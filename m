@@ -1,83 +1,84 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF0725D543
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 10:51:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24E725DAE8
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 10:51:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740739886; cv=none; b=Kc7db1F3yoGq/V3GD9/U1oK9Z+eoBKPKF/7Vwwn5MXqD1WWlkkRr98HoF6jYhSp5dT4gFquW2naQJI5ugPpTLNaa2EoUgGPMpRL8Jr+NxW3XjPf5v4O1ucb1yiUlQgYPRT8iNkf4fWETwxgRGJFZui7raFQWH49BFL7hCrshM28=
+	t=1740739891; cv=none; b=XoX2lHldIz9kOW7UN/5VJbCBYsM3kQLURyTyWWqzrellxDPnxFd3Ky7xwD5q/JkoaBLhrrRan1U3uHPJAMSkyCupTEHgt8ku03ziEj4mOlLQ9hBLMMbcO2ugYaoX3VH1DGcBeLreKnKi1oTd463o/uRxcPn/FoB0pFxGJ7A38zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740739886; c=relaxed/simple;
-	bh=ckj0qyt8mV/UB0kPRRnzIEsDWG1s2Ap34BbsPWwuFDs=;
+	s=arc-20240116; t=1740739891; c=relaxed/simple;
+	bh=jXsQzPpmOszk1rjti0dQrUMXAnz4QDHs6g3I4dUXTs0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BTALR+fTERej4Id1/G9nNGA2Kju/GU7xxhZcuLwQFJs3mfN5NS1ffF2Tp3rv5E2FcyCONZwQ/IlMgEpsaaM+Z6nIyzMbs+Lqri7xk0UYoBJF6e0DQdAqgtGsE1xjY/F0Hrm9CyfnEj4bPQPSFb0QtNcbQAm9jyPYG0slqS/fkHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=airzcqAv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SqJMQ9Ro; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=F/ySTbPb+/Ek4FdFc/0kxYwFXOD+VXUw32YtpDYLJu88u2jaQo/DDNwrgNYbNCLb1JR7FhYkF7rHjWVj23ONSqsT23eGU/T0ibP2FXQoK1cAi3cAlsVSxeRBOC/uzEu+vXExuIgUiJXvdr7N5vBFMan/521097Y9ZBQ4iDPxFNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CIh/GYy2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xCdPy/EV; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="airzcqAv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SqJMQ9Ro"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CIh/GYy2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xCdPy/EV"
 Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id DC77B1380A16;
-	Fri, 28 Feb 2025 05:51:23 -0500 (EST)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D066811403E6;
+	Fri, 28 Feb 2025 05:51:28 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Fri, 28 Feb 2025 05:51:23 -0500
+  by phl-compute-05.internal (MEProxy); Fri, 28 Feb 2025 05:51:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1740739883; x=1740826283; bh=d4l/b8U8Z0
-	MyVz1DOSgSMv3BGSUxaGHn8JjIhQ932Co=; b=airzcqAvQsFEgMfVDFw80F1SY0
-	0eiWMvF26sSrfAUydnbXwN8cvgq2qEQ+/24v5nwBVrD0Z+jqfueH8QEuvouDt4lW
-	CZEbC5TU403qatJRGa2zHNiXjFKwubQ7n2OKVEhLsHSydOTZyw3kOIAY9ZlcfGhS
-	3k7YrFrYU5s4u3+J8scqbRmZkh0VgLH3EDDcRXlWmsBYTUK1XxtqRVtDPv302MfG
-	PvSh9nrFzKTqwlivXa4ME3wEnTyJEp+0BEsnZt/UNc5ktmbQE1PP2jtf5azpAQjR
-	Cnj4O26dJSWWWMW2QtzUxje0zx5UI2Bs8kQft9SJEi0MbLTFMXkMr9zcjapA==
+	:subject:to:to; s=fm1; t=1740739888; x=1740826288; bh=oOGGcD+r4u
+	XtrmFjeOQ1PQ2Ri6HEDyx7iCk89x/AFmw=; b=CIh/GYy22HbdEPaxk3J+jp7Rfg
+	QzvtO+0Vd1aZIpay+f75tsxWVxInYTWMSd0lUtMuWDs7CKzoeYVTJKUHfIPHU5FS
+	bHxHzfzpPBmWeeqR98cwS9qiRQ14tKBfNI3fzp5ISV+9izE59C8QooLu+Jpb5hhD
+	8ZRZHGk7I7/ssQ7taWTG3L8YoR/I8lUyTkkAS2ZaeJYrPZMl7PMA5vXHV15JCr6y
+	FzMXn34ozXjgq0/s327foAJM9P2shFMnBM8fjFWiJM+zBtYm0cZV9SwEj5r07SIE
+	CwsmWFwTVERJP8NCEx3fuq1+FJjcdOSi33tnLQI/xv7fWjh04ug8h/fwPdFA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740739883; x=1740826283; bh=d4l/b8U8Z0MyVz1DOSgSMv3BGSUxaGHn8Jj
-	IhQ932Co=; b=SqJMQ9RoFslI0CYpBsFPE+ZcUJdijGJwyvfjseI2GZ7wNMusZ+Y
-	OBX/ARBiQqtz1MUGkvwrG20LQ1m803kx9r4/EpF5yR92ih4Oym7JGQaxqXYjAwuO
-	qsguKikj8DOA1YaPWgZfQgjX9kZVN/amESK3f1Pms1jpLQyucJzZUN3PsDpnwjfd
-	UOk5bAZgT19kJiwE77uvMHQnyg79fVmQGj1hJZj04JHj2ul9Btx1tErmlhT8ICeC
-	Ws+4w6i6xN9LmeX6IL9lOmsaJcZU9lsW3EawjQoK8z47/0eDUNQ/LumJ/urnNCbr
-	XbBz7wbZztje/7Uj1OXERmHJb11lkkJI9VA==
-X-ME-Sender: <xms:K5XBZ5PVWtEidrF1-drxiIEOy5mwE9MionMmZdWGU9RhO_2IgbWCSw>
-    <xme:K5XBZ78dCWU_fXULkjcDdyIbfMU8L1T6N1sZnEHbXo1TGUezspjh40I5gbO6tdAdR
-    XD0feVqsNlR-KgCsA>
-X-ME-Received: <xmr:K5XBZ4ScDzvGsJhVuBa0kfmNaN2QzsHK_gPRhk3VidvWSoA4H6NppeUAHw0TkqvC2Zsst5UouVLqMhZHDdHBqxQo0g4h6QH8aRvg89X0pTG0_80z>
+	1740739888; x=1740826288; bh=oOGGcD+r4uXtrmFjeOQ1PQ2Ri6HEDyx7iCk
+	89x/AFmw=; b=xCdPy/EVhbpjR6Ya3vWgKH5DUWx26sUbW3oh9kEriuOOOLY1cBU
+	OdH98ZKsu+BNlU0mKQiFcIUdUUa47jKQvrKDxYu2EZLL5cM2EC+yOYZvBWNgx+K8
+	CmfZ/FS9fS/sl5U0KhL7VyVC5tXWvA/ee+QyqfUyj1XCmTJmaubUPWFXGFY84m3L
+	4tO8i/p/vJ07lY7Xo3QKrCHUMK1EO827M+vSPwhirJK6BOfGGR9YHgQHRhoOBTGO
+	NriQclHFsai+UZ4VO5MpSjr01DeUucBZvw9zbGmNmUxc/TwOYkQx50jWVK2gvW+8
+	uR4kfgZtJjkxArI1rfo1ueqMOf9phKzbeag==
+X-ME-Sender: <xms:MJXBZ4iMZRU_2dU4SjZc5LLFhzFaEuBNSGSR8JefocmT2Hc_tKQ_Hw>
+    <xme:MJXBZxAi1R2RIt8s2FcsYz2SSGCMGJEuTjZ0iPeP98tvGm3O6fmOqCLaPprEL1s3x
+    CN3BdLoT5C0y8MbgQ>
+X-ME-Received: <xmr:MJXBZwE5em4Q8SMlpxkj4T-CpcMJRoYgWiSIa3SLxQdJBmWIW3Dwc36YhdPt_ur-8fsCw3RvFcudI_5Sm-Qomme5-560Np9OLcedQ180JVY0dsN8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeltddvtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:K5XBZ1uo1zJqr3QXPziEWJ_OP6cdIPPZDtCSDJQDeO7Oll8xwO6o2w>
-    <xmx:K5XBZxc1PMGn8eZmQNCAv9mElT9rRiVTJHfJqqbx0pSMX630DH_poA>
-    <xmx:K5XBZx3hb8JfjKyfJfrjPfYjw2oEcW8QXvyTDLLZjJNVog0jJE_R5w>
-    <xmx:K5XBZ994PG3cLEOod-NEGBjWlCXp-SsnM3DN8AmNplDoxvB9beBK_A>
-    <xmx:K5XBZyou2v9ViGlrHXp8EFobgkXoWDMp_8cNM0zNWzTYb0SKfItwRLC1>
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:MJXBZ5SXEIkTlLFmQ-Im2FMZ6n3jHSw4oP_5kyDefy8MbSE-CJLuYw>
+    <xmx:MJXBZ1xG85SaOtt3JxieWjUEB6xiUD2IQdLJV8cvs8wXgraGEKLPZQ>
+    <xmx:MJXBZ345giIWATotdFmHIOWIVUfpnObwNCITLIgvosWoRyJUUMVLNA>
+    <xmx:MJXBZyxA32cNaxAj7b9y8nCNbxE2VvjYzTBHfyRjqAJM3u9AT7R_Iw>
+    <xmx:MJXBZw9DJliZgo4ybnxRT0Oe6mW8CeWN6f1bSMiLvdLYZwXjFYM6cb02>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Feb 2025 05:51:22 -0500 (EST)
+ 28 Feb 2025 05:51:28 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6b0b573b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 28 Feb 2025 10:51:21 +0000 (UTC)
-Date: Fri, 28 Feb 2025 11:51:20 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id d70f8b28 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 28 Feb 2025 10:51:27 +0000 (UTC)
+Date: Fri, 28 Feb 2025 11:51:26 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Toon Claes <toon@iotcl.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/9] builtin/cat-file: wire up an option to filter objects
-Message-ID: <Z8GVKLee75GDG2S4@pks.im>
+Subject: Re: [PATCH 5/9] builtin/cat-file: support "object:type=" objects
+ filter
+Message-ID: <Z8GVLrlHY-hwOJeI@pks.im>
 References: <20250221-pks-cat-file-object-type-filter-v1-0-0852530888e2@pks.im>
- <20250221-pks-cat-file-object-type-filter-v1-2-0852530888e2@pks.im>
- <874j0graug.fsf@iotcl.com>
+ <20250221-pks-cat-file-object-type-filter-v1-5-0852530888e2@pks.im>
+ <871pvkraqn.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,43 +87,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <874j0graug.fsf@iotcl.com>
+In-Reply-To: <871pvkraqn.fsf@iotcl.com>
 
-On Wed, Feb 26, 2025 at 04:20:55PM +0100, Toon Claes wrote:
+On Wed, Feb 26, 2025 at 04:23:12PM +0100, Toon Claes wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> > index f57bf65cb03..b374c2bb104 100644
+> > --- a/builtin/cat-file.c
+> > +++ b/builtin/cat-file.c
+> > @@ -474,7 +474,8 @@ static void batch_object_write(const char *obj_name,
+> >  
+> >  		if (use_mailmap ||
+> >  		    opt->objects_filter.choice == LOFC_BLOB_NONE ||
+> > -		    opt->objects_filter.choice == LOFC_BLOB_LIMIT)
+> > +		    opt->objects_filter.choice == LOFC_BLOB_LIMIT ||
+> > +		    opt->objects_filter.choice == LOFC_OBJECT_TYPE)
+> >  			data->info.typep = &data->type;
+> >  		if (opt->objects_filter.choice == LOFC_BLOB_LIMIT)
+> >  			data->info.sizep = &data->size;
+> > @@ -505,6 +506,10 @@ static void batch_object_write(const char *obj_name,
+> >  			    data->size >= opt->objects_filter.blob_limit_value)
+> >  				return;
+> >  			break;
+> > +		case LOFC_OBJECT_TYPE:
+> > +			if (data->type != opt->objects_filter.object_type)
+> > +				return;
+> > +			break;
+> >  		default:
+> >  			BUG("unsupported objects filter");
 > 
-> > In batch mode, git-cat-file(1) enumerates all objects and prints them
-> > by iterating through both loose and packed objects. This works without
-> > considering their reachability at all, and consequently most options to
-> > filter objects as they exist in e.g. git-rev-list(1) are not applicable.
-> > In some situations it may still be useful though to filter objects based
-> > on properties that are inherent to them. This includes the object size
-> > as well as its type.
-> >
-> > Such a filter already exists in git-rev-list(1) with the `--filter=`
-> > command line option. While this option supports a couple of filters that
-> > are not applicable to our usecase, some of them are quite a neat fit.
-> >
-> > Wire up the filter as an option for git-cat-file(1). This allows us to
-> > reuse the same syntax as in git-rev-list(1) so that we don't have to
-> > reinvent the wheel. For now, we die when any of the filter options has
-> > been passed by the user, but they will be wired up in subsequent
-> > commits.
-> >
-> > Note that we don't use the same `--filter=` name fo the option as we use
-> > in git-rev-list(1). We already have `--filters`, and having both
-> > `--filter=` and `--filters` would be quite confusing. Instead, the new
-> > option is called `--objects-filter`.
-> 
-> I'm not sure I agree. I would rather have consistency in various
-> commands. Because `--filters` doesn't accept an argument, so I would say
-> having both `--filters` and `--filter=` is fine. I see in various places
-> we already use `OPT_PARSE_LIST_OBJECTS_FILTER` which defines the option
-> as `--filter=`, so it's pretty standard for several commands. I'd
-> prefer git-cat-file(1) to follow that as well. But that's my 2 cents.
+> I see we don't support LOFC_COMBINE, so we won't be supporting repeating
+> the --filter= option, is this intentional? Should we support that too? I
+> feel it would make sense from the start, unless there are good reasons
+> not to?
 
-I'll wait for a third party to chime in as a tie breaker here :) I'm not
-feeling overly strong about it, but still think that it's just too easy
-to get wrong when those options are so extremely similarly named.
+I think the usefulness of LOFC_COMBINE is quite restricted in our case
+because we only support a subset of filters in the first place. There is
+only a single combination that does make sense: `blob:limit` plus
+`object:type=blob`. All the other combinations are useless as they only
+filter based on the object type, and thus they would yield the empty
+set.
+
+So given that this isn't that useful and given that it does add quite a
+bit of complexity to support I decided to not support it for now, also
+because I don't have any usecase for it.
 
 Patrick
