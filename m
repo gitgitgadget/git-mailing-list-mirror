@@ -1,121 +1,111 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DD31581EE
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 03:47:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5B61B6CFF
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 05:02:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740714450; cv=none; b=pvvaajB/jGJmwZidBfsjkAtkBGN86i3ZaIrMYm76SVfzO0ov7HqcNoM+flElKa3lLXkABI9X1Dgr4mB9hQ4wVzuHDqttu+flGLkwgkjwxZTTmtIRrEczHWq0xi3YF3EMIs0e4FGSTn93HDtQ1ft2h5hIV7RX/nOUDxttm433BtY=
+	t=1740718935; cv=none; b=M5dp7QKJvnf/50XKpnV+UlVpC4wdeT4HPPYj08JUb7OPRW+BljKIhHD63QcVSlJUrnbsdUmUHGAK9+yNhAXrgtQHzjrmlBiMB4fOh/El7UvYJLV154NiD26WZrO8icX3uQFMspO9PDfviA8Y4g21XX110idNCyvNtHzDH9BhEhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740714450; c=relaxed/simple;
-	bh=2hqyjFLqtBPDGjesliViJBTev2Nc681939gi/iFms+U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QvSwK0ClAZpdOuSmC1XVg4yC4qYDfbAGaHf7BldheM8VB+Z46mexbMj2TwM17q3tmxKhGTHqs01jfomt9113rwFhwOl9JOYMhu//nD/fzrhDL8QNOQey01RFxZP58svCPBz/2YUc4791O5ukuxr/1iQU8eocmyOi1EBk9Dp1FzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wZGX7zRq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4Sr7uU6d; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740718935; c=relaxed/simple;
+	bh=SHmfYwZBb9C4WVFLT6mV9ZRQCBP/UFpABhYSJEVQBqc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sf2CXxgwtCwL9OC0IFzpGoYUujZXlF8BVQKHIJhti4pGqKFKyLOtPK5BvsffS6Y4aUfyoqM8EJLPq69I36k9PMgYqsdN6xpcyb1WWy1LGuaGutm0I0lOJEkxAdSqT/jJgm+DfIaa/xisKZmB1kjiKjyjtwX+nAcoZWtXAEJ2pSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hiGFU9KS; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wZGX7zRq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4Sr7uU6d"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id CE946114015D;
-	Thu, 27 Feb 2025 22:47:27 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 27 Feb 2025 22:47:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1740714447; x=
-	1740800847; bh=Sl1GsjiAvBzMBV/8YOpS0gPWoV7Baor7G27uTgjYypc=; b=w
-	ZGX7zRqrTSH7CJQovoczVWkscj0c6M9ctzE+a2P/KwKc0HCqwAFJrfHY5lxrzbny
-	QnO9CFyyVpBOOzZ6t7aPAVfPJMg2aiakjAhy52OUipj6pQWXEBQeUgtTF6S9aPXo
-	aWFXtHHxE2ZwDu0mrQOCQ9PK1fPXWh+qkAyk3LKB5gqiQ8CuyAM0Ve7idd6oiS7v
-	uaOT7mcStB+Vgrn/nbWJitdaxEK/xZk4VJ6f3ICQXdMqE16FPIKaanWILIhBq4gV
-	TUujJSDlyEWJq1bMlUB0X1MJEgyUdlCYu71g1DAD0zi2u2T7dMmWp8qtX0bebKNV
-	Zwg6HZEW6k/5eZEGioEFA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1740714447; x=1740800847; bh=S
-	l1GsjiAvBzMBV/8YOpS0gPWoV7Baor7G27uTgjYypc=; b=4Sr7uU6d8QMZwl4ov
-	Lcyy1+OmC+SbS0S87SpOQs5VP1RWCpYs24NnS5qhHgVlVU5tML3fzKegyNTZohTs
-	iDtGgb9u7SC0zCdKjn4GYYCdDpb2ti8FkiAWVRCJb18DQkgEPpj/uui+H37jUqR0
-	/xqFXYHpvloFQoez1008AUh4oEGbqANZohk571gch9j+YmPm9+Q2cl6UxDoj2Wne
-	UCwwvKHdj2wvt0nma7xUeBYaLaNaTlfgOx5+aOBj+yQ+tYjuPi5KNylS9HJfoQYA
-	wtVyyXzxuupexqOzBt+etKD1/ZZyDvYJT1FKXp9i8Tu0VIwSgh2d1qhnrpgR3zUe
-	CG+Jg==
-X-ME-Sender: <xms:zzHBZ2xBtFYTyVf3fk6OYCJ0Ecvrhuz9-HcesbQPXgQIrKn2oWW6sA>
-    <xme:zzHBZyT_DB3AT873rVGnqro1BbNTSuNukqS2E13v6xnY6OS7mv0n5oF9PrKoRFpPq
-    GXV8Msc72OdaonC9w>
-X-ME-Received: <xmr:zzHBZ4VSU3Bl32ivyq3fIl7jVyVCp8Zg-BiMCGeCgv4Gq1YOpL9bD_Wmxvetu9HLjwANceMu_HMhiCzLvFEXwwO8bNw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekleefgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
-    necuhfhrohhmpefvohguugcukghulhhlihhnghgvrhcuoehtmhiisehpohgsohigrdgtoh
-    hmqeenucggtffrrghtthgvrhhnpeejuefggfehieeugeeuheevgfegudetheetuedvveeu
-    ueeileeuhfeigeefkeekieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehtmhiisehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsrghnuggrlhhs
-    segtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:zzHBZ8gMHV3f3H5RypgipyJe3WSkKrNiQ_oux_kcoNB37ShvxSk_xw>
-    <xmx:zzHBZ4DlfTMHFD3g_viVInXxTCAktN-G2lnHNTGG91BMNyJCXWQa4w>
-    <xmx:zzHBZ9JTshsnYnlb16OqxG64erv4ok1vzPj5XAtQ3aJkygP66zCKxw>
-    <xmx:zzHBZ_DtcdbW1fnQCx_1-12-N_asX9DdI_ae4kk_3jMTMDBCeH6Spg>
-    <xmx:zzHBZ7OhDsUxawcKMUtDbiLhugefbQ_QDDu5l0S_ZelS4QYLVzwV2INQ>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Feb 2025 22:47:27 -0500 (EST)
-From: Todd Zullinger <tmz@pobox.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 3/3] contrib/subtree: rename .txt to .adoc
-Date: Thu, 27 Feb 2025 22:47:06 -0500
-Message-ID: <20250228034713.203461-4-tmz@pobox.com>
-X-Mailer: git-send-email 2.49.0.rc0
-In-Reply-To: <20250228034713.203461-1-tmz@pobox.com>
-References: <20250228034713.203461-1-tmz@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hiGFU9KS"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-22114b800f7so34301305ad.2
+        for <git@vger.kernel.org>; Thu, 27 Feb 2025 21:02:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740718933; x=1741323733; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=qnLcUGj0cy7MjiKS4CE+ESanRVR2a/Ir2JEh0viQV7M=;
+        b=hiGFU9KSG8DORgm2tksOgV8R4jKJkQEW9eFFB6HSG0P166U1OCY/MsLgYjHi7aVRK2
+         Aot3m5JEzi4DmZauMe4CiVmxhXZYhgpzMMvo6VVFcbZVksj3uPZOIbpIbrhncDY6N79k
+         6GYqvy2FT6jpg8j4vEF5vxeKgNkMuyp2k5s1kqNXVPChps0zN/tSlN6ZkT8UrulAV7wl
+         0vEoNnNwWgpsHqngQ3rQElQ6sbeudVT//C0JhsqiacjQ1e0qYw1HW34I2XxWi8zgOuqM
+         DTJVRda+mz97a8mKhfLn5JFJ59dT3D7JIp3riKiriZe5SQNrHgHqChgXNbOU2BUGTux4
+         mCvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740718933; x=1741323733;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qnLcUGj0cy7MjiKS4CE+ESanRVR2a/Ir2JEh0viQV7M=;
+        b=BhoJHr1quZW/r5W8ynVGBL1NFICtJybAa7seJHasbQ99CDqvjgmM4vXxi2L/A2RWsg
+         MrV7LXQATmCWLhFndiYZtF9DEfhSK3QPaCt65owTfI8KHyqWvsnoO/bjzzD71y5XtyBo
+         MBX0dhGRtSHr8n7qcBfVwbAY1JGvJq0yKjp9c1eKgZm1IBb0NvN3TYqfhFhwtD+Dsj0x
+         D/lrWOhzUzsakFND4xTaia2BtELOht47sX5Yev7cQsuiJ8aFt8SZrV56gZJLmabNJiUm
+         FdyBivyFsKAtBQO5otdLXPYStg3V9jZ7isbRCR5n7K8yryZ7/3telna1v7OJAzhgDuJa
+         HlMg==
+X-Gm-Message-State: AOJu0Yxh9uVlYy+u/S/MwJmkc5deTVJqU+2nJ8FfjX/iWG3ON4ckdcw/
+	2VNtrVmMvQHU9RiD1pLxewKUEQ4U69NzXmYAPvPjb56a7sL53kSY
+X-Gm-Gg: ASbGncuqllD5EP8HObLNxQuiV9/vjyRfXXkpHUjfy9mql/OU5YUV++YmCZ5xTP84ZYC
+	62OR2nCFfp2dmjuYCTHm+iAtZdILphhc+nT7garoAoT5D321NmgHe3YArsWX8nQsbozg5R42shb
+	eQ795Dloi5cg/a/jL05xIWve+ocOtxFgJQZDM4KGLtG5GpopQxtc7iiGH2Bi7amtzC0xUAzKGT0
+	+pDgR9CxNbwlBmEgnastOle/Kp/XVymRbUrxt1pb41/nvZOTowaygT2RwZSWu89ZyHnQeNf4YfT
+	7A7yRm/OBBpQILt8rj+qvg==
+X-Google-Smtp-Source: AGHT+IG9UCY0QPPp42hB3va0eEUDMd7vpnS9pZs4tuYMM360iTEDYYkPGxrCf2+E/C8wf+Y8zEAsMw==
+X-Received: by 2002:a17:902:ebc6:b0:220:e63c:5aff with SMTP id d9443c01a7336-2236925e517mr28043275ad.47.1740718933368;
+        Thu, 27 Feb 2025 21:02:13 -0800 (PST)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2fe6ded6ebfsm6905692a91.1.2025.02.27.21.02.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Feb 2025 21:02:12 -0800 (PST)
+Date: Fri, 28 Feb 2025 13:02:23 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v7 3/9] packed-backend: check whether the "packed-refs"
+ is regular file
+Message-ID: <Z8FDX9-BbAt4H1RV@ArchLinux>
+References: <Z78bmBSrDR20GY6g@ArchLinux>
+ <Z78cAU69IUSDgpuD@ArchLinux>
+ <xmqq5xkwd042.fsf@gitster.g>
+ <Z7-4XRCVvLjFCFR8@ArchLinux>
+ <xmqqeczj9vh4.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqeczj9vh4.fsf@gitster.g>
 
-The .txt extensions were changed to .adoc in 1f010d6bdf (doc: use .adoc
-extension for AsciiDoc files, 2025-01-20).
+On Thu, Feb 27, 2025 at 08:57:11AM -0800, Junio C Hamano wrote:
+> shejialuo <shejialuo@gmail.com> writes:
+> 
+> > You are right. Actually, I just want to avoid assigning the `fd` to -1.
+> 
+> Why not?
+> 
+> Between leaving it uninitialized and explicitly initializing it to
+> signal that it is invalid, the only difference is that you can
+> programmatically check if fd is invalid and refrain from calling
+> close(fd), for example, with the latter, while with the former you
+> cannot.
+> 
 
-Do the same for contrib/subtree.
+Yes, that's correct.
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
- contrib/subtree/Makefile                              | 2 +-
- contrib/subtree/{git-subtree.txt => git-subtree.adoc} | 0
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename contrib/subtree/{git-subtree.txt => git-subtree.adoc} (100%)
+> > However, I didn't realize that I would initialize the strbuf later.
+> > After waking up, I have suddenly realized this problem.
+> 
+> Given that initialized-but-never-used strbuf does not hold any
+> acquired resources, the current code at the end of the series is
+> still OK.  So there is technically nothing to fix.  I'll take a
+> reroll if you later send one, but as I said, I do not think it is
+> necessary to reroll only to add fd=-1 initialization.
 
-diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
-index 8fe0bfd401..c0c9f21cb7 100644
---- a/contrib/subtree/Makefile
-+++ b/contrib/subtree/Makefile
-@@ -50,7 +50,7 @@ GIT_SUBTREE    := git-subtree
- 
- GIT_SUBTREE_DOC := git-subtree.1
- GIT_SUBTREE_XML := git-subtree.xml
--GIT_SUBTREE_TXT := git-subtree.txt
-+GIT_SUBTREE_TXT := git-subtree.adoc
- GIT_SUBTREE_HTML := git-subtree.html
- GIT_SUBTREE_TEST := ../../git-subtree
- 
-diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.adoc
-similarity index 100%
-rename from contrib/subtree/git-subtree.txt
-rename to contrib/subtree/git-subtree.adoc
--- 
-2.49.0.rc0
+Yes, as you have said, there is nothing wrong at now. And as Patrick has
+nothing comment. I have sent out a reroll to make code better.
 
+Thanks,
+Jialuo
