@@ -1,176 +1,134 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A249189BB0
-	for <git@vger.kernel.org>; Sat,  1 Mar 2025 09:19:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48ABF1D6DA1
+	for <git@vger.kernel.org>; Sat,  1 Mar 2025 10:23:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740820775; cv=none; b=t8e8ul2YOQoxwXd1E8odYtIEcf5H2LrPxZSt69Bquopn1xWfdpltC4vUjnNmN1eUcV78sIkdjbg2NDdl++NifnV6zV0HMz0STkJaDUTdag0iPt/jqyMawg28DeG8sDOJXKdbLzBZULQB9R4CITr7VvU0UHQSU8GGD2WVjITr8nY=
+	t=1740824604; cv=none; b=GVh4VooTvhMhuEMS4R+XKIX1/UdcUQBGMCAnhZelnG0C2FWZ/sgy8FTte3nW4NDqOENx7KyjVfPq/0OikyB2SgLdOgZK+GuVn97AjVNMdjWZhIf8gWweSp5MldecUgpYY3sgJhRs9oWdVA8NPg42HztC937qwIWxiLRS/33Q+kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740820775; c=relaxed/simple;
-	bh=LcLy+6Vc/La6Q/j5tAZY3Ly1jb8Uc2FVyfHgnVd/3lk=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=VydAQ5Qte+byl0DKN4yEky+wZjv2AVQpAZ57iDvdo9xsPkKV/f+RCnPtbBkF3cT8/OifQxfyyYHLiHa5sX17gSQh3L4iLmw2WpDR2twwHN0nSzxZ/bOvtFd4EXVVXHo+NFTU2uRHxyt9+tu+EgI1ZhGC9TMWAUEKjcS8xmtw7js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MaPgFn/4; arc=none smtp.client-ip=209.85.218.45
+	s=arc-20240116; t=1740824604; c=relaxed/simple;
+	bh=E8FeTWfaCtX56DAF5Z+ZXVboS6+tpMdpT4dqq1zb9fc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ESEhPyz+Kxs1H5ZPUmdjbQpNQL5Ah5Lvi0Ad+9wyWpSM7pQuh67k6vMmYKrVuZ/n34Ot5wGgCz5qKvuC+O4lKezYIp9p+lmoFaRA+LKMdreed29o6pcwH2BQ56TVeFTERd1dqFM5dShfBFsquIZpmK3IDGAKEMIZXYPIvtG5He4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SGxX6ldP; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MaPgFn/4"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-abb9709b5b5so526768166b.2
-        for <git@vger.kernel.org>; Sat, 01 Mar 2025 01:19:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SGxX6ldP"
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-543e4bbcd86so3177166e87.1
+        for <git@vger.kernel.org>; Sat, 01 Mar 2025 02:23:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740820771; x=1741425571; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=LcLy+6Vc/La6Q/j5tAZY3Ly1jb8Uc2FVyfHgnVd/3lk=;
-        b=MaPgFn/4Zgxhw19WClSQAT0AP6pJ4qDEx6pNasgimYT36fGDM/PmAFWRS7hDpsGpSx
-         h4tUjcUMUzSMSO81adftXN4vMIKYzvqWOEIqHQIbUeadmqPgkxyZj/v1gCdCRgY4zNUo
-         SdmkLsFdHCnjlTZIhZ6rgZKLmUtEsUgomiAOM8UUeUaOo+z/rT/0svrALcCTObtByjXl
-         jPXcowoHl7Qu5Gqfeg7P3pmL1haV97zshzyzjaRZTQNM/ILXOfJcMRIyATd/Ce8+2s+N
-         IhmUraNG1X80AW1s5f2vZz9dQknku7oO4PKolJxRYNUwTayNpaHCijXDrSl9+/dFjKIb
-         Ucvg==
+        d=gmail.com; s=20230601; t=1740824600; x=1741429400; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=E8FeTWfaCtX56DAF5Z+ZXVboS6+tpMdpT4dqq1zb9fc=;
+        b=SGxX6ldPnK+64NTVw5rxL/ICphEXN4qTI1jIFDc4Bnx2FTP1IESiYVx+UHc5Wi65Bl
+         cRjHiuBBDkQp/1AFksKou7E9vyyOaSu8DpaGgUmwhYkjw3b2D/mDy+3Tc0RUc9zeTQOH
+         zZdO5Y8Hp3uVheY86WfgxYGDVQIj9StSbFFsNBcGWk/ZVKrXwygRpxkSk7JR3GuHY5g7
+         4nQJoBLJuDYsJVFnKgwYqK0D6qnpsvZfErM5iOlOqXLZx6R8kXABm/X1q+AqljQ0Y6k+
+         Snn2zdJGY+DV452AMV/EF2FAse97UijiQZkpvY+1i6nhjrUQzY6YZrbK2/p+9szwtlWO
+         O/1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740820771; x=1741425571;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LcLy+6Vc/La6Q/j5tAZY3Ly1jb8Uc2FVyfHgnVd/3lk=;
-        b=KF2OoVWAP1TSu0UaIUiw7WQKWRhpYjF/CtZcZttqIj8XQzxtz4m+g2Vje5l8QoGgV4
-         bx9eDC6xAmDJi1hC0rMY3EFN/92wtduhIPE12OpQ0CSKOy91VVb4FXfl7mshv8ibHKeT
-         ys1gj+B2WNvnzaxwE1AfKTASH9gn64uU4SNNg9Epbzj6+kYA6oyRbdVwMSsNohBn2lXk
-         n7Halw8UVImb0gEpz4IQFqLq9ElzAIKQgkXBn2Q/ClXlppQ4SazfG36dO5c/gSEdPw1P
-         hy1ZiTAev8HHUH4BEStg0eH/wI0LQO2Eq5NKd+NC66iyypuq+n3tPah5/sQlfMiuElrw
-         P5MA==
-X-Gm-Message-State: AOJu0YzQscMMQqtobRylkZAIyX3GitILdnN6QBkkJcI2OBWTKUE42rj9
-	1d5i92YAxbyU7tNxC/5qb2vKX9WK1pKf5xxnqS5qYTChQTp/T0A7dvcMX9L69VdmMsxd119KQN4
-	iLcWpIynW1p223SPmVT+LbJ2hZxaXAA6rNJcf7Q==
-X-Gm-Gg: ASbGncur0QFrZl96N65+1e87OQyU+Y9ZeXGtLSrdL4FBk2h4SRPM957mWyCNaRjy373
-	7Weg10AYwzBkMEnelSGxtjGvx3mQUTqD1shnLgLkgsTiqduSSnyer9jBi6yxnLxkN5Y8qj4m08M
-	M9qq1tkucXri34Zq0b9HUK8i/7PQ==
-X-Google-Smtp-Source: AGHT+IFzQ9dZwGOCJ3M10hbiICP/hH9b8REjvGMnkbC3LPHrErE5frPqyBoavK6e8hymkvb4N+Z42oIV6NIS2XPLa4k=
-X-Received: by 2002:a17:907:9619:b0:abe:fd0c:68ac with SMTP id
- a640c23a62f3a-abf2685934bmr733969266b.52.1740820770744; Sat, 01 Mar 2025
- 01:19:30 -0800 (PST)
+        d=1e100.net; s=20230601; t=1740824600; x=1741429400;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=E8FeTWfaCtX56DAF5Z+ZXVboS6+tpMdpT4dqq1zb9fc=;
+        b=T3/rbAgL+AzIqbMRATvtkHjinZAjJf99WAuG8qMW23Q1jEOTU4WoQzZIX0CYoFPOBO
+         D4ATLxAooKhJyISOrMGf/OlFdpL/xtzh+ogru1F1s5gsihYdQk0WJvDJH9Wl4iJVjFmS
+         n3wiWnI/stJVHDye3B7bP3qkwZ4kTL8nHq+GkEy3jqdHIvAO2U0MdUczC2XhwV6PQNpK
+         Hh0+e/RvlLvCvDrzCFkVdeji55DNer+A8Bzg9qK/4SE13B89aeB/a13txBHnk9vyeAGS
+         zEch9iUkURRHGfQEn+1HE3GyoXhEJ4MPejdSd2FTPP60pkEBQsnh+c8cA6oYLWUGyGHz
+         uwoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVltQF7uQzA+d07//nz2JU9vRIYJBziXWdaz9JCTLGQF25rPR4jOfD0Q+9Ngh+3f2hIjVk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxCRgCUBgKalJjyBGR0dE4Ba9r8LcCl3WU7ncxWTHOR0emjFclz
+	80zH2p8kyDcUuCFVPpafJbzMK+FSbue2omwvIcOSo933Gv0FtTyYnmg6L0Bggb8DleeJz4XRAAv
+	iZPQx24/3pmRdIfj7gwoM2Maas5WIxeq2CPc=
+X-Gm-Gg: ASbGnctrZDfAoatxO2ds8cJvMJen0A+xxAf+sOz9qHyg9v4lqe39c+MGF3mOywF31Rl
+	jXtY8z78PlphXm5XoHCO1Lskr8LtUjLUt2EceOCN2Ym6IlKDng+VEPUzEpnPpMimOp4waU8OpJi
+	LN1UHtC8kbuK5Lpg7pXcx7Zi/mnnU=
+X-Google-Smtp-Source: AGHT+IFA6MFuy6tbvYrZaJXok6GsoJxoHY+60Ebqxoe7/+iJsKFhJCESVzHI+pgdCHUxxUaYd+vLhoOC3iM08O8wgdc=
+X-Received: by 2002:a05:6512:3e0c:b0:545:2953:1667 with SMTP id
+ 2adb3069b0e04-5494c31ab08mr2541871e87.13.1740824599935; Sat, 01 Mar 2025
+ 02:23:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: ZheNing Hu <adlternative@gmail.com>
-Date: Sat, 1 Mar 2025 17:19:19 +0800
-X-Gm-Features: AQ5f1Jqt-CCd_Kgl_9sgKLGrgZbhfb2_tW2x9Pk-_KBMPN-s6wtnkiCDSZHBHk4
-Message-ID: <CAOLTT8S2Dk4zr_USpjz_dPBO-Rdr-qqg-Rq5GLBgtom_REFK3A@mail.gmail.com>
-Subject: [Feature Request] Enhancing Git with Inline Code Commenting Features
- for Improved Code Annotation
-To: Git List <git@vger.kernel.org>
+References: <pull.1897.git.git.1740489585344.gitgitgadget@gmail.com>
+ <xmqqv7sxki36.fsf@gitster.g> <3a180cca-0573-474a-8835-8015dbe09541@gmail.com>
+In-Reply-To: <3a180cca-0573-474a-8835-8015dbe09541@gmail.com>
+From: Scott Chacon <schacon@gmail.com>
+Date: Sat, 1 Mar 2025 11:23:08 +0100
+X-Gm-Features: AQ5f1JpYlrB2VqIojSscPyNurQsEPl5XpayVL8U1x8giz2Y_SQJ4HrvV3MhXqoc
+Message-ID: <CAP2yMa+YoxRaf48mS7mUbNnsfCm2Z=FT5Gohq_oWz0Q8XnH_eQ@mail.gmail.com>
+Subject: Re: [PATCH] bundle-uri: copy all bundle references ino the
+ refs/bundle space
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Scott Chacon via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Dear Git Community,
-I hope this message finds you well. I am writing to discuss a
-potential enhancement to Git
-that could significantly improve the way developers annotate and
-review code within their workflows.
+Hey,
 
-Current Landscape: Platforms like GitHub and GitLab offer robust
-commenting features
-within Merge Requests, allowing developers to leave comments on
-specific lines or sections
-of code. These features are incredibly useful for code reviews and
-collaborative discussions.
+On Wed, Feb 26, 2025 at 12:36=E2=80=AFAM Derrick Stolee <stolee@gmail.com> =
+wrote:
+>
+> The intention of the design is to avoid having the bundle URI fetch
+> changing tag refs, especially annotated tags. Those tag updates are
+> expected to be advertised in the "git fetch" output. It would probably
+> be best to peel the tag refs to a commit and then create a fake branch
+> for the bundle.
 
-However, they are inherently tied to centralized web services,
-limiting their accessibility and
-flexibility, especially when working in local development environments
-or with decentralized
-repositories.
+The issue for this and also for the other suggestion you have later on
+is that I'm not sure how this can be easily done with the bundle
+command. It seems like everyone would have to write some sort of
+script to create a special type of bundle so that all these objects
+are referenced in a way that makes the bundle-uri helper actually get
+most of the objects that are needed.
 
-The Gap:
+Is there some option to rev-list that does this? Or are you saying
+it's better to write a script?
 
-While Git provides tools like git blame and git notes, these are
-primarily geared
-towards understanding commit history and annotating commits,
-respectively. They do not
-offer a way to attach comments directly to specific lines or blocks of
-code within files.
-This limitation makes it challenging for developers to:
+> The biggest question I had (and tried to get ahead of on the PR) is
+> the use of a test to demonstrate what kind of bundle files cause this
+> issue. It would be important to demosntrate that the repo is still
+> usable if "refs/bundles/tags/v1.0" exists and points to a tag object.
 
-Take personal code notes that are closely tied to specific parts of
-the codebase.
-Share annotations seamlessly across different development environments and =
-with
-other team members without relying on centralized platforms. Maintain
-contextual comments
-as the code evolves, especially when files undergo significant changes
-that shift line numbers
-or restructure code blocks.
+I have written a test and I'll submit the new series in a minute, but
+I'm not sure what you mean by 'usable' in this context. Is there a
+situation where Git gets mad if there are annotated tags that aren't
+under refs/tags?
 
-Proposed Feature:
+I have done these test clones and nothing bad seems to happen having
+them in refs/bundle/tags/v1.0 that I notice, but I don't know how to
+write a test that specifically verifies that.
 
-Inline Code Commenting in Git I propose the introduction of a native
-inline commenting
-feature in Git, resembling the functionality of
-addcomment(file1:[L3~L10], "comment").
-This feature would allow developers to:
+> So I'm OK with relaxing this to be more flexible, but I'm not sure
+> why the bundles couldn't be created using "refs/heads/", possibly via
+> changing the ref names during bundle creation.
 
-Attach comments to specific lines or ranges within a file directly in
-the repository.
-View and manage these comments within their local IDEs, ensuring that
-annotations
-are always accessible regardless of the hosting service. Share
-comments with other collaborators,
-enabling a decentralized approach to code annotation that aligns with
-Git's distributed nature.
+So same point here. I think the bundle-uri functionality isn't
+particularly effective if the creation of the bundle needs special
+scripts to create in a way that is expected.
 
-Benefits:
+One other approach would be to add an option to `git bundle` that does
+this sanitization (unpeeling things into fake branch heads), like some
+`--bundle-for-uri`, but I feel like just using `--all` and having the
+clone handle it in the way I proposed might be much simpler and more
+usable.
 
-Enhanced Code Documentation: Developers can maintain contextual notes
-and explanations
-directly within the codebase, improving code readability and maintainabilit=
-y.
+We could also immediately delete everything under `refs/bundle/tags`
+after the fetch if we don't like them there, but still having them be
+available for the fetch negotiation.
 
-Seamless Collaboration: Comments can be shared and viewed across
-different environments
-and by various team members without dependency on a centralized service.
-Resilience to Code Changes: Implementing intelligent comment localization w=
-ould
-ensure that annotations remain relevant even as the code evolves,
-addressing scenarios
-where files undergo significant modifications.
+I'll send a new series with the existing tests updated to look for
+`refs/bundle/heads/*` instead of `refs/bundle/*` and adding a very
+simple test to see that the tags were unpacked as the next step.
 
-Potential Challenges:
-
-Synchronization: Ensuring that comments remain accurately associated
-with the intended
-code blocks as changes occur.
-
-Conflict Resolution: Handling scenarios where multiple developers
-attempt to annotate overlapping
-or adjacent code sections.
-Tool Integration: Developing plugins or extensions for popular IDEs to
-support the creation
-and management of inline comments.
-
-Conclusion:
-
-Integrating an inline code commenting feature directly into Git would
-empower developers
-to maintain rich, context-aware annotations within their projects.
-This enhancement aligns
-with Git=E2=80=99s philosophy of decentralization and could bridge the gap
-between local development
-workflows and the collaborative features offered by platforms like
-GitHub and GitLab. I believe
-that such a feature is both feasible and valuable, and I would be
-eager to hear the community=E2=80=99s
-thoughts on its implementation. Collaboration on defining the
-specifications and addressing
-potential challenges could pave the way for a more versatile and
-developer-friendly Git.
-
-Thank you for considering this suggestion. I look forward to engaging
-in fruitful discussions
-and contributing to the continued evolution of Git.
-
-Best regards,
-ZheNing Hu
+Scott
