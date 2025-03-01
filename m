@@ -1,135 +1,86 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01E51D8DF6
-	for <git@vger.kernel.org>; Sat,  1 Mar 2025 10:34:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BFC1D9A50
+	for <git@vger.kernel.org>; Sat,  1 Mar 2025 10:59:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740825246; cv=none; b=jc6nQjCX5uiny6mHfoE7apEBe/pRz2glBMrHfqCYODzukvgXKGmZW+XJ1I6lxZ4g5LPCONMMngGFC+oG4P6AjUN47lW2bqIVkE+wLXCXR/QdqdfapfuyTu1HCDw+juYT+vIrleaYEq2PZIIVS+SVlslCr6rN2xfhC6P2tcqgI14=
+	t=1740826757; cv=none; b=Yi7F69S6tJ2huX+nsddpiK96KWyMGWzMbKyb08hpVZaZEljBz1N+TYlotqmcuTL076Dq/h812Yg0YYIPS+J+ddrVBSm69PaPd5GYUAsX9mf5UtUNTvxnAdMmLyMGNYHarCE+/40vReeayVWDJ/VHutvhZ3ov6T2F5vcnUwrMBUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740825246; c=relaxed/simple;
-	bh=95/PDi4qIIdUPvnZDk1UAF1FhsAnXfq0wMubQBKtoRo=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ajVBmcsJrp2yvZxLSCojaeiL3pIrdT1I6EZwnBnTcsMy9ij5R1jnstGmk4zVo2rxm5uI6NcMd619/TUJpKISNoXwoPQ5DHxfqI241eG8w4L1fDx2VOthkAFB+7A7nhea59miMn+pr8sGIP6V7lspWcWDV/RxayOZemourfw+ppo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FJib+R9G; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1740826757; c=relaxed/simple;
+	bh=zSWO/SaI+RJcY7tNU7VshAvDS6CZ9ZGaJEnw9uTiyBg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=VEVpPtrD6kXOnn825ZRX8QrAqWRAbmHkibav50EVWnbkTsUgKJJd6tNX3+3Wzvk0vNv/gAckg+1RnAtxO6p+CO/kr77J/LdDIFG4ZiHNR6wr90qdD54rW+B6R7N+17MXBzPCBPw8RlEGvLEUlaiVJcfuR06di2+ij5xffikSb+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VG6wYpJM; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FJib+R9G"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43690d4605dso18888285e9.0
-        for <git@vger.kernel.org>; Sat, 01 Mar 2025 02:34:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VG6wYpJM"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2211cd4463cso57486475ad.2
+        for <git@vger.kernel.org>; Sat, 01 Mar 2025 02:59:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740825242; x=1741430042; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xA1krnQtOvhSYNLE949+1YDZm25pKKjYc1RKvWAaHLA=;
-        b=FJib+R9GAtIjPo1LjiqubQH/ejQlPYicVztzNTlNPsfJ7oDLGm5UTE9PovA6ARObjA
-         8kAZrs/XwjEjhnLQy0CtuDk3SzHKyyVRl17AKdvwqHrDX7EZJtDsGwVLO4BMT874wTD5
-         XGUlwnB/0rIsRNrSF4YDl0X4Z4Q0t0l8Se85Zjcsqh7wFXmoIlRvwPnFCz44QogtIOsS
-         /P6mszvu/886ga0ceAyGpbHi/dfsrbsY6jAmaZzZn8oap5/cnuP+weSjScgU9GWLv5wW
-         5DnjF6zZYKhioUsCtQ5NlBPTpDxf5BnpUylJV0Qycy1ZucGAqK/wpwSoBpnDwDcxTVP6
-         WEtw==
+        d=gmail.com; s=20230601; t=1740826755; x=1741431555; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uLhiVp3LQliQoH1k76FmWy21ZhtvCpRbtnOftP471Y8=;
+        b=VG6wYpJMGR3vlm5OEzRL8Lj+WxWKuq7mu5GX381rfYE1FQrEdIrNCCgKXg+hjryTw2
+         YdZk4bYkCgp125BxwUou3FdoNtVmkeuWUTTGhXXPHiH7W3+/c+y7QBiVO4TDVddJ54vI
+         gB0S+If2OdHtjk+23ggy9h9w8eC1FzOhGo4NjFOO5diTNaAUAO+xLHunIPazo+jqX2fC
+         Q6nx1Vp6aGft3LlihEI7LQQdvdPU274P8EdcF4jlCzGZn5i+NQC5exAnRqq+cCQh0U4r
+         SQeL2Y4c+7DIQg1OKjtz7JsorSOW/qZChZG1UxDNdTRsenjhehM6fgmoYsqNsTjAbzG6
+         48BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740825242; x=1741430042;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xA1krnQtOvhSYNLE949+1YDZm25pKKjYc1RKvWAaHLA=;
-        b=Y1kcoGHPjK4KKpI/zZAQctFlrFmeSO2R1SJ3hcFspun0e2g7PKBIQcoh7IPIXg79+P
-         eBB8/7f0UwWgH7yKEUeWKyCw1gTkOf0n5/8rTqF9MUWQbEm+5WSAz9qE72fRxkiftAaq
-         d5HfccunpWwsE/Kc1Wtnp+vRAi6wjmSM6QGxErWj+AGi1kHarkil9p130m8itQoS013p
-         l92GuWCsy7AZtm3jAY6a77BwmBbG9HDjvYX4RIIoWBTpY6Sx6DluIUva87IFv2cKLNyk
-         WO4R0kp6ldfH/pgw+u+5LWdxU/LQDORLjCGWhJ0Why8IjbD4NSzO9frH65aa3xoKKTAW
-         HQDA==
-X-Gm-Message-State: AOJu0Yw54L5dEFSGHPzZjP6Dcknqv+32GiFERLy4yIzAubb4tQ8RJxQo
-	zk/dRzB9uygy5bqzdsP59CRZRuKUvjth8mJAf3NfyIVN0O45EX1TFFPb8Q==
-X-Gm-Gg: ASbGncv6H2M+PVJS/ggpt298xfYjCTg5NM7H8aIvYB8rwpiKOvS5kf8Uxcmau6urSBC
-	7zyL36gW5tqjnDezsYXC8h0UyZqqr1/RW6QcjrfaoJ05XSrMm7OwRWpy7pdyq7kzNznJldSjV7F
-	mwjf63Qm+ep1HLGXS+4SZbKtMF9gRiD9F4uTwMwjpEZeYukWYflU4UuIK89tOgqTxaDWqBAuIX9
-	zpGWI5nfqSP0ePfS8fto6BccGfE83JFmt+7gVuNiJpPRft0vWgljzgrSZPSLe62IYQh9L3G2KND
-	cDTDmdq8wriGbSNRPP2rG/GMhRAXXLwxLalbKChtlkJCqA==
-X-Google-Smtp-Source: AGHT+IEl5Oylz/MtXO93Yz0Oc8ISivHakJKHU7A4icqDdXbxiZknSRoaMtHBazUO+HnVoLugofkA9Q==
-X-Received: by 2002:a05:600c:1da8:b0:439:9b3f:2de1 with SMTP id 5b1f17b1804b1-43ba6702c10mr59984765e9.15.1740825242428;
-        Sat, 01 Mar 2025 02:34:02 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43b73703f83sm88212355e9.13.2025.03.01.02.34.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 02:34:01 -0800 (PST)
-Message-Id: <ea204679cb0e6e11bb9e034baf1dbf75fea2516a.1740825238.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1897.v2.git.git.1740825238.gitgitgadget@gmail.com>
-References: <pull.1897.git.git.1740489585344.gitgitgadget@gmail.com>
-	<pull.1897.v2.git.git.1740825238.gitgitgadget@gmail.com>
-From: "Scott Chacon via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 01 Mar 2025 10:33:58 +0000
-Subject: [PATCH v2 3/3] bundle-uri: add test for bundle-uri clones with tags
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1740826755; x=1741431555;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uLhiVp3LQliQoH1k76FmWy21ZhtvCpRbtnOftP471Y8=;
+        b=L9aCqSnX2xfD0pcv6k2k2tlyx4OT38J+8GfEq4NEWIIwXBO8N+fhDPDm8TuvbI/nBO
+         9HbnhWF01uZElUsLYnU4B+pmF0TVhKl18E/nB8zg7eKf2873xFbVV59Tus051NLYYz08
+         gpTHQCRuw3Z9tshmHUCWFX6IpZzcS51eW3wxZAgiNLcmsFEaLZ5mfYwxLkksMxCLPTYr
+         n+n9EbO1tLy26aKW55lHjkLO3sBS/MeHXHnL7dykFphX+k7nvTDbl1WRKikU13uP8HiJ
+         kKE+Mtl5tYan99eyr/aSx9Z9LBADK5LeYgT4D8j1VEAKbKXpwdL1LYzVsgfH8JROzPTq
+         S66A==
+X-Gm-Message-State: AOJu0YwwKAznor4ds9qQRpF8+bxUA2chKvwlxGBGg+kEkwiS/2N6kNFn
+	LYC28m9dpbwP9FJhsIH8dqtKt/suR/9ei0mLtkoD/P9Gj9gin0PNP3Kp5bDQutQ=
+X-Gm-Gg: ASbGncvRGkvDKjry/qYY4Z+sXXLfzOQfzCA5LKKJom+nKeq+dSXJjgkaCIPmJEQQwYi
+	pw6oZ17NVFKxfk7xLlJ5hAlTsxeVsDA3LNMyNEfDiAA5nRSlvElHXW/3wG2vEphMj2n2cdlpIUy
+	1SL6kNtMMAL2GrHmqzD2E6qh2TQrSXndFm6dOOnKFwlDdCEUTOZjWXwh+RxuzNiB2SCzIQbNUAq
+	ll9mHCGB7faoU4u0yXq3Jo4QD/CIyWIdQBmu/EsQN9qg/KZHB1VFvD+tJNVnKH9547dvkYCJ9sU
+	MJr8T8iag1a1xS+3abHmjAFYus+YDL0UUf0+lIKzlUd1GvTb7eZl849Sv4dMtJLXyMeR9hpLVna
+	NW1g=
+X-Google-Smtp-Source: AGHT+IFihrP5HxazeMsLg67qLF06vRsm4+mng1KZgItiXNZRK82vSLB+1iPDdtMDKex1n1Jd+ykxng==
+X-Received: by 2002:a17:903:98f:b0:215:9894:5679 with SMTP id d9443c01a7336-22368ac4102mr107912415ad.0.1740826755358;
+        Sat, 01 Mar 2025 02:59:15 -0800 (PST)
+Received: from localhost.localdomain ([139.167.143.182])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223504c5cf4sm46156505ad.130.2025.03.01.02.59.13
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 01 Mar 2025 02:59:15 -0800 (PST)
+From: Mahendra Dani <danimahendra0904@gmail.com>
+To: git@vger.kernel.org
+Cc: Mahendra Dani <danimahendra0904@gmail.com>
+Subject: [GSOC][PATCH 0/1] t1403: prefer test_path_exists helper function
+Date: Sat,  1 Mar 2025 16:28:37 +0530
+Message-Id: <20250301105838.1481-1-danimahendra0904@gmail.com>
+X-Mailer: git-send-email 2.39.2 (Apple Git-143)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>,
-    Scott Chacon <schacon@gmail.com>,
-    Scott Chacon <schacon@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Scott Chacon <schacon@gmail.com>
+test -e does not provide a nice error message when we hit test 
+failures, so use test_path_exists instead.
 
-The change to the bundle-uri unbundling refspec now includes tags, so this
-adds a simple test to make sure that tags in a bundle are properly added to
-the cloned repository and will be included in ref negotiation with the
-subsequent fetch.
+Mahendra Dani (1):
+  t1403: prefer test_path_exists helper function
 
-Signed-off-by: Scott Chacon <schacon@gmail.com>
----
- t/t5558-clone-bundle-uri.sh | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ t/t1403-show-ref.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-index 33a7009e9a2..b1276ba295c 100755
---- a/t/t5558-clone-bundle-uri.sh
-+++ b/t/t5558-clone-bundle-uri.sh
-@@ -107,6 +107,37 @@ test_expect_success 'clone with file:// bundle' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'create bundle with tags' '
-+	git init clone-from-tags &&
-+	(
-+		cd clone-from-tags &&
-+		git checkout -b base &&
-+		git checkout -b topic &&
-+
-+		test_commit A &&
-+		git tag tag-A &&
-+		git checkout -b base &&
-+		git branch -d topic &&
-+		test_commit B &&
-+
-+		git bundle create ALL.bundle --all &&
-+		git bundle verify ALL.bundle
-+	)
-+'
-+
-+test_expect_success 'clone with tags bundle' '
-+	git clone --bundle-uri="clone-from-tags/ALL.bundle" \
-+		clone-from-tags clone-tags-path &&
-+	git -C clone-tags-path for-each-ref --format="%(refname)" >refs &&
-+	grep "refs/bundles/tags/" refs >actual &&
-+	cat >expect <<-\EOF &&
-+	refs/bundles/tags/A
-+	refs/bundles/tags/B
-+	refs/bundles/tags/tag-A
-+	EOF
-+	test_cmp expect actual
-+'
-+
- # To get interesting tests for bundle lists, we need to construct a
- # somewhat-interesting commit history.
- #
+
+base-commit: cb0ae672aeabefca9704477ea8018ac94f523970
 -- 
-gitgitgadget
+2.39.2 (Apple Git-143)
+
