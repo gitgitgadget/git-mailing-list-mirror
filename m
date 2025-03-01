@@ -1,124 +1,120 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA421487D1
-	for <git@vger.kernel.org>; Sat,  1 Mar 2025 15:56:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0081157A6B
+	for <git@vger.kernel.org>; Sat,  1 Mar 2025 18:02:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740844614; cv=none; b=FMtXYOPK84ABN7XGIjCQLVImMb4rA2E3XxlIMW/yfGzz9kXTN0YYlonJC707WhqUnyyltvaAJEp/yJJaaim4B9LfASW/1Lc7Y8soHnX/GmD+NtD7AOR7dIsa45WstJiDYMhppoL3QojidOJYgwM6vAuR5HkOLOeRpDn8bwk/f3Y=
+	t=1740852175; cv=none; b=IJqdTz6NFmLQThm8sPh8XT3KSj5bOqI/WNiwsFNUqbxHlOV6FcmEIStkM67s7614cGezc+a9bVJJHuWFhfEsHiFctKXd66EukgWbWHfx0Klw7f62+FUuQXznSasuN+N2NVLHtrgt7L0cqlNcifoXVNNf526VYR7A9FVH9sfDSoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740844614; c=relaxed/simple;
-	bh=kVzDS6GkbPNzJcsP614Lrnki6JfHQsPmOflpTCQrwoQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=N2qCrQULj+j4ANvVdxF57RXpyzONLY3TltuGiLhsKPSd4lVwN08p2VOnOk4TS0H2oK63ZkFoASgt/PJBduXiCXleSErtDPJhGQeUWFY2yBBQMx9jdL8mAXe8nSIaH4g5NiT/WqNXgbyfQuq3eBwbmRc54XjqUTkyXuwXXfaJpsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=S/z9jgeS; arc=none smtp.client-ip=212.227.15.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1740852175; c=relaxed/simple;
+	bh=HCwuW31fnffuZhBB9OGRcq8LqDdyHUMpdkrhxFWrfiE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cNMlrnwoGpKxZd9OSx8VCNE6XY4/drO+Esuf6Yd/KRZ1ws4K6uTMwHGwOiLFpKWsQ6fM+wnsUKrwVKOZ2esAV++MqJNsnBuRj6nx9xEBAVjo/9RSv0yT6Fmd3eEvQi2IXnachj2eWxGquXY9GDBF50XzLy2cdHDaWDI9a5B3ffc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eNFEaWu0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MwMxCCNh; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="S/z9jgeS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1740844609; x=1741449409; i=l.s.r@web.de;
-	bh=JSux5AnkjEqEJejKszVHxIHW34nNWt3LwO6zrV1+80I=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=S/z9jgeS9Lqfr87P2f5WH40LRpyAWednF65Agzu91ccWfX9bsyc9vmmzI7SRps+2
-	 x6fjKG2EEDtDDVp1IhlPPu2B3+cSsiB7OenzsdzZTO+PvCAup/19a46udQ2u1nCiJ
-	 +YsmEvV7gALO0NPDbyPIV+z8sGn/SWfOUenwI1AT2G+9RrL+kwL4Ck0IMVtTphE8R
-	 dodYsAGeIZNVuJKb7cqJN0vnp77F0H/LHAFTBkfPiWC7xv48OUIwtG7fi240oirmB
-	 yuMjuewjmbuf6dToqGVR+v7of+AwnSIc8XBh1jc7C4pao/xo22LUC7fDA8UUwfj0j
-	 uGgn2UV70Tl7AE2XWg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.144.81]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Ml46y-1tROjl0kGK-00qgf9; Sat, 01
- Mar 2025 16:56:49 +0100
-Message-ID: <70bab132-1107-4946-8ef9-24c6b0f9d193@web.de>
-Date: Sat, 1 Mar 2025 16:56:48 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eNFEaWu0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MwMxCCNh"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 90A5E11400FD;
+	Sat,  1 Mar 2025 13:02:51 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Sat, 01 Mar 2025 13:02:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740852171; x=1740938571; bh=eNFnE6TUJ5
+	gHZGSaLAzssTq66ptGJq/txPczRvGG+I0=; b=eNFEaWu0yULGsQwyJFw644B1xB
+	hHcYiMebHS+KIVRNqcHTRj+BgstfoofvRNAnrlEplkIlpuEzGz9noTPmX8BLv+6d
+	kuEGGod/gyHqNx5XXd0ryLWDg7Gs+BYdDKDPOyvQayOQ8q8t3XVporjGib33IAox
+	SKr90BG2DoJjk+8cC3QbFW07bDFWNxg+ZWoNTYpmoh1JvmGF8vHuO05yDpDsNuhM
+	lng6i6aKCb5aeJBoibWquLwroOlUOjZuN1IL0f42rzkAOquOAhvL/hlM4pFFFl+A
+	2GBEwurzkLHQanIHIXvA6hy9fFt0xL90R3vltVqin5UhTm0IHZdShARQnEow==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740852171; x=1740938571; bh=eNFnE6TUJ5gHZGSaLAzssTq66ptGJq/txPc
+	zRvGG+I0=; b=MwMxCCNh6JmW+bfFg61goVPhNE0nJwjX+VJk3MJTQST5zzwYzIg
+	6Rf9ipQOKwcCRpuFVJRzvkeafU0BM0n003N+mpbmtqXEWMIXLAU99rjh14LWV+xy
+	4xIk0kX6dk1XVFPuBK69t8SqPpdQ6/bhQ9Af6ZHVCruGPPCtThs75Cs1GaHB4XjX
+	VTHK06KRhR0tO7Os7O//24J9hLkR44PFIkUAK2pxLLH19/0vd/4+SKjb6U+o1dk9
+	GeizYO5YYB/l4BMSSix7H1IsILfCXGUcVgxnIyJuyd+6A5WdAOInLE+J3j174vAe
+	l7zrM6pvu//xhypTQut9eu0Ev8DsAJsxckA==
+X-ME-Sender: <xms:y0vDZ6CPHUiErDbFBlfbOfOA0cHZYim5WabaloRmWhHO4rFq_hPS_A>
+    <xme:y0vDZ0gDFrOcOXmsCkWIRnkxqfGSMOuzXKv-nwZmdbUs0SobAAKDpHHDh7WHkTSAh
+    ZqL06Jn6oO6J6GlzA>
+X-ME-Received: <xmr:y0vDZ9ltEnXSXTf_EjeB4EdBQhFWzJ4GrgIZqAsk0NGZ0W9NqlugBjKlR4GiewPBokKFLQTt9RWtwtaNMecUUJpzx7tPGI4lc5Gt>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelfeeljecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeevleelhffgudfgtefgueetgedvffevgfev
+    tefgteehgeekhfefueeviefghfegueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpd
+    hgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhope
+    ehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    hpshesphhkshdrihhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohht
+    hhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:y0vDZ4wneR6p3nUS2ZD7bkFQIA1hkOgDyDRzd9TTED0zyabvtHrGog>
+    <xmx:y0vDZ_RiceyGkOqgW32yjaEJO1VR-Gz51jX7ARgKpPyPYfL_KL8zqg>
+    <xmx:y0vDZzb2BN0dpOBpsNC2EZ0Iv6t-ie2peD-dCngKDwWKX5lzIsk6tA>
+    <xmx:y0vDZ4TqttDY4nWPQDSVvpmikT27R3osVWpMwtpNiNjWPr_G-klOfA>
+    <xmx:y0vDZ-Ecjko8A4O_hYgtm09tNIkv2DnWXqAW36bKQwPyi8DgLrjgRluT>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 1 Mar 2025 13:02:50 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Todd Zullinger <tmz@pobox.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  "brian m.
+ carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 0/3] doc: txt -> adoc fixes
+In-Reply-To: <20250301153607.95746-1-tmz@pobox.com> (Todd Zullinger's message
+	of "Sat, 1 Mar 2025 10:36:01 -0500")
+References: <20250301153607.95746-1-tmz@pobox.com>
+Date: Sat, 01 Mar 2025 10:02:49 -0800
+Message-ID: <xmqqv7sszl12.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Subject: Null pointer dereference vulnerability in commit.c
-To: H Z <shiyuyuranzh@gmail.com>, git@vger.kernel.org
-References: <CAAJd+fZUEo15C29KSk61-P+7x=bjhgQ5iDTdbqV++NY4+iGchA@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CAAJd+fZUEo15C29KSk61-P+7x=bjhgQ5iDTdbqV++NY4+iGchA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:MYL/AHEbna+UT/OKjlmRYySifT69wolkJpBiufz7/7L0CikxCsQ
- jNF+iBnbSiBmlnj+UXsOU+6XN/biwNAFmxNiCg5wq8euc+KMEgS+I7CXFRlJEcRVdeYhnOq
- F3PWZ1kRDXTonEAU+8j/cHKIWdXhOFaiDG48uC7kAhFX/P0SUFvk7gq8qZ12lJYBHyaQBHm
- MU9RQ3XN0W91B+ZlAdUhQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:afPSHtikPTc=;cSOlsddAYLmujznrFa7nQugOnQB
- v96Pw7A13z0wAhc21zFhDoWR8Rz1zr4xhzr6MxToMmvTyz0KDXjIGVu4IY+5cSjAC08XZPQrn
- OF7aO8FRzQJZX30ojxn6lEh8cMUXWoGx6taA9jS/lgJo3UVsol6BMEORnTygClTvsJTsdjbKx
- LuTQpkWmMSsqdVhiPj16sVy2SqdTouHLbe/GUBbG1MvATzpeR2VKHwFMRhP8TVrgySl1JaGAT
- iuGxFbxV+ESI5SO9e/vXkwz44n/kQ+255PsURyGwWL8tdvmMV/cJifqUDYMdR7os3weji7qUr
- mDV+5iHOL5CyOhaCnjT8pwrXKG+e/vzk0jEQWSqQIjOHB7UVSmIctNdYqO/wjz1uDhngVYpdS
- o8f6/AZz6fyzUs10kiaIAZ1EfS3KL1ZQAgttSrHm40r38hBdyrG4CiofmXs579U3nt9kA1G88
- XVWoKMVCdJqiZySSHJzlKyPvv2YytnjMzsrfwvNuxbwYpaleQab7qTxuRnot01ArYWLvtJV8B
- uJv1jq81KU6jYsnusQOo+fJXLFKbtsO6GMcipKfu8CyyzZNq/twyYi2W/MhbVGqt7/AEkArNr
- 1u+x7J6x4jMGoqh5ptVeYpJSMQvO8q6o7g2u+IVkvxXzCxMf2TPjqf4p+H6L9WCEzx0lvOLbw
- Yw9nYyy/ir403I7PwyV2es13T9vTM4OLXDb4DP6+LQhd/1vkcDicO/K/lQMYtFjGOgITwYSYy
- Saa8StSmH5qJJDMNB+tvRQALH2VJvog3+LZ0N4lYkv7VUyAYwa//93gsl2YhDpSeoS+zlCAQR
- jeNhIaSG4jIRkp0y4BDxevdLrgHsbDuFwJLRMkxjnLiM/I1ArlHOUNOy3VIY4L4Wa3KLvMcC5
- u4xrxkcdDwHJjck9Queq6c0R8o1G3tDyD6lqkirJ7PAKf7MF2QV66e74Tpu5YBh7M6Vx1nO6B
- SgU919zljfLC51HCZ1FQScseHQH5lLdym2fYIyv61gCqKpFmaIeEumC8vsiIE+r7lji4escG3
- sgA9n48SYbctcpGXssneUr825tefEU4kcZX0fJEB2vXoRBhEXI2d22IxhMtQ6u4Lr31LDhcuO
- 7rJJ7OPttwp/LQTd3grBCWhiQ7d0fKONeAWW5udrWoqhpwKjo7AE6F8zUjlAwrVvtJwskh+dk
- yI/IiVhkLhliJ8CHpSS4elX/mHDmdtRn3UQ1fBrokzngAGz0tBUd4RigJDHqY9TBzpjGmOn9L
- KjIUz5xlaDY5Ghl/u2PY5w0+Grmfx1qsc2ebTWb3526N/iP6p4mn+JZ5QugPFUXNUny5GYpaE
- Yv3BpyuKwrMHn+Gm84JLrxRQ+LwVvrX3daTpn+utnI/1iJeYo382z0mWDcupPKpQtcmIcWZf6
- LD/1Lv8vBdJTDCZZvPs2rqM5nmDk/FzPPuRmiuZG81DXsGeHKdtWTHPMbK
+Content-Type: text/plain
 
-Am 01.03.25 um 08:33 schrieb H Z:
-> Hi, I am a static analysis tool developer, and I have found a
-> potential null pointer dereference bug in commit.c and would like to
-> report it to the maintainers. This vulnerability has the potential to
-> cause unexpected application behavior, crashes. Can you please help me
-> check it? Thank you for your effort and patience!
+Todd Zullinger <tmz@pobox.com> writes:
+
+> This series is now based on ps/meson-contrib-bits.
 >
-> Below is the execution sequence of the program that may produce the
-> null pointer dereference bug.
+> Changes in v2:
+>   - build on ps/meson-contrib-bits
+>   - include changes to contrib/contacts/meson.build
 >
-> First, in the file commit.c, the function pop_commit may assign item
-> to NULL at line 806 if the conditional judgement is false.
-
-True.
-
-> Second, in file commit.c, function pop_most_recent_commit calls
-> function pop_commit at line 748, which may cause variable ret to be
-> assigned NULL.
-
-Technically true, but not quite.  I understand that this is effectively
-a trap for analysis tools, unfortunately.  pop_commit() handles empty
-commit_lists, while pop_most_recent_commit() doesn't, despite its
-similar name.  All three callers of the latter make sure to pass only
-pointers to non-NULL commit_lists, so we're actually safe.
-
-> Finally, ret is dereferenced on line 749, leading to a null pointer
-> dereference vulnerability.
+> v1: https://lore.kernel.org/git/20250228034713.203461-1-tmz@pobox.com/
+> CI: https://github.com/tmzullinger/git/actions/runs/13605720163
 >
-> However, in the file merge-ort.c, the function merge_ort_internal
-> calls the function pop_commit on line 5176, and then makes a judgement
-> on whether the return value of pop_commit is NULL or not on line 5177,
-> which suggests that it is indeed possible for pop_commit to return
-> NULL.
+> Todd Zullinger (3):
+>   doc: update howto-index.sh for .adoc extensions
+>   contrib/contacts: rename .txt to .adoc
+>   contrib/subtree: rename .txt to .adoc
+>
+>  Documentation/howto/howto-index.sh                 | 14 +++++++-------
+>  contrib/contacts/Makefile                          |  2 +-
+>  .../{git-contacts.txt => git-contacts.adoc}        |  0
+>  contrib/contacts/meson.build                       |  4 ++--
+>  contrib/subtree/Makefile                           |  2 +-
+>  .../subtree/{git-subtree.txt => git-subtree.adoc}  |  0
+>  contrib/subtree/meson.build                        |  4 ++--
+>  7 files changed, 13 insertions(+), 13 deletions(-)
+>  rename contrib/contacts/{git-contacts.txt => git-contacts.adoc} (100%)
+>  rename contrib/subtree/{git-subtree.txt => git-subtree.adoc} (100%)
 
-True.
+All looking good.  Will queue.
 
-Most callers of pop_commit() check for NULL, so that function could
-stop checking as well, to slightly increase efficiency and simplicity.
-We would "just" have to audit every caller and make sure they are all
-ready for that.  The only ones that need modifying seem to be in
-pack-bitmap-write.c and revision.c.  Is it worth it?  Not sure.
-
-Ren=C3=A9
-
+Thanks.
