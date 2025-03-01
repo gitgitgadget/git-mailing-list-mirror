@@ -1,171 +1,132 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B634C1CD205
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 23:57:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BED635
+	for <git@vger.kernel.org>; Sat,  1 Mar 2025 00:12:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740787030; cv=none; b=Ny8Ho6tkfRf+EogwqmVK4/L7FOdMPffbM5+medZcXyDaEHKDy/vJngAG/pVeAN6Aj7zcGvuwiR2YSj/zYD/AZq8CK4Git8NTQrFbU3VAv9qeWeb72hIlNBdnVGHCgOQAbYyXTMn8Pa1FwFaAfPjwXYzWukhfqqEU+zeQaU7RRWs=
+	t=1740787973; cv=none; b=V1kZYHklZIhLa8vCl6fyB8jVP+QzxxIsIcfo6MY8RelIvTh7V/jjz03ha038JECbuONjS3ob1TKmUefi6wkyiueYP2Q9coLrvnre9xiB/FsqCdFJS1kWNY59geaGVUB00K/QERyJr1sYhqkh8fk6pomvmHuKRpJwLxpNpZAO/9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740787030; c=relaxed/simple;
-	bh=xS82FGg+QTzLOng6F1yg3xafCNSwkgtvzZJl0aDhxCY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IpZ2WSRY5HRYlk98ztueX0F2Drlrz3YLxBzthUbs6YykSmycjV0/HfMdqfd39SwaYmRTXu5tQMgpbMH4DyyFZRZj5p3ec+WJB4itMujDtM58M4LWU+iagTmH1IFPMWR17FrPkdmGrETAmnFQjQzUmsemNRU85G2nj3il5cSiOwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X6HW9pEL; arc=none smtp.client-ip=209.85.222.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740787973; c=relaxed/simple;
+	bh=HSnnD8u+XSCoQ15NdTUddcjEvDF+dDNhGlJ+qUud/eY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WTtAMZnclrouUpYNuvev53O5iTqPW2hRjM06Cyv/0dPtSFFk9K5PhlWTwTYbyALHY8DwozVe449rqtBrQlD4Ds4rDJlhHbNRXgaR+qKohoShfZIzHvX9z++V7cuwF55h66qIKsFHj2UZDahjNFhxm9EK6XR9yW8ELz0lugBpsPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ylyfa9uO; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X6HW9pEL"
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-86b3ed5fde5so1960466241.0
-        for <git@vger.kernel.org>; Fri, 28 Feb 2025 15:57:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ylyfa9uO"
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e60ad903382so1384855276.0
+        for <git@vger.kernel.org>; Fri, 28 Feb 2025 16:12:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740787027; x=1741391827; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K2pw/2DHzXoGUhFui4X+H5VhsKj6pETHAJr7jHrcwj8=;
-        b=X6HW9pELvlanXmpf3VR+x40sGOQ0NimkZrWv4YRWh5FlJv5+vAdIgRlueN2v9W7JOk
-         nKb7zAJCTsIcDGuvMLV58sPU81u0rnCnlXAR2ehLuKkFoD6sgULQ0zaWMZ9VCn2Ug0Ck
-         ariuqdlK7u3xY6dNEU+8VTaMQothwKLobCIkgnODZm+/UKr502c4JZGNKrMKtcdRoCCE
-         GyjZe9QcqgvnlvZxHDu1FdirYYSH/6vQGFrRmZ4rMz8CqeN8qN//tZTVghdrK/O4Wq7X
-         8R8CsYeWrz/sE1WExLySusfmWQp2kv+h5UsqhGD8oQVALqSSBkEbe+m2VOAxntCfoMPr
-         x7EA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740787970; x=1741392770; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vH9H7rNQ0+h26X29s80a8CViH0M8O3tW66R4sp701bo=;
+        b=ylyfa9uOcBwib/KUsfpRr+6PkOgHJQJwYEsbpxZmZkV/7anTRdQsds2kVmbTb3mPy2
+         coQ4RK+KiqKnDxBwnp8r1AY18szDomzOuXHOKw9uzKYxvFNukOLA+Knv0XwTMs8RIOcl
+         1kwlu42WczLL+lh7E/lOy6Od+BjytDcUotZwMY8WLPH9CfVO4SIbhDibOKwLP0witv8e
+         QmPtDkXF/9VmvqVzgezh6y7L6MB8/ToC2jiUMTbYuLyWiYa1qF/OP7SOnzKiOb1fVKzp
+         UYycXl8OrkZLfmQ6HR0z9j4Cpno0UNrzYlnR3GnaXbTZ8OlysvxxCRvr6+wnT+YM0Iwq
+         7ycg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740787027; x=1741391827;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=K2pw/2DHzXoGUhFui4X+H5VhsKj6pETHAJr7jHrcwj8=;
-        b=iaWciGd5DhydE0tJZehYN4N82HxcAqVFDVGGDk/JlXu45Qe/5dEb9jX8EeOCmde/6m
-         QYl+0HaYCOmd8VTYNOohUuaolwEASX/YMIuVn0qS2gsgcxMrzV4o6FRsBv7R7UovEe2a
-         5anS5cT1NaSNVcIA+zLNzFf9I47TFSu05kwf0F5oFevn60z1nUIZznMzYlexTlHD4mNc
-         mLJUZOz6auaAPSl0GjQQYLDpPlreBO3dL2jIAn9rE+wCmBWJhFzvv/185dL6ghLsdkO2
-         I4GK5za/V/pzDi/RKEBgaj6XKfqAKMNwwPuGKiB/sXoovALXytA4aj8FNPz6hoh+qn43
-         L7Gg==
-X-Forwarded-Encrypted: i=1; AJvYcCUOPTXjcPr1unGqfCwDbWRwA3xrXKGl2OKgSZaY2oYJ3Ij3NZQpCJ5aLosdTnzAsMXTTh8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwVM7k7/6Z0NPxVxLn3hVQcLWzGbt3mNObB7cSC4gED5wX8aSfL
-	YGrSE89KGzjrl3Mb8yfKn6DvleIGF+dc33f8JXU4TPa4FY/8GzPtbW5o0UE+f+WqTG63v7xNH++
-	6hlvjK15QROMGxBaZXegXwBtu+34=
-X-Gm-Gg: ASbGncvsiWLa9OHyF/EIzh7/tfYAFNC5dE9hyPrNORifuQFktQx2+huBiNfkrIVHVkB
-	UetuZvAPZqTqqcFN0yHzVKecLBUXbGg0WvsJacrQtsJz6hkYAwq8UkVEhWdnFhXoug+pfz2QQRo
-	azxtnRVus5DfNAaJ/whHLTlehW/Q==
-X-Google-Smtp-Source: AGHT+IHHK+d5GRXnBU7v0CSqFxDHdjSCjtO3C+OFgHkEoW8Xz1k0fa7Rtl6P/TM3QSH5wo/Hwq7Nl1HNarc8OC/dbyA=
-X-Received: by 2002:a05:6102:5549:b0:4b3:fee3:2820 with SMTP id
- ada2fe7eead31-4c0441c83e1mr3915641137.9.1740787027410; Fri, 28 Feb 2025
- 15:57:07 -0800 (PST)
+        d=1e100.net; s=20230601; t=1740787970; x=1741392770;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vH9H7rNQ0+h26X29s80a8CViH0M8O3tW66R4sp701bo=;
+        b=XLxKylBsjX0uHwlATpAvl6AmlaNtlI+citqHOkKtBiCr/MHQnASSG6kW01p/CQuUQT
+         bt+Z2KOyeSubJFvpWt2M+M5mQzlpI8Zcscc7bs7v5sHbrevkgf/Oh0r1QlCNjfuiiruD
+         JAsw4OVf/rpM5Yf6Bkh7520pP7Voqqy0gFTJknoVp8y+hZ6ewz1Xr/5UEtLONRqmDXCC
+         bPliJ5/hxc6SKmOmW0mHOp9F6AApNVSzN1aH9kkv9s2fgfO/YTOkt+cJM/cIvtC8JHOL
+         kw9D4lxbP02rU1zBhFNnqEm6Lrz+Tgh3n69W3dgqlSOhEAf6n44M9NF5rUwg9HvOXM45
+         UOzQ==
+X-Gm-Message-State: AOJu0YzvOpUgxBW1JK5wqi3R0kbJQc2YGBbzEzFeeOcQfC5qrAzo2+QR
+	PdChGycOQAMamyVwx745UP7S9jDkpZLt0D2cHkV36HHdkad4ePM3rp1l3il2D4E=
+X-Gm-Gg: ASbGnctDgUlv55sMDteEPUxK274SZufmUbpUQ/GhK5kud0Ck23H9/ibD+nSg6VWd9QF
+	dZqu84Y8ivYPpVVqyaQ8AlBtGS+U0kpqNN4ewScBsY1EBVc0P5nanddkWMpN8kyJtku0Li8F/2b
+	e6TEJu6lb0zW75JuU0Fym2W1Q22s5dhnqpHkiAfbi0lYETygIufq2lzJlvCkiVMHfgbH7lV073F
+	GalWXzWjs/y7qhTBHYwEETS6eVpH1Sb4uh0rtINz7kHLa7yC3PZ0pJBXsKHwT6PelI9OsdjK3ny
+	00oPiLc835AU7oRmXmSPHnLIV4VKN182qKXzJls9b4bOIayfcbX0pfdRgpwZLQT+Bn6IlMILCOs
+	w11eA50pZz5FZpxWh
+X-Google-Smtp-Source: AGHT+IHfBdk8kopwYmxsJU1LkfJi2YVADZDFyibbcZwHq4yjdL22FURLif2oR8+cSydmiGsXyywuYA==
+X-Received: by 2002:a05:690c:7484:b0:6e9:e097:718c with SMTP id 00721157ae682-6fd4a088fb2mr86679347b3.6.1740787970066;
+        Fri, 28 Feb 2025 16:12:50 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fd3cb7e155sm9530167b3.85.2025.02.28.16.12.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Feb 2025 16:12:49 -0800 (PST)
+Date: Fri, 28 Feb 2025 19:12:43 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 04/13] pack-bitmap.c: teach `bitmap_for_commit()`
+ about incremental MIDXs
+Message-ID: <Z8JQ+1mg/iYe7OCw@nand.local>
+References: <cover.1723755667.git.me@ttaylorr.com>
+ <cover.1732054032.git.me@ttaylorr.com>
+ <16259667fb4d7534458bb458afd6cefe032c3b6f.1732054032.git.me@ttaylorr.com>
+ <Z8GJb4y7yui7rvxZ@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250227175456.1129840-1-usmanakinyemi202@gmail.com>
- <4e21312d-0d9a-404a-a2e0-0e2fcc681ad6@gmail.com> <xmqqbjum2ayc.fsf@gitster.g>
-In-Reply-To: <xmqqbjum2ayc.fsf@gitster.g>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Sat, 1 Mar 2025 05:26:55 +0530
-X-Gm-Features: AQ5f1JrAsMAqsh2ty5jEKYytbJxZ6WeXbLjMTwDpPvwCo38wajteDm0UAAREYfc
-Message-ID: <CAPSxiM-fzKUtvvf-DB2=VaGznr9utyb6zaKU5onxpy49KPChUA@mail.gmail.com>
-Subject: Re: [RFC PATCH] config: teach `repo_config()` to allow `repo` to be NULL
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
-	christian.couder@gmail.com, ps@pks.im, shejialuo@gmail.com, 
-	johncai86@gmail.com, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z8GJb4y7yui7rvxZ@pks.im>
 
-On Fri, Feb 28, 2025 at 11:44=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
+On Fri, Feb 28, 2025 at 11:01:19AM +0100, Patrick Steinhardt wrote:
+> On Tue, Nov 19, 2024 at 05:07:29PM -0500, Taylor Blau wrote:
+> > diff --git a/pack-bitmap.c b/pack-bitmap.c
+> > index 41675a69f68..e3fdcf8a01a 100644
+> > --- a/pack-bitmap.c
+> > +++ b/pack-bitmap.c
+> > @@ -946,18 +946,21 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+> >  struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
+> >  				      struct commit *commit)
+> >  {
+> > -	khiter_t hash_pos = kh_get_oid_map(bitmap_git->bitmaps,
+> > -					   commit->object.oid);
+> > +	khiter_t hash_pos;
+> > +	if (!bitmap_git)
+> > +		return NULL;
+> > +
+> > +	hash_pos = kh_get_oid_map(bitmap_git->bitmaps, commit->object.oid);
+> >  	if (hash_pos >= kh_end(bitmap_git->bitmaps)) {
+> >  		struct stored_bitmap *bitmap = NULL;
+> >  		if (!bitmap_git->table_lookup)
+> > -			return NULL;
+> > +			return bitmap_for_commit(bitmap_git->base, commit);
+> >
+> >  		/* this is a fairly hot codepath - no trace2_region please */
+> >  		/* NEEDSWORK: cache misses aren't recorded */
+> >  		bitmap = lazy_bitmap_for_commit(bitmap_git, commit);
+> >  		if (!bitmap)
+> > -			return NULL;
+> > +			return bitmap_for_commit(bitmap_git->base, commit);
+> >  		return lookup_stored_bitmap(bitmap);
+> >  	}
+> >  	return lookup_stored_bitmap(kh_value(bitmap_git->bitmaps, hash_pos));
 >
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
-> > Thanks for working on this, I like the idea but looking at
-> > read_very_early_config() it sets "opts.ignore_cmdline =3D 1" which mean=
-s
-> > that this will ignore any config options passed with "git -c
-> > key=3Dvalue". I think it would be better to call config_with_options()
-> > with the appropriate options directly.
->
-> hmph.
->
-Hello,
-> > For this to work all the commands that run outside a repository would
-> > have to read the config via repo_config(), and take care not to call
-> > any of the repo_config_get_*() functions. They mostly seem to do that
-> > but "git for-each-repo" calls repo_config_get_string_multi() - it
-> > should be easy enough to convert that to a callback when that command
-> > is updated to stop using "the_repository"
->
-> Well the only reason why we want to allow NULL in repo_config()
-> calls is to accomodate this pattern, if I am reading the discussion
-> correctly.
->
->  * A command that wants to run in a repository (i.e. marked with
->    RUN_SETUP, not RUN_SETUP_GENTLY) is invoked with "-h" and outside
->    the repository.
->
->  * cmd_foo() is called with "-h" option in argv[]; repo is set to
->    NULL.
->
->  * The typical start-up sequence for any builtin cmd_foo() is to
->    read the configuration and then call parseopt, and the latter is
->    how "git foo -h" is handled.
->
->  * Historically, the "call the configuration" was done by making a
->    call to git_config(), which used the_repository [*].  But recent
->    trend is to use the repo passed down to cmd_foo() instead, and
->    replacing git_config() with repo_config() blindly would break
->    unless repo_config() is prepared to take NULL.
-Yeah, these all are true. Also, "git for-each-repo" and many other commands
-seems not to make use of rep_config() or git_config(). I think this change =
-and
-functions are good for command marked RUN_SETUP since their behaviour
-is pretty straight forward. I think, we might want to use another approach =
-for
-other commands that are not marked RUN_SETUP if we decide to remove
-the_repository from them.
->
-> So, any command that requires to be in a repository would not go
-> beyond its call to parse_options() when called with repo=3D=3DNULL.
-> Either it would have already died inside getup_git_directory() when
-> "-h" is not given, or parse_options() would have gave the usage
-> string and exited.
->
-> For commands like "for-each-repo" that itself wants to be able to
-> run outside a repository by marking itself as RUN_SETUP_GENTLY,
-> they do have to update the code after the parse_options()
-> themselves, of course, but I view it as a separate issue from this
-> "we make git_config() as the first thing in everything---we want
-> to replace it with repo_config()" patch.
->
-> Thanks.
->
->
-> [Footnote]
->
->  * I personally think that it is an unhealthy fundamentalism to try
->    eradicating the use of the_repository even from the top-level
->    calls of cmd_foo() functions, which are like traditional main().
->
->    They are never meant to be reused as a subroutine that can work
->    on an arbitrary repository from any arbitrary codepaths.  The
->    special repository instance, the_repository, is set up to be
->    suitable to work in the current repository, if exists, and gives
->    a reasonable fallback behaviour when we are not inside a
->    repository, which behaves exactly how we want it to behave there.
->
->    The more library-ish helper functions (I am talking about
->    distinction between what is in say builtin/diff.c and diff-lib.c
->    here and referring to the latter) are totally different matter,
->    of course.  They are meant to be reused and they should be made
->    to work on an arbitrary repository from arbitrary codepaths,
->    hence reducing the reliance on the_repository is a good goal for
->    them to aim at.
-Yeah, I understand. I believe these change we are trying to make to
-builtin commands that are marked RUN_SETUP is a good goal due to how
-they work, what  do you think ?
+> One of the things that worries me a bit is that by recursing, we
+> essentially are bound in the depth of MIDX layers as we may otherwise
+> bust the stack. Not that I expect us to typically have thousands of
+> layers, but if there ever was a bug this may fail in bad ways.
 
-Also, about the testing, I was thinking of using the clar framework or the
-test-tool, do you have any in mind ?
+I think it's a valid concern, but in practice I suspect we are unlikely
+to run into it. If we have enough MIDX layers to blow the stack, we
+probably have much bigger problems to worry about ;-).
 
-Thank you.
+> I already asked this for a previous commit, but what is the current
+> state regarding compaction of the layers? Do we need to be worried about
+> this or do we already know to keep things limited in general?
+
+I mentioned upthread, but briefly: we don't compact MIDX layers today,
+but the design is such that it is possible (and planned) to do in the
+future (part three of this multi-series thing).
+
+Thanks,
+Taylor
