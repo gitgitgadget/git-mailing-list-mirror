@@ -1,108 +1,247 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1EB15574E
-	for <git@vger.kernel.org>; Sat,  1 Mar 2025 19:45:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FB2179BC
+	for <git@vger.kernel.org>; Sat,  1 Mar 2025 21:07:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740858337; cv=none; b=ScSd8fZvUKecuczdfHtlSjMhWGpqxY3DqfPhU9rslR69DOmC2Ekrml7wDX236RVYoiCReMuP2ER9nWfBVJCZUtKU/zDEbSYP+iCOfHc6OgxD5yuPePEqjvhbqX5NF1bWjGvBtlFOdcs2Mw21KcjnwjFcII+ntWVmlCtAhze1enI=
+	t=1740863248; cv=none; b=Rc41olE3iYrkjQjTHm+XlEv1y5GyyKXgGzFmotIrAoM2OWvgp+pATYUKDnnApaXge/2vfJ5l77HtUKU65Ww8tCBSci0KdsH63qkpZHseDurTeufFHd7uNVj50iqvkWQmJqy3P7U5GTpsYAiNY6IAxUOUt2hoVjH1TIicMF+6AIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740858337; c=relaxed/simple;
-	bh=I7pzi+TTyYKJ2KIVvfWE2y8/pVR81U5YBiahdyylgdg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FqmvbH1oD2s+3irmvIFvP4RwzbHCU+ZbFZ7gtIerthfnmxUjQDizGBpKsx9+G/K4M81ubAaW+n3zNtC5yPe50zkFrm2KNz4gaO9hj2veXUR6fI+ptMmUFezJMF3NxgGSSjXVy++yHFDC9hK5yhiAMAqNpvVJbR0I8OiEdXe5ttw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ajLKa9RO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SviyV8I2; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740863248; c=relaxed/simple;
+	bh=WsdD/eR1gsTyd4Svbz4kMRitk98bs39S7UPO/e/b5qQ=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=HDl3+T7jEsnf7g7GroP+hkAbqlo/RK4Odz+LrG6zS9nYqXkehfmgmgXpJ5dJBjIawJ3QoCf5y5A4POP8Za1oVBzxNBI0hkUKRbi40zRRXF/ISKGRYKSIS2eM3M4fMMFwU2Ddkg3S2ZzQ9MzTQwnon13E3z7dhzs7AWrWfbfzIfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZpYKRdh3; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ajLKa9RO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SviyV8I2"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0D4C8114015E;
-	Sat,  1 Mar 2025 14:45:34 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Sat, 01 Mar 2025 14:45:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740858334; x=1740944734; bh=AI8E7+0dua
-	Qm9Z0npUoaN1viCEp61/pf7XgAIN/Q+Uo=; b=ajLKa9ROkjQk7dNulWsZ3JZzrj
-	0XZyDpVYloLYPzAjSeDOHbcGJj9dPS7yzKwOBFwzLv8axFgvqEFzQ74J6HZzK2nJ
-	kk9uU1/bVXrDIW+BEPneSNF/K9UCy4JBszIXKr8SfXPe/3Vqi86/xa9HTMTF3BGU
-	o+O+V+GmXzTpauZbVyGcOD/Mc1zISSmws7VTvuXAAzGHoOGaw1V5s+rdhREGRTcA
-	vhTiMJhM2m065zGffqecc5tqETi6sV6E6V1pNQJopyUaNyw7RYHGd0sJ6dhlDDfM
-	nuhKT5mDoeIe8WDCAXfkvOhyPrtUQX+8oFbuKVD/5dMKk8eP4u9SjxEMbXUQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740858334; x=1740944734; bh=AI8E7+0duaQm9Z0npUoaN1viCEp61/pf7Xg
-	AIN/Q+Uo=; b=SviyV8I2GTHngEt4XAdiyyVu9R4tgrXocGpXDPBulC9zcf3sgBN
-	N9dLdd+mpoYhKGUgxkgFBVQhrV1L6hDPzju977/UFtVeDwB6RPp+3F03l8/tZHRh
-	MlCRQya+I4fVNFv6HN9fbTDQwnLuw7jtWVP6vqTXM6SWAmSKdfK8Hckgo+ZN+KB2
-	aOV62cjmMZvqCeXefDeDMj/bCbIu5Y7x9R3sYN5nK5V0z3wc1zY7Uz/ZWwA9pfAl
-	uKotd/HOWv/fpTf3tqlBE5iKHr69HmcW7jYs8MuhxsVq1niefWqhCJeV7edjfyel
-	q2oiSORM3xzN4hnDqhgWjJ63uq8RFDtdROg==
-X-ME-Sender: <xms:3WPDZ16KwWWGtHFgPNOIa3absz64m9bHdemhCIxj9M7hlEAJuWAAxw>
-    <xme:3WPDZy56VpDhar56Z4R9eCgHIpYD8G8H80rax3dPbgUIGcLz0fHriSJMFCG0sp-0E
-    KKTub-Z2mzq2PaqBA>
-X-ME-Received: <xmr:3WPDZ8exX6SHtEwKr_nNm3-kq0di6mBnSO5mb_W3tyql456RNEa4V4sV6juq4GlkxYfYK5lsGRdhzJ1xLtJalECyN523xwoqSCaM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelgedukecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkih
-    hnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdif
-    ohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhm
-    rghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshhhvg
-    hjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhnhgtrghikeeisehg
-    mhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhi
-    drohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:3WPDZ-LnzrB1SJMUa511Va-1LY3jjhZzthCNyuUZr6vNs_FAwVP9Rg>
-    <xmx:3WPDZ5KLCSlX67D9XK97ldiRKjV1CzYRR3PfXBKjxft3QiBwAeTPCg>
-    <xmx:3WPDZ3w19NO_Az74u1jfrTkO9zTPSab5SoIqtoVB3SwjKl3JiGJRIw>
-    <xmx:3WPDZ1K_9e8-C-KXZGHMB15KLGKete-NJGpIzynPcqU_2tFLysdvEQ>
-    <xmx:3mPDZyXF1XF83BmD_o99xxOtMnBDR83x9bjhkFRDZw0Y69HfDPA2dGZh>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 1 Mar 2025 14:45:33 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@vger.kernel.org,
-  christian.couder@gmail.com,  ps@pks.im,  shejialuo@gmail.com,
-  johncai86@gmail.com,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC PATCH] config: teach `repo_config()` to allow `repo` to be
- NULL
-In-Reply-To: <CAPSxiM-fzKUtvvf-DB2=VaGznr9utyb6zaKU5onxpy49KPChUA@mail.gmail.com>
-	(Usman Akinyemi's message of "Sat, 1 Mar 2025 05:26:55 +0530")
-References: <20250227175456.1129840-1-usmanakinyemi202@gmail.com>
-	<4e21312d-0d9a-404a-a2e0-0e2fcc681ad6@gmail.com>
-	<xmqqbjum2ayc.fsf@gitster.g>
-	<CAPSxiM-fzKUtvvf-DB2=VaGznr9utyb6zaKU5onxpy49KPChUA@mail.gmail.com>
-Date: Sat, 01 Mar 2025 11:45:31 -0800
-Message-ID: <xmqq7c58zg9w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZpYKRdh3"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43998deed24so30645255e9.2
+        for <git@vger.kernel.org>; Sat, 01 Mar 2025 13:07:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740863244; x=1741468044; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=dhObuEOqjXRsjNiTqSOcuNxXT4A5U/drG784mWBnAaA=;
+        b=ZpYKRdh3Qz4eVctjEYlnUoVlXdV3eaYFGywbWZjRA7ZlpBZtpt+XK9Qa6HGmrLdkgG
+         LEDStLbPYhjEPQVosV36FMG+FmOmfxK//M9cEoU8mQnnMGA1AknmBDTtjp0Ed8eY9F18
+         A9pP4EcDkcSEuACKQp1XaAoHembM63lTSH/E5VHgiuy/msecCWCjoc1m1ZaXD6qyP64T
+         TfqO8vB/YsvdVbtEGcfdCBNEETrP/rtPDOgCsDYsL4Eh34ZXzLWMTmhXW7RUm12DSrgu
+         KWKdWDw33E39L61uWdmyYEbg32qhlaKQ27bg3iNaSgcfhQaw5kK79wOjN49YxqYhxYxK
+         BnaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740863244; x=1741468044;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dhObuEOqjXRsjNiTqSOcuNxXT4A5U/drG784mWBnAaA=;
+        b=K9ouB7MgQ7FM5JXv4FqsDhKeTuyunynvEPuNhHBaFxuZiFoitOiiYXViIMqXA9R7b1
+         57Ia9lc3jqCKreBJQpGMl2bjeuImUAeBv6GAPX+Vi9DMBB6O2xL6hKsOH3iHReYOfa5R
+         rLSbCXnPw632K4xnRFoezHFCOXCqUzImliNM6DHH0JUdNcRN2+lUyvFP7kjmT9LmyufA
+         TP5Ajx+GMh4n0tOqTxUKNdrV9B3JZoYvuEwMTj3QDrLgQK0eBiH07zGtPaez6NNCAEJE
+         knBjnYeN2Ep2OVMq4/vbGkf0fCld75FnUXfj3q+xbAQbAVN3pmOxOo3PrTrjgPDCu8C6
+         +DfA==
+X-Gm-Message-State: AOJu0Yzys//5IteI5cHQrGWlhS4CJiJL2iLOErXHfl9MFPH/Scxl5ZkR
+	/1Vz2nhKk/x4cFb06eA4+S1q+2DEEskZ9l5BFYIu25IVsFb/WZOi2Twi6w==
+X-Gm-Gg: ASbGncvZSsQ3nwEbCnEN+t+591+clejJ61XW6ZDfwWy9cMGmumWqCKDhFwl7XeYFZgl
+	YCxflqLxJ0+9TM05HAvEnDqrIhES0kJRZlT9DxVdc6j1p+Ucfz7f3CGLLkIRvSHbmK7XmLv0b7g
+	zvwOIyWDozeKkVYy1qz0exRdOuWvbrge4FZm316tLaQYxFefd5+ozRzzlibUJbrkvs4KXMxyFf6
+	2K81cTLWi29fEYTwhLDdv5kB5T4g2W/wdaEZoxME8bBvOsXUITTiEGA3lZMO3Xo8kofc+FuRw7s
+	mXr+/Cl+DOy4ffdsrhMDQLfxaDsSDsOPfDOI4Zv9Zl4aew==
+X-Google-Smtp-Source: AGHT+IHy0qUztePWZ+FhAeJxub2aSGA1e5TJRCWiA7wPr7qVqE3Co40QPfpgawa8VMRxKLCiksJfqw==
+X-Received: by 2002:a05:600c:3b08:b0:439:94ef:3780 with SMTP id 5b1f17b1804b1-43ba6766e7amr75693385e9.30.1740863244046;
+        Sat, 01 Mar 2025 13:07:24 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ab2c4051bsm120859315e9.0.2025.03.01.13.07.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Mar 2025 13:07:23 -0800 (PST)
+Message-Id: <pull.1869.git.1740863242815.gitgitgadget@gmail.com>
+From: "John Giorshev via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 01 Mar 2025 21:07:22 +0000
+Subject: [PATCH] add --must-filter option for fetch and clone
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+    John Giorshev <john.giorshev1@gmail.com>,
+    John Giorshev <john.giorshev1@gmail.com>
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+From: John Giorshev <john.giorshev1@gmail.com>
 
-> Also, about the testing, I was thinking of using the clar framework or the
-> test-tool, do you have any in mind ?
+Signed-off-by: John Giorshev <john.giorshev1@gmail.com>
+---
+    add --must-filter, give error on filter not supported instead of warn
+    
+    from:
+    https://public-inbox.org/git/20250225013227.GB752084@coredump.intra.peff.net/
 
-Neither of them seems a good fit for the task to me.  
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1869%2Fjagprog5%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1869/jagprog5/master-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1869
 
-Once you rewrite one of the built-in commands using this and run
-"git $cmd -h" under "nongit" helper, wouldn't that be a good enough
-test to future-proof the codepath?
+ builtin/clone.c          |  6 ++++++
+ builtin/fetch.c          |  7 ++++++-
+ fetch-pack.c             |  8 ++++++--
+ fetch-pack.h             |  1 +
+ t/t0410-partial-clone.sh | 17 +++++++++++++++++
+ transport.c              |  1 +
+ transport.h              |  1 +
+ 7 files changed, 38 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index f9a2ecbe9cc..7000b0ecd36 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -887,6 +887,7 @@ int cmd_clone(int argc,
+ 	enum ref_storage_format ref_storage_format = REF_STORAGE_FORMAT_UNKNOWN;
+ 	const int do_not_override_repo_unix_permissions = -1;
+ 	int option_reject_shallow = -1; /* unspecified */
++	int must_filter = 0;
+ 	int deepen = 0;
+ 	char *option_template = NULL, *option_depth = NULL, *option_since = NULL;
+ 	char *option_origin = NULL;
+@@ -915,6 +916,8 @@ int cmd_clone(int argc,
+ 			 N_("force progress reporting")),
+ 		OPT_BOOL(0, "reject-shallow", &option_reject_shallow,
+ 			 N_("don't clone shallow repository")),
++		OPT_BOOL(0, "must-filter", &must_filter,
++			 N_("error on filter not supported by server")),
+ 		OPT_BOOL('n', "no-checkout", &option_no_checkout,
+ 			 N_("don't create a checkout")),
+ 		OPT_BOOL(0, "bare", &option_bare, N_("create a bare repository")),
+@@ -1333,6 +1336,9 @@ int cmd_clone(int argc,
+ 	transport_set_verbosity(transport, option_verbosity, option_progress);
+ 	transport->family = family;
+ 	transport->cloning = 1;
++	if (transport->smart_options) {
++		transport->smart_options->must_filter = must_filter;
++	}
+ 
+ 	if (is_bundle) {
+ 		struct bundle_header header = BUNDLE_HEADER_INIT;
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 1c740d5aac3..1f3cdf53148 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -84,7 +84,7 @@ static int prune_tags = -1; /* unspecified */
+ 
+ static int append, dry_run, force, keep, update_head_ok;
+ static int write_fetch_head = 1;
+-static int verbosity, deepen_relative, set_upstream, refetch;
++static int verbosity, deepen_relative, set_upstream, refetch, must_filter;
+ static int progress = -1;
+ static int tags = TAGS_DEFAULT, update_shallow, deepen;
+ static int atomic_fetch;
+@@ -1508,6 +1508,9 @@ static struct transport *prepare_transport(struct remote *remote, int deepen)
+ 	transport = transport_get(remote, NULL);
+ 	transport_set_verbosity(transport, verbosity, progress);
+ 	transport->family = family;
++	if (transport->smart_options) {
++		transport->smart_options->must_filter = must_filter;
++	}
+ 	if (upload_pack)
+ 		set_option(transport, TRANS_OPT_UPLOADPACK, upload_pack);
+ 	if (keep)
+@@ -2322,6 +2325,8 @@ int cmd_fetch(int argc,
+ 			 N_("append to .git/FETCH_HEAD instead of overwriting")),
+ 		OPT_BOOL(0, "atomic", &atomic_fetch,
+ 			 N_("use atomic transaction to update references")),
++		OPT_BOOL(0, "must-filter", &must_filter,
++			 N_("error on filter not supported by server")),
+ 		OPT_STRING(0, "upload-pack", &upload_pack, N_("path"),
+ 			   N_("path to upload pack on remote end")),
+ 		OPT__FORCE(&force, N_("force overwrite of local reference"), 0),
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 1ed5e11dd56..0cf59c1bc82 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -319,9 +319,13 @@ static void send_filter(struct fetch_pack_args *args,
+ 			trace2_data_string("fetch", the_repository,
+ 					   "filter/effective", spec);
+ 		} else {
+-			warning("filtering not recognized by server, ignoring");
+-			trace2_data_string("fetch", the_repository,
++			if (args->must_filter) {
++				die("filtering not recognized by server");
++			} else {
++				warning("filtering not recognized by server, ignoring");
++				trace2_data_string("fetch", the_repository,
+ 					   "filter/unsupported", spec);
++			}
+ 		}
+ 	} else {
+ 		trace2_data_string("fetch", the_repository,
+diff --git a/fetch-pack.h b/fetch-pack.h
+index 9d3470366f8..01ab94fc24b 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -40,6 +40,7 @@ struct fetch_pack_args {
+ 	unsigned cloning:1;
+ 	unsigned update_shallow:1;
+ 	unsigned reject_shallow_remote:1;
++	unsigned must_filter:1;
+ 	unsigned deepen:1;
+ 	unsigned refetch:1;
+ 
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 2a5bdbeeb87..0166c491ca5 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -48,6 +48,23 @@ test_expect_success 'convert shallow clone to partial clone' '
+ 	test_cmp_config -C client 1 core.repositoryformatversion
+ '
+ 
++test_expect_failure 'must filter clone' '
++	rm -fr server client &&
++	test_create_repo server &&
++	test_commit -C server my_commit 1 &&
++	test_commit -C server my_commit2 1 &&
++	git clone --filter="blob:none" --must-filter "file://$(pwd)/server" client
++'
++
++test_expect_failure 'must filter fetch' '
++	rm -fr server client &&
++	test_create_repo server &&
++	test_commit -C server my_commit 1 &&
++	test_commit -C server my_commit2 1 &&
++	git clone --depth=1 "file://$(pwd)/server" client &&
++	git -C client fetch --unshallow --filter="blob:none" --must-filter
++'
++
+ test_expect_success DEFAULT_REPO_FORMAT 'convert to partial clone with noop extension' '
+ 	rm -fr server client &&
+ 	test_create_repo server &&
+diff --git a/transport.c b/transport.c
+index 6c2801bcbd9..0543821399d 100644
+--- a/transport.c
++++ b/transport.c
+@@ -450,6 +450,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.quiet = (transport->verbose < 0);
+ 	args.no_progress = !transport->progress;
+ 	args.depth = data->options.depth;
++	args.must_filter = data->options.must_filter;
+ 	args.deepen_since = data->options.deepen_since;
+ 	args.deepen_not = data->options.deepen_not;
+ 	args.deepen_relative = data->options.deepen_relative;
+diff --git a/transport.h b/transport.h
+index 44100fa9b7f..0ffc8d273ab 100644
+--- a/transport.h
++++ b/transport.h
+@@ -16,6 +16,7 @@ struct git_transport_options {
+ 	unsigned reject_shallow : 1;
+ 	unsigned deepen_relative : 1;
+ 	unsigned refetch : 1;
++	unsigned must_filter : 1;
+ 
+ 	/* see documentation of corresponding flag in fetch-pack.h */
+ 	unsigned from_promisor : 1;
+
+base-commit: a554262210b4a2ee6fa2d594e1f09f5830888c56
+-- 
+gitgitgadget
