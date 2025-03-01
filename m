@@ -1,157 +1,141 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CF023F37D
-	for <git@vger.kernel.org>; Sat,  1 Mar 2025 12:06:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4788923F372
+	for <git@vger.kernel.org>; Sat,  1 Mar 2025 12:47:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740830800; cv=none; b=bow6wrc1aMzH2JybR03qL5U4V2u07jK0lDrJy84XM3Z/kEVwIWO4cLtbFw7fRo2x5VBMB+Os2rCQte4PkBco+LHVe30sI2BVagsdgitaVSPEMLADn++7TT32wL5xhYHWcmL0XquHNkrmV1msl+vbxU+P/yeSWIxLwPUhBpD/RYM=
+	t=1740833244; cv=none; b=D9EavNv3t/Le7ZT5NIWyF7LMbn6XJczgc1qsdMnrZKQ/XtRjLRWzgLoxDS7I1FxXvDBcOh+KYDbA7pC3gv0iZaPdFEQpf2Eez6/EiiZR8IRRZiZu99lGNGfOpP9EDx/Sa64AjaOKNKRNSYK5cLlHjX9atiQPXoQ7nDs/IYS0J8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740830800; c=relaxed/simple;
-	bh=5IocfBbUmTWwrEMDX8Ieh2mfjg6uGvdcY4Fbv5GFI3M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cxx6GPOwvJCjs+OnqpSWWvkmdXfsI32lI/I5GdPBBSHfR6KVNACjQ9HtnkLVkY63z53BoT8gQ6wtxaUY5yCA/7FQ71MIKHJbHKhtVs7k0B4Pqw/8Zoj5y29fOsu6IcRGTyGWcYQkoOOZ6A+73GEwzEoBOaDYQcsMniwSLpkgsP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m9bAn+5G; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740833244; c=relaxed/simple;
+	bh=FyFOslAztSSktwPuTV/iA3VF5CukkPr7YOiD1CkACOI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=ltimfKvqCZOCOFE1Zcwq5Ji8bAh24LTvI/hxgqmPQdoBzdiYCJpAnkhhUZdDrTaLTboRejMdrOSU9xsReNOYsmu8uJbIBYROsP6X1rVjwIE9UCUxO/TwDH9bY+jg6N9pf1EgwCJUyiOSRARG42hWgJI2Nf8jqLP7mmz5RbHZcD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=QBEdHQGl; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m9bAn+5G"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2feae794508so3975741a91.0
-        for <git@vger.kernel.org>; Sat, 01 Mar 2025 04:06:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740830798; x=1741435598; darn=vger.kernel.org;
-        h=disposition-notification-to:in-reply-to:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=uTcEUlYgEtyAEmIl4/w+NK67YysQO02PPsXuswNd618=;
-        b=m9bAn+5GreF5utguSdUwMaeGcuSgOjLq9/Ela94BKXyzCiXx4Cb2RQx7+6N3gGmc5H
-         QikjI6QuseE2GB2XTdX/H8n1tiVeh5or4c61OIsRhMegD5mR2s8NSTMHv639DJM63+zT
-         Yb41ojZDQzqse47Jc3xgHVWvonET3zFu0f82A6B8szyE3t5isKBy+CKnfwHIv5lA9QYm
-         21hSTOb8CtfeiZT0wwOp3YDfCTUZZ+yXZKohqZPNTyRnZdvrEJPcodkb6Kj5thEx0vFX
-         IQomIAtxrbKjZOtLEv+v/VT4TfXfdT/HptoJ5w7F9lm5Kkf5OMhBOrOcQxuvffqxZ+JJ
-         WGIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740830798; x=1741435598;
-        h=disposition-notification-to:in-reply-to:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uTcEUlYgEtyAEmIl4/w+NK67YysQO02PPsXuswNd618=;
-        b=fC7x/8rXvqFeAtJv/UA9djz5pP/G0WAmSx6S7kWzkyt2PRVn/xCdDtqCSJYIwRXXHO
-         eRe070RunBRiIK4ruOVALkOYSjzXJ5Sk1BZyb17lSkFMyQ8m+hxGNp8LZJqM8GVPYUxk
-         3vYX55VQ+QvjvCIKJFMX9Vds8SLm2dGuiEPjk5wwhnxgITLVOtCZIHv1rOGAsoEe+idV
-         okJmbWxboybmoNqPkzHdvGx0/DnKI5Ik4bL6+GcKt50/zVDeJ2iO1XPia5WAbFyARPvS
-         RswkSmaUpYH1qQQTyCR3L3brsboxPrN+XrnkliyneNDdyj8vrHSN3lbbe93Z7IMGaPIi
-         sMUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX3YGriU4kTXhvUmF1i6W5px992a+ma9IYu8KJy0TuZn0MoedtwDlu9bIsl0Z60FyYf9L0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzNqhcff1dlgwZSF3fPSpPsQgOk+WnEzWyruWbVRr0pAly8qhpR
-	YnQH1vAnXVS38z52qAAD6sEEDC8J1LdWXLAzf+wr1s248t+qt/L8
-X-Gm-Gg: ASbGncst82vzLt/8o59S1AqGy0EOUKT0le8pa+kySmI5CfkQPM1NUtL6gRNls4aQ5HG
-	XNWAGElYFyaTN2dS5JUoYW75dtmd2FKgmy9bJIKePADa129KrNCzWbUYit3AFlAkiETQtMRPuzP
-	CmYuTG4uIzyRqYSVYjQb7NqWZhi+H7pvyWGjCajNsxoYX15Qd1sVDOnzxArEPKdr0lfw86FkC2+
-	/TSgfarMRFP38fYetDKOHPjeMhaC5KAYo54FERtZ9Sf8Ek40C0xguab39ujD9POi9IBTm89ftNV
-	gjNJv2FLlh2FR94oD+jW9S+EW4VwUdRkzAvUxww2/tA=
-X-Google-Smtp-Source: AGHT+IFLFbTIBdaD0PCRooskj36ks2DAElqTWC8ZvnQW4Pwyc6vTOs1IUEfKVf7wNubOx6n7ZODnkQ==
-X-Received: by 2002:a17:90b:52cc:b0:2ee:d63f:d73 with SMTP id 98e67ed59e1d1-2febab3e63fmr11514061a91.11.1740830797524;
-        Sat, 01 Mar 2025 04:06:37 -0800 (PST)
-Received: from localhost ([2a0c:b641:69c:caa0:7e25:5c80:5e89:3e1b])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2fea6769ad2sm5425156a91.11.2025.03.01.04.06.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 04:06:36 -0800 (PST)
-Date: Sat, 1 Mar 2025 20:06:03 +0800
-From: lilydjwg <lilydjwg@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Calvin Wan <calvinwan@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Emily Shaffer <emilyshaffer@google.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Enrico Mrass <emrass@google.com>, Taylor Blau <me@ttaylorr.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: Question about `git gc` locking files
-Message-ID: <Z8L4K9ww_pdmOvzx@lilyforest.localdomain>
-References: <CAFySSZBCKUiY5DO3fz340a0dTb0zUDNKxaTYU0LAqsBD2RMwSg@mail.gmail.com>
- <ZxeilMDwq0Z3krhz@pks.im>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="QBEdHQGl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1740833240; x=1741438040; i=l.s.r@web.de;
+	bh=G1R7+iQljHuVlpzUh0jX3AQKzaTs/zRrFaT0nz4BLfc=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=QBEdHQGl39eIlLZCZi2ARNOAoTT3J/F54dX2QiWGZQ/pKVZWPB4sMWNShyri7VIg
+	 uN4cM0bsCqYAAv3kdYR9KzjRVK6+g5hl4H3+S4CVkaRbAR6n5rN/6lLA6Y1cJlm3b
+	 EuK3pNIMx/9fEqW6vss+jtBrA5WzhLoK4lOhM8Q6bThqRN+o0esf4XslvwNVGOQlx
+	 lOQKrolpmQW4SYmB8eV32CSGzl1XVz9Cd6tFWF1kKuW1dVhABSe4zJDl8Kt8ExiU0
+	 /spiE6QRTYbXdEG4LxsYqkb+/uuVV+Tlw5zVJCfYkfojri+5y7/kD+HIWt8LDFU8I
+	 x0tHtxObARLQ1SnzxA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.144.81]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MTfon-1tihL83sRZ-00Yjpk; Sat, 01
+ Mar 2025 13:47:19 +0100
+Message-ID: <6ab668ba-0293-4afc-944f-9bd1299110b5@web.de>
+Date: Sat, 1 Mar 2025 13:47:19 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZxeilMDwq0Z3krhz@pks.im>
-X-Mailer: Mutt 2.2.14 (516568dc) (2025-02-20)
+User-Agent: Mozilla Thunderbird
+Subject: Re: Subject: Null pointer dereference vulnerability in
+ src/read-cache.h
+To: H Z <shiyuyuranzh@gmail.com>, git@vger.kernel.org
+References: <CAAJd+faaEsTVqfTH=EsjXu8kneP1ZAASCCoaqp9zuODjSnDatw@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CAAJd+faaEsTVqfTH=EsjXu8kneP1ZAASCCoaqp9zuODjSnDatw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:aLckQdDNXjwd0lAHB7vdrNMZfHMRicVEnlzuFDQ60KyNsEARYJo
+ qEg5aUBhior7HFRmg7l8QQzve53aWfISBGXKZrHEVisMw9pvM39rgGKSPsKfaVf1ld2wbUL
+ Tnd9cwEBnRsrvscrnIFDQsl3vAuyJ3XhnuHHHzMCdqKGNFEUjz+bNy1cHFvudadvrvH1zVF
+ jI9vgsewHT4cwkXhZd7QA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:XlXuVtb6Nm0=;E02eMcYtwyUGlJSlIPH3ZZogiz5
+ O4eSa9c8nXvBSCKru4yAfLSBB6jR/F34hF7coaBzpblcXCKGra/iWECwSA5aHTMWjb138/jqu
+ a6qjzwWa1MaW5qBOm+YeHjYmTxT7VERDIQuutf1dl1o9DfyODMw6Z8IJmSRM+14htlg3739YQ
+ 8TBtQ8pYObQYFnAFwzUKxXxDXS80nvClWQxxZlR2fVdTI0B9z4WHXnqjeocQo7yFO4Tc4JYzb
+ OHhN2V6fi8UOJCGYkC+WmXeyp6Kv29505ReRT48bv0DzcPFxaTEJcZs19qhAOtOjD4e8/u4XV
+ XGrVXnNAehGuTPt7lmh7gneUqwG49szOmlp5JSc8PJr3LjKQ4+M60L1yrTsOes8wq1SixNXUT
+ nRa+VPZN+axhD73kK8CUpMhmYQGmr57bYx7beKnBLJzJS5KJxHgTT+7vXK5+4W/k+JvXG/H5W
+ c3Um0b6BGvNOIVrrHp4yQV5aBnkWwh9WEjrBzU/hWJKuzvrENkm4z2TbtAAAdjLGaPeOz4JSQ
+ PAUAM07kUv5uQ0iZSAxz49Bg6Z4TeViwQjM4sJw9luN63g0qjUT28YF+tfLeKTL0Zq7nkmnnv
+ le8L8BqGp3QAikvyNUAwF40V7KeKDrxcpDINuLIK+Aq5DJ95+zWJvNpG4qDhuR/vU/lAPS70C
+ fJRFO2ydagX2KdcAv9UuApvJgMnIwZwkfYvz9hstTFTWTxSat9jrjPe8TtZ+2244qMFSg19fe
+ ByB6lsOtpQRhRHzAFWEZ0ZQ96L/KwhKAx4WNHHFuSxmqab2RNR9Zix8schn4WAQw0L/LQCIJ0
+ KJEaEmdbGkvASnhAMQzGktMrRDxGWbwYXkq9HL3+oTXUPbM6eh1jjVzflmnYjrwFL77+8mXnb
+ RanmO76NZjmYZnHdcidDX+dQJoBX932epgD0qHG1ohBoa+4EGYaY4xUS7fM7Z9Si2nsQZuOn0
+ G7OPmftk/1DnthLwxJSoIW55RwdfJHXdxFXmMh2piv1et9e3lhTx0dWAkgBkAUfJElP42hvne
+ P1YFaJ314ALprrD1fsWkRL91ba8iBaSieV4gaa8883UU9bVkz8R9qrTiKjule0LYUefhAElTr
+ 3A5jWo2lNLw4btbDRwxNb3nm+PqaSnOsC+b8/eE454WDRl9L1VXEStX+7g6jlshjlk3fo5gDI
+ NtzqjUxr940HSCecUHil2Aqwahk0dNJEZGf00n2dA1pOuYCr1TVJ/bJoAKQjPWRRMNIcFxrAM
+ okhgYbDJYAZjk/XmWaKUyyHm8/P910SUDSWfMaKOnE4Ddh4drq19NoK7QjI7kedLpQwFOZLnK
+ 1mbMrJYLaMxjU5GSjpQuAQO0vJbmszTOqupMAbFsQfhbTlbstIvjQAPWtyi3bmxxPN8Vezf1u
+ LLRsfdLvU4O6qjgaPD3TsadRTqkmUGQRHxqQBNyItew/52ZUXEyglTF9Ta
 
-On Tue, Oct 22, 2024 at 03:03:21PM +0200, Patrick Steinhardt wrote:
-> On Mon, Oct 21, 2024 at 03:55:45PM -0700, Calvin Wan wrote:
->> Recently, after upgrading to 2.47.0, we had internal reports of users
->> erroring out with:
->> 
->> fatal: cannot lock ref 'HEAD': Unable to create
->> '<filepath>/.git/HEAD.lock': File exists.
->> 
->> We believe this is due to "(98077d06) run-command: fix detaching when
->> running auto maintenance", since we have neither `gc.autoDetach` nor
->> `maintenance.autoDetach` set.
-> 
-> git-maintenance(1) detaches itself by default unless told not to via the
-> config keys that you mention.
-> 
->> When this bug was fixed, the maintenance runs that triggered during
->> usage of the external tool, repo[1], would lock the HEAD file in the
->> Android manifest repository thereby erroring out `repo`. Additionally,
->> long running maintenance tasks would also cause users to frequently
->> run into this issue when using git commands that are written to HEAD.
-> 
-> It is a bit surprising that HEAD would need to be locked in the first
-> place. As far as I am aware, the only step where we end up locking refs
-> in the context of git-gc(1) would be when we decide to repack refs via
-> git-pack-refs(1). And that command shouldn't ever end up packing the
-> HEAD file, as that loose reference must exist
-> 
-> Digging a bit deeper surfaces that it's `git reflog expire --all` that
-> causes us to lock HEAD, which is... unfortunate. Seemingly, relfogs are
-> locked by locking the corresponding reference.
-> 
->> We can fix this easily temporarily by pushing out config changes to
->> run in the foreground, however, I was under the impression that `git
->> gc`, whether invoked normally or through `git maintenance`, would be
->> able to run in parallel with other git commands and therefore not
->> lock. There is no mention of this in the documentation for `git gc`,
->> but I do see it in the `git maintenance` documentation. So should `git
->> gc` be locking the HEAD file in the first place? And if so, is there a
->> way for `git gc` to have less of a dependence on HEAD.lock?
-> 
-> So what seems to be happening is that you have two processes racing with
-> each other: one that is trying to expire entries from your "HEAD"
-> reflog, and the one invoked by the user to update "HEAD". By default,
-> Git will wait up to 100ms for the "HEAD" lock to be released, but it
-> seems like expiring the reflog for your "HEAD" takes longer than that.
-> You can work around that issue by increasing "core.filesRefLockTimeout".
-> 
-> But this whole thing uncovers an issue with git-maintenance(1) itself.
-> The above commit fixed how git-maintenance(1) behaves such that we
-> detach at the correct point in time. But what it neglects is that some
-> tasks are more special than others and should be run synchronously
-> whereas others can be run asynchronously. Packing refs and expiring the
-> reflog are tasks that should be run synchronously to minimize the impact
-> on users.
-> 
-> This all demonstrates that git-maintenance(1) needs to get some more
-> love. You have uncovered this issue with git-gc(1) as configured task,
-> but we have a similar fundamental issue with the git-pack-refs(1)
-> subtask. So I guess we'll have to classify those subtasks into two
-> categories, where one category needs to be executed before detaching
-> itself and another category can be executed asynchronously after we have
-> detached.
+Am 01.03.25 um 07:43 schrieb H Z:
+> Hi, I am a static analysis tool developer, and I have found a
+> potential null pointer dereference bug in src/read-cache.h and would
+> like to report it to the maintainers. This vulnerability has the
+> potential to cause unexpected application behavior, crashes. Can you
+> please help me check it? Thank you for your effort and patience!
+>
+> Below is the execution sequence of the program that may produce the
+> null pointer dereference bug.
+>
+> Below is the execution sequence of the program that may produce the bug.
+> First, in the file diff-lib.c, the function oneway_diff assigns tree
+> to NULL on line 537.
 
-Hi, any news on this issue? (If not, I'd like to get notified when
-there is.)
+Context:
 
-This issue has been happening to me too. I have automation tasks fail
-occasionally in the last few months, and has only traced to "git gc"
-(instead of another concurrent task of our own) just now. It is the
-"git pull" command which fails for the most of time.
+	const struct cache_entry *idx =3D src[0];
+	const struct cache_entry *tree =3D src[1];
 
--- 
-Best regards,
-lilydjwg
+	/*
+	 * Unpack-trees generates a DF/conflict entry if
+	 * there was a directory in the index and a tree
+	 * in the tree. From a diff standpoint, that's a
+	 * delete of the tree and a create of the file.
+	 */
+	if (tree =3D=3D o->df_conflict_entry)
+		tree =3D NULL;
+
+What's a DF conflict?  A directory (D) in the index and a file (F) in
+the tree for the same path, or vice versa.  Except that in the object
+database directories are represented by "trees" and files by "blobs",
+but that's not important here.
+
+Not sure why "a tree in the tree" would conflict with a directory,
+though, as the comment claims.  Probably a typo, and it should read
+"a blob in the tree" instead.
+
+> Second, if on line 540, idx ? idx : tree conditional judgement is
+> false, tree, which is NULL, is passed as the 2nd argument to the
+> function ce_path_match.
+
+This should never happen, as we don't call a situation where one side
+is absent (i.e. an added or removed file or directory) a DF conflict,
+i.e. (tree =3D=3D o->df_conflict_entry) and (idx =3D=3D NULL) should never=
+ be
+true at the same time.
+
+Now it would be very interesting if that assumption could actually be
+violated by callers.  That's a bit hard to prove across the indirect
+call by function pointer, I guess.
+
+> Third, in file read-cache.h, the parameter ce of function
+> ce_path_match is assigned to NULL. and ce is dereferenced on line 41,
+> resulting in a null pointer dereference vulnerability.
+
+We could add a defensive check, but is it worth it?  If we get it
+wrong we'd get a segfault, at least on our main target platforms.
+
+Ren=C3=A9
+
