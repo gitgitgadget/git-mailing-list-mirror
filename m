@@ -1,68 +1,68 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1C2182D7
-	for <git@vger.kernel.org>; Sat,  1 Mar 2025 21:47:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE1D1E9904
+	for <git@vger.kernel.org>; Sat,  1 Mar 2025 21:47:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740865646; cv=none; b=lMfFDh2GfnG7JbOtL/UITpd+yCpotqSDFQo51Yv0jDkWnbLSlFNgMcPdny9tiMmdOTObacrlN3s0I7pivmiE/J0B8Lrqr2OOFH2tiUCZmBFasLZsbXOr1hzm8vVY4TIUkny7FZQN1AkLYnVk+tbkSL5Kqnn93Fp5AbGKePJ8bVI=
+	t=1740865648; cv=none; b=cwNRCbg2v1hA+XBcXWJlWPKqQrfuhpUj7XdNuEEQxWXYrOo8tBfRQMsHaEgBz8OkBFpwvPnDenGI+9hgrn/f68EBCZYAioFgiOHXf6VfTWSBg2pO8azjR6+pd3jIJihiuPYhs5OjrjhvvW8bE2u75f+Dw6VASYdPadqm3EL6O3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740865646; c=relaxed/simple;
-	bh=Eejn5IB/egIlJ1JC5v7+XMEA5HrZPBcrBDiM3XeDwWQ=;
+	s=arc-20240116; t=1740865648; c=relaxed/simple;
+	bh=Rrwwea3bc3Uf5j4WAMLA2Zh4c4SXs8yrSaq4gG5c5Rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4jU/XrPCfqy8dvoZ5kO63GMlNVUzLh6p+43XXJLJbLEySPeuPm/03RTVdAXYjuTEvdw9UoHuxoD+07idFNJST7UoWHmIkFCgNJimnliJICRsylk3J70WQWWGnScFk6gzaQf4rshJFiO54O+NVNN/3IITXkPNY+F86Z3T5EzFeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TxzJeZQs; arc=none smtp.client-ip=209.85.221.42
+	 MIME-Version; b=tKMGX3yvTdFivOXeeIq4KcuynHrfw82CjuwgATwE3Wp/0CZ67isVawAFdE5bZPYibBcUzQVU0FJIBrXXSkbeA+Q5/KjlCy37lARgSwe3G3HrsR96KGRKx+IrWq8xQPQuJMA045rDMOR5uXR6ozzYo5WcFBI5IwXtvbIV/HEt7Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XJqq2KUg; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TxzJeZQs"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-390dd362848so2535731f8f.3
-        for <git@vger.kernel.org>; Sat, 01 Mar 2025 13:47:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XJqq2KUg"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-390effd3e85so1825126f8f.0
+        for <git@vger.kernel.org>; Sat, 01 Mar 2025 13:47:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740865643; x=1741470443; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740865645; x=1741470445; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Xt63xmO/T33T1hYum8T1QdTVnZZJE+sG0fQf8ZIFaD8=;
-        b=TxzJeZQsQ1jcpjbRMyfHQ2u5p0uCFj2uKJFlm0C5QexutJLuCS5kISwfLpmmNC54jn
-         C146KBcXv5WQAvW7xyP45XBgqgL0NShytVZLzizoJqraIZNQdRPmv7DUPwCGhA4nGbsJ
-         JRaGKwZHkM5gUFaCvIOBwYQcD8lGM92k5eSz7pWNaCEKe2aZ9l1IY+s0fxufHpeFUck0
-         KyGAD5By/8pzfL4/xLf0rcmOyH7wn3L5LN+Dy021WgwPTG5cRK0IYqriBz7UwbbYRvsG
-         HIhuDAxArC+xitG1M86WhNhd8gF6t4JwBzK+TBlIOTL4EPPo2stqssO3rfTlXvgz8wTE
-         dHnQ==
+        bh=NHVTwt8xqBKWjUuDEEuRV045NoLIJDOfZRpRkG6vKZQ=;
+        b=XJqq2KUgs0zcomFtMSDWdRtQcU6jTAkaRQ2P2TKuXHDHGCu0oU+2zOjTbcVuGMLKXf
+         QfMog4FuEgbDQ5dqq2zesmQfjtrqFozUUv4UnHYoGE86ellsTm1zucBJIgq1RFjECZyO
+         l5LXtsRuV7JPzZyO3pQNMJVmWlvG2+qaaHyDuah1/vTdphAuWfy6kAvvqN8RAwx6p78z
+         YC7SV2wuVLayE9t9Dlv4btAiQdBFv3TB2ItGQLkQ11xZ4Ht8FB97DQ2y2c5F3zxXeC+T
+         VG0A8soFj91MR0B6I293M/9W6oQhZGcgPg0ux/9SO8WjiOGOgbftUTBmILdgxkYiyDRC
+         zJ1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740865643; x=1741470443;
+        d=1e100.net; s=20230601; t=1740865645; x=1741470445;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Xt63xmO/T33T1hYum8T1QdTVnZZJE+sG0fQf8ZIFaD8=;
-        b=sIN5gCfamr6v+cY+mMmhDX7s3ae5X8nB7s1tGeI/L8bfGSnIWh7pkiBye9P+DLPKcm
-         yJRE7mpGgjxf33+E0PAJ0XFZQ/Xsfksgb3yIfNXnsWePy3V05nq5DzPiQuF8wdgu24fZ
-         SWExs6VzPSR772g7QnNcxQ6tj57ZDnAGolNl+8pSq0kSim00ZTphO8JjX/cq31vSJ7+v
-         LJX9VGtiSRZdyKT/qvw1DqfKSvvs1ZENV0rjQc/mQn1U//EHwW45CcZBMsVYFJPtLlZ7
-         sWjB17IkA0N/e6ikWlxJVaOu9pheNKqWhPlXiBb8B6TFFq/MZTmdD4iLU1RpIjnpWmp9
-         UcQA==
-X-Gm-Message-State: AOJu0Yxxpeq1WO0G478uKDD7sdKSC7s2tCssliSrXOwPhr02TaihPI92
-	VVPj6Y8afeTn90ZFJEw12u6mv2aouh/DW5UIP1QGYKtMwd2Esm/g8YdIfIKz
-X-Gm-Gg: ASbGncuMts8ZBqnjSbQyl5slQHxoesjyo9CAYSQPC10KQRutWQF6vWJAGg1x7mGa6+y
-	CT4KxfK4ThZaiR5L+aE871TxPauYNb/5g+OB3uO5stHHmYb5u/15qu00GulWuZTJ1U4WuSJJuwj
-	SZw6GGMk7lJ5MYBP9mixbBn6FiBzt0hGc8cGGq1HJmoaW8PMKDy3UIaHmfVszISciqA8yOanqjV
-	+VmUYIK5SVe5klPggMbSp/cMCoENghHk0rPW5/Zurcsl0Rj4KC/NLtRkALMBPzWbFxZl/RNEzr3
-	3jQS7GF5oGcM7804F9dnTdIQt14Wx8hnVed31giGUg80ZhhOacCp3zMPmS60F3eGjIGIFgZkhTQ
-	xBZHR
-X-Google-Smtp-Source: AGHT+IFeW+GNTkGqamBUNNjppjOjTRejeFB8jzfCOVbzpBSsA5c2ZVwZT0L/9BNgSZ4Xc51sC1aGuw==
-X-Received: by 2002:a05:6000:4104:b0:391:5f:fa3d with SMTP id ffacd0b85a97d-391005ffe87mr741677f8f.31.1740865642738;
-        Sat, 01 Mar 2025 13:47:22 -0800 (PST)
+        bh=NHVTwt8xqBKWjUuDEEuRV045NoLIJDOfZRpRkG6vKZQ=;
+        b=ID4yWp6sACVUHBbSKu55gaBsDC61VCR5C1Uee4RYdLivmoaW25hN0XtoKEXhHZPsEB
+         eX3aijsnPIeiNjNowe4U8t1/Wm0Y8Lesci3+9VgwG3t4093hP53E+GPz1za6p8GImDGj
+         T8nxkpkCg8+2/uN848rVZu8+z4Y9jQ/AcA6+78v4BJ8YJYCrNw+xQdoHmuM593kmEv0d
+         yHCUx0OKJGA3iY8XGgxKHYpZTkuR1SgO75vweCwREgOgqAtAb/qMnVYRl4gY3q8w8GQN
+         tORkd80TDGyMwJ9QJnB+lZtVKF6WqAatQymt6hMe93k7LqBVsvsBlEh3dc4QP9qn+uNs
+         qkJg==
+X-Gm-Message-State: AOJu0YwH31TMALzWhZ8ML4e3hKFjRS6ZqqelfS6gNdK9KM6GKwv7YNAp
+	5ZofshVQ4OkYK75g7PoNzALPeq3+mJ6MXgHLlp09sfnLOmNdwfCpy0rEaeGu
+X-Gm-Gg: ASbGncsO6DtqD02Pzapu7E/ROlklKNI8kRSybPs0S6zGAph5LXM/NnVaWYr175WGE+n
+	7FHd69zq5ShcPLw66knKuxVcTTo2ypHBJDi3RpPkpEErZ2gxwH3cVn2ksMvxj7Fsp09iZGLdsl5
+	Mx2+gpjLwN3hFNLh43O9XB5Onktirzh01tDq+3SLpoeTHTiug35+ZcRpuVxV7Bq2HYD4sqwXTEP
+	zQ5ZH/UdgHnhtnRqeY3QOSBeAFiLie2TYzrKlcOpqr6Eit4+VlHNQ8CRuHDqtWnYVEYM+vbLj2p
+	Y7lOBYMTea85jKFketWCa/C+xg94Yy3lwf1AVc+aqpbVagfyxANbQFDeSMqYAyLH7+JQM9r4YPZ
+	sq9Nf
+X-Google-Smtp-Source: AGHT+IHtogQCRzC91VurAExjo6FtIGXsj0tH3+MqKutSNA7sUtU6593HIBx8Hu9rHVbwyRSkko72CQ==
+X-Received: by 2002:a05:6000:1848:b0:390:ed05:aa26 with SMTP id ffacd0b85a97d-390ed05acf2mr5946169f8f.5.1740865644612;
+        Sat, 01 Mar 2025 13:47:24 -0800 (PST)
 Received: from aleksbgbg.communityfibre.co.uk ([103.205.25.90])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390e47a72d5sm9603474f8f.31.2025.03.01.13.47.20
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390e47a72d5sm9603474f8f.31.2025.03.01.13.47.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 13:47:21 -0800 (PST)
+        Sat, 01 Mar 2025 13:47:23 -0800 (PST)
 From: Aleks Todorov <aleks.todorov.1337@gmail.com>
 To: git@vger.kernel.org
 Cc: Aleks Todorov <aleks.todorov.1337@gmail.com>
-Subject: [PATCH 1/7] builtin/blame: Accept a user-specified format
-Date: Sat,  1 Mar 2025 21:45:00 +0000
-Message-ID: <20250301214652.536439-2-aleks.todorov.1337@gmail.com>
+Subject: [PATCH 2/7] builtin/blame: Add blame.format config option
+Date: Sat,  1 Mar 2025 21:45:01 +0000
+Message-ID: <20250301214652.536439-3-aleks.todorov.1337@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250301214652.536439-1-aleks.todorov.1337@gmail.com>
 References: <20250301214652.536439-1-aleks.todorov.1337@gmail.com>
@@ -74,35 +74,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a --format / -F option to `git-blame` which allows the user to
-provide a string with placeholders which will be expanded to include
-custom information in the blame output.
+Source the format string from the user's configuration for convenience,
+in place of the "-F" option.
 
 Signed-off-by: Aleks Todorov <aleks.todorov.1337@gmail.com>
 ---
- builtin/blame.c | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/blame.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/builtin/blame.c b/builtin/blame.c
-index c470654c7e..437ac8bd73 100644
+index 437ac8bd73..891ac017f7 100644
 --- a/builtin/blame.c
 +++ b/builtin/blame.c
-@@ -66,6 +66,7 @@ static int xdl_opts;
- static int abbrev = -1;
- static int no_whole_file_rename;
- static int show_progress;
-+static char *format = NULL;
- static char repeated_meta_color[COLOR_MAXLEN];
- static int coloring_mode;
- static struct string_list ignore_revs_file_list = STRING_LIST_INIT_DUP;
-@@ -905,6 +906,7 @@ int cmd_blame(int argc,
- 		OPT_BIT('t', NULL, &output_option, N_("show raw timestamp (Default: off)"), OUTPUT_RAW_TIMESTAMP),
- 		OPT_BIT('l', NULL, &output_option, N_("show long commit SHA1 (Default: off)"), OUTPUT_LONG_OBJECT_NAME),
- 		OPT_BIT('s', NULL, &output_option, N_("suppress author name and timestamp (Default: off)"), OUTPUT_NO_AUTHOR),
-+		OPT_STRING('F', "format", &format, N_("format"), N_("print blame entries in the given <format>")),
- 		OPT_BIT('e', "show-email", &output_option, N_("show author email instead of name (Default: off)"), OUTPUT_SHOW_EMAIL),
- 		OPT_BIT('w', NULL, &xdl_opts, N_("ignore whitespace differences"), XDF_IGNORE_WHITESPACE),
- 		OPT_STRING_LIST(0, "ignore-rev", &ignore_rev_list, N_("rev"), N_("ignore <rev> when blaming")),
+@@ -772,6 +772,11 @@ static int git_blame_config(const char *var, const char *value,
+ 		}
+ 	}
+ 
++	if (!strcmp(var, "blame.format")) {
++		git_config_string(&format, var, value);
++		return 0;
++	}
++
+ 	if (git_diff_heuristic_config(var, value, cb) < 0)
+ 		return -1;
+ 	if (userdiff_config(var, value) < 0)
 -- 
 2.43.0
 
