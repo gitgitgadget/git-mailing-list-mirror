@@ -1,247 +1,157 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FB2179BC
-	for <git@vger.kernel.org>; Sat,  1 Mar 2025 21:07:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA84EB664
+	for <git@vger.kernel.org>; Sat,  1 Mar 2025 21:47:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740863248; cv=none; b=Rc41olE3iYrkjQjTHm+XlEv1y5GyyKXgGzFmotIrAoM2OWvgp+pATYUKDnnApaXge/2vfJ5l77HtUKU65Ww8tCBSci0KdsH63qkpZHseDurTeufFHd7uNVj50iqvkWQmJqy3P7U5GTpsYAiNY6IAxUOUt2hoVjH1TIicMF+6AIg=
+	t=1740865644; cv=none; b=SJ5Ve7l8YzPZyewKEhoBbfnYJxRDONDrqI53PL0P78fxRWUKpoHgAasndErzJeTxJEeuPV8dQR1Azw5dt16gh4niH4CBeLnq/M4/fT+iZEyF2dLfz+89gKLUC6iASv0b8lYucmOHsqLBEfdW294kI1SBjz8QQWkZzlequ3sUU5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740863248; c=relaxed/simple;
-	bh=WsdD/eR1gsTyd4Svbz4kMRitk98bs39S7UPO/e/b5qQ=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=HDl3+T7jEsnf7g7GroP+hkAbqlo/RK4Odz+LrG6zS9nYqXkehfmgmgXpJ5dJBjIawJ3QoCf5y5A4POP8Za1oVBzxNBI0hkUKRbi40zRRXF/ISKGRYKSIS2eM3M4fMMFwU2Ddkg3S2ZzQ9MzTQwnon13E3z7dhzs7AWrWfbfzIfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZpYKRdh3; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1740865644; c=relaxed/simple;
+	bh=eG5zQTHbuugYiWmO93VE94RHA5059LM24dKHS1E7oEU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=sZbnJmSnTSeTaVkxdVhRY/hibEBNgptJoUzBlzkV/RjWaah0+uF7tItgn0mRcVl/BrqptWJsJQSUpR4zBdu+XFA6cpIPDeLbbqZKi3WwGzMUuyIhM+D2PgT3p5LXaT2zgdUQ2OKcM5V6EJryYts+11Rnk6smg5ML03wzjK7I4KQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qko7XfiM; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZpYKRdh3"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43998deed24so30645255e9.2
-        for <git@vger.kernel.org>; Sat, 01 Mar 2025 13:07:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qko7XfiM"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-390ec449556so2039395f8f.1
+        for <git@vger.kernel.org>; Sat, 01 Mar 2025 13:47:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740863244; x=1741468044; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dhObuEOqjXRsjNiTqSOcuNxXT4A5U/drG784mWBnAaA=;
-        b=ZpYKRdh3Qz4eVctjEYlnUoVlXdV3eaYFGywbWZjRA7ZlpBZtpt+XK9Qa6HGmrLdkgG
-         LEDStLbPYhjEPQVosV36FMG+FmOmfxK//M9cEoU8mQnnMGA1AknmBDTtjp0Ed8eY9F18
-         A9pP4EcDkcSEuACKQp1XaAoHembM63lTSH/E5VHgiuy/msecCWCjoc1m1ZaXD6qyP64T
-         TfqO8vB/YsvdVbtEGcfdCBNEETrP/rtPDOgCsDYsL4Eh34ZXzLWMTmhXW7RUm12DSrgu
-         KWKdWDw33E39L61uWdmyYEbg32qhlaKQ27bg3iNaSgcfhQaw5kK79wOjN49YxqYhxYxK
-         BnaA==
+        d=gmail.com; s=20230601; t=1740865641; x=1741470441; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xuH5/lmp5sBANAD/tgRkTiEqGz190be1phqYB260Sjs=;
+        b=Qko7XfiMCwpWGoHhRvSrbRI8a5O570LyM2b/7TAuyy6idpCQWy+lntUfe4QBzan1O1
+         e8L1y3M2tbIyAw6AAX+GUdkW1dhnfCw025Ubq/6YM/E8eTqkRiR53uOgyYA68fQAMIrQ
+         6nffOiUp21zQxsuTmhEckVtak0VQGnD3PpkxwwhUJUnKMwSl1fbLTlZhUG/Yqx2uqiNF
+         2kEI6A629Gdty5d1juT4f5qkQDVqgPVPGwTbPQasXS10PspdI/gou/3/HtaABzaBtHqW
+         CEM2mDOnKYyiio6sh6sG1EqnNyoDJ4rpzUvDYMw9QflbatPbuBPrfYk0c7tNyq39Lwis
+         5KlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740863244; x=1741468044;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1740865641; x=1741470441;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dhObuEOqjXRsjNiTqSOcuNxXT4A5U/drG784mWBnAaA=;
-        b=K9ouB7MgQ7FM5JXv4FqsDhKeTuyunynvEPuNhHBaFxuZiFoitOiiYXViIMqXA9R7b1
-         57Ia9lc3jqCKreBJQpGMl2bjeuImUAeBv6GAPX+Vi9DMBB6O2xL6hKsOH3iHReYOfa5R
-         rLSbCXnPw632K4xnRFoezHFCOXCqUzImliNM6DHH0JUdNcRN2+lUyvFP7kjmT9LmyufA
-         TP5Ajx+GMh4n0tOqTxUKNdrV9B3JZoYvuEwMTj3QDrLgQK0eBiH07zGtPaez6NNCAEJE
-         knBjnYeN2Ep2OVMq4/vbGkf0fCld75FnUXfj3q+xbAQbAVN3pmOxOo3PrTrjgPDCu8C6
-         +DfA==
-X-Gm-Message-State: AOJu0Yzys//5IteI5cHQrGWlhS4CJiJL2iLOErXHfl9MFPH/Scxl5ZkR
-	/1Vz2nhKk/x4cFb06eA4+S1q+2DEEskZ9l5BFYIu25IVsFb/WZOi2Twi6w==
-X-Gm-Gg: ASbGncvZSsQ3nwEbCnEN+t+591+clejJ61XW6ZDfwWy9cMGmumWqCKDhFwl7XeYFZgl
-	YCxflqLxJ0+9TM05HAvEnDqrIhES0kJRZlT9DxVdc6j1p+Ucfz7f3CGLLkIRvSHbmK7XmLv0b7g
-	zvwOIyWDozeKkVYy1qz0exRdOuWvbrge4FZm316tLaQYxFefd5+ozRzzlibUJbrkvs4KXMxyFf6
-	2K81cTLWi29fEYTwhLDdv5kB5T4g2W/wdaEZoxME8bBvOsXUITTiEGA3lZMO3Xo8kofc+FuRw7s
-	mXr+/Cl+DOy4ffdsrhMDQLfxaDsSDsOPfDOI4Zv9Zl4aew==
-X-Google-Smtp-Source: AGHT+IHy0qUztePWZ+FhAeJxub2aSGA1e5TJRCWiA7wPr7qVqE3Co40QPfpgawa8VMRxKLCiksJfqw==
-X-Received: by 2002:a05:600c:3b08:b0:439:94ef:3780 with SMTP id 5b1f17b1804b1-43ba6766e7amr75693385e9.30.1740863244046;
-        Sat, 01 Mar 2025 13:07:24 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ab2c4051bsm120859315e9.0.2025.03.01.13.07.23
+        bh=xuH5/lmp5sBANAD/tgRkTiEqGz190be1phqYB260Sjs=;
+        b=hnwBFMB84iCRPmD3sxTkebv1rn2ApEyppBhs1xwIZx3FNvJtSHHFt3JrD8PTcE6Wlg
+         OzRR4Xb+40uaGvvdJbHgBNNfM34NALvUBPogsivln17QjkyQME6Opts6+XWzmrGimnHg
+         Ss3qcCYBACOPjXT6oYvSw5RG4CIKXXShUZM4tktmlVC1m53W4/3mIykv/1jAZMc82Qat
+         7Xpa+Ng8gWFZ5GSNQhiNM09z39Bc76LerVnPTD0K3OzUmrhCcKdBWrnA3T0hR0XY81dc
+         J3ZApOFvgNfP5vPUGQVwdUqoulEdWANESjWqb7wmrMfXon+sVVANlAN/7NKfmLP8ovDx
+         EZAA==
+X-Gm-Message-State: AOJu0YxFAU3PRz25Kqreuq/b5JChOjw0x7xKnhmbirWnIQRbd5vbVo88
+	DS4l5sPgCyA6wsv9eAyNj9v/fprcOM2Vf4zDyX/krjFSb8Wgb2ZAwj4Dj7bq
+X-Gm-Gg: ASbGnctpdR2fMMxm64Pw3qm/KEyf6qiQd++vMxMlGA5P4hdThakJXEKd21QLwL+lorq
+	d139oMM0CF+E0ZIcPBdRhfepEiqXue5w6fYSFn8onHreRdgTgCeXFP45ZhHIAKo/cpESGzk42/z
+	bSHNv2pfvutH/qd9UgqAsM/0yjs5/RKw5VhXi+tfyUiOq8nTo83I1qiiyh6Y0WyMBVWr4w4YvLr
+	2odQNjmdE5V9ZVQ4fkXmHU8Koiq24uGMeOIBfJVPur8Rw1nStn/ySPSOEapeLlSsbcmlv21FvdS
+	En2DbYjQp2Jd64rDCT0eA46McVRbZVBYjIknY23v0oqlRCGhOo+x8zd2wegtlPkKsXOAhS4pP5N
+	iud07
+X-Google-Smtp-Source: AGHT+IGXfBT8/H8x1qV103hbnIY0EQ9TWjSg2SOc+9YmYKfa/Up++vqj4kvzdAqCap0pFj8SUWcQ0A==
+X-Received: by 2002:a05:6000:381:b0:391:212:459a with SMTP id ffacd0b85a97d-391021246f6mr445541f8f.22.1740865640813;
+        Sat, 01 Mar 2025 13:47:20 -0800 (PST)
+Received: from aleksbgbg.communityfibre.co.uk ([103.205.25.90])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390e47a72d5sm9603474f8f.31.2025.03.01.13.47.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 13:07:23 -0800 (PST)
-Message-Id: <pull.1869.git.1740863242815.gitgitgadget@gmail.com>
-From: "John Giorshev via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 01 Mar 2025 21:07:22 +0000
-Subject: [PATCH] add --must-filter option for fetch and clone
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sat, 01 Mar 2025 13:47:20 -0800 (PST)
+From: Aleks Todorov <aleks.todorov.1337@gmail.com>
+To: git@vger.kernel.org
+Cc: Aleks Todorov <aleks.todorov.1337@gmail.com>
+Subject: [PATCH 0/7] Add Format Specifier for Blame
+Date: Sat,  1 Mar 2025 21:44:59 +0000
+Message-ID: <20250301214652.536439-1-aleks.todorov.1337@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    John Giorshev <john.giorshev1@gmail.com>,
-    John Giorshev <john.giorshev1@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: John Giorshev <john.giorshev1@gmail.com>
+Hi,
 
-Signed-off-by: John Giorshev <john.giorshev1@gmail.com>
----
-    add --must-filter, give error on filter not supported instead of warn
-    
-    from:
-    https://public-inbox.org/git/20250225013227.GB752084@coredump.intra.peff.net/
+As previously discussed, this patch series implements a `--format`
+option for `git-blame`, re-using the existing implementation from
+`git-log`.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1869%2Fjagprog5%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1869/jagprog5/master-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1869
+My motivation for this is that I use git blame quite often when
+debugging, and find myself checking the commit subject for a large
+number of lines that I look at. Instead, it would speed up my workflow
+if I could see the commit subject next to each line in the blame output.
 
- builtin/clone.c          |  6 ++++++
- builtin/fetch.c          |  7 ++++++-
- fetch-pack.c             |  8 ++++++--
- fetch-pack.h             |  1 +
- t/t0410-partial-clone.sh | 17 +++++++++++++++++
- transport.c              |  1 +
- transport.h              |  1 +
- 7 files changed, 38 insertions(+), 3 deletions(-)
+Since this is a personal preference and each git user probably has their
+own personal preference for what kind of output they want to see, as per
+Junio's suggestion, by implementing a generic format option, we serve a
+variety of use cases all at the same time.
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index f9a2ecbe9cc..7000b0ecd36 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -887,6 +887,7 @@ int cmd_clone(int argc,
- 	enum ref_storage_format ref_storage_format = REF_STORAGE_FORMAT_UNKNOWN;
- 	const int do_not_override_repo_unix_permissions = -1;
- 	int option_reject_shallow = -1; /* unspecified */
-+	int must_filter = 0;
- 	int deepen = 0;
- 	char *option_template = NULL, *option_depth = NULL, *option_since = NULL;
- 	char *option_origin = NULL;
-@@ -915,6 +916,8 @@ int cmd_clone(int argc,
- 			 N_("force progress reporting")),
- 		OPT_BOOL(0, "reject-shallow", &option_reject_shallow,
- 			 N_("don't clone shallow repository")),
-+		OPT_BOOL(0, "must-filter", &must_filter,
-+			 N_("error on filter not supported by server")),
- 		OPT_BOOL('n', "no-checkout", &option_no_checkout,
- 			 N_("don't create a checkout")),
- 		OPT_BOOL(0, "bare", &option_bare, N_("create a bare repository")),
-@@ -1333,6 +1336,9 @@ int cmd_clone(int argc,
- 	transport_set_verbosity(transport, option_verbosity, option_progress);
- 	transport->family = family;
- 	transport->cloning = 1;
-+	if (transport->smart_options) {
-+		transport->smart_options->must_filter = must_filter;
-+	}
- 
- 	if (is_bundle) {
- 		struct bundle_header header = BUNDLE_HEADER_INIT;
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 1c740d5aac3..1f3cdf53148 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -84,7 +84,7 @@ static int prune_tags = -1; /* unspecified */
- 
- static int append, dry_run, force, keep, update_head_ok;
- static int write_fetch_head = 1;
--static int verbosity, deepen_relative, set_upstream, refetch;
-+static int verbosity, deepen_relative, set_upstream, refetch, must_filter;
- static int progress = -1;
- static int tags = TAGS_DEFAULT, update_shallow, deepen;
- static int atomic_fetch;
-@@ -1508,6 +1508,9 @@ static struct transport *prepare_transport(struct remote *remote, int deepen)
- 	transport = transport_get(remote, NULL);
- 	transport_set_verbosity(transport, verbosity, progress);
- 	transport->family = family;
-+	if (transport->smart_options) {
-+		transport->smart_options->must_filter = must_filter;
-+	}
- 	if (upload_pack)
- 		set_option(transport, TRANS_OPT_UPLOADPACK, upload_pack);
- 	if (keep)
-@@ -2322,6 +2325,8 @@ int cmd_fetch(int argc,
- 			 N_("append to .git/FETCH_HEAD instead of overwriting")),
- 		OPT_BOOL(0, "atomic", &atomic_fetch,
- 			 N_("use atomic transaction to update references")),
-+		OPT_BOOL(0, "must-filter", &must_filter,
-+			 N_("error on filter not supported by server")),
- 		OPT_STRING(0, "upload-pack", &upload_pack, N_("path"),
- 			   N_("path to upload pack on remote end")),
- 		OPT__FORCE(&force, N_("force overwrite of local reference"), 0),
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 1ed5e11dd56..0cf59c1bc82 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -319,9 +319,13 @@ static void send_filter(struct fetch_pack_args *args,
- 			trace2_data_string("fetch", the_repository,
- 					   "filter/effective", spec);
- 		} else {
--			warning("filtering not recognized by server, ignoring");
--			trace2_data_string("fetch", the_repository,
-+			if (args->must_filter) {
-+				die("filtering not recognized by server");
-+			} else {
-+				warning("filtering not recognized by server, ignoring");
-+				trace2_data_string("fetch", the_repository,
- 					   "filter/unsupported", spec);
-+			}
- 		}
- 	} else {
- 		trace2_data_string("fetch", the_repository,
-diff --git a/fetch-pack.h b/fetch-pack.h
-index 9d3470366f8..01ab94fc24b 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -40,6 +40,7 @@ struct fetch_pack_args {
- 	unsigned cloning:1;
- 	unsigned update_shallow:1;
- 	unsigned reject_shallow_remote:1;
-+	unsigned must_filter:1;
- 	unsigned deepen:1;
- 	unsigned refetch:1;
- 
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 2a5bdbeeb87..0166c491ca5 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -48,6 +48,23 @@ test_expect_success 'convert shallow clone to partial clone' '
- 	test_cmp_config -C client 1 core.repositoryformatversion
- '
- 
-+test_expect_failure 'must filter clone' '
-+	rm -fr server client &&
-+	test_create_repo server &&
-+	test_commit -C server my_commit 1 &&
-+	test_commit -C server my_commit2 1 &&
-+	git clone --filter="blob:none" --must-filter "file://$(pwd)/server" client
-+'
-+
-+test_expect_failure 'must filter fetch' '
-+	rm -fr server client &&
-+	test_create_repo server &&
-+	test_commit -C server my_commit 1 &&
-+	test_commit -C server my_commit2 1 &&
-+	git clone --depth=1 "file://$(pwd)/server" client &&
-+	git -C client fetch --unshallow --filter="blob:none" --must-filter
-+'
-+
- test_expect_success DEFAULT_REPO_FORMAT 'convert to partial clone with noop extension' '
- 	rm -fr server client &&
- 	test_create_repo server &&
-diff --git a/transport.c b/transport.c
-index 6c2801bcbd9..0543821399d 100644
---- a/transport.c
-+++ b/transport.c
-@@ -450,6 +450,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	args.quiet = (transport->verbose < 0);
- 	args.no_progress = !transport->progress;
- 	args.depth = data->options.depth;
-+	args.must_filter = data->options.must_filter;
- 	args.deepen_since = data->options.deepen_since;
- 	args.deepen_not = data->options.deepen_not;
- 	args.deepen_relative = data->options.deepen_relative;
-diff --git a/transport.h b/transport.h
-index 44100fa9b7f..0ffc8d273ab 100644
---- a/transport.h
-+++ b/transport.h
-@@ -16,6 +16,7 @@ struct git_transport_options {
- 	unsigned reject_shallow : 1;
- 	unsigned deepen_relative : 1;
- 	unsigned refetch : 1;
-+	unsigned must_filter : 1;
- 
- 	/* see documentation of corresponding flag in fetch-pack.h */
- 	unsigned from_promisor : 1;
+For context, we can now use a command like:
 
-base-commit: a554262210b4a2ee6fa2d594e1f09f5830888c56
+  git blame builtin/blame.c -F '%h %<(17,trunc)%F (%<(20,trunc)%an %ai %>(4)%L) '
+
+to see output like:
+
+  df8738116f7 builtin/blame.c   (Ævar Arnfjörð Bjar.. 2022-10-13 17:39:20 +0200   40) static char annotate_usage[] = N_("git annotate [<options>] [<rev-opts>] [<rev>] [--] <file>");
+  5817da01434 builtin-blame.c   (Pierre Habouzit      2008-07-08 15:19:34 +0200   41)
+  5817da01434 builtin-blame.c   (Pierre Habouzit      2008-07-08 15:19:34 +0200   42) static const char *blame_opt_usage[] = {
+  5817da01434 builtin-blame.c   (Pierre Habouzit      2008-07-08 15:19:34 +0200   43)     blame_usage,
+  5817da01434 builtin-blame.c   (Pierre Habouzit      2008-07-08 15:19:34 +0200   44)     "",
+
+However, one key feature I could not find an easy way to implement was
+to include a length specifier that auto-detects the minimum column width
+required to display a placeholder without trimming the output. As a
+result, I could not re-implement the existing options using the
+formatting syntax.
+
+Nevertheless, these patches serve my purpose, are self-contained, and
+could be extended in the future to complete the plan.
+
+I've made my best effort to include clear atomic commits, write
+conforming code, include tests, and add documentation. However, as this
+is my first submission here, I expect that I may have missed something -
+so please let me know what can be improved and whether this patch series
+is suitable for integration.
+
+A short logical summary of the patches:
+
+  1. Add --format / -F option
+  2. Add format config option
+  3. Add %F and %L format specifiers (blame-only) to allow the filename
+     and line number to be emitted
+  4. Call into pretty.c to expand the provided format string
+  5. Add tests
+  6. Refactor documentation structure
+  7. Add documentation specific to `git blame --format`
+
+Patches are based on main.
+
+Thanks,
+Aleks
+
+Aleks Todorov (7):
+  builtin/blame: Accept a user-specified format
+  builtin/blame: Add blame.format config option
+  pretty: Add F and L format specifiers
+  builtin/blame: Expand format when available
+  t8015: Add tests for git blame -F
+  Documentation: Move placeholders to separate file
+  Documentation: Add docs for blame format
+
+ Documentation/config/blame.adoc   |   5 +
+ Documentation/git-blame.adoc      |  16 ++
+ Documentation/placeholders.adoc   | 242 ++++++++++++++++++++++++++++++
+ Documentation/pretty-formats.adoc | 239 +----------------------------
+ builtin/blame.c                   | 119 +++++++++------
+ pretty.c                          |  14 ++
+ pretty.h                          |   5 +
+ t/meson.build                     |   1 +
+ t/t8015-blame-format.sh           |  39 +++++
+ 9 files changed, 395 insertions(+), 285 deletions(-)
+ create mode 100644 Documentation/placeholders.adoc
+ create mode 100755 t/t8015-blame-format.sh
+
 -- 
-gitgitgadget
+2.43.0
+
