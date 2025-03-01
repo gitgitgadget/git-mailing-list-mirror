@@ -1,146 +1,124 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from mout.web.de (mout.web.de [212.227.15.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563771E25E3
-	for <git@vger.kernel.org>; Sat,  1 Mar 2025 15:36:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA421487D1
+	for <git@vger.kernel.org>; Sat,  1 Mar 2025 15:56:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740843377; cv=none; b=TWA6N1yqjI29wf/904qtZ4K70IYcLlR9HAFS+iOTlP63hAyIGTU7Bgz7CzLR8SqeZB9tKcLIDVK/x2dkQUJ1bhA2ez67mN6SnXrB3cEm/XQNhKKQmMT9mdosNf5M4cEx08KVxQGIVp2ln9rqZ0gKvxOShC/nyNUsenKngKXxSbs=
+	t=1740844614; cv=none; b=FMtXYOPK84ABN7XGIjCQLVImMb4rA2E3XxlIMW/yfGzz9kXTN0YYlonJC707WhqUnyyltvaAJEp/yJJaaim4B9LfASW/1Lc7Y8soHnX/GmD+NtD7AOR7dIsa45WstJiDYMhppoL3QojidOJYgwM6vAuR5HkOLOeRpDn8bwk/f3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740843377; c=relaxed/simple;
-	bh=laokikOpz3oBAxLv3Egn2xLlZi/7GeEJLp1L/MkE354=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kv8gwmTE6DackTNJftRNFNgthpSYZqgUeBd6ov09MwG98wpoP03cqmPGZzLEjGtXF1OltTyxeTvxXIOtB4OoIr8VTpLNjLxeFZ6vYczhTR+shm1DyAT/drQ7vc/TwU0/Hrx3xZucwvC96Kpjo7C/OFyevxhWwy1RPpQUdMXDlLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wvlgNAyS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jEpwDbXR; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740844614; c=relaxed/simple;
+	bh=kVzDS6GkbPNzJcsP614Lrnki6JfHQsPmOflpTCQrwoQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=N2qCrQULj+j4ANvVdxF57RXpyzONLY3TltuGiLhsKPSd4lVwN08p2VOnOk4TS0H2oK63ZkFoASgt/PJBduXiCXleSErtDPJhGQeUWFY2yBBQMx9jdL8mAXe8nSIaH4g5NiT/WqNXgbyfQuq3eBwbmRc54XjqUTkyXuwXXfaJpsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=S/z9jgeS; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wvlgNAyS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jEpwDbXR"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 558EA11400EE;
-	Sat,  1 Mar 2025 10:36:15 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sat, 01 Mar 2025 10:36:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1740843375; x=
-	1740929775; bh=Ilxpj4tWfJRzGPuSTzxwrswoRZrBatkK+SOy1Ua78UE=; b=w
-	vlgNAySlPE3RvciAWHEy7Xqxec91hdSPYxQThTuAH5eQSxaVZ7fxLwpZOB4KsKSk
-	9DcNtWGKi20b1ttSDnUEaoLQGaNShWn7lTQsQGdshAve9MzbNOmaL9QIzAichtOS
-	iEKUz1Iw3eXeyh6pALA8nLliJy7MjWlv2WjmgVrUC2cTy0sAd3mPZd8mOFRH/L3p
-	aFBzDRMuYvN1chWkRhfC73G+T10i+S92+N1knnOGUCZQfLTKKc87uS+jez2ivuJh
-	w1wGNu1oDrvssYxcoBxCRRm2kk9HyUlT9lJxw7uCWlnucDzA8KGwWE2ol70s+9pc
-	aEwJywjzL6p+qRuaJAJ5w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1740843375; x=1740929775; bh=I
-	lxpj4tWfJRzGPuSTzxwrswoRZrBatkK+SOy1Ua78UE=; b=jEpwDbXRJMa3JqILz
-	za3dY+mAChdPZPuK383h07kSDdonsmyB9XKJ/S59LPUK3m+C8sXq0KWCwAZ0k8tM
-	xb31VMvcWOYfSxCaMfaBNOOFYMY6IyUoxGuCzRV0zaCCjm1Yq5apPV91tEGZLDfH
-	3IXdmIA2t0qWIxHWMvPIPFlQNusIr178EO2mqTPOqQw5qHu/q1CdqzmXMlqi/mOA
-	ZMjBB/2nktuWo4eMA4bYNZVz/6T0dOJnrhjvPXDi+lRdoJj3CoZXs87jmRQXOgA1
-	kQWexaDTmjYfUC6FoqIXKocm19DxCfrUEj5o+a/rBZV11NhmDcm1VGVcXqS5Luc1
-	DwAVQ==
-X-ME-Sender: <xms:bynDZ6i2hW1jJ-8BdUtXnKpxe8xn0Q06QYF9kNs8mEKH8obIygmjSg>
-    <xme:bynDZ7DR3x62QmD-70yfbRyp-jGDqWhg8QtWBPoKTqR9FYmH3nsJEpo41JUnTegcR
-    KDhuyukxnGiGaYe_Q>
-X-ME-Received: <xmr:bynDZyHAUCHv5ERQzkN0wePOCq4a43vRnsxAyO45kCsflsr3lyGEtqY2pFTJI0cqUl9wqS_DMDSfAJocIUkgzenWV_A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelfeeiiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
-    necuhfhrohhmpefvohguugcukghulhhlihhnghgvrhcuoehtmhiisehpohgsohigrdgtoh
-    hmqeenucggtffrrghtthgvrhhnpeejuefggfehieeugeeuheevgfegudetheetuedvveeu
-    ueeileeuhfeigeefkeekieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehtmhiisehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsrghnuggrlhhs
-    segtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:bynDZzTgTr31q8mFEHM1D00G_YoM-65yshUx32aGTC4cM7idI9kMcw>
-    <xmx:bynDZ3zyN3xrHIeSZgXSNZ8jOfWuOZAqppJ87wZk0_YtwqgatwReCw>
-    <xmx:bynDZx5D5LqEHpmotc2VWsc6v0bgno9SGak2nk0PLck5RevnJpn-5w>
-    <xmx:bynDZ0wZw_1qTQUawjvcNcSmgPx_5GPcD5v6CmtLuUn4dBHLGxlA2w>
-    <xmx:bynDZ5sFyhPlFRSqYt9b9riAZWjPc9awtsCIZsPFXdrVTCg6mnwoDeRA>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 1 Mar 2025 10:36:14 -0500 (EST)
-From: Todd Zullinger <tmz@pobox.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/3] contrib/subtree: rename .txt to .adoc
-Date: Sat,  1 Mar 2025 10:36:04 -0500
-Message-ID: <20250301153607.95746-4-tmz@pobox.com>
-X-Mailer: git-send-email 2.49.0.rc0
-In-Reply-To: <20250301153607.95746-1-tmz@pobox.com>
-References: <20250301153607.95746-1-tmz@pobox.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="S/z9jgeS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1740844609; x=1741449409; i=l.s.r@web.de;
+	bh=JSux5AnkjEqEJejKszVHxIHW34nNWt3LwO6zrV1+80I=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=S/z9jgeS9Lqfr87P2f5WH40LRpyAWednF65Agzu91ccWfX9bsyc9vmmzI7SRps+2
+	 x6fjKG2EEDtDDVp1IhlPPu2B3+cSsiB7OenzsdzZTO+PvCAup/19a46udQ2u1nCiJ
+	 +YsmEvV7gALO0NPDbyPIV+z8sGn/SWfOUenwI1AT2G+9RrL+kwL4Ck0IMVtTphE8R
+	 dodYsAGeIZNVuJKb7cqJN0vnp77F0H/LHAFTBkfPiWC7xv48OUIwtG7fi240oirmB
+	 yuMjuewjmbuf6dToqGVR+v7of+AwnSIc8XBh1jc7C4pao/xo22LUC7fDA8UUwfj0j
+	 uGgn2UV70Tl7AE2XWg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.144.81]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Ml46y-1tROjl0kGK-00qgf9; Sat, 01
+ Mar 2025 16:56:49 +0100
+Message-ID: <70bab132-1107-4946-8ef9-24c6b0f9d193@web.de>
+Date: Sat, 1 Mar 2025 16:56:48 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: Subject: Null pointer dereference vulnerability in commit.c
+To: H Z <shiyuyuranzh@gmail.com>, git@vger.kernel.org
+References: <CAAJd+fZUEo15C29KSk61-P+7x=bjhgQ5iDTdbqV++NY4+iGchA@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CAAJd+fZUEo15C29KSk61-P+7x=bjhgQ5iDTdbqV++NY4+iGchA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:MYL/AHEbna+UT/OKjlmRYySifT69wolkJpBiufz7/7L0CikxCsQ
+ jNF+iBnbSiBmlnj+UXsOU+6XN/biwNAFmxNiCg5wq8euc+KMEgS+I7CXFRlJEcRVdeYhnOq
+ F3PWZ1kRDXTonEAU+8j/cHKIWdXhOFaiDG48uC7kAhFX/P0SUFvk7gq8qZ12lJYBHyaQBHm
+ MU9RQ3XN0W91B+ZlAdUhQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:afPSHtikPTc=;cSOlsddAYLmujznrFa7nQugOnQB
+ v96Pw7A13z0wAhc21zFhDoWR8Rz1zr4xhzr6MxToMmvTyz0KDXjIGVu4IY+5cSjAC08XZPQrn
+ OF7aO8FRzQJZX30ojxn6lEh8cMUXWoGx6taA9jS/lgJo3UVsol6BMEORnTygClTvsJTsdjbKx
+ LuTQpkWmMSsqdVhiPj16sVy2SqdTouHLbe/GUBbG1MvATzpeR2VKHwFMRhP8TVrgySl1JaGAT
+ iuGxFbxV+ESI5SO9e/vXkwz44n/kQ+255PsURyGwWL8tdvmMV/cJifqUDYMdR7os3weji7qUr
+ mDV+5iHOL5CyOhaCnjT8pwrXKG+e/vzk0jEQWSqQIjOHB7UVSmIctNdYqO/wjz1uDhngVYpdS
+ o8f6/AZz6fyzUs10kiaIAZ1EfS3KL1ZQAgttSrHm40r38hBdyrG4CiofmXs579U3nt9kA1G88
+ XVWoKMVCdJqiZySSHJzlKyPvv2YytnjMzsrfwvNuxbwYpaleQab7qTxuRnot01ArYWLvtJV8B
+ uJv1jq81KU6jYsnusQOo+fJXLFKbtsO6GMcipKfu8CyyzZNq/twyYi2W/MhbVGqt7/AEkArNr
+ 1u+x7J6x4jMGoqh5ptVeYpJSMQvO8q6o7g2u+IVkvxXzCxMf2TPjqf4p+H6L9WCEzx0lvOLbw
+ Yw9nYyy/ir403I7PwyV2es13T9vTM4OLXDb4DP6+LQhd/1vkcDicO/K/lQMYtFjGOgITwYSYy
+ Saa8StSmH5qJJDMNB+tvRQALH2VJvog3+LZ0N4lYkv7VUyAYwa//93gsl2YhDpSeoS+zlCAQR
+ jeNhIaSG4jIRkp0y4BDxevdLrgHsbDuFwJLRMkxjnLiM/I1ArlHOUNOy3VIY4L4Wa3KLvMcC5
+ u4xrxkcdDwHJjck9Queq6c0R8o1G3tDyD6lqkirJ7PAKf7MF2QV66e74Tpu5YBh7M6Vx1nO6B
+ SgU919zljfLC51HCZ1FQScseHQH5lLdym2fYIyv61gCqKpFmaIeEumC8vsiIE+r7lji4escG3
+ sgA9n48SYbctcpGXssneUr825tefEU4kcZX0fJEB2vXoRBhEXI2d22IxhMtQ6u4Lr31LDhcuO
+ 7rJJ7OPttwp/LQTd3grBCWhiQ7d0fKONeAWW5udrWoqhpwKjo7AE6F8zUjlAwrVvtJwskh+dk
+ yI/IiVhkLhliJ8CHpSS4elX/mHDmdtRn3UQ1fBrokzngAGz0tBUd4RigJDHqY9TBzpjGmOn9L
+ KjIUz5xlaDY5Ghl/u2PY5w0+Grmfx1qsc2ebTWb3526N/iP6p4mn+JZ5QugPFUXNUny5GYpaE
+ Yv3BpyuKwrMHn+Gm84JLrxRQ+LwVvrX3daTpn+utnI/1iJeYo382z0mWDcupPKpQtcmIcWZf6
+ LD/1Lv8vBdJTDCZZvPs2rqM5nmDk/FzPPuRmiuZG81DXsGeHKdtWTHPMbK
 
-The .txt extensions were changed to .adoc in 1f010d6bdf (doc: use .adoc
-extension for AsciiDoc files, 2025-01-20).
+Am 01.03.25 um 08:33 schrieb H Z:
+> Hi, I am a static analysis tool developer, and I have found a
+> potential null pointer dereference bug in commit.c and would like to
+> report it to the maintainers. This vulnerability has the potential to
+> cause unexpected application behavior, crashes. Can you please help me
+> check it? Thank you for your effort and patience!
+>
+> Below is the execution sequence of the program that may produce the
+> null pointer dereference bug.
+>
+> First, in the file commit.c, the function pop_commit may assign item
+> to NULL at line 806 if the conditional judgement is false.
 
-Do the same for contrib/subtree.
+True.
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
- contrib/subtree/Makefile                              | 2 +-
- contrib/subtree/{git-subtree.txt => git-subtree.adoc} | 0
- contrib/subtree/meson.build                           | 4 ++--
- 3 files changed, 3 insertions(+), 3 deletions(-)
- rename contrib/subtree/{git-subtree.txt => git-subtree.adoc} (100%)
+> Second, in file commit.c, function pop_most_recent_commit calls
+> function pop_commit at line 748, which may cause variable ret to be
+> assigned NULL.
 
-diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
-index 8fe0bfd401..c0c9f21cb7 100644
---- a/contrib/subtree/Makefile
-+++ b/contrib/subtree/Makefile
-@@ -50,7 +50,7 @@ GIT_SUBTREE    := git-subtree
- 
- GIT_SUBTREE_DOC := git-subtree.1
- GIT_SUBTREE_XML := git-subtree.xml
--GIT_SUBTREE_TXT := git-subtree.txt
-+GIT_SUBTREE_TXT := git-subtree.adoc
- GIT_SUBTREE_HTML := git-subtree.html
- GIT_SUBTREE_TEST := ../../git-subtree
- 
-diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.adoc
-similarity index 100%
-rename from contrib/subtree/git-subtree.txt
-rename to contrib/subtree/git-subtree.adoc
-diff --git a/contrib/subtree/meson.build b/contrib/subtree/meson.build
-index a752a188df..9c72b23625 100644
---- a/contrib/subtree/meson.build
-+++ b/contrib/subtree/meson.build
-@@ -32,7 +32,7 @@ if get_option('docs').contains('man')
-       '@INPUT@',
-     ],
-     depends: documentation_deps,
--    input: 'git-subtree.txt',
-+    input: 'git-subtree.adoc',
-     output: 'git-subtree.xml',
-   )
- 
-@@ -63,7 +63,7 @@ if get_option('docs').contains('html')
-       '@INPUT@',
-     ],
-     depends: documentation_deps,
--    input: 'git-subtree.txt',
-+    input: 'git-subtree.adoc',
-     output: 'git-subtree.html',
-     install: true,
-     install_dir: get_option('datadir') / 'doc/git-doc',
--- 
-2.49.0.rc0
+Technically true, but not quite.  I understand that this is effectively
+a trap for analysis tools, unfortunately.  pop_commit() handles empty
+commit_lists, while pop_most_recent_commit() doesn't, despite its
+similar name.  All three callers of the latter make sure to pass only
+pointers to non-NULL commit_lists, so we're actually safe.
+
+> Finally, ret is dereferenced on line 749, leading to a null pointer
+> dereference vulnerability.
+>
+> However, in the file merge-ort.c, the function merge_ort_internal
+> calls the function pop_commit on line 5176, and then makes a judgement
+> on whether the return value of pop_commit is NULL or not on line 5177,
+> which suggests that it is indeed possible for pop_commit to return
+> NULL.
+
+True.
+
+Most callers of pop_commit() check for NULL, so that function could
+stop checking as well, to slightly increase efficiency and simplicity.
+We would "just" have to audit every caller and make sure they are all
+ready for that.  The only ones that need modifying seem to be in
+pack-bitmap-write.c and revision.c.  Is it worth it?  Not sure.
+
+Ren=C3=A9
 
