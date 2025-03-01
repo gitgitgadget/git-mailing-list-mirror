@@ -1,157 +1,157 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E325E1DE8A2
-	for <git@vger.kernel.org>; Sat,  1 Mar 2025 11:36:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CF023F37D
+	for <git@vger.kernel.org>; Sat,  1 Mar 2025 12:06:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740829015; cv=none; b=TUETS2WGGexGKUJshW7ZFNsKA3+jvtY1Qsk3cf9TozuEbcqQs5Br7D06Sl54yLWJqq3D6dwEyJlhQrl8vzby44wwGkuMrn8k5jRux1Z5aiawv2+tGf3LjAJo2qRPMMeKcEgQx3ppBcm0uJgLxcGCzVV6tgLwKPJEu/hSe8lZBko=
+	t=1740830800; cv=none; b=bow6wrc1aMzH2JybR03qL5U4V2u07jK0lDrJy84XM3Z/kEVwIWO4cLtbFw7fRo2x5VBMB+Os2rCQte4PkBco+LHVe30sI2BVagsdgitaVSPEMLADn++7TT32wL5xhYHWcmL0XquHNkrmV1msl+vbxU+P/yeSWIxLwPUhBpD/RYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740829015; c=relaxed/simple;
-	bh=2aiuQ0zKp/4GBwG3YUYD5lz8Al540Pwb9D/yuEWLVNg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
-	 In-Reply-To:Content-Type; b=Cwqb4hb7xgKZc90hPkpeMTbbdplzYALwXcaHj/XaPtU3Qf2wp0YlUIjgy2GalqJ08+RS3rmtSHxJ5iyKtM2HJkZNamDULVMga8OmWmnFHvtEsT3H84zCPhsjB4KhWcTg2OiQw6M4m/U4eozMraN0EqUPWDJ75LuFT++I9Cplxxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=cctsX3S6; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1740830800; c=relaxed/simple;
+	bh=5IocfBbUmTWwrEMDX8Ieh2mfjg6uGvdcY4Fbv5GFI3M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cxx6GPOwvJCjs+OnqpSWWvkmdXfsI32lI/I5GdPBBSHfR6KVNACjQ9HtnkLVkY63z53BoT8gQ6wtxaUY5yCA/7FQ71MIKHJbHKhtVs7k0B4Pqw/8Zoj5y29fOsu6IcRGTyGWcYQkoOOZ6A+73GEwzEoBOaDYQcsMniwSLpkgsP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m9bAn+5G; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="cctsX3S6"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1740829011; x=1741433811; i=l.s.r@web.de;
-	bh=NbumPJMRHjUp+hAmdNbPgZMXkDHbWGPtMNF0w+am9+w=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:Cc:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=cctsX3S6YSdgA5jcpuGoGpUVL7Z73aGEaFR0V1Yw99W+2xOtGmyUbGvboza/iTW1
-	 JHS7oC4v7krr6g8w8Yyhj+6Mk2MbZPlA3zQn2i796QNqx1aM0g5wfini6nzFVTSBi
-	 2Eh7LVm5fPKDuL1oWX6FZHqK336TXNl949d7BeJ4RIteoonnv2QE52201Qr2Wrhh5
-	 DyNQAw2YM5Hl10Cx/Iv4L7JL0gfM1vYYvZ5FuVrK6zXcBi6pZKzo/cdQTYilltu+u
-	 n9iqxlIHtkgWWLIJbT9TXT6/rJSykQSzeQWfEkay7YEhQpIETYRosz2oMPIHLH0Rl
-	 i48ywS4FyHVAPTZuWQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.144.81]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MhFhe-1tIq3z3v7K-00Zei5; Sat, 01
- Mar 2025 12:31:33 +0100
-Message-ID: <bca5c0ec-0995-421e-9745-330f729357d6@web.de>
-Date: Sat, 1 Mar 2025 12:31:33 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m9bAn+5G"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2feae794508so3975741a91.0
+        for <git@vger.kernel.org>; Sat, 01 Mar 2025 04:06:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740830798; x=1741435598; darn=vger.kernel.org;
+        h=disposition-notification-to:in-reply-to:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uTcEUlYgEtyAEmIl4/w+NK67YysQO02PPsXuswNd618=;
+        b=m9bAn+5GreF5utguSdUwMaeGcuSgOjLq9/Ela94BKXyzCiXx4Cb2RQx7+6N3gGmc5H
+         QikjI6QuseE2GB2XTdX/H8n1tiVeh5or4c61OIsRhMegD5mR2s8NSTMHv639DJM63+zT
+         Yb41ojZDQzqse47Jc3xgHVWvonET3zFu0f82A6B8szyE3t5isKBy+CKnfwHIv5lA9QYm
+         21hSTOb8CtfeiZT0wwOp3YDfCTUZZ+yXZKohqZPNTyRnZdvrEJPcodkb6Kj5thEx0vFX
+         IQomIAtxrbKjZOtLEv+v/VT4TfXfdT/HptoJ5w7F9lm5Kkf5OMhBOrOcQxuvffqxZ+JJ
+         WGIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740830798; x=1741435598;
+        h=disposition-notification-to:in-reply-to:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uTcEUlYgEtyAEmIl4/w+NK67YysQO02PPsXuswNd618=;
+        b=fC7x/8rXvqFeAtJv/UA9djz5pP/G0WAmSx6S7kWzkyt2PRVn/xCdDtqCSJYIwRXXHO
+         eRe070RunBRiIK4ruOVALkOYSjzXJ5Sk1BZyb17lSkFMyQ8m+hxGNp8LZJqM8GVPYUxk
+         3vYX55VQ+QvjvCIKJFMX9Vds8SLm2dGuiEPjk5wwhnxgITLVOtCZIHv1rOGAsoEe+idV
+         okJmbWxboybmoNqPkzHdvGx0/DnKI5Ik4bL6+GcKt50/zVDeJ2iO1XPia5WAbFyARPvS
+         RswkSmaUpYH1qQQTyCR3L3brsboxPrN+XrnkliyneNDdyj8vrHSN3lbbe93Z7IMGaPIi
+         sMUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX3YGriU4kTXhvUmF1i6W5px992a+ma9IYu8KJy0TuZn0MoedtwDlu9bIsl0Z60FyYf9L0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzNqhcff1dlgwZSF3fPSpPsQgOk+WnEzWyruWbVRr0pAly8qhpR
+	YnQH1vAnXVS38z52qAAD6sEEDC8J1LdWXLAzf+wr1s248t+qt/L8
+X-Gm-Gg: ASbGncst82vzLt/8o59S1AqGy0EOUKT0le8pa+kySmI5CfkQPM1NUtL6gRNls4aQ5HG
+	XNWAGElYFyaTN2dS5JUoYW75dtmd2FKgmy9bJIKePADa129KrNCzWbUYit3AFlAkiETQtMRPuzP
+	CmYuTG4uIzyRqYSVYjQb7NqWZhi+H7pvyWGjCajNsxoYX15Qd1sVDOnzxArEPKdr0lfw86FkC2+
+	/TSgfarMRFP38fYetDKOHPjeMhaC5KAYo54FERtZ9Sf8Ek40C0xguab39ujD9POi9IBTm89ftNV
+	gjNJv2FLlh2FR94oD+jW9S+EW4VwUdRkzAvUxww2/tA=
+X-Google-Smtp-Source: AGHT+IFLFbTIBdaD0PCRooskj36ks2DAElqTWC8ZvnQW4Pwyc6vTOs1IUEfKVf7wNubOx6n7ZODnkQ==
+X-Received: by 2002:a17:90b:52cc:b0:2ee:d63f:d73 with SMTP id 98e67ed59e1d1-2febab3e63fmr11514061a91.11.1740830797524;
+        Sat, 01 Mar 2025 04:06:37 -0800 (PST)
+Received: from localhost ([2a0c:b641:69c:caa0:7e25:5c80:5e89:3e1b])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2fea6769ad2sm5425156a91.11.2025.03.01.04.06.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Mar 2025 04:06:36 -0800 (PST)
+Date: Sat, 1 Mar 2025 20:06:03 +0800
+From: lilydjwg <lilydjwg@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Calvin Wan <calvinwan@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Enrico Mrass <emrass@google.com>, Taylor Blau <me@ttaylorr.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: Question about `git gc` locking files
+Message-ID: <Z8L4K9ww_pdmOvzx@lilyforest.localdomain>
+References: <CAFySSZBCKUiY5DO3fz340a0dTb0zUDNKxaTYU0LAqsBD2RMwSg@mail.gmail.com>
+ <ZxeilMDwq0Z3krhz@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Subject: Memory Leak vulnerability in reftable/readwrite_test.c
-To: H Z <shiyuyuranzh@gmail.com>, git@vger.kernel.org
-References: <CAAJd+fZSUiiUm05D_eO3HS7p=WoxAWSZo51dUNjyGjUNJBvyGg@mail.gmail.com>
-Content-Language: en-US
-Cc: Patrick Steinhardt <ps@pks.im>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CAAJd+fZSUiiUm05D_eO3HS7p=WoxAWSZo51dUNjyGjUNJBvyGg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:0kS2k3BfA0upwZiJYh7pCGbgdeRXNp+/sVBsjwMz74AWBPq1voF
- EJf3CZgkIzYHF1LroHsf7k+ziMegNhbK/PoeOUJzxhZOcaFijsmHD6HZWDwWM8pefcAGOQV
- lJR3H+6Zs/QUHh5uGRuJ04yPG6BJ++VJxlE1+8qL7XT5OX/Ke5mthooyjUCkBG34UmCsAXH
- TNkKzDp4yr0TpB2O8xKzg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:F9ooTDMwBcY=;QAzRb8NilanqePkwRZIR7k/sRrW
- 2voqsqJpvQggP6e5TsJk7E8RjhrcMf70Bh+ceHQjmoMeafZpKuBBwDgsoLvm/9R2BOvV1V1ni
- J/isFKkP5LdiY56fD0VN9cuFTcvu9KXrodKYuMdITldV2pPnvRnqiWrwgSxmcBirJtfKyDwna
- Jp79Olhh9PoP5zl3+3xqODFrzevOjckfDP9wDi+wBle+K1Z5IJIqGqP4oTunREcc4nFSH7nbZ
- DhsPIw69jJe0A1aIW+NFO+Jkmn7rv4WnhEZtenOiQBJdIS9SEwfo+CUKuTOhpSgSKUdN8Kto6
- Ck5fNLHB9ZXYgHsAGi0TgtbWIcQq+gLjJ1Pkjt1074scY/s6845iaP6wxacO0YECpU6zn8r7l
- Ymh3/ZchNQcEnSi+9mpIy8g7CZiS2iohlNj1eerzxG71Ep4nRb3k915/QqnhWhJPc/hEb4uf8
- q5myC0p5ZaaQDKhTn1djmIosVp2vhWGvDw1DUgz+0QOr8gIdfhwZ3Lf9syUJmiadHcAC3R9OG
- Ez4ryXv7SORIfNG3EneSvbygHFGFFJ9oD9p243O5gHjqgEH36rn73BbwGEedSevIM3Rm8hs4S
- YN11oTpksFLHr9ImqSPVQzdqG77rPfY4TPHASUK/IFaox93Vd6kUS/V+iUFOHDLriKXjar536
- Lg76ik0Qsq88lOTGAW0isyoOXfch/HLEgnn+ZqS6eBvd5rcKFfcTdUtw05t1tnTi56ctmUOXl
- mppsPJzvfmcXC6C6mA1BG9jRbvhqGmAxra/APUMPKigMKcIMsdtIH3sxw/tpg/GDGBdu3V9pP
- lQbW8QQ98lKzwwQ/BzbZ/t+MQMxPYqNeSOK65eZ6r7+Jor+IGxo0bM5JIC/XUDQyRC0Sm06hQ
- hd9FL7JOaZsEIQDdwrJktrXUBiGjW41TjTBI+je8fbO6xPjMKkiFSdmCoX4GsdGB2uOOcvjLG
- P6dFmx2x6pVrol2wVAmyjXo5FVrFqYHK+/liR6FG+KaR594yX3VN8mK6EelJSDrq6z7j9hsw7
- Mo6UArN04/3YWqTPJKHTSXOYvU53AuUnQfHNRucGFsoT0y137OkZyZ9wEGf3G8HEEV35I/DF8
- Sx+KRHE7vcSh8V5mGf+KrdO36WyB9w8zkbbzRZ+vqjC6XuHJ29PsT9AO5Gh5y438S5gg132LI
- gV6WVjnjVP+YKlBum1pcytX1gQNCCzU7WpPgqyTLvt1cwlZIM3D0wAhSprZBzeh7uQi7c+ODo
- yXQvPMkgXekf5r+YOTGYBB3IqoQEwnL5MVh8iK6NDDlcNtJrLO9caD5CNKS1xQGoMA83y5pWv
- YnjpbjrVEVblsZj33GdcN+zq0tD2NQLQ05ZEn0ibmjwVkoPVbRuO0iMLfG/lAAyG5H7T7WlyW
- vN9DwyEVhnT1exdqCtrPZTqed3q1wqw5Nm73begvYn2QIdFKm59gjQXnXs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZxeilMDwq0Z3krhz@pks.im>
+X-Mailer: Mutt 2.2.14 (516568dc) (2025-02-20)
 
-Am 01.03.25 um 07:07 schrieb H Z:
-> Hi, I have found a potential memory leak bug in
-> reftable/readwrite_test.c and would like to report it to the
-> maintainers. Can you please help me to check it? Thank you for your
-> effort and patience!
+On Tue, Oct 22, 2024 at 03:03:21PM +0200, Patrick Steinhardt wrote:
+> On Mon, Oct 21, 2024 at 03:55:45PM -0700, Calvin Wan wrote:
+>> Recently, after upgrading to 2.47.0, we had internal reports of users
+>> erroring out with:
+>> 
+>> fatal: cannot lock ref 'HEAD': Unable to create
+>> '<filepath>/.git/HEAD.lock': File exists.
+>> 
+>> We believe this is due to "(98077d06) run-command: fix detaching when
+>> running auto maintenance", since we have neither `gc.autoDetach` nor
+>> `maintenance.autoDetach` set.
+> 
+> git-maintenance(1) detaches itself by default unless told not to via the
+> config keys that you mention.
+> 
+>> When this bug was fixed, the maintenance runs that triggered during
+>> usage of the external tool, repo[1], would lock the HEAD file in the
+>> Android manifest repository thereby erroring out `repo`. Additionally,
+>> long running maintenance tasks would also cause users to frequently
+>> run into this issue when using git commands that are written to HEAD.
+> 
+> It is a bit surprising that HEAD would need to be locked in the first
+> place. As far as I am aware, the only step where we end up locking refs
+> in the context of git-gc(1) would be when we decide to repack refs via
+> git-pack-refs(1). And that command shouldn't ever end up packing the
+> HEAD file, as that loose reference must exist
+> 
+> Digging a bit deeper surfaces that it's `git reflog expire --all` that
+> causes us to lock HEAD, which is... unfortunate. Seemingly, relfogs are
+> locked by locking the corresponding reference.
+> 
+>> We can fix this easily temporarily by pushing out config changes to
+>> run in the foreground, however, I was under the impression that `git
+>> gc`, whether invoked normally or through `git maintenance`, would be
+>> able to run in parallel with other git commands and therefore not
+>> lock. There is no mention of this in the documentation for `git gc`,
+>> but I do see it in the `git maintenance` documentation. So should `git
+>> gc` be locking the HEAD file in the first place? And if so, is there a
+>> way for `git gc` to have less of a dependence on HEAD.lock?
+> 
+> So what seems to be happening is that you have two processes racing with
+> each other: one that is trying to expire entries from your "HEAD"
+> reflog, and the one invoked by the user to update "HEAD". By default,
+> Git will wait up to 100ms for the "HEAD" lock to be released, but it
+> seems like expiring the reflog for your "HEAD" takes longer than that.
+> You can work around that issue by increasing "core.filesRefLockTimeout".
+> 
+> But this whole thing uncovers an issue with git-maintenance(1) itself.
+> The above commit fixed how git-maintenance(1) behaves such that we
+> detach at the correct point in time. But what it neglects is that some
+> tasks are more special than others and should be run synchronously
+> whereas others can be run asynchronously. Packing refs and expiring the
+> reflog are tasks that should be run synchronously to minimize the impact
+> on users.
+> 
+> This all demonstrates that git-maintenance(1) needs to get some more
+> love. You have uncovered this issue with git-gc(1) as configured task,
+> but we have a similar fundamental issue with the git-pack-refs(1)
+> subtask. So I guess we'll have to classify those subtasks into two
+> categories, where one category needs to be executed before detaching
+> itself and another category can be executed asynchronously after we have
+> detached.
 
-I wouldn't call it a vulnerability if it just affects test code, as it
-is not executed by git (the executable run by end users).  We still want
-to fix those, however.
+Hi, any news on this issue? (If not, I'd like to get notified when
+there is.)
 
-> Below is the execution sequence of the program that may produce the bug.
->
-> First, in file src/wrapper.c, function xstrdup allocates memory at
-> line 40 and returns at line 43.
-> Second, in the file reftable/reader.c, the function init_reader calls
-> the function xstrdup on line 202 to allocate memory for r->name, which
-> is the formal parameter of the function init_reader.
+This issue has been happening to me too. I have automation tasks fail
+occasionally in the last few months, and has only traced to "git gc"
+(instead of another concurrent task of our own) just now. It is the
+"git pull" command which fails for the most of time.
 
-Not exactly true since 12b9078066 (reftable: handle trivial allocation
-failures, 2024-10-02); the allocation is done by reftable_strdup() now.
-And 2de3c0d345 (reftable/reader: inline `init_reader()`, 2024-08-23)
-got rid of init_reader().
-
-> Third, in file reftable/readwrite_test.c, function
-> test_corrupt_table_empty calls function init_reader on line 935 with
-> &rd passed as the first argument, causing rd->name to be allocated
-> memory. rd->name is not freed, which would cause the memory leak
-> vulnerability.
-
-This test was moved to t/unit-tests/t-reftable-readwrite.c by 5b539a5361
-(t: move reftable/readwrite_test.c to the unit testing framework,
-2024-08-13).
-
-t_corrupt_table_empty() calls reftable_reader_new() and returns
-REFTABLE_FORMAT_ERROR before it reaches the reftable_strdup() call, so
-there is no leak in this test (anymore?).
-
-reftable_reader_new() would leak name if its block_source_read_block()
-or parse_footer() calls failed, though.  We could do the name
-allocation only after those calls to avoid that, but that may
-complicate matters.  Alternative patch below.
-
-Also its comment in reftable/reftable-reader.h mentions that
-reftable_reader_destroy() needs to be called after use, but that
-function has never existed.  Odd.
-
-Ren=C3=A9
-
-
-=2D-- >8 ---
-Subject: [PATCH] reftable: release name on reftable_reader_new() error
-
-If block_source_read_block() or parse_footer() fail, we leak the "name"
-member of struct reftable_reader in reftable_reader_new().  Release it.
-
-Reported by: H Z <shiyuyuranzh@gmail.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- reftable/reader.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/reftable/reader.c b/reftable/reader.c
-index 3f2e4b2800..f38c83f140 100644
-=2D-- a/reftable/reader.c
-+++ b/reftable/reader.c
-@@ -666,6 +666,7 @@ int reftable_reader_new(struct reftable_reader **out,
- 	reftable_block_done(&footer);
- 	reftable_block_done(&header);
- 	if (err) {
-+		reftable_free(r->name);
- 		reftable_free(r);
- 		block_source_close(source);
- 	}
-=2D-
-2.48.1
-
+-- 
+Best regards,
+lilydjwg
