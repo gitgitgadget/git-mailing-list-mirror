@@ -1,116 +1,184 @@
-Received: from mail-qv1-f99.google.com (mail-qv1-f99.google.com [209.85.219.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4F2169397
-	for <git@vger.kernel.org>; Sun,  2 Mar 2025 20:54:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1311D13AF2
+	for <git@vger.kernel.org>; Sun,  2 Mar 2025 21:37:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740948888; cv=none; b=bU36EJUWeHstXWXAGCMUr9k6Fkafh4LKwmONFGTxmJck5Hnqd2mD8MFrV91yepZhJn4uBTuJM/GcCuH+/SJBaGFu+pTcULfZ3TdfKCWUPop8JhcNKVBkr5a980KANQCe22UmRlnLst5iorUvOJ94Y6uQQ2yaR5w2wNI3xvU8tdU=
+	t=1740951425; cv=none; b=sVuqe2eCP9EBqwl4pO0PdJ8rrQiqzE+3gae21HFJwp6J3EzFU359Mv5YunnOgEfDLwCcpnADN1pJdXN1GJ3TJLCsyhIQxSNdY7kpfF1mIVW+tpRNk3fX4nhH8LLY+FGAIkI/37mpAShddeXzE5jZeCBVWYBhQb5DMAHlMavFxR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740948888; c=relaxed/simple;
-	bh=+XmBjPrbtr8Pu2EcVgjEJvVd9yL0POBmR5XGL0IJ1ME=;
-	h=MIME-Version:Date:From:To:Cc:Subject:Message-ID:Content-Type; b=HKZt2/Eqt6UIQ8JfjoVpi0W8TxZfE2t1gHIsqfhPGV19s3PuiSeGXBtfqRY5nzBuO8xxzQJPC3QdY8UgE+KBNVLbG/gAUc8/00r/R9lQ2+HrkUGOHsfneUzoFKxnitPr2WnWRLxlXKfs/UJUTSiCYfnUOU8F2g4KNEwGQvaKUvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org; spf=pass smtp.mailfrom=mandelberg.org; dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=UeyKYU6E; dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=Sr6mcuf1; arc=none smtp.client-ip=209.85.219.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mandelberg.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="UeyKYU6E";
-	dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="Sr6mcuf1"
-Received: by mail-qv1-f99.google.com with SMTP id 6a1803df08f44-6dd0d09215aso27951656d6.2
-        for <git@vger.kernel.org>; Sun, 02 Mar 2025 12:54:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740948885; x=1741553685;
-        h=content-transfer-encoding:message-id:subject:cc:to:from:date
-         :mime-version:dkim-signature:dkim-signature:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=6fGhLcDFLyX7GfCaLODhr+/yIUNX1ryEuGJys20Fh9I=;
-        b=I7WTTgR5FLRwhHQVFhxHM1ifMNAV3YqpIdNH+6RkPkVEKC1b7mNBx/I6g8+AjMbEdC
-         LXLaSP2v9gg4V3AZlH84HmmMP/K1WPUTdGkyIEV+7Mfqdy9yQDRVsseTUR8U4kcVCFE4
-         ZnRJEThv/GzH7jGXu8nlEbq1BBmqzPD2LrQ0WIoXI87Xd17NSRXo4+WWFZpIt1KxGwOd
-         4MVPG8rAHh6Pfbmho2/3VI5MlUWjrD6v1rhwZAdjCt1DB7gicOv1aOxyu22v4FxboPUJ
-         QuZkASOf7S8EY0P5wYWKFRuFYMRrnp7oulFxm4FkVipeq5lHEmK+CTIH7IAo53vKA9Ju
-         ytVw==
-X-Gm-Message-State: AOJu0YxQJ6dHxIoCS3AvsH0MpfXbScEqpf0sK7WhffIWKIAjQbaidAhZ
-	hqAabw+OiCTj3QVMbqxEgz0G/UXgsL0BvE/ljYSIe6qAykkAIUaa80yGgdUfmS4HXyPm2UJpN/b
-	DaXthRcmgl0L/iCZI+o13NHWdW8bGBQfu8WKomJMxa/ixUcn8
-X-Gm-Gg: ASbGncs99r2VeMXnJmx2X8lCseeXaLx0eLiJJtj7MgEvx1ijYMZLmAO+AgXmvDZWo+o
-	dmyN6iGXs+p+3ifpQArXstc553WNUdKCRc+hjeGieGZjOgL5Tpg4Z/k9X8DeIO6AGHGXVQfp1wd
-	83qBfHE89oIoljPdba4EoKpJziz6ZON1H8hnR0XP61wrBiXSbgIJhPl7/MVD/sYKw87rs2A75m6
-	qBzj16fiP5aImHbAab28Cur7yCAkSxVPZjwxOQc9C1CS9PcE+u4zfgaH05XtEyJO/X51+zvGNhI
-	9F71b5bHVDCRSIip4S94sA7GluD8y6HdhC1TGt4j
-X-Google-Smtp-Source: AGHT+IGtPh1Hkn8wM1xQ1sKO0ZeM1IroJ2KteSKWCWZJ0VU86nhNuLJgdGcuVSTmM5ujCmZ7OxCvbodWJ9I1
-X-Received: by 2002:a05:6214:f2a:b0:6e6:5f08:e77d with SMTP id 6a1803df08f44-6e8a0d0ebc8mr191734896d6.19.1740948885474;
-        Sun, 02 Mar 2025 12:54:45 -0800 (PST)
-Received: from mail-outbound-e14cf917.virgo.mandelberg.org ([2600:4040:52f1:f606::8])
-        by smtp-relay.gmail.com with ESMTPS id 6a1803df08f44-6e897604364sm3511916d6.27.2025.03.02.12.54.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Mar 2025 12:54:45 -0800 (PST)
-X-Relaying-Domain: mandelberg.org
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple;
- d=mandelberg.org; i=@mandelberg.org; q=dns/txt;
- s=mail-outbound-e14cf917-597d7abb; t=1740948884; h=mime-version : date
- : from : to : cc : subject : message-id : content-type :
- content-transfer-encoding : from;
- bh=+XmBjPrbtr8Pu2EcVgjEJvVd9yL0POBmR5XGL0IJ1ME=;
- b=UeyKYU6Eskf0Fs8ndKrt8pbrZsahX0e5Mr7CWlvihpwiRCKWv/N7oG91HG/6cTGibczsl
- /+jvHj0mlZ+6eHIDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mandelberg.org;
- i=@mandelberg.org; q=dns/txt; s=mail-outbound-e14cf917-e56dad1c;
- t=1740948884; h=mime-version : date : from : to : cc : subject :
- message-id : content-type : content-transfer-encoding : from;
- bh=+XmBjPrbtr8Pu2EcVgjEJvVd9yL0POBmR5XGL0IJ1ME=;
- b=Sr6mcuf1URzZ0jRGfUs8CSi29Z1P66z6oqxNxtbsBlODQnMrlwrSgPBeYpEvBqdKX8QR8
- EvhsBqwHTSOpHmnsOp7Q0L1qG6qa+MAT7xFcfg7xdQPfG0ZPOHi9MYtULTtGDqJBmbUxgvj
- JZDsl34rBHbCXkEo1vthXmFyXStL2wTD1J5yxVtvutCHawGaZ7hnR2igrKhAm3TwwK9EkjL
- +5VyZg3Q/eXATOb7foi4S+bH3F6C1tqE10naXetw+9rm4JF/vZktshmubsd0d/6Mja25BVB
- e0w3IWFYs+3o3a/npqfJTVG6fLSTjiu5tVfAxC6JpdTjy/Brm4+/W/6IVs1g==
-Received: from webmail.mandelberg.org (mail-web-d031b246.virgo.mandelberg.org [10.0.6.15])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X448 server-signature ECDSA (secp384r1) server-digest SHA384)
-	(No client certificate requested)
-	by mail-outbound-e14cf917.virgo.mandelberg.org (Postfix) with ESMTPSA id 4Z5Z2D4V6cz10df;
-	Sun,  2 Mar 2025 20:54:44 +0000 (UTC)
+	s=arc-20240116; t=1740951425; c=relaxed/simple;
+	bh=qZxu1vMsE0vef+RwqQpofwNeSRB3dlhFolbFYQXoydw=;
+	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UgsYGPCH4tBblg6SrPoiszipzihFGsA2gDvX4VU1JRN4zoiBVUkI877nFkez4otwwsdYhd6UW92H03RBojAbXjbvbxYRCc5GhI78+Q/kSfe3s1ePxgjFtm2ZUKA8HG/CIsknzoWvufiKYQMMlSN5rgbbvnKtdk5dKOViz2ar62E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 522LarSh145549
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 2 Mar 2025 21:36:54 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'ZheNing Hu'" <adlternative@gmail.com>,
+        "'Git List'" <git@vger.kernel.org>
+References: <CAOLTT8S2Dk4zr_USpjz_dPBO-Rdr-qqg-Rq5GLBgtom_REFK3A@mail.gmail.com> <CAOLTT8SzA2VNjYPvENLQn3cVaHtp1MkN8Czo6OxbOqbNit-FEQ@mail.gmail.com>
+In-Reply-To: <CAOLTT8SzA2VNjYPvENLQn3cVaHtp1MkN8Czo6OxbOqbNit-FEQ@mail.gmail.com>
+Subject: RE: [Feature Request] Enhancing Git with Inline Code Commenting Features for Improved Code Annotation
+Date: Sun, 2 Mar 2025 16:36:49 -0500
+Organization: Nexbridge Inc.
+Message-ID: <04ab01db8bbb$38127300$a8375900$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 02 Mar 2025 15:54:44 -0500
-From: David Mandelberg <david@mandelberg.org>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, "brian m. carlson"
- <sandals@crustytoothpaste.net>
-Subject: [PATCH] editorconfig: add .bash extension
-Message-ID: <15fa4f5d838745b5b05248b44aa16a57@mandelberg.org>
-X-Sender: david@mandelberg.org
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQMeI1HEulT6uNqulav6SyH7ZDAB0wGk20jpsM3IMCA=
+Content-Language: en-ca
+X-Antivirus: Norton (VPS 250302-6, 3/2/2025), Outbound message
+X-Antivirus-Status: Clean
 
-Both files in the command below appear to be indented with tabs, and I'd
-expect .bash files to have roughly the same style as .sh files.
+On March 2, 2025 4:06 AM, ZheNing Hu wrote:
+>In my imagination, this feature might be very similar to git blame but =
+also has some
+>capabilities akin to git notes. Users could view it using a command =
+like git code-note
+>-L1,10 file1, much like git log -L1,10 file1, and it would display some =
+comments.
+>
+>I am currently unsure if there is a feasible technical solution, as I =
+do not yet have a
+>solid understanding of how git blame works.
+>
+>
+>ZheNing Hu <adlternative@gmail.com> =
+=E4=BA=8E2025=E5=B9=B43=E6=9C=881=E6=97=A5=E5=91=A8=E5=85=AD =
+17:19=E5=86=99=E9=81=93=EF=BC=9A
+>>
+>> Dear Git Community,
+>> I hope this message finds you well. I am writing to discuss a
+>> potential enhancement to Git that could significantly improve the way
+>> developers annotate and review code within their workflows.
+>>
+>> Current Landscape: Platforms like GitHub and GitLab offer robust
+>> commenting features within Merge Requests, allowing developers to
+>> leave comments on specific lines or sections of code. These features
+>> are incredibly useful for code reviews and collaborative discussions.
+>>
+>> However, they are inherently tied to centralized web services,
+>> limiting their accessibility and flexibility, especially when working
+>> in local development environments or with decentralized repositories.
+>>
+>> The Gap:
+>>
+>> While Git provides tools like git blame and git notes, these are
+>> primarily geared towards understanding commit history and annotating
+>> commits, respectively. They do not offer a way to attach comments
+>> directly to specific lines or blocks of code within files.
+>> This limitation makes it challenging for developers to:
+>>
+>> Take personal code notes that are closely tied to specific parts of
+>> the codebase.
+>> Share annotations seamlessly across different development =
+environments
+>> and with other team members without relying on centralized platforms.
+>> Maintain contextual comments as the code evolves, especially when
+>> files undergo significant changes that shift line numbers or
+>> restructure code blocks.
+>>
+>> Proposed Feature:
+>>
+>> Inline Code Commenting in Git I propose the introduction of a native
+>> inline commenting feature in Git, resembling the functionality of
+>> addcomment(file1:[L3~L10], "comment").
+>> This feature would allow developers to:
+>>
+>> Attach comments to specific lines or ranges within a file directly in
+>> the repository.
+>> View and manage these comments within their local IDEs, ensuring that
+>> annotations are always accessible regardless of the hosting service.
+>> Share comments with other collaborators, enabling a decentralized
+>> approach to code annotation that aligns with Git's distributed =
+nature.
+>>
+>> Benefits:
+>>
+>> Enhanced Code Documentation: Developers can maintain contextual notes
+>> and explanations directly within the codebase, improving code
+>> readability and maintainability.
+>>
+>> Seamless Collaboration: Comments can be shared and viewed across
+>> different environments and by various team members without dependency
+>> on a centralized service.
+>> Resilience to Code Changes: Implementing intelligent comment
+>> localization would ensure that annotations remain relevant even as =
+the
+>> code evolves, addressing scenarios where files undergo significant
+>> modifications.
+>>
+>> Potential Challenges:
+>>
+>> Synchronization: Ensuring that comments remain accurately associated
+>> with the intended code blocks as changes occur.
+>>
+>> Conflict Resolution: Handling scenarios where multiple developers
+>> attempt to annotate overlapping or adjacent code sections.
+>> Tool Integration: Developing plugins or extensions for popular IDEs =
+to
+>> support the creation and management of inline comments.
+>>
+>> Conclusion:
+>>
+>> Integrating an inline code commenting feature directly into Git would
+>> empower developers to maintain rich, context-aware annotations within
+>> their projects.
+>> This enhancement aligns
+>> with Git=E2=80=99s philosophy of decentralization and could bridge =
+the gap
+>> between local development workflows and the collaborative features
+>> offered by platforms like GitHub and GitLab. I believe that such a
+>> feature is both feasible and valuable, and I would be eager to hear
+>> the community=E2=80=99s thoughts on its implementation. Collaboration =
+on
+>> defining the specifications and addressing potential challenges could
+>> pave the way for a more versatile and developer-friendly Git.
+>>
+>> Thank you for considering this suggestion. I look forward to engaging
+>> in fruitful discussions and contributing to the continued evolution =
+of
+>> Git.
 
-$ find . -name \*.bash
-./contrib/completion/git-completion.bash
-./ci/check-directional-formatting.bash
+The way I could see this working is as an ancillary data structure =
+within a
+Repository. It would be tied to a commit and a line or more generally a
+line range and a sequence, then whatever content blob would be =
+associated.
+This blob could/should be signed or have its own SHA signature.
 
-Signed-off-by: David Mandelberg <david@mandelberg.org>
----
- .editorconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+During a merge, the content would be subject to the similar processing - =
+a
+squash could combine notes.
 
-diff --git a/.editorconfig b/.editorconfig
-index a3c578a43c..2d3929b591 100644
---- a/.editorconfig
-+++ b/.editorconfig
-@@ -4,7 +4,7 @@ insert_final_newline = true
- 
- # The settings for C (*.c and *.h) files are mirrored in .clang-format.  Keep
- # them in sync.
--[{*.{c,h,sh,perl,pl,pm,txt,adoc},config.mak.*,Makefile}]
-+[{*.{c,h,sh,bash,perl,pl,pm,txt,adoc},config.mak.*,Makefile}]
- indent_style = tab
- tab_width = 8
- 
--- 
-2.47.2
+Once stored, a git push/fetch --notes or something like that would cause
+the information to be transferred to a remote in the same way as commits =
+do.
+Of course, this depends on support for non-git core servers, so that =
+would
+be not so easy. It also would depend on things like JGit supporting it.
+
+There is a lot to think about. The big question is whether there are =
+protected
+concepts in use by GitLab or GitHub or others that might cause =
+conflicts.
+I like the Merge Squash by GitLab, but it has not become part of git.
+
+Just my thoughts,
+Randall
+
