@@ -1,63 +1,67 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A398158DD8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79ECA1BD01F
 	for <git@vger.kernel.org>; Sun,  2 Mar 2025 07:45:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740901530; cv=none; b=E+r4spwXhKDC4JpuHtP1VxBGgWVbXHNb9/xnWDmMwxT0OdQQrbDdMaZM7nNV14wYe6tNndIZU0D1b3ZmgLY6QyiAiILxLwwVfs+QBltlE4/hC0+39i3hYW8SsGIlgISShetuJJ29s7RZ5ZwUoMUjrHdLboMdncYSmqX3JzQGoks=
+	t=1740901531; cv=none; b=F8xk3/RNA0thCQEXEoUoaF0+VSqu8U+bw0nDG+L9ik909DF0qIWmCU8ylnxupm5mFhqoRHtEY0HzewH6qxENBwo3WfjKm6N6kLWIrSat/htlfMY05DSOaXTQN1qraIOSj5W1WMab56YHJQUawiUZ0ktSL2KAQH5PwVTXx5ion+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740901530; c=relaxed/simple;
-	bh=y7MeA+bWdXDK+cLCoFTbAOSzUtlDE9215XGvMGxu3AQ=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=XNI0occvdFXjJTUldYJ8UzZg45asL7k52nZnC9n0nfc6KWuQ+AunkaD+8gmHHtkcl/iF/CuBFSXJnD/hnmwftfsH08snxFEpXBFckAcbYcaoSQGVBmsNy9yfOtL8eseHMXJcZ9XcjLukj4eWyqXWQctJWwnqyJ/v9Ffq0tpo6/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I1vVYnM3; arc=none smtp.client-ip=209.85.128.44
+	s=arc-20240116; t=1740901531; c=relaxed/simple;
+	bh=9UbH5fRM8D7OWySSr1WX3miOJ8ws8pKrd4Z5g1mCUao=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=UVUIUh0qII7Q8FauUm3ht9oNz9mYxehAGGQVtf2OryDSMDo5tmcAd1RpnrCBFHqnNhRjNk5x8TdnTfI0RzaTZ91CnL7t3iqGUCD+bvsgGjFj7MecjgD8f5TI4sm7Qa6kUD0hUigGQOo8FdtBs5YipoDxHqGedwQAtcKc9FpXIS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E7UolJ29; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I1vVYnM3"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-439846bc7eeso21258595e9.3
-        for <git@vger.kernel.org>; Sat, 01 Mar 2025 23:45:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E7UolJ29"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43994ef3872so21963925e9.2
+        for <git@vger.kernel.org>; Sat, 01 Mar 2025 23:45:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1740901527; x=1741506327; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=aerWOLqmebk+3q9cNJNUJI76aXd9pFip/zVUgHn9WIo=;
-        b=I1vVYnM3eOtomnZHOvqlsXOmArdXALPua7hoFL1y9KmjjTAk7q4vR+cdSR+8LjelMP
-         KjXbmzYY0tyhTjxUC+tBk4QOqsZcVjLFMFS8yqrF23V+QAl2TRjGeRY0qDrR1PDo1DFO
-         faEU9T7dcMInI1KbyWfoB6OyeruBq0FFLIvk2J+3aQMP5rIpLvAZcTv4r316u5YFCy8t
-         0uaODYQXK+PnCCoz9Ksg+D8VTHykCyKOH5iua6Q8Pp9m3FB7py4fmTqq5GcTkGCDnaoP
-         86IWKyDtQ7O6tbtMQRfCE96FekeRGY9MfyTnG/Rti1wXnlzpIO5dF/juCTdhx27ZG3hk
-         T21w==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AVHQO+bhQ6d4Sk4HDFa1QABWCGfs546zyD4jF4I39nM=;
+        b=E7UolJ29dePTqkwz0+vIQ1dlgh1wB2JUZa1jpqEFh3b6f3R6ziFcgiTeXFmonYoVcQ
+         UmteTGu60M1UhsyKQoicRLVagslG3o3I89pKKM99ps0dxGoOBtHmCZEWMwH8MTZ6BTgM
+         xLrbDffgUMYahvyNyuqa3YcqT8Tz/ySmfQIWvAap9eTX7PoLcaIw1xEJqVWrTO3Vi/4Y
+         DEN8umMeMNMDEXA6kWnh61yLdw1N1wF/pcZ9NLkc1UiFjuUnB9CdpLQucNPuqtHx6kGK
+         bVgw/y97h6+MS4Gjl2f4aPpTOz3k4eNskBJO/1Ci1DGSdRmnjAVnMwW5HwvlOu/MlY54
+         NcfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1740901527; x=1741506327;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aerWOLqmebk+3q9cNJNUJI76aXd9pFip/zVUgHn9WIo=;
-        b=GHpDzrqQUWxP9ZhjvUFBAvi7S8lNhf+gm4CRoHkPzaV1BIs6oOOTcC57MyuTMVl2dO
-         aUA3vDZMpIRc4sywB4mW3xJQGVflA4rbW8HnFz2L5qwquqc6Fe3d8usae+LbmKpqdXKI
-         qQcn9tK4m68zwvZiMa9Ux/5ASN78YZI/vE4e/uDbXdsc3Y1ZF/g09U4mQzK8GkZN2rbr
-         SWF/uYM9DLk8yHM0/w8EKaVtjzTcvPxEgGSNrkVOYlp0lu4gGm6eUem5XZntkFVbe7Ou
-         HTpaLeytRzsu3WpaBhJ0A2DMywPWYeAaj7kCA89c9o0KbQaf+HxAi0Bjd/p2HOJ3ynaY
-         Y0sA==
-X-Gm-Message-State: AOJu0YxlEqNHIrWOjLqoEIVMMFZ1QpCnqeJTgMNACSA1Dpb+ix30nOmt
-	tvp2ArPwhwnEpq3/amYoTcAn+uyOtVGWJQ9yYPQqDt470oLNZ2j9mpBVYg==
-X-Gm-Gg: ASbGncs57iALeAoJUpc8TjivxwFdAKiBQMk84/Mi0uoRKmTopFuzfHXPpnJ974XNibF
-	NuqmbL5BB+6yd5S3ZMep6QZgAREOCwvXF+6SilVtJLA/wJXAZL7ckcDeWERhR2vH1UHSz3XlhHs
-	I8r7lM5dWEfkrz0cfWtjpOWtrN313046t2JRUCwuaEsHtNY1vwyO9kOCy1LAtfek5G6cuKhnG1X
-	tBnRMYJ0E2xj6PTGZLJHNIHjR9dOZuHCgCjFShIiiWqb7I4OAjTh0HK8hns7B0f14pIsfpJy/zz
-	pieqGeCKgTKuukMh9f7crjCnPXvNOyabg0EgftNa2V9/EA==
-X-Google-Smtp-Source: AGHT+IHHvDo1gitQRSN7+aLTr26FG9POOHQx0BcO8aE3U1brkRezeKXYDnrGe45DnUVjkjtUxlrHKw==
-X-Received: by 2002:a05:600c:3505:b0:439:8cbf:3e26 with SMTP id 5b1f17b1804b1-43ba66d5659mr71408445e9.4.1740901526647;
-        Sat, 01 Mar 2025 23:45:26 -0800 (PST)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AVHQO+bhQ6d4Sk4HDFa1QABWCGfs546zyD4jF4I39nM=;
+        b=YoY18eaFcPkgpHdAC18i82gWNqlC03LEx3QMafrtuS8TxDhbscZkBN4kKJ0nA2QPFL
+         DYiWa92FDatxxPOs31uGzNW42FeXYiYWqS9rIRPucYSzb+0ZgqyEvzymdSsHVstqVzk7
+         f3/h8NvDGEGBf3kTQsHIVm2PdBSBSl7l1/6D0a/Nmcly25Rpu0KiZPunGcikoevQ02c6
+         FBsoofzwsiswT8GzYN946zq3zNCokxnmQ9JweK3sVRvSW39CHh67czGsGthgYC4KN8IM
+         W/7S0ePYGiNV56tn/7hqXVMeoUm3umPvV1PXi6JlHr6m9BwvChvKMI9xDVkKo3KSYND+
+         wcFg==
+X-Gm-Message-State: AOJu0YwIiRTGvJf0nqO1jOAJG5nzWbYInzSI0K4ck9bxZof/aXFvhlpB
+	BU2fUdfcclKQ9B7z6PXCEUzZWESJLjJM+LDZQu2eYDc4B0wiLA5XWeO5hw==
+X-Gm-Gg: ASbGnctc7BSQe8d/+GhmBAvEXVRiXKXQZPlQ+CGdxIct/9ko43LIBBzyjFBGtTov63Y
+	LghJ+xg6ZIexhtFGO3q0E0I5sodTXWAhbXmdN8putTn3wM+PpcwC+O9J0+DMplLDLzOOuReG1WJ
+	zILuKiLBVJM5zSTZjymdvlBOfM460raYos8uydA3R9VDXR7ux9QTK3Upom7hVg+sAnTGjTdqZ9i
+	0Yfo0NbbZwjlyAnaGCm0JXiJ1u2S7tcpzGsnM1nBftqRmDfePNCQQUDutAHLySazF+kaM5xf6ts
+	4qCdzuUV4e/0eHP7FC5TX3whyxvC19HowT379eUi7XB6sQ==
+X-Google-Smtp-Source: AGHT+IGCC4dbdWVQQ1LXvkvcPgod3mPpFjh0yFUyMEYQgkJH9g+4tPsWvY9y+TIhL8qHkgtbkgxEMA==
+X-Received: by 2002:a05:600c:1c22:b0:439:8c80:6b02 with SMTP id 5b1f17b1804b1-43ba6a78efcmr81076555e9.31.1740901527277;
+        Sat, 01 Mar 2025 23:45:27 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ab2c4051bsm130627035e9.0.2025.03.01.23.45.26
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43bbc8b7cbesm7504225e9.37.2025.03.01.23.45.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 23:45:26 -0800 (PST)
-Message-Id: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
+        Sat, 01 Mar 2025 23:45:27 -0800 (PST)
+Message-Id: <c8594d311741e884680fab8f9cc15eb881774163.1740901525.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
+References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
 From: "David Mandelberg via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 02 Mar 2025 07:45:22 +0000
-Subject: [PATCH 0/3] completion: fix bugs with slashes in remote names
+Date: Sun, 02 Mar 2025 07:45:23 +0000
+Subject: [PATCH 1/3] completion: add helper to escape strings for fnmatch
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,42 +74,61 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Jacob Keller <jacob.keller@gmail.com>,
     Junio C Hamano <gitster@pobox.com>,
+    David Mandelberg <david@mandelberg.org>,
     David Mandelberg <david@mandelberg.org>
 
-Previously, some calls to for-each-ref passed fixed numbers of path
-components to strip from refs, assuming that remote names had no slashes in
-them. This made completions like:
+From: David Mandelberg <david@mandelberg.org>
 
-git push github/dseomn :com
+A follow-up commit will use this to escape parts of ref names for
+for-each-ref.
 
-Result in:
+Signed-off-by: David Mandelberg <david@mandelberg.org>
+---
+ contrib/completion/git-completion.bash | 12 ++++++++++++
+ t/t9902-completion.sh                  |  7 +++++++
+ 2 files changed, 19 insertions(+)
 
-git push github/dseomn :dseomn/completion-remote-slash
-
-With this patch, it instead results in:
-
-git push github/dseomn :completion-remote-slash
-
-In addition, the change to __git_dwim_remote_heads() restricts it to only
-list remote branches, not HEAD. I think that actually improves the
-completion where it's used though, since HEAD doesn't seem to be valid
-anyway:
-
-$ git switch HEAD fatal: a branch is expected, got 'HEAD'
-
-David Mandelberg (3):
-  completion: add helper to escape strings for fnmatch
-  completion: add helper to count path components
-  completion: fix bugs with slashes in remote names
-
- contrib/completion/git-completion.bash |  40 ++++-
- t/t9902-completion.sh                  | 213 ++++++++++++++++++++++---
- 2 files changed, 225 insertions(+), 28 deletions(-)
-
-
-base-commit: cb0ae672aeabefca9704477ea8018ac94f523970
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1901%2Fdseomn%2Fcompletion-remote-slash-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1901/dseomn/completion-remote-slash-v1
-Pull-Request: https://github.com/git/git/pull/1901
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 413911be3be..cb10f818a81 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -234,6 +234,18 @@ __git_dequote ()
+ 	done
+ }
+ 
++# Escapes special characters in a string to pass to fnmatch(3)
++# 1: String to escape.
++__git_escape_fnmatch ()
++{
++	local s="$1"
++	s=${s//\\/\\\\}
++	s=${s//\?/\\\?}
++	s=${s//\*/\\\*}
++	s=${s//\[/\\\[}
++	printf '%s\n' "$s"
++}
++
+ # The following function is based on code from:
+ #
+ #   bash_completion - programmable completion functions for bash 3.2+
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 51bd7508376..c5e91622876 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -455,6 +455,13 @@ test_expect_success '__git_dequote - open double quote' '
+ '
+ 
+ 
++test_expect_success '__git_escape_fnmatch' '
++	echo '\''foo\\\?\*\['\'' >expected &&
++	__git_escape_fnmatch '\''foo\?*['\'' >"$actual" &&
++	test_cmp expected "$actual"
++'
++
++
+ test_expect_success '__gitcomp_direct - puts everything into COMPREPLY as-is' '
+ 	sed -e "s/Z$//g" >expected <<-EOF &&
+ 	with-trailing-space Z
 -- 
 gitgitgadget
+
