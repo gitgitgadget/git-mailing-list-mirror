@@ -1,98 +1,111 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814F315A8
-	for <git@vger.kernel.org>; Sun,  2 Mar 2025 06:05:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A398158DD8
+	for <git@vger.kernel.org>; Sun,  2 Mar 2025 07:45:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740895520; cv=none; b=Ugol8FmZ17ofbJDfUO5t7z1iaj9bYY/RVB+73c5U0837TgE1QVSM6gd7gQhmBIJoRgrznQ1llW3q1vxWTVZU9GsXfvHWRuph4HniUEYzsmctKOzEy7O9FJuw75eXNzeAwHd5hpEWScsWHbZmU+8Tac7alKuqRHvE6/2miylKcII=
+	t=1740901530; cv=none; b=E+r4spwXhKDC4JpuHtP1VxBGgWVbXHNb9/xnWDmMwxT0OdQQrbDdMaZM7nNV14wYe6tNndIZU0D1b3ZmgLY6QyiAiILxLwwVfs+QBltlE4/hC0+39i3hYW8SsGIlgISShetuJJ29s7RZ5ZwUoMUjrHdLboMdncYSmqX3JzQGoks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740895520; c=relaxed/simple;
-	bh=40HpKbL/A6qsgltwMNgDlWnJuU72y519tzrLg2tHAvI=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=SYmWZTxve1ZwuXyfwp0fPO1F6kE1Rp0DP5+9kHSX7q5zrSgzEgB77w7SCzWpQP3mXDjPiXJ2VlEXZYJI63eCTvJb3PDqhZc5SPnwHmE15pTDCcXd7NFkQQfJ3fGbCZ11sDGjosr+yMprzsk0VQBVMgJK+LclBfutfXlVbbWZwQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kRfQbGNK; arc=none smtp.client-ip=209.85.219.179
+	s=arc-20240116; t=1740901530; c=relaxed/simple;
+	bh=y7MeA+bWdXDK+cLCoFTbAOSzUtlDE9215XGvMGxu3AQ=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=XNI0occvdFXjJTUldYJ8UzZg45asL7k52nZnC9n0nfc6KWuQ+AunkaD+8gmHHtkcl/iF/CuBFSXJnD/hnmwftfsH08snxFEpXBFckAcbYcaoSQGVBmsNy9yfOtL8eseHMXJcZ9XcjLukj4eWyqXWQctJWwnqyJ/v9Ffq0tpo6/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I1vVYnM3; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kRfQbGNK"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e5ad75ca787so2533198276.0
-        for <git@vger.kernel.org>; Sat, 01 Mar 2025 22:05:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I1vVYnM3"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-439846bc7eeso21258595e9.3
+        for <git@vger.kernel.org>; Sat, 01 Mar 2025 23:45:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740895518; x=1741500318; darn=vger.kernel.org;
-        h=mime-version:content-transfer-encoding:msip_labels:content-language
-         :accept-language:message-id:date:thread-index:thread-topic:subject
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=40HpKbL/A6qsgltwMNgDlWnJuU72y519tzrLg2tHAvI=;
-        b=kRfQbGNKJhc46kbCf/IkcZKUSLtd6BJFcDdsLj3KySGtErnTjJTQelALb5YkhZfuEC
-         EJbsJEDPRh4e/m8l8bQdTFPJECx1QzSWwouIhPdYYj+RSKUS7n1jrVx3c1TzeEFsnBFo
-         5CIoBnZOS7FfQz7X06Uz3Z5Digv0uK2dXZxP/IHlRGx4DWcEms4aDfRyxX3h33L6Znkk
-         Tg01zckdQ5FlOVSScxg1t5Qmnru10h1Hsols6G1V11fme83uPRIRIlRqd1utTZ8b7jkF
-         UDSk7ydf72qxmETJ88Xrequ6qDjjXexg80fVg0sjuouAq/KbE+nbLzqb/SftMSzKVZiV
-         vWog==
+        d=gmail.com; s=20230601; t=1740901527; x=1741506327; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=aerWOLqmebk+3q9cNJNUJI76aXd9pFip/zVUgHn9WIo=;
+        b=I1vVYnM3eOtomnZHOvqlsXOmArdXALPua7hoFL1y9KmjjTAk7q4vR+cdSR+8LjelMP
+         KjXbmzYY0tyhTjxUC+tBk4QOqsZcVjLFMFS8yqrF23V+QAl2TRjGeRY0qDrR1PDo1DFO
+         faEU9T7dcMInI1KbyWfoB6OyeruBq0FFLIvk2J+3aQMP5rIpLvAZcTv4r316u5YFCy8t
+         0uaODYQXK+PnCCoz9Ksg+D8VTHykCyKOH5iua6Q8Pp9m3FB7py4fmTqq5GcTkGCDnaoP
+         86IWKyDtQ7O6tbtMQRfCE96FekeRGY9MfyTnG/Rti1wXnlzpIO5dF/juCTdhx27ZG3hk
+         T21w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740895518; x=1741500318;
-        h=mime-version:content-transfer-encoding:msip_labels:content-language
-         :accept-language:message-id:date:thread-index:thread-topic:subject
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1740901527; x=1741506327;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=40HpKbL/A6qsgltwMNgDlWnJuU72y519tzrLg2tHAvI=;
-        b=auPxfitg+GUxxemBdazrexqVpMY4vzW0+QV69eo1T1bfdWPFk+aoOcFWLFDgkWZLcj
-         JqzMosX/XHxAalFoeYJOjl4vLLfCzddeKQmOiOtBzN7pHNcjPIDdPMxpq5SDVRhRMNKd
-         Mc2oaecJMLdAqaTcKeVIX+LiySdCjFKg/i1Eh9u60i6t/fQIjIyjPJpx4R3MZs7nJM6O
-         2O6mHH9nR6QwFHe0HQ5u4/WaIu6QLxSZQwRMsTXVrbZaYFu2xC/85XlltDyzB5S3bh/v
-         9QW/ZIYbXaRaC2X68AB5igrWUl3DMoXVxrPm+Wrm4TBQ97FLfrUl5mrWMXgNhOXImkHs
-         bcLA==
-X-Gm-Message-State: AOJu0YzA4VVplEOd+FkQw9T0Yifvpze6tfLw+Ye+5rJoD5wv8UEck7Wa
-	+v0B3UYok/WRmBfEB1LCTNsbBnoPRRflB83ytOrSQvId65k21yNkGOLeLbAd
-X-Gm-Gg: ASbGnctvHdFI4eSG3gcOiBtz3jliManc15FJfMlP/Vdrd+QcroAk3gEFh1VgGthccUJ
-	4NNpP6+Z3saAhoa3Xt7E+YFJhDCIBUhl95NKdyGqUIgDiO9qxlMjwiXKk35VNIJPpPWr+rfuIUh
-	I9S4A6zgnfdHYyjnGylaOCZK7EfYpYxymr/LsfaO4Wm44c4MN7QEHAvrta/rAqhtX0HjYEgzpG3
-	NhZhA/VqBbPjISzt3PgKWhX0tgjKKiK9bck9QOHssJpulWXymZQkpyc5ah1C0wd9Qh+g5IU/Dy9
-	gCEqAFP2jM5X11yaV0ObIpV1uWp1jpmEjhBwcqU+BPDRwxgxiEbwS//ntEcJ61CakWTF2y/gIow
-	UeYLAkm1+fCT51sojlsRN1t0FuvMc5/OT/g==
-X-Google-Smtp-Source: AGHT+IH5PMJeV+a+GzPJ54xy5HdNyv98C6w1gRXeRuLzN35+33/mwfOHC3qhDfTFmMDTqlYqr8rtoQ==
-X-Received: by 2002:a05:6902:1b04:b0:e5d:f944:c6 with SMTP id 3f1490d57ef6-e609ee93aa9mr17199551276.3.1740895518145;
-        Sat, 01 Mar 2025 22:05:18 -0800 (PST)
-Received: from SEZPR01MB5486.apcprd01.prod.exchangelabs.com ([2603:1046:101:ae::5])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e60a3aa52edsm2198849276.43.2025.03.01.22.05.16
-        for <git@vger.kernel.org>
+        bh=aerWOLqmebk+3q9cNJNUJI76aXd9pFip/zVUgHn9WIo=;
+        b=GHpDzrqQUWxP9ZhjvUFBAvi7S8lNhf+gm4CRoHkPzaV1BIs6oOOTcC57MyuTMVl2dO
+         aUA3vDZMpIRc4sywB4mW3xJQGVflA4rbW8HnFz2L5qwquqc6Fe3d8usae+LbmKpqdXKI
+         qQcn9tK4m68zwvZiMa9Ux/5ASN78YZI/vE4e/uDbXdsc3Y1ZF/g09U4mQzK8GkZN2rbr
+         SWF/uYM9DLk8yHM0/w8EKaVtjzTcvPxEgGSNrkVOYlp0lu4gGm6eUem5XZntkFVbe7Ou
+         HTpaLeytRzsu3WpaBhJ0A2DMywPWYeAaj7kCA89c9o0KbQaf+HxAi0Bjd/p2HOJ3ynaY
+         Y0sA==
+X-Gm-Message-State: AOJu0YxlEqNHIrWOjLqoEIVMMFZ1QpCnqeJTgMNACSA1Dpb+ix30nOmt
+	tvp2ArPwhwnEpq3/amYoTcAn+uyOtVGWJQ9yYPQqDt470oLNZ2j9mpBVYg==
+X-Gm-Gg: ASbGncs57iALeAoJUpc8TjivxwFdAKiBQMk84/Mi0uoRKmTopFuzfHXPpnJ974XNibF
+	NuqmbL5BB+6yd5S3ZMep6QZgAREOCwvXF+6SilVtJLA/wJXAZL7ckcDeWERhR2vH1UHSz3XlhHs
+	I8r7lM5dWEfkrz0cfWtjpOWtrN313046t2JRUCwuaEsHtNY1vwyO9kOCy1LAtfek5G6cuKhnG1X
+	tBnRMYJ0E2xj6PTGZLJHNIHjR9dOZuHCgCjFShIiiWqb7I4OAjTh0HK8hns7B0f14pIsfpJy/zz
+	pieqGeCKgTKuukMh9f7crjCnPXvNOyabg0EgftNa2V9/EA==
+X-Google-Smtp-Source: AGHT+IHHvDo1gitQRSN7+aLTr26FG9POOHQx0BcO8aE3U1brkRezeKXYDnrGe45DnUVjkjtUxlrHKw==
+X-Received: by 2002:a05:600c:3505:b0:439:8cbf:3e26 with SMTP id 5b1f17b1804b1-43ba66d5659mr71408445e9.4.1740901526647;
+        Sat, 01 Mar 2025 23:45:26 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ab2c4051bsm130627035e9.0.2025.03.01.23.45.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 22:05:17 -0800 (PST)
-From: li li <li0371859@gmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [GSoC] Add more builtin patterns for userdiff: Add builtin patterns
- for Verilog
-Thread-Topic: [GSoC] Add more builtin patterns for userdiff: Add builtin
- patterns for Verilog
-Thread-Index: AQHbizi9Vek0tEvt8UyVcAztOKcN9A==
-X-MS-Exchange-MessageSentRepresentingType: 1
-Date: Sun, 2 Mar 2025 06:05:12 +0000
-Message-ID:
-	<SEZPR01MB5486758C5EE90BB11B604482A3CE2@SEZPR01MB5486.apcprd01.prod.exchangelabs.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-Exchange-Organization-SCL: -1
-X-MS-TNEF-Correlator:
-X-MS-Exchange-Organization-RecordReviewCfmType: 0
-msip_labels:
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+        Sat, 01 Mar 2025 23:45:26 -0800 (PST)
+Message-Id: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
+From: "David Mandelberg via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 02 Mar 2025 07:45:22 +0000
+Subject: [PATCH 0/3] completion: fix bugs with slashes in remote names
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Jacob Keller <jacob.keller@gmail.com>,
+    Junio C Hamano <gitster@pobox.com>,
+    David Mandelberg <david@mandelberg.org>
 
-SGVsbG8gZXZlcnlvbmUsCgpJIGFtIG5ldyB0byB0aGUgR2l0IGNvbW11bml0eSBhbmQgd291bGQg
-bGlrZSB0byBjb250cmlidXRlLiBJIG5vdGljZWQgdGhhdCB0aGVyZSBhcmUgbm8gYnVpbHRpbiBw
-YXR0ZXJucyBmb3IgdGhlIFZlcmlsb2cgbGFuZ3VhZ2UgaW4gYHVzZXJkaWZmLmNgLiBTaW5jZSBJ
-IHJlY2VudGx5IHdvcmtlZCBvbiBhIHByb2plY3QgaW52b2x2aW5nIFZlcmlsb2csIEkgZGVjaWRl
-ZCB0byBhZGQgc3VwcG9ydCBmb3IgaXQuCgpCZWxvdyBpcyBhIHN1bW1hcnkgb2YgbXkgY2hhbmdl
-czoKCjEuIEFkZGVkIFZlcmlsb2cgYnVpbHRpbiBwYXR0ZXJucyB0byBgdXNlcmRpZmYuY2AuCjIu
-IFVwZGF0ZWQgdGhlIGRvY3VtZW50YXRpb24gdG8gcmVmbGVjdCB0aGUgbmV3IHBhdHRlcm5zLgoK
-SWYgeW91IGhhdmUgYW55IHN1Z2dlc3Rpb25zIG9yIGZlZWRiYWNrLCBwbGVhc2UgbGV0IG1lIGtu
-b3cuIEkgd291bGQgZ3JlYXRseSBhcHByZWNpYXRlIHlvdXIgZ3VpZGFuY2UgdG8gYXZvaWQgYW55
-IG1pc3Rha2VzIG9yIGRldG91cnMuCgpUaGFuayB5b3UgdmVyeSBtdWNoIQoKQmVzdCByZWdhcmRz
-LApIYW8gQ2hlbm1pbmc=
+Previously, some calls to for-each-ref passed fixed numbers of path
+components to strip from refs, assuming that remote names had no slashes in
+them. This made completions like:
+
+git push github/dseomn :com
+
+Result in:
+
+git push github/dseomn :dseomn/completion-remote-slash
+
+With this patch, it instead results in:
+
+git push github/dseomn :completion-remote-slash
+
+In addition, the change to __git_dwim_remote_heads() restricts it to only
+list remote branches, not HEAD. I think that actually improves the
+completion where it's used though, since HEAD doesn't seem to be valid
+anyway:
+
+$ git switch HEAD fatal: a branch is expected, got 'HEAD'
+
+David Mandelberg (3):
+  completion: add helper to escape strings for fnmatch
+  completion: add helper to count path components
+  completion: fix bugs with slashes in remote names
+
+ contrib/completion/git-completion.bash |  40 ++++-
+ t/t9902-completion.sh                  | 213 ++++++++++++++++++++++---
+ 2 files changed, 225 insertions(+), 28 deletions(-)
+
+
+base-commit: cb0ae672aeabefca9704477ea8018ac94f523970
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1901%2Fdseomn%2Fcompletion-remote-slash-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1901/dseomn/completion-remote-slash-v1
+Pull-Request: https://github.com/git/git/pull/1901
+-- 
+gitgitgadget
