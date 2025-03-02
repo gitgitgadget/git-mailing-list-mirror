@@ -1,154 +1,188 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B44B1DDC11
-	for <git@vger.kernel.org>; Sat,  1 Mar 2025 21:47:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D52DFBF6
+	for <git@vger.kernel.org>; Sun,  2 Mar 2025 02:27:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740865655; cv=none; b=r/XDZjjX+EPFWU8BLnJvfArfXolAAIakZRdZEYbpgcpYmDZ17y6U/wChnkz/m962T3QlC0L1vWrfAuRBPW6zPryiIsTImZ3+VWbacxjBvi/oNjwksiOhT9Yk+8CahyIKn5aaoki2wNzTYIUMFieIkSJsvMSFAPk0SneslVMcCso=
+	t=1740882478; cv=none; b=gE8W3pi/g0HGZzvcdcfC4M314jcU4JQwV5q+1jK6HXqpQD11D+q77I9jUMVdd9b7xG6p7Qo/JOI87b5EKn58X9LGbIU21rCKn4Ehp8ynMMmvAHP0d16lEiMhf/a7kkc7j8OR7Hsz8vAYYZ9qRrkGRpQtd3imM0R7yIZ3D7K2HBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740865655; c=relaxed/simple;
-	bh=VDzbMFBxEVjLZpqE5rC34q6jnqzw5lGIfZE2QJ0Xw94=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ri35wZi2yc3NCfOi2ZhRJk8YE5lj/4L/BQc0l/i6JTdwhU4ajGWjiyuUAw9EZkZzHruqVVFYAehfP+8aKNTsJGu+fiTeuiBCtdySL0MbO8ZRyOJHo/Y+BipsEarNOGaPtk7S7KhVJWpfaSD9StgDkQIRAvKt4OJ8F9/NOHk7GQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b5v8q3ck; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1740882478; c=relaxed/simple;
+	bh=oB/Xl84CpH+JxXpeBeN3HHGWbqmCPLNfgzhLYD76Z4c=;
+	h=From:Message-ID:Date:MIME-Version:To:Subject:Content-Type; b=nCiyw0U5mt7gprsfPctpf+bKFog0/PiGQeB0BgJURBGdFxaD7JRkhoQlhkZ9z2gggWIE8z4lbPj1w1CYkHT7CaPMTKWgGD/6yZJD8jw5jEHMnD66B+bNKQIgq9fBhOf213gxa0DUL2HNToakaFSW+CGmMpLmPtAUrCjtfRqbPzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BvWPxTxB; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b5v8q3ck"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-439946a49e1so20568105e9.0
-        for <git@vger.kernel.org>; Sat, 01 Mar 2025 13:47:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BvWPxTxB"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-47220d28138so48713161cf.3
+        for <git@vger.kernel.org>; Sat, 01 Mar 2025 18:27:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740865652; x=1741470452; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DNoDGICRIZjpFc0M3crv7zQYP0PG5C5ExoDptZTbM90=;
-        b=b5v8q3cks1zDI0d5H4YTYKgJ/kbXaYdX0uTgbR04UzPMiw4BpwSxN6sCVsR8r81FC8
-         ecz22yUydEDkB2xEiE4a5m5JZD3bIQLpVCjzOWcd1MTAUP/8R4SqJbM++VSqgbl/Ixu3
-         AuNXsOLeDjCt4rdCYPAjNOiBYM9OI/8os/4vu9bp4RCdc927oPSlHD9TSEdreAknpbfK
-         tBY2/5oIVbfuCKvDruFldoGi/AmXF69mCrSTtZPErfrtdwUozrnXf9b3bkYesuszrgGC
-         B4MaZkC31Y41GF44usABFeV9btDZpoJ5KBf3MhkNZNG/ccXXuLLRxJDiSp4VXBVt1pYl
-         vKeQ==
+        d=gmail.com; s=20230601; t=1740882475; x=1741487275; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:to:content-language:reply-to
+         :user-agent:mime-version:date:message-id:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=bTRvjrqL34ccaCHMrMEgf0eo4mEp3uQCEHrlIqSuQ4c=;
+        b=BvWPxTxB+0vwVaPw4kuf4HpTBtAcK/ONfWNWJAMhzu9fxQZid/uwOo4+COdkOZP4hq
+         gIcwLwavaSHR5HEygVMBjdl9M743SEOkuUypWE1m0sJceDqqAOoY7pXC5uN3V3/UVoCo
+         uAMCsXJLSf4K9FsICtTCoPUU7IjWnte2NrrIZri0hYE6J5687PcEpJziqD7bfVGoFutl
+         1zoJF/Y1i32cVLGHaAa0Q7Uk+5ihSAwQekVZYZ58v2gXYXCHUX3LXZ9U7qbYkIQZxoY7
+         vrB0iJ3IqatdOep2OaMh2jqbot71PsAioUZYa0b/0BVbUfwWdS77JPDsikwPT+yqbd68
+         TGsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740865652; x=1741470452;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DNoDGICRIZjpFc0M3crv7zQYP0PG5C5ExoDptZTbM90=;
-        b=jEheLruUwE87IbY6VOywkx/AINqnrMYIbsZUB061hM0tft3Z3C8EzWZVImR/MxO2FC
-         dIZKXTkVn4SRyyeSUek55BrIU6HXaEmrR0GKuugeLsZtNnwEXpzeK/mE2VImiHy5aALA
-         vYCQbNb5+KsWENXk8tuldgft4ZGrPHxn39lrEKsf8RT1NAEufjrW+p7lpgfcgeG8Ivz3
-         QvrGf2ChZlSoImWvy9EWcbSYysR2wR9a3XAEtW0INaGVNFEyzVp1QFNfOo1BStU7zOCP
-         JA0PYpEDP7Gu+AdKEScNxI32JNZJwcWm8UOEwgVsT6lsKOoETVvGrbvaXwC3piAlB8bn
-         Sq2g==
-X-Gm-Message-State: AOJu0YyLr73Thj/UKELMPK89tCGfQSASFfn7iC9JXEIc9w+k8Wfz6PEZ
-	PqY0mgjSARrpbaHrWUEddQWsNJx3V8Q9m7e7NZrtbpZoQFF3AKr399fJQkom
-X-Gm-Gg: ASbGnctwUqBLErWfl2dMfZJwCKR6VVGqQ938tCduauPx8RU1Lb3r1izIjdketJT8L4d
-	Ih6vWmuVkd/WAUHXqlxf96A+5IzkfVBnm8AJZvRHkZhqm5LCHwlEzZZhP/+shU6hmSqrmOxmJ0r
-	Wb8xs8sbkaT+uiFAQwlS45wmm1pXw77tpoEWDhh7uE1YLkMF9z+rMaW4x/HbxBvFVaJntlMQpqB
-	DJeWSto2yFMRUFb7QVZQ97UEqUs+dnFbZjrQm+thqKtUmGwiip7j07v5D6HLRqJdw0tz1rb5QHi
-	9qUvIQ0oGgsIW/j33EYaHg+YTPDvrnBbXd12yQo99m3X+ykzdiAuiShtSjaW0Wq4wpdR5v8/lol
-	JyNus
-X-Google-Smtp-Source: AGHT+IFK/km3SasBMv8OmulDTsrX7d4fQidtwanw1gZGD4FeRPKa09yG7OzzcXRT4f+vDMFxwiPmBw==
-X-Received: by 2002:a5d:47c3:0:b0:38f:48ee:ddc2 with SMTP id ffacd0b85a97d-390eca47db0mr6699001f8f.37.1740865651641;
-        Sat, 01 Mar 2025 13:47:31 -0800 (PST)
-Received: from aleksbgbg.communityfibre.co.uk ([103.205.25.90])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390e47a72d5sm9603474f8f.31.2025.03.01.13.47.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 13:47:30 -0800 (PST)
-From: Aleks Todorov <aleks.todorov.1337@gmail.com>
-To: git@vger.kernel.org
-Cc: Aleks Todorov <aleks.todorov.1337@gmail.com>
-Subject: [PATCH 7/7] Documentation: Add docs for blame format
-Date: Sat,  1 Mar 2025 21:45:06 +0000
-Message-ID: <20250301214652.536439-8-aleks.todorov.1337@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250301214652.536439-1-aleks.todorov.1337@gmail.com>
-References: <20250301214652.536439-1-aleks.todorov.1337@gmail.com>
+        d=1e100.net; s=20230601; t=1740882475; x=1741487275;
+        h=content-transfer-encoding:subject:to:content-language:reply-to
+         :user-agent:mime-version:date:message-id:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bTRvjrqL34ccaCHMrMEgf0eo4mEp3uQCEHrlIqSuQ4c=;
+        b=JDYc+V2aaVbGkiqxw49eZoyN5X/3y+0mxJl05AhePNBuXAAg5bgdx3gqmHgrYHH9Y8
+         NkfY4Fq7RZC1YCkwXEO8n17BOCNJ03NQEx+jzuJUEZgnGgSDO7enMG56qx+8hZOzdygK
+         10R0Rfb7eoKKvp67b1InR+axW7Sny/RcHgjz3WIxCW7QoJTmwj8ul8K52g9lKF19GBz6
+         K7IKxOwyKFs3gVjFnQE01OmB/VvbXXEfzadpTSV7PrvYcCa69Q7Bp/W5TFILYCoYB1MU
+         4FQuYxLTVRCIuc7c7CGMsfDh6H+zHhiFglRvIGqEAPxBNp7s0dowzVEXTWb8gkU7rah1
+         cmtA==
+X-Gm-Message-State: AOJu0Yzo779IoeqGgiz5QfJe7pDD7psXdQ2RThp80Nm4eftd1epFh5/5
+	WhI4guS8abz2hbYqlvgGbxCoefO2GnvHBQh5uiJ8ZPHnchEtFtE7S2gUKg==
+X-Gm-Gg: ASbGnctgZeGuPvWijS+hEL6k7fb3CbB+A4lXPKVyCDmxuET0JHSiCucGKbYnYFxm6nB
+	ZoZQntcNnEE8BYNuC6sqsdG/FWntJj9KnqaOHjGuPRprPtduy+4iK8f9GVrElSK6oG3/NbZnbXP
+	V1nyKKSkFjVvOPx87YqoFGUP3J/NcBcV3mFl4L2CUTANK/GK+bYqdn0SabcaTSihVpakGzYFyyY
+	RB4Q0lAxC/OE+LrSMvaFt4LJ5R99QA6/dmBJ7H27v06LpN8ETXjasO1k5IlpD5dlu+8PSUKwkFF
+	1vIh6JPEdziH1hO08Jk+idHGRmVyEUSyNv3TuWvxGLPJlB0JfFgLZ+vQV6yJvqAwTCMuzn+iDBP
+	Ww2QhQBocKCajUWS4UMXggQ==
+X-Google-Smtp-Source: AGHT+IFy+pzn5Rrhc0JDKfhA9yT9XyH9/mIAU7H3pSZfjbbs1VnPxiCbsZ2gbzigE+7xA6BpG+Hwug==
+X-Received: by 2002:a05:622a:118b:b0:471:f8a6:6cf2 with SMTP id d75a77b69052e-474bc06a76amr136878101cf.16.1740882474614;
+        Sat, 01 Mar 2025 18:27:54 -0800 (PST)
+Received: from [192.168.1.174] (c-73-143-206-114.hsd1.ma.comcast.net. [73.143.206.114])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4746b4f9507sm43173211cf.27.2025.03.01.18.27.53
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 01 Mar 2025 18:27:54 -0800 (PST)
+From: Nikolay Shustov <nikolay.shustov@gmail.com>
+X-Google-Original-From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
+Message-ID: <e3e8729b-2f0f-43d4-bd3b-422302df9fa1@gmail.com>
+Date: Sat, 1 Mar 2025 21:27:52 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Reply-To: Nikolay.Shustov@gmail.com
+Content-Language: en-US
+To: git@vger.kernel.org
+Subject: git-p4 enhancements and fixes
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Add documentation explaining the new `git blame --format` option as well
-as the associated `blame.format` config option.
+Hello,
+I am having in works the following changes to git-p4 which I found 
+useful for the usage workflow I typically have to follow.
+I think these could be useful for the users of git-p4 in general.
+Looking for the feedback and comments.
+Thank you in advance for your time and consideration.
 
-Include a section listing the available placeholders. Also document the
-new (blame-specific) placeholders in this section.
+Enhancements:
+=============
 
-Signed-off-by: Aleks Todorov <aleks.todorov.1337@gmail.com>
----
- Documentation/config/blame.adoc |  5 +++++
- Documentation/git-blame.adoc    | 16 ++++++++++++++++
- Documentation/placeholders.adoc |  4 ++++
- 3 files changed, 25 insertions(+)
+New git-p4.P4CommandErrorEncoding (string) configuration setting
+****************************************************************
 
-diff --git a/Documentation/config/blame.adoc b/Documentation/config/blame.adoc
-index 4d047c1790..88ef551c04 100644
---- a/Documentation/config/blame.adoc
-+++ b/Documentation/config/blame.adoc
-@@ -35,3 +35,8 @@ blame.markUnblamableLines::
- blame.markIgnoredLines::
- 	Mark lines that were changed by an ignored revision that we attributed to
- 	another commit with a '?' in the output of linkgit:git-blame[1].
-+
-+blame.format::
-+	Apply the specified format by default when invoking
-+	linkgit:git-blame[1]. For supported format specifiers, see the
-+	discussion of the `--format` option in linkgit:git-blame[1].
-diff --git a/Documentation/git-blame.adoc b/Documentation/git-blame.adoc
-index f75ed44790..373ff6b994 100644
---- a/Documentation/git-blame.adoc
-+++ b/Documentation/git-blame.adoc
-@@ -62,6 +62,17 @@ include::blame-options.adoc[]
- 	a certain threshold for 'git blame' to consider those lines
- 	of code to have been moved.
- 
-+-F::
-+--format::
-+	Emit blame information in a given '<format>'. '<format>' is a string
-+	that can contain '%placeholder' specifiers, which will be expanded to
-+	produce blame information.
-++
-+See the "PLACEHOLDERS" section to learn about all of the available specifiers.
-++
-+Note: you can specify the default blame format in the repository configuration
-+(see `blame.format` in linkgit:git-config[1]).
-+
- -f::
- --show-name::
- 	Show the filename in the original commit.  By default
-@@ -235,6 +246,11 @@ one) at the beginning of the "extended information" lines. That way, if
- there is ever added information (like the commit encoding or extended
- commit commentary), a blame viewer will not care.
- 
-+PLACEHOLDERS
-+------------
-+
-+:git-blame: 1
-+include::placeholders.adoc[]
- 
- MAPPING AUTHORS
- ---------------
-diff --git a/Documentation/placeholders.adoc b/Documentation/placeholders.adoc
-index 7f4d0b59c7..5420a44e94 100644
---- a/Documentation/placeholders.adoc
-+++ b/Documentation/placeholders.adoc
-@@ -145,6 +145,10 @@ tags are added or removed at the same time.
-        (like `git log --source`), only works with `git log`
- '%e':: encoding
- '%s':: subject
-+ifdef::git-blame[]
-+'%L':: line number
-+'%F':: filename in the original commit
-+endif::git-blame[]
- '%f':: sanitized subject line, suitable for a filename
- '%b':: body
- '%B':: raw body (unwrapped subject and body)
--- 
-2.43.0
+This configuration setting allows to specify the characters encoding 
+that will be used for reading the errors Perforce commands may return. 
+If not set, utf-8 is used.
+This setting is useful when Perforce client and/or server are configured 
+to use single-byte encoding, like Laitn-1; in such cases git-p4 errors 
+out while trying to decode error messages from Perforce commands which 
+happen to contain high-bit set characters in the output.
+Setting git-p4.P4CommandErrorEncoding to ‘latin-1’ will now allow git-p4 
+to proceed.
 
+New --disable-p4refresh command line option
+*******************************************
+
+If used, git-p4 will not attempt to sync the associated p4 workspace 
+before creating changelist from git commits.
+New associated configuration setting: git-p4.disableP4Refresh (boolean)
+
+New --new-changelist command line option
+****************************************
+
+Can be used for “shelve” command git-p4 command.
+If used, git-p4 will create a new numbered changelist from gits commits, 
+as opposite to using default changelist.
+New associated configuration setting: git-p4.makeNewChangelist (boolean)
+
+New --keep-p4opened command line option
+***************************************
+
+Can be used for “shelve” git-p4 command.
+If used, git-p4 will not revert the changelist files after creating 
+shelving them.
+New associated configuration setting: git-p4.keepShelvedFilesOpened 
+(boolean)
+
+New --p4-description-file=<filepath> command line option
+********************************************************
+
+This option used instructs git-p4 will use the given file contents as a 
+template for the description of new changelist.
+The template supports the following substitutions:
+     {message} – substituted with the commit message
+     {hash}  – substituted with the commit hash
+New associated configuration setting: git-p4.descriptionTemplateFile 
+(string)
+
+Example: --p4-description-file=~/git-p4/default-description.txt
+
+
+New --p4-description=string command line option
+***********************************************
+
+This option used instructs git-p4 will use the given string as a 
+template for changelist message.
+The template supports the following substitutions:
+     {message} – substituted with the commit message
+     {hash}  – substituted with the commit hash
+     \n – substituted with the newline character; allows to create 
+multiline descriptions.
+New associated configuration setting: git-p4.descriptionTemplate (string)
+
+Example: --p4-description=”{message}\nGit commit: {hash}”
+
+New --no-edit-p4spec command line option
+****************************************
+
+If used, git-p4 will not bring up editor for editing the changelist spec 
+before proceeding, for the usage scenarios where it normally would.
+Associated with the existing configuration setting git-p4.skipSubmitEdit
+
+New --edit-p4spec command line option
+*************************************
+
+If used, git-p4 will bring up editor for editing the changelist spec 
+before proceeding, for the usage scenarios where it normally would not.
+
+
+Fixes:
+======
+
+Issue: After p4 revert operations, git-p4 leaves writeable files in the 
+Perforce workspace.
+
+Scenario: git-p4 reverts created changelist, as a result of the 
+successful shelve or after error happened.
+
+Problem: The files that were added, are left in the Perforce workspace 
+abandoned and writeable after the revert operation. Now these files are 
+in the way of the syncing the Perforce workspace unless it is explicitly 
+instructed to clobber writeable files and/or forced sync is used 
+(depending on workspace settings etc.)
+
+Fix: For such scenarios, git-p4 implementation now calls “p4 revert” 
+with “-w” option, which instructs Perforce client to delete files which 
+were marked in changelist as “added”.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Thank you,
+- Nikolay
