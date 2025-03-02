@@ -1,184 +1,130 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1311D13AF2
-	for <git@vger.kernel.org>; Sun,  2 Mar 2025 21:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9FE1D63FF
+	for <git@vger.kernel.org>; Sun,  2 Mar 2025 23:22:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740951425; cv=none; b=sVuqe2eCP9EBqwl4pO0PdJ8rrQiqzE+3gae21HFJwp6J3EzFU359Mv5YunnOgEfDLwCcpnADN1pJdXN1GJ3TJLCsyhIQxSNdY7kpfF1mIVW+tpRNk3fX4nhH8LLY+FGAIkI/37mpAShddeXzE5jZeCBVWYBhQb5DMAHlMavFxR0=
+	t=1740957755; cv=none; b=kRn7Hf645fNVIZ79XTC/RLGotdwtS6sw1EoJVK/ElKtAz4AcoO+qrt5HkCnjEV4B+NmkcwP+LHSYx6poGpgIYebDUNyFL/FeRt38IeIIdI6fx13yWlTAvoTXVO3sSXMlO+GN0rEQ+YkXSs7vmaV0E8KdCbSMgiDniG6MuLAQqJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740951425; c=relaxed/simple;
-	bh=qZxu1vMsE0vef+RwqQpofwNeSRB3dlhFolbFYQXoydw=;
-	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UgsYGPCH4tBblg6SrPoiszipzihFGsA2gDvX4VU1JRN4zoiBVUkI877nFkez4otwwsdYhd6UW92H03RBojAbXjbvbxYRCc5GhI78+Q/kSfe3s1ePxgjFtm2ZUKA8HG/CIsknzoWvufiKYQMMlSN5rgbbvnKtdk5dKOViz2ar62E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 522LarSh145549
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 2 Mar 2025 21:36:54 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'ZheNing Hu'" <adlternative@gmail.com>,
-        "'Git List'" <git@vger.kernel.org>
-References: <CAOLTT8S2Dk4zr_USpjz_dPBO-Rdr-qqg-Rq5GLBgtom_REFK3A@mail.gmail.com> <CAOLTT8SzA2VNjYPvENLQn3cVaHtp1MkN8Czo6OxbOqbNit-FEQ@mail.gmail.com>
-In-Reply-To: <CAOLTT8SzA2VNjYPvENLQn3cVaHtp1MkN8Czo6OxbOqbNit-FEQ@mail.gmail.com>
-Subject: RE: [Feature Request] Enhancing Git with Inline Code Commenting Features for Improved Code Annotation
-Date: Sun, 2 Mar 2025 16:36:49 -0500
-Organization: Nexbridge Inc.
-Message-ID: <04ab01db8bbb$38127300$a8375900$@nexbridge.com>
+	s=arc-20240116; t=1740957755; c=relaxed/simple;
+	bh=mq0ZCJ6Q57pYG9ZiZVue/n6A5eDqvZ4axArReJPL38A=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=MojBj9et54rheOEyfLQk1WJUGcFBfheIYDXhWz54cxuwV4VPcUSpmP4V6pkV3jbUembFg1WSVyKvJa0BzgybFYXlsRj+gdiG1i+vU5ypiYLwDzwnJzjn2PiYLmFnaijw8Vp31GIPvmJ4xqwVxB3UuLV7MGrl8D/s+Ug3qX90i5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QxxmuyPP; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QxxmuyPP"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e5491eb379so836561a12.3
+        for <git@vger.kernel.org>; Sun, 02 Mar 2025 15:22:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740957752; x=1741562552; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=zKhnxWE5UZLVz2HX9OonSFina7mzgjZzMdzWI5Kzp5s=;
+        b=QxxmuyPPOTlkcnSGfW6/vxzQ3J9kopt4/aiv6c/t5gldyqKO/bGw77bEGdN4pG7P6H
+         r1K71Yx2zNZiRvkAVKQIEJ0w16hhnkNgWoopshqyTdjKJ2pequNGrWUb2fIvmsmKGOyL
+         +aoyQ9TWSDGUcAHheFOv330C4qaHD474E7opT2YZ2zQOiGCRizDFWAapdgma/Ug3u92C
+         3YetJNN8VJeRQgqo40ViapOAREIY0EwYE1ORjDGgaOnXeMvvTSq8N2NhkLFDZhq3NwEl
+         4Wykj9IDODmdaN0AlWAPYmqUoKZOwAM3fMQ4LsVF1+0avtKy2HO0ZYY14fObSSGjGBSV
+         SaFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740957752; x=1741562552;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zKhnxWE5UZLVz2HX9OonSFina7mzgjZzMdzWI5Kzp5s=;
+        b=TbT8mgFqEn/qCaa3Y6h3CEGxDVsE9/1AisjLL8krI47J4Y7/KOBKSteqTLP08/lV0Q
+         v5yLevBGK9t4qiLsSino8VgOrMpZba4nPzE6/ROE6bvUcY6+zdd22ws6lOdx+1W6zte8
+         /6/sjX7bcbHHUZcVSNUElVrq3eKESwe9ZJUP2GubHNypqElzWAdWF2wsmzt2mkZEEags
+         N1WfZ92kN7TRhjcIp4eXOa4uejTrUiVdtQkulYdSJs1v8LZiriNFyNgXDM5fiYI4sWgQ
+         XyCXFStNjdcT+jQ+mjEBZFkAAkJ8QvvBG5w5KSRFZQs/4Mb1yI0C94MYq9iARpyUee21
+         Yj9A==
+X-Gm-Message-State: AOJu0YzxaKNqhmIB9UAGnTqsPfxeiQzXu7db2MiON6E67p3PWNSngAr+
+	IGDM2pri2h57mtoU6z2Xkz6OLu9eKkH1nYInU7hu3nx8cMHwU3cl68sumZFH0SQxDjIa1tmjXYH
+	4R7t10ZjARqwPuxCRbdSc1bcXI5K97iKpVyM=
+X-Gm-Gg: ASbGnctv46i9CjUjX5p3n4F25YW6VhMEx1gb/YlLtAHoe4ew7iVAHthTvGrzQQ8S5wc
+	ZQ22KK2BntpZiCweSwAccFL1kzP4/MquDqc/iwFmF7BCeH7Ia1A4ktUPOKubI4ZkbwiCEQM3dU+
+	PIaiia5mLav517SlqpnIy1EBv9/rk=
+X-Google-Smtp-Source: AGHT+IHYbxYrlwJG4LajPryqlqZUoNQVnVRUbgs+Att2OHqndYol5jmYIKBvg5pzRQwn++6FcpGB5IKgaMmRTBMUyzs=
+X-Received: by 2002:a05:6402:274a:b0:5de:dff7:7d8f with SMTP id
+ 4fb4d7f45d1cf-5e4d6afeb21mr12404726a12.18.1740957751693; Sun, 02 Mar 2025
+ 15:22:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQMeI1HEulT6uNqulav6SyH7ZDAB0wGk20jpsM3IMCA=
-Content-Language: en-ca
-X-Antivirus: Norton (VPS 250302-6, 3/2/2025), Outbound message
-X-Antivirus-Status: Clean
+From: Henry Reed <henrymicreed@gmail.com>
+Date: Sun, 2 Mar 2025 15:21:55 -0800
+X-Gm-Features: AQ5f1JrvqnHepObskivh9FPPOmyE8wWUk8tC7domVQPb1QngkBTKH1dRqE8KOdc
+Message-ID: <CAKe9kabKXpPQVvJX9vryNi8btk9DeFjOaE=bqp9yDvA3oaiqEA@mail.gmail.com>
+Subject: PKCS#11 authentication fails due to escaped URI
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On March 2, 2025 4:06 AM, ZheNing Hu wrote:
->In my imagination, this feature might be very similar to git blame but =
-also has some
->capabilities akin to git notes. Users could view it using a command =
-like git code-note
->-L1,10 file1, much like git log -L1,10 file1, and it would display some =
-comments.
->
->I am currently unsure if there is a feasible technical solution, as I =
-do not yet have a
->solid understanding of how git blame works.
->
->
->ZheNing Hu <adlternative@gmail.com> =
-=E4=BA=8E2025=E5=B9=B43=E6=9C=881=E6=97=A5=E5=91=A8=E5=85=AD =
-17:19=E5=86=99=E9=81=93=EF=BC=9A
->>
->> Dear Git Community,
->> I hope this message finds you well. I am writing to discuss a
->> potential enhancement to Git that could significantly improve the way
->> developers annotate and review code within their workflows.
->>
->> Current Landscape: Platforms like GitHub and GitLab offer robust
->> commenting features within Merge Requests, allowing developers to
->> leave comments on specific lines or sections of code. These features
->> are incredibly useful for code reviews and collaborative discussions.
->>
->> However, they are inherently tied to centralized web services,
->> limiting their accessibility and flexibility, especially when working
->> in local development environments or with decentralized repositories.
->>
->> The Gap:
->>
->> While Git provides tools like git blame and git notes, these are
->> primarily geared towards understanding commit history and annotating
->> commits, respectively. They do not offer a way to attach comments
->> directly to specific lines or blocks of code within files.
->> This limitation makes it challenging for developers to:
->>
->> Take personal code notes that are closely tied to specific parts of
->> the codebase.
->> Share annotations seamlessly across different development =
-environments
->> and with other team members without relying on centralized platforms.
->> Maintain contextual comments as the code evolves, especially when
->> files undergo significant changes that shift line numbers or
->> restructure code blocks.
->>
->> Proposed Feature:
->>
->> Inline Code Commenting in Git I propose the introduction of a native
->> inline commenting feature in Git, resembling the functionality of
->> addcomment(file1:[L3~L10], "comment").
->> This feature would allow developers to:
->>
->> Attach comments to specific lines or ranges within a file directly in
->> the repository.
->> View and manage these comments within their local IDEs, ensuring that
->> annotations are always accessible regardless of the hosting service.
->> Share comments with other collaborators, enabling a decentralized
->> approach to code annotation that aligns with Git's distributed =
-nature.
->>
->> Benefits:
->>
->> Enhanced Code Documentation: Developers can maintain contextual notes
->> and explanations directly within the codebase, improving code
->> readability and maintainability.
->>
->> Seamless Collaboration: Comments can be shared and viewed across
->> different environments and by various team members without dependency
->> on a centralized service.
->> Resilience to Code Changes: Implementing intelligent comment
->> localization would ensure that annotations remain relevant even as =
-the
->> code evolves, addressing scenarios where files undergo significant
->> modifications.
->>
->> Potential Challenges:
->>
->> Synchronization: Ensuring that comments remain accurately associated
->> with the intended code blocks as changes occur.
->>
->> Conflict Resolution: Handling scenarios where multiple developers
->> attempt to annotate overlapping or adjacent code sections.
->> Tool Integration: Developing plugins or extensions for popular IDEs =
-to
->> support the creation and management of inline comments.
->>
->> Conclusion:
->>
->> Integrating an inline code commenting feature directly into Git would
->> empower developers to maintain rich, context-aware annotations within
->> their projects.
->> This enhancement aligns
->> with Git=E2=80=99s philosophy of decentralization and could bridge =
-the gap
->> between local development workflows and the collaborative features
->> offered by platforms like GitHub and GitLab. I believe that such a
->> feature is both feasible and valuable, and I would be eager to hear
->> the community=E2=80=99s thoughts on its implementation. Collaboration =
-on
->> defining the specifications and addressing potential challenges could
->> pave the way for a more versatile and developer-friendly Git.
->>
->> Thank you for considering this suggestion. I look forward to engaging
->> in fruitful discussions and contributing to the continued evolution =
-of
->> Git.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-The way I could see this working is as an ancillary data structure =
-within a
-Repository. It would be tied to a commit and a line or more generally a
-line range and a sequence, then whatever content blob would be =
-associated.
-This blob could/should be signed or have its own SHA signature.
+What did you do before the bug happened? (Steps to reproduce your issue)
+I modified ~/.gitconfig to include my PKCS#11 URI for my YubiKey 5 smart
+card. The contents of my ~/.gitconfig are:
+[http "https://git.example.com"]
+        sslCert =
+"pkcs11:model=PKCS%2315%20emulated;manufacturer=piv_II;serial=0011223344556677;token=someUsername"
+        sslKey =
+"pkcs11:model=PKCS%2315%20emulated;manufacturer=piv_II;serial=0011223344556677;token=someUsername"
+        sslbackend = openssl
+        sslkeytype = ENG
+        sslcerttype = ENG
+        sslCertPasswordProtected = true
 
-During a merge, the content would be subject to the similar processing - =
-a
-squash could combine notes.
+What did you expect to happen? (Expected behavior)
+I expected the URI to be passed, as is, to OpenSSL, without escaping
+special characters
 
-Once stored, a git push/fetch --notes or something like that would cause
-the information to be transferred to a remote in the same way as commits =
-do.
-Of course, this depends on support for non-git core servers, so that =
-would
-be not so easy. It also would depend on things like JGit supporting it.
+What happened instead? (Actual behavior)
+Git appears to escape special characters in the URI, like the equals sign,
+colon and semicolon, causing OpenSSL to not recognize the URI. This is
+the command line output is:
+git clone https://git.example.com/org/repo.git
+Cloning into 'repo'...
+fatal: cannot exec '/usr/bin/ksshaskpass': No such file or directory
+Password for 'cert:///pkcs11%3Amodel%3DPKCS%252315%2520emulated%3Bmanufacturer%3Dpiv_II%3Bserial%3D0011223344556677%3Btoken%3DsomeUsername':
+fatal: Authentication failed for 'https://git.example.com/org/repo.git/'
 
-There is a lot to think about. The big question is whether there are =
-protected
-concepts in use by GitLab or GitHub or others that might cause =
-conflicts.
-I like the Merge Squash by GitLab, but it has not become part of git.
+What's different between what you expected and what actually happened?
+The URI should never be escaped.
 
-Just my thoughts,
-Randall
+Anything else you want to add:
+The version of Git in Rocky Linux 9 is 4.35.5. The URI is not escaped in
+this version.
 
+Separately, note that the serial, username and repo URL have been modified.
+I am working on a non-Internet connected system with Fedora 41. I am unable
+to disclose the YubiKey serial, username nor the repo URL.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.48.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.9.1
+OpenSSL: OpenSSL 3.2.2 4 Jun 2024
+zlib: 1.3.1.zlib-ng
+uname: Linux 6.12.13-200.fc41.x86_64 #1 SMP PREEMPT_DYNAMIC Sat Feb  8
+20:05:26 UTC 2025 x86_64
+compiler info: gnuc: 14.2
+libc info: glibc: 2.40
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
