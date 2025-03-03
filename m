@@ -1,53 +1,53 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E881F0E42
-	for <git@vger.kernel.org>; Mon,  3 Mar 2025 10:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0961F4276
+	for <git@vger.kernel.org>; Mon,  3 Mar 2025 10:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740999314; cv=none; b=AS2a+b5FXIvX0FRVs9OZrinr/fMAG5x4jrKnnKhl+m3dcago701nDaNfZ9lrEJY4QQaZmEGSOw18C/1hAuxvo9tlK7GLXS9hfoVruE1QMeRME5OIVF6uZksqtNvhZuhi09afuUYEnWuPZammUxmm/B8eZTixz4xDars3RxgKIZA=
+	t=1740999316; cv=none; b=X7QjRnhSywdxShaAk6QVvBYtLhBSi8u72mWRdK3aGxBnDZlmMCzz8wnyFQIROXHx3Do92gw04Wro4tY3p+ySXFk2A17kZo540TBPlRr4gqnsvQlc8Y9F5T5kRNg7GV5rny2qPFE/Uw6hw1POCilS9qmR47G+wi2PsO+/ho+uefQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740999314; c=relaxed/simple;
-	bh=ter/6WKgriIt0yOvvHDYe4KkpkCf0w2zVSNYjFM8jJM=;
+	s=arc-20240116; t=1740999316; c=relaxed/simple;
+	bh=HD6BYDlYNj82V7fouyyyXEKX21bGTxwhbxv7TBgVPaE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tWN7TX/XGjXe39neQUPJ5DZ0yugNipUKnALk2sPvEC3DuueEznhi7JkGEW9uXuqarzQvX0wn80bkj4uABV8hvI3OTPdjlNEWeUD4mVE34gLIFnUYeR5gleV8fsInOlNY00EbP4pwigOLw6EwwZ1ITJod7NcUJj0x+cJli1oT6Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OPGwS5iT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cqnW3Pv+; arc=none smtp.client-ip=202.12.124.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=G2D/k+R76v8Vpx3gdaM9npslvCGmOU8c9sZmGrDVu1xgFrFDktHzWVzupcdoxXdiiH5ULCGzBp51j07L/llqXhe6yaBbXAyDhumO2GKnDqEjX45Jmk2wwdtfbwNZI4iku2ebU3KxgXvzDWlYSC6uqOIN/08IFoIK3Y8yCro+qAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BQMSbV+U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=7s5cIOgo; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OPGwS5iT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cqnW3Pv+"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EB0B525401C9;
-	Mon,  3 Mar 2025 05:55:07 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BQMSbV+U";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="7s5cIOgo"
+Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BDBDC25401C6;
+	Mon,  3 Mar 2025 05:55:12 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 03 Mar 2025 05:55:08 -0500
+  by phl-compute-13.internal (MEProxy); Mon, 03 Mar 2025 05:55:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1740999307; x=1741085707; bh=LyhlE56fR6
-	Gzb0pTS5ufMvKqfQdc6p9bRfK8YcZF/nI=; b=OPGwS5iTJFjFeGpXSixAE8yEAA
-	MMeH0AsEG/yon3qocsy63VOCxHNOcRrQH16BCAUsBPnNU4lKjCi+9lfr6EAKD+nH
-	JFQxrRrHWLiD0CEX1kUyCiJ2IXVbw1EMtIZVqS37ufPGmf76uFZHcV7pHVuDoIS3
-	mf+336zZI/SbO2904K1Nd/npUVdgEcGDy5yyIi+OI/DGb6UyvNZi5XLtgiurJCNT
-	xzXqLD478ufriFQ10yvB0ftfLvbOMXiyD/MULvelkVsTEclbo14aCSl4XcvKZhuO
-	T+lBjWUkgsAB300Iu5Hb2qG1kRDUkMq0F+H4olcI61yJSveOJy/uA08CoiaA==
+	:subject:to:to; s=fm1; t=1740999312; x=1741085712; bh=P7vQQIXY4/
+	kshT2MB82ijbcA1HKtRUROiHndgHet2fg=; b=BQMSbV+U4+vWWddBEGmQJk1/ac
+	OmjAfZYhy9XUp0pE+LNgUZ9nd9bti/K+AJPLDR491WQqy8BatMWaIgA7zP/kwIj6
+	TTEQxAjl4/LtwqUUvUQxkvr9bb5s0tkK2tabzSZk6YF3Noq+pntYp0a3jHAmlgcW
+	uNisPiFRjBVwzhCHBvCgeHgTpByFW1SwBpuWLopHyYNKb/1xjiuT5GoGigGeTs0f
+	vAl/EQS9GITvNQkX+cFo9f54yJ00en5lIMuacuTMCkV6dn1C+NcHlRkLET7bGkBU
+	LdsGEXqGk+JBFphFQJKKYcjEQfm1sSsUJ5unf8MuZ2Y1WbYGCbkLtnAO2JWw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740999307; x=1741085707; bh=LyhlE56fR6Gzb0pTS5ufMvKqfQdc6p9bRfK
-	8YcZF/nI=; b=cqnW3Pv+1EmcAks+6ySh3uylo+0Jm30UUYXwgCZU8DeQQzCmKkh
-	Od5R52VN+GZUXtlXniNjigcahbDD6Hy6w66aa+aLhm9F2YBFJ+qzZUOjAqm9rOfK
-	n18qa7pULzKAX67mxWYj0O5t206wyeoJB3Ybdy7OBEOEBEaK7R5lKT4IYTEsfYq2
-	1T+OrgdI+YJGowg1Gvq+CgTy6Pxq1nYmdCTTC96Fa1PtwkzxUE05E12ntRWLA9Ar
-	maLnnte0u/XOEWREnzF79aIzXg9iVSwPxeHtxCNCKqp/vwxEEYVPj6XIa47JLVFs
-	bgiyVKY4efc/w1CXoGaxPPHVbQRKc+j9w4g==
-X-ME-Sender: <xms:i4rFZ2Zlvdf-1jic4w3EsEv6DuvCjtyuh8TfkVZeJ-UeajHSozpe2Q>
-    <xme:i4rFZ5bsuzqC9NtaVSi4V6Gut9D42qrc34cmb0lYTiUArAaurfhOVbP-o8T7WZlSY
-    d5xY8xneOR74ndtDA>
-X-ME-Received: <xmr:i4rFZw_YOv6LTWj12EVx3o82Sc8O_G3vF_S9flaoxRkkVJwEjprsHlhLLCDsV1eeMGTpliisBCpUt3ugNmO_zcBPc0SlV04ViwAD70AWXs7sYejM>
+	1740999312; x=1741085712; bh=P7vQQIXY4/kshT2MB82ijbcA1HKtRUROiHn
+	dgHet2fg=; b=7s5cIOgoY5riqc6U67lKPfQlHV0NRTT5qRkZgDG9SdXbPiSYhuU
+	Vy9tFHbB8fOXgf545Qlonp/W3YIBSx2IwOUp29dUzdxjAdJ2X+zKYPw+dtRkmqVg
+	h4tXb/fLkV3A9s7ry8q7K2kZKdDb8CQjVGguAz7krn1vBiq38fYjbbCdomRhzslo
+	SQO5z1LWKkijwRoFHCTRRfdwRvOgKhft/jeXAr2MHSUXlSs8w4lxxsRFWgFR0CO2
+	Jqglw6LPpxqGSVY2LSb5d0ICagRT1MQSmobjPY5e7SGRnvGMZUXX6FTVeLgxunr1
+	DpCfe9TT9UjzKOWo+3ia6wot7N4FQLC0PPw==
+X-ME-Sender: <xms:kIrFZ_4-m1bi87ICIEouv8fD57fv6QOebYHeuE4mfv4A6VUzFBUieg>
+    <xme:kIrFZ04i0PhEI_Ib9UGIUJW8FiTKycDtPp3FiAnPEyubRbC1gu1kZPmFxYn-aAXjB
+    LMI8UbnP3BwxxPayg>
+X-ME-Received: <xmr:kIrFZ2cHuSoAlCOZtFDG0ymcoBRegY0g7i3Xlc27nICO4LDaK80CcBtqDMWcY6UyVX9PB81R2El6ep6H1wIXQVLvT7lsQmdJfg-jSU31LXuyC9bJ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelkeelfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -56,33 +56,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelkeelfecutefuodetgg
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
-    htohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:i4rFZ4rk4pG4URHQU-ddAReeJ_QFO5KuaJRpGMkTtAngYHqDt32XSw>
-    <xmx:i4rFZxoPa465l32v7Gn5tr2FwUfyOsN51aWoBwTCVkWl2xKa4rUWOQ>
-    <xmx:i4rFZ2RmBcyNpfypij85w-5HBrG04VzZMQWcM17cBvrFM1U1vjlphA>
-    <xmx:i4rFZxoCGEczzjwQ9JJ-3C3gFmybW6JCuOWPPDX26uQdmqmhP33DoA>
-    <xmx:i4rFZ6BP5W0klppG0AIG_2oi-31yeoOpGntKPv0E5kqHnP_Uo54rgdus>
+    shhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhm
+    rghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:kIrFZwIdRtcGhZErfepYs-R3twV1oNovUFwrla9aE7098v3YLIhbvw>
+    <xmx:kIrFZzLqBV1OY_JkFDhEB32ewMrvI5XDtdvkp_NgXldq6PJENxHhHg>
+    <xmx:kIrFZ5w_7K71UKNs3-3-gymF6NT3yaJoYpzWzv-wgB-iy2NNKrPilg>
+    <xmx:kIrFZ_LOKhrodWJOxw60-nIMsRcfm2UzFXmxa4bEXkJSCcFYW0HWdA>
+    <xmx:kIrFZ5ieBO5D9QIl_f7_AsmJJwo52Tj4VNvcc6y_dkBdEHCIEwg-3wdj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Mar 2025 05:55:06 -0500 (EST)
+ 3 Mar 2025 05:55:11 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 81deeeb0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 3 Mar 2025 10:55:04 +0000 (UTC)
-Date: Mon, 3 Mar 2025 11:54:58 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7b92f8fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Mar 2025 10:55:10 +0000 (UTC)
+Date: Mon, 3 Mar 2025 11:55:09 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 01/13] Documentation: describe incremental MIDX bitmaps
-Message-ID: <Z8WKgisnKb5zc1xO@pks.im>
+Subject: Re: [PATCH v3 03/13] pack-bitmap.c: open and store incremental
+ bitmap layers
+Message-ID: <Z8WKjegeTs9aAsBr@pks.im>
 References: <cover.1723755667.git.me@ttaylorr.com>
  <cover.1732054032.git.me@ttaylorr.com>
- <caed2c6ec3483f028f59777bba40480e2661ca80.1732054032.git.me@ttaylorr.com>
- <Z8GJYMbXMZqI5fUL@pks.im>
- <Z8JGNQZolfs7fm65@nand.local>
+ <5b5d625cbe02560a20c12b7dd20aeda4979017bb.1732054032.git.me@ttaylorr.com>
+ <Z8GJbOoY9Z3VMSEM@pks.im>
+ <Z8JLbxBQh7XUpplz@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,71 +92,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z8JGNQZolfs7fm65@nand.local>
+In-Reply-To: <Z8JLbxBQh7XUpplz@nand.local>
 
-On Fri, Feb 28, 2025 at 06:26:45PM -0500, Taylor Blau wrote:
-> On Fri, Feb 28, 2025 at 11:01:04AM +0100, Patrick Steinhardt wrote:
-> > On Tue, Nov 19, 2024 at 05:07:19PM -0500, Taylor Blau wrote:
-> > > diff --git a/Documentation/technical/multi-pack-index.txt b/Documentation/technical/multi-pack-index.txt
-> > > index cc063b30bea..a063262c360 100644
-> > > --- a/Documentation/technical/multi-pack-index.txt
-> > > +++ b/Documentation/technical/multi-pack-index.txt
-> > > @@ -164,6 +164,70 @@ objects_nr($H2) + objects_nr($H1) + i
-> > >  (in the C implementation, this is often computed as `i +
-> > >  m->num_objects_in_base`).
+On Fri, Feb 28, 2025 at 06:49:03PM -0500, Taylor Blau wrote:
+> On Fri, Feb 28, 2025 at 11:01:16AM +0100, Patrick Steinhardt wrote:
+> > On Tue, Nov 19, 2024 at 05:07:26PM -0500, Taylor Blau wrote:
+> > > Prepare the pack-bitmap machinery to work with incremental MIDXs by
+> > > adding a new "base" field to keep track of the bitmap index associated
+> > > with the previous MIDX layer.
 > > >
-> > > +=== Pseudo-pack order for incremental MIDXs
-> > > +
-> > > +The original implementation of multi-pack reachability bitmaps defined
-> > > +the pseudo-pack order in linkgit:gitformat-pack[5] (see the section
-> > > +titled "multi-pack-index reverse indexes") roughly as follows:
-> > > +
-> > > +____
-> > > +In short, a MIDX's pseudo-pack is the de-duplicated concatenation of
-> > > +objects in packs stored by the MIDX, laid out in pack order, and the
-> > > +packs arranged in MIDX order (with the preferred pack coming first).
-> > > +____
-> > > +
-> > > +In the incremental MIDX design, we extend this definition to include
-> > > +objects from multiple layers of the MIDX chain. The pseudo-pack order
-> > > +for incremental MIDXs is determined by concatenating the pseudo-pack
-> > > +ordering for each layer of the MIDX chain in order. Formally two objects
-> > > +`o1` and `o2` are compared as follows:
-> > > +
-> > > +1. If `o1` appears in an earlier layer of the MIDX chain than `o2`, then
-> > > +  `o1` is considered less than `o2`.
+> > > The changes in this commit are mostly boilerplate to open the correct
+> > > bitmap(s), add them to the chain bitmap layers along the "base" pointer,
 > >
-> > Just as a refresher for myself: what is the consequence of an object
-> > `o1` sorting earlier than `o2`? In the case where those refer to
-> > different objects it is only used to establish the pseudo-pack order so
-> > that we know how to interpret the bitmaps. But in the case where those
-> > two objects refer to the same underlying object, e.g. because the object
-> > is contained in two packs, it also impacts which of both objects would
-> > be preferred e.g. during a clone, right?
+> > s/bitmap layers/of &/
+> >
+> > > diff --git a/pack-bitmap.c b/pack-bitmap.c
+> > > index bba9c6a905a..41675a69f68 100644
+> > > --- a/pack-bitmap.c
+> > > +++ b/pack-bitmap.c
+> > > @@ -54,6 +54,13 @@ struct bitmap_index {
+> > >  	struct packed_git *pack;
+> > >  	struct multi_pack_index *midx;
+> > >
+> > > +	/*
+> > > +	 * If using a multi-pack index chain, 'base' points to the
+> > > +	 * bitmap index corresponding to this bitmap's midx->base_midx.
+> > > +	 */
+> > > +	struct bitmap_index *base;
+> > > +	uint32_t base_nr;
+> > > +
+> >
+> > It would be nice to point out that `base_nr` is not 0-indexed, but
+> > 1-indexed, which is rather uncommon. Is there any particular reason why
+> > you made it 1-indexed?
 > 
-> Great question -- the pseudo-pack order here is how we translate the set
-> of objects in a MIDX into their corresponding bit positions in the
-> bitmap.
+> Hah, I have no idea! If I remember correctly, it's because it makes it
+> (slightly) more convenient to do:
 > 
-> So if "o1" sorts ahead of "o2", that means that "o1" will appear in an
-> earlier bit position than "o2". But note that we're talking about
-> objects in a MIDX chain here, comprised of objects from each MIDX'd layer of
-> that chain. So by that point the duplicates have already been filtered
-> out, since:
+>     ewah_or_iterator_init(it, bitmap_git->commits_all,
+>                           bitmap_git->base_nr);
 > 
->   - The MIDX only stores one copy of an object in any given MIDX, and
+> , instead of incrementing 'base_nr' by 1 to determine the number of
+> sub-iterators to allocate.
 > 
->   - The incremental MIDX design avoids putting objects from earlier
->     layers in later ones.
+> So I think there are a couple of options here. Short of doing nothing,
+> we could:
 > 
-> I tried to get at this a few lines up with "[...] a MIDX's pseudo-pack
-> is the de-duplicated concatenation of [...]" to make clear that o1 != o2
-> here. But let me know if you think I should clarify or emphasize that
-> point further.
+>  1. Rename 'base_nr' to 'layers_nr' which would make it clearer that the
+>     count includes the current layer, thus making it 1-indexed.
+> 
+>  2. Leave 'base_nr' named as-is, but make it 0-indexed, and have callers add
+>     1 when they need to know the number of layers.
+> 
+> I prefer the explicitness of (2), which is how I adjusted things
+> locally. But if you prefer (1) or some yet-unknown (3), I'm happy to
+> adjust it further!
 
-Okay, the deduplication bit was a bit subtle, so I missed that part. And
-once one has learned about it my question makes less sense, as I was
-expecting that an object may appear in the same MIDX chain multiple
-times.
+Yup, I also favor (2) here as it is the least surprising option to me.
 
 Patrick
