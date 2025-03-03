@@ -1,220 +1,153 @@
-Received: from mail-qv1-f97.google.com (mail-qv1-f97.google.com [209.85.219.97])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BE733F6
-	for <git@vger.kernel.org>; Mon,  3 Mar 2025 19:19:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.97
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C98C1C8604
+	for <git@vger.kernel.org>; Mon,  3 Mar 2025 19:33:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741029550; cv=none; b=rQpGCzh/XCsHRy/YpcAuj4dRn22C4TtkIR8x5dPS5XMgC3/VAmcab1/X/51r2gehF/JRtJohgKdAied7nX9v/6iv7pdcZ6lZ6MrBzvkSHxWck7xc33OfStHX4AfZzkFovn7f8MHyAaLyAljw/hw7bwDpFVil+g26pcdVTwwJBEI=
+	t=1741030441; cv=none; b=qbpCFV+9zBXNgDmIFHZErnl2zTmhLZjuiVeI6rRKbpL/GlPR3e1ZSujvsuke5rURnK9pBEmsokcUpig9Q3yBd6N1fphZSbf/0sSjE8Fp+aZs1ULqiE0eBb/ugPxPMNjJp4zEyNu92dX8urKOTFU7YMV9dDQ+aq3osu19cCZVcxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741029550; c=relaxed/simple;
-	bh=3McvLd6Rx240Ehdy57pA9a09Xr/NSHsTBUcBd2e8BzU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZUWuUU5usfIqMdvbN2z8k5eiY9gFgowSMZOfnZVvCHdkVQHdMr3PHEVPtMtW9mxHobIpTRy+OEPyK/ofZH8jA6BUS7nTsgCcNI6LNJfxVIZDh1qAVsmh1XbKfnWGx0cohFAWOUHlI2+tiKzJUlj1vCj3MFdfxee2MdtPMnuMDD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org; spf=pass smtp.mailfrom=mandelberg.org; dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=+Y39sNLl; dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=J7fURw22; arc=none smtp.client-ip=209.85.219.97
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mandelberg.org
+	s=arc-20240116; t=1741030441; c=relaxed/simple;
+	bh=+7IiaKIYQ7oOoILzRup9lfj1xphU3c2SODHtc1QZdys=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZDGiycCvh4gKewgH/sasHDFL/fmKw3JHwMGlIenE7GxLJfZJ/FcX8NU0DFpp7I+SA8Eyxp20lzyj8WzkkB7Ws58KSGonkZj8mzjuMDdy+fR9/kQJPDi3aXpivrIyBOnhq17UIPMxmXOUqnuAdDiO4gVs+n7nhWABaDP7TmKHviI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i/P69zmQ; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="+Y39sNLl";
-	dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="J7fURw22"
-Received: by mail-qv1-f97.google.com with SMTP id 6a1803df08f44-6e8ab9ea2deso15567086d6.3
-        for <git@vger.kernel.org>; Mon, 03 Mar 2025 11:19:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i/P69zmQ"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-390eebcc371so1794839f8f.0
+        for <git@vger.kernel.org>; Mon, 03 Mar 2025 11:33:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741030438; x=1741635238; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1+cZKb3KNFRrzGjivP/GL4IigHCfzIvZGULAyTXHOp8=;
+        b=i/P69zmQuWUjAv+t2EEhHCghXp5ibRSOQspmelVy3hzc/x5FR4qaa3yrCCQWPE5Syi
+         Y/4Ox49YI9WRem9gy6rFStOUyw0EmkIDd940I15LYSQ8iac55RpVgxdEvZ7taFyGgIfu
+         XSEOatJe0kZt2Bk3ogpAHVTRQZQvSqJHAiqGlnEsWKFTrPQO6bXcPPflRDF76LWwREe7
+         WT4Ez038t03ZR8tFc/Hqv5DpIb6i+YM2iXjGzqGNKoEjqArDKBG+aCXs3pMFTuQgSFUq
+         lnq4fUtxaER9/0j91/bT2tNOnLfUE0QtHSas7PAwub7selEzEilsTDubMuJezhnoHzno
+         k4uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741029547; x=1741634347;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :dkim-signature:dkim-signature:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=YQv1Izh5/f9Fw394NVjWejafSUwIVX+9/kx5LXV7AXs=;
-        b=pj+mu1e351dxif6lyvK2jdBYezBkOUq6ITNGD24TEhw5hTTCWhPZhOvOkxpy/mXaVl
-         qzQSoR8v3ZcXok6liQz9m+G+1p2lpfKdSSpjFeDIngzunZ6Fo3NE58b4IS/Y9cnA7mHb
-         NAeq9md6Cd+bsb60MQ0IWXBoi7htKz09KPj8m4G6RqYBS4OpDlcmcGg3XAhCAhGhoiRZ
-         evXB9moc3RWr6ACOriJBqKgJe+loJG2xu4DCjHyuQpi+tMBBuJqTtRtqLzMjXO/UqRy9
-         8kXSSJR7ZcqKUwajEf4/0eDPz5vpg+l8530FxVHtUwZm4Wyv06DHEwfIKcLgEWCKiq2G
-         vPYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXbleljc+tCasK7GwdDxpwsMft7w171HcEP/c5od+rLq+FLYAFSnINumZLdGbcsevgzjrw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywoqwc0zZoasPLhz+A3e5is+E8oXNTIRqB51bdWqyVJd5eQDX97
-	tdZXZ7s6Wt2eJOnkR13Rx6DdQLEymrcnaHzZLeXs0Uu3ln9Pw89w23nZQOcooMla2lFYwXM6cq1
-	533Lly5gOxcWJLD8d1QOv+3PxIRfKPjhv
-X-Gm-Gg: ASbGncsJywIf3KjnKpQXO6QJGk7s6vIAbnICLkLrpIAxxSuc28LJOFs4gDkFO/9mrL2
-	+56XNM+WO+cgZmgC5ZiMnlVBJp2QtIzkIHEMnOi0WvMfw890hLY3sb3qwMelKB2IwPafkg6zam0
-	tcgakcsSHYuVnZa5dzTxIsGV/Sl3muA1JJegPNuveV7nHh5h+D9t9fOVkFYWDWzawHHOHMLRBB0
-	PbXXNdQiBpPie/5c/6Jm0nPTfQRRbKjRr+qtG2qBOHKd+nFHr00Y93IHyMmUaf8zu5sFW2Tn0jD
-	PmORUKDsukDTzVy6oq8SWdeMGYmxqtyuaFT+7/xCxeYvjDAWN6eHWR9sti4IN9X7R/GAo3J/Yga
-	hL38Fty8hZlBC2xplsn2bMKCDtbmqFg==
-X-Google-Smtp-Source: AGHT+IHtJkdeoa/WS2iOfahp5wCUPkxGS22wboJ5YKoudSzYYou6RL4tP+CuKJzDqADPxyjxsBr9tnr6XxT4
-X-Received: by 2002:a05:6214:2aad:b0:6e4:4288:61a3 with SMTP id 6a1803df08f44-6e8a0d25f08mr209964676d6.18.1741029546842;
-        Mon, 03 Mar 2025 11:19:06 -0800 (PST)
-Received: from mail-outbound-e14cf917.virgo.mandelberg.org (pool-108-49-41-183.bstnma.fios.verizon.net. [108.49.41.183])
-        by smtp-relay.gmail.com with ESMTPS id 6a1803df08f44-6e897614aaasm4655966d6.41.2025.03.03.11.19.06
+        d=1e100.net; s=20230601; t=1741030438; x=1741635238;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1+cZKb3KNFRrzGjivP/GL4IigHCfzIvZGULAyTXHOp8=;
+        b=bNhGLS1pzqN7vZY/bz8SpY6K8Cmq46BkaH2GNGXPTrj8Rs7/uxyIGmv1XGdvVkpYsc
+         pTP49Fz4l7kDVMktT1nC6Y9eWbY01zly1ZC40iQEMhhZHL0Aqy3ApSJl1mBeyI8KDrLB
+         PIDjgaJU7e2UijkrtAMl4PNe2WQGX3tC+UcRl57BAOgiulJOGShUUhinL1MZ7KQ8PJGS
+         mgeOKYowcD2N1WedCiL/VMGobhK+xgJQ3IhAwyApP+9Y/lrQ47cBa6yTg8LV0YRqsaUe
+         e+iyHNQWJ97VtNvIU9lMeimNM+J3gh/4184ns2ab52Kvi0pzdq5lBoikGp9w2J6H+KVF
+         nMKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV+c69DkKt0FbFYk6Lyn9uQcONlalrfR0TSk75Yn3Ji8nJEO7rGPHCmRg3Mgc4JwR02eho=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxZU8jRKgGvMTnUag46/nkLEiXuNmPvIIRujldNDxuztg/FsWv6
+	8gMpZ1RngAnxPCvTK6fHWwyjb+I5eZn77hkW0yE4H+yJBIGi+Nje
+X-Gm-Gg: ASbGncuVoVcNU8z3g8vj7L7a2PKXckpBUkSBAhcA+f0w7r1wXIKHmZf3R43Dvkvf/P/
+	hmQxtvaHeha+PSG706Dmav7rdacU5zIddNTPGn+crC9Daa8AmySiMgLVnrJ7Q0krdTX4qdLl56U
+	DIAeM2IHNOV2HO9/0W783qTzGP5fJ5fYKXA4+MsZsdUd8U2UQ47xJ36L6lv5UzR3+fkHlmXeLXX
+	hwWxznEJrZROFyacjXbp2Vp3HYiiqaqH/8m/qQshPSNCAazQ8bRZsEAyNeW3tNyrPR4o9BQMCrH
+	Aa2VF5zHweOIWH3+x4HdQKmVJ1WzrNBF0ETZdMtKQfIQGIC04rygVzO/VVuzFIkgO5NnNFxR
+X-Google-Smtp-Source: AGHT+IEz/0SnPj3yZXmTKPTj+v6m6W2980qm/0uYTgj0Ta/3zDVQ6OSLdhX+zfVkTb+QgF+1L12Aqw==
+X-Received: by 2002:a5d:47c3:0:b0:38f:260f:b319 with SMTP id ffacd0b85a97d-390eca480e4mr14226344f8f.44.1741030438086;
+        Mon, 03 Mar 2025 11:33:58 -0800 (PST)
+Received: from localhost (94-21-58-229.pool.digikabel.hu. [94.21.58.229])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43aba58713bsm206114205e9.34.2025.03.03.11.33.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Mar 2025 11:19:06 -0800 (PST)
-X-Relaying-Domain: mandelberg.org
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple;
- d=mandelberg.org; i=@mandelberg.org; q=dns/txt;
- s=mail-outbound-e14cf917-597d7abb; t=1741029546; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding : from;
- bh=3McvLd6Rx240Ehdy57pA9a09Xr/NSHsTBUcBd2e8BzU=;
- b=+Y39sNLlLLgnA0iyWbickYwBt5WGLuL786P1D4uulToqA1XLrf82mwMeg5bCWqg0zC+l+
- wkx4pYcRsmsrUy+AQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mandelberg.org;
- i=@mandelberg.org; q=dns/txt; s=mail-outbound-e14cf917-e56dad1c;
- t=1741029546; h=message-id : date : mime-version : subject : to : cc :
- references : from : in-reply-to : content-type :
- content-transfer-encoding : from;
- bh=3McvLd6Rx240Ehdy57pA9a09Xr/NSHsTBUcBd2e8BzU=;
- b=J7fURw22QaHZuopFLaBWZsoqU+ofyrNZm+TbgWFZdPl3NKZ5Ea95SabFFSta+tTxps3BW
- IjygsAweKKqwK8KQhE4hfwz09il1EBzM9+mc1koOPHIbDyEGnvglZHVK1SC0OICI5oCTXYB
- E7yCYhnpcZQvM05NwQhyP3kYxFI9/GxO9bcfLxWqvmA610sgIIvYRxbHT/2cYGunydTN1Sl
- kWrP0Kn8TbT9XZJ6dajq5yDo49OwPLcbwnhr56jdVRqSbKo3mSw4OKWDP9Q3T8yBYMBDzZ8
- 7rBrzqMu506jgAOZV0CrdhmVG0Pix6H1cRV4F7UT/S4UR5fJIVy435Jp8DCQ==
-Received: from [IPV6:fde5:2b79:35f0:2::166] (unknown [IPv6:fde5:2b79:35f0:2::166])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (secp384r1) server-digest SHA384)
-	(No client certificate requested)
-	by mail-outbound-e14cf917.virgo.mandelberg.org (Postfix) with ESMTPSA id 4Z67sQ1gBzz10df;
-	Mon,  3 Mar 2025 19:19:06 +0000 (UTC)
-Message-ID: <42dfc06e-8eb1-46da-9971-9d102f1390ad@mandelberg.org>
-Date: Mon, 3 Mar 2025 14:19:05 -0500
+        Mon, 03 Mar 2025 11:33:56 -0800 (PST)
+Date: Mon, 3 Mar 2025 20:33:54 +0100
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: David Mandelberg <david@mandelberg.org>
+Cc: phillip.wood@dunelm.org.uk,
+	David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] completion: fix bugs with slashes in remote names
+Message-ID: <Z8YEIo28bLS+t+20@szeder.dev>
+References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
+ <95ffa62df6ce394249a8ddabb84fb2b517825fe3.1740901525.git.gitgitgadget@gmail.com>
+ <c03192bc-68d3-4645-9bd3-93a338a7496f@gmail.com>
+ <2323bb52-f43d-4f40-8955-4c648677a93e@mandelberg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] completion: fix bugs with slashes in remote names
-To: phillip.wood@dunelm.org.uk,
- David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Jacob Keller <jacob.keller@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
- <95ffa62df6ce394249a8ddabb84fb2b517825fe3.1740901525.git.gitgitgadget@gmail.com>
- <c03192bc-68d3-4645-9bd3-93a338a7496f@gmail.com>
- <2323bb52-f43d-4f40-8955-4c648677a93e@mandelberg.org>
- <65d903c0-6b4b-4a55-b7e4-4a277417f0f1@gmail.com>
-Content-Language: en-US
-From: David Mandelberg <david@mandelberg.org>
-In-Reply-To: <65d903c0-6b4b-4a55-b7e4-4a277417f0f1@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2323bb52-f43d-4f40-8955-4c648677a93e@mandelberg.org>
 
-Op 2025-03-03 om 11:36 schreef phillip.wood123@gmail.com:
-> I'm not really sure what a "large" number looks like for people who 
-> track a lot of repositories. On windows forking is pretty slow (our 
-> shell-based test suite is incredibly slow on that platform) so I think 
-> it makes sense to try and avoid adding new processes.
-
-Thanks, I didn't know about forking being slow on Windows.
-
-Do you know if we need to worry about hitting the max number or length 
-of arguments to a command? 
-https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/limits.h.html 
-under _POSIX_ARG_MAX says that at least 4KiB should be supported, which 
-seems low enough to maybe cause trouble, but it's a minimum. 
-https://www.in-ulm.de/~mascheck/various/argmax/ lists a bunch of values 
-for different platforms, and from a brief scan it looks like all the 
-remotely-modern platforms have values that are probably large enough for 
-this.
-
->> I'd like to do some testing to get actual performance numbers before 
->> trying to optimize this, because I think the optimization has some 
->> drawbacks, see below.
->>
->> If optimization is needed, another approach is to parallelize the forks:
->>
->> {
->>      local fer_pids=
->>      for ...
->>      do
->>          __git for-each-ref ... &
->>          fer_pids="$fer_pids $!"
->>      done
->>      test -z "$fer_pids" || wait $fer_pids
->> } | sort | uniq -u
->>
->> That might cause spikes in cpu/memory/disk usage that aren't ideal 
->> though.
+On Sun, Mar 02, 2025 at 03:34:07PM -0500, David Mandelberg wrote:
+> Op 2025-03-02 om 09:17 schreef Phillip Wood:
+> > Hi David
+> > 
+> > On 02/03/2025 07:45, David Mandelberg via GitGitGadget wrote:
+> > > From: David Mandelberg <david@mandelberg.org>
+> > > 
+> > > Previously, some calls to for-each-ref passed fixed numbers of path
+> > > components to strip from refs, assuming that remote names had no slashes
+> > > in them. This made completions like:
+> > > 
+> > > git push github/dseomn :com<Tab>
+> > > 
+> > > Result in:
+> > > 
+> > > git push github/dseomn :dseomn/completion-remote-slash
+> > > 
+> > > With this patch, it instead results in:
+> > > 
+> > > git push github/dseomn :completion-remote-slash
+> > 
+> > This sounds like a useful improvement and I like the idea, but I think
+> > running "git for-each-ref" once for each remote is not going to scale
+> > very well for people who have a lot of remotes. I think it would be
+> > better to try and strip "refs/remote/$remote/" outside of "git for-each-
+> > ref". I've not tested it but I think something like
 > 
-> Yes, if there were a 100 remotes that's a bit of a fork-bomb.
+> Good point, I hadn't thought of that. Do you have a rough estimate of what
+> "a lot of remotes" is? 100ish, maybe?
 
-I also realized after sending that email that it could run into issues 
-with the number of available PIDs too. It could be improved by limiting 
-to n child processes at a time and waiting for one to finish before 
-starting the next, but that's more complication. I think your solution 
-below is better.
+5.
 
->>> local sed_cmd=
->>> local remote
->>> # ref names and therefore remote names cannot contain '*?[]^' so we
->>> # only need to escape '.$/'. Using 'sort -r' means that if there is a
->>> # remote called "github" and another called "github/alice" we will try
->>> # and strip "github/alice" first.
->>> for remote in $(__git_remotes | sort -r)
->>> do
->>>      remote="${remote//./\\./}"
->>>      remote="${remote//\$/\\\$/}"
->>>      remote="${remote//\//\\\//}"
->>
->> Just FYI since it took me hours to figure this out myself: I think 
->> this would break tests on macos because of an old version of bash that 
->> handles backslashes weirdly. I think removing the double quotes would 
->> work around that issue, and be safe because word splitting doesn't 
->> happen in assignments.
+In Git for Windows fork()-ing subshells and fork()+exec()-ing
+processes is rather costly, about an order of magnitude slower than on
+Linux.  The rough equivalent of the body of your loop, with two
+subshells and a git process:
+
+  time { a=$(echo 1) ; b=$(echo 2) ; git for-each-ref >/dev/null ; }
+
+takes on average 0.17s on a windows box I have access to (with fully
+packed refs, and merely 4 refs in total).  So guess at about 4-5
+remotes it would take over a second to react to my TABs...
+
+I would rather try to go in the opposite direction to see whether 'git
+for-each-ref' could be taught to strip the "refs/remote/$remote/"
+prefix with a format specifier option like '%(refname:strip=remote)'.
+
+That would surely be faster than any shell filtering we might come up
+with, and would also save us from the trouble of escaping glob and/or
+regex metacharacters for shell/sed pattern matching.
+
+> I'd like to do some testing to get
+> actual performance numbers before trying to optimize this, because I think
+> the optimization has some drawbacks, see below.
 > 
-> Thanks, I'm not familiar with bash's extensions to parameter 
-> substitution. The completions can also but used under zsh (git- 
-> completion.zsh is pretty much abandoned I think) but it looks like bash 
-> and zsh agree on this expansion.
-
-The tests don't automatically run under zsh though, right? Maybe I 
-should try to figure out how to do that in a separate patch...
-
->>>      sed_cmd="${sed_cmd} -e s/^refs\/remotes\/$remote\/// -e t"
->>> done
->>
->> Mostly just a note to myself if I end up using this idea: I think a 
->> space in $remote would break this because bash would split up the arg 
->> to sed. There's probably some way to fix that with extra escaping though?
+> If optimization is needed, another approach is to parallelize the forks:
 > 
-> I should have said in the comment above that ref names cannot contain 
-> space, tab, newline etc. so we don't have to worry about the shell's 
-> word splitting splitting the patterns. They cannot contain backslashes 
-> either.
-
-Good to know. Is https://git-scm.com/docs/git-check-ref-format the place 
-I should have read to understand what escaping is needed and what isn't 
-because of the limitations on ref names?
-
->>> __git for-each-ref --format="$fer_pfx$sfx" \
->>>      ${GIT_COMPLETION_IGNORE_CASE+--ignore-case} \
->>>      "refs/remotes/*/$cur_*" "refs/remotes/*/$cur_*/**" |
->>
->> This would search for $cur_ in the wrong place because * only matches 
->> one path component, right? Changing to ** might help, but then it 
->> would match in places more it shouldn't.
+> {
+> 	local fer_pids=
+> 	for ...
+> 	do
+> 		__git for-each-ref ... &
+> 		fer_pids="$fer_pids $!"
+> 	done
+> 	test -z "$fer_pids" || wait $fer_pids
+> } | sort | uniq -u
 > 
-> Oh, good point I'd missed that. Could we change sed to run with '-n' and 
-> generate an expression that looks like
-> 
->      -e s|^refs/remotes/$remote/\($cur_\)|\1|p -e t
-> 
-> with the appropriate escaping of $remote and $cur_ so that we only print 
-> the output of for-each-ref that matches $cur_?
+> That might cause spikes in cpu/memory/disk usage that aren't ideal though.
 
-I think that would work. I was hoping to avoid sed, and I was thinking 
-about using shell's ${parameter#word} to strip and test for matching 
-prefixes. But I can't think of a way to do that with 
-GIT_COMPLETION_IGNORE_CASE. Modern bash has ${parameter@L} to lowercase 
-a string, but I don't think the version of bash on macos has that. With 
-sed it would just be a matter of adding the i flag if needed.
+Please don't do this, the completion script must not forkbomb the
+system.
 
-I don't think this is an issue, but do we need to worry about putting 
-remote names and $cur_ on the command line where any other user on the 
-same system can read them? $cur_ was already on the command line before 
-this patch, and remote names appear on other git command lines all the 
-time, so I doubt they're meant to be secret.
-
-Is a Helped-by trailer the right way to credit you for your suggestions 
-on this?
