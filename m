@@ -1,179 +1,127 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D8D23BFBB
-	for <git@vger.kernel.org>; Mon,  3 Mar 2025 16:11:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FF0213E67
+	for <git@vger.kernel.org>; Mon,  3 Mar 2025 16:17:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741018319; cv=none; b=QpFpPbQptmVaMpL5xMnfOWWIDCE9hqsaWFSeb4D09qg40yorCsYcWE40r9JDuouFl2QQTemoIpaQNELfmJU3hqsfTKQwm5bc+u47dU46cTgzQPymJfvnAiIzunAkX+d1hrFzHyAjby0kjx+HHQnAmvFvt+IfI24+8J97d54sy5E=
+	t=1741018626; cv=none; b=M/9NVCpqly25+ihx39Avs4/FDOHZiFbj4O4N4bNY3mja7T5gbgJQ9TNwCOu6SUSWyPwlICP8/rCkFoYUSWrzyPSdxC5+RlquZBfKIusqlpNu4oTOmEJMSOaRpNsn1SVtu6Nzi8XO4NQZ740GkmBXxGc74NpgUnhAk5Xd5sJIEVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741018319; c=relaxed/simple;
-	bh=OhmJD+1lgtPti5EyxrR7HOMdazlnCYMmbOtJ/TS9jyg=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=CQFzbTHzYEMAWYLz483PEd2JCMpbjDE8k20KIREErGaJqhgM4CCdVdOTg1fOnWA+it5yon/mIbAe4h2/n29TMbvzydeYfzZzcybaMOGW/kb4qFWOJg02hWKWNeMzCgDppfs2pssDeTba5gboQCzlzjkMMmXc5vRT5fpSYLiABmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MZdWnan1; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741018626; c=relaxed/simple;
+	bh=9yCeNQuNAq2b6YGUUouvgXUC4ri+UcdmTiqxIc5UgEs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sCZf2F2ElvTUZOmsVSJMk6PjAhuLjsld+PrVT/XiiK5m6viwa9MlUlEHves/sF8OhbwLz5mneEXPd13mtOhEGiJTwIQUx3kMBM+Xe2dmZAyDuvEVQD1fHOzmsPLkj1Rb8bNANXGiJ4GczRhEdUZn2ZEaIcOsFXy6mjB5dTPuhEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=alwkkZHk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W+bV7iuf; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MZdWnan1"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3910e101d0fso691483f8f.2
-        for <git@vger.kernel.org>; Mon, 03 Mar 2025 08:11:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741018312; x=1741623112; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lqj4aPvDcmmFs4zrdhb2+5Il4hyxZHpEREXZiiPJBu4=;
-        b=MZdWnan17lXZ5B6VwIfZyCDEhAVmE155x++IydLB3AVPNHDSx4SmruzzPiwEigtzZz
-         OZYrzZ+VuGLOTgS1UybSdWlPvNCYY3H4nkHuF+abbnhYytZXPC+H8QZVUt09aP3+xV/s
-         MzUuxV5SqSyBOB8//EoRqa7ToITQHincE4NOD554QoAEBfz1FU7KPdzoYqo2sPw0gKMq
-         acXlhuAJ3gdfb2x5ndsJBBRsC4t21DOAOXSoo0vsJPmuz1HdKMd1zDKdQtYKcOp1GiTq
-         q79Wo4J7PQHQ+pEuxmNy9A8EdnVJA3JAYhOg1fBnXmMbTKO2jjWjHzupSafPjSOwTPEl
-         xvDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741018312; x=1741623112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Lqj4aPvDcmmFs4zrdhb2+5Il4hyxZHpEREXZiiPJBu4=;
-        b=lO5KIF/qq1rY2EN1NZkxalmAte6HUjh4bpDjjpDsDoy4sw2dbF8Zn3uuCbVxpJd2Oc
-         oS0MyF7UmJLIwno3aar31d8q1xDREuaAnbhNZe0wr/z2Wtzk8NFwi03fUAMWDlxBtdUB
-         GvBmDfcs0qM9m+EKk73PcSqGigFawZ8j6M9i/7K6FOZ/UrsdVPvDa2VpI/tYY4WGnhb5
-         enUX5bc34jzlPy00pZgJ8yxpRregubVwZqE55rMra7J5iwgDyUjx5jbXlzlSBf2J04kn
-         3UJeiwFjLtvUs1YJ1GXZDHnGlxO4osZm1AXy6j4iO5VDpfrsnSjFvPONV//JVGxXlpiU
-         H38A==
-X-Gm-Message-State: AOJu0Yy6k5YqZTO1MfmQf4itFdY4UCSZ1x0jhZPnpd5Ism0seStzS4pT
-	ybEZy26gkCDXWtPLyo8RXbjPLJeck0u88E+YbQgjsc7oHTFkuDUKt/645g==
-X-Gm-Gg: ASbGncuok5sYxMYSPnKDhqRGGn4K7/HOqFtOv8tvAHsPZMQjGg+ySeLttxGzvHGUDnQ
-	DCHUQswcPvrZ0ZvO5NEShQ20mOYrXZrOWFRdVXHztZhA2e+3IlzwE79c2+AMT6sQZb2X4w+Lw4D
-	shFcsEVundHWLNlXCdASsoK09VVHLOYjUh82oerEBwxV0TBthSBlhFOYwyzDeQqrF1cD/APgvPG
-	7B5NqE8/zbnImhKGKpGaOeAQlSAtjcCOPBoWmpWLk6NfLSnl3wmSRlHZVUAAm8O6sb8QFkeSJa8
-	WCPsHqN92ffI3mZlmhnN/mdy2WsDoVcQ6yOfWE/iKdf3bA==
-X-Google-Smtp-Source: AGHT+IEJCAHazxPcuwDljsHboDpg6IQkCUT8yuBbKAbwVWJnm5psgzBkqpbGy26HwKJoSglXck/hBg==
-X-Received: by 2002:a5d:47a7:0:b0:391:225:9521 with SMTP id ffacd0b85a97d-391022597dcmr6180604f8f.38.1741018311670;
-        Mon, 03 Mar 2025 08:11:51 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390e486eea3sm14669534f8f.101.2025.03.03.08.11.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Mar 2025 08:11:51 -0800 (PST)
-Message-Id: <pull.1871.git.1741018310447.gitgitgadget@gmail.com>
-From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 03 Mar 2025 16:11:50 +0000
-Subject: [PATCH] docs: fix repository-layout when building with breaking
- changes
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="alwkkZHk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W+bV7iuf"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7A54925401C7;
+	Mon,  3 Mar 2025 11:17:03 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 03 Mar 2025 11:17:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741018623; x=1741105023; bh=0ZIxzbjW6A
+	ry59vOZi56nKjvRfcHazG/2zW5TGspjaU=; b=alwkkZHkOpMH00FEuqiFIQ0IUG
+	N5JVc+8lBa1xYjRcvQr6qQQ05fahYO4OCDFTGk5up2U48qBK5a2NnEVkU8yWmKYy
+	oGVJyUosIV0aQ8hHd0pTSD1ti8Dmke5RAXTMVHUkvBONJRAHxFZ4C3PBnEWmPPwf
+	QnznftK1LcZrhR7JYR/GpVlorEhNbaya1B6ctDMfsvzEdaBgY+wMcZe4cY1DlgQ5
+	1gOZ+Qrb4z//L83TmNnu2Q0kE19aXjZ7aMjlnqdD/NujKfQpTcm3VAjd/eqR+d1X
+	MuXjjjTUs155kdtxWtvyEarCN0ZTXHlIPMN4h+U6vUlZNVlnC5MMF4JG244Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741018623; x=1741105023; bh=0ZIxzbjW6Ary59vOZi56nKjvRfcHazG/2zW
+	5TGspjaU=; b=W+bV7iuf5sA6Y75gJ5aU6nBoIQ1LuRNG709QD/4+8zcu+U/bSv9
+	Zsu0LWQL0L0q2CFb6bDwXDNzWHFp3IrO3ORyD3fvcAXo/DHEJmNSvYgG9eti+4D5
+	YX9oWxjeHF82W18DQ80ydmfgYmAuECrtbGIAVPyw1xYivmNs5sctMC3/XbFp5Wp+
+	z1mSuY30pKKJN8oUxR56ik1wX6MbgtDkXtvg03hUQ62VVm0luceZ4jQjt7xguwt5
+	Wo6QmFZRejgimhaT7xPG5Jn6WGtoE6rNlTokDhmToWeJQRQ6wrzjtE+XGdz6dBuj
+	pdts1VakGMsJtRKAtd3s/LCZnLB+2xF3EQw==
+X-ME-Sender: <xms:_9XFZ9rYohLyz5gYIfHkiW4q8IuDsCc5hx087CTCfYGh_o8D-NohaQ>
+    <xme:_9XFZ_pMGHv7iIajHB2y5QRHHtzcILZuItFcH4wrCpTyBWZrdJR6G2FUU-Lp0e4aL
+    zHszWW-vDI3R7C1GA>
+X-ME-Received: <xmr:_9XFZ6O6WfgGe3zlNhnJ1W7FCHA0w8cmkb_01f_rc9RB1sbunQCHtTiRHOEz3i4WSZGVFWkiyWngNOJf0Bdw58gGYtsWc02kFSin>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelleehlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddv
+    feesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:_9XFZ45VCgkTkVTEw1fwRSUDW0OrB0R-Dndr9vaoiEeoF5iXCfsiNw>
+    <xmx:_9XFZ87Fb2FzP7xpdAtlPTP6gWo5tqChrVtKHXhXplOnF68d45tpdw>
+    <xmx:_9XFZwjpHGdW4uk5tquJqplf6pdHVc5tjRR_QnLcwkPWOR4i89QMfA>
+    <xmx:_9XFZ-75qRZmGc3-MW1q3glWND1iKshcmDwoWm91XsNBfAJ_kdvxuw>
+    <xmx:_9XFZ5soQK-a55HUlAtf8FQG9oYJGFSECDMVuqVl-jCbcv019_GRktpW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 3 Mar 2025 11:17:02 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  karthik.188@gmail.com,
+  phillip.wood123@gmail.com
+Subject: Re: [PATCH v5 1/4] diff: return diff_filepair from diff queue helpers
+In-Reply-To: <20250228213346.1335224-2-jltobler@gmail.com> (Justin Tobler's
+	message of "Fri, 28 Feb 2025 15:33:43 -0600")
+References: <20250228002604.3859939-1-jltobler@gmail.com>
+	<20250228213346.1335224-1-jltobler@gmail.com>
+	<20250228213346.1335224-2-jltobler@gmail.com>
+Date: Mon, 03 Mar 2025 08:17:01 -0800
+Message-ID: <xmqqpliyxf5u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Justin Tobler <jltobler@gmail.com> writes:
 
-Since commit 8ccc75c2452 (remote: announce removal of "branches/" and
-"remotes/", 2025-01-22) enabling WITH_BREAKING_CHANGES when building git
-removes support for reading branches from ".git/branches" and remotes
-from ".git/remotes". However those locations are still documented in
-gitrepository-layout.adoc even though the build does not support them.
+> The `diff_addremove()` and `diff_change()` functions set up and queue
+> diffs, but do not return the `diff_filepair` added to the queue. In a
+> subsequent commit, modifications to `diff_filepair` need to occur in
+> certain cases after being queued.
+>
+> Since the existing `diff_addremove()` and `diff_change()` are also used
+> for callbacks in `diff_options` as types `add_remove_fn_t` and
+> `change_fn_t`, modifying the existing function signatures requires
+> further changes.
 
-Rectify this by adding a new document attribute
-"without-breaking-changes" and use it to make the inclusion of those
-sections of the documentation conditional. The name of the attribute is
-based on the similar test prerequisite added in c5bc9a7f94a (Makefile:
-wire up build option for deprecated features, 2025-01-22).
+Sensible.  The patch presented below looks a sane and safe no-op for
+the existing code paths, which is what we want to see in a preliminary
+refactoring step like this one.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
-    docs: fix repository-layout when building with breaking changes
-    
-    I copied the name from the test prerequisite as I didn't want to have
-    different names for condition used in the tests and documentation. I do
-    have some reservations about the naming though as it means we end up
-    having to use ifdef::!without-breaking-changes[] or test_expect_success
-    !WITHOUT_BREAKING_CHANGES to document and test breaking changes which is
-    a double negative.
+> The diff options for pruning use `file_add_remove()`
+> and `file_change()` where file pairs do not even get queued. Thus,
+> separate functions are implemented instead.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1871%2Fphillipwood%2Fbreaking-changes-documentation-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1871/phillipwood/breaking-changes-documentation-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1871
+This looked a bit confusing, but it is an explanation for the reason
+why we simply do not change the function signature of the callback
+members of diff_options structure.  These addremove/change callbacks
+are designed to be a general way to allow applications to react to
+discovered changes to paths, and I agree that it makes sense for
+them to be usable to perform something that has nothing to do with
+the diff_queue structure.
 
- Documentation/Makefile                  | 4 ++++
- Documentation/gitrepository-layout.adoc | 4 ++++
- Documentation/meson.build               | 4 ++++
- 3 files changed, 12 insertions(+)
+> Split out the queuing operations into `diff_queue_addremove()` and
+> `diff_queue_change()` which also return a handle to the queued
+> `diff_filepair`. Both `diff_addremove()` and `diff_change()` are
+> reimplemented as thin wrappers around the new functions.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index a734c6d6243..53a05eb8030 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -221,6 +221,10 @@ asciidoc.conf: asciidoc.conf.in FORCE
- 	$(QUIET_GEN)$(call version_gen,"$(shell pwd)/..",$<,$@)
- endif
- 
-+ifndef WITH_BREAKING_CHANGES
-+ASCIIDOC_EXTRA += -awithout-breaking-changes
-+endif
-+
- ASCIIDOC_DEPS += docinfo.html
- 
- SHELL_PATH ?= $(SHELL)
-diff --git a/Documentation/gitrepository-layout.adoc b/Documentation/gitrepository-layout.adoc
-index 6348ef1dcdf..62ef1c98c26 100644
---- a/Documentation/gitrepository-layout.adoc
-+++ b/Documentation/gitrepository-layout.adoc
-@@ -152,6 +152,7 @@ config.worktree::
- 	working directory in multiple working directory setup (see
- 	linkgit:git-worktree[1]).
- 
-+ifdef::without-breaking-changes[]
- branches::
- 	A deprecated way to store shorthands to be used
- 	to specify a URL to 'git fetch', 'git pull' and 'git push'.
-@@ -164,6 +165,7 @@ branches::
- 	"$GIT_COMMON_DIR/branches" will be used instead.
- +
- Git will stop reading remotes from this directory in Git 3.0.
-+endif::without-breaking-changes[]
- 
- hooks::
- 	Hooks are customization scripts used by various Git
-@@ -231,6 +233,7 @@ info/sparse-checkout::
- 	This file stores sparse checkout patterns.
- 	See also: linkgit:git-read-tree[1].
- 
-+ifdef::without-breaking-changes[]
- remotes::
- 	Stores shorthands for URL and default refnames for use
- 	when interacting with remote repositories via 'git fetch',
-@@ -241,6 +244,7 @@ remotes::
- 	"$GIT_COMMON_DIR/remotes" will be used instead.
- +
- Git will stop reading remotes from this directory in Git 3.0.
-+endif::without-breaking-changes[]
- 
- logs::
- 	Records of changes made to refs are stored in this directory.
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index ead8e482131..4e4fca283c1 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -283,6 +283,10 @@ elif docs_backend == 'asciidoctor'
-   ]
- endif
- 
-+if not get_option('breaking_changes')
-+   asciidoc_common_options += ['--attribute', 'without-breaking-changes']
-+endif
-+
- git = find_program('git', required: false)
- xmlto = find_program('xmlto')
- 
-
-base-commit: 03944513488db4a81fdb4c21c3b515e4cb260b05
--- 
-gitgitgadget
+Nice.
