@@ -1,67 +1,71 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2AB1C5D76
-	for <git@vger.kernel.org>; Mon,  3 Mar 2025 22:00:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05301C5D76
+	for <git@vger.kernel.org>; Mon,  3 Mar 2025 22:01:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741039260; cv=none; b=VLhWyOKEWcrHaLuFbpQuk52CImY8keN+ZX8BXYibt2F6lLvGzY/iyih8qFZ1bhCsZ7KQGRO4OttRJwiJLWsIjl2+UExo08WE1dhI7LwlzhQ5PyW0zjFG/c+L1fqEZn/cSWCXnaSDsOwGyWYRZzLigqDY+L3nm+hxbblUQEVAsUc=
+	t=1741039282; cv=none; b=jrRwisd62UXCFp3Zxdqbif0G/uamoES2tAfrO77mbxvWRrY0TcXEQWwyw4+9Oa1WYEZunAbkvP0UsxPBasPlvFKKscxJaJULoFedCdhQnWNmGpfH3/BQRglPKPBGC42osbOz7bN4VriWoYFMN8u3bbcD+6/tHb7MNpalkrfpSbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741039260; c=relaxed/simple;
-	bh=hXw6b7/8PdDx/cYq7kQezg21ubvurBuqePcuf/gmn1o=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=bcI9WpHugr15GXSrRi711Dx1mdc3CH2pHmme40A2uU4wNoeYC5gjLyiZ384HdEgwZWY/CS2dUNxXwNP2+eLvdoycTZEIhYBHUfX1Bpc1I1O3autoteNapGY6x5OUBLjQxFEVMtaN/xEkk8hIxerv3lP7elXLj374fQUP2BPtOZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DdzrVcps; arc=none smtp.client-ip=209.85.214.170
+	s=arc-20240116; t=1741039282; c=relaxed/simple;
+	bh=FIt5Rma8Ddosq3geQdgFOFfHgIQc+emsR2js9AGorRo=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=eWtX1F33m5KYQTzH449cuuVgW3fpZiYQ2Z54Bljs6HtRcrNDQEDJzTPysqfZ4NGw8L2nO0cjgTn7fxcmycsFdEHLejMGKRxkN4MepZ8+Q7sV9hIFqdavmAgz9fhp2+gNgrS6rn/Juoavy29QLIOkNBEiZhyC0XAXd94Hgp1q/4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QZj61Q7S; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DdzrVcps"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2232b12cd36so66825945ad.0
-        for <git@vger.kernel.org>; Mon, 03 Mar 2025 14:00:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QZj61Q7S"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-22337bc9ac3so94248165ad.1
+        for <git@vger.kernel.org>; Mon, 03 Mar 2025 14:01:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741039257; x=1741644057; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oj1jngaNoOPawWIAboaPUYKgJGGCnQP7xC+57TEEIS0=;
-        b=DdzrVcpsSbSKnKRk/7JrBs42Y3LZm75+K86FO4sjKulG+JGe1sdA3jbfTTroUMFclJ
-         nYL1qGnwJC6AKdq6c4fvbxHi2HKDfQP3qCFXHXRJufZBpg6pN+q9npmtAIkmYLo5eiSc
-         mX7MKkS+0QElDx/UL5olLMwLxDDzjHk6arbbtqguz+tPG9enWSCpdq/apIJYCtKuaZGS
-         aw/Z+kc2S5iGPf1v90WVJcG2oztjfp6Ec/79FS8kCkVBQ2opHLV29vehrljbWorSd/7R
-         Stbm7boxs1Bf/SFo1j2evYAxYYcxJIAWAfJAIb27PoRoxD/x4lrgrhC6l8ZMxgMorKuN
-         Zw+Q==
+        d=gmail.com; s=20230601; t=1741039279; x=1741644079; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1NoC3TVZQIV70pMT6wG4GaGvTXkiZ/B6lTfMypKM9ek=;
+        b=QZj61Q7SijnvCEDmQjbHwoVuPEFivTL/SfFwTQ7rJRu4/yjd0bEouFMLwT3CeA+G3r
+         7H7HiVGXg3m2EJEtWY9SnLrY4kI7A7rdfBBpVQNwxZlUxng7EN2mCuoAEYz9jSxWlfPf
+         0Ka1N2l2rj+CtYutq8AxMgNiMnsOVXSEWS8O71xjiKf+IoUGCtGOeP3CXUWMJl+OPuoD
+         JRQvC0Un7BANvSN6BuR1+ZkzQIOArU4Hw1C9saSk+wppBncVaQ5/6+a/9qUIn9idoGcs
+         uKPDNZGxIiNp2fMv3GOhzrGGjmrS2bjILcKizthH6A4+erddIFI33JM/2UcAhop4GJ8I
+         pfXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741039257; x=1741644057;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oj1jngaNoOPawWIAboaPUYKgJGGCnQP7xC+57TEEIS0=;
-        b=mClcNcpXtGAtJuYsrgPJIXdd348uACr9bjJPeStghj5mFDSFF9KIJQNByuDUyELo6o
-         9CjFUtIlH82SQgcTA99wEdkFl/5jbTRkp8mSASt4GZAXywVaPAvcQpOsXVi8fkZGIsBP
-         5/GXQvWg3m78g4+SkQjkTMTGl72Jh7RN0E+zTLkv6rawCBTNk1B6hK2dqkzB0OMSwny3
-         67nz7e/cVGgJmTnSdkd2ah9wC5BYf5HNQsB+xESaLs0dxKOOrT5een30M2CKZLN7oMU/
-         tASaAOozmOjZAGjI8vjoRLBGxPSld4teBgMpk1T21kWVZUkH7JpWRihtlWmfTZ5JTz/K
-         dzbA==
-X-Gm-Message-State: AOJu0YwAJtYAOLlsfNtlOXKIa2EWzoKkwuXfeoD2poajbXWt+rHdzCsI
-	IgNwjlhPKXaAqjNmnh8VWF6+WnJuGDr9YrCHzUt6kCVaSyacLsTBiz8aXA==
-X-Gm-Gg: ASbGncsNw5Idi93ifMzlKQN5Q89nil/bW1nFtfM9gG7nDfi9SFXRdc7VmltCqHONUyT
-	URmBoZBc9O6Uq2r5xI9yE3zubX0klvls5SXByGnrU+1KOtlwUA83ya+WSd60Y433vEOUci4sUGu
-	HSdl8T+QlDmCjXj5cJizBNE3dNryUVXqmsIQJUmQhCM8cXpVeI+x4Yqa1CKHHJufrs4tUsqx3bN
-	KbZpZbLCI2hI399CJ4ZG5gz5s2sJOw+/MVvr4Zb8hDwzgBLDCsgBxejxj4b6Pvxdp2BaoP2A8zC
-	nEsvx97RdSAJ95gz/D/M2uINjwkw//WuFtNjUVn6YeTQxRPmwwU3U6PL4yTBx/Mpg7+CpvZ1tNt
-	s/3cSdLznRw==
-X-Google-Smtp-Source: AGHT+IF/1sNxLGZMHFdP6s9/npeMX4o5k0sqmO9RpKqRR2dhrJksA7xOrFJ09osSc0TDjjbiGdBwyA==
-X-Received: by 2002:a17:903:2b10:b0:21f:85af:4bbf with SMTP id d9443c01a7336-22368f94859mr234172555ad.20.1741039257415;
-        Mon, 03 Mar 2025 14:00:57 -0800 (PST)
+        d=1e100.net; s=20230601; t=1741039279; x=1741644079;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1NoC3TVZQIV70pMT6wG4GaGvTXkiZ/B6lTfMypKM9ek=;
+        b=naadlhwpa0xuaiRBKX5RGThWz9DKwHDkQNfxK1SWeUxBD9VqkF2tqaiP9JZ5G0X/Fj
+         GWj+sG4+q9TeA8aqh7vko2gpts1+/t9TOdV+XfYT2H/wtJthKoVTgDjyKH0sNsjzIFM1
+         3PGHIAcueXJxaoW88Lw3t2dlwSDG7tL827W+/1G7fNAlbkh3ooS17ikVut80SqkgXbZ6
+         IosYGW55SL5wqIoyz5edqCF2q+ha1+isS4jXuUAox6L+XZB/f83wMfdEB8MKd+FzKuzt
+         2hsYy/P6trft0OL8KFeBDmfxl/wax71GhrqqwSXURn3uCdJLd4nLSxQQGDiwGWQRAlg5
+         8+ZA==
+X-Gm-Message-State: AOJu0YzQZOQW4OisgL6GIL0gojO2i6m55CufWLi+aSDLWCbffqHTzx+E
+	wsjZ4ZkVB6XURbA+F3bpY4DE57Hb+sQ5wvqXsr/cDDfisiR4EgORHJxaLQ==
+X-Gm-Gg: ASbGnctZEt0qvij74Fi0u4oK9ImsDyJ0+tg7vuEm/hgTLkoci+/GDO2r73amf0pM1TL
+	b7r6XWYIfqqdeYGWzsfg/aK4AhBScUzhfIrpCrea7cRSkEbJk6nU5RGDCrbvSSf4VEnriHgBn0b
+	cJaAXbT02aQsAeSTmV3xJ+3xtUuBXleGvUSzyZMkAaitmmSm4MRZQkoV1TV2hMIwKI+TKnJoOEu
+	ydJiSZMpXuaC6AQ/Ny/z3OBdkK9qtxgU/qezmaA6f0ar/5pv8b2iObc0kXieFp8HqomAGuVblV9
+	n991IcIpaMPJtf1T4xli+D2av7IMfKvLwH7mwF9BRtZIAC6uJzJziGq4yaYokWFbhdGGvHV8imQ
+	zn7Skx0Py9g==
+X-Google-Smtp-Source: AGHT+IGSYK3fC56k4u8objD8LlBP0C8mUOoA8IYPOol+VQxgQnTFmP4OgE50Gz01tWDEF4QnWV5Iew==
+X-Received: by 2002:a17:903:17c8:b0:223:49cb:5eaa with SMTP id d9443c01a7336-22369213d6fmr229383595ad.35.1741039278905;
+        Mon, 03 Mar 2025 14:01:18 -0800 (PST)
 Received: from localhost.localdomain ([2804:7f0:b77d:283:5dd5:8e9e:2c56:864a])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223504dc7e1sm82746565ad.176.2025.03.03.14.00.55
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223504dc7e1sm82746565ad.176.2025.03.03.14.01.17
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 03 Mar 2025 14:00:56 -0800 (PST)
+        Mon, 03 Mar 2025 14:01:18 -0800 (PST)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC][RFC PATCH 0/6] Add --subject-extra-prefix flag to format-patch
-Date: Mon,  3 Mar 2025 19:00:23 -0300
-Message-Id: <20250303220029.10716-1-lucasseikioshiro@gmail.com>
+Subject: [GSoC][RFC PATCH 1/6] builtin/log: add subject-extra-prefix flag to format-patch
+Date: Mon,  3 Mar 2025 19:00:24 -0300
+Message-Id: <20250303220029.10716-2-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250303220029.10716-1-lucasseikioshiro@gmail.com>
+References: <20250303220029.10716-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,41 +74,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi!
+Add a new flag --subject-extra-prefix to format-patch. This flag is
+primarily targeted for new contributors that send emails with the suject
+starting with "[Newbie]", "[FirstTimer]" or "[Newcomer]" and developers
+from mentoring programs, which may start the subject with "[GSoC]",
+"[Outreachy]" or similar.
 
-This is a "scratch-my-own-itch" patch, adding a new flag to format-patch. This
-flag allows the user add an extra prefix to the subject, placed before the
-actual prefix, like the "[GSoC]" in the subject of this patchset.
+Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+---
+ builtin/log.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-This is specially targeted for new users or developers from mentoring projects
-like GSoC or Outreachy. Currently, if we want to add to the subject something
-like "[Newbie]", "[GSoC]" or "[Outreachy]", we need to perform some hacks like
-passing --subject-prefix="GSoC][PATCH" or changing it manually in the patch
-content. 
-
-With this new flag, this patchset could be created by using:
-
-`git format-patch -6 --subject-extra-prefix="GSoC" --rfc --to="..."`
-
-This would be only a feature request but I thought it would be better to 
-present a first solution, so I'm sending my implementation as a RFC patchset.
-
-Thanks!
-
-Lucas Seiki Oshiro (6):
-  builtin/log: add subject-extra-prefix flag to format-patch
-  builtin/log: die if -k and --suject-extra-prefix are used together
-  revision: add subject_extra_field to struct rev_info
-  builtin/log: fill subject extra prefix in format-patch
-  log-tree: add subject prefix in output email subject
-  t4014: add tests for the new flag --subject-extra-prefix
-
- builtin/log.c           |  7 +++++++
- log-tree.c              | 12 ++++++++----
- revision.h              |  2 ++
- t/t4014-format-patch.sh | 40 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 57 insertions(+), 4 deletions(-)
-
+diff --git a/builtin/log.c b/builtin/log.c
+index e41f88945e..95667c93ca 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -2036,6 +2036,7 @@ int cmd_format_patch(int argc,
+ 	struct strbuf rdiff2 = STRBUF_INIT;
+ 	struct strbuf rdiff_title = STRBUF_INIT;
+ 	const char *rfc = NULL;
++	const char *extra_prefix = NULL;
+ 	int creation_factor = -1;
+ 	const char *signature = git_version_string;
+ 	char *signature_to_free = NULL;
+@@ -2079,6 +2080,9 @@ int cmd_format_patch(int argc,
+ 		OPT_CALLBACK_F(0, "subject-prefix", &cfg, N_("prefix"),
+ 			    N_("use [<prefix>] instead of [PATCH]"),
+ 			    PARSE_OPT_NONEG, subject_prefix_callback),
++		OPT_STRING(0, "subject-extra-prefix", &extra_prefix,
++			   N_("subject-extra-prefix"),
++			   N_("add an extra prefix at the beginning of the subject")),
+ 		OPT_CALLBACK_F('o', "output-directory", &output_directory,
+ 			    N_("dir"), N_("store resulting files in <dir>"),
+ 			    PARSE_OPT_NONEG, output_directory_callback),
 -- 
 2.39.5 (Apple Git-154)
 
