@@ -1,130 +1,130 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9FE1D63FF
-	for <git@vger.kernel.org>; Sun,  2 Mar 2025 23:22:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EF615DBBA
+	for <git@vger.kernel.org>; Mon,  3 Mar 2025 02:24:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740957755; cv=none; b=kRn7Hf645fNVIZ79XTC/RLGotdwtS6sw1EoJVK/ElKtAz4AcoO+qrt5HkCnjEV4B+NmkcwP+LHSYx6poGpgIYebDUNyFL/FeRt38IeIIdI6fx13yWlTAvoTXVO3sSXMlO+GN0rEQ+YkXSs7vmaV0E8KdCbSMgiDniG6MuLAQqJg=
+	t=1740968691; cv=none; b=MITO3ZMHJfzx+4hkulLosv4rqDcedSEgsoXpjt2s7GMV7EAYGXAxjJkvTU41ACtZ2Nqvh0CiqQ1n6WqmMOXpNUSo9TpzOowY7VZXvtGjEzs9+1nrQtLjWv9USAsavdbKAqLDFfn4+mXfFYeMRv2rCzI2PZB+hUAUxuvd7Iq2ueM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740957755; c=relaxed/simple;
-	bh=mq0ZCJ6Q57pYG9ZiZVue/n6A5eDqvZ4axArReJPL38A=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=MojBj9et54rheOEyfLQk1WJUGcFBfheIYDXhWz54cxuwV4VPcUSpmP4V6pkV3jbUembFg1WSVyKvJa0BzgybFYXlsRj+gdiG1i+vU5ypiYLwDzwnJzjn2PiYLmFnaijw8Vp31GIPvmJ4xqwVxB3UuLV7MGrl8D/s+Ug3qX90i5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QxxmuyPP; arc=none smtp.client-ip=209.85.208.53
+	s=arc-20240116; t=1740968691; c=relaxed/simple;
+	bh=K33DvPHSCvzK6HKieJhCBMg7D8AfO5SEEwztUqsrnc4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Qym62QbRvMPvEa77lpEgAqdF0SkNeQRYVf+u6iGoQxn84K+4hxQ1cLOnSiYfyYyYmpxDw4wDP3v8g784qFtj5pSpoTF/XPg/NNQu7JLHUKOcccRBSLiNFVg2KPnLj4iu4rStaAsg10Xp6tfG2xgGIDKEL5OYA4/d+fhrvsuEltE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kZG+7Vc6; arc=none smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QxxmuyPP"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e5491eb379so836561a12.3
-        for <git@vger.kernel.org>; Sun, 02 Mar 2025 15:22:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kZG+7Vc6"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6ef7c9e9592so29744577b3.1
+        for <git@vger.kernel.org>; Sun, 02 Mar 2025 18:24:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740957752; x=1741562552; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=zKhnxWE5UZLVz2HX9OonSFina7mzgjZzMdzWI5Kzp5s=;
-        b=QxxmuyPPOTlkcnSGfW6/vxzQ3J9kopt4/aiv6c/t5gldyqKO/bGw77bEGdN4pG7P6H
-         r1K71Yx2zNZiRvkAVKQIEJ0w16hhnkNgWoopshqyTdjKJ2pequNGrWUb2fIvmsmKGOyL
-         +aoyQ9TWSDGUcAHheFOv330C4qaHD474E7opT2YZ2zQOiGCRizDFWAapdgma/Ug3u92C
-         3YetJNN8VJeRQgqo40ViapOAREIY0EwYE1ORjDGgaOnXeMvvTSq8N2NhkLFDZhq3NwEl
-         4Wykj9IDODmdaN0AlWAPYmqUoKZOwAM3fMQ4LsVF1+0avtKy2HO0ZYY14fObSSGjGBSV
-         SaFg==
+        d=gmail.com; s=20230601; t=1740968688; x=1741573488; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rC28G/+9O2xwdVl3aM1PrR492BWCWqRc15y79/HckIY=;
+        b=kZG+7Vc6UYdeucdaToo0J0wuZhKaQAKTXAJh7DYQ1GGg8Czb1rOTJ9ukNS3YaJ9hy3
+         1Zee55R/WcNrrlcp3bG1XVjDn0sqe9zUwUYH8UNEh8SsrA1uMM0f93Ho96dPvmc0H7gA
+         PRt0/jjsEhUBbvmjljFEbuqajoUeTE/kerKcAt6D4GLAIUeItDGztrNIKolIoU8q/6aZ
+         mVyYzdsIzIX9/csb/FkNQ6tLhQ2jRpJEvpJmimzBUX2nzjpz67GGfiKnJ/g4aWJUmNeE
+         Y7jq0zx+u6NtJy4qmlIXFyhW+F5QjNlfUDxAzhrwUviGy8eSa7/onW6DJW2MXp355AuZ
+         OA1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740957752; x=1741562552;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zKhnxWE5UZLVz2HX9OonSFina7mzgjZzMdzWI5Kzp5s=;
-        b=TbT8mgFqEn/qCaa3Y6h3CEGxDVsE9/1AisjLL8krI47J4Y7/KOBKSteqTLP08/lV0Q
-         v5yLevBGK9t4qiLsSino8VgOrMpZba4nPzE6/ROE6bvUcY6+zdd22ws6lOdx+1W6zte8
-         /6/sjX7bcbHHUZcVSNUElVrq3eKESwe9ZJUP2GubHNypqElzWAdWF2wsmzt2mkZEEags
-         N1WfZ92kN7TRhjcIp4eXOa4uejTrUiVdtQkulYdSJs1v8LZiriNFyNgXDM5fiYI4sWgQ
-         XyCXFStNjdcT+jQ+mjEBZFkAAkJ8QvvBG5w5KSRFZQs/4Mb1yI0C94MYq9iARpyUee21
-         Yj9A==
-X-Gm-Message-State: AOJu0YzxaKNqhmIB9UAGnTqsPfxeiQzXu7db2MiON6E67p3PWNSngAr+
-	IGDM2pri2h57mtoU6z2Xkz6OLu9eKkH1nYInU7hu3nx8cMHwU3cl68sumZFH0SQxDjIa1tmjXYH
-	4R7t10ZjARqwPuxCRbdSc1bcXI5K97iKpVyM=
-X-Gm-Gg: ASbGnctv46i9CjUjX5p3n4F25YW6VhMEx1gb/YlLtAHoe4ew7iVAHthTvGrzQQ8S5wc
-	ZQ22KK2BntpZiCweSwAccFL1kzP4/MquDqc/iwFmF7BCeH7Ia1A4ktUPOKubI4ZkbwiCEQM3dU+
-	PIaiia5mLav517SlqpnIy1EBv9/rk=
-X-Google-Smtp-Source: AGHT+IHYbxYrlwJG4LajPryqlqZUoNQVnVRUbgs+Att2OHqndYol5jmYIKBvg5pzRQwn++6FcpGB5IKgaMmRTBMUyzs=
-X-Received: by 2002:a05:6402:274a:b0:5de:dff7:7d8f with SMTP id
- 4fb4d7f45d1cf-5e4d6afeb21mr12404726a12.18.1740957751693; Sun, 02 Mar 2025
- 15:22:31 -0800 (PST)
+        d=1e100.net; s=20230601; t=1740968688; x=1741573488;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rC28G/+9O2xwdVl3aM1PrR492BWCWqRc15y79/HckIY=;
+        b=AVeypIN+x//I+JF1/Xgsf+b5w4Da673nnf7WwqP3fubdmInYOgAYuBCNndeuRwahVY
+         hwMz0kIms5O5dhQGDGGrBTdxiF9jhI986BoqT9NKnv+3h4SPXiIixH+mkXBDmodfto/O
+         zZyEfs/GAnoOOkYj06WA6B9BeAXUNjW2W4Gs8662j+n09tDoHBBR+pPBmD2qpteIdKhF
+         tGIk8nMKjFw8Djl8obi4srYDeV2UupmvRUrLTyiKl6+huHc598miE3cHIHaJ9r9+2cfO
+         kp2pCzQeux6R0ldIA6Oprd1AT8iTXm+Cy6zL4mkYKHJVwXOXbc0BDLC+yqxrUUr5OkuT
+         QxbA==
+X-Forwarded-Encrypted: i=1; AJvYcCV9ApbYXC2PBe1hkuO+uXPLJi/uUNkz3E87vPSGRFQDdZiwkwvXXLqRQU1bG1IvsNK768A=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCwr9on5ThJ3P7E7ofZ2awMz9rbves94HzIqQtN0dHUVAcGDyi
+	BvVJrp96K9DK0pDSH5AhIG06uxJXWH0ijmiEPucRlZ33l0lRSNI4jrj0lMn4S8SXUf5pQWhkXJz
+	Gfn/JWBU53rS7ReXJd8oau0Dqaqw=
+X-Gm-Gg: ASbGncu2P9OVALHba1BBS1wI6eibwj5NU6b9XDUt48rVgZ4H6PkRIsJL+tymXkpWsnN
+	dH3lEsaw7t+CPI1fVxSAl81iRY7QWIljPcbJgkQBq58pU2wBhVLP9VUV6u2K5rMZ/hNlzUrLv9t
+	i+3lrSgz3KTNAdBbqThFTSpzvFkKA=
+X-Google-Smtp-Source: AGHT+IH7uq/tx8qd5uaQ2Wf3aqe4ilBzsOH+vlmM8wThvYDrZFCRmFWzUi5kZ2PwyHWGbruqzTbFBSWnd696gg9cq4I=
+X-Received: by 2002:a05:690c:3381:b0:6f5:393f:cf48 with SMTP id
+ 00721157ae682-6fd4a038353mr127300227b3.21.1740968688657; Sun, 02 Mar 2025
+ 18:24:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Henry Reed <henrymicreed@gmail.com>
-Date: Sun, 2 Mar 2025 15:21:55 -0800
-X-Gm-Features: AQ5f1JrvqnHepObskivh9FPPOmyE8wWUk8tC7domVQPb1QngkBTKH1dRqE8KOdc
-Message-ID: <CAKe9kabKXpPQVvJX9vryNi8btk9DeFjOaE=bqp9yDvA3oaiqEA@mail.gmail.com>
-Subject: PKCS#11 authentication fails due to escaped URI
-To: git@vger.kernel.org
+References: <CAFXmTzjQuZn_b-nQHkYo7KHs9__gc1ctoLx0KioTcPEkqak+9w@mail.gmail.com>
+ <xmqq5xkz708v.fsf@gitster.g>
+In-Reply-To: <xmqq5xkz708v.fsf@gitster.g>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Mon, 3 Mar 2025 10:24:37 +0800
+X-Gm-Features: AQ5f1JqZVZwdW32k-NLQTZ3iZ-WcjzFtYaSalyk8YrCCnja4B4Esachd0H0PDxU
+Message-ID: <CANYiYbGJevT_MAKW9n8qvk0Q6AWUY12mD7Hzcg6=+o_tkDuOCw@mail.gmail.com>
+Subject: Re: [PATCH] doc: fix typo in it.po
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>, git@vger.kernel.org, 
+	Ruggero <giurrero@gmail.com>, Alessandro Menti <alessandro.menti@alessandromenti.it>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Tue, Feb 25, 2025 at 12:53=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Ruggero <giurrero@gmail.com> writes:
+>
+> > This patch corrects a minor typographical error in the Italian
+> > translation file (it.po).
+> >
+> > Signed-off-by: Ruggero Turra <giurrero@gmail.com>
+>
+> Jiang, should I take this directly to my tree, or do you prefer to
+> take care of this as part of the upcoming 2.49 updates?
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-I modified ~/.gitconfig to include my PKCS#11 URI for my YubiKey 5 smart
-card. The contents of my ~/.gitconfig are:
-[http "https://git.example.com"]
-        sslCert =
-"pkcs11:model=PKCS%2315%20emulated;manufacturer=piv_II;serial=0011223344556677;token=someUsername"
-        sslKey =
-"pkcs11:model=PKCS%2315%20emulated;manufacturer=piv_II;serial=0011223344556677;token=someUsername"
-        sslbackend = openssl
-        sslkeytype = ENG
-        sslcerttype = ENG
-        sslCertPasswordProtected = true
+With the help of the large model, it can be seen that the patch
+sent by Ruggero is correct. Ruggero can refer to the following
+link [1] and send a pull request to the repository
+https://github.com/git-l10n/git-po.
 
-What did you expect to happen? (Expected behavior)
-I expected the URI to be passed, as is, to OpenSSL, without escaping
-special characters
+The Italian localization work has been on hold for over three
+years, and Ruggero can help rebuild the Italian localization
+translation team (by modifying the po/TEAMS file) and
+regularly update the Italian localization translations.
 
-What happened instead? (Actual behavior)
-Git appears to escape special characters in the URI, like the equals sign,
-colon and semicolon, causing OpenSSL to not recognize the URI. This is
-the command line output is:
-git clone https://git.example.com/org/repo.git
-Cloning into 'repo'...
-fatal: cannot exec '/usr/bin/ksshaskpass': No such file or directory
-Password for 'cert:///pkcs11%3Amodel%3DPKCS%252315%2520emulated%3Bmanufacturer%3Dpiv_II%3Bserial%3D0011223344556677%3Btoken%3DsomeUsername':
-fatal: Authentication failed for 'https://git.example.com/org/repo.git/'
+[1] https://lore.kernel.org/git/20250227015804.100880-1-worldhello.net@gmai=
+l.com/
 
-What's different between what you expected and what actually happened?
-The URI should never be escaped.
+Thanks.
 
-Anything else you want to add:
-The version of Git in Rocky Linux 9 is 4.35.5. The URI is not escaped in
-this version.
-
-Separately, note that the serial, username and repo URL have been modified.
-I am working on a non-Internet connected system with Fedora 41. I am unable
-to disclose the YubiKey serial, username nor the repo URL.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.48.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 8.9.1
-OpenSSL: OpenSSL 3.2.2 4 Jun 2024
-zlib: 1.3.1.zlib-ng
-uname: Linux 6.12.13-200.fc41.x86_64 #1 SMP PREEMPT_DYNAMIC Sat Feb  8
-20:05:26 UTC 2025 x86_64
-compiler info: gnuc: 14.2
-libc info: glibc: 2.40
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+>
+> Thanks.
+>
+>
+> >
+> >
+> > ---
+> >  po/it.po | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/po/it.po b/po/it.po
+> > index c4af156c80..e43f0fea5e 100644
+> > --- a/po/it.po
+> > +++ b/po/it.po
+> > @@ -17602,7 +17602,7 @@ msgstr "Controllo la ridenominazione di '%s' in=
+ '%s'\n"
+> >
+> >  #: builtin/mv.c:185
+> >  msgid "bad source"
+> > -msgstr "sourgente errata"
+> > +msgstr "sorgente errata"
+> >
+> >  #: builtin/mv.c:188
+> >  msgid "can not move directory into itself"
+> > --
+> > 2.48.1
+>
