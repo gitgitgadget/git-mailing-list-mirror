@@ -1,54 +1,54 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65FA22A812
-	for <git@vger.kernel.org>; Mon,  3 Mar 2025 16:19:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0349B23F279
+	for <git@vger.kernel.org>; Mon,  3 Mar 2025 16:30:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741018801; cv=none; b=d4sworeRGQwvu0aLwXnS3+Y/t80nDY8V0ZLGb1ZtK50glRBi28LBzhUYQUZqjgTShdHdUNGkrQkAA/Icm1e3wpfVmKuCOG8rL+VCQ1E6lJap+Ix9ade04jhqf/nfsYJtG4nIwXwoDatZyN/c9E1yNkTtbN2ksGYaRv0lFbPUtkc=
+	t=1741019440; cv=none; b=ZHLOP2CaxX0Vi6fPVud+qGZDuA+0azoKXWYRoePJ7er3qURJ298WPwKt9F5NFJyDdZBxbtYNd4qnWz5yYrTxKrfFBIWryy6gCNNpJZgOuFwakBYphd8Hi1VyKb0cCBKSR6EKLszEzw/+M14t1q7aoJaMP7t3HizN/eL/75VlTCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741018801; c=relaxed/simple;
-	bh=hve+fuB8JPRKjjNnz3ahi41TkNEWOYEFJda138LhTyM=;
+	s=arc-20240116; t=1741019440; c=relaxed/simple;
+	bh=wo28W91gy45/qOBQWu1P2Z0AB2uO87BWPD5iON4PmmI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=b9hlwppiRBKV1Hzy3XoB0Bo/2VhHOpMztgNW4WRjq3REoilZaDbL6qs1gp9IdiDk7zbsLRFtcgdg/GyHUZrYFZw3gGOSPwLNKsanPR3nNOT3dmx2CGzSchTE9NzlF70VmbcXSWNA32RI2AZj+7B307nm9bVJaL7b2kNQR78Wif4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wVZIcBiw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H+mZop0s; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version:Content-Type; b=gasE5pjNBQ2RXU12W1SVcVNKFkexavv4P3Kbnpq4jlfmVEbca0GoyylrXHMkFxZi4aq+ONsKKfm6rWMDXjFMWfn09eTzEwvtmXe1a+tet9y5VaL7AA0CvmyL83FmzGTwgU+g9Oxkd/EDncYiH1HyOT0jM3WNuqPuB0F2CTXLLuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=u8tPMefk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dlFuS9jw; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wVZIcBiw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H+mZop0s"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C4183254020B;
-	Mon,  3 Mar 2025 11:19:58 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 03 Mar 2025 11:19:58 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="u8tPMefk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dlFuS9jw"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id DE8BF11401A2;
+	Mon,  3 Mar 2025 11:30:35 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Mon, 03 Mar 2025 11:30:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741018798; x=1741105198; bh=Vi1cGf+kkl
-	oTcEYYiIcTo15lBcKcjXQb+rFssohIPAU=; b=wVZIcBiwZhLxh9+vxFHcQZY0hx
-	TBigGLJl7QVDRNfDEOUAYmWttTjQ2WeQTrvXfW54qhBUSK9PpY+fD1wQXFFt9MQ5
-	fUbGj3+JUHiSBwWRWHNJG+WD2cwFISHEfQl/mkoymeM6/iUW0aO2vLw+H+tBbWTK
-	1XSMgGXlYyJO1ycZ4ja2IATlXsA6qyyiTatfqLD4iWQz87mOXEdsVdGUWdZG4HsH
-	iC8lFyxI5M0BWznLNwP/BuSmbmOVhqM8gSjvxtlRth8PFsYsp/GsWNDI5Ah8VjWL
-	D354+Ej1dc8XaaHz6hVn00yw5wZyhvHSXsZErZh9UDixTDpmHW2TDUP5Fzkg==
+	:subject:to:to; s=fm3; t=1741019435; x=1741105835; bh=CoNaHO++Ky
+	DX5xk/srh1oVx1hsNXWo3aqRZ4Nkkjphk=; b=u8tPMefkMWPFrlGr3l8g4+mONi
+	peFS0F2akzNES8nNUeqj2SSwkKvVjSuRL99hl53SgBYJBU5bCN/ymDpxjVrK4ORG
+	uFwnHn6t7NZO1WONl6TcfIPmK4s7jjNlGiz61MxykKkgJYFk5fhmhuuIUn0Wb+r4
+	4I4NlWyiw8PvRunuaZOkkkWdafQs0yxeIn6F9X0h22cgOffn4RrTrtP5skN87/5V
+	TK+4BMs8NCqA6gdowC0Axt67mTbbcnrYfU318ahCjMCJAZF3wvlAGXrecOn8uBXA
+	c6wBRmJv0peoQjljyijDmmWS1wsTiZ6tKgzkZVRjXhIE4bMCP5jmmpi/ds+A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741018798; x=1741105198; bh=Vi1cGf+kkloTcEYYiIcTo15lBcKcjXQb+rF
-	ssohIPAU=; b=H+mZop0sgtyAMHeq+oNNo8kRUWapcoTDugSfZ/nMHpssuL+MvE3
-	LDGyWlydFlr55ohNYv9CBRbD2iiwYWKGrhCDECc8vwDIAM5S4rsfDFk4l2PtX7e7
-	krBjpy8wunU3Pg0gcSd9kLPoS6OO8e7gLJ9SXsc3MfeZnNFgYidNchcBTsWAfKmL
-	o9GrrSB/i/4MWM/z4zT4stdQ0kuPkuKDSMFm9NBU/SBRYg4S3O2/iBXBd+YMl+iQ
-	v4xeGFWLzcMrc+vmmrbtI+RdWGj4bs5SbaQny/kne+QXyQlSeENpiyIf4ohL0h6J
-	KKSIVpMgoIWtcDWce2sQWS8e3xUDpmJpXTg==
-X-ME-Sender: <xms:rtbFZ-0BhoLrjFlrCN8Zg5k_5qHqtbPsxZC9UzqXqyYwlHL0WSaeoQ>
-    <xme:rtbFZxHcO43gAJq3bpscAlXRrwXbyyfOkt1wGe4w9woyWFDFoPlSETaAgF9ZQvnq_
-    r5bh6udKTXTAC_WCw>
-X-ME-Received: <xmr:rtbFZ25RQH_GaW3McMx8gHUFLhGlhRdB30fxAyYzfTqzAAjKQ2p7coLXybSO_rPkds-WkNZDKA0ogIs8juBe_dQXE8n7cAB8kqWG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelleeitdcutefuodetggdotefrod
+	1741019435; x=1741105835; bh=CoNaHO++KyDX5xk/srh1oVx1hsNXWo3aqRZ
+	4Nkkjphk=; b=dlFuS9jwdfv3/iIuB4FxT/MI7dYfEo9GBTuy7LTNblcPGouJIaI
+	22lHgmI1bP3+4sI/Qje8MVGRXYkFoseGEMsn6+Da/QLl4rKLtGwBedLXDt5UDRyt
+	pILRFiXrqLJy4n2fuitJGxqMshgaQfapgL2j7ePXiT/XR9zGNayhvLzgfdCSGxaT
+	9lUJgC6tukcVaBjmN2orM7h6LxIBN8jmsVftpQdnx5NbioxbDa/hG2eBCLw+5z3a
+	/Q6Ti+6gwrevBG05BwBV3FEvvZMUq2B9mWXr7g9JzVuEkoJZ743G4D/DFSThAF3Z
+	GQA2gETnH6RGSGOic5FZ62qme6QcLuIjtTQ==
+X-ME-Sender: <xms:K9nFZ2VEMGP312q34kty57moJY1-7_J1XykcyCq--yuF7gCD-KJYBg>
+    <xme:K9nFZyn5EYSJ5wnck9OOeCCOh1jI2CmpLXoP7T6VFz4MShV0RJhewKfrDrezJj9V3
+    DDBo0smc1jlpkM57Q>
+X-ME-Received: <xmr:K9nFZ6ZErpgHD8sTPUz0eK72bptFsNM9OQ1HsYvmYAPTdwhAPfzxr8RT4bZdcuJF0IWVsOcpnDz-Hv6HZ0xGkD0O6_yuGhKmzGr2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelleeiudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -56,32 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelleeitdcutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrh
+    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrh
     esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
     rhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrd
     dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddv
-    feesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:rtbFZ_3r1rEZvkiGd97EHcWDxdTewV7vhYZ-FSyS6RZuT2Zr-NC-4w>
-    <xmx:rtbFZxGNBwDLL2BL7doOR8JFKoqCk6XA3UceP3FZKbROs58M5qPmIA>
-    <xmx:rtbFZ4_yhhZqPMA1dzC2mk50JxDYmzaKolEuDnlO51ZA02zHgWZkzA>
-    <xmx:rtbFZ2lS0-WbLAFsnwM9ElRC-CKNNwpYdipbEjNK5Orb_2o-qaTBbg>
-    <xmx:rtbFZ26825osOwggBZvXCO_j64K7z7CtJnGBuBLdGMGAfOaeDsV7mC0b>
+    feesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:K9nFZ9XKyxXAWAb2ANFTU5WpbSCbJHzdX7z3xp1qlXyQ9O3P3AxDgw>
+    <xmx:K9nFZwl_oE5shnHq5ZZI7fh9b_gIeJJFCMLZeqYSosLayYn_gAIgaQ>
+    <xmx:K9nFZyfJqhcCLMC-AdO1yuQQY1CfudKEtMWmCyFzcv9m1-6HVZwKMw>
+    <xmx:K9nFZyFBAjmOcbxs8zFqXRwBq8lnSzt2XtF84Aml2q09s48OibD3WQ>
+    <xmx:K9nFZ6UfgOV0nzYDr_HdplUXT0XsmqwDnvv_UFkHsZ5KeWCKyISe9Z63>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Mar 2025 11:19:58 -0500 (EST)
+ 3 Mar 2025 11:30:34 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org,  ps@pks.im,  karthik.188@gmail.com,
-  phillip.wood123@gmail.com
-Subject: Re: [PATCH v5 2/4] diff: add option to skip resolving diff statuses
-In-Reply-To: <20250228213346.1335224-3-jltobler@gmail.com> (Justin Tobler's
-	message of "Fri, 28 Feb 2025 15:33:44 -0600")
+  phillip.wood123@gmail.com,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 3/4] builtin: introduce diff-pairs command
+In-Reply-To: <20250228213346.1335224-4-jltobler@gmail.com> (Justin Tobler's
+	message of "Fri, 28 Feb 2025 15:33:45 -0600")
 References: <20250228002604.3859939-1-jltobler@gmail.com>
 	<20250228213346.1335224-1-jltobler@gmail.com>
-	<20250228213346.1335224-3-jltobler@gmail.com>
-Date: Mon, 03 Mar 2025 08:19:56 -0800
-Message-ID: <xmqqldtmxf0z.fsf@gitster.g>
+	<20250228213346.1335224-4-jltobler@gmail.com>
+Date: Mon, 03 Mar 2025 08:30:33 -0800
+Message-ID: <xmqq7c56xeja.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,51 +93,38 @@ Content-Type: text/plain
 
 Justin Tobler <jltobler@gmail.com> writes:
 
-> By default, `diffcore_std()` resolves the statuses for queued diff file
-> pairs by calling `diff_resolve_rename_copy()`. If status information is
-> already manually set, invoking `diffcore_std()` may change the status
-> value.
->
-> Introduce the `skip_resolving_statuses` diff option that prevents
-> `diffcore_std()` from resolving file pair statuses when enabled.
+> +static unsigned parse_mode_or_die(const char *mode, const char **end)
 
-Makes sense.
+A minor naming issue, but the previous round called this endp, which
+is probably a better name; making it explicit that it is a pointer
+to receive the discovered end of converted string is in line with
+how a similar parameter to strtol() and friends is named as
+"endptr".
 
->
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> ---
->  diff.c | 2 +-
->  diff.h | 8 ++++++++
->  2 files changed, 9 insertions(+), 1 deletion(-)
->
-> diff --git a/diff.c b/diff.c
-> index b5a779f997..37cc88c75b 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -7081,7 +7081,7 @@ void diffcore_std(struct diff_options *options)
->  		diffcore_order(options->orderfile);
->  	if (options->rotate_to)
->  		diffcore_rotate(options);
-> -	if (!options->found_follow)
-> +	if (!options->found_follow && !options->skip_resolving_statuses)
->  		/* See try_to_follow_renames() in tree-diff.c */
->  		diff_resolve_rename_copy();
->  	diffcore_apply_filter(options);
-> diff --git a/diff.h b/diff.h
-> index 63afa17e84..fc791ee2cc 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -353,6 +353,14 @@ struct diff_options {
->  	/* to support internal diff recursion by --follow hack*/
->  	int found_follow;
->  
-> +	/*
-> +	 * By default, diffcore_std() resolves the statuses for queued diff file
-> +	 * pairs by calling diff_resolve_rename_copy(). If status information
-> +	 * has already been manually set, this option prevents diffcore_std()
-> +	 * from resetting statuses.
-> +	 */
-> +	int skip_resolving_statuses;
+Not worth a reroll to rename this one alone, though.
+
+> +	while (1) {
+> +		struct object_id oid_a, oid_b;
+> +		struct diff_filepair *pair;
+> +		unsigned mode_a, mode_b;
+> +		const char *p;
+> +		char status;
 > +
->  	/* Callback which allows tweaking the options in diff_setup_done(). */
->  	void (*set_default)(struct diff_options *);
+> +		if (strbuf_getwholeline(&meta, stdin, line_term) == EOF)
+> +			break;
+
+Nice.
+
+> diff --git a/git.c b/git.c
+> index 450d6aaa86..77c4359522 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -541,6 +541,7 @@ static struct cmd_struct commands[] = {
+>  	{ "diff", cmd_diff, NO_PARSEOPT },
+>  	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+>  	{ "diff-index", cmd_diff_index, RUN_SETUP | NO_PARSEOPT },
+> +	{ "diff-pairs", cmd_diff_pairs, RUN_SETUP | NO_PARSEOPT },
+
+OK.  We need a repository to find objects named in our input, but we
+do not need working tree.  Makes sense.
+
