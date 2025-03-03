@@ -1,147 +1,227 @@
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6886E78F30
-	for <git@vger.kernel.org>; Mon,  3 Mar 2025 08:42:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE75E1F130C
+	for <git@vger.kernel.org>; Mon,  3 Mar 2025 08:47:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740991374; cv=none; b=JCCGipCifMoPyE2P9IGEqphsOJsPU7YArjEjR9EncWMmmTjd/8Ah71n+GexYaI6HkepOoqrZCVkfxep1WS6SBEsvQV8DJfbfF2NQt0AWz9HYRIo7E4cGXq8s+3PHt50wJC1ckET7frwS5xeg3Eu7ajkTKIFRZTIanPBGwKFoDOs=
+	t=1740991661; cv=none; b=i0MwKEetWM8RoECxpb71c97oDFljPQG6hD1tx9lotxkpLMrYulLRNpI4AGvemF+S/RuhyfUwoxvfyHFro8mUG0Tu1Jp9y2cUMsPJm8UliSlW96rEvnm99tB4i5kyVPFIf0glhJDKCADzAlfQMFD2OOZRPgJS58VVQ868834Hy9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740991374; c=relaxed/simple;
-	bh=XqzTYE2NQaodUp0XRV9zKEqLWDv+yKtk8tyy6tPthdU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gwJY7lQMK9EiKd27U4CzNPYIfDLI+9zZ/9bXBEn2nzVH1fB5CX7eTbWokQ9MfdfzqZ/iYrHhH2bxE1shie1d1CYZu9eLisBgwiBLE2ZQIuvWU3cc75LYkydcCr+byn4Po6jRQ4ErrNa3sGp3DrrDXnVar7Z0zHUWGnb0kp9jrFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WmpaE7y6; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740991661; c=relaxed/simple;
+	bh=Mc84D7HiPlZ8DNtqhFX0pei0h2FhYE1wr7UD5nXoUm0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=VKFBkS97NNl71BtyQtVt3T/KehcEWH1eVOnkC8vh4hTuZN8Y/JvKvdBiPkcH7YliFPman1a3YtHgpU3yHuUC5QivFrioO+h4xgHvmSMlbtP6oMLxZuefrmhHkr/QztlOLJMZdm862+oqhFXCnfa9ptejwE9kRYEGBrdiWkA5Cuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PDoGu/Xp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CqFYQlx2; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WmpaE7y6"
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e5dc299deb4so3395667276.1
-        for <git@vger.kernel.org>; Mon, 03 Mar 2025 00:42:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740991372; x=1741596172; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3FKaPEyUr9j0Y1/No/HAhINtI8RuqfD3w4uQQIAztck=;
-        b=WmpaE7y6eNImaMnJj17M7NU8IrseIWmkJXx+zYYFA0U7l6/p1ExtdZqvFiEI+Abih5
-         kQY4BtdpRKVGgiZXrErito8uFDR9kC5o1q0FRVh2sgvV0UbS8Ybz8gQIQSPBkcIpKqLO
-         7jhLeaaKHzyyPy9o7x5JCwAnUXnStHoCzMkDXmv+P5Dy4JV5Scp92jaqvhJ/K1gXHFmG
-         H+nPQ7vmIBY9dDbJjkADYHml4JJ6DeET4YDgr2vP1fmvXvrHK0GYk7qxX4D4sacKMrJG
-         ZzvyPxyZUV26J8d4CPfexmwrNgxxzNQv83vV7rsma/ASzte3lXntEr6WV1eqd+Lm9S7C
-         6tyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740991372; x=1741596172;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3FKaPEyUr9j0Y1/No/HAhINtI8RuqfD3w4uQQIAztck=;
-        b=JFBdcpJ4On+agGD7aFFQLnBzExx2nDp56lBrAjlGMef7EnaO9vlzl9Xtrj2HLnD8mh
-         lW9bM/n3o5mm7mGcgzktJPMW3fCMv3jQlBadUeqxKeNL/U5SBTPZjP78FKLz/V8IaT7A
-         D2koYAgYAZZNjr5dJLh8pGQ1EWfOlG7nD/w2kMMqRrHOzDVUzux6Qc1Rgy3UoSc6bh1U
-         kDqe6itV/Wy/4vdAevVX+Ix6wBOlzoENM/30AJImjXTj3hDKSKLYVIh/+nUtRyodRp54
-         R5wXRuTTb1X6FZaZbrGHopt+FARw2QHK/+/EkkaHhEKRxpZljc3RbNhiyAPIuwHU2H4l
-         S97A==
-X-Forwarded-Encrypted: i=1; AJvYcCWul2zlwafgFofU7u1rHR8bHsTCSO4xD0QqYcqZ2Pey2mdzxUKHytRIjVKYjn8+VQEKyVY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyhXAbPMX0trgkOJMNMy18o+FCqvc/2VCLi/qUSTgf3ZEl33OXZ
-	3i4Sotn1ycY9Nszwj3mN+HhKnSIRoKAkF+aSJ7+vkGhtKWjr+c0NfWtIy5BC6RfQ0h7uzqA+Ppk
-	q/ar02CT4WOud6R3wyQte1+Qg5rU=
-X-Gm-Gg: ASbGncvos1oEVk8ULTJmCrbWWOzvyzHkJF1Nd4lEsalCLq29wxqsP3hnFpfaGu1pdvX
-	rU1IFkXuStnscb5RPuIG7F2x64iocYETl++Zo0LUdQlqDwakAmvmXtnst9nZZQNMEl1XHt/XZdI
-	44wdayBxyGh31bLSn7xXx+oxCVEg==
-X-Google-Smtp-Source: AGHT+IE9sQfHF4tW6ehWu1Jh3SSXbCeydMllaK87Jc0JKMDUBxdw/WZJZ3oah/tJwzW6RnQAsn1DjCWQzEOI5xexMqQ=
-X-Received: by 2002:a05:6902:2410:b0:e5b:257e:c3b1 with SMTP id
- 3f1490d57ef6-e60b2e8e498mr15750519276.8.1740991372328; Mon, 03 Mar 2025
- 00:42:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PDoGu/Xp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CqFYQlx2"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id CB74B114016B
+	for <git@vger.kernel.org>; Mon,  3 Mar 2025 03:47:36 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Mon, 03 Mar 2025 03:47:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1740991656; x=1741078056; bh=tBHJdrRWpk
+	+DFfseUhTQyuV4ubM2usEkfukJcm1ihJA=; b=PDoGu/XpnDXktaO4uGYpSXDtP8
+	rmuCI8m9qBsNmftOfcwHa2tVU90ds+2ifUHc+H/xKQ0zRRk3rW0/BpxY8km3B6x8
+	0yxlEk/8A1X3Unmgw/33vYZla+nQUVI9hQr/u0yXVUDera4e9q927MFDWvjIbcGe
+	QyBBgT2XFbYV5R+HygJs9T+gjEx9VEJ1zljevyYO7d7o9DK2ApbiN0DCO3pLdzvL
+	PaUcoKBz4stpoVLZ/xkMolB+1A0d3qFB8rzXexxrA70aHTrW1xP7JRCKDXGvbTHe
+	8Q1UUoNSfzQaP85epzMPfGjeXSztT44Cjvyzbv43YpWzJex2Ff3MKUzU52nA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1740991656; x=1741078056; bh=tBHJdrRWpk+DFfseUhTQyuV4ubM2
+	usEkfukJcm1ihJA=; b=CqFYQlx2VSNFwfxxAsW0ayag+TXfag12QLa26oVsT93E
+	zAaGHd4Xl3bePT7E+QcXzqEjr/ghapulyVItCERbe9I6UfDpipXUw93+aEtkJpVN
+	zoAoOhIwV9xrI2Asz8r2tNHOH1zn0z/BH08Se7QB/OgeoehT2pBsXCO1bAV6aW2W
+	5TDn2qk8KTEuZW/L7sZ1XXlkEer5GbBrK/3PmpGGzB2uxtV3iPESHcuMuL0Ly88W
+	dENmcHJvXLwP4HP7WL8Erg/jDKwBbVeilXa25ZRLECE3TErT30rbX8wdbJKIvM5c
+	jXVFTE8cxrMZSyY8gE8cWfdaLiSyl5rwi6lX722U8g==
+X-ME-Sender: <xms:qGzFZ42D5M2F6U8W153U15AmgiC5ZVOrNpkgpwWiSyeZ5hEahJeKIw>
+    <xme:qGzFZzHNbszVxUIRbW-CNaAqmHnyocu2E0IFNrOOx94hReez20FxWelaFPUTd0D4O
+    PHJu38kXyE68JZ_8w>
+X-ME-Received: <xmr:qGzFZw68EzYqsZDhQSHGprQY08rCmOTXcaG8U8bAMOxnAeLZ3GRcvLroGQeLQkdW4XKeLnvu0mnzNtl6flSN4kC5P-C6Txo0LzVvfVVWV3kXQO39>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelkeeikecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffuff
+    fkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevueegkedtte
+    eigeejueehuedugfevleefveehueehgfetffffvefhuefhueekveenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:qGzFZx0SJ4dSYT9b1Uj_LWdp4xBm6jLNuee0e8L13wdFjKdQKoPrYA>
+    <xmx:qGzFZ7GI6LqupNhalAb1t1XROAMrS-ZUokbX_gHrHjTfgH7J2wKAiA>
+    <xmx:qGzFZ6_V44HgDtQ3sKv4Hp81SGoRi4qHl7C-mECb5SkneeIVjCpXWw>
+    <xmx:qGzFZwnH7jE_hvLcXp4sU8CAWfJVUMKa-Jb0WaId7hNBqkuZ8mDUDw>
+    <xmx:qGzFZxNk0Wz_9bO6h-1kJLa-ljr6RwVHdbA6CspUOFM9sPQv_55U98_q>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 3 Mar 2025 03:47:35 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4a4d2941 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Mon, 3 Mar 2025 08:47:33 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 00/12] Stop depending on `the_repository` in object-related
+ subsystems
+Date: Mon, 03 Mar 2025 09:47:29 +0100
+Message-Id: <20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFXmTzjQuZn_b-nQHkYo7KHs9__gc1ctoLx0KioTcPEkqak+9w@mail.gmail.com>
- <xmqq5xkz708v.fsf@gitster.g> <CANYiYbGJevT_MAKW9n8qvk0Q6AWUY12mD7Hzcg6=+o_tkDuOCw@mail.gmail.com>
- <CAFXmTzgJ0_p92kaqFcby8En6EqEBnccN-H-uH_HMBNQtUtit+g@mail.gmail.com>
-In-Reply-To: <CAFXmTzgJ0_p92kaqFcby8En6EqEBnccN-H-uH_HMBNQtUtit+g@mail.gmail.com>
-From: Ruggero <giurrero@gmail.com>
-Date: Mon, 3 Mar 2025 09:42:41 +0100
-X-Gm-Features: AQ5f1JrTvjq0NkhadArKkTivZbxsd21NeF2JnzXXaL-MdVbZK8Mu4eSOdWuioAM
-Message-ID: <CAFXmTzi_acK2dCen27tgRCYWhD8oHKDq1FE-xsvnOG+F1jytwA@mail.gmail.com>
-Subject: Re: [PATCH] doc: fix typo in it.po
-To: Jiang Xin <worldhello.net@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jiang Xin <zhiyou.jx@alibaba-inc.com>, git@vger.kernel.org, 
-	Alessandro Menti <alessandro.menti@alessandromenti.it>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKJsxWcC/x3NSw7CMAwA0atUXmMpDRQKV6lYNKlLDFIT2eanq
+ ncnYvk2MysoCZPCpVlB6MXKealodw3ENC43Qp6qwTvfOd86DAcsD8Uc7hRN8c2W8tPQEqFQycq
+ W5YvHMPb7cz+fYnRQW0Vo5s//M1y37QehqE0NdwAAAA==
+X-Change-ID: 20250210-b4-pks-objects-without-the-repository-6ba8398f7cc0
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.14.2
 
-Here with the correct commit message:
-https://github.com/git-l10n/git-po/pull/828
-There are many failures
+Hi,
 
-On Mon, Mar 3, 2025 at 9:21=E2=80=AFAM Ruggero <giurrero@gmail.com> wrote:
->
-> Hello Jiang,
->
-> I created a pull request (contrary to what is written in the github
-> template): https://github.com/git-l10n/git-po/pull/827
-> I haven't run "Refine your commits" with msgcat since it creates tons
-> of changes in po/it.po. Let me know if that is what you want.
->
-> On Mon, Mar 3, 2025 at 3:24=E2=80=AFAM Jiang Xin <worldhello.net@gmail.co=
-m> wrote:
-> >
-> > On Tue, Feb 25, 2025 at 12:53=E2=80=AFAM Junio C Hamano <gitster@pobox.=
-com> wrote:
-> > >
-> > > Ruggero <giurrero@gmail.com> writes:
-> > >
-> > > > This patch corrects a minor typographical error in the Italian
-> > > > translation file (it.po).
-> > > >
-> > > > Signed-off-by: Ruggero Turra <giurrero@gmail.com>
-> > >
-> > > Jiang, should I take this directly to my tree, or do you prefer to
-> > > take care of this as part of the upcoming 2.49 updates?
-> >
-> > With the help of the large model, it can be seen that the patch
-> > sent by Ruggero is correct. Ruggero can refer to the following
-> > link [1] and send a pull request to the repository
-> > https://github.com/git-l10n/git-po.
-> >
-> > The Italian localization work has been on hold for over three
-> > years, and Ruggero can help rebuild the Italian localization
-> > translation team (by modifying the po/TEAMS file) and
-> > regularly update the Italian localization translations.
-> >
-> > [1] https://lore.kernel.org/git/20250227015804.100880-1-worldhello.net@=
-gmail.com/
-> >
-> > Thanks.
-> >
-> > >
-> > > Thanks.
-> > >
-> > >
-> > > >
-> > > >
-> > > > ---
-> > > >  po/it.po | 2 +-
-> > > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > > >
-> > > > diff --git a/po/it.po b/po/it.po
-> > > > index c4af156c80..e43f0fea5e 100644
-> > > > --- a/po/it.po
-> > > > +++ b/po/it.po
-> > > > @@ -17602,7 +17602,7 @@ msgstr "Controllo la ridenominazione di '%s=
-' in '%s'\n"
-> > > >
-> > > >  #: builtin/mv.c:185
-> > > >  msgid "bad source"
-> > > > -msgstr "sourgente errata"
-> > > > +msgstr "sorgente errata"
-> > > >
-> > > >  #: builtin/mv.c:188
-> > > >  msgid "can not move directory into itself"
-> > > > --
-> > > > 2.48.1
-> > >
+this patch series is another step to remove our dependency on the global
+`the_repository` variable. The series focusses on subsystems related to
+objects.
+
+The intent here is to work towards libification of the whole subsystem
+so that we can start splitting out something like an object "backend".
+It is thus part of a set of refactorings aimed at allowing pluggable
+object databases eventually. I'm not discussing that bigger effort yet,
+mostly because it's still taking shape. So these patch series contains
+things that make sense standalone, even if pluggable ODBs never get to
+be a thing.
+
+Note that this patch series stop short of dropping `the_repository` in
+"object-file.c". This is a bigger undertaking, so I'm pushing that into
+the next patch series.
+
+The series is built on top of cb0ae672aea (A bit more post -rc0,
+2025-02-27) with ps/path-sans-the-repository at 028f618658e (path:
+adjust last remaining users of `the_repository`, 2025-02-07) merged into
+it.
+
+Thanks!
+
+Patrick
+
+---
+Patrick Steinhardt (12):
+      csum-file: stop depending on `the_repository`
+      object: stop depending on `the_repository`
+      pack-write: stop depending on `the_repository` and `the_hash_algo`
+      environment: move access to "core.bigFileThreshold" into repo settings
+      pack-check: stop depending on `the_repository`
+      pack-revindex: stop depending on `the_repository`
+      pack-bitmap-write: stop depending on `the_repository`
+      object-file-convert: stop depending on `the_repository`
+      delta-islands: stop depending on `the_repository`
+      object-file: split out logic regarding hash algorithms
+      hash: fix "-Wsign-compare" warnings
+      hash: stop depending on `the_repository` in `null_oid()`
+
+ Makefile                                     |   1 +
+ archive.c                                    |   4 +-
+ blame.c                                      |   2 +-
+ branch.c                                     |   2 +-
+ builtin/checkout.c                           |   6 +-
+ builtin/clone.c                              |   2 +-
+ builtin/describe.c                           |   2 +-
+ builtin/diff.c                               |   5 +-
+ builtin/fast-export.c                        |  10 +-
+ builtin/fast-import.c                        |   8 +-
+ builtin/fsck.c                               |   6 +-
+ builtin/grep.c                               |   4 +-
+ builtin/index-pack.c                         |  16 +-
+ builtin/log.c                                |   2 +-
+ builtin/ls-files.c                           |   2 +-
+ builtin/name-rev.c                           |   4 +-
+ builtin/pack-objects.c                       |  17 +-
+ builtin/prune.c                              |   2 +-
+ builtin/rebase.c                             |   2 +-
+ builtin/receive-pack.c                       |   2 +-
+ builtin/submodule--helper.c                  |  36 ++--
+ builtin/tag.c                                |   2 +-
+ builtin/unpack-objects.c                     |   5 +-
+ builtin/update-ref.c                         |   2 +-
+ builtin/worktree.c                           |   2 +-
+ bulk-checkin.c                               |   4 +-
+ combine-diff.c                               |   2 +-
+ commit-graph.c                               |   9 +-
+ commit.c                                     |   2 +-
+ config.c                                     |   5 -
+ csum-file.c                                  |  28 +--
+ csum-file.h                                  |  12 +-
+ delta-islands.c                              |  14 +-
+ delta-islands.h                              |   2 +-
+ diff-lib.c                                   |  10 +-
+ diff-no-index.c                              |  28 +--
+ diff.c                                       |  14 +-
+ diff.h                                       |   2 +-
+ dir.c                                        |   2 +-
+ environment.c                                |   1 -
+ environment.h                                |   1 -
+ grep.c                                       |   2 +-
+ hash.c                                       | 277 +++++++++++++++++++++++++
+ hash.h                                       |   4 +-
+ log-tree.c                                   |   2 +-
+ merge-ort.c                                  |  26 +--
+ merge-recursive.c                            |  12 +-
+ meson.build                                  |   1 +
+ midx-write.c                                 |  12 +-
+ midx.c                                       |   3 +-
+ notes-merge.c                                |   2 +-
+ notes.c                                      |   2 +-
+ object-file-convert.c                        |  29 +--
+ object-file-convert.h                        |   3 +-
+ object-file.c                                | 292 +--------------------------
+ object.c                                     |  21 +-
+ object.h                                     |  10 +-
+ pack-bitmap-write.c                          |  36 ++--
+ pack-bitmap.c                                |  15 +-
+ pack-bitmap.h                                |   1 +
+ pack-check.c                                 |  12 +-
+ pack-revindex.c                              |  35 ++--
+ pack-write.c                                 |  55 +++--
+ pack.h                                       |  11 +-
+ parse-options-cb.c                           |   2 +-
+ range-diff.c                                 |   2 +-
+ reachable.c                                  |   6 +-
+ read-cache.c                                 |   4 +-
+ refs.c                                       |  12 +-
+ refs/debug.c                                 |   2 +-
+ refs/files-backend.c                         |   2 +-
+ repo-settings.c                              |  20 ++
+ repo-settings.h                              |   5 +
+ reset.c                                      |   2 +-
+ revision.c                                   |   3 +-
+ sequencer.c                                  |  10 +-
+ shallow.c                                    |  10 +-
+ streaming.c                                  |   3 +-
+ submodule-config.c                           |   2 +-
+ submodule.c                                  |  28 +--
+ t/helper/test-ref-store.c                    |   2 +-
+ t/helper/test-submodule-nested-repo-config.c |   2 +-
+ t/t1050-large.sh                             |   3 +-
+ tree-diff.c                                  |   4 +-
+ upload-pack.c                                |  14 +-
+ wt-status.c                                  |   4 +-
+ xdiff-interface.c                            |   2 +-
+ 87 files changed, 676 insertions(+), 613 deletions(-)
+
+
+---
+base-commit: e2cb568e11f4ceb427ba4205e6b8a4426d26be12
+change-id: 20250210-b4-pks-objects-without-the-repository-6ba8398f7cc0
+
