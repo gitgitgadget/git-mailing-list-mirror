@@ -1,81 +1,81 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E01023A9B3
-	for <git@vger.kernel.org>; Mon,  3 Mar 2025 20:45:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B885E23AE84
+	for <git@vger.kernel.org>; Mon,  3 Mar 2025 20:45:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741034704; cv=none; b=RL9NI3CLvIGUTiCFN+f/SYdJo+zyBVr4bYEOLYslnRu9kqe5CYpbaAH62LKV3uTBpiK5Edb/etn1LRmLaz1OyJqwEShlNX34zRTNB+saBWjZnYiyLAauQJvgVURw3IngFQ36/LiSPaM0okd/0b6T5dHzbjSsaJrth15RwSR/jeI=
+	t=1741034705; cv=none; b=rAky5O6mlQ1faYpHrg+VV0De7SdpZnLmGsivst+e8W2SlZwTMD+Tp5wnbv1YCZpwy4QM5PX6LB3HzDd6W//7vSpDiTTX+FjICFh4ToWLp2bnN/Z3IcIMEGe9UQfp7Mf5GG3UVNS+gfA+YsmZ2KVgaktxc+gmEB6V0AaGjcQPHeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741034704; c=relaxed/simple;
-	bh=ONCYchRD/yMQgfOMIYL83mY9j/kCgZwCsQxCJJb7UJM=;
+	s=arc-20240116; t=1741034705; c=relaxed/simple;
+	bh=kh0P5MkQTDoLV1OAIMKaGboIpugtZOXFklCfAk+g5p4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b5161yuj1yPw8oYfTIhnCibFlcieXUz5V2bRyUSPJ8LcZRYf8NH5QsXEnw3nQiIcgfsvD7bJd3kUTckjAKXyj1IeyI62r+NS8v5olAoXi8VSrjChxXVULTooSXBiZSaFyleUruY6P6tkAud0PyplacTb/Izr4PRJZeXRoZcfPfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IfmO6qad; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nwVA8YdN; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version; b=Yfx9AELpOlyRFpWz6pm5j3kBnrQEvNl/J1iA8vWYZL+bhPQ58Zf38rQhcmkpSLuQquyfFhXHBJQ6RLgunEbEDJcNPk95TNjxNDP7ZybbFLEkpZ0+eHA57g36BL33nh7AcT992b3XBGbDek5gDZGO4pvfG5mV8oqamJhmIDjts5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X1/ibvYl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s8ooEndn; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IfmO6qad";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nwVA8YdN"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 41F181140189;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X1/ibvYl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s8ooEndn"
+Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
+	by mailfout.phl.internal (Postfix) with ESMTP id E74661382BB0;
 	Mon,  3 Mar 2025 15:45:02 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 03 Mar 2025 15:45:02 -0500
+  by phl-compute-13.internal (MEProxy); Mon, 03 Mar 2025 15:45:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to; s=fm3; t=1741034702; x=
-	1741121102; bh=UXf3wrvYLer95SWAXFvGCh7khCOwNgUO/Q+knl6EKxQ=; b=I
-	fmO6qadWf48AytctP/K1c+Jky4bieZcx5iCqw8fW4IxUFV2XqplZfjltzcnJs9I+
-	/T46IWjBOID61wGG72K2TGavkbuUfSwrmP9qKLhXte8jE21THxi50oifQl5FluM7
-	gE6VqKAI0YcyctoDLLcEzzbnovs0E/5uIIghCKckg2HNqGCirR3qcUSxW0DfTDff
-	Ykk8tXmZYyz17B1xr07ALcPn6eJDfqFZP45e9LBTdvglD3I/8excvQcvPdMWatId
-	IfHLuXZKhCQtDY2OUiIv4JYB/WE2jS01hEYjkCjzSqWb+Ki/g+IkwRmo4brqvyN5
-	t2nPNHC1yAzpesMPZRs4Q==
+	1741121102; bh=RJFOuPBNEv0FugL+z2TH9PMjKkMihMJ7LTjOH8cve0Q=; b=X
+	1/ibvYlpwYOuaQdFlU9yHJrdNoCLJ3U+f7v4wN/9NzqWA4v2JApSFJlp5KeST0/5
+	bJNnmdcm2PjG2wqdKuNqR1M5gQuClRwG5RDy5OFmMwCi4XJSmACoAR+RLJ8xKAVz
+	7J22NLJerDDPkgPojjaAtS16kDixBhmH7qzE54isXw/dgzPTq4LgVrQTg29IXhSI
+	zri+ONMYaCaXahNiIzMf7VThUTVZ4dcLRwIAuQay4SrHYcA/BWvbrtZamo5UnZBd
+	gqTMc5PcOeehAMbq6p6PcCTj3xiBPKVFNpkiQaR/+EE6WfqxRyqgUx2CB5yKPLUc
+	l1YyNPqvX5NYF4LJ1rguA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1741034702; x=1741121102; bh=U
-	Xf3wrvYLer95SWAXFvGCh7khCOwNgUO/Q+knl6EKxQ=; b=nwVA8YdNsVyUSO2/1
-	FEK0xSMTbx5UAuTgExOOydNdjanY+X/L2b7vWeBnYBucCnW/uzmN59x9rg8NkdeW
-	bed80XTxav7OOMW2t7PH6hrSs7t5h3cQ6Be0z21ivJH9rsGtUzpbdn4BQF/stgJX
-	NVncUmH62dp/PLYT2mVNS6E7z/dpnLPFlVWfwnijXEZvLoJvcMr2VTH0g6UqIoUw
-	ipufp++tdVAayqBE3LBUQsQFFgIrX/grZWUpqEOi/5QRYm2zqHnaRZPziz9KkXqb
-	eBKmENSPb63oGFXjCKrAbCbkZBOnSyFaYw4e0NFNCjt8VLy+cy6YJ37pmwr/pFkF
-	9LFGA==
-X-ME-Sender: <xms:zhTGZ7nSN3bXGENrq0UwQucCl39Os8FPf1El9OYV5RKSqP9v-WD1qg>
-    <xme:zhTGZ-0KmXV1WCet7JNakdQ91e04Hu2gMoPRPMuBK2WLiih__xyUkcYsZgIi5TKJj
-    G6gczKNemxPhqBY1A>
-X-ME-Received: <xmr:zhTGZxrt1iHnDYh-V6OgzfLwnX4Dy66gkvQrNBZfDJ5mbOJIvTKnzK1JFce5T4E47Nj1coL_WbpBb98jnr9G6sOhQpA>
+	:x-me-sender:x-sasl-enc; s=fm1; t=1741034702; x=1741121102; bh=R
+	JFOuPBNEv0FugL+z2TH9PMjKkMihMJ7LTjOH8cve0Q=; b=s8ooEndn9u4lF8mMD
+	QERDVelFIjER/NhNbu/jHAJ4q31uAXowo8gqEHZNSZgsIzrqOhRmNjlOm8JGfjAa
+	EIjODyj0I5uNsGsGlBEYsMu6b1jzt4Yge3O+9m0iGc27CWB268MmXi6MzE/hvRix
+	5H4OUWdRzU5tKKCx5xJ5nPR9f3hkVotLb3JFVXfvk+F3Nke5HxB24w7DJsNGZIco
+	wZepnb0p4zJD+ELQQem4nP08vFGsxY8RRDXBAYI8ttpvGpBaIxdsfj4rMhu947NZ
+	QvuIG4ESV6Q3O60U2Jep373cCkFu090Iz/TKQNltYF5WRvBkVUOIiosfuc9Ostjj
+	gRQKA==
+X-ME-Sender: <xms:zhTGZ8BNJfqs0Dw7y0UufSTazPWxlPJkjwahPOKCGlrsjqEaUwo-Zg>
+    <xme:zhTGZ-i2snrHKJIZ7s55m4-ac9r18vG92zZ2o19hgx00N-s4osdL2fblQ9xGgpA48
+    5m1lrX6hjZGQOFs7Q>
+X-ME-Received: <xmr:zhTGZ_morJOZ3134AxYGVxuPo0wWkw6hF5w8_gvDKl8V8bw_z9ETfPIij_CxbMedRuHeKjFlehnxLh1edCQgEi-GHFE>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddtudduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
     evufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefvohguugcukghulhhlihhn
-    ghgvrhcuoehtmhiisehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeduhffgff
-    eiveelteeukeeikeevhfduffdvgeefjeelvdfghfegtdeftdeljeeuueenucffohhmrghi
-    nheprgguohgtrdgtrghllhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehtmhiisehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
-    pehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:zhTGZzm8Y-ZaXQHzI-NTcZlD_6q8vgLdss-lMdbaHsw1sFTCPbaXFg>
-    <xmx:zhTGZ50eYuILMmfed-hxuFHQSZRW-RhohPLrqFTbyWfpvXkQZkloOQ>
-    <xmx:zhTGZyuz6mo7hbRzP5OzQZWLAnmsz9_8JPBBbzpp0fbG9cOlTTcNaQ>
-    <xmx:zhTGZ9V8KEsZYAGIM8V48SFRGj0CXRucRL-jVUhpm1owtEejdvGAVA>
-    <xmx:zhTGZywzaA0OzPiusy3KzQsORQfxg4Xu2vTh4u4yFAqQD7thOH1-tinX>
+    ghgvrhcuoehtmhiisehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeejuefggf
+    ehieeugeeuheevgfegudetheetuedvveeuueeileeuhfeigeefkeekieenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehtmhiisehpohgsohigrd
+    gtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
+    thhhphgrshhtvgdrnhgvth
+X-ME-Proxy: <xmx:zhTGZywUw_jSkSsTaj0AKizCErh3wydItboSjJ6toFEm1B52UOxIGw>
+    <xmx:zhTGZxTjAixsRrhMe9KnIjOOIAUgOpfEGzgjg616t4WT0eON907qbQ>
+    <xmx:zhTGZ9ZDlYRq3wNsZU5O7QWHXz0OOSewFtIGkGDu5A1PooAR7y3Hyg>
+    <xmx:zhTGZ6S3ZR4xpbU0p_NsozVxArIHzyBGLGmHC-2JDzW5UcmUxLQCwQ>
+    <xmx:zhTGZzcO9mkVgn1znolY3Gl1kHxjSf2fFuVG2BP3bv9pxg6O2AceTziJ>
 Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Mar 2025 15:45:01 -0500 (EST)
+ 3 Mar 2025 15:45:02 -0500 (EST)
 From: Todd Zullinger <tmz@pobox.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 12/34] advice.h: *.txt -> *.adoc fixes
-Date: Mon,  3 Mar 2025 15:44:10 -0500
-Message-ID: <20250303204443.360595-13-tmz@pobox.com>
+Subject: [PATCH 13/34] apply.c: *.txt -> *.adoc fixes
+Date: Mon,  3 Mar 2025 15:44:11 -0500
+Message-ID: <20250303204443.360595-14-tmz@pobox.com>
 X-Mailer: git-send-email 2.49.0.rc0
 In-Reply-To: <20250303204443.360595-1-tmz@pobox.com>
 References: <20250303204443.360595-1-tmz@pobox.com>
@@ -89,22 +89,22 @@ Content-Transfer-Encoding: 8bit
 
 Signed-off-by: Todd Zullinger <tmz@pobox.com>
 ---
- advice.h | 2 +-
+ apply.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/advice.h b/advice.h
-index cf2284ec43..d233cfc693 100644
---- a/advice.h
-+++ b/advice.h
-@@ -7,7 +7,7 @@ struct string_list;
-  * To add a new advice, you need to:
-  * Define a new advice_type.
-  * Add a new entry to advice_setting array.
-- * Add the new config variable to Documentation/config/advice.txt.
-+ * Add the new config variable to Documentation/config/advice.adoc.
-  * Call advise_if_enabled to print your advice.
-  */
- enum advice_type {
+diff --git a/apply.c b/apply.c
+index b124678b93..f274a37948 100644
+--- a/apply.c
++++ b/apply.c
+@@ -82,7 +82,7 @@ static int parse_whitespace_option(struct apply_state *state, const char *option
+ 	}
+ 	/*
+ 	 * Please update $__git_whitespacelist in git-completion.bash,
+-	 * Documentation/git-apply.txt, and Documentation/git-am.txt
++	 * Documentation/git-apply.adoc, and Documentation/git-am.adoc
+ 	 * when you add new options.
+ 	 */
+ 	return error(_("unrecognized whitespace option '%s'"), option);
 -- 
 2.49.0.rc0
 
