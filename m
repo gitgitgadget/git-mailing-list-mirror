@@ -1,200 +1,157 @@
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCF7225390
-	for <git@vger.kernel.org>; Mon,  3 Mar 2025 20:12:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B66230BCA
+	for <git@vger.kernel.org>; Mon,  3 Mar 2025 20:17:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741032772; cv=none; b=aCbwnhMtmn7R/7L+IJteZ5KfYFNNodDCw7E6fSHbeMOg6ZkPD1/8CoD3ZADsKVkLB6QVlBdW2J5QIaacmGPlMesVIKV70Pufz3ciRn4FyXSkBB6MQIpVp+s6F+oRDbPLRqdACe74qDdDUkkS2y6nja5S5VKaW0c7MH5L3hZkiKc=
+	t=1741033065; cv=none; b=MBjrdfU8XEeY20CNlARVG98xeNvx0rUvsEmwfGefKxppWlL4gVnnaaktmAH7qsnqCvY7pbt8TGogq22RXIjiaWBcH93G10rXDZxz9vTmNeKrGDmRCQtE3K6DCFxI5Ze3kKU5SB2uaGSMZXIFsE+s0LO68EfCGEBXDAG+uORtH1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741032772; c=relaxed/simple;
-	bh=NZmRTrf8AiHgXRiUO54tBqkGmzaj4vfNIho7h4pmmE0=;
+	s=arc-20240116; t=1741033065; c=relaxed/simple;
+	bh=xmoQbeXVsspcS98FviME2NBoxQkWxKNvSa0NxTHBesQ=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tSS3kJnL67iK7F1NrbM2QZcA6yerDanRBvv+2Ll+esXNd4pP8N6w3X08eXsF2/LDEp40xL9qRmF3iaIsfLSP5bYprQK6IbqFvEN70tBvqAZ+FjxbR1mmcp7dNYc57zGfckY76R0q9LkbtEQ7bQqxlCuidODGTOw3ljz/hN0w61Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UZ4TLZPi; arc=none smtp.client-ip=209.85.221.176
+	 To:Cc:Content-Type; b=dwhHwl+8EDgeyFV8XLPHTEyleuaw1MgSZwKC0o1B6XtnlE6XL4PG96nr2IeAyp+DuNcHsRooq7T21dfhSsapJO6/pmG9L6advtFKFXExyIj1rN+s2cFOj6+WY2pl/HCjeP6oahs9OI6sXF/rdqzvBOV9G+5mGfKkSI5CUtWXKJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=err1MxmX; arc=none smtp.client-ip=209.85.221.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UZ4TLZPi"
-Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-523a00c9d96so438703e0c.3
-        for <git@vger.kernel.org>; Mon, 03 Mar 2025 12:12:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="err1MxmX"
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-523a6fbf025so233462e0c.0
+        for <git@vger.kernel.org>; Mon, 03 Mar 2025 12:17:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741032770; x=1741637570; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741033063; x=1741637863; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vW7L2Wa2/o/hSsiIuQrI54W3/Hxq3c14bwR2SwhZ7Aw=;
-        b=UZ4TLZPiHG+UucDBpSQVlfAYkcvP8brKDyANFyI+p5OwVVHnFpAHZiKA2I4ALFecNe
-         kSs5THpoPD4K9Ztn83fw5fpYmbm5uUpjBhsa6rhsH1FGZimM0+OrvJSBcr3+DvxWjHQM
-         v1Fug79HxH8eH132AOW32XJ3FhTAbokNB6ip7kMHLW1HXT2GPA+xKKVm764wpo4Kp7xN
-         Dc9g5ONAkFT7LzBHPlKLzvn4vCZuwj7pKplAQcMn9SH4WA8E+j/gVU9j75VysjafFe7L
-         xjJonEnqcW18W6W3L7QAUw5pz3B5ClVAo/5FlPXW5ePvUHkgaf5jT8/h/eJnGx54Cz+G
-         KbBQ==
+        bh=Jy13OFV46G2FYRdJuJIwRUWXhv6SKn3UVSRsa8zjzsA=;
+        b=err1MxmXNisyauzsNYQ7xYkuWKQAHMoEyZSR0bR3CBCNwI7BBIrXhphS2X/vsrhVxg
+         JU44j/ZWj1A3vKFrwvLvTW4uz4NVtUjdfTQ21H9vWPiddBn6JrpLTdIwQl6vHKlRLD6r
+         gLeKGsH4SC9sLHpTdX6IwjeDXfSZ+riN6k2wLyDDGIIlPMRRXgzI2KulkyxOjA9RPUey
+         iwPmQyGrkVrpDuuxfFp3km4XHWSrOuP1ILDHtStf30FW8OQmjB4boSDfu3Ohagvcrb0q
+         PmGOd7D7c8PK1bWJW+K1oYc4J5eDZrpZkppi6FmAUwEUVERSbDJ7/zo+rp2tuTst/LP2
+         o4vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741032770; x=1741637570;
+        d=1e100.net; s=20230601; t=1741033063; x=1741637863;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vW7L2Wa2/o/hSsiIuQrI54W3/Hxq3c14bwR2SwhZ7Aw=;
-        b=XfiyqHbgRokeMEq/O8YixpyUMhQhKvfRqDAxU8uc/D1ikMU6d8/irxLZVJInQvyjoO
-         qEN+soxnx6+0Fp9Xiucz23PwY+FFJo+U1BYWIc4R2WaffK5uAg653QqFngdhfEI8qZQl
-         xkSn2HfDHirXVnEsG4o41xRgCidrgs1lVZy3FHf/zgm+gYMfhE6s8a1LrSGNjUAC0TPQ
-         ir/XJIrLkOz/dvZRL0ZAWVPqKh9wXpq6kyTkmbM52lPmG33fjmw3P/Q1750eyWaOXanZ
-         CQKufJUr/SnntL03uUEU62xuKnSQGAKrI0UK+JvR/FEjpTlvLgeOuFtmqxOzuPelaA+v
-         hC9Q==
-X-Gm-Message-State: AOJu0YxtLX5Nf2pZREgA7qGWWgSlHdTtgNlhJ7S1w8D0x/mofxyuyTLH
-	EfrqfsTGWf3y5mymDBNNN2kMIPS9wpH6wW9HnbuLC3ra5N7kWNQ9JqasLGHP7KYDmxZ7hGbRZli
-	H435W+19EHSYZWtD4NP7UG5MHBx4eWF6q
-X-Gm-Gg: ASbGncsRG//nCsjwiqDrdGibWgGvvjdAhpvUH5SvMdWrQ4adNrhrlTSY5xR/myayImt
-	Rrieue1VyBU0J4nSoHl5g9WMcuj2PX+h1DAm3Sv91PEWVziR2hO3laOxj55EGCX2mVma9NmKBBh
-	C7374k9CQgNhSY6XnCvX/3FfZ1v8iC7lFgJXssnz4ApEkGbmg3w4quWTA25QA=
-X-Google-Smtp-Source: AGHT+IGOxyeruSoOdN4bBWvfL7R/+3wfJ8nvzt3tKgLKvgDzbSoEWDOD80Ow3olzor3DUfZcKKKSV4TE5spcO+BYr4s=
-X-Received: by 2002:a05:6122:3a11:b0:516:230b:eec with SMTP id
- 71dfb90a1353d-5235b76fb2dmr9095087e0c.5.1741032769725; Mon, 03 Mar 2025
- 12:12:49 -0800 (PST)
+        bh=Jy13OFV46G2FYRdJuJIwRUWXhv6SKn3UVSRsa8zjzsA=;
+        b=hQYRA1AorLtB+hselbHWJRkneJpEyKkDZG7PwoKs95LLhd6BwwDXr2qyd5Ke2dBLz0
+         +lr2hQr3RI3YqY8ju7AK86gKLWCglm2CTVyLv9PDFjhgz8hEEtBmj4QyBcaUuRQUxOjS
+         e1zsIS6cBvbORYrwf2z1i/J3T/5n0m9rILwMuJxHokv3gIgFfIsrE5K9q8w3vNeyShXY
+         HqGmCZZbObINJvR+SzpSF77QIdlVwNHnot5nMp5q9fe4um9hQmFZ6ZIsjJFTvnfM6PcV
+         6zvrhH3fJJi5hAG5JYIfvhGfvlNq0kjDVD+EipNnrDqZHUdxIz0QHrX8PPJYEfLEprja
+         qy2A==
+X-Gm-Message-State: AOJu0Yz6WUUFGvxmvcLkq5K5qQzLrY/mZWdtAelEHh7YGASASUtx8HKe
+	dcGMeUZKdx1TiJsa11zCNO6Hmfrs2JlUn48ihMZ5ni8cuCtXVo8nS6l56sPPIR7uFguuMyEKaRI
+	Zc+3dMUWWgR2rVlqYy/MKKsmTU7o=
+X-Gm-Gg: ASbGncsvdPHQbXedZb0c/PR5dMPzSmDqb/dPiuA5UHvNyq3d128HhBPq+8Xbv5nKCH6
+	/oBpyE8Je1s6y7CGMiRoLtSVcIpOXMRYQ3JoD81vONH6a7MQ25BHZjdI/5xky5NA9cwMhNuw4B1
+	07OhvWXFHMbBCL9+S1494ar8VrTWk2WNXQ6h1d8D72uCm5SCLqVIa43zhuSp8=
+X-Google-Smtp-Source: AGHT+IEu4ckLauZmBpyBa+HgYL07woklRE9zcbtb8EXlo2+GUZPEKw2Xw32Bye2/dAQEsSHzv92a3c5JC9S6okEv0jE=
+X-Received: by 2002:a05:6122:2788:b0:520:af9c:c058 with SMTP id
+ 71dfb90a1353d-5235b7984bcmr8241085e0c.5.1741033062519; Mon, 03 Mar 2025
+ 12:17:42 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 3 Mar 2025 12:12:47 -0800
+ HTTPREST; Mon, 3 Mar 2025 12:17:41 -0800
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <Z72kmFUARRSukMBe@pks.im>
+In-Reply-To: <Z72kjTRDNOM6iFkY@pks.im>
 References: <20250225-245-partially-atomic-ref-updates-v2-0-cfa3236895d7@gmail.com>
- <20250225-245-partially-atomic-ref-updates-v2-5-cfa3236895d7@gmail.com> <Z72kmFUARRSukMBe@pks.im>
+ <20250225-245-partially-atomic-ref-updates-v2-6-cfa3236895d7@gmail.com> <Z72kjTRDNOM6iFkY@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 3 Mar 2025 12:12:47 -0800
-X-Gm-Features: AQ5f1JrbdJSlvfNRwa6sCDVDFrU410sBtpedYIcyWOw3driS1l7xoI1hu5vo1Sg
-Message-ID: <CAOLa=ZRVHUspvZ9PJiNbj+rqrHSGg-EamLN3AkVX0XuJkL3OHQ@mail.gmail.com>
-Subject: Re: [PATCH v2 5/7] refs: introduce enum-based transaction error types
+Date: Mon, 3 Mar 2025 12:17:41 -0800
+X-Gm-Features: AQ5f1Jp7UUN9TUOrYW-NmZX7Y4_haVzyht-VGf21B-JRQdQBhrIHU6QlBW15zW0
+Message-ID: <CAOLa=ZTwng_NJvTZK2-Rz5JnchsTFCC6txakWcEsYh+41nqYmg@mail.gmail.com>
+Subject: Re: [PATCH v2 6/7] refs: implement partial reference transaction support
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, jltobler@gmail.com, phillip.wood123@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000c845eb062f75c70e"
+Content-Type: multipart/mixed; boundary="0000000000003bf782062f75d9fa"
 
---000000000000c845eb062f75c70e
+--0000000000003bf782062f75d9fa
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Tue, Feb 25, 2025 at 10:29:08AM +0100, Karthik Nayak wrote:
->> diff --git a/refs.h b/refs.h
->> index b14ba1f9ff..8e9ead174c 100644
->> --- a/refs.h
->> +++ b/refs.h
->> @@ -16,6 +16,31 @@ struct worktree;
->>  enum ref_storage_format ref_storage_format_by_name(const char *name);
->>  const char *ref_storage_format_to_name(enum ref_storage_format ref_storage_format);
->>
->> +/*
->> + * enum transaction_error represents the following return codes:
->> + * TRANSACTION_OK: success code.
->> + * TRANSACTION_GENERIC_ERROR error_code: default error code.
->> + * TRANSACTION_NAME_CONFLICT error_code: ref name conflict like A vs A/B.
->> + * TRANSACTION_CREATE_EXISTS error_code: ref to be created already exists.
->> + * TRANSACTION_NONEXISTENT_REF error_code: ref expected but doesn't exist.
->> + * TRANSACTION_INCORRECT_OLD_VALUE error_code: provided old_oid or old_target of
->> + * reference doesn't match actual.
->> + * TRANSACTION_INVALID_NEW_VALUE error_code: provided new_oid or new_target is
->> + * invalid.
->> + * TRANSACTION_EXPECTED_SYMREF error_code: expected ref to be symref, but is a
->> + * regular ref.
->> + */
->> +enum transaction_error {
->> +	TRANSACTION_OK = 0,
->> +	TRANSACTION_GENERIC_ERROR = -1,
->> +	TRANSACTION_NAME_CONFLICT = -2,
->> +	TRANSACTION_CREATE_EXISTS = -3,
->> +	TRANSACTION_NONEXISTENT_REF = -4,
->> +	TRANSACTION_INCORRECT_OLD_VALUE = -5,
->> +	TRANSACTION_INVALID_NEW_VALUE = -6,
->> +	TRANSACTION_EXPECTED_SYMREF = -7,
->> +};
->
-> Nit: how about we name this `ref_transaction_error` and adapt the the
-> enum values accordingly? We may eventually also introduce similar errors
-> for the object database, so it may make sense to have the errors be
-> specific. Doing both the enum and changing the name might be a bit hard
-> to review, so we could also rename in a preparatory commit. Or we just
-> punt on it for now and do it once it becomes necessary, that would also
-> be fine with me.
->
-
-I'm happy to rename it, should be easier now. We can always change later
-if needed.
-
-> I also wonder whether we really want to introduce `TRANSACTION_OK`. It's
-> always a bit of a mouthful, and in many cases one ends up with a mixture
-> of `ret < 0`, `ret != TRANSACTION_OK` and `ret != 0`, which may lead to
-> confusion. Continuing to use `0` for the successful case should be fine.
->
-
-Fair enough, let me remove it!
-
->> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
->> index 3247871574..75e1ebf67d 100644
->> --- a/refs/packed-backend.c
->> +++ b/refs/packed-backend.c
->> @@ -1672,7 +1676,8 @@ static int packed_transaction_prepare(struct ref_store *ref_store,
->>  		data->own_lock = 1;
+> On Tue, Feb 25, 2025 at 10:29:09AM +0100, Karthik Nayak wrote:
+>> diff --git a/refs.c b/refs.c
+>> index f989a46a5a..243c09c368 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -2726,6 +2736,27 @@ void ref_transaction_for_each_queued_update(struct ref_transaction *transaction,
 >>  	}
+>>  }
 >>
->> -	if (write_with_updates(refs, &transaction->refnames, err))
->> +	ret = write_with_updates(refs, &transaction->refnames, err);
->> +	if (ret)
->>  		goto failure;
->>
->>  	transaction->state = REF_TRANSACTION_PREPARED;
+>> +void ref_transaction_for_each_rejected_update(struct ref_transaction *transaction,
+>> +					      ref_transaction_for_each_rejected_update_fn cb,
+>> +					      void *cb_data)
+>> +{
+>> +	if (!(transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL))
+>> +		return;
+>> +
+>> +	for (size_t i = 0; i < transaction->nr; i++) {
+>> +		struct ref_update *update = transaction->updates[i];
+>> +
+>> +		if (!update->rejection_err)
+>> +			continue;
 >
-> Do we also want to change the local variable declaration of `int ret` to
-> use the new type?
+> This kind of proves my point that `TRANSACTION_OK` is pointless and
+> leads to a mixture of using and not using the enum :)
 >
-
-Yes! Good catch.
-
->> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
->> index 2c1e2995de..e1fd9c2de2 100644
->> --- a/refs/reftable-backend.c
->> +++ b/refs/reftable-backend.c
->> @@ -1255,11 +1255,12 @@ static int prepare_single_update(struct reftable_ref_store *refs,
->>  					   "but is a regular ref"),
->>  				    ref_update_original_update_refname(u),
->>  				    u->old_target);
->> -			return -1;
->> +			return TRANSACTION_EXPECTED_SYMREF;
->>  		}
->>
->> -		if (ref_update_check_old_target(referent->buf, u, err)) {
->> -			return -1;
->> +		ret = ref_update_check_old_target(referent->buf, u, err);
+>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> index 3b0adf8bb2..d0a53c9ace 100644
+>> --- a/refs/files-backend.c
+>> +++ b/refs/files-backend.c
+>> @@ -2851,8 +2851,18 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+>>  		ret = lock_ref_for_update(refs, update, transaction,
+>>  					  head_ref, &refnames_to_check,
+>>  					  err);
+>> -		if (ret)
 >> +		if (ret) {
->> +			return ret;
->>  		}
->>  	} else if ((u->flags & REF_HAVE_OLD) && !oideq(&current_oid, &u->old_oid)) {
->>  		if (is_null_oid(&u->old_oid)) {
+>> +			if (transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL &&
 >
-> Nit: superfluous braces that we could remove while at it.
+> Hm. If the error values were defined as a bitfield we could refactor
+> this to not be a flag, but have a `transaction->accepted_rejections`
+> instead that allows the caller to ask for only a subset of rejections to
+> be accepted.
 >
 
-Indeed, will fix.
+I did consider making them bitfield and even tried playing with that
+idea. There are a bunch of side affects of doing that in other
+subsystems which check call use the reference API and expect '< 0'
+errors.
 
+> I'm not quite sure whether it is a good idea, but the logic to handle
+> all of that could be self-contained in `ref_transaction_set_rejected()`:
+> if it returned an error code itself, it would swallow any errors in case
+> the transaction allows a given error, and bubble up the error again in
+> case the error is not allowed. The function could use a rename in that
+> case though, e.g. `ref_transaction_maybe_set_rejected()`.
+>
 > Patrick
 
---000000000000c845eb062f75c70e
+I think this is great idea, it does cleanup a bunch of the code. I will
+add this in the next version with the rename. Thanks!
+
+--0000000000003bf782062f75d9fa
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 1fce57fd8d2f1c40_0.1
+X-Attachment-Id: 9a9a89d315e850c6_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mR0RUMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOWFEQy85ai90d1JHeUVPUlVVd0txV0RBWm5WQzZSZgphSjBSVVgxWTNY
-bUg0ZEY1RFhEVkp5OVFoZW5ZeDRpcjlCdEJuUVJNY0FnaTU4eGtEUU83UVVBUXk3bE5leHpBCnk4
-QjRtVG5SV3p1dUcxSzhPcVpmUjFKczZLNHhVWkpUdkVMRmMwY2tFVDVIRjdjVndvencvemxyd05q
-QnBjcHgKRXV1Tkk4TytXT0pobFFhSlNTakhCS3NaLzRFZDBCNC9lei82Q3dHSDRtb2FYSWFrd1J2
-WFFMaHQ2QlBKQjBmcApSb0crQ0oxcTIzQVVMem5PeXZ5UHkzZHR5bUVGRTdOR0pNNkVWSU1XUjVz
-MU5INVpObTlkWXdwOW9qd0s5bFByCmJHSVBHbmtTSEdVWWxxbjBqVmpKNy9sMHNUVTVDRFVZMGNU
-WVlQNnRFWDF1U1RlVHRIanJQMWVIRDZIVjRhTUsKSmcxbWpXRTdpek4vNER1NlovZk9wLzRyY0dP
-dHR1Y2R1RW1ncTZNU0swZ2NwaEdmaFE4bUN5REZFZVZVbUdIMQpkMVJwTUJVVUs2ZzQyMWw5WGlH
-VC9qeTdYNFJ0d3M0RXhoTFhsUUFKMlVTMVc2TzU1aVV0WlRITWRzalNJWlRwCmxtdWpxNzBTWHBi
-THZ6ckpMa2xqMWtydlhLeURmNzg3amVRZlFEaz0KPUtCb1UKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mR0RtTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMi8xQy93STRSeURYRjhwS2lkakd1eFgraWg2Y1VFMwordGdlTWVKQU9s
+T0h5WmZiNjBmUXlzZEpaNU1WQXFOcTdmZHE0WW4yc2Q2YlZPdjhnTnpPWk5kc0FNT25aT3ZjCloz
+NSs0VVlSWU1sL1pwWUx1bWtSZFB6TGZVbzJxSnFzZFFBUTYxengza3FWTkRUTy9wU0hlTi9mNndu
+OEQwLzYKdFdSb2pBcGVGZVdSNkF1bXhiajJ1SzFtYUtJb0I0SUEyRlRLeTNNeDBkRGJmeCtZL2Jo
+c2JaU0ZiRVB6WlFBOApnQlRwUHRFQUxubXR3VVNpN1NubWRpT29GYVRFc0lRT0lsbGxXaHJVeFBC
+SFQ4N001NGRWVXU4blBrQmVYZ0UwCkVwS0ZOc01SY2dVUVVuVVJUdTBvNC81R2xqTnNpOFRnZjBt
+VHZadSt6VzFmMXVLMEM1YWR3YnF4dmFUMEN4dzIKK1d4SDRnZzMzLzgxT0F3NUlhMmlOZzBZS3k1
+NTdoYzM2LzhhV2lyWVMwOTBTZlFkbHZHRlRQVnZPczNuNlFoegovb2JjWHgxQWx1c3B4eTlNUWtR
+UGkyZVNLNFBIYnpVUURBQWpoZ09HbGVWS28zSmhaZWxLNDhkNmJQRHp0Y3lCClZ6KzN0RW5yOU5U
+Mk5ST2JiL0lwaEd4T2V5dFlSYmdSNVRYeEtRdz0KPU5lVWwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000c845eb062f75c70e--
+--0000000000003bf782062f75d9fa--
