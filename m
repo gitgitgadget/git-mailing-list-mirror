@@ -1,145 +1,109 @@
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4D11EFF8E
-	for <git@vger.kernel.org>; Mon,  3 Mar 2025 10:00:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EEE1EC01D
+	for <git@vger.kernel.org>; Mon,  3 Mar 2025 10:17:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740996049; cv=none; b=lGOg9vLGAFZZciUW4FdxPMGqA5v8se5yFqupGO4r/7FSur6FY7MNwR7o/u8iSYzsXSk0LZuZ7i2TlKadEohjrKvQeurJrpT7P1tFGIjmjES49bl8y9TWyO6XhIAvUin9LSI0+Ge/XKj8lCrkMIuXMOKynj01pHV2Ii+KVWaMtRk=
+	t=1740997067; cv=none; b=U/rTGdyAlL+32Q/hIPJ/qlLiDv/Y/pjCMzm/ZzM/THWrxffVHOYejrf874l0NGYfQ58y94wuoD4jPppRmFK+dzlA4OPq/MuutIrlbiUU4F5TtA2c9PT4DLavumA32uDKV6vqZJY1y/19wHJlshOtOMtvtDvDd4H/G7zoRDcKlLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740996049; c=relaxed/simple;
-	bh=ez4BRteFdNRrLIWfIcm8fJoklW8HBCGLTcS7CaS+sYE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LjK0dKZiQeUFbT4HcvJvp7ErE1ZdQaG0LSw8CEfAI0AQzrVV/GD7hmBAtX0LyelB1SxS59vxIYytmsOGkaXYH+N4MrQ6Afz/3lTMaqDhk7ZY9hcKWDHMR5e0OnD2/VP23b4qvCG+ru2y9Uj8R6PL0qJvrqUR3ilrstEanuFYq1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SvaaujLH; arc=none smtp.client-ip=209.85.222.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740997067; c=relaxed/simple;
+	bh=3XGznXk2uKQV7mviZob1Dy/0Mag9vHx6l83KZtrv4c0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M1xmfffToxsA5a+GVxPhP8RqkEoAUD7VuP55Cow3nc/y+q2CZiA2K5tLvM7dZpvy7FH4H+M7RXuw0EJzV/E9z1BSyNZPOBi59Ob34STFVlmNtYGMlyrDiEl9fzFfRnOn2gcl0SMQpsgQwwI0GxE98aRTNefAE0gRuxGRdmut5pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YzdnASom; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UzDG2Ljm; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SvaaujLH"
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-867129fdb0aso3827712241.1
-        for <git@vger.kernel.org>; Mon, 03 Mar 2025 02:00:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740996046; x=1741600846; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ez4BRteFdNRrLIWfIcm8fJoklW8HBCGLTcS7CaS+sYE=;
-        b=SvaaujLHb5skrIBLQD1ZB1vYrFEg7Ofe/ovp2U1v307aOzQBKH66oA/aWjKzrWcw9p
-         9mqeUiGawt2fMJl2Wx9o6CcEetS6Dwu12TVILprVzsTyED+bWbIPGaTSZJA4WNt/nU7B
-         AnL44bJelnxY939x1Q8UH11uSdfNGSlaIowV5GEuiiUBaNlq7fLgJEUkXcfOzu17yhCP
-         PX4+tdYqBu7KJYTCJIzybAuXM+2BLimSpDK/Ev8upBBkd2foukU/8c0H1ETYSVfoIhBZ
-         kSbIsdqb+H0xBdVZQKf7e9pcWQJRHtAMCB+VR5Cmf3FIpzwUvsThtWu766C42Q8VXXgW
-         dklA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740996046; x=1741600846;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ez4BRteFdNRrLIWfIcm8fJoklW8HBCGLTcS7CaS+sYE=;
-        b=QSoDQIDuujEX87dwf9wL/ca98YHgfazIxkYMlq3Fptuvqr/5P0R1y2M3jBH7UA3Rrl
-         W3npPdDTO0PQ02jwQxfneaqNT0ZuBzHmDgKlKkt4S06ltok8RAL3vzeHRq13LHUkyZ4Z
-         f2J8BZ6F8/A+ykbXTUywTQ9a/QlAcfFTNkzhO5qUXJH6kLJ4s1QHidWWtZX2GJmr3Djp
-         OIGrp3oCzET0sj/s38NT8s91UjhXsUWJ5WMjJOY/xXOjZbDrOBpn1LztsE1bG18NlxrP
-         fGGwkcjF+1JV9ycb2cMqi4Bvaq+d7rOn5b+JXoFqyBfg4yYMo/86blTQjVtSklPEu3vo
-         zftA==
-X-Forwarded-Encrypted: i=1; AJvYcCXgma6MAcObIVofMeC8FricEVxFsKBLJuMogNxTZWJOyPei6Mjsyz1K0SQtKBzzosCHyu4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXDuMt4AaItTcbnUc1xmkZbamz4I7KDrsnbo2L1sxT8yeB0t4Z
-	sjtEKnVpMUe3liF+KvaREQiUWlukGZIglzIbWTyy1fXOjMAn3oJqjH95VfFwkEsW6h1cQ01D7gd
-	I+rB+gqwl1hRtKEXD3glYuFm6HXTKJ4my
-X-Gm-Gg: ASbGncuUZ9K+x6XUu0U6m8d5z340xbWNW0c6h7Xog/agbUWn/KoJxAoQvT6SXIrDDgU
-	DKq5memiwsbqsUAPuwQuO1st5DDwitMrPYxytw99KTgSOUmnvTKQMG1oKGThswX0Tgup0YznH4x
-	6mvXz3/pFdi58u+NEPAKJyu4/vSYG27Bj35nNcnpKtFdrIyPyeUAWWDcrKfUhI
-X-Google-Smtp-Source: AGHT+IH0LOPT4sgEcH6nxP5pcXjz6eg5yZAPJaIDaxX0kdCuffpXrTbUnp/U5SgusYF9rT4xJ0QLSC5L12ijpXiMIhI=
-X-Received: by 2002:a05:6102:4691:b0:4bb:9b46:3f71 with SMTP id
- ada2fe7eead31-4c0448e10d1mr8496601137.8.1740996046170; Mon, 03 Mar 2025
- 02:00:46 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 3 Mar 2025 02:00:45 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <6C29409D-691B-471F-B08C-83E14D35EE13@gmail.com>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com> <6C29409D-691B-471F-B08C-83E14D35EE13@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YzdnASom";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UzDG2Ljm"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C51B82540160;
+	Mon,  3 Mar 2025 05:17:44 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Mon, 03 Mar 2025 05:17:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1740997064; x=1741083464; bh=4LN1ijVILW
+	+XT+qPS98IgcftJFbunA/kcDsBHkrE7vw=; b=YzdnASom+2QEmqHV5H1cAeRwk6
+	8cuPb1ALfVVBCVOIXBty5jh5XjQvlXg+5NQcbOJ7qP+z+Z8JjH5PxtPlM9sIZzqS
+	4SU5Iz713Mq+Pu/W1Z4du4op5lNCQF0jWEFwIQrTvfp8ckgrG2t9YmU7kCw/q8bs
+	/YNj4A7iqRd4X36geQ19Cg0Tz5uEiBclU8neU3Wx3lZVdeZ/D8g1+MNCGsxz6jl0
+	JDQT+Hbn8ejCPGFnnWjk0Xfn4E4TASrXDA7k7nLEh45ZBDJElE2JPktZCWa3BHxY
+	29j/2L0+u5lHe9zzd04JE+jz+ERKytj/jhWpqQH+MyvLrDJx14228HRX+xjw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740997064; x=1741083464; bh=4LN1ijVILW+XT+qPS98IgcftJFbunA/kcDs
+	BHkrE7vw=; b=UzDG2LjmQs81X0sFgt7Xr7WXFcmKtU5M3fSk71VBD/8PfTmcgy9
+	VBYduwMSpPg5vog8zKKyoIkCA/+MERGN4BuAG66X+rtf+WDkkyVigjcWR8OJ0TqN
+	QBqXb6yxgXppoM2hM/LJz53NMtJVTE2OuOkLq8ltoC7N8vJxoCqXENGvYZXXQtU0
+	fKvouHXmvomIry0vZg4F//eXnVeMvuSO8Fxl6adehGMjQlzP2ersuw2g9wHJ5bGD
+	3qVMrqWSV08+pnm0Ns1aNW0NTbC4BasxqvL2jwVx4gzFYzAnV7UmaTHwMt16W2w6
+	Aiyj3eRF2mxTODl3Zn2OO3A/m3pxRgDn6SQ==
+X-ME-Sender: <xms:yIHFZw-nl-oRkS-SHSM0AqA6JLOyWUdP-Jh6P9WK7U17jJXqOpRplQ>
+    <xme:yIHFZ4u3c27xvbaOu89D9LKHuLSbkveR-r20JNfktRCbkadkkrE3PwBuFx6h9wBk3
+    s5becrwVP738PMq-Q>
+X-ME-Received: <xmr:yIHFZ2BgsLMjdCr2YX_lxBLsuDHmkRen4rpwvcdMgmfFBVkTODB6LVKMgI7cC2kul4ztW-7z0MP0I9Ifx77KdTERvQHGcuw4teWi-3CuGXQ00Ohe>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelkeekiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrd
+    horhhgrdhukhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:yIHFZwe1ElYAKUJIYSEZfLeT6VgkSqlrZaW1i6gndJjM1RVXc5fZlA>
+    <xmx:yIHFZ1MiU6VDTWqg2mjumQVCNgCFJC2gvVmLXiPuM3YTfMUvCMAZEA>
+    <xmx:yIHFZ6nLpjQ_2nBavJaZZcviRtCpEVvoowMyH7NC09aQ88ot7J5z4A>
+    <xmx:yIHFZ3seaAbPrwqsLioMrIzAEZT8KBVMqsavUHOQHaovRBJ1dEEX9Q>
+    <xmx:yIHFZ6rhEqB6khPjp2yLnTZgYCjpXnIr1_TBE4I7oFQduZpJN5YQZqPX>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 3 Mar 2025 05:17:43 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id cd52dfec (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Mar 2025 10:17:40 +0000 (UTC)
+Date: Mon, 3 Mar 2025 11:17:39 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] meson: fix building technical and howto docs
+Message-ID: <Z8WBw1L50zVmjGIs@pks.im>
+References: <pull.1870.git.1740931350451.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 3 Mar 2025 02:00:45 -0800
-X-Gm-Features: AQ5f1Jp0XWeaIL5JwBRLf4cH7kfmkC2eWaMMocg89WI01spGWVqZ8W3vqR8mefw
-Message-ID: <CAOLa=ZSHETyzEyyJvP-VT9CbvrJt_jV65nEyCOzR3YGRgFNkrQ@mail.gmail.com>
-Subject: Re: Git in GSoC 2025
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	Christian Couder <christian.couder@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	Ghanshyam Thakkar <shyamthakkar001@gmail.com>, Jialuo She <shejialuo@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Git Mailing List <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="000000000000e34902062f6d3ac4"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1870.git.1740931350451.gitgitgadget@gmail.com>
 
---000000000000e34902062f6d3ac4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Sun, Mar 02, 2025 at 04:02:30PM +0000, Phillip Wood via GitGitGadget wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> When our asciidoc files were renamed from "*.txt" to "*.adoc" in
+> 1f010d6bdf7 (doc: use .adoc extension for AsciiDoc files, 2025-01-20)
+> the "meson.build" file in "Documentation" was updated but the
+> "meson.build" files in the "technical" and "howto" subdirectories were
+> not. This causes the meson build to fail when configured with
+> -Ddocs=html. Fix this by updating the relevant "meson.build" files.
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+Good catch, thanks! I wonder: do we maybe also want to start building
+documentation with Meson so that we would catch issues like this
+earlier?
 
-> Hi Christian, Patrick, Ghanshyam, Karthik, Jialuo and all,
->
->
-> On 19 January 2025 3:43:29 pm IST, Kaartic Sivaraam <kaartic.sivaraam@gma=
-il.com> wrote:
->>Hello everyone,
->>
->>It is that time of year. GSoC Org Applications for 2025 are open now[1].
->>They are due before Tuesday, February 11 at 1800 UTC. It's good to see th=
-at few contributors have already started working on microprojects this year=
- :-)
->>
->
-> I'm glad to announce that we've successfully been selected as a mentoring=
- organization for GSoC this year[1]!
->
-> Christian, Patrick and Karthik,
->
-> As you're already members of the organization kindly log in to the GSoC p=
-ortal to read and accept this year's Program Rules and Org Member agreement=
-. Let me know once that's done. I could then add you to this year's program=
-.
->
+In any case, I'm happy to defer that to a later point and for now only
+land the fix.
 
-That's amazing news. I've signed up. Thanks for handling all of this!
-
->
-> Ghanshyam and Jialuo,
->
-> As you're new to the program, I've sent you an invite. You should've got =
-an e-mail about it. Kindly sign up via the same to read an accept the Progr=
-am Rules and Org Member agreement. Let me know once that's done. I could th=
-en add you to this year's program.
->
-> Let's look forward towards for a great summer this year! :-)
->
-> [[ References ]]
->
-> [1]: https://summerofcode.withgoogle.com/programs/2025/organizations/git
->
-> --
-> Sivaraam
->
-> Sent from my Android device with K-9 Mail. Please excuse my brevity.
-
---000000000000e34902062f6d3ac4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 2f7c6fd4d142a890_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mRmZja1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMk4vQy80cFJCekJySVhhdTdHR3hheHBJZUE1UFlxbgpnamkyamErOU85
-WE04RkJxVUpINW1yaDVUSXk4Tmt3K1VQRk1xU2tMblgxVFRpOW4rRHgrVVNYK2pEdDRFanNyCjNw
-MTBnbGpkb05PYVJjSURrczRPd1VSNFA3bkJ2dC84VTlUUzZnSGwwOWJvQlpzaEVOSDVEYXgxa0F3
-TTgwVFoKM2dOclVPS3dLRVljSU9CQ2k1Y2FPVTdsajN4QU5mRHM0bVJZRmdEM1JaeXhKQlY3bVBx
-Wkx5cjM0TUNNdWlRbwp4S2RHSXJSMCtQN1B1OHh4b1lrSDZqcUU0NTVhUTdEUHc0QU5oV2hzdlhP
-SDA1aFBxQ1RrM1JZUkZ2NldXMmpvCm44N2VlVFVPblBhYmJXVk8xL09BckFnR0c0Q29GU2tHcnlO
-L0k4aWZ1NHdKeUxYcDZCNXhOUEFJKzgzdmJiSi8KendpTUZJVzNKSUtCd2s1d2o2NDMwQS9PTlYy
-M3BMYXdJMUpUTjgxUmVzcVhjTldocjdoUGFQUy8wZWlJbVFHYwpyWUxXWnp3eENQeUd6UngyL3Nw
-emhCT013bXFsVUx3Y0s1a2VMU2JOdlN6djErWXE1MUdQbjUzQVpVOC9OY0VGClpMSlRtdHhnZjFq
-SU54bys3Vm9DTnVOVko0YXdVL0FqSklaZDR4MD0KPWdqVzMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000e34902062f6d3ac4--
+Patrick
