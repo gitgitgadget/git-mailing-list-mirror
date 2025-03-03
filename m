@@ -1,81 +1,81 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EB7235C04
-	for <git@vger.kernel.org>; Mon,  3 Mar 2025 20:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54AB23BFA9
+	for <git@vger.kernel.org>; Mon,  3 Mar 2025 20:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741034708; cv=none; b=uK5xyOEB7V+7zNcM/VOsERNJw4d+xXF9LrBm4x/4DAobmoyF0aJFRfeAAIsGvLbnRAn9DFGrx39a+1hZEUf66BIl9IWPGNTouH/r/6IZLOzNrfxHn8eFVLrFZy4jlEOBJyUOygiUFzfhAKdBlS4/hMblqRkIPE5sQ4NYFz0pmYA=
+	t=1741034709; cv=none; b=n13UNujZGMFoPqduKfj7nHqk91pgU8FdqcEwpJt+oOclHa5AMLLpxIJHuRwR8ggOMAiMzwRzFmneTg2ku5w/bhPChxLMwdZ0yBVqNV/6HraqS/syqsbXPc9e5XPffxCEZks3BTkDfEHCxLmD5NrgS5A7vOiAKUhTLug/hK3pD24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741034708; c=relaxed/simple;
-	bh=ugMMbce1qMQcGRhKaFD6k4nYvv5yXQwwziLFMXbiut4=;
+	s=arc-20240116; t=1741034709; c=relaxed/simple;
+	bh=CApzwVPf6Rb8CCzk0ScgcBEm9nsL32LKSDwuqqZAnRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWCb9lHlkD2/ppDAikQnC4KQJPQK3zrzk39Lohwp+RekJUru8ZlEgdz54rzkQvva+6epcNJge5gmD4S2OR7skgmYoFr3s6httahtPmlmStc5Pd1Dgt1zBXVzNZGrlY22zo3IrwdxAivAnQ5fn4L0EEcbEpFkjIfQxAnfrUAqw4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g7GRwPV9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NWXXBEY4; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version; b=UshUs8gLYYDjJjYLD6kbI+bhjjl2BI77NLguuWSttfQSM+HUl/HtwRawqtcq05k97DXsbtn2M4w0UrorIz+5J4MDdey9rFnDFsuAyTFZrrSVRZMXL2XOErg+A4TVnpTxiAFggTo7SxXMAyc/gqVRqUJPtaeFiUQaf6Co9YKsfK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uD8O3o77; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gRyYrrgV; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g7GRwPV9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NWXXBEY4"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 32BD61140189;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uD8O3o77";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gRyYrrgV"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CEBAC11401A1;
 	Mon,  3 Mar 2025 15:45:06 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 03 Mar 2025 15:45:06 -0500
+  by phl-compute-05.internal (MEProxy); Mon, 03 Mar 2025 15:45:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to; s=fm3; t=1741034706; x=
-	1741121106; bh=XU/awOk3sgjemUFvKBljxwnoPtru+3wmM61qHajmi7A=; b=g
-	7GRwPV9nn08bvzWEKUY7NSbfNe/DBw3LFp0sLAlDGB9bhWHw65vSMrmr3eR9Bimg
-	aT0NRHkKGKyiD2AOdjNDrOmPZoZTKLCkskxvcXGYBmydqzPePftRmYjq4RO/ihic
-	zvnpuyftwSISwnLrvLzmVzyFpiun0ld5AtdwgJ7+A7LwBA0PlaeJSoTTJb3aFKys
-	InfejvkGKXNth6r8Bp1qCS2XejcNM3Nw3v5gP82gfXskq09HRSjq9HTB5IJzzNI5
-	DuWCUP4Qq/0fiH/aScGuuKNDqbdIm0eRU9jfJVdB2coc/iAEqQJvhkvU/mAVMxl0
-	N2GAAW1AseP461oJSjEIA==
+	1741121106; bh=DW6M4pjmXeeQGOw0XTLc1eRhVkGqJFTCsp00m8rKaf4=; b=u
+	D8O3o772vYw/Xi5KDVTSrn1gnf06afNU8gxDblk/B1FKItGakKtWN19mb9oPEcp5
+	NkBGlwkVmMjv4g+qg0r1NTvX43xwaEyHieTcRrpv5zHVxAtfBFKi43Xlij8L3urj
+	thdvGYx0nA+4LmKkJYvY4QnMKMxxeF6KhCjygJZcIJslesaYMhvtAg06ly9e3fWj
+	/EnSy1EbHeNixqh89DBEfvEYDMAeHEX/Vaqwvi54romNuJ3qoNN2kw45gdTCB0y6
+	6CkPEX691tVVOJOJXKNNOPryTtEl7L0EHS5hc1bs6HPDjSHzTczwGRnf+xJLAh86
+	KkRRjXpgwTJk35UFa/0LQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1741034706; x=1741121106; bh=X
-	U/awOk3sgjemUFvKBljxwnoPtru+3wmM61qHajmi7A=; b=NWXXBEY4AVV3DS7H1
-	2JI9UCc3YgKfVGayUTsM2UjseO4cbeLh3vFe1uS+MMdM36H38tx31P/E/kbBz4Ja
-	zBHVCna5usHvKUfVvxkctChDysx82/e1qE2x9b3+TCoWWE1vjUFz9Ms7IM5R5SAJ
-	1bG/JRbgpeAuhMJapx8OtpYLghKujVKgQTQutmTcH3/TymX8tGO91qXH7fV1NQS7
-	rrAb0esIsZp2HZTRkLhhr57DRbVZempKyfBJ+WEasd5+n7c8v8jkATEKe6IqZtQ4
-	ms5P/eV5RyKQk43nwwNemiWuu/e2wimDzt09xylYnQutcXhhA0cgtHkK5aUMcTWQ
-	FJLSw==
-X-ME-Sender: <xms:0hTGZw8VrusCszFsQJotlkUDH-bp_kT0j_re4UdhTOXL5NePh4xP2A>
-    <xme:0hTGZ4uN1HMhY00njoxGXFlritPZnVP7-M2Tz9dV3kXJepFdQfKUHhBiCqc8DxnXM
-    A8xstnUZbxi-wGfoQ>
-X-ME-Received: <xmr:0hTGZ2B-L0aDsVk4UjFpN3aeEh5gt71tOHw0LYdFOLbGsKfzKf2oRS0YmENW1FhPy3HzEmJ5v95vk3OUBzMDRUB52OI>
+	:x-me-sender:x-sasl-enc; s=fm1; t=1741034706; x=1741121106; bh=D
+	W6M4pjmXeeQGOw0XTLc1eRhVkGqJFTCsp00m8rKaf4=; b=gRyYrrgVZdXwUF7Uw
+	K1PeMv6LT3JhgHhv97hqehvxLBkasbxJrLdxA9esUziRFBv7URu9yjJBeYMPZ4jr
+	/flkggOS7YFAyfRV9q6QrOoYOh8FVBZcIgG2xqEmGHn237NtrisaAWz8Fq+megWK
+	pOV4swXV53/Em0UV57JQmDBtF8m/3274yAjPT2vpE4ed+Fxmo5hykB/iZEeATUmE
+	txPH4p6kFAqNHYnMdlvl9RO0xqtxCw3FWIrnV+74wwt0/G8upvom8n/O+ZjxA0RU
+	b7s4i9JQCEdN7bpCvPEEKcJrDukcXKRTn5/je0tJZVnVWnYU7Ke8zTgEFEYUq5Ky
+	Ab5hQ==
+X-ME-Sender: <xms:0hTGZwcOKO1cCoilzCr8KuypSF4jO932LXLVRYGdi3aYn-lxb8jSyw>
+    <xme:0hTGZyNfEj9kPgfeB0u9VyA8o4gkBfh0NVpgP9QGAoKQjetJHph5nbQhZO8Ve6uCY
+    t_6v6apSybREziIdQ>
+X-ME-Received: <xmr:0hTGZxhM8GFxNAOt2RmC5bDaLWHTZ0RsU-X1lcFM-VnRvRghtUKunDzwS35xdJCJLTuUFBi-jrzWlwUVCFGidvL7yR4>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddtudduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
     evufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefvohguugcukghulhhlihhn
     ghgvrhcuoehtmhiisehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeejuefggf
     ehieeugeeuheevgfegudetheetuedvveeuueeileeuhfeigeefkeekieenucevlhhushht
-    vghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehtmhiisehpohgsohigrd
+    vghrufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehtmhiisehpohgsohigrd
     gtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
     pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
     esphhosghogidrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
     thhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:0hTGZwd7JpOnXzwhWWpdppCkxyIuVIzGX7EwMfzuXbJCzeUxbC8xjw>
-    <xmx:0hTGZ1NwovKYd_NQyUm_l5kO85v0Ay5HZOlO4bHhQquuayYFVkjtvw>
-    <xmx:0hTGZ6kBf0cnFv8ukGzRnr1T3PsapptMoxzCNvIrrnPBQZixCMVDYg>
-    <xmx:0hTGZ3sc-xRAmaXw2L5AFdWPLJk1-qeDrEwR-7hTME4gJYV0Y8VpZA>
-    <xmx:0hTGZ2qTfDNsGy1dQ2f0TeakF2IHRAt_00RY6m1-cBbWYedVPHk4fmMJ>
+X-ME-Proxy: <xmx:0hTGZ19isdLgZ_bGI5TZ2y4GBqXAk6Kx3bZRyYBaDI5h4eDQKJ9BBQ>
+    <xmx:0hTGZ8sAwGFOcxAf-PFD5SsSRs25vZl_zC6voaUFb3XW_SL4LFI5XQ>
+    <xmx:0hTGZ8FUgWUnrwHxSENXuXBtGmbJZ32hn_cDebq8TOf1YkdBqWXo_A>
+    <xmx:0hTGZ7MNwFydNcNS9ahOHOVctpkBoBIocVMu3iDXAPLnhV21NNDCRw>
+    <xmx:0hTGZ4Ix3W3cL2dZ_iN7bAgdgDhPbP4is6oKN3lawQC36uHXcm8Kt8xy>
 Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Mar 2025 15:45:05 -0500 (EST)
+ 3 Mar 2025 15:45:06 -0500 (EST)
 From: Todd Zullinger <tmz@pobox.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 18/34] diffcore.h: *.txt -> *.adoc fixes
-Date: Mon,  3 Mar 2025 15:44:16 -0500
-Message-ID: <20250303204443.360595-19-tmz@pobox.com>
+Subject: [PATCH 19/34] fsck.h: *.txt -> *.adoc fixes
+Date: Mon,  3 Mar 2025 15:44:17 -0500
+Message-ID: <20250303204443.360595-20-tmz@pobox.com>
 X-Mailer: git-send-email 2.49.0.rc0
 In-Reply-To: <20250303204443.360595-1-tmz@pobox.com>
 References: <20250303204443.360595-1-tmz@pobox.com>
@@ -89,22 +89,22 @@ Content-Transfer-Encoding: 8bit
 
 Signed-off-by: Todd Zullinger <tmz@pobox.com>
 ---
- diffcore.h | 2 +-
+ fsck.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/diffcore.h b/diffcore.h
-index 2feb325031..9c0a0e7aaf 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -107,7 +107,7 @@ struct diff_filepair {
- 	struct diff_filespec *one;
- 	struct diff_filespec *two;
- 	unsigned short int score;
--	char status; /* M C R A D U etc. (see Documentation/diff-format.txt or DIFF_STATUS_* in diff.h) */
-+	char status; /* M C R A D U etc. (see Documentation/diff-format.adoc or DIFF_STATUS_* in diff.h) */
- 	unsigned broken_pair : 1;
- 	unsigned renamed_pair : 1;
- 	unsigned is_unmerged : 1;
+diff --git a/fsck.h b/fsck.h
+index a44c231a5f..a95ae7eb84 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -15,7 +15,7 @@ enum fsck_msg_type {
+ };
+ 
+ /*
+- * Documentation/fsck-msgids.txt documents these; when
++ * Documentation/fsck-msgids.adoc documents these; when
+  * modifying this list in any way, make sure to keep the
+  * two in sync.
+  */
 -- 
 2.49.0.rc0
 
