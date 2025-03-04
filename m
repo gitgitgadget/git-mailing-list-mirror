@@ -1,133 +1,91 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A891E35944
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 06:31:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930301D7E35
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 06:33:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741069875; cv=none; b=Cvhck26odaU9iQ5T1CF2DFRqCkK83CCYpCpCZuKCC6mAa3hvrwxIcTH37GHZ3cbj4E/qCgYx2U4+Lp0M0r+7kRMPlbMGNUujvYRPX6LlwtvPg66m0V/WLUCozO6jaSAstA/fWMnXkVQX2QzxDAGavFBUPoNsCaJSvzZhrpQnwf8=
+	t=1741070020; cv=none; b=uMSjPm+92gHUDrfNeotR+Gzv8fjdG/Ir64nyd/kJwjw4p48H/690JB7r16/QB/DWwrUe0++INZeCgF1Q45QI7/qU6RIwHXGjJ7xi1nWQ1iGpflN/eVmyrZkkT7oe1/lLrYoKr9VaSeYL+uYdbcHPXlRyr/1+mg4bSLR4YH5J/d4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741069875; c=relaxed/simple;
-	bh=Pc8aYpfIbnfHEwPGtzn6rsI10b0FVlGtV/FZYb5dzZk=;
+	s=arc-20240116; t=1741070020; c=relaxed/simple;
+	bh=m5YvEnMRJuc2hzlMf54Q4p5JqhhGryJYeRbwaXUGJ40=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TQGI7Ebop+DV9KHxsdHCdu2S+NTGg7b0xGHMJZfnz98e9jEKClvD9uUG4vyjjHlTi7SP1iTwUxfqYEgE/6qxPhu8BQh8U7fGCwuHfmvsFylg+Z/AaJotEiB0DFHZGJXOaBzJ7JEapImRBy6NHxE50zhX4S/sLp8diXdyc0gjjG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GZobp85K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bgRzYOvM; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=IgPzn9PtV+hN50wX4saf+z3EoiFesnnxdmxF9oO2uTYMd8ZdUBOHdZ1lDB9JWMvMItVSdZ7hJB7NzuHPqvV91jHfDgQ+cGuT8dRNAp/j49Jx5bw7JT4kxLM8/q8ngP8F+ortEAfrckByLCZ6bh0+3QzzFNcP6He4mdhSfDFIW3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YKNHG7hX; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GZobp85K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bgRzYOvM"
-Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
-	by mailfout.phl.internal (Postfix) with ESMTP id 95A62138099A;
-	Tue,  4 Mar 2025 01:31:12 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-13.internal (MEProxy); Tue, 04 Mar 2025 01:31:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1741069872; x=1741156272; bh=VoyaSFP51q
-	PF0cXKWl0+dOQamivv/LBEYM6SCLnotsM=; b=GZobp85KNnPP9TIIHunkZ88IG9
-	Oy9o18SMZS+MrWywReQBwtg3HQs71AyYwHBtav4T33DrKG2CsclrkCjhglocibw9
-	7J2ssOIrq8Ql3WdbA6PPVdBZS3OS2vy/wlcBEwYjROOi9GGWzU6gOM9EGDC2chWh
-	TwVCe0mzFojQrpM8tkUFMRsaHqUWnerRuDB7P8WNhnQkCCAkdsfNuRa7W49MNP7i
-	AAhm2MlWp3QmUARLnLdirLRo8lQmyIiNKn0dWjl5M9pAXqwSon2moGHyqu56W7jR
-	fgXvLv0namkgiyMs8DuiV7xKujT98F7Ms7BCaFK5JNVJD+qnLnw3irDQ04IQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741069872; x=1741156272; bh=VoyaSFP51qPF0cXKWl0+dOQamivv/LBEYM6
-	SCLnotsM=; b=bgRzYOvMvLrVCmmPPqsy6CqJolLRIk9P80KAWI8L/zhJSNeot6j
-	+bYo2Qp5c166S3woccCo9CvLYa+qEa6Tk/G5r/20m2HrGwykv8imdEpDkdh+xtbM
-	FgD5c2QMp59glmPuVziMjVpxD1CgtA3OjUwtQaM9/YZt/APpRDCaD1QIjOrAOl17
-	/vqEBUaSjihhzflEk7dD8YD4gGaBnCIIMmLuXMc10aN3T+N5hLkI4UpBegHc8tlW
-	CPzFjmMN36msaC32uP/ghr9o43uqRDWp2JhY/+ZSSBpY41gcV4LxytjucrgQlYq3
-	Npj7CMiwUc6KgeYxnkEknj98RDMDYYRVNJQ==
-X-ME-Sender: <xms:MJ7GZ9AFW6PUodQN2ZApHhRunzhHj0QCmOkqzzQy4TkxmgosuYhrQw>
-    <xme:MJ7GZ7h1sFhcV0MuQnNzgiZ30lfMdrOYI8OWnbx_LjJGGNsuvH-G5jEWtlWqANoFv
-    2xJEqL3o8vTbTgvfQ>
-X-ME-Received: <xmr:MJ7GZ4nH5Vl4HzEOvaGiHukgIxx363O4QNFur8vNBH8nlTETy_np3eUr-VmstBQXd_PpLMBbtZEzp06rHu4VnZHRzMs-2MRCo4RosXh47k9IOB0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdduvdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepfeffleeutefgveekffefjeffheevffevveefuefg
-    jeduveelkefhhedvudffuefhnecuffhomhgrihhnpegsvghlohifrdhpshenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghh
-    ihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrgh
-X-ME-Proxy: <xmx:MJ7GZ3x3Sr3gJPonkuesb3QUuNadYC2iwGT2oVWEgG63dOa7dreg4Q>
-    <xmx:MJ7GZyQMomqG4T-lYYkwyZm4z8swLgIFCkfE__ViLIj-RlyPFt2f-w>
-    <xmx:MJ7GZ6Yf_udTeL_avRfJtv7eVTxtXLcFvYg6Vx9ea_qRZJGQzVofig>
-    <xmx:MJ7GZzQvSKt_QO1pjTRbtsU6kC1hRY8_4mHynSmgK05BNPN5cc8y2g>
-    <xmx:MJ7GZweUEFC7WEev7vW_8P1bSnN_gC3CYx4skvjj6NZCf_2R60SZlQeM>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Mar 2025 01:31:11 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 43bc0f87 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Mar 2025 06:31:10 +0000 (UTC)
-Date: Tue, 4 Mar 2025 07:31:09 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Feb 2025, #09; Fri, 28)
-Message-ID: <Z8aeLc-xelujEjTE@pks.im>
-References: <xmqq7c591sus.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YKNHG7hX"
+Received: (qmail 9074 invoked by uid 109); 4 Mar 2025 06:33:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=m5YvEnMRJuc2hzlMf54Q4p5JqhhGryJYeRbwaXUGJ40=; b=YKNHG7hXwufy82ObTx1+pmKk130PCj54my1JDw9xa2LaM6w2BGfGTsR8k7eBSs+anHoVX1IGHtk1jCUbuxj90hoba+BoiGLmAKQSkhwfjLBc/RbcVX0yxxzRntYgDx20fknOYug1v5qspmMtsjJX+LGmLi1LG3cZ0tivAkNcA3/HWQbQXs3ehK8NVisJ2OhhpUhRv6/p3NvIDHLt3nPiUXqGr1VUCWHBoYJUZnXJAyjZucb0OSczTNVxprWI0El1Yqq9rI9Eze45OGCu+ms8GBRVKilR9QlVL2ZL5826rM7sz83eYjt8kHWztxbLWPL4Gkc6W49WMhrK56TguRc0bg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Mar 2025 06:33:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22072 invoked by uid 111); 4 Mar 2025 06:33:29 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Mar 2025 01:33:29 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 4 Mar 2025 01:33:29 -0500
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Junio C Hamano <gitster@pobox.com>, H Z <shiyuyuranzh@gmail.com>,
+	git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: Subject: Memory Leak vulnerability in reftable/readwrite_test.c
+Message-ID: <20250304063329.GA1283445@coredump.intra.peff.net>
+References: <CAAJd+fZSUiiUm05D_eO3HS7p=WoxAWSZo51dUNjyGjUNJBvyGg@mail.gmail.com>
+ <bca5c0ec-0995-421e-9745-330f729357d6@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq7c591sus.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <bca5c0ec-0995-421e-9745-330f729357d6@web.de>
 
-On Fri, Feb 28, 2025 at 04:45:31PM -0800, Junio C Hamano wrote:
-> * ps/reftable-sans-compat-util (2025-02-18) 18 commits
->  - Makefile: skip reftable library for Coccinelle
->  - reftable: decouple from Git codebase by pulling in "compat/posix.h"
->  - git-compat-util.h: split out POSIX-emulating bits
->  - compat/mingw: split out POSIX-related bits
->  - reftable/basics: introduce `REFTABLE_UNUSED` annotation
->  - reftable/basics: stop using `SWAP()` macro
->  - reftable/stack: stop using `sleep_millisec()`
->  - reftable/system: introduce `reftable_rand()`
->  - reftable/reader: stop using `ARRAY_SIZE()` macro
->  - reftable/basics: provide wrappers for big endian conversion
->  - reftable/basics: stop using `st_mult()` in array allocators
->  - reftable: stop using `BUG()` in trivial cases
->  - reftable/record: don't `BUG()` in `reftable_record_cmp()`
->  - reftable/record: stop using `BUG()` in `reftable_record_init()`
->  - reftable/record: stop using `COPY_ARRAY()`
->  - reftable/blocksource: stop using `xmmap()`
->  - reftable/stack: stop using `write_in_full()`
->  - reftable/stack: stop using `read_in_full()`
->  (this branch is used by ps/reftable-windows-unlink-fix.)
+On Sat, Mar 01, 2025 at 12:31:33PM +0100, René Scharfe wrote:
+
+> --- >8 ---
+> Subject: [PATCH] reftable: release name on reftable_reader_new() error
 > 
->  Make the code in reftable library less reliant on the service
->  routines it used to borrow from Git proper, to make it easier to
->  use by external users of the library.
+> If block_source_read_block() or parse_footer() fail, we leak the "name"
+> member of struct reftable_reader in reftable_reader_new().  Release it.
 > 
->  Waiting for Acks, especially for Windows bits?
->  source: <20250218-pks-reftable-drop-git-compat-util-v6-0-8c1f39fb4c02@pks.im>
+> Reported by: H Z <shiyuyuranzh@gmail.com>
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+>  reftable/reader.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/reftable/reader.c b/reftable/reader.c
+> index 3f2e4b2800..f38c83f140 100644
+> --- a/reftable/reader.c
+> +++ b/reftable/reader.c
+> @@ -666,6 +666,7 @@ int reftable_reader_new(struct reftable_reader **out,
+>  	reftable_block_done(&footer);
+>  	reftable_block_done(&header);
+>  	if (err) {
+> +		reftable_free(r->name);
+>  		reftable_free(r);
+>  		block_source_close(source);
+>  	}
 
-Johannes, did the new version of this patch series make your life any
-easier? As far as I can see the conflicts in your "shears/seen" branch
-seem to have been fixed, and the failing pipeline seems to be due to
-other issues. If so, we would be able to move ahead with this patch
-series and the dependent fix for Windows below.
+Coverity complains that "r" might be NULL here. At the top of the
+function we do:
 
-> * ps/reftable-windows-unlink-fix (2025-02-18) 2 commits
->  - reftable: ignore file-in-use errors when unlink(3p) fails on Windows
->  - Merge branch 'ps/reftable-sans-compat-util' into ps/reftable-windows-unlink-fix
->  (this branch uses ps/reftable-sans-compat-util.)
+  REFTABLE_CALLOC_ARRAY(r, 1);
+  if (!r) {
+	err = REFTABLE_OUT_OF_MEMORY_ERROR;
+	goto done;
+  }
 
-Thanks!
+and then the done label hits your new line (the "done:" is right above
+the context in your patch). And err of course is non-zero.
 
-Patrick
+So this probably needs an "if (r)", or multiple layered out-labels.  Or
+alternatively we could return directly when the first allocation fails,
+since there is nothing to clean up at that point.
+
+-Peff
