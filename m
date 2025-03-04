@@ -1,118 +1,135 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5602A1F4735
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 06:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3EA218CBF2
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 07:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741071305; cv=none; b=V8otQTxabbbS/oNCFsctJ9Oh5xJd+RSUWJ8aMgSFIlChCQolC3LFnm2O24GHgWmuzNYB29hR8UD9s+/TMGv9gEX8OqogJ/LVUnC3J8eouZ264SWYmDTSO7P6b8KBsBLFDgTf9eQtfWwWACk9Gmaq8kB2AXPbmB7DkMn6IkkrN/Q=
+	t=1741071732; cv=none; b=B1QY6LE8NjR2aeBJhAqF8NPhkrRt5RFAbBYdFPCeQYhQ7FMThkwPa2WoYjluQvUMzO78DPyayUyttYxbRfqAvZ6Bn4nCozVdHWNw5iaBI+9NllhIMW99eCjeuQR6PS3lBuiTvm11E2nxnuSs3GRtKFwbs2wAqFeIBUQysQDD9P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741071305; c=relaxed/simple;
-	bh=TgcLnlidUPmpo6lvcwH/d9j30hXzALJpcAt3skSH2IU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RZKa9RVgSexYFrsJ0WM/9G29KVDMPE4mteaV86w7UmICsfKpHJgkhuE+gl6I8vFWrxA7GR6OpTmC/5l8UCtH1GllwQ6MB0DQv/x4WsCt90WuFayi5tnG9k3dyplH2ppoKGq+2/jFjBLBFCWac2arTjyL8EvWhbtPby1t6okopdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ey6aCp6t; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1741071732; c=relaxed/simple;
+	bh=Y+EBZ67Sq+GIkUROYlQ5rk23PjW0BcN+Epy//mvvGrU=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=c5FXvTCxAh+jskARpmhpA72fF5pMoJJ76I3Qows17DqdCiWU3bgTYlzL6nSa1es4yzCdT99id60aFps727VVeG9JQegtR5N6eQ6dI69+AZS2slotU3NqOXXSw5f91mtnwmMJ9BX8Uhr3IdqLKc3q3ImCKQopgFIW3cPA3iqYA6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=qHte7ZSY; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ey6aCp6t"
-Received: (qmail 9193 invoked by uid 109); 4 Mar 2025 06:55:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=TgcLnlidUPmpo6lvcwH/d9j30hXzALJpcAt3skSH2IU=; b=Ey6aCp6t6Ru10P2769g7Em6oGTM1u2usD2C6fo4dGgpAR83hx7sgEkBHDeT75MMJH8M00nb0LwaqsPSc3jmv/3OV+FgYTIfDPDYViF/IEqAb9SBfV9e++wLfvF8X+YTgwTjJ9KLEU1yVDZbNKE7MUyXI2dcqTclbB3hvpGNEWWYHokzblTO4OZAb8H+C3z5EhcbmtHXLluLbv98InGX4gQDmY3QdPBqLY+bjc1JL5sY4sxDU6sjEH4wHA0fGpoVj14sxC34BKGZssNvY4l6uGSHHv+i01tjV40eKrbPlhXN5Z319R+N6WOWN1gCL39WwQFe7nI4zgSK9ecoTIT6Vxw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Mar 2025 06:55:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22314 invoked by uid 111); 4 Mar 2025 06:55:01 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Mar 2025 01:55:01 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 4 Mar 2025 01:55:01 -0500
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 06/10] unpack_loose_header(): avoid numeric comparison of
- zlib status
-Message-ID: <20250304065501.GB1283901@coredump.intra.peff.net>
-References: <20250225062518.GA1293854@coredump.intra.peff.net>
- <20250225063056.GF1293961@coredump.intra.peff.net>
- <Z8EEGd4Q+Py3Ym0l@nand.local>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="qHte7ZSY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1741071725; x=1741676525;
+	i=johannes.schindelin@gmx.de;
+	bh=pw119c7l4T8ukLS7DEYacRuVyroeoVje/xr08d7OCtI=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=qHte7ZSYt/r2+W/UdHeJSr/PbyzIBiSR9I/z7os6/MTDYvhHsMNJFcscUkmVviyI
+	 ABfRQEa1U0yLulaaB1aFr8/0SjOKPKoXyRoxcAWGDjsnnayGC+X/jUbbCIBzB12Qp
+	 kZZpG+9WH4AOtF6mgXqnVijPpcxH7l3k72Fd8ahz9tHTfJe/VF6Td+rPDrTelZV4V
+	 TtwZTZZSHDMpZgmFKMcjmUDHorgCNqlXl0PExp7RzSZr2EfAAC+mTMJ1ScLgARB+l
+	 QtHEDCuaaqqxLbmwhMNdM1kEkQAliRhppe9wFfLYzvne1BtgTVq2UGqYOmglWkALR
+	 jgPiM7leKA5FevPsWQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.213.101]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MuDc7-1szs5w0Uov-015V0Z; Tue, 04
+ Mar 2025 08:02:05 +0100
+Date: Tue, 4 Mar 2025 08:02:04 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: ps/reftable-sans-compat-util, was Re: What's cooking in git.git (Feb
+ 2025, #09; Fri, 28)
+In-Reply-To: <Z8aeLc-xelujEjTE@pks.im>
+Message-ID: <0c808b85-d97c-ecd3-0b1d-fba546a1124b@gmx.de>
+References: <xmqq7c591sus.fsf@gitster.g> <Z8aeLc-xelujEjTE@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z8EEGd4Q+Py3Ym0l@nand.local>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:MFPdH0n8xnPiS8dwpvAyi7/1ILRessS4hlEteSM+tIwU3dvolqt
+ TGLcjRcHZcwPWWJ2ZvAmZL3ALZLItZ324hntuvHsyX3mecdDZGFhM2A4UDSwdJIsXc+g3EH
+ 6XQtemuNjaYfXD1kKOWfaVlPDqJ/K3zlD8M6Lcr3s1ImZYnRhkthsC+PmQGQJs48vXdqPwG
+ 0AZV+dI8f1LATop2qok6w==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:OC/WIjRahsY=;7PRM+rB79ClmacikKKXC1u3E5vF
+ vPsAeRF85uCyjAD41rUhSAklmH9XkXrOjjCXqQiPpdHI3mQKOUW6HQRoD8wyHdM/Yt7LyMgB/
+ loLjhIvgovVwseKb6Tx4bKENvhNUpVlUVjOGCHH8+M1xJ6O1zRNKjDLFdfy5hsgwxQ2It3V1z
+ 1LhTNbepJ7PtuzSCayZmHhNKW3vyV61mhnI9UZMU+XIAVGIoUNdYpjchjqqwcbir/AanhrKWy
+ 9Qu50ui3XYYTeU9Y7BjHFPm0UMcy/j8k4JDtimsguEvuwNJao9cgbjN72g5UMhsRXJytntyHU
+ LvTI5IUaunh9DYMxrBJ5C9Do0eyIhGE1QaXlUaPdRdE+NOFBhyWbBze2wSmH8EoDDvMQtpkcN
+ /jXxCdJAKcrSomjbHur+Cctogdt5cZDU/b2MqVyi3aMj1ughhVefBcUQMib8ntPwjTl0UCeMp
+ YLtuYOIrismqulJzg1VWdpzrQHLnekGQByVABQgK/j3nKGs4oyaElJ3NPgsBw+unvYCgaUS/l
+ Xe67zYuvSlw83diI+Dk1ZIsitdm8ahdIbeib9iBJcD4o74ymoUs9PheHIEqcTWr9uHBBsqkWY
+ QCLLgQUl43wrAbijIsJv/6Np4dlcmAkonSPfiTGBSO3x0FRjuA2tIYjdaQ/NUw+dcwp/7Qwuc
+ i5A7sF5bWedLpxnLPKfxZvgTDwfylv8MIV7CcjElTXyepQJQ1LQg4Frp8sW+knmol0yylL+OX
+ fVPzHX/oDrO7/FRLtbT7EhtHHLu75plhX/xdj7Q64L42c1IxL7RaFK6SSmUJUVZ98QKkdSfNT
+ k690iqaeTDeSP2woqxgSXn3pYGbjOAsXk+NcwAGQIitR9zVqyM0VCIl24z/9QcAg9JhM+jyAK
+ Q4Io8XYl/LKNqNTi6S3UxnF/lk0M9XbG3yic+DPts8NzzELjfhwRJ+jW43qqeXW/Bbqj4qLYa
+ OixACK6tdrXV7nmTHw22jCv18fUJHyH2vxltAt99R3PsNnfzN9SzVH5XPNHg6+8x0ITUPwrXX
+ FjjkCHBXu+yNJAV1aDGsK2bO6fRjT/KDkU939NQP7CvmERsEUUVlA3acvoir22BnBXlJ8FCfV
+ MxWGDLzA+v26VLA1G7LCgLqG1WRFQ9jFzIVkgJDV5vZ4Y/fjfCwmzJ3pqbmecOo6SIYiOZXHY
+ FCVRR/TfNCBn0FaFTc942vFMhuJTEKAsNzpyWMqmUhu+dxBSt0eckv/nT9AXkLrkfe7vGIwg5
+ WrZNterJ1SZsGFd5ezHdCbb+XfMYhZ0y7evE+szMTWtVPK7sbZ4HzJC9DFAXIyCMFdcgxnPWc
+ MZkiK/YtF1fDuaXoiaIfxARtzDPFsXZYsrSlcul4A2m3yRMcL+tUKZpXO4QkFvqEboJpabm1q
+ oAV7KbOLkPCTVduG3gqvweiA5OjC1T4Em1UjS/kuDMErYvYaWrtLVKS/MqpPx2VX16pWOT5WA
+ kwIj58H7UqhYYdSjJhBRaMNjGE55jHSyWEtOfauUNSmlp3hsC
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 27, 2025 at 07:32:25PM -0500, Taylor Blau wrote:
+Hi Patrick,
 
-> On Tue, Feb 25, 2025 at 01:30:56AM -0500, Jeff King wrote:
-> > diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> > index e493600aff..86a2825473 100755
-> > --- a/t/t1006-cat-file.sh
-> > +++ b/t/t1006-cat-file.sh
-> > @@ -951,6 +951,8 @@ test_expect_success 'object reading handles zlib dictionary' - <<\EOT
-> >  	printf '\170\273\017\112\003\143' >$objpath &&
+On Tue, 4 Mar 2025, Patrick Steinhardt wrote:
+
+> On Fri, Feb 28, 2025 at 04:45:31PM -0800, Junio C Hamano wrote:
+> > * ps/reftable-sans-compat-util (2025-02-18) 18 commits
+> >  - Makefile: skip reftable library for Coccinelle
+> >  - reftable: decouple from Git codebase by pulling in "compat/posix.h"
+> >  - git-compat-util.h: split out POSIX-emulating bits
+> >  - compat/mingw: split out POSIX-related bits
+> >  - reftable/basics: introduce `REFTABLE_UNUSED` annotation
+> >  - reftable/basics: stop using `SWAP()` macro
+> >  - reftable/stack: stop using `sleep_millisec()`
+> >  - reftable/system: introduce `reftable_rand()`
+> >  - reftable/reader: stop using `ARRAY_SIZE()` macro
+> >  - reftable/basics: provide wrappers for big endian conversion
+> >  - reftable/basics: stop using `st_mult()` in array allocators
+> >  - reftable: stop using `BUG()` in trivial cases
+> >  - reftable/record: don't `BUG()` in `reftable_record_cmp()`
+> >  - reftable/record: stop using `BUG()` in `reftable_record_init()`
+> >  - reftable/record: stop using `COPY_ARRAY()`
+> >  - reftable/blocksource: stop using `xmmap()`
+> >  - reftable/stack: stop using `write_in_full()`
+> >  - reftable/stack: stop using `read_in_full()`
+> >  (this branch is used by ps/reftable-windows-unlink-fix.)
 > >
-> >  	test_must_fail git cat-file blob $blob 2>err &&
-> > +	test_grep ! 'too long' err &&
-> > +	test_grep 'error: unable to unpack' err &&
-> >  	test_grep 'error: inflate: needs dictionary' err
-> >  EOT
-> 
-> All looking good here, too.
-> 
-> I think the test_grep is hiding what is a fairly unpleasant error
-> message that says the same thing a few times from different points in
-> the call-stack. But that isn't anything new from this series, and I'm
-> content to let it be a problem for another day ;-).
+> >  Make the code in reftable library less reliant on the service
+> >  routines it used to borrow from Git proper, to make it easier to
+> >  use by external users of the library.
+> >
+> >  Waiting for Acks, especially for Windows bits?
+> >  source: <20250218-pks-reftable-drop-git-compat-util-v6-0-8c1f39fb4c02=
+@pks.im>
+>
+> Johannes, did the new version of this patch series make your life any
+> easier? As far as I can see the conflicts in your "shears/seen" branch
+> seem to have been fixed, and the failing pipeline seems to be due to
+> other issues. If so, we would be able to move ahead with this patch
+> series and the dependent fix for Windows below.
 
-Yeah, we get one set of errors when we ask for the type to find out if
-we need to peel a tag (it's not a tag, it's OBJ_ERR ;) ). And then
-again we ask if it's a blob to try streaming. It's still OBJ_ERR. And
-then we fall back to the non-streaming case.
+Honestly, I cannot say whether it made my life any easier. As you can see
+from
+https://github.com/git-for-windows/git/actions/workflows/main.yml?query=3D=
+branch%3Ashears%2Fseen,
+the `shears/seen` branch failed to update automatically since I updated it
+manually last Thursday. According to
+https://github.com/git/git/activity?ref=3Dseen, there have been 5 updates
+that were hence missed.
 
-We should probably check for errors earlier. And also avoid asking for
-the type twice when we didn't peel a tag, which is just stupidly
-inefficient.
+I'll try to update the `shears/seen` branch now, but I'll time-box it to
+half an hour because I really planned on taking care of other issues.
 
-Perhaps something like this (untested):
-
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 9de1016acd..e1dbbfeb43 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -236,7 +236,13 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 
- 		if (exp_type_id == OBJ_BLOB) {
- 			struct object_id blob_oid;
--			if (oid_object_info(the_repository, &oid, NULL) == OBJ_TAG) {
-+			enum object_type found_type = oid_object_info(the_repository,
-+								      &oid, NULL);
-+
-+			if (found_type < 0)
-+				die(_("unable to read %s"), oid_to_hex(&oid));
-+
-+			if (found_type == OBJ_TAG) {
- 				char *buffer = repo_read_object_file(the_repository,
- 								     &oid,
- 								     &type,
-@@ -251,10 +257,11 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 						      &hash_algos[oid.algo]))
- 					die("%s not a valid tag", oid_to_hex(&oid));
- 				free(buffer);
-+				found_type = type;
- 			} else
- 				oidcpy(&blob_oid, &oid);
- 
--			if (oid_object_info(the_repository, &blob_oid, NULL) == OBJ_BLOB) {
-+			if (found_type == OBJ_BLOB) {
- 				ret = stream_blob(&blob_oid);
- 				goto cleanup;
- 			}
-
-But yes, this is all way out of scope for this series, and is true of
-any corruption.
-
--Peff
+Ciao,
+Johannes
