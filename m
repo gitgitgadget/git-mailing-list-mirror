@@ -1,80 +1,69 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA2125DCE5
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 18:37:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1FF1D63F8
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 18:50:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741113451; cv=none; b=nvuu0kS5oIjCD7DkbVGRC/AqOQXx85DQp8Vejdih50BL1inbqirRUEXy9MhSxFQX3ZLlMybIuks770NjAedBqyEzXNqc67lZ9KNRw3JXVP+ES56xYvokgszV0YzsygOqUde/N36GWH/lsbv6uYdtFEa3xjayYN1UziL7z9wo3ms=
+	t=1741114208; cv=none; b=lluX40KDwpn9Nqz6KhRs2EtvZx44DTIko9KBb1Wm9iEH9RoAk7jgjJVuWQq9ERuVqssYxP2F6AXCXvz0nwJFucQPeq5kK6sRtbtU2qQCDpVPopBrPXhV+hA6/SIIp5qZPGj7y1e2SFyuiagx7sQGTdZuJZuT1C3WbvGXeGYyee8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741113451; c=relaxed/simple;
-	bh=z21m6Z3sbFxQB6y1x02+M0S6qFO7HTaQzNVhL6SDiMo=;
+	s=arc-20240116; t=1741114208; c=relaxed/simple;
+	bh=pWpDScFFIFw93QFZk/SUWVBDimunUvCeFkw2PcGk2xQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OAVLd645HGBsJWBqxX3fW99xRQ+q4pj64Ou99EkQPMzdVq7/RCB8qEjWNtexHzdMgkzHCDJjBqkx5HEZ65BAbJkQk5udB2RiOMsKUEhrhtEhJqlBPdtwgFChdcwy6jLmhtbx1gNBy49eh99DgF4B30tb57lYnFn4U00NYIymPlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=URrARlvU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m31dqN5w; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=KH/IrG2rBpdVD1sickRYpV5ugg/4Y6n1wniH0upYV34S5O96g1fXPrG4j5jFrCiyJNMA97b3JK/FYW0fBoTwA+1gVVW/Km7khHtx6E4k9c5GDKQnnqGNB9wTNc5gQo/HMloR9ac/gZAcaILj2t3FxTDd5c05HZusFf+tP8KclmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WraYDmnz; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="URrARlvU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m31dqN5w"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id EEF431382753;
-	Tue,  4 Mar 2025 13:37:28 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Tue, 04 Mar 2025 13:37:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741113448; x=1741199848; bh=jheO4Gxjzz
-	1OuqoYQI5TEPvboGNcmb7Faiy8plN2xME=; b=URrARlvUKuhkYcDLrNi3mtS2IO
-	2PFpqmoRtJ9FxeMFN9OF+17JkF47BchefHtW0PzT4WIAxjE6WwoNEu5E+IYozbPO
-	KAPR461gx4J2/RSj75Bf4nrToOY3iqEoS7I2xZU+zVOS9KtIeRLk4DgVNLQSndoU
-	vaP+rYNW0tCnLazYGQqb201DY/SKDADT1IbQXyXbTN//8W/OILyIsT8mGkiV9oTs
-	CuSi3GSN6lU8coGwR4i+X4D6E0VhfnUMM2Dff5OwnS3Rt385/PqocO0SQGwhYv7G
-	NZumdJvOZMF6oTrFIwF3zesCJJtSO3mvB3JTON3gBQENeIYAAmkJ4umAlw4A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741113448; x=1741199848; bh=jheO4Gxjzz1OuqoYQI5TEPvboGNcmb7Faiy
-	8plN2xME=; b=m31dqN5weMKcmJ3+PASiwMFwkRDVyl7bk/JOBp20mx1bpgPjRP2
-	S23mjFjNEGxsJVFX82glCMY95F6PZFM2AbrjR0FmmfEMs2fLHtmMAazH0I9Rot9P
-	dtL+EdFhP9SGe9BCnvW2NQxH0LegNRB02gkXMknYyoa2LYWhqOL1TnoZ6gLJV+Lm
-	FuwZJjqyzLxwBALIeciOj4FdhNnVtw5GeHc+0jLMWM6e1Lj7cTf+7hOj02MTcyim
-	um/lblImKPHzQqvHAle9lFA+rv+GMCRX0dJr9VXG8VXdzKGzgN5k7Kntze9wBAtk
-	tgi6L0xL6QUXUTaCccitd385Y9VW0yLnx6A==
-X-ME-Sender: <xms:aEjHZ0WoCkVm7XD1xUylovSBFBw7vW5nJBkvkaJHAFArVVBb03O9WA>
-    <xme:aEjHZ4m_STYaKItLfEWZhjnOerj7ObC3H2_JPqKdtNR3euO-F1K0hS9ZEDAC7I-L5
-    ZmUV3OFaTZNhD_svw>
-X-ME-Received: <xmr:aEjHZ4b7J7cKDU9Jiv6Ah7C9lLx3Pjora2VW9vBNb2sjPS-kiIsVOf_Iahf3tiClnfHel0aWQ29YQ9CrcupRh5SnX7LnrdOqYrl5XmPPFYHPXx6dUuRS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddvjeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomhepvfhougguucgkuhhllhhinhhgvghruceothhmiiesphhosghogidrtg
-    homheqnecuggftrfgrthhtvghrnhepgeeuveeiffdufeffgeevtefgvdduteffveefffej
-    ieehtedvveffhedvfeekgeeknecuffhomhgrihhnpehfvgguohhrrghprhhojhgvtghtrd
-    horhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    thhmiiesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvse
-    hgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:aEjHZzXoa0AS-1bulFk4HDMh3jI5KPrULQk7EGQJuGeZLfSZIf8K5g>
-    <xmx:aEjHZ-lAsaMxw7bVsB6sKl86xMgWyexGOVYNbaaBF_2xzf2HwnD88Q>
-    <xmx:aEjHZ4eVfFj1axMRuurIR3MHgS2UZgxkGhCNGmCHN_ybqSo9K_b50w>
-    <xmx:aEjHZwGGdPhJ7cllfYX0hc1FC7rKtx1jc11aAx-J6HaB9f-WdvbEgw>
-    <xmx:aEjHZwiFGSRt5t0tK2zZqdWt2CidAzHjRl0E4tiv74pm6rNMFtjSvOxA>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Mar 2025 13:37:28 -0500 (EST)
-Date: Tue, 4 Mar 2025 13:37:26 -0500
-From: Todd Zullinger <tmz@pobox.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.49.0-rc1
-Message-ID: <Z8dIZmscTdi8dZAY@teonanacatl.net>
-References: <xmqqjz94r8p0.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WraYDmnz"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-72726025fa5so1428401a34.0
+        for <git@vger.kernel.org>; Tue, 04 Mar 2025 10:50:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741114206; x=1741719006; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CWZGIPC7bVd8t+dWOrsjYcoNUjJ/G3vC3MrpkiJZRdQ=;
+        b=WraYDmnzf9PtmG+Z3eWnfzoumq0WdJ1T3tLvCmtXzUjCphwGtVmi8a09oiLycyUM3g
+         ivLZlYFAW2jl57DHdDfMkbgw+uQqe6Y6uVNdcrSB4TeiAj5dFZWr4qzDrcWD/TMyjyFk
+         yDcDUvYwtuvLEBtqQ2OXDqV+USy8QdWRxhu6eisYvpBilvj4FWP3gtZXSTqRDHVVdooE
+         8GCGYQlb1iiBmTpgN25pPnuntQenoDjyFoYwjI2xuKV6OyZQfjPD6GbC1QoF9f5mWwyc
+         qaKuBXUuGwc27stffOZVKHAwSM1+0/DDlRsut5NMu9BtjzkN2B5GKbxT3G2Yt8TSnFpF
+         JIlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741114206; x=1741719006;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CWZGIPC7bVd8t+dWOrsjYcoNUjJ/G3vC3MrpkiJZRdQ=;
+        b=bptgiv4BC5jNYs4TXqhvx4sjcVX2+s/SWLvAgVNAnFwx/FbB8/Ozvre4Kn+qph38tv
+         OFDwiFFrRLcUds7uhWIlHqgH+ICK5F7t9mpzEYdqPOa4N6vI+gfy50asJZpxwtYjEDs0
+         5Cgc+5SGMME7GpOiuQHoxSFQoO2nkh6PdVbgGcYzYpevPFctM4jaXxlYsGFAjVIw58lK
+         fRkQnrnV9f23SOmSjIp/Bge1N8fnMqU/PUvZG1FZqKoeckheQU7l4vMU89ZxV+IG/CBD
+         OtVmMitvzqJlQJudVPvPmPF9lQhVjs8prxBkEL/4709qKKnuqIDGA8j1U7txMu9Sgdwh
+         wolg==
+X-Gm-Message-State: AOJu0YzIzGBqyUnPbgJpx+eJJS7au90zdps9App26DTMmKzvIarziNcE
+	tejCe7UHvBFvjG34DebA7gRhDyMnYQkOrhGECTipCosa5uJ/3bL+cFaLyg==
+X-Gm-Gg: ASbGncuQctQUcIlbuEoNxCvLV9zk+WLqOFaaFu2iizejS+42BQaCs46iJ/Xwhmwyl1r
+	rfHoliJB+MunpQJ+rUggWgLkQAq/8q/pevdR2NruGb2I8JoZ2DjrBxAKM9nMaIFzHBSWPsqeg8A
+	oznPqgL65DPPAx+SVCgkr0YZ7owfE7Pg9TS0H6P2A1R/M+khkxdkAh2+U6twnRb5VQ3ANiuOpLM
+	vRzEo7jWJ+zE4dA/ALGyvKzUlnqsc08CEQTo47DXHLTMpDD0Xy9bL4tf9XfN7tKSoR2Hu1UUEyV
+	WTWTc2xk1TnlSDJO4k7Ljq/B1rHv6uSJecuJzQ==
+X-Google-Smtp-Source: AGHT+IElrbRnunwPKvqQsq81fNoRAZxdaXDrKjGq26+htNkm9ge24dqJklYaglHhSk0hqL24JAHaEA==
+X-Received: by 2002:a05:6870:c90a:b0:29e:362b:2162 with SMTP id 586e51a60fabf-2c21caf6838mr123722fac.20.1741114205839;
+        Tue, 04 Mar 2025 10:50:05 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2c15c446de9sm2378424fac.46.2025.03.04.10.50.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Mar 2025 10:50:04 -0800 (PST)
+Date: Tue, 4 Mar 2025 12:46:44 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 03/12] pack-write: stop depending on `the_repository` and
+ `the_hash_algo`
+Message-ID: <hqhlqyonijhjovsop3s3bqv2hjkfp2pde6h4r4jzlcrcreygvf@k53cld26eqs3>
+References: <20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im>
+ <20250303-b4-pks-objects-without-the-repository-v1-3-c5dd43f2476e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,60 +72,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqjz94r8p0.fsf@gitster.g>
+In-Reply-To: <20250303-b4-pks-objects-without-the-repository-v1-3-c5dd43f2476e@pks.im>
 
-Junio C Hamano wrote:
-> A release candidate Git v2.49.0-rc1 is now available for testing at
-> the usual places.  It is comprised of 367 non-merge commits since
-> v2.48.0, contributed by 68 people, 17 of which are new faces [*].
-[...]
->  * Lazy-loading missing files in a blobless clone on demand is costly
->    as it tends to be one-blob-at-a-time.  "git backfill" is introduced
->    to help bulk-download necessary files beforehand.
+On 25/03/03 09:47AM, Patrick Steinhardt wrote:
+> There are a couple of functions in "pack-write.c" that implicitly depend
+> on `the_repository` or `the_hash_algo`. Remove this dependency by
+> injecting the repository via a parameter and adapt callers accordingly.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+[snip]
+> diff --git a/pack.h b/pack.h
+> index 9f1194ac13d..5d4393eaffe 100644
+> --- a/pack.h
+> +++ b/pack.h
+> @@ -87,7 +87,7 @@ struct progress;
+>  /* Note, the data argument could be NULL if object type is blob */
+>  typedef int (*verify_fn)(const struct object_id *, enum object_type, unsigned long, void*, int*);
+>  
+> -const char *write_idx_file(const struct git_hash_algo *hash_algo,
+> +const char *write_idx_file(struct repository *repo,
+>  			   const char *index_name,
+>  			   struct pack_idx_entry **objects,
+>  			   int nr_objects,
+> @@ -106,13 +106,13 @@ struct ref;
+>  
+>  void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought);
+>  
+> -char *write_rev_file(const struct git_hash_algo *hash_algo,
+> +char *write_rev_file(struct repository *repo,
+>  		     const char *rev_name,
+>  		     struct pack_idx_entry **objects,
+>  		     uint32_t nr_objects,
+>  		     const unsigned char *hash,
+>  		     unsigned flags);
+> -char *write_rev_file_order(const struct git_hash_algo *hash_algo,
+> +char *write_rev_file_order(struct repository *repo,
 
-In <Z8HW6petWuMRWSXf@teonanacatl.net>, I noted that one of the git
-backfill command's test fails on s390x:
+These couple of functions were already injecting git_hash_algo, but
+still depended on the_repostiory. By instead injecting repository
+directly, we get both.
 
-expecting success of 5620.4 'do partial clone 2, backfill min batch size':
-        git clone --no-checkout --filter=blob:none      \
-                --single-branch --branch=main           \
-                "file://$(pwd)/srv.bare" backfill2 &&
-        GIT_TRACE2_EVENT="$(pwd)/batch-trace" git \
-                -C backfill2 backfill --min-batch-size=20 &&
-        # Batches were used
-        test_trace2_data promisor fetch_count 20 <batch-trace >matches &&
-        test_line_count = 2 matches &&
-        test_trace2_data promisor fetch_count 8 <batch-trace &&
-        # No more missing objects!
-        git -C backfill2 rev-list --quiet --objects --missing=print HEAD >revs2 &&
-        test_line_count = 0 revs2
-+++ pwd
-++ git clone --no-checkout --filter=blob:none --single-branch --branch=main 'file:///tmp/git-t.6AFX/trash directory.t5620-backfill/srv.bare' backfill2
-ok 3 - do partial clone 1, backfill gets all objects
-Cloning into 'backfill2'...
-+++ pwd
-++ GIT_TRACE2_EVENT='/tmp/git-t.6AFX/trash directory.t5620-backfill/batch-trace'
-++ git -C backfill2 backfill --min-batch-size=20
-++ test_trace2_data promisor fetch_count 20
-++ grep -e '"category":"promisor","key":"fetch_count","value":"20"'
-error: last command exited with $?=1
-not ok 4 - do partial clone 2, backfill min batch size
+Makes sense.
 
-Being a new command, perhaps it's not terrible if it doesn't
-work on a less popular architecture, but I don't want to let
-it slip past without anyone noticing.
-
-As I mentioned the other day, I don't have shell access to
-the s390x host, but can run the test suite with additional
-debugging if needed.  I have the test-results directory from
-the build as well.
-
-If anyone wants to poke at it, the full build log (which
-contains the test-results directory as a base64-encoded,
-zst-compressed tar archive) can be found here for a few
-weeks:
-
-    https://kojipkgs.fedoraproject.org//work/tasks/7999/129807999/build.log
-
--- 
-Todd
+>  			   const char *rev_name,
+>  			   uint32_t *pack_order,
+>  			   uint32_t nr_objects,
+> @@ -134,8 +134,9 @@ int read_pack_header(int fd, struct pack_header *);
+>  
+>  struct packing_data;
+>  
+> -struct hashfile *create_tmp_packfile(char **pack_tmp_name);
+> -void stage_tmp_packfiles(const struct git_hash_algo *hash_algo,
+> +struct hashfile *create_tmp_packfile(struct repository *repo,
+> +				     char **pack_tmp_name);
+> +void stage_tmp_packfiles(struct repository *repo,
+>  			 struct strbuf *name_buffer,
+>  			 const char *pack_tmp_name,
+>  			 struct pack_idx_entry **written_list,
+> 
+> -- 
+> 2.49.0.rc0.375.gae4b89d849.dirty
+> 
+> 
