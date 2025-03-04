@@ -1,85 +1,137 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84211FC7FF
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 18:28:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A72F24EABD
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 18:30:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741112936; cv=none; b=HYh6j+WRWiuHJGIYfiBsndMhFYu768SulLJejzE+lcAzYqEVsQRkpwpetPCov1sMyUeIJkSME7rA+57EDC4ek/PUuhydtTV84TyYMekA20UAHpYF7YGf9/qQWPEjcvnfJlJyKze+IQvRvRk9BaEFeL8xTHj3W95lTxjBBZIgJfU=
+	t=1741113006; cv=none; b=eAKMK9YOtAxoLm9wVBoS0EuVUnqLeBfm/McwzNaTD6BJ4o4Ebrh+9xLXtizKieFEEWwnAWbMju6+rsrjqtat3dAYaBkPR7IN4k1ZPxJ1andlaDcJy3Iq+Sx/sauym2ixWr5cvg8nzR0XEM4Ge0Ru6vglOJOTmMCi97pBYhXr3rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741112936; c=relaxed/simple;
-	bh=YFVgx8bH4QhL0BFZhQWisYtd/MzDA4rcesRGXFc4Dao=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=inmjjjGUUKkQlD1g15ZuAa3kMKKPgBMLymwDN7zfC1iIJnutpAfZhfFnxjSQ/uE6+jkZ00eSJBCZKSXl/2hSW4ifINyk+muRmILUwAwToYwFLR+OrTBxb6RMM3Ialh3Ufjs4lbXmB4uU7Yg71LzFtrAynGFp53XZXWxz/VXNcno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6e894ceca36so6791456d6.2
-        for <git@vger.kernel.org>; Tue, 04 Mar 2025 10:28:54 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741112933; x=1741717733;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+cdNsDirIbebcoh2AtRhXi3ASWpfIe0OEW5wAEfSP4w=;
-        b=lphag0zgzswnBoYBoHjmDq9n5k1r2fpEHwRdvDO1eHafIWkMZvY0c/INZ/m7wgzz22
-         1+XLxOZf/qbDgKv3Vg/SY8RIQK0VPivWlUv3Qhmn3YlLe8sl/yPIlJYOkdNnTdRtq/a1
-         Lv3D1pHYYwIYKJNu441ZZhOJfZhhLb0HJ838Lf5u2AW2XfDsggLld6cWOSWFrBjXKnqS
-         oFkokrDl0km3/wv02cqhuPxIF7lPiYyLcPdwI9pQ9ObT9jEbpS9P66vFfS8FI4X9cgcB
-         EAQJkMPsUB+4Ac2Fz63yrLtWb+A0T/Wz/ShM5yAwgR10VyKg6x0xU8eWkaDXWPSzJ4XS
-         8wWg==
-X-Forwarded-Encrypted: i=1; AJvYcCWXr29ognl9cTLtErr5fCBeyZ7bZkFwacxlLc/1X9FmNMY4Cwe76QIqbwq4QQ29PfK944M=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyih+Ae82U+Tk7MHaOug6Y6hsxJ2QjQAkLFXuei3q6rEbtJzn1A
-	qwGJqykJK07rAlwC3/Fxj1Utrhc7Qcj5HY684M0G7mEWf6WvhKbky7Kfw/F6+7NAYc/DPMlsmiz
-	Aav18C2DXdXR/fpVGSycwVFGYFeo=
-X-Gm-Gg: ASbGncsGajdeaSk7DIJx5xuyfb98oXbz1PAiHc7KivLBtzeOll/PRrBYc52hmUA/25Q
-	bvJGvit8wn24nT86dnraqf5GBRs6w3CPXsyIhAj7KUgGmK9H9SdjS3SfTmjfK1BPz8T1BDhk5Ye
-	WrKbVafwTY7Q4P5SE1QiAg8MTxJp7Cp817R8uEFVlXWmxD8+eV8R9plAYjN1s=
-X-Google-Smtp-Source: AGHT+IG+PFoLnXT3nUSPJ4hMiLQs37K/l+sCUpDW7aeIxWkp+OZufH+3y0GUdOUpjGSLWwac0w4laFI12jW71CMP+7A=
-X-Received: by 2002:ad4:5bc4:0:b0:6e8:9c91:227a with SMTP id
- 6a1803df08f44-6e8e6c8cbf8mr1893116d6.0.1741112933396; Tue, 04 Mar 2025
- 10:28:53 -0800 (PST)
+	s=arc-20240116; t=1741113006; c=relaxed/simple;
+	bh=HnyiRq4W727nKqgczeNEb2iYmR5JIbk0L/mOxN/v2eY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=p5/1GgNCc82DObzQnK/puWxVvdHVzZfH14/sB+6qOdMFr+BP+Q+dcmESwnVaDw1uqkBc+KfSZIpraIJku00MpEUb5EwdJBIxJ1VCm/F3fLT6W3VL1jEbhAZMc7ZIwpZ/CyLECgzewjUQrgpkMuLNofJMrg+V2v9W8QCYzEC2QY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C+EiJrWr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4SolJ31c; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C+EiJrWr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4SolJ31c"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 192831140093;
+	Tue,  4 Mar 2025 13:30:03 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 04 Mar 2025 13:30:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1741113003;
+	 x=1741199403; bh=IQQt8et78IbSOinIxnnAxQMaHAUqRFrzMQAUfzmygXs=; b=
+	C+EiJrWr2hCzAEkmCot6MH6d/v1wxQx5lbZbnYLINtgKKdRE6Tebp2RWNRhaFHj+
+	SnqauhatejYM2M6MHTCNCH2LZb46djerb/NY4uQYsCBj/xrtkwxu72ScOZ61vHdK
+	x4tNh0eLA3a3cg+mA6IGOrVI+D11JLXJCQav7HPneJDtMAqOn+sHy5zSxmLzpmnm
+	45KFMsU+lK1ASekL8JazPLh49DtRsB/AabrNfNkRciXsvUpt5m3IRs7Z3heSvG0g
+	DkCbqhVBi3Bvtq5RqedB18nLseKeq8Rcnl2mnwWbii01DRXalv9KEkTnlkTa6r6w
+	jaPXvYFZUkJ3ZCpl0uhhQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741113003; x=
+	1741199403; bh=IQQt8et78IbSOinIxnnAxQMaHAUqRFrzMQAUfzmygXs=; b=4
+	SolJ31cUGzM6oQxumPwHfOSHSA7nvASEFGRop6U74MUdUutEy7FeXNNNLm8OWyWR
+	tQkFrxRd6qOVwQPlUjEg/2vYfv1ZSzA8YKtrXzqBV0SulD3O2AcOapEGwAmRvXxu
+	/LWmiTRFupklZKDfM01OabugXm71hhjFHYSDHzb5AMp7EetHzqVC+bI4P46So+KV
+	5/wQOwdiiyiYzPwt9VYAReKDtpok7CYq6qvioLgiiy6lkNFoHcM5zWyrQr5DNnfC
+	HnGus865+eQ++ZeXhMzAOmc7BSU17HHoD/KcDFP1swPyFxdHWBj5+C6nJWuJdYYs
+	9FWuOgcAln2HRWgaIwjow==
+X-ME-Sender: <xms:qkbHZ4GnkFmb1PAvANTmI7w2IabIoCAEV2ppIQXooJqpnPXQrQ0BEg>
+    <xme:qkbHZxVU96kMurshVyNXYgIAZ5J3KXbN1y0yUZQxXIFwKnjF8Tbtyvyl80r7h1rDb
+    A0Gx6Yg2AV3Th1faQ>
+X-ME-Received: <xmr:qkbHZyIDlkTYu_x3GE60dve8rLv1qpwA4w0r8QiXyCBGyUZmimeCVx3wy_kK-CNb8PQ5IeXp_aY7_m6rBIXCbTNo5rY3eGLPnNXe>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddvjeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
+    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhih
+    hnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepuggrnhhimhgrhhgvnhgu
+    rhgrtdeltdegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:qkbHZ6FN654SJqELIhDb39Y6JGjB5WIP62jatnNr324IcwJnjSHY9A>
+    <xmx:qkbHZ-V3nnyEuWwGMW9j0S3qUmtrlqGSL9VtHSd-fBQes584eEPSxw>
+    <xmx:qkbHZ9NmMw0hKauCe6ysACwq1IQSq6HsrduQOvuOT9T91PbHaIkTiw>
+    <xmx:qkbHZ13rZQQGEA_QI1Se3bpdpdFsBK7ZISG7QGF5sq_99lUa5gB4LA>
+    <xmx:q0bHZwcd7Mar0najntI51ZDAvtFQ_wABKs5-hwJ08YD5_14F4qA8Iw8u>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Mar 2025 13:30:01 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Mahendra Dani <danimahendra0904@gmail.com>,  Patrick Steinhardt
+ <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 1/1] t1403: prefer test_path_exists helper function
+In-Reply-To: <CAPig+cS3QZhZ=W2WfM3T3EngaMOSV37KH4Pqp78QHzOAODtenA@mail.gmail.com>
+	(Eric Sunshine's message of "Tue, 4 Mar 2025 13:07:22 -0500")
+References: <20250301105838.1481-1-danimahendra0904@gmail.com>
+	<20250301105838.1481-2-danimahendra0904@gmail.com>
+	<Z8WD2MeHpOH7Ni8A@pks.im>
+	<CABGrwBB1-UiiPEOptN9csVP1WYg2X=SWeMxxiyDfz02VmDp1vA@mail.gmail.com>
+	<xmqqldtlt304.fsf@gitster.g>
+	<CAPig+cQ275qBWzaYmMXydiA_8+CTx3FhAAY+o8ro+hD03wzu0g@mail.gmail.com>
+	<xmqqcyewr8j7.fsf@gitster.g>
+	<CAPig+cS3QZhZ=W2WfM3T3EngaMOSV37KH4Pqp78QHzOAODtenA@mail.gmail.com>
+Date: Tue, 04 Mar 2025 10:30:00 -0800
+Message-ID: <xmqq1pvcps2f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250301105838.1481-1-danimahendra0904@gmail.com>
- <20250301105838.1481-2-danimahendra0904@gmail.com> <Z8WD2MeHpOH7Ni8A@pks.im>
- <CABGrwBB1-UiiPEOptN9csVP1WYg2X=SWeMxxiyDfz02VmDp1vA@mail.gmail.com>
- <xmqqldtlt304.fsf@gitster.g> <CAPig+cQ275qBWzaYmMXydiA_8+CTx3FhAAY+o8ro+hD03wzu0g@mail.gmail.com>
- <xmqqcyewr8j7.fsf@gitster.g> <CAPig+cS3QZhZ=W2WfM3T3EngaMOSV37KH4Pqp78QHzOAODtenA@mail.gmail.com>
-In-Reply-To: <CAPig+cS3QZhZ=W2WfM3T3EngaMOSV37KH4Pqp78QHzOAODtenA@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 4 Mar 2025 13:28:42 -0500
-X-Gm-Features: AQ5f1Jp2eF4dDS4bmt3_9RpkzOl6wGfLGCEquZKr29-9-bwjle5voNJNXYl6YY0
-Message-ID: <CAPig+cTUMj-QviOuXtdAN8Ao=gbfhXK=J6oEXfdjn1cAocZ3RA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] t1403: prefer test_path_exists helper function
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Mahendra Dani <danimahendra0904@gmail.com>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 4, 2025 at 1:07=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
-> > >> >> >       remove_object() {
-> > >> >> >               file=3D$(sha1_file "$*") &&
-> > >> >> > -             test -e "$file" &&
-> > >> >> > +             test_path_exists "$file" &&
-> > >> >> >               rm -f "$file"
-> > >> >> >       } &&
->
-> However, it's still not clear to me why this function is making the
-> `test -e "$file"` assertion in the first place or why the enclosing
-> test should care, especially since that assertion is only checking
-> that `git commit` worked correctly, but that's not the intent of this
-> particular test[1]. So, `test -e "$file"` seems pointless or at least
-> misleading.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Perhaps, I'm falling into the trap of assuming that a lone `git
-commit` in a new repository will unconditionally create a loose
-object, and that that will always be the case? If, down the road, `git
-commit` no longer works that way, then the assumption about the loose
-object becomes invalid, in which case I can see how the `test -e
-"$file"` assertion is protecting the test against that future.
+> On Tue, Mar 4, 2025 at 12:49 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> > On Tue, Mar 4, 2025 at 7:05 AM Junio C Hamano <gitster@pobox.com> wrote:
+>> >> Mahendra Dani <danimahendra0904@gmail.com> writes:
+>> >> >> >       remove_object() {
+>> >> >> >               file=$(sha1_file "$*") &&
+>> >> >> > -             test -e "$file" &&
+>> >> >> > +             test_path_exists "$file" &&
+>> >> >> >               rm -f "$file"
+>> >> >> >       } &&
+> ...
+> Yes, I understood the implication of your suggestion, but as mentioned
+> above, it's not clear (at least to me) why `test -e "$file"` is there
+> at all since this test is not about checking functionality of `git
+> commit`.
+
+Yup, I do not see much point in "test -e" there in the original, and
+it does not change even if it were "test -f".
+
+I would understand if the author wanted to have a "slightly more
+intelligent 'rm -f' that knows where a loose object is located, and
+removes the named object no matter what", but if the objective were
+to ensure the object is missing, I wouldn't have written it to
+return non-zero when the object were missing in the first place.
+
+And if the purpose of the function is to catch unexpected cases,
+such as "the loose object file should be there but isn't" and "we
+located the file but we failed to remove it", then it shouldn't have
+the 'test -e' guard and 'rm' shouldn't have been used with '-f'.
+
+So, I agree with you that the original is already iffy.
+
+Thanks.
+
+
