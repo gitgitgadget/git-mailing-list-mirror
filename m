@@ -1,130 +1,141 @@
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEA8209F5D
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 21:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C2A13AC1
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 22:06:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741125192; cv=none; b=iOM4QI8wRaYTyCJuNNXrNgg2Rad8bX8UdiqkEW6KlsjrkEhKvSQOOgTen9/fdTmfoDfgud7N9DXe3BTaeQuQmoo5C6USoo9k1MNDOr1z9dgpmLvdBEo1nIykUgs6WWjoqMFBrdkSa9xAzHJVzvupfvWvqdqYfN4EFTIw+ROjFLA=
+	t=1741126008; cv=none; b=pSAk3bpCpiGx+wTEqHZJB8ppeoZC35qcZvJft19ejhAba9ZNN2pYzIB/fekknd9/ZxgndMri3sZam76PSkg5AuMcJZVdqCogKBDPtdRuZXoqiclYqKnYeVhfh/O+47lQcTTD/JqSWrialtvF7MGQZbEND05nloCJ6q+vloNq1kQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741125192; c=relaxed/simple;
-	bh=N2sWwZrUKYY8yvCoTXz45z3x28iALOJTqB2VfF1VXPY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hXt4lM2PDC6/5+H4WiRubJz1TW/fvtCbp/n2GSHaI9z7cU7YHIh2Be4tbJraEwWgtj7oY3sKJzji2JoAtufKKf5evWX+BUiGRBw3XQiGh13L6kd3wWHCVAs6ZArWV4uqlci43iwAdPuzocjC2VafIynz4p3+H/aQD2l780cY6j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KGjxaUEI; arc=none smtp.client-ip=209.85.166.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741126008; c=relaxed/simple;
+	bh=JsJ7y3ex9KExc4k8Wz7awKY4wxQmefAwczx1vTW4iQI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hRejs6xrn1aKEV8XqLNeaENcDXx74MbyVcRtGiUSBevVhskliAN37FEg4lEFqiyp+ufN0hYf2esJJ5xDYEmL+aFyQ7lVGQ20E/CqplKfE2iJxOFLzvLp4UNpAuTwwU1I1jiZtHN2TkXzJxQ/g8CmFH9/0f/kiSi92NM6D5ozu7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F32P6n6S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WdVnU1Jg; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KGjxaUEI"
-Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-85afcb0c18fso22255439f.1
-        for <git@vger.kernel.org>; Tue, 04 Mar 2025 13:53:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741125189; x=1741729989; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Hvuu3oaJmD9cpcVTa7hvHZZNKXhhimolZMNiNOUbwm8=;
-        b=KGjxaUEIgvPXpxeza7PY31mxPT4GgeVtmcXNBxvpk7pyXxJD55zF4t27AVnOBHy6FY
-         9DZAmFe5WK8/16n4TUDrQcW/Qxo3HwVjFC3E+/nZzpsRwwyfUZ7r6JIBrbIebIU8XDWa
-         f2rWcXqn5TcaTCt1YaOBKGJNek5bdJ3OmTkToEKiWv/Miv/KEb2uAeNCK4CVZjGMNrmJ
-         rwdAlFH7Pj+BWiaoDxiGbzqxIm4TlNw7xBe1XOtQ1+Bc0miXxQaCYvZPNFh4ySiMxxfu
-         r4s452QvRMprZfaaE9Iug0ApBcJcQT4FrMdpjiX+04ZGpWYJFc5clb6RFxqju7IJOMdD
-         /9qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741125189; x=1741729989;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Hvuu3oaJmD9cpcVTa7hvHZZNKXhhimolZMNiNOUbwm8=;
-        b=r+6xbGbLM/uFEjCptdgFO6omi5DIuJOgahDtxrQes9cfnXvtkiHG+GZpNQqkXGi0IQ
-         0HBXkc8NdnH92RSqiBylEUFURAMrb6rZy6smL9cGfN1yzxAwbdhtQVjpFhbigNf+Klmx
-         g8bBOHVWPo8kX+CVqMGAnk4NC5HdPsRsbo6phIq/F3KaCeDtRLC0I5g8neiN2Mu4L4pV
-         x5s1A4iq2/ozZ0Yl54QCJLUuLz7XVWcgiwiMrUEEQYooVX4+spz3qDiCjKmF/icZlHhr
-         F3ha2HBEz47tMLA0nsy9hSxftigjDgAq9kIOrGxYhq2d1OxTLhuHIj6HRlcCd+MFxaOW
-         9sDg==
-X-Forwarded-Encrypted: i=1; AJvYcCWtVPOCyKME/BuCXjzJvGmmeOzm4nurx8uZ464V9O1ghIhqFK/79J89m0cbmuHkQQarJYc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyKMbQzuLAymkFFt8PxkO/xar0FToG6kAPdiWo7eyosbJBCWXU
-	fxn4FFQy0HyCO1AybdhaEFAqfx4IR4XLP5vFytJ9wueopD4brp6hp6vfuuSfF3Nz2SaAnooKYnY
-	UPnxrAUGZ4k5OrscnDQP+8OnDSTw=
-X-Gm-Gg: ASbGncvf5KwqUmEjQIn5j+F7U9yvmcpZjyM7CEit6IsQEzAhYMCKMPbn+dT93iTAsCf
-	2qpA0CBvhtMLwXtHk1tmXCAcGoq+oDgOv+Y6oWtquVp3AR9Ao1XdoPp2YMheoybrfWbngqVpQoA
-	acF99zKGJla0yhL5ozfJsJBRdvfbj8o05sNMVxcSfi5f5+GcYVuhZFpHtL
-X-Google-Smtp-Source: AGHT+IH7sYhtoYgYR8zYLpzklmZ9yWAOXEFy4zHE5usHnnoxIJe9MUqSUlGM902HFMXonWujVvi7jys4TDP7ZZzmRhQ=
-X-Received: by 2002:a05:6e02:12e5:b0:3d0:4700:db0f with SMTP id
- e9e14a558f8ab-3d42b8cf100mr10596875ab.12.1741125189452; Tue, 04 Mar 2025
- 13:53:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F32P6n6S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WdVnU1Jg"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7401013826E4;
+	Tue,  4 Mar 2025 17:06:45 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 04 Mar 2025 17:06:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741126005; x=1741212405; bh=UrzJrpoLa1
+	45NK9N4j7M/NyiGiyIvYyZWv5GKJHkvj0=; b=F32P6n6SFE+nFXq0pnGezUeX/3
+	eCIPnWCZWfFB7+PMetd4shx2gvet8RczfnzU6JtDc2+N/00waXlsE+ZAyvkjPFYN
+	BIaPk1QgfHm2eG93RwLVW1oojtVQWQ0qsnBddQhhF7YlxTOUXgrK0YIhVMiI4w02
+	RlOT9cNDeSP+fFg3GlGybT6YML3t3IT7ytfCEl8aTqgOmtQQaPlkHh3JfDYPDFhl
+	ghaAqyEpAj8gbPnvtjujQBeuzMFNPh0l3cDw7b2UMXKF9tlSDQ5x8lwCNV3P7ZDh
+	r4euyPkXTdC/49GwIkNqoiVRJXZ13wzxVhw3Linbx1aLvMI+fM7yZTA7HQEw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741126005; x=1741212405; bh=UrzJrpoLa145NK9N4j7M/NyiGiyIvYyZWv5
+	GKJHkvj0=; b=WdVnU1Jgsw8gseW/sxtXyjPV61KKTeAt5wuq9xhdafcTth7LBPP
+	cT+ondf52VcczGmky0TVfW5PoLDrAo5oM8fW+ffnUujNQtByw/Qn/YX3sO/xvPiA
+	vWi0cGr7+E4lfHMa4wzD3S6p07TeIYHcied2RqTBJFBL6bQwuc4lZwSBD7YHSD96
+	oXEfYNDqwZSsYUD7YLZN1JoChu+vyQkrFs/bzXnE1MIutTWfFxysOZepM+erS+n9
+	SabFSdEcQcUOKm0wW6dcZqj3UuAHzRV28i/xIEvELvuriYyrLk8p3eicypU3NGn/
+	bAW/mKPAcUkHKgf5f+Qh3recDdOd4tB/4VQ==
+X-ME-Sender: <xms:dXnHZ38kLC1TW21mputnHSKv3YYjKKm6O5fDXRh-QYJMxmdwMSNLLQ>
+    <xme:dXnHZzvAn_NXKuMc_zLFG9AXwDKelISckHYBgwZHlSivnCZhu06T6jV41IYs4fXNL
+    xj5dkzwwPOW9_BdYw>
+X-ME-Received: <xmr:dXnHZ1AzfpmS3_2Lf_jasmiYBF7uTjtcI-alBimKizIh-qx2UfM0wr-oc6iGIjLkYpeiSA3OsvlJDY4_wzpEGkKnFoSrpkrSdO8w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdefudefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:dXnHZzclea9TACzqUKhX2EzbZybMNMeNaW1TvoiUhPKK7koiUS1_tw>
+    <xmx:dXnHZ8MG_MpEAU1d1lAc0Xt42PJqeH-MhrNgRLSDoHJveLygs4YOaw>
+    <xmx:dXnHZ1mvDLLAxsHbqru6uKlFKbI9VxZKUpMquThfEJrrStPXb8RSuw>
+    <xmx:dXnHZ2swmnshjOQuH7YIcE5V-8h4Ke8eBab_rJEdr5oCInOUwM0pAA>
+    <xmx:dXnHZ5pBW3wTG-InjHOAD0AFxNypACLDmit-SLtERy0OQehymN71G6n6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Mar 2025 17:06:44 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org
+Subject: Re: [GSoC][RFC PATCH 0/6] Add --subject-extra-prefix flag to
+ format-patch
+In-Reply-To: <Z8aspywaD0mAyHwd@pks.im> (Patrick Steinhardt's message of "Tue,
+	4 Mar 2025 08:32:55 +0100")
+References: <20250303220029.10716-1-lucasseikioshiro@gmail.com>
+	<xmqq7c55vhj8.fsf@gitster.g> <Z8aspywaD0mAyHwd@pks.im>
+Date: Tue, 04 Mar 2025 14:06:43 -0800
+Message-ID: <xmqq5xkoo3gs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1740680964.git.me@ttaylorr.com> <8564f98259727225391edcb5ab3b47dd53f00e48.1740680964.git.me@ttaylorr.com>
- <Z8FrIfAj_oVwxz3X@pks.im>
-In-Reply-To: <Z8FrIfAj_oVwxz3X@pks.im>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 4 Mar 2025 13:52:58 -0800
-X-Gm-Features: AQ5f1JqyEEgLdIPVVRRc26p-YNJijx7jZo0AoIkqHGwazkrK5hUBPJ4l-XOCCn8
-Message-ID: <CABPp-BGnbQdeSC=XUwTWOnr8=PiGMnt1Q0OXkUAzD=ZiaZoUhw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] builtin/repack.c: simplify cruft pack aggregation
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Feb 27, 2025 at 11:52=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
-te:
->
-> On Thu, Feb 27, 2025 at 01:29:28PM -0500, Taylor Blau wrote:
-> > In 37dc6d8104 (builtin/repack.c: implement support for
-> > `--max-cruft-size`, 2023-10-02), 'git repack' built on support for
-> > multiple cruft packs in Git by instructing 'git pack-objects --cruft'
-> > how to aggregate smaller cruft packs up to the provided threshold.
-> >
-> > The implementation in 37dc6d8104 worked something like the following
-> > pseudo-code:
-> >
-> >     total_size =3D 0;
-> >
-> >     for (p in cruft packs) {
-> >       if (p->pack_size + total_size < max_size) {
-> >         total_size +=3D p->pack_size;
-> >         collapse(p)
-> >       } else {
-> >         retain(p);
-> >       }
-> >     }
-> >
-> > The original idea behind this approach was that smaller cruft packs
-> > would get combined together until the sum of their sizes was no larger
-> > than the given max pack size.
-> >
-> > There is a much simpler way to achieve this, however, which is to simpl=
-y
-> > combine *all* cruft packs which are smaller than the threshold,
-> > regardless of what their sum is. With '--max-pack-size', 'pack-objects'
-> > will split out the resulting pack into individual pack(s) if necessary
-> > to ensure that the written pack(s) are each no larger than the provided
-> > threshold.
->
-> Hm. So the result would be a new set of packfiles where each of them is
-> smaller than the threshold, right?
+Patrick Steinhardt <ps@pks.im> writes:
 
-Are you assuming there's only one threshold, or that --max-pack-size
-=3D=3D --max-cruft-size?
+> I do understand though that `--rfc=GSoC` is not exactly discoverable for
+> a newcomer. Maybe a simpler fix would be to introduce an alias for that
+> option that is more discoverable? I don't have a great idea for how to
+> name it -- the best that comes to mind is `--patch-prefix`, which
+> mirrors `--subject-prefix`.
 
-I read this assuming --max-pack-size >> --max-cruft-size, so the odds
-that the N packs smaller than --max-cruft-size add up to more than
---max-pack-size is small -- but even if it does happen, it just
-results in the cruft packs being split out into a couple packs.
+The problem with it is that having "patch" vs "subject" prefix will
+make it confusing which one is which.
 
-> Wouldn't that mean that the next time
-> we'll again do the same thing and try to combine the new set of cruft
-> packs into one, and basically never arrive at a state where we don't
-> touch the cruft packs anymore?
+Let's step back and examine what we already have.
 
-This would be a risk if we allow --max-cruft-size to approach or be
-equal to --max-pack-size.  (And if --max-pack-size is less than
---max-cruft-size, then we'll perversely split into even more cruft
-packs rather than combining as intended.)
+ * The "--subject-prefix" is configurable and format.subjectPrefix
+   is meant to go to .git/config for repositories that work with
+   projects with special needs (they tell you to use not [PATCH] but
+   subproject specific moniker like [PATCH rcu] instead).
+
+ * The "--rfc[=<word>]" has no configuration and it is deliberately
+   so, as it is meant to be used as needed, on occasions that call
+   for it, pretty much decided per invocation.
+
+Are these two points above not clear in our documentation?  If so,
+we should fix it, but I do not think giving a synonym to --rfc is a
+good way to clarify it.
+
+If it is a GSoC topic sent to this list, it _will_ be GSoC topic for
+the entire iterations of the same topic.  So it would be good to use
+--subject-prefix="GSoC PATCH" (or configure format.subjectPrefix in
+the repository to use that, if a student works with us only on GSoC
+topics during the Summer-of-Code program duration), and on occasion,
+when students are not so sure about their patches (yet), use of --rfc
+would be a good way, which would give us "[RFC GSoC PATCH 0/6]", to
+mark the patches as such.
+
+Another problem with --patch-prefix synonym is that --rfc is not
+necessarily a prefix.  With
+
+	git format-patch --rfc='-WIP' --subject-prefix='GSoC PATCH'
+
+you would get "[GSoC PATCH WIP 0/6]" instead.
+
+In any case, I think it is the root cause of this disease to treat
+GSoC mark as something extra that requires a new marker that is
+separate from the usual PATCH marker.  Using whatever mechanism you
+would use your string in place for the standard PATCH mark to make
+it say "GSoC PATCH" would be the most appropriate, without mucking
+with an extra option, be it '--rfc' or '--subject-extra-prefix', I
+would say.
+
+Thanks.
