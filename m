@@ -1,70 +1,70 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5AF251791
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 23:27:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E42D24DFE1
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 23:44:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741130839; cv=none; b=ePFW5EHREHvgQ4o8CWGJKnhk9yQ1BxBsPUq5WW1I0ov1Wx0r778dk6r0oLEmvbdd9+/uHgAmNLqDfWZQidFlSOvMbYiVUVTJ/mK6nZQSFNvoirOVBrZycLRxUGIKSUmcYGp9Guaoe0y+XqfVzQrEen2x/1VRv3CbETrL7yPj+6k=
+	t=1741131872; cv=none; b=EeZWMHg0Fd1XXBn7Wlq60bckgrfEkS4yno4sZyaGMOEuHTznx9Jg7qae5NUqdiJXjADqLK2zX5+sXngHXM0ZIIZpa/YYQQqiXGAyTY21uoxRskPw8ASndNtcViEY7BVEO8Nx99wDupUnVShDASxMi2jxPQ6wam8hCD7fCb+TDb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741130839; c=relaxed/simple;
-	bh=vpWNh0vTKbp7ezwgABMkq3dTexFnH9wzo9jd5JDQMPY=;
+	s=arc-20240116; t=1741131872; c=relaxed/simple;
+	bh=PEdLpM3BiQNTv0lpWkA+lMJ0kdIlSiAUrp304gQ1Ot0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B1pK5i+pxFsxCiSWOWdnotty/ZIEPxMpqMlGii4uzidIwj7wgzx0pdVxtbNRpszYq9L7AP2azmqCYWSj/r1pHYw62nSseWZk/GRNFeY32P8CgmDi7/8YXjvGUj0Deoy6ijW7Hx+83ejJ0WH14QQpo35csIG4GtzpwZJj+ElC0j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZJ6LLMxV; arc=none smtp.client-ip=209.85.167.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lc6EaiTUwxivONzD4QpUi4OhA4/RkQx/sktnGy4u4GkOZHcmdkF7lPDP9rYaSxP6QtMQsRjlQkM3Lvly8p/hkOpDRj3c4zTigBKiQPho/MTqXJvZPSKOI7OeXQ1Ulw9XLkUhU5DO2YTw/kV29Hn+/fvWDVuGQsRDQY7aoTm8hrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XBC+1VTx; arc=none smtp.client-ip=209.85.161.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZJ6LLMxV"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3f66dfc205dso1568545b6e.3
-        for <git@vger.kernel.org>; Tue, 04 Mar 2025 15:27:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XBC+1VTx"
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-5fc6cd89f85so2535859eaf.1
+        for <git@vger.kernel.org>; Tue, 04 Mar 2025 15:44:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741130835; x=1741735635; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741131870; x=1741736670; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gAktBLQSMLy4Qk6gWu+1Vbg70PjAU+LS/b5n1k9BT0Q=;
-        b=ZJ6LLMxVgNJv4jgy0D40qV8+aiCh2Kn4yhE+kfRO/NVeifV5q8JmKfUPbdm4RmcAoF
-         QLzo9FKTS2dnNeOX7YwQpZgNqjfzwi5xVWcGA/I5dqyW6DueoF5SIFJldTu+EtoEhhb5
-         8TapOQpLZw5dMJzyHF2SGM1c0BY+bLPxahXdbTyQ0hW+KuUTKs9lPRpqEoKJgt76Mh51
-         UfjgpsD4XVyQYMqFFXnkRLv5zxNkE/K2QxwfhXi3I686wVwmUnS7+e6y3lAhXtBa31Zn
-         lR1vPssi4GFb4K5ik8t+5In1ZnELk+POSGQeS/75e9SSoprr1jFfyqniBM6niCWrpiJZ
-         1+Nw==
+        bh=TLOvITaYLZUYpmkO+3VHMXcBSjXsxI+aPeTYM2L8uzU=;
+        b=XBC+1VTxs0iI9T83Sp4BKU4yafcZx/QpiXTf6LiuNGKJPE5S+5V/yK1/uEteGJrAZU
+         kjq8995jMafRs83KM/w6frhQjFLqOZZc0nZbZA1unad3jf9CpGP5udaZP9PJwOnZn0sn
+         RPrmn4O81VejBPNvhOEnhVd+B+wLbOx85OK41v5WrKUZRpwlyQWrGDrw4Ahbcl+FNY8F
+         KUKveA4LokXrFeHoAJGsAC4n6HeFYyDjjrFPSVLmFK/tbiEQJkobtjBjUw+4oMR1R+DA
+         pVs9ICdK2O7FRgeSY+Uh+DqpnLJxIKHjvCvnoNCT7PVFBKQ47w3e8uqZ5XYyR0F1ENFA
+         OqMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741130835; x=1741735635;
+        d=1e100.net; s=20230601; t=1741131870; x=1741736670;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gAktBLQSMLy4Qk6gWu+1Vbg70PjAU+LS/b5n1k9BT0Q=;
-        b=bWQSeOHM9xWQ/0F2J2uwtZpSVozYnFRuW6XvJujtHVhYonNGxUia7C1hnbg0ADRFJ0
-         dcdm71O4zhBfG+TaW4itUStzVwSMWjImHleQgj2u8nmZjjWUDUDGDQ6wNP10c6d3/csq
-         pDMlcvhP/zVF0fezlbUPVg4bEzEa0XMS6AklExM4/Uacg/r5G+K6eUrIxggX1HUFS6eg
-         SOq9917yajZq2mxOoyRS2vvXWdVc9lGUvnTkpUNSGNj2zmbpbdXCDoqDE4t+ax80l5hY
-         DhJV3sAc1EKajgtid+0uraLgKQWleab0v0rUyh8cS6Mjlb6Gcc4Iht07UoOqBFKsw+o8
-         CqDw==
-X-Gm-Message-State: AOJu0YxrtCFk3b+FsLt0jrdpsxsoaw/wDvEgIP7nweNE9VZiiI3jecDK
-	iQclhKdBG4ttF4T+6v0nmPypTm+RMkW0zY8xgQYXjrgfK7QqsIcW
-X-Gm-Gg: ASbGncvxpxG7pCJfG3HLmSOoFnRyLYuMAU0Z0JLwRFMt92wspa81NbGlS3OPqXsb63h
-	eqClCSvwH+oi3FNaGjDMeeNiPoLLZr/ROjd/G9GyVA+Pso8ukfoxa3b3blhz7OwPf/QkWyUe878
-	cbtuRHG3G1V1ba1OqgydzEcBhwlhquSXDNImgP5wVmhEkwM1pisbFRRY5/l4YJKvcTI3Y1uUTmK
-	mSuXtvHgLJEKHiGeKTuIQ4lgRQexJlHfIW7vRLx1+vf21LAkS+u1ezY8pknY6m8guYrkwnh1w49
-	c/PxPZ3ZjSPYqPRXuF6A1zMllL+HHDDUyaE0wQ==
-X-Google-Smtp-Source: AGHT+IGLHmRBUIoJ4QXqvhqUTIcRQMQsxnUjnO/XCpSukAOHXVeo3y/necQafEP4pvPWfDxd5Mae+Q==
-X-Received: by 2002:a05:6808:1a18:b0:3f4:1838:be72 with SMTP id 5614622812f47-3f6831f46e1mr502191b6e.28.1741130835244;
-        Tue, 04 Mar 2025 15:27:15 -0800 (PST)
+        bh=TLOvITaYLZUYpmkO+3VHMXcBSjXsxI+aPeTYM2L8uzU=;
+        b=q/66lKPG5+dYZ6PBE3JFe3MnleLMChO762sSCX5oQWQRn7KS1cOT901MUcliG21Q/n
+         h2A63vJHzA4EYN8iXC5hM6tPJPHu7N0zLCo8TWChZ7CLAo0NmIr8A3VWGJtgN7f8uHGR
+         4rupTReeqX1KKpYETnAWENxAgndJxbnKSFzctw4+8yOg17Nsr5ys0G7GwUPIkhHvGtX7
+         B6hPZZcdbjV4982LNERIZhkvnVWAFEeN8srktGaFs20hAg+mju3GrhkXIajcoqbG/8wK
+         t7DJeJhmWP6GeD2JzUBCMfkjjdf4Syh/aBorkxdgLuyHlSuHo0zL1e/Z1MaNdfqXcYZH
+         0UJw==
+X-Gm-Message-State: AOJu0YwzVafIhMjY9316ieS7ZGriBoPKGBSrKGJ8GVpouZ6fN2tZGGJr
+	9effd2h5o7XmF8VTpsf/ybii0oRU3C0nyx2zOMEakmXb2Hsn9TU7
+X-Gm-Gg: ASbGncsKGDk7Zhs3tsRF6zwoH8WL0lGA1QvhZp6vsdiu8afhHg0fAZtoUtxsV/D3JFO
+	x77Yd0QXzlxTJLIPN8t68rWblYDD/OWXGydgmT9PztyfkXrVV+dkyQJiONHD7jDjXYlct5rR01m
+	6mCo9u3e55qsxTwXjfPbTvvx03QxJN68VKelLFa4eb36cORIHkBa8Qr5mfv+5a2mIKwqsCAYAFw
+	AzjzfHBJ+KB7g0/ONZQMW3f6iYWf/YxLb/aHvYJnrqU6tEwZ/ivcIigT9cgsdmamx82wnnq4irF
+	qJkp+rHsm07CRgJ2DVbajCbXl1XnLNQru9wWSg==
+X-Google-Smtp-Source: AGHT+IFY0xQ2U1yWdtHFusnJgToNhpGVKDoulFJE9lbB1ixdOiHZEFR8xBsy7kdHnsDKrhtOGfUxRw==
+X-Received: by 2002:a05:6820:180b:b0:5fe:9a72:3dea with SMTP id 006d021491bc7-600334786e6mr629315eaf.1.1741131870078;
+        Tue, 04 Mar 2025 15:44:30 -0800 (PST)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-3f67b0bfa85sm451982b6e.13.2025.03.04.15.27.14
+        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-5feb60033a6sm1848595eaf.28.2025.03.04.15.44.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Mar 2025 15:27:14 -0800 (PST)
-Date: Tue, 4 Mar 2025 17:23:53 -0600
+        Tue, 04 Mar 2025 15:44:29 -0800 (PST)
+Date: Tue, 4 Mar 2025 17:41:08 -0600
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Markus Gerstel <2025@uxp.de>, 
 	Junio C Hamano <gitster@pobox.com>, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 2/6] builtin/reflog: stop storing default reflog expiry
- dates globally
-Message-ID: <ammsrvhyzo6f7hfcizlh42e3e5cznfb2j37tcicliqqpqaaqgs@4mniagc5ejzz>
+Subject: Re: [PATCH 3/6] builtin/reflog: stop storing per-reflog expiry dates
+ globally
+Message-ID: <usf4pzrp322xvfrvsasgy22rnw7d2a6krzuctwpp23ppdgh6ji@ram73wv5dn54>
 References: <20250226-pks-maintenance-reflog-expire-v1-0-a1204a814952@pks.im>
- <20250226-pks-maintenance-reflog-expire-v1-2-a1204a814952@pks.im>
+ <20250226-pks-maintenance-reflog-expire-v1-3-a1204a814952@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,149 +73,129 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250226-pks-maintenance-reflog-expire-v1-2-a1204a814952@pks.im>
+In-Reply-To: <20250226-pks-maintenance-reflog-expire-v1-3-a1204a814952@pks.im>
 
 On 25/02/26 04:24PM, Patrick Steinhardt wrote:
-> When expiring reflog entries, it is possible to configure expiry dates
-> that depend on the name of the reflog. This requires us to store a
-> couple of different expiry dates:
-> 
->   - The default expiry date for reflog entries that aren't otherwise
->     specified.
-> 
->   - The per-reflog expiry date.
-> 
->   - The currently active set of expiry dates for a given reference.
-> 
-> While the last item is stored in `struct reflog_expiry_options`, the
+> As described in the preceding commit, the per-reflog expiry dates are
+> stored in a global pair of variables. Refactor the code so that they are
+> contained in `sturct reflog_expire_options` to make the structure useful
 
-s/reflog_expiry_options/reflog_expire_options/
+s/sturct/struct/
 
-> other items aren't, which makes it hard to reuse the structure in other
-> places.
-> 
-> Refactor the code so that the default expiry date is stored as part of
-> the structure. The per-reflog expiry dates will be adapted accordingly
-> in the subsequent commit.
+> in other contexts.
 > 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  builtin/reflog.c | 22 +++++++---------------
->  reflog.h         |  6 ++++++
->  2 files changed, 13 insertions(+), 15 deletions(-)
+>  builtin/reflog.c | 30 ++++++++++++------------------
+>  reflog.h         |  8 ++++++++
+>  2 files changed, 20 insertions(+), 18 deletions(-)
 > 
 > diff --git a/builtin/reflog.c b/builtin/reflog.c
-> index dee49881d32..0910a4e25dc 100644
+> index 0910a4e25dc..a231cf4b857 100644
 > --- a/builtin/reflog.c
 > +++ b/builtin/reflog.c
-> @@ -63,9 +63,6 @@ static const char *const reflog_usage[] = {
->  	NULL
->  };
->  
-> -static timestamp_t default_reflog_expire;
-> -static timestamp_t default_reflog_expire_unreachable;
-> -
->  struct worktree_reflogs {
->  	struct worktree *worktree;
->  	struct string_list reflogs;
-> @@ -122,6 +119,7 @@ static struct reflog_expire_cfg *find_cfg_ent(const char *pattern, size_t len)
->  static int reflog_expire_config(const char *var, const char *value,
->  				const struct config_context *ctx, void *cb)
->  {
-> +	struct reflog_expire_options *opts = cb;
->  	const char *pattern, *key;
->  	size_t pattern_len;
->  	timestamp_t expire;
-> @@ -145,10 +143,10 @@ static int reflog_expire_config(const char *var, const char *value,
->  	if (!pattern) {
->  		switch (slot) {
->  		case EXPIRE_TOTAL:
-> -			default_reflog_expire = expire;
-> +			opts->default_expire_total = expire;
->  			break;
->  		case EXPIRE_UNREACH:
-> -			default_reflog_expire_unreachable = expire;
-> +			opts->default_expire_unreachable = expire;
-
-Ok, instead of setting the default fallback expiry values globably, it
-is set in the options type.
-
->  			break;
->  		}
->  		return 0;
-> @@ -198,9 +196,9 @@ static void set_reflog_expiry_param(struct reflog_expire_options *cb, const char
->  
->  	/* Nothing matched -- use the default value */
->  	if (!(cb->explicit_expiry & EXPIRE_TOTAL))
-> -		cb->expire_total = default_reflog_expire;
-> +		cb->expire_total = cb->default_expire_total;
->  	if (!(cb->explicit_expiry & EXPIRE_UNREACH))
-> -		cb->expire_unreachable = default_reflog_expire_unreachable;
-> +		cb->expire_unreachable = cb->default_expire_unreachable;
-
-Here we update where the defaults are used.
-
+> @@ -88,27 +88,21 @@ static int collect_reflog(const char *ref, void *cb_data)
+>  	return 0;
 >  }
 >  
->  static int expire_unreachable_callback(const struct option *opt,
-> @@ -276,8 +274,8 @@ static int cmd_reflog_list(int argc, const char **argv, const char *prefix,
->  static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
->  			     struct repository *repo UNUSED)
->  {
-> -	struct reflog_expire_options opts = { 0 };
->  	timestamp_t now = time(NULL);
-> +	struct reflog_expire_options opts = REFLOG_EXPIRE_OPTIONS_INIT(now);
-
-The options type is initialized with the default defaults :)
-
->  	int i, status, do_all, single_worktree = 0;
->  	unsigned int flags = 0;
->  	int verbose = 0;
-> @@ -308,17 +306,11 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
->  		OPT_END()
->  	};
->  
-> -	default_reflog_expire_unreachable = now - 30 * 24 * 3600;
-> -	default_reflog_expire = now - 90 * 24 * 3600;
-> -	git_config(reflog_expire_config, NULL);
-> +	git_config(reflog_expire_config, &opts);
->  
->  	save_commit_buffer = 0;
->  	do_all = status = 0;
->  
-> -	opts.explicit_expiry = 0;
-> -	opts.expire_total = default_reflog_expire;
-> -	opts.expire_unreachable = default_reflog_expire_unreachable;
+> -static struct reflog_expire_cfg {
+> -	struct reflog_expire_cfg *next;
+> -	timestamp_t expire_total;
+> -	timestamp_t expire_unreachable;
+> -	char pattern[FLEX_ARRAY];
+> -} *reflog_expire_cfg, **reflog_expire_cfg_tail;
 > -
->  	argc = parse_options(argc, argv, prefix, options, reflog_expire_usage, 0);
+> -static struct reflog_expire_cfg *find_cfg_ent(const char *pattern, size_t len)
+> +static struct reflog_expire_entry_option *find_cfg_ent(struct reflog_expire_options *opts,
+> +						       const char *pattern, size_t len)
+>  {
+> -	struct reflog_expire_cfg *ent;
+> +	struct reflog_expire_entry_option *ent;
 >  
->  	if (verbose)
+> -	if (!reflog_expire_cfg_tail)
+> -		reflog_expire_cfg_tail = &reflog_expire_cfg;
+> +	if (!opts->entries_tail)
+> +		opts->entries_tail = &opts->entries;
+>  
+> -	for (ent = reflog_expire_cfg; ent; ent = ent->next)
+> +	for (ent = opts->entries; ent; ent = ent->next)
+>  		if (!xstrncmpz(ent->pattern, pattern, len))
+>  			return ent;
+>  
+>  	FLEX_ALLOC_MEM(ent, pattern, pattern, len);
+> -	*reflog_expire_cfg_tail = ent;
+> -	reflog_expire_cfg_tail = &(ent->next);
+> +	*opts->entries_tail = ent;
+> +	opts->entries_tail = &(ent->next);
+>  	return ent;
+>  }
+>  
+> @@ -124,7 +118,7 @@ static int reflog_expire_config(const char *var, const char *value,
+>  	size_t pattern_len;
+>  	timestamp_t expire;
+>  	int slot;
+> -	struct reflog_expire_cfg *ent;
+> +	struct reflog_expire_entry_option *ent;
+>  
+>  	if (parse_config_key(var, "gc", &pattern, &pattern_len, &key) < 0)
+>  		return git_default_config(var, value, ctx, cb);
+> @@ -152,7 +146,7 @@ static int reflog_expire_config(const char *var, const char *value,
+>  		return 0;
+>  	}
+>  
+> -	ent = find_cfg_ent(pattern, pattern_len);
+> +	ent = find_cfg_ent(opts, pattern, pattern_len);
+>  	if (!ent)
+>  		return -1;
+>  	switch (slot) {
+> @@ -168,12 +162,12 @@ static int reflog_expire_config(const char *var, const char *value,
+>  
+>  static void set_reflog_expiry_param(struct reflog_expire_options *cb, const char *ref)
+>  {
+> -	struct reflog_expire_cfg *ent;
+> +	struct reflog_expire_entry_option *ent;
+>  
+>  	if (cb->explicit_expiry == (EXPIRE_TOTAL|EXPIRE_UNREACH))
+>  		return; /* both given explicitly -- nothing to tweak */
+>  
+> -	for (ent = reflog_expire_cfg; ent; ent = ent->next) {
+> +	for (ent = cb->entries; ent; ent = ent->next) {
+>  		if (!wildmatch(ent->pattern, ref, 0)) {
+>  			if (!(cb->explicit_expiry & EXPIRE_TOTAL))
+>  				cb->expire_total = ent->expire_total;
 > diff --git a/reflog.h b/reflog.h
-> index eb948119e53..a9d464bbf8c 100644
+> index a9d464bbf8c..b08780a30a7 100644
 > --- a/reflog.h
 > +++ b/reflog.h
-> @@ -5,10 +5,16 @@
+> @@ -2,7 +2,15 @@
+>  #define REFLOG_H
+>  #include "refs.h"
+>  
+> +struct reflog_expire_entry_option {
+> +	struct reflog_expire_entry_option *next;
+> +	timestamp_t expire_total;
+> +	timestamp_t expire_unreachable;
+> +	char pattern[FLEX_ARRAY];
+> +};
+> +
 >  struct reflog_expire_options {
+> +	struct reflog_expire_entry_option *entries, **entries_tail;
+
+Now we can also store the configured per-reflog-pattern expiry entries
+in the options type instead of relying on global state.
+
 >  	int stalefix;
 >  	int explicit_expiry;
-> +	timestamp_t default_expire_total;
->  	timestamp_t expire_total;
-> +	timestamp_t default_expire_unreachable;
->  	timestamp_t expire_unreachable;
->  	int recno;
->  };
-> +#define REFLOG_EXPIRE_OPTIONS_INIT(now) { \
-> +	.default_expire_total = now - 30 * 24 * 3600, \
-> +	.default_expire_unreachable = now - 90 * 24 * 3600, \
-> +}
+>  	timestamp_t default_expire_total;
 
-Looking good
+Now that all the reflog expiry configuration is contained within
+reflog_expire_options, I wonder if it really makes sense to also keep
+the expire_total and expire_unreachable fields.
 
->  
->  struct expire_reflog_policy_cb {
->  	enum {
-> 
-> -- 
-> 2.48.1.741.g8a9f3a5cdc.dirty
-> 
-> 
+From my understanding these fields are not really for configuration, but
+hold the reflog expiry configuration for the current active reference
+while iterating. This gets set by set_reflog_expiry_param() prior to
+calling refs_reflog_expire(). It seems like this could be figured out
+during refs_reflog_expire() now.
+
+-Justin
