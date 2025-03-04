@@ -1,186 +1,118 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3694D3A8C1
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 10:06:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5936320011B
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 10:23:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741082808; cv=none; b=FPUuFHX9R2ZAMVFttmkMXulcR0Xqm4H+wARKPT6PQnmfoay0RgPwTxKgUdZZHS2Nb20QuwBGXwuWH9cQFvRSP+n7lCc4AFmn+EGJzjEXA2OGbckUHMXrloA1JY1HhYOagf8LgAcJMaV2FG+fO2ARD5U5JxZ9DktQFHvdSG0DSGc=
+	t=1741083814; cv=none; b=nqWALylR/LIN0H8DzFQorqviVwgV8kMjlnDDjzPbT45ptfZnEpmT5fDi31gSqOo0RbIPSFfWvJUmgA8gMgEGioNnlKG5aPqN2YtnU/sFoX3Y3iXct+xsUIB4xP7VZHhv3JrLudhhrZcSPs+gtEdW0ANNlGccZ+n/pXNLVziSz/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741082808; c=relaxed/simple;
-	bh=SLU5re4QhoSzd26Q2IakSj9LKh1hER1OeN1NxKY37FY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o8nBUB2HtAdVsAUR0O5xo27ISGGEWYPAIwrde5nDCgit23INg+bnlYosdZS46gzgsF/tdNiGjckEJcwl66t/lZ052NBnp4xfa7IRNg/65rAIUejoghA7HTSQCHqF2Hoov7vMyb+YNvo/TS5j1XOwm0U4F++ZgNFkM7lWA6mlXKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FakSJGX6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0WN3JA+5; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1741083814; c=relaxed/simple;
+	bh=4WFB9JVweHDa1wg2grrbhasPcZn6Qddq+3vFEc33e9M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VNAOu5lyJ34HJuU4m8chgQxcw65ZIPFHqpPgyDH9bMx5Kf1cyUSj27WZ05+10frHCJru2otWFwPcbgaulINDDspFyCbFHd8beuvlgcHetyFnn6xK4ij2HrKhNkJnupUVp5gIn1MAxwqL3wcP+mguUBUzD8jOWXlo95nI3de9X1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HNcfw+f9; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FakSJGX6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0WN3JA+5"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 165831140122;
-	Tue,  4 Mar 2025 05:06:45 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 04 Mar 2025 05:06:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1741082805; x=1741169205; bh=jWHCUNcG/s
-	lOjv0vG9+ClYzK4McBysavxzYppNOisU4=; b=FakSJGX6fg6F8YbSc8/Lvsr8yr
-	60kPzjOZ/UZih0TPhvdvGHn7eK9cnKT4Fzr7I8h/Wup49YiZbyNt53e9XxVR75Kp
-	j7kyJKrz4cvRMSZ0j6k8ECSRjvEzPptIQf7qStZolK9EeYU4QAc64vRwca/v54LN
-	bJWfVFLeGQl+dOU8FybCvPgmRAJeFa0qNRwpioTiaJAwCI6gh1JslBbLiUerHsOH
-	83IxU/1ge+4Ipa8HNlcX1ejhHBW5zTfGy4m/GEtm0bTa+3Jkx70xoVUpeGg/S6nc
-	yLsTR1gUJT3Pim5E2dQjh0CgLn6zmNq8XpRev3N7H7Yr/5kJqBvdGrD5Q9ww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741082805; x=1741169205; bh=jWHCUNcG/slOjv0vG9+ClYzK4McBysavxzY
-	ppNOisU4=; b=0WN3JA+5dSeEFjXmy6vupsoNVzS8JmpHBsFZq1GXhGqsogqRj7O
-	aODtOeA9BNuhM+sTaTnR9pdTIrx3EGQeQbjD6o8AKYMT1glRd10h4C7536Hg6bgE
-	1qhbK0j7RYPfYDladjoNG30gxGX4Byhj0cUZkNSWicPQLz/jYrHNIyrc8tjNrFzF
-	pEFaNfyp9flhngLXvIQenRgKjRWWbNuiaeWAwCZdc9bz/eukSWjxRmaHNVZl0djW
-	h0peoPGuSE1C6O2Le4YVuDbzR6aJbisbSNNg361EXzbt9TvRpVdxaFMUwXU+59NS
-	omZGxAenR2xdw82AH4fi20DqlMx31/Qht7g==
-X-ME-Sender: <xms:tNDGZx63F2DJGWWaLGd5DMrI4ntvAn9njLhmnJp2mCbvtxg8J7Tmeg>
-    <xme:tNDGZ-4HPFST9CwuF8ZsKoi6sR5XnzfA7fA07C4G-h7VmOm2U0acrglED_Iyi54B3
-    pG3R7g_DQyenQqKmA>
-X-ME-Received: <xmr:tNDGZ4eMd3fMWJjN1FQCwaSAVoAYMLL-bG0NLZvim3IptvvKVmZtnRMdDsdNBTWNo96OLIDJRala6oyPk9WvGk4_IleXbZC5P_HUwz4OrvkvJiQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddujeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdu
-    gfehtefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
-    ihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
-    hnsehgmhigrdguvg
-X-ME-Proxy: <xmx:tNDGZ6KLfymIxvLleqP7q1oZkKLXKIz-5ZqVGpCVM0vkBQ0KQ8CHVA>
-    <xmx:tNDGZ1LEXbQRLVmzCozCS7XofKDdlSHKpdKYGsNqkY0WsOmd_4455A>
-    <xmx:tNDGZzzfzKKn7uFr4Rx3CYfjmAsFt_1Wd1bjWodfKKpofDeHx9QjvQ>
-    <xmx:tNDGZxKGuKcgM_NHyFYkrf-aqSCE7ixqb9QPlQHMQwBQErueDeLzXw>
-    <xmx:tdDGZ11wY6i1W50z7tNnHsDPAEzGrNtCm30g5Rdw6rvwLwLWEU8Qg1IJ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Mar 2025 05:06:44 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4bbbc37c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Mar 2025 10:06:42 +0000 (UTC)
-Date: Tue, 4 Mar 2025 11:06:41 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: ps/reftable-sans-compat-util, was Re: What's cooking in git.git
- (Feb 2025, #09; Fri, 28)
-Message-ID: <Z8bQsflIqzZd3AMs@pks.im>
-References: <xmqq7c591sus.fsf@gitster.g>
- <Z8aeLc-xelujEjTE@pks.im>
- <0c808b85-d97c-ecd3-0b1d-fba546a1124b@gmx.de>
- <9cc294f6-03de-d88f-9734-510a23fc8991@gmx.de>
- <Z8bL0HUuQqj7LlTp@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HNcfw+f9"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5dee07e51aaso10198707a12.3
+        for <git@vger.kernel.org>; Tue, 04 Mar 2025 02:23:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741083810; x=1741688610; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=nQPy1CZWQSQ3HScMHeSMRb8LMPkEnRjn3ombSYtjAgw=;
+        b=HNcfw+f9X486DKvg7Z6uYVnUfyZlvhtHxCYs92bfO02Zy34cleH43tJhcLV16tTnDp
+         uESX2NCXSPlRQag481xUWqlVv6PIXiizNIHnW3+t5FMZr6AZ9AGttOXtoMPDpCoTuPRc
+         Dfu+Psem+8iCcZ5sUr2I3jirS0NH2hPqJnQVxHWXy5oBV9hngf6Rga1PHz6zg+Kr2p1S
+         PqubaKLAzjUBuxyvg340cDcYSxd8izRv0dP9WYx1ggwMLV7WXJQO7/mLmksP09g8k2Zb
+         rS5f0G7bff49TgajSOPxJ7UCaTbXMmSDkVDAa8u2QqXrtOj8SaSfdK0OW6lanJDCVV1g
+         a79w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741083810; x=1741688610;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nQPy1CZWQSQ3HScMHeSMRb8LMPkEnRjn3ombSYtjAgw=;
+        b=kBHCAjVVex9vhdsVXd0CsAWpn2sX3AkrCxWy/k9zXAuM1QFdQWZBlVxZgGFVfIk5Sy
+         JUjoevHWBzPk0HYp5ldx0PMCRsyov2ink6FPoOoe1QK6/s7okqp1POH5gBP3kIUxryxv
+         0OLaxieVHI8nauYpaBbpiTjiOWgUQnXTQw3Rn1T4rQ0eQh9BATUg0pqu3sqAbKjgPXfc
+         fUREUwuWcTHNj26xQthf7ppCVamUfTHvtQympBFO0wAbO2DNIJdBbQnl7FnHkvAhkqrY
+         68wQvGMMaQYmnLln1P+TDe1bab3tzRCe8Y+r7sgxkI80tRv9PtpJtgeYDJUx17owv8qB
+         8pyQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUMJWPVbNviEI7jAFmeLHLmrhUx7iPlAM7/Qzpmhls/JcKwvoZmGM7CQakTmDPkS66Zu2E=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz+EiTEhV/IoYK5YZCfGoNHvKkEo8GYSkjJzQknOdpE+4dxjCLA
+	ACJ6Pwn8WdOONvrLHytCU2adk7nEAdRD6bzwNNpAic1dy4VyfNuI
+X-Gm-Gg: ASbGncsgNe/xKofD+UR+VQlgNjD5sxMhKLGJas0SIc4mq1MBQ3QZ1IzZbsWTDgzdtsS
+	7D5WAef0IbC6k11sn/+LMT0Z8SG98WCB+r+vK//axrlySO6672EkBRHUrd7uyaWdVQYFQ4TOK5e
+	1TkxcwtUxxXclZ2F7/MPReoUuG8I3J5yqQSRX5w53RPZTGA5PMNKvjUbq1ixalYxiCg8m8CQzap
+	SexZjaFkpQ0P0SKaUoMUU/fYAztfF0OFhUe7KW8kQgfHBrrdoArlPTaQdB4sdo9rwzImSjahLOm
+	MGwDC2jEqyAe4f37jxreA5Nsz9sZJX1oN41EE+TKiRPMlrczYnXVKswOhWeDjJy2W/bPV67Y5ME
+	q6oZxZzlmAIaOa/wKWDkFIfI=
+X-Google-Smtp-Source: AGHT+IHiI+0a9IDoC8FOGE9ZSFcrAUvwYF21LCV7REo5vL/Vc8OEzm2uiDx7QTro11E7n1rBH0O+pw==
+X-Received: by 2002:a17:907:7247:b0:abf:78df:343b with SMTP id a640c23a62f3a-abf78df3db0mr626624066b.21.1741083810391;
+        Tue, 04 Mar 2025 02:23:30 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abf58804b49sm538340566b.26.2025.03.04.02.23.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Mar 2025 02:23:30 -0800 (PST)
+Message-ID: <2583368f-c7ad-4088-b78d-f6d972c4ee47@gmail.com>
+Date: Tue, 4 Mar 2025 10:23:25 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z8bL0HUuQqj7LlTp@pks.im>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] docs: fix repository-layout when building with breaking
+ changes
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1871.git.1741018310447.gitgitgadget@gmail.com>
+ <xmqqbjuivuzm.fsf@gitster.g> <Z8afGexTdlqDnPV8@pks.im>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <Z8afGexTdlqDnPV8@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 04, 2025 at 10:46:17AM +0100, Patrick Steinhardt wrote:
-> On Tue, Mar 04, 2025 at 08:40:13AM +0100, Johannes Schindelin wrote:
-> > On Tue, 4 Mar 2025, Johannes Schindelin wrote:
-> > > On Tue, 4 Mar 2025, Patrick Steinhardt wrote:
-> > > > Johannes, did the new version of this patch series make your life any
-> > > > easier? As far as I can see the conflicts in your "shears/seen" branch
-> > > > seem to have been fixed, and the failing pipeline seems to be due to
-> > > > other issues. If so, we would be able to move ahead with this patch
-> > > > series and the dependent fix for Windows below.
-> > >
-> > > Honestly, I cannot say whether it made my life any easier. As you can see
-> > > from
-> > > https://github.com/git-for-windows/git/actions/workflows/main.yml?query=branch%3Ashears%2Fseen,
-> > > the `shears/seen` branch failed to update automatically since I updated it
-> > > manually last Thursday. According to
-> > > https://github.com/git/git/activity?ref=seen, there have been 5 updates
-> > > that were hence missed.
-> > >
-> > > I'll try to update the `shears/seen` branch now, but I'll time-box it to
-> > > half an hour because I really planned on taking care of other issues.
-> > 
-> > It seems that there are the usual CMake-related breakages (not related to
-> > ps/reftable-sans-compat-util, but to the introduction of the
-> > `CLAR_TEST_OBJS` or at least the `lib-oid` addition to that). I hope that
-> > the tip commit of `shears/seen` that I just pushed addresses that, but I
-> > ran out of time to monitor this.
-> > 
-> > And there are some pretty bad `exit code 127` problems in the unit tests
-> > on Windows, see e.g.
-> > https://github.com/git-for-windows/git/actions/runs/13648196783/job/38151312208#step:5:213
-> > (but again, I ran out of the allotted time).
+Hi Patrick
+
+On 04/03/2025 06:35, Patrick Steinhardt wrote:
+> On Mon, Mar 03, 2025 at 10:18:05AM -0800, Junio C Hamano wrote:
+>> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>>>      I copied the name from the test prerequisite as I didn't want to have
+>>>      different names for condition used in the tests and documentation. I do
+>>>      have some reservations about the naming though as it means we end up
+>>>      having to use ifdef::!without-breaking-changes[] or test_expect_success
+>>>      !WITHOUT_BREAKING_CHANGES to document and test breaking changes which is
+>>>      a double negative.
+>>
+>> It was exactly the first thing that came to my mind when I saw the
+>> change to the Makefile in the patch.  Unless our breaking changes
+>> are all removals, which is not likely to be the case in the longer
+>> term, "without-breaking-changes" would be an invitation for
+>> confusing double negatives.
 > 
-> Interesting. All of the errors relate to reftable stuff. Curiously,
-> those errors only seem to happen in the MinGW build, but not with the
-> Meson-based MSVC build. I can reproduce the issue in MinGW indeed, so
-> I'll investigate. Thanks for the hint!
+> I remember not quite being happy with the double-negation myself. I
+> don't mind renaming the prerequisite we have in our test suite for
+> consistency, as well, if you want to do that.
 
-Okay, I found the issue: it's mismatching allocators. Git for Windows
-has support for the custom mimalloc allocator, and it's getting roped in
-by default in MinGW builds. And because the allocator is declared in
-"git-compat-util.h", the reftable library uses allocators from mscrt.dll,
-whereas the rest of the Git code base uses allocators from mimalloc.
-This causes us to sometimes free memory with a different allocator than
-we have allocated it with, and that causes a SIGTRAP.
+Yes, I can do that when I re-roll the patches at 
+https://lore.kernel.org/git/pull.1863.git.1740149837.gitgitgadget@gmail.com/ 
+to use WITH_BREAKING_CHANGES
 
-Below patch addresses the issue.
+Best Wishes
 
-Patrick
+Phillip
 
-diff --git a/compat/posix.h b/compat/posix.h
-index b484029f751..5ad3539d55b 100644
---- a/compat/posix.h
-+++ b/compat/posix.h
-@@ -176,6 +176,16 @@ typedef unsigned long uintptr_t;
- #define _ALL_SOURCE 1
- #endif
- 
-+#ifdef USE_MIMALLOC
-+#include "mimalloc.h"
-+#define malloc mi_malloc
-+#define calloc mi_calloc
-+#define realloc mi_realloc
-+#define free mi_free
-+#define strdup mi_strdup
-+#define strndup mi_strndup
-+#endif
-+
- #ifdef MKDIR_WO_TRAILING_SLASH
- #define mkdir(a,b) compat_mkdir_wo_trailing_slash((a),(b))
- int compat_mkdir_wo_trailing_slash(const char*, mode_t);
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 8d2acf86670..a102a365592 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -226,16 +226,6 @@ static inline const char *precompose_string_if_needed(const char *in)
- # include <sys/sysinfo.h>
- #endif
- 
--#ifdef USE_MIMALLOC
--#include "mimalloc.h"
--#define malloc mi_malloc
--#define calloc mi_calloc
--#define realloc mi_realloc
--#define free mi_free
--#define strdup mi_strdup
--#define strndup mi_strndup
--#endif
--
- #ifndef PATH_SEP
- #define PATH_SEP ':'
- #endif
+> Patrick
+> 
+
