@@ -1,54 +1,54 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D43202F89
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 17:59:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507072512C3
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 18:05:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741111157; cv=none; b=WFFRcWxKcp1B4F8g+WPChT+OL2NKMhJle7hv0e+S8R0kvx4IhXMK32qabSxOmIy5FLYolwyixJxdVOn/0UKZCX05ml4pjtQklkxZM5q2Xpfn4ckWh4/M0SC8glVOasC28SNlTRr7BObHrJVMpnQ5xGG6Bp9QC/25DmYkGvX84zM=
+	t=1741111520; cv=none; b=tTgvsHopoKcIb+BaerzBE38H5YF9Abz6hX/c7cuQ8MiErYfcMPX0bH/c1vX/To/Uejfzywhi3swh5WLknw/e+DF0+SJRkv9E9Vxn6wa/sJjRPoDLYoERB70WIFYchv3aCyzEc7t1WSGEbAJSMBESp8vjVe8RvQiFx7aM2RSrV/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741111157; c=relaxed/simple;
-	bh=YkiUl817/4qZFJte6qqha73Z7TYxH0B7eG6Zum4TyZ4=;
+	s=arc-20240116; t=1741111520; c=relaxed/simple;
+	bh=JZJQkwuRsIEKI0ZT6OX7U5ra9pV3qkHHdDQNe6zVRXQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tNKgpl+ciO0QtZHZSt9/B4ZndQd45uSj3GxStcZD4h7LPMDt9UIXxDOauootgSdJVZ+lPAUUhBdsKlfAShoziUWLLirM7aJzT70stZtlz+nsFYeYTZLOidY1/MYHkG8qLKZlaRog3oNqw0ZVZ6evNmcyH/jKx7piCr8rQpSShSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hrndDw9x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5nMHnyq7; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=c5HQ8w+A0KzrFM2ChFlTqeW4TR69LrsFA+QOcxD6Td373sSMmWegdXrsHvXdFvh8gsNRhQLnt8xV7r40xSXFEIhIFK7g1JFMijS5HKLO6c+0ycN3znahZWrDjx/WVMBZL0iOEKuzmPe/Bue4PeP+d6CBA+DEuRofkj6VLIX8N2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HdIy5HiQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AIRnT3TO; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hrndDw9x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5nMHnyq7"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 02DBB1140222;
-	Tue,  4 Mar 2025 12:59:15 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HdIy5HiQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AIRnT3TO"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 516B5138276C;
+	Tue,  4 Mar 2025 13:05:17 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Tue, 04 Mar 2025 12:59:15 -0500
+  by phl-compute-01.internal (MEProxy); Tue, 04 Mar 2025 13:05:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741111154; x=1741197554; bh=5EMNSdiuEa
-	UkOpqWQkoRx9FPnTz4ghjgmsmdyqc7JDU=; b=hrndDw9xXwa55x48hkmJJ58IND
-	dOr2p6uG6VPKmX9CH2Bkcu6GcK/5/7Qack724vDvi08kbp0I+95TrdHYuYeXxVo9
-	A6b2LRzKAVzXJj8sucwO23Xm/RfFFfmbuGvPEb4u8Tc/0loj54QPykSKXfQWlgjI
-	000/HWG2lwCx+xTE79Yenomq8yL9+ph4YPm2VyRmDIQ7Vom5hRki1xTk0ZDd6o5p
-	ZA8ShGRcwK8jYKGfffNn9lQmsDYdrWhTv4JTgKY2L8Dikkw6gD3bPSYQ0pgEScqd
-	TomEKGQq79wauxChdfbNOynvieNQM8HIqLA0nkADkBPbuAIuWH0MrkCyRBjw==
+	:subject:to:to; s=fm3; t=1741111517; x=1741197917; bh=3G2ykG5qDW
+	a/AKOTZcuFmOf5Dl4/ST8olcrW1XnEjgQ=; b=HdIy5HiQ2MoZX/qEw9aD5cfpYW
+	e8+rU0gxM3IyIDH8zZPaHDZ0vWdtxgWrWm/aP7oi99LQqF9C38KTg6T8iqRyo2/P
+	HtLRxsj+ThZDnQHKGrpb8ZXWq18698XWO13C1NWqMmkXc3/J0/4VDCKet9O7RYcs
+	gLbCld8+J2BQAcd8wIrbh3Issy/b4gv71a3d319HYyN4PNHBuPSnDqOtx26WyL2m
+	nXANg9B+dDpscBP61dHFYvFQw38S2NcsDVTyd+tyxgfjRau8wmNX62J0yKnZtHDi
+	d9c8nhDoc0NXK/AcvG76tjQy140t0XrEk5vD60/tEZoZvGgbCYr+MJIS+Z1Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741111154; x=1741197554; bh=5EMNSdiuEaUkOpqWQkoRx9FPnTz4ghjgmsm
-	dyqc7JDU=; b=5nMHnyq7KU/4luIVzqf9scqvZsW1gx0jNIV0/3HEeiBCtnZofSQ
-	AdTEFFezoylCuJahbeePMerTNLGBPO3g+LtjbKmwyICOZwJ2lCBZC/sKAuPinyoe
-	oZDawVjJvXfdijnAR1yqHB3zdxnhcFI9QWsnNdVPs4Q95G48ewwJ1xMeFn1/iH6g
-	YlKa0rihbC+UvDGtqrJ2f2X/A6sM69tTubsHV3dd+/5oxNOmECpbduXChmxGiNiW
-	QrQEyMnr2cPF21oZI8AgmsiA/9hcNAbhDg09ScM+uPpiU3uI7NdsH+wTIxFzczQj
-	+7TZHYoBUbttP+Ri0kY7WudVWfLKVHHF12Q==
-X-ME-Sender: <xms:cj_HZzL1LfhiMr2NOnrzbrchJOpE11hRZ4Jagh_s8QK9veTLCxc2jA>
-    <xme:cj_HZ3Ju6qOT1Rrl1MV9LQQB0KdhPQ6iuKoM2qCD9xzlzRqUWLAJP-Nxsj_BPDogu
-    rZNxWn9BUOaZC54UQ>
-X-ME-Received: <xmr:cj_HZ7vKgw4x4iUU4uKNA_fh82pJFSaJvtyDVgnc-IfeAcAEws2BRvyybaSqYAWTEyGAEA00p4gMAqJtAgG42Ao6t6emdBaWNZS0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddvjedtucetufdoteggodetrf
+	1741111517; x=1741197917; bh=3G2ykG5qDWa/AKOTZcuFmOf5Dl4/ST8olcr
+	W1XnEjgQ=; b=AIRnT3TOLPwyFwGgtq0lkFmmPOjAk4Htqi41vJ1qaGSLyCHcWor
+	2z353iER4dI9m2O8E+vN93zRya3xWl5rQQmBdTZ6jTyv1TWBDnDUZ5dkOqwBEudx
+	5KN1ToX8auVUm5N7rss4tVQEU+9BEXd75LkRQuDK2veX7gzNTBwLLOdyznGY5PCB
+	Ef+aJaNw9F1myJCbDkBoPizeW31X4MnmTXvUhI8zEc3gVXA6kyXJ9ploQAM51jBe
+	uUJtrgNM9WgJ/9YOAb9CSlXZl/AS76xWz5UESQonChsdHQjN7ThYoqtSLA5vfAMj
+	1rP1RC1p0DOMuxUNjS3bKZr4u3cKsyc5yww==
+X-ME-Sender: <xms:3UDHZ6ZMg2lBzp13YKdnrv1JeiNWEU3gXgsXLkEs-29ihQiqPSGzJA>
+    <xme:3UDHZ9biwsgTynf0cCXS6Xyad1NgdfPxFcpbYMdavSRSi1z6TjKeynpDf1zpj5u0e
+    HT7KytFh19flOBYVQ>
+X-ME-Received: <xmr:3UDHZ08xbzuwbVe0GZPu0Wf_G2r6HCQWbxjBVWyZpTt_peohw4DhP0bUV9JuRb-Ubp-joNaX8otPmtAAkVCMKgcjuXYGl7BrhANp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddvjeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -56,29 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddvjedtucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhufhhorhhijh
-    hileeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllh
-    hiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:cj_HZ8a_iOlToAy78wn9_VehfXGcByp2WPgmsP8ZAVyN8S_XpjW1BA>
-    <xmx:cj_HZ6ZPUQbwFnFYLmqWPpjaFS3fNVKtJfsE1avQro3o0iVXVUoC3A>
-    <xmx:cj_HZwCqHKBZ6LFAVYv0qq3i3xTbtjB4KAdO4q-oQS2vlMlXJ7ydCg>
-    <xmx:cj_HZ4bzjRfVE8C3vy4izIXwYUUeD9re9xx8fRyWMSbs03P9j0zAKA>
-    <xmx:cj_HZxwG5Qt8vaoGErz_NF1I3JJ-YDh7aqUco_M_Ee6elpNL1RJoWsvh>
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggrnhhimhgrhh
+    gvnhgurhgrtdeltdegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:3UDHZ8pkXHDv0vIsKGd8RyLgArac47iCkE0EznzXtvN3qGv77mGQEw>
+    <xmx:3UDHZ1oqYCzCVYDap6K0CLE7jFAQ4Ie9Sluy8yzIvUBoAHo_zS_byg>
+    <xmx:3UDHZ6SA3eLPOdUuLudGaHRkh1tVyBjgCWhBTWqEeuXVHmesnpQ6jw>
+    <xmx:3UDHZ1qvsNsrr04ofQ_LwN1J9tTtOdg2Qh-GCk33ATE-B3J7qW9iUQ>
+    <xmx:3UDHZ8XWzyraOWPC-5RBKmtHo9aaturLOZACUET24eJ2raGg_6IO4XtA>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Mar 2025 12:59:14 -0500 (EST)
+ 4 Mar 2025 13:05:16 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Seyi Kuforiji <kuforiji98@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] t/unit-tests: convert trailer test to use clar
-In-Reply-To: <20250304113323.10564-2-kuforiji98@gmail.com> (Seyi Kuforiji's
-	message of "Tue, 4 Mar 2025 12:33:22 +0100")
-References: <20250304113323.10564-1-kuforiji98@gmail.com>
-	<20250304113323.10564-2-kuforiji98@gmail.com>
-Date: Tue, 04 Mar 2025 09:59:12 -0800
-Message-ID: <xmqqzfi0pthr.fsf@gitster.g>
+To: Mahendra Dani <danimahendra0904@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 1/1] t1403: verify that path exists and is a file
+In-Reply-To: <20250304094153.28959-2-danimahendra0904@gmail.com> (Mahendra
+	Dani's message of "Tue, 4 Mar 2025 15:11:53 +0530")
+References: <20250304091556.22478-1-danimahendra0904@gmail.com>
+	<20250304094153.28959-1-danimahendra0904@gmail.com>
+	<20250304094153.28959-2-danimahendra0904@gmail.com>
+Date: Tue, 04 Mar 2025 10:05:15 -0800
+Message-ID: <xmqqv7sopt7o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,64 +88,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Seyi Kuforiji <kuforiji98@gmail.com> writes:
+Mahendra Dani <danimahendra0904@gmail.com> writes:
 
-> diff --git a/t/unit-tests/u-trailer.c b/t/unit-tests/u-trailer.c
-> new file mode 100644
-> index 0000000000..3d60ea1603
-> --- /dev/null
-> +++ b/t/unit-tests/u-trailer.c
+> test -e does not provide a nice error message when
+> we hit test failures, so use test_path_exists() instead
+> and verify that if the path exists then it is a file using test_path_is_file().
+>
+> Signed-off-by: Mahendra Dani <danimahendra0904@gmail.com>
+> ---
+>  t/t1403-show-ref.sh | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
+> index 9d698b3cc3..4afde01a29 100755
+> --- a/t/t1403-show-ref.sh
+> +++ b/t/t1403-show-ref.sh
+> @@ -196,7 +196,8 @@ test_expect_success 'show-ref --verify with dangling ref' '
+>  
+>  	remove_object() {
+>  		file=$(sha1_file "$*") &&
+> -		test -e "$file" &&
+> +		test_path_exists "$file" &&
+> +		test_path_is_file "$file" &&
+>  		rm -f "$file"
+>  	} &&
 
-It is a bit sad (not your fault) that this is not shown as a
-rename+modification patch, as most of the logic seem to be straight
-out of the original.
-
-> +void test_trailer__no_newline_start(void)
-> +{
-> +	struct contents expected_contents[] = { 0 };
-> +
-> +	t_trailer_iterator("Fixes: x\n"
-> +			   "Acked-by: x\n"
-> +			   "Reviewed-by: x\n",
-> +			   0,
-> +			   expected_contents);
-> +}
-> +
-> +void test_trailer__newline_start(void)
-> +{
-> +	struct contents expected_contents[] = {
-> +		{
-> +			.raw = "Fixes: x\n",
-> +			.key = "Fixes",
-> +			.val = "x",
-> +		},
-> +		{
-> +			.raw = "Acked-by: x\n",
-> +			.key = "Acked-by",
-> +			.val = "x",
-> +		},
-> +		{
-> +			.raw = "Reviewed-by: x\n",
-> +			.key = "Reviewed-by",
-> +			.val = "x",
-> +		},
-> +		{
-> +			0
-> +		},
-> +	};
-> +
-> +	t_trailer_iterator("\n"
-> +			   "Fixes: x\n"
-> +			   "Acked-by: x\n"
-> +			   "Reviewed-by: x\n",
-> +			   3,
-> +			   expected_contents);
-> +}
-
-This is inherited from the original, but the hardcoded "3" feels a
-bit brittle.
-
-Would ARRAY_SIZE(expected_contents)-1 always match the expected
-number, I wonder?  Even if it is, improving it is totally outside
-the scope of this topic.  I am just mentioning this since I will
-forget if I don't ;-).
+Makes sense.  Will queue.
