@@ -1,125 +1,145 @@
-Received: from mail-yw1-f195.google.com (mail-yw1-f195.google.com [209.85.128.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80AD1FC10F
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 07:39:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FE31FCD06
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 07:39:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741073990; cv=none; b=oZ+F9ZdsMEzs6VXC9/cpp+76Q37KBzp/gNrv0hGmfHi89/ABgcw+sHpFF9YVlVgkydsyxQ0agy9VNq3VtVhVwisxSxJOaXYC/qgbUsH944ylK+ZrA2JB/+bA3s7iotWJY9ywtTvjLxXGtPr0K8A61R1j1/8FTOmUUxyRz4TWrDQ=
+	t=1741073998; cv=none; b=GoiJtBZyRKKktv0DDE2kJ7fGmGxSOA+Prpbn/iQGS+GNsENXIHSom/7ATLJc9+Fv/I4TQXpop/wBEoQygJ5hIf7zP2MK3Fxbq/i/2hOrW+T48Fuj0XVqkSAuVeV2S/s+3h0oWJh0Vdx5lancKXxC5OkRT5X6iy84BO+GJeXLGX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741073990; c=relaxed/simple;
-	bh=RJVY96CJTvFLl7PgPTh/kx+/9VdOUi7aa+JJoUfhx7s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kvQLH3pKElPI93qMsqnKuUi8Ma+dDTXXgKOkXo24ya7m/H15jYYjfjWMObJq9Zuwvjh50jJbis/KALyP8MzqGOLXRrua6besKqdtatc4dw34DDCX4lMshUsghqtfK8C/pz20f/kGl8YziGt6oaHI5YXjsMdFFq/oDMOY15HuP/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J/vesOnV; arc=none smtp.client-ip=209.85.128.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741073998; c=relaxed/simple;
+	bh=oy+h6fWlbwtjNEfYaMyiWEMNhb5jbheYIdADAF1E0lE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eq2x402GNgxnSNJjsAwj1cr2L94+0sri4M5rJMhLfIVDfEaD5vDb4clUiQbLhtE07N+nYaY2611MOMIO+1LkOnsOLPIDsNf+6I3oH2XBZJ2b4CKLVpKfG950FIe48jZJq6KPql3KZzp1mDHw53pZ+Yk4RGD5wxOu1/hCxt06xBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EOywt8PK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VQQdmXi2; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J/vesOnV"
-Received: by mail-yw1-f195.google.com with SMTP id 00721157ae682-6ef60e500d7so43605997b3.0
-        for <git@vger.kernel.org>; Mon, 03 Mar 2025 23:39:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741073987; x=1741678787; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DL+HN8KOPQhR8lA4+ipSzL5JZ9nE18GoeYaC+WIhL9Q=;
-        b=J/vesOnV9pJ3GeUede189itm5iK+v8uKWOuf2EMZjz0+Dve3h8ClcWwOYkBnTI02UV
-         jmbJwCjQxFUBHvwwE8VxPqdQ+A7Y7o38uK6qj06hZLHo+BPaxGCh2BgHApwoWoL4iN7T
-         GvMYeMhIajSiuW8TbP92f2Z8WHJuwAzujtdEbALZ6ToF4KoOMyHgvpEjqcX1XUr5+M50
-         qUWmBbLgjSq+HhgxWMXIH6yHVHgv0jcdCIuwSjODn3JsHP/Va2aZl1CE3KE2OyQnqqPA
-         D5t1DFQigvfVTCEhwR36f+BatnSPrY9gRQLxKCphnwdho92BvfscwCkOEs5eM5lAMs7t
-         BVZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741073987; x=1741678787;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DL+HN8KOPQhR8lA4+ipSzL5JZ9nE18GoeYaC+WIhL9Q=;
-        b=VvAvQAZkqFfmXBe6RlODmhRGmafMra7seLGYJf6YO5al49RJWPII9x1+5a6dMcmTpO
-         axg+6/dcog8Rvl4iPTttt4XUm59Oyy3duIjJnClehHolQn0cY7W44/KK/sXzeChX3bb7
-         5wEcr0pT9tnGHzAtNZe2+gBZM6qsCMKU+HHkt4UIMgSaRJ8T+X5HYPN088CTvFEihIyg
-         QCNkMBGEazg63wx/Qekw5W0VwvD7B7ovrZnAyzxcA8faSRdKiDmvsz3JAuWpfDqBZlhy
-         xeAcqH5IPsAr2kVav23HpM/4+gIhsAUulVz3dTqwYjebPu8it9lrifdmxU94aEFbuZ3B
-         1vZA==
-X-Forwarded-Encrypted: i=1; AJvYcCVmQ6K65fxj+UF+72k3bwZelYfSB6tD1CHpiqc0qZeYAf+XFwuU4AGS8KpEs/XVUWIIQgA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxtFKLGgAGB9BkW+d+iJqFOeJ3PWNAkINMWcumKvF0LAnwP+WME
-	v/icWGRu4yBgfzQ+Iir/015+eH43+/6Nk/imi/VPwMtoD0Eva0lmrPRizbuQY51luUB9b/cKEPj
-	fF8HMmOQW//VhlCoX/GwKJXI6L1w=
-X-Gm-Gg: ASbGnculh7hR2Bu1to5h5voY1rGZvsUO5gxdSilPOw9psdxQNvQejPKDNPBfW4NVOpE
-	FzOKLI7phOUaSawAfWkBaKjJkBf7M4D4kYwMM0b9cZbspvx5rH+oGA9OpBttKvFyQb5KQ9SrCjk
-	Fp1Y2blOZlrikbGYfHiWmpaQxn
-X-Google-Smtp-Source: AGHT+IFFLtnavQkGLImwaN2uf2Bpo4byPQlW3A8JnMyPrWT7B1T6teu/yby5cOach38mg+IdOs6rossfFaViITAf7As=
-X-Received: by 2002:a05:690c:4801:b0:6fd:1d9c:bd6a with SMTP id
- 00721157ae682-6fd4a03a63emr201621747b3.3.1741073987672; Mon, 03 Mar 2025
- 23:39:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EOywt8PK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VQQdmXi2"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5DD911140227;
+	Tue,  4 Mar 2025 02:39:54 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Tue, 04 Mar 2025 02:39:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1741073994; x=1741160394; bh=F+Jn0Fde6F
+	jGPu+nuQmU7TrIlHRFizW7NynooMRzBbo=; b=EOywt8PKVrLr9Ka927lOlESzXd
+	DJAwfWPCecvxrhXJ7/W8gxE1yKzGzeMwghkFjJq6snE6xLJGAQZElafFK/mLNx/l
+	x2i5YQwCPPiC7MYCg5x91hCCJh2COOr8zLLL/80NYp3kcIcPh1Aj+dKUryzBRhhf
+	WZuWUNiGX+hidh6dNg2ubr98sZVSN0rlFvCOiCofY/0hNgwn5fc5VY3agoMO8t6E
+	jeeaVgNFss9j/52bsapWNiCZkLEOLBla2sUqjWVq8U2Z4fVCObPPjmtZZiKqqJ0B
+	VVN+/35PTCr8XJ9J1rlpzbobLK7togHqkGf472pPf4pJDyjD1w4njuLNYgdw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741073994; x=1741160394; bh=F+Jn0Fde6FjGPu+nuQmU7TrIlHRFizW7Nyn
+	ooMRzBbo=; b=VQQdmXi2W3vCiDHr9exhqQEoXOFNsADaxrqCpfIhqKWw7Fo2fin
+	j6Wf8JWB9cwlI+tRqz0j/bJlgPLzLJ9p+XeDspoq5eRu7sjpFl5og9ch3CEKyCHp
+	OxY0gDng1H+zvFQDi4oYqLBm7P64pcYrwhhdwrZg0oKR8iqMzGVeOJNMPh7cnPSr
+	ORMJoI3jKTFDA4LzaXIp3LnW6eXmVkdZI3zGRUNIqGT0uVa43DdSYLryPEjilsiL
+	m4zB32JzCGA9DnuBAHkqpWj4a724EFVik9VbQtlQMfSO4ALVHwo1jaJxlayzglzl
+	ppvphZGW2H0J1Mep3SYxsPkt0Bsm7eHrLBg==
+X-ME-Sender: <xms:Sa7GZ2MCmkvNpJypHkLOIDDtag8DIn8oOm6tLN20oRX4eNvm0gH2Pw>
+    <xme:Sa7GZ08S8uPaWk1uD4nwHQjCoUsmZra9wyps3Yiq0HXI17pT3j0_tg3Dsith21cEE
+    e7sbXqblqB4G0jFuQ>
+X-ME-Received: <xmr:Sa7GZ9QdueR6jll1t9uiniP9ApzmDlO0OZCuiKbBzoUOf8yiHgCcCU6rIDQ-_95sBsN757Lokly5zNtilpudH_HPPnKLwaSLsvCjkb4oWxrz6MU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddugeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
+    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghf
+    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehgihhtsehgrhhusghigidrvghupdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Sq7GZ2uX8U9ta2gNq6aDH1p232uXHC7xiiQ9O_ESz-A0zY1n3FVk-g>
+    <xmx:Sq7GZ-dez7TnU890nHfAY4nKoeqUqKNUFkYRKbQyHse5RjlCjcSyhw>
+    <xmx:Sq7GZ62OaZtgx4LBZYjxk960s1JtIsPRDuaQgFgRn7Bl5gLlFA2z8Q>
+    <xmx:Sq7GZy-_OgJKVhkOvK3vbF6bi7HFR2Mu32FkEFDgJWPiBr0eMjDyNg>
+    <xmx:Sq7GZ95kDe5ucv9PRPaQBM0xy98gG-_EE-QbayLi0sGR0rqinHd9GCfN>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Mar 2025 02:39:52 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id d7175fea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Mar 2025 07:39:51 +0000 (UTC)
+Date: Tue, 4 Mar 2025 08:39:50 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Michael J Gruber <git@grubix.eu>,
+	git@vger.kernel.org
+Subject: Re: [BUG/WIP PATCH] unit-tests: use clean test environment
+Message-ID: <Z8auRqylLYuwalAA@pks.im>
+References: <e3be6705d103ccbc165d0fd3b9b7c818d14001e9.1740516033.git.git@grubix.eu>
+ <Z8GVAjwZWOM7c2fR@pks.im>
+ <xmqqseny40kx.fsf@gitster.g>
+ <Z8WFcaEtMCD5C0EN@pks.im>
+ <xmqqzfi2xl5q.fsf@gitster.g>
+ <20250304073010.GC1283943@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAAJd+fZSUiiUm05D_eO3HS7p=WoxAWSZo51dUNjyGjUNJBvyGg@mail.gmail.com>
- <bca5c0ec-0995-421e-9745-330f729357d6@web.de> <20250304063329.GA1283445@coredump.intra.peff.net>
-In-Reply-To: <20250304063329.GA1283445@coredump.intra.peff.net>
-From: H Z <shiyuyuranzh@gmail.com>
-Date: Tue, 4 Mar 2025 15:39:36 +0800
-X-Gm-Features: AQ5f1JollyjouWZb2cJUi5CTKJ-PhVGBtsEIB4LD83JdBLzhmUMdgqvIntRYp_s
-Message-ID: <CAAJd+fZ_EK=ZZKptFjuumx2TLsdQ3s7WxTT+n_x3ARwZw23BCw@mail.gmail.com>
-Subject: Re: Subject: Memory Leak vulnerability in reftable/readwrite_test.c
-To: Jeff King <peff@peff.net>
-Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250304073010.GC1283943@coredump.intra.peff.net>
 
-Very nice fix, thanks again for doing it!
+On Tue, Mar 04, 2025 at 02:30:10AM -0500, Jeff King wrote:
+> On Mon, Mar 03, 2025 at 06:07:29AM -0800, Junio C Hamano wrote:
+> 
+> > Patrick Steinhardt <ps@pks.im> writes:
+> > 
+> > > Maybe. I guess for unit tests it's a lot less clear cut as most of the
+> > > tests won't depend on such a controlled environment. So sanitizing the
+> > > environment would be a good enough first step for me, and if we see
+> > > demand for making specific information available to lots of tests we
+> > > could still start to expose those at a later point.
+> > 
+> > Fair enough.
+> > 
+> > To put it another way, if you write a test and if it gets affected
+> > by externalities, perhaps you are testing a function that is at too
+> > high a level that is not a suitable target for unit tested?
+> 
+> I think one problem with this approach is that breakage is likely going
+> to depend on the user's environment. So something that works just fine
+> for you, the test author, may introduce a hidden dependency that breaks
+> for somebody else much later.
+> 
+> Some examples, assuming we just suppress reading Git config:
+> 
+>   - Without an explicit ident, we fall back to constructing one from
+>     system info. So if a unit test ever creates a commit, it will work
+>     fine for most people, but not for somebody with a blank GECOS field
+>     in /etc/passwd. (We do look at that field for reflogs, which current
+>     unit tests already do, but we are more forgiving there since we
+>     don't pass IDENT_STRICT).
+> 
+>   - Other programs we call (e.g., imagine gpg or ssh for commit signing
+>     or verification) may read their own config based on $HOME,
+>     $XDG_CONFIG_HOME, etc. I don't know if Patrick was including that in
+>     "sanitizing the environment" or not.
 
-Jeff King <peff@peff.net> =E4=BA=8E2025=E5=B9=B43=E6=9C=884=E6=97=A5=E5=91=
-=A8=E4=BA=8C 14:33=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Sat, Mar 01, 2025 at 12:31:33PM +0100, Ren=C3=A9 Scharfe wrote:
->
-> > --- >8 ---
-> > Subject: [PATCH] reftable: release name on reftable_reader_new() error
-> >
-> > If block_source_read_block() or parse_footer() fail, we leak the "name"
-> > member of struct reftable_reader in reftable_reader_new().  Release it.
-> >
-> > Reported by: H Z <shiyuyuranzh@gmail.com>
-> > Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> > ---
-> >  reftable/reader.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/reftable/reader.c b/reftable/reader.c
-> > index 3f2e4b2800..f38c83f140 100644
-> > --- a/reftable/reader.c
-> > +++ b/reftable/reader.c
-> > @@ -666,6 +666,7 @@ int reftable_reader_new(struct reftable_reader **ou=
-t,
-> >       reftable_block_done(&footer);
-> >       reftable_block_done(&header);
-> >       if (err) {
-> > +             reftable_free(r->name);
-> >               reftable_free(r);
-> >               block_source_close(source);
-> >       }
->
-> Coverity complains that "r" might be NULL here. At the top of the
-> function we do:
->
->   REFTABLE_CALLOC_ARRAY(r, 1);
->   if (!r) {
->         err =3D REFTABLE_OUT_OF_MEMORY_ERROR;
->         goto done;
->   }
->
-> and then the done label hits your new line (the "done:" is right above
-> the context in your patch). And err of course is non-zero.
->
-> So this probably needs an "if (r)", or multiple layered out-labels.  Or
-> alternatively we could return directly when the first allocation fails,
-> since there is nothing to clean up at that point.
->
-> -Peff
+Oh, yes. I didn't mean to say we shouldn't sanitize at all, I rather
+meant to say we should sanitize to values that simply cause us to do a
+no-op in the relevant parts. That means we'd:
+
+    - Unset a bunch of environment variables where we know that they
+      impact Git.
+
+    - Set config-related environment variables to read configuration
+      from "/dev/null".
+
+This is in contrast to the more involved fix here, which would be to
+populate a temporary home directory with gitconfig files and whatnot.
+
+Patrick
