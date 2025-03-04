@@ -1,141 +1,187 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C2A13AC1
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 22:06:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132D724EAA8
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 22:09:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741126008; cv=none; b=pSAk3bpCpiGx+wTEqHZJB8ppeoZC35qcZvJft19ejhAba9ZNN2pYzIB/fekknd9/ZxgndMri3sZam76PSkg5AuMcJZVdqCogKBDPtdRuZXoqiclYqKnYeVhfh/O+47lQcTTD/JqSWrialtvF7MGQZbEND05nloCJ6q+vloNq1kQ=
+	t=1741126157; cv=none; b=eI/5BJSQ5mFl5zyz5MFIigitPhDu/gKrVUmg5j0EyZikmFTLJQq19qwX6AA1E92O5JZU7DQcJa/97vdPUiGWP1/p6cG3vn22JscW5UvmRyWVMsNQEnuk1X1CYEekoO1MkcqTb4iXlCJNKvOsRVI5mTnGiK+NX/WINfbsSYXclok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741126008; c=relaxed/simple;
-	bh=JsJ7y3ex9KExc4k8Wz7awKY4wxQmefAwczx1vTW4iQI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hRejs6xrn1aKEV8XqLNeaENcDXx74MbyVcRtGiUSBevVhskliAN37FEg4lEFqiyp+ufN0hYf2esJJ5xDYEmL+aFyQ7lVGQ20E/CqplKfE2iJxOFLzvLp4UNpAuTwwU1I1jiZtHN2TkXzJxQ/g8CmFH9/0f/kiSi92NM6D5ozu7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F32P6n6S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WdVnU1Jg; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741126157; c=relaxed/simple;
+	bh=eq7RaOHNwqTO1v5fyyWQoHIHrrHpS5hFoRaO/Jup0IM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aT2oyjlLP8CiRw2hCTq8Z+c5W05rGhl3JBkKex+SW56WCLCRBg/j2OduAdsHqCxK56yA6IdVB3OsM32RwbQPN67ulu8TJlsgbakEiBugjZDEG5mbmN5Fswf1bCqG7NaPhqydqZ0rv73XrSMvfK1rIBZBXYkttKOTJ4JSpKCdYlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Jolzb1n3; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F32P6n6S";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WdVnU1Jg"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7401013826E4;
-	Tue,  4 Mar 2025 17:06:45 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 04 Mar 2025 17:06:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741126005; x=1741212405; bh=UrzJrpoLa1
-	45NK9N4j7M/NyiGiyIvYyZWv5GKJHkvj0=; b=F32P6n6SFE+nFXq0pnGezUeX/3
-	eCIPnWCZWfFB7+PMetd4shx2gvet8RczfnzU6JtDc2+N/00waXlsE+ZAyvkjPFYN
-	BIaPk1QgfHm2eG93RwLVW1oojtVQWQ0qsnBddQhhF7YlxTOUXgrK0YIhVMiI4w02
-	RlOT9cNDeSP+fFg3GlGybT6YML3t3IT7ytfCEl8aTqgOmtQQaPlkHh3JfDYPDFhl
-	ghaAqyEpAj8gbPnvtjujQBeuzMFNPh0l3cDw7b2UMXKF9tlSDQ5x8lwCNV3P7ZDh
-	r4euyPkXTdC/49GwIkNqoiVRJXZ13wzxVhw3Linbx1aLvMI+fM7yZTA7HQEw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741126005; x=1741212405; bh=UrzJrpoLa145NK9N4j7M/NyiGiyIvYyZWv5
-	GKJHkvj0=; b=WdVnU1Jgsw8gseW/sxtXyjPV61KKTeAt5wuq9xhdafcTth7LBPP
-	cT+ondf52VcczGmky0TVfW5PoLDrAo5oM8fW+ffnUujNQtByw/Qn/YX3sO/xvPiA
-	vWi0cGr7+E4lfHMa4wzD3S6p07TeIYHcied2RqTBJFBL6bQwuc4lZwSBD7YHSD96
-	oXEfYNDqwZSsYUD7YLZN1JoChu+vyQkrFs/bzXnE1MIutTWfFxysOZepM+erS+n9
-	SabFSdEcQcUOKm0wW6dcZqj3UuAHzRV28i/xIEvELvuriYyrLk8p3eicypU3NGn/
-	bAW/mKPAcUkHKgf5f+Qh3recDdOd4tB/4VQ==
-X-ME-Sender: <xms:dXnHZ38kLC1TW21mputnHSKv3YYjKKm6O5fDXRh-QYJMxmdwMSNLLQ>
-    <xme:dXnHZzvAn_NXKuMc_zLFG9AXwDKelISckHYBgwZHlSivnCZhu06T6jV41IYs4fXNL
-    xj5dkzwwPOW9_BdYw>
-X-ME-Received: <xmr:dXnHZ1AzfpmS3_2Lf_jasmiYBF7uTjtcI-alBimKizIh-qx2UfM0wr-oc6iGIjLkYpeiSA3OsvlJDY4_wzpEGkKnFoSrpkrSdO8w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdefudefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:dXnHZzclea9TACzqUKhX2EzbZybMNMeNaW1TvoiUhPKK7koiUS1_tw>
-    <xmx:dXnHZ8MG_MpEAU1d1lAc0Xt42PJqeH-MhrNgRLSDoHJveLygs4YOaw>
-    <xmx:dXnHZ1mvDLLAxsHbqru6uKlFKbI9VxZKUpMquThfEJrrStPXb8RSuw>
-    <xmx:dXnHZ2swmnshjOQuH7YIcE5V-8h4Ke8eBab_rJEdr5oCInOUwM0pAA>
-    <xmx:dXnHZ5pBW3wTG-InjHOAD0AFxNypACLDmit-SLtERy0OQehymN71G6n6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Mar 2025 17:06:44 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org
-Subject: Re: [GSoC][RFC PATCH 0/6] Add --subject-extra-prefix flag to
- format-patch
-In-Reply-To: <Z8aspywaD0mAyHwd@pks.im> (Patrick Steinhardt's message of "Tue,
-	4 Mar 2025 08:32:55 +0100")
-References: <20250303220029.10716-1-lucasseikioshiro@gmail.com>
-	<xmqq7c55vhj8.fsf@gitster.g> <Z8aspywaD0mAyHwd@pks.im>
-Date: Tue, 04 Mar 2025 14:06:43 -0800
-Message-ID: <xmqq5xkoo3gs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Jolzb1n3"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e46ebe19368so5080572276.0
+        for <git@vger.kernel.org>; Tue, 04 Mar 2025 14:09:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741126154; x=1741730954; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jjVIvh5/jWglSXnYxa6FvC6spJ2atic4CWqZLy/0JOs=;
+        b=Jolzb1n3LpZXK8fN0IDPSjKKjfEE0N/RRbRqENvykg3nJkd4y/b1tNt0YClQTLTs/d
+         woJhD2kpfK78mMaW/7XqXOLdtBP5alnPCTvBqGBJ9gc4NGkkwlb5tA6ZbZ8yXfQ3Epm1
+         Elm9jlj3UjikpM4zyM0M8gzVqgw24llXRFhNaUxfJd1shpPC/TRmoaTTv7daHjU6lwNs
+         ckYSsUO4Syy+JxfwCYBVFNNMsz2YAEoy6k6FGVU960IPg0VbA2GhiYISUngXROeVi5m0
+         MY/3Ixpa1uC9rH8GyaMOD+Th56JMhLePVpIlR1Goa0Zi0jbylFIKFKUmdAdQilx4kkRa
+         Q3Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741126154; x=1741730954;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jjVIvh5/jWglSXnYxa6FvC6spJ2atic4CWqZLy/0JOs=;
+        b=ZK4ilUE9FJ8Tj6FizKSVLWMUQlzIxWmPvocD8YFMcA8jdhaXUlGCTlMAnG9QcdtaI7
+         VZZp+nBQWTmtT/vRX6MUT80IbtnY2mZmtUtBLIXEmt+nfusM0HfgfcZe6/jcQIsJHeeU
+         OFRCoWoOCZ7x276rWe+YNr27SIyjtUzm0psHKkjFW0lcpT+B6ONuvgc8msGMkbzdgyA7
+         0uomnwcUwAl9ExXQLs+/aueCIIiVTV3Fl33IYX3pv6HgcKl1i7itDpuP6Yu/8ww73mv3
+         MpuP+wFPlddo3EJ+sECjA1vqfrscjtxRYcNmTm0tGeknUORP0KJhs3a1VlaMAeYqR7d7
+         DJhg==
+X-Gm-Message-State: AOJu0Yzp50NxqqHU+NzEJxCmCh0WiJ8TlI0pBbzZ/VLMNBCygShhzRzC
+	BnPLdWFE0f2ifm8MhpPznfN16hqZxxDrGfZxRb1s1LGVKJUNkZkli5nxqp+URPxA+0bXUHroGlT
+	R
+X-Gm-Gg: ASbGncsXEPvbeP5Y4KQFybi+7G9Yl+rMV5W8SAFvcJ0K9qBvjYp/SaudnlGXmREmtNc
+	Uu7N48+zc3/9WaAhmwim36Xy/Rf+7II2lzU5GuI7RpbrL/gsgGqW/Es99FyBmNDpFEYPZWBIAd2
+	XQvHFwvBYXHaNtJcfBubj1gxk6JbfWfyvhjS2y2bScabZL7nwfjH7bhWwscwxI+3mp7Z8UJOvAk
+	J+C9Pspd8Cgn3Par2mmG1NHsk+6rUBHUo2LfWJiyCWWEucU8EQpw4CMa9ekQcgypClGe8ehTI3M
+	wIOcUxOZnWSUUF1ij0JmjIOKbTC3Yin3kKfm45LV9y0fcPRWe6rVFjavPWgb/MhGJInxWUbkfQd
+	hP1cbYJcMjteCJuWb
+X-Google-Smtp-Source: AGHT+IHZn5YAZBfPVwrbtM/QuakCdzcdtWwI3Mf+TIm7lfvBqTSt6Y801K9jciVSeYUNsyYerpUV4Q==
+X-Received: by 2002:a05:6902:1207:b0:e5d:fd9c:f4b with SMTP id 3f1490d57ef6-e611e1ca94emr1285030276.21.1741126153862;
+        Tue, 04 Mar 2025 14:09:13 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e60a3a1fae0sm4015549276.7.2025.03.04.14.09.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Mar 2025 14:09:13 -0800 (PST)
+Date: Tue, 4 Mar 2025 17:08:59 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	"\\ Junio C Hamano" <gitster@pobox.com>,
+	"\\ Elijah Newren" <newren@gmail.com>
+Subject: Re: GIT-BUILD-OPTIONS can override manual invocations
+Message-ID: <Z8d5++1dNdo/32uz@nand.local>
+References: <Z8IX2bMJe+V80idE@nand.local>
+ <20250304082901.GA1297837@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250304082901.GA1297837@coredump.intra.peff.net>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Mar 04, 2025 at 03:29:01AM -0500, Jeff King wrote:
+> On Fri, Feb 28, 2025 at 03:08:57PM -0500, Taylor Blau wrote:
+>
+> > In 4638e8806e (Makefile: use common template for GIT-BUILD-OPTIONS,
+> > 2024-12-06), the project's Makefile changed how it writes the
+> > GIT-BUILD-OPTIONS script. Prior to 4638e8806e, the Makefile would write
+> > the file itself, but post-4638e8806e it fills out a template
+> > ("GIT-BUILD-OPTIONS.in") with the appropriate values.
+> >
+> > This has an interesting side effect when running e.g. the t/perf or
+> > t/interop suites. If I do:
+> >
+> >     make && make -C t/perf GIT_PERF_MAKE_OPTS='NO_EXPAT=1'
+> >
+> > , then we will still try and build with the libexpat headers!
+>
+> Hmm. I am not sure what this is supposed to do, as I would not expect
+> that "make -C t/perf" to build anything at all. It will use the working
+> tree version built in the first step. So I'd expect your initial "make"
+> to do all the work (and either fail or not depending on whether NO_EXPAT
+> is set in your config.mak).
 
-> I do understand though that `--rfc=GSoC` is not exactly discoverable for
-> a newcomer. Maybe a simpler fix would be to introduce an alias for that
-> option that is more discoverable? I don't have a great idea for how to
-> name it -- the best that comes to mind is `--patch-prefix`, which
-> mirrors `--subject-prefix`.
+Oops, I should have used the t/interop example instead of t/perf from
+above. I agree that t/perf doesn't build anything. The buggy invocation
+that Elijah and I noticed was:
 
-The problem with it is that having "patch" vs "subject" prefix will
-make it confusing which one is which.
+    make &&
+    make -C t/interop GIT_INTEROP_MAKE_OPTS='...'
 
-Let's step back and examine what we already have.
+> I usually trigger a build of another version using arguments to "./run".
+> Is there a way to make that happen via make in t/perf?
 
- * The "--subject-prefix" is configurable and format.subjectPrefix
-   is meant to go to .git/config for repositories that work with
-   projects with special needs (they tell you to use not [PATCH] but
-   subproject specific moniker like [PATCH rcu] instead).
+I don't think there is via "make" (at least, I couldn't think of one off
+the top of my head), but I imagine if you set e.g., GIT_PERF_REPO in
+your environment when calling t/perf/run (and didn't have it set when
+you originally built with 'make') that you'd run into similar issues.
 
- * The "--rfc[=<word>]" has no configuration and it is deliberately
-   so, as it is meant to be used as needed, on occasions that call
-   for it, pretty much decided per invocation.
+> > This is AFAICT fallout from a change in 4638e8806e where instead of
+> > *not* writing e.g. GIT_PERF_MAKE_OPTS into the GIT-BUILD-OPTIONS file,
+> > we now write it with an empty value. So when we run 'make -C t/perf'
+> > with a non-empty GIT_PERF_MAKE_OPTS, t/perf/run will source
+> > GIT-BUILD-OPTIONS, and override the value of GIT_PERF_MAKE_OPTS we
+> > specified.
+>
+> But yeah, I can see how this would fail with:
+>
+>   make &&
+>   (cd t/perf && GIT_PERF_MAKE_OPTS=NO_EXPAT=1 ./run HEAD^ HEAD)
 
-Are these two points above not clear in our documentation?  If so,
-we should fix it, but I do not think giving a synonym to --rfc is a
-good way to clarify it.
+Exactly.
 
-If it is a GSoC topic sent to this list, it _will_ be GSoC topic for
-the entire iterations of the same topic.  So it would be good to use
---subject-prefix="GSoC PATCH" (or configure format.subjectPrefix in
-the repository to use that, if a student works with us only on GSoC
-topics during the Summer-of-Code program duration), and on occasion,
-when students are not so sure about their patches (yet), use of --rfc
-would be a good way, which would give us "[RFC GSoC PATCH 0/6]", to
-mark the patches as such.
+> if the GIT-BUILD-OPTIONS value takes precedence over the environment.
+> OTOH, wasn't that also true before 4638e8806e if you did set
+> GIT_PERF_MAKE_OPTS? So:
+>
+>   make GIT_PERF_MAKE_OPTS=NO_TCLTK=1 &&
+>   (cd t/perf && GIT_PERF_MAKE_OPTS="NO_TCLTK=1 NO_EXPAT=1" ./run HEAD^ HEAD)
+>
+> would fail (or more likely, the initial one is set in your config.mak).
+>
+> I think you're "supposed" to do this:
+>
+>   make GIT_PERF_MAKE_OPTS=NO_EXPAT=1 &&
+>   (cd t/perf && ./run HEAD^ HEAD)
+>
+> Rather than rely on the environment. But of course none of that is
+> documented at all, and is just convention and the whims of the few
+> people who bothered to run t/perf at all in the first place.
 
-Another problem with --patch-prefix synonym is that --rfc is not
-necessarily a prefix.  With
+Thanks for pointing out the subtlety there. I agree that pre-4638e8806e
+it was a bug to do
 
-	git format-patch --rfc='-WIP' --subject-prefix='GSoC PATCH'
+    make GIT_PERF_MAKE_OPTS=ABC &&
+    (cd t/perf && GIT_PERF_MAKE_OPTS="ABC XYZ" ./run HEAD^ HEAD)
 
-you would get "[GSoC PATCH WIP 0/6]" instead.
+since the GIT-BUILD-OPTIONS values override the environment variables
+when the ./run script is ran.
 
-In any case, I think it is the root cause of this disease to treat
-GSoC mark as something extra that requires a new marker that is
-separate from the usual PATCH marker.  Using whatever mechanism you
-would use your string in place for the standard PATCH mark to make
-it say "GSoC PATCH" would be the most appropriate, without mucking
-with an extra option, be it '--rfc' or '--subject-extra-prefix', I
-would say.
+But it feels like a regression that in addition to the above now:
 
-Thanks.
+    make &&
+    (cd t/perf && GIT_PERF_MAKE_OPTS=ABC ./run HEAD^ HEAD)
+
+is broken, too, since GIT_PERF_MAKE_OPTS wasn't set in the original make
+invocation at all!
+
+> I do think it would be nice if environment variables took precedence
+> over the sourced GIT-BUILD-OPTIONS for "./run", but I suspect doing so
+> is a little tricky.
+
+Yeah, I agree, and I think that would be tantamount to also fixing the
+pre-4638e8806e behavior, which would be nice. I think a good middle
+ground would be to continue to allow environment variables to override
+options that are unset in GIT-BUILD-OPTIONS, which definitely is a
+regression in 4638e8806e.
+
+> > So I think a more robust fix might look like only filling out those
+> > lines in the GIT-BUILD-OPTIONS template when they are non-empty, similar
+> > to the pre-4638e8806e behavior. Something like:
+>
+> Yeah, that would fix the regression. But I kind of feel like your
+> initial command is already skirting the edges of what the original code
+> was meant to handle.
+
+Hmm. I'm not sure I am following what you're saying here. How so?
+
+Thanks,
+Taylor
