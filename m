@@ -1,69 +1,69 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21821FF5FB
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 11:33:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140221FF5FB
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 11:33:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741088020; cv=none; b=KM74GhhczgGOinN3qTCHcC/AfkePKn+bSp3xB1/Q9GnptpelmV0TvPDWZoVdM8v2obVeAzm5wB+jSqB40GHxL0BdGxnJqlFcgb0uBuqd5t3rceh735FyFfKP1dX0vRLSdtm8vBXy0GQ/9C+jOZeA8oNst/gHyWw4vIf9wI8ELig=
+	t=1741088027; cv=none; b=DHpWkq+YUF8j5GHhr5Bei98yOYW08RITsx6xZ24zW2FiPauD4mkpfHIWSbUkw3MsSEBO5Ug1ELusR5/lLNgTG4h6IrJ5iwcK4rlYoXROFv/giYsjNqcl9oWwjpBaoR8UPp0DvcrOw08q3gVFNKIVC8b36kN7AXmWqjVqUouzrJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741088020; c=relaxed/simple;
-	bh=zwcwYZDfb93VSq1SgwZW/q7pt73jl5B/c8VCLWj7sAg=;
+	s=arc-20240116; t=1741088027; c=relaxed/simple;
+	bh=mB30tgwIOR2srLPRGaYHZJuqHzWlly3vmeHXkOdTCHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kc8pH/yXmOdT7de/Gaj9fxVrbJ0JRr3gp3qhIbEP3cGSIaGT9hvcemY9AOGK/l1FJdmu2OiPh6ASm6pkad86wKZObSqypzyF3scbHRVw+c9kY8YYUA+j5OeZwEMofIsNoxsiTe2GoMCnkvOwxRpLUPT2bBjb5yJEL1xBFdXmZ2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BH/yUix+; arc=none smtp.client-ip=209.85.128.44
+	 MIME-Version; b=c9LBB7/Nsrsn5ie22OpgixOofNFpAJyQEvAb1XXpW66v6QJGEDsTAQ8ARYgtai4VUXMPwa3OqKZWSyBIzNV7OR7gKSdykZOX57Ccmfb4J/8QP0B4KwwPkEW7UqhS1wPc561vkZz/r2HPuwmUim+l2WHBJ5cWfWNkL6LvcIrhWDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R/jEiKwk; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BH/yUix+"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43bc4b16135so11669125e9.1
-        for <git@vger.kernel.org>; Tue, 04 Mar 2025 03:33:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R/jEiKwk"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-388cae9eb9fso2878600f8f.3
+        for <git@vger.kernel.org>; Tue, 04 Mar 2025 03:33:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741088016; x=1741692816; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741088022; x=1741692822; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WPczT27eegxQLo/VP1UXnYbtWNQlUcBUV+iHI6KWQms=;
-        b=BH/yUix+eTB6xKLa8D4JhFg5spMgRrjSCLI+e9F0AC3XeFHBjLBKo8KA0OtseHX9PV
-         RM16s8lcKRD23QGtquuI/Vpe72DTcDy9MMSKETAQIFOIt84NuKE9IdbEci2GGZSUFJy0
-         AZdWE5hkZsErWENV6QR2Y4JBlbpxOezbGzoZzqEhj1aWcxrq1Bo5VVOwyQhxGhYIhK0U
-         8a2fTTvcGeUOqShPW+L39qijPMxzggc67n7Yrekx9/Pdbr6V4xxV6l8+qQhsBZSFNm/m
-         Zqxjsu2GeBgfd2s/h3ulsieE8mPkvmCIpGYiLOmEY/CRPTQNbHyk/M5yb7mMkpiCz/B5
-         L2/A==
+        bh=BA1tr1Ty5Y2XeG96QWL49R6VfTP3i5pA11F2TRT1A90=;
+        b=R/jEiKwkkuPXtRuikqTKuXAbj9KPnIik2QXgDOJvFdk+mCkbjUE66rTcAKzDW8hkRJ
+         hgKTGXccEafaI/V0rmkZnkrEeFJeDKDbV6ryzcl8bS7k526WDTMgM+wzejhIAhLKaUao
+         e1Cpyp7Fi/l5BZdV3xm9d4F32aLEn369jwoNK92T8PhmSOlhhz69/NtmP3jZ6BoHI3xM
+         GxK/HSk+qADhiUg7caj98OJbJULBU8PK2TIJqY7Zx3xZ8uE0av3pemvEer4j+oYk/2EA
+         auGIVy59bT76NGUdwPN+yxy1wQCtAsK5RqywDKDGRj0ayRHkBvSO9DxhTbDfoJLMqMZO
+         0Kfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741088016; x=1741692816;
+        d=1e100.net; s=20230601; t=1741088022; x=1741692822;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WPczT27eegxQLo/VP1UXnYbtWNQlUcBUV+iHI6KWQms=;
-        b=QQpOgYM2QbtmuNsj2SxnhkOhdnDlPmicWp9fmPVZkBRRnuMPVCHxzhGq1pS3M2nU5q
-         DTGhONpIKBSUdakqxD0EIu8LvpqiXqHtyZwVUqzZRhkUunqi1pwtRJoRRP2DHh5tvIGA
-         9XmHjUzyaSQscuhvp+CSdqmydIEFMRgwIWCZzpqZiRy2NqMfL6ZTpjR72YwZjHrFaY10
-         uHleC8Qf0MViqw90IJ/PkebUlmSzQGnnoijWUOr8zjwuxo8rluUb7Xa34daxgi2UQ6eN
-         4f0NMxCPXFR/cyPjvvFwb3mn35NAlhG4+09wX9ClyuvAHIu42N6UbGQ0f3x9jg8F3Ml1
-         gZpA==
-X-Gm-Message-State: AOJu0YwiPOvqOqtyc4eZO6GjWoR9U6dnUf73tH3GOqi6hMcdtNhYfF96
-	o4HPz/CiOIcuKtCOfASSBZYB4SL9PcSdVQyLlVzHNtfpxplH+7isk0HNgYpkqVI=
-X-Gm-Gg: ASbGncsy8L/CrVhbqLlfwvkryUCx0l/zARxJo0VHwE7hd5sM2GNNispCKF0CDZgAl70
-	LnNNitxnh7pNwbTxPXWjxi2zzDqv8AHlC1IYLo5VFYX6d5qKioHzOjWHCRdod5IoeLG1im9Ygut
-	dcS7IaOxD2FfQROXsc5gHCALdmlCYTmF8ldSrzRapOmV6Fi/f56onEF5rv3nZn6tEG3JDFe1LbK
-	gndWSf0Z9bwMznnIQSCDVm7Jjo7nWXQ44y7g/kkQW6p4IQva3je/LdvuKBUfG4O9vtjIP3vubq7
-	cpwo1FxC8QcxFkz153mGWcIzD4nCnd7RSBZqk695YoD2VgbKl0sK3xHuvRY=
-X-Google-Smtp-Source: AGHT+IGPn6lkM6LnMk5ZpKxk/bJbme+hFecR/juT8PGtAAfDyOOQ8UPAj34tQv6ZzdpD0aT9XiBIug==
-X-Received: by 2002:a05:6000:2d07:b0:38a:8ed1:c5c7 with SMTP id ffacd0b85a97d-390eca4a038mr11219129f8f.46.1741088015692;
-        Tue, 04 Mar 2025 03:33:35 -0800 (PST)
+        bh=BA1tr1Ty5Y2XeG96QWL49R6VfTP3i5pA11F2TRT1A90=;
+        b=ZEI05RxxL/IfdAWubfNHEmsf6eNIhFf05LlP6HRhwHlKbd82BDVjBnx2qQNATJgcIA
+         esA2DmDpnpHCb8Jbm6FR4s6HTi/o25kha4cvoEfO4zJVu0EGG7N66U+U5uxhRuGPFvOL
+         xqw9QBC0uollSzcMMXW3ezFFJnZ4BFJXmdfRcsmhBIo58lYMVXD1p0TZV5dy4qfqzwj9
+         S0dwvIkWSrg3J0aBI1u81yPIeAY+Q0/fcGEI3hZeQeYSJCJ66UAO27Gpd/GxY9BNrgBd
+         Bd9kK//E+dReyaNIrbklwFEFRB7snzimmd83c3QHKCocb7tR9Y22oHFzB+IargMbvh7Q
+         hO8g==
+X-Gm-Message-State: AOJu0Yze6nK9ufq+hnEH5mqYJlBjrlZzx8IvdJGCcozWaN13h2lut0Cz
+	s5FydDEDZlpF03+j3yU+XfjZ69pbRj36zlT/gXf1RxfLUtLepVmfHjJLOjPiaTY=
+X-Gm-Gg: ASbGncteSbB3WS80bfkFSaB7+71b/Xfs+cwCHTk2kIbDPLcb9t6xt5yNzRE9gchIQoS
+	LK4f9BQBhGiYstzvfcUsuF6Yyf6PwNiNayYMGsBFESms8etoEcEBUO2U3EoeFclpzZDH+u7WCJM
+	OPctFhD+nJJKc+aw2GTvAoeYlBh0zgV8y3hk1wlhpttkleXlsAUCEO5u20S1B2vt+XAjEF/g2Va
+	p/fev4bvbqSblnC/OqBbVafoNkw08kbF1yNT1yz4MdPGqDqyO+PHhahLlEo6vu4IcFocOS5gc95
+	XbEFNb598Rhxn2DdoCWDGmFh9sSQaMrA3up/S2lAu6YTUnC+Z8RC38pMLR8=
+X-Google-Smtp-Source: AGHT+IGIrjt3+PUXhF5WC+TMO/Ox+YjF28VINOMcqQoQiz6C/gIpduegMMvUEy4VJLDe6tjPlNf6JQ==
+X-Received: by 2002:a05:6000:1789:b0:391:ab2:9e87 with SMTP id ffacd0b85a97d-3910ab2a230mr5261162f8f.6.1741088022459;
+        Tue, 04 Mar 2025 03:33:42 -0800 (PST)
 Received: from localhost.localdomain ([154.118.41.125])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-390e47b7d12sm17764128f8f.58.2025.03.04.03.33.33
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-390e47b7d12sm17764128f8f.58.2025.03.04.03.33.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Mar 2025 03:33:35 -0800 (PST)
+        Tue, 04 Mar 2025 03:33:42 -0800 (PST)
 From: Seyi Kuforiji <kuforiji98@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	phillip.wood@dunelm.org.uk,
 	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH 1/2] t/unit-tests: convert trailer test to use clar
-Date: Tue,  4 Mar 2025 12:33:22 +0100
-Message-ID: <20250304113323.10564-2-kuforiji98@gmail.com>
+Subject: [PATCH 2/2] t/unit-tests: convert urlmatch-normalization test to clar
+Date: Tue,  4 Mar 2025 12:33:23 +0100
+Message-ID: <20250304113323.10564-3-kuforiji98@gmail.com>
 X-Mailer: git-send-email 2.47.0.86.g15030f9556
 In-Reply-To: <20250304113323.10564-1-kuforiji98@gmail.com>
 References: <20250304113323.10564-1-kuforiji98@gmail.com>
@@ -75,713 +75,230 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adapt trailer test file to use clar testing framework by using clar
-assertions where necessary. Split test into individual test functions
-for clarity and maintainability. Each test case now has its own
-function, making it easier to isolate failures and improve test
-readability.
+Adapt urlmatch-normalization test file to use clar testing framework by
+using clar assertions where necessary.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
 ---
- Makefile                 |   2 +-
- t/meson.build            |   2 +-
- t/unit-tests/t-trailer.c | 317 --------------------------------------
- t/unit-tests/u-trailer.c | 320 +++++++++++++++++++++++++++++++++++++++
- 4 files changed, 322 insertions(+), 319 deletions(-)
- delete mode 100644 t/unit-tests/t-trailer.c
- create mode 100644 t/unit-tests/u-trailer.c
+ Makefile                                      |  2 +-
+ t/meson.build                                 |  2 +-
+ ...alization.c => u-urlmatch-normalization.c} | 60 ++++++-------------
+ 3 files changed, 20 insertions(+), 44 deletions(-)
+ rename t/unit-tests/{t-urlmatch-normalization.c => u-urlmatch-normalization.c} (84%)
 
 diff --git a/Makefile b/Makefile
-index a9b2de0692..9cb68aaa61 100644
+index 9cb68aaa61..a4787bff5d 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1361,6 +1361,7 @@ CLAR_TEST_SUITES += u-reftable-tree
- CLAR_TEST_SUITES += u-strbuf
+@@ -1362,6 +1362,7 @@ CLAR_TEST_SUITES += u-strbuf
  CLAR_TEST_SUITES += u-strcmp-offset
  CLAR_TEST_SUITES += u-strvec
-+CLAR_TEST_SUITES += u-trailer
+ CLAR_TEST_SUITES += u-trailer
++CLAR_TEST_SUITES += u-urlmatch-normalization
  CLAR_TEST_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
  CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
-@@ -1377,7 +1378,6 @@ UNIT_TEST_PROGRAMS += t-reftable-reader
+@@ -1378,7 +1379,6 @@ UNIT_TEST_PROGRAMS += t-reftable-reader
  UNIT_TEST_PROGRAMS += t-reftable-readwrite
  UNIT_TEST_PROGRAMS += t-reftable-record
  UNIT_TEST_PROGRAMS += t-reftable-stack
--UNIT_TEST_PROGRAMS += t-trailer
- UNIT_TEST_PROGRAMS += t-urlmatch-normalization
+-UNIT_TEST_PROGRAMS += t-urlmatch-normalization
  UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
  UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
 diff --git a/t/meson.build b/t/meson.build
-index 25ce072707..560aa9a1f1 100644
+index 560aa9a1f1..e6ac23df11 100644
 --- a/t/meson.build
 +++ b/t/meson.build
-@@ -9,6 +9,7 @@ clar_test_suites = [
-   'unit-tests/u-strbuf.c',
+@@ -10,6 +10,7 @@ clar_test_suites = [
    'unit-tests/u-strcmp-offset.c',
    'unit-tests/u-strvec.c',
-+  'unit-tests/u-trailer.c',
+   'unit-tests/u-trailer.c',
++  'unit-tests/u-urlmatch-normalization.c',
  ]
  
  clar_sources = [
-@@ -59,7 +60,6 @@ unit_test_programs = [
+@@ -60,7 +61,6 @@ unit_test_programs = [
    'unit-tests/t-reftable-readwrite.c',
    'unit-tests/t-reftable-record.c',
    'unit-tests/t-reftable-stack.c',
--  'unit-tests/t-trailer.c',
-   'unit-tests/t-urlmatch-normalization.c',
+-  'unit-tests/t-urlmatch-normalization.c',
  ]
  
-diff --git a/t/unit-tests/t-trailer.c b/t/unit-tests/t-trailer.c
-deleted file mode 100644
-index 184593e73d..0000000000
---- a/t/unit-tests/t-trailer.c
-+++ /dev/null
-@@ -1,317 +0,0 @@
--#define DISABLE_SIGN_COMPARE_WARNINGS
--
+ foreach unit_test_program : unit_test_programs
+diff --git a/t/unit-tests/t-urlmatch-normalization.c b/t/unit-tests/u-urlmatch-normalization.c
+similarity index 84%
+rename from t/unit-tests/t-urlmatch-normalization.c
+rename to t/unit-tests/u-urlmatch-normalization.c
+index 1769c357b9..39f6e1ba26 100644
+--- a/t/unit-tests/t-urlmatch-normalization.c
++++ b/t/unit-tests/u-urlmatch-normalization.c
+@@ -1,12 +1,11 @@
 -#include "test-lib.h"
--#include "trailer.h"
--
--struct contents {
--	const char *raw;
--	const char *key;
--	const char *val;
--};
--
--static void t_trailer_iterator(const char *msg, size_t num_expected,
--			       struct contents *contents)
--{
--	struct trailer_iterator iter;
--	size_t i = 0;
--
--	trailer_iterator_init(&iter, msg);
--	while (trailer_iterator_advance(&iter)) {
--		if (num_expected) {
--			check_str(iter.raw, contents[i].raw);
--			check_str(iter.key.buf, contents[i].key);
--			check_str(iter.val.buf, contents[i].val);
--		}
--		i++;
--	}
--	trailer_iterator_release(&iter);
--
--	check_uint(i, ==, num_expected);
--}
--
--static void run_t_trailer_iterator(void)
--{
--
--	static struct test_cases {
--		const char *name;
--		const char *msg;
--		size_t num_expected;
--		struct contents contents[10];
--	} tc[] = {
--		{
--			"empty input",
--			"",
--			0,
--			{{0}},
--		},
--		{
--			"no newline at beginning",
--			"Fixes: x\n"
--			"Acked-by: x\n"
--			"Reviewed-by: x\n",
--			0,
--			{{0}},
--		},
--		{
--			"newline at beginning",
--			"\n"
--			"Fixes: x\n"
--			"Acked-by: x\n"
--			"Reviewed-by: x\n",
--			3,
--			{
--				{
--					.raw = "Fixes: x\n",
--					.key = "Fixes",
--					.val = "x",
--				},
--				{
--					.raw = "Acked-by: x\n",
--					.key = "Acked-by",
--					.val = "x",
--				},
--				{
--					.raw = "Reviewed-by: x\n",
--					.key = "Reviewed-by",
--					.val = "x",
--				},
--				{
--					0
--				},
--			},
--		},
--		{
--			"without body text",
--			"subject: foo bar\n"
--			"\n"
--			"Fixes: x\n"
--			"Acked-by: x\n"
--			"Reviewed-by: x\n",
--			3,
--			{
--				{
--					.raw = "Fixes: x\n",
--					.key = "Fixes",
--					.val = "x",
--				},
--				{
--					.raw = "Acked-by: x\n",
--					.key = "Acked-by",
--					.val = "x",
--				},
--				{
--					.raw = "Reviewed-by: x\n",
--					.key = "Reviewed-by",
--					.val = "x",
--				},
--				{
--					0
--				},
--			},
--		},
--		{
--			"with body text, without divider",
--			"my subject\n"
--			"\n"
--			"my body which is long\n"
--			"and contains some special\n"
--			"chars like : = ? !\n"
--			"hello\n"
--			"\n"
--			"Fixes: x\n"
--			"Acked-by: x\n"
--			"Reviewed-by: x\n"
--			"Signed-off-by: x\n",
--			4,
--			{
--				{
--					.raw = "Fixes: x\n",
--					.key = "Fixes",
--					.val = "x",
--				},
--				{
--					.raw = "Acked-by: x\n",
--					.key = "Acked-by",
--					.val = "x",
--				},
--				{
--					.raw = "Reviewed-by: x\n",
--					.key = "Reviewed-by",
--					.val = "x",
--				},
--				{
--					.raw = "Signed-off-by: x\n",
--					.key = "Signed-off-by",
--					.val = "x",
--				},
--				{
--					0
--				},
--			},
--		},
--		{
--			"with body text, without divider (second trailer block)",
--			"my subject\n"
--			"\n"
--			"my body which is long\n"
--			"and contains some special\n"
--			"chars like : = ? !\n"
--			"hello\n"
--			"\n"
--			"Fixes: x\n"
--			"Acked-by: x\n"
--			"Reviewed-by: x\n"
--			"Signed-off-by: x\n"
--			"\n"
--			/*
--			 * Because this is the last trailer block, it takes
--			 * precedence over the first one encountered above.
--			 */
--			"Helped-by: x\n"
--			"Signed-off-by: x\n",
--			2,
--			{
--				{
--					.raw = "Helped-by: x\n",
--					.key = "Helped-by",
--					.val = "x",
--				},
--				{
--					.raw = "Signed-off-by: x\n",
--					.key = "Signed-off-by",
--					.val = "x",
--				},
--				{
--					0
--				},
--			},
--		},
--		{
--			"with body text, with divider",
--			"my subject\n"
--			"\n"
--			"my body which is long\n"
--			"and contains some special\n"
--			"chars like : = ? !\n"
--			"hello\n"
--			"\n"
--			"---\n"
--			"\n"
--			/*
--			 * This trailer still counts because the iterator
--			 * always ignores the divider.
--			 */
--			"Signed-off-by: x\n",
--			1,
--			{
--				{
--					.raw = "Signed-off-by: x\n",
--					.key = "Signed-off-by",
--					.val = "x",
--				},
--				{
--					0
--				},
--			},
--		},
--		{
--			"with non-trailer lines in trailer block",
--			"subject: foo bar\n"
--			"\n"
--			/*
--			 * Even though this trailer block has a non-trailer line
--			 * in it, it's still a valid trailer block because it's
--			 * at least 25% trailers and is Git-generated (see
--			 * git_generated_prefixes[] in trailer.c).
--			 */
--			"not a trailer line\n"
--			"not a trailer line\n"
--			"not a trailer line\n"
--			"Signed-off-by: x\n",
--			/*
--			 * Even though there is only really 1 real "trailer"
--			 * (Signed-off-by), we still have 4 trailer objects
--			 * because we still want to iterate through the entire
--			 * block.
--			 */
--			4,
--			{
--				{
--					.raw = "not a trailer line\n",
--					.key = "not a trailer line",
--					.val = "",
--				},
--				{
--					.raw = "not a trailer line\n",
--					.key = "not a trailer line",
--					.val = "",
--				},
--				{
--					.raw = "not a trailer line\n",
--					.key = "not a trailer line",
--					.val = "",
--				},
--				{
--					.raw = "Signed-off-by: x\n",
--					.key = "Signed-off-by",
--					.val = "x",
--				},
--				{
--					0
--				},
--			},
--		},
--		{
--			"with non-trailer lines (one too many) in trailer block",
--			"subject: foo bar\n"
--			"\n"
--			/*
--			 * This block has only 20% trailers, so it's below the
--			 * 25% threshold.
--			 */
--			"not a trailer line\n"
--			"not a trailer line\n"
--			"not a trailer line\n"
--			"not a trailer line\n"
--			"Signed-off-by: x\n",
--			0,
--			{{0}},
--		},
--		{
--			"with non-trailer lines (only 1) in trailer block, but no Git-generated trailers",
--			"subject: foo bar\n"
--			"\n"
--			/*
--			 * This block has only 1 non-trailer out of 10 (IOW, 90%
--			 * trailers) but is not considered a trailer block
--			 * because the 25% threshold only applies to cases where
--			 * there was a Git-generated trailer.
--			 */
--			"Reviewed-by: x\n"
--			"Reviewed-by: x\n"
--			"Reviewed-by: x\n"
--			"Helped-by: x\n"
--			"Helped-by: x\n"
--			"Helped-by: x\n"
--			"Acked-by: x\n"
--			"Acked-by: x\n"
--			"Acked-by: x\n"
--			"not a trailer line\n",
--			0,
--			{{0}},
--		},
--	};
--
--	for (int i = 0; i < sizeof(tc) / sizeof(tc[0]); i++) {
--		TEST(t_trailer_iterator(tc[i].msg,
--					tc[i].num_expected,
--					tc[i].contents),
--		     "%s", tc[i].name);
--	}
--}
++#include "unit-test.h"
+ #include "urlmatch.h"
+ 
+ static void check_url_normalizable(const char *url, unsigned int normalizable)
+ {
+ 	char *url_norm = url_normalize(url, NULL);
+ 
+-	if (!check_int(normalizable, ==, url_norm ? 1 : 0))
+-		test_msg("input url: %s", url);
++	cl_assert_equal_i(normalizable, url_norm ? 1 : 0);
+ 	free(url_norm);
+ }
+ 
+@@ -14,8 +13,7 @@ static void check_normalized_url(const char *url, const char *expect)
+ {
+ 	char *url_norm = url_normalize(url, NULL);
+ 
+-	if (!check_str(url_norm, expect))
+-		test_msg("input url: %s", url);
++	cl_assert_equal_s(url_norm, expect);
+ 	free(url_norm);
+ }
+ 
+@@ -26,13 +24,9 @@ static void compare_normalized_urls(const char *url1, const char *url2,
+ 	char *url2_norm = url_normalize(url2, NULL);
+ 
+ 	if (equal) {
+-		if (!check_str(url1_norm, url2_norm))
+-			test_msg("input url1: %s\n  input url2: %s", url1,
+-				 url2);
+-	} else if (!check_int(strcmp(url1_norm, url2_norm), !=, 0)) {
+-		test_msg(" normalized url1: %s\n   normalized url2: %s\n"
+-			 "  input url1: %s\n  input url2: %s",
+-			 url1_norm, url2_norm, url1, url2);
++		cl_assert_equal_s(url1_norm, url2_norm);
++	} else {
++		cl_assert(strcmp(url1_norm, url2_norm) != 0);
+ 	}
+ 	free(url1_norm);
+ 	free(url2_norm);
+@@ -43,14 +37,12 @@ static void check_normalized_url_length(const char *url, size_t len)
+ 	struct url_info info;
+ 	char *url_norm = url_normalize(url, &info);
+ 
+-	if (!check_int(info.url_len, ==, len))
+-		test_msg("     input url: %s\n  normalized url: %s", url,
+-			 url_norm);
++	cl_assert_equal_i(info.url_len, len);
+ 	free(url_norm);
+ }
+ 
+ /* Note that only "file:" URLs should be allowed without a host */
+-static void t_url_scheme(void)
++void test_urlmatch_normalization__scheme(void)
+ {
+ 	check_url_normalizable("", 0);
+ 	check_url_normalizable("_", 0);
+@@ -73,7 +65,7 @@ static void t_url_scheme(void)
+ 	check_normalized_url("AbCdeF://x.Y", "abcdef://x.y/");
+ }
+ 
+-static void t_url_authority(void)
++void test_urlmatch_normalization__authority(void)
+ {
+ 	check_url_normalizable("scheme://user:pass@", 0);
+ 	check_url_normalizable("scheme://?", 0);
+@@ -109,7 +101,7 @@ static void t_url_authority(void)
+ 	check_url_normalizable("scheme://invalid....:[", 0);
+ }
+ 
+-static void t_url_port(void)
++void test_urlmatch_normalization__port(void)
+ {
+ 	check_url_normalizable("xyz://q@some.host:", 1);
+ 	check_url_normalizable("xyz://q@some.host:456/", 1);
+@@ -139,7 +131,7 @@ static void t_url_port(void)
+ 	check_url_normalizable("xyz://[::1]:030f/", 0);
+ }
+ 
+-static void t_url_port_normalization(void)
++void test_urlmatch_normalization__port_normalization(void)
+ {
+ 	check_normalized_url("http://x:800", "http://x:800/");
+ 	check_normalized_url("http://x:0800", "http://x:800/");
+@@ -154,7 +146,7 @@ static void t_url_port_normalization(void)
+ 	check_normalized_url("https://x:000000443", "https://x/");
+ }
+ 
+-static void t_url_general_escape(void)
++void test_urlmatch_normalization__general_escape(void)
+ {
+ 	check_url_normalizable("http://x.y?%fg", 0);
+ 	check_normalized_url("X://W/%7e%41^%3a", "x://w/~A%5E%3A");
+@@ -164,7 +156,7 @@ static void t_url_general_escape(void)
+ 	check_normalized_url("X://W?!", "x://w/?!");
+ }
+ 
+-static void t_url_high_bit(void)
++void test_urlmatch_normalization__high_bit(void)
+ {
+ 	check_normalized_url(
+ 		"x://q/\x01\x02\x03\x04\x05\x06\x07\x08\x0e\x0f\x10\x11\x12",
+@@ -198,26 +190,26 @@ static void t_url_high_bit(void)
+ 		"x://q/%F0%F1%F2%F3%F4%F5%F6%F7%F8%F9%FA%FB%FC%FD%FE%FF");
+ }
+ 
+-static void t_url_utf8_escape(void)
++void test_urlmatch_normalization__utf8_escape(void)
+ {
+ 	check_normalized_url(
+ 		"x://q/\xc2\x80\xdf\xbf\xe0\xa0\x80\xef\xbf\xbd\xf0\x90\x80\x80\xf0\xaf\xbf\xbd",
+ 		"x://q/%C2%80%DF%BF%E0%A0%80%EF%BF%BD%F0%90%80%80%F0%AF%BF%BD");
+ }
+ 
+-static void t_url_username_pass(void)
++void test_urlmatch_normalization__username_pass(void)
+ {
+ 	check_normalized_url("x://%41%62(^):%70+d@foo", "x://Ab(%5E):p+d@foo/");
+ }
+ 
+-static void t_url_length(void)
++void test_urlmatch_normalization__length(void)
+ {
+ 	check_normalized_url_length("Http://%4d%65:%4d^%70@The.Host", 25);
+ 	check_normalized_url_length("http://%41:%42@x.y/%61/", 17);
+ 	check_normalized_url_length("http://@x.y/^", 15);
+ }
+ 
+-static void t_url_dots(void)
++void test_urlmatch_normalization__dots(void)
+ {
+ 	check_normalized_url("x://y/.", "x://y/");
+ 	check_normalized_url("x://y/./", "x://y/");
+@@ -244,7 +236,7 @@ static void t_url_dots(void)
+  * "http://foo" specifies neither a user name nor a password.
+  * So they should not be equivalent.
+  */
+-static void t_url_equivalents(void)
++void test_urlmatch_normalization__equivalents(void)
+ {
+ 	compare_normalized_urls("httP://x", "Http://X/", 1);
+ 	compare_normalized_urls("Http://%4d%65:%4d^%70@The.Host", "hTTP://Me:%4D^p@the.HOST:80/", 1);
+@@ -253,19 +245,3 @@ static void t_url_equivalents(void)
+ 	compare_normalized_urls("https://@x.y/^/../abc", "httpS://@x.y:0443/abc", 1);
+ 	compare_normalized_urls("https://@x.y/^/..", "httpS://@x.y:0443/", 1);
+ }
 -
 -int cmd_main(int argc UNUSED, const char **argv UNUSED)
 -{
--	run_t_trailer_iterator();
+-	TEST(t_url_scheme(), "url scheme");
+-	TEST(t_url_authority(), "url authority");
+-	TEST(t_url_port(), "url port checks");
+-	TEST(t_url_port_normalization(), "url port normalization");
+-	TEST(t_url_general_escape(), "url general escapes");
+-	TEST(t_url_high_bit(), "url high-bit escapes");
+-	TEST(t_url_utf8_escape(), "url utf8 escapes");
+-	TEST(t_url_username_pass(), "url username/password escapes");
+-	TEST(t_url_length(), "url normalized lengths");
+-	TEST(t_url_dots(), "url . and .. segments");
+-	TEST(t_url_equivalents(), "url equivalents");
 -	return test_done();
 -}
-diff --git a/t/unit-tests/u-trailer.c b/t/unit-tests/u-trailer.c
-new file mode 100644
-index 0000000000..3d60ea1603
---- /dev/null
-+++ b/t/unit-tests/u-trailer.c
-@@ -0,0 +1,320 @@
-+#define DISABLE_SIGN_COMPARE_WARNINGS
-+
-+#include "unit-test.h"
-+#include "trailer.h"
-+
-+struct contents {
-+	const char *raw;
-+	const char *key;
-+	const char *val;
-+};
-+
-+static void t_trailer_iterator(const char *msg, size_t num_expected,
-+			       struct contents *contents)
-+{
-+	struct trailer_iterator iter;
-+	size_t i = 0;
-+
-+	trailer_iterator_init(&iter, msg);
-+	while (trailer_iterator_advance(&iter)) {
-+		if (num_expected) {
-+			cl_assert_equal_s(iter.raw, contents[i].raw);
-+			cl_assert_equal_s(iter.key.buf, contents[i].key);
-+			cl_assert_equal_s(iter.val.buf, contents[i].val);
-+		}
-+		i++;
-+	}
-+	trailer_iterator_release(&iter);
-+
-+	cl_assert_equal_i(i, num_expected);
-+}
-+
-+void test_trailer__empty_input(void)
-+{
-+	struct contents expected_contents[] = { 0 };
-+	t_trailer_iterator("", 0, expected_contents);
-+}
-+
-+void test_trailer__no_newline_start(void)
-+{
-+	struct contents expected_contents[] = { 0 };
-+
-+	t_trailer_iterator("Fixes: x\n"
-+			   "Acked-by: x\n"
-+			   "Reviewed-by: x\n",
-+			   0,
-+			   expected_contents);
-+}
-+
-+void test_trailer__newline_start(void)
-+{
-+	struct contents expected_contents[] = {
-+		{
-+			.raw = "Fixes: x\n",
-+			.key = "Fixes",
-+			.val = "x",
-+		},
-+		{
-+			.raw = "Acked-by: x\n",
-+			.key = "Acked-by",
-+			.val = "x",
-+		},
-+		{
-+			.raw = "Reviewed-by: x\n",
-+			.key = "Reviewed-by",
-+			.val = "x",
-+		},
-+		{
-+			0
-+		},
-+	};
-+
-+	t_trailer_iterator("\n"
-+			   "Fixes: x\n"
-+			   "Acked-by: x\n"
-+			   "Reviewed-by: x\n",
-+			   3,
-+			   expected_contents);
-+}
-+
-+void test_trailer__no_body_text(void)
-+{
-+	struct contents expected_contents[] = {
-+
-+		{
-+			.raw = "Fixes: x\n",
-+			.key = "Fixes",
-+			.val = "x",
-+		},
-+		{
-+			.raw = "Acked-by: x\n",
-+			.key = "Acked-by",
-+			.val = "x",
-+		},
-+		{
-+			.raw = "Reviewed-by: x\n",
-+			.key = "Reviewed-by",
-+			.val = "x",
-+		},
-+		{
-+			0
-+		},
-+	};
-+
-+	t_trailer_iterator("subject: foo bar\n"
-+			   "\n"
-+			   "Fixes: x\n"
-+			   "Acked-by: x\n"
-+			   "Reviewed-by: x\n",
-+			   3,
-+			   expected_contents);
-+}
-+
-+void test_trailer__body_text_no_divider(void)
-+{
-+	struct contents expected_contents[] = {
-+		{
-+			.raw = "Fixes: x\n",
-+			.key = "Fixes",
-+			.val = "x",
-+		},
-+		{
-+			.raw = "Acked-by: x\n",
-+			.key = "Acked-by",
-+			.val = "x",
-+		},
-+		{
-+			.raw = "Reviewed-by: x\n",
-+			.key = "Reviewed-by",
-+			.val = "x",
-+		},
-+		{
-+			.raw = "Signed-off-by: x\n",
-+			.key = "Signed-off-by",
-+			.val = "x",
-+		},
-+		{
-+			0
-+		},
-+	};
-+
-+	t_trailer_iterator("my subject\n"
-+			   "\n"
-+			   "my body which is long\n"
-+			   "and contains some special\n"
-+			   "chars like : = ? !\n"
-+			   "hello\n"
-+			   "\n"
-+			   "Fixes: x\n"
-+			   "Acked-by: x\n"
-+			   "Reviewed-by: x\n"
-+			   "Signed-off-by: x\n",
-+			   4,
-+			   expected_contents);
-+}
-+
-+void test_trailer__body_no_divider_2nd_block(void)
-+{
-+	struct contents expected_contents[] = {
-+			{
-+				.raw = "Helped-by: x\n",
-+				.key = "Helped-by",
-+				.val = "x",
-+			},
-+			{
-+				.raw = "Signed-off-by: x\n",
-+				.key = "Signed-off-by",
-+				.val = "x",
-+			},
-+			{
-+				0
-+			},
-+	};
-+
-+	t_trailer_iterator("my subject\n"
-+			   "\n"
-+			   "my body which is long\n"
-+			   "and contains some special\n"
-+			   "chars like : = ? !\n"
-+			   "hello\n"
-+			   "\n"
-+			   "Fixes: x\n"
-+			   "Acked-by: x\n"
-+			   "Reviewed-by: x\n"
-+			   "Signed-off-by: x\n"
-+			   "\n"
-+			   /*
-+			   * Because this is the last trailer block, it takes
-+			   * precedence over the first one encountered above.
-+			   */
-+			   "Helped-by: x\n"
-+			   "Signed-off-by: x\n",
-+			   2,
-+			   expected_contents);
-+}
-+
-+void test_trailer__body_and_divider(void)
-+{
-+	struct contents expected_contents[] = {
-+			{
-+				.raw = "Signed-off-by: x\n",
-+				.key = "Signed-off-by",
-+				.val = "x",
-+			},
-+			{
-+				0
-+			},
-+	};
-+
-+	t_trailer_iterator("my subject\n"
-+			   "\n"
-+			   "my body which is long\n"
-+			   "and contains some special\n"
-+			   "chars like : = ? !\n"
-+			   "hello\n"
-+			   "\n"
-+			   "---\n"
-+			   "\n"
-+			   /*
-+			   * This trailer still counts because the iterator
-+			   * always ignores the divider.
-+			   */
-+			   "Signed-off-by: x\n",
-+			   1,
-+			   expected_contents);
-+}
-+
-+void test_trailer__non_trailer_in_block(void)
-+{
-+	struct contents expected_contents[] = {
-+		{
-+			.raw = "not a trailer line\n",
-+			.key = "not a trailer line",
-+			.val = "",
-+		},
-+		{
-+			.raw = "not a trailer line\n",
-+			.key = "not a trailer line",
-+			.val = "",
-+		},
-+		{
-+			.raw = "not a trailer line\n",
-+			.key = "not a trailer line",
-+			.val = "",
-+		},
-+		{
-+			.raw = "Signed-off-by: x\n",
-+			.key = "Signed-off-by",
-+			.val = "x",
-+		},
-+		{
-+			0
-+		},
-+	};
-+
-+	t_trailer_iterator("subject: foo bar\n"
-+			   "\n"
-+			   /*
-+			   * Even though this trailer block has a non-trailer line
-+			   * in it, it's still a valid trailer block because it's
-+			   * at least 25% trailers and is Git-generated (see
-+			   * git_generated_prefixes[] in trailer.c).
-+			   */
-+			   "not a trailer line\n"
-+			   "not a trailer line\n"
-+			   "not a trailer line\n"
-+			   "Signed-off-by: x\n",
-+			   /*
-+			   * Even though there is only really 1 real "trailer"
-+			   * (Signed-off-by), we still have 4 trailer objects
-+			   * because we still want to iterate through the entire
-+			   * block.
-+			   */
-+			   4,
-+			   expected_contents);
-+}
-+
-+void test_trailer__too_many_non_trailers(void)
-+{
-+	struct contents expected_contents[] = { 0 };
-+
-+	t_trailer_iterator("subject: foo bar\n"
-+			   "\n"
-+			   /*
-+			   * This block has only 20% trailers, so it's below the
-+			   * 25% threshold.
-+			   */
-+			   "not a trailer line\n"
-+			   "not a trailer line\n"
-+			   "not a trailer line\n"
-+			   "not a trailer line\n"
-+			   "Signed-off-by: x\n",
-+			   0,
-+			   expected_contents);
-+}
-+
-+void test_trailer__one_non_trailer_no_git_trailers(void)
-+{
-+	struct contents expected_contents[] = { 0 };
-+
-+	t_trailer_iterator("subject: foo bar\n"
-+			   "\n"
-+			   /*
-+			   * This block has only 1 non-trailer out of 10 (IOW, 90%
-+			   * trailers) but is not considered a trailer block
-+			   * because the 25% threshold only applies to cases where
-+			   * there was a Git-generated trailer.
-+			   */
-+			   "Reviewed-by: x\n"
-+			   "Reviewed-by: x\n"
-+			   "Reviewed-by: x\n"
-+			   "Helped-by: x\n"
-+			   "Helped-by: x\n"
-+			   "Helped-by: x\n"
-+			   "Acked-by: x\n"
-+			   "Acked-by: x\n"
-+			   "Acked-by: x\n"
-+			   "not a trailer line\n",
-+			   0,
-+			   expected_contents);
-+}
 -- 
 2.47.0.86.g15030f9556
 
