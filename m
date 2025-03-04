@@ -1,42 +1,86 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F18AD24
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 07:30:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D222FAD24
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 07:33:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741073414; cv=none; b=a20vQ2wcT9BpSw9NKKcSAl4IAJOVoPmUM6q0UvbaXMgDN6Y0cV0Q9ls2B93w1FTa/fUetmmgjsbBwDYrVVK8NwzLS3tRJfCu/rcOcxb9n432cUDzY2Xg3VOxy4cpWoXP/t9T0i65W+HbEHSbSakwP15Xyc3FgE1cXgzyCrttIVk=
+	t=1741073586; cv=none; b=LHFJGbB9W8aS9OxsR/m87qppQr+P4tia2Fx9z2TmkwlmA6UbvqSQ9m7VRy24cJ9t0WcmZxgU31iWeGteEhNqr12eJS6v2hylelMKbYQEQ5TmnlyVtgm+Y93A0VMAnb4vXYQt7uZVp9TVttMFQ+AlKmVzXIWEMSJXObpwVrTCjq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741073414; c=relaxed/simple;
-	bh=QW/fySd1qjUI5XfZWYOPm64ikcrXvEgUvEVFNZivFNQ=;
+	s=arc-20240116; t=1741073586; c=relaxed/simple;
+	bh=/J9pQXZbxjPcGa0d4PamGxfE4zReYhivVLdC/w7Bg2U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OCTAW8LGKj/+eBjefSleQeqQhNfBEHkvfBs6cLuZrjPj61VESXVAiJgW4S6uPonVqLX9nA4kiLDS7bBDNfNGU/SKSloZ5c7MeU1x+FyHh6WQAUAsn3vRUUWzG9u3OaqOlxRmHCAiobNf1bXRgtjiFs6+3u+KOy4l5ieHSN7SOfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cydfiPaq; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=mQ2Ho5ksseA6BP5PIQyr9etMtQHg3Lxn6amTrfbyTkVUG5gTnt4FFk3b4rLUztbOiaQzm3MXYKu4P1dkqodj9jW4si9dmHECkhGQ+h5anVYba6NylLr6e0PgictXjYLBV+g93RNzh2MwtjztDOqy9kZgpI/wgXiFb3WCEFDbkdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Hmjsl9XK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UYQi26Y9; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cydfiPaq"
-Received: (qmail 9332 invoked by uid 109); 4 Mar 2025 07:30:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=QW/fySd1qjUI5XfZWYOPm64ikcrXvEgUvEVFNZivFNQ=; b=cydfiPaqQZ9oAIbBMQ9lYO5627h/ulaZz29+qsB9cQleFBDSnaLHLHwDDxHh3e+jxbZwj9KSKGfvoKFtHFW3Mzg+uBB4x0EmWxzowje0VNCZB9y5FLrnZKmdCdKDWntOOb6iOBs04yRIncLppisQJ30ER8hbRL0IJOMglUB5X2kSWJBwFmcXCJNryMIpgJ/G6regxt1qCgyLcJNU/YEbI45XyyoJZAr4i9uRM7K9mZvK+RcCbkbzaAiog0x3ZZUj54cAz8KL7XZ7JRNuq4pyG3fJ4iq2uvL3TjfOTtz3y7E0ehykZf3rRcDUSW/l47NVVdXlV6kZL07E3f4oQJOZvg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Mar 2025 07:30:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22674 invoked by uid 111); 4 Mar 2025 07:30:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Mar 2025 02:30:11 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 4 Mar 2025 02:30:10 -0500
-From: Jeff King <peff@peff.net>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Hmjsl9XK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UYQi26Y9"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EAFBE11401EC;
+	Tue,  4 Mar 2025 02:33:03 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Tue, 04 Mar 2025 02:33:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1741073583;
+	 x=1741159983; bh=KTBP5oiCTJG/joE0ZTcg+Y4/0BJiP6R7NVa9WpyYNkc=; b=
+	Hmjsl9XKdklO20biN3RHpVr3j6wwatcmW/O6nigsB0r6yD5+WVY+V5NGRcHcg9LH
+	Vcb/7HDYeWgeMPuEv5/DuAD/dIG/7T1vGrWvdsp+4gRYfASi54FnlfKIo9xbJRid
+	ZCtDJsx66RFhMEk5G2+r1UhPJzQ9WZrGhums9M6sokPw/Q9FGaVa6DwcINKKOAqG
+	/ksRXhnkyTsAhIWgj95EBfs9oLhJ8nizmbQS6gHqcsm9iea77TOLjJoIVxWHyQZR
+	IMqa5HdQpILRfZ9+O86Gf2CIErMT7uAzXDJJE8oS+aV4Rznj7ZCeTgonwgC+tTL6
+	NXE3EwEaLLfJnJsadBa6PQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741073583; x=
+	1741159983; bh=KTBP5oiCTJG/joE0ZTcg+Y4/0BJiP6R7NVa9WpyYNkc=; b=U
+	YQi26Y9mx5RDD+rKdKoTqY5k3quCy/U3WSKZbRhrPNbkX6tdFCqf6+ONFj2WKca0
+	OOyGQE24FSWrvPjl8YrEa89RScE01OiEftqc+T4+WPsgDqFFxKKsh3V0WZadnhAz
+	EXjPito5rbVlJhOQ67uLsTN4XOwTgnvhMqdpmic/IgKWWEQYEEfmB57FJ8HypuGp
+	Ib7O9rTT1xjiqDd69MBPId2xFnHF7dG46gvCxkEGwd+pHVIid8GBWZrkcHG0Yo5M
+	CIeFeD6hH5EA65YmL+GQvEeMxyxgcZFSnRM8vV0A9vXc4sKRTyllO69OuvtuhEgH
+	NKTUHJ2mjlvpmV5+xS3Sg==
+X-ME-Sender: <xms:r6zGZ7-cJGywUTN37mZ_doAQjyV5qI3WksWyGQ3Ti1DaAN-AwXpeJA>
+    <xme:r6zGZ3tzdFrcOI1XxjPAKhWXg9VehwbCtULKkYbbwRJYzuMzIeP5LN-Ve75G5tuX1
+    ByJASiOubamUaIzYw>
+X-ME-Received: <xmr:r6zGZ5AFGjpllY81Rsyei8pr22Tonsfk7wub0jy4378veo3Q5HhOrGIzzEXqwy3sWEeGn-GNX-GNi3iEijt3T2eAxTe7MEAo30uVeLh4lThOqbc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddugeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
+    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehl
+    uhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:r6zGZ3cqt2MgjLlc2b0-LaMxW35QYhnLv8Sl3oLOeDaJPY4aew7UMw>
+    <xmx:r6zGZwPDG5nyuP8muepml8XjkxsKjAizPSx2VO285g3Y6VqkNGCd8w>
+    <xmx:r6zGZ5lWsQPBIwL67WpRfZEdd85R96ObJa8cKQl5xTMx6XijguxC2g>
+    <xmx:r6zGZ6vm-NtWEzGjS603GETNfHdahIPeRcbjmiapn4j46t3TX4usIw>
+    <xmx:r6zGZ1qWag-wkiaFqODeMuipQWi1cZ38jO9ljLPOY5zD_9kAM0IE1Tyf>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Mar 2025 02:33:02 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id c0202fb1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Mar 2025 07:33:00 +0000 (UTC)
+Date: Tue, 4 Mar 2025 08:32:55 +0100
+From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Michael J Gruber <git@grubix.eu>,
-	git@vger.kernel.org
-Subject: Re: [BUG/WIP PATCH] unit-tests: use clean test environment
-Message-ID: <20250304073010.GC1283943@coredump.intra.peff.net>
-References: <e3be6705d103ccbc165d0fd3b9b7c818d14001e9.1740516033.git.git@grubix.eu>
- <Z8GVAjwZWOM7c2fR@pks.im>
- <xmqqseny40kx.fsf@gitster.g>
- <Z8WFcaEtMCD5C0EN@pks.im>
- <xmqqzfi2xl5q.fsf@gitster.g>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org
+Subject: Re: [GSoC][RFC PATCH 0/6] Add --subject-extra-prefix flag to
+ format-patch
+Message-ID: <Z8aspywaD0mAyHwd@pks.im>
+References: <20250303220029.10716-1-lucasseikioshiro@gmail.com>
+ <xmqq7c55vhj8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,41 +89,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqzfi2xl5q.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq7c55vhj8.fsf@gitster.g>
 
-On Mon, Mar 03, 2025 at 06:07:29AM -0800, Junio C Hamano wrote:
-
-> Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Mar 03, 2025 at 03:08:43PM -0800, Junio C Hamano wrote:
+> Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 > 
-> > Maybe. I guess for unit tests it's a lot less clear cut as most of the
-> > tests won't depend on such a controlled environment. So sanitizing the
-> > environment would be a good enough first step for me, and if we see
-> > demand for making specific information available to lots of tests we
-> > could still start to expose those at a later point.
+> > Subject: Re: [GSoC][RFC PATCH 0/6] Add --subject-extra-prefix flag to format-patch
 > 
-> Fair enough.
-> 
-> To put it another way, if you write a test and if it gets affected
-> by externalities, perhaps you are testing a function that is at too
-> high a level that is not a suitable target for unit tested?
+> Hmph, instead use "--rfc=GSoC" to do [GSoC PATCH n/m] and please do
+> not pile more "extra" on top?
 
-I think one problem with this approach is that breakage is likely going
-to depend on the user's environment. So something that works just fine
-for you, the test author, may introduce a hidden dependency that breaks
-for somebody else much later.
+I do understand though that `--rfc=GSoC` is not exactly discoverable for
+a newcomer. Maybe a simpler fix would be to introduce an alias for that
+option that is more discoverable? I don't have a great idea for how to
+name it -- the best that comes to mind is `--patch-prefix`, which
+mirrors `--subject-prefix`.
 
-Some examples, assuming we just suppress reading Git config:
+    --patch-prefix=<prefix>
+    --rfc
+        Prepends the string `<prefix>` to the subject prefix. As the
+        subject prefix defaults to "PATCH", you’ll get "<prefix> PATCH"
+        by default.
 
-  - Without an explicit ident, we fall back to constructing one from
-    system info. So if a unit test ever creates a commit, it will work
-    fine for most people, but not for somebody with a blank GECOS field
-    in /etc/passwd. (We do look at that field for reflogs, which current
-    unit tests already do, but we are more forgiving there since we
-    don't pass IDENT_STRICT).
+        When `--rfc` is given, the prefix will be set to "RFC" . RFC
+        means "Request For Comments"; use this when sending an
+        experimental patch for discussion rather than application.
+        "--rfc=WIP" may also be a useful way to indicate that a patch is
+        not complete yet ("WIP" stands for "Work In Progress").
 
-  - Other programs we call (e.g., imagine gpg or ssh for commit signing
-    or verification) may read their own config based on $HOME,
-    $XDG_CONFIG_HOME, etc. I don't know if Patrick was including that in
-    "sanitizing the environment" or not.
+        If the convention of the receiving community for a particular
+        extra string is to have it after the subject prefix, the string
+        <prefix> can be prefixed with a dash ("-") to signal that the rest
+        of the <prefix> string should be appended to the subject prefix
+        instead, e.g., --patch-prefix='-(WIP)' results in "PATCH (WIP)".
 
--Peff
+We would hide away the optional value `[=<rfc>]` of the `--rfc` option
+and instead advertise `--patch-prefix=<prefix>`. This would of course
+only be a cosmetic change, we'd still accept the optional argument so
+that we don't break backwards compatibility.
+
+Patrick
