@@ -1,143 +1,115 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAA817583
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 00:15:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE8711CAF
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 02:27:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741047312; cv=none; b=eHETxXRKD8BOWArm66cZgrqfYOlC1+6FfXkXHdAvFmOcR++7ArbA7ANiAnBTHPwSrkmO1fK6gbJvthDxUauovq+aNWBsGNIDBAFznGV7c3twJoelaRvm00bu3b8OmIXwytfJemmPHh6sBFs3NCJ2ifaSVlTUFcIlFvnZdOVfNL0=
+	t=1741055261; cv=none; b=hG+nnHAW60Stb728e+WB8HMYuvnSr6kjDPRdio3hoB2agpDqxcZCDk4578bEoiENzDi1Tw3DBxUcY9L7xVvmfunvk502lTmwNYOb1GPX6pj0fZ3b1rlLtemV77WIbURgwq+sXUMTQYQWoyvDOXqzKwxG2t4L60VJOYLix6fSUDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741047312; c=relaxed/simple;
-	bh=hnPlmepxMpJhV3jzgyyudiS6u2zmU6xdEU0J2tV+Wm4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DZPsPjE2C0cFIrG00w6fKPZ/Sire4bE2KIE2xqZ+5W/yMh5LWMIWS36S1iel+Xlsq45hGE/tJU27bQQNDwco7ZjflDZSNwgRMHEzTOFCKw35bFCkJWYUK3G/89VuVj1HL9CIFcIARPAXxjhwP1NWDx2DYHwQV+eVj1Mar1QDtQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jLFMJt5S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A9L59KWV; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741055261; c=relaxed/simple;
+	bh=SxsoaYmeiVEQ8aw74MgNbGyZdXPk4NYYQvY6KyfmxCs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ttogang7k2seXmcgTpc6yaCJqGpcttJKk5tcz1RBtIokwC72YgPaJtnlcba+gK6MCMxvr+NjZO9Nn1Gu+EdzG0evXKLWLPbNgg0vICmaDF5kYGL4S1jVgJrKvEXXY4owb/d5S1feIJc74Ll6bSELqUhwcLVbeW73yuNlLIg8NMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d9q4lBM2; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jLFMJt5S";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A9L59KWV"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7C2892540475;
-	Mon,  3 Mar 2025 19:15:08 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 03 Mar 2025 19:15:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741047308; x=1741133708; bh=V1ba4uj1Bc
-	Vsl0JfEKR+Vej+CuxMBoE4yHc1TaxOIeg=; b=jLFMJt5S7Fb6VHgiitr3u0MUrB
-	zo9tUWdfrgmy9/43LTnIgLWFN3mpIPdG90je/wDuxz0PLL0O/+SBZKiLPeI1+6iy
-	8KYpagDci3Zdsti2a4yuf9bHf7+M7qni2rByJSKCcYf2VGywTCOCr/U1vSkO5KRm
-	wOZLxDNwgnmmtRpQVnfEVamhaJI7UWOfUYdRgYkMonYg/F4LNvSU7bg/xkLAjJVo
-	zZDfnCnVuk3Fy6VOAHKTK243DUqjzRQ3MLv9yu07CyLkls/qtq23PqPskGUgN2TX
-	PqxJfcQf/ai2pZTT2u3xNcT80sSYqd4WyFdFCGXcuvk/SYfENgOwQwcONNOQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741047308; x=1741133708; bh=V1ba4uj1BcVsl0JfEKR+Vej+CuxMBoE4yHc
-	1TaxOIeg=; b=A9L59KWVWERerf9dX9hL57SdRw0WlTORpCvuLmUYTmE9/ThgtA5
-	h4zQs1GoTNUvUUA2D71DJXoPD+c3mUoJBH2fsThWr+Cbg6aOSgO2dTGCurksYT90
-	O+FkxoLR57ErwWz2DL9ej1wVgyronC5MiH3qd1/pVesSXaHCVe2FqxUB7RuWO4vW
-	A/GnOMwquy9dwEIy5/XoPmSqrZlkxLe6DEP4of6mdTVdJ97W8tNQrQrjZmir/2Yu
-	foUbkEzXzF/BMo5TkjqQUioLBx5m7rMfzXyuUswkZf4ZcRfqbpJYuT+OPhXZLDal
-	7C+u6hyiAAOFONxExl2paUNrYlLwapLLfhQ==
-X-ME-Sender: <xms:DEbGZzggJaO6hQIpnEEsHpDFTbiV1Axte_sXDaVdKHVcE5CF3AiVnw>
-    <xme:DEbGZwAkV13JNw5gINRpZ2l4gW6msBW1BY5LpB8Keegg8-uaOnDRo-d9dNQPF8MMV
-    KqFmKyt5TDkCQgrPQ>
-X-ME-Received: <xmr:DEbGZzGs0i8Lwpb9M1l19goHBhY99s4eh_3WhxGYHgdIseDDUd6Qnq7Ir1IanIA9XyTszkDDrmTDpYzoMbhnVweyP7FrQBInY_MGuv3zpb0WwJEywmlG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddtheegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomhepvfhougguucgkuhhllhhinhhgvghruceothhmiiesphhosghogidrtg
-    homheqnecuggftrfgrthhtvghrnhepgfevfeeviefhheehhfegtefhvdffheefheeuleeh
-    ieffuedvvdeuhfevffeigfeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
-    htohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:DEbGZwTDdiORdfkartWNZJLMYPppTFxVx_BGW7aDpxwal-sVx3m-yw>
-    <xmx:DEbGZwxlukjCKYJq4jJrylZq2Dts0HqnIBF28tC8AdiUtkSJN8vaog>
-    <xmx:DEbGZ25qHH5gafjz8RqMhIl9HRphPnorEPK4wWVdZK4tj0NYl-PIaA>
-    <xmx:DEbGZ1y2vS2YIaGqIIosF9gI_Mld13Oamx7e8N5N8vtoq7tCXhbSlA>
-    <xmx:DEbGZ6s09Y2M6FwG_nQZbTRMGWOHt_041FZRym8htFOjcw2jB7wfpeB8>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Mar 2025 19:15:07 -0500 (EST)
-Date: Mon, 3 Mar 2025 19:15:06 -0500
-From: Todd Zullinger <tmz@pobox.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 01/34] t0450: *.txt -> *.adoc fixes
-Message-ID: <Z8ZGChnWGa3sXD3s@teonanacatl.net>
-References: <20250303204443.360595-1-tmz@pobox.com>
- <20250303204443.360595-2-tmz@pobox.com>
- <xmqqo6yhvl2o.fsf@gitster.g>
- <Z8YtJd078J44snOE@teonanacatl.net>
- <xmqqbjuhvi57.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d9q4lBM2"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30b9b1979b9so39499311fa.1
+        for <git@vger.kernel.org>; Mon, 03 Mar 2025 18:27:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741055258; x=1741660058; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8gIfQ7vqNUaIaxpO/iJt1vHF7lnQRGLFnh0Hr/4fd9g=;
+        b=d9q4lBM2qJDIRaKauK3UZekFRaJxqsLsueC2ApZ341lof2IlaxhKevfAfOyvRixmKR
+         OA1AKeRBjVEG6P2GQi/FF0/RbjjhCmPkdIKJh+hJk5BsERH2+KEBHPsfzyYHKHzD395f
+         Lo4qHblmX5wOBZwi2B6VBUGyYkljPNr+VT46NZpdTIdVMHWw5D0u87NP2G5Cd2V38LTt
+         S8N/CdcSN0kU1lQ9jjD4e2EW80i/jxI9G6DnFljwidDlW2oVKzpDcFrCxXP9N6GGSZJr
+         S3EBtQcB5vwBtTb5ojcDK++DBslu0DggeDnwMnOPKnmgQFsYjCJ/i307gXNMFxBC/t/q
+         XlBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741055258; x=1741660058;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8gIfQ7vqNUaIaxpO/iJt1vHF7lnQRGLFnh0Hr/4fd9g=;
+        b=QeRZR0UTlvuuEPwclai5IaAXz3YPokkcoJbAgV/RJYnblRzSaI3MrxYdCSTm4nOhkA
+         L6zYXZMO96gnFM2ER2HgW9kM4e3k2p/2WhGZ7KpHSNF8XV/D0lnrQa/dctK1cfzltMJe
+         bW3lvlIvWPjplNzArjy7/7mBG+P5auCRQZ821k7qoR33QqgGnnLt53WUmk3tCKQCWaFg
+         Boo84uoTQeiEhAWddJIk/GJLUY61ADDOeKO4+Jes1//pLiYEm5lX1/LK+AHh3ic1zbQY
+         PFOv/Cs4/yGNJqHQHFW7PidFPTsxNLoS9pPzJH7/+0mA5+jWXb2MO76Yi8/cpW1gSKML
+         1UQw==
+X-Gm-Message-State: AOJu0YyvqBH4C1Bx//Ekf8EwP2vDilLbcKlbFMPE2l1uEHEZc6f7oniC
+	Mhw8lvVp/2SbBADpWGy6aL9PCD5YxrlyuRrQVp3tdRco/g57G5gJi1pMKfO+2YuP5ibx/tcV65Z
+	bVPskJjM58KCm+HFMMIUZC/vNOR0=
+X-Gm-Gg: ASbGncupZot2eYI4zAH7BSfEibLLkh7Lv+uc1uZ8OBOuZIrKYeap+aWo4bg+VR4X9fQ
+	6UtkAaNzqeCMrzO+MxSxfNAwxpLvuN6D7EQr+nKiZ+T1dsZ6CHzDA0Bcblvtx+THqwrTT8LKdpd
+	U0mINvQXhLYGDL/FwYNyXQZaJNXOHX9B2pbSy8KRgRhDX82k4IT2zTaN6oDA==
+X-Google-Smtp-Source: AGHT+IGMO4nKOuNaR/qNr9TXotMRiiNVvleKQ7mP64lV3C1++7c6Qbp7sdrvjKlYPY6XciN5wVSznTeMD9/zjyDnwYI=
+X-Received: by 2002:a05:651c:2129:b0:30b:be23:39d with SMTP id
+ 38308e7fff4ca-30bbe230db6mr22535201fa.14.1741055257729; Mon, 03 Mar 2025
+ 18:27:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbjuhvi57.fsf@gitster.g>
+References: <20250301105838.1481-1-danimahendra0904@gmail.com>
+ <20250301105838.1481-2-danimahendra0904@gmail.com> <Z8WD2MeHpOH7Ni8A@pks.im>
+In-Reply-To: <Z8WD2MeHpOH7Ni8A@pks.im>
+From: Mahendra Dani <danimahendra0904@gmail.com>
+Date: Tue, 4 Mar 2025 07:57:25 +0530
+X-Gm-Features: AQ5f1JqeQfWIfyhgj1UZGgOkW-EbUKrG261WFIHzKmE6WrN1hWMMv1P-eHDiWYA
+Message-ID: <CABGrwBB1-UiiPEOptN9csVP1WYg2X=SWeMxxiyDfz02VmDp1vA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] t1403: prefer test_path_exists helper function
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano wrote:
-> Todd Zullinger <tmz@pobox.com> writes:
-> 
->> Indeed.  I haven't looked closely at the CI bits to see how
->> we might be able to improve this.  When we skip tests
->> unintentionally we just don't see that currently.
-> 
-> In any case, while the t0450 was inadvertently disabled this way, a
-> topic seems to have escaped to 'master' already with an inconsistent
-> synopsis section and help text.
-> 
-> Here is a fix.
+On Mon, Mar 3, 2025 at 3:56=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
+:
+>
+> On Sat, Mar 01, 2025 at 04:28:38PM +0530, Mahendra Dani wrote:
+> > test -e does not provide a nice error message when
+> > we hit test failures, so use test_path_exists instead.
+> >
+> > Signed-off-by: Mahendra Dani <danimahendra0904@gmail.com>
+> > ---
+> >  t/t1403-show-ref.sh | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
+> > index 9d698b3cc3..12f7b60024 100755
+> > --- a/t/t1403-show-ref.sh
+> > +++ b/t/t1403-show-ref.sh
+> > @@ -196,7 +196,7 @@ test_expect_success 'show-ref --verify with danglin=
+g ref' '
+> >
+> >       remove_object() {
+> >               file=3D$(sha1_file "$*") &&
+> > -             test -e "$file" &&
+> > +             test_path_exists "$file" &&
+> >               rm -f "$file"
+> >       } &&
+>
+> The refactoring is true to the original spirit of the preimage indeed.
+> But we could also improve it even further if we verified that the path
+> not only exists, but exists and is a file via `test_path_is_file()`. If
+> we decide to do that we should also explain the change in the commit
+> message.
+>
+> Thanks!
+>
+> Patrick
 
-I'm glad that's already paying off; it helps prove the patch
-nicely.
+Yes, sure.
+I will improve it further using the `test_path_is_file()` helper
+function and change the commit message in v2 patch.
 
-I wondered for a moment why I didn't catch it with any of my
-test runs.  But it's simply that the rpm build tests were on
-top of 2.49.0-rc0 and my local branch for this was built on
-top of tz/doc-txt-to-adoc-fixes, neither of which contain
-89be7d2774 (builtin/refs: add '--no-reflog' flag to drop
-reflogs, 2025-02-21).
-
-> --- >8 ---
-> Subject: [PATCH] refs: show --no-reflog in the help text
-> 
-> We forgot that we must keep the documentation and help text in sync.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  builtin/refs.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/builtin/refs.c b/builtin/refs.c
-> index c459507d51..44d592a94c 100644
-> --- a/builtin/refs.c
-> +++ b/builtin/refs.c
-> @@ -8,7 +8,7 @@
->  #include "worktree.h"
->  
->  #define REFS_MIGRATE_USAGE \
-> -	N_("git refs migrate --ref-format=<format> [--dry-run]")
-> +	N_("git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]")
->  
->  #define REFS_VERIFY_USAGE \
->  	N_("git refs verify [--strict] [--verbose]")
-
-The fix looks obviously correct. :)
-
--- 
-Todd
+Thanks,
+Mahendra.
