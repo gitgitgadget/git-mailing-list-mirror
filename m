@@ -1,132 +1,125 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f195.google.com (mail-yw1-f195.google.com [209.85.128.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D222FAD24
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 07:33:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80AD1FC10F
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 07:39:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741073586; cv=none; b=LHFJGbB9W8aS9OxsR/m87qppQr+P4tia2Fx9z2TmkwlmA6UbvqSQ9m7VRy24cJ9t0WcmZxgU31iWeGteEhNqr12eJS6v2hylelMKbYQEQ5TmnlyVtgm+Y93A0VMAnb4vXYQt7uZVp9TVttMFQ+AlKmVzXIWEMSJXObpwVrTCjq4=
+	t=1741073990; cv=none; b=oZ+F9ZdsMEzs6VXC9/cpp+76Q37KBzp/gNrv0hGmfHi89/ABgcw+sHpFF9YVlVgkydsyxQ0agy9VNq3VtVhVwisxSxJOaXYC/qgbUsH944ylK+ZrA2JB/+bA3s7iotWJY9ywtTvjLxXGtPr0K8A61R1j1/8FTOmUUxyRz4TWrDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741073586; c=relaxed/simple;
-	bh=/J9pQXZbxjPcGa0d4PamGxfE4zReYhivVLdC/w7Bg2U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mQ2Ho5ksseA6BP5PIQyr9etMtQHg3Lxn6amTrfbyTkVUG5gTnt4FFk3b4rLUztbOiaQzm3MXYKu4P1dkqodj9jW4si9dmHECkhGQ+h5anVYba6NylLr6e0PgictXjYLBV+g93RNzh2MwtjztDOqy9kZgpI/wgXiFb3WCEFDbkdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Hmjsl9XK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UYQi26Y9; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1741073990; c=relaxed/simple;
+	bh=RJVY96CJTvFLl7PgPTh/kx+/9VdOUi7aa+JJoUfhx7s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kvQLH3pKElPI93qMsqnKuUi8Ma+dDTXXgKOkXo24ya7m/H15jYYjfjWMObJq9Zuwvjh50jJbis/KALyP8MzqGOLXRrua6besKqdtatc4dw34DDCX4lMshUsghqtfK8C/pz20f/kGl8YziGt6oaHI5YXjsMdFFq/oDMOY15HuP/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J/vesOnV; arc=none smtp.client-ip=209.85.128.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Hmjsl9XK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UYQi26Y9"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EAFBE11401EC;
-	Tue,  4 Mar 2025 02:33:03 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Tue, 04 Mar 2025 02:33:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1741073583;
-	 x=1741159983; bh=KTBP5oiCTJG/joE0ZTcg+Y4/0BJiP6R7NVa9WpyYNkc=; b=
-	Hmjsl9XKdklO20biN3RHpVr3j6wwatcmW/O6nigsB0r6yD5+WVY+V5NGRcHcg9LH
-	Vcb/7HDYeWgeMPuEv5/DuAD/dIG/7T1vGrWvdsp+4gRYfASi54FnlfKIo9xbJRid
-	ZCtDJsx66RFhMEk5G2+r1UhPJzQ9WZrGhums9M6sokPw/Q9FGaVa6DwcINKKOAqG
-	/ksRXhnkyTsAhIWgj95EBfs9oLhJ8nizmbQS6gHqcsm9iea77TOLjJoIVxWHyQZR
-	IMqa5HdQpILRfZ9+O86Gf2CIErMT7uAzXDJJE8oS+aV4Rznj7ZCeTgonwgC+tTL6
-	NXE3EwEaLLfJnJsadBa6PQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741073583; x=
-	1741159983; bh=KTBP5oiCTJG/joE0ZTcg+Y4/0BJiP6R7NVa9WpyYNkc=; b=U
-	YQi26Y9mx5RDD+rKdKoTqY5k3quCy/U3WSKZbRhrPNbkX6tdFCqf6+ONFj2WKca0
-	OOyGQE24FSWrvPjl8YrEa89RScE01OiEftqc+T4+WPsgDqFFxKKsh3V0WZadnhAz
-	EXjPito5rbVlJhOQ67uLsTN4XOwTgnvhMqdpmic/IgKWWEQYEEfmB57FJ8HypuGp
-	Ib7O9rTT1xjiqDd69MBPId2xFnHF7dG46gvCxkEGwd+pHVIid8GBWZrkcHG0Yo5M
-	CIeFeD6hH5EA65YmL+GQvEeMxyxgcZFSnRM8vV0A9vXc4sKRTyllO69OuvtuhEgH
-	NKTUHJ2mjlvpmV5+xS3Sg==
-X-ME-Sender: <xms:r6zGZ7-cJGywUTN37mZ_doAQjyV5qI3WksWyGQ3Ti1DaAN-AwXpeJA>
-    <xme:r6zGZ3tzdFrcOI1XxjPAKhWXg9VehwbCtULKkYbbwRJYzuMzIeP5LN-Ve75G5tuX1
-    ByJASiOubamUaIzYw>
-X-ME-Received: <xmr:r6zGZ5AFGjpllY81Rsyei8pr22Tonsfk7wub0jy4378veo3Q5HhOrGIzzEXqwy3sWEeGn-GNX-GNi3iEijt3T2eAxTe7MEAo30uVeLh4lThOqbc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddugeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehl
-    uhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:r6zGZ3cqt2MgjLlc2b0-LaMxW35QYhnLv8Sl3oLOeDaJPY4aew7UMw>
-    <xmx:r6zGZwPDG5nyuP8muepml8XjkxsKjAizPSx2VO285g3Y6VqkNGCd8w>
-    <xmx:r6zGZ5lWsQPBIwL67WpRfZEdd85R96ObJa8cKQl5xTMx6XijguxC2g>
-    <xmx:r6zGZ6vm-NtWEzGjS603GETNfHdahIPeRcbjmiapn4j46t3TX4usIw>
-    <xmx:r6zGZ1qWag-wkiaFqODeMuipQWi1cZ38jO9ljLPOY5zD_9kAM0IE1Tyf>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Mar 2025 02:33:02 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c0202fb1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Mar 2025 07:33:00 +0000 (UTC)
-Date: Tue, 4 Mar 2025 08:32:55 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org
-Subject: Re: [GSoC][RFC PATCH 0/6] Add --subject-extra-prefix flag to
- format-patch
-Message-ID: <Z8aspywaD0mAyHwd@pks.im>
-References: <20250303220029.10716-1-lucasseikioshiro@gmail.com>
- <xmqq7c55vhj8.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J/vesOnV"
+Received: by mail-yw1-f195.google.com with SMTP id 00721157ae682-6ef60e500d7so43605997b3.0
+        for <git@vger.kernel.org>; Mon, 03 Mar 2025 23:39:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741073987; x=1741678787; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DL+HN8KOPQhR8lA4+ipSzL5JZ9nE18GoeYaC+WIhL9Q=;
+        b=J/vesOnV9pJ3GeUede189itm5iK+v8uKWOuf2EMZjz0+Dve3h8ClcWwOYkBnTI02UV
+         jmbJwCjQxFUBHvwwE8VxPqdQ+A7Y7o38uK6qj06hZLHo+BPaxGCh2BgHApwoWoL4iN7T
+         GvMYeMhIajSiuW8TbP92f2Z8WHJuwAzujtdEbALZ6ToF4KoOMyHgvpEjqcX1XUr5+M50
+         qUWmBbLgjSq+HhgxWMXIH6yHVHgv0jcdCIuwSjODn3JsHP/Va2aZl1CE3KE2OyQnqqPA
+         D5t1DFQigvfVTCEhwR36f+BatnSPrY9gRQLxKCphnwdho92BvfscwCkOEs5eM5lAMs7t
+         BVZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741073987; x=1741678787;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DL+HN8KOPQhR8lA4+ipSzL5JZ9nE18GoeYaC+WIhL9Q=;
+        b=VvAvQAZkqFfmXBe6RlODmhRGmafMra7seLGYJf6YO5al49RJWPII9x1+5a6dMcmTpO
+         axg+6/dcog8Rvl4iPTttt4XUm59Oyy3duIjJnClehHolQn0cY7W44/KK/sXzeChX3bb7
+         5wEcr0pT9tnGHzAtNZe2+gBZM6qsCMKU+HHkt4UIMgSaRJ8T+X5HYPN088CTvFEihIyg
+         QCNkMBGEazg63wx/Qekw5W0VwvD7B7ovrZnAyzxcA8faSRdKiDmvsz3JAuWpfDqBZlhy
+         xeAcqH5IPsAr2kVav23HpM/4+gIhsAUulVz3dTqwYjebPu8it9lrifdmxU94aEFbuZ3B
+         1vZA==
+X-Forwarded-Encrypted: i=1; AJvYcCVmQ6K65fxj+UF+72k3bwZelYfSB6tD1CHpiqc0qZeYAf+XFwuU4AGS8KpEs/XVUWIIQgA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxtFKLGgAGB9BkW+d+iJqFOeJ3PWNAkINMWcumKvF0LAnwP+WME
+	v/icWGRu4yBgfzQ+Iir/015+eH43+/6Nk/imi/VPwMtoD0Eva0lmrPRizbuQY51luUB9b/cKEPj
+	fF8HMmOQW//VhlCoX/GwKJXI6L1w=
+X-Gm-Gg: ASbGnculh7hR2Bu1to5h5voY1rGZvsUO5gxdSilPOw9psdxQNvQejPKDNPBfW4NVOpE
+	FzOKLI7phOUaSawAfWkBaKjJkBf7M4D4kYwMM0b9cZbspvx5rH+oGA9OpBttKvFyQb5KQ9SrCjk
+	Fp1Y2blOZlrikbGYfHiWmpaQxn
+X-Google-Smtp-Source: AGHT+IFFLtnavQkGLImwaN2uf2Bpo4byPQlW3A8JnMyPrWT7B1T6teu/yby5cOach38mg+IdOs6rossfFaViITAf7As=
+X-Received: by 2002:a05:690c:4801:b0:6fd:1d9c:bd6a with SMTP id
+ 00721157ae682-6fd4a03a63emr201621747b3.3.1741073987672; Mon, 03 Mar 2025
+ 23:39:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq7c55vhj8.fsf@gitster.g>
+References: <CAAJd+fZSUiiUm05D_eO3HS7p=WoxAWSZo51dUNjyGjUNJBvyGg@mail.gmail.com>
+ <bca5c0ec-0995-421e-9745-330f729357d6@web.de> <20250304063329.GA1283445@coredump.intra.peff.net>
+In-Reply-To: <20250304063329.GA1283445@coredump.intra.peff.net>
+From: H Z <shiyuyuranzh@gmail.com>
+Date: Tue, 4 Mar 2025 15:39:36 +0800
+X-Gm-Features: AQ5f1JollyjouWZb2cJUi5CTKJ-PhVGBtsEIB4LD83JdBLzhmUMdgqvIntRYp_s
+Message-ID: <CAAJd+fZ_EK=ZZKptFjuumx2TLsdQ3s7WxTT+n_x3ARwZw23BCw@mail.gmail.com>
+Subject: Re: Subject: Memory Leak vulnerability in reftable/readwrite_test.c
+To: Jeff King <peff@peff.net>
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 03, 2025 at 03:08:43PM -0800, Junio C Hamano wrote:
-> Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
-> 
-> > Subject: Re: [GSoC][RFC PATCH 0/6] Add --subject-extra-prefix flag to format-patch
-> 
-> Hmph, instead use "--rfc=GSoC" to do [GSoC PATCH n/m] and please do
-> not pile more "extra" on top?
+Very nice fix, thanks again for doing it!
 
-I do understand though that `--rfc=GSoC` is not exactly discoverable for
-a newcomer. Maybe a simpler fix would be to introduce an alias for that
-option that is more discoverable? I don't have a great idea for how to
-name it -- the best that comes to mind is `--patch-prefix`, which
-mirrors `--subject-prefix`.
-
-    --patch-prefix=<prefix>
-    --rfc
-        Prepends the string `<prefix>` to the subject prefix. As the
-        subject prefix defaults to "PATCH", you’ll get "<prefix> PATCH"
-        by default.
-
-        When `--rfc` is given, the prefix will be set to "RFC" . RFC
-        means "Request For Comments"; use this when sending an
-        experimental patch for discussion rather than application.
-        "--rfc=WIP" may also be a useful way to indicate that a patch is
-        not complete yet ("WIP" stands for "Work In Progress").
-
-        If the convention of the receiving community for a particular
-        extra string is to have it after the subject prefix, the string
-        <prefix> can be prefixed with a dash ("-") to signal that the rest
-        of the <prefix> string should be appended to the subject prefix
-        instead, e.g., --patch-prefix='-(WIP)' results in "PATCH (WIP)".
-
-We would hide away the optional value `[=<rfc>]` of the `--rfc` option
-and instead advertise `--patch-prefix=<prefix>`. This would of course
-only be a cosmetic change, we'd still accept the optional argument so
-that we don't break backwards compatibility.
-
-Patrick
+Jeff King <peff@peff.net> =E4=BA=8E2025=E5=B9=B43=E6=9C=884=E6=97=A5=E5=91=
+=A8=E4=BA=8C 14:33=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Sat, Mar 01, 2025 at 12:31:33PM +0100, Ren=C3=A9 Scharfe wrote:
+>
+> > --- >8 ---
+> > Subject: [PATCH] reftable: release name on reftable_reader_new() error
+> >
+> > If block_source_read_block() or parse_footer() fail, we leak the "name"
+> > member of struct reftable_reader in reftable_reader_new().  Release it.
+> >
+> > Reported by: H Z <shiyuyuranzh@gmail.com>
+> > Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> > ---
+> >  reftable/reader.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/reftable/reader.c b/reftable/reader.c
+> > index 3f2e4b2800..f38c83f140 100644
+> > --- a/reftable/reader.c
+> > +++ b/reftable/reader.c
+> > @@ -666,6 +666,7 @@ int reftable_reader_new(struct reftable_reader **ou=
+t,
+> >       reftable_block_done(&footer);
+> >       reftable_block_done(&header);
+> >       if (err) {
+> > +             reftable_free(r->name);
+> >               reftable_free(r);
+> >               block_source_close(source);
+> >       }
+>
+> Coverity complains that "r" might be NULL here. At the top of the
+> function we do:
+>
+>   REFTABLE_CALLOC_ARRAY(r, 1);
+>   if (!r) {
+>         err =3D REFTABLE_OUT_OF_MEMORY_ERROR;
+>         goto done;
+>   }
+>
+> and then the done label hits your new line (the "done:" is right above
+> the context in your patch). And err of course is non-zero.
+>
+> So this probably needs an "if (r)", or multiple layered out-labels.  Or
+> alternatively we could return directly when the first allocation fails,
+> since there is nothing to clean up at that point.
+>
+> -Peff
