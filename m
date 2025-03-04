@@ -1,108 +1,151 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB26202996
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 17:49:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D43202F89
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 17:59:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741110596; cv=none; b=tq1EM6WlGpBZFo+yYlUTUi9Ocuwih3c9QjM+rYJ6cWb3iYbcaAo6AqlzMr48CwnWjNxUHS2HgAUpslBnSmQZ20ODJj9Er4BOwj16uheBJz6Fx286RMxfMOyrjBgOXw5k3sf8ygugjakdFDMb771xZ289YeJkFxvDPe2FhaCKzPI=
+	t=1741111157; cv=none; b=WFFRcWxKcp1B4F8g+WPChT+OL2NKMhJle7hv0e+S8R0kvx4IhXMK32qabSxOmIy5FLYolwyixJxdVOn/0UKZCX05ml4pjtQklkxZM5q2Xpfn4ckWh4/M0SC8glVOasC28SNlTRr7BObHrJVMpnQ5xGG6Bp9QC/25DmYkGvX84zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741110596; c=relaxed/simple;
-	bh=SCpdKL0GylMnatdPGiEWPucigMSRgq4d/HVgK0gaOVc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MfEj5Be1hKAChoknd5LFmwBETWBAuSSRc/HBn4Mv8V0UrEaYOThwV5PvVYV/9dYljAfX2FrLZ8VqkO7jXz694LRFTq89VQV8F2a1BBfJM0cpOwaZ4QAeXIXoQhjh53nsn4SOm605owEOvPdHg+wLX4fUHeNXenEoGAOWALL2hR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TzGRO2bs; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741111157; c=relaxed/simple;
+	bh=YkiUl817/4qZFJte6qqha73Z7TYxH0B7eG6Zum4TyZ4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tNKgpl+ciO0QtZHZSt9/B4ZndQd45uSj3GxStcZD4h7LPMDt9UIXxDOauootgSdJVZ+lPAUUhBdsKlfAShoziUWLLirM7aJzT70stZtlz+nsFYeYTZLOidY1/MYHkG8qLKZlaRog3oNqw0ZVZ6evNmcyH/jKx7piCr8rQpSShSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hrndDw9x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5nMHnyq7; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TzGRO2bs"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-54973b49353so1560745e87.1
-        for <git@vger.kernel.org>; Tue, 04 Mar 2025 09:49:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741110593; x=1741715393; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HVVAM7L0+MvCUrrVWu2tY61N2EYBBHX8FMK/RIbDp28=;
-        b=TzGRO2bswCpDYUtUnaRYx66oHN9wm1l9UURJJYUm087hyi3d7vK4CzSQhs4fwNBVq+
-         ZGf6fNN3qBQX50SUlTJHLOghzRotnpOHHVrZAUHAxz+ufzKHJafmh4ccrjsz2twyzowq
-         75cOmY4DK96dCDdfYoVBTQST/hButCKTV6eRjUGI7uBXkZEMedREDcAG5ZET64m5eRnh
-         ESsBE3ed1wiwKBJu4+xrVoPIXsvRuIKjgaTOVw0L66h9U4XSVKQ4K+JKgqag6XMGwJYr
-         HDyrN3Ixa/Q/VBXVsMYEbW6zodozSsdJLRPX4J5Kg8iEA18OEFF/Ifz2v/Qc8SYCTL7X
-         CVQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741110593; x=1741715393;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HVVAM7L0+MvCUrrVWu2tY61N2EYBBHX8FMK/RIbDp28=;
-        b=BPqQW8k+OYrhZl84u/fQ0W8XXU7QNc7kWFHAVvyKvaGPEUoq1AVvDZwR6INKVDxlRc
-         6e2+9g9rP6VojSfb4vf8cEbO7o3KqLOazzpv11anIvwn9QAXVllvJRBoQ56/VOKLwjkc
-         gFIXZMca9nHaBViYno/VbTjCVRn+F8THgxcB7PVvVZm0UbYikNgWalEJJNMt2ZRXzAjh
-         YCRSKXZlqxU54hYn/N2aeTxhvPL8xfrDIOrvDcTi2x0xm5wui0JF8/Zbf9pJyM81ZNe8
-         AWuJXq1sBj96UIMh+YtsOY8THyTjUPNZro6ASUGyFqaogNuV7a0Qf/3sK5bgzchKvaS5
-         eyYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUmqYRtRkDc3CErak36aLFC2eW1OjTy7nuiNIH3UEY8Q2jC+Np1nBboGVIHs0/kR8EdaHE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzWyqVCCGo6vA5xDKzZ0XUQc25GyTvtXHeade4ZSuoVUNuM2Klx
-	NcNgSzyFQzY40R6XQLPVx+gVA9agqsMKTm65ZcHgVksA/RfHox/ne6cPUj4rEzj5lco/9nV8fdh
-	8gBG8QmLhkB6VjAEINUjztDRqg84=
-X-Gm-Gg: ASbGncsuTXuOdu7p5Iq2bTEYgwa10wrZyMe3WIwTYzP3htyjQk3L///1XpTKIR4jcKe
-	+pC4owCAsmduTOSNo3h06zRef3s0E0pMqYTflClFq9X+b3Ga8D/eMYzwlqWMmU3mGy6j75UeMs5
-	6SgFdRetkV9qT4n1kvdvcMers4xxFwxJzuMva74pn0DGqRN1vIoZjPH6x/0g==
-X-Google-Smtp-Source: AGHT+IHqsdLy2/vq4doh1iclwQDHh981fsaGrrzlKFkhAEJkIs8w1V2eWTExlp0bHWGoyeUm+322Vx8vxQfhx+QGU1c=
-X-Received: by 2002:a05:6512:3b83:b0:545:9e:bed4 with SMTP id
- 2adb3069b0e04-5497d383223mr10517e87.52.1741110592872; Tue, 04 Mar 2025
- 09:49:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hrndDw9x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5nMHnyq7"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 02DBB1140222;
+	Tue,  4 Mar 2025 12:59:15 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Tue, 04 Mar 2025 12:59:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741111154; x=1741197554; bh=5EMNSdiuEa
+	UkOpqWQkoRx9FPnTz4ghjgmsmdyqc7JDU=; b=hrndDw9xXwa55x48hkmJJ58IND
+	dOr2p6uG6VPKmX9CH2Bkcu6GcK/5/7Qack724vDvi08kbp0I+95TrdHYuYeXxVo9
+	A6b2LRzKAVzXJj8sucwO23Xm/RfFFfmbuGvPEb4u8Tc/0loj54QPykSKXfQWlgjI
+	000/HWG2lwCx+xTE79Yenomq8yL9+ph4YPm2VyRmDIQ7Vom5hRki1xTk0ZDd6o5p
+	ZA8ShGRcwK8jYKGfffNn9lQmsDYdrWhTv4JTgKY2L8Dikkw6gD3bPSYQ0pgEScqd
+	TomEKGQq79wauxChdfbNOynvieNQM8HIqLA0nkADkBPbuAIuWH0MrkCyRBjw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741111154; x=1741197554; bh=5EMNSdiuEaUkOpqWQkoRx9FPnTz4ghjgmsm
+	dyqc7JDU=; b=5nMHnyq7KU/4luIVzqf9scqvZsW1gx0jNIV0/3HEeiBCtnZofSQ
+	AdTEFFezoylCuJahbeePMerTNLGBPO3g+LtjbKmwyICOZwJ2lCBZC/sKAuPinyoe
+	oZDawVjJvXfdijnAR1yqHB3zdxnhcFI9QWsnNdVPs4Q95G48ewwJ1xMeFn1/iH6g
+	YlKa0rihbC+UvDGtqrJ2f2X/A6sM69tTubsHV3dd+/5oxNOmECpbduXChmxGiNiW
+	QrQEyMnr2cPF21oZI8AgmsiA/9hcNAbhDg09ScM+uPpiU3uI7NdsH+wTIxFzczQj
+	+7TZHYoBUbttP+Ri0kY7WudVWfLKVHHF12Q==
+X-ME-Sender: <xms:cj_HZzL1LfhiMr2NOnrzbrchJOpE11hRZ4Jagh_s8QK9veTLCxc2jA>
+    <xme:cj_HZ3Ju6qOT1Rrl1MV9LQQB0KdhPQ6iuKoM2qCD9xzlzRqUWLAJP-Nxsj_BPDogu
+    rZNxWn9BUOaZC54UQ>
+X-ME-Received: <xmr:cj_HZ7vKgw4x4iUU4uKNA_fh82pJFSaJvtyDVgnc-IfeAcAEws2BRvyybaSqYAWTEyGAEA00p4gMAqJtAgG42Ao6t6emdBaWNZS0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddvjedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhufhhorhhijh
+    hileeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllh
+    hiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:cj_HZ8a_iOlToAy78wn9_VehfXGcByp2WPgmsP8ZAVyN8S_XpjW1BA>
+    <xmx:cj_HZ6ZPUQbwFnFYLmqWPpjaFS3fNVKtJfsE1avQro3o0iVXVUoC3A>
+    <xmx:cj_HZwCqHKBZ6LFAVYv0qq3i3xTbtjB4KAdO4q-oQS2vlMlXJ7ydCg>
+    <xmx:cj_HZ4bzjRfVE8C3vy4izIXwYUUeD9re9xx8fRyWMSbs03P9j0zAKA>
+    <xmx:cj_HZxwG5Qt8vaoGErz_NF1I3JJ-YDh7aqUco_M_Ee6elpNL1RJoWsvh>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Mar 2025 12:59:14 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Seyi Kuforiji <kuforiji98@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] t/unit-tests: convert trailer test to use clar
+In-Reply-To: <20250304113323.10564-2-kuforiji98@gmail.com> (Seyi Kuforiji's
+	message of "Tue, 4 Mar 2025 12:33:22 +0100")
+References: <20250304113323.10564-1-kuforiji98@gmail.com>
+	<20250304113323.10564-2-kuforiji98@gmail.com>
+Date: Tue, 04 Mar 2025 09:59:12 -0800
+Message-ID: <xmqqzfi0pthr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250301105838.1481-1-danimahendra0904@gmail.com>
- <20250301105838.1481-2-danimahendra0904@gmail.com> <Z8WD2MeHpOH7Ni8A@pks.im>
- <CABGrwBB1-UiiPEOptN9csVP1WYg2X=SWeMxxiyDfz02VmDp1vA@mail.gmail.com>
- <xmqqldtlt304.fsf@gitster.g> <CABGrwBAaN3U8WCtPgd+UjVjsoBniCawWV3U+WdKOzBdG5LxmAg@mail.gmail.com>
- <xmqqwmd4r9jx.fsf@gitster.g> <CABGrwBBaHzM9tE6vWkuMSZuUbHVWwCZVTgkvMb04C=NYyGCLAw@mail.gmail.com>
- <xmqqsensr8r9.fsf@gitster.g>
-In-Reply-To: <xmqqsensr8r9.fsf@gitster.g>
-From: Mahendra Dani <danimahendra0904@gmail.com>
-Date: Tue, 4 Mar 2025 23:19:41 +0530
-X-Gm-Features: AQ5f1JoM7hjcXBe0E2uJByIRUzcj-BmXivUtcAmBDcyxQXF-mgK4ZMTbRuIdU9g
-Message-ID: <CABGrwBBbtiWtMnwJV3Pefo8VDH2LYWsH2QKG-TG_AEdZq5585A@mail.gmail.com>
-Subject: Re: [PATCH 1/1] t1403: prefer test_path_exists helper function
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Mar 4, 2025 at 11:14=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Mahendra Dani <danimahendra0904@gmail.com> writes:
->
-> > Yes, due to the use of the "-f" flag, it's not necessary to explicitly
-> > check the lack of file using `test -e`.
-> > But if we drop the "-f" flag, we will have to check the lack of file
-> > using `test -e` or
-> > `test_path_is_file()`.
->
-> Isn't it the other way around?
->
->     $ rm -f nosuch ; echo $?
->     0
->     $ rm nosuch ; echo $?
->     rm: cannot remove 'nosuch': No such file or directory
->     1
->
+Seyi Kuforiji <kuforiji98@gmail.com> writes:
 
-Yes, you are right.
-With the "-f" flag, `rm` returns exit code 0 irrespective of whether
-the file is present or not.
-Thus, the `test -e` check is _required_ if we drop the "-f" flag to
-return the correct exit code.
+> diff --git a/t/unit-tests/u-trailer.c b/t/unit-tests/u-trailer.c
+> new file mode 100644
+> index 0000000000..3d60ea1603
+> --- /dev/null
+> +++ b/t/unit-tests/u-trailer.c
 
-I apologize for the mistake.
+It is a bit sad (not your fault) that this is not shown as a
+rename+modification patch, as most of the logic seem to be straight
+out of the original.
 
-Thanks,
-Mahendra
+> +void test_trailer__no_newline_start(void)
+> +{
+> +	struct contents expected_contents[] = { 0 };
+> +
+> +	t_trailer_iterator("Fixes: x\n"
+> +			   "Acked-by: x\n"
+> +			   "Reviewed-by: x\n",
+> +			   0,
+> +			   expected_contents);
+> +}
+> +
+> +void test_trailer__newline_start(void)
+> +{
+> +	struct contents expected_contents[] = {
+> +		{
+> +			.raw = "Fixes: x\n",
+> +			.key = "Fixes",
+> +			.val = "x",
+> +		},
+> +		{
+> +			.raw = "Acked-by: x\n",
+> +			.key = "Acked-by",
+> +			.val = "x",
+> +		},
+> +		{
+> +			.raw = "Reviewed-by: x\n",
+> +			.key = "Reviewed-by",
+> +			.val = "x",
+> +		},
+> +		{
+> +			0
+> +		},
+> +	};
+> +
+> +	t_trailer_iterator("\n"
+> +			   "Fixes: x\n"
+> +			   "Acked-by: x\n"
+> +			   "Reviewed-by: x\n",
+> +			   3,
+> +			   expected_contents);
+> +}
+
+This is inherited from the original, but the hardcoded "3" feels a
+bit brittle.
+
+Would ARRAY_SIZE(expected_contents)-1 always match the expected
+number, I wonder?  Even if it is, improving it is totally outside
+the scope of this topic.  I am just mentioning this since I will
+forget if I don't ;-).
