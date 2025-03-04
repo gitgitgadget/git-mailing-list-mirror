@@ -1,102 +1,88 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDA21FCF7C
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 09:27:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284DF1F37CE
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 09:34:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741080453; cv=none; b=CIpeHflQx0HkaiX/vezKbK1JEDaz591x29/23/p/c6vjV7lKlhv/tvI3OsenLPy414elBkRuxwSz1ABz3u+V5Ra0HGn2fF59wT8Y9qjAecv/ke/jowSH8stRM+jzXDCZbxfJAA5ht848W9iixG+4YLUOSWeSj8RzKYkwqhVE0KA=
+	t=1741080888; cv=none; b=VXw2V7bynxruxwqhgHReIhyWPhqxQFU/WZAhasVXCJzrPpsgStSaWqeOG7zOZVenhyIjpsOpeg/xgtxH3ATXXUkjGNkaxp/F/CqDdBZJX9a8Ve85/OMdSC3UP+wGZhtj07J+kAqZrlorcmv3yLYS9llcU3E7anppV5Qiu3OZq7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741080453; c=relaxed/simple;
-	bh=G7T2hXAtaL1M0X+vGu/E6KsguYtyz6owh77MhwT0a5U=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=U7qYcPAG3MV8RIFpd8Ooe/aPc8JFNY7uQuuq2HuK3+m5FG/YK5rYKX9OaK7qDq3/UPf7EYIJnrfOjYJKecYI4GFGGkgcA8egVdjLAsTsj45A8r2eBfv7HR75HeUD6hqpsD0oMgUZB289EnV3Pz0CbSWy6ysRvhHteLW3YUZn+/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d1Y/1Fco; arc=none smtp.client-ip=209.85.214.176
+	s=arc-20240116; t=1741080888; c=relaxed/simple;
+	bh=AByzqV2DCaZSUYrDi0/eKhk6yDlYteotDl2qynjEif0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=KUQG4e/il3/D/q39xx4qt90L/bLu0moCI7o2u1IrAeSywiZJgG7CPBgtyjPkc82JFITY5/wNQB488RWrJ7zEBrrQ8vrWFrZzaTyVZ/CS1MqBoPK1ueERBVafj/yqBb8Zet4CRxJzbnoKGxQSEE9Ny3/CkDdc3zSmFIxEq+P2vxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AYAIhJdQ; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d1Y/1Fco"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2235c5818a3so66655045ad.1
-        for <git@vger.kernel.org>; Tue, 04 Mar 2025 01:27:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AYAIhJdQ"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e3983426f80so4500267276.1
+        for <git@vger.kernel.org>; Tue, 04 Mar 2025 01:34:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741080451; x=1741685251; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1Qk7PHbGAO2P45jiVlOxlUZ0NSGvZDOG8uBk/PqG65s=;
-        b=d1Y/1FcoNggoB0iZp2fAvjVLtNV9DkRqqFzurMqSURY7LNrmZINDnmIb27JRJkxp2q
-         +SLF6cIFwI7yfKcFTrQUO0zgkkm33s5TAJopV6x5LKRbasP/NbM1e08QvM5TcXvoaHrf
-         o1xIRJMlAZESMbCmqLpTKjkmvGseh8w/zSKnAHo8/gl7HbEelifGpXBzpIQZxSVKZKZV
-         ExOLJ1b0As+B8zohWlq524GR8IuDApX2zxRA2NqQDq/aJH09n4XXKr+ZnQ9sH48pIDul
-         izGQLNTrhuG9AzXFOK/lskVEam4/JWLFzNPlX9mqVfZwaE94YkhK3Hrv96zvLXUbkbKS
-         jSHA==
+        d=gmail.com; s=20230601; t=1741080886; x=1741685686; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=AByzqV2DCaZSUYrDi0/eKhk6yDlYteotDl2qynjEif0=;
+        b=AYAIhJdQHFDxUCobpjEOeVEVT97s49XO0RjaMaWmlxZS1nzrfHxrlMM6Z5XFiKdAxv
+         noEPjVo88Y+yeANpWhncOPchEGRjHG6HI0HG4G3tCQ7U69hApDt1l7A1yFvbh44s7gsB
+         xfDxrLVVSW+g0rSPc8TvmUzuJWkuZT0tZI8A3mVEjjuSM/SLers8Se9CMkl8l77t8qaz
+         craSNxqfsgGF7j1ngpvvrzhZO090yPgROHg1pC+9kRlcTPP9J9Jm5pOn85SRsHEzehga
+         GEX1sJT0EsXNDig6ZkbIaAE6WkdG2SGsDDO5EgeNogIleGIFykMdZBSAOlrzxg7EeZQg
+         9hEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741080451; x=1741685251;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1Qk7PHbGAO2P45jiVlOxlUZ0NSGvZDOG8uBk/PqG65s=;
-        b=V83Cz++aJIXh2ehPchjRf74uelD5GeDLXdDMg1Pptijlghriotaa2CqoWcdliUiGWm
-         80unQHHswIaKAYhY3qZkebbyaLPBjhnMRq7WLyB1+0kH3sa67TTjPVRHdA4+OycyLbBF
-         8K74nYU25+OxoK7F0L/ykyXPU5J6mOmWA05sMjTKVypKhSNZPS9hvAbFFXUJn0qo7ws7
-         Md9KLWGlNALdgz9tcFxodAZuuyzMiDuV0Kc2s5P0DMxegrqfM1NLbLcujMBYKRqhHtU3
-         ARrEFnro42wb2PswtoHNYBAaBm9YWl6hRM2E60HPGvi3+8DmUe3rFJhtNedzyKPZAHOX
-         TrGA==
-X-Gm-Message-State: AOJu0YxSaYJTVqArt6C1ZUQ3tazBsLZy4VkgBRuPyO7OZ1cdHwIH2BlZ
-	xQc4a7uqLxeHo2BzRM/uOC1+s4cd+4+VrnsmQGQgF1S/nMj69KHAepp+J0Bczx4=
-X-Gm-Gg: ASbGncvMzJFiOrZIaMWPq92ovtFNPBtZJsuDS6PPtEcxdNIzmJE1Fw0ctrnH4ivUGNo
-	a4RSzQw0pgS+/y/Q+j0NWs89BBQInWBxH5VYxlAxcYPF2JVyeUdIEre8E0xp9hAj94SfibLM5qq
-	co4WbMXqTnT7dtD6hQm9d6vHPezeFAWTuoP+x/LGmOnCDAanId7QIIAVjPcUHRhX+VF7BmyVAEq
-	G+r9a1wmtL2M7tMwrQiGiz0JXxvsbp3l4bIxPM6mBHDpjWaBgjrFA5ktDGMnnlgaSztLHN3Uvwx
-	+io1BXONcyLIlL7BnAHi6X0yopdvbViXmk6eAisbCLzmzgjcMmsF79xXGaaNc8bTp8v+kdRTbMC
-	Lk5vs0oM17WH305s=
-X-Google-Smtp-Source: AGHT+IGEF/lq8Hg3PSKAzR+eHgyDy3rKPOhXGOU2ogpY3pw2Ua5ZoamaB7W7CEpNk7DmXv4izBVmCw==
-X-Received: by 2002:a17:903:292:b0:21f:7e12:5642 with SMTP id d9443c01a7336-22368fbee43mr229958865ad.18.1741080450629;
-        Tue, 04 Mar 2025 01:27:30 -0800 (PST)
-Received: from localhost.localdomain ([2409:40c4:307:e1c:f069:cd37:99b2:31c5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223501f9da1sm91099985ad.68.2025.03.04.01.27.28
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 04 Mar 2025 01:27:30 -0800 (PST)
-From: Mahendra Dani <danimahendra0904@gmail.com>
-To: git@vger.kernel.org
-Cc: Mahendra Dani <danimahendra0904@gmail.com>
-Subject: [PATCH v2 1/1] t1403: verify that path exists and is a file
-Date: Tue,  4 Mar 2025 14:57:22 +0530
-Message-Id: <20250304092722.25757-1-danimahendra0904@gmail.com>
-X-Mailer: git-send-email 2.39.2 (Apple Git-143)
-In-Reply-To: <20250301105838.1481-1-danimahendra0904@gmail.com>
-References: <20250301105838.1481-1-danimahendra0904@gmail.com>
+        d=1e100.net; s=20230601; t=1741080886; x=1741685686;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AByzqV2DCaZSUYrDi0/eKhk6yDlYteotDl2qynjEif0=;
+        b=Jw7GFfwzkx2IfIOMCb5iT6vCS5A7pt/v95tXiu31btc6wyW1v9EdJLTUApKrPVOpqi
+         6KCF7VnVphFRUW/esbb1pPqLVfhv2GRttxMkmey0KXEFGUJi6BNQgHs+LMm9RDyLcPeT
+         B4+mbh1jePg8MFFSxOfNKjZcz6j9bpE5eS2Rt33/7YJFtEjgswyoHXbgFcjaWxi5w8Ia
+         c/KVN7uyWQ+ccO9E9aFKipbde+6YCp3mkYnMTcQ9iIRIdjGC+WkDDLTdU99ndLJh1afj
+         QTbYotxRmKk6GVGnMezB4EFpV9HVU8RGAr4VkohACyu5TwQ3nNnht3PJLLISFJXbGNqC
+         sTTA==
+X-Gm-Message-State: AOJu0YwXKEQOZAv1QtVUqWGp9jNKs5LpKFsD4L+qtPyiqxg+MEfdygPN
+	TszrTi1tjZHW4vdoTK6GE/j/2ljOMFvry/8WZZKU07lVNcyfpnj+nSoGA+eXfpC5cXCDqDysTHO
+	IBepTfc5wbRq2fGJNTAnTaTkfaYh1YaiPDto=
+X-Gm-Gg: ASbGnctqQcPjz1n6UkZjUpIMJAitGLHvfbeBfZxkSi2ipfFmwRAAKpy0dlLlgBfRhJn
+	7y3KzBTzwqwWLA2qljBgNo/Q77sWzWRnxULY9qEUODHZuFpAIcrv2ZQ3UxzzrvQb2LaEAJUDq7j
+	WVJLDy/eUKqSMHvHsupnZtTCOlCDc=
+X-Google-Smtp-Source: AGHT+IHg38+RFtS2ev1CGPJyNSOl81dKgKaf2qE3RMqQ0EsWxp6Pfacf5myIMEhqTEHblJCFqCJPcf3y/aqaO6t4ACY=
+X-Received: by 2002:a05:6902:2501:b0:e60:a70b:23c9 with SMTP id
+ 3f1490d57ef6-e60b2f2cddcmr20369112276.32.1741080885933; Tue, 04 Mar 2025
+ 01:34:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Hisham Hasan <hishhasanstudent@gmail.com>
+Date: Tue, 4 Mar 2025 14:34:35 +0500
+X-Gm-Features: AQ5f1JovU94VNTvS8O7wHhX_WW7Q_Vfg9n-AbzifOSKV77KE1EJ_8n6p5CV1JQg
+Message-ID: <CAPPeA_SNEbXMJnz=-qAjNoJZFWxW1fV0yQFsZYzW9VcwEUOSjA@mail.gmail.com>
+Subject: [GSoC] Introduction and dev environment setup help
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-test -e does not provide a nice error message when
-we hit test failures, so use test_path_exists() instead
-and verify that if the path exists then it is a file using test_path_is_file().
+Hello all,
 
-Signed-off-by: Mahendra Dani <danimahendra0904@gmail.com>
----
- t/t1403-show-ref.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+You may refer to me as Hisham (he/him). I am currently doing my BS in
+Computer Science.
+I meet all the eligibility requirements for the Google Summer of Code program.
 
-diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
-index 9d698b3cc3..4afde01a29 100755
---- a/t/t1403-show-ref.sh
-+++ b/t/t1403-show-ref.sh
-@@ -196,7 +196,8 @@ test_expect_success 'show-ref --verify with dangling ref' '
- 
- 	remove_object() {
- 		file=$(sha1_file "$*") &&
--		test -e "$file" &&
-+		test_path_exists "$file" &&
-+		test_path_is_file "$file" &&
- 		rm -f "$file"
- 	} &&
- 
--- 
-2.39.2 (Apple Git-143)
+To begin with, before I start working on a microproject, is it
+possible for me to contribute to an even smaller task (A
+nanoproject!?) that pertains mainly to something like a minor
+refactoring issue. This is mainly to ease myself into the codebase,
+meet with members of the community, and gain a better understanding of
+my capabilities here. If this option is not suitable and it is more
+preferable to start with a microproject, that's perfectly fine as
+well.
 
+I have looked at the SoC 2025 Microprojects list and the SoC 2025
+Ideas list. I am currently setting up my development environment. I
+have cloned the git repository to my local machine. I would like to
+ask some clarifying questions about setting up my development
+environment as I couldn't find adequate answers in the docs.
+
+Thanks all,
+Hisham
