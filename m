@@ -1,90 +1,137 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB811DFD8B
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 08:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0711FC7EE
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 09:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741077221; cv=none; b=fndN5QYXirZFE0dxABiuCyCx+jhp7r7s9rZBKIDUZfDduLqv9CFgyqiSm1GI4g2TJgx16hnnMypjrxOJH1OBRI6m8bkgOwQ7zJvGSQ/pZudLWZy2/93fE6DRSdwUckgdwWA3Zh838ICdk0DlQfRCwzoe/fHVrES+2d8p35LhtEc=
+	t=1741079281; cv=none; b=lFU0neFej2XUygK99ogJg8xRzNx1XFTPQn2nFwkabNEz48I7o5Nu3M1ZyYs5Z7lrsgWO+e2m3LRBfqiy/bd6eWHWlx3ygi3eVkFaZhKqCMTLetuWcvZdg4hANHGERii5pZWUdD2MRsh0ve5PzQRN+xHOPsv3Per2jRzoF8cG8Pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741077221; c=relaxed/simple;
-	bh=kPObWwLA46yUss4vKoznQv63PtQX66D5Wbmi6gQXf0o=;
+	s=arc-20240116; t=1741079281; c=relaxed/simple;
+	bh=4Iy+RYC/2fZKuXzIyEvWFgtz0GouQcHycJMQ580bciU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CbGOLjdBSO84h1GwqVfHaAvni+pJLvnPgVpbZPmAIgegTcsd8qvK6ovrFTlAes9c3UBXVBTEn25xfyw9HEYw0fWxXdygosJUOWopxxNWK0HE2mcTeK2mfMStmVu13YRK1Ry3lML1i1nlVs4UgL+xyP0Lso8pByAYBVSHRzDnzmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=H7GbH8e9; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=oVoWXyWFD5KgqRweX+IIEYFYbXDUBUDl9cYr6q/APFVcQdgrpeAcbaRACbmL/UoHovkw7I4X4cOIxE/6ArbvQCdNbUWaYjOUgeCrIkEVAPTYELiI37gey+3yEJdp7SKVj7FYFTcDImpKy7dEAvGtcE9QVHSW3GOws+Gl5fDQ/cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DU73JwKA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vxzWmYgI; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="H7GbH8e9"
-Received: (qmail 10330 invoked by uid 109); 4 Mar 2025 08:33:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=kPObWwLA46yUss4vKoznQv63PtQX66D5Wbmi6gQXf0o=; b=H7GbH8e9lTdq5QvWdhhYfuZGLet0pBJqzudyeCwRVRj6oBMJQOz6s5fD+xaYjinmIjC7GbxSgb7ZZSf7lWojsU2ir/+8eLvB3LlUaD54RjAEAzri7TpmBx2WqQuvYij01jnxe6sCiRH3goEAJHfUuzHP0KNu12BSeiT2O2sZxCKV+kXJTFUhrWp60RVMBPMx+tioxq/GNcf5YTiKGt9wXrdQIQRQOc3tqGdfXac2Ai5/wbx9qmb0TqOWQ9mtJgzlOOJcYfzDp99O8k02LLH2VRWjkacX4OBNdErPFDe7jf14ujZ6PJCarRLs8+NjKq0N8Kx435OyKonpsEBXoL4Ykw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Mar 2025 08:33:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23481 invoked by uid 111); 4 Mar 2025 08:33:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Mar 2025 03:33:38 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 4 Mar 2025 03:33:37 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, Michael J Gruber <git@grubix.eu>,
-	git@vger.kernel.org
-Subject: Re: [BUG/WIP PATCH] unit-tests: use clean test environment
-Message-ID: <20250304083337.GB1297837@coredump.intra.peff.net>
-References: <e3be6705d103ccbc165d0fd3b9b7c818d14001e9.1740516033.git.git@grubix.eu>
- <Z8GVAjwZWOM7c2fR@pks.im>
- <xmqqseny40kx.fsf@gitster.g>
- <Z8WFcaEtMCD5C0EN@pks.im>
- <xmqqzfi2xl5q.fsf@gitster.g>
- <20250304073010.GC1283943@coredump.intra.peff.net>
- <Z8auRqylLYuwalAA@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DU73JwKA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vxzWmYgI"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 46BB81380B39;
+	Tue,  4 Mar 2025 04:07:58 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Tue, 04 Mar 2025 04:07:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1741079278; x=1741165678; bh=ILIn44vWdM
+	YQ1AJ0C9r2n4+S2euz5cLg6PX7g6Lk7dk=; b=DU73JwKASd5tRz9yMGuBOZqEX3
+	zoZNGQvqe9X3flm4fpgAZ86GeA7/lINLr93CM/Vz5NSUi7hZZUftOocVtt+FSuIQ
+	mM7sZFFbzg7TOVEUfs5n7cr6XEFTqQn87rbwOWiBQL4GihTXeEtwp3E9awantsYL
+	ZkHQ2u9UnynsIc3pUBuhcxnCAZeyZGlGHgC82hLvKZrrmrhDoj/K17lVM+6Kern7
+	NqrJ4KXZX/NPrEza/9I9dn43p2xjFw9DYyfLY0GBQy/RquBXBxbD9rPbRAdiMMMv
+	vmMesjX3Jy5C5iPKk6cx26kkBIkMxS6utD4oCmdSxIRW/J1NjcP5hKfs20/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741079278; x=1741165678; bh=ILIn44vWdMYQ1AJ0C9r2n4+S2euz5cLg6PX
+	7g6Lk7dk=; b=vxzWmYgIctW4BzsFxIGwXppUfIM9YfrqdQI+6JxzpMdG+iEbbOB
+	oGaSDmmudKo+KIEAm5P46Zze4SVr76LZeaHWpBCG07dI64P9fypr0flIHgir4tol
+	/a/E+heYrUtO3dcVdZRPi/WRPjb82G2mc9viNtdz9Jarrk1ncJJr0nqLPh5izsPq
+	p8rcuoZQt0jEUJDWiHFrKtmiuLldCQirwQ0jhvps4M7KqYb/7HFPBoeDCPwSa+Yn
+	XYIMLTjuk4hSQVjyqfGeTKJlW5X24ffUi6Hija4liC3AJ8M/c5pXmwljbJsE8oHD
+	p5nmzqSCRk0xeYwgwa7FAqR1/tez3+kIafA==
+X-ME-Sender: <xms:7cLGZ249cvoEcPJrfJj6xItkboh89T27OGaDD1hz3FT_Be0Hp15ldQ>
+    <xme:7cLGZ_4XM5NcXKr-233OS7Oo91HN_DzbyrLLMAl8NCG_69pERf_QZ-f9tmA92NLKP
+    ElkKPScIlZVGvwkuA>
+X-ME-Received: <xmr:7cLGZ1fD1-2dE7z7kPITldxOsfZeIOrDy4HNXrp6dzjibl8uEui_VgM06_lsMFMhpm_ro6tWtpqaRTCblzCjoNhkMb3ZGgoRcq8CKnIUAXIIvIc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdduiedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehpshdrrhgvphhorhhtsehgmhigrdhnvghtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvshgthhifrghrthiisehgvg
+    hnthhoohdrohhrgh
+X-ME-Proxy: <xmx:7cLGZzLCdembt61ykp5C87De45fMGIHbXEU6ynspt-c2AFWklFlWUg>
+    <xmx:7cLGZ6Jf-NHJ3kqXn3kd4UcybEWKDTw7WwyEmJ6rPhzG4C-5zOo9Uw>
+    <xmx:7cLGZ0zg6rIki_W6vYR4za_IiMwSLECZSmQNfwVWEOsuHWuWLMyeRQ>
+    <xmx:7cLGZ-JZM1THfT3BarNj_0jzXbLWmEsKKzZOcgrCWrfREcGNDTjgyQ>
+    <xmx:7sLGZ_GCDXDHaYOLONdTvW3c5y_LD2t1Ecl032EicNcg2je0RGZTO12E>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Mar 2025 04:07:56 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 222f2901 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Mar 2025 09:07:54 +0000 (UTC)
+Date: Tue, 4 Mar 2025 10:07:48 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Peter Seiderer <ps.report@gmx.net>
+Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] meson: distinguish build and target host binaries
+Message-ID: <Z8bC5LINEPmoarRy@pks.im>
+References: <20250303-pks-meson-cross-compiling-v1-1-73002ef6432e@pks.im>
+ <20250303150956.24a1815e@gmx.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z8auRqylLYuwalAA@pks.im>
+In-Reply-To: <20250303150956.24a1815e@gmx.net>
 
-On Tue, Mar 04, 2025 at 08:39:50AM +0100, Patrick Steinhardt wrote:
-
-> > Some examples, assuming we just suppress reading Git config:
-> > 
-> >   - Without an explicit ident, we fall back to constructing one from
-> >     system info. So if a unit test ever creates a commit, it will work
-> >     fine for most people, but not for somebody with a blank GECOS field
-> >     in /etc/passwd. (We do look at that field for reflogs, which current
-> >     unit tests already do, but we are more forgiving there since we
-> >     don't pass IDENT_STRICT).
-> > 
-> >   - Other programs we call (e.g., imagine gpg or ssh for commit signing
-> >     or verification) may read their own config based on $HOME,
-> >     $XDG_CONFIG_HOME, etc. I don't know if Patrick was including that in
-> >     "sanitizing the environment" or not.
+On Mon, Mar 03, 2025 at 03:09:56PM +0100, Peter Seiderer wrote:
+> > this patch addresses the issue reported at [1], where it is impossible
+> > to specify the shell, Python and Perl paths during cross-compilation
+> > when using Meson.
 > 
-> Oh, yes. I didn't mean to say we shouldn't sanitize at all, I rather
-> meant to say we should sanitize to values that simply cause us to do a
-> no-op in the relevant parts. That means we'd:
+> I still believe that is is a 'misuse' of the cross-file (as stated already
+> here [1]) the given programs in cross-file are to be meant to run while
+> cross-compiling (at compile time) and not on the target (e.g. it would be
+> impossible to find a program (as the name find_program indicates) at
+> compile/configure where the target layout is yet unknown....
 > 
->     - Unset a bunch of environment variables where we know that they
->       impact Git.
-> 
->     - Set config-related environment variables to read configuration
->       from "/dev/null".
-> 
-> This is in contrast to the more involved fix here, which would be to
-> populate a temporary home directory with gitconfig files and whatnot.
+> I believe the correct solution is an extra configure option for cross-compile
+> and a sane default (or find_program) in case of native build...
 
-OK. I still think you'd want to set GIT_COMMITTER_NAME (to avoid gecos
-dependencies).
+I'm mostly going by Eli's assessment [1]:
 
-And I'm assuming your "a bunch of environment variables where we know
-that they impact Git" includes $HOME, since we are inheriting
-dependencies from sub-programs. It doesn't necessarily have to point
-somewhere useful, though I wouldn't be surprised if some programs
-complain if they can't write to it.
+On Tue, Feb 18, 2025 at 09:41:23AM -0500, Eli Schwartz wrote:
+> Overriding it via the cross file would be fine -- if your goal is to
+> only ever find_program(..., native: false) in order to detect a path and
+> embed it, then it doesn't matter whether cross files are for running
+> cross tools on the build machine or for looking up cross tools to detect
+> a path and embed it, since the two goals would never *come into
+> conflict*. And that's what actually matters -- if you are concerned that
+> cross files will be wrong as they specify the cross-compile environment
+> not the install environment, then you shouldn't be using find_program()
+> either, you should be exclusively using build options.
 
--Peff
+So this makes me assume that this usage is okay.
+
+The reason why I prefer using a cross-file is that it makes it possible
+to specify the complete environment for a cross-compilation in a single
+file. This would include both the toolchain, but also target-specific
+options like the shell/Python/Perl path. In theory, this would make it
+possible to eventually start shipping machine files as part of the Git
+project that are completely sufficient to set up cross-compilation for
+e.g. Windows.
+
+That being said, this is only my opinion and it's not set into stone. I
+just don't quite see the cross-file as abuse and think it has merit to
+do it that way. If there is another good argument why having a build
+option is preferable then I'm all ears and happy to revise my opinion.
+
+Patrick
+
+[1]: 24df8aa2-760f-4da3-88b0-ab97796373fd@gentoo.org
