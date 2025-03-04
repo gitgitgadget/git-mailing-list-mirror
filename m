@@ -1,86 +1,112 @@
-Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C25F1FF7D7
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 11:49:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9AD1FC0ED
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 12:05:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741088969; cv=none; b=s5M/waqoLsKSqNQfeGb4ZHceTz69Xe7CraA6Vtq+BcoDhf/BfECC7aGooCtRlZqbW3dz8Yj4RJV0yCoJFVi6pwwE6WTfb1USDNGFfSsur/0vChZSncwjLeETrGgLPnh4Ab/dDqxzify3H4sgKqIWwV6k1Kt0r8SD4S/Vp+wvkJM=
+	t=1741089937; cv=none; b=OqNjd+RKzdecUPn3CXaJzNFXJoRI1pGyykuVRjTcRmgjZGDY+L74Rpt/2+RNhUPsNkLemHJiXaz9vaagoXhuuQFdCVAbPqMhBZxLxtzI6d1r+45itzvrckzHrgR8m8BMBCcw9nwx6ohm/KvA4D4S5h8TGPn6gf84Eme6GV3Cms0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741088969; c=relaxed/simple;
-	bh=2TimVpwcI+10Mb1ZWF7yUvK6qOL+y+OK5vdaGOOg4DE=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=VFR5+xTMgqwaodwROUHQ1aOQPq3CSPGTTJIgD0WHcBOI5k7fOobLojkfR8mLmfjFL9gk6hcqkkG2/DYKr73rsFMpa9pZjtJXqvOgj/vEQ5T14e0z8HqwEItdn4/X5n98fF+RlzD1S4Wb/XEhG8ukwiBCUAVathCDj2Y9BGWgq9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=rxTJY+fl; arc=none smtp.client-ip=185.70.43.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1741089937; c=relaxed/simple;
+	bh=TChHTG5knbhvOQd4FSq0XKg/OB5bRtxiYxMbzWecSTo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FRuiMrd1Li5u780fMBMu0g2R2ztTpRQWStl4QfTi5ol8wVpy7Zv7ZZtJ9vTEJJQxFsOCTbL4a/kCcWt8wjVU4emviXZedueH1MmDwNxZMqJ0mUF0wzyBtxX/zt7OtMFr/UASDjPC13qFXeBAduc5uj1DaBhBWPocJtyj01VGsPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g1l6JcmY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DQv12qgS; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="rxTJY+fl"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1741088960; x=1741348160;
-	bh=2TimVpwcI+10Mb1ZWF7yUvK6qOL+y+OK5vdaGOOg4DE=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
-	 List-Unsubscribe:List-Unsubscribe-Post;
-	b=rxTJY+fl5LJ1MIKDtAeoJxhlhMMc/wyYMXgRktxCC0UxU0AZz0oerQuF6KMf/rbL8
-	 3vX0irXMzcxrPKYXs9ylYfFpRluKqt2vavLxqwZLstzZUBRY3oe0BVQZIuASDS77re
-	 B7tfA9AEQ76pXvggU276cSpG349vwKjQKxBkLc8PDGB1oW+pbnB0vN0oJ2TPQpTphS
-	 gvNqwl1+kFWtpUU7cFlckgkefleoyOSxUww8AVvkhxpH8SrWluXZhp7WJJXwgpTW9s
-	 4V2pPosssKExKx4ZD+Vn1L//f67+UD9AbUv3FubhWfQmi1UlBBz3QUJKMHorymuOCU
-	 J+52bYc/XgV4A==
-Date: Tue, 04 Mar 2025 11:49:14 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-From: Tech Kenya <techkenya@protonmail.com>
-Subject: Suggestion: Enhance git init with Language-Specific Templates
-Message-ID: <qMn1k_iuZCe353x0BBxdD5z4-17Abk_ZHoPr8nVDLOgLhGf8Nxb3-bsXPH2GiATUsuGLVqAaEESua5G9qBaW0qqxwz-7AbcNyRwSXJzbKMs=@protonmail.com>
-Feedback-ID: 122308232:user:proton
-X-Pm-Message-ID: 292f9411a1ef7b81f088883f35f458dc85f33d91
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g1l6JcmY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DQv12qgS"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id BA134138277D;
+	Tue,  4 Mar 2025 07:05:33 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 04 Mar 2025 07:05:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741089933; x=1741176333; bh=o8QUI/jx+E
+	wMiaNu0yUANHysIsjl2DNVZCYYP+1W34U=; b=g1l6JcmYjafRj60LiovsYLjaUx
+	7hL7RtchCd83/DMRiACXHe8S1Sh54Mfpee4/F+Gly6ULXOHFHcMVZhBxf/Wo+mkl
+	+X3otZPoTZyxKRarkii5tn3bPxRhksI6kBqjZe1ZfBjDYRo7M9bu0Qm5r7VCZeF2
+	MKOA+QC1y6LEZCFLadmG/fodsZpuKZDzXhNUAtB1NO+1jg66/pZCMHENmQyzAMcp
+	bqYrYtdtG+z+nHf8a0lvbb4FTToFoMvESheL4TB+xOLsApPDknfuCxV7G0FVY/EW
+	ExAEjPPBd7/zh7icy2Dp5bM0YSNEoH151MlSGdZyim8TWqCRoHBP7uCSE1uA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741089933; x=1741176333; bh=o8QUI/jx+EwMiaNu0yUANHysIsjl2DNVZCY
+	YP+1W34U=; b=DQv12qgSANHme882QO2W7G9/8oR56h8xJ1vFvk5iAlyiLh4t8EI
+	OCV9j3IBhcBhUymUV5nz5XCTU33UzhnY65/iarrqbjn2ym+4nJh/xp0nmis5fQS7
+	UezI9wzWXB2blB+Fif+H6SIlZoRkxg+xR5NbNOA/aIdCeSerdCpGp/Ew97iQTuZA
+	hvPTtBhrvfge6+cCQj0F1NchyVoYxLpEhMMmRWdw8BTuxSndWiopAHtePB6nmvKf
+	8/Unqnr6dxn+BUeGRNCbM4exPV790nPBa4YZn9EnWJ5uows1PeEq9ibWlsihuQ0a
+	Vy7AcjLJqRPhs9j6T91nrOSoXgpfxL8e2NA==
+X-ME-Sender: <xms:jezGZ0VzLrupBm0mpVvg01OGTi_-ZQT9hl1df-74O22TZ9xfV0a6Wg>
+    <xme:jezGZ4ku6c_8I6pgw41m95NvO905veZkk6b20Fa5aCFk3OerbRvlWue1HzeodBl10
+    J2VsBDN73GvX7nlzg>
+X-ME-Received: <xmr:jezGZ4Y-xLG7pSrsTNdPW_Ws00Z6WOIV3XSLKAJ51qA4UGFZnj4YqjYJqkEb9u8dRK3otDIFe8SlVbq9gQfygPggDNLruHgzMP8I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdduleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggrnhhimhgrhh
+    gvnhgurhgrtdeltdegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:jezGZzVvJh326AqMtMDIuVdIvI_0SwJYq2G4vAPznTBMRcV9dnMHyQ>
+    <xmx:jezGZ-m7Zqjo9D7MWwf4RsEVjs1X2HpE26dfWSGmd03-xkccmwH1Fg>
+    <xmx:jezGZ4f0Q8r--mSA6dnczJSt6UrLiHPRINQ4XJ4r23UeCvy5zHKZHA>
+    <xmx:jezGZwH5sR0R5Z-ki7VHGev3tQCRUO4sxyHEqr29lWSl1-Jhp8xCVg>
+    <xmx:jezGZ_BGr075JyZMOkL34M3i6DosdmCu700ywNM_t8Qq1cPP1KCwyvpn>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Mar 2025 07:05:33 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mahendra Dani <danimahendra0904@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 1/1] t1403: prefer test_path_exists helper function
+In-Reply-To: <CABGrwBB1-UiiPEOptN9csVP1WYg2X=SWeMxxiyDfz02VmDp1vA@mail.gmail.com>
+	(Mahendra Dani's message of "Tue, 4 Mar 2025 07:57:25 +0530")
+References: <20250301105838.1481-1-danimahendra0904@gmail.com>
+	<20250301105838.1481-2-danimahendra0904@gmail.com>
+	<Z8WD2MeHpOH7Ni8A@pks.im>
+	<CABGrwBB1-UiiPEOptN9csVP1WYg2X=SWeMxxiyDfz02VmDp1vA@mail.gmail.com>
+Date: Tue, 04 Mar 2025 04:05:31 -0800
+Message-ID: <xmqqldtlt304.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------71f535407719a3164beed35c9f5ac6059fe605feea0216d27a0529f3e414f301"; charset=utf-8
+Content-Type: text/plain
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------71f535407719a3164beed35c9f5ac6059fe605feea0216d27a0529f3e414f301
-Content-Type: multipart/mixed; boundary=-------------------e39321678d92516ac12fdad360e46e18
+Mahendra Dani <danimahendra0904@gmail.com> writes:
 
----------------------e39321678d92516ac12fdad360e46e18
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=utf-8
+>> >       remove_object() {
+>> >               file=$(sha1_file "$*") &&
+>> > -             test -e "$file" &&
+>> > +             test_path_exists "$file" &&
+>> >               rm -f "$file"
+>> >       } &&
+>>
+>> The refactoring is true to the original spirit of the preimage indeed.
+>> But we could also improve it even further if we verified that the path
+>> not only exists, but exists and is a file via `test_path_is_file()`. If
+>> we decide to do that we should also explain the change in the commit
+>> message.
+>
+> Yes, sure.
+> I will improve it further using the `test_path_is_file()` helper
+> function and change the commit message in v2 patch.
 
-=0A=0AI would like to propose an enhancement to git init that allows users =
-to specify a language or framework when initializing a repository, automat=
-ically applying an appropriate .gitignore template.=0A=0AProposal=0A=0AInt=
-roduce a flag to git init that enables users to initialize a repository wi=
-th a predefined .gitignore based on the project's language or framework. F=
-or example:=0A=0Agit init --golang=0Agit init --python=0Agit init --node=0A=
-=0AThis would generate a .gitignore file using well-established templates, =
-such as those from Toptal's Gitignore Generator https://www.toptal.com/dev=
-elopers/gitignore/ or GitHub's official .gitignore repository.=0A=0ABenefi=
-ts=0A=0AImproves Developer Experience: Eliminates the manual step of searc=
-hing for and adding a .gitignore file.=0A=0AStandardization: Ensures that =
-best-practice .gitignore files are consistently applied.=0A=0ASaves Time: =
-Reduces setup time, especially for new projects.=0A=0ALet me know if furth=
-er details or discussions are needed.=0A=0ATech Kenya=0A=0A=0A
-
----------------------e39321678d92516ac12fdad360e46e18--
---------71f535407719a3164beed35c9f5ac6059fe605feea0216d27a0529f3e414f301
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wqsEARYIAF0FgmfG6LkJkDiFfxANeY64NRQAAAAAABwAEHNhbHRAbm90YXRp
-b25zLm9wZW5wZ3Bqcy5vcmfJNYk8v2AGpsFc6x/Php0wFiEErwlxgZMZ9KXP
-llPUOIV/EA15jrgAAHctAP4vOYi+JTLgJQWtU+Twt98ocm6Yavz4AEWArUdL
-hPL9hwEA0wHl4lewj946aFNeJ5rZb8I5ATYnYQMLRMeCzRtiQwQ=
-=9nqo
------END PGP SIGNATURE-----
-
-
---------71f535407719a3164beed35c9f5ac6059fe605feea0216d27a0529f3e414f301--
-
+You may want to think about why there is "-f" there.  If we remove
+it, do we still need to have any check there?
