@@ -1,103 +1,131 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9DA481C4
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 09:44:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0761F4E38
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 09:46:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741081478; cv=none; b=pBMoLN4AASz1EtzTpoahonbZS8GS17tncDvo/W31u6kbktCqmdVuWFePA1SLe9xmRHAZ+nlAQM0imBo2yGxbWj6f+ZP8i5WRFvSgOcwMDaznlyh6+X/R3TaDL0gWv9gt91Vy42WmvZ3B2Vk8PFJyCVkU/Oq6zTr9VhO/PjS7a5U=
+	t=1741081588; cv=none; b=cdmpWn5ws9IqgZKff/P7TLx+KIUP+bUyX4QiomMsv/81tf/yDvwYj4bjdzR6icZcSFGCg2aafPwgPf/P89oCcdQpK7HRky1N4kkJWGrZGzaY5rf17LQexb8jT/brWrKIWLUW7Q4ZSsj2sPqXmU/LMi96nabf57Da/6za5K6qj10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741081478; c=relaxed/simple;
-	bh=G7T2hXAtaL1M0X+vGu/E6KsguYtyz6owh77MhwT0a5U=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=qc4vWluscvmlIl21+FfxVgOvLm9XkzWWCpMnsb63r0TziuKImO07TOp9373xdIjjd4Uf3kwuwfnHQCxbjWhWZhigKfVvcU9tHmSKxu5w1aeywcAQUfQsNUqBgIw2iwxCPc4qp0uBf775QcjksxUjxZ7N1zflG+XkwX/HrJwPT6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wfo/DGvU; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741081588; c=relaxed/simple;
+	bh=PayyfICO5tUvQO3HM+rw9E1fwowT4WlxNOtG+yZe1WE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n/OQLrHhmLylnNbbOpSu+T6GEurgco8O8E40xiSA/qfDjvuHZT9lD1FvnXNmXs9yvYNl6rEtXORKRyH/Jn0jn3Of+O6FxcrSM56jQNY6/GuORWIpzcyvavE1CrdP4aDWwEsLTtUgl73VjDG/eMlmYUBDDBT+NXSEUn9h2pzLleU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Rew7Gbpe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sg/VXLOQ; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wfo/DGvU"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2232aead377so104907635ad.0
-        for <git@vger.kernel.org>; Tue, 04 Mar 2025 01:44:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741081475; x=1741686275; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1Qk7PHbGAO2P45jiVlOxlUZ0NSGvZDOG8uBk/PqG65s=;
-        b=Wfo/DGvUV9OQarBQAh3Ddg8Fh4xhK+x8U648Tw6bUD5X/yel6UHAWjF2zisqFWpkGq
-         6GQaINUp3Ncw6CQI+8mwe0uvWB26lhBYs2MI1I008xt2E3IvfUezEuNw2N15rJFeazbc
-         N1rUAKgseBcTFv5eBRbp4Xw00uBlGfLIaPw2sCBC1wMlo9hVT2txIGTQwowXKip2mm2O
-         bJ6IdL03z9sb+QZJlDMTafCODUPL4scveekH9R43bp/f77sC+fpiPo/wwidZefU5Vn1o
-         j2f2eNvB85tgDlqP0JKACuMWfsoSRE1qbuyUpXK32tXeuPoot2QoxKWVSspyuTwld/LC
-         PbNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741081475; x=1741686275;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1Qk7PHbGAO2P45jiVlOxlUZ0NSGvZDOG8uBk/PqG65s=;
-        b=RwmqXpkl7NkPqBQD27tOtZuRJMqHGz+gTipEb02b92XxK/+70NP4teSdaOK6D3qaxQ
-         FPCWkQA8b2vP6M8QVcvQbTdk5L6zDrMhJuzp5OXX3/fEIlaRhGuzBZqxkx5wyw+C/17R
-         zAAf6k9SYXtwSnQKX1dP9+Geifha0CR4kDRbsArtFm7Sa8lv0o7x1zTSRerwLEhfx9At
-         ZN19QXOWu0itIFqsOZYzjdGNlu0/QaKAYy7XhX6O3CS9ZGQwhskZrEMh7SocMiYDowcN
-         qEwxjtd0zPHGNzRGBq7YPG6hS8+TqvQa7lll7WaMXpPu8ac8uacQcEL+tm9s7CtRPIyy
-         KUAQ==
-X-Gm-Message-State: AOJu0Yyd8qltdPb6w/OsT8EDu4LZHJ5/s+ee31/gBc/85GOzuS4jssML
-	IeWie1F0xjFdEyLQ7u/bGYgUl/fEqVLA5dXe00TSK1SmN8w5rKZguA037TpvuoI=
-X-Gm-Gg: ASbGnctY8GGM6OKtSUdyyvPWLgN6t8PdbIYNqtJpUU4XpkNeLZVa0V2JATPJrexjg9F
-	iMP+KCPczZx8oS9o+PbX7rsIA59kmgzdI0Up7GpxC3zNZYwq6M7LOC6l0B+MDJianX9EGYUytkD
-	G6vZiLjUaKvd6f27ZdMVDLuqT0JYwq15VOWpG1zyfOyvUi4K0GVM+JNUexRJI/dAFJwwiHVqxSY
-	7CAO/dQDeJOM2HVRLDv2f/mFROW5l5FYLfo5C9RphtRfhDsRoKjfQYK9CjwDJGNCCljM2JFOVvA
-	BUrtcm4uQmnNSaJ8epvqjSw+rkZjG2EfsAlYkJKpgZTMb+cAP17xVxMNjC2o3BBUJHPadpjReRj
-	YbBP80HpqWg==
-X-Google-Smtp-Source: AGHT+IG80CkEFBHfpa8iPcurSLMicoKq0XlrW1JZYiEeObztrsnBm4t0CfjTEomzuQcul0HT1aVrCA==
-X-Received: by 2002:a17:903:33cc:b0:223:5a6e:b16 with SMTP id d9443c01a7336-22368f60ac5mr231944245ad.5.1741081475569;
-        Tue, 04 Mar 2025 01:44:35 -0800 (PST)
-Received: from localhost.localdomain ([2409:40c4:307:e1c:f069:cd37:99b2:31c5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22350510ec6sm91858265ad.220.2025.03.04.01.44.33
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 04 Mar 2025 01:44:35 -0800 (PST)
-From: Mahendra Dani <danimahendra0904@gmail.com>
-To: git@vger.kernel.org
-Cc: Mahendra Dani <danimahendra0904@gmail.com>
-Subject: [PATCH v3 1/1] t1403: verify that path exists and is a file
-Date: Tue,  4 Mar 2025 15:11:53 +0530
-Message-Id: <20250304094153.28959-2-danimahendra0904@gmail.com>
-X-Mailer: git-send-email 2.39.2 (Apple Git-143)
-In-Reply-To: <20250304094153.28959-1-danimahendra0904@gmail.com>
-References: <20250304091556.22478-1-danimahendra0904@gmail.com>
- <20250304094153.28959-1-danimahendra0904@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Rew7Gbpe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sg/VXLOQ"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 71C7F13814CE;
+	Tue,  4 Mar 2025 04:46:25 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Tue, 04 Mar 2025 04:46:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1741081585; x=1741167985; bh=K/dEk3rZlj
+	gALlbzpQIf3Che/L/uVdTCFirrofDiJ9M=; b=Rew7Gbpe8D/Rmm5t9ONWSrMfrT
+	VUMdDHmS5mvwW0iql34uVvmaFeifroeAOqWHNj25j8FMrPnvAR0e4heZkI3U0aUN
+	RA06o7HeeV9b36zKSleH9Blaq/I+/Wrgk3SkQaSed7utar0AhPfS808bXWbps4iE
+	35wePXEMm6I4U9WvbkDkOG0VJZe6mk77HyXEmi7k2O2YDQ0TCdo2cDumudjBhVXj
+	mtwZBxjrYcgwE7N0Fp+cup2eHssSuP1UrYALGZ8hu5hvNsYO+PnXTbiaMTGHSQB9
+	xj7ZMk4G3C3E43K+NjDPOFEqqsrx0Uyj1KB6YRut1HEkaWB/fddRvbgMxsZw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741081585; x=1741167985; bh=K/dEk3rZljgALlbzpQIf3Che/L/uVdTCFir
+	rofDiJ9M=; b=Sg/VXLOQ4IeJ4Cqr63IWeBMwLRLO6A0HXmmsuDiE5Buy4/uN0bM
+	xobqlr08OuCAg0gZ8Un5yv1LmNo/ugNINNEV2ZHcIbweTPLPAJLenQu/S9IZlmlx
+	4GRNkoLEzslOSThCVvuBsLtvQk64BROCd78T0/6y0frXBjOQmjciR+O3FtEOL+TU
+	S0pf26utHX+js385iLKy8G25BKE/UJkYY+xs+g1Sm1LEepJ9aSHTT50WIlbH8W0Y
+	2WoAOqroZXD2vnripTwbeDgB3oU7x+mmBSrQMA41rRTIfFmPJmvsPZYyX1uSXQCM
+	Jwvo3qjmlp7mmgkd5SBixNSXAJP8JC6jlxQ==
+X-ME-Sender: <xms:8cvGZ-EftaB_OWE4bfJgqH77-awyc1h_fI1fYXNSZ1L2OWalfXPHKA>
+    <xme:8cvGZ_XUJPGSe_WdFKwGgfh6ZPCiPoWkFzda6UkeXjLK-TATWg671lcwf0PjYuBZU
+    T-LhOFhIVTY4O-kGg>
+X-ME-Received: <xmr:8cvGZ4IiP4MpzAScptY7W5DA9PlpMEf_w_2a_gaevQBkjwgwSLd7VZFajwPtOM6NedqHi6OuojHJsyepZKaPuTCkgYy25sUNm8ZTLi0QcGkMYUo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddujedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdu
+    gfehtefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
+    ihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghs
+    rdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:8cvGZ4HpnWtfTxrMXwMbHsfBH4RKTr3hPzcTnTY93A0-2Hh2V_IBCg>
+    <xmx:8cvGZ0UWNg9V1Uaob0LNUpSiXW-sNLC3mXXpWbrqLEBHQfElU9iZsg>
+    <xmx:8cvGZ7MVjPD4sb_hFqHeddXoTvkutg4oLXviBZ--mtvVd2UX5YLY-g>
+    <xmx:8cvGZ72gxfSjluZ40rxiTFQ3F2-HqWIhGWf8cTFGlx2_ES8PEkyeqQ>
+    <xmx:8cvGZ7ReEDk3qxxEMqoOXGlQpl2Qwt7TZiwk3LG1G62-d3K_CH7yK7ol>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Mar 2025 04:46:24 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 78a68dc5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Mar 2025 09:46:21 +0000 (UTC)
+Date: Tue, 4 Mar 2025 10:46:17 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: ps/reftable-sans-compat-util, was Re: What's cooking in git.git
+ (Feb 2025, #09; Fri, 28)
+Message-ID: <Z8bL0HUuQqj7LlTp@pks.im>
+References: <xmqq7c591sus.fsf@gitster.g>
+ <Z8aeLc-xelujEjTE@pks.im>
+ <0c808b85-d97c-ecd3-0b1d-fba546a1124b@gmx.de>
+ <9cc294f6-03de-d88f-9734-510a23fc8991@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9cc294f6-03de-d88f-9734-510a23fc8991@gmx.de>
 
-test -e does not provide a nice error message when
-we hit test failures, so use test_path_exists() instead
-and verify that if the path exists then it is a file using test_path_is_file().
+On Tue, Mar 04, 2025 at 08:40:13AM +0100, Johannes Schindelin wrote:
+> On Tue, 4 Mar 2025, Johannes Schindelin wrote:
+> > On Tue, 4 Mar 2025, Patrick Steinhardt wrote:
+> > > Johannes, did the new version of this patch series make your life any
+> > > easier? As far as I can see the conflicts in your "shears/seen" branch
+> > > seem to have been fixed, and the failing pipeline seems to be due to
+> > > other issues. If so, we would be able to move ahead with this patch
+> > > series and the dependent fix for Windows below.
+> >
+> > Honestly, I cannot say whether it made my life any easier. As you can see
+> > from
+> > https://github.com/git-for-windows/git/actions/workflows/main.yml?query=branch%3Ashears%2Fseen,
+> > the `shears/seen` branch failed to update automatically since I updated it
+> > manually last Thursday. According to
+> > https://github.com/git/git/activity?ref=seen, there have been 5 updates
+> > that were hence missed.
+> >
+> > I'll try to update the `shears/seen` branch now, but I'll time-box it to
+> > half an hour because I really planned on taking care of other issues.
+> 
+> It seems that there are the usual CMake-related breakages (not related to
+> ps/reftable-sans-compat-util, but to the introduction of the
+> `CLAR_TEST_OBJS` or at least the `lib-oid` addition to that). I hope that
+> the tip commit of `shears/seen` that I just pushed addresses that, but I
+> ran out of time to monitor this.
+> 
+> And there are some pretty bad `exit code 127` problems in the unit tests
+> on Windows, see e.g.
+> https://github.com/git-for-windows/git/actions/runs/13648196783/job/38151312208#step:5:213
+> (but again, I ran out of the allotted time).
 
-Signed-off-by: Mahendra Dani <danimahendra0904@gmail.com>
----
- t/t1403-show-ref.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Interesting. All of the errors relate to reftable stuff. Curiously,
+those errors only seem to happen in the MinGW build, but not with the
+Meson-based MSVC build. I can reproduce the issue in MinGW indeed, so
+I'll investigate. Thanks for the hint!
 
-diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
-index 9d698b3cc3..4afde01a29 100755
---- a/t/t1403-show-ref.sh
-+++ b/t/t1403-show-ref.sh
-@@ -196,7 +196,8 @@ test_expect_success 'show-ref --verify with dangling ref' '
- 
- 	remove_object() {
- 		file=$(sha1_file "$*") &&
--		test -e "$file" &&
-+		test_path_exists "$file" &&
-+		test_path_is_file "$file" &&
- 		rm -f "$file"
- 	} &&
- 
--- 
-2.39.2 (Apple Git-143)
-
+Patrick
