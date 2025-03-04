@@ -1,104 +1,143 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E70A20EB
-	for <git@vger.kernel.org>; Mon,  3 Mar 2025 23:48:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAA817583
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 00:15:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741045740; cv=none; b=HW0UZYNRVURDBPvzgOLY3ZuZggqZG9y6vRBiw5u7vory7P0t9QWwGWShf6lxu7/jy+QO2dwQ597X0gW1wplVQ+o4hMyRRsVo7o+ZDWQ5Pgh3Wgup734lzrbqLv4OJR47R+dm03xHmC62aXl2AiXtWgUOjU4Sz1u+SRqlIF6EscE=
+	t=1741047312; cv=none; b=eHETxXRKD8BOWArm66cZgrqfYOlC1+6FfXkXHdAvFmOcR++7ArbA7ANiAnBTHPwSrkmO1fK6gbJvthDxUauovq+aNWBsGNIDBAFznGV7c3twJoelaRvm00bu3b8OmIXwytfJemmPHh6sBFs3NCJ2ifaSVlTUFcIlFvnZdOVfNL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741045740; c=relaxed/simple;
-	bh=bg9cq3Rq8De1amjAvOHAdVgENc4bMY1PdcoXCdVQ3nc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FZ4NIr/EhVuOe0ItpOiPFpnXJcquWVjD2JUIeh8BJToQevPCYHgh1WPr6GVsGDPO2bST/TuZX5rleMz7Dyl1F6INwoqSZ5iVJK63ZUWJ3BsI2SNTwv+r9VVLfnLRYqWGWCGhX4EUUSxikYcg8tjzAEpFf+2yvSYFeViuhfFYWBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rJPlADsZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CSALKKC9; arc=none smtp.client-ip=202.12.124.156
+	s=arc-20240116; t=1741047312; c=relaxed/simple;
+	bh=hnPlmepxMpJhV3jzgyyudiS6u2zmU6xdEU0J2tV+Wm4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DZPsPjE2C0cFIrG00w6fKPZ/Sire4bE2KIE2xqZ+5W/yMh5LWMIWS36S1iel+Xlsq45hGE/tJU27bQQNDwco7ZjflDZSNwgRMHEzTOFCKw35bFCkJWYUK3G/89VuVj1HL9CIFcIARPAXxjhwP1NWDx2DYHwQV+eVj1Mar1QDtQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jLFMJt5S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A9L59KWV; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rJPlADsZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CSALKKC9"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0A69B2540270;
-	Mon,  3 Mar 2025 18:48:57 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Mon, 03 Mar 2025 18:48:57 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jLFMJt5S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A9L59KWV"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7C2892540475;
+	Mon,  3 Mar 2025 19:15:08 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Mon, 03 Mar 2025 19:15:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741045736; x=1741132136; bh=sIUcFLcZhT
-	gkjNQJZKxxOBnMh2vYTJpV0si0m2WGGyw=; b=rJPlADsZTHYGhULL90Owu2KP3e
-	12EUJqwLfPTt3HBfXC9H8OKiNPIaINz+GMPMrUSxTDoIseVIX2IW2C2b5ZDi6fg4
-	6EY7/h73unVcxtTcKi9axkVBJBcdFM3HUrOwXpmOv+PHLhiLlZy67VEii6a3x1Et
-	TaLRwoy8C4anznqRWvlM0jL+GUYj7QuoN1wLzxUhNkdnV88DF13bpSCqcM5qH6I4
-	x/MMlprYvz20Lr3ynDgLUvOx7EcxDXdbhHvYpeCqh6hLdX7fSctcHI986fSASTGj
-	J/dtkpWDgMlfieUm0+rZ+duLqfMxaHla1jlbrQ29BOJBHQStBP7E3jKhiRXw==
+	:subject:to:to; s=fm3; t=1741047308; x=1741133708; bh=V1ba4uj1Bc
+	Vsl0JfEKR+Vej+CuxMBoE4yHc1TaxOIeg=; b=jLFMJt5S7Fb6VHgiitr3u0MUrB
+	zo9tUWdfrgmy9/43LTnIgLWFN3mpIPdG90je/wDuxz0PLL0O/+SBZKiLPeI1+6iy
+	8KYpagDci3Zdsti2a4yuf9bHf7+M7qni2rByJSKCcYf2VGywTCOCr/U1vSkO5KRm
+	wOZLxDNwgnmmtRpQVnfEVamhaJI7UWOfUYdRgYkMonYg/F4LNvSU7bg/xkLAjJVo
+	zZDfnCnVuk3Fy6VOAHKTK243DUqjzRQ3MLv9yu07CyLkls/qtq23PqPskGUgN2TX
+	PqxJfcQf/ai2pZTT2u3xNcT80sSYqd4WyFdFCGXcuvk/SYfENgOwQwcONNOQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741045736; x=1741132136; bh=sIUcFLcZhTgkjNQJZKxxOBnMh2vYTJpV0si
-	0m2WGGyw=; b=CSALKKC9stO1X9a3BqnRSpLMQI9gUVYHytBlDPLy/UAl6pBnyrp
-	Zcyagz0tC8cvFPl5yJRGG3l3R42Nammp5yHnW6GVF8Q4kMRZS4VE48v0HHIp+jlg
-	9ea8jxDCb5w5NoRc5Nqyay7CxwR6u6O2kq+bD0nNW70+bfA9eXvCKiyGbzTGa9YK
-	UNFFew0+z416AExIsd5MtZDpoiiwuzIRZL3TXuOwVUv0JaBnBbPMLuBlu9kEZYg7
-	s0Q5E/vQhirO8QNR1tbz2et9d8K7Qx4rvu4mvdNu9/n75STNyeSygIYOH9NmYz3H
-	/ppStuVVuW4UVd1oQr8pkpOjZ21u0n8jreQ==
-X-ME-Sender: <xms:6D_GZ7fuegbi357TNtfWaLLSG4qqXKtRix4wqOFbd_CbFwOkLaC2Gg>
-    <xme:6D_GZxMqej_q0oaOT0PGiIutVz8loZGonnt7MJ87q-PsMVpPYrM6IqynzvPt9XQv1
-    WTkbJRO3y3V1laneA>
-X-ME-Received: <xmr:6D_GZ0hUtQPqFjajjLcjCqOdaPCSLKqoTKt7HnrSyQV4lHYlYDfCmO3IduaJ9ZW8eO9kNCR_s0qAgof3O4oLpfDBWrhgqqtbDLKn>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddtgeelucetufdoteggodetrf
+	1741047308; x=1741133708; bh=V1ba4uj1BcVsl0JfEKR+Vej+CuxMBoE4yHc
+	1TaxOIeg=; b=A9L59KWVWERerf9dX9hL57SdRw0WlTORpCvuLmUYTmE9/ThgtA5
+	h4zQs1GoTNUvUUA2D71DJXoPD+c3mUoJBH2fsThWr+Cbg6aOSgO2dTGCurksYT90
+	O+FkxoLR57ErwWz2DL9ej1wVgyronC5MiH3qd1/pVesSXaHCVe2FqxUB7RuWO4vW
+	A/GnOMwquy9dwEIy5/XoPmSqrZlkxLe6DEP4of6mdTVdJ97W8tNQrQrjZmir/2Yu
+	foUbkEzXzF/BMo5TkjqQUioLBx5m7rMfzXyuUswkZf4ZcRfqbpJYuT+OPhXZLDal
+	7C+u6hyiAAOFONxExl2paUNrYlLwapLLfhQ==
+X-ME-Sender: <xms:DEbGZzggJaO6hQIpnEEsHpDFTbiV1Axte_sXDaVdKHVcE5CF3AiVnw>
+    <xme:DEbGZwAkV13JNw5gINRpZ2l4gW6msBW1BY5LpB8Keegg8-uaOnDRo-d9dNQPF8MMV
+    KqFmKyt5TDkCQgrPQ>
+X-ME-Received: <xmr:DEbGZzGs0i8Lwpb9M1l19goHBhY99s4eh_3WhxGYHgdIseDDUd6Qnq7Ir1IanIA9XyTszkDDrmTDpYzoMbhnVweyP7FrQBInY_MGuv3zpb0WwJEywmlG>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddtheegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnh
-    gvthdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:6D_GZ8_-MOXdhHo6OI1vvOz2uc5ILLn4eeBo60mvBDd_Ip46HGP8uQ>
-    <xmx:6D_GZ3s84j_2pyKvmjnuq-C4HGijgRx5ftj9wCzbikpbTG77OhlKxg>
-    <xmx:6D_GZ7He9GEGnEWvZ5-8kIDVs6V6G6VmEzdag4LKhhCihDrPBvfZMA>
-    <xmx:6D_GZ-NoH_HwIXF3PtKFeAUh5aMqhIhK6ijLFiCkIrbFkazOQb1YmQ>
-    <xmx:6D_GZxIR8hFzsgyhN7SaXEsxIQUtUjX4dRkGYeaPY3JD7JGnzs54O89->
-Feedback-ID: if26b431b:Fastmail
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomhepvfhougguucgkuhhllhhinhhgvghruceothhmiiesphhosghogidrtg
+    homheqnecuggftrfgrthhtvghrnhepgfevfeeviefhheehhfegtefhvdffheefheeuleeh
+    ieffuedvvdeuhfevffeigfeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
+    htohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:DEbGZwTDdiORdfkartWNZJLMYPppTFxVx_BGW7aDpxwal-sVx3m-yw>
+    <xmx:DEbGZwxlukjCKYJq4jJrylZq2Dts0HqnIBF28tC8AdiUtkSJN8vaog>
+    <xmx:DEbGZ25qHH5gafjz8RqMhIl9HRphPnorEPK4wWVdZK4tj0NYl-PIaA>
+    <xmx:DEbGZ1y2vS2YIaGqIIosF9gI_Mld13Oamx7e8N5N8vtoq7tCXhbSlA>
+    <xmx:DEbGZ6s09Y2M6FwG_nQZbTRMGWOHt_041FZRym8htFOjcw2jB7wfpeB8>
+Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Mar 2025 18:48:56 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Todd Zullinger <tmz@pobox.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 00/34] misc *.txt -> *.adoc fixes
-In-Reply-To: <Z8Y_PxXsYndBV64C@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Mon, 3 Mar 2025 23:46:07 +0000")
+ 3 Mar 2025 19:15:07 -0500 (EST)
+Date: Mon, 3 Mar 2025 19:15:06 -0500
+From: Todd Zullinger <tmz@pobox.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 01/34] t0450: *.txt -> *.adoc fixes
+Message-ID: <Z8ZGChnWGa3sXD3s@teonanacatl.net>
 References: <20250303204443.360595-1-tmz@pobox.com>
-	<Z8Y_PxXsYndBV64C@tapette.crustytoothpaste.net>
-Date: Mon, 03 Mar 2025 15:48:54 -0800
-Message-ID: <xmqq34ftvfo9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20250303204443.360595-2-tmz@pobox.com>
+ <xmqqo6yhvl2o.fsf@gitster.g>
+ <Z8YtJd078J44snOE@teonanacatl.net>
+ <xmqqbjuhvi57.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqbjuhvi57.fsf@gitster.g>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Junio C Hamano wrote:
+> Todd Zullinger <tmz@pobox.com> writes:
+> 
+>> Indeed.  I haven't looked closely at the CI bits to see how
+>> we might be able to improve this.  When we skip tests
+>> unintentionally we just don't see that currently.
+> 
+> In any case, while the t0450 was inadvertently disabled this way, a
+> topic seems to have escaped to 'master' already with an inconsistent
+> synopsis section and help text.
+> 
+> Here is a fix.
 
-> On 2025-03-03 at 20:43:58, Todd Zullinger wrote:
->> As a follow-up to <Z8Ni0EyQYgD8uWJ0@teonanacatl.net>, this
->> series aims to fix a good number of the remaining references
->> to renamed *.txt files in our tree.
->> 
->> The first patch fixes an actual issue, where we were
->> skipping all the tests in t0450-txt-doc-vs-help.
->
-> All of these seem reasonable to me.
+I'm glad that's already paying off; it helps prove the patch
+nicely.
 
-Yup, I plan to merge them down before -rc1 (or -rc2 at the latest).
+I wondered for a moment why I didn't catch it with any of my
+test runs.  But it's simply that the rpm build tests were on
+top of 2.49.0-rc0 and my local branch for this was built on
+top of tz/doc-txt-to-adoc-fixes, neither of which contain
+89be7d2774 (builtin/refs: add '--no-reflog' flag to drop
+reflogs, 2025-02-21).
 
-Thanks.
+> --- >8 ---
+> Subject: [PATCH] refs: show --no-reflog in the help text
+> 
+> We forgot that we must keep the documentation and help text in sync.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/refs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/builtin/refs.c b/builtin/refs.c
+> index c459507d51..44d592a94c 100644
+> --- a/builtin/refs.c
+> +++ b/builtin/refs.c
+> @@ -8,7 +8,7 @@
+>  #include "worktree.h"
+>  
+>  #define REFS_MIGRATE_USAGE \
+> -	N_("git refs migrate --ref-format=<format> [--dry-run]")
+> +	N_("git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]")
+>  
+>  #define REFS_VERIFY_USAGE \
+>  	N_("git refs verify [--strict] [--verbose]")
+
+The fix looks obviously correct. :)
+
+-- 
+Todd
