@@ -1,145 +1,153 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FE31FCD06
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 07:39:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8BD1F873A
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 07:40:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741073998; cv=none; b=GoiJtBZyRKKktv0DDE2kJ7fGmGxSOA+Prpbn/iQGS+GNsENXIHSom/7ATLJc9+Fv/I4TQXpop/wBEoQygJ5hIf7zP2MK3Fxbq/i/2hOrW+T48Fuj0XVqkSAuVeV2S/s+3h0oWJh0Vdx5lancKXxC5OkRT5X6iy84BO+GJeXLGX0=
+	t=1741074022; cv=none; b=PgmWuu2+UFlk7ZfjJLZuVDZLTI0Kuw7OCcwgUC5kRmOJWsbsMuWb9/3c3loPQVfKVMO0ALGzAnYT4SaW6i3//3YnxDRZIc6p5nj6Gn6KPcKVxthUGyHVx+pXvCmKF62xMl/f5SVe1jOTADdWryvszypWoDTjcCcWcg3jIEIZqUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741073998; c=relaxed/simple;
-	bh=oy+h6fWlbwtjNEfYaMyiWEMNhb5jbheYIdADAF1E0lE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eq2x402GNgxnSNJjsAwj1cr2L94+0sri4M5rJMhLfIVDfEaD5vDb4clUiQbLhtE07N+nYaY2611MOMIO+1LkOnsOLPIDsNf+6I3oH2XBZJ2b4CKLVpKfG950FIe48jZJq6KPql3KZzp1mDHw53pZ+Yk4RGD5wxOu1/hCxt06xBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EOywt8PK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VQQdmXi2; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1741074022; c=relaxed/simple;
+	bh=/71lS8cJNGok4pLNbLq6LkXWAkl8a4Nl2kFL5IdjW4c=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=laWQ2aFmrbIgAy6eNv/byHDYmWmaQTxduywtFHYTQSTKboOwFD71bHQdvo9BGluybwJ7FAlZAz03R9juJDTmfZCGRItYkqj9bUVmU2z4lRZ6ZkxqaeIuso6HIlSsGnz7kvz5/9F6puxASGwHdhaw220y+L4MWMMRqO7HQun/d5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=qGvJR3El; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EOywt8PK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VQQdmXi2"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5DD911140227;
-	Tue,  4 Mar 2025 02:39:54 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 04 Mar 2025 02:39:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1741073994; x=1741160394; bh=F+Jn0Fde6F
-	jGPu+nuQmU7TrIlHRFizW7NynooMRzBbo=; b=EOywt8PKVrLr9Ka927lOlESzXd
-	DJAwfWPCecvxrhXJ7/W8gxE1yKzGzeMwghkFjJq6snE6xLJGAQZElafFK/mLNx/l
-	x2i5YQwCPPiC7MYCg5x91hCCJh2COOr8zLLL/80NYp3kcIcPh1Aj+dKUryzBRhhf
-	WZuWUNiGX+hidh6dNg2ubr98sZVSN0rlFvCOiCofY/0hNgwn5fc5VY3agoMO8t6E
-	jeeaVgNFss9j/52bsapWNiCZkLEOLBla2sUqjWVq8U2Z4fVCObPPjmtZZiKqqJ0B
-	VVN+/35PTCr8XJ9J1rlpzbobLK7togHqkGf472pPf4pJDyjD1w4njuLNYgdw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741073994; x=1741160394; bh=F+Jn0Fde6FjGPu+nuQmU7TrIlHRFizW7Nyn
-	ooMRzBbo=; b=VQQdmXi2W3vCiDHr9exhqQEoXOFNsADaxrqCpfIhqKWw7Fo2fin
-	j6Wf8JWB9cwlI+tRqz0j/bJlgPLzLJ9p+XeDspoq5eRu7sjpFl5og9ch3CEKyCHp
-	OxY0gDng1H+zvFQDi4oYqLBm7P64pcYrwhhdwrZg0oKR8iqMzGVeOJNMPh7cnPSr
-	ORMJoI3jKTFDA4LzaXIp3LnW6eXmVkdZI3zGRUNIqGT0uVa43DdSYLryPEjilsiL
-	m4zB32JzCGA9DnuBAHkqpWj4a724EFVik9VbQtlQMfSO4ALVHwo1jaJxlayzglzl
-	ppvphZGW2H0J1Mep3SYxsPkt0Bsm7eHrLBg==
-X-ME-Sender: <xms:Sa7GZ2MCmkvNpJypHkLOIDDtag8DIn8oOm6tLN20oRX4eNvm0gH2Pw>
-    <xme:Sa7GZ08S8uPaWk1uD4nwHQjCoUsmZra9wyps3Yiq0HXI17pT3j0_tg3Dsith21cEE
-    e7sbXqblqB4G0jFuQ>
-X-ME-Received: <xmr:Sa7GZ9QdueR6jll1t9uiniP9ApzmDlO0OZCuiKbBzoUOf8yiHgCcCU6rIDQ-_95sBsN757Lokly5zNtilpudH_HPPnKLwaSLsvCjkb4oWxrz6MU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddugeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
-    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
-    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
-    hnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghf
-    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehgihhtsehgrhhusghigidrvghupdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Sq7GZ2uX8U9ta2gNq6aDH1p232uXHC7xiiQ9O_ESz-A0zY1n3FVk-g>
-    <xmx:Sq7GZ-dez7TnU890nHfAY4nKoeqUqKNUFkYRKbQyHse5RjlCjcSyhw>
-    <xmx:Sq7GZ62OaZtgx4LBZYjxk960s1JtIsPRDuaQgFgRn7Bl5gLlFA2z8Q>
-    <xmx:Sq7GZy-_OgJKVhkOvK3vbF6bi7HFR2Mu32FkEFDgJWPiBr0eMjDyNg>
-    <xmx:Sq7GZ95kDe5ucv9PRPaQBM0xy98gG-_EE-QbayLi0sGR0rqinHd9GCfN>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Mar 2025 02:39:52 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d7175fea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Mar 2025 07:39:51 +0000 (UTC)
-Date: Tue, 4 Mar 2025 08:39:50 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Michael J Gruber <git@grubix.eu>,
-	git@vger.kernel.org
-Subject: Re: [BUG/WIP PATCH] unit-tests: use clean test environment
-Message-ID: <Z8auRqylLYuwalAA@pks.im>
-References: <e3be6705d103ccbc165d0fd3b9b7c818d14001e9.1740516033.git.git@grubix.eu>
- <Z8GVAjwZWOM7c2fR@pks.im>
- <xmqqseny40kx.fsf@gitster.g>
- <Z8WFcaEtMCD5C0EN@pks.im>
- <xmqqzfi2xl5q.fsf@gitster.g>
- <20250304073010.GC1283943@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="qGvJR3El"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1741074014; x=1741678814;
+	i=johannes.schindelin@gmx.de;
+	bh=JLaP9fzFeutOjggia1UT88iTIryOuvFhvwHfcuEjkmg=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=qGvJR3Ely9se6mZkpHUJMpaSn8qZhSDPdwCyWJXHSSgTg+LclIRRnBGsmKBiYUwG
+	 aLAM/tNKBSRZIux3/zAhtTcEWjC4sEf6btuWazlg4CtshNN9OF93VqpWI/OiDyGzm
+	 ZGyiQuTU9UuEyGFg2nzyWM78b871L6Lu4l4/rSzzuUr61zGjn9yFRF745za+au8oO
+	 SossPZvVDWjGiXM9O5IHdFcK4GrTLfsrLnh+2BL4SNCoqiOB+qRmCLEVfaIMZmbAP
+	 UPQSPHh6VhAvRM4PtEw0b6kNF2+QyVM2PgOQ3JdoDv8lpG04650nOWJk5iG9icKOF
+	 F86AwrzE0TvKjMwXjA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.213.101]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1McYCb-1tHOdv0Bcj-00bHp0; Tue, 04
+ Mar 2025 08:40:14 +0100
+Date: Tue, 4 Mar 2025 08:40:13 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: ps/reftable-sans-compat-util, was Re: What's cooking in git.git
+ (Feb 2025, #09; Fri, 28)
+In-Reply-To: <0c808b85-d97c-ecd3-0b1d-fba546a1124b@gmx.de>
+Message-ID: <9cc294f6-03de-d88f-9734-510a23fc8991@gmx.de>
+References: <xmqq7c591sus.fsf@gitster.g> <Z8aeLc-xelujEjTE@pks.im> <0c808b85-d97c-ecd3-0b1d-fba546a1124b@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250304073010.GC1283943@coredump.intra.peff.net>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Fc1nI90G+3fUWrHcrxukd6tdIEIn94JTJKzwcTIyzmeF5WnQzZh
+ dlOZl95Chyu5ZpcIfATP2rv3WAHUyO4nuumNg1PTyr4/f44t/jRANrr7Y7HQQ6qBM9nZw4O
+ FKeZ2MabBE8o+98U8KaTTq06EwwPmU0jrBl4glpRlwYct0UTxrIOzrtncwJYpJh0U7SNljs
+ 1mNCGv/Ke4pPKC2ZzaITQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Wqwvu5ta6oA=;xz1Tbb+5iHUqdWJY4VgkWSUlnhN
+ RA9Wmnpvo52HU+v5Oyj5LDyDKAiYI0ETe3Ul9uLjpGqQVP9h7aXh+MfhsX4TryZi2iQp1Q8BZ
+ z2PZidVeqXgLIerlXjq4zOdSCl2XzeTtbKjVKExoAmPchONxEWKeBoyn0E5dPsGvI7esnPq62
+ OqE7aVPl7cTWGKRcWcCwonHgbUWgzkvYkZhAETdWRqlWF7qjOEKtnv5STsmC9ReO6C9LMpznC
+ pqROkKt9H2W41pQ0OeHcDcWjjJrFcCQd9O1sGBXJ6ry0jUmbmQkcYn//eIFuk3aEOPQjlqfpH
+ Gg3m/rUd2DcaTiIzQFQf1XLMi5IgQGj3aEClla0QuTIg3z3cg6bcboOtt6ywCDxhXpvvTIWNU
+ nYud7+sO/b/VIqW3iEKVBsxmiI8KgRJWa1F6aB0AQqVMs5Y7f8Ufy2aDrCzJTzkLuUokL0Tpm
+ Ki1RD42ZKr+GFX0jOsQvYu5hRRHfF8WIgd8ZhBLIM+T1pDhlZMWHzAxeIO1yONCk/3xRzSF/X
+ KELM4E4h804DgjM17BHBGHVDz8cbARVNMAFhVA/rTi4K5f1J6e9BuwOeWybIoNq4Jw8cCSM7S
+ bHYeVL3teiG5XJ3LWzLUtBlHaWZe518imYE15F7xfZkFKfTVs8lrRNsqExmKm42s4YbmQLiji
+ QZWIw+pif8FASmKyYChmzu3E1NxIZWbV176bL8YpGbmpK/bKV236bOU6rKYvZqM9dct6z7pTt
+ VYF6X38D0gYC+NSISckERZ2Y1/B+8r8eaLEKjjBK9HJajkqyuVJLKrVjbL8IGL5fAnKIqsjvV
+ Mvk3vy26+sBoL08cnCVknpx4XZNNU/7U2aHFEaFu/9l7aZkkqWHAaHyoy2SjNP7z5EOQ93wv5
+ 2ZVjlz/BYdYHIlq0hTakU/WZQm02Jk6/GXozJX+vrVRSPulEfeqXegezQu0Nz8pwLcg3KvFez
+ ZRiZkTgBHkHRl1uvCV6Z+AC4uYRwh7sD5lW+J1HjwPZ4EERkl63BU+YSKwf9WywQH3TmJfw2j
+ V4Tm06y/Fi/jl9XU0OMhltswR+gigqN7+RRGAkzpO8ve3/gyIqqL1QCKACJO9wFxJRv+7nilM
+ Zyt5kBP86KToT7/pd+KXDfcz9VX9TwdYKOCcM0yTwWSvW0Hs0ZDBMOF+w16IJJbvNIq4ScNpO
+ /0Jmk4E21m/vxvdn4IQLvNvrO1H4JkYJXHkztraW44IMYly6WlqrHMqGQF7kj5kz+TDM54Ge5
+ MqF/oZjzFu+QZ+Cflk6BUx97vKktQrlxbWu8nCZFF/m0EVYqtLGvZ7AcDiDtNl0thCCOyGyhM
+ wO5I+0KaeejhjJgs8e8RGtIeSHc4zV1nVC0/PjrD1OAvV03OD9S3x6KJfIifU1K6Zobej95FK
+ I2YWCcVyOImHsvgiTUG3PHFL3HnHSHF1VkuLuNE8Gp9jkt8zyNKtQx9uzbYLsoDAniDM9nT9g
+ hcaaW6FpLltstnaXcd9R7RNQHOKpfDtq/8KNjeWxgdzPuWhYh
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 04, 2025 at 02:30:10AM -0500, Jeff King wrote:
-> On Mon, Mar 03, 2025 at 06:07:29AM -0800, Junio C Hamano wrote:
-> 
-> > Patrick Steinhardt <ps@pks.im> writes:
-> > 
-> > > Maybe. I guess for unit tests it's a lot less clear cut as most of the
-> > > tests won't depend on such a controlled environment. So sanitizing the
-> > > environment would be a good enough first step for me, and if we see
-> > > demand for making specific information available to lots of tests we
-> > > could still start to expose those at a later point.
-> > 
-> > Fair enough.
-> > 
-> > To put it another way, if you write a test and if it gets affected
-> > by externalities, perhaps you are testing a function that is at too
-> > high a level that is not a suitable target for unit tested?
-> 
-> I think one problem with this approach is that breakage is likely going
-> to depend on the user's environment. So something that works just fine
-> for you, the test author, may introduce a hidden dependency that breaks
-> for somebody else much later.
-> 
-> Some examples, assuming we just suppress reading Git config:
-> 
->   - Without an explicit ident, we fall back to constructing one from
->     system info. So if a unit test ever creates a commit, it will work
->     fine for most people, but not for somebody with a blank GECOS field
->     in /etc/passwd. (We do look at that field for reflogs, which current
->     unit tests already do, but we are more forgiving there since we
->     don't pass IDENT_STRICT).
-> 
->   - Other programs we call (e.g., imagine gpg or ssh for commit signing
->     or verification) may read their own config based on $HOME,
->     $XDG_CONFIG_HOME, etc. I don't know if Patrick was including that in
->     "sanitizing the environment" or not.
+Hi Patrick,
 
-Oh, yes. I didn't mean to say we shouldn't sanitize at all, I rather
-meant to say we should sanitize to values that simply cause us to do a
-no-op in the relevant parts. That means we'd:
+On Tue, 4 Mar 2025, Johannes Schindelin wrote:
 
-    - Unset a bunch of environment variables where we know that they
-      impact Git.
+> On Tue, 4 Mar 2025, Patrick Steinhardt wrote:
+>
+> > On Fri, Feb 28, 2025 at 04:45:31PM -0800, Junio C Hamano wrote:
+> > > * ps/reftable-sans-compat-util (2025-02-18) 18 commits
+> > >  - Makefile: skip reftable library for Coccinelle
+> > >  - reftable: decouple from Git codebase by pulling in "compat/posix.=
+h"
+> > >  - git-compat-util.h: split out POSIX-emulating bits
+> > >  - compat/mingw: split out POSIX-related bits
+> > >  - reftable/basics: introduce `REFTABLE_UNUSED` annotation
+> > >  - reftable/basics: stop using `SWAP()` macro
+> > >  - reftable/stack: stop using `sleep_millisec()`
+> > >  - reftable/system: introduce `reftable_rand()`
+> > >  - reftable/reader: stop using `ARRAY_SIZE()` macro
+> > >  - reftable/basics: provide wrappers for big endian conversion
+> > >  - reftable/basics: stop using `st_mult()` in array allocators
+> > >  - reftable: stop using `BUG()` in trivial cases
+> > >  - reftable/record: don't `BUG()` in `reftable_record_cmp()`
+> > >  - reftable/record: stop using `BUG()` in `reftable_record_init()`
+> > >  - reftable/record: stop using `COPY_ARRAY()`
+> > >  - reftable/blocksource: stop using `xmmap()`
+> > >  - reftable/stack: stop using `write_in_full()`
+> > >  - reftable/stack: stop using `read_in_full()`
+> > >  (this branch is used by ps/reftable-windows-unlink-fix.)
+> > >
+> > >  Make the code in reftable library less reliant on the service
+> > >  routines it used to borrow from Git proper, to make it easier to
+> > >  use by external users of the library.
+> > >
+> > >  Waiting for Acks, especially for Windows bits?
+> > >  source: <20250218-pks-reftable-drop-git-compat-util-v6-0-8c1f39fb4c=
+02@pks.im>
+> >
+> > Johannes, did the new version of this patch series make your life any
+> > easier? As far as I can see the conflicts in your "shears/seen" branch
+> > seem to have been fixed, and the failing pipeline seems to be due to
+> > other issues. If so, we would be able to move ahead with this patch
+> > series and the dependent fix for Windows below.
+>
+> Honestly, I cannot say whether it made my life any easier. As you can se=
+e
+> from
+> https://github.com/git-for-windows/git/actions/workflows/main.yml?query=
+=3Dbranch%3Ashears%2Fseen,
+> the `shears/seen` branch failed to update automatically since I updated =
+it
+> manually last Thursday. According to
+> https://github.com/git/git/activity?ref=3Dseen, there have been 5 update=
+s
+> that were hence missed.
+>
+> I'll try to update the `shears/seen` branch now, but I'll time-box it to
+> half an hour because I really planned on taking care of other issues.
 
-    - Set config-related environment variables to read configuration
-      from "/dev/null".
+It seems that there are the usual CMake-related breakages (not related to
+ps/reftable-sans-compat-util, but to the introduction of the
+`CLAR_TEST_OBJS` or at least the `lib-oid` addition to that). I hope that
+the tip commit of `shears/seen` that I just pushed addresses that, but I
+ran out of time to monitor this.
 
-This is in contrast to the more involved fix here, which would be to
-populate a temporary home directory with gitconfig files and whatnot.
+And there are some pretty bad `exit code 127` problems in the unit tests
+on Windows, see e.g.
+https://github.com/git-for-windows/git/actions/runs/13648196783/job/381513=
+12208#step:5:213
+(but again, I ran out of the allotted time).
 
-Patrick
+Ciao,
+Johannes
