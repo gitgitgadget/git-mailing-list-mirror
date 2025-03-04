@@ -1,111 +1,132 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79AB27CCE2
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 16:12:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4ED2836BF
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 16:40:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741104729; cv=none; b=CQWobW34BBJ51amJk06GNTuVSYO+/tnmWFIERwOYDlJ2GUYF9iEARK0t0FA4WWY8I0AB3G/dmZvoF0hxo+0HYXakfzOWTLO6OxIcfp46v5Th+4VpoTIUpes9MlFb6G7YPS8d6oqTncElr31CR4WJhNmZgvkWgPfd1h9eltSDKco=
+	t=1741106422; cv=none; b=QSRpU620JjgyaEGKbGzeYFAy/quMSmbAmxN2rringOrpecKz00lHlnYNwVPiapARQGP7wzoOvkSyOJ2ZFHSh2RerprEdkgRK31IMB9h2YxrtEVaP9q7Cjud1f4uBr8wEP3N7TnaWlprG5oHpi58Al9KnWTdJBW41+Vwx4m88WuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741104729; c=relaxed/simple;
-	bh=j6JoAcFwhcyMmc+ftqWuiUvf579ylN3cfbGvvlRFtZI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h9cpy3uQHzppe45ImfZXThGQBINW+rjihz0On0P55MJeyuUxsEskUS2zqnlx9Ao5kOIx6nbnpQOgsgBh5VyG7CiE9xvSxV8UUZSgt/SkusYGYku25Fg3pQfKIN6fE8cvDHGFNddc7z3iJRX9//SC+syomjV/k0ALnHdRvCVth/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=SlHRJtwc; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1741106422; c=relaxed/simple;
+	bh=cj9dKAk/QduIfIxzEcztFunKWhFenYS/h8g+gODcvss=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e+xmB54nC4ozMuK7hciwlFHjC09KEdIKJvTP0ps6qr+uXcUxnOL4F6h52hOEjJ/4WIk5n3B7bGmqXlGwrtGhGadjoe08296MpacTgKmJwmxP9Kxver5Xl76EuDIZk9SkBXE1R2jOV68y1IPXx2Hsw315CRTsVblp25HMCIfpSZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=BZd3z3yF; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="SlHRJtwc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1741104715; x=1741709515; i=l.s.r@web.de;
-	bh=iVSoFlWbLWZe4K6lg4GWN81iD0tfFh+mqg2zkKZKw2U=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=SlHRJtwcFQDR/X5mkAoaZrREgtcJIZN9JtH0J33/llfpVJkKpAfbM3ObMcAiTbqA
-	 nQTca6qmrZyGEbidYupIQFK3sXodBaLg48Lm8sZzLdkcdgOOECds7nplHXTVJp+sX
-	 52TmDmi4yJ0knbP4SVLk6vWOz9mVPfcSi3f+i6iF8zbzgvkw03AwssHLuthYCBuxS
-	 vpy79zWTiHp2WsIn4dbTmSCzn+j/AjAPM6tkTwJJQpskmAJuMPf13xlaZ1BYI7TDY
-	 SQN70Px9QEOp3ayzsuCqX3abjv441IKQ4Pnzd4mhusiB1ZcYmHTjuq6wIxpGIj/gY
-	 Gk14D03+8b1rLfC6iQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.144.81]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MNORC-1te2Wv2S42-00KBsI; Tue, 04
- Mar 2025 17:11:55 +0100
-Message-ID: <77e1fe2e-f652-4aea-bc12-4deae7bcd569@web.de>
-Date: Tue, 4 Mar 2025 17:11:54 +0100
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="BZd3z3yF"
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e5372a2fbddso4102129276.3
+        for <git@vger.kernel.org>; Tue, 04 Mar 2025 08:40:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741106419; x=1741711219; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pHD7s3h1vAGySKOKjMCmT2EltXV5B9S4m+FbsKmD960=;
+        b=BZd3z3yF1epp7/1ameJpVtNsTmCJldil+q1IKQ3yFv+Yh9UOzpF2AzWyA7TtYVWjWZ
+         8Wt8bsd6oRUhRyj6+Gn1/zJApEVC+XMUc9dOXmev41qkB101nZWuSZxJKi4fx/ABnKxh
+         k13ES6qDipNW2kODgvGS3P4vQALcNBfdfTs68LC/9AmgffQAeL6v4CK4ioWtGniwvxRq
+         WDZnRHbuat9xbYTU1KPRXVTcNEuPRszdErDAZXWk43OTMlWWVyNc/LUWmCImPa7dkqJv
+         LJX8yrJRCZ/+rP6a6mPq7gbuZyF+sbcwkZYFhGo7s9qVvorq8vk5C+5QnW+6X2qEZ+gk
+         ErJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741106419; x=1741711219;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pHD7s3h1vAGySKOKjMCmT2EltXV5B9S4m+FbsKmD960=;
+        b=gbzR77D8h2RBBYPr0jYZ9lP7Cs0tWETbqAGK3/Wu4wNNyAoOiDvDIl/XTCYOCgMlf6
+         g30yQR5F6IXcjkXedq/xKp1TS4Auy5dmZW5VhpZEVCnM7XVdWfpEJPziIAvrLtKVYuBK
+         sg0yIcZpGoIHAikUPsChcvsbgZpI7k3X+ivh0MheqSwcQYQgX9TvhKe1V+g0GTzgNfsR
+         YngccbqOrQ/28WG3gtL+/Gbv+VrazYmHCgLvENe6Sf6NyzAqYhVacvd8UqCcYSu+wAUS
+         WHvJjF4FVxZv3wLZeaEHrEEnedRCBLIUAuzunlK980lJOTBNxKZ+1zDetiTc1bFXh1Xk
+         iOBw==
+X-Forwarded-Encrypted: i=1; AJvYcCUOUXrCrG2wAvZj45DjZU5C4NX44aEaOOlP0s16bmRKGRZbmh4j+lrczDJY4fUJ8xdyHb8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywiofrd5sJF7r++NLwm/tFPOanTfJU6llL3sy1lWsI/XM1hYGYA
+	tx+aF9t4m1gq+Wdt+HZTivWKoPLpnegxQkMWomKzc248+YkXHQeAb8HzEQTt9rfPEhpKOHsEqmj
+	z
+X-Gm-Gg: ASbGnctZau/ErM2Cd4+S/El3hmKJ74SIeJsz50CjtXBX+z3rFMUd7Dh8duSMtQZxTXj
+	5FTaX/ygykCL+WDGHu7W8M3fcc0MW3P45GjbF5s/+BOYSGS72+Mg35wUZfk3fIrpjU3TXZSt0r7
+	/WsVxidoFrp81GXbH7ux09AkcZ1wYJlbRrggPnxpKLfDJolOnFIUNerqLgOVieQ1eOpi+zj8nrt
+	HxIQPhROzH6NxMoupQ2pEVMEA+qyIbmI6K5s0yZBRum+L+dYhPIs83dDqAFeXHu5kTSOp2eemTs
+	zzg9+xcrbqPPlPpHInxY8sDbZHrHC/D3hX91HW+WRAbR5COpROdF5chpLoZarmrxRtogWgjcgnE
+	vwSB+6Xmmjs/Gqffp
+X-Google-Smtp-Source: AGHT+IGub2KfH1dMGHyDHHuG/airCVpTSa2uer/wBzjvlCr+eSYmPBe7wFQf1VXcHErMfYkg1x7qRw==
+X-Received: by 2002:a05:6902:2185:b0:e60:9842:8639 with SMTP id 3f1490d57ef6-e60b2ed3409mr21382108276.28.1741106418711;
+        Tue, 04 Mar 2025 08:40:18 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e60a3ab1265sm3744175276.57.2025.03.04.08.40.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Mar 2025 08:40:18 -0800 (PST)
+Date: Tue, 4 Mar 2025 11:40:17 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>, SURA <surak8806@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: The transfer.hideRefs of the upload-pack process does not work
+ properly
+Message-ID: <Z8cs8Y4CVpP0QHNj@nand.local>
+References: <CAD6AYr-ZC32VNfUfMB63H-rQRfTdV=VQfBm67i2mG+6GDCNxkQ@mail.gmail.com>
+ <Z8D/aiqN5e/aRSn7@nand.local>
+ <CAD6AYr84KuBb5N-LVBQo-6Gq2Ms3JKQCk0gyO8i=N8gp3whe_Q@mail.gmail.com>
+ <20250304075113.GD1283943@coredump.intra.peff.net>
+ <20250304075146.GA1297781@coredump.intra.peff.net>
+ <Z8bmSj_Ds7ePpzBM@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2] reftable: release name on reftable_reader_new() error
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, H Z <shiyuyuranzh@gmail.com>,
- Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <CAAJd+fZSUiiUm05D_eO3HS7p=WoxAWSZo51dUNjyGjUNJBvyGg@mail.gmail.com>
- <bca5c0ec-0995-421e-9745-330f729357d6@web.de>
- <20250304063329.GA1283445@coredump.intra.peff.net>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20250304063329.GA1283445@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:CWNtTPyB2I3MgCicM4Lv+1zdfxF3vPl0ypINcCYnsZ9uCpfH6Bs
- L7YBEmeV3BD2fS9+dBYE0Tk3BqWMlmBFVYiT7nCb6bfBkXaD2yqvrSD9VJPXx2+VdUeLhp6
- lMbecmqEe3CkrslsUohd7+AQw7KZHyAj2nHMpLI//rbDu9budrwsxf1T+1emzlE7LQr2rW+
- k0YH5ZuwaV8QnoHKDA/WQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:BwX2REsoQmk=;YBl3qicfpOXS/cMT26f1PX5eIaQ
- UmzK8pyo7IDclKAW1GmbDI6fXSkCPJnajHvgw01Ywged7xl1z74LOkGFyXMSQx4pVXD45NLbB
- U9RTWnwVYpiq1A81xmjOj2mamK1arI+nAGr1LicFuQyRsClvQ/LwNW4JCdFEJOfSF5HkWfUIk
- kdYu3CBj3Tx2iFVX1vAfDgkMryfbnl8dSdPDTmsWfG4RpN5Ug0NimbPf0in5DWz7Hk7MxE8ek
- tG4S4vfnElsDZitf+d70ss16oFj32GQokp2XSF2usHEtmPxbm7ZHwVKtHP73iO/V9Jezi14dI
- J03d1uP4tOnQ3HuFTjcT3+mDcCbPPHmUzi1EMexjqtF4hWvAaeqCJ4sweTYvksXgaqGG3XoY+
- jQ71lptwKG5T3XgXyeapJp3fjaP/fC3Tg12+GrPJN4HUQd5dSF9NRvBMxxkb+KRt0fFhQ0gKV
- VIffLz4lds6+ZPvpeALjhcApgd+OhgiY8jSmacy/3kvQvc9Mo1c7+w5EbS++mgjYw80fPQtNv
- 7LMpPoVH38PJdOu/dbcorxdGJoKUTnAJskboCLUoPUXB+idUNCa0BrH9j9MC/8wTDq4mwROlJ
- 45eKl9QakvEvIqM9bSLRZbJIdwzB1hUKYF5HHiEdXwByd2rtw3XiKKVaR+Gvtr6fzV7ScjpAr
- 9EucJM6uUwTu6KJN5ayqiazooDvalye3v1Iu8TOP+/fANZ9VEY8vbqbBnb5/74dylqmgUAz+U
- FhK/qGymzqtXzufmcJ9G5F7fk8/DhgROG7jWYKHUdWZQfFKTx2IKj9wF0OusNpdjUADDAMHgH
- 8k0O1wSw+MJKXRsuOap10pbGNMF0jrT9CV1jKb+XVvbZ4HYXbh4aidF5uUeUmszCoSv6scfZq
- qynSJiflFfvH5vqqsSvJQ50V87zSG47ylYWVFNWUpAwkhjZ4t5NOAnnVyqsi1hDIRdwdJxZFs
- 38ZZgiR8XKqKmXBWKLANo7pRay3utPP0bndI+gdjxTaQBIxRTVqdHCzA7Xcq1qHMy6WAbbiR9
- BTdOdkW3e8IPh3Wl2kqp4BM9XqhPbCoHgpcH1B6QTvKqVa0vaY/V7nlkR05qZ3Kbkn39oVFh+
- G6LnMRx3XWrISUfF449e7/TlIKzo5BDg8jsYqU+OYu2fUSq+lUMp7DaFuIuVKMS96HO0t2qvE
- p37l5/wrCf1D6niSwFtQWEAbomafA70voiETUfccn/RftHJ95cRh5gbtn1rjn8jI+w8xzDNJL
- mWqlIBsRce51sNtXl4dj/XFRLST+y3s+5UC8iCaOTWTVgmdm40S4RdbXLN0vkn4SxaEMYWnJG
- aHWIg+QFRxspfYFen514A89jefPKPzg92SgVulDQO7n331SEpNogZmmwcNLk7PoV+MqybOp/4
- C2WjOMG4Qpv824wN80lIPhO22y0RmoyI4eVfm4S4MsLeafdxXR1WfwLaq3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z8bmSj_Ds7ePpzBM@pks.im>
 
-If block_source_read_block() or parse_footer() fail, we leak the "name"
-member of struct reftable_reader in reftable_reader_new().  Release it.
+On Tue, Mar 04, 2025 at 12:38:50PM +0100, Patrick Steinhardt wrote:
+> On Tue, Mar 04, 2025 at 02:51:46AM -0500, Jeff King wrote:
+> > On Tue, Mar 04, 2025 at 02:51:14AM -0500, Jeff King wrote:
+> >
+> > > From your reproduction, it looks like the issue is that for loose refs,
+> > > asking for_each_ref() to exclude "refs/heads/foo" will not yield
+> > > "refs/heads/foo/bar", but will yield "refs/heads/foo-bar".
+> > >
+> > > And that was true for packed-refs, too, before 59c35fac54
+> > > (refs/packed-backend.c: implement jump lists to avoid excluded
+> > > pattern(s), 2023-07-10). After that, packed-refs exclude both.
+> >
+> > Oh, and of course it would be interesting to know how reftables behave
+> > here, too, as I think they recently learned about exclusions.
+>
+> Well, we have tests that explicitly verify that prefixes cause us to
+> exclude such refs in t1419, "overlapping exclude regions". So the
+> reftable backend is bug-compatible :)
+>
+> Guess we'll need something similar to the following:
+>
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index 7e90e13f745..45462f2ce6d 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -594,6 +594,16 @@ static int should_exclude_current_ref(struct reftable_ref_iterator *iter)
+>  		if (cmp < 0)
+>  			return 0;
+>
+> +		/*
+> +		 * The exclude pattern needs to either match exactly, or, if it
+> +		 * is a prefix of the given reference, it must be a containing
+> +		 * directory.
+> +		 */
+> +		if (iter->ref.refname[iter->exclude_patterns_strlen] &&
+> +		    pattern[iter->exclude_patterns_strlen - 1] != '/' &&
+> +		    iter->ref.refname[iter->exclude_patterns_strlen] != '/')
+> +			return 0;
+> +
+>  		/*
+>  		 * The reference shares a prefix with the exclude pattern and
+>  		 * shall thus be omitted. We skip all references that match the
 
-Reported by: H Z <shiyuyuranzh@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Change since v1: Avoid NULL pointer dereference.  Thank you, Peff!
+Ah, makes sense. Thanks, both, for looking a little deeper. I can work
+on a fix shortly...
 
- reftable/reader.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/reftable/reader.c b/reftable/reader.c
-index 3f2e4b2800..24bae50ac2 100644
-=2D-- a/reftable/reader.c
-+++ b/reftable/reader.c
-@@ -666,6 +666,8 @@ int reftable_reader_new(struct reftable_reader **out,
- 	reftable_block_done(&footer);
- 	reftable_block_done(&header);
- 	if (err) {
-+		if (r)
-+			reftable_free(r->name);
- 		reftable_free(r);
- 		block_source_close(source);
- 	}
-=2D-
-2.48.1
+Thanks,
+Taylor
