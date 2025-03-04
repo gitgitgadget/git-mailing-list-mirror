@@ -1,66 +1,66 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F41B1FF614
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 10:25:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1351FC7CA
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 10:31:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741083948; cv=none; b=E45Vrexi6BCT/Zl9BxPIP2SQBdid3L9Zp2WWIkh80Nka71MSUWGQGYUGM3DD79WRqTXIM/48k6rmmIs58TSC7xZ5NsN5qiUrrkqcaMRyMudQBPL+RsLtOZsXIbbafRsLKa2UXpJAKKQthQVxLYAKbBQSIUY0BLjA11LZnvUTT7Q=
+	t=1741084291; cv=none; b=NSNjX3gy9WGGiofwaq5Ydlu4B/ONATpW42rkXz1ox9rRYheLVVoE3HWrfu1CiTMOaPURVbKSSbvS7Cd3Y91bgJ7UOuDTgxcyAUTGFajs7pLOPA089A+IiOViggaa8U+QH0vY0JvHS7fIU2IakdlTgUHAgPnlzA20Ke7DwgSncd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741083948; c=relaxed/simple;
-	bh=Q6Z0QxgzlhHeK2nBgNB+TS1bbHZux9JKDv0F+hNjNXo=;
+	s=arc-20240116; t=1741084291; c=relaxed/simple;
+	bh=Ejlp43C7xzB2DvF7rLm1VgZzyxEVNL1bTwsPM5fxstE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rOfScGKFv99usl83O4v6BiFADeJXRKjRbVEO9Y9t+w5NPNbd97BU3fwF2e0o0M6MnuRd+a5f7f7Aw99MjLI2ZnnLvwRnw8XuJive/JJOBjgXG64hCGp6ElT85QK8X0oy8e6F2EPCpwZjXFJXZXIvGa6Waxf6/xzLN7MA2Lq0S+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N4tKE/3R; arc=none smtp.client-ip=209.85.218.53
+	 In-Reply-To:Content-Type; b=oI4Oo7xiKT77lV/2wiivXShJMhzqMZ5vDrEqRqd4DvvJf+N5srTfFB4pf8P1X33sOeq8Au3EOMHDVpnjOMN1y3Bb8XHkllIwP2oszEIWuPLtbaFgrcg5Xi8JAO1CwvdyLfCzNcHPujfXCGWiFWA8VqBiZc2z3ZVL1jnT/ZGRKdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RBxQgEbH; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N4tKE/3R"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-abf5358984bso466553766b.3
-        for <git@vger.kernel.org>; Tue, 04 Mar 2025 02:25:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RBxQgEbH"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-abf48293ad0so526085666b.0
+        for <git@vger.kernel.org>; Tue, 04 Mar 2025 02:31:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741083944; x=1741688744; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=gmail.com; s=20230601; t=1741084288; x=1741689088; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1yT03A61q/gf361fLyOr0ufh6I99OphCivyP4O6PMQ8=;
-        b=N4tKE/3RVtl1GJL1QRstS2Ig3ioCs5JvCWUtSgHUc6/DvnIFkidlw6v4dB3+UiLuEM
-         2aJCT0hqdR+8pBRHXCsX7Jqasz3x+lfk1evvb2d2fKXWtQtB3eJq/1j6mOiRtiyRwY8c
-         lGZ1lzr+mjcbUBVEOOrHHONVOJmVnfA7dpBbZyhE64JDRtDD00iXz9/vrwaQ2BnIGPEM
-         VdYfbZzjoOEtq2OWieJssZdqNRpk/+O7q4y1xDaX+vuAlQUwErU2/Bk2SLffOodyFN+0
-         xOyN83B0BUyfPO3iuLmLATyKaZVBxT9StlnKvtqCNuqBdJ1EjFUSBK5aj0ClVPY64ERp
-         QNOQ==
+        bh=Bti1dohy2R9QbFIvhV1vAFgA2Jk09eHW0lSq23tjXcg=;
+        b=RBxQgEbHfe13vDVuYHsZOHwao+yMIuZxc7Un5Ea0Vj4OVGeEmo5U1KJD6pGYtOJ7NQ
+         wLlnVR6nIA2atpS43uNkNmDokwIAzxBjtLvM7ttm/ItadIgqUJdBmCybjUI2NDbhH+Ie
+         +4Vzbv60LRl+Zg8wudZxTUcvI06Ys5U/uiV5V6uWqFuaf8hWGWtGe+QxL8YXKOLSCuEw
+         j1cGMgnqam/ZhJygS9rqwfpHiNOjqtBCHfWN6oFhPNhG/ONleRvnm47ZuH3Db0IHex4q
+         NdoymcXcSwAbTjE18CgDf1hHR0zTSh3eEfWAt/Hsa2WMROWUr1e8yOZwMGSjLlLCU8GP
+         DipQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741083944; x=1741688744;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=1e100.net; s=20230601; t=1741084288; x=1741689088;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1yT03A61q/gf361fLyOr0ufh6I99OphCivyP4O6PMQ8=;
-        b=Fp5y23HYgZVu1CBLo4hyVmFs7z6jxuejqsTPCTDKToUNI82UpeHL0iX4tkGHJV6Qh/
-         V9jKw5CDnIPRLdW7FvRW0lIvlotQNdc1XfP/aObD1JkU5X9YRN87qIifd8S6RKr3A0yM
-         YRmcgPuTEFRqk1MzCKWWfB1u/C2sf4D+oaezehCqJP018LqdiK4BpDV0Cgm2bwwxYT5S
-         AqmUgFYFZwWRUZf2ZNpqvodlpggV2yGIiqtLA+77NxeHzDR0HIvvv1JbK4uf6kDC6d0t
-         ISTFN651xGNmpoqu/hseBa5TktTUyKkL/yz0jWlarW+Ll1k0awhYH6bKX/60SQwgNn3b
-         aSBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXtkb1xbkuvK855mj4qkbQ3j2DlYS8U6EhPFdG0o498Hym/eT4MG7jw8gB/g1hUlGFQXJ0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEf2HDwdgfwA/Mk0Zerg5dRYcAqjn49KMJitSiUuACnkERplQp
-	0f7RRVhpVUlP/+ffkL7QRcRfEX+esvA1y2MaLwFZqYLD/KJrwGSY
-X-Gm-Gg: ASbGncsVxLFrutBhoz9JWeew25uRcHkmDwtcWTzR9+94PR0g6cR7NmaSxZ2Vgo9dkpn
-	ERCyCkSq4b/d20kTG2UdKIp8jOevK3fYYa+DSuiVFJFncwodJOcq+HjQB2439fTehM+hT4Ak1mb
-	k5rgYiea0eXgTQ+ry4D0Vw1+4sgHs6en5qp5dsZJrDpGGczIb4D4vWKgZT0V8V+SzOc8OEXUbK/
-	KRmjAtkmeithfqp+//9sNHd3ZpRc+lzU9VN60hldG8T5Ga4cuweKtEDkuK1vQYEPOr2vEVm0M/c
-	YV8GEbE4/M8mOT3c7iGIc2tD6MqLDxyJ+4ZMNxQZpc5VDKxU71PeltNjFM5uZn5aRUWBYH2NOsB
-	6QQ8QFIO3rPJlwqs/XPD7Rxk=
-X-Google-Smtp-Source: AGHT+IE3w2gMB3JgGbz2DCUKQozxtYnbSB2VKMbjpzyh5Df36hMOBy7fLgpTOVMc5pbiRdWFpJt4EA==
-X-Received: by 2002:a17:907:1b26:b0:abe:fdfc:47d6 with SMTP id a640c23a62f3a-abf25fab3e9mr1925421566b.23.1741083944290;
-        Tue, 04 Mar 2025 02:25:44 -0800 (PST)
+        bh=Bti1dohy2R9QbFIvhV1vAFgA2Jk09eHW0lSq23tjXcg=;
+        b=uqBCGRl6ZwbhqYuTtkyDGuqmgtA6t9RZoaQVJyxBtTUWvGbZZAQavZBe6FBuWR1/al
+         7CNeg34Pgq0NtmpiF6ITJq7H7EYLBr67u8jffwZIniEIsUllumCakyo4UrcvkO2OP1bv
+         0xE2352MRVodhfxFkyoyyBAbNSV8EQT4mzfbG+VQw+8s/Mtw+ubVxv1BS2ikwmZgfsqW
+         a6aipjMHe8Q7aSDi11dGCAq/5pQ9hS4f7dp5Tx9eBHGTWApGW0zxq6U7FB0V9zUvs9fm
+         jsJWKE8LyjEY/27p9drWbXw1794SMJwKjIcQTxTUDMDPyH5G1y4lOuSS/ey16V6kv11M
+         BasA==
+X-Forwarded-Encrypted: i=1; AJvYcCUH7XvRyhjb8/Bl+hbSeZS7jJdiPdvmMHbK7jUr8dN3L5HGhatBuswcIdL8CqMk4C6BPH4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzsAHcpIIAgYZDi9JtvVuYTWZ5veDBb/HMkD9Ch6EVwEpCt945t
+	CJa6t7KEM7ob3T5JUhYssFK4TkxghaZECmX92H6lS1/ao3A8HKV4
+X-Gm-Gg: ASbGncu7DpRFqeMhXdhXVq8fS1dT6h1yVY17anANrE+Yp+WAjUeVb9tlAAs1eT4M5ZD
+	AMK5HGmqX0t3ujrwn+uT5H/Y0XvovNZs91mYsXHbaz3Q4DUOheAnW79Ul4LeXVgWNYZu/kSlu+3
+	nISu/a4wcm7oKO+i4Ig4ssC60InqvckIkpkTvOK3QPfUbUxJdG473Eg8vgH4B/LPviK5pb+zT+7
+	sSruAXvRf3LQ/0kuB6wiFBFjWlmPiZH4IiX4QbJgWcam+6+28U4kZnA9jROKOFQlGSulNltfCfV
+	Lq2RAce7W6ysuyAkLkCN98ycoTTh9/zrSqbbPtf5sOu5qNxG1EFu9GC0OfL+JUhHO6EuJRgVa2S
+	ZbbCOpGvl5mdxIVMOBtGCx6w=
+X-Google-Smtp-Source: AGHT+IFc5viVTFo/57oQCTG4vDN96+wqiQoHMVTZhrC7415AXKnH9E4sd5UigfNqK0/cKFOA3L6DjA==
+X-Received: by 2002:a17:907:2d20:b0:ac1:e1e1:1f30 with SMTP id a640c23a62f3a-ac1e1e1403fmr559458566b.38.1741084288041;
+        Tue, 04 Mar 2025 02:31:28 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abf5a6e59ffsm539981666b.171.2025.03.04.02.25.43
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac20381299asm6084366b.46.2025.03.04.02.31.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Mar 2025 02:25:43 -0800 (PST)
-Message-ID: <a2cbc3ce-c58f-4003-a7e7-53d97fe8e67f@gmail.com>
-Date: Tue, 4 Mar 2025 10:25:39 +0000
+        Tue, 04 Mar 2025 02:31:27 -0800 (PST)
+Message-ID: <33e6e65e-c68b-4b88-a66b-53b808745a24@gmail.com>
+Date: Tue, 4 Mar 2025 10:31:23 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,58 +69,79 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] add -p: mark split hunks as undecided
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1863.git.1740149837.gitgitgadget@gmail.com>
- <43a0592a462cf68bcfdc54373da2319431c3c1ca.1740149837.git.gitgitgadget@gmail.com>
- <xmqq34g79e8k.fsf@gitster.g> <618d4a61-7480-46b7-8563-221264290ed1@gmail.com>
- <xmqqikowejmb.fsf@gitster.g> <180271a6-eb0e-4c15-9916-b2ab5760f4ec@gmail.com>
- <xmqqjz9b6xr1.fsf@gitster.g> <d2c934cc-72be-4aae-8661-3331d3936219@gmail.com>
- <xmqqh64e3snx.fsf@gitster.g>
-Content-Language: en-US
+Subject: Re: [PATCH v2 6/7] refs: implement partial reference transaction
+ support
+To: Karthik Nayak <karthik.188@gmail.com>, phillip.wood@dunelm.org.uk,
+ git@vger.kernel.org
+Cc: ps@pks.im, jltobler@gmail.com
+References: <20250225-245-partially-atomic-ref-updates-v2-0-cfa3236895d7@gmail.com>
+ <20250225-245-partially-atomic-ref-updates-v2-6-cfa3236895d7@gmail.com>
+ <2755fb78-d587-4ad9-b22f-b60dfa752d7a@gmail.com>
+ <CAOLa=ZQCWFGsaPN+J8R9eQMBJqNNyoeDLkLwCFBbBzTG_R_-sg@mail.gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqh64e3snx.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <CAOLa=ZQCWFGsaPN+J8R9eQMBJqNNyoeDLkLwCFBbBzTG_R_-sg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Junio
+Hi Karthik
 
-On 28/02/2025 17:06, Junio C Hamano wrote:
+On 03/03/2025 20:21, Karthik Nayak wrote:
 > Phillip Wood <phillip.wood123@gmail.com> writes:
+>> On 25/02/2025 09:29, Karthik Nayak wrote:
+>>> Git's reference transactions are all-or-nothing: either all updates
+>>> succeed, or none do. While this atomic behavior is generally desirable,
+>>> it can be suboptimal especially when using the reftable backend, where
+>>> batching multiple reference updates into a single transaction is more
+>>> efficient than performing them sequentially.
+>>>
+>>> Introduce partial transaction support with a new flag,
+>>> 'REF_TRANSACTION_ALLOW_PARTIAL'. When enabled, this flag allows
+>>> individual reference updates that would typically cause the entire
+>>> transaction to fail due to non-system-related errors to be marked as
+>>> rejected while permitting other updates to proceed. Non-system-related
+>>> errors include issues caused by user-provided input values, whereas
+>>> system-related errors, such as I/O failures or memory issues, continue
+>>> to result in a full transaction failure. This approach enhances
+>>> flexibility while preserving transactional integrity where necessary.
+>>>
+>>> The implementation introduces several key components:
+>>>
+>>>     - Add 'rejection_err' field to struct `ref_update` to track failed
+>>>       updates with failure reason.
+>>>
+>>>     - Modify reference backends (files, packed, reftable) to handle
+>>>       partial transactions by using `ref_transaction_set_rejected()`
+>>>       instead of failing the entire transaction when
+>>>       `REF_TRANSACTION_ALLOW_PARTIAL` is set.
+>>>
+>>>     - Add `ref_transaction_for_each_rejected_update()` to let callers
+>>>       examine which updates were rejected and why.
+>>
+>> I think this is a much better design. I wonder if we want to signal to
+>> the caller of ref_transaction_commit() that there were ignored errors
+>> rather than forcing them to call ref_transaction_for_each_rejected() to
+>> find that out. Another possibility would be to call the callback from
+>> ref_transaction_commit() but that would mean changing the signature of
+>> ref_transaction_begin() to take the callback and user data when
+>> REF_TRANSACTION_ALLOW_PARTIAL is passed.
+>>
 > 
->> ... There was some talk a while ago about
->> adding a mechanism to select "git 3.0" features at build or run
->> time. If we add something like that I'll resubmit with this change
->> guarded by that feature.
-> 
-> Documentation/BreakingChanges says that we can hide it behind
-> WITH_BREAKING_CHANGES compile-time switch, and that is part of
-> 2.49-rc0 already.  The linux-breaking-changes GitHub Actions CI job
-> runs with it defined.
+> Yes, I did toy around modifying `ref_transaction_*` at first, but I
+> think the current implementation is slightly better. Users of the ref
+> API do not have to worry about complexity of partial transactions unless
+> they really need to. So in that case, for most users, the API remains
+> simple and clean, and for specific users who do want partial transaction
+> support, they can activate it via the flag and use the iterator to
+> collect the rejections at the end.
 
-Thanks I'd missed that being merged. I'll re-roll with the changes in 
-this patch guarded by WITH_BREAKING_CHANGES.
-
->> Perhaps we should make the confirm-before-quitting thing a "git 3.0"
->> feature as well?
-> 
-> I do not feel too strongly either way.  Sometimes I wish it asked
-> for the final confirmation after all hunks are decided.  Most of the
-> time I do not feel that way, which almost always is after saying 'q'
-> to finish the selection.  So I dunno, but my thinking right now is
-> that I lean a bit toward negative than positive.
-> 
-> In any case, I think we should indicate the (selected, deselected,
-> undecided) for the current hunk the user is being asked about, which
-> we talked about. As a workaround, we can do 'g' command to see the
-> list of hunks and check the indicator (+/ /-) for each hunk.
-
-I'll try and take a look at that in the next release cycle
+That makes sense. I have a slight concern that iterating through the 
+errors is O(number of ref updates) rather than O(number of errors). If 
+we expect most updates to succeed that it is a shame to have to check 
+them all just to see there were no errors. Maybe we could be store the 
+errors in a separate list of (update-index, error) pairs to avoid that.
 
 Best Wishes
 
 Phillip
-
 
