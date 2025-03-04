@@ -1,373 +1,113 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE12442C
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 13:01:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35C71FCFD3
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 13:05:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741093282; cv=none; b=NbFxO92YzWyV/EdqEoZYUcPSnYsTdRrCWpDAEPTsZl/ijbTQyTkhS5nEqAdrXJqlvafQQZ4WH8nIWf4Px9KxLZ9tVbWo/vuuy/6XL6ywkM4ESy8C92lgsEvmK7+5d9iu5ScoEzDAuIq9r4OfWJqlrNNEojvOYaIex9b4E6mJ0Zk=
+	t=1741093540; cv=none; b=ejvvH23TxSLPrje2EkXRtGiesouh4fTsQIxroJRGkBbTWPPk6wh7sIu+xIUaWQVb7sF5wF+eSALr3GSYTu/Q2EI4tByJqcw/QNWyIVov5DChKQrPKs0IBh8K0KZkYl5qTv9dpnWv55qek2kVT6zaOFS0CQYxU0noUz3u7gkVa+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741093282; c=relaxed/simple;
-	bh=32+tncTUjvjLcSZou65UmCrEU6M7K3cRPLkAtzfIrAM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ja1B+dJxKUaTrkF7nDaM18mkgQArrE8yVtVN/Z347UpBF/oLNVhscP4riFL/HJrTkxuK7x11R5e8MmReDTd/GgOMW6qdt8b1FLzCfAvE4mwydyb1wusdxfqQFMlEaFMSUFTPggVE3TUZft7xpADxR0tRrpg6q4XuIJ/iyddpt9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c7tZharE; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741093540; c=relaxed/simple;
+	bh=KmOyVHl7cxWtDk29P6hboKJSxX85udsAeheEFTcUi0M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uB7DZDN7zY3vfAwWkNdQ0kHKygRJIrXebRowei86WY+bYX4BBagJcaw80gV/tPy9mcCm7fbA6vUV7G+Qp+f3yPyEYLWdZKnxWzDSFFRPc1KNWxVeQ0MYkYYYmog2MlY6CaAKHPQXRd+ch3a5GqqzgqL/gkvmz2nJ/9OhsU17vtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aI00wYsE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=6J4wPrRf; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c7tZharE"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-390f5556579so2186670f8f.1
-        for <git@vger.kernel.org>; Tue, 04 Mar 2025 05:01:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741093278; x=1741698078; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/kBhdyBS/UPX1ZKJR7bcSnQpMoBfWi7Q7NQuPR8rb2k=;
-        b=c7tZharE5p0+HqkKSL2xRs/aWky51vO7ksFzcDN3Vn+I/HMn1IQsocW+vQU8+9H6rt
-         uUfuL+6NO64Bq8/8T75YYeMWDHLDdfFNGslu4BNOwdB7aN4UOhaPa+vSIMKjSHLJMRPt
-         4Ni1iEJGFW+rFgbtUPodRYxV2eLkZmuiCqUUSyRok+sGLtGoVJOuccPhUQxlMLm3Zpsa
-         czzxz3HZpaPEKsTj+KrKgEtfqpqvk+PyXH9Yhz5vM6Y4r6GlV/LmsKaDxdPCrxTb4+Qy
-         mhT7Xm4Ocmb4urqAWoU22KElIDsUmkNr5NCU91nBdPiQxIhJmZziz3sJWgXrFBHB0Z9V
-         qY5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741093278; x=1741698078;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/kBhdyBS/UPX1ZKJR7bcSnQpMoBfWi7Q7NQuPR8rb2k=;
-        b=ENi5N9mMjIHKW6DIYj+tqoU5YY9d071eOJ1R8pCmf5JSAb/T8BWa/GvLr4WBRaJ0b9
-         0OUnLOT1bzKipspxkOKiG9zPVqufb4mvS7+QDS0X8Ck6QZk0JnfE/0i6DvCRQu+QvgPW
-         gnzf4ENlx/YmyXhiIUw50X9CSK5+QRiLxqahT+Cwhec7LRszodg+CsLMEL/2+Du5PJkt
-         G22785fVWF8f5OfhYM5DJMnPR3krmzaBfFEmF2ym2/6ClnKN+XG+loB/ydiv6+UYRWhA
-         E7p1j3pRSalkjDtOwR/tJAsd2pvsVskWl9BYBlBiruoB3VsfiBeVgitXpWxiw6IVsoCd
-         aAww==
-X-Gm-Message-State: AOJu0YxeTtF3zeYFHeo1hssIoWyiR+oIE58NEIo9sd/QW351SzSODz+G
-	80IhRVKLEReti9YWxpXZvU6giayVguwhTbBDODgazQP+237f1PUeG9dwOA==
-X-Gm-Gg: ASbGncsFV1DI/fPbfPw7orLgHPsLfcBUzAj8fViSoLc9j3Fe6FxL8kSTSzl2AYJ5Zq1
-	aa2D5HxhUN1UDLFPaGr4fbcEa+naJIFK7SWnva+fFHEND6U48aWY5I3iuN2e2bXAj9VbE++gEHe
-	iwLSSSWKyESvzlKLeVKTsfTMSj8ixtrBrMPpGthIDDDK0HhlNSH9oBrdO2gOS4yM8HchgiboKK/
-	z/68MqRvzA9kEcZadg/hkoz0qFYaVGX6quO9pSKpJN0KdjPtHnO17iZ93dRTrVRZhkMRfb+C06M
-	GWNbjoTexa1TFp+7eFd2ORS2BT/+WzOL6P5xYCJ9gg1XRw==
-X-Google-Smtp-Source: AGHT+IEM6zCSv0Q+fJsJ8IlBKmSd4PBGAQyRLVT0poC3Li7JaDjEiBysaBj4b/F846xfk4iiQpMKZA==
-X-Received: by 2002:a5d:5984:0:b0:390:f88c:a684 with SMTP id ffacd0b85a97d-390f88caccdmr13351727f8f.35.1741093277196;
-        Tue, 04 Mar 2025 05:01:17 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390e4795978sm17291719f8f.3.2025.03.04.05.01.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Mar 2025 05:01:16 -0800 (PST)
-Message-Id: <pull.1774.v3.git.1741093275742.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1774.v2.git.1725607698680.gitgitgadget@gmail.com>
-References: <pull.1774.v2.git.1725607698680.gitgitgadget@gmail.com>
-From: "ToBoMi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 04 Mar 2025 13:01:15 +0000
-Subject: [PATCH v3] gitk: added external diff file rename detection
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aI00wYsE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="6J4wPrRf"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id EAC0E1381135;
+	Tue,  4 Mar 2025 08:05:33 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Tue, 04 Mar 2025 08:05:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741093533; x=1741179933; bh=GyU47ofQMv
+	s1fMV98oT9qXwuoqfeRCfPzLX3/jtIP90=; b=aI00wYsEt6m1g+tyrLMNRlqpUD
+	S/A+meFiliv3tkV4+ldLfr+JNpNa3paZ9LQvzvibBfrSSwtePhWlQtFhQJDLRNNZ
+	Mbx/+51ZTKpAOLN6o3pUR67fmdtx1tHim80LMXiZhNBBAHMiJ5+Zcxkg6OqePkng
+	cHL8b11R6J1xDKfYxSv1+MpOVGVbdKxNLdebtTKBWuLajDcaRJV/RW1vAbJ56KnH
+	ixqd3HbmoenrqaczGV/3WODWnWO+9X+1EvtApq+d7vSExYhVXyKYUPEWVkVrP169
+	0PvzMRmepMlkNnKOS5WuzNUyawdosGT3bqNxctRsCIE4RjWcU2UnQz4xvOQg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741093533; x=1741179933; bh=GyU47ofQMvs1fMV98oT9qXwuoqfeRCfPzLX
+	3/jtIP90=; b=6J4wPrRfVIk/h4TiMvYwwk0p1D4p7CvzBC/SAoDs0qIaFSFsK73
+	uuL5Gir4NPfjB6zXUEet0WuYhr/NA1rYi0XQPB0016k1n3zYM5tqFVtqVZ4h2OiK
+	kycATQbUFiEDyfksVTEBicmSDkHCRLvz4T4zVR6lXBGu+rc5BxhbO0i1wz7fRamF
+	Ouny4RDcrjsx2ZTG9cXhIMJ9tlxygp23j6V6tW/yna7cnWBWzqmZv3dD4fyhdNtI
+	HNMiRj8MHbZz4jM9NIfp0bYbXiqgigFT1xzjnewSdnXHNROt3eBhBOA6nkjY/cPI
+	VxBfSOjEKAt1qdnVQ0Z+sJWN9dJJxM3R1Lg==
+X-ME-Sender: <xms:nfrGZ9kUjhxQpdSl9YZ1HOSVDs1Q0sOu6B8GJayDf1e05XXrAesgrQ>
+    <xme:nfrGZ43yO31LX0b434qVn_H0sQk4XhVa53e8vfzQZUdqckCxk5sBIgXfnt-tNaey6
+    wrCGXdf43uLr_7zaA>
+X-ME-Received: <xmr:nfrGZzpMzQVc-5OOftTdryS19ugypuNQCh1eIJg_Pxf7ZEccguOit4YsjWXiXoblAv3agScqobBj84qYFR2B_9mit7ffbZtwuisB>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddvuddtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhhutggrshhsvg
+    hikhhiohhshhhirhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:nfrGZ9n8QME1-mO3ts2xSJoWa550N89dVSBOBU05OCiYpNdVFkl7gQ>
+    <xmx:nfrGZ71iJi7rjWHLRM4Fp7BIXCV_nDKWrUxRoshOtD9byVdtXsB8GA>
+    <xmx:nfrGZ8t0MJAzxhcOD7HRDgyf2081oI18rXtUbftRXncUjqGo96BQYQ>
+    <xmx:nfrGZ_WtURW2vRKF12UUcHjx3ltbKPsqhWq7yfGm9UrH2vd_aSnnPw>
+    <xmx:nfrGZ8yIyIrtlG8IwIwZJ4M5WmS5twqzt1iSlE_hWKuznat_zGdkSuzv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Mar 2025 08:05:33 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC][RFC PATCH 0/6] Add --subject-extra-prefix flag to
+ format-patch
+In-Reply-To: <xmqq7c55vhj8.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	03 Mar 2025 15:08:43 -0800")
+References: <20250303220029.10716-1-lucasseikioshiro@gmail.com>
+	<xmqq7c55vhj8.fsf@gitster.g>
+Date: Tue, 04 Mar 2025 05:05:31 -0800
+Message-ID: <xmqqfrjtt084.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: ToBoMi <tobias.boesch@miele.com>,
-    Tobias Boesch <tobias.boesch@miele.com>
+Content-Type: text/plain
 
-From: Tobias Boesch <tobias.boesch@miele.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-* If a file was renamed between commits and an external diff is started
-  through gitk on the original or the renamed file name,
-  gitk was unable to open the renamed file in the external diff editor.
-  It failed to fetch the renamed file from git, because it fetched it
-  using its original path in contrast to using the renamed path of the
-  file.
-* With this change gitk detects the rename and opens the external diff
-  with the original and the renamed file instead of no file (it is able
-  to fetch the renamed file path and name now from git).
-* Since git doesn't destinguish between move or rename this also works
-  for moved files.
-* Showing the external diff with the original and the renamed file
-  works when either of the files is selected in gitk.
+> Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+>
+>> Subject: Re: [GSoC][RFC PATCH 0/6] Add --subject-extra-prefix flag to format-patch
+>
+> Hmph, instead use "--rfc=GSoC" to do [GSoC PATCH n/m] and please do
+> not pile more "extra" on top?
 
-Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
----
-    gitk: added external diff file rename detection
-    
-    Changes since v1:
-    
-     * Commit message ident
-     * Commit message line length
-    
-    Changes since v2:
-    
-     * Removed option for rename detection (Adding GUI options seems to be
-       not desired - which is understandable)
-     * Rebased on current master of git-for-windows
-     * Renamed variables for a better understanding
-     * Made rename detection also work when the renamed file is selected in
-       gitk
+Or even --subject-prefix="GSoC PATCH".
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1774%2FToBoMi%2Fdetect_renamed_files_when_opening_diff-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1774/ToBoMi/detect_renamed_files_when_opening_diff-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1774
+Once you stop treating [GSoC] as if it is an independent prefix,
+everything will fall into place naturally without adding anything
+extra.
 
-Range-diff vs v2:
+To put it differently, which one wastes more precious horizontal
+screen estate on the Subject line, where practically only 50 or so
+columns are usable?
 
- 1:  6209080cad6 ! 1:  1a64e989713 gitk: added external diff file rename detection
-     @@ Commit message
-          gitk: added external diff file rename detection
-      
-          * If a file was renamed between commits and an external diff is started
-     -      through gitk on the THE ORIGINAL FILE NAME (not the renamed one),
-     +      through gitk on the original or the renamed file name,
-            gitk was unable to open the renamed file in the external diff editor.
-            It failed to fetch the renamed file from git, because it fetched it
-     -      with the original path in contrast to using the renamed path
-     -    * gitk now detects the rename and opens the external diff with the
-     -      original and the RENAMED file instead of no file (it is able to
-     -      fetch the renamed file now from git with the renamed path/filename)
-     -    * Since git doesn't destinguish between move or rename this also works
-     -      for moved files
-     -    * External diff detection and usage is optional and has to be enabled in
-     -      gitk settings
-     -    * External rename detection ist marked EXPERIMENTAL in the settings
-     -      and disabled by default
-     -    * Showing the renamed file doesn't work when THE RENAMED FILE is selected
-     -      in gitk and an external diff ist started on that file, because the
-     -      selected file is not renamed in that commit. It already IS the renamed
-     +      using its original path in contrast to using the renamed path of the
-            file.
-     +    * With this change gitk detects the rename and opens the external diff
-     +      with the original and the renamed file instead of no file (it is able
-     +      to fetch the renamed file path and name now from git).
-     +    * Since git doesn't destinguish between move or rename this also works
-     +      for moved files.
-     +    * Showing the external diff with the original and the renamed file
-     +      works when either of the files is selected in gitk.
-      
-     -    Signed-off-by: Tobias Boeesch <tobias.boesch@miele.com>
-     +    Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
-      
-       ## gitk-git/gitk ##
-      @@ gitk-git/gitk: proc external_diff_get_one_file {diffid filename diffdir} {
-     @@ gitk-git/gitk: proc external_diff_get_one_file {diffid filename diffdir} {
-      +
-      +    set renamed_filenames [list {}]
-      +    set filename [file tail $filepath]
-     -+    set rename_from_text_length 12
-     -+    set rename_to_text_length 10
-     ++    set rename_from_text_identifier_length 12
-     ++    set rename_to_text_identifier_length 10
-      +    set reg_expr_rename_from {^rename from (.*$filename)}
-      +    set reg_expr_rename_from [subst -nobackslashes -nocommands $reg_expr_rename_from]
-     -+    set reg_expr_rename_to {^rename to (.*)}
-      +    set rename_from_text_index [$ctext search -elide -regexp -- $reg_expr_rename_from 0.0]
-      +    if { ($rename_from_text_index != {})} {
-     ++        set reg_expr_rename_to {^rename to (.*)}
-      +        set rename_to_text_index [$ctext search -elide -regexp -- $reg_expr_rename_to $rename_from_text_index]
-      +        if { ($rename_from_text_index != {}) && ($rename_to_text_index != {}) } {
-     -+            lappend renamed_filenames [$ctext get "$rename_from_text_index + $rename_from_text_length chars" "$rename_from_text_index lineend"]
-     -+            lappend renamed_filenames [$ctext get "$rename_to_text_index + $rename_to_text_length chars" "$rename_to_text_index lineend"]
-     ++            lappend renamed_filenames [$ctext get "$rename_from_text_index + $rename_from_text_identifier_length chars" "$rename_from_text_index lineend"]
-     ++            lappend renamed_filenames [$ctext get "$rename_to_text_index + $rename_to_text_identifier_length chars" "$rename_to_text_index lineend"]
-     ++        }
-     ++        return $renamed_filenames
-     ++    }
-     ++    set reg_expr_rename_to {^rename to (.*$filename)}
-     ++    set reg_expr_rename_to [subst -nobackslashes -nocommands $reg_expr_rename_to]
-     ++    set rename_to_text_index [$ctext search -elide -regexp -- $reg_expr_rename_to 0.0]
-     ++    if { ($rename_to_text_index != {})} {
-     ++        set reg_expr_rename_from {^rename from (.*)}
-     ++        set rename_from_text_index [$ctext search -backwards -elide -regexp -- $reg_expr_rename_from $rename_to_text_index]
-     ++        if { ($rename_to_text_index != {}) && ($rename_from_text_index != {}) } {
-     ++            lappend renamed_filenames [$ctext get "$rename_from_text_index + $rename_from_text_identifier_length chars" "$rename_from_text_index lineend"]
-     ++            lappend renamed_filenames [$ctext get "$rename_to_text_index + $rename_to_text_identifier_length chars" "$rename_to_text_index lineend"]
-      +        }
-     ++        return $renamed_filenames
-      +    }
-     -+    return $renamed_filenames
-      +}
-      +
-       proc external_diff {} {
-           global nullid nullid2
-           global flist_menu_file
-     -     global diffids
-     -     global extdifftool
-     -+    global file_rename_detection
-     - 
-     -     if {[llength $diffids] == 1} {
-     -         # no reference commit given
-      @@ gitk-git/gitk: proc external_diff {} {
-           if {$diffdir eq {}} return
-       
-           # gather files to diff
-      -    set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
-      -    set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
-     -+    if {$file_rename_detection} {
-     -+        set renamed_filenames [check_for_renames_in_diff $flist_menu_file]
-     -+        set rename_from_filename [lindex $renamed_filenames 1]
-     -+        set rename_to_filename [lindex $renamed_filenames 2]
-     -+        if { ($rename_from_filename != {}) && ($rename_to_filename != {}) } {
-     -+            set difffromfile [external_diff_get_one_file $diffidfrom $rename_from_filename $diffdir]
-     -+            set difftofile [external_diff_get_one_file $diffidto $rename_to_filename $diffdir]
-     -+        } else {
-     -+            set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
-     -+            set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
-     -+        }
-     ++    set renamed_filenames [check_for_renames_in_diff $flist_menu_file]
-     ++    set rename_from_filename [lindex $renamed_filenames 1]
-     ++    set rename_to_filename [lindex $renamed_filenames 2]
-     ++    if { ($rename_from_filename != {}) && ($rename_to_filename != {}) } {
-     ++        set difffromfile [external_diff_get_one_file $diffidfrom $rename_from_filename $diffdir]
-     ++        set difftofile [external_diff_get_one_file $diffidto $rename_to_filename $diffdir]
-      +    } else {
-      +        set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
-      +        set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
-     @@ gitk-git/gitk: proc external_diff {} {
-       
-           if {$difffromfile ne {} && $difftofile ne {}} {
-               set cmd [list [shellsplit $extdifftool] $difffromfile $difftofile]
-     -@@ gitk-git/gitk: proc create_prefs_page {w} {
-     - proc prefspage_general {notebook} {
-     -     global NS maxwidth maxgraphpct showneartags showlocalchanges
-     -     global tabstop limitdiffs autoselect autosellen extdifftool perfile_attrs
-     --    global hideremotes want_ttk have_ttk maxrefs web_browser
-     -+    global hideremotes want_ttk have_ttk maxrefs web_browser file_rename_detection
-     - 
-     -     set page [create_prefs_page $notebook.general]
-     - 
-     -@@ gitk-git/gitk: proc prefspage_general {notebook} {
-     -     grid $page.lgen - -sticky w -pady 10
-     -     ${NS}::checkbutton $page.want_ttk -variable want_ttk \
-     -         -text [mc "Use themed widgets"]
-     -+    ${NS}::checkbutton $page.file_rename_detection -variable file_rename_detection \
-     -+        -text [mc "Use ext diff file rename detection"]
-     -+    ${NS}::label $page.file_rename_detection_note -text [mc "(EXPERIMENTAL\nTries to find the file path of a\nrenamed file in external diff)"]
-     -     if {$have_ttk} {
-     -         ${NS}::label $page.ttk_note -text [mc "(change requires restart)"]
-     -     } else {
-     -         ${NS}::label $page.ttk_note -text [mc "(currently unavailable)"]
-     -     }
-     -     grid x $page.want_ttk $page.ttk_note -sticky w
-     -+    grid x $page.file_rename_detection $page.file_rename_detection_note -sticky w
-     -     return $page
-     - }
-     - 
-     -@@ gitk-git/gitk: proc doprefs {} {
-     -     global oldprefs prefstop showneartags showlocalchanges
-     -     global uicolor bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
-     -     global tabstop limitdiffs autoselect autosellen extdifftool perfile_attrs
-     --    global hideremotes want_ttk have_ttk
-     -+    global hideremotes want_ttk have_ttk file_rename_detection
-     - 
-     -     set top .gitkprefs
-     -     set prefstop $top
-     -@@ gitk-git/gitk: proc doprefs {} {
-     -         return
-     -     }
-     -     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
-     --                   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
-     -+                   limitdiffs tabstop perfile_attrs hideremotes want_ttk file_rename_detection} {
-     -         set oldprefs($v) [set $v]
-     -     }
-     -     ttk_toplevel $top
-     -@@ gitk-git/gitk: proc prefscan {} {
-     -     global oldprefs prefstop
-     - 
-     -     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
-     --                   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
-     -+                   limitdiffs tabstop perfile_attrs hideremotes want_ttk file_rename_detection} {
-     -         global $v
-     -         set $v $oldprefs($v)
-     -     }
-     -@@ gitk-git/gitk: set autoselect 1
-     - set autosellen 40
-     - set perfile_attrs 0
-     - set want_ttk 1
-     -+set file_rename_detection 0
-     - 
-     - if {[tk windowingsystem] eq "aqua"} {
-     -     set extdifftool "opendiff"
-     -@@ gitk-git/gitk: config_check_tmp_exists 50
-     - set config_variables {
-     -     mainfont textfont uifont tabstop findmergefiles maxgraphpct maxwidth
-     -     cmitmode wrapcomment autoselect autosellen showneartags maxrefs visiblerefs
-     --    hideremotes showlocalchanges datetimeformat limitdiffs uicolor want_ttk
-     -+    hideremotes showlocalchanges datetimeformat limitdiffs uicolor want_ttk file_rename_detection
-     -     bgcolor fgcolor uifgcolor uifgdisabledcolor colors diffcolors mergecolors
-     -     markbgcolor diffcontext selectbgcolor foundbgcolor currentsearchhitbgcolor
-     -     extdifftool perfile_attrs headbgcolor headfgcolor headoutlinecolor
+    Subject: [A][B][C][D][PATCH 0/6] This is my first contribution
+    Subject: [A B C D PATCH 0/6] This is my first contribution
 
 
- gitk-git/gitk | 45 +++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 43 insertions(+), 2 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index bc9efa18566..ddbe60398f2 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -3806,6 +3806,39 @@ proc external_diff_get_one_file {diffid filename diffdir} {
-                "revision $diffid"]
- }
- 
-+proc check_for_renames_in_diff {filepath} {
-+    global ctext
-+
-+    set renamed_filenames [list {}]
-+    set filename [file tail $filepath]
-+    set rename_from_text_identifier_length 12
-+    set rename_to_text_identifier_length 10
-+    set reg_expr_rename_from {^rename from (.*$filename)}
-+    set reg_expr_rename_from [subst -nobackslashes -nocommands $reg_expr_rename_from]
-+    set rename_from_text_index [$ctext search -elide -regexp -- $reg_expr_rename_from 0.0]
-+    if { ($rename_from_text_index != {})} {
-+        set reg_expr_rename_to {^rename to (.*)}
-+        set rename_to_text_index [$ctext search -elide -regexp -- $reg_expr_rename_to $rename_from_text_index]
-+        if { ($rename_from_text_index != {}) && ($rename_to_text_index != {}) } {
-+            lappend renamed_filenames [$ctext get "$rename_from_text_index + $rename_from_text_identifier_length chars" "$rename_from_text_index lineend"]
-+            lappend renamed_filenames [$ctext get "$rename_to_text_index + $rename_to_text_identifier_length chars" "$rename_to_text_index lineend"]
-+        }
-+        return $renamed_filenames
-+    }
-+    set reg_expr_rename_to {^rename to (.*$filename)}
-+    set reg_expr_rename_to [subst -nobackslashes -nocommands $reg_expr_rename_to]
-+    set rename_to_text_index [$ctext search -elide -regexp -- $reg_expr_rename_to 0.0]
-+    if { ($rename_to_text_index != {})} {
-+        set reg_expr_rename_from {^rename from (.*)}
-+        set rename_from_text_index [$ctext search -backwards -elide -regexp -- $reg_expr_rename_from $rename_to_text_index]
-+        if { ($rename_to_text_index != {}) && ($rename_from_text_index != {}) } {
-+            lappend renamed_filenames [$ctext get "$rename_from_text_index + $rename_from_text_identifier_length chars" "$rename_from_text_index lineend"]
-+            lappend renamed_filenames [$ctext get "$rename_to_text_index + $rename_to_text_identifier_length chars" "$rename_to_text_index lineend"]
-+        }
-+        return $renamed_filenames
-+    }
-+}
-+
- proc external_diff {} {
-     global nullid nullid2
-     global flist_menu_file
-@@ -3836,8 +3869,16 @@ proc external_diff {} {
-     if {$diffdir eq {}} return
- 
-     # gather files to diff
--    set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
--    set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
-+    set renamed_filenames [check_for_renames_in_diff $flist_menu_file]
-+    set rename_from_filename [lindex $renamed_filenames 1]
-+    set rename_to_filename [lindex $renamed_filenames 2]
-+    if { ($rename_from_filename != {}) && ($rename_to_filename != {}) } {
-+        set difffromfile [external_diff_get_one_file $diffidfrom $rename_from_filename $diffdir]
-+        set difftofile [external_diff_get_one_file $diffidto $rename_to_filename $diffdir]
-+    } else {
-+        set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
-+        set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
-+    }
- 
-     if {$difffromfile ne {} && $difftofile ne {}} {
-         set cmd [list [shellsplit $extdifftool] $difffromfile $difftofile]
-
-base-commit: db91954e18654eeebc54c900f44c704002e1866d
--- 
-gitgitgadget
