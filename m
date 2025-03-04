@@ -1,146 +1,116 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3392E3377
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 20:20:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA491FC0E8
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 21:32:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741119612; cv=none; b=Ld3UW42imSTqtSMhgTKA1G4fppymQfIke9RBUnegDUG3/VnJMP8EHRvC+7Tj3KeHrcnZaTjw6PWnxiYEWsityp8og9+6U6P1wGqe9otQhiiXAiwKaFj4J0fVSwPJ12eo8qURX63syJq3oIKTXJT4MU3CFOWovqhI2msjRYnmnIc=
+	t=1741123925; cv=none; b=eQ+65jYqBP72L1FA1ZJ1y+So8mmK0NdQsmiFjNuqUkDgl8KIcR2cwk14uvt4NI4xfayoCtLBKtBGoLsfLALb9BbUJpK+RxjcmskOrNa/IWJNKs6OESgh6yjxEpCbrXExPQ2SRRxgQFcOHUS9uYNn9gR8oPp7j/xULyvmsA0sEGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741119612; c=relaxed/simple;
-	bh=td37L+NNW1EKgqj9ZVDqodkzxnCrmFP7wKsvLzoDh94=;
+	s=arc-20240116; t=1741123925; c=relaxed/simple;
+	bh=oQ2HHvTciYlcpRKZ3aGWSMioxrBaYS8GbnG4ES5xT9k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rtn4ifWLluSFa8rbVU2TO9tJPHh6nyouNUwYTArtYrFAUvXHDOpOjbOovrDpNDema9k+Z28g3jW74iPK1NlY/Vf0WmuUAW8/mzl/ogGnky/HFVVO/ZdTIfGDR6K/RRCBkG/mjt1VE3UzNxNYc2hqgGG9wBWtFminHashoCBhMCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UGIJLBuP; arc=none smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=aFC8Nh+TBGuDL8lxwTDtAlmeV8kiVOaIN2e3zFpq+mn9AWTJEORAu54E+9811nEIpQ9S4laq8RRVv077Q8yPSj6CPw6ftgDgks/qWpAcciXGtVHzNSsTlUSbpVUqxIhwhtYIM5BLyX01gMIDWklgQuwqMY64lR0cLfBzyl5lc9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=J4qSpeeG; arc=none smtp.client-ip=209.85.128.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UGIJLBuP"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-727388e8f6cso3279515a34.0
-        for <git@vger.kernel.org>; Tue, 04 Mar 2025 12:20:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="J4qSpeeG"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6fb95249855so53305987b3.2
+        for <git@vger.kernel.org>; Tue, 04 Mar 2025 13:32:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741119610; x=1741724410; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741123923; x=1741728723; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1+k39ykkeO5aArcV4ngGzznizSy5VxREJ0metjvF1PI=;
-        b=UGIJLBuP4mCSD54JByEOPjCwozu1V90XUShcD/oymkbDGY6/i+qCY+tOkFhqfQ3nw3
-         l/gCwJtY7s4rvprfMyWUMXaL4hlsgyDW18/EG3t4KjCcafhZclMIYznFeXw4TcrKilNV
-         quUDiVH5buYXaJuaS1qG/yL3SvLAiLxOBoV1qoIJfZ0YV7viiUtUB1zCUOv/u9PZM+EE
-         DBlz2W606pHG6oremLM5I2PEeQ+yStM8QUZNW67ZuJGDFa+kJpD76g3Cn5NkrX2kR6kT
-         gYaHgTZHYPjXM1GfxAA/ilMhgbv+li9AUykRSj5mVDvgdi3FkZX5B1Epu0jvIZC1HAvc
-         yWyA==
+        bh=tkJfIS9w0UlT2ujBFkHPpX3eNH9jWP0caTsheeVvMMA=;
+        b=J4qSpeeGnQX2PVkzVToKBgZxROvdRStVgtWm5P5my9AUhEtKYHqssh8pcQYyOeq9s3
+         1cXAcd2xWGzUXUzabRbSvdW606+cw22v9eevCAVlGp39Yzk31cjAhZFXba/tv4aZHLBR
+         fzCeUDceELA+auMc/XAdDxFSSDWWo1uOxIyMkvqhX8Zkl1wx9KwQSNQteJqbV4rKR+Rj
+         JRPIsa1jlvHjwP2vcngvkawvSnGB5XP1/XGVKWdjuL5Rz0MOdt0vUIi1RKLhLUSdAJc6
+         veZdUjzC9pZlO9vMtTe+oDponnxdABdYEzSo92MHOUC/r6XNNmeIeDCxUnG3wscIXBej
+         kskw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741119610; x=1741724410;
+        d=1e100.net; s=20230601; t=1741123923; x=1741728723;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1+k39ykkeO5aArcV4ngGzznizSy5VxREJ0metjvF1PI=;
-        b=nwp0gakWIYfTbONtcKNRFrcE6SKDhr8z9NsC8xSzdn4ly9v1hgD79gzGyA7C25P8Y4
-         fcQE8ujzYfczKhlYF2aEQh0RdPR7ohUxynOW235k0fgJPSdbGIM3CB/VzoH2AwQ7V8lB
-         p+IVQ+JC80S++dxSWa6walAzE9kwOUWN9NPwUVryOnr5aL78XfqeSi9X741C0cop0h1N
-         H83T0AI9TcrUOcGeNni4bRda7rv1nR3FTTCFVye6uNG0VrdiBzWC01Ks86eIGn4OHDXP
-         IxO1P4EMlhfr/B+z5NJ2sk8NrPZ4/GOTNUKwRpnQ7HRm5ld8Ide7HHRHnvo4hlCQamiA
-         aYPw==
-X-Gm-Message-State: AOJu0YyZ9beemeqPtsYWTwRZe1u0pwPvbjI/1f7NM+Mp02gmWsFOlz4E
-	7cQJiFVZg56LaS1Br2LGeiGEfKuTKDgpC8kd2BkIbr8uzVsjg8phzxCOdQ==
-X-Gm-Gg: ASbGncswSaVarbTPoOx4LGrXSMTjheL0Cy73AuN17T1uex6cYTvY644ay422kISkLaD
-	oag+FMN5EVVdABCQeRxfcxQSrSpKMKYMuQKaceAB+mDibsBvbONWO5oIZoqq2tsjXIOEG1Rn45y
-	BSMOsbX2/NHbNH/NOwEI45vnxtfBLXUYF6da0xyrwz7u6ikP3tQ3CUPuW1YuEY9kGFn9x6u30NR
-	CMuFE04tsUpcUYw/c4tqZpzlg5TdQ+lJbPIS4wF6gyaNBIC8kN1GV2swMuXpZInLctnhnqTYL27
-	afpIApnNLIYtIyIkhIuwZ1/pa9UBrQvtCTpwuQ==
-X-Google-Smtp-Source: AGHT+IGBFBKt3FG9wpkF1J6k3q5tYuEi2Jx5zZMPSD5qWnfpcgjgd0MBSe11AqKYppdcbHk4Esnl1w==
-X-Received: by 2002:a05:6830:3c0c:b0:727:2fbd:1147 with SMTP id 46e09a7af769-72a1faf1ffbmr254236a34.2.1741119610260;
-        Tue, 04 Mar 2025 12:20:10 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-60027b0a741sm328991eaf.11.2025.03.04.12.20.09
+        bh=tkJfIS9w0UlT2ujBFkHPpX3eNH9jWP0caTsheeVvMMA=;
+        b=b1wJKOnQRsk6zUeLfO3E5MdqN2cz6LiMWbNc1VXLeh4zHVMtWQat7+QBb0Ta2AKU2l
+         bbgh6KyaRk4+wX64R1kD+ZnIAbnTxodv39VPtSUl2ynXnoo5IEj4Tqg5fO5NxyTG5Sr1
+         llYDhDx/4KKNU5QnX3veeGG6AKITOoQ8ob6v0MSbrIi6oMpZ+hxtrrA9AooNYvyL2wds
+         okxt6Ehayu7eGTTIzEO0EQusz9I7LU4DRe+KjvUJYf3bZa1JwoICFbpaKqteLJfenadQ
+         o9Vwk+POO9HHXTfuvLYBSjt5aeETVzR3Vm7AcrFpZxbjgHEuyCrm3MgCz1xpxebM4HYs
+         daXQ==
+X-Gm-Message-State: AOJu0Ywrj63lrAq5G1RsjSEjJv96WmFqRWP8kOktz7Wbe6O/NWkLAVRT
+	wXIwN6+M6mm7toitNhz1P8UALlsBWrK6MGdFdOnMaISw3N+m7VaG3P+tYJcc9yFYC8pGEL2cbDf
+	1
+X-Gm-Gg: ASbGncsixF0j0BKm1tqVHlAgV004Iv7VbI59SWs/7+YZj9jFGC/6D1QG0TBH+xO3R4G
+	O0OcB3kXGPTiEsYHwNP87/nSRnhxq5FR8+UbESFsW+voDFiYfLl/eThMB1tNwpdvTw1Wv5qgE7F
+	flf4NqF0YWPwUK5O61XGlG9Q2YrS41EaU8tJG0BydJTiSRiuGrcu/V96KokziXJdQgnbJ70y95j
+	+B1srO0kFOGL4uY0FD51EZKtIynfHtGmtgAwYc2d8afMfH3/Jkv2fHjk4ipkX30+OTanJWxofpk
+	ADJar6EncaM6FpAh+1PeOzXOcpq4/gYmpdjyOpcGOhWMQAJQuHwH7PUQ/qDwPktlne5OWtbCos1
+	hW1cOU17XPKT0XsXq
+X-Google-Smtp-Source: AGHT+IHOlZsZC52vFlH8q8dYH9QDTKOFPJbX+M5PEwvZ5ZWM2kyF+XczmsnT81+N8gPRPWm5beBM8g==
+X-Received: by 2002:a05:690c:708d:b0:6f5:2793:2897 with SMTP id 00721157ae682-6fda3094903mr12137267b3.30.1741123922778;
+        Tue, 04 Mar 2025 13:32:02 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fd3cbc5ac9sm26369057b3.121.2025.03.04.13.32.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Mar 2025 12:20:09 -0800 (PST)
-Date: Tue, 4 Mar 2025 14:16:48 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
+        Tue, 04 Mar 2025 13:32:02 -0800 (PST)
+Date: Tue, 4 Mar 2025 16:32:01 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 12/12] hash: stop depending on `the_repository` in
- `null_oid()`
-Message-ID: <yl7t44tp5zhygppxrusdpiehjydncv3b6bmxhp2hgzk6xjwvbr@cjpzvpwo4vxk>
-References: <20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im>
- <20250303-b4-pks-objects-without-the-repository-v1-12-c5dd43f2476e@pks.im>
+Subject: Re: [PATCH 10/10] unpack_loose_rest(): rewrite return handling for
+ clarity
+Message-ID: <Z8dxUc1rUeOp13Pb@nand.local>
+References: <20250225062518.GA1293854@coredump.intra.peff.net>
+ <20250225063421.GJ1293961@coredump.intra.peff.net>
+ <Z8EFGnUmyAAJ6DUY@nand.local>
+ <20250304071011.GB1283943@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250303-b4-pks-objects-without-the-repository-v1-12-c5dd43f2476e@pks.im>
+In-Reply-To: <20250304071011.GB1283943@coredump.intra.peff.net>
 
-On 25/03/03 09:47AM, Patrick Steinhardt wrote:
-> The `null_oid()` function returns the object ID that only consists of
-> zeroes. Naturally, this ID also depends on the hash algorithm used, as
-> the number of zeroes is different between SHA1 and SHA256. Consequently,
-> the function returns the hash-algorithm-specific null object ID.
-> 
-> This is currently done by depending on `the_hash_algo`, which implicitly
-> makes us depend on `the_repository`. Refactor the function to instead
-> pass in the hash algorithm for which we want to retrieve the null object
-> ID. Adapt callsites accordingly by passing in `the_repository`, thus
-> bubbling up the dependency on that global variable by one layer.
-> 
-> There are a couple of trivial exceptions for subsystems that already got
-> rid of `the_repository`. These subsystems instead use the repository
-> that is available via the calling context:
-> 
->   - "builtin/grep.c"
->   - "grep.c"
->   - "refs/debug.c"
-> 
-> There is also a single non-trivial exception with "diff-no-index.c".
-> Here we know that we may not have a repository initialized at all, so we
-> cannot rely on `the_repository`. Instead, we adapt `diff_no_index()` to
-> get a `struct git_hash_algo` as parameter. The only caller is located in
-> "builtin/diff.c", where we know to call `repo_set_hash_algo()` in case
-> we're running outside of a Git repository. Consequently, it is fine to
-> continue passing `the_repository->hash_algo` even in this case.
-> 
-> This means that we could in theory just not bother about this edge case
-> at all and just use `the_repository` in "diff-no-index.c". But doing so
-> would feel misdesigned.
-> 
-> Remove the `USE_THE_REPOSITORY_VARIABLE` preprocessor define in
-> "hash.c".
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-[snip]
-> -int diff_no_index(struct rev_info *revs,
-> -		  int implicit_no_index,
-> -		  int argc, const char **argv)
-> +int diff_no_index(struct rev_info *revs, const struct git_hash_algo *algop,
-> +		  int implicit_no_index, int argc, const char **argv)
+On Tue, Mar 04, 2025 at 02:10:11AM -0500, Jeff King wrote:
+> On Thu, Feb 27, 2025 at 07:36:42PM -0500, Taylor Blau wrote:
+>
+> > On Tue, Feb 25, 2025 at 01:34:21AM -0500, Jeff King wrote:
+> > > This should make the logic a bit easier to follow. It does mean
+> > > duplicating the buf cleanup for errors, but it's a single line.
+> >
+> > At least to my eyes, I actually prefer the state after 9/10 and would
+> > probably be OK to see this patch get dropped. I wish I had a compelling
+> > reason *why* I felt that way, but I think it may too subjective.
+> >
+> > I don't feel strongly about it either way, though.
+>
+> I also don't have a super strong feeling, though I fall on the other
+> side of the line (which is why I bothered sending the patch).
+>
+> If we didn't do that, I think the alternative is probably a comment
+> like:
+>
+>   if (error1)
+> 	error(describe error1);
+>   else if (error2)
+> 	error(describe error2);
+>   else
+> 	return buf;
+>
+>   /* if we didn't return above, we saw some error */
+>   free(buf);
+>   return NULL;
+>
+> I dunno. I'd probably stick with what I send. ;)
 
-As mentioned in the commit message, diff_no_index() may not have a
-repository initialized, so the git_hash_algo should be explicitly
-passed.
+Fair enough ;-).
 
-Makes sense.
-
->  {
->  	int i, no_index;
->  	int ret = 1;
-> @@ -354,7 +354,7 @@ int diff_no_index(struct rev_info *revs,
->  	setup_diff_pager(&revs->diffopt);
->  	revs->diffopt.flags.exit_with_status = 1;
->  
-> -	if (queue_diff(&revs->diffopt, paths[0], paths[1], 0))
-> +	if (queue_diff(&revs->diffopt, algop, paths[0], paths[1], 0))
->  		goto out;
->  	diff_set_mnemonic_prefix(&revs->diffopt, "1/", "2/");
->  	diffcore_std(&revs->diffopt);
-[snip]
-
-The other changes in this patch largely consist of just updating
-null_oid() and its call sites to recieve the git_hash_algo explicitly.
-
-Looks good to me.
-
--Justin
+Thanks,
+Taylor
