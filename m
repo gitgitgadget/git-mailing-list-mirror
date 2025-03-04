@@ -1,110 +1,257 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40C81F4E27
-	for <git@vger.kernel.org>; Tue,  4 Mar 2025 22:33:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EF1278142
+	for <git@vger.kernel.org>; Tue,  4 Mar 2025 22:56:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741127629; cv=none; b=fnumO4gXDYHroSOjYHqqzisz8tvhAGo3e99lYJDtPpeI2DzMcG1F1Q/+9yE4fAmqnHJIcBW7XwR5g5iPiA/loVCuf5SFuG8VJDJBZ8UR+LjVHCUpPsYyDnMWBCM6t17SIWZoWQXLx/WlBZtcgHnJe5ouUk2e7syzzh8+Ma7DD6U=
+	t=1741129015; cv=none; b=uk5X8Ybe+cTmaMQxueou1/xopnLMRabNnKUMD7TxOPQwpNFaLcs4KfZX85m+Nw3fIdliu1UjP2WM5xO5uKAnvKX70tRmGtW0uOp4TZfGYXori/8Uc+Ul61zfravsymjkQyNX8HcRQ6CUAwGO9559p0f4ieH+tr0JiJrv3GWM2lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741127629; c=relaxed/simple;
-	bh=mlz5ve3BTm8vkOaXj2m8R9zVM3nHWBuMynHxq/5CZX8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Z0Z3+3iwEg1yOaBPxNyQbl69iLngJfp5dWNPeGn2mNTqyo/phNOcqXbHdLLTRUNI8D2JTXRTZJTwZnj1IpzKAmCRoeP1CndVnt8P9T+9hhihtvK0gf6Zj0uCLkdc4CTr6eqg9SpDF37PeU0k1dD3KeId3EF5+KnBgW52GEDJRvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mVQDRp8h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=evNNYq8a; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741129015; c=relaxed/simple;
+	bh=HqfDOG7PLrBrBrwlxj/xW+LhXvjb1/q1K5AQKt4J27Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hhdHwoFnbxng7H3E3za6eP51zeWNH8NPVmptKvyDxIzxgwwGTTuOHuYebprSIF3gdU/SKkBTZhGi2mgm4dnuFM3yqEgYCuKpeEBrwtBD7w3dky5Y7I8ZI9ypyYJNxpVLKrTQrVW0VCMxdz+n+sWu1lhjavu3G9qRwfAir4EoRYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yi6cCO86; arc=none smtp.client-ip=209.85.166.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mVQDRp8h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="evNNYq8a"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8683F114019B;
-	Tue,  4 Mar 2025 17:33:46 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 04 Mar 2025 17:33:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741127626; x=1741214026; bh=p9tHWLSiGq
-	3tjut9KUpyPifvkMdqJJGiHAM6DGjZXfg=; b=mVQDRp8hntvdo+zNaKWWXT539m
-	ArYy4J7XhCr0/2Qh5dK2CDBztuFJaCSo8WZPdk0WKRweUXf3vtGRWnU4SgRlgX9w
-	9t7b25b+k6xEpWBtPGuhUaj6fCW3H2cgk4bZ8PCsHgbKEc9eEoUBGrgnIOTBN1wa
-	3ewRQEreWNEiM8VLKLWHDegIOdNqS2BbFZdQXvaAbCSCGT8Bt5314LcQOjwaEDPi
-	zy41CFRiLaGokzih/9OYMTiQAT1a+kXMbL2cs1DWGwEaFmuY/CG6Z60HPbXi9JTr
-	ttchHCWXh99d/YhAVSgQhrvADQVf1Idat/tS0EBRb6rW+BQY830ZOnIfPpyQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741127626; x=1741214026; bh=p9tHWLSiGq3tjut9KUpyPifvkMdqJJGiHAM
-	6DGjZXfg=; b=evNNYq8aTGWl9eVplWoZ2gXweqwUYitwwq90jfKMqlFMb3MAqut
-	bsn0ERKqNolf9vDMSizbhARtUH97L9NLhVuvgYqDMN6pT36CvVUlBSSAkZX/LGo4
-	xO4O1nw36zA/Cw+11N08JSZ1McoGfXSIlaKR4+ZnHqszvPekj489JkrySBq/burE
-	MwIVPKeABsa/ArgRy9A7k01977kkPzmhz2008VfxX+J1V0S/WQyVv7hf/NxhBHY/
-	q15n7O3Y7hmZ9DZCD79WQwHRP84BasEpDl9QZXJMxgNtAR+QEPyl5BUV+bhstS1w
-	lywLH2gWPzof+loM240UwoEK5MT6XWaZrww==
-X-ME-Sender: <xms:yn_HZ8uxunGVklgifIMlAbj5k5fucWJ693Lwzzo3BYKCKeS6zTEZBw>
-    <xme:yn_HZ5cxVGG6eJiuaP1Xfotmpy-gTj2zQd3ZD5F_arVHVg_XxsmrCmAekvJwy-GBG
-    1yaeIdK_tHhFnvzRg>
-X-ME-Received: <xmr:yn_HZ3wf-7XrCKKO12GHt3fm9ICleC17NoSfiTuFAmcB-llNdzOddiNFdt5_nFhHVjuN8_QaJcrdSOiKCulxHDbPoEOyAguVZoEI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdefudekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhohiflhgvth
-    httdelsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:yn_HZ_M7ae0D_253JjdWY_ltQgKKhblOfrJjQIZa-zqvko18L8AfyA>
-    <xmx:yn_HZ8-c8ttYGK33w7AkXbzdIP_NuzAu_WmEBiN1dmI6BY0u5CmydA>
-    <xmx:yn_HZ3Va6TBne0nZBORBC6GqyP6FKVU0pMNnwKXu-VmpARXmqhZ8kw>
-    <xmx:yn_HZ1czGscV3PEQuWuxexQgmpdqXU42LnXrazNr8DPLnf-g7c5fzA>
-    <xmx:yn_HZ7lamTBd_XEjAY_wjvDgXe8iwHaLbY8tJd-_fpIoKYZvmDkibvZp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Mar 2025 17:33:45 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chris Howlett <chowlett09@gmail.com>
-Cc: Chris Howlett via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PREVIEW v2] help: add prompt-yes setting for autocorrect
-In-Reply-To: <CAJVagJm36-Z8CtdDFgFXgQfmqGCD7i2rufoErGUc_ou2094How@mail.gmail.com>
-	(Chris Howlett's message of "Tue, 4 Mar 2025 21:41:23 +0000")
-References: <pull.1852.git.1736933815236.gitgitgadget@gmail.com>
-	<pull.1852.v2.git.1739801702034.gitgitgadget@gmail.com>
-	<CAJVagJm36-Z8CtdDFgFXgQfmqGCD7i2rufoErGUc_ou2094How@mail.gmail.com>
-Date: Tue, 04 Mar 2025 14:33:44 -0800
-Message-ID: <xmqqzfi0mnnb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yi6cCO86"
+Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-85b018062a5so2792539f.3
+        for <git@vger.kernel.org>; Tue, 04 Mar 2025 14:56:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741129013; x=1741733813; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sOuPISCVk/j1dObHhjR9gHuX7PO11NNYoL9Kf9DJTnU=;
+        b=Yi6cCO86dqpRXkqA1KF9uvBrcs/ijgvASfMWoIENxe5hPbFGhC2h4KLcdTbhuWMQ9g
+         8BYFdNbpnZA4rLw76t9+YKHqSO+QRDazcRVGMlwM60a0hT/s+sFkaK8A8egR/0li4Leh
+         dpzhP5gdZ/GJu2cqit+aundEasDmM9xx8xj9GNKlNAega/bfIC8niG4CTpFonArHmHnR
+         MVDxn3apTJia4dFQhjB1Zx8svu2YeXOb281SZqBy5xYZYmZiWoXqEy4GKMeO7btx06j2
+         xZncf/n2t0p1dgZ4PWJWJDO3QrSajJF2H7StrAywK45kHhhfAu3XVsp+Q41QM2N37sSe
+         ymqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741129013; x=1741733813;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sOuPISCVk/j1dObHhjR9gHuX7PO11NNYoL9Kf9DJTnU=;
+        b=K85JwRnlKgKGsmKtllSjENEnRKq5M2R7VCfTO0Kjijb30HoUa0U376Aknb3Z8k739Z
+         Si3bxLEfxpNsa/dWaH1DP7mYysqG67hMDfU32HST5asMbRn2Kv1TrmCUelPOYdJEZ4XR
+         hQJzBKJmOJDkhxqWr9svZLJJOzZZ9//H6g7+IJZeCE0rQ4PTaIPEpaI308sxtP6tYcl3
+         hiTI9EnuviM2wrNZGXG90J2YTXgBBPY61BNyJNVmNRjwm+RbaeTtRBrvMrRdtfxkHLQF
+         vAGPVCl5AU57sVhKnqQ2tn8rQHgUZDkN+ErevjdeDJYCYyF0TOo7andJxoHIR1iN9MVg
+         E9eA==
+X-Gm-Message-State: AOJu0YwVRaF0O1GkovKERatzrF1qg7R4p6Hv4cDC0A4IWlSRW5N/NhY3
+	JjwSTNKm09kZlKK6xLhGFI9a8UVJfUO0OEvSBbmN6iEb864lae+rak/9r0DnkE6P8tnBGp8iLzu
+	fqSpxGUizKy7p1nyknwhtoxpRnoM=
+X-Gm-Gg: ASbGncvXSwt651gtCmqxroJnzFm5z+/H63rVRJBdICqqITYBw2GCfvrh5FpAahrANLF
+	EPgMhBj6E8t0R6W1GVM4vCLGsWFGxgqn7J9ORbrZWX2XxRoP5o4NdmJW88SGLer6LvhMDe1QHcr
+	WfY586tdPN+jJ5mOb0Swe1jlSeFLMamUycbAGPOE0VolbRgz+GpwzPZH8O
+X-Google-Smtp-Source: AGHT+IHK4IJTnGG9mzyR0yR89YwilAI5eotaLRZwSqn8vF2KjDY6D0PY9o/o7gBuaJdKgZj/bco5orxdMLzvU6Zm41g=
+X-Received: by 2002:a05:6602:4a06:b0:85a:ec03:b124 with SMTP id
+ ca18e2360f4ac-85aff9cfc23mr168888639f.4.1741129013051; Tue, 04 Mar 2025
+ 14:56:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1740680964.git.me@ttaylorr.com> <cover.1741124116.git.me@ttaylorr.com>
+In-Reply-To: <cover.1741124116.git.me@ttaylorr.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 4 Mar 2025 14:55:00 -0800
+X-Gm-Features: AQ5f1JoA5TdUK9f46zLDbBL571KfV28RQvzOJTjdcHDGPWrd4vYMYq_0-PGLI-s
+Message-ID: <CABPp-BHv2_tgeQBKU6v4mnwU8_wOPHfPPRcpRQZ8wEP9P-HovA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] pack-objects: freshen objects with multi-cruft packs
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Chris Howlett <chowlett09@gmail.com> writes:
+On Tue, Mar 4, 2025 at 1:35=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> This is a minor reroll of my series to fix a bug in freshening objects
+> with multiple cruft packs.
+>
+> Since last time the only updates to the series are textual changes to
+> the commit message, so everything functionally should be working as it
+> was before.
+>
+> As usual, there is a range-diff showing as much below, and the original
+> cover letter is as follows:
+>
+> ---
+>
+> This short series contains a fix for a bug I noticed while rolling out
+> multi-cruft packs (via 'git repack --max-cruft-size') within GitHub's
+> infrastructure.
+>
+> The series is structured as follows:
+>
+>  - The first patch simplifies how 'repack' aggregates cruft packs
+>    together when their size is below the '--max-cruft-size' or
+>    '--max-pack-size' threshold. This simplification changes behavior
+>    slightly, but not in a meaningful way. It occurred to me while
+>    writing the second patch.
+>
+>  - The second patch describes and fixes the main bug. The gist here is
+>    that objects which are (a) unreachable, (b) exist in a cruft pack
+>    being retained, and (c) were freshened to have a more recent mtime
+>    than any existing cruft copy are unable to be freshened.
+>
+> The fix pursued in the second patch changes the rules around when we
+> want to retain an object via builtin/pack-objects.c::want_found_object()
+> when at least one cruft pack will survive the repack.
+>
+> Previously the rule was to discard any object which appears in any
+> surviving pack, regardless of mtime. The rule now is to only discard an
+> object if it appears in either (a) a non-cruft pack which will survive
+> the repack, or (b) a cruft pack whose mtime for that object is older
+> than the one we are trying to pack.
+>
+> I think that this is the right behavior, but admittedly putting this
+> series together hurt my brain trying to think through all of the cases.
+> I'm fairly confident in the testing here as I remember it being fairly
+> exhaustive of all interesting cases. But I'd appreciate a sanity check
+> from others that they too are convinced this is the right approach.
+>
+> Thanks in advance for your review!
+>
+> Taylor Blau (2):
+>   builtin/repack.c: simplify cruft pack aggregation
+>   builtin/pack-objects.c: freshen objects from existing cruft packs
+>
+>  builtin/pack-objects.c  | 118 ++++++++++++++++++++++++++++++++++------
+>  builtin/repack.c        |  38 +------------
+>  packfile.c              |   3 +-
+>  packfile.h              |   2 +
+>  t/t7704-repack-cruft.sh | 105 +++++++++++++++++++++--------------
+>  5 files changed, 170 insertions(+), 96 deletions(-)
+>
+> Range-diff against v1:
+> 1:  8564f982597 ! 1:  63ea9d4d00e builtin/repack.c: simplify cruft pack a=
+ggregation
+>     @@ Commit message
+>          would get combined together until the sum of their sizes was no =
+larger
+>          than the given max pack size.
+>
+>     -    There is a much simpler way to achieve this, however, which is t=
+o simply
+>     -    combine *all* cruft packs which are smaller than the threshold,
+>     +    There is a much simpler way to combine cruft packs, however, whi=
+ch is to
+>     +    simply combine *all* cruft packs which are smaller than the thre=
+shold,
+>          regardless of what their sum is. With '--max-pack-size', 'pack-o=
+bjects'
+>          will split out the resulting pack into individual pack(s) if nec=
+essary
+>          to ensure that the written pack(s) are each no larger than the p=
+rovided
+> 2:  c0c926adde2 ! 2:  7ba9054701b builtin/pack-objects.c: freshen objects=
+ from existing cruft packs
+>     @@ Commit message
+>          only be modified in a pruning GC, or if the threshold itself is
+>          adjusted.
+>
+>     -    However, this process breaks down when we attempt to freshen an =
+object
+>     -    packed in an earlier cruft pack that is larger than the threshol=
+d and
+>     -    thus will survive the repack.
+>     +    Prior to this patch, however, this process breaks down when we a=
+ttempt
+>     +    to freshen an object packed in an earlier cruft pack, and that c=
+ruft
+>     +    pack is larger than the threshold and thus will survive the repa=
+ck.
+>
+>          When this is the case, it is impossible to freshen objects in cr=
+uft
+>     -    pack(s) which are larger than the threshold. This is because we =
+avoid
+>     -    writing them in the new cruft pack entirely, for a couple of rea=
+sons.
+>     +    pack(s) when those cruft packs are larger than the threshold. Th=
+is is
+>     +    because we would avoid writing them in the new cruft pack entire=
+ly, for
+>     +    a couple of reasons.
+>
+>           1. When enumerating packed objects via 'add_objects_in_unpacked=
+_packs()'
+>              we pass the SKIP_IN_CORE_KEPT_PACKS, which is used to avoid =
+looping
+>     @@ Commit message
+>           - exists in a non-cruft pack that we are retaining, regardless =
+of that
+>             pack's mtime, or
+>
+>     -     - exists in a cruft pack with an mtime more recent than the cop=
+y we are
+>     -       debating whether or not to pack, in which case freshening wou=
+ld be
+>     -       redundant.
+>     +     - exists in a cruft pack with an mtime at least as recent as th=
+e copy
+>     +       we are debating whether or not to pack, in which case freshen=
+ing
+>     +       would be redundant.
+>
+>          To do this, keep track of whether or not we have any cruft packs=
+ in our
+>          in-core kept list with a new 'ignore_packed_keep_in_core_has_cru=
+ft'
+>          flag. When we end up in this new special case, we replace a call=
+ to
+>     -    'has_object_kept_pack()' to 'want_cruft_object_mtime()', and onl=
+y
+>     -    reject objects when we have a copy in an existing cruft pack wit=
+h a more
+>     -    recent mtime (in which case "freshening" would be redundant).
+>     +    'has_object_kept_pack()' to 'want_cruft_object_mtime()', and onl=
+y reject
+>     +    objects when we have a copy in an existing cruft pack with at le=
+ast as
+>     +    recent an mtime as our candidate (in which case "freshening" wou=
+ld be
+>     +    redundant).
+>
+>          Signed-off-by: Taylor Blau <me@ttaylorr.com>
+>
+>     @@ t/t7704-repack-cruft.sh: test_expect_success '--max-cruft-size wit=
+h freshened ob
+>      +
+>      +          git repack --cruft -d &&
+>      +
+>     -+          # Make a packed copy of object $foo with a more recent
+>     -+          # mtime.
+>     ++          # Make an identical copy of foo stored in a pack with a m=
+ore
+>     ++          # recent mtime.
+>      +          foo=3D"$(generate_random_blob foo $((2*1024*1024)))" &&
+>      +          foo_pack=3D"$(echo "$foo" | git pack-objects $packdir/pac=
+k)" &&
+>      +          test-tool chmtime --get -100 \
+>      +                  "$packdir/pack-$foo_pack.pack" >foo.new &&
+>      +          git prune-packed &&
+>      +
+>     -+          # Make a loose copy of object $bar with a more recent
+>     -+          # mtime.
+>     ++          # Make a loose copy of bar, also with a more recent mtime=
+.
+>      +          bar=3D"$(generate_random_blob bar $((2*1024*1024)))" &&
+>      +          test-tool chmtime --get -100 \
+>      +                  "$objdir/$(test_oid_to_path "$bar")" >bar.new &&
+>
+> base-commit: 08bdfd453584e489d5a551aecbdcb77584e1b958
+> --
+> 2.49.0.rc0.57.gdb91954e186.dirty
 
-> I've not seen any interaction with this patch since I posted it a
-> couple of weeks ago. Has it slipped under the radar, or is there no
-> interest in the change?
-
-I personally do not find the cause so compelling, and am not myself
-interested in a patch that pretty much has to duplicate the lines
-needed to support existing AUTOCORRECT_PROMPT.  But others may feel
-differently.
-
-Around here, people do not react to everything they see, and some
-may change their mind when asked the same question twice with some
-interval in between, so it is a good idea to ping after some weeks
-to reconfirm.
-
-Thanks for pinging.
+v2 looks good to me; though I'm curious if some wording improvement in
+the commit message might help in distinguishing between
+--max-cruft-size and --max-pack-size...and whether we want to provide
+any checks on the relative sizes of the two.
