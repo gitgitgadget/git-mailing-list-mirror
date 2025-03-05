@@ -1,85 +1,85 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA6D2505B2
-	for <git@vger.kernel.org>; Wed,  5 Mar 2025 15:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9881C24DFEB
+	for <git@vger.kernel.org>; Wed,  5 Mar 2025 16:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741190016; cv=none; b=G2tX4k4uCWjR+61E/LeHBDyenDGTMt3ne3FtlvzyEu2kNHAVBcpnc6oFTqo5WDXZ3to1HIaziyRSG0ShfePnc/FJWWh1GNPtKG+kSjXVfb/I9veM8Gqk//fbOjYnP/ziF0c2KYO/UInfYTFQFeL27eoQIslvAXN2wTHdjNK/n8U=
+	t=1741190432; cv=none; b=Hx9TcUGyp4Izkjro/jmPG9U86J9kPEKIhEfUBrvSFe4zREj9siN9tI781/wDFQFHQqMNVmBEbAK9ztShjfMEL6PhObXyxxjyqeNRNRzCZLLPuHxV0NUFFiLb7Fxl2qAMFhXDhrNhKoS/o6/htL9nlg1GBsmmcneSOCh1H2n9e3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741190016; c=relaxed/simple;
-	bh=C0TI3btLaJaNYlhGxbsbqfAqqUcPArOKVqZi2wnZZu8=;
+	s=arc-20240116; t=1741190432; c=relaxed/simple;
+	bh=Wm0KrmTCDTTij6ehMfxJACbqakkw4mfv6poQ25K6/dc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=P3yTRtk/CYZl3MtN//3zuHjU/oiuvHvbcPA2p8t6cFbHWNo6BunZ+rqB6s490lP1tm+rOs1jjqmYQzX5LzG934IlhliTOqfhxdkVQSiQ9u1kCZ/9FsQ8xujIn0/HBoXXHuGJha3MaFY6M7xMMe6Dk5psmmWIgVcR7HGJNLs4YZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=yTdGi99r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g4zFYOom; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=EQriZflxmk9zyQd4EE8xLblLV9xJjdCnW8l/VyU5EiBJAsAZnLcyL/mz0IBgPNqAcyPQU/WGZXq0Gr4inyhwDpMn/mNe37TDwA1cek/wS0WREJcwEBcubzcGvXXLajWBJAtCnOGCuIW3Ncm/A45aKAG+Vh04wqf9aTuuqI296Ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g9Kk9SVR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3eVkg58Z; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="yTdGi99r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g4zFYOom"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id B654411401A0;
-	Wed,  5 Mar 2025 10:53:32 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g9Kk9SVR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3eVkg58Z"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9485B11401D4;
+	Wed,  5 Mar 2025 11:00:29 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 05 Mar 2025 10:53:32 -0500
+  by phl-compute-05.internal (MEProxy); Wed, 05 Mar 2025 11:00:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741190012; x=1741276412; bh=IXjUCVufUM
-	4f9TKQ9ep3e2P4WCUGB10IXazktY1M7xk=; b=yTdGi99rRCJrAdrgzNCPQNrjI/
-	EfxEj2g2WEM8feMPV+pZCsnzqP/vVenrUDqENv+dEBe7iv1TrWn+hgTU6WKFik3q
-	8CDuQy89y7dzq5E72So0ny+7ey8P9DMgkSCv668Y9sVg5SBzO3Z9PyxrgFsQLee7
-	ZWxlWTRqEqYK5If1XGfCne+0WYro70pAIeT1h7yRCihnZD6+uTIiAbUBDVoE0czq
-	F/jFJ+vPq43ZTXKHUOSQTyF+7WdZbjXwKnXa5oWQ7/GRDhjIvlFq+m/C9EFqvud+
-	ngPeAd91GKEB+xySbU0T1R6VSajskw7ZJNUkvbx2/o8XjiXE9VlmoHHvjn8Q==
+	:subject:to:to; s=fm3; t=1741190429; x=1741276829; bh=0EhiMxzpsP
+	/NHEDnYPzzvSUDo/I6Sx1TWJzt9KyxxUU=; b=g9Kk9SVRGJtZ7qwzfcwhjyvfhW
+	oIzhlk0EFRt2OMXvfW/TCoKm1zknISM5wjms2A/GSTz/OfDfIU0Wt0uZ5h/iiO8j
+	qGVj00xsluxB1iMedFIE7c5mG+PHLkqIuW++1DBVsR7axRtnU4Vu/9L621z3YiEd
+	v/3PBx++DUAV1WI70netWCn/EkRlRLeMbWcTWuMifn2K2PzyPAq5SLk65d7iXhV7
+	N+UNFq2XT5pxk6DQTTTcFbsNlG6es2IQpTYMe7MJ2npCixXouPujpzceMuAxQKBC
+	LTf6bZLRHP/zCKX120MFaLcfoYkt5S35I4gclDZ4dkkdU4IGvd4COcXB9J1g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741190012; x=1741276412; bh=IXjUCVufUM4f9TKQ9ep3e2P4WCUGB10IXaz
-	ktY1M7xk=; b=g4zFYOom1EFUy/XPCrmyVHjjFZ2gPfx5b5cOuaepjbTBvjGEDaE
-	YigH0mjgq03JOLcFnTF9Xgc6HT0a2i/EeiWqNE9ieM0z9mTzGbX2lB0b4pk+4ZF8
-	iKZFUHbrYQb6PLsVCEIOYyu5+McajG+XrIVViX+sY0r+QUXOu2OrDGIaigZGFOPP
-	kOWevkJpqOee95PWZGQR15WfoBqlFT+6g4h4ILoTfvPc6Tw2Z2MmlLC3lMC5QMyu
-	pUxQA8dNjDPBpTvfc+6LQyIUOhY0UC/AIgMFW0oeMtv5jP42dFC03ZFGT8P1Mj+3
-	Pgwlb4/FDulvzB+UDn2iESUzm37H1cbm8NQ==
-X-ME-Sender: <xms:e3PIZyrA1OLM7O8unKZs1IexKPqjgsOR_Y4vwmNG-KtrRMjcotdrYA>
-    <xme:e3PIZwqq6ZPyE3NvrngO07YCiS8YbIGLZpVZGtsW8LgeyJx1bz52iXAPL9MtGmq9E
-    CFmO7IoAdwX9jSbBw>
-X-ME-Received: <xmr:e3PIZ3O62k3V6IlPsM2ytVDKNH4V5ZhU7kkuhniSPL6_eH918J3lOqDut9GSs2f_rh6jCPg6DMFiSCY-vRdmY-Il1CQe9HwxVDaS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdehvddvucetufdoteggodetrf
+	1741190429; x=1741276829; bh=0EhiMxzpsP/NHEDnYPzzvSUDo/I6Sx1TWJz
+	t9KyxxUU=; b=3eVkg58Zqmh4jIaRnidAdwnroOXXaZvwYqw75uekRm8dqVenU11
+	lhTHSmV0WTXDCVXPtl7paoxjL5JsnmakD1VY6L1caGn16wqk63UhtxS6K3OzFnqy
+	/9hSBSHJntyCk3AgGjnFZvYf4sk34FauQZOrVI7Y9NiMhmysi23/u1lLkTxg9RrS
+	TlWMhZ9l41VqByAM1NEIlbPAKs5tMwhlaxosOUeG+2PKh0kWgUzsaDQgspmDL6kL
+	lRcAvOxI1rsvwzsd1YsD/lE7pd+x+4EcKUXpWAIv/LaYwEe9OeGf2SKqQ4MEHDxN
+	kqAevRfEqhmoXvOHSrde0c2LaED46V8Lsiw==
+X-ME-Sender: <xms:HXXIZymNNxJzeNM9dRtbP0L2N5ZB_bdSYYUkZjmRTWEVJOOGCw1Mhw>
+    <xme:HXXIZ50MPKKqSBUUNVYJZiKSi7uMegq2fx-SFPwz2OYLAnpkcJ84jWqPef4nd4PBE
+    8s73LhxWFtGRM7n5w>
+X-ME-Received: <xmr:HXXIZwrFAsVI525x4GZscIv5zIEgokh0W_XnU4bmBw8hFf89ogLn0MwN7ABlGYLaCahp4el_AkOktQiAP7IKPh1_7X6v9Ge2LSKj>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdehvdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthht
-    ohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhope
-    hphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:e3PIZx4hjIriDYNzPaRxz7vn3oKH58MTcfv8LFwi8mm2RUI9t7LleQ>
-    <xmx:e3PIZx7SVqt4zJFWMRiWS_oWZVTjNXf9fv1L-Jmg2JgWTXhCXT4CTw>
-    <xmx:e3PIZxgHTS0hHEuJhpqkkjpHrf-FJPyr_fsiGTPNkC7mDIfhykfncA>
-    <xmx:e3PIZ74m6UowhhOSGauJdPs24iBpGOIoCGi4d1Z6IS_eYQ1X_bxIkA>
-    <xmx:fHPIZ_Qn4idwJVYCt-2TseZMYyqaS_lDb9TOjfzrmKJwP8NGCWIjvHB9>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeeg
+    fefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhig
+    rdguvgdprhgtphhtthhopehgihhtqdhfohhrqdifihhnughofihssehgohhoghhlvghgrh
+    houhhpshdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepghhithdqphgrtghkrghgvghrshesghhoohhglhgvghhrohhuphhsrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:HXXIZ2lNUPXcyGhfiiQ5_nLWig_2VoIC23QBaAEwAZzG355yCR0-DQ>
+    <xmx:HXXIZw0QzT84MN_vH16reYSjVT0A1y-ElNH6VZ17gmIOgoqhiRb60A>
+    <xmx:HXXIZ9sfnvmXyF1NKBZZBUrFZ4w6HVJX7PSdW4vBjG6QVRGnCFZNfg>
+    <xmx:HXXIZ8XjcxMzx_NYV7p0JZkhhgtbKK60MUQeaBAUK1hMExU6dJBhEw>
+    <xmx:HXXIZ0-S0xOAhk0NOc_N0HLq-_-WYsYzIvnfmnJ5C5BjWMOGvglrLYFt>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Mar 2025 10:53:30 -0500 (EST)
+ 5 Mar 2025 11:00:28 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,  Phillip Wood <phillip.wood123@gmail.com>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH] docs: fix check-docs with WITH_BREAKING_CHANGES
-In-Reply-To: <pull.1871.v2.git.1741171357627.gitgitgadget@gmail.com> (Phillip
-	Wood via GitGitGadget's message of "Wed, 05 Mar 2025 10:42:37 +0000")
-References: <pull.1871.git.1741018310447.gitgitgadget@gmail.com>
-	<pull.1871.v2.git.1741171357627.gitgitgadget@gmail.com>
-Date: Wed, 05 Mar 2025 07:53:29 -0800
-Message-ID: <xmqqzfhzlbie.fsf_-_@gitster.g>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: git-for-windows@googlegroups.com,  git@vger.kernel.org,
+  git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git for Windows 2.49.0-rc1
+In-Reply-To: <1MmDIo-1tPXph2dbU-00pKOM@mail.gmx.net> (Johannes Schindelin's
+	message of "Wed, 5 Mar 2025 15:52:33 +0100 (CET)")
+References: <1MmDIo-1tPXph2dbU-00pKOM@mail.gmx.net>
+Date: Wed, 05 Mar 2025 08:00:27 -0800
+Message-ID: <xmqqv7snlb6s.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,32 +89,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-We correctly omit builtin/pack-objects.o from BUILTIN_OBJS, but
-forgot to add "git pack-redundant" on the EXCLUDED_PROGRAMS list,
-which made "make check-docs" target notice that the command has been
-removed but still is documented.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * The command is still listed in the resulting "git help git"
-   output, as cmd-list.perl does not yet know which commands on the
-   list are to be ignored under WITH_BREAKING_CHANGES.
+> Dear Git users,
+>
+> I hereby announce that Git for Windows 2.49.0-rc1 is available from:
+>
+>     https://github.com/git-for-windows/git/releases/tag/v2.49.0-rc1.windows.1
 
- Makefile | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Thanks, as always.
 
-diff --git c/Makefile w/Makefile
-index a9b2de0692..95ac0820e9 100644
---- c/Makefile
-+++ w/Makefile
-@@ -1283,7 +1283,9 @@ BUILTIN_OBJS += builtin/mv.o
- BUILTIN_OBJS += builtin/name-rev.o
- BUILTIN_OBJS += builtin/notes.o
- BUILTIN_OBJS += builtin/pack-objects.o
--ifndef WITH_BREAKING_CHANGES
-+ifdef WITH_BREAKING_CHANGES
-+EXCLUDED_PROGRAMS += git-pack-redundant
-+else
- BUILTIN_OBJS += builtin/pack-redundant.o
- endif
- BUILTIN_OBJS += builtin/pack-refs.o
+> Changes since Git for Windows v2.48.1 (February 13th 2025)
+>
+> Due to persistent maintenance challenges and the community's limited
+> engagement and usage, git svn support in Git for Windows will be phased
+> out over the next few months.
+>
+> Git for Windows v2.48.1 was the last version to ship with the i686
+> ("32-bit") variant of the installer, portable Git and archive. Only
+> 32-bit MinGit will be built for future versions, until April 2029.
+>
+> New Features
+>
+>   * Comes with Git v2.49.0-rc1.
+>   * Comes with OpenSSH v9.9.P2.
+>   * Comes with PCRE2 v10.45.
+>   * The previously-experimental --full-name-hash option has been
+>     accepted into upstream Git as --name-hash-version=2 and is no
+>     longer experimental.
+>   * The git backfill command has been accepted into upstream Git; Its
+>     --batch-size=<n> option has been renamed to --min-batch-size=<n>,
+>     though.
+>
+> Bug Fixes
+>
+>   * A change in upstream Git v2.48.0 broke renaming symlinks, which was
+>     fixed.
+>   * On a recent Insider Windows version, users experienced the message:
+>     "Cygwin WARNING: Couldn't compute FAST_CWD pointer", which has been
+>     fixed.
+>   * A bug has been fixed that, when calling git add -p from VS Code's
+>     internal terminal, after using the edit command, caused the
+>     internal terminal got stuck and no further command was accepted.
+>
+> Git-2.49.0-rc1-64-bit.exe | 81bf3f20c85c0ca82de760da8ac28eec53523edfb24a7c71f925e1c1e11bbe40
+> Git-2.49.0-rc1-arm64.exe | 1b527f8e80c10a09d561908fd8cbe8acefb47bd1f61da5048188808deed64183
+> PortableGit-2.49.0-rc1-64-bit.7z.exe | b387c7ae0ce0eb751e5ca812fd47dddc8b53f0cc1148b4ba67b66071e5933f1d
+> PortableGit-2.49.0-rc1-arm64.7z.exe | 80a7a186150ff22b695e54b20e55684f6c1a6abeaf2f32c9c256263a8901465d
+> MinGit-2.49.0-rc1-64-bit.zip | bc0d31dcb8a04eb5b0645ef92f132c3e3b184817b3d840806c06accb51e47ef7
+> MinGit-2.49.0-rc1-arm64.zip | c0244edc063ccb23aa425c88a591d2e90e6967725e168070ca64aea55e78ebb1
+> MinGit-2.49.0-rc1-32-bit.zip | b7edc701e8b874bca635896e0e9653bf1be5f6098d7046120c9a1a9af2f7844f
+> MinGit-2.49.0-rc1-busybox-64-bit.zip | dbeef21bf998c8094a936180251b51731040fccd0fa414c68a37b475b2ecebea
+> MinGit-2.49.0-rc1-busybox-32-bit.zip | aa516fe9904c406c29d9f030e80bf17de08aae009124fffad0249afd669da756
+> Git-2.49.0-rc1-64-bit.tar.bz2 | 65c1104bda7fa199829967a3f941c482721b983ffdb1132e76d2282a0e3f8c01
+> Git-2.49.0-rc1-arm64.tar.bz2 | 528e9c6759f30367e2cac04231c141d7973240ed7212d521bd2495d25878736a
+>
+> Ciao,
+> Johannes
