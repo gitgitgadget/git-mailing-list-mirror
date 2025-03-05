@@ -1,64 +1,65 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068ED22257F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D44D1957E4
 	for <git@vger.kernel.org>; Wed,  5 Mar 2025 17:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741196360; cv=none; b=Gmxx7FJUvNwknoFBzI7+bZIVyxrbRjajO7E959122K8V0PGGzqLIDX7L4mc9tYFKyqsfBHM+kFRTgQBQghBuPV1c+6rAOcR5OqiroR9hbRbsAWFJvoJ38MCQwESSKHslxsA/5PKFtwETENhzuQss2VNmpUr5cUPVRf54k52uGTM=
+	t=1741196360; cv=none; b=fusrNgw80TP8kZi7y9lJvpcA9ue7a5hC6i+8krixmkMH7zumSASLM23RNqeCGgs1VVKS5D8hichSzKmVEGbnA02Ab6oiSOsijlZ7/j6pkLXtADAJ5TshDV+mCDU5Ln1wHVA8cJhCibGHoENPHrKOemrFv6MZi8UMAR+YDSgDz3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1741196360; c=relaxed/simple;
-	bh=9YmifEGyq1ueljobaFVEbkIC66lNtY7vX4XH43M3rLI=;
+	bh=5bt+/QhQReQpcV1NPz9FwIG1Tj/OgN92R/3ZBHzcVrU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Cto+rgxw1SoSIN13l7m8S5x8CsVaqNlx6Jh8PxlcNAbdl4s1FlvGVilTIFp/E+Nc0Uf9O8VPmfpltB4zOTM0RwFxfYWr9w2pSXEQWVZnG98VZgs+GV1qlcCPZK474qxkI918rTkT/JQH1vPTPlHjxEyn+HLdB7ZJSNJBNv6skyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y2zthJFY; arc=none smtp.client-ip=209.85.208.52
+	 In-Reply-To:To:Cc; b=EtoylysIf7aXuTSFvwUXlZ+FUtcjx+zQ37lfMK8ba0XgSHzv0I7ZnlUN8nqZktq+SlPJm7nmsx/TURffE6hC9Z4m/HTVzRm/Go6K/tX3FyvmtRYvgXpwQOilWWhGR2SOwEWiiF4yAk1yCDAu4SiqKD2f9+CgAg3kxgiLem6v2EI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XFd9Tkgf; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y2zthJFY"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5e539ea490dso5225808a12.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XFd9Tkgf"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ab7430e27b2so1134318866b.3
         for <git@vger.kernel.org>; Wed, 05 Mar 2025 09:39:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741196357; x=1741801157; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741196356; x=1741801156; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HDPXCiVB5QBIs7R6/jJuJGsxfpKTePe6+C/xKixPjNk=;
-        b=Y2zthJFYRRJwbjuiGoNfMZM9gT2jzhI0VLmtS3REO/RzpgY5mgj32zboOdP29VLlsr
-         LCZbbkfj4STa1mVypJHLq2gC2GtKLbFIQV7q9wAhz2PULpnFkFxJDp7OUGXBC4u56pTZ
-         o6cDNiVIn35c5EFniPddzC2iEep2H//yk7uxLpcu2NY5EnWSQe/cStBj9ntriONBpODn
-         mS/putZ/3BumUmkobBc3aO8jmtE6bC2sfhJnR2bEh/xvyOdcE8srfOmuUCu+6qScCcrX
-         6Z1NiJLdbDcn+OOMVen/XUtOPD1+BCWGDZ5N3/7BXs3+xeLRAdPtCu/cQk3kpZpmMfSf
-         em6g==
+        bh=+SM5DsjCKB+t7zOnRuTK/2XNfabBuFKuKPrBHO1I+Kg=;
+        b=XFd9Tkgf4h0wubhwuT0d1zimPffZuIKMsUXuaEC29YQHsELTm+OdIlPf/Gqqpd+NDW
+         mrGwV0v91s12qU0xXCyuYGlZPEfDSqmfABFUdAIcUQvPFFf/WYYxp6dWEtONabIdE9Hi
+         IIHvJasUA0eXTL0wbctpw0XggIkNgkoXpjbP8jtoP/jRPhXiZHSo3ibw9ruVuOUCYGG8
+         qogu6l/7t8Pn1H0Hl5ySnTfFR4HfNQrEvrsZI3liFx7JQuoAjkKqLJl/ZtgsSsC33pgx
+         I4Ry/2765Oen6Wekt8t0mK8x3NltX0FxcbbVJD9r8tPEvGb3LrCqivi1HUVWdvijFOHW
+         svoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741196357; x=1741801157;
+        d=1e100.net; s=20230601; t=1741196356; x=1741801156;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HDPXCiVB5QBIs7R6/jJuJGsxfpKTePe6+C/xKixPjNk=;
-        b=Xcq5I6ZHN4xn6hEbkWL+72A2yx0CBcFgJ25A7KIv+YhLYC7DovmJJcP5+XwkgkDL7w
-         00HaFbaGKbJyKLvc38HNeVllKRdG5U93DQj4PHk5KinScRZusO5YUb17oa90JvwW00bO
-         ZUL1CkYk0OGTKmZ+g/DG8EkPcpvwc0+oc/hUgHG37f5mDDc0zsGVeMqOP2/Wq8UOz32/
-         qviJwZJ9AwbjoD6TSH4j08DZOVpOcKNhRIvIoTphqd7yk9aVsg/Zs6rfoPP7ZGO09XcP
-         I9nTp0x9NGrEr8rhNxnAocpoMN3Jg/Wvj5rWUVxyUJ7r3wc7jWNQZZvxiFGeKp+kcX/A
-         A7FA==
-X-Gm-Message-State: AOJu0YwLdm8NKb/HlgoI1k9BtHqgIVzWbRk41sP0DZ9Ac/9Nxc6ddw5F
-	LpT5cpYXpQjq3sRlOMq5zM4ECsNsGJyi0HPBUrAHdgLj7II7zz2ebHgpKFnZ
-X-Gm-Gg: ASbGncvmdXTxZXTSbsrgCiNwrYoCyT5JRqybObYXYF4YSUZmyKMCJb/l5fnoyKcosF5
-	tj7gsNqR+/GlDoxX2k3hAAGDpbkBtFuA1Z19wVJYh3BcMVXHBjjeQKMWLsz/HBxdtf3uhJQ/240
-	9X4dcnrDubweGKJFdbXztrb732H0WSb7elci3VLFUh97KeB3Mt25DE6lH5HkIx8bP/flvb8xZQ8
-	xGBo8tE92j4cfihs4ctD/qemGfSVk2QAHL8r85Syk69kRsBz0uTMnnT/deWxMNB8fvQLA4WpYVd
-	a7209sPbEpAWamxzQOH4/cs2t7hnLz9Ca+oM5CTOd20mSvfpVw==
-X-Google-Smtp-Source: AGHT+IH9nTC3uCEOC4lOHVLPvO8lyxqyk/0cVrU0kIO8WR356kxKtUiSOb06lcRml7Mj8vOTuenNoA==
-X-Received: by 2002:a05:6402:34cd:b0:5e5:2d5c:4f32 with SMTP id 4fb4d7f45d1cf-5e59f4b69f9mr8869259a12.28.1741196356666;
-        Wed, 05 Mar 2025 09:39:16 -0800 (PST)
+        bh=+SM5DsjCKB+t7zOnRuTK/2XNfabBuFKuKPrBHO1I+Kg=;
+        b=VS2qe1iiXRxBeX02YmO2s4e1JfJu0VRNcCZkXBK4a5QMlM++V63RWgL9JXgQzyOZp/
+         08H2DJL7ZLSXi/UD1OwbP0yOCe7LxfwHv5yIfvvO4SkL3Ayc24KJbC+xXdVebwFgWb1M
+         CjR65gMNO0/Thy1yUtPugU5RDSIqm5ognX0kzNy+k+frcipfr3soH4MxCeFY9f0vgNcq
+         JXfZ3JVJjVgxgUDf676TiOtaU6VdNxEZGSZ1k6TYd8acyZAtXtjcm74GnJnRfO/xx+bS
+         UTt+VF4kjXjfSE31qtux+4EyreCXiuvVSlLJUMbLNpZiPI7y8HrAcdhbqRkKC+CqydS5
+         dtQQ==
+X-Gm-Message-State: AOJu0YyQ/el9ZmiuJmGKNCY/3853lkrrS0L1i91d2sENwAwqCjaLe+cL
+	86GoExk/IGrt5cyuU4Al97NXtKPVT3EH/sVq/ME9sL+femQYtc+R1u/i6Aql
+X-Gm-Gg: ASbGncvYUXvVtxyEfhriUGy5K6TDtX2ge4grS94Z0sU/T8vcs4K9q1guYmKeS+HiQh7
+	WfDZV2H4M32d5dc374U6g81eqnn9K6MJGv8BsRWbJa5SGptEiMw86M0/XCGEK/FYFTXaIeaoD1f
+	36gpOeN+L1Qc7ybOfNXKr8DW8xtpQzIzcxP53DsoomR1wUAtqrcY8lGOvYnyAEtlEYWlcQ2bjDb
+	8xY8udqeodE93vuLe5r1wqokQ7ubCA21fpUOmNoyYrC4Y7JOXbHM2uZ6bng/5mgNNvl1Nws8Wo/
+	Pu9rNsr0Iz447Irr/KRzyRTvUaHQ32fQeoGIfZxWSKjtnR+58A==
+X-Google-Smtp-Source: AGHT+IHTXdKuro9LEjM5z5WCY0mOI2g2mxBjxEgO+Vk39hPMxP5Oz0+ZGJIMDpbkkFP2EBlK2DJYcQ==
+X-Received: by 2002:a17:907:d112:b0:abf:70af:f33a with SMTP id a640c23a62f3a-ac20dac4909mr400973366b.21.1741196355909;
+        Wed, 05 Mar 2025 09:39:15 -0800 (PST)
 Received: from [127.0.0.2] ([2a02:2455:8268:bc00:8a90:b290:3a5b:4dd])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abf3a8e2f53sm946851866b.115.2025.03.05.09.39.16
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abf3a8e2f53sm946851866b.115.2025.03.05.09.39.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Mar 2025 09:39:16 -0800 (PST)
+        Wed, 05 Mar 2025 09:39:15 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 05 Mar 2025 18:38:58 +0100
-Subject: [PATCH v3 3/8] refs/files: remove duplicate duplicates check
+Date: Wed, 05 Mar 2025 18:38:57 +0100
+Subject: [PATCH v3 2/8] refs: move duplicate refname update check to
+ generic layer
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,104 +68,529 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250305-245-partially-atomic-ref-updates-v3-3-0c64e3052354@gmail.com>
+Message-Id: <20250305-245-partially-atomic-ref-updates-v3-2-0c64e3052354@gmail.com>
 References: <20250305-245-partially-atomic-ref-updates-v3-0-0c64e3052354@gmail.com>
 In-Reply-To: <20250305-245-partially-atomic-ref-updates-v3-0-0c64e3052354@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, jltobler@gmail.com, 
  phillip.wood123@gmail.com
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2998; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=9YmifEGyq1ueljobaFVEbkIC66lNtY7vX4XH43M3rLI=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGfIjEDFSxV5U+shYinBLFSJWDxOZpkwZ7B1M
- cQ6aBqeVQgFoYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnyIxAAAoJED7VnySO
- Rox/tOMMAJF1y0MpONJ9tDdFr8UB4KnXunWLeE7LjymXogL6TjaQk7ZmcclKKp75eugA24cbdh5
- f2FerDr8Q0OJJEs8klUS5t4UzjQi66RVUdMCoF38z9zALlgpF9XVcdYUKw5NSO8Ggnsa3pbljEG
- glNIsNGcCR+d1UomK6yt1o2f4NRPJlMf2AsluuhofQ+oNF6lVDKwUjVKS6yw0XFW1lLSve24WUF
- rorlxy5sFNa1/y1bItyO3lHIyzhYpnXK1+aFahY1F9OcvFyXo13Zf3uiK1CJ9yLq8sjPKCeInoV
- F9PhHMlHQl6MUtS6Sl3DhvPA+8t/L5CGL6iB4npsQ/tPJDDsNM4r9s4+S0P6uu0mMCfPUcBrnte
- k1yr/DlWAEQPLVJuTKGnaH2BUP9ORanrAjFa5Z79Irv7sK/6agPDIBVVphFeJ07xpOXQzACH9XF
- IuM+Ks6k2E0Y61fswQfQVGG2Vn0FV85NuHrguIu1BBO5K6wZKGY2Xt9TDyofbpepD9HAPvErlp5
- hM=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=18724;
+ i=karthik.188@gmail.com; h=from:subject:message-id;
+ bh=5bt+/QhQReQpcV1NPz9FwIG1Tj/OgN92R/3ZBHzcVrU=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGfIjEDuctQg2uSCcouvfH9bmMEZmqj1yZtHH
+ C7kxD+BXWdgSYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnyIxAAAoJED7VnySO
+ Rox/mUML/2/0goFNHYxVa9z9U7tMmWNEoD/TK93rOODPqxahRFFmv2PAT1O29eJDbx4ieMcJgsp
+ wUE0pxZvTTzptRxp1X/GLW3uDxMBLQ5rC+FCxcfyzW4mLYlrcXnD4IdzfUdaZuW+7+C+gsO0IYx
+ HOIDzEQ9Djpiff8EwCoS5vS1oPiJ3zfmtQxxdl6w5DPE1rwVk3rWehGkoh/K7AUfLHM8j4lQxnt
+ VIIa7xXHDTgwPfXJxgmsgOaUe6K2drQi68vg7CW2Rj4N6oxyZAm6msEHw6pygE9piCwVEMMG3t5
+ hQcNIS+kmSgLamuSMsy5kWIE+9WQzs14iDwGm84ANjMrpn++2newnF3U79zaB6H5fPHR7hxKdAc
+ 9VDi0h1oLDWgQ3b4zKcBO260iSe4qdU15PGfJx4h8+eXe8nxZE0yS5x1haCcJBsBg1Ll2+dZIow
+ k5omid7BqBln8bh+YzKMwLcFBruv+wGNhXDJVRShYsk0x5FU1gYXqBCgs6dwS0+i0BH4Pb2RZi4
+ 48=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Within the files reference backend's transaction's 'finish' phase, a
-verification step is currently performed wherein the refnames list is
-sorted and examined for multiple updates targeting the same refname.
+Move the tracking of refnames in `affected_refnames` from individual
+backends into the generic layer in 'refs.c'. This centralizes the
+duplicate refname detection that was previously handled separately by
+each backend.
 
-It has been observed that this verification is redundant, as an
-identical check is already executed during the transaction's 'prepare'
-stage. Since the refnames list remains unmodified following the
-'prepare' stage, this secondary verification can be safely eliminated.
+Make some changes to accommodate this move:
 
-The duplicate check has been removed accordingly, and the
-`ref_update_reject_duplicates()` function has been marked as static, as
-its usage is now confined to 'refs.c'.
+  - Add a `string_list` field `refnames` to `ref_transaction` to contain
+    all the references in a transaction. This field is updated whenever
+    a new update is added via `ref_transaction_add_update`, so manual
+    additions in reference backends are dropped.
+
+  - Modify the backends to use this field internally as needed. The
+    backends need to check if an update for refname already exists when
+    splitting symrefs or adding an update for 'HEAD'.
+
+  - In the reftable backend, within `reftable_be_transaction_prepare()`,
+    move the `string_list_has_string()` check above
+    `ref_transaction_add_update()`. Since `ref_transaction_add_update()`
+    automatically adds the refname to `transaction->refnames`,
+    performing the check after will always return true, so we perform
+    the check before adding the update.
+
+This helps reduce duplication of functionality between the backends and
+makes it easier to make changes in a more centralized manner.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs.c               | 9 +++++++--
- refs/files-backend.c | 6 ------
- refs/refs-internal.h | 8 --------
- 3 files changed, 7 insertions(+), 16 deletions(-)
+ refs.c                  | 17 +++++++++++++
+ refs/files-backend.c    | 67 +++++++++++--------------------------------------
+ refs/packed-backend.c   | 25 +-----------------
+ refs/refs-internal.h    |  2 ++
+ refs/reftable-backend.c | 54 +++++++++++++--------------------------
+ 5 files changed, 51 insertions(+), 114 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index ab69746947..69f385f344 100644
+index 54fd5ce21e..ab69746947 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2303,8 +2303,13 @@ int refs_update_symref_extended(struct ref_store *refs, const char *ref,
- 	return ret;
+@@ -1175,6 +1175,7 @@ struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
+ 	CALLOC_ARRAY(tr, 1);
+ 	tr->ref_store = refs;
+ 	tr->flags = flags;
++	string_list_init_dup(&tr->refnames);
+ 	return tr;
  }
  
--int ref_update_reject_duplicates(struct string_list *refnames,
--				 struct strbuf *err)
-+/*
-+ * Write an error to `err` and return a nonzero value iff the same
-+ * refname appears multiple times in `refnames`. `refnames` must be
-+ * sorted on entry to this function.
-+ */
-+static int ref_update_reject_duplicates(struct string_list *refnames,
-+					struct strbuf *err)
+@@ -1205,6 +1206,7 @@ void ref_transaction_free(struct ref_transaction *transaction)
+ 		free((char *)transaction->updates[i]->old_target);
+ 		free(transaction->updates[i]);
+ 	}
++	string_list_clear(&transaction->refnames, 0);
+ 	free(transaction->updates);
+ 	free(transaction);
+ }
+@@ -1218,6 +1220,7 @@ struct ref_update *ref_transaction_add_update(
+ 		const char *committer_info,
+ 		const char *msg)
  {
- 	size_t i, n = refnames->nr;
++	struct string_list_item *item;
+ 	struct ref_update *update;
  
+ 	if (transaction->state != REF_TRANSACTION_OPEN)
+@@ -1245,6 +1248,16 @@ struct ref_update *ref_transaction_add_update(
+ 		update->msg = normalize_reflog_message(msg);
+ 	}
+ 
++	/*
++	 * This list is generally used by the backends to avoid duplicates.
++	 * But we do support multiple log updates for a given refname within
++	 * a single transaction.
++	 */
++	if (!(update->flags & REF_LOG_ONLY)) {
++		item = string_list_append(&transaction->refnames, refname);
++		item->util = update;
++	}
++
+ 	return update;
+ }
+ 
+@@ -2405,6 +2418,10 @@ int ref_transaction_prepare(struct ref_transaction *transaction,
+ 		return -1;
+ 	}
+ 
++	string_list_sort(&transaction->refnames);
++	if (ref_update_reject_duplicates(&transaction->refnames, err))
++		return TRANSACTION_GENERIC_ERROR;
++
+ 	ret = refs->be->transaction_prepare(refs, transaction, err);
+ 	if (ret)
+ 		return ret;
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 85ed85ad87..7c6a0b3478 100644
+index 6c7df30738..85ed85ad87 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -3016,12 +3016,6 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
+@@ -2378,9 +2378,7 @@ static struct ref_iterator *files_reflog_iterator_begin(struct ref_store *ref_st
+  */
+ static int split_head_update(struct ref_update *update,
+ 			     struct ref_transaction *transaction,
+-			     const char *head_ref,
+-			     struct string_list *affected_refnames,
+-			     struct strbuf *err)
++			     const char *head_ref, struct strbuf *err)
+ {
+ 	struct ref_update *new_update;
+ 
+@@ -2398,7 +2396,7 @@ static int split_head_update(struct ref_update *update,
+ 	 * transaction. This check is O(lg N) in the transaction
+ 	 * size, but it happens at most once per transaction.
+ 	 */
+-	if (string_list_has_string(affected_refnames, "HEAD")) {
++	if (string_list_has_string(&transaction->refnames, "HEAD")) {
+ 		/* An entry already existed */
+ 		strbuf_addf(err,
+ 			    "multiple updates for 'HEAD' (including one "
+@@ -2420,7 +2418,6 @@ static int split_head_update(struct ref_update *update,
+ 	 */
+ 	if (strcmp(new_update->refname, "HEAD"))
+ 		BUG("%s unexpectedly not 'HEAD'", new_update->refname);
+-	string_list_insert(affected_refnames, new_update->refname);
+ 
+ 	return 0;
+ }
+@@ -2436,7 +2433,6 @@ static int split_head_update(struct ref_update *update,
+ static int split_symref_update(struct ref_update *update,
+ 			       const char *referent,
+ 			       struct ref_transaction *transaction,
+-			       struct string_list *affected_refnames,
+ 			       struct strbuf *err)
+ {
+ 	struct ref_update *new_update;
+@@ -2448,7 +2444,7 @@ static int split_symref_update(struct ref_update *update,
+ 	 * size, but it happens at most once per symref in a
+ 	 * transaction.
+ 	 */
+-	if (string_list_has_string(affected_refnames, referent)) {
++	if (string_list_has_string(&transaction->refnames, referent)) {
+ 		/* An entry already exists */
+ 		strbuf_addf(err,
+ 			    "multiple updates for '%s' (including one "
+@@ -2486,15 +2482,6 @@ static int split_symref_update(struct ref_update *update,
+ 	update->flags |= REF_LOG_ONLY | REF_NO_DEREF;
+ 	update->flags &= ~REF_HAVE_OLD;
+ 
+-	/*
+-	 * Add the referent. This insertion is O(N) in the transaction
+-	 * size, but it happens at most once per symref in a
+-	 * transaction. Make sure to add new_update->refname, which will
+-	 * be valid as long as affected_refnames is in use, and NOT
+-	 * referent, which might soon be freed by our caller.
+-	 */
+-	string_list_insert(affected_refnames, new_update->refname);
+-
+ 	return 0;
+ }
+ 
+@@ -2558,7 +2545,6 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 			       struct ref_transaction *transaction,
+ 			       const char *head_ref,
+ 			       struct string_list *refnames_to_check,
+-			       struct string_list *affected_refnames,
+ 			       struct strbuf *err)
+ {
+ 	struct strbuf referent = STRBUF_INIT;
+@@ -2575,8 +2561,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 		update->flags |= REF_DELETING;
+ 
+ 	if (head_ref) {
+-		ret = split_head_update(update, transaction, head_ref,
+-					affected_refnames, err);
++		ret = split_head_update(update, transaction, head_ref, err);
+ 		if (ret)
+ 			goto out;
+ 	}
+@@ -2586,9 +2571,8 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 		lock->count++;
+ 	} else {
+ 		ret = lock_raw_ref(refs, update->refname, mustexist,
+-				   refnames_to_check, affected_refnames,
+-				   &lock, &referent,
+-				   &update->type, err);
++				   refnames_to_check, &transaction->refnames,
++				   &lock, &referent, &update->type, err);
+ 		if (ret) {
+ 			char *reason;
+ 
+@@ -2642,9 +2626,8 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 			 * of processing the split-off update, so we
+ 			 * don't have to do it here.
+ 			 */
+-			ret = split_symref_update(update,
+-						  referent.buf, transaction,
+-						  affected_refnames, err);
++			ret = split_symref_update(update, referent.buf,
++						  transaction, err);
+ 			if (ret)
+ 				goto out;
+ 		}
+@@ -2799,7 +2782,6 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 			       "ref_transaction_prepare");
+ 	size_t i;
+ 	int ret = 0;
+-	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
+ 	struct string_list refnames_to_check = STRING_LIST_INIT_NODUP;
+ 	char *head_ref = NULL;
+ 	int head_type;
+@@ -2818,12 +2800,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 	transaction->backend_data = backend_data;
+ 
+ 	/*
+-	 * Fail if a refname appears more than once in the
+-	 * transaction. (If we end up splitting up any updates using
+-	 * split_symref_update() or split_head_update(), those
+-	 * functions will check that the new updates don't have the
+-	 * same refname as any existing ones.) Also fail if any of the
+-	 * updates use REF_IS_PRUNING without REF_NO_DEREF.
++	 * Fail if any of the updates use REF_IS_PRUNING without REF_NO_DEREF.
+ 	 */
+ 	for (i = 0; i < transaction->nr; i++) {
+ 		struct ref_update *update = transaction->updates[i];
+@@ -2831,16 +2808,6 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 		if ((update->flags & REF_IS_PRUNING) &&
+ 		    !(update->flags & REF_NO_DEREF))
+ 			BUG("REF_IS_PRUNING set without REF_NO_DEREF");
+-
+-		if (update->flags & REF_LOG_ONLY)
+-			continue;
+-
+-		string_list_append(&affected_refnames, update->refname);
+-	}
+-	string_list_sort(&affected_refnames);
+-	if (ref_update_reject_duplicates(&affected_refnames, err)) {
+-		ret = TRANSACTION_GENERIC_ERROR;
+-		goto cleanup;
+ 	}
+ 
+ 	/*
+@@ -2882,7 +2849,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 
+ 		ret = lock_ref_for_update(refs, update, transaction,
+ 					  head_ref, &refnames_to_check,
+-					  &affected_refnames, err);
++					  err);
+ 		if (ret)
+ 			goto cleanup;
+ 
+@@ -2929,7 +2896,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 	 * So instead, we accept the race for now.
+ 	 */
+ 	if (refs_verify_refnames_available(refs->packed_ref_store, &refnames_to_check,
+-					   &affected_refnames, NULL, 0, err)) {
++					   &transaction->refnames, NULL, 0, err)) {
+ 		ret = TRANSACTION_NAME_CONFLICT;
+ 		goto cleanup;
+ 	}
+@@ -2975,7 +2942,6 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 
+ cleanup:
+ 	free(head_ref);
+-	string_list_clear(&affected_refnames, 0);
+ 	string_list_clear(&refnames_to_check, 0);
+ 
+ 	if (ret)
+@@ -3050,13 +3016,8 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
  	if (transaction->state != REF_TRANSACTION_PREPARED)
  		BUG("commit called for transaction that is not prepared");
  
--	string_list_sort(&transaction->refnames);
--	if (ref_update_reject_duplicates(&transaction->refnames, err)) {
+-	/* Fail if a refname appears more than once in the transaction: */
+-	for (i = 0; i < transaction->nr; i++)
+-		if (!(transaction->updates[i]->flags & REF_LOG_ONLY))
+-			string_list_append(&affected_refnames,
+-					   transaction->updates[i]->refname);
+-	string_list_sort(&affected_refnames);
+-	if (ref_update_reject_duplicates(&affected_refnames, err)) {
++	string_list_sort(&transaction->refnames);
++	if (ref_update_reject_duplicates(&transaction->refnames, err)) {
+ 		ret = TRANSACTION_GENERIC_ERROR;
+ 		goto cleanup;
+ 	}
+@@ -3074,7 +3035,7 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
+ 	 * that we are creating already exists.
+ 	 */
+ 	if (refs_for_each_rawref(&refs->base, ref_present,
+-				 &affected_refnames))
++				 &transaction->refnames))
+ 		BUG("initial ref transaction called with existing refs");
+ 
+ 	packed_transaction = ref_store_transaction_begin(refs->packed_ref_store,
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index f4c82ba2c7..19220d2e99 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1622,8 +1622,6 @@ int is_packed_transaction_needed(struct ref_store *ref_store,
+ struct packed_transaction_backend_data {
+ 	/* True iff the transaction owns the packed-refs lock. */
+ 	int own_lock;
+-
+-	struct string_list updates;
+ };
+ 
+ static void packed_transaction_cleanup(struct packed_ref_store *refs,
+@@ -1632,8 +1630,6 @@ static void packed_transaction_cleanup(struct packed_ref_store *refs,
+ 	struct packed_transaction_backend_data *data = transaction->backend_data;
+ 
+ 	if (data) {
+-		string_list_clear(&data->updates, 0);
+-
+ 		if (is_tempfile_active(refs->tempfile))
+ 			delete_tempfile(&refs->tempfile);
+ 
+@@ -1658,7 +1654,6 @@ static int packed_transaction_prepare(struct ref_store *ref_store,
+ 			REF_STORE_READ | REF_STORE_WRITE | REF_STORE_ODB,
+ 			"ref_transaction_prepare");
+ 	struct packed_transaction_backend_data *data;
+-	size_t i;
+ 	int ret = TRANSACTION_GENERIC_ERROR;
+ 
+ 	/*
+@@ -1671,34 +1666,16 @@ static int packed_transaction_prepare(struct ref_store *ref_store,
+ 	 */
+ 
+ 	CALLOC_ARRAY(data, 1);
+-	string_list_init_nodup(&data->updates);
+ 
+ 	transaction->backend_data = data;
+ 
+-	/*
+-	 * Stick the updates in a string list by refname so that we
+-	 * can sort them:
+-	 */
+-	for (i = 0; i < transaction->nr; i++) {
+-		struct ref_update *update = transaction->updates[i];
+-		struct string_list_item *item =
+-			string_list_append(&data->updates, update->refname);
+-
+-		/* Store a pointer to update in item->util: */
+-		item->util = update;
+-	}
+-	string_list_sort(&data->updates);
+-
+-	if (ref_update_reject_duplicates(&data->updates, err))
+-		goto failure;
+-
+ 	if (!is_lock_file_locked(&refs->lock)) {
+ 		if (packed_refs_lock(ref_store, 0, err))
+ 			goto failure;
+ 		data->own_lock = 1;
+ 	}
+ 
+-	if (write_with_updates(refs, &data->updates, err))
++	if (write_with_updates(refs, &transaction->refnames, err))
+ 		goto failure;
+ 
+ 	transaction->state = REF_TRANSACTION_PREPARED;
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index e5862757a7..92db793026 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -3,6 +3,7 @@
+ 
+ #include "refs.h"
+ #include "iterator.h"
++#include "string-list.h"
+ 
+ struct fsck_options;
+ struct ref_transaction;
+@@ -198,6 +199,7 @@ enum ref_transaction_state {
+ struct ref_transaction {
+ 	struct ref_store *ref_store;
+ 	struct ref_update **updates;
++	struct string_list refnames;
+ 	size_t alloc;
+ 	size_t nr;
+ 	enum ref_transaction_state state;
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 441b8c69c1..f616d9aabe 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1076,7 +1076,6 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_WRITE|REF_STORE_MAIN, "ref_transaction_prepare");
+ 	struct strbuf referent = STRBUF_INIT, head_referent = STRBUF_INIT;
+-	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
+ 	struct string_list refnames_to_check = STRING_LIST_INIT_NODUP;
+ 	struct reftable_transaction_data *tx_data = NULL;
+ 	struct reftable_backend *be;
+@@ -1101,10 +1100,6 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 						 transaction->updates[i], err);
+ 		if (ret)
+ 			goto done;
+-
+-		if (!(transaction->updates[i]->flags & REF_LOG_ONLY))
+-			string_list_append(&affected_refnames,
+-					   transaction->updates[i]->refname);
+ 	}
+ 
+ 	/*
+@@ -1116,17 +1111,6 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 		tx_data->args[i].updates_alloc = tx_data->args[i].updates_expected;
+ 	}
+ 
+-	/*
+-	 * Fail if a refname appears more than once in the transaction.
+-	 * This code is taken from the files backend and is a good candidate to
+-	 * be moved into the generic layer.
+-	 */
+-	string_list_sort(&affected_refnames);
+-	if (ref_update_reject_duplicates(&affected_refnames, err)) {
 -		ret = TRANSACTION_GENERIC_ERROR;
--		goto cleanup;
+-		goto done;
 -	}
 -
  	/*
- 	 * It's really undefined to call this function in an active
- 	 * repository or when there are existing references: we are
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 92db793026..6d3770d0cc 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -142,14 +142,6 @@ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
- 		      struct object_id *oid, struct strbuf *referent,
- 		      unsigned int *type, int *failure_errno);
- 
--/*
-- * Write an error to `err` and return a nonzero value iff the same
-- * refname appears multiple times in `refnames`. `refnames` must be
-- * sorted on entry to this function.
-- */
--int ref_update_reject_duplicates(struct string_list *refnames,
--				 struct strbuf *err);
+ 	 * TODO: it's dubious whether we should reload the stack that "HEAD"
+ 	 * belongs to or not. In theory, it may happen that we only modify
+@@ -1194,14 +1178,12 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 		    !(u->flags & REF_LOG_ONLY) &&
+ 		    !(u->flags & REF_UPDATE_VIA_HEAD) &&
+ 		    !strcmp(rewritten_ref, head_referent.buf)) {
+-			struct ref_update *new_update;
 -
- /*
-  * Add a ref_update with the specified properties to transaction, and
-  * return a pointer to the new object. This function does not verify
+ 			/*
+ 			 * First make sure that HEAD is not already in the
+ 			 * transaction. This check is O(lg N) in the transaction
+ 			 * size, but it happens at most once per transaction.
+ 			 */
+-			if (string_list_has_string(&affected_refnames, "HEAD")) {
++			if (string_list_has_string(&transaction->refnames, "HEAD")) {
+ 				/* An entry already existed */
+ 				strbuf_addf(err,
+ 					    _("multiple updates for 'HEAD' (including one "
+@@ -1211,12 +1193,11 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 				goto done;
+ 			}
+ 
+-			new_update = ref_transaction_add_update(
+-					transaction, "HEAD",
+-					u->flags | REF_LOG_ONLY | REF_NO_DEREF,
+-					&u->new_oid, &u->old_oid, NULL, NULL, NULL,
+-					u->msg);
+-			string_list_insert(&affected_refnames, new_update->refname);
++			ref_transaction_add_update(
++				transaction, "HEAD",
++				u->flags | REF_LOG_ONLY | REF_NO_DEREF,
++				&u->new_oid, &u->old_oid, NULL, NULL, NULL,
++				u->msg);
+ 		}
+ 
+ 		ret = reftable_backend_read_ref(be, rewritten_ref,
+@@ -1281,6 +1262,15 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 				if (!strcmp(rewritten_ref, "HEAD"))
+ 					new_flags |= REF_UPDATE_VIA_HEAD;
+ 
++				if (string_list_has_string(&transaction->refnames, referent.buf)) {
++					strbuf_addf(err,
++						    _("multiple updates for '%s' (including one "
++						    "via symref '%s') are not allowed"),
++						    referent.buf, u->refname);
++					ret = TRANSACTION_NAME_CONFLICT;
++					goto done;
++				}
++
+ 				/*
+ 				 * If we are updating a symref (eg. HEAD), we should also
+ 				 * update the branch that the symref points to.
+@@ -1305,16 +1295,6 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 				 */
+ 				u->flags |= REF_LOG_ONLY | REF_NO_DEREF;
+ 				u->flags &= ~REF_HAVE_OLD;
+-
+-				if (string_list_has_string(&affected_refnames, new_update->refname)) {
+-					strbuf_addf(err,
+-						    _("multiple updates for '%s' (including one "
+-						    "via symref '%s') are not allowed"),
+-						    referent.buf, u->refname);
+-					ret = TRANSACTION_NAME_CONFLICT;
+-					goto done;
+-				}
+-				string_list_insert(&affected_refnames, new_update->refname);
+ 			}
+ 		}
+ 
+@@ -1384,7 +1364,8 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 	}
+ 
+ 	string_list_sort(&refnames_to_check);
+-	ret = refs_verify_refnames_available(ref_store, &refnames_to_check, &affected_refnames, NULL,
++	ret = refs_verify_refnames_available(ref_store, &refnames_to_check,
++					     &transaction->refnames, NULL,
+ 					     transaction->flags & REF_TRANSACTION_FLAG_INITIAL,
+ 					     err);
+ 	if (ret < 0)
+@@ -1402,7 +1383,6 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 			strbuf_addf(err, _("reftable: transaction prepare: %s"),
+ 				    reftable_error_str(ret));
+ 	}
+-	string_list_clear(&affected_refnames, 0);
+ 	strbuf_release(&referent);
+ 	strbuf_release(&head_referent);
+ 	string_list_clear(&refnames_to_check, 0);
 
 -- 
 2.48.1
