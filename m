@@ -1,148 +1,183 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9881C24DFEB
-	for <git@vger.kernel.org>; Wed,  5 Mar 2025 16:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F66617B401
+	for <git@vger.kernel.org>; Wed,  5 Mar 2025 17:39:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741190432; cv=none; b=Hx9TcUGyp4Izkjro/jmPG9U86J9kPEKIhEfUBrvSFe4zREj9siN9tI781/wDFQFHQqMNVmBEbAK9ztShjfMEL6PhObXyxxjyqeNRNRzCZLLPuHxV0NUFFiLb7Fxl2qAMFhXDhrNhKoS/o6/htL9nlg1GBsmmcneSOCh1H2n9e3Y=
+	t=1741196359; cv=none; b=XWNT09XFD3jjYZPLL0E70YTQt+qwKx1D9CnTzUOpm4D9NfWaarV5yOcVtNP2HoBjAGV9jjsJC4/9MlB9BUKiWzjQ2g7u/adu/HchMWlZnDuEHrPJgUemwq/KXQ8Hzcdj3T6KMrHANSpONUYXonj44qbEFsNy8txx2BDY8aeje+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741190432; c=relaxed/simple;
-	bh=Wm0KrmTCDTTij6ehMfxJACbqakkw4mfv6poQ25K6/dc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EQriZflxmk9zyQd4EE8xLblLV9xJjdCnW8l/VyU5EiBJAsAZnLcyL/mz0IBgPNqAcyPQU/WGZXq0Gr4inyhwDpMn/mNe37TDwA1cek/wS0WREJcwEBcubzcGvXXLajWBJAtCnOGCuIW3Ncm/A45aKAG+Vh04wqf9aTuuqI296Ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g9Kk9SVR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3eVkg58Z; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741196359; c=relaxed/simple;
+	bh=ijcews+R3T9WRiFIz5DXUchs6rSe6Or9l3vjvHuB7SA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=HDKZ1i/oKXrfFus1S1/AUGRiLfjdkxBwSk3SynM8Dx/ghBFkvDkw5RFIMrEw2MQFqGRAS8pvc4NdIrYF003T2c14GZNgx15pT3o8QA+f6vQyrrq+VOIiRDKAPiPUet/NSqJ4wFOYCZjlB15na7Uq+yvipuJ+gI8iZSEsIbB+ASU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SA/xvE64; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g9Kk9SVR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3eVkg58Z"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9485B11401D4;
-	Wed,  5 Mar 2025 11:00:29 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 05 Mar 2025 11:00:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741190429; x=1741276829; bh=0EhiMxzpsP
-	/NHEDnYPzzvSUDo/I6Sx1TWJzt9KyxxUU=; b=g9Kk9SVRGJtZ7qwzfcwhjyvfhW
-	oIzhlk0EFRt2OMXvfW/TCoKm1zknISM5wjms2A/GSTz/OfDfIU0Wt0uZ5h/iiO8j
-	qGVj00xsluxB1iMedFIE7c5mG+PHLkqIuW++1DBVsR7axRtnU4Vu/9L621z3YiEd
-	v/3PBx++DUAV1WI70netWCn/EkRlRLeMbWcTWuMifn2K2PzyPAq5SLk65d7iXhV7
-	N+UNFq2XT5pxk6DQTTTcFbsNlG6es2IQpTYMe7MJ2npCixXouPujpzceMuAxQKBC
-	LTf6bZLRHP/zCKX120MFaLcfoYkt5S35I4gclDZ4dkkdU4IGvd4COcXB9J1g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741190429; x=1741276829; bh=0EhiMxzpsP/NHEDnYPzzvSUDo/I6Sx1TWJz
-	t9KyxxUU=; b=3eVkg58Zqmh4jIaRnidAdwnroOXXaZvwYqw75uekRm8dqVenU11
-	lhTHSmV0WTXDCVXPtl7paoxjL5JsnmakD1VY6L1caGn16wqk63UhtxS6K3OzFnqy
-	/9hSBSHJntyCk3AgGjnFZvYf4sk34FauQZOrVI7Y9NiMhmysi23/u1lLkTxg9RrS
-	TlWMhZ9l41VqByAM1NEIlbPAKs5tMwhlaxosOUeG+2PKh0kWgUzsaDQgspmDL6kL
-	lRcAvOxI1rsvwzsd1YsD/lE7pd+x+4EcKUXpWAIv/LaYwEe9OeGf2SKqQ4MEHDxN
-	kqAevRfEqhmoXvOHSrde0c2LaED46V8Lsiw==
-X-ME-Sender: <xms:HXXIZymNNxJzeNM9dRtbP0L2N5ZB_bdSYYUkZjmRTWEVJOOGCw1Mhw>
-    <xme:HXXIZ50MPKKqSBUUNVYJZiKSi7uMegq2fx-SFPwz2OYLAnpkcJ84jWqPef4nd4PBE
-    8s73LhxWFtGRM7n5w>
-X-ME-Received: <xmr:HXXIZwrFAsVI525x4GZscIv5zIEgokh0W_XnU4bmBw8hFf89ogLn0MwN7ABlGYLaCahp4el_AkOktQiAP7IKPh1_7X6v9Ge2LSKj>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdehvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeeg
-    fefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhig
-    rdguvgdprhgtphhtthhopehgihhtqdhfohhrqdifihhnughofihssehgohhoghhlvghgrh
-    houhhpshdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepghhithdqphgrtghkrghgvghrshesghhoohhglhgvghhrohhuphhsrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:HXXIZ2lNUPXcyGhfiiQ5_nLWig_2VoIC23QBaAEwAZzG355yCR0-DQ>
-    <xmx:HXXIZw0QzT84MN_vH16reYSjVT0A1y-ElNH6VZ17gmIOgoqhiRb60A>
-    <xmx:HXXIZ9sfnvmXyF1NKBZZBUrFZ4w6HVJX7PSdW4vBjG6QVRGnCFZNfg>
-    <xmx:HXXIZ8XjcxMzx_NYV7p0JZkhhgtbKK60MUQeaBAUK1hMExU6dJBhEw>
-    <xmx:HXXIZ0-S0xOAhk0NOc_N0HLq-_-WYsYzIvnfmnJ5C5BjWMOGvglrLYFt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Mar 2025 11:00:28 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc: git-for-windows@googlegroups.com,  git@vger.kernel.org,
-  git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git for Windows 2.49.0-rc1
-In-Reply-To: <1MmDIo-1tPXph2dbU-00pKOM@mail.gmx.net> (Johannes Schindelin's
-	message of "Wed, 5 Mar 2025 15:52:33 +0100 (CET)")
-References: <1MmDIo-1tPXph2dbU-00pKOM@mail.gmx.net>
-Date: Wed, 05 Mar 2025 08:00:27 -0800
-Message-ID: <xmqqv7snlb6s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SA/xvE64"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ac1f5157c90so372805166b.0
+        for <git@vger.kernel.org>; Wed, 05 Mar 2025 09:39:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741196355; x=1741801155; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zwFj8lgbcCEReiZ0VMtFUt5egxOBI7jMsqXr/ycBxS4=;
+        b=SA/xvE64EvKT4V+NPF95r4QRgbwHhVteHW61PaTyDJHeTewfaQ5RZeCfqgb5aSdVJt
+         GTVrQM9fX5S5+bRI3VvsmKvmxaJQKnlqNtoq4CncaZLfTSL8FbIFfy4lnYJ8de1vUMlG
+         KRNYh2UYowDZia6Xwjvvk1MEAizpi0iM0wpFOyvRlVorPSStrtmrRDA0SrKawVRJmP+M
+         0D6UTgY9hQ146Ua6HYVV6D8rvjlkupYTtgfc68mvsgGxkBUqZA2cQokKprmDMInZJ8B5
+         ysShdVbhWCgMqfkEaeskY5m7nGAQTbFoaRkQWvtK0hqSztX9T3YWxvseB4aOqXeVATyY
+         PAtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741196355; x=1741801155;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zwFj8lgbcCEReiZ0VMtFUt5egxOBI7jMsqXr/ycBxS4=;
+        b=GRG3fRY1rv1rU+4oxHwGokLj1eKF+73lEu1jPtbs8h8+Ca8de+fmPXd18fNmuWIclr
+         may/UThIHllmVnLvPUwR2MB5FlJ2y6d62mZiVAOeCLiCpyMljd856ngLRo68YPVtw+A8
+         Zh1FmY10aWZnj22Uy3mZVLidKcrcSKXukv/m/D76qE9uQ6cMOKcHTcF8Ol1rx+IDnaD0
+         KktqsqyAC9apQcs0KSWf9S4vp6N/hzVi2V2gSSmVHUYqMCVBgxYD5Qr+naXp9Q3kweXv
+         D0cW/+F9COjT6QdE6AWml8zHm7LRLapuMQBs92cGceMc7/FIL3UCPYx9agdAh8KYtc6s
+         nr9w==
+X-Gm-Message-State: AOJu0Yz5X+z+hIH8ijCV4VZcRoYP1N9xdw7yDQUrJFbEAuCu+Ginu8Us
+	LaO/VEQJ4VdltI9S8R3yo/2Z4ff5PorM1n2QS4sSwKrtPYRmAOUJHWxzP3EG
+X-Gm-Gg: ASbGncuRrEQGYok5Pu8UFmyJGo02iEoOp0fGtWYRj/HeYAb5o/8dvKBPUIRC4qrTDnF
+	690csAq1DTeK48B/V1NcdHIPUtr6DZUFb8cDw1+8cxwjfEISNQ12jYQTebF9dNCp4vkgIPHgl2g
+	j1iXPWCOHYiR8yTwz9PNS3Ojx2ehWkXe6i2r0/uFqfrUbZdMXZ9rJ0C04JtVJ03vt0wf0F1+FXm
+	XHT+8MM+oCpD2c7X8NV6Y8k4AYAzDgwrRy3dAsyBv5RP1clwZt/05UfNdgcpogKaCf9PD0Jn6zK
+	RIqBvG438oLzz6eWJDpGldDmufe+MbUl6qf1sjtClOGmYva9KQ==
+X-Google-Smtp-Source: AGHT+IG1yI+itF01Rstu97McQMUdpHIgmV1oToWMdrAs723M1RcG+xN7arvVBwVsZ6RxcppNOtFglA==
+X-Received: by 2002:a17:907:6e92:b0:ac1:f759:f9e7 with SMTP id a640c23a62f3a-ac20da187b5mr353594866b.23.1741196354965;
+        Wed, 05 Mar 2025 09:39:14 -0800 (PST)
+Received: from [127.0.0.2] ([2a02:2455:8268:bc00:8a90:b290:3a5b:4dd])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abf3a8e2f53sm946851866b.115.2025.03.05.09.39.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Mar 2025 09:39:14 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Wed, 05 Mar 2025 18:38:56 +0100
+Subject: [PATCH v3 1/8] refs/files: remove redundant check in
+ split_symref_update()
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250305-245-partially-atomic-ref-updates-v3-1-0c64e3052354@gmail.com>
+References: <20250305-245-partially-atomic-ref-updates-v3-0-0c64e3052354@gmail.com>
+In-Reply-To: <20250305-245-partially-atomic-ref-updates-v3-0-0c64e3052354@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, jltobler@gmail.com, 
+ phillip.wood123@gmail.com
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3232; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=ijcews+R3T9WRiFIz5DXUchs6rSe6Or9l3vjvHuB7SA=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGfIjEB8VYlcX/44MtlLJQXQFWuhyioSttenz
+ 1QZu7c765c6dYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnyIxAAAoJED7VnySO
+ Rox/RzUL/RlWbRQ4Cd0LDUJy+I6Jl2GzxPoVfkvLPWhXnS9ISRKGoLpw+aPk33yRUPomCqaMfzk
+ Qtj+aj537OGfW+9MGTZajM3WtYDJNW2symJ8cMi3NjKUsq0boiFSKYHHjInVIzXa/yNtzVA7Yqx
+ JAPfZkyF014ZpGLxN+ntnWCcOlJ1UeptOHxSvOzzw7KpK2EpnsUYjJqSWnOoRYpyvASPd7BSNIR
+ Dau325PlGWOLsjneJP5OaOYgVH3hHzGY14rpmDiTvpITwaOoqpLOVSQ19idGTYf64Ew1PDgcMsW
+ MZkEkmfuKDePhl59mjpvvznlk3qQmGfrh1SlnTd4lsvyfc7iF7LFKVvTCKITs7/rx+7UT3Gt9LF
+ lvC0oNObu21rByqj6sckTrGdpzq+NjWwS39d36hQaF9fCqRpAq6hiq5guHrl+0y8Y8RerAm8SnU
+ CjP0Fh6DZtgwSRjOwtOP76dH8xM+Fzv1Dx0k9/NLP3trBrUkqRFJwGUlIxtqjtEPgPCTdKqMz75
+ qU=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+In `split_symref_update()`, there were two checks for duplicate
+refnames:
 
-> Dear Git users,
->
-> I hereby announce that Git for Windows 2.49.0-rc1 is available from:
->
->     https://github.com/git-for-windows/git/releases/tag/v2.49.0-rc1.windows.1
+  - At the start, `string_list_has_string()` ensures the refname is not
+    already in `affected_refnames`, preventing duplicates from being
+    added.
 
-Thanks, as always.
+  - After adding the refname, another check verifies whether the newly
+    inserted item has a `util` value.
 
-> Changes since Git for Windows v2.48.1 (February 13th 2025)
->
-> Due to persistent maintenance challenges and the community's limited
-> engagement and usage, git svn support in Git for Windows will be phased
-> out over the next few months.
->
-> Git for Windows v2.48.1 was the last version to ship with the i686
-> ("32-bit") variant of the installer, portable Git and archive. Only
-> 32-bit MinGit will be built for future versions, until April 2029.
->
-> New Features
->
->   * Comes with Git v2.49.0-rc1.
->   * Comes with OpenSSH v9.9.P2.
->   * Comes with PCRE2 v10.45.
->   * The previously-experimental --full-name-hash option has been
->     accepted into upstream Git as --name-hash-version=2 and is no
->     longer experimental.
->   * The git backfill command has been accepted into upstream Git; Its
->     --batch-size=<n> option has been renamed to --min-batch-size=<n>,
->     though.
->
-> Bug Fixes
->
->   * A change in upstream Git v2.48.0 broke renaming symlinks, which was
->     fixed.
->   * On a recent Insider Windows version, users experienced the message:
->     "Cygwin WARNING: Couldn't compute FAST_CWD pointer", which has been
->     fixed.
->   * A bug has been fixed that, when calling git add -p from VS Code's
->     internal terminal, after using the edit command, caused the
->     internal terminal got stuck and no further command was accepted.
->
-> Git-2.49.0-rc1-64-bit.exe | 81bf3f20c85c0ca82de760da8ac28eec53523edfb24a7c71f925e1c1e11bbe40
-> Git-2.49.0-rc1-arm64.exe | 1b527f8e80c10a09d561908fd8cbe8acefb47bd1f61da5048188808deed64183
-> PortableGit-2.49.0-rc1-64-bit.7z.exe | b387c7ae0ce0eb751e5ca812fd47dddc8b53f0cc1148b4ba67b66071e5933f1d
-> PortableGit-2.49.0-rc1-arm64.7z.exe | 80a7a186150ff22b695e54b20e55684f6c1a6abeaf2f32c9c256263a8901465d
-> MinGit-2.49.0-rc1-64-bit.zip | bc0d31dcb8a04eb5b0645ef92f132c3e3b184817b3d840806c06accb51e47ef7
-> MinGit-2.49.0-rc1-arm64.zip | c0244edc063ccb23aa425c88a591d2e90e6967725e168070ca64aea55e78ebb1
-> MinGit-2.49.0-rc1-32-bit.zip | b7edc701e8b874bca635896e0e9653bf1be5f6098d7046120c9a1a9af2f7844f
-> MinGit-2.49.0-rc1-busybox-64-bit.zip | dbeef21bf998c8094a936180251b51731040fccd0fa414c68a37b475b2ecebea
-> MinGit-2.49.0-rc1-busybox-32-bit.zip | aa516fe9904c406c29d9f030e80bf17de08aae009124fffad0249afd669da756
-> Git-2.49.0-rc1-64-bit.tar.bz2 | 65c1104bda7fa199829967a3f941c482721b983ffdb1132e76d2282a0e3f8c01
-> Git-2.49.0-rc1-arm64.tar.bz2 | 528e9c6759f30367e2cac04231c141d7973240ed7212d521bd2495d25878736a
->
-> Ciao,
-> Johannes
+The second check is unnecessary because the first one guarantees that
+`string_list_insert()` will never encounter a preexisting entry.
+
+Since `item->util` is only used in this context, remove the assignment and
+simplify the surrounding code.
+
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ refs/files-backend.c | 20 +++-----------------
+ 1 file changed, 3 insertions(+), 17 deletions(-)
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 4e1c50fead..6c7df30738 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2382,7 +2382,6 @@ static int split_head_update(struct ref_update *update,
+ 			     struct string_list *affected_refnames,
+ 			     struct strbuf *err)
+ {
+-	struct string_list_item *item;
+ 	struct ref_update *new_update;
+ 
+ 	if ((update->flags & REF_LOG_ONLY) ||
+@@ -2421,8 +2420,7 @@ static int split_head_update(struct ref_update *update,
+ 	 */
+ 	if (strcmp(new_update->refname, "HEAD"))
+ 		BUG("%s unexpectedly not 'HEAD'", new_update->refname);
+-	item = string_list_insert(affected_refnames, new_update->refname);
+-	item->util = new_update;
++	string_list_insert(affected_refnames, new_update->refname);
+ 
+ 	return 0;
+ }
+@@ -2441,7 +2439,6 @@ static int split_symref_update(struct ref_update *update,
+ 			       struct string_list *affected_refnames,
+ 			       struct strbuf *err)
+ {
+-	struct string_list_item *item;
+ 	struct ref_update *new_update;
+ 	unsigned int new_flags;
+ 
+@@ -2496,11 +2493,7 @@ static int split_symref_update(struct ref_update *update,
+ 	 * be valid as long as affected_refnames is in use, and NOT
+ 	 * referent, which might soon be freed by our caller.
+ 	 */
+-	item = string_list_insert(affected_refnames, new_update->refname);
+-	if (item->util)
+-		BUG("%s unexpectedly found in affected_refnames",
+-		    new_update->refname);
+-	item->util = new_update;
++	string_list_insert(affected_refnames, new_update->refname);
+ 
+ 	return 0;
+ }
+@@ -2834,7 +2827,6 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 	 */
+ 	for (i = 0; i < transaction->nr; i++) {
+ 		struct ref_update *update = transaction->updates[i];
+-		struct string_list_item *item;
+ 
+ 		if ((update->flags & REF_IS_PRUNING) &&
+ 		    !(update->flags & REF_NO_DEREF))
+@@ -2843,13 +2835,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 		if (update->flags & REF_LOG_ONLY)
+ 			continue;
+ 
+-		item = string_list_append(&affected_refnames, update->refname);
+-		/*
+-		 * We store a pointer to update in item->util, but at
+-		 * the moment we never use the value of this field
+-		 * except to check whether it is non-NULL.
+-		 */
+-		item->util = update;
++		string_list_append(&affected_refnames, update->refname);
+ 	}
+ 	string_list_sort(&affected_refnames);
+ 	if (ref_update_reject_duplicates(&affected_refnames, err)) {
+
+-- 
+2.48.1
+
