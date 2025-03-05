@@ -1,109 +1,219 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A73B2080DD
-	for <git@vger.kernel.org>; Wed,  5 Mar 2025 22:52:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E52D1FDA7A
+	for <git@vger.kernel.org>; Wed,  5 Mar 2025 23:12:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741215175; cv=none; b=kxGTgT01cm8FAMj2r8SdQ6M9KGbzKBBmf+seeTcXkxmv2FHKN15wzAiTMkiuY8hHQsTTCyXQTXx7veU3FGg2b6i7Kpis225Qw7ZX1QdfoML5uv979lUx4Pd/dYyuZ9O6USwUtw7W5hmhs9CSwYf7hwKY9ukoNlwwt3qyML23du8=
+	t=1741216379; cv=none; b=YiZh70i3CKJHYmwLEL/eWbsHlIMcmbpKlrwrmIbvLeMUXXMPVMQkFlSTnyu9uXsu0ixFMg7Na2dbVPbqqu6YEvxpdQ2gNmpEAT1BGw2RurLmzz67WwOnZbXDR53ORQl5DVOcMkJt593OueQhpjmw+326XDcuOY2sQjWzryWA6mQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741215175; c=relaxed/simple;
-	bh=XVzDj9Kq/2eWFzMOdc9j8T0IUI9HCd7vsV+wHTdomeE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pUYnv9ZHQuzkvB2Xt2hZOHIyT82gzYrxkVDiXC0uvkEx+54Xk9xaJ6bA4MBcl0dKEROunj5y3KjxWtWcIS5YqSVbhpMdFmHAk6l8+ZWkPJELJ3N7MbPAqfeE37gVhA/0wLgZus4cygldmKrLJv8eDW2bUD/hpCh0eDLoZPnEuOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Mm1LZaOK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V0WfvKLS; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741216379; c=relaxed/simple;
+	bh=7aD7yc7hOTl+sMwSD3BJKZg2taZfUjPVqUYbkinIlHk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bg1FGG3p9185gwwEpYKOq6C2OgO9jnzwjRGh9lEWh7p28tQNL/CI4RjCP/n7seHrh11ZLvHbpUr036DWwGE0/fUsCrBqJjnXbL7D4IK29h1ujCVe9TkDcYgOABGnZ13Osz1HUNAb31LYI9KkR23yiwKCdTcUc0CL9N9ewVXleaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=hQe495Yh; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mm1LZaOK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V0WfvKLS"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 55A92114018A;
-	Wed,  5 Mar 2025 17:52:52 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 05 Mar 2025 17:52:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741215172; x=1741301572; bh=kurElo++m0
-	S2AKAMhAD5Zgq9Eyd+sMkCDRGh679Jbvk=; b=Mm1LZaOKzrtIj8sM9wuhweniph
-	+AhA8iQR/WBBoW0OGVCDVxX9gjkQHM+lUWjDYyueQ+Ljeuq8xciwrYr1Q7P4Tqub
-	nU97L3zIzpfpOXwjWxiPHcCCqTAHUYS0m2kLKjGcauq1vwGnliWDBIDA7Mfm7ImF
-	o3Fyn12NLi+L+5S1zdHl+8oNMKnRRkos1i3p7arSJWjgRrUjQDlPhBjQ8LbFrw9o
-	ousOSa7+29/k5W1q6R6WqEJySmLuKyKnmXI7PwMv3SuKhdualR1flPQQHeISQQNl
-	3viwXgKSm1So3AgDj5yfKxFimdubo05PUD/Fst3JXV85tgNz1VUgbO1qqK5Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741215172; x=1741301572; bh=kurElo++m0S2AKAMhAD5Zgq9Eyd+sMkCDRG
-	h679Jbvk=; b=V0WfvKLS9KNasS5RqnIuoERWGWsex+wvJpuInNA3QK2fXIksN0z
-	Y0xEHBDfP2L6tIdZW8gR6b0hzFakw9CXUS76dffFvapW124qlEwvE1Y/EgksTQEJ
-	mExUKFOZiI9Jki7Z2SEw9xLIC2v3Q3lOYHJXLoXwdE+p+b4QQoKL7xXI/nAk8TcL
-	zBOKhlnvgwOzCKE21s3GzMHlP7cUREII10AGHiOuRknLwZfiNP7VGKopwV5ijrA0
-	nHJ67/hPgQ0o7MDzO6pNjNaF1fzV0OBUo8w0SWEyH6iA+65u49+ylftXxZmOheMf
-	2l3E6iaMibzA7xCLeVZ7UIe7loL50kX9nSg==
-X-ME-Sender: <xms:xNXIZ3Pytx5CzB8kVFaXdmA_RiBeSFVCCtEypo-taLe38bJccBBc-w>
-    <xme:xNXIZx-pH9y5EgwGY5xuoORSlWky7mzN7HROfzLQBB4r599XYKdX13n7-XVmMFfg-
-    a_U0_1ourpR-jBiqQ>
-X-ME-Received: <xmr:xNXIZ2Q0Ye1O2Vz0980XU_y5Lbuu7Qf_-YVZ8MKqakSk8S9Ru9_3OACXw7H4Usinhw2LkTOlD9QE45Jbi_gFpRzlJP4ME8r6M3ny>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdeitdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlsh
-    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepthgvtghhkhgv
-    nhihrgesphhrohhtohhnmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:xNXIZ7uSiLAb-9yAY2pNnBQxJFWLgaTc8w0DT8bI-h18e4OY3J1TOQ>
-    <xmx:xNXIZ_c_oohlhxSmTHMk-BT17DAzg9Wfe395FDm5GPf-oz9TzDDqyw>
-    <xmx:xNXIZ33CJ51ea3HKpR4Cq6aemtM5wXOY1G73chd6Tx2EgF18Uh7cXA>
-    <xmx:xNXIZ7-ug8Y6DuPlesng9HOiDYzK0kvyyUipWA2cxKkOeqGSXbanMA>
-    <xmx:xNXIZ262DpjKRUNTd1DciS1L8YPcF1HbQfNYVhCTwUbWzDz9zb4wpmqD>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Mar 2025 17:52:51 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Tech Kenya <techkenya@protonmail.com>,  "git@vger.kernel.org"
- <git@vger.kernel.org>
-Subject: Re: Suggestion: Enhance git init with Language-Specific Templates
-In-Reply-To: <Z8jTjt1CQ7hp8KSP@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Wed, 5 Mar 2025 22:43:26 +0000")
-References: <qMn1k_iuZCe353x0BBxdD5z4-17Abk_ZHoPr8nVDLOgLhGf8Nxb3-bsXPH2GiATUsuGLVqAaEESua5G9qBaW0qqxwz-7AbcNyRwSXJzbKMs=@protonmail.com>
-	<Z8jTjt1CQ7hp8KSP@tapette.crustytoothpaste.net>
-Date: Wed, 05 Mar 2025 14:52:49 -0800
-Message-ID: <xmqq1pvbks3i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="hQe495Yh"
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e62d132a6a7so10846276.3
+        for <git@vger.kernel.org>; Wed, 05 Mar 2025 15:12:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741216376; x=1741821176; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=O/InRIqjNVZx/blpGUkK0n02HMR+7Ej6KHhfZv/3p+M=;
+        b=hQe495Yh2PiK3Wef2ZNW1Bq6kNyYJMwonWh5MqaRK6yOh7m1eWcZzFq1hqzxbMwqEP
+         DomUNbm11568XysZX2QFxF6ZtOPp3BFWDnKri1FVR06FUKVnhLxpGS77Fa1wCbgXGXFP
+         9j7CaemIvrDwXXC3fEKePXWURWMpTP016fFSK1Z2AS2t/wX9cVh/lTFSEHAk0BpSFO8G
+         SV1WIp+pCNdsnIlj/WWnq+pJ/c6Ctwy2YOPBdz7xD29ssP8Mcx9gNAzRj1hVG6FgjK5L
+         K/8+yQUVSae/HAaTw7IhuS5iK52RKsj4OhmjcpWONl7orQQpqgLZ3OpZi6wH60cqN5Bx
+         UFXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741216376; x=1741821176;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O/InRIqjNVZx/blpGUkK0n02HMR+7Ej6KHhfZv/3p+M=;
+        b=i6608pv+X4r3XH4NRdtdmNQOORpXwASoZFW8qAVSZkI5CvtZ0zQhbVZYGQWox9t71f
+         LRFzOw+xXyyhMtn9ZtD8qRruoI4FDXBDtIx/wmhCEsPQzOOlISQvtJA4qT18tNkIs7qr
+         /YI2dCWqABrf3SvzeK2VOXzCy8l9C9cIf6FQiGgwKa1mEnpE2FhYohnYNMzW9eT06nfJ
+         L9USo4hGdfQ0BFK6m954ETiUhge50yOd1z0fN4TCecpk+IVzAwDifF1/9gGWvGLA+yLf
+         zK+3Yh+7psqVtYb6ox+zP2CnKfzYSr6W97ILw+H9Gg7tbHzymzVpkZgyhDXmvsr9EY9X
+         dz8A==
+X-Forwarded-Encrypted: i=1; AJvYcCVt0l5V4BcQpJxXUThtLOn/QCTkBg9+Lf2mBIJvVfHDJxkwIbQfRIbIsiYOsEDzmRNKvG8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyG8DY3VhzoQg9KK+IeLyWog47t4mWP7TZtffYArxr0uGL7kUS/
+	bMYpow2XRy7hgQX6I61EUUSisXVPR+TwBsnyE2ftfKc6hcCS7EHlls+9WITZRbc=
+X-Gm-Gg: ASbGncuH94Nb/1mJ2HZRAFiFuTvTdb6Nar51ymAmdHle3/ZUfWheklDXq1qWYppYcRo
+	61CtuJy39R0A6aroKR0kLe4FIWnBy164hDsLjpmyt36Q3oKD2jYeyzFaBb6kr/L6Sma+85XT//d
+	IFxVm+kNM5IHNT4H0BDCtx8KEk1hiVigniwsuMXhhCPZEGDo0eQVNPocmu2XT4wL8LdAiK1maO8
+	st49rtiGBvcjV9tXjVB9uhYp6ckIUjfDMoRQKNgry2WlkiIB7sHbV28z01J+0E3qKR67eadia3X
+	p9anegAEpo1mH6GJi9Psy/Pm2hq+Eh5WxaFL3QeAjrp1OAw1qnuTHrfR4G6v2bQtTg4/Md/Y/F+
+	uRLXFcmeqAFlqTJoh
+X-Google-Smtp-Source: AGHT+IHXtrxbpEOdGffoUkdXGoEht0GbWRNvZb3nRnME+34dh00AcVA/CLsHHTVkyqT71QQ5pvJm+Q==
+X-Received: by 2002:a05:6902:848:b0:e60:78b9:1502 with SMTP id 3f1490d57ef6-e611e1b8a1fmr6864116276.16.1741216376317;
+        Wed, 05 Mar 2025 15:12:56 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e634b8fdea7sm19468276.50.2025.03.05.15.12.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Mar 2025 15:12:55 -0800 (PST)
+Date: Wed, 5 Mar 2025 18:12:54 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: SURA <surak8806@gmail.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: The transfer.hideRefs of the upload-pack process does not work
+ properly
+Message-ID: <Z8jadiyUj/U0TORF@nand.local>
+References: <CAD6AYr-ZC32VNfUfMB63H-rQRfTdV=VQfBm67i2mG+6GDCNxkQ@mail.gmail.com>
+ <Z8D/aiqN5e/aRSn7@nand.local>
+ <CAD6AYr84KuBb5N-LVBQo-6Gq2Ms3JKQCk0gyO8i=N8gp3whe_Q@mail.gmail.com>
+ <20250304075113.GD1283943@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250304075113.GD1283943@coredump.intra.peff.net>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Tue, Mar 04, 2025 at 02:51:13AM -0500, Jeff King wrote:
+> On Fri, Feb 28, 2025 at 10:32:01AM +0800, SURA wrote:
+>
+> > My previous description was not clear enough. The early hiding
+> > according to exclude_patterns in packed_ref_iterator_begin seems to be
+> > designed for git for-each-ref's exclude. It is different from the
+> > ref_hidden matching rule used by upload-pack.
+>
+> >From your reproduction, it looks like the issue is that for loose refs,
+> asking for_each_ref() to exclude "refs/heads/foo" will not yield
+> "refs/heads/foo/bar", but will yield "refs/heads/foo-bar".
+>
+> And that was true for packed-refs, too, before 59c35fac54
+> (refs/packed-backend.c: implement jump lists to avoid excluded
+> pattern(s), 2023-07-10). After that, packed-refs exclude both.
 
-> What Git _does_ provide is a way to create a template of objects that
-> should be in the `.git` directory using the `--template` option.  It's
-> possible to create a template that contains an initial commit with a
-> `.gitignore` file.  I personally would not recommend this approach,
-> since it will not work gracefully with alternate ref formats or hash
-> algorithms, but it is an option for people who want to use it.  This was
-> in common use for setting up the default branch name before `git init`
-> added the `-b` option and it's related config, so it is well tested.
+Thanks for the careful analysis. Since you and I co-wrote this feature
+in the first place, naturally I agree with what you wrote here ;-).
 
-I wouldn't have thrown objects in the --template directory, and I
-wouldn't count on things outside what the mechanism was invented for
-(namely, .git/hooks and possibly .git/info/ files) would forever be
-copied in newer versions of Git, but certainly "git init --template"
-mechanism sounds like a good escape hatch than mucking with Git code
-base to teach it myriad of languages and their dialects.
+> So probably the solution is for the jump list in 59c35fac54 to be
+> pickier about finding its start/end points. It should insist on a
+> trailing "/" (I think end-of-string would also be valid, but it may be
+> easier to ignore that, and it is OK to err on the side of inclusion,
+> since the caller is supposed to do their own filtering).
+>
+> Probably the logic needs to go into cmp_record_to_refname(), but I lack
+> sufficient brain power at this time of night to even attempt a fix.
 
-Thanks.
+That is definitely one way to fix the issue, and the fix would look
+something like the following:
+
+--- 8< ---
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index a7b6f74b6e..b137641f9d 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -326,7 +326,8 @@ static int cmp_packed_ref_records(const void *v1, const void *v2,
+  * refname.
+  */
+ static int cmp_record_to_refname(const char *rec, const char *refname,
+-                                int start, const struct snapshot *snapshot)
++                                int start, int strict,
++                                const struct snapshot *snapshot)
+ {
+        const char *r1 = rec + snapshot_hexsz(snapshot) + 1;
+        const char *r2 = refname;
+@@ -334,8 +335,11 @@ static int cmp_record_to_refname(const char *rec, const char *refname,
+        while (1) {
+                if (*r1 == '\n')
+                        return *r2 ? -1 : 0;
+-               if (!*r2)
++               if (!*r2) {
++                       if (strict && *r1 != '/')
++                               return 1;
+                        return start ? 1 : -1;
++               }
+                if (*r1 != *r2)
+                        return (unsigned char)*r1 < (unsigned char)*r2 ? -1 : +1;
+                r1++;
+--- >8 ---
+
+I'm eliding some plumbing here to pass the "strict" flag through the
+callers eventually all the way down to cmp_record_to_refname().
+
+But I think this is equivalent to pretending like the excluded patterns
+all end in a '/' character (if they weren't already like that to begin
+with). So equivalently, you could do something like:
+
+--- 8< ---
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index a7b6f74b6e..e4569519a1 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1024,6 +1024,7 @@ static void populate_excluded_jump_list(struct packed_ref_iterator *iter,
+        size_t i, j;
+        const char **pattern;
+        struct jump_list_entry *last_disjoint;
++       struct strbuf buf = STRBUF_INIT;
+
+        if (!excluded_patterns)
+                return;
+@@ -1043,8 +1044,13 @@ static void populate_excluded_jump_list(struct packed_ref_iterator *iter,
+                if (has_glob_special(*pattern))
+                        continue;
+
+-               start = find_reference_location(snapshot, *pattern, 0);
+-               end = find_reference_location_end(snapshot, *pattern, 0);
++               strbuf_reset(&buf);
++               strbuf_addstr(&buf, *pattern);
++               if (buf.len && buf.buf[buf.len - 1] != '/')
++                       strbuf_addch(&buf, '/');
++
++               start = find_reference_location(snapshot, buf.buf, 0);
++               end = find_reference_location_end(snapshot, buf.buf, 0);
+
+                if (start == end)
+                        continue; /* nothing to jump over */
+@@ -1061,7 +1067,7 @@ static void populate_excluded_jump_list(struct packed_ref_iterator *iter,
+                 * Every entry in exclude_patterns has a meta-character,
+                 * nothing to do here.
+                 */
+-               return;
++               goto out;
+        }
+
+        QSORT(iter->jump, iter->jump_nr, jump_list_entry_cmp);
+@@ -1095,6 +1101,9 @@ static void populate_excluded_jump_list(struct packed_ref_iterator *iter,
+
+        iter->jump_nr = j;
+        iter->jump_cur = 0;
++
++out:
++       strbuf_release(&buf);
+ }
+
+ static struct ref_iterator *packed_ref_iterator_begin(
+--- >8 ---
+
+But then we have to handle the reftable case too, which Patrick gave a
+potential fix to below. But equally fine I think would be to push this
+^^ logic up into refs.c::refs_ref_iterator_begin(), which would fix both
+at the same time.
+
+> The smallest reproduction for me is:
+>
+>   git init
+>   git commit --allow-empty -m foo
+>   git pack-refs --all
+>   git -c transfer.hiderefs=refs/he upload-pack .
+>
+> which shows "refs/heads/main" (or "master") before 59c35fac54, but not
+> after.
+
+Thanks, this was a very clean reproduction that made it much easier to
+diagnose what was going on here ;-).
+
+Thanks,
+Taylor
