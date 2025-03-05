@@ -1,128 +1,120 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B9E2475C8
-	for <git@vger.kernel.org>; Wed,  5 Mar 2025 14:52:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA6D2505B2
+	for <git@vger.kernel.org>; Wed,  5 Mar 2025 15:53:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741186358; cv=none; b=V8WBO6tWJ9iamGUYmJlD/KxNZ3JmwwH16WOobT0oL9mu1vwlTFPifutUqbedI71l9v1N42+T/YZimjtuCQx/g14fQXLhX0oUGZqW6ZSFM0lWnfPIhVP0Jb1jdsDVsLBPjrsLjfoXo9sJxlRDfEDkKzaB0nSaR1kwbpGVjXyJSqQ=
+	t=1741190016; cv=none; b=G2tX4k4uCWjR+61E/LeHBDyenDGTMt3ne3FtlvzyEu2kNHAVBcpnc6oFTqo5WDXZ3to1HIaziyRSG0ShfePnc/FJWWh1GNPtKG+kSjXVfb/I9veM8Gqk//fbOjYnP/ziF0c2KYO/UInfYTFQFeL27eoQIslvAXN2wTHdjNK/n8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741186358; c=relaxed/simple;
-	bh=lRBf7UK3SdX8KVqS5lr5B2hZlh4A5i+PyCKHExO+lPA=;
-	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=mBZRTQ04SnF3+vhJ7Q2NPidIG8DPJDybsKzQuXLQa08eXVdjYJqiRrPvbKfjsSpb34g/Ah+phF+00Gdd4xdrVmeeHExOrGavsw1zmMMhAwXSr7S40d2z72BAyS9G8WIrUDbiU6XWr3sBXz3I3sGvf78fi02WKwnZCjrbHquf8T0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=cWUTa6SA; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1741190016; c=relaxed/simple;
+	bh=C0TI3btLaJaNYlhGxbsbqfAqqUcPArOKVqZi2wnZZu8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=P3yTRtk/CYZl3MtN//3zuHjU/oiuvHvbcPA2p8t6cFbHWNo6BunZ+rqB6s490lP1tm+rOs1jjqmYQzX5LzG934IlhliTOqfhxdkVQSiQ9u1kCZ/9FsQ8xujIn0/HBoXXHuGJha3MaFY6M7xMMe6Dk5psmmWIgVcR7HGJNLs4YZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=yTdGi99r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g4zFYOom; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="cWUTa6SA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1741186353; x=1741791153;
-	i=johannes.schindelin@gmx.de;
-	bh=Oan+UvEVl+Kn5Fil6DgJ8j9TVW+YkW0PIdmKJClvG/M=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
-	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
-	 message-id:mime-version:reply-to:subject:to;
-	b=cWUTa6SAMAv/J8IIv8rjbR5Bsn7qpTNIw3zioHWC//X9iFBaA7wiZSWvQdry+qtf
-	 Bwc/sFJtqsbzftgqh2Yd9B3CwwV0us+cKtrPTVCSDUFnJ32OyZfZCcL/cmhGCwq9x
-	 Jz1Tv4F/KC91eDQk9V9ZBMQH4PQ14GENkeg/CdkVi56XDcpm270gbGvcEQ1KnNJbd
-	 Fw0lJfPD3JIxz18V1QKvEEPWRMKaA7Rq96swFhQLFw3rw+OjBqofSgEa7v0+m7Wuh
-	 EjdXD8jtv4ZvAMyHAgDzUDDuLLNkhSBshh2j4htqHIpPpPUvZGol67m5wJDbKlGA6
-	 l4Lhf8tqCS0IdO+DXA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.213.101]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MfYPi-1tJ0OX2UTg-00Zu3a; Wed, 05
- Mar 2025 15:52:33 +0100
-Date: Wed, 5 Mar 2025 15:52:33 +0100 (CET)
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com, git@vger.kernel.org, 
-    git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git for Windows 2.49.0-rc1
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="yTdGi99r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g4zFYOom"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id B654411401A0;
+	Wed,  5 Mar 2025 10:53:32 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Wed, 05 Mar 2025 10:53:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741190012; x=1741276412; bh=IXjUCVufUM
+	4f9TKQ9ep3e2P4WCUGB10IXazktY1M7xk=; b=yTdGi99rRCJrAdrgzNCPQNrjI/
+	EfxEj2g2WEM8feMPV+pZCsnzqP/vVenrUDqENv+dEBe7iv1TrWn+hgTU6WKFik3q
+	8CDuQy89y7dzq5E72So0ny+7ey8P9DMgkSCv668Y9sVg5SBzO3Z9PyxrgFsQLee7
+	ZWxlWTRqEqYK5If1XGfCne+0WYro70pAIeT1h7yRCihnZD6+uTIiAbUBDVoE0czq
+	F/jFJ+vPq43ZTXKHUOSQTyF+7WdZbjXwKnXa5oWQ7/GRDhjIvlFq+m/C9EFqvud+
+	ngPeAd91GKEB+xySbU0T1R6VSajskw7ZJNUkvbx2/o8XjiXE9VlmoHHvjn8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741190012; x=1741276412; bh=IXjUCVufUM4f9TKQ9ep3e2P4WCUGB10IXaz
+	ktY1M7xk=; b=g4zFYOom1EFUy/XPCrmyVHjjFZ2gPfx5b5cOuaepjbTBvjGEDaE
+	YigH0mjgq03JOLcFnTF9Xgc6HT0a2i/EeiWqNE9ieM0z9mTzGbX2lB0b4pk+4ZF8
+	iKZFUHbrYQb6PLsVCEIOYyu5+McajG+XrIVViX+sY0r+QUXOu2OrDGIaigZGFOPP
+	kOWevkJpqOee95PWZGQR15WfoBqlFT+6g4h4ILoTfvPc6Tw2Z2MmlLC3lMC5QMyu
+	pUxQA8dNjDPBpTvfc+6LQyIUOhY0UC/AIgMFW0oeMtv5jP42dFC03ZFGT8P1Mj+3
+	Pgwlb4/FDulvzB+UDn2iESUzm37H1cbm8NQ==
+X-ME-Sender: <xms:e3PIZyrA1OLM7O8unKZs1IexKPqjgsOR_Y4vwmNG-KtrRMjcotdrYA>
+    <xme:e3PIZwqq6ZPyE3NvrngO07YCiS8YbIGLZpVZGtsW8LgeyJx1bz52iXAPL9MtGmq9E
+    CFmO7IoAdwX9jSbBw>
+X-ME-Received: <xmr:e3PIZ3O62k3V6IlPsM2ytVDKNH4V5ZhU7kkuhniSPL6_eH918J3lOqDut9GSs2f_rh6jCPg6DMFiSCY-vRdmY-Il1CQe9HwxVDaS>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdehvddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthht
+    ohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhope
+    hphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:e3PIZx4hjIriDYNzPaRxz7vn3oKH58MTcfv8LFwi8mm2RUI9t7LleQ>
+    <xmx:e3PIZx7SVqt4zJFWMRiWS_oWZVTjNXf9fv1L-Jmg2JgWTXhCXT4CTw>
+    <xmx:e3PIZxgHTS0hHEuJhpqkkjpHrf-FJPyr_fsiGTPNkC7mDIfhykfncA>
+    <xmx:e3PIZ74m6UowhhOSGauJdPs24iBpGOIoCGi4d1Z6IS_eYQ1X_bxIkA>
+    <xmx:fHPIZ_Qn4idwJVYCt-2TseZMYyqaS_lDb9TOjfzrmKJwP8NGCWIjvHB9>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 5 Mar 2025 10:53:30 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,  Phillip Wood <phillip.wood123@gmail.com>,
+    Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH] docs: fix check-docs with WITH_BREAKING_CHANGES
+In-Reply-To: <pull.1871.v2.git.1741171357627.gitgitgadget@gmail.com> (Phillip
+	Wood via GitGitGadget's message of "Wed, 05 Mar 2025 10:42:37 +0000")
+References: <pull.1871.git.1741018310447.gitgitgadget@gmail.com>
+	<pull.1871.v2.git.1741171357627.gitgitgadget@gmail.com>
+Date: Wed, 05 Mar 2025 07:53:29 -0800
+Message-ID: <xmqqzfhzlbie.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Message-ID: <1MmDIo-1tPXph2dbU-00pKOM@mail.gmx.net>
-X-Provags-ID: V03:K1:5+3cESmHgbj/XfrPDc1kOBHrJclp33fbwO5rgCtkLES5d0weMK0
- d62a+DEyBKxFyVibR7SEj0jcYhfyW+MLNoB4PIMLHyibCkagJeaWRZGCeq9YSahhywzes+0
- hfIey+2VbAzwwJ5yaIb+B+hmySxlDD0gmXOEXFmS63WvM26dw0McCEqkN09h8MXbGf93L3I
- hYTnDhc6qLBT/sfHoD5Ow==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:VYMlGc2uxNs=;TYUxkkZmfJM1w4QmQ/aA9KTyLRe
- NLw5Woni4dDIeGjUJyasgFQXLIzTK+CqyNhI53uhaQvMXEHPnX8xvpD3+pzDnKYMtBLeXevtO
- aQ5ZJZn6fyfYLBc65NDAaDc3yhTx24mGe2tgf7C0BtPUQa61a+q5PxNA4IKF1XRFezwUntJCl
- WBbfUuZkPjBb89zHb6HfJrGk1i7hPPJHXT2B3LaUNyYLjWlYD/clnDdq069fc4WVAnSdnNdwb
- uqwqXkj0ypCYIfzzi4Pu452Kq2xySkJabrEilZf+D2Zm1PVA4qo6KkxJl/AxCgR6DzPTOU396
- CDuMhUkKv6ssf34IyX4ZWyqclCvzlG8rZQpr049dLBpHdoO0aoFsj78GuTwRMcALwKHX2mOCQ
- 6G+uCVwYgAVOye5KC0/8/yuTQl/2OwmCMxNwksXQ0KkTctDlNqoxslbzl+hYPem9NHkvtbWUe
- t3T75ql4uoho03fKFRnsIKUAsIJdvOyHXI/pXng49m2n7bvgJtPn51K85nB5bhBovhwaO14/t
- /CnwezWAZrR2BHVjiluiotI+PGwD08DgEdBDsL03ogRm15jaWH457N3lR91mpJz9ZJEwFmj/V
- jMoMvADcH1vOOHr9t0booA8nhlgS3NMZX8N4OxsIUDnkeZftd8A6Ega4nPEgJdOL4OtuwhfRh
- DWbnGGv/pFM9F+nJgjWfX4f7xRPVX/pHwpTtPnymiPvCve8gDcZST9V4sOgve0mUN0lx9xpM8
- 15u2E1LXRcFQ8u2UqO/lO1LPxHaf/byDXRAIaeLZLYmcF5dyzh4OuMSZSNiUjqNtQMN3+ZvUf
- TbW6bG+G9nqqg+/rlBnN779oMYOW9hkcmlou/FytR4MtEfHyve7Yv4GKLkQS9uOX7GpQHvzEC
- unFehT3lv+iEMqazYOat7emYb4jieKnWOiCKNkdp7DoQFVHiZryebnbJZtJbuvdD7TNiFWycb
- +L59BiL09yKsm8M9hsJc0dZ7mSoEjpqMdDS+Dfc8BDcQtafSWj1InOysyWPEwyXYC6HIsQg0u
- hq4aedWQIrF49cR2K7MM0JDAP/yaC5Yh74rTVb+ynG3YUFfc7FDsJr0RTFjpmpoaTwQxbCLqN
- YiGnOeB2nIKHWUTIH8Lhh9QlPwWa8pAz/A9upp7m4SSlcEGzCKtybFzLhs8KUmLUNjkowbvfd
- cKBhglt5gFzT2EUUZeNZqoskqQ3mo/Unk8TjSHwIprunLx7snaBUfDRe/K6/M3rL9y2+J1GFm
- AzueJKq2f7F9BzIlpHmysq4Nycy/kJo8xStie6yjC+iBDAVYGE6Di0/QclbLHFvl0zvLAN11F
- /E9ewLgZYLCcYkCqncYrCLmAML3t/jxVy8rac5tBLimdfJnh+NPJhnzMEbXqphLZUIocg6bO0
- u+Iv0a9lkL8wQDLqmnWtuT+R84typZKK4NoBDm+sWUcxgDoNDDYsFiRM9Rmp573Ia4oauo72M
- hygXMV/7bn2+Y+zdIglMRZrYhwKKX9FvdInU8BF7tjT8f0Hoi
+Content-Type: text/plain
 
-Dear Git users,
+We correctly omit builtin/pack-objects.o from BUILTIN_OBJS, but
+forgot to add "git pack-redundant" on the EXCLUDED_PROGRAMS list,
+which made "make check-docs" target notice that the command has been
+removed but still is documented.
 
-I hereby announce that Git for Windows 2.49.0-rc1 is available from:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * The command is still listed in the resulting "git help git"
+   output, as cmd-list.perl does not yet know which commands on the
+   list are to be ignored under WITH_BREAKING_CHANGES.
 
-    https://github.com/git-for-windows/git/releases/tag/v2.49.0-rc1.windows.1
+ Makefile | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Changes since Git for Windows v2.48.1 (February 13th 2025)
-
-Due to persistent maintenance challenges and the community's limited
-engagement and usage, git svn support in Git for Windows will be phased
-out over the next few months.
-
-Git for Windows v2.48.1 was the last version to ship with the i686
-("32-bit") variant of the installer, portable Git and archive. Only
-32-bit MinGit will be built for future versions, until April 2029.
-
-New Features
-
-  * Comes with Git v2.49.0-rc1.
-  * Comes with OpenSSH v9.9.P2.
-  * Comes with PCRE2 v10.45.
-  * The previously-experimental --full-name-hash option has been
-    accepted into upstream Git as --name-hash-version=2 and is no
-    longer experimental.
-  * The git backfill command has been accepted into upstream Git; Its
-    --batch-size=<n> option has been renamed to --min-batch-size=<n>,
-    though.
-
-Bug Fixes
-
-  * A change in upstream Git v2.48.0 broke renaming symlinks, which was
-    fixed.
-  * On a recent Insider Windows version, users experienced the message:
-    "Cygwin WARNING: Couldn't compute FAST_CWD pointer", which has been
-    fixed.
-  * A bug has been fixed that, when calling git add -p from VS Code's
-    internal terminal, after using the edit command, caused the
-    internal terminal got stuck and no further command was accepted.
-
-Git-2.49.0-rc1-64-bit.exe | 81bf3f20c85c0ca82de760da8ac28eec53523edfb24a7c71f925e1c1e11bbe40
-Git-2.49.0-rc1-arm64.exe | 1b527f8e80c10a09d561908fd8cbe8acefb47bd1f61da5048188808deed64183
-PortableGit-2.49.0-rc1-64-bit.7z.exe | b387c7ae0ce0eb751e5ca812fd47dddc8b53f0cc1148b4ba67b66071e5933f1d
-PortableGit-2.49.0-rc1-arm64.7z.exe | 80a7a186150ff22b695e54b20e55684f6c1a6abeaf2f32c9c256263a8901465d
-MinGit-2.49.0-rc1-64-bit.zip | bc0d31dcb8a04eb5b0645ef92f132c3e3b184817b3d840806c06accb51e47ef7
-MinGit-2.49.0-rc1-arm64.zip | c0244edc063ccb23aa425c88a591d2e90e6967725e168070ca64aea55e78ebb1
-MinGit-2.49.0-rc1-32-bit.zip | b7edc701e8b874bca635896e0e9653bf1be5f6098d7046120c9a1a9af2f7844f
-MinGit-2.49.0-rc1-busybox-64-bit.zip | dbeef21bf998c8094a936180251b51731040fccd0fa414c68a37b475b2ecebea
-MinGit-2.49.0-rc1-busybox-32-bit.zip | aa516fe9904c406c29d9f030e80bf17de08aae009124fffad0249afd669da756
-Git-2.49.0-rc1-64-bit.tar.bz2 | 65c1104bda7fa199829967a3f941c482721b983ffdb1132e76d2282a0e3f8c01
-Git-2.49.0-rc1-arm64.tar.bz2 | 528e9c6759f30367e2cac04231c141d7973240ed7212d521bd2495d25878736a
-
-Ciao,
-Johannes
+diff --git c/Makefile w/Makefile
+index a9b2de0692..95ac0820e9 100644
+--- c/Makefile
++++ w/Makefile
+@@ -1283,7 +1283,9 @@ BUILTIN_OBJS += builtin/mv.o
+ BUILTIN_OBJS += builtin/name-rev.o
+ BUILTIN_OBJS += builtin/notes.o
+ BUILTIN_OBJS += builtin/pack-objects.o
+-ifndef WITH_BREAKING_CHANGES
++ifdef WITH_BREAKING_CHANGES
++EXCLUDED_PROGRAMS += git-pack-redundant
++else
+ BUILTIN_OBJS += builtin/pack-redundant.o
+ endif
+ BUILTIN_OBJS += builtin/pack-refs.o
