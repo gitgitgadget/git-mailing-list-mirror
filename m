@@ -1,54 +1,54 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA214A33
-	for <git@vger.kernel.org>; Wed,  5 Mar 2025 21:21:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531A91547DE
+	for <git@vger.kernel.org>; Wed,  5 Mar 2025 21:56:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741209663; cv=none; b=gJLsvrBj8rEL86ztofE1Q+C9f6SIiWF6xIk2B9it5OOgSpWx5i00ebxKMKPJ1AeJZK+VfKEFpFcwTSGyMJj489XAW/tvyhSlnW5XUELU+90NrTbboxHzJvUMII66MrgxQy38RlhM45yif9p72iNyGKQMcmEva8XA9vYw5DL6h7w=
+	t=1741211807; cv=none; b=WjW1u+ieTtYfj4f9fVBMNl1wv5KM7Nx2l8uG7GdXaa8B6sJJ9vQ1iyxdP6emh70Hv+tiHoISeypkMLctp+zrMzpFHKik2+EDYFC+CZPmQZTgvJC3QC431z5Rcn4ksZunq+/coEPifdSZ79+QUCuTb9V6t4xKoFw3vTiFB6AqAhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741209663; c=relaxed/simple;
-	bh=CCJpaY5vTi49jZQn4AH2ZKJU8hGWOYRw6Oj2hIhqF3c=;
+	s=arc-20240116; t=1741211807; c=relaxed/simple;
+	bh=nkg6+YFo4vwCKnJzr7HcnSMbgUzb4fbu1LzkFUPHFUY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EelsdvmouNVIfikka/dD01S+G24QjOh77DulR6m5wyks55tbEJbYSAOeYpe4RcZzQgfA27uBov9bk7I24S7xK9Kr3aLf4DE+3VwGkbkrD/rc59826CwAWXx7Hxgwkr+gra+T5crVNt3vHInFmMWclT3gnOQWuO+V6aJSdq88VeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WuBZyy2n; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b4spxHMg; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=EcnWh/v0MzU8wFtSRd4NangJkxJP1BnZqhqnHtQdKYmcxxwRZw9X9g5J9V0GpSv+srtLtfuYrBWKFh4OzZVf3hn1aezsr/DRYcyyePAVgVcd9BZYYhGjaqaI3Kr0RLZOL2jcsnk/jnRIc9QJZRvwFFBokD9Uok1TzPmmalhdvPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L2xtz6pG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yRicItKm; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WuBZyy2n";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b4spxHMg"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id C680213826A6;
-	Wed,  5 Mar 2025 16:20:59 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 05 Mar 2025 16:20:59 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L2xtz6pG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yRicItKm"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 68B131140189;
+	Wed,  5 Mar 2025 16:56:43 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Wed, 05 Mar 2025 16:56:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741209659; x=1741296059; bh=exkMLX1ZqZ
-	+0/F4fHDcE1qsc3s+XsDISA98+di7mo8U=; b=WuBZyy2ntqkZohrdRI8u9+NYtA
-	8V0TNAPnhWSTmSHkN1ogcd9nQpQZgInQCbolydoT4gK7tdvv+jpYe3Sd/RLERwSs
-	8d3+FZAxl1xADm2PjoYIEjGuc3CfTlMf4wI6N1bkFoc6qV4qg8g2bxL+PbwmtzIM
-	eqGJriOJal+gx5N2gFcFVcDLfzHZHBO43kk27g3lMTipFhhhixsO6zD33URUj1xT
-	bYCU8CegTkm6WugEe1MlLbm8HBw9PMQseqrJSj/I8uu9N5NaOYwcLSBmFvvj8O8M
-	YBK2219cwcvnoaSSGV+zSlYm++F25iCHHTvzcbA6QcIYPrhWBQkf6SAVn8zg==
+	:subject:to:to; s=fm3; t=1741211803; x=1741298203; bh=Veq+QgIS6x
+	2pJYw22wZwpIi8ylu5IXBrK0IwQ8BkH1o=; b=L2xtz6pGeEojotv9Sbt87lXPeR
+	KBL0jFK6qX9Rq9wJvkUiO6XdknXWwJwpHb1qtZb9vkOaGG/4UAn9xqXzgZWMZNiV
+	B/k91mMOoyBK9XGAcJ+TLaJwLWOnh5pLXdXvJkRzPmoSg8qje+4u4CSaneZY49tT
+	rYyAksnHQ/hPVTppm/KxfFeZQqlqgIWek9pKvmZ+LRax+/y6RtpxDaY7pkhLHBCU
+	PtRMjZ38t1DFVrxlWyHL8YyNHFWqh5VDj5CbdvREDc7S+AaoexQlVDfCtlKPZrVg
+	TfoGhTj1LqCH31REYqgeA6GTd54TVQSQQ+BFjD2PL8Za+uxCMyolT4MHpBkg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741209659; x=1741296059; bh=exkMLX1ZqZ+0/F4fHDcE1qsc3s+XsDISA98
-	+di7mo8U=; b=b4spxHMgD36qWSMoxODSgArKnowekhJZMs+JqzzXdTr6MxQSh8A
-	cbqlqyOTCx3uR9aQnESpH+AcpNn6DBOs2mVbVQAF9n5nilHbjvbJwslgXmNQAy+E
-	HrTc9ZuqwcxUHAYIh3XXNJPguZycK8m0p8ppRCgesyw1195x1n/tN5UEw6NvBBrS
-	rkAdxn0bxJ/LjBT/rsINdGtvxxUUyhtMc59mv7MdSCpPLzlrNwrF4JKLj6AP/FfO
-	eBArJ2/hmSb1oc9RYz3oJQpgTUF84CTby/bTkmcXi2vaBeQpN3v/6dEWfLIBaCoS
-	7a69seHZO1zBopbRCgrAae5Ab5hhkkqf/Cg==
-X-ME-Sender: <xms:O8DIZ2Uwp3_1kJ3fRZRKXuOVXnQjojUH8RRnvv7HAKk9vxDjkREHtg>
-    <xme:O8DIZyl1vAq2E9xsqqazT2ZCsFbkJwiHyGUEfLm9VKheWW47DRdIxGuQ2HWH2Bcm3
-    UbExg7MSqxkiw2_FA>
-X-ME-Received: <xmr:O8DIZ6YQrWoLYOJ-lWx1xwkd-2x6c8qk7tV0bWdUYbInVymcuIOCRgUEq1L064mLTmrW2uzVPBjPqFrOt8LqS4yBpZcQ8Af3J72F>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdehkeelucetufdoteggodetrf
+	1741211803; x=1741298203; bh=Veq+QgIS6x2pJYw22wZwpIi8ylu5IXBrK0I
+	wQ8BkH1o=; b=yRicItKmZCPQxjFiNPHfEmt6QzjR1WbcFHPL1Eiw75XmHdyMva4
+	6NLfgF77J0D07jcPCMhORgZC//eYM/C/wh3DxpDhSRqBQmLCmWoOr0dToT1dehnz
+	zihDtI1voBHEEEiwNV71L6lB1xKf2sFNiaCGc06Lb321gPDtIumTGf6YmtMbNCIz
+	z98eGX2qUJdZJfVOfrJ7kUJ4cDPh7y2pBsXjAb53o8liSTMfLMovV1oVeidtG00x
+	luswIvilfuzZeM0vwZ0gO/2IUwnvnwZsDSCpireUYZ1DqqLlMLoFKOp+AD+buu7q
+	FJxuGNL4fx+pjIaFT2oXArWyGjULV+aPUIQ==
+X-ME-Sender: <xms:m8jIZ_DxTorvsobXR5QNKlK0Rxd8LmKhNWjqNX9PBuUnCOOpCejL0A>
+    <xme:m8jIZ1i_MEJWhRWzpnPFObSXHWnZXO9C3BmX2BrMOnMb5u098QRYazRPixZS4puup
+    3NLkIlSiVtps7YetQ>
+X-ME-Received: <xmr:m8jIZ6ngKqcaljGhuyGEt47BmD5NtpJMbrNefku8JdRi6NsxqEZ0owiL-La4XWbW9KaLxidRtZkpavQOcloBbbccOCTTPqJbWb7S>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdehleeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -62,26 +62,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdehkeelucetufdote
     gslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougdu
     vdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
     homh
-X-ME-Proxy: <xmx:O8DIZ9WmkHpvz7m07VA1uAWjoQ2jmQ_5XBIZZnbfOzLMsCkebB1eLA>
-    <xmx:O8DIZwkrGuRW6zsu3giBl852E63pYu8EW6xKqODHebNnYAhXrGL1VA>
-    <xmx:O8DIZycFAZ14m0PzePRf6b_3VH_aG7VojDvwdseQl0bgHost6q-3mA>
-    <xmx:O8DIZyHNocip9cxXWfpsHz7jZL_tBE_zj8PtqExx3-MB6zbDUCNFaA>
-    <xmx:O8DIZ-Z4BTHuKVq9cN8WEQ9e3fwyhHec1bq9txqV-wug61If9K7CF0A0>
+X-ME-Proxy: <xmx:m8jIZxzqyKFsgJg8d2Qw3_rBjjOXWkmKDt0F6PwUOpA_o7Ifgw9YGg>
+    <xmx:m8jIZ0Sa9LqilX2C7cQnYzkWMSKVmhIRLpALtcvRkvWwgz4lB9S94Q>
+    <xmx:m8jIZ0ZjVQyJgmIpfn6mz1i4Zk9d9Sd6pWaaQd_zYzEh4kB1f7d4Dg>
+    <xmx:m8jIZ1S6saIdwjV2UeKlUMisM-BuALCtyhLoyMkriPuZjmHOizTFtw>
+    <xmx:m8jIZzGzHAjT2viNcpTmRuwtl3Bs5RNTEdruuaVG_lR-vf0_qCW5s6aF>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Mar 2025 16:20:59 -0500 (EST)
+ 5 Mar 2025 16:56:42 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org,  ps@pks.im,  jltobler@gmail.com,
   phillip.wood123@gmail.com
-Subject: Re: [PATCH v3 1/8] refs/files: remove redundant check in
- split_symref_update()
-In-Reply-To: <20250305-245-partially-atomic-ref-updates-v3-1-0c64e3052354@gmail.com>
-	(Karthik Nayak's message of "Wed, 05 Mar 2025 18:38:56 +0100")
+Subject: Re: [PATCH v3 2/8] refs: move duplicate refname update check to
+ generic layer
+In-Reply-To: <20250305-245-partially-atomic-ref-updates-v3-2-0c64e3052354@gmail.com>
+	(Karthik Nayak's message of "Wed, 05 Mar 2025 18:38:57 +0100")
 References: <20250305-245-partially-atomic-ref-updates-v3-0-0c64e3052354@gmail.com>
-	<20250305-245-partially-atomic-ref-updates-v3-1-0c64e3052354@gmail.com>
-Date: Wed, 05 Mar 2025 13:20:57 -0800
-Message-ID: <xmqqjz93kwcm.fsf@gitster.g>
+	<20250305-245-partially-atomic-ref-updates-v3-2-0c64e3052354@gmail.com>
+Date: Wed, 05 Mar 2025 13:56:41 -0800
+Message-ID: <xmqq5xknkup2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,52 +93,54 @@ Content-Type: text/plain
 
 Karthik Nayak <karthik.188@gmail.com> writes:
 
-> In `split_symref_update()`, there were two checks for duplicate
-> refnames:
+> Move the tracking of refnames in `affected_refnames` from individual
+> backends into the generic layer in 'refs.c'. This centralizes the
+> duplicate refname detection that was previously handled separately by
+> each backend.
 >
->   - At the start, `string_list_has_string()` ensures the refname is not
->     already in `affected_refnames`, preventing duplicates from being
->     added.
+> Make some changes to accommodate this move:
 >
->   - After adding the refname, another check verifies whether the newly
->     inserted item has a `util` value.
->
-> The second check is unnecessary because the first one guarantees that
-> `string_list_insert()` will never encounter a preexisting entry.
->
-> Since `item->util` is only used in this context, remove the assignment and
-> simplify the surrounding code.
+>   - Add a `string_list` field `refnames` to `ref_transaction` to contain
+>     all the references in a transaction. This field is updated whenever
+>     a new update is added via `ref_transaction_add_update`, so manual
+>     additions in reference backends are dropped.
 
-It was a bit unclear what "this context" refers to.  We lost all
-assignments to the .util member and that is a safe thing to do
-because ...
+The transaction object is the most logical place to keep track of
+what is involved in the transaction.  Nice.
 
-> @@ -2843,13 +2835,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
->  		if (update->flags & REF_LOG_ONLY)
->  			continue;
->  
-> -		item = string_list_append(&affected_refnames, update->refname);
-> -		/*
-> -		 * We store a pointer to update in item->util, but at
-> -		 * the moment we never use the value of this field
-> -		 * except to check whether it is non-NULL.
-> -		 */
-> -		item->util = update;
+>   - Modify the backends to use this field internally as needed. The
+>     backends need to check if an update for refname already exists when
+>     splitting symrefs or adding an update for 'HEAD'.
 
-... of this comment, and the "except to check whether" used to
-happen in this code ...
+The above reads to me as if you are saying that the files backend
+needs to notice that it is updating "HEAD", notice that it is a
+symbolic ref that points at "refs/heads/main", notice that "HEAD"
+and "refs/heads/main" are the two things involved in the
+transaction, and must check if an update is already queued.
 
->  	 * be valid as long as affected_refnames is in use, and NOT
->  	 * referent, which might soon be freed by our caller.
->  	 */
-> -	item = string_list_insert(affected_refnames, new_update->refname);
-> -	if (item->util)
-> -		BUG("%s unexpectedly found in affected_refnames",
-> -		    new_update->refname);
-> -	item->util = new_update;
+But when an update changes a symbolic ref in the sense that the
+underlying ref gets updated through it, the need to update both the
+underlying ref and the symbolic ref is common across backends, isn't
+it?  IOW, shouldn't "splitting symrefs" (which I take to mean "ah,
+we are updating HEAD so we need to update it and at the same time
+update the underlying refs/heads/main, two updates in total") be
+done also at the generic layer?
 
-... which the patch removed.
+And if that happens at the generic layer, should .refname member
+even be visible to backends?
 
-OK.  Makes perfect sense.
+>   - In the reftable backend, within `reftable_be_transaction_prepare()`,
+>     move the `string_list_has_string()` check above
+>     `ref_transaction_add_update()`. Since `ref_transaction_add_update()`
+>     automatically adds the refname to `transaction->refnames`,
+>     performing the check after will always return true, so we perform
+>     the check before adding the update.
 
-Thanks.
+This change makes perfect tense.  It is the most natural to check
+and modify at the transaction layer the .refnames member, as it
+belongs at the transaction layer after all.
+
+> This helps reduce duplication of functionality between the backends and
+> makes it easier to make changes in a more centralized manner.
+
+Nice.
