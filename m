@@ -1,107 +1,93 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854CD206F2E
-	for <git@vger.kernel.org>; Wed,  5 Mar 2025 23:45:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39902207A2A
+	for <git@vger.kernel.org>; Wed,  5 Mar 2025 23:53:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741218313; cv=none; b=dDlt+qTfHYnAhtmJmGJGsuJNZsCug7iuy/AegXPP+oryCi8BMcMVYlWeboOArhf+yxiMxWz5lWDJAFDb5P5ZsIlStT09kBUKfU29dL+QUhZvBQao1peo8TpZIj53lH+XbUt7VScI7bocEkWA4GSEfzXDkbacXYnsa7rxsI/upqE=
+	t=1741218826; cv=none; b=Qtw17Y5p0GGXj54HyI8V9V16Yj9Anl+fQDqdUDCjkrOedd8klrYHGTV2Zytq1HD+VfTi1mz1ktVfVrpvjvPq8pA7HWYSdYLAHuMMSRlAGEelQEhu1VvG2HWp7u0svTDv+5qxpwFnHHj4D8a2eULbcgszjlgpAnCcZSgKFYLTEFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741218313; c=relaxed/simple;
-	bh=M4kF5yQO5J4wbfjih9XnEyC6jm96Y4Avc2d4ouSWgjc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ublpYiZpgj8sSkYkTV7KWeR4Gv778ttoPWNm2S2ErzMrxNoHcSqAze35K8KpZwAUipuPQlCWQG3aBP2XXOHPKioaihLYiv3kZ2bs4L82uEOoPGkBw7Joqz0YdOHMsWygis5HBq1aaAOhHxgXKbkzf+h1n4amMjK9A6gyxpZHp1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=chJ3LRz0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A9YVZfOe; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741218826; c=relaxed/simple;
+	bh=+/aV8KghDrY4yoOeQVB61g8OCfzAIbUXWg7iY5Xa8z4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SeL5ij1LVEEN6NNEgfxmXZPs3TlVodcq3Klt2sDsqk2c2+PZKO/E8utFouf3S8pKyoj+QYZBHDW3RrUmLql8ttigTPIWxKvmIhFufH+Jkhhi+Z3DABibIoWOnI1uvDnbC6IsJH+lYjiAUnTqxu1STpJEYpVeVD9Y0heQcL990es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lcrdz5b4; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="chJ3LRz0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A9YVZfOe"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4BF301140237;
-	Wed,  5 Mar 2025 18:45:08 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 05 Mar 2025 18:45:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741218308; x=1741304708; bh=M4kF5yQO5J
-	4wbfjih9XnEyC6jm96Y4Avc2d4ouSWgjc=; b=chJ3LRz0Lv0Lrd5Td0O3OwkRwX
-	5iXxBUkVMr6djxFqLdv3nlrs5rm6OAmt+RdRcVKIwt+e/iaxYOA4TgiE3YUAbur9
-	n5SLAGHM0Neh+mqTG5d4nSA2pg5lRjEHeADb29xrQxPpgFNYRBM4Zxuvz+QTseIk
-	lLGWWXuhFW9Abs3dSPhthI1jjFXkJwvP8cf4/UEd389b+P3XnSP8E4dCZJcXGVe7
-	zUT/Nmh5FPweS4bKYQbcSiO2FN6ekWPeUNOzQCzzbdOVDq/M3dWmoIa1NgVAV56d
-	2Il4ZFlpNMpKQYG4Q0UeorPUsiaWZnfwe92RvIJKqSw7s+hb0Gd43Fb3vTkA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741218308; x=1741304708; bh=M4kF5yQO5J4wbfjih9XnEyC6jm96Y4Avc2d
-	4ouSWgjc=; b=A9YVZfOeuwS8wxFCELOeOg/l07lQp1aplyjCsozT7lIA/H0PXAw
-	vkaoxyVY32cdtnYsTYu0Kpp4vcfCfzaer3E+sJe6W64nLN2zQRNpzzL/FSIfTnl0
-	JUiDpQGzAEQk5dgaluREzSgNlbVcIzciYlIlu8WBqN5YSLd2AmsCZ32wzLSa4R2m
-	aNE0ah/kisHlu++3TX0HrfgVinv0dgq7AS2FfEXV83AS+WOV4oFCoBzQ/IbENHrP
-	ZqIiNCDtZybyQGIDUIgywIwq0V7HG3oDPoRSGEupnyOw/uKoP6M3TxDAKo6qjdLa
-	v3FX+I+n4qCi/MN6/djUpzi4ydfivXEwF4Q==
-X-ME-Sender: <xms:A-LIZ-tDLR9es8L0QZA7mV3LDvks9xkiknDjQNtMTjppvO2B8PGmcQ>
-    <xme:A-LIZzcp5Z_yTIrllJonaJVYf9-SwyDWYd3ZvhelTls9owMu9Xzb4jXZdWTbf4g-3
-    jlkWzSrpwFDKkMhrA>
-X-ME-Received: <xmr:A-LIZ5xOrp98STCAnnC5kKmqv4WJyjz0CZSzfEavWuUxQhRzwAY0gqxB6wCiMrsNwZzmdW3fmJr5FIlMtNi-Ug71XnpnNDbmlGm_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdeiudelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
-    hlohhrrhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
-    ohepshhurhgrkhekkedtieesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:A-LIZ5MMi5znLyJM1OUZxAjJ3HNArkYyk1lw3DCRGePyd1vgyciRQQ>
-    <xmx:A-LIZ-8wSOJSiVk-DnoEqFTE-f_iTpRGQweYXtuEE3piCeAHNpLR-Q>
-    <xmx:A-LIZxUs7hMog-ZkJ0LvaMAtoju3gqW5HFZ1WUM6Bdb_Daj69sQVdg>
-    <xmx:A-LIZ3c0_cMynP1XLAOBNNBSqNNxrtsCzq-Qbb1ipIMlqar_XxPkfQ>
-    <xmx:BOLIZ-x579Y4ZZ-BtaGNvn1tZlwWy489w3qJMxrvw0EM6lOrwBxqgUHC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Mar 2025 18:45:07 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Jeff King <peff@peff.net>,  SURA <surak8806@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: The transfer.hideRefs of the upload-pack process does not work
- properly
-In-Reply-To: <Z8jadiyUj/U0TORF@nand.local> (Taylor Blau's message of "Wed, 5
-	Mar 2025 18:12:54 -0500")
-References: <CAD6AYr-ZC32VNfUfMB63H-rQRfTdV=VQfBm67i2mG+6GDCNxkQ@mail.gmail.com>
-	<Z8D/aiqN5e/aRSn7@nand.local>
-	<CAD6AYr84KuBb5N-LVBQo-6Gq2Ms3JKQCk0gyO8i=N8gp3whe_Q@mail.gmail.com>
-	<20250304075113.GD1283943@coredump.intra.peff.net>
-	<Z8jadiyUj/U0TORF@nand.local>
-Date: Wed, 05 Mar 2025 15:45:05 -0800
-Message-ID: <xmqqwmd3jb3y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lcrdz5b4"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-54963160818so93968e87.2
+        for <git@vger.kernel.org>; Wed, 05 Mar 2025 15:53:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741218823; x=1741823623; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+/aV8KghDrY4yoOeQVB61g8OCfzAIbUXWg7iY5Xa8z4=;
+        b=Lcrdz5b42qMPcKZNaN+xswDhmILvTrNmcfYNB3u4r8AoA+y/ZYWy3o54ApJoTvhniB
+         XeH1iHbP4SriQGLJd0Ds1GGs/rEXRexYsPuZUV/rhKiZVQbwQay9r2Igs9/QA4ctes6b
+         Q0/UCPL5Rn83jHq1deX8jJdzhF3lOE0neVFnHGFwpyTdsP/HC3WY15ZDzjlEhHEBwqFC
+         yQLdUcFUGArufaO0dcdEkI7RJr6JU4tUTQFr3B2HD+gNozE/pV/eSl4vo4rS8UKUzrkv
+         yWhtR3WHHayDfznirsfDQcerIeXGkXka/gS0yQCapIcCWDoFf5T9mSgze6i7NONuXIaa
+         fK1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741218823; x=1741823623;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+/aV8KghDrY4yoOeQVB61g8OCfzAIbUXWg7iY5Xa8z4=;
+        b=nMgprP/yvxiYXfl8kmzsXwqhSKKYwiWXs3LSDy67rLaW9v9eP+W26QFjUfCsUY5321
+         SfwImyrRxZjZKlWnlsZBTp6iCbWxl7gshLpCdWSfQHUg0EMSLUmjQNZXpeHxtlHWSKhi
+         n8S9lWerQpc2TuH0qxmy4TMzwl8dC9bPQJQGzmlCI2ollGiCXfZP7L1dnLkSwucT+9Qy
+         ZpG8jGtRZGEYqc1UkXvgowEi/htexjLYo9xvxRaHpq3QUG60UVzpCG5BGgWvwcn0RiBw
+         3JCPULuyAJ5mTky0Ki6/NTIBYCoghban/MlC4J9Jc1zEDquIlRX7C7MOLlofYmzDINjZ
+         ckeg==
+X-Forwarded-Encrypted: i=1; AJvYcCWMasiitPuvVH07VcD/wH0HSCQjk/yrSB3ZAftYaTdozmcq2rEGL52y9JJOvuJiJQDcir4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzsld09lQWygsEWd3NVHgXRS7Ud149Nyufy5bZPrEAVt5FKQbwR
+	RoUDRJAJi//bOOop0E0nzfMN+Sk/y9myH8RwniU7507T9x1rH37yXHzSxTBi2fc/cTwwAvjvRrj
+	APTdocWJpjdH6hLVDR6yMohJVlvs=
+X-Gm-Gg: ASbGnct41GnlG+PT2Y1F4eM4TEK8z15zca5G/+55YRtTnZQOnz25Ofbk6WafVKiJhdf
+	ySSi5EyKrI0FOwf2vFGHj/gizbIfb61LygziMEF0YAucs25hoWjpBJEk5ykcEDRedh/ZM9g2uRP
+	41zLo+9LEmAk0YSPfYOvCKnELZ
+X-Google-Smtp-Source: AGHT+IE4Rfu4VeaGeenFQsZykTjwPSN8eWex2dDWG2OkuP8MS0P7qwzkIGceMqnbnv1Qp4vIiM1EmGWGR+n+NIdll4U=
+X-Received: by 2002:a05:6512:6d2:b0:545:2eca:856 with SMTP id
+ 2adb3069b0e04-5497d330b21mr2127271e87.9.1741218822945; Wed, 05 Mar 2025
+ 15:53:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <qMn1k_iuZCe353x0BBxdD5z4-17Abk_ZHoPr8nVDLOgLhGf8Nxb3-bsXPH2GiATUsuGLVqAaEESua5G9qBaW0qqxwz-7AbcNyRwSXJzbKMs=@protonmail.com>
+ <Z8jTjt1CQ7hp8KSP@tapette.crustytoothpaste.net> <xmqq1pvbks3i.fsf@gitster.g>
+In-Reply-To: <xmqq1pvbks3i.fsf@gitster.g>
+From: Oleg Taranenko <olegtaranenko@gmail.com>
+Date: Thu, 6 Mar 2025 00:53:30 +0100
+X-Gm-Features: AQ5f1JrJ1XX6-HFTKfOI4NT0fPjAOrtMrBszhSIYfv1mBs0gU5GMSDHYeLiRoOA
+Message-ID: <CABEd3j-36C_LUOetg0qLofrby9M1Hixkh4o7sQkkyyWuTqHQvQ@mail.gmail.com>
+Subject: Re: Suggestion: Enhance git init with Language-Specific Templates
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Tech Kenya <techkenya@protonmail.com>, 
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Wed, 5 Mar 2025 at 23:53, Junio C Hamano <gitster@pobox.com> wrote:
 
-> But then we have to handle the reftable case too, which Patrick gave a
-> potential fix to below. But equally fine I think would be to push this
-> ^^ logic up into refs.c::refs_ref_iterator_begin(), which would fix both
-> at the same time.
+> I wouldn't have thrown objects in the --template directory, and I
+> wouldn't count on things outside what the mechanism was invented for
+> (namely, .git/hooks and possibly .git/info/ files) would forever be
+> copied in newer versions of Git, but certainly "git init --template"
+> mechanism sounds like a good escape hatch than mucking with Git code
+> base to teach it myriad of languages and their dialects.
 
-Somehow, today seems to be the day to read about "let's push as much
-common things up from ref backends to the generic ref layer " for me
-;-).
+It sounds like creating a copy of the .gitignore structure requires
+the user to learn bash script syntax. :-D I'd like to suggest adding
+one more option to the init --template <template/dir>
+--only-gitignores. It will not deal with all the complicated mechanics
+behind hooks/etc, and will only look at the template folder structure
+and copy **/.gitignore into the newly created worktree. In case of
+existing .gitignore files, just put warnings and do not override
+those.
 
 
+--Oleg
