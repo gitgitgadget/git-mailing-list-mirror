@@ -1,267 +1,193 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F43188A0E
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 14:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6CB16D9AA
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 14:44:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741271824; cv=none; b=ZRXP8pP0qigXUlBK54xWsDNvJnpTEeRkn97CNjs+v9RcM6kYaq2CnssP6X/+wzRfY60Ldeg9TULhN+kRqEB9Fg+8XJFmcgttyZ9NVZ3xMtgTLQ7bl0c6nVE6ey2opvI/rMwi9zkiEMjAIk0Oupvgwb07Gty2FQuBikA69O2S5Lg=
+	t=1741272247; cv=none; b=CeadyPl2C5sk+SbPMvAtnJDYWHC3Xxbc3Qz+NXd3bf8uP6iWMsHIok6DSA+Fl90YAUfb4LOI5iuK1exlO+AA9A6hoqhSVj3tp0s3DCnTdKrx6w5UgreYnpHI7SrSQTSOe5MoM68kBtNjpflXlHlosLRk1i86jMhRTxzlk3ycuE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741271824; c=relaxed/simple;
-	bh=OOuocYm/o6iHxD4hH78Ud5/4/gAXbkbBxfgKp9NLIS8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBgyklSt7JRMHBG2iNSRuIB9liQ0UpU2W5unT0US3H6ZlwTCanlADhaADd0WioaW8c0MvSyJf9i8x06fFuCbl6RIA/9rICTGghQLYdK+x7PWGvFFpGwgzeLgHvzVlnxIEXLwls2rRtSTkrcKefXyYe1wwJv9JnLek3sPGy1Qc5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UIzlr15X; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741272247; c=relaxed/simple;
+	bh=T9KmC+DYFf4drj7OxVl1x6Xrc8d7xBE662VYKlU2cgY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EOinbxMQFtPgVQDswjrQrF7Qts4Z82c5RyMpKHGwsHqMhmYXgsm2Lt9jzWjvmIy6DiBH0ptV91kNn5oFh5PfhlNuT9ge2GSdhcgOKllQuz2H2QRNsUqqjFHeTN3DhnPFNvh+qyLA/o5BhnZgW3URp3w6rIUo1aj+LMGcngN7usc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JrUAGnLF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SvUb5M3b; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UIzlr15X"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2feb867849fso1187109a91.3
-        for <git@vger.kernel.org>; Thu, 06 Mar 2025 06:37:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741271821; x=1741876621; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P0TiMUI5l54jqyfeIJLHiEJvUTmL2bCQdsfSYZRn3RE=;
-        b=UIzlr15XK6pTNcxiTZAr8nS8uqWyZfbYjNw9BKaqSNLIUtHoGArSnlARg6dcXPlbD6
-         DYPui+EoxN94kg1gTAGj8EIC0IE6ajkwPpdLwNSktWIYdtxYIkYV9VpXt+XLngIKiSpz
-         7FKJKK8pvPHsKPY5rNtZ9hETt/0zIOnea0n3VK5Nkcmy0cjLIkNtYkMKEuI4B0woJFe9
-         ZSmMqAACtWEddLODoxEDPestGnz3HG2lcJkARCsAqfbk5vZmwGfH3FIOJyBnQbwAGkxI
-         pGwaTWF5s2wY1QjjNLF4FJlfziS3Yo1cZkdc26ft5QYJS+cVg0wPnxHpw3/uDC8SJSbl
-         suww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741271821; x=1741876621;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P0TiMUI5l54jqyfeIJLHiEJvUTmL2bCQdsfSYZRn3RE=;
-        b=K9UkcrXBznfiiqUcYE05kKX8TFYxom41fyToHK1K/3ZIfhTWFdEX/Q9/5VOup1kd9M
-         0s1b18UsQKCnkEyqMCbWWTDoSpfa+uV3rBWa0isPeLXNk1vkMGrhSPF3Z0+EgkpEfFie
-         K6almxOYyhnw5hpEyD6L52ZqsI0RsMYYoO/Zm0kWPazEFLmIQKzv5NHCIJ48FqvebIhu
-         3YzIB2OHFA1g0wFmd9aAmqrYCROooO6sKGNir03wNWPt/pA9F4gIk6vJtj2Lch5MIbY2
-         9HgqkrXic5ITunPg+T8yR89pChlch+oCcC4tXXNANHDOAZbNVAD2mMjxtsbJhdI2bpV9
-         QWwA==
-X-Gm-Message-State: AOJu0YxhfVYH/T0gFdH27Q5yLlIMGr8P3CkmGwd2N/pGYphwn/7prCRX
-	AB7DEQPrYK58aL/5Km5s79dKbPugyDGzfSj2JVR7OGyfDKJfrKjHuOqvTP2I
-X-Gm-Gg: ASbGncvnJbphWRrU5kjIULSUhNI/aoFlE3WrqWRHEEhWJHYB67l7c/Jfi+PH1Ll0EM8
-	73KbGxHXlLz2P7tMDqcpFx+5kKRE9Wk+8Hx1IvmSgjHyBS6PQLrqtco/DreCEWJ395ELs0OkWec
-	Cj03A7zo4L+qVNGXr3nAAzg9D0hdaMcz3gxfzTbpzmtssyarnUnp6X4NXMcPU7acy4V+b6e+mSe
-	XaYS1NuU7RoMi/y8QB7IQonU6jdE/eNMCO/WkvrWlokShJBSD5MckJ+uqtmK/pt3G6Ouh40EL7b
-	HdOCBNkUGH5lPeCmU4i2zTtgq6J9H5dS4TkhxRssfA9PLRVlVeaaeisTfSuDQmXrHQUKaQ==
-X-Google-Smtp-Source: AGHT+IG/1FAvyWb2VjoorB0m4saqHiPvbDjTP4bDaxoYS+YaMjE7GTQG3qtgaJLUqkb0mwHxxeclDQ==
-X-Received: by 2002:a17:90b:498d:b0:2fa:15ab:4dff with SMTP id 98e67ed59e1d1-2ff497c418dmr10382221a91.31.1741271821567;
-        Thu, 06 Mar 2025 06:37:01 -0800 (PST)
-Received: from archlinux.plaksha.edu.in ([182.75.25.162])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff4e7ff944sm3561184a91.34.2025.03.06.06.36.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Mar 2025 06:37:01 -0800 (PST)
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-To: git@vger.kernel.org,
-	christian.couder@gmail.com
-Cc: gitster@pobox.com,
-	johncai86@gmail.com,
-	me@ttaylorr.com,
-	ps@pks.im,
-	shejialuo@gmail.com,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 8/8] builtin/checkout-index: stop using `the_repository`
-Date: Thu,  6 Mar 2025 20:05:52 +0530
-Message-ID: <20250306143629.1267358-9-usmanakinyemi202@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250306143629.1267358-1-usmanakinyemi202@gmail.com>
-References: <20250219203349.787173-1-usmanakinyemi202@gmail.com>
- <20250306143629.1267358-1-usmanakinyemi202@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JrUAGnLF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SvUb5M3b"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id B797511401BE;
+	Thu,  6 Mar 2025 09:44:03 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Thu, 06 Mar 2025 09:44:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1741272243; x=1741358643; bh=wmxuzQXg9R
+	GVYNRu9CYZAmrPikKGI9HSzT/cVoHooig=; b=JrUAGnLFQL7rUkzun/UeWSQ3OG
+	DJx4Dqwor0BaZTKZrWVtP3+P7pCCQuaXjbFmEYjjM1ZVkD7zLI4RUr76EtmhshFZ
+	OZRpcDA5pXVQcDL551Z3W+i0msBfvuVOM2LLMvqAkYWowCdVevSB7/sRPapt1VEK
+	JBqkPTDidNl2Az35qwsxCvzdTsuE6NsKCWbI/Hb8Lb6uP1Zbc9YFy+dPSvkiRXFm
+	+0pBzapcg3BEv9OMcNWCihXKQWi+hIG/lSYQtOxa6gKIppsveSNfvGF/E5umouhq
+	IIg8yz4uPPlJt6WWTS/xuXoC7jfFChbdgKb9T7hVrHJIG6DsTQDxeo1/uzaw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741272243; x=1741358643; bh=wmxuzQXg9RGVYNRu9CYZAmrPikKGI9HSzT/
+	cVoHooig=; b=SvUb5M3bV0FiFq07NbW3DmtTiS3oJfAWtqj8BVpFT/28lc6mJeH
+	2cscH8MZQfsu8koyjeQfvcg7loN9KLfQDyjbQm/RrrrvV4+RVqJGprVirxr6wj+C
+	ER3oBN6csRjHZhJsvdBIWN9EnG5HSPrKTew9eKtlVppQrlSvNbqQANGNlDPMkz+0
+	dMKNQ4OlHrArhWE1b9NQAL05ENaexpT32ERs2qXCVaKRghtA86SLLjtWiM/87Y19
+	/ZtS6WJaGVBJEQw74HGMSyuuMv7SghOMyOSlj9eYPn9M9EwlrLJkYUv5y1wWKvco
+	s1TT7hhgUAeU047ItWg9gWaVaMumJRws1Rw==
+X-ME-Sender: <xms:s7TJZyCnJkCScpIp8I0pSk0t2W5CletxtdLZXkidcxd04U3lMeibOw>
+    <xme:s7TJZ8gEEiQ7NOvOuiCjGN2T4GMfqGABQ-uDTdnVzaniBTm1QgLJ-FgA16pv0aGkX
+    MpqZXfVBWNSP-6f0w>
+X-ME-Received: <xmr:s7TJZ1kRuFv8ukAylj9TZI-iYkMeTTJS8jV7blvDezyqjEFV3QD1ahClT9uvHRgy9Jai23Pm5gYpr4Y_67OoMzw2FFQx7cJPpsl7h7A6UAvrrQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdektdefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehhrghnfigvnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepmhgv
+    vghtshhonhhifedtudejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:s7TJZwzF5N05-a9_oShkW_bM4k4F-kI8GmiG_LQD57XHgQxjAYNuPg>
+    <xmx:s7TJZ3RyxE7Fb6BEn1IGU5I4eJ4vFK4iV6N6M3XqjnO4rQY_-1NjEg>
+    <xmx:s7TJZ7aPT6RAPZuxhHPaV_TGd9ynqfvLv7HCIudug0ym8A9FKaawTQ>
+    <xmx:s7TJZwRGYzMsYJAKZtC_-9vJyvBr1WF9UwXjaFSnuNn6uGf51GLQcQ>
+    <xmx:s7TJZ1MRzjc_iHfg9Gxjec2iQlAmnhWE75ST0XFSfmiPb6B1xwxMTyHq>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Mar 2025 09:44:02 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1af85c58 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Mar 2025 14:43:59 +0000 (UTC)
+Date: Thu, 6 Mar 2025 15:43:58 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC PATCH] reftable: return proper error code from
+ block_writer_add()
+Message-ID: <Z8m0rnTr2PrqBUKQ@pks.im>
+References: <20250306121324.1315290-1-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250306121324.1315290-1-meetsoni3017@gmail.com>
 
-Remove the_repository global variable in favor of the repository
-argument that gets passed in "builtin/checkout-index.c".
+On Thu, Mar 06, 2025 at 05:43:24PM +0530, Meet Soni wrote:
+> @@ -115,8 +115,9 @@ int block_writer_add(struct block_writer *w, struct reftable_record *rec)
+>  	int err;
+>  
+>  	err = reftable_record_key(rec, &w->scratch);
+> -	if (err < 0)
+> +	if (err < 0) {
+>  		goto done;
+> +	}
+>  
+>  	if (!w->scratch.len) {
+>  		err = REFTABLE_API_ERROR;
 
-When `-h` is passed to the command outside a Git repository, the
-`run_builtin()` will call the `cmd_checkout_index()` function with `repo`
-set to NULL and then early in the function, `show_usage_with_options_if_asked()`
-call will give the options help and exit.
+This change probably shouldn't be here. Our style guide mentions that we
+prefer to not have curly braces around single-line statements.
 
-Pass the repository available in the calling context to both `checkout_all()`
-and `checkout_file()` to remove their dependency on the global
-`the_repository` variable.
+> @@ -126,14 +127,14 @@ int block_writer_add(struct block_writer *w, struct reftable_record *rec)
+>  	n = reftable_encode_key(&is_restart, out, last, w->scratch,
+>  				reftable_record_val_type(rec));
+>  	if (n < 0) {
+> -		err = -1;
+> +		err = n;
+>  		goto done;
+>  	}
+>  	string_view_consume(&out, n);
+>  
+>  	n = reftable_record_encode(rec, out, w->hash_size);
+>  	if (n < 0) {
+> -		err = -1;
+> +		err = n;
+>  		goto done;
+>  	}
+>  	string_view_consume(&out, n);
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- builtin/checkout-index.c        | 43 ++++++++++++++++-----------------
- t/t2006-checkout-index-basic.sh |  7 ++++++
- 2 files changed, 28 insertions(+), 22 deletions(-)
+Okay. `reftable_encode_key()` right now only knows to return generic
+errors, but you fix that further down, and you also adapt
+`reftable_record_encode()`.
 
-diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-index e30086c7d4..46035444eb 100644
---- a/builtin/checkout-index.c
-+++ b/builtin/checkout-index.c
-@@ -5,7 +5,6 @@
-  *
-  */
- 
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
-@@ -68,10 +67,10 @@ static void write_tempfile_record(const char *name, const char *prefix)
- 	}
- }
- 
--static int checkout_file(const char *name, const char *prefix)
-+static int checkout_file(struct repository *repo, const char *name, const char *prefix)
- {
- 	int namelen = strlen(name);
--	int pos = index_name_pos(the_repository->index, name, namelen);
-+	int pos = index_name_pos(repo->index, name, namelen);
- 	int has_same_name = 0;
- 	int is_file = 0;
- 	int is_skipped = 1;
-@@ -81,8 +80,8 @@ static int checkout_file(const char *name, const char *prefix)
- 	if (pos < 0)
- 		pos = -pos - 1;
- 
--	while (pos <the_repository->index->cache_nr) {
--		struct cache_entry *ce =the_repository->index->cache[pos];
-+	while (pos < repo->index->cache_nr) {
-+		struct cache_entry *ce =repo->index->cache[pos];
- 		if (ce_namelen(ce) != namelen ||
- 		    memcmp(ce->name, name, namelen))
- 			break;
-@@ -137,13 +136,13 @@ static int checkout_file(const char *name, const char *prefix)
- 	return -1;
- }
- 
--static int checkout_all(const char *prefix, int prefix_length)
-+static int checkout_all(struct repository *repo, const char *prefix, int prefix_length)
- {
- 	int i, errs = 0;
- 	struct cache_entry *last_ce = NULL;
- 
--	for (i = 0; i < the_repository->index->cache_nr ; i++) {
--		struct cache_entry *ce = the_repository->index->cache[i];
-+	for (i = 0; i < repo->index->cache_nr ; i++) {
-+		struct cache_entry *ce = repo->index->cache[i];
- 
- 		if (S_ISSPARSEDIR(ce->ce_mode)) {
- 			if (!ce_skip_worktree(ce))
-@@ -156,8 +155,8 @@ static int checkout_all(const char *prefix, int prefix_length)
- 			 * first entry inside the expanded sparse directory).
- 			 */
- 			if (ignore_skip_worktree) {
--				ensure_full_index(the_repository->index);
--				ce = the_repository->index->cache[i];
-+				ensure_full_index(repo->index);
-+				ce = repo->index->cache[i];
- 			}
- 		}
- 
-@@ -213,7 +212,7 @@ static int option_parse_stage(const struct option *opt,
- int cmd_checkout_index(int argc,
- 		       const char **argv,
- 		       const char *prefix,
--		       struct repository *repo UNUSED)
-+		       struct repository *repo)
- {
- 	int i;
- 	struct lock_file lock_file = LOCK_INIT;
-@@ -253,19 +252,19 @@ int cmd_checkout_index(int argc,
- 	show_usage_with_options_if_asked(argc, argv,
- 					 builtin_checkout_index_usage,
- 					 builtin_checkout_index_options);
--	git_config(git_default_config, NULL);
-+	repo_config(repo, git_default_config, NULL);
- 	prefix_length = prefix ? strlen(prefix) : 0;
- 
--	prepare_repo_settings(the_repository);
--	the_repository->settings.command_requires_full_index = 0;
-+	prepare_repo_settings(repo);
-+	repo->settings.command_requires_full_index = 0;
- 
--	if (repo_read_index(the_repository) < 0) {
-+	if (repo_read_index(repo) < 0) {
- 		die("invalid cache");
- 	}
- 
- 	argc = parse_options(argc, argv, prefix, builtin_checkout_index_options,
- 			builtin_checkout_index_usage, 0);
--	state.istate = the_repository->index;
-+	state.istate = repo->index;
- 	state.force = force;
- 	state.quiet = quiet;
- 	state.not_new = not_new;
-@@ -285,8 +284,8 @@ int cmd_checkout_index(int argc,
- 	 */
- 	if (index_opt && !state.base_dir_len && !to_tempfile) {
- 		state.refresh_cache = 1;
--		state.istate = the_repository->index;
--		repo_hold_locked_index(the_repository, &lock_file,
-+		state.istate = repo->index;
-+		repo_hold_locked_index(repo, &lock_file,
- 				       LOCK_DIE_ON_ERROR);
- 	}
- 
-@@ -304,7 +303,7 @@ int cmd_checkout_index(int argc,
- 		if (read_from_stdin)
- 			die("git checkout-index: don't mix '--stdin' and explicit filenames");
- 		p = prefix_path(prefix, prefix_length, arg);
--		err |= checkout_file(p, prefix);
-+		err |= checkout_file(repo, p, prefix);
- 		free(p);
- 	}
- 
-@@ -326,7 +325,7 @@ int cmd_checkout_index(int argc,
- 				strbuf_swap(&buf, &unquoted);
- 			}
- 			p = prefix_path(prefix, prefix_length, buf.buf);
--			err |= checkout_file(p, prefix);
-+			err |= checkout_file(repo, p, prefix);
- 			free(p);
- 		}
- 		strbuf_release(&unquoted);
-@@ -334,7 +333,7 @@ int cmd_checkout_index(int argc,
- 	}
- 
- 	if (all)
--		err |= checkout_all(prefix, prefix_length);
-+		err |= checkout_all(repo, prefix, prefix_length);
- 
- 	if (pc_workers > 1)
- 		err |= run_parallel_checkout(&state, pc_workers, pc_threshold,
-@@ -344,7 +343,7 @@ int cmd_checkout_index(int argc,
- 		return 1;
- 
- 	if (is_lock_file_locked(&lock_file) &&
--	    write_locked_index(the_repository->index, &lock_file, COMMIT_LOCK))
-+	    write_locked_index(repo->index, &lock_file, COMMIT_LOCK))
- 		die("Unable to write new index file");
- 	return 0;
- }
-diff --git a/t/t2006-checkout-index-basic.sh b/t/t2006-checkout-index-basic.sh
-index bac231b167..fedd2cc097 100755
---- a/t/t2006-checkout-index-basic.sh
-+++ b/t/t2006-checkout-index-basic.sh
-@@ -21,6 +21,13 @@ test_expect_success 'checkout-index -h in broken repository' '
- 	test_grep "[Uu]sage" broken/usage
- '
- 
-+test_expect_success 'checkout-index does not crash with -h' '
-+	test_expect_code 129 git checkout-index -h >usage &&
-+	test_grep "[Uu]sage: git checkout-index " usage &&
-+	test_expect_code 129 nongit git checkout-index -h >usage &&
-+	test_grep "[Uu]sage: git checkout-index " usage
-+'
-+
- test_expect_success 'checkout-index reports errors (cmdline)' '
- 	test_must_fail git checkout-index -- does-not-exist 2>stderr &&
- 	test_grep not.in.the.cache stderr
--- 
-2.48.1
+> diff --git a/reftable/record.c b/reftable/record.c
+> index 8919df8a4d..5523804a0c 100644
+> --- a/reftable/record.c
+> +++ b/reftable/record.c
+> @@ -148,18 +148,18 @@ int reftable_encode_key(int *restart, struct string_view dest,
+>  	uint64_t suffix_len = key.len - prefix_len;
+>  	int n = put_var_int(&dest, prefix_len);
+>  	if (n < 0)
+> -		return -1;
+> +		return REFTABLE_ENTRY_TOO_BIG_ERROR;
+>  	string_view_consume(&dest, n);
+>  
+>  	*restart = (prefix_len == 0);
+>  
+>  	n = put_var_int(&dest, suffix_len << 3 | (uint64_t)extra);
+>  	if (n < 0)
+> -		return -1;
+> +		return REFTABLE_ENTRY_TOO_BIG_ERROR;
+>  	string_view_consume(&dest, n);
+>  
+>  	if (dest.len < suffix_len)
+> -		return -1;
+> +		return REFTABLE_ENTRY_TOO_BIG_ERROR;
+>  	memcpy(dest.buf, key.buf + prefix_len, suffix_len);
+>  	string_view_consume(&dest, suffix_len);
+>  
 
+Makes sense.
+
+> @@ -1144,14 +1144,20 @@ static struct reftable_record_vtable reftable_index_record_vtable = {
+>  
+>  int reftable_record_key(struct reftable_record *rec, struct reftable_buf *dest)
+>  {
+> -	return reftable_record_vtable(rec)->key(reftable_record_data(rec), dest);
+> +	int key_len = reftable_record_vtable(rec)->key(reftable_record_data(rec), dest);
+> +	if (key_len < 0)
+> +		return REFTABLE_ENTRY_TOO_BIG_ERROR;
+> +	return key_len;
+>  }
+
+This here is incorrect. We don't know why the `->key()` function has
+failed, so we shouldn't assume `TOO_BIG_ERROR`. We'd have to vet all the
+implementations of that function and then should bubble up their
+respective error codes.
+
+>  int reftable_record_encode(struct reftable_record *rec, struct string_view dest,
+>  			   uint32_t hash_size)
+>  {
+> -	return reftable_record_vtable(rec)->encode(reftable_record_data(rec),
+> +	int encode_len = reftable_record_vtable(rec)->encode(reftable_record_data(rec),
+>  						   dest, hash_size);
+> +	if (encode_len < 0)
+> +		return REFTABLE_ENTRY_TOO_BIG_ERROR;
+> +	return encode_len;
+>  }
+>  
+>  int reftable_record_copy_from(struct reftable_record *rec,
+
+Same remark here.
+
+Thanks!
+
+Patrick
