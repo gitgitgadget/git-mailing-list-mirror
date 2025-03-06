@@ -1,152 +1,856 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BE521ABC5
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 16:33:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5CF233715
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 16:35:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741278828; cv=none; b=jReIMMM5Ps9YX6hKTf+ILnWUwzClEimFxRj+E1spylSuGyfoDiOYHyqsYIw03tAdpUbUIH9GzMJmVBIKzLnEtyamuX4LjvSE+dcNrvbj27M9AgFZwfEom8xFffnAdIF+7qVxK5dASNLdt/gZBpePLDp04wPo5rX4KFJj9JdD6hA=
+	t=1741278934; cv=none; b=b6IWUrcgLnMKByj5IHtS+pwpg31BIGxYZS41Pz2bsxT2HPGDfsM0oxoQUxxm11UFfslBg13rKd2aLK5LjKmHHu+MP7IOAmRf2wRLZMKL7jYfxccR6Se3+Ulmlu3cUDrs7bHSiu6hEVe/3i6kn+vSdSY4j1P9O78/Q+JXj5AQc4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741278828; c=relaxed/simple;
-	bh=lgYSw5Pk0Tj76i3KclfycXUMvoR/kdB15gIOWEs38ac=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Qne5ab4ZvoL+unzT7k/clolMGI4IaZwDTVejUpDEUP8+xUw6lyoPFoV0lX6o/3SpTpJeU3UnC2tFPLxUUgeLJ5V30tMgHj5HWV/ZnSpqunGfkwv1vsxB1mfRHR/BHoW9kgitMBaFHL9Upfy/qoHdXy82vjWTfLZ39pb5gvAbyC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q/kIwXKw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z4NLcOTN; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741278934; c=relaxed/simple;
+	bh=O5+qCjLU/wnCYR2QgS5+rxHy4FvE6lH7r7BitRZgvOc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OMLI0nLPx2UfI7P6C3TX0WIx4iiQInH5D6j+QAKEMHHYgJ8QaNTQ8KAEOMOsHTFzFdc9aDgturvLUiThT4UxG36uwxM2exeNtYQClJJIBN3Uera+8Bj4he+nNVdJdQpK0LvHlPkiDPJQOZ/piuKLwCjwoSXMjboguNlLf+eD80s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TliSBcP7; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q/kIwXKw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z4NLcOTN"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id EE5F3138276D;
-	Thu,  6 Mar 2025 11:33:44 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 06 Mar 2025 11:33:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741278824; x=1741365224; bh=x7PWUStXfv
-	z4+z/dSn2HWPa8FLj+QQEyjj75t5PQKnw=; b=Q/kIwXKw6GbGZXcUFNkcV8ysjr
-	Mi26rUNryUPV093f4UuQcwOob4i0Ah6kouvyqGSX/jMttyi1bNesXEeQFPPPTZFH
-	/aX/615/mgoeUWE4FcRYcyvb9msqIyK0irSxcA4vm/fMo6bWSDk9HVY6ia1kW2D6
-	epA1BrjYtrepsIPeAxo7xwF1tAlTPLuGAhc+12pPK3NNDSQU9P/a+Jf2hM39HXL+
-	9RAdhUcc4gIjzs3scxLr1Vqgx78sVJ1X2Gzhs0S/gtS+vIz0NeSLnHExeaipaC1w
-	Jz63g3BbRpooiNnZpHUF7JYjism6rmHbCSKB+efZFmZAgtqNzSHyiTcV/IPw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741278824; x=1741365224; bh=x7PWUStXfvz4+z/dSn2HWPa8FLj+QQEyjj7
-	5t5PQKnw=; b=Z4NLcOTNPdX8UmFFNYwH06CG0RZfnAzAMOSN9WR6cV5fEKz2rbR
-	ipQg5cSg0iG5WXCUMipChT/i5BeMtf8KYZ2QzZgf7QXkwwxeQksPfHKv90AcDXGW
-	bBjj7jYUzA2ZRiYQ+9NqA2epIQiWZuRPvFtygV5UYedcK2u140KTeQwS07ZielJI
-	TkfQzZVDxFX5mUOPYeIR7KIvzsI7tKiFI8bLAPqNZKe1gRIm+VR9j00FK8npe1oI
-	VQHZV+UUiLW9Ttq8bqHJ9y7pbV6eODmU0VXbgbYac1vy2r3ntmV+5njWD88oZN+8
-	ki42UIbqMVIDbhBw9LxzpUakV3D6wtgrNUg==
-X-ME-Sender: <xms:aM7JZ2s6imXAwe8m2C6M3XtCaCfAElAYwp0srjZz1CcEwAIb0QCA4Q>
-    <xme:aM7JZ7cd8ViPLzMDFc5tTRQ2ipRM2ARfggomtdgq7V640lBfbKqZG2KgoOygFreyQ
-    tmjxTc5xQIS7cSGYQ>
-X-ME-Received: <xmr:aM7JZxxpcI3R8T5z5rpeg7QuHFsUf6nd28_9B1KR2Y1jmOGAfBUGw5G0esWZgS1hqVZa7HI8Z6zV4vb9XgQjfamFK7hl1croi04r>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdekvdehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhohh
-    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:aM7JZxNV_6k4HgohOE0XwuSkM-0wglglVeaY27eQUfjKF8eI6NsXVQ>
-    <xmx:aM7JZ28P7utd9e-RKOJgiqcLRbNaq4uAV7KNkU_f7tJqV68WkQAl4g>
-    <xmx:aM7JZ5XodFMqyLE4ORfHL7mze5M9x91hCHf799lu4uBcq5sUmizZUQ>
-    <xmx:aM7JZ_d2tqMxe6HnNrf-uVJ5QPonKp3Lgu4KpV7as7l0paGN1aI9zA>
-    <xmx:aM7JZ9kpvrzgJZKeWRa5I9JMMT0v2paidb7A6g87XOsmqIseUVKfJ8Op>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Mar 2025 11:33:44 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
- Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/3] ident: stop assuming that `gw_gecos` is writable
-In-Reply-To: <3e9ccffc7474698947bdcb6d49b5d0728deadd08.1741256780.git.gitgitgadget@gmail.com>
-	(Johannes Schindelin via GitGitGadget's message of "Thu, 06 Mar 2025
-	10:26:18 +0000")
-References: <pull.1867.git.1740671049.gitgitgadget@gmail.com>
-	<pull.1867.v2.git.1741256780.gitgitgadget@gmail.com>
-	<3e9ccffc7474698947bdcb6d49b5d0728deadd08.1741256780.git.gitgitgadget@gmail.com>
-Date: Thu, 06 Mar 2025 08:33:43 -0800
-Message-ID: <xmqq8qpijezc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TliSBcP7"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-aaee2c5ee6eso135775666b.1
+        for <git@vger.kernel.org>; Thu, 06 Mar 2025 08:35:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741278930; x=1741883730; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=AXSSlabxeEDboK77ltHrJmFTRROlDIjI9K9GlGsP1q0=;
+        b=TliSBcP7tGrsxge9LdTNMZq6gu6hVKbz0VSp7qIJRLtwu2gOy5/NWiCBkrXtsv5E63
+         Rs7u/ve3gcEnUegTHJf+8YkyDoOsqNsAsmd0c0/1Pbe5cjoA1Sao9OX8dcBVEX1+1MNJ
+         3kUQ5SO0ty6kGJVs8Oaf/Ks2NNGzjinuA23xoDWjm1UjO8QnzZ/Az6nY6o2QaLACvk4/
+         88Ge5SXQ1JlaKsnK/4Zw9rey4V/K3advFDrDInlSq4SmZUbLygb4uH942TMwzXyzOgPB
+         cQnU3yHO0p8sZezorF8vV81neUliNJGq/DoKEVwMQrILhGbNfUOKKCZMLZHQJkoqN2Ll
+         vvhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741278930; x=1741883730;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AXSSlabxeEDboK77ltHrJmFTRROlDIjI9K9GlGsP1q0=;
+        b=gy3/tsJ3+Bs+MM2/1cwwi0iM5r16vDAyWQjQANt2V1gHc+vUTX7bviZmWafNocsZzA
+         ZUomEKUk5povxdv8p/VJjKzhpq4bt+ucyr5IR8vuQZUu2gfO5w92XVu2ujuiXtYM4Ueu
+         s/MVd7so0UsnB7K+iaox3mfhzHsEEOJZ/h5rz+EQWld/0HQNo8D+q3zyqQuDJrktQFNU
+         AOFrElGN2iYU19poX/Rf8xzuw9462/nKemdK8go5G1EBOhlmxEwQfgn+RfZyMF0suz/Y
+         7jP70c3r6BK1/YJUCerbFNhsbULBVq3LVvpgRLZp5lS/5mvknLuczzW+b6tDdbwGAt5d
+         J8NA==
+X-Gm-Message-State: AOJu0Yz42SAiMBjyJnoNO2pndhvTm5h35bjB8m6ePjj5hyCPR7GCmCiZ
+	iAiUSeweNHLF2hfQORO53oEA3s2w9GzdHNKdPrWuti2RdQwIH6tB
+X-Gm-Gg: ASbGnctfif+PRLwZojNSFx7DxCN86Rfxi44Sh93pjTqxSqh9hMGlK0Az+6eqf3RPBp0
+	KDgaewBlSDaUMP4xo4KqaQdoKhT2RU1+ucj64quqi+3/Ze5Sj09UtiycE+tLHXL/2K5qRV/mIUk
+	Fr2VZz2yH7sMFLoTUShxbTxSklgeMJ6xkQ5U/HV9gxEm4yE9eh5XBCUCrgb8RvOXZqi+KJpof7l
+	a+Dfj6qBl+LljHqQu3vS7nH8eGfaldj6zZUw7fWS/Bj5+FJhJTRg9VvUI0ITCeU/NSn91ukeV3a
+	5RFWgIhYts3E/zGAeaiinzdlGkA2jrK+4OA5+LoQNvgM9NH7c1QdjzYM5VO9xCF53MmqcS+IMRQ
+	o4sPIUfY6luYDxQgk8hzeHpw=
+X-Google-Smtp-Source: AGHT+IG0C9LaVWz37hv/Elob9PsD+qZcq1615c4r5gaipaIVeJphuBYoaW0BhR9/nyAr9FTXnBllww==
+X-Received: by 2002:a17:907:7d93:b0:ac1:effd:f2ea with SMTP id a640c23a62f3a-ac20da43f47mr884503266b.24.1741278929973;
+        Thu, 06 Mar 2025 08:35:29 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac23943c476sm119105066b.3.2025.03.06.08.35.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Mar 2025 08:35:29 -0800 (PST)
+Message-ID: <2bed28ca-b106-474d-9bac-db377bc51949@gmail.com>
+Date: Thu, 6 Mar 2025 16:35:26 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/2] completion: fix bugs with slashes in remote names
+To: David Mandelberg <david@mandelberg.org>,
+ David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
+ <d5860dbe1e6a149d72739af3271369b3@mandelberg.org>
+ <187a63ad2f4a66b644187a8201eadfed@mandelberg.org>
+ <fa70c8336f836ebb5b9c196fe291d357@mandelberg.org>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <fa70c8336f836ebb5b9c196fe291d357@mandelberg.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Hi David
 
-> In other words, contrary to my expectations, the `win+Meson` job is
-> ill-equipped to replace the `win build` job because it exercises a
-> completely different tool version/compiler flags vector than what Git
-> for Windows needs.
+On 05/03/2025 20:50, David Mandelberg wrote:
+> David Mandelberg schreef op 2025-03-04 19:09:
+>> Previously, some calls to for-each-ref passed fixed numbers of path
+>> components to strip from refs, assuming that remote names had no slashes
+>> in them. This made completions like:
+>>
+>> git push github/dseomn :com<Tab>
+>>
+>> Result in:
+>>
+>> git push github/dseomn :dseomn/completion-remote-slash
+>>
+>> With this patch, it instead results in:
+>>
+>> git push github/dseomn :completion-remote-slash
+>>
+>> Signed-off-by: David Mandelberg <david@mandelberg.org>
+>> ---
+>>   contrib/completion/git-completion.bash |  38 +++++-
+>>   t/t9902-completion.sh                  | 180 ++++++++++++++++++++++---
+>>   2 files changed, 189 insertions(+), 29 deletions(-)
+>>
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index 5fdc71208e..450fabc901 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -790,16 +790,39 @@ __git_tags ()
+>>   __git_dwim_remote_heads ()
+>>   {
+>>   	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
+>> -	local fer_pfx="${pfx//\%/%%}" # "escape" for-each-ref format specifiers
+>>   
+>>   	# employ the heuristic used by git checkout and git switch
+>>   	# Try to find a remote branch that cur_es the completion word
+>>   	# but only output if the branch name is unique
+>> -	__git for-each-ref --format="$fer_pfx%(refname:strip=3)$sfx" \
+>> -		--sort="refname:strip=3" \
+>> -		${GIT_COMPLETION_IGNORE_CASE+--ignore-case} \
+>> -		"refs/remotes/*/$cur_*" "refs/remotes/*/$cur_*/**" | \
+>> -	uniq -u
+>> +	local awk_script='
+>> +	function casemap(s) {
+>> +		if (ENVIRON["IGNORE_CASE"])
+>> +			return tolower(s)
+>> +		else
+>> +			return s
+>> +	}
+>> +	BEGIN {
+>> +		split(ENVIRON["REMOTES"], remotes, /\n/)
+>> +		for (i in remotes)
+>> +			remotes[i] = "refs/remotes/" casemap(remotes[i])
+>> +		cur_ = casemap(ENVIRON["CUR_"])
+>> +	}
+>> +	{
+>> +		ref_case = casemap($0)
+>> +		for (i in remotes) {
+>> +			if (index(ref_case, remotes[i] "/" cur_) == 1) {
+>> +				branch = substr($0, length(remotes[i] "/") + 1)
+>> +				print ENVIRON["PFX"] branch ENVIRON["SFX"]
+>> +				break
+>> +			}
+>> +		}
+>> +	}
+>> +	'
+>> +	__git for-each-ref --format='%(refname)' |
+>> +		PFX="$pfx" SFX="$sfx" CUR_="$cur_" \
+>> +			IGNORE_CASE=${GIT_COMPLETION_IGNORE_CASE+1} \
+>> +			REMOTES="$(__git_remotes | sort -r)" awk "$awk_script" |
+>> +		sort | uniq -u
 
-It is apparent that meson support is a new procedure to build our
-codebase that is untested and unproven on Windows at all, given that
-among all people who may have stake in Windows you are discovering
-problems in it this late in the cycle.  Nobody knows what other
-breakages, other than something obvious and easy to catch like "ah,
-compiler refuses to go further", are lurking under the radar.
+I wonder if we can use "sort -u" here and drop uniq. It isn't quite the 
+same as it will remove entries that are equal according to the current 
+locale but I don't think that should matter.
 
-I would be reluctant to trust the build artifact out of meson-based
-build on Windows after seeing your report, especially the above
-part.
+> I realized that this sends refs to awk that it doesn't need to. I'll
+> apply this diff to the next version of this patch:
 
-A reasonable alternative may be to declare that meson-based build is
-not ready yet at this point, and possibly disable win+Meson jobs to
-punt and divert our engineering resources elsewhere in the meantime.
-For a new thing, having an uneven support depending on the platform
-early in the evolution is not unusual or to be ashamed of.
+With that tweak this looks good. If there are no glob characters then 
+"git for-each-ref" does a prefix match so strictly speaking you don't 
+need the '**' but I don't think it matters in practice. I had one 
+thought below but if you don't feel like spending more that on this I 
+think what you have here is fine.
 
-> Nevertheless, there is currently this huge push, including breaking
-> changes after -rc1 and all, for switching to Meson. Therefore, we need
-> to make it work, somehow, even in Git for Windows' SDK, hence this
-> patch, at this point in time.
+The filtering is O(number of remote refs * number of remotes). If we 
+could sort the list of remotes and remote refs in the same order then we 
+can reduce this to O(number of remote refs + number of remotes) by doing 
+(in pseudo code)
 
-As I said earlier already, I do not mind turning the type of this
-pointer, which is only used to read from a struct member, like this
-patch does.  It is the right thing to do, so I'll apply.
+     for ($ref in $remote_refs) {
+	while (!starts_with($ref, "refs/remotes/$remote[$i]"))
+		$i++;
+	if (starts_with($ref, "refs/remotes/$remote[$i]/$cur_)
+		print $ref;
+     }
 
-But I personally would not be comfortable with the product built
-with "completely different tool version/compiler flags vector than
-what G4W needs", even the compilation passes with just this small
-change.  If I were using Windows, that is.
+I think we can get "git for-each-ref --sort=-refname" and "sort -r" to 
+agree on a sorting order by setting LC_COLLATE=C, otherwise "sort" will 
+sort according the the current locale whereas git sorts by bytes.
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  ident.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Best Wishes
 
-Thanks, will apply.
+Phillip
 
-> diff --git a/ident.c b/ident.c
-> index caf41fb2a98..967895d8850 100644
-> --- a/ident.c
-> +++ b/ident.c
-> @@ -59,7 +59,7 @@ static struct passwd *xgetpwuid_self(int *is_bogus)
->  
->  static void copy_gecos(const struct passwd *w, struct strbuf *name)
->  {
-> -	char *src;
-> +	const char *src;
->  
->  	/* Traditionally GECOS field had office phone numbers etc, separated
->  	 * with commas.  Also & stands for capitalized form of the login name.
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 450fabc901..c9d014070c 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -818,7 +818,7 @@ __git_dwim_remote_heads ()
+>                  }
+>          }
+>          '
+> -       __git for-each-ref --format='%(refname)' |
+> +       __git for-each-ref --format='%(refname)' 'refs/remotes/**' |
+>                  PFX="$pfx" SFX="$sfx" CUR_="$cur_" \
+>                          IGNORE_CASE=${GIT_COMPLETION_IGNORE_CASE+1} \
+>                          REMOTES="$(__git_remotes | sort -r)" awk "$awk_script" |
+> 
+>>   }
+>>   
+>>   # Lists refs from the local (by default) or from a remote repository.
+>> @@ -905,7 +928,8 @@ __git_refs ()
+>>   			case "HEAD" in
+>>   			$match*|$umatch*)	echo "${pfx}HEAD$sfx" ;;
+>>   			esac
+>> -			__git for-each-ref --format="$fer_pfx%(refname:strip=3)$sfx" \
+>> +			local strip="$(__git_count_path_components "refs/remotes/$remote")"
+>> +			__git for-each-ref --format="$fer_pfx%(refname:strip=$strip)$sfx" \
+>>   				${GIT_COMPLETION_IGNORE_CASE+--ignore-case} \
+>>   				"refs/remotes/$remote/$match*" \
+>>   				"refs/remotes/$remote/$match*/**"
+>> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+>> index 015289c776..343b8cd191 100755
+>> --- a/t/t9902-completion.sh
+>> +++ b/t/t9902-completion.sh
+>> @@ -149,7 +149,8 @@ fi
+>>   test_expect_success 'setup for __git_find_repo_path/__gitdir tests' '
+>>   	mkdir -p subdir/subsubdir &&
+>>   	mkdir -p non-repo &&
+>> -	git init -b main otherrepo
+>> +	git init -b main otherrepo &&
+>> +	git init -b main slashrepo
+>>   '
+>>   
+>>   test_expect_success '__git_find_repo_path - from command line (through $__git_dir)' '
+>> @@ -674,6 +675,13 @@ test_expect_success 'setup for ref completion' '
+>>   	) &&
+>>   	git remote add other "$ROOT/otherrepo/.git" &&
+>>   	git fetch --no-tags other &&
+>> +	(
+>> +		cd slashrepo &&
+>> +		git commit --allow-empty -m initial &&
+>> +		git branch -m main branch/with/slash
+>> +	) &&
+>> +	git remote add remote/with/slash "$ROOT/slashrepo/.git" &&
+>> +	git fetch --no-tags remote/with/slash &&
+>>   	rm -f .git/FETCH_HEAD &&
+>>   	git init thirdrepo
+>>   '
+>> @@ -686,6 +694,8 @@ test_expect_success '__git_refs - simple' '
+>>   	other/HEAD
+>>   	other/branch-in-other
+>>   	other/main-in-other
+>> +	remote/with/slash/HEAD
+>> +	remote/with/slash/branch/with/slash
+>>   	matching-tag
+>>   	EOF
+>>   	(
+>> @@ -702,6 +712,8 @@ test_expect_success '__git_refs - full refs' '
+>>   	refs/remotes/other/HEAD
+>>   	refs/remotes/other/branch-in-other
+>>   	refs/remotes/other/main-in-other
+>> +	refs/remotes/remote/with/slash/HEAD
+>> +	refs/remotes/remote/with/slash/branch/with/slash
+>>   	refs/tags/matching-tag
+>>   	EOF
+>>   	(
+>> @@ -767,6 +779,19 @@ test_expect_success '__git_refs - configured remote' '
+>>   	test_cmp expected "$actual"
+>>   '
+>>   
+>> +test_expect_success '__git_refs - configured remote - with slash' '
+>> +	cat >expected <<-EOF &&
+>> +	HEAD
+>> +	HEAD
+>> +	branch/with/slash
+>> +	EOF
+>> +	(
+>> +		cur= &&
+>> +		__git_refs remote/with/slash >"$actual"
+>> +	) &&
+>> +	test_cmp expected "$actual"
+>> +'
+>> +
+>>   test_expect_success '__git_refs - configured remote - full refs' '
+>>   	cat >expected <<-EOF &&
+>>   	HEAD
+>> @@ -909,17 +934,19 @@ test_expect_success '__git_refs - unique remote branches for git checkout DWIMer
+>>   	other/ambiguous
+>>   	other/branch-in-other
+>>   	other/main-in-other
+>> -	remote/ambiguous
+>> -	remote/branch-in-remote
+>> +	remote/with/slash/HEAD
+>> +	remote/with/slash/ambiguous
+>> +	remote/with/slash/branch-in-remote
+>> +	remote/with/slash/branch/with/slash
+>>   	matching-tag
+>> -	HEAD
+>>   	branch-in-other
+>>   	branch-in-remote
+>> +	branch/with/slash
+>>   	main-in-other
+>>   	EOF
+>>   	for remote_ref in refs/remotes/other/ambiguous \
+>> -		refs/remotes/remote/ambiguous \
+>> -		refs/remotes/remote/branch-in-remote
+>> +		refs/remotes/remote/with/slash/ambiguous \
+>> +		refs/remotes/remote/with/slash/branch-in-remote
+>>   	do
+>>   		git update-ref $remote_ref main &&
+>>   		test_when_finished "git update-ref -d $remote_ref" || return 1
+>> @@ -939,6 +966,8 @@ test_expect_success '__git_refs - after --opt=' '
+>>   	other/HEAD
+>>   	other/branch-in-other
+>>   	other/main-in-other
+>> +	remote/with/slash/HEAD
+>> +	remote/with/slash/branch/with/slash
+>>   	matching-tag
+>>   	EOF
+>>   	(
+>> @@ -955,6 +984,8 @@ test_expect_success '__git_refs - after --opt= - full refs' '
+>>   	refs/remotes/other/HEAD
+>>   	refs/remotes/other/branch-in-other
+>>   	refs/remotes/other/main-in-other
+>> +	refs/remotes/remote/with/slash/HEAD
+>> +	refs/remotes/remote/with/slash/branch/with/slash
+>>   	refs/tags/matching-tag
+>>   	EOF
+>>   	(
+>> @@ -972,6 +1003,8 @@ test_expect_success '__git refs - excluding refs' '
+>>   	^other/HEAD
+>>   	^other/branch-in-other
+>>   	^other/main-in-other
+>> +	^remote/with/slash/HEAD
+>> +	^remote/with/slash/branch/with/slash
+>>   	^matching-tag
+>>   	EOF
+>>   	(
+>> @@ -988,6 +1021,8 @@ test_expect_success '__git refs - excluding full refs' '
+>>   	^refs/remotes/other/HEAD
+>>   	^refs/remotes/other/branch-in-other
+>>   	^refs/remotes/other/main-in-other
+>> +	^refs/remotes/remote/with/slash/HEAD
+>> +	^refs/remotes/remote/with/slash/branch/with/slash
+>>   	^refs/tags/matching-tag
+>>   	EOF
+>>   	(
+>> @@ -1015,6 +1050,8 @@ test_expect_success '__git_refs - do not filter refs unless told so' '
+>>   	other/branch-in-other
+>>   	other/main-in-other
+>>   	other/matching/branch-in-other
+>> +	remote/with/slash/HEAD
+>> +	remote/with/slash/branch/with/slash
+>>   	matching-tag
+>>   	matching/tag
+>>   	EOF
+>> @@ -1135,6 +1172,8 @@ test_expect_success '__git_complete_refs - simple' '
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	matching-tag Z
+>>   	EOF
+>>   	(
+>> @@ -1173,6 +1212,20 @@ test_expect_success '__git_complete_refs - remote' '
+>>   	test_cmp expected out
+>>   '
+>>   
+>> +test_expect_success '__git_complete_refs - remote - with slash' '
+>> +	sed -e "s/Z$//" >expected <<-EOF &&
+>> +	HEAD Z
+>> +	HEAD Z
+>> +	branch/with/slash Z
+>> +	EOF
+>> +	(
+>> +		cur= &&
+>> +		__git_complete_refs --remote=remote/with/slash &&
+>> +		print_comp
+>> +	) &&
+>> +	test_cmp expected out
+>> +'
+>> +
+>>   test_expect_success '__git_complete_refs - track' '
+>>   	sed -e "s/Z$//" >expected <<-EOF &&
+>>   	HEAD Z
+>> @@ -1181,9 +1234,11 @@ test_expect_success '__git_complete_refs - track' '
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	matching-tag Z
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main-in-other Z
+>>   	EOF
+>>   	(
+>> @@ -1228,6 +1283,8 @@ test_expect_success '__git_complete_refs - suffix' '
+>>   	other/HEAD.
+>>   	other/branch-in-other.
+>>   	other/main-in-other.
+>> +	remote/with/slash/HEAD.
+>> +	remote/with/slash/branch/with/slash.
+>>   	matching-tag.
+>>   	EOF
+>>   	(
+>> @@ -1253,6 +1310,20 @@ test_expect_success '__git_complete_fetch_refspecs - simple' '
+>>   	test_cmp expected out
+>>   '
+>>   
+>> +test_expect_success '__git_complete_fetch_refspecs - with slash' '
+>> +	sed -e "s/Z$//" >expected <<-EOF &&
+>> +	HEAD:HEAD Z
+>> +	HEAD:HEAD Z
+>> +	branch/with/slash:branch/with/slash Z
+>> +	EOF
+>> +	(
+>> +		cur= &&
+>> +		__git_complete_fetch_refspecs remote/with/slash &&
+>> +		print_comp
+>> +	) &&
+>> +	test_cmp expected out
+>> +'
+>> +
+>>   test_expect_success '__git_complete_fetch_refspecs - matching' '
+>>   	sed -e "s/Z$//" >expected <<-EOF &&
+>>   	branch-in-other:branch-in-other Z
+>> @@ -1333,8 +1404,8 @@ test_expect_success '__git_complete_worktree_paths with -C' '
+>>   
+>>   test_expect_success 'git switch - with no options, complete local branches and unique remote branch names for DWIM logic' '
+>>   	test_completion "git switch " <<-\EOF
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -1480,8 +1551,8 @@ test_expect_success 'git-bisect - existing view subcommand is recognized and ena
+>>   test_expect_success 'git checkout - completes refs and unique remote branches for DWIM' '
+>>   	test_completion "git checkout " <<-\EOF
+>>   	HEAD Z
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -1489,6 +1560,8 @@ test_expect_success 'git checkout - completes refs and unique remote branches fo
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1508,8 +1581,8 @@ test_expect_success 'git switch - with GIT_COMPLETION_CHECKOUT_NO_GUESS=1, compl
+>>   
+>>   test_expect_success 'git switch - --guess overrides GIT_COMPLETION_CHECKOUT_NO_GUESS=1, complete local branches and unique remote names for DWIM logic' '
+>>   	GIT_COMPLETION_CHECKOUT_NO_GUESS=1 test_completion "git switch --guess " <<-\EOF
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -1518,8 +1591,8 @@ test_expect_success 'git switch - --guess overrides GIT_COMPLETION_CHECKOUT_NO_G
+>>   
+>>   test_expect_success 'git switch - a later --guess overrides previous --no-guess, complete local and remote unique branches for DWIM' '
+>>   	test_completion "git switch --no-guess --guess " <<-\EOF
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -1542,14 +1615,16 @@ test_expect_success 'git checkout - with GIT_COMPLETION_NO_GUESS=1 only complete
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>>   test_expect_success 'git checkout - --guess overrides GIT_COMPLETION_NO_GUESS=1, complete refs and unique remote branches for DWIM' '
+>>   	GIT_COMPLETION_CHECKOUT_NO_GUESS=1 test_completion "git checkout --guess " <<-\EOF
+>>   	HEAD Z
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -1557,6 +1632,8 @@ test_expect_success 'git checkout - --guess overrides GIT_COMPLETION_NO_GUESS=1,
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1569,14 +1646,16 @@ test_expect_success 'git checkout - with --no-guess, only completes refs' '
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>>   test_expect_success 'git checkout - a later --guess overrides previous --no-guess, complete refs and unique remote branches for DWIM' '
+>>   	test_completion "git checkout --no-guess --guess " <<-\EOF
+>>   	HEAD Z
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -1584,6 +1663,8 @@ test_expect_success 'git checkout - a later --guess overrides previous --no-gues
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1596,6 +1677,8 @@ test_expect_success 'git checkout - a later --no-guess overrides previous --gues
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1609,6 +1692,8 @@ test_expect_success 'git checkout - with checkout.guess = false, only completes
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1616,8 +1701,8 @@ test_expect_success 'git checkout - with checkout.guess = true, completes refs a
+>>   	test_config checkout.guess true &&
+>>   	test_completion "git checkout " <<-\EOF
+>>   	HEAD Z
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -1625,6 +1710,8 @@ test_expect_success 'git checkout - with checkout.guess = true, completes refs a
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1632,8 +1719,8 @@ test_expect_success 'git checkout - a later --guess overrides previous checkout.
+>>   	test_config checkout.guess false &&
+>>   	test_completion "git checkout --guess " <<-\EOF
+>>   	HEAD Z
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -1641,6 +1728,8 @@ test_expect_success 'git checkout - a later --guess overrides previous checkout.
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1654,6 +1743,8 @@ test_expect_success 'git checkout - a later --no-guess overrides previous checko
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1666,6 +1757,8 @@ test_expect_success 'git switch - with --detach, complete all references' '
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1678,6 +1771,8 @@ test_expect_success 'git checkout - with --detach, complete only references' '
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1850,6 +1945,8 @@ test_expect_success 'git switch - with -d, complete all references' '
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1862,6 +1959,8 @@ test_expect_success 'git checkout - with -d, complete only references' '
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1870,11 +1969,15 @@ test_expect_success 'git switch - with --track, complete only remote branches' '
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   	test_completion "git switch -t " <<-\EOF
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1883,11 +1986,15 @@ test_expect_success 'git checkout - with --track, complete only remote branches'
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   	test_completion "git checkout -t " <<-\EOF
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1907,6 +2014,8 @@ test_expect_success 'git checkout - with --no-track, complete only local referen
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1919,6 +2028,8 @@ test_expect_success 'git switch - with -c, complete all references' '
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1931,6 +2042,8 @@ test_expect_success 'git switch - with -C, complete all references' '
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1943,6 +2056,8 @@ test_expect_success 'git switch - with -c and --track, complete all references'
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1955,6 +2070,8 @@ test_expect_success 'git switch - with -C and --track, complete all references'
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1967,6 +2084,8 @@ test_expect_success 'git switch - with -c and --no-track, complete all reference
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1979,6 +2098,8 @@ test_expect_success 'git switch - with -C and --no-track, complete all reference
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -1991,6 +2112,8 @@ test_expect_success 'git checkout - with -b, complete all references' '
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -2003,6 +2126,8 @@ test_expect_success 'git checkout - with -B, complete all references' '
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -2015,6 +2140,8 @@ test_expect_success 'git checkout - with -b and --track, complete all references
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -2027,6 +2154,8 @@ test_expect_success 'git checkout - with -B and --track, complete all references
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -2039,6 +2168,8 @@ test_expect_success 'git checkout - with -b and --no-track, complete all referen
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -2051,13 +2182,15 @@ test_expect_success 'git checkout - with -B and --no-track, complete all referen
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>>   test_expect_success 'git switch - for -c, complete local branches and unique remote branches' '
+>>   	test_completion "git switch -c " <<-\EOF
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -2066,8 +2199,8 @@ test_expect_success 'git switch - for -c, complete local branches and unique rem
+>>   
+>>   test_expect_success 'git switch - for -C, complete local branches and unique remote branches' '
+>>   	test_completion "git switch -C " <<-\EOF
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -2104,8 +2237,8 @@ test_expect_success 'git switch - for -C with --no-track, complete local branche
+>>   
+>>   test_expect_success 'git checkout - for -b, complete local branches and unique remote branches' '
+>>   	test_completion "git checkout -b " <<-\EOF
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -2114,8 +2247,8 @@ test_expect_success 'git checkout - for -b, complete local branches and unique r
+>>   
+>>   test_expect_success 'git checkout - for -B, complete local branches and unique remote branches' '
+>>   	test_completion "git checkout -B " <<-\EOF
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -2152,8 +2285,8 @@ test_expect_success 'git checkout - for -B with --no-track, complete local branc
+>>   
+>>   test_expect_success 'git switch - with --orphan completes local branch names and unique remote branch names' '
+>>   	test_completion "git switch --orphan " <<-\EOF
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -2168,8 +2301,8 @@ test_expect_success 'git switch - --orphan with branch already provided complete
+>>   
+>>   test_expect_success 'git checkout - with --orphan completes local branch names and unique remote branch names' '
+>>   	test_completion "git checkout --orphan " <<-\EOF
+>> -	HEAD Z
+>>   	branch-in-other Z
+>> +	branch/with/slash Z
+>>   	main Z
+>>   	main-in-other Z
+>>   	matching-branch Z
+>> @@ -2185,6 +2318,8 @@ test_expect_success 'git checkout - --orphan with branch already provided comple
+>>   	other/HEAD Z
+>>   	other/branch-in-other Z
+>>   	other/main-in-other Z
+>> +	remote/with/slash/HEAD Z
+>> +	remote/with/slash/branch/with/slash Z
+>>   	EOF
+>>   '
+>>   
+>> @@ -2199,7 +2334,8 @@ test_expect_success 'git restore completes modified files' '
+>>   test_expect_success 'teardown after ref completion' '
+>>   	git branch -d matching-branch &&
+>>   	git tag -d matching-tag &&
+>> -	git remote remove other
+>> +	git remote remove other &&
+>> +	git remote remove remote/with/slash
+>>   '
+> 
+
