@@ -1,272 +1,135 @@
-Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC206481CD
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:27:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A3620F09C
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:29:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741274860; cv=none; b=LfuMSr3PNRUxrLChu/Mqf5GkBMf/i3L2biL4W2abYWKXZJQgRxTddR4MOqUJlQWqV0POOhvM+K/oIg3YblnfrmtnF7V3fLC6Vr6M3IcmjxRBBtW39JyilMEn84bhN5IYCmU1sOwRcyKbUEuVz7Jb/s/2Nu5YYa4wGZNpDXdJfpg=
+	t=1741274983; cv=none; b=qRkKzXVd8VmVHm8lxRZLvFp3dgAbtROIcgBfXllG7lCdZuSv0R10wOwX85OjJG2gB0xbpjneh3+ArelSUZPTf/h5a/t/HaO2AL0lFvJwhAJPDvKFt5wJn+cPaUGylCyZH3PPTlDqmbTfgZphKoabq+2ifqX4BmRxfzeUcIBeLXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741274860; c=relaxed/simple;
-	bh=9FEQ6HAUzUHvkuyswlUIVaNeiAk6l4eHgs1UoxKkp7c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cwLZu3N9mK6cLifYiSm9YqfmASCDoGtu/Je+jvw2P9+et0SRpwPiQBz9a/xWRbSbkn+Z1Tkn/xXWzwcpTShH+ZYCKPyzCIylBnquy4yliTrQ44hRmNO1YHtsBlxNbpr7Gxg8WOKq0I8jHObqFip68SoZvYQzD8fDLe19aciDVl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dU3bXoOl; arc=none smtp.client-ip=209.85.166.46
+	s=arc-20240116; t=1741274983; c=relaxed/simple;
+	bh=gWPgQRJWztrMbk3gsPTo/m9TpIBcjPziJMEtFgkB7V4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=quFs8dWJjMWQuHgH8tA1L//OZ6RGV1pkQaHkI3P4+QzsB9S+aA+3+wTcKrWy93dqyJqyQHpdJ7q7seWvDT2Ce4+7UGsz739UP80ZoB2X+YXJdBJCQUrNvjNNM9YWPf87ECwaEye8FtdyB4rrQI7q47t6nT/ZOw3e5eYJjfpVVog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RJp9chEH; arc=none smtp.client-ip=209.85.221.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dU3bXoOl"
-Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-85add67e9c1so30259039f.0
-        for <git@vger.kernel.org>; Thu, 06 Mar 2025 07:27:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RJp9chEH"
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-5235db99207so349187e0c.2
+        for <git@vger.kernel.org>; Thu, 06 Mar 2025 07:29:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741274858; x=1741879658; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qjRhizDdf2QSXO4SrN62PWO9uVFf/YwA+QY2MQ2HEYE=;
-        b=dU3bXoOlLFDPdlX6ZU5gCfELfboQxorOp+bhgiiU9PxQHSP0uQtbByvDWdTBXgSuKC
-         6l6+51MYhMh5zjZIqrC9Givi6ZlppVpzmZCO8YEEvOnzuPyIyNd0kcBSu7nTCa1uvFSG
-         DagnCfDaveIqhQy0dXADj21PGvm6g9abbk4y4mJI85LTGdYjIBo8Potrxt4Fs4nbnvBN
-         h5WdKwaEfBHeYZJaHRz78a4aWucAwVClFmgY1ltlZIsxQ7gI3r0Dd7miQtzcMo37TSMm
-         1uCTUDLaDOaQycn+vkNM7d6T8ziAJoJrdmXSeDJJlvsqYZbJ4cx+gmANr2VjpDobxrZE
-         k/Ow==
+        d=gmail.com; s=20230601; t=1741274981; x=1741879781; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+yMXb+Xy8TkXUhlRscab9mZExts3G8WrNLQoeNs9Oj0=;
+        b=RJp9chEHYgJAVeRpuGuLtMtWKJzhBw/B1CxFat1iWK6plMlkBG9SssFHIhAazZoBqz
+         stOsHhvnnVsPR/LoPybSmMvb4ePCyK44t3g3dutppRNNJ8EQivRmubILw1nV516/NWmM
+         IfkhbZUgtiUBjkAG04FHnddYQXIXRtX3c2vqjRfVezDujgl0wRHXwQo8Z4+JtQSp5B8+
+         R+Iy0Va3Lk7BTfeoO2AMlkcD/D8mnO7OQiTcXYQbr31vGsp4ur1gVxTzFxPo/0kYLqCa
+         B7v2hrGzD7htkBBoBbPG/07yZVuXuGPuhHvi5K+VcbuQD5rSbebu66MUdjn9AfOPlCUd
+         whgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741274858; x=1741879658;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qjRhizDdf2QSXO4SrN62PWO9uVFf/YwA+QY2MQ2HEYE=;
-        b=mi/A14H8ZrLp4MhKtd/8xo66HPrtl3wx9wM8Idz2AjBUMbn7Cms/3+BDFAeaqnrSOD
-         DY3ZV3ypzoQawVPpLKkFVX8TkCetS9Ft3x2DhBLOqXGnuFBwgdlA/50C5hcq9r51/Gp1
-         XmRR4ug0nqcCB+79hZEvdH6LZQS2Vgmy8876pvCp86Z3gV+AHjWsiA2y7qw/UUMLbVMm
-         g8ITiTfNLMmIMk/qIQqpT4ehNT9mzB/mOrLJM1xgF7Be0Qdy54HzpBOUCknVxTW+g1hQ
-         wroX0CTfhUZTag3rCrdNzmBvdewpBgX3tJp07wveFUdhjEZHiQPpP6v+BEDm+2OymhDP
-         pFGA==
-X-Gm-Message-State: AOJu0YxRB5Whpp7WKp2wtSt28EoOrvd9v+32Pl/kbXLfK1kswL4AuKxe
-	Z4ckcp5pWUVi1xjRhmtn8If6NRHZz8hybc6C/MLf8/V8ZYIYDkysnxrI9/BZ2hvUyVdZiURB+W2
-	3yLcs7DMNFbICc/ymz6jsnaosMaM=
-X-Gm-Gg: ASbGnctqDGNDD0s27rXvd+D+KCYXGUtVtuzB1z7qPf8aG33gMl+stjoR8XLOxlg19dV
-	sc3shXkf5PGobCtNdHN2EZEjvyorxG+YapEiGxkcDIYUy5Ci/CZjPZKcgTRoVNkR4RykPu/AA6q
-	ABWRoMajbwnpZGfM6HeNBd2cVzpgcH
-X-Google-Smtp-Source: AGHT+IGdfxSrChQFeSsgnBn7jRIlz9ZWu7sdh+kk2ZVw5D8yMDoqGGBR5fGcK4BoTQZTmQ1w1yrg8Q4Gc5Hd4lFHruw=
-X-Received: by 2002:a05:6602:80b:b0:855:a287:12d0 with SMTP id
- ca18e2360f4ac-85b0e9b7c70mr342820539f.0.1741274857669; Thu, 06 Mar 2025
- 07:27:37 -0800 (PST)
+        d=1e100.net; s=20230601; t=1741274981; x=1741879781;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+yMXb+Xy8TkXUhlRscab9mZExts3G8WrNLQoeNs9Oj0=;
+        b=StElu8gSMGyISu1jCLvTop4OOhNrBndWnC+teS0mQ0ExN+cyy+uxUuVWC87GlUDvaq
+         5lXfnQNtxkGvZlv2+WtHXiuJxVxO99spHaxY/glgGUDnhWT/2qxQto2ivof5h33Bul0b
+         VG2ujZNVSfCVJH+IX+g+YrIoTEuXMxRku95nAmeoPPa3CTvLo9D5QOXD7JrLiHYTV9Rk
+         dM+NMR5MKHLzn4gMCC5N4mabqXr2hZ4vRYHgwTm3RKzSCvzzoTP2BDeAUzTIGUvpXGJ1
+         Inzv8npoN8yY9DVyuCF2q58HECu8JvBYTuJOsQFHt3fvqSGmguGypwHeTwAwETqzClzP
+         Vszg==
+X-Forwarded-Encrypted: i=1; AJvYcCVBbCJM/J3iQqXbI4AGCOhfZEwFHPO1kWu1jmE/Oi56XO0mxh6WMSqT8Bzq2CdCmxSRbHA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzrh3lh9OoUp4K2PIGd5ghZGJHbhbb1RUe63ID1sDReaY4KYwzC
+	29HQQeAZGnXmFqPlV6g5M4km0bgnngn7GmFNZh9/AkPzNCERz8IIL4HIucKS5hmPoG/gA6O3aTx
+	OmFGCSVaPASBdFPnkCUT546pIY720zJxr
+X-Gm-Gg: ASbGncsOVltUkB/xyv3eNL56+UgrkldieK7xRdv2UGTiyXJSYXulCI7Vbtvl9bKoYnY
+	NZbeyo931KxgC7TdtsPwXfTzS2C44UEUnAShThW9vqt0uqGbcRRSxzKEmM4BGqsq7gEMJTMTl0C
+	anlFbqOf28wALbO4kseE59PoVt
+X-Google-Smtp-Source: AGHT+IFOO2xwQsc36pVuuIa6uj0AOt9UiWI74xKRILagniT6XPllpv8gMinNvGvhbK+BlAISPGAi2FGYFfKk3h/WSkc=
+X-Received: by 2002:a05:6122:3543:b0:523:a88b:a100 with SMTP id
+ 71dfb90a1353d-523c625956dmr5082909e0c.6.1741274980732; Thu, 06 Mar 2025
+ 07:29:40 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 6 Mar 2025 07:29:38 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250306-b4-pks-objects-without-the-repository-v2-0-f3465327be69@pks.im>
+References: <20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im>
+ <20250306-b4-pks-objects-without-the-repository-v2-0-f3465327be69@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240921024533.15249-1-dgoncharov@users.sf.net> <20240921024533.15249-2-dgoncharov@users.sf.net>
-In-Reply-To: <20240921024533.15249-2-dgoncharov@users.sf.net>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 6 Mar 2025 07:27:25 -0800
-X-Gm-Features: AQ5f1JrJyh3cbmaxsvWBXfQVvr91LcFB0-x93A0gwfun_6ivgPcjidwVuR_s8os
-Message-ID: <CABPp-BFX-HewJWXMRNVMasGOUAuhSn7Pwx9Ls4Virz7fnOqxEA@mail.gmail.com>
-Subject: Re: [PATCH] merge-ort: fix a crash in process_renames
-To: dgoncharov@users.sf.net
-Cc: git@vger.kernel.org
+Date: Thu, 6 Mar 2025 07:29:38 -0800
+X-Gm-Features: AQ5f1Jpb22rhYeu8X5KItODw9fSkPdfjurv6kSJRUuuQS_vRvSGQKVIMuZBM07E
+Message-ID: <CAOLa=ZTcn5ibmejf3AcEsvQV3YjY4ZaY07jqX_YATxUvSWLp-w@mail.gmail.com>
+Subject: Re: [PATCH v2 00/12] Stop depending on `the_repository` in
+ object-related subsystems
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000af0656062fae2cd5"
+
+--000000000000af0656062fae2cd5
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-I apologize for the very delayed response...
+Patrick Steinhardt <ps@pks.im> writes:
 
-On Fri, Sep 20, 2024 at 7:46=E2=80=AFPM <dgoncharov@users.sf.net> wrote:
+> Hi,
 >
-> From: Dmitry Goncharov <dgoncharov@users.sf.net>
+> this patch series is another step to remove our dependency on the global
+> `the_repository` variable. The series focusses on subsystems related to
+> objects.
 >
-> cherry-pick --strategy=3Dort (the default at the moment) crashes in the f=
-ollowing
-> scenario
-
-Good job, you found a testcase that caused both `ort` and `recursive`
-to fail.  :-)
-
-For other readers, I'll note that this isn't special to cherry-pick; I
-can also reproduce using merge for example.
-
-> $ ls -a
-> .  ..
-> $ mkdir tools
-> $ git init -q -b side2
-> $ echo hello>tools/hello
-> $ git add  tools/hello
-> $ git commit -q tools/hello -m'Add tools/hello.'
-> $ git branch side1
-> $ echo world>world
-> $ git add world
-> $ git commit -q world -m'Add world.'
-> $ git mv  world tools/world
-> $ git commit -q -m'mv world tools/world.'
-> $ git checkout -q side1
-> $ git mv tools/hello hello
-> $ git commit -q -m'mv tools/hello hello.'
-> $ git cherry-pick --strategy=3Dort side2
-> git: merge-ort.c:3006: process_renames: Assertion `source_deleted || oldi=
-nfo->filemask & old_sidemask' failed.
-> Aborted (core dumped)
-
-Thanks for putting together a testcase; very helpful.  And you even
-provided it in the form of a patch, and provided an attempted fix;
-very nice!
-
-> While cherry picking the top commit from side2 to side1 collect_renames i=
-s
-> confused by the preceding move from "tools/hello" to "hello" that took pl=
-ace on
-> side1. This move from "tools/hello" to "hello" causes the logic in
-> check_for_directory_rename to incorrectly conclude that "tools/world" sho=
-uld be
-> renamed to "world".  detect_and_process_renames proceeds with "world" ins=
-tead
-> of "tools/world" and ends up tripping on an assertion in process_renames.
+> The intent here is to work towards libification of the whole subsystem
+> so that we can start splitting out something like an object "backend".
+> It is thus part of a set of refactorings aimed at allowing pluggable
+> object databases eventually. I'm not discussing that bigger effort yet,
+> mostly because it's still taking shape. So these patch series contains
+> things that make sense standalone, even if pluggable ODBs never get to
+> be a thing.
 >
-> In the same scenario cherry-pick --strategy=3Drecursive detects a merge c=
-onflict.
+> Note that this patch series stop short of dropping `the_repository` in
+> "object-file.c". This is a bigger undertaking, so I'm pushing that into
+> the next patch series.
 >
-> $ rm .git/index.lock
-> $ git reset -q --hard
-> $ git cherry-pick --strategy=3Drecursive side2
-> CONFLICT (file location): world renamed to tools/world in fead592 (mv wor=
-ld tools/world.), inside a directory that was renamed in HEAD, suggesting i=
-t should perhaps be moved to world.
-> CONFLICT (content): Merge conflict in world
-
-Yes, this is the correct resolution...
-
-> error: cache entry has null sha1: world
-> error: cherry-pick: Unable to write new index file
-> fatal: cherry-pick failed
-
-...but it looks like the recursive backend still trips up on it, just
-not until after it prints the conflict message.  It shouldn't fail to
-write out a new index file; while it got further than ort, that's
-still pretty bad.
-
-> There really is a merge conflict and the goal of this commit is to have
-> cherry-pick --strategy=3Dort detect the conflict.  This commit modifies
-> collect_renames to ignore an implicit directory rename that suggests movi=
-ng a
-> file to itself.
+> The series is built on top of cb0ae672aea (A bit more post -rc0,
+> 2025-02-27) with ps/path-sans-the-repository at 028f618658e (path:
+> adjust last remaining users of `the_repository`, 2025-02-07) merged into
+> it.
 >
-> Also, see test t3515-cherry-pick-move.sh.
+> Changes in v2:
+>   - Point out why t1050 had to be adapted.
+>   - Drop the rename of `get_max_object_index()` and
+>     `get_indexed_object()`.
+>   - Fix a couple of commit message typos.
+>   - Link to v1: https://lore.kernel.org/r/20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im
 >
-> Signed-off-by: Dmitry Goncharov <dgoncharov@users.sf.net>
-> ---
->  merge-ort.c                 |  9 +++++++
->  t/t3515-cherry-pick-move.sh | 48 +++++++++++++++++++++++++++++++++++++
->  2 files changed, 57 insertions(+)
->  create mode 100755 t/t3515-cherry-pick-move.sh
->
-> diff --git a/merge-ort.c b/merge-ort.c
-> index 691db9050e..e58fb7a7fa 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -3369,6 +3369,15 @@ static int collect_renames(struct merge_options *o=
-pt,
->                                                       collisions,
->                                                       &clean);
->
-> +               if (new_path && !strcmp(new_path, p->one->path)) {
-> +                       /* Ignore an implicit directory rename that sugge=
-sts replacing a move
-> +                        * from one->path to two->path with a move
-> +                        * from one->path to one->path.
-> +                        */
-> +                       free(new_path);
-> +                       new_path =3D NULL;
-> +               }
 
-Unfortunately, this solution makes it display the wrong conflict
-message, which I think could be quite confusing for the user:
+No further comments from my side, the changelog and range-diff looks
+good. Thanks!
 
-CONFLICT (rename/delete): world renamed to tools/world in dac8a10
-(Move world into tools/), but deleted in HEAD.
+[snip]
 
-The file was not deleted in HEAD.  HEAD moved `tools/hello` to
-`hello`, so the only thing it could have been said to delete was
-`tools/hello`, not `world`.  So I appreciate the attempt to fix, but I
-don't think this solution is quite right.
+--000000000000af0656062fae2cd5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d898a560e05add6c_0.1
 
-> +
->                 possibly_cache_new_pair(renames, p, side_index, new_path)=
-;
->                 if (p->status !=3D 'R' && !new_path) {
->                         pool_diff_free_filepair(&opt->priv->pool, p);
-> diff --git a/t/t3515-cherry-pick-move.sh b/t/t3515-cherry-pick-move.sh
-> new file mode 100755
-> index 0000000000..20af478d4e
-> --- /dev/null
-> +++ b/t/t3515-cherry-pick-move.sh
-> @@ -0,0 +1,48 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'Test cherry-picking a move commit.'
-> +
-> +
-> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dside2
-> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> +
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
-> +. ./test-lib.sh
-> +
-> +test_expect_success setup '
-> +       mkdir tools &&
-> +
-> +       echo hello >tools/hello &&
-> +
-> +       git add tools/hello &&
-> +       git commit -m"Add tools/hello." tools/hello &&
-> +
-> +       git branch side1 &&
-> +
-> +       # This commit is the base of the fatal cherry-pick merge.
-> +       echo world >world &&
-> +       git add world &&
-> +       git commit -m"Add world." &&
-> +
-> +       # Cherry picking this commit crashes git.
-> +       # This commit is side 2 of the fatal cherry-pick merge.
-> +       git mv -v world tools/world &&
-> +       git commit -m"mv world tools/world." &&
-> +
-> +       git checkout side1 &&
-> +       # This commit is side 1 of the fatal cherry-pick merge.
-> +       git mv -v tools/hello hello &&
-> +       git commit -m"mv tools/hello hello"
-> +'
-
-Thanks for including this.  I have a slight preference to include this
-in a related testsuite rather than introducing a new testsuite file
-just for it.
-
-> +
-> +test_expect_success 'recursive cherry-pick of a move commit' '
-> +       test_must_fail git cherry-pick --strategy=3Drecursive side2
-> +'
-
-Yes, but this doesn't really test that the `recursive` strategy fails
-appropriately.  In particular, the error messages you showed above
-pointed out that the recursive backend failed to write a new index
-file, leaving the working tree and index out of sync.
-
-However, since I have some patches to delete the recursive backend
-(and remap it to ort), I think it makes sense to just drop this and
-not worry about recursive.
-
-> +
-> +test_expect_success 'ort cherry-pick of a move commit' '
-> +       rm -f world &&
-> +       git reset --hard &&
-> +       test_must_fail git cherry-pick --strategy=3Dort side2
-> +'
-
-Thanks for sending this in and even for pinging on it.  I kept it in
-my notes, even though I didn't have time back then to respond.  I did
-forget about it for a while, but came back after re-checking my notes.
-
-Anyway, I've got a couple patches, the first with your testcase moved
-and adjusted slightly to fit into the existing t6423 with you as the
-author, and a second patch with an alternate fix.  I'll submit them
-shortly.
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mSnYxNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOFM4Qy85cGt6amQyaDFnZnIrWW9pVVVHM1RrekhEdApqRmZySVBmOXNq
+MVppZXRodjgvb0ZEeTF2UDhSWFA3MFVEQzRncDRHRUIrdkUxbk1BdFBPbHF6WENCb3BJWnJVCkJZ
+RFVkWnBleWFkaXc5SStHbW5QR0VFdjN5bzdjQzlUSWJGREtlV083dU5LS3B6TGZtZFh6cElDTXBo
+Q0VwaVUKUzI2aDJHaElYa2dxWkpvQTE0WG1OYlhXbFIwdjVkY0k1VHZNNEdZMTl6VmxyM2Vnc3Z1
+K2x1RlRKV3hIazJEegorMXJqUGtleC9ndWgwTkpyc1ZZb2E5cndQUlBOTjRFbTZBNmVic3FzWWFQ
+QjZCT3lvY3g5NUZrTjd0QkRnVE9SCnhRN2tBZDVKbkZJOHV3c0Zzcjd2ZWxnQ1BYV3VRVnZxUC8z
+TCtPbWlNdFRpRmIySy9Db0owZnNGb09KcFhtOVMKSjVmWFZPbVc1LzIrdkpEWWJ4R1pQaGVrd3FZ
+Q21HRFpLRmkwajk3bkdUTzV2VDA4UHFOaytTYTFxVEErbndSRgpvVnNDQ0IrZXhBZkd0c2Q4WG5t
+Q1I2QVkzSnNTRnRZVGRRc1Fhc2ZYaFZxenVkMW45ZEo5SFkxbk4xSUJlMElXCi9ZdUNLSVVtYTJj
+RHBUUVJ4MkM3ZDRjM3RzUFJDRmxRcmVlc0orWT0KPVBUSmEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000af0656062fae2cd5--
