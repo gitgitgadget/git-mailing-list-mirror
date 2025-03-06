@@ -1,101 +1,114 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED0920C46A
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:30:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96CC2101AB
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:32:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741275034; cv=none; b=u0l3QLyDvJoA8eO1lVO/OBcibQHyZ7Z63mbyCf1k8HZbKABEumAR9K6yNGO5AwXs5I2dnrLdnOBB6BTYPjC0IJgxz0vaF4C4YFisMfVoDEUiDU4+j8i6WQKyMzc6bma90J3bFjvgMSLXpRp2ujU3BvHDBcbEZYgwVaE2en+u+Es=
+	t=1741275172; cv=none; b=FyUHKTxCDsaLCc9lhL0siAojymToleQpGic4S1TIr7GquJEf/KQKIJI1AeYoCwXRR90uI9opwEmlEYU/6u2TyOiuOx+XTIbyGGUNkHXSGzsrfk+qUAT1z/thFgjE8o9sJK9SF8BYHcDLzpxHb3ClTcMZ1TsQDMCJTYR5h7MKSjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741275034; c=relaxed/simple;
-	bh=mC7VXrydvQpvZsrJ4H0TAf3ZLyU0EpDIOkTvcU2ZLnM=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=MUx7K1H6cB5GVCtPvwBOsj4LeRlAsIf7ymc+viT4faxc8yHriaQTP6RSvA2l6nRaCh2yMpGv331PGiigdtWS8TYMCxnH2ip6Z2XdUQAz42vfBezV+R1QF17hFoL1ZD/v8GT+2AdSZFHsnuP87IOCPw5wWgwQDH35tkQLrv5eczU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VOzQcaZ2; arc=none smtp.client-ip=209.85.208.48
+	s=arc-20240116; t=1741275172; c=relaxed/simple;
+	bh=D6hg3jC9+WtrZz2SLWkWtsM4tgQNoAWOgh883jmXVwI=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KJ7dyCV29MHdnCkpajOAPj6IizfK6rg8VilmeozQBCOnvm8nw0fsCMCl4bdBcQvlnvxU8WHS0xvNKpzFVg+BzsOlfDJDHeTrOmCabjLpcfoG+uVLYoM+V7AFgOCxy+Ozb7v8TmFfrJWsje29A18+1O4kRMfOfSBRYSh5AHkhkA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VRKgOKGf; arc=none smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VOzQcaZ2"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5e4ce6e3b8cso1386725a12.1
-        for <git@vger.kernel.org>; Thu, 06 Mar 2025 07:30:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VRKgOKGf"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6e89a2501a0so7034186d6.1
+        for <git@vger.kernel.org>; Thu, 06 Mar 2025 07:32:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741275031; x=1741879831; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=pnVE5T7dMbCpoR3/dyy5h4yRWRCU+sUz95YcDZdqJzY=;
-        b=VOzQcaZ2Yfz73d6lBOWXxlYOQ4tEcoN7Q4IIIW6aVeVsasYKT/9S8VIOdVqLHC0ACo
-         omABqqCszBQ6VB3CKo2i6oSpO2ySGt7J9u3bj6cFm0/M/CS85B55u6QDO2Bg+q609CZW
-         Hq89XI+FweeQ+KndK8B7X655cnSwPokGVsLY/5S0oJHlIXKR6SBESRlCWxxlFtyoE+pG
-         sxLockRl9RC2rfMkopDql7sC/cI6+wVWuyLKXdeQpt6Y1knTPatrMOoqeydqUAfX8MKr
-         5hlWT+ryE/fVrASCAIiECtvVm29RwSEUNtg0BjcYfS/UnGvrbhxLl6fPCHM5+JD4eHJd
-         m+Sw==
+        d=gmail.com; s=20230601; t=1741275170; x=1741879970; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=a4s6rfICiODJdEmiSuoEUe4XpJVoMjbd3muBSEv1BVQ=;
+        b=VRKgOKGf/7HT1hztAmcdyVyuaG3nrtrDOh+GWfZGkqjtfrMdtiP8w/ZPc4fJG0OwS1
+         xNZpGJc2aGy+1VDcUHVHIt2feoGNo+I4fRZZsRh75FpAYmG1w6Wb0KyITBGYMhJ7FRrE
+         SsTBAYbDFzq8ts3PCNoyJYIAc4ShF0bZbPouTb8pEhjcMU5DI2YoKiEoWyy77dYTvrPR
+         vdyNQceIWc4Wefp5KwJGzkvntjb0muCYwtNRmGZsv9/2TZf8AB/x/ogrVE+ycC9RBBdq
+         9HlaBwQ0LsaaGV/ITVgZjmhnBPB4rxkqJbZnVCwGyrkM11y7OtyQJoipw7hPh0PRovGj
+         bzPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741275031; x=1741879831;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pnVE5T7dMbCpoR3/dyy5h4yRWRCU+sUz95YcDZdqJzY=;
-        b=pYqVAezI+PCIiLHwHXGtgM/VRmfrSqKWj2npFocYvNLS2w6FFgwQex6mtC6zCwoBra
-         R9fSBdDI4K5VdfnxbUUCV2lzwhoPaWLqDi7KFkg4PGoe2+Cx7OP1cAFjGEc3Loo5Kqgx
-         W60lNP6OAzvUkaEG7c11+IFv0eCFdJHGvbYgPJaFEwWyTwT20PJfsHa+T/Hcl2ba6Kno
-         JkpU5k/cPpHGTxeEGBPxlSIY49DfTfFTSY2HsZiph1OuYqpll3gggPIPFYBvfXvfQxUK
-         y/fkhNuC2PpYIYE67riBXrTCVnXIY2jYEKXqPs3eIQqYBvsVVHzofZyIxI/kXzy6K/Y0
-         Vg1g==
-X-Gm-Message-State: AOJu0YxBRnfpEmoz86nv3M8sJrUkvePKi6PuMUoT6klzCV2MnENSwsWT
-	GhK/RDTEftHBFWxurt5eWM26TVDApRxoZVP62o+mirnE6MYnkZh3llSAuA==
-X-Gm-Gg: ASbGncv499L/qpSYrVXkrJihv1sTjjCyX7Y2ovOslYSpDdFRLeSCHfXGI0sJ6g4EXRZ
-	j00S7Ty5WivqI0XDpX0NnDkp1YHxX9cl6FMNUL9PjfPVqgGlMDG8zVPXbvDYfiJha8CckAxkbRL
-	PNd0VmPXCl023ZPyUq1UIoKZKSdKnck2LUVjKbd/MRV8IN319epG8tULEaoB1RkhMrkMlUql2GT
-	J16s6mLHnvv5bH55r18fyr2gTs2pmz2yYZKyd102jYizUC9B4fchQ0H/hWXeWjrxg8iAXQEPpVe
-	JSjM9T0FNBfMl+QLfUoyQ9XYr0Cj+f3ZbO3T/WyIbZ++HA==
-X-Google-Smtp-Source: AGHT+IHcepefveb6GY3pn0zT6HKyJSLR/+YzKyguwENM6lsAFobesPl/rbfuirXS2jU8UdvM3X7eZg==
-X-Received: by 2002:a05:6402:3514:b0:5de:572c:72cf with SMTP id 4fb4d7f45d1cf-5e5c1b8ae47mr3437830a12.10.1741275028802;
-        Thu, 06 Mar 2025 07:30:28 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e5c745d5cfsm1093516a12.19.2025.03.06.07.30.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Mar 2025 07:30:28 -0800 (PST)
-Message-Id: <pull.1873.git.1741275027.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 06 Mar 2025 15:30:25 +0000
-Subject: [PATCH 0/2] merge-ort: fix a crash in process_renames for a file transitively renamed to
- itself
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1741275170; x=1741879970;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a4s6rfICiODJdEmiSuoEUe4XpJVoMjbd3muBSEv1BVQ=;
+        b=gi2gb/tcjRNyNbcVi7lOrzPTvoOiDyp7wlysOJTwC0b7eee9+eKV/Eiu/EyLOxDNES
+         jhohJQl+v8UMV1wJ6/sOYYHB80Vly6JkwJJ7w6/tcLM8037N8RWhnOu6GkAt7iDg/IQw
+         OWU59DFXJO+hX14m/UeRtkCpF6DXsbd/+eedlENK94Bl9zWXpQWPkAp3Maycplq6IkAQ
+         2aQWhA0AQAWbDhFwZUPUjn+CzWI1TUF1/InDnU4CrVn5y1BHIas8a6+8Luy+g9Aenre4
+         KzcYYlUpIe5mz9lYlyDYR9UWznwdqg91Ud40rxSUImVRpsVA5XYtDfFsraf+9nz2MCdt
+         Slcg==
+X-Forwarded-Encrypted: i=1; AJvYcCWAOhIgif9Y3/FwdZsZxJXM/ybfL0c7olVCvvO9l2qiRngH2UJvoDiePLyz4N70fP4IVac=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyS56tvv/1+kNAnknefzMmJ+RzSK2xt5uSsy6ieKnVf2wTv1LZX
+	SZKNF7Y9GiaoEGHfyglvOEPvaJxqW/SM7JLfChfVdDTCXrTLi08UxTSjiEKgX+tE676GYjbiiC+
+	6ByootCqYBTW3oaGeIDze4n/LIqI=
+X-Gm-Gg: ASbGncvdADxE+pRqz/w02jjE+KhdN3wZBtK9u61EilS6KMAN8P6QyAEu/calh6mfXtI
+	jqST4s+FmSAOjrAdcW+aBVi0Masf2UI3eksQdSfs8ggAS3FiChF6yAAb1lFTxPUW1tfZ9UfyTXK
+	bMOlC9KfOxUeZzB4Fg+lXT7I+O
+X-Google-Smtp-Source: AGHT+IGihs7NfyxVc29qVQiZ0zwWkck4K6y0pjUAUF7uUyyfqu13mmw2p80zsgaL8aW5qNVxYSkuYQrWLWBKS3yidjo=
+X-Received: by 2002:ad4:5f48:0:b0:6e4:7307:51af with SMTP id
+ 6a1803df08f44-6e8e6dd3eb4mr127019736d6.36.1741275169605; Thu, 06 Mar 2025
+ 07:32:49 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 6 Mar 2025 09:32:48 -0600
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
+References: <20250217-pks-update-ref-optimization-v1-0-a2b6d87a24af@pks.im> <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Dmitry Goncharov <dgoncharov@users.sf.net>,
-    Elijah Newren <newren@gmail.com>
+Date: Thu, 6 Mar 2025 09:32:48 -0600
+X-Gm-Features: AQ5f1Jr_q7b8KZUb1pZvI8twypphg2xcBKkZ3ceala6ETJtqSFpo6gVOczMYGLs
+Message-ID: <CAOLa=ZSUDq+uqBhbpf00k4i=mT9D8VFzjyR_a7K=3UzRiNj8eQ@mail.gmail.com>
+Subject: Re: [PATCH v5 00/16] refs: batch refname availability checks
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Jeff King <peff@peff.net>, 
+	Junio C Hamano <gitster@pobox.com>, shejialuo <shejialuo@gmail.com>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="000000000000f11580062fae375e"
 
-Maintainer note: this is not a recent regression; it need not be included in
-v2.49.0.
+--000000000000f11580062fae375e
+Content-Type: text/plain; charset="UTF-8"
 
-This is a follow-up to Dmitry's report of a case where both merge-ort and
-merge-recursive fail to properly handle a very specific type of conflict.
-See
-https://lore.kernel.org/git/20240921024533.15249-2-dgoncharov@users.sf.net/
-for the earlier thread; the first patch is an adaptation of his
-demonstrating the issue, and the second patch is my fix for it.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Dmitry Goncharov (1):
-  t6423: add a testcase causing a failed assertion in process_renames
+[snip]
 
-Elijah Newren (1):
-  merge-ort: fix slightly overzealous assertion for rename-to-self
+> Changes in v5:
+>   - Improve a couple of commit messages.
+>   - Align `GET_OID_*` flag values.
+>   - Link to v4: https://lore.kernel.org/r/20250228-pks-update-ref-optimization-v4-0-6425c04268b5@pks.im
+>
 
- merge-ort.c                         |  3 ++-
- t/t6423-merge-rename-directories.sh | 41 +++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 1 deletion(-)
+The range-diff looks good (snipped to keep my email small and direct).
+Thanks for addressing the comments!
 
+Karthik
 
-base-commit: f93ff170b93a1782659637824b25923245ac9dd1
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1873%2Fnewren%2Fendit-fix-funny-rename-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1873/newren/endit-fix-funny-rename-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1873
--- 
-gitgitgadget
+[snip]
+
+--000000000000f11580062fae375e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: de1b68c81c42525d_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mSndCOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK3JDQy93SUdpcllzbHpLdVdPbTdVNlZUbVNZU2I0YQptMkFGTVJHdUVo
+M25sZXEyVmFYa2lMdHZvWnpmeDY4UCtuQzdlYnFVbk5zL3c5bHY0ME5td2piTk9QcHV5MmdjCjdw
+ME1OMjdmRnpuaDZuYkR1WnVzcmFZcWhDSWl5R01YSGpoTVptNlBXcE1jK3NBN2FudkdQMlFycE1C
+M1I5NWsKWUNPbDROWldqU2cwdkd4L1pralgxcCt0R1kxU3krT1JxTUIzNVJxRXpod1crYjcxa2Js
+eWZrdnpxWm9LOG8vUAp3c3ZxUWZHWkNDajF2clRmQU53bGtjaWd1TVBuSm96RWxoNjJFTzZJa3lL
+eXRidlI1WWg2MCtSOUpEQ0tnQmt0CmJTbzZRY0Z1S0ZCN25ZWFVJYlF5b0Y1UzN3RWZkekNqWjB1
+cTc4UjB0RUhrRG4ySGhKMWxqNXJNMGNXZE5tbGMKakFGczlVeTFwNWVCYzhvTDlySnZKVVIvTURV
+TThEcFh6Nm9YTmRqUENGdXJYWEhTenpDOG50ZmdKOGVJVU9vQwpYUlFBQnFHaS9zZDEvZmQzNXFW
+dEM3YlhGZVZVS2pKOVRpUllGRU1GK0ZsY2diaEN0emlFSnFScjFxUXhZaW1QCjBvMEl3WThPdzJp
+RjhzWStHMXBJb1dKYmgzRDg4MFVVT2pCc1ZQZz0KPW9pOVkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f11580062fae375e--
