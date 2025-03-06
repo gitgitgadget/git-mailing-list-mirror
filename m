@@ -1,112 +1,191 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3206204C26
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 10:31:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634F0204698
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 10:37:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741257108; cv=none; b=LOQKCfc/a0UXCkAjr2CvLN5WrdPaUBCCxLjif9yKuyitkaZuBf4etDG8ooWJtXcI41JHpvJaNHfP1ePGuDu9GjsVZDwpaXJpWlIhgbPXSTaBAgyBJOyrlzS5d8ABwsxY9K2eif8RCAU3LqpZeCzCDzafrJqGDfhI2r2Je1RM3eE=
+	t=1741257426; cv=none; b=XD7tICh07v/TUwGqBmSpPtFjg3/1H2z8jy/Bp9yKKYi4qTCsHQBiQAc201+ofjUCgQDZA6OoOZaoXKmYTr4QbRrcBDPCqwX4+Tc6CevsI8SJdlHb+l7JPieBkv5qOgJwbHzy65HguQFlW1eBCBExLR71LIpg/sYcKrAy4mDst0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741257108; c=relaxed/simple;
-	bh=XRr4i6ppRCnNXLXQx+acE32sGU0TxprklMup6R0kXg4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=skfP/eKoIQDorDy9seMJcHZ6nzbrhO8TdnGB7Hg4Gk6vbjeAE8kahMW0cX9hjLjwedWztcnckHJT70qMG2GyfB4BYts7mByKj1S8JNxhefypbsNuBJWiWIoy41Tbu1E4qzE6XFbNCxAeqsqHPxgeIxInkne4uyjQZJ679Be9D4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jj1crNEB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dd/r6O1S; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1741257426; c=relaxed/simple;
+	bh=luqU48vPUnzetMnkonuWW+PF90jkhybEtsWzZd+j9fc=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=tq2jdpF/yiccGbtlvXZ0F8knAK65Bc4tlB97Xr235cJTE48pFpK/k/QlsAooTAkUWO5jvLmfuJHvx5fZc5OUzKmX5rivVFQwXscVDDWxwvZEA8BePM3CGUsQ4SmArflgFZrPwuc9MMIKoENh/6gjApZu3TXsdeZcYCbfM2jiUWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iqnFKwHD; arc=none smtp.client-ip=209.85.221.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jj1crNEB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dd/r6O1S"
-Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
-	by mailfout.stl.internal (Postfix) with ESMTP id A17A111400E9;
-	Thu,  6 Mar 2025 05:31:45 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-13.internal (MEProxy); Thu, 06 Mar 2025 05:31:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1741257105; x=1741343505; bh=chKQK4KzbJ
-	9chexrkLp3LdGhADyC3NreRPQDTpafPcw=; b=jj1crNEB2LtFubB6r/ABdPuyH3
-	6d857/4GG2EFFHahnQVApvSQuu0wtIZuMle0fFhelXII+u89pyEE34aoijYg82pU
-	30zRkBXdgoNCDEqFoP+2uLKZKAeVwepwTyCDt8+/cwzWQVLcEeNT9Vp6wU0DuRRd
-	Xw13VmKL5Is0GRxp6nwrNSszE1g/W2GexrfYXn62vvPZWoxJy8LtPDY/t6fnxkcd
-	7PKgdE0lrOnH1NRmnWNvF4hfYk+IV5JYe/4fwWam9x8OdB1mIaH3LEvoPWqcWjNH
-	JIUn/8Fdi/lbrSMrH2aHNZFDXgPD3Nz8jlLVLo6CDKc2R8yNFeEhV1Q1l24w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741257105; x=1741343505; bh=chKQK4KzbJ9chexrkLp3LdGhADyC3NreRPQ
-	DTpafPcw=; b=dd/r6O1SWadn1p5idZJbJxw3rYjtBpj4inoumkPE2yo6HjsdRwP
-	mILK83O2qTHpFJGKfyxuEDKszckBWrd7oLSIdVQ7CcSa0UQ+Wf/TjyimP0gokup2
-	k2IFopdQQCbSDVLKQTGthDUJ70AnHeUKKRoWhCSAxAkWenPeUPQ2W9ZQxcXRZQUF
-	co+XH7hUeQyMijXzVaScqdHI2kJkDzFNs0+4DmB5yNCc4quCMYiRuhw3JVYyGd8A
-	yPA5i47vgnhPfT6L6s9u+ndTZwrVxogsTeKw4osWiQvQfsvx7GufOHL5r4uZj9hB
-	QKFQMKxs0mjK4O+hbgoi7yf+oG5x829pTYA==
-X-ME-Sender: <xms:kXnJZ71g1sKF-pFGwWyIzWV11OgySYXxafCxEY5yGA_ImqfQoa3fgA>
-    <xme:kXnJZ6EaY-zQ_VrMp0nLYyZYl2ZBKAsoc9ygeYui9u0tXVtIJmR7B13cR-UQsonDC
-    VM6QdNa2c7w-v6N3w>
-X-ME-Received: <xmr:kXnJZ75U69E_dSdCSHnzZo_YT92i8DX7cE9s9cFnq11n7rmab80pFZfjxOGGfNCRkkomLLxy5m5OAJSbf7JVQiJrWjl2iOlOwbJzBlVYLrdyLQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdejhedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgr
-    hihlohhrrhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:kXnJZw01YffY21GFU4TjpzsWjEj4zLAf2JBysvr2gq-exoo_w75EzQ>
-    <xmx:kXnJZ-EITRRmIx7-dci6tqX-Z5A7JV7ANEwQmdRXGfburSPJo2siyQ>
-    <xmx:kXnJZx-KGalVsEEX-jktGFSnX7gL1X89AxlhxbhoGUwo_5ysMygXLA>
-    <xmx:kXnJZ7k6KZtSXgOZUstfWT8Va3eBx3d5rUHtrqwstH2GfENdAq1Tjg>
-    <xmx:kXnJZ7MoJcGhIgig-GEV2o4BjF3NtRjilSNlamxA2SFNAWkR_uZeLA8M>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Mar 2025 05:31:44 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f17a269c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Mar 2025 10:31:43 +0000 (UTC)
-Date: Thu, 6 Mar 2025 11:31:43 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v3 0/1] pack-objects: freshen objects with multi-cruft
- packs
-Message-ID: <Z8l5j-uOpits9r0w@pks.im>
-References: <cover.1740680964.git.me@ttaylorr.com>
- <cover.1741133712.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iqnFKwHD"
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-523c67dba31so208362e0c.1
+        for <git@vger.kernel.org>; Thu, 06 Mar 2025 02:37:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741257423; x=1741862223; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ln3i262YCa7P4DVr5nF+dYEsHVZDRukhonxnZqXIirE=;
+        b=iqnFKwHDPeduu1fF+QpqyozciV3yQHmvomodxp4iZIKlSvrACjHiI6MiPbKW+U+tbj
+         C/t03p5hhV9TVE9iE3P5koTiiNVG+39p2Dff8dvFLiVFfVtwmndRYJUguQ7ypdrYr6Vg
+         zU3mhyQnf+LiwvkGHhhwp+WU16fGPS0NbZP1f9MVtIYCOHT5lK/L4WNctHCB3UG38icI
+         wv9YrZGkvQGb3r7ikIptcHxp0Avde/y3JpgH8YoSUgYrXzKrPC7z0yDWjNPidXCBIkau
+         yW7MkAUrDwfFg1ga7+aI8hYfrgMIz9LvjLzq8y6aCQ+ppYunACGU0sPqE6UriDc8/LF0
+         golA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741257423; x=1741862223;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ln3i262YCa7P4DVr5nF+dYEsHVZDRukhonxnZqXIirE=;
+        b=Brt2rtq9DmqXidwWeAoGXeu5vspzoLHUeLDoAedTRGaxs/6WKzd5ZGsIyosg2A6/+5
+         LiW/BYwRlYTHz8oJIUJniVDigbJzWjXs2xoZBS0LZN25L6QBXnInxexqrj9lAjFmZ0Vp
+         e1gK56VE5VP+4glGUSIw57qFmrtV+JkQ723THweOlyZ+RmtDrC44bvpqQRZxiRZRfH87
+         Elt3YWCgOksZHrRqYsMRfjsxnCDRgd6jX/Dccm/VLe7mt25ShavjF3s1kbYd95r76Zit
+         /MR8P5rlXlQmamCMvV572o8A9cx8o6dThZNOZytezPNhcdMSmQrEOlSvp3lGnhok3Jk5
+         eZEw==
+X-Forwarded-Encrypted: i=1; AJvYcCUBWcjOk+rdHa4xspvVL7IJ4y4Lc83XlE/n8C913HA9tIaj6Gs43tVBi7uP+QPhgGhiO0I=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzFKgOpO4Oy6NNfuY+rCIe6Asg18vm3t9uhgrAFoPi1Zlwq2cfZ
+	pfWdDojBZGWsVMbXWFibpE/G7sJLxJOgtoAhUkpmPyASWBsJoEdGU+wcmqBwWpg1OZRmxLU2ZdN
+	Q4LvXHxhk++VW1+LgCHYYedjLOOA=
+X-Gm-Gg: ASbGncsU2MjJZCKqn5ovk9ifiNh7Ec6NKG17cpT0dB0K//VvZitE6s33GNIuDVG2n/C
+	wDAREEJp+GzEDPZZUl9OWDvxwreK8se3sh53uPT+GqHVwbTvgOHWrsK46DWjBIdn45Jh4a7e9Hb
+	n3PN59xFcwVsabEYxXTvD/yFD3Bjg=
+X-Google-Smtp-Source: AGHT+IHABI2702liAJtMD5CgJzkgn1LUw4Dw0F3AZSUqTAGlzOMqXISDaLoRadiQbWaIfIQOIJgNFZVfWIQX3TPuQEQ=
+X-Received: by 2002:a05:6102:5493:b0:4b2:c391:7d16 with SMTP id
+ ada2fe7eead31-4c2e27ada59mr3635272137.7.1741257423033; Thu, 06 Mar 2025
+ 02:37:03 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 6 Mar 2025 05:37:01 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250303-b4-pks-objects-without-the-repository-v1-1-c5dd43f2476e@pks.im>
+References: <20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im>
+ <20250303-b4-pks-objects-without-the-repository-v1-1-c5dd43f2476e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1741133712.git.me@ttaylorr.com>
+Date: Thu, 6 Mar 2025 05:37:01 -0500
+X-Gm-Features: AQ5f1JpIc4GeqoN6qvedaQJ86U_PUwnLl98NYwZlqi0jHqtTnro840HxWQCdzXI
+Message-ID: <CAOLa=ZREou-t8m6-HqUXpgB1SygNzP1JXSUV09NzpaoKgEUdwQ@mail.gmail.com>
+Subject: Re: [PATCH 01/12] csum-file: stop depending on `the_repository`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000029fd15062faa161d"
 
-On Tue, Mar 04, 2025 at 07:15:14PM -0500, Taylor Blau wrote:
-> This is a(nother) reroll of my series to fix a bug in freshening objects
-> with multiple cruft packs.
-> 
-> The only update since last time is that I dropped the first patch, after
-> Patrick astutely pointed out a flaw with the approach pursued there.
-> That flaw is why I wrote '--max-cruft-size' in what appeared to be a
-> convoluted fashion, but I couldn't remember my line of thinking at the
-> time.
-> 
-> As usual, there is a range-diff showing as much below. Thanks again,
-> Patrick, for catching what would be a very frustrating issue to deal
-> with later on ;-).
+--00000000000029fd15062faa161d
+Content-Type: text/plain; charset="UTF-8"
 
-Would it maybe make sense to add a commit that explains _why_ the
-existing algorithm looks as it does so that the next person won't be
-triggered to remove the code again?
+Patrick Steinhardt <ps@pks.im> writes:
 
-Patrick
+> There are multiple sites in "csum-file.c" where we use the global
+> `the_repository` variable, either explicitly or implicitly by using
+> `the_hash_algo`.
+>
+> Refactor the code to stop using `the_repository` by adapting functions
+> to receive required data as parameters. Adapt callsites accordingly by
+> either using `the_repository->hash_algo`, or by using a context-provided
+> hash algorithm in case the subsystem already got rid of its dependency
+> on `the_repository`.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/fast-import.c  |  2 +-
+>  builtin/index-pack.c   |  2 +-
+>  builtin/pack-objects.c |  3 ++-
+>  commit-graph.c         |  9 ++++++---
+>  csum-file.c            | 28 ++++++++++++++++------------
+>  csum-file.h            | 12 ++++++++----
+>  midx-write.c           |  6 ++++--
+>  midx.c                 |  3 ++-
+>  pack-bitmap-write.c    |  2 +-
+>  pack-bitmap.c          |  9 +++++----
+>  pack-check.c           |  2 +-
+>  pack-revindex.c        |  3 ++-
+>  pack-write.c           | 12 ++++++------
+>  read-cache.c           |  2 +-
+>  14 files changed, 56 insertions(+), 39 deletions(-)
+>
+> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+> index 397a6f46ad8..86e6e754816 100644
+> --- a/builtin/fast-import.c
+> +++ b/builtin/fast-import.c
+> @@ -770,7 +770,7 @@ static void start_packfile(void)
+>  	p->pack_fd = pack_fd;
+>  	p->do_not_close = 1;
+>  	p->repo = the_repository;
+> -	pack_file = hashfd(pack_fd, p->pack_name);
+> +	pack_file = hashfd(the_repository->hash_algo, pack_fd, p->pack_name);
+>
+
+I recall that `p->repo` should be an option here, but it makes to use
+`the_repository` directly here and not worry about it, this should apply
+to the other changes below too.
+
+[snip]
+
+The rest of the changes look good.
+
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 6406953d322..f0e2c000252 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -3024,7 +3024,8 @@ int bitmap_is_preferred_refname(struct repository *r, const char *refname)
+>  	return 0;
+>  }
+>
+> -static int verify_bitmap_file(const char *name)
+> +static int verify_bitmap_file(const struct git_hash_algo *algop,
+> +			      const char *name)
+>  {
+>  	struct stat st;
+>  	unsigned char *data;
+> @@ -3040,7 +3041,7 @@ static int verify_bitmap_file(const char *name)
+>
+>  	data = xmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+>  	close(fd);
+> -	if (!hashfile_checksum_valid(data, st.st_size))
+> +	if (!hashfile_checksum_valid(algop, data, st.st_size))
+>  		res = error(_("bitmap file '%s' has invalid checksum"),
+>  			    name);
+>
+
+Here, we're modifying an internal function since it needs to pass the
+algo to `hashfile_checksum_valid`. Makes sense.
+
+> @@ -3055,14 +3056,14 @@ int verify_bitmap_files(struct repository *r)
+>  	for (struct multi_pack_index *m = get_multi_pack_index(r);
+>  	     m; m = m->next) {
+>  		char *midx_bitmap_name = midx_bitmap_filename(m);
+> -		res |= verify_bitmap_file(midx_bitmap_name);
+> +		res |= verify_bitmap_file(r->hash_algo, midx_bitmap_name);
+>  		free(midx_bitmap_name);
+>  	}
+>
+>  	for (struct packed_git *p = get_all_packs(r);
+>  	     p; p = p->next) {
+>  		char *pack_bitmap_name = pack_bitmap_filename(p);
+> -		res |= verify_bitmap_file(pack_bitmap_name);
+> +		res |= verify_bitmap_file(r->hash_algo, pack_bitmap_name);
+>  		free(pack_bitmap_name);
+>  	}
+
+[snip]
+
+--00000000000029fd15062faa161d
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: ee740f75085fcd6d_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mSmVzc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mem1jQy8wVm9FRzJWQ1F2aEUya1RzMm4weEpEcXJ6TAowWWwwekdWY0o1
+R0ZVR1N0NFAwVjZXZStCT3ovMmtxdXpaaTZCUTZLRFpiMkJqcDIxR3J3c01tSlFpcnkyb1oyClls
+YXFxK1A2aDFiRzZEY1pkQ0tpcFFLNHlVMnF6VmprREZCcEE0dzZEaFFqRVRkSCtxekdaY0R1dzZW
+d3VhNHEKUzZVS1Q2bFZoKzlCQklCWE1iaVdia0srVHRqQXR0TGxZQXY1NWxkc2lkMFljLzZPQVRp
+UTUvWGRCT2JEeWEydwo3ZEZ0SW54TEdVVzJXTDAvb1BndGZvOHdxYXRGOWxLRG15R1hIbEVYQU1v
+NVk2M3lZa0NINERndDhFSWJxaGVZCmNqRkhCSSt2S1FhU09UVUMzcmZEUEpMbVZuT1hmaEdoRkVa
+RkQvSTZYenVtVUk0K2ExaEhyajBPRmxtajJKa2UKMG1jekJ0QXdBNW5GVklmOHB3N1gxWnZiVmVM
+MkFVekZmbmZ3QkQ3Y0h5aGEwYkNrTXhlRmJocW5CUWkrU0xTNgp0bEc4OC9neEdRZ1cyN2YzSE42
+elpzbEIxWWs3VkJnR0tvaEQrR05yMVRUcGsrRjN0RmY5THlkTzhnOFRoVjV3Ck5MMko1VGdPQzJJ
+MFRqbllwZkM1SEhTQVN6UzBnVTE4MmI1V0MrVT0KPUp3enQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000029fd15062faa161d--
