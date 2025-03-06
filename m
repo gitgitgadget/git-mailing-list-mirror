@@ -1,114 +1,162 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96CC2101AB
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:32:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200D917B500
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:34:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741275172; cv=none; b=FyUHKTxCDsaLCc9lhL0siAojymToleQpGic4S1TIr7GquJEf/KQKIJI1AeYoCwXRR90uI9opwEmlEYU/6u2TyOiuOx+XTIbyGGUNkHXSGzsrfk+qUAT1z/thFgjE8o9sJK9SF8BYHcDLzpxHb3ClTcMZ1TsQDMCJTYR5h7MKSjw=
+	t=1741275291; cv=none; b=NR9yNHWeG0fH415Bn97BgrQz5Er8UshlGeV3fzrSaU4FQ+10LFQ9Xp7W2+B4+jFHiRsBROBaaL4A6rnV4Y9xXsqCPZ0WkST30DI0AIgi9BT7O00nI+Y3TOzwNCA5kTgo8PNr6ThDDuz9lH4L6wdwX6vyEfpGq04Rm8oKNLjyZc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741275172; c=relaxed/simple;
-	bh=D6hg3jC9+WtrZz2SLWkWtsM4tgQNoAWOgh883jmXVwI=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KJ7dyCV29MHdnCkpajOAPj6IizfK6rg8VilmeozQBCOnvm8nw0fsCMCl4bdBcQvlnvxU8WHS0xvNKpzFVg+BzsOlfDJDHeTrOmCabjLpcfoG+uVLYoM+V7AFgOCxy+Ozb7v8TmFfrJWsje29A18+1O4kRMfOfSBRYSh5AHkhkA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VRKgOKGf; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741275291; c=relaxed/simple;
+	bh=A9UAfD20j/2XTJHfVd+E8WxMkALknrk9PKOGSBtlVKQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EXy5cBnkzK98Iwfb5ksOKGlpjtIlduApV9zEKUlFj1LsoYQ2RedX5PHdwiwkPp9mX7nJIkJyYaUs8mV4nAgzvqOR4hlUO4tbxZ2DCxb0LoLwqSRZKcs77BMdVOu9bWgr1YXUDHJpYM0ue/vvyb0V3lr0wfmg8u4i6WZ83P9gQkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=jjLZwP6I; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VRKgOKGf"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6e89a2501a0so7034186d6.1
-        for <git@vger.kernel.org>; Thu, 06 Mar 2025 07:32:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="jjLZwP6I"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6ef7c9e9592so7486117b3.1
+        for <git@vger.kernel.org>; Thu, 06 Mar 2025 07:34:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741275170; x=1741879970; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=a4s6rfICiODJdEmiSuoEUe4XpJVoMjbd3muBSEv1BVQ=;
-        b=VRKgOKGf/7HT1hztAmcdyVyuaG3nrtrDOh+GWfZGkqjtfrMdtiP8w/ZPc4fJG0OwS1
-         xNZpGJc2aGy+1VDcUHVHIt2feoGNo+I4fRZZsRh75FpAYmG1w6Wb0KyITBGYMhJ7FRrE
-         SsTBAYbDFzq8ts3PCNoyJYIAc4ShF0bZbPouTb8pEhjcMU5DI2YoKiEoWyy77dYTvrPR
-         vdyNQceIWc4Wefp5KwJGzkvntjb0muCYwtNRmGZsv9/2TZf8AB/x/ogrVE+ycC9RBBdq
-         9HlaBwQ0LsaaGV/ITVgZjmhnBPB4rxkqJbZnVCwGyrkM11y7OtyQJoipw7hPh0PRovGj
-         bzPQ==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741275288; x=1741880088; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8tm4mx7/to/8iG22ZoULEZ+dOsGO1FI+1JF58WrRPLo=;
+        b=jjLZwP6I71jTgIkfVNI41gGh1IgFl3U08an5nHeH6m0upREKmjouswqbD0F3kjrzd7
+         2OmbybRh56dOA/6MxLbvlIrZ+EoVOB5EwQGH9dNNahQqeECcMGQgBvJ40CXwM7rUK6YZ
+         rNG3jFh85Q1EkRta8g6BAKXGdzUsMtdmF3Am5pqLWtJ37E3bJgrvTLbrrhO/g3pjBaSv
+         NpBdHBKGVIQFtgwZuf+UmNyTep/N3QQhqCVvf/UTSaRVRKhNYlnAQXFaRyydfslapNRz
+         Msl803GpIgRIwtC6wldtVfXQdgzZB6yko4DV5Ue2NzJnYid0PCfp45HhorseWYJOS5FT
+         kxjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741275170; x=1741879970;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a4s6rfICiODJdEmiSuoEUe4XpJVoMjbd3muBSEv1BVQ=;
-        b=gi2gb/tcjRNyNbcVi7lOrzPTvoOiDyp7wlysOJTwC0b7eee9+eKV/Eiu/EyLOxDNES
-         jhohJQl+v8UMV1wJ6/sOYYHB80Vly6JkwJJ7w6/tcLM8037N8RWhnOu6GkAt7iDg/IQw
-         OWU59DFXJO+hX14m/UeRtkCpF6DXsbd/+eedlENK94Bl9zWXpQWPkAp3Maycplq6IkAQ
-         2aQWhA0AQAWbDhFwZUPUjn+CzWI1TUF1/InDnU4CrVn5y1BHIas8a6+8Luy+g9Aenre4
-         KzcYYlUpIe5mz9lYlyDYR9UWznwdqg91Ud40rxSUImVRpsVA5XYtDfFsraf+9nz2MCdt
-         Slcg==
-X-Forwarded-Encrypted: i=1; AJvYcCWAOhIgif9Y3/FwdZsZxJXM/ybfL0c7olVCvvO9l2qiRngH2UJvoDiePLyz4N70fP4IVac=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyS56tvv/1+kNAnknefzMmJ+RzSK2xt5uSsy6ieKnVf2wTv1LZX
-	SZKNF7Y9GiaoEGHfyglvOEPvaJxqW/SM7JLfChfVdDTCXrTLi08UxTSjiEKgX+tE676GYjbiiC+
-	6ByootCqYBTW3oaGeIDze4n/LIqI=
-X-Gm-Gg: ASbGncvdADxE+pRqz/w02jjE+KhdN3wZBtK9u61EilS6KMAN8P6QyAEu/calh6mfXtI
-	jqST4s+FmSAOjrAdcW+aBVi0Masf2UI3eksQdSfs8ggAS3FiChF6yAAb1lFTxPUW1tfZ9UfyTXK
-	bMOlC9KfOxUeZzB4Fg+lXT7I+O
-X-Google-Smtp-Source: AGHT+IGihs7NfyxVc29qVQiZ0zwWkck4K6y0pjUAUF7uUyyfqu13mmw2p80zsgaL8aW5qNVxYSkuYQrWLWBKS3yidjo=
-X-Received: by 2002:ad4:5f48:0:b0:6e4:7307:51af with SMTP id
- 6a1803df08f44-6e8e6dd3eb4mr127019736d6.36.1741275169605; Thu, 06 Mar 2025
- 07:32:49 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 6 Mar 2025 09:32:48 -0600
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
-References: <20250217-pks-update-ref-optimization-v1-0-a2b6d87a24af@pks.im> <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
+        d=1e100.net; s=20230601; t=1741275288; x=1741880088;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8tm4mx7/to/8iG22ZoULEZ+dOsGO1FI+1JF58WrRPLo=;
+        b=bbNF/pobEX4d+Ocq0iJjQWYw79HmvXMkxLAP1dT48T0c0WXOMO9LsVUnvGpH0T/GCp
+         nkVn/X1TkCQhCca5VKhyhyhE8eK4qWFB+PesXjPFbB28UARAXSxXNHffMtvjAkAQWt2G
+         muoTC24VYpeE8o5hJETZCSPyxEJWDHRHNOBfx+m/9VRy4KSCW0uwff+bkA7gQH7GcxsZ
+         xVJ9aTsxQUmFheLtXbZS+4NP31nXjG+HSKwf4HYh3pWVwr0CwoX3H93OS5J7i4n60wXl
+         Jh7Tdr7ygRXbyJqLRjdXHN5SDi6FxD17Vi5F6yIU9y+Ou9B8b5l+nuR6MCPiM5Ir+/gg
+         qVuQ==
+X-Gm-Message-State: AOJu0YxyeJlmc0vAR8NmpdtCkszmgxFSNZ6TFCd3neFndCfIf1cDUigE
+	8YPqxf0xM8R0TApuLpBVPN/VzNCGrPDCMQ9vdQznVYuPjOVvgck3mB7K0ET9I1TIvADYsuQFlU1
+	h
+X-Gm-Gg: ASbGncvKx80JNh4Ko0FInKx8vdgCBjDU1rovheM2rVgnEvXMd6wEiwv8i+XlYwVjHEo
+	p0qrlRgl/WBeA26FOrAm9hoXKsFqubYfA+yn2r5blx6yN/F9HZho9irQzm+Lnnpd/Jk9hLwUAM7
+	JKDKhNJNyKLL9jocEZ4O6672r5yoyjdrI8GZzwZl88R3PVD3cdrE04DrQTBeSerU8FZTZHzPsrf
+	Hz76ifYhhuiJwSmqMYlzGN/b2eW4yteSzPbQo3NIiuX5bsJujEB3Vh68XsarGuP+A+EZI1JcBQm
+	lcafrsg1DQdmYiwPdEmCPUP7L1Ih4d+pj+785OXvBwkjc4vepO91j9zXPQhAZjIuTR8blDTaN78
+	93ijre+ip1ur/L3yZ
+X-Google-Smtp-Source: AGHT+IH3QW1Dwi2oRFydK1MwYzV1/aV6NmJfwW6W5bgMgZQD85mOQOYQAbwhIkOfLj2Z/KdZNRCXdw==
+X-Received: by 2002:a05:690c:3607:b0:6f7:55a2:4cd8 with SMTP id 00721157ae682-6fda2fe1661mr107711167b3.5.1741275286879;
+        Thu, 06 Mar 2025 07:34:46 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6feb2a51821sm2990077b3.39.2025.03.06.07.34.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Mar 2025 07:34:45 -0800 (PST)
+Date: Thu, 6 Mar 2025 10:34:44 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	SURA <surak8806@gmail.com>
+Subject: [PATCH v2 0/2] refs: a couple of --exclude fixes
+Message-ID: <cover.1741275245.git.me@ttaylorr.com>
+References: <cover.1741223981.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 6 Mar 2025 09:32:48 -0600
-X-Gm-Features: AQ5f1Jr_q7b8KZUb1pZvI8twypphg2xcBKkZ3ceala6ETJtqSFpo6gVOczMYGLs
-Message-ID: <CAOLa=ZSUDq+uqBhbpf00k4i=mT9D8VFzjyR_a7K=3UzRiNj8eQ@mail.gmail.com>
-Subject: Re: [PATCH v5 00/16] refs: batch refname availability checks
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Jeff King <peff@peff.net>, 
-	Junio C Hamano <gitster@pobox.com>, shejialuo <shejialuo@gmail.com>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="000000000000f11580062fae375e"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1741223981.git.me@ttaylorr.com>
 
---000000000000f11580062fae375e
-Content-Type: text/plain; charset="UTF-8"
+Here is a small reroll of my series to fix a couple of quirks with the
+--exclude pattern matching.
 
-Patrick Steinhardt <ps@pks.im> writes:
+The changes since last time are fairly minor: the second patch's subject
+line was reworded (thanks to a suggestion by Patrick). Likewise, its
+test script changed slightly to reflect that "refs/heads/ba" and
+"refs/heads/bar" are no longer considered overlapping regions.
 
-[snip]
+For convenience, a range-diff is below. Thanks again for your review
+:-).
 
-> Changes in v5:
->   - Improve a couple of commit messages.
->   - Align `GET_OID_*` flag values.
->   - Link to v4: https://lore.kernel.org/r/20250228-pks-update-ref-optimization-v4-0-6425c04268b5@pks.im
->
+Taylor Blau (2):
+  refs.c: remove empty '--exclude' patterns
+  refs.c: stop matching non-directory prefixes in exclude patterns
 
-The range-diff looks good (snipped to keep my email small and direct).
-Thanks for addressing the comments!
+ refs.c                  | 20 ++++++++++++++++++++
+ t/t1419-exclude-refs.sh | 26 ++++++++++++++++++++++++--
+ 2 files changed, 44 insertions(+), 2 deletions(-)
 
-Karthik
+Range-diff against v1:
+1:  c3b5ca5973 = 1:  c3b5ca5973 refs.c: remove empty '--exclude' patterns
+2:  7e6a5e020b ! 2:  67c8c5f797 refs.c: unify '--exclude' behavior between files and packed backends
+    @@ Metadata
+     Author: Taylor Blau <me@ttaylorr.com>
 
-[snip]
+      ## Commit message ##
+    -    refs.c: unify '--exclude' behavior between files and packed backends
+    +    refs.c: stop matching non-directory prefixes in exclude patterns
 
---000000000000f11580062fae375e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: de1b68c81c42525d_0.1
+         In the packed-refs backend, our implementation of '--exclude' (dating
+         back to 59c35fac54 (refs/packed-backend.c: implement jump lists to avoid
+    @@ Commit message
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mSndCOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK3JDQy93SUdpcllzbHpLdVdPbTdVNlZUbVNZU2I0YQptMkFGTVJHdUVo
-M25sZXEyVmFYa2lMdHZvWnpmeDY4UCtuQzdlYnFVbk5zL3c5bHY0ME5td2piTk9QcHV5MmdjCjdw
-ME1OMjdmRnpuaDZuYkR1WnVzcmFZcWhDSWl5R01YSGpoTVptNlBXcE1jK3NBN2FudkdQMlFycE1C
-M1I5NWsKWUNPbDROWldqU2cwdkd4L1pralgxcCt0R1kxU3krT1JxTUIzNVJxRXpod1crYjcxa2Js
-eWZrdnpxWm9LOG8vUAp3c3ZxUWZHWkNDajF2clRmQU53bGtjaWd1TVBuSm96RWxoNjJFTzZJa3lL
-eXRidlI1WWg2MCtSOUpEQ0tnQmt0CmJTbzZRY0Z1S0ZCN25ZWFVJYlF5b0Y1UzN3RWZkekNqWjB1
-cTc4UjB0RUhrRG4ySGhKMWxqNXJNMGNXZE5tbGMKakFGczlVeTFwNWVCYzhvTDlySnZKVVIvTURV
-TThEcFh6Nm9YTmRqUENGdXJYWEhTenpDOG50ZmdKOGVJVU9vQwpYUlFBQnFHaS9zZDEvZmQzNXFW
-dEM3YlhGZVZVS2pKOVRpUllGRU1GK0ZsY2diaEN0emlFSnFScjFxUXhZaW1QCjBvMEl3WThPdzJp
-RjhzWStHMXBJb1dKYmgzRDg4MFVVT2pCc1ZQZz0KPW9pOVkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000f11580062fae375e--
+         But that test fallout is expected, because the test was codifying the
+         buggy behavior to begin with, and should have never been written that
+    -    way.
+    +    way. Split that into its own test (since the range is no longer
+    +    overlapping under the stricter interpretation of --exclude patterns
+    +    presented here). Create a new test which does have overlapping
+    +    regions by using a refs/heads/bar/4/... hierarchy and excluding both
+    +    "refs/heads/bar" and "refs/heads/bar/4".
+
+         Reported-by: SURA <surak8806@gmail.com>
+         Helped-by: Jeff King <peff@peff.net>
+    @@ refs.c: struct ref_iterator *refs_ref_iterator_begin(
+      		exclude_patterns = normalized_exclude_patterns.v;
+
+      ## t/t1419-exclude-refs.sh ##
+    +@@ t/t1419-exclude-refs.sh: test_expect_success 'setup' '
+    + 			echo "create refs/heads/$name/$i $base" || return 1
+    + 		done || return 1
+    + 	done >in &&
+    ++	for i in 5 6 7
+    ++	do
+    ++		echo "create refs/heads/bar/4/$i $base" || return 1
+    ++	done >>in &&
+    + 	echo "delete refs/heads/main" >>in &&
+    +
+    + 	git update-ref --stdin <in &&
+     @@ t/t1419-exclude-refs.sh: test_expect_success 'adjacent, non-overlapping excluded regions' '
+    + 	esac
+    + '
+
+    - test_expect_success 'overlapping excluded regions' '
+    +-test_expect_success 'overlapping excluded regions' '
+    ++test_expect_success 'non-directory excluded regions' '
+      	for_each_ref__exclude refs/heads refs/heads/ba refs/heads/baz >actual 2>perf &&
+     -	for_each_ref refs/heads/foo refs/heads/quux >expect &&
+     +	for_each_ref refs/heads/bar refs/heads/foo refs/heads/quux >expect &&
+    ++
+    ++	test_cmp expect actual &&
+    ++	assert_jumps 1 perf
+    ++'
+    ++
+    ++test_expect_success 'overlapping excluded regions' '
+    ++	for_each_ref__exclude refs/heads refs/heads/bar refs/heads/bar/4 >actual 2>perf &&
+    ++	for_each_ref refs/heads/baz refs/heads/foo refs/heads/quux >expect &&
+
+      	test_cmp expect actual &&
+      	assert_jumps 1 perf
+
+base-commit: 6a64ac7b014fa2cfa7a69af3c253bcd53a94b428
+--
+2.49.0.rc1.2.g67c8c5f7978
