@@ -1,124 +1,110 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB04B1C8602
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 20:46:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6E217B50B
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 23:21:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741293997; cv=none; b=c8Ucrr1456bo8QlrHwprZFz6gFVBRHEI8ez6b7z/FhKT2XsOdhomRxmEhO7PJFhxMe8zv6gVyR3GFYfvzQa3ymVXzJxkW3iBv47UvoScHxz4oXCnE4R6NEJxcRJ5bVGn5kchnq3lNM0XBqtpkoadAt7f6O1ejBd0jthkph6hoQI=
+	t=1741303263; cv=none; b=tAUCzYzPMtvNZdoKS2CJYkj04aWobY8yPZsZHYjG/2mkUWaKLtp0+Uq3INOkq9J8qBtZ1Ehft+uurX09PT+XMMmPTsHso1v0NP/fD41KSDfZBpP1XgX9uxxEhMb6NkWtQNbUdzni/d/UEWiyqxGWG+7zvfXQsRj8YKqVIvFYi/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741293997; c=relaxed/simple;
-	bh=uJAwM84T9zGYm7kjajrFu9gKgxQQu1Xu4NBqWAzkidU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eU+zkQHW7SAjx42ZRO3DHQghZjGNws4fu9MlrSlXrEjFiMOhnIYwT87TNoyUehjoy2H3qgSxnbF0cDeKi6fOIQ632yY+khaUjmIsMCiCFOp29b76k6JyJQgNQqyRQNxd/Z/ucyoFAf4H8KJEy+IvJ7+KWaf6iotN4vPy7aImU7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nzEQD4iE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0VnBZfwk; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741303263; c=relaxed/simple;
+	bh=oH2NIq1J0kFrODcnG7aZ+b7UwgIyIynnrIZZdf22gxQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A6LK/dYrrHTkqnm/FJ9GfFqvO3VpYqwRMk+sW6tPhdmxm9AiHPBNDGwQnErISSwWipr/RyKKyCm+BLHckbPqE+sUZt/9jPusY36W/K7VTAbK+l9UwSmf4uo8qlt6EFligRKSE634+ydfNgnxmI77Sw0NzHeMxsIgkTzFx2v05v0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lm2Fglqf; arc=none smtp.client-ip=209.85.210.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nzEQD4iE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0VnBZfwk"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9C0E9138273B;
-	Thu,  6 Mar 2025 15:46:34 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 06 Mar 2025 15:46:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741293994; x=1741380394; bh=bhfcY0mHt5
-	1YQReGyUxJZAdOnM/jpwK6q4F4GoGGjE8=; b=nzEQD4iEFrWObEZ5KtwITF8UEO
-	Px32j/EF5ePZZTPVqGT06Q4zUbpZlus+6pvn+C6/Boc5A1ksdNabgq/rS2Jd4DjI
-	NB+VcqtlzVgylpANFX/cCqnL3s6mSYecFbd2hhnWPCWWL0MNiBAb2JRz/IUWUvOm
-	vHm9ahgrdwnKbqcjT1YbZP+FU/TuRPzbHMykAbOXytvNoFiNaaXPyMvhHH0RVxgR
-	t3kxQ+VabonEnui8+y5CYq/5BBCDKWD0Y6kVHz9Q1bQtnol2a/zk/YpBWqmaRJto
-	UWKxvQq4WhD71bzW0H9vB45HrjfBV3FJWpy6gQCvaYngoz/0EPCjaQYgSMQg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741293994; x=1741380394; bh=bhfcY0mHt51YQReGyUxJZAdOnM/jpwK6q4F
-	4GoGGjE8=; b=0VnBZfwkRoCe+vrNZsYHxW52/8dSa7JhjQk3lTum5PaQQP/bqdt
-	w/T5sxUPjmVfkH9zFAIOuM5s/6LJWYNpmmRvVAAO+ERcnVeDfeQsI52Afevs+n44
-	4y5jW+4Iv5Ly6hJ+WowQXo/U7nTeMg8vLU04cdyYtL9S5iSBacFO3wiLKAGKI/w7
-	YXzqwcPScj+6pXiL3FsVtJ0M4b9Wv7v95YSlyTxPdkTmUkteDyhEY/gl4XnreXpo
-	7iw/fPRzUjiVUKxgItdWZgDx9kfgjOcIluiGA/rd2T8FitsuYVQwqsuCHQdv2mtV
-	NSy01ZWArcY/9ZJzc5TCv1eiy6DL76rA2Rw==
-X-ME-Sender: <xms:qgnKZwV5us2bajxDDhUBJ6AqpsrNwSm-mFXVMrQCJTpQxS6w_-E8UA>
-    <xme:qgnKZ0khsk-fuuDVZD9Yon3Sj6euYCo_NzY7Um3X9YN0YJsD9S-GhS_3NUID4NZye
-    wPa195vLlbULsorPg>
-X-ME-Received: <xmr:qgnKZ0YabO3PldeuW77l5Z8rv-1KOlRDDo99JnhX7IsP65NKbxP96efPJNUomFGchH-dXGwHyB1MvISZHcrKqYeuYtZURAIosR9r>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdekjeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtg
-    homhdprhgtphhtthhopegurghvihgusehmrghnuggvlhgsvghrghdrohhrghdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:qgnKZ_V_DWiMhn0Jbw_G-TqufJr5CI66ya3tgQQkXjugK0zXo8zcmQ>
-    <xmx:qgnKZ6ld1RY3Z1Z3poSK5g-KqbWb43zZtqW2TWW3MI0qPTJiIidgag>
-    <xmx:qgnKZ0dTsdGpBehjt9fs2gY6OD1xRaoPIIxYWQ91GAsaFcitPuK7Jg>
-    <xmx:qgnKZ8HQY2OmzfTylCuaWuP9wJ0BaeiFHGeS8N6q1Tlc7puMLjVB4Q>
-    <xmx:qgnKZxv_u3EPgtOs2aLwIUVYAZiBeY3b6e4lFheZZzRvcv8TylXoXuJK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Mar 2025 15:46:34 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "David Mandelberg via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Jacob Keller <jacob.keller@gmail.com>,  David
- Mandelberg <david@mandelberg.org>
-Subject: Re: [PATCH 3/3] completion: fix bugs with slashes in remote names
-In-Reply-To: <95ffa62df6ce394249a8ddabb84fb2b517825fe3.1740901525.git.gitgitgadget@gmail.com>
-	(David Mandelberg via GitGitGadget's message of "Sun, 02 Mar 2025
-	07:45:25 +0000")
-References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
-	<95ffa62df6ce394249a8ddabb84fb2b517825fe3.1740901525.git.gitgitgadget@gmail.com>
-Date: Thu, 06 Mar 2025 12:46:32 -0800
-Message-ID: <xmqqh645hopj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lm2Fglqf"
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-72a1703027eso124497a34.2
+        for <git@vger.kernel.org>; Thu, 06 Mar 2025 15:21:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741303261; x=1741908061; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zBHc1fmiFiYDKFCz6ALqhmhRzbTiJo6HkesfY0HEUrE=;
+        b=lm2FglqfSj9C15NPb/5tcoZni1vdG0uFXXWQyMTz3Pjgz8YVKHJ7prqmmc/eY39KiT
+         h/P0czoCG4MO+UANRIjhsRGKGuPnTAWhVsY1yCS7dpa3D+nSTm94oFCeEyCQ4GBkV/Hd
+         gdYXOq9ppFdBdpF8tLHITBnmq0n3+1ftpm1P9DhfZIoOhUCOc6yrjwHU0hVs2U/YG4Ey
+         KHrpB5ZCXg+PjZ+Ldp7QuSNysP87daB++rWx07BZMIlHTWJOvE9JPUsmn3e2poFVO56w
+         XQdSBPTMum98E/PE3msiPvf2vmjGglqFZCebx1sgW3rN1zUUgYJu+yMaJY7i6qYXnv5l
+         Kh8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741303261; x=1741908061;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zBHc1fmiFiYDKFCz6ALqhmhRzbTiJo6HkesfY0HEUrE=;
+        b=gh8+O6eNoK+HGCiJ4d54cPTWEqQe03rA5fgTlBxzJUyGxbSL5RZ/3x2/MJtsHsRaUJ
+         gOthrRuLj+/6l3+ULSbviQMe16IaKTYrebEEPI8gat+ju0LeI7NQ1W2XWB4jYztqNEmo
+         7bciOjhJUC9gTrrnMDGeZtnBnOhSuUfBvU7Hg8YproVvLskh1UWnfB2YiulX20wBdHwl
+         GXuWNASIY7+mJ10hut0DTq1oxss4oSE7ibXjn6K6jCtqszSVrDhkS0/HsZJ/AtC4RSkd
+         AzIElhA9uMIw4/6LKo/W8w6esFbKn3qH5ASNA7w+7HFbDsnmHuvLcnEx6kG5Ywhz9C9I
+         NU2Q==
+X-Gm-Message-State: AOJu0YxbY5VuotiStL0IY6GWyyrszf9d/qYqNhertHyF9RkEhYNaJbKH
+	quRs8ASW1KxU0VloElcKFfq3XxwqfVsu/+YADoZ0M/0EEyXSz2zo
+X-Gm-Gg: ASbGncui27iBCTLe5fAAP5sMRyluXiypkzeXqnoDcdzJqJV8BVsQC1DsXrkbil07f5t
+	6deq3avmjSUV5Q/6/CZk0XqUyJnySjnMmkJ9+2auIgZgW1nYXNJ0UiwKNcCFe4PkrLoqfE3rtNh
+	hTCCGIz7KruHM2A3KgcrbeEdW946EuCrHXESumwfMs9i5Aro67R6IdaL4mSBHzT6DJSZjdq2IzJ
+	rKI00Py8p2+vaoKuEC5UW/OZxpY86ZhdbSTtTji27YA+WIJq4cE8/QVhYb5vkMNosChqrJKZrbB
+	DM+sm9AxNU21uASnFAlt06T9xpQNPk4VVTaFyg==
+X-Google-Smtp-Source: AGHT+IH4rGUtdIFWLpKnVVidTHW+990hTIaJR0Jwed74d19/BfOk8hlIm8X5agDEpEu9tiucT68H2w==
+X-Received: by 2002:a05:6830:6487:b0:727:42cb:db30 with SMTP id 46e09a7af769-72a37c64b2dmr738032a34.26.1741303260781;
+        Thu, 06 Mar 2025 15:21:00 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-72a2dbc3887sm445001a34.59.2025.03.06.15.20.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Mar 2025 15:20:59 -0800 (PST)
+Date: Thu, 6 Mar 2025 17:17:37 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Markus Gerstel <2025@uxp.de>, 
+	Junio C Hamano <gitster@pobox.com>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 3/6] builtin/reflog: stop storing per-reflog expiry dates
+ globally
+Message-ID: <35jnncjitwoy7bb7w5zyk6nhjvab4tmdjhtuqltljypfigk2g7@swpulgkzooxl>
+References: <20250226-pks-maintenance-reflog-expire-v1-0-a1204a814952@pks.im>
+ <20250226-pks-maintenance-reflog-expire-v1-3-a1204a814952@pks.im>
+ <usf4pzrp322xvfrvsasgy22rnw7d2a6krzuctwpp23ppdgh6ji@ram73wv5dn54>
+ <Z8l69bRy8PY3Ep9J@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z8l69bRy8PY3Ep9J@pks.im>
 
-"David Mandelberg via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 25/03/06 11:37AM, Patrick Steinhardt wrote:
+> > Now that all the reflog expiry configuration is contained within
+> > reflog_expire_options, I wonder if it really makes sense to also keep
+> > the expire_total and expire_unreachable fields.
+> > 
+> > From my understanding these fields are not really for configuration, but
+> > hold the reflog expiry configuration for the current active reference
+> > while iterating. This gets set by set_reflog_expiry_param() prior to
+> > calling refs_reflog_expire(). It seems like this could be figured out
+> > during refs_reflog_expire() now.
+> 
+> Yes, these fields hold state indeed, namely the value for a given
+> refname. These fields thus need to be updated for every refname for
+> which you want to check expiration, which is done by calling
+> `reflog_expire_options_set_refname()`. This interfaces is extremely
+> awkward from my perspective, and it would be very much preferable to
+> instead have an interface that, given the options and a refname as
+> parameters, tells you whether the reflog contains entries that should be
+> pruned.
+> 
+> In fact, I did have a look at fixing this awkward interface, but it
+> always ended up with way more changes than I felt comfortable with. So I
+> decided to only go a couple steps into the direction of better
+> encapsulation, but to not fix all of the design issues with the current
+> interface.
 
-> This made completions like:
->
-> git push github/dseomn :com<Tab>
->
-> Result in:
->
-> git push github/dseomn :dseomn/completion-remote-slash
+That's fair. This interface certainly feels awkward and exposing it
+further doesn't seem ideal. At the same time, maybe its not too big of a
+deal that it should be dealt with now.
 
-Apparently I am late to the party, but I have to wonder how
-prevalent it is to use such a name for remotes.
-
-Back in 2005 when I designed the remote namespaces and
-remote-tracking branches, the code may have been loose not to
-complain, but it certainly was not an intended way the remote names
-and remote-tracking hiearchies were to be used.  Being able to say
-"refs/remote/*/master" and learn where everybody's 'master' branch
-points at with a single globbing was a powerful thing, but with
-refs/remotes/github/dseomn/master thrown into the mix, that would
-break down miserably.  As a remote name, we still do use "is that a
-file on the filesystem?" to see if it is a local file:// URL
-(i.e. "git fetch github/dseomn" may be fetching from a subdirectory
-two levels down); in retrospect, we might have been better off if we
-said "well with a slash it must be a local directory and not remote
-nickname" to prevent such usage pattern.
-
-Anyway, this is not something we'd do lightly, but we may want to
-see if we should tighten the naming rules for remote nicknames and
-the mapping from nicknames to remote-tracking hiearchy, at Git 3.0
-version boundary.
-
+-Justin
