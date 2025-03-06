@@ -1,143 +1,174 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAD7200BB2
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 10:26:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE4C204699
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 10:31:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741256789; cv=none; b=RSDVN4Z9IrnZTMhB05d4CeffZ9+UviV3/bAXQma9quMZqk5XTKcaqZKrY8NWGm3ZgpiDk2XIihPxN3JUbEEA3NrshzJg4feaQ2O9rvUlog7MrnRqIf+NGvi1QwhKX5i5p2f88e8h4TK1tMqmki6oUZUHnQv9gSZe36OorgnYq48=
+	t=1741257107; cv=none; b=CkECdMABTX5broCG6YX0WFBlBDKHmvFL4VdYxIcejH5sZRRSDbLj9mREHWLZZl6U4RXBCOEe7KJNc+nKSZ+AYke37ePWFriP5yfqa0vzS13AB2xqxLv5NdWVMmDkwCQz15OiebVY2lktNgQX9gPpm1fu8JP36QTeruXFHWU3iUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741256789; c=relaxed/simple;
-	bh=MS04Wd+wCruY9ILuKpUoJZsIKYwaCv8R3zRVksflk0g=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=hdB9/HzM9fKiQzIvfoyEXGP+YUvPpcQZJw2lAkm9ia5MA/9zgqODy7ryeGG+t5JFbbOb3WeoMhXGJRxPIneAtgRos1FtWVi0l09jAYJAeah2HpTM9iTBF3UcM8pGPRKUnP7931xjSbPQOgwDuxBxAgO54xfWUO5lRwQJ7zh37+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TMyU+If0; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741257107; c=relaxed/simple;
+	bh=XoGcgt+lPAJJwoyghEEWmD0pMwxiCulrgVJFYfqIcVk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U2mCZMFnJf0lyuaeIYGVJQgJTXedJVt/ibrX+MtAAVKyfCIjvh2Ekmksce5gqt3lD+GJfrdarwBa8IjJdq5OkUkzYIRbDMzEDRd/io/45pUG66OFThdPOGjWfxrjMV4Eob/ZSTVxToVIO/Ps1pbYMMJzXgfSO9KVAVbt+q1yT7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Xtjekp18; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QL7KjLaK; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TMyU+If0"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ac21c5d0ea0so62531566b.2
-        for <git@vger.kernel.org>; Thu, 06 Mar 2025 02:26:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741256785; x=1741861585; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3KaNfvj71wrgb2f2vMO/kY2tf0Sw+soCYRf35rIjfRY=;
-        b=TMyU+If0rXCRwzDnSs5IKm/NUqh665XE5n0MqnFjQbwdqcgzo/Me89epxWfHAuDlV1
-         kSZfqysnGt8ReE+TGzNW4n7kqgj1gbVEX8+xAKiF3UCNbQCIUfnu9SSf8z1n0LnUhK5D
-         lJm+vJmtP/FCv//0FQYntTDIt+hlF/EXEGB3aUq2U/TTmifp5VTYM76cTBwLBdBnZD+A
-         yC94b3HxHzNdnsBeEzdaZm39L8y0M7ST0L9yFDxyi+Xl/2mhPYc+35k/zUgWAmIgAaL9
-         Ld/DIs1yemOT2aA5vaoLSUCSOSvN8v/B/ieBIHFMQ0lh68Df00dNyQl09tsMgZnQnli1
-         PfSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741256785; x=1741861585;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3KaNfvj71wrgb2f2vMO/kY2tf0Sw+soCYRf35rIjfRY=;
-        b=QFFEx5id+1XNetBSHhc8FInBGpl6l7tNCdQVi0IsdUJvZNLlCcWdMEu1ph6+GRMARQ
-         5OyhOifpQuNCebKf9BpblVcjy4DsfBO4WWV2I4vyCf6MESLMt8/R/ooSBsCzgom8Zbi5
-         vp97LYw+WN/S9IRXdJdThrZQOz+GLapPTex+econSI5npO8PEJXpGZPspPkN0+LitmES
-         fhI643uvVjFW5qBGOzKAtfAkAJBC9gGAxtbCYRB38peAbawzl2W837J/wQTfZrv0hqK8
-         K74OgYxztCTINp0JiJIkm4TpscgutuhwFbRrS2+KVMmf0Bodqb6Lgjnxc7DvZjFDNM7P
-         PeSQ==
-X-Gm-Message-State: AOJu0YzpvLXxdLFF+vJw9C88vURcExXTUYAhrZXn64H4imAwloRvhjVX
-	zEKH1zBIYyungyUtZUENRXTDpl+GDqdGdLlus1PrxNFjHvI67WJmrdd48A==
-X-Gm-Gg: ASbGncs+gTRZxYsL9bTBdmc6XbajBjsOinIocQETLmdM0Rix5GHFD50IdHgql1zC8YO
-	6kSrVdE9S9aWNNgjCBeJMdCqO7muLWdF1+u1PF2C5Yeasy9o4KGAQecRZmeXkKeulkWA5IvCNCg
-	0sbIeFEaOJYi0Z4n8Nxum5VzAUy/quXMHYSfltDT3ODOJHYdqY7+M54ugMF1k6ZCLI5DO/b/v3q
-	uBKBd+yLQXfw7aNFsQU7lB+irdYwjTmQ/iq4sUtcE+yDhrmcgOzeOg1S1kSWqXa9D3/FScDB+lL
-	TnFKifI+fmqAANQzLdjXUNWn36GFTIFdS1QWTVJ9HipbBw==
-X-Google-Smtp-Source: AGHT+IFBDaQRdeLua/v9Ny6cAuWlBCL9aSg/yRc2uqis/5++akeiMJ83TpmiqSYKy2u6zEhKLTG0mQ==
-X-Received: by 2002:a05:6402:274a:b0:5e4:92ca:34d0 with SMTP id 4fb4d7f45d1cf-5e59f47f014mr15092291a12.20.1741256785082;
-        Thu, 06 Mar 2025 02:26:25 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e5c7472151sm729296a12.26.2025.03.06.02.26.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Mar 2025 02:26:24 -0800 (PST)
-Message-Id: <59a2e586e1ae705471c7003efc007df5447692f9.1741256780.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1867.v2.git.1741256780.gitgitgadget@gmail.com>
-References: <pull.1867.git.1740671049.gitgitgadget@gmail.com>
-	<pull.1867.v2.git.1741256780.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 06 Mar 2025 10:26:20 +0000
-Subject: [PATCH v2 3/3] cmake: generalize the handling of the `CLAR_TEST_OBJS`
- list
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Xtjekp18";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QL7KjLaK"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5938911400C1;
+	Thu,  6 Mar 2025 05:31:44 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Thu, 06 Mar 2025 05:31:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1741257104; x=1741343504; bh=4n8sphnLKv
+	5QqcuLR4UNSSKx9AzwdOApnMA9EfQ/MYQ=; b=Xtjekp18qBgmkgSFh9k2V1+ddU
+	FDjX6ftRnNtxn3F9k3RSb7KVWPInSIjGz/HfjDUfBNFu7Eq6+wqxjYNa7LDAbSt6
+	h81wliO2ZO0llTnrlzkEitiwis68gIxIgdELU+jwookYXvtOjkPFxPJvaPjY8eGG
+	j85BxF0LApBWygzEbeL9dRGoIl9QcNfmQYfUNk7Fnb3oXAuYDAy+ixVdayx4N4nr
+	mjB6/Zi31hjKTTBiAcpcQVV0tNyEpGevu8q+34ID/zdmPLl2BalLjSafH9PMdHNc
+	n6wX7uGmjrFpK516+aY8JdkSR7SYBewQ2F9wTx5Vx7Xi/RD6gMk3UOHGU15w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741257104; x=1741343504; bh=4n8sphnLKv5QqcuLR4UNSSKx9AzwdOApnMA
+	9EfQ/MYQ=; b=QL7KjLaKUkpgb9n9Ld/TLi+qi3A6MsE/DodNoIoI1Cx3T3ipLqz
+	LR8iLoYr25Gpx+ux9+OqP1LSJpJISOJMx3WvJ99UHXfaW/Yex5y4gvtjNvx3R9Ok
+	v+K+xqyJ1DQfghCS1RW+Q6ZnbFsVBZDQH/sXxsEkdNBmtgXOkyjCGgcB+gAfoUoA
+	f8jLV9Jg5/18RrDULN2VtwGy2CQLL90WlDyZ57DbJgmCj1Vt4zkQV8PCutkfpxFI
+	bLFeC0Aowx4fV3tQFp42RJdFK9AWeDWitKtXw6HHW/x/HadpBHHp5gDfkMyOwB2Y
+	L0gX+4LljIukonbfnf/CRfslTJBaH1nSejg==
+X-ME-Sender: <xms:kHnJZ8dxJXAmaZ2XeVLTFHjgSJx_pbHP865bb4ngLzJhU9oJLnP7rA>
+    <xme:kHnJZ-NXlCGXlKBgJVGqAh3VL2w5dlwrpghx6Hh-jHyPF5BUEaXV9JHJqY82AEcXp
+    g69wl-QzBRclN39SQ>
+X-ME-Received: <xmr:kHnJZ9i1w2ndO6EywKbLFM83IdgF9n-tRPz6Krht38hLdd-gyaX8fUASuukCmAAT9lEPe4DArh-nn1ydEi8VH0OAlIP5THfBlXMh_Xjvw0XMew>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdejhedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehpvghffhesphgv
+    fhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:kHnJZx_ptxVh1FIdkrji27ficVQYoexuMBgyDON1J1_JWnU4bMNnNg>
+    <xmx:kHnJZ4vgl4FC9YxmJZeXKFY9Z0NDZHzURuMtavh_RlIJ4CWOf3-IPw>
+    <xmx:kHnJZ4EZcqwbZUY-g53-rbnwbtu1DvCeUGa2Ob77VWUXbhguVqga1w>
+    <xmx:kHnJZ3NTCMPblqYrc1suA_FgdZjiND9eeWyBZfwQ4URcBPl9WmePjQ>
+    <xmx:kHnJZyVA_FXavn6U7nwzzVmLjTUdBTdI_cD-nbhJOtuUVh1nk3cPXl8b>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Mar 2025 05:31:42 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id a175dcf1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Mar 2025 10:31:40 +0000 (UTC)
+Date: Thu, 6 Mar 2025 11:31:35 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3 1/1] builtin/pack-objects.c: freshen objects from
+ existing cruft packs
+Message-ID: <Z8l5hxNjEOALl_g-@pks.im>
+References: <cover.1740680964.git.me@ttaylorr.com>
+ <cover.1741133712.git.me@ttaylorr.com>
+ <6e93471f9a8e6a3dde36342088748ba17e4f7f95.1741133712.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6e93471f9a8e6a3dde36342088748ba17e4f7f95.1741133712.git.me@ttaylorr.com>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, Mar 04, 2025 at 07:15:18PM -0500, Taylor Blau wrote:
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 58a9b161262..79e1e6fb52b 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1502,8 +1503,60 @@ static int have_duplicate_entry(const struct object_id *oid,
+>  	return 1;
+>  }
+>  
+> +static int want_cruft_object_mtime(struct repository *r,
+> +				   const struct object_id *oid,
+> +				   unsigned flags, uint32_t mtime)
+> +{
+> +	struct packed_git **cache;
+> +
+> +	for (cache = kept_pack_cache(r, flags); *cache; cache++) {
+> +		struct packed_git *p = *cache;
+> +		off_t ofs;
+> +		uint32_t candidate_mtime;
+> +
+> +		ofs = find_pack_entry_one(oid, p);
+> +		if (!ofs)
+> +			continue;
+> +
+> +		/*
+> +		 * We have a copy of the object 'oid' in a non-cruft
+> +		 * pack. We can avoid packing an additional copy
+> +		 * regardless of what the existing copy's mtime is since
+> +		 * it is outside of a cruft pack.
+> +		 */
+> +		if (!p->is_cruft)
+> +			return 0;
+> +
+> +		/*
+> +		 * If we have a copy of the object 'oid' in a cruft
+> +		 * pack, then either read the cruft pack's mtime for
+> +		 * that object, or, if that can't be loaded, assume the
+> +		 * pack's mtime itself.
+> +		 */
+> +		if (!load_pack_mtimes(p)) {
+> +			uint32_t pos;
+> +			if (offset_to_pack_pos(p, ofs, &pos) < 0)
+> +				continue;
+> +			candidate_mtime = nth_packed_mtime(p, pos);
+> +		} else {
+> +			candidate_mtime = p->mtime;
+> +		}
+> +
+> +		/*
+> +		 * We have a surviving copy of the object in a cruft
+> +		 * pack whose mtime is greater than or equal to the one
+> +		 * we are considering. We can thus avoid packing an
+> +		 * additional copy of that object.
+> +		 */
+> +		if (mtime <= candidate_mtime)
+> +			return 0;
+> +	}
+> +
+> +	return -1;
+> +}
+> +
 
-A late-comer to the v2.49.0 party, `sk/unit-test-oid`, added yet another
-array item to `CLAR_TEST_OBJS`, causing the `win+VS build` job to fail
-with symptoms like this one:
+Minor nit: it is a bit unusual that a negative value, which typically
+indicates an error, is used as a boolean value here to indicate that we
+don't want to have the object.
 
-  unit-tests-lib.lib(u-oid-array.obj) : error LNK2019: unresolved
-  external symbol cl_parse_any_oid referenced in function fill_array
+> diff --git a/t/t7704-repack-cruft.sh b/t/t7704-repack-cruft.sh
+> index 959e6e26488..f427150de5b 100755
+> --- a/t/t7704-repack-cruft.sh
+> +++ b/t/t7704-repack-cruft.sh
+> @@ -304,6 +304,69 @@ test_expect_success '--max-cruft-size with freshened objects (packed)' '
+>  	)
+>  '
+>  
+> +test_expect_success '--max-cruft-size with freshened objects (previously cruft)' '
+> +	git init max-cruft-size-threshold &&
 
-This is a similar scenario to the one that forced me to write
-8afda42fce60 (cmake: generalize the handling of the `UNIT_TEST_OBJS`
-list, 2024-09-18): The hard-coded echo of `CLAR_TEST_OBJS` in
-`CMakeLists.txt` that recapitulates faithfully what was already
-hard-coded in `Makefile` would either have to be updated whack-a-mole
-style, or generalized.
+Let's also delete the repository via `test_when_finished`.
 
-Just like I chose the latter option for `UNIT_TEST_OBJS`, I now do the
-same for `CLAR_TEST_OBJS`.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- contrib/buildsystems/CMakeLists.txt | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index c6fbd57e158..25b495fa737 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1001,10 +1001,14 @@ parse_makefile_for_sources(unit-test_SOURCES ${CMAKE_SOURCE_DIR}/Makefile "UNIT_
- list(TRANSFORM unit-test_SOURCES REPLACE "\\$\\(UNIT_TEST_DIR\\)/" "${CMAKE_SOURCE_DIR}/t/unit-tests/")
- add_library(unit-test-lib STATIC ${unit-test_SOURCES})
- 
-+parse_makefile_for_sources(clar-test_SOURCES ${CMAKE_SOURCE_DIR}/Makefile "CLAR_TEST_OBJS")
-+list(TRANSFORM clar-test_SOURCES REPLACE "\\$\\(UNIT_TEST_DIR\\)/" "${CMAKE_SOURCE_DIR}/t/unit-tests/")
-+add_library(clar-test-lib STATIC ${clar-test_SOURCES})
-+
- parse_makefile_for_scripts(unit_test_PROGRAMS "UNIT_TEST_PROGRAMS" "")
- foreach(unit_test ${unit_test_PROGRAMS})
- 	add_executable("${unit_test}" "${CMAKE_SOURCE_DIR}/t/unit-tests/${unit_test}.c")
--	target_link_libraries("${unit_test}" unit-test-lib common-main)
-+	target_link_libraries("${unit_test}" unit-test-lib clar-test-lib common-main)
- 	set_target_properties("${unit_test}"
- 		PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/unit-tests/bin)
- 	if(MSVC)
-@@ -1046,13 +1050,13 @@ add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
- 	VERBATIM)
- 
- add_library(unit-tests-lib ${clar_test_SUITES}
--	"${CMAKE_SOURCE_DIR}/t/unit-tests/clar/clar.c"
- 	"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
- 	"${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
- )
-+target_include_directories(clar-test-lib PUBLIC "${CMAKE_BINARY_DIR}/t/unit-tests")
- target_include_directories(unit-tests-lib PUBLIC "${CMAKE_BINARY_DIR}/t/unit-tests")
--add_executable(unit-tests "${CMAKE_SOURCE_DIR}/t/unit-tests/unit-test.c")
--target_link_libraries(unit-tests unit-tests-lib common-main)
-+add_executable(unit-tests)
-+target_link_libraries(unit-tests unit-tests-lib clar-test-lib common-main)
- set_target_properties(unit-tests
- 	PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/unit-tests/bin)
- if(MSVC)
--- 
-gitgitgadget
+Patrick
