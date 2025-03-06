@@ -1,217 +1,119 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C60720F071
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:34:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490E9145A0B
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 16:11:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741275299; cv=none; b=c/tmquAayW2QTw8bkGxNw3OnNtU+iszKvk4lm5I361CTPzKG0EqmSyUgObuJ+28TlS0nIAID9vkbSzOJ54YHStqUEcIievjbRyC4KnU8kXs03QzjyEkwLh6OfpRkfht16no98MKOL50M4OaL2FpieFcWD1g6OhnOyGSZvlQ2FNI=
+	t=1741277475; cv=none; b=f+VO2KO3rs88FY9IBzIEE8tnHcpGIUchqe8Qj6Ts920JeC7L3h4+/7Cb1RftRj75DFjVpEBcweA8LYEhS80EvuOTVwA3sqJbRyV8oS+9BEYGQ7nhpArixGv41UqY8O7V30xojHupAcA2I3aoCM04qwthJ0ubvUxDwltEPOF47p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741275299; c=relaxed/simple;
-	bh=Bt768Z6Xli0s+jmh5b12qEb3kmkh0pu4FdDz0Y4EhUQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kkm39858UN8XGok3nECh9+BGJZrd7fKdnsVptWxFgkNZyQmixkZYKzZbYcm1PJNU8Sl2P4bRzVLJe777if4TIgXo8DP2xhEUfcQGE0UqLiRJwfcMFI/bLkAr7oV7x/3TtNaSgiAugtRE8gD1FRmW4xOX+S7/VLXdt9J8Lf+IbBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=CMikSIH8; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1741277475; c=relaxed/simple;
+	bh=mRSf9wR5gSrUrtG1LGnRUjQJNM9VENzFvOeZv6x4m28=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YMjxo0NcFpNe4Hks+J3P0IbcowALFPEH5LkKGmQlbq5VctXjepQJxIxvvBmW2eDFlMzuv4bv4FBzTbRpcQjUf9EfbMmuCqw7tjVCtqwzbDBR6GWyIWZlp/mF/rn+ITbmVhDKSpeI/VTKgKFLqt5fjYP5FfNd1xXIfaCjZswmutU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Zmqnv4Gr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oxa7Y/Qf; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="CMikSIH8"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e60b75f8723so560187276.0
-        for <git@vger.kernel.org>; Thu, 06 Mar 2025 07:34:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741275295; x=1741880095; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=N2gmj7umx8YEC2iDBDgR3dP5G/jqE0yB0Le6C+vecL4=;
-        b=CMikSIH8gAfgbuz7w1/PuFYBBHt0+PekipMEOUBxI9jFOF3Io6azX4VL9wprAQy9MW
-         IXdJBnoZzUOuV9oVY5sCRZUl7Cxv8ED7EHqVyhJNPakyj2v4QsUgbsa2lV0dWcJfus+0
-         09/VVvyuC3vKjk+dppkBotKZPCzJdoEnHTqByx0WrmOBQi/2wg0ie5mS/+r+ByTu15qa
-         IcMWVngykicXSYBiYsgir3FYhoj9XNUd9Gb4YjWIbSXLneSUJ7CUhs8+g49KgQWQqQDC
-         h4Vrw0lqkMcvCRKWKi+72zYSpbDauJHR4hKtpdd5GzQpV9LvhqQQvjJ4mq3/p/QwM0tC
-         OQVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741275295; x=1741880095;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N2gmj7umx8YEC2iDBDgR3dP5G/jqE0yB0Le6C+vecL4=;
-        b=Hi+catyjG9MpoHPoVXZRrNFzga3tnhFosF+9VtSwxnBmAESvDo7iqtWQHBeek/bSZp
-         i4gz97BBTtEqj+ergKpTJ7NiuGWEWvVS3nl4/08FXyFTJVnYgdzXUXhaCWatYFTH/LAv
-         8mEWIbW39EmfFd3/3PGIjDjxTPZf8BliFbZdeDXBE8TxSM2AqAPcn88tsrP/aJk0diNV
-         YdSgutePOTP+2nnbBztL3Ccc7c0c/ioCDksXLT5CRcVEA7KxqB3/Ij9uj7FrOF2Qn2fn
-         3jr6vKG0IM3XBCkR982DuTvGM8/uJTKcZkCtkNuX/zs9CVvvSaFhWVwEMXxd312fH/5Q
-         8+Rg==
-X-Gm-Message-State: AOJu0YxOUlzK7FjDVVcBj/Hn4ntfrM96EbE5JVxhqObxPhjewcZiKFb4
-	WHPOjpzRAIAPJ0wNwNpYXsYCbWr9LB8uQDUlYI+iY7u/hIaX2BNREeXWOrAAPBqzfxpaSoXBfDy
-	j
-X-Gm-Gg: ASbGncud007sTiYEeNXHnJe9NNhNqcTKAeU5AmVn1J8ZqlCISKDxguCtVy2OnEYzEWJ
-	SFm4LHKfuNf8yJSkRRdDqOZzOa1zdzpj725OvCxjuRezK8B81Lvx7EsynTsTC3sLMJx61MvEfga
-	QybHESjLwZH9ztcTp8XgOD/obTVRJ5ZtmzyU2FWsXiwpomxWeW3NEIsIHLDGWAwAT26N41bQn2N
-	99pHHO+pYJaaMoCTw1KsVkDny8REd7eetmcEnTFpCUgv7YemE4OM4GPl7thA3sMdkAQn73H1bMa
-	T0RLgz0ZfLFNdJXUt9KPqvv3Lwcw4iCVAOuxLJxwM3fO1vdF1OQHoiSogW9EYSmfZTE8VLb1VcV
-	odivFNOi7QZqScsCP
-X-Google-Smtp-Source: AGHT+IH7S/fa788jYavvk1pinUjhZxgLzG1yTOhCzW5mmPSX0OIiezyYRfG49ELQfzA8U7RlVIdPYQ==
-X-Received: by 2002:a05:6902:1b8e:b0:e60:a93f:2a86 with SMTP id 3f1490d57ef6-e611e329e49mr9611803276.42.1741275295545;
-        Thu, 06 Mar 2025 07:34:55 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e634b8e8fa5sm361809276.44.2025.03.06.07.34.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Mar 2025 07:34:54 -0800 (PST)
-Date: Thu, 6 Mar 2025 10:34:53 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	SURA <surak8806@gmail.com>
-Subject: [PATCH v2 2/2] refs.c: stop matching non-directory prefixes in
- exclude patterns
-Message-ID: <67c8c5f797833a9a35f4805059d7e759020f54bd.1741275245.git.me@ttaylorr.com>
-References: <cover.1741223981.git.me@ttaylorr.com>
- <cover.1741275245.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zmqnv4Gr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oxa7Y/Qf"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4096B11401F6;
+	Thu,  6 Mar 2025 11:11:11 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 06 Mar 2025 11:11:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741277471; x=1741363871; bh=/oQysCTdv+
+	IpuPfQSjIykhp/WvXq3VZ+UH0hQos1zIM=; b=Zmqnv4GrpubTd1H/KQUFHMPiwP
+	KJeDCvbu3ItvVNuqLvAXQWIJxA5Ldowd6zQn5KLwRDo+fr14uBE4i3CvjtOWry2L
+	rq7GduhU6YvSWpxZ2goYzFJoOzI7N0CdPEEcab23uCrXUffJmHSJJedSl8sAkQer
+	RLTk0ylewYta46eOh9nvYVBjyuAid13ecEcKX8OXuXdOMDQeYtnJ8V2Lv06L0Toq
+	vxEhnmSzPeDTw+IsUzAPa7V8Cnm6cJpZssSU8Ofb1Y/TSvTy0t3SpxIVhldq69Lb
+	7jSwB3ZOw2+fjvE1VNRA0LoWhI4S6ezG1MK4CIuTTpTK8fRqNodzn2HiqgKg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741277471; x=1741363871; bh=/oQysCTdv+IpuPfQSjIykhp/WvXq3VZ+UH0
+	hQos1zIM=; b=Oxa7Y/QfGyQn8osxRrcMdoqsRQegyyD+xMxhiRav7o+ZDoKdqb9
+	VS34Mk7xy5aQ9MJCHUoLaUvk8IQmr9ZXqjKirDsjfa434CxjWtwa7IzV7y0HF1sk
+	ryjshlqBRwC58zsVkzbSYZpnWbSCBkD8ZGOrm/21kgL0JGlyRSMI2PavdCPsqMIL
+	rz2cq1rrcWKi43WtaWokeZyEojkWpVYXkGm+RlRHL55EAT0oHZdTvY1reLqADNdP
+	rscB70BL8T7noG0TlmxQgG3vxw30wx89+kpkGyT8Tbz9jD9s/inrbUsMz1qpUoLF
+	R6jYh65LpoJO/uN/Vf7ODhGL/exMDcSyc7Q==
+X-ME-Sender: <xms:HsnJZyq3llOL5K9LVU-cI27o37yTzELyLxq463DycxcFjfY49HIQ3w>
+    <xme:HsnJZwrVaY6Kv-zYZ7ZZMjjc_P_e-lFFnW7nRSlxTOZXlE2M16lLNwMrM2nDI8JsV
+    Fla4bxf2EP6pfUi4Q>
+X-ME-Received: <xmr:HsnJZ3MJD8GURWSK1n6BWFX1qOMxNFIDEyhmWd5WGPZMXeYaYKhuBwRX5lkhf-627QNf4NBIbv-Qugh5BXWt43H4ddiHI6QRU5wX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdekvdduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehgihhthhhusgessggvnhhjrghmrdhinhhfohdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:HsnJZx7Ey2oXDXXtwR-1bgrWkyivb4TtCFVaoCm-HImpCsVQrnT-Ew>
+    <xmx:H8nJZx454ZY8GuyTP4-8NqPps66wNpBWxr6OBvB8wV3BELOPPpwq4g>
+    <xmx:H8nJZxjixMO8HMnAXd4dsQxVZxdWJDeszfOj9IHUajXKw8WcoUdPYw>
+    <xmx:H8nJZ75ls-7xfs1DrYvw3Ci0zXZG2cPwrLdRuJcNnvRILTz734HTcA>
+    <xmx:H8nJZ02uuDwxnUSQTUklRhGGslX1lsCqXLwmZ5-otKiIalJTQpJKEgsv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Mar 2025 11:11:10 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Benjamin Woodruff via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Benjamin Woodruff <github@benjam.info>
+Subject: Re: [PATCH 0/2] describe and diff: implement --no-optional-locks
+In-Reply-To: <pull.1872.git.1741240685.gitgitgadget@gmail.com> (Benjamin
+	Woodruff via GitGitGadget's message of "Thu, 06 Mar 2025 05:58:03
+	+0000")
+References: <pull.1872.git.1741240685.gitgitgadget@gmail.com>
+Date: Thu, 06 Mar 2025 08:11:09 -0800
+Message-ID: <xmqqo6yejg0y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1741275245.git.me@ttaylorr.com>
+Content-Type: text/plain
 
-In the packed-refs backend, our implementation of '--exclude' (dating
-back to 59c35fac54 (refs/packed-backend.c: implement jump lists to avoid
-excluded pattern(s), 2023-07-10)) considers, for example:
+"Benjamin Woodruff via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-    $ git for-each-ref --exclude=refs/heads/ba
+> git describe and git diff may update the index in the background for similar
+> performance reasons to git-status.
 
-to exclude "refs/heads/bar", "refs/heads/baz", and so on.
+That is a wrong reasoning that is completely opposite, though.
 
-The files backend, which does not implement '--exclude' (and relies on
-the caller to cull out results that don't match) naturally will
-enumerate "refs/heads/bar" and so on.
+The commands at the Porcelain level, like "status" and "diff",
+refresh the index for the CORRECTNESS purposes.
 
-So in the above example, 'for-each-ref' will try and see if
-"refs/heads/ba" matches "refs/heads/bar" (since the files backend simply
-enumerated every loose reference), and, realizing that it does not
-match, output the reference as expected. (A caller that did want to
-exclude "refs/heads/bar" and "refs/heads/baz" might instead run "git
-for-each-ref --exclude='refs/heads/ba*'").
+The commands at the plumbing level, which are designed to be used in
+your own scripts, like "diff-files" and "diff-index", do not refresh
+the index for the performance purposes.  If your own script wants to
+produce correct result, your script IS responsible for refreshing
+the index after its last modification to working tree files before
+it starts to use the plumbing commands to inspect which ones are
+modified and which ones are not.  This is so that your script has
+more control over when the index is refreshed.  It does not have to
+pay cost to run refresh for each Git command it invokes, if it knows
+that it does not make any modification between the two invocations;
+it can instead refresh just once and then run these two plumbing
+commands.
 
-This can lead to strange behavior, like seeing a different set of
-references advertised via 'upload-pack' depending on what set of
-references were loose versus packed.
+So, it would be absolute no-no to make the Porcelain commands like
+"describe" and "diff" not to refresh the index before they work by
+default.  As an optional behaviour, it might be acceptable if there
+is no other reasonable solutions (like, using plumbing commands if
+the callers are not you typing but your scripts calling them).
 
-So there is a subtle bug with '--exclude' which is that in the
-packed-refs backend we will consider "refs/heads/bar" to be a pattern
-match against "refs/heads/ba" when we shouldn't. Likewise, the reftable
-backend (which in this case is bug-compatible with the packed backend)
-exhibits the same broken behavior.
-
-There are a few ways to fix this. One is to tighten the rules in
-cmp_record_to_refname(), which is used to determine the start/end-points
-of the jump list used by the packed backend. In this new "strict" mode,
-the comparison function would handle the case where we've reached the
-end of the pattern by introducing a new check like so:
-
-    while (1) {
-        if (*r1 == '\n')
-            return *r2 ? -1 : 0;
-        if (!*r2)
-            if (strict && *r1 != '/')        /* <- here */
-                return 1;
-            return start ? 1 : -1;
-        if (*r1 != *r2)
-            return (unsigned char)*r1 < (unsigned char)*r2 ? -1 : +1;
-        r1++;
-        r2++;
-    }
-
-(eliding out the rest of cmp_record_to_refname()). Equivalently, we
-could teach refs/packed-backend::populate_excluded_jump_list() to append
-a trailing '/' if one does not already exist, forcing an exclude pattern
-like "refs/heads/ba" to only match "refs/heads/ba/abc" and so forth.
-
-But since the same problem exists in reftable, we can fix both at once
-by performing this pre-processing step one layer up in refs.c at the
-common entrypoint for the two, which is 'refs_ref_iterator_begin()'.
-
-Since that solution is both the simplest and only requires modification
-in one spot, let's normalize exclude patterns so that they end with a
-trailing slash. This causes us to unify the behavior between all three
-backends.
-
-There is some minor test fallout in the "overlapping excluded regions"
-test, which happens to use 'refs/ba' as an exclude pattern, and expects
-references under the "refs/heads/bar/*" and "refs/heads/baz/*"
-hierarchies to be excluded from the results.
-
-But that test fallout is expected, because the test was codifying the
-buggy behavior to begin with, and should have never been written that
-way. Split that into its own test (since the range is no longer
-overlapping under the stricter interpretation of --exclude patterns
-presented here). Create a new test which does have overlapping
-regions by using a refs/heads/bar/4/... hierarchy and excluding both
-"refs/heads/bar" and "refs/heads/bar/4".
-
-Reported-by: SURA <surak8806@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- refs.c                  |  6 +++++-
- t/t1419-exclude-refs.sh | 16 ++++++++++++++--
- 2 files changed, 19 insertions(+), 3 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 17d3840aff..2d9a1b51f4 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1708,7 +1708,11 @@ struct ref_iterator *refs_ref_iterator_begin(
- 			if (!len)
- 				continue;
- 
--			strvec_push(&normalized_exclude_patterns, pattern);
-+			if (pattern[len - 1] == '/')
-+				strvec_push(&normalized_exclude_patterns, pattern);
-+			else
-+				strvec_pushf(&normalized_exclude_patterns, "%s/",
-+					     pattern);
- 		}
- 
- 		exclude_patterns = normalized_exclude_patterns.v;
-diff --git a/t/t1419-exclude-refs.sh b/t/t1419-exclude-refs.sh
-index fd58260a24..04797aee59 100755
---- a/t/t1419-exclude-refs.sh
-+++ b/t/t1419-exclude-refs.sh
-@@ -46,6 +46,10 @@ test_expect_success 'setup' '
- 			echo "create refs/heads/$name/$i $base" || return 1
- 		done || return 1
- 	done >in &&
-+	for i in 5 6 7
-+	do
-+		echo "create refs/heads/bar/4/$i $base" || return 1
-+	done >>in &&
- 	echo "delete refs/heads/main" >>in &&
- 
- 	git update-ref --stdin <in &&
-@@ -99,9 +103,17 @@ test_expect_success 'adjacent, non-overlapping excluded regions' '
- 	esac
- '
- 
--test_expect_success 'overlapping excluded regions' '
-+test_expect_success 'non-directory excluded regions' '
- 	for_each_ref__exclude refs/heads refs/heads/ba refs/heads/baz >actual 2>perf &&
--	for_each_ref refs/heads/foo refs/heads/quux >expect &&
-+	for_each_ref refs/heads/bar refs/heads/foo refs/heads/quux >expect &&
-+
-+	test_cmp expect actual &&
-+	assert_jumps 1 perf
-+'
-+
-+test_expect_success 'overlapping excluded regions' '
-+	for_each_ref__exclude refs/heads refs/heads/bar refs/heads/bar/4 >actual 2>perf &&
-+	for_each_ref refs/heads/baz refs/heads/foo refs/heads/quux >expect &&
- 
- 	test_cmp expect actual &&
- 	assert_jumps 1 perf
--- 
-2.49.0.rc1.2.g67c8c5f7978
