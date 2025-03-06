@@ -1,159 +1,136 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BC525A652
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 19:14:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0389F42A8C
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 20:24:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741288473; cv=none; b=HWZ2nDxnUw98ZnAb4zwDzNAOVqsXbA5+bxi+rY8uN/o0NDPYq3TpbAFGTFBth8iraMHlJsq6EfCoOJZFrOVxJ3hBxRM0QPEV4w9zoDXNEazQSF6jcOG03xwYCZzeZC6sqQBUDeU3PlWBDFD08GxVk0YQ1YodztqYCavPSZIWt90=
+	t=1741292694; cv=none; b=NunlYxVdaaa1ByJ336oN914O8nCDEnwngUU/uX4M1tUU9FQdD2OlcFD9CfYnPI02SXUnCr78Kr1kczxhoTSGyH6L9Gg3nhqsdg1qVsRkOJ7SENg0EA3UWWYbHj0mde+s05M5ITttTrWSjNWjej/qaoGVFqy++XrHZ3OAQfR5NoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741288473; c=relaxed/simple;
-	bh=rCyHb4HSdLcusXnH+o7n1/MjC5QiDFeTNrVHZ5+GS3U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oWvmmJyISUHpMTMrbBGQvp7o6+OY3KFNW3JGWY7iwI8XQUxkPHQKbH4taMFEDLWbntvDXD3zS3OxWneR8ClWoxt2jfrH6g2T2MD5yBIRPZb7o7ZQiCRMjbxyGWeq/Vp2k03b/c5dfaO+7j/SuzFvZJZAfwWTahJ0lSdQnqFBrdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i5dGIOLy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SU0GU9gX; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741292694; c=relaxed/simple;
+	bh=1zr0Xalr9XrpSzoSMHjgDmQ+HDdc0q5FKLfwL+ZKzDc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Rm716+b4wEm+k4OEAD1P+3s6DUANYTqQn68+PZ7vrwPBAf9/6h9rL9e7luk2vJGZO7yjtsb9R2nli/iBWF+O0Lw44iSbiByZxS6OK912vCMb1iYzAd1XHf0iinQLnN+ebRGuwxhMioiOoBDfoiVUV09aYgyhPzXqzNtwg2W+BDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BSpRcve5; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i5dGIOLy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SU0GU9gX"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 37CEB11401E4;
-	Thu,  6 Mar 2025 14:14:30 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Thu, 06 Mar 2025 14:14:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741288470; x=1741374870; bh=nzu2BJR2aF
-	wBhU6JPKCue7L7ds/k8CYGF1jxTyN1jCQ=; b=i5dGIOLyaWcpcnGjBajtae4xat
-	pMxJyrx9NkjGSsaFjgmr+eOH7vKh+tPIZEbEDdnc2tlz+rVQT9CohXVRhh52+47r
-	n0y5wQzRAiTRsdlLcEpKjdY/oZ8GApsydMRPCw3uwJh+oMzaeyYXdC7q2Voy9+7W
-	8a+4Wv5QRZnkO6NchCeehl8U7lp6tUTBU9kJhh71MOUGmIV8snphoAz26WM/zi3D
-	XFuHn+XDMrfvJeHz3yEwvLJs/smkaNHww8QLIQXpLnIh754VlbJNr9ZsrQLsjVY5
-	SR05PKbTsZCNkgPbVlU//GSuKwhGkW7F7btzDNH+aoyvzVWp6iZX0gdLyvJQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741288470; x=1741374870; bh=nzu2BJR2aFwBhU6JPKCue7L7ds/k8CYGF1j
-	xTyN1jCQ=; b=SU0GU9gXPc+bINNRzCzzal0rXhlCb0SLPZ/VC7FKTdArkUlkHdQ
-	R627rQJe28O/7W9NM7n4CuDLjJBAH7YVV5d7v1FawDqX7RhhJlPtr/OYBhIjm5OO
-	OcuolTI6ezU8s+66o5v0LkyfQBHC5lnhuYtSNS3Q4lhFGsKld0DwvMSAlHYh2kZc
-	wdyAAi371/mkwfqBl92rvTfe6xaRzpmrgZ1AwhCIGYTi1BlOWTo/Fgp6dR3kvlV0
-	BqMj+GhnsmsQ9MDafcCS28J1BUERMEZ6R7OWc/TEcYj18fWyer2kUCawRXHXAK3b
-	Uh6U4XIkGW3UtBaC43lLWh5tEZk3PNDtmCQ==
-X-ME-Sender: <xms:FfTJZ4nZbfpXe1v15AoxNHQv9hOKMRZr5E-fNqK1uFZb2fCYhJZVbw>
-    <xme:FfTJZ33RePKxX40VINIuyvPrC95nB__OaIPi1J3enUOvx84RiK_I85uZEXFb9ogDk
-    NJ-nKtS24TxRUSKcg>
-X-ME-Received: <xmr:FfTJZ2rYQ0YELodYeQ2mW1wafJoYQ4dYyLaqptWQvrIcuv3zqppG8Gx4TSEz0NoDu3_-hZOL0sS1RZ8UtqwoIFDyyFCjIl4UUS-R>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdekheeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgs
-    lhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:FfTJZ0nN7ZGOZV8okRRS3dlKU_XcN4Q2QnL-hksnfFHj0rZsX9zDiA>
-    <xmx:FfTJZ23CP5JvtDZ3oSniaP_lHonyHprh1gzalWMYYZPhJlxhzS2Dcg>
-    <xmx:FfTJZ7tSNtFcidundLxQcWqGBzDozbJaGZ7oSnz3A1mA0JV9cQ4YtQ>
-    <xmx:FfTJZyXNdsNfJ13QMeOuo1IVyzoyPyuHAyhVQ8u_IHa_OhpaH653jQ>
-    <xmx:FvTJZwqzGA-0ZFFM2__Cnxqs_MJZOQvGa14VrR7yzxAXORRlBTPoS7Wu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Mar 2025 14:14:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>, Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Justin
- Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 12/12] hash: stop depending on `the_repository` in
- `null_oid()`
-In-Reply-To: <20250306-b4-pks-objects-without-the-repository-v2-12-f3465327be69@pks.im>
-	(Patrick Steinhardt's message of "Thu, 06 Mar 2025 16:10:36 +0100")
-References: <20250306-b4-pks-objects-without-the-repository-v2-0-f3465327be69@pks.im>
-	<20250306-b4-pks-objects-without-the-repository-v2-12-f3465327be69@pks.im>
-Date: Thu, 06 Mar 2025 11:14:28 -0800
-Message-ID: <xmqqr03ageej.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BSpRcve5"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-abf4d756135so188101166b.1
+        for <git@vger.kernel.org>; Thu, 06 Mar 2025 12:24:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741292691; x=1741897491; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3jYzYpVGiid1iTM8BHdzBH3oI2knLkIhmJAFxJbQI2Q=;
+        b=BSpRcve53WWDQggfUViaImyMHUJCcRDmdzAt6NDczh25/0Or312pdMnWHVssLqKAGG
+         EiTj0LwPWQCFwkj7Jc7pWvZmXUE+b3zIpL7PzN/7AYiKQJsQA3KPZsle6hvFn9cu3t9H
+         sIqkPIGyrjsCgkXxVxHly/wG6bA+vCg0JmITRFQDvgubpKLEnZpK0hi5AZIm8GfxgX62
+         lf8/Rq11n26eP3xtGaQ0Z/EMQS3ASgPVX1uyCuVZzDbbD1uWYY1vwoKP3bPSAx1h8E93
+         kLB47eWSaCOZNKqw79lj0QzwRX25t7FGsp3sOZKTaSL8BTdWrB79ycte17mWVPbW07ue
+         QkvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741292691; x=1741897491;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3jYzYpVGiid1iTM8BHdzBH3oI2knLkIhmJAFxJbQI2Q=;
+        b=Fq0QO9VzBNCvxgRR5kTcU25zqSfDB1cwTWZ4smpfpNCO5Y52L86JW43Qbt623J2LYe
+         4Bjjtr0/p3X0qdus2pH9VkjBxh+lAZ7kqk7Ukq2RjuvFPOKSZZj5LyG9CZpnhU3BrNXJ
+         iktXzfZgJg0Ixfy7qO3yrLz9KepojtXBHQdnwIAR9bNTO2Kl+UalZY1AQ7WcmZhz7Xfa
+         DkTlo95/G16Xak9/xyb55J7A7EpJ0KwCFmzoQFAfCFXF4/KTd28pu0pTVNOgC9NzSt9F
+         UrEpgd9JlHr2bclr665Ik5cEpunn0aM9LZMP6/wK9ZvcxayCUUrL33doE6tXz0q7eZJK
+         UOZA==
+X-Forwarded-Encrypted: i=1; AJvYcCV7Osm5qaYDhCwDby/+bCA9ZqRAVcfyQfgoyfiC3Hcj6xivtvCrRxk4AqwfpDrk/6qb9pE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx/FSGeK3qQx+60kmHFuRIWJLYWK8HQK/7JV9D0bYmaVDDTME9h
+	gzrpdm6Y2TAoUd9pThWEIEocP/djHQiP6BGeP8iVNFmohzW4ftx2+Ula82g61igp0wibZhXEkcU
+	SOs3r+IpoURjTHo5fU8PNhncUFcg=
+X-Gm-Gg: ASbGncsnb5vkrjHH0Dv5lINfDSUWD/ZvhrlnAdwrlxotgr4PQaUcvt0WLtYInFIA2ez
+	9cjNM/p5p7zCT+4OoemK983/9LXliAmEl2V1idwO3p3wBXJXEJtnoVKFZlrx8kPKXxwdHbWu0dM
+	PyyOoD6kX4AcTmX3to+3VE+FGaHRzODeDVDswYaOOT8xPFOd7RY2QN8kfN
+X-Google-Smtp-Source: AGHT+IGxbavGioVbf8Ml++VcNe43eb/Vtpf3g8YzNhnX7mwuFgD66hUGflpR0be4doSu6BnYCVSsVMN9IaQkDyi9j/Y=
+X-Received: by 2002:a17:907:1c9c:b0:ac1:e881:8997 with SMTP id
+ a640c23a62f3a-ac2525e0444mr52180766b.3.1741292690848; Thu, 06 Mar 2025
+ 12:24:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
+ <95ffa62df6ce394249a8ddabb84fb2b517825fe3.1740901525.git.gitgitgadget@gmail.com>
+ <c03192bc-68d3-4645-9bd3-93a338a7496f@gmail.com> <2323bb52-f43d-4f40-8955-4c648677a93e@mandelberg.org>
+ <65d903c0-6b4b-4a55-b7e4-4a277417f0f1@gmail.com> <42dfc06e-8eb1-46da-9971-9d102f1390ad@mandelberg.org>
+In-Reply-To: <42dfc06e-8eb1-46da-9971-9d102f1390ad@mandelberg.org>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 6 Mar 2025 15:24:39 -0500
+X-Gm-Features: AQ5f1Jp6G0Stx941GSWnt_YsS1qt3IelsjT54CoH3-mtbgrdK-KrfGtqGZY7jVs
+Message-ID: <CALnO6CBDjQgc2TNaXbBWiUNqWV=RgrL2Ry-7HzRu3Ozuqazzvw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] completion: fix bugs with slashes in remote names
+To: David Mandelberg <david@mandelberg.org>
+Cc: phillip.wood@dunelm.org.uk, 
+	David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Jacob Keller <jacob.keller@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Mar 3, 2025 at 2:25=E2=80=AFPM David Mandelberg <david@mandelberg.o=
+rg> wrote:
+>
+> Op 2025-03-03 om 11:36 schreef phillip.wood123@gmail.com:
+> >>> local sed_cmd=3D
+> >>> local remote
+> >>> # ref names and therefore remote names cannot contain '*?[]^' so we
+> >>> # only need to escape '.$/'. Using 'sort -r' means that if there is a
+> >>> # remote called "github" and another called "github/alice" we will tr=
+y
+> >>> # and strip "github/alice" first.
+> >>> for remote in $(__git_remotes | sort -r)
+> >>> do
+> >>>      remote=3D"${remote//./\\./}"
+> >>>      remote=3D"${remote//\$/\\\$/}"
+> >>>      remote=3D"${remote//\//\\\//}"
+> >>
+> >> Just FYI since it took me hours to figure this out myself: I think
+> >> this would break tests on macos because of an old version of bash that
+> >> handles backslashes weirdly. I think removing the double quotes would
+> >> work around that issue, and be safe because word splitting doesn't
+> >> happen in assignments.
+> >
+> > Thanks, I'm not familiar with bash's extensions to parameter
+> > substitution. The completions can also but used under zsh (git-
+> > completion.zsh is pretty much abandoned I think) but it looks like bash
+> > and zsh agree on this expansion.
 
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index a4431429b7d..2d2e90bc23a 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -234,7 +234,7 @@ static void show_submodule(struct repository *superproject,
->  {
->  	struct repository subrepo;
->  
-> -	if (repo_submodule_init(&subrepo, superproject, path, null_oid()))
-> +	if (repo_submodule_init(&subrepo, superproject, path, null_oid(the_hash_algo)))
->  		return;
->  
->  	if (repo_read_index(&subrepo) < 0)
+I don't think "abandoned" is the right characterization=E2=80=94at least, i=
+t's
+the completion script that Homebrew-installed Git users will get for
+Zsh, and it does re-use the Bash completion scripts (which therefore
+ought to stay portable between both if possible, otherwise we get
+stuff like 8776470cf3 (completion: repair config completion for Zsh,
+2025-01-06)). The Zsh script has seen some fixups over time (such as
+my own 3c20acdf46 (completion: zsh: stop leaking local cache variable,
+2024-04-30)).
 
-This has an obvious semantic interaction with what is done in
-Usman's series <20250306143629.1267358-7-usmanakinyemi202@gmail.com>
-where builtin/ls-files.c claims that it got rid of its dependence on
-the_repository.
+>
+> The tests don't automatically run under zsh though, right? Maybe I
+> should try to figure out how to do that in a separate patch...
 
-The resulting ls-files still calls null_oid() here, hence it depends
-on the_hash_algo hence indirectly on the_repository.  When these
-topics are merged together, builtin/ls-files.c again needs to be
-marked that it still needs the_repository variable in order to see
-the_hash_algo.
+Correct=E2=80=94which is how bugs sneak in ;)
 
-I _think_ the subrepo is not allowed to use different hash from the
-superproject, so we can pass superproject->hash_algo instead in this
-series to make it easier on the other topic?
+I'm willing to manually test the patch if I can understand how to
+reproduce the issue=E2=80=94it sounds like having a remote name with a slas=
+h
+is sufficient?
 
-What do you think?
+I started trying to test Zsh completion a while back when working on
+one of the patches mentioned above; I got as far as this hack [1],
+which is to say, not very far at all.
 
-Perhaps we should have hidden null_oid() as requiring the_repository
-just like the_hash_algo is guarded like so
+[1]: https://github.com/git/git/commit/d8918195f18a503aa1a42fed3c66a0af8d04=
+131f
 
-        #ifdef USE_THE_REPOSITORY_VARIABLE
-        # include "repository.h"
-        # define the_hash_algo the_repository->hash_algo
-        #endif
-
-in <hash.h>.
-
-In other words, I wish we had the following patch already applied,
-before Usman started working on the other topic.
-
-But with this topic getting solidified, it would become a moot point
-to do that in the longer term.  This series removes null_oid() that
-had the implicit dependency anyway.
-
-diff --git c/hash.h w/hash.h
-index 4367acfec5..3c9ccb550d 100644
---- c/hash.h
-+++ w/hash.h
-@@ -340,7 +340,9 @@ static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
- 
- const struct git_hash_algo *unsafe_hash_algo(const struct git_hash_algo *algop);
- 
-+#ifdef USE_THE_REPOSITORY_VARIABLE
- const struct object_id *null_oid(void);
-+#endif
- 
- static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2, const struct git_hash_algo *algop)
- {
-
-
+--
+D. Ben Knoble
