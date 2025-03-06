@@ -1,54 +1,54 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490E9145A0B
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 16:11:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BE521ABC5
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 16:33:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741277475; cv=none; b=f+VO2KO3rs88FY9IBzIEE8tnHcpGIUchqe8Qj6Ts920JeC7L3h4+/7Cb1RftRj75DFjVpEBcweA8LYEhS80EvuOTVwA3sqJbRyV8oS+9BEYGQ7nhpArixGv41UqY8O7V30xojHupAcA2I3aoCM04qwthJ0ubvUxDwltEPOF47p0=
+	t=1741278828; cv=none; b=jReIMMM5Ps9YX6hKTf+ILnWUwzClEimFxRj+E1spylSuGyfoDiOYHyqsYIw03tAdpUbUIH9GzMJmVBIKzLnEtyamuX4LjvSE+dcNrvbj27M9AgFZwfEom8xFffnAdIF+7qVxK5dASNLdt/gZBpePLDp04wPo5rX4KFJj9JdD6hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741277475; c=relaxed/simple;
-	bh=mRSf9wR5gSrUrtG1LGnRUjQJNM9VENzFvOeZv6x4m28=;
+	s=arc-20240116; t=1741278828; c=relaxed/simple;
+	bh=lgYSw5Pk0Tj76i3KclfycXUMvoR/kdB15gIOWEs38ac=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YMjxo0NcFpNe4Hks+J3P0IbcowALFPEH5LkKGmQlbq5VctXjepQJxIxvvBmW2eDFlMzuv4bv4FBzTbRpcQjUf9EfbMmuCqw7tjVCtqwzbDBR6GWyIWZlp/mF/rn+ITbmVhDKSpeI/VTKgKFLqt5fjYP5FfNd1xXIfaCjZswmutU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Zmqnv4Gr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oxa7Y/Qf; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=Qne5ab4ZvoL+unzT7k/clolMGI4IaZwDTVejUpDEUP8+xUw6lyoPFoV0lX6o/3SpTpJeU3UnC2tFPLxUUgeLJ5V30tMgHj5HWV/ZnSpqunGfkwv1vsxB1mfRHR/BHoW9kgitMBaFHL9Upfy/qoHdXy82vjWTfLZ39pb5gvAbyC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q/kIwXKw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z4NLcOTN; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zmqnv4Gr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oxa7Y/Qf"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4096B11401F6;
-	Thu,  6 Mar 2025 11:11:11 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q/kIwXKw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z4NLcOTN"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id EE5F3138276D;
+	Thu,  6 Mar 2025 11:33:44 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 06 Mar 2025 11:11:11 -0500
+  by phl-compute-04.internal (MEProxy); Thu, 06 Mar 2025 11:33:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741277471; x=1741363871; bh=/oQysCTdv+
-	IpuPfQSjIykhp/WvXq3VZ+UH0hQos1zIM=; b=Zmqnv4GrpubTd1H/KQUFHMPiwP
-	KJeDCvbu3ItvVNuqLvAXQWIJxA5Ldowd6zQn5KLwRDo+fr14uBE4i3CvjtOWry2L
-	rq7GduhU6YvSWpxZ2goYzFJoOzI7N0CdPEEcab23uCrXUffJmHSJJedSl8sAkQer
-	RLTk0ylewYta46eOh9nvYVBjyuAid13ecEcKX8OXuXdOMDQeYtnJ8V2Lv06L0Toq
-	vxEhnmSzPeDTw+IsUzAPa7V8Cnm6cJpZssSU8Ofb1Y/TSvTy0t3SpxIVhldq69Lb
-	7jSwB3ZOw2+fjvE1VNRA0LoWhI4S6ezG1MK4CIuTTpTK8fRqNodzn2HiqgKg==
+	:subject:to:to; s=fm3; t=1741278824; x=1741365224; bh=x7PWUStXfv
+	z4+z/dSn2HWPa8FLj+QQEyjj75t5PQKnw=; b=Q/kIwXKw6GbGZXcUFNkcV8ysjr
+	Mi26rUNryUPV093f4UuQcwOob4i0Ah6kouvyqGSX/jMttyi1bNesXEeQFPPPTZFH
+	/aX/615/mgoeUWE4FcRYcyvb9msqIyK0irSxcA4vm/fMo6bWSDk9HVY6ia1kW2D6
+	epA1BrjYtrepsIPeAxo7xwF1tAlTPLuGAhc+12pPK3NNDSQU9P/a+Jf2hM39HXL+
+	9RAdhUcc4gIjzs3scxLr1Vqgx78sVJ1X2Gzhs0S/gtS+vIz0NeSLnHExeaipaC1w
+	Jz63g3BbRpooiNnZpHUF7JYjism6rmHbCSKB+efZFmZAgtqNzSHyiTcV/IPw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741277471; x=1741363871; bh=/oQysCTdv+IpuPfQSjIykhp/WvXq3VZ+UH0
-	hQos1zIM=; b=Oxa7Y/QfGyQn8osxRrcMdoqsRQegyyD+xMxhiRav7o+ZDoKdqb9
-	VS34Mk7xy5aQ9MJCHUoLaUvk8IQmr9ZXqjKirDsjfa434CxjWtwa7IzV7y0HF1sk
-	ryjshlqBRwC58zsVkzbSYZpnWbSCBkD8ZGOrm/21kgL0JGlyRSMI2PavdCPsqMIL
-	rz2cq1rrcWKi43WtaWokeZyEojkWpVYXkGm+RlRHL55EAT0oHZdTvY1reLqADNdP
-	rscB70BL8T7noG0TlmxQgG3vxw30wx89+kpkGyT8Tbz9jD9s/inrbUsMz1qpUoLF
-	R6jYh65LpoJO/uN/Vf7ODhGL/exMDcSyc7Q==
-X-ME-Sender: <xms:HsnJZyq3llOL5K9LVU-cI27o37yTzELyLxq463DycxcFjfY49HIQ3w>
-    <xme:HsnJZwrVaY6Kv-zYZ7ZZMjjc_P_e-lFFnW7nRSlxTOZXlE2M16lLNwMrM2nDI8JsV
-    Fla4bxf2EP6pfUi4Q>
-X-ME-Received: <xmr:HsnJZ3MJD8GURWSK1n6BWFX1qOMxNFIDEyhmWd5WGPZMXeYaYKhuBwRX5lkhf-627QNf4NBIbv-Qugh5BXWt43H4ddiHI6QRU5wX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdekvdduucetufdoteggodetrf
+	1741278824; x=1741365224; bh=x7PWUStXfvz4+z/dSn2HWPa8FLj+QQEyjj7
+	5t5PQKnw=; b=Z4NLcOTNPdX8UmFFNYwH06CG0RZfnAzAMOSN9WR6cV5fEKz2rbR
+	ipQg5cSg0iG5WXCUMipChT/i5BeMtf8KYZ2QzZgf7QXkwwxeQksPfHKv90AcDXGW
+	bBjj7jYUzA2ZRiYQ+9NqA2epIQiWZuRPvFtygV5UYedcK2u140KTeQwS07ZielJI
+	TkfQzZVDxFX5mUOPYeIR7KIvzsI7tKiFI8bLAPqNZKe1gRIm+VR9j00FK8npe1oI
+	VQHZV+UUiLW9Ttq8bqHJ9y7pbV6eODmU0VXbgbYac1vy2r3ntmV+5njWD88oZN+8
+	ki42UIbqMVIDbhBw9LxzpUakV3D6wtgrNUg==
+X-ME-Sender: <xms:aM7JZ2s6imXAwe8m2C6M3XtCaCfAElAYwp0srjZz1CcEwAIb0QCA4Q>
+    <xme:aM7JZ7cd8ViPLzMDFc5tTRQ2ipRM2ARfggomtdgq7V640lBfbKqZG2KgoOygFreyQ
+    tmjxTc5xQIS7cSGYQ>
+X-ME-Received: <xmr:aM7JZxxpcI3R8T5z5rpeg7QuHFsUf6nd28_9B1KR2Y1jmOGAfBUGw5G0esWZgS1hqVZa7HI8Z6zV4vb9XgQjfamFK7hl1croi04r>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdekvdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -56,28 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdekvdduucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
     grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehgihhthhhusgessggvnhhjrghmrdhinhhfohdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:HsnJZx7Ey2oXDXXtwR-1bgrWkyivb4TtCFVaoCm-HImpCsVQrnT-Ew>
-    <xmx:H8nJZx454ZY8GuyTP4-8NqPps66wNpBWxr6OBvB8wV3BELOPPpwq4g>
-    <xmx:H8nJZxjixMO8HMnAXd4dsQxVZxdWJDeszfOj9IHUajXKw8WcoUdPYw>
-    <xmx:H8nJZ75ls-7xfs1DrYvw3Ci0zXZG2cPwrLdRuJcNnvRILTz734HTcA>
-    <xmx:H8nJZ02uuDwxnUSQTUklRhGGslX1lsCqXLwmZ5-otKiIalJTQpJKEgsv>
+    nhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhohh
+    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:aM7JZxNV_6k4HgohOE0XwuSkM-0wglglVeaY27eQUfjKF8eI6NsXVQ>
+    <xmx:aM7JZ28P7utd9e-RKOJgiqcLRbNaq4uAV7KNkU_f7tJqV68WkQAl4g>
+    <xmx:aM7JZ5XodFMqyLE4ORfHL7mze5M9x91hCHf799lu4uBcq5sUmizZUQ>
+    <xmx:aM7JZ_d2tqMxe6HnNrf-uVJ5QPonKp3Lgu4KpV7as7l0paGN1aI9zA>
+    <xmx:aM7JZ9kpvrzgJZKeWRa5I9JMMT0v2paidb7A6g87XOsmqIseUVKfJ8Op>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Mar 2025 11:11:10 -0500 (EST)
+ 6 Mar 2025 11:33:44 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Benjamin Woodruff via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Benjamin Woodruff <github@benjam.info>
-Subject: Re: [PATCH 0/2] describe and diff: implement --no-optional-locks
-In-Reply-To: <pull.1872.git.1741240685.gitgitgadget@gmail.com> (Benjamin
-	Woodruff via GitGitGadget's message of "Thu, 06 Mar 2025 05:58:03
-	+0000")
-References: <pull.1872.git.1741240685.gitgitgadget@gmail.com>
-Date: Thu, 06 Mar 2025 08:11:09 -0800
-Message-ID: <xmqqo6yejg0y.fsf@gitster.g>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/3] ident: stop assuming that `gw_gecos` is writable
+In-Reply-To: <3e9ccffc7474698947bdcb6d49b5d0728deadd08.1741256780.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Thu, 06 Mar 2025
+	10:26:18 +0000")
+References: <pull.1867.git.1740671049.gitgitgadget@gmail.com>
+	<pull.1867.v2.git.1741256780.gitgitgadget@gmail.com>
+	<3e9ccffc7474698947bdcb6d49b5d0728deadd08.1741256780.git.gitgitgadget@gmail.com>
+Date: Thu, 06 Mar 2025 08:33:43 -0800
+Message-ID: <xmqq8qpijezc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,33 +91,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Benjamin Woodruff via GitGitGadget" <gitgitgadget@gmail.com>
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 writes:
 
-> git describe and git diff may update the index in the background for similar
-> performance reasons to git-status.
+> In other words, contrary to my expectations, the `win+Meson` job is
+> ill-equipped to replace the `win build` job because it exercises a
+> completely different tool version/compiler flags vector than what Git
+> for Windows needs.
 
-That is a wrong reasoning that is completely opposite, though.
+It is apparent that meson support is a new procedure to build our
+codebase that is untested and unproven on Windows at all, given that
+among all people who may have stake in Windows you are discovering
+problems in it this late in the cycle.  Nobody knows what other
+breakages, other than something obvious and easy to catch like "ah,
+compiler refuses to go further", are lurking under the radar.
 
-The commands at the Porcelain level, like "status" and "diff",
-refresh the index for the CORRECTNESS purposes.
+I would be reluctant to trust the build artifact out of meson-based
+build on Windows after seeing your report, especially the above
+part.
 
-The commands at the plumbing level, which are designed to be used in
-your own scripts, like "diff-files" and "diff-index", do not refresh
-the index for the performance purposes.  If your own script wants to
-produce correct result, your script IS responsible for refreshing
-the index after its last modification to working tree files before
-it starts to use the plumbing commands to inspect which ones are
-modified and which ones are not.  This is so that your script has
-more control over when the index is refreshed.  It does not have to
-pay cost to run refresh for each Git command it invokes, if it knows
-that it does not make any modification between the two invocations;
-it can instead refresh just once and then run these two plumbing
-commands.
+A reasonable alternative may be to declare that meson-based build is
+not ready yet at this point, and possibly disable win+Meson jobs to
+punt and divert our engineering resources elsewhere in the meantime.
+For a new thing, having an uneven support depending on the platform
+early in the evolution is not unusual or to be ashamed of.
 
-So, it would be absolute no-no to make the Porcelain commands like
-"describe" and "diff" not to refresh the index before they work by
-default.  As an optional behaviour, it might be acceptable if there
-is no other reasonable solutions (like, using plumbing commands if
-the callers are not you typing but your scripts calling them).
+> Nevertheless, there is currently this huge push, including breaking
+> changes after -rc1 and all, for switching to Meson. Therefore, we need
+> to make it work, somehow, even in Git for Windows' SDK, hence this
+> patch, at this point in time.
 
+As I said earlier already, I do not mind turning the type of this
+pointer, which is only used to read from a struct member, like this
+patch does.  It is the right thing to do, so I'll apply.
+
+But I personally would not be comfortable with the product built
+with "completely different tool version/compiler flags vector than
+what G4W needs", even the compilation passes with just this small
+change.  If I were using Windows, that is.
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  ident.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Thanks, will apply.
+
+> diff --git a/ident.c b/ident.c
+> index caf41fb2a98..967895d8850 100644
+> --- a/ident.c
+> +++ b/ident.c
+> @@ -59,7 +59,7 @@ static struct passwd *xgetpwuid_self(int *is_bogus)
+>  
+>  static void copy_gecos(const struct passwd *w, struct strbuf *name)
+>  {
+> -	char *src;
+> +	const char *src;
+>  
+>  	/* Traditionally GECOS field had office phone numbers etc, separated
+>  	 * with commas.  Also & stands for capitalized form of the login name.
