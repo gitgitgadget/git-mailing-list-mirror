@@ -1,83 +1,83 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F1E20F08F
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:08:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C39121128A
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:08:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741273737; cv=none; b=LNOjXwNXhe365cDhcFgTLmIC0sG47YRDU3RyyrGONHuslMR4diR9w3SGq6Z/KD+xsBdbc/YYyQdfLvC09OKuwsnrSi7vLPqaBnkBmIPyIkvuzuPEHDn4SH1yLdECCIV2n53wC4M2re6NHSKe8vsVdzfvLegJh/OVDqbC8ZHvePc=
+	t=1741273737; cv=none; b=s0XEDW8kZunTwBJ1IHJXtJYTfFNYEY4jGQI64N2RUMAvyk7eEAR0DoS1S0hwriKIEYZr5AdS46b3PmrpcizDaoTZLq+1qR90SZJLPyAoYY+0bcOBMewSgP3LnV7URY9/6RZTOggvuseWoAbNjw6Z6iAWwtWn1EotZ5Y7xbhL0uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1741273737; c=relaxed/simple;
-	bh=UJNvGhux4NX9CzNSDnsHT01rFjCpiDAdonEkYb6Em6k=;
+	bh=eQktM5kWYkU1TcxRbzAgYV4CH7VOl5+KWlP987rQLIc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QF/swQi07IihW3txNEgVaqJBXnO4DMsQeGBcjsF6RXmLwC6K5uzz7c1DZcd4wu/LvpminL6t6hejFzC6mtIGZMi7iC4PHjhRdprRKDN9pQYU4S+kKnTepSyECcJe56DSc6ulQ95/VQxO0SGheHDS1OX0JGp/GfB4yi/8WgDAq7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZSHphhmy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WtX8j0Iv; arc=none smtp.client-ip=202.12.124.156
+	 In-Reply-To:To:Cc; b=A3BxvBQjN15SXM4UazW0RJnYt10fxn9XqXjW0g0yF45ZbcMeo/J94M+88T10Hw9aXPZUW58GMabdwBbd9ONLx6z6q/8DISzyxdPxK6clyw6EOFLvvIlaAr/OY5FV1vPuQGZ3z5jS7PBAznLAxDRIyDKG/BpUCOkInmfkJkiskyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YyreXh3p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CnFvrG01; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZSHphhmy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WtX8j0Iv"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 44FF3254016F;
-	Thu,  6 Mar 2025 10:08:54 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Thu, 06 Mar 2025 10:08:54 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YyreXh3p";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CnFvrG01"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2628311401E2;
+	Thu,  6 Mar 2025 10:08:55 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Thu, 06 Mar 2025 10:08:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1741273734;
-	 x=1741360134; bh=nNm0S+yS2lk8rd7nCGb527Lalq91mMEYhFqgFYfYwuE=; b=
-	ZSHphhmy5zadken4pP+QTtqqBu9CAupfFx/K9hcNfrrGUXITCjj0DHIu8jMFRhsK
-	hi0jKxZPnVir1m1DHbbsCokKCaPrbXy8CPFuRoKcL+CTPHq3phf4uqfiruMGl4ZG
-	B9UsT4YWmtUSax2QSUD+59QT/ZYeazIPrkH06n+K94+nl6rciOIL6y+BRz12iqGv
-	+o5ikqud8pOOcTutO9PISJjupD5MfOP9w/QsZbbYFCY7BF1m2rorhEIo1nY9iWQV
-	6N8YJjhqEvtXZpnksJhwjx6KRtQUOJMsrrOuXXjtRTxtJRiKIjBabjqQhe1NN0wQ
-	2lSKXbpw/ltfIZ7MclMH7Q==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1741273735;
+	 x=1741360135; bh=B2sr2MMIvTkvlsPTzK24wVsW3b7XhDVvulJDMqJOMPo=; b=
+	YyreXh3pydP2nDRVzRvhRTbjL/4wizZ84e8doSnhQlWtsaxW4YiTv+2bAMWO/GDJ
+	bNgunAVMtebwsSSdy/xrLqcnvL/sKZw3k9kZKt0+43cMoaiqM7P+8eeH2OhZ62OK
+	D3T0Xb6+lUktCdG28fsT1l9THFWl8Waq1XeDZn+rrzANaytwfzChUuApkxrnvDW5
+	DfdA/4ZMNJ/TSqSqxgJvWuMv9/dSM7jsQYydVj59GJi0UpnipNInnS40at/DQMJ7
+	GiVw1Va+hy5DITr+vIKHpMGpkjG4tlMP0ojcNk786nKfSp3Zt8h+foH9ig334UxI
+	gBAIu8nrOoIW6GQj1M6Yug==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741273734; x=
-	1741360134; bh=nNm0S+yS2lk8rd7nCGb527Lalq91mMEYhFqgFYfYwuE=; b=W
-	tX8j0IvpOkXnf816wyEZkzKb3D1+0eM7VZdo5gxj6Ejs/aJ3ua5T43jlwVsLfnOh
-	9h8I8VPPCfwrnYQBrvjLBXo1BbwyvgeTvzyOIQblGhgWUwgZGOCyti2kIqmDCFys
-	vnTyLDaRhzy4u0hlG5CmSNKGc5SgL+euiz3RAz6K/25xQCbEDsOgrmYkbE7qO/HD
-	Rs5er5ovueOCKVfwnQHZ4bwu5TTOLOBM48QTpXnheYj5wMbUjxQaxQw6gE3305Ou
-	ltB8zXWYoSr6WkDNTS3xHwRU5RdXXKwr5VOpnAhJk4C9Jw9fCbm0r4nZvRYfrtdJ
-	RaDQtnsq+UYCryVXws2Uw==
-X-ME-Sender: <xms:hbrJZ8HJZ1Xgcn-KJlqlqzjszrMLZI4CLtjmG4FruJdRUnbnWrA7VQ>
-    <xme:hbrJZ1VpVkB3-6CFuGzXHhds8DcRvxcWEXF-1ZkOZ8xOV2f9Nro5hQgB4EokkHpu3
-    A1rI1akPcYG4krBSA>
-X-ME-Received: <xmr:hbrJZ2KPKc9QWUl9tmB1tLQieO-vLI1ByMqh9QULX7skrjJS5oPD56c8wqQyssKAny0mGNWCknuhI2spJrwN9N7txij2yvQrBMi-VdAbrCkCkA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741273735; x=
+	1741360135; bh=B2sr2MMIvTkvlsPTzK24wVsW3b7XhDVvulJDMqJOMPo=; b=C
+	nFvrG01N9hCbR/d/BbaX4UWz55lBTcDoF3y0toyotMckODt7MQKZa+a92aZcAh5s
+	Ua4/5WyljI4jpvtry+rUXM9i0Imkh8VajHphcQiM2y7CVN2wU57C/Gafo3VKJybh
+	EtX9ONl9U6PikDxgJ4slG6QbsihWtxMT/XUsa3lZGoXGtJThb6Rwp8lGUSGhDvbJ
+	FX61d9On6kRvDSsQ+gkLyaRTZ6RJGdnw6BQLLYfhGYkbsL+jgHOW1GYC1I8U6B4c
+	OYYoU3Z4JrweD8C8rPSWSL0E6xoWTNu26YZcE3wZ8Py3jpsjXBVqiJDDRrF1+MOW
+	sdi7pDIv40NFWjfZT6uIw==
+X-ME-Sender: <xms:hrrJZyJHJ_WL0-r5-R8wwXQbqAMdKL_ysoQEHGHKImZpGhBVhf35NA>
+    <xme:hrrJZ6Lx7wLzFtyEzCUTI_paLZyegiu4-2ZI__o-H-vvvNPLZQjFKW5tLVD4xfwX0
+    5X5KYVy8g8Zgtu8Ug>
+X-ME-Received: <xmr:hrrJZyvG-QcsmGooEO8hn3WDWE_84prY3G3shxNbeOgMgzvyDrHwxNeuON5yoMxR3LIsnXOlJM_IOKfsPkzyLorjB3hrGl9-qGPMx4p0-Y4GpA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdektdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdp
-    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtth
-    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:hrrJZ-GEv_rMz4DYjrxNec1uNkUK9KJCeMn5LITwxQoeco-w_QJwsg>
-    <xmx:hrrJZyV-na4Rx5rCYll8mrp4MPFO7xQzKdK-GnEGZMNdkDYlJL9NtQ>
-    <xmx:hrrJZxOQZrnHsx_-RCvqxxdDslf_Ub6dvJEFodz5XC-4gyz14puj9w>
-    <xmx:hrrJZ537PdQSbomQKJLIo-Yu0fPW_mjaYhQh_ykLJ7yZOOX13Xz_MQ>
-    <xmx:hrrJZ9HysI-SUCKVL5rG4M1FVkGeciF-w3WCR0VGGK_tVFfZVzt6en7u>
+    vgepshhmthhpohhuthdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehk
+    rghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlsh
+    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtoheptghhrhhishgt
+    ohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrd
+    hnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:hrrJZ3Zu6wvNj98W7_Jcje2lAO0y5x8Xmv63BNKbWgdFqfhrVamDnw>
+    <xmx:hrrJZ5bQh_2WI4lZWzgvUgNQRscCwdTlu3pVOEGP6iX99hAITkvf4A>
+    <xmx:hrrJZzAwadedvHA9_Lw70YU37Belx1e6sOlA2ZwRXC2VQdWwTo8L1A>
+    <xmx:hrrJZ_Y18reU1KJRs7LEolCzASmTvnFVnQGBc_vd0xMSJBxNZGzygQ>
+    <xmx:hrrJZ14ooc41ERwSvnttJibdACI4TralAaxPb146sKsvcZW1IzX7z43b>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Mar 2025 10:08:52 -0500 (EST)
+ 6 Mar 2025 10:08:53 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 29bb12c6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Mar 2025 15:08:50 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id e4d51737 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Mar 2025 15:08:52 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 06 Mar 2025 16:08:43 +0100
-Subject: [PATCH v5 12/16] refs/iterator: implement seeking for reftable
+Date: Thu, 06 Mar 2025 16:08:45 +0100
+Subject: [PATCH v5 14/16] refs/iterator: implement seeking for packed-ref
  iterators
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250306-pks-update-ref-optimization-v5-12-dcb2ee037e97@pks.im>
+Message-Id: <20250306-pks-update-ref-optimization-v5-14-dcb2ee037e97@pks.im>
 References: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
 In-Reply-To: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
 To: git@vger.kernel.org
@@ -97,116 +97,158 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  shejialuo <shejialuo@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-Implement seeking of reftable iterators. As the low-level reftable
-iterators already support seeking this change is straight-forward. Two
-notes though:
-
-  - We do not support seeking on reflog iterators. It is unclear what
-    seeking would even look like in this context, as you typically would
-    want to seek to a specific entry in the reflog for a specific ref.
-    There is currently no use case for this, but if one arises in the
-    future, we can still implement seeking at that later point.
-
-  - We start to check whether `reftable_stack_init_ref_iterator()` is
-    successful.
+Implement seeking of `packed-ref` iterators. The implementation is again
+straight forward, except that we cannot continue to use the prefix
+iterator as we would otherwise not be able to reseek the iterator
+anymore in case one first asks for an empty and then for a non-empty
+prefix. Instead, we open-code the logic to in `advance()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/reftable-backend.c | 35 ++++++++++++++++++++++++++++++-----
- 1 file changed, 30 insertions(+), 5 deletions(-)
+ refs/packed-backend.c | 65 ++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 43 insertions(+), 22 deletions(-)
 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 06543f79c64..b0c09f34433 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -547,7 +547,7 @@ struct reftable_ref_iterator {
- 	struct reftable_ref_record ref;
- 	struct object_id oid;
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 38a1956d1a8..f4c82ba2c7d 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -819,6 +819,8 @@ struct packed_ref_iterator {
  
--	const char *prefix;
+ 	struct snapshot *snapshot;
+ 
 +	char *prefix;
- 	size_t prefix_len;
- 	char **exclude_patterns;
- 	size_t exclude_patterns_index;
-@@ -718,6 +718,20 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 	return ITER_OK;
++
+ 	/* The current position in the snapshot's buffer: */
+ 	const char *pos;
+ 
+@@ -841,11 +843,9 @@ struct packed_ref_iterator {
+ };
+ 
+ /*
+- * Move the iterator to the next record in the snapshot, without
+- * respect for whether the record is actually required by the current
+- * iteration. Adjust the fields in `iter` and return `ITER_OK` or
+- * `ITER_DONE`. This function does not free the iterator in the case
+- * of `ITER_DONE`.
++ * Move the iterator to the next record in the snapshot. Adjust the fields in
++ * `iter` and return `ITER_OK` or `ITER_DONE`. This function does not free the
++ * iterator in the case of `ITER_DONE`.
+  */
+ static int next_record(struct packed_ref_iterator *iter)
+ {
+@@ -942,6 +942,9 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	int ok;
+ 
+ 	while ((ok = next_record(iter)) == ITER_OK) {
++		const char *refname = iter->base.refname;
++		const char *prefix = iter->prefix;
++
+ 		if (iter->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
+ 		    !is_per_worktree_ref(iter->base.refname))
+ 			continue;
+@@ -951,12 +954,41 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 					    &iter->oid, iter->flags))
+ 			continue;
+ 
++		while (prefix && *prefix) {
++			if (*refname < *prefix)
++				BUG("packed-refs backend yielded reference preceding its prefix");
++			else if (*refname > *prefix)
++				return ITER_DONE;
++			prefix++;
++			refname++;
++		}
++
+ 		return ITER_OK;
+ 	}
+ 
+ 	return ok;
  }
  
-+static int reftable_ref_iterator_seek(struct ref_iterator *ref_iterator,
-+				      const char *prefix)
++static int packed_ref_iterator_seek(struct ref_iterator *ref_iterator,
++				    const char *prefix)
 +{
-+	struct reftable_ref_iterator *iter =
-+		(struct reftable_ref_iterator *)ref_iterator;
++	struct packed_ref_iterator *iter =
++		(struct packed_ref_iterator *)ref_iterator;
++	const char *start;
++
++	if (prefix && *prefix)
++		start = find_reference_location(iter->snapshot, prefix, 0);
++	else
++		start = iter->snapshot->start;
 +
 +	free(iter->prefix);
 +	iter->prefix = xstrdup_or_null(prefix);
-+	iter->prefix_len = prefix ? strlen(prefix) : 0;
-+	iter->err = reftable_iterator_seek_ref(&iter->iter, prefix);
++	iter->pos = start;
++	iter->eof = iter->snapshot->eof;
 +
-+	return iter->err;
++	return 0;
 +}
 +
- static int reftable_ref_iterator_peel(struct ref_iterator *ref_iterator,
- 				      struct object_id *peeled)
+ static int packed_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 				   struct object_id *peeled)
  {
-@@ -744,10 +758,12 @@ static void reftable_ref_iterator_release(struct ref_iterator *ref_iterator)
- 			free(iter->exclude_patterns[i]);
- 		free(iter->exclude_patterns);
- 	}
+@@ -979,11 +1011,13 @@ static void packed_ref_iterator_release(struct ref_iterator *ref_iterator)
+ 		(struct packed_ref_iterator *)ref_iterator;
+ 	strbuf_release(&iter->refname_buf);
+ 	free(iter->jump);
 +	free(iter->prefix);
+ 	release_snapshot(iter->snapshot);
  }
  
- static struct ref_iterator_vtable reftable_ref_iterator_vtable = {
- 	.advance = reftable_ref_iterator_advance,
-+	.seek = reftable_ref_iterator_seek,
- 	.peel = reftable_ref_iterator_peel,
- 	.release = reftable_ref_iterator_release,
+ static struct ref_iterator_vtable packed_ref_iterator_vtable = {
+ 	.advance = packed_ref_iterator_advance,
++	.seek = packed_ref_iterator_seek,
+ 	.peel = packed_ref_iterator_peel,
+ 	.release = packed_ref_iterator_release,
  };
-@@ -806,8 +822,6 @@ static struct reftable_ref_iterator *ref_iterator_for_stack(struct reftable_ref_
- 
- 	iter = xcalloc(1, sizeof(*iter));
- 	base_ref_iterator_init(&iter->base, &reftable_ref_iterator_vtable);
--	iter->prefix = prefix;
--	iter->prefix_len = prefix ? strlen(prefix) : 0;
- 	iter->base.oid = &iter->oid;
- 	iter->flags = flags;
- 	iter->refs = refs;
-@@ -821,8 +835,11 @@ static struct reftable_ref_iterator *ref_iterator_for_stack(struct reftable_ref_
- 	if (ret)
- 		goto done;
- 
--	reftable_stack_init_ref_iterator(stack, &iter->iter);
--	ret = reftable_iterator_seek_ref(&iter->iter, prefix);
-+	ret = reftable_stack_init_ref_iterator(stack, &iter->iter);
-+	if (ret)
-+		goto done;
-+
-+	ret = reftable_ref_iterator_seek(&iter->base, prefix);
- 	if (ret)
- 		goto done;
- 
-@@ -2015,6 +2032,13 @@ static int reftable_reflog_iterator_advance(struct ref_iterator *ref_iterator)
- 	return ITER_OK;
- }
- 
-+static int reftable_reflog_iterator_seek(struct ref_iterator *ref_iterator UNUSED,
-+					 const char *prefix UNUSED)
-+{
-+	BUG("reftable reflog iterator cannot be seeked");
-+	return -1;
-+}
-+
- static int reftable_reflog_iterator_peel(struct ref_iterator *ref_iterator UNUSED,
- 					 struct object_id *peeled UNUSED)
+@@ -1097,7 +1131,6 @@ static struct ref_iterator *packed_ref_iterator_begin(
  {
-@@ -2033,6 +2057,7 @@ static void reftable_reflog_iterator_release(struct ref_iterator *ref_iterator)
+ 	struct packed_ref_store *refs;
+ 	struct snapshot *snapshot;
+-	const char *start;
+ 	struct packed_ref_iterator *iter;
+ 	struct ref_iterator *ref_iterator;
+ 	unsigned int required_flags = REF_STORE_READ;
+@@ -1113,14 +1146,6 @@ static struct ref_iterator *packed_ref_iterator_begin(
+ 	 */
+ 	snapshot = get_snapshot(refs);
  
- static struct ref_iterator_vtable reftable_reflog_iterator_vtable = {
- 	.advance = reftable_reflog_iterator_advance,
-+	.seek = reftable_reflog_iterator_seek,
- 	.peel = reftable_reflog_iterator_peel,
- 	.release = reftable_reflog_iterator_release,
- };
+-	if (prefix && *prefix)
+-		start = find_reference_location(snapshot, prefix, 0);
+-	else
+-		start = snapshot->start;
+-
+-	if (start == snapshot->eof)
+-		return empty_ref_iterator_begin();
+-
+ 	CALLOC_ARRAY(iter, 1);
+ 	ref_iterator = &iter->base;
+ 	base_ref_iterator_init(ref_iterator, &packed_ref_iterator_vtable);
+@@ -1130,19 +1155,15 @@ static struct ref_iterator *packed_ref_iterator_begin(
+ 
+ 	iter->snapshot = snapshot;
+ 	acquire_snapshot(snapshot);
+-
+-	iter->pos = start;
+-	iter->eof = snapshot->eof;
+ 	strbuf_init(&iter->refname_buf, 0);
+-
+ 	iter->base.oid = &iter->oid;
+-
+ 	iter->repo = ref_store->repo;
+ 	iter->flags = flags;
+ 
+-	if (prefix && *prefix)
+-		/* Stop iteration after we've gone *past* prefix: */
+-		ref_iterator = prefix_ref_iterator_begin(ref_iterator, prefix, 0);
++	if (packed_ref_iterator_seek(&iter->base, prefix) < 0) {
++		ref_iterator_free(&iter->base);
++		return NULL;
++	}
+ 
+ 	return ref_iterator;
+ }
 
 -- 
 2.49.0.rc0.416.g627208d89d.dirty
