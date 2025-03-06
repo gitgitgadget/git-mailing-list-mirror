@@ -1,126 +1,185 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D56C2045BC
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 10:50:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C20E202984
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 11:07:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741258230; cv=none; b=uYWApICKF7kqTovf2bbmSPez2shaejcelK9QBP4FSEmjXGvXi4cWR6KWi07+Wa4vjS4DQ7Utq/Pb6Ly/U7U6lfZPD+HMKCDfQSdvx6OitvMX6tmeUHnG2KuOGbFXXiI1it4aHQJF8H1baOn1hY5+9Of+jIpVa96XzHcj5RRl9m0=
+	t=1741259244; cv=none; b=Tat1n1HFRhwCH3LtWDcZ9/L5UzjRr/xmPsscyOWbWsttteqPPmlNvP1tLtUnN6KVWFIc4Im3WJP5zmn5w/4V8mgIJZ4+YClpfLSz3Znwwr2seTo/miTtepVRjUQyR0q589+VGXbKWg39EVQBynxkYhs681QdeyV+RXDxaoYe/Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741258230; c=relaxed/simple;
-	bh=sykC/bx3YQEWiZbFZMreenzKy3dCttnaZOpMJ8Yovb4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nyhslOLEDqPrLP5kdLUQ/id8wIdbvIyuHC1zY5hpfrwp6prSds+32Zco1S/rnSn/L4vyz8l/OvAZjV/EkYILkE4xdS7/P+deanojumd61ONNjIGPz+/HA85v2RzM9Mud2ls9YsdyrGUl2p7hCAl1F3rSw4TYsmz+49Tio2MCmH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DzYzvTfr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f4dTn1Da; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1741259244; c=relaxed/simple;
+	bh=IrfOXh1//bERmdeL9IxhTUGR8ynYWz1hvZRaMRjV5t8=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=NyttptymnDg0NS5RjIr9diTM/DiUbJG0pTr2kakF6tWotl55BJJ5VmT8vBZDxF7kwrIFf5Ep5q3eEpKHnY1TX1Rn5++pahlqQrmR3ohA9R9N4kexTW/nVBOXmR3EEh2MR1SmHk/MiV0A/0QD+10tz7Kd5ypCU/u/TOekXd1WIh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lyektjO6; arc=none smtp.client-ip=209.85.221.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DzYzvTfr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f4dTn1Da"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 294E2254017D;
-	Thu,  6 Mar 2025 05:50:27 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 06 Mar 2025 05:50:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1741258227; x=1741344627; bh=sv+ghjJ0Jb
-	YRbfFlrg985jFsJHmYatlFeAaGpkmoqrQ=; b=DzYzvTfri0G4WJaGNIcw/RX+ri
-	Agg08KmBH9Q/hlOVm5rBaokp/Ripxczmddxh55ZaJudC1l6peLCqQR3yBa1qle0M
-	s5YEEGnyTmIkAJx+K240AMLDtS6r0pjZ5bszdmkLegqGbTfbwkm0OXEdRxI8RDak
-	1r2ei13x/DAm3a9EHFrNLYFyu1Zr6sWlrrTPKgBU2oRBRm52NKn/P68iRsmoNpKA
-	d+9cAMigpqqcV0bUzUDxQCfkDLDf9tLRaDgknp8ugtNpGJr4YWa4kDP83l6XsBUN
-	ExukRjn+lhBcvK6oG88NItjIutZit6RGS0Fby3EMmBjehHfoAv6emwlxCVuw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741258227; x=1741344627; bh=sv+ghjJ0JbYRbfFlrg985jFsJHmYatlFeAa
-	GpkmoqrQ=; b=f4dTn1DaK3GSvNAHFvmjLQ7dnvPFDHb+WfHc4yIH8JFHhd9p47j
-	AmtfO5gt32gL4iL9Ha9XZj8oKtMCcU1rZYwyJlcjH0BtuW2nbLe1M/BP2DO4IV+m
-	CxUbNWWNWl+GPDfzPtP9Ofto3Qlehs4D3aaJr0n6cSuHmhN4SkXAz5IHUNO/mV5c
-	NH2MYTr8ABeNSqDIItbmOw/HY+AtkoKlKROmSlA/KFSnO09MEoeXJmY2PodK7oby
-	uYr7q09srRe7Mldb1KD2p5rdeGyttw5C7tbqluGRqJgk1c6w/ifZ2gToazUKVpEZ
-	LyrpItpburrcFNsPhrgdoGD3z0ILD+/vstQ==
-X-ME-Sender: <xms:8n3JZzfuta_WoCAB80xWSz1e5gRLenJAEQH2dChZNY5IOWsSrWVq5g>
-    <xme:8n3JZ5PzJdnAMenZm_7yuHxLUpbaOOgN_VVSd84omGg1BCnuyKd3x11DOS3b27jMp
-    QEuaXFQY_X5kzWS8g>
-X-ME-Received: <xmr:8n3JZ8gf44prARinYPv1xRz545q9oC-5cK3iVb6CTz_jz9NJWhjGMW1qjJ70nzVltC30yIHtVcuVOtXuA7z8vgZSnng1Vnnlkvw8g1AaT1lydw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdejheehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepieeffeegieeuueevueejkeejjeegleevueekkeeh
-    hfdtgeeltdeuleekgeefkeeinecuffhomhgrihhnpehgihhthhhusgdrtghomhdpghhith
-    hlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
-    rhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehjoh
-    hhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:8n3JZ0-khTJPfdEfJaZQOOmujs9SqmSVmg1BprEuzNP0MsBerNGfqw>
-    <xmx:8n3JZ_uzncuBBF6bGJ0BY8sn22wcluhyifZTvX9FxV7EOYw4IvMcqw>
-    <xmx:8n3JZzHAI3g4cwSrBqCM88dHvXZ2YRVs4fVfYEbtd2zhB4d0-Vr-gw>
-    <xmx:8n3JZ2NsrmMFp3Oed87N2shrvPxGiIfx__rUnP3FVyyw6FLmm_Vgng>
-    <xmx:833JZ_Kat8zoMSY7gtPjMQ0L9CvVgCPd2e9ODybceAi5ScX3X7ZfEtbq>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Mar 2025 05:50:25 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3d2a5798 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Mar 2025 10:50:24 +0000 (UTC)
-Date: Thu, 6 Mar 2025 11:50:19 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/3] ident: stop assuming that `gw_gecos` is writable
-Message-ID: <Z8l967w0rjrnWGpO@pks.im>
-References: <pull.1867.git.1740671049.gitgitgadget@gmail.com>
- <pull.1867.v2.git.1741256780.gitgitgadget@gmail.com>
- <3e9ccffc7474698947bdcb6d49b5d0728deadd08.1741256780.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lyektjO6"
+Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-51eb18130f9so248923e0c.3
+        for <git@vger.kernel.org>; Thu, 06 Mar 2025 03:07:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741259241; x=1741864041; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=n5rX9VTH6S4x+njy7g7kMe6vzXwqCn8kbrmu9MMjgss=;
+        b=lyektjO6FEbEry+ISTzOdWwtOjRb5bKyBG/Icyk1Ivcp6SqLJYkax7lhyTN9XLKCd9
+         B+ObPhLH0dwYUpSm39i9FqrOt550uPaeeF7yN3OkXjQvSVhfvNKk8ONfCnRJD+ZuGxmv
+         Ppi9mVWEbcevY9Ui2CUj1WhmVoQc9NAXyJUh5wgVuhPC3PR7zaEOaozPuvHf6h9WX82B
+         XLS8++pu40cjkyyNZLe0JeJd9ujYogczp6H+kUaDacMzkr0odM7ozORG/5H9ygKrxbgd
+         RgTK20IDnI3k5QyPOPETvPen0jxUlS1eVrJmtg8KwXMaYaj4NAXMj/vKlzeMYvQp+XzN
+         qHyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741259241; x=1741864041;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=n5rX9VTH6S4x+njy7g7kMe6vzXwqCn8kbrmu9MMjgss=;
+        b=NAU+td+IcOUhlAV2G/yrMJPtkidMgR70/pIuxCM/irs4DHtBwSoie5JBRBFEhf2O3G
+         lIRyG8gfIedAKhrRpd7U6vxZIIOLOTFnzZIUZ8pAJ/O4VDEw5if9oMDKXY7ix1OKGMN7
+         /WDxWc7CIqMmPHJijrk8CSzwP3AsuXTnQkUGMOFjUmIOwdCtdRjBX4YQARcXV7ynqgia
+         7sxt9HpACv326wuKyERHugePx79/sskkX2V1bff9FQfPwPTtPD+ss+li+H4FmeRx96bB
+         cGRR7CfO1744ikf7D0tAXsimla5edmSxbVjChsO90Zgznsq6SEvPju7SM2EVo83T9A2c
+         Vx3w==
+X-Forwarded-Encrypted: i=1; AJvYcCV6aLSQ7UKREh/F+aOOgHBBzZf70gMs5twW6FNWGyeMH1sS5/kTYXcOdGXrKbzOXgxoTJs=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7f/2EQf2sObRwam53co7OcbNQz7EEat4yvb52MGbF92W+GIkl
+	18gYbqKqnifpT8ZfVvXYiD1+Df2DLFpgbxEvlxFh7FkWKJa+Oy4fnlo0MOr9L+AaZoDe99i3Rnm
+	lmikcR8F5K+ZJqopFVylIMx728kU=
+X-Gm-Gg: ASbGncvV5TvSLjN4zIyuSP1V3mQ9BzZYNxl7FmM/0WM0vN9Z2g/RGPn+ZU89N6+mQ+l
+	9MfeoA1HrqDMxHUlOVEW/dl7USosYcsgc1wjt2tJwMevMtoEobqjCYb+8nxxP2C4W/s03fscSSz
+	FKYQ84vuvOZuib3NgPdb0gI6yN
+X-Google-Smtp-Source: AGHT+IFZPsePgfhn1/LgTNVPrVXHC1fDDvY41pn9pf4VAr6tEQeH/3YxIPy4lO4xnG/gG3rpXLmZ3DvWdSdJh4lbrEc=
+X-Received: by 2002:a05:6122:3d15:b0:520:42d3:91c1 with SMTP id
+ 71dfb90a1353d-523c62dc296mr3734938e0c.10.1741259241432; Thu, 06 Mar 2025
+ 03:07:21 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 6 Mar 2025 03:07:20 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250303-b4-pks-objects-without-the-repository-v1-2-c5dd43f2476e@pks.im>
+References: <20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im>
+ <20250303-b4-pks-objects-without-the-repository-v1-2-c5dd43f2476e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3e9ccffc7474698947bdcb6d49b5d0728deadd08.1741256780.git.gitgitgadget@gmail.com>
+Date: Thu, 6 Mar 2025 03:07:20 -0800
+X-Gm-Features: AQ5f1Jo0FdCTcZk_R7If6Tyo4EV-lBewKItzij_TeHxvHN3Sd266mhTeYqmNscg
+Message-ID: <CAOLa=ZQOoif7zFY30dF+SewKZw1Y8wTOq=npMpUzsJxtr_0mww@mail.gmail.com>
+Subject: Re: [PATCH 02/12] object: stop depending on `the_repository`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000008c731d062faa82de"
 
-On Thu, Mar 06, 2025 at 10:26:18AM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Now, why does this not trigger in CI? The answer is as simple as it is
-> puzzling: The `win+Meson` job completely side-steps Git for Windows'
-> development environment, opting instead to use the GCC that is on the
-> `PATH` in GitHub-hosted `windows-latest` runners. That GCC is pinned to
-> v12.2.0 and targets the UCRT (unlikely to change any time soon, see
-> https://github.com/actions/runner-images/blob/win25/20250303.1/images/windows/toolsets/toolset-2022.json#L132-L141).
-> That is in stark contrast to Git for Windows, which uses GCC v14.2.0 and
-> targets MSVCRT. Git for Windows' `Makefile`-based build also obviously
-> uses different compiler flags, otherwise this compile error would have
-> had plenty of opportunity in almost 14 years to surface.
+--0000000000008c731d062faa82de
+Content-Type: text/plain; charset="UTF-8"
 
-Oh, interesting. I didn't even know that the Windows runners had GCC in
-their PATH, and thus I didn't expect it to use that compiler at all. On
-GitLab for example we can see that it uses the MSVC compiler as I did
-expect [1]:
+Patrick Steinhardt <ps@pks.im> writes:
 
-    Activating VS 17.10.2
-    C compiler for the host machine: cl (msvc 19.40.33811 "Microsoft (R) C/C++ Optimizing Compiler Version 19.40.33811 for x64")
-    C linker for the host machine: link link 14.40.33811.0
+> There are a couple of functions exposed by "object.c" that implicitly
+> depend on `the_repository`. Remove this dependency by injecting the
+> repository via a parameter. Adapt callers accordingly by simply using
+> `the_repository`, except in cases where the subsystem is already free of
+> the repository. In that case, we instead pass the repository provided by
+> the caller's context.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/fsck.c         |  4 ++--
+>  builtin/grep.c         |  2 +-
+>  builtin/index-pack.c   |  4 ++--
+>  builtin/log.c          |  2 +-
+>  builtin/name-rev.c     |  4 ++--
+>  builtin/pack-objects.c |  2 +-
+>  builtin/prune.c        |  2 +-
+>  midx-write.c           |  4 ++--
+>  object.c               | 21 +++++++++++----------
+>  object.h               | 10 ++++++----
+>  pack-bitmap.c          |  6 +++---
+>  reachable.c            |  6 +++---
+>  revision.c             |  3 ++-
+>  shallow.c              | 10 +++++-----
+>  upload-pack.c          | 12 ++++++------
+>  15 files changed, 48 insertions(+), 44 deletions(-)
+>
+> diff --git a/builtin/fsck.c b/builtin/fsck.c
+> index eea1d43647f..a441eda7ff9 100644
+> --- a/builtin/fsck.c
+> +++ b/builtin/fsck.c
+> @@ -399,12 +399,12 @@ static void check_connectivity(void)
+>  	}
+>
+>  	/* Look up all the requirements, warn about missing objects.. */
+> -	max = get_max_object_index();
+> +	max = repo_get_max_object_index(the_repository);
 
-But you're right, on GitHub that's not the case:
+Nit: I understand the rename here, but would be nice to callout the same
+in the commit message.
 
-    C compiler for the host machine: gcc (gcc 12.2.0 "gcc (x86_64-posix-seh-rev2, Built by MinGW-W64 project) 12.2.0")
-    C linker for the host machine: gcc ld.bfd 2.39
+[snip]
 
-We can easily fix that by passing the `--vsenv` flag to Meson. I'll send
-a patch soonish.
+> diff --git a/object.h b/object.h
+> index 17f32f1103e..0a5293e9911 100644
+> --- a/object.h
+> +++ b/object.h
+> @@ -169,12 +169,13 @@ int type_from_string_gently(const char *str, ssize_t, int gentle);
+>  /*
+>   * Return the current number of buckets in the object hashmap.
+>   */
+> -unsigned int get_max_object_index(void);
+> +unsigned int repo_get_max_object_index(const struct repository *repo);
+>
+>  /*
+>   * Return the object from the specified bucket in the object hashmap.
+>   */
+> -struct object *get_indexed_object(unsigned int);
+> +struct object *repo_get_indexed_object(const struct repository *repo,
+> +				       unsigned int);
+>
+>  /*
+>   * This can be used to see if we have heard of the object before, but
+> @@ -231,7 +232,8 @@ struct object *parse_object_with_flags(struct repository *r,
+>   * "name" parameter is not NULL, it is included in the error message
+>   * (otherwise, the hex object ID is given).
+>   */
+> -struct object *parse_object_or_die(const struct object_id *oid, const char *name);
+> +struct object *parse_object_or_die(struct repository *repo, const struct object_id *oid,
+> +				   const char *name);
+>
+>  /* Given the result of read_sha1_file(), returns the object after
+>   * parsing it.  eaten_p indicates if the object has a borrowed copy
+> @@ -336,7 +338,7 @@ void object_array_remove_duplicates(struct object_array *array);
+>   */
+>  void object_array_clear(struct object_array *array);
+>
+> -void clear_object_flags(unsigned flags);
+> +void clear_object_flags(struct repository *repo, unsigned flags);
+>
 
-Patrick
+Could you explain the reasoning behind only renaming the first two
+functions with 'repo_'?
 
-[1]: https://gitlab.com/gitlab-org/git/-/jobs/9324989037#L95
-[2]: https://github.com/git/git/actions/runs/13686408338/job/38270746786#step:5:15
+>  /*
+>   * Clear the specified object flags from all in-core commit objects from
+
+[snip]
+
+--0000000000008c731d062faa82de
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d5fe2a1f81ead6cc_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mSmdlY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMHNEQy93SjYxRjVOczBVcHp5UUFGYzJMc3M0aVBjRQp4QjB6bHRJaDVj
+NmcyN2hLVVRNS0VKT1hLcFh3czNHbXdwMjQwQnk4L1dtTG9wK3NYakdpSmxqNzd4MlhaU1VKCk9x
+aUttRitCZGQzK3lvZjV3WVJ4OGljSWpnVHZrNVlvY0xRTUk0R01aOCttMWl4N2V4SVZnK3dGa2xX
+UTBCSTcKaHlTT1g4VGtYMjBOSzZYalRnWndtWW8rZHB6NVZOWjl4cHpGcVdpKy82Q3daNkUrTHpV
+ZjRkbm52SzdGQzJacwpBeTJ5ZFhOYWdpVHZubUNqK3YzU0ZUbGhqMEVPb0V2QkYyY3ZsSENUZUxB
+TVlscmtGNHJ3TExsR002emMxSmVsClUyVnFkdzYwTUEzcm5yMlBuRkEySTB0bms2UUsxd2ZiYzFo
+L09zNzN1YzBJTDd1S1RMK01PbEswck5SeDc0VXAKUzJkdHdhL1ZxOFNGenM5RW11UCttMzY3cHY2
+R1RaUG5rRTQ4TXk5UFVXS2RkSFhQTS9KU1lxUTRhbTY3VzB4ZQpZcWtDZmllK1ZFWnB0T1ZPZ0s4
+ZmNMWVpTSGhIcWIxR2tlMkVuTURtK24wdm5ZRWpjOXR0My9WRzc2QUtJZjBWCjdTVHhBTThhTzRh
+SWkzODJyOG8yaHJ0NGwwdk10SXNrUlcyQTk5WT0KPXdXbDcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000008c731d062faa82de--
