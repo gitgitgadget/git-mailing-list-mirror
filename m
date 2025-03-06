@@ -1,81 +1,82 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB0F20B807
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F8320D516
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741273838; cv=none; b=WI9U/Hh5RZfnxhN6qEI/Co2gCtWuDpfEI4PdU8UnvhQjG3FqTaQUyPHb+NEfqr21PrwlQdfszxa3xQlQT3XuF8rjXxNEJqDfE66k+xLwQSeT8f/bUTssYK/BbGnSiE/AdPVS+v8oiS+U6NClPdZJUPATrlRzp4u4OwVYXlGTCXc=
+	t=1741273840; cv=none; b=pHQp2tXTe/RNYbv0NYwWtnNwQDhxc44dIlz7nbOQrCJSYOExgBnizBkKfgggcqa7aD324HaSEIZzKoFmhbJ1bPII/ivaOJnn/i9VCEtffCBA/a0Lf0xTVGwddlYqvaqwnUS3hztjFg8Gn+vFOtDWpwx5CCp4+sTHojNyRJygvHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741273838; c=relaxed/simple;
-	bh=NUPkIfKcdY1+rP1MUn/O6u6IE9CKsTCDaAqTmZjojsY=;
+	s=arc-20240116; t=1741273840; c=relaxed/simple;
+	bh=S95uDOqd7TxUrVFaUmglcyYfHnge6SrKa+Ls9Kqupis=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PQfOMK0ALdI6UERXNfIEasDJqIU6QYFtOW1CDNj+ya+LCRgDDKtAQJh6wQWA/2G8f4Hh+aqe/53mgD4WtlpLaX85BcshMiL21QfF6IrOebJe1spqOQafCoCRLWjQOESLvL+JyFPdRDiHJ5+cngdxIm5kZhaMeGY+vVFrmzj0qZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IRq9MiJV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xj/K14TS; arc=none smtp.client-ip=202.12.124.156
+	 In-Reply-To:To:Cc; b=s/KhLVn3ZliBfPzYD9Yvot0hiWmjl0rtXhh5TEQyE4gpeTYuj3m6vLOl9q5JIAbKolHVWv07T/oiQiHylXpDJSqvSEl5bqRQPeE1fVYYoDmynbPB2/hC+V4NYrJlRyaza8yQfoSnJlXtpTxN1EqhuYCOaW3FhPUvhHES+MENFs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Q23ba3W6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZVwvmt1o; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IRq9MiJV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xj/K14TS"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E002125401F4;
-	Thu,  6 Mar 2025 10:10:35 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q23ba3W6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZVwvmt1o"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4C31E25401EF;
+	Thu,  6 Mar 2025 10:10:37 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Thu, 06 Mar 2025 10:10:36 -0500
+  by phl-compute-11.internal (MEProxy); Thu, 06 Mar 2025 10:10:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1741273835;
-	 x=1741360235; bh=GVZJV4s3dD5CuPfTB/7DxWlPVI525MWV5jUYW3VtRR4=; b=
-	IRq9MiJVX7sE0gcFN3dQlj4+p4KWgIjenC4MNhqQJ8f35AJBT67xzejesHoJTZ00
-	Dany+kwxhd6x0bnNc5ZUc6NVip7IsYPeZMTRC6iCFSJGYLz+xKAcv+gwrTctEu4a
-	iPvwIf+x1rGHTUvgyXqbk8qrC0x+hTvxRk6Oki/SEp8g+4cgOCKVYry4KIbtZoZ9
-	yR+kci9V2GbXreZL0Us5sDQ7QjbYQicHfkOgFaD6MDYVVasTroXiwe1oYRSOpApw
-	g5uPl0M//+AjHK3TSGFUg7gprx92G+S3Yp3VsR7J9xZw1GdS5AdtJctRvOzF8qKZ
-	RQlfroelaIjqrIu2jhY4pA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1741273837;
+	 x=1741360237; bh=fSyzIB9gkbUF1zfA8du5MEWvHna3KgoqMa0F/xPZneU=; b=
+	Q23ba3W656l+2SoM+ctV0edABzu67Xw4AIlrW69pFpgDdetlDs7dd3vgxwzNjKCq
+	IeE/nrA+seGlOFTdEZiow8NKKAjPgRjf1nkmXhC9NkNZUrfNSc3r9HhtMpZfHHbW
+	P+xrGhcXGySyTHN9oj3JZ1sVNWweEA6wiJOVXKWlFPaQHoJ0PPZ3zwZ1HusA4SL4
+	5gCXRhOl0ZU0veG5tU9RpQTtKwWzfRN8d/Vgiiz4CAHkNeNscx2Ets8d1OuNtJR3
+	wxO5sQuBuX8R/fjOvgDLU9PhECvNanAo3czxs/eHnqTlDmItLsL/zMlq7w2DLTcy
+	SyRMZxmP/5VP9qyN5TVWjA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741273835; x=
-	1741360235; bh=GVZJV4s3dD5CuPfTB/7DxWlPVI525MWV5jUYW3VtRR4=; b=X
-	j/K14TSwke0N3vGqeEWMFLMyP8mBkVNJFfHPKPZQWA60KAn8fE8w/bKoR4mvbxxQ
-	cJgxoZwu5+OtqfhXJYdEGWeqGO1HqvDyKjyTbZjmCKfL/cDsqH8I7tO/6zFUmcdu
-	1sWuSsB5lJ2zQ/UOwLpE5D8gQsh4PLWeOz6FjYTViivFPi+mufUHbC/3TywoTv2y
-	6/ncy5V6rJzOj6MksiBv117MyI7yIa4duHsZxRmNLOFDtokUhtoujOqVI4c+zJZo
-	B0LZIhmX/tss8+NuinUqT3Er+KXORYIaLcwEqJYD1uZkq5cD3ljvbTHyMEJiwuN0
-	9VdVxNm5NIpwqYkKZoYGw==
-X-ME-Sender: <xms:67rJZ8wIfLGJLU8wiO3UWT15zj7mcI6zx6Mmb5xiyXBgZ3Hw0rf4bA>
-    <xme:67rJZwQjvU1ts2tsJ-4CarvfygARkifxqCg76wwR02kJ83xM1CkDey2r7ApVsaAlH
-    t4LGhwQykNKNkBmkQ>
-X-ME-Received: <xmr:67rJZ-XYDb7GdogfeZMXAAriIgZG6AT6Nms947iJD08nuvaDO4vnP15pZzGkt8qo71grd8MjTeaAbOv0TQGkuoAs0HTIOhpazUmqKFHPaoowCA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741273837; x=
+	1741360237; bh=fSyzIB9gkbUF1zfA8du5MEWvHna3KgoqMa0F/xPZneU=; b=Z
+	Vwvmt1ojTeOplsglqAI1/K41GKnbhHsuUa5L+/+oY+8ggUECSuHUMOZHPsYybPtF
+	YpEDhDTd9IqALe+2LL5RujA+8ZNyBIZ48OVRZlQCtMfQmW5Xi75sQTilxgQ8SE7h
+	R6UYhMwf0yUltjkZUSqyA7S1qHUjeciGie5UOslRr6OSMvABhq4fiSS1DSzSw/Xs
+	6wHSqzKSVu4g+Q/ozcBC1H1UtgvupKIkiavyfzakOJ7EZnoMti1CVmimj0oZQwIB
+	dpca1okbChXHLLI/CY1E6A35HdpHoFFK3afAASFJgx+yt1jamNx0wq67e68Ri92e
+	Xs8q6O745x8RxF0OoUs4g==
+X-ME-Sender: <xms:7LrJZ804J907qcwoCbSZ0ex8Zm8UxhHY1TGTNtYtXtfjB2WP3_SOjQ>
+    <xme:7LrJZ3F5rdHvzxBM2avyhhMQR9cUqwFvne_1ir_3sadsuHVyG6DkPmNQW_3rVaFmg
+    BEeaiYML3Wrhy0FeA>
+X-ME-Received: <xmr:7LrJZ06ThAunup9VPFm9rk5-e8nATAD8acczm707M6reqNc2TBkeauD8IxlS9K4FBWDfDPGbcvF93bQVhmxbaXKhvP5S0wdDiJvegkNOyVq0MA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdektdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpeeinecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:67rJZ6iDwirbGpPNCfpAu_dey9zGEMCkb_9P4ukZpZ_9HTeS3nPaog>
-    <xmx:67rJZ-DCPkKUclcF1X8Sg3t7Ir6gkQs7nh4tXt4bH65QNJ9e55q5sg>
-    <xmx:67rJZ7LVNP9ow0q_z8zj2lLZKP7-B_nQGv1vXtqdH326A6hpLuJktw>
-    <xmx:67rJZ1B6MvB0-yQ0mnrxURRyYn68OItpwtHGI3pWrkb6bSg-TQ-IYA>
-    <xmx:67rJZ5N_6wxERJJo97WGbXYGBHyHd3nsOJbV_YqLt5eF7TzUDoOIRo4X>
+    drihhmqeenucggtffrrghtthgvrhhnpeejfefgveelteeffeetgeduueegieekkeetffel
+    ueeitdeghfetgeekvdetteehveenucffohhmrghinhepshhhrghrvggurhgvphhoshhith
+    horhihrdhinhhtpdhprggtkhgvugdrihhsnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfe
+    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:7LrJZ104lrj-19PZl_FGbKsoGRN0sDXxHM7NbmwezfhXZnzx00j5wg>
+    <xmx:7brJZ_FRmWaDA_AJxp2GMhyOLB-tGm9D0VvglhPNAFJic4hW7PoGYw>
+    <xmx:7brJZ-8F-XdkuymOaTGj6Gw74MUaBUE8Woy79cU6AVIuhATqTGnOMg>
+    <xmx:7brJZ0nSTf2BV6ivCe0l7Cs7rJkPQJj4jnhvtp2pzgIwYjy1hvvH8w>
+    <xmx:7brJZ3Ca_FNdZ040gYpxdsrczVXV8fopyp0cZ7zySsBb058sDLF_-Iaq>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Mar 2025 10:10:34 -0500 (EST)
+ 6 Mar 2025 10:10:36 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0ad68c87 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Mar 2025 15:10:31 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id b2dcafc1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Mar 2025 15:10:32 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 06 Mar 2025 16:10:27 +0100
-Subject: [PATCH v2 03/12] pack-write: stop depending on `the_repository`
- and `the_hash_algo`
+Date: Thu, 06 Mar 2025 16:10:28 +0100
+Subject: [PATCH v2 04/12] environment: move access to
+ "core.bigFileThreshold" into repo settings
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250306-b4-pks-objects-without-the-repository-v2-3-f3465327be69@pks.im>
+Message-Id: <20250306-b4-pks-objects-without-the-repository-v2-4-f3465327be69@pks.im>
 References: <20250306-b4-pks-objects-without-the-repository-v2-0-f3465327be69@pks.im>
 In-Reply-To: <20250306-b4-pks-objects-without-the-repository-v2-0-f3465327be69@pks.im>
 To: git@vger.kernel.org
@@ -92,342 +93,329 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.2
 
-There are a couple of functions in "pack-write.c" that implicitly depend
-on `the_repository` or `the_hash_algo`. Remove this dependency by
-injecting the repository via a parameter and adapt callers accordingly.
+The "core.bigFileThreshold" setting is stored in a global variable and
+populated via `git_default_core_config()`. This may cause issues in
+the case where one is handling multiple different repositories in a
+single process with different values for that config key, as we may or
+may not see the correct value in that case. Furthermore, global state
+blocks our path towards libification.
+
+Refactor the code so that we instead store the value in `struct
+repo_settings`, where the value is computed as-needed and cached.
+
+Note that this change requires us to adapt one test in t1050 that
+verifies that we die when parsing an invalid "core.bigFileThreshold"
+value. The exercised Git command doesn't use the value at all, and thus
+it won't hit the new code path that parses the value. This is addressed
+by using git-hash-object(1) instead, which does read the value.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fast-import.c  |  2 +-
- builtin/index-pack.c   |  4 ++--
- builtin/pack-objects.c |  4 ++--
- bulk-checkin.c         |  4 ++--
- midx-write.c           |  2 +-
- pack-write.c           | 55 +++++++++++++++++++++++++-------------------------
- pack.h                 | 11 +++++-----
- 7 files changed, 41 insertions(+), 41 deletions(-)
+ archive.c                |  2 +-
+ builtin/fast-import.c    |  4 ++--
+ builtin/index-pack.c     |  6 ++++--
+ builtin/pack-objects.c   |  6 ++++--
+ builtin/unpack-objects.c |  3 ++-
+ config.c                 |  5 -----
+ diff.c                   |  6 ++++--
+ environment.c            |  1 -
+ environment.h            |  1 -
+ object-file.c            |  6 ++++--
+ pack-check.c             |  3 ++-
+ repo-settings.c          | 20 ++++++++++++++++++++
+ repo-settings.h          |  5 +++++
+ streaming.c              |  3 ++-
+ t/t1050-large.sh         |  3 ++-
+ 15 files changed, 52 insertions(+), 22 deletions(-)
 
+diff --git a/archive.c b/archive.c
+index 8be4e7ac8db..f4331aeb49e 100644
+--- a/archive.c
++++ b/archive.c
+@@ -216,7 +216,7 @@ static int write_archive_entry(const struct object_id *oid, const char *base,
+ 	/* Stream it? */
+ 	if (S_ISREG(mode) && !args->convert &&
+ 	    oid_object_info(args->repo, oid, &size) == OBJ_BLOB &&
+-	    size > big_file_threshold)
++	    size > repo_settings_get_big_file_threshold(the_repository))
+ 		return write_entry(args, oid, path.buf, path.len, mode, NULL, size);
+ 
+ 	buffer = object_file_to_archive(args, path.buf, oid, mode, &type, &size);
 diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 86e6e754816..e1758aa9514 100644
+index e1758aa9514..ce52f78579d 100644
 --- a/builtin/fast-import.c
 +++ b/builtin/fast-import.c
-@@ -798,7 +798,7 @@ static const char *create_index(void)
- 	if (c != last)
- 		die("internal consistency error creating the index");
+@@ -2021,7 +2021,7 @@ static void parse_and_store_blob(
+ 	static struct strbuf buf = STRBUF_INIT;
+ 	uintmax_t len;
  
--	tmpfile = write_idx_file(the_hash_algo, NULL, idx, object_count,
-+	tmpfile = write_idx_file(the_repository, NULL, idx, object_count,
- 				 &pack_idx_opts, pack_data->hash);
- 	free(idx);
- 	return tmpfile;
+-	if (parse_data(&buf, big_file_threshold, &len))
++	if (parse_data(&buf, repo_settings_get_big_file_threshold(the_repository), &len))
+ 		store_object(OBJ_BLOB, &buf, last, oidout, mark);
+ 	else {
+ 		if (last) {
+@@ -3402,7 +3402,7 @@ static int parse_one_option(const char *option)
+ 		unsigned long v;
+ 		if (!git_parse_ulong(option, &v))
+ 			return 0;
+-		big_file_threshold = v;
++		repo_settings_set_big_file_threshold(the_repository, v);
+ 	} else if (skip_prefix(option, "depth=", &option)) {
+ 		option_depth(option);
+ 	} else if (skip_prefix(option, "active-branches=", &option)) {
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 1268032d769..174e03afa61 100644
+index 174e03afa61..09c0a8adf63 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -2088,10 +2088,10 @@ int cmd_index_pack(int argc,
- 	ALLOC_ARRAY(idx_objects, nr_objects);
- 	for (i = 0; i < nr_objects; i++)
- 		idx_objects[i] = &objects[i].idx;
--	curr_index = write_idx_file(the_hash_algo, index_name, idx_objects,
-+	curr_index = write_idx_file(the_repository, index_name, idx_objects,
- 				    nr_objects, &opts, pack_hash);
- 	if (rev_index)
--		curr_rev_index = write_rev_file(the_hash_algo, rev_index_name,
-+		curr_rev_index = write_rev_file(the_repository, rev_index_name,
- 						idx_objects, nr_objects,
- 						pack_hash, opts.flags);
- 	free(idx_objects);
+@@ -485,7 +485,8 @@ static void *unpack_entry_data(off_t offset, unsigned long size,
+ 		git_hash_update(&c, hdr, hdrlen);
+ 	} else
+ 		oid = NULL;
+-	if (type == OBJ_BLOB && size > big_file_threshold)
++	if (type == OBJ_BLOB &&
++	    size > repo_settings_get_big_file_threshold(the_repository))
+ 		buf = fixed_buf;
+ 	else
+ 		buf = xmallocz(size);
+@@ -799,7 +800,8 @@ static int check_collison(struct object_entry *entry)
+ 	enum object_type type;
+ 	unsigned long size;
+ 
+-	if (entry->size <= big_file_threshold || entry->type != OBJ_BLOB)
++	if (entry->size <= repo_settings_get_big_file_threshold(the_repository) ||
++	    entry->type != OBJ_BLOB)
+ 		return -1;
+ 
+ 	memset(&data, 0, sizeof(data));
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index c3adbc94504..e05dfc4021e 100644
+index e05dfc4021e..eefc6c78096 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -1314,7 +1314,7 @@ static void write_pack_file(void)
- 			f = hashfd_throughput(the_repository->hash_algo, 1,
- 					      "<stdout>", progress_state);
- 		else
--			f = create_tmp_packfile(&pack_tmp_name);
-+			f = create_tmp_packfile(the_repository, &pack_tmp_name);
+@@ -499,7 +499,8 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
  
- 		offset = write_pack_header(f, nr_remaining);
+ 	if (!usable_delta) {
+ 		if (oe_type(entry) == OBJ_BLOB &&
+-		    oe_size_greater_than(&to_pack, entry, big_file_threshold) &&
++		    oe_size_greater_than(&to_pack, entry,
++					 repo_settings_get_big_file_threshold(the_repository)) &&
+ 		    (st = open_istream(the_repository, &entry->idx.oid, &type,
+ 				       &size, NULL)) != NULL)
+ 			buf = NULL;
+@@ -2454,7 +2455,8 @@ static void get_object_details(void)
+ 		struct object_entry *entry = sorted_by_offset[i];
+ 		check_object(entry, i);
+ 		if (entry->type_valid &&
+-		    oe_size_greater_than(&to_pack, entry, big_file_threshold))
++		    oe_size_greater_than(&to_pack, entry,
++					 repo_settings_get_big_file_threshold(the_repository)))
+ 			entry->no_try_delta = 1;
+ 		display_progress(progress_state, i + 1);
+ 	}
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 8383bcf4049..e20c120913e 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -553,7 +553,8 @@ static void unpack_one(unsigned nr)
  
-@@ -1407,7 +1407,7 @@ static void write_pack_file(void)
- 			if (cruft)
- 				pack_idx_opts.flags |= WRITE_MTIMES;
+ 	switch (type) {
+ 	case OBJ_BLOB:
+-		if (!dry_run && size > big_file_threshold) {
++		if (!dry_run &&
++		    size > repo_settings_get_big_file_threshold(the_repository)) {
+ 			stream_blob(size, nr);
+ 			return;
+ 		}
+diff --git a/config.c b/config.c
+index dfd03b9421c..dc95608f749 100644
+--- a/config.c
++++ b/config.c
+@@ -1490,11 +1490,6 @@ static int git_default_core_config(const char *var, const char *value,
+ 		return 0;
+ 	}
  
--			stage_tmp_packfiles(the_hash_algo, &tmpname,
-+			stage_tmp_packfiles(the_repository, &tmpname,
- 					    pack_tmp_name, written_list,
- 					    nr_written, &to_pack,
- 					    &pack_idx_opts, hash,
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 20f2da67b93..23ac00ea0a6 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -44,7 +44,7 @@ static void finish_tmp_packfile(struct strbuf *basename,
- {
- 	char *idx_tmp_name = NULL;
- 
--	stage_tmp_packfiles(the_hash_algo, basename, pack_tmp_name,
-+	stage_tmp_packfiles(the_repository, basename, pack_tmp_name,
- 			    written_list, nr_written, NULL, pack_idx_opts, hash,
- 			    &idx_tmp_name);
- 	rename_tmp_packfile_idx(basename, &idx_tmp_name);
-@@ -244,7 +244,7 @@ static void prepare_to_stream(struct bulk_checkin_packfile *state,
- 	if (!(flags & HASH_WRITE_OBJECT) || state->f)
- 		return;
- 
--	state->f = create_tmp_packfile(&state->pack_tmp_name);
-+	state->f = create_tmp_packfile(the_repository, &state->pack_tmp_name);
- 	reset_pack_idx_option(&state->pack_idx_opts);
- 
- 	/* Pretend we are going to write only one object */
-diff --git a/midx-write.c b/midx-write.c
-index ac80a8298ed..a628ac24dcb 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -658,7 +658,7 @@ static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
- 	strbuf_addf(&buf, "%s-%s.rev", midx_name, hash_to_hex_algop(midx_hash,
- 								    ctx->repo->hash_algo));
- 
--	tmp_file = write_rev_file_order(ctx->repo->hash_algo, NULL, ctx->pack_order,
-+	tmp_file = write_rev_file_order(ctx->repo, NULL, ctx->pack_order,
- 					ctx->entries_nr, midx_hash, WRITE_REV);
- 
- 	if (finalize_object_file(tmp_file, buf.buf))
-diff --git a/pack-write.c b/pack-write.c
-index 5eb89f44cf4..6b06315f80a 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -1,5 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
+-	if (!strcmp(var, "core.bigfilethreshold")) {
+-		big_file_threshold = git_config_ulong(var, value, ctx->kvi);
+-		return 0;
+-	}
 -
- #include "git-compat-util.h"
- #include "environment.h"
- #include "gettext.h"
-@@ -56,7 +54,7 @@ static int need_large_offset(off_t offset, const struct pack_idx_option *opts)
-  * The *sha1 contains the pack content SHA1 hash.
-  * The objects array passed in will be sorted by SHA1 on exit.
-  */
--const char *write_idx_file(const struct git_hash_algo *hash_algo,
-+const char *write_idx_file(struct repository *repo,
- 			   const char *index_name, struct pack_idx_entry **objects,
- 			   int nr_objects, const struct pack_idx_option *opts,
- 			   const unsigned char *sha1)
-@@ -82,7 +80,7 @@ const char *write_idx_file(const struct git_hash_algo *hash_algo,
+ 	if (!strcmp(var, "core.autocrlf")) {
+ 		if (value && !strcasecmp(value, "input")) {
+ 			auto_crlf = AUTO_CRLF_INPUT;
+diff --git a/diff.c b/diff.c
+index c89c15d98e0..4f802b4251c 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4193,7 +4193,8 @@ int diff_populate_filespec(struct repository *r,
+ 		 * is probably fine.
+ 		 */
+ 		if (check_binary &&
+-		    s->size > big_file_threshold && s->is_binary == -1) {
++		    s->size > repo_settings_get_big_file_threshold(the_repository) &&
++		    s->is_binary == -1) {
+ 			s->is_binary = 1;
+ 			return 0;
+ 		}
+@@ -4243,7 +4244,8 @@ int diff_populate_filespec(struct repository *r,
+ 		if (size_only || check_binary) {
+ 			if (size_only)
+ 				return 0;
+-			if (s->size > big_file_threshold && s->is_binary == -1) {
++			if (s->size > repo_settings_get_big_file_threshold(the_repository) &&
++			    s->is_binary == -1) {
+ 				s->is_binary = 1;
+ 				return 0;
+ 			}
+diff --git a/environment.c b/environment.c
+index 9e4c7781be0..3c32367c28c 100644
+--- a/environment.c
++++ b/environment.c
+@@ -49,7 +49,6 @@ int fsync_object_files = -1;
+ int use_fsync = -1;
+ enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
+ enum fsync_component fsync_components = FSYNC_COMPONENTS_DEFAULT;
+-unsigned long big_file_threshold = 512 * 1024 * 1024;
+ char *editor_program;
+ char *askpass_program;
+ char *excludes_file;
+diff --git a/environment.h b/environment.h
+index 45e690f203f..91d854dcb08 100644
+--- a/environment.h
++++ b/environment.h
+@@ -154,7 +154,6 @@ extern int zlib_compression_level;
+ extern int pack_compression_level;
+ extern size_t packed_git_window_size;
+ extern size_t packed_git_limit;
+-extern unsigned long big_file_threshold;
+ extern unsigned long pack_size_limit_cfg;
+ extern int max_allowed_tree_depth;
  
- 	if (opts->flags & WRITE_IDX_VERIFY) {
- 		assert(index_name);
--		f = hashfd_check(the_repository->hash_algo, index_name);
-+		f = hashfd_check(repo->hash_algo, index_name);
+diff --git a/object-file.c b/object-file.c
+index 726e41a0475..b3e0276b2a4 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2803,7 +2803,8 @@ int index_fd(struct index_state *istate, struct object_id *oid,
+ 		ret = index_stream_convert_blob(istate, oid, fd, path, flags);
+ 	else if (!S_ISREG(st->st_mode))
+ 		ret = index_pipe(istate, oid, fd, type, path, flags);
+-	else if (st->st_size <= big_file_threshold || type != OBJ_BLOB ||
++	else if (st->st_size <= repo_settings_get_big_file_threshold(the_repository) ||
++		 type != OBJ_BLOB ||
+ 		 (path && would_convert_to_git(istate, path)))
+ 		ret = index_core(istate, oid, fd, xsize_t(st->st_size),
+ 				 type, path, flags);
+@@ -3137,7 +3138,8 @@ int read_loose_object(const char *path,
+ 		goto out;
+ 	}
+ 
+-	if (*oi->typep == OBJ_BLOB && *size > big_file_threshold) {
++	if (*oi->typep == OBJ_BLOB &&
++	    *size > repo_settings_get_big_file_threshold(the_repository)) {
+ 		if (check_stream_oid(&stream, hdr, *size, path, expected_oid) < 0)
+ 			goto out;
  	} else {
- 		if (!index_name) {
- 			struct strbuf tmp_file = STRBUF_INIT;
-@@ -92,7 +90,7 @@ const char *write_idx_file(const struct git_hash_algo *hash_algo,
- 			unlink(index_name);
- 			fd = xopen(index_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
- 		}
--		f = hashfd(the_repository->hash_algo, fd, index_name);
-+		f = hashfd(repo->hash_algo, fd, index_name);
- 	}
+diff --git a/pack-check.c b/pack-check.c
+index 6bcadc1e679..017dc740f7b 100644
+--- a/pack-check.c
++++ b/pack-check.c
+@@ -131,7 +131,8 @@ static int verify_packfile(struct repository *r,
+ 		type = unpack_object_header(p, w_curs, &curpos, &size);
+ 		unuse_pack(w_curs);
  
- 	/* if last object's offset is >= 2^31 we should use index V2 */
-@@ -131,7 +129,7 @@ const char *write_idx_file(const struct git_hash_algo *hash_algo,
- 		struct pack_idx_entry *obj = *list++;
- 		if (index_version < 2)
- 			hashwrite_be32(f, obj->offset);
--		hashwrite(f, obj->oid.hash, hash_algo->rawsz);
-+		hashwrite(f, obj->oid.hash, repo->hash_algo->rawsz);
- 		if ((opts->flags & WRITE_IDX_STRICT) &&
- 		    (i && oideq(&list[-2]->oid, &obj->oid)))
- 			die("The same object %s appears twice in the pack",
-@@ -173,7 +171,7 @@ const char *write_idx_file(const struct git_hash_algo *hash_algo,
- 		}
- 	}
- 
--	hashwrite(f, sha1, hash_algo->rawsz);
-+	hashwrite(f, sha1, repo->hash_algo->rawsz);
- 	finalize_hashfile(f, NULL, FSYNC_COMPONENT_PACK_METADATA,
- 			  CSUM_HASH_IN_STREAM | CSUM_CLOSE |
- 			  ((opts->flags & WRITE_IDX_VERIFY) ? 0 : CSUM_FSYNC));
-@@ -217,7 +215,7 @@ static void write_rev_trailer(const struct git_hash_algo *hash_algo,
- 	hashwrite(f, hash, hash_algo->rawsz);
+-		if (type == OBJ_BLOB && big_file_threshold <= size) {
++		if (type == OBJ_BLOB &&
++		    repo_settings_get_big_file_threshold(the_repository) <= size) {
+ 			/*
+ 			 * Let stream_object_signature() check it with
+ 			 * the streaming interface; no point slurping
+diff --git a/repo-settings.c b/repo-settings.c
+index 67e9cfd2e63..4129f8fb2b4 100644
+--- a/repo-settings.c
++++ b/repo-settings.c
+@@ -20,6 +20,13 @@ static void repo_cfg_int(struct repository *r, const char *key, int *dest,
+ 		*dest = def;
  }
  
--char *write_rev_file(const struct git_hash_algo *hash_algo,
-+char *write_rev_file(struct repository *repo,
- 		     const char *rev_name,
- 		     struct pack_idx_entry **objects,
- 		     uint32_t nr_objects,
-@@ -236,7 +234,7 @@ char *write_rev_file(const struct git_hash_algo *hash_algo,
- 		pack_order[i] = i;
- 	QSORT_S(pack_order, nr_objects, pack_order_cmp, objects);
- 
--	ret = write_rev_file_order(hash_algo, rev_name, pack_order, nr_objects,
-+	ret = write_rev_file_order(repo, rev_name, pack_order, nr_objects,
- 				   hash, flags);
- 
- 	free(pack_order);
-@@ -244,7 +242,7 @@ char *write_rev_file(const struct git_hash_algo *hash_algo,
- 	return ret;
- }
- 
--char *write_rev_file_order(const struct git_hash_algo *hash_algo,
-+char *write_rev_file_order(struct repository *repo,
- 			   const char *rev_name,
- 			   uint32_t *pack_order,
- 			   uint32_t nr_objects,
-@@ -268,7 +266,7 @@ char *write_rev_file_order(const struct git_hash_algo *hash_algo,
- 			fd = xopen(rev_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
- 			path = xstrdup(rev_name);
- 		}
--		f = hashfd(the_repository->hash_algo, fd, path);
-+		f = hashfd(repo->hash_algo, fd, path);
- 	} else if (flags & WRITE_REV_VERIFY) {
- 		struct stat statbuf;
- 		if (stat(rev_name, &statbuf)) {
-@@ -278,18 +276,18 @@ char *write_rev_file_order(const struct git_hash_algo *hash_algo,
- 			} else
- 				die_errno(_("could not stat: %s"), rev_name);
- 		}
--		f = hashfd_check(the_repository->hash_algo, rev_name);
-+		f = hashfd_check(repo->hash_algo, rev_name);
- 		path = xstrdup(rev_name);
- 	} else {
- 		return NULL;
- 	}
- 
--	write_rev_header(hash_algo, f);
-+	write_rev_header(repo->hash_algo, f);
- 
- 	write_rev_index_positions(f, pack_order, nr_objects);
--	write_rev_trailer(hash_algo, f, hash);
-+	write_rev_trailer(repo->hash_algo, f, hash);
- 
--	if (adjust_shared_perm(the_repository, path) < 0)
-+	if (adjust_shared_perm(repo, path) < 0)
- 		die(_("failed to make %s readable"), path);
- 
- 	finalize_hashfile(f, NULL, FSYNC_COMPONENT_PACK_METADATA,
-@@ -330,7 +328,7 @@ static void write_mtimes_trailer(const struct git_hash_algo *hash_algo,
- 	hashwrite(f, hash, hash_algo->rawsz);
- }
- 
--static char *write_mtimes_file(const struct git_hash_algo *hash_algo,
-+static char *write_mtimes_file(struct repository *repo,
- 			       struct packing_data *to_pack,
- 			       struct pack_idx_entry **objects,
- 			       uint32_t nr_objects,
-@@ -346,13 +344,13 @@ static char *write_mtimes_file(const struct git_hash_algo *hash_algo,
- 
- 	fd = odb_mkstemp(&tmp_file, "pack/tmp_mtimes_XXXXXX");
- 	mtimes_name = strbuf_detach(&tmp_file, NULL);
--	f = hashfd(the_repository->hash_algo, fd, mtimes_name);
-+	f = hashfd(repo->hash_algo, fd, mtimes_name);
- 
--	write_mtimes_header(hash_algo, f);
-+	write_mtimes_header(repo->hash_algo, f);
- 	write_mtimes_objects(f, to_pack, objects, nr_objects);
--	write_mtimes_trailer(hash_algo, f, hash);
-+	write_mtimes_trailer(repo->hash_algo, f, hash);
- 
--	if (adjust_shared_perm(the_repository, mtimes_name) < 0)
-+	if (adjust_shared_perm(repo, mtimes_name) < 0)
- 		die(_("failed to make %s readable"), mtimes_name);
- 
- 	finalize_hashfile(f, NULL, FSYNC_COMPONENT_PACK_METADATA,
-@@ -527,14 +525,15 @@ int encode_in_pack_object_header(unsigned char *hdr, int hdr_len,
- 	return n;
- }
- 
--struct hashfile *create_tmp_packfile(char **pack_tmp_name)
-+struct hashfile *create_tmp_packfile(struct repository *repo,
-+				     char **pack_tmp_name)
++static void repo_cfg_ulong(struct repository *r, const char *key, unsigned long *dest,
++			   unsigned long def)
++{
++	if (repo_config_get_ulong(r, key, dest))
++		*dest = def;
++}
++
+ void prepare_repo_settings(struct repository *r)
  {
- 	struct strbuf tmpname = STRBUF_INIT;
- 	int fd;
- 
- 	fd = odb_mkstemp(&tmpname, "pack/tmp_pack_XXXXXX");
- 	*pack_tmp_name = strbuf_detach(&tmpname, NULL);
--	return hashfd(the_repository->hash_algo, fd, *pack_tmp_name);
-+	return hashfd(repo->hash_algo, fd, *pack_tmp_name);
+ 	int experimental;
+@@ -151,6 +158,19 @@ void repo_settings_clear(struct repository *r)
+ 	r->settings = empty;
  }
  
- static void rename_tmp_packfile(struct strbuf *name_prefix, const char *source,
-@@ -555,7 +554,7 @@ void rename_tmp_packfile_idx(struct strbuf *name_buffer,
- 	rename_tmp_packfile(name_buffer, *idx_tmp_name, "idx");
- }
++unsigned long repo_settings_get_big_file_threshold(struct repository *repo)
++{
++	if (!repo->settings.big_file_threshold)
++		repo_cfg_ulong(repo, "core.bigfilethreshold",
++			       &repo->settings.big_file_threshold, 512 * 1024 * 1024);
++	return repo->settings.big_file_threshold;
++}
++
++void repo_settings_set_big_file_threshold(struct repository *repo, unsigned long value)
++{
++	repo->settings.big_file_threshold = value;
++}
++
+ enum log_refs_config repo_settings_get_log_all_ref_updates(struct repository *repo)
+ {
+ 	const char *value;
+diff --git a/repo-settings.h b/repo-settings.h
+index ddc11967e01..2bf24b25973 100644
+--- a/repo-settings.h
++++ b/repo-settings.h
+@@ -64,6 +64,7 @@ struct repo_settings {
+ 	size_t delta_base_cache_limit;
+ 	size_t packed_git_window_size;
+ 	size_t packed_git_limit;
++	unsigned long big_file_threshold;
  
--void stage_tmp_packfiles(const struct git_hash_algo *hash_algo,
-+void stage_tmp_packfiles(struct repository *repo,
- 			 struct strbuf *name_buffer,
- 			 const char *pack_tmp_name,
- 			 struct pack_idx_entry **written_list,
-@@ -568,19 +567,19 @@ void stage_tmp_packfiles(const struct git_hash_algo *hash_algo,
- 	char *rev_tmp_name = NULL;
- 	char *mtimes_tmp_name = NULL;
+ 	char *hooks_path;
+ };
+@@ -88,6 +89,10 @@ int repo_settings_get_warn_ambiguous_refs(struct repository *repo);
+ /* Read the value for "core.hooksPath". */
+ const char *repo_settings_get_hooks_path(struct repository *repo);
  
--	if (adjust_shared_perm(the_repository, pack_tmp_name))
-+	if (adjust_shared_perm(repo, pack_tmp_name))
- 		die_errno("unable to make temporary pack file readable");
++/* Read and set the value for "core.bigFileThreshold". */
++unsigned long repo_settings_get_big_file_threshold(struct repository *repo);
++void repo_settings_set_big_file_threshold(struct repository *repo, unsigned long value);
++
+ /* Read, set or reset the value for "core.sharedRepository". */
+ int repo_settings_get_shared_repository(struct repository *repo);
+ void repo_settings_set_shared_repository(struct repository *repo, int value);
+diff --git a/streaming.c b/streaming.c
+index 38839511afc..018b794d252 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -431,7 +431,8 @@ static int istream_source(struct git_istream *st,
+ 		st->open = open_istream_loose;
+ 		return 0;
+ 	case OI_PACKED:
+-		if (!oi.u.packed.is_delta && big_file_threshold < size) {
++		if (!oi.u.packed.is_delta &&
++		    repo_settings_get_big_file_threshold(the_repository) < size) {
+ 			st->u.in_pack.pack = oi.u.packed.pack;
+ 			st->u.in_pack.pos = oi.u.packed.offset;
+ 			st->open = open_istream_pack_non_delta;
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index c71932b0242..5be273611ad 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -6,7 +6,8 @@ test_description='adding and checking out large blobs'
+ . ./test-lib.sh
  
--	*idx_tmp_name = (char *)write_idx_file(hash_algo, NULL, written_list,
-+	*idx_tmp_name = (char *)write_idx_file(repo, NULL, written_list,
- 					       nr_written, pack_idx_opts, hash);
--	if (adjust_shared_perm(the_repository, *idx_tmp_name))
-+	if (adjust_shared_perm(repo, *idx_tmp_name))
- 		die_errno("unable to make temporary index file readable");
- 
--	rev_tmp_name = write_rev_file(hash_algo, NULL, written_list, nr_written,
-+	rev_tmp_name = write_rev_file(repo, NULL, written_list, nr_written,
- 				      hash, pack_idx_opts->flags);
- 
- 	if (pack_idx_opts->flags & WRITE_MTIMES) {
--		mtimes_tmp_name = write_mtimes_file(hash_algo, to_pack,
-+		mtimes_tmp_name = write_mtimes_file(repo, to_pack,
- 						    written_list, nr_written,
- 						    hash);
- 	}
-diff --git a/pack.h b/pack.h
-index 9f1194ac13d..5d4393eaffe 100644
---- a/pack.h
-+++ b/pack.h
-@@ -87,7 +87,7 @@ struct progress;
- /* Note, the data argument could be NULL if object type is blob */
- typedef int (*verify_fn)(const struct object_id *, enum object_type, unsigned long, void*, int*);
- 
--const char *write_idx_file(const struct git_hash_algo *hash_algo,
-+const char *write_idx_file(struct repository *repo,
- 			   const char *index_name,
- 			   struct pack_idx_entry **objects,
- 			   int nr_objects,
-@@ -106,13 +106,13 @@ struct ref;
- 
- void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought);
- 
--char *write_rev_file(const struct git_hash_algo *hash_algo,
-+char *write_rev_file(struct repository *repo,
- 		     const char *rev_name,
- 		     struct pack_idx_entry **objects,
- 		     uint32_t nr_objects,
- 		     const unsigned char *hash,
- 		     unsigned flags);
--char *write_rev_file_order(const struct git_hash_algo *hash_algo,
-+char *write_rev_file_order(struct repository *repo,
- 			   const char *rev_name,
- 			   uint32_t *pack_order,
- 			   uint32_t nr_objects,
-@@ -134,8 +134,9 @@ int read_pack_header(int fd, struct pack_header *);
- 
- struct packing_data;
- 
--struct hashfile *create_tmp_packfile(char **pack_tmp_name);
--void stage_tmp_packfiles(const struct git_hash_algo *hash_algo,
-+struct hashfile *create_tmp_packfile(struct repository *repo,
-+				     char **pack_tmp_name);
-+void stage_tmp_packfiles(struct repository *repo,
- 			 struct strbuf *name_buffer,
- 			 const char *pack_tmp_name,
- 			 struct pack_idx_entry **written_list,
+ test_expect_success 'core.bigFileThreshold must be non-negative' '
+-	test_must_fail git -c core.bigFileThreshold=-1 rev-parse >out 2>err &&
++	: >input &&
++	test_must_fail git -c core.bigFileThreshold=-1 hash-object input >out 2>err &&
+ 	grep "bad numeric config value" err &&
+ 	test_must_be_empty out
+ '
 
 -- 
 2.49.0.rc0.416.g627208d89d.dirty
