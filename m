@@ -1,193 +1,126 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6CB16D9AA
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 14:44:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9334A33
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 14:54:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741272247; cv=none; b=CeadyPl2C5sk+SbPMvAtnJDYWHC3Xxbc3Qz+NXd3bf8uP6iWMsHIok6DSA+Fl90YAUfb4LOI5iuK1exlO+AA9A6hoqhSVj3tp0s3DCnTdKrx6w5UgreYnpHI7SrSQTSOe5MoM68kBtNjpflXlHlosLRk1i86jMhRTxzlk3ycuE4=
+	t=1741272887; cv=none; b=QcZ0QnmQQtvTFfs2JxxwwBge5dVU/PC2X0OcLJM/83GE9nvJxWrzdRUSuPZOXKd1lKHmhenhhaxaBBpSBzJB/vyBfCtJgmpykM3zU6fF/0IWOnFWlm4fhHSK9U0Tjx/njTCFicSNZ0qFs8wic/8v+iNBU4mjw0zbV68Kest8CZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741272247; c=relaxed/simple;
-	bh=T9KmC+DYFf4drj7OxVl1x6Xrc8d7xBE662VYKlU2cgY=;
+	s=arc-20240116; t=1741272887; c=relaxed/simple;
+	bh=e17v3cwcXDXbo7q+QxzvkKmbo1F5qvVS70lMFXchC10=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EOinbxMQFtPgVQDswjrQrF7Qts4Z82c5RyMpKHGwsHqMhmYXgsm2Lt9jzWjvmIy6DiBH0ptV91kNn5oFh5PfhlNuT9ge2GSdhcgOKllQuz2H2QRNsUqqjFHeTN3DhnPFNvh+qyLA/o5BhnZgW3URp3w6rIUo1aj+LMGcngN7usc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JrUAGnLF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SvUb5M3b; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=jb6XZxvMNgDRMWFEl4ayPgbljROhocqgFyheDVxtgCWsxEbumdsCT0u4K53RQSLjSNAs92f3Egjlap9ha4hHFmqpzdam8wR29y8BggnR8lHbyr21xbXTwmDsEp0wPEuKeokpBEwsSRSmgdgrVCL90nmFEbXpZYqgpJ5dy9JptMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=m6XustHu; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JrUAGnLF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SvUb5M3b"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id B797511401BE;
-	Thu,  6 Mar 2025 09:44:03 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 06 Mar 2025 09:44:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1741272243; x=1741358643; bh=wmxuzQXg9R
-	GVYNRu9CYZAmrPikKGI9HSzT/cVoHooig=; b=JrUAGnLFQL7rUkzun/UeWSQ3OG
-	DJx4Dqwor0BaZTKZrWVtP3+P7pCCQuaXjbFmEYjjM1ZVkD7zLI4RUr76EtmhshFZ
-	OZRpcDA5pXVQcDL551Z3W+i0msBfvuVOM2LLMvqAkYWowCdVevSB7/sRPapt1VEK
-	JBqkPTDidNl2Az35qwsxCvzdTsuE6NsKCWbI/Hb8Lb6uP1Zbc9YFy+dPSvkiRXFm
-	+0pBzapcg3BEv9OMcNWCihXKQWi+hIG/lSYQtOxa6gKIppsveSNfvGF/E5umouhq
-	IIg8yz4uPPlJt6WWTS/xuXoC7jfFChbdgKb9T7hVrHJIG6DsTQDxeo1/uzaw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741272243; x=1741358643; bh=wmxuzQXg9RGVYNRu9CYZAmrPikKGI9HSzT/
-	cVoHooig=; b=SvUb5M3bV0FiFq07NbW3DmtTiS3oJfAWtqj8BVpFT/28lc6mJeH
-	2cscH8MZQfsu8koyjeQfvcg7loN9KLfQDyjbQm/RrrrvV4+RVqJGprVirxr6wj+C
-	ER3oBN6csRjHZhJsvdBIWN9EnG5HSPrKTew9eKtlVppQrlSvNbqQANGNlDPMkz+0
-	dMKNQ4OlHrArhWE1b9NQAL05ENaexpT32ERs2qXCVaKRghtA86SLLjtWiM/87Y19
-	/ZtS6WJaGVBJEQw74HGMSyuuMv7SghOMyOSlj9eYPn9M9EwlrLJkYUv5y1wWKvco
-	s1TT7hhgUAeU047ItWg9gWaVaMumJRws1Rw==
-X-ME-Sender: <xms:s7TJZyCnJkCScpIp8I0pSk0t2W5CletxtdLZXkidcxd04U3lMeibOw>
-    <xme:s7TJZ8gEEiQ7NOvOuiCjGN2T4GMfqGABQ-uDTdnVzaniBTm1QgLJ-FgA16pv0aGkX
-    MpqZXfVBWNSP-6f0w>
-X-ME-Received: <xmr:s7TJZ1kRuFv8ukAylj9TZI-iYkMeTTJS8jV7blvDezyqjEFV3QD1ahClT9uvHRgy9Jai23Pm5gYpr4Y_67OoMzw2FFQx7cJPpsl7h7A6UAvrrQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdektdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehhrghnfigvnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepmhgv
-    vghtshhonhhifedtudejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:s7TJZwzF5N05-a9_oShkW_bM4k4F-kI8GmiG_LQD57XHgQxjAYNuPg>
-    <xmx:s7TJZ3RyxE7Fb6BEn1IGU5I4eJ4vFK4iV6N6M3XqjnO4rQY_-1NjEg>
-    <xmx:s7TJZ7aPT6RAPZuxhHPaV_TGd9ynqfvLv7HCIudug0ym8A9FKaawTQ>
-    <xmx:s7TJZwRGYzMsYJAKZtC_-9vJyvBr1WF9UwXjaFSnuNn6uGf51GLQcQ>
-    <xmx:s7TJZ1MRzjc_iHfg9Gxjec2iQlAmnhWE75ST0XFSfmiPb6B1xwxMTyHq>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Mar 2025 09:44:02 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1af85c58 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Mar 2025 14:43:59 +0000 (UTC)
-Date: Thu, 6 Mar 2025 15:43:58 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GSoC PATCH] reftable: return proper error code from
- block_writer_add()
-Message-ID: <Z8m0rnTr2PrqBUKQ@pks.im>
-References: <20250306121324.1315290-1-meetsoni3017@gmail.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="m6XustHu"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-475086185easo20019161cf.0
+        for <git@vger.kernel.org>; Thu, 06 Mar 2025 06:54:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741272884; x=1741877684; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=yqRVr9qn+/hjbbLFAhPxnJLIyNIw26bahPAOGzdzWi8=;
+        b=m6XustHuKgRXc3F7/DJ/NQcrvQ0zCp3eIDcd4iESHr9zzZ2/Gvm2ddl+ZPNJzqqNp+
+         lY/w8uXkmpE42StIk7P/ulzRLPu5zmqASJrVtZo9j7yxoXNnYjeJmJ+eqLHVrdOb39Zx
+         QhlD4rj5Vsr4MwydZmCUeFVzmIRHBXFz+RkUr50qY3aBMtq11sYSoFvHeZt/s15+c0JA
+         LH6WWFYeOaZilVYq1QiX5Jz2tE0Apwgl8QuAH3YiezKcd6UCFtIbk8KS4OKWYT5gCamb
+         Y5Ao6f5FKQntDR9awBaVAZuK6LfN7cVXwehoaQfGd5dpAGZIN/EJlq7x4QvcEQsf9h2k
+         iDzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741272884; x=1741877684;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yqRVr9qn+/hjbbLFAhPxnJLIyNIw26bahPAOGzdzWi8=;
+        b=fEr3R6BHNB0x2OVXwFwYEvub0IwhorfGjFg7BAM5OPS7FflTE5WknyUv4ILdnqm1pB
+         tyt8qvDP/xmWt1gfbrIoKwXP5CGJT3byHttsqenkEf3hV0LzT9Q+vXL1aelZGK6tKzBB
+         3IPrUsGFW7C5aPuA8xPxPUOsl1RSO3hCcG59+qemTVPkLgmYxpEQrT7uHm/cJvkW4k1r
+         oTYjmPQZX3dVjKz1S0ALUV4r8TWnLtb1WNfPog9PcAieZVGi6y9VTvjxRyBfSU31AOd6
+         zXx4HmgIbTMoQdsCkQVHlRGbCMv909Fh+ayjU/Y0wHsZ2bLNlZCgtgvvCrof473aBhKK
+         psRw==
+X-Gm-Message-State: AOJu0YxDHxjJY4ln9UWcJIC554FFDRxHoaexbsSuCO5K9TjA+m2NSk/g
+	vHtjxl2/FGud1VjhoQdIePAK2XP2Jor6nMfCKre1fXyT99u5KdyWTDk2UACExjk=
+X-Gm-Gg: ASbGncsEsCgrvL4oOgjlmxpcqBvLqDdz98JClSOyq9e9j5empgxCvgOEjjEyGZc33u1
+	xGgfB+19MGLJjmIrfabX28BUl72WUrzEYiZTsdAu1DAb1Dcds++Ss4m9bxu/TIJWTBXPAUijy8h
+	h5ndUlOHALyGfjOo8oSWsPJNNhwjRcEuuIjwkkUj2tOYBCH3bu/Y4MpX1bo+UyQladISMnEG2TU
+	ILunXCVucnaBkHCUJyLp7HXi9oFc+YBIeraPChrQrtTNhfP4+9DQcukKO81W92JN4ot4+HWe8lM
+	NNAGv/Oyj9Qu7Y0uiMyNV+PVdNz5+uRL/xuLsgDnIXrquUNu1f2Uk3CWWfoyURP9aulkvg4q9E+
+	AHJYVBpufJ/PNUkKv
+X-Google-Smtp-Source: AGHT+IEIduOnAUUv8Ia+1kqcky1ePlRiti+pao0mhC6FC6ScOmEIFvUw9MLKkOHSBQKoLZJ379Wpdw==
+X-Received: by 2002:ac8:5952:0:b0:46e:2d0b:e1bf with SMTP id d75a77b69052e-4751a55823dmr46708701cf.11.1741272884334;
+        Thu, 06 Mar 2025 06:54:44 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4751d9a516esm8273451cf.34.2025.03.06.06.54.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Mar 2025 06:54:44 -0800 (PST)
+Date: Thu, 6 Mar 2025 09:54:42 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+	SURA <surak8806@gmail.com>
+Subject: Re: [PATCH 2/2] refs.c: unify '--exclude' behavior between files and
+ packed backends
+Message-ID: <Z8m3Mo+3l0IxzyOH@nand.local>
+References: <cover.1741223981.git.me@ttaylorr.com>
+ <7e6a5e020bad14b782a8c85518289220579fae64.1741223981.git.me@ttaylorr.com>
+ <Z8lhKT2KuM3VJ7d-@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250306121324.1315290-1-meetsoni3017@gmail.com>
+In-Reply-To: <Z8lhKT2KuM3VJ7d-@pks.im>
 
-On Thu, Mar 06, 2025 at 05:43:24PM +0530, Meet Soni wrote:
-> @@ -115,8 +115,9 @@ int block_writer_add(struct block_writer *w, struct reftable_record *rec)
->  	int err;
->  
->  	err = reftable_record_key(rec, &w->scratch);
-> -	if (err < 0)
-> +	if (err < 0) {
->  		goto done;
-> +	}
->  
->  	if (!w->scratch.len) {
->  		err = REFTABLE_API_ERROR;
+On Thu, Mar 06, 2025 at 09:47:37AM +0100, Patrick Steinhardt wrote:
+> On Wed, Mar 05, 2025 at 08:19:53PM -0500, Taylor Blau wrote:
+>
+> Nit: I'd reword the commit subject to not only talk about "files" and
+> "packed" backends. Or maybe not mention the backend at all, as it is the
+> same bug for every backend that implements excludes. Something like
+> "refs: stop matching non-directory prefixes in exclude patterns", for
+> example.
 
-This change probably shouldn't be here. Our style guide mentions that we
-prefer to not have curly braces around single-line statements.
+Fair enough.
 
-> @@ -126,14 +127,14 @@ int block_writer_add(struct block_writer *w, struct reftable_record *rec)
->  	n = reftable_encode_key(&is_restart, out, last, w->scratch,
->  				reftable_record_val_type(rec));
->  	if (n < 0) {
-> -		err = -1;
-> +		err = n;
->  		goto done;
->  	}
->  	string_view_consume(&out, n);
->  
->  	n = reftable_record_encode(rec, out, w->hash_size);
->  	if (n < 0) {
-> -		err = -1;
-> +		err = n;
->  		goto done;
->  	}
->  	string_view_consume(&out, n);
+> > diff --git a/t/t1419-exclude-refs.sh b/t/t1419-exclude-refs.sh
+> > index fd58260a24..d955cf9541 100755
+> > --- a/t/t1419-exclude-refs.sh
+> > +++ b/t/t1419-exclude-refs.sh
+> > @@ -101,7 +101,7 @@ test_expect_success 'adjacent, non-overlapping excluded regions' '
+> >
+> >  test_expect_success 'overlapping excluded regions' '
+> >  	for_each_ref__exclude refs/heads refs/heads/ba refs/heads/baz >actual 2>perf &&
+> > -	for_each_ref refs/heads/foo refs/heads/quux >expect &&
+> > +	for_each_ref refs/heads/bar refs/heads/foo refs/heads/quux >expect &&
+> >
+> >  	test_cmp expect actual &&
+> >  	assert_jumps 1 perf
+>
+> I was wondering whether this still tests the right thing. But the ranges
+> still are overlapping, as "refs/heads" and "refs/heads/baz" are. So
+> judging by the test description it seems to still do what's advertised.
 
-Okay. `reftable_encode_key()` right now only knows to return generic
-errors, but you fix that further down, and you also adapt
-`reftable_record_encode()`.
+That's not quite true. for_each_ref__exclude treats its first argument
+as the positive half of the query, and the remaining arguments as
+exclusions. So the only excluded regions here are "refs/heads/ba" and
+"refs/heads/baz", which were overlapping prior to this patch but aren't
+anymore.
 
-> diff --git a/reftable/record.c b/reftable/record.c
-> index 8919df8a4d..5523804a0c 100644
-> --- a/reftable/record.c
-> +++ b/reftable/record.c
-> @@ -148,18 +148,18 @@ int reftable_encode_key(int *restart, struct string_view dest,
->  	uint64_t suffix_len = key.len - prefix_len;
->  	int n = put_var_int(&dest, prefix_len);
->  	if (n < 0)
-> -		return -1;
-> +		return REFTABLE_ENTRY_TOO_BIG_ERROR;
->  	string_view_consume(&dest, n);
->  
->  	*restart = (prefix_len == 0);
->  
->  	n = put_var_int(&dest, suffix_len << 3 | (uint64_t)extra);
->  	if (n < 0)
-> -		return -1;
-> +		return REFTABLE_ENTRY_TOO_BIG_ERROR;
->  	string_view_consume(&dest, n);
->  
->  	if (dest.len < suffix_len)
-> -		return -1;
-> +		return REFTABLE_ENTRY_TOO_BIG_ERROR;
->  	memcpy(dest.buf, key.buf + prefix_len, suffix_len);
->  	string_view_consume(&dest, suffix_len);
->  
+So this test isn't quite doing what it says it is anymore, and should
+really be called "non-directory excluded regions" or similar. But we
+should still have a separate test that does cover excluded regions,
+which needs a new layer underneath some hirearchy, e.g., having
+"refs/heads/bar/x/..." and "refs/heads/bar" as the excluded regions.
 
-Makes sense.
+I adjusted those and will push out a new version with the results
+shortly. Thanks for reading closely.
 
-> @@ -1144,14 +1144,20 @@ static struct reftable_record_vtable reftable_index_record_vtable = {
->  
->  int reftable_record_key(struct reftable_record *rec, struct reftable_buf *dest)
->  {
-> -	return reftable_record_vtable(rec)->key(reftable_record_data(rec), dest);
-> +	int key_len = reftable_record_vtable(rec)->key(reftable_record_data(rec), dest);
-> +	if (key_len < 0)
-> +		return REFTABLE_ENTRY_TOO_BIG_ERROR;
-> +	return key_len;
->  }
-
-This here is incorrect. We don't know why the `->key()` function has
-failed, so we shouldn't assume `TOO_BIG_ERROR`. We'd have to vet all the
-implementations of that function and then should bubble up their
-respective error codes.
-
->  int reftable_record_encode(struct reftable_record *rec, struct string_view dest,
->  			   uint32_t hash_size)
->  {
-> -	return reftable_record_vtable(rec)->encode(reftable_record_data(rec),
-> +	int encode_len = reftable_record_vtable(rec)->encode(reftable_record_data(rec),
->  						   dest, hash_size);
-> +	if (encode_len < 0)
-> +		return REFTABLE_ENTRY_TOO_BIG_ERROR;
-> +	return encode_len;
->  }
->  
->  int reftable_record_copy_from(struct reftable_record *rec,
-
-Same remark here.
-
-Thanks!
-
-Patrick
+Thanks,
+Taylor
