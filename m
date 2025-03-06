@@ -1,160 +1,166 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA18A1C6FF6
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 09:13:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC4918DB3F
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 09:46:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741252413; cv=none; b=rdxi/uKu5b3HfF18EtuFareZkxL/AUeh5ASn+L6LVOzTcicmAsSWTDLbiTQB6YZcOF/Ctde6cAZfjdsejla6JmH67yBrRnBi1dS+n8Blch6YefTvWI8OstvKpsiE2NANAqHQNXC1LwNJEUIJifIQRBQvjtV633Sdvquyfl9e8UQ=
+	t=1741254385; cv=none; b=scEWjRhTU3w+Z1HvK1MPaG127q0OqB8gskN5hKeKe7sK+RGpA8LQNPYhv+QmvvmKvQSXOUvFC6BAD6ipBi0Cl+y17VSD7xrh3EDUT+v646kD95jQ0nMqRy5DLflgpPlvR0XYZi16jbwdGJuvmWwMdBZaISkmJIOCjddn/bvkHio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741252413; c=relaxed/simple;
-	bh=3cCkKKDOTmBxyRfSUBTPGsLCQ/M+YjPSgY4n4fD4Owo=;
+	s=arc-20240116; t=1741254385; c=relaxed/simple;
+	bh=eoLevWZjD0jkec8wcL2KyV2NKcmdxq0ZX0ELUs/aCSk=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nIjP+nO+EiKx7IeBsbltvK6Mnfh9yn0rhafSsv9AueSwHherghFlz8wMEB3rHn70jtFm2fk+FFVgCOQbkyFTwVg3KGq1nNb7Gtlv6XAsvbyYDtSUq4xJXTmcdoov5hkvcumM018L3GDVhSqPpX4zIjcmQwQQop8uN2l6+SYn8vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qgz5XCfF; arc=none smtp.client-ip=209.85.221.172
+	 To:Cc:Content-Type; b=ki4XybRKPwM1xkJZ6vpCNo+Gd9FZ7c8wDssXR7hG4TSLc0SpwTpaQmMg4R00MComUWdgG8nNA7keLj0E2n7MRo65TbdAhOjflmHsQFUu9ddpav9F78l2zwy14NYUNObJpLxuznfEOCP7qbl5WC+HtmCHCMWdcOE0G+TwwHa/9pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KN+IsY74; arc=none smtp.client-ip=209.85.221.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qgz5XCfF"
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-52364925cfeso1739939e0c.0
-        for <git@vger.kernel.org>; Thu, 06 Mar 2025 01:13:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KN+IsY74"
+Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-523dc366e42so108495e0c.2
+        for <git@vger.kernel.org>; Thu, 06 Mar 2025 01:46:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741252410; x=1741857210; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741254383; x=1741859183; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=K1HoOSsMEgfFSy1djvQMr8ahj4WRViig8qX0qsqefTg=;
-        b=Qgz5XCfF7i+q3BWEYAUfECtsKiiDOKoy5w1ynELgFmARmjKGr51uJasUaP2s3spLl8
-         RXZW6j3kvvVVAVXDYNANBEEgj/YpNEYBlhS5iqFESbs6cdkXCEQnN9os1BiJcw5RCsCF
-         xSfrZPhlqnT9I0/0yyvxTJ+Npk+6ARbDUP69u5VwqHAiYqWVHKtKYVwcs9FqLSXHeim9
-         6PLVPSsTqSqR36HHT9C7lRI47i4aL9BZnmhIjYnBpp8u1p5W4ZJAZwfngLaHkdI9AKOf
-         VkbDLKGDut+ANc+Cdcqfi3GiQxq/8w3wgIZXkf224R1sRt9qyJ7oppTrbdPoGL/M/J8e
-         poOw==
+        bh=sM4W5CWhdJM6A4MVbZk0z+XEytdygtseLVSFvAIPK0I=;
+        b=KN+IsY74W0XA33eUkuqkMbKXdM+T3wLRxmdy8v1p84hc/ZOCywoDjOqVH4B+3xfgxi
+         mHM2ZyfqC9gpEHRw66yMz7FQzlXI/qHvJmElJb2nj2Xt+V7hgkjEpTuGG4VLJLW+dQf5
+         1Gkn4gJgQulsmsP6ZOkhFoVo9My/EoQQpRgA8R50K+rgAFDZTwGrJX7cW0zW45SFXfpH
+         V0WCBFb6pdFHcKyR6g/5DWDROYyznoP2pUp8c1fQuE5LQvMaBFHRxHbmjzlsa2qBvUOw
+         DDCsqzdhDqXhateTTGqxCGRMq/QpvyADWqXD70I8iO9MVR4bR/iODhZckVaHA+CpjuJ0
+         eDtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741252410; x=1741857210;
+        d=1e100.net; s=20230601; t=1741254383; x=1741859183;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K1HoOSsMEgfFSy1djvQMr8ahj4WRViig8qX0qsqefTg=;
-        b=Ov3PJqB3seX0gAGU3h3pLFNf563jep7fef9HPCKMXHsooeLSRIrSJnz/t9Purm33l4
-         O2I8ivm+71Ifg9d12HxWB6GGJyzPjD0FzPKfQGfGdtbY3sLkIDuIFUdsszekcgfDv2Ds
-         kivmDpDcSg9YSzRuNjWHEcCtY5Zq1rf3fSi9DH/lak7AhXyQnd+e+qgx4SSuX00QbDfl
-         NlxVwNKXS0pjKgu2Zy3K35ASqSqyGZl9/PBsNKY+Ek9fKI95367htvs4+6FAwQPz6OnO
-         Zx6wxjB1lcANz0PtC2meIEBF1AR941udz+LqCtQGxNuM3fPmC3AHsXjWWftf1tMuFZ0V
-         8j9A==
-X-Gm-Message-State: AOJu0YzMK+/zucGqDaTiqKYGaBp+1k7jdI8Z6NZSoYylpoCiDJzRz0Fb
-	8LLNoGvkD6j95XmPwWOobRs8Dks4TBtFlD20ignuLyTQTxwURX5eF98k7BBfjYMpOK7P5Q5uZao
-	HGXM2iVVPjS9hIEiOVrxCYx8TJMU=
-X-Gm-Gg: ASbGncttXMrBrU838ES9ibSEdZqiwQBAPM+QfGTJ3fcSSfvJlV0AizFwKcrfbprc7V3
-	P4pXctXjNXwgDuNFOdPq6ABI6kItPirnLPi07GBRhX8kDLIA0Q9CdkDNQ5Mk7QgDbHed824WkK3
-	O49YTnTuYpjIkh8f74WAOaWL2+6jU=
-X-Google-Smtp-Source: AGHT+IFHMgeQ9/qSPtvFsnKzC6u1AGxP/mu87VFtjCFBexcVLK+H9m2hZcnD2h6Kcajn2j8Xhnk7R9GHbwrV5BwRGKI=
-X-Received: by 2002:a05:6122:a0e:b0:51f:a02b:45d4 with SMTP id
- 71dfb90a1353d-523d5003fe3mr1314872e0c.1.1741252410578; Thu, 06 Mar 2025
- 01:13:30 -0800 (PST)
+        bh=sM4W5CWhdJM6A4MVbZk0z+XEytdygtseLVSFvAIPK0I=;
+        b=ewmnGSfwLPuvTd23YrGlkyEyaJsXjgZNvcgyj3RPJTnTYbDREemU7YqhwqIYXrsTKp
+         87g+4a21Bupzi7KsXKET5WtTs5+AVwlBXZXkjFCCIDejsHlQql3cuISwLaE5LzAkIqXJ
+         IIlQIBq3rsW483I/X0ORmA+SSlhwpj/cUahtTVQPxcCj1uEUf8dZupBZlbOEKnkdUskZ
+         2Hgy4uqUukLl0Wz+1IbBj2GDVfTSZUcMxGkwjLpK+yOa1q9MYTYZ6lK4ZsnMhvug3jaz
+         rSl8pPRXH6Y+u+AIIF4GkHzK3DXO5O6cRmiHoHM3NjjE5A3kdoLT1yz1d19AhL4N5MDp
+         CFvw==
+X-Gm-Message-State: AOJu0YyExtVFAr1e8iKdWC7jc492WNpxR1UHyRrxKzot2N47H1Yw2UYQ
+	u2jiIqBcw0FtaS2aum2PrPFUgGkV/Ysw/mTL9ZcQo3AXXr40RrDsiWdMHH967UgOh74NVWw0Hwf
+	cObQM3TCkfb7fuMNxs0UHG/Eafi6kBw==
+X-Gm-Gg: ASbGncviPplm85T0zcO3ygNU83VwUiRn36IiGnIiAYpJWRHVEMjVHTfXnOBJqQrxoxe
+	fWKuVjs7VOIRbfLKIJbOEieNqfcuq6Xcyx+wpH6GbDHg8FoaLlrfnSc71BJMNR4gTyqYWUqScKE
+	hmmbmkZVyKzrYA3ILQdp5Kl7XfcOE=
+X-Google-Smtp-Source: AGHT+IGEYKcXu2ybkIMXPE68Bghw03rm304mj+u8TrjODShFLlasChQ1DvK0iKRhCKmwbXp+TNTYEKTQq5t/QQerfgI=
+X-Received: by 2002:a05:6122:2a14:b0:520:42d3:91b7 with SMTP id
+ 71dfb90a1353d-523c6114152mr2881496e0c.1.1741254382769; Thu, 06 Mar 2025
+ 01:46:22 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 6 Mar 2025 04:13:29 -0500
+ HTTPREST; Thu, 6 Mar 2025 04:46:22 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqjz93kwcm.fsf@gitster.g>
+In-Reply-To: <xmqq5xknkup2.fsf@gitster.g>
 References: <20250305-245-partially-atomic-ref-updates-v3-0-0c64e3052354@gmail.com>
- <20250305-245-partially-atomic-ref-updates-v3-1-0c64e3052354@gmail.com> <xmqqjz93kwcm.fsf@gitster.g>
+ <20250305-245-partially-atomic-ref-updates-v3-2-0c64e3052354@gmail.com> <xmqq5xknkup2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 6 Mar 2025 04:13:29 -0500
-X-Gm-Features: AQ5f1JoDTQKU5Y8F0c9Y_RPxfc0CTWu9j9Ie-QEP2Y4KewXm9s84p7-1P04QivA
-Message-ID: <CAOLa=ZTQ0MhA=rYJ7UTXReRBMJ=YA3+YqKZX05UndM4J1W9CAg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/8] refs/files: remove redundant check in split_symref_update()
+Date: Thu, 6 Mar 2025 04:46:21 -0500
+X-Gm-Features: AQ5f1JoWZ38xU3IQd6zo7ZZKh_JdqmoQOe6KNxQeLdzLsoTR-fTNarRS1hz-P3M
+Message-ID: <CAOLa=ZSW9TaD5_-9oQ97=hZXinZUGAkLOSeyDsg-YrTiOOorvw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/8] refs: move duplicate refname update check to
+ generic layer
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, ps@pks.im, jltobler@gmail.com, 
 	phillip.wood123@gmail.com
-Content-Type: multipart/mixed; boundary="00000000000065beac062fa8eb4f"
+Content-Type: multipart/mixed; boundary="000000000000f2f63f062fa960e2"
 
---00000000000065beac062fa8eb4f
+--000000000000f2f63f062fa960e2
 Content-Type: text/plain; charset="UTF-8"
 
 Junio C Hamano <gitster@pobox.com> writes:
 
 > Karthik Nayak <karthik.188@gmail.com> writes:
 >
->> In `split_symref_update()`, there were two checks for duplicate
->> refnames:
+>> Move the tracking of refnames in `affected_refnames` from individual
+>> backends into the generic layer in 'refs.c'. This centralizes the
+>> duplicate refname detection that was previously handled separately by
+>> each backend.
 >>
->>   - At the start, `string_list_has_string()` ensures the refname is not
->>     already in `affected_refnames`, preventing duplicates from being
->>     added.
+>> Make some changes to accommodate this move:
 >>
->>   - After adding the refname, another check verifies whether the newly
->>     inserted item has a `util` value.
->>
->> The second check is unnecessary because the first one guarantees that
->> `string_list_insert()` will never encounter a preexisting entry.
->>
->> Since `item->util` is only used in this context, remove the assignment and
->> simplify the surrounding code.
+>>   - Add a `string_list` field `refnames` to `ref_transaction` to contain
+>>     all the references in a transaction. This field is updated whenever
+>>     a new update is added via `ref_transaction_add_update`, so manual
+>>     additions in reference backends are dropped.
 >
-> It was a bit unclear what "this context" refers to.  We lost all
-> assignments to the .util member and that is a safe thing to do
-> because ...
+> The transaction object is the most logical place to keep track of
+> what is involved in the transaction.  Nice.
+>
+>>   - Modify the backends to use this field internally as needed. The
+>>     backends need to check if an update for refname already exists when
+>>     splitting symrefs or adding an update for 'HEAD'.
+>
+> The above reads to me as if you are saying that the files backend
+> needs to notice that it is updating "HEAD", notice that it is a
+> symbolic ref that points at "refs/heads/main", notice that "HEAD"
+> and "refs/heads/main" are the two things involved in the
+> transaction, and must check if an update is already queued.
+>
+> But when an update changes a symbolic ref in the sense that the
+> underlying ref gets updated through it, the need to update both the
+> underlying ref and the symbolic ref is common across backends, isn't
+> it?  IOW, shouldn't "splitting symrefs" (which I take to mean "ah,
+> we are updating HEAD so we need to update it and at the same time
+> update the underlying refs/heads/main, two updates in total") be
+> done also at the generic layer?
+
+Yup that is correct, in the files backend, we do this via the
+'split_symref_update()' function and in the reftable backend it is
+directly handled in the 'reftable_be_transaction_prepare()' function.
+
+I don't have a reason for why I didn't undertake that too in this
+series. Mostly I think I didn't observe it. But it something that
+can/should be done in the future.
+
+>
+> And if that happens at the generic layer, should .refname member
+> even be visible to backends?
 >
 
-Definitely could use some clarification. Will change to:
+It shouldn't be necessary anymore with that change. I think this is good
+step in that direction.
 
-  The `item->util` field is assigned to validate that a rename doesn't
-  already exist in the list. The validation is done after the first
-  check. As this check is removed, clean up the validation and the
-  assignment of this field.
+>>   - In the reftable backend, within `reftable_be_transaction_prepare()`,
+>>     move the `string_list_has_string()` check above
+>>     `ref_transaction_add_update()`. Since `ref_transaction_add_update()`
+>>     automatically adds the refname to `transaction->refnames`,
+>>     performing the check after will always return true, so we perform
+>>     the check before adding the update.
+>
+> This change makes perfect tense.  It is the most natural to check
+> and modify at the transaction layer the .refnames member, as it
+> belongs at the transaction layer after all.
+>
+>> This helps reduce duplication of functionality between the backends and
+>> makes it easier to make changes in a more centralized manner.
+>
+> Nice.
 
->> @@ -2843,13 +2835,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
->>  		if (update->flags & REF_LOG_ONLY)
->>  			continue;
->>
->> -		item = string_list_append(&affected_refnames, update->refname);
->> -		/*
->> -		 * We store a pointer to update in item->util, but at
->> -		 * the moment we never use the value of this field
->> -		 * except to check whether it is non-NULL.
->> -		 */
->> -		item->util = update;
->
-> ... of this comment, and the "except to check whether" used to
-> happen in this code ...
->
->>  	 * be valid as long as affected_refnames is in use, and NOT
->>  	 * referent, which might soon be freed by our caller.
->>  	 */
->> -	item = string_list_insert(affected_refnames, new_update->refname);
->> -	if (item->util)
->> -		BUG("%s unexpectedly found in affected_refnames",
->> -		    new_update->refname);
->> -	item->util = new_update;
->
-> ... which the patch removed.
->
-> OK.  Makes perfect sense.
->
-> Thanks.
-
-Thanks!
-
---00000000000065beac062fa8eb4f
+--000000000000f2f63f062fa960e2
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: c016b1b93862952f_0.1
+X-Attachment-Id: b14a65b81f87bbd2_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mSlp6Z1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meEE0Qy80dkJhb012d1B4WHBPVlAzTS9XcHZiZFc3VApaNk1RbGV6aDdK
-Vy9ydGVyYVJPSDRUZEdTZ2R6aFlhYXlmWWZaVWNKNXFvYk92L2Uwd0ZrTGl4NklqaVZsS0YxCldX
-c2d4MDlBRTdLOUxEUFJ0Y1ZoQXlyN25XT2ErY1pOcE42SWxtNFYxM0Y1bndid1BuaktONHhaZzFM
-VTQyeXoKejV5Zk4wbkZmU21vVzBlWWRrNm02b0IzYWdSQ1BZemdaRno2L3FnUEtZNE1XNVZ6RENC
-Y1FGbkVicTFmbkxsWgpENDVXVE5iSlpyODd5TURDWXQ2TCtRWjVoUnliRXBjaTJpV014V2JZcm1V
-NmFXcm16d1pjUnZITGVkbVpYeFg4CkNSc1dQWjV1WTF0TXpJTUdEa2ZtMVk0cmZjZlFGSmo4QmZy
-MFFQOHU3bGhsK0lsWjBsVDBhTldKTm5scDduM1MKUWE4UWhqR05BNnV0Zk5hUE1zcTgzU0NCVGFH
-L3dkZW1EMStQMWNPWmhmL0xISjltVW1hT1JkWVFQSUVqdkxMMwpUbWVXc25MUUdrWFpiNkdGTGVI
-N0paZy80SUJsb0FOQzRmVHRxb1lQNDBxMWVYSDd4emg1YnU4ODA4NG1aY3pNCityS3pzdFFEV3BK
-QTAyUXNab0YralV2eW5mUktFMjRqdFBPbzd0TT0KPUFIOE0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mSmJ1d1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNUI5Qy85K3VQOHRFMEtXbm5xOXZla3JpSk5ETVJjMgpiUVI3MGxzTjJ3
+bUdqenhJV3dRc3N0R1BzSTg1SVBZb3NZY3l2cG1nemwvYzRqenpKSFFVSmRwWlVkdnVQcWRGCkVq
+UGt3a2c3empEWm1JWVNacVdWYUdPd1QzZ3QyWlVxKzNFY1FkR0VibmV5T3Q2WEY1c20vZTZwVnNj
+U0tLQnAKUjgvdk80QW84eDBwc1FIekdVaGIwWHRWNTVoUVVqU2R2SURMRk5NZ2pveHRhd0RQRTJa
+RFhrOGI2ZWUxdWtiZApCQmF1bmZmR1lpMDJpZVhoZzRzOTBsc2p0MjR6SW1jRi9UVU9yZmJlYXJ6
+ZEV4R0hobU9HMWVPcmlac0ZGbENQCmcrS0QrNTM0bXhxWTdyVThlbXFpZ2NMam4rSm5MQytEeFlV
+VDBENE1NWk42b1pXaUFOZmhqNUh5UnZlRHo3WnQKTkZYRFkwOWt0MUxhRmRyTENrWUVzQmxyUnBq
+Rm4vM2xmU3Z3RGoyVWxKS1NFWTlvaFkxdEZlN0swbnBNY3NMawpMZVpvYTV0U25JcXJ0dWRuV3gw
+WEMrQVlQc3NMbzlIbTRuRGNqWHRLN2xqbjFPYTdIdGxJWjVGbUROZk1NQVNDClJ2RWR4SmZhRDRB
+UGhJZFU0aFF2MHRkaGJWSkUxS040M096UFhxRT0KPXlYOEMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000065beac062fa8eb4f--
+--000000000000f2f63f062fa960e2--
