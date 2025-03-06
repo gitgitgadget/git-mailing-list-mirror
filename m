@@ -1,84 +1,83 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABE618C92F
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB4F20897F
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 15:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741273729; cv=none; b=pWwhs0LFGkAbv4lBYvRcnApL66G3DpDsWIOBj4WkSHVjwsm0Q+LMFqJH4pHVmTEys7jWheMxoeThkuQmU9rMyBvrB7EoMr89v4xaZnq1TH0H5nh1LnfLn4D0VNBypkiykXcdQpJ/G6pzesWEosEIu/K73PXd0MEPRMEpTImchVU=
+	t=1741273731; cv=none; b=WYKjOIkqTcnIzrcAgsmv0+qmgg++dC9jsQMyBf9vyN1YsXAmfBwKJ/4gZ6ov43tsITOK6yI7nLmG9trzVylyD0cbUy+jgeQ9a81hcYCnF8wERv4Le2ihAW3BKAq+5RaSPYnxs+Ljxwg+kaL+lhPizTeHi7jZMHMvN6iNll3uqPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741273729; c=relaxed/simple;
-	bh=sb3XjAxABCfF4cxMqn2HFJpx9Zi3qxhebaNSB7qO7N8=;
+	s=arc-20240116; t=1741273731; c=relaxed/simple;
+	bh=BF5wtmUe1XZEe3gRWoVlmpeBoEvugVXNMSCQKdPZZRE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pZFjFga3UqpBkueU15W0PVpJTzV30o4LJcVhh/xiah9b0RUJgHNE76mZfEWCRBwAu+IQRHqx4bpwu0S3OaQT8PTW0yBARitxhOgD6PYL1huDpRfyFIt6mYsCQ4JQYLzRCgg8YJTVjDaJgGO1FZSIFfgaSVy2PLNsDRtFBS30ySk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jNi1sGEQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cRIZmSZh; arc=none smtp.client-ip=202.12.124.147
+	 In-Reply-To:To:Cc; b=Cx+NHMv7H7Mqhyw7ofaotVv+edtaSZooBUTEz47FeAcYA0Gzp8sfzAASySVtmKYaGERLGZJBRYjBdHj4UEJVnXkT2pryBT4vVEsLJECnUbSVrX79m30TjkQH2IDhW4BVBGJul3X9n1BNJiVZaoh+GJzxhvtL7s4sm9WQFN9JQbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m5LeIkOn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=09bABsk7; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jNi1sGEQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cRIZmSZh"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1B2DC1140159;
-	Thu,  6 Mar 2025 10:08:47 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Thu, 06 Mar 2025 10:08:47 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m5LeIkOn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="09bABsk7"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6AEF91140106;
+	Thu,  6 Mar 2025 10:08:48 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Thu, 06 Mar 2025 10:08:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1741273726;
-	 x=1741360126; bh=5L67u+lvaBbUnCLveZ5tFpci4yebngppu3PmualLKfM=; b=
-	jNi1sGEQi2/bnF9x43zlEkdzgHEe6bg4LzJC2dT4cZNDetcYJkjB2G/1SQVU8A/5
-	ii4UMz8SJw4qyVm1ulGXm7Tr0wbJAWqHHC9lo3GN7zEP2fe90gNfaZ4hlD+s2g56
-	nDXlGv2GvH2T8YeZM590jtVmyvzQwjiThmmA+gJLCTnkGbXXWAMlegQ7U+bn/s+r
-	GlADYaa3VGBvV/oPP+3b+0eLd3Yc84+XN0i5HlQVryuNsLLBzeSHpOKcywSNiy00
-	B9ae78wVN2g6YMk633rG/mrVCMdIhhZtH5xek/2V/qS3SyRWDb2Z6YgVHyGzvjRN
-	fldw9MA9EFJtsjMKFwfhLQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1741273728;
+	 x=1741360128; bh=Gkpk2yNagRtaVqgMY0LYBj2dB1FOlgSLKE27KW096RU=; b=
+	m5LeIkOno1kjoSA6TlMdcfA0jBesRXotzNPaaw1tTIHr5tgU2sSNUQJ6rETbgewW
+	D90UyA7Nt4VNaL4kNYBNASabh1v42FmRz7QbVy3ER3KrGS8KpVXu7yhVGfPja6gP
+	aCQqA+pEMUnhzyxtqdR6grzhHPuBbUgGQuyr0Zk3yel5hADyAYPCY0CBCo/oE1gX
+	mQsT0XtVnEYXeD8mzCnd1tbivD6+lZjdIPjpozm3unG0ErKp7XsYvSAqTFN/m+iV
+	gOZkPNl+jPZWRBF2beNzvencSapDXZRhgAbdmeYmdeZdXUbqmVXh/xa6CqqU0Lkh
+	hWuEag9K00A+ap6nnXo2Ag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741273726; x=
-	1741360126; bh=5L67u+lvaBbUnCLveZ5tFpci4yebngppu3PmualLKfM=; b=c
-	RIZmSZhczDWJMENA0lsi3RpHCi8mMF4RpNRoNx0QN0HcgK7Ov+NvgctLuc+H0y9E
-	6/wQqDyxXYa/i1MkhZ6I+wZgYFX9dhiCuSUraDEWz8/p/x4VYPXgoNnZwKfaBWns
-	QZeLSPDwSUrBBwSuJGYAK4j0xnjdfVcE1124UDWwzFFvGPJRQzc6V5Yz5G0lbXE+
-	tC2fSKSjhDK1YY1W2mZKmgvzNJm8jqYYNtQrjbv8m2TueoygKu2ZvOY0e5UrRTMs
-	vtZN1BZyXMF0V04OjFcqvmadhjOEWOyzvLECi3fI7JZXNkbDPs+srBgR1j46wo3T
-	7lOs6QG+NkZ7DAFl5iz4Q==
-X-ME-Sender: <xms:frrJZ-47kcA7tECtw18VLRTWuBRyvQKjfhICk38uNVc1NKQKJY2n5Q>
-    <xme:frrJZ350DGUcIyj-Uf7TF_FebNC5dbc6SEDXgg3uRW97i-sfl-2Uzsgp9Yiu2z7Fg
-    rrEU208KL1S6wA9gQ>
-X-ME-Received: <xmr:frrJZ9clf9Zo0W4HBc5996oNTpzvsc0vO_pbYNofYlgAn61o6bOpTBrjHgudGfEk1wMqlh46GyUAMxgFEjy0ongqNrAf7XDcQLaIWvLsowsNXA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdektdelucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741273728; x=
+	1741360128; bh=Gkpk2yNagRtaVqgMY0LYBj2dB1FOlgSLKE27KW096RU=; b=0
+	9bABsk7tQIYkBHwZf4rku0aqcj0rha3oba6kBuwcn2k9RPXkjTaJT/7a4ugiPc83
+	I5eusjR4OoX6m6wg9VYRQEhUF8x0X1CUF8xoIxprVu+gvHNBf34RGcc9NrPXUJjP
+	vjLIROMOfBGwcH++fLbjvD1QCASacTgPpZ9A57I9vDf+UkMWONd/okxbJ0iyMORQ
+	n6zPhWvG8jGGUpemCkX497/Nfzw7PkiEl6Ey0qJkvk0p0o0wsWkGStB7v2iqzP5z
+	Y6BuDSayPlXQ/cbDe1UKykTrENx609ZoPupvLPqF1u0GlWSJaVYiYni2wwfy9Shs
+	2O6Bc8ddTRuNCc3mKrJjA==
+X-ME-Sender: <xms:gLrJZ5JH93sys9-whQUz9pnAVCmE6oySACdFl5GULh4VzBMeYGeFYg>
+    <xme:gLrJZ1LBJNEhAEQoLexWxoKHHnES7QB1JhMKqYW7CGMEZRQzAnwyRwOcrblPuDrrE
+    ffR6A5WNU_XWQ7ppg>
+X-ME-Received: <xmr:gLrJZxtUTl2YStPrqPLv8uRHYmuu34QCStLo0H3z6ZrJH5LBdmjX_OHtcVR0NxTfR8eLZVxrfkUY5ogvCGCNzFvhq5D2mcHlOXT2wAH34o_74A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdektdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilh
-    ihrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghs
-    thgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhh
-    vghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrd
-    hnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:frrJZ7KyOSnhGHXtLSpQ1LzFAfu1J56gyD82Qmuwb4-iOhpHiDjNqw>
-    <xmx:frrJZyLGeLiqwO9IuvqbpdJeoNy65SEEwBvjbwy9EOxIOmRYLjb8vw>
-    <xmx:frrJZ8yErbGdNkR7I77lameXn1HRyLfxQVEiSrb98Uw_SL67N0ZX1Q>
-    <xmx:frrJZ2Jk3lLfproTe1eU5W4oZEQM6Ct4JvTy6VNjbQeyaNjZsVY92g>
-    <xmx:frrJZzoalLxtJJEhzlCdTASVPQldw3if7A3Cz9ccKXtiGmRYJg0o8kZk>
+    vgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhoth
+    hhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhope
+    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehp
+    vghffhdrnhgvthdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrd
+    horhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:gLrJZ6Z9sVFfrtsNcgd9fkfgbK6teTlovl06wZX1KD62VBh-cRmSwA>
+    <xmx:gLrJZwZowUTC2r0l_Hi42dZ92m9m1S_pB8Lge20wSN-Sth_wxTO93w>
+    <xmx:gLrJZ-BKPaSJVuBZ4YR_gyRNQ7HNwEoWnt-XKLoHuWDmGZbUYLyB4Q>
+    <xmx:gLrJZ-aye7iq5tL2EN26we7JYqgmh5f_TmJVi7Td9khsbogJj-oixw>
+    <xmx:gLrJZw5Eaa8K0v36lX1zN8iL6rFGelV2spMimFzHk4K9Aao3ektVk2_x>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Mar 2025 10:08:45 -0500 (EST)
+ 6 Mar 2025 10:08:46 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9daacd11 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Mar 2025 15:08:42 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0d90c211 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Mar 2025 15:08:43 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 06 Mar 2025 16:08:35 +0100
-Subject: [PATCH v5 04/16] refs: introduce function to batch refname
- availability checks
+Date: Thu, 06 Mar 2025 16:08:36 +0100
+Subject: [PATCH v5 05/16] refs/reftable: batch refname availability checks
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250306-pks-update-ref-optimization-v5-4-dcb2ee037e97@pks.im>
+Message-Id: <20250306-pks-update-ref-optimization-v5-5-dcb2ee037e97@pks.im>
 References: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
 In-Reply-To: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
 To: git@vger.kernel.org
@@ -97,258 +96,66 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  shejialuo <shejialuo@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-The `refs_verify_refname_available()` functions checks whether a
-reference update can be committed or whether it would conflict with
-either a prefix or suffix thereof. This function needs to be called once
-per reference that one wants to check, which requires us to redo a
-couple of checks every time the function is called.
-
-Introduce a new function `refs_verify_refnames_available()` that does
-the same, but for a list of references. For now, the new function uses
-the exact same implementation, except that we loop through all refnames
-provided by the caller. This will be tuned in subsequent commits.
-
-The existing `refs_verify_refname_available()` function is reimplemented
-on top of the new function. As such, the diff is best viewed with the
-`--ignore-space-change option`.
+Refactor the "reftable" backend to batch the availability check for
+refnames. This does not yet have an effect on performance as
+`refs_verify_refnames_available()` effectively still performs the
+availability check for each refname individually. But this will be
+optimized in subsequent commits, where we learn to optimize some parts
+of the logic when checking multiple refnames for availability.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c | 169 +++++++++++++++++++++++++++++++++++++----------------------------
- refs.h |  12 +++++
- 2 files changed, 109 insertions(+), 72 deletions(-)
+ refs/reftable-backend.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index f4094a326a9..5a9b0f2fa1e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2467,19 +2467,15 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 	return ret;
- }
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index d39a14c5a46..2a90e7cb391 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1069,6 +1069,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 		reftable_be_downcast(ref_store, REF_STORE_WRITE|REF_STORE_MAIN, "ref_transaction_prepare");
+ 	struct strbuf referent = STRBUF_INIT, head_referent = STRBUF_INIT;
+ 	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
++	struct string_list refnames_to_check = STRING_LIST_INIT_NODUP;
+ 	struct reftable_transaction_data *tx_data = NULL;
+ 	struct reftable_backend *be;
+ 	struct object_id head_oid;
+@@ -1224,12 +1225,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 			 * can output a proper error message instead of failing
+ 			 * at a later point.
+ 			 */
+-			ret = refs_verify_refname_available(ref_store, u->refname,
+-							    &affected_refnames, NULL,
+-							    transaction->flags & REF_TRANSACTION_FLAG_INITIAL,
+-							    err);
+-			if (ret < 0)
+-				goto done;
++			string_list_append(&refnames_to_check, u->refname);
  
--int refs_verify_refname_available(struct ref_store *refs,
--				  const char *refname,
--				  const struct string_list *extras,
--				  const struct string_list *skip,
--				  unsigned int initial_transaction,
--				  struct strbuf *err)
-+int refs_verify_refnames_available(struct ref_store *refs,
-+				   const struct string_list *refnames,
-+				   const struct string_list *extras,
-+				   const struct string_list *skip,
-+				   unsigned int initial_transaction,
-+				   struct strbuf *err)
- {
--	const char *slash;
--	const char *extra_refname;
- 	struct strbuf dirname = STRBUF_INIT;
- 	struct strbuf referent = STRBUF_INIT;
--	struct object_id oid;
--	unsigned int type;
- 	int ret = -1;
- 
- 	/*
-@@ -2489,79 +2485,91 @@ int refs_verify_refname_available(struct ref_store *refs,
- 
- 	assert(err);
- 
--	strbuf_grow(&dirname, strlen(refname) + 1);
--	for (slash = strchr(refname, '/'); slash; slash = strchr(slash + 1, '/')) {
--		/*
--		 * Just saying "Is a directory" when we e.g. can't
--		 * lock some multi-level ref isn't very informative,
--		 * the user won't be told *what* is a directory, so
--		 * let's not use strerror() below.
--		 */
--		int ignore_errno;
--		/* Expand dirname to the new prefix, not including the trailing slash: */
--		strbuf_add(&dirname, refname + dirname.len, slash - refname - dirname.len);
-+	for (size_t i = 0; i < refnames->nr; i++) {
-+		const char *refname = refnames->items[i].string;
-+		const char *extra_refname;
-+		struct object_id oid;
-+		unsigned int type;
-+		const char *slash;
-+
-+		strbuf_reset(&dirname);
-+
-+		for (slash = strchr(refname, '/'); slash; slash = strchr(slash + 1, '/')) {
-+			/*
-+			 * Just saying "Is a directory" when we e.g. can't
-+			 * lock some multi-level ref isn't very informative,
-+			 * the user won't be told *what* is a directory, so
-+			 * let's not use strerror() below.
-+			 */
-+			int ignore_errno;
-+
-+			/* Expand dirname to the new prefix, not including the trailing slash: */
-+			strbuf_add(&dirname, refname + dirname.len, slash - refname - dirname.len);
-+
-+			/*
-+			 * We are still at a leading dir of the refname (e.g.,
-+			 * "refs/foo"; if there is a reference with that name,
-+			 * it is a conflict, *unless* it is in skip.
-+			 */
-+			if (skip && string_list_has_string(skip, dirname.buf))
-+				continue;
-+
-+			if (!initial_transaction &&
-+			    !refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
-+					       &type, &ignore_errno)) {
-+				strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
-+					    dirname.buf, refname);
-+				goto cleanup;
-+			}
-+
-+			if (extras && string_list_has_string(extras, dirname.buf)) {
-+				strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
-+					    refname, dirname.buf);
-+				goto cleanup;
-+			}
-+		}
- 
- 		/*
--		 * We are still at a leading dir of the refname (e.g.,
--		 * "refs/foo"; if there is a reference with that name,
--		 * it is a conflict, *unless* it is in skip.
-+		 * We are at the leaf of our refname (e.g., "refs/foo/bar").
-+		 * There is no point in searching for a reference with that
-+		 * name, because a refname isn't considered to conflict with
-+		 * itself. But we still need to check for references whose
-+		 * names are in the "refs/foo/bar/" namespace, because they
-+		 * *do* conflict.
- 		 */
--		if (skip && string_list_has_string(skip, dirname.buf))
--			continue;
-+		strbuf_addstr(&dirname, refname + dirname.len);
-+		strbuf_addch(&dirname, '/');
-+
-+		if (!initial_transaction) {
-+			struct ref_iterator *iter;
-+			int ok;
-+
-+			iter = refs_ref_iterator_begin(refs, dirname.buf, NULL, 0,
-+						       DO_FOR_EACH_INCLUDE_BROKEN);
-+			while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
-+				if (skip &&
-+				    string_list_has_string(skip, iter->refname))
-+					continue;
-+
-+				strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
-+					    iter->refname, refname);
-+				ref_iterator_abort(iter);
-+				goto cleanup;
-+			}
- 
--		if (!initial_transaction &&
--		    !refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
--				       &type, &ignore_errno)) {
--			strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
--				    dirname.buf, refname);
--			goto cleanup;
-+			if (ok != ITER_DONE)
-+				BUG("error while iterating over references");
- 		}
- 
--		if (extras && string_list_has_string(extras, dirname.buf)) {
-+		extra_refname = find_descendant_ref(dirname.buf, extras, skip);
-+		if (extra_refname) {
- 			strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
--				    refname, dirname.buf);
-+				    refname, extra_refname);
- 			goto cleanup;
+ 			/*
+ 			 * There is no need to write the reference deletion
+@@ -1379,6 +1375,13 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
  		}
  	}
  
--	/*
--	 * We are at the leaf of our refname (e.g., "refs/foo/bar").
--	 * There is no point in searching for a reference with that
--	 * name, because a refname isn't considered to conflict with
--	 * itself. But we still need to check for references whose
--	 * names are in the "refs/foo/bar/" namespace, because they
--	 * *do* conflict.
--	 */
--	strbuf_addstr(&dirname, refname + dirname.len);
--	strbuf_addch(&dirname, '/');
--
--	if (!initial_transaction) {
--		struct ref_iterator *iter;
--		int ok;
--
--		iter = refs_ref_iterator_begin(refs, dirname.buf, NULL, 0,
--					       DO_FOR_EACH_INCLUDE_BROKEN);
--		while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
--			if (skip &&
--			    string_list_has_string(skip, iter->refname))
--				continue;
--
--			strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
--				    iter->refname, refname);
--			ref_iterator_abort(iter);
--			goto cleanup;
--		}
--
--		if (ok != ITER_DONE)
--			BUG("error while iterating over references");
--	}
--
--	extra_refname = find_descendant_ref(dirname.buf, extras, skip);
--	if (extra_refname)
--		strbuf_addf(err, _("cannot process '%s' and '%s' at the same time"),
--			    refname, extra_refname);
--	else
--		ret = 0;
-+	ret = 0;
++	string_list_sort(&refnames_to_check);
++	ret = refs_verify_refnames_available(ref_store, &refnames_to_check, &affected_refnames, NULL,
++					     transaction->flags & REF_TRANSACTION_FLAG_INITIAL,
++					     err);
++	if (ret < 0)
++		goto done;
++
+ 	transaction->backend_data = tx_data;
+ 	transaction->state = REF_TRANSACTION_PREPARED;
  
- cleanup:
+@@ -1394,6 +1397,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 	string_list_clear(&affected_refnames, 0);
  	strbuf_release(&referent);
-@@ -2569,6 +2577,23 @@ int refs_verify_refname_available(struct ref_store *refs,
+ 	strbuf_release(&head_referent);
++	string_list_clear(&refnames_to_check, 0);
+ 
  	return ret;
  }
- 
-+int refs_verify_refname_available(struct ref_store *refs,
-+				  const char *refname,
-+				  const struct string_list *extras,
-+				  const struct string_list *skip,
-+				  unsigned int initial_transaction,
-+				  struct strbuf *err)
-+{
-+	struct string_list_item item = { .string = (char *) refname };
-+	struct string_list refnames = {
-+		.items = &item,
-+		.nr = 1,
-+	};
-+
-+	return refs_verify_refnames_available(refs, &refnames, extras, skip,
-+					      initial_transaction, err);
-+}
-+
- struct do_for_each_reflog_help {
- 	each_reflog_fn *fn;
- 	void *cb_data;
-diff --git a/refs.h b/refs.h
-index a0cdd99250e..185aed5a461 100644
---- a/refs.h
-+++ b/refs.h
-@@ -124,6 +124,18 @@ int refs_verify_refname_available(struct ref_store *refs,
- 				  unsigned int initial_transaction,
- 				  struct strbuf *err);
- 
-+/*
-+ * Same as `refs_verify_refname_available()`, but checking for a list of
-+ * refnames instead of only a single item. This is more efficient in the case
-+ * where one needs to check multiple refnames.
-+ */
-+int refs_verify_refnames_available(struct ref_store *refs,
-+				   const struct string_list *refnames,
-+				   const struct string_list *extras,
-+				   const struct string_list *skip,
-+				   unsigned int initial_transaction,
-+				   struct strbuf *err);
-+
- int refs_ref_exists(struct ref_store *refs, const char *refname);
- 
- int should_autocreate_reflog(enum log_refs_config log_all_ref_updates,
 
 -- 
 2.49.0.rc0.416.g627208d89d.dirty
