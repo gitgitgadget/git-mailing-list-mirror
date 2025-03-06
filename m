@@ -1,278 +1,463 @@
-Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304B91624ED
-	for <git@vger.kernel.org>; Thu,  6 Mar 2025 14:20:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45556149DF0
+	for <git@vger.kernel.org>; Thu,  6 Mar 2025 14:36:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741270826; cv=none; b=DFUz6XffVpeBO4V99mjN6H+Fg60MEt8Xs1Tvwdl/ghLVwVI8+6kEzfKZEsiv9yFBsrJ39/bpPMKDlLMfDY+8AxY1NoV0I5RUjgLI8No2tB7a1oYiuu5uAYHOPAGhLjhJYbaUhz7TgaKTHqX3y6ChNiwXg1/7qV56IqrNZ+XbH20=
+	t=1741271798; cv=none; b=rmiIpoLRUtFfV2SwZTQ5xMVoz2nWlhLTJTBsJxpad/To98h0AZvOT9XtnS7pd2lgxI7QUvo8/pGzxokU6pHIHZjueIbQVoxr1Jgcz7zwVLdW8HmuodVENPFK2NfZFGUiWR3MqCx1kbmB7sCBCGzJy0BoGiIHlX9K4EVXufK3/X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741270826; c=relaxed/simple;
-	bh=LvcpKGQki3fNTwehHNFePFM2SozOBhkOX0MJN4+1G6c=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a3n76WZpZHJnAXG176trWFz+iO7AO0ZqoRWh5zmkZ8Pf0FO8RGV/0XUcStdGUT6DHKmX64gGJCsEuPta2w3UucAktaxeT1Vk3+E3hKGNhp6w128Nuh7KVKXVlbLOpk+txlHQDKEXgMde68No+ZtkmGImwVhxk/h6+YohncSzck0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gDkUMuyL; arc=none smtp.client-ip=209.85.221.177
+	s=arc-20240116; t=1741271798; c=relaxed/simple;
+	bh=P58Hbfcl7fKWtXi1Z4PMq4w4cT0dY5IFczEQidsVSao=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=BTynzY0SvK0/R5YwiT6tdSfc65KF+2vXgI22u54NhfcdqW8qR7N7EVSEz8rdSi4m40wn8qi1UMKpSw+MC5DAWnqHBN6Y76c7wLdVGLWlBtiKmuU9rtDL5b2FrvzNZkoRttoaloZTGhwGOHKCyH9y5gsWAMklsjQfDoFtmxaYXYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kTAJbTNn; arc=none smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gDkUMuyL"
-Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-523b7013dc8so290178e0c.0
-        for <git@vger.kernel.org>; Thu, 06 Mar 2025 06:20:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kTAJbTNn"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2ff694d2d4dso988258a91.0
+        for <git@vger.kernel.org>; Thu, 06 Mar 2025 06:36:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741270824; x=1741875624; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uMtD5kno+niLJlZO04uPr1jumOXXe6uEr6PQdCruRh8=;
-        b=gDkUMuyLJS0yYJgdOKB8OUQ1mkfPIB6c6NV06GJ+xjh+tSaKRMHtnq4NxEjLZ1dd5Y
-         Rup1HDmpNBhHvsa1cfy4w0O3asRq+YLdw1fmLWh5T2MJz6zhNMv7wLZRXTiUWeazSPT1
-         OPTFKuKFX+V4Q1p9ANRvhnVPNyBzRihy89wYZEQPc2FaHbp8uYxJaVoqq7wn/4oZdbs/
-         zlkF6Hmb11FbuFoemzAcJiDPPfv3HyrgmgxwisIlIMfPqiaUtcp5i+xh83REb/ZYThUO
-         UOSKZvespu/ufInEql6xmsqtQxo71Ni0FwnnfyaT4TuXLpEMydyc0v5dujhjyg/7JUa5
-         B/GQ==
+        d=gmail.com; s=20230601; t=1741271795; x=1741876595; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S1QTZG2XgD/1DB+3AsgPaTOWKhVTTBg+G1MRe+UmUQI=;
+        b=kTAJbTNnbxa8lUv4JigzUY4Ox/ujhVGKA3bmUKv61ZMeL7AvLDUlT3oJVZmnYwcdVH
+         0eWgJFqSZ+FL/TRBJ4tpQwpAuHEKY6feteeTBnhIohaTz8/szNacoNRFYkHst8yZi7fX
+         i/q+GRj1c/q5joycl/+eRAlKwPcuD+BnJOwLeA7PZgy4KOKLWT/WZKXichdWaGdlXOTd
+         gqNi0BZwMlhlTN7rZ3epfUd3jbcjAtsjzAtRui3h5JnUsp1l+rq8TIVYhVKjxOMIhcjo
+         fqA5Uh2LS4wkGzRylh9tBGDZZAs9OY5Q2wsAKOX3p9Q0hTHZ0705hAnm+EmjibbBz3HO
+         V+Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741270824; x=1741875624;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uMtD5kno+niLJlZO04uPr1jumOXXe6uEr6PQdCruRh8=;
-        b=hdbqhkAjI8jz4aYPoPeDyqQ9mHBsyfy5zsId4GtzrCRoBFZIR8KwoBegXyko8Sre9k
-         EKLrDABqkOFSrZdelAgk/mpXcN4zeRpdjfHaWCA7OFn1swgeWlSCeJZKcCmpgNF86aGh
-         6DJBCKpGSO0gDCl8HrumiS6VboH+uFYC37Fohxp0W52Coh7rQ/ibu5TNmesDKFg24LvV
-         t+1PpCZQ2wANLFSTx/eYaG6Uglkov1HBIHScVVZtnsp8zUg3UI9pDC7znF85Ha9aLidM
-         2KJwSwXZVjMDFnWL7kvp24jckZTq24qV6iQJZmZ4iKQu2AS4nRp9d6pfCirakPKidOPP
-         tf0A==
-X-Forwarded-Encrypted: i=1; AJvYcCU2xLT+nmZUObSoIw3XLjNvNyM/KNALDHHnIOhDlQINGux4s9LIOrtcAbJtEXexzK5NkMU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMhUJn/ZRlgaVJcvd6N/+1STEnwvvmi9QzkHCNjZs+1yKWqJ8C
-	zlzNLIq2S31gqtGGc5NYsA5GGd6AAqaKA1eDXYI8qnZMRmcYQs/oT284uBLaNOQx9X6ehBAw3rY
-	PQbnDklOQh2/uvk4469notDN4jJ0=
-X-Gm-Gg: ASbGncucTVMqEz/ECB446lLQX2erkBYW4xZUzRvhVXtzKokc1+Mtpf3dUA75h3ICkiI
-	CQZzCzy9r2h1jcbq+1AC23snBkTU1P3p9q1XuSNMj1+EGlDrL3cVSCg2/LyD8JRkuLPw/y9wgdf
-	QSottFMtSahnRewp824CouoyabnHY=
-X-Google-Smtp-Source: AGHT+IHmpwyYQtYnrAHXAs4GQvsC+oJifbfn5gjxyKZkVRp3yFAlO/G7Dn07eimNznoS7D+oHJXb6n6S9LLHcpazfzw=
-X-Received: by 2002:a05:6122:310f:b0:51b:a11f:cbdb with SMTP id
- 71dfb90a1353d-523c61423ffmr4078253e0c.4.1741270823852; Thu, 06 Mar 2025
- 06:20:23 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 6 Mar 2025 08:20:22 -0600
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250228-pks-update-ref-optimization-v4-0-6425c04268b5@pks.im>
-References: <20250217-pks-update-ref-optimization-v1-0-a2b6d87a24af@pks.im> <20250228-pks-update-ref-optimization-v4-0-6425c04268b5@pks.im>
+        d=1e100.net; s=20230601; t=1741271795; x=1741876595;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=S1QTZG2XgD/1DB+3AsgPaTOWKhVTTBg+G1MRe+UmUQI=;
+        b=gp8olRx8VmDs4SgFkN2h3vOy1+P2iYFn8CRuRAiwLrMEsJ5ZRy5Y/E8lgSnnH90FaN
+         r09DqLgNVWmZuJYezD4H4vMIBTS3Llr1PSs/093Wn4PaTs6QuVkaaN+P4QZ4q1p+DiCa
+         ivKzkRar2cDo/GfZTzbAYA2QIH7BzFgz2uUf2Ygqi0VgtQFhN/ktDr4mGSlHP8UCFOF7
+         kmhufkb8EVMumUcbzWhEGdmHIqC8x92c+xTCc6+wz9/ncG2EBWUyGAFJ6+E7YIe+uGUW
+         ele2IH+2KaiKK87I+c0CQ17ne6bSkpyBDg1gY03Q5rQmT0xVb+0bJxrx6eQdzTWcjCUF
+         iQ2Q==
+X-Gm-Message-State: AOJu0YwzWvJQmqhni+Ac5PB30H1pk6bl+ggkMW0RqTPYSi8gcLCOoLuP
+	Uz/5kD5Fwt7sBvxcvzAUTub9J80UhcLRborihGEJwvYRw6WGIFGeiiqnd419
+X-Gm-Gg: ASbGncs7JUk4APXGoOiYeSnd4m8W5KE0aKbtgUysgetFqy24YEsdl0hzpVFPPPBlEzf
+	YXDGMCmGBCZqSokzamZW9mSnCddXQIDEAW+Dc8iG1vhJ6qmj/Pe4/W10NP25qqAUSi7LRbVFxjd
+	MBPaoWwxWupobR6+RLR6V/idGFNOPKpU8yyZvlMQHFCdkztXQG7vptV1OJnDlrXcD9o4gEYAtfy
+	uFeqxtHOSbNARgcD8g2FrviDxym1J6VhChkYc+p/iuMAZp2t6w4KDkPJMdVZd6/Vwi7zejhK19o
+	DWd5FZM6eS445anLqN7jliqMZ68qPOis99CXwSbmkg0IT9MpO3ybzm3XnBbd3bMPLihe8w==
+X-Google-Smtp-Source: AGHT+IFBHNbSltI43tww4ENOOjfqQpse1DaVYiRZ2emibLbgrWhd6v/r+OVHjqTGf08L0VuioBcDfA==
+X-Received: by 2002:a17:90b:2b83:b0:2ee:db8a:2a01 with SMTP id 98e67ed59e1d1-2ff4981f6f2mr11146882a91.30.1741271794764;
+        Thu, 06 Mar 2025 06:36:34 -0800 (PST)
+Received: from archlinux.plaksha.edu.in ([182.75.25.162])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff4e7ff944sm3561184a91.34.2025.03.06.06.36.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Mar 2025 06:36:34 -0800 (PST)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: git@vger.kernel.org,
+	christian.couder@gmail.com
+Cc: gitster@pobox.com,
+	johncai86@gmail.com,
+	me@ttaylorr.com,
+	ps@pks.im,
+	shejialuo@gmail.com
+Subject: [Outreachy PATCH v3 0/8] stop using the_repository global variable.
+Date: Thu,  6 Mar 2025 20:05:44 +0530
+Message-ID: <20250306143629.1267358-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250219203349.787173-1-usmanakinyemi202@gmail.com>
+References: <20250219203349.787173-1-usmanakinyemi202@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 6 Mar 2025 08:20:22 -0600
-X-Gm-Features: AQ5f1JqLj5H3pW_4Q4q2t-yqNC37FQbvjEfp35Y7SvZ_GT9ZdUDzVzdz1svjlY4
-Message-ID: <CAOLa=ZR-AEGuKGARzrhXSpeJFWQrDSoTzsq3EfMQzH5PDqCxkA@mail.gmail.com>
-Subject: Re: [PATCH v4 00/16] refs: batch refname availability checks
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Jeff King <peff@peff.net>, 
-	Junio C Hamano <gitster@pobox.com>, shejialuo <shejialuo@gmail.com>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="000000000000ea0673062fad3437"
+Content-Transfer-Encoding: 8bit
 
---000000000000ea0673062fad3437
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Remove `the_repository` global variable in favor of the repository
+argument that gets passed in builtin commands. 
 
-Patrick Steinhardt <ps@pks.im> writes:
+These sets of commands are commands that use only RUN_SETUP macro in "git.c".
+Basically, When `-h` is passed to any of this command outside a Git repository,
+the `run_builtin()` will call the `cmd_x()` function (where `x` is any
+of the command from the sets of builtin commands that `the_repository` is removed
+from) with `repo` set to NULL and then early in the function, `parse_options()`
+or show_usage_with_options_if_asked() call will give the options help
+and exit.
 
-> Hi,
->
-> this patch series has been inspired by brian's report that the reftable
-> backend is significantly slower when writing many references compared to
-> the files backend. As explained in that thread, the underlying issue is
-> the design of tombstone references: when we first delete all references
-> in a repository and then recreate them, we still have all the tombstones
-> and thus we need to churn through all of them to figure out that they
-> have been deleted in the first place. The files backend does not have
-> this issue.
->
-> I consider the benchmark itself to be kind of broken, as it stems from
-> us deleting all refs and then recreating them. And if you pack refs in
-> between then the "reftable" backend outperforms the "files" backend.
->
-> But there are a couple of opportunities here anyway. While we cannot
-> make the underlying issue of tombstones being less efficient go away,
-> this has prompted me to have a deeper look at where we spend all the
-> time. There are three ideas in this series:
->
->   - git-update-ref(1) performs ambiguity checks for any full-size object
->     ID, which triggers a lot of reads. This is somewhat pointless though
->     given that the manpage explicitly points out that the command is
->     about object IDs, even though it does know to parse refs. But being
->     part of plumbing, emitting the warning here does not make a ton of
->     sense, and favoring object IDs over references in these cases is the
->     obvious thing to do anyway.
->
->   - For each ref "refs/heads/bar", we need to verify that neither
->     "refs/heads" nor "refs" exists. This was repeated for every refname,
->     but because most refnames use common prefixes this made us re-check
->     a lot of prefixes. This is addressed by using a `strset` of already
->     checked prefixes.
->
->   - For each ref "refs/heads/bar", we need to verify that no ref
->     "refs/heads/bar/*" exists. We always created a new ref iterator for
->     this check, which requires us to discard all internal state and then
->     recreate it. The reftable library has already been refactored though
->     to have reseekable iterators, so we backfill this functionality to
->     all the other iterators and then reuse the iterator.
->
-> With the (somewhat broken) benchmark we see a small speedup with the
-> "files" backend:
->
->     Benchmark 1: update-ref (refformat =3D files, revision =3D master)
->       Time (mean =C2=B1 =CF=83):     234.4 ms =C2=B1   1.9 ms    [User: 7=
-5.6 ms, System: 157.2 ms]
->       Range (min =E2=80=A6 max):   232.2 ms =E2=80=A6 236.9 ms    10 runs
->
->     Benchmark 2: update-ref (refformat =3D files, revision =3D HEAD)
->       Time (mean =C2=B1 =CF=83):     184.2 ms =C2=B1   2.0 ms    [User: 6=
-2.8 ms, System: 119.9 ms]
->       Range (min =E2=80=A6 max):   181.1 ms =E2=80=A6 187.0 ms    10 runs
->
->     Summary
->       update-ref (refformat =3D files, revision =3D HEAD) ran
->         1.27 =C2=B1 0.02 times faster than update-ref (refformat =3D file=
-s, revision =3D master)
->
-> And a huge speedup with the "reftable" backend:
->
->     Benchmark 1: update-ref (refformat =3D reftable, revision =3D master)
->       Time (mean =C2=B1 =CF=83):     16.852 s =C2=B1  0.061 s    [User: 1=
-6.754 s, System: 0.059 s]
->       Range (min =E2=80=A6 max):   16.785 s =E2=80=A6 16.982 s    10 runs
->
->     Benchmark 2: update-ref (refformat =3D reftable, revision =3D HEAD)
->       Time (mean =C2=B1 =CF=83):      2.230 s =C2=B1  0.009 s    [User: 2=
-.192 s, System: 0.029 s]
->       Range (min =E2=80=A6 max):    2.215 s =E2=80=A6  2.244 s    10 runs
->
->     Summary
->       update-ref (refformat =3D reftable, revision =3D HEAD) ran
->         7.56 =C2=B1 0.04 times faster than update-ref (refformat =3D reft=
-able, revision =3D master)
->
-> We're still not up to speed with the "files" backend, but considerably
-> better. Given that this is an extreme edge case and not reflective of
-> the general case I'm okay with this result for now.
->
-> But more importantly, this refactoring also has a positive effect when
-> updating references in a repository with preexisting refs, which I
-> consider to be the more realistic scenario. The following benchmark
-> creates 10k refs with 100k preexisting refs.
->
-> With the "files" backend we see a modest improvement:
->
->     Benchmark 1: update-ref: create many refs (refformat =3D files, preex=
-isting =3D 100000, new =3D 10000, revision =3D master)
->       Time (mean =C2=B1 =CF=83):     478.4 ms =C2=B1  11.9 ms    [User: 9=
-6.7 ms, System: 379.6 ms]
->       Range (min =E2=80=A6 max):   465.4 ms =E2=80=A6 496.6 ms    10 runs
->
->     Benchmark 2: update-ref: create many refs (refformat =3D files, preex=
-isting =3D 100000, new =3D 10000, revision =3D HEAD)
->       Time (mean =C2=B1 =CF=83):     388.5 ms =C2=B1  10.3 ms    [User: 5=
-2.0 ms, System: 333.8 ms]
->       Range (min =E2=80=A6 max):   376.5 ms =E2=80=A6 403.1 ms    10 runs
->
->     Summary
->       update-ref: create many refs (refformat =3D files, preexisting =3D =
-100000, new =3D 10000, revision =3D HEAD) ran
->         1.23 =C2=B1 0.04 times faster than update-ref: create many refs (=
-refformat =3D files, preexisting =3D 100000, new =3D 10000, revision =3D ma=
-ster)
->
-> But with the "reftable" backend we see an almost 5x improvement, where
-> it's now ~15x faster than the "files" backend:
->
->     Benchmark 1: update-ref: create many refs (refformat =3D reftable, pr=
-eexisting =3D 100000, new =3D 10000, revision =3D master)
->       Time (mean =C2=B1 =CF=83):     153.9 ms =C2=B1   2.0 ms    [User: 9=
-6.5 ms, System: 56.6 ms]
->       Range (min =E2=80=A6 max):   150.5 ms =E2=80=A6 158.4 ms    18 runs
->
->     Benchmark 2: update-ref: create many refs (refformat =3D reftable, pr=
-eexisting =3D 100000, new =3D 10000, revision =3D HEAD)
->       Time (mean =C2=B1 =CF=83):      32.2 ms =C2=B1   1.2 ms    [User: 2=
-7.6 ms, System: 4.3 ms]
->       Range (min =E2=80=A6 max):    29.8 ms =E2=80=A6  38.6 ms    71 runs
->
->     Summary
->       update-ref: create many refs (refformat =3D reftable, preexisting =
-=3D 100000, new =3D 10000, revision =3D HEAD) ran
->         4.78 =C2=B1 0.19 times faster than update-ref: create many refs (=
-refformat =3D reftable, preexisting =3D 100000, new =3D 10000, revision =3D=
- master)
->
-> The series is structured as follows:
->
->   - Patches 1 to 4 implement the logic to skip ambiguity checks in
->     git-update-ref(1).
->
->   - Patch 5 to 8 introduce batched checks.
->
->   - Patch 9 deduplicates the ref prefix checks.
->
->   - Patch 10 to 16 implement the infrastructure to reseek iterators.
->
->   - Patch 17 starts to reuse iterators for nested ref checks.
->
-> Changes in v2:
->   - Point out why we also have to touch up the `dir_iterator`.
->   - Fix up the comment explaining `ITER_DONE`.
->   - Fix up comments that show usage patterns of the ref and dir iterator
->     interfaces.
->   - Start batching availability checks in the "files" backend, as well.
->   - Improve the commit message that drops the ambiguity check so that we
->     also point to 25fba78d36b (cat-file: disable object/refname
->     ambiguity check for batch mode, 2013-07-12).
->   - Link to v1: https://lore.kernel.org/r/20250217-pks-update-ref-optimiz=
-ation-v1-0-a2b6d87a24af@pks.im
->
-> Changes in v3:
->   - Fix one case where we didn't skip ambiguity checks in
->     git-update-ref(1).
->   - Document better that only the prefix can change on reseeking
->     iterators. Other internal state will remain the same.
->   - Fix a memory leak in the ref-cache iterator.
->   - Don't ignore errors returned by `packed_ref_iterator_seek()`.
->   - Link to v2: https://lore.kernel.org/r/20250219-pks-update-ref-optimiz=
-ation-v2-0-e696e7220b22@pks.im
->
-> Changes in v4:
->   - A couple of clarifications in the commit message that disabled
->     ambiguity warnings.
->   - Link to v3: https://lore.kernel.org/r/20250225-pks-update-ref-optimiz=
-ation-v3-0-77c3687cda75@pks.im
->
-> Thanks!
->
+Some, functions also uses `the_repository` global internally, so, let's
+let's refactor them and pass `struct repo` as one of the argument. 
 
-I did a review of the 4th version and it generally looks great. I've
-noted some nits, but I don't see anything that warrants a re-roll.
-Thanks
+As the `repo` value can be NULL if a builtin command is run outside
+any repository. The current implementation of `repo_config()` will
+fail if `repo` is NULL.
+If the `repo` is NULL, the `repo_config()` can ignore the repository
+configuration but it should read the other configuration sources like
+the system-side configuration instead of failing.
 
-[snip]
+Teach the `repo_config()` to allow `repo` to be NULL by calling the
+`read_very_early_config()` which read config but only enumerate system
+and global settings. This make it possible for us to savely replace
+`git_config()` with `repo_config()`.
 
---000000000000ea0673062fad3437
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: edb3386d9c99b736_0.1
+Changes since v2
+================
+- Remove preparatory patches that move the `git_config()` below the
+`usage_with_options()`.
+- Add a new preparatory patch that teach the `repo_config()` to accept
+NULL value for `repo` variable.
+- Add tests to each of the builtin function in this commit to ensure
+`repo_config()` works as expected.
+- Make changes to the commit messages. 
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mSnJ5VVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meEZzREFDZHhHS09acTd4UUdZalZPdVBEeVEzc2N1SQpPTTNSL21kQU44
-WE9vdHRXaGFKTDMwN1Z5TnRRcFVMdHQ2R2laWG9VelR2azJaU1VBcXJVZUc0OGcraFdXaUptCjdX
-NXdzWVJ4Q001VXBnV2VveU8yT2t2TUVYcWNjTnAvcDNKOTBVSzZjY1oxNVRUcDBlUTJYN29yVzg0
-cDVxUi8KZTk4Mkk3L2hoVWp4STlvQ3pSeTBJM0xDRHFBdzhXZktTRHc0eTBMZGdMWUQ4Y2VoS3Av
-cHFPYjNtcHFvblJwRwpMZ3ZTOFZId3cxVnRDSHRQelZYaW45UC81VlByQm9UVEFzS09FZjIzL3py
-cVBBL0p2VjRJZlFHcUNkTGlXeUZ4CjNySjNwYzBlTmV2R3Q5SnNFUkdJdjlXVXFHTDlqakFYWWpx
-YWNLT3dtYU85MVZzampJMjdHUGc3TGx0Rnl0MVoKUjBUZDZpb3JzVFpCdGlTZWtwazVmZnBpMk9m
-L2dZUEJVMlZtWWRNS0ZQZGw5d1lneE10TG1URXdiSDZLTW9scwoyUWNDcko5cm1CNytRdDNhajA3
-RDZVSHg0WW1IUStGNGVTOEVXSFJBZjVBVGg0Q1JKKy8zRXdtaW9lSVg4VUI2CmVEckxSVjRGbVM3
-eS91TURIV1VTUTRPNEEzSDQ3UmYrekVwSW9GQT0KPU9WYlkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000ea0673062fad3437--
+Usman Akinyemi (8):
+  config: teach repo_config to allow `repo` to be NULL
+  builtin/verify-tag: stop using `the_repository`
+  builtin/verify-commit: stop using `the_repository`
+  builtin/send-pack: stop using `the_repository`
+  builtin/pack-refs: stop using `the_repository`
+  builtin/ls-files: stop using `the_repository`
+  builtin/for-each-ref: stop using `the_repository`
+  builtin/checkout-index: stop using `the_repository`
+
+ builtin/checkout-index.c        | 43 ++++++++++++++++-----------------
+ builtin/for-each-ref.c          |  5 ++--
+ builtin/ls-files.c              | 32 ++++++++++++------------
+ builtin/pack-refs.c             |  8 +++---
+ builtin/send-pack.c             |  7 +++---
+ builtin/verify-commit.c         | 13 +++++-----
+ builtin/verify-tag.c            |  7 +++---
+ config.c                        |  4 +++
+ config.h                        |  3 +++
+ t/t0610-reftable-basics.sh      |  7 ++++++
+ t/t2006-checkout-index-basic.sh |  7 ++++++
+ t/t3004-ls-files-basic.sh       |  7 ++++++
+ t/t5400-send-pack.sh            |  7 ++++++
+ t/t6300-for-each-ref.sh         |  7 ++++++
+ t/t7030-verify-tag.sh           |  7 ++++++
+ t/t7510-signed-commit.sh        |  7 ++++++
+ 16 files changed, 110 insertions(+), 61 deletions(-)
+
+Range-diff versus v2:
+
+ 1:  a313f9afb7 <  -:  ---------- builtin/verify-tag: refactor `cmd_verify_tag()`
+ -:  ---------- >  1:  a5c69f3753 config: teach repo_config to allow `repo` to be NULL
+ 2:  f993160d90 !  2:  dfa0da4061 builtin/verify-tag: stop using `the_repository`
+    @@ Commit message
+         When `-h` is passed to the command outside a Git repository, the
+         `run_builtin()` will call the `cmd_verify_tag()` function with `repo` set
+         to NULL and then early in the function, `parse_options()` call will give
+    -    the options help and exit, without having to consult much of the
+    -    configuration file.
+    +    the options help and exit.
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+    @@ builtin/verify-tag.c: static const char * const verify_tag_usage[] = {
+      	int i = 1, verbose = 0, had_error = 0;
+      	unsigned flags = 0;
+     @@ builtin/verify-tag.c: int cmd_verify_tag(int argc,
+    - 		flags |= GPG_VERIFY_OMIT_STATUS;
+    - 	}
+    + 		OPT_END()
+    + 	};
+      
+     -	git_config(git_default_config, NULL);
+     +	repo_config(repo, git_default_config, NULL);
+      
+    - 	while (i < argc) {
+    + 	argc = parse_options(argc, argv, prefix, verify_tag_options,
+    + 			     verify_tag_usage, PARSE_OPT_KEEP_ARGV0);
+    +@@ builtin/verify-tag.c: int cmd_verify_tag(int argc,
+      		struct object_id oid;
+      		const char *name = argv[i++];
+      
+    @@ builtin/verify-tag.c: int cmd_verify_tag(int argc,
+      			had_error = !!error("tag '%s' not found.", name);
+      			continue;
+      		}
+    +
+    + ## t/t7030-verify-tag.sh ##
+    +@@ t/t7030-verify-tag.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+    + . ./test-lib.sh
+    + . "$TEST_DIRECTORY/lib-gpg.sh"
+    + 
+    ++test_expect_success GPG 'verify-tag does not crash with -h' '
+    ++	test_expect_code 129 git verify-tag -h >usage &&
+    ++	test_grep "[Uu]sage: git verify-tag " usage &&
+    ++	test_expect_code 129 nongit git verify-tag -h >usage &&
+    ++	test_grep "[Uu]sage: git verify-tag " usage
+    ++'
+    ++
+    + test_expect_success GPG 'create signed tags' '
+    + 	echo 1 >file && git add file &&
+    + 	test_tick && git commit -m initial &&
+ 3:  f2f785190d <  -:  ---------- builtin/verify-commit: refactor `cmd_verify_commit()`
+ 4:  5f8dc0c0ec !  3:  ade2d026cb builtin/verify-commit: stop using `the_repository`
+    @@ Commit message
+         When `-h` is passed to the command outside a Git repository, the
+         `run_builtin()` will call the `cmd_verify_commit()` function with `repo`
+         set to NULL and then early in the function, `parse_options()` call will
+    -    give the options help and exit, without having to consult much of the
+    -    configuration file.
+    +    give the options help and exit.
+     
+         Pass the repository available in the calling context to `verify_commit()`
+         to remove it's dependency on the global `the_repository` variable.
+    @@ builtin/verify-commit.c: static int verify_commit(const char *name, unsigned fla
+      	int i = 1, verbose = 0, had_error = 0;
+      	unsigned flags = 0;
+     @@ builtin/verify-commit.c: int cmd_verify_commit(int argc,
+    - 	if (verbose)
+    - 		flags |= GPG_VERIFY_VERBOSE;
+    + 		OPT_END()
+    + 	};
+      
+     -	git_config(git_default_config, NULL);
+     +	repo_config(repo, git_default_config, NULL);
+      
+    - 	/* sometimes the program was terminated because this signal
+    + 	argc = parse_options(argc, argv, prefix, verify_commit_options,
+    + 			     verify_commit_usage, PARSE_OPT_KEEP_ARGV0);
+    +@@ builtin/verify-commit.c: int cmd_verify_commit(int argc,
+      	 * was received in the process of writing the gpg input: */
+      	signal(SIGPIPE, SIG_IGN);
+      	while (i < argc)
+    @@ builtin/verify-commit.c: int cmd_verify_commit(int argc,
+      			had_error = 1;
+      	return had_error;
+      }
+    +
+    + ## t/t7510-signed-commit.sh ##
+    +@@ t/t7510-signed-commit.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+    + GNUPGHOME_NOT_USED=$GNUPGHOME
+    + . "$TEST_DIRECTORY/lib-gpg.sh"
+    + 
+    ++test_expect_success GPG 'verify-commit does not crash with -h' '
+    ++	test_expect_code 129 git verify-commit -h >usage &&
+    ++	test_grep "[Uu]sage: git verify-commit " usage &&
+    ++	test_expect_code 129 nongit git verify-commit -h >usage &&
+    ++	test_grep "[Uu]sage: git verify-commit " usage
+    ++'
+    ++
+    + test_expect_success GPG 'create signed commits' '
+    + 	test_oid_cache <<-\EOF &&
+    + 	header sha1:gpgsig
+ 5:  d79c3fc1ee <  -:  ---------- builtin/send-pack: refactor `cmd_send_pack()`
+ 6:  f280a9c387 !  4:  e3b58bc6cf builtin/send-pack: stop using `the_repository`
+    @@ Commit message
+         When `-h` is passed to the command outside a Git repository, the
+         `run_builtin()` will call the `cmd_send_pack()` function with `repo` set
+         to NULL and then early in the function, `parse_options()` call will give
+    -    the options help and exit, without having to consult much of the
+    -    configuration file.
+    +    the options help and exit.
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+    @@ builtin/send-pack.c: static int send_pack_config(const char *k, const char *v,
+      	struct refspec rs = REFSPEC_INIT_PUSH;
+      	const char *remote_name = NULL;
+     @@ builtin/send-pack.c: int cmd_send_pack(int argc,
+    - 	if (!dest)
+    - 		usage_with_options(send_pack_usage, options);
+    + 		OPT_END()
+    + 	};
+      
+     -	git_config(send_pack_config, NULL);
+     +	repo_config(repo, send_pack_config, NULL);
+    - 
+    - 	args.verbose = verbose;
+    - 	args.dry_run = dry_run;
+    + 	argc = parse_options(argc, argv, prefix, options, send_pack_usage, 0);
+    + 	if (argc > 0) {
+    + 		dest = argv[0];
+     @@ builtin/send-pack.c: int cmd_send_pack(int argc,
+      	set_ref_status_for_push(remote_refs, args.send_mirror,
+      		args.force_update);
+    @@ builtin/send-pack.c: int cmd_send_pack(int argc,
+      
+      	if (helper_status)
+      		print_helper_status(remote_refs);
+    +
+    + ## t/t5400-send-pack.sh ##
+    +@@ t/t5400-send-pack.sh: test_expect_success setup '
+    + 	echo Rebase &&
+    + 	git log'
+    + 
+    ++test_expect_success 'send-pack does not crash with -h' '
+    ++	test_expect_code 129 git send-pack -h >usage &&
+    ++	test_grep "[Uu]sage: git send-pack " usage &&
+    ++	test_expect_code 129 nongit git send-pack -h >usage &&
+    ++	test_grep "[Uu]sage: git send-pack " usage
+    ++'
+    ++
+    + test_expect_success 'pack the source repository' '
+    + 	git repack -a -d &&
+    + 	git prune
+ 7:  df192a1b2c <  -:  ---------- builtin/pack-refs: refactor `cmd_pack_refs()`
+ 8:  845cd1ea7c !  5:  b11e99627c builtin/pack-refs: stop using `the_repository`
+    @@ Commit message
+         When `-h` is passed to the command outside a Git repository, the
+         `run_builtin()` will call the `cmd_pack_refs()` function with `repo` set
+         to NULL and then early in the function, `parse_options()` call will give
+    -    the options help and exit, without having to consult much of the
+    -    configuration file.
+    +    the options help and exit.
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+    @@ builtin/pack-refs.c: static char const * const pack_refs_usage[] = {
+      	struct ref_exclusions excludes = REF_EXCLUSIONS_INIT;
+      	struct string_list included_refs = STRING_LIST_INIT_NODUP;
+     @@ builtin/pack-refs.c: int cmd_pack_refs(int argc,
+    - 	if (parse_options(argc, argv, prefix, opts, pack_refs_usage, 0))
+    - 		usage_with_options(pack_refs_usage, opts);
+    - 
+    + 			N_("references to exclude")),
+    + 		OPT_END(),
+    + 	};
+     -	git_config(git_default_config, NULL);
+     +	repo_config(repo, git_default_config, NULL);
+    - 	for_each_string_list_item(item, &option_excluded_refs)
+    - 		add_ref_exclusion(pack_refs_opts.exclusions, item->string);
+    + 	if (parse_options(argc, argv, prefix, opts, pack_refs_usage, 0))
+    + 		usage_with_options(pack_refs_usage, opts);
+      
+     @@ builtin/pack-refs.c: int cmd_pack_refs(int argc,
+      	if (!pack_refs_opts.includes->nr)
+    @@ builtin/pack-refs.c: int cmd_pack_refs(int argc,
+      
+      	clear_ref_exclusions(&excludes);
+      	string_list_clear(&included_refs, 0);
+    +
+    + ## t/t0610-reftable-basics.sh ##
+    +@@ t/t0610-reftable-basics.sh: export GIT_TEST_DEFAULT_REF_FORMAT
+    + 
+    + INVALID_OID=$(test_oid 001)
+    + 
+    ++test_expect_success 'pack-refs does not crash with -h' '
+    ++	test_expect_code 129 git pack-refs -h >usage &&
+    ++	test_grep "[Uu]sage: git pack-refs " usage &&
+    ++	test_expect_code 129 nongit git pack-refs -h >usage &&
+    ++	test_grep "[Uu]sage: git pack-refs " usage
+    ++'
+    ++
+    + test_expect_success 'init: creates basic reftable structures' '
+    + 	test_when_finished "rm -rf repo" &&
+    + 	git init repo &&
+ 9:  2aff17b09c !  6:  51c80f9273 builtin/ls-files: stop using `the_repository`
+    @@ Commit message
+         When `-h` is passed to the command outside a Git repository, the
+         `run_builtin()` will call the `cmd_ls_files()` function with `repo` set
+         to NULL and then early in the function, `show_usage_with_options_if_asked()`
+    -    call will give the options help and exit, without having to consult much
+    -    of the configuration file.
+    +    call will give the options help and exit.
+     
+         Pass the repository available in the calling context to both
+         `expand_objectsize()` and `show_ru_info()` to remove their
+    @@ builtin/ls-files.c: int cmd_ls_files(int argc,
+      
+      	if (ps_matched && report_path_error(ps_matched, &pathspec)) {
+      		fprintf(stderr, "Did you forget to 'git add'?\n");
+    +
+    + ## t/t3004-ls-files-basic.sh ##
+    +@@ t/t3004-ls-files-basic.sh: test_expect_success 'ls-files -h in corrupt repository' '
+    + 	test_grep "[Uu]sage: git ls-files " broken/usage
+    + '
+    + 
+    ++test_expect_success 'ls-files does not crash with -h' '
+    ++	test_expect_code 129 git ls-files -h >usage &&
+    ++	test_grep "[Uu]sage: git ls-files " usage &&
+    ++	test_expect_code 129 nongit git ls-files -h >usage &&
+    ++	test_grep "[Uu]sage: git ls-files " usage
+    ++'
+    ++
+    + test_expect_success SYMLINKS 'ls-files with absolute paths to symlinks' '
+    + 	mkdir subs &&
+    + 	ln -s nosuch link &&
+10:  4cc9a4935a <  -:  ---------- builtin/for-each-ref: refactor `cmd_for_each_ref()`
+11:  42c1a7ae74 !  7:  63bb89291f builtin/for-each-ref: stop using `the_repository`
+    @@ Commit message
+         When `-h` is passed to the command outside a Git repository, the
+         `run_builtin()` will call the `cmd_for_each_ref()` function with `repo`
+         set to NULL and then early in the function, `parse_options()` call will
+    -    give the options help and exit, without having to consult much of the
+    -    configuration file.
+    +    give the options help and exit.
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+    @@ builtin/for-each-ref.c: static char const * const for_each_ref_usage[] = {
+      	struct ref_sorting *sorting;
+      	struct string_list sorting_options = STRING_LIST_INIT_DUP;
+     @@ builtin/for-each-ref.c: int cmd_for_each_ref(int argc,
+    - 	if (verify_ref_format(&format))
+    - 		usage_with_options(for_each_ref_usage, opts);
+    + 
+    + 	format.format = "%(objectname) %(objecttype)\t%(refname)";
+      
+     -	git_config(git_default_config, NULL);
+     +	repo_config(repo, git_default_config, NULL);
+    - 	sorting = ref_sorting_options(&sorting_options);
+    - 	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+    - 	filter.ignore_case = icase;
+    + 
+    + 	/* Set default (refname) sorting */
+    + 	string_list_append(&sorting_options, "refname");
+    +
+    + ## t/t6300-for-each-ref.sh ##
+    +@@ t/t6300-for-each-ref.sh: test_expect_success 'Check invalid atoms names are errors' '
+    + 	test_must_fail git for-each-ref --format="%(INVALID)" refs/heads
+    + '
+    + 
+    ++test_expect_success 'for-each-ref does not crash with -h' '
+    ++	test_expect_code 129 git for-each-ref -h >usage &&
+    ++	test_grep "[Uu]sage: git for-each-ref " usage &&
+    ++	test_expect_code 129 nongit git for-each-ref -h >usage &&
+    ++	test_grep "[Uu]sage: git for-each-ref " usage
+    ++'
+    ++
+    + test_expect_success 'Check format specifiers are ignored in naming date atoms' '
+    + 	git for-each-ref --format="%(authordate)" refs/heads &&
+    + 	git for-each-ref --format="%(authordate:default) %(authordate)" refs/heads &&
+12:  232cbef160 !  8:  8dfe6b40c8 builtin/checkout-index: stop using `the_repository`
+    @@ Commit message
+         When `-h` is passed to the command outside a Git repository, the
+         `run_builtin()` will call the `cmd_checkout_index()` function with `repo`
+         set to NULL and then early in the function, `show_usage_with_options_if_asked()`
+    -    call will give the options help and exit, without having to consult much
+    -    of the configuration file.
+    +    call will give the options help and exit.
+     
+         Pass the repository available in the calling context to both `checkout_all()`
+         and `checkout_file()` to remove their dependency on the global
+    @@ builtin/checkout-index.c: int cmd_checkout_index(int argc,
+      		die("Unable to write new index file");
+      	return 0;
+      }
+    +
+    + ## t/t2006-checkout-index-basic.sh ##
+    +@@ t/t2006-checkout-index-basic.sh: test_expect_success 'checkout-index -h in broken repository' '
+    + 	test_grep "[Uu]sage" broken/usage
+    + '
+    + 
+    ++test_expect_success 'checkout-index does not crash with -h' '
+    ++	test_expect_code 129 git checkout-index -h >usage &&
+    ++	test_grep "[Uu]sage: git checkout-index " usage &&
+    ++	test_expect_code 129 nongit git checkout-index -h >usage &&
+    ++	test_grep "[Uu]sage: git checkout-index " usage
+    ++'
+    ++
+    + test_expect_success 'checkout-index reports errors (cmdline)' '
+    + 	test_must_fail git checkout-index -- does-not-exist 2>stderr &&
+    + 	test_grep not.in.the.cache stderr
+
+-- 
+2.48.1
+
