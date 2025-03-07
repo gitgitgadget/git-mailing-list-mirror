@@ -1,123 +1,140 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B5221ABC3
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 14:14:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C2B21C166
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 14:15:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741356886; cv=none; b=V9Jh6++umt4rQjcBRGwaH9FBpcmxaQvi8tYVXQp12G+uFXv5xyFOSPdS8IrHVVfyqZEbgwYWgeUHvT7MDojaNxy5Bqe128TEqZQaIPMZEq04KGzUafBTcsyA10KvPbIdwuIU+HetrPni/Q7erIjqzbZdd/GL/vqR4sq7+gbj0Rg=
+	t=1741356938; cv=none; b=t+BW5x/1zBcZ8LYv6Q7F7g8ico4uUJY+kdpMPB0NUNVGa7Ze8ql/Cs+HbUMzjXRka+VaoYvxfLnPV+Ans9IYtSSiQhj3OXMvSIO6CqjUqzy4meJUOl8E/02XlNMarHiFB/xEeyUavWIU8UvXzLuA/AKr9mwoKhxl1C5pYVEh0ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741356886; c=relaxed/simple;
-	bh=HAMXtnFXlD/xBJHLrKDBse+ixtsC1kicXXOpxIoYIuw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=S1JAXIF192xyevKxRFSHWvHEpxC8NckDXwg2FuxKcGt+WzpU9HkaStzsDxwAOYj2msopzeOOsz722EFnqZyWVMEqTLt8yaChIt2JThV9tzhuadYOPr8zdvuMs4zrJtH18wrtAKu4Bk0fqL03ubv2d700st6p10mlpYEwIFbvyyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CMfZc83J; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741356938; c=relaxed/simple;
+	bh=Qk28Pbs8szpRTKVtUPf/8JBqLuJFVzWpcYIFSFkm33g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oafg7O8ecW9/6RSukifitjD8jSXrj0sr/xJfiV99sRxV3FS9b958qc4zrRGKfV4hQyefllt44dM48LI8rVVldDKyou+ZtZ4E53o3mN1maPZr+PWUNGYCtfKQuLsKNwodz+3ei/TEu8O02+VxS9SL3gJss9/YkgrnatY4d2/dAjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rhVkd/WB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WnGawgx4; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CMfZc83J"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2feb91a2492so3392892a91.2
-        for <git@vger.kernel.org>; Fri, 07 Mar 2025 06:14:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741356884; x=1741961684; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=HAMXtnFXlD/xBJHLrKDBse+ixtsC1kicXXOpxIoYIuw=;
-        b=CMfZc83JtOSg614aYl6quAjwWWMiKENfnEdSWn0NFWW64Pe/PTHO7miOBTup0/9/nD
-         qreAfBBVnspuUrqgLg3jyuurxScx2V5JtpRmHdfbXmKJCmwyuYbQAix3RShx5XTBLrDc
-         JKIs5Py3lzZn4imqBkWW1D3SHVknRSZ1iJU39zok01KSWTdqIEEdMESIOcE2jgbfgbmT
-         bDz/eO42OJkKuoAR5KURmo8FidZA6debDwKElEPa3asnyxunJr1dr8xTYeivhMYO7oa1
-         JjwRQ7I0ulBOwnXw3lAyOnIjk2tVWCj0JCflJZ5t3T1SH/RmNVq1LTd7t5JD2ZdeZdI9
-         HO1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741356884; x=1741961684;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HAMXtnFXlD/xBJHLrKDBse+ixtsC1kicXXOpxIoYIuw=;
-        b=n8c3HuMg9EzDYvtXmfCI6byh/lzDn8HDEZU88hGQLTn0mFZQuJ4Ax/fz6Tfx1eY6tT
-         E4QMDuCYnoN3JOVbCRiuIWiu85UMxq0g3jfcwryEi0FQzYKIKmt2MOnn7PFsH3hIE1oG
-         Vbz2wf0jIsNtUG6hSXSR8yFNtBEdU47elgNCHcLFnuF64xhyvyyjDZFffu45cB29Xq3y
-         LwfpWihGM1L6+nCpYZPU1yU3QLhHuVEfLLpLsv3nqv+e1LBJKLCJcjGvJAYCGQ2vlRuf
-         pAxgTiY8OmE4jh3ePoyWFTQmWi1PxlxS7Xh+PbuWUcQTw25WTZZi1Srw9eGo/xNIBYLV
-         IPSA==
-X-Gm-Message-State: AOJu0Yy/Pek90HXhrRTh7SzabKutVViKXxI4tBxKL6hr8jWQ2w6vdPqF
-	iFcJqD3YRJKzehiRV4cNeUuMiaw+cv+SfZtjkjSyHLlaNvBrhetGVqiuWLeJioPV9+LHjhyGOSg
-	VpoFG6JZzqZHlkKb1BwnhY2zH/Yo=
-X-Gm-Gg: ASbGncsESuB8OMhVqcFA8x6YgJpTorDgjRc5rhVNjSJ8b5hEQPAWCOUHl00344j+OZH
-	dKyQs8B5SW+HQnCyanqjd29EVSYbu1W1bvgYKMi2Fad4n/SGsmBq9FS9MboyXJV/KqsdC4uQf4Y
-	UiT8zSQGrcGNKZHaLEjRbqg8hELTc=
-X-Google-Smtp-Source: AGHT+IHKTrfxmhOWKdpqSR21ejodGDSnwk/peCiZYgwXsxdIUUtGOlgWgVUdXRpjCZD8a5jHol1xfUhknv5MKLCnd90=
-X-Received: by 2002:a17:90b:384a:b0:2fe:ba7f:8032 with SMTP id
- 98e67ed59e1d1-2ff7ce6ec12mr6081742a91.9.1741356884418; Fri, 07 Mar 2025
- 06:14:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rhVkd/WB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WnGawgx4"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8E6BE13826E3;
+	Fri,  7 Mar 2025 09:15:34 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Fri, 07 Mar 2025 09:15:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741356934; x=1741443334; bh=+Tj+t4d0X6
+	vf1ihV8pDSYdAESRIO3nh71BFimi+ftqU=; b=rhVkd/WBttJE8jaLBv6B6J4hq+
+	cYheDtSlLFjxnAWiIOPVvFwJlr7QaaE4yUEGoibm+u3JDpqyybed5HfAmZQs9Jf4
+	ChG6YxgaKPiYYxrV1dm3EkshfEZzZMA95hYsvCSOOdPOmwrN6NwZHE/AHw2KmdOk
+	9CqhO9uAXMoWRFwpArGVD0V7KEkvT9goFT9OhQySaCwwbj9DVWHx+o5mGnwVb3XT
+	7//TFzzLTvQnE6FBRSyt7Pf6da3sX1exEv+bCOJavOQN1daxxpBiYdXlu9cVgoFT
+	xFqyg/4i/wrkcN6hdKEss9W85GrbpxVbzx3+0/JuEjvLgc2WWB+yTKiECKkw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741356934; x=1741443334; bh=+Tj+t4d0X6vf1ihV8pDSYdAESRIO3nh71BF
+	imi+ftqU=; b=WnGawgx4GV3rMlPIIn9xU/fgxIUpz8s9TsNNUwyxQ26T0LCj8R+
+	hC2p04KiNllWA32Y4dXFwyH6uIR39PbMmL4cRtTzN3rrcMZwovc/oTMN/svYa2jj
+	CrTGWLHb086x1DkFq8tTQ85FfYGZEGm7/b4fvPIwFhwv+N2R6Ndw599RNiFvlJ/C
+	8zJedIjpEzAdz1N84eWY/n/gKGX7edgSF5V2i/YL2Xx9bjb2fQW0gDqBehBrN2rj
+	+VYsIoLgpWEd1MXyaitlem9FS22nqp0bZIVkXMKvtrNW+VaCPsQeDawWuZ5PEzq9
+	vYJMWHTgHhfu0O63KzuJd1nioYINc4eGeBg==
+X-ME-Sender: <xms:hf_KZ7kKYEUqqFNRyLLe8CDUqJ_XJQNgc0vqXkkQnXSq1RMtDNllfw>
+    <xme:hf_KZ-3iCGzoYqMXatz4NGMmAliCd9GaWM2tZZZBOcdio68SN76HxNsxbNovVKs_L
+    _aYJ3yjyzbA_T44GQ>
+X-ME-Received: <xmr:hf_KZxrlhav0gXsadRPjLLrbzEVzJloHIcqHlmc4Ej-bTq-zyUmdyTDB4Rx8bwFClXcsueEQT6qxGMZsGVJtQ_5RdWygYoRJUdcf>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduuddtkeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
+    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkh
+    hinhihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehpsh
+    esphhkshdrihhmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdp
+    rhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:hv_KZzlUs1j9YcAVzzW3mggLe-U3UdGO76I53Z9ldpMItc9QTJ43Og>
+    <xmx:hv_KZ53W1TB1DAsCEQBtN2qNZT21fKm2LZlg-VIlZwZd9dMvX2xOvQ>
+    <xmx:hv_KZysLgGnB7nNRZxH3zTDJS9JurqX7if8skZDsVbX99gqC1NuLRg>
+    <xmx:hv_KZ9X0zv0o9sd1Zs02TAjB90mgfhuI0BE7kFv3X5fdPULUVz-DXg>
+    <xmx:hv_KZzz1GZOJe2bNexSW2zIUtGZNA6G9c6q8QRKogeyt-6MFwa0Uianj>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Mar 2025 09:15:33 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  johncai86@gmail.com,
+  me@ttaylorr.com,  ps@pks.im,  shejialuo@gmail.com,  Christian Couder
+ <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 8/8] builtin/checkout-index: stop using `the_repository`
+In-Reply-To: <CAPSxiM_fLNUvg86TtCHZTbsE_VnhKdMiDa3pfLPsLa3ThZfxmw@mail.gmail.com>
+	(Usman Akinyemi's message of "Fri, 7 Mar 2025 06:45:29 +0530")
+References: <20250219203349.787173-1-usmanakinyemi202@gmail.com>
+	<20250306143629.1267358-1-usmanakinyemi202@gmail.com>
+	<20250306143629.1267358-9-usmanakinyemi202@gmail.com>
+	<xmqqzfhyggzb.fsf@gitster.g>
+	<CAPSxiM_fLNUvg86TtCHZTbsE_VnhKdMiDa3pfLPsLa3ThZfxmw@mail.gmail.com>
+Date: Fri, 07 Mar 2025 06:15:31 -0800
+Message-ID: <xmqqfrjpexks.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250305104650.238392-1-ayu.chandekar@gmail.com> <Z8g4dTSFQDTi9ueU@ArchLinux>
-In-Reply-To: <Z8g4dTSFQDTi9ueU@ArchLinux>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Fri, 7 Mar 2025 19:44:32 +0530
-X-Gm-Features: AQ5f1JoTLmC8sHv_2KWVWTpyNVdizSoi4Y-CST4TSTR4oM0Oe2q4BsNamFeUQkQ
-Message-ID: <CAE7as+ZEKE1P_va8e6=nT1SvFoGd+nNJXxZzNoyTJmaQcDBoXA@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_Discuss_GSOC=3A_Refactoring_in_order_to_reduce_Git?=
-	=?UTF-8?Q?=E2=80=99s_global_state?=
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Thanks for the response!
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-> Although there are few callers calling `have_git_dir`, I don't think
-> it's a good idea to remove the `have_git_dir`. This is because we need
-> to reomove the dependency on `startup_info`. It's not an easy thing.
+>> Hmph, if we are passing anything down to these code paths, I would
+>> have expected that it would be an instance of "struct index_state".
+>>
+>> Do these two helper functions need anything other than that from the
+>> repository instance?
+> No, they do not. They could possibly do in the future and is there any
+> reason why we might want to pass the "struct index_state" instead of
+> the whole "struct repository" ?
 
-Oh, I will try to study more about it.
+You are asking a wrong question.
 
-> I somehow understand what you mean here. But "shift" may be not
-> accurate. When user sets the "core.*" in the command line or config
-> file, we will parse the setting and sets the _global_ state defined in
-> "environment.[ch]". We don't want to use these global variables, but
-> want to put these states into repo settings.
->
-> So, we do not shift core.* into repo settings, but shift the global
-> variables which are related to the "core.*" or other settings to repo
-> settings.
+When there are two things, A and B, where B is a piece of data with
+a smaller scope that is contained within A, unless your function
+needs to access parts of A that is impossible to access if you fed
+it only B, limiting the interface to the smallest piece necessary
+(in this case, B) is always the better design.  A potential caller
+that only has B and not A can still call your function that takes B
+if you designed the API that way.  If you insist that the caller
+pass A (and infer which B to use as part of A), a potential caller
+that only has B cannot call your function.
 
-Right right, I went through it after your response, and understood
-what you are saying.
+So, with that understanding of a general principle in mind, you need
+a stronger justification to pass the larger object A that goes
+against the best practice, saying "Even though we do not have to
+pass A because only B is necessary, we pass A because ...".  And you
+just said there is no such reason why you need a repository and for
+these functions an index_state is sufficient.
 
-> I think you could work on this but I don't think this would be a small
-> patch. You need some efforts to figure out the solution. You are on the
-> right direction.
->
-> However, it's hard to suggest which files you need to read. This is
-> because that for each global state, there are many files which may use
-> this global state. So, you'd better follow the call stack to know which
-> functions you need to change.
->
-> In conclusion, I somehow think that you could first think which states
-> you want to change. Try to figure out the most simplest global states.
-> Classify them by the complexity or difficulty thus you could write a
-> good proposal.
+There are many functions that only need "struct index_state"
+instance and obtains one from their callers.  They do not have a
+repository object, other than the one that is referred to from the
+index_state (to keep track of which repository it originated from).
 
-Oh okay!
-I was thinking of creating a poc patch to get a better understanding
-of how to approach this during the timeline.
+But this pointer is not designed to round-trip.  There can be, and
+there indeed are, code paths that use multiple index_state instances
+associated with one repository.  But a repository instance has only
+one ".index" member.  It means if you pass a repository, you are
+making it impossible for your potential callers that has secondary
+index_state instances.
 
-> > Also are these patches ([1] and [2]) an example of how the project
-> > should be carried throughout the GSOC timeline?
-> >
->
-> Exactly.
->
-Thank you so much!
-
-(Sorry for the delayed reply, I have my university exams going on this
-week :') )
-
-Regards,
-Ayush
