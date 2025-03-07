@@ -1,73 +1,120 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD2A23F279
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 16:45:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459902DF68
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 16:53:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741365919; cv=none; b=I3npkkWV0EqmZKf1KAc1ksBgEGOItK0lJztLAPnDEE+KxYorM7LVXgBZv2v8S3Cz4tv2KhGvw27L4bJZu9Po/xTlO8zeU2owR+Kc1s1OkBGToYWpLAIlMzpKkfdSDh/h4nwqhn3BgsNBn8Jx8+O2nHECKhg9iiGZt2ti/xYLubc=
+	t=1741366419; cv=none; b=CNKQvtattUkwu4JIE2xE+lUOfif2nmmjqGvPAcYvncqZGqKqXjIcTApRipD7fj96Fsu7k9nZu7WEBe+cdQSVCHsNeHik4Dt5l+PuUOuC5nSHOXgDe2cx6ISQSYws0bmXA4f+rLY4m8I/wWsrx4uOaJvXAyBR/qSOcIIv4g+XnWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741365919; c=relaxed/simple;
-	bh=6znIVWFDiWThW0Ko+mCqSXqKekLXSDLFP0p3lvLVcOo=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=J20Pyy/oVgcDi8DFJaDjPTlpJfYIed/XjZFEhEIGOuS1oDW4QJs2kacNd3+9c2r6L+H8qwNcZAaDa5TNxxj6eaKQK8U22J00su9vA0NFNiVVJpr88nASwpejYBo5369PfCAnpyQszVFhNUdWU5rtb4RKCkJeDUsqpq85udTTJj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ER4HJfzo; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741366419; c=relaxed/simple;
+	bh=khPW3zi3tG0Sz5Fe9rMnp6FsFz+wVlXXMI+ytnSLZ04=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=N1pVL2szvjKAUAkcYVlBZeZdCXAFB5fx9WU26HG2xnllb2r1xWb0hEnUfo8cXNP2+kNcQ14rS+RaVT6HyWd8s0dOF7JJz/G0WC0ZJqJp0S4C2KlCHvXx9Aj6b75eDmy2QiMxqsMmGlyQZXxdvPHjX0Mc71pRn1mgCl7EhwN1NDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HlmSXvIg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JWxH7KDo; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ER4HJfzo"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5e60cfef9cfso719089a12.2
-        for <git@vger.kernel.org>; Fri, 07 Mar 2025 08:45:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741365916; x=1741970716; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=6znIVWFDiWThW0Ko+mCqSXqKekLXSDLFP0p3lvLVcOo=;
-        b=ER4HJfzoFxCqUablNhbBDsYUsbpwsq/73mSY9ORDDSKH1nssG0LLlQXPaeZ7iLQwyX
-         SRTrsoFFQ4ZHFJ2dZJ7T51Sci6Fv0cglQuutRdS8nyVrSjxgRTWzGRDfYmH7aH9OAdzp
-         sXo7FZIkwcIiSR8vemndMLzBldJA9G7bOUbx0q8AJ+kTsJs0e73uaX6gl36Ay/WPs8L3
-         ydTgXC0bPZE+sVOYS3WH10K2dfVzMGEPRn6f1M/q1zTzmfGfDiJDHBPMkX4vFESko6lt
-         xhWzUmaQRpOVlm01fmNQNLjRNZPDceyJylxyDWXvl2bKOIpentM8bSWYAO9XFvyCYV8Q
-         EJzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741365916; x=1741970716;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6znIVWFDiWThW0Ko+mCqSXqKekLXSDLFP0p3lvLVcOo=;
-        b=qPSV8o899Kk5aS9jIYO0rGBZCtlxs9slZtfkjQMU1PfrngUv5x5vAtOrEWZ/ly/XmN
-         AWMI9AbouKblVinUSZ+ST2IBi51ziHK5lfUJmJhKyASXUnaT1LciJjXRFWVCUjDjlSnJ
-         4sdfjZZRPqUxykVtWFUSrK1LGy6/Vj4Oq5qnHBkKNzENOIBftpyyZaMGwKsyYUutBf9P
-         6zUdCgVWgBxY2YLQjafY2c+9kXuhjX5LgA3IP5FnsXFjTMgRd3CnPiRCJcxy+j7eiQhA
-         omkLKn5RT/nmpRSOLif/gUba1JQqvr2XFdXnu9X9yYszTPuNKkOf5+/v4+zaHZz21qOW
-         Yk1g==
-X-Gm-Message-State: AOJu0Yx/elTGfsPwwAdwTEZc3O6RKbUjkwKeAYhOlrNZI9W/m7BLIQAp
-	4Awp4axC7szzv+24XKf9W+tCi0q/wP1II62GpIWvQ/16+05Jd/9x5AG+y2aDVRIKNYzKn0l/6qf
-	zeoM5WBDXVc9KPUNf2Bk9YwUtOqm8ig==
-X-Gm-Gg: ASbGncvM47/CFRB5D/YJlzI/8Avif5gwIWy4fopw3+b+XsiS9UTTmfP0WlXOfB08wRL
-	JHfLj6PSuJ5ZuhdCM7HVpBcFtsNUKY9XLYjgKOGnT7onps/TLA+uNPTxI508BD9NCEBprORH1NY
-	bdBPDyjf/bBwUpFWz8A92SCYlVLUfD2r9MiS4wmpI/YrL9Jweid0ZSsgEhPug=
-X-Google-Smtp-Source: AGHT+IF0Av1ixuL0oEwpL3ACnIuS66dMrSGorOrHa4OI7TXXXCZNxoVxy3bfV+jMmvPTgDwFNUN/smf6J0saE9op6LM=
-X-Received: by 2002:a17:907:c302:b0:ac1:fb60:2269 with SMTP id
- a640c23a62f3a-ac2526e5e9dmr479070566b.27.1741365916195; Fri, 07 Mar 2025
- 08:45:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HlmSXvIg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JWxH7KDo"
+Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5B9B9138273B;
+	Fri,  7 Mar 2025 11:53:36 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-13.internal (MEProxy); Fri, 07 Mar 2025 11:53:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741366416; x=1741452816; bh=t2h5QBFQsF
+	cBehW+fE1XLWhWwCxCRzz9s6RZ9ujoFt0=; b=HlmSXvIgOJTVsYtfO+7BzIGAa5
+	BWan5D4h+OL7Dz/BhJAxoEPeiciPbm7+M2waL6x9KXVKCxWJ0AePrYCXNmJ7zV+7
+	rAyARVrNJ7jlhcI20DCPPdpc9tCyHtaXUhmt9CdQQ8Ej8RWx4BT0Gqscu+EuXn8u
+	MmEBHuWt2v2mrCNKRIdkugenb3ReyD4+B6bbGUh7gZK8KqHdQmnnaDZQI6DRDCJF
+	StvvUxkGtHTtTSVBETjuQu8RfAHmw0qOpLJhA8sFYOf6GFD8oHYt35HR3l34KweG
+	eUnsn+CWG/mblBys4NmUrG3HK31KeFXfhjx70DcAOPCU8meTvwYJdo2yR0Og==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741366416; x=1741452816; bh=t2h5QBFQsFcBehW+fE1XLWhWwCxCRzz9s6R
+	Z9ujoFt0=; b=JWxH7KDolV09YP9K06+bHlWjbGBAH0OGkHXYhgT5yHqfxF3OJSf
+	TPB6/hZdEH3VIcrNKNzWgeTZGRO5+tqZqYfXQ3FaMx7RVk5FZSuCWpsXxnpqJH36
+	FsMj5OUoKlJrRX+QhcPqe6/i6h6VsvcPpARx/OderzVUw6LORCyqyp/vIOnE5XHe
+	r9rhORinSkxi5nACWKAI9NifrTJFDN8vALx/oK7zAosi2wsexeRmTy1j+FXHnzZC
+	LtV7AvnfXbm/lsGZ+BjIwQpzWJhET0e3Xf59aD4KUwUIFp9in9OHxDjbm1dXdqYB
+	MuTNX2J5Hf5QkVoQy9uHyS23zXVWzwpDRKQ==
+X-ME-Sender: <xms:jyTLZ340PhTP6tpfmACtETAHliDOdxu22O3x1j8zB2XEFIPB-u6cwA>
+    <xme:jyTLZ86pw3FFNZhPD_J6-ZZFgRw7LrP_kMfr33TEHyOLRhHyjVSIjcv89OqkRiWvH
+    HYyf2UCtdMAjcjkSw>
+X-ME-Received: <xmr:jyTLZ-e4JmAL-waOQHd9TaBD0kRBx2hOjRSvEMihKQXgNc13HjW7nzLTmb0Pcq_iKrERkkaIcfPZdVPHLsK4xu6svDmftjlwfPDJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudduudelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgs
+    lhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:jyTLZ4Kwc8Z2HuwJ_fnK8jls28iYc_mieJCjla1F5xIoTB8BI8IsnA>
+    <xmx:jyTLZ7K38h9lNhJuNiERMzP29ebXf-nozAP_IwVMXRyURsO88Q0H6w>
+    <xmx:jyTLZxy_YOAQ-O0vkk_14NR3eWYFQCb4zO7vflfjNHEjIfVsGxX7-A>
+    <xmx:jyTLZ3IYUl15W7SUBEblR1PFvgh26VJnzcg9mm7k2dZcdKnWpLIqEg>
+    <xmx:kCTLZz-1uVRTm4VZ86lTYkPGWusjYR2Ts2lxUEIxFlH2kczldLi0_ksC>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Mar 2025 11:53:34 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,  git@vger.kernel.org,
+  Karthik Nayak <karthik.188@gmail.com>,  Justin Tobler
+ <jltobler@gmail.com>
+Subject: Re: [PATCH v2 12/12] hash: stop depending on `the_repository` in
+ `null_oid()`
+In-Reply-To: <Z8q3nzhl3DHETZgf@pks.im> (Patrick Steinhardt's message of "Fri,
+	7 Mar 2025 10:08:47 +0100")
+References: <20250306-b4-pks-objects-without-the-repository-v2-0-f3465327be69@pks.im>
+	<20250306-b4-pks-objects-without-the-repository-v2-12-f3465327be69@pks.im>
+	<xmqqr03ageej.fsf@gitster.g> <Z8q3nzhl3DHETZgf@pks.im>
+Date: Fri, 07 Mar 2025 08:53:33 -0800
+Message-ID: <xmqqbjucg4tu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Xylon Chacier <xchacier@gmail.com>
-Date: Fri, 7 Mar 2025 16:45:09 +0000
-X-Gm-Features: AQ5f1JrrzRkyOtfN5VgXwR4cZyoXkSTOGFsNTSeNZXcFFyTasHhpevsR_oQgBoM
-Message-ID: <CAM1NYDbc1MSCKBp8ViiqGLOhbt76=weH67nh05Wcw8t8N8GbNw@mail.gmail.com>
-Subject: Lessons
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-I would like to tell you this, in a message, can you teach me, with
-more clarity, your service? Can you show it in images, by any chance?
-Aside=E2=80=94as an incidental note=E2=80=94have you read the repository en=
-titled
-create-your-own-x? I find it may taint your reputation a slight
-little, but you can take a look if you like.
+Patrick Steinhardt <ps@pks.im> writes:
+
+> So in theory, I don't really think there is anything that keeps us from
+> mixing object formats, and I even think that this is a necessary feature
+> to have once people start to migrate their repositories to SHA256. There
+> are people out there who use submodules, and it may not be feasible for
+> them to wait until all of their submodules have been converted to SHA256
+> to migrate their own repositories.
+> ...
+> Anyway, that was a bit of a tangent to your initial question: which hash
+> should we be passing in the first place? As it turns out, we should be
+> passing the superproject's null OID indeed. The object ID we pass to
+> `repo_submodule_init()` does not describe any object in the submodule
+> itself, but rather indicates which tree-ish the submodule information
+> should be parsed from in the superproject. As such, it refers to an
+> object in the superproject itself and should thus use its object hash.
+
+Good reasoning.
+
+So the null-object suitable for the superproject is what we want
+there after all.  We've been using the_hash_algo, which is the
+algorithm used in the_repository, which in turn *IS* the
+superproject in this code path, so we have been correct all the time
+;-)
+
