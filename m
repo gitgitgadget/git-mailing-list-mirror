@@ -1,156 +1,125 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9CF1E1DE3
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 10:02:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A30212D9E
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 10:32:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741341739; cv=none; b=qOxrHYCLpjTUOiC7Z6FudSObBiKKy1Ghsu0IeqZIgyR/avMmV+SQq3ffz1qCciVjg8/h1hmDQqqD5s3xn6mIyezu6oiVjvPvGeZyrtY8GQheG5KP/T7x3U0ySmQJw+EowZKb3FEndoD+3libsm9NafOz5OY43t5EuTV8PufVHdU=
+	t=1741343550; cv=none; b=s6CpUulR1zGZzZ9v7Xv+p24e7v5l0KVfCLWD74mLUszfenlLUFTttT8TULVY6AtY56FFD6RlanKx6ppo/+jMPB3iarQuBJZcwMLw82n8YkC4hSzVf6ORILX7ls+eSo2XEpRlnmDzewsza9iFkTVdbJHGNVzUebj0otS3lAgvQgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741341739; c=relaxed/simple;
-	bh=DKo50ljcL9eXr8trcL3mvc6bNe/izooKfQRuqubRp4s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mNCIQ8mVWIKET/Ut4jzeKfPqbY4sJMKgFJxAfECE8hyenSolefSHZQAB8kiRSAn5jXs8Z+lyPZFxqn6afuXrmpWqkISNc1PUo3av66TdbZ58SEnQS36AG/lY7lP44gH9+LI39OMjpknHSo38fOoomsUEiJubg5OdhLUXusyRAiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PauXl2Kz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OKEB7EPB; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1741343550; c=relaxed/simple;
+	bh=lIxujJA49dqGYuXpQO/LsXPrIgjtZ6Ytz63rwGZAe1w=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=thHy0XDI2QZBxzSlJg3odwuvu36p5X3m/bqW97gl3ayRHV8m7+nUMdlFlmw7xc/LQNZvLt1OoAKaxB3DVz+Vu/KCKDB4l8koqzLLhSCmcFuoaa7leourRxUZIyRcfj6qFC6u4PQo2ru7awYAJ+p9wpN5vCpB/NbDyTb7ndB3alU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cF4OdqaE; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PauXl2Kz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OKEB7EPB"
-Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9375C1140106;
-	Fri,  7 Mar 2025 05:02:16 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-13.internal (MEProxy); Fri, 07 Mar 2025 05:02:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1741341736; x=1741428136; bh=5ghBpH0iJh
-	R13kLKTLEf5hnZP/Pa+mcFDNhe8tj9tUo=; b=PauXl2KzEyATJZEfTzDASJWUu9
-	sWStDhw3GMVvxgFxfDrEqEAkHYgCnuCe8PE6N+7nlE1+nnBf6dh+9Vilq8gVqQ6E
-	GZ2LVhJ6aR2Tw7N+Lss+YJM9TzRZz0Epzlq3+mT9fl7NEfMZyrggV+hCJwC/gINp
-	UQ8uOzxNT1Tb9sC2j5TnuyIVZlbHw837U6PfMfY8qpFlSLqLe3FTXk21ijLwRJD9
-	Monn6/jpsC1ddikgZ2GRDGC2lhoO5041nDEQBYLOufee/H0iK4RZqzCQR6lzbJRO
-	JvZlYZ8yaY57DV8SzAFrsoJa/b8er4uMY8hyGkMb/IUARCI2H6ywAK9zoqiw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741341736; x=1741428136; bh=5ghBpH0iJhR13kLKTLEf5hnZP/Pa+mcFDNh
-	e8tj9tUo=; b=OKEB7EPBiNiww89yw6HDc658b72iuimD8cdAWLOStDpiwtoYQtk
-	s/SG70IWnHenzrOyD4rAbyExtFtvuWYNn1/uj4TkLHFqEUfjeeaSueYh5Nws+dI3
-	Lq7DQOjlTvrGLd5a25bZqgnQs379JdP7WNuTPLy6GVyL02wbCPfoEheqre6BBqr7
-	a44RZ2Ras7v4TnYLWfcwFL6XmhfLouQht5BDXDKVHBbhkMX32JelxrWzjdFHTYbG
-	OSNY6MOVXMn4w/sQhx0N8k8+sZUW770UNXaHbf9fkfZ0NdXS7hFpQvCadk6hNyrS
-	LDSqsJEiZBbPMtXNwRSK/YwTMJ/gooGaTKg==
-X-ME-Sender: <xms:KMTKZ5bTtsv2xlXNctJc8EjKG4iFaXdhN_UTr3lCxH3kGdN0YvrExw>
-    <xme:KMTKZwb3LmkTj9en6r_L8j0-XW-kH9NmqRUPtXw4WLFfF_-YuS097vfr-wwx1VhoS
-    o4Dvm3upu5r6Zg4_Q>
-X-ME-Received: <xmr:KMTKZ7_p1t_7Ycn_lrCNIPVIr5dWqvdF4ta2s0DdFTwEK6C4x-PI6ObfjCGZwex1fv0VV0OIZQr8W4bT1iQyTYdiLL9snmp86n2NP5Q1lg4t>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduuddtfeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhi
-    thhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvg
-    hsrdhstghhihhnuggvlhhinhesghhmgidruggv
-X-ME-Proxy: <xmx:KMTKZ3qMeseGm4ncT3dCtDQt2YwfftTvnNwdEqBBjfIhdGE68m8oBw>
-    <xmx:KMTKZ0owH5IRZFELH8OQp8jCRyFclDgXMpJRSVVq6eUx0d-F0gDHow>
-    <xmx:KMTKZ9SnyG213xj5AAyXzaeRTFGWxmFYacWOdH58VooeVWFAsztBGA>
-    <xmx:KMTKZ8p-RQe4gMi0o3ZHxaYQgyFPJYB_MehtZaenDjyko3SC2vVRSw>
-    <xmx:KMTKZ9lc2Dc0qAJM894Jf_AWOUh9B1w5njF5b8e4Hx4vpSRSE78WZ5o0>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Mar 2025 05:02:15 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c31b8420 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Mar 2025 10:02:13 +0000 (UTC)
-Date: Fri, 7 Mar 2025 11:02:09 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/3] ident: stop assuming that `gw_gecos` is writable
-Message-ID: <Z8rEIffQeVCjd_U8@pks.im>
-References: <pull.1867.git.1740671049.gitgitgadget@gmail.com>
- <pull.1867.v2.git.1741256780.gitgitgadget@gmail.com>
- <3e9ccffc7474698947bdcb6d49b5d0728deadd08.1741256780.git.gitgitgadget@gmail.com>
- <xmqq8qpijezc.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cF4OdqaE"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5dca468c5e4so3053702a12.1
+        for <git@vger.kernel.org>; Fri, 07 Mar 2025 02:32:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741343547; x=1741948347; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hr2sCF5d/qskYUAxJRVq6pjh2l4HwmBklKEvw5xvBgE=;
+        b=cF4OdqaEDZdjxVXJFFOjeWPQ39x+Bn07Qer81v6CuWYLET0L/1O4t4ouHrmi6bROMM
+         9tRh3YO64rtHWzpPq8EHTtnYYMl6NKixk4Rwe0Nx4cEzdvxhY5qxPt6nWdOUNnIZ54Te
+         82ceGncLMPuvrOGtdp4Wgk559VN6HUxsrTkmSHCvxLSA2ukZKZOfxmeU9SWQReLeuhJS
+         3hPU/g93FWQvrvyAACDd/OMc6MYEuSfUQsjbpYFRdUURXvaHL67XRGGjljRVSOCAdg5c
+         Frfo5j3VQHhrZ5CPow9vIn0Cs5/Gm1mG6yEpmjNqu+eZE0Yxu6m9+sK8LCJqPz9FamTL
+         6NXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741343547; x=1741948347;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hr2sCF5d/qskYUAxJRVq6pjh2l4HwmBklKEvw5xvBgE=;
+        b=mEdjsvs2emwhoyXw7NLq93M+sru2fYV/aDv2XctqcCmvbaXE58QX1JpqmKWqtx/e31
+         pYsLum4k/slX2h3hTD3+zunBf9dENutV60NoKoX/yh23pNYQrZ2MsgSBqKfaToKXYgAh
+         rmLW2R/rMy4oV6hWOtZf6aON4emTo7e+Fg0yPLb3SiiaEvWokV71Bs6ms1CyzNihg9Xc
+         BT5rn8Kqj89at++wqb91p4TOOU6x1JvlcQQ5eZHPi/RoB8CE3bFXQpV0r7u5YqnMh/GZ
+         QDfTBAWtgfqhjy5RCNNzj2ZHeK5OpPTrMukCsnNiiWQnGZqHxrxFcydVnbJcjWwgzJ4+
+         ZrIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUBr5RO59F1gWGDuyaAIFqwa2fknDgcAqy7w62sa7a4+J9r2iRmvPwzMZcuYJddErBKL4o=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyouKgr953PNSV22o87hLiQ/GdQQax9wnLMzJydUmmWjUeAxFO/
+	dA1Cwzi4lG3Z/sweC+6CPgqT4An8RiULASlS2Q6vSfHOxelG0lLR
+X-Gm-Gg: ASbGncvuC/L4yqtO250Lt0cYHHSfXtgpBZzZqSFHEK5OdSI2UMUCWMUDaKZUHCSzVoP
+	5Oa3wrD3/6Cb8kPigD7fQFWId6O46+u4eKYe1hf3jzvMPsnVx5rzJ9SvrCD/oST1DwyAiIuYSSF
+	k2fSKnjvhZbZfcxglziIrcea8hHl2vM0D25ZkGlcuxtJyucZ6hMuWjpNqi+erwBf9VAhFqtqjOO
+	UOCMkzFbaHvDhyCxgF4f7Swn+Q4t5CqWAX+rYuqpGCyhbAUF6KXvySzQTc7/sVJECqLaenwIhN0
+	eRir3vVFU/ugCDX4Pqhj6KlBWPAX5mmbvt0SSaAboZlZNElzr9OsaO9Om573QyvkrJEFo/W+LuY
+	pqp/M3bQUWMukvm1hXIqRFfc=
+X-Google-Smtp-Source: AGHT+IF5UoO85DGjG9wNYJb2UYkIW3wSiU2JTf8P+90EWnABy3tql/jGpGctPs7jnYIzidSXjpmQRw==
+X-Received: by 2002:a05:6402:90c:b0:5df:5188:11cc with SMTP id 4fb4d7f45d1cf-5e5e24e8c23mr2933214a12.20.1741343546566;
+        Fri, 07 Mar 2025 02:32:26 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e5c7476515sm2354427a12.32.2025.03.07.02.32.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Mar 2025 02:32:26 -0800 (PST)
+Message-ID: <082af6a3-a7ba-440d-af84-6c59827a2929@gmail.com>
+Date: Fri, 7 Mar 2025 10:32:23 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8qpijezc.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] docs: fix check-docs with WITH_BREAKING_CHANGES
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1871.git.1741018310447.gitgitgadget@gmail.com>
+ <pull.1871.v2.git.1741171357627.gitgitgadget@gmail.com>
+ <xmqqzfhzlbie.fsf_-_@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqzfhzlbie.fsf_-_@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 06, 2025 at 08:33:43AM -0800, Junio C Hamano wrote:
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+On 05/03/2025 15:53, Junio C Hamano wrote:
+> We correctly omit builtin/pack-objects.o from BUILTIN_OBJS, but
+> forgot to add "git pack-redundant" on the EXCLUDED_PROGRAMS list,
+> which made "make check-docs" target notice that the command has been
+> removed but still is documented.
 > 
-> > In other words, contrary to my expectations, the `win+Meson` job is
-> > ill-equipped to replace the `win build` job because it exercises a
-> > completely different tool version/compiler flags vector than what Git
-> > for Windows needs.
-> 
-> It is apparent that meson support is a new procedure to build our
-> codebase that is untested and unproven on Windows at all, given that
-> among all people who may have stake in Windows you are discovering
-> problems in it this late in the cycle.  Nobody knows what other
-> breakages, other than something obvious and easy to catch like "ah,
-> compiler refuses to go further", are lurking under the radar.
-> 
-> I would be reluctant to trust the build artifact out of meson-based
-> build on Windows after seeing your report, especially the above
-> part.
-> 
-> A reasonable alternative may be to declare that meson-based build is
-> not ready yet at this point, and possibly disable win+Meson jobs to
-> punt and divert our engineering resources elsewhere in the meantime.
-> For a new thing, having an uneven support depending on the platform
-> early in the evolution is not unusual or to be ashamed of.
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>   * The command is still listed in the resulting "git help git"
+>     output, as cmd-list.perl does not yet know which commands on the
+>     list are to be ignored under WITH_BREAKING_CHANGES.
 
-I think it would be a bit sad to disable those jobs. They build and pass
-the test suite alright in Git itself, even though they fail downstream
-in Git for Windows. They help me quite a bit to ensure that I don't
-regress anything that already is working while I'm iterating on the
-current set of features. So in the end, I view them more as testing more
-variants of Windows than replacing what we currently have, similar to
-how we test Git on different Linux distributions.
+Good catch. It seems the meson build was also forgotten in 68f51871df8 
+(builtin/pack-redundant: remove subcommand with breaking changes, 
+2025-01-22) as we still compile builtin/pack-redundant.c and build the 
+documentation. We should probably wrap the function declaration for 
+cmd_pack_redundant() in builtin.h with "#ifndef WITH_BREAKING_CHANGES" 
+as well though I don't think that is urgent.
 
-I have said before that I'm very willing to help to figure out any
-issues, regardless of which platform, and I stand by that statement --
-if you see anything that is broken in this context and report the issue
-to me I'll jump on it immediately.
+Best Wishes
 
-> > Nevertheless, there is currently this huge push, including breaking
-> > changes after -rc1 and all, for switching to Meson. Therefore, we need
-> > to make it work, somehow, even in Git for Windows' SDK, hence this
-> > patch, at this point in time.
+Phillip
+
+
+>   Makefile | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> As I said earlier already, I do not mind turning the type of this
-> pointer, which is only used to read from a struct member, like this
-> patch does.  It is the right thing to do, so I'll apply.
-> 
-> But I personally would not be comfortable with the product built
-> with "completely different tool version/compiler flags vector than
-> what G4W needs", even the compilation passes with just this small
-> change.  If I were using Windows, that is.
+> diff --git c/Makefile w/Makefile
+> index a9b2de0692..95ac0820e9 100644
+> --- c/Makefile
+> +++ w/Makefile
+> @@ -1283,7 +1283,9 @@ BUILTIN_OBJS += builtin/mv.o
+>   BUILTIN_OBJS += builtin/name-rev.o
+>   BUILTIN_OBJS += builtin/notes.o
+>   BUILTIN_OBJS += builtin/pack-objects.o
+> -ifndef WITH_BREAKING_CHANGES
+> +ifdef WITH_BREAKING_CHANGES
+> +EXCLUDED_PROGRAMS += git-pack-redundant
+> +else
+>   BUILTIN_OBJS += builtin/pack-redundant.o
+>   endif
+>   BUILTIN_OBJS += builtin/pack-refs.o
 
-That's completely fair. The CI job we have isn't meant to verify that we
-have a G4W-compatible distribution falling out of it, it merely verifies
-that we can build and pass tests in such a "standalone" (that is,
-without the SDK) configuration. We might eventually want to introduce
-another job that _does_ use the SDK with Meson, as well, but I didn't
-yet see a need for that until now.
-
-Patrick
