@@ -1,85 +1,127 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f226.google.com (mail-pl1-f226.google.com [209.85.214.226])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A008E21859D
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 19:57:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518522561AC
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 20:11:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.226
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741377464; cv=none; b=mHiv5tOc9WFO8V8dmwooLvnUIyrqz76MTomCzjHzD0Y2vP2p0HIT1aCoA1tOPB2B5A/JkSbt3ELwWyJx3qPLCH8f+9jm4Zv3YaefzkVKXz3FwfDWZBOvocD24UYc35fnn6D5DCSdbaR8tdCim3wHto4Jx8Hhj3uCGcjHVsutFtA=
+	t=1741378297; cv=none; b=uAw0txz88d/rjU63IJLpqs6iLk6es+m9d5jAt6ikCdXlZmq3fQZ4Oy+ZMMP6TqrYOdL4VwYanJRwR6y73s03GwQX5gpscT7fTqggxi25WtFN3YnTCKpnF388c0JTZ9QKsCADD/UTE/yT5AnJqD9T0a5RBg3PzeV/MGcwZRY+Prk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741377464; c=relaxed/simple;
-	bh=kxYSkTil+zN774aeVH0bgN609Rxu0KTpIowyT7I5mv8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mTJlFoPCywC12OYzk5ClqEOSYZMRipSJpivlVYDjxVBNqaIZpByG5adpvzBSA8iuQgi3bpZs/1rTo4SYpoNKC2PjrzKJuC1ccZjZXnFjdZI35Z8TrfO34aiDAsBb0FAkFHiJh7OUdg6yWIMyc5pXJopkq2cyUtMKI7cdZYWZ1rE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=LIOfKpPH; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1741378297; c=relaxed/simple;
+	bh=tDRglAIZw1qPAPtpHltAFWzo/hy7QoWKiHAVdZLO2/U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XW7QiTcvkqMcD7LMH1Rxt2zsCv1Hag99yXdOK54hbi+m7BxQLSPnmDgSwvA5rOWQh9SY6aXZ3tcJmNPyE1oBztRN873qt4WBHnKeBEi4dCtcGK7yg8o3uppzndegY/UwFcmc5mVq5byUXU/DGcWDFlt128vaXs4R+HUvXRTFpY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org; spf=pass smtp.mailfrom=mandelberg.org; dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=2Bs37LXt; dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=PLjOJN2r; arc=none smtp.client-ip=209.85.214.226
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mandelberg.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="LIOfKpPH"
-Received: (qmail 19638 invoked by uid 109); 7 Mar 2025 19:57:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=kxYSkTil+zN774aeVH0bgN609Rxu0KTpIowyT7I5mv8=; b=LIOfKpPHylUvd0KGruSSTRe3aTB7VNCE81yvj1WHeu0na1u5s1+bapq3GpfwV+cZQXpoVyQu7ZEYdQJOIxfa2Ra9W2GaCNRXhW9eVDa/8Mj9q0zyLHJXP92bhJu3oIByUYQkavk0dPXLJw2S7sYmSjEeik2NJjlek5jBX1u8GniazLV3UU4U3QwW+cATvfrISUMNXU+kH0sIDAOFldWF9KADzlp7RavGp9nLWgtgV8MkHpmAdgqC9CC5LP7hsUH7TPzFyRkMCcHF7LUo/THHA2YppjUOiyWbdVtzLVBa6lrkKECOVHqunrs05MvPtQHpHmmVCjgSqzZEQqLRLv7fsg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 07 Mar 2025 19:57:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17227 invoked by uid 111); 7 Mar 2025 19:57:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 07 Mar 2025 14:57:41 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 7 Mar 2025 14:57:40 -0500
-From: Jeff King <peff@peff.net>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, jltobler@gmail.com,
-	phillip.wood123@gmail.com
-Subject: Re: [PATCH v3 6/8] refs: implement partial reference transaction
- support
-Message-ID: <20250307195740.GA3675378@coredump.intra.peff.net>
-References: <20250305-245-partially-atomic-ref-updates-v3-0-0c64e3052354@gmail.com>
- <20250305-245-partially-atomic-ref-updates-v3-6-0c64e3052354@gmail.com>
+	dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="2Bs37LXt";
+	dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="PLjOJN2r"
+Received: by mail-pl1-f226.google.com with SMTP id d9443c01a7336-223594b3c6dso42858745ad.2
+        for <git@vger.kernel.org>; Fri, 07 Mar 2025 12:11:34 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741378294; x=1741983094;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :dkim-signature:dkim-signature:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=fWvBcNP/pSniPYQk/EQ0fQeezLiWV6IKa1qaA3yYIU8=;
+        b=xRd6RLc33m1CvRgYclx/lfyQI4NT5EssGmEV7HAEOIOmrpvJLX+3tDXimujgGTR55v
+         PIsr+/xnr5td8hjQmKdpOmgKrAN5oYQ8wktkq08Bkm/qjq23w0hL2qoPMpLoN75/RhpW
+         QPheeP239lqmYdKJKjtatpqsop4asjs8qJKeTfthyHSUtg0GAQRHfPC5jH8kYVzhh4nF
+         lje/ul5wGDyMX4tUciurtYWdzNONKCSQ78Uw0HjMpixG69GKhEw2N3qFbN/qyNSjfAEY
+         lvO70Dbg7iN9fSEckURoBDJW1Hyl9Cc7rbRb3y9A1kkCKMY8kx4CGEe6/N20OIW0nXYb
+         jMKA==
+X-Gm-Message-State: AOJu0Yx1icpeksahQPnNWx2Cfl6Bz8SWHeTh07kGNzWGYBtb4R3JzKg9
+	D5qp1lzMtMOJnJkhAZpVVlGp7rVNWK3mmWbc01nEuLNASTs/mAt3a9pZkhcGI7B5sPWG3GFLEaU
+	/nA75ouPwGrO1Duc9upgZvu0DG2YmPy/t1elYLf9xyXMvCLiR
+X-Gm-Gg: ASbGnctxMp8HbPXWmbKLK9XInLkorTdSOW9PvQaOXmlvQ7iUHHGaut+AR8BZhPx38FK
+	kvjZRpLXmvFfSekF6QneyTwmnyBzcqN/4k0Dy+MUKlwGIu0Qss4ZAmKO8MBJHJO1aakapYxh/++
+	xxiw5RgzW4vSfPqcw7adNTZfEOaw9zzXj3Pc7mETu8Gevk93rus9qKQfZj0umC+1u533vNZtRLI
+	+/KS/aXF8dnNDGGwQbz9bafhY9l7NxEIfFNYyiSiCelLOiTdOnzemp79+IhBwHd/Owp8K9mYhzF
+	6T3Q1cgTUOwG3QoOHL7a24KVn+fzDxJawQEOmFvf
+X-Google-Smtp-Source: AGHT+IEHEJi4BovNhn3yzN3Gf28t70jQ9nL9RFvzZJ5SoYVPsxJuGRD0IeciD1DBPmAGDmiYQht/3OI+IRrd
+X-Received: by 2002:a17:902:d488:b0:224:e0f:4b5 with SMTP id d9443c01a7336-224288866a4mr63492645ad.7.1741378294399;
+        Fri, 07 Mar 2025 12:11:34 -0800 (PST)
+Received: from mail-outbound-e14cf917.virgo.mandelberg.org ([2600:4040:52f1:f606::8])
+        by smtp-relay.gmail.com with ESMTPS id d9443c01a7336-224109e6f83sm1868985ad.43.2025.03.07.12.11.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Mar 2025 12:11:34 -0800 (PST)
+X-Relaying-Domain: mandelberg.org
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple;
+ d=mandelberg.org; i=@mandelberg.org; q=dns/txt;
+ s=mail-outbound-e14cf917-597d7abb; t=1741378292; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding : from;
+ bh=tDRglAIZw1qPAPtpHltAFWzo/hy7QoWKiHAVdZLO2/U=;
+ b=2Bs37LXt5yJD3HFB9wwjl5Gl5SxPZvFJU3DuZgNUNTs5TKMVOJVq1inEsI7Rs97ZG+GxD
+ O6SjvP/rmHHnCVGCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mandelberg.org;
+ i=@mandelberg.org; q=dns/txt; s=mail-outbound-e14cf917-e56dad1c;
+ t=1741378292; h=message-id : date : mime-version : subject : to : cc :
+ references : from : in-reply-to : content-type :
+ content-transfer-encoding : from;
+ bh=tDRglAIZw1qPAPtpHltAFWzo/hy7QoWKiHAVdZLO2/U=;
+ b=PLjOJN2rH7ESOG86MHo1lpVBiEoxRss4/3a3qHIoNuGVfPc+smmEpDC+mEKgWCLuDrWnf
+ twrrNfGRqh7HG1E8C6EaUW8GNVvppcv26R36+r+t8L5w5QTCyXeHzh2jAygDXCGSYSatcNs
+ W92b3poCl68qvGtcGAZ4KqvI4/SGk//muMODwDCk3Pp4RLTV2rWD3zjsVhERefNfVslHoe+
+ uASXkHVcFZxPLdVZjVZuAdpqM6usKq/8uXp6Pb5Jc2yaVYRcYMvscK20C5eCWbfH/BGbNE6
+ kFzicErCOMukBb3GL25xdhRwB2CgAqCLygZK/VHW3xw3Ujv+9RxEdZ+ZyJTw==
+Received: from [IPV6:fde5:2b79:35f0:2::166] (unknown [IPv6:fde5:2b79:35f0:2::166])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (secp384r1))
+	(No client certificate requested)
+	by mail-outbound-e14cf917.virgo.mandelberg.org (Postfix) with ESMTPSA id 4Z8cr47037z10df;
+	Fri,  7 Mar 2025 20:11:32 +0000 (UTC)
+Message-ID: <05bf397e-4bc2-4255-87b5-925c80667f4c@mandelberg.org>
+Date: Fri, 7 Mar 2025 15:11:32 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250305-245-partially-atomic-ref-updates-v3-6-0c64e3052354@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] completion: fix bugs with slashes in remote names
+To: Junio C Hamano <gitster@pobox.com>,
+ David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
+ <95ffa62df6ce394249a8ddabb84fb2b517825fe3.1740901525.git.gitgitgadget@gmail.com>
+ <xmqqh645hopj.fsf@gitster.g>
+Content-Language: en-US
+From: David Mandelberg <david@mandelberg.org>
+In-Reply-To: <xmqqh645hopj.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Mar 05, 2025 at 06:39:01PM +0100, Karthik Nayak wrote:
+Op 2025-03-06 om 15:46 schreef Junio C Hamano:
+> Apparently I am late to the party, but I have to wonder how
+> prevalent it is to use such a name for remotes.
 
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index 0132b8b06a..dd9912d637 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -1371,8 +1371,15 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->  					    transaction->updates[i],
->  					    &refnames_to_check, head_type,
->  					    &head_referent, &referent, err);
-> -		if (ret)
-> +		if (ret) {
-> +			if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
-> +				strbuf_setlen(err, 0);
-> +				ret = 0;
-> +
-> +				continue;
-> +			}
->  			goto done;
-> +		}
->  	}
->  
->  	string_list_sort(&refnames_to_check);
+ From a quick search, it looks like I'm not the only one, but I don't 
+know how common it is: https://github.com/desktop/desktop/issues/3618
 
-Coverity complains that this "ret = 0" is a dead store. I think it's
-right, because either:
+I'm not sure if I'm remembering right, but I think I got the idea from 
+seeing slashes in branch names to organize a hierarchy of branches, and 
+realizing I could do the same with remotes. Was it intentional to allow 
+slash in branch names, or is that a similar situation?
 
-  1. Our continue loops again, and we overwrite "ret" with the next call
-     to prepare_single_update().
+> As a remote name, we still do use "is that a
+> file on the filesystem?" to see if it is a local file:// URL
+> (i.e. "git fetch github/dseomn" may be fetching from a subdirectory
+> two levels down);
 
-  2. We leave the loop (because this is the final entry in the
-     transaction update array), and then we overwrite "ret" with the
-     result of refs_verify_refnames_available().
+That's a good reason not to use slashes in remotes that I didn't know 
+about, thanks!
 
-But it may be better to leave it in place as a defensive measure against
-the rest of the function changing.
+> Anyway, this is not something we'd do lightly, but we may want to
+> see if we should tighten the naming rules for remote nicknames and
+> the mapping from nicknames to remote-tracking hiearchy, at Git 3.0
+> version boundary.
 
--Peff
+What does that mean for this patch now? Do you want to fix the 
+completion for the currently (unintentionally) supported remote names, 
+or leave it broken to discourage their use? Fixing the completion might 
+also give anybody reading the completion script the idea that slashes in 
+remote names are somewhat sanctioned.
