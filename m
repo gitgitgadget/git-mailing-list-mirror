@@ -1,166 +1,114 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947CF21C16D
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 15:07:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F99821D58C
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 15:44:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741360050; cv=none; b=A7f6soh/xubNdFQcsHy4R+bPwaRQd4gorIhu0aLMHDl1jdvFTyEW/kXfADBxxfzDRrbofbo42mUq4MfFkPZVJWeSmkrg8EmujTQXJm2ENrOZjnx3Nz1htdmXcfHAA5zCgItqrlBrsW4BrWocMPgIP1OqIYVjoshQeSM13jRgqws=
+	t=1741362279; cv=none; b=XrYCW0uPqfsF+2wJS2l3uToNG7qnuS5LhRfJqyjhI0z2WZpPuQ9Rkn00VI9pNpgnRG43+BBgqZ6jVYb+q5ZuqzsJqf2CTn/Wz6l++cJmIjRukhxloWYYsWStG3H82HPyRV8tkedemHJuh7WRSqWjyj9RiyWi5dlSlHE4Kr1YnXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741360050; c=relaxed/simple;
-	bh=eBF+gDjFwgJjnWtxmMi45NQ1K5TVb9D0TEtWXYqVJPg=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=bbAjzH70e+CYaJVmJr8WdVVIKie0gSXecv+BBnGUJEu/cRtjEr4hp7i+ganuVssxZ3JwmB2w5cEER5oRAX0CWqAFhnJPlrT/NQucQzgchAfgY3ubtaRVo+TRbCR6uv/oQ4CsdiuHRPCo9M0vGrCS3TjuE2fO7rmw6cvMuhyQrZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lJcAwi8t; arc=none smtp.client-ip=209.85.218.43
+	s=arc-20240116; t=1741362279; c=relaxed/simple;
+	bh=RqNZHITLW7wqJizTLG5wQqpVsqjo2863Mtz4zm/la74=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TsNPE+3gST3WoOOltJeN/SSTEhITmX1NDy5yaVPU5YkkB0Q7DCcqpAv8pcqyYpZo2P6R+2Ah9nTn6y6H3oUK096j7a9e+G2QkwyAen1DgH1p0S7LPQC+9EWnNu7MYj8BtbUIzVkgmGoPgnb+NXgkPZF+C8IweprEtt7+tcNyaSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KvnGatOP; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lJcAwi8t"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-abbb12bea54so379148166b.0
-        for <git@vger.kernel.org>; Fri, 07 Mar 2025 07:07:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KvnGatOP"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2feb867849fso3225677a91.3
+        for <git@vger.kernel.org>; Fri, 07 Mar 2025 07:44:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741360047; x=1741964847; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZZ/Ey2m+cdHeStn1PjrkbGly9GZ2dI8UZ+HE60tdc04=;
-        b=lJcAwi8t5TWlQZ/8lnhRh1El3BeAGBf4/oopfBBkt8nlWkqmGVD5X9nBs6xWtwXAyL
-         2dZZIXM5MKZHo3fS8iK+84733A03eeHvN+c0B6uwfgVbn9h4y61pA5SwptiL04TyF9MI
-         V+V5kuaVAsTcdPKqcw9IZ3Y6oqkyCSZgjGtBge0tTO7seEFCpOgeS3qy4mm2GTGKXbKi
-         G8T8H+ct13wBi0x2R9zhD/qDo+t+Zvze04uSkVGPezox3vTUXB6jQoNYX9c03zvl5LqH
-         JEDLfojNFg50GenqpHV8BdKv8kOaX3CsX6sQRUPX+SG4WaykTjd9VK640NcBk4ivw+Ah
-         j5lQ==
+        d=gmail.com; s=20230601; t=1741362277; x=1741967077; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Kie/GQQrLD57RYQ1RIMSCmNHb5gqxBz/GVU7qNMYVTg=;
+        b=KvnGatOPZ1AMO7YYfNUFoHNli81AYS8246MQAqsrLjMik5OfARl97o7AJjeQts3kJ7
+         CNNeTEhgCjpToToqUZUxPWBi8IacueYgPuYOldDHb7OkqogD8PO1kVceATQwhTHWnGYK
+         ph4YIlb634nPFZ4DP/hcjJmgfI7flZ9ajqzWubVwKqUn3Br5nlm8yUd/4onBiS/bfZmh
+         rOwIwLfx9+fFyIIX2MWVwknxW4R+3DWRoXybN9Dhqj42Z9Wtx+JbYEtDL+akxOiFhZRB
+         +Bt283hM72YqXbDb0kit/AfcfzXunnw0PsQ/rgzkwLhm41OpSaZs5t0+sWeu9sOWI9eu
+         BL/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741360047; x=1741964847;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZZ/Ey2m+cdHeStn1PjrkbGly9GZ2dI8UZ+HE60tdc04=;
-        b=B10vPvguxLoF7Zo/9nR6AkvA+Kw20fgUTWH6h4UFyL+tUnxDxo5Hz7DS/B+ZeyhBvF
-         dUn4+Hwgjn7z1uVRYB0ixFZ6hGasxeca/oG5mThCF36n+v8UkydpyIc/yCxKvqJR2wlU
-         o4g1es9nIgNT5DsNx/OdX9cVOuWtzP7/DYNuXv8qR7md9RZdEqVmCuUEijZ/9ziHkqql
-         BEjTPn8rjGVfSajbNg6pscF6+JJu0LwryCdAMLEKNtj1A0jHgw7ytuhgRK4VHe8in/DB
-         qVta41+gqRlYEg5TZ0MqSKJbWmT5Fa/DLNAlF2Z1eciMCY6fL3ltuXjqnmmC6jyMgOVU
-         ycCA==
-X-Forwarded-Encrypted: i=1; AJvYcCUhvF3jPRjwIQcMCmKJvow9eDAWBlPfeLT/XjM16cUxueEtafB8rPlxd1Tjw4i2Jc9ISCQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyF53CcXzbqE3zK49Hxq19KfAycdKZNSEL37r8YKvkXVVMsiI00
-	InjRHnxP9EdJt25VglSQMIBf42r2ra0vIboQVs02/vuO81Q47pHj
-X-Gm-Gg: ASbGncv8rAD+l2QqzTDk70G0ImRxi7sa4p77Gb8SKJqdytYME9dvyrfOOvNkhBhWr7o
-	LfuRH80ODVZXXJkFPTRIjDO5gCgq8nBBWQGV+L8tLR4Ge63xx9nv6vzlsSjLcCx42X4f7KMS4Ef
-	QN8srVwMPvG2AARUFTVCOv8TLaV3SRNwI7L4VtQ9OJtVa7slg4g/7PsUT/Y0l5Y0+ye/VlecPmu
-	/5fucrzhnAQhsrsp+FOg+GWpomx39iGLASw5KWJQPMBMpreQb9Iqyx0MA/IdbfC2DMKvQHbbePe
-	TnAe/32Zh0rHseG12khy68ciCK42KyFOf9tAkqfI+FWmYspjnlLGWv6EwVASZKEztdIIKhx3Uab
-	4cwRXEzS6BF4SZgGeDM0Z5FI=
-X-Google-Smtp-Source: AGHT+IE1JXtqBkFQ9uK/zzk6nGtFZ3I4JMQRtobg9Fi92IqEQe14wtILJa0BGyn+R2X+Y7v2IPzPDw==
-X-Received: by 2002:a17:907:1b21:b0:ac1:e2e0:f8d6 with SMTP id a640c23a62f3a-ac2525f936amr377759466b.17.1741360046429;
-        Fri, 07 Mar 2025 07:07:26 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac2399c9a79sm284486266b.162.2025.03.07.07.07.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Mar 2025 07:07:26 -0800 (PST)
-Message-ID: <56cf842a-7c1f-4354-b191-35bcc1e139bd@gmail.com>
-Date: Fri, 7 Mar 2025 15:07:25 +0000
+        d=1e100.net; s=20230601; t=1741362277; x=1741967077;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Kie/GQQrLD57RYQ1RIMSCmNHb5gqxBz/GVU7qNMYVTg=;
+        b=JEvdkigtw+wp/0liWYvEMw94xNNW3OWt/3dSzxXVOpvatqLGm5/hzXZ/r6yo8pAKr7
+         Qwsm5FBPmkM/qlpYVBkxKI+3b2PtD5dMByDCzVmGfaRlAks/PdRYeZ3nrSQgudvhqcFP
+         6D7X5JgktOWPXr487/CHTVxCFqEwKCPpVPy3fqXFX+88zjrOj+dtqcfgbEwasIojuo+Y
+         /0mlb22aZPahS3GZ30qgXrZPT83sx9h91IUp4AITZ4LR/gd33nn+aMB2DUN9+6uAdJ+f
+         diIm18RMtMOMpw7fFlXZw3ayxPvtTd4A+cuAQH/mCSB5BYf80n31CAeVql2CCC8MxqHQ
+         ZpAA==
+X-Gm-Message-State: AOJu0YzMeuKY+uuWsBz+iqMubeSt+Fb3rgyoWVUwxAkBhMt4wV3/U3Ap
+	Q1KEAaEibDDDwm7IOGA17sTDFwNSC0y1W3ufhTFEL3zOjXpK7bUyAH6gZexogltQRLW3AeXfdln
+	PVUm0NdriIYZELUNYV1OJqT0OATOxymH1Kll2yw==
+X-Gm-Gg: ASbGncs/vOn+fd8s7IJ0f9fvLbSTF/qQqql6zyBGEquzkFmzuIKhrn6r906h/Gytl8p
+	HUxAaH2JodgRQgkAyxpH+ZIXT9WlB9IzbxV5nyNSvWwOsdsHTBavg0HIS5oGoy0WqLuhb4vxWOh
+	WqBB+P/oislyiL4k0cNiNNKR3t1Xw=
+X-Google-Smtp-Source: AGHT+IFz0NbDtokUylQahiqiH+tn9kJSVlk3eq+PkNTdUdjT32AY4ctAh6t2vON5KrzPvS2pb3NEvCS/80jMog+ZaRY=
+X-Received: by 2002:a17:90b:52:b0:2ee:863e:9ffc with SMTP id
+ 98e67ed59e1d1-2ff7cea6e4fmr5666355a91.21.1741362276631; Fri, 07 Mar 2025
+ 07:44:36 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] docs: fix check-docs with WITH_BREAKING_CHANGES
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1871.git.1741018310447.gitgitgadget@gmail.com>
- <pull.1871.v2.git.1741171357627.gitgitgadget@gmail.com>
- <xmqqzfhzlbie.fsf_-_@gitster.g>
- <082af6a3-a7ba-440d-af84-6c59827a2929@gmail.com>
-Content-Language: en-US
-In-Reply-To: <082af6a3-a7ba-440d-af84-6c59827a2929@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20250305104650.238392-1-ayu.chandekar@gmail.com>
+ <Z8g4dTSFQDTi9ueU@ArchLinux> <Z8qpxj2i3vFjJe4l@pks.im>
+In-Reply-To: <Z8qpxj2i3vFjJe4l@pks.im>
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Fri, 7 Mar 2025 21:14:25 +0530
+X-Gm-Features: AQ5f1JqqU4LrHylJ4cDx1vURSEGr0-7J5C9d7DyWNY1cWwoiR4UDhfxsmjZHWu0
+Message-ID: <CAE7as+a+z9EgBnws-a4250TN_hDgWgapefxVAQHvpmUEfqKeTw@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_Discuss_GSOC=3A_Refactoring_in_order_to_reduce_Git?=
+	=?UTF-8?Q?=E2=80=99s_global_state?=
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, shejialuo <shejialuo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 07/03/2025 10:32, Phillip Wood wrote:
-> On 05/03/2025 15:53, Junio C Hamano wrote:
->> We correctly omit builtin/pack-objects.o from BUILTIN_OBJS, but
->> forgot to add "git pack-redundant" on the EXCLUDED_PROGRAMS list,
->> which made "make check-docs" target notice that the command has been
->> removed but still is documented.
->>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>   * The command is still listed in the resulting "git help git"
->>     output, as cmd-list.perl does not yet know which commands on the
->>     list are to be ignored under WITH_BREAKING_CHANGES.
-> 
-> Good catch. It seems the meson build was also forgotten in 68f51871df8 
-> (builtin/pack-redundant: remove subcommand with breaking changes, 
-> 2025-01-22) as we still compile builtin/pack-redundant.c and build the 
-> documentation. We should probably wrap the function declaration for 
-> cmd_pack_redundant() in builtin.h with "#ifndef WITH_BREAKING_CHANGES" 
-> as well though I don't think that is urgent.
+Thanks for taking the time to respond!
 
-I just had a look at fixing the meson build but it seems to be tricky as
-the manpage sources are stored in a meson dictionary and meson
-dictionaries are immutable so I don't know how one is supposed to
-conditionally add items.
+> Yeah, things depending on `startup_info` are definitely a more involved
+> thing to address, and I wouldn't necessarily recommend it for the
+> initial batch of refactorings. I'd recommend to rather focus on some of
+> the global variables we have in "environment.c" that store configuration
+> values, which are generally a bit easier to tackle.
+>
+> Also note that `local_repo_env[]` is nothing that we need to adapt. It
+> only stores a couple of environment variable names and does not have any
+> state, so it's perfectly fine to keep that variable.
 
-I also noticed that while we store the correct value for
-WITH_BREAKING_CHANGES in GIT-BUILD-OPTIONS it is not defined when
-building the C sources and so we still build the pack-redundant builtin.
+Okay, got it.
 
-The diff below stops us from building pack-redundant with
--Dbreaking_changes=true but still builds the documentation. I don't intend
-spending any more time one this
+> It would be a bit more involved than a typical microproject, but I don't
+> think it's particularly bad. It would involve a couple of steps:
+>
+>   - Investigate all users of the `git_attributes_file` global variable
+>     and how they interact with the variable.
+>
+>   - Adapt `git_attr_global_file()` so that it knows to not only handle
+>     the fallback value of `xdg_config_home("attributes")`, but also
+>     knows to first read the value from the config.
+>
+>   - Adapt `git_attr_global_file()` so that it accepts a repository as
+>     parameter so that it doesn't need to depend on `the_repository`.
+>     This will also require you to adapt all callers.
+>
+> You _can_ use this as a microproject, but as said it's a bit more
+> involved than what we'd expect. Which isn't necessarily bad if you
+> manage to pull it off, but might make for a bit of a steep learning
+> curve.
 
-Best Wishes
+I already submitted a patch quite a while ago: [1].
+Thank you for clarifying how to approach this! It looks interesting to
+me, and I'd love to give it a try.
+I'll study more about it and hopefully submit a patch soon :)
 
-Phillip
+Thanks,
+Ayush
 
-diff --git a/builtin.h b/builtin.h
-index 89928ccf92f..8483975c191 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -197,7 +197,9 @@ int cmd_mv(int argc, const char **argv, const char *prefix, struct repository *r
-  int cmd_name_rev(int argc, const char **argv, const char *prefix, struct repository *repo);
-  int cmd_notes(int argc, const char **argv, const char *prefix, struct repository *repo);
-  int cmd_pack_objects(int argc, const char **argv, const char *prefix, struct repository *repo);
-+#ifndef WITH_BREAKING_CHANGES
-  int cmd_pack_redundant(int argc, const char **argv, const char *prefix, struct repository *repo);
-+#endif
-  int cmd_patch_id(int argc, const char **argv, const char *prefix, struct repository *repo);
-  int cmd_prune(int argc, const char **argv, const char *prefix, struct repository *repo);
-  int cmd_prune_packed(int argc, const char **argv, const char *prefix, struct repository *repo);
-diff --git a/meson.build b/meson.build
-index e86085b0a47..5c039fe525a 100644
---- a/meson.build
-+++ b/meson.build
-@@ -581,7 +581,6 @@ builtin_sources = [
-    'builtin/name-rev.c',
-    'builtin/notes.c',
-    'builtin/pack-objects.c',
--  'builtin/pack-redundant.c',
-    'builtin/pack-refs.c',
-    'builtin/patch-id.c',
-    'builtin/prune-packed.c',
-@@ -632,6 +631,10 @@ builtin_sources = [
-    'builtin/write-tree.c',
-  ]
-  
-+if not get_option('breaking_changes')
-+  builtin_sources += 'builtin/pack-redundant.c'
-+endif
-+
-  builtin_sources += custom_target(
-    output: 'config-list.h',
-    command: [
-@@ -674,6 +677,7 @@ build_options_config.set('GITWEBDIR', fs.as_posix(get_option('prefix') / get_opt
-  
-  if get_option('breaking_changes')
-    build_options_config.set('WITH_BREAKING_CHANGES', 'YesPlease')
-+  add_project_arguments('-DWITH_BREAKING_CHANGES=YesPlease', language : 'c')
-  else
-    build_options_config.set('WITH_BREAKING_CHANGES', '')
-  endif
-
+[1]: https://lore.kernel.org/git/20250202120926.322417-1-ayu.chandekar@gmail.com/
