@@ -1,53 +1,53 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448FF2505D4
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 20:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249C213C8EA
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 20:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741379132; cv=none; b=BeI6fP1INqx3x6DXyQGIP3WvG7Kv2+cax6NVakdIWTj7LXaoT7s7ZeJ4W2UrpTIwahE6svUk2XSRzJoYbMtYtO/fkD1Pl/nsrYxtulogqjK8fJkbVDIV11dlWqUve8mgbBx/Y9cD9tHGqJ1m6bDDZy7iPjdlxsVPzZWnz/QXlSw=
+	t=1741379149; cv=none; b=U6UHFGNOWCgmMleP6z5BUWp5dpNXiTpq3TSyku4+WFu4+W5ksZ1+7noDjXVxlB+V8UbxgVGalihdUZ3HV62hmaP0DxnbVAWBvSMo/B3sf/x4GVX1h/vWlSGN2TpCn16VmsrqrJcmOCUANDu9LCB5HwgNBuKG9jz1VKJt5gJkyT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741379132; c=relaxed/simple;
-	bh=enQkSe/QqEDk+ifoe0uWgFqi5DqR6cL0h6yBkxLdg/U=;
+	s=arc-20240116; t=1741379149; c=relaxed/simple;
+	bh=LQK/NCKNWC9eAm8ZzsLXFqct4YkfHZWDFgC6q5pX8J0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=F8GJCk/HJn0wfy6ZHxN2fKQbqKsPmX2ClmPPdPR3WX9IPAn1jUFLDNMdSZhY5aEL7L5OmmOQRbaeV/ob9iDhbKv+o6WkDD6UJskyMpaQf11/hMF1Gyht/tUr2DEZeD9X63de9359UNZf/s4PsJYb20qQUZD/wBS8o5Wmy3UvVJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fy44fdB5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4kdWX7In; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=QxSJUs1xnvABcP7eEp10SnyGedG6+O2dzDxLtpEpQO+2BhtOHlLSktEOP94bGFi+V1CrVGnAv46I+YTkzcs1dkjXi+HGAQd6Vl+R0ln3ioVy4hrJtb+kpSClH7bTMZuFiaWhc6lVTfh+F8Uv6Mu7KRil++15kA5x962TvML3B0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QBSYxJIf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lyvt+gxd; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fy44fdB5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4kdWX7In"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4D18825400EE;
-	Fri,  7 Mar 2025 15:25:29 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QBSYxJIf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lyvt+gxd"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4A99D2540200;
+	Fri,  7 Mar 2025 15:25:47 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 07 Mar 2025 15:25:29 -0500
+  by phl-compute-12.internal (MEProxy); Fri, 07 Mar 2025 15:25:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741379129; x=1741465529; bh=g3yA2gDeAI
-	rnPtpXVTDsaf6nfvs8RrzsRpVgvNDF6OI=; b=Fy44fdB5njgX1TLUxRSM6G1o9T
-	3cPqyfsTmjQvBmCr9RYQbGb0a0dDqUp2hhiqAhidtEMboDlxMWracvEBjGUPwqTM
-	l6paFflxtCnCpDfBHMonb/RaZOT9/5ZTBpd36XXIC5jCl9kQeuXy4LlYpEEThExF
-	Yy0pKWsYLlvwmHurIqDZ/Dy04hQGjK79tV3PvLtqWtUSf51n3T/L6MRiQ4x/1NCE
-	idpT8omLO1kXBJ0jv4GdIjm1H3USPavVnNK51z8wkQPwILP1W3GqzRycHyCU3CzK
-	BScPTYgeF4xP/D9vfwk3k7qOFlogR2jplfy/7ryIUvOJGwPx71Qv67NeDnuw==
+	:subject:to:to; s=fm3; t=1741379147; x=1741465547; bh=JcaShhrxdS
+	yp/wMNn/e3oDP8wkjeaAiax43oYkplVqA=; b=QBSYxJIfzjy2s5j1T0sncDpTyz
+	Cv+zomHknQg0htugdkbk6EKuW4BdbzC67un9169PWq9s9fc8mLhZAWVe8wk3HSyW
+	9Kp9UUu3SHloPbRnBBhdVHHcMByw6wfdnAKS8gK/EIKXWQlv10vWZyEE+2+S5teQ
+	grakLA7FALdvWYitXQHxcs7HM49znnyKOtW1SsuVhZOzpA4E/OAXxiQcTUKBhNOy
+	VLdycQxGfq1bne4XwyGnX71lrMpJGeHJbPplUV8J5AeP5G8DtVHnJXBv18mivEiQ
+	gQA7Y+0iZ2iS8+cXaA4+81cmP/A9sZLkmE72Wetq/VPJoo7jz+Jxl4t4wWmg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741379129; x=1741465529; bh=g3yA2gDeAIrnPtpXVTDsaf6nfvs8RrzsRpV
-	gvNDF6OI=; b=4kdWX7InDQOjDfKcozZFs+eWSiLjTEsLAqwNWksCfZjWZnyonnV
-	SxFcm2MQoYl/aHPNKBziJ0dixHjTjd5US9iNAJDIH4AHusWmspg1OPlvPGWlfXlY
-	dxaLViWDx+/MKTtogBQe8+FDxhqv6w1zPHl2EUQHeXOCwJ0sOxIG8uhhl5Dd2OVu
-	FBYVC612tZ6L6P5VeMIwGu6LbmJjzTc1BPdhKBQU0R4n/+uNa4KyC11AKG1Nhg3u
-	2Yk3ZJLH8Li17HNAVqarR2dAlS2q6sg862N4jq6vSKObh1pRVsLG+coc7+gETSiz
-	9xHYITAp5RjoaQSBLznSup71eBl6tFYTRdQ==
-X-ME-Sender: <xms:OFbLZzDH_7RvvOAxJ-ypUzD0XFF_O3tmCnegRvB-E1Zc4WeMi-2xNQ>
-    <xme:OFbLZ5gLE2bE1U5Nuj0oPhx672toosMJcuekGWAkbothr_gvEwB0ASR4rnnUr0L6l
-    mzOwbwSW0_VkMXjmg>
-X-ME-Received: <xmr:OFbLZ-nXBgpcfXZ6cibSvRI9E_S4iBg4Fz931hvLcqBURQPkIqxDSFEeHANnLdC9UfPWtnGC8Jcik9tEPs53DL_3g9OWDDblGf7_>
+	1741379147; x=1741465547; bh=JcaShhrxdSyp/wMNn/e3oDP8wkjeaAiax43
+	oYkplVqA=; b=Lyvt+gxdndcayA1to8c7NK5ZKtu1cEDJv5s5Yhlz+eusSrHIzTH
+	H65eOBXN2llqoQRIUmva5uuPtKymgGszmqGckyrtGth+cjcyY8+lOv4gqZ9F2Rd+
+	ofTxRsTAqecu/A7bkf6JBbUd635N6gbH2a13o56zgPCBFP9cvhJynwVpv1DiO4h5
+	kFuCPs7BVbLqe82mLIxGpSkPiAbFLcwZiWp88ZsXgOH4PCGJtAQeEaV1DY3lWAUs
+	RT2LnYKsQhhkyCHh44XJ6BxuZNYYuUA/0w1d6CSAFb+WKxfpOc832fPxaGNMjpwU
+	WZONv/DIiACeqlMzVvblQ/uA8DyukoqlVwA==
+X-ME-Sender: <xms:SlbLZxfdcC5z01UrR14rFt3hbKxrWX4MCEIYpMyuANll2VWU1wdJIg>
+    <xme:SlbLZ_Po2jc7QrzAzoe37NuGv3uW2Pk6k1wAlN4q7G-4-1o9OjnFvP8EElY1yOIkx
+    AUZJfV8QdT99aN_Bw>
+X-ME-Received: <xmr:SlbLZ6jZ4-ZRrBBttlj4YVRqRzJDOvTH0SjTfUAhLw81WdJKLdVlODgkO6n0nx_XsNjkmnjqm8yvoWhR47sydQm_zdep7Dz9DDg_>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudduieduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -56,28 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudduieduucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthhoohhnsehioh
-    httghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
     hogidrtghomh
-X-ME-Proxy: <xmx:OFbLZ1ywlMhtI0xFzU-EGm1IXzJr9c2N9m8wzDb09qAaHT1zWEPH2w>
-    <xmx:OFbLZ4SD1ZZsyvRKca17vfZhE_gRiIxW3ncyXym7tp1lOWXE6zsHqg>
-    <xmx:OFbLZ4YzqEMF_QwFowWTY0zKWrysgLo-6yjxtRxpR6lwAwNumurlCQ>
-    <xmx:OFbLZ5TlDRNF64ZAftCOeWZEU2wi5QDpW7RnYf65NfsTtHeY-2ecOQ>
-    <xmx:OVbLZ-MSt4UA-hr4nJ7RHuC_aVP-hbcIamNpQpno2cTq4M0Vn-sVDTEa>
+X-ME-Proxy: <xmx:SlbLZ68IVKAPtrPCixCBpwUqRigsIsHH3MHySLFWvN36TwIBxJfsyw>
+    <xmx:SlbLZ9uwLMPJkHL5AxZ3r0ZRXmuP1t0hZVFC7XdUEo0L8KJf7URuvQ>
+    <xmx:SlbLZ5GrtrXG6Wv4fPJ_4We3leGFaKr0uhC1vF7uNYKrapGqnBX52g>
+    <xmx:SlbLZ0PkNNcTdq9TATQdXbbc5GLP-TJb0rUtZb092A6nMpQ8tHWjJA>
+    <xmx:S1bLZ3KYN4fUnDqwsNsj3wWvAXaHBvzBjJxNLNJRmcL4Fjm-3ukn9LRH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Mar 2025 15:25:28 -0500 (EST)
+ 7 Mar 2025 15:25:46 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 1/2] help: include git-zlib.h to print zlib version
-In-Reply-To: <20250307-toon-zlib-git-version-v1-1-5e8069752bb9@iotcl.com>
-	(Toon Claes's message of "Fri, 07 Mar 2025 15:18:07 +0100")
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/2] Ensure zlib version is printed by git-version(1)
+In-Reply-To: <Z8sAwLHff3S4jF1P@pks.im> (Patrick Steinhardt's message of "Fri,
+	7 Mar 2025 15:20:48 +0100")
 References: <20250307-toon-zlib-git-version-v1-0-5e8069752bb9@iotcl.com>
-	<20250307-toon-zlib-git-version-v1-1-5e8069752bb9@iotcl.com>
-Date: Fri, 07 Mar 2025 12:25:26 -0800
-Message-ID: <xmqqbjucegg9.fsf@gitster.g>
+	<Z8sAwLHff3S4jF1P@pks.im>
+Date: Fri, 07 Mar 2025 12:25:45 -0800
+Message-ID: <xmqq7c50egfq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,43 +87,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Toon Claes <toon@iotcl.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> In 41f1a8435a (git-compat-util: move include of "compat/zlib.h" into
-> "git-zlib.h", 2025-01-28) some code was refactored to enable easier
-> linking against zlib-ng.
+> On Fri, Mar 07, 2025 at 03:18:06PM +0100, Toon Claes wrote:
+>> I was trying to benchmark the difference between using zlib and zlib-ng.
+>> To be sure I was testing the correct version, I was interested if
+>> git-version(1) would tell which zlib library it uses. After some digging
+>> I saw it should be printing the zlib version number, but on my machine
+>> it wasn't.
+>> 
+>> I discovered a regression caused by 41f1a8435a (git-compat-util: move
+>> include of "compat/zlib.h" into "git-zlib.h", 2025-01-28). In the first
+>> commit I'm addressing that regression.
+>> 
+>> But I've noticed building against zlib-ng directly still didn't print
+>> the zlib version. This issue is resolved in the second commit.
 >
-> This removed `zlib.h` being indirectly included in `help.c`. As this
-> file uses `ZLIB_VERSION` to print the version number of zlib when
-> running git-version(1) with `--build-options`, this resulted in a
-> regression.
->
-> Include `git-zlib.h` directly into `help.c` to print zlib version
-> information. This brings back the zlib version in the output of
-> `git version --build-options`.
->
-> Signed-off-by: Toon Claes <toon@iotcl.com>
-> ---
->  help.c | 1 +
->  1 file changed, 1 insertion(+)
+> I've already reviewed the change internally and it looked obviously good
+> to me. Thanks for finding, fixing and improving this!
 
-OK, the user was merely "#ifdef ZLIB_VERSION", so this new inclusion
-would not introduce a separate unintended breakage, I would think.
-
-Makes sense.
-
-Will queue.
-
-
-> diff --git a/help.c b/help.c
-> index 8d91afe851..707cd59b79 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -2,6 +2,7 @@
->  #define DISABLE_SIGN_COMPARE_WARNINGS
->  
->  #include "git-compat-util.h"
-> +#include "git-zlib.h"
->  #include "config.h"
->  #include "builtin.h"
->  #include "exec-cmd.h"
+Thanks, both.  The changes look quite sensible.
