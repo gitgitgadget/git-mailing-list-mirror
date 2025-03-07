@@ -1,61 +1,61 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F1133DF
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 23:36:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCC233DF
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 23:36:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741390564; cv=none; b=B8t0rK6XiL5JW1dLi27Tc2tmShn+vRGLtC/g9hwfevSjzH5GWQ1Peqf/QRw+eQX64f4JF9hUshqpnmN17B7YMSwXsSsIzhrZjKlW3BUuiXFrlYE/MMxEQZEZdoCoq/BOA3s6+/+85dMybXo20W/rwo77scaI3aUpqkeAJpmDbGY=
+	t=1741390568; cv=none; b=KdVm6so+76IUcvBiBhRKb0SJaXSdsVl46pCd93my9dvYhv79EOERY6UD+cQ2aXExYQGN3rdwzxgScm0lLfE3cYfIOmSp/sa+oTGcBiJ7YawnGNgTd+Vd0jeJQvrLYKRRn1B9yDtAkoQOYFLZchSCZkZ3r8VuCbMhErYFgVu3+8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741390564; c=relaxed/simple;
-	bh=6u2NuRnQfBqAIwfT9N+W2cLbTA8vrQV39JvWlFebs8A=;
+	s=arc-20240116; t=1741390568; c=relaxed/simple;
+	bh=XTJrwl6lGzYH/UD6p2YmKN1G1LrAG9X5uWXZIigQmz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUAtOOcwvndqgozkLFQFbS7rrATaoOnXJfG8BvKMjaaUtdwiOJRk/JkodjIAfdkBeHHPG88fE+WTj/MLsuZRRdLbaTrR0Y6M8ayqeEX0Ey2/CWqofT3S25y9SXVU/wipLvx25M3TLO0zQsS6FJEMxKy80k3PMBCSgkG1HKwwJ60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PRT/3M97; arc=none smtp.client-ip=209.85.214.170
+	 MIME-Version; b=oUz1qxiTP9kzBDuP2oXtRb7vFLC3anvPgOXaZFs0VRz9YElwqTULmB1MfToz3ftAe5vCCIS4wNPsczBeo9hiM224Al0p7GDBcRMHRKuQDbTiV8q6+YU5PfsQOCpZv0Il2Fm6BLZxXG3pFeELADTiX7UR5Fo6OxrrU016e//iuxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e0RTTRBl; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PRT/3M97"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-224100e9a5cso46588375ad.2
-        for <git@vger.kernel.org>; Fri, 07 Mar 2025 15:36:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e0RTTRBl"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-22548a28d0cso1251725ad.3
+        for <git@vger.kernel.org>; Fri, 07 Mar 2025 15:36:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741390562; x=1741995362; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741390566; x=1741995366; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3Rb3yS0CVOISQIr4Ol2n4ARfJ+e3EEivkK8XxzJZZK4=;
-        b=PRT/3M973S94nNuVy4iGdBLbBWEyrAjQb0bGktzqr7iXp80rNJH+OKMatGxVo/6aEI
-         NHfYEKIq4m++hnba5Vlj1SkE19f+mCAUuOBREBZu6DvsGAX3/KEKeVnNysfag5+0Pkor
-         SFstlNORbhw5p9m/HK0tvz4uUvZ3Z7GYfe3VFKePlR+Q+VWyk9vGABnIP1yHTmBslBue
-         vu/Ol2gLyTvp2pXVLXQEem334Z34Vd8IjdjAOdG/eY/wTG8NI+5dwW08BYLLuweNdGC7
-         yr1OPuYVrzEl3SEDqdFZ8sk0HhInKjdoq3qzMYGLLkyiksaFp5175Jf7yzMsmxy3jCAX
-         z6mw==
+        bh=odxIt6J5cAejMWvEFPdbwTynWI7WHeWNfI/TInK4QPk=;
+        b=e0RTTRBllDORQRodq+SAhi8G5RBcMgZzEscoKUbpuEiJtNxOhnHkjdAU9wfuPLAlMd
+         yFuDhFOvu5BV+X1hNz5r4CkUerZBJLHBeIIw2ZzED+r4e3NcVC/6YYo5DZa0Ib2UOu0r
+         WxSnuluoowA1s2/4bHmYalDnbk4Jx/zVpDwithTvtIHZQWjDe7OmMDhxDfFCzhFq9h3F
+         +qygxz4iz2i2AHNDsJ7Axp0tgNT6z9RVarLVXPwZtWU8yJMWmtGzhmLDnBvG0qPlHimj
+         iPLnyMPvd5e7cqUJG7SVZV6gCF8PpGpl5HjslRGQHQjW3S78jJn8DPR5SaoWfbxZwE2s
+         i+oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741390562; x=1741995362;
+        d=1e100.net; s=20230601; t=1741390566; x=1741995366;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3Rb3yS0CVOISQIr4Ol2n4ARfJ+e3EEivkK8XxzJZZK4=;
-        b=ItjjGmlqrEZFGQJaDadM6vxuAcMByfycwkaMq/nkPEZOLJNwEk5F1PhmhIDQawgPiy
-         jS8KW8muPkHAGC5rtc2FlaSXcj05TKteJDCuVD8YToHtOXoPHR/Iv90bZ6bqPmgBqRJZ
-         TKkh7sL0fJE8fxoz9ql8vxsZB9rnWYtvcWdwYlgQNiWWApGHgdAmk6TLP0tL+Zkov4/D
-         5ns6KCDXLqn9Thp7BA/rc+wa5AQxF00cDGQu47lpDrhdxpx2Xd8qRXIXnzhgK2U9nCMa
-         zKbwWueNxxkGheDdzBUA8lkOwCgRaaQWDEX4usgzz6bL39NgRkRayt46IVi2zzUsnWMB
-         dv9w==
-X-Gm-Message-State: AOJu0Yz3ybMbVApx5gIxWgtQarv4hghPRXN0wGBNojpUuQ5XYHDJcoL5
-	iYjO1yUyYNBzYyhQpVJTtXaB/hhWzh0Pp2JsKjXjvAxaaicR063m2G4Wc0CCDZI=
-X-Gm-Gg: ASbGncvHHP9CrWWNjmhd8D581ejo6TmPZfIyLujAjQNrtLjREBq8TTSzLv+uTcVv0Gk
-	7/BkFMyEnlZ7swFju8kA15qJUkXfO9KASlL7SqKhMHTcXF7d+ztClDF5pLFmvKqwtU/H6LFFOwO
-	teUJHp8SnhN6H9E8RSoklj+w2BSPqnE+GZUMGDy1YIuAb21xJGEtuFtmiyFR3T656P4odAdNij2
-	b6+PHdAoU2m33EbalqNUhCX/NaqPhEA5T8R0YafIvzlXIF/CKQeqoYaw76hDjmcLpE84ys4hrVu
-	w2ODvx0sOYjUlr3Rw+5p1KMtqFmEi8kHJCXw0pmrRK47CjsbpDw5DiP1sPMH3kbrURlMeA==
-X-Google-Smtp-Source: AGHT+IEttNnfgLp/m+5p0HFSRlYzxZy4+TSiroF+oac18WQ9WXzgnoJnEdpbEVVMfm5oyJMIWvTQ9w==
-X-Received: by 2002:a05:6a00:c8f:b0:736:69aa:112c with SMTP id d2e1a72fcca58-736aaa1df1emr6152541b3a.9.1741390562250;
-        Fri, 07 Mar 2025 15:36:02 -0800 (PST)
+        bh=odxIt6J5cAejMWvEFPdbwTynWI7WHeWNfI/TInK4QPk=;
+        b=g4Kg428LJYUXkgWL6TO2G1b4Ifbm2H/clsYQubeHXTGj6flTOxVYBe/QYReMlmdgt+
+         gQoBxhyW5r1GM0Fil0sqQJNeX6kE24d5JDsSIBYZLS4Kye8sn0F7GeYgHBZMCIjRuEZU
+         GaTChjuIhOizIpnNVTujIZZUmKpBgvGkA1RTKF6NCP5LhyhwtpWHYufaoQxw8PjzFsTw
+         PHNDqd19OjzY/GAY72N7JqIrU3DvEjDfZbzOxujCt2jjxqthkxLXJ+gE6MLfFiBmU+DE
+         A7E7N1rS3KZ6x5hvAq9M1Q/3gTPfnTACfDzHs0eHRT60udqKDfSHH/2AXhaLpEBYm2XA
+         KKCw==
+X-Gm-Message-State: AOJu0YzbK93DfQ60yjgxJRbfhNt6dHdiCLbSEXmFYE2g+/S5rmHSDGIm
+	VvO2hzz17Dnw9BAGs3/CLxWl8LcVdyKkJUMgYIyMJZKMnEWTxqGGKCfjrAGyr18=
+X-Gm-Gg: ASbGnctDR1W0092EuLOULNRcC65pcL0SPXERYOOVfSX2ANHBYBeQcVYWAgqW16Mla7Q
+	0L3SbbA+5a5VVbVKoous29eQa0877NDvnR2o9V7lSErIAH2pCTI1AVArQwFRvSA/iyWfOncEQT5
+	IRB60NjVzTZDfTBafj/XTvp7qmT2687RMGTgrbMHrgncFCYJeoRIrq1kuDL2Zlcs2/kiUjfbunc
+	PG4fC+QLVGf9hF+/qU3qDYLHxF/mYqJLW3suxATH2Jfn+lJ8pLSvFTND6liOQrZrENGsymBnmBc
+	BQ4QTstE+w6SldOWjY5I8rzB3MhZznLXgmtvWJm2deAjpMcJNedoXsqXSH1KjECTqB7yeg==
+X-Google-Smtp-Source: AGHT+IG8sqpqxK6s442ZRfhZC4mD+NW9vfmqY5Sk5h1DpbqfaYHLDfm7oAPaou5RbfQ3s0m4vupT8g==
+X-Received: by 2002:a17:902:ea07:b0:21d:dfae:300c with SMTP id d9443c01a7336-22428880270mr79316145ad.3.1741390565989;
+        Fri, 07 Mar 2025 15:36:05 -0800 (PST)
 Received: from archlinux.plaksha.edu.in ([182.75.25.162])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-736bcb8de04sm423880b3a.154.2025.03.07.15.35.59
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-736bcb8de04sm423880b3a.154.2025.03.07.15.36.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Mar 2025 15:36:01 -0800 (PST)
+        Fri, 07 Mar 2025 15:36:05 -0800 (PST)
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 To: git@vger.kernel.org,
 	christian.couder@gmail.com
@@ -66,9 +66,9 @@ Cc: gitster@pobox.com,
 	shejialuo@gmail.com,
 	phillip.wood123@gmail.com,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 4/8] builtin/send-pack: stop using `the_repository`
-Date: Sat,  8 Mar 2025 05:05:03 +0530
-Message-ID: <20250307233543.1721552-5-usmanakinyemi202@gmail.com>
+Subject: [PATCH v4 5/8] builtin/pack-refs: stop using `the_repository`
+Date: Sat,  8 Mar 2025 05:05:04 +0530
+Message-ID: <20250307233543.1721552-6-usmanakinyemi202@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250307233543.1721552-1-usmanakinyemi202@gmail.com>
 References: <20250306143629.1267358-1-usmanakinyemi202@gmail.com>
@@ -82,74 +82,75 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 Remove the_repository global variable in favor of the repository
-argument that gets passed in "builtin/send-pack.c".
+argument that gets passed in "builtin/pack-refs.c".
 
 When `-h` is passed to the command outside a Git repository, the
-`run_builtin()` will call the `cmd_send_pack()` function with `repo` set
+`run_builtin()` will call the `cmd_pack_refs()` function with `repo` set
 to NULL and then early in the function, `parse_options()` call will give
 the options help and exit.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 ---
- builtin/send-pack.c  | 7 +++----
- t/t5400-send-pack.sh | 7 +++++++
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ builtin/pack-refs.c        | 8 +++-----
+ t/t0610-reftable-basics.sh | 7 +++++++
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 8d461008e2..c6e0e9d051 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -1,4 +1,3 @@
+diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
+index 4fdd68880e..e47bae1c80 100644
+--- a/builtin/pack-refs.c
++++ b/builtin/pack-refs.c
+@@ -1,5 +1,3 @@
 -#define USE_THE_REPOSITORY_VARIABLE
+-
  #include "builtin.h"
  #include "config.h"
- #include "hex.h"
-@@ -151,7 +150,7 @@ static int send_pack_config(const char *k, const char *v,
- int cmd_send_pack(int argc,
+ #include "gettext.h"
+@@ -15,7 +13,7 @@ static char const * const pack_refs_usage[] = {
+ int cmd_pack_refs(int argc,
  		  const char **argv,
  		  const char *prefix,
 -		  struct repository *repo UNUSED)
 +		  struct repository *repo)
  {
- 	struct refspec rs = REFSPEC_INIT_PUSH;
- 	const char *remote_name = NULL;
-@@ -212,7 +211,7 @@ int cmd_send_pack(int argc,
- 		OPT_END()
+ 	struct ref_exclusions excludes = REF_EXCLUSIONS_INIT;
+ 	struct string_list included_refs = STRING_LIST_INIT_NODUP;
+@@ -39,7 +37,7 @@ int cmd_pack_refs(int argc,
+ 			N_("references to exclude")),
+ 		OPT_END(),
  	};
+-	git_config(git_default_config, NULL);
++	repo_config(repo, git_default_config, NULL);
+ 	if (parse_options(argc, argv, prefix, opts, pack_refs_usage, 0))
+ 		usage_with_options(pack_refs_usage, opts);
  
--	git_config(send_pack_config, NULL);
-+	repo_config(repo, send_pack_config, NULL);
- 	argc = parse_options(argc, argv, prefix, options, send_pack_usage, 0);
- 	if (argc > 0) {
- 		dest = argv[0];
-@@ -317,7 +316,7 @@ int cmd_send_pack(int argc,
- 	set_ref_status_for_push(remote_refs, args.send_mirror,
- 		args.force_update);
+@@ -52,7 +50,7 @@ int cmd_pack_refs(int argc,
+ 	if (!pack_refs_opts.includes->nr)
+ 		string_list_append(pack_refs_opts.includes, "refs/tags/*");
  
--	ret = send_pack(the_repository, &args, fd, conn, remote_refs, &extra_have);
-+	ret = send_pack(repo, &args, fd, conn, remote_refs, &extra_have);
+-	ret = refs_pack_refs(get_main_ref_store(the_repository), &pack_refs_opts);
++	ret = refs_pack_refs(get_main_ref_store(repo), &pack_refs_opts);
  
- 	if (helper_status)
- 		print_helper_status(remote_refs);
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index 3f81f16e13..8f018d2f23 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -55,6 +55,13 @@ test_expect_success setup '
- 	echo Rebase &&
- 	git log'
+ 	clear_ref_exclusions(&excludes);
+ 	string_list_clear(&included_refs, 0);
+diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+index 4618ffc108..002a75dee8 100755
+--- a/t/t0610-reftable-basics.sh
++++ b/t/t0610-reftable-basics.sh
+@@ -14,6 +14,13 @@ export GIT_TEST_DEFAULT_REF_FORMAT
  
-+test_expect_success 'send-pack does not crash with -h' '
-+	test_expect_code 129 git send-pack -h >usage &&
-+	test_grep "[Uu]sage: git send-pack " usage &&
-+	test_expect_code 129 nongit git send-pack -h >usage &&
-+	test_grep "[Uu]sage: git send-pack " usage
+ INVALID_OID=$(test_oid 001)
+ 
++test_expect_success 'pack-refs does not crash with -h' '
++	test_expect_code 129 git pack-refs -h >usage &&
++	test_grep "[Uu]sage: git pack-refs " usage &&
++	test_expect_code 129 nongit git pack-refs -h >usage &&
++	test_grep "[Uu]sage: git pack-refs " usage
 +'
 +
- test_expect_success 'pack the source repository' '
- 	git repack -a -d &&
- 	git prune
+ test_expect_success 'init: creates basic reftable structures' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
 -- 
 2.48.1
 
