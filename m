@@ -1,131 +1,125 @@
-Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10C1502BE
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 10:48:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784E5217712
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 11:17:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741344539; cv=none; b=tCEBvmmDHQsNFeZZe2mZDiEeOXQUZKRsmKmisT2DbtLilnhbjObX61skstc1YILbhn/eyabukPC97r31DuPgMcfkXTCQgAsqoQad75y//9aJoQRXQFNzpAMKWbqz+INVzjRHwvoSb3KbVHjjxMmaWM6p5tqnGck1M4MSv5+KQ8Y=
+	t=1741346261; cv=none; b=E8wFU8SOlU/Rkg5n1HUBqO8a/Q5NuxrB/KXwhVZEWktIy/tm0H1YDjnrbG30GNIWQQgCd79QJi036PpE7YJuVlEacjjBopclcoCC35tY/86R5Ij+pEtTFN5YxX5M3W0YytzpowNkcgWdb+OfEm7e/w7sZKqu+O6oQwUbsd14ek4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741344539; c=relaxed/simple;
-	bh=waNVKU8zkbKl6WNS+uH9OAhq1NJcWU4fgS8LRf6SgHQ=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cOxy+0V6fxoGfeNPVd20/zlGJIRqCBs+VPo//7eRhD4xLXYg1DGZsllidpdrGMcTalEkZnpBKSzzrib7FfREBEJFk0FBi+c10XZij5fJ1T0rp4vBDIznzoxHyR5MINWvAN24uu5FnE8XsGLuCKCB7DuYZYR/Q7doCFz3f6qMQ0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N6TV2zJR; arc=none smtp.client-ip=209.85.221.175
+	s=arc-20240116; t=1741346261; c=relaxed/simple;
+	bh=RWTbTcrz1YAsjbkbskRzzTP2qZOaaChawAAhksR1yuw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Z0lkfrOS2ifM55DuZNPMZ6H79rDP6IXdJCbByWFinCqqpK0zwJxIRBH3FANintUIp/wQ3kuG+FfyxJqbZ3fXasCpZ8IP6/yUL6BLf/G39AlDSWQO8ZEmT+0ZYp74+Xk45Cmq6QBNKjQ4zy0CWxYngXFkO6sNvXGCcB2+dk5e2FY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EFCWUThh; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N6TV2zJR"
-Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-52364925cfeso2839155e0c.0
-        for <git@vger.kernel.org>; Fri, 07 Mar 2025 02:48:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EFCWUThh"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-abf4b376f2fso314555766b.3
+        for <git@vger.kernel.org>; Fri, 07 Mar 2025 03:17:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741344536; x=1741949336; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=i+kcd0fGSQ5jVGMHu0kWKoPfrUNQFr8DF8CHqB7aYN8=;
-        b=N6TV2zJRNGi6dH54j+IECIXwRh42VlmOPdOlO1qS5CEyqqooSaX3HAkZOJc4rSQNvj
-         TPLnlmHMnBJ9p9hJDdqRi6eLYipueU02rzStb81K8jcFNJP7xV+D38/nY0uFlcREK4lw
-         nGxj5yLzzbH2soNvsee3BeorP+CQRrXZ1gE/A3iUXLb3A6/52XdB4a6cyoEwtkUxYL1N
-         ZWFWuF6KffdtfN8AHgYc8PSj1xI40Vby9Kzoukd9hrrWrpLCOnbFJ3/ihcD4I9kOXKpA
-         uC14yqID2jGTDafdBoVVa6ZH2CubAn50J/3werr0uOWA+7sORtCUsbY2IVbcH8kzNa0i
-         od3Q==
+        d=gmail.com; s=20230601; t=1741346257; x=1741951057; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SU2fAlxpxQ9hnsU7epeb/8WJDiG49FZyhjV4BGJIUMw=;
+        b=EFCWUThh+OsuT9qEhxut6aC9JVMD3PRh1jQL7XMsLjW2bUcyeRhuDqih2oXOvSsvyo
+         tpIjz5444ydup1U3GtEzRo5R5XT6hct1XNab6oiS8cmMlj1NgCMPx2HkL819CoI02j+s
+         ntM2Abu+MlWetNln8WqXfrqfldpHAy96faWmJoWmBRKwFXQeHigjCngbnQMhOCYn6j5Y
+         ueAl9fexrNybkOM6EFbcob/GNUjrz9x6u5WkPg9y5pVL5vPu097RVeVLYk6ylxj2xPJk
+         vvuw4FH0v4yPFVU5rDtkejEXW6EvLhIhWy4DTxheFwLF9CzlkLcyf9L9KAwbFdzYgBzT
+         t+ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741344536; x=1741949336;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i+kcd0fGSQ5jVGMHu0kWKoPfrUNQFr8DF8CHqB7aYN8=;
-        b=BFe4Y518hvAScgaCDdDP4K4PAPX2EDBx6VgXwO6ueMBSLzPnAlmS0vHq8NXUnKgWLC
-         eE3mXvRUIjtAvyvH+G8NhVrjq8NuPVz9sX+jjqSGw3I1TsHKzrFjdTcXT80f0i62EXFR
-         G52aEgrCTOrg8JYfSYEfeD67+pj89yHo8SUQJ4lgopMCGzmpAonsOdNK2mPOZNl34Vkd
-         B4aD2bltnT0Wtcym6ucLp1wSUM9pjql3uDphGzlB8x3YNw85gWZRU0FX7PFs9Quje4OC
-         pTZq+VjGIlCzy2nhl/HBXCy3cMp5Jh20I9EYN/LA+BULL20DENHft8fD/2eIxRlwNmeX
-         xBPg==
-X-Gm-Message-State: AOJu0YyUvrjJGOAYgkDnriaXwEskcu3BP3kWV21ZFYs8ePEg7YbDL59r
-	S1SR24sP9IdXH/UhfcWCOUTDp6hR1z4FFHCPu3YZjxrDG0IkHZjncMQyE6uLGvYJK+NqcS2LTgu
-	M1R5JyL3HIGabYoMfXuP/KaeIMUk=
-X-Gm-Gg: ASbGnctVpFFausFg8XAJOJKyc2ce30gfnP+mM7e4Mct811lq6M99zR9ukRTRBtIB1Mc
-	XQ/v0jUvOwRbcUuPc2PBv/O240vqMGWhOwUiwnOulKBl9bXXmjR8+6ES11zqxmInVo4qKHC/W6Q
-	W3NrB3eH5ah5JF5g5UQkYS7U+QPFg=
-X-Google-Smtp-Source: AGHT+IGAfa7+TOzvKzBepgK5zYJ1EGJwOEWg6Xtb3sxgt8UqecTNUWx4xEE6VpVFg6qH08fBvSZ2gsGv266yc+y9sAw=
-X-Received: by 2002:a05:6102:4a83:b0:4c1:9439:f7a with SMTP id
- ada2fe7eead31-4c308bbeafbmr1946427137.2.1741344536526; Fri, 07 Mar 2025
- 02:48:56 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 7 Mar 2025 02:48:55 -0800
+        d=1e100.net; s=20230601; t=1741346257; x=1741951057;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SU2fAlxpxQ9hnsU7epeb/8WJDiG49FZyhjV4BGJIUMw=;
+        b=Mkwx3G+HIVo9msTFGljdQKfMAcXDTwxdlFCFIXwy3clA0vre93Z/3XuX8G2/Q8qTGL
+         l3LkZHeqdNpBFgYSeaSV34ASeLrW4DFK99yeBEq8tB7Xnr9GgWRm55vfYV8CWm0Gakk7
+         iiGgUTlNjgUzj/QK33Ts99acXr4ulpJeyGuVSKOtVlbrYt5mWtyul9wIc3QxSW/yU9GC
+         pX6WO+Xjag45b49lZp00j1vJphI6zYoOsPRXiK2zDz5o/RVsh2dRy+LYk2V8KJApzOGZ
+         7hMQHjIfcM3MBwj8HatoTcNVAir8e3nleAV7TI+oOtZ4yox+K9jQtjbI0A5d+inFqSbC
+         84Qw==
+X-Gm-Message-State: AOJu0YyE/I4O6SwgbMASSDZ6JjzDoCHRjkbj2ptQ/0Z/7SwqyIskx0so
+	PUS27awXJU3n/E4Uv1nVFvxenSPibtUPO/wQ5r5xZ6MG2SZEVTuTFTtqRwmb
+X-Gm-Gg: ASbGncsFvNfL9SNNXXRqkwo+GaLU4X7IXile4d09RoM10uieeZ2iKXKdWWmDxwMhQn3
+	pjwghteJqCoSK9AXVUKq+O7HevFa6uTtkjrxmnnMI+Fo5Sp8qPJ8bgBUBYElmmqNLNXLP1oipZA
+	CtBWvxvrbxCTDmeDCR2ELCyYsdeW/HOGiRJuY8TV6G8TgR6xlqVgnP++pzYKbNPTQtEWzRKD4C2
+	2fY3/+o39w5rjANnGyeBK9i6PTC7Woa504EfrKEPTKsFiuvujc7WU3oGilOR/mpyjhZLjv2X4B6
+	+LQkwUtz9MSMZTNc61cQ7HV03tq7VJWOhYixAFASn91O
+X-Google-Smtp-Source: AGHT+IG6ZVFJ2y+f2UNYir1xSP2m0sO4YHMDDS8T9PsuO6oRbAPrR3wGSnXIQ+0HTDiw48i/McJ4Rw==
+X-Received: by 2002:a17:907:7255:b0:abf:51b7:608a with SMTP id a640c23a62f3a-ac252738131mr298550466b.5.1741346257055;
+        Fri, 07 Mar 2025 03:17:37 -0800 (PST)
+Received: from [127.0.0.2] ([217.110.80.4])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac23988bdc7sm261464266b.133.2025.03.07.03.17.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Mar 2025 03:17:35 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqldtmvyfa.fsf@gitster.g>
-References: <xmqq7c591sus.fsf@gitster.g> <Z8XJnJEHZd1dFE96@ArchLinux> <xmqqldtmvyfa.fsf@gitster.g>
+Subject: [PATCH 0/2] EDITME: cover title for
+ 493-add-command-to-purge-reflog-entries
+Date: Fri, 07 Mar 2025 12:17:24 +0100
+Message-Id: <20250307-493-add-command-to-purge-reflog-entries-v1-0-84ab8529cf9e@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 7 Mar 2025 02:48:55 -0800
-X-Gm-Features: AQ5f1Joiyzy5MnCmZ_gY5apQzaoXkGEhJgFbJBkvcP1pRZyj3W3UrSFKO4cDdhY
-Message-ID: <CAOLa=ZSe01-ziQi5SB+aZX8rtA7ZtzgapW7nH7+afO2yKPDaaQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2025, #09; Fri, 28)
-To: Junio C Hamano <gitster@pobox.com>, shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="000000000000881fb1062fbe5e8a"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMTVymcC/x2N0QrCMAxFf2Xk2UBtO4f+ivgQl7gFXDvaKcLYv
+ 5vt8XAu565QpahUuDUrFPlq1ZwMzqcG+pHSIKhsDN751gV3wXgNSMzY52mixLhknD/FdkVe7zy
+ gpGUP4pO9b2NHHCKB1Wbz+jue7o9t+wOK5RveeQAAAA==
+X-Change-ID: 20250306-493-add-command-to-purge-reflog-entries-bd22547ad34a
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1408; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=RWTbTcrz1YAsjbkbskRzzTP2qZOaaChawAAhksR1yuw=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGfK1c9Gz9Wur62OV2T4ErJR+RcvgPtPppklO
+ U8yoQx9ejy3KokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnytXPAAoJED7VnySO
+ Rox/n3sMAJKF8781ts3AO1b2f96Db6MvHb9yVWJ10lp7ptfRtK/61UTCxjzZsbFzFSFMPpvEkCY
+ qrjMwLkagSBQ6CntRCqTiylWbLsD9jisMwZtBfSc7DTlB2BQj/2q3tIBZ+RA0eJ8fT9shmxk1p8
+ tvY+1jUFBb9fxS+ATYn7wXrrxiDXE8Ja5tHfvSNhH01dY+hcgaHhxHZthgfkue9mREzp4Di4aRd
+ qqdLiSe4Kr3GM0Nn0LEYaHinUBfXdWVMS2VHkxLFhg4EShl3z2awixS5bkT8YoPYVUVuEpI6ZID
+ rTXs98ezkzI55I9JjZz5e9M8wgcwoN4rQlHVho8Vp2MOghJjWygltSB8xzJ5FFKOkcGVLSyK1lr
+ 1TcvXAGV+MY7MpYK6XRoHcCIsV5CwwNMdZE1bJNwgyOIhDpbUn2Rmxp7/6/pf276j7bBg0xgqPH
+ yBb/Wv5Pr1BpMl0wjzqABN6IOBwkaHj8ypCjI5nkiz8WF0nlo/q0IeGgzAtyPB7GO2P21893hp4
+ 6U=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
---000000000000881fb1062fbe5e8a
-Content-Type: text/plain; charset="UTF-8"
+ Documentation/git-reflog.adoc |  6 ++++
+ builtin/reflog.c              | 84 +++++++++++++++++++++++++++++++++++--------
+ t/t1410-reflog.sh             | 55 ++++++++++++++++++++++++++++
+ 3 files changed, 130 insertions(+), 15 deletions(-)
 
-Junio C Hamano <gitster@pobox.com> writes:
+Karthik Nayak (2):
+      reflog: drop usage of global variables
+      reflog: implement subcommand to drop reflogs
 
-> shejialuo <shejialuo@gmail.com> writes:
->
->> On Fri, Feb 28, 2025 at 04:45:31PM -0800, Junio C Hamano wrote:
->>
->>> * sj/ref-consistency-checks-more (2025-02-27) 9 commits
->>>  - builtin/fsck: add `git refs verify` child process
->>>  - packed-backend: check whether the "packed-refs" is sorted
->>>  - packed-backend: add "packed-refs" entry consistency check
->>>  - packed-backend: check whether the refname contains NUL characters
->>>  - packed-backend: add "packed-refs" header consistency check
->>>  - packed-backend: check if header starts with "# pack-refs with: "
->>>  - packed-backend: check whether the "packed-refs" is regular file
->>>  - builtin/refs: get worktrees without reading head information
->>>  - t0602: use subshell to ensure working directory unchanged
->>>
->>>  "git fsck" becomes more careful when checking the refs.
->>>
->>>  Comments?
->>>  source: <Z8CMx7O19PMs9sVY@ArchLinux>
->>
->> I think I have addressed the comments from you, Patrick and Karthik.
->> Could we make the patch into "next"?
->
-> Mine was merely a small kibitzing on the logic flow structure, and I
-> didn't really looked at the larger picture beyond that part of the
-> code I looked at.  Let's hear from Patrick and Karthik (cc'ed) if
-> they find the result of the updates satisfactory.
->
+This patch series adds a new 'drop' subcommand to git-reflog that allows
+users to delete the reflog for a specified reference. Additionally, it
+adds an '--all' flag to enable dropping all reflogs in a repository.
+This is a followup to the discussion we had when I sent in a patch to
+add '--no-reflog' option to 'git refs migrate' [1].
 
-Sorry I missed this email. I did review an earlier version of the series
-and it did look good to me, haven't reviewed the latest version (but
-that's not a blocker from my side).
+While 'git-reflog(1)' currently allows users to expire reflogs and
+delete individual entries, it lacks functionality to completely remove
+reflogs for specific references. This becomes problematic in
+repositories where reflogs are not needed but continue to accumulate
+entries despite setting 'core.logAllRefUpdates=false'.
 
-> Thanks.
+The first patch is a small cleanup which ensures that 'builtin/reflog.c' no
+longer uses global variables. The second patch add the required changes.
 
---000000000000881fb1062fbe5e8a
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: cf7062e3f40ee823_0.1
+[1]: https://lore.kernel.org/all/xmqqa5aqu7g9.fsf@gitster.g/
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mS3p4WVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md3BwREFDT2xQMnJMZTZuQUdZZWMvU0k4VFVLeWdacApMSUtiUVlOUW5S
-SFBzQnJybU5RRE5tdVhONy9hREZUZG10aXhxK0RkY2JWNXdnQWlJSlN6bC9TaTdISHdZUTRpCkMw
-aXlINlNGdG9JUURURXhxSVllYkZTTGZKUURjR015UUdUN1p6NERReEJNWitVY1NaWGYwdS9GTE9u
-cVQ3RnEKVGIvUjl0QXFpazA2dGhkbFdQTVJsdGdrRk1ac1FCcHh6WG9NLzE3clRmU3VlZEpPOG5j
-ckxFRmFUNlZrOWhscgpJc01SbVBIVmoxUk53aG9PL0VITVhYS25WcmlLSklWc1cyVWlEckVpZHkv
-dmI4UFdFR3hxc0pSRmgxeE1RTGVRCitwZ1dESWVHbzlFdU9JY3hwZTlZTHh4SHNWVHJLWVFRUmFS
-MHIzYXFHRU9yZkJuRG8wTnNpTUtOdll1OWVzU0IKSmZxc1EyaTBNanhsWFBWOEl4cm5YMlRyUTR1
-Sks4QU9kSnVOWWtacTFEUnJ1YnZQZzRSdGlxUklLKzRMaDJyaQpUOWdjSXk0ci8xZDRUWndQMjl5
-azIrdnlieUVBOG82QWVQNEJJRk9kK1ZIRFNGZW9ZNVFOeXkxcnA1cXQzRGdyCjBhdm0vMkRJNEd3
-OFI4S3d6N3NYTlVPc1krQWp2TlluRXU2QUFkOD0KPVN2SEEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000881fb1062fbe5e8a--
+
+
+base-commit: e969bc875963a10890d61ba84eab3a460bd9e535
+change-id: 20250306-493-add-command-to-purge-reflog-entries-bd22547ad34a
+
+Thanks
+- Karthik
+
