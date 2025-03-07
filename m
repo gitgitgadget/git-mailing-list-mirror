@@ -1,64 +1,64 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F28921771D
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 11:17:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADBD21771F
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 11:17:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741346261; cv=none; b=GAd66jj/oh8CNVo+NMH+60TSzmaIhQCbZ91CnxxsbtNvu5O5Jb8zQnCQ7V97gIYVS2DbOKpDCWCaQxQaIGyWcTgHQKkDwEBonh2Os5Ys+3kJy5f4u8bXuNp1Gw0CiNi7jgBPjc/BmMk3JJ4TI/fBfHEw09ky8xQXD7pFuNEoGZw=
+	t=1741346262; cv=none; b=AcRrW0T8vBvoiVn+hIbo4nWDUVfavePdWV1erks5jDR4TIXt6govDh/6y74nNjw3ArIAmIFA6PwO4nuBAT60LBYpsvsPAonUMIQGKO8arqxB3XIT28X99EduPXpAJc4Lcq6XlQcIijYk+xTXsxuVzNvWv/ruScwotV2y9ZGvyQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741346261; c=relaxed/simple;
-	bh=0ARivOJYw5HH/tjqlIAJQpwqlP4QpHGn/maGR+B9Y6w=;
+	s=arc-20240116; t=1741346262; c=relaxed/simple;
+	bh=ve1t6t4NVDBecRrb01FdVw187MV4RdGzoq9v+zdzNDg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bBmIu4esUjjDsblCwxbexvuG/vQaeJuQDaXaYxrqMM+EE+tN2r0yt5TIx825Tn/54EfCSSdBPaT3X2rIzQ3lRIo0hc6dCisWas4W9jov226YAA0nz11pGfor3ZuJvPTtFg5DMfaxmUxAQw0e+vnlvHHI+VTANpdC7KPnhzkbQes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aTZbmoxu; arc=none smtp.client-ip=209.85.218.51
+	 In-Reply-To:To:Cc; b=dh6lRkAYMDxNs3f9UjY8/nAOVFODIz14Iprta2wHKlEHLJSCzHKOiaR+1S2S14RllL+9y0zC7MS6rppLPp/7NWhSy3HGmCmoOKgznfr3dRfA+kEiBFzq7TNk6HsopL3tKgoEJ1VejI11U95uvPSz82P8diKR/N6/5Aynm5Lhv58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CT0RPA/I; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aTZbmoxu"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ac0cc83e9adso578760666b.0
-        for <git@vger.kernel.org>; Fri, 07 Mar 2025 03:17:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CT0RPA/I"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ac0cc83e9adso578762666b.0
+        for <git@vger.kernel.org>; Fri, 07 Mar 2025 03:17:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741346258; x=1741951058; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741346259; x=1741951059; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RMF9erA64E7nyWXBNUGrz6bvNYlYBlODA8zBPHI0gO8=;
-        b=aTZbmoxuPk/B7everS94YAvTORQ4nRsADBMmqr7FTlF3L7Rj0hHZo2IPwMyFJlMYvn
-         Rs63Q2+6Ing3eNxLR2B+yOJvYktjYLdPgWYxaONLevgyCDN5b+qJEOVHTpXzFDpRTWWB
-         tczJubyb692jUdNawcMF3b7OhqHPORKgxg0NOBgyOmKPGOHING3hrw6W3Nom2qDGCbKx
-         iVIOSvNCqRaSJYnV2FdNqk27aVKhEHRrUvu/XO0FHIUCfIEwEl9phsC7QP1t4awytLiu
-         vJ89Bh4abzsfXeEwEE/O226+nKLlTKMYo3ZKCIIVKIXpUure10rnYokqkwFSxD6l3x+M
-         cYHw==
+        bh=ivK0lQDRvZ5+cBtxxqlPI5DTBlZfAf2ONc1nTenVwQc=;
+        b=CT0RPA/I7SGauYivJ/kQY9t2NVSunlJVrB0k90zvPngfE6bxPqlVUMMmgCIPo7VZZo
+         9PKRIYiaHR2h4UZErrD12XBjikGnC1Dwo2ZWoTMUqGjylPZPzMa3xPVASKKkYZq1z63h
+         xCA4DOA4h6PADadkSug33mMJtBItmQPhZA29jFrQMYaPgfCmMa+j81cbLO4mU30T6mkM
+         kM+AJf5VVb6eNewKWLDT560sJ+rumZIJuCHNMvB5ztH6ragMeO4+rLeR5kN4CXNogeO1
+         /+5yslYoUhIi4CJiSrabZo5qoiLgikwsK0iDQ7yTicOZb4IBYnuBdw2nyHjzc+ulzocz
+         qBpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741346258; x=1741951058;
+        d=1e100.net; s=20230601; t=1741346259; x=1741951059;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RMF9erA64E7nyWXBNUGrz6bvNYlYBlODA8zBPHI0gO8=;
-        b=E3uAkm4dz0mZOaokoITM1SmmdwmwOmIGj2nGpTjUujg/FJSvdwChNkqBpT4v9qwad+
-         UCsi4GpbhIRidu1KIXMTsk2o75p2rlWiLMQNxZe4ymm3yW0nfKpwN6apG7tVVugjSyvr
-         nQrMYK8HmrLszf9OjAdhRAhCj3fbZMPFshcq8+nt65S+4iQSTmROZVtCyzJCmea4hRqg
-         nqxDxDCJyj7qtYdfcrDanxc/3fP/MSj62U1lqMS0U9h9KadnoJMpsQSmGcF5yXbAMpHl
-         kudpAiEtuzZHTBtUaZezeyUy0QsOuAHVUaayEfYiwpXMnzA4VBD+g49IVobfzil7ka3q
-         Zujw==
-X-Gm-Message-State: AOJu0YyO7x0sFO5FppXPyIP4TxlEoU6963EHm3SnVD4MhkbYyImwYtQe
-	BPeOnWZDTxF1z9MJCpjf108v/fduBQeDdw8oGbhQEs3qbBLiC2dUbMf4VggA
-X-Gm-Gg: ASbGncueprPJl35ykUTxgcQo5WXPpvZeWTZOP3JEIvbujS/ndZlXcp+etH10aqBQh1l
-	uz2eynq8Z5YTjpCJEQMX6kbt9l+iXDd+RekG6XHdAPYnodRa4/BWa6Yl1xPtkM8fB9d6mqKng4/
-	G05k2rLfdq2qwOKup/YfhR2YErOq82nmxn12NaKigXEnFqLniiwjYiFDNDrxItG5csbTsQpVneW
-	WLKC+enZKac92PevYD+aNut02nzfCJUrCVkk3aHCdRvUst1+W/DY3uFhbZZ4qwh/1rBOiX1DGuw
-	QJEZOVS370jfGrdaIvrqSKW2DaaZ2WrE5OLIU/oPmiNP
-X-Google-Smtp-Source: AGHT+IFTH35/kmi+FI3ZwFrVJmHAemDAh7VVsulBVwRESn9V213CZsU1Ph/kv9EOiJdA7+ANYOsCyw==
-X-Received: by 2002:a17:906:c00d:b0:ac2:4f30:5033 with SMTP id a640c23a62f3a-ac24f305493mr394276366b.15.1741346257715;
-        Fri, 07 Mar 2025 03:17:37 -0800 (PST)
+        bh=ivK0lQDRvZ5+cBtxxqlPI5DTBlZfAf2ONc1nTenVwQc=;
+        b=Xr81ez+ynN3avVpfLAlxuC9oDZ65AJKj2W7HonFVXdftTPQTv8hvrS0cttDfVWd+12
+         Q+DsGwDfsLOaD1iU6EnZbahxGv64M6WQMXI+0X56/br9r4tUOMXo7hrEkDSojo5vezqD
+         Eagaw0HCwEbJH7xuPz32BT9tQYFttPhrUlMo/oekBQD+DJa61IPKUizG5sjUe32GpAQd
+         ydShWqiEVBhhHGksKkpGfttB/ZscBZpjB8ScRIXGyCVjmm3Il3s+dbXci3cyObq5JBql
+         d6ht27ZMHdxLtUNA1DBwgV/nqix2+O4nW46vCdiSTdwjT6AhoPdnEpM4C/0oNCwIkaOs
+         FeNQ==
+X-Gm-Message-State: AOJu0YztvJ9vvGa6ryaWacq8C2T4xnu10aIPN6WfJXPrmbcJyyZf7902
+	nUPLOi0iJbrUQRB9An/M37GlCI/uX/q1A6zxmZVA3nvRi0LcPE5Aox+swRET
+X-Gm-Gg: ASbGnctJKODjV1ybqCaS/B0770WgiLNuLVY+gq68xjf7rtDlEseVPlrK0JC1SbCJOPB
+	u9DAY9MvjLdgcVMWELugdpHgqJ88J26HANC3OAHT11fDqZDJ5pfu231mRiopCzYafinNz0sSTPv
+	wK2MVTvcZudQVydU3gmVVvVM7L5B3sYCHeuRfLnjtltbCzWvgH92ZLMOmU4iZdK8hFaSS5jonwu
+	pKguQTQxN9XIQrz0DkAwnxGYsbJC2j4KBI2aXA4KkcqjAF937APLfYpgFUu90NI3qBGjSlCPVI+
+	gD0ejIUhbiSlCP8Oma4o+MXxAgCFaEoUzNQbd+hwx/sp
+X-Google-Smtp-Source: AGHT+IGjo6DWpOtlT1d896M97s1YnQcfPCBy6HsAe2gf9usRcY2bE/l63hcZwhtHgAQug5qhLszgCA==
+X-Received: by 2002:a17:906:6a20:b0:abf:6d1c:8f4a with SMTP id a640c23a62f3a-ac22ccf822bmr759557166b.18.1741346258506;
+        Fri, 07 Mar 2025 03:17:38 -0800 (PST)
 Received: from [127.0.0.2] ([217.110.80.4])
         by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac23988bdc7sm261464266b.133.2025.03.07.03.17.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Mar 2025 03:17:37 -0800 (PST)
+        Fri, 07 Mar 2025 03:17:38 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Fri, 07 Mar 2025 12:17:25 +0100
-Subject: [PATCH 1/2] reflog: drop usage of global variables
+Date: Fri, 07 Mar 2025 12:17:26 +0100
+Subject: [PATCH 2/2] reflog: implement subcommand to drop reflogs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,152 +67,233 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250307-493-add-command-to-purge-reflog-entries-v1-1-84ab8529cf9e@gmail.com>
+Message-Id: <20250307-493-add-command-to-purge-reflog-entries-v1-2-84ab8529cf9e@gmail.com>
 References: <20250307-493-add-command-to-purge-reflog-entries-v1-0-84ab8529cf9e@gmail.com>
 In-Reply-To: <20250307-493-add-command-to-purge-reflog-entries-v1-0-84ab8529cf9e@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4805; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=0ARivOJYw5HH/tjqlIAJQpwqlP4QpHGn/maGR+B9Y6w=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGfK1c+MDaCkqNCqDQpMqBjXG9Z+OalUNfc+Y
- +LW6dBUtdPrbIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnytXPAAoJED7VnySO
- Rox/PC4L/jTTWTGz73ykaG6IdNeR9CKIJdwD/hralLAjjZdfxsmE6CanI5nqNdmHQENzyMQ74Bh
- lhDYL/O7GuLjgwzWO5LBzhvdbpdFhejKxGjSGqio5eprr7jgppMdjtGgAo6/g5tLkVWA+T1cf8f
- jQMjwBSpntNLTNYPhMqMqkT7jdZ9+GGb5eDBatOCuOzbkU7gmcN7tS7atOQ5OXKFlGgQuYOK4WN
- DGiTDzfbSDorYyjtxrhXzZdTA8cG19aIpdykzl16/prFvPVnzPjxaQhT4VbpSlmz9cBbQTA0h11
- SR2NuCZ62QtvIz8OO/s6pSnD+nc3HF7HJJqlzthD62REUqz0/y9VlR8hOJmaWm7TZW7oeyrqNCx
- rwK3KSaOc2wPZpitfjPj8VcsaRYV7OYmGFljrcDssQrz55yy6E27iPWG5DNj/UUfuHO0/1EzInV
- /sTiJ0Au7xWqK/OcaWpOWiLqkylyzgoYVDzllytdyFpbTZTv1p38ewtBnMxCKsPmKH6l/US8yn7
- rE=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6303; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=ve1t6t4NVDBecRrb01FdVw187MV4RdGzoq9v+zdzNDg=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGfK1c98sbop0PrAyN2vC0kAIY2NflRCPEjRz
+ o3o0q+gkaQhjYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnytXPAAoJED7VnySO
+ Rox/HY8L/0o55OYHYnAt1CokNTpLYz76Dp3KktY5Pu1jsQXDTeCImVwOw75nRWir1dmP3Oo6Ar+
+ 7hzOschoCsbQ32/01rKHaW8NHiI9FixVnk3+eTwNvnCT1ZDYYEk3vmimL/RsdD1HYomkGDH6t0t
+ vljJvDwqETVrq0DQyAD/05NMLD4dcTQBs9nnjjd8XOhk4Qod70d0R9bxOH+w3qHeS9KuvVyfWne
+ 6KgozPTT/r3LTZpgPQ+BRE31Yc8GzeII0I/8F8nNK4rWD+UgaTIpYC7ki6kWOUSICzre923ViZ9
+ LG8bKFKiEVOI+sEP+5ZgJJj8Yz+riRzFdrhllXUf6/MdUwlf5uR+UNWvHBYVxtZV9ymkArRriRj
+ 24fUcXvViaSLHbNRUU/sOXgV0Uu/pHIEdoDoL5IwzXx4shZwjXZAui88WGwYMBmu4ZHtws5EooB
+ hRhIr5YTFGlLlulDZEQ4KRtQFI6IRo9Iu5Y2C+qcdXEHaokGxgel/6oC2+uLGAUMFGnWv/L1Xm4
+ 98=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The 'builtin/reflog.c' file uses the 'the_repository' global variable
-directly and also via 'git_config()'. Since this is a builtin command
-which has access to the 'struct repository', drop usage of the global
-variable and use the available repository struct.
+Add a new 'drop' subcommand to git-reflog that allows users to delete
+the entire reflog for a specified reference. Include a '--all' flag to
+enable dropping all reflogs in a repository.
 
-With this, remove the 'USE_THE_REPOSITORY_VARIABLE' macro from the file.
+While 'git-reflog(1)' currently allows users to expire reflogs and
+delete individual entries, it lacks functionality to completely remove
+reflogs for specific references. This becomes problematic in
+repositories where reflogs are not needed but continue to accumulate
+entries despite setting 'core.logAllRefUpdates=false'.
+
+While here, remove an erranous newline in the file.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/reflog.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ Documentation/git-reflog.adoc |  6 +++++
+ builtin/reflog.c              | 58 ++++++++++++++++++++++++++++++++++++++++++-
+ t/t1410-reflog.sh             | 55 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 118 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/git-reflog.adoc b/Documentation/git-reflog.adoc
+index a929c52982..4ecee297de 100644
+--- a/Documentation/git-reflog.adoc
++++ b/Documentation/git-reflog.adoc
+@@ -17,6 +17,7 @@ SYNOPSIS
+ 'git reflog delete' [--rewrite] [--updateref]
+ 	[--dry-run | -n] [--verbose] <ref>@{<specifier>}...
+ 'git reflog exists' <ref>
++'git reflog drop' [--all | <refs>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -57,6 +58,11 @@ The "exists" subcommand checks whether a ref has a reflog.  It exits
+ with zero status if the reflog exists, and non-zero status if it does
+ not.
+ 
++The "drop" subcommand removes the reflog for the specified references.
++In contrast, "expire" can be used to prune all entries from a reflog,
++but the reflog itself will still exist for that reference. To fully
++remove the reflog for specific references, use the "drop" subcommand.
++
+ OPTIONS
+ -------
+ 
 diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 95f264989b..f92258f6b6 100644
+index f92258f6b6..232602c1a6 100644
 --- a/builtin/reflog.c
 +++ b/builtin/reflog.c
-@@ -1,5 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "builtin.h"
- #include "config.h"
- #include "gettext.h"
-@@ -236,7 +234,7 @@ static int expire_total_callback(const struct option *opt,
- }
+@@ -27,6 +27,9 @@
+ #define BUILTIN_REFLOG_EXISTS_USAGE \
+ 	N_("git reflog exists <ref>")
  
- static int cmd_reflog_show(int argc, const char **argv, const char *prefix,
--			   struct repository *repo UNUSED)
-+			   struct repository *repo)
- {
- 	struct option options[] = {
- 		OPT_END()
-@@ -246,7 +244,7 @@ static int cmd_reflog_show(int argc, const char **argv, const char *prefix,
- 		      PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_ARGV0 |
- 		      PARSE_OPT_KEEP_UNKNOWN_OPT);
++#define BUILTIN_REFLOG_DROP_USAGE \
++	N_("git reflog drop [--all | <refs>...]")
++
+ static const char *const reflog_show_usage[] = {
+ 	BUILTIN_REFLOG_SHOW_USAGE,
+ 	NULL,
+@@ -52,12 +55,18 @@ static const char *const reflog_exists_usage[] = {
+ 	NULL,
+ };
  
--	return cmd_log_reflog(argc, argv, prefix, the_repository);
-+	return cmd_log_reflog(argc, argv, prefix, repo);
- }
++static const char *const reflog_drop_usage[] = {
++	BUILTIN_REFLOG_DROP_USAGE,
++	NULL,
++};
++
+ static const char *const reflog_usage[] = {
+ 	BUILTIN_REFLOG_SHOW_USAGE,
+ 	BUILTIN_REFLOG_LIST_USAGE,
+ 	BUILTIN_REFLOG_EXPIRE_USAGE,
+ 	BUILTIN_REFLOG_DELETE_USAGE,
+ 	BUILTIN_REFLOG_EXISTS_USAGE,
++	BUILTIN_REFLOG_DROP_USAGE,
+ 	NULL
+ };
  
- static int show_reflog(const char *refname, void *cb_data UNUSED)
-@@ -256,7 +254,7 @@ static int show_reflog(const char *refname, void *cb_data UNUSED)
- }
- 
- static int cmd_reflog_list(int argc, const char **argv, const char *prefix,
--			   struct repository *repo UNUSED)
-+			   struct repository *repo)
- {
- 	struct option options[] = {
- 		OPT_END()
-@@ -268,13 +266,13 @@ static int cmd_reflog_list(int argc, const char **argv, const char *prefix,
- 		return error(_("%s does not accept arguments: '%s'"),
- 			     "list", argv[0]);
- 
--	ref_store = get_main_ref_store(the_repository);
-+	ref_store = get_main_ref_store(repo);
- 
- 	return refs_for_each_reflog(ref_store, show_reflog, NULL);
- }
- 
- static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
--			     struct repository *repo UNUSED)
-+			     struct repository *repo)
- {
- 	struct cmd_reflog_expire_cb cmd = { 0 };
- 	timestamp_t now = time(NULL);
-@@ -310,7 +308,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
- 
- 	default_reflog_expire_unreachable = now - 30 * 24 * 3600;
- 	default_reflog_expire = now - 90 * 24 * 3600;
--	git_config(reflog_expire_config, NULL);
-+	repo_config(repo, reflog_expire_config, NULL);
- 
- 	save_commit_buffer = 0;
- 	do_all = status = 0;
-@@ -332,7 +330,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
- 	if (cmd.stalefix) {
- 		struct rev_info revs;
- 
--		repo_init_revisions(the_repository, &revs, prefix);
-+		repo_init_revisions(repo, &revs, prefix);
- 		revs.do_not_die_on_missing_objects = 1;
- 		revs.ignore_missing = 1;
- 		revs.ignore_missing_links = 1;
-@@ -368,7 +366,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
- 			};
- 
- 			set_reflog_expiry_param(&cb.cmd,  item->string);
--			status |= refs_reflog_expire(get_main_ref_store(the_repository),
-+			status |= refs_reflog_expire(get_main_ref_store(repo),
- 						     item->string, flags,
- 						     reflog_expiry_prepare,
- 						     should_prune_fn,
-@@ -382,12 +380,12 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
- 		char *ref;
- 		struct expire_reflog_policy_cb cb = { .cmd = cmd };
- 
--		if (!repo_dwim_log(the_repository, argv[i], strlen(argv[i]), NULL, &ref)) {
-+		if (!repo_dwim_log(repo, argv[i], strlen(argv[i]), NULL, &ref)) {
- 			status |= error(_("%s points nowhere!"), argv[i]);
- 			continue;
- 		}
- 		set_reflog_expiry_param(&cb.cmd, ref);
--		status |= refs_reflog_expire(get_main_ref_store(the_repository),
-+		status |= refs_reflog_expire(get_main_ref_store(repo),
- 					     ref, flags,
- 					     reflog_expiry_prepare,
- 					     should_prune_fn,
-@@ -430,7 +428,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix,
- }
- 
- static int cmd_reflog_exists(int argc, const char **argv, const char *prefix,
--			     struct repository *repo UNUSED)
-+			     struct repository *repo)
- {
- 	struct option options[] = {
- 		OPT_END()
-@@ -445,7 +443,7 @@ static int cmd_reflog_exists(int argc, const char **argv, const char *prefix,
- 	refname = argv[0];
- 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
- 		die(_("invalid ref format: %s"), refname);
--	return !refs_reflog_exists(get_main_ref_store(the_repository),
-+	return !refs_reflog_exists(get_main_ref_store(repo),
+@@ -447,10 +456,56 @@ static int cmd_reflog_exists(int argc, const char **argv, const char *prefix,
  				   refname);
  }
  
++static int cmd_reflog_drop(int argc, const char **argv, const char *prefix,
++			   struct repository *repo)
++{
++	int i, ret, do_all;
++	const struct option options[] = {
++		OPT_BOOL(0, "all", &do_all, N_("process the reflogs of all references")),
++		OPT_END()
++	};
++
++	do_all = ret = 0;
++	argc = parse_options(argc, argv, prefix, options, reflog_drop_usage, 0);
++
++	if (do_all) {
++		struct worktree_reflogs collected = {
++			.reflogs = STRING_LIST_INIT_DUP,
++		};
++		struct string_list_item *item;
++		struct worktree **worktrees, **p;
++
++		worktrees = get_worktrees();
++		for (p = worktrees; *p; p++) {
++			collected.worktree = *p;
++			refs_for_each_reflog(get_worktree_ref_store(*p),
++					     collect_reflog, &collected);
++		}
++		free_worktrees(worktrees);
++
++		for_each_string_list_item(item, &collected.reflogs)
++			ret |= refs_delete_reflog(get_main_ref_store(repo),
++						     item->string);
++		string_list_clear(&collected.reflogs, 0);
++	}
++
++	for (i = 0; i < argc; i++) {
++		char *ref;
++		if (!repo_dwim_log(repo, argv[i], strlen(argv[i]), NULL, &ref)) {
++			ret |= error(_("%s points nowhere!"), argv[i]);
++			continue;
++		}
++
++		ret |= refs_delete_reflog(get_main_ref_store(repo), ref);
++		free(ref);
++	}
++
++	return ret;
++}
++
+ /*
+  * main "reflog"
+  */
+-
+ int cmd_reflog(int argc,
+ 	       const char **argv,
+ 	       const char *prefix,
+@@ -463,6 +518,7 @@ int cmd_reflog(int argc,
+ 		OPT_SUBCOMMAND("expire", &fn, cmd_reflog_expire),
+ 		OPT_SUBCOMMAND("delete", &fn, cmd_reflog_delete),
+ 		OPT_SUBCOMMAND("exists", &fn, cmd_reflog_exists),
++		OPT_SUBCOMMAND("drop", &fn, cmd_reflog_drop),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 388fdf9ae5..b6e44ce6b9 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -551,4 +551,59 @@ test_expect_success 'reflog with invalid object ID can be listed' '
+ 	)
+ '
+ 
++test_expect_success 'reflog drop non-existent ref' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_must_fail git reflog exists refs/heads/non-existent &&
++		test_must_fail git reflog drop refs/heads/non-existent
++	)
++'
++
++test_expect_success 'reflog drop' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit A &&
++		test_commit_bulk --ref=refs/heads/branch 1 &&
++		git reflog exists refs/heads/main &&
++		git reflog exists refs/heads/branch &&
++		git reflog drop refs/heads/main &&
++		test_must_fail git reflog exists refs/heads/main &&
++		git reflog exists refs/heads/branch
++	)
++'
++
++test_expect_success 'reflog drop multiple references' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit A &&
++		test_commit_bulk --ref=refs/heads/branch 1 &&
++		git reflog exists refs/heads/main &&
++		git reflog exists refs/heads/branch &&
++		git reflog drop refs/heads/main refs/heads/branch &&
++		test_must_fail git reflog exists refs/heads/main &&
++		test_must_fail git reflog exists refs/heads/branch
++	)
++'
++
++test_expect_success 'reflog drop --all' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit A &&
++		test_commit_bulk --ref=refs/heads/branch 1 &&
++		git reflog exists refs/heads/main &&
++		git reflog exists refs/heads/branch &&
++		git reflog drop --all &&
++		test_must_fail git reflog exists refs/heads/main &&
++		test_must_fail git reflog exists refs/heads/branch
++	)
++'
++
+ test_done
 
 -- 
 2.48.1
