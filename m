@@ -1,57 +1,57 @@
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F112AF1E
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 01:15:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E8D27706
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 01:33:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741310143; cv=none; b=bav1M4X34DXaPuD09ctH2GHfBbciXZzFYXs83tA8++5VhHLpNPZJepOvGohpLbrBEQIHHw9/s12WoG3rRY5ogOWlQdX9FSYIEUVhLxrJaJO/QfmwDDmDY+Bqmky2dIPmZgiaYXzMLG9DmHOjIHu1da8bqYtv7fs907c4zc2VYmQ=
+	t=1741311240; cv=none; b=nMU1nsDiB6WTMT5J4z1cM+NvYGhoQJxOk0cFaHaSmHSQq+d1h7hYJacFzHBfFzgTR/XjC3QP0s5aYO/yMerdVUHz+gxAHniXVY8INCuT7riHxuH6oL/vJv5XO7Z7HdDcXekc4XLH5x3+9UJU/tEfrABsWavd+zxFg/CQXI2Z3W0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741310143; c=relaxed/simple;
-	bh=7bbuZIa40DxUwCl9ySMS1k/TEJkkmlJ/6xKjlNW+1YU=;
+	s=arc-20240116; t=1741311240; c=relaxed/simple;
+	bh=/ogG4isJumKMn5BYgVoMiWBZadouR7VIdV/NW6jFlq4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CL6PGsX7o/XWqvKHvgnAALITm/EltTxCexr+Z36k8NV9d6rZYTL59/q3+cwT+Fu0YqqUBd/1NK8vfcxMIhieX3APmBznP2ghX9UwBZbfEWTexYXq4hl3iMkWkBy1Qc6oama15LATdZOTENLUy+8IdBc13q095zixedDPnlapUa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UFO8wSuD; arc=none smtp.client-ip=209.85.222.42
+	 To:Cc:Content-Type; b=h72uLMH2WT16p0RTy7eTLMZ2SN+pxM1B6EPUZwPnYecZ1huG8pAiMCYdgPcmCwfYsLkEqEmeYnXcUR8WQ00SHTU3oV8cLQZQ4t4KY88nURffxetx6pcF8PFMF3BxVHP8/1CQU/TgezOCTFhSCpD1vOqFld3Sdpc7rimRZU4arm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WbVFYBY5; arc=none smtp.client-ip=209.85.221.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UFO8wSuD"
-Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-86d2fba8647so1153054241.0
-        for <git@vger.kernel.org>; Thu, 06 Mar 2025 17:15:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WbVFYBY5"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5235db99207so555162e0c.2
+        for <git@vger.kernel.org>; Thu, 06 Mar 2025 17:33:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741310140; x=1741914940; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741311238; x=1741916038; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7bbuZIa40DxUwCl9ySMS1k/TEJkkmlJ/6xKjlNW+1YU=;
-        b=UFO8wSuD+2yF69yeiEBXAxoshvlt0hBEM8xPAZuO0uVu8Mw96ZPDRi+q81AJNiyMpC
-         uyhDExX6nEWPkq66kyjwoYLOrmS97l01ZmsZKL3qg4utWwRepHPXyyL3oxAXDkcyVSGx
-         EC5n8b7ZQpFxpa/lGnfHk4TKEFJmW/Zcr9bw2jkp988M7L1e5DDIVL9kvL7/soSHv8bg
-         ZmDHJaUzNtoKTe6Iby8/nfKbRq6D5iEbJjtPrLZHGaz8g8pX7Zblvk2vXnD7AyhoJWyX
-         1PVNomMMNrVWkG+H+1yNjKpdh2ucxcKATN4IkLYj5qX/eAl0JxEhOpjgm/XXjvZG9eKz
-         gazw==
+        bh=n46trzAMtr23Yiyb7rRC7VbUwXrfZZfQ1tMIU7TAnKM=;
+        b=WbVFYBY5tPmToZmnxR1arBkuY6+OSVUzabjq1Meq3VCDKuoWY9kJSjcLBE7L7msdks
+         xgKv8Wge4mNCqbiDsDyxQMlx/kwYyXEFmo7i3enCFSGjaB/IrY8gSvm6fl8fDVZxGV/T
+         RYiiU3SMXK2wZ9hINzWeJTwl2XBh7rhXnlwYXdyXkZaZc6/qTuhpBooSX4AL93Cey9Ro
+         v7FIVYodTzeltAZg73jKkwcRHeOiep/DxL7VHd7V3sFGN9GCa/cw6AL1NSBgU8grHfnI
+         80mXY7OEHqBtlUfwUKv7/AoDX1qPUeTG840TUxp3gdKvv/ip58pp7Pnzv1ZNvEjaJfAc
+         XXsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741310140; x=1741914940;
+        d=1e100.net; s=20230601; t=1741311238; x=1741916038;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7bbuZIa40DxUwCl9ySMS1k/TEJkkmlJ/6xKjlNW+1YU=;
-        b=Ar8PDObnTvDf15HUjpJ0RnphrLdW5qlSjNmXn67FQEU1fTMcXeOE9Y9MKr5ayBbMCM
-         VQ166y5xKDyBubbc1ur2TKDCKSDV5kSe1J2VXGlP61IeBuBfmiaGvqhpVlIH0Nx0FCZ2
-         QYWT33HnQbVfaspAb/yLzBxiL3TA7FE/FVXW5yy9Z8cQCg+14Gdvha32b9tpflNfYBH9
-         /Aaroa/KB7kF4SCZMUj5hbl6JymBgQ6VONnj81FTLN9nx3Pif9Yo1R1oEMuDtSpaUqX2
-         TvUPvAPhX05m6Z6KRu4wpeBpjUh9TQNe3vxRSJrxCH3HptOBtXK3zF1A4118Ybhzublw
-         pEBw==
-X-Gm-Message-State: AOJu0Yw+Wxq8PyZvZzvUWJJVyoUMyWSY9bSuXNSpcDECqyLKWGoZxfPf
-	VqQlBwoPZUKF0bE8pXuqzEO9T8xyCBGK/CKFq8mkQF3g365cGvCOvsj1D7Fm+uybTaaQz/TzRA3
-	H6EY1EQi/0U/4WuiZODCNixqrFb6fO1G6fKY=
-X-Gm-Gg: ASbGncsxYWzwG+w+xcF255OGJ8ecZVuWK+zvdHFhVdWrNeOSxxEBOxwoyYuElEqdygV
-	0viAp0kz3ISv4fSpdgvaDyOxuAiIdVDD8eiYb1OiC1eiauggacvKl/eqK+wja7GRJArmfrNIfeX
-	XcWDu23kW74OulU79UlPOo39qhWA==
-X-Google-Smtp-Source: AGHT+IEM+HCjysmdqjstGH+wz3nxLOKce9eoGFLzmxtt0XmNWpe6lgWY0Ty5xLuT8BYLMDy58FzKdWGVyTR7ntPD9Zc=
-X-Received: by 2002:a05:6102:3054:b0:4bb:e14a:9451 with SMTP id
- ada2fe7eead31-4c30a6ab886mr999833137.20.1741310140601; Thu, 06 Mar 2025
- 17:15:40 -0800 (PST)
+        bh=n46trzAMtr23Yiyb7rRC7VbUwXrfZZfQ1tMIU7TAnKM=;
+        b=pvdNk8H/+H1FRjGDGC6FZLKhA200pdirJ9um73Fxgx2VFoy4tLdbxRX7mSdi6FA9Oj
+         HT8Pd7csUQFinDFDGCdgkw4ilzovTvkeAs4aBToJutbSzQC14lw2ZRWBX8ybOcAfg4yQ
+         5sPbkRgaYC2Tlhkt/LWpbMsPDsflM3uXXbXyJ24AHH2QAkSHvFdbnI1rNnkgBwQSLicA
+         DssQVfXKNimkjRPTS0TqVsFQbGMks1NrvqGb8eGY/cx3nnHc3yypu/rvgV+Rqh6wWe2X
+         L/m6UrdVcKrlv2/GGzo5hvIImmlw/xn7Odu1DPNDiG+ImtoV7pKmtBITHftNohQ97/eP
+         VPTA==
+X-Gm-Message-State: AOJu0YwUD2tjYF9nHKgVFvvUU4n4SopjZXrMPhoRMlIu5JkUTapK7c0a
+	sLi7Ra4ayaF4wAmk+WfrhUmfpUAOixFhbl6Fz6vfG/SClg/JsA3l78sJz/A15SgZ+rreMvxnfHW
+	E1nw15IYP6n61TYEab1/cdeUt0Gw=
+X-Gm-Gg: ASbGnct2QtDZVdWWfzczXEtv7ReqnDDiQXzYEoFKGXYKrRDrIlG//2Okma24ukVrUGm
+	Rmp9lanra5+vFHxfnNqRuuq0RGqgwI5Cwu7gtWjsvXzBikX+z+PaG8eCtdjOtUbWo1qJKNiMRfZ
+	Q4u9Ejyvg4Asg8bTckKRNhclt8VA==
+X-Google-Smtp-Source: AGHT+IHMpF0XSHfhv/D7G0egi96ZKA+Ikr5NlMdkmFTZdGnJC5YWm9v9BUvbFCCcuG21KiNoTkoyEpqwQ3BEKy8+alk=
+X-Received: by 2002:a05:6102:54a3:b0:4c1:875e:2215 with SMTP id
+ ada2fe7eead31-4c30a534d15mr1058329137.1.1741311238057; Thu, 06 Mar 2025
+ 17:33:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,14 +59,14 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250219203349.787173-1-usmanakinyemi202@gmail.com>
- <20250306143629.1267358-1-usmanakinyemi202@gmail.com> <20250306143629.1267358-9-usmanakinyemi202@gmail.com>
- <xmqqzfhyggzb.fsf@gitster.g>
-In-Reply-To: <xmqqzfhyggzb.fsf@gitster.g>
+ <20250306143629.1267358-1-usmanakinyemi202@gmail.com> <20250306143629.1267358-2-usmanakinyemi202@gmail.com>
+ <xmqqcyeuhwqb.fsf@gitster.g>
+In-Reply-To: <xmqqcyeuhwqb.fsf@gitster.g>
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Fri, 7 Mar 2025 06:45:29 +0530
-X-Gm-Features: AQ5f1JqQ53yyzZPSdAUuT68JuUzRZmV19Wv5HslM2eddvTmroxTMRCkslqxU1Cg
-Message-ID: <CAPSxiM_fLNUvg86TtCHZTbsE_VnhKdMiDa3pfLPsLa3ThZfxmw@mail.gmail.com>
-Subject: Re: [PATCH v3 8/8] builtin/checkout-index: stop using `the_repository`
+Date: Fri, 7 Mar 2025 07:03:47 +0530
+X-Gm-Features: AQ5f1Jo4AckckjB1iJZuGSWmrMU8cHrK8MtMpWi2naVj2iO5Zd1O9SoKA6u_q5E
+Message-ID: <CAPSxiM8m7oeQ+DNPjzZzve4F510RYhWTfM-wsg5RabJ9fSF7Yg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/8] config: teach repo_config to allow `repo` to be NULL
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, christian.couder@gmail.com, johncai86@gmail.com, 
 	me@ttaylorr.com, ps@pks.im, shejialuo@gmail.com, 
@@ -74,40 +74,69 @@ Cc: git@vger.kernel.org, christian.couder@gmail.com, johncai86@gmail.com,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 6, 2025 at 11:48=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+On Thu, Mar 6, 2025 at 11:23=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
 wrote:
 >
 > Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 >
-> > Remove the_repository global variable in favor of the repository
-> > argument that gets passed in "builtin/checkout-index.c".
-> >
-> > When `-h` is passed to the command outside a Git repository, the
-> > `run_builtin()` will call the `cmd_checkout_index()` function with `rep=
-o`
-> > set to NULL and then early in the function, `show_usage_with_options_if=
-_asked()`
-> > call will give the options help and exit.
-> >
-> > Pass the repository available in the calling context to both `checkout_=
-all()`
-> > and `checkout_file()` to remove their dependency on the global
-> > `the_repository` variable.
+> >  void repo_config(struct repository *repo, config_fn_t fn, void *data)
+> >  {
+> > +     if (!repo) {
+> > +             read_very_early_config(fn, data);
+> > +             return;
+> > +     }
+> >       git_config_check_init(repo);
+> >       configset_iter(repo->config, fn, data);
+> >  }
+> > diff --git a/config.h b/config.h
+> > index 5c730c4f89..1e5b22dfc4 100644
+> > --- a/config.h
+> > +++ b/config.h
+> > @@ -219,6 +219,9 @@ void read_very_early_config(config_fn_t cb, void *d=
+ata);
+> >   * repo-specific one; by overwriting, the higher-priority repo-specifi=
+c
+> >   * value is left at the end).
+> >   *
+> > + * In cases where the repository variable is NULL, repo_config() will
+> > + * call read_early_config().
+> > + *
 >
-> Hmph, if we are passing anything down to these code paths, I would
-> have expected that it would be an instance of "struct index_state".
+> early or very early?
 >
-> Do these two helper functions need anything other than that from the
-> repository instance?
-No, they do not. They could possibly do in the future and is there any
-reason why we might want to pass the "struct index_state" instead of
-the whole "struct repository" ?
-
-
-
+> I am wondering if we should describe the effect we want out of the
+> design more prominently than the way we try to obtain the effect
+> here.  In other words, instead of (rather, in addition to) saying
+> that we call helper X, wouldn't it be more helpful to future
+> developers why we call X, to convey the intent, so that they know
+> how to adjust when for example what X does change or X even
+> disappears?  E.g.,
 >
-> Other than that, I think this step does look great.
+>         When repo=3D=3DNULL, skip reading the per-repository
+>         configuration file but still use the system- and globa-
+>         configuration, by calling X.  Note that this ignores
+>         one-time configuration override "git -c var=3Dval" given from
+>         the command line.  The only use case the feature to allow
+>         passing repo=3D=3DNULL was designed for is to support handling
+>         "git foo -h" (which lets git.c:run_builtin() to pass NULL
+>         and have the cmd_foo() call repo_config() before calling
+>         parse_options() to notice "-h", give help and exit) for a
+>         command that ordinarily require a repository, so this
+>         limitation may be OK (but if needed you are welcome to fix
+>         it).
 >
-> Will queue.
+> That way, folks who are planning to update read_veriy_early_config()
+> so that it pays attention to the "git -c var=3Dval" in the future will
+> be rest assured that they won't be breaking this caller with their
+> planned change.
+>
+> Of course I didn't spend enough brainpower to make the above comment
+> more concise and to the point, which the final version should be,
+> but hopefully you got the idea.
+Yeah, thanks Junio, I understand clearly. Your comment is well explained al=
+so.
+I will refine it and add it in an updated patch.
+Thank you.
 >
 > Thanks.
+>
