@@ -1,56 +1,56 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB26321B9C8
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 14:19:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B679821B9F7
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 14:19:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741357147; cv=none; b=glzgl2RN2AzFQbi+XNarXJGWDN5CGcJxM+eAG2wpVCkYVNP4L7rfInjOEorOdveREz4jneaWVMPISVCDl2MHEhl0jhjYIFIFbJRFJBu+npkoaEC/odL2ZosBfKASG7Wpsj5yYGtNqYQYgmXx37indWtWyxK72880GsRz08bMVIc=
+	t=1741357148; cv=none; b=eVCqGar7euper8NbWC/CJnJMmH4CVIBFISv7tt4UKOH/GtCc10lv5xexU2p4zJvzVr5mBvshN+7kT7athcNEehR2so0HWv0bJ8ggGcrBZvRKnyq8sZ0HDBrxRAtXmw5xGOZriBt8/trkvi0qyle2jQG5s9L5/grXoHNDzKmC6V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741357147; c=relaxed/simple;
-	bh=l6vfHxMQsfAk2Qo3m9vjhJ+Y7ZUBwfGJqNafkI6rHmQ=;
+	s=arc-20240116; t=1741357148; c=relaxed/simple;
+	bh=Nvyn7DlNFnqaTMirC3Qa47WRk5b9+r5bVU0i8X/+0mo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OUJMENgtlvLzQpeUwbXAZ0+Xr0IixfJmaxDBwyxZIfQsJ49ZVuAmr52xhG2kvjO7YrMguLhQafZPkaU2aGMljl3ASU82NbAmqRkiGIxo6uPOuasZ8xuCFiScSs4M8HD0B8yVx1boRcEwHID42grUq43Xt0isP9hYpn7Id/MYQYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=adpOGT2Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hpggdRXJ; arc=none smtp.client-ip=202.12.124.154
+	 In-Reply-To:To:Cc; b=hIVRIOi4qI1CHBzYH44FvmCvvHWmuFHpTweS7ODyPPQPjv5PmOCC0Il+1pldaVUWXAcNMnD+THPiHxy43PRresJ93TZCFxYsm5RtKwMWqLwHQxNzHitFOYacPgQWhRkkeSPqpPwqJf7JdLCmBjOcFnxqJ4d20IUgWcMPydYwZXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SDaf+Tcu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VqV/i/mP; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="adpOGT2Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hpggdRXJ"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id ED51D25401DC;
-	Fri,  7 Mar 2025 09:19:04 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SDaf+Tcu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VqV/i/mP"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id C53DD1140186;
+	Fri,  7 Mar 2025 09:19:05 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 07 Mar 2025 09:19:05 -0500
+  by phl-compute-05.internal (MEProxy); Fri, 07 Mar 2025 09:19:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1741357144;
-	 x=1741443544; bh=EB42OqKPgYccqjSUi5BBsPv0PfiBSBd8mpmIBQub4AE=; b=
-	adpOGT2QkhQmtj7+NDejBx/YffRybwZ/Jnu0i/78zhZO9kBykR3LldL6o9qcZdvk
-	W8RtdOxIkkJKTiG3YiPTwmtBVoHZM88NLNNm4nJyalMKeskrqouw+5UWLiPewNfv
-	lGsZivTtJGRNWXyR86eDFA7fXHxJtZNE4QHE4dOKu05AX8jD5eOxGfpTIRB+6b/v
-	UK0mENnLXlFxFCx9rSILE+o7peL1+3JhhEclkPeI18vTel/YwSYTJVjieDkpMzRw
-	Bi1ztuiXkzWW3Iv1ZL787ZEdI/f0Jcn3Zo/ZfH/amAYvzBOyWC48zP2d+w5AP6Eu
-	erp8FBhHkFSPJJ0TQxJ1Bg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1741357145;
+	 x=1741443545; bh=Y4HJmM+JiR7nztyQnLAkouWPQJpIaN73FcU24TrRUvI=; b=
+	SDaf+Tcun7aML6DSB6MfIU9xHK4fxtP+arsGpXtJTFSihVMociiT6XxSQtJ/zNA4
+	Ewkhk23aL5okA5QgMS8ZepIBc7cbTzZWkoPP49nqyf8PzhhIcWrkOrrk4p26lPU5
+	KtIcRxomykgrHSe56rXV+ybxNL01YB8QJsOWQTnwnvDDl9p4VcjaM+LbMKRUEdkN
+	EQMqPV7U5Qpr/IiXvZzsmtW5xt3nqwtwUzr7mGmFXkNJcLZxMqlmESZO9zzcc6i+
+	kkKNNyQj3n6KYVlUmskrQh5GTUl2e8KU/UsiRsDBu1yEVR9/8K+DP6p5GOtEpx4K
+	h+0dOcAUn62C6H3W0DfgBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741357144; x=
-	1741443544; bh=EB42OqKPgYccqjSUi5BBsPv0PfiBSBd8mpmIBQub4AE=; b=h
-	pggdRXJEiCEE76JgRnYbOnV63yskLyHRbNIMk1raDJjxnMos0jjfhDzVgT+eLssu
-	LC3mX9gvaKI355JpCL4uGRj/Pel2EZLer4RQhyBmzNGLWdY2EHeEPYpd/CS62KOh
-	THy4OLzfwCU88MOR7aAjMUkHf81bXkxK2ygTam9uI5envOlu4Wu/My4E0YW2AMUW
-	xTR3mSbFpAgaevu2pg7G4dZv0tVPKw0o+5Ia3jUmuDUARwfm79PbdLXm4pCK6XhC
-	PtZPG8N+ZiEBUm9v6hGAvazGWyNpqArJPGuW2oQKcYIOddPcKpxmPDzhy0KZtFk8
-	rSkpyN2GQ1kjtU8Dhsm+g==
-X-ME-Sender: <xms:WADLZwt16e8QxPgqFHarGWf2u9lo_90XnX8olLxBJjXfZTysXSo3QA>
-    <xme:WADLZ9fTqJ0DKqrHY6BKhUL6kj6N5oNg5R43BqnS6ZICWhU7dYQ0Ey0DlYMVmXKiY
-    UIr0QzqmJwMsShIhQ>
-X-ME-Received: <xmr:WADLZ7y0yYJuriXyQJIeoeVa2g-WXEF5M-SJADkNF-qg8n3ZF7S3WUzgINW7tssHLg25rNj0TGtOCdz3SN0xoO8RHfgCaS-_1AzvfxdGGKDt>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduuddtkeekucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741357145; x=
+	1741443545; bh=Y4HJmM+JiR7nztyQnLAkouWPQJpIaN73FcU24TrRUvI=; b=V
+	qV/i/mPve73v57YuYNmAsxrkn01fL2BL5y5onpsM0v+yTyxesS/1Gptyrnr7G6rF
+	2+sjlMGZTvJbbCp9tD8ChkyTwKROiuaz0xWkrXslTpQ0xumQAF5I6GZ/BqghqyVb
+	luIZ0icej4KpY4hmX6OjcnyDL4eG7+iuhPyGu+wRRUGX7eSpfYiObVdJsT1d6kUU
+	ogytSKJXPrgCiHM1bWOQoHAFR/p05LnJNyWdsqL1fUP+GAEknmtnLGmIZzPjveet
+	/OQI2xQ0CKHeu9lmEIj48oOR/kJcIo5N2gfgiRkJsX5F5NbE01AfUXLfyIKHCCn/
+	gDQ4pUPIZFskQevdRAJ3A==
+X-ME-Sender: <xms:WQDLZzXII0KA1IAJDQN6852KOUKJYBn0sxVLLvLnv-DnoW_-e5ZGXg>
+    <xme:WQDLZ7n47R1m1S4DcKoZq5e_CRzd102DJVwpbMXvWsnWBuw9rQUIU2H0il0ZBWpLy
+    TLY5X9onHBucpghDg>
+X-ME-Received: <xmr:WQDLZ_Z0tTtZGGMv-FiTruPpXijj90SYvlQMQlubWzGULGwnfEvpx1_eq7IEjINPP381fiiqRqy2Jby63V93pNno2W5Cvb53MBMY_90th_BR>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduuddtkeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
@@ -58,23 +58,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduuddtkeekucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    khgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:WADLZzNIdtJYTgtCXADP-sOB4yVWp3sK1j-QikgRpK8dmDah9wW1ig>
-    <xmx:WADLZw9Ugub853Xpl4r4cveF-Or3ZvQ11Rl_FUUtQJ1l1XinrZHH0w>
-    <xmx:WADLZ7XgvT2bNMGZBUnH_HwJ1nuIWWCZdIybCp5pSq-pkYh1uSn-Ow>
-    <xmx:WADLZ5fcNHGRIfttAov2VWi1qtGIFbZDuTEBt-d4PTJemZSYmssGFw>
-    <xmx:WADLZ_bH266GPLw6wULTtrN1yb1Ihtq3FyupS9DcdX0-pOVJ2pC2mJhs>
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:WQDLZ-U8A9-Q4u68Q-US-hAa9S3pATKqNqZBAVgqQpU_pv_mj0_l-w>
+    <xmx:WQDLZ9lvdtLkWKNXlFvY8_A3HznnItXZVeeWhxCfVk8S7G1pZXldRA>
+    <xmx:WQDLZ7cx3c_OSIElzNBzlTBT2oawz4O3I7BiI0dBrRW2ZPO6caP0zQ>
+    <xmx:WQDLZ3EmKjX0NiFM5F8KuyVx8JPF4MfHIKhAjzUmBBKPI3TelCgZjQ>
+    <xmx:WQDLZzh3f-sWRJ56MLcMgkKYPRRYXeSh9JOzUEbzvxzRQ4gN4da5ut_f>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Mar 2025 09:19:03 -0500 (EST)
+ 7 Mar 2025 09:19:04 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 40f73abe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Mar 2025 14:19:01 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id b97c8c8d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Mar 2025 14:19:02 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 07 Mar 2025 15:18:58 +0100
-Subject: [PATCH v3 05/12] pack-check: stop depending on `the_repository`
+Date: Fri, 07 Mar 2025 15:18:59 +0100
+Subject: [PATCH v3 06/12] pack-revindex: stop depending on `the_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250307-b4-pks-objects-without-the-repository-v3-5-7bccf408731e@pks.im>
+Message-Id: <20250307-b4-pks-objects-without-the-repository-v3-6-7bccf408731e@pks.im>
 References: <20250307-b4-pks-objects-without-the-repository-v3-0-7bccf408731e@pks.im>
 In-Reply-To: <20250307-b4-pks-objects-without-the-repository-v3-0-7bccf408731e@pks.im>
 To: git@vger.kernel.org
@@ -91,7 +91,7 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.2
 
-There are multiple sites in "pack-check.c" where we use the global
+There are multiple sites in "pack-revindex.c" where we use the global
 `the_repository` variable, either explicitly or implicitly by using
 `the_hash_algo`. In all of those cases we already have a repository
 available in the calling context though.
@@ -101,59 +101,135 @@ remove the `USE_THE_REPOSITORY_VARIABLE` define.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- pack-check.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ pack-revindex.c | 34 ++++++++++++++++++++--------------
+ 1 file changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/pack-check.c b/pack-check.c
-index 017dc740f7b..95dcbbe9852 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -1,4 +1,3 @@
+diff --git a/pack-revindex.c b/pack-revindex.c
+index 78139e3d7f5..038e0c96b1c 100644
+--- a/pack-revindex.c
++++ b/pack-revindex.c
+@@ -1,5 +1,3 @@
 -#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
+-
  #include "git-compat-util.h"
-@@ -44,7 +43,7 @@ int check_pack_crc(struct packed_git *p, struct pack_window **w_curs,
- 	} while (len);
+ #include "gettext.h"
+ #include "pack-revindex.h"
+@@ -9,6 +7,7 @@
+ #include "strbuf.h"
+ #include "trace2.h"
+ #include "parse.h"
++#include "repository.h"
+ #include "midx.h"
+ #include "csum-file.h"
  
- 	index_crc = p->index_data;
--	index_crc += 2 + 256 + (size_t)p->num_objects * (the_hash_algo->rawsz/4) + nr;
-+	index_crc += 2 + 256 + (size_t)p->num_objects * (p->repo->hash_algo->rawsz/4) + nr;
+@@ -137,7 +136,7 @@ static void create_pack_revindex(struct packed_git *p)
+ 	const unsigned num_ent = p->num_objects;
+ 	unsigned i;
+ 	const char *index = p->index_data;
+-	const unsigned hashsz = the_hash_algo->rawsz;
++	const unsigned hashsz = p->repo->hash_algo->rawsz;
  
- 	return data_crc != ntohl(*index_crc);
+ 	ALLOC_ARRAY(p->revindex, num_ent + 1);
+ 	index += 4 * 256;
+@@ -193,7 +192,11 @@ static char *pack_revindex_filename(struct packed_git *p)
  }
-@@ -81,11 +80,11 @@ static int verify_packfile(struct repository *r,
- 	} while (offset < pack_sig_ofs);
- 	git_hash_final(hash, &ctx);
- 	pack_sig = use_pack(p, w_curs, pack_sig_ofs, NULL);
--	if (!hasheq(hash, pack_sig, the_repository->hash_algo))
-+	if (!hasheq(hash, pack_sig, r->hash_algo))
- 		err = error("%s pack checksum mismatch",
- 			    p->pack_name);
- 	if (!hasheq(index_base + index_size - r->hash_algo->hexsz, pack_sig,
--		    the_repository->hash_algo))
-+		    r->hash_algo))
- 		err = error("%s pack checksum does not match its index",
- 			    p->pack_name);
- 	unuse_pack(w_curs);
-@@ -132,7 +131,7 @@ static int verify_packfile(struct repository *r,
- 		unuse_pack(w_curs);
  
- 		if (type == OBJ_BLOB &&
--		    repo_settings_get_big_file_threshold(the_repository) <= size) {
-+		    repo_settings_get_big_file_threshold(r) <= size) {
- 			/*
- 			 * Let stream_object_signature() check it with
- 			 * the streaming interface; no point slurping
-@@ -181,7 +180,7 @@ int verify_pack_index(struct packed_git *p)
- 		return error("packfile %s index not opened", p->pack_name);
+ #define RIDX_HEADER_SIZE (12)
+-#define RIDX_MIN_SIZE (RIDX_HEADER_SIZE + (2 * the_hash_algo->rawsz))
++
++static size_t ridx_min_size(const struct git_hash_algo *algo)
++{
++	return RIDX_HEADER_SIZE + (2 * algo->rawsz);
++}
  
- 	/* Verify SHA1 sum of the index file */
--	if (!hashfile_checksum_valid(the_repository->hash_algo, p->index_data, p->index_size))
-+	if (!hashfile_checksum_valid(p->repo->hash_algo, p->index_data, p->index_size))
- 		err = error("Packfile index for %s hash mismatch",
- 			    p->pack_name);
- 	return err;
+ struct revindex_header {
+ 	uint32_t signature;
+@@ -201,7 +204,8 @@ struct revindex_header {
+ 	uint32_t hash_id;
+ };
+ 
+-static int load_revindex_from_disk(char *revindex_name,
++static int load_revindex_from_disk(const struct git_hash_algo *algo,
++				   char *revindex_name,
+ 				   uint32_t num_objects,
+ 				   const uint32_t **data_p, size_t *len_p)
+ {
+@@ -228,12 +232,12 @@ static int load_revindex_from_disk(char *revindex_name,
+ 
+ 	revindex_size = xsize_t(st.st_size);
+ 
+-	if (revindex_size < RIDX_MIN_SIZE) {
++	if (revindex_size < ridx_min_size(algo)) {
+ 		ret = error(_("reverse-index file %s is too small"), revindex_name);
+ 		goto cleanup;
+ 	}
+ 
+-	if (revindex_size - RIDX_MIN_SIZE != st_mult(sizeof(uint32_t), num_objects)) {
++	if (revindex_size - ridx_min_size(algo) != st_mult(sizeof(uint32_t), num_objects)) {
+ 		ret = error(_("reverse-index file %s is corrupt"), revindex_name);
+ 		goto cleanup;
+ 	}
+@@ -279,7 +283,8 @@ int load_pack_revindex_from_disk(struct packed_git *p)
+ 
+ 	revindex_name = pack_revindex_filename(p);
+ 
+-	ret = load_revindex_from_disk(revindex_name,
++	ret = load_revindex_from_disk(p->repo->hash_algo,
++				      revindex_name,
+ 				      p->num_objects,
+ 				      &p->revindex_map,
+ 				      &p->revindex_size);
+@@ -322,7 +327,7 @@ int verify_pack_revindex(struct packed_git *p)
+ 	if (!p->revindex_map || !p->revindex_data)
+ 		return res;
+ 
+-	if (!hashfile_checksum_valid(the_repository->hash_algo,
++	if (!hashfile_checksum_valid(p->repo->hash_algo,
+ 				     (const unsigned char *)p->revindex_map, p->revindex_size)) {
+ 		error(_("invalid checksum"));
+ 		res = -1;
+@@ -375,19 +380,20 @@ int load_midx_revindex(struct multi_pack_index *m)
+ 		 * not want to accidentally call munmap() in the middle of the
+ 		 * MIDX.
+ 		 */
+-		trace2_data_string("load_midx_revindex", the_repository,
++		trace2_data_string("load_midx_revindex", m->repo,
+ 				   "source", "midx");
+ 		m->revindex_data = (const uint32_t *)m->chunk_revindex;
+ 		return 0;
+ 	}
+ 
+-	trace2_data_string("load_midx_revindex", the_repository,
++	trace2_data_string("load_midx_revindex", m->repo,
+ 			   "source", "rev");
+ 
+ 	get_midx_filename_ext(m->repo->hash_algo, &revindex_name, m->object_dir,
+ 			      get_midx_checksum(m), MIDX_EXT_REV);
+ 
+-	ret = load_revindex_from_disk(revindex_name.buf,
++	ret = load_revindex_from_disk(m->repo->hash_algo,
++				      revindex_name.buf,
+ 				      m->num_objects,
+ 				      &m->revindex_map,
+ 				      &m->revindex_len);
+@@ -419,7 +425,7 @@ int offset_to_pack_pos(struct packed_git *p, off_t ofs, uint32_t *pos)
+ {
+ 	unsigned lo, hi;
+ 
+-	if (load_pack_revindex(the_repository, p) < 0)
++	if (load_pack_revindex(p->repo, p) < 0)
+ 		return -1;
+ 
+ 	lo = 0;
+@@ -465,7 +471,7 @@ off_t pack_pos_to_offset(struct packed_git *p, uint32_t pos)
+ 	if (p->revindex)
+ 		return p->revindex[pos].offset;
+ 	else if (pos == p->num_objects)
+-		return p->pack_size - the_hash_algo->rawsz;
++		return p->pack_size - p->repo->hash_algo->rawsz;
+ 	else
+ 		return nth_packed_object_offset(p, pack_pos_to_index(p, pos));
+ }
 
 -- 
 2.49.0.rc1.455.g4cd33545ba.dirty
