@@ -1,138 +1,112 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63ECA1D9A66
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 23:47:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4899F1537A7
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 23:58:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741391222; cv=none; b=QrUJpSr/3NDbYR26j6/Z5r5Djzca00HVciLD6cve4e5shxe2DuWBAR+CY2757lVfLOhQhpTE1nYJ8ObumI9nnxribR909GBHtFd00cxjMupdIcfC5bcE8qH3Jp2wb8fMoDv24nNAZgd2zNr68KRJO+sLcJFQE13U1LKeKXrBzxA=
+	t=1741391909; cv=none; b=UWEk4qDz0gblC9fyznVt4KloKPOftpYYvdrZd4k5dTmCbUtH6sZsSjBfHnwz04LvDe8U2C6JNyXbYeY7229muwCH6rGX1FKvEcLeiYv+T8DgxLYiwA8oKleblU8z37DBk1pAPSu5JaZflZ8xm+8SHVlWHWUfXTDplJ5ZXMxDlcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741391222; c=relaxed/simple;
-	bh=riRPZE43xG/1h2JzaVfTA6+rSIMUKd7tdCQv182M/f8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kz1CsN99ykd0/SPoAcud4yYrvGdL1xK9iDQUHH+x74VS/ThPb3+xQZcE/f1pt2euQg6vjNMwe3AAEAhdNgolJEMmRW+owu38Cj8/nIK84fCYWfmgSk1UhQ8XDonmtbzNmk7BZMqbQbkVjo5vqVH/EEjaTzP01aLtB23ibwO2cts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=w6O6UPaL; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1741391909; c=relaxed/simple;
+	bh=spALKpt3cS6bKVikbCaqrlblh1dHq9jbrgGvQ1e8P2U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ikxKR//ojaqyuHd5nNEhyys408oAXtq4xHTYm4GpDuF4MFIiRcIKqrOY7p6XTsaM+LNvDNvqX3syOHzGfOc/OEVnu3mt0aD6lWBrbgMIUv8u0dhA5qWlDcHkz1HCfUdMShh55xSPbvKj16SClJ6j7bFRnc9RtyVarMGqnLXw71s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uwnyvk8p; arc=none smtp.client-ip=209.85.166.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="w6O6UPaL"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e5dc299deb4so2100469276.1
-        for <git@vger.kernel.org>; Fri, 07 Mar 2025 15:47:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uwnyvk8p"
+Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-3d04932a36cso22661495ab.1
+        for <git@vger.kernel.org>; Fri, 07 Mar 2025 15:58:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741391220; x=1741996020; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=P9YHCtWv3FPmU7YgNpKlSgYkMknIPPp9gxWCBC8DvD4=;
-        b=w6O6UPaLojBeeaLpU7tpSYAPXCNa3+ppU9tv7X3AfXbDkutsz/hUVWwaPeMxoNTOmE
-         P6SN8Vg2B2yIR+8T0F1676M574JgnfxewqM3bTaZmMaDwxWCXKf/3o8P+Y1oYEmKhv/Z
-         fD76X6hQkG6Z0OIBvAJR1qfM+UjKa4NR6HXNsuXznv67p/jIyWKqIuMnpS1ghvt6kOHU
-         MIxY56gnV41h5Hw28WBEZdU+IFSHRkWWXwGovFmHUUIVARuFor1G72xWk/i1VZFuswgG
-         D6Dj2HOGwpc+Z32qXSgt2HphyBwLV803XR0PEeCUvZEpbzfk9lhmxJCS/KS4gJqyZD4j
-         nKjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741391220; x=1741996020;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1741391907; x=1741996707; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=P9YHCtWv3FPmU7YgNpKlSgYkMknIPPp9gxWCBC8DvD4=;
-        b=WXIp37cnfcd7EPSPmaH2K0foP7KCeoE7zILyz/6XXUQB+meycIu7qaDwppkzCzLenL
-         q4M5Gsj6Pv7rYcBxBTab9kYB8fZnGiFZQePT8aYE/WoXu/yxWdz3PRzd3Xa7uoCRXGXU
-         y+DAToonVuXjmKbErRI6ysmW0Bnt87Hd2JTOv6ecYz05fzutvVK1axpZIo2DTOQ8XVMR
-         md7x8tGXg3pi1ASI83KkDMuk9LjUnc2giFH+jRPahiU5Qdj1gaRqvJxz4nIJkHu1BZex
-         Xh71TigLaVLI8QmbZ4NpBiW/5DmVdjm5jFbC/AocC7zarOxsOPktpt5Gxvsxt4xX7vEa
-         nNFA==
-X-Gm-Message-State: AOJu0YxUYU9ZCsaIhwTAa8yyMY/la76ivjpmghfeK+YdyulHzLG+TMQ+
-	40rv49JoVtXpowLLjf0oBsoObOM5K4AYRpdY3eIj/EiD+x9hZA2UHdlmJfqAy9A=
-X-Gm-Gg: ASbGnctSqdj6v/Ycm9N0b1rU7s5PGNcG3aeWKi1E7dJ5qKpxkjh6tzv3TcP5W9kMapr
-	V7vOwaXZnqT/JCrxfBvfOHWlVRScxztq/+B4F1SvhaHoMUGLXqNuQ4oklKnwnSXwxTdxJf2s7RE
-	OwdNp5jQicwliqlrwUrDY+VkPj9crMAHhkGSwuxGYLEbhMC/d31QjShd7rs9B11KXJCAtRZs+sE
-	wdCGIlzM1g1M34Ba7cfoybUnHkrZbrnWRO5fNwpVD2N4QT/FihWzxTZWprCtKpJIdZypwve87E9
-	YBxUzTHU4aULsujmppDoNSK8Hzh9N97YpuSf9I5g9wI0p+4LIerpa9iQd+ZjvgoAyMQgHgNBPSV
-	BriRP417he22yJ/U8
-X-Google-Smtp-Source: AGHT+IFZEK17tP8aab2pFfdADlK96LUqAtW3wpdUs+JQhbo4K05xJoDFNtm4zBTNTIGXg4I01D+5nw==
-X-Received: by 2002:a05:6902:330c:b0:e5b:1c0a:6cac with SMTP id 3f1490d57ef6-e635c1d81f6mr5940090276.38.1741391220350;
-        Fri, 07 Mar 2025 15:47:00 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e6372629e58sm91560276.46.2025.03.07.15.46.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Mar 2025 15:47:00 -0800 (PST)
-Date: Fri, 7 Mar 2025 18:46:58 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
-	SURA <surak8806@gmail.com>
-Subject: Re: [PATCH v2 2/2] refs.c: stop matching non-directory prefixes in
- exclude patterns
-Message-ID: <Z8uFcvHRcBExhjNS@nand.local>
-References: <cover.1741223981.git.me@ttaylorr.com>
- <cover.1741275245.git.me@ttaylorr.com>
- <67c8c5f797833a9a35f4805059d7e759020f54bd.1741275245.git.me@ttaylorr.com>
- <CABPp-BFn0wht71rM1bE1ABpa6Rn6QRrcVrbN0fhcwprbm+T39Q@mail.gmail.com>
+        bh=b/j7uYeZdkonY15WSIP6B49iXYvNKX3JaPn/Gf1dmb4=;
+        b=Uwnyvk8px26csT0l0ZDmMmPr9+Byhz1YfCHGArZm1WJCYlqamqL839QGm02AhxTpjP
+         oZXA45BBjRgF4nQSYn5TQ3Lsd23wTdNUEry91VE2Qri/GZ81L1NOR5LXy91kHuuN7jP1
+         Z/daZbfy33nKcbOEKi4LGv5d5+3MGCWD1P6EGIb4zlEBCuEfdOunBxKuVzCgaF1e5/7/
+         HQRCs7s63OcneVDEaCQbmR0wbh9BlxlY/5pCsgIpmD1BCBIykpBSc5bpWRHsEglw8Gvp
+         nHT7Au2tWgA67aEI2En1NW+ssKJw9/6ThbouifY9FM6fdVyQIv9xfkSFylHp60lCd8B0
+         RRoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741391907; x=1741996707;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=b/j7uYeZdkonY15WSIP6B49iXYvNKX3JaPn/Gf1dmb4=;
+        b=doZuPMK6IgWtT1A4aP+MQxXyuLAiTHzTNk1XddnlOib+0dR4h0hwxPflwdg1f7h0ry
+         iQ4H6MxtBPeQ92b6TO/C2PASRMxUxuF8nzUqihUNI993KqQUjV+BlLAPCCzL73hSxTIN
+         ZeDckvyHulG4AE7UoVwNnXyPu8L5JlvWTHHCHC6uyCVyQBOlMeevDNnnERZKgTMG8Nve
+         GXAcFf45dKTOTEgM5pOO7/iBTfRVlDxa4cERUC2CMkA80ThKqjhka43LuVHmHbWSXyVJ
+         O0MKsnV+pRKkyot4b9LX2at+yNC9fNigMy0pwybY1CVWhXET7xp+jOqeiBbXwX21BlUb
+         M3Sg==
+X-Gm-Message-State: AOJu0Yz4xrRNaTqd0lBWyN56r80DoDtCM+aElF7SJn12Dm1J/8crvGcA
+	k/gC3LkS/Vk0ZHYgciBpo+ewJUuRFD4dgcIXg2Dl2m05xPoZSDWpK+8fr3vSHCBApD/S7bdLw0w
+	9xsI57pvfvSZLEtwacTxd5tT3sRU=
+X-Gm-Gg: ASbGncu5lQfWqoNazKK+mErPAOp+eLNJoYCQJKcmE72tXkhbJ4ltY2yTsIzr5AXC1Bu
+	avxdVB7Qc/bK5umxz2TzdzY3BIYgSRjhfObUN/x1825vxTl1qT5a+Aqm+/5crYG6ukVR0If6FKi
+	g6G74lj2Xa5VnCs9J2WOwWdi3knQeZBwcdbqckWizkMZodC0vL22UrnzQmEd8=
+X-Google-Smtp-Source: AGHT+IG9yVJ4LHlPIZRnH2++lYqeIRJl0BQFxyNw0X20sU3+jj+8eug4GeS0pZct78CNMMkmv4QYDEqti30IAR4Mj8o=
+X-Received: by 2002:a05:6e02:1aaa:b0:3d4:3d63:e076 with SMTP id
+ e9e14a558f8ab-3d44192e5f9mr82220895ab.18.1741391907227; Fri, 07 Mar 2025
+ 15:58:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BFn0wht71rM1bE1ABpa6Rn6QRrcVrbN0fhcwprbm+T39Q@mail.gmail.com>
+References: <cover.1741223981.git.me@ttaylorr.com> <cover.1741275245.git.me@ttaylorr.com>
+ <c3b5ca597330275391704a0653398ee28f911fc1.1741275245.git.me@ttaylorr.com>
+ <CABPp-BE3u=YVCU20Bz4jZc90DkmArE=v02WjOzr-uO6kV6Zfng@mail.gmail.com> <Z8uDMHclfE+KqBMz@nand.local>
+In-Reply-To: <Z8uDMHclfE+KqBMz@nand.local>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 7 Mar 2025 15:58:16 -0800
+X-Gm-Features: AQ5f1JoceMc6ixyyEVbpeY58WZwaWaPYeqU_lrz0YUe8qjS7czboVTfLV8KYf7c
+Message-ID: <CABPp-BG_mXT1fv0G2QXJg4WJuVZcWbPHG_9VQ8Szf8Ges4fGJw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] refs.c: remove empty '--exclude' patterns
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+	Patrick Steinhardt <ps@pks.im>, SURA <surak8806@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 07, 2025 at 01:31:31PM -0800, Elijah Newren wrote:
-> > diff --git a/refs.c b/refs.c
-> > index 17d3840aff..2d9a1b51f4 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -1708,7 +1708,11 @@ struct ref_iterator *refs_ref_iterator_begin(
-> >                         if (!len)
-> >                                 continue;
-> >
-> > -                       strvec_push(&normalized_exclude_patterns, pattern);
-> > +                       if (pattern[len - 1] == '/')
-> > +                               strvec_push(&normalized_exclude_patterns, pattern);
-> > +                       else
-> > +                               strvec_pushf(&normalized_exclude_patterns, "%s/",
-> > +                                            pattern);
+On Fri, Mar 7, 2025 at 3:37=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote:
 >
-> Doesn't this mean that if the user requested to exclude
-> "refs/heads/bar" and "refs/heads/bar" exists, that we won't exclude it
-> because it doesn't have a trailing slash?
+> On Fri, Mar 07, 2025 at 01:32:49PM -0800, Elijah Newren wrote:
+> > Makes sense...but doesn't the second patch also fix this issue without
+> > the first patch being needed?
 >
-> >From reading other comments in this thread, I guess that ends up being
-> okay, because we only promise to filter out what we can cheaply
-> filter, and we rely on our caller to double-check everything and do
-> the real filtering.
->
-> ...but it gives me some ugly dir.c vibes, reminding me of 95c11ecc73f2
-> (Fix error-prone fill_directory() API; make it only return matches,
-> 2020-04-01) and a slew of related bugs preceding it.  Granted, dir.c
-> had this tri-state to deal with (tracked, untracked-but-ignored,
-> untracked-and-not-ignored) and simplifying of whole directories, which
-> don't apply here, so maybe the similarity of
-> "fast-filtering-only-and-rely-on-caller" won't be a problem since the
-> upper level filtering is so much more straightforward.
->
-> Should this at least be called out in the commit message, though?
+> It does, but the mechanism is pretty round-about. (From a quick glance
+> we'll turn the empty pattern "" into "/" which won't match anything, and
+> thus won't contribute to the jump list).
 
-Yeah, I think that we don't have a tri-state here to deal with as was
-the case in 95c11ecc732 makes this a little easier to reason about.
+How is that round-about?  The whole point of patch 2 is to stop
+matching on excludes as a prefix unless that prefix is a directory
+name, right?  To me, patch 1 merely looks like a special case of patch
+2.
 
-And you're right: if we have a pattern like "refs/heads/bar" and we see
-a leaf in our reference hierarchy called "refs/heads/bar", the packed
-backend will not exclude it.
+> But there are a couple of reasons to keep this patch. Most importantly,
+> it hardens us against potential future regressions here with the empty
+> pattern.
 
-This is OK because the exclude pattern stuff is all considered
-"best-effort" and callers are expected to do their own filtering. Note
-that the exclude patterns (at least in the packed backend) don't know
-how to handle meta-characters (there's a big comment in
-refs/packed-backend.c explaining why). So we can't guarantee the absence
-of false positives without performing the same post-processing as the
-caller would.
+I'm fine with leaving the patch in place, since it doesn't hurt
+anything.  And if the empty pattern is especially problematic, I can
+see this logic.
 
-Even prior to this commit, a literal match in the excluded patterns
-would result in a region whose start- and end-points are the same, and
-we'd throw it out before it made its way into the jump list.
+> And it makes dealing with that case much more explicit by
+> throwing those patterns out before they make their way to the backends
+> instead of the quirk above.
 
-Thanks,
-Taylor
+I don't understand this reason, though.  It feels to me like the
+design behind patch 2 rather than a "quirk"...but maybe the fact that
+patch 2 doesn't exclude "refs/heads/bar" (at the low-level) even when
+that exact string is given as an exclude was unintentional or
+something?  If it was an intentional part of patch 2 (as I assumed
+while reading it), then I don't see how patch 2 excluding the empty
+string exclude is a "quirk".  Am I missing something?
+
+(Not that it matters, since I'm fine with keeping the patch for your
+first reason, I'm just curious...)
