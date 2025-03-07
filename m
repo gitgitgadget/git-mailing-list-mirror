@@ -1,83 +1,80 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B468221ABAC
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 14:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2035121B8FE
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 14:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741357145; cv=none; b=I09RZtOB6Z1hUVZ5J3ryOokGQguErKqQ8YLYXG/9NyWM6Cz8B9YT4wYUMqam4KXdtpOoo+8MSjQlGr/AS0kUi4vXQ9yVN1HSmvthFxfAt1EmDurFLQj6yBhnrINEVe42VVA7H37usnPB0H/8J+SLL41+t6aOnpM81lMnPgTVwlw=
+	t=1741357146; cv=none; b=b3W2X5S/MDcXdSrNwh0BLg4dWcpxhU5s9jv+8jj+MWcLOrSoTizz3lca9/ZH+9OReQD5x6O7ISvf6tC8csRHT6HpDjgUokkPgjMUbRzsQus6XtHtQnZHZ1CFgH/4qBPrsaydLJh074qJ/5WC+UZ9uUzKG77WigLLUAxz5S0uNxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741357145; c=relaxed/simple;
-	bh=ixJsusgz98W9FQq0EvzgXaLfY3j92IcuWjXzNfu6Lyk=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=XjGjvWGgq2B1H7HaI29tSEOmcqTXpyCXhN1Fnnn7MMZ3t91fVV4EY9geACgcPloNm6t1L3xX4r6rgvSggHFM5LrpsFZzq8bq+7bVB/0vbXpI2QUDC9OxFmVC8ytzqXAo7p4cL724uMDRrlpkiZw4e78QAOhBDL4XR1b7db+R7hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bf8eEgQT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j1jXiVSm; arc=none smtp.client-ip=202.12.124.145
+	s=arc-20240116; t=1741357146; c=relaxed/simple;
+	bh=HPvG6QRmFd2LxU6XlVTh08OhreRXhqgvoiQaKXz9SOk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=YQK6kxapVNiFsidOUafKPw+PiQgSzUqmAr6PlAArU48uei4ZTkDA1ILLz9erDPb9LVhc+6yqobFmCpbxaFXCyAdp5fnb/BirZiqI9NTQztkPWTrJTnoHmu2Rz8HerdaKbfaNdqtntv4LZ+KWB/eqNZ97yLreNqReHyzummXYR5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PJInlHHC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C/MU3E50; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bf8eEgQT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j1jXiVSm"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id B43D81140125;
-	Fri,  7 Mar 2025 09:19:01 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PJInlHHC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C/MU3E50"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2A2FE1140148;
+	Fri,  7 Mar 2025 09:19:03 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 07 Mar 2025 09:19:01 -0500
+  by phl-compute-12.internal (MEProxy); Fri, 07 Mar 2025 09:19:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1741357141;
-	 x=1741443541; bh=U9bisS8sDZRMVsHyyRUuYyIYPLhfpqjD9foz8NVb/VE=; b=
-	bf8eEgQTq4JOthkwSLxS+Kj+5JqSIFwkc3dUjRFQAE13Tjo0UUc26u2yAq/wlBny
-	tvKfNwfHBYHGDuEWiZ8tzuRI+d6NlOw2fvvfUh1sBr72qsKs+4ySdA4TzAsC64KY
-	FWxPIdGabDBdnS0rADKTyRixbIUFgktoKtwiq0JyyDkTdk6lLtsMxy9KLT3ctMT1
-	GcLigjOm3B0hL4nvVX7dqkAObTXbc6l1Bx7IDUkgRi+wx5nYGtHNQ68bYPqpAS/W
-	HwnZnyBxsa1RlBNyL5gVRxaahCvS/kR8lqLVZrkw2V3rq4H/8evC9Pro+zywptCI
-	x+QtU5pefNMHm7pjHs95Mw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1741357143;
+	 x=1741443543; bh=FHKn7PD/XxTVvkaeLX34P8BFoIX4bdw+RpQkUl+Mmqs=; b=
+	PJInlHHCGhN1tt8VFREKC6R0uwhD6e5l5H3oWwAGoZ9aJyJTegle06sTl1uviLnI
+	TC94ni2qnum/ae5VGWPBC/hLYvRnIQD3NUdUEM1k7dP4FKHH9oQJ5wUXDzZjJY3S
+	7T25T8/BtwBrtmRTcUPJsWy8FHgoj4SuL98E1cyPm99poptfgX9thmIfGOGpyz0o
+	VGXFbUGHEukMqGfQ5xc60JZVI5hxYQSceFxxntl4FzkdrOcKTRXHskJoCPVdhwYO
+	bMqZaxX+AdyopjsAY3bhxUPqchybwUi8xQ/L9cD4zbBWJQMTRW/QcMGu3A14H6mZ
+	xgLTCD6rMKkBLNK1CSji5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741357141; x=
-	1741443541; bh=U9bisS8sDZRMVsHyyRUuYyIYPLhfpqjD9foz8NVb/VE=; b=j
-	1jXiVSmSaye1TySfQO0zaaKyKAWIlVviuLrwbPLtrnhHVNsSEM92xGRfUNE0v0rz
-	kqb3C2N0Ko1SFGf4C5RnXBvK65Gioqj07R7HC8lhGQL140QehhLnovFtsvY3YekT
-	hXd4jmEA/rMUNQr60CN3EenCzlWRMO+IYkUopLxy+TXiRdonGN8Sk1aJRR9lsTbC
-	gTdY7kyfwkXWFPUpJh+v25eQwq0lF3bEUYmx+JEA/+nt1+fEzq8A0LMb/l6xZjh4
-	jd4yaHpOOoanVfWxT0yfJffXS3mTscR18ij7FN4W0cJNYimQuojVWwyXelZA6lhC
-	vVmn2tFoG5Lsy7mBPnzcw==
-X-ME-Sender: <xms:VQDLZ2Nt2h4xR5SIZUStmW9-4Hs-Hkavo6Es1fZB4BshXCuOJSSKmw>
-    <xme:VQDLZ0-hgVoIakxXufjl2Wxyom8z-JcRiE3oTd8cG3eVblKko0Fkc4S3FneZG7BV7
-    29AERun4vGvnHN1Hg>
-X-ME-Received: <xmr:VQDLZ9QAUy4nHOKIYoMSMoQFNUaJhqQ2zCErx9ZZciQ_IqfP2MHVSDvqFpk1LAM20rdcjwBM4fOclijs_8NvZ7qRWdNhAo_Aq9YgLUluk39b>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduuddtkeelucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741357143; x=
+	1741443543; bh=FHKn7PD/XxTVvkaeLX34P8BFoIX4bdw+RpQkUl+Mmqs=; b=C
+	/MU3E507s2qlPDP2sKeKgcUBq/GFnMSSPcRQS5eaPwZ3gf7CBtoOdXa0H3QcSaSr
+	JMIQ27U0ZPzxgC1/huxyApWRX4oIwXp1ng/FdQa46667vDBAT2h7QxTa7KF1d9/M
+	AOkFE0mu4YUg534zajErrRJ/k9MKZNYbgJbhYUmnl2ZLg+x4regl1sSpkzR4SZfM
+	ngK/uX2EnrV197+ChfiAcsVT8lMY6jMiavDkd1d0XjXO7TaUmEY924qsenWJGf4T
+	nwrBjb7Jk/8ZGHAmVzHRk5Nbm+M7xKqs3oEPy3pGvkvpHTqkWZurWm1W32iUhxgJ
+	9/NNeDX7U6fo+b6QUZrTg==
+X-ME-Sender: <xms:VgDLZyjXK5Aiu5gRGf-1jjDgh-ZVKnHSJDXlFgoQbvQEGmuMLWjSxQ>
+    <xme:VgDLZzCozhbQ23U57Ol3bdJ7BU78t9CyBR27WnMhVfO5OXl7CMDa5WCMYrjVqmVp3
+    BFtDA7Ltgb-lXRaoA>
+X-ME-Received: <xmr:VgDLZ6EUuQT4kDQKC-sCRKYN_GAG0lSZcAadq6hUF9juhgr-QU3XKxmz46uxwjfhDL6y9ZJXDyzwZ7jWWAaGa2-SAO9y7X6_UkP4xCtdx9La>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduuddtkeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffufffkgggtgfgjfhfvvefosehtjeertder
+    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedt
-    heefhfegffevgeegtdfhheeuvdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
-    rdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrih
-    hlrdgtohhm
-X-ME-Proxy: <xmx:VQDLZ2s-aSzUdwdH7VgN9eqgRx64HlYDlC9jOlb2Gu0__z7asTRc2w>
-    <xmx:VQDLZ-d5ywf3UxS8SCrhGJWGsLXpu2M6ijw_28q_gScABQQ81E8vpA>
-    <xmx:VQDLZ60NA1VtuhDlV7-VS-Gf9YZ4JJC7xeV4nlElbmwxskpqO4aEyw>
-    <xmx:VQDLZy_SrwS26eL7toxspQH0115sPNxiSVeUStjFRU_AHenRez1uGw>
-    <xmx:VQDLZ-6bjC3IGYVldKG9cAl_q3AlBviGvILQEYAtcxx5wzcJr1c0mBgP>
+    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:VgDLZ7TapTLx9ESnP6_MYeDJ9f6lX-nH05XoA4lcvaJCVzFvL_zEaA>
+    <xmx:VgDLZ_yaT4VEgjZpIvftXBgydhMDP4X8MGnnlKN1GjvrnxDGC-osfQ>
+    <xmx:VgDLZ54BWjFkJ-FxytlJ2sWc9thLHA1pzz5kP0wD_AuX5U0RvWnm0Q>
+    <xmx:VgDLZ8w1DNUPfxp-g17TnwfWViqTieDDMr4g0nR_pmdJKwogy5SLNQ>
+    <xmx:VgDLZ_-8GYcA3Ebh2Plk0CdoIB93mtVJGmRIoi-aMi2qVbIrynI-SNNA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Mar 2025 09:19:00 -0500 (EST)
+ 7 Mar 2025 09:19:01 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b9513d38 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Mar 2025 14:18:56 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 363d88bb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Mar 2025 14:18:58 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 00/12] Stop depending on `the_repository` in
- object-related subsystems
-Date: Fri, 07 Mar 2025 15:18:53 +0100
-Message-Id: <20250307-b4-pks-objects-without-the-repository-v3-0-7bccf408731e@pks.im>
+Date: Fri, 07 Mar 2025 15:18:55 +0100
+Subject: [PATCH v3 02/12] object: stop depending on `the_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,218 +83,426 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAE0Ay2cC/42NQQ6CMBBFr0K6dkxpoYAr72FcQBlkNFLS1qoh3
- N2CiXHJ8k3mvzcxh5bQsUMyMYuBHJkhgtwlTPf1cEGgNjITXORcpByaDMabA9NcUXsHT/K9eXj
- wPYLF0Tjyxr5BNXUpq7IrtOYsukaLHb3WzukcuSe3/K3ZkC7Xb0FyubEQUuCg87bNZCeyQuExj
- vZ0Z4s+iH+l2qoUUdnJTOVSFA2q6qec5/kDrA6j8yoBAAA=
-X-Change-ID: 20250210-b4-pks-objects-without-the-repository-6ba8398f7cc0
-In-Reply-To: <20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im>
-References: <20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im>
+Message-Id: <20250307-b4-pks-objects-without-the-repository-v3-2-7bccf408731e@pks.im>
+References: <20250307-b4-pks-objects-without-the-repository-v3-0-7bccf408731e@pks.im>
+In-Reply-To: <20250307-b4-pks-objects-without-the-repository-v3-0-7bccf408731e@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, 
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.2
 
-Hi,
+There are a couple of functions exposed by "object.c" that implicitly
+depend on `the_repository`. Remove this dependency by injecting the
+repository via a parameter. Adapt callers accordingly by simply using
+`the_repository`, except in cases where the subsystem is already free of
+the repository. In that case, we instead pass the repository provided by
+the caller's context.
 
-this patch series is another step to remove our dependency on the global
-`the_repository` variable. The series focusses on subsystems related to
-objects.
-
-The intent here is to work towards libification of the whole subsystem
-so that we can start splitting out something like an object "backend".
-It is thus part of a set of refactorings aimed at allowing pluggable
-object databases eventually. I'm not discussing that bigger effort yet,
-mostly because it's still taking shape. So these patch series contains
-things that make sense standalone, even if pluggable ODBs never get to
-be a thing.
-
-Note that this patch series stop short of dropping `the_repository` in
-"object-file.c". This is a bigger undertaking, so I'm pushing that into
-the next patch series.
-
-The series is built on top of cb0ae672aea (A bit more post -rc0,
-2025-02-27) with ps/path-sans-the-repository at 028f618658e (path:
-adjust last remaining users of `the_repository`, 2025-02-07) merged into
-it.
-
-Changes in v2:
-  - Point out why t1050 had to be adapted.
-  - Drop the rename of `get_max_object_index()` and
-    `get_indexed_object()`.
-  - Fix a couple of commit message typos.
-  - Link to v1: https://lore.kernel.org/r/20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im
-
-Changes in v3:
-  - Fix a semantic conflict with an in-flight patch series.
-  - Link to v2: https://lore.kernel.org/r/20250306-b4-pks-objects-without-the-repository-v2-0-f3465327be69@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (12):
-      csum-file: stop depending on `the_repository`
-      object: stop depending on `the_repository`
-      pack-write: stop depending on `the_repository` and `the_hash_algo`
-      environment: move access to "core.bigFileThreshold" into repo settings
-      pack-check: stop depending on `the_repository`
-      pack-revindex: stop depending on `the_repository`
-      pack-bitmap-write: stop depending on `the_repository`
-      object-file-convert: stop depending on `the_repository`
-      delta-islands: stop depending on `the_repository`
-      object-file: split out logic regarding hash algorithms
-      hash: fix "-Wsign-compare" warnings
-      hash: stop depending on `the_repository` in `null_oid()`
+ builtin/fsck.c         |  4 ++--
+ builtin/grep.c         |  2 +-
+ builtin/index-pack.c   |  4 ++--
+ builtin/log.c          |  2 +-
+ builtin/name-rev.c     |  4 ++--
+ builtin/pack-objects.c |  2 +-
+ builtin/prune.c        |  2 +-
+ midx-write.c           |  4 ++--
+ object.c               | 21 +++++++++++----------
+ object.h               | 10 ++++++----
+ pack-bitmap.c          |  6 +++---
+ reachable.c            |  6 +++---
+ revision.c             |  3 ++-
+ shallow.c              | 10 +++++-----
+ upload-pack.c          | 12 ++++++------
+ 15 files changed, 48 insertions(+), 44 deletions(-)
 
- Makefile                                     |   1 +
- archive.c                                    |   4 +-
- blame.c                                      |   2 +-
- branch.c                                     |   2 +-
- builtin/checkout.c                           |   6 +-
- builtin/clone.c                              |   2 +-
- builtin/describe.c                           |   2 +-
- builtin/diff.c                               |   5 +-
- builtin/fast-export.c                        |  10 +-
- builtin/fast-import.c                        |   8 +-
- builtin/fsck.c                               |   6 +-
- builtin/grep.c                               |   4 +-
- builtin/index-pack.c                         |  16 +-
- builtin/log.c                                |   2 +-
- builtin/ls-files.c                           |   3 +-
- builtin/name-rev.c                           |   4 +-
- builtin/pack-objects.c                       |  17 +-
- builtin/prune.c                              |   2 +-
- builtin/rebase.c                             |   2 +-
- builtin/receive-pack.c                       |   2 +-
- builtin/submodule--helper.c                  |  36 ++--
- builtin/tag.c                                |   2 +-
- builtin/unpack-objects.c                     |   5 +-
- builtin/update-ref.c                         |   2 +-
- builtin/worktree.c                           |   2 +-
- bulk-checkin.c                               |   4 +-
- combine-diff.c                               |   2 +-
- commit-graph.c                               |   9 +-
- commit.c                                     |   2 +-
- config.c                                     |   5 -
- csum-file.c                                  |  28 +--
- csum-file.h                                  |  12 +-
- delta-islands.c                              |  14 +-
- delta-islands.h                              |   2 +-
- diff-lib.c                                   |  10 +-
- diff-no-index.c                              |  28 +--
- diff.c                                       |  14 +-
- diff.h                                       |   2 +-
- dir.c                                        |   2 +-
- environment.c                                |   1 -
- environment.h                                |   1 -
- grep.c                                       |   2 +-
- hash.c                                       | 277 +++++++++++++++++++++++++
- hash.h                                       |   4 +-
- log-tree.c                                   |   2 +-
- merge-ort.c                                  |  26 +--
- merge-recursive.c                            |  12 +-
- meson.build                                  |   1 +
- midx-write.c                                 |  12 +-
- midx.c                                       |   3 +-
- notes-merge.c                                |   2 +-
- notes.c                                      |   2 +-
- object-file-convert.c                        |  29 +--
- object-file-convert.h                        |   3 +-
- object-file.c                                | 292 +--------------------------
- object.c                                     |  21 +-
- object.h                                     |  10 +-
- pack-bitmap-write.c                          |  36 ++--
- pack-bitmap.c                                |  15 +-
- pack-bitmap.h                                |   1 +
- pack-check.c                                 |  12 +-
- pack-revindex.c                              |  35 ++--
- pack-write.c                                 |  55 +++--
- pack.h                                       |  11 +-
- parse-options-cb.c                           |   2 +-
- range-diff.c                                 |   2 +-
- reachable.c                                  |   6 +-
- read-cache.c                                 |   4 +-
- refs.c                                       |  12 +-
- refs/debug.c                                 |   2 +-
- refs/files-backend.c                         |   2 +-
- repo-settings.c                              |  20 ++
- repo-settings.h                              |   5 +
- reset.c                                      |   2 +-
- revision.c                                   |   3 +-
- sequencer.c                                  |  10 +-
- shallow.c                                    |  10 +-
- streaming.c                                  |   3 +-
- submodule-config.c                           |   2 +-
- submodule.c                                  |  28 +--
- t/helper/test-ref-store.c                    |   2 +-
- t/helper/test-submodule-nested-repo-config.c |   2 +-
- t/t1050-large.sh                             |   3 +-
- tree-diff.c                                  |   4 +-
- upload-pack.c                                |  14 +-
- wt-status.c                                  |   4 +-
- xdiff-interface.c                            |   2 +-
- 87 files changed, 677 insertions(+), 613 deletions(-)
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index eea1d43647f..62c7494bbda 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -399,12 +399,12 @@ static void check_connectivity(void)
+ 	}
+ 
+ 	/* Look up all the requirements, warn about missing objects.. */
+-	max = get_max_object_index();
++	max = get_max_object_index(the_repository);
+ 	if (verbose)
+ 		fprintf_ln(stderr, _("Checking connectivity (%d objects)"), max);
+ 
+ 	for (i = 0; i < max; i++) {
+-		struct object *obj = get_indexed_object(i);
++		struct object *obj = get_indexed_object(the_repository, i);
+ 
+ 		if (obj)
+ 			check_object(obj);
+diff --git a/builtin/grep.c b/builtin/grep.c
+index d1427290f77..cbbf6f26439 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1144,7 +1144,7 @@ int cmd_grep(int argc,
+ 			break;
+ 		}
+ 
+-		object = parse_object_or_die(&oid, arg);
++		object = parse_object_or_die(the_repository, &oid, arg);
+ 		if (!seen_dashdash)
+ 			verify_non_filename(prefix, arg);
+ 		add_object_array_with_path(object, arg, &list, oc.mode, oc.path);
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 3eb5af20950..1268032d769 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -279,14 +279,14 @@ static unsigned check_objects(void)
+ {
+ 	unsigned i, max, foreign_nr = 0;
+ 
+-	max = get_max_object_index();
++	max = get_max_object_index(the_repository);
+ 
+ 	if (verbose)
+ 		progress = start_delayed_progress(the_repository,
+ 						  _("Checking objects"), max);
+ 
+ 	for (i = 0; i < max; i++) {
+-		foreign_nr += check_object(get_indexed_object(i));
++		foreign_nr += check_object(get_indexed_object(the_repository, i));
+ 		display_progress(progress, i + 1);
+ 	}
+ 
+diff --git a/builtin/log.c b/builtin/log.c
+index 04a6ef97bc1..0d4c579dad7 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -2468,7 +2468,7 @@ int cmd_format_patch(int argc,
+ 	base = get_base_commit(&cfg, list, nr);
+ 	if (base) {
+ 		reset_revision_walk();
+-		clear_object_flags(UNINTERESTING);
++		clear_object_flags(the_repository, UNINTERESTING);
+ 		prepare_bases(&bases, base, list, nr);
+ 	}
+ 
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index beac166b5cb..2fe82c839ba 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -667,9 +667,9 @@ int cmd_name_rev(int argc,
+ 	} else if (all) {
+ 		int i, max;
+ 
+-		max = get_max_object_index();
++		max = get_max_object_index(the_repository);
+ 		for (i = 0; i < max; i++) {
+-			struct object *obj = get_indexed_object(i);
++			struct object *obj = get_indexed_object(the_repository, i);
+ 			if (!obj || obj->type != OBJ_COMMIT)
+ 				continue;
+ 			show_name(obj, NULL,
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 8e282f2a980..c3adbc94504 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4161,7 +4161,7 @@ static int mark_bitmap_preferred_tip(const char *refname,
+ 	if (!peel_iterated_oid(the_repository, oid, &peeled))
+ 		oid = &peeled;
+ 
+-	object = parse_object_or_die(oid, refname);
++	object = parse_object_or_die(the_repository, oid, refname);
+ 	if (object->type == OBJ_COMMIT)
+ 		object->flags |= NEEDS_BITMAP;
+ 
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 1c357fffd8c..8f52da8bd66 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -185,7 +185,7 @@ int cmd_prune(int argc,
+ 		const char *name = *argv++;
+ 
+ 		if (!repo_get_oid(the_repository, name, &oid)) {
+-			struct object *object = parse_object_or_die(&oid,
++			struct object *object = parse_object_or_die(the_repository, &oid,
+ 								    name);
+ 			add_pending_object(&revs, object, "");
+ 		}
+diff --git a/midx-write.c b/midx-write.c
+index 26d9d8bb148..ac80a8298ed 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -708,7 +708,7 @@ static int add_ref_to_pending(const char *refname, const char *referent UNUSED,
+ 	if (!peel_iterated_oid(revs->repo, oid, &peeled))
+ 		oid = &peeled;
+ 
+-	object = parse_object_or_die(oid, refname);
++	object = parse_object_or_die(revs->repo, oid, refname);
+ 	if (object->type != OBJ_COMMIT)
+ 		return 0;
+ 
+@@ -768,7 +768,7 @@ static int read_refs_snapshot(const char *refs_snapshot,
+ 		if (*end)
+ 			die(_("malformed line: %s"), buf.buf);
+ 
+-		object = parse_object_or_die(&oid, NULL);
++		object = parse_object_or_die(revs->repo, &oid, NULL);
+ 		if (preferred)
+ 			object->flags |= NEEDS_BITMAP;
+ 
+diff --git a/object.c b/object.c
+index 100bf9b8d12..154525a4972 100644
+--- a/object.c
++++ b/object.c
+@@ -1,4 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "git-compat-util.h"
+@@ -18,14 +17,15 @@
+ #include "commit-graph.h"
+ #include "loose.h"
+ 
+-unsigned int get_max_object_index(void)
++unsigned int get_max_object_index(const struct repository *repo)
+ {
+-	return the_repository->parsed_objects->obj_hash_size;
++	return repo->parsed_objects->obj_hash_size;
+ }
+ 
+-struct object *get_indexed_object(unsigned int idx)
++struct object *get_indexed_object(const struct repository *repo,
++				       unsigned int idx)
+ {
+-	return the_repository->parsed_objects->obj_hash[idx];
++	return repo->parsed_objects->obj_hash[idx];
+ }
+ 
+ static const char *object_type_strings[] = {
+@@ -283,10 +283,11 @@ struct object *parse_object_buffer(struct repository *r, const struct object_id
+ 	return obj;
+ }
+ 
+-struct object *parse_object_or_die(const struct object_id *oid,
++struct object *parse_object_or_die(struct repository *repo,
++				   const struct object_id *oid,
+ 				   const char *name)
+ {
+-	struct object *o = parse_object(the_repository, oid);
++	struct object *o = parse_object(repo, oid);
+ 	if (o)
+ 		return o;
+ 
+@@ -524,12 +525,12 @@ void object_array_remove_duplicates(struct object_array *array)
+ 	}
+ }
+ 
+-void clear_object_flags(unsigned flags)
++void clear_object_flags(struct repository *repo, unsigned flags)
+ {
+ 	int i;
+ 
+-	for (i=0; i < the_repository->parsed_objects->obj_hash_size; i++) {
+-		struct object *obj = the_repository->parsed_objects->obj_hash[i];
++	for (i=0; i < repo->parsed_objects->obj_hash_size; i++) {
++		struct object *obj = repo->parsed_objects->obj_hash[i];
+ 		if (obj)
+ 			obj->flags &= ~flags;
+ 	}
+diff --git a/object.h b/object.h
+index 17f32f1103e..a3040939799 100644
+--- a/object.h
++++ b/object.h
+@@ -169,12 +169,13 @@ int type_from_string_gently(const char *str, ssize_t, int gentle);
+ /*
+  * Return the current number of buckets in the object hashmap.
+  */
+-unsigned int get_max_object_index(void);
++unsigned int get_max_object_index(const struct repository *repo);
+ 
+ /*
+  * Return the object from the specified bucket in the object hashmap.
+  */
+-struct object *get_indexed_object(unsigned int);
++struct object *get_indexed_object(const struct repository *repo,
++				       unsigned int);
+ 
+ /*
+  * This can be used to see if we have heard of the object before, but
+@@ -231,7 +232,8 @@ struct object *parse_object_with_flags(struct repository *r,
+  * "name" parameter is not NULL, it is included in the error message
+  * (otherwise, the hex object ID is given).
+  */
+-struct object *parse_object_or_die(const struct object_id *oid, const char *name);
++struct object *parse_object_or_die(struct repository *repo, const struct object_id *oid,
++				   const char *name);
+ 
+ /* Given the result of read_sha1_file(), returns the object after
+  * parsing it.  eaten_p indicates if the object has a borrowed copy
+@@ -336,7 +338,7 @@ void object_array_remove_duplicates(struct object_array *array);
+  */
+ void object_array_clear(struct object_array *array);
+ 
+-void clear_object_flags(unsigned flags);
++void clear_object_flags(struct repository *repo, unsigned flags);
+ 
+ /*
+  * Clear the specified object flags from all in-core commit objects from
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index f0e2c000252..7fd78c634ef 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1301,7 +1301,7 @@ static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
+ 	revs->tag_objects = tmp_tags;
+ 
+ 	reset_revision_walk();
+-	clear_object_flags(UNINTERESTING);
++	clear_object_flags(repo, UNINTERESTING);
+ 
+ 	/*
+ 	 * Then add the boundary commit(s) as fill-in traversal tips.
+@@ -1935,7 +1935,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 		struct object *object = revs->pending.objects[i].item;
+ 
+ 		if (object->type == OBJ_NONE)
+-			parse_object_or_die(&object->oid, NULL);
++			parse_object_or_die(revs->repo, &object->oid, NULL);
+ 
+ 		while (object->type == OBJ_TAG) {
+ 			struct tag *tag = (struct tag *) object;
+@@ -1945,7 +1945,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 			else
+ 				object_list_insert(object, &wants);
+ 
+-			object = parse_object_or_die(get_tagged_oid(tag), NULL);
++			object = parse_object_or_die(revs->repo, get_tagged_oid(tag), NULL);
+ 			object->flags |= (tag->object.flags & UNINTERESTING);
+ 		}
+ 
+diff --git a/reachable.c b/reachable.c
+index 9ee04c89ec6..1b26b9b1d76 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -45,7 +45,7 @@ static void add_one_file(const char *path, struct rev_info *revs)
+ 	}
+ 	strbuf_trim(&buf);
+ 	if (!get_oid_hex(buf.buf, &oid)) {
+-		object = parse_object_or_die(&oid, buf.buf);
++		object = parse_object_or_die(the_repository, &oid, buf.buf);
+ 		add_pending_object(revs, object, "");
+ 	}
+ 	strbuf_release(&buf);
+@@ -94,7 +94,7 @@ static int add_one_ref(const char *path, const char *referent UNUSED, const stru
+ 		return 0;
+ 	}
+ 
+-	object = parse_object_or_die(oid, path);
++	object = parse_object_or_die(the_repository, oid, path);
+ 	add_pending_object(revs, object, "");
+ 
+ 	return 0;
+@@ -218,7 +218,7 @@ static void add_recent_object(const struct object_id *oid,
+ 	switch (type) {
+ 	case OBJ_TAG:
+ 	case OBJ_COMMIT:
+-		obj = parse_object_or_die(oid, NULL);
++		obj = parse_object_or_die(the_repository, oid, NULL);
+ 		break;
+ 	case OBJ_TREE:
+ 		obj = (struct object *)lookup_tree(the_repository, oid);
+diff --git a/revision.c b/revision.c
+index c4390f0938c..b536c4a29ad 100644
+--- a/revision.c
++++ b/revision.c
+@@ -3612,7 +3612,8 @@ static void set_children(struct rev_info *revs)
+ 
+ void reset_revision_walk(void)
+ {
+-	clear_object_flags(SEEN | ADDED | SHOWN | TOPO_WALK_EXPLORED | TOPO_WALK_INDEGREE);
++	clear_object_flags(the_repository,
++			   SEEN | ADDED | SHOWN | TOPO_WALK_EXPLORED | TOPO_WALK_INDEGREE);
+ }
+ 
+ static int mark_uninteresting(const struct object_id *oid,
+diff --git a/shallow.c b/shallow.c
+index 4bd9342c9a7..06c3266a3e0 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -226,7 +226,7 @@ struct commit_list *get_shallow_commits_by_rev_list(int ac, const char **av,
+ 	 * SHALLOW (excluded) and NOT_SHALLOW (included) should not be
+ 	 * set at this point. But better be safe than sorry.
+ 	 */
+-	clear_object_flags(both_flags);
++	clear_object_flags(the_repository, both_flags);
+ 
+ 	is_repository_shallow(the_repository); /* make sure shallows are read */
+ 
+@@ -613,9 +613,9 @@ static void paint_down(struct paint_info *info, const struct object_id *oid,
+ 		}
+ 	}
+ 
+-	nr = get_max_object_index();
++	nr = get_max_object_index(the_repository);
+ 	for (i = 0; i < nr; i++) {
+-		struct object *o = get_indexed_object(i);
++		struct object *o = get_indexed_object(the_repository, i);
+ 		if (o && o->type == OBJ_COMMIT)
+ 			o->flags &= ~SEEN;
+ 	}
+@@ -675,9 +675,9 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
+ 	 * Prepare the commit graph to track what refs can reach what
+ 	 * (new) shallow commits.
+ 	 */
+-	nr = get_max_object_index();
++	nr = get_max_object_index(the_repository);
+ 	for (i = 0; i < nr; i++) {
+-		struct object *o = get_indexed_object(i);
++		struct object *o = get_indexed_object(the_repository, i);
+ 		if (!o || o->type != OBJ_COMMIT)
+ 			continue;
+ 
+diff --git a/upload-pack.c b/upload-pack.c
+index 728b2477fcc..7412d3c6ce8 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -662,8 +662,8 @@ static int do_reachable_revlist(struct child_process *cmd,
+ 
+ 	cmd_in = xfdopen(cmd->in, "w");
+ 
+-	for (i = get_max_object_index(); 0 < i; ) {
+-		o = get_indexed_object(--i);
++	for (i = get_max_object_index(the_repository); 0 < i; ) {
++		o = get_indexed_object(the_repository, --i);
+ 		if (!o)
+ 			continue;
+ 		if (reachable && o->type == OBJ_COMMIT)
+@@ -731,8 +731,8 @@ static int get_reachable_list(struct upload_pack_data *data,
+ 			o->flags &= ~TMP_MARK;
+ 		}
+ 	}
+-	for (i = get_max_object_index(); 0 < i; i--) {
+-		o = get_indexed_object(i - 1);
++	for (i = get_max_object_index(the_repository); 0 < i; i--) {
++		o = get_indexed_object(the_repository, i - 1);
+ 		if (o && o->type == OBJ_COMMIT &&
+ 		    (o->flags & TMP_MARK)) {
+ 			add_object_array(o, NULL, reachable);
+@@ -1554,7 +1554,7 @@ static int parse_want_ref(struct packet_writer *writer, const char *line,
+ 		}
+ 
+ 		if (!o)
+-			o = parse_object_or_die(&oid, refname_nons);
++			o = parse_object_or_die(the_repository, &oid, refname_nons);
+ 
+ 		if (!(o->flags & WANTED)) {
+ 			o->flags |= WANTED;
+@@ -1790,7 +1790,7 @@ int upload_pack_v2(struct repository *r, struct packet_reader *request)
+ 	enum fetch_state state = FETCH_PROCESS_ARGS;
+ 	struct upload_pack_data data;
+ 
+-	clear_object_flags(ALL_FLAGS);
++	clear_object_flags(the_repository, ALL_FLAGS);
+ 
+ 	upload_pack_data_init(&data);
+ 	data.use_sideband = LARGE_PACKET_MAX;
 
-Range-diff versus v2:
-
- 1:  94dfdecf59d =  1:  2b8ac989731 csum-file: stop depending on `the_repository`
- 2:  c456c1a057b =  2:  f70f85a194b object: stop depending on `the_repository`
- 3:  4eb651128e2 =  3:  af03d83d7f0 pack-write: stop depending on `the_repository` and `the_hash_algo`
- 4:  0632bc5c186 =  4:  19a8ee01385 environment: move access to "core.bigFileThreshold" into repo settings
- 5:  86214482421 =  5:  ec9b0012242 pack-check: stop depending on `the_repository`
- 6:  3fda249b16a =  6:  f15148e3aee pack-revindex: stop depending on `the_repository`
- 7:  99dbafed649 =  7:  ce1255da4aa pack-bitmap-write: stop depending on `the_repository`
- 8:  a3843270ce0 =  8:  2f6d7b93dc9 object-file-convert: stop depending on `the_repository`
- 9:  8d141a24804 =  9:  28e2dac294d delta-islands: stop depending on `the_repository`
-10:  4671a252952 = 10:  813da442eee object-file: split out logic regarding hash algorithms
-11:  2b81a7d91fd = 11:  7432ecb550b hash: fix "-Wsign-compare" warnings
-12:  6e8f5f8987b ! 12:  8d88ef2aab7 hash: stop depending on `the_repository` in `null_oid()`
-    @@ Commit message
-           - "grep.c"
-           - "refs/debug.c"
-     
-    -    There is also a single non-trivial exception with "diff-no-index.c".
-    -    Here we know that we may not have a repository initialized at all, so we
-    -    cannot rely on `the_repository`. Instead, we adapt `diff_no_index()` to
-    -    get a `struct git_hash_algo` as parameter. The only caller is located in
-    -    "builtin/diff.c", where we know to call `repo_set_hash_algo()` in case
-    -    we're running outside of a Git repository. Consequently, it is fine to
-    -    continue passing `the_repository->hash_algo` even in this case.
-    +    There are also two non-trivial exceptions:
-    +
-    +      - "diff-no-index.c": Here we know that we may not have a repository
-    +        initialized at all, so we cannot rely on `the_repository`. Instead,
-    +        we adapt `diff_no_index()` to get a `struct git_hash_algo` as
-    +        parameter. The only caller is located in "builtin/diff.c", where we
-    +        know to call `repo_set_hash_algo()` in case we're running outside of
-    +        a Git repository. Consequently, it is fine to continue passing
-    +        `the_repository->hash_algo` even in this case.
-    +
-    +      - "builtin/ls-files.c": There is an in-flight patch series that drops
-    +        `USE_THE_REPOSITORY_VARIABLE` in this file, which causes a semantic
-    +        conflict because we use `null_oid()` in `show_submodule()`. The
-    +        value is passed to `repo_submodule_init()`, which may use the object
-    +        ID to resolve a tree-ish in the superproject from which we want to
-    +        read the submodule config. As such, the object ID should refer to an
-    +        object in the superproject, and consequently we need to use its hash
-    +        algorithm.
-     
-         This means that we could in theory just not bother about this edge case
-         at all and just use `the_repository` in "diff-no-index.c". But doing so
-    @@ builtin/ls-files.c: static void show_submodule(struct repository *superproject,
-      	struct repository subrepo;
-      
-     -	if (repo_submodule_init(&subrepo, superproject, path, null_oid()))
-    -+	if (repo_submodule_init(&subrepo, superproject, path, null_oid(the_hash_algo)))
-    ++	if (repo_submodule_init(&subrepo, superproject, path,
-    ++				null_oid(superproject->hash_algo)))
-      		return;
-      
-      	if (repo_read_index(&subrepo) < 0)
-
----
-base-commit: e2cb568e11f4ceb427ba4205e6b8a4426d26be12
-change-id: 20250210-b4-pks-objects-without-the-repository-6ba8398f7cc0
+-- 
+2.49.0.rc1.455.g4cd33545ba.dirty
 
