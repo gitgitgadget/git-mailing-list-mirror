@@ -1,110 +1,85 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA01EDDA9
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 19:55:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A008E21859D
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 19:57:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741377315; cv=none; b=QJSx2BPx/+vsi5cVwlQh9ks7sNGCHsQN0bJoNP/62L2C3i5cTNHGhA0FwEP2h15icwOUkcFQDFBGBhQ7JrXIxx430AU4x7gpM5iXTGoro6lwosfNfsxXj8entvVs+La0+3+W/Y+GKIVgap4zW0sVOTu4Y4qNDKdKNNjFlU+Z0dc=
+	t=1741377464; cv=none; b=mHiv5tOc9WFO8V8dmwooLvnUIyrqz76MTomCzjHzD0Y2vP2p0HIT1aCoA1tOPB2B5A/JkSbt3ELwWyJx3qPLCH8f+9jm4Zv3YaefzkVKXz3FwfDWZBOvocD24UYc35fnn6D5DCSdbaR8tdCim3wHto4Jx8Hhj3uCGcjHVsutFtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741377315; c=relaxed/simple;
-	bh=tioEYP/jC+lzuht4R8n3mQg7DGcMqEyq7kCoCE5aZUI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OQsUwtD+TNOhJhIrCHwKG8p4n7fH3Bi0n5E594LNIlmdAolH6CddzsF+F1DNcA0R5B/KwxMmP/9VDhXUJr6bzGIn9RLR3Jbl+kj6nRkSSOPSwstkMlDGqISrYrVn85Z/00vhNuLJNPCXhKrmHCC9MdyYQ9TdepuXbK6tKtkAOx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fck2XV7+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SW8jxFk8; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741377464; c=relaxed/simple;
+	bh=kxYSkTil+zN774aeVH0bgN609Rxu0KTpIowyT7I5mv8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mTJlFoPCywC12OYzk5ClqEOSYZMRipSJpivlVYDjxVBNqaIZpByG5adpvzBSA8iuQgi3bpZs/1rTo4SYpoNKC2PjrzKJuC1ccZjZXnFjdZI35Z8TrfO34aiDAsBb0FAkFHiJh7OUdg6yWIMyc5pXJopkq2cyUtMKI7cdZYWZ1rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=LIOfKpPH; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fck2XV7+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SW8jxFk8"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 825D811401B6;
-	Fri,  7 Mar 2025 14:55:11 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Fri, 07 Mar 2025 14:55:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741377311; x=1741463711; bh=DdwOiqb5Fw
-	LRFQbcVGfxY5W+fKmqiOxBUZ3EK5tU28s=; b=fck2XV7+mH5QaYSdlsCmzieoDF
-	FkXs08pMGw2kpxVnoIyrYTYM14hbyJstI4WVaLI02iOn5y0e7wxvVjFC0xsgwfr5
-	PoQCI/qRiY9pOihgGvy4/NZhfR5W+Z1ghx6DvIokdOFpBhrSril0mViLJ9tinDDm
-	Wi5XpLksc4MPR1sY4lBeCsTI4LfPx3ZqhwCE8Xxj8r1AEKN7NcMPOdG1a7nEF53A
-	GuhfX4QXRxhU9pbuXA5KE92GVPtIBc0znWyqpqunUvRBqGbE4t+YFjS8DxINLPCZ
-	ZIsGPA8FadZPYEEE4K12D2cU7+CoHC5DkXXfJuN/rHY++2QMa4i5DYlQqVVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741377311; x=1741463711; bh=DdwOiqb5FwLRFQbcVGfxY5W+fKmqiOxBUZ3
-	EK5tU28s=; b=SW8jxFk8qFVF1CXsrKQqSqPOewFEUp4R7L03BfHc1sVh4PmD/ss
-	rgNWhOJDMFTrJWnxX3l7BjCCd6n/wKNYnt6i8CqzXzuAvxQLxT3gagrFvV/7DloH
-	zrqfQZDeiG+A2qj5hvypTFYKbWd6LiR1MjDAcUNhinIGvi9t3URt0KLm6mHEBUiX
-	qp20SPNxwLtLa6jYGCX91KV5xo/QBonTyvstya38SwK35exppHaXB/GYAShD0b/j
-	mfryWhYq5P6swkvVn6in88vQbhkXsviWnryiHPEgFawCJdWMFIy59zvaDjDiz0hE
-	bjXppnQqLGR21ifOs4hqFBhm7xWBGmbZwSw==
-X-ME-Sender: <xms:Hk_LZ9NMSnPqe38OI6tWJI0MRa7-Mt3_-jQaOqy59xisteIR2DOwaA>
-    <xme:Hk_LZ_9jIuyb5Orhau31iMbbyB7qGZ_sGAZR_mc9bUZLYqSzPpt_Zv3LPH7NWeMs9
-    MkutWRKpboXP3d24w>
-X-ME-Received: <xmr:Hk_LZ8QF8Limw5k9p-xDW6to9mH1VhEfm0v80ZhffstULA57NuUD-F0Ct9iJ7Tzj9yWM7cbx9KeKB4_iU-b8UM7NrDFiW19nyj17>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudduheeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
-    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhope
-    hphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Hk_LZ5v48_CSsBsUV_WZzpXiE3ScZl8yJMZq7D7_TeA9S2J8ei6ALA>
-    <xmx:Hk_LZ1fgY5784hsp09mXsdxfn8yPdddCvYwElYAbIYaol4oQGWzhSQ>
-    <xmx:Hk_LZ11LL-_uhKEz3puRXDqB9L5jQXyC4-t5FDymZf9p17hi9kUkFQ>
-    <xmx:Hk_LZx82MudNgr7AwGk76xwQraN9vHrTMgTbAlIGSDUUqnMzKakqVQ>
-    <xmx:H0_LZ-H2L5xlPzCkEY23ECv55BDVPUI8dLLNrOQIrS3NJEuZ8lgFAGBf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Mar 2025 14:55:09 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] docs: fix check-docs with WITH_BREAKING_CHANGES
-In-Reply-To: <56cf842a-7c1f-4354-b191-35bcc1e139bd@gmail.com> (Phillip Wood's
-	message of "Fri, 7 Mar 2025 15:07:25 +0000")
-References: <pull.1871.git.1741018310447.gitgitgadget@gmail.com>
-	<pull.1871.v2.git.1741171357627.gitgitgadget@gmail.com>
-	<xmqqzfhzlbie.fsf_-_@gitster.g>
-	<082af6a3-a7ba-440d-af84-6c59827a2929@gmail.com>
-	<56cf842a-7c1f-4354-b191-35bcc1e139bd@gmail.com>
-Date: Fri, 07 Mar 2025 11:55:08 -0800
-Message-ID: <xmqqfrjoehur.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="LIOfKpPH"
+Received: (qmail 19638 invoked by uid 109); 7 Mar 2025 19:57:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=kxYSkTil+zN774aeVH0bgN609Rxu0KTpIowyT7I5mv8=; b=LIOfKpPHylUvd0KGruSSTRe3aTB7VNCE81yvj1WHeu0na1u5s1+bapq3GpfwV+cZQXpoVyQu7ZEYdQJOIxfa2Ra9W2GaCNRXhW9eVDa/8Mj9q0zyLHJXP92bhJu3oIByUYQkavk0dPXLJw2S7sYmSjEeik2NJjlek5jBX1u8GniazLV3UU4U3QwW+cATvfrISUMNXU+kH0sIDAOFldWF9KADzlp7RavGp9nLWgtgV8MkHpmAdgqC9CC5LP7hsUH7TPzFyRkMCcHF7LUo/THHA2YppjUOiyWbdVtzLVBa6lrkKECOVHqunrs05MvPtQHpHmmVCjgSqzZEQqLRLv7fsg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 07 Mar 2025 19:57:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17227 invoked by uid 111); 7 Mar 2025 19:57:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 07 Mar 2025 14:57:41 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 7 Mar 2025 14:57:40 -0500
+From: Jeff King <peff@peff.net>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, jltobler@gmail.com,
+	phillip.wood123@gmail.com
+Subject: Re: [PATCH v3 6/8] refs: implement partial reference transaction
+ support
+Message-ID: <20250307195740.GA3675378@coredump.intra.peff.net>
+References: <20250305-245-partially-atomic-ref-updates-v3-0-0c64e3052354@gmail.com>
+ <20250305-245-partially-atomic-ref-updates-v3-6-0c64e3052354@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250305-245-partially-atomic-ref-updates-v3-6-0c64e3052354@gmail.com>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On Wed, Mar 05, 2025 at 06:39:01PM +0100, Karthik Nayak wrote:
 
-> I also noticed that while we store the correct value for
-> WITH_BREAKING_CHANGES in GIT-BUILD-OPTIONS it is not defined when
-> building the C sources and so we still build the pack-redundant builtin.
->
-> The diff below stops us from building pack-redundant with
-> -Dbreaking_changes=true but still builds the documentation. I don't intend
-> spending any more time one this
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index 0132b8b06a..dd9912d637 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -1371,8 +1371,15 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+>  					    transaction->updates[i],
+>  					    &refnames_to_check, head_type,
+>  					    &head_referent, &referent, err);
+> -		if (ret)
+> +		if (ret) {
+> +			if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
+> +				strbuf_setlen(err, 0);
+> +				ret = 0;
+> +
+> +				continue;
+> +			}
+>  			goto done;
+> +		}
+>  	}
+>  
+>  	string_list_sort(&refnames_to_check);
 
-Thanks.
+Coverity complains that this "ret = 0" is a dead store. I think it's
+right, because either:
 
-I am afraid that Patrick's plate may already be full, but I am
-hoping that there are others who are interested in getting the meson
-build support into a usable shape.  Any takers?
+  1. Our continue loops again, and we overwrite "ret" with the next call
+     to prepare_single_update().
 
+  2. We leave the loop (because this is the final entry in the
+     transaction update array), and then we overwrite "ret" with the
+     result of refs_verify_refnames_available().
+
+But it may be better to leave it in place as a defensive measure against
+the rest of the function changing.
+
+-Peff
