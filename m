@@ -1,64 +1,64 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784E5217712
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F28921771D
 	for <git@vger.kernel.org>; Fri,  7 Mar 2025 11:17:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741346261; cv=none; b=E8wFU8SOlU/Rkg5n1HUBqO8a/Q5NuxrB/KXwhVZEWktIy/tm0H1YDjnrbG30GNIWQQgCd79QJi036PpE7YJuVlEacjjBopclcoCC35tY/86R5Ij+pEtTFN5YxX5M3W0YytzpowNkcgWdb+OfEm7e/w7sZKqu+O6oQwUbsd14ek4=
+	t=1741346261; cv=none; b=GAd66jj/oh8CNVo+NMH+60TSzmaIhQCbZ91CnxxsbtNvu5O5Jb8zQnCQ7V97gIYVS2DbOKpDCWCaQxQaIGyWcTgHQKkDwEBonh2Os5Ys+3kJy5f4u8bXuNp1Gw0CiNi7jgBPjc/BmMk3JJ4TI/fBfHEw09ky8xQXD7pFuNEoGZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1741346261; c=relaxed/simple;
-	bh=RWTbTcrz1YAsjbkbskRzzTP2qZOaaChawAAhksR1yuw=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Z0lkfrOS2ifM55DuZNPMZ6H79rDP6IXdJCbByWFinCqqpK0zwJxIRBH3FANintUIp/wQ3kuG+FfyxJqbZ3fXasCpZ8IP6/yUL6BLf/G39AlDSWQO8ZEmT+0ZYp74+Xk45Cmq6QBNKjQ4zy0CWxYngXFkO6sNvXGCcB2+dk5e2FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EFCWUThh; arc=none smtp.client-ip=209.85.218.50
+	bh=0ARivOJYw5HH/tjqlIAJQpwqlP4QpHGn/maGR+B9Y6w=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=bBmIu4esUjjDsblCwxbexvuG/vQaeJuQDaXaYxrqMM+EE+tN2r0yt5TIx825Tn/54EfCSSdBPaT3X2rIzQ3lRIo0hc6dCisWas4W9jov226YAA0nz11pGfor3ZuJvPTtFg5DMfaxmUxAQw0e+vnlvHHI+VTANpdC7KPnhzkbQes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aTZbmoxu; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EFCWUThh"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-abf4b376f2fso314555766b.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aTZbmoxu"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ac0cc83e9adso578760666b.0
         for <git@vger.kernel.org>; Fri, 07 Mar 2025 03:17:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741346257; x=1741951057; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=SU2fAlxpxQ9hnsU7epeb/8WJDiG49FZyhjV4BGJIUMw=;
-        b=EFCWUThh+OsuT9qEhxut6aC9JVMD3PRh1jQL7XMsLjW2bUcyeRhuDqih2oXOvSsvyo
-         tpIjz5444ydup1U3GtEzRo5R5XT6hct1XNab6oiS8cmMlj1NgCMPx2HkL819CoI02j+s
-         ntM2Abu+MlWetNln8WqXfrqfldpHAy96faWmJoWmBRKwFXQeHigjCngbnQMhOCYn6j5Y
-         ueAl9fexrNybkOM6EFbcob/GNUjrz9x6u5WkPg9y5pVL5vPu097RVeVLYk6ylxj2xPJk
-         vvuw4FH0v4yPFVU5rDtkejEXW6EvLhIhWy4DTxheFwLF9CzlkLcyf9L9KAwbFdzYgBzT
-         t+ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741346257; x=1741951057;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1741346258; x=1741951058; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SU2fAlxpxQ9hnsU7epeb/8WJDiG49FZyhjV4BGJIUMw=;
-        b=Mkwx3G+HIVo9msTFGljdQKfMAcXDTwxdlFCFIXwy3clA0vre93Z/3XuX8G2/Q8qTGL
-         l3LkZHeqdNpBFgYSeaSV34ASeLrW4DFK99yeBEq8tB7Xnr9GgWRm55vfYV8CWm0Gakk7
-         iiGgUTlNjgUzj/QK33Ts99acXr4ulpJeyGuVSKOtVlbrYt5mWtyul9wIc3QxSW/yU9GC
-         pX6WO+Xjag45b49lZp00j1vJphI6zYoOsPRXiK2zDz5o/RVsh2dRy+LYk2V8KJApzOGZ
-         7hMQHjIfcM3MBwj8HatoTcNVAir8e3nleAV7TI+oOtZ4yox+K9jQtjbI0A5d+inFqSbC
-         84Qw==
-X-Gm-Message-State: AOJu0YyE/I4O6SwgbMASSDZ6JjzDoCHRjkbj2ptQ/0Z/7SwqyIskx0so
-	PUS27awXJU3n/E4Uv1nVFvxenSPibtUPO/wQ5r5xZ6MG2SZEVTuTFTtqRwmb
-X-Gm-Gg: ASbGncsFvNfL9SNNXXRqkwo+GaLU4X7IXile4d09RoM10uieeZ2iKXKdWWmDxwMhQn3
-	pjwghteJqCoSK9AXVUKq+O7HevFa6uTtkjrxmnnMI+Fo5Sp8qPJ8bgBUBYElmmqNLNXLP1oipZA
-	CtBWvxvrbxCTDmeDCR2ELCyYsdeW/HOGiRJuY8TV6G8TgR6xlqVgnP++pzYKbNPTQtEWzRKD4C2
-	2fY3/+o39w5rjANnGyeBK9i6PTC7Woa504EfrKEPTKsFiuvujc7WU3oGilOR/mpyjhZLjv2X4B6
-	+LQkwUtz9MSMZTNc61cQ7HV03tq7VJWOhYixAFASn91O
-X-Google-Smtp-Source: AGHT+IG6ZVFJ2y+f2UNYir1xSP2m0sO4YHMDDS8T9PsuO6oRbAPrR3wGSnXIQ+0HTDiw48i/McJ4Rw==
-X-Received: by 2002:a17:907:7255:b0:abf:51b7:608a with SMTP id a640c23a62f3a-ac252738131mr298550466b.5.1741346257055;
+        bh=RMF9erA64E7nyWXBNUGrz6bvNYlYBlODA8zBPHI0gO8=;
+        b=aTZbmoxuPk/B7everS94YAvTORQ4nRsADBMmqr7FTlF3L7Rj0hHZo2IPwMyFJlMYvn
+         Rs63Q2+6Ing3eNxLR2B+yOJvYktjYLdPgWYxaONLevgyCDN5b+qJEOVHTpXzFDpRTWWB
+         tczJubyb692jUdNawcMF3b7OhqHPORKgxg0NOBgyOmKPGOHING3hrw6W3Nom2qDGCbKx
+         iVIOSvNCqRaSJYnV2FdNqk27aVKhEHRrUvu/XO0FHIUCfIEwEl9phsC7QP1t4awytLiu
+         vJ89Bh4abzsfXeEwEE/O226+nKLlTKMYo3ZKCIIVKIXpUure10rnYokqkwFSxD6l3x+M
+         cYHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741346258; x=1741951058;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RMF9erA64E7nyWXBNUGrz6bvNYlYBlODA8zBPHI0gO8=;
+        b=E3uAkm4dz0mZOaokoITM1SmmdwmwOmIGj2nGpTjUujg/FJSvdwChNkqBpT4v9qwad+
+         UCsi4GpbhIRidu1KIXMTsk2o75p2rlWiLMQNxZe4ymm3yW0nfKpwN6apG7tVVugjSyvr
+         nQrMYK8HmrLszf9OjAdhRAhCj3fbZMPFshcq8+nt65S+4iQSTmROZVtCyzJCmea4hRqg
+         nqxDxDCJyj7qtYdfcrDanxc/3fP/MSj62U1lqMS0U9h9KadnoJMpsQSmGcF5yXbAMpHl
+         kudpAiEtuzZHTBtUaZezeyUy0QsOuAHVUaayEfYiwpXMnzA4VBD+g49IVobfzil7ka3q
+         Zujw==
+X-Gm-Message-State: AOJu0YyO7x0sFO5FppXPyIP4TxlEoU6963EHm3SnVD4MhkbYyImwYtQe
+	BPeOnWZDTxF1z9MJCpjf108v/fduBQeDdw8oGbhQEs3qbBLiC2dUbMf4VggA
+X-Gm-Gg: ASbGncueprPJl35ykUTxgcQo5WXPpvZeWTZOP3JEIvbujS/ndZlXcp+etH10aqBQh1l
+	uz2eynq8Z5YTjpCJEQMX6kbt9l+iXDd+RekG6XHdAPYnodRa4/BWa6Yl1xPtkM8fB9d6mqKng4/
+	G05k2rLfdq2qwOKup/YfhR2YErOq82nmxn12NaKigXEnFqLniiwjYiFDNDrxItG5csbTsQpVneW
+	WLKC+enZKac92PevYD+aNut02nzfCJUrCVkk3aHCdRvUst1+W/DY3uFhbZZ4qwh/1rBOiX1DGuw
+	QJEZOVS370jfGrdaIvrqSKW2DaaZ2WrE5OLIU/oPmiNP
+X-Google-Smtp-Source: AGHT+IFTH35/kmi+FI3ZwFrVJmHAemDAh7VVsulBVwRESn9V213CZsU1Ph/kv9EOiJdA7+ANYOsCyw==
+X-Received: by 2002:a17:906:c00d:b0:ac2:4f30:5033 with SMTP id a640c23a62f3a-ac24f305493mr394276366b.15.1741346257715;
         Fri, 07 Mar 2025 03:17:37 -0800 (PST)
 Received: from [127.0.0.2] ([217.110.80.4])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac23988bdc7sm261464266b.133.2025.03.07.03.17.35
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac23988bdc7sm261464266b.133.2025.03.07.03.17.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Mar 2025 03:17:35 -0800 (PST)
+        Fri, 07 Mar 2025 03:17:37 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 0/2] EDITME: cover title for
- 493-add-command-to-purge-reflog-entries
-Date: Fri, 07 Mar 2025 12:17:24 +0100
-Message-Id: <20250307-493-add-command-to-purge-reflog-entries-v1-0-84ab8529cf9e@gmail.com>
+Date: Fri, 07 Mar 2025 12:17:25 +0100
+Subject: [PATCH 1/2] reflog: drop usage of global variables
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,59 +67,153 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAMTVymcC/x2N0QrCMAxFf2Xk2UBtO4f+ivgQl7gFXDvaKcLYv
- 5vt8XAu565QpahUuDUrFPlq1ZwMzqcG+pHSIKhsDN751gV3wXgNSMzY52mixLhknD/FdkVe7zy
- gpGUP4pO9b2NHHCKB1Wbz+jue7o9t+wOK5RveeQAAAA==
-X-Change-ID: 20250306-493-add-command-to-purge-reflog-entries-bd22547ad34a
+Message-Id: <20250307-493-add-command-to-purge-reflog-entries-v1-1-84ab8529cf9e@gmail.com>
+References: <20250307-493-add-command-to-purge-reflog-entries-v1-0-84ab8529cf9e@gmail.com>
+In-Reply-To: <20250307-493-add-command-to-purge-reflog-entries-v1-0-84ab8529cf9e@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1408; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=RWTbTcrz1YAsjbkbskRzzTP2qZOaaChawAAhksR1yuw=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGfK1c9Gz9Wur62OV2T4ErJR+RcvgPtPppklO
- U8yoQx9ejy3KokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnytXPAAoJED7VnySO
- Rox/n3sMAJKF8781ts3AO1b2f96Db6MvHb9yVWJ10lp7ptfRtK/61UTCxjzZsbFzFSFMPpvEkCY
- qrjMwLkagSBQ6CntRCqTiylWbLsD9jisMwZtBfSc7DTlB2BQj/2q3tIBZ+RA0eJ8fT9shmxk1p8
- tvY+1jUFBb9fxS+ATYn7wXrrxiDXE8Ja5tHfvSNhH01dY+hcgaHhxHZthgfkue9mREzp4Di4aRd
- qqdLiSe4Kr3GM0Nn0LEYaHinUBfXdWVMS2VHkxLFhg4EShl3z2awixS5bkT8YoPYVUVuEpI6ZID
- rTXs98ezkzI55I9JjZz5e9M8wgcwoN4rQlHVho8Vp2MOghJjWygltSB8xzJ5FFKOkcGVLSyK1lr
- 1TcvXAGV+MY7MpYK6XRoHcCIsV5CwwNMdZE1bJNwgyOIhDpbUn2Rmxp7/6/pf276j7bBg0xgqPH
- yBb/Wv5Pr1BpMl0wjzqABN6IOBwkaHj8ypCjI5nkiz8WF0nlo/q0IeGgzAtyPB7GO2P21893hp4
- 6U=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4805; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=0ARivOJYw5HH/tjqlIAJQpwqlP4QpHGn/maGR+B9Y6w=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGfK1c+MDaCkqNCqDQpMqBjXG9Z+OalUNfc+Y
+ +LW6dBUtdPrbIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnytXPAAoJED7VnySO
+ Rox/PC4L/jTTWTGz73ykaG6IdNeR9CKIJdwD/hralLAjjZdfxsmE6CanI5nqNdmHQENzyMQ74Bh
+ lhDYL/O7GuLjgwzWO5LBzhvdbpdFhejKxGjSGqio5eprr7jgppMdjtGgAo6/g5tLkVWA+T1cf8f
+ jQMjwBSpntNLTNYPhMqMqkT7jdZ9+GGb5eDBatOCuOzbkU7gmcN7tS7atOQ5OXKFlGgQuYOK4WN
+ DGiTDzfbSDorYyjtxrhXzZdTA8cG19aIpdykzl16/prFvPVnzPjxaQhT4VbpSlmz9cBbQTA0h11
+ SR2NuCZ62QtvIz8OO/s6pSnD+nc3HF7HJJqlzthD62REUqz0/y9VlR8hOJmaWm7TZW7oeyrqNCx
+ rwK3KSaOc2wPZpitfjPj8VcsaRYV7OYmGFljrcDssQrz55yy6E27iPWG5DNj/UUfuHO0/1EzInV
+ /sTiJ0Au7xWqK/OcaWpOWiLqkylyzgoYVDzllytdyFpbTZTv1p38ewtBnMxCKsPmKH6l/US8yn7
+ rE=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
- Documentation/git-reflog.adoc |  6 ++++
- builtin/reflog.c              | 84 +++++++++++++++++++++++++++++++++++--------
- t/t1410-reflog.sh             | 55 ++++++++++++++++++++++++++++
- 3 files changed, 130 insertions(+), 15 deletions(-)
+The 'builtin/reflog.c' file uses the 'the_repository' global variable
+directly and also via 'git_config()'. Since this is a builtin command
+which has access to the 'struct repository', drop usage of the global
+variable and use the available repository struct.
 
-Karthik Nayak (2):
-      reflog: drop usage of global variables
-      reflog: implement subcommand to drop reflogs
+With this, remove the 'USE_THE_REPOSITORY_VARIABLE' macro from the file.
 
-This patch series adds a new 'drop' subcommand to git-reflog that allows
-users to delete the reflog for a specified reference. Additionally, it
-adds an '--all' flag to enable dropping all reflogs in a repository.
-This is a followup to the discussion we had when I sent in a patch to
-add '--no-reflog' option to 'git refs migrate' [1].
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ builtin/reflog.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-While 'git-reflog(1)' currently allows users to expire reflogs and
-delete individual entries, it lacks functionality to completely remove
-reflogs for specific references. This becomes problematic in
-repositories where reflogs are not needed but continue to accumulate
-entries despite setting 'core.logAllRefUpdates=false'.
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 95f264989b..f92258f6b6 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -1,5 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "builtin.h"
+ #include "config.h"
+ #include "gettext.h"
+@@ -236,7 +234,7 @@ static int expire_total_callback(const struct option *opt,
+ }
+ 
+ static int cmd_reflog_show(int argc, const char **argv, const char *prefix,
+-			   struct repository *repo UNUSED)
++			   struct repository *repo)
+ {
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -246,7 +244,7 @@ static int cmd_reflog_show(int argc, const char **argv, const char *prefix,
+ 		      PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_ARGV0 |
+ 		      PARSE_OPT_KEEP_UNKNOWN_OPT);
+ 
+-	return cmd_log_reflog(argc, argv, prefix, the_repository);
++	return cmd_log_reflog(argc, argv, prefix, repo);
+ }
+ 
+ static int show_reflog(const char *refname, void *cb_data UNUSED)
+@@ -256,7 +254,7 @@ static int show_reflog(const char *refname, void *cb_data UNUSED)
+ }
+ 
+ static int cmd_reflog_list(int argc, const char **argv, const char *prefix,
+-			   struct repository *repo UNUSED)
++			   struct repository *repo)
+ {
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -268,13 +266,13 @@ static int cmd_reflog_list(int argc, const char **argv, const char *prefix,
+ 		return error(_("%s does not accept arguments: '%s'"),
+ 			     "list", argv[0]);
+ 
+-	ref_store = get_main_ref_store(the_repository);
++	ref_store = get_main_ref_store(repo);
+ 
+ 	return refs_for_each_reflog(ref_store, show_reflog, NULL);
+ }
+ 
+ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
+-			     struct repository *repo UNUSED)
++			     struct repository *repo)
+ {
+ 	struct cmd_reflog_expire_cb cmd = { 0 };
+ 	timestamp_t now = time(NULL);
+@@ -310,7 +308,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
+ 
+ 	default_reflog_expire_unreachable = now - 30 * 24 * 3600;
+ 	default_reflog_expire = now - 90 * 24 * 3600;
+-	git_config(reflog_expire_config, NULL);
++	repo_config(repo, reflog_expire_config, NULL);
+ 
+ 	save_commit_buffer = 0;
+ 	do_all = status = 0;
+@@ -332,7 +330,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
+ 	if (cmd.stalefix) {
+ 		struct rev_info revs;
+ 
+-		repo_init_revisions(the_repository, &revs, prefix);
++		repo_init_revisions(repo, &revs, prefix);
+ 		revs.do_not_die_on_missing_objects = 1;
+ 		revs.ignore_missing = 1;
+ 		revs.ignore_missing_links = 1;
+@@ -368,7 +366,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
+ 			};
+ 
+ 			set_reflog_expiry_param(&cb.cmd,  item->string);
+-			status |= refs_reflog_expire(get_main_ref_store(the_repository),
++			status |= refs_reflog_expire(get_main_ref_store(repo),
+ 						     item->string, flags,
+ 						     reflog_expiry_prepare,
+ 						     should_prune_fn,
+@@ -382,12 +380,12 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
+ 		char *ref;
+ 		struct expire_reflog_policy_cb cb = { .cmd = cmd };
+ 
+-		if (!repo_dwim_log(the_repository, argv[i], strlen(argv[i]), NULL, &ref)) {
++		if (!repo_dwim_log(repo, argv[i], strlen(argv[i]), NULL, &ref)) {
+ 			status |= error(_("%s points nowhere!"), argv[i]);
+ 			continue;
+ 		}
+ 		set_reflog_expiry_param(&cb.cmd, ref);
+-		status |= refs_reflog_expire(get_main_ref_store(the_repository),
++		status |= refs_reflog_expire(get_main_ref_store(repo),
+ 					     ref, flags,
+ 					     reflog_expiry_prepare,
+ 					     should_prune_fn,
+@@ -430,7 +428,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix,
+ }
+ 
+ static int cmd_reflog_exists(int argc, const char **argv, const char *prefix,
+-			     struct repository *repo UNUSED)
++			     struct repository *repo)
+ {
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -445,7 +443,7 @@ static int cmd_reflog_exists(int argc, const char **argv, const char *prefix,
+ 	refname = argv[0];
+ 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
+ 		die(_("invalid ref format: %s"), refname);
+-	return !refs_reflog_exists(get_main_ref_store(the_repository),
++	return !refs_reflog_exists(get_main_ref_store(repo),
+ 				   refname);
+ }
+ 
 
-The first patch is a small cleanup which ensures that 'builtin/reflog.c' no
-longer uses global variables. The second patch add the required changes.
-
-[1]: https://lore.kernel.org/all/xmqqa5aqu7g9.fsf@gitster.g/
-
-
-
-base-commit: e969bc875963a10890d61ba84eab3a460bd9e535
-change-id: 20250306-493-add-command-to-purge-reflog-entries-bd22547ad34a
-
-Thanks
-- Karthik
+-- 
+2.48.1
 
