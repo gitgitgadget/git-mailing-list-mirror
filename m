@@ -1,158 +1,116 @@
-Received: from mail-qv1-f99.google.com (mail-qv1-f99.google.com [209.85.219.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3596C1AA1D9
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 21:38:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D9F200BB3
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 21:45:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741383536; cv=none; b=Fpe4VU1qRqVfvL+kX1DELLeYThpa6DouQbUr7CJr1UryM6biB8d6g/55WV8j54K1dKDHq2vv/NyHtgrjLoPRpa5e0Hfu1qzUpoHs2YF0yQjqM8rZWeyQPcONtVEYmRl1sWThJzp0Z9LF8hSHY3Zi15gxK2hWQy8F0QUP7airF7c=
+	t=1741383918; cv=none; b=EfaA/XXdyy+O/6viWedByIhl5bE3AkrMNfkELdzE3ENPPuZUrlSajoUIKDyZATcvChG1WQRz2N1fjBaKv0KTH4xtKoH+j0iIuh7jAYgP3UZNdIqvF5J1w2pTH3fTFRjR8dY5PVd/q5u+MDDLMeG+0T9vYYfP14YL+ypKEEG/AWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741383536; c=relaxed/simple;
-	bh=RVLXIpqfvfQd1paXAq31y3srafPTpyZoij4P5zbF8fM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=id6Odr6ZPqf+h+0ORIlVWmZWXuf9zVPyYblxbGwHb42ryy/lhjJbHatBBkcUX8o+/7ycz03eEEKyjSPtQqAKvwo4UNvyYNGbhPCXH3JJt7IibD4vtDTIvBxGJdGwXMv35CRwO12hYhQ85phWA5krRuw7303B6c55bXHDuHB/UUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org; spf=pass smtp.mailfrom=mandelberg.org; dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=Sjt1+Ugs; dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=bG/dPhaG; arc=none smtp.client-ip=209.85.219.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mandelberg.org
+	s=arc-20240116; t=1741383918; c=relaxed/simple;
+	bh=2zwAMREt17g7qAf3JrZ6HZopMpYYP1GhJsDiOM1Ru90=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZFyehiyHv+RBa5p2mVWuXiwnCr5uwdcBvWvKsJdAIYdH62Jz9XF8zFqWQa+0On9+3hUb95V2XS/gzlH+gK7TRZcCfaNfR3lL0Cgmo/U+gdcvZBSs/NSymG6K1N0+lGaj5nx9jy/Ufh2g6Kv25ilH2XCzKOsinRamnTUWHa2C2tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WOCm+inb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q/Hav8s8; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="Sjt1+Ugs";
-	dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="bG/dPhaG"
-Received: by mail-qv1-f99.google.com with SMTP id 6a1803df08f44-6e8fb8ad525so18227166d6.3
-        for <git@vger.kernel.org>; Fri, 07 Mar 2025 13:38:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741383533; x=1741988333;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :dkim-signature:dkim-signature:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=gxbVRgl+xhfo5wo9N9/w1llKWgG0wLh0GZiejQVTYc8=;
-        b=keofhy+lU0esY58QkUgs3s8aOFAbZzCWsZ60zl5Arg86ILMyzJiGjzjasG2EP62/ZP
-         g+T1gjiuX9BD09qwFavXcNEcs5ZsPpJGxcc89aEuPU2mNQNCVLxLqrgIAyCexGk72SgK
-         6oc5iDZ+kR3I/O02CbVrHBHlwVLDxyqk3xPcS0skU8GaihJ8abQ2dUUQfsVIjkeKJXIt
-         q1HogZRy4DyLDToHizD7mTES6KKeIiECbxKwKghOEX6uGihLlVerQNgpajbvxwbqiLmn
-         AOa+vwiAKkrAzDkil7vefRHqWTdGkRXp1pEuaGnKsJ/TmV7BXBMCOK+UmEC+0DR71Y77
-         VFSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW8RseLlIbFE+zo188Z4IvI6165wEs7zwIOMcHf0CONQFD9IvOAAm/JNQ2kT1raj6LrmlE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzej25Q3aezmhVkR1lL9uZFlRpobMa3fIh0CsdSYWttRPnzlIQj
-	u7tyiWDnUgV5vqq6dxhA3XbiSKdiY+uyMUbU6FiKlDh4KgHK4CdKaCFaWsa1au3z8KzLOeBVUXH
-	z/zRTx56oWUd/Oo/bt+smF1zjlCIwhzDwgamXRtlPikK0fU8J
-X-Gm-Gg: ASbGncv0eTrqqE3Czhlgb8Y1QMDj+J4YSPvxGW93pXhvQcxVPcfouiVySB5rdMyXc2n
-	y7Tn8ETU88KI0L9jQ4jPYgdC+B0eI2O6Pgrc2NCaMPqV1dVh0ACjTrBgyvjTd6tLkUUMQy5NsH9
-	mT05kQi4gf+5yMekf8F566S8ymPYtqjL3ImkpAfTpsIc837eC7CVv+vOEWeFL1TEoxbPE9c36P3
-	MaHGGk5f4+r5sFJtoMPGFLucaZHR6TC8+KkSKfaD6hqx3OC9Ln08I31KrpaHVbRl8IPFIyDKk9p
-	smaoBOxsxjhkWuyjwZnZfm1MU6DC/yXmgcowG3zM
-X-Google-Smtp-Source: AGHT+IEjh/tUenpiQDh69bDnk+1NWJD/fz5qK5TsmvZNTaBGWNls/uLEMfiayREFjspm260i2gsiDXblKqA4
-X-Received: by 2002:a05:6214:19c3:b0:6e6:6252:ad1a with SMTP id 6a1803df08f44-6e90067731amr62494236d6.28.1741383532962;
-        Fri, 07 Mar 2025 13:38:52 -0800 (PST)
-Received: from mail-outbound-e14cf917.virgo.mandelberg.org ([2600:4040:52f1:f606::8])
-        by smtp-relay.gmail.com with ESMTPS id 6a1803df08f44-6e8f70a4faasm1468316d6.31.2025.03.07.13.38.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Mar 2025 13:38:52 -0800 (PST)
-X-Relaying-Domain: mandelberg.org
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple;
- d=mandelberg.org; i=@mandelberg.org; q=dns/txt;
- s=mail-outbound-e14cf917-597d7abb; t=1741383532; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding : from;
- bh=RVLXIpqfvfQd1paXAq31y3srafPTpyZoij4P5zbF8fM=;
- b=Sjt1+UgsB+Iotu8xgh6lX+gPkIIaJ0lCYKyHbGXvpnMX9U/Q2VpA/vn+O3wY88QoGyovZ
- 7oxwulOt230o6fVDQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mandelberg.org;
- i=@mandelberg.org; q=dns/txt; s=mail-outbound-e14cf917-e56dad1c;
- t=1741383532; h=message-id : date : mime-version : subject : to : cc :
- references : from : in-reply-to : content-type :
- content-transfer-encoding : from;
- bh=RVLXIpqfvfQd1paXAq31y3srafPTpyZoij4P5zbF8fM=;
- b=bG/dPhaGVjTGmk0TcuGFpzsofnKnbdNOfwsOtRANZfQ6gvUki8uJjCR7eAUHfYQQFSvU9
- YcsoaPnkA7UY8JqY6YES/bb8zjfU3F68i8r2q0GXzgrTI3H+51QzMBtMCVaiNfXJzWFJHtT
- 7gxeXhtPOjJhz0A5q0BU0y8vofUa027qRhRA50kGt6FyWyGF5LEcx3D4tQLGYstF+LjnTRt
- kWZxDGR/5xdYDnMAlob/dDKRYnMbJmqZwPQ4/rLwPgpo07YsoZGVp9NGc5f/OrkYYXUzq+6
- bdKa4mMmV48KAHhwXju9w/LigYfwiR76C+48ztrAv/4dQAcmlhhsvn0TP26A==
-Received: from [IPV6:fde5:2b79:35f0:2::166] (unknown [IPv6:fde5:2b79:35f0:2::166])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (secp384r1) server-digest SHA384)
-	(No client certificate requested)
-	by mail-outbound-e14cf917.virgo.mandelberg.org (Postfix) with ESMTPSA id 4Z8fmr2QWrz10df;
-	Fri,  7 Mar 2025 21:38:52 +0000 (UTC)
-Message-ID: <1192682c-b68d-429d-9852-15ab627d711f@mandelberg.org>
-Date: Fri, 7 Mar 2025 16:38:51 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WOCm+inb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q/Hav8s8"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4EA4611401BE;
+	Fri,  7 Mar 2025 16:45:16 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Fri, 07 Mar 2025 16:45:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741383916; x=1741470316; bh=hPmup/wztf
+	JtMbQ6kKO37oFet471w8zLr/kAXdHIRCQ=; b=WOCm+inbyNFR+wWLhRCJUB0hke
+	8a+atOVXTeeFI6dXygLIaqpcibJl91wAri1b5gWCbbYvmj+pf7XeTqmqFWaw+6WV
+	8BEqwWHhcrg8lJt05yV3wiWBpxSlrcktSpRUAZhmnSSOFaqNa5k06kMEeSJmywZe
+	Xy9lDX9JZyMKauk7D+OMGmzsncP15lHGY+Irpcfj8B2LDvHZZpjaIryhmg4xLCzv
+	JxoVkDoaMCyBIjcT256Xp6HMkYUN2pDOxe3H7Y4MCtnHw45Fs86kofbqaCiwY7qb
+	cRQBysSTHYC49kiBkioxJtMyqP3R/3aVA1CT2VnkY24unWvsqA7b3rocllYw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741383916; x=1741470316; bh=hPmup/wztfJtMbQ6kKO37oFet471w8zLr/k
+	AXdHIRCQ=; b=q/Hav8s87HR8UZsYrHvL1cX8jB9+brd14DDyUKrOVYbgeyTwxo4
+	mYv3gsOU+kifB7ZASirzcRDX5kSIvUYF0DB98m1C8PSRgPXB6zQmTlZJp1ZG9JbP
+	v5k42XcvEudZOyA6TARI20BrSP/2RB+hlg8eDCYULtgeRR7KKu5kE27+PSB9wIgx
+	Z1c/vCgBy8Mwgwn9IxqPI5pv/x5lsRL+7ZQqQOWwqGY6dyqoYlaKIHSnbCBPq5Ue
+	b6knPkn5u8wI+yO3e1W+Qe04C0BOs2BDvko9/k/tWCL+XTp0pwgZ37uiJL1ojpgo
+	yXkaDgQuhob5ve1tDpRPmjB2UX2sfUEdX4w==
+X-ME-Sender: <xms:62jLZyOE5YXBSYjRAj_qNVzlYWuNBZFkrQxHLoQXS3PfTJ8ZBfgTlw>
+    <xme:62jLZw_RqqknVOsbMBYTL_LK720fIbrtd_9djR_gKyLTRQkVkgOtOmJVNeNryw_GL
+    Dcu6BLmTyHbZERS8A>
+X-ME-Received: <xmr:62jLZ5TVwmgjrfd59PbSwjDyoj-8bDgwwn-i2d6SsvPbksqDXxqojejz4iWVKqdLKQ3ZFkwwSDrCihpx-9A118m8YzsrRbc0Ascu>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduuddujeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggrvhhiugesmh
+    grnhguvghlsggvrhhgrdhorhhgpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:7GjLZytUKyilUUE5Wd4zAKmr5A2Gdbmf8V996lfPcN5BPPFKvQ1uCw>
+    <xmx:7GjLZ6c8-SW4LNp8NbrAq2R-KvLK5wUv7pas-WolrgkkLCE1Txg1sw>
+    <xmx:7GjLZ215d1RF2knGZaac56iefbcyhuYcESBdVA_OeMHbmJgkClcUWA>
+    <xmx:7GjLZ-8yEDefML5HP8UnXcIT2xqG6i5uPsK46M8a3k3THIpOOMvmjQ>
+    <xmx:7GjLZ3F9ra8dMBgdEbwmBw9-6aRNJRDUXpJdv7QJhrLqOfgx6dhNN7UL>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Mar 2025 16:45:15 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: David Mandelberg <david@mandelberg.org>
+Cc: David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 3/3] completion: fix bugs with slashes in remote names
+In-Reply-To: <1192682c-b68d-429d-9852-15ab627d711f@mandelberg.org> (David
+	Mandelberg's message of "Fri, 7 Mar 2025 16:38:51 -0500")
+References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
+	<95ffa62df6ce394249a8ddabb84fb2b517825fe3.1740901525.git.gitgitgadget@gmail.com>
+	<xmqqh645hopj.fsf@gitster.g>
+	<05bf397e-4bc2-4255-87b5-925c80667f4c@mandelberg.org>
+	<xmqqtt84d0dz.fsf@gitster.g>
+	<1192682c-b68d-429d-9852-15ab627d711f@mandelberg.org>
+Date: Fri, 07 Mar 2025 13:45:14 -0800
+Message-ID: <xmqq4j04cy6t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] completion: fix bugs with slashes in remote names
-To: Junio C Hamano <gitster@pobox.com>
-Cc: David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
- <95ffa62df6ce394249a8ddabb84fb2b517825fe3.1740901525.git.gitgitgadget@gmail.com>
- <xmqqh645hopj.fsf@gitster.g>
- <05bf397e-4bc2-4255-87b5-925c80667f4c@mandelberg.org>
- <xmqqtt84d0dz.fsf@gitster.g>
-Content-Language: en-US
-From: David Mandelberg <david@mandelberg.org>
-In-Reply-To: <xmqqtt84d0dz.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Op 2025-03-07 om 15:57 schreef Junio C Hamano:
-> It probably would not mean much either way, and certainly not
-> something we should worry about during pre-release feature freeze.
-> 
-> The "fix" may take quite different shapes.  Remote nick/name may
-> still be allowed but the default fetch refspec left by "git clone"
-> would start using the refs/remotes/nick-name/ hierarchy instead of
-> the refs/remotes/nick/name hierarchy, for example, but as long as
-> this round of completion fixes properly read the configuration to
-> learn the remote-tracking hierarchy by reading the configured value
-> of "remote.nick/name.fetch", such a change would not break the code
-> in the completion script at all.  Or remote nick/name may outright
-> banned and people are encouraged to use nick-name instead, in which
-> case even if the completion code is prepared to accept remote names
-> with slashes in it, as long as it still works correctly with remote
-> names with no slashes in it, it will keep working in such a future.
-> 
-> Or the "fix" may be to declare "there is nothing to fix, if people
-> want to use
-> 
->      [remote "nick/name"] fetch = +refs/heads/*:refs/remotes/nickname/*
->      [remote "nocknyme"] fetch = +refs/heads/*:refs/remotes/nock/nyme/*
-> 
-> that's their choice, and the completion code would do the right thing
-> anyway".
-> 
-> I didn't read your patches, so the situation may be different and
-> with any shape of "fix", or without any "fix", there might still be
-> need for further polishing.  But hopefully you got the idea.  For
-> this particular patch, there is nothing urgently needed.  Well, we
-> are right now in the pre-release feature freeze anyway ;-).
-> 
-> Thanks.
+David Mandelberg <david@mandelberg.org> writes:
 
-Thanks for the explanation!
+>> As a remote name, we still do use "is that a
+>> file on the filesystem?" to see if it is a local file:// URL
+>> (i.e. "git fetch github/dseomn" may be fetching from a subdirectory
+>> two levels down)
+>
+> Btw, I just tested it, and I think this is an issue for remote names
+> without slashes too:
 
-> As a remote name, we still do use "is that a
-> file on the filesystem?" to see if it is a local file:// URL
-> (i.e. "git fetch github/dseomn" may be fetching from a subdirectory
-> two levels down)
+Yes, and that is an intended way local repositories are discovered
+and used.
 
-Btw, I just tested it, and I think this is an issue for remote names 
-without slashes too:
+The problem with slashes is that the mistake surface becomes a lot
+larger.  "ls<RETURN>" would show you "origin" immediately in the
+current working directory, but you wouldn't know if origin has
+origin/foo or origin/bar unless you look.  Limiting the local
+filesystem reference to something like "only the ones that has no
+slashes, or begin with ../ or /" would make it less likely that you
+meant to push to somewhere and instead push to a local directory.
 
-/tmp/tmp.sVAhhZuEzA$ git init foo
-Initialized empty Git repository in /tmp/tmp.sVAhhZuEzA/foo/.git/
-/tmp/tmp.sVAhhZuEzA$ cd foo
-/tmp/tmp.sVAhhZuEzA/foo$ git init --bare origin
-Initialized empty Git repository in /tmp/tmp.sVAhhZuEzA/foo/origin/
-/tmp/tmp.sVAhhZuEzA/foo$ git commit --allow-empty -m 'test'
-[main (root-commit) 24c92a9] test
-/tmp/tmp.sVAhhZuEzA/foo$ git push origin main
-Enumerating objects: 2, done.
-Counting objects: 100% (2/2), done.
-Writing objects: 100% (2/2), 162 bytes | 162.00 KiB/s, done.
-Total 2 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
-To origin
-  * [new branch]      main -> main
