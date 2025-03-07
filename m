@@ -1,57 +1,57 @@
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
+Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920A652F88
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 21:31:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DC752F88
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 21:33:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741383105; cv=none; b=DkdvaxXtrt1u7WsdEAeHSf3YAbik8DQQpZXFJ7q+0/lOH3iMazbCHMoYFIt0bSvmaUtcbhaCsaT8l4fh1xpXD4VN82+3TcHZtiA3K/3RR4MRBQasdr6Ih61zLcKYnAGA0Ekq8Ard0Mbkuh/gWCie7+fCc3TRwn6+SaeTOzrONBc=
+	t=1741383183; cv=none; b=YhBhcKkWVOESutY0CKhW+1dDnM+sP8Ew6dtmrEdbeKJKtFAaVTGskw9N+fUnmRkmJ04ik3obBadCxfkCHR9UCZ9SXoA2O3S12B5UtmNGnAJSPYWaP889Fq5bVsYKFP2tOM3j9n9DSqQklhiG6Ieb+L4yLbu1XUW/xUdUbPyyZV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741383105; c=relaxed/simple;
-	bh=2K6E2I4L3XUoRsxM4aa16QgQaAuuXa6hQyjkgx50SRg=;
+	s=arc-20240116; t=1741383183; c=relaxed/simple;
+	bh=Cixwxt8irrFsdhBQ+t5eEdXGdRxptDjkkfbOUeKkjAo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lSoOOiDr8iYf/YeIpgLOvMTCqmUmw6u4Qvh1ZoJfm3rkiA0x7VC0uHOITk6ti2pOISH6xZfAO3lSy1PxUf4OKMzcd74SWIwi8ehyz9G+egGDGWdpxIPgipU74x6YwuSzkrUqLL6CHo+JC0QSgarjrjGkZ0Ex6hiuuXICXcsyhf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nBW5EgOR; arc=none smtp.client-ip=209.85.166.181
+	 To:Cc:Content-Type; b=lmsWYI8LTez2tCNMuY5AfHpFgd4vEI84Z2FSo5GjrLp0oQgEr6xrjqDZdhXpgwg6maWiqnxl5yCsdzMfN9Be10W+zozc0SQA8CMHErYPyH9+P4mkLiRTA8xrHp92FFqh/pq89Mf64prkCnYbw+OgYfnKbbLCKf/QHeT4y8bT22E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fy0BgU7S; arc=none smtp.client-ip=209.85.166.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nBW5EgOR"
-Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-3d4496a34cdso1803405ab.1
-        for <git@vger.kernel.org>; Fri, 07 Mar 2025 13:31:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fy0BgU7S"
+Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-3cfc79a8a95so6815335ab.2
+        for <git@vger.kernel.org>; Fri, 07 Mar 2025 13:33:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741383102; x=1741987902; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741383181; x=1741987981; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Da88ei4Gk8D88/zIbUHY/i+9jdUaVCtTipiSAnDZCT4=;
-        b=nBW5EgOR2LVMY4G+gb3NtaQ8PD2MWwTBfsZpldoRoswHxxrNY4E5SXaHEgOEDzP/7T
-         24ZuXyXRRSVRSdrQ3SDdTkJQVjwoFt02knbJ1M7atXbqA+BoLj/ZVN2KxBaPKovcpJrv
-         SepZr3Wkm3CUR1V/4CqITnd/0h3KpWAEP9953F+xshIDVjCyJENR0g9jvdoRAqji/oE1
-         aDV2/0WLdPnmF4S86u+ylcnpDPmE6+hDHc1oxtrVSIs+8Drm+Youxo0tlZTPteTvNIEG
-         mCm0jKWmouMyRQH/jvSOZrb5K6q57t7GodRfMDV3bWQ/Fxnhd0vQQxv7cD4caK/NwmGV
-         WaZA==
+        bh=luGEaD29i2clkVFlupQttlD4RG5VzQyZYaxhE5ubF5g=;
+        b=Fy0BgU7Sykk6XBTuaMVkeAbeaOQg5TRrnyVTqw4nTY2JC89iDIhH4faBvdKypjRhk9
+         KvS8+kC1pds2EPz7vmsNeNj30wyNtSgkYz7SiqWhQM7LUj+lz3OofyGYgD72WIxAsfMi
+         zdnJKvmbp6Vd1t4hxuTipmVaDPJPrHSImp9zCZNRSENgoHAgJrldDaowckEbBikbXSnw
+         TKr/sTBnZCIsXvnEwuITvPzT+93SlS1hp6U9Ob2A1Bx8CwwkX2zGz8iR1YMo+7P6S3dY
+         YQdxOIKFyFiYusyfBdYGtiQcXguuYs0MCIewuOBA3Vo0Ixf6QFF0EZH8mJyvprriPkop
+         qeOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741383102; x=1741987902;
+        d=1e100.net; s=20230601; t=1741383181; x=1741987981;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Da88ei4Gk8D88/zIbUHY/i+9jdUaVCtTipiSAnDZCT4=;
-        b=UrA11M+i1A9j4W0Mirrl55spNNyBSVOEBsv6swhAUR3aGMrImxnwr+WRXS61PTEcus
-         NS/pNIvvoj0PFZbakITtqynkIKnBwvZYiEwjR4G8jBDNA0omRIej06ths8tadUw852ao
-         VMimWceXqNxQL0dj1/CJHYM4zW0LEkFyCKwQcF+xrUgukIpZRs4bz6YdLTp5oXLijtZP
-         1LlOygnE/yQC/7DtWF8iQArEwlOJNRDXUAigS4ohljpOpvXwzneaMc1hIsu9x/cjqz9Q
-         YGtldijOlL96ofYol1HUJIiQHvL18tjqt2Xvm1LPEgHeyWaODQ4MtqB0eyP2th9cUqIH
-         K5/g==
-X-Gm-Message-State: AOJu0YxuRz+SOWB/CbcAkvqi4zKnQb63bu76btR+gn4t8kKoQbO9j8Ii
-	crJjg0lBO7uohvu+UWKNeQzrNrWcDSwTH0C6o6i8/vb6kQmxvLfT88KnBfcWNto8HEQYonOvv4o
-	f1zT0NUQ1ut6mi65mUrn1DTfoOqY=
-X-Gm-Gg: ASbGncvmZ/47Od9YfM+O6z7E1pScUKyQ5Hn50IqK2mfCc6vqClD/A1ZF24kF7NRuVhP
-	vt3hTa6m8nGzdcGNKQW4nlBeFGQ+pRH6Da4HRhXlVlnzTMb/ytISA5u5SIeCJnJ9QEgvJQpO8ma
-	I/4iJtzdKMPF8RgM9HcvTJrbR/ZGUVSEpLcAGMUTNVyuPtvIoTuDnPjZCRSzY=
-X-Google-Smtp-Source: AGHT+IHIwe9flXmNGheMCx/qYRK5i0Ws3CU4NRBmAkoWVq+bSHIBi6aO+YnfiT51yNr/BXYlNL1cwQm3dBrMyb68qQE=
-X-Received: by 2002:a92:ca07:0:b0:3d1:9236:ca52 with SMTP id
- e9e14a558f8ab-3d44186fe89mr61576615ab.0.1741383102498; Fri, 07 Mar 2025
- 13:31:42 -0800 (PST)
+        bh=luGEaD29i2clkVFlupQttlD4RG5VzQyZYaxhE5ubF5g=;
+        b=Xngt+lMpm0u2QsquW1dFeS620eaJWuucp4oH0Y4QFhkv2CWYC/EqBBlioQza71axQT
+         bdXFNELE3H+8Z2Ly2zFFAEjqwknan+KoCkDO7cthAheN8zX3F/sA7Qh4Vu+i3fpgD75b
+         BkJmta6cfv1qbcW4yPnWpJGAZhf4PQo13Hj7C6KqA6O2Fr8rT8sIFSnuXy+4OH00fPlK
+         tKp5Wfb1zvncPNPEp4meGsq3H3ZKMm61HzCNdYCIwxVyyFbUpltMuKUy9hFfa+urdV6n
+         qVdlPlRxx1tTuzVAJh29TMOzzb1q2kAjmQb1918moRZ4pgOMdIzk/UHw9btlypTd7bJP
+         iBQw==
+X-Gm-Message-State: AOJu0YwJzuj3yKbDo19GQwVaST1mIPFwo3bjlDfpmeHnlrbf7XOPoUHO
+	ysagdLOrh2IiU0MQoEDY+fhmB18u12EmDHIZhmSKbGgYF3Y6Q1o/ABQuh/sxl6psbBfeWYqwYBo
+	xgG55Tzm8L7RpEzOkEvBojEq5MaA=
+X-Gm-Gg: ASbGnctlSemuWbT2JPp35mpMXWCOw/erik3yi7uOqfjfgn53SQwTiNmiuMXbCZRQTPY
+	QiXbN4D8ownwpBmN9EAZ16USaGGmbk40lvXDIQUxCgeApiKp1X08qI6qsJrUaAy02pRwtfj1Je1
+	hgxIKFB7y15T7tPb7LUSvO02BBepgCiy431Sna3iiHEANhhOcoQkfKW0KyxRI=
+X-Google-Smtp-Source: AGHT+IGNTqxhT/5LNAH5g1UMrXNjLFDxJGBVSCG0Aj5wdfFpmbdyXHAxtIZp2ovS7SuJAau8SoUaTcFT0XxlbSSXvxg=
+X-Received: by 2002:a05:6e02:198a:b0:3d3:dcb8:1bf1 with SMTP id
+ e9e14a558f8ab-3d4419713a8mr58845705ab.3.1741383180913; Fri, 07 Mar 2025
+ 13:33:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,14 +59,13 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <cover.1741223981.git.me@ttaylorr.com> <cover.1741275245.git.me@ttaylorr.com>
- <67c8c5f797833a9a35f4805059d7e759020f54bd.1741275245.git.me@ttaylorr.com>
-In-Reply-To: <67c8c5f797833a9a35f4805059d7e759020f54bd.1741275245.git.me@ttaylorr.com>
+ <c3b5ca597330275391704a0653398ee28f911fc1.1741275245.git.me@ttaylorr.com>
+In-Reply-To: <c3b5ca597330275391704a0653398ee28f911fc1.1741275245.git.me@ttaylorr.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Fri, 7 Mar 2025 13:31:31 -0800
-X-Gm-Features: AQ5f1Jp_GdMmE3iv_ep6J1xbODXE1_Kpmvg2t14KMRqqjNAe9mjSEQyVc6G-t88
-Message-ID: <CABPp-BFn0wht71rM1bE1ABpa6Rn6QRrcVrbN0fhcwprbm+T39Q@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] refs.c: stop matching non-directory prefixes in
- exclude patterns
+Date: Fri, 7 Mar 2025 13:32:49 -0800
+X-Gm-Features: AQ5f1JqB6BopaQWpxuWRzNYT9GHdeRWTD1DdJA-pSzrya64cVU9s1k6dbOilzNg
+Message-ID: <CABPp-BE3u=YVCU20Bz4jZc90DkmArE=v02WjOzr-uO6kV6Zfng@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] refs.c: remove empty '--exclude' patterns
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
 	Patrick Steinhardt <ps@pks.im>, SURA <surak8806@gmail.com>
@@ -75,178 +74,129 @@ Content-Transfer-Encoding: quoted-printable
 
 On Thu, Mar 6, 2025 at 7:34=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrote:
 >
-> In the packed-refs backend, our implementation of '--exclude' (dating
-> back to 59c35fac54 (refs/packed-backend.c: implement jump lists to avoid
-> excluded pattern(s), 2023-07-10)) considers, for example:
+> In 59c35fac54 (refs/packed-backend.c: implement jump lists to avoid
+> excluded pattern(s), 2023-07-10), the packed-refs backend learned how to
+> construct "jump lists" to avoid enumerating sections of the packed-refs
+> file that we know the caller is going to throw out anyway.
 >
->     $ git for-each-ref --exclude=3Drefs/heads/ba
+> This process works by finding the start- and end-points (that is, where
+> in the packed-refs file corresponds to the range we're going to ignore)
+> for each exclude pattern, then constructing a jump list based on that.
+> At enumeration time we'll consult the jump list to skip past everything
+> in the range(s) found in the previous step, saving time when excluding a
+> large portion of references.
 >
-> to exclude "refs/heads/bar", "refs/heads/baz", and so on.
+> But when there is a --exclude pattern which is just the empty string,
+> the behavior is a little funky. When we try and exclude the empty
+> string, the matched range covers the entire packed-refs file, meaning
+> that we won't output any packed references. But the empty pattern
+> doesn't actually match any references to begin with! For example, on my
+> copy of git.git I can do:
 >
-> The files backend, which does not implement '--exclude' (and relies on
-> the caller to cull out results that don't match) naturally will
-> enumerate "refs/heads/bar" and so on.
+>     $ git for-each-ref '' | wc -l
+>     0
 >
-> So in the above example, 'for-each-ref' will try and see if
-> "refs/heads/ba" matches "refs/heads/bar" (since the files backend simply
-> enumerated every loose reference), and, realizing that it does not
-> match, output the reference as expected. (A caller that did want to
-> exclude "refs/heads/bar" and "refs/heads/baz" might instead run "git
-> for-each-ref --exclude=3D'refs/heads/ba*'").
+> So "git for-each-ref --exclude=3D''" shouldn't actually remove anything
+> from the output, and ought to be equivalent to "git for-each-ref". But
+> it's not, and in fact:
 >
-> This can lead to strange behavior, like seeing a different set of
-> references advertised via 'upload-pack' depending on what set of
-> references were loose versus packed.
+>     $ git for-each-ref | wc -l
+>     2229
+>     $ git for-each-ref --exclude=3D'' | wc -l
+>     480
 >
-> So there is a subtle bug with '--exclude' which is that in the
-> packed-refs backend we will consider "refs/heads/bar" to be a pattern
-> match against "refs/heads/ba" when we shouldn't. Likewise, the reftable
-> backend (which in this case is bug-compatible with the packed backend)
-> exhibits the same broken behavior.
-
-Yuck; nice to see this being addressed.
-
-> There are a few ways to fix this. One is to tighten the rules in
-> cmp_record_to_refname(), which is used to determine the start/end-points
-> of the jump list used by the packed backend. In this new "strict" mode,
-> the comparison function would handle the case where we've reached the
-> end of the pattern by introducing a new check like so:
+> But why does the '--exclude' version output only some of the references
+> in the repository? Here's a hint:
 >
->     while (1) {
->         if (*r1 =3D=3D '\n')
->             return *r2 ? -1 : 0;
->         if (!*r2)
->             if (strict && *r1 !=3D '/')        /* <- here */
->                 return 1;
->             return start ? 1 : -1;
->         if (*r1 !=3D *r2)
->             return (unsigned char)*r1 < (unsigned char)*r2 ? -1 : +1;
->         r1++;
->         r2++;
->     }
+>     $ find .git/refs -type f | wc -l
+>     480
 >
-> (eliding out the rest of cmp_record_to_refname()). Equivalently, we
-> could teach refs/packed-backend::populate_excluded_jump_list() to append
-> a trailing '/' if one does not already exist, forcing an exclude pattern
-> like "refs/heads/ba" to only match "refs/heads/ba/abc" and so forth.
+> Indeed, because the files backend doesn't implement[^1] the same jump
+> list concept as the packed backend we get the correct result for the
+> loose references, but none of the packed references.
 >
-> But since the same problem exists in reftable, we can fix both at once
-> by performing this pre-processing step one layer up in refs.c at the
-> common entrypoint for the two, which is 'refs_ref_iterator_begin()'.
+> Since the empty string exclude pattern doesn't match anything, we can
+> discard them before the packed-refs backend has a chance to even see it
+> (and likewise for reftable, which also implements a similar concept
+> since 1869525066 (refs/reftable: wire up support for exclude patterns,
+> 2024-09-16)).
 >
-> Since that solution is both the simplest and only requires modification
-> in one spot, let's normalize exclude patterns so that they end with a
-> trailing slash. This causes us to unify the behavior between all three
-> backends.
-
-:-)
-
-> There is some minor test fallout in the "overlapping excluded regions"
-> test, which happens to use 'refs/ba' as an exclude pattern, and expects
-> references under the "refs/heads/bar/*" and "refs/heads/baz/*"
-> hierarchies to be excluded from the results.
+> This approach (copying only some of the patterns into a strvec at the
+> refs.c layer) may seem heavy-handed, but it's setting us up to fix
+> another bug in the following commit where the fix will involve modifying
+> the incoming patterns.
 >
-> But that test fallout is expected, because the test was codifying the
-> buggy behavior to begin with, and should have never been written that
-> way. Split that into its own test (since the range is no longer
-> overlapping under the stricter interpretation of --exclude patterns
-> presented here). Create a new test which does have overlapping
-> regions by using a refs/heads/bar/4/... hierarchy and excluding both
-> "refs/heads/bar" and "refs/heads/bar/4".
-
-Always nice to see tests corrected.
-
-> Reported-by: SURA <surak8806@gmail.com>
-> Helped-by: Jeff King <peff@peff.net>
+> [^1]: As noted in 59c35fac54. We technically could avoid opening and
+>   enumerating the contents of, for e.g., "$GIT_DIR/refs/heads/foo/" if
+>   we knew that we were excluding anything under the 'refs/heads/foo'
+>   hierarchy. But the --exclude stuff is all best-effort anyway, since
+>   the caller is expected to cull out any results that they don't want.
+>
+> Noticed-by: Jeff King <peff@peff.net>
 > Signed-off-by: Taylor Blau <me@ttaylorr.com>
 > ---
->  refs.c                  |  6 +++++-
->  t/t1419-exclude-refs.sh | 16 ++++++++++++++--
->  2 files changed, 19 insertions(+), 3 deletions(-)
+>  refs.c                  | 16 ++++++++++++++++
+>  t/t1419-exclude-refs.sh | 10 ++++++++++
+>  2 files changed, 26 insertions(+)
 >
 > diff --git a/refs.c b/refs.c
-> index 17d3840aff..2d9a1b51f4 100644
+> index 91da5325d7..17d3840aff 100644
 > --- a/refs.c
 > +++ b/refs.c
-> @@ -1708,7 +1708,11 @@ struct ref_iterator *refs_ref_iterator_begin(
->                         if (!len)
->                                 continue;
->
-> -                       strvec_push(&normalized_exclude_patterns, pattern=
+> @@ -1699,6 +1699,20 @@ struct ref_iterator *refs_ref_iterator_begin(
+>                 enum do_for_each_ref_flags flags)
+>  {
+>         struct ref_iterator *iter;
+> +       struct strvec normalized_exclude_patterns =3D STRVEC_INIT;
+> +
+> +       if (exclude_patterns) {
+> +               for (size_t i =3D 0; exclude_patterns[i]; i++) {
+> +                       const char *pattern =3D exclude_patterns[i];
+> +                       size_t len =3D strlen(pattern);
+> +                       if (!len)
+> +                               continue;
+> +
+> +                       strvec_push(&normalized_exclude_patterns, pattern=
 );
-> +                       if (pattern[len - 1] =3D=3D '/')
-> +                               strvec_push(&normalized_exclude_patterns,=
- pattern);
-> +                       else
-> +                               strvec_pushf(&normalized_exclude_patterns=
-, "%s/",
-> +                                            pattern);
-
-Doesn't this mean that if the user requested to exclude
-"refs/heads/bar" and "refs/heads/bar" exists, that we won't exclude it
-because it doesn't have a trailing slash?
-
-From reading other comments in this thread, I guess that ends up being
-okay, because we only promise to filter out what we can cheaply
-filter, and we rely on our caller to double-check everything and do
-the real filtering.
-
-...but it gives me some ugly dir.c vibes, reminding me of 95c11ecc73f2
-(Fix error-prone fill_directory() API; make it only return matches,
-2020-04-01) and a slew of related bugs preceding it.  Granted, dir.c
-had this tri-state to deal with (tracked, untracked-but-ignored,
-untracked-and-not-ignored) and simplifying of whole directories, which
-don't apply here, so maybe the similarity of
-"fast-filtering-only-and-rely-on-caller" won't be a problem since the
-upper level filtering is so much more straightforward.
-
-Should this at least be called out in the commit message, though?
-
->                 }
+> +               }
+> +
+> +               exclude_patterns =3D normalized_exclude_patterns.v;
+> +       }
 >
->                 exclude_patterns =3D normalized_exclude_patterns.v;
+>         if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN)) {
+>                 static int ref_paranoia =3D -1;
+> @@ -1719,6 +1733,8 @@ struct ref_iterator *refs_ref_iterator_begin(
+>         if (trim)
+>                 iter =3D prefix_ref_iterator_begin(iter, "", trim);
+>
+> +       strvec_clear(&normalized_exclude_patterns);
+> +
+>         return iter;
+>  }
+>
 > diff --git a/t/t1419-exclude-refs.sh b/t/t1419-exclude-refs.sh
-> index fd58260a24..04797aee59 100755
+> index c04eeb7211..fd58260a24 100755
 > --- a/t/t1419-exclude-refs.sh
 > +++ b/t/t1419-exclude-refs.sh
-> @@ -46,6 +46,10 @@ test_expect_success 'setup' '
->                         echo "create refs/heads/$name/$i $base" || return=
- 1
->                 done || return 1
->         done >in &&
-> +       for i in 5 6 7
-> +       do
-> +               echo "create refs/heads/bar/4/$i $base" || return 1
-> +       done >>in &&
->         echo "delete refs/heads/main" >>in &&
->
->         git update-ref --stdin <in &&
-> @@ -99,9 +103,17 @@ test_expect_success 'adjacent, non-overlapping exclud=
-ed regions' '
->         esac
+> @@ -155,4 +155,14 @@ test_expect_success 'meta-characters are discarded' =
+'
+>         assert_no_jumps perf
 >  '
 >
-> -test_expect_success 'overlapping excluded regions' '
-> +test_expect_success 'non-directory excluded regions' '
->         for_each_ref__exclude refs/heads refs/heads/ba refs/heads/baz >ac=
-tual 2>perf &&
-> -       for_each_ref refs/heads/foo refs/heads/quux >expect &&
-> +       for_each_ref refs/heads/bar refs/heads/foo refs/heads/quux >expec=
-t &&
+> +test_expect_success 'empty string exclude pattern is ignored' '
+> +       git update-ref refs/heads/loose $(git rev-parse refs/heads/foo/1)=
+ &&
+> +
+> +       for_each_ref__exclude refs/heads "" >actual 2>perf &&
+> +       for_each_ref >expect &&
 > +
 > +       test_cmp expect actual &&
-> +       assert_jumps 1 perf
+> +       assert_no_jumps perf
 > +'
 > +
-> +test_expect_success 'overlapping excluded regions' '
-> +       for_each_ref__exclude refs/heads refs/heads/bar refs/heads/bar/4 =
->actual 2>perf &&
-> +       for_each_ref refs/heads/baz refs/heads/foo refs/heads/quux >expec=
-t &&
->
->         test_cmp expect actual &&
->         assert_jumps 1 perf
+>  test_done
 > --
 > 2.49.0.rc1.2.g67c8c5f7978
 
-Other than the one surprise noted above, looks good to me.
+Makes sense...but doesn't the second patch also fix this issue without
+the first patch being needed?
