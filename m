@@ -1,80 +1,81 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDEC21C17B
-	for <git@vger.kernel.org>; Fri,  7 Mar 2025 14:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6922021CA0C
+	for <git@vger.kernel.org>; Fri,  7 Mar 2025 14:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741357149; cv=none; b=nyxjI0Ti1NXhyNygX9rA3iJ229P22J8sgEYUSm1n4fDMnb5Bas2M8+0UGIs7Npz6+YTA8trK3Lsa7X1skcIrYjWpDzrc7rdHWrQTPbQYIoJP8qTsIoUBsl2/fmCLB9jxyqlaXDV5cLUNU1u6nDUALBtqm913n2BUdib++GPQjDQ=
+	t=1741357151; cv=none; b=UBsYEKfYRGhsUupv8dsyuQEioQc90goOTRGH/+1VwcOGi9TsSghk20pZe28c7Lve0vCLOTGhl+0V/QPOsBcrXguU82o72QCGEmtih3dYxYQLM3iyk/Yoa5xYnm7fqD2ierPAxvhd73XBQJDbvEqmKG0KlPTXJibHyPxpk4sdxM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741357149; c=relaxed/simple;
-	bh=U0QcKtD2WdFY83c2bWUuqe2WkcIgzACZuaHt2DwwIGE=;
+	s=arc-20240116; t=1741357151; c=relaxed/simple;
+	bh=J4KR9jKvc9YiQ/OqvY1HdrM1efMXqSGq+WtDp5MKYQE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jXA0k8nJPOG11cmNQj+OCOHc/vprODXSx1eK4Wk0k3EttXDCO609y1GmvCNJYQ1wgei9r3i3Hq5DRrt+Yh9gJ5eQMMwG1U0aN8cKLyJpa/zl0Y/ZrvTow5ZrCcY6uThkIlyL4oWMNg1hOpJpZvzHyktxnyC5Hx4vDmwboBz9VyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d8GUIrrq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jDkohkdX; arc=none smtp.client-ip=202.12.124.145
+	 In-Reply-To:To:Cc; b=SpdOM9eywMAbV3GqVsr/pQlZ44VecD+c+o3w4KYEzKx7mH+cYm2d80zsnpVstbjMYZwZW12mIbHuxE3BAOKrkQbM+J9iPNYR14pQQi1cLYL7xqG3nCd6/vq3wIkdXrUjSAkaw3q3DEVpulaPYM+zIu+YmK8OMB0cGWzsgQtOjmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cFyhIGew; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ugyPCOMR; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d8GUIrrq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jDkohkdX"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cFyhIGew";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ugyPCOMR"
 Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4219F1140148;
-	Fri,  7 Mar 2025 09:19:07 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id 8A2A61140174;
+	Fri,  7 Mar 2025 09:19:08 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 07 Mar 2025 09:19:07 -0500
+  by phl-compute-06.internal (MEProxy); Fri, 07 Mar 2025 09:19:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1741357146;
-	 x=1741443546; bh=j8wM8xxqHp3SL2yruZvF/i0o952TBSUUOCa513JA0WI=; b=
-	d8GUIrrqnpatzQy/UuxjPKTK5m8kLul02Fl2PadY1g40Q5+XaXoaxY2PysXS/dAX
-	QtpZEc2vFltrVvv+wAUzIOWzEp4Qb2abgVCNo4nqy285lk1VouRgWvIKxWm8JoJh
-	Xu1lzvj0G8OhNieV1RL5rid0a3tWuyHDudQhMukhSGh68UrHMC00b2KrIV6FnEC6
-	UWirdmDpy2Q/LEVVZ07wtC8OyxwIFO8IYvHOCW4qqq647kTttji8p9QztPN1srrj
-	0Ucm1ZI5SrdWLXXfY//2lChtTEF0ZVbQBPeeQjKIL02V0DtT6+WDE9OpT4mJmMTV
-	2mmdrbQo9PyLGjgTkbQDPQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1741357148;
+	 x=1741443548; bh=VrPUo6BsQcYayhnRwh9ZfkemN1pdad/wvf0XzDYVUC8=; b=
+	cFyhIGewHi3khSqycpSoRWLuXbHsvjKXsi4QHm/hxF2xV1sktoMgFQjne4Z1aTlD
+	Eu94yQixZu/+KhDEaXrxJFT4CvZ7M3U2K7VZWjbEln9TjPxyiTBg7e7y1BoIODo1
+	SEAF0xdtxWPlBP0veaeS3xR3HvXmi2cia958UdY24afT0Lt4OlcDCu+sRn+51uE8
+	El7FKEJScfzCa05LyLiINCK87AMbGmvfX1piq/tUmYDB5X6ynTNr58Zm+lqL3k4k
+	7Xyd+qCp+EcgZ7QI3pBtoA5B5YR9JLa3m1hTgbWJRX8Vw8PpMFhQzFV69qxstc8+
+	ybcd/8+wGwuzchqFbt6pCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741357146; x=
-	1741443546; bh=j8wM8xxqHp3SL2yruZvF/i0o952TBSUUOCa513JA0WI=; b=j
-	DkohkdXKKALBvZSIwfLTGdbgpwg11MZ4yT00faB/U77njDOKYv6xvXD1p0Uf0ol2
-	RdTKmJkEqwvWd3xhAN480BlG/7SiuQ5GwYKtn5xup7nIr0NbAbNHeYmmcXa42RyC
-	uQ4ptIlW5jU2xml5Zy7y3dvKCMm6Jv0zGAyHte3CQG31NUiTolQ8PoI7eS0XGUIJ
-	88n/IkzAjvwuWIimlnGHri+rZxfC6IxA6wLIQVLXiA32kILJxuQgnqSucPVZBJqE
-	1nRlsz4rda7qCjPjK0pmBaTm1qUmtAaji8ESgmO+88YuEYUkoob/CCoeqRsFHMFG
-	8zdfDBLs5SPpU8lV/Ck6w==
-X-ME-Sender: <xms:WgDLZyHUB6IgBgQDAkF4nhWJ3-w9ZEGK5lNEqU5OdpqRq-DdCCppLw>
-    <xme:WgDLZzUUTXp-9-qAhs8qXa52Z8CC1b2RccB3MuaVPnh2N8Yd8VTaq50FCRLJAzwcR
-    j3LBHcT9jPD7tEciw>
-X-ME-Received: <xmr:WgDLZ8KQNeH3NnypOPjx6Pnec0ISMgTJ-mwJaCwsO8uWJ6YQeGqWSK10oYtZvaA91HJ0eOw4cIijfq5qm_1aW27OeAUbo_AeFPx_Dcv-pCeC>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741357148; x=
+	1741443548; bh=VrPUo6BsQcYayhnRwh9ZfkemN1pdad/wvf0XzDYVUC8=; b=u
+	gyPCOMRAmH0RZGViPVxoquBO46c7j3Ntuk+G/LeHLorvuRGEZyjC3FrLfOJdFSt+
+	PfWo8pJX5EF/quITJjtJ1XS1AyocAMh2phA/4iVJBRIPqwMqy/3ItnWMQc+W2uQH
+	R5C3kdAOxhP8nV28ShkV0dknJ5geJQCzxFufE02nPRUJvGNVUhEQZYxNjWbWaD64
+	PoMTJ6cNilx45V/ewknXN+UCA7JiNymIrXwWlOWlu0OmLOeQZGgcyLkePUIBr56s
+	Kdk0+OmQaqBb3G0mlKN4aPk/1cG3sYvH+wZKqzvFBYWd5smY8gqgKgoPiUhhtvKO
+	Zj2+UTPM3DiMzA+rMepZQ==
+X-ME-Sender: <xms:XADLZ7O56OCiLCw-D1HBJT9loDhDWjM_scJbW86M_CVGvG7j01aytg>
+    <xme:XADLZ1__54zzFzKrIeXwGEawQTsCeFu8_yBRkLsDzNql2JlwdbCgqn6aKFly0u7rX
+    WfnOxfIQyX157ELzA>
+X-ME-Received: <xmr:XADLZ6RtKzMOJjNeyHafmeXwBnR9uDju2SYDqTU8L2b9MfYPiCgCBvbjbPrb-p9lgFQHfeLcbm5fIixApUxnrZvifd8I8wfilSInEPrdFXal>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduuddtkeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
-    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:WgDLZ8FamPeG10FWgjGrhiyGtORZqHRvIop9jKzyQ6k_MC03pjLmag>
-    <xmx:WgDLZ4XOl5HLsYMLgOIEYHpTEmQkSlLPLPsNpS56BYvBi4qzQK2oUg>
-    <xmx:WgDLZ_MIsZrKc8aFWbg2vVoYHp4sbxcRALhpOGY74YmJ9N2mUS680A>
-    <xmx:WgDLZ_2yDFh8_jLud4hMUvQKGHXlVYrhPyiu2BTCoFWTRmJXMajiWw>
-    <xmx:WgDLZ_R5KAPk-T0fSiFrOh4NskbU-Aan8MiBm3-LBfS1qWv-jKXSKedY>
+    vgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    khgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:XADLZ_tyEl77kQjM_fyi-ef42YlabTkbCdXu4hMYTm3mUEMbwC-sLQ>
+    <xmx:XADLZzc70IaAaj2k5CeWSnws_MNNz06gFdgs3h-V8TMcDo3H9zFTWw>
+    <xmx:XADLZ708d0Vs4BZQZcUVQrRdHYmWFRg8amOdqnULt25zhz-8szcPAQ>
+    <xmx:XADLZ_87MAvTxwJlEtbURoDYAka8loyVU6Pdovt_IytFAacdC0Bk-w>
+    <xmx:XADLZ_6cERP4jYv3jqAbZiAndiM6mJY44LjMuYuxI6vreyiAlC6gUm8v>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Mar 2025 09:19:06 -0500 (EST)
+ 7 Mar 2025 09:19:07 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ee662f80 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Mar 2025 14:19:05 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2ac818a3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Mar 2025 14:19:06 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 07 Mar 2025 15:19:02 +0100
-Subject: [PATCH v3 09/12] delta-islands: stop depending on `the_repository`
+Date: Fri, 07 Mar 2025 15:19:03 +0100
+Subject: [PATCH v3 10/12] object-file: split out logic regarding hash
+ algorithms
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250307-b4-pks-objects-without-the-repository-v3-9-7bccf408731e@pks.im>
+Message-Id: <20250307-b4-pks-objects-without-the-repository-v3-10-7bccf408731e@pks.im>
 References: <20250307-b4-pks-objects-without-the-repository-v3-0-7bccf408731e@pks.im>
 In-Reply-To: <20250307-b4-pks-objects-without-the-repository-v3-0-7bccf408731e@pks.im>
 To: git@vger.kernel.org
@@ -91,99 +92,623 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.2
 
-There are multiple sites in "delta-islands.c" where we use the
-global `the_repository` variable, either explicitly or implicitly by
-using `the_hash_algo`.
+While we have a "hash.h" header, the actual implementation of the
+subsystem is hosted by "object-file.c". This makes it harder than
+necessary to find the actual implementation of the hash subsystem and
+intermingles the different concerns with one another.
 
-Refactor the code to stop using `the_repository`. In most cases this is
-trivial because we already had a repository available in the calling
-context, with the only exception being `propagate_island_marks()`. Adapt
-it so that the repository gets passed in via a parameter.
+Split out the implementation of hash algorithms into a new, separate
+"hash.c" file.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/pack-objects.c |  2 +-
- delta-islands.c        | 14 ++++++--------
- delta-islands.h        |  2 +-
- 3 files changed, 8 insertions(+), 10 deletions(-)
+ Makefile      |   1 +
+ hash.c        | 283 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ meson.build   |   1 +
+ object-file.c | 277 --------------------------------------------------------
+ 4 files changed, 285 insertions(+), 277 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index eefc6c78096..fba5db74656 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3847,7 +3847,7 @@ static void show_commit(struct commit *commit, void *data UNUSED)
- 		index_commit_for_bitmap(commit);
+diff --git a/Makefile b/Makefile
+index 6d45093089d..6dfe88322dd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1041,6 +1041,7 @@ LIB_OBJS += gpg-interface.o
+ LIB_OBJS += graph.o
+ LIB_OBJS += grep.o
+ LIB_OBJS += hash-lookup.o
++LIB_OBJS += hash.o
+ LIB_OBJS += hashmap.o
+ LIB_OBJS += help.o
+ LIB_OBJS += hex.o
+diff --git a/hash.c b/hash.c
+new file mode 100644
+index 00000000000..dd5ac9d0eb2
+--- /dev/null
++++ b/hash.c
+@@ -0,0 +1,283 @@
++#define USE_THE_REPOSITORY_VARIABLE
++#define DISABLE_SIGN_COMPARE_WARNINGS
++
++#include "git-compat-util.h"
++#include "hash.h"
++#include "hex.h"
++
++static const struct object_id empty_tree_oid = {
++	.hash = {
++		0x4b, 0x82, 0x5d, 0xc6, 0x42, 0xcb, 0x6e, 0xb9, 0xa0, 0x60,
++		0xe5, 0x4b, 0xf8, 0xd6, 0x92, 0x88, 0xfb, 0xee, 0x49, 0x04
++	},
++	.algo = GIT_HASH_SHA1,
++};
++static const struct object_id empty_blob_oid = {
++	.hash = {
++		0xe6, 0x9d, 0xe2, 0x9b, 0xb2, 0xd1, 0xd6, 0x43, 0x4b, 0x8b,
++		0x29, 0xae, 0x77, 0x5a, 0xd8, 0xc2, 0xe4, 0x8c, 0x53, 0x91
++	},
++	.algo = GIT_HASH_SHA1,
++};
++static const struct object_id null_oid_sha1 = {
++	.hash = {0},
++	.algo = GIT_HASH_SHA1,
++};
++static const struct object_id empty_tree_oid_sha256 = {
++	.hash = {
++		0x6e, 0xf1, 0x9b, 0x41, 0x22, 0x5c, 0x53, 0x69, 0xf1, 0xc1,
++		0x04, 0xd4, 0x5d, 0x8d, 0x85, 0xef, 0xa9, 0xb0, 0x57, 0xb5,
++		0x3b, 0x14, 0xb4, 0xb9, 0xb9, 0x39, 0xdd, 0x74, 0xde, 0xcc,
++		0x53, 0x21
++	},
++	.algo = GIT_HASH_SHA256,
++};
++static const struct object_id empty_blob_oid_sha256 = {
++	.hash = {
++		0x47, 0x3a, 0x0f, 0x4c, 0x3b, 0xe8, 0xa9, 0x36, 0x81, 0xa2,
++		0x67, 0xe3, 0xb1, 0xe9, 0xa7, 0xdc, 0xda, 0x11, 0x85, 0x43,
++		0x6f, 0xe1, 0x41, 0xf7, 0x74, 0x91, 0x20, 0xa3, 0x03, 0x72,
++		0x18, 0x13
++	},
++	.algo = GIT_HASH_SHA256,
++};
++static const struct object_id null_oid_sha256 = {
++	.hash = {0},
++	.algo = GIT_HASH_SHA256,
++};
++
++static void git_hash_sha1_init(struct git_hash_ctx *ctx)
++{
++	ctx->algop = &hash_algos[GIT_HASH_SHA1];
++	git_SHA1_Init(&ctx->state.sha1);
++}
++
++static void git_hash_sha1_clone(struct git_hash_ctx *dst, const struct git_hash_ctx *src)
++{
++	dst->algop = src->algop;
++	git_SHA1_Clone(&dst->state.sha1, &src->state.sha1);
++}
++
++static void git_hash_sha1_update(struct git_hash_ctx *ctx, const void *data, size_t len)
++{
++	git_SHA1_Update(&ctx->state.sha1, data, len);
++}
++
++static void git_hash_sha1_final(unsigned char *hash, struct git_hash_ctx *ctx)
++{
++	git_SHA1_Final(hash, &ctx->state.sha1);
++}
++
++static void git_hash_sha1_final_oid(struct object_id *oid, struct git_hash_ctx *ctx)
++{
++	git_SHA1_Final(oid->hash, &ctx->state.sha1);
++	memset(oid->hash + GIT_SHA1_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA1_RAWSZ);
++	oid->algo = GIT_HASH_SHA1;
++}
++
++static void git_hash_sha1_init_unsafe(struct git_hash_ctx *ctx)
++{
++	ctx->algop = unsafe_hash_algo(&hash_algos[GIT_HASH_SHA1]);
++	git_SHA1_Init_unsafe(&ctx->state.sha1_unsafe);
++}
++
++static void git_hash_sha1_clone_unsafe(struct git_hash_ctx *dst, const struct git_hash_ctx *src)
++{
++	dst->algop = src->algop;
++	git_SHA1_Clone_unsafe(&dst->state.sha1_unsafe, &src->state.sha1_unsafe);
++}
++
++static void git_hash_sha1_update_unsafe(struct git_hash_ctx *ctx, const void *data,
++				      size_t len)
++{
++	git_SHA1_Update_unsafe(&ctx->state.sha1_unsafe, data, len);
++}
++
++static void git_hash_sha1_final_unsafe(unsigned char *hash, struct git_hash_ctx *ctx)
++{
++	git_SHA1_Final_unsafe(hash, &ctx->state.sha1_unsafe);
++}
++
++static void git_hash_sha1_final_oid_unsafe(struct object_id *oid, struct git_hash_ctx *ctx)
++{
++	git_SHA1_Final_unsafe(oid->hash, &ctx->state.sha1_unsafe);
++	memset(oid->hash + GIT_SHA1_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA1_RAWSZ);
++	oid->algo = GIT_HASH_SHA1;
++}
++
++static void git_hash_sha256_init(struct git_hash_ctx *ctx)
++{
++	ctx->algop = unsafe_hash_algo(&hash_algos[GIT_HASH_SHA256]);
++	git_SHA256_Init(&ctx->state.sha256);
++}
++
++static void git_hash_sha256_clone(struct git_hash_ctx *dst, const struct git_hash_ctx *src)
++{
++	dst->algop = src->algop;
++	git_SHA256_Clone(&dst->state.sha256, &src->state.sha256);
++}
++
++static void git_hash_sha256_update(struct git_hash_ctx *ctx, const void *data, size_t len)
++{
++	git_SHA256_Update(&ctx->state.sha256, data, len);
++}
++
++static void git_hash_sha256_final(unsigned char *hash, struct git_hash_ctx *ctx)
++{
++	git_SHA256_Final(hash, &ctx->state.sha256);
++}
++
++static void git_hash_sha256_final_oid(struct object_id *oid, struct git_hash_ctx *ctx)
++{
++	git_SHA256_Final(oid->hash, &ctx->state.sha256);
++	/*
++	 * This currently does nothing, so the compiler should optimize it out,
++	 * but keep it in case we extend the hash size again.
++	 */
++	memset(oid->hash + GIT_SHA256_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA256_RAWSZ);
++	oid->algo = GIT_HASH_SHA256;
++}
++
++static void git_hash_unknown_init(struct git_hash_ctx *ctx UNUSED)
++{
++	BUG("trying to init unknown hash");
++}
++
++static void git_hash_unknown_clone(struct git_hash_ctx *dst UNUSED,
++				   const struct git_hash_ctx *src UNUSED)
++{
++	BUG("trying to clone unknown hash");
++}
++
++static void git_hash_unknown_update(struct git_hash_ctx *ctx UNUSED,
++				    const void *data UNUSED,
++				    size_t len UNUSED)
++{
++	BUG("trying to update unknown hash");
++}
++
++static void git_hash_unknown_final(unsigned char *hash UNUSED,
++				   struct git_hash_ctx *ctx UNUSED)
++{
++	BUG("trying to finalize unknown hash");
++}
++
++static void git_hash_unknown_final_oid(struct object_id *oid UNUSED,
++				       struct git_hash_ctx *ctx UNUSED)
++{
++	BUG("trying to finalize unknown hash");
++}
++
++static const struct git_hash_algo sha1_unsafe_algo = {
++	.name = "sha1",
++	.format_id = GIT_SHA1_FORMAT_ID,
++	.rawsz = GIT_SHA1_RAWSZ,
++	.hexsz = GIT_SHA1_HEXSZ,
++	.blksz = GIT_SHA1_BLKSZ,
++	.init_fn = git_hash_sha1_init_unsafe,
++	.clone_fn = git_hash_sha1_clone_unsafe,
++	.update_fn = git_hash_sha1_update_unsafe,
++	.final_fn = git_hash_sha1_final_unsafe,
++	.final_oid_fn = git_hash_sha1_final_oid_unsafe,
++	.empty_tree = &empty_tree_oid,
++	.empty_blob = &empty_blob_oid,
++	.null_oid = &null_oid_sha1,
++};
++
++const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
++	{
++		.name = NULL,
++		.format_id = 0x00000000,
++		.rawsz = 0,
++		.hexsz = 0,
++		.blksz = 0,
++		.init_fn = git_hash_unknown_init,
++		.clone_fn = git_hash_unknown_clone,
++		.update_fn = git_hash_unknown_update,
++		.final_fn = git_hash_unknown_final,
++		.final_oid_fn = git_hash_unknown_final_oid,
++		.empty_tree = NULL,
++		.empty_blob = NULL,
++		.null_oid = NULL,
++	},
++	{
++		.name = "sha1",
++		.format_id = GIT_SHA1_FORMAT_ID,
++		.rawsz = GIT_SHA1_RAWSZ,
++		.hexsz = GIT_SHA1_HEXSZ,
++		.blksz = GIT_SHA1_BLKSZ,
++		.init_fn = git_hash_sha1_init,
++		.clone_fn = git_hash_sha1_clone,
++		.update_fn = git_hash_sha1_update,
++		.final_fn = git_hash_sha1_final,
++		.final_oid_fn = git_hash_sha1_final_oid,
++		.unsafe = &sha1_unsafe_algo,
++		.empty_tree = &empty_tree_oid,
++		.empty_blob = &empty_blob_oid,
++		.null_oid = &null_oid_sha1,
++	},
++	{
++		.name = "sha256",
++		.format_id = GIT_SHA256_FORMAT_ID,
++		.rawsz = GIT_SHA256_RAWSZ,
++		.hexsz = GIT_SHA256_HEXSZ,
++		.blksz = GIT_SHA256_BLKSZ,
++		.init_fn = git_hash_sha256_init,
++		.clone_fn = git_hash_sha256_clone,
++		.update_fn = git_hash_sha256_update,
++		.final_fn = git_hash_sha256_final,
++		.final_oid_fn = git_hash_sha256_final_oid,
++		.empty_tree = &empty_tree_oid_sha256,
++		.empty_blob = &empty_blob_oid_sha256,
++		.null_oid = &null_oid_sha256,
++	}
++};
++
++const struct object_id *null_oid(void)
++{
++	return the_hash_algo->null_oid;
++}
++
++const char *empty_tree_oid_hex(const struct git_hash_algo *algop)
++{
++	static char buf[GIT_MAX_HEXSZ + 1];
++	return oid_to_hex_r(buf, algop->empty_tree);
++}
++
++int hash_algo_by_name(const char *name)
++{
++	int i;
++	if (!name)
++		return GIT_HASH_UNKNOWN;
++	for (i = 1; i < GIT_HASH_NALGOS; i++)
++		if (!strcmp(name, hash_algos[i].name))
++			return i;
++	return GIT_HASH_UNKNOWN;
++}
++
++int hash_algo_by_id(uint32_t format_id)
++{
++	int i;
++	for (i = 1; i < GIT_HASH_NALGOS; i++)
++		if (format_id == hash_algos[i].format_id)
++			return i;
++	return GIT_HASH_UNKNOWN;
++}
++
++int hash_algo_by_length(int len)
++{
++	int i;
++	for (i = 1; i < GIT_HASH_NALGOS; i++)
++		if (len == hash_algos[i].rawsz)
++			return i;
++	return GIT_HASH_UNKNOWN;
++}
++
++const struct git_hash_algo *unsafe_hash_algo(const struct git_hash_algo *algop)
++{
++	/* If we have a faster "unsafe" implementation, use that. */
++	if (algop->unsafe)
++		return algop->unsafe;
++	/* Otherwise use the default one. */
++	return algop;
++}
+diff --git a/meson.build b/meson.build
+index 021a182135f..38568344953 100644
+--- a/meson.build
++++ b/meson.build
+@@ -311,6 +311,7 @@ libgit_sources = [
+   'graph.c',
+   'grep.c',
+   'hash-lookup.c',
++  'hash.c',
+   'hashmap.c',
+   'help.c',
+   'hex.c',
+diff --git a/object-file.c b/object-file.c
+index b0e237a2acc..de603e2ca8c 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -45,283 +45,6 @@
+ /* The maximum size for an object header. */
+ #define MAX_HEADER_LEN 32
  
- 	if (use_delta_islands)
--		propagate_island_marks(commit);
-+		propagate_island_marks(the_repository, commit);
- }
- 
- static void show_object(struct object *obj, const char *name,
-diff --git a/delta-islands.c b/delta-islands.c
-index 3aec43fada3..36c94799d69 100644
---- a/delta-islands.c
-+++ b/delta-islands.c
-@@ -1,4 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
-@@ -267,8 +266,7 @@ void resolve_tree_islands(struct repository *r,
- 	QSORT(todo, nr, tree_depth_compare);
- 
- 	if (progress)
--		progress_state = start_progress(the_repository,
--						_("Propagating island marks"), nr);
-+		progress_state = start_progress(r, _("Propagating island marks"), nr);
- 
- 	for (i = 0; i < nr; i++) {
- 		struct object_entry *ent = todo[i].entry;
-@@ -490,9 +488,9 @@ void load_delta_islands(struct repository *r, int progress)
- 
- 	island_marks = kh_init_oid_map();
- 
--	git_config(island_config_callback, &ild);
-+	repo_config(r, island_config_callback, &ild);
- 	ild.remote_islands = kh_init_str();
--	refs_for_each_ref(get_main_ref_store(the_repository),
-+	refs_for_each_ref(get_main_ref_store(r),
- 			  find_island_for_ref, &ild);
- 	free_config_regexes(&ild);
- 	deduplicate_islands(ild.remote_islands, r);
-@@ -502,7 +500,7 @@ void load_delta_islands(struct repository *r, int progress)
- 		fprintf(stderr, _("Marked %d islands, done.\n"), island_counter);
- }
- 
--void propagate_island_marks(struct commit *commit)
-+void propagate_island_marks(struct repository *r, struct commit *commit)
- {
- 	khiter_t pos = kh_get_oid_map(island_marks, commit->object.oid);
- 
-@@ -510,8 +508,8 @@ void propagate_island_marks(struct commit *commit)
- 		struct commit_list *p;
- 		struct island_bitmap *root_marks = kh_value(island_marks, pos);
- 
--		repo_parse_commit(the_repository, commit);
--		set_island_marks(&repo_get_commit_tree(the_repository, commit)->object,
-+		repo_parse_commit(r, commit);
-+		set_island_marks(&repo_get_commit_tree(r, commit)->object,
- 				 root_marks);
- 		for (p = commit->parents; p; p = p->next)
- 			set_island_marks(&p->item->object, root_marks);
-diff --git a/delta-islands.h b/delta-islands.h
-index 8d1591ae28b..6107660306b 100644
---- a/delta-islands.h
-+++ b/delta-islands.h
-@@ -12,7 +12,7 @@ void resolve_tree_islands(struct repository *r,
- 			  int progress,
- 			  struct packing_data *to_pack);
- void load_delta_islands(struct repository *r, int progress);
--void propagate_island_marks(struct commit *commit);
-+void propagate_island_marks(struct repository *r, struct commit *commit);
- int compute_pack_layers(struct packing_data *to_pack);
- void free_island_marks(void);
- 
+-static const struct object_id empty_tree_oid = {
+-	.hash = {
+-		0x4b, 0x82, 0x5d, 0xc6, 0x42, 0xcb, 0x6e, 0xb9, 0xa0, 0x60,
+-		0xe5, 0x4b, 0xf8, 0xd6, 0x92, 0x88, 0xfb, 0xee, 0x49, 0x04
+-	},
+-	.algo = GIT_HASH_SHA1,
+-};
+-static const struct object_id empty_blob_oid = {
+-	.hash = {
+-		0xe6, 0x9d, 0xe2, 0x9b, 0xb2, 0xd1, 0xd6, 0x43, 0x4b, 0x8b,
+-		0x29, 0xae, 0x77, 0x5a, 0xd8, 0xc2, 0xe4, 0x8c, 0x53, 0x91
+-	},
+-	.algo = GIT_HASH_SHA1,
+-};
+-static const struct object_id null_oid_sha1 = {
+-	.hash = {0},
+-	.algo = GIT_HASH_SHA1,
+-};
+-static const struct object_id empty_tree_oid_sha256 = {
+-	.hash = {
+-		0x6e, 0xf1, 0x9b, 0x41, 0x22, 0x5c, 0x53, 0x69, 0xf1, 0xc1,
+-		0x04, 0xd4, 0x5d, 0x8d, 0x85, 0xef, 0xa9, 0xb0, 0x57, 0xb5,
+-		0x3b, 0x14, 0xb4, 0xb9, 0xb9, 0x39, 0xdd, 0x74, 0xde, 0xcc,
+-		0x53, 0x21
+-	},
+-	.algo = GIT_HASH_SHA256,
+-};
+-static const struct object_id empty_blob_oid_sha256 = {
+-	.hash = {
+-		0x47, 0x3a, 0x0f, 0x4c, 0x3b, 0xe8, 0xa9, 0x36, 0x81, 0xa2,
+-		0x67, 0xe3, 0xb1, 0xe9, 0xa7, 0xdc, 0xda, 0x11, 0x85, 0x43,
+-		0x6f, 0xe1, 0x41, 0xf7, 0x74, 0x91, 0x20, 0xa3, 0x03, 0x72,
+-		0x18, 0x13
+-	},
+-	.algo = GIT_HASH_SHA256,
+-};
+-static const struct object_id null_oid_sha256 = {
+-	.hash = {0},
+-	.algo = GIT_HASH_SHA256,
+-};
+-
+-static void git_hash_sha1_init(struct git_hash_ctx *ctx)
+-{
+-	ctx->algop = &hash_algos[GIT_HASH_SHA1];
+-	git_SHA1_Init(&ctx->state.sha1);
+-}
+-
+-static void git_hash_sha1_clone(struct git_hash_ctx *dst, const struct git_hash_ctx *src)
+-{
+-	dst->algop = src->algop;
+-	git_SHA1_Clone(&dst->state.sha1, &src->state.sha1);
+-}
+-
+-static void git_hash_sha1_update(struct git_hash_ctx *ctx, const void *data, size_t len)
+-{
+-	git_SHA1_Update(&ctx->state.sha1, data, len);
+-}
+-
+-static void git_hash_sha1_final(unsigned char *hash, struct git_hash_ctx *ctx)
+-{
+-	git_SHA1_Final(hash, &ctx->state.sha1);
+-}
+-
+-static void git_hash_sha1_final_oid(struct object_id *oid, struct git_hash_ctx *ctx)
+-{
+-	git_SHA1_Final(oid->hash, &ctx->state.sha1);
+-	memset(oid->hash + GIT_SHA1_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA1_RAWSZ);
+-	oid->algo = GIT_HASH_SHA1;
+-}
+-
+-static void git_hash_sha1_init_unsafe(struct git_hash_ctx *ctx)
+-{
+-	ctx->algop = unsafe_hash_algo(&hash_algos[GIT_HASH_SHA1]);
+-	git_SHA1_Init_unsafe(&ctx->state.sha1_unsafe);
+-}
+-
+-static void git_hash_sha1_clone_unsafe(struct git_hash_ctx *dst, const struct git_hash_ctx *src)
+-{
+-	dst->algop = src->algop;
+-	git_SHA1_Clone_unsafe(&dst->state.sha1_unsafe, &src->state.sha1_unsafe);
+-}
+-
+-static void git_hash_sha1_update_unsafe(struct git_hash_ctx *ctx, const void *data,
+-				      size_t len)
+-{
+-	git_SHA1_Update_unsafe(&ctx->state.sha1_unsafe, data, len);
+-}
+-
+-static void git_hash_sha1_final_unsafe(unsigned char *hash, struct git_hash_ctx *ctx)
+-{
+-	git_SHA1_Final_unsafe(hash, &ctx->state.sha1_unsafe);
+-}
+-
+-static void git_hash_sha1_final_oid_unsafe(struct object_id *oid, struct git_hash_ctx *ctx)
+-{
+-	git_SHA1_Final_unsafe(oid->hash, &ctx->state.sha1_unsafe);
+-	memset(oid->hash + GIT_SHA1_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA1_RAWSZ);
+-	oid->algo = GIT_HASH_SHA1;
+-}
+-
+-static void git_hash_sha256_init(struct git_hash_ctx *ctx)
+-{
+-	ctx->algop = unsafe_hash_algo(&hash_algos[GIT_HASH_SHA256]);
+-	git_SHA256_Init(&ctx->state.sha256);
+-}
+-
+-static void git_hash_sha256_clone(struct git_hash_ctx *dst, const struct git_hash_ctx *src)
+-{
+-	dst->algop = src->algop;
+-	git_SHA256_Clone(&dst->state.sha256, &src->state.sha256);
+-}
+-
+-static void git_hash_sha256_update(struct git_hash_ctx *ctx, const void *data, size_t len)
+-{
+-	git_SHA256_Update(&ctx->state.sha256, data, len);
+-}
+-
+-static void git_hash_sha256_final(unsigned char *hash, struct git_hash_ctx *ctx)
+-{
+-	git_SHA256_Final(hash, &ctx->state.sha256);
+-}
+-
+-static void git_hash_sha256_final_oid(struct object_id *oid, struct git_hash_ctx *ctx)
+-{
+-	git_SHA256_Final(oid->hash, &ctx->state.sha256);
+-	/*
+-	 * This currently does nothing, so the compiler should optimize it out,
+-	 * but keep it in case we extend the hash size again.
+-	 */
+-	memset(oid->hash + GIT_SHA256_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA256_RAWSZ);
+-	oid->algo = GIT_HASH_SHA256;
+-}
+-
+-static void git_hash_unknown_init(struct git_hash_ctx *ctx UNUSED)
+-{
+-	BUG("trying to init unknown hash");
+-}
+-
+-static void git_hash_unknown_clone(struct git_hash_ctx *dst UNUSED,
+-				   const struct git_hash_ctx *src UNUSED)
+-{
+-	BUG("trying to clone unknown hash");
+-}
+-
+-static void git_hash_unknown_update(struct git_hash_ctx *ctx UNUSED,
+-				    const void *data UNUSED,
+-				    size_t len UNUSED)
+-{
+-	BUG("trying to update unknown hash");
+-}
+-
+-static void git_hash_unknown_final(unsigned char *hash UNUSED,
+-				   struct git_hash_ctx *ctx UNUSED)
+-{
+-	BUG("trying to finalize unknown hash");
+-}
+-
+-static void git_hash_unknown_final_oid(struct object_id *oid UNUSED,
+-				       struct git_hash_ctx *ctx UNUSED)
+-{
+-	BUG("trying to finalize unknown hash");
+-}
+-
+-static const struct git_hash_algo sha1_unsafe_algo = {
+-	.name = "sha1",
+-	.format_id = GIT_SHA1_FORMAT_ID,
+-	.rawsz = GIT_SHA1_RAWSZ,
+-	.hexsz = GIT_SHA1_HEXSZ,
+-	.blksz = GIT_SHA1_BLKSZ,
+-	.init_fn = git_hash_sha1_init_unsafe,
+-	.clone_fn = git_hash_sha1_clone_unsafe,
+-	.update_fn = git_hash_sha1_update_unsafe,
+-	.final_fn = git_hash_sha1_final_unsafe,
+-	.final_oid_fn = git_hash_sha1_final_oid_unsafe,
+-	.empty_tree = &empty_tree_oid,
+-	.empty_blob = &empty_blob_oid,
+-	.null_oid = &null_oid_sha1,
+-};
+-
+-const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+-	{
+-		.name = NULL,
+-		.format_id = 0x00000000,
+-		.rawsz = 0,
+-		.hexsz = 0,
+-		.blksz = 0,
+-		.init_fn = git_hash_unknown_init,
+-		.clone_fn = git_hash_unknown_clone,
+-		.update_fn = git_hash_unknown_update,
+-		.final_fn = git_hash_unknown_final,
+-		.final_oid_fn = git_hash_unknown_final_oid,
+-		.empty_tree = NULL,
+-		.empty_blob = NULL,
+-		.null_oid = NULL,
+-	},
+-	{
+-		.name = "sha1",
+-		.format_id = GIT_SHA1_FORMAT_ID,
+-		.rawsz = GIT_SHA1_RAWSZ,
+-		.hexsz = GIT_SHA1_HEXSZ,
+-		.blksz = GIT_SHA1_BLKSZ,
+-		.init_fn = git_hash_sha1_init,
+-		.clone_fn = git_hash_sha1_clone,
+-		.update_fn = git_hash_sha1_update,
+-		.final_fn = git_hash_sha1_final,
+-		.final_oid_fn = git_hash_sha1_final_oid,
+-		.unsafe = &sha1_unsafe_algo,
+-		.empty_tree = &empty_tree_oid,
+-		.empty_blob = &empty_blob_oid,
+-		.null_oid = &null_oid_sha1,
+-	},
+-	{
+-		.name = "sha256",
+-		.format_id = GIT_SHA256_FORMAT_ID,
+-		.rawsz = GIT_SHA256_RAWSZ,
+-		.hexsz = GIT_SHA256_HEXSZ,
+-		.blksz = GIT_SHA256_BLKSZ,
+-		.init_fn = git_hash_sha256_init,
+-		.clone_fn = git_hash_sha256_clone,
+-		.update_fn = git_hash_sha256_update,
+-		.final_fn = git_hash_sha256_final,
+-		.final_oid_fn = git_hash_sha256_final_oid,
+-		.empty_tree = &empty_tree_oid_sha256,
+-		.empty_blob = &empty_blob_oid_sha256,
+-		.null_oid = &null_oid_sha256,
+-	}
+-};
+-
+-const struct object_id *null_oid(void)
+-{
+-	return the_hash_algo->null_oid;
+-}
+-
+-const char *empty_tree_oid_hex(const struct git_hash_algo *algop)
+-{
+-	static char buf[GIT_MAX_HEXSZ + 1];
+-	return oid_to_hex_r(buf, algop->empty_tree);
+-}
+-
+-int hash_algo_by_name(const char *name)
+-{
+-	int i;
+-	if (!name)
+-		return GIT_HASH_UNKNOWN;
+-	for (i = 1; i < GIT_HASH_NALGOS; i++)
+-		if (!strcmp(name, hash_algos[i].name))
+-			return i;
+-	return GIT_HASH_UNKNOWN;
+-}
+-
+-int hash_algo_by_id(uint32_t format_id)
+-{
+-	int i;
+-	for (i = 1; i < GIT_HASH_NALGOS; i++)
+-		if (format_id == hash_algos[i].format_id)
+-			return i;
+-	return GIT_HASH_UNKNOWN;
+-}
+-
+-int hash_algo_by_length(int len)
+-{
+-	int i;
+-	for (i = 1; i < GIT_HASH_NALGOS; i++)
+-		if (len == hash_algos[i].rawsz)
+-			return i;
+-	return GIT_HASH_UNKNOWN;
+-}
+-
+-const struct git_hash_algo *unsafe_hash_algo(const struct git_hash_algo *algop)
+-{
+-	/* If we have a faster "unsafe" implementation, use that. */
+-	if (algop->unsafe)
+-		return algop->unsafe;
+-	/* Otherwise use the default one. */
+-	return algop;
+-}
+-
+ /*
+  * This is meant to hold a *small* number of objects that you would
+  * want repo_read_object_file() to be able to return, but yet you do not want
 
 -- 
 2.49.0.rc1.455.g4cd33545ba.dirty
