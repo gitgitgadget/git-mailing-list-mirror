@@ -1,80 +1,100 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9774A3C38
-	for <git@vger.kernel.org>; Sat,  8 Mar 2025 01:06:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7A814B96E
+	for <git@vger.kernel.org>; Sat,  8 Mar 2025 03:23:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741396019; cv=none; b=JBwZPQ6OAF0mv+wzliQE9ZK0QVaYpCwgVJqpvx8oLOaQIBiujUx6TLSvMgAdNwotcHjqJINqyOzSuJ2shIVTlmP9k8If6DiajiF2WtQQa95da+hXxMQAY7ZERmR/1qDtwMTuXXUsgQGG4CVHq/HOIox5KGhByGpHsAHfIHCppzY=
+	t=1741404193; cv=none; b=tga8AkwmCiJktiO4VNbySwBqZnRrb3GH7hUJLabkpSEngn4aW7jNz59Y7JE9msIWvBYnKxEwQuXjXgzo/X1i3+Vo48/nkIUyllOe2h11OciOlagQ3cpql+8cjLsDAOVEbgN15LZdy8YIQTtVp7Y+zpTjhM5q83yDZ7y+MCaT7GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741396019; c=relaxed/simple;
-	bh=KB4bKBvnj+CfcaRA0U6RLY/FNwhWO6PhupXZ4V6KSMY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KQiBhQy5PlNTaBgyRu/t9438JlHLQ574zvoiU70/1/WC/6yxPMWDTsV7fm+F2hcvYlUaIAFUwLdkBFTFhLnsD/kHR3Gx0sK6ZEUox7WS6iWyakeoaIha+hytLccWFq1m5IIvmtbHNaE5mVZUkTq/Vk+N62mvBjymBeeVBkR4RLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NAh4Ipon; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741404193; c=relaxed/simple;
+	bh=bQh9BP2py1XRbThLivMoQuAsWSqb9es/UvWfGoNWWc0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pDO+VDYZS42dzkyRvZQCeH3GXc43M5dUBXTh3JuUGwlAJpishi35dOwOVMYAlJiHhDlc79kZAKMAPHSe5xMFw/KrVEEmirdnmdhbInqmgfOALrYRQp+U7BAvwqGB6gSoANSfAy4LnUddLtr0edHVw84iCUlDZtspn5NgtzOIWOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=igy0ZWvW; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NAh4Ipon"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2fecba90cc3so5023817a91.2
-        for <git@vger.kernel.org>; Fri, 07 Mar 2025 17:06:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741396018; x=1742000818; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KB4bKBvnj+CfcaRA0U6RLY/FNwhWO6PhupXZ4V6KSMY=;
-        b=NAh4IponTYvbrHOiKckh7TTauqkw4RtRJAYcqgJ2syfxIFTb9d8crTmAcNqGeGyxa8
-         6NJyzq/mrGQabk0pCybRRdvyTcUitFZMdvqn/SzEWFh9LHf0mz1mzgu5rcd6ecocPMFX
-         kp/3VDnOhvkYdK6qYcs+GJ9+b+UsWCdvixDC50ub2asJSYH2/XDy3Su78Q3Q6GVKYL9z
-         jQ4+iT28JhZZaC5K4MWmUQfwYQibvxDpQEkGQCmGoExCgLcjIsyAdSUOr6QwnxHLJTm2
-         cvm66M8Kn7q/kc2lsz8Z9JbERd2xqPKSjnfXVDsIWuE3swBT0/C9mB3CWogVWkyBtb25
-         voHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741396018; x=1742000818;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KB4bKBvnj+CfcaRA0U6RLY/FNwhWO6PhupXZ4V6KSMY=;
-        b=dqumAFzP3uOnhyAxE1qY+Jq2vPy+uII9uUWKlV2xbyvx7WNrhaOi1VK/Hc0T1gGkUR
-         Ybmqqhysqfr/w/FV1S4SVFwO+XMLfvDzBhA9kBTtVwxAianj9GPf7JXuEvSxB6VsT2Fi
-         p8lr7ciV3y72GyefZkOxCJ4RitObvQOOoOcEPWQsvRattBjo1KM9esi8mv+IA3FNDTMQ
-         I0lcFQfU+xHwQyfDr9HBbMrG+XvlOTkbzLXf48rr7bmiIkoEsqXWfhaplCla/4qW0lOb
-         rpYatktagvlO1l062wwqTWC24BqZYYSu5/QZhM4bnnR7gdyXNKR4Vtimi1s5QYEIYcSC
-         VCMA==
-X-Gm-Message-State: AOJu0YxKR6JqL7YzFmdKenky0BflzWFKB84Gkp8kAx8sLNX6Dl/REkyD
-	BbJSMrd5Sc7qVbQeENqAd+P+OJNjaYxBIln+0nS3D5Zhp+GudkIYYUSQNaOUY9un7kE+Bxgx63c
-	5n7dWho075fap7jMv+pUc1AUaMr0=
-X-Gm-Gg: ASbGnctahRKJtlSAwAEH3GU6xmX8jP/7k2+bZWzutdDEsdr1Utf4cITdYh8iGi4B6PR
-	+kn81EsVKU23f/eQ3945m/NopZN2apdqlRrRuVQSr+acd7d2gn8Jr/ERscl4U3Eul3cwEQZIvIj
-	Dcwgt17Q2DX+b3WsQK+0pTsyHfZgyxCrV2Vv1faA==
-X-Google-Smtp-Source: AGHT+IFF1axack08d8Da7YpviATK87cZTyU3tNW1/EXYd570/JK2/HJ43zs0HeJmjm9vVmwpHOK9I4eMqqYrsj808J4=
-X-Received: by 2002:a17:90b:4ac1:b0:2fe:baa3:b8bc with SMTP id
- 98e67ed59e1d1-2ff7ced8c6cmr7202113a91.23.1741396017664; Fri, 07 Mar 2025
- 17:06:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="igy0ZWvW"
+Received: (qmail 23647 invoked by uid 109); 8 Mar 2025 03:23:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=bQh9BP2py1XRbThLivMoQuAsWSqb9es/UvWfGoNWWc0=; b=igy0ZWvWN/P6TwO4TIU6WqMCCx+/EpX5Fh0d7Qpo1gnA6e1mnZjdjpoGPgKj/xmbrrpLWOUwNaHdcHVAK057Ke9Be0oXPRcmbq5W0v2dLbzxwJSNrm4zF07cDs0TgQzt7rHTJA802UDr8O9DUuCTWOX+a9aBYo3L0K8jLZum/CifTyt4U9hbh6WM3IWAkUwjv0T46uOXs40AuprWADxiL4YoPsRqCHyJPT1Kv33nKPslXyPmMVEDPh3z6GacDGSYUMGxzPlewlTquXzUhu7PKO6Mc3Rm9F+mBbSgrsiCwXCfO34ic8yuKxZo7QRgOhftYkb/l724AQGLa9WlT5feZQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 08 Mar 2025 03:23:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22716 invoked by uid 111); 8 Mar 2025 03:23:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 07 Mar 2025 22:23:09 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 7 Mar 2025 22:23:09 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, ps@pks.im,
+	jltobler@gmail.com, phillip.wood123@gmail.com
+Subject: Re: [PATCH] config.mak.dev: enable -Wunreachable-code
+Message-ID: <20250308032309.GA584028@coredump.intra.peff.net>
+References: <20250305-245-partially-atomic-ref-updates-v3-0-0c64e3052354@gmail.com>
+ <20250305-245-partially-atomic-ref-updates-v3-6-0c64e3052354@gmail.com>
+ <20250307195057.GA3675279@coredump.intra.peff.net>
+ <xmqq34foefh8.fsf@gitster.g>
+ <20250307225444.GA42758@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250305104650.238392-1-ayu.chandekar@gmail.com>
- <Z8g4dTSFQDTi9ueU@ArchLinux> <Z8qpxj2i3vFjJe4l@pks.im> <CAE7as+a+z9EgBnws-a4250TN_hDgWgapefxVAQHvpmUEfqKeTw@mail.gmail.com>
-In-Reply-To: <CAE7as+a+z9EgBnws-a4250TN_hDgWgapefxVAQHvpmUEfqKeTw@mail.gmail.com>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Sat, 8 Mar 2025 06:36:43 +0530
-X-Gm-Features: AQ5f1Jp58E4_GQmEG7DkfsxN5F2CH7c3Uawju7rOQMXLjNh03eLZOuYOVDCylq8
-Message-ID: <CAE7as+bpxfr8F-jakhziW9-z_escWcFH6pJOV6AERoSi8YTAKQ@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_Discuss_GSOC=3A_Refactoring_in_order_to_reduce_Git?=
-	=?UTF-8?Q?=E2=80=99s_global_state?=
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, shejialuo <shejialuo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250307225444.GA42758@coredump.intra.peff.net>
 
-Hey,
+On Fri, Mar 07, 2025 at 05:54:45PM -0500, Jeff King wrote:
 
-> I already submitted a patch quite a while ago: [1].
+> However, clang does implement this option, and it finds the case
+> mentioned above (and no other cases within the code base). And since we
+> run clang in several of our CI jobs, that's enough to get an early
+> warning of breakage.
 
-By "patch" here, I mean patch for a microproject.
+Hmph, this might be more trouble than it is worth.
 
-Best,
-Ayush:)
+After correcting the problem in the refs code, the osx CI builds (and
+only those) now fail with:
+
+  run-command.c:519:3: error: code will never be executed [-Werror,-Wunreachable-code]
+                  die_errno("sigfillset");
+                  ^~~~~~~~~
+
+The code in question is just:
+
+  if (sigfillset(&all))
+	die_errno("sigfillset");
+
+So I have to imagine that the issue is that sigfillset() on that
+platform is an inline or macro that will never return an error, and the
+compiler can see that. But since POSIX says this can fail (though I'd
+imagine it's unlikely on most platforms), we should check in the general
+case.
+
+So I don't see how to solve it short of:
+
+#ifdef SIGFILLSET_CANNOT_FAIL
+	sigfillset(&all);
+#else
+	if (sigfillset(&all))
+		die_errno("sigfillset");
+#endif
+
+which is rather ugly. It's only used in one spot, so the damage doesn't
+go too far, but I don't love the idea of getting surprised by the
+compiler over-analyzing system functions (and having to add Makefile
+knobs to support it).
+
+I guess a knob-less version is:
+
+  errno = 0;
+  sigfillset(&all); /* don't check return value! only errno */
+  if (errno)
+	die_errno("sigfillset");
+
+which is subtle, to say the least.
+
+-Peff
