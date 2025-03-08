@@ -1,163 +1,130 @@
-Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24CC14A8B
-	for <git@vger.kernel.org>; Sat,  8 Mar 2025 03:29:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A182A1891A8
+	for <git@vger.kernel.org>; Sat,  8 Mar 2025 09:04:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741404568; cv=none; b=g3fGbqosHTiLJeods9WJ3Ws6s6lPyULT3izTFG6EQkXZA5X9N9Rfi/gd1PwrjBS6bCmZ9gZEYX3507TL2NW0lPlo0vZM3wn8uFtm9kytv3nFjWivpPMn54SSi0UU28sfDEyveGWP10hK9LjsiK+8zTHbRg0KIgN7MYxHmmB86hA=
+	t=1741424662; cv=none; b=OiaCTg3lQ6GtKlzeDpmNBtbQ0c9RoPW9yK4SaCLOhPDPU5YYJaRhtAkCwqAbQE3FfcoI2BgjLnN2etEiD6/vgtGjTLTiGkkMR84UncLrmtoGVfjv0rmPkpRKSD7iYmAAEq2jR9V0umiP7OXLA/YYiIeMnDUeYjLDEBbMH0PMLgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741404568; c=relaxed/simple;
-	bh=322FKPXK02gs3ezo3obk/JbreJueC/0X5QgD4e5rB9U=;
-	h=Date:From:To:Cc:Message-id:In-reply-to:References:Subject:
-	 MIME-version:Content-type; b=eEdE+US5v9SJw3jAZHTyWAoUJ4shdPZ1zLesSVr69seCiMBaw88HOdrTrkGPofLckxfM68/HonDjaz85490yVIXTbbWgrwMLULsTVpUprkBHlXVjRGI+D1M05gbfgoHFkM60q+gsCXfIwh3WIdAKftaLYOYFrlNNH+CjzBqUiXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=UKsRpZW2; arc=none smtp.client-ip=192.29.178.126
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="UKsRpZW2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=322FKPXK02gs3ezo3obk/JbreJueC/0X5QgD4e5rB9U=;
- b=UKsRpZW2E7/Zf92uQUKWdWhK3QRfQF6qYGensqRNLZWqaBkgT5Djsm6CAQnSQo485vD8TLQNUoRi
-   tdRXIfd9BhAsJbHu4iDbKL1UVYvevvMShycJonMfawmjTo+8Ronu8g59UfvGFMExmDGPZke0MoTM
-   90eASQMQwnxmNQGiffRIAZu2jwRj/yUb/HuOVmYHZ3aFwbb0V7nWYQVuvmQfmT3rQW+OHcUOAIGn
-   QdxTU+4utUKeoUo9NuoU6WVQ+IBLo1U9EsW3kp1dTMYCBZAfXjeVrj3oW8QFRGAY/jVATv8BABov
-   AfkMxM9yDxRQ9mNEbiBl/5FkdcYBI4GN1pflJw==
-Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20250214 64bit (built Feb 14
- 2025))
- with ESMTPS id <0SSS00AYUC4E8WA0@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Sat, 08 Mar 2025 03:24:14 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-Date: Sat, 8 Mar 2025 04:23:00 +0100 (GMT+01:00)
-From: Bence Ferdinandy <bence@ferdinandy.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Igor Todorovski <itodorov@ca.ibm.com>
-Message-id: <6d77cffc-94a3-42ca-938d-791256b508fd@ferdinandy.com>
-In-reply-to:
- <61147be4b9a0ee76f1fe0f3376d7316205da350c.1741389941.git.me@ttaylorr.com>
-References: <71075837-D0AA-4F01-9F5D-CA10BFE93B63@ca.ibm.com>
- <61147be4b9a0ee76f1fe0f3376d7316205da350c.1741389941.git.me@ttaylorr.com>
-Subject: Re: [PATCH] fetch: fix following tags when fetching specific OID
+	s=arc-20240116; t=1741424662; c=relaxed/simple;
+	bh=bVsM5iic+aR4X/xK9j4mQcE9vpLY88AztfN7US7suiY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=IvErFMGgTrMx0+emH/lJj4CP5JJH6QCSkF+dh5ck2v03Sclv2PZjc5DZtvViKgYGyG3/kkf6EnrLlU4vIo/SJ3xIL0GM72ULnj5Mg+UiQOpQeDgdm5YU6mPwof1tOin4cjsPpI6ZsgoNqDCbZ8riXqv9fv9ceOp229aCV+v6TBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aynp.dev; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aynp.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2239aa5da08so43431305ad.3
+        for <git@vger.kernel.org>; Sat, 08 Mar 2025 01:04:20 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741424659; x=1742029459;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1XoVyYhouY45nzsXIQbXW1kvJ2EPPxr9Ni/O2dcbZ3E=;
+        b=T6bmnxG7j4vewe/5iaexn8UFEXK6AAnlB/4MgQ08JtAor1naoQjGjzIZsFctedyS9C
+         Yg7d7EgMHVD9sRicNZDKypXxv2wMd1RBZuKgPMu804vJe61wDCGXRQ2kxK4GdvPH1S46
+         O3lXXgAmkVYYYuzXKaTQjPnT8rPWDBQ5jf1C+E6ZcxUOqgu/RE/hMY8H6SBtk9uacZky
+         /Icfrmsmb9zWrF/ktny+A06gZMVjwvwIFiPjnhE0q8ZmnRVcBc+HS+P8mtv8JVNXqZX1
+         huvAJZ+BPDk0LvaYNGB+crdX+ruczY+mL7b43AsCV2alNCol6MFAEJdFVEmIiJEEn676
+         5iZw==
+X-Gm-Message-State: AOJu0YxUPz93+AozkU7dr1ocLAHk+Hzp7fgXzm2YrtmQy+QtNNm37XVD
+	sc8uvhPPj7cl4WKczI4xFoOaUx/ReRhGOI0k7Xrc5zXFwuL9UOVDeARPrFuna5viMA==
+X-Gm-Gg: ASbGncvsoR3QsEkUIh9vzPHL8hXn3lDyfkVlNcXXVhhromslo2qliERYUdH2EOk0Wnq
+	4rZaAdKcqj6CBKArHjCI5BKwFFJSE8eXXh94v/yIHE/12reCR0MCLchKIVOq/iOwKmN3CzX3llg
+	EbbWGOSv6NJ83nysM1BtgEtMbJbAVTLtppGbQJ7QfL9vcAEbggxnFp1zarFfmj5EPtbCsRoCdB/
+	aMoqQ0rvMXZqedoTLuOPCtd6u0ri+3JAlYfsmqgV7Szm9dScsI5KuQ3t5Cf3PX3EQmAdx3ADnfk
+	Vq+2bJQ1mr2/M60rKx4BK3WqdaV0ND4m9eeWLDgE9eWkU5RGDkTvNzqjfdC/w0oMXd1j474w8dq
+	Yvvujn+EO
+X-Google-Smtp-Source: AGHT+IFbNkVLPPfe3pICY+EhVoT+5DQsjZajY2SC3Ak7Pj19cFelqrhJbiCy98J5QJC8z9RtQeGNgw==
+X-Received: by 2002:a05:6a21:103:b0:1f3:3c5d:cd7e with SMTP id adf61e73a8af0-1f544b229eemr12215497637.24.1741424659347;
+        Sat, 08 Mar 2025 01:04:19 -0800 (PST)
+Received: from L6X9J4F4CV.flets-east.jp ([2405:6580:9580:2e00:5475:f9d8:3afa:33f3])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af2810768a8sm3620894a12.4.2025.03.08.01.04.18
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 08 Mar 2025 01:04:18 -0800 (PST)
+From: Aryan Pathania <contact@aynp.dev>
+To: git@vger.kernel.org
+Cc: Aryan Pathania <contact@aynp.dev>
+Subject: [GSoC PATCH] t9400: prefer test_path_* helper functions
+Date: Sat,  8 Mar 2025 18:03:58 +0900
+Message-Id: <20250308090358.25429-1-contact@aynp.dev>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-type: text/plain; charset=UTF-8; format=flowed
-Content-transfer-encoding: quoted-printable
-X-Correlation-ID: <6d77cffc-94a3-42ca-938d-791256b508fd@ferdinandy.com>
-Reporting-Meta:
- AAGkFeCys0q8uen8CljnbhrRMwhiJd0Po+wTmeYpSuiJcBmQbYpeoP0T6I1ljy7D
- pbK6V+bz1/QDPA43FX7bWONhf/wB7B99C6zkZfArBdKpiKY3M6wa2v+w71XIBSbt
- kQ3Rd4dS427yn+PBDClctbiYfbJKvuktV7UQHlWw1bbssa6VuqkFtkEZEKEvaaF2
- CbzYCXTmOOq2QyWaQE9WBA6pZhHcBaTJbZl2M72Sg7XoAtOV6giO9PMbtfZNqanm
- iTP2Ln2leOhK+zKNCS2VpcVXXfQcg+nqNJjmX1FgWAcnbqBUuowN/ss6avCvu869
- neP3Bv3PO0qCbEb5J3aJMmQ3IOD+JZG1HZ4DOltpRHHoNL69pGJ5ipQhYn1V01Uo
- ha0PXZp3BAH5pHfvUQ7I9KK05jG4PDcGiVpTXagw4gPTnI9pR+6lvLN27SN5KrXn
- ebOLzIzSBei4L6oF7zPsOG2Dg65BbMG4MTMQ4CkLRGRnVXZ224GuTlA=
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-2025. m=C3=A1rc. 8. 0:27:43 Taylor Blau <me@ttaylorr.com>:
+use `test_path_*` instead of `test -[efd]` to avoid false complaints and
+output when running the script with `-v` or `-x`
 
-> In 3f763ddf28 (fetch: set remote/HEAD if it does not exist,=20
-> 2024-11-22),
-> unconditionally adds "HEAD" to the list of ref prefixes we send to the
-> server.
->
-> This breaks a core assumption that the list of prefixes we send to the
-> server is complete. We must either send all prefixes we care about, or
-> none at all (in the latter case the server then advertises everything).
->
-> The tag following code is careful to only add "refs/tags/" to the list
-> of prefixes if there are already entries in the prefix list. But=20
-> because
-> the new code from 3f763ddf28 runs after the tag code, and because it
-> unconditionally adds to the prefix list, we may end up with a prefix
-> list that _should_ have "refs/tags/" in it, but doesn't.
->
-> When that is the case, the server does not advertise any tags, and our
-> auto-following breaks because we never learned about any tags in the
-> first place.
->
-> Fix this by only adding "HEAD" to the ref prefixes when we know that we
-> are already limiting the advertisement. In either case we'll learn=20
-> about
-> HEAD (either through the limited advertisement, or implicitly through a
-> full advertisement).
->
-> Reported-by: Igor Todorovski <itodorov@ca.ibm.com>
-> Co-authored-by: Jeff King <peff@peff.net>
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
-> Peff and I talked about this today, and neither of us could find any
-> reasons not to pursue the approach listed in the footnote of
->
-> =C2=A0 <20250221072558.GA572877@coredump.intra.peff.net>
->
-> , but this is a more conservative approach that should fix the issue=20
-> and
-> apply cleanly on top of 'maint'. It may be worth picking this into=20
-> 2.49,
-> even though we are already quite late into the -rc cycle, this is a
-> fairly nasty bug.
->
-> builtin/fetch.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 +++-
-> t/t5503-tagfollow.sh | 15 +++++++++++++++
-> 2 files changed, 18 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index fe2b26c74ae..a06d1305016 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1777,7 +1777,9 @@ static int do_fetch(struct transport *transport,
->
-> =C2=A0=C2=A0=C2=A0 if (uses_remote_tracking(transport, rs)) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 must_list_refs =3D 1;
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 strvec_push(&transport_ls_refs_opti=
-ons.ref_prefixes, "HEAD");
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (transport_ls_refs_options.ref_p=
-refixes.nr)
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 strvec_push=
-(&transport_ls_refs_options.ref_prefixes,
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "HEAD");
-> =C2=A0=C2=A0=C2=A0 }
->
-> =C2=A0=C2=A0=C2=A0 if (must_list_refs) {
-> diff --git a/t/t5503-tagfollow.sh b/t/t5503-tagfollow.sh
-> index 195fc64dd44..8495730e264 100755
-> --- a/t/t5503-tagfollow.sh
-> +++ b/t/t5503-tagfollow.sh
-> @@ -160,4 +160,19 @@ test_expect_success 'new clone fetch main and=20
-> tags' '
-> =C2=A0=C2=A0=C2=A0 test_cmp expect actual
-> '
->
-> +test_expect_success 'fetch specific OID with tag following' '
-> +=C2=A0=C2=A0 rm -f $U &&
-> +=C2=A0=C2=A0 git init --bare clone3.git &&
-> +=C2=A0=C2=A0 (
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cd clone3.git &&
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 git remote add origin .. &&
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 git fetch origin $B:refs/heads/main=
- &&
-> +
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 git -C .. for-each-ref >expect &&
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 git for-each-ref >actual &&
-> +
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 test_cmp expect actual
-> +=C2=A0=C2=A0 )
-> +'
-> +
-> test_done
->
-> base-commit: f93ff170b93a1782659637824b25923245ac9dd1
-> --
-> 2.48.1.1.g965d2fe18fa
+Signed-off-by: Aryan Pathania <contact@aynp.dev>
+---
+ t/t9400-git-cvsserver-server.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-Thanks for cleaning up my mess!
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+index e499c7f955..6c7cb1964c 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -254,7 +254,7 @@ test_expect_success 'gitcvs.enabled = false' \
+      true
+    fi &&
+    grep "GITCVS emulation disabled" cvs.log &&
+-   test ! -d cvswork2'
++   test_path_is_missing cvswork2'
+ 
+ rm -fr cvswork2
+ test_expect_success 'gitcvs.ext.enabled = true' '
+@@ -276,7 +276,7 @@ test_expect_success 'gitcvs.ext.enabled = false' '
+ 		true
+ 	fi &&
+ 	grep "GITCVS emulation disabled" cvs.log &&
+-	test ! -d cvswork2
++	test_path_is_missing cvswork2
+ '
+ 
+ rm -fr cvswork2
+@@ -285,7 +285,7 @@ test_expect_success 'gitcvs.dbname' '
+ 	GIT_DIR="$SERVERDIR" git config gitcvs.dbname %Ggitcvs.%a.%m.sqlite &&
+ 	GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 main >cvs.log 2>&1 &&
+ 	test_cmp cvswork cvswork2 &&
+-	test -f "$SERVERDIR/gitcvs.ext.main.sqlite" &&
++	test_path_is_file_not_symlink "$SERVERDIR/gitcvs.ext.main.sqlite" &&
+ 	cmp "$SERVERDIR/gitcvs.main.sqlite" "$SERVERDIR/gitcvs.ext.main.sqlite"
+ '
+ 
+@@ -296,8 +296,8 @@ test_expect_success 'gitcvs.ext.dbname' '
+ 	GIT_DIR="$SERVERDIR" git config gitcvs.dbname %Ggitcvs2.%a.%m.sqlite &&
+ 	GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 main >cvs.log 2>&1 &&
+ 	test_cmp cvswork cvswork2 &&
+-	test -f "$SERVERDIR/gitcvs1.ext.main.sqlite" &&
+-	test ! -f "$SERVERDIR/gitcvs2.ext.main.sqlite" &&
++	test_path_is_file_not_symlink "$SERVERDIR/gitcvs1.ext.main.sqlite" &&
++	test_path_is_missing "$SERVERDIR/gitcvs2.ext.main.sqlite" &&
+ 	cmp "$SERVERDIR/gitcvs.main.sqlite" "$SERVERDIR/gitcvs1.ext.main.sqlite"
+ '
+ 
+@@ -346,7 +346,7 @@ test_expect_failure "cvs update w/o -d doesn't create subdir (TODO)" '
+ 	git push gitcvs.git >/dev/null &&
+ 	cd cvswork &&
+ 	GIT_CONFIG="$git_config" cvs -Q update &&
+-	test ! -d test
++	test_path_is_missing test
+ '
+ 
+ cd "$WORKDIR"
+@@ -379,7 +379,7 @@ test_expect_success 'cvs update (delete file)' '
+ 	cd cvswork &&
+ 	GIT_CONFIG="$git_config" cvs -Q update &&
+ 	test -z "$(grep testfile1 CVS/Entries)" &&
+-	test ! -f testfile1
++	test_path_is_missing testfile1
+ '
+ 
+ cd "$WORKDIR"
+-- 
+2.39.5 (Apple Git-154)
+
