@@ -1,38 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292833209
-	for <git@vger.kernel.org>; Sun,  9 Mar 2025 03:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F3B3209
+	for <git@vger.kernel.org>; Sun,  9 Mar 2025 03:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741489629; cv=none; b=Gk4MuDc4g6B+rwbKQrkSv8RURJS1hMj3p6B3nbLL3MR2eJWlmg8INNpE9/E8v4I9TkCm52Y2KfXjvn6cGobYCBMYES6lD0RdyneV9MlmCEesY6uY6Aw+S0JXRKWOsk9O8LZbYTLtUIKHgibKYbmSbQSqbcAtXEPiOXUkFURa3c0=
+	t=1741489730; cv=none; b=Xd3WmOMJnp90CRYIAGuXupIl7gbsyY8t8VB0k/bnH7HyDKXD57tawqJdpz5+A45c/WQTvZZQ7dnLBmtL7++rZzOY9YnMV+/iMPLGbdF2kr06yDRd6/oLQwWsswKyhb4AD52jL8erraapYwzBN8ZlUtQ0LNVW9wJUNngSN5hnXS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741489629; c=relaxed/simple;
-	bh=gT7/ZFv6rC20DRIwYynuIOgVtIBbc1eOqQP/18eQYcQ=;
+	s=arc-20240116; t=1741489730; c=relaxed/simple;
+	bh=hK9QnUOQ4a9I862iyrZNezxh/8O/gzZwhJkqiOdAz7o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UcbtaYevETGrEHhoBeysYHLAugy2T2XqyQHUb6YNLLS5bY0uMoy8dZ7jfIBUNSmJgJJQeDITtHe+JhQd210M4qHXLPQ5Gbhq2BHXHhY2uQncNIxk2uXS8tbz3baC9OqYcMjxTsCYJCrMcDhECWaWAvWD5/tFawIhz2qSXL8Bf94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QcqabLRr; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=RXerhbVNkO5ycfwGrBLE47h+AEgzdgW2gpoW8/XzC6ZGWPtHjDhmYTjvbyYGQm1X1VVoZ0uKCtCeXbfa2qLMblLraQwumr03jXydYb9lxf0Ndnno66MisXEdYNsO3u1ThxkQy1iwfKszCLPz/MFp45snzJo6QanqOMgcz+l4vLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Lxdw0yFU; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QcqabLRr"
-Received: (qmail 4737 invoked by uid 109); 9 Mar 2025 03:07:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=gT7/ZFv6rC20DRIwYynuIOgVtIBbc1eOqQP/18eQYcQ=; b=QcqabLRrHNoezmKGOP6UrG6cV5kvlFrwL1+d19K+MjASWeiqAgtTVHjp7Qgzf6p6VCvzsgNBZ3UBmksKfpbQdnySKBxLRjDw+z34SJxKy402G6MUCdd3yk6GHAuOAoFHu2KQy6Q5agAmJOstFV5APV1ljJGFOOViBAhbZ1RbMuaXno8lTn6E8+Z7gCoaJUtRV0va7ptmVgyAJ8dNXQ2srUu13BzWMABCRXrOWz/bD2n3opAiSxwuuqQOgzX7isEumv/rWoR9zSKDG6E0YbliUrauaEi3HP9xtFfBNJNWArF9lBHUB/SR5weFLO5Y9M+9uYGpR/mrwAFnmrx/w56Jrg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Lxdw0yFU"
+Received: (qmail 4778 invoked by uid 109); 9 Mar 2025 03:08:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=hK9QnUOQ4a9I862iyrZNezxh/8O/gzZwhJkqiOdAz7o=; b=Lxdw0yFU5NjOCWJp8KqDrUJY85pyoDmnkeSLAQafUGnV0x6d7iQLpn7ed4DVMitRrYFciJPBl4oZ1IpSWzfs3ynjTwvtT3zzY7H7gaBTWr4vjM+blL1EUnT2tmiVAcQnL7Rsa+8VggjORUP0NnoBR2+6qeab1grXeGfasWpgZdzviBC4G98CxOnDvgbIRyKKTWhXkkAHyrnRv2h9EKcNYBX7SwvWfZD4/oe/a0C6MApdDMKWCo1qqswHpBdpcv9ZUxZNaEy58c47qVfom0R0KZZZLg0uHmlFtf9YF4OIG7cbLnl4yVS++3GireuwxbAQFF2R2xXjE5Q1FryAExWEhw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 09 Mar 2025 03:07:07 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 09 Mar 2025 03:08:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4912 invoked by uid 111); 9 Mar 2025 03:07:06 -0000
+Received: (qmail 4939 invoked by uid 111); 9 Mar 2025 03:08:47 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 08 Mar 2025 22:07:06 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 08 Mar 2025 22:08:47 -0500
 Authentication-Results: peff.net; auth=none
-Date: Sat, 8 Mar 2025 22:07:06 -0500
+Date: Sat, 8 Mar 2025 22:08:47 -0500
 From: Jeff King <peff@peff.net>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Igor Todorovski <itodorov@ca.ibm.com>,
 	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [PATCH 5/9] refspec_ref_prefixes(): clean up refspec_item logic
-Message-ID: <20250309030706.GE2334191@coredump.intra.peff.net>
+Subject: [PATCH 6/9] fetch: ask server to advertise HEAD for config-less fetch
+Message-ID: <20250309030847.GF2334191@coredump.intra.peff.net>
 References: <20250309030101.GA2334064@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -44,117 +44,87 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20250309030101.GA2334064@coredump.intra.peff.net>
 
-The point of refspec_ref_prefixes() is to look over the set of refspecs
-and set up an appropriate list of "ref-prefix" strings to send to the
-server.
+If we're not given any refspecs (either on the command line or via
+config) and we have no branch merge config, then we fetch the remote
+HEAD into our local FETCH_HEAD. In that case we do not send any
+ref-prefix option to the server at all, and we see the full
+advertisement.
 
-The logic for handling individual refspec_items has some confusing bits.
-The final part of our if/else cascade checks this:
+But this is sub-optimal. We only care about HEAD, so we can just ask
+for that, and ignore all of the other refs.
 
-  else if (item->src && !item->exact_sha1)
-	prefix = item->src;
+The new test demonstrates a case where we see fewer refs (in this case
+only one less, but in theory we could be ignoring millions of them).
 
-But we know that "item->exact_sha1" can never be true, because earlier
-we did:
+This also removes the only case where we care about seeing some refs
+from the other side, but don't add anything to the ref_prefixes list.
+Cleaning this up means one less maintenance burden. Before this patch,
+any code which wanted to add to the list had to make sure the list was
+not empty, since an empty list meant "ask for everything". Now it really
+means "we are not interested in any refs".
 
-  if (item->exact_sha1 || item->negative)
-	continue;
+This should let us optimize a few more cases in subsequent patches.
 
-This is due to 6c301adb0a (fetch: do not pass ref-prefixes for fetch by
-exact SHA1, 2018-05-31), which added the continue. So it is tempting to
-remove the extra exact_sha1 at the end of the cascade, leaving the one
-at the top of the loop.
-
-But I don't think that's quite right. The full cascade is:
-
-  if (rs->fetch == REFSPEC_FETCH)
-	prefix = item->src;
-  else if (item->dst)
-	prefix = item->dst;
-  else if (item->src && !item->exact_sha1)
-	prefix = item->src;
-
-which all comes from 6373cb598e (refspec: consolidate ref-prefix
-generation logic, 2018-05-16). That first "if" is supposed to handle
-fetches, where we care about the source name, since that is coming from
-the server. And the rest should be for pushes, where we care about the
-destination, since that's the name the server will use. And we get that
-either explicitly from "dst" (for something like "foo:bar") or
-implicitly from the source (a refspec like "foo" is treated as
-"foo:foo").
-
-But how should exact_sha1 interact with those? For a fetch, exact_sha1
-always means we do not care about sending a name to the server (there is
-no server refname at all). But pushing an exact sha1 should still care
-about the destination on the server! It is only if we have to fall back
-to the implicit source that we need to care if it is a real ref (though
-arguably such a push does not even make sense; where would the server
-store it?).
-
-So I think that 6c301adb0a "broke" the push case by always skipping
-exact_sha1 items, even though a push should only care about the
-destination.
-
-Of course this is all completely academic. We have still not implemented
-a v2 push protocol, so even though we do call this function for pushes,
-we'd never actually send these ref-prefix lines.
-
-However, given the effort I spent to figure out what was going on here,
-and the overlapping exact_sha1 checks, I'd like to rewrite this to
-preemptively fix the bug, and hopefully make it less confusing.
-
-This splits the "if" at the top-level into fetch vs push, and then each
-handles exact_sha1 appropriately itself. The check for negative refspecs
-remains outside of either (there is no protocol support for them, so we
-never send them to the server, but rather use them only to reduce the
-advertisement we receive).
-
-The resulting behavior should be identical for fetches, but hopefully
-sets us up better for a potential future v2 push.
+Note that we'll add "HEAD" to the list of prefixes, and later code for
+updating "refs/remotes/<remote>/HEAD" may likewise do so. In theory this
+could cause duplicates in the list, but in practice these can't both
+trigger. We hit our new case only if there are no refspecs, and the
+"<remote>/HEAD" feature is enabled only when we are fetching from a
+remote with configured refspecs. We could be defensive with a flag, but
+it didn't seem worth it to me (the absolute worse case is a useless
+redundant ref-prefix line sent to the server).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This could be dropped without affecting the rest of the series if it's
-too churn-y.
+ builtin/fetch.c        |  8 ++++++++
+ t/t5702-protocol-v2.sh | 15 +++++++++++++++
+ 2 files changed, 23 insertions(+)
 
- refspec.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
-
-diff --git a/refspec.c b/refspec.c
-index 4cb80b5208..c6ad515f04 100644
---- a/refspec.c
-+++ b/refspec.c
-@@ -246,14 +246,24 @@ void refspec_ref_prefixes(const struct refspec *rs,
- 		const struct refspec_item *item = &rs->items[i];
- 		const char *prefix = NULL;
- 
--		if (item->exact_sha1 || item->negative)
-+		if (item->negative)
- 			continue;
--		if (rs->fetch == REFSPEC_FETCH)
--			prefix = item->src;
--		else if (item->dst)
--			prefix = item->dst;
--		else if (item->src && !item->exact_sha1)
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 95fd0018b9..f142756441 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1766,6 +1766,14 @@ static int do_fetch(struct transport *transport,
+ 					    branch->merge[i]->src);
+ 			}
+ 		}
 +
-+		if (rs->fetch == REFSPEC_FETCH) {
-+			if (item->exact_sha1)
-+				continue;
- 			prefix = item->src;
-+		} else {
-+			/*
-+			 * Pushes can have an explicit destination like
-+			 * "foo:bar", or can implicitly use the src for both
-+			 * ("foo" is the same as "foo:foo").
-+			 */
-+			if (item->dst)
-+				prefix = item->dst;
-+			else if (item->src && !item->exact_sha1)
-+				prefix = item->src;
-+		}
++		/*
++		 * If there are no refs specified to fetch, then we just
++		 * fetch HEAD; mention that to narrow the advertisement.
++		 */
++		if (!transport_ls_refs_options.ref_prefixes.nr)
++			strvec_push(&transport_ls_refs_options.ref_prefixes,
++				    "HEAD");
+ 	}
  
- 		if (!prefix)
- 			continue;
+ 	if (tags == TAGS_SET || tags == TAGS_DEFAULT) {
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index cea8f92a3d..2f0a52a72d 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -679,6 +679,21 @@ test_expect_success 'default refspec is used to filter ref when fetching' '
+ 	grep "ref-prefix refs/tags/" log
+ '
+ 
++test_expect_success 'set up parent for prefix tests' '
++	git init prefix-parent &&
++	git -C prefix-parent commit --allow-empty -m foo &&
++	git -C prefix-parent branch unrelated-branch
++'
++
++test_expect_success 'empty refspec filters refs when fetching' '
++	git init configless-child &&
++
++	test_when_finished "rm -f log" &&
++	GIT_TRACE_PACKET="$(pwd)/log" \
++		git -C configless-child fetch ../prefix-parent &&
++	test_grep ! unrelated-branch log
++'
++
+ test_expect_success 'fetch supports various ways of have lines' '
+ 	rm -rf server client trace &&
+ 	git init server &&
 -- 
 2.49.0.rc1.381.gc60f5426ff
 
