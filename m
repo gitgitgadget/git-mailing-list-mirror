@@ -1,118 +1,95 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0AC224AEB
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 09:07:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7317225410
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 09:46:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741597658; cv=none; b=hCmmKc73nuY4K63xJiHJ3bRS4XYPShbLd3F7RNpL4lFCB7mdCSm2eKw7BffJgb+XZ2T3QrR12tJ4G4kFLld6svZBCxy29qWKQDAd3WXuRblat1rGA8VK6K8g4ehp8EH8J8ZOjBmWuQpsw2a29EOv2hjSIP5fCT3xL39cbW/8LcU=
+	t=1741600005; cv=none; b=VExVi55N4XvZlRx0h8IKq7Yzpy0GUlKbnDQC5FCdXGrhtbJQayM0/n4awZURluEl3GvY7bP2NRnq5LnM6fzYm2r8NF2vP8knBXYFvKBaP36DO+V0fEGQyG+TWoM7+hQ8uPI04+auGYjbvdrcC+qJiZAzx/Qm4Ef57tuY2X7VfLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741597658; c=relaxed/simple;
-	bh=1PayPm7arFwA9xCEtCZyLsfFxayB/90KGALs4amQtTg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZlkOHzqqwmtPsBRtzi28Gr1fQBgpQl1RYQcrmdfzUlwZyA/ScrvGEpLerbneEKm9PKKmW/WC/RiNdzsFuke/ISd2r8qC6ZPc1UVWBBB2iVg2/OzX2vYFhk0VXMZgseZ0J28BvmvSgthLWAqC1YBb4F1hWxFzBUE4f9A7OuzgMA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QAPrEmes; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1741600005; c=relaxed/simple;
+	bh=YQEDl9uKZAk+3MaG24MQlc9ZTwYlf4ZUS4EfY6ETPjE=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=YX2yZe3SWebIxWuSjfUDFrkaK1ZOcuPnEoscw1INMTuT1112u5qSEQFjMTkHCw8tkFXngpzw0tvF92TcLze85oPHDBdGorYasMfl57A4AxE56V6YwT05CB/g44QVgetvSqGIfcuqw04nbKHL27OiV/tcKXhz6mNeHtTL3PtQ+M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uc2dygHT; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QAPrEmes"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-225477548e1so23326115ad.0
-        for <git@vger.kernel.org>; Mon, 10 Mar 2025 02:07:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uc2dygHT"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-224341bbc1dso39027215ad.3
+        for <git@vger.kernel.org>; Mon, 10 Mar 2025 02:46:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741597656; x=1742202456; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1PayPm7arFwA9xCEtCZyLsfFxayB/90KGALs4amQtTg=;
-        b=QAPrEmeskc8hnIdSFWgfSF8CBgdhm4gi0pzPHguHi4kVNfzvXAurE7Ku3a1erYXU8V
-         DCnPCzUkhHmXpbwFEuVFhfyVQ5Hz+/ABL6K9FAX4S76ZmXBWJhhvv0unxhpfzjhu87pT
-         jYoEohDQ9Tt4aNcSmJj57nTr92lYKaTp/8XniTz0pGtjTNC9nQYN0Vl5IR2oVB443h9p
-         454JnwWr7zQEVr2uNIcNMXrK7pJh9eOqEr5KsPfUT6AA4Vb8RSGbzd5HJl/vHmEoOsYO
-         SCbLY4G50RTr+S+sSxwsPJs8HMMSjXg5wCyjVoCfKz0tMiyWZ0nEWBtcLhu7+CpppWg/
-         BxkQ==
+        d=gmail.com; s=20230601; t=1741600003; x=1742204803; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sh4IBdzzZb0y//lhl/Cank6u0KB+JotzYw+IsbspWcU=;
+        b=Uc2dygHT/ckEva3w8wbu7VevWj60WQwnZB+lhMblSlYjUuoWBeh7gDULt6DJ2/33Ts
+         ee7SXRVVqWRsF/AREn/bRcHaGH2yMRA4aIBwzEgAnkEcODVmICL1vioW9mey6sqPmAa8
+         yWzPqV8TmVTkvA5elDzZ2PN2M/gi45MyQpVv9JP9Ql8LW9UjT8EnhbTslfWgj1BMKDIp
+         CZ1Vj7qgPx2DnFMn0n+cpfWJbzv86i9olVA3vuBHCcSt6zupagHElZebDq9d3epRPu8f
+         zJ88qUNHpjLiemtlYCwUooRNjgPjk1o7WKmjjU4Y3nF9t/RJNmTziOBwy1hKol31Gux2
+         pnwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741597656; x=1742202456;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1PayPm7arFwA9xCEtCZyLsfFxayB/90KGALs4amQtTg=;
-        b=Zs+YKGC6HN7He5ITkS+tsacuhFh9b0eA98siButidDPr1w0laQfdVcjZHd6oPD7AEG
-         Ud5Vyvg87es/Wf4oW/GC9RpkdHT4hbXsgeNelFhBQH2Hio8WFaqbZcphg/Q7X8AimPBt
-         3JjWmibTVjB45U3yDJ6ilmxgjLdqsai4KlhLMHiDw7/i1FQ0YwyrFpWMfpXxbllW8uNr
-         s0Pwuf8g1pCJ8Y2rESfoDZHCBdSa0mjv5jvNcp5G89aVihkgEYjdcPfjdZ9aPir8VpIH
-         Hg2y+SFObyDI2tKxuoEtHG+vmvk2fh9joX4CuuPbuREwHKyg87zjrCbGBUTxeH8f97/f
-         CyNA==
-X-Gm-Message-State: AOJu0Yw8XrNfYyU0kqnsnAGPrqArkX5SPa6FZCdPGsG/GvpXTLHnaLbP
-	aDMqn2SFKJ6hGCu+3aI+zgH2MKtasaOiTJ70N/duDKLUx2Ip5u9eVKbwQvt+zMMF5uG4xnToCEY
-	LTwCiXFvA+CpXK8kmb2ATL7cClIY=
-X-Gm-Gg: ASbGncvpsJ2kQfHrKG2KpTutFHswQkfqZAOUlCBav6NEJXDvhoDOdz4nx81jwb3k2ci
-	cQFGFUWg4ihcwxiYDjvH3YW+KIJmeuvv8xrc04x8hrzrZCF6DJ57HsYzp+rZWvgJj/OTeUK6umW
-	Nf/q1uDVPxSkeZ5rsuyx/iiEjV8pSVzM63Wrj0zA==
-X-Google-Smtp-Source: AGHT+IE54o4aGXyjtIg7Wo6zxqA+IfP4ULaj/d9s4Ma2JYm1BYDc0bj/fl8o8qBAGK/bQHjqdE2RpdvJAuSdmsMuyw4=
-X-Received: by 2002:a17:90b:180c:b0:2ee:b875:6d30 with SMTP id
- 98e67ed59e1d1-2ff7ce8cfccmr21510308a91.9.1741597655826; Mon, 10 Mar 2025
- 02:07:35 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741600003; x=1742204803;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=sh4IBdzzZb0y//lhl/Cank6u0KB+JotzYw+IsbspWcU=;
+        b=E6mDAHCJEdwK8QYlm65xq3zkFSJxlDjApVGSvl6uymhipWznk18PRnUPMI7TYj53jz
+         mdT9wCzPIOB5zBh2zV7lObKwlXGMK+LGlfG4PO+vwoKQiTkw5cMEzIAVCdFhmEW6vQ1H
+         q5MXF/miZCg/8YVlyEaX3+5LIHaGOjuRu2kTvmLNIK1Dl9JTZZ3dXXAUJm754EvaETSP
+         YL5w/K1gr7vdc4w2tXim21TjIZgKSN91waKsM6z77FVlFkiBkefvOtYjW9YJmNi5v7vf
+         HhumPohYKfELJqTRv2xALNTn1VHYCAxPwOfEnBg1XL6ABRGHCW1N4PAk8Evi0p8lHxRS
+         pfrA==
+X-Gm-Message-State: AOJu0Yz9VypSu3TAKlaUF444Hj6fh/NUXaSs4GmXmkYU+GWjTMyKMN6E
+	jkr5l6Oj717vSyK8aPcQYD+d+C5XN8fmAFkPYg5CErIA/bqj7jnUMG9jAQ==
+X-Gm-Gg: ASbGncv+zKQCFSgVsadYU4BhqMG840tauhlTwF/TcIblf/X7XO63MDlA9g/oZEk4BHi
+	0vdESgi8l4AMEKOSc3laBO1mazWCrLz65Tn54e75xwCXiiBpjPfLYBqTM7dMi+o+ETe3Y2l9G9V
+	lVH6CNcGXoYTtWYO0djoJn9YaQXXB5XiIrhOvh8VpCohuLonGHNmUkLh9knTGQQK9kvTlelx7/U
+	oOZkls17PsOSwV3YU+hNgxZMdiSDOvE72bM2mReUNC4R18K+PMClbHUkDhfa51dKGAk4axJAub0
+	bsPw5AbDG1PCvV85VfSoSn4O7MAnPDLogIMQW1gvgekf79w+uw==
+X-Google-Smtp-Source: AGHT+IG3fqBhHj97Mkn1Ci8qCyjMBMGro71zsZuY7PkFKJirk4omhMDRTyt27kqvXEstPB7mL8vN3A==
+X-Received: by 2002:a05:6a21:4613:b0:1f5:67c2:e3f4 with SMTP id adf61e73a8af0-1f567c2e5ebmr11052982637.30.1741600002726;
+        Mon, 10 Mar 2025 02:46:42 -0700 (PDT)
+Received: from [10.61.111.37] ([103.21.124.55])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7369d4b978asm7532481b3a.28.2025.03.10.02.46.41
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Mar 2025 02:46:42 -0700 (PDT)
+Message-ID: <ff10a962-57c6-4603-a739-f4e068886820@gmail.com>
+Date: Mon, 10 Mar 2025 15:16:46 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250309153321.254844-1-ayu.chandekar@gmail.com> <Z86PUkJ1sbSH2VTU@pks.im>
-In-Reply-To: <Z86PUkJ1sbSH2VTU@pks.im>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Mon, 10 Mar 2025 14:37:24 +0530
-X-Gm-Features: AQ5f1JqZIDW_Y-ThMoiu5wf5u6tr2j-o26KN5jbzJ0H_s9JmZU-WYJWTsenda3U
-Message-ID: <CAE7as+bm1+aMz3SpiYeZWD9PUHNjzOYNgKm_FnEPzJesSFcodA@mail.gmail.com>
-Subject: Re: [PATCH] environment: move access to "core.attributesfile" into
- repo settings
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, shejialuo@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+From: Arnav Bhate <bhatearnav@gmail.com>
+Subject: [GSoC] Introduction and Microproject
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hey,
-thanks for reviewing the patch!
+Hello everyone,
 
-> We typically switch the order around a bit in our commit messages: we
-> first explain what the actual problem is, and then we say how we fix it.
+I'm Arnav Bhate, currently in my second year of undergrad and a first-time GSoC
+applicant. I've been interested in contributing to the open source community
+for a while now, but never had the confidence to participate before. I'm using
+GSoC as an opportunity to start contributing, and I will continue after as
+well.
 
-Got it.
+I've decided to do the 'Fix Sign Comparison Warnings in Git's Codebase'
+microproject, and I already have a patch for decorate.c ready, which I will
+send soon. Since, it is a rather small file, there was not much to fix and I
+will work on more files.
 
+As it is my first time collaborating through such a workflow, or on a project
+of such scale, I hope you will provide your guidance and tell me if I make
+mistakes.
+-- 
+Regards,
+Arnav Bhate
+(He/Him)
 
-> Hm. I wonder what the actual merit of this function is after the
-> refactoring. Right now there isn't really any as it is a direct wrapper
-> of `repo_settings_get_attributesfile_path()`.
-
-I can remove the function and replace all the instances with
-`repo_settings_get_attributesfile_path()`. What do you think?
-
-> I think it would make sense to split out this change into a separate
-> commit. The first commit would move the config into "repo-settings.c",
-> the second commit would adapt functions and their callers as necessary.
-
-Alright.
-
-> Extraneous newline.
-Apologies. Will fix it.
-
-> I think we should just retain `git_attr_val_global()` and plug in
-> `the_repository`. The extra change here doesn't add anything, and
-> "builtin/var.c" being a builtin means is not reused anywhere else,
-> either.
-
-Makes sense. I will drop `repo_git_attr_val_globa()` and keep
-`git_attr_val_global()` with `the_repository`.
-
-
-> We don't use curly braces around one-line statements.
-Will fix it.
-
-> One thing I'm missing is the code to `free()` the allocated memory in
-> `repo_settings_clear()`.
-Oh right.
-
-> > \ No newline at end of file
-
-Got it.
-
-Thanks,
-Ayush:)
