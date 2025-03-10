@@ -1,54 +1,54 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD3C1DEFD4
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 20:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07021DF273
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 20:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741639074; cv=none; b=e0nGO17bXIjAU2pGndiWbri+WyRitkkEHnZOkpC2ihF0fLfNFqwfPT4q0SKZs7DOIn+H7J3w6thu4437gCs5qG43XIQf4QbLxVKISvsShqkku4/RtU4FU6uJdBLb0X5PuBZOOyoJqePnfc+C3GQq0rtY4CfKDwZqksbjeHtb5+0=
+	t=1741639901; cv=none; b=ViEtGpZKUyVyx4EfX+O7tPI5Gpj56d7/U1TceLxByz4ZyTgkjaNjchN2G6/NjkTtx1pGHuU83Ugusf3lznWCq7kUHURdo86Jof4rpW8PjlUPxy2/CIUNb0ty1TdyXGKhWu/mH1qOkCmHpzqh9H9IjczREU3mN55tFjDNBWIC9Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741639074; c=relaxed/simple;
-	bh=XT318qIMZ6MA26lTbQEcnqX6MLP/yfjsEQbyNhmw3vs=;
+	s=arc-20240116; t=1741639901; c=relaxed/simple;
+	bh=bRj8lWytto1ROXv/YU61thhPv9m7t3RaGcAuAu+A31o=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NPeOG1097v6JbrUfD2WzFiyBoPKGhmUkW8Un92z1eIMdN998qoS+Zk00+9I6jLIUtQFjH2yLfqYwnr7FxXrf4Fo3kvIlO2tLuju7SKnlFnK7oSDMybT3QlJrXu8NPieZUlZyZHCcQlrMSO4KWa+ZvT5vRJ1Gqc4h3mbTRID+rQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jKAK0l2Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3D3wwSKj; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=ZCBSvT67/NqHkVvdJQ8KRmdOyOsWJL4HV+RjwhM0oDk7JWLHbMt8jf56NDvBsTPkdw4qp5J75HW3b5osVEq84/s+PBfXRb3aRB2Z5GMUCPT6xAg1zwsQHk+qC4KOn3fTQdBJp5XX/dtrLzew/4dqL4AB2wNC1w2UKkhbuQEcgAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=suzbqULY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WFb6wYtg; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jKAK0l2Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3D3wwSKj"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="suzbqULY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WFb6wYtg"
 Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 177B425401A3;
-	Mon, 10 Mar 2025 16:37:51 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E2D602540246;
+	Mon, 10 Mar 2025 16:51:38 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Mon, 10 Mar 2025 16:37:51 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 10 Mar 2025 16:51:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741639070; x=1741725470; bh=zdMAmEuVkA
-	OFq7pZaRb0qaxa3gMPCg5rVaK3S7iOpqY=; b=jKAK0l2YigskG5+DrQsERB7j7z
-	J/6DrLKMQzeqAO4W6ru23AVwofKf9vGdbs6HDTwo+vQ5E7Dxc0/1etqEZ2ImtL3R
-	ttlnms1lR6MaNz1aGmAbcWw/yZAqf2Euolxg547trOlA5TidM1D8jSSrI50pMmFn
-	9he3XJ2MbkIlM8FCO1r9kNPrTgkdukjF1bMGI3ZBlh8A+zm5rIz3kh5eSyGP7Zxf
-	d33aEYMNUmDFQ/ouOGakOalxzcYhuz73v5AF7ySljUq3COcD+1SA33avIhD4H9Rh
-	TQRf2NBWKlbZX9IVIsDPzQG42ch94M+M/vsYx36zWoZezDBXbMpokFNJRQVA==
+	:subject:to:to; s=fm3; t=1741639898; x=1741726298; bh=jqYJyDm8/J
+	H/DRtueFw72BOTrGvXtC8i8R93GUaLn18=; b=suzbqULYRl5X5jthoEhPxUdYht
+	kGKR48Q/TRLLzEkUVvY98DlBzqS5fbOiXWka3pNt6s7cxTlda82i4clhqcLKpXj1
+	E+9J6eAzWmuLyhrSx+7hGRuyaVdoIVyfepqZk38U9JxGBrmnmou0w7HLSB2EGMLr
+	Ff21wxm1JC/m8G/Q9+NBQ4KQIFEVwZRyJIc2frXjaDrQWW6YL/Y72/mKw8CgdKeF
+	59ktn36IqGukCsE18U/UZ9owQxz/ZorjgccT0ykgp8XrhsF7BRNl1fRo4Znn9Zs7
+	FPcnFWm6uBuE0cL9c4yNObNLPXAzH49CjAifEgVbsBJWbC+dKJl4k6k9Yz6w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741639070; x=1741725470; bh=zdMAmEuVkAOFq7pZaRb0qaxa3gMPCg5rVaK
-	3S7iOpqY=; b=3D3wwSKjba9qPetaoRux8JRlLxB+P3ES7eIxWxNRv210xVVejMq
-	vZ72rawFhBiHiDLwQYdJiS9dZXBVXHHUnnG4pSReqBE+sU4XcXZOSnIpk+0iBzpz
-	hfx/qz8LMHyF9UiT/ioFXGUir/7VRJuE/Cn/HL6O5UP8mBbc383eGGU7xmwUvk7p
-	SB8EUig/Rk0xy2HqrOSX3UYdGiG3BnmxQjtFSaC0e2wGfPjSSRh5eB/IJBsnNJzh
-	o162rU2pkLoLxzMx7J0o76jVIY0Xx/oC+U/YasdGm6bWhRpq/+6LCcUH1brtu2tV
-	dxAnb9RZZwQcZH0Gz3TVGQ9599kXKXNbGgg==
-X-ME-Sender: <xms:nk3PZ6SbcTd4Fs43_Qhk-7DuiFUPpFhcpY1aU9b57XuCRnXJ2-hsZg>
-    <xme:nk3PZ_y4WqiwvhfUkFWUqSGrLvE60J2wK2lZxjpXD34YhOopaLaYOqyBE-n6Ucrrf
-    qAVgzBgQU2zXev1uA>
-X-ME-Received: <xmr:nk3PZ32DgzgNOt84Z4G59zcN1zAP_4m9j34cLaN6WHdnNZ36khuHxUz6LLGJj24B8hoRtBOSLtUCYWbM2Gq00yWknBP4q11vMyQQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvddtfedvucetufdoteggodetrf
+	1741639898; x=1741726298; bh=jqYJyDm8/JH/DRtueFw72BOTrGvXtC8i8R9
+	3GUaLn18=; b=WFb6wYtgEONp2Md+xedfDvcnhP+iad/qQIGHlXhvkW/34/fqW7X
+	n+/LJUJO2Vqwj0PJiycazmHEeQpwLAIWD3mrzYoDt2YqOha0RV9IiXWGR2OueTzV
+	1HRRsjEByBaEtArJRasFfVgv2OvlGC5ekJb0CJfaP9LNMHbAV5QlCwhJQLjJetqe
+	axNf2MmdPzIs7zzvpcvYo08iIN7gvwlWohjZ9qXJ7CeNuMW/dwSB0Df1pu5bhX/d
+	ecnGe3eSYh5xwE3kT5dnQqCblxkE6hv4V0pStOLZlqgYUqcQwhYuwROoOhwUvo7v
+	M1Oj9LjQKzUhiGBHGH2hi8daOmx4mDYE89Q==
+X-ME-Sender: <xms:2lDPZzyh6KsxgjrNOKrh5OQLY8Tgg3JSB-fqaNWMCXzCJkBCBxtu3w>
+    <xme:2lDPZ7SqLiZ10wzlWOX539nGJIhQ6QIVYpbnaqDpuqzKPMoV8gtidvRYVJSQRJaod
+    9cgyfpFLKRS9_lF3g>
+X-ME-Received: <xmr:2lDPZ9W-jJz2gR7DLCeL-hbE4_EmmRFjRGk-TG2UK8bdWPnifZ5Q_DpASrQei-6ASCBdku7BlKbfAqKkroib0oZByDhsBA0088ib>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvddtfeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -61,23 +61,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvddtfedvucetufdote
     ohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheptghhrhhishhtih
     grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
     phhosghogidrtghomh
-X-ME-Proxy: <xmx:nk3PZ2C2QBrvxvYLk8DWt0KO2i9BOE6V5A35CDk2lLHSfK2Z-Qaa_g>
-    <xmx:nk3PZzirK-7SySYAve5d8UWQt-G8NZpzhs1FNnKKTfaDuq2YJoBjYw>
-    <xmx:nk3PZyrT8owrIZP6vpfQnFklgT71kX1YAL2mYKiZBAAxklbL1E3tYw>
-    <xmx:nk3PZ2g2cba-wU-cRVXv2XMTblZxWn9MpA8uBQqyPK0XfDpyAx_YfA>
-    <xmx:nk3PZ5ZZKHnl33_u1snftpK5mdJwrF0vAEUbI8oJ4TyHmOjrakikwAnm>
+X-ME-Proxy: <xmx:2lDPZ9gKoAKNwOH0xL6YshzfSFBXEMzeFvbWKZj8qElo80oA7TAxeQ>
+    <xmx:2lDPZ1ByRnMxK7c60frQTqzBysQLcO4Tw5ZDM_SsOaT9LGgIdtLesg>
+    <xmx:2lDPZ2IoWaKEksFXfZAh_LLwxnSm4AudUK0pF-XSLc1rW0Z7W2SufQ>
+    <xmx:2lDPZ0DPM-MjJ31aQ-DbEzHXMNWgvcPcsNkGEejBYFu258Cb4fVRJw>
+    <xmx:2lDPZ44ESSITGfVKsrcEPkl8AjY2g_PYxVi0w0HB8-6x977LLPPU567U>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Mar 2025 16:37:50 -0400 (EDT)
+ 10 Mar 2025 16:51:38 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org,  ps@pks.im,  christian.couder@gmail.com
-Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
-In-Reply-To: <20250310192829.661692-1-jltobler@gmail.com> (Justin Tobler's
-	message of "Mon, 10 Mar 2025 14:28:25 -0500")
+Subject: Re: [PATCH 1/4] rev-list: inline `show_object_with_name()` in
+ `show_object()`
+In-Reply-To: <20250310192829.661692-2-jltobler@gmail.com> (Justin Tobler's
+	message of "Mon, 10 Mar 2025 14:28:26 -0500")
 References: <20250310192829.661692-1-jltobler@gmail.com>
-Date: Mon, 10 Mar 2025 13:37:48 -0700
-Message-ID: <xmqq34fk7hb7.fsf@gitster.g>
+	<20250310192829.661692-2-jltobler@gmail.com>
+Date: Mon, 10 Mar 2025 13:51:37 -0700
+Message-ID: <xmqqy0xc623q.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,54 +91,42 @@ Content-Type: text/plain
 
 Justin Tobler <jltobler@gmail.com> writes:
 
->         ?<oid> [SP <token>=<value>]... LF
+> The `show_object_with_name()` function only has a single call site.
+> Inline call to `show_object_with_name()` in `show_object()` so the
+> explicit function can be cleaned up and live closer to where it is used.
+> While at it, factor out the code that prints the OID and newline for
+> both objects with and without a name. In a subsequent commit,
+> `show_object()` is modified to support printing object information in a
+> NUL-delimited format.
 >
-> where values containing LF or SP are printed in a token specific fashion
-> so that the resulting encoded value does not contain either of these two
-> problematic bytes. For example, missing object paths are quoted in the C
-> style so they contain LF or SP.
-
-"so" -> "when"???
-
-> To make machine parsing easier, this series introduces a NUL-delimited
-> output mode for git-rev-list(1) via a `-z` option following a suggestion
-> from Junio in a previous thread[1]. In this mode, instead of LF, each
-> object is delimited with two NUL bytes and any object metadata is
-> separated with a single NUL byte. Examples:
+> Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> ---
+>  builtin/rev-list.c | 13 +++++++++----
+>  revision.c         |  8 --------
+>  revision.h         |  2 --
+>  3 files changed, 9 insertions(+), 14 deletions(-)
 >
->         <oid> NUL NUL
->         <oid> [NUL <path>] NUL NUL
+> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+> index bb26bee0d4..dcd079c16c 100644
+> --- a/builtin/rev-list.c
+> +++ b/builtin/rev-list.c
+> @@ -357,10 +357,15 @@ static void show_object(struct object *obj, const char *name, void *cb_data)
+>  		return;
+>  	}
+>  
+> -	if (arg_show_object_names)
+> -		show_object_with_name(stdout, obj, name);
+> -	else
+> -		printf("%s\n", oid_to_hex(&obj->oid));
+> +	printf("%s", oid_to_hex(&obj->oid));
+> +
+> +	if (arg_show_object_names) {
+> +		putchar(' ');
+> +		for (const char *p = name; *p && *p != '\n'; p++)
+> +			putchar(*p);
+> +	}
+> +
+> +	putchar('\n');
+>  }
 
-Why do we need double-NUL in the above two cases?
-
->         ?<oid> [NUL <token>=<value>]... NUL NUL
-
-This one I understand; we could do without double-NUL and take the
-lack of "=" in the token after NUL termination as the sign that the
-previous record ended, though, to avoid double-NUL while keeping the
-format extensible.
-
-As this topic is designing essentially a new and machine parseable
-format, we could even unify all three formats into one.  For example,
-the format could be like this:
-
-	<oid> NUL [<attr>=<value> NUL]...
-
-where
-
- (1) A record ends when a new record begins.
-
- (2) The beginning of a new record is signaled by <oid> that is all
-     hexadecimal and does not have any '=' in it.
-
- (3) The traditional "rev-list --objects" output that gives path in
-     addition to the object name uses "path" as the <attr> name,
-     i.e. such a record looks like "<oid> NUL path=<path> NUL".
-
- (4) The traditional "rev-list --missing" output loses the leading
-     "?"; it is replaced by "missing" as the <attr> name, i.e. such
-     a record may look like "<oid> NUL missing=yes NUL..." together
-     with other "<token>=<value> NUL" pairs appended as needed at
-     the end.
-
-Hmm?
+Makes sense.
