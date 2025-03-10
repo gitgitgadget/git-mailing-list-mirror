@@ -1,67 +1,67 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F30A79C4
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 01:51:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B70184524
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 01:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741571463; cv=none; b=iMe5c1tgVrrKmD+QG/QH9lSXyHtrkgcl+sfxXSeVTlVDv0qhXf5BqJ299e/fsZanMzqkh28Ahv6Is1ZsbKeWQZ/5de8ZS/00VpcSW2gN/2WvnMv8kpMtHJDQaQ5hLr0pVv4aA4hgxU/y0NjM4o/MqkiePR1KBijO3Yz0P8xkZ7M=
+	t=1741571464; cv=none; b=lKu0dgqVt58v32b2OXBGJysHuaiOkpWuWSQm8txmRKaKGhhSD9OXWOyW+ROauPW06K6Q2U3/aMFJFcgxaH2jBeLUPlHpL6+qngUd9EYNH4ypr6EHdXI4g+yEpi1pu5f+fckjRryVuXYaPHr8d55gq1IgtQXB/o0WYcmI1e6mpyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741571463; c=relaxed/simple;
-	bh=rrWJiDZRa62NeWIzuBayNkgL7bKmrESBgsFekn6aSTo=;
+	s=arc-20240116; t=1741571464; c=relaxed/simple;
+	bh=sBDxmHmMJWqPY95cIw4iuPmAqnSZ1w7luG1IZrJdPhM=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=aalt4Ao1bu5K04GPm2IVjy9Cx2BdfD4nM+cm6tg0xTjuxy/FU36mKj+QXCsd7OuwtIhxIhYrvLoXweuNSF+b/Aegx59BW3+MS0iT8jmh8SGsCE5rNzPfIAHiWNP6ySBXpw+hzArRrXdiccLX9W8in/4EbeYW5hNvlYn5b/m8oJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P9zGEBNd; arc=none smtp.client-ip=209.85.208.42
+	 MIME-Version:To:Cc; b=fGYhvu/jJKnooJBWmCHEzV/DGALaM6qfKBPwBoB62qicZYa1n1j30VJMl9IloBeaI7PzUEEVkiEKtpdRNG5ge3/FPqcYv6dBAlSkP+X/fcNtqkBai+aK7GF2YjHOfGxnG+QALmnQ0MDACVFX5OhF8n+fk0M38RO8GcbQzeau5Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lGIWs8xS; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P9zGEBNd"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5e5b572e45cso6453636a12.0
-        for <git@vger.kernel.org>; Sun, 09 Mar 2025 18:51:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lGIWs8xS"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aaf900cc7fbso756569966b.3
+        for <git@vger.kernel.org>; Sun, 09 Mar 2025 18:51:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741571458; x=1742176258; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741571460; x=1742176260; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IHfJA8EakFpP4alsVHXP/A3oM0vOFjKNDNe+NK8sJOs=;
-        b=P9zGEBNdMEdEGVQeFJJAaARq3e4c+uUF/Ywzlxgc3myo1hgnaLFQSoSCFyVYl9GDF1
-         YqZsEMKHDvsjKS6YgQVqb8cYS4RGoxYBrUltcyqEsbfg4RB9xpum7VY+S1YnCnFgpEkB
-         B7vyrFA8bZ9ldwe+mEZOz2ec7zXgQnGtSLICqe8nxoPjC4seApKITo3VWF3ghlR5+V8D
-         tHnSZpulTckh1U+FY4gCGPRh7GunkfFUL1FB8RaDDTrQ+ioxrb5+sYH1zsH0XcmpAWrX
-         brukUjJFSicJo5W+QZ8TZ7Y/ApfdAXHCbtU7RlT9B88HMl9pJwEw52/ooe/r/dtbqlOp
-         ibrQ==
+        bh=AZfgU188EnQL+k3sZE2JE4F3xbk0g4OY20kDa9yr1/I=;
+        b=lGIWs8xS0WYIZqEOTPmODpT1ut4eTZQ+GMfYsgupns+607ga96Y1756Omak+z8TVgL
+         LNaVDPGgAOXL1IPOkQGxypOXrUz5mdr4wfFtCKMZN8BMXb1a0nRtkI6zq2YEUtomiTOV
+         j1wtKRCHRZRCabXQdstnarOtE1XnZK3X+QpCOcLvNeB4i0AlFzqh4i+6f9efRmN6Y+Vi
+         GJBoUz7dmYQ8ZuNzYB62M/hDi7CUtrk+tKSvXjOzq7NfIp3Rh1SIgeQruDDxUj3uMCwn
+         EpevToJsL9SCNYfL3kWm6tL8UL0H4dIiJZlYZv2JbIsG5SRrcb38VME9HRGtOab33o8h
+         0iqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741571458; x=1742176258;
+        d=1e100.net; s=20230601; t=1741571460; x=1742176260;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IHfJA8EakFpP4alsVHXP/A3oM0vOFjKNDNe+NK8sJOs=;
-        b=KdiRRhihdtd6zFJsxWZ7fLJVRdb62foQcCfE9CBAkfRFLcgllcR3yHiKXLb2MXlvmy
-         uGesve1Sm29gLzK8aStPVU+x2ykteGj9hdBVmk54TdTtLFt7KbCUpkeZLwMeTR9xO6E+
-         ZElyKZMCbbjE6I289nybSL5VT13/QCBNrSoCf3XtZukN9DgRcMtiKQUEP6LhJnYbfX06
-         6JdOiPfigMS/eWmxfkhTmY7FllLFVk0aMivdxShFDIF8RBAgzUVApr9ML6q/amqSfZVU
-         i8ZrEPdu2vYoN8Y5Cl7ZKSb9xzzhsvz6QXs+4POCYLsgx+Qq21pYVlcyqc4TOCkaYGWV
-         ioMQ==
-X-Gm-Message-State: AOJu0YzuA8xrLPLQE1QSnjqiSC7haz9U9wn4G0xGYvShSAeqxtMLyRkC
-	Z3sNoCK+IOq3bK3esKJ5ynyqsDJa6BjdbVEckRbZJvQG4FHMjC2+z4olMA==
-X-Gm-Gg: ASbGnctiPRZ6QjJbOCrwVDoa60++2ZZqWc103zDIL9dX6azmaMu3lnBZVcdyb90oAii
-	3GoxbAR6Ofo2Sz2z1vQh1xz3bgiAn34F919z0ZGG1jmW9zyoDI0UM+aNCf/XdADMwx66363J7hV
-	w9BznNpG0VdVgnoX/jD5v3wkSSPurdBZtEgqYiHTJNowX5QSWOzn0bN2cUErEZRVuxpV9gdUVn4
-	r95bY85jN3zMh8wNEzBC0IhEt7UZ4FkTcDDDANeI1g62caO3ivdODWd3U1v9rOrBSjgpWAWVUTJ
-	/YR08l/Dp1uAB2GCEnvw/PciTCaqk/IGha2FZPT8R/+1qQ==
-X-Google-Smtp-Source: AGHT+IGimGS7ezV/3xBgr+OzONlJ62q2rL9NNf1pDlo3zeTV5vc8B8097FN4WFMrZ8UmDFJBpq7AiQ==
-X-Received: by 2002:a17:907:6ea8:b0:ac2:8a59:92f4 with SMTP id a640c23a62f3a-ac28a5997fdmr515684066b.51.1741571458093;
-        Sun, 09 Mar 2025 18:50:58 -0700 (PDT)
+        bh=AZfgU188EnQL+k3sZE2JE4F3xbk0g4OY20kDa9yr1/I=;
+        b=VovMu4/dy/JJP3g/Z3QAgI5Xbo5ttesxhuwhWkk90xFJxGKJun+8ZvybtiNUvrmZe4
+         syVLkzyOR0/10J8DhGbwyqE9j21DKnrtLNVFs/aPkm0qgchb6jJPM1sPlKbVPjO1oSrK
+         h7HNgGiE/+cQ5wi2HTFZgoPzw9XBr+A8aQXiqi9pwVOd/5DfazGbfdiTMBXLEYmcpZxZ
+         RlleCBiAPQ2KtGqJ4r8S2qKTE+1W6jjf0Hiz+LUM1x/kXvRKmdS1M/yYjEQ/34w94Nzb
+         E8+ZbA4seTj0Cd7SBoJ+V2whwqC8W0EQITzbSEUXkfS3DcRr0EPxk1H9hnB6l7SUCCXT
+         j+zQ==
+X-Gm-Message-State: AOJu0YyC3ow8QMX0OXglkZV5S8AQmZYlhURioeun1H5Bzmz1fYE4wsbY
+	C0pC4OCmkoeXcmbTzPGCURT+i9mN171qizqldwszSEAAW33WALqy3eTXOw==
+X-Gm-Gg: ASbGncuSg9jzfUinTKsQnd5u+SUOd2Er4OBFTCjVwEnpfTogK9hxIi4SESqqGKf2oAS
+	vu9SS3t7dY9ufpGVG2Iui65UkkIKtHVn57Gx52gM0OYrXYkT0jy6+VnXY1QZXyRNmmaTx4daElx
+	dtuebbYddTCQAO3b8/NrB0vFQgCUFM8ku8L2pdICcX/+71v8UVA9Qu2xiLFPUf1KVKQayTpjkaF
+	pS55BMSoU7DaG3g3Ep1D/h02T2z6yGAEvM0IgRcW8+yUrAGfvlLeqA4imI3YIEQNO6EFQiRUN6N
+	Xor18C4RWkHGjK4MM7qDVY5/lpAsQVIVMB2gR4nPegYqpA==
+X-Google-Smtp-Source: AGHT+IHq2SSGDxxDEws3NG/Lr6XbNL1fUxMogOzoDkeS9NTJtAG9dEJSLYXkD0D/egfJlfiIdar2Mg==
+X-Received: by 2002:a17:907:c302:b0:ac1:fb60:2269 with SMTP id a640c23a62f3a-ac2526e5e9dmr1349026666b.27.1741571459724;
+        Sun, 09 Mar 2025 18:50:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac23973a74bsm666260766b.123.2025.03.09.18.50.57
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac24ce8f578sm567480066b.153.2025.03.09.18.50.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Mar 2025 18:50:57 -0700 (PDT)
-Message-Id: <9b31dc87bb61f4d73eced02a24baea58bc51aa5e.1741571455.git.gitgitgadget@gmail.com>
+        Sun, 09 Mar 2025 18:50:59 -0700 (PDT)
+Message-Id: <de848ebff74b3ea461d6b750454d4b50af23bedc.1741571455.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
 References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 10 Mar 2025 01:50:44 +0000
-Subject: [PATCH 02/13] pack-objects: add --path-walk option
+Date: Mon, 10 Mar 2025 01:50:46 +0000
+Subject: [PATCH 04/13] p5313: add performance tests for --path-walk
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -88,323 +88,169 @@ Cc: christian.couder@gmail.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-In order to more easily compute delta bases among objects that appear at
-the exact same path, add a --path-walk option to 'git pack-objects'.
+The previous change added a --path-walk option to 'git pack-objects'.
+Create a performance test that demonstrates the time and space benefits
+of the feature.
 
-This option will use the path-walk API instead of the object walk given
-by the revision machinery. Since objects will be provided in batches
-representing a common path, those objects can be tested for delta bases
-immediately instead of waiting for a sort of the full object list by
-name-hash. This has multiple benefits, including avoiding collisions by
-name-hash.
+In order to get an appropriate comparison, we need to avoid reusing
+deltas and recompute them from scratch.
 
-The objects marked as UNINTERESTING are included in these batches, so we
-are guaranteeing some locality to find good delta bases.
+Compare the creation of a thin pack representing a small push and the
+creation of a relatively large non-thin pack.
 
-After the individual passes are done on a per-path basis, the default
-name-hash is used to find other opportunistic delta bases that did not
-match exactly by the full path name.
+Running on my copy of the Git repository results in this data (removing
+the repack tests for --name-hash-version):
 
-The current implementation performs delta calculations while walking
-objects, which is not ideal for a few reasons. First, this will cause
-the "Enumerating objects" phase to be much longer than usual. Second, it
-does not take advantage of threading during the path-scoped delta
-calculations. Even with this lack of threading, the path-walk option is
-sometimes faster than the usual approach. Future changes will refactor
-this code to allow for threading, but that complexity is deferred until
-later to keep this patch as simple as possible.
+Test                                                     this tree
+------------------------------------------------------------------------
+5313.2: thin pack with --name-hash-version=1             0.02(0.01+0.01)
+5313.3: thin pack size with --name-hash-version=1                   1.6K
+5313.4: big pack with --name-hash-version=1              2.55(4.20+0.26)
+5313.5: big pack size with --name-hash-version=1                   16.4M
+5313.6: shallow fetch pack with --name-hash-version=1    1.24(2.03+0.08)
+5313.7: shallow pack size with --name-hash-version=1               12.2M
+5313.10: thin pack with --name-hash-version=2            0.03(0.01+0.01)
+5313.11: thin pack size with --name-hash-version=2                  1.6K
+5313.12: big pack with --name-hash-version=2             1.91(3.23+0.20)
+5313.13: big pack size with --name-hash-version=2                  16.4M
+5313.14: shallow fetch pack with --name-hash-version=2   1.06(1.57+0.10)
+5313.15: shallow pack size with --name-hash-version=2              12.5M
+5313.18: thin pack with --path-walk                      0.03(0.01+0.01)
+5313.19: thin pack size with --path-walk                            1.6K
+5313.20: big pack with --path-walk                       2.05(3.24+0.27)
+5313.21: big pack size with --path-walk                            16.3M
+5313.22: shallow fetch pack with --path-walk             1.08(1.66+0.07)
+5313.23: shallow pack size with --path-walk                        12.4M
 
-This new walk is incompatible with some features and is ignored by
-others:
+This can be reformatted as follows:
 
- * Object filters are not currently integrated with the path-walk API,
-   such as sparse-checkout or tree depth. A blobless packfile could be
-   integrated easily, but that is deferred for later.
+Pack Type            Hash v1   Hash v2     Path Walk
+---------------------------------------------------
+thin pack    (time)    0.02s      0.03s      0.03s
+             (size)    1.6K       1.6K       1.6K
+big pack     (time)    2.55s      1.91s      2.05s
+             (size)   16.4M      16.4M      16.3M
+shallow pack (time)    1.24s      1.06s      1.08s
+             (size)   12.2M      12.5M      12.4M
 
- * Server-focused features such as delta islands, shallow packs, and
-   using a bitmap index are incompatible with the path-walk API.
+Note that the timing is slower because there is no threading in the
+--path-walk case (yet). Also, the shallow pack cases are really not
+using the --path-walk logic right now because it is disabled until some
+additions are made to the path walk API.
 
- * The path walk API is only compatible with the --revs option, not
-   taking object lists or pack lists over stdin. These alternative ways
-   to specify the objects currently ignores the --path-walk option
-   without even a warning.
+The cases where the --path-walk option really shines is when the default
+name-hash is overwhelmed with collisions. An open source example can be
+found in the microsoft/fluentui repo [1] at a certain commit [2].
 
-Future changes will create performance tests that demonstrate the power
-of this approach.
+[1] https://github.com/microsoft/fluentui
+[2] e70848ebac1cd720875bccaa3026f4a9ed700e08
+
+Running the tests on this repo results in the following comparison table:
+
+Pack Type            Hash v1    Hash v2    Path Walk
+---------------------------------------------------
+thin pack    (time)    0.36s      0.12s      0.08s
+             (size)    1.2M      22.0K      18.4K
+big pack     (time)    2.00s      2.90s      2.21s
+             (size)   20.4M      25.9M      19.5M
+shallow pack (time)    1.41s      1.80s      1.65s
+             (size)   34.4M      33.7M      33.6M
+
+Notice in particular that in the small thin pack, the time performance
+has improved from 0.36s for --name-hash-version=1 to 0.08s and this is
+likely due to the improved size of the resulting pack: 18.4K instead of
+1.2M.  The relatively new --name-hash-version=2 is competitive with
+--path-walk (0.12s and 22.0K) but not quite as successful.
+
+Finally, running this on a copy of the Linux kernel repository results
+in these data points:
+
+Pack Type            Hash v1    Hash v2    Path Walk
+---------------------------------------------------
+thin pack    (time)    0.03s      0.13s      0.03s
+             (size)    4.6K       4.6K       4.6K
+big pack     (time)   15.29s     12.32s     13.92s
+             (size)  201.1M     159.1M     158.5M
+shallow pack (time)   10.88s     22.93s     22.74s
+             (size)  269.2M     273.8M     267.7M
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/git-pack-objects.adoc        |  13 +-
- Documentation/technical/api-path-walk.adoc |   1 +
- builtin/pack-objects.c                     | 147 +++++++++++++++++++--
- t/t5300-pack-object.sh                     |  15 +++
- 4 files changed, 166 insertions(+), 10 deletions(-)
+ t/perf/p5313-pack-objects.sh | 37 ++++++++++++++++++++++--------------
+ 1 file changed, 23 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/git-pack-objects.adoc b/Documentation/git-pack-objects.adoc
-index 7f69ae4855f..7dbbe6d54d2 100644
---- a/Documentation/git-pack-objects.adoc
-+++ b/Documentation/git-pack-objects.adoc
-@@ -16,7 +16,7 @@ SYNOPSIS
- 	[--cruft] [--cruft-expiration=<time>]
- 	[--stdout [--filter=<filter-spec>] | <base-name>]
- 	[--shallow] [--keep-true-parents] [--[no-]sparse]
--	[--name-hash-version=<n>] < <object-list>
-+	[--name-hash-version=<n>] [--path-walk] < <object-list>
- 
- 
- DESCRIPTION
-@@ -375,6 +375,17 @@ many different directories. At the moment, this version is not allowed
- when writing reachability bitmap files with `--write-bitmap-index` and it
- will be automatically changed to version `1`.
- 
-+--path-walk::
-+	By default, `git pack-objects` walks objects in an order that
-+	presents trees and blobs in an order unrelated to the path they
-+	appear relative to a commit's root tree. The `--path-walk` option
-+	enables a different walking algorithm that organizes trees and
-+	blobs by path. This has the potential to improve delta compression
-+	especially in the presence of filenames that cause collisions in
-+	Git's default name-hash algorithm. Due to changing how the objects
-+	are walked, this option is not compatible with `--delta-islands`,
-+	`--shallow`, or `--filter`.
-+
- 
- DELTA ISLANDS
- -------------
-diff --git a/Documentation/technical/api-path-walk.adoc b/Documentation/technical/api-path-walk.adoc
-index 3e089211fb4..e522695dd9f 100644
---- a/Documentation/technical/api-path-walk.adoc
-+++ b/Documentation/technical/api-path-walk.adoc
-@@ -69,4 +69,5 @@ Examples
- 
- See example usages in:
- 	`t/helper/test-path-walk.c`,
-+	`builtin/pack-objects.c`,
- 	`builtin/backfill.c`
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 1d0992a8dac..5596c409927 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -41,6 +41,9 @@
- #include "promisor-remote.h"
- #include "pack-mtimes.h"
- #include "parse-options.h"
-+#include "blob.h"
-+#include "tree.h"
-+#include "path-walk.h"
- 
- /*
-  * Objects we are going to pack are collected in the `to_pack` structure.
-@@ -217,6 +220,7 @@ static int delta_search_threads;
- static int pack_to_stdout;
- static int sparse;
- static int thin;
-+static int path_walk;
- static int num_preferred_base;
- static struct progress *progress_state;
- 
-@@ -4188,6 +4192,105 @@ static void mark_bitmap_preferred_tips(void)
- 	}
- }
- 
-+static inline int is_oid_interesting(struct repository *repo,
-+				     struct object_id *oid)
-+{
-+	struct object *o = lookup_object(repo, oid);
-+	return o && !(o->flags & UNINTERESTING);
-+}
-+
-+static int add_objects_by_path(const char *path,
-+			       struct oid_array *oids,
-+			       enum object_type type,
-+			       void *data)
-+{
-+	struct object_entry **delta_list;
-+	size_t oe_start = to_pack.nr_objects;
-+	size_t oe_end;
-+	unsigned int sub_list_size;
-+	unsigned int *processed = data;
-+
-+	/*
-+	 * First, add all objects to the packing data, including the ones
-+	 * marked UNINTERESTING (translated to 'exclude') as they can be
-+	 * used as delta bases.
-+	 */
-+	for (size_t i = 0; i < oids->nr; i++) {
-+		int exclude;
-+		struct object_info oi = OBJECT_INFO_INIT;
-+		struct object_id *oid = &oids->oid[i];
-+
-+		/* Skip objects that do not exist locally. */
-+		if (exclude_promisor_objects &&
-+		    oid_object_info_extended(the_repository, oid, &oi,
-+					     OBJECT_INFO_FOR_PREFETCH) < 0)
-+			continue;
-+
-+		exclude = !is_oid_interesting(the_repository, oid);
-+
-+		if (exclude && !thin)
-+			continue;
-+
-+		add_object_entry(oid, type, path, exclude);
-+	}
-+
-+	oe_end = to_pack.nr_objects;
-+
-+	/* We can skip delta calculations if it is a no-op. */
-+	if (oe_end == oe_start || !window)
-+		return 0;
-+
-+	sub_list_size = 0;
-+	ALLOC_ARRAY(delta_list, oe_end - oe_start);
-+
-+	for (size_t i = 0; i < oe_end - oe_start; i++) {
-+		struct object_entry *entry = to_pack.objects + oe_start + i;
-+
-+		if (!should_attempt_deltas(entry))
-+			continue;
-+
-+		delta_list[sub_list_size++] = entry;
-+	}
-+
-+	/*
-+	 * Find delta bases among this list of objects that all match the same
-+	 * path. This causes the delta compression to be interleaved in the
-+	 * object walk, which can lead to confusing progress indicators. This is
-+	 * also incompatible with threaded delta calculations. In the future,
-+	 * consider creating a list of regions in the full to_pack.objects array
-+	 * that could be picked up by the threaded delta computation.
-+	 */
-+	if (sub_list_size && window) {
-+		QSORT(delta_list, sub_list_size, type_size_sort);
-+		find_deltas(delta_list, &sub_list_size, window, depth, processed);
-+	}
-+
-+	free(delta_list);
-+	return 0;
-+}
-+
-+static void get_object_list_path_walk(struct rev_info *revs)
-+{
-+	struct path_walk_info info = PATH_WALK_INFO_INIT;
-+	unsigned int processed = 0;
-+
-+	info.revs = revs;
-+	info.path_fn = add_objects_by_path;
-+	info.path_fn_data = &processed;
-+	revs->tag_objects = 1;
-+
-+	/*
-+	 * Allow the --[no-]sparse option to be interesting here, if only
-+	 * for testing purposes. Paths with no interesting objects will not
-+	 * contribute to the resulting pack, but only create noisy preferred
-+	 * base objects.
-+	 */
-+	info.prune_all_uninteresting = sparse;
-+
-+	if (walk_objects_by_path(&info))
-+		die(_("failed to pack objects via path-walk"));
-+}
-+
- static void get_object_list(struct rev_info *revs, int ac, const char **av)
- {
- 	struct setup_revision_opt s_r_opt = {
-@@ -4234,7 +4337,7 @@ static void get_object_list(struct rev_info *revs, int ac, const char **av)
- 
- 	warn_on_object_refname_ambiguity = save_warning;
- 
--	if (use_bitmap_index && !get_object_list_from_bitmap(revs))
-+	if (use_bitmap_index && !path_walk && !get_object_list_from_bitmap(revs))
- 		return;
- 
- 	if (use_delta_islands)
-@@ -4243,15 +4346,19 @@ static void get_object_list(struct rev_info *revs, int ac, const char **av)
- 	if (write_bitmap_index)
- 		mark_bitmap_preferred_tips();
- 
--	if (prepare_revision_walk(revs))
--		die(_("revision walk setup failed"));
--	mark_edges_uninteresting(revs, show_edge, sparse);
--
- 	if (!fn_show_object)
- 		fn_show_object = show_object;
--	traverse_commit_list(revs,
--			     show_commit, fn_show_object,
--			     NULL);
-+
-+	if (path_walk) {
-+		get_object_list_path_walk(revs);
-+	} else {
-+		if (prepare_revision_walk(revs))
-+			die(_("revision walk setup failed"));
-+		mark_edges_uninteresting(revs, show_edge, sparse);
-+		traverse_commit_list(revs,
-+				show_commit, fn_show_object,
-+				NULL);
-+	}
- 
- 	if (unpack_unreachable_expiration) {
- 		revs->ignore_missing_links = 1;
-@@ -4461,6 +4568,8 @@ int cmd_pack_objects(int argc,
- 			 N_("use the sparse reachability algorithm")),
- 		OPT_BOOL(0, "thin", &thin,
- 			 N_("create thin packs")),
-+		OPT_BOOL(0, "path-walk", &path_walk,
-+			 N_("use the path-walk API to walk objects when possible")),
- 		OPT_BOOL(0, "shallow", &shallow,
- 			 N_("create packs suitable for shallow fetches")),
- 		OPT_BOOL(0, "honor-pack-keep", &ignore_packed_keep_on_disk,
-@@ -4546,7 +4655,27 @@ int cmd_pack_objects(int argc,
- 		window = 0;
- 
- 	strvec_push(&rp, "pack-objects");
--	if (thin) {
-+
-+	if (path_walk && filter_options.choice) {
-+		warning(_("cannot use --filter with --path-walk"));
-+		path_walk = 0;
-+	}
-+	if (path_walk && use_delta_islands) {
-+		warning(_("cannot use delta islands with --path-walk"));
-+		path_walk = 0;
-+	}
-+	if (path_walk && shallow) {
-+		warning(_("cannot use --shallow with --path-walk"));
-+		path_walk = 0;
-+	}
-+	if (path_walk) {
-+		strvec_push(&rp, "--boundary");
-+		 /*
-+		  * We must disable the bitmaps because we are removing
-+		  * the --objects / --objects-edge[-aggressive] options.
-+		  */
-+		use_bitmap_index = 0;
-+	} else if (thin) {
- 		use_internal_rev_list = 1;
- 		strvec_push(&rp, shallow
- 				? "--objects-edge-aggressive"
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 5ac8d39094b..16420d12863 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -723,4 +723,19 @@ test_expect_success '--name-hash-version=2 and --write-bitmap-index are incompat
- 	! test_grep "currently, --write-bitmap-index requires --name-hash-version=1" err
+diff --git a/t/perf/p5313-pack-objects.sh b/t/perf/p5313-pack-objects.sh
+index be5229a0ecd..cd6dd3abb71 100755
+--- a/t/perf/p5313-pack-objects.sh
++++ b/t/perf/p5313-pack-objects.sh
+@@ -25,46 +25,55 @@ test_expect_success 'create rev input' '
+ 	EOF
  '
  
-+test_expect_success '--path-walk pack everything' '
-+	git -C server rev-parse HEAD >in &&
-+	git -C server pack-objects --stdout --revs --path-walk <in >out.pack &&
-+	git -C server index-pack --stdin <out.pack
-+'
+-for version in 1 2
+-do
+-	export version
++test_all_with_args () {
++	parameter=$1
++	export parameter
+ 
+-	test_perf "thin pack with version $version" '
++	test_perf "thin pack with $parameter" '
+ 		git pack-objects --thin --stdout --revs --sparse \
+-			--name-hash-version=$version <in-thin >out
++			$parameter <in-thin >out
+ 	'
+ 
+-	test_size "thin pack size with version $version" '
++	test_size "thin pack size with $parameter" '
+ 		test_file_size out
+ 	'
+ 
+-	test_perf "big pack with version $version" '
++	test_perf "big pack with $parameter" '
+ 		git pack-objects --stdout --revs --sparse \
+-			--name-hash-version=$version <in-big >out
++			$parameter <in-big >out
+ 	'
+ 
+-	test_size "big pack size with version $version" '
++	test_size "big pack size with $parameter" '
+ 		test_file_size out
+ 	'
+ 
+-	test_perf "shallow fetch pack with version $version" '
++	test_perf "shallow fetch pack with $parameter" '
+ 		git pack-objects --stdout --revs --sparse --shallow \
+-			--name-hash-version=$version <in-shallow >out
++			$parameter <in-shallow >out
+ 	'
+ 
+-	test_size "shallow pack size with version $version" '
++	test_size "shallow pack size with $parameter" '
+ 		test_file_size out
+ 	'
++}
+ 
+-	test_perf "repack with version $version" '
++for version in 1 2
++do
++	export version
 +
-+test_expect_success '--path-walk thin pack' '
-+	cat >in <<-EOF &&
-+	$(git -C server rev-parse HEAD)
-+	^$(git -C server rev-parse HEAD~2)
-+	EOF
-+	git -C server pack-objects --thin --stdout --revs --path-walk <in >out.pack &&
-+	git -C server index-pack --fix-thin --stdin <out.pack
-+'
++	test_all_with_args --name-hash-version=$version
++
++	test_perf "repack with --name-hash-version=$version" '
+ 		git repack -adf --name-hash-version=$version
+ 	'
+ 
+-	test_size "repack size with version $version" '
++	test_size "repack size with --name-hash-version=$version" '
+ 		gitdir=$(git rev-parse --git-dir) &&
+ 		pack=$(ls $gitdir/objects/pack/pack-*.pack) &&
+ 		test_file_size "$pack"
+ 	'
+ done
+ 
++test_all_with_args --path-walk
 +
  test_done
 -- 
