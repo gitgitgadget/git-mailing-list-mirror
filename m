@@ -1,121 +1,119 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6727922759B
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 12:25:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6809D220687
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 12:34:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741609537; cv=none; b=kSioAH5tyaNWrqI+mxfvTgb1YyQoTs8ka1ZyWga+tHUycn761cwOT+vUeag2WnzARSWubmeN9ohsaSXReYWZzlnH1CIo3UW92sDqR5cEAYpGKlmM6yR6YhQ2tpl8OqKm1ikox6+ihpCRrySOc0Y8PAFeY1JOT9gvFzCuxP3kiZU=
+	t=1741610056; cv=none; b=JcENyZu6Fmv+3G+dRAtxndFX/1n4g/wSYoYaZ+oEGusVFWK7Z/ysiK/yBcRoeWwNJDfI6xn2E4UrZ4twTBxpok3LYKAXgbDPRgJz8ZlLZRwU9lz0FNVxKnXM2tA2cIu8GweLKKQnidqYIrXrn5q9vYiM4xQS0zTAKBUYrRVwUOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741609537; c=relaxed/simple;
-	bh=aMC6ZlHzTjpR48guPFjOe//31cKr9TH0s/s57vFCWXg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rXbz795sEJPHU0vXLu5rDRePfXgErf6UWBVjc4VFmIkqn/X3fdhle+72m+xDYTo43IIAbOLkR6mZp1VPK19s64ZChgJLuqBkKBabC5IKHspfbvMRv1PdCyPbqIxPJJqU4tEEAfYPolBW+PZ2OxEwGIy6u2EA6i7rXMElGTb62Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xNhrjwiK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ch2lOFMz; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741610056; c=relaxed/simple;
+	bh=Mq9gHBVp2wQJh+uj2Hgu5F9cy7lpPs/BPRb8FmWl93k=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=N1EgtvDQPBz1enaswFTIfiPtCfr24Nw24eqVQUZiNl9QMoVofbrsHSB369HhE8VOFpBHrqVwDjXdXC/V2DgAitewCL+QfjKD243kGOuwKF90iI4R11LvKQfrkbSrGh9pJp6jQWi2GxtsEK6F213npQGjgs2AhzkhYuNhA0Xr+6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HMJNTPrV; arc=none smtp.client-ip=209.85.221.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xNhrjwiK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ch2lOFMz"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5BC24114018F;
-	Mon, 10 Mar 2025 08:25:34 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Mon, 10 Mar 2025 08:25:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741609534; x=1741695934; bh=Ms85LZUSnw
-	nCnfIWrjjR8tsFwLoVJCjUDmHrhXnzXLw=; b=xNhrjwiK6n24OUqZ2FyjE/K6Iv
-	qHb1ytHz4ozqfp1A8lu/lJNBW8QRdTJiItissiXplTpibuTgp6+tMMeh3JIbpz32
-	u2Rw/xENN3gEEopdBGKPgiAXmERGZ+UJ0agWtzUYmrf9Od2BTC5jI8klBy5RFAo8
-	37VxDoo0ubJqphv5cHHPdEWN0e8qDfj8KB5F9A6DdqOVq5gXPFuE75sr+wMH+B6L
-	hAPq9ucgRZmpW3kqazOGKwGPNTd2z8GQjV8pA1kXNJiPUWDezdN0uifSPr6XZ/Ir
-	+7jDveqXUnl1P4PzwrLv3xY1gGLsge+g4/LPK6pMnaAYZLx8fGEf8l3RRUFA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741609534; x=1741695934; bh=Ms85LZUSnwnCnfIWrjjR8tsFwLoVJCjUDmH
-	rhXnzXLw=; b=ch2lOFMzLQgF7g1WlmRvWfhPgq5O/pdxNVW5OEi9Kkg3ONKb47M
-	tP+g8FoC7uPT4g3cNFSOajo6z42t0mctZhsd2VDhtr9cUeSVmclOD/sXatYlwJjt
-	ENtQsXUDovSW/s+Oxzs6LWWZIp7hDV334E3QM71aPDOury5hXhX+poI5CB86a0Z6
-	ybF/y4C78IuSw+IPjwRCdaRK+oqoViCHcLJ7N55wD0y0nyxj21tASRryZh0/EtJn
-	MsAAPrAKVMauX3mXA+nsA2tiHcJ/VaUtV4gldxDwsUIlQJn/XDOuU2z1gMWciPPu
-	s55d6ejEnbf76mDxynfqXiwiLNIfImfu4Gg==
-X-ME-Sender: <xms:PdrOZ0yXBWZvEIabHuk-6ossDyKEFhJpe4MZ8hDdIEvEb742vvkT3A>
-    <xme:PdrOZ4TPVSAZAZQe2tw8SAiHshoxriKYL-lyfNIQpTEjFDfOyb09Lh7y7bbecYTDG
-    vrvnniWYXIh9344Lw>
-X-ME-Received: <xmr:PdrOZ2VLCpp_QyPhkB_urx7VnQyOwsCCikabG-cJV1Uqrz_8-fODfILIsOg5COoYbjAUgoJSZL3614qmVH4TOS6f1Q7V6XibxT0u>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudelfeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epghhithhhuhgssegsvghnjhgrmhdrihhnfhhopdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:PdrOZyhEHjL5qfDyxyEbB71kYsNZnD_htHrRsEglv9ITY0eKaPvlVA>
-    <xmx:PdrOZ2C5Qkk511XP4YWeTc901_Ys_mal6iYydG06z5Yen2n2W625gg>
-    <xmx:PdrOZzLKW8lxRz_46hbx3PQzNnZWmLEv8idCZ3pa8ReRbOXM_h8qsA>
-    <xmx:PdrOZ9CUc2hSM4ToxNktwCHFGFThQT3MAyLWQS2BrWbJZTksMzkNgg>
-    <xmx:PtrOZ978gtE3uytqBWuOf763gtE3I-2rUswJ_nXXb224ElOmJoJ6it-O>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Mar 2025 08:25:33 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Benjamin Woodruff via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Benjamin Woodruff <github@benjam.info>
-Subject: Re: [PATCH 0/2] describe and diff: implement --no-optional-locks
-In-Reply-To: <20250309033908.GA2361799@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 8 Mar 2025 22:39:08 -0500")
-References: <pull.1872.git.1741240685.gitgitgadget@gmail.com>
-	<xmqqo6yejg0y.fsf@gitster.g>
-	<20250309033908.GA2361799@coredump.intra.peff.net>
-Date: Mon, 10 Mar 2025 05:25:32 -0700
-Message-ID: <xmqqwmcx9io3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HMJNTPrV"
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5240764f7c1so411606e0c.2
+        for <git@vger.kernel.org>; Mon, 10 Mar 2025 05:34:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741610054; x=1742214854; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7c2YFkvLSpcTWEGR3IOjqy+YJvpvhFxGzS2eoXVlFyE=;
+        b=HMJNTPrVuRbI5s0ho6UuFawiVcBkyp1nmPo6Rb37XoKxm5reLe3ztajxeUvSAMh4zf
+         r09DJ6sOgYs4DBjfFJnXp2W+2zfjxkq4BajTZVSVqKUAI6zrBX+uVwcwG+0RntHVMdfD
+         /c99ir+vPbJ6wBnD7oX/8at+nRPjWjC8dPAHhQPO12rD6AJC9IS2RHEjvNQwQ3bmpDfn
+         05hyDpfUQusoPVZGRGrAVjD4/xQKfoiI9wwIwqcUqj9zJQLxiePb+Kw8NUQKS2p8SYSz
+         Uo+mnFKA9I7oCLdVtj/gXWdlBPYN6xPPz7OoWtjjUtq/KfVPQRAZLq6vVPfSVNVmo5bB
+         GRlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741610054; x=1742214854;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7c2YFkvLSpcTWEGR3IOjqy+YJvpvhFxGzS2eoXVlFyE=;
+        b=HoAlGFJy50fuStYDpQ5grwB9lSGoHPxolS7Qgis+CXmviz6YGHilj2fCCGLnyJN3Q1
+         A3B5/wsI21wOzNwxhW3ebc7c5PoNuuEo/GyIfq9Xxy3MnmrCJu/KISWYOXYhinOc7hMI
+         Fz9DKIQk5tlx4RaC0M1jUo/CY+00uDHLRqaReqMGTC5btKEMHPWDKfpId4fTSaQMTfR6
+         6nKpKPbLynqIwtuIgiWp6Z3unxXejygpqJFSOFIefMIF4aGFeeeAyd4gacDcG0ZQWxub
+         1nbpvY4+llfS6chUSa3Jh5GiK8nC1ZgEH1IdbR+X+7XOQsMdGiHLagFLd+RMlr46brg5
+         PpCA==
+X-Forwarded-Encrypted: i=1; AJvYcCUQPO2vu3+unK0y951mc3nx6vTagxWdVKhLMqXo8pkCKQkViDTOrcu4blSJU6jdLf5mX28=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yylm9xeeigqI/TCJI44c3Xgus51yscwwYmM5gaDU5quInMNb787
+	4N9Jghu9Cn28pXH1Au/uqDZvwQYB9IS0jac9Xk2hKhueouSyXFA+mYRlC6QQuTde+LJoeEjBVZJ
+	rDLTr4Md57sYngqauL6+RdzA0l38=
+X-Gm-Gg: ASbGncsJMejw2Ec2EX7lDcQDmFcOm0az/swA0qs2tKPd0X0l68u9jnLm4XxLRHvvAtF
+	ER3avlHYB9h7oHSTtjfbcylU3HplGtS+tjjAva0LMKDOLkaeCt81md2VQGJZv9VX1SqdKE7hm1Q
+	pI1Mi64533lFm6N8FLlZJaybru
+X-Google-Smtp-Source: AGHT+IGvheRjL2enIwv89NOmLr0/aI9CIEjZiQXJCskFFgR2hBtPLQl2FMoBvUtVdFMklktIVUDA8tyZUJjM4oKjmgc=
+X-Received: by 2002:a05:6122:3c8e:b0:520:535e:89f2 with SMTP id
+ 71dfb90a1353d-523e40fd448mr8040656e0c.3.1741610054151; Mon, 10 Mar 2025
+ 05:34:14 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 10 Mar 2025 05:34:13 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ba1fbb96-ae87-40b5-814c-4fcea106f956@app.fastmail.com>
+References: <20250307-493-add-command-to-purge-reflog-entries-v1-0-84ab8529cf9e@gmail.com>
+ <ba1fbb96-ae87-40b5-814c-4fcea106f956@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Mon, 10 Mar 2025 05:34:13 -0700
+X-Gm-Features: AQ5f1JrE8kaPvArjAkyisqF4dUH9-VmsomySSdgGt24fc3vAW9PJv-Xl84jaKo8
+Message-ID: <CAOLa=ZTL3mUHKRa2cxL2jJ-SKKncB3AjQ4deJkN3k7mgTAwibw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] EDITME: cover title for 493-add-command-to-purge-reflog-entries
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000009d8dbd062ffc3010"
 
-Jeff King <peff@peff.net> writes:
+--0000000000009d8dbd062ffc3010
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> .... What
-> git-status does with --no-optional-locks is to update the index
-> internally for its _own_ use (giving it the correct results), but not to
-> lock nor write out the resulting index (to avoid conflicting with other
-> running programs). So it's pessimal (losing the opportunity to share
-> what it learned) but prevents lock contention.
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-Yup, that sounds somewhat sensible.  I also have to wonder, other
-than commands that are clearly about changing the repository state
-like "add", the inspection commands like diff and status should
-always opportunistically write the index back, without even being
-asked?
-
-> ... Either it must:
+> On Fri, Mar 7, 2025, at 12:17, Karthik Nayak wrote:
+>> This patch series adds a new 'drop' subcommand to git-reflog that allows
+>> users to delete the reflog for a specified reference. Additionally, it
+>> adds an '--all' flag to enable dropping all reflogs in a repository.
+>> This is a followup to the discussion we had when I sent in a patch to
+>> add '--no-reflog' option to 'git refs migrate' [1].
 >
->   - accept that diff-files might return stat-dirty results (yuck)
+> I=E2=80=99ve been wanting a command to drop reflogs.  I use `always` and =
+get a
+> lot of entries that I don=E2=80=99t care about.  But I don=E2=80=99t want=
+ to set it to
+> `true` because I care about some of them.
 >
->   - use its own index that is separate from the regular .git/index file.
->     But that may be overly slow, since the index "update" would rewrite
->     the whole thing from scratch. Of course all of our index writes are
->     from scratch, but you'd pay the price even when there is nothing to
->     update.
+> So this is great.
 >
->   - use a command which operates all in a single process, with an
->     in-memory index that is updated but not written out (e.g., "git
->     --no-optional-locks status").
 
+That's good to know! I was surprised that this didn't exist till date.
+
+> --
+> Kristoffer Haugsbakk
+
+--0000000000009d8dbd062ffc3010
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 72edf64a41476eb7_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mTzNFUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNHBLQy8wWkRyTW1iUDJsR0FWN3BzUFk2MDlLQjYxRAo5cGplYXZ0ZllF
+dVRDZW1kS0VlU25wRU1DcnFabm1NT1NyRSsrQXJjWWl5SENOTmlpb1Y3azljSXJMTm5rQzg5ClFx
+c3lCWllySS9XL0NpMnNTM0JTSm1KQTRrUlFxdWNOd04xYW9XT011SXFEV0ZiUFJzK3NobjFUVjZu
+dTVmTzgKMk9HNkNLd3lwTS9tV3BpNTJFdkNUMUprVTduRkVMcXBaWCtZak81VTBGMlpsaGFvQTAy
+aFNBc0hxSC9RMWxydgpNSjdTSXYyN0NBbklMd2plNCs1dXhyd0dmR3FsQzhzUXM0cDBmQ3RGcHkw
+OFBhQVBVbGt3Tmc5YU54cEVLL0tpCmRwVnpHNDJ3dlZiT2VYTHd4NHhjYkJldE0vdlZHUGVuMnNx
+WnRPb1RPeWZGM3lGTTFoOGVObmZ6N21CeU9JM2oKZ2dSM0VTUFE3c09UWFVEQmhEcDI2RW4wUE42
+dDdJbXgrcTdiRWFReVFWN2NNQjBqOXowYi8zUzQ4Ri9kK2FGUwpJY3Rzdmg4eXMvQ2lzemJHak9s
+RWgwYXBUdU5sZnpoQjhSbExqYWthYTl6aTJWK0JEVmYzTGw3ckJiaVNoeFJCCkJZc2pMUC95VHFF
+MnpMU2QzV0lhakZ3ZEp6dGFIbFRYRFJ2YVlxbz0KPTVNSTYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000009d8dbd062ffc3010--
