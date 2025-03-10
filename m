@@ -1,120 +1,96 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E98E22B8D1
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 15:59:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20382229B1D
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 16:04:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741622400; cv=none; b=UOt3A1ffjWcBOmAeBeMFB2Op/qBpRYv/KAwYxFlNDsOXK/RneelnnOzhSVts70PoDJLmdt4lIWi9Q5Alh+piibsgC75Gr/5o3LtnCRvL8/WRJMihBgFMgb9iFufij11MxsG0/N5/xF5vklRcIiQz2slFQLza1WtsmQLM5QdVEn0=
+	t=1741622692; cv=none; b=UmKkWKZCirF8/N3ANtl4WrLiDxY5B0aSJOxWnq7JSDIW1Wb7r5ZJxpEk6NLvBvW3KL3pVgqTRKEaeEONLDV9QIUa/PScFhYmWz5+lIDN7GqARCaHoAZp+3Xu2pWD24OblXZ+xFpdkndRR+o974g2IGvjBkGDp9KpYtv2NBbwBL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741622400; c=relaxed/simple;
-	bh=LdJkAvL3vG4HNm4TKKinFZTl4gMoQVm7sd+MQfMuCYI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IVObWruktpXTbPsfbVce+DJ8U86h6Y9+a2clgEvAdzsR9py3vKLefQ8+WicTU8WyfnE8b7WdderV/sRg9u8T0a5N49Vfj9NmQIh6ZdrTcXF2OR4Ki/5DADfROQtJBFAL2aN3nF9n+kPJDOCqtdRSZjGCYutciUsHhR6LJ4r+z68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qaOZw1/C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1/ylUHTO; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741622692; c=relaxed/simple;
+	bh=xc4qWwC3OseIib4xQI6eSw5tSUZMLdcEPV3zKZTPqZI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JFhmlEToVvHql6dgT91CYMoQU3/eI1u/NOj/J4Q8zbFsndBiNe+0bJ8k353y5f5uYm4JnnLhOiv4bqMYgLYZ8Gr7bhE9jHjzxkuP15C/Su6/CAOVSqtuqjHDJU4Dl3KN1Uh0rkkFeYT3sfybS3CsYAdfG/n/UxMv+nBeWA0jfcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NzNJqybr; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qaOZw1/C";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1/ylUHTO"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 517A6254017D;
-	Mon, 10 Mar 2025 11:59:57 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Mon, 10 Mar 2025 11:59:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741622397; x=1741708797; bh=Q0a0yAWxv1
-	YJl1nBi6ButPUwESmN2gX4jRNlO6uzjC0=; b=qaOZw1/CRCzX6ZDc63GikVwevM
-	dkp0MMgdrwRBUhNT1hdIq3mpngJXboX4VO8I7DDo6PcuRdv5LHJjXzk50tav0mZ7
-	yeXSfxwME4jHobBUHVvSHUSe6z3KD57ZAXj7XA7ZUqQQgASqEt/pmo+aXwubNUgr
-	cJaSnVVf6zPHPyYqFp9ec4pjgSiDqJJD4x38CxnOfAUlW4Kbxc/GaoLbua9rzzfO
-	HuZkOt8008hsHYS2Ul+ESKNsQtNNevGHrfFmWPXegjnzm2p5pHHDwxnGD1v/a7tz
-	NRv6YPdXNDGnRETPQMQHDLXmENJVdN+q6YbmY5Q2Dya2r+PwLUprh9lW0oEA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741622397; x=1741708797; bh=Q0a0yAWxv1YJl1nBi6ButPUwESmN2gX4jRN
-	lO6uzjC0=; b=1/ylUHTOh0Y+1bUkHeuSCwo52XWxZe6Nl0u6OnlfajJ4w46+S0C
-	+RN+RvzrZS6noUk3edxvfX5CEMsgXjWOHA7LWIfL6FE2/K/PBGNxO9GHTRNI7pcr
-	8ZFQlUSsL+eWV2MW12E2rusG5BGhfXByGu0kJsuKVW1NySoH8D/O93Hag2wn+s4B
-	KA409ZXKufoLi+fmBBbAHE+ifklAsnqY+Dw5XEdj1ko6xsLBw9eH3E/8JvTawBDX
-	qECsnH/+08TssrwZ2O5+hDVco9sKHtU5W7UQ9PPx03/SEeYH1cbmBtxSdOvHh7vl
-	s+3kHhYEuRriVbA5xo00keOOYLOuuAIgyqQ==
-X-ME-Sender: <xms:fAzPZ9PztJwCVjnKSnG7Kji_gVtq8n53y-3roaeiWKCWxdl81DlVAQ>
-    <xme:fAzPZ_9-lVSu_7ThZiet9n5OvMjYg_oNHboZpAYr7ZD6wEAXMJIiAoWyS61Sggu8H
-    L9oz01rjTLO7u0_8Q>
-X-ME-Received: <xmr:fAzPZ8SENIB3rWHrm8Wwes-18UKj6ntozYweEad51aSGAETu7tk3aLL1sESafQKPyvPaydwhnwfOZPzCN7T8Ii_aa77LTXtVUWl3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudeljeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghmih
-    hlhiihhiihlhhimhgvodhgihhtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:fAzPZ5sLOGeboviw-91aJOLdQ3BLabjYsyA0OqqX9NOFQpTBDRMCng>
-    <xmx:fAzPZ1f3caadm3g_SicTrDm6TqRlxGmOwm3owGq4cq2v29SgsNb1rg>
-    <xmx:fAzPZ10W2TkMfg4qTJlM30LmkmICK99JLaGWpEvswkNq4fN5zN7AxA>
-    <xmx:fAzPZx-l32FMXxn8hSN_Xplrqajh_mkHlQa2rK_ey9Yq6FArx2z-9Q>
-    <xmx:fQzPZ-GZp7Z8-C5tlHfMdZ0zFMtt2axBqdXWzQt8oE_jOLXS2n6baSkN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Mar 2025 11:59:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: emilylime via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  emilylime <emilyyyylime+git@gmail.com>
-Subject: Re: [PATCH] archive: error instead of triggering a segfault in `git
- archive --remote=""`
-In-Reply-To: <Z86WtQ-3Rk9OSmn_@pks.im> (Patrick Steinhardt's message of "Mon,
-	10 Mar 2025 08:37:25 +0100")
-References: <pull.1877.git.1741515155475.gitgitgadget@gmail.com>
-	<Z86WtQ-3Rk9OSmn_@pks.im>
-Date: Mon, 10 Mar 2025 08:59:55 -0700
-Message-ID: <xmqq7c4wanb8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NzNJqybr"
+Received: (qmail 24062 invoked by uid 109); 10 Mar 2025 16:04:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=xc4qWwC3OseIib4xQI6eSw5tSUZMLdcEPV3zKZTPqZI=; b=NzNJqybrhlzQ2vnnWg1vDgAFYxCxSu6lfSktavwWIIjuRanUyCZSKV5f2StGcuv/6llxP140DbMwaxObFToxnavZHkc5nNZ9rJcOO2F0NNKi9N4C7SlHVknRomH534jgnWuH4rXVEbksKrGg2i8IqwL3bmbvnPGEML9IezaaMK7PVG7xTCm/uqaaiZm8J15TJuv/2A0Vt2nUHVfakgwH+X6YR4cQHhGb+xVRzLbaz+0kvgLTpyM3E2pcOD0/BzjemF3XQaWNOAH9cnSjXmqaTIOKNgbfqALmNWd3zQSMcxGVrbf2lMLOBZBG+eUfxs7Vrzv+NTQ1AvqcjUtCfyWsUQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 10 Mar 2025 16:04:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29466 invoked by uid 111); 10 Mar 2025 16:04:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 10 Mar 2025 12:04:41 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 10 Mar 2025 12:04:40 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, ps@pks.im,
+	jltobler@gmail.com, phillip.wood123@gmail.com
+Subject: Re: [PATCH] config.mak.dev: enable -Wunreachable-code
+Message-ID: <20250310160440.GA26189@coredump.intra.peff.net>
+References: <20250305-245-partially-atomic-ref-updates-v3-0-0c64e3052354@gmail.com>
+ <20250305-245-partially-atomic-ref-updates-v3-6-0c64e3052354@gmail.com>
+ <20250307195057.GA3675279@coredump.intra.peff.net>
+ <xmqq34foefh8.fsf@gitster.g>
+ <20250307225444.GA42758@coredump.intra.peff.net>
+ <20250308032309.GA584028@coredump.intra.peff.net>
+ <xmqqfrjkao75.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfrjkao75.fsf@gitster.g>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Mar 10, 2025 at 08:40:46AM -0700, Junio C Hamano wrote:
 
->> +	if (remote && !remote[0]) {
->
-> Okay, so this triggers in case the user passes "--remote ''"?
-> I see that we ultimately pass the string to `remote_get()`, so does that
-> function segfault? If so, can other callers of that function segfault in
-> a similar way? In that case, we should probably address the issue deeper
-> down in the call stack.
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Fri, Mar 07, 2025 at 05:54:45PM -0500, Jeff King wrote:
+> >
+> >> However, clang does implement this option, and it finds the case
+> >> mentioned above (and no other cases within the code base). And since we
+> >> run clang in several of our CI jobs, that's enough to get an early
+> >> warning of breakage.
+> >
+> > Hmph, this might be more trouble than it is worth.
+> >
+> > After correcting the problem in the refs code, the osx CI builds (and
+> > only those) now fail with:
+> >
+> >   run-command.c:519:3: error: code will never be executed [-Werror,-Wunreachable-code]
+> >                   die_errno("sigfillset");
+> >                   ^~~~~~~~~
+> > ...
+> > I guess a knob-less version is:
+> >
+> >   errno = 0;
+> >   sigfillset(&all); /* don't check return value! only errno */
+> >   if (errno)
+> > 	die_errno("sigfillset");
+> >
+> > which is subtle, to say the least.
+> 
+> Bah.  This is just as horrible as some other warnings that are not
+> enabled by default.  I guess we should just be more vigilant X-<.
 
-A good thing to point out.  If remote_get() segfaults, that is a
-grave bug.  If remote_get() returns a NULL for such a non-existent
-remote, the code should be able to cope with it, or you found a bug.
+Yeah. We could perhaps live with hacking around this one specific spot.
+But there's an open question of how often these kinds of false positives
+will come up.
 
-In short, I agree with you that this may merely be sweeping a
-problem under a rug, not addressing a real problem.
+Maybe not often, if there is only one instance in the current code base.
+Or maybe a lot, but we wouldn't know because we haven't had the warning
+enabled.
 
-run_remote_archiver() seems to run remote_get() and use the returned
-value (which could be NULL, if you named a remote nickname that you
-do not even have) without validating when it calls transport_get(),
-so that is probably where the problem lies.  If I were writing this
-code path, I would probably make run_remote_archiver() take a pointer
-to an instance of "struct remote", moving the call to remote_get()
-to the caller's side, and deal with an error inside cmd_archive().
+I guess another option is to enable it in _one_ CI job that uses clang
+on Linux (maybe linux-sha256?) and see how often it is helpful or
+harmful.
 
-Thanks.
-
-
+-Peff
