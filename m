@@ -1,63 +1,63 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7317225410
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 09:46:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0452253F7
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 09:51:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741600005; cv=none; b=VExVi55N4XvZlRx0h8IKq7Yzpy0GUlKbnDQC5FCdXGrhtbJQayM0/n4awZURluEl3GvY7bP2NRnq5LnM6fzYm2r8NF2vP8knBXYFvKBaP36DO+V0fEGQyG+TWoM7+hQ8uPI04+auGYjbvdrcC+qJiZAzx/Qm4Ef57tuY2X7VfLQ=
+	t=1741600270; cv=none; b=qm5P0z/njZLnQzuXN+RdkJriCfSo9hZw8TWwX/rzfZP201Eli6M+B1OdCDY7TwwYTQr/Qvs6HwmtWqC9PKFw1bG4njD2VkVr/TWT0xppgr9yIs9EZ7lBS2S+qN2qQHrR15/uzBtu6ez76/o8qFbdIyOrvFmxbvNDwjzWeoMx7m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741600005; c=relaxed/simple;
-	bh=YQEDl9uKZAk+3MaG24MQlc9ZTwYlf4ZUS4EfY6ETPjE=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=YX2yZe3SWebIxWuSjfUDFrkaK1ZOcuPnEoscw1INMTuT1112u5qSEQFjMTkHCw8tkFXngpzw0tvF92TcLze85oPHDBdGorYasMfl57A4AxE56V6YwT05CB/g44QVgetvSqGIfcuqw04nbKHL27OiV/tcKXhz6mNeHtTL3PtQ+M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uc2dygHT; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1741600270; c=relaxed/simple;
+	bh=7kbPunVOR6ujw2txjtLCnvvIEzZ4Wlz96U5oH9vNTmk=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=b21Mo5LmiTtW3EzdRmY+X+NK7O9cx4FNF+ctMXpFhPoBTbXeIiSPR2XRlweXp9YAH/an/+bDZTG9MUG8sC90HglYI9Rz77NYnYKmBT8e8AgTBoWeFL4fohq7vpX/DI8saoaWH1u7CFF3msL2GbDRPwgZPu2q0sTblX1SfG8idHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j1HLEbxq; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uc2dygHT"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-224341bbc1dso39027215ad.3
-        for <git@vger.kernel.org>; Mon, 10 Mar 2025 02:46:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j1HLEbxq"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-22435603572so33335575ad.1
+        for <git@vger.kernel.org>; Mon, 10 Mar 2025 02:51:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741600003; x=1742204803; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741600268; x=1742205068; darn=vger.kernel.org;
         h=content-transfer-encoding:subject:from:to:content-language
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sh4IBdzzZb0y//lhl/Cank6u0KB+JotzYw+IsbspWcU=;
-        b=Uc2dygHT/ckEva3w8wbu7VevWj60WQwnZB+lhMblSlYjUuoWBeh7gDULt6DJ2/33Ts
-         ee7SXRVVqWRsF/AREn/bRcHaGH2yMRA4aIBwzEgAnkEcODVmICL1vioW9mey6sqPmAa8
-         yWzPqV8TmVTkvA5elDzZ2PN2M/gi45MyQpVv9JP9Ql8LW9UjT8EnhbTslfWgj1BMKDIp
-         CZ1Vj7qgPx2DnFMn0n+cpfWJbzv86i9olVA3vuBHCcSt6zupagHElZebDq9d3epRPu8f
-         zJ88qUNHpjLiemtlYCwUooRNjgPjk1o7WKmjjU4Y3nF9t/RJNmTziOBwy1hKol31Gux2
-         pnwg==
+        bh=Cc1zUtOnpqjuyjqC5ggNxAOl8cibiBaD9VXDRF3fm1E=;
+        b=j1HLEbxqjAgVp5eKRvzSYfO7ggExbVt1d0q5KsPowovQ6tiY+lPnN2gXt7VGrVjR6Q
+         0U7LsVZUyl+MxWWVUHcsXcLhhpsUVrIRAzpodfeUE11IUC9D7cxAAu3bNCyyDxg3QoOB
+         qYbKElJA11yqYWYnIgbGGtwnvjAc1G7NuEBtc0Ak8zhSYuvoUdAWgtfLpQgCrURJJ7Xe
+         4dl6Il1lxHJjbWDdPOuaIT51sH3H1XkcljUFbd/2aFw/y2DtgC1H0lL6qcunr9kfydOU
+         EpqbXLo1mh+Ytj6aO2No8NC7SB7QUTcO5MdgIUvQ1anZ4a2yu6lA57eftb/rQ2KZlzck
+         Hd7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741600003; x=1742204803;
+        d=1e100.net; s=20230601; t=1741600268; x=1742205068;
         h=content-transfer-encoding:subject:from:to:content-language
          :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=sh4IBdzzZb0y//lhl/Cank6u0KB+JotzYw+IsbspWcU=;
-        b=E6mDAHCJEdwK8QYlm65xq3zkFSJxlDjApVGSvl6uymhipWznk18PRnUPMI7TYj53jz
-         mdT9wCzPIOB5zBh2zV7lObKwlXGMK+LGlfG4PO+vwoKQiTkw5cMEzIAVCdFhmEW6vQ1H
-         q5MXF/miZCg/8YVlyEaX3+5LIHaGOjuRu2kTvmLNIK1Dl9JTZZ3dXXAUJm754EvaETSP
-         YL5w/K1gr7vdc4w2tXim21TjIZgKSN91waKsM6z77FVlFkiBkefvOtYjW9YJmNi5v7vf
-         HhumPohYKfELJqTRv2xALNTn1VHYCAxPwOfEnBg1XL6ABRGHCW1N4PAk8Evi0p8lHxRS
-         pfrA==
-X-Gm-Message-State: AOJu0Yz9VypSu3TAKlaUF444Hj6fh/NUXaSs4GmXmkYU+GWjTMyKMN6E
-	jkr5l6Oj717vSyK8aPcQYD+d+C5XN8fmAFkPYg5CErIA/bqj7jnUMG9jAQ==
-X-Gm-Gg: ASbGncv+zKQCFSgVsadYU4BhqMG840tauhlTwF/TcIblf/X7XO63MDlA9g/oZEk4BHi
-	0vdESgi8l4AMEKOSc3laBO1mazWCrLz65Tn54e75xwCXiiBpjPfLYBqTM7dMi+o+ETe3Y2l9G9V
-	lVH6CNcGXoYTtWYO0djoJn9YaQXXB5XiIrhOvh8VpCohuLonGHNmUkLh9knTGQQK9kvTlelx7/U
-	oOZkls17PsOSwV3YU+hNgxZMdiSDOvE72bM2mReUNC4R18K+PMClbHUkDhfa51dKGAk4axJAub0
-	bsPw5AbDG1PCvV85VfSoSn4O7MAnPDLogIMQW1gvgekf79w+uw==
-X-Google-Smtp-Source: AGHT+IG3fqBhHj97Mkn1Ci8qCyjMBMGro71zsZuY7PkFKJirk4omhMDRTyt27kqvXEstPB7mL8vN3A==
-X-Received: by 2002:a05:6a21:4613:b0:1f5:67c2:e3f4 with SMTP id adf61e73a8af0-1f567c2e5ebmr11052982637.30.1741600002726;
-        Mon, 10 Mar 2025 02:46:42 -0700 (PDT)
+        bh=Cc1zUtOnpqjuyjqC5ggNxAOl8cibiBaD9VXDRF3fm1E=;
+        b=C4ahI+02CCZ1m2QhLKs94Kh9selGTc3wXCn4H0EFJzJiQJuidXj2qNQvkJwaqhS8qA
+         eVwA3VQ+qj4qGO1c0YMScRuQ0qtHyx6+VbarXHCWkL860dUZmm2qwF7HTOd3X60rmRjD
+         TUU0e6Q6DjLzYZdL/ERQDbCWXxMutCy4ntzI1w8s5fbXNKW7oV8wjCvL1uiLPee9F0PQ
+         wDgYQFiMtm6omaVffmQMq6UP61j7k/XKYE7LYVuA+I+BkChfifpr5U9YpMUd+IzRDQj+
+         a6RdoypJxJH+J0/nsJNxmSkb939n8GEUwO15aS/TPW6VYXkbKLOtDC4qKqB5jka83qlO
+         yAig==
+X-Gm-Message-State: AOJu0Yw4QftXYoiFLJrfobUPSOz0UtjdPpY6EtITr99rvly6Elz+X6Bk
+	AbJu2O6aIQrJuBG/oLL5oJ70/iQsHIUxAekFdaASpM+YUkrTtIWzMq1/JQ==
+X-Gm-Gg: ASbGncu01ayzuVo7mG8ydEQmCueP0lyO9iPNOUREgKdF0fKb8sAjE5KHPTsyxmZFoew
+	dLdA3gSgReH2g/QIAHgV7L/4Jq0wLpuY1LU6u1uTeb8icSYy76DCPTpf4gEAgiBKXXAREQ8Az4n
+	thwnK3vZc6KCWNT6cjWtDCLjmf0TkfMqntGrAcqzHQ5b76peEKhROS+VKalZo7FLJC0zykQit0o
+	5p38UutIxKZnW+psqVcg201JOWw0QIwsA0p5rb1FoP2H5/00jxrl9AoGzYf6fG+3bQmCnnbXULB
+	/YabXp8eGUCpzAZHL9KlvqUp93Va1WU74cfFXwuaR8hFiIDlmg==
+X-Google-Smtp-Source: AGHT+IGOsLSPTXHehISnDQMETptgqFcYaL4R34gGfR3GYKA4L7laV2T2rbLLSjVgWAe60BKUgsDcMw==
+X-Received: by 2002:a17:902:ce0a:b0:220:cb1a:da5 with SMTP id d9443c01a7336-22428c075e3mr242154665ad.40.1741600267660;
+        Mon, 10 Mar 2025 02:51:07 -0700 (PDT)
 Received: from [10.61.111.37] ([103.21.124.55])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7369d4b978asm7532481b3a.28.2025.03.10.02.46.41
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22410a91d4esm73610295ad.198.2025.03.10.02.51.06
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Mar 2025 02:46:42 -0700 (PDT)
-Message-ID: <ff10a962-57c6-4603-a739-f4e068886820@gmail.com>
-Date: Mon, 10 Mar 2025 15:16:46 +0530
+        Mon, 10 Mar 2025 02:51:07 -0700 (PDT)
+Message-ID: <afa6b428-3190-42ae-9eac-540c95b576fd@gmail.com>
+Date: Mon, 10 Mar 2025 15:21:11 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,28 +68,50 @@ User-Agent: Mozilla Thunderbird
 Content-Language: en-US
 To: git@vger.kernel.org
 From: Arnav Bhate <bhatearnav@gmail.com>
-Subject: [GSoC] Introduction and Microproject
+Subject: [GSoC PATCH] decorate: fix sign comparison warnings
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hello everyone,
+In two instances, an int was initialized and assigned the value of an
+unsigned int. Then, the int was compared to unsigned ints.
 
-I'm Arnav Bhate, currently in my second year of undergrad and a first-time GSoC
-applicant. I've been interested in contributing to the open source community
-for a while now, but never had the confidence to participate before. I'm using
-GSoC as an opportunity to start contributing, and I will continue after as
-well.
+Replace int with unsigned int in both cases.
 
-I've decided to do the 'Fix Sign Comparison Warnings in Git's Codebase'
-microproject, and I already have a patch for decorate.c ready, which I will
-send soon. Since, it is a rather small file, there was not much to fix and I
-will work on more files.
+Signed-off-by: Arnav Bhate <bhatearnav@gmail.com>
+---
+ decorate.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-As it is my first time collaborating through such a workflow, or on a project
-of such scale, I hope you will provide your guidance and tell me if I make
-mistakes.
+diff --git a/decorate.c b/decorate.c
+index e161e13772..8d5774fcdd 100644
+--- a/decorate.c
++++ b/decorate.c
+@@ -3,8 +3,6 @@
+  * data.
+  */
+ 
+-#define DISABLE_SIGN_COMPARE_WARNINGS
+-
+ #include "git-compat-util.h"
+ #include "object.h"
+ #include "decorate.h"
+@@ -16,7 +14,7 @@ static unsigned int hash_obj(const struct object *obj, unsigned int n)
+ 
+ static void *insert_decoration(struct decoration *n, const struct object *base, void *decoration)
+ {
+-	int size = n->size;
++	unsigned int size = n->size;
+ 	struct decoration_entry *entries = n->entries;
+ 	unsigned int j = hash_obj(base, size);
+ 
+@@ -59,7 +57,7 @@ static void grow_decoration(struct decoration *n)
+ void *add_decoration(struct decoration *n, const struct object *obj,
+ 		void *decoration)
+ {
+-	int nr = n->nr + 1;
++	unsigned int nr = n->nr + 1;
+ 
+ 	if (nr > n->size * 2 / 3)
+ 		grow_decoration(n);
 -- 
-Regards,
-Arnav Bhate
-(He/Him)
-
+2.48.1
