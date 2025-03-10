@@ -1,67 +1,67 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B70184524
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 01:51:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE05190674
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 01:51:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741571464; cv=none; b=lKu0dgqVt58v32b2OXBGJysHuaiOkpWuWSQm8txmRKaKGhhSD9OXWOyW+ROauPW06K6Q2U3/aMFJFcgxaH2jBeLUPlHpL6+qngUd9EYNH4ypr6EHdXI4g+yEpi1pu5f+fckjRryVuXYaPHr8d55gq1IgtQXB/o0WYcmI1e6mpyM=
+	t=1741571465; cv=none; b=ZMp1OqJp+6YpFMIbOKKxIXro1FRppvYUinNVSVb7ZSNdUClzskXL/Hol2POalWWq7R4ypoV1TpH4w8dAUyGDNsDjqy0wbCZ7C/SSk6xSMKigHqKpIWcXuTub2obxnBrJmPhiwVjjgxdn5fIWfI145DMLLhiV8dOl22TIr9waB3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741571464; c=relaxed/simple;
-	bh=sBDxmHmMJWqPY95cIw4iuPmAqnSZ1w7luG1IZrJdPhM=;
+	s=arc-20240116; t=1741571465; c=relaxed/simple;
+	bh=nlUI0ABCQsibVHOq/5euLOYgQNpTrN2MpbxFeSrmW/s=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=fGYhvu/jJKnooJBWmCHEzV/DGALaM6qfKBPwBoB62qicZYa1n1j30VJMl9IloBeaI7PzUEEVkiEKtpdRNG5ge3/FPqcYv6dBAlSkP+X/fcNtqkBai+aK7GF2YjHOfGxnG+QALmnQ0MDACVFX5OhF8n+fk0M38RO8GcbQzeau5Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lGIWs8xS; arc=none smtp.client-ip=209.85.218.52
+	 MIME-Version:To:Cc; b=GV6T8RsDFcXDuQGNciMFrWkha3pc8K74423XvDLqnsRB+QKfA5t6G4XreqYaeuk4tL53xkVx2XVP2bxbYL05Eb+fFUo1sSuiv3Y+jYMAoU2fRkDouXXX/M6kua8MDgdGay9gpz5VFQRouDJYsU5HAsuffq4H9GSRJUAyv6Zr+yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ncbihFV6; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lGIWs8xS"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aaf900cc7fbso756569966b.3
-        for <git@vger.kernel.org>; Sun, 09 Mar 2025 18:51:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ncbihFV6"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-abfe7b5fbe8so543086066b.0
+        for <git@vger.kernel.org>; Sun, 09 Mar 2025 18:51:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741571460; x=1742176260; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741571461; x=1742176261; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AZfgU188EnQL+k3sZE2JE4F3xbk0g4OY20kDa9yr1/I=;
-        b=lGIWs8xS0WYIZqEOTPmODpT1ut4eTZQ+GMfYsgupns+607ga96Y1756Omak+z8TVgL
-         LNaVDPGgAOXL1IPOkQGxypOXrUz5mdr4wfFtCKMZN8BMXb1a0nRtkI6zq2YEUtomiTOV
-         j1wtKRCHRZRCabXQdstnarOtE1XnZK3X+QpCOcLvNeB4i0AlFzqh4i+6f9efRmN6Y+Vi
-         GJBoUz7dmYQ8ZuNzYB62M/hDi7CUtrk+tKSvXjOzq7NfIp3Rh1SIgeQruDDxUj3uMCwn
-         EpevToJsL9SCNYfL3kWm6tL8UL0H4dIiJZlYZv2JbIsG5SRrcb38VME9HRGtOab33o8h
-         0iqw==
+        bh=upOV+Ni5f0v+0t/cclecq8DthtiSYqTCyAODw4CnCgM=;
+        b=ncbihFV63JPYUo2vK5FwyH13NuJd4cbaFtTKIQQdz0p4liIR0DgrZE0wtSbQ7teSLW
+         Mv2VgZSPxWVcBW+jOudx/C2bmeo3f/CWE7KcV26HnDGw7EMZZJVj1rUCwTB1Fb6U4dL8
+         fF6v9RUSBW3XTJxstMNP/A1i+aF04ozf9dgb11oZIiiZIByFuZ3qshYafchKxvOkAUEc
+         uM5JclwqrZ9rIa3A2/ernE52rGr02AY+jHfT2LGanC83Q2f+y+lTPvboJNaTy9S5l8kL
+         GrvlGHuCeJzViRXgsITUDgQO1Ysf0Kk8gUmmyeTf1ZbDA2qwy/OR8JBo52FhrNeAN7HZ
+         qPxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741571460; x=1742176260;
+        d=1e100.net; s=20230601; t=1741571461; x=1742176261;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AZfgU188EnQL+k3sZE2JE4F3xbk0g4OY20kDa9yr1/I=;
-        b=VovMu4/dy/JJP3g/Z3QAgI5Xbo5ttesxhuwhWkk90xFJxGKJun+8ZvybtiNUvrmZe4
-         syVLkzyOR0/10J8DhGbwyqE9j21DKnrtLNVFs/aPkm0qgchb6jJPM1sPlKbVPjO1oSrK
-         h7HNgGiE/+cQ5wi2HTFZgoPzw9XBr+A8aQXiqi9pwVOd/5DfazGbfdiTMBXLEYmcpZxZ
-         RlleCBiAPQ2KtGqJ4r8S2qKTE+1W6jjf0Hiz+LUM1x/kXvRKmdS1M/yYjEQ/34w94Nzb
-         E8+ZbA4seTj0Cd7SBoJ+V2whwqC8W0EQITzbSEUXkfS3DcRr0EPxk1H9hnB6l7SUCCXT
-         j+zQ==
-X-Gm-Message-State: AOJu0YyC3ow8QMX0OXglkZV5S8AQmZYlhURioeun1H5Bzmz1fYE4wsbY
-	C0pC4OCmkoeXcmbTzPGCURT+i9mN171qizqldwszSEAAW33WALqy3eTXOw==
-X-Gm-Gg: ASbGncuSg9jzfUinTKsQnd5u+SUOd2Er4OBFTCjVwEnpfTogK9hxIi4SESqqGKf2oAS
-	vu9SS3t7dY9ufpGVG2Iui65UkkIKtHVn57Gx52gM0OYrXYkT0jy6+VnXY1QZXyRNmmaTx4daElx
-	dtuebbYddTCQAO3b8/NrB0vFQgCUFM8ku8L2pdICcX/+71v8UVA9Qu2xiLFPUf1KVKQayTpjkaF
-	pS55BMSoU7DaG3g3Ep1D/h02T2z6yGAEvM0IgRcW8+yUrAGfvlLeqA4imI3YIEQNO6EFQiRUN6N
-	Xor18C4RWkHGjK4MM7qDVY5/lpAsQVIVMB2gR4nPegYqpA==
-X-Google-Smtp-Source: AGHT+IHq2SSGDxxDEws3NG/Lr6XbNL1fUxMogOzoDkeS9NTJtAG9dEJSLYXkD0D/egfJlfiIdar2Mg==
-X-Received: by 2002:a17:907:c302:b0:ac1:fb60:2269 with SMTP id a640c23a62f3a-ac2526e5e9dmr1349026666b.27.1741571459724;
-        Sun, 09 Mar 2025 18:50:59 -0700 (PDT)
+        bh=upOV+Ni5f0v+0t/cclecq8DthtiSYqTCyAODw4CnCgM=;
+        b=IKaKt6ZXfJzr+balVEx4ZCZtEKcmSXPIoK+5GmvguJs5lDxClm+SJFqnVbAtDB7m6N
+         vYYaVBfRI5GiokB7qN3octrvoeZf6c/MHyu+8c4bko94yeokjZkqQefvKSssExexOS+N
+         1y5v0oGfibFegVJIMdgtXCiS1t+mKgaXRrXvG4ZGklkDoY8t5tPEiZYVG0u/WbokUek6
+         cHIMFwyejeRmcXK0ttE0eaGIEJ8mrhPjYrUZre+f4hEMsLlXZNPd9U7NJkQrjnScdmkt
+         gkVnh4y2bdqRnfd36l+Iq4m6o2ABxUHFG6a7JC/5JwlrkquYf8od+BL9AqrqAIng+a9P
+         SlSg==
+X-Gm-Message-State: AOJu0YwiPrN6hdwdP6MVrfkjdQZ2QjxR5zm08pQ/ouk2G99XLHT7uGqM
+	LNYClwZDFxBgULrOpq/z2ygg8PdGrrE9loPspvgTi3OhYlL8rbkMajFYsA==
+X-Gm-Gg: ASbGncs3Upu1pXc7qldFk+UbP5eDrG3Twnsf34vRuCUzJCu4Y3Lma/ZZbVBsvbMLDeI
+	K019L1q4bRYRa3/mL/FdL3l4CLvqO/VPHXKDj94/BULyJmrUyaCs1Coi56DlhbCkbXYcG5f97yG
+	ZknqaKW0rg1yKKwe5TnIgdsixC24TsNFaGIIXVRVdxCZbYJSHqgsmFrC75NZxNJxdJWaFtGrDE7
+	vruT/KXLeHcuemMiaZ0q0SgvlmBuRaJgdV17194ROJAcqSFL4/1cT5Se63+bcgEO7gKyxQQtITU
+	qrs2gLsDoatQE6kg/YH+u2c03iu5W0IBVa19xinWKntVUe+VKhZIk8Ts
+X-Google-Smtp-Source: AGHT+IGFsTT/bNUBD9U+SgTeTR8mod3/a1TCyZsMOlMP+Q8jJqYqhhuNCknRSSDhGkwavL7q6hFutw==
+X-Received: by 2002:a05:6402:270f:b0:5de:dfde:c8b1 with SMTP id 4fb4d7f45d1cf-5e5e229de50mr27823782a12.4.1741571461264;
+        Sun, 09 Mar 2025 18:51:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac24ce8f578sm567480066b.153.2025.03.09.18.50.59
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac2a54c3c25sm52342966b.118.2025.03.09.18.51.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Mar 2025 18:50:59 -0700 (PDT)
-Message-Id: <de848ebff74b3ea461d6b750454d4b50af23bedc.1741571455.git.gitgitgadget@gmail.com>
+        Sun, 09 Mar 2025 18:51:00 -0700 (PDT)
+Message-Id: <cfee2136e92832cb3fb4e90e016d5d71034ea9a6.1741571455.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
 References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 10 Mar 2025 01:50:46 +0000
-Subject: [PATCH 04/13] p5313: add performance tests for --path-walk
+Date: Mon, 10 Mar 2025 01:50:48 +0000
+Subject: [PATCH 06/13] t5538: add tests to confirm deltas in shallow pushes
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -88,169 +88,58 @@ Cc: christian.couder@gmail.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-The previous change added a --path-walk option to 'git pack-objects'.
-Create a performance test that demonstrates the time and space benefits
-of the feature.
-
-In order to get an appropriate comparison, we need to avoid reusing
-deltas and recompute them from scratch.
-
-Compare the creation of a thin pack representing a small push and the
-creation of a relatively large non-thin pack.
-
-Running on my copy of the Git repository results in this data (removing
-the repack tests for --name-hash-version):
-
-Test                                                     this tree
-------------------------------------------------------------------------
-5313.2: thin pack with --name-hash-version=1             0.02(0.01+0.01)
-5313.3: thin pack size with --name-hash-version=1                   1.6K
-5313.4: big pack with --name-hash-version=1              2.55(4.20+0.26)
-5313.5: big pack size with --name-hash-version=1                   16.4M
-5313.6: shallow fetch pack with --name-hash-version=1    1.24(2.03+0.08)
-5313.7: shallow pack size with --name-hash-version=1               12.2M
-5313.10: thin pack with --name-hash-version=2            0.03(0.01+0.01)
-5313.11: thin pack size with --name-hash-version=2                  1.6K
-5313.12: big pack with --name-hash-version=2             1.91(3.23+0.20)
-5313.13: big pack size with --name-hash-version=2                  16.4M
-5313.14: shallow fetch pack with --name-hash-version=2   1.06(1.57+0.10)
-5313.15: shallow pack size with --name-hash-version=2              12.5M
-5313.18: thin pack with --path-walk                      0.03(0.01+0.01)
-5313.19: thin pack size with --path-walk                            1.6K
-5313.20: big pack with --path-walk                       2.05(3.24+0.27)
-5313.21: big pack size with --path-walk                            16.3M
-5313.22: shallow fetch pack with --path-walk             1.08(1.66+0.07)
-5313.23: shallow pack size with --path-walk                        12.4M
-
-This can be reformatted as follows:
-
-Pack Type            Hash v1   Hash v2     Path Walk
----------------------------------------------------
-thin pack    (time)    0.02s      0.03s      0.03s
-             (size)    1.6K       1.6K       1.6K
-big pack     (time)    2.55s      1.91s      2.05s
-             (size)   16.4M      16.4M      16.3M
-shallow pack (time)    1.24s      1.06s      1.08s
-             (size)   12.2M      12.5M      12.4M
-
-Note that the timing is slower because there is no threading in the
---path-walk case (yet). Also, the shallow pack cases are really not
-using the --path-walk logic right now because it is disabled until some
-additions are made to the path walk API.
-
-The cases where the --path-walk option really shines is when the default
-name-hash is overwhelmed with collisions. An open source example can be
-found in the microsoft/fluentui repo [1] at a certain commit [2].
-
-[1] https://github.com/microsoft/fluentui
-[2] e70848ebac1cd720875bccaa3026f4a9ed700e08
-
-Running the tests on this repo results in the following comparison table:
-
-Pack Type            Hash v1    Hash v2    Path Walk
----------------------------------------------------
-thin pack    (time)    0.36s      0.12s      0.08s
-             (size)    1.2M      22.0K      18.4K
-big pack     (time)    2.00s      2.90s      2.21s
-             (size)   20.4M      25.9M      19.5M
-shallow pack (time)    1.41s      1.80s      1.65s
-             (size)   34.4M      33.7M      33.6M
-
-Notice in particular that in the small thin pack, the time performance
-has improved from 0.36s for --name-hash-version=1 to 0.08s and this is
-likely due to the improved size of the resulting pack: 18.4K instead of
-1.2M.  The relatively new --name-hash-version=2 is competitive with
---path-walk (0.12s and 22.0K) but not quite as successful.
-
-Finally, running this on a copy of the Linux kernel repository results
-in these data points:
-
-Pack Type            Hash v1    Hash v2    Path Walk
----------------------------------------------------
-thin pack    (time)    0.03s      0.13s      0.03s
-             (size)    4.6K       4.6K       4.6K
-big pack     (time)   15.29s     12.32s     13.92s
-             (size)  201.1M     159.1M     158.5M
-shallow pack (time)   10.88s     22.93s     22.74s
-             (size)  269.2M     273.8M     267.7M
+It can be notoriously difficult to detect if delta bases are being
+computed properly during 'git push'. Construct an example where it will
+make a kilobyte worth of difference when a delta base is not found. We
+can then use the progress indicators to distinguish between bytes and
+KiB depending on whether the delta base is found and used.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- t/perf/p5313-pack-objects.sh | 37 ++++++++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ t/t5538-push-shallow.sh | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/t/perf/p5313-pack-objects.sh b/t/perf/p5313-pack-objects.sh
-index be5229a0ecd..cd6dd3abb71 100755
---- a/t/perf/p5313-pack-objects.sh
-+++ b/t/perf/p5313-pack-objects.sh
-@@ -25,46 +25,55 @@ test_expect_success 'create rev input' '
- 	EOF
+diff --git a/t/t5538-push-shallow.sh b/t/t5538-push-shallow.sh
+index e91fcc173e8..11b85cca9e8 100755
+--- a/t/t5538-push-shallow.sh
++++ b/t/t5538-push-shallow.sh
+@@ -123,4 +123,38 @@ EOF
+ 	git cat-file blob $(echo 1|git hash-object --stdin) >/dev/null
+ 	)
  '
- 
--for version in 1 2
--do
--	export version
-+test_all_with_args () {
-+	parameter=$1
-+	export parameter
- 
--	test_perf "thin pack with version $version" '
-+	test_perf "thin pack with $parameter" '
- 		git pack-objects --thin --stdout --revs --sparse \
--			--name-hash-version=$version <in-thin >out
-+			$parameter <in-thin >out
- 	'
- 
--	test_size "thin pack size with version $version" '
-+	test_size "thin pack size with $parameter" '
- 		test_file_size out
- 	'
- 
--	test_perf "big pack with version $version" '
-+	test_perf "big pack with $parameter" '
- 		git pack-objects --stdout --revs --sparse \
--			--name-hash-version=$version <in-big >out
-+			$parameter <in-big >out
- 	'
- 
--	test_size "big pack size with version $version" '
-+	test_size "big pack size with $parameter" '
- 		test_file_size out
- 	'
- 
--	test_perf "shallow fetch pack with version $version" '
-+	test_perf "shallow fetch pack with $parameter" '
- 		git pack-objects --stdout --revs --sparse --shallow \
--			--name-hash-version=$version <in-shallow >out
-+			$parameter <in-shallow >out
- 	'
- 
--	test_size "shallow pack size with version $version" '
-+	test_size "shallow pack size with $parameter" '
- 		test_file_size out
- 	'
-+}
- 
--	test_perf "repack with version $version" '
-+for version in 1 2
-+do
-+	export version
 +
-+	test_all_with_args --name-hash-version=$version
++test_expect_success 'push new commit from shallow clone has correct object count' '
++	git init origin &&
++	test_commit -C origin a &&
++	test_commit -C origin b &&
 +
-+	test_perf "repack with --name-hash-version=$version" '
- 		git repack -adf --name-hash-version=$version
- 	'
- 
--	test_size "repack size with version $version" '
-+	test_size "repack size with --name-hash-version=$version" '
- 		gitdir=$(git rev-parse --git-dir) &&
- 		pack=$(ls $gitdir/objects/pack/pack-*.pack) &&
- 		test_file_size "$pack"
- 	'
- done
- 
-+test_all_with_args --path-walk
++	git clone --depth=1 "file://$(pwd)/origin" client &&
++	git -C client checkout -b topic &&
++	git -C client commit --allow-empty -m "empty" &&
++	GIT_PROGRESS_DELAY=0 git -C client push --progress origin topic 2>err &&
++	test_grep "Enumerating objects: 1, done." err
++'
++
++test_expect_success 'push new commit from shallow clone has good deltas' '
++	git init base &&
++	test_seq 1 999 >base/a &&
++	test_commit -C base initial &&
++	git -C base add a &&
++	git -C base commit -m "big a" &&
++
++	git clone --depth=1 "file://$(pwd)/base" deltas &&
++	git -C deltas checkout -b deltas &&
++	test_seq 1 1000 >deltas/a &&
++	git -C deltas commit -a -m "bigger a" &&
++	GIT_TRACE2_PERF="$(pwd)/trace.txt" \
++	GIT_PROGRESS_DELAY=0 git -C deltas push --progress origin deltas 2>err &&
++
++	test_grep "Enumerating objects: 5, done" err &&
++
++	# If the delta base is found, then this message uses "bytes".
++	# If the delta base is not found, then this message uses "KiB".
++	test_grep "Writing objects: .* bytes" err
++'
 +
  test_done
 -- 
