@@ -1,68 +1,72 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB6B22318
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 19:32:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF5C15B971
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 19:32:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741635134; cv=none; b=KbMESwUY3zAyAqO+P666l1Qgk0BfxGK8ZnhvqfoHykDQX9V70HrCS/jgoT4VSOgKAXV1KjEGE1IVjPhveTfGoxOHC447bXKVp5/GvsKIRa73v9Q/pHF8LV8i2AoswzV/o/MugittocgkY/7+ph5MrxnH1r4xP0P9/lc81YD2M24=
+	t=1741635135; cv=none; b=orOir1K17oYk9L5ItYyudY/XDEDyJV7onXvoNp/VVXQE1VStBn1rOPqi9gOJQv/a49EGzAakGZ87oVtTZV9qhdFUyX2773aK3IfLqd/sPVUjoRL3vgyZbNFtgbi2V1MOCADQ5EJZZe5sB0PVNaH570ERIHG4DNEZDsvx3xu/Yqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741635134; c=relaxed/simple;
-	bh=IiJZ+/lGHP62JKtFfeLKxVnblQNImWJDosg3k3zzM/o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=j8668QrDG2SOdPFQKtsaGr6anmsli8uXVfpXPt6oEOBjClSqSxAifcHPxtimOxUNnkS18cJZpejumORm07IjZwkr+wHNYhcHKern3ZwhxvQ96s5PochlMqE5eJbFYHYn81vLtoXN/Sng9KUh9tMJE8jgwu/uEUMDh35uWrke3MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eUI7MIpJ; arc=none smtp.client-ip=209.85.167.174
+	s=arc-20240116; t=1741635135; c=relaxed/simple;
+	bh=9Oixtf8VtLt11mtugwndN5WDyIGQO6bIWKsWs5kuz2g=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ETSYCloXaCV3Kmt11K+X/8N10Jt5HpjygCh2wVXaXuR9y6r4rrKL6X8it32hsrEM2u0BXIX0BWaXAT2q4+Chx0ydAzLyrE662LtcTxPF57u1fL23flv8hoMY2lKf1/xUYpNS7O1dO6rnOyx4FD2pVkvRyDcb8589YBuNotiztRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dk7O8b7M; arc=none smtp.client-ip=209.85.167.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eUI7MIpJ"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3f6aa4b3a7fso727101b6e.3
-        for <git@vger.kernel.org>; Mon, 10 Mar 2025 12:32:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dk7O8b7M"
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3f3d1280f3dso1276954b6e.2
+        for <git@vger.kernel.org>; Mon, 10 Mar 2025 12:32:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1741635132; x=1742239932; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=h2KCUd0MoOanUKXP2Uhkc7oc6TjB038/p7mgg2sKQXk=;
-        b=eUI7MIpJgJmQvaZiNOBQeqy3T/gyNU+jPmZ1H/6+uscB+9W2DkPlA/2a++kTqyZNNA
-         DcShIzrI4UihlBIfsjg5cI6tO5BGJbaNJOpHdO61kTIwEFrQ+M9+F4C5TOZIq3PoCqOV
-         +4UZnG64ERZuyzHPCblFo9l6dudjvLOIvKtvzi7SdfC2MIFY41Iap1OCHCc44o4i1EWD
-         2Uwqnxq59nfQMLwSxd9qbeQWckVdlE3s2sFWSZKFVPzOI9FpDmaDRmfIFsSQgm5JMkDt
-         kBL6DMLFNhmV2NAdo10BRHHBLtRsXrjzThdtonFhnE5qREdIY0O8jl6U4NLa4NFIf6rA
-         qS0Q==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UNuZlJ4W5k6Ov8daMR9JpIecLLiQjZVFryYurms4G8k=;
+        b=Dk7O8b7MgwQNbCcliVoQSCUHgd9CFBLDcWy5miDLPEJ2B7olbAEReUouli1yabceTW
+         mHKy2x4PRlIAD6dJThqGCINrAYOhntBrw9gdKubxKOnRg38ILosFa9GVDYjCBuUeQ6j4
+         I7uE73LBTO56mzh5pJeF9qjaytWUzqjGUv0OV8fi00Etc/vHEY/voTGcs6E9EUnCntg+
+         WZgC4/X/65VbFwA7Rcm1sJSdTqvAlkRsbQTYZPG559IzfdXcLL1SNdafm7RQcrsZ6DoW
+         lK2oMxFbq1+D1H4mRswR6k7VYmuxdBsFGj3riHoFJo6PgZTawhUonKSP1L6/zWZvod/W
+         9pZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1741635132; x=1742239932;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=h2KCUd0MoOanUKXP2Uhkc7oc6TjB038/p7mgg2sKQXk=;
-        b=XCmhGRxcOzu6zxoCTvXlObsPBH3R9KYakgoB2K91ZJmLUPAM6w9tv9QbG2vMjxnLCf
-         E2xNr0kZBKYiyRNJhZ8ZlZZcxcSMJChrBAAfrYXlHiWXZLpC7Kef+WoFQNbnYBR5ru45
-         FJSM+UslIOK0AmylFtFpNbEQOKNbdXaSYUDciLb1NjJ+XCKE+oF5DA202a/9cktfvfC0
-         dGvz8w7vJ0wOWSv8huPfJCd5/imQ84jg7Gz+GWjqwMEkSRKxoaxzGb8kSj+IJMRS4CXi
-         ynvuLQcJ2WlGShVJksvaKUUm36f10My5OfPTUzlSDwg7UYttMao6XJQYjwIjB2UPPeoO
-         CQ6A==
-X-Gm-Message-State: AOJu0YzG+iJYXjSiBDy0HGld5nVIj1srob0YPzgfLP4KuwgxQ6xrPkTL
-	oPEV54e4daepB0EgflIGHhHHLiNG9gOLFqu2vMkQ1pBte/ql7WJc0ZUkcA==
-X-Gm-Gg: ASbGncuHamv82ieogyX2R+sYWbtdgyHfWKasdobu2gbKsktt91InrMBV0bfXEQErbT+
-	7wSZC1yeaj04TJMHHN9NWNLXZJZpAfeyq+VolwHlXMrUXgExRiokZqIiRJ1Ps6+LP4XvVMocjXV
-	yS9IrgtYOibxNZiwn82VcWNTYtQte1luYUGbbxsCXh5tjbsx2yp9g7KBOXFhW+iB+n0cmnVMCS2
-	DqcUY7LbyTNgDoaZbRYPM2UcEZp3Ds8ZTo5YfDxfH0oJBd/CHsn0R4jbmIreBHs8FQTkL7pIj1P
-	EEWOxvN+8IUvCswBvpmEYuTbUUFIQP5teeGGIY1lXsnEpXG+z6pj
-X-Google-Smtp-Source: AGHT+IGx6Va/3tVGJTf/fwoQf+ZLeokWa3IokSuHL7NBdpQ+QfRqTNuxrR3p/FTOTZdjCBjrWgxBWA==
-X-Received: by 2002:a05:6808:3206:b0:3f4:e8d:ab8e with SMTP id 5614622812f47-3fa298c04c3mr526652b6e.8.1741635131519;
-        Mon, 10 Mar 2025 12:32:11 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UNuZlJ4W5k6Ov8daMR9JpIecLLiQjZVFryYurms4G8k=;
+        b=MKe9PK5Scy4Z2hxh85fkP04j0+T6a6QM9yrZaW8tKsbLlofHgAlGOsCcFiXwBFZufh
+         ZEEZs95YeZNGWGqFRmiVfTIUWWvumGFCYE8uyIou1EtBxOkcAxFheNTgQGc2+vuW9fZg
+         oQqkl5VsPShHq5N+6rowL2qQu3DgwPoxEOTOfnt2cmAkf0IVUOi53Rq4EVDvN6BcTD8S
+         EHji0FstAB8cb1cw5nUlrR1OO6n1VCi53J+Q6j4n2aybB0U2HvgaJ1V5fxKAXgOe5kI4
+         CnUhApy14t8DHD2AGLozo4AMj+dzD915GHem8qe8e6ntty3x6qfZdzEuBVmZMC7Z7d/U
+         /Q1Q==
+X-Gm-Message-State: AOJu0YxO/CRgtUibyZ5WpPet0wvDdLOwWDD1EiGaA8+KFMRv64XJDjaB
+	kiG/rsnswi0VljeabwaVcga9Z0G8CkyogMhgXdEjnjM2sxmyP6xAzZKNMA==
+X-Gm-Gg: ASbGncv7XKIie2Jj/yC4sBjC1RJ/KJqeHyf5I5BLlvXy7RxiDmqpiIsE1NcBNMKN/XH
+	vRABQeLC4ZRCLByixqvz2Pf4EmauSQHPJGssWQ9A6rw5Bd26zSq4Uppd277S85laW+1GUSOM+zS
+	Tv4siKUBHOcsY6tjf7LbDhpH0kEcrYoibX1gY/8WKZESYV6GErPlxlsoWinH2mtwAJdT9gG550R
+	/vo80y2tMpclNPkyuR6g0iiSRv6hxl8n3L5XqLMw6IUHZlcNZgTEheyKIrAgte4NX1leIAgMvhm
+	inBVDkj09zLOBLxFL69l1XQDksdmkVEqLjgoQNj5n2t2Oga2Q9g+Ff1UucDsKww=
+X-Google-Smtp-Source: AGHT+IH8JyXc1dCfDVbBvN3kmsnUt4IRkDiKIOD0mkidD1GAUIsy895n0NxGow5c4hgzgmtReyqVOQ==
+X-Received: by 2002:a05:6808:2013:b0:3f9:c668:2cb8 with SMTP id 5614622812f47-3f9c668319amr1253080b6e.13.1741635132516;
+        Mon, 10 Mar 2025 12:32:12 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3f861f30de5sm697819b6e.46.2025.03.10.12.32.10
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-3f861f30de5sm697819b6e.46.2025.03.10.12.32.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Mar 2025 12:32:10 -0700 (PDT)
+        Mon, 10 Mar 2025 12:32:11 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	christian.couder@gmail.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
-Date: Mon, 10 Mar 2025 14:28:25 -0500
-Message-ID: <20250310192829.661692-1-jltobler@gmail.com>
+Subject: [PATCH 1/4] rev-list: inline `show_object_with_name()` in `show_object()`
+Date: Mon, 10 Mar 2025 14:28:26 -0500
+Message-ID: <20250310192829.661692-2-jltobler@gmail.com>
 X-Mailer: git-send-email 2.49.0.rc2
+In-Reply-To: <20250310192829.661692-1-jltobler@gmail.com>
+References: <20250310192829.661692-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,85 +75,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When walking objects, git-rev-list(1) prints each object entry on a
-separate line in the form:
+The `show_object_with_name()` function only has a single call site.
+Inline call to `show_object_with_name()` in `show_object()` so the
+explicit function can be cleaned up and live closer to where it is used.
+While at it, factor out the code that prints the OID and newline for
+both objects with and without a name. In a subsequent commit,
+`show_object()` is modified to support printing object information in a
+NUL-delimited format.
 
-        <oid> LF
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+ builtin/rev-list.c | 13 +++++++++----
+ revision.c         |  8 --------
+ revision.h         |  2 --
+ 3 files changed, 9 insertions(+), 14 deletions(-)
 
-Some options, such as `--objects`, may print additional information
-about the object on the same line:
-
-        <oid> SP [<path>] LF
-
-In this mode, if the object path contains a newline it is truncated at
-the newline.
-
-When the `--missing={print,print-info}` option is provided, information
-about any missing objects encountered during the object walk are also
-printed in the form:
-
-        ?<oid> [SP <token>=<value>]... LF
-
-where values containing LF or SP are printed in a token specific fashion
-so that the resulting encoded value does not contain either of these two
-problematic bytes. For example, missing object paths are quoted in the C
-style so they contain LF or SP.
-
-To make machine parsing easier, this series introduces a NUL-delimited
-output mode for git-rev-list(1) via a `-z` option following a suggestion
-from Junio in a previous thread[1]. In this mode, instead of LF, each
-object is delimited with two NUL bytes and any object metadata is
-separated with a single NUL byte. Examples:
-
-        <oid> NUL NUL
-        <oid> [NUL <path>] NUL NUL
-        ?<oid> [NUL <token>=<value>]... NUL NUL
-
-In this mode, path and value info are printed as-is without any special
-encoding or truncation.
-
-For now this series only adds support for use with the `--objects` and
-`--missing` options. Usage of `-z` with other options is rejected, so it
-can potentially be added in the future.
-
-One idea I had, but did not implement in this version, was to also use
-the `<token>=<value>` format for regular non-missing object info while
-in the NUL-delimited mode. I could see this being a bit more flexible
-instead of relying strictly on order. Interested if anyone has thoughts
-on this. :)
-
-This series is structured as follows:
-
-        - Patches 1 and 2 do some minor preparatory refactors.
-
-        - Patch 3 adds the `-z` option to git-rev-list(1) to print
-          objects in a NUL-delimited fashion. Printed object paths with
-          the `--objects` option are also handled.
-
-        - Patch 4 teaches the `--missing` option how to print info in a
-          NUL-delimited fashion.
-
-Thanks for taking a look,
--Justin
-
-[1]: <xmqq5xlor0la.fsf@gitster.g>
-
-Justin Tobler (4):
-  rev-list: inline `show_object_with_name()` in `show_object()`
-  rev-list: refactor early option parsing
-  rev-list: support delimiting objects with NUL bytes
-  rev-list: support NUL-delimited --missing option
-
- Documentation/rev-list-options.adoc | 26 +++++++++
- builtin/rev-list.c                  | 86 ++++++++++++++++++++++-------
- revision.c                          |  8 ---
- revision.h                          |  2 -
- t/t6000-rev-list-misc.sh            | 34 ++++++++++++
- t/t6022-rev-list-missing.sh         | 30 ++++++++++
- 6 files changed, 155 insertions(+), 31 deletions(-)
-
-
-base-commit: 87a0bdbf0f72b7561f3cd50636eee33dcb7dbcc3
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index bb26bee0d4..dcd079c16c 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -357,10 +357,15 @@ static void show_object(struct object *obj, const char *name, void *cb_data)
+ 		return;
+ 	}
+ 
+-	if (arg_show_object_names)
+-		show_object_with_name(stdout, obj, name);
+-	else
+-		printf("%s\n", oid_to_hex(&obj->oid));
++	printf("%s", oid_to_hex(&obj->oid));
++
++	if (arg_show_object_names) {
++		putchar(' ');
++		for (const char *p = name; *p && *p != '\n'; p++)
++			putchar(*p);
++	}
++
++	putchar('\n');
+ }
+ 
+ static void show_edge(struct commit *commit)
+diff --git a/revision.c b/revision.c
+index c4390f0938..0eaebe4478 100644
+--- a/revision.c
++++ b/revision.c
+@@ -59,14 +59,6 @@ implement_shared_commit_slab(revision_sources, char *);
+ 
+ static inline int want_ancestry(const struct rev_info *revs);
+ 
+-void show_object_with_name(FILE *out, struct object *obj, const char *name)
+-{
+-	fprintf(out, "%s ", oid_to_hex(&obj->oid));
+-	for (const char *p = name; *p && *p != '\n'; p++)
+-		fputc(*p, out);
+-	fputc('\n', out);
+-}
+-
+ static void mark_blob_uninteresting(struct blob *blob)
+ {
+ 	if (!blob)
+diff --git a/revision.h b/revision.h
+index 71e984c452..21c6a69899 100644
+--- a/revision.h
++++ b/revision.h
+@@ -489,8 +489,6 @@ void mark_parents_uninteresting(struct rev_info *revs, struct commit *commit);
+ void mark_tree_uninteresting(struct repository *r, struct tree *tree);
+ void mark_trees_uninteresting_sparse(struct repository *r, struct oidset *trees);
+ 
+-void show_object_with_name(FILE *, struct object *, const char *);
+-
+ /**
+  * Helpers to check if a reference should be excluded.
+  */
 -- 
 2.49.0.rc2
 
