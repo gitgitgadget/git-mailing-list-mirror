@@ -1,94 +1,182 @@
-Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A055240BF5
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 22:37:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3851EF38D
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 22:39:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741646234; cv=none; b=AEjAGp47PGDffQwUnmuHjZTFglTpQGYHxhOs+g+/1xqjGrQ6ziCNQbPq0D2HeHHb/IkVICqP84OKlXgfGWaxU69adcRE91XXCi96MG8M6q/u8f7h01VX6QBKy3AaunUIN41rn9JSm1vxZw1GoX12shDsO/VJK6ZOc4nWRM1W6Z4=
+	t=1741646350; cv=none; b=dtpCAiuwvoBLhCPEcNrxMW1+Tr+EkmSORF9EHiBEGJVbC0E0vzeWn6M9NLfJfSSrqtfdNiSivINZWa7PKpNARJ/MveCpze+5ViKXOhOegc8Nga6AMHbVIGZ9mGnD7Gn6w0NdjxHHazykU5UeIwdlaN59CiYFhsU9P2OMertYQaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741646234; c=relaxed/simple;
-	bh=W6i26DlicNn3SNtrRAiuZj7Zx6BELcw3iQ441o5HMBM=;
+	s=arc-20240116; t=1741646350; c=relaxed/simple;
+	bh=IHyCE/QSbRNww1/y2S3dh/naALmoZxqbPqj8mDQH4LQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZupNGfNDIYtKRXwQhXYwnNUVaX8WLS4r+tfUDmFwhh3t5/PRgfR1sAOUyAZ+USoj7MSYTT9IBoSDPeSmqfvE5MUyGUAnKVUFay9NGQmpQFXITnDQPCKjym1Ra8rJ/pYzcvLrILZppUHur87QZijyjhqLJw1P0ac5FDHbO9521tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BzatzhVu; arc=none smtp.client-ip=209.85.166.170
+	 To:Cc:Content-Type; b=V/dJTfDJd+VsOPg8qRrKiQCcEJcioxV2ij/svYYjxAch159wSVfk52KY2whSUe4YiLEsdZupRsZpE7vXH601/tUKvnguAzsUh0gqhCKJIj1vz5ScD1/EladyTYCBsjdIs6bDqbAL7Zv9yaDQDQf8k/B3pTU9Ti9qSLeLAQ36iAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PvRRNE5E; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BzatzhVu"
-Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-3d439f01698so15410025ab.1
-        for <git@vger.kernel.org>; Mon, 10 Mar 2025 15:37:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PvRRNE5E"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5e5cded3e2eso7400443a12.0
+        for <git@vger.kernel.org>; Mon, 10 Mar 2025 15:39:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741646232; x=1742251032; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741646346; x=1742251146; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Zga+2l+TLWn5tzrLXQOwWuKCVGPoMELU89rEXuIqS2U=;
-        b=BzatzhVuuNddf5rNU1yxfpySB/nSXHdbJbkyOcE2vCAYagKPsHZ5ajcN4yx8EdeYq8
-         Bygx9KCfjYD66NbZ/XpnI/dA5SgLZk2APrnejf54DpgE7GYy+SR6CfXucUTdvQGmgCtU
-         XUxME75sTZSvYUlTSx79cYCpQ/kD5H0zDcnWnWywqICxrpZ6XRk3VeVEtjM8LcAHYgiT
-         fPy8sUr57Uw7juUBz+D9ueHe1gUx3E/fTGJ9AeFx40i9smjlPW4y3StWn5ZxkbqYlXt6
-         f/xSjohYh+wFQuD1qnguTBNVvCDru/A7S5piDwCgL7SekQwWamDIhg1akKEFj1njtyRP
-         15uQ==
+        bh=cftqOQwt7xjejYT/MiHpmPPwZu3rw0DbqFlf/5kQy3Y=;
+        b=PvRRNE5EhlUK/E6n1n0L8siIqRiM0yzDgPqwllxmlt7Jv1R08jpYjSDeXHTik2cykp
+         qw2O/Yngr+9/bVlQgdOl5jyzmplt3ZxR7IL7LC0NE2Tmmyb/fXj4IRWTuQ5H4WTY8RHm
+         R+eSZbdvVZsIB6pMFZWBwDUllfh592kYMFPkFISEl+4+u3nXt/u3LFWj5xeFF+hjAIGk
+         M7cO1AfLP8G+jAUKtV7guEJrPWUCoWL1SXq/6sLgmWnfM7Z920HTdVO9HZXyes1+foEM
+         4EUMvrSF5pkxEo69akPrMidHnUjOdYBieEPz4ARROjbFVPZUoxLQ73P5V6kUQNOdnRNg
+         NoHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741646232; x=1742251032;
+        d=1e100.net; s=20230601; t=1741646346; x=1742251146;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Zga+2l+TLWn5tzrLXQOwWuKCVGPoMELU89rEXuIqS2U=;
-        b=MpQENRmf3Mtc2taDLtP5XnOtsfb31HetshAEAEtOU6mtCqDt5f2K/RAFrC/kbilT8Z
-         fvTz7MyPBZ5igUvAjN0snsua5HMkvn+PBXagfssc6B0lnvajxCdXuVPIaBXasjPajRy5
-         k8HCL9yXoo0dJ8QEHQd6OBFgdR2P3NkovBtq5Sr1vmHJXp1QUogZYc4VSHF1e/Hs5rx9
-         wdseGl3Skx7NVF0TfPRN02iOvdWfSH0GuOcnYGbvHN44gHSmWNfEefr57peVF7xtIB4i
-         +xim+27lsa+ln8jtfqGt3vxvbN81TOl2/ylYysyCx79FGyo8tcwZBvuySgXk1UtghCfv
-         xnpA==
-X-Gm-Message-State: AOJu0YwkNnu7vb2VkY0WD63fsz5o9r9cWre9MFVKzLWRnpHTocTEUoZ7
-	S1mqUJGKCRYU8QHnva/ukcgrVR3L9zpRCAOCpyewXmPse0sNv3Eqq04tfAG+Dq3OrxwrL4rSxLa
-	7lBv8kmjndyD/hU8+pS3lFxEWuKw=
-X-Gm-Gg: ASbGncs49daLvXuWaAfTwx+cXRDwlENcgkDRb7fYC1WIqoW4glHSKAt+VREssFPsE3o
-	LN/QLd4g6dc14hMnph1hVQcC+FbBubil8eid4yz3r9Y0Qmr/5l9MHWQhoHiO/KxBflsR0bj+VCa
-	+6NWmK2efPs+SQfQlCyjZeTdVmKsaVeUIlamzj+JzsLyveDGRfJC59/ojdIm4=
-X-Google-Smtp-Source: AGHT+IHZWl0/nTT55zAR0LwrizzGbIKHQEbrGnZyxyYrmV9F7m8a9Ipelf/64PZVBczy5YZobINQ+MThUDnlbnOxIUw=
-X-Received: by 2002:a05:6e02:ecd:b0:3d4:2a80:74fb with SMTP id
- e9e14a558f8ab-3d46915efcemr11451455ab.3.1741646231739; Mon, 10 Mar 2025
- 15:37:11 -0700 (PDT)
+        bh=cftqOQwt7xjejYT/MiHpmPPwZu3rw0DbqFlf/5kQy3Y=;
+        b=TW8yeQz6efyRUMhPYyjGoLlZ0BoVTc78rp5mWw/f40csP4blWY4nvJxaIzq2+RRozp
+         /FTG4pQL76G32NJNu7QFrak72rmLsBjuxGLgSGnYlDqxCNQDY350p+w/Qy5ZSt256LJk
+         /zyDyKEcYYE/a9a1TBE6DJy25GitcFk8gkqmeLJ4Byxi1Lfg+2zdXrRan123RWoE/EZY
+         J9qRS+O1OamVN6cdH8BRgzutgTxiC/LnsMdYE1o9MMT5rAmDhhjnZjDlOK8H5FYFgWqQ
+         sbPNbR07HKfBv87BscZWNfDrv5rJERhyV8E1+UQKSE5e7UBeVN4BUdaFN+HHFAg7hCId
+         QVrw==
+X-Gm-Message-State: AOJu0YzPJiErftm44zaPAseKhsu7SHYG4qcL659u0DhV9pTKFGY4/rmQ
+	1QTcXy/rN5MmtwOf9eI8aldeSR47HkKC7H6oWv7/CxVtOUW4z86FLrrPyRouOqsWuBvhEZ0oy6y
+	X3jMJHF4YUeI+Bjy8bdcfQJvx4q3rHxOn
+X-Gm-Gg: ASbGnculAVP45RB4Fzyt9rMOYJrJ5Cz/ZLvuDLtqcOZG0tnr4soDTYSThatbG54zdaS
+	uk1SZTkvWjL3aSaDB1xJMz5LqIVmNse/PwjLH4RVtW3VmVYnJW0BCblLbadAK43ARQ6yyNM51Gg
+	CKBUbGySDS7ufyVeu2HjzOdweSGluLa8QxX/HF/yNtMfCIH4YNOEnaK/8D5kC0
+X-Google-Smtp-Source: AGHT+IFrl135B6rksnAdAmJfzzfNl6NVE9Gd9OVfo4/db6VbrjhDWQRykfGge4ALhUYbOlWqLpqpTPhOGira12m63pQ=
+X-Received: by 2002:a05:6402:3589:b0:5e0:8c55:501 with SMTP id
+ 4fb4d7f45d1cf-5e5e22a9443mr15448505a12.7.1741646346293; Mon, 10 Mar 2025
+ 15:39:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250307-b4-pks-objects-without-the-repository-v3-0-7bccf408731e@pks.im>
- <20250307-b4-pks-objects-without-the-repository-v3-12-7bccf408731e@pks.im>
- <CABPp-BG0AtKdUH2g8+_f0J0ViWs5xZKM9kCcbWYZ=uEu6bswdQ@mail.gmail.com> <Z86Qh1yLUC7aIaG9@pks.im>
-In-Reply-To: <Z86Qh1yLUC7aIaG9@pks.im>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 10 Mar 2025 15:37:00 -0700
-X-Gm-Features: AQ5f1Jqhrh1fCW5WIrGnWkUTU2EfBq721vBXFobFavf4GB3b_fLcL1ZeuOLdhU0
-Message-ID: <CABPp-BGXJ38txpr=B_xi7V4+uVhLiDX2n=czZjoX3f+-9E6ZRQ@mail.gmail.com>
-Subject: Re: [PATCH v3 12/12] hash: stop depending on `the_repository` in `null_oid()`
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	Justin Tobler <jltobler@gmail.com>
+References: <20250310192829.661692-1-jltobler@gmail.com>
+In-Reply-To: <20250310192829.661692-1-jltobler@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 10 Mar 2025 18:38:54 -0400
+X-Gm-Features: AQ5f1JpPA235YNiK4luDSrWMDtBrZLPV0gP_k68Up3TpBBkN_FEc6ZuH7hpdpmU
+Message-ID: <CALnO6CBh_pYiU0p6pSndJ8rdDiykqBkRgosyrO1QhaQ55BKrkQ@mail.gmail.com>
+Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, christian.couder@gmail.com, 
+	Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 10, 2025 at 12:11=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
-te:
+On Mon, Mar 10, 2025 at 3:32=E2=80=AFPM Justin Tobler <jltobler@gmail.com> =
+wrote:
 >
-> On Sat, Mar 08, 2025 at 08:05:09AM -0800, Elijah Newren wrote:
-
-> > What you have is an improvement since it's at least making things
-> > explicit, but these should really be opt->repo->hash_algo.
+> When walking objects, git-rev-list(1) prints each object entry on a
+> separate line in the form:
 >
-> Oh, yeah, I suspect that we'll have a bunch of places where we can
-> already plug in a repository as available via the context. I typically
-> refrain from doing though unless really necessary (e.g. when the file at
-> hand doesn't declare `USE_THE_REPOSITORY_VARIABLE` anymore). This is so
-> that neither I nor reviewers have to carefully vet every callsite, but
-> to make this a mechanical change that is obviously correct because it is
-> identical to the old state. So I'm basically leaving it to the next
-> patch series that gets rid of `USE_THE_REPOSITORY_VARIABLE` to think
-> more carefully about those callsites.
+>         <oid> LF
+>
+> Some options, such as `--objects`, may print additional information
+> about the object on the same line:
+>
+>         <oid> SP [<path>] LF
+>
+> In this mode, if the object path contains a newline it is truncated at
+> the newline.
+>
+> When the `--missing=3D{print,print-info}` option is provided, information
+> about any missing objects encountered during the object walk are also
+> printed in the form:
+>
+>         ?<oid> [SP <token>=3D<value>]... LF
+>
+> where values containing LF or SP are printed in a token specific fashion
+> so that the resulting encoded value does not contain either of these two
+> problematic bytes. For example, missing object paths are quoted in the C
+> style so they contain LF or SP.
+>
+> To make machine parsing easier, this series introduces a NUL-delimited
+> output mode for git-rev-list(1) via a `-z` option following a suggestion
+> from Junio in a previous thread[1]. In this mode, instead of LF, each
+> object is delimited with two NUL bytes and any object metadata is
+> separated with a single NUL byte. Examples:
+>
+>         <oid> NUL NUL
+>         <oid> [NUL <path>] NUL NUL
+>         ?<oid> [NUL <token>=3D<value>]... NUL NUL
+>
+> In this mode, path and value info are printed as-is without any special
+> encoding or truncation.
+>
+> For now this series only adds support for use with the `--objects` and
+> `--missing` options. Usage of `-z` with other options is rejected, so it
+> can potentially be added in the future.
+>
+> One idea I had, but did not implement in this version, was to also use
+> the `<token>=3D<value>` format for regular non-missing object info while
+> in the NUL-delimited mode. I could see this being a bit more flexible
+> instead of relying strictly on order. Interested if anyone has thoughts
+> on this. :)
 
-Ah, ok, that makes sense.  Thanks for the context.
+Without taking a deeper look, I think token=3Dvalue has the benefit of
+being self-describing at the cost of more output bytes (which might
+matter over the wire, for example). Generally I like the idea;
+sometimes I find it troublesome having to parse prose manuals for the
+specifics of output formats like field order, especially when I end up
+coding a parser for the format. If the field order doesn=E2=80=99t matter t=
+o
+the consumer, then perhaps using ordered fields AWK-style is
+inappropriately terse?
+
+OTOH, the -z format is for machines, and they don=E2=80=99t need human labe=
+ls
+;) [I think token labels would be a great parser-writing and debugging
+aid]
+
+Best,
+Ben
+
+>
+> This series is structured as follows:
+>
+>         - Patches 1 and 2 do some minor preparatory refactors.
+>
+>         - Patch 3 adds the `-z` option to git-rev-list(1) to print
+>           objects in a NUL-delimited fashion. Printed object paths with
+>           the `--objects` option are also handled.
+>
+>         - Patch 4 teaches the `--missing` option how to print info in a
+>           NUL-delimited fashion.
+>
+> Thanks for taking a look,
+> -Justin
+>
+> [1]: <xmqq5xlor0la.fsf@gitster.g>
+>
+> Justin Tobler (4):
+>   rev-list: inline `show_object_with_name()` in `show_object()`
+>   rev-list: refactor early option parsing
+>   rev-list: support delimiting objects with NUL bytes
+>   rev-list: support NUL-delimited --missing option
+>
+>  Documentation/rev-list-options.adoc | 26 +++++++++
+>  builtin/rev-list.c                  | 86 ++++++++++++++++++++++-------
+>  revision.c                          |  8 ---
+>  revision.h                          |  2 -
+>  t/t6000-rev-list-misc.sh            | 34 ++++++++++++
+>  t/t6022-rev-list-missing.sh         | 30 ++++++++++
+>  6 files changed, 155 insertions(+), 31 deletions(-)
+>
+>
+> base-commit: 87a0bdbf0f72b7561f3cd50636eee33dcb7dbcc3
+> --
+> 2.49.0.rc2
+>
+>
+
+
+--=20
+D. Ben Knoble
