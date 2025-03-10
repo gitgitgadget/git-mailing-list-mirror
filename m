@@ -1,217 +1,142 @@
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB8D236449
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 19:32:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD3C1DEFD4
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 20:37:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741635139; cv=none; b=H9jC0d9vMkMRwuQW9DHGK/z23roMvggNHJz4VzbnzXypv+kdENcXyOSrIetYUWtu8g+x+pibQKGWJKdANLAR1xfi+rBgmA5mOAFQDvElcZMKPkTm5RxCFCYAucmAjARl4RaqGYFd30wzuEGiL9URn8RCTecOukn+XsOSqo95x5w=
+	t=1741639074; cv=none; b=e0nGO17bXIjAU2pGndiWbri+WyRitkkEHnZOkpC2ihF0fLfNFqwfPT4q0SKZs7DOIn+H7J3w6thu4437gCs5qG43XIQf4QbLxVKISvsShqkku4/RtU4FU6uJdBLb0X5PuBZOOyoJqePnfc+C3GQq0rtY4CfKDwZqksbjeHtb5+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741635139; c=relaxed/simple;
-	bh=4Tndw1GYlY8PiPzX1zL//L6P7E3PCl6u8LKT4wjlyuI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvcsw1rCvZxgFbKP0aEQ685LSqWLvZy9khxn9OZ9HVdjRc+miM708iXTH97DfJxpaz26scRndzMuexJcX05Bfye9ufvSlvtzrBUWRF6XOkJgB/kfh7nROGtVh38rFRQX5ARJKS3MzLdA62sxaPsFpd58injgHfj+nX78b+eKo3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gxcDzRl5; arc=none smtp.client-ip=209.85.167.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741639074; c=relaxed/simple;
+	bh=XT318qIMZ6MA26lTbQEcnqX6MLP/yfjsEQbyNhmw3vs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NPeOG1097v6JbrUfD2WzFiyBoPKGhmUkW8Un92z1eIMdN998qoS+Zk00+9I6jLIUtQFjH2yLfqYwnr7FxXrf4Fo3kvIlO2tLuju7SKnlFnK7oSDMybT3QlJrXu8NPieZUlZyZHCcQlrMSO4KWa+ZvT5vRJ1Gqc4h3mbTRID+rQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jKAK0l2Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3D3wwSKj; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gxcDzRl5"
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-3fa0eb29cebso235304b6e.0
-        for <git@vger.kernel.org>; Mon, 10 Mar 2025 12:32:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741635136; x=1742239936; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XZ81+t9Lx38WfPyXWYaI6JgA8qqe8G7JF74fWb4C/V4=;
-        b=gxcDzRl59c5EsGjRsLXtrykiqQxrf6BDgNYCLpiqB2dwLTXbY/2VEnRQSD1zmhcdBj
-         lYW3SsB0nPZomm1HGyAG2b0Ho48cln/esbkN2gnT5QapIkIg3zUHzlte3zs7LH/jU6Jp
-         T+Qn6S3dHhjiXcOu5sf0Rz+4O/T3hoL6YcCtu1wFgq5/HppFjep/q6gPP0oE6DHhXv9J
-         9HSziX7DHk1My2J47tkSZgHi0rq3CShkb4tltvkViJ+l9ABr6qSMFjJc4KDn3ma0p2MN
-         bC7B4+BLGEYuyJW4UkSFpqXhUyQu7JDpD0/aECMplPsrzfGHzBQj/011d7yz4o309V0g
-         8bnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741635136; x=1742239936;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XZ81+t9Lx38WfPyXWYaI6JgA8qqe8G7JF74fWb4C/V4=;
-        b=oXoXmZSrDZ2xUiEV7hmWcva8vDXu5z8hI19Wp9S9VLV6nsb7Gc4x6jPNbk1CyF395I
-         mjcQAcdPQf/DUSW5WJ/Oj2BdwvNJvG5WqkU+QQk8IgJukwZoqTI8lXZOFVTPCSAlpxTO
-         ZdZMRr+9mCqPiYJpdeEKNdkeXlHHg1iDUzuriq8dz/uabTKsbRaQPxRWtI7PcM4UemFq
-         C5LLQl/kSN2ZLz7JhzzqQ70Q2aLmcReg8EzOst9zj1q6nBAo/cMbEXGOA4Om63LLxbgJ
-         q+v1Jc3LByf242w3vaaD8mnYvvmyPfPuaEGeujtH2WGyH5MSUOzeu73/ZNib94AHV+PT
-         upOQ==
-X-Gm-Message-State: AOJu0YznTBpKVHUm0Rj+s2yE1Tddyf1WDxq1pgzLAzKI5PN0Aep5/y6/
-	Uc1+dLcWIwiFqFy+cLA55RmlCjlZgEBoOX1jRE8c4r2Pn6e4Ha8/7J6eAQ==
-X-Gm-Gg: ASbGncv3h9Ro9FdTcnb9yRY7mFOIMREMirMrlwP7Y9xNdELxzEcF6MgWRTR/4+txCbc
-	Ct3gGP5IvcU7ntQWlZRRfHLyAPmlvynuBeywEkT46Nxur33IPlIdNyhrt+3rrBT16zF1XpvKVlc
-	8LgQN86Bgbn9cm5uaKBxNLXifx6DD50Qw9vqSoPPXk/qEa0sJf9FPRzkt9FnesR+lPxh+XDmv8l
-	RI5KgWNIxtNddU/FL6pov0iZ4q4FedLGs3W/LYAlwxyaBex7kyq0oUHgshTuVltLyB34O8OkywR
-	V+OcAgVwN0KmQBE4CEdCsAmU4Gs518peSzdLhOkluzfK2Nx5aQec
-X-Google-Smtp-Source: AGHT+IF8gGA9+gPkkT16OjrPEYjIjWVrfYFubeUP0GfOylzLF9P+bYE06IhD92rolWuJt9nPDhg3ZA==
-X-Received: by 2002:a05:6808:3a09:b0:3f9:aeb6:6e92 with SMTP id 5614622812f47-3fa2badc1a7mr429047b6e.9.1741635136525;
-        Mon, 10 Mar 2025 12:32:16 -0700 (PDT)
-Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3f861f30de5sm697819b6e.46.2025.03.10.12.32.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Mar 2025 12:32:15 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	christian.couder@gmail.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 4/4] rev-list: support NUL-delimited --missing option
-Date: Mon, 10 Mar 2025 14:28:29 -0500
-Message-ID: <20250310192829.661692-5-jltobler@gmail.com>
-X-Mailer: git-send-email 2.49.0.rc2
-In-Reply-To: <20250310192829.661692-1-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jKAK0l2Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3D3wwSKj"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 177B425401A3;
+	Mon, 10 Mar 2025 16:37:51 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Mon, 10 Mar 2025 16:37:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741639070; x=1741725470; bh=zdMAmEuVkA
+	OFq7pZaRb0qaxa3gMPCg5rVaK3S7iOpqY=; b=jKAK0l2YigskG5+DrQsERB7j7z
+	J/6DrLKMQzeqAO4W6ru23AVwofKf9vGdbs6HDTwo+vQ5E7Dxc0/1etqEZ2ImtL3R
+	ttlnms1lR6MaNz1aGmAbcWw/yZAqf2Euolxg547trOlA5TidM1D8jSSrI50pMmFn
+	9he3XJ2MbkIlM8FCO1r9kNPrTgkdukjF1bMGI3ZBlh8A+zm5rIz3kh5eSyGP7Zxf
+	d33aEYMNUmDFQ/ouOGakOalxzcYhuz73v5AF7ySljUq3COcD+1SA33avIhD4H9Rh
+	TQRf2NBWKlbZX9IVIsDPzQG42ch94M+M/vsYx36zWoZezDBXbMpokFNJRQVA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741639070; x=1741725470; bh=zdMAmEuVkAOFq7pZaRb0qaxa3gMPCg5rVaK
+	3S7iOpqY=; b=3D3wwSKjba9qPetaoRux8JRlLxB+P3ES7eIxWxNRv210xVVejMq
+	vZ72rawFhBiHiDLwQYdJiS9dZXBVXHHUnnG4pSReqBE+sU4XcXZOSnIpk+0iBzpz
+	hfx/qz8LMHyF9UiT/ioFXGUir/7VRJuE/Cn/HL6O5UP8mBbc383eGGU7xmwUvk7p
+	SB8EUig/Rk0xy2HqrOSX3UYdGiG3BnmxQjtFSaC0e2wGfPjSSRh5eB/IJBsnNJzh
+	o162rU2pkLoLxzMx7J0o76jVIY0Xx/oC+U/YasdGm6bWhRpq/+6LCcUH1brtu2tV
+	dxAnb9RZZwQcZH0Gz3TVGQ9599kXKXNbGgg==
+X-ME-Sender: <xms:nk3PZ6SbcTd4Fs43_Qhk-7DuiFUPpFhcpY1aU9b57XuCRnXJ2-hsZg>
+    <xme:nk3PZ_y4WqiwvhfUkFWUqSGrLvE60J2wK2lZxjpXD34YhOopaLaYOqyBE-n6Ucrrf
+    qAVgzBgQU2zXev1uA>
+X-ME-Received: <xmr:nk3PZ32DgzgNOt84Z4G59zcN1zAP_4m9j34cLaN6WHdnNZ36khuHxUz6LLGJj24B8hoRtBOSLtUCYWbM2Gq00yWknBP4q11vMyQQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvddtfedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvg
+    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheptghhrhhishhtih
+    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:nk3PZ2C2QBrvxvYLk8DWt0KO2i9BOE6V5A35CDk2lLHSfK2Z-Qaa_g>
+    <xmx:nk3PZzirK-7SySYAve5d8UWQt-G8NZpzhs1FNnKKTfaDuq2YJoBjYw>
+    <xmx:nk3PZyrT8owrIZP6vpfQnFklgT71kX1YAL2mYKiZBAAxklbL1E3tYw>
+    <xmx:nk3PZ2g2cba-wU-cRVXv2XMTblZxWn9MpA8uBQqyPK0XfDpyAx_YfA>
+    <xmx:nk3PZ5ZZKHnl33_u1snftpK5mdJwrF0vAEUbI8oJ4TyHmOjrakikwAnm>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Mar 2025 16:37:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  christian.couder@gmail.com
+Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
+In-Reply-To: <20250310192829.661692-1-jltobler@gmail.com> (Justin Tobler's
+	message of "Mon, 10 Mar 2025 14:28:25 -0500")
 References: <20250310192829.661692-1-jltobler@gmail.com>
+Date: Mon, 10 Mar 2025 13:37:48 -0700
+Message-ID: <xmqq34fk7hb7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The `--missing={print,print-info}` option for git-rev-list(1) prints
-missing objects found while performing the revision walk. Add support
-for printing missing objects in a NUL-delimited format when the `-z`
-option is enabled.
+Justin Tobler <jltobler@gmail.com> writes:
 
-        $ git rev-list -z --missing=print-info <rev>
-        <oid> NUL NUL
-        ?<oid> [NUL <token>=<value>]... NUL NUL
+>         ?<oid> [SP <token>=<value>]... LF
+>
+> where values containing LF or SP are printed in a token specific fashion
+> so that the resulting encoded value does not contain either of these two
+> problematic bytes. For example, missing object paths are quoted in the C
+> style so they contain LF or SP.
 
-In this mode, values containing special characters or spaces are printed
-as-is without being escaped or quoted.
+"so" -> "when"???
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- Documentation/rev-list-options.adoc | 10 +++++++++-
- builtin/rev-list.c                  | 27 +++++++++++++++++++-------
- t/t6022-rev-list-missing.sh         | 30 +++++++++++++++++++++++++++++
- 3 files changed, 59 insertions(+), 8 deletions(-)
+> To make machine parsing easier, this series introduces a NUL-delimited
+> output mode for git-rev-list(1) via a `-z` option following a suggestion
+> from Junio in a previous thread[1]. In this mode, instead of LF, each
+> object is delimited with two NUL bytes and any object metadata is
+> separated with a single NUL byte. Examples:
+>
+>         <oid> NUL NUL
+>         <oid> [NUL <path>] NUL NUL
 
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index d21016d657..48648b7507 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -378,7 +378,15 @@ containing newline characters:
- <OID> [NUL <object-name>] NUL NUL
- -----------------------------------------------------------------------
- +
--This option is only compatible with `--objects`.
-+When the `--missing` option is provided, missing objects are printed in the
-+following form where value is printed as-is without any token specific
-+encoding:
-++
-+-----------------------------------------------------------------------
-+?<OID> [NUL <token>=<value>]... NUL NUL
-+-----------------------------------------------------------------------
-++
-+This option is only compatible with `--objects` and `--missing`.
- endif::git-rev-list[]
- 
- History Simplification
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 86b3ce5806..5bbc4a787e 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -145,25 +145,38 @@ static void print_missing_object(struct missing_objects_map_entry *entry,
- 				 int print_missing_info)
- {
- 	struct strbuf sb = STRBUF_INIT;
-+	char info_sep = ' ';
-+
-+	if (nul_delim)
-+		info_sep = '\0';
-+
-+	printf("?%s", oid_to_hex(&entry->entry.oid));
- 
- 	if (!print_missing_info) {
--		printf("?%s\n", oid_to_hex(&entry->entry.oid));
-+		print_object_term(nul_delim);
- 		return;
- 	}
- 
- 	if (entry->path && *entry->path) {
- 		struct strbuf path = STRBUF_INIT;
- 
--		strbuf_addstr(&sb, " path=");
--		quote_path(entry->path, NULL, &path, QUOTE_PATH_QUOTE_SP);
--		strbuf_addbuf(&sb, &path);
-+		strbuf_addf(&sb, "%cpath=", info_sep);
-+
-+		if (nul_delim) {
-+			strbuf_addstr(&sb, entry->path);
-+		} else {
-+			quote_path(entry->path, NULL, &path, QUOTE_PATH_QUOTE_SP);
-+			strbuf_addbuf(&sb, &path);
-+		}
- 
- 		strbuf_release(&path);
- 	}
- 	if (entry->type)
--		strbuf_addf(&sb, " type=%s", type_name(entry->type));
-+		strbuf_addf(&sb, "%ctype=%s", info_sep, type_name(entry->type));
-+
-+	fwrite(sb.buf, sizeof(char), sb.len, stdout);
-+	print_object_term(nul_delim);
- 
--	printf("?%s%s\n", oid_to_hex(&entry->entry.oid), sb.buf);
- 	strbuf_release(&sb);
- }
- 
-@@ -782,7 +795,7 @@ int cmd_rev_list(int argc,
- 	if (nul_delim) {
- 		if (revs.graph || revs.verbose_header || show_disk_usage ||
- 		    info.show_timestamp || info.header_prefix || bisect_list ||
--		    use_bitmap_index || revs.edge_hint || arg_missing_action)
-+		    use_bitmap_index || revs.edge_hint)
- 			die(_("-z option used with unsupported option"));
- 	}
- 
-diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
-index 3e2790d4c8..3ae25e4cfb 100755
---- a/t/t6022-rev-list-missing.sh
-+++ b/t/t6022-rev-list-missing.sh
-@@ -198,4 +198,34 @@ do
- 	'
- done
- 
-+test_expect_success "-z nul-delimited --missing" '
-+	test_when_finished rm -rf repo &&
-+
-+	git init repo &&
-+	(
-+		cd repo &&
-+		git commit --allow-empty -m first &&
-+
-+		path="foo bar" &&
-+		echo foobar >"$path" &&
-+		git add -A &&
-+		git commit -m second &&
-+
-+		oid=$(git rev-parse "HEAD:$path") &&
-+		type="$(git cat-file -t $oid)" &&
-+
-+		obj_path=".git/objects/$(test_oid_to_path $oid)" &&
-+
-+		git rev-list -z --objects --no-object-names \
-+			HEAD ^"$oid" >expect &&
-+		printf "?%s\0path=%s\0type=%s\0\0" "$oid" "$path" "$type" >>expect &&
-+
-+		mv "$obj_path" "$obj_path.hidden" &&
-+		git rev-list -z --objects --no-object-names \
-+			--missing=print-info HEAD >actual &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
--- 
-2.49.0.rc2
+Why do we need double-NUL in the above two cases?
 
+>         ?<oid> [NUL <token>=<value>]... NUL NUL
+
+This one I understand; we could do without double-NUL and take the
+lack of "=" in the token after NUL termination as the sign that the
+previous record ended, though, to avoid double-NUL while keeping the
+format extensible.
+
+As this topic is designing essentially a new and machine parseable
+format, we could even unify all three formats into one.  For example,
+the format could be like this:
+
+	<oid> NUL [<attr>=<value> NUL]...
+
+where
+
+ (1) A record ends when a new record begins.
+
+ (2) The beginning of a new record is signaled by <oid> that is all
+     hexadecimal and does not have any '=' in it.
+
+ (3) The traditional "rev-list --objects" output that gives path in
+     addition to the object name uses "path" as the <attr> name,
+     i.e. such a record looks like "<oid> NUL path=<path> NUL".
+
+ (4) The traditional "rev-list --missing" output loses the leading
+     "?"; it is replaced by "missing" as the <attr> name, i.e. such
+     a record may look like "<oid> NUL missing=yes NUL..." together
+     with other "<token>=<value> NUL" pairs appended as needed at
+     the end.
+
+Hmm?
