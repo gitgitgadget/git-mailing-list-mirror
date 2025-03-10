@@ -1,70 +1,70 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBA822DFA9
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 15:11:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C6522DFB1
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 15:11:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741619478; cv=none; b=p1r2gW6n9iNULQwzowCzvHTPdaWLwbVYpuPt0MqOp4Q3ZnbSFaWNn0X7VhaUNd2+PEIHBT53t9o1f541U/0MDyzn6IGoExD58Ft2PTmlj2eNC7bm4BWdiDDEbjOtF1pWB8m1IRGuz1B0jnWInm60xiwKZ0fnnMpTzE23ycIXiz8=
+	t=1741619478; cv=none; b=iVbCmFs7yFObVtJl5sR0i8B76Wr5xDgNTN3ARbkCJ9U/dMox6f+AzqfJNWRg97y+oGIw0qfXpjUqzbYFjN2vClP0q+L9ofbBL0Hs9Dnl9aGQb8HIO20AupXrf4SQCpDYFdK/FhGhUqS1jkibT2HpheP9YNGo/mmaZ5K6PY99muQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1741619478; c=relaxed/simple;
-	bh=WEo4mxcdIigSyR+o/6PLgE0H1CeRSktYeKOH/3U2tUk=;
+	bh=e2gQUjqP7pL1yZEGKmf1K9g/TnpSGAJy/Ya+hqlDpQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R4mAhvSSwKt0kalVqFm89IXaG+dX5hAorhz3+9JrJW3/gYF09ppPYQ5T5KiuNiqfLUvQU2ew7mNPxd/UrfnNMWYkRay4iFh4DYvyTh2Mq/RN+nivOQYIbCj8JKbysgD8ZsfeHeJOgmh0dxeunciTbz+H/PF78alLlr5+NlcP+qY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BmVlXTKO; arc=none smtp.client-ip=209.85.214.180
+	 MIME-Version; b=N4nwM2MJ2AbTeSkjkEpOr6dIIMjc7LnLB7FJTZJCQm44o91DdCqJiXIFShLQKACTJp9qqvtIr5KTxldgUFhsfprcY5zGqjyOsvzY0gmdTkUdl4fY9urFvQ91UO4/hJPHs5w3i4SLmVCPIs9EXqCJPwFdu9DkQZ5ei41EEWSJ0jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V9dff32x; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BmVlXTKO"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2232aead377so13708435ad.0
-        for <git@vger.kernel.org>; Mon, 10 Mar 2025 08:11:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V9dff32x"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-223959039f4so86460415ad.3
+        for <git@vger.kernel.org>; Mon, 10 Mar 2025 08:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741619474; x=1742224274; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741619476; x=1742224276; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VixsNJLmWejyNtPg75SfrCyGIDEQzoVVSa7gAOblVvY=;
-        b=BmVlXTKOi9zI6jCkzA5Y2KZh0kb/gyhTrAVmLxyaS0qL1I6myF8o+d0qWi/5/UFkU0
-         Eph6VHEtmKSAbxzV9wvEdUON80PpK3d6jlwtL86Zk15T6q+Rpix+v0/I7sDTX7Ea9+Uy
-         Cc3uxuVvrgCUoKPJC68Dk1SypzvTdTtlkenp4uYMbyyoPRC/Crymwu++azoUSFdxVrZV
-         RoqyLTbKefR/2YRB5i7NLthu3QQ2y0iAtZrd3Xgf7DO4bb+rdK5DJARyU5Y7PFTCv+PQ
-         IABrsV2z8QNg+7ErJ1sgRXz3yN6rwnrp49NEeBvoII2LG4SDGr7+IbpYKgBi+LwvEEsD
-         NUzg==
+        bh=OTdsgIbmcNz4p0eL9/uQxo4wXB4UOfN+DrkksRCZezI=;
+        b=V9dff32xzkcKpDnDx43LL2LqDjN4XOzc9KQVjDZnODb6lhwMQlN/zXHfOq/hT6fyaK
+         M3dhnEsQ+4/s5oPI9eG6xFn9VVae8q+Q6ii9hBxnsP45ItCrbzWACxo8x7I5ekQqoolh
+         hZmds/vgmWjlvl3IA/zF6D9Wp3TLm6LtTD2kUQ0rVyL8YpMW5YFkuoPYdhDeLY4GxNzS
+         hnL0TK1qiJYTBkYnU9i9kwVbG3j9vdiYisMBjG8E4Ea8DTnXVcKXh31pIaQKgCJQ6Owb
+         2Ff5+wahkroy+4uz9HMNSDY594Y35Z2Bzx9C89u5ahUWbVwb1V/YGARRXgf8mIrPVDb4
+         7ayQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741619474; x=1742224274;
+        d=1e100.net; s=20230601; t=1741619476; x=1742224276;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VixsNJLmWejyNtPg75SfrCyGIDEQzoVVSa7gAOblVvY=;
-        b=v6RLnDeNH1Cvv3qpf8rm/pgRPES9MxpSIJPSESO83aWsszjlF382udgeG3W8BJcpNp
-         wDj/I8BvKT/ULrR+PuuH5vpauHCkCH3hYfpdj4Xeq+mE6F3E9oa1qYr/Qg1w82hhHA3c
-         I6r7rbWtGDUggJ026gj1CBPZnTdY9xrn2xXfB5BHAa8shDk2GtmO8mhyAvDyCdy0u+qi
-         MtPbs6M0Zd90ulDmz2CdB6Q6tod8y/SOe65PoyghGQms3eEVYj/SP9npoDFIApym0V2V
-         TTWVYFal09BlUax3lzSJXelxjLRWpapBRIyNOCf9bNBoPU0sXG+CEjkO1K/sRiAPmV7o
-         zATA==
-X-Gm-Message-State: AOJu0YxWWVTji61YpfmN0b+7E05UjBep6bx8W356aBzKl6jeTramRkmy
-	n3bMylw8tC7GGqMOqmEhv7S0uPPe4uudEIiYyCdYxC/ekkcC/xsv
-X-Gm-Gg: ASbGncsKBIWOs2uorRtbVfyGHzCVMIjXTGhtlO85z0g8BfsTrzjlA+j47QODWaLqFsf
-	YCWzSSpqzKtv3k/dgoM0aOpHNq18ULvD+489ufMtZc3mjsIXfMR7T4Tg9V5D/uGxX3KftDtqIn5
-	abHQ9pg7K70hdtt54ZkKxe+8m+hHf5NlCF7+XPThvTegqylab/q6Ev4O50uLlhf7xWYq32DEbo3
-	+mQWjLaXpOiSnUQQD4MU0HvP1R6i5hfLDaGLSvNWKr5mfsTVGZ2oRbWThyDVLLihK/79dkd8Hvt
-	PH8eFv5wnCrupX/uYZgElMMR2+Hih1VHkFvP6Cpkemgz+VkC+2aJMjOnlWN/xg==
-X-Google-Smtp-Source: AGHT+IHBEU8uyddlwWJUNZnQp1bi5BU/mg7njd+qHbcGPA7DKcu333Hm8Tle5akd9HRMi2MgePevSA==
-X-Received: by 2002:a17:903:1b63:b0:220:e5be:29c8 with SMTP id d9443c01a7336-22428bdee3cmr240846325ad.32.1741619473862;
-        Mon, 10 Mar 2025 08:11:13 -0700 (PDT)
+        bh=OTdsgIbmcNz4p0eL9/uQxo4wXB4UOfN+DrkksRCZezI=;
+        b=Ci6SqAp2vJQgxAXcDLIC2f+T6hiNLNz7vIVoxxVK6WvoTQgIEvCmFL65+n7OOFVI8l
+         AHqx8Sxcq9fire+O3ulMs3bRzWuBcDWyHZwhSwA5m7cRNq+pDpGNHN8gxH7upa/bSt8H
+         PnQeFBQfq5IBfLK2SDSRH5EgZs3oS+ct9PoqJYwp8gNmq/jiZazCCwWoOt/GZ4brK2K8
+         wKi8JAkpzjdt1wsTZPzEJS8MaknhNttHieYJ/DmzsYCoqMhpxTUctrWPQITrTkwG7E0W
+         aMYbcUZsP0q1VvEqKeFuD0HdDdo8VAdtXE4zJy3h0jOJHjZV32WBwTxuaCdPYgM+TsYg
+         Ea2w==
+X-Gm-Message-State: AOJu0Yyxc7KovN4eMUGETVwRqVWIFRyhSInzoykBUS1f+BMHiYF8d2/o
+	pSWou6M+IIMc9TfnhbLNmp8mO75dRwkKbdPHbinVDv4mrYehD9nMaE2rOH00lB8=
+X-Gm-Gg: ASbGncs020jAlF7xfIsW2I79SnY46EClMc/V6hxzWQ5I+Ay1GqsalmtMKDUknTVn8zl
+	pvS/ajbUzgrraWmBC298AyOZpeIeXT93/pwNnB1msMeZtVsdd/yDinNEuaXrjNWu2+g49h1HJKy
+	VNKYwMS8jC31MhqQaW5R07WQ//yrtkKanvn9rBtv3gRH+ELqZLxK71d+sQ3K06QJlJKreQ8Nsv/
+	ldc0IC3EMrWXV7xDcQLLaYa+O2G3sWK1ltdrjWxf+oAAKS27+QY43jVbyIxiEvSTPuLyk3FPGT7
+	nfPE2ZzwQYfMf05UIHNYBiPq5T9dYjKRD4a/eVDcRIqTV+AkQwggppLUgr581Q==
+X-Google-Smtp-Source: AGHT+IGgGqECt4fYRXjoZ+sSx60098Jvno6wLCtNu91wBqLCMA7Xw1/P+X9qA9HKesPokxsEHyxZ5g==
+X-Received: by 2002:a17:902:e5d2:b0:224:23ab:b88b with SMTP id d9443c01a7336-2242887ecc6mr196011545ad.8.1741619476382;
+        Mon, 10 Mar 2025 08:11:16 -0700 (PDT)
 Received: from bl4ze-rig.iitr.ac.in ([103.37.201.222])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-224109e98adsm79528715ad.90.2025.03.10.08.11.11
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-224109e98adsm79528715ad.90.2025.03.10.08.11.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Mar 2025 08:11:13 -0700 (PDT)
+        Mon, 10 Mar 2025 08:11:15 -0700 (PDT)
 From: Ayush Chandekar <ayu.chandekar@gmail.com>
 To: ayu.chandekar@gmail.com
 Cc: git@vger.kernel.org,
 	ps@pks.im,
 	shejialuo@gmail.com,
 	gitster@pobox.com
-Subject: [GSOC PATCH v2 1/2] environment: move access to "core.attributesfile" into repo settings
-Date: Mon, 10 Mar 2025 20:40:47 +0530
-Message-ID: <20250310151048.69825-2-ayu.chandekar@gmail.com>
+Subject: [GSOC PATCH v2 2/2] attr: use `repo_settings_get_attributesfile_path()` and update callers
+Date: Mon, 10 Mar 2025 20:40:48 +0530
+Message-ID: <20250310151048.69825-3-ayu.chandekar@gmail.com>
 X-Mailer: git-send-email 2.48.GIT
 In-Reply-To: <20250310151048.69825-1-ayu.chandekar@gmail.com>
 References: <20250309153321.254844-1-ayu.chandekar@gmail.com>
@@ -77,118 +77,176 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When handling multiple repositories within the same process, relying on
-global state for accessing the "core.attributesfile" configuration can
-lead to incorrect values being used. It also makes it harder to isolate
-repositories and hinders the libification of git.
-
-Store the "core.attributesfile" configuration in the `repo_settings`
-instead of relying on the global state. Add a new function
-`repo_settings_get_attributesfile_path()` to retrieve this setting in a
-repository-scoped manner.
+Update attribute-related functions to retrieve the "core.attributesfile"
+configuration via the new repository-scoped accessor
+`repo_settings_get_attributesfile_path()`. This improves behaviour in
+multi-repository contexts and aligns with the goal of minimizing
+reliance on global state.
 
 Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
 ---
- config.c        |  5 -----
- environment.c   |  1 -
- environment.h   |  1 -
- repo-settings.c | 11 +++++++++++
- repo-settings.h |  3 +++
- 5 files changed, 14 insertions(+), 7 deletions(-)
+ attr.c               | 28 ++++++++++------------------
+ attr.h               |  7 +++----
+ builtin/check-attr.c |  2 +-
+ builtin/var.c        |  2 +-
+ 4 files changed, 15 insertions(+), 24 deletions(-)
 
-diff --git a/config.c b/config.c
-index 658569af08..b52ad3e3ad 100644
---- a/config.c
-+++ b/config.c
-@@ -1432,11 +1432,6 @@ static int git_default_core_config(const char *var, const char *value,
- 		return 0;
+diff --git a/attr.c b/attr.c
+index 0bd2750528..8f28463e8c 100644
+--- a/attr.c
++++ b/attr.c
+@@ -879,14 +879,6 @@ const char *git_attr_system_file(void)
+ 	return system_wide;
+ }
+ 
+-const char *git_attr_global_file(void)
+-{
+-	if (!git_attributes_file)
+-		git_attributes_file = xdg_config_home("attributes");
+-
+-	return git_attributes_file;
+-}
+-
+ int git_attr_system_is_enabled(void)
+ {
+ 	return !git_env_bool("GIT_ATTR_NOSYSTEM", 0);
+@@ -906,7 +898,7 @@ static void push_stack(struct attr_stack **attr_stack_p,
+ 	}
+ }
+ 
+-static void bootstrap_attr_stack(struct index_state *istate,
++static void bootstrap_attr_stack(struct repository *repo, struct index_state *istate,
+ 				 const struct object_id *tree_oid,
+ 				 struct attr_stack **stack)
+ {
+@@ -927,8 +919,8 @@ static void bootstrap_attr_stack(struct index_state *istate,
  	}
  
--	if (!strcmp(var, "core.attributesfile")) {
--		FREE_AND_NULL(git_attributes_file);
--		return git_config_pathname(&git_attributes_file, var, value);
--	}
--
- 	if (!strcmp(var, "core.bare")) {
- 		is_bare_repository_cfg = git_config_bool(var, value);
- 		return 0;
-diff --git a/environment.c b/environment.c
-index 9e4c7781be..d7bf911ec5 100644
---- a/environment.c
-+++ b/environment.c
-@@ -42,7 +42,6 @@ char *git_commit_encoding;
- char *git_log_output_encoding;
- char *apply_default_whitespace;
- char *apply_default_ignorewhitespace;
--char *git_attributes_file;
- int zlib_compression_level = Z_BEST_SPEED;
- int pack_compression_level = Z_DEFAULT_COMPRESSION;
- int fsync_object_files = -1;
-diff --git a/environment.h b/environment.h
-index 45e690f203..b7860eed3a 100644
---- a/environment.h
-+++ b/environment.h
-@@ -149,7 +149,6 @@ extern int assume_unchanged;
- extern int warn_on_object_refname_ambiguity;
- extern char *apply_default_whitespace;
- extern char *apply_default_ignorewhitespace;
--extern char *git_attributes_file;
- extern int zlib_compression_level;
- extern int pack_compression_level;
- extern size_t packed_git_window_size;
-diff --git a/repo-settings.c b/repo-settings.c
-index 67e9cfd2e6..17e60aa0d6 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -5,6 +5,7 @@
- #include "midx.h"
- #include "pack-objects.h"
- #include "setup.h"
-+#include "path.h"
+ 	/* home directory */
+-	if (git_attr_global_file()) {
+-		e = read_attr_from_file(git_attr_global_file(), flags);
++	if (repo_settings_get_attributesfile_path(repo)) {
++		e = read_attr_from_file(repo_settings_get_attributesfile_path(repo), flags);
+ 		push_stack(stack, e, NULL, 0);
+ 	}
  
- static void repo_cfg_bool(struct repository *r, const char *key, int *dest,
- 			  int def)
-@@ -148,6 +149,7 @@ void repo_settings_clear(struct repository *r)
- 	struct repo_settings empty = REPO_SETTINGS_INIT;
- 	FREE_AND_NULL(r->settings.fsmonitor);
- 	FREE_AND_NULL(r->settings.hooks_path);
-+	FREE_AND_NULL(r->settings.git_attributes_file);
- 	r->settings = empty;
+@@ -946,7 +938,7 @@ static void bootstrap_attr_stack(struct index_state *istate,
+ 	push_stack(stack, e, NULL, 0);
  }
  
-@@ -207,3 +209,12 @@ void repo_settings_reset_shared_repository(struct repository *repo)
+-static void prepare_attr_stack(struct index_state *istate,
++static void prepare_attr_stack(struct repository *repo, struct index_state *istate,
+ 			       const struct object_id *tree_oid,
+ 			       const char *path, int dirlen,
+ 			       struct attr_stack **stack)
+@@ -969,7 +961,7 @@ static void prepare_attr_stack(struct index_state *istate,
+ 	 * .gitattributes in deeper directories to shallower ones,
+ 	 * and finally use the built-in set as the default.
+ 	 */
+-	bootstrap_attr_stack(istate, tree_oid, stack);
++	bootstrap_attr_stack(repo, istate, tree_oid, stack);
+ 
+ 	/*
+ 	 * Pop the "info" one that is always at the top of the stack.
+@@ -1143,7 +1135,7 @@ static void determine_macros(struct all_attrs_item *all_attrs,
+  * If check->check_nr is non-zero, only attributes in check[] are collected.
+  * Otherwise all attributes are collected.
+  */
+-static void collect_some_attrs(struct index_state *istate,
++static void collect_some_attrs(struct repository *repo, struct index_state *istate,
+ 			       const struct object_id *tree_oid,
+ 			       const char *path, struct attr_check *check)
  {
- 	repo->settings.shared_repository_initialized = 0;
+@@ -1164,7 +1156,7 @@ static void collect_some_attrs(struct index_state *istate,
+ 		dirlen = 0;
+ 	}
+ 
+-	prepare_attr_stack(istate, tree_oid, path, dirlen, &check->stack);
++	prepare_attr_stack(repo, istate, tree_oid, path, dirlen, &check->stack);
+ 	all_attrs_init(&g_attr_hashmap, check);
+ 	determine_macros(check->all_attrs, check->stack);
+ 
+@@ -1310,7 +1302,7 @@ void git_check_attr(struct index_state *istate,
+ 	int i;
+ 	const struct object_id *tree_oid = default_attr_source();
+ 
+-	collect_some_attrs(istate, tree_oid, path, check);
++	collect_some_attrs(the_repository, istate, tree_oid, path, check);
+ 
+ 	for (i = 0; i < check->nr; i++) {
+ 		unsigned int n = check->items[i].attr->attr_nr;
+@@ -1321,14 +1313,14 @@ void git_check_attr(struct index_state *istate,
+ 	}
  }
+ 
+-void git_all_attrs(struct index_state *istate,
++void git_all_attrs(struct repository *repo, struct index_state *istate,
+ 		   const char *path, struct attr_check *check)
+ {
+ 	int i;
+ 	const struct object_id *tree_oid = default_attr_source();
+ 
+ 	attr_check_reset(check);
+-	collect_some_attrs(istate, tree_oid, path, check);
++	collect_some_attrs(repo, istate, tree_oid, path, check);
+ 
+ 	for (i = 0; i < check->all_attrs_nr; i++) {
+ 		const char *name = check->all_attrs[i].attr->name;
+diff --git a/attr.h b/attr.h
+index a04a521092..1ff058bef7 100644
+--- a/attr.h
++++ b/attr.h
+@@ -213,11 +213,13 @@ void git_check_attr(struct index_state *istate,
+ 		    const char *path,
+ 		    struct attr_check *check);
+ 
++struct repository;
 +
-+const char *repo_settings_get_attributesfile_path(struct repository *repo)
-+{
-+	if (!repo->settings.git_attributes_file) {
-+		if (repo_config_get_pathname(repo, "core.attributesfile", &repo->settings.git_attributes_file))
-+			repo->settings.git_attributes_file = xdg_config_home("attributes");
-+	}
-+	return repo->settings.git_attributes_file;
-+}
-diff --git a/repo-settings.h b/repo-settings.h
-index ddc11967e0..58dadd9dae 100644
---- a/repo-settings.h
-+++ b/repo-settings.h
-@@ -66,6 +66,7 @@ struct repo_settings {
- 	size_t packed_git_limit;
+ /*
+  * Retrieve all attributes that apply to the specified path.
+  * check holds the attributes and their values.
+  */
+-void git_all_attrs(struct index_state *istate,
++void git_all_attrs(struct repository *repo, struct index_state *istate,
+ 		   const char *path, struct attr_check *check);
  
- 	char *hooks_path;
-+	char *git_attributes_file;
- };
- #define REPO_SETTINGS_INIT { \
- 	.shared_repository = -1, \
-@@ -92,5 +93,7 @@ const char *repo_settings_get_hooks_path(struct repository *repo);
- int repo_settings_get_shared_repository(struct repository *repo);
- void repo_settings_set_shared_repository(struct repository *repo, int value);
- void repo_settings_reset_shared_repository(struct repository *repo);
-+/* Read the value for "core.attributesfile". */
-+const char *repo_settings_get_attributesfile_path(struct repository *repo);
+ enum git_attr_direction {
+@@ -232,9 +234,6 @@ void attr_start(void);
+ /* Return the system gitattributes file. */
+ const char *git_attr_system_file(void);
  
- #endif /* REPO_SETTINGS_H */
+-/* Return the global gitattributes file, if any. */
+-const char *git_attr_global_file(void);
+-
+ /* Return whether the system gitattributes file is enabled and should be used. */
+ int git_attr_system_is_enabled(void);
+ 
+diff --git a/builtin/check-attr.c b/builtin/check-attr.c
+index 7cf275b893..1b8a89dfb2 100644
+--- a/builtin/check-attr.c
++++ b/builtin/check-attr.c
+@@ -70,7 +70,7 @@ static void check_attr(const char *prefix, struct attr_check *check,
+ 		prefix_path(prefix, prefix ? strlen(prefix) : 0, file);
+ 
+ 	if (collect_all) {
+-		git_all_attrs(the_repository->index, full_path, check);
++		git_all_attrs(the_repository, the_repository->index, full_path, check);
+ 	} else {
+ 		git_check_attr(the_repository->index, full_path, check);
+ 	}
+diff --git a/builtin/var.c b/builtin/var.c
+index ada642a9fe..8fbf5430a4 100644
+--- a/builtin/var.c
++++ b/builtin/var.c
+@@ -71,7 +71,7 @@ static char *git_attr_val_system(int ident_flag UNUSED)
+ 
+ static char *git_attr_val_global(int ident_flag UNUSED)
+ {
+-	char *file = xstrdup_or_null(git_attr_global_file());
++	char *file = xstrdup_or_null(repo_settings_get_attributesfile_path(the_repository));
+ 	if (file) {
+ 		normalize_path_copy(file, file);
+ 		return file;
 -- 
 2.48.GIT
 
