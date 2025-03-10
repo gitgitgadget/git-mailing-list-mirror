@@ -1,168 +1,115 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50C31B3927
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 17:28:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773BA2206BD
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 18:07:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741627707; cv=none; b=rVMtv4H2pwIYjKJjsIfXOS1GVQl7V7PuOYPCjZo3H6YKiHCFud0WBjvkfqbuRuj/yIbtx5I4Mgslyos/+A4+rHPU/ppvl22fn1iCU/ZGoKCTha3gNGcIilYvwxnfA92gvbuyXucL6AZN32BEZNrnuCXDw+D60Eydbg7vw3P6mwU=
+	t=1741630026; cv=none; b=RgEE7+ucWVTh/cigKMQNXEjq9Q4QZE2z43PByc2hePOTKRNe0r+B04ptotVSNOY3QVS+T05kuWIz2xCUWc0bFFEwUdGL2lug3wp5inhXIbrak3ggt8FAFexUoOuHiQnNGeuBkGd1qXNLf/vKp1B/CJCb9vZEZ0BsuF7P16yV6sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741627707; c=relaxed/simple;
-	bh=YQSo/ei9Jr29mwJabnm4r4SRDrIAOYtZldVBiTUu8Jk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B3TAbzRR77HxZQ3SfOjyjDoFLf5a4k0uECgUEdZGeg59TB6tYPXBCuXhVioqel0GYQ6hDJojchv2HfMhV4rAQhvfXMtTBsWO40SVjbbedHCUdFu13ef7L73h8Cg90G7yTbwN92qfjh/paoy3EJgkeTgNv+QcFdUb3XzB9WHuOB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ce5Qs89h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VMZUrW6J; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741630026; c=relaxed/simple;
+	bh=9YvqJnL83+j+YPO28aUA7omKJByc9fOVbH0n1Qd1GqU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QV0zoZWQKE+AlIc53Y/Ov8yqoCoFyQ1FVl3o0bymp77TnviuNxkJKM6uAGVDUMVku92sBtmvP9QHysYB2x8aD4swAHDItOx4oFV7S9k3VRQwyc/0cQLYnVBBOZK2DkjGTAM8rjJQLb2SOjNpufM2Ed/w8oaWYf6hdjPepQymG2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FoWokNnw; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ce5Qs89h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VMZUrW6J"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9664B11401BC;
-	Mon, 10 Mar 2025 13:28:24 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 10 Mar 2025 13:28:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741627704; x=1741714104; bh=uINygo8qW3
-	Ne/pPhS3PgjLagm2Vu0kli/rstTV6JPes=; b=ce5Qs89h64YXm0xvhY1tQ7k+Iq
-	WeuSbCkDx/78dbR0CCPcsH65zARR0fuQfNDYsFHFm1Aqqan5Zq+ZHCjhX0Wv1GKM
-	ckihOxpGI5hbKD60NdfSdeoOyVilg1KjZnHyp9eFbWFcAhwYfUmjCsyvtjL0+pVB
-	E2uxbSjkJv3ogDkpw11anvUCu5ET8AkI9h3QUY+6R7EXVQB86kQqc5AKi/8nHXq9
-	3bhg7cLgNg8XVXL1JTerd7G9wMqGMIz6Qxv5YLmXDJbD4hR9/DX9IhzrfR9y2No1
-	tXfl01vZccBqSOschI2ht+txUuIdfg+08jHe81CvrTkDWobzSEPAYhat7Opw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741627704; x=1741714104; bh=uINygo8qW3Ne/pPhS3PgjLagm2Vu0kli/rs
-	tTV6JPes=; b=VMZUrW6JadkpotdeHbM8uNP8xKfZEe9/RZjhK74N+ynPCZPgEO9
-	/kguH0zTetYAX2dl9NpVKf1Owk2GmmA8azH5SICjV2NriiFfRLJEw9Tt1SjIxMju
-	GmW5Tk2Akq2dDpkipIdoj39w1rcYlnT+8e3GbGSBqRo6irjfzCIvtdtm5Cv8W0+w
-	qD8/N6+unL03DlmDvIshfhLXYjv5ApFzS0lXrVYSQ32ddJV+97BEBtMReixwY6RO
-	FyIwqJriBAXHhT71MC2PIOeAktFe17sDYGjQPONhLxBF9UIZgLEc4PYvgLgTiV3J
-	5nESN+e6WqRykvm0slEjCqU3twO2VQpJu8Q==
-X-ME-Sender: <xms:OCHPZxFw4DS1CI57B0wWKnmORLQXUqVpnM7GwoDoDC3uevLEmEppzg>
-    <xme:OCHPZ2UZ4X0_w9_040LfdzTxN3y6QHyijlyB05BdcH5smvc-UuINmmyRyno0Y3Ije
-    pT1eJRGoOTZVWZ4dg>
-X-ME-Received: <xmr:OCHPZzLmJMw8j1fLTKzuNEFP8gUOIf4-ps_swqI3SUZheaYIofB9TT0kz74c3cSxPPbiHW2JdHrOHR_v120aR8Wet1UOf79L55NN>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudelleehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepudegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhith
-    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhes
-    ghhmgidruggvpdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomhdprh
-    gtphhtthhopehjohhnrghthhgrnhhtrghnmhihsehgohhoghhlvgdrtghomhdprhgtphht
-    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:OCHPZ3FbgumgM7fCK40suX4sVSp_vo1eYy6FCtPYBSQQBGKldVN9SQ>
-    <xmx:OCHPZ3U5GBFMhJ3e2IrrVOmmPncBh1e7nr6VhWKC8sLs3g4woB2YXA>
-    <xmx:OCHPZyMxsvl_lfHnuobAYxAtnTDUAbEAgLHikogsD_WA-8JAAC2gQw>
-    <xmx:OCHPZ23v5YGIN6jw-lfRuqurHZQGjw5TvzSbR-VjGygwUqYdlnHIDw>
-    <xmx:OCHPZ4sDChgosSQ-cHCHRJPj9f7i_Djp1uhqJwQJWkchPMJIinAii9La>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Mar 2025 13:28:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  johannes.schindelin@gmx.de,  johncai86@gmail.com,
-  jonathantanmy@google.com,  karthik.188@gmail.com,
-  kristofferhaugsbakk@fastmail.com,  me@ttaylorr.com,  newren@gmail.com,
-  peff@peff.net,  ps@pks.im,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 00/13] PATH WALK II: Add --path-walk option to 'git
- pack-objects'
-In-Reply-To: <pull.1819.git.1741571455.gitgitgadget@gmail.com> (Derrick Stolee
-	via GitGitGadget's message of "Mon, 10 Mar 2025 01:50:42 +0000")
-References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
-Date: Mon, 10 Mar 2025 10:28:22 -0700
-Message-ID: <xmqqwmcw7q2x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FoWokNnw"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2234e4b079cso82390885ad.1
+        for <git@vger.kernel.org>; Mon, 10 Mar 2025 11:07:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741630025; x=1742234825; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Yn2L/PB8nGVLa9NB5KS7DVfGJv3G9Eg3/zncgTCz2zc=;
+        b=FoWokNnw9fN2B7Dwhqm9yXgAgqRAnlwVJq20qsBVhbd+daWEop2VxwBAx132KpfWU8
+         Lex2zuWZdfXFLHmuDKgNwMAC1DLmbB5Klj/A+iUpoDGtCiogjbkoBbmX+xbeXEA1lmpH
+         bbyIAVR6VWvh09Ov15H6Vdy5+6hD+V13xGKEMPP6chXyoupTv+ny3/SQtEUmlDRUCYVR
+         H1bp0wMXijGu4dMFeGdaiLFg42epzYFxZXHGHKTDuWcuL+oBtlLPoHLFkXGD+XnQpfSs
+         yF5Gc4ksGrAEztDHQ4QBtXRPr7EaD80NYYveyiNW0zsTrxjByJwSRdU7mYRi2ltMyqeF
+         RHzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741630025; x=1742234825;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yn2L/PB8nGVLa9NB5KS7DVfGJv3G9Eg3/zncgTCz2zc=;
+        b=PzSfTMIE6pp2fW3rmAzwKiE3kdmiAJt9OuvK9e6KIJKiyguEabOLt9UBXaQhxM3b/Z
+         bm85zhWnEA4nQelWbYEZ2K5ovxA9eHCGXPPOi9UPMZdC86hQtap3S3RtF4h9S5a/yvVm
+         DZeVj0ZJl8WSruZAeRQ6utK0FLfmB9HE441IyER0Opdjkis7usxkMCmoRuQDjaDVAQrB
+         dtorx0omwOBRaXClqynLOyShApBDz81FCUSlPODLZyVSKzWIh5jINJ7MA57WUp/bGQ8t
+         BpNrqY8H2QJQ87YoLRtJg7VWAqcNyj1UO17bW4wYseQGaKAp8guAzfbTreHUlh7pQZGh
+         nlgw==
+X-Gm-Message-State: AOJu0YzEsP/axlEfjz67vFL25lsS8LRtA1hPYlc+drjkofntfb3fEgmJ
+	haeztr/0HSU0okVyl3VxT8y598vJ7lTuwUjzCfPdGM8LZGBE3D6C
+X-Gm-Gg: ASbGnctA+f1FGghS+H/h4ZTizsUwfYUd6NmMpzYculwywwWjL40enjVRnQaPvcqBq9e
+	dp7L0R7mvD1PqvGesMPZz6Jq+GrmDPm4WQlYLAFxdzzz1aexKgexWJ3x8rfSfxKkuwhpCTQgAE1
+	ftS+cWIyubiNPQEzFe1qRsZWuAzBprnXkSTotxHX9M6jnFQExQuxwUzEQeO9j/8jMqYYOR2zV72
+	JcmOJOCHbD67gTiz4P23RQo0GoK9QAmX0BwgiRCsl8dyyjtK7nipP3AVufV45o9YzFO3u8IQVp0
+	Ny8YmiIu+DUu1HtyCBFFCf+WNEvHktG+zBiPgqpSMF48DJd82kzX20W9mOhOgMqdGEQrCyUSuH6
+	Om7CHZx8Ma3xgKxJDmDPZJlHi
+X-Google-Smtp-Source: AGHT+IEqkwrKMRyXOsWYRjWKbsyb94Fje4+Vysk7ZPUJAxjMbR5BUF/SDeI8/b4/O2PZCBZ3936AKA==
+X-Received: by 2002:a17:902:e809:b0:223:53fb:e1dd with SMTP id d9443c01a7336-22428886811mr178467345ad.9.1741630024546;
+        Mon, 10 Mar 2025 11:07:04 -0700 (PDT)
+Received: from ?IPV6:2402:3a80:4163:e5a:15b1:e92d:8ad3:3f81? ([2402:3a80:4163:e5a:15b1:e92d:8ad3:3f81])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-224109e84a6sm81760095ad.55.2025.03.10.11.07.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Mar 2025 11:07:03 -0700 (PDT)
+Message-ID: <d68646b7-0513-4a54-a145-cdbd0cd67a4a@gmail.com>
+Date: Mon, 10 Mar 2025 23:37:07 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC PATCH] decorate: fix sign comparison warnings
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <afa6b428-3190-42ae-9eac-540c95b576fd@gmail.com>
+ <xmqqikog96uz.fsf@gitster.g>
+Content-Language: en-US
+From: Arnav Bhate <bhatearnav@gmail.com>
+In-Reply-To: <xmqqikog96uz.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> ... deltas across path boundaries. This second pass is much faster than a fresh
-> pass since the existing deltas are used as a limit for the size of
-> potentially new deltas, short-circuiting the checks when the delta size
-> exceeds the current-best.
+> A simpler fix to the first hunk may be to get rid of the
+> intermediate variable altogether and always refer to n->size
+> when its value is needed.  The compiler should be able to see in
+> this static file-scope helper function that n->size would not change
+> at all and do the right thing (i.e. allocate a register to hold its
+> value at entry, if needed) without a hand-optimization we see in the
+> original code.
+> 
+> The same can be said for the second hunk.  The intermediate variable
+> is used only once, and one could argue that its presense obscures
+> the condition under which grow_decoration() is called by splitting a
+> logically single expression into two.
+> 
+> Which one is easier to grok?
+> 
+> 	unsigned nr = n->nr + 1;
+> 	if (nr > n->size * 2 / 3)
+> 		grow_decoration(n);
+> 
+> or
+> 	
+> 	if ((n->nr + 1) > n->size * 2 / 3)
+> 		grow_decoration(n);
 
-Very nice.
+Your suggestion makes sense to me, the second one is better. I will send an
+updated patch. I also found some more places in the file where a change from
+int to unsigned int should happen, but where int does not cause warnings. I
+will also include it in the patch.
 
-> The microsoft/fluentui is a public Javascript repo that suffers from many of
-> the name hash collisions as internal repositories I've worked with. Here is
-> a comparison of the compressed size and end-to-end time of the repack:
->
-> Repack Method    Pack Size       Time
-> ---------------------------------------
-> Hash v1             439.4M      87.24s
-> Hash v2             161.7M      21.51s
-> Path Walk           142.5M      28.16s
->
->
-> Less dramatic, but perhaps more standardly structured is the nodejs/node
-> repository, with these stats:
->
-> Repack Method       Pack Size       Time
-> ------------------------------------------
-> Hash v1                739.9M      71.18s
-> Hash v2                764.6M      67.82s
-> Path Walk              698.0M      75.10s
->
->
-> Even the Linux kernel repository gains some benefits, even though the number
-> of hash collisions is relatively low due to a preference for short
-> filenames:
->
-> Repack Method       Pack Size       Time
-> ------------------------------------------
-> Hash v1                  2.5G     554.41s
-> Hash v2                  2.5G     549.62s
-> Path Walk                2.2G     559.00s
+-- 
+Regards,
+Arnav Bhate
+(He/Him)
 
-This third one, v2 not performing much better than v1, is quite
-surprising.
-
-> The drawbacks of the --path-walk feature is that it will be harder to
-> integrate it with bitmap features, specifically delta islands. This is not
-> insurmountable, but would require more work, such as a revision walk to
-> paint objects with reachability information before using that during delta
-> computations.
->
-> However, there should still be significant benefits to Git clients trying to
-> save space and improve local performance.
-
-Sure.  More experiments and more approaches will eventually give us
-overall improvement.  I am hoping that we will be able to condense
-the result of these different approaches and their combinations into
-easy-to-choose-from canned choices (as opposed to a myriad of little
-knobs the users need to futz with without really understanding what
-they are tweaking).
-
-> This feature was shipped with similar features in microsoft/git as of
-> v2.47.0.vfs.0.3 [4]. This was used in CI machines for an internal monorepo
-> that had significant repository growth due to constructing a batch of
-> beachball [5] CHANGELOG.[md|json] files and pushing them to a release
-> branch. These pushes were frequently 70-200 MB due to poor delta
-> compression. Using the 'pack.usePathWalk=true' config, these pushes dropped
-> in size by 100x while improving performance. Since these CI machines were
-> working with a shallow clone, the 'edge_aggressive' changes were required to
-> enable the path-walk option.
-
-Nice, thanks.
