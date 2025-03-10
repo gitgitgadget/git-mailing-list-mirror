@@ -1,56 +1,56 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CD113E41A
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 07:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE52A1D5CD1
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 07:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741590811; cv=none; b=bQhW/IJ6FPIDmhmnWIveLwRenZGDZbNki3kNwZx7HFVryHr1UBfWGqVw4gsQZoqcFwsldr+xWYqFZoM1Pehcf2MoT9OclaBIdUYaEFzkbcZ9ERvvwu8gXwSgAUVN8ftN1Q3MTBJuDghXa318tWuZnvZ5VRDtUp6gbIcP6mwz/bA=
+	t=1741590813; cv=none; b=OwhoUUSrj6OfifOHBhaHjvfjUJZ/tjQXpcLI21AWxffYIy41Xd5xVpIIaS8hwmAz1iBC2YY61obq3rJcwqG3aR8Bb5MAk1+YmXQQQt498HCw8OmShsxWOTaqfVEDcjVHGEHKEC1VWZFehENLPnK30fF3BYooFpp26x6zb0vWffo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741590811; c=relaxed/simple;
-	bh=bv8IZhDz4zBVj8rlWOvBbfV0uGeJBXuQZTCLMHM4Ymc=;
+	s=arc-20240116; t=1741590813; c=relaxed/simple;
+	bh=HPvG6QRmFd2LxU6XlVTh08OhreRXhqgvoiQaKXz9SOk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KsdkeW8D05liCZ9sU9H6ekqXh86KVqMmoLCJw3/XMTEWZorkLgrpoFb/5KkS4p6DizdMtUSnR2GGiJkwxFdAZs9aXZii4M+ZLWeM/e0ZGyDzhNGFA4F449oCqPoajtgcY4AtOVA3RDS/Dp5LLLzo8ZGzbOFmVPCbjrRy1c14+RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d4SYK7Ga; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oLV5lvVY; arc=none smtp.client-ip=202.12.124.145
+	 In-Reply-To:To:Cc; b=kbj8mu6o7v9mQ4EjISZdnMwTO23QlVVERnSw1xQCWqPynB+v35/y69u8ln6gZZGqQ4vrTQpzX8naQQ/50hSXiPIrFdTHGdYG281LdPIaDE5oTrKWpIuHyrKeES6siwqw7MrE65W3skOekCs3NML1pP8/aDUrcYlcpgL01tjWVcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kGqom28t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t5ig6uAH; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d4SYK7Ga";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oLV5lvVY"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4780711400FD;
-	Mon, 10 Mar 2025 03:13:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kGqom28t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t5ig6uAH"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id B5A8711400F8;
+	Mon, 10 Mar 2025 03:13:29 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 10 Mar 2025 03:13:28 -0400
+  by phl-compute-12.internal (MEProxy); Mon, 10 Mar 2025 03:13:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1741590808;
-	 x=1741677208; bh=86WTk53QhHtRTvyOJyqa+ksLpT5zPa/TZiK/zuYFKRQ=; b=
-	d4SYK7GakeVnCPKU3kaGKfJ2hflW4hAFK6TFlkNNnazKeHElWt10CcoDtKTPqoSB
-	sMCedw+lS2bIQwRHtY3LCOjgkGKNKO5y1fOCCLf1QYvTGijV/nLA5jZAeJQKexmo
-	kVx/vD6DMIL+DmsMOimJVnno/fmqSf91rYLjbl1qbevG+29eQpkNvV1AXa33v6xz
-	vd0F9TDZRCKIMB2Wb0HAAz6AW7v/FPgmDLORUtiT9HXYC2lRDcaxhlPAIr5sjWfz
-	bidQLS/R6WQbryB1/bKeODouCOCfBdAdk6u7nWpVxFLZHc/EpnXfBLKN7Vc3b3yc
-	bOxEt2hYJsbeoV/KIJiXaA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1741590809;
+	 x=1741677209; bh=FHKn7PD/XxTVvkaeLX34P8BFoIX4bdw+RpQkUl+Mmqs=; b=
+	kGqom28tqrW5lpI1C+sh2yz3OB13/K0xMX2IvEXJAEBzUFvNeZAcxLavRwiDejkE
+	xyksYTu1ftdYiVRKVsygWg23bZFk98vP9E3Sfr8E+kXS3NgWTzMaThCbOoZyT0G4
+	/27aaYC28IrV+HgyzdV394r2MYRUQAEa8UtWR5Z0gc/b4QpI0H8op28DJ2h/87cl
+	YEmvBJatBLmg4Rxa7cuE2916Y8owdSjGu5AuM7TotwcwVFfxnqE/tp9vNWTeTur0
+	MYi0pfRuHZNXFiSA/wsUJk7tOXqsf3wAqHXCDyKjFxIS8gx41MyPQ8wWZx/DeDPi
+	LyXl70qp8IJLSnDprexzWA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741590808; x=
-	1741677208; bh=86WTk53QhHtRTvyOJyqa+ksLpT5zPa/TZiK/zuYFKRQ=; b=o
-	LV5lvVY5/g7uUqDQjrIoeX1L/mkmg/RQtQU/ExyV9bGiBaqh0OlH6Q81/tQmr5nt
-	n5W2NTz+ufrFbXGv5qzVGw94uy2FumioJdKgJhFh3YK4QCncvqSdMa+4qX3X3hCr
-	TrHzpxX5Nhc/UBjUah1wjD7riJkIPAO3sVYBYNP7ML+mFlseD78XdSS+VhEfwliq
-	m2+KtOElDZVNmYum3LykIPV2cM35SvGqevAbVMHZ6Jn+K5rwUg5aVNIjPprZSb4m
-	cP781VpVDWNxcxj57lE0Wm3tC34h1lpM80a4mZoCtxORBTyCpQiZny8FfKRI2sye
-	hgy2UmO9EcTqUreRmTRAg==
-X-ME-Sender: <xms:F5HOZ98Q5tKGsObmuLnufwhQPtC8-EHRzR7EUe4wXQcdPNBNSEmatA>
-    <xme:F5HOZxulp7ZWbfHvSwfO_0QSD1yZeBFNxsMkYoCHR-PnJ2iaea0kTfHHVncxHcNn1
-    jQw3sVSc84FQQYXzg>
-X-ME-Received: <xmr:F5HOZ7Dm-_mgYqYMttbY9nYlw5j-fwRL_Wpxy1lWaZamhosmrTIqqZt_4qianVpnSZFB3ZVSSRVv72KETlXXi8xHE3oKl5i483zIqK9B0Zzb_g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudekjedvucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741590809; x=
+	1741677209; bh=FHKn7PD/XxTVvkaeLX34P8BFoIX4bdw+RpQkUl+Mmqs=; b=t
+	5ig6uAHkdTJDKXtJvygEdFAgDI0VfJcsDNHmC4hoc0pd7sV1rTLod5D3rLjLhcyW
+	RxlLoZlDei6Hy2RkcErp+gSNPeBcMGJyDFzvGH0Xs+ahKx3yBY5Wyp91LrGcBnOD
+	eRh8CyOX6B1h2XOeoTd9rSR1/j2iQdbBhVinhe1iQVHHz/BqGPMEZzYdAMAOHWIK
+	S2DLFChN4mVcXOj1TU4IQj31W6X/w0iPwvkaEw1IwLEaCXSoEEMQuB9q/LaDGIYK
+	LxWPims9LAODMWitT9z+dbLYQsCpQO7qoUQdMlDqf4YokbMzcmcMPRGPFvrsp3jG
+	ziIfg3lbZlddeGoRxangw==
+X-ME-Sender: <xms:GZHOZ05n3epqT5KW9fv_7L37DW5urYMmaurmIu2e2NRM32TwlhD30A>
+    <xme:GZHOZ14s8xJG69p75_Ml2OdMQ_n8WgOzhiuwt9rPhGnBj6pozm03MxtF5pad4F16F
+    RxORS6ehbiG2rUHsw>
+X-ME-Received: <xmr:GZHOZzewbu2Yldv3IJRO7RRcuNKRw5glmTlM1e84o5MPFs8UVdsUUnMed_zaLQ62kCMGNo0gAwagySJajQAtExO343UN2XnATg_9db_DdDVO1Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudekjeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudekjedvucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrh
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgr
+    rhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrh
     esghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:F5HOZxfFplDNRpx_4yorMa7CVXS8vdBrMX8Kpp_LRzlU0yxCkW7kIw>
-    <xmx:GJHOZyNZjAsnJR-tIORa0aamP78WQi7GWsnmJDNYix7TUi3joZVxAg>
-    <xmx:GJHOZzkCAgoMa2cWFvuYYWRPgzcS-ZRYukZMnnez2vLosc9IhpiyYA>
-    <xmx:GJHOZ8u5A_734fnTKm0pXxpcKEpRSuRSYVcJ8gvHUDYQhQsvlzdd8A>
-    <xmx:GJHOZ_qWKFOz9dFjySLkC7heKQDLb_A_GMzCPy7n3TS8u1PVsZczGDgU>
+X-ME-Proxy: <xmx:GZHOZ5LdCfQy6NwSpcfy26rUJCCNM18CxcA8FKKYYieQKrx0F20Iwg>
+    <xmx:GZHOZ4JHIOBSjL8Ve7vO29pAvN2fxJ4clGRPxgyzOGCGG4X4pnYTWw>
+    <xmx:GZHOZ6zau5aHfBTYdklUnYw3LGTfcdeN3VxWQavLanHS-6U7XQpaoA>
+    <xmx:GZHOZ8I0oCUeK1qEe4ILjlYIfByTe3CLkr0J8IlWQ4V97njfULfEPQ>
+    <xmx:GZHOZ9HZZs2ezVn1G_2ivCkHVOjHEMM2pi8gjHVnvezHxfml151vuOxJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Mar 2025 03:13:27 -0400 (EDT)
+ 10 Mar 2025 03:13:28 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6349be76 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 10 Mar 2025 07:13:25 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id c765be2c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 10 Mar 2025 07:13:26 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 10 Mar 2025 08:13:20 +0100
-Subject: [PATCH v4 01/12] csum-file: stop depending on `the_repository`
+Date: Mon, 10 Mar 2025 08:13:21 +0100
+Subject: [PATCH v4 02/12] object: stop depending on `the_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250310-b4-pks-objects-without-the-repository-v4-1-f201b8ec57ba@pks.im>
+Message-Id: <20250310-b4-pks-objects-without-the-repository-v4-2-f201b8ec57ba@pks.im>
 References: <20250310-b4-pks-objects-without-the-repository-v4-0-f201b8ec57ba@pks.im>
 In-Reply-To: <20250310-b4-pks-objects-without-the-repository-v4-0-f201b8ec57ba@pks.im>
 To: git@vger.kernel.org
@@ -92,417 +92,417 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>, Elijah Newren <newren@gmail.com>
 X-Mailer: b4 0.14.2
 
-There are multiple sites in "csum-file.c" where we use the global
-`the_repository` variable, either explicitly or implicitly by using
-`the_hash_algo`.
-
-Refactor the code to stop using `the_repository` by adapting functions
-to receive required data as parameters. Adapt callsites accordingly by
-either using `the_repository->hash_algo`, or by using a context-provided
-hash algorithm in case the subsystem already got rid of its dependency
-on `the_repository`.
+There are a couple of functions exposed by "object.c" that implicitly
+depend on `the_repository`. Remove this dependency by injecting the
+repository via a parameter. Adapt callers accordingly by simply using
+`the_repository`, except in cases where the subsystem is already free of
+the repository. In that case, we instead pass the repository provided by
+the caller's context.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fast-import.c  |  2 +-
- builtin/index-pack.c   |  2 +-
- builtin/pack-objects.c |  3 ++-
- commit-graph.c         |  9 ++++++---
- csum-file.c            | 28 ++++++++++++++++------------
- csum-file.h            | 12 ++++++++----
- midx-write.c           |  6 ++++--
- midx.c                 |  3 ++-
- pack-bitmap-write.c    |  2 +-
- pack-bitmap.c          |  9 +++++----
- pack-check.c           |  2 +-
- pack-revindex.c        |  3 ++-
- pack-write.c           | 12 ++++++------
- read-cache.c           |  2 +-
- 14 files changed, 56 insertions(+), 39 deletions(-)
+ builtin/fsck.c         |  4 ++--
+ builtin/grep.c         |  2 +-
+ builtin/index-pack.c   |  4 ++--
+ builtin/log.c          |  2 +-
+ builtin/name-rev.c     |  4 ++--
+ builtin/pack-objects.c |  2 +-
+ builtin/prune.c        |  2 +-
+ midx-write.c           |  4 ++--
+ object.c               | 21 +++++++++++----------
+ object.h               | 10 ++++++----
+ pack-bitmap.c          |  6 +++---
+ reachable.c            |  6 +++---
+ revision.c             |  3 ++-
+ shallow.c              | 10 +++++-----
+ upload-pack.c          | 12 ++++++------
+ 15 files changed, 48 insertions(+), 44 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 397a6f46ad8..86e6e754816 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -770,7 +770,7 @@ static void start_packfile(void)
- 	p->pack_fd = pack_fd;
- 	p->do_not_close = 1;
- 	p->repo = the_repository;
--	pack_file = hashfd(pack_fd, p->pack_name);
-+	pack_file = hashfd(the_repository->hash_algo, pack_fd, p->pack_name);
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index eea1d43647f..62c7494bbda 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -399,12 +399,12 @@ static void check_connectivity(void)
+ 	}
  
- 	pack_data = p;
- 	pack_size = write_pack_header(pack_file, 0);
+ 	/* Look up all the requirements, warn about missing objects.. */
+-	max = get_max_object_index();
++	max = get_max_object_index(the_repository);
+ 	if (verbose)
+ 		fprintf_ln(stderr, _("Checking connectivity (%d objects)"), max);
+ 
+ 	for (i = 0; i < max; i++) {
+-		struct object *obj = get_indexed_object(i);
++		struct object *obj = get_indexed_object(the_repository, i);
+ 
+ 		if (obj)
+ 			check_object(obj);
+diff --git a/builtin/grep.c b/builtin/grep.c
+index d1427290f77..cbbf6f26439 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1144,7 +1144,7 @@ int cmd_grep(int argc,
+ 			break;
+ 		}
+ 
+-		object = parse_object_or_die(&oid, arg);
++		object = parse_object_or_die(the_repository, &oid, arg);
+ 		if (!seen_dashdash)
+ 			verify_non_filename(prefix, arg);
+ 		add_object_array_with_path(object, arg, &list, oc.mode, oc.path);
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 52cc97d52cb..3eb5af20950 100644
+index 3eb5af20950..1268032d769 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -1381,7 +1381,7 @@ static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned cha
- 		REALLOC_ARRAY(objects, nr_objects + nr_unresolved + 1);
- 		memset(objects + nr_objects + 1, 0,
- 		       nr_unresolved * sizeof(*objects));
--		f = hashfd(output_fd, curr_pack);
-+		f = hashfd(the_repository->hash_algo, output_fd, curr_pack);
- 		fix_unresolved_deltas(f);
- 		strbuf_addf(&msg, Q_("completed with %d local object",
- 				     "completed with %d local objects",
+@@ -279,14 +279,14 @@ static unsigned check_objects(void)
+ {
+ 	unsigned i, max, foreign_nr = 0;
+ 
+-	max = get_max_object_index();
++	max = get_max_object_index(the_repository);
+ 
+ 	if (verbose)
+ 		progress = start_delayed_progress(the_repository,
+ 						  _("Checking objects"), max);
+ 
+ 	for (i = 0; i < max; i++) {
+-		foreign_nr += check_object(get_indexed_object(i));
++		foreign_nr += check_object(get_indexed_object(the_repository, i));
+ 		display_progress(progress, i + 1);
+ 	}
+ 
+diff --git a/builtin/log.c b/builtin/log.c
+index 04a6ef97bc1..0d4c579dad7 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -2468,7 +2468,7 @@ int cmd_format_patch(int argc,
+ 	base = get_base_commit(&cfg, list, nr);
+ 	if (base) {
+ 		reset_revision_walk();
+-		clear_object_flags(UNINTERESTING);
++		clear_object_flags(the_repository, UNINTERESTING);
+ 		prepare_bases(&bases, base, list, nr);
+ 	}
+ 
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index beac166b5cb..2fe82c839ba 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -667,9 +667,9 @@ int cmd_name_rev(int argc,
+ 	} else if (all) {
+ 		int i, max;
+ 
+-		max = get_max_object_index();
++		max = get_max_object_index(the_repository);
+ 		for (i = 0; i < max; i++) {
+-			struct object *obj = get_indexed_object(i);
++			struct object *obj = get_indexed_object(the_repository, i);
+ 			if (!obj || obj->type != OBJ_COMMIT)
+ 				continue;
+ 			show_name(obj, NULL,
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 58a9b161262..8e282f2a980 100644
+index 8e282f2a980..c3adbc94504 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -1311,7 +1311,8 @@ static void write_pack_file(void)
- 		char *pack_tmp_name = NULL;
+@@ -4161,7 +4161,7 @@ static int mark_bitmap_preferred_tip(const char *refname,
+ 	if (!peel_iterated_oid(the_repository, oid, &peeled))
+ 		oid = &peeled;
  
- 		if (pack_to_stdout)
--			f = hashfd_throughput(1, "<stdout>", progress_state);
-+			f = hashfd_throughput(the_repository->hash_algo, 1,
-+					      "<stdout>", progress_state);
- 		else
- 			f = create_tmp_packfile(&pack_tmp_name);
+-	object = parse_object_or_die(oid, refname);
++	object = parse_object_or_die(the_repository, oid, refname);
+ 	if (object->type == OBJ_COMMIT)
+ 		object->flags |= NEEDS_BITMAP;
  
-diff --git a/commit-graph.c b/commit-graph.c
-index 1021ccb983d..8286d5dda24 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2090,11 +2090,13 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 			return -1;
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 1c357fffd8c..8f52da8bd66 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -185,7 +185,7 @@ int cmd_prune(int argc,
+ 		const char *name = *argv++;
+ 
+ 		if (!repo_get_oid(the_repository, name, &oid)) {
+-			struct object *object = parse_object_or_die(&oid,
++			struct object *object = parse_object_or_die(the_repository, &oid,
+ 								    name);
+ 			add_pending_object(&revs, object, "");
  		}
- 
--		f = hashfd(get_tempfile_fd(graph_layer), get_tempfile_path(graph_layer));
-+		f = hashfd(the_repository->hash_algo,
-+			   get_tempfile_fd(graph_layer), get_tempfile_path(graph_layer));
- 	} else {
- 		hold_lock_file_for_update_mode(&lk, ctx->graph_name,
- 					       LOCK_DIE_ON_ERROR, 0444);
--		f = hashfd(get_lock_file_fd(&lk), get_lock_file_path(&lk));
-+		f = hashfd(the_repository->hash_algo,
-+			   get_lock_file_fd(&lk), get_lock_file_path(&lk));
- 	}
- 
- 	cf = init_chunkfile(f);
-@@ -2716,7 +2718,8 @@ static void graph_report(const char *fmt, ...)
- 
- static int commit_graph_checksum_valid(struct commit_graph *g)
- {
--	return hashfile_checksum_valid(g->data, g->data_len);
-+	return hashfile_checksum_valid(the_repository->hash_algo,
-+				       g->data, g->data_len);
- }
- 
- static int verify_one_commit_graph(struct repository *r,
-diff --git a/csum-file.c b/csum-file.c
-index b58c183a4f0..6e21e3cac8a 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -8,8 +8,6 @@
-  * able to verify hasn't been messed with afterwards.
-  */
- 
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "csum-file.h"
- #include "git-zlib.h"
-@@ -148,21 +146,23 @@ void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
- 	}
- }
- 
--struct hashfile *hashfd_check(const char *name)
-+struct hashfile *hashfd_check(const struct git_hash_algo *algop,
-+			      const char *name)
- {
- 	int sink, check;
- 	struct hashfile *f;
- 
- 	sink = xopen("/dev/null", O_WRONLY);
- 	check = xopen(name, O_RDONLY);
--	f = hashfd(sink, name);
-+	f = hashfd(algop, sink, name);
- 	f->check_fd = check;
- 	f->check_buffer = xmalloc(f->buffer_len);
- 
- 	return f;
- }
- 
--static struct hashfile *hashfd_internal(int fd, const char *name,
-+static struct hashfile *hashfd_internal(const struct git_hash_algo *algop,
-+					int fd, const char *name,
- 					struct progress *tp,
- 					size_t buffer_len)
- {
-@@ -176,7 +176,7 @@ static struct hashfile *hashfd_internal(int fd, const char *name,
- 	f->do_crc = 0;
- 	f->skip_hash = 0;
- 
--	f->algop = unsafe_hash_algo(the_hash_algo);
-+	f->algop = unsafe_hash_algo(algop);
- 	f->algop->init_fn(&f->ctx);
- 
- 	f->buffer_len = buffer_len;
-@@ -186,17 +186,19 @@ static struct hashfile *hashfd_internal(int fd, const char *name,
- 	return f;
- }
- 
--struct hashfile *hashfd(int fd, const char *name)
-+struct hashfile *hashfd(const struct git_hash_algo *algop,
-+			int fd, const char *name)
- {
- 	/*
- 	 * Since we are not going to use a progress meter to
- 	 * measure the rate of data passing through this hashfile,
- 	 * use a larger buffer size to reduce fsync() calls.
- 	 */
--	return hashfd_internal(fd, name, NULL, 128 * 1024);
-+	return hashfd_internal(algop, fd, name, NULL, 128 * 1024);
- }
- 
--struct hashfile *hashfd_throughput(int fd, const char *name, struct progress *tp)
-+struct hashfile *hashfd_throughput(const struct git_hash_algo *algop,
-+				   int fd, const char *name, struct progress *tp)
- {
- 	/*
- 	 * Since we are expecting to report progress of the
-@@ -204,7 +206,7 @@ struct hashfile *hashfd_throughput(int fd, const char *name, struct progress *tp
- 	 * size so the progress indicators arrive at a more
- 	 * frequent rate.
- 	 */
--	return hashfd_internal(fd, name, tp, 8 * 1024);
-+	return hashfd_internal(algop, fd, name, tp, 8 * 1024);
- }
- 
- void hashfile_checkpoint_init(struct hashfile *f,
-@@ -246,13 +248,15 @@ uint32_t crc32_end(struct hashfile *f)
- 	return f->crc32;
- }
- 
--int hashfile_checksum_valid(const unsigned char *data, size_t total_len)
-+int hashfile_checksum_valid(const struct git_hash_algo *algop,
-+			    const unsigned char *data, size_t total_len)
- {
- 	unsigned char got[GIT_MAX_RAWSZ];
- 	struct git_hash_ctx ctx;
--	const struct git_hash_algo *algop = unsafe_hash_algo(the_hash_algo);
- 	size_t data_len = total_len - algop->rawsz;
- 
-+	algop = unsafe_hash_algo(algop);
-+
- 	if (total_len < algop->rawsz)
- 		return 0; /* say "too short"? */
- 
-diff --git a/csum-file.h b/csum-file.h
-index ffccbf09966..07ae11024af 100644
---- a/csum-file.h
-+++ b/csum-file.h
-@@ -45,9 +45,12 @@ int hashfile_truncate(struct hashfile *, struct hashfile_checkpoint *);
- #define CSUM_FSYNC		2
- #define CSUM_HASH_IN_STREAM	4
- 
--struct hashfile *hashfd(int fd, const char *name);
--struct hashfile *hashfd_check(const char *name);
--struct hashfile *hashfd_throughput(int fd, const char *name, struct progress *tp);
-+struct hashfile *hashfd(const struct git_hash_algo *algop,
-+			int fd, const char *name);
-+struct hashfile *hashfd_check(const struct git_hash_algo *algop,
-+			      const char *name);
-+struct hashfile *hashfd_throughput(const struct git_hash_algo *algop,
-+				   int fd, const char *name, struct progress *tp);
- 
- /*
-  * Free the hashfile without flushing its contents to disk. This only
-@@ -66,7 +69,8 @@ void crc32_begin(struct hashfile *);
- uint32_t crc32_end(struct hashfile *);
- 
- /* Verify checksum validity while reading. Returns non-zero on success. */
--int hashfile_checksum_valid(const unsigned char *data, size_t len);
-+int hashfile_checksum_valid(const struct git_hash_algo *algop,
-+			    const unsigned char *data, size_t len);
- 
- /*
-  * Returns the total number of bytes fed to the hashfile so far (including ones
 diff --git a/midx-write.c b/midx-write.c
-index 48d6558253e..26d9d8bb148 100644
+index 26d9d8bb148..ac80a8298ed 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -1342,10 +1342,12 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 			return -1;
- 		}
+@@ -708,7 +708,7 @@ static int add_ref_to_pending(const char *refname, const char *referent UNUSED,
+ 	if (!peel_iterated_oid(revs->repo, oid, &peeled))
+ 		oid = &peeled;
  
--		f = hashfd(get_tempfile_fd(incr), get_tempfile_path(incr));
-+		f = hashfd(r->hash_algo, get_tempfile_fd(incr),
-+			   get_tempfile_path(incr));
- 	} else {
- 		hold_lock_file_for_update(&lk, midx_name.buf, LOCK_DIE_ON_ERROR);
--		f = hashfd(get_lock_file_fd(&lk), get_lock_file_path(&lk));
-+		f = hashfd(r->hash_algo, get_lock_file_fd(&lk),
-+			   get_lock_file_path(&lk));
- 	}
+-	object = parse_object_or_die(oid, refname);
++	object = parse_object_or_die(revs->repo, oid, refname);
+ 	if (object->type != OBJ_COMMIT)
+ 		return 0;
  
- 	cf = init_chunkfile(f);
-diff --git a/midx.c b/midx.c
-index d91088efb87..807fdf72f7b 100644
---- a/midx.c
-+++ b/midx.c
-@@ -747,7 +747,8 @@ int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, i
+@@ -768,7 +768,7 @@ static int read_refs_snapshot(const char *refs_snapshot,
+ 		if (*end)
+ 			die(_("malformed line: %s"), buf.buf);
  
- int midx_checksum_valid(struct multi_pack_index *m)
+-		object = parse_object_or_die(&oid, NULL);
++		object = parse_object_or_die(revs->repo, &oid, NULL);
+ 		if (preferred)
+ 			object->flags |= NEEDS_BITMAP;
+ 
+diff --git a/object.c b/object.c
+index 100bf9b8d12..154525a4972 100644
+--- a/object.c
++++ b/object.c
+@@ -1,4 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "git-compat-util.h"
+@@ -18,14 +17,15 @@
+ #include "commit-graph.h"
+ #include "loose.h"
+ 
+-unsigned int get_max_object_index(void)
++unsigned int get_max_object_index(const struct repository *repo)
  {
--	return hashfile_checksum_valid(m->data, m->data_len);
-+	return hashfile_checksum_valid(m->repo->hash_algo,
-+				       m->data, m->data_len);
+-	return the_repository->parsed_objects->obj_hash_size;
++	return repo->parsed_objects->obj_hash_size;
  }
  
- struct clear_midx_data {
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 34e86d49947..50e5c491ccb 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -1030,7 +1030,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
- 	if (writer->pseudo_merges_nr)
- 		options |= BITMAP_OPT_PSEUDO_MERGES;
+-struct object *get_indexed_object(unsigned int idx)
++struct object *get_indexed_object(const struct repository *repo,
++				       unsigned int idx)
+ {
+-	return the_repository->parsed_objects->obj_hash[idx];
++	return repo->parsed_objects->obj_hash[idx];
+ }
  
--	f = hashfd(fd, tmp_file.buf);
-+	f = hashfd(the_repository->hash_algo, fd, tmp_file.buf);
+ static const char *object_type_strings[] = {
+@@ -283,10 +283,11 @@ struct object *parse_object_buffer(struct repository *r, const struct object_id
+ 	return obj;
+ }
  
- 	memcpy(header.magic, BITMAP_IDX_SIGNATURE, sizeof(BITMAP_IDX_SIGNATURE));
- 	header.version = htons(default_version);
+-struct object *parse_object_or_die(const struct object_id *oid,
++struct object *parse_object_or_die(struct repository *repo,
++				   const struct object_id *oid,
+ 				   const char *name)
+ {
+-	struct object *o = parse_object(the_repository, oid);
++	struct object *o = parse_object(repo, oid);
+ 	if (o)
+ 		return o;
+ 
+@@ -524,12 +525,12 @@ void object_array_remove_duplicates(struct object_array *array)
+ 	}
+ }
+ 
+-void clear_object_flags(unsigned flags)
++void clear_object_flags(struct repository *repo, unsigned flags)
+ {
+ 	int i;
+ 
+-	for (i=0; i < the_repository->parsed_objects->obj_hash_size; i++) {
+-		struct object *obj = the_repository->parsed_objects->obj_hash[i];
++	for (i=0; i < repo->parsed_objects->obj_hash_size; i++) {
++		struct object *obj = repo->parsed_objects->obj_hash[i];
+ 		if (obj)
+ 			obj->flags &= ~flags;
+ 	}
+diff --git a/object.h b/object.h
+index 17f32f1103e..a3040939799 100644
+--- a/object.h
++++ b/object.h
+@@ -169,12 +169,13 @@ int type_from_string_gently(const char *str, ssize_t, int gentle);
+ /*
+  * Return the current number of buckets in the object hashmap.
+  */
+-unsigned int get_max_object_index(void);
++unsigned int get_max_object_index(const struct repository *repo);
+ 
+ /*
+  * Return the object from the specified bucket in the object hashmap.
+  */
+-struct object *get_indexed_object(unsigned int);
++struct object *get_indexed_object(const struct repository *repo,
++				       unsigned int);
+ 
+ /*
+  * This can be used to see if we have heard of the object before, but
+@@ -231,7 +232,8 @@ struct object *parse_object_with_flags(struct repository *r,
+  * "name" parameter is not NULL, it is included in the error message
+  * (otherwise, the hex object ID is given).
+  */
+-struct object *parse_object_or_die(const struct object_id *oid, const char *name);
++struct object *parse_object_or_die(struct repository *repo, const struct object_id *oid,
++				   const char *name);
+ 
+ /* Given the result of read_sha1_file(), returns the object after
+  * parsing it.  eaten_p indicates if the object has a borrowed copy
+@@ -336,7 +338,7 @@ void object_array_remove_duplicates(struct object_array *array);
+  */
+ void object_array_clear(struct object_array *array);
+ 
+-void clear_object_flags(unsigned flags);
++void clear_object_flags(struct repository *repo, unsigned flags);
+ 
+ /*
+  * Clear the specified object flags from all in-core commit objects from
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 6406953d322..f0e2c000252 100644
+index f0e2c000252..7fd78c634ef 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -3024,7 +3024,8 @@ int bitmap_is_preferred_refname(struct repository *r, const char *refname)
+@@ -1301,7 +1301,7 @@ static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
+ 	revs->tag_objects = tmp_tags;
+ 
+ 	reset_revision_walk();
+-	clear_object_flags(UNINTERESTING);
++	clear_object_flags(repo, UNINTERESTING);
+ 
+ 	/*
+ 	 * Then add the boundary commit(s) as fill-in traversal tips.
+@@ -1935,7 +1935,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 		struct object *object = revs->pending.objects[i].item;
+ 
+ 		if (object->type == OBJ_NONE)
+-			parse_object_or_die(&object->oid, NULL);
++			parse_object_or_die(revs->repo, &object->oid, NULL);
+ 
+ 		while (object->type == OBJ_TAG) {
+ 			struct tag *tag = (struct tag *) object;
+@@ -1945,7 +1945,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 			else
+ 				object_list_insert(object, &wants);
+ 
+-			object = parse_object_or_die(get_tagged_oid(tag), NULL);
++			object = parse_object_or_die(revs->repo, get_tagged_oid(tag), NULL);
+ 			object->flags |= (tag->object.flags & UNINTERESTING);
+ 		}
+ 
+diff --git a/reachable.c b/reachable.c
+index 9ee04c89ec6..1b26b9b1d76 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -45,7 +45,7 @@ static void add_one_file(const char *path, struct rev_info *revs)
+ 	}
+ 	strbuf_trim(&buf);
+ 	if (!get_oid_hex(buf.buf, &oid)) {
+-		object = parse_object_or_die(&oid, buf.buf);
++		object = parse_object_or_die(the_repository, &oid, buf.buf);
+ 		add_pending_object(revs, object, "");
+ 	}
+ 	strbuf_release(&buf);
+@@ -94,7 +94,7 @@ static int add_one_ref(const char *path, const char *referent UNUSED, const stru
+ 		return 0;
+ 	}
+ 
+-	object = parse_object_or_die(oid, path);
++	object = parse_object_or_die(the_repository, oid, path);
+ 	add_pending_object(revs, object, "");
+ 
  	return 0;
- }
+@@ -218,7 +218,7 @@ static void add_recent_object(const struct object_id *oid,
+ 	switch (type) {
+ 	case OBJ_TAG:
+ 	case OBJ_COMMIT:
+-		obj = parse_object_or_die(oid, NULL);
++		obj = parse_object_or_die(the_repository, oid, NULL);
+ 		break;
+ 	case OBJ_TREE:
+ 		obj = (struct object *)lookup_tree(the_repository, oid);
+diff --git a/revision.c b/revision.c
+index c4390f0938c..b536c4a29ad 100644
+--- a/revision.c
++++ b/revision.c
+@@ -3612,7 +3612,8 @@ static void set_children(struct rev_info *revs)
  
--static int verify_bitmap_file(const char *name)
-+static int verify_bitmap_file(const struct git_hash_algo *algop,
-+			      const char *name)
+ void reset_revision_walk(void)
  {
- 	struct stat st;
- 	unsigned char *data;
-@@ -3040,7 +3041,7 @@ static int verify_bitmap_file(const char *name)
- 
- 	data = xmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
- 	close(fd);
--	if (!hashfile_checksum_valid(data, st.st_size))
-+	if (!hashfile_checksum_valid(algop, data, st.st_size))
- 		res = error(_("bitmap file '%s' has invalid checksum"),
- 			    name);
- 
-@@ -3055,14 +3056,14 @@ int verify_bitmap_files(struct repository *r)
- 	for (struct multi_pack_index *m = get_multi_pack_index(r);
- 	     m; m = m->next) {
- 		char *midx_bitmap_name = midx_bitmap_filename(m);
--		res |= verify_bitmap_file(midx_bitmap_name);
-+		res |= verify_bitmap_file(r->hash_algo, midx_bitmap_name);
- 		free(midx_bitmap_name);
- 	}
- 
- 	for (struct packed_git *p = get_all_packs(r);
- 	     p; p = p->next) {
- 		char *pack_bitmap_name = pack_bitmap_filename(p);
--		res |= verify_bitmap_file(pack_bitmap_name);
-+		res |= verify_bitmap_file(r->hash_algo, pack_bitmap_name);
- 		free(pack_bitmap_name);
- 	}
- 
-diff --git a/pack-check.c b/pack-check.c
-index d0aeb5ec412..6bcadc1e679 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -180,7 +180,7 @@ int verify_pack_index(struct packed_git *p)
- 		return error("packfile %s index not opened", p->pack_name);
- 
- 	/* Verify SHA1 sum of the index file */
--	if (!hashfile_checksum_valid(p->index_data, p->index_size))
-+	if (!hashfile_checksum_valid(the_repository->hash_algo, p->index_data, p->index_size))
- 		err = error("Packfile index for %s hash mismatch",
- 			    p->pack_name);
- 	return err;
-diff --git a/pack-revindex.c b/pack-revindex.c
-index d3832478d99..78139e3d7f5 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -322,7 +322,8 @@ int verify_pack_revindex(struct packed_git *p)
- 	if (!p->revindex_map || !p->revindex_data)
- 		return res;
- 
--	if (!hashfile_checksum_valid((const unsigned char *)p->revindex_map, p->revindex_size)) {
-+	if (!hashfile_checksum_valid(the_repository->hash_algo,
-+				     (const unsigned char *)p->revindex_map, p->revindex_size)) {
- 		error(_("invalid checksum"));
- 		res = -1;
- 	}
-diff --git a/pack-write.c b/pack-write.c
-index 823e40b42f2..5eb89f44cf4 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -82,7 +82,7 @@ const char *write_idx_file(const struct git_hash_algo *hash_algo,
- 
- 	if (opts->flags & WRITE_IDX_VERIFY) {
- 		assert(index_name);
--		f = hashfd_check(index_name);
-+		f = hashfd_check(the_repository->hash_algo, index_name);
- 	} else {
- 		if (!index_name) {
- 			struct strbuf tmp_file = STRBUF_INIT;
-@@ -92,7 +92,7 @@ const char *write_idx_file(const struct git_hash_algo *hash_algo,
- 			unlink(index_name);
- 			fd = xopen(index_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
- 		}
--		f = hashfd(fd, index_name);
-+		f = hashfd(the_repository->hash_algo, fd, index_name);
- 	}
- 
- 	/* if last object's offset is >= 2^31 we should use index V2 */
-@@ -268,7 +268,7 @@ char *write_rev_file_order(const struct git_hash_algo *hash_algo,
- 			fd = xopen(rev_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
- 			path = xstrdup(rev_name);
- 		}
--		f = hashfd(fd, path);
-+		f = hashfd(the_repository->hash_algo, fd, path);
- 	} else if (flags & WRITE_REV_VERIFY) {
- 		struct stat statbuf;
- 		if (stat(rev_name, &statbuf)) {
-@@ -278,7 +278,7 @@ char *write_rev_file_order(const struct git_hash_algo *hash_algo,
- 			} else
- 				die_errno(_("could not stat: %s"), rev_name);
- 		}
--		f = hashfd_check(rev_name);
-+		f = hashfd_check(the_repository->hash_algo, rev_name);
- 		path = xstrdup(rev_name);
- 	} else {
- 		return NULL;
-@@ -346,7 +346,7 @@ static char *write_mtimes_file(const struct git_hash_algo *hash_algo,
- 
- 	fd = odb_mkstemp(&tmp_file, "pack/tmp_mtimes_XXXXXX");
- 	mtimes_name = strbuf_detach(&tmp_file, NULL);
--	f = hashfd(fd, mtimes_name);
-+	f = hashfd(the_repository->hash_algo, fd, mtimes_name);
- 
- 	write_mtimes_header(hash_algo, f);
- 	write_mtimes_objects(f, to_pack, objects, nr_objects);
-@@ -534,7 +534,7 @@ struct hashfile *create_tmp_packfile(char **pack_tmp_name)
- 
- 	fd = odb_mkstemp(&tmpname, "pack/tmp_pack_XXXXXX");
- 	*pack_tmp_name = strbuf_detach(&tmpname, NULL);
--	return hashfd(fd, *pack_tmp_name);
-+	return hashfd(the_repository->hash_algo, fd, *pack_tmp_name);
+-	clear_object_flags(SEEN | ADDED | SHOWN | TOPO_WALK_EXPLORED | TOPO_WALK_INDEGREE);
++	clear_object_flags(the_repository,
++			   SEEN | ADDED | SHOWN | TOPO_WALK_EXPLORED | TOPO_WALK_INDEGREE);
  }
  
- static void rename_tmp_packfile(struct strbuf *name_prefix, const char *source,
-diff --git a/read-cache.c b/read-cache.c
-index e678c13e8f1..a012cb22368 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2848,7 +2848,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 	struct strbuf sb = STRBUF_INIT;
- 	int nr, nr_threads, ret;
+ static int mark_uninteresting(const struct object_id *oid,
+diff --git a/shallow.c b/shallow.c
+index 4bd9342c9a7..06c3266a3e0 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -226,7 +226,7 @@ struct commit_list *get_shallow_commits_by_rev_list(int ac, const char **av,
+ 	 * SHALLOW (excluded) and NOT_SHALLOW (included) should not be
+ 	 * set at this point. But better be safe than sorry.
+ 	 */
+-	clear_object_flags(both_flags);
++	clear_object_flags(the_repository, both_flags);
  
--	f = hashfd(tempfile->fd, tempfile->filename.buf);
-+	f = hashfd(the_repository->hash_algo, tempfile->fd, tempfile->filename.buf);
+ 	is_repository_shallow(the_repository); /* make sure shallows are read */
  
- 	prepare_repo_settings(r);
- 	f->skip_hash = r->settings.index_skip_hash;
+@@ -613,9 +613,9 @@ static void paint_down(struct paint_info *info, const struct object_id *oid,
+ 		}
+ 	}
+ 
+-	nr = get_max_object_index();
++	nr = get_max_object_index(the_repository);
+ 	for (i = 0; i < nr; i++) {
+-		struct object *o = get_indexed_object(i);
++		struct object *o = get_indexed_object(the_repository, i);
+ 		if (o && o->type == OBJ_COMMIT)
+ 			o->flags &= ~SEEN;
+ 	}
+@@ -675,9 +675,9 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
+ 	 * Prepare the commit graph to track what refs can reach what
+ 	 * (new) shallow commits.
+ 	 */
+-	nr = get_max_object_index();
++	nr = get_max_object_index(the_repository);
+ 	for (i = 0; i < nr; i++) {
+-		struct object *o = get_indexed_object(i);
++		struct object *o = get_indexed_object(the_repository, i);
+ 		if (!o || o->type != OBJ_COMMIT)
+ 			continue;
+ 
+diff --git a/upload-pack.c b/upload-pack.c
+index 728b2477fcc..7412d3c6ce8 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -662,8 +662,8 @@ static int do_reachable_revlist(struct child_process *cmd,
+ 
+ 	cmd_in = xfdopen(cmd->in, "w");
+ 
+-	for (i = get_max_object_index(); 0 < i; ) {
+-		o = get_indexed_object(--i);
++	for (i = get_max_object_index(the_repository); 0 < i; ) {
++		o = get_indexed_object(the_repository, --i);
+ 		if (!o)
+ 			continue;
+ 		if (reachable && o->type == OBJ_COMMIT)
+@@ -731,8 +731,8 @@ static int get_reachable_list(struct upload_pack_data *data,
+ 			o->flags &= ~TMP_MARK;
+ 		}
+ 	}
+-	for (i = get_max_object_index(); 0 < i; i--) {
+-		o = get_indexed_object(i - 1);
++	for (i = get_max_object_index(the_repository); 0 < i; i--) {
++		o = get_indexed_object(the_repository, i - 1);
+ 		if (o && o->type == OBJ_COMMIT &&
+ 		    (o->flags & TMP_MARK)) {
+ 			add_object_array(o, NULL, reachable);
+@@ -1554,7 +1554,7 @@ static int parse_want_ref(struct packet_writer *writer, const char *line,
+ 		}
+ 
+ 		if (!o)
+-			o = parse_object_or_die(&oid, refname_nons);
++			o = parse_object_or_die(the_repository, &oid, refname_nons);
+ 
+ 		if (!(o->flags & WANTED)) {
+ 			o->flags |= WANTED;
+@@ -1790,7 +1790,7 @@ int upload_pack_v2(struct repository *r, struct packet_reader *request)
+ 	enum fetch_state state = FETCH_PROCESS_ARGS;
+ 	struct upload_pack_data data;
+ 
+-	clear_object_flags(ALL_FLAGS);
++	clear_object_flags(the_repository, ALL_FLAGS);
+ 
+ 	upload_pack_data_init(&data);
+ 	data.use_sideband = LARGE_PACKET_MAX;
 
 -- 
 2.49.0.rc1.455.g4cd33545ba.dirty
