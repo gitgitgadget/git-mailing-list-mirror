@@ -1,64 +1,65 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773BA2206BD
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 18:07:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7592206BD
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 18:08:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741630026; cv=none; b=RgEE7+ucWVTh/cigKMQNXEjq9Q4QZE2z43PByc2hePOTKRNe0r+B04ptotVSNOY3QVS+T05kuWIz2xCUWc0bFFEwUdGL2lug3wp5inhXIbrak3ggt8FAFexUoOuHiQnNGeuBkGd1qXNLf/vKp1B/CJCb9vZEZ0BsuF7P16yV6sc=
+	t=1741630132; cv=none; b=AubBtpLexx+0WkgKUB8van/2pQPvWJyCbYq8A1OdpUNcyQY/YgK6hzFw4k1QaEz3HoQuDjj4Sa3xoUHmf6etTShTC2Rq5v+kKCAbHPIrwnM+64sZaF6xqh+UlVax5eBMUj07+xy+GwxoCv5FkId2C3oEuEFKFwqy6Jr/DyVP/+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741630026; c=relaxed/simple;
-	bh=9YvqJnL83+j+YPO28aUA7omKJByc9fOVbH0n1Qd1GqU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QV0zoZWQKE+AlIc53Y/Ov8yqoCoFyQ1FVl3o0bymp77TnviuNxkJKM6uAGVDUMVku92sBtmvP9QHysYB2x8aD4swAHDItOx4oFV7S9k3VRQwyc/0cQLYnVBBOZK2DkjGTAM8rjJQLb2SOjNpufM2Ed/w8oaWYf6hdjPepQymG2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FoWokNnw; arc=none smtp.client-ip=209.85.214.169
+	s=arc-20240116; t=1741630132; c=relaxed/simple;
+	bh=KV4FrTi2yPYYFiXCW6+P9Zo4j2IW7CbBCtJXqJ3rlMU=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=mQ/x+8Dzb2nj8ielTdkOo/xp95vRy/276z8UG8IUXO2k5JOznqJb/m274MhikR3GOvWnWdSsUNalzfvkYuE2VapFr7O7gl6UWauw7k2nIh5GrlfHvApFcwFnC3TcTLYz/g2hxGMiY27b0HGupjDj95nUt8wdP4Gg7hHb/wu0fYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dlPSfNI6; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FoWokNnw"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2234e4b079cso82390885ad.1
-        for <git@vger.kernel.org>; Mon, 10 Mar 2025 11:07:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dlPSfNI6"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2f9d3d0f55dso6976782a91.1
+        for <git@vger.kernel.org>; Mon, 10 Mar 2025 11:08:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741630025; x=1742234825; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Yn2L/PB8nGVLa9NB5KS7DVfGJv3G9Eg3/zncgTCz2zc=;
-        b=FoWokNnw9fN2B7Dwhqm9yXgAgqRAnlwVJq20qsBVhbd+daWEop2VxwBAx132KpfWU8
-         Lex2zuWZdfXFLHmuDKgNwMAC1DLmbB5Klj/A+iUpoDGtCiogjbkoBbmX+xbeXEA1lmpH
-         bbyIAVR6VWvh09Ov15H6Vdy5+6hD+V13xGKEMPP6chXyoupTv+ny3/SQtEUmlDRUCYVR
-         H1bp0wMXijGu4dMFeGdaiLFg42epzYFxZXHGHKTDuWcuL+oBtlLPoHLFkXGD+XnQpfSs
-         yF5Gc4ksGrAEztDHQ4QBtXRPr7EaD80NYYveyiNW0zsTrxjByJwSRdU7mYRi2ltMyqeF
-         RHzw==
+        d=gmail.com; s=20230601; t=1741630130; x=1742234930; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CGSeM2ad00JvAAmXH6Ixwi39sL8eIN/g7ErEPu6YIVs=;
+        b=dlPSfNI6rc2kTEK3jzz0SpdmbelaOMtVQDWXbiQcsdlVfl37TNrm/vjT/VhwqWlNr3
+         a+xZUoddAD9IzhIspxXGyZmMuEU/3rLBMmSyZP9P+UzcavKJ/WeDDNWKzEPvdbZtdfe7
+         L+mfLwF+o3DFMxz6miTptXBNHqnLQgdnMbNFulO2EO2qK0I8Wqv3UHbcSaxMkKqFR973
+         Yha+8HJkFsOw9sgxCc7Qk88oz5KkRYC2bTa40Sy1tZqV90nQp7CoRN9LQvXpNYQYmDyb
+         qlbfX/BDCi7u9ixJpfz7jk8XFbkNxlILKHBMolvPWNMlik8fbbEnoPGc00qLbM3JcrrZ
+         Qdvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741630025; x=1742234825;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1741630130; x=1742234930;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yn2L/PB8nGVLa9NB5KS7DVfGJv3G9Eg3/zncgTCz2zc=;
-        b=PzSfTMIE6pp2fW3rmAzwKiE3kdmiAJt9OuvK9e6KIJKiyguEabOLt9UBXaQhxM3b/Z
-         bm85zhWnEA4nQelWbYEZ2K5ovxA9eHCGXPPOi9UPMZdC86hQtap3S3RtF4h9S5a/yvVm
-         DZeVj0ZJl8WSruZAeRQ6utK0FLfmB9HE441IyER0Opdjkis7usxkMCmoRuQDjaDVAQrB
-         dtorx0omwOBRaXClqynLOyShApBDz81FCUSlPODLZyVSKzWIh5jINJ7MA57WUp/bGQ8t
-         BpNrqY8H2QJQ87YoLRtJg7VWAqcNyj1UO17bW4wYseQGaKAp8guAzfbTreHUlh7pQZGh
-         nlgw==
-X-Gm-Message-State: AOJu0YzEsP/axlEfjz67vFL25lsS8LRtA1hPYlc+drjkofntfb3fEgmJ
-	haeztr/0HSU0okVyl3VxT8y598vJ7lTuwUjzCfPdGM8LZGBE3D6C
-X-Gm-Gg: ASbGnctA+f1FGghS+H/h4ZTizsUwfYUd6NmMpzYculwywwWjL40enjVRnQaPvcqBq9e
-	dp7L0R7mvD1PqvGesMPZz6Jq+GrmDPm4WQlYLAFxdzzz1aexKgexWJ3x8rfSfxKkuwhpCTQgAE1
-	ftS+cWIyubiNPQEzFe1qRsZWuAzBprnXkSTotxHX9M6jnFQExQuxwUzEQeO9j/8jMqYYOR2zV72
-	JcmOJOCHbD67gTiz4P23RQo0GoK9QAmX0BwgiRCsl8dyyjtK7nipP3AVufV45o9YzFO3u8IQVp0
-	Ny8YmiIu+DUu1HtyCBFFCf+WNEvHktG+zBiPgqpSMF48DJd82kzX20W9mOhOgMqdGEQrCyUSuH6
-	Om7CHZx8Ma3xgKxJDmDPZJlHi
-X-Google-Smtp-Source: AGHT+IEqkwrKMRyXOsWYRjWKbsyb94Fje4+Vysk7ZPUJAxjMbR5BUF/SDeI8/b4/O2PZCBZ3936AKA==
-X-Received: by 2002:a17:902:e809:b0:223:53fb:e1dd with SMTP id d9443c01a7336-22428886811mr178467345ad.9.1741630024546;
-        Mon, 10 Mar 2025 11:07:04 -0700 (PDT)
+        bh=CGSeM2ad00JvAAmXH6Ixwi39sL8eIN/g7ErEPu6YIVs=;
+        b=INqweQS8ovWFvM7uaEBdKwSSBaSZIHaBinz+osaBfVBa7EQwkd3jEgOhYojOdTYlDR
+         W1yEJuY3w8TiFp7VS23B5hH1zknkZ+2W8xZzJCS7rND9AHuirWpYTxOF9LY8PpAC4ZCP
+         wpUMSH4xmMROqrwf6EM8uvj7b7U7XXEtSqivbLlaPajLgT6xFk8tgP6cLo51AC75PBre
+         mfasppNRsnIFDWrSTZYWfh9ho+byjY6cGM8+0DjebLM1gq319FMUOBU3scozAiPEgxzU
+         GZCRjxWe1Ilqj1NCGKKwHBSmk2riZHlJFbrBhox9ql8qnKDTbL+RE09oQkm9ymY6S6c7
+         tc/g==
+X-Gm-Message-State: AOJu0Yw98KL/7BYlCVA9Dl6OSoXI+g6IyWujgO9UhIMQviAC95xX6ENg
+	jgyXmLU+SPnIZuASrx8ELaeY9nZWHR3l2WgT2UlFyDbcFCMe3VkUDIOOOQ==
+X-Gm-Gg: ASbGncurDJtMmLeoL+Yvj84kKOA/D9YJ9qz9RsJu5k7eMzODaJITJ0F1Dz5qLtc7jwA
+	YET0Y7/I3GS8ZX8B35BoRhwWlsAWvGwg9E+bSMfqxlW0MtoAjWvjgfBbUHRmeNPMgVBXf/8M/Ve
+	mtGEjDY981f9w702vyQTNtSAxqF5Nnf72PFqAQlvM34q7rE5RBsfAwu4/LwAWA3RBpeg46t2veA
+	n4TC0pgS7j+IPaNZr4ORVRg+KNouQXiJu6rWOXdFhRzhCyRI7A4jgt8MOo/xAgXYbNisrXgvYJh
+	qHHglDZDOj0H7ILMHOMbMc9ZP0O11gRmeWJTzRcT/v+8i/SIKerLLsY4k0fEMMWJjnktua9Oeju
+	HB5OOaCuLFwdEWJp+6Y7AabRi
+X-Google-Smtp-Source: AGHT+IHXfXDx4Y7OuQx2ucbYv0wJlXGtQiWLW/MYuOh7nso5sC2L3GP3p4p/RtYSPszleotrJ4238A==
+X-Received: by 2002:a17:90b:1c07:b0:2fe:7f40:420a with SMTP id 98e67ed59e1d1-2ff7cea6996mr25156537a91.17.1741630129612;
+        Mon, 10 Mar 2025 11:08:49 -0700 (PDT)
 Received: from ?IPV6:2402:3a80:4163:e5a:15b1:e92d:8ad3:3f81? ([2402:3a80:4163:e5a:15b1:e92d:8ad3:3f81])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-224109e84a6sm81760095ad.55.2025.03.10.11.07.02
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-300d2ad6d19sm2975197a91.38.2025.03.10.11.08.48
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Mar 2025 11:07:03 -0700 (PDT)
-Message-ID: <d68646b7-0513-4a54-a145-cdbd0cd67a4a@gmail.com>
-Date: Mon, 10 Mar 2025 23:37:07 +0530
+        Mon, 10 Mar 2025 11:08:49 -0700 (PDT)
+Message-ID: <7c219279-8151-49c0-8fc0-8abe2624aca9@gmail.com>
+Date: Mon, 10 Mar 2025 23:38:53 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,50 +67,86 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [GSoC PATCH] decorate: fix sign comparison warnings
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <afa6b428-3190-42ae-9eac-540c95b576fd@gmail.com>
- <xmqqikog96uz.fsf@gitster.g>
-Content-Language: en-US
+Subject: [GSoC PATCH v2] decorate: fix sign comparison warnings
 From: Arnav Bhate <bhatearnav@gmail.com>
-In-Reply-To: <xmqqikog96uz.fsf@gitster.g>
+To: git@vger.kernel.org
+References: <afa6b428-3190-42ae-9eac-540c95b576fd@gmail.com>
+Content-Language: en-US
+In-Reply-To: <afa6b428-3190-42ae-9eac-540c95b576fd@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+There are multiple instances where ints have been initialized with
+values of unsigned ints, and where negative values don't mean anything.
+When such ints are compared with unsigned ints, it causes sign comparison
+warnings.
 
-> A simpler fix to the first hunk may be to get rid of the
-> intermediate variable altogether and always refer to n->size
-> when its value is needed.  The compiler should be able to see in
-> this static file-scope helper function that n->size would not change
-> at all and do the right thing (i.e. allocate a register to hold its
-> value at entry, if needed) without a hand-optimization we see in the
-> original code.
-> 
-> The same can be said for the second hunk.  The intermediate variable
-> is used only once, and one could argue that its presense obscures
-> the condition under which grow_decoration() is called by splitting a
-> logically single expression into two.
-> 
-> Which one is easier to grok?
-> 
-> 	unsigned nr = n->nr + 1;
-> 	if (nr > n->size * 2 / 3)
-> 		grow_decoration(n);
-> 
-> or
-> 	
-> 	if ((n->nr + 1) > n->size * 2 / 3)
-> 		grow_decoration(n);
+Also, some of these are used just as stand-ins for their initial
+values, never being modified, thus obscuring the specific conditions
+under which certain operations happen.
 
-Your suggestion makes sense to me, the second one is better. I will send an
-updated patch. I also found some more places in the file where a change from
-int to unsigned int should happen, but where int does not cause warnings. I
-will also include it in the patch.
+Replace int with unsigned int for 2 variables, and replace the
+intermediate variables with their initial values for 2 other variables.
 
+Signed-off-by: Arnav Bhate <bhatearnav@gmail.com>
+---
+ decorate.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
+
+diff --git a/decorate.c b/decorate.c
+index e161e13772..9f24925263 100644
+--- a/decorate.c
++++ b/decorate.c
+@@ -3,8 +3,6 @@
+  * data.
+  */
+ 
+-#define DISABLE_SIGN_COMPARE_WARNINGS
+-
+ #include "git-compat-util.h"
+ #include "object.h"
+ #include "decorate.h"
+@@ -16,9 +14,8 @@ static unsigned int hash_obj(const struct object *obj, unsigned int n)
+ 
+ static void *insert_decoration(struct decoration *n, const struct object *base, void *decoration)
+ {
+-	int size = n->size;
+ 	struct decoration_entry *entries = n->entries;
+-	unsigned int j = hash_obj(base, size);
++	unsigned int j = hash_obj(base, n->size);
+ 
+ 	while (entries[j].base) {
+ 		if (entries[j].base == base) {
+@@ -26,7 +23,7 @@ static void *insert_decoration(struct decoration *n, const struct object *base,
+ 			entries[j].decoration = decoration;
+ 			return old;
+ 		}
+-		if (++j >= size)
++		if (++j >= n->size)
+ 			j = 0;
+ 	}
+ 	entries[j].base = base;
+@@ -37,8 +34,8 @@ static void *insert_decoration(struct decoration *n, const struct object *base,
+ 
+ static void grow_decoration(struct decoration *n)
+ {
+-	int i;
+-	int old_size = n->size;
++	unsigned int i;
++	unsigned int old_size = n->size;
+ 	struct decoration_entry *old_entries = n->entries;
+ 
+ 	n->size = (old_size + 1000) * 3 / 2;
+@@ -59,9 +56,7 @@ static void grow_decoration(struct decoration *n)
+ void *add_decoration(struct decoration *n, const struct object *obj,
+ 		void *decoration)
+ {
+-	int nr = n->nr + 1;
+-
+-	if (nr > n->size * 2 / 3)
++	if ((n->nr + 1) > n->size * 2 / 3)
+ 		grow_decoration(n);
+ 	return insert_decoration(n, obj, decoration);
+ }
 -- 
-Regards,
-Arnav Bhate
-(He/Him)
-
+2.48.1
