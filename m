@@ -1,186 +1,116 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1B61DF996
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 20:51:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6751C3F34
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 20:54:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741639905; cv=none; b=j5KPTl8OmO14BJeVJchcWEqzvunZYA1vJMzmaApK6cDKQ6re5488rRcrIeYLEfeWdi0vTiIw1TpWzgQGszhVrHZw0w+0ee9PctiQfH4wV/jMjosHK26TxXc8WjiCQkL73ffWRl6u9dJ9c8xdb/6kdlYW4RzdNSo9/RkyevcXyrc=
+	t=1741640065; cv=none; b=LjHDepwbakOnCuDlrcnrsLA20CtKNpRGjWOrhYSeHKJyVha5ScXLC6o6rQEhrgQVunrACiiztjP2SjVgM639Luf7YSvzgcZei1MVKiQ8frMWjAT3OnFU0zn7mOql8dzQXvvfBtvDxlLcpalBfoSUQUavX34A3HEpAQWZeV96pvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741639905; c=relaxed/simple;
-	bh=d/fXyGegzc8UtY0WnfvLnupLGdUUGPc9O/iQnnYtHlg=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=JwpNRr1A8vKKfMlx+yQZPjVMiK1J18DvkeaVlCoX4/6Dz7TadOafjxS4Bc1mFEMX4dQyKTkbmxpHQMm8Ynx61E+rmXhoRbxHIjqoNw5vy635Yh7ghOQHqCADv1ZiUE2CbqDlkjhezXOJQEMRBAFniLUmemC7gPFMyzM6H1dJ1Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=benjam.info; spf=pass smtp.mailfrom=benjam.info; dkim=pass (2048-bit key) header.d=benjam.info header.i=@benjam.info header.b=W5PRt8HU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BqwwOYq4; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=benjam.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=benjam.info
+	s=arc-20240116; t=1741640065; c=relaxed/simple;
+	bh=QYEla9ThpgkrWg4hNmeV9TZmgVvEU3Ai4KCxq0oAHlA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cgDsRQv+lLThTQh6Vj/tS13b1fqIQJwlVW13WVX+zHi/Qj/dvwq75wlsyUuUn0gxRMngRT3p7Cw/hCJU128rGmxHLTBx/W7mUc8NYOazVa2fCo54ReekTodXk8LQOvmH5L6qoFbEyiKfJDz4IP3j24J1b6zS5SXaKWkXnvRYW+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VoNLr05Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yVKlH61D; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=benjam.info header.i=@benjam.info header.b="W5PRt8HU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BqwwOYq4"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7BA76254024C;
-	Mon, 10 Mar 2025 16:51:42 -0400 (EDT)
-Received: from phl-imap-06 ([10.202.2.83])
-  by phl-compute-05.internal (MEProxy); Mon, 10 Mar 2025 16:51:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=benjam.info; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1741639902;
-	 x=1741726302; bh=rQG4IeybhVYj64GspdUD28hwBVgTN9QeemIQDy26voM=; b=
-	W5PRt8HUdNafYI4gMbZEo8KmRAvwxb/okRsOz/yI6l2EVE5e/3vbXR14NoRcNSQV
-	/VvK18EnB/DGvETKdAmtl4ypJi++X41JZLxy3atUq4oruabNAK2VVrAd+q15XKxW
-	Zy6pbEuiiCS4/Y60sBq59S618SvtlcFp+Tfr8Kl8SaN1UL+e6EnHPRz+8PJmaSuG
-	dQbd+yvMmUXvRTUDpOFay5LxrzWnd/O/cTxjy7BHC4Hnjxd01DetC+H3xt7p0b/c
-	m/7wwTsW9TuwbR/sGQD3vQxJ9hjK7lN1JUHd1/R/TCdtns+6exmtHN/maAjWFgqB
-	zzBi2We8pONReWs/nNITFw==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VoNLr05Z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yVKlH61D"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5406911401C2;
+	Mon, 10 Mar 2025 16:54:22 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Mon, 10 Mar 2025 16:54:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741640062; x=1741726462; bh=QdDFFA9QC6
+	BhmbhCg9oPZ67QOVNfLS890nsBF8opA8I=; b=VoNLr05ZW4Qkd+jiYUxm1VQQei
+	xZlL/0G4cimI1Lg+Uw5StjnWjZ7b29jdOta1c9K9IBYGKSptLDsDrjV2IakEMEQ3
+	eVqEQfk+q5trA+fGJy1XHLPRgGcKA0CX4TOgZ3VPbSSvLH8USbbzifqyBruZJ75Y
+	mjt4jqFJ7Cj2OQASlTL38KRLtzxnyWBi2Rc/o4BITr46T+7a2Lt0tGmSDZ6tJdXr
+	hd5wfKnES4Q9eaXT5JjRQefFopUP8vKLbnCDs9eP9Hp39OoP6h+BlM6uQ4d+nYgm
+	YyJr2mF8NQMaOgyAa6Lo/LbS90hFtzo2KKaiv1Ovb4zJ17Usuc9RSwXFE47g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741639902; x=
-	1741726302; bh=rQG4IeybhVYj64GspdUD28hwBVgTN9QeemIQDy26voM=; b=B
-	qwwOYq4oVHuV6o5KAUh+/j0XCfVswmdf4/pPgHTGQtYcf1Uzsl0AsWE5ey3bb0BU
-	D88uOdhaQBkAsg1SZwgmNbvmxO+JrXRPKcCjdQO7zBEIhu4XYlVK061kjMvDSwQs
-	MFPipIMRKh17BssiJ06MWscV23/LX2VZyPAOwIW7VzdidobeddCdrd+yTnCh9+bV
-	LFhDn7RntbN1atTtbDdCkJOYfoq2f+60Vg3ll1r5SFFi9rXSzh4m91AhM4B7npsr
-	lwjSdcf2IZ/mPW3HM5xpObypwRKBAKwWXkInWptFOptWW+orlHPRnF5jOBIS4no+
-	z2vrDaTFbT7k5fZmzNVjQ==
-X-ME-Sender: <xms:3lDPZ6r20u7zlVoMeBWbnuCYwykjLcrblGUp60SXtHABh-y3_xNIpQ>
-    <xme:3lDPZ4reHVID3wKiL3HN2Reuok8wAXjWZW9erVacySeKboR21Hd6A3X_ZSg3wJaFe
-    ORt9xxOlIe2N70ZoA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvddtfeehucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741640062; x=1741726462; bh=QdDFFA9QC6BhmbhCg9oPZ67QOVNfLS890ns
+	BF8opA8I=; b=yVKlH61DYR+lwF5XRnRxqsc5mD08YQ91iUsjHOeUmZD5Fk5VpWH
+	Wu9pq80Au+TGj0odWwTrWV9XVIdFOj13ihbySJQvNSe48PSv5OgKHYNshNQFO+4E
+	kZqjsvcAXrB4c8KSYHNwIz1sQigpbtNMoPo9er5pGzsYityhIqTQ3PRQulxUYHoq
+	7zOvyxTm8RX2erQX7+5TBWOmuxc/nYFVp72rmW0f7tAE0jzIBRpTdVOKQ7xIsmZO
+	fnjuIYKkmI03fpXBLICK6aogIK5fwT53DHmeE0dPIp9Nhaq30HCekhQOu06bRoSi
+	lfXEtdDaVsbSZubRtae9izMO6jV2PVEooEQ==
+X-ME-Sender: <xms:fVHPZx5ra4tSs4arU5aIiNplK4ACgG0tX2qyCDvaCpRDX8PUQV7fzQ>
+    <xme:fVHPZ-6rl-o6U1tzehcU8OVhSDbWbCBVHKawUtckmKeEAJ8phST2QOMUaNwlYPtcW
+    2Ufo_qLm2yupRN23Q>
+X-ME-Received: <xmr:fVHPZ4dg1AEEsjoENCgKBw6sAwG2uHiWrZHwiSK99Y4QORdlnCIEHz3wu9fA6RiavjA3git9P1DByLbo7gCjvmM3025Qa0HOX3Db>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvddtfeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertder
-    tddtnecuhfhrohhmpedfuegvnhhjrghmihhnucghohhoughruhhffhdfuceoghhithhhuh
-    gssegsvghnjhgrmhdrihhnfhhoqeenucggtffrrghtthgvrhhnpeefgedtgeehleevhefh
-    gfejteefuedtvdfhvdektdffudevleefheeiheegvdejffenucffohhmrghinhepghhith
-    hhuhgsrdgtohhmpdhgihhtqdhstghmrdgtohhmnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhhuhgssegsvghnjhgrmhdrihhnfhhopd
-    hnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
-    ghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:3lDPZ_MUQJeuHL6us6J_0PcCj4IojqMojEkkcwVF0QxrXfyrAPJtDA>
-    <xmx:3lDPZ56pAkgvAJggZZ9-EuEo_Ng3C3TGe-jm221ssOKEy68VIaAa0g>
-    <xmx:3lDPZ57wcavy-k1pn-a3IC2vE8BzcAZwtYye03lXn6j8pSJ-N0wRpg>
-    <xmx:3lDPZ5gDQLQr1EIWav9Tyqt0xDS8TNBiORAlgwEsPtDRChQx3_jMbA>
-    <xmx:3lDPZzlEHNGfa9A_K-3K4Y_xmP6APsWag0r4oYkhoTJJnJoxJeXxYPdq>
-Feedback-ID: i2c704235:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 029DB29C0072; Mon, 10 Mar 2025 16:51:42 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvg
+    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheptghhrhhishhtih
+    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:flHPZ6LPfem_MOSpcII8T2TQGRnbOv7nhxb3HFCtoOvPHdojpN2KYA>
+    <xmx:flHPZ1K4uJQ4kG-iYcSo9I_5rJsyg46H96i0TIUIyJsw1b7RLDnyUQ>
+    <xmx:flHPZzzDvtDovdHgzqP-X2ILCiYN-DOcUGHHAn_rSJTu6zhKIVzueQ>
+    <xmx:flHPZxKajrpoQbp0BcP9Am4YCzdGAtkAyS275DDx0b1NKPysNyL_aQ>
+    <xmx:flHPZzjPz74q4Us52brXY04pnrSn9P2kv_hYCHn0axxqlkbAVgGlDP7o>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Mar 2025 16:54:21 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  christian.couder@gmail.com
+Subject: Re: [PATCH 2/4] rev-list: refactor early option parsing
+In-Reply-To: <20250310192829.661692-3-jltobler@gmail.com> (Justin Tobler's
+	message of "Mon, 10 Mar 2025 14:28:27 -0500")
+References: <20250310192829.661692-1-jltobler@gmail.com>
+	<20250310192829.661692-3-jltobler@gmail.com>
+Date: Mon, 10 Mar 2025 13:54:20 -0700
+Message-ID: <xmqqr03461z7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 10 Mar 2025 13:50:36 -0700
-From: "Benjamin Woodruff" <github@benjam.info>
-To: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
-Cc: "Benjamin Woodruff via GitGitGadget" <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Message-Id: <bbc8a0ef-737c-44ba-9786-f5456f5ce71b@app.fastmail.com>
-In-Reply-To: <xmqqo6y87m4d.fsf@gitster.g>
-References: <pull.1872.git.1741240685.gitgitgadget@gmail.com>
- <xmqqo6yejg0y.fsf@gitster.g>
- <20250309033908.GA2361799@coredump.intra.peff.net>
- <xmqqwmcx9io3.fsf@gitster.g> <20250310160837.GA26308@coredump.intra.peff.net>
- <xmqqo6y87m4d.fsf@gitster.g>
-Subject: Re: [PATCH 0/2] describe and diff: implement --no-optional-locks
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 10, 2025, at 11:53 AM, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
->
->> But maybe that is lost in the noise of reading the files to actually do
->> diffs, etc? I dunno. I expect it is more important for status, which
->> probably does not need to read the whole file contents in most cases
->> (and which may be run a lot from the user's prompt, etc).
->
-> Yeah, and old timers who run "diff --raw" as if it were a quick
-> analogue for "status" also would notice.
+Justin Tobler <jltobler@gmail.com> writes:
 
-Thanks for your reviews, Junio and Jeff.
+> @@ -639,19 +640,15 @@ int cmd_rev_list(int argc,
+>  		if (!strcmp(arg, "--exclude-promisor-objects")) {
+>  			fetch_if_missing = 0;
+>  			revs.exclude_promisor_objects = 1;
+> -			break;
+> -		}
+> -	}
+> -	for (i = 1; i < argc; i++) {
+> -		const char *arg = argv[i];
+> -		if (skip_prefix(arg, "--missing=", &arg)) {
+> -			if (revs.exclude_promisor_objects)
+> -				die(_("options '%s' and '%s' cannot be used together"), "--exclude-promisor-objects", "--missing");
+> -			if (parse_missing_action_value(arg))
+> -				break;
+> +		} else if (skip_prefix(arg, "--missing=", &arg)) {
+> +			parse_missing_action_value(arg);
+>  		}
+>  	}
 
->>>> I must admit that I didn't imagine "describe" is something that
->>>> somebody would run a lot in the background
-
-It might help if I start with some more context of why I wrote this
-patch. We've got a tool that uses the Rust `vergen-gitcl` crate to call
-`git describe --dirty`. You can see that code here:
-https://github.com/vercel/next.js/pull/76889/files
-
-We use `vergen-gitcl` to generate version identifiers for an on-disk
-cache. This cache stores results of thousands of functions and has no
-backwards compatibility. We want to invalidate it when *any* of the code
-changes. `git-describe` felt like a good fit for that, as it gives us a
-unique identifier that's still reasonably user-friendly.
-
-However, we discovered that we'd frequently end up with stale git
-lockfiles. This appeared to be due some combination of IDE tools that
-run the build in the background (i.e. the rust-analyzer LSP), behavior
-that causes builds to sometimes get killed before completion, and the
-fact that `git describe --dirty` takes a lock.
-
-I've worked around this on our end, by re-implementing `describe`'s
-`--dirty` flag on top of `status`:
-<https://github.com/rustyhorde/vergen/pull/406>
-
-So, from my end, there's no urgency to get this change in, or to add
-support for `diff` (we only care about `describe`). Rather, I felt like
-this might be a footgun for other users, and wanted to do the right
-thing by submitting an upstream change.
-
->>> git describe and git diff may update the index in the background for
->>> similar performance reasons to git-status.
->>
->> That is a wrong reasoning that is completely opposite, though.
->> 
->> The commands at the Porcelain level, like "status" and "diff",
->> refresh the index for the CORRECTNESS purposes.
->
-> Right, but "status" supports --no-optional-locks already.
-
-Does this mean the documentation in `git-status` is incorrect? It
-implies that the background refresh is only for performance reasons.
-That's where I got this idea from:
-<https://git-scm.com/docs/git-status#_background_refresh>
-
-It's also worth noting that libgit2 does not do this background refresh
-by default (`GIT_DIFF_UPDATE_INDEX` and `GIT_STATUS_OPT_UPDATE_INDEX`).
-I think that makes sense for libgit2's typical use-cases, but it is a
-divergence in behavior.
-
->> Yeah, certainly it is a potential source of confusion to have a
->> conceptually read-only operation take locks or modify the repo state.
->>
->> [...]
->>
->> It seems like a big and possibly risky departure from what we've done
->> for so many years. I'm inclined not to rock the boat too much. ;)
->
-> Certainly not right now.  But adding a command line option is even
-> worse as we would have to carry the support for it for practically
-> forever X-<.
-
-What about if we reduce this to documentation changes? That alone
-would've saved me a lot of pain of trying to figure out what does and
-doesn't take a lock:
-
-- Explicitly document that `--no-optional-locks` only changes behavior
-  for `git status`.
-
-- Document that the `--dirty` flag on `describe` will lead to
-  `status`-like background refresh behavior.
-
-- Change the documentation for status's background refresh to indicate
-  that there is a subtle difference in behavior caused by
-  `--no-optional-locks`? I lack sufficient context on how best to
-  describe or explain this.
-
-- Leave `git-diff` documentation as-is. I think the current
-  documentation of `diff.autoRefreshIndex` is sufficient?
+There is a huge NEEDSWORK comment that essentially says that the
+above two loops that this patch combines into one is fundamentally
+broken.  I suspect that the remaining two patches in this series
+would punt and not improve them, but offhand I am not sure if this
+change is making it harder to fix them properly easier or harder.
