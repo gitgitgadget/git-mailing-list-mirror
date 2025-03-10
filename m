@@ -1,56 +1,56 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBAD1D90B3
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 07:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983A51D9A50
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 07:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741590819; cv=none; b=EiNZXuK04YyLWl1p3LTWdQxNvp83n8eO01uBYSAVxi8DFtrEfNNV21ZdXNp1FwALie/38ZiZWdgwEcWdmA4XHooUfyssjOkFitciuR+td210/j6QrThqe0y2AoDGhHqw9uA/wTkevrfuKemQxncMj8fEgbq/u14/MI65Qxn5oeA=
+	t=1741590820; cv=none; b=KVy8Muz7BvIDnDQwru3FA0QhoOWVLXO7iDzSJiQpzhhhJRqALZn43IBRvLPCcM7k9BemmDYtWjh0M4Y/pig3glTuqi6d1ntXRwGGrhtps9PNYG+wIiEs3iMbITfSBGPRt1+DsqLAM70ZEdVWYiMEcEMoeYZB3H0ueh8ToAE3WRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741590819; c=relaxed/simple;
-	bh=ucpN61xgCl8qx7reUMM3zdV+HuUWvFtycjkS8TGwtMA=;
+	s=arc-20240116; t=1741590820; c=relaxed/simple;
+	bh=d8b7Bzs/NfmorixL/Rk68wqPV4+s6+8iOOchSDgavuY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qAXRhCUzOycaAbPMXPg7hWLsqt2kw7IDaB1nhny0JkgmhLkNkJchWTMK7H1UuxWCWod8Uun87HslT5ptgx7GcZv5+Qq9r4+3GZuQQP4osNKPEOGoo/zDSVl8wwIvU3KKTpwHA32SXpdHf2kD2iRZzEY8gceAWjvPLLwuVVKTdI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E3k0KFgp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e160TtVX; arc=none smtp.client-ip=202.12.124.153
+	 In-Reply-To:To:Cc; b=JRWC0aPJ/vkLbpSBOksTXbAvz4a026ho+c8qW1PQ0NvM3AjlHaYe+lUDUKxECQFRL+CLGkJLfpEk2BwLMqRN636GtIS7+FdP01ePKq/0lBPAENDuHgVNa4Z9KWNiVzoXDnP1nlhv1NSuTcoHAE2xp56SV2KkP/TUr0O5e4BjlX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Wd9ZkuPg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h4e/w3pO; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E3k0KFgp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e160TtVX"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2DCFE2540130;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Wd9ZkuPg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h4e/w3pO"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C2B0E2540137;
 	Mon, 10 Mar 2025 03:13:37 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 10 Mar 2025 03:13:37 -0400
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 10 Mar 2025 03:13:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm1; t=1741590817;
-	 x=1741677217; bh=PGOtoRfukW7dv+Yz20doSCZJWwibZZrpXd5eDRBV0WA=; b=
-	E3k0KFgpk8ikw8xCK3lvodnlZj3FSZsHHWw5T5w5FFzop1nSzFArL+Ustk0s5EGi
-	7+zGzmbIceSlq8/6fYgDPDh0FA7RNUztDwkMrwZacAayaMiBH6GFNUEAQi6SpUCv
-	t+qaBugC184/ArNRJJSZ4o4hIPrVu01nptwxeCwrQbJFGLyDH2flJI6iv8f0VFhz
-	9MSl1hUw81n2Z4lj0YJPM23yODGGdZ534ieGdlTUJL9dIPSxMOSCyRr/eOMTSh44
-	G26bAtCswKA9QpRKMeG+qnzKFenBqKmNCAkCPOHKI0p1/mxTxYxOYqb83eZGN85c
-	3oT5wuNINYF90PoPfsvccw==
+	 x=1741677217; bh=er5VNE4MwJeSYQ3kvnqv2V+NHWCOiX0C4nuYTfZ7rMg=; b=
+	Wd9ZkuPgbqpWkiGL3h65fb2SiY9N5/9PGZU1Mjtks+OgbYKAhDBqS7hYC8zPFnjB
+	NiZScVMly0oy5Nqk1iKitIv1ZX6wtLHlR0phTjkvPsN0e4xm2thYA5a5QAPxRWPD
+	07iPNbWrHGPkk38m5Sp/VIROQ6v0x4HNkAofyRU5abARboLtLIr2GOLrIPe42blX
+	FCEFQNnykvz2L2O9DWqwWMJ2mR3533V8bBBxcSMokWLPikepAvKXTj4O+nxdwqtW
+	EV0RSsi0J5VcOzY3wtjKD27Kjp/0/XIOhcOY/JfH0wr2DTac2VHxkG40oY0YiEpH
+	uGBAI3PVi6jSUq/5saTaVg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741590817; x=
-	1741677217; bh=PGOtoRfukW7dv+Yz20doSCZJWwibZZrpXd5eDRBV0WA=; b=e
-	160TtVXPEwHqTx3df/F20RxvWksR4VO+CVjMgPAP1yT4zCaamh7BXWlkXtUl5Xxz
-	uAEX5TXim0gVW8319iaTKpLTiBVUGQX0rszv1OjWi5gsXx561oV1g2JAgJ8al4Rk
-	tI50GiaSuugiR1BpgXqB4OjuJY0Oq3PwNQvBNuJ98mnxbkYNYGTyBygMf5ZXS8ue
-	gaF0xpeYMiSWGOC60Sy1Mem5a5Wkv5tyY8Zyq/WzcSZjlydps9kySlGnIOPctfDN
-	XayAWCFVOjEsEIlVTrZ1zZVBvSjUQJLKT19P+J0HIZ7axT+wMBHkBElEtTNSeQVT
-	EVvp3iSWOT+MeOQK64Uhw==
-X-ME-Sender: <xms:IJHOZyRaos6v67QZCd8osZKWS2iX-jKm15PywhVbXjAwhRVHFYtXLg>
-    <xme:IJHOZ3zVQnEJv7w_NDbnXYch9O4JDk1mdBK3FzNW9Lb1qMaC8ynjBVYSp1URcR2L0
-    SlWFfTHNfE4ibhOhQ>
-X-ME-Received: <xmr:IJHOZ_2l8pI_kNdUxgY5cShjU0qJUI-1aDnG5BVbhWnnt2L98CPsf6A_HltFcO5WjJz9nURuVflmUzH1AOuP2rsWabkPhdkaS_9irr63_ke5ow>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudekjedvucetufdoteggodetrf
+	1741677217; bh=er5VNE4MwJeSYQ3kvnqv2V+NHWCOiX0C4nuYTfZ7rMg=; b=h
+	4e/w3pOvF2DgMxEr+CAkilIUpoFlvi6+tJ6G6jEsWKNflvLQT6xJgGC8aRFcEpk8
+	LREfy/nH/J9qSreknc4m53B12NXUopWk2tM1yfUktWj2mp/HHaTLFc8I5Wt0MWDG
+	7caZPfdMn3G5dEdEO8k2aoiD7zDHeUHI0QtpzuAaaG/9Vo+4YqTzDQdr5vkUXHW5
+	c0jMy1G+8iZ3D3Ykbmb1XrN9NxOJK0nsaA+UMTcSITSmijrQQ5T43nZZBJWMYQqG
+	M8+XJsOFN0m/pECZtYZRo2ucir5r8uq9TgoXMT371BYT6jTNFfIM2P2E/nSwGz8S
+	AXiSJbIu/ECMeLor+4qOQ==
+X-ME-Sender: <xms:IZHOZ3-eTh_oGbOXdIAj6i_vHx8nk0GNYX8aMpmbg6q491dpH57WSA>
+    <xme:IZHOZzuy6X0T4AI83tK5ttfYNmKa1fDB4Lws68jRPAQt3WC3KJAIl73DEY_RyLHpd
+    sney-q5_OJ80i_y5A>
+X-ME-Received: <xmr:IZHOZ1A9ZgL1v0USJVpxAHr8puYMOAk3WqC8GptlWH8nqmiJ8qST7Zbql3BM0tzS-c8k0PaMc8SKoRn2EwEycGX6xSEgVcNNHMTKa-JYAZUDDg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudekjeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
@@ -59,23 +59,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduudekjedvucetufdote
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
     vgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekke
-    esghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:IJHOZ-BmkUIrbr-Lu6BbzAscjvZQY-VH5FvS4XChh6aSKEZxgFol-Q>
-    <xmx:IJHOZ7jRGU1zdbwqWUSdiRFlN84uYhm4Aa4Ug3B4DKUKSMyCOAUkig>
-    <xmx:IJHOZ6o38GweresvczKssgKauIr8PX85FH09EsG0SB_HKuznmXDVqw>
-    <xmx:IJHOZ-gAoGN59CMJGqqwXMjeRIU6ideMdriTXM4ICgMjSvMT6hSuGQ>
-    <xmx:IZHOZ7fEqcYJHpmQHnatl0M2zKO0Y1nwyGHzQP9aG7k-FGQonymzHzEr>
+    dprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghr
+    thhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:IZHOZzdnQQsTPx-p7hLmmmLrx15z4S0hRrLeKuVQhxcyVOFLkLi1RQ>
+    <xmx:IZHOZ8MgjKJYJ6Nhk--OYlZ74TQ8DfHd1luE1M7fP2tx8AAkwOl0SQ>
+    <xmx:IZHOZ1nBw-lWSQCpSHM1uWr1qnerILeX2pB4EDonOdxrKoLp4cYOng>
+    <xmx:IZHOZ2vauEY5sRsHFGW22u8bLGYq1bosklLW5HGxkAWgIHK4WcuQEg>
+    <xmx:IZHOZ5or5UhijOg7X3UAS-BsGmEH7BJoQIqwMIycWGS9-oyPmsLvgpPs>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Mar 2025 03:13:35 -0400 (EDT)
+ 10 Mar 2025 03:13:36 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b5082241 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	by vm-mail (OpenSMTPD) with ESMTPSA id 273bb687 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
 	Mon, 10 Mar 2025 07:13:31 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 10 Mar 2025 08:13:26 +0100
-Subject: [PATCH v4 07/12] pack-bitmap-write: stop depending on
+Date: Mon, 10 Mar 2025 08:13:27 +0100
+Subject: [PATCH v4 08/12] object-file-convert: stop depending on
  `the_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250310-b4-pks-objects-without-the-repository-v4-7-f201b8ec57ba@pks.im>
+Message-Id: <20250310-b4-pks-objects-without-the-repository-v4-8-f201b8ec57ba@pks.im>
 References: <20250310-b4-pks-objects-without-the-repository-v4-0-f201b8ec57ba@pks.im>
 In-Reply-To: <20250310-b4-pks-objects-without-the-repository-v4-0-f201b8ec57ba@pks.im>
 To: git@vger.kernel.org
@@ -93,174 +93,207 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>, Elijah Newren <newren@gmail.com>
 X-Mailer: b4 0.14.2
 
-There are multiple sites in "pack-bitmap-write.c" where we use the
+There are multiple sites in "object-file-convert.c" where we use the
 global `the_repository` variable, either explicitly or implicitly by
-using `the_hash_algo`.
+using `the_hash_algo`. All of these callsites are transitively called
+from `convert_object_file()`, which indeed has no repo as input.
 
-Refactor the code so that the `struct bitmap_writer` stores the
-repository it is getting initialized with. Like this, we can adapt
-callsites that use `the_repository` to instead use the repository
-provided by the writer.
-
-Remove the `USE_THE_REPOSITORY_VARIABLE` define.
+Refactor the function so that it receives a repository as a parameter
+and pass it through to all internal functions to get rid of the
+dependency. Remove the `USE_THE_REPOSITORY_VARIABLE` define.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- pack-bitmap-write.c | 36 ++++++++++++++++++------------------
- pack-bitmap.h       |  1 +
- 2 files changed, 19 insertions(+), 18 deletions(-)
+ builtin/tag.c         |  2 +-
+ commit.c              |  2 +-
+ object-file-convert.c | 29 ++++++++++++++++-------------
+ object-file-convert.h |  3 ++-
+ object-file.c         |  7 ++++---
+ 5 files changed, 24 insertions(+), 19 deletions(-)
 
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 50e5c491ccb..6a97b52b36d 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
+diff --git a/builtin/tag.c b/builtin/tag.c
+index d3e0943b734..7c173535cb3 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -172,7 +172,7 @@ static int do_sign(struct strbuf *buffer, struct object_id **compat_oid,
+ 	if (compat) {
+ 		const struct git_hash_algo *algo = the_repository->hash_algo;
+ 
+-		if (convert_object_file(&compat_buf, algo, compat,
++		if (convert_object_file(the_repository ,&compat_buf, algo, compat,
+ 					buffer->buf, buffer->len, OBJ_TAG, 1))
+ 			goto out;
+ 		if (sign_buffer(&compat_buf, &compat_sig, keyid))
+diff --git a/commit.c b/commit.c
+index 6efdb03997d..48aeefaad31 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1380,7 +1380,7 @@ static int convert_commit_extra_headers(const struct commit_extra_header *orig,
+ 		struct commit_extra_header *new;
+ 		CALLOC_ARRAY(new, 1);
+ 		if (!strcmp(orig->key, "mergetag")) {
+-			if (convert_object_file(&out, algo, compat,
++			if (convert_object_file(the_repository, &out, algo, compat,
+ 						orig->value, orig->len,
+ 						OBJ_TAG, 1)) {
+ 				free(new);
+diff --git a/object-file-convert.c b/object-file-convert.c
+index eba71955cf7..7ab875afe6c 100644
+--- a/object-file-convert.c
++++ b/object-file-convert.c
 @@ -1,4 +1,3 @@
 -#define USE_THE_REPOSITORY_VARIABLE
  #define DISABLE_SIGN_COMPARE_WARNINGS
  
  #include "git-compat-util.h"
-@@ -48,6 +47,7 @@ void bitmap_writer_init(struct bitmap_writer *writer, struct repository *r,
- 	memset(writer, 0, sizeof(struct bitmap_writer));
- 	if (writer->bitmaps)
- 		BUG("bitmap writer already initialized");
-+	writer->repo = r;
- 	writer->bitmaps = kh_init_oid_map();
- 	writer->pseudo_merge_commits = kh_init_oid_map();
- 	writer->to_pack = pdata;
-@@ -415,9 +415,9 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
- 		bb->commits[bb->commits_nr++] = r->item;
- 	}
- 
--	trace2_data_intmax("pack-bitmap-write", the_repository,
-+	trace2_data_intmax("pack-bitmap-write", writer->repo,
- 			   "num_selected_commits", writer->selected_nr);
--	trace2_data_intmax("pack-bitmap-write", the_repository,
-+	trace2_data_intmax("pack-bitmap-write", writer->repo,
- 			   "num_maximal_commits", num_maximal);
- 
- 	release_revisions(&revs);
-@@ -460,7 +460,7 @@ static int fill_bitmap_tree(struct bitmap_writer *writer,
- 		switch (object_type(entry.mode)) {
- 		case OBJ_TREE:
- 			if (fill_bitmap_tree(writer, bitmap,
--					     lookup_tree(the_repository, &entry.oid)) < 0)
-+					     lookup_tree(writer->repo, &entry.oid)) < 0)
- 				return -1;
- 			break;
- 		case OBJ_BLOB:
-@@ -536,7 +536,7 @@ static int fill_bitmap_commit(struct bitmap_writer *writer,
- 				return -1;
- 			bitmap_set(ent->bitmap, pos);
- 			prio_queue_put(tree_queue,
--				       repo_get_commit_tree(the_repository, c));
-+				       repo_get_commit_tree(writer->repo, c));
- 		}
- 
- 		for (p = c->parents; p; p = p->next) {
-@@ -590,11 +590,11 @@ int bitmap_writer_build(struct bitmap_writer *writer)
- 	int closed = 1; /* until proven otherwise */
- 
- 	if (writer->show_progress)
--		writer->progress = start_progress(the_repository,
-+		writer->progress = start_progress(writer->repo,
- 						  "Building bitmaps",
- 						  writer->selected_nr);
- 	trace2_region_enter("pack-bitmap-write", "building_bitmaps_total",
--			    the_repository);
-+			    writer->repo);
- 
- 	old_bitmap = prepare_bitmap_git(writer->to_pack->repo);
- 	if (old_bitmap)
-@@ -645,10 +645,10 @@ int bitmap_writer_build(struct bitmap_writer *writer)
- 	free(mapping);
- 
- 	trace2_region_leave("pack-bitmap-write", "building_bitmaps_total",
--			    the_repository);
--	trace2_data_intmax("pack-bitmap-write", the_repository,
-+			    writer->repo);
-+	trace2_data_intmax("pack-bitmap-write", writer->repo,
- 			   "building_bitmaps_reused", reused_bitmaps_nr);
--	trace2_data_intmax("pack-bitmap-write", the_repository,
-+	trace2_data_intmax("pack-bitmap-write", writer->repo,
- 			   "building_bitmaps_pseudo_merge_reused",
- 			   reused_pseudo_merge_bitmaps_nr);
- 
-@@ -711,7 +711,7 @@ void bitmap_writer_select_commits(struct bitmap_writer *writer,
- 	}
- 
- 	if (writer->show_progress)
--		writer->progress = start_progress(the_repository,
-+		writer->progress = start_progress(writer->repo,
- 						  "Selecting bitmap commits", 0);
- 
- 	for (;;) {
-@@ -960,7 +960,7 @@ static void write_lookup_table(struct bitmap_writer *writer, struct hashfile *f,
- 	for (i = 0; i < bitmap_writer_nr_selected_commits(writer); i++)
- 		table_inv[table[i]] = i;
- 
--	trace2_region_enter("pack-bitmap-write", "writing_lookup_table", the_repository);
-+	trace2_region_enter("pack-bitmap-write", "writing_lookup_table", writer->repo);
- 	for (i = 0; i < bitmap_writer_nr_selected_commits(writer); i++) {
- 		struct bitmapped_commit *selected = &writer->selected[table[i]];
- 		uint32_t xor_offset = selected->xor_offset;
-@@ -987,7 +987,7 @@ static void write_lookup_table(struct bitmap_writer *writer, struct hashfile *f,
- 		hashwrite_be64(f, (uint64_t)offsets[table[i]]);
- 		hashwrite_be32(f, xor_row);
- 	}
--	trace2_region_leave("pack-bitmap-write", "writing_lookup_table", the_repository);
-+	trace2_region_leave("pack-bitmap-write", "writing_lookup_table", writer->repo);
- 
- 	free(table);
- 	free(table_inv);
-@@ -1008,7 +1008,7 @@ static void write_hash_cache(struct hashfile *f,
- void bitmap_writer_set_checksum(struct bitmap_writer *writer,
- 				const unsigned char *sha1)
- {
--	hashcpy(writer->pack_checksum, sha1, the_repository->hash_algo);
-+	hashcpy(writer->pack_checksum, sha1, writer->repo->hash_algo);
+@@ -63,7 +62,8 @@ static int decode_tree_entry_raw(struct object_id *oid, const char **path,
+ 	return 0;
  }
  
- void bitmap_writer_finish(struct bitmap_writer *writer,
-@@ -1030,15 +1030,15 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
- 	if (writer->pseudo_merges_nr)
- 		options |= BITMAP_OPT_PSEUDO_MERGES;
+-static int convert_tree_object(struct strbuf *out,
++static int convert_tree_object(struct repository *repo,
++			       struct strbuf *out,
+ 			       const struct git_hash_algo *from,
+ 			       const struct git_hash_algo *to,
+ 			       const char *buffer, size_t size)
+@@ -78,7 +78,7 @@ static int convert_tree_object(struct strbuf *out,
+ 		if (decode_tree_entry_raw(&entry_oid, &path, &pathlen, from, p,
+ 					  end - p))
+ 			return error(_("failed to decode tree entry"));
+-		if (repo_oid_to_algop(the_repository, &entry_oid, to, &mapped_oid))
++		if (repo_oid_to_algop(repo, &entry_oid, to, &mapped_oid))
+ 			return error(_("failed to map tree entry for %s"), oid_to_hex(&entry_oid));
+ 		strbuf_add(out, p, path - p);
+ 		strbuf_add(out, path, pathlen);
+@@ -88,7 +88,8 @@ static int convert_tree_object(struct strbuf *out,
+ 	return 0;
+ }
  
--	f = hashfd(the_repository->hash_algo, fd, tmp_file.buf);
-+	f = hashfd(writer->repo->hash_algo, fd, tmp_file.buf);
+-static int convert_tag_object(struct strbuf *out,
++static int convert_tag_object(struct repository *repo,
++			      struct strbuf *out,
+ 			      const struct git_hash_algo *from,
+ 			      const struct git_hash_algo *to,
+ 			      const char *buffer, size_t size)
+@@ -105,7 +106,7 @@ static int convert_tag_object(struct strbuf *out,
+ 		return error("bogus tag object");
+ 	if (parse_oid_hex_algop(buffer + 7, &oid, &p, from) < 0)
+ 		return error("bad tag object ID");
+-	if (repo_oid_to_algop(the_repository, &oid, to, &mapped_oid))
++	if (repo_oid_to_algop(repo, &oid, to, &mapped_oid))
+ 		return error("unable to map tree %s in tag object",
+ 			     oid_to_hex(&oid));
+ 	size -= ((p + 1) - buffer);
+@@ -139,7 +140,8 @@ static int convert_tag_object(struct strbuf *out,
+ 	return 0;
+ }
  
- 	memcpy(header.magic, BITMAP_IDX_SIGNATURE, sizeof(BITMAP_IDX_SIGNATURE));
- 	header.version = htons(default_version);
- 	header.options = htons(flags | options);
- 	header.entry_count = htonl(bitmap_writer_nr_selected_commits(writer));
--	hashcpy(header.checksum, writer->pack_checksum, the_repository->hash_algo);
-+	hashcpy(header.checksum, writer->pack_checksum, writer->repo->hash_algo);
+-static int convert_commit_object(struct strbuf *out,
++static int convert_commit_object(struct repository *repo,
++				 struct strbuf *out,
+ 				 const struct git_hash_algo *from,
+ 				 const struct git_hash_algo *to,
+ 				 const char *buffer, size_t size)
+@@ -165,7 +167,7 @@ static int convert_commit_object(struct strbuf *out,
+ 			    (p != eol))
+ 				return error(_("bad %s in commit"), "tree");
  
--	hashwrite(f, &header, sizeof(header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz);
-+	hashwrite(f, &header, sizeof(header) - GIT_MAX_RAWSZ + writer->repo->hash_algo->rawsz);
- 	dump_bitmap(f, writer->commits);
- 	dump_bitmap(f, writer->trees);
- 	dump_bitmap(f, writer->blobs);
-@@ -1072,7 +1072,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
- 	finalize_hashfile(f, NULL, FSYNC_COMPONENT_PACK_METADATA,
- 			  CSUM_HASH_IN_STREAM | CSUM_FSYNC | CSUM_CLOSE);
+-			if (repo_oid_to_algop(the_repository, &oid, to, &mapped_oid))
++			if (repo_oid_to_algop(repo, &oid, to, &mapped_oid))
+ 				return error(_("unable to map %s %s in commit object"),
+ 					     "tree", oid_to_hex(&oid));
+ 			strbuf_addf(out, "tree %s\n", oid_to_hex(&mapped_oid));
+@@ -177,7 +179,7 @@ static int convert_commit_object(struct strbuf *out,
+ 			    (p != eol))
+ 				return error(_("bad %s in commit"), "parent");
  
--	if (adjust_shared_perm(the_repository, tmp_file.buf))
-+	if (adjust_shared_perm(writer->repo, tmp_file.buf))
- 		die_errno("unable to make temporary bitmap file readable");
+-			if (repo_oid_to_algop(the_repository, &oid, to, &mapped_oid))
++			if (repo_oid_to_algop(repo, &oid, to, &mapped_oid))
+ 				return error(_("unable to map %s %s in commit object"),
+ 					     "parent", oid_to_hex(&oid));
  
- 	if (rename(tmp_file.buf, filename))
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index d7f4b8b8e95..53cd42772f3 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -104,6 +104,7 @@ int bitmap_has_oid_in_uninteresting(struct bitmap_index *, const struct object_i
- off_t get_disk_usage_from_bitmap(struct bitmap_index *, struct rev_info *);
+@@ -202,7 +204,7 @@ static int convert_commit_object(struct strbuf *out,
+ 			}
  
- struct bitmap_writer {
-+	struct repository *repo;
- 	struct ewah_bitmap *commits;
- 	struct ewah_bitmap *trees;
- 	struct ewah_bitmap *blobs;
+ 			/* Compute the new tag object */
+-			if (convert_tag_object(&new_tag, from, to, tag.buf, tag.len)) {
++			if (convert_tag_object(repo, &new_tag, from, to, tag.buf, tag.len)) {
+ 				strbuf_release(&tag);
+ 				strbuf_release(&new_tag);
+ 				return -1;
+@@ -241,7 +243,8 @@ static int convert_commit_object(struct strbuf *out,
+ 	return 0;
+ }
+ 
+-int convert_object_file(struct strbuf *outbuf,
++int convert_object_file(struct repository *repo,
++			struct strbuf *outbuf,
+ 			const struct git_hash_algo *from,
+ 			const struct git_hash_algo *to,
+ 			const void *buf, size_t len,
+@@ -256,13 +259,13 @@ int convert_object_file(struct strbuf *outbuf,
+ 
+ 	switch (type) {
+ 	case OBJ_COMMIT:
+-		ret = convert_commit_object(outbuf, from, to, buf, len);
++		ret = convert_commit_object(repo, outbuf, from, to, buf, len);
+ 		break;
+ 	case OBJ_TREE:
+-		ret = convert_tree_object(outbuf, from, to, buf, len);
++		ret = convert_tree_object(repo, outbuf, from, to, buf, len);
+ 		break;
+ 	case OBJ_TAG:
+-		ret = convert_tag_object(outbuf, from, to, buf, len);
++		ret = convert_tag_object(repo, outbuf, from, to, buf, len);
+ 		break;
+ 	default:
+ 		/* Not implemented yet, so fail. */
+diff --git a/object-file-convert.h b/object-file-convert.h
+index a4f802aa8ee..9b3cc5e533d 100644
+--- a/object-file-convert.h
++++ b/object-file-convert.h
+@@ -14,7 +14,8 @@ int repo_oid_to_algop(struct repository *repo, const struct object_id *src,
+  * Convert an object file from one hash algorithm to another algorithm.
+  * Return -1 on failure, 0 on success.
+  */
+-int convert_object_file(struct strbuf *outbuf,
++int convert_object_file(struct repository *repo,
++			struct strbuf *outbuf,
+ 			const struct git_hash_algo *from,
+ 			const struct git_hash_algo *to,
+ 			const void *buf, size_t len,
+diff --git a/object-file.c b/object-file.c
+index b3e0276b2a4..b0e237a2acc 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1793,7 +1793,7 @@ static int oid_object_info_convert(struct repository *r,
+ 		if (type == -1)
+ 			return -1;
+ 		if (type != OBJ_BLOB) {
+-			ret = convert_object_file(&outbuf,
++			ret = convert_object_file(the_repository, &outbuf,
+ 						  the_hash_algo, input_algo,
+ 						  content, size, type, !do_die);
+ 			free(content);
+@@ -2510,7 +2510,7 @@ int write_object_file_flags(const void *buf, unsigned long len,
+ 			hash_object_file(compat, buf, len, type, &compat_oid);
+ 		else {
+ 			struct strbuf converted = STRBUF_INIT;
+-			convert_object_file(&converted, algo, compat,
++			convert_object_file(the_repository, &converted, algo, compat,
+ 					    buf, len, type, 0);
+ 			hash_object_file(compat, converted.buf, converted.len,
+ 					 type, &compat_oid);
+@@ -2550,7 +2550,8 @@ int write_object_file_literally(const void *buf, unsigned long len,
+ 					 &compat_oid);
+ 		else if (compat_type != -1) {
+ 			struct strbuf converted = STRBUF_INIT;
+-			convert_object_file(&converted, algo, compat,
++			convert_object_file(the_repository,
++					    &converted, algo, compat,
+ 					    buf, len, compat_type, 0);
+ 			hash_object_file(compat, converted.buf, converted.len,
+ 					 compat_type, &compat_oid);
 
 -- 
 2.49.0.rc1.455.g4cd33545ba.dirty
