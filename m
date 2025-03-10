@@ -1,57 +1,58 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893DC22A4D3
-	for <git@vger.kernel.org>; Mon, 10 Mar 2025 15:59:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8332822A4D3
+	for <git@vger.kernel.org>; Mon, 10 Mar 2025 15:59:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741622357; cv=none; b=mrPohyOPXbQfQkHR2jt1GFlg8N2aGXlZeIxbo/V0qf3K6CLQZqWBYqv7B6lwTyLwLH2MBuJHbRPAKzYVItIEQvsR1RvU297wPK2Ve+/HtCESixUXv984/zPOZ1I9munF3nSS56bz+ya7E7/1u/KNXtXUA3558Sd+wQXgeSKd2Iw=
+	t=1741622374; cv=none; b=HBDBJW4+B0epXfoZcNCjuqY+N2i/EULsKb6P8Djyzkd1X947O8X+K0r6g2NVincTG3zsKrnmoUnm8NCNeg8qvOTfyMplibuMuJ/QE6JiJIEpbx04g2qzAw+oYTSvNuNCq2hdbNftbfIQbRfos17RbF2oq9ff8gcWri7XRZBxlio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741622357; c=relaxed/simple;
-	bh=pc32IRMZyoXWs3xvZYms0PJUaxtoTavP4aAFONs3uio=;
+	s=arc-20240116; t=1741622374; c=relaxed/simple;
+	bh=4w7z1skuFfH4wffmvkmzc/uPFNMTZRNJbKLz5HSFT5w=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EJkSWOlKnZPAgduHMUFzaD+yh8Vsd36TBrBWRMvmslg1PkkPhTS5nc4wb9y0UkdJVWLc6yGGbYjL2cye4Nw1hxGojFuYvbJ+ipOBHITStb9puvK+J0GW2E6gyxWJ/D8F5sYGamztHTXRl9zAwbdkEQM6fH9IsOR7yHNpNJZKvg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cmE3r2M9; arc=none smtp.client-ip=209.85.208.51
+	 To:Cc:Content-Type; b=Ayet8be1EhyAGzsO5i/rrjC4elRYzdRjLkg5Ev5scRFMomZ3np9DrKWVpJw1+7yBkai6sEBRgddSifP0XkT6Ayf4eDNIwiYv+Ty0Fq45d5tNpnn1mG8SFfIJEX+PA4Li6dxE6dnaL1cPp8kOupgpebVBqRT+A7WInqgCRcaQwTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BhpYU8CY; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cmE3r2M9"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5e5deb6482cso6959380a12.1
-        for <git@vger.kernel.org>; Mon, 10 Mar 2025 08:59:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BhpYU8CY"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5e5cded3e2eso6808350a12.0
+        for <git@vger.kernel.org>; Mon, 10 Mar 2025 08:59:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741622354; x=1742227154; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741622371; x=1742227171; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=J/f6UsvKfeKkWKuCGEWH8XIYYfV3Pgh3Ak3Eu9yBcAM=;
-        b=cmE3r2M9K4+v7Xqilizm98ULIxkAKqVRbvEGPbiFB1STsRd6DELlBYU4eRJayMGa+e
-         2L13bwRd7xF+sJ3eSu3NK9yGHckxFO+c1Z91YMV+xR12pkUZXLkFDhWNP35qTUeOQjmo
-         EFU+Lmtxp6TmAc41tnZHv/NwEiIoQY6eqqII6qZMquH5IOdQMmQkP7npalWzmbwXUf1a
-         f1BQR7+XhPpAIEY4P2a6Q3Nc9lespnUVVknsLYGHK0SJXZyTxCrwmSMchpYYuJtlLhDN
-         Rx5ccS38Abur6Amkgz6UAtkI8ylJQvYTyDeWZAm7x3T8lkIFn6tXJFNUDoH/NOcD4PZ6
-         LSrQ==
+        bh=nWUmkBLhDQ8HTMkrF124Tl5nII4ki5+VAt5+8aR2BUI=;
+        b=BhpYU8CY7LfX6HkF7XXcrTMua6Cm8bE67HIv3AjYg7OJCQ6NpHNo+gOxmI1o5HJ1cV
+         0WJM7Oc3u4LBPly+Yx/GTFku9J/4osU+d5jXMSHDMEOaBKrmcgBY6v23DBEn9C8lSEOG
+         65g/ELXIrA+Zfrp6vQh6TUnzwjs4F5Ag41MNQCMf0X6i2KZJxzcOthOZJihZ+Km6+UwE
+         aEmcHculJO4Wfik3uLdBcWzaqGa/DWukneCi8q/2NEkeeGNRYoWpCbIdpBdRM5nbwx3L
+         VBIxepXJuWXqVAoni1cL1xCCKBm/PnLk7SSJ9n57mMXapKMS1LnvXFmS6gx1+aVJ6DpR
+         PVBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741622354; x=1742227154;
+        d=1e100.net; s=20230601; t=1741622371; x=1742227171;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=J/f6UsvKfeKkWKuCGEWH8XIYYfV3Pgh3Ak3Eu9yBcAM=;
-        b=azd8nFclGcU3uszpM4Cm9/2E2L+vcRfGZMP+97nPslMfz+yv7+C105o/NvWwenegEK
-         WwPM53CzKN5JuvO+Q1FsKIsa+V15uqslDnKTxWtL/RYcYAMn22qhPneTbDjLbem1HrnM
-         03BI5fWj0Xx6GgdEOoMUNS3nAOXDJRM+ieXuFUX0zSVr5w85B3Q3C7Zy4GLORxiYlKum
-         sr+plOoPcniRlkbBeMevq8iQ4MAsqW7fAPY8w9UxWp2qNjqZ6XtwesDmbNlQ2m4vaif4
-         QIb6u9/UC7W26kEIUUxr2QJmYUaXeHQ08nQhia5++WIAqhpPXljVCg6zCet5UWWL6pUP
-         NwZw==
-X-Gm-Message-State: AOJu0YwnnzHedISXzVtvU/zN0CdS/iME03bKONMmDFeNlCcp8SlRorFf
-	FzqZuAnwJojIt+g9Tp2AxKeeccJvKeLmmTpC7bab/vM+fhDxv8r4C18isUwh2Hy/7Ii1NdDe2iA
-	GyIKKrDIkj4AuNF7am+RoxrnJhec=
-X-Gm-Gg: ASbGncsy44qFjfi+2E7qFk1w9vXh8ZSAvmTRIfTepUzJ5bdEoWdqCsUV4bdL2BPR4Yb
-	4hiTKollXH57hpl8pN5hptIlLdNV2gMFVe3VaYtloiUKXocd4TMG5oZ15x/DR6iORgPdV97FqIw
-	gvdH6CKuJVARROb8wkmnExAzZl+I0/
-X-Google-Smtp-Source: AGHT+IEE3e5BgPIkpH3PMf1PKzRsDopcFRARItN/8WC6E8tL58phfxY+61M7GVgD7p2LWNjSgWJVRf3NE/huJFJeZ/4=
-X-Received: by 2002:a05:6402:278c:b0:5e5:334e:86d9 with SMTP id
- 4fb4d7f45d1cf-5e61505027fmr12828012a12.13.1741622353527; Mon, 10 Mar 2025
- 08:59:13 -0700 (PDT)
+        bh=nWUmkBLhDQ8HTMkrF124Tl5nII4ki5+VAt5+8aR2BUI=;
+        b=iqME20IoG4U8LyJolJ0+uUyR9mKO80xtWCW7l69Awb/ctSVqgfikNZS7DVM6QfqOVr
+         mnQRuNEGvcBpaC+mqQTLyLU2TXbfTdupvEwR+hDp4CSGht2hOATDqyx+OEbSMWKE1BJj
+         oHJDxv4BhGEfz8zF53F8b+eC/8W/+9MhzanQZedZIZZ5/NRDWgbk0N70MxgVGbwn7k03
+         VeGvruDu2xod5vXH82GgpKBwXF88oMNlPs5rS6tFssNYRua7q99BJdqG1TSTAQEksx1L
+         r/zh7HHpEyP9KDMkrWg1/8Xpo6v+ZOs+rM4d7myMY+HXmc3l8nXGLKkcqsTTfGTRMTjX
+         o8CQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU4jY0la/zxTgDiDzKxHh+i7dgzDndktb71urrguJg/9yasGeWyCaARgTvea3gT61ngXiE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzQ48HMgBadEC+Tv6twEhMBvdL9g6ZpX4QW0rTV06Ummwg0wtmM
+	1oGgqzPQYOy/LeScxqiJzYRqMuaZlC4zU1q6E+9vrwIT4nfvBvks5Ztxmb4v+NI58F6McW/89SO
+	L9pjdA9n65d8Z4qyPjlpsZ3EBZXs=
+X-Gm-Gg: ASbGncuKNzm1pXx1sgN7k+2E5onSwH2YPG1447OUbS3lh93KlvKoDDFHRcakszqFsfy
+	MWzzT9FtoNL8ciWmUraO+c3O+IusYdECUxmbfhPn8n0G5AecnwgOQVC5o9veLfdwc2N5lxcOa1O
+	aX8TN5c45ucqpAeoPT9R/fKtQ4P09y
+X-Google-Smtp-Source: AGHT+IELulgah6ClUm/OvXAJerRMtr9JG4T7mZlvd9tnpbD73gKyU3ZW6RbXuhHsK0GGdmPsba7emSbOG0aUWpdhRWI=
+X-Received: by 2002:a05:6402:1ed2:b0:5dc:7823:e7e4 with SMTP id
+ 4fb4d7f45d1cf-5e5e22bf5abmr17512030a12.12.1741622370601; Mon, 10 Mar 2025
+ 08:59:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,99 +60,57 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20210430232537.1131641-1-lukeshu@lukeshu.com> <20250224142744.279643-1-christian.couder@gmail.com>
- <98b4c9e7-4034-4692-bc86-f6b905dcc5aa@gmail.com>
-In-Reply-To: <98b4c9e7-4034-4692-bc86-f6b905dcc5aa@gmail.com>
+ <xmqq1pvn6zvg.fsf@gitster.g> <CABPp-BHOvCWd6mMg0WdR4O5TfZS7TWtRCQCYPLnGpo5+jNHy5w@mail.gmail.com>
+ <Z712Z0zGQD1zkdkZ@pks.im> <CABPp-BHDx4YAjCqWX_VUjHQQ-r1iDbw7UcUgLXtt1ZAJjNXD-Q@mail.gmail.com>
+ <xmqqikoyklo9.fsf@gitster.g>
+In-Reply-To: <xmqqikoyklo9.fsf@gitster.g>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 10 Mar 2025 16:59:01 +0100
-X-Gm-Features: AQ5f1JpCA37O1zZxM6mIWEiZUw1YyYYJrSPAYvn0WA_kxqDt0VzKQxvMAKzKlGU
-Message-ID: <CAP8UFD1TyDQahYOm9D8ohU-F95XneOgk7fg5mSH_k+s3ZG7omg@mail.gmail.com>
+Date: Mon, 10 Mar 2025 16:59:04 +0100
+X-Gm-Features: AQ5f1JowFCwQ7xHYDWT2jAks81s0ltKz9fNNP7Y2tXCavqCU8NVmvuxB5xSPamg
+Message-ID: <CAP8UFD1m2Lb=e-gQgR_oT7u67-S0_XY=OebOiRq6Tnn3g9-pkQ@mail.gmail.com>
 Subject: Re: [PATCH v5 0/6] fast-export, fast-import: add support for signed-commits
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	Luke Shumaker <lukeshu@lukeshu.com>, Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>, 
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Luke Shumaker <lukeshu@lukeshu.com>, Jeff King <peff@peff.net>, 
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Taylor Blau <me@ttaylorr.com>, 
 	"brian m . carlson" <sandals@crustytoothpaste.net>, Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Phillip,
-
-On Tue, Feb 25, 2025 at 3:53=E2=80=AFPM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
+On Tue, Feb 25, 2025 at 5:56=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Hi Christian
+> Elijah Newren <newren@gmail.com> writes:
 >
-> I've only glanced over this series,
-
-Thanks for taking a look at it!
-
-> but I did notice a memory leak
->
-> On 24/02/2025 14:27, Christian Couder wrote:
+> >> This is also exactly the usecase we have been reviving this effort for
+> >> :) We recently hit such a case where a customer was basically unable t=
+o
+> >> use git-filter-repo(1) due to commit signatures, so we wanted to help
+> >> out and get this patch series landed so that the issue can ultimately =
+be
+> >> addressed in git-filter-repo(1).
 > >
-> >       + * The returned string has had the ' ' line continuation markers
-> >      -+ * removed, and points to staticly allocated memory (not to memo=
-ry
-> >      ++ * removed, and points to statically allocated memory (not to me=
-mory
+> > I'm confused; this patch series doesn't implement the option Junio and
+> > I were talking about.  It only allows existing signatures to be
+> > carried as-is, as opposed to resigning all the commits with the
+> > current user's signature.
 >
-> This corrects the spelling but the changes below remove the static
-> buffer so the user is now responsible for freeing the returned string.
-> That means this comment is wrong
+> I read the "can ultimately be" as "this series lays the groundwork
+> by upstreaming what the earlier effort started and stops there. a
+> future follow-up work will build on this to add more".
 
-Yeah, this part of the comment is wrong. I have changed it in the next
-version to the following:
+Yeah, this is our goal. I have added the following section to the
+cover letter to clarify this:
 
- * The returned string has had the ' ' line continuation markers
- * removed, and points to allocated memory that must be free()d (not
- * to memory within 'msg').
+Big picture goal
+~~~~~~~~~~~~~~~~
 
-> and I don't see any corresponding
-> changes to the callers to free the memory.
+Independent from these --signed-tags/--signed-commits options
+addressed in this series, we want to have an option, that allows the
+person who performed the import to attest to the result by adding
+their own signature on tags and commits, whether these tags and
+commits were originally signed or not.
 
-It is called by the following lines:
-
-> >      -+       if ((signature =3D find_commit_multiline_header(commit_bu=
-ffer_cursor + 1, "gpgsig", &commit_buffer_cursor)))
-> >      -+               signature_alg =3D "sha1";
-> >      -+       else if ((signature =3D find_commit_multiline_header(comm=
-it_buffer_cursor + 1, "gpgsig-sha256", &commit_buffer_cursor)))
-> >      -+               signature_alg =3D "sha256";
-> >      ++       if (*commit_buffer_cursor =3D=3D '\n') {
-> >      ++               if ((signature =3D find_commit_multiline_header(c=
-ommit_buffer_cursor + 1, "gpgsig", &commit_buffer_cursor)))
-> >      ++                       signature_alg =3D "sha1";
-> >      ++               else if ((signature =3D find_commit_multiline_hea=
-der(commit_buffer_cursor + 1, "gpgsig-sha256", &commit_buffer_cursor)))
-> >      ++                       signature_alg =3D "sha256";
-> >      ++       }
-
-so the 'signature' variable points to the allocated memory, and then
-it's used like this:
-
-> >      @@ builtin/fast-export.c: static void handle_commit(struct commit =
-*commit, struct r
-> >               printf("%.*s\n%.*s\n",
-> >                      (int)(author_end - author), author,
-> >                      (int)(committer_end - committer), committer);
-> >      -+       if (signature)
-> >      -+               switch(signed_commit_mode) {
-> >      ++       if (signature) {
-> >      ++               switch (signed_commit_mode) {
-> >       +               case SIGN_ABORT:
-> >       +                       die("encountered signed commit %s; use "
-> >       +                           "--signed-commits=3D<mode> to handle =
-it",
-> >      @@ builtin/fast-export.c: static void handle_commit(struct commit =
-*commit, struct r
-> >       +               case SIGN_STRIP:
-> >       +                       break;
-> >       +               }
-> >      ++               free((char *)signature);
-
-And eventually the memory is freed by the added call to free() above.
-
-> >      ++       }
-
-But yeah, the description of the changes since the previous version in
-the cover letter might have done a better job of explaining this.
+This series lays the groundwork for that future option by upstreaming
+the earlier effort started by Luke Shumaker and stops there. Future
+follow-up work will build on it towards the big picture goal.
