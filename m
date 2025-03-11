@@ -1,173 +1,257 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AC2846D
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 15:24:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544261805A
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 16:04:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741706698; cv=none; b=ZZOvu7QPm8B857huuEfDBx1CYQ2kRrmZ/MBK+mYBvh1ILcE0JwZpE9H1cYifwouDuFFWK8N/k533IzKH10ebFyiztSLxc73abDvi9ggxGFTGutx39aEPOzpVzVZPEwc1rr42nQM3XttHILrIYSAAmRpALnEgyMAQWuzf6ekb9eA=
+	t=1741709052; cv=none; b=PZVrjV/QT+2/1yr7NxKo9MmDtP0yvKPTQFlMfCNymt7CL06efHDopB8CNaH93YjjtyQ+EZV1JsieqlbWi65PhzPYUU+ezGj2pPwcNOPVPaLNtJkxOysmHL2d6nhJDvTGJ6w5l9xeTelxGhapKkOeV6xUpM4YOdpPsAi50oJOjdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741706698; c=relaxed/simple;
-	bh=rFbwNAA/Jr96ZJJ13HILqHtebWj9Usw+YB2ue1fGFl4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PrunoahGoS6w+v95Zy/Y/25XwYCtBX/XyLgcoDOobDTO1InodvTmK7DzNV5Lm5cSK9A3EaKc+75NB9sQ1oYo4ZtUQgpZTtsh9DNaX/xeXu1lFq07w6EzvWQqTqtZY9JQTCHNf9VJuMqQ/1SJjv79Flb80F6K/lqugYLdiJ5QK6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UsaUNtbN; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741709052; c=relaxed/simple;
+	bh=pvHHef25WKybvCSPRtiqUmuaVrOpNASKWVLFbY9arX4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KC+HMd38pdcs6X5Q9d6q4LAz+QEKou66176L8OVf2C+4NUHKimAtdD43ki2rimGSMVQ5X47Ps7KoM/k412e4iu02Qeezw02WZYcfSfiLm786ZgzIj5du9kLZizoY5I+D/kv5Z9PHuHn042+5IY0XQfc/78AsS72jNpc3mIdh1fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b9W7mfwL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Um93sGaJ; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UsaUNtbN"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5e614da8615so2071383a12.1
-        for <git@vger.kernel.org>; Tue, 11 Mar 2025 08:24:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741706694; x=1742311494; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7c1hf8hAOdhqGPyVZD1VYzU6ZpQpaI1twiioBCMCvbM=;
-        b=UsaUNtbNLGmVEor7GoAqYVVxxO3X2vnGKDyayQWuMouFvjATzPdzV2szBHlRVBxgj1
-         KsgPnEzEaw1owx2E7NqftN5bU//MIEmxuaBkQQbmAF0vZVAI2TK3+isssASMqNaPCrdm
-         gOcd34lPKgtMtPqts3RYgqkCABz4KlTR6A+TRKQXhNOWSjntogIrLtAQh7Nv+OoujRpT
-         ppeRKkL21zMoDpTtt8w56cgk2EpUKoI02BTLnbhymi8fAwRgDSfkSgyo5xEHqjMnLUkD
-         6uWTe9AMD8sSK3ad2cEphf23nE5sC3rPeytW4XU4qLiCaZi7DnADQChlUZ7skAcshpNP
-         shyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741706694; x=1742311494;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7c1hf8hAOdhqGPyVZD1VYzU6ZpQpaI1twiioBCMCvbM=;
-        b=r96HNKrQvDHXF7oYdEtPmZaoryD8QtRefG9TDyGYUetYABR5P+r9TxZDxmbGwcR29x
-         07FXks3CHeHLKuW91YuduFqda7jsE5De+WGuqR11lCZVwZPqcpi1I73jfh6u1juVmY3P
-         rto4ewyVEspl10EdJaAOnZMKYeQ2m/j885lkfT/uzNekSU56G6VEd2IqvBQsSAJAL0mY
-         mg0zqxBvILEzzqF4H/Butrdha0KtvLIsM9AGEvyOIcAoymo+eWRtaUKd3we2sDw4QELe
-         eRudfMH0TFZzgRAq2DnttqYMDKua4E3siISxgmBv/ctgf3mIfwRbANlHrLpJYhkOtT2u
-         8oDA==
-X-Gm-Message-State: AOJu0YxuGNR36OZ0KvrAZCzKYpJ1bpDIS0J7AuVY3ZTc02Czr31J7hTY
-	kdcGd0tn3cqB8J7Te7G6RwxXU/qLTAZXRaWbNR2NR/F3C4LLs8J1d2y4MEckMzuELZPE7mn9MS4
-	4TFWVOLreEp8E/tdxJVwxLIhZ9q8=
-X-Gm-Gg: ASbGncuKJfwAq5n6e798C1K9cuhPsywkdenjmR5ltP3psutlkk0aQApNA26+yl8LZ0f
-	c2kkqqoL/zsQGZXxLyG/CxBD1XqWgkET0gnAyG1q1WRdOTGvLCYaIpb7CSgg293RwbwKHHO93r7
-	SWdUnxtZss07sn4DYwz9cKiob871RO9QnKQZYbVcY=
-X-Google-Smtp-Source: AGHT+IGKOopZlhg/dvETlgIj1977EwYhd03QtJx1rAs/MtpBROD6QNEr6bIONkp6jmw69SDgovr//Nda+N4KdcUCQWU=
-X-Received: by 2002:a05:6402:254e:b0:5e6:102a:c30 with SMTP id
- 4fb4d7f45d1cf-5e762808483mr5420285a12.2.1741706694067; Tue, 11 Mar 2025
- 08:24:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b9W7mfwL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Um93sGaJ"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 36444114022C;
+	Tue, 11 Mar 2025 12:04:09 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Tue, 11 Mar 2025 12:04:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1741709049;
+	 x=1741795449; bh=dcbgN4+9UYDktP+4RDI+PWvo7j/AiNNsk/KNqRaXB98=; b=
+	b9W7mfwLCh1rSqXkrlACfBGe8FDofCvJaVaGeJX1tP7uz3G86CIxN9kdTSuZ8HuW
+	B8+RE6xy8e3neUTgZu/XvWzBRyayvwNcmUNd//Y31+QiRf1YEjtmoK0ymXfdn7yY
+	Lvm+8dprW8BvDshIp26LL8abx5GxOBU8GvM2oxxg3cm8UaXx/TgZak3BZp6FohqQ
+	ZocK/81s1RNHGIxXbWPjTJBwzB+qbx7l9WQuUkCCkIaoBSA91SK5kWzOSZDA9tkP
+	R2Uis0qTuABSnl8x6Pch61nC6cSA/25HiW6x/GJBGjTVy+z+bg26QboGO0/Ny9Wr
+	9BGIK+N73E9T30fyjGVFdQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741709049; x=
+	1741795449; bh=dcbgN4+9UYDktP+4RDI+PWvo7j/AiNNsk/KNqRaXB98=; b=U
+	m93sGaJcwtS7c9kxcFTb3xGMn4TIVEu2zb+WMirQcB2CFTamMLOae4VKWGhbBv5h
+	OnTzPZDw68jGjhCzu3XSV7Cr0Jk771Y9ZtrOCnhp3v9tZcN/PTnryL0LouMvyp9I
+	bQLCnLrxgTNU4lnr0uL40++W5d/TkSxJ9PKJgMfr/hf6mzyO8CFwRFgDtqzoV3oo
+	bJiHzD+wHyHbEexriCLhXRzHvcp2MoYHloelEGAtIcJU1pFB94hcJUQiQigvd6Dn
+	zBijdJwLnFdCKYXSIhj2ukIE8r1fsrRsdmnjN+GtGZ5uBXuzqGQcwwIxLN99AvCd
+	hoVaJe3+DHVMAxQzY+eJA==
+X-ME-Sender: <xms:-F7QZ9KCUz91hvOg3ppNZS1PVQRAOkMc_J472bNhzl_R5L3q0yle_Q>
+    <xme:-F7QZ5J7pftpcmUua34MrdGMEANvWxnraG-J0RAhkGzZRR8bp5dR4V1lywh2NQqgw
+    GP9Y0qcSFvjm_HrQA>
+X-ME-Received: <xmr:-F7QZ1shc1DDOft-82xOWMaEHHvQcaRB026_0apnfpR73ljQu8IrXClXmS_8o5PQVFVBKUmZsA04TIpqlHp7Q_LWqsmq1CR1iSU58LfsciVDSdLXNQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvddvieeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnegoufhushhpvggtthffohhmrghinhculdegledmnecujfgu
+    rhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhitg
+    hkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhn
+    peejfefhgfeuleeuvdehteevfedtueetkeegiedujedtuedvteeuhedvfedufeetfeenuc
+    ffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgihhthhhusgdrihhonecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgvlhhs
+    vgihrdiirdiihhhouheludejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:-F7QZ-ZhxJ-dmXnNWPqYvvReAzDpsJ2Ur8iY7usOsifaVa-si4nvzQ>
+    <xmx:-V7QZ0YX3maInWVeSorOH1Qipaefg4GfiyyRFbgK_Wvv-LIJF5FgUA>
+    <xmx:-V7QZyBp5_5txf85GuCa7nfNjkSDyoBE9Zn9xeUU1LKKqt9sR6j4-Q>
+    <xmx:-V7QZyYUGI2CQZkdgKTyL-Zmc9AL9Kn4pHwULC_vUrf_3FhHjH7VTA>
+    <xmx:-V7QZzmH_sa_mchc2vf8uueA9r4ndQmHBTh1Dr2ju2RXEnEQxKR8kQtn>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Mar 2025 12:04:08 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7f3de066 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 11 Mar 2025 16:04:06 +0000 (UTC)
+Date: Tue, 11 Mar 2025 17:04:06 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Kelsey Zhou <kelsey.z.zhou917@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Interest in Git's Global State Reduction Project - UC Berkeley
+ CS Student
+Message-ID: <Z9Be9hAGDH7lLbfZ@pks.im>
+References: <CADGDkpQuygSCPt-QwTrf1bt7hU9STLO2uxzNB3s-BdZVhWtZ+Q@mail.gmail.com>
+ <Z8qkAoGcpw9VRbzy@pks.im>
+ <CADGDkpRfBsvpg_LzjU7+A73_dt622qsCGu_haoPtxmWvjB9HqQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250310074053.1886097-1-christian.couder@gmail.com> <xmqqo6y897cz.fsf@gitster.g>
-In-Reply-To: <xmqqo6y897cz.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 11 Mar 2025 16:24:40 +0100
-X-Gm-Features: AQ5f1JpLQT39u9a_NdWoguOTQZRjryeR6pdiAiXiDpQ7VCvEGdXyWwb0yuOXKhw
-Message-ID: <CAP8UFD1ujnSYEnNO4xifwXj397V-=1kJSMGJ3j613+qVAkyg=Q@mail.gmail.com>
-Subject: Re: [PATCH] promisor-remote: fix segfault when remote URL is missing
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Karthik Nayak <karthik.188@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	"brian m . carlson" <sandals@crustytoothpaste.net>, 
-	"Randall S . Becker" <rsbecker@nexbridge.com>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CADGDkpRfBsvpg_LzjU7+A73_dt622qsCGu_haoPtxmWvjB9HqQ@mail.gmail.com>
 
-On Mon, Mar 10, 2025 at 5:29=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > Pushing NULL into a 'strvec' results in a segfault, as 'strvec' is a
-> > kind of NULL terminated array that is designed to be compatible with
-> > 'argv' variables used on the command line.
->
-> It is good that you corrected a caller that tries to make a strvec
-> into such a state, but shouldn't strvec_push() protect itself with a
-> BUG or something, I have to wonder.
+Hi Kelsey,
 
-Actually strvec_push() uses xstrdup() on the value it is passed and
-xstrdup() crashes if that value is NULL. So another way to avoid
-crashes would be to make xstrdup() BUG when it's passed NULL. Or maybe
-xstrdup() should just return NULL in this case?
+On Mon, Mar 10, 2025 at 03:17:21AM -0700, Kelsey Zhou wrote:
+> Dear Patrick,
 
-Also it looks like strvec_push_nodup() kind of works if it is passed a
-NULL. (It adds the NULL to the array and grows it.) So I wonder if the
-right solution for strvec_push() would be to make it kind of work in
-the same way.
+two asks from my side:
 
-Anyway I think these are separate issues that deserve their own
-discussions and can wait for after the 2.49.0 release. Here I am just
-providing a hotfix for the "promisor-remote" protocol capability.
+  - In the Git community we don't top-post. Instead, replies to an email
+    go inline and relevant parts you want to quote go above your reply.
 
-> > So when an URL is missing from the config, let's push an empty string
-> > instead of NULL into the 'strvec' that stores URLs.
->
-> How will these strings in the "names" strvec used?  When URLs are
-> present, I'm sure we are going to use it as URL, but when they are
-> missing, what happens?
+  - Please send your follow-up questions to the Git mailing list instead
+    of only contacting me. This allows other mentors to chime in, as
+    well.
 
-The 'names' strvec and 'urls' strvec contain what exists in the client
-config. They are only used by the promisor remote code to compare the
-names and maybe urls in the config with what the server advertises in
-case 'promisor.acceptfromserver' is set to KnownName or KnownUrl. This
-is done to decide if an advertised promisor remote is accepted or not
-by the client.
+I've put the Git mailing list back into Cc.
 
-When 'promisor.acceptfromserver' is set to KnownUrl, a remote should
-be rejected in any of the following cases:
+> Thank you for your detailed responses and insights into the global state
+> refactoring project. I appreciate you taking the time to address my
+> questions. I'll definitely follow your recommendation to explore the
+> microprojects as a starting point to demonstrate my fit for the program.
+> 
+> From your explanations, I understand that while no single global variable
+> presents a uniquely difficult challenge, the comprehensive nature of the
+> refactoring and the volume of references (3,200+ for the_repository alone)
+> make this a substantial undertaking. I'm particularly interested in the
+> environment.c variables you mentioned, which require more thoughtful,
+> case-by-case solutions.
+> 
+> A few follow-up questions I have:
+> 1. For newcomers to the Git codebase, are there any specific microprojects
+> you would recommend that might build relevant skills for this global state
+> reduction effort?
 
-  - the server doesn't advertise an URL for that remote,
-  - the client doesn't have an URL configured for that remote.
+I honestly wouldn't care about that too much yet. The microprojects are
+designed so that you first get up to speed with contributing to the Git
+project in the first place. So I'd rather focus on a microproject that
+looks easy, and once you have finished that microproject you can look
+for further projects that might already be in the vicinity of what you
+want to do in the actual project.
 
-When 'promisor.acceptfromserver' is set to KnownName, URLs should not
-be taken into account to decide if an advertised promisor remote is
-accepted or not.
+> 2. Could you suggest some previously completed patches related to global
+> state reduction that might serve as good examples to study?
+> I'm excited about the potential architectural improvements you described,
+> particularly the possibility of better parallelization and reduced process
+> spawning. These align well with my interests in systems optimization. Thank
+> you again for your guidance. I look forward to contributing to the Git
+> project.
 
-Note that the promisor remote code added by this series doesn't change
-the code that actually uses the remote names and urls to clone or
-fetch objects, so there is no change there. In particular, if the
-client doesn't have an URL configured for a remote, even if the remote
-is accepted and the server provides an URL, the client will not be
-able to fetch or clone from the remote as it will not use the server
-provided URL. The test called "clone with 'KnownName' and missing URL
-in the config" shows that.
+The patch series at [1] would be one such example.
 
-> The second hunk of this patch seems to
-> ignore such a broken entry with an empty URL, but that smells like
-> sweeping a problem under the rug.  Shouldn't such a promisor be
-> either diagnosed as an error, or skipped when you accumulate URLs to
-> be used into the strvec, so that the later code (i.e. the second
-> hunk) does not even have to worry about it?
+Thanks!
 
-If 'promisor.acceptfromserver' is set to KnownName, I think it is
-simpler to just ignore URLs altogether. Such a behavior is easier to
-document and implement.
+Patrick
 
-Also if we ever develop a mode where the advertised URL can be used
-for cloning or fetching by the client, then it won't matter if no URL
-is configured on the client side. In fact it might be the common case.
+[1]: https://lore.kernel.org/git/20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im/
 
-Skipping remotes with no URL would make it more difficult to explain
-why a remote was rejected in the KnownUrl case. In the next version, I
-have added checks and warnings to help diagnose why a remote is
-rejected when a URL is missing.
-
-I have also added a test case where the LOP URL is not configured on
-the server side, so not advertised.
-
-> > @@ -356,7 +360,7 @@ char *promisor_remote_info(struct repository *repo)
-> >                       strbuf_addch(&sb, ';');
-> >               strbuf_addstr(&sb, "name=3D");
-> >               strbuf_addstr_urlencode(&sb, names.v[i], allow_unsanitize=
-d);
-> > -             if (urls.v[i]) {
-> > +             if (urls.v[i] && *urls.v[i]) {
->
-> Why does urls.v[i] need to be checked?  Didn't you just make sure
-> that the strvec would not have NULL in it?
-
-Yeah, right. I changed this to just `if (*urls.v[i])` in the next version.
-
-Thanks for your review.
+> Best regards,
+> Kelsey Zhou
+> 
+> On Fri, Mar 7, 2025 at 12:51 AM Patrick Steinhardt <ps@pks.im> wrote:
+> 
+> > Hi Kelsey,
+> >
+> > On Thu, Mar 06, 2025 at 10:49:47PM -0800, Kelsey Zhou wrote:
+> > > Hi,
+> > >
+> > > I hope this message finds you well! My name is Kelsey Zhou, a Computer
+> > > Science and Data Science student at UC Berkeley, and I'm reaching out to
+> > > express my genuine interest in the Git refactoring project focused on
+> > > reducing global state.
+> > >
+> > > The architectural challenge of modernizing Git's environment handling
+> > > immediately caught my attention. Having worked extensively with complex
+> > > systems that required careful state management, I'm fascinated by the
+> > > opportunity to contribute to such a foundational tool used by developers
+> > > worldwide. The prospect of improving Git's maintainability while
+> > > potentially enabling better multi-repository handling represents exactly
+> > > the kind of meaningful technical challenge I'm eager to tackle.
+> >
+> > Thank you for your interest!
+> >
+> > > My background includes relevant experience that I believe would be
+> > valuable
+> > > for this project:
+> > >
+> > > At GSK, I worked as a Data Engineer Intern developing pipelines that
+> > > processed millions of data points, where I gained hands-on experience
+> > with
+> > > environment management using Docker and Terraform. This work required
+> > > meticulous attention to system architecture and careful handling of state
+> > > across different components – skills directly applicable to refactoring
+> > > Git's environment handling code.
+> > >
+> > > While my academic work has primarily focused on data structures,
+> > > algorithms, and systems programming, I've developed a strong foundation
+> > in
+> > > C programming through coursework and personal projects. My experience
+> > with
+> > > database systems has also given me insight into managing state
+> > effectively
+> > > across complex software systems.
+> > >
+> > > I'm particularly curious about:
+> > >
+> > >    1. Which specific global variables or components have proven most
+> > >    challenging to refactor in previous attempts at reducing Git's global
+> > state?
+> >
+> > I think for most of the part there isn't really anything that is
+> > _particularly_ challenging. It's more the sheer vastness of global state
+> > that the Git project has that makes this an involved project, as every
+> > dropped global variable is something that needs careful consideration.
+> >
+> > There are of course nuances.
+> >
+> >   - Projects like getting rid of the global `the_repository` variable
+> >     are for for most of the part trivial, as it is merely about plumbing
+> >     through the variable layer by layer. But a simple grep shows we've
+> >     got 3200 references remaining to that variable, so it takes a lot of
+> >     time to reduce our reliance on it.
+> >
+> >   - Other projects, like for example getting rid of global variables in
+> >   - "environment.c", require a lot more thought because there is no
+> >     ready made solution for each of those variables. Instead, we always
+> >     have to think about how that variable is used and then decide on a
+> >     specific solution for it.
+> >
+> > Another challenge in this context is that we must be careful to not
+> > break existing behaviour during our refactorings.
+> >
+> > >    2. Beyond the architectural improvements, are there any performance
+> > >    considerations or trade-offs you're anticipating with this refactoring
+> > >    effort?
+> >
+> > Yes and no. We don't expect there to be a significant impact on
+> > performance just due to the refactorings. But the architectural
+> > improvements may lead to performance improvements down the road:
+> >
+> >   - We may be able to parallelize more work via multithreading.
+> >
+> >   - We may be able to perform some tasks without having to spawn a
+> >     separate process.
+> >
+> >   - With proper, compartmentalized subsystems it may also become easier
+> >     to refactor their internals more readily, thus unlocking further
+> >     performance optimizations.
+> >
+> > > I would welcome the opportunity to discuss how I might contribute to this
+> > > project and learn more about your expectations for GSoC participants.
+> > Thank
+> > > you for considering my interest.
+> >
+> > I would strongly recommend to read through [1] and start working on a
+> > microproject. This is a prerequisite for every student to get accepted
+> > into Git's GSoC program so that we can assess whether we think that the
+> > individual is a good fit.
+> >
+> > Patrick
+> >
+> > [1]: https://git.github.io/General-Microproject-Information/
+> >
