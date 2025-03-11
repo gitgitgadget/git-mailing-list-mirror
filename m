@@ -1,163 +1,130 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58271BDCF
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 14:39:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7684225C6F1
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 14:40:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741703977; cv=none; b=eAqGNxo1b42O4DRpVLTlXbfjeQEBFE6roCgZcZymEycm4U9nOuVsSSRDheVgoMVXw/jF3oNE/z3tbVg9YAe0GuZewVWavJFbuTnRjt+1aRGrneMxUWo8nVZZHVNIdyC8Ye4G35q0VO0y9b22n74yT6M2gCKuC8aKg+JuQQdDpeM=
+	t=1741704053; cv=none; b=pZ59DB7pD7OV0t70RQcf4SP7Lmtau9TfmluolKR3wu5eB5LNx9ADTdjXIdqoQShTWUTi6ZwPh5xVdpW5Qn1ugdBxle8KKHiGu0WkB31DVVlcamNLOAxVcT6kZaR0l4CYz/bLvGz2SN86cYDsC4GLujSb434+PtE54L4HBHDE9O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741703977; c=relaxed/simple;
-	bh=tgkexHeYZHE0ZjjytZ8GTtRLTEwRfKK66Mxq6c5zaGo=;
+	s=arc-20240116; t=1741704053; c=relaxed/simple;
+	bh=0b8msB7Nux1ikDgU7/CMLkftk2T/KzuBTIVABXmUGC4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=of2zzwAfvrGqt5yKpTOKL6GEUSzl8CYXPC430r06Jv/+6x42uKjeTb/uPrqBCo/QNhhGS5y5QeF2CK5b6xWTcut7KZAFkcdLT6HeqaUIoL0LG55+ksF+5K6E17pYTPIMRj6muuERwo2El9aUrm+A6ZL69tAVTQbCgvrEEu4vUpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fjY5GUCf; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=sdiLM+JbKKDCHEPqpcq8e2Bkx5qRc3GDXJhJTlse+MJJ/ne5SQ8K3Z2z6UChweTXTks+HdzRyCeo+Xbmj/kWVAJrAfWtAX8caDb3h7hnC3N6mdn5DcSaB51vgBejz7lTt6u3VW9nhGJt3mxjM8yt04pXluaiXXvrmf27JP1dgr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Qs841MW3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PF1wNHdr; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fjY5GUCf"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2fef5c978ccso8337998a91.1
-        for <git@vger.kernel.org>; Tue, 11 Mar 2025 07:39:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741703975; x=1742308775; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YObjQJhjImBrN0QP6BJdk3CW8gN3WsPvz4+BC3H9SOY=;
-        b=fjY5GUCfv+JkO+Xv1VYFgcAhb7A/juyVP64aQD4yNiJCs7UmktZHRAnKjSmW9VBGi9
-         vCVI9K6g4gsVyWRfx2fXlkhfcAR9ZyzVotNmzV0d2N8S4BmkSWlu/pwNHrgg6Dx6dqga
-         +tkyLUwJxe8MNK93qTwYrkbgZFw3xv7YgUzoqLCE9n00prQGfd5jxrfNA2oXnYH7Q+Im
-         wAr6HTVUm6e0rJT1ijk01SDnNo7nUHvEKnLRvnafD4VXkAv71BPPDmfZKAh6eZl78fYL
-         RmgZpBEgMUR4Q3pXnbGK1cLQg/Ju/49zhvuI39HBeC5IcgH3sjoBls3F1ufpmM8uKBhQ
-         6Hzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741703975; x=1742308775;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YObjQJhjImBrN0QP6BJdk3CW8gN3WsPvz4+BC3H9SOY=;
-        b=ReRugyBuDUnIbMF/8DG9YgR3WxQlFEX3dpqxs1JJFZfiwr7ZTLqgxOvCHqR5yxgHO8
-         bt31eibdL0RFq/3cYFnDwUhI0hyqqKWX6vOhUufcMpvfLU+j3rDxp2ZBFkBmFA+KsuKU
-         KYWfi+2YduBxl1QOO91Ei1ioG8kzytR5i8BOokffJjKgG1wuyXSsXeATstL6SFl/PZPE
-         9GayL2e4Y/Lm8GyWfOlPlt6KKxMxJbUxxSmH2D5yNNlH5GBx9UaDmQ3a3ZsWmA6beUqe
-         RwAmeJp5HFcK8wF7zZ9iCiJglyeBWWXiI8Ha+Xkodh3YIdyGk2PKXQlXcy2yAoEHxiWf
-         ViRQ==
-X-Gm-Message-State: AOJu0Yyzln/67dFEvPsF7fguyoS6i10AJyYEVpMhF/R4hqC0SMcAN1Z1
-	f9Ow/vLp1OxbESppKKpItIyJp39bl4mKmmfIOBGxrJTKuQALH1SS
-X-Gm-Gg: ASbGncuhjK9vIN+uwj/gEkgaSSmhJqfG6j85CdVVa+2GepYZM5fM9GGh4MJrx1HSNAh
-	Wly7KriGncTqcctVwtzL81gIK6rMo0k/hqK4z91fFFyA/fopWNZwwvzsvIm4h8JMRWk+bMhE2KA
-	tTVDlFfzxjO6/ntSR+owSEpLZS05ih5dRhg691SkppBNcAPlelby48wMh/BeT8Jblotsc0jTwOv
-	ZLRdGlIEuELI4Ppz445CZ984jiVaeSYkO3WhyQ3Bm47HEaa4YOFQRLZkshRpfF1XKNoGP+75Ydx
-	0tmVv7Z3q2AK4PgVc+o3gd9qQy8VAp54SZvvN1Ut
-X-Google-Smtp-Source: AGHT+IEGu3MZDbENzVvJWxSNBV7o1ze3LU5Flkj8ZpZN1LcXwAGEpY38W2B/aWoyTkl6JckWahNDaw==
-X-Received: by 2002:a17:90b:2883:b0:2ef:19d0:2261 with SMTP id 98e67ed59e1d1-2ff7ce89574mr30347021a91.16.1741703974747;
-        Tue, 11 Mar 2025 07:39:34 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2ff4e7747aesm11854016a91.20.2025.03.11.07.39.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Mar 2025 07:39:34 -0700 (PDT)
-Date: Tue, 11 Mar 2025 22:39:44 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Ayush Chandekar <ayu.chandekar@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com
-Subject: Re: [GSOC PATCH v2 2/2] attr: use
- `repo_settings_get_attributesfile_path()` and update callers
-Message-ID: <Z9BLMLXJ7Desl-n6@ArchLinux>
-References: <20250309153321.254844-1-ayu.chandekar@gmail.com>
- <20250310151048.69825-1-ayu.chandekar@gmail.com>
- <20250310151048.69825-3-ayu.chandekar@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Qs841MW3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PF1wNHdr"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 745FC114018C;
+	Tue, 11 Mar 2025 10:40:50 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Tue, 11 Mar 2025 10:40:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1741704050;
+	 x=1741790450; bh=gwtsHLtHNWVr4KPhJWbLGul+x97NrLQdjlUCIc4QfFI=; b=
+	Qs841MW3YrSkezJ0nRnhb3tw6oK9hNOrYfSbswWtR+amoVfd1Mf3LP9q4Oxi2GAZ
+	RD/D7Zi8PfvTIJDYD/ncbD0i6tNvZZ8rq4cgz7gsnRY/3LJinKegt3YYEsZFtn7z
+	6wXgduDdORleFgyl6bIje0KSIRLgqyXIyNr+zyNQg+kR1X5a/JUgbFFrROG0uEdv
+	4RHdaY4PXiPOQm1u2jrBsMUo4jPa5OJnc/8ifjBK6UznXMoLIhMxXxSFaJQlT6Jx
+	Y/7XIYtEJzBDHKZxR7lvHlLzp4tuSQzLZQQmrDNw73u+pPTMmKFe1J9LyDiTj5g9
+	3etPnxUidS9SkmLUBo9KPQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741704050; x=
+	1741790450; bh=gwtsHLtHNWVr4KPhJWbLGul+x97NrLQdjlUCIc4QfFI=; b=P
+	F1wNHdrf8HeZoKqGv1Oeu9b7Uny3HP34lrDe2ZF7ejKFg853kmU4GoJBKlchjAVt
+	y6GcU5isrqTzMj8I3qj1ym3hmD9KPRmbLTWwpy2fp7eP4gu2P4Lld5zJOOEdyfAu
+	G2XKVHZOBfeEJCX+qSdbYih6zOe5XptbXBtGRUBVlAAO+MpmUBqTjNamp7i4bbkW
+	y8/LMp5S+en+b5Xej7GmffAeoV+dvWkOWrmGCw7bBvtOLzvxjZRoUpUbJXpGan0m
+	7mPDDW4C9H0nGc8M2q+sIgoSzWzzIbQhbg/tPIxxgO9Z7W2El/0VBCFwpV7QptvQ
+	NJ7pw3gsc3bbmbglujlyw==
+X-ME-Sender: <xms:cUvQZwChA-zYG5_vORf3ZSVW3bmBR_xEr7FG-PMttEGtkkXMJ5eipg>
+    <xme:cUvQZyipJ3RZ4ta7ss_vZEC9_oxFroZ473dmun2G-GpJBsLkxL-b2W_4KL5TgVNqo
+    lMNPa1ERyUf1y6BaQ>
+X-ME-Received: <xmr:cUvQZzlOHa_XTXZlodR6bwd44MSyxeI94cqHBoNFk-1nglw2cC-MxBY6fAsUxPS_j_FG8YGNgljnQarkdKxajzyrKa_CHcmYNOcw6ox5S_6BBQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvddvgeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufht
+    vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefje
+    eitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+    dpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifoh
+    hougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:cUvQZ2zwMLMI4aASjFPsk0ux96KHoBru0LKjI0aIQjzGItdEnQBTYA>
+    <xmx:cUvQZ1Qqq8vNoL4w7b5c4E5z6MAUoMKiA3Tnj1lz3K5sxUAMY1nwmA>
+    <xmx:cUvQZxYaP95y3KE65y0X5s_aSDgKk8vDJ_8bDVFJ0zvry3hChTEADA>
+    <xmx:cUvQZ-RwM-Wpj8xxbB0wCuG5Hl-ZRYWmZ_asd8oDKS4c3rJDYLeRDg>
+    <xmx:ckvQZ3dsLCyy_jnmsiRPvK0jbdjSil-YLzYBJEAs6TQF2YrQXXWR1Hxl>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Mar 2025 10:40:48 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id a36ce0c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 11 Mar 2025 14:40:46 +0000 (UTC)
+Date: Tue, 11 Mar 2025 15:40:37 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] docs: fix check-docs with WITH_BREAKING_CHANGES
+Message-ID: <Z9BLZWUarN0kC4CQ@pks.im>
+References: <pull.1871.git.1741018310447.gitgitgadget@gmail.com>
+ <pull.1871.v2.git.1741171357627.gitgitgadget@gmail.com>
+ <xmqqzfhzlbie.fsf_-_@gitster.g>
+ <082af6a3-a7ba-440d-af84-6c59827a2929@gmail.com>
+ <56cf842a-7c1f-4354-b191-35bcc1e139bd@gmail.com>
+ <b5fb3292-216a-4456-b456-e9ed38affc22@gmail.com>
+ <Z86Jze2qZ5s5OyOB@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250310151048.69825-3-ayu.chandekar@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z86Jze2qZ5s5OyOB@pks.im>
 
-On Mon, Mar 10, 2025 at 08:40:48PM +0530, Ayush Chandekar wrote:
-> Update attribute-related functions to retrieve the "core.attributesfile"
-> configuration via the new repository-scoped accessor
-> `repo_settings_get_attributesfile_path()`. This improves behaviour in
-> multi-repository contexts and aligns with the goal of minimizing
-> reliance on global state.
+On Mon, Mar 10, 2025 at 07:42:25AM +0100, Patrick Steinhardt wrote:
+> On Sun, Mar 09, 2025 at 10:52:44AM +0000, Phillip Wood wrote:
+> > On 07/03/2025 15:07, Phillip Wood wrote:
+> > > On 07/03/2025 10:32, Phillip Wood wrote:
+> > > 
+> > > The diff below stops us from building pack-redundant with
+> > > -Dbreaking_changes=true but still builds the documentation. I don't intend
+> > > spending any more time one this
+> > > 
+> > > [...]
+> > >
+> > >   if get_option('breaking_changes')
+> > >     build_options_config.set('WITH_BREAKING_CHANGES', 'YesPlease')
+> > > +  add_project_arguments('-DWITH_BREAKING_CHANGES=YesPlease', language :
+> > > 'c')
+> > 
+> > Looking again at this I think it should probably be
+> > 
+> >     libgit_c_args += '-DWITH_BREAKING_CHANGES=YesPlease'
+> > 
+> > to match the rest of our meson.build. As a newcomer to meson I find it
+> > confusing that the CFLAGS for the build targets are set implicitly by their
+> > libgit dependency.
 > 
-> Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-> ---
->  attr.c               | 28 ++++++++++------------------
->  attr.h               |  7 +++----
->  builtin/check-attr.c |  2 +-
->  builtin/var.c        |  2 +-
->  4 files changed, 15 insertions(+), 24 deletions(-)
-> 
-> diff --git a/attr.c b/attr.c
-> index 0bd2750528..8f28463e8c 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -879,14 +879,6 @@ const char *git_attr_system_file(void)
->  	return system_wide;
->  }
->  
-> -const char *git_attr_global_file(void)
-> -{
-> -	if (!git_attributes_file)
-> -		git_attributes_file = xdg_config_home("attributes");
-> -
-> -	return git_attributes_file;
-> -}
-> -
->  int git_attr_system_is_enabled(void)
->  {
->  	return !git_env_bool("GIT_ATTR_NOSYSTEM", 0);
-> @@ -906,7 +898,7 @@ static void push_stack(struct attr_stack **attr_stack_p,
->  	}
->  }
->  
-> -static void bootstrap_attr_stack(struct index_state *istate,
-> +static void bootstrap_attr_stack(struct repository *repo, struct index_state *istate,
+> Yup, that would be preferable indeed, thanks!
 
-I have scanned the definition of the "struct index_state", there is a
-"struct repository *repo" member in this data structure. This makes me
-think why do we need to pass the "struct repository *repo" in the first
-place. A design question, should we just use `istate->repo` directly?
+To set expectations: do you have the time/intent to work on this and
+polish it up into a patch? Otherwise I'm happy to pick it up.
 
->  				 const struct object_id *tree_oid,
->  				 struct attr_stack **stack)
->  {
-> @@ -927,8 +919,8 @@ static void bootstrap_attr_stack(struct index_state *istate,
->  	}
->  
->  	/* home directory */
-> -	if (git_attr_global_file()) {
-> -		e = read_attr_from_file(git_attr_global_file(), flags);
-> +	if (repo_settings_get_attributesfile_path(repo)) {
-> +		e = read_attr_from_file(repo_settings_get_attributesfile_path(repo), flags);
->  		push_stack(stack, e, NULL, 0);
->  	}
->  
-> @@ -946,7 +938,7 @@ static void bootstrap_attr_stack(struct index_state *istate,
->  	push_stack(stack, e, NULL, 0);
->  }
->  
-> -static void prepare_attr_stack(struct index_state *istate,
-> +static void prepare_attr_stack(struct repository *repo, struct index_state *istate,
->  			       const struct object_id *tree_oid,
->  			       const char *path, int dirlen,
->  			       struct attr_stack **stack)
+Thanks!
 
-If we use "istate->repo", we don't even need to change this function.
-
-> @@ -969,7 +961,7 @@ static void prepare_attr_stack(struct index_state *istate,
->  	 * .gitattributes in deeper directories to shallower ones,
->  	 * and finally use the built-in set as the default.
->  	 */
-> -	bootstrap_attr_stack(istate, tree_oid, stack);
-> +	bootstrap_attr_stack(repo, istate, tree_oid, stack);
->  
->  	/*
->  	 * Pop the "info" one that is always at the top of the stack.
-
-[snip]
-
-Thanks,
-Jialuo
+Patrick
