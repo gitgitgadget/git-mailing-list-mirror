@@ -1,149 +1,114 @@
-Received: from mail-pj1-f66.google.com (mail-pj1-f66.google.com [209.85.216.66])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06D1262D05
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 18:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E162041C72
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 18:23:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741716645; cv=none; b=Yx5xsVjtB6EtkluaBpVB9hGf2Bwty3N/CUo4K/Pcsy1NnmfYsnDhNn9gyXSp1K6Wc7cgjaVazv0+ugseWfdAwEnyEcNYy8h5e/sttLNt1xUHt6gVJeT9XmP80GaGGKzMOrMfRbw0rKT+bnMedMyizLbVXQ81BkQZizEE0X2CZZg=
+	t=1741717439; cv=none; b=C06JUmXu8z8hER1UyazQGWepRbxgKG9QTHjlp32sToCghMkeR1MooAoBMhaBRx5ys9IKVT3b8l+W9ateIDXX6TmnJSTTpTLyzTC9jnis1o286E2W0Y+WVN+6zYiG94jTJkWGVNc5QuTdZaGOxl1yTBKI7FCE8dzY4GBRaYC5HGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741716645; c=relaxed/simple;
-	bh=IJha6tRP4hHM23L6SKPBk8uDuGroZqip+TKR207jQmY=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=JDFZ57zopspdVUYml0Q1hyX5xAvE9EHl5nICHplI/kLruevv40TDjdngHjxwWbx3DPpIOn3rrewHaSOWJCog1yxByK6f+CjH8fOwRFf5qSX0sZKOaG7SbSm5L421RF7IYa23jZErmq5x8uhyBxgQpe9WNgwEzGRROB8JeQ5jrkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oygng5pR; arc=none smtp.client-ip=209.85.216.66
+	s=arc-20240116; t=1741717439; c=relaxed/simple;
+	bh=mYQzjiY+Ha0QZVty7UQ3xP4K48/HUuNvrQ/B5Z4gJXQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YxjkshjFLA+hzzKT9pXdXCg0n/Rt6mSaGMEnS3jfvWZjkX4JyDHawujuRpIFDFI4uTIOmWaEomsLhnW1fAcxBwBY6GSVjjSki44jJ+z7/qGOtVH7L0K3sHdYXd5Oh/GbNwiFL8Ek1Fv0CyyiWlVbQdvVoSrekpLXXNkTlbdpSfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TzOJrO3c; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oygng5pR"
-Received: by mail-pj1-f66.google.com with SMTP id 98e67ed59e1d1-2fec3176ef3so8653304a91.1
-        for <git@vger.kernel.org>; Tue, 11 Mar 2025 11:10:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TzOJrO3c"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-223a7065ff8so16755905ad.0
+        for <git@vger.kernel.org>; Tue, 11 Mar 2025 11:23:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741716642; x=1742321442; darn=vger.kernel.org;
-        h=mime-version:message-id:date:subject:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=IJha6tRP4hHM23L6SKPBk8uDuGroZqip+TKR207jQmY=;
-        b=Oygng5pRwnHyhvw2sf2p4fazoa5wQCJ/dwozc8X4ARI2R2rUv1osRcpSHFJ8s+nWI6
-         f7Urr/kZaNB/Ji8nt9PXii6iEw4BuHfc1ZoAIIBoXuAGcQgwODOLjCj8K93w1aa0gqY9
-         jVijQ6ytg7qaF1zFAufYO7xUoCGqvcDCjRo8KpIz79JH0lejmGcfGfmLA7Gt+cTYace1
-         NiLh+XaTL9laOD/WLXsC/zJLcy57wwtUdPeHc/3/iBM7R0oNpgtw1u78Tq7C1kYVhTAD
-         uZG9BWkDO1dQD2C6jmKIuNyakosxeC0hovR9K1g7D5wf3L0kL/I2cEbKzzDIra6PmVir
-         lQ4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741716642; x=1742321442;
-        h=mime-version:message-id:date:subject:to:from:x-gm-message-state
+        d=gmail.com; s=20230601; t=1741717437; x=1742322237; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=IJha6tRP4hHM23L6SKPBk8uDuGroZqip+TKR207jQmY=;
-        b=f/GiPQvyFkmaoIkdZTg5IBtJ5BUGvxvgPj4fYC5+uWBcNQMcJyQftCLADApns9hgMX
-         ie55MZqFU+tzK4sYoJV/9MOPQ2j7LR5TfEbUkg4CY94DvoeE+d8tcC8pzHWdOLG7n1+b
-         ViSKrXTCssxFf0MijeyeBOm1Uniz7Z00jHHNPmAJHD/g8BcEz5QGo4QHdj+qUn2Gx8bA
-         qQsFerQwA9jQ8ujyw+1GR1/4bN/ZvEqnH6cme6dmnkvm1fHJsrciljuMszkCgmODMfI+
-         Qqv6F7Im1oQu3L1y4ikKwynmP7hTqTaCwNGsepjj6+Wfy088nY74bwp3CZnHhko3kwIM
-         k4Hw==
-X-Gm-Message-State: AOJu0YwsXkgPcOraXxXZ0e0iybHD2Y6Czqy9Yal2nLfJX/A7OuvT74VP
-	eSwERnDEh1hGR/nuNp0Ah4FBfkVvD9fePp9ncZCMg67Q2wRtfD1n/J1NTVgL
-X-Gm-Gg: ASbGncvMSP37B5+ABO8HRvGyn0H+9/nQaCsTyT+9hHtyptaWyWFOJQ60LwSHrghVCe9
-	XMPqBvj5jNVPNklDEgeqg7MnY6/SHWlYW/Ua6PHVBxPoA9Xyrkzio7GLnBxfEB8ecy/VN+tgdke
-	T9TyTX1whLuPVuTIFQe240FVh9H0JFwSbNr5FDAe5K9gPzZ14bfTLsqS4ELbzWbeG7+R03l1VmH
-	0nvp/zIiRXDhsY8RLLD0b/BdqPtpqn0pqQJVkCjbH3sxvzefqvGzLHPkMLBc6C/qQIOQc0C0gv/
-	1DJwNe6zY0QQhMpWsoKnaTFcCqZU624bYgR1BRRUGRWLzQ==
-X-Google-Smtp-Source: AGHT+IEY9pvXNSkPpiQ3DUOJftxDVO6nBv0eMaPUPlqmmO3Dvu9pj8KTqvlHAAfL7iA1FxrxoxmBfA==
-X-Received: by 2002:a17:90b:2fc5:b0:2f7:e201:a8cc with SMTP id 98e67ed59e1d1-2ff7ce93a2bmr32002671a91.18.1741716642451;
-        Tue, 11 Mar 2025 11:10:42 -0700 (PDT)
-Received: from guix1 (utm3.nitt.edu. [14.139.162.2])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff4e7ff944sm13638378a91.34.2025.03.11.11.10.40
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Mar 2025 11:10:42 -0700 (PDT)
-From: 45mg <45mg.writes@gmail.com>
-To: git@vger.kernel.org
-Subject: git rebase skips reapplied commits
-Date: Tue, 11 Mar 2025 18:10:32 +0000
-Message-ID: <87jz8v8mlj.fsf@gmail.com>
+        bh=DqfE0lci8sGuJuNvCB5gzwHOSPrDBfMtCuum/A/rlq8=;
+        b=TzOJrO3cC1AZoTJ8CjXc+O7MV+WXkyWRA0FK/N2xBZIkPERYEfS0dx8QuitKiNR4fZ
+         fp5u2BNN/7AwEmvayVy6ICtsFaojCSgi0YU3jlO5aUlxPkXaKiGAwvNQQB9ueGShJJXQ
+         8cqyYXrZoF8IjB+ayrJaIsZzRmSXD2fZyN6L3PNbRXn/EDKB085infTTeSvEtdRvcDc3
+         McYw9Ml1JETDYNSyLIQ4Zm+g2pHyQV1X7AsQWwRP3vE0s4N6GjGO0b2dvXPxeR/A+K3+
+         OSNy2eH7fnZZqddEWvSZKsYP8/KuwvqjPRehoY5pnQPe42g1VV7D37OfQh+iRPf7A8VF
+         c/6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741717437; x=1742322237;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DqfE0lci8sGuJuNvCB5gzwHOSPrDBfMtCuum/A/rlq8=;
+        b=Z0S9pExzg2R6NQJLpmBX68S2PqQBNyZPcp2HMRcb4ZTBvTmggh2NDFNyxhCMSKjBb/
+         I8MbkPUfgqpRPN4lCr7G5RkswH6LbhQEQLjNi/eyEVtwhTLf6yLZhjZqJ+K1cmkf/Hw2
+         sV2+UDHlf6wQZW3aBPmpYUxmlXMNUMD4mvJabLECcKvbzr3UxydYIYYCW6tmEtRgrP6X
+         MtSIxFTVUH3eBxFffzbWwKxV5Fio0CXOJ48zNAiwOMgMVnaIdtqWT5FYitBVr6unCmfE
+         EqTcTCoSYYFYq4ejYkMGkRvd/4G4yV84b2iHV/x3+cT37Wy6SYVhWBFfNG0TTQAKMYLN
+         WrIQ==
+X-Gm-Message-State: AOJu0YzqcYpsd7tbMcj4fkb0XeGuUiKcgOyy4a5FweK5JCz3xkHPbTXy
+	b6Ga3Q33Yu0xPJalGS43yUyB1G8gldhLjBnmvlLt+/4zNx1yphrA
+X-Gm-Gg: ASbGncvJmcsgG6A5s/rAItZUXZGw9RcR7R6xbysxZVZyTHSK8wBK+7u6Y6bMKlB3UKt
+	wY2OAH6mOKbbmPSklAoI4kN2Qll0GGiLc2LqgHjxh768nJEQN+ia4vs5v4tW5A+ONK/ZLAusleM
+	zoR8DoMUuQhWz5hyE8SEXbfvW3hRCyfisxKPlniAZtQAKFXdnBPa+et5ALnvlmHDfVGjw+UJGNS
+	bTT/KCb02GwYWULmDOS1K0rHc4tmDO6n3ciUOlmB8goCsnu6kLP1CaY5ty1J027x0tuHHvJSfOu
+	DOxNEmzCA7maX7xfQg8DWtosUCY7tZWQ++kfw+nH/GBfcIKOLm4=
+X-Google-Smtp-Source: AGHT+IH+HMdMzs2sSwIUo46i6/EfaIQPFnQPjt1HHfEFFrNIwe5CI2bw6di13HxaiJTy8T2J+IaHEg==
+X-Received: by 2002:a05:6a00:b4d:b0:730:8a0a:9f09 with SMTP id d2e1a72fcca58-736aaaaca0fmr28651091b3a.18.1741717436923;
+        Tue, 11 Mar 2025 11:23:56 -0700 (PDT)
+Received: from [10.61.143.243] ([103.21.124.55])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7369dfd387csm10630625b3a.171.2025.03.11.11.23.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Mar 2025 11:23:56 -0700 (PDT)
+Message-ID: <ab2af3ec-f4cf-4337-82ce-7c4ade244568@gmail.com>
+Date: Tue, 11 Mar 2025 23:53:53 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: Defining timestamp_t as intmax_t instead of uintmax_t
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <629c3c21-ab11-42c1-8cb1-34698e736db6@gmail.com>
+ <xmqqv7sf32a6.fsf@gitster.g>
+Content-Language: en-US
+From: Arnav Bhate <bhatearnav@gmail.com>
+In-Reply-To: <xmqqv7sf32a6.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+Junio C Hamano <gitster@pobox.com> writes:
+> Arnav Bhate <bhatearnav@gmail.com> writes:
+> 
+>> timestamp_t is a data type defined in git-compat-util.h as uintmax_t since
+>> 28f4aee3fb (use uintmax_t for timestamps, 2017-04-26). It was introduced with
+>> dddbad728c (timestamp_t: a new data type for timestamps, 2017-04-26) to replace
+>> use of both time_t and unsigned long for time-related uses.
+> 
+> I do not think the object format and the existing object parsers are
+> prepared to handle timestamp before the epoch.
 
-If the same commit is made and then reverted on both <upstream> and
-<branch>, and then reapplied only on <branch>, then
-`git rebase <upstream> <branch>` will skip the reapplied commit.
+Looks like I bit off more than I could chew. Maybe this could be a medium-sized
+project in itself.
 
-The following script demonstrates the issue:
+> You may want to go back to the list archive for discussions around
+> the choice of the type back then, which should have enough
+> information to go by.
+> 
+> https://lore.kernel.org/git/20170228200145.ymbqmxwrbbrwagks@sigill.intra.peff.net/
+> 
+> might be a good starting point.
+> 
+> https://lore.kernel.org/git/?q=f:peff@+d:20170201..20170430+timestamp_t
+> 
+> gives 6 entry points to a single large thread that may be worth
+> following before tackling this topic further.
+> 
+> Thanks.
 
-```
-#!/bin/sh -eu
+I'll go through it.
 
-# Set up a repo for the following commands.
-repo_directory="./rebase-test-repo"
-rm -rf "${repo_directory}"
-mkdir -p "${repo_directory}"
-cd "${repo_directory}"
-git init -b main
-git config user.name test
-git config user.email test@no.mail
+-- 
+Regards,
+Arnav Bhate
+(He/Him)
 
-# Create a branch 'br' starting from a commit other than the tip of the
-# 'main' branch. Switch to it.
-git commit --allow-empty -m 'initial commit'
-git commit --allow-empty -m 'another empty commit'
-git switch --create br HEAD^
-
-# Create a non-empty commit on 'br', then revert it.
-touch a
-git add a
-git commit -m 'Add a'
-git revert --no-edit HEAD
-
-# Make identical commits on 'main'.
-git switch main
-touch a
-git add a
-git commit -m "Add a (on 'main')"
-git revert --no-edit HEAD
-
-# Reapply the reverted commit to 'br'.
-git switch br
-git revert --no-edit HEAD
-
-# Rebase 'br' onto 'main'.
-git rebase main br
-
-git -P log --graph --all --oneline
-# Sample output:
-#
-# * 5b4d655 (HEAD -> br, main) Revert "Add a (on 'main')"
-# * 7881a38 Add a (on 'main')
-# * 907f1a8 another empty commit
-# * 6c094a9 initial commit
-#
-# What we expect to see:
-# The commit 'Reapply "Add a"' should have been rebased onto 'main'.
-#
-# What we see:
-# This commit was skipped during the rebase and has been lost.
-```
-
-Using the '--reapply-cherry-picks' option prevents this from happening,
-but it also creates empty commits, so it's not a proper workaround.
-
-
-[System Info]
-git version:
-git version 2.48.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /gnu/store/jlqbjxk51bdq5w7wlnbmwxm1j0pnllpx-bash-minimal-5.1.16/bin/sh
-zlib: 1.3
-compiler info: gnuc: 11.4
-libc info: glibc: 2.39
-$SHELL (typically, interactive shell): /gnu/store/cdwviyfnsfv7k57qrwmym0mrynjixc1i-bash-5.1.16/bin/bash
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
