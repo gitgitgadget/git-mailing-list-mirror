@@ -1,167 +1,141 @@
-Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4F226158C
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 18:55:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A394222F169
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 20:13:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741719316; cv=none; b=lnzwMO3+l+2szNIa/73oFcE3/IgEyaRc+M6oyD68vv9qzfLEA6w3dENRq/alXyQ8+F2Av9AylRafLy7HDPa0SgasDTiMd/U6ifd//cWNM4yFmUhyPCQaAJKKOdxgmyrlef2Fa8CoZnAeKoElnx/2jgsLA1MR0yTJCg41DBFGBCE=
+	t=1741724005; cv=none; b=uBfmxN/REvsaWhdkHinn0JC0F3XESDBdTFX11KQDw60Ywynmxel3GYeBbEkZcl0FUFGjef4KmRMYEI8q8N7Byu+9ISKlzsKdOvlqQwSY5q0Zco2zGLDUaQG2ZMRf8ZpVUZSlnCHxSAyCU7ocIGJ+zUEd8I52wnrH7mK0cnLMqBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741719316; c=relaxed/simple;
-	bh=rjubhvM9KVxlr/JGHmFC+qCigi8Gu69HFDtZ9Ya8+38=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=of0jP5oGOQzq4b7bvnvzRdnukZG7sEUQYWOr30ZQlCLutjO49qsJekJKEToJRIwdarAvEq8MVXLP+7Po+5R3z5D9iB1RnFSAhtXFiAYvpJsEn0ZreYywEQscdaPG3lw6lGE+WJtKvw0eqdO6/p7nUJ0nCb0KLANu+Y/ugCgK910=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R61xb3hh; arc=none smtp.client-ip=209.85.166.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741724005; c=relaxed/simple;
+	bh=Q31fNJX9Gyf25CEnMfDyqt/gu7vHyVdgL8T2LKZv2mY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WOUemIElR9/J14KzN7rdPMwMRucW1w71ib4bj0kea6NykNq3PHEAaR4SAF5pwhZaIaT+mWdvxUbWSMzMkpfR8l0ELwifZzvH2kp7GVv/lXLlHF232Vex5RqcjqjhyD0QzBgIeYeC+co3XvVaEjpbAZSonu5DaMiAq/t8mazoxlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C401TTqv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oL58jnwB; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R61xb3hh"
-Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-3ce868498d3so20430805ab.3
-        for <git@vger.kernel.org>; Tue, 11 Mar 2025 11:55:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741719314; x=1742324114; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8YBXYJJ0O3Jhz4OCocplGl/dFjvXB5s/HHbYomLfMIk=;
-        b=R61xb3hh4SwjsY5CQnLrmm9td+Yeu6xWYhN/5k3zx5ickMpGhddGUxKd8HNRjIh2rc
-         FNlSBNX4VgC4I9L0/DuqefQxx1w0Zg3bx/jLjJlYc91M1FEhdPNclh/M4ty/JJbrO3yR
-         PCPtUgSkJLSFI4ibAg2CRhPmjoUPxIgP3XED8BJUzHfRt0LN8CZfLRdK2SAX5LgRc+no
-         CMd5L8x0qz3K+q3ZbYmcdyA4PgFhyY/l6iJgcWvS4+ppdyz4eVreTpnWAeuRixP2KK89
-         /ZpuTdUv7ac/ldgv/pottZi/IAT6rBvpftDy0FxVNXz1XNp8PguQfOl5EoaCJrMZfVCQ
-         v+eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741719314; x=1742324114;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8YBXYJJ0O3Jhz4OCocplGl/dFjvXB5s/HHbYomLfMIk=;
-        b=UjUKGOAQIMtgCVK/MRlKMosnxfY8gJk4hkPO3d+gbhieZfrutc6n5NZvEOjSlHW9qZ
-         gmklCtub4zS81YBPdsH2MGSClrhwSRqvkFNVfB7wmel1MiQUUowZ06AyCWcr+kCLqc8Y
-         0Yy66nw1u7Tcti7DAuM31dc1KbKHd2hDvHIESABVuOedTSRo5EKuwgDchE8FG/bA6MMK
-         n0rSxkYGynuaTYjEjSnQMpwEe+nY3lt1zehK5AcYjFzlgh2PB2NfKKpqAPet/hnlnqz4
-         P2wJv0EH71SO9KjXRZXsXMDrjKp9p2EMBfzqR1V8he2CYFi6PDvW4IvoBokznGj/zCod
-         zfsw==
-X-Gm-Message-State: AOJu0Yw6lwS7thiHR1vtvx35FZqyiOnTsKKeKutIZ7dTZiwsnkeUslto
-	ArgkkfZ0Xqo+kNDkHSeFT6vTStsKdy3+SS95Z+VgrtDXRCSU+T/uDeykUQOjV9kcJSFCFO+VHWj
-	vjWwtCA/6tMRYjBcVqcwGyhx+18syKA==
-X-Gm-Gg: ASbGncvxiGd0nElq0ynaM6BKSafElwlf7XMcoqbW15tKdzXCr+Kql2eVvusoCrJ9zNQ
-	PLQXzNuvUMSW6UrmRl8QPjylbOQW04XxfmtxKUmEBOyxLg7NFLHx86Q6ttBmotowwe4GJcX7sen
-	HrRcwMWle3RsWBivW+gvePZ4R6Gh25abTJWB+Js5wmaGvggHz09TQ+Z1J4CO8=
-X-Google-Smtp-Source: AGHT+IF8Ke4XVO/arBiW68wplFreTRK2Uw3oowSZS8kVXVWRZQnX4O+m+UR65TWlZUzCPrImVedkgZEOI3/DfVJLamw=
-X-Received: by 2002:a05:6e02:1f0f:b0:3d3:fdb8:1799 with SMTP id
- e9e14a558f8ab-3d4419b2bdemr240588915ab.22.1741719314338; Tue, 11 Mar 2025
- 11:55:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C401TTqv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oL58jnwB"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id BBE5E1382DC3;
+	Tue, 11 Mar 2025 16:13:22 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 11 Mar 2025 16:13:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741724002; x=1741810402; bh=k1iCUWIn0i
+	61AXTRDMrFOOc4jF+121HnSxEKEdm0LPQ=; b=C401TTqvexGMke0sc/EzYSKLQn
+	Rlf2eIrIU5tKAs5gigSASNYfnNbZfpaBBlWxxvV0boOdX73p7MY8F059Zzq6cUcL
+	7FImJ5dG0lQvLi3uOQ0nyVeXrSGsQZj/OunE/BH4xnO12QYaqBPFbLX1Z0AGwtll
+	hj+q8ia1iyPYpmi/iG6PWRYqt7YmstQrG+aBuOmaHR8kWz6n0HYE6cJp1tpf/JlC
+	J1w9VDtRI+AMlqIx4sFdL0hU/EG8Fsa+SgW7gCe+/ytYxmmJ1lwohcYuQgBWUAD9
+	cj8UeZd7RYjy8Sft7INSbEzt1sjWSYALb17WxVtd525MKOV/U6h+tLIwPylA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741724002; x=1741810402; bh=k1iCUWIn0i61AXTRDMrFOOc4jF+121HnSxE
+	KEdm0LPQ=; b=oL58jnwBbuqM1tFxsYAMAcUdx3TiZpfV7gigZdCmpqgaj58Pc3k
+	dLRVdbv/EEkKOSxbSHDu59cNObruQty/IIb3CTwkWBDMJ7lR+89fPiNHa70fQAWN
+	Cv18beXd10qCanTy8tPrEI5V9mPWzjaqYhxDFLTDI0vIhVOIhRohYZXYyky3hKK/
+	6niXk5auQp0yguXEJ+RWYxTwtk+/oKI7JIjPdIRLeG9Q14UwoPQPZ2Wiu6hINF7M
+	LB4yE2O1Y1al+eKV/idDMErEgEDz2Ac0GtPCIHQgW25iAMGutSKMk8zc/CmcyTD+
+	EFw8vf5G5OIttkQFxnxUnk6PgR+OZZPHEjA==
+X-ME-Sender: <xms:YpnQZ3seRrsAczN-9d6aHSU6xU6Oo9mqUovcjvoB2GsWtXYMLDWepQ>
+    <xme:YpnQZ4eYl8cmEqMVBRnpL5yrygrjb4pSCZN5V2zfLGIe2cgL8QC4bR1t2zAuXoC4r
+    YsZn24-px8tFUmy3g>
+X-ME-Received: <xmr:YpnQZ6yTadS0SZzzm_Mss7djWd-JaT7OL1-azni9qfQ39_FNviqjxUCT1vaKfkcRqCOIquuV8x2Zi8bZve4y4n7zfwvl5yao0s-E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdefudeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
+    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:YpnQZ2PUE9vbVeicVsLHj1dcVijQRhmM4tgVvl3ZAnav48MoaX_XFQ>
+    <xmx:YpnQZ38kyvnu53m81etCfiQnCRqHA8uJBV0XSE8_6QdYZuAiZgZK5g>
+    <xmx:YpnQZ2VA1j_ttQNhTgjlJZ3cE6PuXM0SV0ViP1u4zFt7IrSVvFu1lg>
+    <xmx:YpnQZ4e6zRGiRWpNX2FZ4TLWbRexQjEFCCzqTXj_fGhyMro1x9HQyg>
+    <xmx:YpnQZ3wYNLT_Dylie5TD57bbw-iKsQ8qjvpcNFYEdW99GyM3DY67bPM->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Mar 2025 16:13:21 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
+ <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 0/6] pack-objects: freshen objects with multi-cruft
+ packs
+In-Reply-To: <cover.1741648467.git.me@ttaylorr.com> (Taylor Blau's message of
+	"Mon, 10 Mar 2025 20:21:35 -0400")
+References: <cover.1740680964.git.me@ttaylorr.com>
+	<cover.1741648467.git.me@ttaylorr.com>
+Date: Tue, 11 Mar 2025 13:13:20 -0700
+Message-ID: <xmqqr0332un3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <87jz8v8mlj.fsf@gmail.com>
-In-Reply-To: <87jz8v8mlj.fsf@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 11 Mar 2025 11:55:02 -0700
-X-Gm-Features: AQ5f1Jqql7M_4tS1CzdzTy8JaB7Dbt1GuQHvvmyKFZX2j7EhmImHBfJdblDFgz4
-Message-ID: <CABPp-BH0xziowZx4S2aKJL5wjPHbJQ8wNstPUSLaw0FNdDu-fg@mail.gmail.com>
-Subject: Re: git rebase skips reapplied commits
-To: 45mg <45mg.writes@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Mar 11, 2025 at 11:11=E2=80=AFAM 45mg <45mg.writes@gmail.com> wrote=
-:
+Taylor Blau <me@ttaylorr.com> writes:
+
+> Here is a slightly larger reroll of my series to fix object freshening
+> when using multi-cruft packs that I have been meaning to send for a
+> couple of days.
 >
-> If the same commit is made and then reverted on both <upstream> and
-> <branch>, and then reapplied only on <branch>, then
-> `git rebase <upstream> <branch>` will skip the reapplied commit.
-
-Yes, as expected and as documented.  Another commit exists upstream
-which introduces the same change, so it is omitted.
-
-> The following script demonstrates the issue:
+> I realized after sending the last round that not only was the first
+> commit from v1 flawed (for the reasons Patrick identified) but that
+> there is currently no way to grow a new cruft pack past the configured
+> limit.
 >
-> ```
-> #!/bin/sh -eu
->
-> # Set up a repo for the following commands.
-> repo_directory=3D"./rebase-test-repo"
-> rm -rf "${repo_directory}"
-> mkdir -p "${repo_directory}"
-> cd "${repo_directory}"
-> git init -b main
-> git config user.name test
-> git config user.email test@no.mail
->
-> # Create a branch 'br' starting from a commit other than the tip of the
-> # 'main' branch. Switch to it.
-> git commit --allow-empty -m 'initial commit'
-> git commit --allow-empty -m 'another empty commit'
-> git switch --create br HEAD^
->
-> # Create a non-empty commit on 'br', then revert it.
-> touch a
-> git add a
-> git commit -m 'Add a'
-> git revert --no-edit HEAD
->
-> # Make identical commits on 'main'.
-> git switch main
-> touch a
-> git add a
-> git commit -m "Add a (on 'main')"
-> git revert --no-edit HEAD
+> Independent of this series suppose for example that we have two 100 MiB
+> packs, and the threshold is 200 MiB. We should able to in theory combine
+> those packs together. But we can't! The largest pack we'll make is
+> 199MiB (and change), since builtin/pack-objects.c::write_one() will
+> refuse to write any object which would bust the limit given by
+> --max-pack-size.
 
-Note that this does not match your original description, and your
-comment here, "Make identical commits on 'main'" is not (always)
-correct.  If there's even a little lag between when the last two
-commands run and the ones before them, then the commits on 'br' and
-the commits on 'main' are not the same.
+I am not sure why that is a problem.  If we have many loose objects
+and the threshold is set at 200, wouldn't we also give up at 199
+plus a change when packing these loose objects into a pack?  If the
+last object that makes us bust the threshold is unusually large, say
+50, we may give up at 150 plus a bit, unless we go back to the queue
+and pick smaller objects among the remaining ones to fill the
+remaining 50 minus a bit, and because we do not do that to enforce
+max-pack-size, I am not sure how "give up just before the threshold"
+is too bad and needs to be replaced with "give up just after".
 
-> # Reapply the reverted commit to 'br'.
-> git switch br
-> git revert --no-edit HEAD
->
-> # Rebase 'br' onto 'main'.
-> git rebase main br
+Or is the problem that the threshold is applied differently based on
+where the objects come from?  E.g., packing many loose objects would
+stop just after, but repacking from cruft would stop just before, or
+something?  If the problem is that we are inconsistent, then I would
+understand that it may be good to make things consistent.
 
-I would have expected
-   git rebase --onto main br~1 br
-due to the non-identical commits issue I mentioned above, though
-without --reapply-cherry-picks it doesn't really matter.  With
---reapply-cherry-picks, though, it matters because I would have
-expected you wanted 5 commits rather than 7 (empty initial commit,
-another empty commit, Add a on main, revert add a on main, Add a,
-revert that, Reapply add a).
+> This series resurrects the first patch from v1 after introducing a
+> behavior change for 'git pack-objects --cruft --max-pack-size'. When
+> given with '--cruft', '--max-pack-size' now allows pack-objects to grow
+> a pack *just* past the given limit by at most one object.
 
-> git -P log --graph --all --oneline
-> # Sample output:
-> #
-> # * 5b4d655 (HEAD -> br, main) Revert "Add a (on 'main')"
-> # * 7881a38 Add a (on 'main')
-> # * 907f1a8 another empty commit
-> # * 6c094a9 initial commit
-> #
-> # What we expect to see:
-> # The commit 'Reapply "Add a"' should have been rebased onto 'main'.
-> #
-> # What we see:
-> # This commit was skipped during the rebase and has been lost.
-> ```
+And what happens when the last object appended is very large, like
+70?  Would we end up with 270 when the threshold says 200?
 
-Yes, it's behaving as documented.
+I still am not getting what you are trying to explain in the above
+two paragraphs, but in general, "give up just before" would be a
+better choice than "give up just after", exactly because the threshold
+we are letting the user to give is the maximum.
 
-> Using the '--reapply-cherry-picks' option prevents this from happening,
-> but it also creates empty commits, so it's not a proper workaround.
 
-It'll only create an empty commit if (a) the commit being
-cherry-picked is empty, or (b) the application of the changes from the
-commit result in no-change.
-In this example you provided, no empty commit would be created
-(whether or not you used your original rebase command or the
-modification I expected).
 
-So, it looks like precisely the appropriate workaround if you really
-want to reapply these commits.  Why do you think it's not the right
-workaround?
