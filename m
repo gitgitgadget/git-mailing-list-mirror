@@ -1,70 +1,69 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA0D1C695
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 00:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E33288D6
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 00:21:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741652511; cv=none; b=u65JAGsTbr48mqyzOxq53h1gKtGiPLiWW93owaVs7fcd4DjhYNcZgive6pp+Io7yv9CDzQEFIPKrLCDJcyFOoIyMnHGB245aj+O1xXDCB6/HhlFwENsBOiuu8Az5XfjvfAyjpQiQmFnLgk1sLqqxY1MmJKitb4Mmx+PyBp3f6z4=
+	t=1741652514; cv=none; b=CMlwGiC8hg8JZUZXFePhO/NValKkqGyZUVrWz2jB6Xy/zzseUiIniyrpav3wGdNADLDQaCpf21Z9MZ+s0Rlh0hmxVP4JebQiYq9eetn6R46QW+g54D22TYkw9n2MVLtnoo8VbatURm3GOSmoAon4U2G3IqwtJKe4ODZKs3enuTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741652511; c=relaxed/simple;
-	bh=l6ue9Z9lM94WN/+NHToCp+1p4WjXKWnzYAWGBLBR+Zg=;
+	s=arc-20240116; t=1741652514; c=relaxed/simple;
+	bh=Cvk9LBejBWXghx1DchRZZ1gkUlA17n1638CK5gzGvbY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S15wUwYvihPFgInJCPtABplmDEEYSjH87duvzBcrJQrEzd9LF4MPL913DcWDJgpPP81cXFcfzEEPgt5ujvcMeLFoEWXbc4yiFo9n7xhYDHbEmgZv7ka+9zaNONTP7IsotsZoAaPDCJ+aYo0HN9BVKVE1LDu0foNh4HsusYoYRuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=x4hgy9U0; arc=none smtp.client-ip=209.85.128.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=mbwl9v1Ud77MwHFwnCHxMGjw+kG322Uxi5j+wjUi/GywgQ/IM6NtTpU3LQK8dV/UEGAShK4QYsj1juAcrgLMmSoI1v8vh8IPC2WyimZXFvGveTWijd9HjUl2v81SNGKbSAuY7istc1q6b+RN/Y61jZHwOl2s/91WuBj7Fsk5JXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ysVJ8QKA; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="x4hgy9U0"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6ff07872097so7004097b3.3
-        for <git@vger.kernel.org>; Mon, 10 Mar 2025 17:21:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ysVJ8QKA"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6f7031ea11cso49825417b3.2
+        for <git@vger.kernel.org>; Mon, 10 Mar 2025 17:21:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741652508; x=1742257308; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741652511; x=1742257311; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NlPJOxxU4Y+W3u0tmgeDZw8BlZuKCBgXzhnrKQJC7Go=;
-        b=x4hgy9U0CNcP4QBTNt0zM4F6UifeIy1+ctSzGS6jfDMgqwaUO15X53kG8RZAFvsEBp
-         eWEOPmLauAbk2Px7w1vCLK6aNF1Bh7gIVNl4W2v8UkIJEOr9Q+ie4fBEfwbkV4IYecI2
-         qXFj1Plvvt4abLzJRG+Cg+tDKGH3KJttKbNkS8JjbGZ4MxxhKuShcivr3VbPdOGYarNp
-         4xePXjZijsxSDqa9Hf6YVhtMOwJ2gA9kGTFOWDob6+ItuMEyJsnUysVqpwz2bqrLDnbC
-         q9PGOMixq5bPb3FcrwxHmw8sdT462hE3ccI1GxNHH4U18KmmE1LJYpQ5N7T83kagwfTX
-         LPbA==
+        bh=M0A6TwSB8q37TO6SUmVJ+KoQphhFdebNEcHWSqPs7Mc=;
+        b=ysVJ8QKAMknh4hK6exkUFYD8uCKjihJukIGOuDzxZNoY2FcY722ZC7o6o3fRfuGNtj
+         +h/ddmcXGzQkpzUrQEcF9kW9Pg7pvd6j0wnRd51d4BoJ3Onea837ySUFCg7lclBK8yHj
+         LeGmOn1C5WyOaT/BBfi1LkA3Zb6zeFRgQwpRM5JOddEsYc6zJNN+Y8TxailfStfS8WId
+         GnX3H/57wEtNtiLTWBCXMaB+7Hi21daB/Hk0qBF5yXA6rH9KpfG2rIFI0lZXkD/aKrxP
+         /9cKOa+RiSX4zS3tnIcf9zHIFF9rh+fq46JikcZOREGEM7p56GQNNfoKv/O38uBC6aod
+         czJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741652508; x=1742257308;
+        d=1e100.net; s=20230601; t=1741652511; x=1742257311;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NlPJOxxU4Y+W3u0tmgeDZw8BlZuKCBgXzhnrKQJC7Go=;
-        b=Lv8KTBxtJ/JA2GkZnssaN3IJcDyr9BXOEChi1eIbC9rn4snfjdGoQ+sjMD6S0NE2kM
-         q12O+wvooUR3FLh4z+Xi6hmm0nNvwtBPbFNffH2sgkZyf/RsR2aq+ZZBO9Dp5Eet5qZQ
-         Rc3IufWr+CPnyIN6GfiKWYin3IsbBljBfrQjR/K17oX16M/suMK2lH/h5avUmzWPVggq
-         9W/MbWfK8bdQx9CxuN2SHGV4/1hcJQ2VHJ1KxrxF57LP378peUEkIp47OMj61nOzpjrR
-         /Zmqq6F/IWJVeegEr0wzTYA3eS+PQrclIrF0OfAMaPQTh9Z0LLTYZz8b7qH1SaF1lWdq
-         nbBQ==
-X-Gm-Message-State: AOJu0YxLg4c1PHxPZUnkIu8aWVRjEi9fr+aMDc+Pfl0mtLVAza4LO1dy
-	b6EQrc4qUrsElnKNmJjcr+iIQJ2r4nzyfnvsrZnz6TVJDszGR7wTp3BEUem2MgWomcwOQzqvtBe
-	o20E=
-X-Gm-Gg: ASbGncubIB4dqKKbkzmQ22tcuwklvJf7qiw3n8wW+E+nch1WXIT+qGHOLZBKlA9Gz2G
-	lbFn3Ce/LtEDg63zacjAg29yEQMZcngvkHQO9xXyCwyBkShOjiPpzLbQ97IrYqFgAaMLTRQ6BIG
-	WxImXjCCZ8uv+6mSIA8M+dx60FldcjaUY4PqZqgs/TrOg8LLhClI6SRge4HtnsfoWFKx4l1fY4n
-	sf5ZLUcBaYYZmLimNkXamFZpXqzN2kpqQ85kZZwqIVB8uRU5VzdmhfBhNNPqcPhUjcQeVAM1DJQ
-	xIb77+MdKkmHCECGdKfqJ1alYPMUa1I/c1fHmE2baARdHf+a6nM1MPhQkxkBiiXBrpGiCbSndbN
-	lCdbgDjhVNDttLk8Q
-X-Google-Smtp-Source: AGHT+IF4aCRmDtgy3bS2iHTIvHQ0mIT3pUXTM2JjX6Z7F8QSCv6rQpdYqRbT6mSQTOiT+XToGVPYUw==
-X-Received: by 2002:a05:690c:6813:b0:6ef:48ac:9d21 with SMTP id 00721157ae682-6febf3c252amr220439427b3.24.1741652508185;
-        Mon, 10 Mar 2025 17:21:48 -0700 (PDT)
+        bh=M0A6TwSB8q37TO6SUmVJ+KoQphhFdebNEcHWSqPs7Mc=;
+        b=jQ/gC77Q9Vmn3isgW5FcePxxfpNHq3lp+tdAWg2xvKgEwXxbrf6E+s5Vtn8psU5HFJ
+         p2kzo8rKJ2Of+t/0KwHH1VzkFsiI9PkH3x4YSQGLlmeEZSwxiVuvmtFsflVCkP3GhVim
+         ZtjjccsHCfqP1gQPyXEeD9FWH6iihFnjUxKuLX4rLaTw/1rGmFN8mkj2UWucNWL7uPh+
+         RE4XipTl25LrOBGUo0AiCg6fPZ80USXIqwgXRqXcKlWVy2guXPZE4SD/7Ef5sLVLJTct
+         d2Hbxa2qAhatGzNdo9bxmdYMDjaOYb/n5kAJ4bcn0Q//8b6vD0BM4TaDoo89A27o/qsy
+         kbeA==
+X-Gm-Message-State: AOJu0Yx0PXxafEHMjop3MONwxrmNbqsIj1ynRsNiRnGr6KU3Qph3kuRd
+	DqxPzfO8JYrU/wvWdPkJu1suC3diqA11oL96TZNDOuhxupaq8GOjzFXD4YeLfhgfhRMkR5yUDIQ
+	YX/s=
+X-Gm-Gg: ASbGnctsDdyymuG4vb+oQDHxeK8Nz2Nc5n5+Jxu9sBe8rkGKy+1qwoeAewJsNpZBSoy
+	X1yy9US8KWCeDL7T60AnuAI/UTb3u1Q+4fVZLbRIoVKKpS5reKXoSbriqCB2BPWMp1wVwUXzSLv
+	JNbmYVUm05/r7s4t1S6OtwhqflyL4f0KgAooZbGQCnzpFdEScTs+Ky6tErJy+X2KyqT6geqHbs7
+	V1sIBcDSoFxRjGVuXJdnlRisxASVn832NKCts4CsJNfWGea2eI3eicsoZEZRHgcd89upLvq9LNM
+	fLyE7cbV103q8lb0/ndMyOqEtk3PWlKK0JWsiEQSv8vBd4YS4LHiLbiPKzzjT8QBfRzhr9JGVfi
+	k/FtB/QMmC7HcxJ0v
+X-Google-Smtp-Source: AGHT+IEa02vtHRHop1m8KIE/BD5DdLnjgw9iW4jYGCLHv2ylQqg9ox9SOz+U4wNZluEzkBDMHBHB1A==
+X-Received: by 2002:a05:690c:690d:b0:6fb:33e1:2e66 with SMTP id 00721157ae682-6febf2c8ab4mr230204287b3.14.1741652511045;
+        Mon, 10 Mar 2025 17:21:51 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6feb2a5beb5sm23948827b3.34.2025.03.10.17.21.47
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6feb2a8aa70sm23708037b3.61.2025.03.10.17.21.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Mar 2025 17:21:47 -0700 (PDT)
-Date: Mon, 10 Mar 2025 20:21:46 -0400
+        Mon, 10 Mar 2025 17:21:50 -0700 (PDT)
+Date: Mon, 10 Mar 2025 20:21:49 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 4/6] pack-objects: generate cruft packs at most one object
- over threshold
-Message-ID: <f2ca92245ada74825806b50f786aab312275fd85.1741648467.git.me@ttaylorr.com>
+Subject: [PATCH v4 5/6] builtin/repack.c: simplify cruft pack aggregation
+Message-ID: <12ddea7603e305e8a7af5c05dbe021add834f2fc.1741648467.git.me@ttaylorr.com>
 References: <cover.1740680964.git.me@ttaylorr.com>
  <cover.1741648467.git.me@ttaylorr.com>
 Precedence: bulk
@@ -77,193 +76,170 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1741648467.git.me@ttaylorr.com>
 
-When generating multiple cruft packs with 'git repack --max-cruft-size',
-we use 'git pack-objects --cruft --max-pack-size' (with many other
-elided options), filling in the '--max-pack-size' value with whatever
-was provided via the '--max-cruft-size' flag.
+In 37dc6d8104 (builtin/repack.c: implement support for
+`--max-cruft-size`, 2023-10-02), 'git repack' built on support for
+multiple cruft packs in Git by instructing 'git pack-objects --cruft'
+how to aggregate smaller cruft packs up to the provided threshold.
 
-This causes us to generate a pack that is smaller than the specified
-threshold. This poses a problem since we will never be able to generate
-a cruft pack that crosses the threshold. In effect, this means that we
-will try and repack its contents over and over again.
+The implementation in 37dc6d8104 worked something like the following
+pseudo-code:
 
-Instead, change the meaning of '--max-pack-size' in pack-objects when
-combined with '--cruft'. When put together, '--max-pack-size' allows the
-pack to grow larger than the specified threshold, but only by one
-additional object.
+    total_size = 0;
 
-This allows cruft packs to become just a little bit larger than the
-threshold, allowing cruft packs to accumulate past the set threshold and
-avoid being repacked in the future until a pruning GC takes place.
+    for (p in cruft packs) {
+      if (p->pack_size + total_size < max_size) {
+        total_size += p->pack_size;
+        collapse(p)
+      } else {
+        retain(p);
+      }
+    }
 
-Noticed-by: Patrick Steinhardt <ps@pks.im>
+The original idea behind this approach was that smaller cruft packs
+would get combined together until the sum of their sizes was no larger
+than the given max pack size.
+
+There is a much simpler way to achieve this, however, which is to simply
+combine *all* cruft packs which are smaller than the threshold,
+regardless of what their sum is. With '--max-pack-size', 'pack-objects'
+will split out the resulting pack into individual pack(s) if necessary
+to ensure that the written pack(s) are each at most one object larger
+than the provided threshold.
+
+This yields a slight behavior change, which is reflected in the removed
+test. Previous to this change, we would aggregate smaller cruft packs
+first, whereas now we will opportunistically combine as many cruft packs
+as possible. As as result, that test is no longer relevant, and can be
+deleted.
+
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/config/pack.adoc      |  4 ++
- Documentation/git-pack-objects.adoc |  4 ++
- builtin/pack-objects.c              | 32 +++++++++++++-
- t/t5329-pack-objects-cruft.sh       | 67 +++++++++++++++++++++++++++++
- 4 files changed, 105 insertions(+), 2 deletions(-)
+ builtin/repack.c        | 38 ++-----------------------------------
+ t/t7704-repack-cruft.sh | 42 -----------------------------------------
+ 2 files changed, 2 insertions(+), 78 deletions(-)
 
-diff --git a/Documentation/config/pack.adoc b/Documentation/config/pack.adoc
-index da527377fa..0a90931b93 100644
---- a/Documentation/config/pack.adoc
-+++ b/Documentation/config/pack.adoc
-@@ -119,6 +119,10 @@ sizes (e.g., removable media that cannot store the whole repository),
- you are likely better off creating a single large packfile and splitting
- it using a generic multi-volume archive tool (e.g., Unix `split`).
- +
-+When generating cruft packs with `git pack-objects`, this option has a
-+slightly different interpretation than above; see the documentation for
-+`--max-pack-size` option in linkgit:git-pack-objects[1].
-++
- The minimum size allowed is limited to 1 MiB. The default is unlimited.
- Common unit suffixes of 'k', 'm', or 'g' are supported.
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 75e3752353..4d83d40f39 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -1022,29 +1022,13 @@ static int write_filtered_pack(const struct pack_objects_args *args,
+ 	return finish_pack_objects_cmd(&cmd, names, local);
+ }
  
-diff --git a/Documentation/git-pack-objects.adoc b/Documentation/git-pack-objects.adoc
-index 7f69ae4855..aee467c496 100644
---- a/Documentation/git-pack-objects.adoc
-+++ b/Documentation/git-pack-objects.adoc
-@@ -161,6 +161,10 @@ depth is 4095.
- 	`pack.packSizeLimit` is set. Note that this option may result in
- 	a larger and slower repository; see the discussion in
- 	`pack.packSizeLimit`.
-++
-+When used with `--cruft`, the output packfile(s) may be as large or
-+larger than the configured maximum size. The pack will exceed the
-+specified maximum by no more than one object.
+-static int existing_cruft_pack_cmp(const void *va, const void *vb)
+-{
+-	struct packed_git *a = *(struct packed_git **)va;
+-	struct packed_git *b = *(struct packed_git **)vb;
+-
+-	if (a->pack_size < b->pack_size)
+-		return -1;
+-	if (a->pack_size > b->pack_size)
+-		return 1;
+-	return 0;
+-}
+-
+ static void collapse_small_cruft_packs(FILE *in, size_t max_size,
+ 				       struct existing_packs *existing)
+ {
+-	struct packed_git **existing_cruft, *p;
++	struct packed_git *p;
+ 	struct strbuf buf = STRBUF_INIT;
+-	size_t total_size = 0;
+-	size_t existing_cruft_nr = 0;
+ 	size_t i;
  
- --honor-pack-keep::
- 	This flag causes an object already in a local pack that
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 58a9b16126..f701b4c9ec 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -692,11 +692,39 @@ static off_t write_object(struct hashfile *f,
- 	off_t len;
- 	int usable_delta, to_reuse;
+-	ALLOC_ARRAY(existing_cruft, existing->cruft_packs.nr);
+-
+ 	for (p = get_all_packs(the_repository); p; p = p->next) {
+ 		if (!(p->is_cruft && p->pack_local))
+ 			continue;
+@@ -1056,24 +1040,7 @@ static void collapse_small_cruft_packs(FILE *in, size_t max_size,
+ 		if (!string_list_has_string(&existing->cruft_packs, buf.buf))
+ 			continue;
  
-+	if (cruft && pack_size_limit && pack_size_limit <= write_offset) {
-+		/*
-+		 * When writing a cruft pack with a limited size,
-+		 * perform the --max-pack-size check *before* writing
-+		 * the object.
-+		 *
-+		 * When we have not yet reached the size limit, this
-+		 * combined with the fact that we act as if there is no
-+		 * limit when writing objects via write_object() allows
-+		 * us to grow one object *past* the specified limit.
-+		 *
-+		 * This is important for generating cruft packs with a
-+		 * --max-pack-size so we can generate packs that are
-+		 * just over the threshold to avoid repacking them in
-+		 * the future.
-+		 */
-+		return 0;
-+	}
-+
- 	if (!pack_to_stdout)
- 		crc32_begin(f);
+-		if (existing_cruft_nr >= existing->cruft_packs.nr)
+-			BUG("too many cruft packs (found %"PRIuMAX", but knew "
+-			    "of %"PRIuMAX")",
+-			    (uintmax_t)existing_cruft_nr + 1,
+-			    (uintmax_t)existing->cruft_packs.nr);
+-		existing_cruft[existing_cruft_nr++] = p;
+-	}
+-
+-	QSORT(existing_cruft, existing_cruft_nr, existing_cruft_pack_cmp);
+-
+-	for (i = 0; i < existing_cruft_nr; i++) {
+-		size_t proposed;
+-
+-		p = existing_cruft[i];
+-		proposed = st_add(total_size, p->pack_size);
+-
+-		if (proposed <= max_size) {
+-			total_size = proposed;
++		if (p->pack_size < max_size) {
+ 			fprintf(in, "-%s\n", pack_basename(p));
+ 		} else {
+ 			retain_cruft_pack(existing, p);
+@@ -1086,7 +1053,6 @@ static void collapse_small_cruft_packs(FILE *in, size_t max_size,
+ 			existing->non_kept_packs.items[i].string);
  
--	/* apply size limit if limited packsize and not first object */
--	if (!pack_size_limit || !nr_written)
-+	/*
-+	 * Apply size limit when one is provided, with the following
-+	 * exceptions:
-+	 *
-+	 * - We are writing the first object.
-+	 *
-+	 * - We are writing a cruft pack with a size limit. The check
-+	 *   above covers this case while letting the pack grow at most
-+	 *   one object beyond the limit.
-+	 */
-+	if (!pack_size_limit || !nr_written || cruft)
- 		limit = 0;
- 	else if (pack_size_limit <= write_offset)
- 		/*
-diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
-index 60dac8312d..9cbc21a65d 100755
---- a/t/t5329-pack-objects-cruft.sh
-+++ b/t/t5329-pack-objects-cruft.sh
-@@ -3,6 +3,7 @@
- test_description='cruft pack related pack-objects tests'
+ 	strbuf_release(&buf);
+-	free(existing_cruft);
+ }
  
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-cruft.sh
- 
- objdir=.git/objects
- packdir=$objdir/pack
-@@ -695,4 +696,70 @@ test_expect_success 'additional cruft blobs via gc.recentObjectsHook' '
+ static int write_cruft_pack(const struct pack_objects_args *args,
+diff --git a/t/t7704-repack-cruft.sh b/t/t7704-repack-cruft.sh
+index 88c6ce2913..fb52bb36a2 100755
+--- a/t/t7704-repack-cruft.sh
++++ b/t/t7704-repack-cruft.sh
+@@ -174,48 +174,6 @@ test_expect_success '--max-cruft-size combines existing packs when below thresho
  	)
  '
  
-+test_expect_success 'cruft pack generation beyond --max-pack-size' '
-+	test_when_finished "rm -fr repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		# Disable pack compression to ensure the pack size is
-+		# predictable.
-+		git config pack.compression 0 &&
-+
-+		sz=524288 && # 0.5 MiB
-+		foo="$(generate_random_blob foo $sz)" &&
-+		bar="$(generate_random_blob bar $sz)" &&
-+		baz="$(generate_random_blob baz $sz)" &&
-+		quux="$(generate_random_blob quux $sz)" &&
-+
-+		printf "%s\n" "$foo" "$bar" >A.objects &&
-+		printf "%s\n" "$baz" "$quux" >B.objects &&
-+
-+		A="$(git pack-objects $packdir/pack <A.objects)" &&
-+		B="$(git pack-objects $packdir/pack <B.objects)" &&
-+
-+		git prune-packed &&
-+
-+		sz=1572864 && # 1.5 MiB
-+		printf -- "-%s\n" "pack-$A.pack" "pack-$B.pack" >C.in &&
-+		git pack-objects --cruft --max-pack-size=$sz $packdir/pack \
-+			<C.in >C.out &&
-+
-+		test_line_count = 2 C.out &&
-+		C_large="$(head -n 1 C.out)" &&
-+		C_small="$(tail -n 1 C.out)" &&
-+
-+		# Swap $C_large and $C_small if necessary.
-+		if test "$(test_file_size $packdir/pack-$C_large.idx)" -lt \
-+			"$(test_file_size $packdir/pack-$C_small.idx)"
-+		then
-+			tmp="$C_large" &&
-+			C_large="$C_small" &&
-+			C_small="$tmp"
-+		fi &&
-+
-+		# Ensure the large pack is no smaller than the threshold
-+		# such that it does not get repacked in subsequent runs
-+		# with the same --max-pack-size setting.
-+		test $(test_file_size $packdir/pack-$C_large.pack) -ge $sz &&
-+
-+		{
-+			git show-index <"$packdir/pack-$C_large.idx" &&
-+			git show-index <"$packdir/pack-$C_small.idx"
-+		} >actual.raw &&
-+		printf "%s\n" "$foo" "$bar" "$baz" "$quux" >expect.raw &&
-+
-+		sort <expect.raw >expect &&
-+		cut -d " " -f 2 actual.raw | sort >actual &&
-+
-+		# Ensure that all of the objects are present in the two
-+		# cruft packs we just generated.
-+		#
-+		# Note that the contents of "actual" are not
-+		# de-duplicated. This is intentional to ensure we avoid
-+		# packing the same object twice (once in each pack).
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
+-test_expect_success '--max-cruft-size combines smaller packs first' '
+-	git init max-cruft-size-consume-small &&
+-	(
+-		cd max-cruft-size-consume-small &&
+-
+-		test_commit base &&
+-		git repack -ad &&
+-
+-		cruft_foo="$(generate_cruft_pack foo 524288)" &&    # 0.5 MiB
+-		cruft_bar="$(generate_cruft_pack bar 524288)" &&    # 0.5 MiB
+-		cruft_baz="$(generate_cruft_pack baz 1048576)" &&   # 1.0 MiB
+-		cruft_quux="$(generate_cruft_pack quux 1572864)" && # 1.5 MiB
+-
+-		test-tool pack-mtimes "$(basename $cruft_foo)" >expect.raw &&
+-		test-tool pack-mtimes "$(basename $cruft_bar)" >>expect.raw &&
+-		sort expect.raw >expect.objects &&
+-
+-		# repacking with `--max-cruft-size=2M` should combine
+-		# both 0.5 MiB packs together, instead of, say, one of
+-		# the 0.5 MiB packs with the 1.0 MiB pack
+-		ls $packdir/pack-*.mtimes | sort >cruft.before &&
+-		git repack -d --cruft --max-cruft-size=2M &&
+-		ls $packdir/pack-*.mtimes | sort >cruft.after &&
+-
+-		comm -13 cruft.before cruft.after >cruft.new &&
+-		comm -23 cruft.before cruft.after >cruft.removed &&
+-
+-		test_line_count = 1 cruft.new &&
+-		test_line_count = 2 cruft.removed &&
+-
+-		# the two smaller packs should be rolled up first
+-		printf "%s\n" $cruft_foo $cruft_bar | sort >expect.removed &&
+-		test_cmp expect.removed cruft.removed &&
+-
+-		# ...and contain the set of objects rolled up
+-		test-tool pack-mtimes "$(basename $(cat cruft.new))" >actual.raw &&
+-		sort actual.raw >actual.objects &&
+-
+-		test_cmp expect.objects actual.objects
+-	)
+-'
+-
+ test_expect_success 'setup --max-cruft-size with freshened objects' '
+ 	git init max-cruft-size-freshen &&
+ 	(
 -- 
 2.49.0.rc2.6.g9a1eecd400
 
