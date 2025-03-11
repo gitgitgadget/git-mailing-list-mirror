@@ -1,117 +1,93 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918872638A6
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 17:07:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D01263C84
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 17:21:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741712880; cv=none; b=Ku9mmlLPXKYuEkDMloDsARDvZVdnTfoQnDML+Z1dmTbbdgDz/rbtMfo2+OKLr/FgNK61WXsNrsGwWQloM97d/wfkGeYPLu0qZ9CFTc/SZVgOzjg8FlHtpTEiT07j9ZABkoA8T8qP+AWhVjdDWukXUGxfNWhfcaPszeNL/IUnygA=
+	t=1741713663; cv=none; b=ZXwECmgfqYoq2CiOx5n3McW3IQbd9vpsS+r3KTzVLo6OgD0Cd+wMXpwrZ2iJvmH2zBnxFKDMiTFE31KpBm92pcTfMF3wcCuf1Al1kZLppcwuKNadMNwa8CRZoOwZT94LAq91gT7rUn7g9cKLcQZ3VmC66hQ31AWs4WsbFnscv/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741712880; c=relaxed/simple;
-	bh=9hUjKbvtPNZoV3h2getiUdxndgcjlfEpartDV9nbtTQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pGgKLrAMrqLzuCMJaJKZ9yu1JOF/1Ejc5U2P/vJeNFY5NHf2ymXCAIdoYuAmB4q6pkobAXhei9+QwT1j2ByNip99fsw4MU1myUmUO/+76OGTMxhmob1EvkX0z7NN1XMkPeBYuk77MNQwx4wWtCxRt6jKmpbYyTVjYoZrTPb1GsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RMbOp2YF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=8IFiJ0lZ; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741713663; c=relaxed/simple;
+	bh=hQt/XYt3lZvtbVEUuEr6/Z/WcCKnHFNq0nvL0dAVttE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SvgtVIdAYpMlst3mKLGKNdDmxCJRc9Z4lpR0XfRX1jbqOk0FFJtoBRxaeEEuRPH7LzobHAJsadonHwKVv9YNbPuW7fBfhALRCV9mnRByL9rn0j7eEJFgpV64xjkhDShACdrfW6MbzHPdC9YnmPWkG3mFqNtjA7euCfpIzJKWJWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=juYCGyOu; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RMbOp2YF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="8IFiJ0lZ"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8564D11401A8;
-	Tue, 11 Mar 2025 13:07:57 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 11 Mar 2025 13:07:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741712877; x=1741799277; bh=kvEozte6/P
-	GDbc//X0yn0Ix4N4Pfg5zUQOZMFtxQGbQ=; b=RMbOp2YFP9UHzugbqCdiVbcUQQ
-	wTU06vXwuryFhRUM2jdvYl19nuYa3xMu2PKjht4ociJk5yETOuwREycjeKvbelE6
-	zcswkU3W5QHy5lkiTQJFqo1bY4EcYCSv9A8xGQ/aAuMHYH1Q4FtgULFFNrU9OkgR
-	FosylpTeI5sTFU/ZYxFPmUxH2bB9fyDrcwKyz5psPSPmVWpHxIT3mdP9VXeLPhHD
-	dnmGBzIoXLljTm+6BGCuNbHVIUak4q9NzSjTVrlSgl3YUkGL3ej5OAvCD5alxpyj
-	i5Mkn0lVVpy1KlT23pG/4OxYiN89diuMOnh2ssGEAmaEeLyEmGhIgAi6dF0A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741712877; x=1741799277; bh=kvEozte6/PGDbc//X0yn0Ix4N4Pfg5zUQOZ
-	MFtxQGbQ=; b=8IFiJ0lZwMP7P5RzcVcrgTP4sbH9nGMIOlEubVjklIfl/tSaZeh
-	W5UD+5GTxPu4On9gwLmRqdZcnXvno83Oop8gF/CEZMmmHculuRjHzqqLE/pI05gO
-	f2GUpIVNxS3hND0NAyH6sTnbUJyYEAlwTMIp+aoDZ91655IH+RWqInh+tm1Ax1dx
-	XeiXqzmxCNnkDbTEGoLJ7Itttoby1N1rrMxlSVCSxkIdUqpKXON9CafC73q+Tbaw
-	bxSLF/I73IxW9lwbwDk65+ekne45pXK6oqztFdkQBINLaVyt1ecW2bD0FJpnfdPD
-	UCXuljzMe5CsbszA7dSpQOe5mpR30ImGjTQ==
-X-ME-Sender: <xms:7W3QZyp8iyw_LQaQ13jCwKxFVzdz3S_2SkdbHpgyGfVVC-HB1cGHOA>
-    <xme:7W3QZwq2n3PYB5xQTaK4aeBQjAdZPWqWgDL3qtG7WHOP1IDtbn_2-5rXBe5i8wx4P
-    KbsJPYdAyGrhh1p4Q>
-X-ME-Received: <xmr:7W3QZ3PWJS2IXoUBgtTo1_YVcFcI5C9fYkUjwxVLot8nBH6GXQd8dkgJNTIGD8Zu5fvIsFLoSXzDQfOeyV-yRUhko-WKGSjEJOYI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvddvjeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:7W3QZx4Nr-j9t-zF7Nc0WvjYDuq2kQYSx9vTHP4xo7kmKbJBfq4RcQ>
-    <xmx:7W3QZx5OPbCM1ujYBeI0LjVCPjwNbZIYl7ECu1EaKffTdH7JljqDjA>
-    <xmx:7W3QZxjT16b37edndhCFlNzy_W5N9ArefSPhb4LUBJ_V0OvWyS-eFQ>
-    <xmx:7W3QZ74CSs7AXUYejd18jIow9VrMXR6lPl1kjtLDhx6yRAFJ-pDAVg>
-    <xmx:7W3QZ7mDDt6mdJHneQEmSJuztEioJp10gvaPIjlsWmB8OIckLh1bfsgv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Mar 2025 13:07:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v1 4/4] name-rev: remove "--stdin" support
-In-Reply-To: <Z9AzMaXMGq8BbENb@pks.im> (Patrick Steinhardt's message of "Tue,
-	11 Mar 2025 13:57:21 +0100")
-References: <20250310231652.3742490-1-gitster@pobox.com>
-	<20250310231652.3742490-5-gitster@pobox.com> <Z9AzMaXMGq8BbENb@pks.im>
-Date: Tue, 11 Mar 2025 10:07:55 -0700
-Message-ID: <xmqqzfhr3384.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="juYCGyOu"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2ff6ae7667dso10975222a91.0
+        for <git@vger.kernel.org>; Tue, 11 Mar 2025 10:21:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741713661; x=1742318461; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hQt/XYt3lZvtbVEUuEr6/Z/WcCKnHFNq0nvL0dAVttE=;
+        b=juYCGyOuTqSORat+hn5wKEJ53sbZTTJYpYeXoIJ9ubIcpkpcuOkNkWTAV4XfmfKWjk
+         koO8UBIwbWEQgGc2ODM2hXx0UQkUiuCjMM8bYsYc+Fzut03VTL5yU9ANKTp/R4o4PzMF
+         oW8pL0AMqmySfhZfBAutGKgIQEe19PSe5/hHEwfUz+zHmrfsBCFB/VscPEKJ7uXo0iaM
+         BRd9Qaf7V3meGLW1ZjWwGcLZzz542RmZY8xBnhBHLGtOKfRxvxZ77rNJUsFgPDOZOjaX
+         cia3/NPfXSd+a3IVwXvVMh+2We8vYtcIrih6GeKKgkDHSKTm0c0p+Kk6YY3CDVboU8aV
+         OsYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741713661; x=1742318461;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hQt/XYt3lZvtbVEUuEr6/Z/WcCKnHFNq0nvL0dAVttE=;
+        b=O0aBEH2ro1I6fB2p2dS5MKPrRl8QFipMuz2QyJ7Act9DRrso6JD4X6qxnKMhoeabIo
+         Ija/OxHBAK10u1p55+hXTa8HbRVrb9I0wpj2jP2s0UFDnmqShpb7VQiVrMBAv/QJ7A7s
+         xuI8plEBYq0ZNzIUWdRBgRSDLyE7qDFzPBBkqfXYA4PvOdDZffK4oAcypFeNe9lA7Fqg
+         rP0R6WKKMYXuOlLjyxjrYF6NAskjZBizhRSPD1BYf+tLfJmBnqZr4bHPXRAGgYSQA3DM
+         WTkH7bs6qeDJHbR2xDHuzZYtEditzfnylAiJKXbFIJuWiG2jzWKNikZ4Mwjt/A1g8PDu
+         RTew==
+X-Gm-Message-State: AOJu0YzNhpON6siH4R0uOy0ikO2vfei2TXtusBM3CkjuagY9QmWy5j8+
+	iISu46tZFc2elYznNrnDbKFFdUop94Wq3bhtrOgkeHaJWT6h/9jbwQrMM5kIFnpRZk6IuB9GLWE
+	2B4OXnHsIVFJp2z1zWGf3Ui/66WFBWQYjXGLoMA==
+X-Gm-Gg: ASbGncsKtr40Qv0HFb8YDNcgvfKvEI+46zvCm6o16YrtZ6KB4zIknUUq5X95Lo79DUZ
+	HeO7GTv9kpundWehHb1lVuaomND8dShpLaTsmnb66govYh85RTHwnFbYfVQhsBsaDfny2pmrlKs
+	jJxfMFVPjIAUyvKbeBldBqM6ysJi8=
+X-Google-Smtp-Source: AGHT+IGURAz4RKPOhAZA1Ah215wHVSUJjy+9d2wE4+Fpj6BIrYb7A57ju9NBOcz9yUTUXRJKnbqG7Q1tAlAAzyRRQT4=
+X-Received: by 2002:a17:90b:17c3:b0:2fe:6942:3710 with SMTP id
+ 98e67ed59e1d1-2ff7ce59681mr25521461a91.3.1741713661543; Tue, 11 Mar 2025
+ 10:21:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250309153321.254844-1-ayu.chandekar@gmail.com>
+ <20250310151048.69825-1-ayu.chandekar@gmail.com> <20250310151048.69825-3-ayu.chandekar@gmail.com>
+ <Z9BLMLXJ7Desl-n6@ArchLinux>
+In-Reply-To: <Z9BLMLXJ7Desl-n6@ArchLinux>
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Tue, 11 Mar 2025 22:50:50 +0530
+X-Gm-Features: AQ5f1Jouj7uhQm9IXdGcfH93pG1m3l31psUaR5ARK1RxJ_8-GqTH8_R7uJfyMbg
+Message-ID: <CAE7as+ZROO1GiEhXYga5Nqmrs5Xr=k9zsAiP2y0xzuny1ws+UQ@mail.gmail.com>
+Subject: Re: [GSOC PATCH v2 2/2] attr: use `repo_settings_get_attributesfile_path()`
+ and update callers
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+> If we use "istate->repo", we don't even need to change this function.
 
-> On Mon, Mar 10, 2025 at 04:16:52PM -0700, Junio C Hamano wrote:
->> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
->> index beac166b5c..3f49138551 100644
->> --- a/builtin/name-rev.c
->> +++ b/builtin/name-rev.c
->> @@ -578,11 +578,13 @@ int cmd_name_rev(int argc,
->>  				   N_("ignore refs matching <pattern>")),
->>  		OPT_GROUP(""),
->>  		OPT_BOOL(0, "all", &all, N_("list all commits reachable from all refs")),
->> +#ifndef WITH_BREAKING_CHANGES
->>  		OPT_BOOL_F(0,
->>  			   "stdin",
->>  			   &transform_stdin,
->>  			   N_("deprecated: use --annotate-stdin instead"),
->>  			   PARSE_OPT_HIDDEN),
->> +#endif /* WITH_BREAKING_CHANGES */
->>  		OPT_BOOL(0, "annotate-stdin", &annotate_stdin, N_("annotate text from stdin")),
->>  		OPT_BOOL(0, "undefined", &allow_undefined, N_("allow to print `undefined` names (default)")),
->>  		OPT_BOOL(0, "always",     &always,
->
-> I was wondering whether we should also #ifdef `transform_stdin` and its
-> single user to more closely reflect what we would have once the feature
-> is fully removed.
+Oh you're absolutely right about that. I actually just got to learn more
+about `index_state` from another thread where Junio brought it up.
 
-Absolutely.  That's a great point.
+But now with his suggestion that attributes may not belong in the
+repository struct at all, I'm a bit unsure how to move the patch forward.
 
-Thanks.
+One thing I did take away from this is that we shouldn't be cramming
+environment variables into the repository struct. This discussion has
+definitely helped me think more clearly about the design, and I think
+it'll guide me take better decisions going forward.
+
+I=E2=80=99d really appreciate your thoughts on how you think we should
+approach this from here.
+
+Thanks,
+Ayush:)
