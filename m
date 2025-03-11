@@ -1,54 +1,54 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60A61F09B4
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 23:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5A022257B
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 23:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741736189; cv=none; b=UkCd0mU1D51Y1CaQGfX40fGw8Noru3g8NyIgr1m54AaMumpdSwJYH7B7uUOMaT3VoEwlFTpgzbuFnZh8/nE5353TceoorNxhvkrt8gLXJxlV2Gs2/pOGjLDSnsgUm2N/BZZt7W/Lv2A3Ge58JnY6D/IhOsaxFaVG2HUnLiIJdRY=
+	t=1741736654; cv=none; b=Pn1sItxHn4BFalyiCMApytGhID92i3ImFldMCV7ES7apsq6qpRKwmWb4d965Ig5JuLxnZ8NcAIek/rAjdjwTkZXI527uZj8sosAqGHDV/UT/9vwF+gB588nFoSjNQriaIbHG1AUevqleSdIZEFcd0gBFIe58wcHka9Aj0Vc24l0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741736189; c=relaxed/simple;
-	bh=h2vV6OXol2+o5S6LrENYZXc/I8fHHkCWNsGa5eDqYoI=;
+	s=arc-20240116; t=1741736654; c=relaxed/simple;
+	bh=4SbMtQ6iu4Hbm7u5LDerHcUat3i2u3FBGpV2ZV6Ft/I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N9MfkeVF3K72drw4af9GFrr4zkH0s/sJvxzZnTH7uWSWOLQc1BS2HGE8RjYKdoAgQ/iuNqXvXstnrImoqccWS/ZOlUgfeT7aLK2VlrTNc+kykR1A99Q8cg2bQIfVMIYxkdpX/sBG507sEsIErGk4IIWHJXTjVcI1ExqBd0O0MCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fqjf+OMH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p4UcV/1m; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=Lvuh7BL2RxYZSboPJDvJJVWLpPEyfLLt/Lkf0hhbCtIv5MCbZLwh2r1TcvDr45S+tQ0+fpdZGQAZE6T8qYxZIp6SNto5BjlsADMSNqSu3dj6ANtUxktNNOE/to5tRqXaBgs09wjG1aFTI7uhIjXFl0HWaulLsNZiko+c+pkR7nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xPe60ZgT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kMdrWe75; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fqjf+OMH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p4UcV/1m"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id D9D9C1382DF8;
-	Tue, 11 Mar 2025 19:36:26 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 11 Mar 2025 19:36:26 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xPe60ZgT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kMdrWe75"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id B90AA1382E05;
+	Tue, 11 Mar 2025 19:44:11 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 11 Mar 2025 19:44:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741736186; x=1741822586; bh=dPJAZFkcKu
-	t166t5h95voH6Ue/Xp/Zn0GtGUyjT0nfM=; b=fqjf+OMHOto1dnMONosFHw5sP6
-	OWHJ64CCcdEnfwvoC+zj/cFA2WWwfwTOvVhFx++7c31S7fwbMXpAtDFSvricVIUT
-	T/FK3Cpjq6koYj28/1qLOJnWPNGAq7OKL+/owJgYRPNZvkFuT4v+VZpiojesJnkX
-	UmfkmmIGKSRiZ+EV1ptRDFq0xwhn5pqF7ZnM36In11XmiiwgYrqMPd1VB3sGXTr0
-	VxB+qSoHecNW8AcQ10FIatrCtO2/b3iSTkEfRZB3TdlsXDdvttNrdzcppBFZbxD7
-	ZN7YsLv8Qw/ljQWgzYj2UcHcPWtbgrbktn9WCdy0nrhyTxEDHNSiwjikE+sg==
+	:subject:to:to; s=fm3; t=1741736651; x=1741823051; bh=C0xh6HBX/s
+	N2OdGFEG14SJghTS47NwYd+Y9IUOO4yZg=; b=xPe60ZgTzHu8+ILQaNYCGtsnko
+	uesSs2GwJMd02jIga9h3X99Znzfob8kMFaEx2WUm1CCXUEaNm+RhH3stZe0CVXsw
+	4Znfdgn+d9Le2drfpjoZrxGRhZ/EeMJ1GX90ssWm3kxHeKz5XQEnFFyYjndC1any
+	SmlLG5LfnlcMKXxljOvnPnYj87hv0MF1gbK/7+GkZSvVqR+os0r9eQpRvMEGFvOG
+	AQ3PH2UPOV5IwLe9JCR0b1E7BkJuJG0whJoL5/W67Io3ro1ls7raZZgacvmHsaVr
+	Mf0nF0h0uQ5jtQAXQwmJCiN+9PikPcrhpMGD5hTmFAwuHrjKGdznKaWUANpw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741736186; x=1741822586; bh=dPJAZFkcKut166t5h95voH6Ue/Xp/Zn0GtG
-	UyjT0nfM=; b=p4UcV/1m6LD++AQ6PsYEoWYt1acnEiugYHHxzNJzjr1eCJ/xEqf
-	y8dJWO8zCtlGgfAm0oOpdZ9zB2/HRVLEv4emSbIczTYb0XN8oTf94TykEwRexU0S
-	UerEHPOYTSgcW/ncB4y+zp5/dKR+WGBOFMeB+nTz/Av1vXPcIlHGtH2WYUQLttd9
-	wK064wfQ2y7n4XwsD29mbZlyuCvvJKKigXsN/gwiqigM9QC+JokflNyP1aqy8/NL
-	Bk260iHU+j72CqN8sLcetegMxZzbo4gm+N25MtHmwYWXHncWe1yUwUMIqn1y57Gs
-	+iEL/Ruu8tD72UTLudk8ZGTW9T6Cu6GwxyA==
-X-ME-Sender: <xms:-sjQZ8QKvYYrqlkNNx5C19hy-bsHbhpyKR-jmqHrfYfGG3b-Um1NPQ>
-    <xme:-sjQZ5zJz2ItH51Lgj52-g7gRp8wenKxp5DJ5wXNdlWgmv9Rnrcj1iHi9OzdtuTr1
-    0_LLxvr_PvlR8ppHg>
-X-ME-Received: <xmr:-sjQZ51Xy9w6_EuNscYWOPocAEd9Pyp2oFQnuDCVDKjFjMyyo_l8DmIfVi4KtyJ593RV3qo77sMU5k08fMcKxsK_Q27jYi59q_fa>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdefhedvucetufdoteggodetrf
+	1741736651; x=1741823051; bh=C0xh6HBX/sN2OdGFEG14SJghTS47NwYd+Y9
+	IUOO4yZg=; b=kMdrWe75cxYssOegx/M1i0Juo8erNIJ3gS0t3kR+dUiLV0wCily
+	J8mpLd/PONH/JLt+S3IUm0s6cXAXEM6/xFU3c+5+id7zdmULWUr/K9PRfFc2ZTlm
+	HALc2EZgwAsQRIPrK87FRm2J6a5KMu96gAv2En2KaaYGjnidONBL6V1/ca/iVDK3
+	zuBCcGpG/3gB7ZPjSqlkEryg1MVNYpTJcD5GT38UIBH6cxcgpqBYSX/MTAweA1cZ
+	dawhx59h8B0NdBdbd6t6feXa+jsV4KjT2xszgCv3AtWuCEyJtOfnFm9P1M0ZLvr7
+	4agcLpDSS5oz31Y0fEJt1SapfrRskcaZ70A==
+X-ME-Sender: <xms:y8rQZ3pojqgoN9EX3LdTsVWE2xiPkGJpmzFlVkBJX11W8_N5n5ue3g>
+    <xme:y8rQZxo07hqvTK9tR0pP_6d4YQHMd0RugcHzMJalnn1uX9qy5fcYBSlIYPQ9Z4iAH
+    J7Q0I1LKIwsOpo4kg>
+X-ME-Received: <xmr:y8rQZ0PjkwWODUjorhaRhHkIsXMJAMenkSJ21cobWF2bVwBXycb4rQCWEfAjUE_cg27NJbnuVAbOaAKtiHBlr73GN5geMw5plCwX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdefheehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -56,40 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdefhedvucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepuddvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesph
-    gvfhhfrdhnvghtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdr
-    tghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpd
-    hrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthho
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
-    gtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:-sjQZwDI6uLvsWyZ8cCW0Sgw7kRctyqJ8x_JwtqyX0UFERZfvr6K1g>
-    <xmx:-sjQZ1js6ilmWtowf3or7J6pcUkV5hk8Q_Qvy0bPCzPUoz6RV2A9Bg>
-    <xmx:-sjQZ8pNZJu44XH5vBfANM3jvoBAVHPZJUAw6WrUrvXdOLVwkZK5yA>
-    <xmx:-sjQZ4gsbpyURRfKF9hLd04K1ivfyIHIJQHYZvCi4ypRfT_wNOoiDA>
-    <xmx:-sjQZ-ZenmgR48Uq3psXQxAJrmEywWxBGGLHZQ_t00J_O0o8Xu_FH0uc>
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvg
+    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheptghhrhhishhtih
+    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:y8rQZ65hzR5GfDm_eMLEir5Gy9i-wSa7LidgXbzkNMVrRs3w4Jjo-Q>
+    <xmx:y8rQZ26v4M_A0qgmbMGKOK0CbbBdCT1FoaNYA3taVvVklaFLx3NaxQ>
+    <xmx:y8rQZygilv41GZyP-4nwjDmiealAox5uUoX8ZSLGRuiaXQjXT1MTRw>
+    <xmx:y8rQZ44MGujGNXHPt4ZCsrtMJKnIn8tCwReYo01KAhLgZOYZFsNpdg>
+    <xmx:y8rQZ4SDVCzzpoX-nJZUB_PsNlgAKoa_4xsKXgM-Qd0KOpoVSKhtncbK>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Mar 2025 19:36:25 -0400 (EDT)
+ 11 Mar 2025 19:44:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
-  Patrick Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,  Eric
- Sunshine <sunshine@sunshineco.com>,  Karthik Nayak
- <karthik.188@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  "Randall S . Becker"
- <rsbecker@nexbridge.com>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] promisor-remote: fix segfault when remote URL is
- missing
-In-Reply-To: <20250311230601.GA72712@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 11 Mar 2025 19:06:01 -0400")
-References: <20250310074053.1886097-1-christian.couder@gmail.com>
-	<20250311152413.1059343-1-christian.couder@gmail.com>
-	<20250311230601.GA72712@coredump.intra.peff.net>
-Date: Tue, 11 Mar 2025 16:36:24 -0700
-Message-ID: <xmqq5xkf2l8n.fsf@gitster.g>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  christian.couder@gmail.com
+Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
+In-Reply-To: <nfrfyg56nq7m2bcko4v4tsfdklrafpkybc6uhqgo25swdeebh3@a7aneoylg46u>
+	(Justin Tobler's message of "Tue, 11 Mar 2025 18:19:45 -0500")
+References: <20250310192829.661692-1-jltobler@gmail.com>
+	<xmqq34fk7hb7.fsf@gitster.g>
+	<nfrfyg56nq7m2bcko4v4tsfdklrafpkybc6uhqgo25swdeebh3@a7aneoylg46u>
+Date: Tue, 11 Mar 2025 16:44:10 -0700
+Message-ID: <xmqq1pv32kvp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -99,24 +89,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Justin Tobler <jltobler@gmail.com> writes:
 
-> Is a configured remote with out a url key really a missing url, though?
-> In other contexts it defaults to the name of the remote. E.g.:
+>>  (4) The traditional "rev-list --missing" output loses the leading
+>>      "?"; it is replaced by "missing" as the <attr> name, i.e. such
+>>      a record may look like "<oid> NUL missing=yes NUL..." together
+>>      with other "<token>=<value> NUL" pairs appended as needed at
+>>      the end.
 >
->   # make a repo so "foo" is a valid url
->   git init foo
->   git -C foo commit --allow-empty bar
->
->   # configure a fetch refspec, but no url!
->   git init
->   git config remote.foo.fetch '+refs/heads/*:refs/remotes/foo/*'
->
->   # now fetching will use the configured refspec with a url of "foo"
->   git fetch foo
->
->   # and git-remote will report it, along with its url
->   git remote ;# shows "foo"
->   git remote --get-url foo ;# also shows "foo"
+> I think this is good. Instead of prefixing missing OIDs with '?', we can
+> just append another token/value pair `missing=yes`.
 
-Yeah, that does sound like a more natural way to look at it.
+And we may want to avoid excessive bloat of the output that is not
+primarily meant for human consumption, in which case perhaps a
+common things like "missing" and "path" can be given a shorter
+token, perhaps like "m=yes" and "p=Makefile"?
