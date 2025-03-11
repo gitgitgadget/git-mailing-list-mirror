@@ -1,67 +1,71 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A4E1E4928
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 06:25:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8BD1E4928
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 06:25:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741674302; cv=none; b=C1lNog8vqDX/0OEvD71Yaya2wmEZotx5ki1u59gutDfy4vI5UaHEZ/YFusaKiQilQ8p4/FBSvlYzZ4jjYYEw0PYTZQ9J/1xLOtzshoXmok2Mk7S0ZXyQYssXSELaJVAnH45TzvmYibuU3U/7lAyrIye4Ik1z/LL/Z5Ogif/IInU=
+	t=1741674306; cv=none; b=cc+GTmflbvVpBTg7G9hcn+IlnI6CocaLJ9lRkV1f/ZyFewrkeQCMvjoOh3hlegq5Ac47lFwIYMQo7ToJhFt6sR9MzyYuC4EwQOBvJhVTFwPfinOhtftK6zKngQI6+xT/KcRVTqsdYXGlJyBRMXWP5ae2AUmZwjfVaFcR2Gq79iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741674302; c=relaxed/simple;
-	bh=hJ69YGhDzQNRP54mYx/3iRiKguXsD3bbSBLzEHVd6lA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=f30N16PTeeqsca9/VSziL1FY7mR0AaxP6e/7Uz0lvmJTOR1rSGdReRCKGlWO0if8ZRjXH9HCdU5jevGVXxiNxWhHEjrvgcBMCbgo+UWDlI9TrSbZ+BG8CZJUPyImiNPn+1pam6hp8y03SZ74/JORrun83rKbvKzne2iaFfU2HQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cBRGqR27; arc=none smtp.client-ip=209.85.214.179
+	s=arc-20240116; t=1741674306; c=relaxed/simple;
+	bh=QIsUzZ6A6cDWQ3sCO6K4IvFwhhQaSpbKvWBluGsbdwM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=uf0sMXaw54DV2X6EV04rBmUtQo+D0pULrqz1OjSCvj7uqYuptlo3etnMrQ+hXsXYoNtZ0anEHjzbF0I8A24y++IHShI/5dlp0r17ygbEpPSfZ2MyK8CvUxTVxJoiOIxN0fIrCLSBytKnZzY/bC7ihwvh12SC6hj8yGJ4HifrYZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U08NcEQH; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cBRGqR27"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-223f4c06e9fso84622055ad.1
-        for <git@vger.kernel.org>; Mon, 10 Mar 2025 23:25:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U08NcEQH"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2fa8ac56891so7583678a91.2
+        for <git@vger.kernel.org>; Mon, 10 Mar 2025 23:25:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741674300; x=1742279100; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=YS++E94eorTw7Gr5xH5R4Iqde2lE1ecppXxRJVZ6otk=;
-        b=cBRGqR27n37LOAy+zXmn3qhqWI69ehHei26L0+s+K/h32+i6hFEfcJTPASTDd84oFK
-         FvdmxWhYYnRfSmIoCkMXuSaa3By6PmXCfOveOyIM7yjD8xwXKzHmnd08iU2uVNyyacDq
-         mdNNzhhwZ5CoNpUe1t+8Sv+MySMBw/2nT9tW3HkyGvdPpR/ZuQjzBqWRSAHTxE/LT/xr
-         XJtAnhCIQ9PAi9R6C3BEEsiYHoXAn/H5D4tBioqcwidNtxySNcQ8R4I5xeXsPsPOZL/O
-         Lw9NOf3oHNPW2LkkVSWnreXq3Lc5ABGyvhmhX/vOn3cdyRW2bPhGvSypWq2WgYcjrCLt
-         04Gw==
+        d=gmail.com; s=20230601; t=1741674304; x=1742279104; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C+FI5cc+nOI4qdPzOAN1dTfUN4HjT76BDJX6n0rFZ5A=;
+        b=U08NcEQHnbdgPVpfJ2vc8I/V2gfJgKclO+p6fFmi59P0XyzJy+EQ1JNfVAkzhthtQs
+         uLbTq9HZtHb3i+ZBYnDwAuFcP0wBepdqYWmgyat44fSMx+0oa2yIKmHujJ33/W6PXztw
+         1YZHp7Fz6IssCHO+Cx9UAS5MKNqVoq0FpX7OO+DZeaN5o+b6Ze+UhdI1MwhEErHs3ts5
+         mO8Ljqnt5HHorKXk0KqKcBvD4ztFs+9288/lw7LNNUt6gwssv1uvsIQ+dNBlAEUIPpNN
+         jyzJXUCcczXs/vC3tdAEVUND8fMdRNsQlmYZ3d0/ZtL7Mch1E0UYsICsickxC0ZYfjIS
+         TeZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741674300; x=1742279100;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YS++E94eorTw7Gr5xH5R4Iqde2lE1ecppXxRJVZ6otk=;
-        b=Jeeq5nqY1TTgVbhG4wM5vL0G6Dz5dkEVHTQFQbRdrNjqzCaCXBfVtzV7fblomsN+sQ
-         VAnmtQbu0hUBzXvzxYQ1DQ/xqZV9WdFq0hCzGn1ym02HWYIrRwgM2O3NqzGkfaIodnL0
-         bgFdyA8SU/trwN91gyMY4oYAzh83LNJ8jQoOht/Nn02AWqnTxh+z8I1AsWF6uoMypsC2
-         m8byIL6AlOY6iv2dtd0cXHYpHpKYBl/nfcu3WgWCc0QYZZBScxGITAVfC+d3kXZ/o3Cg
-         mXZciZqeRQbMDdD+YHO4J1a6x2sutli8Chht+yH1kJT1BOuZewIk9WW68xECKIrQZT7L
-         Z3cw==
-X-Gm-Message-State: AOJu0YwZnNERAO+axsN03JFT/s3f4/CGxcY2F8rH/JgZazJo5F9TnLSW
-	qO4Ad3NXjp4RKgqUwLlCnXgQpw0AKbAjT8EbSjtpTfUAYudPx7O90dfqv8lk
-X-Gm-Gg: ASbGncsqWHeRkoQasbq8BQs1K2N2EBvhtZ6lmm8qoPvuOBYnRjyFfGmmSdXwGioeTfz
-	1fZ4OoCuoVuFfFV/oKnD7H1f3bk31TXG8nDtC2HCyW2zPTVph4eX+6b4nNoMtb3vtaTy4zoD8FQ
-	lsOwoZ6mCmStyyTo6U9ZYHTHwQFcWRglgfr/lHEAaKDr9Y7Hng2ruEAh46PCNMv2zC5VNMA3TXd
-	1amm3QV6ejpErwWiGt441xhQNM4+MIqSDs+P/ODLKQt6n81h41XqRUaBCqgRdSYPate3BJorJsz
-	y4QfY9B5cPpXqhoLe9JQq62IM4vO2WKkxCQzACrL/7j/wsyOtEBs
-X-Google-Smtp-Source: AGHT+IEDeS78M1lniv5AqQpqnIfvQSYuwBw1eFreKOu8dToxrZ1/fT6PXFXl5FXKelwukKOATHNwdg==
-X-Received: by 2002:a17:903:3dea:b0:223:fbbe:599c with SMTP id d9443c01a7336-22593dc508emr26229685ad.19.1741674300589;
-        Mon, 10 Mar 2025 23:25:00 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741674304; x=1742279104;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=C+FI5cc+nOI4qdPzOAN1dTfUN4HjT76BDJX6n0rFZ5A=;
+        b=n0vqF5VM5vMWCyeFR6b1klwSU3Rj8+Ten8GU/hWJvF+NeQlop8+mcCgEkssauZh0RT
+         KSWmk7bBvgblVr4GfXh0ldGhdpNvfmMh7KKSLvYcUKZ7AfnF7Mx6gYOg1xpLIKANRsQq
+         CEda2RMAWmeg76T2PvEyvRQnV2dqutILilz8vIFAQxDFh9DAawSfalmhmi2d0809a/hJ
+         n6ZfDRzUbSZEgB/sSsadvrrEp7sRelPjVpPkv5GeHCCXQiz4x5Prb7/sRlpzLJ1MNnPQ
+         Wklcx+gsYJCF64EubmSTa7hacTcMqHQVePBJN8yUcBffm8HQ7AuJxA4q0qMyuam49X8o
+         P/gw==
+X-Gm-Message-State: AOJu0YwejlfzucW548C0ZTRyY1lo4G+UxRPhfQ3PJeuRsGTKkL6S+Iaf
+	VV2TOcLxfoWyQtTmQGyiyuJP0hfDghNQhDdoOruvvdkTReSTfCRZrUYIINZo
+X-Gm-Gg: ASbGncvwBLfzvY+YRBXenNbA/CGW9JQkm/fcHJYwUW0dVzYm40smbwZK8oDrKCYM5TK
+	D6u+HY23XwZBmF0Bei5jilLoc0QYqiAxBHJm5p9amBw+BxykFkDPj5HFv0hTE0ckGlES0d0dt+H
+	Igc3frnTV5ewTQ1TLbRpa9Ep8kp4FyL2ZQ+2pL+aP3dNVisO84jtURoTFxYm02w+XJ8mx3/SimD
+	9BmWbrok3k2uD8Iy/G4LYJZcpC2zwO3l+qCnMEZgRoPewGmyzozLAmpsWIft4n66ep/o+mc8nod
+	3G01T3h2z1IlZ31uMeaeT0poV58i6QX5RkdDdNrDwqACaHGU6Y+9
+X-Google-Smtp-Source: AGHT+IFetYXv/6mp6JDSJMEBX9EdCod/UwLHQ1fv2cZWiPdwF5LaZLnR+WWJHfBFIV25ZElkeLBqnw==
+X-Received: by 2002:a17:90b:1dce:b0:2ff:62f3:5b19 with SMTP id 98e67ed59e1d1-2ff7ce6f0bcmr25029107a91.13.1741674304267;
+        Mon, 10 Mar 2025 23:25:04 -0700 (PDT)
 Received: from localhost.localdomain ([39.184.61.58])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff693f991fsm10250099a91.48.2025.03.10.23.24.58
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff693f991fsm10250099a91.48.2025.03.10.23.25.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Mar 2025 23:25:00 -0700 (PDT)
+        Mon, 10 Mar 2025 23:25:03 -0700 (PDT)
 From: Zheng Yuting <05zyt30@gmail.com>
 X-Google-Original-From: Zheng Yuting <05ZYT30@gmail.com>
 To: git@vger.kernel.org
 Cc: Zheng Yuting <05ZYT30@gmail.com>
-Subject: [GSoC PATCH v2 0/1] improve smtp auth error handling logic
-Date: Tue, 11 Mar 2025 14:24:12 +0800
-Message-ID: <20250311062440.3566116-1-05ZYT30@gmail.com>
+Subject: [GSoC PATCH v2 1/1] improve smtp authentication error handling logic
+Date: Tue, 11 Mar 2025 14:24:13 +0800
+Message-ID: <20250311062440.3566116-2-05ZYT30@gmail.com>
 X-Mailer: git-send-email 2.49.0.rc0.57.gdb91954e18
+In-Reply-To: <20250311062440.3566116-1-05ZYT30@gmail.com>
+References: <20250311062440.3566116-1-05ZYT30@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,15 +74,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This patch enhances error handling in the smtp_auth_maybe() function by
-distinguishing between temporary errors and permanent authentication
-failures.
-
-Zheng Yuting (1):
-  improve smtp authentication error handling logic
-
+---
  git-send-email.perl | 30 ++++++++++++++++++++++--------
  1 file changed, 22 insertions(+), 8 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 798d59b84f..a012d61abb 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1419,19 +1419,19 @@ sub smtp_auth_maybe {
+ 		die "invalid smtp auth: '${smtp_auth}'";
+ 	}
+
+-	# TODO: Authentication may fail not because credentials were
++	# Authentication may fail not because credentials were
+ 	# invalid but due to other reasons, in which we should not
+ 	# reject credentials.
+ 	$auth = Git::credential({
+ 		'protocol' => 'smtp',
+ 		'host' => smtp_host_string(),
+ 		'username' => $smtp_authuser,
+-		# if there's no password, "git credential fill" will
+-		# give us one, otherwise it'll just pass this one.
+ 		'password' => $smtp_authpass
++
+ 	}, sub {
+ 		my $cred = shift;
+-
++		my $result;
++		my $error;
+ 		if ($smtp_auth) {
+ 			my $sasl = Authen::SASL->new(
+ 				mechanism => $smtp_auth,
+@@ -1441,13 +1441,27 @@ sub smtp_auth_maybe {
+ 					authname => $cred->{'username'},
+ 				}
+ 			);
+-
+ 			return !!$smtp->auth($sasl);
++		} else {
++			# Handle plain authentication errors
++			eval {
++				$result = $smtp->auth($cred->{'username'}, $cred->{'password'});
++				1; # Ensure true value is returned
++			} or do {
++				$error = $@ || 'Unknown error';
++			};
+ 		}
+-
+-		return !!$smtp->auth($cred->{'username'}, $cred->{'password'});
++		# Unified error handling logic
++		if ($error) {
++			# Match temporary errors
++			if ($error =~ /timeout|temporary|greylist|throttled|quota\s+exceeded|queue|overload|try\s+again|connection\s+lost|network\s+error/i) {
++				warn "SMTP temporary error: $error";
++				return 1;
++			}
++			return 0;
++		}
++		return !!$result;
+ 	});
+-
+ 	return $auth;
+ }
 
 --
 2.49.0.rc0.57.gdb91954e18
