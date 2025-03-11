@@ -1,147 +1,247 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399DA1EB182
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 23:06:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3925A125B9
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 23:10:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741734373; cv=none; b=PcV6qvklIwlyDWrGj3q3JsXZjGE8bE55vaPG7GfvMkUMdcnPCV+6U8Ia8fGn4l42TjzKoD+ibx8OWgsUhzcgrVQjlXfjbrxxjFI0807IpgQVH9LB15pclaVeo5MUuuVK6+ZuNFOc2X6rEI9juOptq7SsrzU5TfoO5IWA4iY6d9g=
+	t=1741734637; cv=none; b=YoI2a05Fs/ZpfXDjqlzi4LNR5FuMbsxcYWhKgBm4peGifYG+85StCsVAGyzp5FCuZ5guhyrqHq/TMcjdys6ugXbUced/pxar6gzYL6QP3L7ORW91F8eJh8495djRT6GGZbEGZ+zUULQ3DIov4FviwEIIpa100IXMeM/zOv6uRxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741734373; c=relaxed/simple;
-	bh=7RGSXaz9DIzs3u1L4j5k6EtVnaQ+KW8qgj94rApx/2Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F3t6eaOxNc9/PO1RDmtpeMrw/PgKzMNwpDSwO44eZBtJVvSp2eioCMhJP/3H3FttyE4ezsupo/6JhKOBPPVwX7WHksZXXgggzvYPTCKy5b/5g/atMObbNXyU1GtmieyfVKVwr9XuTKe49ylqrgmttjPQ6uy1ZyrC5TuSVawf5e4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bLhk1+yq; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1741734637; c=relaxed/simple;
+	bh=Ha/tHtQBj6VYgN2D3aXkrrVyOnIedgqtUP1yqUi75+4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q3x0uqSYm3kJSwKv3KXfNl+6FDvFrHuvTApV1EmXL7nE6nCAxbfddUBOCA6uw/nxcbejYKQ8qOMZRiolAm2YMWua8OPKXk4TeQ5xzrSIuWp7IPKtzO+7ri2GHD8mbDC+RZrWZVOIf+E9Q+bGoyBz6RF3EHkE4J8yU/SBhGCWgjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ae9KgymO; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bLhk1+yq"
-Received: (qmail 4510 invoked by uid 109); 11 Mar 2025 23:06:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=7RGSXaz9DIzs3u1L4j5k6EtVnaQ+KW8qgj94rApx/2Q=; b=bLhk1+yqa9cj5x16PVWjO5W3V6eFR3/eE4bTSL9b8cwJmSXyI0hlxLZ8vB1RkcF4HgsF+sczQJO3+NmTazj214M7j1jn5FWUGDVLHCkHceov9e7Zqmi7EhUrD8MCsXBl7C9vvtCSQBODT9sCZuJUYGmpgMl5sXeGRHL9sJ1pEv1Hvyn+x/LGHzRuouMMN5HQuQ+0BB7aL9k6oeEGbPVXw8djDgPpf1gp7KgPPEaJ4OzPFNz697js29Ho5LBVEHDLV8KGEsRtrR2YMCnQdtL85S0oqdn+t9zgqSIg5evdmvu8XRVRKzhMRAcepBsdss9aqFFz0zZNVPWiK8PHCKgSNg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Mar 2025 23:06:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20406 invoked by uid 111); 11 Mar 2025 23:06:02 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Mar 2025 19:06:02 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 11 Mar 2025 19:06:01 -0400
-From: Jeff King <peff@peff.net>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	"Randall S . Becker" <rsbecker@nexbridge.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] promisor-remote: fix segfault when remote URL is
- missing
-Message-ID: <20250311230601.GA72712@coredump.intra.peff.net>
-References: <20250310074053.1886097-1-christian.couder@gmail.com>
- <20250311152413.1059343-1-christian.couder@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ae9KgymO"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6fecfae554bso36494897b3.0
+        for <git@vger.kernel.org>; Tue, 11 Mar 2025 16:10:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741734635; x=1742339435; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yBc9keyReq/GgdhVKZWShQpasPsX8+ShIXPAAWWnRUo=;
+        b=ae9KgymOh0ccw1jyPih1RfZJ0F8P87eG3fcZSEkfcu/B+7aABxeeSswNvrrT6Y+c9P
+         FZeQbXPxUy20Xuhxhv7b4XfRBSujSW5Xgb6FPw9uCyPPQHLwD2d1bx50o+iHbYPjp3+S
+         ACmURe3bJOm5QUZrfwEaSQF4rywagWSpEtfVxTp0x5/6uHBSsLjnuGyEmf2GdUOOr+lv
+         zSTgNFiDp4SppdB0DFhk1amwCC2PBtl/6RrUMS9OdjXCQcnzwrpFWf9xzXpzsNGvP+2W
+         fIhb+J4dJe6EQU+ckbn9Eh+rC4hPQz9VTCi41dFdK8MKBo85ZErsCWd6wMafpok+/DQ+
+         j4FA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741734635; x=1742339435;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yBc9keyReq/GgdhVKZWShQpasPsX8+ShIXPAAWWnRUo=;
+        b=IdjmfICTlWwd893AhddU0GvZOl7+oHzjUWWFBi0CXBfWir8UBlftuAbmcPPnPQV4nq
+         8oEoS3v7XdcGctvfgwyucENyiPx4WLEAhklFYMo2BGczyU289KVQG23RlkUw6BmoW2gN
+         uJ+OGsEovaoVxq5aqLJD/Vst3WQg1SSTIkF5ngKuE63lPBHCS2MF+ZpZi04M+CUCWJcX
+         8FdSCz+1KjrTbX2f2rj6/090RJjPploQcHd12QnBnsaoLVkF9H7RC5OuihND8mB4uOkm
+         7LKxb3xv52ObPHzK+fLxQClJuvQ7Ta8iYzItHQ//QFFStqVY0tbHEXYpIA/3BWSgB3oI
+         +zFA==
+X-Gm-Message-State: AOJu0YwqHwxLSgtkG3xuaH4jdxvgAMdHf5t+Sd7j+LIzNTUK7xFVxCuj
+	pvHkjwsU9ydUhr8zEKcghMbG1TdZxH6ebL0vYR55DzuOmRLX4phdzTtimxImPyx4wdDEtYDm9Mt
+	K9G/YJTXSCXQNEjrPGa5020YAEjQ=
+X-Gm-Gg: ASbGncueE1fPqXMfhjxmpFUxyp2xT+FbGBPFybW8vVUx/O6zZ8Shh9Hr1GaxxESdyjI
+	Ywuh5GAfxSEYpSIenandl2kIMYcVjZOl4fiCfY9c13mDIvjo1ffP2xPfc+V8m8bxAOVMruA7zVV
+	oDjFFLcDqpykvz/YkC3twkEosNJAc=
+X-Google-Smtp-Source: AGHT+IFUkckQTLNCsp09TZAcOsflKqZvTdWkLxqtAk+zcsbN6YzWpXNV/Z53+zciyxY1NWgf81KnWj/m3Ho+k3vV73Y=
+X-Received: by 2002:a05:690c:6c90:b0:6f9:97f7:a5c4 with SMTP id
+ 00721157ae682-6ff0925f1c3mr71037437b3.29.1741734634958; Tue, 11 Mar 2025
+ 16:10:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250311152413.1059343-1-christian.couder@gmail.com>
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20250221190451.12536-1-eric.peijian@gmail.com> <20250221190451.12536-9-eric.peijian@gmail.com>
+ <xmqqo6yr3wc4.fsf@gitster.g>
+In-Reply-To: <xmqqo6yr3wc4.fsf@gitster.g>
+From: Peijian Ju <eric.peijian@gmail.com>
+Date: Tue, 11 Mar 2025 19:10:23 -0400
+X-Gm-Features: AQ5f1JqeO9c1qLrYvCRy_YD2yLaP0NTEQQ0koelQTucpXhZlTxu2JqlLCsqPDJY
+Message-ID: <CAN2LT1Cc-UaUpabqcGascicR3nk6ZdFythamKje33Orhy5WoNA@mail.gmail.com>
+Subject: Re: [PATCH v11 8/8] cat-file: add remote-object-info to batch-command
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
+	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
+	jltobler@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 11, 2025 at 04:24:13PM +0100, Christian Couder wrote:
+On Mon, Feb 24, 2025 at 3:46=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Eric Ju <eric.peijian@gmail.com> writes:
+>
+> > diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> > index 69ea642dc6..47fd2a777b 100644
+> > --- a/builtin/cat-file.c
+> > +++ b/builtin/cat-file.c
+> > @@ -27,6 +27,18 @@
+> >  #include "promisor-remote.h"
+> >  #include "mailmap.h"
+> >  #include "write-or-die.h"
+> > +#include "alias.h"
+> > +#include "remote.h"
+> > +#include "transport.h"
+> > +
+> > +/* Maximum length for a remote URL. While no universal standard exists=
+,
+> > + * 8K is assumed to be a reasonable limit.
+> > + */
+>
+> Style.  Our multi-line comment begins with slash-asterisk and ends
+> with asterisk-slash both on their own line without anything else.
+>
 
-> Using strvec_push() to push `NULL` into a 'strvec' results in a
-> segfault, because `xstrdup(NULL)` crashes.
-> 
-> So when an URL is missing from the config, let's push an empty string
-> instead of `NULL` into the 'strvec' that stores URLs.
+Thank you. All the style-related comments will be fixed in the next patch.
 
-Is a configured remote with out a url key really a missing url, though?
-In other contexts it defaults to the name of the remote. E.g.:
+> > +#define MAX_REMOTE_URL_LEN (8*1024)
+>
+> Here and ...
+>
+> > +/* Maximum number of objects allowed in a single remote-object-info re=
+quest. */
+> > +#define MAX_ALLOWED_OBJ_LIMIT 10000
+>
+> ... here, please have a blank line.
+>
+> > +/* Maximum input size permitted for the remote-object-info command. */
+> > +#define MAX_REMOTE_OBJ_INFO_LINE (MAX_REMOTE_URL_LEN + MAX_ALLOWED_OBJ=
+_LIMIT * (GIT_MAX_HEXSZ + 1))
+>
+> This is an overly long line.
+>
+> > @@ -579,6 +593,61 @@ static void batch_one_object(const char *obj_name,
+> >       object_context_release(&ctx);
+> >  }
+> >
+> > +static int get_remote_info(struct batch_options *opt, int argc, const =
+char **argv)
+> > +{
+> > +     int retval =3D 0;
+> > +     struct remote *remote =3D NULL;
+> > +     struct object_id oid;
+> > +     struct string_list object_info_options =3D STRING_LIST_INIT_NODUP=
+;
+> > +     static struct transport *gtransport;
+> > +
+> > +     /*
+> > +      * Change the format to "%(objectname) %(objectsize)" when
+> > +      * remote-object-info command is used. Once we start supporting o=
+bjecttype
+> > +      * the default format should change to DEFAULT_FORMAT.
+> > +     */
+>
+> Style.  Closing asterisk-slash aligns with the asterisk on the
+> previous line.
+>
+> > +     if (!opt->format)
+> > +             opt->format =3D "%(objectname) %(objectsize)";
+> > +
+> > +     remote =3D remote_get(argv[0]);
+> > +     if (!remote)
+> > +             die(_("must supply valid remote when using remote-object-=
+info"));
+> > +
+> > +     oid_array_clear(&object_info_oids);
+> > +     for (size_t i =3D 1; i < argc; i++) {
+>
+> Pointless mixing of "size_t" and "int".  We have declared "int
+> argc", which is perfectly a sensible type, since we know that the
+> value of it would not exceed MAX_ALLOWED_OBJ_LIMIT, which is 10000.
+>
 
-  # make a repo so "foo" is a valid url
-  git init foo
-  git -C foo commit --allow-empty bar
+Thank you. Change to "int" instead.
 
-  # configure a fetch refspec, but no url!
-  git init
-  git config remote.foo.fetch '+refs/heads/*:refs/remotes/foo/*'
+> > +             if (get_oid_hex(argv[i], &oid))
+> > +                     die(_("Not a valid object name %s"), argv[i]);
+> > +             oid_array_append(&object_info_oids, &oid);
+> > +     }
+> > +     if (!object_info_oids.nr)
+> > +             die(_("remote-object-info requires objects"));
+> > +
+> > +     gtransport =3D transport_get(remote, NULL);
+> > +     if (gtransport->smart_options) {
+> > +             CALLOC_ARRAY(remote_object_info, object_info_oids.nr);
+> > +             gtransport->smart_options->object_info =3D 1;
+> > +             gtransport->smart_options->object_info_oids =3D &object_i=
+nfo_oids;
+> > +
+> > +             /* 'objectsize' is the only option currently supported */
+> > +             if (!strstr(opt->format, "%(objectsize)"))
+> > +                     die(_("%s is currently not supported with remote-=
+object-info"), opt->format);
+> > +
+> > +             string_list_append(&object_info_options, "size");
+> > +
+> > +             if (object_info_options.nr > 0) {
+> > +                     gtransport->smart_options->object_info_options =
+=3D &object_info_options;
+> > +                     gtransport->smart_options->object_info_data =3D r=
+emote_object_info;
+> > +                     retval =3D transport_fetch_refs(gtransport, NULL)=
+;
+> > +             }
+> > +     } else {
+> > +             retval =3D -1;
+> > +     }
+>
+> Minor style nit, but when everything else is equal, writing the side
+> of smaller body first would make it easier to follow if/else, i.e.
+>
+>
+>         gtransport =3D transport_get(remote, NULL);
+>         if (!gtransport->smart_options) {
+>                 /* error */
+>                 retval =3D -1;
+>         } else {
+>                 ... a lot of real code here ...
+>         }
+>
+> > +static void parse_cmd_remote_object_info(struct batch_options *opt,
+> > +                                      const char *line, struct strbuf =
+*output,
+> > +                                      struct expand_data *data)
+> > +{
+> > +     int count;
+> > +     const char **argv;
+> > +     char *line_to_split;
+> > +
+> > +     if (strlen(line) >=3D MAX_REMOTE_OBJ_INFO_LINE)
+> > +             die(_("remote-object-info command input overflow "
+> > +                     "(no more than %d objects are allowed)"),
+> > +                     MAX_ALLOWED_OBJ_LIMIT);
+>
+> Nobody guarantees this user gave a request for more than 10000
+> objects; after all it may have been an overly long URL that busted
+> the line length limit, no?
 
-  # now fetching will use the configured refspec with a url of "foo"
-  git fetch foo
+Yes, the error message is indeed misleading here.
+In the next patch, the behavior will be updated as follows:
 
-  # and git-remote will report it, along with its url
-  git remote ;# shows "foo"
-  git remote --get-url foo ;# also shows "foo"
+1. If strlen(line) >=3D MAX_REMOTE_OBJ_INFO_LINE, we will die with a clear =
+error:
+"remote-object-info input too long".
 
-This is obviously a weird thing to be doing, so I admit I don't really
-care all that much. But it feels like the most natural thing is just:
+2. After step 1, when calling get_remote_info(opt, count, argv), we
+will check object_info_oids.nr.
+If `object_info_oids.nr > MAX_ALLOWED_OBJ_LIMIT`, we will die with:
+"no more than %d objects are allowed", MAX_ALLOWED_OBJ_LIMIT.
 
-diff --git a/promisor-remote.c b/promisor-remote.c
-index 6a0a61382f..761eb1dbd5 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -327,7 +327,7 @@ static void promisor_info_vecs(struct repository *repo,
- 		char *url_key = xstrfmt("remote.%s.url", r->name);
- 
- 		strvec_push(names, r->name);
--		strvec_push(urls, git_config_get_string(url_key, &url) ? NULL : url);
-+		strvec_push(urls, git_config_get_string(url_key, &url) ? r->name : url);
- 
- 		free(url);
- 		free(url_key);
+>
+> > +     line_to_split =3D xstrdup(line);
+> > +     count =3D split_cmdline(line_to_split, &argv);
+> > +     if (count < 0)
+> > +             die(_("split remote-object-info command"));
+>
+> Here, the code could check if count busts MAX_ALLOWED_OBJ_LIMIT, but
+> it doesn't.
 
-> We could have modified strvec_push() to behave like
-> strvec_push_nodup() and accept `NULL`, but it's not clear that it's
-> the right thing to do for the strvec API. 'strvec' is a kind of NULL
-> terminated array that is designed to be compatible with 'argv'
-> variables used on the command line. So we might want to disallow
-> pushing any `NULL` in it instead.
-> 
-> It's also not clear if `xstrdup(NULL)` should crash or BUG or just
-> return NULL.
-
-We have xstrdup_or_null() for the latter suggestion. There was some
-light discussion at the time about having xstrdup(NULL) handle this
-automatically:
-
-  https://lore.kernel.org/git/20150112231231.GA4023@peff.net/
-
-but it was mostly negative. I don't think anybody really dug into the
-thought experiment beyond a general "it might propagate NULL places you
-wouldn't expect" vibe, though.
-
-For the same reason I'd be a little hesitant to bless NULLs inside
-strvec structures. I think "nodup" allowing them is mostly an unintended
-consequence.
-
-> For all these reasons, let's just focus on fixing the issue in
-> "promisor-remote.c" and let's leave improving the strvec API and/or
-> xstrdup() for a future effort.
-
-This part I certainly agree with. ;)
-
->  	for (r = repo->promisor_remote_config->promisors; r; r = r->next) {
-> -		char *url;
-> +		char *url = NULL;
-> +		const char *url_pushed = "";
->  		char *url_key = xstrfmt("remote.%s.url", r->name);
->  
-> +		if (!git_config_get_string(url_key, &url) && url)
-> +			url_pushed = url;
-> +
->  		strvec_push(names, r->name);
-> -		strvec_push(urls, git_config_get_string(url_key, &url) ? NULL : url);
-> +		strvec_push(urls, url_pushed);
->  
->  		free(url);
-
-Probably not super important, but while reading this I noticed that
-using git_config_get_string_tmp() would make the memory management a
-little simpler (since you do not need to free "url", you are free to
-point it to at the empty string and do not need a separate url_pushed).
-
--Peff
+Yes, a check is needed here. Please see the previous reply.
