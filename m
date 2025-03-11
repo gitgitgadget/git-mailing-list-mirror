@@ -1,54 +1,54 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B94B264A88
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 21:25:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42012264F83
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 21:25:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741728314; cv=none; b=He/8wcbcvQghYWmhFGoB7w/lSiqaURvycWulcQy6DDRTVIzeaPhOpTbdcaWUjcVxroRpzPxMuOhhvhJ+V+Uny01REJnMShOYyZAdP7x/GSwquV7PmPKMs9uS8hat4IW1IcQ5i2Zecc8foSwhLLJbsTN/q+e6KRtLjWBucWFX+qI=
+	t=1741728315; cv=none; b=EnIWbYZgVkkamWxURfKCQGzw9geQzfMsb9whQwRYd7Msxx2znGVUYZgpwbFu7C3HipD88ZxE9uuItmseJ/qbHexZsHOaja7XZFqaAtYhY5LNFHQdOmli+B+A4wyQ4+h1hs3s/MRie2dJcLhw0LwAc8vpyJw5YWuPhJa8X0P2/fM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741728314; c=relaxed/simple;
-	bh=rJMz2Swxauio+A/vmwiT1WyxKRfvpBf8QhsZ2Fx0ySY=;
+	s=arc-20240116; t=1741728315; c=relaxed/simple;
+	bh=P2Ot7d44b7yZCoOG2d4AIRCR+SfY7GARQ0oLEtpj/G8=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IXKwOThsL3T5WzFHBFxsKyiiiCLtMs3G0Xf1jJ0eqDH+3bwJDxaPuIgGA9TLrYJXZb55OTfO99pdgLWi8aZkTUC4aUldohuPdYxQdq6uA2l5Kfrk2OEd4n+OPjpcFIHbeA1HKHZ4ve7i0DhIwQjBX0CREqll8/UzvcueTmnszls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=r/tl5f27; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MAYX/oDS; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version; b=Y8+/1tw6KvuE/MrDCBJ1yS4gC810ttFNGx5DL6GdAdVc3AIMijz/VppgDwK0qQ4UPhWMr3cdHoEjkHEIDVMZVVMcQ5GptYuTD3Ns92H3FM0clTWAmBXaqXqomRH9w467ocLkQyn2f6ST6JevdkSfimGNcH7V29RBvKZc+WChCwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hEqSHxUw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yPyKYWl4; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="r/tl5f27";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MAYX/oDS"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E30C31140172;
-	Tue, 11 Mar 2025 17:25:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 11 Mar 2025 17:25:10 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hEqSHxUw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yPyKYWl4"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 50B101382DC2;
+	Tue, 11 Mar 2025 17:25:12 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 11 Mar 2025 17:25:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1741728310; x=
-	1741814710; bh=+Uy09orawCujF9qrZlnpUaqrlZYYnNwPzRbbwmy0QxY=; b=r
-	/tl5f27yItGHSSjxn5X644Dz6xpVEhM3T5aKph7+seA1j0mtutxj1Q5uTz9GKzHB
-	n4bQj8BV5mlJbvsGg4JBTFvEu2Yks2yv9Zsx2n6f3YSQVWZPwE4ITeLNDm3e90wW
-	a3lROmmZrPzGrfzsl3Pfr6GdFs0fRML6TfvZKs6adm6dSvvJHr+qtuVjMBGW8kL3
-	0qx1Pj2KhRXoDeWIRpSJJ/SSZznqs0oDDKaFUTwGP3Gncy0fX8eeDOLt2xZct99r
-	FyDh8xVwUXIp2f/mc65TOWshwZ3uBHOuyhBtdaY1D8930kxFoMTvPyJ1wFwR3CgL
-	T0cOsxaFnAmL0gfasFz8g==
+	:reply-to:subject:subject:to:to; s=fm3; t=1741728312; x=
+	1741814712; bh=nhICu5J/+1GMMSWcwSB4VjN1IQN+cad4LG3zv0a8/GU=; b=h
+	EqSHxUwMd5+r1JfdMGLHeIlX60G8YazaiWV27sbD6tdyjgSSkiMc3mtQHoLgOWX4
+	jXTanUUimINQYirs/C4X9bob95HEcNe2Ua00xKLCcTqRzWrZSqzrDHSrcMm4aNZT
+	vaCPIWMhp9dlM4TeqnIC6B8zFkVQzsXI+mxfUooVQMComvKHz6b0WcA4kiiESvMu
+	zAsODtGdLVHH69LmhmuxP2yhpa5Wloxa49oOptihImH8KGYxthJOi7Fsy8/1mmBO
+	Jmb639SwAabJNGcXA+kNin369m1o7F6V2P90LEo/F2esAsaxoSTPkuHFopBb7u2z
+	0WLkOnnHVWol2morgsozQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1741728310; x=1741814710; bh=+Uy09orawCujF9qrZlnpUaqrlZYY
-	nNwPzRbbwmy0QxY=; b=MAYX/oDSodwT1KyNUEWOFVrRStXvd6RbH65AtgGLaoW/
-	c1Gm2MwCv221MkF+aLzMoC2KiC7tiPVx3s1U31J7zz3IBilwG1aswh74/r3R6fVS
-	7y6c/E5yynTUcrg5Y9Hzv71x02yrgRWf4GoR+Css8dqFLuVNIR/VrLR+QNfD79sa
-	Dgvr7/YwoyfQOKbLKHIU/Nc+sbOAIAc+B9wGHij6UqxZXTuToVzqSqmo5SJdGX6d
-	R1rzYVEPdzYvc+lCBk4/0y5wfBHLGmnGffr5AkhvYTnLZJQIn0qv5unRXwILyND6
-	bevfek/GxybWZ3Gv5NGJ58DmB58ijglnxsYfQlowzg==
-X-ME-Sender: <xms:NqrQZyKeevH1pgXhnbYvan7v7gZkpQ14STMn1kHn72WRKEPAB6Bbog>
-    <xme:NqrQZ6L8lYZwCoERiYyTVoQJmCRjiLTJkNwhYonSblYLRytvdk4Uq6MlZz6R0zV4X
-    KuKWOlMJl81S24o5A>
-X-ME-Received: <xmr:NqrQZyt1jmc6CZn-mtxIke0qwFDG8Rf82TvhBfGT0kVhW3JdZXqI7zoa3SVh7R85hnk4xXunyLShvFACwcvny507rxoC9v2UDg_9>
+	fm1; t=1741728312; x=1741814712; bh=nhICu5J/+1GMMSWcwSB4VjN1IQN+
+	cad4LG3zv0a8/GU=; b=yPyKYWl4ZdFF/qgLrvPLhK4VFr4AbLp6qa5pRTEG1Zg6
+	a+Dn0kuau8Bj8vmY58AuJw2xqS1HFnaZ6cjRYRWq9S784v4St24n0d7OBnnLcZBb
+	rkoNPJcAbJNfetURiEmcNwftn8g8stSK/9MgxWghD8i5fb+UwGemyeKUGiezvql8
+	MHqe+LqtZKHG+flHjuAVOHnkXSpX6jMAZ53h5xY/CIUzad+5y7QT2fAyHxbhOLbp
+	9QLW9N8bvkNs+3B0QTVcXFZ2cR6D0jdVZHaW4Jm2BDq60BaRFQWylFT1dGpiCTtw
+	ECV2RHgFSTjIFw5IKfEv09gxZSL/+eX89lXroRXe5A==
+X-ME-Sender: <xms:OKrQZ3R8Pg3XDsEewS7bRoGHbx1SS8B2YI2gshDjiYBEJZNweZ4gXw>
+    <xme:OKrQZ4xRUWIyIIhNG9lDTflI975pKKmXtftdeB_MgebgA_gpPSdLafip6CKdkYGmL
+    o8Rfl1v85t1ZemV8A>
+X-ME-Received: <xmr:OKrQZ83YU3i-lhKC5Y-Kl98UPXTFyOVindMXLGfN86Zh7b7dvCFq-z2us_hwUHm3Of0An1-rM-yCdG25FkZOjTP0SVejQcX2Inhf>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdefvdejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdefvdejucetufdote
     esphhosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhht
     pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
     hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:NqrQZ3bxc6fL5AvWBcT3rDgtzxpGf1yNnMqGLKiXcvsgQdhu75y_tw>
-    <xmx:NqrQZ5aXWaAivuZyJa_0pJTzgaSGYyQh06TYL6x_phMlTAWFp60FMg>
-    <xmx:NqrQZzDrhBeBnk7bWemJ09s3vZ8dnxa0FfVecLkCt2JrxXo33NkO8Q>
-    <xmx:NqrQZ_bUwlFPXez5GvFPR3NYNmbxIRY7g_Tr0Q4HsP_0yFLffi-Ohw>
-    <xmx:NqrQZ4nBKyAgHusgwoiIUv71Hu6rpf4yc0_FBr86UabWgZVTiwZ2Um-8>
+X-ME-Proxy: <xmx:OKrQZ3DpWngL28wbGa77fSMODGV3ziLaAyg0WGRLHxyM_qDikzXD-g>
+    <xmx:OKrQZwjJ83sb1aBKnmAYPAoMFz0ivTjJHlPwarp53uJWU2DFDt_5aQ>
+    <xmx:OKrQZ7pksJF7v3yUaF7_FvHHPyGJFhusgK2_wdOWn5uQRY9mQYrNPA>
+    <xmx:OKrQZ7iQrxy-4lqfAapivrj9m__SWauuGQrl1AmI8lQdpm4LbRX-pA>
+    <xmx:OKrQZzvvOyfxy2SvvTvL25nWMVJ-VPI9x9bsnU3jfVqxP4hsrRgeTEyE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Mar 2025 17:25:10 -0400 (EDT)
+ 11 Mar 2025 17:25:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v2 2/6] t: extend test_lazy_prereq
-Date: Tue, 11 Mar 2025 14:25:01 -0700
-Message-ID: <20250311212505.2920181-3-gitster@pobox.com>
+Subject: [PATCH v2 3/6] t: introduce WITH_BREAKING_CHANGES prerequisite
+Date: Tue, 11 Mar 2025 14:25:02 -0700
+Message-ID: <20250311212505.2920181-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.49.0-rc2-181-g28e223d67e
 In-Reply-To: <20250311212505.2920181-1-gitster@pobox.com>
 References: <20250310231652.3742490-1-gitster@pobox.com>
@@ -84,57 +84,145 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Allow test_lazy_prereq script to signal a programming error by
-exiting with status 125 (like how bisect scripts do).  This is used
-to signal a deprecated-and-then-removed prerequisite that should
-never be used in tests anymore.
+Earlier c5bc9a7f (Makefile: wire up build option for deprecated
+features, 2025-01-22) made an unfortunate decision to introduce the
+WITHOUT_BREAKING_CHANGES prerequisite to perform tests that ensure
+the historical behaviour that may be different from what we will
+have in the future.  It would inevitably invite double-negation when
+we need to add tests to ensure the behaviour we want to have in the
+future.
+
+Introduce WITH_BREAKING_CHANGES prerequisite and replace the
+existing uses of WITHOUT_BREAKING_CHANGES prerequisite.  To catch
+any future topics that add more uses of WITHOUT_BREAKING_CHANGES,
+introduce a mechanism to mark a prerequisite not to be used, and
+use it to mark the removed prerequisite as such.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/README                | 6 ++++--
- t/test-lib-functions.sh | 5 +++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ t/t5323-pack-redundant.sh    | 2 +-
+ t/t5505-remote.sh            | 6 +++---
+ t/t5515-fetch-merge-logic.sh | 2 +-
+ t/t5516-fetch-push.sh        | 8 ++++----
+ t/test-lib.sh                | 7 ++++++-
+ 5 files changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/t/README b/t/README
-index 3ce9f5a393..e9ffd9a81c 100644
---- a/t/README
-+++ b/t/README
-@@ -983,8 +983,10 @@ see test-lib-functions.sh for the full list and their options.
-    SYMLINKS ...".  The script is run in a temporary directory inside
-    a subshell, so you do not have to worry about removing temporary
-    files you create there.  When the script exits with status 0, the
--   prerequisite is set.  Exiting with non-zero status makes the
--   prerequisite unsatisified.
-+   prerequisite is set.  Exiting with non-zero status other than 125
-+   makes the prerequisite unsatisified.  Exiting the script with 125
-+   signals a programming error and is used to mark a prerequisite that
-+   should not be used by test scripts.
+diff --git a/t/t5323-pack-redundant.sh b/t/t5323-pack-redundant.sh
+index 688cd9706c..bc30bc9652 100755
+--- a/t/t5323-pack-redundant.sh
++++ b/t/t5323-pack-redundant.sh
+@@ -36,7 +36,7 @@ relationship between packs and objects is as follows:
  
-  - test_expect_code <exit-code> <command>
+ . ./test-lib.sh
  
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 79377bc0fc..16eaaaf4c3 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -773,6 +773,8 @@ mkdir -p "$TRASH_DIRECTORY/prereq-test-dir-'"$1"'" &&
- 	rm -rf "$TRASH_DIRECTORY/prereq-test-dir-$1"
- 	if test "$eval_ret" = 0; then
- 		say >&3 "prerequisite $1 ok"
-+	elif test "$eval_ret" = 125; then
-+		:;
- 	else
- 		say >&3 "prerequisite $1 not satisfied"
- 	fi
-@@ -811,6 +813,9 @@ test_have_prereq () {
- 				if test_run_lazy_prereq_ "$prerequisite" "$script"
- 				then
- 					test_set_prereq $prerequisite
-+				elif test $? = 125
-+				then
-+					BUG "Do not use $prerequisite"
- 				fi
- 				lazily_tested_prereq="$lazily_tested_prereq$prerequisite "
- 			esac
+-if ! test_have_prereq WITHOUT_BREAKING_CHANGES
++if test_have_prereq WITH_BREAKING_CHANGES
+ then
+ 	skip_all='skipping git-pack-redundant tests; built with breaking changes'
+ 	test_done
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index bb7e0c6879..82fccf8e36 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -1123,7 +1123,7 @@ Pull: refs/heads/main:refs/heads/origin
+ Pull: refs/heads/next:refs/heads/origin2
+ EOF
+ 
+-test_expect_success WITHOUT_BREAKING_CHANGES 'migrate a remote from named file in $GIT_DIR/remotes' '
++test_expect_success !WITH_BREAKING_CHANGES 'migrate a remote from named file in $GIT_DIR/remotes' '
+ 	git clone one five &&
+ 	origin_url=$(pwd)/one &&
+ 	(
+@@ -1149,7 +1149,7 @@ test_expect_success WITHOUT_BREAKING_CHANGES 'migrate a remote from named file i
+ 	)
+ '
+ 
+-test_expect_success WITHOUT_BREAKING_CHANGES 'migrate a remote from named file in $GIT_DIR/branches' '
++test_expect_success !WITH_BREAKING_CHANGES 'migrate a remote from named file in $GIT_DIR/branches' '
+ 	git clone --template= one six &&
+ 	origin_url=$(pwd)/one &&
+ 	(
+@@ -1165,7 +1165,7 @@ test_expect_success WITHOUT_BREAKING_CHANGES 'migrate a remote from named file i
+ 	)
+ '
+ 
+-test_expect_success WITHOUT_BREAKING_CHANGES 'migrate a remote from named file in $GIT_DIR/branches (2)' '
++test_expect_success !WITH_BREAKING_CHANGES 'migrate a remote from named file in $GIT_DIR/branches (2)' '
+ 	git clone --template= one seven &&
+ 	(
+ 		cd seven &&
+diff --git a/t/t5515-fetch-merge-logic.sh b/t/t5515-fetch-merge-logic.sh
+index 4e6026c611..8ac04d742c 100755
+--- a/t/t5515-fetch-merge-logic.sh
++++ b/t/t5515-fetch-merge-logic.sh
+@@ -104,7 +104,7 @@ test_expect_success setup '
+ 	git config remote.config-glob.fetch refs/heads/*:refs/remotes/rem/* &&
+ 	remotes="$remotes config-glob" &&
+ 
+-	if test_have_prereq WITHOUT_BREAKING_CHANGES
++	if ! test_have_prereq WITH_BREAKING_CHANGES
+ 	then
+ 		mkdir -p .git/remotes &&
+ 		cat >.git/remotes/remote-explicit <<-\EOF &&
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 85ed049627..6e2b233157 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -975,7 +975,7 @@ test_expect_success 'allow push to HEAD of non-bare repository (config)' '
+ 	! grep "warning: updating the current branch" stderr
+ '
+ 
+-test_expect_success WITHOUT_BREAKING_CHANGES 'fetch with branches' '
++test_expect_success !WITH_BREAKING_CHANGES 'fetch with branches' '
+ 	mk_empty testrepo &&
+ 	git branch second $the_first_commit &&
+ 	git checkout second &&
+@@ -991,7 +991,7 @@ test_expect_success WITHOUT_BREAKING_CHANGES 'fetch with branches' '
+ 	git checkout main
+ '
+ 
+-test_expect_success WITHOUT_BREAKING_CHANGES 'fetch with branches containing #' '
++test_expect_success !WITH_BREAKING_CHANGES 'fetch with branches containing #' '
+ 	mk_empty testrepo &&
+ 	mkdir testrepo/.git/branches &&
+ 	echo "..#second" > testrepo/.git/branches/branch2 &&
+@@ -1005,7 +1005,7 @@ test_expect_success WITHOUT_BREAKING_CHANGES 'fetch with branches containing #'
+ 	git checkout main
+ '
+ 
+-test_expect_success WITHOUT_BREAKING_CHANGES 'push with branches' '
++test_expect_success !WITH_BREAKING_CHANGES 'push with branches' '
+ 	mk_empty testrepo &&
+ 	git checkout second &&
+ 
+@@ -1022,7 +1022,7 @@ test_expect_success WITHOUT_BREAKING_CHANGES 'push with branches' '
+ 	)
+ '
+ 
+-test_expect_success WITHOUT_BREAKING_CHANGES 'push with branches containing #' '
++test_expect_success !WITH_BREAKING_CHANGES 'push with branches containing #' '
+ 	mk_empty testrepo &&
+ 
+ 	test_when_finished "rm -rf .git/branches" &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 9001ed3a64..fffbfb89ef 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1862,8 +1862,13 @@ test_lazy_prereq CURL '
+ 	curl --version
+ '
+ 
++test_lazy_prereq WITH_BREAKING_CHANGES '
++	test -n "$WITH_BREAKING_CHANGES"
++'
++
+ test_lazy_prereq WITHOUT_BREAKING_CHANGES '
+-	test -z "$WITH_BREAKING_CHANGES"
++	# Signal that this prereq should not be used.
++	exit 125
+ '
+ 
+ # SHA1 is a test if the hash algorithm in use is SHA-1.  This is both for tests
 -- 
 2.49.0-rc2-181-g28e223d67e
 
