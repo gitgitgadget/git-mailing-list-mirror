@@ -1,54 +1,54 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D7B22A4D3
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 21:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F075229B18
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 21:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741728310; cv=none; b=g+5aSPvi+NlaaUxMgDc/VZNJl1LXsBjN9cNTJWUTJ3i/9+PJCMeZW/02NHlul800gKt9eUfQlfh9QlQ7v6pliq6PoYZndZptePQxsiTy5MRl2ctOnbfGsk5df2MbofAiLZtRDNU/SZI0hd0e+xIgA+VOl7YSfkdJs2tyfeZSH50=
+	t=1741728311; cv=none; b=lpcuLBvGjT2V1xlJE2GAwukvrIWsnBl0pz3Ujn4GFKXChQnxj7uphVAuJEt1mh+Fpgc3FVkM9MR3rksfHagipHVsTBMiripALqc0oxrtSIkF7rw+0zNY2WRZJPsfQ2rhmT7D9JMVGSYjHQTkSW0XbRg1OsnD2rXC0vycMELyBwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741728310; c=relaxed/simple;
-	bh=Iblili9z3mxl1pWc2qkYcl0Da94nBJaIg+Z6q4nKrzs=;
+	s=arc-20240116; t=1741728311; c=relaxed/simple;
+	bh=393jHk+kNDR+u6p3k4BenO9Idf8kD19+ysqWChQRYzM=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hQqBmw8CkSJ5+lPR9FteNWGH5preq/Odk5ayixNRPVE7mvRCE/uBJKjp53iBI1QAw0TjlNYLxTiLM1zJiO/aY9k7c13XTHUVcT1Q/ELjjqlZR20ZScxVLHzBvJ81o28aqlQ4+VTbX6Pn270/fRIB7JQIKvBJRpwFygVN1gQFNh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cTNwcKTF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JaayzBQD; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version; b=BIT9cd4N3xPwCNZxMbGnNduQelLHkhLcdqTnqoWfAkuGiI/VSfLA2GRufXRzI+wKNlgagJVBAr6dW+kQoYkk7TQQ/Gy0ue4CBCh+LSXcxxTF0r94IDX4WaCt3I7hzsOaj/1LPRuWRPvWFlsTG48JslPUiCzumla13GNGvjPv00k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PLn9Q8hV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hDwxSFwx; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cTNwcKTF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JaayzBQD"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3697E1382DCB;
-	Tue, 11 Mar 2025 17:25:07 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PLn9Q8hV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hDwxSFwx"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 96BE11382DC2;
+	Tue, 11 Mar 2025 17:25:08 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 11 Mar 2025 17:25:07 -0400
+  by phl-compute-08.internal (MEProxy); Tue, 11 Mar 2025 17:25:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1741728307; x=
-	1741814707; bh=3/RR8AJxISJbEfWwBdZzorYzVpXwoI/rSk2bWpypvZU=; b=c
-	TNwcKTFIM4fE7o51BjpPhiZ5RxFF9tSCSfLhgW4l8j03H/9yKaL9kCf9F5fNAclj
-	MIWFHtZ+GWrwTwkqSsbNdaMRRbFOVYNubPN07RXlqo2EaF/erPbra1C6Blu955Vo
-	1n5dmng3+8i3V1VkUMr9QFjc6tM+zxblF39p/hMSWregIJcb8pFQx+7hPV+7JnVa
-	femkkNC8Bp8U5PwWzMxMVC56zhK66Zq0DGt1hwSQ5nQjosUkrRAkYu2aDhwAuzJw
-	DZbFxlprEPJIU59wkUc2tPhTa/ch94o76awrO8ZuHKq0d+VKu8x3ZvR21Q4LVYFx
-	hGdsQz8SMqT+EaDhwHsyA==
+	:reply-to:subject:subject:to:to; s=fm3; t=1741728308; x=
+	1741814708; bh=aJW9cciD/JoCSsobLfiHZ2RR2UqWM844+p9uWheE0cs=; b=P
+	Ln9Q8hV5+DRVpL3LfHoTjVSu5gf/b37P2FOVfmyKKEN5/nAtywdbzgtEdCy+2VHd
+	lq/Ax90wwCxCBWVT8OmXixFb6T5aI41dCTUIAMlBrtibC+c8Qad2mBaxSS6M5oxe
+	OAS/KWNQPNWwWu8PBvJlb4HDwlPTrgP5AcaNI/18T0Z3ykQsx/5YM1hJ8dMjPHM7
+	Fa7JayLnbaZtEhFHD31I5pIyj3SysE6BiTYMErGpK4QOUbaDvPSuSSYgPRmiPddr
+	VEeqzb3PeLs8rrVpSBsZlYULEAJ4WNmvSClpxCcI3yGTYIH76C6ne5cTAjuGep9V
+	2tW7ly+fPpsoNf+zRMDpQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1741728307; x=1741814707; bh=3/RR8AJxISJbEfWwBdZzorYzVpXw
-	oI/rSk2bWpypvZU=; b=JaayzBQDpQy1PieqofKoTkhEdKHJ3OOz9NDhr4CQSiSr
-	pEtmp25eBHuDfICt17l+FUbx5VMEhiSg+jQjr0+nr6oxt4p3tmAsL0pLDy3r2yPT
-	LaDql7FwewrDSyH/pXDllEPjyFBgiV2IwyUt1yvG9phiiuHX6w8/Bld7p8Oo54Iv
-	a2VD3jSjEnsCIdZyR7sQJfmsF4n3ooc7YfQAHsqP2FYbpYZGl5jsQgBua6VfdK81
-	FH5ssbCFJ8DRPmbTcOixYfAz8kBOFM+MqjhLFu0x7rfopMImFbeiuKbOMJVU1WbP
-	FcIlkoYWikYV2BitYKIbnLPShLZLN2XynqRNs256jQ==
-X-ME-Sender: <xms:M6rQZ0zZwsFTVfCZC6MhLlWl04MT_-aTOt1rPPO_NfLEA-C9Zj1OHg>
-    <xme:M6rQZ4TpNhGfPdOfvUm_6wxeODh_jK01WBv3hBR078hNFH7VTs0jBjfI5kKcZeVLQ
-    8nndyoGUCaOItwyGQ>
-X-ME-Received: <xmr:M6rQZ2VdPl89pHm4sOLzZbiXR30RnzQPh3ORPbz6F9MhwwrLp_w4EnUFOWYPA8sdaTBvMX1CamfT-87iovnMk33Ks2Zbz-QCdphg>
+	fm1; t=1741728308; x=1741814708; bh=aJW9cciD/JoCSsobLfiHZ2RR2UqW
+	M844+p9uWheE0cs=; b=hDwxSFwxrHygpW6Dsw9zpYxBSfG8/BZ49hHIgK+TVlIH
+	H6ETBvzfD/t0gnIMXeArpqdGERHDgXVM/rQk4zjWuVJIA7xfEWIspDSTGaPhLUg5
+	boyhPpUs1lmPVG9jVFU42ZLVznUTMXsHutjCklcNiCIP//C85rdxdmrCMs8gSUMW
+	N/PCU97R9EKuFjrfImLPs5hft8YXgfxPCug1SfQJLH+Tc0UD2Op623EBk9ghMsUC
+	LvoL21FOSItmyLoCT3pCdTSn1BlYwH3KFdtNsEo7CZ+3CjhIAFxVQGiFB4ds4x9G
+	AoG8C4ixdtZIxDyAmEDtj5Hly/6/7qIcFIEkDPy51A==
+X-ME-Sender: <xms:NKrQZ5GM0QH72jXLpV7KNn6iSSD9uKLltc41S4WTKVsZqXLvj8g-zg>
+    <xme:NKrQZ-U7JaZX2bJi-jXYKwBanTnR176i-O2NUkgP0blELYWg-ZPSpGhMXT-Uzj8VG
+    TTglrPv2KYoiBPIJg>
+X-ME-Received: <xmr:NKrQZ7KWJvbGvcB3ealL8OqPi9v4XVHCmahyiiXX22L6NiL6s6-mm9liX66NexWdPZDY5LWxSOotT2Jnpm_h-_Xcc-uJXV8vLGc5>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdefvdejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
@@ -59,22 +59,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdefvdejucetufdote
     esphhosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhht
     pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
     hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:M6rQZyjudYkK_G3a1o87jtIUOTAKGVHAOXO0xFuaHASwWSei4NS8bQ>
-    <xmx:M6rQZ2AbUvS1RslwAiQBVBuEunZLeVLWi_9WeZa02jnvSwJ4XiLSuA>
-    <xmx:M6rQZzKE9MjsXTfb2EITfZxNrMrd-LJybRKkNANL1V_hL1e_LGMfig>
-    <xmx:M6rQZ9DGluvoavUCbS3oymbM0GPbI7Pok6D-zRfU01OfA7p3o9WF6A>
-    <xmx:M6rQZ5M0Qc_US5r1iTEfwTZvtU29K0dPvYF1k9u3sF4zAwlyFtakunUw>
+X-ME-Proxy: <xmx:NKrQZ_GBzQaHlGXoD-1HDTXhfb-5p7zHZby-WyDDjmLMmOSYpnzdBA>
+    <xmx:NKrQZ_WdroxT8XjSLwOKlOqsdEPeoD0LZ8A2vpdrpuaVki2T1V3rpQ>
+    <xmx:NKrQZ6P7BV0ObtwgsuONem3HOzPc5qrTOHD_m4dnFhXhx2g_BFCc8g>
+    <xmx:NKrQZ-0ngsKz_KV_HCS9zI7ig9D9ItoMlqlIAXjFbpuFqgJLB2KW4w>
+    <xmx:NKrQZ8iU0VJAxRDoELnEJACAz6B-Oia6FzWm1IfyWUuIA8mq4lp03LKB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Mar 2025 17:25:06 -0400 (EDT)
+ 11 Mar 2025 17:25:08 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v2 0/6] drop "name-rev --stdin" support
-Date: Tue, 11 Mar 2025 14:24:59 -0700
-Message-ID: <20250311212505.2920181-1-gitster@pobox.com>
+Subject: [PATCH v2 1/6] t: document test_lazy_prereq
+Date: Tue, 11 Mar 2025 14:25:00 -0700
+Message-ID: <20250311212505.2920181-2-gitster@pobox.com>
 X-Mailer: git-send-email 2.49.0-rc2-181-g28e223d67e
-In-Reply-To: <20250310231652.3742490-1-gitster@pobox.com>
+In-Reply-To: <20250311212505.2920181-1-gitster@pobox.com>
 References: <20250310231652.3742490-1-gitster@pobox.com>
+ <20250311212505.2920181-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,53 +84,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-During Git 2.40 timeframe, we deprecated the "--stdin" option of the
-"name-rev" command in preference to the "--annotate-stdin" option,
-and removed the mention of the former from the documentation.
+The t/README file talked about test_set_prereq but lacked
+explanation on test_lazy_prereq, which is a more modern way to
+define prerequisites.
 
-Let's prepare for Git 3.0 to stop supporting it.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/README | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-The real motive of these patches is not really about that particular
-option but make sure we have, with WITH_BREAKING_CHANGES compilation
-knob, enough support to keep preparing for these changes.
-
-The first two patches are preliminary clean-up and enhancement.
-We lacked documentation on test_lazy_prereq and we did not have a
-good way to signal a prerequisite that no longer should be used,
-both of which are remedied.
-
-The third patch renames the WITHOUT_BREAKING_CHANGES prerequisite
-that unfortunately invites double negations easily and changes
-existing users of it.
-
-Then two patches to a test script minimally modernizes it.  
-
-The last step introduces the real change, guarded by
-WITH_BREAKING_CHANGES compilation knob.  The resulting code is more
-littered with #if[n]def compared to the previous round but it should
-be clear which section of the code should go away once we do Git
-3.0, which is the whole point of the WITH_BREAKING_CHANGES exercise.
-
-Junio C Hamano (6):
-  t: document test_lazy_prereq
-  t: extend test_lazy_prereq
-  t: introduce WITH_BREAKING_CHANGES prerequisite
-  t6120: avoid hiding "git" exit status
-  t6120: further modernize
-  name-rev: remove "--stdin" support
-
- Documentation/BreakingChanges.adoc |  6 ++++++
- builtin/name-rev.c                 | 10 +++++++++-
- t/README                           | 25 ++++++++++++++++++++++++-
- t/t5323-pack-redundant.sh          |  2 +-
- t/t5505-remote.sh                  |  6 +++---
- t/t5515-fetch-merge-logic.sh       |  2 +-
- t/t5516-fetch-push.sh              |  8 ++++----
- t/t6120-describe.sh                | 18 +++++++++++++-----
- t/test-lib-functions.sh            |  5 +++++
- t/test-lib.sh                      |  7 ++++++-
- 10 files changed, 72 insertions(+), 17 deletions(-)
-
+diff --git a/t/README b/t/README
+index 53e5b4a710..3ce9f5a393 100644
+--- a/t/README
++++ b/t/README
+@@ -818,7 +818,7 @@ Skipping tests
+ --------------
+ 
+ If you need to skip tests you should do so by using the three-arg form
+-of the test_* functions (see the "Test harness library" section
++of the test_expect_* functions (see the "Test harness library" section
+ below), e.g.:
+ 
+     test_expect_success PERL 'I need Perl' '
+@@ -965,6 +965,27 @@ see test-lib-functions.sh for the full list and their options.
+ 	    test_done
+ 	fi
+ 
++ - test_lazy_prereq <prereq> <script>
++
++   Declare the way to determine if a test prerequisite <prereq> is
++   satisified or not, but delay the actual determination until the
++   prerequisite is actually used by "test_have_prereq" or the
++   three-arg form of the test_expect_* functions.  For example, this
++   is how the SYMLINKS prerequisite is declared to see if the platform
++   supports symbolic links:
++
++	test_lazy_prereq SYMLINKS '
++		ln -s x y && test -h y
++	'
++
++   The script is lazily invoked when SYMLINKS prerequisite is first
++   queried by either "test_have_prereq SYMLINKS" or "test_expect_*
++   SYMLINKS ...".  The script is run in a temporary directory inside
++   a subshell, so you do not have to worry about removing temporary
++   files you create there.  When the script exits with status 0, the
++   prerequisite is set.  Exiting with non-zero status makes the
++   prerequisite unsatisified.
++
+  - test_expect_code <exit-code> <command>
+ 
+    Run a command and ensure that it exits with the given exit code.
 -- 
 2.49.0-rc2-181-g28e223d67e
 
