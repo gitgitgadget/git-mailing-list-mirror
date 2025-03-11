@@ -1,72 +1,45 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBB917991
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 00:21:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66435258
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 02:10:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741652517; cv=none; b=FiSgXujhdEYJv7qnr4Hm3N2C0j9oK7Cf8P6wOwWJ+nzYazMOX+IXNRXwuG+xwl5DcHJkxfU0DrId4Ei6XiFZ2zhNX5WmrSt6Ulw8PLYqcyxHS6AQUq3JxBjNiQc/NwFgjhWlko2FAikBArF+HXV4OyY+zzAHKFJJxULBlAsRklI=
+	t=1741659056; cv=none; b=K+RDacSt9KScs8P00J6ezPzhEq27wjhRnS42MQ1RxktnbvoE023sLVl2Duu68MsSPJzLCHr4PuCPRd1rc63+5pv4YiaadFKvlI0/uC3M/Wgf9NYSCueBz56xAhnTkSPd3X3HhBFEKGy6NoJ/gGmQyiWfYyWwKrUceSKorOVCfYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741652517; c=relaxed/simple;
-	bh=9yoZ/kNU+UHcwLj6ANxSzEl6+wEb7wQ/0K9IdeM6aqA=;
+	s=arc-20240116; t=1741659056; c=relaxed/simple;
+	bh=5QPKpfoqUEPJNXTEVil3ANAgBvD/c8KFVLX53k/vadA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DNe0l+I15qT1NsTkSHJHF7lr2bTyJpyDsZEI0952IcONmGJdocmnvtMR6xUgBsTPyZPlbW4NOCw0Pze+osu7rLZzay6waYyJQ0zAwxOAk4Osy3JHFt5Qw7R0OhLHLVRJvQQENMKEy4ZzDP5d1BjE/vGBeVHMNG+MPdXx0QRaoow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=rZFJ9t2z; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=E7/0BZ638iNercabuTgY7HgjLiZwuuKqFcrxR4R5kj6SVw6MlprRyLms7KVAI5dkNgUMsEaqydsMkurD9nLNEptt2e34BnXztKTrCyjW2dTgXa566Ptj6GleOZu03jNzoKWX8AI0Tcau22dQrseCQ2HidBlv3295sDL6wU097Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Wh9ng+Vr; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="rZFJ9t2z"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6fedefb1c9cso16140457b3.0
-        for <git@vger.kernel.org>; Mon, 10 Mar 2025 17:21:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741652514; x=1742257314; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JQcHeJGaPi/O6pIz/PBbadfzT2q9ITLSMJBpzHxESd8=;
-        b=rZFJ9t2z9j7StyMPmRwcCLD+7r/4GcbuzjliDxigRZ20VyqFWktapiymTY3MG5jXid
-         4OfwYd1sseKZqth7FBjodnGU69UMBzbk8GyRpLH/x5hq/x5Ly2w/gFoHApgrqVFTPrRy
-         afp+KElD4UWqd9qpU+AFHOH0yPH2Jkc/4HSDTLqIBFu8prhiAaeuyGmjid3/ukIroVQm
-         oKxnTeTT7pkvNRUZY9H5zbuQXUWZ2yU4aASmhRN9JrIMsV2cwXAfRxefQBOz9PErhO5C
-         HLWF3V2jQsN2+yiA10HvTcYyCYMYZBJ2X9NCzAbxVzbm81CcvxsCULNqIqtJnI7fp08J
-         RGpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741652514; x=1742257314;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JQcHeJGaPi/O6pIz/PBbadfzT2q9ITLSMJBpzHxESd8=;
-        b=jQU8zNx35bL5PtmYm2v3j+TbmROB41QI+9yAb5HXJ+gM8TWWYM2K600X1iFrskdOYm
-         BjyhoEumUoEo/onmWf4h6yo6AOK0o4k52r9q96L+f2tUvqwleWMNh+ZOp4hKKsTxPc+0
-         FMvMxiuEpAnumqGuzz4CsqvJHBlpWP4guXZ4mz+8cKR2rTA4G6Xdr58lQquR3WUtRGwM
-         RN+uHMa8q6j9j+9fKZWcIzsxlVvhdBdw3lPK8uJJted6UeiinkB3voIPRcsWGgy1jC+W
-         98NMtz+NAXcZhLFfplwqIr7K8QfxmaOuvbVslhFv0rDkIfYQqSthatMYCSwv1cie5xOx
-         22+Q==
-X-Gm-Message-State: AOJu0YztYC9/QnGsMKtxe595ggDLPG7wIZIIyyx3m6rUOaHsyD2NVR3S
-	2OAMwXvd6Sl1PknuZTiZYvaGCq+hUn7LpOjrEGFKfq9EwN8lpT70/Jik1Ed11q3nDlP6G9vH+8T
-	mAs8=
-X-Gm-Gg: ASbGncvGj+xuFfoFlUnpnuVh4oIBIu2064FLj4tKZ/b0sRd8VunE/XBJkstVFfP6Azu
-	4gpZw7s8qIDI7kTpY98olfquYc89beMw6N1KhnGnRNX+fjSD7ZjuJJK+vftBMB72Drdlwk72WP0
-	YlvdZ2RMMEwcdXhEPPYMzkFmacfNMymW6nD8as9oztHjvgli5yTdLdzj+XWweBHfMAZ03IdBeAc
-	p1AbT4izCzcN6vkL1nSlCvS9cx4BuolacDEWx0drHqPRlheBJbpJVwgIg4JNihPj/DFcVX6J0ZZ
-	x3MueD9q16uR+HwweI6K5cBqDPKOIAq3u9T3IuIE6IXFcmsQAOeCcdq5m/vCfLVz7YxHUDVkn/v
-	KMSsP9Oo8RdKX22X/
-X-Google-Smtp-Source: AGHT+IFpRTwGkektRO7DKipNGz654uIjOQuHQ8N6a9YozujXjdygWfy5gNddYBAeVaa4627DDV9fLQ==
-X-Received: by 2002:a05:690c:45c3:b0:6ef:4a57:fc98 with SMTP id 00721157ae682-6febf30026bmr224695617b3.16.1741652513956;
-        Mon, 10 Mar 2025 17:21:53 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6feb3d3e3aesm23666847b3.115.2025.03.10.17.21.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Mar 2025 17:21:53 -0700 (PDT)
-Date: Mon, 10 Mar 2025 20:21:52 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 6/6] builtin/pack-objects.c: freshen objects from existing
- cruft packs
-Message-ID: <d44a124c81386bbbdb06522d0af2765b05fb8e84.1741648467.git.me@ttaylorr.com>
-References: <cover.1740680964.git.me@ttaylorr.com>
- <cover.1741648467.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Wh9ng+Vr"
+Received: (qmail 27586 invoked by uid 109); 11 Mar 2025 02:10:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=5QPKpfoqUEPJNXTEVil3ANAgBvD/c8KFVLX53k/vadA=; b=Wh9ng+VrZAIIRZUDrbeLuW5lszeHgdgp3VHoXTjfFafGObps7c0SAc/P7JkXsGzGFgleuVOLr/M0uzpMeDSqNFmGKz/yYuV1aYCa8MxpkkXa/s2Q3JldwRQdcb2U7FNVcgHjO5eqpoDkyxYH7zC8wMB/JzHG4W9RmB46BoQCd9TDG5PF8sGoYPMHZL+CsZITw8ESqtBB291sMM2FJ/YDltMv4GG7iWOTuQ4NW7ge2HTpRQc5eAo2L80EAFNJORawznQN/Wax9MzxxAy1FQSh8+RgNnjvus306gKyg4i1LzrCz72FMnEL4D3R2vZDEkhCzwRlYSafImnCUivwFMoBkg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Mar 2025 02:10:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3914 invoked by uid 111); 11 Mar 2025 02:10:50 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 10 Mar 2025 22:10:50 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 10 Mar 2025 22:10:49 -0400
+From: Jeff King <peff@peff.net>
+To: Benjamin Woodruff <github@benjam.info>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Benjamin Woodruff via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 0/2] describe and diff: implement --no-optional-locks
+Message-ID: <20250311021049.GA33498@coredump.intra.peff.net>
+References: <pull.1872.git.1741240685.gitgitgadget@gmail.com>
+ <xmqqo6yejg0y.fsf@gitster.g>
+ <20250309033908.GA2361799@coredump.intra.peff.net>
+ <xmqqwmcx9io3.fsf@gitster.g>
+ <20250310160837.GA26308@coredump.intra.peff.net>
+ <xmqqo6y87m4d.fsf@gitster.g>
+ <bbc8a0ef-737c-44ba-9786-f5456f5ce71b@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,411 +48,104 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1741648467.git.me@ttaylorr.com>
+In-Reply-To: <bbc8a0ef-737c-44ba-9786-f5456f5ce71b@app.fastmail.com>
 
-Once an object is written into a cruft pack, we can only freshen it by
-writing a new loose or packed copy of that object with a more recent
-mtime.
+On Mon, Mar 10, 2025 at 01:50:36PM -0700, Benjamin Woodruff wrote:
 
-Prior to 61568efa95 (builtin/pack-objects.c: support `--max-pack-size`
-with `--cruft`, 2023-08-28), we typically had at most one cruft pack in
-a repository at any given time. So freshening unreachable objects was
-straightforward when already rewriting the cruft pack (and its *.mtimes
-file).
+> It might help if I start with some more context of why I wrote this
+> patch. We've got a tool that uses the Rust `vergen-gitcl` crate to call
+> `git describe --dirty`. You can see that code here:
+> https://github.com/vercel/next.js/pull/76889/files
+> 
+> We use `vergen-gitcl` to generate version identifiers for an on-disk
+> cache. This cache stores results of thousands of functions and has no
+> backwards compatibility. We want to invalidate it when *any* of the code
+> changes. `git-describe` felt like a good fit for that, as it gives us a
+> unique identifier that's still reasonably user-friendly.
+> 
+> However, we discovered that we'd frequently end up with stale git
+> lockfiles. This appeared to be due some combination of IDE tools that
+> run the build in the background (i.e. the rust-analyzer LSP), behavior
+> that causes builds to sometimes get killed before completion, and the
+> fact that `git describe --dirty` takes a lock.
 
-But 61568efa95 changes things: 'pack-objects' now supports writing
-multiple cruft packs when invoked with `--cruft` and the
-`--max-pack-size` flag. Cruft packs are rewritten until they reach some
-size threshold, at which point they are considered "frozen", and will
-only be modified in a pruning GC, or if the threshold itself is
-adjusted.
+Yeah, that is not quite the original use case that --no-optional-locks
+was designed for (i.e., simultaneous contention), but I think it is a
+reasonable application of the flag.
 
-Prior to this patch, however, this process breaks down when we attempt
-to freshen an object packed in an earlier cruft pack, and that cruft
-pack is larger than the threshold and thus will survive the repack.
+> >>> git describe and git diff may update the index in the background for
+> >>> similar performance reasons to git-status.
+> >>
+> >> That is a wrong reasoning that is completely opposite, though.
+> >> 
+> >> The commands at the Porcelain level, like "status" and "diff",
+> >> refresh the index for the CORRECTNESS purposes.
+> >
+> > Right, but "status" supports --no-optional-locks already.
+> 
+> Does this mean the documentation in `git-status` is incorrect? It
+> implies that the background refresh is only for performance reasons.
+> That's where I got this idea from:
+> <https://git-scm.com/docs/git-status#_background_refresh>
 
-When this is the case, it is impossible to freshen objects in cruft
-pack(s) when those cruft packs are larger than the threshold. This is
-because we would avoid writing them in the new cruft pack entirely, for
-a couple of reasons.
+I think Junio gave an explanation here, so I won't repeat that. But I
+also think both of us may have been a bit confused about the changes
+your patches are making, because there's some subtlety.
 
- 1. When enumerating packed objects via 'add_objects_in_unpacked_packs()'
-    we pass the SKIP_IN_CORE_KEPT_PACKS, which is used to avoid looping
-    over the packs we're going to retain (which are marked as kept
-    in-core by 'read_cruft_objects()').
+The important thing to keep in mind is that there are _two_ steps:
+refreshing the in-core index and writing the result out to the on-disk
+file. With --no-optional-locks we must continue to do the first step
+(for correctness), and skip the second step.
 
-    This means that we will avoid enumerating additional packed copies
-    of objects found in any cruft packs which are larger than the given
-    size threshold. Thus there is no opportunity to call
-    'create_object_entry()' whatsoever.
+So looking at your patch 1/2 for git-describe, it is doing the right
+thing: we still call refresh_index() always, and only skip the calls to
+repo_hold_locked_index() and repo_update_index_if_able().
 
- 2. We likewise will discard the loose copy (if one exists) of any
-    unreachable object packed in a cruft pack that is larger than the
-    threshold. Here our call path is 'add_unreachable_loose_objects()',
-    which uses the 'add_loose_object()' callback.
+But one thing that puzzles me is that we read and refresh the index
+first and only _then_ take a lock. Which seems wrong to me, as we could
+racily overwrite an intermediate write from somebody else that we never
+even saw (e.g., imagine you call "git add" at just the wrong moment).
 
-    That function will eventually land us in 'want_object_in_pack()'
-    (via 'add_cruft_object_entry()'), and we'll discard the object as it
-    appears in one of the packs which we marked as kept in-core.
+That is not a bug in your code, but an existing problem that I think
+made it harder to understand your change (and probably one we should
+fix regardless).
 
-This means in effect that it is impossible to freshen an unreachable
-object once it appears in a cruft pack larger than the given threshold.
+Your patch 2/2 for git-diff is what I thought was actually wrong, but
+after digging further, I'm not so sure.
 
-Instead, we should pack an additional copy of an unreachable object we
-want to freshen even if it appears in a cruft pack, provided that the
-cruft copy has an mtime which is before the mtime of the copy we are
-trying to pack/freshen. This is sub-optimal in the sense that it
-requires keeping an additional copy of unreachable objects upon
-freshening, but we don't have a better alternative without the ability
-to make in-place modifications to existing *.mtimes files.
+In your patch we return early from refresh_index_quietly(), without
+actually refreshing the in-core index. So I _thought_ that meant we'd
+produce a wrong answer for something like this:
 
-In order to implement this, we have to adjust the behavior of
-'want_found_object()'. When 'pack-objects' is told that we're *not*
-going to retain any cruft packs (i.e. the set of packs marked as kept
-in-core does not contain a cruft pack), the behavior is unchanged.
+  $ touch git.c
+  $ ./git --no-optional-locks diff
 
-But when there *is* at least one cruft pack that we're holding onto, it
-is no longer sufficient to reject a copy of an object found in that
-cruft pack for that reason alone. In this case, we only want to reject a
-candidate object when copies of that object either:
+where we should report "no changes", but would instead find the
+stat-dirty git.c (just like a plumbing "git diff-files" would). But
+that doesn't happen!
 
- - exists in a non-cruft pack that we are retaining, regardless of that
-   pack's mtime, or
+That's because refresh_index_quietly() runs after the diff has completed
+anyway. The real magic is in diffcore_skip_stat_unmatch(), which
+processes individual stat-dirty entries and suppresses them (when
+there's no actual content change).
 
- - exists in a cruft pack with an mtime at least as recent as the copy
-   we are debating whether or not to pack, in which case freshening
-   would be redundant.
+So the call in refresh_index_quietly() really is just about updating
+what we're about to write out, and your patch is correct to bail from
+the whole function (if we are not writing it out, there is no purpose in
+refreshing at that point).
 
-To do this, keep track of whether or not we have any cruft packs in our
-in-core kept list with a new 'ignore_packed_keep_in_core_has_cruft'
-flag. When we end up in this new special case, we replace a call to
-'has_object_kept_pack()' to 'want_cruft_object_mtime()', and only reject
-objects when we have a copy in an existing cruft pack with at least as
-recent an mtime as our candidate (in which case "freshening" would be
-redundant).
+So as far as I can tell the patches are doing the right thing. But I
+think the commit messages probably need to describe those subtleties and
+argue that the change is correct. Bonus points if a preparatory patch
+fixes the race in git-describe. ;)
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/pack-objects.c  | 118 ++++++++++++++++++++++++++++++++++------
- packfile.c              |   3 +-
- packfile.h              |   2 +
- t/t7704-repack-cruft.sh |  63 +++++++++++++++++++++
- 4 files changed, 168 insertions(+), 18 deletions(-)
+> It's also worth noting that libgit2 does not do this background refresh
+> by default (`GIT_DIFF_UPDATE_INDEX` and `GIT_STATUS_OPT_UPDATE_INDEX`).
+> I think that makes sense for libgit2's typical use-cases, but it is a
+> divergence in behavior.
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index f701b4c9ec..1a3e7dd3d3 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -206,6 +206,7 @@ static int have_non_local_packs;
- static int incremental;
- static int ignore_packed_keep_on_disk;
- static int ignore_packed_keep_in_core;
-+static int ignore_packed_keep_in_core_has_cruft;
- static int allow_ofs_delta;
- static struct pack_idx_option pack_idx_opts;
- static const char *base_name;
-@@ -1530,8 +1531,60 @@ static int have_duplicate_entry(const struct object_id *oid,
- 	return 1;
- }
- 
-+static int want_cruft_object_mtime(struct repository *r,
-+				   const struct object_id *oid,
-+				   unsigned flags, uint32_t mtime)
-+{
-+	struct packed_git **cache;
-+
-+	for (cache = kept_pack_cache(r, flags); *cache; cache++) {
-+		struct packed_git *p = *cache;
-+		off_t ofs;
-+		uint32_t candidate_mtime;
-+
-+		ofs = find_pack_entry_one(oid, p);
-+		if (!ofs)
-+			continue;
-+
-+		/*
-+		 * We have a copy of the object 'oid' in a non-cruft
-+		 * pack. We can avoid packing an additional copy
-+		 * regardless of what the existing copy's mtime is since
-+		 * it is outside of a cruft pack.
-+		 */
-+		if (!p->is_cruft)
-+			return 0;
-+
-+		/*
-+		 * If we have a copy of the object 'oid' in a cruft
-+		 * pack, then either read the cruft pack's mtime for
-+		 * that object, or, if that can't be loaded, assume the
-+		 * pack's mtime itself.
-+		 */
-+		if (!load_pack_mtimes(p)) {
-+			uint32_t pos;
-+			if (offset_to_pack_pos(p, ofs, &pos) < 0)
-+				continue;
-+			candidate_mtime = nth_packed_mtime(p, pos);
-+		} else {
-+			candidate_mtime = p->mtime;
-+		}
-+
-+		/*
-+		 * We have a surviving copy of the object in a cruft
-+		 * pack whose mtime is greater than or equal to the one
-+		 * we are considering. We can thus avoid packing an
-+		 * additional copy of that object.
-+		 */
-+		if (mtime <= candidate_mtime)
-+			return 0;
-+	}
-+
-+	return -1;
-+}
-+
- static int want_found_object(const struct object_id *oid, int exclude,
--			     struct packed_git *p)
-+			     struct packed_git *p, uint32_t mtime)
- {
- 	if (exclude)
- 		return 1;
-@@ -1581,12 +1634,29 @@ static int want_found_object(const struct object_id *oid, int exclude,
- 		if (ignore_packed_keep_in_core)
- 			flags |= IN_CORE_KEEP_PACKS;
- 
--		if (ignore_packed_keep_on_disk && p->pack_keep)
--			return 0;
--		if (ignore_packed_keep_in_core && p->pack_keep_in_core)
--			return 0;
--		if (has_object_kept_pack(p->repo, oid, flags))
--			return 0;
-+		/*
-+		 * If the object is in a pack that we want to ignore, *and* we
-+		 * don't have any cruft packs that are being retained, we can
-+		 * abort quickly.
-+		 */
-+		if (!ignore_packed_keep_in_core_has_cruft) {
-+			if (ignore_packed_keep_on_disk && p->pack_keep)
-+				return 0;
-+			if (ignore_packed_keep_in_core && p->pack_keep_in_core)
-+				return 0;
-+			if (has_object_kept_pack(p->repo, oid, flags))
-+				return 0;
-+		} else {
-+			/*
-+			 * But if there is at least one cruft pack which
-+			 * is being kept, we only want to include the
-+			 * provided object if it has a strictly greater
-+			 * mtime than any existing cruft copy.
-+			 */
-+			if (!want_cruft_object_mtime(p->repo, oid, flags,
-+						     mtime))
-+				return 0;
-+		}
- 	}
- 
- 	/*
-@@ -1605,7 +1675,8 @@ static int want_object_in_pack_one(struct packed_git *p,
- 				   const struct object_id *oid,
- 				   int exclude,
- 				   struct packed_git **found_pack,
--				   off_t *found_offset)
-+				   off_t *found_offset,
-+				   uint32_t found_mtime)
- {
- 	off_t offset;
- 
-@@ -1621,7 +1692,7 @@ static int want_object_in_pack_one(struct packed_git *p,
- 			*found_offset = offset;
- 			*found_pack = p;
- 		}
--		return want_found_object(oid, exclude, p);
-+		return want_found_object(oid, exclude, p, found_mtime);
- 	}
- 	return -1;
- }
-@@ -1635,10 +1706,11 @@ static int want_object_in_pack_one(struct packed_git *p,
-  * function finds if there is any pack that has the object and returns the pack
-  * and its offset in these variables.
-  */
--static int want_object_in_pack(const struct object_id *oid,
--			       int exclude,
--			       struct packed_git **found_pack,
--			       off_t *found_offset)
-+static int want_object_in_pack_mtime(const struct object_id *oid,
-+				     int exclude,
-+				     struct packed_git **found_pack,
-+				     off_t *found_offset,
-+				     uint32_t found_mtime)
- {
- 	int want;
- 	struct list_head *pos;
-@@ -1653,7 +1725,8 @@ static int want_object_in_pack(const struct object_id *oid,
- 	 * are present we will determine the answer right now.
- 	 */
- 	if (*found_pack) {
--		want = want_found_object(oid, exclude, *found_pack);
-+		want = want_found_object(oid, exclude, *found_pack,
-+					 found_mtime);
- 		if (want != -1)
- 			return want;
- 
-@@ -1664,7 +1737,7 @@ static int want_object_in_pack(const struct object_id *oid,
- 	for (m = get_multi_pack_index(the_repository); m; m = m->next) {
- 		struct pack_entry e;
- 		if (fill_midx_entry(the_repository, oid, &e, m)) {
--			want = want_object_in_pack_one(e.p, oid, exclude, found_pack, found_offset);
-+			want = want_object_in_pack_one(e.p, oid, exclude, found_pack, found_offset, found_mtime);
- 			if (want != -1)
- 				return want;
- 		}
-@@ -1672,7 +1745,7 @@ static int want_object_in_pack(const struct object_id *oid,
- 
- 	list_for_each(pos, get_packed_git_mru(the_repository)) {
- 		struct packed_git *p = list_entry(pos, struct packed_git, mru);
--		want = want_object_in_pack_one(p, oid, exclude, found_pack, found_offset);
-+		want = want_object_in_pack_one(p, oid, exclude, found_pack, found_offset, found_mtime);
- 		if (!exclude && want > 0)
- 			list_move(&p->mru,
- 				  get_packed_git_mru(the_repository));
-@@ -1702,6 +1775,15 @@ static int want_object_in_pack(const struct object_id *oid,
- 	return 1;
- }
- 
-+static inline int want_object_in_pack(const struct object_id *oid,
-+				      int exclude,
-+				      struct packed_git **found_pack,
-+				      off_t *found_offset)
-+{
-+	return want_object_in_pack_mtime(oid, exclude, found_pack, found_offset,
-+					 0);
-+}
-+
- static struct object_entry *create_object_entry(const struct object_id *oid,
- 						enum object_type type,
- 						uint32_t hash,
-@@ -3634,7 +3716,7 @@ static void add_cruft_object_entry(const struct object_id *oid, enum object_type
- 			entry->no_try_delta = no_try_delta(name);
- 		}
- 	} else {
--		if (!want_object_in_pack(oid, 0, &pack, &offset))
-+		if (!want_object_in_pack_mtime(oid, 0, &pack, &offset, mtime))
- 			return;
- 		if (!pack && type == OBJ_BLOB && !has_loose_object(oid)) {
- 			/*
-@@ -3708,6 +3790,8 @@ static void mark_pack_kept_in_core(struct string_list *packs, unsigned keep)
- 		struct packed_git *p = item->util;
- 		if (!p)
- 			die(_("could not find pack '%s'"), item->string);
-+		if (p->is_cruft && keep)
-+			ignore_packed_keep_in_core_has_cruft = 1;
- 		p->pack_keep_in_core = keep;
- 	}
- }
-diff --git a/packfile.c b/packfile.c
-index 2d80d80cb3..9d09f8bc72 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -24,6 +24,7 @@
- #include "commit-graph.h"
- #include "pack-revindex.h"
- #include "promisor-remote.h"
-+#include "pack-mtimes.h"
- 
- char *odb_pack_name(struct repository *r, struct strbuf *buf,
- 		    const unsigned char *hash, const char *ext)
-@@ -2107,7 +2108,7 @@ static void maybe_invalidate_kept_pack_cache(struct repository *r,
- 	r->objects->kept_pack_cache.flags = 0;
- }
- 
--static struct packed_git **kept_pack_cache(struct repository *r, unsigned flags)
-+struct packed_git **kept_pack_cache(struct repository *r, unsigned flags)
- {
- 	maybe_invalidate_kept_pack_cache(r, flags);
- 
-diff --git a/packfile.h b/packfile.h
-index 00ada7a938..25097213d0 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -197,6 +197,8 @@ int has_object_pack(struct repository *r, const struct object_id *oid);
- int has_object_kept_pack(struct repository *r, const struct object_id *oid,
- 			 unsigned flags);
- 
-+struct packed_git **kept_pack_cache(struct repository *r, unsigned flags);
-+
- /*
-  * Return 1 if an object in a promisor packfile is or refers to the given
-  * object, 0 otherwise.
-diff --git a/t/t7704-repack-cruft.sh b/t/t7704-repack-cruft.sh
-index fb52bb36a2..3082e65817 100755
---- a/t/t7704-repack-cruft.sh
-+++ b/t/t7704-repack-cruft.sh
-@@ -242,6 +242,69 @@ test_expect_success '--max-cruft-size with freshened objects (packed)' '
- 	)
- '
- 
-+test_expect_success '--max-cruft-size with freshened objects (previously cruft)' '
-+	git init max-cruft-size-threshold &&
-+	(
-+		cd max-cruft-size-threshold &&
-+
-+		test_commit base &&
-+		foo="$(generate_random_blob foo $((2*1024*1024)))" &&
-+		bar="$(generate_random_blob bar $((2*1024*1024)))" &&
-+		baz="$(generate_random_blob baz $((2*1024*1024)))" &&
-+
-+		test-tool chmtime --get -100000 \
-+			"$objdir/$(test_oid_to_path "$foo")" >foo.old &&
-+		test-tool chmtime --get -100000 \
-+			"$objdir/$(test_oid_to_path "$bar")" >bar.old &&
-+		test-tool chmtime --get -100000 \
-+			"$objdir/$(test_oid_to_path "$baz")" >baz.old &&
-+
-+		git repack --cruft -d &&
-+
-+		# Make an identical copy of foo stored in a pack with a more
-+		# recent mtime.
-+		foo="$(generate_random_blob foo $((2*1024*1024)))" &&
-+		foo_pack="$(echo "$foo" | git pack-objects $packdir/pack)" &&
-+		test-tool chmtime --get -100 \
-+			"$packdir/pack-$foo_pack.pack" >foo.new &&
-+		git prune-packed &&
-+
-+		# Make a loose copy of bar, also with a more recent mtime.
-+		bar="$(generate_random_blob bar $((2*1024*1024)))" &&
-+		test-tool chmtime --get -100 \
-+			"$objdir/$(test_oid_to_path "$bar")" >bar.new &&
-+
-+		# Make a new cruft object $quux to ensure we do not
-+		# generate an identical pack to the existing cruft
-+		# pack.
-+		quux="$(generate_random_blob quux $((1024)))" &&
-+		test-tool chmtime --get -100 \
-+			"$objdir/$(test_oid_to_path "$quux")" >quux.new &&
-+
-+		git repack --cruft --max-cruft-size=3M -d &&
-+
-+		for p in $packdir/pack-*.mtimes
-+		do
-+			test-tool pack-mtimes "$(basename "$p")" || return 1
-+		done >actual.raw &&
-+		sort actual.raw >actual &&
-+
-+		# Among the set of all cruft packs, we should see both
-+		# mtimes for object $foo and $bar, as well as the
-+		# single new copy of $baz.
-+		sort >expect <<-EOF &&
-+		$foo $(cat foo.old)
-+		$foo $(cat foo.new)
-+		$bar $(cat bar.old)
-+		$bar $(cat bar.new)
-+		$baz $(cat baz.old)
-+		$quux $(cat quux.new)
-+		EOF
-+
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success '--max-cruft-size with pruning' '
- 	git init max-cruft-size-prune &&
- 	(
--- 
-2.49.0.rc2.6.g9a1eecd400
+Yes, I think that is probably a reasonable default for libgit2, where
+you'd expect everything to happen in a single process (that can share
+the in-core index).
+
+-Peff
