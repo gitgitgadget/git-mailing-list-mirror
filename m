@@ -1,86 +1,149 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pj1-f66.google.com (mail-pj1-f66.google.com [209.85.216.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC21824EF6E
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 17:41:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06D1262D05
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 18:10:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741714916; cv=none; b=T6lpTunzN8SVImN6CboZ7r3NbNSBRemQFRqPwuiFUdqsoB1U2uM1BeSKCM6L9Q4AFzJjTS5WzgvyoCOQ0lakV8kzXaDyHsT6zSQl02fyEyrHl5VYZ/qw/sroOZyu1MPzBITzc6ymUvB8PxSOjjjThTGGiy3YcuAK9br5YK8lS5o=
+	t=1741716645; cv=none; b=Yx5xsVjtB6EtkluaBpVB9hGf2Bwty3N/CUo4K/Pcsy1NnmfYsnDhNn9gyXSp1K6Wc7cgjaVazv0+ugseWfdAwEnyEcNYy8h5e/sttLNt1xUHt6gVJeT9XmP80GaGGKzMOrMfRbw0rKT+bnMedMyizLbVXQ81BkQZizEE0X2CZZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741714916; c=relaxed/simple;
-	bh=J67u9yoGvc0xMIu0A1QwY82cOIxGIYBdCvWYbehID2A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VHIccof9dB4GqL5XwlFGd7andI51TQyfOO4NMql5SweQWASK3RDltzfpU1k8Hi0I1QRTnwcFlwIysUxLaxdoxxAXYSk9m2PocZWnS0GWFTOrsgxi0wPZj6SUB7BHSHpmDENCEgNu0bRqhaltO/TI48DGYT1YR1IpijueByUd9B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IvX2GVa+; arc=none smtp.client-ip=209.85.214.181
+	s=arc-20240116; t=1741716645; c=relaxed/simple;
+	bh=IJha6tRP4hHM23L6SKPBk8uDuGroZqip+TKR207jQmY=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=JDFZ57zopspdVUYml0Q1hyX5xAvE9EHl5nICHplI/kLruevv40TDjdngHjxwWbx3DPpIOn3rrewHaSOWJCog1yxByK6f+CjH8fOwRFf5qSX0sZKOaG7SbSm5L421RF7IYa23jZErmq5x8uhyBxgQpe9WNgwEzGRROB8JeQ5jrkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oygng5pR; arc=none smtp.client-ip=209.85.216.66
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IvX2GVa+"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-22359001f1aso137599775ad.3
-        for <git@vger.kernel.org>; Tue, 11 Mar 2025 10:41:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oygng5pR"
+Received: by mail-pj1-f66.google.com with SMTP id 98e67ed59e1d1-2fec3176ef3so8653304a91.1
+        for <git@vger.kernel.org>; Tue, 11 Mar 2025 11:10:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741714914; x=1742319714; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=J67u9yoGvc0xMIu0A1QwY82cOIxGIYBdCvWYbehID2A=;
-        b=IvX2GVa+LKfDdJFPPimwafhKvloXLEs5c742FIbSmE/GwvUG4lX0JOllYzflNgzQy3
-         T3GMMOgwy4s4CpDjbCwBMTAiutxO8i11mKcl8n0yKxShzq6nujGXt3H/NJ39Osh9eXt6
-         77J7QbGViJfaue9Ygm1v3lk9tTVT3bgiyRdoOG+K3barAD4kLS+MxYOC1qABFZV1yYZz
-         9lME94lRXG3Wbbus0HV+OJmq86mDWsGRxDxMVsWyrTiqQnLZqM1X3rWAzStCy2HNm2RC
-         cH3i2erX/PHf0djRBS03Cb4WX5/EYI0PdJDZL44brIen8M4ikZwRGiXIXArg1tha3KOV
-         5jnw==
+        d=gmail.com; s=20230601; t=1741716642; x=1742321442; darn=vger.kernel.org;
+        h=mime-version:message-id:date:subject:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=IJha6tRP4hHM23L6SKPBk8uDuGroZqip+TKR207jQmY=;
+        b=Oygng5pRwnHyhvw2sf2p4fazoa5wQCJ/dwozc8X4ARI2R2rUv1osRcpSHFJ8s+nWI6
+         f7Urr/kZaNB/Ji8nt9PXii6iEw4BuHfc1ZoAIIBoXuAGcQgwODOLjCj8K93w1aa0gqY9
+         jVijQ6ytg7qaF1zFAufYO7xUoCGqvcDCjRo8KpIz79JH0lejmGcfGfmLA7Gt+cTYace1
+         NiLh+XaTL9laOD/WLXsC/zJLcy57wwtUdPeHc/3/iBM7R0oNpgtw1u78Tq7C1kYVhTAD
+         uZG9BWkDO1dQD2C6jmKIuNyakosxeC0hovR9K1g7D5wf3L0kL/I2cEbKzzDIra6PmVir
+         lQ4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741714914; x=1742319714;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=J67u9yoGvc0xMIu0A1QwY82cOIxGIYBdCvWYbehID2A=;
-        b=NiPUWArjQeHGcaZj95oZ1QH6xHtShbYm4lgLDZ3PMSqwiQTEBZ6wJ5W2pNi7BNVkXE
-         2vf4EEcsM8ugtTEKPUfFz1Bz+GCHE53PMPCaKEcT9bIOO1DqM+EIvsTPwzi8vXyFW6ig
-         IUpRzWwhBhiOQI2VwV5AsVlMV89Up1DKsVczko014Rd9Ig97mhCRAz0FtKdUWJkYpWuP
-         lo/GDB5voS+JVD9TOyxUhvXV/sVG+/UsvNUAZOOZE/qH6PV9L5PbQnZhxYkxFNzuYN9f
-         1qOe2Y354A3iWkFg+XTPZgcdh7w5nG4n6xhO2lMgdhPmRijQQTiwJCIOBXWKsCZlSrEO
-         jw9A==
-X-Gm-Message-State: AOJu0Yz3MN5WH+GfWlDVG9Etqvz9b4e4Kvnwa/merLwETEE6oOM7vN2/
-	hNmAcTcYQ8jYZl3dIW7NvpKvyaJt1fR4Ego0XzJneCGTCObbC1cqiPnpva6tDgg8+RDEmsgRvUY
-	XrdjsUZrURDl4YeONebV2yFOdf80=
-X-Gm-Gg: ASbGncuMOHlzXSvlle9kbvt79nkzvvjVyzieqdg9Bcq2aX7o9sxlKr3CkVlI9Oza91W
-	tEEMNIEVPOH5ZSZzOujkfOKfxFNIqFdHk/oINqhoaPbsPBqxyiMH2zSOnaS0evrXqTqGpb/Vk8B
-	gj5cxbWGuLbYGQ/GTxHAt1d/ohm7U=
-X-Google-Smtp-Source: AGHT+IHFq4V5Yr9mezOpZLvkeZ5Lm+G0w4jV0cIBLPS+elLST1D58yJQipdDmFHcYVMbhZ5LvVZgLtiPQfEJBVcQOWs=
-X-Received: by 2002:a05:6a00:4fc6:b0:735:7bc0:dcda with SMTP id
- d2e1a72fcca58-736aa9b3cbbmr23843538b3a.5.1741714913979; Tue, 11 Mar 2025
- 10:41:53 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741716642; x=1742321442;
+        h=mime-version:message-id:date:subject:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IJha6tRP4hHM23L6SKPBk8uDuGroZqip+TKR207jQmY=;
+        b=f/GiPQvyFkmaoIkdZTg5IBtJ5BUGvxvgPj4fYC5+uWBcNQMcJyQftCLADApns9hgMX
+         ie55MZqFU+tzK4sYoJV/9MOPQ2j7LR5TfEbUkg4CY94DvoeE+d8tcC8pzHWdOLG7n1+b
+         ViSKrXTCssxFf0MijeyeBOm1Uniz7Z00jHHNPmAJHD/g8BcEz5QGo4QHdj+qUn2Gx8bA
+         qQsFerQwA9jQ8ujyw+1GR1/4bN/ZvEqnH6cme6dmnkvm1fHJsrciljuMszkCgmODMfI+
+         Qqv6F7Im1oQu3L1y4ikKwynmP7hTqTaCwNGsepjj6+Wfy088nY74bwp3CZnHhko3kwIM
+         k4Hw==
+X-Gm-Message-State: AOJu0YwsXkgPcOraXxXZ0e0iybHD2Y6Czqy9Yal2nLfJX/A7OuvT74VP
+	eSwERnDEh1hGR/nuNp0Ah4FBfkVvD9fePp9ncZCMg67Q2wRtfD1n/J1NTVgL
+X-Gm-Gg: ASbGncvMSP37B5+ABO8HRvGyn0H+9/nQaCsTyT+9hHtyptaWyWFOJQ60LwSHrghVCe9
+	XMPqBvj5jNVPNklDEgeqg7MnY6/SHWlYW/Ua6PHVBxPoA9Xyrkzio7GLnBxfEB8ecy/VN+tgdke
+	T9TyTX1whLuPVuTIFQe240FVh9H0JFwSbNr5FDAe5K9gPzZ14bfTLsqS4ELbzWbeG7+R03l1VmH
+	0nvp/zIiRXDhsY8RLLD0b/BdqPtpqn0pqQJVkCjbH3sxvzefqvGzLHPkMLBc6C/qQIOQc0C0gv/
+	1DJwNe6zY0QQhMpWsoKnaTFcCqZU624bYgR1BRRUGRWLzQ==
+X-Google-Smtp-Source: AGHT+IEY9pvXNSkPpiQ3DUOJftxDVO6nBv0eMaPUPlqmmO3Dvu9pj8KTqvlHAAfL7iA1FxrxoxmBfA==
+X-Received: by 2002:a17:90b:2fc5:b0:2f7:e201:a8cc with SMTP id 98e67ed59e1d1-2ff7ce93a2bmr32002671a91.18.1741716642451;
+        Tue, 11 Mar 2025 11:10:42 -0700 (PDT)
+Received: from guix1 (utm3.nitt.edu. [14.139.162.2])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff4e7ff944sm13638378a91.34.2025.03.11.11.10.40
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Mar 2025 11:10:42 -0700 (PDT)
+From: 45mg <45mg.writes@gmail.com>
+To: git@vger.kernel.org
+Subject: git rebase skips reapplied commits
+Date: Tue, 11 Mar 2025 18:10:32 +0000
+Message-ID: <87jz8v8mlj.fsf@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250309153321.254844-1-ayu.chandekar@gmail.com>
- <20250310151048.69825-1-ayu.chandekar@gmail.com> <20250310151048.69825-3-ayu.chandekar@gmail.com>
- <CAOLa=ZT=zGTF2DLEy9VjXhcUN3wEi7_R=8O6nV-TtBXKT=ENXg@mail.gmail.com>
-In-Reply-To: <CAOLa=ZT=zGTF2DLEy9VjXhcUN3wEi7_R=8O6nV-TtBXKT=ENXg@mail.gmail.com>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Tue, 11 Mar 2025 23:11:43 +0530
-X-Gm-Features: AQ5f1JpO8xtVPYprFLMrHKIEjNpRA4Dg5WZbXrY4M9Mr20KlphlJjxOBT2yiDsw
-Message-ID: <CAE7as+YBnOd3jTYVzmHNjei0gjhMwsV3XGk1Y7Vi45CvzJTo4A@mail.gmail.com>
-Subject: Re: [GSOC PATCH v2 2/2] attr: use `repo_settings_get_attributesfile_path()`
- and update callers
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, shejialuo@gmail.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-> Can't we modify 'git_check_attr()' to also receive a 'repository'? If
-> not, perhaps it would be much simpler to simply pass 'the_repository'
-> everywhere and cleanup this file in another follow up series?
->
 
-Right, that was one of the things I considered too. But since `git_check_attr()`
-is used in a lot of widely used code paths that don't currently pass a
-struct repository, it felt like threading repo through all of them would
-create a much larger change that I intended for this patch series.
+If the same commit is made and then reverted on both <upstream> and
+<branch>, and then reapplied only on <branch>, then
+`git rebase <upstream> <branch>` will skip the reapplied commit.
 
-That's why I decided to stick with `the_repository` for now, and perhaps revisit
-the cleanup in a follow-up series once the proposed changes are
-accepted by the community.
+The following script demonstrates the issue:
+
+```
+#!/bin/sh -eu
+
+# Set up a repo for the following commands.
+repo_directory="./rebase-test-repo"
+rm -rf "${repo_directory}"
+mkdir -p "${repo_directory}"
+cd "${repo_directory}"
+git init -b main
+git config user.name test
+git config user.email test@no.mail
+
+# Create a branch 'br' starting from a commit other than the tip of the
+# 'main' branch. Switch to it.
+git commit --allow-empty -m 'initial commit'
+git commit --allow-empty -m 'another empty commit'
+git switch --create br HEAD^
+
+# Create a non-empty commit on 'br', then revert it.
+touch a
+git add a
+git commit -m 'Add a'
+git revert --no-edit HEAD
+
+# Make identical commits on 'main'.
+git switch main
+touch a
+git add a
+git commit -m "Add a (on 'main')"
+git revert --no-edit HEAD
+
+# Reapply the reverted commit to 'br'.
+git switch br
+git revert --no-edit HEAD
+
+# Rebase 'br' onto 'main'.
+git rebase main br
+
+git -P log --graph --all --oneline
+# Sample output:
+#
+# * 5b4d655 (HEAD -> br, main) Revert "Add a (on 'main')"
+# * 7881a38 Add a (on 'main')
+# * 907f1a8 another empty commit
+# * 6c094a9 initial commit
+#
+# What we expect to see:
+# The commit 'Reapply "Add a"' should have been rebased onto 'main'.
+#
+# What we see:
+# This commit was skipped during the rebase and has been lost.
+```
+
+Using the '--reapply-cherry-picks' option prevents this from happening,
+but it also creates empty commits, so it's not a proper workaround.
+
+
+[System Info]
+git version:
+git version 2.48.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /gnu/store/jlqbjxk51bdq5w7wlnbmwxm1j0pnllpx-bash-minimal-5.1.16/bin/sh
+zlib: 1.3
+compiler info: gnuc: 11.4
+libc info: glibc: 2.39
+$SHELL (typically, interactive shell): /gnu/store/cdwviyfnsfv7k57qrwmym0mrynjixc1i-bash-5.1.16/bin/bash
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
