@@ -1,103 +1,128 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995351E573F
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 23:27:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EE21E573F
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 23:29:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741735679; cv=none; b=M0vsqtIFCcAXSDnjglult5QkK/g/RFd4whqxvJaXP1rX8URlN14Mhn1q1ivC+09jC5TIZlDlwokPI1fOBTGt9KT3LtO2zyVn6Vj9SdoDOytbaghgOXbMAS9de8CoGX7xVlyo0cCTLLrMRNSxm0fTNR+cC0vC169XHMUFHBcHgv0=
+	t=1741735773; cv=none; b=XWA7LQRpVxHQowWu+aj2awi0og4H3r+l4mE4oHS6r0YNw5Z5E3lCENG13++t74XBqUuTv/75MP/Zkr+1En7ILd5BVZoTM39RWCySLBgqtIpYYYuQE2xbpKkoU0KIdopK1Vmjsyb1/d/mZ7noWXLivqV6JOVo3jZ6LsXCxOqv3SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741735679; c=relaxed/simple;
-	bh=fi6+UprRyG6bOedyqN/GfX8QIl57k6jv1LGkZdtVbAY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jbu5+ptMyfqsW9RVdjEIAz1J44tutkqXl94Dhbqi0NE6WzDgYmPysqc/h6G8D49gTmG03t0VYmwouv9v+vQlxzc1j0lhw7L8/RvbyfrFGBHRpOb/VqX9SqNr1KqIoLl4Bx8csaFDBAV5aXD+2bJr6kP1UCtn8R1lqI1i4wSQyBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dszXVnKy; arc=none smtp.client-ip=209.85.161.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741735773; c=relaxed/simple;
+	bh=HsTNsnu96xP08gNCWRHl8iZ9KLJMvU84zUtb8El2pec=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eBQfVKiIUXoOiaASLgjvbYiV2f/qNPS0Txs8tnMHpiEnVyvyFARQw4G+M79Z8xYDBL8IKdAis8xAw29gRPXGhoFgl+Uwvd6iOPblAswl54kEpspv0HDNiFYfInBExAxihks3YWo09z8fYDTyChHyeL+D4p/RsevHMEYxHsVG6do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G0nw8GwH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m3svau64; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dszXVnKy"
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-5fe944b3fa0so2786538eaf.0
-        for <git@vger.kernel.org>; Tue, 11 Mar 2025 16:27:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741735675; x=1742340475; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SusSQ0ylXqQqnSinnQtrlvLoK2FOu9l5J1o2MsWObsQ=;
-        b=dszXVnKyHYl2nIe7yIcyCgKCP7VGWp3CXscNUwrgcM6GmR7++ZofzEjBPzWBAM0J2d
-         QVhnD0uuElk+/LuKK/rn1K9HjTQzAMZDKJfqWX3raXItK7Ky9wF5HXyNCUNwNh4fjqXD
-         V2G21uyeJEzn7SY02M7ucKIbpsp2LFiDckEsTwJC+4af0hi5c48OaiA1WsxdaPAz3G1M
-         ZAGICNAgs+lpz8rRnA9zHBUOCE2eJsh7sx0eTkxQsqdEFFZPJVlIKXrCWFokFlfmj4e+
-         6oz0KAupqTiDaVccbBDy8bv8GsekNzdkyj4u4gNGDZ4bFhKzduCLdSzrCTXh2gSQlTZU
-         fiFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741735675; x=1742340475;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SusSQ0ylXqQqnSinnQtrlvLoK2FOu9l5J1o2MsWObsQ=;
-        b=xHwGZIFcMkYgXD6u8LaG+J0iZsbUYW0W9b9Wtw7Ft3jgPrGxCpILEiTIaz8rnl51rp
-         8hbPym00iiHSP9wZd314f2HJeXVkRpBEPD4KuI/bZKtlLp8o5k+zjn9k8kae7PmSe+IF
-         H9pajuJuMTTYfCjruf3uP0PFgnjHnUE4+JqyKTGVKiltGB4YUujm09qQHeo75KJyOBRw
-         g5T6IhC8G4wQ4zOwKLd9/aHSgfF91dMfDYy43XNhQSNcc1IdDnw57q3hKPrLMsSIw0GA
-         DAc0vH+CrolQ03d3m3tL/Nf9AOW6ZQARkJQIx1h0O2rBcMBbQ9iuuWPpUGKa1UZQclzO
-         ydfQ==
-X-Gm-Message-State: AOJu0YxIvIiOWnx6LJB+fsBG9OGornfma5nWIVPup9lsG+4w0RL8CqQ2
-	Daq6a3Sn7HS56uGtskoTOegmXx+k8vVIC4WD80X8xprd6EvHzEDk
-X-Gm-Gg: ASbGncuEa/4y1bQ+PaButrmEWrQf+avV6bl9UAOmMlqaaNOFzI4acb+TYSXGNkFiQ7h
-	HtBBa6zWIPTPckxqzlmbyBFQdOKHNgl0zo/JUXX4v1NJe7B1LqhO+4J4e6tBjvD+W4uVcrfHu68
-	6+T+3rnbzK+qJnyP92X4gRqEN04IrsbTbEE95g5wSLeZssAbGHwEB8eAL9TEGTOH/dC6wQLHNQh
-	AxgipP3jStD+cXUX/zi2xSrds+fAkmumvELixmvitHvMePxG8GPBv14zbc+z0lS0ZCt3eVYKAHm
-	FIosSZvrEl5zG5GTD1imN/Laxd1Ta7/CKd30KA==
-X-Google-Smtp-Source: AGHT+IHBZLA9a9Yta/+MfUG3IGzS2Kkd/VaikHTbVjZSAVW17BE0MSOm82W6IWF72SFdMKSkHj6Dsg==
-X-Received: by 2002:a05:6830:6d12:b0:72a:e8b:a849 with SMTP id 46e09a7af769-72b9b538fd8mr3477079a34.27.1741735675529;
-        Tue, 11 Mar 2025 16:27:55 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-72b6ed7db80sm1650111a34.16.2025.03.11.16.27.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Mar 2025 16:27:55 -0700 (PDT)
-Date: Tue, 11 Mar 2025 18:24:28 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, christian.couder@gmail.com
-Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
-Message-ID: <72x6ku4jylvsnqjapqlfidq6m4yvpzu5gzpweg47phzgjg35fg@laabmtehkes4>
-References: <20250310192829.661692-1-jltobler@gmail.com>
- <xmqq34fk7hb7.fsf@gitster.g>
- <xmqqfrjk61bb.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G0nw8GwH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m3svau64"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C981F114011F;
+	Tue, 11 Mar 2025 19:29:29 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 11 Mar 2025 19:29:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741735769; x=1741822169; bh=msrLXiuI/X
+	NtUk60S0ek8S3/C4hFwtnmtTS68qDDH1Y=; b=G0nw8GwHXQfZQH2ACzf+bq9Vni
+	VninKOtjcjhtTrItSc0OGc1og+bNksbMcmgCbIMSz+0yOwRUEFTAchOuGSlUn7Eu
+	YqnKquVVzmabozH1VWMPMEgoVSHY+r/JqbK4yAH3Lc3f8fzfdalUkogxv6jvBooN
+	8Nk/oUKM+QOaJYFiFMBDpO3PSkfwXIGDfD+KwPv06lOjDcuXx/Uk2kGWqlU1MH/G
+	LC5fZM0Oo87PPRq+g6gPzxfXtO8QbARM0jtJG18d90bs91Fj/0+lXI/njl+LB0K5
+	5bXEEHLzvQkVPjbXy2v9ZAGhL+REv38Cop9NV2oklYEqyVawG/bAk+2y0YzQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741735769; x=1741822169; bh=msrLXiuI/XNtUk60S0ek8S3/C4hFwtnmtTS
+	68qDDH1Y=; b=m3svau64e5NTNJ8LWZahcJrGm+i/8yCq4ujZrnOdHsBvV/6a+/I
+	x4ELP6Y31lBFqi+51uDsxQ/ErlBYPRXxyTdZ5+3dt7/nUQjFAQtP9ElLRvma0MNM
+	d+nTSFNrUv61gMSm9MGzy2HfOCrhwjfuV+BbKGQ+5EEbJ/YPkYwkJ0G1qEXG1Eht
+	3mDLpLCgmb74wPzM9K0BH3m184RnPGCVFM/7qf6WK/Y6Big6idwlEzuwqfwR55o/
+	23g3b6Z6zO0i/jeipToPTU7mkRu0WOYfyJ0Hp0/gRwLwF56HrHrHRBVbCUr2s9zK
+	imSRywtKrpzkBwVea2HWnZdeGPiVAfN+D6w==
+X-ME-Sender: <xms:WcfQZ0sNOv3rPah3XIfczHseSQKxX1eipdynuWR31f-UMdywTVbZEw>
+    <xme:WcfQZxcnw4xAqKWLhh9kuZcV4MDUA1wsAjOkgAuohdf2kpNEHh7PLsLp9CKNimmUG
+    wDha2NEKKv8D2RH2g>
+X-ME-Received: <xmr:WcfQZ_ymyjbYMnsRYJ1OEmCiWxs7J7lcGd8YGPsfJnffA0yYSX5BV0OVH7GOm6Jq0VWwat48UuCEL5h3b399CPdT77a4T_HKuDnV>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdefheduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
+    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvthhhohhmshhonhesvggufigrrh
+    guthhhohhmshhonhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdr
+    tghomhdprhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehjohhhrg
+    hnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehtohhonhes
+    ihhothgtlhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:WcfQZ3PtgiMlvgGDactAWicn36p80oWfzx3pZr4kL_ISstgsurtiGw>
+    <xmx:WcfQZ08wXJzBBVNxCrGeNah6Tm3na2eCHW4iwrLKOxiQWO4qzbzqBA>
+    <xmx:WcfQZ_UnYvIEwEgto4Zww0pyDebGoQtNVjB77NHA3b-s-nUfLisiYw>
+    <xmx:WcfQZ9eyKiK-X-27Rh2_zVTIOx437hB6DCsA4XqByO5yNC3NhRP8sQ>
+    <xmx:WcfQZ4RGoeCGJJKIDaUbsbrnL1cHphqe1eE3KSmH5lvGkFpVRvy2aB-n>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Mar 2025 19:29:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Edward Thomson <ethomson@edwardthomson.com>,
+  Justin Tobler <jltobler@gmail.com>,  Johannes Sixt <j6t@kdbg.org>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Toon Claes
+ <toon@iotcl.com>
+Subject: Re: [PATCH v6 00/18] reftable: stop using "git-compat-util.h"
+In-Reply-To: <xmqqjz9nkrqt.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	18 Feb 2025 10:55:06 -0800")
+References: <20250127-pks-reftable-drop-git-compat-util-v1-0-6e280a564877@pks.im>
+	<20250218-pks-reftable-drop-git-compat-util-v6-0-8c1f39fb4c02@pks.im>
+	<xmqqjz9nkrqt.fsf@gitster.g>
+Date: Tue, 11 Mar 2025 16:29:27 -0700
+Message-ID: <xmqqa59r2lk8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqfrjk61bb.fsf@gitster.g>
+Content-Type: text/plain
 
-On 25/03/10 02:08PM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > As this topic is designing essentially a new and machine parseable
-> > format, we could even unify all three formats into one.  For example,
-> > the format could be like this:
-> >
-> > 	<oid> NUL [<attr>=<value> NUL]...
-> >
-> > where
-> 
-> (0) "rev-list" that gives only a sequence of "<oid>" for commit-ish,
->     as well as "rev-list --boundary", would fall out as a natural
->     consequence.  Bog-standard "list of commits" would see a
->     sequence of "<oid> NUL", while a boundary object would see
->     "<oid> NUL boundary=yes NUL".
+Junio C Hamano <gitster@pobox.com> writes:
 
-I had not considered handling the `--boundary` option. It looks like
-boundary objects are printed as part of `show_commit()`, so I can adapt
-the handling and do something similar to missing objects:
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+>> Changes in v6:
+>>   - I have rebased the patch series on top of "master" at 03944513488
+>>     (The eleventh batch, 2025-02-14). On the one hand this gets rid of
+>>     the conflict with the zlib-ng changes, which have meanwhile been
+>>     merged to that branch. And on the other hand it pulls in the new CI
+>>     build for MSVC+Meson, which allows me to have better test coverage
+>>     on Windows to better detect breakage there.
+>>   - Stop moving around Win32 files so that we do the minimum viable
+>>     change in this context. Hopefully, this makes it easier for Dscho to
+>>     integrate into Git for Windows. If it doesn't I don't really have
+>>     any other good ideas for how to do it, so the only alternative would
+>>     be to just ignore Windows altogether.
+>>   - Link to v5: https://lore.kernel.org/r/20250207-pks-reftable-drop-git-compat-util-v5-0-ba2adc79110f@pks.im
+>
+> Thanks.  I think the "unlink" thing on Windows I have was queued
+> depended on the previous iteration of this series so let me make
+> sure that I'd unentangle it while replacing the topic with this
+> round.
+>
+> Will queue.  Thanks.
 
-    $ git rev-list -z --boundary <rev>
-    <oid> NUL boundary=yes NUL
+So, sorry I lost track.  I think I saw you ask Dscho about the
+Windows specific bits once in a thread on What's cooking report,
+but I do not recall the outcome.  Is this topic (and the unlink fix
+that depends on this series) now OK, or would we see further updates
+once 2.49 is tagged?
 
-This would remain consistent with the unified format.
-
--Justin
+Thanks.
