@@ -1,112 +1,86 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A2D261367
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 17:28:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC21824EF6E
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 17:41:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741714102; cv=none; b=r6JJJURJEY0oxtzwc3cxkBmOWoNlE3yFdRIDSDuVEvQs9NJNnHA7If/4yYkkhCAC543Xvl6nuvcgBxCkZKQGcncqZh7VBIJ6/960ngJjMu/Uf/n0aF0asDACRtQykeuK78n9rF/FRcgZYMlBS/Z/zIJjrT5YEhLJw1bYbObUl3Y=
+	t=1741714916; cv=none; b=T6lpTunzN8SVImN6CboZ7r3NbNSBRemQFRqPwuiFUdqsoB1U2uM1BeSKCM6L9Q4AFzJjTS5WzgvyoCOQ0lakV8kzXaDyHsT6zSQl02fyEyrHl5VYZ/qw/sroOZyu1MPzBITzc6ymUvB8PxSOjjjThTGGiy3YcuAK9br5YK8lS5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741714102; c=relaxed/simple;
-	bh=8WTJD3xbjC7Ku/P/O1iulAvIh8LSi5dXj0llgKqbHcA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=k8DmdHNY1KS2RpU+FkoQa3dMba6xZq+OCz/fsdydOWLmU8VSkxg2q8QNU++syKAyCvYnv2X5FQtOdg3hCHkSkuWGw1645fbpZuDc2/YDNNCrByg7Fw6iJSmUXUgrEmBlljs0qQrtdyPh7M8dNwjPsGKskb3jd8c7srQNjAHpsbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A3U/bBn7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vW/miSG4; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741714916; c=relaxed/simple;
+	bh=J67u9yoGvc0xMIu0A1QwY82cOIxGIYBdCvWYbehID2A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VHIccof9dB4GqL5XwlFGd7andI51TQyfOO4NMql5SweQWASK3RDltzfpU1k8Hi0I1QRTnwcFlwIysUxLaxdoxxAXYSk9m2PocZWnS0GWFTOrsgxi0wPZj6SUB7BHSHpmDENCEgNu0bRqhaltO/TI48DGYT1YR1IpijueByUd9B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IvX2GVa+; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A3U/bBn7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vW/miSG4"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 936161140136;
-	Tue, 11 Mar 2025 13:28:19 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 11 Mar 2025 13:28:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741714099; x=1741800499; bh=8WTJD3xbjC
-	7Ku/P/O1iulAvIh8LSi5dXj0llgKqbHcA=; b=A3U/bBn7jLK6uxQoSiI3dPbzmw
-	QlmoFCm11WJKrYx1xZ/vIQs3Pvi2aX8P2L+qQ5TAQlVDWR2d8PrQQJ0EdIP6jtrE
-	EnUP1/VKJAk8StArENE2BEum9BWTn8tEYxaaQ9geoiuyTAR72e2HpXjHRdu+e+9z
-	mLuc2IU6CgTlw8o3fQ7RIa92Q6+rKUTJ3r2vJUHLnu8TENi55O41u/hiWbPF/kIs
-	Zar/gWIlTnA1DAwLlNWmi4/mindtxGC+27j3ql2xSr7WsUy69CRLf8t4N8/Pv6Kk
-	uOSJHAYrHOocAix/4Hl+l9MUZ/ljJ46YulBUyqwzSsXKzZzKpkHxtHc1ZNGg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741714099; x=1741800499; bh=8WTJD3xbjC7Ku/P/O1iulAvIh8LSi5dXj0l
-	lgKqbHcA=; b=vW/miSG4kI3j9reS1zYi/ldbtc1o2t1HqRuYjnNtyWsF0gzuZ4M
-	ZuoRPnz4BFByBDAPL63skRbJYcw2aNxDnZKkGBIrwkUe3/940pS0WzawS7DcFW8o
-	GCjnWwhFyZfUjWrp+fA/JEnnDcniq7hFufM58L7r8lejY0Oc21xSjtDQnofZ6+mo
-	F80PzjZfajtxFRxearHrUsd6mGtta6Q4TBmsqeAKLlFR83I9pQ6ywSgCZCjNlIb2
-	fwYSA3ZJqF8rcRptkFAr8xQ6BOX8SlNux5qs2ol48hJQVgw3L6QyOZ2jR0aIxi66
-	sfTHzy3zUIsFxWnqGxlmBEvDs998aTDD2aQ==
-X-ME-Sender: <xms:s3LQZ79R2Y__jeSMeGpUG3Cyf8vzfr_Z1AhPr0OcYlz9EM-TXXrb9w>
-    <xme:s3LQZ3uEA8XaJLOOxM_zvDYOmMJy1ISOhVsLgWuQteL55IeNSGkAtYi4G_NB4blBb
-    gqgrUTPzyapNf2Xvg>
-X-ME-Received: <xmr:s3LQZ5BCSs6aY2U0yaKbGUPO7Chu_Lcv9BMRAeAtnwZanplwe5FHzGdZSZWh21LzOIe_A9a1q3IQWehGMO2Ad8jkymaMCHUKkNtH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvddvkeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
-    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopegshhgrthgvrghrnhgrvhesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:s3LQZ3cjDw8aMmeuGW_V7LVBPxHOZjF3v7eYKiYzcho7ay80YNaKXA>
-    <xmx:s3LQZwPIRiPQtsj2PewYAvFTGo54xY0GlsxndT1Vl2mIhBOqmEf8yA>
-    <xmx:s3LQZ5l3gBqOLde-BxB908ILUyTswaLUSFDAPkidgTJX3gX8JCPn-A>
-    <xmx:s3LQZ6vzzxUzf5xzO0gH-esIDM-S4knRLfcs0-077XyomRsmUMS86g>
-    <xmx:s3LQZ1rXnGrzml_dFnrtetzx0ltvy2FWv3Ffovka72Bjshx6ykjju9oT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Mar 2025 13:28:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Arnav Bhate <bhatearnav@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Defining timestamp_t as intmax_t instead of uintmax_t
-In-Reply-To: <629c3c21-ab11-42c1-8cb1-34698e736db6@gmail.com> (Arnav Bhate's
-	message of "Tue, 11 Mar 2025 15:30:12 +0530")
-References: <629c3c21-ab11-42c1-8cb1-34698e736db6@gmail.com>
-Date: Tue, 11 Mar 2025 10:28:17 -0700
-Message-ID: <xmqqv7sf32a6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IvX2GVa+"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-22359001f1aso137599775ad.3
+        for <git@vger.kernel.org>; Tue, 11 Mar 2025 10:41:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741714914; x=1742319714; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=J67u9yoGvc0xMIu0A1QwY82cOIxGIYBdCvWYbehID2A=;
+        b=IvX2GVa+LKfDdJFPPimwafhKvloXLEs5c742FIbSmE/GwvUG4lX0JOllYzflNgzQy3
+         T3GMMOgwy4s4CpDjbCwBMTAiutxO8i11mKcl8n0yKxShzq6nujGXt3H/NJ39Osh9eXt6
+         77J7QbGViJfaue9Ygm1v3lk9tTVT3bgiyRdoOG+K3barAD4kLS+MxYOC1qABFZV1yYZz
+         9lME94lRXG3Wbbus0HV+OJmq86mDWsGRxDxMVsWyrTiqQnLZqM1X3rWAzStCy2HNm2RC
+         cH3i2erX/PHf0djRBS03Cb4WX5/EYI0PdJDZL44brIen8M4ikZwRGiXIXArg1tha3KOV
+         5jnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741714914; x=1742319714;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=J67u9yoGvc0xMIu0A1QwY82cOIxGIYBdCvWYbehID2A=;
+        b=NiPUWArjQeHGcaZj95oZ1QH6xHtShbYm4lgLDZ3PMSqwiQTEBZ6wJ5W2pNi7BNVkXE
+         2vf4EEcsM8ugtTEKPUfFz1Bz+GCHE53PMPCaKEcT9bIOO1DqM+EIvsTPwzi8vXyFW6ig
+         IUpRzWwhBhiOQI2VwV5AsVlMV89Up1DKsVczko014Rd9Ig97mhCRAz0FtKdUWJkYpWuP
+         lo/GDB5voS+JVD9TOyxUhvXV/sVG+/UsvNUAZOOZE/qH6PV9L5PbQnZhxYkxFNzuYN9f
+         1qOe2Y354A3iWkFg+XTPZgcdh7w5nG4n6xhO2lMgdhPmRijQQTiwJCIOBXWKsCZlSrEO
+         jw9A==
+X-Gm-Message-State: AOJu0Yz3MN5WH+GfWlDVG9Etqvz9b4e4Kvnwa/merLwETEE6oOM7vN2/
+	hNmAcTcYQ8jYZl3dIW7NvpKvyaJt1fR4Ego0XzJneCGTCObbC1cqiPnpva6tDgg8+RDEmsgRvUY
+	XrdjsUZrURDl4YeONebV2yFOdf80=
+X-Gm-Gg: ASbGncuMOHlzXSvlle9kbvt79nkzvvjVyzieqdg9Bcq2aX7o9sxlKr3CkVlI9Oza91W
+	tEEMNIEVPOH5ZSZzOujkfOKfxFNIqFdHk/oINqhoaPbsPBqxyiMH2zSOnaS0evrXqTqGpb/Vk8B
+	gj5cxbWGuLbYGQ/GTxHAt1d/ohm7U=
+X-Google-Smtp-Source: AGHT+IHFq4V5Yr9mezOpZLvkeZ5Lm+G0w4jV0cIBLPS+elLST1D58yJQipdDmFHcYVMbhZ5LvVZgLtiPQfEJBVcQOWs=
+X-Received: by 2002:a05:6a00:4fc6:b0:735:7bc0:dcda with SMTP id
+ d2e1a72fcca58-736aa9b3cbbmr23843538b3a.5.1741714913979; Tue, 11 Mar 2025
+ 10:41:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250309153321.254844-1-ayu.chandekar@gmail.com>
+ <20250310151048.69825-1-ayu.chandekar@gmail.com> <20250310151048.69825-3-ayu.chandekar@gmail.com>
+ <CAOLa=ZT=zGTF2DLEy9VjXhcUN3wEi7_R=8O6nV-TtBXKT=ENXg@mail.gmail.com>
+In-Reply-To: <CAOLa=ZT=zGTF2DLEy9VjXhcUN3wEi7_R=8O6nV-TtBXKT=ENXg@mail.gmail.com>
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Tue, 11 Mar 2025 23:11:43 +0530
+X-Gm-Features: AQ5f1JpO8xtVPYprFLMrHKIEjNpRA4Dg5WZbXrY4M9Mr20KlphlJjxOBT2yiDsw
+Message-ID: <CAE7as+YBnOd3jTYVzmHNjei0gjhMwsV3XGk1Y7Vi45CvzJTo4A@mail.gmail.com>
+Subject: Re: [GSOC PATCH v2 2/2] attr: use `repo_settings_get_attributesfile_path()`
+ and update callers
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, shejialuo@gmail.com, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 
-Arnav Bhate <bhatearnav@gmail.com> writes:
+> Can't we modify 'git_check_attr()' to also receive a 'repository'? If
+> not, perhaps it would be much simpler to simply pass 'the_repository'
+> everywhere and cleanup this file in another follow up series?
+>
 
-> timestamp_t is a data type defined in git-compat-util.h as uintmax_t since
-> 28f4aee3fb (use uintmax_t for timestamps, 2017-04-26). It was introduced with
-> dddbad728c (timestamp_t: a new data type for timestamps, 2017-04-26) to replace
-> use of both time_t and unsigned long for time-related uses.
+Right, that was one of the things I considered too. But since `git_check_attr()`
+is used in a lot of widely used code paths that don't currently pass a
+struct repository, it felt like threading repo through all of them would
+create a much larger change that I intended for this patch series.
 
-I do not think the object format and the existing object parsers are
-prepared to handle timestamp before the epoch.
-
-You may want to go back to the list archive for discussions around
-the choice of the type back then, which should have enough
-information to go by.
-
-https://lore.kernel.org/git/20170228200145.ymbqmxwrbbrwagks@sigill.intra.peff.net/
-
-might be a good starting point.
-
-https://lore.kernel.org/git/?q=f:peff@+d:20170201..20170430+timestamp_t
-
-gives 6 entry points to a single large thread that may be worth
-following before tackling this topic further.
-
-Thanks.
+That's why I decided to stick with `the_repository` for now, and perhaps revisit
+the cleanup in a follow-up series once the proposed changes are
+accepted by the community.
