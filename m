@@ -1,247 +1,151 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3925A125B9
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 23:10:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC4C14F117
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 23:23:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741734637; cv=none; b=YoI2a05Fs/ZpfXDjqlzi4LNR5FuMbsxcYWhKgBm4peGifYG+85StCsVAGyzp5FCuZ5guhyrqHq/TMcjdys6ugXbUced/pxar6gzYL6QP3L7ORW91F8eJh8495djRT6GGZbEGZ+zUULQ3DIov4FviwEIIpa100IXMeM/zOv6uRxk=
+	t=1741735395; cv=none; b=dsDam7O/2qRglxJAfvOrSQgS/zk7MGShWSpqNNkWNzMWovRiOu2sNkgP+vdQ7BvlXNotRYhGBfxjn6l7yl9Jfw2N7FfSZU2C7alxZHlaEP80LAuQrWZq4gU3PFgbmkMD8UZK3WqswjjIG9ihCjF499l445F9TRHnliw8B0YiwYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741734637; c=relaxed/simple;
-	bh=Ha/tHtQBj6VYgN2D3aXkrrVyOnIedgqtUP1yqUi75+4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q3x0uqSYm3kJSwKv3KXfNl+6FDvFrHuvTApV1EmXL7nE6nCAxbfddUBOCA6uw/nxcbejYKQ8qOMZRiolAm2YMWua8OPKXk4TeQ5xzrSIuWp7IPKtzO+7ri2GHD8mbDC+RZrWZVOIf+E9Q+bGoyBz6RF3EHkE4J8yU/SBhGCWgjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ae9KgymO; arc=none smtp.client-ip=209.85.128.180
+	s=arc-20240116; t=1741735395; c=relaxed/simple;
+	bh=zSCncc2oDA/Vhum7bKke3ZoZ+3H+226wAKqzOzAbfNU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RKe/fYSyc1LPrgCMaLoDnTbxVoqDcqdw7YJhvtbFbT/VHlaoWkk/cbUP8Snb4xZsB11GdBt2B6IJDjiFylyFsy2NTDlCtT6IBhegajN01UooVWBNkkxlJF286I85s6PFLq+0ItyYgXUmDy8/1Tc6UVavszEkR7/vmoKC75ZUZkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d3DLG+rE; arc=none smtp.client-ip=209.85.167.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ae9KgymO"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6fecfae554bso36494897b3.0
-        for <git@vger.kernel.org>; Tue, 11 Mar 2025 16:10:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d3DLG+rE"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3f6dccdcadaso2043592b6e.2
+        for <git@vger.kernel.org>; Tue, 11 Mar 2025 16:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741734635; x=1742339435; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yBc9keyReq/GgdhVKZWShQpasPsX8+ShIXPAAWWnRUo=;
-        b=ae9KgymOh0ccw1jyPih1RfZJ0F8P87eG3fcZSEkfcu/B+7aABxeeSswNvrrT6Y+c9P
-         FZeQbXPxUy20Xuhxhv7b4XfRBSujSW5Xgb6FPw9uCyPPQHLwD2d1bx50o+iHbYPjp3+S
-         ACmURe3bJOm5QUZrfwEaSQF4rywagWSpEtfVxTp0x5/6uHBSsLjnuGyEmf2GdUOOr+lv
-         zSTgNFiDp4SppdB0DFhk1amwCC2PBtl/6RrUMS9OdjXCQcnzwrpFWf9xzXpzsNGvP+2W
-         fIhb+J4dJe6EQU+ckbn9Eh+rC4hPQz9VTCi41dFdK8MKBo85ZErsCWd6wMafpok+/DQ+
-         j4FA==
+        d=gmail.com; s=20230601; t=1741735393; x=1742340193; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/k/PwpLPSvX8S2WdEIZL1buvlMnhCjN8+oCchuCynI8=;
+        b=d3DLG+rEXyeTxptHGokIfDYDi7DjKKa01/B/NEJJMjfI7DWIo8djsSOKW/efTAJl1r
+         0k7DzT8n/3cXMTyxLkH8HHjZ9OmVm4tmtW70b/MbQmKJAeCUDCxBXQQVXO0gc10UaOHu
+         EYxmHrFFT1KeyO2V4u9PdwbbQFQyqdeAg3AqZTyMURpwUOl7uPnkZANfED6ZmNY5sJyA
+         CEtXBhdSmMp2QkaV1MQcmhQKgpo+QcGGQ4QRGnV4NB7QWFkeZUyAySMM2SGiqYpSrZRC
+         YUrhpIJQf+c9MFKvCbKKyNzyeSZ1NiMJa+3oLd+lcT2FMMlC4FAcOknmysZw23zXvSkt
+         JCWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741734635; x=1742339435;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yBc9keyReq/GgdhVKZWShQpasPsX8+ShIXPAAWWnRUo=;
-        b=IdjmfICTlWwd893AhddU0GvZOl7+oHzjUWWFBi0CXBfWir8UBlftuAbmcPPnPQV4nq
-         8oEoS3v7XdcGctvfgwyucENyiPx4WLEAhklFYMo2BGczyU289KVQG23RlkUw6BmoW2gN
-         uJ+OGsEovaoVxq5aqLJD/Vst3WQg1SSTIkF5ngKuE63lPBHCS2MF+ZpZi04M+CUCWJcX
-         8FdSCz+1KjrTbX2f2rj6/090RJjPploQcHd12QnBnsaoLVkF9H7RC5OuihND8mB4uOkm
-         7LKxb3xv52ObPHzK+fLxQClJuvQ7Ta8iYzItHQ//QFFStqVY0tbHEXYpIA/3BWSgB3oI
-         +zFA==
-X-Gm-Message-State: AOJu0YwqHwxLSgtkG3xuaH4jdxvgAMdHf5t+Sd7j+LIzNTUK7xFVxCuj
-	pvHkjwsU9ydUhr8zEKcghMbG1TdZxH6ebL0vYR55DzuOmRLX4phdzTtimxImPyx4wdDEtYDm9Mt
-	K9G/YJTXSCXQNEjrPGa5020YAEjQ=
-X-Gm-Gg: ASbGncueE1fPqXMfhjxmpFUxyp2xT+FbGBPFybW8vVUx/O6zZ8Shh9Hr1GaxxESdyjI
-	Ywuh5GAfxSEYpSIenandl2kIMYcVjZOl4fiCfY9c13mDIvjo1ffP2xPfc+V8m8bxAOVMruA7zVV
-	oDjFFLcDqpykvz/YkC3twkEosNJAc=
-X-Google-Smtp-Source: AGHT+IFUkckQTLNCsp09TZAcOsflKqZvTdWkLxqtAk+zcsbN6YzWpXNV/Z53+zciyxY1NWgf81KnWj/m3Ho+k3vV73Y=
-X-Received: by 2002:a05:690c:6c90:b0:6f9:97f7:a5c4 with SMTP id
- 00721157ae682-6ff0925f1c3mr71037437b3.29.1741734634958; Tue, 11 Mar 2025
- 16:10:34 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741735393; x=1742340193;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/k/PwpLPSvX8S2WdEIZL1buvlMnhCjN8+oCchuCynI8=;
+        b=DBWr7wxpLMGWRHr6I4SH4jbarUC47x8Br3ivwQgetEiW+V1tU43GY/iEu6krqCQvoo
+         +6a3DgRvXJkx+j2A2T9PF8Mca4xQxoZEVBwq/6pB6ojV1qwk3TMcyL5wIpnR7siXhqk1
+         2754synZ+pYOpeyiEC8K8bx+FP/GggPWI70zL+YfRngbLiaGQXf3+O56sKN2XVBNa3eb
+         j1dVIEDIXZUpsMHeW7UiGTFnc93vPvZTFGJVsEqRlekfMEYc+UR3V38d+8qwJgBZh+xA
+         xGl5wUHHIkDPgEaZfr7m8dQc1yfrtkzeiHEn287ifLWd27Cc3xHGh0BiZmxDLo/71UE1
+         +z0Q==
+X-Gm-Message-State: AOJu0YwsKgmeRCpLaotzh7D2wyFpXWP5kOqJjFumM4Tcjbo8g7kHg1Ng
+	9VuBPxMNBLAO7YddLL/5sHEqrC/GIY82TcofpYOq74H8d4xlGWWYFLs/6Q==
+X-Gm-Gg: ASbGnctMCxjH2yt/zq7LtSE3Z3qHSsIMwaOUxXMzydAgTMmvcq1K7tXxZfue4LXThax
+	jseiu8T85ooGrkKeEjoUAks/HTS3I3MOFyZo4rKLRE+vAeVtKrQ2k6M9BUOVCJXcm9vQuocyBkN
+	OlXQyIC8x+0V21nU1nCb0cozUNBZyQA5txBX00oo7CHhlY2XJRpMPg1w3gv/8yzUa9ctNR9Zal/
+	YpoHDBNdQhsDi91TXiDPNE9sofhavVXs56VZ9I/PkzH/wbnUiLRsIR1EURvZrI1J5OmP4NXaP4k
+	L37r408HnjYGuAx6IAA6YmM3XPcFDgDhDZtXoQ==
+X-Google-Smtp-Source: AGHT+IFcXe6O98V1V2Sv0cjnj8YxZS2ItIdJT4cv+kLVzYmPIXIExrTR/sREkzSRnmkCnFT43pejuQ==
+X-Received: by 2002:a05:6808:18a5:b0:3f7:de07:6e1c with SMTP id 5614622812f47-3f7de0771c9mr6786844b6e.35.1741735393194;
+        Tue, 11 Mar 2025 16:23:13 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-3f7f8a283f5sm1421429b6e.33.2025.03.11.16.23.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Mar 2025 16:23:12 -0700 (PDT)
+Date: Tue, 11 Mar 2025 18:19:45 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, christian.couder@gmail.com
+Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
+Message-ID: <nfrfyg56nq7m2bcko4v4tsfdklrafpkybc6uhqgo25swdeebh3@a7aneoylg46u>
+References: <20250310192829.661692-1-jltobler@gmail.com>
+ <xmqq34fk7hb7.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20250221190451.12536-1-eric.peijian@gmail.com> <20250221190451.12536-9-eric.peijian@gmail.com>
- <xmqqo6yr3wc4.fsf@gitster.g>
-In-Reply-To: <xmqqo6yr3wc4.fsf@gitster.g>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Tue, 11 Mar 2025 19:10:23 -0400
-X-Gm-Features: AQ5f1JqeO9c1qLrYvCRy_YD2yLaP0NTEQQ0koelQTucpXhZlTxu2JqlLCsqPDJY
-Message-ID: <CAN2LT1Cc-UaUpabqcGascicR3nk6ZdFythamKje33Orhy5WoNA@mail.gmail.com>
-Subject: Re: [PATCH v11 8/8] cat-file: add remote-object-info to batch-command
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
-	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
-	jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq34fk7hb7.fsf@gitster.g>
 
-On Mon, Feb 24, 2025 at 3:46=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Eric Ju <eric.peijian@gmail.com> writes:
->
-> > diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> > index 69ea642dc6..47fd2a777b 100644
-> > --- a/builtin/cat-file.c
-> > +++ b/builtin/cat-file.c
-> > @@ -27,6 +27,18 @@
-> >  #include "promisor-remote.h"
-> >  #include "mailmap.h"
-> >  #include "write-or-die.h"
-> > +#include "alias.h"
-> > +#include "remote.h"
-> > +#include "transport.h"
-> > +
-> > +/* Maximum length for a remote URL. While no universal standard exists=
-,
-> > + * 8K is assumed to be a reasonable limit.
-> > + */
->
-> Style.  Our multi-line comment begins with slash-asterisk and ends
-> with asterisk-slash both on their own line without anything else.
->
-
-Thank you. All the style-related comments will be fixed in the next patch.
-
-> > +#define MAX_REMOTE_URL_LEN (8*1024)
->
-> Here and ...
->
-> > +/* Maximum number of objects allowed in a single remote-object-info re=
-quest. */
-> > +#define MAX_ALLOWED_OBJ_LIMIT 10000
->
-> ... here, please have a blank line.
->
-> > +/* Maximum input size permitted for the remote-object-info command. */
-> > +#define MAX_REMOTE_OBJ_INFO_LINE (MAX_REMOTE_URL_LEN + MAX_ALLOWED_OBJ=
-_LIMIT * (GIT_MAX_HEXSZ + 1))
->
-> This is an overly long line.
->
-> > @@ -579,6 +593,61 @@ static void batch_one_object(const char *obj_name,
-> >       object_context_release(&ctx);
-> >  }
+On 25/03/10 01:37PM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> > To make machine parsing easier, this series introduces a NUL-delimited
+> > output mode for git-rev-list(1) via a `-z` option following a suggestion
+> > from Junio in a previous thread[1]. In this mode, instead of LF, each
+> > object is delimited with two NUL bytes and any object metadata is
+> > separated with a single NUL byte. Examples:
 > >
-> > +static int get_remote_info(struct batch_options *opt, int argc, const =
-char **argv)
-> > +{
-> > +     int retval =3D 0;
-> > +     struct remote *remote =3D NULL;
-> > +     struct object_id oid;
-> > +     struct string_list object_info_options =3D STRING_LIST_INIT_NODUP=
-;
-> > +     static struct transport *gtransport;
-> > +
-> > +     /*
-> > +      * Change the format to "%(objectname) %(objectsize)" when
-> > +      * remote-object-info command is used. Once we start supporting o=
-bjecttype
-> > +      * the default format should change to DEFAULT_FORMAT.
-> > +     */
->
-> Style.  Closing asterisk-slash aligns with the asterisk on the
-> previous line.
->
-> > +     if (!opt->format)
-> > +             opt->format =3D "%(objectname) %(objectsize)";
-> > +
-> > +     remote =3D remote_get(argv[0]);
-> > +     if (!remote)
-> > +             die(_("must supply valid remote when using remote-object-=
-info"));
-> > +
-> > +     oid_array_clear(&object_info_oids);
-> > +     for (size_t i =3D 1; i < argc; i++) {
->
-> Pointless mixing of "size_t" and "int".  We have declared "int
-> argc", which is perfectly a sensible type, since we know that the
-> value of it would not exceed MAX_ALLOWED_OBJ_LIMIT, which is 10000.
->
+> >         <oid> NUL NUL
+> >         <oid> [NUL <path>] NUL NUL
+> 
+> Why do we need double-NUL in the above two cases?
 
-Thank you. Change to "int" instead.
+In the `<oid> [NUL <path>] NUL NUL` case, it would technically be
+possible for an object path to match an OID. The use of two NUL bytes
+signals when the object record ends.
 
-> > +             if (get_oid_hex(argv[i], &oid))
-> > +                     die(_("Not a valid object name %s"), argv[i]);
-> > +             oid_array_append(&object_info_oids, &oid);
-> > +     }
-> > +     if (!object_info_oids.nr)
-> > +             die(_("remote-object-info requires objects"));
-> > +
-> > +     gtransport =3D transport_get(remote, NULL);
-> > +     if (gtransport->smart_options) {
-> > +             CALLOC_ARRAY(remote_object_info, object_info_oids.nr);
-> > +             gtransport->smart_options->object_info =3D 1;
-> > +             gtransport->smart_options->object_info_oids =3D &object_i=
-nfo_oids;
-> > +
-> > +             /* 'objectsize' is the only option currently supported */
-> > +             if (!strstr(opt->format, "%(objectsize)"))
-> > +                     die(_("%s is currently not supported with remote-=
-object-info"), opt->format);
-> > +
-> > +             string_list_append(&object_info_options, "size");
-> > +
-> > +             if (object_info_options.nr > 0) {
-> > +                     gtransport->smart_options->object_info_options =
-=3D &object_info_options;
-> > +                     gtransport->smart_options->object_info_data =3D r=
-emote_object_info;
-> > +                     retval =3D transport_fetch_refs(gtransport, NULL)=
-;
-> > +             }
-> > +     } else {
-> > +             retval =3D -1;
-> > +     }
->
-> Minor style nit, but when everything else is equal, writing the side
-> of smaller body first would make it easier to follow if/else, i.e.
->
->
->         gtransport =3D transport_get(remote, NULL);
->         if (!gtransport->smart_options) {
->                 /* error */
->                 retval =3D -1;
->         } else {
->                 ... a lot of real code here ...
->         }
->
-> > +static void parse_cmd_remote_object_info(struct batch_options *opt,
-> > +                                      const char *line, struct strbuf =
-*output,
-> > +                                      struct expand_data *data)
-> > +{
-> > +     int count;
-> > +     const char **argv;
-> > +     char *line_to_split;
-> > +
-> > +     if (strlen(line) >=3D MAX_REMOTE_OBJ_INFO_LINE)
-> > +             die(_("remote-object-info command input overflow "
-> > +                     "(no more than %d objects are allowed)"),
-> > +                     MAX_ALLOWED_OBJ_LIMIT);
->
-> Nobody guarantees this user gave a request for more than 10000
-> objects; after all it may have been an overly long URL that busted
-> the line length limit, no?
+Without someother mechanism to know when a record starts/stops, even the
+`<oid> NUL NUL` case would need the two trailing NUL bytes to avoid
+being considered a potential path.
 
-Yes, the error message is indeed misleading here.
-In the next patch, the behavior will be updated as follows:
+If the output format would not result in any additional object metadata
+being appended, we could use a single NUL byte to delimit between
+objects in this case, but always using two NUL bytes allowed for a more
+consistent format.
 
-1. If strlen(line) >=3D MAX_REMOTE_OBJ_INFO_LINE, we will die with a clear =
-error:
-"remote-object-info input too long".
+> 
+> >         ?<oid> [NUL <token>=<value>]... NUL NUL
+> 
+> This one I understand; we could do without double-NUL and take the
+> lack of "=" in the token after NUL termination as the sign that the
+> previous record ended, though, to avoid double-NUL while keeping the
+> format extensible.
+> 
+> As this topic is designing essentially a new and machine parseable
+> format, we could even unify all three formats into one.  For example,
+> the format could be like this:
+> 
+> 	<oid> NUL [<attr>=<value> NUL]...
 
-2. After step 1, when calling get_remote_info(opt, count, argv), we
-will check object_info_oids.nr.
-If `object_info_oids.nr > MAX_ALLOWED_OBJ_LIMIT`, we will die with:
-"no more than %d objects are allowed", MAX_ALLOWED_OBJ_LIMIT.
+I was also considering something similar. This format could allow other
+object metadata like `--timestamp` to be supported in the future with a
+more flexible format. In the next version I'll implement a unified
+format here.
 
->
-> > +     line_to_split =3D xstrdup(line);
-> > +     count =3D split_cmdline(line_to_split, &argv);
-> > +     if (count < 0)
-> > +             die(_("split remote-object-info command"));
->
-> Here, the code could check if count busts MAX_ALLOWED_OBJ_LIMIT, but
-> it doesn't.
+> 
+> where
+> 
+>  (1) A record ends when a new record begins.
+> 
+>  (2) The beginning of a new record is signaled by <oid> that is all
+>      hexadecimal and does not have any '=' in it.
 
-Yes, a check is needed here. Please see the previous reply.
+I think this is a good idea. By always appending printed object metadata
+in the form `<token>=<value>`, we know that any entry without '=' must
+be the start of a new record. This removes the need for the two NUL
+bytes to indicate the end of a record.
+
+I'll use only a single NUL byte to delimit in the next version.
+
+> 
+>  (3) The traditional "rev-list --objects" output that gives path in
+>      addition to the object name uses "path" as the <attr> name,
+>      i.e. such a record looks like "<oid> NUL path=<path> NUL".
+> 
+>  (4) The traditional "rev-list --missing" output loses the leading
+>      "?"; it is replaced by "missing" as the <attr> name, i.e. such
+>      a record may look like "<oid> NUL missing=yes NUL..." together
+>      with other "<token>=<value> NUL" pairs appended as needed at
+>      the end.
+
+I think this is good. Instead of prefixing missing OIDs with '?', we can
+just append another token/value pair `missing=yes`.
+
+Thanks,
+-Justin
