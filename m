@@ -1,106 +1,80 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5A022257B
-	for <git@vger.kernel.org>; Tue, 11 Mar 2025 23:44:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FC2225764
+	for <git@vger.kernel.org>; Tue, 11 Mar 2025 23:57:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741736654; cv=none; b=Pn1sItxHn4BFalyiCMApytGhID92i3ImFldMCV7ES7apsq6qpRKwmWb4d965Ig5JuLxnZ8NcAIek/rAjdjwTkZXI527uZj8sosAqGHDV/UT/9vwF+gB588nFoSjNQriaIbHG1AUevqleSdIZEFcd0gBFIe58wcHka9Aj0Vc24l0=
+	t=1741737445; cv=none; b=fZiS4IHMXnLw8aoxwfcFf9XfYMXBHpyuTjx0WZZKAW/kBJrLnYVjFaYRTZfFCB76JwlUj+5/edVJ8c9OOXqUrsOAWMs5cVTl2J3WYZSfFeDa6ka/j6AeQdK8q+wObamMhX3QQ5zQTKN/0LtiCkURh6j+rrdxnzl/NckXV2b1wkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741736654; c=relaxed/simple;
-	bh=4SbMtQ6iu4Hbm7u5LDerHcUat3i2u3FBGpV2ZV6Ft/I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Lvuh7BL2RxYZSboPJDvJJVWLpPEyfLLt/Lkf0hhbCtIv5MCbZLwh2r1TcvDr45S+tQ0+fpdZGQAZE6T8qYxZIp6SNto5BjlsADMSNqSu3dj6ANtUxktNNOE/to5tRqXaBgs09wjG1aFTI7uhIjXFl0HWaulLsNZiko+c+pkR7nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xPe60ZgT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kMdrWe75; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741737445; c=relaxed/simple;
+	bh=NBEIC3+2yHa5wPptk71LCeCj005cyms4/K8rFXEmG4c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V2BPxyHrHW2M8tIqMrY3CyE0L77VQuq6qqbXYNW6Yuk+D8C+FZMIiozJnmJzdS+aa9aJaDqiY1DVfpHuTAGkt6MXZQdJzaP7/2fuvvqRja8oTnfN/PlGmSt4WfZasDhFbhgb8/I2RgDZoll1AixbhQGGHhzujswe1w5gOOWgDwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Gmb2hcCI; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xPe60ZgT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kMdrWe75"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id B90AA1382E05;
-	Tue, 11 Mar 2025 19:44:11 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 11 Mar 2025 19:44:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741736651; x=1741823051; bh=C0xh6HBX/s
-	N2OdGFEG14SJghTS47NwYd+Y9IUOO4yZg=; b=xPe60ZgTzHu8+ILQaNYCGtsnko
-	uesSs2GwJMd02jIga9h3X99Znzfob8kMFaEx2WUm1CCXUEaNm+RhH3stZe0CVXsw
-	4Znfdgn+d9Le2drfpjoZrxGRhZ/EeMJ1GX90ssWm3kxHeKz5XQEnFFyYjndC1any
-	SmlLG5LfnlcMKXxljOvnPnYj87hv0MF1gbK/7+GkZSvVqR+os0r9eQpRvMEGFvOG
-	AQ3PH2UPOV5IwLe9JCR0b1E7BkJuJG0whJoL5/W67Io3ro1ls7raZZgacvmHsaVr
-	Mf0nF0h0uQ5jtQAXQwmJCiN+9PikPcrhpMGD5hTmFAwuHrjKGdznKaWUANpw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741736651; x=1741823051; bh=C0xh6HBX/sN2OdGFEG14SJghTS47NwYd+Y9
-	IUOO4yZg=; b=kMdrWe75cxYssOegx/M1i0Juo8erNIJ3gS0t3kR+dUiLV0wCily
-	J8mpLd/PONH/JLt+S3IUm0s6cXAXEM6/xFU3c+5+id7zdmULWUr/K9PRfFc2ZTlm
-	HALc2EZgwAsQRIPrK87FRm2J6a5KMu96gAv2En2KaaYGjnidONBL6V1/ca/iVDK3
-	zuBCcGpG/3gB7ZPjSqlkEryg1MVNYpTJcD5GT38UIBH6cxcgpqBYSX/MTAweA1cZ
-	dawhx59h8B0NdBdbd6t6feXa+jsV4KjT2xszgCv3AtWuCEyJtOfnFm9P1M0ZLvr7
-	4agcLpDSS5oz31Y0fEJt1SapfrRskcaZ70A==
-X-ME-Sender: <xms:y8rQZ3pojqgoN9EX3LdTsVWE2xiPkGJpmzFlVkBJX11W8_N5n5ue3g>
-    <xme:y8rQZxo07hqvTK9tR0pP_6d4YQHMd0RugcHzMJalnn1uX9qy5fcYBSlIYPQ9Z4iAH
-    J7Q0I1LKIwsOpo4kg>
-X-ME-Received: <xmr:y8rQZ0PjkwWODUjorhaRhHkIsXMJAMenkSJ21cobWF2bVwBXycb4rQCWEfAjUE_cg27NJbnuVAbOaAKtiHBlr73GN5geMw5plCwX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdefheehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheptghhrhhishhtih
-    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:y8rQZ65hzR5GfDm_eMLEir5Gy9i-wSa7LidgXbzkNMVrRs3w4Jjo-Q>
-    <xmx:y8rQZ26v4M_A0qgmbMGKOK0CbbBdCT1FoaNYA3taVvVklaFLx3NaxQ>
-    <xmx:y8rQZygilv41GZyP-4nwjDmiealAox5uUoX8ZSLGRuiaXQjXT1MTRw>
-    <xmx:y8rQZ44MGujGNXHPt4ZCsrtMJKnIn8tCwReYo01KAhLgZOYZFsNpdg>
-    <xmx:y8rQZ4SDVCzzpoX-nJZUB_PsNlgAKoa_4xsKXgM-Qd0KOpoVSKhtncbK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Mar 2025 19:44:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Gmb2hcCI"
+Received: (qmail 5915 invoked by uid 109); 11 Mar 2025 23:57:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=NBEIC3+2yHa5wPptk71LCeCj005cyms4/K8rFXEmG4c=; b=Gmb2hcCIXxadNl0B77+V2+Zskrbn7diq4tjnshqmEqHTh5VOrvW39/cPfMMdsqh+DAC3Bmf3YZr8T0D/d6JbTrJOtHT0A3sPiYkOsMNcM3c1XtOALUtjdW9XvlLxt2kFj+wZAHCnF7Mt2tW92zC8ho9yxvUVjNDulTRRw8YEbd50C4p3ymRQi339zYeUCI+GA0tJZXe3iuzRurmOHIsTFxu0DMKLRAZzmz0YIL/2KTImu1pSSvMOmrQU0TaN2CH7WsSpOjzh8P7RrZf7d6UljaLTyBfIWxFyKuQoBb7wnMU1VCZF9E0dzu3hkShvHoMO6Uc6p38f+o+9OyL8jFMwqA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Mar 2025 23:57:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21069 invoked by uid 111); 11 Mar 2025 23:57:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Mar 2025 19:57:21 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 11 Mar 2025 19:57:20 -0400
+From: Jeff King <peff@peff.net>
 To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  christian.couder@gmail.com
+Cc: git@vger.kernel.org, ps@pks.im, christian.couder@gmail.com
 Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
-In-Reply-To: <nfrfyg56nq7m2bcko4v4tsfdklrafpkybc6uhqgo25swdeebh3@a7aneoylg46u>
-	(Justin Tobler's message of "Tue, 11 Mar 2025 18:19:45 -0500")
+Message-ID: <20250311235720.GA73755@coredump.intra.peff.net>
 References: <20250310192829.661692-1-jltobler@gmail.com>
-	<xmqq34fk7hb7.fsf@gitster.g>
-	<nfrfyg56nq7m2bcko4v4tsfdklrafpkybc6uhqgo25swdeebh3@a7aneoylg46u>
-Date: Tue, 11 Mar 2025 16:44:10 -0700
-Message-ID: <xmqq1pv32kvp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250310192829.661692-1-jltobler@gmail.com>
 
-Justin Tobler <jltobler@gmail.com> writes:
+On Mon, Mar 10, 2025 at 02:28:25PM -0500, Justin Tobler wrote:
 
->>  (4) The traditional "rev-list --missing" output loses the leading
->>      "?"; it is replaced by "missing" as the <attr> name, i.e. such
->>      a record may look like "<oid> NUL missing=yes NUL..." together
->>      with other "<token>=<value> NUL" pairs appended as needed at
->>      the end.
->
-> I think this is good. Instead of prefixing missing OIDs with '?', we can
-> just append another token/value pair `missing=yes`.
+> To make machine parsing easier, this series introduces a NUL-delimited
+> output mode for git-rev-list(1) via a `-z` option following a suggestion
+> from Junio in a previous thread[1]. In this mode, instead of LF, each
+> object is delimited with two NUL bytes and any object metadata is
+> separated with a single NUL byte. Examples:
+> 
+>         <oid> NUL NUL
+>         <oid> [NUL <path>] NUL NUL
+>         ?<oid> [NUL <token>=<value>]... NUL NUL
+> 
+> In this mode, path and value info are printed as-is without any special
+> encoding or truncation.
 
-And we may want to avoid excessive bloat of the output that is not
-primarily meant for human consumption, in which case perhaps a
-common things like "missing" and "path" can be given a shorter
-token, perhaps like "m=yes" and "p=Makefile"?
+I think this is a good direction, but I have two compatibility
+questions:
+
+  1. What should "git rev-list -z --stdin" do? In most other programs
+     with a "-z" option it affects both input and output. I don't
+     particularly care about this case myself, but it will be hard to
+     change later. So we probably want to decide now.
+
+  2. I was a little surprised that rev-list already takes a "-z" option,
+     but it doesn't seem to do anything. I guess it's probably picked up
+     via diff_opt_parse(), though (I think) you can't actually trigger a
+     diff via rev-list itself. So even though this is a change in
+     behavior, probably nobody would have been using it until now?
+
+     If it is possible to see some effect from "-z" now (I didn't dig
+     very far), then it may be better to continue to let the diff
+     options parser handle it, and simply pick the result out of
+     revs.diffopt.line_termination. As your patch 3 is written, I think
+     the diff code probably doesn't see it anymore at all.
+
+-Peff
