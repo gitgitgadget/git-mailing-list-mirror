@@ -1,257 +1,220 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1C3230BFB
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 08:19:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2ECF235345
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 08:23:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741767561; cv=none; b=c/93L71zvC304ZKUo5NIIWAYr1CODwCSuYbRztDNi+2HNtJ6MeoHdcbjOjktXZqnmBazR/4Sg2mXv9qMmgug1ikE1VB3HPcrXxcPhozlxW8OvMI4xRBn/SrghCB/3KvbTXjc1E6pC24bEm1S9uVxS06DpTRAIF6YhVBWo5vE9ZQ=
+	t=1741767802; cv=none; b=Ip2ARTsj7KSgfh0e42I1sGJe91k7VScaeSBBcv7MrUAdXhay/XTk64uHoA5dMFzoD9XkMja4NX07GH+XWTVBtL3SKi0ebOKe7cGtTTmB77Yj9eE/xqR7+ZHg0A3Nf/p0ECABkNFJm2FRFuySkdD7VBGoWuZ9osYw08guIjm8ggI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741767561; c=relaxed/simple;
-	bh=FSYMM9Ml9ufUxGWczuCZL/m3atys67yK4m5US10li4Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q2KZkOWD6honzvxqLlIWbg/oPykJTXXdh4nW0OWhVjvmpb2a8WLWxf7ewTBNeiK4LBEGdryB5d9D/3OGddNxrggC2ZE06lfhLS9Za3EeMRHtbor/VNenLHCASl4f3ErKF42hr8Hv8bCeanJmMDW0vFV265oiloqm/ARBB7K76Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RgKM6P3c; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741767802; c=relaxed/simple;
+	bh=D1bOqDiQEAP4aTeHgUIqG/iWD9mh8jJOWPbNeoAQLes=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K1NbG+8+OYrh7doxFKmDluH2TEv925N8gr8ISDbt4uFRjHdDBNfE5yPUxInjiXKewOB+RX4nA6u+Hdv161diBqgbHKQD4BTA0dUGZjnYxQIThemyUzciOKZljQkyZQn30yAMOn894qsfA2T1UxhQIF4c6cp/+IU6PU+m4HZBpjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A91+TE8d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fKZGJSJn; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RgKM6P3c"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6e8f43c1fa0so67791036d6.3
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 01:19:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741767558; x=1742372358; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qvFaMQT0yTtub2gPF4mdAeAT/FcUbvr0qGSqlWanxUU=;
-        b=RgKM6P3c61CrTnTqmS/sytwrt1VZbwFYxCm++8tM55zAa0lzSN1OzD/9tRyiI81ZRy
-         I5+AAok/J6bQ/yIkz6dWH3t5Tts0jSW02gPnEgXflQjDITjDnyhL1BMzLzOLXmv0jKIT
-         K+lOGidzjl/I2s3RGc84qmwmpdTIRtZhochYkyNtJldSsNocKKcTiU5FwWc4bETr0uUP
-         Bd8r1IjTZeJaYnwttftVzxlhh5XRt6sZYxh0v9xcmFKz/E13rZWB4iKT26q+YWcuJwyb
-         yfKMQ7WzpfA17ptDRgs+VnM91TX1bpNT7PqXYU1O/oTCgfNUhArSEkQHX+3WH45efi5j
-         j5BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741767558; x=1742372358;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qvFaMQT0yTtub2gPF4mdAeAT/FcUbvr0qGSqlWanxUU=;
-        b=iI7pFoheACjLEAsX+QVfcnk2rtYHa4xwgxeVNxYoTQVIZZXAMcue9h1VRl2NR+cebK
-         h/bxmo7mz6T1vIfPjd5cyvq4FP+09Pf70NjIP+XCqGPgVe2dvsl3F5TYWzRpWw+2tKZR
-         sYY8S4TKtP44oF3TUCdHqmKSGphlHy/8v6+6Jb51mh2NuCShP07wZZBEvstqlHC3WqRB
-         Gx47yqzmR1bJ+m01lCe+4Quy5D01v7xOIayILuM8+iav7lvunHrdfnd4iAjZP7qPrxKU
-         duwIFUmIX4pj8kDVsHksGpH73WOmwL3IAk48Upuf05a/Bg5IS5yOcot/UmmjbclbRakB
-         wiEg==
-X-Forwarded-Encrypted: i=1; AJvYcCUS0Fi9Z18CtUCF8GEMEN+ZohggpfRAZjCgMptAR2aVBoouBKiPL6fj95NIxMns/MSsXvw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw50vlXHPpSAUhDYXAbP146muFj7N2LFrf2yiwHMoH7Du82kCiZ
-	8RU5rJEHb5adZZGITdYeuEWvG1lvbWbj8y/4A0G1TYSdsItEBeuWQtCDQzrvmsM7zjPD8yb92a7
-	2w00jn6c2q+YB7elrp9BJJaloW58=
-X-Gm-Gg: ASbGncuUrk2v7c1t4bDe5omzcwOLuHjKJZOhB62yKRGZj4FrRyxrDNYPG7LvZXnmRor
-	jhEqW1QG1TwKi6eTbNSVB9VKyEcxKJIWjrStPAdHCtfmohouyPqUSiGxBjtsD+aHj20ZPPrU3zr
-	XQX8ooXAUmen2X8nIcT2mSsr1Zj1xtj9vjABwGMQhnz7RXQwlHC1Mf663HRZI=
-X-Google-Smtp-Source: AGHT+IHYzaPLfyjOl9uBZyY85m4y80iS9/tz8BGLa3atE34UjSpOk3AoblW77qk32+QsvarZrWF43HkWgQRkIrQCZbA=
-X-Received: by 2002:a05:6214:76c:b0:6e8:fa7a:14ab with SMTP id
- 6a1803df08f44-6e9005b6618mr270699876d6.6.1741767558388; Wed, 12 Mar 2025
- 01:19:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A91+TE8d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fKZGJSJn"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id A04C21140236;
+	Wed, 12 Mar 2025 04:23:19 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Wed, 12 Mar 2025 04:23:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1741767799; x=1741854199; bh=q2WDnf1xje
+	/EBWirtqGMCl93XosgG6DrbtnD5VWd8Xo=; b=A91+TE8d8eClwivA364NjjkMnr
+	c+2mjfFeBXVqytObu9q+96cZtOscaBvQ0T4AgvY9VZ9IYjnJa+7LkhKYATGmyO6r
+	qMGF8KS5owKauDetfzzBBtl+Wa0/afG5Gw2FNpvpcd0DkdBjKx7R8f7w8mH+NSqU
+	uX9zbkvZP5vGe411239QcTaaBUyMOzdP1DwSTiOqk3bpQcbWxMlLgPcCMGwK0foo
+	8eeuH7Ul5DyIhUBRZSys2dCoFExL2pQ5bJ+OjY7FXstD2UXnTrJZ3lJSmPyZ/VG1
+	jc7W6O+Jl9fBoiqBC6CLmK2kyg4W90cdI0PZ6cG8ysA79Ds7vT64eNp6sgWg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741767799; x=1741854199; bh=q2WDnf1xje/EBWirtqGMCl93XosgG6Drbtn
+	D5VWd8Xo=; b=fKZGJSJnt/KbNAXYlnY+OrTxnfhRMqr1ZfATYrG3RENVfo0HvVJ
+	hlNmfcMVwJf9L9uuP9vv808belkUVQn9kGjfeAQO/BaIPC0l6LZVqYLN1uQXRoEI
+	Dk1QzeC7rKcAkz0QUB4x+UbrzZGpAXg9J26Vz9g23TSaSJa+VX/rZv+Xk3pXRgd1
+	wCQuVKTNXfwpQsN4b8g3Xsem3WN3mv+Ohpn7l8RhSWIg2fXE2s9zwnsPM66cu2pC
+	4NeYl9IEym6TI0lJkHQcosgt93rr6il8Fbh7BbITRxQC+3+3gfxdOdybbbX5ZkkI
+	ObhN//vQnau55pa+bBus4+G6LWBzb2uD1+g==
+X-ME-Sender: <xms:d0TRZ-KumnzkKIjHaayv6horACZNsH22G7_LvfutWzCUF-BUWpZHGA>
+    <xme:d0TRZ2KeSYNpkSSXGOjWeC5QDAv_a5ytYEX5fvADAjLjTONyV_KlIhnLrs0_0OaQg
+    tObgs3hbd0yQxP6fA>
+X-ME-Received: <xmr:d0TRZ-vTXADKUvjy7F_OoqDCIrTict4TU8pF6f2lSUCmN1a1mEACY0Cz95vpurAa63SFR1UlVvBv_Sz4Tnmuro4EZ8HHsJI9vFrRBW1QX0GQhYzCbQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdegheekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgv
+    vghtshhonhhifedtudejsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:d0TRZzbJcvmNiglgJUtbJ68ixrdWSOEscVfr0Fw3wDxHSFwZv5-7kQ>
+    <xmx:d0TRZ1b0seSLQF-5E9oBNu3mL4F0-9VhlsnxDV_2H3u_R0ieDVk4Vg>
+    <xmx:d0TRZ_DoeJVHeYwXrhix_ZF3fdr6dKEzhlAFJBGHm0ct4K4R-qCyAA>
+    <xmx:d0TRZ7ZfoJVaX0qes_wzeH2CC-5_XY2XjroJFV-hzM3DKnwOkp4CqQ>
+    <xmx:d0TRZ5F8m_33YaOLLfH9yZ62Z0Xha34ICWqBcRJp_Ahzt__ZePhAXh5A>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Mar 2025 04:23:18 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 214a0d72 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Mar 2025 08:23:16 +0000 (UTC)
+Date: Wed, 12 Mar 2025 09:23:08 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [GSoC PATCH v2] reftable: return proper error code from
+ block_writer_add()
+Message-ID: <Z9FEbH48tQ9KxzQV@pks.im>
+References: <20250306121324.1315290-1-meetsoni3017@gmail.com>
+ <20250308133349.1591331-1-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+rGoLc69R8qgbkYQiKoc2uweDwD10mxZXYFSY8xFs5eKSRVkA@mail.gmail.com>
- <CABGrwBDLO9=FCjUW_LfJ_RZ95bRXWHFFNvdJfOuiYocGXdj3Mg@mail.gmail.com>
- <xmqqo6ybb48p.fsf@gitster.g> <CA+rGoLfTJSHQZTvNBgfcMmGjJwqak+wGHh9PRhHfqHSxB2p6-g@mail.gmail.com>
- <CAOLa=ZTVOBNMLHE0Wa=vpYdcy56V+S1QdQM1Rk8XWQye32tL0g@mail.gmail.com>
-In-Reply-To: <CAOLa=ZTVOBNMLHE0Wa=vpYdcy56V+S1QdQM1Rk8XWQye32tL0g@mail.gmail.com>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Wed, 12 Mar 2025 13:49:07 +0530
-X-Gm-Features: AQ5f1Jop8V0tFrqfeF0WXkG7zCu1b8kgHAS7pPVNiIpJ0rRcqv-YZ6PNerzFamE
-Message-ID: <CA+rGoLdwGfFD0K+DW-XOJEOx6m-BmOg82T1g_y2u5ieD5vVyWw@mail.gmail.com>
-Subject: Re: [GSoC] Microproject: Updating Documentation
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Mahendra Dani <danimahendra0904@gmail.com>, git@vger.kernel.org, 
-	nasamuffin@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250308133349.1591331-1-meetsoni3017@gmail.com>
 
-Hey Karthik,
+On Sat, Mar 08, 2025 at 07:03:49PM +0530, Meet Soni wrote:
+> diff --git a/reftable/block.c b/reftable/block.c
+> index b14a8f1259..89ab8bbc57 100644
+> --- a/reftable/block.c
+> +++ b/reftable/block.c
+> @@ -49,7 +49,7 @@ static int block_writer_register_restart(struct block_writer *w, int n,
+>  	if (is_restart)
+>  		rlen++;
+>  	if (2 + 3 * rlen + n > w->block_size - w->next)
+> -		return -1;
+> +		return REFTABLE_ENTRY_TOO_BIG_ERROR;
+>  	if (is_restart) {
+>  		REFTABLE_ALLOC_GROW_OR_NULL(w->restarts, w->restart_len + 1,
+>  					    w->restart_cap);
+> @@ -97,9 +97,9 @@ uint8_t block_writer_type(struct block_writer *bw)
+>  	return bw->block[bw->header_off];
+>  }
+>  
+> -/* Adds the reftable_record to the block. Returns -1 if it does not fit, 0 on
+> -   success. Returns REFTABLE_API_ERROR if attempting to write a record with
+> -   empty key. */
+> +/* Adds the reftable_record to the block. Returns 0 on success and
+> + * appropriate error codes on failure.
+> + */
+>  int block_writer_add(struct block_writer *w, struct reftable_record *rec)
+>  {
+>  	struct reftable_buf empty = REFTABLE_BUF_INIT;
 
-I've looked into the mail and have added a PR to Git [1]
-I also sent an email [2] starting a new thread with the patch details.
+I'm in favor of touching up the comment's formatting while at it, but if
+we do so we should use the correct style, which has the opening and
+closing parts on their own line:
 
-1 - https://github.com/git/git/pull/1913
-2- https://lore.kernel.org/git/20250312081534.75536-1-jayatheerthkulkarni20=
-05@gmail.com/T/#u
+    /*
+     * Yadda yadda.
+     */
 
-Looking forward to feedback.
+> diff --git a/reftable/block.h b/reftable/block.h
+> index bef2b8a4c5..0e7c680cf6 100644
+> --- a/reftable/block.h
+> +++ b/reftable/block.h
+> @@ -53,7 +53,7 @@ int block_writer_init(struct block_writer *bw, uint8_t typ, uint8_t *block,
+>  /* returns the block type (eg. 'r' for ref records. */
+>  uint8_t block_writer_type(struct block_writer *bw);
+>  
+> -/* appends the record, or -1 if it doesn't fit. */
+> +/* attempts to append the record. returns 0 on success or error code on failure. */
+>  int block_writer_add(struct block_writer *w, struct reftable_record *rec);
+>  
+>  /* appends the key restarts, and compress the block if necessary. */
 
-Thank you,
-Jay
+We might also touch up this comment to start with an upper-case "A"
+while at it.
 
+> diff --git a/reftable/record.c b/reftable/record.c
+> index 8919df8a4d..d9fba8ff38 100644
+> --- a/reftable/record.c
+> +++ b/reftable/record.c
+> diff --git a/reftable/writer.c b/reftable/writer.c
+> index f3ab1035d6..5cb9d0bf85 100644
+> --- a/reftable/writer.c
+> +++ b/reftable/writer.c
+> @@ -327,18 +327,11 @@ static int writer_add_record(struct reftable_writer *w,
+>  		goto done;
+>  
+>  	/*
+> -	 * Try to add the record to the writer again. If this still fails then
+> -	 * the record does not fit into the block size.
+> -	 * TODO: it would be great to have `block_writer_add()` return proper
+> -	 *       error codes so that we don't have to second-guess the failure
+> -	 *       mode here.
+> +	 * Try to add the record to the writer again.
+>  	 */
+>  	err = block_writer_add(w->block_writer, rec);
+> -	if (err) {
+> -		err = REFTABLE_ENTRY_TOO_BIG_ERROR;
+> +	if (err)
+>  		goto done;
+> -	}
 
+Let's not drop the second sentence of the comment, as it is important to
+give context. Also, let's take a step back here and figure out what this
+function is doing:
 
-On Tue, Mar 11, 2025 at 3:15=E2=80=AFAM Karthik Nayak <karthik.188@gmail.co=
-m> wrote:
->
-> JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com> writes:
->
-> > Hey Junio and Mahendra, Thanks for your responses, they=E2=80=99ve been=
- super
-> > helpful in guiding me as a new contributor!
-> >
-> > On Sun, Mar 9, 2025 at 2:59=E2=80=AFAM Junio C Hamano <gitster@pobox.co=
-m> wrote:
-> >>
-> >> Mahendra Dani <danimahendra0904@gmail.com> writes:
-> >>
-> >> > I'd suggest trying to submit a microproject listed in [1]. Further,
-> >> > please go through the General Microproject Information[2] and
-> >> > MyFirstContribution[3].
-> >>
-> >
-> > I've gone through the links posted by Mahendra and read the micro
-> > projects list too.
-> > I've also explored that we as students can have our own idea as long
-> > as it doesn't get too involved.
-> > These emails actually cleared up a lot about how microprojects are eval=
-uated
-> >
-> >> All good suggestions, but we also welcome students who try to
-> >> scratch their own itch, as long as it is small enough to be suitable
-> >> as a microproject material.  And it is fine to ask if doing X
-> >> qualifies as a microproject or if it is too involved.
-> >>
-> >> The primary objective for a micro-project is to get used to the
-> >> workflow, i.e. working with the community mainly via this mailing
-> >> list, how you explain your changes in your proposed commit log
-> >> message, how to work with those who gave you reviews, how your
-> >> updated submission should look like, etc., etc.  Given that, it is
-> >> rare that anything is too trivial as a microproject material, but
-> >> you would not want to choose something too involved, as it would
-> >> slow you down in learning the procedure, which is the main focus on
-> >> the microproject period.
-> >>
-> >
-> > This really helps set expectations as learning the workflow is my main
-> > goal here, so I=E2=80=99ve picked small fixes that I think will help me=
- get
-> > familiar with the process.
-> >
-> >> Another thing I noticed in the original message that is worth
-> >> reacting is that you do not need to ask for permission to start
-> >> working on anything around here.  "Am I allowed to do X for my
-> >> microproject" is not the question you want to ask; rather "I see
-> >> document X says A, B, and C, but A is outdated and I think it is
-> >> better to phrase it like D.  Would it be a suitable microproject
-> >> material?" is something we can work with. Answers may depend on the
-> >> nature of A, B, C, and D and would range from "nah, A is fine and D
-> >> is not better because ...; don't do it" to "great, yes A may have
-> >> been suitable a decade ago, but no longer relevant, and D would be a
-> >> great addition", to "Yeah, I agree that A is not great, but D is not
-> >> all that better, how about E?", to "Yes that is a great suggestion,
-> >> but wouldn't it may be a bit too much as a microproject".
-> >>
-> >
-> > Got it, I=E2=80=99ll focus on being specific about what I see and what =
-I=E2=80=99d change.
-> > Here=E2=80=99s what I found in "MyFirstContribution.adoc" and "config.h=
-" my
-> > proposed fixes:
-> >
-> > 1. Outdated Function Signature in Documentation In the "Adding a New
-> > Command" section
-> > (https://github.com/git/git/blob/master/Documentation/MyFirstContributi=
-on.adoc#adding-a-new-command),
-> > the signature for cmd_psuh() is:
-> > int cmd_psuh(int argc, const char **argv, const char *prefix);
-> > But the current Git codebase (builtin.h) expects:
-> > int cmd_psuh(int argc, const char **argv, const char *prefix, struct
-> > repository *repo);
-> > This mismatch caused compilation errors when I tried following the tuto=
-rial.
-> > Proposed Fix: Update the signature in the doc to include struct
-> > repository *repo.
-> >
->
-> Yes, this would be nice for users who try to follow the guide.
->
-> > 2. Unused Parameters Handling Not Documented The tutorial code doesn=E2=
-=80=99t
-> > mention that unused parameters (argc, argv, etc.) will trigger
-> > compiler warnings. The current Git codebase uses the UNUSED macro
-> > (e.g., as seen in cmd_check_ref_format in builtin/check-ref-format.c)
-> > to handle this, but the doc skips this detail.
-> > Proposed Fix: Add a note in the doc explaining how to use the UNUSED
-> > macro for unused arguments, and update the example code snippet to
-> > reflect this.
-> >
->
-> This seems worthwhile too!
->
-> > 3. Incorrect Config Function Reference In the "Implementation" section
-> > (https://github.com/git/git/blob/master/Documentation/MyFirstContributi=
-on.adoc#implementation),
-> > it mentions git_config(...), but config.c doesn=E2=80=99t define it.
-> > I had to use repo_config(...) instead, which isn=E2=80=99t documented h=
-ere.
-> > Proposed Fix: Update the doc to use repo_config(...) and explain its us=
-age.
-> > Additional Note: I can also edit the config files to appropriately
-> > correct the git_config() function if needed, but I=E2=80=99d require so=
-me
-> > guidance as to not mess up other programs while doing this as I
-> > believe config.c/config.h is used by a lot of other files too.
->
-> I think for new commands and also for new users, it is not worthwhile to
-> get into how the `USE_THE_REPOSITORY_VARIABLE` macro works.
->
-> So I think it'd be best to modify the documentation to use
-> 'repo_config()' as you suggested here.
->
-> > 4. Outdated Reference Link The doc points to a GitHub repo
-> > (https://github.com/nasamuffin/git/tree/psuh) as a reference
-> > implementation,
-> > but it=E2=80=99s not updated to the latest Git version, which confused =
-me when
-> > I tried following it.
-> > Proposed Fix: Update the link to a maintained branch or clarify its sta=
-tus.
->
-> This is a bit hard, since this is linked to an external repository.
-> Generally the code referred to in this document doesn't seldom change,
-> so I think the easiest way to update this would be to raise a PR to
-> Emily's repository with the update, so the link could stay the same.
-> CC'd Emily in this email.
->
-> I also see some more potential fixes to the documentation, which you
-> could also overtake (if you wish too :))
-> - Remove git-mentoring@googlegroups.com [1].
-> - Rename 'Documentation/git-psuh.txt' -> 'Documentation/git-psuh.adoc'.
->
-> [1]: https://public-inbox.org/git/CAJoAoZnk88ZFZFdEtUxMnUa1OZiXYOgcw8DSbB=
-+A0LzyCPFugg@mail.gmail.com/
->
-> >> To solicit such productive reaction from others, you'd need to be a
-> >> bit more specific than "I see flaws and want to improve".
-> >>
-> >
-> > I seek feedback as to if this mail is well specified or do I need to
-> > improve in any parameters.
-> > I also seek feedback in terms of my understanding with Git workflow
-> > and also with my understanding with Git codebase. Any feedback will be
-> > great for me.
-> >
->
-> I think the changes you suggested would be great to have. Looking
-> forward to the patche[s].
->
-> >> Thanks, and good luck with your microproject selection.
-> >
-> > Thanks again,
-> > Jay
->
-> Thanks for fixing documentation, it is very important to keep them
-> updated!
->
-> Karthik
+  1. We compute the record data and try to append it to the current
+     block. If this succeeds, we can return immediately and are done.
+
+  2. If appending to the current block fails we assume that we have
+     failed because the block is full. This is because reftable blocks
+     have a specific maximum length that we cannot exceed. We thus
+     flush the block and start writing a new one.
+
+  3. We now try to add the same record to the new block again and hope
+     that we can now write the record successfully.
+
+The important part that the TODO comment refers to is in (2), indicated
+by "assume": we don't actually check what the error is that we've got
+from `block_writer_add()`, but simply pretend as if it was
+`REFTABLE_ENTRY_TOO_BIG_ERROR`. This means that we'd even re-try writing
+the record in case we had for example a memory allocation failure, or an
+I/O error, and that is plain wrong.
+
+With your changes we have now started to plumb proper errors through from
+`block_writer_add()`. But that doesn't mean we can just drop the comment
+and bubble up the error. Instead, we should also be adapting the code in
+(2) to do the right thing: we shouldn't _assume_ that the current block
+is full, but instead check the error code returned by the first call to
+`block_writer_add()`:
+
+  - If it is `REFTABLE_ENTRY_TOO_BIG_ERROR` we indeed should flush the
+    current block and try to write a new one.
+
+  - Otherwise we bail out and bubble up the error.
+
+And once we do that, it is fine to remove the comment indeed. It's
+somewhat funny because from my point of view the comment is in the wrong
+spot: it does correctly point out that _this_ particular callsite is
+doing the wrong thing, but it didn't mention that the other callsite
+also has the same problem. And that other callsite is more important
+from my perspective.
+
+So I'd recommend to split up this commit into two commits:
+
+  - The first commit prepares all transitively called functions as you
+    already do.
+
+  - The second commit adapts "reftable/writer.c" and fixes both
+    callsites of `block_writer_add()` to do proper error handling.
+
+Patrick
