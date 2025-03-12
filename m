@@ -1,113 +1,159 @@
-Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3157FBF6
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 20:49:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A851CAA80
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 21:01:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741812571; cv=none; b=tulAhazhhiAeDo2XR3G6VgwXsFjTauFm72UUSir+LfQp+zk4synXoTte8OMkje2YGXcrNKUuhDMRYcOSNPGGxttr1jOOr0usk62X7KJyC2b6GFkSQk1ux9K8ZoSpxlGwT1o9UzqkKw97a1UausY4zmHq1ayeHMPZ/FilL9o8GXs=
+	t=1741813271; cv=none; b=WIcWEjGnC6BVmUaYvImBVbatD9YL47N/aKEWwihYTY8Tt++pnwBtQA6JJYQDk/tKYg8A7Q4YFeTJIcryWK8b5RowPS7xTZ+OSi5Q26AaulI5n4611xBM4H3hqFphhA4asdHv7giXOEAXxBr0DyWRRyMaPFKrblPuG4/4X8d3KI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741812571; c=relaxed/simple;
-	bh=0P5WAA+fKWMVxJo7D8cwDhTRT8ZbbYEjaReIrCBtUbE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eO7dtCbE56t9qskOwY9+dmpMD4NqSZOHnhudFTSgBu6U9IcXAHz9lRB9szrBjWt38mg9/xnZogfRVBUqcsigiRQIbE9O5GLv/mxbZnzXVewovldDf4BdhJmjx96o6N9eDHN0YmrUkJTpwU1tOAAAp8Z1xJVqC9jKo8BUo6kJycg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oz9XLDZB; arc=none smtp.client-ip=209.85.166.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741813271; c=relaxed/simple;
+	bh=NS2QOfVHdgS6AJcMbyudWyaCCCtRNlYvVwYnQsU+yWE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kfGpgKltSNqlCVOzSFk9VfroHRe1YsFMKouEYlDesJ4X8UXlD952PLH2nrcaHpHr4tbFwXtqFVpcRXbqfjdUwgf5slD78qCuibiHNnYDjK9wqba258lRsiqSFoX5mltvz32ypYXAPD0HmpwqCLqMgsAzOWyw/03lCzfqN0LMUwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=eeBRLEtE; arc=none smtp.client-ip=209.85.219.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oz9XLDZB"
-Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-3d46693a5e9so1693795ab.3
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 13:49:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="eeBRLEtE"
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e461015fbd4so268250276.2
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 14:01:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741812569; x=1742417369; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZMg1zJLmxNYe4iLuDaRfElPKVyfCFtVD6FDhYQk1JbI=;
-        b=Oz9XLDZB7FZNolN1L69HDGixR8zJj5DeKzBXWLmLY31Cgju9bJp80PzqhVBf5pRdXN
-         EdhoWUrcvn6G8FYnGUBzfOEViiCCdSkyltsDgvdTMl57Or5BksUIUKIx97hNfbUR9Deq
-         bURS5u6UnC5MfA9rYYNauZYda00wSnfXF9JSSkafO2t4RpKZBHG4WqxxSB2IZf1QSGZj
-         eVivFeI4nA3xMGLvZ9zuMAwvAuzANTd86OtDSa7rubsRcKO1TEz6upbiCzDnhkxlgEh4
-         iPlegwsWDieGFYZqGm1EaFwNRv/uGhFp2GtHmHX0Cm791MiqcTsh3iBQSAYa4irFieoW
-         Oi8A==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741813268; x=1742418068; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OmoTTXB6wfaPEv6zO/zRq6t6WYweKcVPttwFaAkkTdo=;
+        b=eeBRLEtEqdYos1+9Bztinjwlym57gFQYEUZYi3PCFDWSoWm+mdmfzN3Yva/bfMsLfB
+         GJkVWRxpbl6h4Wwbd1wy+5AaNKhZIx2y9psTZAVoRNqYKI4OH2js8lv87VppL/P5l7dt
+         awItegw3Q6zA0m/NZF8OCBS2A6xjW5uRBHaa5rTNSVnRE7bqje3mAZ6BgY0ILIRfm7a1
+         CsklT9SmooZn76AsJhNkYl6HvAelKc8hjzFj5okHh6yVbqTRDEkKhCs4T3KnUh5ZWlZN
+         khg0t8IcpvA4QW3fS5pSt/6blNFYVqS4h+vNNgg2OL71kSx03cB0cqtLfdLd+HILsMlf
+         CDLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741812569; x=1742417369;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZMg1zJLmxNYe4iLuDaRfElPKVyfCFtVD6FDhYQk1JbI=;
-        b=jpc0A8U5G8TcgWXvtxV5zjBmXlu145uHKsSRFi/Vqk6jYdJnBbxUUYDWcDj83FL9Ng
-         MGFdmeT/uFNp6HUcV5W80/1Q8c3jSmKXvhGJIuniJF4br9iQxs4gJwyJJo03O25dcPtu
-         pmyYB3gwm+NwA7YT/sR4oHhhO9ECVTHAviRuDMcGJ9GrbMchyA+MnEgMNWMQ3HtPMXaW
-         Ml7Xmdk8lJtXavCfxnJKmeoLbdI38MSRTBnPmkeu3k85x5gxNgLaiHogb7hlqbRqD4OJ
-         3gtk12jAMLZEWHfqggbGNMKL2tq8baSFPz8u2fFxh4Yf6/NGwnywBKtAi88cSIJCL9L9
-         Tvjw==
-X-Forwarded-Encrypted: i=1; AJvYcCV+9DQllzTocyPApb934WNGCKpB3VhwhqygmW0yWCtl2Z/NiuRuvgLJr3jCtvs54Tez7Bs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YywqMrp9Y44TedI5JG/r+Nv4LqADJX47Vy/alQD4AcNXhR+6huo
-	1tuOEZQO0GoprTxVQ/k25uahqYxUShlQesjcyuR+NvBqPp9aAAS3/XTah3UIdVqoFIM/fA4drtI
-	SjHL7qNh/gGS7H/jNsCSTQ4Coxxw=
-X-Gm-Gg: ASbGncsFJzgjaUi1Pho3AEVElPvfANb3pUev/4InXFCMs4mxsVfXxkfVy+gzC9f+zZm
-	hcicC0hfUqw+ydyEMsDbo0WLUE7t9bIfJMbX+EhWbPXyVLkNo4YXqrhbiS3dOP/FYFHZa5jL7yF
-	QHNvJcAO4S3T5VPFWyVnDSceuDLusD9PugtZYcsQU4b9i6Ciu0eEy+EAhVZgE=
-X-Google-Smtp-Source: AGHT+IG89ltk/T54NyGGasrIBaawEDPirpg/cEHyv/C2YG3cjArnGfqsR7iD/ngI5z8r0caZjxMj3Ncx1/cLPadye+E=
-X-Received: by 2002:a05:6e02:174a:b0:3d3:e296:1c1c with SMTP id
- e9e14a558f8ab-3d468921f95mr95151785ab.9.1741812568905; Wed, 12 Mar 2025
- 13:49:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741813268; x=1742418068;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OmoTTXB6wfaPEv6zO/zRq6t6WYweKcVPttwFaAkkTdo=;
+        b=ptm8Xe3SsgQbk8GvsCeWFZkowyPiYpKOxtMUWTPMOA3FDFDzc6xkugQ5KSGdSmGPtM
+         uOy18pS6lhhczJVTU++N/K6YSnDhL371qxDf8hmxgTzdw0sbL5VyfHroAVrS9ObvwWl/
+         0V3Hw+zHJpugnPbfjImL34NiOY0F4LLmp7oYv7JyDIdpMtMV7uctgxxh1fe3oaFpxeLk
+         tFrbXW+ojoLvEcha+o+OqOqtwG1TsuOBKjAS1WcBJfktv6SZqJDOkT+d5gQcVGoKpkG1
+         Y8f40OPaEMfPtblw6047/ieEqu7+AtPHsZ4l2DMIrNbHGdQd8VXYZ9AqR3aM5JfPjW6s
+         fafw==
+X-Gm-Message-State: AOJu0YzXZY91hy9QL1mupf4a4n+voOX0nIEX6L4yQQ/CJmDflgluASq+
+	mKGobphrNOJPioUICM0cbAarAVkzKW5NtY2rpPNWewtQr91WPn+4lXPuCYbzaiU=
+X-Gm-Gg: ASbGnct2o2m9hPVrC9UWqjzPzhWGcv9sxnEBNaxfHV7MMx8u8K/+hpvgR7HCYoUEnBn
+	XXGfEhn+wQf/F00sofl/E2twlpTiu4Du53lrpgC0S0HgZo195lND0KOAmnRhvjK6O81j0PNOfJZ
+	s5eo8Z60HBdl2mo57vodiButGBKXFMt+LSdRVfj6+fzTK+jwLuCIlw6XsCopU2JWWAPw/wjA8uL
+	1I2rEZpbk8pfdRFQT5LtSLsEbpSVNbY5YmMqooNm2DSFDAqK6invpnjWqjbySupBMOHObExhxp7
+	qaz/5w2DNLuepuz9cAGvNwpoVXgLUQSD4t9x02wKDqlhUmTR97LwegjxQcVXz6I954Wi8HKma1F
+	YQHqe1OqL1JKbDS02AGuv1wv7JWM=
+X-Google-Smtp-Source: AGHT+IH2bQNWz3Js4ps9nVDOx0oYxFpMZeTQNoMReNZpm13MucPZVsDEyXanQEV6ej+nx1aaBT1ZBg==
+X-Received: by 2002:a05:6902:2ec2:b0:e63:6758:6a00 with SMTP id 3f1490d57ef6-e63c5c4f3aemr4516255276.3.1741813268373;
+        Wed, 12 Mar 2025 14:01:08 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e63b54ace28sm1152589276.34.2025.03.12.14.01.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Mar 2025 14:01:08 -0700 (PDT)
+Date: Wed, 12 Mar 2025 17:01:07 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
+	johannes.schindelin@gmx.de, johncai86@gmail.com,
+	jonathantanmy@google.com, karthik.188@gmail.com,
+	kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net,
+	ps@pks.im, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 01/13] pack-objects: extract should_attempt_deltas()
+Message-ID: <Z9H2E9hEWgaS9NnP@nand.local>
+References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
+ <a2ed1f2d4e3946c563f934fcaf149050d50f255f.1741571455.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1740680964.git.me@ttaylorr.com> <cover.1741648467.git.me@ttaylorr.com>
- <f2ca92245ada74825806b50f786aab312275fd85.1741648467.git.me@ttaylorr.com>
- <xmqqikof2pqp.fsf@gitster.g> <Z9Gmo2P3Fnt3JeOs@nand.local>
- <xmqqjz8uxfyq.fsf@gitster.g> <Z9HaYEyYgBYTiia3@nand.local>
- <CABPp-BH0rbieCV4Z11pHOX-mwrtEO-FPNdywV0P5HxXnusdRKQ@mail.gmail.com> <xmqq5xkex9md.fsf@gitster.g>
-In-Reply-To: <xmqq5xkex9md.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 12 Mar 2025 13:49:17 -0700
-X-Gm-Features: AQ5f1JpRRr7tqmZI2neftq1ojESkfaRDWBeG2lZq8p60KPa_7BmPoi_WfFXJOUg
-Message-ID: <CABPp-BH35cn1nXSaF=U=dbSKUxTFL5uP+yUvhbXMi66tJMuhLQ@mail.gmail.com>
-Subject: Re: [PATCH v4 4/6] pack-objects: generate cruft packs at most one
- object over threshold
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <a2ed1f2d4e3946c563f934fcaf149050d50f255f.1741571455.git.gitgitgadget@gmail.com>
 
-On Wed, Mar 12, 2025 at 1:43=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Mon, Mar 10, 2025 at 01:50:43AM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <stolee@gmail.com>
 >
-> Elijah Newren <newren@gmail.com> writes:
+> This will be helpful in a future change, which will reuse this logic.
 >
-> > Would it make sense to break the assumption that --max-cruft-size =3D=
-=3D
-> > --max-pack-size and perhaps rename the former?  I think the problem is
-> > that the two imply different things (one is a minimum, the other a
-> > maximum), and thus really should be different values.  E.g.
-> > --combine-cruft-below-size that is set to e.g. half of
-> > --max-pack-size, and then you can continue combining cruft packs
-> > together until they do go above the cruft threshold, while avoiding
-> > actually exceeding the pack size threshold?
+> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> ---
+>  builtin/pack-objects.c | 53 +++++++++++++++++++++++-------------------
+>  1 file changed, 29 insertions(+), 24 deletions(-)
 >
-> With below-size and max-size set to say 180 and 200 respectively, an
-> attempt to combine the crufts may end up filling a cruft pack to 170
-> but the smallest of the remaining cruft may weigh 40, which means
-> including it would cause the max-size to be exceeded.  In such a
-> scenario, there may not be a solution to satisfy given constraints,
-> i.e. go above the below-size without stay below the max-size.
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 58a9b161262..1d0992a8dac 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -3196,6 +3196,33 @@ static int add_ref_tag(const char *tag UNUSED, const char *referent UNUSED, cons
+>  	return 0;
+>  }
 >
-> So I am not sure if the approach would really solve much.
+> +static int should_attempt_deltas(struct object_entry *entry)
+> +{
+> +	if (DELTA(entry))
+> +		return 0;
+> +
+> +	if (!entry->type_valid ||
+> +	    oe_size_less_than(&to_pack, entry, 50))
+> +		return 0;
+> +
+> +	if (entry->no_try_delta)
+> +		return 0;
+> +
+> +	if (!entry->preferred_base) {
+> +		if (oe_type(entry) < 0)
+> +			die(_("unable to get type of object %s"),
+> +				oid_to_hex(&entry->idx.oid));
+> +	} else if (oe_type(entry) < 0) {
+> +		/*
+> +		 * This object is not found, but we
+> +		 * don't have to include it anyway.
+> +		 */
+> +		return 0;
+> +	}
+> +
+> +	return 1;
+> +}
+> +
+>  static void prepare_pack(int window, int depth)
+>  {
+>  	struct object_entry **delta_list;
+> @@ -3226,33 +3253,11 @@ static void prepare_pack(int window, int depth)
+>  	for (i = 0; i < to_pack.nr_objects; i++) {
+>  		struct object_entry *entry = to_pack.objects + i;
 >
-> Other than that a separate names, especially losing "max" from the
-> threshold that really does not mean "max", would solve the confusion
-> that comes from naming, that is.
+> -		if (DELTA(entry))
+> -			/* This happens if we decided to reuse existing
+> -			 * delta from a pack.  "reuse_delta &&" is implied.
+> -			 */
 
---max-pack-size is a constraint.  --combine-cruft-below-size is not.
-Think particularly of the case where the user doesn't even have any
-cruft packs yet and has only accumulated a little bit of cruft.  That
-option is merely a guide post to say that if it's smaller than that
-size, then feel free to keep trying to add to it (so long as it
-doesn't violate constraints such as --max-pack-size).
+It looks like this comment went away when this part of prepare_pack()
+was extracted into should_attempt_deltas().
+
+> -			continue;
+> -
+> -		if (!entry->type_valid ||
+> -		    oe_size_less_than(&to_pack, entry, 50))
+> +		if (!should_attempt_deltas(entry))
+>  			continue;
+>
+> -		if (entry->no_try_delta)
+> -			continue;
+> -
+> -		if (!entry->preferred_base) {
+> +		if (!entry->preferred_base)
+>  			nr_deltas++;
+
+Makes sense; should_attempt_deltas() doesn't itself change nr_deltas, so
+we want to do it ourselves here. Looking good!
+
+Thanks,
+Taylor
