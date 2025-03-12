@@ -1,62 +1,62 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A851CAA80
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 21:01:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A561EE7C6
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 21:14:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741813271; cv=none; b=WIcWEjGnC6BVmUaYvImBVbatD9YL47N/aKEWwihYTY8Tt++pnwBtQA6JJYQDk/tKYg8A7Q4YFeTJIcryWK8b5RowPS7xTZ+OSi5Q26AaulI5n4611xBM4H3hqFphhA4asdHv7giXOEAXxBr0DyWRRyMaPFKrblPuG4/4X8d3KI8=
+	t=1741814060; cv=none; b=hV89CHNej2JKB335FvTzuirM94Scgy5apHaj5Td4CatTm9759ZeDzPWUkbXP24IbidAanZpRz/XRJwsrW5nyg5DXs6C44VQVJHkN7MoCC8KT0KEM+0qajLkbZW4RAppQuXf31o1i09RYumMBFZHLk/tU3SC4/8O3o+qUIizkrko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741813271; c=relaxed/simple;
-	bh=NS2QOfVHdgS6AJcMbyudWyaCCCtRNlYvVwYnQsU+yWE=;
+	s=arc-20240116; t=1741814060; c=relaxed/simple;
+	bh=hJWdvt8dK0weAd7s+H2VS4e03i8Bboc4gOyJDwmQbf0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kfGpgKltSNqlCVOzSFk9VfroHRe1YsFMKouEYlDesJ4X8UXlD952PLH2nrcaHpHr4tbFwXtqFVpcRXbqfjdUwgf5slD78qCuibiHNnYDjK9wqba258lRsiqSFoX5mltvz32ypYXAPD0HmpwqCLqMgsAzOWyw/03lCzfqN0LMUwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=eeBRLEtE; arc=none smtp.client-ip=209.85.219.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=bSKnwZelEvCwaSi1BUoU18v2FvS0STj72zOab5lryhsLMuXPyqERZv71EpMGqRzmKFWKL2jgwpZys/5ETRm4dS+jKiqdzN41RSXAWucZ/Hp0B2JUAqI2SK74FdyOXktGikW/xsqxM/u6kkjo5O9B+dccK8zb0zKBXojIr3tN8SU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=shcMEXc2; arc=none smtp.client-ip=209.85.219.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="eeBRLEtE"
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e461015fbd4so268250276.2
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 14:01:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="shcMEXc2"
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e549be93d5eso305086276.1
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 14:14:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741813268; x=1742418068; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741814056; x=1742418856; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OmoTTXB6wfaPEv6zO/zRq6t6WYweKcVPttwFaAkkTdo=;
-        b=eeBRLEtEqdYos1+9Bztinjwlym57gFQYEUZYi3PCFDWSoWm+mdmfzN3Yva/bfMsLfB
-         GJkVWRxpbl6h4Wwbd1wy+5AaNKhZIx2y9psTZAVoRNqYKI4OH2js8lv87VppL/P5l7dt
-         awItegw3Q6zA0m/NZF8OCBS2A6xjW5uRBHaa5rTNSVnRE7bqje3mAZ6BgY0ILIRfm7a1
-         CsklT9SmooZn76AsJhNkYl6HvAelKc8hjzFj5okHh6yVbqTRDEkKhCs4T3KnUh5ZWlZN
-         khg0t8IcpvA4QW3fS5pSt/6blNFYVqS4h+vNNgg2OL71kSx03cB0cqtLfdLd+HILsMlf
-         CDLw==
+        bh=SHu/gQPFOnr6fJItjaaPtdnvmLAZW8Q+IeIzv+7KT58=;
+        b=shcMEXc2DVDif6DMAVbdhqI5y0msq/h3XNn9ucPqSNacq9U6NkILO4TAYM3ZGjgCZ4
+         Vs5mT+wGLhRPG6LwwDtCZhdZ8Q376qNKcGr5e15UaTgOU2PpDkWHTJvUm0XdHhyEofsz
+         Z7tyTGwHHT+3fwATaH8M6qpGWSVty2CJ/X0XSFVtB8LVoBp/b9yEiSEkhwemiTX2jssl
+         GcYL2Gg61k1gBceMxYSzOCppH9fcERvrR2spuCkHNJLcZnqD2NY85V6bG/rAN4Z/bfSt
+         rQkko9BfFBijPUMKvWPjCyGLyv03bWhd6u3RVa4i6vpN/b1XSxpT3eFDComH64E7DBlT
+         tM+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741813268; x=1742418068;
+        d=1e100.net; s=20230601; t=1741814056; x=1742418856;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OmoTTXB6wfaPEv6zO/zRq6t6WYweKcVPttwFaAkkTdo=;
-        b=ptm8Xe3SsgQbk8GvsCeWFZkowyPiYpKOxtMUWTPMOA3FDFDzc6xkugQ5KSGdSmGPtM
-         uOy18pS6lhhczJVTU++N/K6YSnDhL371qxDf8hmxgTzdw0sbL5VyfHroAVrS9ObvwWl/
-         0V3Hw+zHJpugnPbfjImL34NiOY0F4LLmp7oYv7JyDIdpMtMV7uctgxxh1fe3oaFpxeLk
-         tFrbXW+ojoLvEcha+o+OqOqtwG1TsuOBKjAS1WcBJfktv6SZqJDOkT+d5gQcVGoKpkG1
-         Y8f40OPaEMfPtblw6047/ieEqu7+AtPHsZ4l2DMIrNbHGdQd8VXYZ9AqR3aM5JfPjW6s
-         fafw==
-X-Gm-Message-State: AOJu0YzXZY91hy9QL1mupf4a4n+voOX0nIEX6L4yQQ/CJmDflgluASq+
-	mKGobphrNOJPioUICM0cbAarAVkzKW5NtY2rpPNWewtQr91WPn+4lXPuCYbzaiU=
-X-Gm-Gg: ASbGnct2o2m9hPVrC9UWqjzPzhWGcv9sxnEBNaxfHV7MMx8u8K/+hpvgR7HCYoUEnBn
-	XXGfEhn+wQf/F00sofl/E2twlpTiu4Du53lrpgC0S0HgZo195lND0KOAmnRhvjK6O81j0PNOfJZ
-	s5eo8Z60HBdl2mo57vodiButGBKXFMt+LSdRVfj6+fzTK+jwLuCIlw6XsCopU2JWWAPw/wjA8uL
-	1I2rEZpbk8pfdRFQT5LtSLsEbpSVNbY5YmMqooNm2DSFDAqK6invpnjWqjbySupBMOHObExhxp7
-	qaz/5w2DNLuepuz9cAGvNwpoVXgLUQSD4t9x02wKDqlhUmTR97LwegjxQcVXz6I954Wi8HKma1F
-	YQHqe1OqL1JKbDS02AGuv1wv7JWM=
-X-Google-Smtp-Source: AGHT+IH2bQNWz3Js4ps9nVDOx0oYxFpMZeTQNoMReNZpm13MucPZVsDEyXanQEV6ej+nx1aaBT1ZBg==
-X-Received: by 2002:a05:6902:2ec2:b0:e63:6758:6a00 with SMTP id 3f1490d57ef6-e63c5c4f3aemr4516255276.3.1741813268373;
-        Wed, 12 Mar 2025 14:01:08 -0700 (PDT)
+        bh=SHu/gQPFOnr6fJItjaaPtdnvmLAZW8Q+IeIzv+7KT58=;
+        b=ADcgMbJvzMs405j0s+NE5gzHGRXC0lPN1Q/CIbiAb/OFf9nsTWKpWOLN6rDPXCisD9
+         oUBO6sSCL5bhetpD/YX6UsKZ+zy7M3mLMtahmXqP8F/Lk6MDNLxRK+9yL8tnQTyvGgiz
+         BuVG0410h/30vhnyZau4quR0NH7WP26hP7VSMuRNhE2a/wONKtR4SqbbNAd3iqeiiIgk
+         hdHZEHCwcVDKoUZxbb0X4jPiAz4hQTEa7aofxnNd9xU55i8mN0of2063rl50CcbZiwrv
+         EYujo8djWs8ozDPzACMK5pWez0/BAFd6mHuK19BMx/iMZzXvynyX7ldqUI2MYZjtYraL
+         zd7w==
+X-Gm-Message-State: AOJu0Yw5IUDz9MMGw5gtCa3r4Uk8wa66GmrQB0HcnNY9H86Uun2NcOxx
+	kP0VFv74unHSrSa74vqI696M1fBJZwAItLaZnpUi5jGRbjPO40L2yNKPZxpmtVc=
+X-Gm-Gg: ASbGncss8cPYH0d1cXyijwrIYSo5rSElN5s0oV3rCeh9W3dtHT5e8oBtM2KBGvXz+Xh
+	Dle9r15TJdZEKJn/KIQU6bUVVzz92LVKGS3R8xvQo1vOV6+NpqcShBnALPJkBc1zDdA/gxGnutZ
+	BAi50sykVJDUFrqM7lH1PwmOrrdl5nmIP3BbFme++0UL9eCwPKG8d23cbU1zlo6stFlxt5tY2dP
+	RB8IDXgdi3P8oovYXDnMMoTZOk6x7chYOBx4kZuBAA87HR8fLhhb7q4L+VwV/pjvsVzDIZ9qVMP
+	hXsq8CbBHmyHx/NsycDk0mi3LGQI16rGB5rlrAQsXHWpka/Nt1zvuhw1cDthoD06BOeHdx5bMoI
+	WKQ1atZ4hqLMg2t+MxPaRSBl8MiE=
+X-Google-Smtp-Source: AGHT+IF6culrnCNbjyVkIu9hGxHIEENtVbDVjMPazGojhed595/mEBswBfEiVi/HgdlbAF1pH3xRbg==
+X-Received: by 2002:a05:6902:98e:b0:e5d:d8ea:8c96 with SMTP id 3f1490d57ef6-e635c18bcc6mr31977270276.29.1741814055838;
+        Wed, 12 Mar 2025 14:14:15 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e63b54ace28sm1152589276.34.2025.03.12.14.01.08
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e634b8fde4fsm3353833276.49.2025.03.12.14.14.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 14:01:08 -0700 (PDT)
-Date: Wed, 12 Mar 2025 17:01:07 -0400
+        Wed, 12 Mar 2025 14:14:15 -0700 (PDT)
+Date: Wed, 12 Mar 2025 17:14:14 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
@@ -64,10 +64,10 @@ Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
 	jonathantanmy@google.com, karthik.188@gmail.com,
 	kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net,
 	ps@pks.im, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 01/13] pack-objects: extract should_attempt_deltas()
-Message-ID: <Z9H2E9hEWgaS9NnP@nand.local>
+Subject: Re: [PATCH 02/13] pack-objects: add --path-walk option
+Message-ID: <Z9H5JsicyLWXagxS@nand.local>
 References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
- <a2ed1f2d4e3946c563f934fcaf149050d50f255f.1741571455.git.gitgitgadget@gmail.com>
+ <9b31dc87bb61f4d73eced02a24baea58bc51aa5e.1741571455.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,84 +76,166 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <a2ed1f2d4e3946c563f934fcaf149050d50f255f.1741571455.git.gitgitgadget@gmail.com>
+In-Reply-To: <9b31dc87bb61f4d73eced02a24baea58bc51aa5e.1741571455.git.gitgitgadget@gmail.com>
 
-On Mon, Mar 10, 2025 at 01:50:43AM +0000, Derrick Stolee via GitGitGadget wrote:
+On Mon, Mar 10, 2025 at 01:50:44AM +0000, Derrick Stolee via GitGitGadget wrote:
 > From: Derrick Stolee <stolee@gmail.com>
 >
-> This will be helpful in a future change, which will reuse this logic.
+> In order to more easily compute delta bases among objects that appear at
+> the exact same path, add a --path-walk option to 'git pack-objects'.
+>
+> This option will use the path-walk API instead of the object walk given
+> by the revision machinery. Since objects will be provided in batches
+> representing a common path, those objects can be tested for delta bases
+> immediately instead of waiting for a sort of the full object list by
+> name-hash. This has multiple benefits, including avoiding collisions by
+> name-hash.
+>
+> The objects marked as UNINTERESTING are included in these batches, so we
+> are guaranteeing some locality to find good delta bases.
+>
+> After the individual passes are done on a per-path basis, the default
+> name-hash is used to find other opportunistic delta bases that did not
+> match exactly by the full path name.
+>
+> The current implementation performs delta calculations while walking
+> objects, which is not ideal for a few reasons. First, this will cause
+> the "Enumerating objects" phase to be much longer than usual. Second, it
+> does not take advantage of threading during the path-scoped delta
+> calculations. Even with this lack of threading, the path-walk option is
+> sometimes faster than the usual approach. Future changes will refactor
+> this code to allow for threading, but that complexity is deferred until
+> later to keep this patch as simple as possible.
+>
+> This new walk is incompatible with some features and is ignored by
+> others:
+>
+>  * Object filters are not currently integrated with the path-walk API,
+>    such as sparse-checkout or tree depth. A blobless packfile could be
+>    integrated easily, but that is deferred for later.
+>
+>  * Server-focused features such as delta islands, shallow packs, and
+>    using a bitmap index are incompatible with the path-walk API.
+>
+>  * The path walk API is only compatible with the --revs option, not
+>    taking object lists or pack lists over stdin. These alternative ways
+>    to specify the objects currently ignores the --path-walk option
+>    without even a warning.
+>
+> Future changes will create performance tests that demonstrate the power
+> of this approach.
 >
 > Signed-off-by: Derrick Stolee <stolee@gmail.com>
 > ---
->  builtin/pack-objects.c | 53 +++++++++++++++++++++++-------------------
->  1 file changed, 29 insertions(+), 24 deletions(-)
+>  Documentation/git-pack-objects.adoc        |  13 +-
+>  Documentation/technical/api-path-walk.adoc |   1 +
+>  builtin/pack-objects.c                     | 147 +++++++++++++++++++--
+>  t/t5300-pack-object.sh                     |  15 +++
+>  4 files changed, 166 insertions(+), 10 deletions(-)
 >
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 58a9b161262..1d0992a8dac 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -3196,6 +3196,33 @@ static int add_ref_tag(const char *tag UNUSED, const char *referent UNUSED, cons
->  	return 0;
->  }
+> diff --git a/Documentation/git-pack-objects.adoc b/Documentation/git-pack-objects.adoc
+> index 7f69ae4855f..7dbbe6d54d2 100644
+> --- a/Documentation/git-pack-objects.adoc
+> +++ b/Documentation/git-pack-objects.adoc
+> @@ -16,7 +16,7 @@ SYNOPSIS
+>  	[--cruft] [--cruft-expiration=<time>]
+>  	[--stdout [--filter=<filter-spec>] | <base-name>]
+>  	[--shallow] [--keep-true-parents] [--[no-]sparse]
+> -	[--name-hash-version=<n>] < <object-list>
+> +	[--name-hash-version=<n>] [--path-walk] < <object-list>
 >
-> +static int should_attempt_deltas(struct object_entry *entry)
+>
+>  DESCRIPTION
+> @@ -375,6 +375,17 @@ many different directories. At the moment, this version is not allowed
+>  when writing reachability bitmap files with `--write-bitmap-index` and it
+>  will be automatically changed to version `1`.
+>
+> +--path-walk::
+> +	By default, `git pack-objects` walks objects in an order that
+> +	presents trees and blobs in an order unrelated to the path they
+> +	appear relative to a commit's root tree. The `--path-walk` option
+> +	enables a different walking algorithm that organizes trees and
+> +	blobs by path. This has the potential to improve delta compression
+> +	especially in the presence of filenames that cause collisions in
+> +	Git's default name-hash algorithm. Due to changing how the objects
+> +	are walked, this option is not compatible with `--delta-islands`,
+> +	`--shallow`, or `--filter`.
+
+I think from reading further below that this feature is somewhat
+incompatible with --use-bitmap-index, at least in the sense that we
+implicitly disable the latter whenever we see the former. Would that be
+worth mentioning here?
+
+> +static int add_objects_by_path(const char *path,
+> +			       struct oid_array *oids,
+> +			       enum object_type type,
+> +			       void *data)
 > +{
-> +	if (DELTA(entry))
-> +		return 0;
+> +	struct object_entry **delta_list;
+> +	size_t oe_start = to_pack.nr_objects;
+> +	size_t oe_end;
+> +	unsigned int sub_list_size;
+> +	unsigned int *processed = data;
 > +
-> +	if (!entry->type_valid ||
-> +	    oe_size_less_than(&to_pack, entry, 50))
-> +		return 0;
+> +	/*
+> +	 * First, add all objects to the packing data, including the ones
+> +	 * marked UNINTERESTING (translated to 'exclude') as they can be
+> +	 * used as delta bases.
+> +	 */
+> +	for (size_t i = 0; i < oids->nr; i++) {
+> +		int exclude;
+> +		struct object_info oi = OBJECT_INFO_INIT;
+> +		struct object_id *oid = &oids->oid[i];
 > +
-> +	if (entry->no_try_delta)
-> +		return 0;
+> +		/* Skip objects that do not exist locally. */
+> +		if (exclude_promisor_objects &&
+> +		    oid_object_info_extended(the_repository, oid, &oi,
+> +					     OBJECT_INFO_FOR_PREFETCH) < 0)
+> +			continue;
 > +
-> +	if (!entry->preferred_base) {
-> +		if (oe_type(entry) < 0)
-> +			die(_("unable to get type of object %s"),
-> +				oid_to_hex(&entry->idx.oid));
-> +	} else if (oe_type(entry) < 0) {
-> +		/*
-> +		 * This object is not found, but we
-> +		 * don't have to include it anyway.
-> +		 */
-> +		return 0;
+> +		exclude = !is_oid_interesting(the_repository, oid);
+> +
+> +		if (exclude && !thin)
+> +			continue;
+> +
+> +		add_object_entry(oid, type, path, exclude);
 > +	}
 > +
-> +	return 1;
-> +}
+> +	oe_end = to_pack.nr_objects;
 > +
->  static void prepare_pack(int window, int depth)
->  {
->  	struct object_entry **delta_list;
-> @@ -3226,33 +3253,11 @@ static void prepare_pack(int window, int depth)
->  	for (i = 0; i < to_pack.nr_objects; i++) {
->  		struct object_entry *entry = to_pack.objects + i;
->
-> -		if (DELTA(entry))
-> -			/* This happens if we decided to reuse existing
-> -			 * delta from a pack.  "reuse_delta &&" is implied.
-> -			 */
+> +	/* We can skip delta calculations if it is a no-op. */
+> +	if (oe_end == oe_start || !window)
+> +		return 0;
+> +
+> +	sub_list_size = 0;
+> +	ALLOC_ARRAY(delta_list, oe_end - oe_start);
 
-It looks like this comment went away when this part of prepare_pack()
-was extracted into should_attempt_deltas().
+Makes sense, and seems all reasonable.
 
-> -			continue;
-> -
-> -		if (!entry->type_valid ||
-> -		    oe_size_less_than(&to_pack, entry, 50))
+> +	for (size_t i = 0; i < oe_end - oe_start; i++) {
+> +		struct object_entry *entry = to_pack.objects + oe_start + i;
+> +
 > +		if (!should_attempt_deltas(entry))
->  			continue;
->
-> -		if (entry->no_try_delta)
-> -			continue;
-> -
-> -		if (!entry->preferred_base) {
-> +		if (!entry->preferred_base)
->  			nr_deltas++;
+> +			continue;
+> +
+> +		delta_list[sub_list_size++] = entry;
+> +	}
+> +
+> +	/*
+> +	 * Find delta bases among this list of objects that all match the same
+> +	 * path. This causes the delta compression to be interleaved in the
+> +	 * object walk, which can lead to confusing progress indicators. This is
+> +	 * also incompatible with threaded delta calculations. In the future,
+> +	 * consider creating a list of regions in the full to_pack.objects array
+> +	 * that could be picked up by the threaded delta computation.
+> +	 */
+> +	if (sub_list_size && window) {
+> +		QSORT(delta_list, sub_list_size, type_size_sort);
+> +		find_deltas(delta_list, &sub_list_size, window, depth, processed);
+> +	}
 
-Makes sense; should_attempt_deltas() doesn't itself change nr_deltas, so
-we want to do it ourselves here. Looking good!
+Interesting. I like the "regions in to_pack.objects" idea as a way of
+threading the delta selection process in the future.
 
 Thanks,
 Taylor
