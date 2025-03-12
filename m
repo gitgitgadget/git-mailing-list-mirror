@@ -1,110 +1,152 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856131DE3AF
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 20:05:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568F41E9B36
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 20:19:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741809926; cv=none; b=XEzeQTGgUlb6gogo7Qy8e2Bb6Ok4eH5QDS7IpwPcdHV/ZgSSOoiDceLKIHQrSThv+Z8IaeQlCRjByYy65iplHWATzIChB6MoVkuEsJojfHbRw1ElQGuaGfAhs2RVCfaIf2M2tWuyBzzKId+8nd86cY17Ad4T9xD/bX41Shysb8E=
+	t=1741810753; cv=none; b=LGd78bSpWSkjPOV58B5OOKVCq97T8s1tmhYn1uP2jO9lHEURZY2dEsNUlJOsWFjTL0XHKlRJcZ0MobY6d0v9spnU2W48wUPpmxdC80eFTJnS/eBwYMyai+DcDZ3XIDZUeO0osQg1J/Akh+QCjqmX+a8E+OigWV3Q2p/f4Ss5t5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741809926; c=relaxed/simple;
-	bh=eI0sOeqHL3ORDurM8wkADLpu5ZKg6UIuJ0jkf7grvjY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rtSWd0K0hUTgpv+NhnxlaAqCFOitAlQHuDV0sa7+Qs922DrhyvP+XcyY6MVGi93UH7cHfm11Ff6IGYFtdWj1VWdgMHy/0D7pL0Ld6OvvkmjFn2/nse5pNZdBMVcEpPhVreoMaX1yOCLZ3pJLPOXLkkdhcSlG5RS+JX60NUXv0aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=iEhH/L/s; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1741810753; c=relaxed/simple;
+	bh=uc3811tAsAAfFqMXZLw/jBrqgreoMiycvaZ/tYpTEt4=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=kB4dyUBPi47EDjxWmzU+5qq+uPTvXYRC9XjhCP3U3VMuHgamNsslHEbNeAZSaDehbIqKMVmM54G6dpHrIZ49LwgH/mXxi95tBq/8gjkj8QU2InZmQbzbrOKmUIrhOeXP+D3iwcvtBiD44ZC1zepmkLIJBw/XrAHUnhr1Lryt5fU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kqx53GDo; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="iEhH/L/s"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6ff0c9d1761so2147437b3.1
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 13:05:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kqx53GDo"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-22438c356c8so4883945ad.1
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 13:19:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741809923; x=1742414723; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eI0sOeqHL3ORDurM8wkADLpu5ZKg6UIuJ0jkf7grvjY=;
-        b=iEhH/L/sml521Oxz5OofG/aEOxAPLDXJCGJdS8C64bABI4/TTwqrlaiFgrueMA0xnK
-         dIaYmJeDu6La/EKe0MJewck+7oC4cl+C3na6Yuz7XTG2HEAcp1jcNIFkgjOriBfTggGr
-         YCTD9vb3ODWpdGxE8NZ60sj4QidJw9M2uy5WwfaS6gbkDMEAH4X7AHQ8g5K24k2wyJyp
-         QJym7SxjjTUP8qWRFeyEWEOgrJ+sO0sPg/0fMhIpkqKDVYyAueLqk4x8/s1ncklTw2hx
-         8ydR6Xbz5xOnFa8vaRuiAxdRKxRyR7ZJrUV/QcE31Fuyoj9aTuOQlL4ed7+FMD7HaqLu
-         5VQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741809923; x=1742414723;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1741810751; x=1742415551; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eI0sOeqHL3ORDurM8wkADLpu5ZKg6UIuJ0jkf7grvjY=;
-        b=NSqNRAEZQDc2HsWgACHCH09KETrih2o2FxCbGfov42ua2COwT6vWXwaSG9kC25t8Eu
-         A0Ytwv9AvCrWzhYAIGFOznreSR/Br9yXfNZCVpgrUpjbD8ec8V+9HcABc9UojfqyBn4y
-         Iq/sFwfSjWoKlwPL6Z32cTH1jtIH6zVmOkDIET3rkprgWBg/xY3cEP42oKmN5d3FgRgc
-         6tafp9UIAIWThLrKRON635OAl8n7fmeNlm2N3NB+XnWSHQHbD4kbQb3lKDRgnbZfGRbU
-         5jtg74TfxAQVNrvxvc5JabDu6nOAh+P+4Uy40nDbqKt7OfjkdAFS0hvyxfS06fgEcO6s
-         r9dg==
-X-Forwarded-Encrypted: i=1; AJvYcCXZsEiRLc2xCh9cMWbXUfWffCNymlKY6ketcQ/w0fjxH3lgqv9tcV+6ZMeZO6dhc0NBDTs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YznGfHru26leuxYDVd2YovRPUVED8x39BMQ+DVv2dNmRMORjaYj
-	Qq4JvC736vE+g12ofs+WiorRfGfjed8e5d1e+BXny7Muu1NQ6bAqrxWSrhhjjZV2o2h64zCG3TY
-	Bpqg=
-X-Gm-Gg: ASbGnctVVyCPCe/L4MiQDVRg+wqkwox4+YMOT1wkcUl1jWzGyxduNothYvUIUPaU6fT
-	mIrvEtlXN/fAjsFN0FW4y9qpvL/dCkMbg1bWnnpH//jZ23Fj/zWWcoTrD5HfRrn4Y0oeJR2t/UX
-	ziKrleUiBgJvJz1+a+8nz9HYEasr+sCcav65mixFJg11iEbLol2KmEZlUh1igdWaEmPSZf0b0LJ
-	ldKyE6kuRTUrVB80YK3o8ABCoeGuvTpS+8FCfMZuu4oMfNSrv/VaZfCW5OQvZpB3jjkDfLCcTAR
-	DyxRkh7NVVy7dzVA4iFgnI29upD9SXRkQNFUywCTQCXJuEDZPCkGuDaOOfgH+Yzujl2UYPov5CV
-	zyRuw3Y1NCk6K5DAj
-X-Google-Smtp-Source: AGHT+IE+DDLY9RNJUG5MynT/fz6AA3sDbM3gECiTOqbAVLu8JvM+JgB0KVEnBzWR6Aaa9aUT8TTZjA==
-X-Received: by 2002:a05:690c:4d45:b0:6fd:2f47:f4f9 with SMTP id 00721157ae682-6febf2cc21dmr287228587b3.9.1741809923379;
-        Wed, 12 Mar 2025 13:05:23 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6feb2a1c108sm33066887b3.2.2025.03.12.13.05.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 13:05:23 -0700 (PDT)
-Date: Wed, 12 Mar 2025 16:05:22 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 0/3] Small new merge-ort features, prepping for deletion
- of merge-recursive.[ch]
-Message-ID: <Z9HpAgGq0FSOheLj@nand.local>
-References: <pull.1875.git.1741362522.gitgitgadget@gmail.com>
- <Z9FAh5p2h55_4mki@pks.im>
+        bh=qb1xBF+7pJMOEkdrfR95iAwyy3mcGN2p8RPsT+eCEQE=;
+        b=Kqx53GDoUexbdoWBNSappQ5497RDWFhK5ajUrANpdFsFFNlpo2QvoFsT8LomSsKaxd
+         ka8cmopI4h+DJ6GHmtGdWC5FYuaFbRdfpNT+J0VWmET05/hQTxjRJq1vepunBp+kBnCZ
+         SfbrGmSIs/V2FGyqAhwcYYY2qF8Wtyt4zGP7b7KyYu2huZbUXBeKC+oIrbQfd+sNp/ng
+         80y2mpUCRamg+gmxPvEaqPJxlE9Iw+tSGkf1Kk8iQCVnlqQTXoSB0kY5mTPQl7PxwtXR
+         zPwFJtYplQJLd2S7aSZ0TfIuh1zJRhOGDg3cz3cvHABGqUjUWC7rEEzFq5AaD9hdwLn0
+         Xa6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741810751; x=1742415551;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=qb1xBF+7pJMOEkdrfR95iAwyy3mcGN2p8RPsT+eCEQE=;
+        b=kpbrOGBSqClTcabBkUWx6iNxQ0ssWOBvAEIh9gfmoX6fldalmq9rW9EBkisj+jEWOc
+         i6SzYnhZeRSRCp59xKhaz9TzotUX1ni5QTM0tr/ETdJIyedP6UNmopz1AsHEvFo0aVpr
+         +sQi+TYA2VPZgso5lQyypfnS/uFG/EX495E5sxn2NgCDTeBfSVbnYjPwtScgKUq5EdSq
+         5kaYw9SBa9+V+Fnu02w4Gr+8/MeMznBbz3cIDf4LkPLYIN4CwHi+ktDEQsohqnCfzboF
+         l8j5ZFB1hO09nJZk+HDvCMxLw8PFtJyiPnZcsCvACmohLuuxCf/MlaXmk61iHSffCEax
+         qAxQ==
+X-Gm-Message-State: AOJu0YxX8+botet60hp3mklMRxqj3qdsB5Va0HFXFsqXTuZ3NdCLUz9c
+	UZf5MeYHEmKZnyrrC0ge0eCvSDYzFidgIdpInu8EWJbVHwO8GLhioj0Whw==
+X-Gm-Gg: ASbGncvAdZFiIcPB387bRaGA+fMcv1l6Xaqc9/haol2lQa6/KkFQopIyH15f5y7VQqU
+	yItxDgBaa+1JqqhOw0MVPPtM+KynfSncF7LlPuMFdPoFEf2ac7TVvi3pyy1+YdfgOwPN9bzLz+H
+	SBqWHOpTZXgOlieydAkjWycmE3dReY6CtKg9cV+bBueO24UnZz/LRMYw7hofg2hoeD4ggeimg50
+	tmhjgxdMBp1t8tjzSdHJRwoLZub85Fb0XRvJnJu74c0F2racuY3ueeDv0MNiXb7Cc8MBMVSoDNm
+	H0EZqWxxyXNRQ6Cq5GG9WiNB/4tnzf8V4I/g/oFKXcpP99ijTQ==
+X-Google-Smtp-Source: AGHT+IFVB0AA44SXbmJSzRjaF5wopOXySLdWJHdT8WdOTiiiJPiOZsLjoyQrkSGA1rUng0EsFSbWdQ==
+X-Received: by 2002:a17:903:c4:b0:220:e392:c73 with SMTP id d9443c01a7336-22428a8905emr268355085ad.22.1741810751519;
+        Wed, 12 Mar 2025 13:19:11 -0700 (PDT)
+Received: from [10.61.60.205] ([103.21.124.55])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22410a7f70bsm120263255ad.131.2025.03.12.13.19.10
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Mar 2025 13:19:11 -0700 (PDT)
+Message-ID: <38de63ce-6d4e-4f1f-95b1-049df78d9cfc@gmail.com>
+Date: Thu, 13 Mar 2025 01:49:08 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z9FAh5p2h55_4mki@pks.im>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+From: Arnav Bhate <bhatearnav@gmail.com>
+Subject: [GSoC PATCH] rm: fix sign comparison warnings
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Mar 12, 2025 at 09:06:31AM +0100, Patrick Steinhardt wrote:
-> On Fri, Mar 07, 2025 at 03:48:39PM +0000, Elijah Newren via GitGitGadget wrote:
-> > I've got 19 patches covering the work needed to prep for and allow us to
-> > delete merge-recursive.[ch], and remap 'recursive' to 'ort', including some
-> > clean-up along the way. I've tried to divide it up into five smaller patch
-> > series.
-> >
-> > These 3 patches are the first of those series, and each of these 3 patches
-> > provide a small new feature that together will be used to allow us to
-> > convert some callers over from recursive to ort. If the third patch,
-> > introducing merge_ort_generic(), doesn't make sense to submit without one of
-> > its new callers, I can extend this series to 6 patches and include the
-> > conversion of git-am.sh.
->
-> I think extending it to 6 patches would make sense as it's somewhat
-> unfortunate that this version introduces the function, but has no
-> callers at all.
+There are multiple places in loops, where a signed and an
+unsigned data type are compared. Git uses a mix of signed and unsigned
+types to store lengths of arrays. This sometimes leads to using a signed
+index for an array whose length is stored in an unsigned variable or
+vice versa.
 
-Eh. I have gone back and forth about that over the years. I think in
-cases where the either caller(s) or implementation is sufficiently
-complicated, it's OK to introduce a (non-static) function without any
-callers.
+get_ours_cache_pos is a special case where the initial index
+is derived from a signed variable, however, upon checking the usage of
+the function, it is clear that it cannot be negative, and hence can be
+replaced by an unsigned variable.
 
-I don't feel strongly about it, so I think the multi-series structure is
-fine as it is (especially since we know that more are coming in the
-future). But I'm also not opposed to seeing this series extended out to
-include the three additional patches.
+Replace signed data types with unsigned data types and vice versa
+wherever necessary. In some cases, introduce a new variable, where both
+signed and unsigned data types have been used to store lengths of arrays
+in the same function, where previously only one variable was used to
+iterate over both types. Remove #define DISABLE_SIGN_COMPARE_WARNINGS.
 
-Thanks,
-Taylor
+Signed-off-by: Arnav Bhate <bhatearnav@gmail.com>
+---
+ builtin/rm.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 12ae086a55..4ebfa7539d 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -5,7 +5,6 @@
+  */
+ 
+ #define USE_THE_REPOSITORY_VARIABLE
+-#define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "builtin.h"
+ #include "advice.h"
+@@ -42,7 +41,12 @@ static struct {
+ 
+ static int get_ours_cache_pos(const char *path, int pos)
+ {
+-	int i = -pos - 1;
++	/*
++	 * This function is only called when pos < 0, so -pos - 1 is
++	 * greater than or equal to 0, so it can be safely be stored in
++	 * an unsigned int.
++	 */
++	unsigned int i = -pos - 1;
+ 
+ 	while ((i < the_repository->index->cache_nr) && !strcmp(the_repository->index->cache[i]->name, path)) {
+ 		if (ce_stage(the_repository->index->cache[i]) == 2)
+@@ -58,7 +62,7 @@ static void print_error_files(struct string_list *files_list,
+ 			      int *errs)
+ {
+ 	if (files_list->nr) {
+-		int i;
++		unsigned int i;
+ 		struct strbuf err_msg = STRBUF_INIT;
+ 
+ 		strbuf_addstr(&err_msg, main_msg);
+@@ -271,6 +275,7 @@ int cmd_rm(int argc,
+ {
+ 	struct lock_file lock_file = LOCK_INIT;
+ 	int i, ret = 0;
++	unsigned int j;
+ 	struct pathspec pathspec;
+ 	char *seen;
+ 
+@@ -314,8 +319,8 @@ int cmd_rm(int argc,
+ 	if (pathspec_needs_expanded_index(the_repository->index, &pathspec))
+ 		ensure_full_index(the_repository->index);
+ 
+-	for (i = 0; i < the_repository->index->cache_nr; i++) {
+-		const struct cache_entry *ce = the_repository->index->cache[i];
++	for (j = 0; j < the_repository->index->cache_nr; j++) {
++		const struct cache_entry *ce = the_repository->index->cache[j];
+ 
+ 		if (!include_sparse &&
+ 		    (ce_skip_worktree(ce) ||
+-- 
+2.48.1
