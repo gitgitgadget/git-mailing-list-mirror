@@ -1,123 +1,134 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4BA1EEA3B
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 22:00:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C88E1EEA3B
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 22:13:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741816835; cv=none; b=b4LWciEcSS4TR08SgdC+6Bt16iSOMY58nFWaTN8qYynZB4AhloykYEt81fCDTCpl/bhupJu0x+fIVtV179CErvfE5h0kWlQ1w/RXtVNNUyBqfqI31/XSZ5lOdu9ztxoLEs19CwKjzWT85n69XU7fp5tSGEb3L0ID9slLQtWKgq8=
+	t=1741817592; cv=none; b=ZuDxziApzQ7LffHnAEQ5bwM/uU4Cw7XHbDLhZsTJi+1kWHcDOz8m3sZyVlaa/6rveW20TE+1I0JgQRfwEeO2KMiJ5AaQkmcZFKTc5/sD3qTc7J8BQdd9/VqImQMmqRqCrjMpH/evMbwOlbqp5lqihXciXpTfKLiLrJdc8VVHe+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741816835; c=relaxed/simple;
-	bh=pASNwMO2NZ0QdW7+lxkqISC7PT8Po7C4a4h9zQz4o3s=;
+	s=arc-20240116; t=1741817592; c=relaxed/simple;
+	bh=j/kF09mYPlfRJdv5r9NdGtngDHIkzbigEvNTivuPFpE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C0RANDCSz/2iTJQWHs+Q3Dw4RZwrYuVk0RwAewfdVspJBueVcCmta0Cc3HZPLaIn2N0d+T8j95Od50BuePcDYSAOh6edXaGmMYunc72bH/thzTiTLy46S+J5XkboltSxXt0QHiBxnYDa2Ap0WwnT3I4HVXoeGjsqwrNEDEkbpc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=LHioWzaH; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=nSdqDygjNWeK4TzflBPqAnAU6TjM+cSem+hK6ct2DY1Y4QE53rqML+F6AkPNHCwn80yzloLZSTR1U/PZY04NNKRs902EU9i5TI8oPTXH+tAg8m8e2sjUjaix9yQONV7Wi2I+Zn3XBHcUapB19BwJx9FUHXdIZe1/63uA8It8uLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e3pJ/6bM; arc=none smtp.client-ip=209.85.160.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="LHioWzaH"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6fead015247so2471677b3.2
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 15:00:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e3pJ/6bM"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-2b199bb8af9so989995fac.1
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 15:13:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741816833; x=1742421633; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741817590; x=1742422390; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VpjJ0jK4KHsSggjDzCmQqdAWbzQcHY0n+ZyLZCLcRJE=;
-        b=LHioWzaHg8eaxexes6LKTZZlUhCGktp9coQ5j5IyGRb+cSaTNfOV0cZaQWzBVjlMC5
-         cwhAVjgkHxo8uqyy8ZpMPINRlHN3Bb1ofy77aZP8XKY1AGjCcfmAH9oJtjeBo1hi9N9h
-         4xOyr1zzXJoRb6xm0E1YSGLggfDRQL5qOIv/mZtoSJ3CNQTFE/7qUvjrfau78Jn6Izvv
-         pMYSFFv8GT+baoEn9wPLdVJpoyzASdncwwJx/VQ5EzCC5CLQSepOP1iXur6cDQYnjP3+
-         RWBHZ8CsteXxxRE+gPLEWy89cZRpBrBHq/3RQ8VjYxoyu4EuDZF5F1HhayXbVM7vglzz
-         +zhg==
+        bh=PsG3Mfd8J36kNGr57YjzsnsnzwyqieOHu0/GkApkXHQ=;
+        b=e3pJ/6bMRmjEFf3GuVUYd5GXQIeVsjw3YNx748JP2wvAYPycslIxLzAZ1JkQnpBiBU
+         yuWQyLxL+5cSfRuaUu7j/IMteOqJqLrwVQ+WOXSyTS2TAOZvBBQkfgGjeU6k0AV/iE/h
+         y9TZyIpxd8TFmzQVn2OsjNctnJeKHwpOxpR5sLNt7eV/LED1zDr0AwYMhJxUAECdVDD4
+         KcP1sM1OI3XRHpBGXdl3FKYgfbLJQbTLlQ7OSJ4z5NlV87O05um6Zcj1blvjvNdzBb+q
+         dgghkmREqnn8svc+5KAf3mxJ10Ef80+32jwTzDiHZzk4PkuKwXuUoq+8O5DHC1YTmVMa
+         M4Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741816833; x=1742421633;
+        d=1e100.net; s=20230601; t=1741817590; x=1742422390;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VpjJ0jK4KHsSggjDzCmQqdAWbzQcHY0n+ZyLZCLcRJE=;
-        b=BXDnFZeHAfv8hGDK2OIdkhGVKp2Mn61zcC6ZQwBsJojXRZJY+cZZohu/2hK6N/uboa
-         9wVSV9DOFLACQjfEZkrrYfPbs+CtQ0TE/qfbI5FfQBicPe1aIiR7XdYbya+8BIz2LtvK
-         ZEpcJ0l8CL4GdJeGBVgqrYwEzHXt6CQ9Pj7xAdy88VbREasJuRrreap8EGG1j19N44hr
-         8Ml1N6tXGjNO7Hl1pjcv1XcFKOesWL4S39XB5/K/rvHfFYc8wn1cSNHSo2xer/D11kfd
-         wGtFmsgmvCKB5fMjyQWsbSxzh9YCV9up2BCuPEYoi0yDSmjinCr4jvFRRq/+yQA+QJwo
-         zNog==
-X-Gm-Message-State: AOJu0Yw6VEw2VjlKEgKNwxNUgJMwywfXSfPXD6Axr7lXaHCg2Jm3ZbpU
-	a3Av3c9lSNOVEsg6ONpYHzP7og+DygFbbiI153yKSpCc1P0hFV07iwZdSn7tRT8=
-X-Gm-Gg: ASbGncvbtgKxnufPedfj4FyotrGhu7Bi7rqMdzy0J+xe4T9B+fU5x/Jk/gzK8hGJ2JI
-	JPmxdW112Q7gjgCoMl4uN6eM6NIkBZ12L+hQsJGJnrSVbBnJQ32MUgqUIe+ubjIekyVMDGo4psI
-	wxLkx9BI92y2vBR/fe4LE7XhysbNuRweFBn6AI+bS3YcdkwuTk8fL6AqjLzIQRtj/7zElYxF3O3
-	cVq2iwyORNcK4HZ8DXBSV+ehKgsc9V3yTfvi/wH5SIJRmYRspMu9poqZCS94MfkAA4SugDZhuXs
-	b7EgvHAAg6QcHYB8B/74Ou+sq1N9APh9IeX+hNVVRT5N2hkYvGm3BmqT6GqbWd8H1xbHO9BbrCn
-	qgXnyar6N4+aa7Z1NyI749E8TaYg=
-X-Google-Smtp-Source: AGHT+IGM4AAg1ByJhvmVqKnhIDls592YugHz/NlloUAmclyietRfBeH4AXn86nqX54p359b9nui33Q==
-X-Received: by 2002:a05:690c:25c4:b0:6fb:9429:83c5 with SMTP id 00721157ae682-6febf307356mr313422617b3.19.1741816832975;
-        Wed, 12 Mar 2025 15:00:32 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6feb2c64b57sm34024257b3.119.2025.03.12.15.00.32
+        bh=PsG3Mfd8J36kNGr57YjzsnsnzwyqieOHu0/GkApkXHQ=;
+        b=pbfhUwSe5lru/UUDBvlIcC85mxXxKTcKEjvJg5Iy687HZegfHFhBlqlo0xIALrZxap
+         wqdUT4wjtEptP2Z+bAOOk//fcoXTESNnsZWWQg9UuKy2gN12yPCam+GMbghZHCkbHTwh
+         EOkRKWu5S+Jb8aMIEZxAXyL4n9HHRdhMJ8VgpZs8JLlSbZW0KVLrmIYO6yGLaVRUW2cr
+         rzM0U3CgIKQkPRQOzqspRQh4AbA6Lmg+jvrOkLHIhvLNScQQFBtAWieIPfM15mQOO+9o
+         7jVaSfez6bJX4Psm7fGxa4hGuncdB+MX+X74r+PIS7gNKmpIBZZL2M816GodNXB6c3AV
+         8UYQ==
+X-Gm-Message-State: AOJu0Yw98dUc/1cLa5tUwd6YRoYwhVKMkdIueF2CUHFf4o9HHiL6gaab
+	5GBUnRaPXF4sjSKfw4nIYK8AlKF40ASCb09j6Uix78V+527bgiOrLdByng==
+X-Gm-Gg: ASbGncvQYrfwifw6kZvV3rvzcD4Pg8V/0XzBEpC9rklbM/xMUCWxQbG4UosSP1PhYAT
+	qvTXS9LDGZN79zsStiW+Yzgx5qFJVlXYos21Og2pTo+Um6kU8ReVaZYXXNNOeL9pJCGxmZ21RWw
+	26oJsETPEz8/qnV9OI2SU4O3aTyhclxeoS4PcWqf/pg4wqneH8ME638+RYLD5S4yT42P1M0W3h7
+	ALwS1Ehyd2tvTILsrRcvP8gO+K282Vc9T70DOHk1MnFHfb3wBywxIdQPsOstUXO7dKrUd2GtML0
+	KrL6CtdxyHP3ehzVKfob/IEsowt9W5PBxYfEwA==
+X-Google-Smtp-Source: AGHT+IETu2VRyBpBgeOuhnLCzvRSoARZFtVPPfq34yRGFtZvQ6RfyWHD35N0WsFPk2nLXJW7QIJKhg==
+X-Received: by 2002:a05:6871:3285:b0:2b8:92f0:ba5d with SMTP id 586e51a60fabf-2c66f88b26fmr122567fac.8.1741817589978;
+        Wed, 12 Mar 2025 15:13:09 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2c6712e5774sm3943fac.31.2025.03.12.15.13.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 15:00:32 -0700 (PDT)
-Date: Wed, 12 Mar 2025 18:00:31 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Dmitry Goncharov <dgoncharov@users.sf.net>,
-	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 2/2] merge-ort: fix slightly overzealous assertion for
- rename-to-self
-Message-ID: <Z9ID/2zx25qesuJs@nand.local>
-References: <pull.1873.git.1741275027.gitgitgadget@gmail.com>
- <f48b3310d4ae8d05780fd25e467083c4dc9852cc.1741275027.git.gitgitgadget@gmail.com>
+        Wed, 12 Mar 2025 15:13:09 -0700 (PDT)
+Date: Wed, 12 Mar 2025 17:09:41 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, ps@pks.im, christian.couder@gmail.com
+Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
+Message-ID: <sm5xvh7bipyrlpw45bptlctbuhey7v3qktpskal5dzexomt34f@wgfziyhcf3t6>
+References: <20250310192829.661692-1-jltobler@gmail.com>
+ <20250311235720.GA73755@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f48b3310d4ae8d05780fd25e467083c4dc9852cc.1741275027.git.gitgitgadget@gmail.com>
+In-Reply-To: <20250311235720.GA73755@coredump.intra.peff.net>
 
-On Thu, Mar 06, 2025 at 03:30:27PM +0000, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
->
-> merge-ort has a number of sanity checks on the file it is processing in
-> process_renames().  One of these sanity checks was slightly overzealous
-> because it indirectly assumed that a renamed file always ended up at a
-> different path than where it started.  That is normally an entirely fair
-> assumption, but directory rename detection can make things interesting.
->
-> As a quick refresher, if one side of history renames directory A/ -> B/,
-> and the other side of history adds new files to A/, then directory
-> rename detection notices and suggests moving those new files to B/.  A
-> similar thing is done for paths renamed into A/, causing them to be
-> transitively renamed into B/.  But, if the file originally came from B/,
-> then this can end up causing a file to be renamed back to itself.
->
-> It turns out the rest of the code following this assertion handled the
-> case fine; the assertion was just an extra sanity check, not a rigid
-> precondition.  Therefore, simply adjust the assertion to pass under this
-> special case as well.
+On 25/03/11 07:57PM, Jeff King wrote:
+> On Mon, Mar 10, 2025 at 02:28:25PM -0500, Justin Tobler wrote:
+> 
+> > To make machine parsing easier, this series introduces a NUL-delimited
+> > output mode for git-rev-list(1) via a `-z` option following a suggestion
+> > from Junio in a previous thread[1]. In this mode, instead of LF, each
+> > object is delimited with two NUL bytes and any object metadata is
+> > separated with a single NUL byte. Examples:
+> > 
+> >         <oid> NUL NUL
+> >         <oid> [NUL <path>] NUL NUL
+> >         ?<oid> [NUL <token>=<value>]... NUL NUL
+> > 
+> > In this mode, path and value info are printed as-is without any special
+> > encoding or truncation.
+> 
+> I think this is a good direction, but I have two compatibility
+> questions:
+> 
+>   1. What should "git rev-list -z --stdin" do? In most other programs
+>      with a "-z" option it affects both input and output. I don't
+>      particularly care about this case myself, but it will be hard to
+>      change later. So we probably want to decide now.
 
-Wow, that is a very interesting edge case from Dmitry. The explanation
-and fix makes sense, and yeah, looks like just an over-zealous
-assertion.
+As others suggested in this thread, in the next version I'll make
+revision and pathspec parsing on stdin also be NUL-delimited when -z is
+used.
 
-As a meta-comment, I vaguely remember past discussions on the list about
-when to assert() versus when to BUG(). I recall that where we landed was
-that:
+>   2. I was a little surprised that rev-list already takes a "-z" option,
+>      but it doesn't seem to do anything. I guess it's probably picked up
+>      via diff_opt_parse(), though (I think) you can't actually trigger a
+>      diff via rev-list itself. So even though this is a change in
+>      behavior, probably nobody would have been using it until now?
 
-    if (foo)
-        BUG("something");
+This is correct. Technically git-rev-list(1) accepts all the common diff
+options because it invokes `setup_revisions()`. From my understanding it
+isn't possible to trigger diffs so I think parsing diff options is
+unnecessary to begin with. As it also isn't a documented option, I
+figured -z being an accepted option for git-rev-list(1) is largely an
+unintended consequence of it using `setup_revisions()` and should be
+fine to use.
 
-was preferable to:
+>      If it is possible to see some effect from "-z" now (I didn't dig
+>      very far), then it may be better to continue to let the diff
+>      options parser handle it, and simply pick the result out of
+>      revs.diffopt.line_termination. As your patch 3 is written, I think
+>      the diff code probably doesn't see it anymore at all.
 
-    assert(foo);
+As currently implemented, the early parsing of -z doesn't effect the
+diff options parsing in `setup_revisions()`. The early parsing doesn't
+remove the option and thus it continues to be set in the diff options.
 
-I know that we don't usually define NDEBUG, but I think there are a
-couple of cases where we do, like for nedmalloc stuff when building with
-USE_NED_ALLOCATOR, and in Windows builds if DEBUG is undefined.
-
-So I don't think it makes a huge practical difference, but it might be
-nice to put in CodingGuidelines or similar.
+Furthermore, revision and pathspec argument parsing is all handled in
+`setup_revisions()` so if we want to NUL-delimit arguments parsed on
+stdin with -z, we would still need to parse the option early anyway. I
+think it should be fine to leave the early -z option parsing as-is.
 
 Thanks,
-Taylor
+-Justin
