@@ -1,72 +1,90 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C213624291B
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 13:22:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF782459DC
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 13:43:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741785772; cv=none; b=Utl0jhLeWJNdobzeOeuKmfC1spvhQ3DyDZtUq4KxltT5gP8UzKr7eWougYmEnI/pBF0EC/j9z8mM8sq0H/nfzsmizWj1DC6dHXNyKmA7rtAoewg7NIkjrKT2cm9ThMNhVjYc32tLCMGcF02d0tpZ0gYkC3CgcDfCVCaQXqubBdU=
+	t=1741786997; cv=none; b=XPRQKNDUn2G96hZhP8U2rPq3Mt/IztontZq0ybP3F53005Kxskkzx37q6skEMvCdkTdH9zv0I072Z1hJ6j4GSKk6le+PrAVpcYkLtgQvR3gwuQFl60sNNfkshIzHi9RcpOLROcQGrFGeEqliDg8bLU6QfE/INaEUtgse0DcT1q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741785772; c=relaxed/simple;
-	bh=H0qC6aU0jAWW3qkzHXHG0Pp36vRQ3gSS1yNu4MCwDQc=;
+	s=arc-20240116; t=1741786997; c=relaxed/simple;
+	bh=Ws3MociJZ8RxRtotJ2aCKh2BRT/PwBYodqAeqmB9KiQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qNTgnl0lseOrw4oxdBO8SgZsOUIeeDNzOUl3JnrtqCr0ApnZXpNb1+jZ/Z+d+5GhiYF1bxKCmyXOG5RMjgMGejPfsFA2D4C6Jkv3sFIf/gqT/u4hR98y4S7wB2K6+mp4F9Q//PTDAgmi5jjpt0FssziVmjxDazSetEiQWt8J8J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WvkJ0Lut; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=TggPaOe3/bgSUso2Gb4KqadTVlwPUKPrrPKJ1U8ZAd04D3Y93tq1SQLNdbyJFAK081jNdMbCy9vm1vCIceshRNGXJcPUejij/DjoegXQH4i/en4n1/Hk8MIe8XQEa+AKgF3EF81U46O5pUgUIrLhW0SwhUvDP5y3sdKocmqhDtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=acNHUbLv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IMVNIJfx; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WvkJ0Lut"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2232aead377so33461535ad.0
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 06:22:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741785770; x=1742390570; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1kIRQ54cklmdxM03wNJIEO0icUhTz0dedhjiuHzW79Q=;
-        b=WvkJ0LutYCR3oIZCBGPM6YWphYEIFKk5GpSgKPGwUYF6MOB19omD+CDGBZqF2LXiw2
-         699DzRATYrp0eSlQiEYtLXl0LVbVqbm/BqvHFOksSxXvx5P93+URdlAQxPvBIfH1NCz/
-         CrAyhD5/O+XQjUf16lJ7Cl/0R3Kf7CF8Tuq4oWKPj/ouYsj4Af4cuUxfhvB0Y4M596jx
-         b+8d1hnyPAmNne5q8cgPO3yqL89g3ntGMpJAMRLZ32gNJMTHNmXGC5GiODWeZmmr7Yrh
-         I94vg0QJTIwjtin5TY3EHMyflfwp+fB6D1QdhUQityHyVjk5ZGF9LWXg71Cv+FhXr0JR
-         C6DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741785770; x=1742390570;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1kIRQ54cklmdxM03wNJIEO0icUhTz0dedhjiuHzW79Q=;
-        b=rYPPZ1U3XXNka0Fv0NzRHXquW9WuowTINg2JOCDwwfBCki1HrRO2egGo0VmQIdpr1F
-         fji0D/nPowz0UfUIm3wZkkQ5hiGbzVbbfo+uUK1GQovKYAPvapxVyq7yvpBkwohElUtn
-         xmrP/zmxvdmgKwp9mnMaaodMs4xcV51oKRFxAcY9Sm3zjNpamEnaGGprZEbQSBg4rdUf
-         eWPNcF9Ijqz2XPdwbgr+aIE/5eboxXRuNbYAKnJnWizZf7SAgLBr5qLrK5zBBfeHMU6d
-         8TVJj+cN3oIpLI3qeD+XxeQ+/ADgKyLrdJx13VxWvNtfmzcyGdz9diG50Fym5Eu+ZWP7
-         POOQ==
-X-Gm-Message-State: AOJu0YzjZorB4wkawL1I2yb1jrKb2uMOEhpWKHbSZ2ISfi573/V3vyAh
-	nyMslePgnC5vRTWILxR7rFMmb2rQtezkB2TvXmqhl9/i4C7cePJt
-X-Gm-Gg: ASbGncunOoN3r41OCe89GtzOmG3/Tgn31+F8x+e80zPYpD545nUJRefsJvYEJ2RkS7J
-	dK0o7E4w1FPXhwu0VKevChIS2ikfnGcPghERSk5tQJUAiAYoxZlPJeF8k2Jo966I07q4nGRNHo7
-	d9j/D7/HxxQZb6QqB41EID9o1yD9Ol50XsqrCv6qSuQwAli4oYtHM09pr0u5aTKzvZo4ai0blqk
-	vERFm6kKfCuLLCYNI+mB56ziUXhSElXNOOfJOpYdAnoN0tCDcvebjUCDrH7lnlgP9DjuCcyi9qR
-	2IqPx/cSLok2Y5H4xDtwFwm9ixLE+226Ya6IJQn3bhUAjC82vIQ=
-X-Google-Smtp-Source: AGHT+IFez5VZPg1oYHiPi39EP4OTh8zWQ7hyLU4ixV7WjJsWd3ZOGHJTxM+Gr9s8o6l2nqyoEPN4gA==
-X-Received: by 2002:a17:903:1b63:b0:220:e5be:29c8 with SMTP id d9443c01a7336-22428bdee3cmr350565455ad.32.1741785769887;
-        Wed, 12 Mar 2025 06:22:49 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22410a91be9sm115181445ad.179.2025.03.12.06.22.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 06:22:49 -0700 (PDT)
-Date: Wed, 12 Mar 2025 21:22:59 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v5 08/16] refs: stop re-verifying common prefixes for
- availability
-Message-ID: <Z9GKs9z4n4qgOP7n@ArchLinux>
-References: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
- <20250306-pks-update-ref-optimization-v5-8-dcb2ee037e97@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="acNHUbLv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IMVNIJfx"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8B36C11401F0;
+	Wed, 12 Mar 2025 09:43:14 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Wed, 12 Mar 2025 09:43:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1741786994; x=1741873394; bh=lelNplem8x
+	WiypZjA0UjSFDR5bfE0FOoJSmMX5WvRoI=; b=acNHUbLvHqgr8SHe3VJKa6jKGa
+	Iz4Jw8uZIM+7IE5lgLYyHFtpRxYoXujdRzNMrrycxNIcpSlU/rfE/V7Oavx0zAon
+	OMNcVx8MC0sovnONiBMXL3s2xuyxga/Sokfu8M1teFb5EM9RqNxcWsXjY5d3HHME
+	DWh/k1Gvu1vJmzrGfZLvZZ0ZJ6FHeCRerEwicYf+WIawSz2FTgBMWZY2eXPXaoJw
+	e2fIQiuWciDh4xy2ixWMVWmzs1yAU7eC4aJJa6UrbESCI+kVR+8MEGjXHHcMl/yO
+	Mr3YvtQNP6koP2n8F8ddZI6n+D6azD17dl+BzTMo2KJr6ELks3O1WduHVplA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741786994; x=1741873394; bh=lelNplem8xWiypZjA0UjSFDR5bfE0FOoJSm
+	MX5WvRoI=; b=IMVNIJfxkuXBisLCIfkhe0Fdi9prhX86ZqeIJJL7XzDpLQsc7Ye
+	PZCqFuxYJT+i++dFhk7B5KbxsdSxKPCsCTkiXy2iqmTXJT8UU8ky4LvW6QIbfOeX
+	g2XeGaW+xqk9DHaB2aGHpk8oUk2X+L0UVY5kvjNnyQ2ymtjLXju1qRBsGBEr2P/F
+	UC16H3mHmwreYQ8hUFENVzNMO8h5AzgiaZp6LZAY49XL9IP1S5P1kM7gA7eiMLhE
+	CURAyCOvoLM8Ic7g29EX5P/26PfiCWJTliPRmHyNEumDzYDl9EgsMcrx8MvvFsLY
+	CJpiatxWwmZ0epMFC8TW35VYQ5h/6syux2Q==
+X-ME-Sender: <xms:cY_RZ5zigi8BhCm3Nlx7GMxnwmn1vu1d8XsKLY4S3CLZ0mGaEnam4g>
+    <xme:cY_RZ5TAGEoaXR0-g6CFJ0I5c8CjE4q6kFgYLc3MzNnedc0jMMzTqOZc-xfqd8jiB
+    FSnVOrOrJJsqQh6lQ>
+X-ME-Received: <xmr:cY_RZzVPX6EV3iK1G9dWKBF0eZmDRvaUDBkqF55l-9s7Bd--5eib7k4_3xzOdHSNGeoQYYbafYIZ2Xi2zdF9QbJQN3zXpz2QY-HAHt5bI-hQoGg7Xg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehvdduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
+    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdho
+    rhhgrdhukh
+X-ME-Proxy: <xmx:co_RZ7jDfZbP3VZ3h93nXQkRN742zS_UHCK8sMUU5VRWXoQSQfUScw>
+    <xmx:co_RZ7BpR0tvlIyVJaChvwkPjOg6Uxekct8rXPIiNGojR8wc4buIDQ>
+    <xmx:co_RZ0K8gsWxlkmBQmXmtB9BE4D7JrvPPdMEtAjVKfshAUrkgDQCEg>
+    <xmx:co_RZ6AFQ8lkQtV0XqT_z9ASnIdBoiu1uBhj-9uhP3tAIqbg_2sRiQ>
+    <xmx:co_RZyOo-cF4Qyfj11C2aS5LxMJcmd8MarBPxfmkeEXsMlYdEIsfxbOt>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Mar 2025 09:43:13 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3899f5b1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Mar 2025 13:43:11 +0000 (UTC)
+Date: Wed, 12 Mar 2025 14:43:10 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] docs: fix check-docs with WITH_BREAKING_CHANGES
+Message-ID: <Z9GPbggliX7asG2a@pks.im>
+References: <pull.1871.git.1741018310447.gitgitgadget@gmail.com>
+ <pull.1871.v2.git.1741171357627.gitgitgadget@gmail.com>
+ <xmqqzfhzlbie.fsf_-_@gitster.g>
+ <082af6a3-a7ba-440d-af84-6c59827a2929@gmail.com>
+ <56cf842a-7c1f-4354-b191-35bcc1e139bd@gmail.com>
+ <b5fb3292-216a-4456-b456-e9ed38affc22@gmail.com>
+ <Z86Jze2qZ5s5OyOB@pks.im>
+ <Z9BLZWUarN0kC4CQ@pks.im>
+ <75a8b321-4cf0-4d75-93a7-b616ae818d81@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,61 +93,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250306-pks-update-ref-optimization-v5-8-dcb2ee037e97@pks.im>
+In-Reply-To: <75a8b321-4cf0-4d75-93a7-b616ae818d81@gmail.com>
 
-On Thu, Mar 06, 2025 at 04:08:39PM +0100, Patrick Steinhardt wrote:
->  refs.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+On Wed, Mar 12, 2025 at 10:39:49AM +0000, phillip.wood123@gmail.com wrote:
+> Hi Patrick
 > 
-> diff --git a/refs.c b/refs.c
-> index 5a9b0f2fa1e..eaf41421f50 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2476,6 +2476,7 @@ int refs_verify_refnames_available(struct ref_store *refs,
->  {
->  	struct strbuf dirname = STRBUF_INIT;
->  	struct strbuf referent = STRBUF_INIT;
-> +	struct strset dirnames;
->  	int ret = -1;
->  
->  	/*
-> @@ -2485,6 +2486,8 @@ int refs_verify_refnames_available(struct ref_store *refs,
->  
->  	assert(err);
->  
-> +	strset_init(&dirnames);
-> +
->  	for (size_t i = 0; i < refnames->nr; i++) {
->  		const char *refname = refnames->items[i].string;
->  		const char *extra_refname;
-> @@ -2514,6 +2517,14 @@ int refs_verify_refnames_available(struct ref_store *refs,
->  			if (skip && string_list_has_string(skip, dirname.buf))
->  				continue;
->  
-> +			/*
-> +			 * If we've already seen the directory we don't need to
-> +			 * process it again. Skip it to avoid checking checking
-> +			 * common prefixes like "refs/heads/" repeatedly.
-> +			 */
-> +			if (!strset_add(&dirnames, dirname.buf))
-> +				continue;
-> +
+> On 11/03/2025 14:40, Patrick Steinhardt wrote:
+> > On Mon, Mar 10, 2025 at 07:42:25AM +0100, Patrick Steinhardt wrote:
+> > 
+> > To set expectations: do you have the time/intent to work on this and
+> > polish it up into a patch? Otherwise I'm happy to pick it up.
+> 
+> If you're happy to pick this up that would be great. I'm unlikely to have
+> time for git related things for the next week or so and you're also much
+> more familiar with meson than me.
 
-Reading here, I think we should not sort the refnames for "reftable"
-backend. Anyway, really a nice job for optimizing the speed.
+Okay, I've sent the patch series in [1]. Thanks!
 
->  			if (!initial_transaction &&
->  			    !refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
->  					       &type, &ignore_errno)) {
-> @@ -2574,6 +2585,7 @@ int refs_verify_refnames_available(struct ref_store *refs,
->  cleanup:
->  	strbuf_release(&referent);
->  	strbuf_release(&dirname);
-> +	strset_clear(&dirnames);
->  	return ret;
->  }
->  
-> 
-> -- 
-> 2.49.0.rc0.416.g627208d89d.dirty
-> 
+[1]: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
+
+Patrick
