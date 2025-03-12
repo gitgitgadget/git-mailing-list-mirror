@@ -1,123 +1,157 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from mail-10628.protonmail.ch (mail-10628.protonmail.ch [79.135.106.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC1A254842
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 15:36:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D72255E4C
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 15:51:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741793819; cv=none; b=atZNH11y/yKpeRqBVoWXPKSbjAMgSGWlcPjxFywgXpr72bzZtrs7g4yFQ7l37IlneknSff5Mxqa/8SManLt6C1yVrHd0g3IunqmNXd2eUpRgcuJ2PktEZACZqDHi/ASqyOz9L1/2DpL0GACJ8P4yYq4BhSUxlFq/o3GfNRxQy50=
+	t=1741794672; cv=none; b=onTZylYsoX05u+UFzve7Ao/18n8EwzKFXkrs0EAu6nttC5p23d+qbmq5+dOspdKGftjg/6t+a/8jOgvr4/YDJgyxROVzJnwWSF5cj2v/29VB+Zw/WZw58EL3X/6GW+NiSJQH1kV2+Mu/Q1uIIIRTycj6C/9Je494SxZEjsJkYXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741793819; c=relaxed/simple;
-	bh=tbCM6ZLqw1JyO32hUwYlo1es/xVjvjeTBUPkqmCreow=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fjpb94gv8ne9K6GvjHXe0haZAJmUd1j9KPsd1HeOxhfbBpxv8/zHxY6pxGop+Uk2pyCZrsepcJ45f7AkmtB/5t+r5PtqBODfj/PSzqTriRD3Kxo8pOj9edkX9siCGUZw6c6Xb6GY4MmF/asjVT2QHDXzLiW96O96TwQxU86+0Wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Tci8Anws; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YquJbQ1E; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1741794672; c=relaxed/simple;
+	bh=omDWhkY1Um1z3KXbyqc2sNUy3DryhU68Q6aJ6PdIQM4=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sezrsIgPfGXbrIEo/c7o35EigXvPN6dkOQYZdH2eZYArnGXwvWWu5gUh5Zt4rI7NKhwv6Sgnrh1fr37/4MMv5EtkDAWV9c1gKn7/lezpqZpILEfGr6M32Embfs0Gvp5GO0qzLe+uhfvKI6K985a4klsj0PfmQ0RwIC7iGbTnxjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=J3I0jzc/; arc=none smtp.client-ip=79.135.106.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Tci8Anws";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YquJbQ1E"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 397611140208;
-	Wed, 12 Mar 2025 11:36:57 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Wed, 12 Mar 2025 11:36:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1741793817; x=1741880217; bh=daRDDUoTnB
-	oXDbeWg66+eu4UNEG3n/grlU6z+h2uOnI=; b=Tci8AnwstZT1l05/3Mx8fGJfLN
-	76XteaS9xjk1IXk3446sxnZMoVuKUgIWAo9/aDBZ5y6oKvZPDbpdEwdEOOJC4IRm
-	lrwCNGB7GpVGOZwY6DtQfDWADCLnWmHvdm/RCJcByntBY9njd0j2NdetfjXEnag8
-	mOUMG7tx3INF7toyds4vhgchFlGn93AMrryMhxq2iy459NJV6NVui15Hw2jMQFN8
-	UZ/34e17/W5/7H4T652Pto016PpDtBeDfTH5UZ97e0RuzENV7gBdEd2GyKFJ83BD
-	QTODQIspt2B7l8vd1D/x0eYjauNqm0wNuRG/88PczTj7fAw8C1Mtvoh5CsXA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741793817; x=1741880217; bh=daRDDUoTnBoXDbeWg66+eu4UNEG3n/grlU6
-	z+h2uOnI=; b=YquJbQ1EByKmuO1QAIRxT45+sEO8AsOIEXsIGtk/k0c9WkU7u1W
-	KKZ+aj49PGfcRDE+UFsG+sqh1wvWU7mfnU/G+co7Gc0aDYIKAp9+/Immn6Nmpujl
-	7dCEvf5+7nuJIyU9j6jhrJ+cJZGcGxDWk/e/JlDm6iU+9q4NVZqWOZMpj0MH8fqR
-	jg5I6ic7EbaeNp/fIFEa7CCfl1BkWWyC6emenK+Mo34NPmVMJL3ouR3emO3BD3vy
-	mpAxfA8bTYwZlaeFMww/tBLIm7GLnzcxLot3rTUt/jl4OtvA/CbzQSVeIF/F2uVw
-	/6mXko00miK3GcMWFbxvpu0pAbiMfzjc0Yw==
-X-ME-Sender: <xms:GKrRZy3VyXga5QDpB0jWalPePZarvgWLT5UgBWQUlHUH8lOfwg3_aQ>
-    <xme:GKrRZ1FO6JbpayRjZjGNIcAD1fWxFMKVpMCvwJ1hzV2bMpft4ppWtEld15R5--zdJ
-    TXlcVhJ0Kfq0_mIjw>
-X-ME-Received: <xmr:GKrRZ652Ul8nRDpkCP1SdzcEHZtBToTCSn-yWQhBaACvD-hFoCinbnWTZ2bsbCoGMPECbMg1CyIcNPSGbxu1uTgzt2_UyqIA2he0W7uiVBIptD3qIQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehgeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhhvghjihgrlhhu
-    ohesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtoh
-    epshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvght
-X-ME-Proxy: <xmx:GKrRZz1ICD5d3mpQqsgrX8DsRPaRWeOQzgfgko32avjB7glhKzICQw>
-    <xmx:GKrRZ1FU7ZRm7wLXe5Szy9I_26ptpJnzlSwLtN0KXDjSWSC1cR-P2g>
-    <xmx:GKrRZ89IYBzWd5fUf7PpgOH2pXGrMXpgVBqnISR6a162ZqAn1QULdg>
-    <xmx:GKrRZ6mL2qm5kvstmlEi_IXo2ZMrNL8gkPIfai51OTPhV3HWZb8EOw>
-    <xmx:GarRZ80OtvDSXInQLxAJRP31bd-zhTU0TTjdPKj-lGxXljyzLVN9ZC41>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Mar 2025 11:36:55 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 425f64b3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Mar 2025 15:36:55 +0000 (UTC)
-Date: Wed, 12 Mar 2025 16:36:54 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v5 08/16] refs: stop re-verifying common prefixes for
- availability
-Message-ID: <Z9GqFmLBX6SAkgZy@pks.im>
-References: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
- <20250306-pks-update-ref-optimization-v5-8-dcb2ee037e97@pks.im>
- <Z9GKs9z4n4qgOP7n@ArchLinux>
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="J3I0jzc/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1741794668; x=1742053868;
+	bh=omDWhkY1Um1z3KXbyqc2sNUy3DryhU68Q6aJ6PdIQM4=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=J3I0jzc/SgbDF+u8u1Xlvut/+2rboRg2yvRpcEhQNaLaWrmx7Iv8ZjEwrem6JD8Te
+	 HdQMNWp1M8xa7gjKMQ2nKeV+raoOr+LaGHSR1kI8retSUjBzOFfN/u4hoF1xhXAHFK
+	 hPYvYoOqtrSNnudn/4bxp4pU9pY6hfXISPlwhEiChSbebhvKsqevRXxQCFn7sKqXlc
+	 xmW3IdbH1Vsi8tl0Lvv2WmEMSfO4HaEMwV8cj1ZTWn+KEQtvm5/3/EK+SIS5R5g9In
+	 qR7qv9Wpq5dJ6JesWInDjhuKmRq3bsWdzA4LPy7DOV6v12/hH00gCLZh9hlHgu1OZA
+	 0yW5C0xWYV+Dw==
+Date: Wed, 12 Mar 2025 15:51:02 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: Jason Cho <jason11choca@proton.me>
+Subject: Iffy output given git diff --unified=2147483647
+Message-ID: <NYMqsJ7uttDzFT2OOEg5LLsxCSoQhTzqBs16KrMHGEKC7LzOAiYnYTEZavRQWqGH41UgjdwScwer7MssNzI7AEDHnD8GTBWvoBIqJ2e7D6g=@proton.me>
+In-Reply-To: <xXWgbH3mlNEvFcdGLqBHwcclZoeZNPoLg8Hr6YCipHXvS5eKaHeTppzFM-l_wyB46BB1R1T0j6g_jWRXIj7-GRJh1LPxi1ta3GkQ5t8F4-0=@proton.me>
+References: <xXWgbH3mlNEvFcdGLqBHwcclZoeZNPoLg8Hr6YCipHXvS5eKaHeTppzFM-l_wyB46BB1R1T0j6g_jWRXIj7-GRJh1LPxi1ta3GkQ5t8F4-0=@proton.me>
+Feedback-ID: 126703824:user:proton
+X-Pm-Message-ID: 2b6384503e95bdada685d16f109f77fbcaea8fd4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z9GKs9z4n4qgOP7n@ArchLinux>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 12, 2025 at 09:22:59PM +0800, shejialuo wrote:
-> On Thu, Mar 06, 2025 at 04:08:39PM +0100, Patrick Steinhardt wrote:
-> > diff --git a/refs.c b/refs.c
-> > index 5a9b0f2fa1e..eaf41421f50 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -2514,6 +2517,14 @@ int refs_verify_refnames_available(struct ref_store *refs,
-> >  			if (skip && string_list_has_string(skip, dirname.buf))
-> >  				continue;
-> >  
-> > +			/*
-> > +			 * If we've already seen the directory we don't need to
-> > +			 * process it again. Skip it to avoid checking checking
-> > +			 * common prefixes like "refs/heads/" repeatedly.
-> > +			 */
-> > +			if (!strset_add(&dirnames, dirname.buf))
-> > +				continue;
-> > +
-> 
-> Reading here, I think we should not sort the refnames for "reftable"
-> backend. Anyway, really a nice job for optimizing the speed.
+> $ git --versiongit version 2.47.0.windows.2
+>=20
+> $ git diff --unified=3D2147483647 1.txt 2.txt
+> diff --git a/1.txt b/2.txt
+> index e53eaa1..1130481 100644
+> --- a/1.txt
+> +++ b/2.txt
+> @@ -1,10 +1,10 @@
+> =C2=A01
+> -2
+> +a
+> =C2=A03
+> =C2=A04
+> =C2=A05
+> =C2=A06
+> =C2=A07
+> =C2=A08
+> =C2=A0a
+> =C2=A00
+> @@ -1,10 +1,10 @@
+> =C2=A01
+> =C2=A0a
+> =C2=A03
+> =C2=A04
+> =C2=A05
+> =C2=A06
+> =C2=A07
+> =C2=A08
+> -9
+> +a
+> =C2=A00
+>=20
+> $ git diff --unified=3D3 1.txt 2.txt
+> diff --git a/1.txt b/2.txt
+> index e53eaa1..1130481 100644
+> --- a/1.txt
+> +++ b/2.txt
+> @@ -1,10 +1,10 @@
+> =C2=A01
+> -2
+> +a
+> =C2=A03
+> =C2=A04
+> =C2=A05
+> =C2=A06
+> =C2=A07
+> =C2=A08
+> -9
+> +a
+> =C2=A00
+>=20
+> $ diff --version
+> diff (GNU diffutils) 3.10
+> Copyright (C) 2023 Free Software Foundation, Inc.
+> License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.=
+html>.
+> This is free software: you are free to change and redistribute it.
+> There is NO WARRANTY, to the extent permitted by law.
+>=20
+> Written by Paul Eggert, Mike Haertel, David Hayes,
+> Richard Stallman, and Len Tower.
+>=20
+> $ diff =C2=A0--unified=3D2147483647 1.txt 2.txt
+> --- 1.txt =C2=A0 =C2=A0 =C2=A0 2025-03-12 16:04:06.947099900 +0100
+> +++ 2.txt =C2=A0 =C2=A0 =C2=A0 2025-03-12 16:04:27.131732400 +0100
+> @@ -1,10 +1,10 @@
+> =C2=A01
+> -2
+> +a
+> =C2=A03
+> =C2=A04
+> =C2=A05
+> =C2=A06
+> =C2=A07
+> =C2=A08
+> -9
+> +a
+> =C2=A00
 
-Agreed, it's unnecessary for this optimization.
 
-Patrick
+Please see the above command line output. I run this on Windows with git fo=
+r windows, but the problem should apply for other platforms. The version of=
+ my git is 2.47.
+
+I prepare two files, I run GNU diff =C2=A0--unified=3D2147483647 1.txt 2.tx=
+t, the output is correct. Then I run git diff with --unified=3D2147483647, =
+the context of the second hunk is repeated, which is unexpected.
+
+I investigated it and found the repetition is due to an overflow issue in =
+=C2=A0 xdiff/xemit.c.
+
+
+> xdchange_t *xdl_get_hunk(xdchange_t **xscr, xdemitconf_t const *xecfg){
+> xdchange_t *xch, *xchp, *lxch;
+> long max_common =3D 2 * xecfg->ctxlen + xecfg->interhunkctxlen;=C2=A0 <- =
+----
+> ...
+> }
+
+
+The documentation https://git-scm.com/docs/git-diff doesn't say the range o=
+f --unified. Even if its max value is INT_MAX, 2147483647 is in the range.
+
+Can you guys clarify the correct range of --unified? If my value 2147483647=
+ is in range, git diff should output a diff without the strange repetition.=
+ Please fix it.
+
+
+
