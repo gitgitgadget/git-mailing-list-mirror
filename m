@@ -1,165 +1,121 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC57241CB7
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 13:05:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C828B2EAF7
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 13:17:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741784761; cv=none; b=RP3Cgd8G+Dm2Jgn2qUW/QzNBx+xHxL1ZTtMT10OXQcCB5fzMIkmG1c08CZa/YXwWPJEwVquXINUDb4JN79GrPSyZGZ9wA5cQW2xTKb6I7+kBy/Pm+711aPuNhL8u0cCCDeNutt6y9xvMTRsd6ZSBU+CgzFk86srK8INamn4qd9M=
+	t=1741785464; cv=none; b=PY36OACMhhbbGMj0hj/Cx2inroOZGnJvYlUMZ+96gmlKQ622LxoDWm2exMzKXPEzKpQVMjQcSXqxqB4TIPfKcdsdmB4AXH6OSCXEhAol5AxOjbzBaEn0K/I/QAqnvVJgvCJsTzxzHXgLoNbZDv16Ifi6jWrh430jzKhoIQybU/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741784761; c=relaxed/simple;
-	bh=5jgmOYykbCGjYc+shwDNdNyRNbyX/ZGDIRUh6XNVbGc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ogAccqOM8BIp+6HQqKGI0p7EIgc9LS+eLUdwQr2eOI9+BoAmv3D1EHXn8hNswpPdXA0/1Q61fjG2eD51k6FUKX5dC6TFpEqjZdtbJ2CSx0RJwJLgpGtt9FAJ9ajfH69nyoNIbgDm01bN9JTOr+iIH25q6yZsRMVtXpgt0TnEvn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j28MYJgE; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741785464; c=relaxed/simple;
+	bh=YCw75iX1hYEl9PX49wVsTtPkSpsaxUSAlTs3ikKqTwk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=rUF+xSL/BMCSoi7B3Ey0KByoszqTfUe1v48odqZ37fNi1fJHmXth1UZNZpHDjML4rNc73hZDeVz8xA4J7KDXn9vgCWeO1h6nWeDxOPWPTBa52Fn1xSNvV/Wt6ytRKgkrWTRPP13LzVYsxe9tMd5iPXKjkb9qTeNx82wtdt97tXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fyE76A9M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZOMlVUdi; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j28MYJgE"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-225b5448519so5777365ad.0
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 06:05:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741784759; x=1742389559; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DTI8E17g2TFDLocVt2Flxb+CVCkEihl5IHPfRIV0H7w=;
-        b=j28MYJgEg130ZEtE9Pjro8A1YUotLgXin4hW41vM3DmfKW6Zvcd4EbzFRj61QORbgz
-         c8tA3m2BvgI8kUloODSww/bOwRwCn4Rxl9rxrLkCGlvxZuXJJF3LhoGUvkOcvW6fRgpI
-         i6UiJuROqn5MjuxLPgy1eKMdA5N3g9REaoDeKfdtmxVr0KjhbSYqAmoI6+MN35qNwfqn
-         XqRBNpkgw2ZdxSToqUc7C8M82dG7AWkx7Md5LCrBlZX4HA3gbTfKQ/JyUQksA9dD8hKE
-         QoxZxJ94gFIFSa60sOfNtNFUKhS0Nz6JFB6G1b5biya2qokWQYY5TXj/TfwzRGTCFhr3
-         jC1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741784759; x=1742389559;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DTI8E17g2TFDLocVt2Flxb+CVCkEihl5IHPfRIV0H7w=;
-        b=JliN5WpplLRAT4kNENDKKjs5eRdGB15R2LEwaUGOS7e7BYbWORjJ0R9/hnGq1e/hMh
-         joOO5nb8g9AIZ50TA35yP73L1O/sTdhEoXhyo10ObBp7fSPetic06T83BfHD5vNRYE3U
-         lgYV7jVCYSaIupzZ9Nbp0q+2Yod+s3tJSyEq58Zq57TG1EYur5L2T5+dYzx1JSYsA2y2
-         6CSjEkM5Jqxx07z+GdoGa7zTs3x2CGp67u+rfUbWevGKbOy2G2PD94El1DznmCWC+hPL
-         PJ6rp5XgBCvb9LxouRG7vpNNaBhASzxUe970SUBB6izrYlKGIAvLAoinNU8akqh1jV7V
-         kVNQ==
-X-Gm-Message-State: AOJu0YzMRWvqmmVGECFZNxlvbJfn01SKtPDwyIq/JlzTwxclQkGb3ctg
-	KS4vZ7tPLj8Yo/XoaAPjJct5l3mqM9+hVgqZPYEZAQ8Rrv0UxLvP
-X-Gm-Gg: ASbGncti/sDD3ixH8rFQ9Fd+/QkOZGcfMX179p5OgUv3j1sHncMW6UeQjO7EfMBxkOn
-	tBEQRLmXRhuJrREOKq3H2pJJjqdEiRsQNT/o89Cg9bs2xct+H7fZljaCrEysFLz3DEFuuIpgcW8
-	IMuyeUJImHA+NegV+CuCtBajNLeRMJ41lDFkHAha1dY8w+Q4+HUqUK3n+UVDrVs/huh3UtrdGqm
-	+t8a1j2oL8XIYAlRtHTSLHhDZB71Cn71CCXUyKnJK4Ll41jCvg68XzxNYjaFUoW8aye7uPhq2Me
-	gLYdPbk2ghAtdLOWsaHtrM9XUW1MIc88+zxwpzVx
-X-Google-Smtp-Source: AGHT+IEKHx0jaUYoLVvSPtvyPH/MU3Uh2o4ChjOC3Eo3DBF2c5Z5ZUn/HTAEhc6VEcBeMO0UH7GZsQ==
-X-Received: by 2002:a17:902:e88a:b0:21f:6fb9:9299 with SMTP id d9443c01a7336-22428aaad15mr339082655ad.27.1741784759385;
-        Wed, 12 Mar 2025 06:05:59 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-224109e98f9sm115266565ad.93.2025.03.12.06.05.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 06:05:58 -0700 (PDT)
-Date: Wed, 12 Mar 2025 21:06:08 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v5 07/16] refs/files: batch refname availability checks
- for initial transactions
-Message-ID: <Z9GGwNpfDly4_NIL@ArchLinux>
-References: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
- <20250306-pks-update-ref-optimization-v5-7-dcb2ee037e97@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fyE76A9M";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZOMlVUdi"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0ACD5114026C;
+	Wed, 12 Mar 2025 09:17:41 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Wed, 12 Mar 2025 09:17:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1741785460; x=1741871860; bh=IlFCY5MGiS
+	ivE2NvVWZBCyWRzQIPwMlqXkkVubMs/+A=; b=fyE76A9MVTw6KumZNyesORW3tI
+	fFCJUu6mIlgRkMU5Pq4VSb0ciEfeQ3o+N60Grs/SJT6vXhvi2jbAncp7B7ehQ85c
+	FacZ338FxuPewmDUxWBjM8INdP2Ow4vKClG6LG7KsDuvzayYqMfSzlm+53Ra7sUO
+	7nc+adIOvJUFZzI0exolhjr6TPzgICARh2A2g/AlNDxV/TqYxXsOvi5GsxX8qaTX
+	g9Q7iS7etaDBo7L3RORYXElG8Qj2JBxnh9iZxNaCjPreyPieRBLIyvLyT/3WrdgP
+	cS2KGPPPcqltTGieuPFHpD9js9dyqiqrEe6IMh7R1suRZ1dj7sIA/XhQD9yQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1741785460; x=1741871860; bh=IlFCY5MGiSivE2NvVWZBCyWRzQIP
+	wMlqXkkVubMs/+A=; b=ZOMlVUdiX/C3iMNEkXWsKs6QbHFckvwlxUoNmrH/2r1D
+	4/447uhijiFcB2QsYsd/IswGEcgPmJqJdAOMe/BnuKcn/5P6mTy6YBYsy3We7jB+
+	X1FJwBPkFkV1j0M/5qpIQQxbHPDe9i8+obC4VENNPwFekqpW/Xok12uwfl6c3BgS
+	7FcMUNslTf500wQAnb853kymfy96QoN6gEN2OjItI8FCbRHFTBerGy9Vcf7Fueb9
+	5X1RhlEo/G9QCAEZH/aJQ6wseK7mIDX+SPyRgPFuc7MXJVQMP1ORro+HunXiirVR
+	L6Y9rlqkFdsxa0uZc8Ew67DOn8E3xK6F58Dfdh6s8g==
+X-ME-Sender: <xms:dInRZ3kgJppwCzHFOWH5LUBasF8zD8medklpilSsNOgJsG5UzpHtFQ>
+    <xme:dInRZ62l6gi7s2YVCCtFeEDkEnOI-8BMYYQ6s-UZFtqWVdqp_Br87HOaWpVX-GgPX
+    Dl-Hlls482LD9Pe9w>
+X-ME-Received: <xmr:dInRZ9pQnlXAc54ayJSbyFatVTflm5c6YgEQ75h_ngVDacMoUKCl5_RdBwrI49OatdGX83VPJvLfFRtihe7Y5QrEj_DRvLtgTW-3SyDPYIBCxWTBfg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehudeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffufffkgggtgffvvefosehtjeertdertdej
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevueegkedtteeigeejueehuedugfevleefveehueeh
+    gfetffffvefhuefhueekveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghr
+    thhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfi
+    hoohguuddvfeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:dInRZ_m054p3pu45jv_ctsiTL9w5QxpkbfOp2-en2YrYjcaJato0PQ>
+    <xmx:dInRZ12ID1GJiRD8QuTHoDMKmPYlytbCJCRX-x1xkfRY7QFgWN7Vpw>
+    <xmx:dInRZ-s5w1TrcBP2dafyg9FVOH3pxj5TAPMeqTFJyFqauXAzSJCu8Q>
+    <xmx:dInRZ5Vcah6OASxTAkk16WHATxlQSRDb_g4ASXW_Rhp7sot_2iEdhg>
+    <xmx:dInRZwQJsTxAlwPiw5ApHyZIwligH5biTkxV2T90Y_TV_t4D7vJ6RrFs>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Mar 2025 09:17:39 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 52a191d5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Mar 2025 13:17:37 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/3] meson: improve handling of `-Dbreaking_changes=true`
+Date: Wed, 12 Mar 2025 14:17:31 +0100
+Message-Id: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250306-pks-update-ref-optimization-v5-7-dcb2ee037e97@pks.im>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGuJ0WcC/yXMSwqAMAwA0atI1gbaqvi5irioNWoQqzQgQvHuF
+ l0+GCaCUGAS6LIIgS4WPnyCzjNwq/ULIU/JYJSpVKENjiWem+BOcngcA9mN/YJ/K9jo1s7OWUO
+ qhvQ4A818f/9+eJ4XhZ6n0m8AAAA=
+X-Change-ID: 20250312-b4-pks-meson-breaking-changes-819afcca2e07
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, 
+ Phillip Wood <phillip.wood123@gmail.com>, 
+ Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.14.2
 
-On Thu, Mar 06, 2025 at 04:08:38PM +0100, Patrick Steinhardt wrote:
-> The "files" backend explicitly carves out special logic for its initial
-> transaction so that it can avoid writing out every single reference as
-> a loose reference. While the assumption is that there shouldn't be any
-> preexisting references, we still have to verify that none of the newly
-> written references will conflict with any other new reference in the
-> same transaction.
-> 
-> Refactor the initial transaction to use batched refname availability
-> checks. This does not yet have an effect on performance as we still call
-> `refs_verify_refname_available()` in a loop. But this will change in
-> subsequent commits and then impact performance when cloning a repository
-> with many references or when migrating references to the "files" format.
-> 
-> This will improve performance when cloning a repository with many
-> references or when migrating references from any format to the "files"
-> format once the availability checks have learned to optimize checks for
-> many references in a subsequent commit.
+Hi,
 
-I guess you forgot to delete some sentences for the commit message. This
-paragraph is a little redundant. In the second paragraph, I think we
-have already talked about this.
+this small patch series improves handling of the breaking changes option
+with the Meson build system as discussed in the thread starting at [1].
 
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  refs/files-backend.c | 23 ++++++++++++++++-------
->  1 file changed, 16 insertions(+), 7 deletions(-)
-> 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 6ce79cf0791..11a620ea11a 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -3056,6 +3056,7 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
->  	size_t i;
->  	int ret = 0;
->  	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
-> +	struct string_list refnames_to_check = STRING_LIST_INIT_NODUP;
->  	struct ref_transaction *packed_transaction = NULL;
->  	struct ref_transaction *loose_transaction = NULL;
->  
-> @@ -3105,11 +3106,7 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
->  		    !is_null_oid(&update->old_oid))
->  			BUG("initial ref transaction with old_sha1 set");
->  
-> -		if (refs_verify_refname_available(&refs->base, update->refname,
-> -						  &affected_refnames, NULL, 1, err)) {
-> -			ret = TRANSACTION_NAME_CONFLICT;
-> -			goto cleanup;
-> -		}
-> +		string_list_append(&refnames_to_check, update->refname);
->  
->  		/*
->  		 * packed-refs don't support symbolic refs, root refs and reflogs,
-> @@ -3145,8 +3142,19 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
->  		}
->  	}
->  
-> -	if (packed_refs_lock(refs->packed_ref_store, 0, err) ||
-> -	    ref_transaction_commit(packed_transaction, err)) {
-> +	if (packed_refs_lock(refs->packed_ref_store, 0, err)) {
-> +		ret = TRANSACTION_GENERIC_ERROR;
-> +		goto cleanup;
-> +	}
-> +
+Thanks!
 
-Still the same question: why we don't sort the `refnames_to_check` here.
+Patrick
 
-> +	if (refs_verify_refnames_available(&refs->base, &refnames_to_check,
-> +					   &affected_refnames, NULL, 1, err)) {
-> +		packed_refs_unlock(refs->packed_ref_store);
-> +		ret = TRANSACTION_NAME_CONFLICT;
-> +		goto cleanup;
-> +	}
-> +
-> +	if (ref_transaction_commit(packed_transaction, err)) {
->  		ret = TRANSACTION_GENERIC_ERROR;
->  		goto cleanup;
->  	}
-> @@ -3167,6 +3175,7 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
->  		ref_transaction_free(packed_transaction);
->  	transaction->state = REF_TRANSACTION_CLOSED;
->  	string_list_clear(&affected_refnames, 0);
-> +	string_list_clear(&refnames_to_check, 0);
->  	return ret;
->  }
+[1]: <56cf842a-7c1f-4354-b191-35bcc1e139bd@gmail.com>
+
+---
+Patrick Steinhardt (3):
+      meson: define WITH_BREAKING_CHANGES when enabling breaking changes
+      meson: don't compile git-pack-redundant(1) with breaking changes
+      meson: don't install git-pack-redundant(1) docs with breaking changes
+
+ Documentation/Makefile    |  2 +-
+ Documentation/meson.build | 13 +++++++++++--
+ meson.build               | 18 +++++++++++-------
+ 3 files changed, 23 insertions(+), 10 deletions(-)
+
+
+---
+base-commit: 87a0bdbf0f72b7561f3cd50636eee33dcb7dbcc3
+change-id: 20250312-b4-pks-meson-breaking-changes-819afcca2e07
+
