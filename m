@@ -1,118 +1,170 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3968A78F29
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 18:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B911DE894
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 19:02:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741804101; cv=none; b=LjyKVylXMBN88FW1yt6aJCarp0OJTQrviZ87qxDyp+eRG6fLbQQnQAkFdfkeB7BQwyW1N/VQMCZniGTDWu6j8PCVLAC4vLlZTOREY0KVqrHKMScuVIvMYOVBMTAPApzNy8brl0BH2SZRt7fXKVtCYChSzlW3F9kDHJ1pSdh/H4c=
+	t=1741806181; cv=none; b=ilqtggFmoDdEMCRJKg1xMgxZnNkFmKS3DViIcvb+gmctqRaPNIwCtOKifVjenqMFWptobLv64VmfUgQI3WeEOqpNqpbHKXptcBk/h2wPpuWsdfOuFCN1hWGsA1lcuMWHkRm6nXmiwd2aWwpdaVobn66KKTZ3WqdLaDY7yE2rjaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741804101; c=relaxed/simple;
-	bh=nZ+M8kskx3KRcS+HD9jvm52dZK76zqNAvXA+3mH+zW8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=S209ONXXiLYXrDRBB4CZnQlzt+goNVPmIVwHHeovAuz6dOYa8IkpmcKA2QTgysLDmP0rIEQsZbHsma+MaHAcT7o7ghU+bGl9BFrFXy2NOJsJHu6QWTY1Hume8JeoBIgGiXJ4CUvEfgwAAtOiVTYku9pDVE32JiPxR/jAmciwKfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZWpTLUBC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pNihCYVZ; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741806181; c=relaxed/simple;
+	bh=um7/UJzvBQEYd1/Uudenc9jRnQlTVT4paUBoX/Z1ZsI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=R3tgIP6pIWfWzBOaQ3usIf7Ge9TUt8/8PorqC3GFZG9MVQrd4x99ZKWHAI3GtY1FS4AOsXgrZ4FnT1t+7vmHM7Xj5YeLTeoi+XpCtE/shQerj/9E6WUOPD07v7BU8ih0F4XRUy/n1FJFhQy2vElGmKsqq/yLKRURromEwPfI/Hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=KFPmerWm; arc=none smtp.client-ip=209.85.219.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZWpTLUBC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pNihCYVZ"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5096E1382DAD;
-	Wed, 12 Mar 2025 14:28:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Wed, 12 Mar 2025 14:28:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741804099; x=1741890499; bh=JLlb1kVNSE
-	pVVe4xA3a0j1tsLET2N6GKqarba1bUdws=; b=ZWpTLUBCTz1/RsK5cvGHT5F3Ga
-	G78lE7am9ciQcK1DmTEru4xUHTKbLpLicsK6uRe5/ihelSenm9RODWd9aCysw0ij
-	cYD5wGWza+WRlEOeROlGZ3FQ33wZPSPhu1uFVIgsSrdfggiCv/A3w0gNnsO1wBXo
-	sxA1iIDNPqeeXii10w9YnbOAlh4FnF02UgDst7FbI5Xdc9nvEG2KWEX1FufUmmk8
-	dduEMcQdOZXlfGlL0HRF7SfnNRDSy043Lr/rIECFleBtwxfDW3Uqr4CqZAteowgd
-	zo9ot0KedUqdiOrwDzqYw5PcWm9JKfa2x/PMNcF9hIKu/I8G4ONTTJYLWoPw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741804099; x=1741890499; bh=JLlb1kVNSEpVVe4xA3a0j1tsLET2N6GKqar
-	ba1bUdws=; b=pNihCYVZU9Rv7+qulD2JGoizJX9YbkBA2hMYAG6ZB0KMD0ixK9H
-	LAvpSVSOEZE99uBoSpyuP+3tA7iRdFzyc/f52ujtUSOcZeSM4/+54mcjwXFt67nl
-	COh7KZVS5guIzJySkZddfOldR+n+28xDjw38DGlazfHVzGIawvJlSR844gY9MQtq
-	z9JBM4OL+n2soQyda3lg5XI0eL8h/uiX6s4QxTCYkpvidt7qe0l7OfWJDCGTQEma
-	qxbElOTEQWnCe/D0JRPrXSWEmCKpi02kUU+aNtZvCBj7CMZas2DdNtaf/8M1GyB/
-	k7t/72q0aSyyEWhGRWjWcy1SI3ayI9jcZeA==
-X-ME-Sender: <xms:QtLRZ6c2zk3K5R7C-OyaDutYIrbH5o6gBfuKjmCJ5v6ip9uhsPm6pQ>
-    <xme:QtLRZ0Nr0eEAyhOlbREpvyFrs0MVotF7-FgMble3vfgrjlGHjx5XNbatZXkDPUthz
-    k8QdQ_hRCjh6T0QpA>
-X-ME-Received: <xmr:QtLRZ7g1rT_BYBslDuAQ11ZA-_RVTLp2tDuY-lVdpCo4AIXEK-GWl9Q3swEeJoiAJYcOPhmDpy4qHvv1oodtl98PJITdXs09HV1R>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehjeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
-    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
-    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:QtLRZ3-bhhX2T5tXIrphBnRuRIIXfkQIs-ppDU3sHPQ32bUiZ3MEgw>
-    <xmx:Q9LRZ2sTXNFfPkhsi_Nvo0N5m1iWoyS1aNf35ghI8Xo3DCEleS58Pw>
-    <xmx:Q9LRZ-ECMQ9apu6eRqTdNEXsJI18bv_-88vWWA8jaDpoj4YBFfWZpA>
-    <xmx:Q9LRZ1Pxfbhu75POpmFGyeLZz--v0FJ9ZBp_ei8G4QhYv-t0lav7IA>
-    <xmx:Q9LRZ6iT4mwdFiSknjSzcgWTyvnFMfWr41AaPHQvynccUCxSI8ttMMeQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Mar 2025 14:28:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 0/6] pack-objects: freshen objects with multi-cruft
- packs
-In-Reply-To: <Z9GpQqm4YBvWF7Ff@nand.local> (Taylor Blau's message of "Wed, 12
-	Mar 2025 11:33:22 -0400")
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="KFPmerWm"
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e60aef2711fso153877276.2
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 12:02:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741806178; x=1742410978; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=G1454M0Ew/2XsRu09iH9yd1xVZOilbW+ueFxGS6Fp34=;
+        b=KFPmerWmDYl+ksexX82ynB4yHhUlKVCF+J1u4O71Rqq3GyksBlMBc5uIFDDHawJSo+
+         AgMUkTg1Adse4Fiwr+JWSNPxjdnai824gvUoGXy/lqafwAGrebe99OhRSEae37LFpc1Z
+         u3FHLYs9i3tU68RqgrVOWOLKj4aEsXO8EszxOKwQkV8B51oQmZ9Ggk1J49RahSXe7YOm
+         TeKdUit4g7Su6VAbbctP6UXqZ/ZLwVFM0dZMg+KH+wjsg7L2DEBAg04pREWnglFHm7Pc
+         HtFxB22/I3jiTzADRYpTj6BW4Yq+SXN23mNwxkRQK4P+8UDCN/fOgtxdmfEYPKYi9AtO
+         yjyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741806178; x=1742410978;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G1454M0Ew/2XsRu09iH9yd1xVZOilbW+ueFxGS6Fp34=;
+        b=upg4e1LCGf3/UiFqEZoRzGN9y6asNoqLFxzCW5k3PyfrlTqx7PNkquF5XICO3POj7r
+         IPCB3P8l2+0RlAybm8aRzFNG+UV3BuNbIzuz8mDXV/FJmrICqmoOsND3PMuVpCUwuQQl
+         3bK+ubvwda9KIZsZ363ayoWSGROD/vtr0a5yt3rq1QIcZC8pRbM3c/ZRSYxIU7YK6vwh
+         Y6+d0wOo3LDoReKNsCnzPFR48k+9xWLXxdkThbWAJK1VPMlC1JP+ssoDr3fMcyqACCy6
+         xw62Pi+0JnzlUBBlf8rrJN4t8h2TQPqVyuw+0UCBR17WbBz5NZNf602JNkdwqFW0wZNC
+         PEKg==
+X-Gm-Message-State: AOJu0YzeU3NlQ4582EkdzADW2xsfLZoLZa1mEkkaCZFY4sq1krd9+DK/
+	u1OxSq3wEnoBC8mfoDkn6Py3Aq8WFsAUexYPB9txcsqCNCnqDTdg4wUgsQYouE0=
+X-Gm-Gg: ASbGncvRm+sDv2OAIOPTOXHR30brd9QigQhodRMNqX4fjRUKpx1xhtdeUKNn5fp/tAq
+	Paldft2V8d9CZsaKgil2/xntkdTWrWgPYrQVDhTfJSHM3Jo7vnI2EK2O08FFCjj1jqfsj92Cz2Y
+	MrKBEAshnMobBhmrawviHXLY7oMKxErL81OfbPKsglyEgyc++Uf+BhD22E97EwrXyAttphdZ4cX
+	M5P5rq9YwmmjVk2VxxEt9Wfmd+B9FPkRWH4gVdZMVgWrelCmvX76RLgNxejlM1hU8uDoIbpvlBH
+	2kez8nl3qGRv/8GgH2911V0HKOpMtAhBPOAmPlR+IuluSDxmtHxxJWEjy0d66UEGgn7QU1yqN61
+	K+f08JH+oJwRDXBZiCwEnfzuR3ps=
+X-Google-Smtp-Source: AGHT+IGy+tjaywd1X7i+CuuoV3hHUdLqEom4tBpbhZzGPKakbq8X/Ifc+i/BmPKVBDNN+/pXakUWjw==
+X-Received: by 2002:a05:6902:154d:b0:e5d:dd0a:7fdb with SMTP id 3f1490d57ef6-e635c19566dmr32363792276.28.1741806178036;
+        Wed, 12 Mar 2025 12:02:58 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e63d108f722sm280657276.0.2025.03.12.12.02.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Mar 2025 12:02:57 -0700 (PDT)
+Date: Wed, 12 Mar 2025 15:02:56 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 4/6] pack-objects: generate cruft packs at most one
+ object over threshold
+Message-ID: <Z9HaYEyYgBYTiia3@nand.local>
 References: <cover.1740680964.git.me@ttaylorr.com>
-	<cover.1741648467.git.me@ttaylorr.com> <xmqqr0332un3.fsf@gitster.g>
-	<Z9GpQqm4YBvWF7Ff@nand.local>
-Date: Wed, 12 Mar 2025 11:28:17 -0700
-Message-ID: <xmqqfrjixfwe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <cover.1741648467.git.me@ttaylorr.com>
+ <f2ca92245ada74825806b50f786aab312275fd85.1741648467.git.me@ttaylorr.com>
+ <xmqqikof2pqp.fsf@gitster.g>
+ <Z9Gmo2P3Fnt3JeOs@nand.local>
+ <xmqqjz8uxfyq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqjz8uxfyq.fsf@gitster.g>
 
-Taylor Blau <me@ttaylorr.com> writes:
-
-> On Tue, Mar 11, 2025 at 01:13:20PM -0700, Junio C Hamano wrote:
->> > This series resurrects the first patch from v1 after introducing a
->> > behavior change for 'git pack-objects --cruft --max-pack-size'. When
->> > given with '--cruft', '--max-pack-size' now allows pack-objects to grow
->> > a pack *just* past the given limit by at most one object.
->>
->> And what happens when the last object appended is very large, like
->> 70?  Would we end up with 270 when the threshold says 200?
->>
->> I still am not getting what you are trying to explain in the above
->> two paragraphs, but in general, "give up just before" would be a
->> better choice than "give up just after", exactly because the threshold
->> we are letting the user to give is the maximum.
+On Wed, Mar 12, 2025 at 11:26:53AM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> I think this is similar to the discussion earlier in the thread, but let
-> me know if there is something here I'm missing.
+> >> So would it be feasible to remember how 199MB cruft pack is lying in
+> >> the object store (i.e. earlier we packed as much as possible), and
+> >> add a logic that says "if there is nothing to expire out of this
+> >> one, do not attempt to repack---this is fine as-is"?
+> > .... So
+> > the majority of packs in this case should all be removed, and the small
+> > amount of cruft data remaining can be repacked into a small number of
+> > packs relatively quickly.
+>
+> Given the above ...
+>
+> > Suppose you have a 100MB cruft limit, and there are two cruft packs in
+> > the repository: one that is 99MB and another that is 1MB in size. Let's
+> > suppose further that if you combine these two packs, the resulting pack
+> > would be exactly 100MB in size.
+> >
+> > Today, repack will say, "I have two packs that sum together to be the
+> > value of --max-cruft-size", and mark them both to be removed (and
+> > replaced with the combined pack generated by pack-objects).
+>
+> ... yes, this logic to reach the above decision is exactly what I
+> said is broken.  Is there no way to fix that?
+>
+> > But if the
+> > combined pack is exactly 100MB, then pack-objects will break the pack
+> > into two just before the 100MB limit, and we'll end up with the same two
+> > packs we started with.
+>
+> If "the majority of packs should all be removed and remainder combined"
+> you stated earlier is true, then this case falls in a tiny minority
+> that we do not have to worry about, doesn't it?
 
-I think the only thing you are missing is that max specified is the
-ceiling, and "you can bust it, hoping by a little but you do not
-know how huge the error is" is unacceptable.
+Yeah, it is a niche case. But the more I think about it the more I see
+it your way. I apologize for all of the back-and-forth here, this is
+quite a tricky problem to think through (at least for me), so I
+appreciate your patience.
 
-Thanks.
+The original implementation in repack was designed to aggregate smaller
+cruft packs together first until the combined size exceeds the
+threshold. So the above would all be true if no new unreachable objects
+were ever added to the repository, but if another 1MB cruft pack
+appears, then we would:
 
+  - See the first 1MB pack, and decide we can repack it as it's under
+    the 100MB threshold.
+
+  - See the second 1MB pack, and repack it for the similar reasons (this
+    time because 1+1<100, not 1<100).
+
+  - See the 100MB pack, and refuse to repack it because the combined
+    size of 102MB would be over the threshold.
+
+So I think it's reasonable that if we keep the current behavior of
+repacking the smaller ones first that this case is niche enough for me
+to feel OK not worrying about it too much.
+
+And, yes, breaking --max-pack-size when given with --cruft is ugly.
+
+> > But in current Git we will keep repacking
+> > the two together, only to generate the same two packs we started with
+> > forever.
+>
+> Yes.  That is because the logic that decides these packs need to be
+> broken and recombined is flawed.  Maybe it does not have sufficient
+> information to decide that it is no use to attempt combining them,
+> in which case leaving some more info to help the later invocation of
+> repack to tell that it would be useless to attempt combining these
+> packs when you do the initial repack would help, which was what I
+> suggested.  You've thought about the issue much longer than I did,
+> and would be able to come up with better ideas.
+
+I think in the short term I came up with a worse idea than you would
+have ;-).
+
+Probably there is a way to improve this niche case as described above,
+but I think the solution space is probably complicated enough that given
+how narrow of a case it is that it's not worth introducing that much
+complexity.
+
+So I think at this point we should consider v3 to be the "good" version,
+and discard this v4. I can re-send v3 as v5 if you'd like, or I can
+avoid it if it would be redundant. Either is fine, just LMK.
+
+Thanks,
+Taylor
