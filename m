@@ -1,134 +1,124 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C88E1EEA3B
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 22:13:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E2219E96D
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 22:17:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741817592; cv=none; b=ZuDxziApzQ7LffHnAEQ5bwM/uU4Cw7XHbDLhZsTJi+1kWHcDOz8m3sZyVlaa/6rveW20TE+1I0JgQRfwEeO2KMiJ5AaQkmcZFKTc5/sD3qTc7J8BQdd9/VqImQMmqRqCrjMpH/evMbwOlbqp5lqihXciXpTfKLiLrJdc8VVHe+o=
+	t=1741817837; cv=none; b=aTgmdSMf4/3BoJQC8vd3OtgrsuFL93m9NyYMUuJN9kcrw8gKnBIqfy3mTUxHJtKJvVYYgcDAtK57G8xbOS2yYGl/IEiJznDtMhYgLsgCPsLu/PcSAFUA/ADqTx2dEgS82mr47A803uOPC2lEfscLgKhqirKGIrg4UFG1KIaHw/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741817592; c=relaxed/simple;
-	bh=j/kF09mYPlfRJdv5r9NdGtngDHIkzbigEvNTivuPFpE=;
+	s=arc-20240116; t=1741817837; c=relaxed/simple;
+	bh=4Hl3rdJy3AkrDBL6Er2SD55jnDOtAe0ufEXQupEGVvk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nSdqDygjNWeK4TzflBPqAnAU6TjM+cSem+hK6ct2DY1Y4QE53rqML+F6AkPNHCwn80yzloLZSTR1U/PZY04NNKRs902EU9i5TI8oPTXH+tAg8m8e2sjUjaix9yQONV7Wi2I+Zn3XBHcUapB19BwJx9FUHXdIZe1/63uA8It8uLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e3pJ/6bM; arc=none smtp.client-ip=209.85.160.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=YfDIvBXPFYlTrtFVRDK51Q8ur2G1F3BEekluYWCmmPknaFrQCNmChlfUAYHKci0ar3OYfQIFcSzsvNpWFHlWxoxcSh/WCMck7FMjv4YzPz2Aa4GNBIUcOsZJPOXEhcR0YMrAzqhH2x3FYy8c6r6b9tcq1AZgfqKHuK1OX+AMpPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=KLmnXYd9; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e3pJ/6bM"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-2b199bb8af9so989995fac.1
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 15:13:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="KLmnXYd9"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e53a91756e5so361260276.1
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 15:17:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741817590; x=1742422390; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741817834; x=1742422634; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PsG3Mfd8J36kNGr57YjzsnsnzwyqieOHu0/GkApkXHQ=;
-        b=e3pJ/6bMRmjEFf3GuVUYd5GXQIeVsjw3YNx748JP2wvAYPycslIxLzAZ1JkQnpBiBU
-         yuWQyLxL+5cSfRuaUu7j/IMteOqJqLrwVQ+WOXSyTS2TAOZvBBQkfgGjeU6k0AV/iE/h
-         y9TZyIpxd8TFmzQVn2OsjNctnJeKHwpOxpR5sLNt7eV/LED1zDr0AwYMhJxUAECdVDD4
-         KcP1sM1OI3XRHpBGXdl3FKYgfbLJQbTLlQ7OSJ4z5NlV87O05um6Zcj1blvjvNdzBb+q
-         dgghkmREqnn8svc+5KAf3mxJ10Ef80+32jwTzDiHZzk4PkuKwXuUoq+8O5DHC1YTmVMa
-         M4Lg==
+        bh=aSdwn8RsdZ+4ov61MKvV7tFZlIxNR1TLCbIHjhqVhec=;
+        b=KLmnXYd9R7+QAZnm2aI4xP5Juz/DhLYj0T02JBeRZ9uhXk4T//oZOXrp/AsFrLJz2C
+         K8L0++q7nOEirLKEHwMcVgOGiGRllbSavSI6Tw4Kkj/wGLGtHeiciafSubmmT+Uuilnv
+         vTDor34gu640ez/G8laqm/9sB8IJwVQLV31xg+1nFy2MZlk1YgFpcSIfUFfj/oNg2KHi
+         cO+j9QjTzqLyrY7oPMkmTiTvImyqeonsx09wkaUOlf/HxUEoXezJoLjPvBOKab2teZdE
+         oBfhRLPHhheUBkPBalpl5fSjtGaiFNmOyeUxeL0vsoZ1iFUSHUWFdX+pTL1AMCFbirYV
+         oREA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741817590; x=1742422390;
+        d=1e100.net; s=20230601; t=1741817834; x=1742422634;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PsG3Mfd8J36kNGr57YjzsnsnzwyqieOHu0/GkApkXHQ=;
-        b=pbfhUwSe5lru/UUDBvlIcC85mxXxKTcKEjvJg5Iy687HZegfHFhBlqlo0xIALrZxap
-         wqdUT4wjtEptP2Z+bAOOk//fcoXTESNnsZWWQg9UuKy2gN12yPCam+GMbghZHCkbHTwh
-         EOkRKWu5S+Jb8aMIEZxAXyL4n9HHRdhMJ8VgpZs8JLlSbZW0KVLrmIYO6yGLaVRUW2cr
-         rzM0U3CgIKQkPRQOzqspRQh4AbA6Lmg+jvrOkLHIhvLNScQQFBtAWieIPfM15mQOO+9o
-         7jVaSfez6bJX4Psm7fGxa4hGuncdB+MX+X74r+PIS7gNKmpIBZZL2M816GodNXB6c3AV
-         8UYQ==
-X-Gm-Message-State: AOJu0Yw98dUc/1cLa5tUwd6YRoYwhVKMkdIueF2CUHFf4o9HHiL6gaab
-	5GBUnRaPXF4sjSKfw4nIYK8AlKF40ASCb09j6Uix78V+527bgiOrLdByng==
-X-Gm-Gg: ASbGncvQYrfwifw6kZvV3rvzcD4Pg8V/0XzBEpC9rklbM/xMUCWxQbG4UosSP1PhYAT
-	qvTXS9LDGZN79zsStiW+Yzgx5qFJVlXYos21Og2pTo+Um6kU8ReVaZYXXNNOeL9pJCGxmZ21RWw
-	26oJsETPEz8/qnV9OI2SU4O3aTyhclxeoS4PcWqf/pg4wqneH8ME638+RYLD5S4yT42P1M0W3h7
-	ALwS1Ehyd2tvTILsrRcvP8gO+K282Vc9T70DOHk1MnFHfb3wBywxIdQPsOstUXO7dKrUd2GtML0
-	KrL6CtdxyHP3ehzVKfob/IEsowt9W5PBxYfEwA==
-X-Google-Smtp-Source: AGHT+IETu2VRyBpBgeOuhnLCzvRSoARZFtVPPfq34yRGFtZvQ6RfyWHD35N0WsFPk2nLXJW7QIJKhg==
-X-Received: by 2002:a05:6871:3285:b0:2b8:92f0:ba5d with SMTP id 586e51a60fabf-2c66f88b26fmr122567fac.8.1741817589978;
-        Wed, 12 Mar 2025 15:13:09 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2c6712e5774sm3943fac.31.2025.03.12.15.13.08
+        bh=aSdwn8RsdZ+4ov61MKvV7tFZlIxNR1TLCbIHjhqVhec=;
+        b=J7zwxYGWNgnjguLssNcSE6RmGra3cxy4WoSjjsTwHpACM6pfxLZnP1WQ2xUx3WNOzf
+         g0UVoyD9tD2MW6c95ehm9tK3y6EwEz8uwTrfhPdTr2BSxWeRnQeMocnut/tmGsMbxRCQ
+         1EWxpEPtJheNLddlzudqHcI30Xb9qZ2HPiKh3xqPyE8h8aVc//vVXju3fvqQ49drYHgH
+         MeGJ+0yg8EBte9qpPM+IyWxKs92AQ1OpHAEWu3VYoaMJBSR3ZLyisO+AtzsL8zvARQGD
+         Rmw3CuG15czuwblAsN12o5R3g3Pb98oYbF/jDbk9K8p/F1L/N57xKp5ZD1V8m6hJqdsT
+         ozzA==
+X-Gm-Message-State: AOJu0YycL8F9d1lPjCD5F+7s/ItQJFqC2NitecEdXvo08o2Sj+hhp4ng
+	k2zovRzXjcw7Blo6Eqvj0GXCG1cSkrs/qZEFNjmeHnCxLf6P70yrpDV3Y4ZRUvkY91OTLG97+JO
+	gL3E=
+X-Gm-Gg: ASbGnctylikPGTFkLQIvmsmImJ7G1CYZ8OLzExRXhzYIZUl09+Ge99X7LHPHLSIqFe4
+	+TYk6ZyRANbWhgNWO/EnKAxggQY+7FR92mZX31cQNlvBkrD3OpkLGaXDksfhLTwo3PeiZ4oDEES
+	JIJTQMcbHMGXryDgnjWEvFjHmECIkKGEuwxJGq4elfhcyK5VeUBJFpx7+LdQcdqsBntyVDcLntX
+	/21HIW+e+Sm4rbT8ExcptnjjIOyEYeSweGoGqBkIzOSPhpHp1/lMNPt2Xog7CB3giabhlh1uWTn
+	ANjm3W5aWf2MBrNBLvyuQG7eCnByXzwwTx875znz8DDJ9Ip+bvAuNWpTZU6HcgnHwXlwQ91vFHM
+	dwnQDjrJFfPgHy9zh
+X-Google-Smtp-Source: AGHT+IGL9636e+Bt2umyDtza5QimbNrkZMqj91MQ2ekVYvI8aBxnML/66wKt29tcxHzuCxF9FDQfXg==
+X-Received: by 2002:a05:6902:2382:b0:e60:93ee:d94 with SMTP id 3f1490d57ef6-e63b522db9bmr10769805276.42.1741817834430;
+        Wed, 12 Mar 2025 15:17:14 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e6366b6bfcesm2901836276.32.2025.03.12.15.17.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 15:13:09 -0700 (PDT)
-Date: Wed, 12 Mar 2025 17:09:41 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, ps@pks.im, christian.couder@gmail.com
-Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
-Message-ID: <sm5xvh7bipyrlpw45bptlctbuhey7v3qktpskal5dzexomt34f@wgfziyhcf3t6>
-References: <20250310192829.661692-1-jltobler@gmail.com>
- <20250311235720.GA73755@coredump.intra.peff.net>
+        Wed, 12 Mar 2025 15:17:14 -0700 (PDT)
+Date: Wed, 12 Mar 2025 18:17:12 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Ivan Shapovalov <intelfx@intelfx.name>
+Subject: Re: [PATCH] doc: centrally document various ways spell `true` and
+ `false`
+Message-ID: <Z9IH6G7BnM0blOmH@nand.local>
+References: <xmqqy0ycz9dk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250311235720.GA73755@coredump.intra.peff.net>
+In-Reply-To: <xmqqy0ycz9dk.fsf@gitster.g>
 
-On 25/03/11 07:57PM, Jeff King wrote:
-> On Mon, Mar 10, 2025 at 02:28:25PM -0500, Justin Tobler wrote:
-> 
-> > To make machine parsing easier, this series introduces a NUL-delimited
-> > output mode for git-rev-list(1) via a `-z` option following a suggestion
-> > from Junio in a previous thread[1]. In this mode, instead of LF, each
-> > object is delimited with two NUL bytes and any object metadata is
-> > separated with a single NUL byte. Examples:
-> > 
-> >         <oid> NUL NUL
-> >         <oid> [NUL <path>] NUL NUL
-> >         ?<oid> [NUL <token>=<value>]... NUL NUL
-> > 
-> > In this mode, path and value info are printed as-is without any special
-> > encoding or truncation.
-> 
-> I think this is a good direction, but I have two compatibility
-> questions:
-> 
->   1. What should "git rev-list -z --stdin" do? In most other programs
->      with a "-z" option it affects both input and output. I don't
->      particularly care about this case myself, but it will be hard to
->      change later. So we probably want to decide now.
+On Tue, Feb 11, 2025 at 09:20:07AM -0800, Junio C Hamano wrote:
+>  Cc'ed Taylor, as the author of fb0dc3ba (builtin/config.c: support
+>  `--type=<type>` as preferred alias for `--<type>`, 2018-04-18) this
+>  patch butchers.
 
-As others suggested in this thread, in the next version I'll make
-revision and pathspec parsing on stdin also be NUL-delimited when -z is
-used.
+Wow, this is a blast from the past. I think this was one of my first
+contributions to Git, and indeed:
 
->   2. I was a little surprised that rev-list already takes a "-z" option,
->      but it doesn't seem to do anything. I guess it's probably picked up
->      via diff_opt_parse(), though (I think) you can't actually trigger a
->      diff via rev-list itself. So even though this is a change in
->      behavior, probably nobody would have been using it until now?
+    $ git log --oneline --author=Taylor.Blau --until=2018-04-18 | wc -l
+    9
 
-This is correct. Technically git-rev-list(1) accepts all the common diff
-options because it invokes `setup_revisions()`. From my understanding it
-isn't possible to trigger diffs so I think parsing diff options is
-unnecessary to begin with. As it also isn't a documented option, I
-figured -z being an accepted option for git-rev-list(1) is largely an
-unintended consequence of it using `setup_revisions()` and should be
-fine to use.
+>  Documentation/git-config.txt     | 4 +++-
+>  Documentation/git.txt            | 5 +++--
+>  Documentation/pretty-formats.txt | 8 ++++----
+>  3 files changed, 10 insertions(+), 7 deletions(-)
+>
+> diff --git c/Documentation/git-config.txt w/Documentation/git-config.txt
+> index 3e420177c1..76042581ec 100644
+> --- c/Documentation/git-config.txt
+> +++ w/Documentation/git-config.txt
+> @@ -213,7 +213,9 @@ See also <<FILES>>.
+>  +
+>  Valid `<type>`'s include:
+>  +
+> -- 'bool': canonicalize values as either "true" or "false".
+> +- 'bool': canonicalize values `true`, `yes`,`on`, and positive
+> +  numbers as "true", and values `false`, `no`, `off` and `0` as
+> +  "false".
 
->      If it is possible to see some effect from "-z" now (I didn't dig
->      very far), then it may be better to continue to let the diff
->      options parser handle it, and simply pick the result out of
->      revs.diffopt.line_termination. As your patch 3 is written, I think
->      the diff code probably doesn't see it anymore at all.
+I agree with the rest of the patch, but is this true (no pun intended
+;-))? I thought that we might canonicalize "yes" to "yes" if the value
+we are asking about is already something other than a literal "true" or
+"false", but I don't think we do:
 
-As currently implemented, the early parsing of -z doesn't effect the
-diff options parsing in `setup_revisions()`. The early parsing doesn't
-remove the option and thus it continues to be set in the diff options.
+    $ git.compile -c foo.bar=yes config --type=bool foo.bar
+    true
 
-Furthermore, revision and pathspec argument parsing is all handled in
-`setup_revisions()` so if we want to NUL-delimit arguments parsed on
-stdin with -z, we would still need to parse the option early anyway. I
-think it should be fine to leave the early -z option parsing as-is.
+So I do think that it is worth saying "you can spell 'true' as 'yes',
+'1', ..." in the documentation, but I don't think that it is correct
+that we'll canonicalize "yes" to "true" in the case described here.
+
+Sorry that this took me so long to respond to. I think I must have
+missed it when you wrote it and I only noticed it today while cleaning
+up old emails.
 
 Thanks,
--Justin
+Taylor
