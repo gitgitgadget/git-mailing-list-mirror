@@ -1,148 +1,128 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF62A1E8327
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 21:40:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33581EC00C
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 21:42:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741815648; cv=none; b=dhGujpaAl2e8R6xdoWIizb0FtsaOqsmKIAScN5qtiHFbPaTLV9bMi5nXGLxrvCR72bMkr9OH723bsMkQkWjbtTjjDTBbkCfdQ82TmHJCA7JU74uK61amDL9f10SA7Mxd6mscnvx4un0pSgrjK/TOWStui9EYugnuMbxDGDgYLUw=
+	t=1741815762; cv=none; b=f1mqKHdjTccBUS61HncUW8SSoxq7+cHOMJPi7sCEc3BUxF5I0sIST3DHLtLO78Vl6pbbTEw4seuPVjedeFpnhQqdNwxO4ei7LYPKmKbA1D6yeNOIZ5gmSVwTSStsszMoqWZ71lkTxjfAeG2grqk/y/NmbW8EArVi7GCO23E1gyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741815648; c=relaxed/simple;
-	bh=nQVWxmnRDv/X8F7YOp4zfT92w8+io2LsX34MFrbWrfk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mrHusxZpJk9HN1Xs6T98z4q88sRD5Fdt3Blyfe+8/XSYZBJQWqgpPDZXKCvMEsOQM64l+nZaQQ6xYdav/CnMmsc3O2NV3ia5S1+2pyUPa/ypruKe3msVkKxAkcfsYZzrWDqnRJr7fDEwDD8MhEeC9YQYgc5TopVNZpqvqXFI40c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g9qRq+rQ; arc=none smtp.client-ip=209.85.166.51
+	s=arc-20240116; t=1741815762; c=relaxed/simple;
+	bh=tajjEvYT+bsgy8HqzO/yKHZV5003GiZBIoaX4DrtUG0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZieRMlb/5+Jr+uChu9sW0o7nQzaA7zZuIzJYUun6ufNpy17saiaL/OwVBl9lPCtWmNWcUIu7/gqwEhhIcyWPfpK5yt1WonOuv0DUMUPd8FaB4DiRzyLb4q5jisG9ThtIAbDj9SRfVR6W3OdHtWIuMLp6j5v8G5cFIH6qBoTffC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QN00+5BA; arc=none smtp.client-ip=209.85.160.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g9qRq+rQ"
-Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-8553e7d9459so6741839f.2
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 14:40:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QN00+5BA"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-2b2b6019a74so190737fac.0
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 14:42:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741815646; x=1742420446; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bU3/efZhptTFNtCmFXchB0F33gwWxIYdvZOYy3OgXSE=;
-        b=g9qRq+rQS2oQUIO7pwVyprsrusKp7vSbIub4ozCNMJckStQYUeJdxnwreZfUIw8DSz
-         SGtfaz1Da9lEt14QhOCxnCsXXVn90/MgbWKtFL7XEJDEVq6GjsAG5GeFaGzEUIZOeQA1
-         4x4kVYCm+Nmc4cpeCTs/pPC9sJ+4lXXNjJLW0nfK70xvZjdO9RpJ6/de3jNLzurc1k/e
-         zjmwNd5srPDbzaqvvCHwndM8Nw8MhSVfAG28sh20idpA8FGbS9TwImQwNALVV5dLwRF3
-         IQrBu0AwlpICeaTun/UD3D1XSt2Xq+ju4WDST/94PUxFRuqlTf2juTtHpPZ8oDsTzh/b
-         ovlg==
+        d=gmail.com; s=20230601; t=1741815757; x=1742420557; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PazOGAR4eQJSWmDkE8+uXpzFkJ5qOOtRmbFKEiKauRY=;
+        b=QN00+5BAqH/qFSfSbSmQstSFYQw3IyZz3FeeKdHKs8HJRWVorxXnw0BYOaJiM3nGrS
+         96IJVdVnKACrV4rUGN6aZsf+duUBSm2ybT1WZXBhFdoXai27QbEvTIvY/+PhcZ8O0zvU
+         Rwi6d4qIUs6O0nM+y0s8zvYyDL7/XOWJLf45xltcWOrH8gmgkfXZ3NXWtd4KCstGh/ZO
+         rzI1fE0kzuHsTseauQJqQGjsetH0ZXa7v+5jmLnSgESVS4zztQyD99yabl/oAqQ4njR4
+         VTQUWDdpQ2AKyNRk1pCfiKjLOWwmT6psrM4HbU6tKiw49F3cweMnRIFJDDeAbSHbquat
+         U0jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741815646; x=1742420446;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bU3/efZhptTFNtCmFXchB0F33gwWxIYdvZOYy3OgXSE=;
-        b=PP3H7+EnQImiFJMmoR78shXQVKQCtoai9tM4VTyKA9StYgXzTl/ES7l0EJcxX+8pkj
-         yaKuZXgzdnpUVeMM3Y0VDNtChoy8Am90yzMgDi1JMy+/HWJcgJK1VbP14lAfsLNkQ7cQ
-         kD9CPS+aY4rWmpOCQ3AMLmqaheS74bGafaXfG5MYOyL/edZDUGDelsMR9UwnF+v0kFOS
-         e5RZF9kHk4Y5Ur+yrppHO5f/810QOKRo4WmvBDidY597T04MzGVdHUedklneu1WFlMoM
-         1SX8RI2axQNWi2tzsX8U9idpkDEOd4RCxXux8yNRBAbtUtQkpoc5K2DnExBF4Huz6Xti
-         qnhA==
-X-Forwarded-Encrypted: i=1; AJvYcCVvLTm1gPQ7sQ41etU9rSyh+SdxVFCgs3fX9sdumMZLkZnKYCP7siGCqensgCbxb8qgGYM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2SU369DiZiisf7xgsGZkAs5YyqlgttcjReiBZWq84bQPgkufl
-	234ckJ29xpmTjcGu1SBJ6HeZD++jXGrgURmq7+l8uzVzXFh3Z6rjEt2qP0VVxf5ZEhJHSqB/qKt
-	kzpAnw5BYaiFp7/QIrFDN1RzSS2s=
-X-Gm-Gg: ASbGncuXPjJmJLCNDqcdNkRUjetKvQfTxS8sNn3FKZJw5Oa1Cgt2iiNgG+YT0cX7WEm
-	UDUSzhtqLuidNOesu7yNgwjYohXiXy5nCeIRJRFrcokYrSRelyYfgpAG7XIYFTi1ySjoig+J7jI
-	bhutRFrxLaMYEclg5fRfR0H/vHvUquOhiUjOjwvDA1u4wASvapXfxXBKXH00A=
-X-Google-Smtp-Source: AGHT+IHHaYP8DfNjaenUKfhzsBvCVWeLg75LH60Q/oSFyHsya/UNZuuqhI30IKPFFdz5Z7DiEPXI8X6bkEcbxPnNnPg=
-X-Received: by 2002:a05:6602:b96:b0:85b:4484:182c with SMTP id
- ca18e2360f4ac-85b448419e1mr1704039839f.11.1741815645969; Wed, 12 Mar 2025
- 14:40:45 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741815757; x=1742420557;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PazOGAR4eQJSWmDkE8+uXpzFkJ5qOOtRmbFKEiKauRY=;
+        b=vlEdaKDIHKWUIjAwYKlMkjoO5vOgAAPpVYAyerxI8B47p9f2PT4sFl0fcF0ORJbLr4
+         dnRpHmcRllTJqvNjsMKTSlfTJlIIiApgtQHTeHPRLRJIKwTaNdbyn0i1TH2SymNdIFhf
+         u4K7EjHGfNL8BsDKaollAwg7HaUtizzspDoCL0DTNqHR24BDVI/zfxzm7qEYNWsvZ7SU
+         WzNZdS0IfA2wLuziMmGytpCtm8BUIisVKSuzOK6mFHWNIxhaKYak+VBVEFYFu7rd07Yy
+         xnbRW86czzpqe7Hcbofu7/zvky7/ExIM/KlubUEOOjNLlFtdaSYPrXMy7RAQQR4wFefe
+         3s/w==
+X-Gm-Message-State: AOJu0Yw3DBb1f+DacL0mSBbpTR57pMGfcRvTGMVJg5l66Z9ji/jnJjsM
+	OiZdN/NUl7ASPrteN1W8DH640UYmapXbQqWA+eLJYstVFMF81bUgc4ijGg==
+X-Gm-Gg: ASbGncsCBaddgVVs96HZj3O1lTFv1dsj4TYQsn8yI4ptsu52ZssrLSxB5ZVFAWL2ex9
+	X+4kNZ3Q9POiMmx9F4pfIyt/paqxCD9g5ZWp4v1PX9Wxgrsu0x/0fr2ZG8mLZVYlMCvL1mCnnVi
+	rn/GAW66UKOF4o6/uUCHnlIWg6cWr+U4F4dk9mjr3/F5M0NdWI6uhqRj5lBuffe7nuipCxWmNF+
+	oqaW6LP2A6EYJjFaZlGc6/udmsZGmJcaUz+s7Ga0A7WHLRPPxcNqultvReNlUmSLDP/y9L53N7U
+	O6wpBmvRnH+aDPXRw0uO53s4kUdduJlqNFhYlVuPm86ehHyo
+X-Google-Smtp-Source: AGHT+IF6/BA+/pfPEtlp3hyn1Z+dyXzDXYVSWDc65Z+kdIZcMMd5MgQBFPTuzR5LSGRk8qzQfplnzg==
+X-Received: by 2002:a05:6870:ef03:b0:29e:62e5:9b55 with SMTP id 586e51a60fabf-2c2610da07amr12032708fac.20.1741815756757;
+        Wed, 12 Mar 2025 14:42:36 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-72b8c9fe897sm1286147a34.2.2025.03.12.14.42.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Mar 2025 14:42:36 -0700 (PDT)
+Date: Wed, 12 Mar 2025 16:39:07 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, christian.couder@gmail.com
+Subject: Re: [PATCH 2/4] rev-list: refactor early option parsing
+Message-ID: <zozymxxh4s2qbh2cknqyy7z4ktgppm7i62bhkgupnij4enkq5n@6v2icwdt77nc>
+References: <20250310192829.661692-1-jltobler@gmail.com>
+ <20250310192829.661692-3-jltobler@gmail.com>
+ <xmqqr03461z7.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1875.git.1741362522.gitgitgadget@gmail.com>
- <4292b22723f759c3e0f84ac1000992187a9c7f7c.1741362522.git.gitgitgadget@gmail.com>
- <Z9FAix-VKGte8UKk@pks.im> <Z9Hobtp+9esKkY/O@nand.local>
-In-Reply-To: <Z9Hobtp+9esKkY/O@nand.local>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 12 Mar 2025 14:40:35 -0700
-X-Gm-Features: AQ5f1JogYWSg0KCZ5ne-Om-TGmnJ9hVz_MdB5kU1a1oBR--fYPUppgbNIrzxccw
-Message-ID: <CABPp-BFj08mpXGiSoZ3xZ4KamwTJ4k5wPLTCJh6hUtKSxWE52Q@mail.gmail.com>
-Subject: Re: [PATCH 2/3] merge-ort: allow rename detection to be disabled
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqr03461z7.fsf@gitster.g>
 
-On Wed, Mar 12, 2025 at 1:02=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
-:
->
-> On Wed, Mar 12, 2025 at 09:06:35AM +0100, Patrick Steinhardt wrote:
-> > On Fri, Mar 07, 2025 at 03:48:41PM +0000, Elijah Newren via GitGitGadge=
-t wrote:
-> > > From: Elijah Newren <newren@gmail.com>
-> > >
-> > > [...] Also, there has been at least one request to
-> > > allow rename detection to be disabled for behavioral rather than
-> > > performance reasons, so let's start heeding the config and command li=
-ne
-> > > settings.
-> >
-> > It might be nice to provide a link to that request for more context.
+On 25/03/10 01:54PM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > @@ -639,19 +640,15 @@ int cmd_rev_list(int argc,
+> >  		if (!strcmp(arg, "--exclude-promisor-objects")) {
+> >  			fetch_if_missing = 0;
+> >  			revs.exclude_promisor_objects = 1;
+> > -			break;
+> > -		}
+> > -	}
+> > -	for (i = 1; i < argc; i++) {
+> > -		const char *arg = argv[i];
+> > -		if (skip_prefix(arg, "--missing=", &arg)) {
+> > -			if (revs.exclude_promisor_objects)
+> > -				die(_("options '%s' and '%s' cannot be used together"), "--exclude-promisor-objects", "--missing");
+> > -			if (parse_missing_action_value(arg))
+> > -				break;
+> > +		} else if (skip_prefix(arg, "--missing=", &arg)) {
+> > +			parse_missing_action_value(arg);
+> >  		}
+> >  	}
+> 
+> There is a huge NEEDSWORK comment that essentially says that the
+> above two loops that this patch combines into one is fundamentally
+> broken.  I suspect that the remaining two patches in this series
+> would punt and not improve them, but offhand I am not sure if this
+> change is making it harder to fix them properly easier or harder.
 
-Will add.
+My understanding here is that `setup_revisions()` does not provide a
+mechanism to reject certain individual or combinations of parsed options
+that do not make sense for a command. As you mentioned, this patch is
+just punting on that issue, but I don't think it is really making the
+problem any harder to be resolved in the future.
 
-> I don't know if a link exists; I suspect the request referred to here is
-> an email that Johannes Schindelin wrote to Elijah privately).
+In this case, the `-z` option is parsed early to avoid is being handled
+by the diff options parsing in `setup_revisions()`. From the perspective
+of git-rev-list(1), I don't think there is any reason to be parsing diff
+options at all. We could introduce an option to disable diff options
+parsing in `setup_revisions()`, but now that we also want to modify
+stdin argument parsing to be NUL-delimited, we would still have to parse
+the -z option early in order to configure `setup_revisions()`
+appropriately.
 
-It exists: https://lore.kernel.org/git/CABPp-BG-Nx6SCxxkGXn_Fwd2wseifMFND8e=
-ddvWxiZVZk0zRaA@mail.gmail.com/
+Another way we could potentially resolve these issues would be to
+optionally separate the argument/option parsing logic out of
+`setup_revisions()` and expose it directly. That could give the caller
+more control over how options are handled before fully setting up the
+`rev_info` structure. I suspect this would be non-trivial though, so I
+think it would preferrable to keep the current approach for now as it
+isn't making the problem harder to fix IMO.
 
-...which wasn't Johannes' request.
-
-> But I am almost certain that the behavior requested here is to disable
-> rename detection to match the behavior of GitHub's prior use of libgit2
-> to perform merges, where we also had rename detection disabled (for
-> reasons that are unclear to me, but Peff might know).
-
-No, if that were the sole reason, I'd say it probably only belongs in
-our internal fork.  Disabling of rename detection within GitHub was a
-temporary internal migration measure, not a desired end state -- at
-least that's the way Johannes portrayed it to me.  I know that
-"temporary" sometimes lasts longer than we want, but now that I've
-become internal to GitHub, one of the things I want to do is add some
-weight to that "temporary" modifier.
-
-> > > diff --git a/merge-ort.c b/merge-ort.c
-> > > index b4ff24403a1..a6960b6a1b4 100644
-> > > --- a/merge-ort.c
-> > > +++ b/merge-ort.c
-> > > @@ -3448,6 +3448,11 @@ static int detect_and_process_renames(struct m=
-erge_options *opt)
-> > >
-> > >     if (!possible_renames(renames))
-> > >             goto cleanup;
-> > > +   if (opt->detect_renames =3D=3D 0) {
->
->     if (!opt->detect_renames)
->
-> ?
-
-Yeah, I wanted an opt->detect_renames =3D=3D DIFF_DETECT_NONE, but we
-never defined that and only defined DIFF_DETECT_RENAME and
-DIFF_DETECT_COPY.  I'll switch it over.
-
-> > > +           renames->redo_after_renames =3D 0;
-> > > +           renames->cached_pairs_valid_side =3D 0;
-> > > +           goto cleanup;
-> > > +   }
-> > >
-> > >     trace2_region_enter("merge", "regular renames", opt->repo);
-> > >     detection_run |=3D detect_regular_renames(opt, MERGE_SIDE1);
-> >
-> > Do we want to add a test that demonstrates that the option works as
-> > expected?
->
-> Yeah, having a test here would be nice.
-
-Will add.
+-Justin
