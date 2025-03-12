@@ -1,112 +1,86 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89331487ED
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 02:20:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2721BDCF
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 06:47:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741746014; cv=none; b=kce39sr0BX2+yxNoHZvRtGM/V0uDUVPYwOaQsC3AbLs/MhrBba+zSF6H7SAnoBIlHorNdze08xf8RsS+zisVA15GE/uMgVDVeUwHR8ES+9MIypEGMqmOrPaFseykRWcCjgYIJfeZJxsiENMk9Iw5YR3mYcUzI4TnBFWRd27jcHw=
+	t=1741762023; cv=none; b=dGxwdxP5a1aZClYgh77ygrEJlfSZnqWpXo/migfZJe5+2FV2kkjmtmeKmIP+MElI/JV6WWk0GWChmQMRhzxpcAefLh0eIJlk6OLbI5jbeKpetGxQ7sREeAiJt2LB+POmgRl+COEpyIqxMcnANmNmHHk2BUyuiAQFpEZv+QHFlJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741746014; c=relaxed/simple;
-	bh=+oli9qBIgP5kNN8LghBh3nRP2zIHV8Gmz2ZqIKpRZgk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ie3SZMkaVQMZ9ElYew4fiCVtmiGcfJSINiYaU/19YStq85Cch61hlun0kPQatFqyzFJljvzxThrKPKM0E0CcUG20jL4I+YF7uqSOWTNMzmxkaVyF27/4vmEe9gBlE9MXQ47Q3DPl7TA7o8CfdeFpoeKQRr3bmcbis15vApzOcCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JCQdhiTv; arc=none smtp.client-ip=209.85.128.171
+	s=arc-20240116; t=1741762023; c=relaxed/simple;
+	bh=FFN/p6LHLVMK9silEJ3nVgD8iHAlgIrE4cf/iCYGJY0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QrRkIpK+8+j84G8oeN4c9++cmr64baMfBqCD1aA0nuUauYx6eBLuLIsMD2kdfzcZRlBKROZrkkmv+FZkX/KrlaAl3YqFHaQy5FQLQAqS3vOysLIV5vUjTornlj8BPtmCfRIYCg0cUJCzVtSy1xXOkZ7VT9CL5gog++41I/TDYS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KLRDPAEo; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JCQdhiTv"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6f7031ea11cso63989867b3.2
-        for <git@vger.kernel.org>; Tue, 11 Mar 2025 19:20:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KLRDPAEo"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-223a7065ff8so28265955ad.0
+        for <git@vger.kernel.org>; Tue, 11 Mar 2025 23:47:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741746012; x=1742350812; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PKCmrSq7m43IuyriNj7j46USrDuDn1fMvYWxze1ZVH8=;
-        b=JCQdhiTvyR6zw2r8ZoD+g7Zay5nbQlDa+/vuPm4nrwp/UuTRVE0eEVGhznLIiiWKbs
-         aTo5cxk/TuZtd9XUiogv/AoRjks7mIo9NrELxh63L6QtDx5ZmQUYhs5KS+QKORHSg28U
-         9dPItuVaQceQX8tBGmY0LLq/+0yXWkVFuyqcOFFYTXBF63HbYtuVts3mNrRhzhWeUWjz
-         Ib0PgnQcq2XoUaeCSj8jJqI+bnW7uCSIsXg6P7QRNZ/WBdlqtwVv3W63PdwnwenLE9LE
-         k5paA8uWY+pVic/UNC7p4Opfq1zw2v1ShSFT2/p2LGbztDzlYgATn0ORfwlOfVHjMrmn
-         ufvg==
+        d=gmail.com; s=20230601; t=1741762021; x=1742366821; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4bbOKtCBwWqQxZYFA9CfjgKY3NdaSL5avyY7w1YGOGA=;
+        b=KLRDPAEo82kxNwRnJeA/AvGQrfvW6nG7KAFxDOskj/XCOv90R9ej7xyNDaIRSAgW7T
+         akkZftxIay+7AJO2nGh0CEbqhbuwJQEfiPKd8WPN6f5XrBQPdJpDObzAz9BzFjUGgvO0
+         uZkuQIgwtQcM5hkeqZTSRmt7xicyg2R5KKLqNRH4wMMbX8dZbF+joCPvNDNCCpun7TZA
+         VgFErPA49Mze8ylAT6KX9obuXwMCX6xwfXlWexRJKTFwNKwiwaJZC4sLa4QzYiKE/oQW
+         ++mzeB/uD/NnpzwCdeESkEaEG8q6wVQySdHgobpHlcnbMZweKeui2dqFNBNcVM/Glpea
+         cMdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741746012; x=1742350812;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PKCmrSq7m43IuyriNj7j46USrDuDn1fMvYWxze1ZVH8=;
-        b=sn+AA4Gl+jjVfquyb85qvMVSXVzMzcAUqe5VB1pPDJl9NZTyMnWtZwxR57IpJGqtlq
-         jhTUyCJvzLZI0dy+RgHQm1QV/2Vch+p5B0nC4i0HqkIM1/I7FiuHGI5+w53PGVdLExc6
-         wceCUsqORwiaIDNzZoCAHquDKHH7S8wj5wpagPxZaC9JiJZQVM7UxRd/3+yjw1KL5nJ9
-         i5438rTMRQcqpBDMovC5sYOTkCPxo6gw3Ss4RpAD2OxDS4jSz9phtOQPohhhGV5o9SfH
-         dUZvA3yAMrtKTQz4EdNscOCgMi7eu/XDh+eiUTL8Ghzns8vaBrEwM3VPVmbOy+zqhRfR
-         FhuA==
-X-Gm-Message-State: AOJu0YzCkXMJMdZwIc6PVpPyBBCdWjXvih6O6eSWohQGs8Zlg+R7Od2P
-	F2+Ck2TNk/GOdzNu8rcxqMJDdcfyeoV/5Xs3KmyDX2hchC8c/vkabJHVjjYQmGpxpZlAAm6q3Wf
-	7IpVGYtG7Q115g4lgbX8TsdL2Hkg=
-X-Gm-Gg: ASbGncsh8uVSWEFmRhELM+16Vu8hbUWsp8R7lehv11zyG7OAG7zcCQnq6C2X3avKkAW
-	dDUWMMZoIkBB8KKzIOM9doS5Gb0/4QQRfcGswGkyjIKPn4FcMKgYoD+4kysn/8oDD+qCXZuieVf
-	EXDCmEytlCW7iCZohCFXkUj9fiihs=
-X-Google-Smtp-Source: AGHT+IGDZCWl8gSHtTNXiasYuObmUlI0ouBulU3T8AtRSx4DeZZVg6VMeg6/UzDDW3YAz/UoSIviNZ36CxAinK8o5uw=
-X-Received: by 2002:a05:690c:6f84:b0:6fb:9786:5871 with SMTP id
- 00721157ae682-6febf292ca7mr268162407b3.7.1741746011037; Tue, 11 Mar 2025
- 19:20:11 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741762021; x=1742366821;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4bbOKtCBwWqQxZYFA9CfjgKY3NdaSL5avyY7w1YGOGA=;
+        b=oUnd7UqxKbyHUQ1pZZjCzkBFg2cPZCcwCR1Zn9Ol1b9nAzDJFlJIG3xKOnRQha2Z8j
+         0ZkcKK1UwiJPhTv+jt9aRNJBTH6QidrLkzoN0DJRrSzzQM58Szot2cvOym8466FOv6Do
+         IqYa5Q5JAH1ilO6IKR1bySGFLGZC05gjI+bnhrV4v/I1AR9kpZs7QPXXRwP5Dx9KDgIx
+         M/Ah3CQ4A07FJTdV62He0u6cEKf2N766pL/4lAnJIpq+ukAxWs1aN9fkXhednSZW5K9C
+         QszP7rkNJX1uY/rEvpH0GcjYDmPcvXyp7163qHUtroaDvYC/6TJw8V4FUCgD1EAkuAOf
+         kjIg==
+X-Gm-Message-State: AOJu0YwTPBfvMJQ/ryneg++fkTOIyXjWmpAGa9CrgQATEANSi4U2IVU8
+	GtsZL3zhEOkBbgKSzPgPq77Sn+QwX3awx1D1ExqeXq/15wbPsKoCsN24f8wW
+X-Gm-Gg: ASbGncv8ezsPxeKfD2Et9vCCYn+wgwB/0BItMgVm1w3U+P3qtwktiUdQXctjSLiI8wD
+	C8XXN9v8p/459fLcVnsjl71GZCJbRVifz4ANizqV40P1ldUr08MmB/EAXj4m4Oy/OBBxdqrWeI1
+	R616kWCySjJxEa/g5Ifqxs843ZnKag/eBMFE20eslYtiViiAYADZzOilPHXdOxM3eYu+PRjyA+3
+	XWIxuLHTW5x1wgEjT9r7NhEK3N1e9FgBiJui35By0Gzx03SbX54f8ugKZgGYN5sOiAxqVs7vnXF
+	4zXsgHQIJyBtwG1jhGAQiVcYun0cm9juFZWVu794ypY9kg4fljPx
+X-Google-Smtp-Source: AGHT+IFXC4pwMtexTeoGqY+qctzzluqdRvxdWhmBKvvtgjQM/ZVjlaP9KjPoS//LczYaH4thqFbrUw==
+X-Received: by 2002:a05:6a00:190a:b0:736:31cf:2590 with SMTP id d2e1a72fcca58-736aaaad27fmr28114151b3a.16.1741762021011;
+        Tue, 11 Mar 2025 23:47:01 -0700 (PDT)
+Received: from localhost.localdomain ([39.184.61.58])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-736e6262982sm3889822b3a.120.2025.03.11.23.46.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Mar 2025 23:47:00 -0700 (PDT)
+From: Zheng Yuting <05zyt30@gmail.com>
+X-Google-Original-From: Zheng Yuting <05ZYT30@gmail.com>
+To: git@vger.kernel.org
+Cc: Zheng Yuting <05ZYT30@gmail.com>
+Subject: [GSoC PATCH v3 0/1] Refactor SMTP Auth Error Handling
+Date: Wed, 12 Mar 2025 14:46:35 +0800
+Message-ID: <20250312064639.668875-1-05ZYT30@gmail.com>
+X-Mailer: git-send-email 2.49.0.rc0.57.gdb91954e18
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20250221190451.12536-1-eric.peijian@gmail.com> <20250221190451.12536-9-eric.peijian@gmail.com>
- <20250224234720.GC729825@coredump.intra.peff.net>
-In-Reply-To: <20250224234720.GC729825@coredump.intra.peff.net>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Tue, 11 Mar 2025 22:19:55 -0400
-X-Gm-Features: AQ5f1Jo-Z_6gAyYpjDKFJKPyQ30A9M1tmQU8uaOuXPFHCm6luTPaFQRPgAn3_MQ
-Message-ID: <CAN2LT1CsjA7V_y-OqDNREkpERHEBcx627JhCrzg9GHfWS=b0NA@mail.gmail.com>
-Subject: Re: [PATCH v11 8/8] cat-file: add remote-object-info to batch-command
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
-	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
-	jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Feb 24, 2025 at 6:47=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->
-> On Fri, Feb 21, 2025 at 02:04:49PM -0500, Eric Ju wrote:
->
-> > +static int get_remote_info(struct batch_options *opt, int argc, const =
-char **argv)
-> > [...]
-> > +     if (gtransport->smart_options) {
-> > +             CALLOC_ARRAY(remote_object_info, object_info_oids.nr);
-> > +             gtransport->smart_options->object_info =3D 1;
-> > +             gtransport->smart_options->object_info_oids =3D &object_i=
-nfo_oids;
-> > +
-> > +             /* 'objectsize' is the only option currently supported */
-> > +             if (!strstr(opt->format, "%(objectsize)"))
-> > +                     die(_("%s is currently not supported with remote-=
-object-info"), opt->format);
->
-> BTW, this strstr() isn't quite sufficient to prevent problems, as it
-> would not find placeholders which _do_ exist but which aren't handled.
-> One of the first things I tried was:
->
->   git cat-file --batch-command=3D'%(objecttype) %(objectsize)'
->
-> and feeding it "remote-object-info /path/to/repo some-oid". And it
-> segfaulted.
->
-> -Peff
+This patch unifies error capture for both SASL and plain SMTP authentication.
+It replaces regex-based error detection with SMTP status code parsing,
+differentiating transient (retryable) errors from permanent failures.
 
-Thank you, Peff. Yes, you are right. It is a bug. I am adding a new
-logic in v12:
-1. Iterating on the `opt->format` to see if there are any unsupported
-placeholders. If there is,  error with unspported placeholders.
-2. Adding more test cases to cover different formats, e.g., just
-`%(objectsize)`, just `%(objectname)`, mixed usage of supported and
-unsupported placeholders.
+
+Zheng Yuting (1):
+  SMTP Auth: Use status codes to differentiate transient vs. permanent
+    errors
+
+ git-send-email.perl | 72 +++++++++++++++++++++++++++------------------
+ 1 file changed, 43 insertions(+), 29 deletions(-)
+
+--
+2.49.0.rc0.57.gdb91954e18
