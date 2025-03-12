@@ -1,57 +1,57 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC4417BB6
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 11:47:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4109923AE64
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 11:47:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741780044; cv=none; b=JPcv2aWlefgWp31jkYyntD2fZlWWtrRlytwOAn3Nly+tt32M5grJJOdVTakmAUiHtbivGljxj+ApvyDR+lqJ6g88Vqx+BVTrau6bblb8UqZImTxLcpDGya6LOTjB48ay2gT7Wf5tVZYYmvnflz6kvBgfFSsrWkfdEU+YaIfPvBA=
+	t=1741780052; cv=none; b=M0PcXTIfs7rSc495RoMMtTxIgssHi2hdMMbVeVDCUdKB+ke/ivf+7fr419zsYTQMh3+jciSNlbDgXHeObPyouMJjNwGyLjXz9y8t4QGLEYtXF2+IBOV3I5whGGymn+GzBaBYHD/857ZOGsy4cIEH01DcILxQvn++EHcEFLUfa9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741780044; c=relaxed/simple;
-	bh=BYC44yx6j7KqO/VpWUuaN0b/32aTvihuzV0vmF4pObM=;
+	s=arc-20240116; t=1741780052; c=relaxed/simple;
+	bh=e2TKhqx39RHBVCP1Leho9y7glHrOKf8ijDRhH6H46co=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KVrL5Srv9CD2AYIfjWHx0hPGyjEae/o8rLmPj7DcL83HOT955cm2HpT2//btNig25zjQKBt/3iv5eUb2fx9OtejISDK1mjB4RrimdQWlZlS8uUu7zg0bAwLQBvKn1+ynwu4LuOpPv1PCWyRYdpQxvWAVtnRfotuD+0NUA+32fAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PYFp+NPn; arc=none smtp.client-ip=209.85.208.54
+	 To:Cc:Content-Type; b=bTdivZNkuimQ03PpgSfdnMTD7ZddUeoOti+B1y3jj0BLsKS90WNeH6VL6uc7YgJqkFQrd9U6I41gm1lGlUdBOezRidn0kELJWINpBnSo8ooVjhKG/Tu1HMcQdSdiJDHK6GWsclw2VGPBQ9Tzx9KMQxHCamoAQtobjzQ+ocwJGtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HPXNav8W; arc=none smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PYFp+NPn"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5e5e63162a0so8151583a12.3
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 04:47:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HPXNav8W"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5e614da8615so1558034a12.1
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 04:47:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741780041; x=1742384841; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741780049; x=1742384849; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=m6GMrL7M9s2jBKnKdnIlm+LqSqgA07Q16df6VvEq098=;
-        b=PYFp+NPnyjOjWhbrQpufh6rdid47YgG825rENRoM2A9UZIKpYPUXcKg+tjlWHPBSpZ
-         qMfNINxBM/jKN23yByRwIqare6HVjb00dteBlws7O6Bz2f7Lj7nO83nX8N6DmhzzjurD
-         RWW9TqXmEa3yuwf9isOFzmONPbc8V29jfHFsS4pbCN6GrrQmrNygQDCClQiBkBmnT3RG
-         LvDVkPAwnYgdCfJLoLIv4SNeFO2WQ3bXDu7GXu2mSgOFdLKYQuwfaBS602OpDCQio65v
-         aNrhyXDX2t2Lmi3XiIIiXQU3BSGmFB/meqxgg7Lk+mi90gasqmBmld7TYNQrusWr/gpx
-         loDw==
+        bh=X5E62YDnFZYHWxGPep6ubUy4haSlA4504/ARKkSlcNs=;
+        b=HPXNav8WhcSAvvqQXhSKiQZ0ZyCAnVm6mW8Bwfs4lso2knTYyuiYvzDVWsFAIsyOzS
+         /borRdhYIgSUs7gn7UkBESrOYjlr2xF01Eat9oWv5p/9//jkAvf0op128GZiA82I3qjo
+         qnTqoqvz4xil6EmokdUdkemzjRb01Wa1rskGx/Qmd7Mk6ereI7hWqcO5NQKb3UIfNt+y
+         BUZqrWrULGITq7lsdkuiI4E0D9J1LQql/pT3A0kdx5Klb+PomQSXPtccBjUi6DO1VjQL
+         ytNlnzaJjocjppLobydAwLFqqCfBsHFDRQ/z3fpT0hnkYc2it/nPxQFv/AIZLes54WFv
+         QaaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741780041; x=1742384841;
+        d=1e100.net; s=20230601; t=1741780049; x=1742384849;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=m6GMrL7M9s2jBKnKdnIlm+LqSqgA07Q16df6VvEq098=;
-        b=qKzNvVPoKDYzGIjeE5/H9OARRspOxuVhjMvGK3VlK0gS8Ukb1dUEaQktCznhvX409S
-         LINrJN/1zRxTCZ/9M9ar0SfnKe2U5gh2dHU17J3B9KBDqbkTM5ZxUNQtvzaXRbae3J2D
-         whHIJgA7z2N6kW5u05vWB3PeXa7/9K6V44yO0N9w9FIHwsBxV4OitFm15ai0ZNXGzRnH
-         S0m4r9qpW6HQr29F+Oo5nz+0r2KhNCNFO1HHebIGDLxaRKfmjjYQqMMti2loGCpHvfz/
-         X6XvprBWxGp4U1TxJeR86VDnE2Dfm2VaheDMIF+Y9DYbVDZAu9GMQ2xh4WqnkZnV/LkA
-         PUVQ==
-X-Gm-Message-State: AOJu0YzfFsC7fc9+C+0/roGQG5neUN/utKSyKr0+Foe70EMJCcG8XWxA
-	u3gWpE2rvmzz6V/vGn3AkYBE+xcSMd2sMg5k9aY5MBFj4WR5dXs2Bb36IjJjRjqUrbWRP+tkZMP
-	hLa2y52jQdiEtjIuPzYci55XvXQ8=
-X-Gm-Gg: ASbGncvHISYXoH/ts1zsDto8Y2Mto2UGsuuuyhaWn1bJ3aUZZSUEBjNO4tf+G5Kzuqp
-	VzOAxXnAxHroIFqABcoz3UkzPca6w96evVy9G4GEOAvDUV4vxH3f80NI1RRi7cvqFJ9H3ZDPJz0
-	aMcxCrBi8eYlvFfbZucemU7Q6dQDgT
-X-Google-Smtp-Source: AGHT+IG2iMMMGJL88546MLJZ6oXxWePq93jHCNmLg+K+iPQSFrscTJyjEVK+hqK5qZytEt11B+sBhnOof/uqGny2tSw=
-X-Received: by 2002:a17:907:874b:b0:abf:5fa3:cf96 with SMTP id
- a640c23a62f3a-ac2b9de398amr984984966b.14.1741780040563; Wed, 12 Mar 2025
- 04:47:20 -0700 (PDT)
+        bh=X5E62YDnFZYHWxGPep6ubUy4haSlA4504/ARKkSlcNs=;
+        b=Pnszpv8wkPDdwIyGnj/rm4VKZfMZn/xIBOEHn1RBGoVH0CsJEHOTOJDZQI15kWmZu3
+         LY6fL0jdifyZWmlOeUNhVdPM8SKu5YQClf6MPbmD0IkTyCjK1WbJxQUN0G5dXyWE15s7
+         8Vfp0dQNgspDZnPyJuBfRHluZIRi0tTVcCPDLe5sO+ldNddXTZME/M9Jhd4QU4Ckf2Gc
+         1J8pTAskQfvfJ2v2D9KPEOT4kPQSrW8nnkXGjJxB7x0wcNjYfeY/iTBBPnUksQnkZvH0
+         45IF9i822VtUnbMjsysDw817YLUjbWd7kwCppFxmJI+YnKe2Dn0hm9anDYo/MTopaEud
+         Bo1w==
+X-Gm-Message-State: AOJu0YwJxJ1PlbcyEXI5+zy9EmanOC3nsYHZp5Ghz7aKXsPEalz1Cm3O
+	n0TBSLMoQa/xbwSZlMqaJ9spQ/qYoQwdBa+edygng033KjZ40VfhJSJUJuGug5Him3jMnu/mK+r
+	oeePQ5HFyei6jwKHjXJjojlSSrf4=
+X-Gm-Gg: ASbGncvOH0r1hlHQ3titE3j0Dr3AGqE+308MIIPgk/EwK1Y6R3+oONTtgawAbv/cBbC
+	bIgDuh5nS4hdHYcOmiy3BlzU1EwNCvLtZqzx+yCdHiYadqg5Ikx8IXISYbsP5NygRkm7X2LRbzD
+	YstojJCUOXFUXvarpyyvVeVfGIrsUl
+X-Google-Smtp-Source: AGHT+IF2dwA8sS04pvZyToVuzmqj1RZUo6Si867NVi+czk2Izqirg5LPQ1PVZQ9Ff6gNe5oKS0ia8TRQNtTOqwi/3W8=
+X-Received: by 2002:a05:6402:d0e:b0:5e4:d2c2:b8e8 with SMTP id
+ 4fb4d7f45d1cf-5e7631ea318mr8890540a12.16.1741780048561; Wed, 12 Mar 2025
+ 04:47:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,50 +59,148 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250310074053.1886097-1-christian.couder@gmail.com>
- <20250311152413.1059343-1-christian.couder@gmail.com> <xmqqmsdr2szx.fsf@gitster.g>
-In-Reply-To: <xmqqmsdr2szx.fsf@gitster.g>
+ <20250311152413.1059343-1-christian.couder@gmail.com> <20250311230601.GA72712@coredump.intra.peff.net>
+In-Reply-To: <20250311230601.GA72712@coredump.intra.peff.net>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 12 Mar 2025 12:47:07 +0100
-X-Gm-Features: AQ5f1JpOC5OerASXLIYI9ACYZriJYyoppsBZltmMll0dlSmeUv2SxdC-WYDvjQc
-Message-ID: <CAP8UFD0b1fH+oJTR+2ZrC30_Ga=JOkv9kxVM8VLvBMNJPhCvDw@mail.gmail.com>
+Date: Wed, 12 Mar 2025 12:47:16 +0100
+X-Gm-Features: AQ5f1JqZtzY9lC7vfZZ5POVl7GW7wN3jYyVvk3jeiWokLeXd9dZXcS03pHr1v6g
+Message-ID: <CAP8UFD16xD4airwbf_c5ysrvVdXEHb9QkiepKBxCCMmpyx0jDA@mail.gmail.com>
 Subject: Re: [PATCH v2] promisor-remote: fix segfault when remote URL is missing
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Karthik Nayak <karthik.188@gmail.com>, 
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Karthik Nayak <karthik.188@gmail.com>, 
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
 	"brian m . carlson" <sandals@crustytoothpaste.net>, 
 	"Randall S . Becker" <rsbecker@nexbridge.com>, Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 11, 2025 at 9:48=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Wed, Mar 12, 2025 at 12:06=E2=80=AFAM Jeff King <peff@peff.net> wrote:
 >
-> Christian Couder <christian.couder@gmail.com> writes:
+> On Tue, Mar 11, 2025 at 04:24:13PM +0100, Christian Couder wrote:
 >
-> > +     GIT_NO_LAZY_FETCH=3D0 test_must_fail git clone -c remote.lop.prom=
-isor=3Dtrue \
+> > Using strvec_push() to push `NULL` into a 'strvec' results in a
+> > segfault, because `xstrdup(NULL)` crashes.
+> >
+> > So when an URL is missing from the config, let's push an empty string
+> > instead of `NULL` into the 'strvec' that stores URLs.
 >
-> This one triggers test-lint violation.
+> Is a configured remote with out a url key really a missing url, though?
+> In other contexts it defaults to the name of the remote. E.g.:
 >
-> diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-rem=
-ote-capability.sh
-> index 23203814d6..4c5c3c7656 100755
-> --- a/t/t5710-promisor-remote-capability.sh
-> +++ b/t/t5710-promisor-remote-capability.sh
-> @@ -257,7 +257,7 @@ test_expect_success "clone with 'KnownUrl' and url no=
-t advertised" '
->         # It should fail because the client will reject the LOP
->         # as URLs are different, and the server cannot lazy fetch as
->         # the LOP URL is missing.
-> -       GIT_NO_LAZY_FETCH=3D0 test_must_fail git clone -c remote.lop.prom=
-isor=3Dtrue \
-> +       test_must_fail env GIT_NO_LAZY_FETCH=3D0 git clone -c remote.lop.=
-promisor=3Dtrue \
->                 -c remote.lop.fetch=3D"+refs/heads/*:refs/remotes/lop/*" =
-\
->                 -c remote.lop.url=3D"file://$(pwd)/lop" \
->                 -c promisor.acceptfromserver=3DKnownUrl \
+>   # make a repo so "foo" is a valid url
+>   git init foo
+>   git -C foo commit --allow-empty bar
+>
+>   # configure a fetch refspec, but no url!
+>   git init
+>   git config remote.foo.fetch '+refs/heads/*:refs/remotes/foo/*'
+>
+>   # now fetching will use the configured refspec with a url of "foo"
+>   git fetch foo
+>
+>   # and git-remote will report it, along with its url
+>   git remote ;# shows "foo"
+>   git remote --get-url foo ;# also shows "foo"
+>
+> This is obviously a weird thing to be doing, so I admit I don't really
+> care all that much. But it feels like the most natural thing is just:
+>
+> diff --git a/promisor-remote.c b/promisor-remote.c
+> index 6a0a61382f..761eb1dbd5 100644
+> --- a/promisor-remote.c
+> +++ b/promisor-remote.c
+> @@ -327,7 +327,7 @@ static void promisor_info_vecs(struct repository *rep=
+o,
+>                 char *url_key =3D xstrfmt("remote.%s.url", r->name);
+>
+>                 strvec_push(names, r->name);
+> -               strvec_push(urls, git_config_get_string(url_key, &url) ? =
+NULL : url);
+> +               strvec_push(urls, git_config_get_string(url_key, &url) ? =
+r->name : url);
+>
+>                 free(url);
+>                 free(url_key);
 
-Sorry for forgetting to check that and thanks for the fix. I use it in
-the next version.
+Yeah, right I am using this in the next version. I have added warnings
+to help debug this in the case a remote is rejected because urls are
+different, as I think it could confuse users.
+
+> > We could have modified strvec_push() to behave like
+> > strvec_push_nodup() and accept `NULL`, but it's not clear that it's
+> > the right thing to do for the strvec API. 'strvec' is a kind of NULL
+> > terminated array that is designed to be compatible with 'argv'
+> > variables used on the command line. So we might want to disallow
+> > pushing any `NULL` in it instead.
+> >
+> > It's also not clear if `xstrdup(NULL)` should crash or BUG or just
+> > return NULL.
+>
+> We have xstrdup_or_null() for the latter suggestion.
+
+Yeah, I forgot about it. I think it makes sense to replace xstrdup()
+with xstrdup_or_null() in strvec_push().
+
+If we ever want a mode (possibly the default one) that forbids NULL in
+strvec, we could add that on top. But right now as strvec_push_nodup()
+accepts NULL, I think it makes sense for strvec_push() to accept NULL
+too.
+
+Anyway this is something we can work on after the release.
+
+> There was some
+> light discussion at the time about having xstrdup(NULL) handle this
+> automatically:
+>
+>   https://lore.kernel.org/git/20150112231231.GA4023@peff.net/
+>
+> but it was mostly negative. I don't think anybody really dug into the
+> thought experiment beyond a general "it might propagate NULL places you
+> wouldn't expect" vibe, though.
+
+I don't mind having both xstrdup() and xstrdup_or_null(). At least it
+gives a hint to readers about NULL being expected or not.
+
+> For the same reason I'd be a little hesitant to bless NULLs inside
+> strvec structures. I think "nodup" allowing them is mostly an unintended
+> consequence.
+
+Yeah, but then if we ever need a strvec like struct that can contain
+NULL, it would be kind of sad to have a separate struct with its own
+files mostly duplicating the strvec code. I think we would then be
+better with strvec having two modes, one accepting NULL and one
+rejecting it.
+
+> > For all these reasons, let's just focus on fixing the issue in
+> > "promisor-remote.c" and let's leave improving the strvec API and/or
+> > xstrdup() for a future effort.
+>
+> This part I certainly agree with. ;)
+>
+> >       for (r =3D repo->promisor_remote_config->promisors; r; r =3D r->n=
+ext) {
+> > -             char *url;
+> > +             char *url =3D NULL;
+> > +             const char *url_pushed =3D "";
+> >               char *url_key =3D xstrfmt("remote.%s.url", r->name);
+> >
+> > +             if (!git_config_get_string(url_key, &url) && url)
+> > +                     url_pushed =3D url;
+> > +
+> >               strvec_push(names, r->name);
+> > -             strvec_push(urls, git_config_get_string(url_key, &url) ? =
+NULL : url);
+> > +             strvec_push(urls, url_pushed);
+> >
+> >               free(url);
+>
+> Probably not super important, but while reading this I noticed that
+> using git_config_get_string_tmp() would make the memory management a
+> little simpler (since you do not need to free "url", you are free to
+> point it to at the empty string and do not need a separate url_pushed).
+
+Yeah, I will use this in the next version.
+
+Thanks for the review.
