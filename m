@@ -1,174 +1,181 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B4C645
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 14:29:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518E814601C
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 15:22:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741789743; cv=none; b=Q/B0z7Fx+ZRXwNnf1RVmaBeampDoQrMPJmnUB58oZBGbIM8QnminThEtkN6bLliUVTFaINwozSdsQ07GIgCvzqxQdPkypVUYI5CbzeWrJlKUp/U1B4Vcdze6Lml5Uunz/xVeWRm8J2pXBm9RhxfeawfL/u8d0K3ZUL02h9j9rJg=
+	t=1741792939; cv=none; b=DiURXAHq49McLqCP3a4IQbJRF/78EAGqjt/NwAKJlpw0z1KWCJhv5R6obul/MHPLcmQd8UGVoVsDeMDS1aw9CQnhL55lgfj8v/o5XNPpBPQd7MebEOqBz022eh/lxvj1u5wbYct75M72WCr4hZ/8Xd20QyopoxFnm8kTSGJwI6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741789743; c=relaxed/simple;
-	bh=lpH5+JUMy/itG+65SYu0u+sn1B0Zy/q+Gu8aNq01l+Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=DJ9JoNfYXgGH9lZvjdhN9lGcuG2hOiygCy3sJErOsRyeHPieZBkU+3acjmodoawZoVHK4dwikgdQhzDmu9OcpXkZ3KGWjHq3FQWocVfDwqa4bHP7dqv9lo3doG0CGlfsHt7NTG7CQnTSb5dXB/4QtWi6I1uIkfHMSIm4HcGYxcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QNSJGO4K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bcqEkHQa; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1741792939; c=relaxed/simple;
+	bh=WLDCDq7Ai4gedzXe4YXczOOCBC25DLAFrZ++T5Xg3/A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YwTsBwehvHVOerBAYHQe2PHMRiIymOovSUN1scB9PsrG8HYrAZ+kB/tIgod50by5AoGC/3rsgIASE/M3xDCd43wxSxBUVlkxM+YcIp+qQEmqqFSKdk1Be8euxDH5BhpEVtDmVFLeg7xXNXEokq7N025kFdPNqVrWXh446HtpDMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ERSe3pzb; arc=none smtp.client-ip=209.85.219.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QNSJGO4K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bcqEkHQa"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3E972114025D
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 10:29:00 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Wed, 12 Mar 2025 10:29:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1741789740; x=1741876140; bh=22DvvJj1M5
-	pRZfadBmKUu0UnaP5YdjU4fEJhw2eEr0M=; b=QNSJGO4KGlY1n1Oeo0EOIje28S
-	3qA2YNuf640iHLKMgb9SeI1SjFFlSQDCguU1BmoznA7dD0OjEfx/ERBvzGwWix67
-	dT/A9CyN42MljzJ9sW+9ppeYv7kGjvrvpERb5VGNwYhPILwu6TDns1OmHZLlVmyV
-	p1j6QekLJHRgPnoTZau7BGqlRltdMA7OXVE0uZ/q3S5762wVfw2US5fnjrXqn2oN
-	d0FcX7aJyilHREgnJa6r/GsTl3Psg+wI2W0Yed24rIialHrXI8ogQcYw8GT7+jw5
-	+gSijhW0uR6MaC7saPMlNdkNAf7ERwv/ubLlszH/X3wXhJlKNWxNM9340ZYg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1741789740; x=1741876140; bh=22DvvJj1M5pRZfadBmKUu0UnaP5Y
-	djU4fEJhw2eEr0M=; b=bcqEkHQa247LSHr/h8oGkxb/xIPgxxWwEnEzBQ/ggFlL
-	jwS/R+JnE8hRxMt/Rq6SCV74LVhdNDfs5BE0mtCFppksQzSBTXQCDBLe+Gzd6I3p
-	pF3LUTqMuJIfIC3TzckywO1zytHnTUu0Dycksm5lvL4B1dv9mw4i88i0F9pDZdIx
-	nYYKODGUsbxRU9pE4GhlCoBqtvA/21i5ZprH6U1jJhK+FhPxFP0d+Jkc3Ay+Zz5L
-	yfRToOAvSCYm7k3oPmQveTxhJXf4HH7Kt5HlbrJZvD3+AONd8+NDxtXB7//jsErL
-	sAhdPvHVUaP6DrHY8Lg9k87r4xu7adp1vbRMee03bA==
-X-ME-Sender: <xms:K5rRZ_dKW9k06S_BL2rhXGWfUowO6sW4cV0AyzHRky21GxSGDrZmeg>
-    <xme:K5rRZ1Px4iZ2AhuzdIk7-N9kqHjS-qirL81s6-NkdD4Tkw3poEJct15oxmWnyMzzf
-    lJE4ZwR_gi3I5O5Fg>
-X-ME-Received: <xmr:K5rRZ4iqVd3dhMQ49Cu5JcHjJ09IIvSWxJeQtJP7QmuS-wt7xiFfFTHDvoAiGuzDVO0vaIKw1BkwZs3sLO3xUEllnJP_92yE5al2uVycbM7UbRkaLQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehfeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
-    fugggtgffkvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepiefgiedtff
-    ffvddvueehheejheehleduudfhheekkeeggefgueffheevgeetjeefnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:K5rRZw84856ToHoA18oVQ0I7CHXXqcU6RjB4bdTM6A3ztp2vQz-qMA>
-    <xmx:K5rRZ7scBB5XrjpQh0TkcEVuCr8lKmj0C3nqYVi477WAg6aT501AxQ>
-    <xmx:K5rRZ_HZ2qAmX8TQzhVgVhfE1kg7ZBJNZ6DDH2MvtltUKMIKUI46Sw>
-    <xmx:K5rRZyPjxnddtDrQk1dREsx1cLomX-Jhnt0xVO-9Cx9zRFrjtSF01A>
-    <xmx:LJrRZ0WWrRNSRNcUGKY5gz4kO0Wb43e7IdSt8xQlnVCGv9uYVm3YetVx>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 12 Mar 2025 10:28:59 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c6903a74 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Wed, 12 Mar 2025 14:28:56 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 12 Mar 2025 15:28:54 +0100
-Subject: [PATCH] ci: perform build and smoke tests for Meson docs
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ERSe3pzb"
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e637669ef11so3288426276.1
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 08:22:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741792936; x=1742397736; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=aTP3embx/R9kjjmd96baaqxIBZEQxc+ghPXhRh82Vro=;
+        b=ERSe3pzbZ0ieLPx8QmMf7JjSaMheFBg7Pqwc1OT8UuPTcD7E2ARW0ysuzSmB2RiIcy
+         nZd3o84WMeUQ16n0w2gRke+GvgBpYaoW33Uyk+cwpetUOnv32mgVf6vlgggZvQ9UXFXz
+         xApYQVpBkVJ/iEeHTxzPafUCKCZuZSFf5p3EJsPrftexDOo4WvCamd2VHkucxOsHmCGg
+         /qbasiCWz+vuip8qDUT0B/umVj3+w54BbBOKirdZ49gvdXSwKAN1PO8A/SPHDkcuh6Ak
+         EtsrPPreOuJafm5EmA8oaAe/pY8Wxf6wbYHpQ4JCvG0yM52cblJ0MH2XzSfJMfLuVh/F
+         aEew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741792936; x=1742397736;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aTP3embx/R9kjjmd96baaqxIBZEQxc+ghPXhRh82Vro=;
+        b=t+y6NpWZbRqqqS8EOruOJl6mPkt/VGQIM1oeJqtcFZt9G4zkiZqF4dTnMVOQ8bj+5s
+         /a1bnoFNlF4gNChEX6AMlwyRKWXaHphmbkuvLmWLGj2HbC8OjwZ8+e3u83eVsvvFe+Hv
+         KGRcUTEC3Ez9OGR3Iu/50iVPKFJSw51fTH8GAdBhEdEhNxrGN+IWUaZmTWtZLDnNJt/G
+         Cq59+B42wGDKEZus7v6fBokqrX1fJ8nwk8hjbbexaLsWbf7YGQOf33M0tWkKDHidR1b4
+         vL8TPHu4YF8ZrFCmLe6nA8d+Er1z5h3Xu//nW03hsjkhvQV5KDhnMGOWK3acPCdMa1o0
+         luNg==
+X-Gm-Message-State: AOJu0YwZg6qKV2q+47mrStORiJ/wiZw+8Oou0g6OMlVZ9UFr+CbOiXkz
+	QOCXj5TwF9gxgCj+UvF2kP/Mt7oGkuC5/CgKgVV96bw4JaOb+b+l+O8BmTdtrkk=
+X-Gm-Gg: ASbGnctcb3KzcFUin0yVLBnNK763/pYMnNJzpOEOWiuxtjK0SwongbUs8pW6hmuSaFf
+	9/ZBlQDxYx2BpX6/TiyE3HWwkuwjCXfz0ZxEN1vvpWSaRJpoFz+GLHhcvnQb5mg6FTo4CCC9w8r
+	QVXUM9jyEiQVOXvQpis40iKODSDp2DCM3mFPgGZ70Dcv7vnV1x8dv16AAUWI2z5E4A7znoMSm21
+	tQpxUCjGxXNv5SwIhzTDbmtS6mVosaF2m99+JgFwWHjPNrmbX2UDRqSRNk+T3iOK4tNp7F4Lnav
+	GpmFammiPWnaG8hQhfjudA8cIT+mXeoLKjUcd4jVQhBEwqfOMy8EUj4Bg7bEzTuVdLyWC2klAti
+	sFDRkw8RZkXEpOfVI
+X-Google-Smtp-Source: AGHT+IH6E69yh8wzGSgsNX6vq/G0bFVsa8NaxhCz+y2iO1mzAfXomzU/9iPzbJDwat7y1L9wG2edhw==
+X-Received: by 2002:a05:690c:d19:b0:6f9:e45d:8a32 with SMTP id 00721157ae682-6febf39bb68mr315647397b3.23.1741792936087;
+        Wed, 12 Mar 2025 08:22:16 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6feb2a6b14bsm32180237b3.49.2025.03.12.08.22.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Mar 2025 08:22:15 -0700 (PDT)
+Date: Wed, 12 Mar 2025 11:22:11 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 4/6] pack-objects: generate cruft packs at most one
+ object over threshold
+Message-ID: <Z9Gmo2P3Fnt3JeOs@nand.local>
+References: <cover.1740680964.git.me@ttaylorr.com>
+ <cover.1741648467.git.me@ttaylorr.com>
+ <f2ca92245ada74825806b50f786aab312275fd85.1741648467.git.me@ttaylorr.com>
+ <xmqqikof2pqp.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250312-b4-pks-ci-meson-docs-v1-1-5e7cf7ac959a@pks.im>
-X-B4-Tracking: v=1; b=H4sIACWa0WcC/x3MTQqAIBBA4avErBtQ+4OuEi3SxhoiDQciCO+et
- PwW770glJgExuqFRDcLx1Cg6wrcvoSNkNdiMMp0qtEGbYvXIegYT5IYcI1OUHurle0HsuShpFc
- iz8+/neacPxiQnjZmAAAA
-X-Change-ID: 20250312-b4-pks-ci-meson-docs-1fb10b67ebef
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqikof2pqp.fsf@gitster.g>
 
-Our "documentation" CI job performs a couple of tests against our
-documentation. Part of these tests is to check whether documentation
-builds at all and whether it spits out the expected set of files. We
-don't yet have such a test for Meson, which means that we wouldn't
-notice at all if building the documentation were to break. As a result,
-breakages as fixed by 87eccc3a81d (meson: fix building technical and
-howto docs, 2025-03-02) are easy to go unnoticed.
+On Tue, Mar 11, 2025 at 02:59:10PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > When generating multiple cruft packs with 'git repack --max-cruft-size',
+> > we use 'git pack-objects --cruft --max-pack-size' (with many other
+> > elided options), filling in the '--max-pack-size' value with whatever
+> > was provided via the '--max-cruft-size' flag.
+> >
+> > This causes us to generate a pack that is smaller than the specified
+> > threshold. This poses a problem since we will never be able to generate
+> > a cruft pack that crosses the threshold.
+>
+> So far I see absolutely *NO* problem described in the above.  The
+> user said "I want to chop them into 200MB pieces but do not exceed
+> the threshold" and the system honored that wish.
+>
+> > In effect, this means that we
+> > will try and repack its contents over and over again.
+>
+> The end effect however may be problematic, but isn't it due to the
+> way when to repack is determined?  You see 199MB piece of cruft pack
+> plus some other cruft data.  You have generated no new cruft and no
+> existing cruft expired out, but you do not know these facts until
+> you try to repack.  Because 200MB is the limit, you include the
+> 199MB one as part of the ones to be recombined into the new cruft
+> pack because 199MB is smaller than 200MB and you do not know that
+> the reason why it is 199MB is because the earlier repack operation
+> found all remaining cruft material to be larger than 1MB; if there
+> were a 0.5MB cruft, it may have made it closer to 200MB.
+>
+> So would it be feasible to remember how 199MB cruft pack is lying in
+> the object store (i.e. earlier we packed as much as possible), and
+> add a logic that says "if there is nothing to expire out of this
+> one, do not attempt to repack---this is fine as-is"?
 
-Address this test gap by starting to build both manpages and HTML sites
-as part of the CI job.
+I had a similar thought when first thinking about multi-cruft packs, but
+the line of thinking is somewhat flawed. When we do a pruning GC, the
+vast majority of objects should be expired out of the repository,
+leaving only the recent ones that have mtime newer than the cutoff. So
+the majority of packs in this case should all be removed, and the small
+amount of cruft data remaining can be repacked into a small number of
+packs relatively quickly.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Hi,
+> > Instead, change the meaning of '--max-pack-size' in pack-objects when
+> > combined with '--cruft'. When put together, '--max-pack-size' allows the
+> > pack to grow larger than the specified threshold, but only by one
+> > additional object.
+>
+> I do not think that would work well.  You have no control over the
+> size of that one additional object---it may weigh more than 100MB,
+> combining your 199MB cruft pack with something else to make it ~300MB
+> cruft.  In other words, "just a little bit larger" sounds like a
+> wishful thinking handwaving.
 
-this single patch expands our "documentation" CI job to also start
-building Meson documentation.
+I think that it is somewhat of a handwave, but I would note that our
+current rules around --max-pack-size are not quite as strict as I
+originally thought. If you have a single object that is 100MB and your
+pack limit is 50MB, then pack-objects will generate a 100MB pack today
+containing just that object. So I don't think that our --max-pack-size
+rules are quite that strict.
 
-Thanks!
+Here is the case that I am worried about:
 
-Patrick
----
- ci/test-documentation.sh | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+Suppose you have a 100MB cruft limit, and there are two cruft packs in
+the repository: one that is 99MB and another that is 1MB in size. Let's
+suppose further that if you combine these two packs, the resulting pack
+would be exactly 100MB in size.
 
-diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-index 6c018b673e0..49f87f50fd7 100755
---- a/ci/test-documentation.sh
-+++ b/ci/test-documentation.sh
-@@ -15,6 +15,13 @@ filter_log () {
- 	    "$1"
- }
- 
-+check_docs () {
-+	test -s "$1"/Documentation/git.html &&
-+	test -s "$1"/Documentation/git.xml &&
-+	test -s "$1"/Documentation/git.1 &&
-+	grep "<meta name=\"generator\" content=\"$2 " "$1"/Documentation/git.html
-+}
-+
- make check-builtins
- make check-docs
- 
-@@ -23,10 +30,7 @@ make doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)
- cat stderr.raw
- filter_log stderr.raw >stderr.log
- test ! -s stderr.log
--test -s Documentation/git.html
--test -s Documentation/git.xml
--test -s Documentation/git.1
--grep '<meta name="generator" content="AsciiDoc ' Documentation/git.html
-+check_docs . AsciiDoc
- 
- rm -f stdout.log stderr.log stderr.raw
- check_unignored_build_artifacts
-@@ -37,10 +41,21 @@ make USE_ASCIIDOCTOR=1 doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)
- cat stderr.raw
- filter_log stderr.raw >stderr.log
- test ! -s stderr.log
--test -s Documentation/git.html
--grep '<meta name="generator" content="Asciidoctor ' Documentation/git.html
-+check_docs . Asciidoctor
- 
- rm -f stdout.log stderr.log stderr.raw
- check_unignored_build_artifacts
- 
-+# Build docs with Meson and AsciiDoc
-+meson setup build-asciidoc -Ddocs=html,man -Ddocs_backend=asciidoc
-+meson compile -C build-asciidoc
-+check_docs build-asciidoc AsciiDoc
-+rm -rf build-asciidoc
-+
-+# Build docs with Meson and AsciiDoctor
-+meson setup build-asciidoctor -Ddocs=html,man -Ddocs_backend=asciidoctor
-+meson compile -C build-asciidoctor
-+check_docs build-asciidoctor Asciidoctor
-+rm -rf build-asciidoctor
-+
- save_good_tree
+Today, repack will say, "I have two packs that sum together to be the
+value of --max-cruft-size", and mark them both to be removed (and
+replaced with the combined pack generated by pack-objects). But if the
+combined pack is exactly 100MB, then pack-objects will break the pack
+into two just before the 100MB limit, and we'll end up with the same two
+packs we started with.
 
----
-base-commit: 87a0bdbf0f72b7561f3cd50636eee33dcb7dbcc3
-change-id: 20250312-b4-pks-ci-meson-docs-1fb10b67ebef
+Ideally we would combine those packs into one that is at most one
+object's size larger than the threshold, and the steady state would be
+to avoid repacking it further. But in current Git we will keep repacking
+the two together, only to generate the same two packs we started with
+forever.
 
+So I think a reasonable stop-gap here is to let pack-objects generate
+cruft packs with a --max-pack-size that are allowed to grow *just*
+beyond the threshold by at most one object. Yes, that object can be
+large, and so it's possible that you could end up with a pack that is
+significantly larger in size than the threshold, if the one-extra-object
+is itself large.
+
+But the point of --max-pack-size in conjunction with --cruft is not in
+the original spirit of --max-pack-size, which was to work around
+filesystems that don't do well with large files. Instead, the utility
+here is to bound the amount of repacking we have to do when generating
+cruft packs in repositories that have many unreachable objects.
+
+In other words, if my --max-cruft-size is 1G, and I have 20GB of cruft
+data, I am less concerned about generating a pack that is 1.1G in size
+than I am about repeatedly repacking the same 20GB over and over again
+each time I want to add a single unreachable object.
+
+Thanks,
+Taylor
