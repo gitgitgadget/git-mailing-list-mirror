@@ -1,160 +1,215 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03B170810
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 21:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2B41D5175
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 21:39:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741815489; cv=none; b=qBtBx2ooEUt2PspOR+wHFTqY1+kwEMb6m0mHas8AyHLnBl7QYAJIpyIrqi+j25XtEbNhkMinDo7m9JVGEXRe4LJZNj2N+5a3Vrhw7gkAneaxf4Q22tlG3OOM5O0XbDQHJvwpX8ibVuQg2X2ToO++GjNSGF+PmO67gM6Y06lsRV4=
+	t=1741815584; cv=none; b=tomL9S7I9A9EiSreJH/Y4MRp+/kd1LWLAhgSM/VPDdj4DEITx4UrcpOrKig4aWJkg0JGq5H2e8gR6aicPfGqz+t3NWKPdhBNCA0ZEIyMfKDlx3VNwiBe7691jt6HAT/sjdwCVuQz7LnyjnPPVP0XTvbZI+w4v54hb4ym46md5jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741815489; c=relaxed/simple;
-	bh=7zsKhNps1FMmUeR/PcGdJTFil0oJQ/mjkXwbAVpfXlI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ljFobAkpSnqKyG5fmUHWYtda12EKUpMoNc3BnISKC5WesFxVPJh+hMIlSacHXh1MPFZyJXOwSvor6DQ2xFTZ2JMT4HfHTnK4TWtsQBQgUYUfdYK+jGtFrXwLEbNpQfvERbvWplDBEZ8k5c37zW/Y1wFn07DNWm33at1A/zRscZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=toTP02jT; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1741815584; c=relaxed/simple;
+	bh=DqaR0tM/SZMIn4AwKVDqNA/BR4/q7d9kD4LbT2Xx8Ng=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iJH98Kss2Q92KFcNMvcT1zJtdcbc6Q4Wlt2rVjyh2KJvoBpMij35zp1iaKsEMD8XlwFfxqsNOPHbzqOYEqOxwycHrXHjyGc73UnO+INwaELeJ4AFdF/9DaIjzTWozgKz4v/QIqrpkW5yjAYDxxZYOitW9Sf7wUCS8mOersi52p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Iljrx91O; arc=none smtp.client-ip=209.85.166.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="toTP02jT"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e5372a2fbddso270095276.3
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 14:38:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Iljrx91O"
+Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-85db872dd80so703839f.0
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 14:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741815487; x=1742420287; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ruDACtn+200w8Pl6lj/7nRC37498S3Aq+NdSquipztA=;
-        b=toTP02jT0OOh1csX8oiJiV7DlUARMnO2VjxwbGMppWZ5ghxxs9sJxCQ/qQYku3xOnC
-         uKn1X/pij1eO5Y+U38bD0HFQPYH3Ege9c/Rc4tVyMeuwVWCohGJT65v3Lf/v+4/85KAL
-         1sqEKc/UErqHbDTdxaD80yF47y2FPV8JYm4YKaI0g7CrSPKlebJS4Ub/rd3s5KNT+MDZ
-         n3kaV4pdcqHVkWttTlr44ZfOHLtU+33QexxZcNU5vW6J6Pt/1cu5q+yRZXzEtEDFyIjU
-         WtQT83oO8+L6WNWcoVwrrYZ1AhkOEZ2dia57+/H1jx6v1ChThhOo1eRcQEF/2jkX4yIf
-         W02Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741815487; x=1742420287;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1741815582; x=1742420382; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ruDACtn+200w8Pl6lj/7nRC37498S3Aq+NdSquipztA=;
-        b=N+wa5pqi2RdKjm6TnTuKiySODiuVCW0g9v8zCkW6GT7SH7sxSBZ+KHrqyFvV/XqZ8M
-         MwJm2cs00hWZodXZDMbMCoJ7QkxS3HaXk3Cwckzz5QObgcvCgd1i/S2kL9WXUyFp378H
-         PXTxHf4XBvWvfJWgTngTxqWSsIjbiMmfcNHMLGAjR5IDA8ew6hnemNjeR/QC3483VC9O
-         XZJxPfSIvpFwDpXvZNdjS3/aGCttEkpzv0NlMosb4/+V7bcf9MheZEniFMCXmAvxLbgp
-         CHLgQ30SvJLm4yOClX7NPp0sFkmtZC6D0cZVaA6lY2mvENgufeOSncj0efgT5wvsuzlP
-         /NHg==
-X-Gm-Message-State: AOJu0Yx8eFFbCtwUMoNw2y4eCrKjO3xmtB4PMBgRR1/XnTg7uc/w7elF
-	UVQMymJP8i2+fjbhbj+RjxUInYeuwfgPyYJ4s2zjCtFkPkWmtsaruOr1GlRlBFY=
-X-Gm-Gg: ASbGncvxkZIDJsSt0AnocT2u/9+ArMDXJN/+0Qdkvt63lcByxOTCAFLgPMi83yu7U0I
-	je3Biq6rU1Tz6WGKUVMnNWa0drf4h9oC3oHolxDJRLLw12Adeki8GEvCkAiirUdNqIHn3+EdOQR
-	KoE7BpU35Qy/VurCMBfHe6BpeuKJZ+Hq3xDsMLtrNeWQCkX8uN06mhSqZz78PO+uC98sZvgizji
-	mE620JC7DxETQGz8Wb7CQb8JZ35+6PbPW2AAgpuv34/iOMALzq6LJxqQavb9Xe9R5yWDeqTZ3i3
-	5Id/KD97hRHn2DMf72jQ6s71omvqRQlhiKSqh1c8g7UnP8CPujys04oTLq32fnrN1g3jl3lzkBD
-	9+Ic5kikCdZKAWcKb
-X-Google-Smtp-Source: AGHT+IF7uVAhedFtDgA23QmAQAqKr5TdZ5k95PNe+JscOK8P/uUcpnWj6Yd8UilrWC+iruWh0LAVKQ==
-X-Received: by 2002:a05:6902:2702:b0:e5d:b671:8fce with SMTP id 3f1490d57ef6-e635c144d83mr32460335276.12.1741815486879;
-        Wed, 12 Mar 2025 14:38:06 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e634b8e8ff1sm3537438276.40.2025.03.12.14.38.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 14:38:06 -0700 (PDT)
-Date: Wed, 12 Mar 2025 17:38:05 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Igor Todorovski <itodorov@ca.ibm.com>,
-	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: Re: [PATCH 5/9] refspec_ref_prefixes(): clean up refspec_item logic
-Message-ID: <Z9H+vWHFkATWNLxt@nand.local>
-References: <20250309030101.GA2334064@coredump.intra.peff.net>
- <20250309030706.GE2334191@coredump.intra.peff.net>
+        bh=OKFHOiH7vdn0PPU6luFtvgPLKGiMnG0ZWi5O03HOXyI=;
+        b=Iljrx91O3CtOlzAbMfjTp18Wy4Q5aUfumqtlxlDYq6shrNbfqrPJdibhpEkbMNZlGr
+         ppC+lbmirSsX1ndrkvrEebs96DcYHjfNSDIQsqqaaotWbAHo8Vwz9+Lc+ZZqQJ3Lla/2
+         YdPTm9QhtvWCtn/eccYfv15DjObIuAN8dMZmxw7tX3lIe+riHAOjApEfpwSyvoBTN4XS
+         rsD0KVDZTmhqDV6SLtdMNL1WNjRLJBZ12nYKRDiRVXDEX+ki9jFyAoZBDNINzoSuaVP8
+         DRi6XkMQq/eiVwIXL+Z83dqr0PMQMmH8cJ3W9i91tR674AtSAu89N1/uqi1sgZUN6cgs
+         raBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741815582; x=1742420382;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OKFHOiH7vdn0PPU6luFtvgPLKGiMnG0ZWi5O03HOXyI=;
+        b=jsoDYfDOBJv3wtPvB1jWfIsa1HXHK2rXFx3oPn4gDIhSU0Kz2QpmTifen5DF8idj2z
+         4wSeIPy+aOYmHTvG2eRZkl2TGaJHdJtJs6Lmk2YiN2FvCk0khLas8vQ2Jeem/j9sf3Du
+         xs144EnfRMAM9trP+RdtIzdmBnskggl/NVDkGylLxm3IyaIihpjR/dHZX6lk7y3ECJ43
+         6sh7XGTIutxthdC00N+il0QOGVQittP/orbApgvRZfL6eHxn9DBR+79QKr1odxObI3nx
+         AHQArXOge7JKt1Ee8u402MNPr0fzY9njW1BVPrjgiWCo5O+DBhponUrqcWKoFMAhsxZJ
+         EHpg==
+X-Forwarded-Encrypted: i=1; AJvYcCUiWYyz3/NQiMPIwQIPT9leWf2uyBteCPsQcEp/Z6JVpg4FGZdZgfsRcbWbVFW8LmnrUXY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyguRkXxZn256bTvo1Z0aYKoO8i8agSKgF4psLt32xyhctUNmeC
+	Anam2k3E3kZRDUdRzzVa50a9bH4Fw6xlXEB1A99x+dNuhhyXhixB+KoTjcfBThyocqSJweD6tiO
+	o84bRrwMzh2I8hpE0XCBxxyh9iWBPrw==
+X-Gm-Gg: ASbGncuUwczBvnYmifPC5rjVD627LlFmeNWXARRkk1ObBy4BTvXsxWVrqcsxQxK8IPS
+	7am0bkEpmzlOVslf0U+zTQIPmNYqtnu7VUQCVt23wQadV3Q7anHaAgxDzSUDdh3qSRmrCs/D96E
+	XCclcMr1XGRVheR/EMx5m92AYAmuotb7tZ5HUCB7UeVZU19aj3LMfdRKVf0zY=
+X-Google-Smtp-Source: AGHT+IEg/uRj7Zjoq+FfSNeO+eRezZGqUKgmRc0kFRjMkjle/Nkaq1izFDzsv2AgMq0/9iKNadSo5FoAW2B8VBlg3GM=
+X-Received: by 2002:a05:6602:4893:b0:85d:a69f:371d with SMTP id
+ ca18e2360f4ac-85da69f39c7mr857524239f.4.1741815582024; Wed, 12 Mar 2025
+ 14:39:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250309030706.GE2334191@coredump.intra.peff.net>
+References: <pull.1875.git.1741362522.gitgitgadget@gmail.com>
+ <9f73e54224d55b40faeb5d68ebd7ff0c13d69c7b.1741362522.git.gitgitgadget@gmail.com>
+ <Z9FAgCSCZSJnzv9d@pks.im>
+In-Reply-To: <Z9FAgCSCZSJnzv9d@pks.im>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 12 Mar 2025 14:39:31 -0700
+X-Gm-Features: AQ5f1Jo26TjCHJy7Hqzv3SXD93wFpZhvNdgprE_mvlJpu_I7HYm-ENa_K1pI3Sc
+Message-ID: <CABPp-BGUjLm+G1_LsEOp3P2b962rADxmgoWxn1MgREHWiTvOQA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] merge-ort: add new merge_ort_generic() function
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Mar 08, 2025 at 10:07:06PM -0500, Jeff King wrote:
-> The point of refspec_ref_prefixes() is to look over the set of refspecs
-> and set up an appropriate list of "ref-prefix" strings to send to the
-> server.
-
-While we're cleaning things up, I wonder if it is worth (slightly)
-renaming this function to something more descriptive, like:
-
-    refspecs_to_ref_prefixes()
-
-, where we pluralize "refspec" and add "to" to make it clear that we're
-converting from one to the other.
-
-> Of course this is all completely academic. We have still not implemented
-> a v2 push protocol, so even though we do call this function for pushes,
-> we'd never actually send these ref-prefix lines.
+On Wed, Mar 12, 2025 at 1:06=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
-> However, given the effort I spent to figure out what was going on here,
-> and the overlapping exact_sha1 checks, I'd like to rewrite this to
-> preemptively fix the bug, and hopefully make it less confusing.
-
-All makes sense.
-
-> This splits the "if" at the top-level into fetch vs push, and then each
-> handles exact_sha1 appropriately itself. The check for negative refspecs
-> remains outside of either (there is no protocol support for them, so we
-> never send them to the server, but rather use them only to reduce the
-> advertisement we receive).
+> On Fri, Mar 07, 2025 at 03:48:40PM +0000, Elijah Newren via GitGitGadget =
+wrote:
+> > diff --git a/merge-ort-wrappers.c b/merge-ort-wrappers.c
+> > index d6f61359965..62834c30e9e 100644
+> > --- a/merge-ort-wrappers.c
+> > +++ b/merge-ort-wrappers.c
+> > @@ -64,3 +68,63 @@ int merge_ort_recursive(struct merge_options *opt,
+> >
+> >       return tmp.clean;
+> >  }
+> > +
+> > +static struct commit *get_ref(struct repository *repo,
+> > +                           const struct object_id *oid,
+> > +                           const char *name)
+> > +{
+> > +     struct object *object;
+> > +
+> > +     object =3D deref_tag(repo, parse_object(repo, oid),
+> > +                        name, strlen(name));
+> > +     if (!object)
+> > +             return NULL;
+> > +     if (object->type =3D=3D OBJ_TREE)
+> > +             return make_virtual_commit(repo, (struct tree*)object, na=
+me);
+> > +     if (object->type !=3D OBJ_COMMIT)
+> > +             return NULL;
+> > +     if (repo_parse_commit(repo, (struct commit *)object))
+> > +             return NULL;
+> > +     return (struct commit *)object;
+> > +}
 >
-> The resulting behavior should be identical for fetches, but hopefully
-> sets us up better for a potential future v2 push.
+> This is an exact copy of the same function in "merge-recursive.c".
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This could be dropped without affecting the rest of the series if it's
-> too churn-y.
+> > +int merge_ort_generic(struct merge_options *opt,
+> > +                   const struct object_id *head,
+> > +                   const struct object_id *merge,
+> > +                   int num_merge_bases,
+> > +                   const struct object_id *merge_bases,
+> > +                   struct commit **result)
+> > +{
+> > +     int clean;
+> > +     struct lock_file lock =3D LOCK_INIT;
+> > +     struct commit *head_commit =3D get_ref(opt->repo, head, opt->bran=
+ch1);
+> > +     struct commit *next_commit =3D get_ref(opt->repo, merge, opt->bra=
+nch2);
+> > +     struct commit_list *ca =3D NULL;
+> > +
+> > +     if (merge_bases) {
+> > +             int i;
+> > +             for (i =3D 0; i < num_merge_bases; ++i) {
+> > +                     struct commit *base;
+> > +                     if (!(base =3D get_ref(opt->repo, &merge_bases[i]=
+,
+> > +                                          oid_to_hex(&merge_bases[i]))=
+))
+> > +                             return error(_("Could not parse object '%=
+s'"),
+> > +                                          oid_to_hex(&merge_bases[i]))=
+;
+> > +                     commit_list_insert(base, &ca);
+> > +             }
+> > +     }
+> > +
+> > +     repo_hold_locked_index(opt->repo, &lock, LOCK_DIE_ON_ERROR);
+> > +     clean =3D merge_ort_recursive(opt, head_commit, next_commit, ca,
+> > +                                 result);
+> > +     free_commit_list(ca);
+> > +     if (clean < 0) {
+> > +             rollback_lock_file(&lock);
+> > +             return clean;
+> > +     }
+> > +
+> > +     if (write_locked_index(opt->repo->index, &lock,
+> > +                            COMMIT_LOCK | SKIP_IF_UNCHANGED))
+> > +             return error(_("Unable to write index."));
+> > +
+> > +     return clean ? 0 : 1;
+> > +}
 >
->  refspec.c | 22 ++++++++++++++++------
->  1 file changed, 16 insertions(+), 6 deletions(-)
+> There are two differences here:
 >
-> diff --git a/refspec.c b/refspec.c
-> index 4cb80b5208..c6ad515f04 100644
-> --- a/refspec.c
-> +++ b/refspec.c
-> @@ -246,14 +246,24 @@ void refspec_ref_prefixes(const struct refspec *rs,
->  		const struct refspec_item *item = &rs->items[i];
->  		const char *prefix = NULL;
+>   - We use `error()` instead of the custom `err()` function that
+>     "merge-recursive.c" uses. I'm happy to see us using standard error
+>     reporting.
 >
-> -		if (item->exact_sha1 || item->negative)
-> +		if (item->negative)
->  			continue;
-> -		if (rs->fetch == REFSPEC_FETCH)
-> -			prefix = item->src;
-> -		else if (item->dst)
-> -			prefix = item->dst;
-> -		else if (item->src && !item->exact_sha1)
-> +
-> +		if (rs->fetch == REFSPEC_FETCH) {
+>   - We don't have the check for `num_merge_bases =3D=3D 1`. I have no ide=
+a
+>     why we don't have it, and it's likely that other readers may be
+>     puzzled in the same way. So this is something I'd expect to see
+>     explained in the commit message.
 
-Do you think it'd be worth handling rs->fetch in a switch/case block? At
-least that would allow us to catch unknown values more easily, though it
-seems unlikely we'd ever add any :-).
+Yeah, it looks like when I was splitting commits, I had more of this
+explanation in a commit which was explaining differences in testcases.
+I'll copy the relevant bits here.  Thanks for reading carefully.
 
-> +			if (item->exact_sha1)
-> +				continue;
->  			prefix = item->src;
-> +		} else {
-> +			/*
-> +			 * Pushes can have an explicit destination like
-> +			 * "foo:bar", or can implicitly use the src for both
-> +			 * ("foo" is the same as "foo:foo").
-> +			 */
-> +			if (item->dst)
-> +				prefix = item->dst;
-> +			else if (item->src && !item->exact_sha1)
-> +				prefix = item->src;
-> +		}
-
-All makes sense.
-
-Thanks,
-Taylor
+>
+> Other than that this function looks identical.
+>
+> > diff --git a/merge-ort.c b/merge-ort.c
+> > index 46e78c3ffa6..b4ff24403a1 100644
+> > --- a/merge-ort.c
+> > +++ b/merge-ort.c
+> > @@ -5186,6 +5186,8 @@ static void merge_ort_internal(struct merge_optio=
+ns *opt,
+> >               ancestor_name =3D "empty tree";
+> >       } else if (merge_bases) {
+> >               ancestor_name =3D "merged common ancestors";
+> > +     } else if (opt->ancestor) {
+> > +             ancestor_name =3D opt->ancestor;
+> >       } else {
+> >               strbuf_add_unique_abbrev(&merge_base_abbrev,
+> >                                        &merged_merge_bases->object.oid,
+> > @@ -5275,8 +5277,13 @@ void merge_incore_recursive(struct merge_options=
+ *opt,
+> >  {
+> >       trace2_region_enter("merge", "incore_recursive", opt->repo);
+> >
+> > -     /* We set the ancestor label based on the merge_bases */
+> > -     assert(opt->ancestor =3D=3D NULL);
+> > +     /*
+> > +      * We set the ancestor label based on the merge_bases...but we
+> > +      * allow one exception through so that builtin/am can override
+> > +      * with its constructed fake ancestor.
+> > +      */
+> > +     assert(opt->ancestor =3D=3D NULL ||
+> > +            (merge_bases && !merge_bases->next));
+> >
+> >       trace2_region_enter("merge", "merge_start", opt->repo);
+> >       merge_start(opt, result);
+>
+> These two hunks look related to my above observation that we don't have
+> the check for `num_merge_bases =3D=3D 1`, as in "merge-recursive.c" we us=
+ed
+> to set `opt->ancestor =3D "constructed merge base" if so.
+>
+> Patrick
