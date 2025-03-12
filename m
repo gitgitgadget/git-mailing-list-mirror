@@ -1,170 +1,276 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55F8230BF4
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 08:06:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F661258A
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 08:15:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741766800; cv=none; b=VYqe60S/+8fQ37IPPZL9LXXdgZ+4h7htTLynlUjK4iVLooWdATT8yVR9M1mZpSo+i59V6nONKYL9aOVsbCxeM/Z4lxYAsYquEQO0KnovwJ3lpcDvbjr5ppbvEQO19RijRsDC6jin3C6z58Mfk3zWytLG/B8wyj5GNZMcWdE9izY=
+	t=1741767350; cv=none; b=hAuUdH7ZfydkO/EtxrWYHzbdbfwnFbHHQNMfPGgDJSQvz81A1TJThVNLHuOfOCl6XW/lxl8gpTh9dLTw0CbDl8Lg1qMDlVj0H9rbR5OTy86NTm4b+55NWDAAfXtxudcdFpLKn5koi3M6qxRbgQm2A1HVYoXtcLT5ENP1aWqqQd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741766800; c=relaxed/simple;
-	bh=4eUe/93yds9PMJpUE7cw8LCZv+f8ARiVN32TIIBNGpw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t7mVjEC7WmzH3TmCrJ9ne3+cNtLZLWDEdMQNk63yUKrLv1BjWG2w6KsULpBijIPWmZhPtpPE1HxwOxOReX3xv1wktTuLU4/dN9hbsZW+Q4bI9iZr4RhgpfcgXEW4sFNYMQhEgU4UvtLsCB5z+KUA0NRz7ViyBEg08QuOrpWW9Ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Zoy37l8W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XWRZ1DRD; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1741767350; c=relaxed/simple;
+	bh=sQnaC/exLSk/QQN0U7EADf6+XVjCWIjNKIWGN5afXv8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Zi4908hmyrj1T35ReRUcK3Jhb7Jd20cq0RVjBKH003F06ekotMP+i+PHM94OLJcIjTsol8oa8NdXrqJOnHB0vj8fjlyJNHfeypFKxXbGkE3nSLL224B6K8tl4UYXqehYp6ULAAKjyCBXdAFUO3J6sUJSycFM/z1kQePxvFUTwkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eJauGNMJ; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Zoy37l8W";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XWRZ1DRD"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id AFF8111402A2;
-	Wed, 12 Mar 2025 04:06:37 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Wed, 12 Mar 2025 04:06:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1741766797; x=1741853197; bh=9vHYcxFJUx
-	qgST4B3KxpaYZ4bQzfH3lMYkBG16wfBUc=; b=Zoy37l8WwLX8bLRgJQP1tMIr7s
-	Mc1tFD2+wk1ck+mZcaRQwkShP4m7+loPQYCXfIeXwEYtxcMmVQedqOMBTQe40SVR
-	qsxgokib+4fBlEay6Inb+iuL6ZRgbIpbuA2pTNQJbWrurStMjtrfXA6OgVgQtTW6
-	6NbDeRkqS6vbWsz11REWGHDd1YAT5EUp1+GGfMubv4m7DRHK737qbmZAr7sd/0fy
-	g9Meb26LIfDtuOVyc28RH6Z5XACWgkH3aJEJuOKRjPv5e2Vq/mXuSJK3n4VO7gzI
-	e/YgTOiY7VcuT739BEiGA1qo9DaMcLYuwgUtiOGzOzWBc37b5wJKgJEpWeMQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741766797; x=1741853197; bh=9vHYcxFJUxqgST4B3KxpaYZ4bQzfH3lMYkB
-	G16wfBUc=; b=XWRZ1DRDVaRx4k2Q6djG/aBjZqepsRC5aJ1vrwcwCJ2RmVVFL/v
-	e797CzELg1mgBC6Me5hZxP+ZxupCof0Xx65nPeVaRroeziIN3lVmfhQxbjOPtCLy
-	git6OEzm8a/RGYc87KwYb4gUVdVQdX2OqqcTbf7EybR++P4pcSZeVVWHKyruauuh
-	bgBDaN36tzjBAaf8a2ydq9/KcgUcaXxzdwvUAKOyvOp4JDyAIdwhU1j9BqclU3y7
-	LUQzniVilRKya1pmTRxvue/79afRzHeVS7kJmaApqirBwQwujQ4ugs+pLc5xTV8K
-	A4w2BFNbhjoCFOvHos6b3sbUsK6w8Bj70qw==
-X-ME-Sender: <xms:jUDRZ4CZpJAP074G4lgD4NYdSbyK0KR4yQUjUEBrUG-cDKfFydLNXw>
-    <xme:jUDRZ6h39EFpwJ3BnPZ1g98RvBxVJWmR0TaFimN8Ku5PFqeWW9Gns-o-DED__cb36
-    ZAV-AW_LeBllC1Meg>
-X-ME-Received: <xmr:jUDRZ7k62K680VO1E5eCRaaLMr1OG0AhK7F-cGX_avrS3pLxueuQG4Kpp3VueaspfbzZKoueG8IDZZBguXVePXBvswnAIjvZg8b6sCLycfIJEU_Tpw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdegheehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehnvgifrhgvnhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:jUDRZ-yiQozWJFLMOkmZGe-awDd8v_TZhr_XTwOaEn_JHlvZ0R5M7Q>
-    <xmx:jUDRZ9Qqk6yuXvri5a9UidUmQjt4JumDEwWXTs6Z53QKvVjN7QXoMQ>
-    <xmx:jUDRZ5ZQeod6Fmal9ivF8nn1Q_6MnIej43iTOwSGnRzP0lYC7ZeoCQ>
-    <xmx:jUDRZ2SlYGSc20e4ahqHun7Jp09OcH_TLELjRLaBatqWxtIZlXQlBw>
-    <xmx:jUDRZ_fyJyTN_i3jV7ZnUlug0YnB9AkGsrdFiR_aVAYyIpGyT_q79Oql>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Mar 2025 04:06:36 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 79b7c991 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Mar 2025 08:06:36 +0000 (UTC)
-Date: Wed, 12 Mar 2025 09:06:35 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 2/3] merge-ort: allow rename detection to be disabled
-Message-ID: <Z9FAix-VKGte8UKk@pks.im>
-References: <pull.1875.git.1741362522.gitgitgadget@gmail.com>
- <4292b22723f759c3e0f84ac1000992187a9c7f7c.1741362522.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eJauGNMJ"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2255003f4c6so69468135ad.0
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 01:15:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741767348; x=1742372148; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uPW65+fi8qGd/cHAqG6Y5vOY94E6d5+OPAyI4SF47w4=;
+        b=eJauGNMJjmPsTdCdLRmzsep0Kr8w1zd3IdgU6NuvKmsc4JmnuUqoQkvbhMGDaYH3c3
+         TW+kJul4MUd2Oh/qIW/a0rOkzcrQjMlXfdGA5tb3vdbzFVnslONG24SZSXhl9wlc9/xl
+         rGnUzFRuJdHQlJTfJipTha3tJVeLSszwkrKckmQNuounQWhmZK6tEJ2cj6zduAKI4AyC
+         y1xCH/GfwdJ3S/DaqHCwl78ngNDHZmQ5o1nE0Xx29hf0Pz2d/CVUwlwMrN3xjDURqCE8
+         4YCsNO9lPaJirR909dcNs97krmhm+2uxf8Q5gEAL5ap2ciSYkFV8SiPXbUD/55IX20gk
+         /riQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741767348; x=1742372148;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uPW65+fi8qGd/cHAqG6Y5vOY94E6d5+OPAyI4SF47w4=;
+        b=Wd12ZCbG2gGl+LGwyJniAJLoCRCew9m0sEzZ2bQ9U2P1yDWP3rNZz6b8+DypslRJ17
+         eRv+Jydzg8FRzz9A6gU2b+MshvpMA8kDAt9jVylg9uwYjNyPLOsSGOdw4MzRQnR8p8sl
+         wTkTcl3EVZqcWHbVqkiEsOLhlXpn9Vk6fnNfR68fmkoxsrrw6qL9xPmUaVl2mWmxfAbB
+         VKRTXhYE0gsO8Ku7/gU124kssseWZri/rC3stGm9pezkNBf54ZbB9n6FD/Pn4Cr9TYo0
+         YAmQnkAydf/thkHdMF2WKr452KJ6d9gYYhicRfg2iaFnwkBvSG0bqhexXpQ9xEiPvgT4
+         WTYA==
+X-Gm-Message-State: AOJu0YytnFjp4LxxmmR5W6mN16ToSEEmvovUEzZUdPXqdQpytuuAq/oD
+	Bbnw3oq5q3aoa39O/6TnFAMe2s3ZrFf4SGKrJY+OfHDSBmkDhfqLvdPHXw8e
+X-Gm-Gg: ASbGncuWbgp6kn7sY/cXGSZSWsiQ3oGU9iY9ffoqb9QtsvYetJGDgdLW4VgvTcUGWaF
+	uTF2jWr3dqGoa8dO1qO+gGPUrc1h4AqkWn8b/ybBgYGRm8TcKHRGZQJvms1Xv/xISCVljThT3D4
+	0VtYnZJbzItaJ2he6jFQwJ+JbIzPIfNm4YHhqTtx6x5R5YaVocxkY9N9s/D3ZESXQE1gOu3aUSR
+	1f18pkd1To7M6EBA3NbLOFKFGKJgQBhG9XbJMkpltxx0fCFHvyiOGDmuzf7p+IfPNZwKlN+zuUf
+	o37qBEiwTfMYA7YvJfsYEDrsOfXE6Glu4nbsyxhb5XR4sV7dymsREF2xWMKqCIUgkp8Br/EO6DR
+	7xQ4=
+X-Google-Smtp-Source: AGHT+IFsMzO3TJ8VNW7EW1Jbo+QPC4peJl01Na/aMpnF8JAlGzHhH1YUYJ8Ph9bvTvmbDaDzwTK2kQ==
+X-Received: by 2002:a05:6a21:e90:b0:1f5:7c6f:6c8a with SMTP id adf61e73a8af0-1f58cbef8afmr11576433637.35.1741767347907;
+        Wed, 12 Mar 2025 01:15:47 -0700 (PDT)
+Received: from localhost.localdomain ([2405:201:c005:b018:5841:514c:af52:5598])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af2894e3cdasm9980204a12.24.2025.03.12.01.15.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Mar 2025 01:15:47 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: git@vger.kernel.org
+Cc: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Subject: [PATCH] [GSOC] Update MyFirstContribution.adoc to current codebase
+Date: Wed, 12 Mar 2025 13:45:34 +0530
+Message-ID: <20250312081534.75536-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4292b22723f759c3e0f84ac1000992187a9c7f7c.1741362522.git.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Mar 07, 2025 at 03:48:41PM +0000, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> When merge-ort was written, I did not at first allow rename detection to
-> be disabled, because I suspected that most folks disabling rename
-> detection were doing so solely for performance reasons.  Since I put a
-> lot of working into providing dramatic speedups for rename detection
-> performance as used by the merge machinery, I wanted to know if there
-> were still real world repositories where rename detection was
-> problematic from a performance perspective.  We have had years now to
-> collect such information, and while we never received one, waiting
-> longer with the option disabled seems unlikely to help surface such
-> issues at this point.  Also, there has been at least one request to
-> allow rename detection to be disabled for behavioral rather than
-> performance reasons, so let's start heeding the config and command line
-> settings.
+This updates MyFirstContribution.adoc to correct outdated information,
+improve clarity for new contributors following the guide.
 
-It might be nice to provide a link to that request for more context.
+Key changes:
+- Updated the function signature of `cmd_psuh` to match the current Git
+  codebase, adding `struct repository *repo` as required.
+- Added a note on using the `UNUSED` macro to suppress compiler
+  warnings for unused function parameters.
+- Replaced `git_config(...)` with `repo_config(...)` in documentation,
+  aligning with modern Git practices.
+- Removed mention of the deprecated
+  `git-mentoring@googlegroups.com`.
+- Renamed `Documentation/git-psuh.txt` to
+  `Documentation/git-psuh.adoc` to follow the
+  correct documentation format.
+- Updated `.txt` references to `.adoc`
+  wherever applicable for consistency.
 
-> diff --git a/Documentation/merge-strategies.adoc b/Documentation/merge-strategies.adoc
-> index 93822ebc4e8..59f5ae36ccb 100644
-> --- a/Documentation/merge-strategies.adoc
-> +++ b/Documentation/merge-strategies.adoc
-> @@ -82,6 +82,11 @@ find-renames[=<n>];;
->  rename-threshold=<n>;;
->  	Deprecated synonym for `find-renames=<n>`.
->  
-> +no-renames;;
-> +	Turn off rename detection. This overrides the `merge.renames`
-> +	configuration variable.
-> +	See also linkgit:git-diff[1] `--no-renames`.
-> +
->  subtree[=<path>];;
->  	This option is a more advanced form of 'subtree' strategy, where
->  	the strategy makes a guess on how two trees must be shifted to
-> @@ -107,7 +112,7 @@ For a path that is a submodule, the same caution as 'ort' applies to this
->  strategy.
->  +
->  The 'recursive' strategy takes the same options as 'ort'.  However,
-> -there are three additional options that 'ort' ignores (not documented
-> +there are two additional options that 'ort' ignores (not documented
->  above) that are potentially useful with the 'recursive' strategy:
->  
->  patience;;
-> @@ -121,11 +126,6 @@ diff-algorithm=[patience|minimal|histogram|myers];;
->  	specifically uses `diff-algorithm=histogram`, while `recursive`
->  	defaults to the `diff.algorithm` config setting.
->  
-> -no-renames;;
-> -	Turn off rename detection. This overrides the `merge.renames`
-> -	configuration variable.
-> -	See also linkgit:git-diff[1] `--no-renames`.
-> -
->  resolve::
->  	This can only resolve two heads (i.e. the current branch
->  	and another branch you pulled from) using a 3-way merge
+These changes make it easier for
+new contributors to follow the tutorial without
+running into compilation errors or outdated references.
 
-Makes sense.
+Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+---
+ Documentation/MyFirstContribution.adoc | 83 +++++++++++++++++---------
+ 1 file changed, 55 insertions(+), 28 deletions(-)
 
-> diff --git a/merge-ort.c b/merge-ort.c
-> index b4ff24403a1..a6960b6a1b4 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -3448,6 +3448,11 @@ static int detect_and_process_renames(struct merge_options *opt)
->  
->  	if (!possible_renames(renames))
->  		goto cleanup;
-> +	if (opt->detect_renames == 0) {
-> +		renames->redo_after_renames = 0;
-> +		renames->cached_pairs_valid_side = 0;
-> +		goto cleanup;
-> +	}
->  
->  	trace2_region_enter("merge", "regular renames", opt->repo);
->  	detection_run |= detect_regular_renames(opt, MERGE_SIDE1);
+diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+index afcf4b46c1..4236c9ae3e 100644
+--- a/Documentation/MyFirstContribution.adoc
++++ b/Documentation/MyFirstContribution.adoc
+@@ -13,6 +13,7 @@ the Git tree, sending it for review, and making changes based on comments.
+ 
+ This tutorial assumes you're already fairly familiar with using Git to manage
+ source code.  The Git workflow steps will largely remain unexplained.
++This tutorial also assumes you know/understand C programming language in a good capacity.
+ 
+ [[related-reading]]
+ === Related Reading
+@@ -40,13 +41,6 @@ the list by sending an email to <git+subscribe@vger.kernel.org>
+ The https://lore.kernel.org/git[archive] of this mailing list is
+ available to view in a browser.
+ 
+-==== https://groups.google.com/forum/#!forum/git-mentoring[git-mentoring@googlegroups.com]
+-
+-This mailing list is targeted to new contributors and was created as a place to
+-post questions and receive answers outside of the public eye of the main list.
+-Veteran contributors who are especially interested in helping mentor newcomers
+-are present on the list. In order to avoid search indexers, group membership is
+-required to view messages; anyone can join and no approval is required.
+ 
+ ==== https://web.libera.chat/#git-devel[#git-devel] on Libera Chat
+ 
+@@ -149,8 +143,14 @@ subcommand and contained within `builtin/`. So it makes sense to implement your
+ command in `builtin/psuh.c`. Create that file, and within it, write the entry
+ point for your command in a function matching the style and signature:
+ 
++The following line represents the function signature for any builtin/<filename.c> file that we add:
++----
++int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo)
+ ----
+-int cmd_psuh(int argc, const char **argv, const char *prefix)
++Before proceeding further, we should use the UNUSED macro to suppress warnings about unused parameters in the function.
++This prevents the compiler from generating warnings when certain parameters are not used within the function body:
++----
++int cmd_psuh(int argc UNUSED, const char **argv UNUSED, const char *prefix UNUSED, struct repository *repo UNUSED)
+ ----
+ 
+ We'll also need to add the declaration of psuh; open up `builtin.h`, find the
+@@ -158,7 +158,7 @@ declaration for `cmd_pull`, and add a new line for `psuh` immediately before it,
+ in order to keep the declarations alphabetically sorted:
+ 
+ ----
+-int cmd_psuh(int argc, const char **argv, const char *prefix);
++int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo);
+ ----
+ 
+ Be sure to `#include "builtin.h"` in your `psuh.c`. You'll also need to
+@@ -174,7 +174,7 @@ Throughout the tutorial, we will mark strings for translation as necessary; you
+ should also do so when writing your user-facing commands in the future.
+ 
+ ----
+-int cmd_psuh(int argc, const char **argv, const char *prefix)
++int cmd_psuh(int argc UNUSED, const char **argv UNUSED, const char *prefix UNUSED, struct repository *repo UNUSED)
+ {
+ 	printf(_("Pony saying hello goes here.\n"));
+ 	return 0;
+@@ -205,6 +205,9 @@ with the command name, a function pointer to the command implementation, and a
+ setup option flag. For now, let's keep mimicking `push`. Find the line where
+ `cmd_push` is registered, copy it, and modify it for `cmd_psuh`, placing the new
+ line in alphabetical order (immediately before `cmd_pull`).
++----
++{ "psuh", cmd_psuh, RUN_SETUP}
++----
+ 
+ The options are documented in `builtin.h` under "Adding a new built-in." Since
+ we hope to print some data about the user's current workspace context later,
+@@ -291,6 +294,8 @@ Modify your `cmd_psuh` implementation to dump the args you're passed, keeping
+ existing `printf()` calls in place:
+ 
+ ----
++int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo UNUSED)
++{
+ 	int i;
+ 
+ 	...
+@@ -304,6 +309,7 @@ existing `printf()` calls in place:
+ 
+ 	printf(_("Your current working directory:\n<top-level>%s%s\n"),
+ 	       prefix ? "/" : "", prefix ? prefix : "");
++	...
+ 
+ ----
+ 
+@@ -312,26 +318,47 @@ on the command line, including the name of our command. (If `prefix` is empty
+ for you, try `cd Documentation/ && ../bin-wrappers/git psuh`). That's not so
+ helpful. So what other context can we get?
+ 
+-Add a line to `#include "config.h"`. Then, add the following bits to the
++Add `#include "config.h"` and `#include "repository.h"`. Then, add the following bits to the
+ function body:
+ 
+ ----
+-	const char *cfg_name;
++#include "builtin.h"
++#include "gettext.h"
++#include "config.h"
++#include "repository.h"  // Required for repo_config_get_string_tmp()
+ 
+-...
++int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo)
++{
++    const char *cfg_name;
++
++    printf(Q_("Your args (there is %d):\n",
++              "Your args (there are %d):\n",
++              argc),
++           argc);
++
++    for (int i = 0; i < argc; i++) {
++        printf("%d: %s\n", i, argv[i]);
++    }
++
++    printf(_("Your current working directory:\n<top-level>%s%s\n"),
++           prefix ? "/" : "", prefix ? prefix : "");
+ 
+-	git_config(git_default_config, NULL);
+-	if (git_config_get_string_tmp("user.name", &cfg_name) > 0)
+-		printf(_("No name is found in config\n"));
+-	else
+-		printf(_("Your name: %s\n"), cfg_name);
++    repo_config(repo, git_default_config, NULL);
++
++    if (repo_config_get_string_tmp(repo, "user.name", &cfg_name))
++        printf(_("No name is found in config\n"));
++    else
++        printf(_("Your name: %s\n"), cfg_name);
++
++    return 0;
++}
+ ----
+ 
+-`git_config()` will grab the configuration from config files known to Git and
+-apply standard precedence rules. `git_config_get_string_tmp()` will look up
++`repo_config()` will grab the configuration from config files known to Git and
++apply standard precedence rules. `repo_config_get_string_tmp()` will look up
+ a specific key ("user.name") and give you the value. There are a number of
+ single-key lookup functions like this one; you can see them all (and more info
+-about how to use `git_config()`) in `Documentation/technical/api-config.adoc`.
++about how to use `repo_config()` ) in `Documentation/git-config.adoc`.
+ 
+ You should see that the name printed matches the one you see when you run:
+ 
+@@ -379,8 +406,8 @@ prepare it, and print its contents:
+ 
+ ...
+ 
+-	wt_status_prepare(the_repository, &status);
+-	git_config(git_default_config, &status);
++	wt_status_prepare(repo, &status);
++	repo_config(repo, git_default_config, &status);
+ 
+ ...
+ 
+@@ -1089,11 +1116,11 @@ The one generated for `psuh` from the sample implementation looks like this:
+ 
+ ----
+  Documentation/git-psuh.adoc | 40 +++++++++++++++++++++
+- Makefile                    |  1 +
+- builtin.h                   |  1 +
+- builtin/psuh.c              | 73 ++++++++++++++++++++++++++++++++++++++
+- git.c                       |  1 +
+- t/t9999-psuh-tutorial.sh    | 12 +++++++
++ Makefile                   |  1 +
++ builtin.h                  |  1 +
++ builtin/psuh.c             | 73 ++++++++++++++++++++++++++++++++++++++
++ git.c                      |  1 +
++ t/t9999-psuh-tutorial.sh   | 12 +++++++
+  6 files changed, 128 insertions(+)
+  create mode 100644 Documentation/git-psuh.adoc
+  create mode 100644 builtin/psuh.c
+-- 
+2.48.1
 
-Do we want to add a test that demonstrates that the option works as
-expected?
-
-Patrick
