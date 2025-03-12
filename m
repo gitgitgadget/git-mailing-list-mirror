@@ -1,98 +1,147 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E43C15539A
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 15:33:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E002512EC
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 15:36:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741793607; cv=none; b=CYhsvASpSKL+JH3Yk3eCqiM/ZZUrcLQAJEQ5RGFYeusCo3MqmlaC81sukykZCiK+CHFwpg/eMtwRo//A2RZE0gpUsmilHmH4C/QGiSoY4CDA/8oGSLOypLN8pN+3z67xVn2/x5FlYa3RkJEQIVsuunFJj8qycTiJ4BJDCSNl3QM=
+	t=1741793802; cv=none; b=WUeNRQufCec65cTsWwWTTj1rnguGqv8s7MnF+qvzrZr+jd7qmaL3bVIJEETLpGP3R90/rG0on31ljtcI+RfzQEZGaa88eMIiegoUyofUs6NYpCIQmJv/nPLbYGdlpkelZgQcNRey9LbB/aT+GKr3LHM4sPUD0DryHSRt4saZIQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741793607; c=relaxed/simple;
-	bh=+1q5sntUtIodL0w39LoQesm/z0GSXHI2wSvkFDJU85c=;
+	s=arc-20240116; t=1741793802; c=relaxed/simple;
+	bh=SR7cBrEdiD/ZWmn8FOCkdviOfWwpmx9JYG6zLWcPJ6Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ev/EIyGLhi0TASXO9FIlGefimtArSbEbuEYCtLf1RmbCEOygnKpoP2vOfD5vzkfxZcHJ9lh6APNw+AmIJkFELk3jM1Zz+IPrCQU2m3bGnGPkT77dATn2vw2NkF7OtAFHptGAFe4waVqcHBa1jCeS14+jUSAIY+PzBBLeb7RFFgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=NHHQodLw; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=bPvbCuFpj9bzhPz5AZi6uGdsLmn2UjJjrCh2/s7Pq2mcKbrroeDK7gIgoQPk8huhOZEuW/4fwe7/2C9XaRDlAwP5V/8z2EzbmGn/PAfiiRY36VGi+Sh+KE0RgOuyzaF/ZKpGByKdF7TfLzYslY45RR8CxhFydPdmaZirfde3i84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GHIX4U1N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S9zN2WPt; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="NHHQodLw"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6f754678c29so68481477b3.0
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 08:33:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741793604; x=1742398404; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EGZJq53BIDf3b10e9zitP2ux5GNwcN2PJ7hVCnFVsmU=;
-        b=NHHQodLwFxggGRtLAf0il1EaVk3EMW+yFE4axXkiX0i2jBN39tWvqvahhS6hHcQo07
-         LpeMxvfdCyN7A2fbmcXsdpINoGlnRAyipJgG++AYLt/xMJI6so2q1mzEGhU+AzlE7pzG
-         9+cH8slNMSr4DvaqBcRM894gDTtK/Qhedf6LOjsa0Jy1m177saeN3QpUjNgGO/Tp5CkQ
-         SCOLACOUOun/MtF4LfGrPRzC4T7GIQXLNJEsesGZUIp7pfCBFrq52kk6PdHgChDDWBNt
-         W/bowT9qy09xThGvmJxCjUGe8UR76I/+SYWlHPpNpvtptvwMcJQ6uVHLF26iRZkHcv5X
-         1caw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741793604; x=1742398404;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EGZJq53BIDf3b10e9zitP2ux5GNwcN2PJ7hVCnFVsmU=;
-        b=bd7HjU7k59/kDdbJfoO5bwDvAtc5nKNYJ783mNy0mxWJPTh27WuYCynMM063JT0HLR
-         BmYOaZgpDyYY74UyRrqNuRxgV2nolgMoU0B/X4my3vV48LhVllLB56n9YGMFRnF2vPDM
-         G/K6JwshNnUnMGwAiOnYTbtUj9NlauOgG6i8nQ7I6O8mWWW0C5WPQ+JgvDb4dITel3ba
-         LjendSFkg+fwIP1LPBbdEa3Kqr6xN/QzxBsazbaGSHnD0wV6f3R3ZN02AHv3+vyVmpWX
-         gtRlFyqUnH3uqVNmUdmj6bS+n7wzuAeMRLHOrQsczMue/8X5FwBbRbQHxtZXLA9df09J
-         WcXw==
-X-Gm-Message-State: AOJu0YxXjQ89NpiZ5VI8LHlv69TTv0QvFpeIjECf9ZjniOanShM50enY
-	/lRI76hktwRE3SbBHQFhgXKrIfqK4rb9oG/Ic6ySF99vhF49q5RwQoDjiB5B7hk=
-X-Gm-Gg: ASbGncvc3fgwdhiF0iT5nFYPl0hoG0Xc1ztBCOEKXXSYCm2GhTu4paJ2kFUm5OyfaMX
-	NfYqSEh5mO/zKnf/eAsebsfGoKZrw2HRGZN8oqJpRe7Eq/tJcC51jGQIUmnieXyANith4+PWpkV
-	2YvwzKVcnkb9NTFpafZOvQ4BvXjhLG27WAbSr1zFqkRmtEu8+wVBe2qeInNvMIN0WHrFeFDwZeJ
-	qwo/fyhmfHMLonn0PNNXZ2XZtNM0wEG4tMH0rISAiji+AX4pnXSdeWhQQQQmRC22Pg0OJiPtBvP
-	zyk/JUTI1t9I0oKXyvaj7+BAe3Uwltw7cj7JxRPxf0qdoGWET7d+Qa6Dy/9t2kSqSo25CaAzDYB
-	kzDOjLCvTig08U3wl
-X-Google-Smtp-Source: AGHT+IE6NO2RR9ZOxL7WPeQKcdRZ2VhS1bQyqK7P/fqNQtNhWe0yMhy2VQVJdJo1Tr6TsCbq3o68zA==
-X-Received: by 2002:a05:690c:d1c:b0:6f9:776f:71d7 with SMTP id 00721157ae682-6febf321f2amr325681567b3.21.1741793604207;
-        Wed, 12 Mar 2025 08:33:24 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fee31db510sm19140477b3.50.2025.03.12.08.33.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 08:33:23 -0700 (PDT)
-Date: Wed, 12 Mar 2025 11:33:22 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 0/6] pack-objects: freshen objects with multi-cruft
- packs
-Message-ID: <Z9GpQqm4YBvWF7Ff@nand.local>
-References: <cover.1740680964.git.me@ttaylorr.com>
- <cover.1741648467.git.me@ttaylorr.com>
- <xmqqr0332un3.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GHIX4U1N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S9zN2WPt"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 98F7E254025A;
+	Wed, 12 Mar 2025 11:36:39 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Wed, 12 Mar 2025 11:36:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1741793799; x=1741880199; bh=wqv387IsWe
+	SB8X94GvfsaSIRiFv7VRpGl5FAWamIyKo=; b=GHIX4U1N0GFZ7IbUOVMBJlkY7e
+	nWLA0ClE1HK29iaeyEvOnGDtHiLptEFZQz8hI9JODt70Q7VdJr7pfpKIkTMRo9AL
+	bYoJhn4Gv9l+WIb90dHNdkp700oUmWIijKiTuiroudfPezDtVUNCJJTrSWs9kY1c
+	IDbiMFleLfR2zix6GsQvl6E7o5R4bC51EKNsEUYDdH90ew21OGAODo3nOEX+ShFN
+	S9u8sQxecgGYvWPCrESqKzMjgZ/NOKAUnEozokUqiGDYgyawzhaiq/l4WujyKpcD
+	Ef5KfKLQ/rU9QVIBkBOkN2JgBoA78/u1L1G0nilRBleSIXIV5/2GB3Hdr0yw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741793799; x=1741880199; bh=wqv387IsWeSB8X94GvfsaSIRiFv7VRpGl5F
+	AWamIyKo=; b=S9zN2WPtVL3odghdnCNM55AT4NPf14mAkc8eh9L4cFnrcZQ80CQ
+	wVeYxLOMZqj+Q+x/uNmdbY/yr695hjOPH8Mun7mEKgmy6Poo+ptvo/X7P0r68ATi
+	AMzcqeDKMBslLXUhDw9unXUNIoJ+zJHM559ZeCWtizj7bogSJ0HC0ldJIT6Oq6yU
+	fiYYee6jVH1D8Ayfno30vVbV9HJ+V7SU38NCaTqPoLBchXwK+PRs8JmU21khC9fd
+	2n+buXihzQcRLchgDcxyGKffjz8X2kAlzcJztu/eXNsbc4wLC/LThamrZQsjIshj
+	CxTH4TTjDeC4nnELh5DXHJGXNX36DSUl2JA==
+X-ME-Sender: <xms:BqrRZyOcTWiI95WoVDTUqp6ZpwQd3hqsqBvOKCXhlrUXliNNOTOcjg>
+    <xme:BqrRZw8JjbXznd7RA1noh8xz9JvlfIZCBxVb0rAV6_zbxAzMMhPbU7U8Zkm018-B1
+    pJdvJigMPn1hFxR7A>
+X-ME-Received: <xmr:BqrRZ5StZFYY3kOuDbiCQJfO0QEkXZ5avt-93uTC9ZSKJI34F_heCOl8ctyQoz5SogfyU4kHNt3qOIuNt7rLLPBMw6pM3lVKTz2MxHDaDGkrflUB9g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehgeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgv
+    thdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhes
+    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhg
+X-ME-Proxy: <xmx:BqrRZytMJN7ZPmXQWomWYP2qSLVV9BPbwxl-yfRbU2T4WjAjgHimhA>
+    <xmx:BqrRZ6fUyu8C9FE8gER752SpCcz4mcJzIdm0so8rFrCQnaiXOMtkfQ>
+    <xmx:BqrRZ20xRbGb0N9eRVtp0Va-CDaOBLdar6MBB0rvPB2VEm-eO4Ry5g>
+    <xmx:BqrRZ--K9y3O67pZDQrVkHsGaYlpECZUMf3-1jwWvV_hgqxzTNLOFg>
+    <xmx:B6rRZwv1FuDgqF7ODanmMAIhGCTgwo2CUgRRF48UPzVhneu71NZMPv7k>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Mar 2025 11:36:37 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 115295ae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Mar 2025 15:36:35 +0000 (UTC)
+Date: Wed, 12 Mar 2025 16:36:33 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 04/16] refs: introduce function to batch refname
+ availability checks
+Message-ID: <Z9GqAYy4E0JVU7DA@pks.im>
+References: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
+ <20250306-pks-update-ref-optimization-v5-4-dcb2ee037e97@pks.im>
+ <Z9F_3xu6RXeelXJK@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqr0332un3.fsf@gitster.g>
+In-Reply-To: <Z9F_3xu6RXeelXJK@ArchLinux>
 
-On Tue, Mar 11, 2025 at 01:13:20PM -0700, Junio C Hamano wrote:
-> > This series resurrects the first patch from v1 after introducing a
-> > behavior change for 'git pack-objects --cruft --max-pack-size'. When
-> > given with '--cruft', '--max-pack-size' now allows pack-objects to grow
-> > a pack *just* past the given limit by at most one object.
->
-> And what happens when the last object appended is very large, like
-> 70?  Would we end up with 270 when the threshold says 200?
->
-> I still am not getting what you are trying to explain in the above
-> two paragraphs, but in general, "give up just before" would be a
-> better choice than "give up just after", exactly because the threshold
-> we are letting the user to give is the maximum.
+On Wed, Mar 12, 2025 at 08:36:47PM +0800, shejialuo wrote:
+> On Thu, Mar 06, 2025 at 04:08:35PM +0100, Patrick Steinhardt wrote:
+> > diff --git a/refs.c b/refs.c
+> > index f4094a326a9..5a9b0f2fa1e 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> > @@ -2489,79 +2485,91 @@ int refs_verify_refname_available(struct ref_store *refs,
+> >  
+> >  	assert(err);
+> >  
+> > -	strbuf_grow(&dirname, strlen(refname) + 1);
+> > -	for (slash = strchr(refname, '/'); slash; slash = strchr(slash + 1, '/')) {
+> > -		/*
+> > -		 * Just saying "Is a directory" when we e.g. can't
+> > -		 * lock some multi-level ref isn't very informative,
+> > -		 * the user won't be told *what* is a directory, so
+> > -		 * let's not use strerror() below.
+> > -		 */
+> > -		int ignore_errno;
+> > -		/* Expand dirname to the new prefix, not including the trailing slash: */
+> > -		strbuf_add(&dirname, refname + dirname.len, slash - refname - dirname.len);
+> > +	for (size_t i = 0; i < refnames->nr; i++) {
+> 
+> Nit: we may just use `for_each_string_list_item` instead of use the raw
+> "for" loop.
 
-I think this is similar to the discussion earlier in the thread, but let
-me know if there is something here I'm missing.
+Fair, can do.
 
-Thanks,
-Taylor
+> > diff --git a/refs.h b/refs.h
+> > index a0cdd99250e..185aed5a461 100644
+> > --- a/refs.h
+> > +++ b/refs.h
+> > @@ -124,6 +124,18 @@ int refs_verify_refname_available(struct ref_store *refs,
+> >  				  unsigned int initial_transaction,
+> >  				  struct strbuf *err);
+> >  
+> > +/*
+> > + * Same as `refs_verify_refname_available()`, but checking for a list of
+> > + * refnames instead of only a single item. This is more efficient in the case
+> > + * where one needs to check multiple refnames.
+> > + */
+> 
+> Should we talk about more about why this is more efficient?
+
+I don't think the caller needs to be aware of why specifically it is
+faster. All they should care for is that it does the same than the other
+function, but that it knows to optimize better.
+
+Patrick
