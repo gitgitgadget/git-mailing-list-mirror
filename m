@@ -1,71 +1,72 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D5F7083C
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 12:54:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B297924501D
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 12:58:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741784053; cv=none; b=D+7K9s2eau47X8ahGgigYRYC/BDw2YPYtAaMhNRJ9vTe5erFP0gHPQzXqkb5hhZp4DiorPgxvBGtxVU0Mb6wn9iU60ieB7y0mPWhq5AgCgyV+L7tvKt3Iju7ZJwcfe3OtycmC1YCs5j4s98l78VLe1YSHFbcJkeHDURTxHXvIuI=
+	t=1741784319; cv=none; b=aM5zisHZ+9ixEloawUBY+18ps0o/cn7pn6YBCW6HHKWPs+9JtPnvyTwKibdffSXzrHq7gIrPgamYWx3ZUHIfu0rTrGM3OTgwLkF8b/YkhXro37pm3Q48LNe09m5LyJssSY6/sRHv9YGSYEI7B7ik4O7Jrlt+LxrPZRyUvEjk1uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741784053; c=relaxed/simple;
-	bh=04F8YnjA1Wj7D1dHGziwnqCPm+SUWIVupPK7meYZuLw=;
+	s=arc-20240116; t=1741784319; c=relaxed/simple;
+	bh=sfYgB3MzPvfqeHjR+4JCSHtdz7zXPkr3MvygmW7Buko=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Esvr/Cdn5/lr+LhB6d5dDkPeHLPVacmmbxiwDVRj/pVr7MVEcICzdoumNateAws719ie1MBTA/VnbYX1erYh7NRUouDsB8kq8EVVYkrkihiPUsUI036KWkw0KCdoyFOSf0rn262FTVTzrBTrP1792uw4+n5dGY4XmWq8TDtf0DI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MPzBbicR; arc=none smtp.client-ip=209.85.214.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=qIlQBS/SnzaVkja+t22422Unb/7s+aVHWU/5hhKceqnxLil3LJnkWFz9e8gGpGr2hqXcxg4Gfd+5GoIbucLtA4PrTNSOnQefIKegJDdHBHCQE/Q9Qkf5lxYZsDYLm1ImuFUMRIovq47udVEqi618xz/u1bzES/icFEapYPADasU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BhNX7d5r; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MPzBbicR"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-219f8263ae0so124469825ad.0
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 05:54:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BhNX7d5r"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2feae794508so10096870a91.0
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 05:58:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741784049; x=1742388849; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741784317; x=1742389117; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=K98/FCDNkT0SbpHt6lz8bkeyxIipQ9Ir+S4DqWreSM4=;
-        b=MPzBbicRhYWqMTs6CR3/U6b2B5UuDwNxpc8iX9T+f7AT+NOS16H687m6AeSOSDLYYl
-         n/iA1Re3visMW6umwpXnoeCfEYa4AGWYAWngQish9VmKQpefYMFIGY59OAEkWsU6298t
-         lmSnG00I3kKbGYx7uNTHTqv9peEmWwx3ubAILcZcYEdMUsfy0W+eEpe3KjK4lI/SUfVd
-         HpAhHO9GF3uj/ms/AIqiKjju6GqksuTmEQmIFm6NqP6AB5QfCdKIn6FduwnI/hoCOa7k
-         nuUTwMgX7LGCWIivmjPTluo5+WQ4a3KUEMhhekBCT/Vb4vLBu3F0QDrC/faRdEXfHsln
-         MWbQ==
+        bh=SqPoBAuItdEgRw8NAwuReExfs4ptNfuMfmx10cpxsgo=;
+        b=BhNX7d5r9Mu9u9m5LGbHR25huiF0VcB0D90/VdnV+LMwQlWiSezlLkLU+U8vqaoquY
+         Ie9THIklfJIHt3hXVsu+YoNBXb/3G4YkZrjsyNHWp2T5SCjj5exjy/icOH9ZDg6JlqaQ
+         0m8S8cDASz4cXUc6oQBPGtry3CcpFouqZ9ZUAe1Kff3YQf4BGqaOP6R2YY3iyc+t5Qqv
+         L75Ag8UmhmErD5k+1YYpkfhq6wMwaQgUaj5ngy9YlWMjb9UQkIkpffgpQzetCkezSBrr
+         2DTojguxSk7HyRDcSN+Warra2Ol2EiNWVF4gdCPqnBAMlMGc+ut5uZ2Nzi9kl9Ua6dhA
+         UShw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741784049; x=1742388849;
+        d=1e100.net; s=20230601; t=1741784317; x=1742389117;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=K98/FCDNkT0SbpHt6lz8bkeyxIipQ9Ir+S4DqWreSM4=;
-        b=kVBTpG5sIgnSDd+Gp444chcLDFmMbOw9PuS/zb/3RZTZzy+bFzLtFS3VIhHz9PqrIP
-         5AITA3bzGSNRVVW8M7bzLOlBKp2iak1rg/mwRM5LNOVD5m8ipljmDwthjXuCDTW9oKpQ
-         zEfFIcBzEK3sJSiy3aBonRYGppWRe8F26+AUdrMfrKoukmWcGDhEA9XwDGQc7pZ68jP9
-         mOrGv4qAE6/V1I/KIWiUyxsgSa89mXoN7O6iHCDrqEVtkwtDLKT2seBX35qdUrkz+A4Z
-         mU1YR9XdFbfQJcHtACWTiZs/BxDNsybJNVGQBzwPjb7vyz0yytQBXtDwC9km0b2VlSaK
-         GYLQ==
-X-Gm-Message-State: AOJu0Yzxt+75RZ729YqUDwxNDWyT1mA3yhD7tzVryoPSCNN51GmMur+I
-	G9eYIrygs1ac0U+EX5/rCMtHYSR9QKP+SL1WlvOuAgUHN5qtCbGU
-X-Gm-Gg: ASbGncsi1VhPjr8dw9EcaaYcrkUtwN54hKPx4We9X46KRBnnoY3UyNsb2kBSECcwHbc
-	BADTzmwp7eOpFj92ZuZGBkEW/W8njoefzXasBWAoXmx99ZYNjuSLIeYjzSnorYDrbu/1938Jt0r
-	ASM4sTvNwChnMiWxk7ZHhsw7zIU5QY9I+JDKDuYl6NB3M0A7EHQpmVSNqeRp86pv21kqdvqmIY9
-	vm68zvRRaBGv5yWrSadNjIP6XKnjmGMg/uKSG09AJtY0lOg8re/C1/cq9BrJDRE0QMb+eGEKLRk
-	UwcY/zMSZn14Zg2v50NnZaGG2p2w++ExbU1TyOlU
-X-Google-Smtp-Source: AGHT+IH2f6vToCDJpMZh+9RcPUvWlQh2OUe3Binn8568vSHietJIYVXapo81G89fiD87AnzS8qGXqw==
-X-Received: by 2002:a05:6a00:238d:b0:736:d6da:8f9e with SMTP id d2e1a72fcca58-736eb667a71mr10215762b3a.0.1741784048657;
-        Wed, 12 Mar 2025 05:54:08 -0700 (PDT)
+        bh=SqPoBAuItdEgRw8NAwuReExfs4ptNfuMfmx10cpxsgo=;
+        b=l0tF4fOmSJIjdcvNA84B30hvrgPjNkNFI7zxtrhCagOUHfi+OiI6GkWrBNNvZFnuZ0
+         NM/jQgPlkZ12o3S881C5Mpv6Z7Csaxoh5dzk5EU3avXcRUW87ZHSoNmbZzuYmofsfPWp
+         1nrAP+pVbND/XS+SSNdEvMlF5gGh6xnJaCUvzJEHOhjXuN8mRdNdbAouGAECoxq0lRmp
+         DWm44NrCYeuL0HKaIkTTxm8N3caihkaNodm+MagXiOqI2CpJPX+UCvmn1TgOa+yEKMhI
+         QooghIwNwXXnqGCttNTKCfMNqPpbzMaWMtkNL5uE2sAypPICRs8JvUOq/6YDaHpIbhyB
+         BisQ==
+X-Gm-Message-State: AOJu0Yy+v74RUqZcfpcqHUArfqE0UoGniS2+TmzfdBDCncM5l5pOA2Wl
+	xCtAMXF++iXJ91vjgfi42d/7Kb9S8SwCIBfrgCqT1ef8AEZp8EYs
+X-Gm-Gg: ASbGncscuRf30zyUthb/I+tdGT9VxJas6IN5CNjFypGb8nicUPzlb1vnu5zhgHAEpPG
+	M/FHe1PWiMvpX8+81evtdoV4VL3bezUK1xysYDEGEOogFHBXuNPtiW3qpCh2w7oye2SBudOtb0/
+	/pel9u7mAEs7xAgq0gRFLXoRGmhDAicigs3P2s1yIBSa/XNMQvI2pn7qch2b1KtbbtwKmEmIoDU
+	cd2Wb/RE2QWg1S+abgl+m5lrdkGlHhmdH27MDKB3kV7pr1GOQPJbH7Vk1pdza5/osaRxkAXO0+x
+	wRTJ7FW0evh7Esa1YtVXmDj7KG/31Dr6hw7QugXp
+X-Google-Smtp-Source: AGHT+IEDBrFJcr46a6dYGD54Df+qyU9Fa+rfBhJTDdMHDMVqj7MYz74T5vOho184urdl/B+bkEHDTA==
+X-Received: by 2002:a17:90b:380e:b0:2ff:64a0:4a57 with SMTP id 98e67ed59e1d1-2ff7ceef536mr26917969a91.26.1741784316852;
+        Wed, 12 Mar 2025 05:58:36 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-7369824593csm12216650b3a.71.2025.03.12.05.54.07
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-3011928604esm1661867a91.41.2025.03.12.05.58.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 05:54:08 -0700 (PDT)
-Date: Wed, 12 Mar 2025 20:54:18 +0800
+        Wed, 12 Mar 2025 05:58:36 -0700 (PDT)
+Date: Wed, 12 Mar 2025 20:58:46 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v5 05/16] refs/reftable: batch refname availability checks
-Message-ID: <Z9GD-mg7CrvUxgqH@ArchLinux>
+Subject: Re: [PATCH v5 06/16] refs/files: batch refname availability checks
+ for normal transactions
+Message-ID: <Z9GFBl5AIQZGyI-9@ArchLinux>
 References: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
- <20250306-pks-update-ref-optimization-v5-5-dcb2ee037e97@pks.im>
+ <20250306-pks-update-ref-optimization-v5-6-dcb2ee037e97@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,80 +75,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250306-pks-update-ref-optimization-v5-5-dcb2ee037e97@pks.im>
+In-Reply-To: <20250306-pks-update-ref-optimization-v5-6-dcb2ee037e97@pks.im>
 
-On Thu, Mar 06, 2025 at 04:08:36PM +0100, Patrick Steinhardt wrote:
-> Refactor the "reftable" backend to batch the availability check for
-> refnames. This does not yet have an effect on performance as
-> `refs_verify_refnames_available()` effectively still performs the
-> availability check for each refname individually. But this will be
-> optimized in subsequent commits, where we learn to optimize some parts
-> of the logic when checking multiple refnames for availability.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  refs/reftable-backend.c | 16 ++++++++++------
->  1 file changed, 10 insertions(+), 6 deletions(-)
-> 
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index d39a14c5a46..2a90e7cb391 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -1069,6 +1069,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->  		reftable_be_downcast(ref_store, REF_STORE_WRITE|REF_STORE_MAIN, "ref_transaction_prepare");
->  	struct strbuf referent = STRBUF_INIT, head_referent = STRBUF_INIT;
+On Thu, Mar 06, 2025 at 04:08:37PM +0100, Patrick Steinhardt wrote:
+> @@ -2811,6 +2808,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+>  	size_t i;
+>  	int ret = 0;
 >  	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
 > +	struct string_list refnames_to_check = STRING_LIST_INIT_NODUP;
->  	struct reftable_transaction_data *tx_data = NULL;
->  	struct reftable_backend *be;
->  	struct object_id head_oid;
-> @@ -1224,12 +1225,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->  			 * can output a proper error message instead of failing
->  			 * at a later point.
->  			 */
-> -			ret = refs_verify_refname_available(ref_store, u->refname,
-> -							    &affected_refnames, NULL,
-> -							    transaction->flags & REF_TRANSACTION_FLAG_INITIAL,
-> -							    err);
-> -			if (ret < 0)
-> -				goto done;
-> +			string_list_append(&refnames_to_check, u->refname);
+>  	char *head_ref = NULL;
+>  	int head_type;
+>  	struct files_transaction_backend_data *backend_data;
+> @@ -2898,7 +2896,8 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+>  		struct ref_update *update = transaction->updates[i];
 >  
-
-Instead of checking in `prepare`, we will just append the refname to the
-list.
-
->  			/*
->  			 * There is no need to write the reference deletion
-> @@ -1379,6 +1375,13 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+>  		ret = lock_ref_for_update(refs, update, transaction,
+> -					  head_ref, &affected_refnames, err);
+> +					  head_ref, &refnames_to_check,
+> +					  &affected_refnames, err);
+>  		if (ret)
+>  			goto cleanup;
+>  
+> @@ -2930,6 +2929,26 @@ static int files_transaction_prepare(struct ref_store *ref_store,
 >  		}
 >  	}
 >  
-> +	string_list_sort(&refnames_to_check);
+> +	/*
+> +	 * Verify that none of the loose reference that we're about to write
+> +	 * conflict with any existing packed references. Ideally, we'd do this
+> +	 * check after the packed-refs are locked so that the file cannot
+> +	 * change underneath our feet. But introducing such a lock now would
+> +	 * probably do more harm than good as users rely on there not being a
+> +	 * global lock with the "files" backend.
+> +	 *
+> +	 * Another alternative would be to do the check after the (optional)
+> +	 * lock, but that would extend the time we spend in the globally-locked
+> +	 * state.
+> +	 *
+> +	 * So instead, we accept the race for now.
+> +	 */
 
-I am curious why we need to sort the refnames here. I think at current,
-we don't optimize the `refs_verify_refnames_available` function. No
-matter whether the `refnames_to_check` is sorted, it should not
-change the result of `refs_verify_refnames_available` function, right? I
-guess this statement may be related to optimization part. If so, I think
-we should delete this line and add in the later commit.
+I am curious why we don't sort the `refnames_to_check` here. What is the
+difference between the reftable backend and files backend?
 
-However, I am not sure.
-
-> +	ret = refs_verify_refnames_available(ref_store, &refnames_to_check, &affected_refnames, NULL,
-> +					     transaction->flags & REF_TRANSACTION_FLAG_INITIAL,
-> +					     err);
-> +	if (ret < 0)
-> +		goto done;
+> +	if (refs_verify_refnames_available(refs->packed_ref_store, &refnames_to_check,
+> +					   &affected_refnames, NULL, 0, err)) {
+> +		ret = TRANSACTION_NAME_CONFLICT;
+> +		goto cleanup;
+> +	}
 > +
->  	transaction->backend_data = tx_data;
->  	transaction->state = REF_TRANSACTION_PREPARED;
->  
-> @@ -1394,6 +1397,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->  	string_list_clear(&affected_refnames, 0);
->  	strbuf_release(&referent);
->  	strbuf_release(&head_referent);
-> +	string_list_clear(&refnames_to_check, 0);
->  
->  	return ret;
->  }
+>  	if (packed_transaction) {
+>  		if (packed_refs_lock(refs->packed_ref_store, 0, err)) {
+>  			ret = TRANSACTION_GENERIC_ERROR;
