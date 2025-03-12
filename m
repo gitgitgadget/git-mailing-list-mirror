@@ -1,73 +1,85 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809661E489
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 12:44:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DDA67083C
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 12:49:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741783474; cv=none; b=Knc6eekUTyku/TwqyvU2dNOnprf9YJ6VvOjfXrqolMzDA8Ofpgr4y0mf7NQpXnd6ejrsGWyfxuSMvYwP7ma+qmnbwlRtsMfAT+njm0X7JADxQ8e7wJEhaEZb3Faoniny8QMuL7jZpj3qZf3k+T1oDjteJJ7vs6IcE9QAMb5Q0HQ=
+	t=1741783791; cv=none; b=fRESBsUMgIfAPuZAn/RfdZAtZBsLTjJWA0opUTmlz/W8+R0eme2sqOSwTx+XlOUMymUrXsfoL3ganT7MqWc6LhxFy/ok9ognCBdb+GwqwzQaWuTjUFrHeHTCk8a7/rO2YBi9M1HPw3cG/G++Nb/FoSWBMj16eIl9EkS5X7nCAxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741783474; c=relaxed/simple;
-	bh=++pv1awPV56pjKVo/L2wSMDNZ0qoadgteFS8Bk2a1Lc=;
+	s=arc-20240116; t=1741783791; c=relaxed/simple;
+	bh=ELzLTSXf8jITk7oZsXuu/83u3ksCx5//NoIkKPzqt/o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=doPLFBDTbf4kXxAFtZLwjzh/SOKzA03rzxTbO0bIOtHyZrHQZlWEx8iy7KKEJMzF0Nloj1Sp1XLdaK0QH/v1carewrtQplmmTg/ZhytrGpvi/Rnu06BGUyo4rTYLBOlhBqfuupMKfy/v/Py9qiP9MvYwQ3J9QZ7SOD5oIPerfsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A05HfcTq; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=OAIBhZ46AOHErkHn/uJT1251P6i3B0g2pucnQe2Sh1HbX2VJd2Qq5CEv1Ybfv4bh93djlK7HWfLFfc4+i0u6e12RUpLDXuoXDPQjO3sfeO/khMZdMGkZVy/rCZEk1TXAzZrcqMRy+uecGU++4sTNz+U3wNek/ws7hG6+f3Z3DWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MsWlCGlm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0NWerYSr; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A05HfcTq"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-22359001f1aso156411385ad.3
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 05:44:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741783473; x=1742388273; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kaZ3YG8Qq55RVr/QEVpdtXPAVN9Meg9QgxcjedY4qSk=;
-        b=A05HfcTq1DEkHDgCo9wwVmbfqtae4G6ygZzyrPbEwPzoC9mI7z3flt+j03NohX0bq6
-         WuVsA0/+O9TJRJpliMpHTXoX44X8nrSncq6wnySqX4okjDNd9Xo393ic5ZIIkiYH758+
-         5FPr6XlOXMoit7siT0tv5nUPy1J9SaRWkKeVhrgsln6Oz3xbq7EwyfS/Z5dPT+O4FhVK
-         thNLA6CQraULzPQ3jUsy+4rKZV6QERPsKt1cHcQs1OUIx2f2jE3v4aC35wxCvJh560m0
-         U5tdpFOGA0hmJQ3vQEliL7ET3C9kBjv5ih2LWiGzHVKI/v/iHANmVFK9hdBVUpppNVWx
-         529A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741783473; x=1742388273;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kaZ3YG8Qq55RVr/QEVpdtXPAVN9Meg9QgxcjedY4qSk=;
-        b=H8Cv+n4Ccy1a21gPa+h4a6q4+bw66alkM83QGWMkpVstlnsqM+jXE7hsgpYccAXO0F
-         Y2jPz+GIjQ1Od+ufVkGfskVQxM1vlRWrj7mW8HVDqi7kTeRbpDYYY50Plm2RweYqbSAu
-         zD0Yq2/ub0dbkv/Vial/m+S+96NjPO5WXRDMPShC2GMW4Pbdewzd1G02K01ahQfwG9OI
-         R4CiljSCv72tsPAk2xnCF98ViNxxbY8+4jADaq7RXRSfPtt2/Wd0m4/flpOmSiYUXY4K
-         fZvloADdG8JnufNRuYMCADcF+rcosQyqiNxjxPAzhbAyoYBbCR4pVMknOTIh1yqaKOaT
-         9dDw==
-X-Gm-Message-State: AOJu0Yw1V4NlqVAoG/H1fI5WczUqwrLPo2xbqjZjMbPxVP48YGEs+dlX
-	iHqkZ0fxkeNFp/QvNEjo7VIu+Xc90GF9Hx1BeCU5eRSw6tJNTQhm
-X-Gm-Gg: ASbGncs9G3GutAeWCurs9wDbQdZ8ij2dCcpCVvJBN4Db5gKgGgQgrtq7N1q5X011nkF
-	kHjajsuWvyKhptphp15INwmekuhx0E8AW9WTVehFC1Ch4NcpDFGxLhHLdGAvcZ8o+3ymhR4tNzU
-	nQXan3zp9q5roW/WmKrortY4ouLx7LTqaqQpHjcHI1qqQvsSloM3ban5G21N6f9nKt+328tqT5E
-	uObcaAI0FlNoU5DpjvlihttiqXb3yH8EEf/Ep0zHodQ/JTmYwkU/v54YGLCUdnropDcYpBIdudG
-	2o4SV7hqSkkuf66RrzD4hJ1sVlTAmFDgHDX3ZIEy
-X-Google-Smtp-Source: AGHT+IGkg6LWz+mXsNLt/C4UkWHP1pzBUWDtC78g8tNXe7L12Kt3lJmNRYy4YSci6tAd8Z80HiRjMA==
-X-Received: by 2002:a17:902:e84f:b0:220:e896:54e1 with SMTP id d9443c01a7336-2242889f4e7mr301152815ad.26.1741783472700;
-        Wed, 12 Mar 2025 05:44:32 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-224109ddfbcsm115068555ad.21.2025.03.12.05.44.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 05:44:32 -0700 (PDT)
-Date: Wed, 12 Mar 2025 20:44:42 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v5 04/16] refs: introduce function to batch refname
- availability checks
-Message-ID: <Z9GBut33q1puzliq@ArchLinux>
-References: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
- <20250306-pks-update-ref-optimization-v5-4-dcb2ee037e97@pks.im>
- <Z9F_3xu6RXeelXJK@ArchLinux>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MsWlCGlm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0NWerYSr"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5587F2540283;
+	Wed, 12 Mar 2025 08:49:48 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Wed, 12 Mar 2025 08:49:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1741783788; x=1741870188; bh=NPcGHQPgzr
+	5Byu8BdAk9vvrhqYIVuun0Ajz92muU4G4=; b=MsWlCGlmxR4n96L07H0ID83+Y/
+	ZTxv6dX2ClV72vCtq4hlTg2TvtCfiSXjpYZgU6HRtOZuFmIQTfKn8bXevq5SlpUw
+	HLf9mgQdbk+6cYrrfGyVZcoHNhwOFdXkWqjKIV9eGAn4VSr0WdVYUIVH8RvwAgHN
+	PkNYgZOqgvtY+gu1Zyfpn6SS+7cY3Ob58r5YJvfyvcrmPFMt1BLdOsSoU0VHij3l
+	ZJODUM1NfLepXPMKkwa/0GsjYTv5R/JmupJJiwkIDe//SiHELzBH9CEmb6jG3PEK
+	NYUziXf+OVpm/yWzQ1RWCCUuXB6GykpAMyDyk3DTg2xHZGP3lVHQfRFjeUKA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741783788; x=1741870188; bh=NPcGHQPgzr5Byu8BdAk9vvrhqYIVuun0Ajz
+	92muU4G4=; b=0NWerYSrJuciKmHXvyAabMcLpm+etWgzSi62zkZKuq2jxF2rUZ9
+	VlZZxOMDfMWXvAhR83oXkTGvA1nth+be8C5aQU0W+rZtjlynrLb8/LYETBSwqqWz
+	jAGSLazfeeAT0m+N4d6TCObbxdee33huSLJ5YBYp8rJWczHrlgVWrIjGNMK1x31O
+	VsfvehQZB+EICLTlaySjIzivBpwfqvDSo+IoqzjVajnLnoZs3KLclmAp9JBy5nS/
+	vNzet6dcFH0n2hofs0KXwneKyPdOOGweIjx6MKvKn1oa8Y5kBG/ZzGCboOvH4MaE
+	w7to6pbFrdEn1TpyCg5+Xv5D7j8IbszpXkg==
+X-ME-Sender: <xms:64LRZ4ih2bU6KUh2dup3A77bd8K4PEGYw64Xt_vD3w2BZ0-KM-5ZEw>
+    <xme:64LRZxATIBYOlJqIXrb0JcBB3mHtL4ClAMrKJMApjNED4dJ_TP5H0-OnQ6Ul4Djin
+    ZhIl1AZ5JORAAqE8g>
+X-ME-Received: <xmr:64LRZwHW6KZ52wIJ8U5yWLXz9iwBdwV3tV3gPvpTA_GSQu7l-5Uul04ELRoKlmXi9aCALtXCpxo6tQ7x3pqdgdKpO4MBVnN5_Y41KYcQ5c85YHAUQQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehudduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepmhgvvghtshhonhhifedtudejsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:64LRZ5RwN62KnrjwBkfEmlJtamMaJigcA--M34pzvoo3IFuPiZ87mQ>
+    <xmx:64LRZ1yrc-y4vGlCZw8mD98XdC_EQlqwfqcd8kZMMNV8gAb3km_NxQ>
+    <xmx:64LRZ34669qumblQNepiK-sqzZXmgWVtBAnWrmDyO4kUM3TOqQ23jw>
+    <xmx:64LRZyytei9uPW5uX9u5hbNQYrZrJlMWgE82_NWzvCIA8_jN0nFCdQ>
+    <xmx:7ILRZ98xhe2vBZdpWz_HDjuQK7xOd6B59P-_h5ozPT0TCP4_pwDIVyM6>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Mar 2025 08:49:46 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 09cb0416 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Mar 2025 12:49:44 +0000 (UTC)
+Date: Wed, 12 Mar 2025 13:49:39 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v3 2/2] reftable: adapt writer code to propagate
+ block_writer_add() errors
+Message-ID: <Z9GC400L-XV3SFyj@pks.im>
+References: <20250308133349.1591331-1-meetsoni3017@gmail.com>
+ <20250312121148.1879604-1-meetsoni3017@gmail.com>
+ <20250312121148.1879604-3-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,35 +88,96 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z9F_3xu6RXeelXJK@ArchLinux>
+In-Reply-To: <20250312121148.1879604-3-meetsoni3017@gmail.com>
 
-On Wed, Mar 12, 2025 at 08:36:47PM +0800, shejialuo wrote:
-> On Thu, Mar 06, 2025 at 04:08:35PM +0100, Patrick Steinhardt wrote:
-> > The `refs_verify_refname_available()` functions checks whether a
-> > reference update can be committed or whether it would conflict with
-> > either a prefix or suffix thereof. This function needs to be called once
-> > per reference that one wants to check, which requires us to redo a
-> > couple of checks every time the function is called.
-> > 
-> > Introduce a new function `refs_verify_refnames_available()` that does
-> > the same, but for a list of references. For now, the new function uses
-> > the exact same implementation, except that we loop through all refnames
-> > provided by the caller. This will be tuned in subsequent commits.
-> > 
-> 
-> After reading this patch, I think we may could add more motivation here.
-> What's the advantage of checking batch refname? From my understanding,
-> we want to check the group of refnames and if we find one which is not
-> good we will just return and we don't need to check further more thus
-> avoiding unnecessary checks which improves speed.
-> 
-> When I read the commit message, I wonder if we will loop through all
-> refnames, we still need to handle the same number of refnames. So how do
-> we avoid this?
-> 
-> I think we should make this clear.
-> 
+On Wed, Mar 12, 2025 at 05:41:48PM +0530, Meet Soni wrote:
+> diff --git a/reftable/writer.c b/reftable/writer.c
+> index f3ab1035d6..0d8181e227 100644
+> --- a/reftable/writer.c
+> +++ b/reftable/writer.c
+> @@ -310,11 +310,12 @@ static int writer_add_record(struct reftable_writer *w,
+>  	 * done. Otherwise the block writer may have hit the block size limit
+>  	 * and needs to be flushed.
+>  	 */
+> -	if (!block_writer_add(w->block_writer, rec)) {
+> -		err = 0;
+> +	err = block_writer_add(w->block_writer, rec);
+> +	if (err == 0)
+>  		goto done;
+> -	}
 
-I totally misunderstood. After reading the commit message of the next
-patch, I have realized that we just simply do a refactor. Ignore my
-comment. Sorry.
+Style: we'd typically say `if (!err)` here, even though I see that we
+have explicit comparisons with 0 elsewhere in this file, too. So I guess
+ultimately this is okay.
+
+> @@ -327,18 +328,11 @@ static int writer_add_record(struct reftable_writer *w,
+>  		goto done;
+>  
+>  	/*
+> -	 * Try to add the record to the writer again. If this still fails then
+> -	 * the record does not fit into the block size.
+> -	 *
+> -	 * TODO: it would be great to have `block_writer_add()` return proper
+> -	 *       error codes so that we don't have to second-guess the failure
+> -	 *       mode here.
+> +	 * Try to add the record to the writer again.
+>  	 */
+
+My comment on the preceding version still applies here: the second
+sentence (the one starting with "If this still fails...") should be
+retained.
+
+>  	err = block_writer_add(w->block_writer, rec);
+> -	if (err) {
+> -		err = REFTABLE_ENTRY_TOO_BIG_ERROR;
+> +	if (err)
+>  		goto done;
+> -	}
+>  
+>  done:
+>  	return err;
+> @@ -625,10 +619,22 @@ static void write_object_record(void *void_arg, void *key)
+>  	if (arg->err < 0)
+>  		goto done;
+>  
+> +	/*
+> +	 * Try to add the record to the writer. If this succeeds then we're
+> +	 * done. Otherwise the block writer may have hit the block size limit
+> +	 * and needs to be flushed.
+> +	 */
+>  	arg->err = block_writer_add(arg->w->block_writer, &rec);
+>  	if (arg->err == 0)
+>  		goto done;
+>  
+> +	if (arg->err != REFTABLE_ENTRY_TOO_BIG_ERROR)
+> +		goto done;
+
+Good catch that there is another such pattern!
+
+> +	/*
+> +	 * The current block is full, so we need to flush and reinitialize the
+> +	 * writer to start writing the next block.
+> +	 */
+>  	arg->err = writer_flush_block(arg->w);
+>  	if (arg->err < 0)
+>  		goto done;
+
+But there is another case further down where we do `block_writer_add()`
+and then re-try in case the write fails. This one is a bit more curious:
+if the write fails, we don't create a new block -- after all we have
+just created one. Instead, we reset the record's offset length to zero
+before retrying.
+
+I _think_ that this is done because we know that when resetting the
+offset we would write less data to the block, as can be seen in
+`reftable_obj_record_encode()`. But I'm honestly not quite sure here as
+I haven't yet done a deep dive into object records -- after all, we
+don't even really use them in Git.
+
+In any case, I think that this callsite also needs adjustment and
+warrants a comment. And if so, all changes to `write_object_record()`
+should probably go into a separate commit, as well.
+
+Thanks!
+
+Patrick
