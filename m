@@ -1,75 +1,73 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89511145355
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 21:50:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62BD1EBA0C
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 21:50:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741816238; cv=none; b=KE8wv9lIHqLskB3WvhH0UugIQhNqVRNX0uL7C81WXu1nnNoIdnzmEZjlcjiBWXLoBp5fEjiD4MxsXLjyoayrC234Ks/qzxUeho49hPvHh9Dl0j8gT/e6aSh9WGVR0fIMAvfjM7lJqQug/01vyIUOeyWiqRS/MNNZpPTZnHCqUMo=
+	t=1741816259; cv=none; b=XoRM6iWa5WqoTMdYhztGI8i2h8P4E0AyJ4XcrgttpoRFyptrnAvT6JeEkD225oqKCB/J7ydQrX90oMtq4+XxCC1WDA3xBKQH1r2gXAXhWlh39/3sCLiVqjwoniZLOU84zT/1keAIPMzxggy3uNNHtxiH1EQKFv50TWWdEOvQDBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741816238; c=relaxed/simple;
-	bh=nCSKvPrNNmDJzvWTfXwQzvrXPrHoLVOAzY9QlF0L3sI=;
+	s=arc-20240116; t=1741816259; c=relaxed/simple;
+	bh=nqWWefwT9MRv4XciCIdMfcmcdiXuDYWgSw4mBVMqgUI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j4wP3LR0eW5NfF2O9xU9dWwUEIQ1Ulhj2ePYyjBpKAKRqSRe2BQNWF9K6wGV8HaEm257IIw2uQ16sADhW7aq6QHO5DHhJZtjk7O9A1dO9KsmEBTQURLaKm7+Fuv2+syat+BiIg7ebF4niUlKULx9R4EC2uVNTzf9VutbaY/MUII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ieKO0Z5R; arc=none smtp.client-ip=209.85.128.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=QWP8J50qfOS12KBuwdnThpw1CN0gTaRPSz+Vc1JKLxO+vo9pipSyA9z3gW0MtODzUcWVwqbtT2G/HbarKCW0YSIHkmXPjELooRz8ghWz3llAJVjNLhmM7744TpgszpJqQI3W5Y7RQUW4rLetle5RPNp8gHrA38HzPwGzVi8OCJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=PqSZq09/; arc=none smtp.client-ip=209.85.219.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ieKO0Z5R"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6fee63b9139so3567477b3.1
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 14:50:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="PqSZq09/"
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e639040ec74so1371304276.1
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 14:50:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741816235; x=1742421035; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741816256; x=1742421056; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=z5VTMs+Yp9hvv/obxnoXJojQKz13y+Qs1Y/uF40rE5w=;
-        b=ieKO0Z5RWIu20eC79Rh6yWDHHxaACFawUnGksBCxzFN6qBWUUalN0KbsWIBJ+hanzh
-         3poTpOxlFJpX5KkKyM5rl4I2+h2GIwlohJxei1Okf2p763ESfD3rv15vcVAXBAngHyqF
-         Cy+/g0ni7W5/bM8pcuXgO/5brMSJGX/LXhNpf+XEUmAwbTsFNJByr/++CPRgSIA1uF7i
-         R9savKCqpIMTnKcs1auwzaymKtJRj8rwhXYZ17b4iqn0MUw4hanlEspHBlooK3jc0GHu
-         YkKJ8kJaxsJ+UaXe8nRFJEs9uEbonBByk+5j2rIgYtdltQ05l9xzfQyHQU94eWg7U0qn
-         KClg==
+        bh=HX3xHj9J/jPDFSoKL90Lbbc2Ebl09j0XNgNhtIcwdBo=;
+        b=PqSZq09/EYVF6wZc25VRrzn/sstaOndNn5qhBN6RCTUOJpwFOPemkWatFbif3pAcLr
+         nB/QhNBsO6xK0+BM8eW5FyhXS1SN81xG1RL2UUNh5DFWLUYppLGALpXGohtYEGRLEc1A
+         JHqSXEZuLTz4FeemUGBh5mwTnQM9YhoNhG92ovyaUs5FiPN5slzqjiVBXDj+eBTQEfBc
+         W2JbfQd/91GPjO6Nxiptm6aQnXeqH61MTPiLnRTVg4cmBMefhXSB6YH5YLzPHmCJMLhM
+         geXO3if5Lsu2TmaPd9/01IZtvISF4g5jU2c9bpDy59MJio/VFBFKICZSKA34zI3WPGxk
+         JJDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741816235; x=1742421035;
+        d=1e100.net; s=20230601; t=1741816256; x=1742421056;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=z5VTMs+Yp9hvv/obxnoXJojQKz13y+Qs1Y/uF40rE5w=;
-        b=hZP7kxUaVPNNZsVgxeRE8huTroydj9daehuQI2h1XnyQV9V87Px0lDjo09L1nZHGeE
-         1hrtk0TOZkNzXx8HaMyJ5jHp11KDlUEjnUnEIThy85MBYCDwBV6vGBwUH/Ld57JmDf/N
-         GhrsRoT2NW3dFauHZjbBjjIB6WGriTz02fZtguAmS9us1LBMCSklsq9olIXwvV3l2vKl
-         D90PYNGaugpcRL08OmW65L2cT8ZeRsDc24osIZynRaYi06hKsXidYd+yfAC8gQutk7M+
-         V/cvmPCGzbllfYssEyMnaWn1S6dJRpPRp1BDjMz4iJMgPgGwhUoI1J+Nbzo/+Nm1cuxE
-         plWw==
-X-Forwarded-Encrypted: i=1; AJvYcCW6AdpVihNieAspCh1rtLQx9LNMdlCrxvldvZv4zvqk0Hpt6eYkSoAFl09GoaLmbjUNPlQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyqUfEg03/X5rkqPevVl9g4z2Ht0HkWpdgCjPNOGkwnhCkpfAtC
-	jbb1Wf9CZZBTlTtgT0EETUHRhDJK/PwEJ9kvX5TM7WwbeBpD7rl5jY4wk6h1eDU=
-X-Gm-Gg: ASbGnctWmDvSi6XhPDjR3r0deWezrKDok8RnOKBzsRvqnIUtfYf0nXqwNK5O1HTC4c1
-	rgrzZvS7pgJ8o9wH8i9f/rNecN3PyOcV0cFKQBKWE2gO+U0s11azClf0kvtNvj7B9viXSu89WE1
-	IIZKtx82cVfQNJuraS51c0bHA/FdmNYT98/CfVk6xQr+zI4OGNUK8iK6/O4B8gVs/8A1CCJ8ek8
-	f5QevMR05NxZUnETyecQhEiVW+X4AqZDAY2qj31OBu97NX+1dYQG0cf+k7Tu6ktz34KhXueoBYW
-	NMerSu1yuv1nTY97qHWY+LEIz6x/FgSlcm7STOFoasAzx7khOgeFACW+61rXd6loww8SRAKHAtl
-	UIaVWKTqNWVuzExYEp3NKOwsjiVo=
-X-Google-Smtp-Source: AGHT+IFSPUERt6/3aiWVFJzBHbOBQYH6F2oKDDTZhy/sNk4QPV5B0rQ0Jx3SjkoQjquRdkXf6TiL7g==
-X-Received: by 2002:a05:690c:3411:b0:6fe:5dba:b190 with SMTP id 00721157ae682-6ff2f810e1dmr2048997b3.11.1741816235524;
-        Wed, 12 Mar 2025 14:50:35 -0700 (PDT)
+        bh=HX3xHj9J/jPDFSoKL90Lbbc2Ebl09j0XNgNhtIcwdBo=;
+        b=NuHMrlHX7bISUrazVS0MxZkQprRSg9bGGlr0z/SLSRjrHK8TWPBCo4lKrGGADJ5gEF
+         ar8EcUs+h/xZGLpBwxCJ1ugMD55MQKVuO5hGIhNCk7b3V5THGJW+ZPz/Hh/Zcooh0msS
+         zG2TmOJpOyopSAnyJSXM+YuhoY4VRDXyT+adzn4ol4KOFS4t5LZPqV4jo9VpY9/E52Ya
+         LwRyfeP/hjVs1kT+CkeSUtooPLeGVVOBjmVz/neQadhV6UwlAZ9dtvTNjlui9oGw8jAB
+         TWl6wQN5KaIfFdX7R4JmJQKgODZyZxHL6yM6rlnQO19f+60vV9Epyu5Dsv2hRoaDljmO
+         Hs9w==
+X-Forwarded-Encrypted: i=1; AJvYcCUJWwyNUQczhy911rHjYd2xwRLfQUwDod/nkBapU6EWQZ01mUZKbXmDEMq+b/GJVGqzS3s=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywyr+5lKdzdvg3SM6LYP1H0lxPMcnAe4I4/dB2U2paNUVRLBXpJ
+	AXargki4mDw/9Z7/OkKSITSmwRY6g1HKTQi/SKwrZKOj1inPzzZCLbOCsrGGiOY=
+X-Gm-Gg: ASbGnctZ1FBMJL1xYMT/iFLw/+DyGCmOSvWWLKZM496cAlSU5rGOr4g9KtByxG9iW/M
+	/GZ8ukrVtdSlGmdgJq1nJHdZ00zc2ntvBBnXDoXfKSDBNXVOEFPl5d7Ajk9fSDfRQbd0mVWukTx
+	9CGd14Qsr0DxS/S5L9o0D0YfoE8VarMi/01FxfFq0FqWECAisQi9E9rPxi4zHW4QhIAPXntNbQL
+	KQRk2/JRZjdmCJVpAXUxHII7H182svI0dOz39/0J7pmWdeOs7XKL8S/lo/FS7FIZ1Y5mZ21Pky8
+	PjIlJFf93EyXm2xcaac+Vu6WWzbt/tUdF9ddnRlJ2c2vDwEA2qfi55U94dx4BZyRBAVymKUlWlQ
+	fhAeJc1LFGUJLEftfQq2CYlmUe1w=
+X-Google-Smtp-Source: AGHT+IGsin/JeqPJ+yXsH6pu4iOFCfViUlFeQaIxnRhQ59CChqvpmS1MsTl2klQHqgr/2usVsvc9qQ==
+X-Received: by 2002:a05:690c:3683:b0:6fe:d004:e2a3 with SMTP id 00721157ae682-6ff2f735523mr2518937b3.16.1741816256646;
+        Wed, 12 Mar 2025 14:50:56 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6feb2a67dc1sm33472817b3.40.2025.03.12.14.50.35
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6feb2c2edb8sm33565467b3.73.2025.03.12.14.50.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 14:50:35 -0700 (PDT)
-Date: Wed, 12 Mar 2025 17:50:34 -0400
+        Wed, 12 Mar 2025 14:50:56 -0700 (PDT)
+Date: Wed, 12 Mar 2025 17:50:55 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Elijah Newren <newren@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] merge-ort: allow rename detection to be disabled
-Message-ID: <Z9IBql7M3UuVMotw@nand.local>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 3/3] merge-ort: support having merge verbosity be set to 0
+Message-ID: <Z9IBv6ia3VHNmF1p@nand.local>
 References: <pull.1875.git.1741362522.gitgitgadget@gmail.com>
- <4292b22723f759c3e0f84ac1000992187a9c7f7c.1741362522.git.gitgitgadget@gmail.com>
- <Z9FAix-VKGte8UKk@pks.im>
- <Z9Hobtp+9esKkY/O@nand.local>
- <CABPp-BFj08mpXGiSoZ3xZ4KamwTJ4k5wPLTCJh6hUtKSxWE52Q@mail.gmail.com>
+ <c2a2be336e0ed7966b6ab0ef004f150537167b55.1741362522.git.gitgitgadget@gmail.com>
+ <Z9HopHJKPv7CXI3R@nand.local>
+ <CABPp-BHoHsc8Pov+d3B6i9T4sRg2g4-tt+hLYg1VHT07XLyncw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,32 +76,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABPp-BFj08mpXGiSoZ3xZ4KamwTJ4k5wPLTCJh6hUtKSxWE52Q@mail.gmail.com>
+In-Reply-To: <CABPp-BHoHsc8Pov+d3B6i9T4sRg2g4-tt+hLYg1VHT07XLyncw@mail.gmail.com>
 
-On Wed, Mar 12, 2025 at 02:40:35PM -0700, Elijah Newren wrote:
-> > I don't know if a link exists; I suspect the request referred to here is
-> > an email that Johannes Schindelin wrote to Elijah privately).
+On Wed, Mar 12, 2025 at 02:44:24PM -0700, Elijah Newren wrote:
+> > Should we add a test to ensure that we don't regress this behavior in the future?
 >
-> It exists: https://lore.kernel.org/git/CABPp-BG-Nx6SCxxkGXn_Fwd2wseifMFND8eddvWxiZVZk0zRaA@mail.gmail.com/
->
-> ...which wasn't Johannes' request.
+> I'd rather reuse `git {switch,checkout} -m`'s tests for this purpose
+> rather than adding new ones (and perhaps the ones from git-am; can't
+> remember if those also caught this).  If you feel strongly about this,
+> I'll just squash this into the later patch and make it bigger so we
+> don't need more redundant tests.
 
-Ah, thanks for the link!
-
-> > But I am almost certain that the behavior requested here is to disable
-> > rename detection to match the behavior of GitHub's prior use of libgit2
-> > to perform merges, where we also had rename detection disabled (for
-> > reasons that are unclear to me, but Peff might know).
->
-> No, if that were the sole reason, I'd say it probably only belongs in
-> our internal fork.  Disabling of rename detection within GitHub was a
-> temporary internal migration measure, not a desired end state -- at
-> least that's the way Johannes portrayed it to me.  I know that
-> "temporary" sometimes lasts longer than we want, but now that I've
-> become internal to GitHub, one of the things I want to do is add some
-> weight to that "temporary" modifier.
-
-:-).
+No, I don't feel strongly.
 
 Thanks,
 Taylor
