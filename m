@@ -1,73 +1,73 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07771E9B32
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 20:00:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185BCA31
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 20:02:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741809614; cv=none; b=cGLx2LPi/oRfcDJaKZ5koZCAmXWf8rGR6z7+xc4A/Gewn5c1r7/JmhOedOv7nNeB2f+xQpYz5gia3izlN812pz89Reh0HRKlrVNX8mT/JFoYq2hX9WeTI3yfUp99Kz9g7tXaPeckzDO+x56llTt1qGJUzNtrULEwxWNg2cFO/RA=
+	t=1741809778; cv=none; b=OeUwrBqvCzO0tyKz7oqKkZ8KzqfsgTZqT1HAJT89XG5b3ohZzp7oMw7KnluHq0v6+/+fbJ8WpykmbUJ3KkTp3ZMXTeBZqLEy6MG4WnixCfDDkXBw4+MQM4RHRKE6kZ8Ae6LwAE9GTEwEiDNeKmcNgIsnb0s/IekmQoYRiASlbD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741809614; c=relaxed/simple;
-	bh=LMxXnf+4zzFRQ7H73AFnJy23fnGbk6fGeAvEIF9x6hg=;
+	s=arc-20240116; t=1741809778; c=relaxed/simple;
+	bh=r2UB7XVblTTHx0KU4+fR7EWt7Crsb3OCWc/xiNqGcvY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ko3SzKfOAczPjhBiUtVbJ4tPkN1TT73uGL0UN5bEpf84YuW1rWM8Cj98cjLlFrIOPXfW5WzuaWHyZv3qtiFJugCVd9ydY70hQfk5C228DM2YiVAx0/8QQ6Vng/soLuR0d2xNHrpGHAUG13Hf8mgVraRfp10ULpNDieh31Fh8waI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=yW3son4h; arc=none smtp.client-ip=209.85.128.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=cV+R1hHE4r/yxcWaOFkG1lCXyiS2oGCaPLpQDd+XWR6W/BBIurnKeUzYQ8onfKNOUMX7c3TeZPxTACLq9XWjP5PQ+EcSu2aawCGxfFodLtkZeELIea4Tt1uRocezWQdxtu2p+sysgm41gIDdKmDQsH4Z0UXkROL2PKRCKVrqCGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=cV3T3B6S; arc=none smtp.client-ip=209.85.128.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="yW3son4h"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6f77b9e0a34so1672477b3.2
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 13:00:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="cV3T3B6S"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6feb229b716so2088017b3.3
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 13:02:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741809611; x=1742414411; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741809776; x=1742414576; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LMxXnf+4zzFRQ7H73AFnJy23fnGbk6fGeAvEIF9x6hg=;
-        b=yW3son4hsGdoiuUPJIjAxxNic4PSU4aIH3zA3qVB7obydJb/Z92Qgk8Z6CFSzHi5q7
-         6umX4/1C62fjc1TtowO6NJoA4rTIKYe4mQUbVxYIvYWg/2ru5SvgErgMA4d1BprQdNRF
-         RyVL5MB+auQKcz9keQuxpnD6XST2oYR8M6tae/vR6Zdp0hGR7e4UfTSp9rAFNeBJyEq9
-         Xkr+7qjNMzT5omhKM7nRoCM/ZVWOMKew3FbTkLXdUXLRfmCFqVgYJnurdVqOA9RDVsSI
-         1NpdER7of0cA1znHTbz+hjczgUKMTXitLerERco8zLXNV7VrGnL6Ucw+46GTUcuJoJQc
-         1AxA==
+        bh=bNmoJgIrcLvNZEnZ+fBkXNdubneZIwuUoQduaVmXxy4=;
+        b=cV3T3B6SNlPdmy7T1tx44Me6te2viV5h/qiX7f9HNBJXxozIT/s72h8S2SDX1HhXXm
+         Ejq7JfDoMcqBoxH4EzqHr0Cyy4N9R0gi8+2oRMO9eq1DCWr6dVYgPVe/3ozpzEH8EvYY
+         0LlVwItyN5MEcOOQf/lK/Y05dgOei8GP425CxabL++lGimDf8Xhr1Fyp4ZugQoBEFBml
+         XGyJHVLmv1/myFTNFP7pMDRjPzVqM1c72MGrzVOvk0VWFqAebUx5k8T1iphQGJNtrixi
+         533DUjl361NqzAsSJQDZqSwGbzXig/hblgmF1eEPx8NJ4ceWzPNynKxpCJQHuXBLY098
+         dKFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741809611; x=1742414411;
+        d=1e100.net; s=20230601; t=1741809776; x=1742414576;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LMxXnf+4zzFRQ7H73AFnJy23fnGbk6fGeAvEIF9x6hg=;
-        b=owdkk/06xsq7dPINCtbg96MxsWjFGv84rBZWfyxaubU3makmfdgI2hRHxA2NDhdi32
-         wPdIHzavMeUUL0voqSPy8tKdHes2vwZtKqPeTKtNp1UOurVcAoNo2IFj2vC1yOEAHEiz
-         CY6riSh4U4n/7TKRO5iaedHm6FxalWv859SgJu2HKjvJrPFX+couSmCry2vb2NIzxM6N
-         KGVKSCTE6H5lsgjh8c7RX0U/ySC0T1Ey0WQWu7bMHvHni5Y5nPdrvzPEM8BbArGiq3gq
-         9F841TI0r+l2ZZo4lzRC1R+wK/xYJIscFjOKPwpR9Qy9nfsjbxb/m2cqfuey+D962a+a
-         WW0w==
-X-Forwarded-Encrypted: i=1; AJvYcCV+uzYMyts4o291sn2RgTIzM72D3SzwvYfIKp5f9qleYZxJywcc0cPKJg8nHzGEEaLQ4w8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzpQEnCpq7pWMd6/SQta6YgjVhBpDiUJFMROETyfwfOCDlUmQVR
-	zd5VIZUxinm+V1nVG/91n4juTmduYFAHGMr8wPUj0maMOXnks99j15yci0HPl7vDIzj8cRbrit7
-	CkBA=
-X-Gm-Gg: ASbGncvhcrcS1fnKNBn+a9fDAigKEIIg7nmYbYNIF+AXlOs29es4TqwiuRVRAVkiHyr
-	5UQUVqAfETVkXvFrzah8AAdhXDmNI9Vxc0fU+n4p87ZEcmBtcUVBN/KuhaQjlTHw1N4x3LZMr+z
-	SpYUgZ89AJKzA3chXKJ2Z5ZDYmRXewB2SxlbXmKZCsp9UCDc0uzrTVcGkLgAjxHY/8vFcKD3ezA
-	VdU3wrBu+HRQ4VjYTPMni2LodgQVEdJpkTLsszF91uSFF7swxwe7cy/l4MDP3PfQENqef9eiQlW
-	bD0RcUy+/NujZwn6QI2zTu1jYj18tskKckOAp4qLEHyFQO/ZunKyL3gcsfUGuoMBH1rbGp851nW
-	wbohZ9PX6hdnTEGAd
-X-Google-Smtp-Source: AGHT+IExfNYwOf3kvPMclBRHpnOZaUK04k4GMi33HTUTvjTbCIEvfQyi9SrIVwXDeHFhtR6DgYoQ7A==
-X-Received: by 2002:a05:690c:4807:b0:6f7:50b7:8fe0 with SMTP id 00721157ae682-6febf2a4500mr320395417b3.1.1741809611529;
-        Wed, 12 Mar 2025 13:00:11 -0700 (PDT)
+        bh=bNmoJgIrcLvNZEnZ+fBkXNdubneZIwuUoQduaVmXxy4=;
+        b=KbulXouwGbhlTOYJBNonO6bXaTUB6WedsjG4yWPKhrGRezuqvem+SJzUhgOoGca+W2
+         VHp/XqrOiFYuUwhmAluWLyJDYtznk4M+Kx254OLvOp6ZKeFJ2Tmek2UAdxO8N3C0DuvI
+         L+CpJhFaH7vUeZN/TrkN3+lx6wgqCCyuEKOwfCgn9be3MqlC7L7TxJZTwp1QC+WBSv34
+         AYOGHyZgEnTgbiJ5NLgDt4mPYlPFouXzDshWxIe9h6Zk5FriUdpHOxOKjxWlXjiWULag
+         mU5v6jd0I57AGU8fMNGbP1MwJckl31atVr9x1VuPGQfXIhPHu99Anaqq6pBr1Uu4LJB+
+         nkJA==
+X-Forwarded-Encrypted: i=1; AJvYcCXV79tEhOnfo2AUBlt7ALfwEgqQz94xr1Dazmr7cwS1TwpXU6tsjQtbb450oqGjgprpQ14=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwvIyna5Bq1RE0+o/1FPIw4egekSsMDi1enXm4k64YiVj/Wex3a
+	kTtnYUjiEf+y5REETyuWiOl0mDH5VbgY3bo1kp+LpfBsdxFJj3iVmKilU0gkTo4=
+X-Gm-Gg: ASbGncvYlNmFLduPIZHBRb08wBz7plzSIor0UdE2KkOZFDl/D+ZSBQgpSjtUFyCufPu
+	fPUlL3DFRtCYDn5qGVC4TXd2nF0y4Ll9GGLMvh3ibnI5Ln6Dov8RXJSRc6dZr74es8R7IwJ2ZCb
+	F/CvEEiA9xvuzVhDZQIeVDXD2vArBcl1PyLGr4pnOb0Uerd++zQh45bG/WRddyONp13ME9DDOYP
+	SRSiW3em5ljR7vxdlsliQ32OgzkWGiixsDszUPLIBpCWdt18J056Q3+E6ZVpl6BumtzV2hF7G0t
+	20jqTYLEJ+1jBWcDpZtntbw/nYAWXtbbTzyrXsNKKC8pcKt6dFiq/6SQf3AUKjscdOq1BrXk8i1
+	8+nsbPuQKNjOR3h63
+X-Google-Smtp-Source: AGHT+IF9TE32SB4gRp6neoPV6K9qVj3SAiMo5H/xfwquUyfrF5g8w8NldP+2sIrLDUCUecRhQpp8Mw==
+X-Received: by 2002:a05:690c:6813:b0:6f9:af1f:53a4 with SMTP id 00721157ae682-6febf3ae047mr337213167b3.32.1741809776006;
+        Wed, 12 Mar 2025 13:02:56 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6feb2c483d6sm32844267b3.117.2025.03.12.13.00.11
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6feb2a8aa70sm32889817b3.61.2025.03.12.13.02.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 13:00:11 -0700 (PDT)
-Date: Wed, 12 Mar 2025 16:00:10 -0400
+        Wed, 12 Mar 2025 13:02:55 -0700 (PDT)
+Date: Wed, 12 Mar 2025 16:02:54 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/3] merge-ort: add new merge_ort_generic() function
-Message-ID: <Z9HnysAkF6P9uUg6@nand.local>
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] merge-ort: allow rename detection to be disabled
+Message-ID: <Z9Hobtp+9esKkY/O@nand.local>
 References: <pull.1875.git.1741362522.gitgitgadget@gmail.com>
- <9f73e54224d55b40faeb5d68ebd7ff0c13d69c7b.1741362522.git.gitgitgadget@gmail.com>
- <Z9FAgCSCZSJnzv9d@pks.im>
+ <4292b22723f759c3e0f84ac1000992187a9c7f7c.1741362522.git.gitgitgadget@gmail.com>
+ <Z9FAix-VKGte8UKk@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,15 +76,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z9FAgCSCZSJnzv9d@pks.im>
+In-Reply-To: <Z9FAix-VKGte8UKk@pks.im>
 
-On Wed, Mar 12, 2025 at 09:06:24AM +0100, Patrick Steinhardt wrote:
-> These two hunks look related to my above observation that we don't have
-> the check for `num_merge_bases == 1`, as in "merge-recursive.c" we used
-> to set `opt->ancestor = "constructed merge base" if so.
+On Wed, Mar 12, 2025 at 09:06:35AM +0100, Patrick Steinhardt wrote:
+> On Fri, Mar 07, 2025 at 03:48:41PM +0000, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > When merge-ort was written, I did not at first allow rename detection to
+> > be disabled, because I suspected that most folks disabling rename
+> > detection were doing so solely for performance reasons.  Since I put a
+> > lot of working into providing dramatic speedups for rename detection
+> > performance as used by the merge machinery, I wanted to know if there
+> > were still real world repositories where rename detection was
+> > problematic from a performance perspective.  We have had years now to
+> > collect such information, and while we never received one, waiting
+> > longer with the option disabled seems unlikely to help surface such
+> > issues at this point.  Also, there has been at least one request to
+> > allow rename detection to be disabled for behavioral rather than
+> > performance reasons, so let's start heeding the config and command line
+> > settings.
+>
+> It might be nice to provide a link to that request for more context.
 
-Yeah, I noticed the same thing and agree that it would be helpful to see
-that spelled out in the commit message.
+I don't know if a link exists; I suspect the request referred to here is
+an email that Johannes Schindelin wrote to Elijah privately).
+
+But I am almost certain that the behavior requested here is to disable
+rename detection to match the behavior of GitHub's prior use of libgit2
+to perform merges, where we also had rename detection disabled (for
+reasons that are unclear to me, but Peff might know).
+
+> > diff --git a/merge-ort.c b/merge-ort.c
+> > index b4ff24403a1..a6960b6a1b4 100644
+> > --- a/merge-ort.c
+> > +++ b/merge-ort.c
+> > @@ -3448,6 +3448,11 @@ static int detect_and_process_renames(struct merge_options *opt)
+> >
+> >  	if (!possible_renames(renames))
+> >  		goto cleanup;
+> > +	if (opt->detect_renames == 0) {
+
+    if (!opt->detect_renames)
+
+?
+
+> > +		renames->redo_after_renames = 0;
+> > +		renames->cached_pairs_valid_side = 0;
+> > +		goto cleanup;
+> > +	}
+> >
+> >  	trace2_region_enter("merge", "regular renames", opt->repo);
+> >  	detection_run |= detect_regular_renames(opt, MERGE_SIDE1);
+>
+> Do we want to add a test that demonstrates that the option works as
+> expected?
+
+Yeah, having a test here would be nice.
 
 Thanks,
 Taylor
