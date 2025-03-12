@@ -1,84 +1,84 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEAE257AFE
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 15:56:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790D1258CC4
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 15:56:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741794984; cv=none; b=dlk+f7krXB05MUOVA4OUl3I050qyDqiE34BXZslrcjvW4R5YoMhsjUswhxgWplm3+K9lcvkKvS9LUSXvdiM0MnBESeWS0jGv/jMki1n9suse6JsA9FRHjvwxIl0DsXehzkLGgrlgQ2hja7DPt3aTkQuAxzo0I5R1wTwzDRSLXPA=
+	t=1741794986; cv=none; b=AcUw0Z6ndsF70mD7K1eu1my543+mDA1ZC1lDtjPMB6xewxNvdK7CUy0q9meSgDsDRrHCVcx7PTn+UyeHA497pqwtKWYvkFZ+qPLhyPBRocKfvgLsn/HHbBUpGCj/zM7M+EdHLKecNArR0Td1BX8QOtdDjtGRJsknb6yum1q0+GM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741794984; c=relaxed/simple;
-	bh=iLaJ3iVPCyvhpkTp+4LGCrn9MEugnEuY2pAYxiG3+7Y=;
+	s=arc-20240116; t=1741794986; c=relaxed/simple;
+	bh=evGhBHEShvx+Wz2OMlhodH3XxHSprNJWfhaFexf0qFc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Q8vFNDs5fWKrtCwjqcX1GZC0XRvSHHcTQxuIaTYDzZyk9rkXbEEhv0AooE53FQBSNZf4rWIYlmpR6lwblq2EpAaDnwqLYy7InRETiWmYjjaLe66EZfL8SlMc94m/SEA6ErOxXMiOJyaYYgM7WHY0lMDLUryri1TFrksq0+W0eWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gHbXT5Dj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q4J4HkLW; arc=none smtp.client-ip=202.12.124.147
+	 In-Reply-To:To:Cc; b=sY8hx7DdaYU6yTZPg28XHMsuYioXpLwL+2y8XolA8enQgtWU8y5VVSJNAdEUdgN/ikdVJSaR4QgkGHtdAsmeT1pAC5VTYg7LO+baXYyUAJdXJpqq5fBD/kWEayrpQOokdnEJGG7OPWt/XIZJ4FBwYsJeQZsmy0U1Ej+syQ0K3NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hhKl3150; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1YUqBsu8; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gHbXT5Dj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q4J4HkLW"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8C9F91140226;
-	Wed, 12 Mar 2025 11:56:21 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Wed, 12 Mar 2025 11:56:21 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hhKl3150";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1YUqBsu8"
+Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AAA01254030F;
+	Wed, 12 Mar 2025 11:56:23 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-13.internal (MEProxy); Wed, 12 Mar 2025 11:56:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1741794981;
-	 x=1741881381; bh=gvhbxVPaOmGQyzRN5mSwiB2NzvhSzaeeZf0y+ELUFKY=; b=
-	gHbXT5DjbQIhaVNpGLj3PWzQ3Dw6yVIPYIt7gMmYViW8CmIRBaEzELr4fli/J80Q
-	DI51T/kFOrMRVBgU6o9G4IL4n81aPfgNclw+sderW7zqbgg0bOVnXRGThlYS27QZ
-	//QD514w4kolcQeABZ/kQCMcu9YKRu++KOSAP1RowMCW9vLNiL/vmEaAh0qDtobd
-	VDf4SVGcb2C4QM5IwHTPCZXwLx1S32utKgIHwEUZ6FluSzgfNMa17kIHB/YWu11l
-	01tlMwq4lEIo9AUvf+q64tkesQfA4vxoSk71Ca1sUrY4wZGUKHRwK0bRLOv8dYv0
-	N5PvNHe8EnH7EuQXJvRkJQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1741794983;
+	 x=1741881383; bh=3DdDV4H8cwIMEb61hTghlIJjMifNGzs3Dki56QedE+M=; b=
+	hhKl3150dkKogbkA33+umxk81vl+UA8L7k8bhCwxTeckfExjwwjp3gsUedblvjh1
+	F62aqyoyIEhLPoqj69z0G9A3bud2QPkLBYKqrYUm+GrWrNFoy+gT7CxUnb3ym14l
+	RIk7zGrd8NMZGxz8A6m/mAGQqOofe5xo2y4xmFXHR9BTBlCutEoYbMF5a5z5oI9N
+	CIZZEEZCJLBpqdYtODxrWIZ0XqXffgL1WejcQobGDmiCfYdvUgOeHw2v7ukuWmXb
+	qzRH/0H+icDF9dGrM3L8Fxkmb3CDv/DJNhBuW+7eEsDJ96WFMa5jLJeLRxXAGGYp
+	QnLG3EZjMfglUCyRgO581Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741794981; x=
-	1741881381; bh=gvhbxVPaOmGQyzRN5mSwiB2NzvhSzaeeZf0y+ELUFKY=; b=q
-	4J4HkLWkrSwD3NVjlLRZaV/MF6KrQ49ZTs2Uvv2BWph+8FDHTYmck2ervalPsABB
-	8HGnfNSSPHjPxgnlDDUKGVRxR6JXFcYFucfoHLLTBusqFCeAhcvRqxzFSeMH2pvk
-	Y6AwT8sgBlrVRTu5pCkyHz+AHFCCiRPJ3cogzg7hmZHczGItUwSeTAoFb1nUPkkp
-	oTDbIfKoBMfUFVu+a9DqTSDEJf7nARAEs3EoLf/k5js5ydfXYwhUN2JrjTGm3DAj
-	RXTw7U0G1TxQg+QygYGD8QxiUQQ68tcPmQS3dT33W/XoHdLh44/MJgbdu7DEwawl
-	c0I3knBDiER42jkcXq5tw==
-X-ME-Sender: <xms:pa7RZ0n9GafGZKMctG0jKyvY6XOqLhQOlefTIpUaCO-k_ZvnuTLQig>
-    <xme:pa7RZz2K4pTY5s2WABofYFkfhhYfw7tsbIbabzSx1epqIGq7Y_74xl8t40uNr34he
-    j_OE0jWkjterBFV3w>
-X-ME-Received: <xmr:pa7RZyoCRDrri5NTd33cX4yL6p9Ai5vwS-McgC7EigYyUACSHFMnOYcsdBexCb-MZQm_oq0Vb2gNYyBd9EqggtFq3iPZJcUfUaxlYkSreRvdP_hGtA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741794983; x=
+	1741881383; bh=3DdDV4H8cwIMEb61hTghlIJjMifNGzs3Dki56QedE+M=; b=1
+	YUqBsu8SA1R14HEGaTOJiC03Vrw37ZfiPNdokDaVWn6hnciiMJrAqdTA8iOBDDE5
+	LwqRAKpT525sD24AA0/P5QSbS8wFNUBlCfHwdj3JZ1nMArocNbNUxzB3mtHuaX0f
+	fl3++CtwDGwbPchPMA/yNAwBNjwece4k9AJPH0+hfSCvVFFE/aNUyrkH6CD1nsPT
+	P1dUwIVX97eifBHnt4WaZO1S9JCMouUvCc7kp6nkxFtUm4ENpk2Yf75qTnHSqtln
+	BNXVElJc+YYqJhldh/+AaRFEV6YcdcWlPULgkuD+EKIsTCtSMBFRZ0YONx9ubalx
+	InU13P5skF01NRpvqpHJA==
+X-ME-Sender: <xms:p67RZxn454Kg_HId_qzDKoTygOyJMH8ETEENnzXWqds_1q7uzng8wg>
+    <xme:p67RZ800rdLib02otv6NHrqXJeZ_qHso3GbvfR47ctJXaVLtZOXgq6BSlJfxxfWCM
+    IPNwpX489uxBDmuEg>
+X-ME-Received: <xmr:p67RZ3oBjLvybb-IhRe-5lT1kz73YUXmFF5yioT_p3iqOT7YkKK2ZgV63cRxvwMQTkeq8-PnctNZYz9K-OhBw5rV3S5WS4-F3UHN7TQ5-lSEa6QYqg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehgeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtkeertder
+    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeefhfeugeelheefjeektdffhedvhfdvteefgfdt
-    udffudevveetgeeuuedtkefhgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilh
-    ihrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghs
-    thgvrdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    hshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:pa7RZwkUgpgFzyjDH8FbC7mKRu7KdZfCYJ283bn6J7RIPBd_J-7MuQ>
-    <xmx:pa7RZy1i8k-X8o9_XSrZFuSytJS-usexXEXAbm2BxbKtp9b0GQXI1w>
-    <xmx:pa7RZ3vXytaDcl8biuwAzwdv0LXjF2dgN_6zB5vFFiZrP1WoUA5uTA>
-    <xmx:pa7RZ-XS93O0pkNPtHwP13FFWWuUHLyP2sgf9_njIposWf8Tseu4pQ>
-    <xmx:pa7RZ7kdpwiBJGJb8NcauqGr-k0De_SoAamoOZI9Eva2MhrElmj5nae6>
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
+    vghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihth
+    hoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhm
+    rghilhdrtghomhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpd
+    hrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrgh
+X-ME-Proxy: <xmx:p67RZxmpSxEcMQkt1UBjWIL2k7rjmNY3QKIwVa8_utqtN3xug8pvGQ>
+    <xmx:p67RZ_05cyQnlmQtfNJXjlupC3ZSTq0kMKYzjtSXZLysCYGHbQTajw>
+    <xmx:p67RZwubS2cnVbexwf58VddEH-th-ry4DLQ44iTSmW9ZdXm8p-cp7A>
+    <xmx:p67RZzV3PtPlQhI0O3OB5DVQgojuSXKZgcPXRtmGO560xL4uXzGLuw>
+    <xmx:p67RZ0mMsZffoHeY85hibZIhHaRnzgREDHwtd1pBnz-QeOG10RCi_wM6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Mar 2025 11:56:19 -0400 (EDT)
+ 12 Mar 2025 11:56:22 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5837283a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Mar 2025 15:56:17 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6dbb1931 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Mar 2025 15:56:20 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 12 Mar 2025 16:56:14 +0100
-Subject: [PATCH v6 08/16] refs: stop re-verifying common prefixes for
- availability
+Date: Wed, 12 Mar 2025 16:56:17 +0100
+Subject: [PATCH v6 11/16] refs/iterator: implement seeking for merged
+ iterators
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,8 +86,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250312-pks-update-ref-optimization-v6-8-f778e0414f55@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250312-pks-update-ref-optimization-v6-11-f778e0414f55@pks.im>
 References: <20250312-pks-update-ref-optimization-v6-0-f778e0414f55@pks.im>
 In-Reply-To: <20250312-pks-update-ref-optimization-v6-0-f778e0414f55@pks.im>
 To: git@vger.kernel.org
@@ -97,134 +97,115 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  shejialuo <shejialuo@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-One of the checks done by `refs_verify_refnames_available()` is whether
-any of the prefixes of a reference already exists. For example, given a
-reference "refs/heads/main", we'd check whether "refs/heads" or "refs"
-already exist, and if so we'd abort the transaction.
-
-When updating multiple references at once, this check is performed for
-each of the references individually. Consequently, because references
-tend to have common prefixes like "refs/heads/" or refs/tags/", we
-evaluate the availability of these prefixes repeatedly. Naturally this
-is a waste of compute, as the availability of those prefixes should in
-general not change in the middle of a transaction. And if it would,
-backends would notice at a later point in time.
-
-Optimize this pattern by storing prefixes in a `strset` so that we can
-trivially track those prefixes that we have already checked. This leads
-to a significant speedup with the "reftable" backend when creating many
-references that all share a common prefix:
-
-    Benchmark 1: update-ref: create many refs (refformat = reftable, preexisting = 100000, new = 10000, revision = HEAD~)
-      Time (mean ± σ):      63.1 ms ±   1.8 ms    [User: 41.0 ms, System: 21.6 ms]
-      Range (min … max):    60.6 ms …  69.5 ms    38 runs
-
-    Benchmark 2: update-ref: create many refs (refformat = reftable, preexisting = 100000, new = 10000, revision = HEAD)
-      Time (mean ± σ):      40.0 ms ±   1.3 ms    [User: 29.3 ms, System: 10.3 ms]
-      Range (min … max):    38.1 ms …  47.3 ms    61 runs
-
-    Summary
-      update-ref: create many refs (refformat = reftable, preexisting = 100000, new = 10000, revision = HEAD) ran
-        1.58 ± 0.07 times faster than update-ref: create many refs (refformat = reftable, preexisting = 100000, new = 10000, revision = HEAD~)
-
-For the "files" backend we see an improvement, but a much smaller one:
-
-    Benchmark 1: update-ref: create many refs (refformat = files, preexisting = 100000, new = 10000, revision = HEAD~)
-      Time (mean ± σ):     395.8 ms ±   5.3 ms    [User: 63.6 ms, System: 330.5 ms]
-      Range (min … max):   387.0 ms … 404.6 ms    10 runs
-
-    Benchmark 2: update-ref: create many refs (refformat = files, preexisting = 100000, new = 10000, revision = HEAD)
-      Time (mean ± σ):     386.0 ms ±   4.0 ms    [User: 51.5 ms, System: 332.8 ms]
-      Range (min … max):   380.8 ms … 392.6 ms    10 runs
-
-    Summary
-      update-ref: create many refs (refformat = files, preexisting = 100000, new = 10000, revision = HEAD) ran
-        1.03 ± 0.02 times faster than update-ref: create many refs (refformat = files, preexisting = 100000, new = 10000, revision = HEAD~)
-
-This change also leads to a modest improvement when writing references
-with "initial" semantics, for example when migrating references. The
-following benchmarks are migrating 1m references from the "reftable" to
-the "files" backend:
-
-    Benchmark 1: migrate reftable:files (refcount = 1000000, revision = HEAD~)
-      Time (mean ± σ):     836.6 ms ±   5.6 ms    [User: 645.2 ms, System: 185.2 ms]
-      Range (min … max):   829.6 ms … 845.9 ms    10 runs
-
-    Benchmark 2: migrate reftable:files (refcount = 1000000, revision = HEAD)
-      Time (mean ± σ):     759.8 ms ±   5.1 ms    [User: 574.9 ms, System: 178.9 ms]
-      Range (min … max):   753.1 ms … 768.8 ms    10 runs
-
-    Summary
-      migrate reftable:files (refcount = 1000000, revision = HEAD) ran
-        1.10 ± 0.01 times faster than migrate reftable:files (refcount = 1000000, revision = HEAD~)
-
-And vice versa:
-
-    Benchmark 1: migrate files:reftable (refcount = 1000000, revision = HEAD~)
-      Time (mean ± σ):     870.7 ms ±   5.7 ms    [User: 735.2 ms, System: 127.4 ms]
-      Range (min … max):   861.6 ms … 883.2 ms    10 runs
-
-    Benchmark 2: migrate files:reftable (refcount = 1000000, revision = HEAD)
-      Time (mean ± σ):     799.1 ms ±   8.5 ms    [User: 661.1 ms, System: 130.2 ms]
-      Range (min … max):   787.5 ms … 812.6 ms    10 runs
-
-    Summary
-      migrate files:reftable (refcount = 1000000, revision = HEAD) ran
-        1.09 ± 0.01 times faster than migrate files:reftable (refcount = 1000000, revision = HEAD~)
-
-The impact here is significantly smaller given that we don't perform any
-reference reads with "initial" semantics, so the speedup only comes from
-us doing less string list lookups.
+Implement seeking on merged iterators. The implementation is rather
+straight forward, with the only exception that we must not deallocate
+the underlying iterators once they have been exhausted.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ refs/iterator.c | 38 +++++++++++++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 9 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index d91a2184e06..111e3cf3aa9 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2477,6 +2477,7 @@ int refs_verify_refnames_available(struct ref_store *refs,
- 	struct strbuf dirname = STRBUF_INIT;
- 	struct strbuf referent = STRBUF_INIT;
- 	struct string_list_item *item;
-+	struct strset dirnames;
- 	int ret = -1;
+diff --git a/refs/iterator.c b/refs/iterator.c
+index ea4db59481d..766d96e795c 100644
+--- a/refs/iterator.c
++++ b/refs/iterator.c
+@@ -96,7 +96,8 @@ int is_empty_ref_iterator(struct ref_iterator *ref_iterator)
+ struct merge_ref_iterator {
+ 	struct ref_iterator base;
  
- 	/*
-@@ -2486,6 +2487,8 @@ int refs_verify_refnames_available(struct ref_store *refs,
+-	struct ref_iterator *iter0, *iter1;
++	struct ref_iterator *iter0, *iter0_owned;
++	struct ref_iterator *iter1, *iter1_owned;
  
- 	assert(err);
+ 	ref_iterator_select_fn *select;
+ 	void *cb_data;
+@@ -160,13 +161,11 @@ static int merge_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	if (!iter->current) {
+ 		/* Initialize: advance both iterators to their first entries */
+ 		if ((ok = ref_iterator_advance(iter->iter0)) != ITER_OK) {
+-			ref_iterator_free(iter->iter0);
+ 			iter->iter0 = NULL;
+ 			if (ok == ITER_ERROR)
+ 				goto error;
+ 		}
+ 		if ((ok = ref_iterator_advance(iter->iter1)) != ITER_OK) {
+-			ref_iterator_free(iter->iter1);
+ 			iter->iter1 = NULL;
+ 			if (ok == ITER_ERROR)
+ 				goto error;
+@@ -177,7 +176,6 @@ static int merge_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 		 * entry:
+ 		 */
+ 		if ((ok = ref_iterator_advance(*iter->current)) != ITER_OK) {
+-			ref_iterator_free(*iter->current);
+ 			*iter->current = NULL;
+ 			if (ok == ITER_ERROR)
+ 				goto error;
+@@ -206,7 +204,6 @@ static int merge_ref_iterator_advance(struct ref_iterator *ref_iterator)
  
-+	strset_init(&dirnames);
-+
- 	for_each_string_list_item(item, refnames) {
- 		const char *refname = item->string;
- 		const char *extra_refname;
-@@ -2515,6 +2518,14 @@ int refs_verify_refnames_available(struct ref_store *refs,
- 			if (skip && string_list_has_string(skip, dirname.buf))
- 				continue;
- 
-+			/*
-+			 * If we've already seen the directory we don't need to
-+			 * process it again. Skip it to avoid checking checking
-+			 * common prefixes like "refs/heads/" repeatedly.
-+			 */
-+			if (!strset_add(&dirnames, dirname.buf))
-+				continue;
-+
- 			if (!initial_transaction &&
- 			    !refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
- 					       &type, &ignore_errno)) {
-@@ -2575,6 +2586,7 @@ int refs_verify_refnames_available(struct ref_store *refs,
- cleanup:
- 	strbuf_release(&referent);
- 	strbuf_release(&dirname);
-+	strset_clear(&dirnames);
- 	return ret;
+ 		if (selection & ITER_SKIP_SECONDARY) {
+ 			if ((ok = ref_iterator_advance(*secondary)) != ITER_OK) {
+-				ref_iterator_free(*secondary);
+ 				*secondary = NULL;
+ 				if (ok == ITER_ERROR)
+ 					goto error;
+@@ -226,6 +223,28 @@ static int merge_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	return ITER_ERROR;
  }
  
++static int merge_ref_iterator_seek(struct ref_iterator *ref_iterator,
++				   const char *prefix)
++{
++	struct merge_ref_iterator *iter =
++		(struct merge_ref_iterator *)ref_iterator;
++	int ret;
++
++	iter->current = NULL;
++	iter->iter0 = iter->iter0_owned;
++	iter->iter1 = iter->iter1_owned;
++
++	ret = ref_iterator_seek(iter->iter0, prefix);
++	if (ret < 0)
++		return ret;
++
++	ret = ref_iterator_seek(iter->iter1, prefix);
++	if (ret < 0)
++		return ret;
++
++	return 0;
++}
++
+ static int merge_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 				   struct object_id *peeled)
+ {
+@@ -242,12 +261,13 @@ static void merge_ref_iterator_release(struct ref_iterator *ref_iterator)
+ {
+ 	struct merge_ref_iterator *iter =
+ 		(struct merge_ref_iterator *)ref_iterator;
+-	ref_iterator_free(iter->iter0);
+-	ref_iterator_free(iter->iter1);
++	ref_iterator_free(iter->iter0_owned);
++	ref_iterator_free(iter->iter1_owned);
+ }
+ 
+ static struct ref_iterator_vtable merge_ref_iterator_vtable = {
+ 	.advance = merge_ref_iterator_advance,
++	.seek = merge_ref_iterator_seek,
+ 	.peel = merge_ref_iterator_peel,
+ 	.release = merge_ref_iterator_release,
+ };
+@@ -268,8 +288,8 @@ struct ref_iterator *merge_ref_iterator_begin(
+ 	 */
+ 
+ 	base_ref_iterator_init(ref_iterator, &merge_ref_iterator_vtable);
+-	iter->iter0 = iter0;
+-	iter->iter1 = iter1;
++	iter->iter0 = iter->iter0_owned = iter0;
++	iter->iter1 = iter->iter1_owned = iter1;
+ 	iter->select = select;
+ 	iter->cb_data = cb_data;
+ 	iter->current = NULL;
 
 -- 
 2.49.0.rc2.394.gf6994c5077.dirty
