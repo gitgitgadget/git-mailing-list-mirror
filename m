@@ -1,119 +1,172 @@
-Received: from uggla.sjd.se (uggla.sjd.se [178.174.241.107])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA3E24166E
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 11:58:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.174.241.107
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E5323C367
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 12:12:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741780744; cv=none; b=mDYeyPCcty/+IxHlybu5cRy0bsTbQZtX+A/qoCwP8cN4COwEk/tTE+b/fZq7XlPVUZRfK9IEGprTaJdgPRq+wrV/Oyk2wXtksgeG0eTJ/11C4FTyahwkjBeF4R7gvq/tgNLdkVadLWghScILehLZXmLJPu4jnVB5ga9g1gaQ3do=
+	t=1741781530; cv=none; b=hZi5V1QGuc+s7gwcR4tP9eTAR4FkhCELkhc1SUC99D2Tp/jZ2xjt6JajY9Ou1xbsaxgk4EjsDt9rjB576gaS65x5dOSFB0wrvS/f1ZOZQCe4vavo9RJZSncEx/W/nsNowGBN8t6EMLlYCzfeM+CDs46dn+nfmIgPCk/gYsXfUUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741780744; c=relaxed/simple;
-	bh=prO+cv3GMHhfM2vNGR7d9KDkoTz8rwfpjDT4JMVrVPo=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AsY2VCuVlrqIBhA6EmKi5hIeVogGFT6ApVMWmdNgzvDUgw7W0pBjdY4AHnQt6mCyAwvpHXehjXZZO9kwELDQ8G3J6ipy61zZNg3wlQoHhAZVONuvWp3lGeNYOvLRb1Cwt4dcm/TfhCWmYCIiIIktXaKtRX7dFwo9fFGT664tcmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=josefsson.org; spf=pass smtp.mailfrom=josefsson.org; dkim=permerror (0-bit key) header.d=josefsson.org header.i=@josefsson.org header.b=AMrFhA/S; dkim=temperror (0-bit key) header.d=josefsson.org header.i=@josefsson.org header.b=FMnDSg6I; arc=none smtp.client-ip=178.174.241.107
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=josefsson.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=josefsson.org
+	s=arc-20240116; t=1741781530; c=relaxed/simple;
+	bh=AmGpqohk10n9xMsFTbFeFzjbdIdrY84zgDeQMlqPELQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=cbdLRQapwStLH5gwYr7/KxTIbWj32etsTuwgrQ7ujsl1PEDy3pGN5qfbP1Gp7UgjcBhoK6cVvcrcnTRLN+qJqzdiG5LKhAAZtIF0b+Isw7CTE9PWuSjW2jruvLqUxSzK9HGBIuiX71BqiEVmFvjIpJ//Jx3DJx3nmAJXER/sbwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iiI5DSYo; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=josefsson.org header.i=@josefsson.org header.b="AMrFhA/S";
-	dkim=temperror (0-bit key) header.d=josefsson.org header.i=@josefsson.org header.b="FMnDSg6I"
-DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=josefsson.org; s=ed2303; h=Content-Type:MIME-Version:Message-ID:Date:
-	Subject:To:From:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-	Content-Description; bh=jxBbMN0q6EGLn65T/pyvm6NlEmFMqTtWcjSjwkbd+Y0=;
-	t=1741780733; x=1742990333; b=AMrFhA/SPZwe2EbYYWGLEzrypBY54+yauglZisFTwiz8/1v
-	DyBcliAIzem9VcfzhI/jaNNqy2g4N6rbZSJ5CBA==;
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=josefsson.org; s=rsa2303; h=Content-Type:MIME-Version:Message-ID:Date:
-	Subject:To:From:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-	Content-Description; bh=jxBbMN0q6EGLn65T/pyvm6NlEmFMqTtWcjSjwkbd+Y0=;
-	t=1741780733; x=1742990333; b=FMnDSg6IHqUTnmbV+odOjej+8cWctFaSlvKIrohGRjEMxYS
-	rS/zZ+T8i5Cur8i17CS4M6DPyqHW1ZtbvaUduLHp2xp0flx/qODe8MvwotCIlHOe8Utjh82UHNR2C
-	11713iS9A8sQ1NaUVUC+OPZ5t+VDM/i8dwtjPs7fLAUkh7P3SLTFgOE/nAAl/1nGMPXk8Eq2y3aqn
-	KKlQo6FWxp9zZhOkV7bvNvTLUEWITdH/FC4YeSV74R96lxuAr0OfrjDfvqg/S96uK0tbDiG8cw/GN
-	AAGlqYX1dYM7U+UR4u6utxspTdko6dlk36u6yzdkOjPcfB0I2G+MfaNcatBMgJCNHy+0oGCex4RSD
-	j0SeMiv7X2oK5ySjppdOwdSMa2ADxOgKiaa2Dyhbiyx2y3xw3h7IlyoPc5xX8CcJx3uvqGCfbHQxe
-	gqnFiXuvsom9BDY7U98+RC+M;
-Received: from h-178-174-130-130.a498.priv.bahnhof.se ([178.174.130.130]:47958 helo=kaka)
-	by uggla.sjd.se with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <simon@josefsson.org>)
-	id 1tsKRh-00GDZd-74
-	for git@vger.kernel.org;
-	Wed, 12 Mar 2025 11:40:21 +0000
-From: Simon Josefsson <simon@josefsson.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iiI5DSYo"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-225a28a511eso25664555ad.1
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 05:12:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741781528; x=1742386328; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=D/LNEYcdEalPP9PdaKoapy+ZHukH9Xk6PXQ5MRXSXYc=;
+        b=iiI5DSYoRyjqcJQsi5cEDKH/W8MVs6uoW70oEOnURf+Huj+Hc5deA0PW5rSKunk8S/
+         2PxTq3YoSsaht9iDiQ9IiDPV02FvCuXDOhQ4Arl+j6T18q5dcljuRUvb/K+aSYDHdIsD
+         5w1AK5k/gYOCjRMAN7Pnjd/rdT9iCiZn0860FBKfEBQBsPjE/wt2bXsKb7DWpL2lX9rm
+         lBZ9giUvjbesbNHaED3qcIR5lINytU3fl9IMT1l+2Hd/u/7LbrDFZB95wfb37F+2L3U7
+         pb1PSjPpWb8579pWFzdcgHbY6Tj3n+phFcTAMJFitMuwUgFXDe3icAuBizQiiWmmccUy
+         sqdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741781528; x=1742386328;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=D/LNEYcdEalPP9PdaKoapy+ZHukH9Xk6PXQ5MRXSXYc=;
+        b=fZO1zAZ4jy8foph8YpP88vSTtUa8ZiLAIdv+jwE0UyioeElZs7hiJWIn9suMJMxY++
+         L+HZZ/1mO53plzaLG3QO93Ld+9kjt3W2MHVxCXOMyH7Pp1USFOVMSasH8esgL2QXbzOi
+         vPX0Lv8Ch1aC9qLq7OdmD60XOLMrLCpQxTtZONiBhfyvMFnC5ORCQqDjdvL9ZxXnJOHD
+         B0Yd435iMN8kCVZuELFF8MI39FuTwEc9svIu6vqhsowzMrUR+N2cVGmCLWxALR94jpui
+         Nlfoihjaf8zeJmK7qGEqWhNSLFh6HVJn3yKs586AjNazRr/r62llmnZS3S+yXA4wNoS2
+         xN0Q==
+X-Gm-Message-State: AOJu0YyyrY/SroDk9yItJNARJYXVvoynMXZ3fobZ16AqwL921kw1PQfT
+	CxBHOQb9WRvIJRzEYBrUyYJYfBG0OtkcXhb7ER98l/q5E01GDK1oZxDOEQ==
+X-Gm-Gg: ASbGncsGyTXLeW7gr3VmGxp+w5CcF/h7+BWd1A2aX+4eI/q6FIz8EK1K+V0BtVvn0Wo
+	QRcd2si+r5BpwgrF00OCIq5sPAy3D6sSNmuw/NGMV29V7BfFzWMRpM6JyvO/e6gOq7Dv1u/X+CH
+	WlvXEXXfWaPmLamEenzoYuZIRxJxgGba6xctkHeNXQNlBF0TLQikBwJPSMlDhbSJximmQeOwcNX
+	CjzEHGyStmWM8+1oCHKZ9TxvhtSo/lUuASKo4rB1CSMofmxOUSkuowGdAWtNszGeTAPlP5OVhnp
+	gK15P7E/dc31aOiV2fEJ5SQ/xR/P+0XaK0ymwSAV
+X-Google-Smtp-Source: AGHT+IFGUj3VjKbBbcqoxNVk+tB+DAZkyba/VYhbZW6yyrZtIDPvqbkf3T2Mr0so1Oimc8z6uzCa4Q==
+X-Received: by 2002:a17:902:e88a:b0:21f:6fb9:9299 with SMTP id d9443c01a7336-22428aaad15mr336895335ad.27.1741781528149;
+        Wed, 12 Mar 2025 05:12:08 -0700 (PDT)
+Received: from meet.. ([103.86.19.121])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-224109e974fsm114469035ad.78.2025.03.12.05.12.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Mar 2025 05:12:07 -0700 (PDT)
+From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
-Subject: Making bit-by-bit reproducible Git Bundles?
-OpenPGP: id=B1D2BD1375BECB784CF4F8C4D73CF638C53C06BE;
- url=https://josefsson.org/key-20190320.txt
-X-Hashcash: 1:23:250312:git@vger.kernel.org::Gva/lkjr8EsOX0WA:Sf/G
-Date: Wed, 12 Mar 2025 12:40:05 +0100
-Message-ID: <871pv2jx4a.fsf@josefsson.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	Meet Soni <meetsoni3017@gmail.com>
+Subject: [GSoC PATCH v3 0/2] reftable: return proper error codes from block_writer_add
+Date: Wed, 12 Mar 2025 17:41:46 +0530
+Message-Id: <20250312121148.1879604-1-meetsoni3017@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250308133349.1591331-1-meetsoni3017@gmail.com>
+References: <20250308133349.1591331-1-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha256; protocol="application/pgp-signature"
+Content-Transfer-Encoding: 8bit
 
---=-=-=
-Content-Type: text/plain
+This patch attempts to avoid making an assumption regarding error codes
+returned by block_writer_add().
 
-Hi.
+Changes since v2:
+    - Split the commit into two to separate transitively called function
+      updates from writer call-site adaptations
+    - Made formatting improvements in comments and code for better 
+      readability.
+    - Modified the writer logic to flush and retry only when a specific
+      error occurs, while other errors are propagated as-is.
 
-Thank you for the "git-archive" and "git-bundle" features, making it
-easier to do source-based builds in a no-Internet environment.
+Meet Soni (2):
+  reftable: propagate specific error codes in block_writer_add()
+  reftable: adapt writer code to propagate block_writer_add() errors
 
-I have published a Git bundle of Gnulib:
+ reftable/block.c  | 13 ++++++------
+ reftable/block.h  |  2 +-
+ reftable/record.c | 53 +++++++++++++++++++++--------------------------
+ reftable/writer.c | 30 ++++++++++++++++-----------
+ 4 files changed, 50 insertions(+), 48 deletions(-)
 
-https://www.gnu.org/software/gnulib/manual/html_node/Gnulib-Git-Bundle.html
+Range-diff against v2:
+1:  7cdc7ce0ce ! 1:  6ab35d569c reftable: return proper error code from block_writer_add()
+    @@ Metadata
+     Author: Meet Soni <meetsoni3017@gmail.com>
+     
+      ## Commit message ##
+    -    reftable: return proper error code from block_writer_add()
+    +    reftable: propagate specific error codes in block_writer_add()
+     
+    -    Previously, block_writer_add() used to return generic -1, which forced
+    -    an assumption about the error type. Replace these generic -1 returns in
+    -    block_writer_add() and related functions with defined error codes.
+    +    Previously, functions block_writer_add() and related functions returned
+    +    -1 when the record did not fit, forcing the caller to assume that any
+    +    failure meant the entry was too big. Replace these generic -1 returns
+    +    with defined error codes.
+     
+    -    Reviewed all call sites to ensure they check for nonzero error returns
+    -    rather than strictly -1, confirming that this change is safe.
+    +    This prepares the codebase for finer-grained error handling so that
+    +    callers can distinguish between a block-full condition and other errors.
+     
+         Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
+     
+    @@ reftable/block.c: uint8_t block_writer_type(struct block_writer *bw)
+     -/* Adds the reftable_record to the block. Returns -1 if it does not fit, 0 on
+     -   success. Returns REFTABLE_API_ERROR if attempting to write a record with
+     -   empty key. */
+    -+/* Adds the reftable_record to the block. Returns 0 on success and
+    ++/*
+    ++ * Adds the reftable_record to the block. Returns 0 on success and
+     + * appropriate error codes on failure.
+     + */
+      int block_writer_add(struct block_writer *w, struct reftable_record *rec)
+    @@ reftable/block.h: int block_writer_init(struct block_writer *bw, uint8_t typ, ui
+      uint8_t block_writer_type(struct block_writer *bw);
+      
+     -/* appends the record, or -1 if it doesn't fit. */
+    -+/* attempts to append the record. returns 0 on success or error code on failure. */
+    ++/* Attempts to append the record. Returns 0 on success or error code on failure. */
+      int block_writer_add(struct block_writer *w, struct reftable_record *rec);
+      
+      /* appends the key restarts, and compress the block if necessary. */
+    @@ reftable/record.c: static int reftable_log_record_encode(const void *rec, struct
+      	string_view_consume(&s, n);
+      
+      	return start.len - s.len;
+    -
+    - ## reftable/writer.c ##
+    -@@ reftable/writer.c: static int writer_add_record(struct reftable_writer *w,
+    - 		goto done;
+    - 
+    - 	/*
+    --	 * Try to add the record to the writer again. If this still fails then
+    --	 * the record does not fit into the block size.
+    --	 *
+    --	 * TODO: it would be great to have `block_writer_add()` return proper
+    --	 *       error codes so that we don't have to second-guess the failure
+    --	 *       mode here.
+    -+	 * Try to add the record to the writer again.
+    - 	 */
+    - 	err = block_writer_add(w->block_writer, rec);
+    --	if (err) {
+    --		err = REFTABLE_ENTRY_TOO_BIG_ERROR;
+    -+	if (err)
+    - 		goto done;
+    --	}
+    - 
+    - done:
+    - 	return err;
+-:  ---------- > 2:  a54d440dd3 reftable: adapt writer code to propagate block_writer_add() errors
+-- 
+2.34.1
 
-As you can see at the end, I struggle to come up with a recipe to allow
-others to reproduce the git bundle that I created.
-
-If I run the recipe above twice (including the clone), I get different
-checksums.  This even if nothing was committed in the remote repository
-meanwhile.
-
-Is it possible to create a bit-by-bit reproducible git bundle using some
-other set of commands?  If so, how?  I'm using git 2.48.1 from Guix.
-
-Can anyone explain what is causing the irreproducibility?  Running
-diffoscope is not helpful, since the bundle is compressed and diffoscope
-doesn't seem to know how to untangle it.
-
-If this is not possible today, what do you think about changes to make
-this work?
-
-Thanks,
-/Simon
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQNoBAEWCAMQFiEEo8ychwudMQq61M8vUXIrCP5HRaIFAmfRcpUUHHNpbW9uQGpv
-c2Vmc3Nvbi5vcmfCHCYAmDMEXJLOtBYJKwYBBAHaRw8BAQdACIcrZIvhrxDBkK9f
-V+QlTmXxo2naObDuGtw58YaxlOu0JVNpbW9uIEpvc2Vmc3NvbiA8c2ltb25Aam9z
-ZWZzc29uLm9yZz6IlgQTFggAPgIbAwULCQgHAgYVCAkKCwIEFgIDAQIeAQIXgBYh
-BLHSvRN1vst4TPT4xNc89jjFPAa+BQJl/YgIBQkLehFUAAoJENc89jjFPAa+CboA
-+wUa06RD5e5VTCxvSWtPS75Wq2qBeYGZnf0jvUMxa2n4AP4xkUeAPPnNuMsTm2fs
-FCDIGaEM2Yn6Vb2huzzT1Fw/BLgzBFySz4EWCSsGAQQB2kcPAQEHQOxTCIOaeXAx
-I2hIX4HK9bQTpNVei708oNr1Klm8qCGKiPUEGBYIACYCGwIWIQSx0r0Tdb7LeEz0
-+MTXPPY4xTwGvgUCZf2IKwUJC3oQqgCBdiAEGRYIAB0WIQSjzJyHC50xCrrUzy9R
-cisI/kdFogUCXJLPgQAKCRBRcisI/kdFoqdMAQCgH45aseZgIrwKOvUOA9QfsmeE
-8GZHYNuFHmM9FEQS6AD6A4x5aYvoY6lo98pgtw2HPDhmcCXFItjXCrV4A0GmJA4J
-ENc89jjFPAa+GcYA/26YQY05bLtnXiIjTiAzrGQrRXxTHPA8Av7TDFHvIetWAP9s
-HSoU8OfTwmTiEnGwLlsV7QJclZg3YNz/Ypcp9TqQBrg4BFySz2oSCisGAQQBl1UB
-BQEBB0AxlRumDW6nZY7A+VCfek9VpEx6PJmdJyYPt3lNHMd6HAMBCAeIfgQYFggA
-JgIbDBYhBLHSvRN1vst4TPT4xNc89jjFPAa+BQJl/YgwBQkLehDGAAoJENc89jjF
-PAa+phoA/jrDqIrl/55vUMBhIQv+TP635d2iCTEnyFmbUcP9+gh6APoDsXalVd2c
-OGxQtSC+TF8PkZMn1TLkJKAjVxr+xx40AgAKCRBRcisI/kdFohlQAQDBjqFWNqqz
-5Orm9Ge0/7NbSehs7NgCBw7b3QOC+zjpjgEAw329A0W8RgzlbCZ0L1Gf5+joMO90
-FwUFGbfc07SrVQQ=
-=dJYG
------END PGP SIGNATURE-----
---=-=-=--
