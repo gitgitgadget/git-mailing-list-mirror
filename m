@@ -1,206 +1,120 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB56A1EE002
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 20:20:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58ED81EB5DD
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 20:43:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741810841; cv=none; b=aP7D5+B6r7r2JAluQ4vKmRFhPaFjBZPOtGe9PSlsUDOK6bHyKZ5JfTnatJsIJDbzlnBa57DhHjuXW4nCtVNAvWVaS/h77WfVF46VV89i7FbgLl1FXIlZZU+k0ArydI4yCgZhNMyfrihO5/XDE2pRMeCfk1nJR9LneIg/fpCTOXk=
+	t=1741812239; cv=none; b=CtZNb4TRZ17VZEP4T4KGtuAaCPrbnbd14RTB9h1v0RqADPFlZcE6rfT4byey1A8PKMN0pZL8LmDASxpQxefMZxqZjU8noglxjQnWBePioaaHluqT1yPhd8fLBWw99orK31oLLFr4jfaX5mDJB5ts/izA8APmXa10LFLireEajnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741810841; c=relaxed/simple;
-	bh=QQURTNcJXovYOltMZyMHc60lQbxEeHqaHR/zmNUEQQk=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Iv5xRZGk9TPi/kLepNSNdPN7hlLTU4zGU/Zo+9JIty5TCpVNVnXAi1XbA6MhespEORxCTL2cIx2u6eyzcr0a/l0EOuomHDH3gpkoxGOjKq9C9IY6OmktPdTz1lr8xQxjdsZlApDI5UF0FfTJX7HnDGHL3uuOXJJmNyCj07NsJOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BMUPolD2; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741812239; c=relaxed/simple;
+	bh=Rbq6ji8CJRa2C6i+A/HYhXYYIVf6k4vApqPwPX5+RwU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=N58NOtZxQPZ90EnRSyGHb68zukX3TPBXxi7BOpzwAI3+YEkA7zni2eDTUym8RzkbdLFsMZNmni6FltyC2DrzxdTVRwaHnWL12nt5NJbbMMvHI1WenDVk0IJM9KHQVQlpx0UxVkRncSqER5Voz8TmeIuntHed/m56S98cnLqqz5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eTd3uIq8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TqEVPtJQ; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BMUPolD2"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2ff784dc055so516329a91.1
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 13:20:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741810839; x=1742415639; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WzC/L8pnaQ5JIlYyvN9iApFo62xImtcPnZAuPXaBjTU=;
-        b=BMUPolD2Ot7gktGkc7hmSgwBQTosAnzE78GxE48NudgjNWLgKEd3TUIubBrZKp/yLs
-         Ry7ut7282D+jgivGR+6vZ1NdTgSt2dJVS1Sr3ybKcyzRyFoZXJR3BjMaPcsEwAiGrtWE
-         +4NGiw+S464t8997IBrs/xglx8vz+DYq3zr+ifDknI1dlA0r7mUAJA6ANn8lCG1N+rbN
-         KU7TcbF/V+PTdOg1Uo9X71cy4WrxhBHaGHvfaPGDHFhIc26giu9/jM9qlZT/PIlM+Jda
-         OmdktSn+cc364uG14Tm94vccH2VdHUNQnYWdyJPMPk8hRqCkyBa5Q+3ajhbE4cKM6XVb
-         f0Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741810839; x=1742415639;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=WzC/L8pnaQ5JIlYyvN9iApFo62xImtcPnZAuPXaBjTU=;
-        b=WBwLR9f1zC7tQOpYW+J0FbVm/+2KLvwZ1J3YITn03Il731dgrOPA2CYavkSrGo4ZhZ
-         Y/bsXTTuIbkgb8+Modm+LiM/y3OQxdQf+iUgwgqDaU6uE9pHijrhcGgFw77kj1xYLCM6
-         PmN96uuBPLIAXa43aakNYyTBeZkvqETTC1Nhk7Y8AlEGRX1ayk7BZ6lExgoq0anaKNEi
-         l3jkOALPom6X61484pZMZtZOwvcQXsD38XU8/IGGzbxLr3r7g/2dkcPCQC+J01Qwm8Td
-         MZkgz0fLPrKNCpqmkxhJdxQrzv8S+UbVDXzNoTXEEoUwiVuvBMiHwpepExA2KuUe8wgZ
-         iLSQ==
-X-Gm-Message-State: AOJu0YzBkjdbcM1/XnGfM8Ft4MFiy6I0M4i18UJ4nwu4sNRXiO/CGKCJ
-	BRoZ5a2gBLTPaJRYw0SlMqYbVFbG49mR3C96Gn1dnCN5Q/28Tp5EyyMSxg==
-X-Gm-Gg: ASbGncvuddC0zAX9rDxJ24OZGlNBKyQayIfmQ9+nzPGob1TrkGa5oCJhdxQWw2VoGq/
-	LpvZmjOHYqJZ/7gCo/SmEnGuWkOGCvNwd/pc/x+jNgHTOTW+lyIUtMuAYtxGRgPGRe5ZB71Nu02
-	dyUeubesfHedP9AznzQR3x+zifoCWM0HDrGmlwece68fGk15Qx+roWbEJ3SJ2JJU+QiUH/61Ecl
-	lsDFuPGIzT4E+JrW/6exI41kxMLs/qrW6alO/wqQnWkNo1eoDBG8UEgEyd2nNSD9dgJ+l1uqMYT
-	noNz6/RyeCtlNpaqf8pfVJfFGCsJMg2hpMry/txKA6gDrfTtxw==
-X-Google-Smtp-Source: AGHT+IEnXW8EhgY3tui6tacItk5gFnqKbgixKBOxzw2T1AXjjKFxI47cW3Weja1MFo1HQKlpNsKgLA==
-X-Received: by 2002:a17:90b:53ce:b0:2ff:4a8d:74f8 with SMTP id 98e67ed59e1d1-300ff0a93demr10976223a91.6.1741810838919;
-        Wed, 12 Mar 2025 13:20:38 -0700 (PDT)
-Received: from [10.61.60.205] ([103.21.124.55])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-301027187c4sm4388609a91.0.2025.03.12.13.20.37
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Mar 2025 13:20:38 -0700 (PDT)
-Message-ID: <a3aa5f99-63ce-4be5-8d64-fb6e226b3bf9@gmail.com>
-Date: Thu, 13 Mar 2025 01:50:35 +0530
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eTd3uIq8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TqEVPtJQ"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4A46B114011F;
+	Wed, 12 Mar 2025 16:43:56 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 12 Mar 2025 16:43:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741812236; x=1741898636; bh=mOYOy2qBcz
+	Ze63BdMNKy0yJyrh0YMtWbRoi6WuXVH1c=; b=eTd3uIq893v0kOVbUOYwYcX8C4
+	C7WJaL5iCud4N7/pa3A/7izMUu2x/Np3t0GI26JeJilLuOZOm5tx/hhnQLnmydGV
+	95DcwGQFWjejrpF1mhzw2yZmj6i+j+phsSN09BaaR0tmmCllfy4Vn67ECoIfwvPn
+	GmedUbpIZKnlCeQFS4zoCYOPerLxnaIZb3t7hvTlliFifRw3YkfGJUHdqlYBki1S
+	h+M7TS1TxNYM842UTxQdhc3W41MlCkdta/DfJcjkcNZ8YcSujPimHJolPSf+l6sV
+	geLIWGmg3zJwzruYQ8dZ1uujvdpmtNczViP1SihTGKnqXKs4/DkGMznqTH0g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741812236; x=1741898636; bh=mOYOy2qBczZe63BdMNKy0yJyrh0YMtWbRoi
+	6WuXVH1c=; b=TqEVPtJQB6e0+FF93BnkGWiydDbzcfS9SJhLOlQ0/j5bzvZOJTD
+	k16GjZlkvizUv35bzID3aN0AP4LimBFQoHHm47NHEMfYPhTNgGBoYAhdyohqMW/s
+	OIXW5CsWS45s9pqBg4VWpH2n581g1kEMUSZoZLgXk/ATRwLWr5hbKqODM97qLWkW
+	mlmJYziRnPhJGs6a4ULgaLESeMNchv3GZ8hC/aB+otVQmknwnAxX2Hjce3HPk+Gc
+	SJucuXo04Slv+4/kDEqRpUzsXHYNSkDT8vyjzgWdWMIeTGrUSy2Lmpsb3HI72Ggu
+	boYrwRbZrGjippalcSLtWtkGT814Vc7PCiA==
+X-ME-Sender: <xms:DPLRZ-tQxLrhFZS6gl_sxs0_ialJi4oM5lR_shJXn-5LX0A33OBbCw>
+    <xme:DPLRZzey45CcNINpoyNRv_lmBIck1t-id6cH0HH2nP_j67oyihz9PPUJVvjkk41lz
+    XkRL-BmYF3-f1Bg_g>
+X-ME-Received: <xmr:DPLRZ5yjJDfc4JyOIJOeUD49T-PCHbk26eb1Af5gL77w6XYb-sOcZmjPx5vgJWyc_iTF8ALzf9NlZpIM9sjB0WLiTiHLO4XZlIZx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdeitdejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfh
+    hfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:DPLRZ5M9S8YHq-Y7H-4h6jAX-rkMa8nrIvjNVc6CP39omLVYDp9FOw>
+    <xmx:DPLRZ-8NI4EcVCqiIqTAqwIMvgSz7YMwGrcO3DJbRqj7Icsiifa5NA>
+    <xmx:DPLRZxVFrBXhVlRnmPbZ64nbdToCaDEXEOD1JN1TH9nfGCs2NwRfGA>
+    <xmx:DPLRZ3fZY1gjHwBzWXh2es12Bu8EJFgiUtoCoc4IS9x_vkFFbN0YIw>
+    <xmx:DPLRZ-zGY2qMLtWU9WRBCy29evUaxJyvWIeJpmsnwO1gkFFQaVFTMoYN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Mar 2025 16:43:55 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  Jeff King
+ <peff@peff.net>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 4/6] pack-objects: generate cruft packs at most one
+ object over threshold
+In-Reply-To: <CABPp-BH0rbieCV4Z11pHOX-mwrtEO-FPNdywV0P5HxXnusdRKQ@mail.gmail.com>
+	(Elijah Newren's message of "Wed, 12 Mar 2025 12:13:10 -0700")
+References: <cover.1740680964.git.me@ttaylorr.com>
+	<cover.1741648467.git.me@ttaylorr.com>
+	<f2ca92245ada74825806b50f786aab312275fd85.1741648467.git.me@ttaylorr.com>
+	<xmqqikof2pqp.fsf@gitster.g> <Z9Gmo2P3Fnt3JeOs@nand.local>
+	<xmqqjz8uxfyq.fsf@gitster.g> <Z9HaYEyYgBYTiia3@nand.local>
+	<CABPp-BH0rbieCV4Z11pHOX-mwrtEO-FPNdywV0P5HxXnusdRKQ@mail.gmail.com>
+Date: Wed, 12 Mar 2025 13:43:54 -0700
+Message-ID: <xmqq5xkex9md.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git@vger.kernel.org
-From: Arnav Bhate <bhatearnav@gmail.com>
-Subject: [GSoC PATCH] pathspec: fix sign comparison warnings
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-There are multiple places, especially in loops, where a signed and an
-unsigned data type are compared. Git uses a mix of signed and unsigned
-types to store lengths of arrays. This sometimes leads to using a signed
-index for an array whose length is stored in an unsigned variable or
-vice versa.
+Elijah Newren <newren@gmail.com> writes:
 
-Replace signed data types with unsigned data types and vice versa
-wherever necessary. In some cases, introduce a new variable, where both
-signed and unsigned data types have been used to store lengths of arrays
-in the same function, where previously only one variable was used to
-iterate over both types. In cases where this is not possible, add
-appropriate cast. Remove #define DISABLE_SIGN_COMPARE_WARNINGS.
+> Would it make sense to break the assumption that --max-cruft-size ==
+> --max-pack-size and perhaps rename the former?  I think the problem is
+> that the two imply different things (one is a minimum, the other a
+> maximum), and thus really should be different values.  E.g.
+> --combine-cruft-below-size that is set to e.g. half of
+> --max-pack-size, and then you can continue combining cruft packs
+> together until they do go above the cruft threshold, while avoiding
+> actually exceeding the pack size threshold?
 
-Signed-off-by: Arnav Bhate <bhatearnav@gmail.com>
----
- pathspec.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+With below-size and max-size set to say 180 and 200 respectively, an
+attempt to combine the crufts may end up filling a cruft pack to 170
+but the smallest of the remaining cruft may weigh 40, which means
+including it would cause the max-size to be exceeded.  In such a
+scenario, there may not be a solution to satisfy given constraints,
+i.e. go above the below-size without stay below the max-size.
 
-diff --git a/pathspec.c b/pathspec.c
-index 89663645e1..fd7dfdfd84 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
- #include "abspath.h"
-@@ -36,6 +35,7 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
- 					enum ps_skip_worktree_action sw_action)
- {
- 	int num_unmatched = 0, i;
-+	unsigned int j;
- 
- 	/*
- 	 * Since we are walking the index as if we were walking the directory,
-@@ -48,8 +48,8 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
- 			num_unmatched++;
- 	if (!num_unmatched)
- 		return;
--	for (i = 0; i < istate->cache_nr; i++) {
--		const struct cache_entry *ce = istate->cache[i];
-+	for (j = 0; j < istate->cache_nr; j++) {
-+		const struct cache_entry *ce = istate->cache[j];
- 		if (sw_action == PS_IGNORE_SKIP_WORKTREE &&
- 		    (ce_skip_worktree(ce) || !path_in_sparse_checkout(ce->name, istate)))
- 			continue;
-@@ -78,7 +78,7 @@ char *find_pathspecs_matching_skip_worktree(const struct pathspec *pathspec)
- {
- 	struct index_state *istate = the_repository->index;
- 	char *seen = xcalloc(pathspec->nr, 1);
--	int i;
-+	unsigned int i;
- 
- 	for (i = 0; i < istate->cache_nr; i++) {
- 		struct cache_entry *ce = istate->cache[i];
-@@ -130,7 +130,7 @@ static void prefix_magic(struct strbuf *sb, int prefixlen,
- 	if (element[1] != '(') {
- 		/* Process an element in shorthand form (e.g. ":!/<match>") */
- 		strbuf_addstr(sb, ":(");
--		for (int i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
-+		for (unsigned int i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
- 			if ((magic & pathspec_magic[i].bit) &&
- 			    pathspec_magic[i].mnemonic) {
- 				if (sb->buf[sb->len - 1] != '(')
-@@ -341,7 +341,7 @@ static const char *parse_long_magic(unsigned *magic, int *prefix_len,
- 
- 	for (pos = elem + 2; *pos && *pos != ')'; pos = nextat) {
- 		size_t len = strcspn_escaped(pos, ",)");
--		int i;
-+		unsigned int i;
- 
- 		if (pos[len] == ',')
- 			nextat = pos + len + 1; /* handle ',' */
-@@ -354,7 +354,7 @@ static const char *parse_long_magic(unsigned *magic, int *prefix_len,
- 		if (starts_with(pos, "prefix:")) {
- 			char *endptr;
- 			*prefix_len = strtol(pos + 7, &endptr, 10);
--			if (endptr - pos != len)
-+			if ((size_t)(endptr - pos) != len)
- 				die(_("invalid parameter for pathspec magic 'prefix'"));
- 			continue;
- 		}
-@@ -400,7 +400,7 @@ static const char *parse_short_magic(unsigned *magic, const char *elem)
- 
- 	for (pos = elem + 1; *pos && *pos != ':'; pos++) {
- 		char ch = *pos;
--		int i;
-+		unsigned int i;
- 
- 		/* Special case alias for '!' */
- 		if (ch == '^') {
-@@ -564,7 +564,7 @@ static int pathspec_item_cmp(const void *a_, const void *b_)
- 
- void pathspec_magic_names(unsigned magic, struct strbuf *out)
- {
--	int i;
-+	unsigned int i;
- 	for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
- 		const struct pathspec_magic *m = pathspec_magic + i;
- 		if (!(magic & m->bit))
-@@ -803,8 +803,8 @@ int match_pathspec_attrs(struct index_state *istate,
- int pathspec_needs_expanded_index(struct index_state *istate,
- 				  const struct pathspec *pathspec)
- {
--	unsigned int i, pos;
--	int res = 0;
-+	unsigned int pos;
-+	int i, res = 0;
- 	char *skip_worktree_seen = NULL;
- 
- 	/*
-@@ -845,7 +845,7 @@ int pathspec_needs_expanded_index(struct index_state *istate,
- 			 * - not-in-cone/bar*: may need expanded index
- 			 * - **.c: may need expanded index
- 			 */
--			if (strspn(item.original + item.nowildcard_len, "*") == item.len - item.nowildcard_len &&
-+			if (strspn(item.original + item.nowildcard_len, "*") == (unsigned int)(item.len - item.nowildcard_len) &&
- 			    path_in_cone_mode_sparse_checkout(item.original, istate))
- 				continue;
- 
-@@ -860,7 +860,7 @@ int pathspec_needs_expanded_index(struct index_state *istate,
- 				 * directory name and the sparse directory is the first
- 				 * component of the pathspec, need to expand the index.
- 				 */
--				if (item.nowildcard_len > ce_namelen(ce) &&
-+				if ((unsigned int)item.nowildcard_len > ce_namelen(ce) &&
- 				    !strncmp(item.original, ce->name, ce_namelen(ce))) {
- 					res = 1;
- 					break;
--- 
-2.48.1
+So I am not sure if the approach would really solve much.
+
+Other than that a separate names, especially losing "max" from the
+threshold that really does not mean "max", would solve the confusion
+that comes from naming, that is.
+
