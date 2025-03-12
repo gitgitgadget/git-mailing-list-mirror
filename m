@@ -1,163 +1,135 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531192459D8
-	for <git@vger.kernel.org>; Wed, 12 Mar 2025 13:17:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C213624291B
+	for <git@vger.kernel.org>; Wed, 12 Mar 2025 13:22:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741785466; cv=none; b=Is37PqvTKZBLpLgM/W1WlabXTZdUZU76jFgqg+XC3X5yUrKnPWClwTl3TPKFri4FKNodRaeTKbD1KD5Zal8QV09jlWxzU6Q0lX33XIxVK525Xonw2jcdGUoR71JZzraE9Z+9PLcY38q3Td2XwWRMeNQJm/Ru+xa5X0ssf1DlfWQ=
+	t=1741785772; cv=none; b=Utl0jhLeWJNdobzeOeuKmfC1spvhQ3DyDZtUq4KxltT5gP8UzKr7eWougYmEnI/pBF0EC/j9z8mM8sq0H/nfzsmizWj1DC6dHXNyKmA7rtAoewg7NIkjrKT2cm9ThMNhVjYc32tLCMGcF02d0tpZ0gYkC3CgcDfCVCaQXqubBdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741785466; c=relaxed/simple;
-	bh=sa3vIU5zRaiMhBcb9OIGCV7v3PtSYM6VbT4oQkpzqys=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oCj6vQCVMeh3OU/U2srK6u/QjaIa2wF/CgwteV5uCejgJg1uqhvy3B+21QPsDm8lpvSBNMWteyCL5NlLV945DZ/zFciTBj2d0TlUqcE+PVFcH6qP0vcXVkBE842a9sJWsxE5+z/PeMGmA7yU69shBylkGLGt8aj4MptbyoWU+mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=le2Igmxi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5xhcsUbJ; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1741785772; c=relaxed/simple;
+	bh=H0qC6aU0jAWW3qkzHXHG0Pp36vRQ3gSS1yNu4MCwDQc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qNTgnl0lseOrw4oxdBO8SgZsOUIeeDNzOUl3JnrtqCr0ApnZXpNb1+jZ/Z+d+5GhiYF1bxKCmyXOG5RMjgMGejPfsFA2D4C6Jkv3sFIf/gqT/u4hR98y4S7wB2K6+mp4F9Q//PTDAgmi5jjpt0FssziVmjxDazSetEiQWt8J8J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WvkJ0Lut; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="le2Igmxi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5xhcsUbJ"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 62B3C254020E;
-	Wed, 12 Mar 2025 09:17:43 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 12 Mar 2025 09:17:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1741785463;
-	 x=1741871863; bh=lTDsSOcCNpIFP/e7wqgyYZoc7tmmGsYSNOr9l8GpOaA=; b=
-	le2IgmxiWGulr2M3nQJidtLGKMOafrI2erbONNrze3o/mTUNFnjeRLplaYBrfchB
-	rB2sQjRpZ4M0StolSCNZluMAHbL+/WQCB47i8KhtN0XWgeRaZ0C8ElMUnkX0ktbg
-	qx51qXGaxjherWhuvdrTzFMqBdP41jods5edXLTOtq1mihoDePLwgIp2J3LrTSER
-	Ka8oFJ1bGM+fMszyD2OnFR6EZ4oTM2gzXvWI9KCCfstNtdtkjrCEEzhAOpFvPpxT
-	SIhVl9lLeqbdoOKB/4eLIux/I3M7kV173x1KHWEdtnF8M1VB4VHueSo5dmW7rFHB
-	Ld7HK3FCnzUgATnFCqWfwQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741785463; x=
-	1741871863; bh=lTDsSOcCNpIFP/e7wqgyYZoc7tmmGsYSNOr9l8GpOaA=; b=5
-	xhcsUbJ6JojRnp+MCBD/vbg9AB2hP6yrzySIYHfrLQIC+zAYI0Qf/SR0aMNTTFC3
-	ciKWRvRoEdvI83LFgFuA+z7iF6fQ3uLPLqR7Ltgn3bDCaK4fasnC/ujXzQzkDQlA
-	wV+aUIQGj4uAjVM5oSijEzv1Z+ol7IN6WIJLRgFTH72/DLgnur8yEE4Mc2o1wnTc
-	FKMZqjPNJ7JTLkhssAdYnSA7Zh5YIaFW9K6bf3jXFAWWGmPXXdG42Q81mYRIS4Wu
-	mQWSRDmV+A+9cvl1pR3TYhGCeTDvcsvIygnc0XG/3ffAH5gznBqjFXX7qeMOshXm
-	VO7mZNIOhHcVwcYCfhtUg==
-X-ME-Sender: <xms:d4nRZ77v38kpuuGEyBU2dGm7K5b7uQQ4ILv3Dok0k3NFg4gStmUdwg>
-    <xme:d4nRZw7k2zR-f3ItuR_pHGvt-diUy_lP3292c9Oj_TbwFJ6_XNwuOg7bYjmXitK0g
-    H_-qItEU0XeeUAjcQ>
-X-ME-Received: <xmr:d4nRZycGzWh58mYdzGVEuFBwJ7xWRAsJZJgaM1jpYQYdla_-Sveanc474_O1p0N5yTuwiKV44-oWZIwM06JIzIfcMmibgcNmhjHwXXiwLBz6e9awmA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdehudejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
-    thhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:d4nRZ8IUqpUU9v7_RPyoKYyg6ktkvQSp20yaRMyT9UzUw5LvlfzAfw>
-    <xmx:d4nRZ_LmLCMB_mKVXzbaip0B0sCxFMyZ53mMljqw7cdLCwkSYUwqYQ>
-    <xmx:d4nRZ1xdmpXgOTjhSOTPHtfcpI4PK9TAcvnNgLxsLWdn5Dt9mRAfWQ>
-    <xmx:d4nRZ7L5B67780z_eRIAoEvi03IB2_OMg0wj1I6rVxhalZz8uNqZeA>
-    <xmx:d4nRZ8FMyFzt4dA0IX6ng5z81xP5zOEK_JNBVIRlYPz5hN9fI8Qq9yZ2>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Mar 2025 09:17:42 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 46d3ff28 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Mar 2025 13:17:40 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 12 Mar 2025 14:17:34 +0100
-Subject: [PATCH 3/3] meson: don't install git-pack-redundant(1) docs with
- breaking changes
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WvkJ0Lut"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2232aead377so33461535ad.0
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 06:22:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741785770; x=1742390570; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1kIRQ54cklmdxM03wNJIEO0icUhTz0dedhjiuHzW79Q=;
+        b=WvkJ0LutYCR3oIZCBGPM6YWphYEIFKk5GpSgKPGwUYF6MOB19omD+CDGBZqF2LXiw2
+         699DzRATYrp0eSlQiEYtLXl0LVbVqbm/BqvHFOksSxXvx5P93+URdlAQxPvBIfH1NCz/
+         CrAyhD5/O+XQjUf16lJ7Cl/0R3Kf7CF8Tuq4oWKPj/ouYsj4Af4cuUxfhvB0Y4M596jx
+         b+8d1hnyPAmNne5q8cgPO3yqL89g3ntGMpJAMRLZ32gNJMTHNmXGC5GiODWeZmmr7Yrh
+         I94vg0QJTIwjtin5TY3EHMyflfwp+fB6D1QdhUQityHyVjk5ZGF9LWXg71Cv+FhXr0JR
+         C6DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741785770; x=1742390570;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1kIRQ54cklmdxM03wNJIEO0icUhTz0dedhjiuHzW79Q=;
+        b=rYPPZ1U3XXNka0Fv0NzRHXquW9WuowTINg2JOCDwwfBCki1HrRO2egGo0VmQIdpr1F
+         fji0D/nPowz0UfUIm3wZkkQ5hiGbzVbbfo+uUK1GQovKYAPvapxVyq7yvpBkwohElUtn
+         xmrP/zmxvdmgKwp9mnMaaodMs4xcV51oKRFxAcY9Sm3zjNpamEnaGGprZEbQSBg4rdUf
+         eWPNcF9Ijqz2XPdwbgr+aIE/5eboxXRuNbYAKnJnWizZf7SAgLBr5qLrK5zBBfeHMU6d
+         8TVJj+cN3oIpLI3qeD+XxeQ+/ADgKyLrdJx13VxWvNtfmzcyGdz9diG50Fym5Eu+ZWP7
+         POOQ==
+X-Gm-Message-State: AOJu0YzjZorB4wkawL1I2yb1jrKb2uMOEhpWKHbSZ2ISfi573/V3vyAh
+	nyMslePgnC5vRTWILxR7rFMmb2rQtezkB2TvXmqhl9/i4C7cePJt
+X-Gm-Gg: ASbGncunOoN3r41OCe89GtzOmG3/Tgn31+F8x+e80zPYpD545nUJRefsJvYEJ2RkS7J
+	dK0o7E4w1FPXhwu0VKevChIS2ikfnGcPghERSk5tQJUAiAYoxZlPJeF8k2Jo966I07q4nGRNHo7
+	d9j/D7/HxxQZb6QqB41EID9o1yD9Ol50XsqrCv6qSuQwAli4oYtHM09pr0u5aTKzvZo4ai0blqk
+	vERFm6kKfCuLLCYNI+mB56ziUXhSElXNOOfJOpYdAnoN0tCDcvebjUCDrH7lnlgP9DjuCcyi9qR
+	2IqPx/cSLok2Y5H4xDtwFwm9ixLE+226Ya6IJQn3bhUAjC82vIQ=
+X-Google-Smtp-Source: AGHT+IFez5VZPg1oYHiPi39EP4OTh8zWQ7hyLU4ixV7WjJsWd3ZOGHJTxM+Gr9s8o6l2nqyoEPN4gA==
+X-Received: by 2002:a17:903:1b63:b0:220:e5be:29c8 with SMTP id d9443c01a7336-22428bdee3cmr350565455ad.32.1741785769887;
+        Wed, 12 Mar 2025 06:22:49 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22410a91be9sm115181445ad.179.2025.03.12.06.22.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Mar 2025 06:22:49 -0700 (PDT)
+Date: Wed, 12 Mar 2025 21:22:59 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 08/16] refs: stop re-verifying common prefixes for
+ availability
+Message-ID: <Z9GKs9z4n4qgOP7n@ArchLinux>
+References: <20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im>
+ <20250306-pks-update-ref-optimization-v5-8-dcb2ee037e97@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250312-b4-pks-meson-breaking-changes-v1-3-b89e9a59d228@pks.im>
-References: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
-In-Reply-To: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, 
- Phillip Wood <phillip.wood123@gmail.com>, 
- Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250306-pks-update-ref-optimization-v5-8-dcb2ee037e97@pks.im>
 
-When breaking changes are enabled we continue to install documentation
-of the git-pack-redundant(1) command even though it is completely
-disabled and thus inaccessible. Improve this by only installing the
-documentation in case breaking changes aren't enabled.
+On Thu, Mar 06, 2025 at 04:08:39PM +0100, Patrick Steinhardt wrote:
+>  refs.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/refs.c b/refs.c
+> index 5a9b0f2fa1e..eaf41421f50 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2476,6 +2476,7 @@ int refs_verify_refnames_available(struct ref_store *refs,
+>  {
+>  	struct strbuf dirname = STRBUF_INIT;
+>  	struct strbuf referent = STRBUF_INIT;
+> +	struct strset dirnames;
+>  	int ret = -1;
+>  
+>  	/*
+> @@ -2485,6 +2486,8 @@ int refs_verify_refnames_available(struct ref_store *refs,
+>  
+>  	assert(err);
+>  
+> +	strset_init(&dirnames);
+> +
+>  	for (size_t i = 0; i < refnames->nr; i++) {
+>  		const char *refname = refnames->items[i].string;
+>  		const char *extra_refname;
+> @@ -2514,6 +2517,14 @@ int refs_verify_refnames_available(struct ref_store *refs,
+>  			if (skip && string_list_has_string(skip, dirname.buf))
+>  				continue;
+>  
+> +			/*
+> +			 * If we've already seen the directory we don't need to
+> +			 * process it again. Skip it to avoid checking checking
+> +			 * common prefixes like "refs/heads/" repeatedly.
+> +			 */
+> +			if (!strset_add(&dirnames, dirname.buf))
+> +				continue;
+> +
 
-Based-on-patch-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/Makefile    |  2 +-
- Documentation/meson.build | 13 +++++++++++--
- 2 files changed, 12 insertions(+), 3 deletions(-)
+Reading here, I think we should not sort the refnames for "reftable"
+backend. Anyway, really a nice job for optimizing the speed.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 671267a8ac7..e6b20c021fd 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -509,7 +509,7 @@ lint-docs-meson:
- 	awk "/^manpages = {$$/ {flag=1 ; next } /^}$$/ { flag=0 } flag { gsub(/^  \047/, \"\"); gsub(/\047 : [157],\$$/, \"\"); print }" meson.build | \
- 		grep -v -e '#' -e '^$$' | \
- 		sort >tmp-meson-diff/meson.adoc && \
--	ls git*.adoc scalar.adoc | grep -v -e git-bisect-lk2009.adoc -e git-tools.adoc >tmp-meson-diff/actual.adoc && \
-+	ls git*.adoc scalar.adoc | grep -v -e git-bisect-lk2009.adoc -e git-pack-redundant.adoc -e git-tools.adoc >tmp-meson-diff/actual.adoc && \
- 	if ! cmp tmp-meson-diff/meson.adoc tmp-meson-diff/actual.adoc; then \
- 		echo "Meson man pages differ from actual man pages:"; \
- 		diff -u tmp-meson-diff/meson.adoc tmp-meson-diff/actual.adoc; \
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index 594546d68b1..a2de85f5aad 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -96,7 +96,6 @@ manpages = {
-   'git-notes.adoc' : 1,
-   'git-p4.adoc' : 1,
-   'git-pack-objects.adoc' : 1,
--  'git-pack-redundant.adoc' : 1,
-   'git-pack-refs.adoc' : 1,
-   'git-patch-id.adoc' : 1,
-   'git-prune-packed.adoc' : 1,
-@@ -205,6 +204,14 @@ manpages = {
-   'gitworkflows.adoc' : 7,
- }
- 
-+manpages_breaking_changes = {
-+  'git-pack-redundant.adoc' : 1,
-+}
-+
-+if not get_option('breaking_changes')
-+  manpages += manpages_breaking_changes
-+endif
-+
- docs_backend = get_option('docs_backend')
- if docs_backend == 'auto'
-   if find_program('asciidoc', dirs: program_path, required: false).found()
-@@ -479,7 +486,9 @@ endif
- # Sanity check that we are not missing any tests present in 't/'. This check
- # only runs once at configure time and is thus best-effort, only. Furthermore,
- # it only verifies man pages for the sake of simplicity.
--configured_manpages = manpages.keys() + [ 'git-bisect-lk2009.adoc', 'git-tools.adoc' ]
-+configured_manpages = manpages.keys()
-+configured_manpages += manpages_breaking_changes.keys()
-+configured_manpages += [ 'git-bisect-lk2009.adoc', 'git-tools.adoc' ]
- actual_manpages = run_command(shell, '-c', 'ls git*.adoc scalar.adoc',
-   check: true,
-   env: script_environment,
-
--- 
-2.49.0.rc2.394.gf6994c5077.dirty
-
+>  			if (!initial_transaction &&
+>  			    !refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
+>  					       &type, &ignore_errno)) {
+> @@ -2574,6 +2585,7 @@ int refs_verify_refnames_available(struct ref_store *refs,
+>  cleanup:
+>  	strbuf_release(&referent);
+>  	strbuf_release(&dirname);
+> +	strset_clear(&dirnames);
+>  	return ret;
+>  }
+>  
+> 
+> -- 
+> 2.49.0.rc0.416.g627208d89d.dirty
+> 
