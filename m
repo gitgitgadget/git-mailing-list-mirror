@@ -1,54 +1,54 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79E722612
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 15:12:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609912690FE
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 15:25:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741878771; cv=none; b=KmFufv53RuQlMb210WZ0By7AwrUIVXLwMqtj9tVqxW0mumB/Ff4WkM0ZJ+WYSk4nmKd+1o2cHV1tsGAGnYg1F2h2UadOIxqMv+C1poDp4vqufBFUozENVBWq/vMynbWOf2BgxG8GhE8B85J0BaZMM8b1Jjku5fU5DBfzb6ipDus=
+	t=1741879529; cv=none; b=Rz1sEl3KNdeQNx/OHzGRpgzK2SV/770AGPRLECxsZXJhAX7eO5qNlbsU9/GJpvTIo5raGG1rOgHSEQSlVYY2w5tqhYyZcQiCbs1QIbSQtTUIkFIeiWXxMEbMtWnHd0cNBk3A1WLcOaL9vqxxKEg79mbYbMM0siIuv/HHFF5h2y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741878771; c=relaxed/simple;
-	bh=4Je5/XUH/aJqUXDy+sCLFJ658JKF/oo+JXlfAO1YE3o=;
+	s=arc-20240116; t=1741879529; c=relaxed/simple;
+	bh=3gyYPkgpC8rTLq/2TtYPjLVo0NEYJIcfJujccErkoFI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Vl8RZWUuNkDnh17N2/XXgBTG60B6BIuX/y0mp8y+ro2+ox73QWnKH+uJopilETYIzs6K2qtqa70SLWJ5z1stf/D7mlpiKsFMAMWF4oob1ttz2O8KOFz5p8swpXZM4aP9RjIqn7PQLmj19pX3IIoskz1U7cFQNcsnwgRddcpxyBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XamKCXZB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BXG0VwKu; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=UZ1qA1xy4/gNztGYzV76ya+ZJbtbUsraCoWo2NMhpVHLRNh7ljpS2BOm7dOg9hNVmQzAAV1QkDcPskjGvU7GTZj+w411v5CkOI+1iKdhce2M6p7/TJ8D4qldm1GNjuph8jiQsSLJEduq2IeUetF6j/V+VgiZLOH9l0JvXhdwiL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=yTCUM7UP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PvwWCmG8; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XamKCXZB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BXG0VwKu"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CF70D1140083;
-	Thu, 13 Mar 2025 11:12:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="yTCUM7UP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PvwWCmG8"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 572A911401FB;
+	Thu, 13 Mar 2025 11:25:26 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Thu, 13 Mar 2025 11:12:47 -0400
+  by phl-compute-07.internal (MEProxy); Thu, 13 Mar 2025 11:25:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741878767; x=1741965167; bh=fizZFo1+TJ
-	KB0ae0dqjfZLGyg5NaNioAfXWkvMXIE5w=; b=XamKCXZBG3qMeKCQMTmeSzujH9
-	k6CW6nfZmykQyNG7T2XXd3tW+QyniM/O2cKi20lIb3CzPzTtfHNVoMUgIWqaD/M7
-	hvECAJRajW2WMFyLoDTC6ZJ9x9TXnfSPNZE6d9Wbdiico2/TFltytSNyGxVKIMSz
-	jazTA1LAdE2D7R30iMcJM7v2oCAp2G+DmaLtpCF0Y9ydYLgWRDsOVw2FO+azRl3i
-	MkpfphrWreqBihegvKLwjpDbAT1nm73Jxh9bc3NQyXOfWEk4qLGk1tCAE1m3YOsL
-	Bw6KbMTyqO6J++gJzR5k9R9XDT29X0hFTY30Qoqc6SQeAfsOCmDsYabCYIEw==
+	:subject:to:to; s=fm3; t=1741879526; x=1741965926; bh=hUI4ahVIoG
+	afveJ0A1iS8Q+oTjax1oyv+j6HQJ8q3fY=; b=yTCUM7UPQ0q6rcOtxrTuXBAkSM
+	RznVd/jJ942puoslwWd265JpYySHjMhWxK61hI6Lzrzz9kZ4byEzIQ5OUnrhcoKP
+	ECTAPgdHo7v2Xi3lShdCp7Aw+3SICj6LK5cKXlto6Q5fNYJKSvn3NWCJteJlVMek
+	Qtb9Fcjw8hVBelUVmZSRtygwih6Z8xOIf/n2apfvTMgBOvXrym86XyYFGsfpL74E
+	8fPTrBHbH/79ytbgE2oUbxDz+vPas8QuaquhocikPloMJJ+jVZmBg3fnjvbvGPIS
+	6xuCL/6X8iuS8m5TROz58Cqd4hdNIwU6SGXIdi1R/5xBiPbkW+HS1ak62S1w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741878767; x=1741965167; bh=fizZFo1+TJKB0ae0dqjfZLGyg5NaNioAfXW
-	kvMXIE5w=; b=BXG0VwKuchVNTb/+SpVkV0WkkVD2ELGA1r38sHThfBXmfUUVEL6
-	0VZWgBp/onnDzr5MKSs+mOvo5PKmrs8f5GVUNlYlO5VwE/EqGytRmbldxTLV5NCY
-	pZsbOKsOHyudaHuMM3ea/RWGhytGtcqDT9RoreiYiFmoVdcehh/Sb7YwlV8nTWp9
-	V/DcW4xQMvESHY1PwuniCaltfPciUDSMrzbuxU/GkeDYwxF3mXH9J+gvBDU1NcNo
-	nuyIknjZhnj/P7jiSmjj+W6FT7vK3K8+Wf+Bo+YTTGdd4zDmoYGu+KSfOuoloQ/+
-	UKcBRGU/vbnvG3gSg3oRRIaSI/j/o3tkbWA==
-X-ME-Sender: <xms:7_XSZ7ze5551ZvZ88BLRXXsrNnzoWnqiAwi7fVwqZ90yeKrijaltXg>
-    <xme:7_XSZzTaHKCpgqTW5aeBlz52CHAdOwMtwY9OkohFTd6BS69QqAZj7n4_jw9GBtOxW
-    UYt5nRNS4Jw-WCT3Q>
-X-ME-Received: <xmr:7_XSZ1X4o09Frq7lPpPyg5SlEf-A3ICOrX_WJzZWt-OzZRkUpl3bvsVv_flD0KCP_THKJj_f62chV61LfjoC73lR-YSyQhh4O2IIpgU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekvdekucetufdoteggodetrf
+	1741879526; x=1741965926; bh=hUI4ahVIoGafveJ0A1iS8Q+oTjax1oyv+j6
+	HQJ8q3fY=; b=PvwWCmG8zhIVSum/9+6TG7tDh/RGU9iz8+B+MVYQOLbIPKFYFVS
+	UQpQu5rDUidEmK6wMnhcb+GqwwoXvPbzoNZzj+cJTod3qX8Xb83pLCR+ZfHDhIRU
+	u/HwST62kD0hij2QcydtCV8wWoK0NM6sbaFzT4HKNAb8KyYTYTFxK3FQ219DuDDF
+	q5oRXo6R516Gp2dTFUP7ve+vKIYxz2YrR4CEAOu1uNPdIbPr+t5oDTosiBQR28cp
+	fqlk67stJArHFYBW7X68qDQEBpJILyQEraQ/uXsWSCW65vNuDhjYrnPGL0MQzcCv
+	CUxbquPlM1vCP3zGouLEWLPLK8GJSaTGkNw==
+X-ME-Sender: <xms:5vjSZ2KRN8YbAhlW0rK6uoMgydCPfem-Z7UFPhUapRvDLcgGVYYH9w>
+    <xme:5vjSZ-IOlZwfTgt7418MAHE0BQRyGCVdyDqRV-bv3Eechfoj5HgWp18IfL8hO2zfp
+    Bj7zC6FhtpsG1zeIg>
+X-ME-Received: <xmr:5vjSZ2u6jkJKyrmOcVtCRDPvDRkLoDqVDrZ5MZBPajI41w5D_XSr51J4JH8U13DdLgmNodVb2Z1Zd7WAmPNnY9TQoRi2mQQjGCDZTrg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekfedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -56,34 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekvdekucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:7_XSZ1iGLCPEQsLOOwyJK5y1W8c0w8AZrbPyRLF0l27PJwzqbodEuA>
-    <xmx:7_XSZ9AHDGAQZBH1QoqgefGBEMZnzHWFo03lKuCqsyAQopssWXBBqQ>
-    <xmx:7_XSZ-LPysiI2IvS3aP01Yw9gb9zMOuELQGyHEDGcjiwI_6S9wFSzw>
-    <xmx:7_XSZ8AgFcgVCHMf1vb3IwftiECdparw3Ei-Ljnx1_HFmYnGL4-BCg>
-    <xmx:7_XSZ_1qOkFokPk1R7bPNGKgSKW0sLhKdmBtFtCybHpou00p6BCWpbLy>
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikh
+    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopegshhgrthgvrghrnhgrvhesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:5vjSZ7btyHtT4fkduv3XqL88xxwEZsvvY9amdvcZokndEoIb9ECQeA>
+    <xmx:5vjSZ9Z-Km67a9I1F2KqNRsvDNAbEUrJ3grNSD0gI3QWHvAZYZmwmw>
+    <xmx:5vjSZ3DhOhgJY21kfm5nNWKoUtONGa8IcYQ_GiaR8hTxdSCI3lZ9sw>
+    <xmx:5vjSZzYuep2SiPbKQALnBez8s3f9HOkT9nUMzqiQ-7JJIXMaWUo__w>
+    <xmx:5vjSZ8UNM7zvPowPwxVzK1VEGmXx2DRVHFKnKOHdwhfKGUZ7rBSB6FzB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Mar 2025 11:12:47 -0400 (EDT)
+ 13 Mar 2025 11:25:25 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  Elijah Newren
- <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 0/6] pack-objects: freshen objects with multi-cruft
- packs
-In-Reply-To: <20250313062951.GA96035@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 13 Mar 2025 02:29:51 -0400")
-References: <cover.1740680964.git.me@ttaylorr.com>
-	<cover.1741648467.git.me@ttaylorr.com> <xmqqr0332un3.fsf@gitster.g>
-	<Z9GpQqm4YBvWF7Ff@nand.local> <xmqqfrjixfwe.fsf@gitster.g>
-	<Z9Ha2mFXpojI+aIR@nand.local>
-	<20250313062951.GA96035@coredump.intra.peff.net>
-Date: Thu, 13 Mar 2025 08:12:45 -0700
-Message-ID: <xmqqr031q80i.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Arnav Bhate <bhatearnav@gmail.com>,  git@vger.kernel.org
+Subject: Re: [GSoC PATCH] rm: fix sign comparison warnings
+In-Reply-To: <CAOLa=ZTia95Lib6bkz_nWi2BYEteAaOxsrrX9DqLTEz1t02ggA@mail.gmail.com>
+	(Karthik Nayak's message of "Thu, 13 Mar 2025 07:25:07 -0400")
+References: <38de63ce-6d4e-4f1f-95b1-049df78d9cfc@gmail.com>
+	<xmqqy0x9s8mg.fsf@gitster.g>
+	<CAOLa=ZTia95Lib6bkz_nWi2BYEteAaOxsrrX9DqLTEz1t02ggA@mail.gmail.com>
+Date: Thu, 13 Mar 2025 08:25:24 -0700
+Message-ID: <xmqqmsdpq7ff.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,31 +88,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> But do we actually care about eventually having a series of 40MB packs?
-> Or do we care about having some cutoff so that we don't rewrite those
-> first 40MB on subsequent repacks?
+> I have to agree. I think it would a bit cleaner to actually change the
+> functions argument type itself. Perhaps, something like:
 >
-> If the latter, then for step 2, what if we don't feed a max size? We'd
-> end up with one 60MB pack (again, having written all of the bytes once).
-> And on the next repack we'd leave it be (since it's over the threshold).
-> We'll start forming new packs, which will eventually aggregate to 40MB
-> (or possibly larger).
+> -- >8 --
 >
-> If I understand the main purpose of the series, it is that we must
-> rescue objects out of cruft packs if they became fresher (by having
-> loose copies made). But that is orthogonal to max pack sizes, isn't it?
-> We just need for pack-objects to be fed those objects (which should be
-> happening already) and decide _not_ to omit them based on their presence
-> in the kept cruft packs (based on the mtime in those cruft packs, of
-> course). Which looks like what your want_cruft_object_mtime() is doing.
+> diff --git a/builtin/rm.c b/builtin/rm.c
+> index 12ae086a55..79e47d6e9e 100644
+> --- a/builtin/rm.c
+> +++ b/builtin/rm.c
+> @@ -40,10 +40,8 @@ static struct {
+>  	} *entry;
+>  } list;
+>
+> -static int get_ours_cache_pos(const char *path, int pos)
+> +static int get_ours_cache_pos(const char *path, unsigned int i)
+>  {
+> -	int i = -pos - 1;
+> -
+>  	while ((i < the_repository->index->cache_nr) &&
+> !strcmp(the_repository->index->cache[i]->name, path)) {
+>  		if (ce_stage(the_repository->index->cache[i]) == 2)
+>  			return i;
+> @@ -83,7 +81,7 @@ static void submodules_absorb_gitdir_if_needed(void)
+>
+>  		pos = index_name_pos(the_repository->index, name, strlen(name));
+>  		if (pos < 0) {
+> -			pos = get_ours_cache_pos(name, pos);
+> +			pos = get_ours_cache_pos(name, -pos - 1);
+>  			if (pos < 0)
+>  				continue;
+>  		}
+>
+> @@ -131,7 +129,7 @@ static int check_local_mod(struct object_id *head,
+> int index_only)
+>  			 * Skip unmerged entries except for populated submodules
+>  			 * that could lose history when removed.
+>  			 */
+> -			pos = get_ours_cache_pos(name, pos);
+> +			pos = get_ours_cache_pos(name, -pos - 1);
+>  			if (pos < 0)
+>  				continue;
 
-Yeah, no packsize limit on the output side, but making sure that the
-decision to roll up existing cruft packs is made sensibly, is what
-the above gives us, which I life a lot.  The one-before and -after
-confusion came exactly because we somehow tried to have threshold on
-the output side.
+It makes the code far easier to read to turn what index_name_pos()
+returns to the index where the conflicted "our" entry ought to
+appear like the above two hunks do.  Makes perfect sense, even if
+there weren't any type mismatch warnings.
 
-
-
+Thanks.
