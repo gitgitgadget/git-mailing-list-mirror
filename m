@@ -1,133 +1,139 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924CF27468
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 03:09:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51261DE2BD
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 05:15:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741835357; cv=none; b=ixlvhQfASJ/6pH/SBtknS075BLQbIcJ0bHRJhAeyKU6YLFgaPUR+boJzHYXUtMVgb/HVOaRP36SaiETVr6Hl+rsh/lVvFicT3wHbQv1/aDQtYwwDgx3g1sSIeSGt/dxIpLAuamZDHRVdejgFfylzn/Hp+YygTCihzP3/L9J16xU=
+	t=1741842950; cv=none; b=VQZmL+HuGMCG6XIc/ETippIGV7pZNnqY2JpiNTsQx4YVxa2rE2ZLEokChMr8qCs12NUDSzw52T/MLndfutzxpD6szr7EUgNz5cTcEqp1S43u1wM8L/XrWboMH7t+auYVzVen/WGgcIGdTvzTJdxCbJjGJoUsHYD0KAs7OaYxFJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741835357; c=relaxed/simple;
-	bh=FRR5ALzxfCMtgUKtqaefYyEgVpcirglhbt1VFTcc8Ko=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MWvFuWrsRYSHmPMgg7DLXPpM6hHPB2JxiFr1PlOfn9hOBwfcK7usklBtEMKRUGdtlX8JsMrrkQqROODbl0DCYANAhfRpS5AAzukVBUIMt8sp8solhiNj3C8veUqkye8vkgrL+bx9nk/+gSExalZnidNdqewx5LJTPtpAfnuTFfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bxDWCYqY; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1741842950; c=relaxed/simple;
+	bh=MPtXV6NzWZrf2LLbYmMRqEJLRJ9V0/IaWpw54MnzwKI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dB21pECu6bHtyc0ugr/dIRdOTvpUJHveol4YoDBmG+Au8iUSJvZ++cIvMfwOaIf5lNUkqa+IpSuYxbLraHlDTrspT2rQL//bzi5Ovg76bg7EjMf/LNxli+8+6VIdSwxhh9zzpyGN5CKsfydCHqlKBNRyCBi+tCSB0n99kbGC+lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HsUqsuqh; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bxDWCYqY"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-300fefb8e06so953216a91.0
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 20:09:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1741835355; x=1742440155; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XsBio417/MOA9zN8lbpusMdYvKerhN6GXkPbuJ3SIX4=;
-        b=bxDWCYqYT3igtEiucll8cwA4jqoFreUbx/sOk/C2+fDtFclGJM0/qgSPNNIzgqpvyb
-         ikC6yIjC1hW4l2Ab3ukczOfq9QgRzZFAnDDz2QbklbfFXbj+bjF5WCijwDL5B0wNRQRc
-         pF4eIgFyHeS1vh4T20ty7Qs9No3NrkzGI7L+nQ1pKM2jhYVNH03LxjsfSzUSAE6JrHd+
-         ITWaJio+fZ+VuGSXpBLqpP3nZEO5ydZuStM86+P9ihZR+kXNbRXcySNp49v8LpRsLx0c
-         LJLApj6iAHDngtVqG2StxdpWGtX/9tB8R/lmOb9XoeCi0240D0ya64GYLO2qdyy2LIde
-         rj4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741835355; x=1742440155;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XsBio417/MOA9zN8lbpusMdYvKerhN6GXkPbuJ3SIX4=;
-        b=qnvUPYbNwoog0/375broQqNBsWFL1wBcXkem0vM7iy9qhz0QwIJpVIpWrMCaV2fB7M
-         7MmoK3G/HqBpC9iQgolGg5EOGUvzN7IXaHeTWvBBqnmmjHK+UVhNRmjWBmv3kbJUsK09
-         jNfIhBaE7nFoTotPFKKJlrAw/TbaxOG3vcvGj9Ku5K35HRP07ALTzCH0sVp8ialEEXEo
-         LtlIcn4TUDZIhEMuAwu0MWtULBQ0VO2K5mgMtS/0fnQBC6uN8arEC67lhVtUZY1uMOF0
-         xVKHHeW/mSEkafqReAGqDYxJkurb49twlOXPuYEesqSevhMIzaWVLcN8vBy7nEJxZfLS
-         /Jyw==
-X-Gm-Message-State: AOJu0YzcTkhkkchcJK9j00jG86R3Jfbb2VhBHF2jxiq9J0DeHgJfgXt9
-	Ov72AKi4Kl4dou5GRPQw5dsmcR0+Gay6N8cUwkLSBZebaXRzzM1PJGMnn3AXOJjunzup4tReBS3
-	xXyuh88c41eEYIFdyDb9FGYRcWOiTVOihPvnNuhPQPEhlSLPq/w==
-X-Gm-Gg: ASbGnctAxLDicXdgiboK08kDPO1+m/8+N8LhZQ3T52++E9+atKKdSfqwy4wN+n3xhNP
-	57xe3OHudqgnFOBGy0boW+iwMQvhAEBmtam/jTyMb+MqlEgGlvUU87OWcUGHWS48U2WHyEpiXqP
-	B3Y3QNw7XRNF3BGH6cbsfFQ3PPOV9HWUogQJOpeW73T8eDjO8VGzKn62IRRg==
-X-Google-Smtp-Source: AGHT+IHYvgpB/yKGCvnGQOUqB5cOWWQGWWTsjuOXr50BTaKnDTDoMvBeKgG0IYyCgcFZl5hWv2Ya7vn/N+efTYvkNwA=
-X-Received: by 2002:a17:90b:4c51:b0:2f9:c139:b61f with SMTP id
- 98e67ed59e1d1-300ff0ca64cmr14873736a91.14.1741835354491; Wed, 12 Mar 2025
- 20:09:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HsUqsuqh"
+Received: (qmail 20574 invoked by uid 109); 13 Mar 2025 05:15:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=MPtXV6NzWZrf2LLbYmMRqEJLRJ9V0/IaWpw54MnzwKI=; b=HsUqsuqhACpsJlieel7/dtm6hAfcmhmGTDGDuXMyPsK7ROa0bG8rrGU3FoQXMkm2z7tdlM3ec+u7/oholWwxpoemTWy53nViwsnCYuE7YN8BsHwxzSZH3w1IgXcQSd0rD69QH7WKSihVEO+w8R6lXL69JHDx6Py4CyMapzEXuLum94O35UMaZYXLRDCflq7C4IpRQCxs04sx0h5tu3vQPBE0FeT201bVrUq9KGyMuLlMQdYH5Xu19UnrGlgMkMUh7NAlerHWU1nTfM598EYHvuJs5MvnHiQbJpqLe8M17M8qPkuzN6LWck/StmDUfXRP3v5nWNwLfKMKElRP5gACOw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Mar 2025 05:15:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11283 invoked by uid 111); 13 Mar 2025 05:15:39 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Mar 2025 01:15:39 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 13 Mar 2025 01:15:38 -0400
+From: Jeff King <peff@peff.net>
+To: Simon Josefsson <simon@josefsson.org>
+Cc: git@vger.kernel.org
+Subject: Re: Making bit-by-bit reproducible Git Bundles?
+Message-ID: <20250313051538.GA94015@coredump.intra.peff.net>
+References: <871pv2jx4a.fsf@josefsson.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <871pv2jx4a.fsf@josefsson.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 In-Reply-To: <871pv2jx4a.fsf@josefsson.org>
-From: Kyle Lippincott <spectral@google.com>
-Date: Wed, 12 Mar 2025 20:09:03 -0700
-X-Gm-Features: AQ5f1JqnRUI4ympcIxCmhwD00R6Dew5qPbzEEzkQE3wE4Zet3BjHy4mYqMrVSAQ
-Message-ID: <CAO_smViryqTa1LfQSsPbBYcSvijs-UkYkHaot3CK1j=uiuEppQ@mail.gmail.com>
-Subject: Re: Making bit-by-bit reproducible Git Bundles?
-To: Simon Josefsson <simon@josefsson.org>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 12, 2025 at 4:59=E2=80=AFAM Simon Josefsson <simon@josefsson.or=
-g> wrote:
->
-> Hi.
->
-> Thank you for the "git-archive" and "git-bundle" features, making it
-> easier to do source-based builds in a no-Internet environment.
->
-> I have published a Git bundle of Gnulib:
->
-> https://www.gnu.org/software/gnulib/manual/html_node/Gnulib-Git-Bundle.ht=
-ml
->
-> As you can see at the end, I struggle to come up with a recipe to allow
-> others to reproduce the git bundle that I created.
->
+On Wed, Mar 12, 2025 at 12:40:05PM +0100, Simon Josefsson wrote:
+
 > If I run the recipe above twice (including the clone), I get different
 > checksums.  This even if nothing was committed in the remote repository
 > meanwhile.
->
+> 
 > Is it possible to create a bit-by-bit reproducible git bundle using some
 > other set of commands?  If so, how?  I'm using git 2.48.1 from Guix.
->
-> Can anyone explain what is causing the irreproducibility?  Running
-> diffoscope is not helpful, since the bundle is compressed and diffoscope
-> doesn't seem to know how to untangle it.
 
-Spent some time on this, and when I followed the instructions, the
-diffs were in the pack file portion of the bundle file, different
-"tree" objects were produced at different points in the pack file. But
-it produces identical bundles if I run `git bundle create` multiple
-times in the same clone. My guess is that the non-determinism is
-coming from the clone process being multi-threaded, meaning that the
-order things are created in the filesystem during the clone,
-presumably due to multithreading happening during the clone process,
-or maybe during gc? The contents of .git/objects/pack have different
-hashes across my two clones, and I haven't investigated why.
+As Junio noted, multithreading is the first problem. E.g., here are some
+commands on git.git, using my 8-core machine:
 
->
-> If this is not possible today, what do you think about changes to make
-> this work?
+  [try once...]
+  $ git bundle create --no-progress - HEAD | sha1sum
+  686da850200da487032c9d91bdc544b605a3e426  -
 
-What is your end goal with being able to reproduce the bundles?
-Bundles are just a list of refs and a pack file, I think. Reproducing
-the bundle doesn't provide any more security than git provides when it
-writes the pack file to disk - if you end up with commits with the
-same hashes, the bundle has to be *effectively* the same as a git
-clone of the repository.
+  [and again; oops, it's different]
+  $ git bundle create --no-progress - HEAD | sha1sum
+  70b018c16d244f32b36e55deb931e29ae15506e3  -
 
-Producing an identical bit-for-bit bundle might be doable by doing
-some form of sorting of the objects in the pack file, but this would
-only get us closer to bit-for-bit reproducibility *on the same machine
-and versions of everything*. There could be some changes to git, zlib,
-machine architecture, etc. that causes deterministic but different
-values to be produced. As an example, maybe future versions of zlib
-compress better, producing an equal result when decompressed, but a
-different compressed result.
+  [now without threading]
+  $ git -c pack.threads=1 bundle create --no-progress - HEAD | sha1sum
+  c897caf9c68d2c37d997d3973196886af3b0b46e  -
 
->
-> Thanks,
-> /Simon
+  [and we can do it again. yay!]
+  $ git -c pack.threads=1 bundle create --no-progress - HEAD | sha1sum
+  c897caf9c68d2c37d997d3973196886af3b0b46e  -
+
+What's happening here is that the bundle mostly consists of a packfile,
+where many objects will be stored as deltas against others. The search
+for deltas is multi-threaded, so it will find slightly different ones
+each time (there surely is an "optimal" answer, but finding it is much
+too expensive, so we bound the search with some heuristics).
+
+So disabling threading gives you a deterministic answer. But that's not
+the end of the story! We only search for deltas of objects that are not
+already stored as deltas in on-disk packfiles. We try to reuse any
+deltas we have already on disk (assuming that both the delta and its
+base are going to be in the output).
+
+There are options to ask pack-objects (the command which git-bundle uses
+under the hood to generate the pack) not to reuse deltas. So
+pack-objects running on a single thread without any delta reuse should
+generate a deterministic pack. But there are some gotchas:
+
+  1. It's stable only for a given Git version, and with a particular set
+     of delta window/depth options. I wouldn't expect behavior to change
+     much between versions, but it's not something that we try to
+     guarantee.
+
+  2. There is no way to pass pack-objects options down through
+     git-bundle. So you'd have to either assemble the bundle yourself,
+     or perhaps generate a stable on-disk pack state, and then generate
+     the bundle. Perhaps something like:
+
+       # make one single pack, with no reuse, using the default options
+       git -c pack.threads=1 repack -adf
+
+       # now we can make a bundle from that. We probably do not even
+       # need to disable threads here, since we'd just be picking the
+       # deltas from the on-disk file (assuming that you're including
+       # all objects in the bundle)
+       git bundle create - | sha1sum
+
+  3. It will be really slow. We're throwing out all of the deltas and
+     searching from scratch. And doing it single-threaded. I didn't time
+     it, but I'd guess from past experience we're talking about hours to
+     generate the bundle for something like linux.git.
+
+So I think it's possible, but I doubt it's very ergonomic. You're
+probably better off using some checksum over Git's logical model, rather
+than the stored bytes. The obvious one is that a single Git commit hash
+unambiguously represents the whole tree and all of history leading up to
+it, because of the chains of hashes.
+
+But that implies you trust Git's object hash algorithm. If you don't
+trust sha1 (and don't want to try out the sha256 support), then you'd
+have to design something else.  Perhaps something like:
+
+  # print all commits in topological order, with ties broken by
+  # committer date, which should be stable. And then follow up with the
+  # trees and blobs for each.
+  git rev-list --topo-order --objects HEAD >objects
+
+  # now print the contents of each object (preceded by its name, type,
+  # and length, so there's no chance of weird prepending or appending
+  # attacks). We cut off the path information from rev-list here, since
+  # the ordered set of objects is all we care about.
+  cut -d' ' -f1 objects |
+  git cat-file --batch >content
+
+  # and then take a hash over that content; this will be unambiguous.
+  sha256sum <content
+
+-Peff
