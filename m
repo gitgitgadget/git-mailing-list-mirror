@@ -1,512 +1,667 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-out1-04.simnet.is (smtp-out1-04.simnet.is [194.105.232.35])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD3C1C84CB
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 18:09:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D461EC012
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 18:26:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.105.232.35
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741889400; cv=none; b=PCmETgt+qe03i2BRf1cyd0USfFM4ftIMB0mWpPhQrQVDBHQ7OMehjpEJATGc619Efb1IJ9R4a5UMjqdTtt1arI1JO1sBYeCYGcgWZcQHUKdBB5KGxE886Z1jZ6XfBYjJC2r4YFZBrkhac0ZJNUixQV3u4379d6lo5i1CWRjHtnM=
+	t=1741890424; cv=none; b=sjwvQeqNbWzNAxniYrkfmO7pExmqjOoE33O6EW+x+pB4SpI4bD8sYi5G1L/aU0qnz+nruJINu+ZbLNUNgyeTorCxMXLooM8Gg3Dn6crertOsEWd1YyEgJp1HgLyZoFGEGiv+M0Utf2ItYmr9eqq3Ql/xqYPPc48UNaZoSOr5Xjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741889400; c=relaxed/simple;
-	bh=tgS26nmD4UX9neNJ+7qDzECir8VnvVp+uuq0qK7s4A8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xrg8VoEkuVFKBxgroFhs1VUZYJK3jTfFI0SssXPjo8d3ZlBXdLX7pYqHR82EcrS32aywPCe/yMx5PZiNwcsHP5Y7PO4yv9zSZMl3U74/xPwaPNovGfT33xh/bvEFvNJaz1RZA8H+0oRNhKdAeMEOEBlxrsFcGNQDWo32JXvhLYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=RjLwY/IE; arc=none smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1741890424; c=relaxed/simple;
+	bh=+HMGnX41+218mVkw8kheQB9gSzZ/1qS04gm1CX7k1uk=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Q0xsD4yzggu3S3/DKP1WafH0Ve1ZQELjDPaOyMzDDJxfyKTjEfxFtwUY3yAN58/2rwWP2ZIonbpdE28ioQsLiv4ZPjdKyrtg6AoIXHfzNxjHaoVBlhYZWc+Y8JCFQg8e+CT14EocDF6I8GmxBoa8/Qgq0sTyshNUD2CoZeXsCy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=simnet.is; spf=pass smtp.mailfrom=simnet.is; dkim=pass (2048-bit key) header.d=simnet.is header.i=@simnet.is header.b=Hfm+xvNA; arc=none smtp.client-ip=194.105.232.35
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=simnet.is
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=simnet.is
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="RjLwY/IE"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-476b89782c3so15213981cf.1
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 11:09:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=simnet.is header.i=@simnet.is header.b="Hfm+xvNA"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741889397; x=1742494197; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xGfkSXm0TkJKRo89SaTcUeHZHWpVVLQvB7lOyF92gvs=;
-        b=RjLwY/IElnSn1CR+pL0Cm/aB01b2l16afGGIZzEbgjs2FkUx/zJyeGzn6Z9iGC/XJv
-         t3g8f6r12f7RkOBIyVMTJJO35LqW+nfwLeXLSzzpWd6eNThMPpmzfZMAZT9wWq4500KF
-         t+hL5PFcsNgiUL7q430d3XAjgwZpFJ5vZCns6BRDinggYQqeUNalTleFMygZWxL356hg
-         2/cKKT0mKzK4GZ+y91dq2GIHJsBCpYq9YJTHg5+YkZjIQIZIlEM0kio70y/rF0MhnUCI
-         LfmmsTjRHXnqcvuuacHUF62sNg8ZXEaTje0O2ofNS6ewFmZKjhGbghNoPNRhAJLTgspQ
-         Cwsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741889397; x=1742494197;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xGfkSXm0TkJKRo89SaTcUeHZHWpVVLQvB7lOyF92gvs=;
-        b=EJEmiJ9uezrwyKSoFbkh9gd3rgWslVMCYVkc4NBRO7m0FwAx23ILwS+rvQwAEnT4/9
-         hWF6z+mfcDgmzz8vVfcqwGqg1K6+95UATDSxJ4RIYxXQ+0vOj/ky47ZK4dJfw9bf5Lou
-         1BOGv+1WsYdYWOoCVbnJOAKyjtvRrEMHmTHNY5aK0dR8KCSqEEowJzFerMbKjdttBSbP
-         AcEZ94TUyc5RbVUpXYLYBwZDaIaPZqna57mqTqPqUK++CU+vlw/u/2Pr84ygL4M9TBAo
-         yjFaU1bYXIJqcMSmqws0LNVn5bCUiE7fbXE6PqeyV/WFsQGGqoZO2tndCfI1xX8jeHsl
-         giTA==
-X-Gm-Message-State: AOJu0YyadwUkNpZ18fXOVAC/m9yDqGPHrM4QbijtwUaRaAVb66cF036i
-	7dHGi5FO1kIVlErAmCPXxHXBj2jIfUGO31KerSBGeMN06A0pqPEcoNRLBBWkS+ku8KwQ3Dz5I27
-	uXI4=
-X-Gm-Gg: ASbGnctxgI407/wyBRr37Qli4a5e3NAGea9kgWSIS81x5FtaIidJEQoHwWfTKTxy44h
-	cVFzG3roASrtCg6zcmF4rJrlpJu+Yc/fZJnoeNDtmSmTPCH6Zx5ZYRuY6fHZ05bvuSNpULe9c6L
-	N/5HXQbUH8rpc3uEy9r6ah9ImdwwlIGOva7vY3FL5CR5tvT5UdCnJTWn39MlcnpYiw0lv2/n9NN
-	t/lWRJuhaJZaFzTzmudXIvAlt55mjsRRgiBkQkR7DutUsGW/+F8viYU1KYt0dl3ga+DIQlVqUgU
-	gKZZaIJYaNj4e1mIIP8nZKjO+5X5VNTfbRHi27yuMzldsV54SeeNZU5Y4C3xAnX7sSB4iRfFlWj
-	aPH8q8GSBV/YbhkKW
-X-Google-Smtp-Source: AGHT+IGJ9cGb6+7xjnYy0V9cLdMp3qgD4STenTH2cRKkBY4rXy0hgpwkMGb0KyAqeOKRnZZNNo+hsw==
-X-Received: by 2002:a05:622a:2a0b:b0:476:6a3d:de35 with SMTP id d75a77b69052e-4769960fa75mr205792541cf.39.1741889396773;
-        Thu, 13 Mar 2025 11:09:56 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-476bb60b6c0sm11872951cf.1.2025.03.13.11.09.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 11:09:56 -0700 (PDT)
-Date: Thu, 13 Mar 2025 14:09:47 -0400
-From: Taylor Blau <me@ttaylorr.com>
+  d=simnet.is; i=@simnet.is; q=dns/txt; s=sel1;
+  t=1741890420; x=1773426420;
+  h=date:from:to:cc:subject:message-id:mime-version;
+  bh=eWmy3NWLPc0RPc8ZnNUw3wpaBzcU5wfD9hwPRsRkit0=;
+  b=Hfm+xvNAr8qS7ZtAWbBoZyxcEYHCwUCkdivBfmlIPrtAUWSxeqwOC20S
+   zvxYu6ijP/cHRbY3NHnSLs+IXDMbkKkV+T6g624ypTcjAvMwpE46E3VsI
+   xq7LbJnFj1R93vifdB07HFikEHIyDHiGjXQ6sPm2752eMGge4UjYljk0d
+   4VCsJAj3MqetOtTPMcQy0+TZpApWtL9jRu1ZBtXWQ6kfIDOqPGnQOE2an
+   OZuDFIe+GYOHuioZnyQi1F3JixcOXCtvpieDiem2EezK7TedThHS5CLbN
+   GdJwvlKLGbYNt/vCE/2Gw/DWP/AbZehA0cb08+GFkh034UUrJPjrW7wgE
+   Q==;
+X-CSE-ConnectionGUID: /09N302lSRiWdEwqE39zlw==
+X-CSE-MsgGUID: AWewoIyzR1a7dUCrC2vzng==
+Authentication-Results: smtp-out-04.simnet.is; dkim=none (message not signed) header.i=none
+X-SBRS: 3.3
+X-IPAS-Result: =?us-ascii?q?A2EtAADqHdNnhVfoacJaGQEBAQEBAQEBAQEBAQEBAQEBA?=
+ =?us-ascii?q?RIBAQEBAQEBAQEBAQFAgVOCRH2BZIgWD44igRaQNIxhgVoDFQcBAQEPLg8HB?=
+ =?us-ascii?q?AEBAwEDggyCLkaLHSg4EwECBAEBAQEDAgMBAQEBAQEBAQEBAQsBAQYBAQEBA?=
+ =?us-ascii?q?QEGBwIQAQEBAUAOO4U1Rg2DFnGBJAEBAQEBAQEBAQEBAQEBAQEBAQEBFwEBA?=
+ =?us-ascii?q?guBBXgtWyEwgnkBgmQUBq96gTSBAYMcPgIQQdoHgV4QgUgBhWyCYwGFbIR3P?=
+ =?us-ascii?q?AaCDYEVMgOBc0oHb4IULxMLAQEBAoE7AQEGRoYYBIIYF4E7ggKBaocdgjKFB?=
+ =?us-ascii?q?4NPhBwgEpJqSIEhA1ksAVUTDQoLBwWBbAM1DAsuFTKBFEM3NYIOaUk6Ag0CN?=
+ =?us-ascii?q?YIbfIIrglWBeIQ8hEGFToIRizaEYS1USx02CgMLGA1IESw3FBtEbgehVTuDS?=
+ =?us-ascii?q?AkBJQlDAQEwGTETASkBARcJAjZAAyoGBg8LEgEiKB6SVCYBMY9aAYFEoCSBP?=
+ =?us-ascii?q?oQlhlyDMYILjTmIETMig2GBV4syhjoMOpE1gRaYfo0bapVdGRk3hGiBfoF/L?=
+ =?us-ascii?q?AcaCDA7gjMBATIJSRkPjgcjAxYWg0KEWAU2w3V4AjoCBwsBAQMJhkuLHAEB?=
+IronPort-PHdr: A9a23:4LXLeBBqClGZytokVOVIUyQVQxdPi9zP1m898Z87k/dJb7jmp8ikJ
+ 03a4/hxyl7SDs3X6PNB3uzRta2oGWkN+o2Iv31KdptQHwQEhsMbk01oAMOMBUDhav+/aSs8E
+ ax/
+IronPort-Data: A9a23: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
+ FXZjFtsGCmTIXMd2+45E5KJMHn1ZA/S8gg=
+IronPort-HdrOrdr: A9a23:gdJ7wqOUazRFo8BcTtCjsMiBIKoaSvp037BL7SBMoHluH/Bw+P
+ rOoB12726QtN9zYgBCpTnjAse9qBrnnPYY3WB4B9yftWLdyQmVxe9ZgrcKkweLJxHD
+X-Talos-CUID: 9a23:6BM6q2AEilrNa+j6E24/pWhPQpohSUfc83v9PFaVUjd7TKLAHA==
+X-Talos-MUID: =?us-ascii?q?9a23=3AbQ8dOA0/40LJKOqch+g09DSySzUjypujF0csgIc?=
+ =?us-ascii?q?84sDbORFbIRzHkiaxTdpy?=
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-AV: E=Sophos;i="6.14,245,1736812800"; 
+   d="1'?diff'?bugs'?scan'208";a="40704867"
+Received: from vist-zimproxy-01.vist.is ([194.105.232.87])
+  by smtp-out-04.simnet.is with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2025 18:25:48 +0000
+Received: from localhost (localhost [127.0.0.1])
+	by vist-zimproxy-01.vist.is (Postfix) with ESMTP id 71A0141CEF48;
+	Thu, 13 Mar 2025 18:25:48 +0000 (GMT)
+Received: from vist-zimproxy-01.vist.is ([127.0.0.1])
+ by localhost (vist-zimproxy-01.vist.is [127.0.0.1]) (amavis, port 10032)
+ with ESMTP id KE01jNQs8aUi; Thu, 13 Mar 2025 18:25:47 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by vist-zimproxy-01.vist.is (Postfix) with ESMTP id 4199B41CEF49;
+	Thu, 13 Mar 2025 18:25:47 +0000 (GMT)
+Received: from vist-zimproxy-01.vist.is ([127.0.0.1])
+ by localhost (vist-zimproxy-01.vist.is [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id tgOnAQVgq9tv; Thu, 13 Mar 2025 18:25:47 +0000 (GMT)
+Received: from kassi.invalid.is (85-220-33-163.dsl.dynamic.simnet.is [85.220.33.163])
+	by vist-zimproxy-01.vist.is (Postfix) with ESMTPS id 0CDA041C4690;
+	Thu, 13 Mar 2025 18:25:46 +0000 (GMT)
+Received: from bg by kassi.invalid.is with local (Exim 4.98)
+	(envelope-from <bg@kassi.invalid.is>)
+	id 1tsnFa-000000005o7-24J5;
+	Thu, 13 Mar 2025 18:25:46 +0000
+Date: Thu, 13 Mar 2025 18:25:46 +0000
+From: Bjarni Ingi Gislason <bjarniig@simnet.is>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5] builtin/pack-objects.c: freshen objects from existing
- cruft packs
-Message-ID: <1563552bbda0bc910c9f41b0fabc3225c4d778fc.1741889018.git.me@ttaylorr.com>
-References: <cover.1740680964.git.me@ttaylorr.com>
+Cc: Debian Bug Tracking System <submit@bugs.debian.org>
+Subject: git-filter-branch.1: Some remarks and a patch with editorial changes
+ for this man page
+Message-ID: <174188934245.21716.6680332666412833022.reportbug@kassi.invalid.is>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/mixed; boundary="1QreUpu+FrkDDLdd"
 Content-Disposition: inline
-In-Reply-To: <cover.1740680964.git.me@ttaylorr.com>
+X-Mailer: reportbug 13.1.0
 
-Once an object is written into a cruft pack, we can only freshen it by
-writing a new loose or packed copy of that object with a more recent
-mtime.
 
-Prior to 61568efa95 (builtin/pack-objects.c: support `--max-pack-size`
-with `--cruft`, 2023-08-28), we typically had at most one cruft pack in
-a repository at any given time. So freshening unreachable objects was
-straightforward when already rewriting the cruft pack (and its *.mtimes
-file).
+--1QreUpu+FrkDDLdd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-But 61568efa95 changes things: 'pack-objects' now supports writing
-multiple cruft packs when invoked with `--cruft` and the
-`--max-pack-size` flag. Cruft packs are rewritten until they reach some
-size threshold, at which point they are considered "frozen", and will
-only be modified in a pruning GC, or if the threshold itself is
-adjusted.
+Package: git-man
+Version: 1:2.47.2-0.1
+Severity: minor
+Tags: patch
 
-Prior to this patch, however, this process breaks down when we attempt
-to freshen an object packed in an earlier cruft pack, and that cruft
-pack is larger than the threshold and thus will survive the repack.
+   * What led up to the situation?
 
-When this is the case, it is impossible to freshen objects in cruft
-pack(s) when those cruft packs are larger than the threshold. This is
-because we would avoid writing them in the new cruft pack entirely, for
-a couple of reasons.
+     Checking for defects with a new version
 
- 1. When enumerating packed objects via 'add_objects_in_unpacked_packs()'
-    we pass the SKIP_IN_CORE_KEPT_PACKS, which is used to avoid looping
-    over the packs we're going to retain (which are marked as kept
-    in-core by 'read_cruft_objects()').
+test-[g|n]roff -mandoc -t -K utf8 -rF0 -rHY=0 -rCHECKSTYLE=10 -ww -z < "man page"
 
-    This means that we will avoid enumerating additional packed copies
-    of objects found in any cruft packs which are larger than the given
-    size threshold. Thus there is no opportunity to call
-    'create_object_entry()' whatsoever.
+  [Use "groff -e ' $' -e '\\~$' <file>" to find obvious trailing spaces.]
 
- 2. We likewise will discard the loose copy (if one exists) of any
-    unreachable object packed in a cruft pack that is larger than the
-    threshold. Here our call path is 'add_unreachable_loose_objects()',
-    which uses the 'add_loose_object()' callback.
+  ["test-groff" is a script in the repository for "groff"; is not shipped]
+(local copy and "troff" slightly changed by me).
 
-    That function will eventually land us in 'want_object_in_pack()'
-    (via 'add_cruft_object_entry()'), and we'll discard the object as it
-    appears in one of the packs which we marked as kept in-core.
+  [The fate of "test-nroff" was decided in groff bug #55941.]
 
-This means in effect that it is impossible to freshen an unreachable
-object once it appears in a cruft pack larger than the given threshold.
+   * What was the outcome of this action?
 
-Instead, we should pack an additional copy of an unreachable object we
-want to freshen even if it appears in a cruft pack, provided that the
-cruft copy has an mtime which is before the mtime of the copy we are
-trying to pack/freshen. This is sub-optimal in the sense that it
-requires keeping an additional copy of unreachable objects upon
-freshening, but we don't have a better alternative without the ability
-to make in-place modifications to existing *.mtimes files.
 
-In order to implement this, we have to adjust the behavior of
-'want_found_object()'. When 'pack-objects' is told that we're *not*
-going to retain any cruft packs (i.e. the set of packs marked as kept
-in-core does not contain a cruft pack), the behavior is unchanged.
+troff:<stdin>:902: warning [page 10, line 29]: cannot break line
 
-But when there *is* at least one cruft pack that we're holding onto, it
-is no longer sufficient to reject a copy of an object found in that
-cruft pack for that reason alone. In this case, we only want to reject a
-candidate object when copies of that object either:
 
- - exists in a non-cruft pack that we are retaining, regardless of that
-   pack's mtime, or
+   * What outcome did you expect instead?
 
- - exists in a cruft pack with an mtime at least as recent as the copy
-   we are debating whether or not to pack, in which case freshening
-   would be redundant.
+     No output (no warnings).
 
-To do this, keep track of whether or not we have any cruft packs in our
-in-core kept list with a new 'ignore_packed_keep_in_core_has_cruft'
-flag. When we end up in this new special case, we replace a call to
-'has_object_kept_pack()' to 'want_cruft_object_mtime()', and only reject
-objects when we have a copy in an existing cruft pack with at least as
-recent an mtime as our candidate (in which case "freshening" would be
-redundant).
+-.-
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/pack-objects.c  | 118 ++++++++++++++++++++++++++++++++++------
- packfile.c              |   3 +-
- packfile.h              |   2 +
- t/t7704-repack-cruft.sh |  66 ++++++++++++++++++++++
- 4 files changed, 171 insertions(+), 18 deletions(-)
+  General remarks and further material, if a diff-file exist, are in the
+attachments.
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 58a9b16126..79e1e6fb52 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -206,6 +206,7 @@ static int have_non_local_packs;
- static int incremental;
- static int ignore_packed_keep_on_disk;
- static int ignore_packed_keep_in_core;
-+static int ignore_packed_keep_in_core_has_cruft;
- static int allow_ofs_delta;
- static struct pack_idx_option pack_idx_opts;
- static const char *base_name;
-@@ -1502,8 +1503,60 @@ static int have_duplicate_entry(const struct object_id *oid,
- 	return 1;
- }
- 
-+static int want_cruft_object_mtime(struct repository *r,
-+				   const struct object_id *oid,
-+				   unsigned flags, uint32_t mtime)
-+{
-+	struct packed_git **cache;
-+
-+	for (cache = kept_pack_cache(r, flags); *cache; cache++) {
-+		struct packed_git *p = *cache;
-+		off_t ofs;
-+		uint32_t candidate_mtime;
-+
-+		ofs = find_pack_entry_one(oid, p);
-+		if (!ofs)
-+			continue;
-+
-+		/*
-+		 * We have a copy of the object 'oid' in a non-cruft
-+		 * pack. We can avoid packing an additional copy
-+		 * regardless of what the existing copy's mtime is since
-+		 * it is outside of a cruft pack.
-+		 */
-+		if (!p->is_cruft)
-+			return 0;
-+
-+		/*
-+		 * If we have a copy of the object 'oid' in a cruft
-+		 * pack, then either read the cruft pack's mtime for
-+		 * that object, or, if that can't be loaded, assume the
-+		 * pack's mtime itself.
-+		 */
-+		if (!load_pack_mtimes(p)) {
-+			uint32_t pos;
-+			if (offset_to_pack_pos(p, ofs, &pos) < 0)
-+				continue;
-+			candidate_mtime = nth_packed_mtime(p, pos);
-+		} else {
-+			candidate_mtime = p->mtime;
-+		}
-+
-+		/*
-+		 * We have a surviving copy of the object in a cruft
-+		 * pack whose mtime is greater than or equal to the one
-+		 * we are considering. We can thus avoid packing an
-+		 * additional copy of that object.
-+		 */
-+		if (mtime <= candidate_mtime)
-+			return 0;
-+	}
-+
-+	return -1;
-+}
-+
- static int want_found_object(const struct object_id *oid, int exclude,
--			     struct packed_git *p)
-+			     struct packed_git *p, uint32_t mtime)
- {
- 	if (exclude)
- 		return 1;
-@@ -1553,12 +1606,29 @@ static int want_found_object(const struct object_id *oid, int exclude,
- 		if (ignore_packed_keep_in_core)
- 			flags |= IN_CORE_KEEP_PACKS;
- 
--		if (ignore_packed_keep_on_disk && p->pack_keep)
--			return 0;
--		if (ignore_packed_keep_in_core && p->pack_keep_in_core)
--			return 0;
--		if (has_object_kept_pack(p->repo, oid, flags))
--			return 0;
-+		/*
-+		 * If the object is in a pack that we want to ignore, *and* we
-+		 * don't have any cruft packs that are being retained, we can
-+		 * abort quickly.
-+		 */
-+		if (!ignore_packed_keep_in_core_has_cruft) {
-+			if (ignore_packed_keep_on_disk && p->pack_keep)
-+				return 0;
-+			if (ignore_packed_keep_in_core && p->pack_keep_in_core)
-+				return 0;
-+			if (has_object_kept_pack(p->repo, oid, flags))
-+				return 0;
-+		} else {
-+			/*
-+			 * But if there is at least one cruft pack which
-+			 * is being kept, we only want to include the
-+			 * provided object if it has a strictly greater
-+			 * mtime than any existing cruft copy.
-+			 */
-+			if (!want_cruft_object_mtime(p->repo, oid, flags,
-+						     mtime))
-+				return 0;
-+		}
- 	}
- 
- 	/*
-@@ -1577,7 +1647,8 @@ static int want_object_in_pack_one(struct packed_git *p,
- 				   const struct object_id *oid,
- 				   int exclude,
- 				   struct packed_git **found_pack,
--				   off_t *found_offset)
-+				   off_t *found_offset,
-+				   uint32_t found_mtime)
- {
- 	off_t offset;
- 
-@@ -1593,7 +1664,7 @@ static int want_object_in_pack_one(struct packed_git *p,
- 			*found_offset = offset;
- 			*found_pack = p;
- 		}
--		return want_found_object(oid, exclude, p);
-+		return want_found_object(oid, exclude, p, found_mtime);
- 	}
- 	return -1;
- }
-@@ -1607,10 +1678,11 @@ static int want_object_in_pack_one(struct packed_git *p,
-  * function finds if there is any pack that has the object and returns the pack
-  * and its offset in these variables.
-  */
--static int want_object_in_pack(const struct object_id *oid,
--			       int exclude,
--			       struct packed_git **found_pack,
--			       off_t *found_offset)
-+static int want_object_in_pack_mtime(const struct object_id *oid,
-+				     int exclude,
-+				     struct packed_git **found_pack,
-+				     off_t *found_offset,
-+				     uint32_t found_mtime)
- {
- 	int want;
- 	struct list_head *pos;
-@@ -1625,7 +1697,8 @@ static int want_object_in_pack(const struct object_id *oid,
- 	 * are present we will determine the answer right now.
- 	 */
- 	if (*found_pack) {
--		want = want_found_object(oid, exclude, *found_pack);
-+		want = want_found_object(oid, exclude, *found_pack,
-+					 found_mtime);
- 		if (want != -1)
- 			return want;
- 
-@@ -1636,7 +1709,7 @@ static int want_object_in_pack(const struct object_id *oid,
- 	for (m = get_multi_pack_index(the_repository); m; m = m->next) {
- 		struct pack_entry e;
- 		if (fill_midx_entry(the_repository, oid, &e, m)) {
--			want = want_object_in_pack_one(e.p, oid, exclude, found_pack, found_offset);
-+			want = want_object_in_pack_one(e.p, oid, exclude, found_pack, found_offset, found_mtime);
- 			if (want != -1)
- 				return want;
- 		}
-@@ -1644,7 +1717,7 @@ static int want_object_in_pack(const struct object_id *oid,
- 
- 	list_for_each(pos, get_packed_git_mru(the_repository)) {
- 		struct packed_git *p = list_entry(pos, struct packed_git, mru);
--		want = want_object_in_pack_one(p, oid, exclude, found_pack, found_offset);
-+		want = want_object_in_pack_one(p, oid, exclude, found_pack, found_offset, found_mtime);
- 		if (!exclude && want > 0)
- 			list_move(&p->mru,
- 				  get_packed_git_mru(the_repository));
-@@ -1674,6 +1747,15 @@ static int want_object_in_pack(const struct object_id *oid,
- 	return 1;
- }
- 
-+static inline int want_object_in_pack(const struct object_id *oid,
-+				      int exclude,
-+				      struct packed_git **found_pack,
-+				      off_t *found_offset)
-+{
-+	return want_object_in_pack_mtime(oid, exclude, found_pack, found_offset,
-+					 0);
-+}
-+
- static struct object_entry *create_object_entry(const struct object_id *oid,
- 						enum object_type type,
- 						uint32_t hash,
-@@ -3606,7 +3688,7 @@ static void add_cruft_object_entry(const struct object_id *oid, enum object_type
- 			entry->no_try_delta = no_try_delta(name);
- 		}
- 	} else {
--		if (!want_object_in_pack(oid, 0, &pack, &offset))
-+		if (!want_object_in_pack_mtime(oid, 0, &pack, &offset, mtime))
- 			return;
- 		if (!pack && type == OBJ_BLOB && !has_loose_object(oid)) {
- 			/*
-@@ -3680,6 +3762,8 @@ static void mark_pack_kept_in_core(struct string_list *packs, unsigned keep)
- 		struct packed_git *p = item->util;
- 		if (!p)
- 			die(_("could not find pack '%s'"), item->string);
-+		if (p->is_cruft && keep)
-+			ignore_packed_keep_in_core_has_cruft = 1;
- 		p->pack_keep_in_core = keep;
- 	}
- }
-diff --git a/packfile.c b/packfile.c
-index 2d80d80cb3..9d09f8bc72 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -24,6 +24,7 @@
- #include "commit-graph.h"
- #include "pack-revindex.h"
- #include "promisor-remote.h"
-+#include "pack-mtimes.h"
- 
- char *odb_pack_name(struct repository *r, struct strbuf *buf,
- 		    const unsigned char *hash, const char *ext)
-@@ -2107,7 +2108,7 @@ static void maybe_invalidate_kept_pack_cache(struct repository *r,
- 	r->objects->kept_pack_cache.flags = 0;
- }
- 
--static struct packed_git **kept_pack_cache(struct repository *r, unsigned flags)
-+struct packed_git **kept_pack_cache(struct repository *r, unsigned flags)
- {
- 	maybe_invalidate_kept_pack_cache(r, flags);
- 
-diff --git a/packfile.h b/packfile.h
-index 00ada7a938..25097213d0 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -197,6 +197,8 @@ int has_object_pack(struct repository *r, const struct object_id *oid);
- int has_object_kept_pack(struct repository *r, const struct object_id *oid,
- 			 unsigned flags);
- 
-+struct packed_git **kept_pack_cache(struct repository *r, unsigned flags);
-+
- /*
-  * Return 1 if an object in a promisor packfile is or refers to the given
-  * object, 0 otherwise.
-diff --git a/t/t7704-repack-cruft.sh b/t/t7704-repack-cruft.sh
-index 959e6e2648..43d2947d28 100755
---- a/t/t7704-repack-cruft.sh
-+++ b/t/t7704-repack-cruft.sh
-@@ -304,6 +304,72 @@ test_expect_success '--max-cruft-size with freshened objects (packed)' '
- 	)
- '
- 
-+test_expect_success '--max-cruft-size with freshened objects (previously cruft)' '
-+	repo="max-cruft-size-threshold" &&
-+
-+	test_when_finished "rm -fr $repo" &&
-+	git init "$repo" &&
-+	(
-+		cd "$repo" &&
-+
-+		test_commit base &&
-+		foo="$(generate_random_blob foo $((2*1024*1024)))" &&
-+		bar="$(generate_random_blob bar $((2*1024*1024)))" &&
-+		baz="$(generate_random_blob baz $((2*1024*1024)))" &&
-+
-+		test-tool chmtime --get -100000 \
-+			"$objdir/$(test_oid_to_path "$foo")" >foo.old &&
-+		test-tool chmtime --get -100000 \
-+			"$objdir/$(test_oid_to_path "$bar")" >bar.old &&
-+		test-tool chmtime --get -100000 \
-+			"$objdir/$(test_oid_to_path "$baz")" >baz.old &&
-+
-+		git repack --cruft -d &&
-+
-+		# Make an identical copy of foo stored in a pack with a more
-+		# recent mtime.
-+		foo="$(generate_random_blob foo $((2*1024*1024)))" &&
-+		foo_pack="$(echo "$foo" | git pack-objects $packdir/pack)" &&
-+		test-tool chmtime --get -100 \
-+			"$packdir/pack-$foo_pack.pack" >foo.new &&
-+		git prune-packed &&
-+
-+		# Make a loose copy of bar, also with a more recent mtime.
-+		bar="$(generate_random_blob bar $((2*1024*1024)))" &&
-+		test-tool chmtime --get -100 \
-+			"$objdir/$(test_oid_to_path "$bar")" >bar.new &&
-+
-+		# Make a new cruft object $quux to ensure we do not
-+		# generate an identical pack to the existing cruft
-+		# pack.
-+		quux="$(generate_random_blob quux $((1024)))" &&
-+		test-tool chmtime --get -100 \
-+			"$objdir/$(test_oid_to_path "$quux")" >quux.new &&
-+
-+		git repack --cruft --max-cruft-size=3M -d &&
-+
-+		for p in $packdir/pack-*.mtimes
-+		do
-+			test-tool pack-mtimes "$(basename "$p")" || return 1
-+		done >actual.raw &&
-+		sort actual.raw >actual &&
-+
-+		# Among the set of all cruft packs, we should see both
-+		# mtimes for object $foo and $bar, as well as the
-+		# single new copy of $baz.
-+		sort >expect <<-EOF &&
-+		$foo $(cat foo.old)
-+		$foo $(cat foo.new)
-+		$bar $(cat bar.old)
-+		$bar $(cat bar.new)
-+		$baz $(cat baz.old)
-+		$quux $(cat quux.new)
-+		EOF
-+
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success '--max-cruft-size with pruning' '
- 	git init max-cruft-size-prune &&
- 	(
 
-Range-diff against v4:
-1:  390c3a6d85 < -:  ---------- t/t5329-pack-objects-cruft.sh: evict 'repack'-related tests
-2:  e7ebe6c460 < -:  ---------- t7704-repack-cruft.sh: consolidate `write_blob()`
-3:  aa7588f817 < -:  ---------- t/lib-cruft.sh: extract some cruft-related helpers
-4:  f2ca92245a < -:  ---------- pack-objects: generate cruft packs at most one object over threshold
-5:  12ddea7603 < -:  ---------- builtin/repack.c: simplify cruft pack aggregation
-6:  d44a124c81 ! 1:  1563552bbd builtin/pack-objects.c: freshen objects from existing cruft packs
-    @@ t/t7704-repack-cruft.sh: test_expect_success '--max-cruft-size with freshened ob
-      '
-      
-     +test_expect_success '--max-cruft-size with freshened objects (previously cruft)' '
-    -+	git init max-cruft-size-threshold &&
-    ++	repo="max-cruft-size-threshold" &&
-    ++
-    ++	test_when_finished "rm -fr $repo" &&
-    ++	git init "$repo" &&
-     +	(
-    -+		cd max-cruft-size-threshold &&
-    ++		cd "$repo" &&
-     +
-     +		test_commit base &&
-     +		foo="$(generate_random_blob foo $((2*1024*1024)))" &&
+-- System Information:
+Debian Release: trixie/sid
+  APT prefers testing
+  APT policy: (500, 'testing')
+Architecture: amd64 (x86_64)
 
-base-commit: 87a0bdbf0f72b7561f3cd50636eee33dcb7dbcc3
--- 
-2.49.0.rc2.1.g1563552bbd
+Kernel: Linux 6.12.17-amd64 (SMP w/2 CPU threads; PREEMPT)
+Locale: LANG=is_IS.iso88591, LC_CTYPE=is_IS.iso88591 (charmap=ISO-8859-1), LANGUAGE not set
+Shell: /bin/sh linked to /usr/bin/dash
+Init: sysvinit (via /sbin/init)
+
+-- no debconf information
+
+--1QreUpu+FrkDDLdd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="chk_man.err.git-filter-branch.1"
+Content-Transfer-Encoding: quoted-printable
+
+Input file is git-filter-branch.1
+
+Output from "mandoc -T lint  git-filter-branch.1": (shortened list)
+
+      1 input text line longer than 80 bytes: (if the parent strin...
+      1 input text line longer than 80 bytes: A \fImap\fR function...
+      1 input text line longer than 80 bytes: A minor issue, but u...
+      1 input text line longer than 80 bytes: Always verify that t...
+      1 input text line longer than 80 bytes: Annotated tags can b...
+      1 input text line longer than 80 bytes: Any commit messages ...
+      1 input text line longer than 80 bytes: As a special extensi...
+      1 input text line longer than 80 bytes: By using \fBgit-rev-...
+      1 input text line longer than 80 bytes: Coming up with the c...
+      1 input text line longer than 80 bytes: Commit messages (eve...
+      1 input text line longer than 80 bytes: Even if you don\(cqt...
+      1 input text line longer than 80 bytes: Filenames with space...
+      1 input text line longer than 80 bytes: Further, several add...
+      1 input text line longer than 80 bytes: However, if the file...
+      3 input text line longer than 80 bytes: If \-\-prune\-empty ...
+      1 input text line longer than 80 bytes: If any evaluation of...
+      1 input text line longer than 80 bytes: If the user provides...
+      1 input text line longer than 80 bytes: If you need to add \...
+      1 input text line longer than 80 bytes: If you really don\(c...
+      1 input text line longer than 80 bytes: If you try and cheat...
+      1 input text line longer than 80 bytes: In editing files, gi...
+      1 input text line longer than 80 bytes: It\(cqs far too easy...
+      1 input text line longer than 80 bytes: Lets you rewrite Git...
+      1 input text line longer than 80 bytes: Nearly proper rewrit...
+      1 input text line longer than 80 bytes: Non\-ascii filenames...
+      1 input text line longer than 80 bytes: Note that since this...
+      1 input text line longer than 80 bytes: On success, the exit...
+      1 input text line longer than 80 bytes: Only look at the his...
+      1 input text line longer than 80 bytes: Running git\-filter\...
+      1 input text line longer than 80 bytes: Side note: Unfortuna...
+      1 input text line longer than 80 bytes: Similarly, when movi...
+      1 input text line longer than 80 bytes: Some filters will ge...
+      1 input text line longer than 80 bytes: Someone can do a his...
+      1 input text line longer than 80 bytes: Someone can have a s...
+      1 input text line longer than 80 bytes: Suppose you want to ...
+      1 input text line longer than 80 bytes: The \fB\-\-env\-filt...
+      1 input text line longer than 80 bytes: The \m[blue]\fBgit f...
+      1 input text line longer than 80 bytes: The command will onl...
+      1 input text line longer than 80 bytes: The filters are appl...
+      1 input text line longer than 80 bytes: The original tags ar...
+      1 input text line longer than 80 bytes: The performance of g...
+      1 input text line longer than 80 bytes: The shift magic firs...
+      1 input text line longer than 80 bytes: The user\-provided s...
+      1 input text line longer than 80 bytes: Then there are two w...
+      1 input text line longer than 80 bytes: There are no facilit...
+      1 input text line longer than 80 bytes: This filter may be u...
+      1 input text line longer than 80 bytes: This is not a real f...
+      6 input text line longer than 80 bytes: This is the filter f...
+      1 input text line longer than 80 bytes: This option will cau...
+      1 input text line longer than 80 bytes: Thus you can, e\&.g\...
+      1 input text line longer than 80 bytes: To restrict rewritin...
+      1 input text line longer than 80 bytes: To rewrite the repos...
+      1 input text line longer than 80 bytes: To set a commit (whi...
+      1 input text line longer than 80 bytes: To top it all off, e...
+      2 input text line longer than 80 bytes: Use this option to s...
+      1 input text line longer than 80 bytes: Using \fB\-\-index\-...
+      1 input text line longer than 80 bytes: You can rewrite the ...
+      1 input text line longer than 80 bytes: You really removed a...
+      1 input text line longer than 80 bytes: argument could no lo...
+      1 input text line longer than 80 bytes: command, with argume...
+      1 input text line longer than 80 bytes: commits, but each co...
+      1 input text line longer than 80 bytes: convenience function...
+      1 input text line longer than 80 bytes: even if you succeed ...
+      3 input text line longer than 80 bytes: git\-filter\-branch ...
+      1 input text line longer than 80 bytes: if you don\(cqt wish...
+      1 input text line longer than 80 bytes: refuses to start wit...
+      1 input text line longer than 80 bytes: the fact that \-\-ta...
+      1 input text line longer than 80 bytes: the fact that little...
+      1 input text line longer than 80 bytes: you run into problem...
+      1 skipping paragraph macro: PP after SH
+      9 skipping paragraph macro: sp after SH
+      2 skipping paragraph macro: sp after SS
+
+
+-.-.
+
+Output from "test-nroff -mandoc -t -ww -z git-filter-branch.1": (shortened =
+list)
+
+      1 cannot break line
+
+-.-.
+
+Lines containing '\c':
+
+447:\h'-04'\(bu\h'+03'\c
+460:\h'-04'\(bu\h'+03'\c
+475:\h'-04'\(bu\h'+03'\c
+490:\h'-04'\(bu\h'+03'\c
+502:\h'-04'\(bu\h'+03'\c
+514:\h'-04'\(bu\h'+03'\c
+533:\h'-04'\(bu\h'+03'\c
+552:\h'-04'\(bu\h'+03'\c
+562:\h'-04'\(bu\h'+03'\c
+573:\h'-04'\(bu\h'+03'\c
+585:\h'-04'\(bu\h'+03'\c
+596:\h'-04'\(bu\h'+03'\c
+607:\h'-04'\(bu\h'+03'\c
+618:\h'-04'\(bu\h'+03'\c
+628:\h'-04'\(bu\h'+03'\c
+647:\h'-04'\(bu\h'+03'\c
+658:\h'-04'\(bu\h'+03'\c
+669:\h'-04'\(bu\h'+03'\c
+681:\h'-04'\(bu\h'+03'\c
+692:\h'-04'\(bu\h'+03'\c
+702:\h'-04'\(bu\h'+03'\c
+714:\h'-04'\(bu\h'+03'\c
+725:\h'-04'\(bu\h'+03'\c
+736:\h'-04'\(bu\h'+03'\c
+748:\h'-04'\(bu\h'+03'\c
+758:\h'-04'\(bu\h'+03'\c
+769:\h'-04'\(bu\h'+03'\c
+781:\h'-04'\(bu\h'+03'\c
+792:\h'-04'\(bu\h'+03'\c
+803:\h'-04'\(bu\h'+03'\c
+814:\h'-04'\(bu\h'+03'\c
+825:\h'-04'\(bu\h'+03'\c
+836:\h'-04'\(bu\h'+03'\c
+847:\h'-04'\(bu\h'+03'\c
+858:\h'-04'\(bu\h'+03'\c
+871:\h'-04'\(bu\h'+03'\c
+882:\h'-04'\(bu\h'+03'\c
+
+  Use a macro for repeated use of the same code.
+
+-.-
+
+Show if docman-to-man created this.
+
+Who is actually creating this man page?  Debian or upstream?
+
+Is the generating software out of date?
+
+3:.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/a=
+uthor]
+4:.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+
+-.-.
+
+Strings longer than 3/4 of a standard line length (80)
+Use "\:" to split the string at the end of an output line, for example a
+long URL (web address)
+
+902 \%https://github.com/newren/git-filter-repo/blob/master/contrib/filter-=
+repo-demos/filter-lamely
+
+-.-.
+
+Wrong distance (not two spaces) between sentences in the input file.
+
+  Separate the sentences and subordinate clauses; each begins on a new
+line.  See man-pages(7) ("Conventions for source file layout") and
+"info groff" ("Input Conventions").
+
+  The best procedure is to always start a new sentence on a new line,
+at least, if you are typing on a computer.
+
+Remember coding: Only one command ("sentence") on each (logical) line.
+
+E-mail: Easier to quote exactly the relevant lines.
+
+Generally: Easier to edit the sentence.
+
+Patches: Less unaffected text.
+
+Search for two adjacent words is easier, when they belong to the same line,
+and the same phrase.
+
+  The amount of space between sentences in the output can then be
+controlled with the ".ss" request.
+
+Mark a final abbreviation point as such by suffixing it with "\&".
+
+Some sentences (etc.) do not begin on a new line.
+
+Split (sometimes) lines after a punctuation mark; before a conjunction.
+
+  Lines with only one (or two) space(s) between sentences could be split,
+so latter sentences begin on a new line.
+
+Use
+
+#!/usr/bin/sh
+
+sed -e '/^\./n' \
+-e 's/\([[:alpha:]]\)\.  */\1.\n/g' $1
+
+to split lines after a sentence period.
+Check result with the difference between the formatted outputs.
+See also the attachment "general.bugs"
+
+[List of affected lines removed.]
+
+-.-
+
+Split lines longer than 80 characters into two or more lines.
+Appropriate break points are the end of a sentence and a subordinate
+clause; after punctuation marks.
+Add "\:" to split the string for the output, "\<newline>" in the source. =
+=20
+
+[List of affected lines removed.]
+
+-.-
+
+Put a parenthetical sentence, phrase on a separate line,
+if not part of a code.
+See man-pages(7), item "semantic newline".
+
+[List of affected lines removed.]
+
+Change a HYPHEN-MINUS (code 0x55, 2D) to a dash
+(\-, minus) if it matches "[[:alph:]]-[[:alpha:]]" in the name of an
+option).
+Facilitates the copy and paste of
+a) an option in UTF-8 text
+b) web addresses (URL).
+
+Is not needed in ordinary words like "mother-in-law", that are not
+copied and pasted to a command line (which needs ASCII code)
+
+897:\%https://github.com/newren/git-filter-repo/
+902:\%https://github.com/newren/git-filter-repo/blob/master/contrib/filter-=
+repo-demos/filter-lamely
+
+-.-.
+
+No need for '\&' to be in front of a period (.),
+if there is a character in front of it.
+
+Remove with "sed -e 's/\\&\././g'".
+
+[List with affected lines removed.]
+
+Lines longer than about(?) 1023 forces a mail program to use quoted-printab=
+le
+encoding which is bad.  Translater program is unusable.
+
+Line 877, length 1036
+
+Coming up with the correct shell snippet to do the filtering you want is so=
+metimes difficult unless you\(cqre just doing a trivial modification such a=
+s deleting a couple files\&. Unfortunately, people often learn if the snipp=
+et is right or wrong by trying it out, but the rightness or wrongness can v=
+ary depending on special circumstances (spaces in filenames, non\-ascii fil=
+enames, funny author names or emails, invalid timezones, presence of grafts=
+ or replace objects, etc\&.), meaning they may have to wait a long time, hi=
+t an error, then restart\&. The performance of git\-filter\-branch is so ba=
+d that this cycle is painful, reducing the time available to carefully re\-=
+check (to say nothing about what it does to the patience of the person doin=
+g the rewrite even if they do technically have more time available)\&. This=
+ problem is extra compounded because errors from broken filters may not be =
+shown for a long time and/or get lost in a sea of output\&. Even worse, bro=
+ken filters often just result in silent incorrect rewrites\&.
+
+-.-.
+
+One space only after a possible end of sentence
+(after a punctuation, that
+can end a sentence).
+
+[List of affected lines removed.]
+
+-.-
+
+Put a subordinate sentence (after a comma) on a new line.
+
+[List of affected lines removed.]
+
+-.-.
+
+Remove quotes when there is a printable
+but no space character between them
+and the quotes are not for emphasis (markup),
+for example as an argument to a macro.
+
+git-filter-branch.1:10:.TH "GIT\-FILTER\-BRANCH" "1" "01/19/2025" "Git 2\&.=
+47\&.2" "Git Manual"
+git-filter-branch.1:30:.SH "NAME"
+git-filter-branch.1:32:.SH "SYNOPSIS"
+git-filter-branch.1:44:.SH "WARNING"
+git-filter-branch.1:47:.SH "DESCRIPTION"
+git-filter-branch.1:60:.SS "Filters"
+git-filter-branch.1:67:.SH "OPTIONS"
+git-filter-branch.1:195:.SH "EXAMPLES"
+git-filter-branch.1:527:.SH "PERFORMANCE"
+git-filter-branch.1:641:.SH "SAFETY"
+git-filter-branch.1:890:.SH "GIT"
+git-filter-branch.1:893:.SH "NOTES"
+
+-.-.
+
+Use ".na" (no adjustment) instead of ".ad l" (and ".ad" to begin the
+same adjustment again as before).
+
+26:.ad l
+
+-.-.
+
+Section headings (.SH and .SS) do not need quoting their arguments.
+
+30:.SH "NAME"
+32:.SH "SYNOPSIS"
+44:.SH "WARNING"
+47:.SH "DESCRIPTION"
+60:.SS "Filters"
+67:.SH "OPTIONS"
+189:.SS "Remap to ancestor"
+192:.SH "EXIT STATUS"
+195:.SH "EXAMPLES"
+441:.SH "CHECKLIST FOR SHRINKING A REPOSITORY"
+527:.SH "PERFORMANCE"
+641:.SH "SAFETY"
+890:.SH "GIT"
+893:.SH "NOTES"
+
+-.-.
+
+Remove excessive "\&" when it has no functional purpose.
+
+46:\fIgit filter\-branch\fR has a plethora of pitfalls that can produce non=
+\-obvious manglings of the intended history rewrite (and can leave you with=
+ little time to investigate such problems since it has such abysmal perform=
+ance)\&. These safety and performance issues cannot be backward compatibly =
+fixed and as such, its use is not recommended\&. Please use an alternative =
+history filtering tool such as \m[blue]\fBgit filter\-repo\fR\m[]\&\s-2\u[1=
+]\d\s+2\&. If you still need to use \fIgit filter\-branch\fR, please carefu=
+lly read the section called \(lqSAFETY\(rq (and the section called \(lqPERF=
+ORMANCE\(rq) to learn about the land mines of filter\-branch, and then vigi=
+lantly avoid as many of the hazards listed there as reasonably possible\&.
+640:The \m[blue]\fBgit filter\-repo\fR\m[]\&\s-2\u[1]\d\s+2 tool is an alte=
+rnative to git\-filter\-branch which does not suffer from these performance=
+ problems or the safety problems (mentioned below)\&. For those with existi=
+ng tooling which relies upon git\-filter\-branch, \fIgit filter\-repo\fR al=
+so provides \m[blue]\fBfilter\-lamely\fR\m[]\&\s-2\u[2]\d\s+2, a drop\-in g=
+it\-filter\-branch replacement (with a few caveats)\&. While filter\-lamely=
+ suffers from all the same safety issues as git\-filter\-branch, it at leas=
+t ameliorates the performance issues a little\&.
+
+-.-.
+
+Use "\-" instead of "-" in web addresses.
+
+16:.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+897:\%https://github.com/newren/git-filter-repo/
+902:\%https://github.com/newren/git-filter-repo/blob/master/contrib/filter-=
+repo-demos/filter-lamely
+
+-.-.
+
+Put a (long) web address on a new line to reduce the posibility of
+splitting the address between two output lines.
+Or inhibit hyphenation with "\%" in front of the name.
+
+897:\%https://github.com/newren/git-filter-repo/
+902:\%https://github.com/newren/git-filter-repo/blob/master/contrib/filter-=
+repo-demos/filter-lamely
+
+-.-.
+
+Output from "test-nroff  -mandoc -t -K utf8 -rF0 -rHY=3D0 -rCHECKSTYLE=3D10=
+ -ww -z ":
+
+troff:<stdin>:902: warning [page 10, line 29]: cannot break line
+
+-.-.
+
+Generally:
+
+Split (sometimes) lines after a punctuation mark; before a conjunction.
+
+--1QreUpu+FrkDDLdd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="git-filter-branch.1.diff"
+
+--- git-filter-branch.1	2025-03-13 02:10:27.604859557 +0000
++++ git-filter-branch.1.new	2025-03-13 18:02:25.935434652 +0000
+@@ -894,10 +894,10 @@ Part of the \fBgit\fR(1) suite
+ .IP " 1." 4
+ git filter-repo
+ .RS 4
+-\%https://github.com/newren/git-filter-repo/
++\%https://github.com/newren/git\-filter\-repo/
+ .RE
+ .IP " 2." 4
+ filter-lamely
+ .RS 4
+-\%https://github.com/newren/git-filter-repo/blob/master/contrib/filter-repo-demos/filter-lamely
++https://github.com/newren/git\-filter\-repo/\:blob/\:master/\:contrib/\:filter\-repo\-demos/\:filter\-lamely
+ .RE
+
+--1QreUpu+FrkDDLdd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="general.bugs"
+
+  Any program (person), that produces man pages, should check the output
+for defects by using (both groff and nroff)
+
+[gn]roff -mandoc -t -ww -b -z -K utf8 <man page>
+
+  The same goes for man pages that are used as an input.
+
+  For a style guide use
+
+  mandoc -T lint
+
+-.-
+
+  Any "autogenerator" should check its products with the above mentioned
+'groff', 'mandoc', and additionally with 'nroff ...'.
+
+  It should also check its input files for too long (> 80) lines.
+
+  This is just a simple quality control measure.
+
+  The "autogenerator" may have to be corrected to get a better man page,
+the source file may, and any additional file may.
+
+  Common defects:
+
+  Not removing trailing spaces (in in- and output).
+  The reason for these trailing spaces should be found and eliminated.
+
+  "git" has a "tool" to point out whitespace,
+see for example "git-apply(1)" and git-config(1)")
+
+  Not beginning each input sentence on a new line.
+Line length and patch size should thus be reduced.
+
+  The script "reportbug" uses 'quoted-printable' encoding when a line is
+longer than 1024 characters in an 'ascii' file.
+
+  See man-pages(7), item "semantic newline".
+
+-.-
+
+The difference between the formatted output of the original and patched file
+can be seen with:
+
+  nroff -mandoc <file1> > <out1>
+  nroff -mandoc <file2> > <out2>
+  diff -d -u <out1> <out2>
+
+and for groff, using
+
+\"printf '%s\n%s\n' '.kern 0' '.ss 12 0' | groff -mandoc -Z - \"
+
+instead of 'nroff -mandoc'
+
+  Add the option '-t', if the file contains a table.
+
+  Read the output from 'diff -d -u ...' with 'less -R' or similar.
+
+-.-.
+
+  If 'man' (man-db) is used to check the manual for warnings,
+the following must be set:
+
+  The option \"-warnings=w\"
+
+  The environmental variable:
+
+export MAN_KEEP_STDERR=yes (or any non-empty value)
+
+  or
+
+  (produce only warnings):
+
+export MANROFFOPT=\"-ww -b -z\"
+
+export MAN_KEEP_STDERR=yes (or any non-empty value)
+
+-.-
+
+--1QreUpu+FrkDDLdd--
