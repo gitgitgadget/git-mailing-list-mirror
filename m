@@ -1,82 +1,81 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CF026773D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B3D261389
 	for <git@vger.kernel.org>; Thu, 13 Mar 2025 14:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741875481; cv=none; b=eVt0S3M93laAXxLsUE7l+rvz9KFc6dklruhdqn6FUBOjfRyGUuC0I5i5QFlS9rkoFMPKAXbyOeQL+AqgGXLX5LWPueqLRUZRWVxVJrByOJi+6yKQCA8kKeRopPqo1H5Ky0+BazzHxTH5cyuTGtNeESL1VAncuhl6sguQvKtRTv4=
+	t=1741875484; cv=none; b=ML7dio4/39OAmMDgsS2zcS54rVJ4r7+AzNBS5RSzukQSHT9HHdYiDWgLrcpzkmku7VWwSUIBf+RVgc9FDtpmAhMD53DuWsE/Np+WyxoqVw/Fbii1ukyRzLHZLt9T+Ab1DC1YoGq0FG1TEJ8gVPnzj+v0xYQWJDyJqVTPnTZpTx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741875481; c=relaxed/simple;
-	bh=EPKBuz+se1g0fsXex8Fez681P4JfntC8LeZVz0DVBcs=;
+	s=arc-20240116; t=1741875484; c=relaxed/simple;
+	bh=gekX9SCTfYjtVUv5Ir/6YV1CaH/euSiiRvZPRgfpKu8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=p5XCx3WB2Bc5x+9kMQQvYOnhlA/lcbb2cAQxzvSkXSI4uNY64fw0k86Keej1wWv5bpvZeiBiJiEuTWGi1O3moR3lL73GP74cSiK0ogqHhOsDCU59sIaXShKJwmIVNYi1EhEZkaV3KvCi3U1N4WqyWquj/cVXLpyIfoU8bF6OEGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gwLA5iYi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qxW3uUjx; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=eHxgVkTPj86Gy56f2k0lmuOkHUpcMnV0+CXUxdenjiG7tBCMiFUP5bWadNeBUDoiAxSktEIr9f8WvCQrrynppR1DHMjS6XfxU4BCme46k4XE6Ri6PMIJM5g2/ZykgAF8YyIAh3D/GT8o6c32vtAfI8D5jea/OkkaqwIYgkJ2Ens=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WS2132cQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HDTw036y; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gwLA5iYi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qxW3uUjx"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 83DBD1382D3A;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WS2132cQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HDTw036y"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4049E1382D32;
 	Thu, 13 Mar 2025 10:17:58 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 13 Mar 2025 10:17:58 -0400
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Thu, 13 Mar 2025 10:17:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm1; t=1741875478;
-	 x=1741961878; bh=Uv+2hK3E17AFMT/Sf1tqoz3hDWcQM3JvdPM0flCSKF8=; b=
-	gwLA5iYiiE0Xyv1iXWeHU5Bdw76gN4la9eMxktqxoAPv7XLDFxXgrpD+r37o+JJC
-	rJrI4Fott5inqTc7gAqeMqHO3DbecDX+Cz85Ia37nG8car92CjSnZq65HMSV8Qny
-	agcMWoom+lpVHjBUrNJTz7ggIUyFBs0Tg2k4+e2R5Y1mEXyzXJLusaRU6vugF5M8
-	JaxqIDNN0KNVZ+O9d0V1ZkGmCzNgFUbTzoTOroMdYz+pHf04cQW05mgQpBDJTgfp
-	JWBsZUH/JYPB4car3gC0Os9JBRekmhV0jkT292uoSYD4YkS1l4nxjiBnRftZ8mSR
-	GUitmmfremH9s1jEAzcJHA==
+	 x=1741961878; bh=hf13J5KwnYPb/vNCqt3K8r2BTndUfxe56+Gv25YhszY=; b=
+	WS2132cQEnCgV7eWIPvKSq9E/Zr/1o8GAhAQ64Bdkmkq5uxicN87bBNVZfNnFu6C
+	w+dWrgl3/8iMweOTXWr3SMjly5sLvuGcUwR/0TMrkkJ8YYBr837YkeINah8l9ADt
+	DogZI2TvKs91Q0u0v7ZkwRanQHV5JBKW+IMcHXbyLXN7HSzRuYm7epgFqYxEl88W
+	TiRUJZmS0bz/b7PvraBLLGe+0WzOZM4bzO/vCn9M5nJBGAGDqjnoK8rVqYIKvcHF
+	fZh2DNQ0t9haw54kbt7UQe/uMKde4u7VfvmsoCxchlC8Ee1S9d6w8mKKeB77cam9
+	1wrq1mqlRIRyETArjFtllQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741875478; x=
-	1741961878; bh=Uv+2hK3E17AFMT/Sf1tqoz3hDWcQM3JvdPM0flCSKF8=; b=q
-	xW3uUjxg4HQ5Xvj6fVij8wsRmRsrRLOESe4jt66HMnz7vxcI/GZ3Uq7YsY5BGHk9
-	OSGDR9xxig3UnSar/IawIb3EBhRvttFJL/QJDO8ZlNoCKZqgS/EDKraExJo9V34r
-	YGSsDCEJNdqkm5QMIwC1R79vb4hUXDm+Ic1Q5a1pp8WfsVubBS/zBAF659oSy8gQ
-	MxfFtWJITE7OcFoOg3O24mBHCa6pyoM05576lfVEC78xX1nWtNK62h/+LywPAlR0
-	TDurBeefY58ia3SE8lTzZsxZiyHOPxBbJFMA307xKyzG+Hxx64X0VILgkibd6/IB
-	TksT43p3r1h2zJv+LtPnA==
-X-ME-Sender: <xms:FunSZ74E-l9vHrwvRA4ljjsowVCIUfGkwEyX0pemk8nI6j5sfjON4Q>
-    <xme:FunSZw7V1Og1MuC_JOYJ-Yw7fMKtNSR5JsSVw0F7JWmjcaIg9wL8TrP--SzWFHHYD
-    z-LZ0yYJJmYlrvc9A>
-X-ME-Received: <xmr:FunSZyejUd53nPIN7_6JbflGujzoJcQmf9qPIFU03_zVaJ5WcZYJfo1XumWec83pu5iCca6w_SkY99oF1yUhJjq7OXlxyHnJrSoQ128GA-bzgY_JAw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekudeiucetufdoteggodetrf
+	1741961878; bh=hf13J5KwnYPb/vNCqt3K8r2BTndUfxe56+Gv25YhszY=; b=H
+	DTw036yZ2xCQf29bmZOgahaO4cevLDu2YefT7jCUaTWYFsbLRXoGBL4sjjEQqnJ9
+	z5G5AytApRWRSC8P0dAWWz9FyR8B8DUYPnothJBtegG/YkjSlDYkhPgP6BWhEUfA
+	GS3dvgP2vJDJMN6iacxz9O0WTDMD6q+Y1UEdZKaPUZUrUhQ/kQs+dEchYcoE500t
+	btCOoOBu8a88Dom9DDFSshsvIePkzdhCR25RnuXaCWgeSX2nvMOlPc36QL1YT61S
+	7wutBfRENNoEroUzhc+6RFb+Vtiik6MzTI2IUshARKJdGajq2S53vHkXMaxhnfML
+	vklCACHu9Z8TkK6VL3lgw==
+X-ME-Sender: <xms:FunSZ8bVhDNHhx4km69DXe2azJvYPD4Bxw7xPpVSN-1JFwLCCcENHg>
+    <xme:FunSZ3YFHVYsoTgc3g1uRXJLAmJ05pCjKAvWNN_3spHYttxrgOE92WT7p1sTxtOyO
+    33qTQgqavOE4UbbIw>
+X-ME-Received: <xmr:FunSZ2-vaxEuKXkOZXa5LSLhe2UXC4H-M7t1XeFSWkXpqN7tWECnX6t6zNgYt9WLyKJ_IwEOCRKuwb9zpW1TY3hJVnNWxR-4SA56cuQJV18uj4-oOQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekudejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeeujeeivdeufefhvdeuteetteffkeehieelgfei
-    feegvdeuleekgfejgedtleehjeenucffohhmrghinhepmhhitghrohhsohhfthdrtghomh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
-    phhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinh
-    esghhmgidruggv
-X-ME-Proxy: <xmx:FunSZ8LtLoCu2gwkPsG7oQ7COHAFfX1-MbGZ7Sh1oyogBzSdCoW_gQ>
-    <xmx:FunSZ_JLs2SyZd64ByqefyY0wiKtLxfXLLwVAqA8RC9TtYh7IIm5iw>
-    <xmx:FunSZ1xekVb7BgKoy-zS0rilQN_PLnKXQ55OjtmTsyRT8gT65d76kQ>
-    <xmx:FunSZ7JmGa5XDzClSCtmjJ616gBJaKbjBYdjhPfBAy9NuludVPVvZg>
-    <xmx:FunSZ32zTB9GMpYm1WZDPd9rgq83fRozFaMDcHzzqmSB8Lkj7mRGw_QR>
+    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepjhhohhgrnhhn
+    vghsrdhstghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:FunSZ2rYrmuODBrC1xhHtmWkUClpogMssiBVTwmA3ih2MqNEN3_RkQ>
+    <xmx:FunSZ3ol3ZlpcQYL-v4DL5FCBlx22YUNQIgCtN9nf5-zbiC-cMfEaw>
+    <xmx:FunSZ0QtMwxqTMLw_c5Wf4EcGqaRGLiPVif7g1orAYB-OiZtEUSM3g>
+    <xmx:FunSZ3rvwlHj-hddQrCewnhTN6cnZOL5pytQHgbW9QppFekekdsTeg>
+    <xmx:FunSZ2V3MgjBSi_QEfhFNll-_fn-7h14-Ij3PTWQsn4Xtzubi_G7MW3A>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
  13 Mar 2025 10:17:57 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7ba5e19e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 13 Mar 2025 14:17:55 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 777082d9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 13 Mar 2025 14:17:54 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 13 Mar 2025 15:17:44 +0100
-Subject: [PATCH 2/2] compat/mingw: fix EACCESS when opening files with
- `O_CREAT | O_EXCL`
+Date: Thu, 13 Mar 2025 15:17:43 +0100
+Subject: [PATCH 1/2] compat/mingw: handle O_CLOEXEC in
+ `mingw_open_existing()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250313-b4-pks-mingw-lockfile-flake-v1-2-bc5d3e70f516@pks.im>
+Message-Id: <20250313-b4-pks-mingw-lockfile-flake-v1-1-bc5d3e70f516@pks.im>
 References: <20250313-b4-pks-mingw-lockfile-flake-v1-0-bc5d3e70f516@pks.im>
 In-Reply-To: <20250313-b4-pks-mingw-lockfile-flake-v1-0-bc5d3e70f516@pks.im>
 To: git@vger.kernel.org
@@ -93,101 +92,57 @@ Cc: Johannes Sixt <j6t@kdbg.org>,
  Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.2
 
-In our CI systems we can observe that t0610 fails rather frequently.
-This testcase races a bunch of git-update-ref(1) processes with one
-another which are all trying to update a unique reference, where we
-expect that all processes succeed and end up updating the reftable
-stack. The error message in this case looks like the following:
+Our MinGW emulation of the open(3p) syscall uses one of three different
+code paths depending on the flags passed by the caller. Ideally, we
+would just use `_wopen()` for all of these directly and instead rely on
+the Windows SDK to implement the logic for us. But unfortunately, this
+interface does not allow us to set the `FILE_SHARING_*` flags, which we
+need to have control over to implement POSIX semantics.
 
-    fatal: update_ref failed for ref 'refs/heads/branch-88': reftable: transaction prepare: I/O error
+One of the code paths is for opening existing files, where we end up
+calling `mingw_open_existing()`. While this code path is executed when
+the user passes `O_NOINHERIT`, we don't know to handle `O_CLOEXEC` yet,
+which causes a couple of code paths that use the flag to not use the
+emulation. The consequence is that those code paths do not support POSIX
+semantics because we don't know to set the sharing mode correctly.
 
-Instrumenting the code with a couple of calls to `BUG()` in relevant
-sites where we return `REFTABLE_IO_ERROR` quickly leads one to discover
-that this error is caused when calling `flock_acquire()`, which is a
-thin wrapper around our lockfile API. Curiously, the error code we get
-in such cases is `EACCESS`, indicating that we are not allowed to access
-the file.
+Supporting `O_CLOEXEC` is quite trivial: we don't have to do anything,
+as Windows already closes the file handle by default when exec'ing into
+another process. This is further supported by the fact that we indeed
+define `O_CLOEXEC` as `O_NOINHERIT` in case the former isn't defined in
+"compat/mingw.h".
 
-The root cause of this is an oddity of `CreateFileW()`, which is what
-`_wopen()` uses internally. Quoting its documentation [1]:
-
-    If you call CreateFile on a file that is pending deletion as a
-    result of a previous call to DeleteFile, the function fails. The
-    operating system delays file deletion until all handles to the file
-    are closed. GetLastError returns ERROR_ACCESS_DENIED.
-
-This behaviour is triggered quite often in the above testcase because
-all the processes race with one another trying to acquire the lock for
-the "tables.list" file. This is due to how locking works in the reftable
-library when compacting a stack:
-
-    1. Lock the "tables.list" file and reads its contents.
-
-    2. Decide which tables to compact.
-
-    3. Lock each of the individual tables that we are about to compact.
-
-    4. Unlock the "tables.list" file.
-
-    5. Compact the individual tables into one large table.
-
-    6. Re-lock the "tables.list" file.
-
-    7. Write the new list of tables into it.
-
-    8. Commit the "tables.list" file.
-
-The important step is (4): we don't commit the file directly by renaming
-it into place, but instead we delete the lockfile so that concurrent
-processes can continue to append to the reftable stack while we compact
-the tables. And because we use `DeleteFileW()` to do so, we may now race
-with another process that wants to acquire that lockfile. So if we are
-unlucky, we would now see `ERROR_ACCESS_DENIED` instead of the expected
-`ERROR_FILE_EXISTS`, which the lockfile subsystem isn't prepared to
-handle and thus it will bail out without retrying to acquire the lock.
-
-In theory, the issue is not limited to the reftable library and can be
-triggered by every other user of the lockfile subsystem, as well. My gut
-feeling tells me it's rather unlikely to surface elsewhere though.
-
-Fix the issue by translating the error to `EEXIST`. This makes the
-lockfile subsystem handle the error correctly: in case a timeout is set
-it will now retry acquiring the lockfile until the timeout has expired.
-
-With this, t0610 is now always passing on my machine whereas it was
-previously failing in around 20-30% of all test runs.
-
-[1]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew
+Adapt the code so that we know to handle `O_CLOEXEC` in case it has a
+different definition than `O_NOINHERIT` to improve our POSIX semantics
+handling.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- compat/mingw.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ compat/mingw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 101e380c5a3..fb61de759c7 100644
+index f524c54d06d..101e380c5a3 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -644,6 +644,19 @@ int mingw_open (const char *filename, int oflags, ...)
+@@ -560,7 +560,7 @@ static int mingw_open_existing(const wchar_t *filename, int oflags, ...)
+ 	int fd;
  
- 	fd = open_fn(wfilename, oflags, mode);
+ 	/* We only support basic flags. */
+-	if (oflags & ~(O_ACCMODE | O_NOINHERIT)) {
++	if (oflags & ~(O_ACCMODE | O_NOINHERIT | O_CLOEXEC)) {
+ 		errno = ENOSYS;
+ 		return -1;
+ 	}
+@@ -632,7 +632,7 @@ int mingw_open (const char *filename, int oflags, ...)
  
-+	/*
-+	 * Internally, `_wopen()` uses the `CreateFile()` API with CREATE_NEW,
-+	 * which may error out with ERROR_ACCESS_DENIED when the file is
-+	 * scheduled for deletion via `DeleteFileW()`. The file essentially
-+	 * exists, so we map this error to ERROR_ALREADY_EXISTS so that callers
-+	 * don't have to special-case this.
-+	 *
-+	 * This fixes issues for example with the lockfile interface when one
-+	 * process has a lock that it is about to commit or release while
-+	 * another process wants to acquire it.
-+	 */
-+	if (fd < 0 && create && GetLastError() == ERROR_ACCESS_DENIED)
-+		errno = EEXIST;
- 	if (fd < 0 && (oflags & O_ACCMODE) != O_RDONLY && errno == EACCES) {
- 		DWORD attrs = GetFileAttributesW(wfilename);
- 		if (attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY))
+ 	if ((oflags & O_APPEND) && !is_local_named_pipe_path(filename))
+ 		open_fn = mingw_open_append;
+-	else if (!(oflags & ~(O_ACCMODE | O_NOINHERIT)))
++	else if (!(oflags & ~(O_ACCMODE | O_NOINHERIT | O_CLOEXEC)))
+ 		open_fn = mingw_open_existing;
+ 	else
+ 		open_fn = _wopen;
 
 -- 
 2.49.0.rc2.394.gf6994c5077.dirty
