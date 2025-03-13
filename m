@@ -1,89 +1,98 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B83A1D5CD4
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172AB142E6F
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741886283; cv=none; b=YnHDM4f1CWNv0SMucLUCKBVEl1oSFohMOk0IRhOelCcbIJNzYE1ZkOGcGRdEpqzy8doPOdBcjsflNsv+66KC6lxNmA/oycMgT25yEskIYgoO8Jc+fNxEP1w73xMQI0Tu7XmckTC1HVWpbarllCLAI7VaIi+EtmcFeb5Aje5tqHo=
+	t=1741886491; cv=none; b=YoVWP5Tz3wwp+958/NferQuRWW18JxFDrXcdEsE72Jiv6a8aiyFBkzbG33uFQZBOe3V7uzbMlzII2c6HmFzxrZuSL5ixAJjvwQiHaU87te4aV0gNshoqX3yGhFxZ8S+SWBUodZXdOMMLpwQ2x17xC0FHrxkxQP4NlKg8hpaPzR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741886283; c=relaxed/simple;
-	bh=a5KKk5jbQRcZICRJ2iULXUIEXC8mOg2cc0u0p3dtyMk=;
+	s=arc-20240116; t=1741886491; c=relaxed/simple;
+	bh=u7nkfWC4SzEomuvH9M6UjRN6DnNLmQYnu8DuUIeZLEc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=t9Byc1Jgf4kZnmjytbIPyBntwwaW5Ugi0r3zxThRO1mOPt3ixiVfYdbpFoyGaDh2PQf1I/zgqKgZwoXK46imVc6v3LKxBW593zI254VYQD9NMevI5yKrqczPjisRdgC7pID3QwCn/BSVTDTBW1LZchHqO1BO9BQ5vNzQR70LzLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rWuXTx1L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GJ55AYlf; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=QScPhhjZgsL6K9eJwlVJ3+toXVvgzqD1/Aab/fkP4E6AU05oHxm9osXEUCaqLgaaRM/hMFtWW1tbuJZ0z5Zu6COOfakn5JuLysTlT8eQqbgB99jA2cquMTgwG6X5tJNU8wQ0QzMkdBQHHtNyauZyIKDI9R1DEiNmGaFGR8sUAVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g18F0tmr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qeZTPunJ; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rWuXTx1L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GJ55AYlf"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 736FA138315B;
-	Thu, 13 Mar 2025 13:18:00 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Thu, 13 Mar 2025 13:18:00 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g18F0tmr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qeZTPunJ"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 152C71380A52;
+	Thu, 13 Mar 2025 13:21:28 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Thu, 13 Mar 2025 13:21:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741886280; x=1741972680; bh=7DhuJLUcXo
-	2LbhIUR3cRPYaP7wnT3SIdiRlMgNHW9r8=; b=rWuXTx1La6kTGfr+DqY81K21Zy
-	IvD0ryA3831PjMGnN4O3hDddaa/YOKIpWtenw0OTWWgEoTWHZwd8tO2zmhSRoGGv
-	tHcBLFjJbFkSBjb3nCHG51gahJEfW9B9t8mrIaKRni7M8I/pCRLdAE/vmHtfUmc/
-	CbWucXLlL5T9l6xP+G8SxK1xwcR7cFU+Z9XtmXmqOmo6Y5YutEiCkAsIRB9cjOM2
-	KXwK5lHm+HTwC5TOPS+EVAhZim/Py9xXwt8u8APVCQNQ7vHANzsBNQlh91jOZcAh
-	b127D80SporwZn4whCbD5cXUtFpGXLfxMUNi0cIXMk98X7bHWmSGxbIE2W0Q==
+	:subject:to:to; s=fm3; t=1741886488; x=1741972888; bh=brO8O5ccZo
+	QjKr1W7+5OS03NgShYBGIoLpHDuTFkqLQ=; b=g18F0tmrIrY1WSFlpSt9WjY7zb
+	hKFQB7enQYj9pmsoLKKYrkAr1EOURtydlkhDrq+I9g3h5gjA7FXG42dMt0gIOMOM
+	reuLPoNX1pJSzIdtVtqRwVagV1VG400YVW1U2x8H7sXc6y/N2MMXO+VnSrbVMOok
+	xwBl5aNR9cOptwbBtIbcw/ksTlV2RIEBa0ZEDczVCMfefxsuaMAWk0KePtE9Gc2b
+	vA1qf320KpcPkotaAYvnoWwpOkg56wxZ367CZtUc2GnZraRwQ2id8zvJLA7tU1Ew
+	ZPAZ80gLBiwIl10I7GXAEnsPVYrtV+eoAplocxyUu4KarZFP2EWipRfKudSw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741886280; x=1741972680; bh=7DhuJLUcXo2LbhIUR3cRPYaP7wnT3SIdiRl
-	MgNHW9r8=; b=GJ55AYlfgVxajr97aykCdJxZsePEeF+1EurNVV8WELJrEIDO13f
-	/jlOkev3Vlz0sYWQS6thL7tiwUcebk5bbNUWuxfpwiFm4lNynRE4NpcptNTMLLoW
-	mxy6O7yyBmG0uQNxackBCQ4HAhW7VoQ2zS1VYOhtD3mIlZbkO2I9lXegyK7nlxQO
-	Y0ggVhkfsoFwVNn/GcbdVrUC08JsYqYBA6pBZd0f2avv92f6Mg0Am4z9wwVcLfIa
-	3A32fvfohLqj63/wWfnIngh8g6Oqigc8703r1PHe5nMLHR/OqKlyxU/VFhaUx9iv
-	tWcJ6UNFzNxr2UMYxv7WRFUhQP2z8H3DdlQ==
-X-ME-Sender: <xms:RxPTZ_OArtEswyFxZuJV7FkPXrkkijO3aPOKddGSGmoA0zBznjzUVg>
-    <xme:RxPTZ59VIfGtF8RHH1C10ZfM37X3pdsM1a4iCnXirNkQHGVRyleL4Sp_srKHxaPiB
-    b4qBJoMray64IBTIQ>
-X-ME-Received: <xmr:RxPTZ-SmEmaIeMAtAeaB-E5Sk6XRYVKLsuKQecdA8XwZt5wO1GstMgY0TCN5t7A4wVwFf9kT01xGU_ljQczJTLFE2RXHgdb5Ch3yx_g>
+	1741886488; x=1741972888; bh=brO8O5ccZoQjKr1W7+5OS03NgShYBGIoLpH
+	DuTFkqLQ=; b=qeZTPunJgwD0IwcXWmmXcHT3XMktnUhMaDcxbMORL7BxErvf1wc
+	DwjmTgIUB/vRe/ge/pb+jD9SHPsvGyiy9KU0Vl1C/WxMRX8dV6SNJGjafxfXN3id
+	vt88Wcxar3xTNPnQMDk4AJLZBsGem1Jf05M63Jp6PyYNTkNKcKIYeEG/LZVnZW98
+	4vsTcWxRnAtUSMjvPUWPk3ZzoEKBwZlCTicq+YAZgtAfRyBm72Od3/HuwQbM7hNN
+	cWWQpk6v/8h0Qq4sj2bQNNTIEU1LQn676RaS4wZAmKspePz+ovVhSKMcVLOyeP/6
+	88biH8yVV7qPMiLO3M15idz388r+mGLJbAg==
+X-ME-Sender: <xms:FhTTZ5z6Iu7bHNTkGidHFnQPo5Gsn-z3TGB2tfDst9i3kE3GEFoNuw>
+    <xme:FhTTZ5T40mlaoXQcYjP_y670jALvpqkp3-TMAY2n2alAwGDhgw_odPN6UfOLJUFJM
+    OOE_uXMecftPztJ6A>
+X-ME-Received: <xmr:FhTTZzUn-RG0I7t3n1oK46aEAVZ77Ms54j3Hw5SSz0Hs0monG4rwgs0UTzoYpu212vDP85f_dinS9rYHNcFYNnX6Xvr9VeSQVXxXO2k>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekheefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
+    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
-    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:RxPTZztT9Q5rX2_dEk0itaXyx47YtChqEnizzjFE3iI62VHxdbO8eA>
-    <xmx:RxPTZ3c24-cao6BC9S6qO1DJRlfOzrMq4R4zjVw-ONrko-951ooNaw>
-    <xmx:RxPTZ_22R8fE16PLzWl86o2uv2CdrykU60fIJxh61u_ToI9ahZb1LQ>
-    <xmx:RxPTZz_JydGI6O19npWto4Xbr4TCddlPsDlI0KL5uo8hPVUl5nT5pg>
-    <xmx:SBPTZ_QI2tOK5oNfRNMBnNDRiHH2o-Q56pnhK5OxYQnwsSHHXMbCiBEH>
+    tghpthhtohepvddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeifohhrlhguhh
+    gvlhhlohdrnhgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtqdhluddtnhes
+    ghhoohhglhgvghhrohhuphhsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopegrshhhsehkrghmsggrnhgrrhhirgdrohhrghdp
+    rhgtphhtthhopegrrhhksegthhhordhrvggupdhrtghpthhtohepsggrghgrshguohhtmh
+    gvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepughjmhdttdhnsehmrghilhdrrhhupdhr
+    tghpthhtohepsghithhighgthhhisehmvgdrtghomhdprhgtphhtthhopegvmhhirhgpsh
+    grrhhisehitghlohhuugdrtghomh
+X-ME-Proxy: <xmx:FhTTZ7i7DuB-U-90kb9cwOV4UZN-JOBdjwX7WBIC9dxp4fQQ2tQ_uQ>
+    <xmx:FhTTZ7AB0XyAuc2Igg9N5Ak_gm4bll3SxF5h6VcU1z_Rz_UhOExsVQ>
+    <xmx:FhTTZ0J0qJtevpjZGxAzIHCVfyAUjkW1rJaThxr-swnJFP3i_masJw>
+    <xmx:FhTTZ6BdonqGjUVXsvMLHTYwad9ORL_BSw8h2jcbVg5t-zmHwcy6dw>
+    <xmx:GBTTZ6Aa6dnXPlADpRZGYqVcFtS7N5r2SfQK_GPeHR-XmMeoM2c_kab6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Mar 2025 13:17:59 -0400 (EDT)
+ 13 Mar 2025 13:21:25 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 0/6] pack-objects: freshen objects with multi-cruft
- packs
-In-Reply-To: <Z9Hl+UpnEq07qFeW@nand.local> (Taylor Blau's message of "Wed, 12
-	Mar 2025 15:52:25 -0400")
-References: <cover.1740680964.git.me@ttaylorr.com>
-	<cover.1741648467.git.me@ttaylorr.com> <xmqqr0332un3.fsf@gitster.g>
-	<Z9GpQqm4YBvWF7Ff@nand.local> <xmqqfrjixfwe.fsf@gitster.g>
-	<Z9Ha2mFXpojI+aIR@nand.local> <xmqqa59qxc9b.fsf@gitster.g>
-	<Z9Hl+UpnEq07qFeW@nand.local>
-Date: Thu, 13 Mar 2025 10:17:57 -0700
-Message-ID: <xmqq1pv0q27u.fsf@gitster.g>
+To: Jiang Xin <worldhello.net@gmail.com>
+Cc: Git l10n discussion group <git-l10n@googlegroups.com>,  Git List
+ <git@vger.kernel.org>,  Alexander Shopov <ash@kambanaria.org>,  Arkadii
+ Yakovets <ark@cho.red>,  Bagas Sanjaya <bagasdotme@gmail.com>,  Dimitriy
+ Ryazantcev <DJm00n@mail.ru>,  Emir SARI <bitigchi@me.com>,  Emir SARI
+ <emir_sari@icloud.com>,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>,  Mikel
+ Forcada <mikel.forcada@gmail.com>,  Peter Krefting
+ <peter@softwolves.pp.se>,  Ralf Thielow <ralf.thielow@gmail.com>,  Ruggero
+ Turra <ruggero.turra@cern.ch>,  Teng Long <dyroneteng@gmail.com>,  Tuomas
+ Ahola <taahol@utu.fi>,  =?utf-8?B?VsWpIFRp4bq/biBIxrBuZw==?=
+ <newcomerminecraft@gmail.com>,
+  Yi-Jyun Pan <pan93412@gmail.com>,  seoyeon-kwon
+ <seoyeon.kwon@navercorp.com>
+Subject: Re: [GIT PULL] l10n updates for 2.49.0 round 1
+In-Reply-To: <20250313141445.110468-1-worldhello.net@gmail.com> (Jiang Xin's
+	message of "Thu, 13 Mar 2025 10:14:41 -0400")
+References: <20250313141445.110468-1-worldhello.net@gmail.com>
+Date: Thu, 13 Mar 2025 10:21:24 -0700
+Message-ID: <xmqqwmcsonhn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,16 +102,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Taylor Blau <me@ttaylorr.com> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> Perhaps in the longer term, but I think for the reasons above that the
-> existing behavior (plus the new patch from v3, which we should still
-> queue) is sufficient.
+> Hi Junio,
+>
+> Please pull the following l10n updates for Git 2.49.0.
+>
+> The following changes since commit 87a0bdbf0f72b7561f3cd50636eee33dcb7dbcc3:
+>
+>   Git 2.49-rc2 (2025-03-10 08:47:08 -0700)
+>
+> are available in the Git repository at:
+>
+>   git@github.com:git-l10n/git-po.git tags/l10n-2.49.0-rnd1
+>
+> for you to fetch changes up to ab7cb7e2634bc84e87074cff1035efcc1a5ed27d:
+>
+>   Merge branch 'l10n/zh-TW/2025-03-09' of github.com:l10n-tw/git-po (2025-03-13 21:57:56 +0800)
+>
+> ----------------------------------------------------------------
+> l10n-2.49.0-rnd1
 
-The older iteration has a few loose ends <Z8l5hxNjEOALl_g-@pks.im>
-we would want to tie.  Elijah's "decision to combine should be made
-at half or below the max size to always make a progress" would also
-makes sense.
-
-Thanks.
-
+Thanks.  Pulled.
