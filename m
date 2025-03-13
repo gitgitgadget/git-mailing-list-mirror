@@ -1,99 +1,96 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3013217E
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 06:02:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9E4645
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 06:23:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741845774; cv=none; b=AvmBM/DBx3mxO4vZ5COXIb23JzTFhs8nYqyYSyO3DWOjZG3XYP9Y1E6Lbg03scbDon/6ClMoZrxOVWzfrNs4Y32XPjzLRHZC5F3YVeKvtkIBsto2+kt+eu7q7THWauMjLjU1rU0KW/HApg+M3QTxM7+edTq/lqU88NEdlshvitY=
+	t=1741846989; cv=none; b=cMe221hWM3pUNwrBvGA0zG9LEfcJg6ZY4aFGqb2YGRMSpxqSPPrN4l6aRVg8zSl2pTOCsYoO82/J3PJL7NJJ51r4jg31URDeFzcf7878o1fqNI82AB/Vdr+1JBbVF8RtobKG6r+SMBoPGq181x3VxHrd0DmZGnkoRuJGH2//KqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741845774; c=relaxed/simple;
-	bh=lg9K2A/qyzZkKTcjivIBMMqIqJegh3d3DXmDTTlfvQg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dbv6e58kCh4uVVVM6S+lHGw61kmS1phJHUegxA1VQiNOwj7I6Yq1P7G2x11Sw+JD59V+RXA8TX+POUuAaVNBbdcaLySUxFMTlA740hIBsFHnzlRJ1kNfBtgfsLrQmmW6TTMQWe+NtYHNypgaWmwcS9KfSrUCJK+hdL5y7apQgtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ixyj2gEN; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1741846989; c=relaxed/simple;
+	bh=HLitd1UjwS5bL39lpUXy+pB5J39hobsT7j5T+cdxYkI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=c8VIOYBeEboKCwNXuZdK3jpouUAQ7wM5U9bXAq+6R2oR2qilpXeN3JVkt291J065nPOR6jE5Nqs2YZDrJT6JEHIg3M2D+jJrgKJXG09kZUx5ovgBCPuNkAHsYETYRAzK26X6YnMUSRJbmwCI/IYCaXQyONXQg+7OeFDa5SYCC64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WGGB2Wew; arc=none smtp.client-ip=209.85.166.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ixyj2gEN"
-Received: (qmail 21130 invoked by uid 109); 13 Mar 2025 06:02:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=lg9K2A/qyzZkKTcjivIBMMqIqJegh3d3DXmDTTlfvQg=; b=Ixyj2gENNK9axxI/g4qz8mfgszzYMdvn5ATFFUMc3DOggeOlnqi742D3fkfKR662/U0clMS0co8WmpYdlSFtTEdn5mVUaZHj6DP4VPrGrgLlQCSFE+BHwEi+xdI07w6d6YtL8A/dtohAGyFEFmcZg+sLw/OP4ByZdCVaKMOJymSI61RUsuIlqTiZq/OPm3kJpv4EcZHj5rj27UkujVbGkxQKdmw7GR+uiiUIOMPzQPQeKrBioZwjOhRxwnMRiH8SOC9LpkAYf189DkmAY44MQwfAkp0MOspbv8uGWrrm1TaFFVjV7jKZF47qrVap/PldbnNF0mMFEUAsmkWSd2P0gA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Mar 2025 06:02:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11939 invoked by uid 111); 13 Mar 2025 06:02:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Mar 2025 02:02:50 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 13 Mar 2025 02:02:50 -0400
-From: Jeff King <peff@peff.net>
-To: Peijian Ju <eric.peijian@gmail.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com,
-	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com,
-	jltobler@gmail.com
-Subject: Re: [PATCH v11 8/8] cat-file: add remote-object-info to batch-command
-Message-ID: <20250313060250.GH94015@coredump.intra.peff.net>
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20250221190451.12536-1-eric.peijian@gmail.com>
- <20250221190451.12536-9-eric.peijian@gmail.com>
- <20250224234720.GC729825@coredump.intra.peff.net>
- <CAN2LT1CsjA7V_y-OqDNREkpERHEBcx627JhCrzg9GHfWS=b0NA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WGGB2Wew"
+Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3d46aaf36a2so4544795ab.3
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 23:23:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741846987; x=1742451787; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ve7ipnukD5+sILPZywaecngHzzyXAKDOvg98fhwsIAY=;
+        b=WGGB2WewydgCRqTwTcXKEHxyHeNco5tlabxTOCVKg5f4SLhtdch/uYizzVMpdTuLX+
+         5CHH329BXADOfq9yugos6P6OgAahdSDvXNQ1V1hsehbAR5QfKuxvrilgT+tzsn1vDcsR
+         u8h6QeZNN+6RmAKQ6/fWRr1zQqDtJwMmexSf9NLDZvFSI3kzDjRrgUwa/19BH+XoCSX+
+         7g1cUIH8Xfw8S5VfbOl3af8imrILXkZAcEcfXjyCHXD/3xilpxnNfwqjK9pisEpZWJMu
+         7IbDyGwVsNq0PlFHO3Bvkf3OtAtpdr3etDmfo+mj/aGAXq5ydvHn6KJfAECj7010Cy5y
+         Bv4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741846987; x=1742451787;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ve7ipnukD5+sILPZywaecngHzzyXAKDOvg98fhwsIAY=;
+        b=rJ8nmAv2FFOA6b2TCdwOml9u9f72MsH9lqaXK/NMfjD8W8pIq9TaNPAPYbBvWP/igQ
+         Jwv8bExMQ0aYj8n75cibXwCDRnNniXCsAOEWlrPtvSRReE8IM5Tef2MyjLTS5J0I6gSM
+         LLvNW2rzLTTHuggLeWSNHIsp+5afyM1YIObNUa24e1JZtwneU7/pKb6tZiC0MVcS7k2b
+         CgO5NfgvJqjizGrnClqgVPfkE1jx3HSLhUIQMF4C52mdKRBXaL9degGOyv3hA2Tc44Db
+         gynslBcvR+rJ7mtHob2Y5zParHxMwtL/zDu5C57oW4ZNJqj/hRNC4kPUuVyEuePe2BcQ
+         yYPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWuLzYnMqrUan+ISpf3wimNFMDph+GKpvQkG8RkzE9KGYFaVPBKSw57LW+jisWfRNg3ZQE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxGxPqbHi2sX8wtrFMgIpVQ8nyLl9Bc4EQYQy8PW7X0yweL5T9K
+	Ngfik8sfIlcx7QCB061JTUIiMWyRlmizME3H9OCMHODCWNSUyjc6fxc6mN7lgIqeKD7HuiWaJ6s
+	4MkVDK0rz21NBoIRF+6p5m2Z2baw=
+X-Gm-Gg: ASbGnctQHd03d78RqJiTQFErlxYQkuifkzkvvFRD6fZcrxg6LG4CahDJVgpdJ2NCHUC
+	yXAyPJCm9fQCcjQgNtfT53UDk7YGBcGvlplorljQsFGdnmSs/hnIIyVw4yHyDZDQoLF13jQhcXm
+	PYR52FgMBE3Mclv1sWd05UhC8OeInOx9P2CBjYGBA0trjONx6lWufyJWLgxC0=
+X-Google-Smtp-Source: AGHT+IGVZzv4CTNjYRyPtpM2rGYbR3kBn/9bSLP/mFKSAU/P1No2E1r67qCNzvSsAwAIPsp2NVNrs8hZvrkFZcbBWuY=
+X-Received: by 2002:a05:6e02:184e:b0:3d1:92fc:fb45 with SMTP id
+ e9e14a558f8ab-3d44187c0demr301220315ab.5.1741846987539; Wed, 12 Mar 2025
+ 23:23:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAN2LT1CsjA7V_y-OqDNREkpERHEBcx627JhCrzg9GHfWS=b0NA@mail.gmail.com>
+References: <pull.1873.git.1741275027.gitgitgadget@gmail.com>
+ <f48b3310d4ae8d05780fd25e467083c4dc9852cc.1741275027.git.gitgitgadget@gmail.com>
+ <Z9ID/2zx25qesuJs@nand.local> <CABPp-BH+9JcP6FDP6RFQzZbwW=XOWnWAR8PmrCS6hG4iyd2pPQ@mail.gmail.com>
+ <xmqqr031x2gg.fsf@gitster.g>
+In-Reply-To: <xmqqr031x2gg.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 12 Mar 2025 23:22:56 -0700
+X-Gm-Features: AQ5f1JqIF5JBnzxhzIwLPNr6bQeX-_wmduFGSRMbzbDIXKinL1JajQlRTunaasA
+Message-ID: <CABPp-BF7iTvqKFvuOZ5wZ3vZADjCvB63iKR-4D5+WeTxnZGThg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] merge-ort: fix slightly overzealous assertion for rename-to-self
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Taylor Blau <me@ttaylorr.com>, 
+	Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Dmitry Goncharov <dgoncharov@users.sf.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 11, 2025 at 10:19:55PM -0400, Peijian Ju wrote:
+On Wed, Mar 12, 2025 at 4:18=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > But it might be worth mentioning that having side-effects in
+> > assertions is a huge no-no, and I understand that when folks have to
+> > debug one of those (I had to in a separate project years ago which was
+> > kind of nasty), that they sometimes jump to the conclusion that
+> > assertions are bad.
+>
+> Yes, assert() invites such mistakes.  Why not avoid them when there
+> are better alternatives like "if (condition) BUG()"?
 
-> > BTW, this strstr() isn't quite sufficient to prevent problems, as it
-> > would not find placeholders which _do_ exist but which aren't handled.
-> > One of the first things I tried was:
-> >
-> >   git cat-file --batch-command='%(objecttype) %(objectsize)'
-> >
-> > and feeding it "remote-object-info /path/to/repo some-oid". And it
-> > segfaulted.
-> >
-> > -Peff
-> 
-> Thank you, Peff. Yes, you are right. It is a bug. I am adding a new
-> logic in v12:
-> 1. Iterating on the `opt->format` to see if there are any unsupported
-> placeholders. If there is,  error with unspported placeholders.
-> 2. Adding more test cases to cover different formats, e.g., just
-> `%(objectsize)`, just `%(objectname)`, mixed usage of supported and
-> unsupported placeholders.
-
-Yes, though it would be nice for step 1 to avoid re-parsing the string.
-I think you could either:
-
-  1. After the mark_query pass in batch_objects(), check for unsupported
-     pointers in expand_data. The downside here is that you'd have to
-     match each one that you _don't_ allow (so if somebody adds a new
-     one and forgets to update your list, it wouldn't be caught).
-
-  2. In expand_atom() or expand_format(), check an allow-list using
-     is_atom(), when remote-mode is in use. The downside here is that I
-     think we'd eventually want to move that parsing and formatting to
-     the shared ref-filter API. But maybe that API could provide some
-     kind of "check that this atom is allowed" function pointer.
-
-I do wonder if there might be a way to also just notice that we don't
-have the requested information and handle it gracefully. I didn't
-reproduce it again just now, but I'd guess the segfault is due to
-feeding garbage to type_name() in expand_atom().
-
-So maybe if we initialized expand_data fully (so that data->type is
-always OBJ_BAD or something) and then checked for a NULL return from
-type_name(), we could do something sensible in expand_atom(), like
-insert a blank string or similar. And then it is not an error to ask for
-%(objecttype), but you will just not get useful data for those entries.
-From the description of the protocol, it sounds like you could actually
-intermix remote and local object requests?
-
--Peff
+I mean, I just gave my reasons above which you snipped out.  But if
+you feel it is important for folks to move away from assert(), would
+you like to see someone create a better alternative to assert, such as
+BUG_ON(condition), so that they have reason to want to switch?
