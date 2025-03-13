@@ -1,204 +1,122 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7983042AA6
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 14:46:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC982686B3
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 14:48:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741877163; cv=none; b=YeEiXB1D4ScLa6skY+7x87kRla5lTrp/3oNaXuKoXoCPOYjLRZPAlklnqkJFjDB7volppPbKWsT5yMCwkWiQ5Y2P6dTwq+Xf2Dgt8vaRsxuYgxdPRfjpQs6xZ1iugwQge48HWybHqOyy/z2+uLRggQcjU4OJu+X7PU+NXpe9AG0=
+	t=1741877311; cv=none; b=DOV73GzXvV7Lv39CzW/mOq9rdiTYnhrfaE3JlYpAPQlbkkhRGyubQWM3rX1c+hNVfx7yIabHIT++sHRO3+OE6/25xqbAoft321MD2fWdSTbZtHrt1jsbpkNWce2hIdp+5St1bLfeycb1qW8KUZLX3328BsGmzs6Y6zy8V9s+BEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741877163; c=relaxed/simple;
-	bh=qfEFoIms95dETsa582BfQRdddQfX2d3vmxITfokrSoI=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZVp+Bu4evmF9R8RURA5zT+RKUjvKngDZ3e4bVNBUORpLZTT4Kqm87qHR8ECCN6G1lTDVoqzjXWXAPdrrLNF7cac05LJJcUeV2z4MTw4ohZi/M7jn14L/yKpZ2Ydxzj6mJOzrbv5YR8jPTcWkZRnImr9E6zgRV2IzccV4XHHMNFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UKYoXg1I; arc=none smtp.client-ip=209.85.219.45
+	s=arc-20240116; t=1741877311; c=relaxed/simple;
+	bh=at8pQGTR1TNdmG2oN1JVG2lfo1VlVdZGB0pUZbtkSb4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e5BALF4eM6MU2XQD3aC2rpnM9Ub0MuKw4RAE5P3kPs5L07E9qPjurAOiQ6fDL7H0V1LkJjFrx2nKYGBYLEKt/hxdYc2iGCEaPThTR27K0bRaAV/d11xqZ0STSUeI2wRDv1koszoduFX4meBnEE3AqrINghj0vPNKA4NezLLCsgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j58uWqIS; arc=none smtp.client-ip=209.85.161.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UKYoXg1I"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6dd1962a75bso8557316d6.3
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 07:46:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j58uWqIS"
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-601c12ac8d0so463707eaf.2
+        for <git@vger.kernel.org>; Thu, 13 Mar 2025 07:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741877160; x=1742481960; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=U7RDq7m6FhdPf5NbZMEP5YCKFCU+DmVzw+RgDTjKJ+k=;
-        b=UKYoXg1IKJXSVQxoNNH8vPhHCtjdrbhUg+yGAWOFL0xB3z1sBJXhRsMOovWw6SZFUr
-         pS8ADFMRUIyzCejzjPOVHje7N8TTBUBKQ6pTPh4MnRat1G+ZIQXsVKLqHg7uUCxtO1ZO
-         wV+0eKCMyqVtf05szCH/UjdHn83qGceXMe+waRmqMhEnRba3Kt+ZxlAKqv9dXtzrxhfC
-         +LjSPRl+dQ86fzGPDQu2xPuxhlPk6FPMHz/SGZ74ljii2LxkvIW2FEy6EJgy3jqbccwg
-         xBPTNXyyg+6DzgnfiAmGSPIwM4ZaIpP3NBFob06YkS6xmfle3xqzZX2gFTHs1UerzpqQ
-         hzUA==
+        d=gmail.com; s=20230601; t=1741877309; x=1742482109; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=LawqL6m6SGQFTrw4Jm6mRdqlKC5lrLjSJKtTtRyKt30=;
+        b=j58uWqISFNKz4utiIG1mkckoJy1xMH3iOKqmLko3Smx6DE9zyBoAOsvOBcMHnFtVNX
+         q0QG63dmRfCFALe+Ya8Ga3fQ/LFFbQC5sKX/siWI56lTCi+19v+Z6jkKoyTzFN8qX9So
+         m8JsUt/fOaVgDczL+r0nav2pkoNV/gtXeGmiiPADSvucngiijmMucXNUIJ7Gx8hWwAnX
+         l08Fjcw07g7PsmP5pivJLM+6IMbviRmKenb+csr4ZqfyFP/wF5YziSByrJy9sB1MmJS0
+         OrVP/Odm19V50ca9d2l4EJIrUsNxpfsFRoMbVvAfKHL5daSF0OaAmozB9pWKR3bGUXkF
+         XeuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741877160; x=1742481960;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U7RDq7m6FhdPf5NbZMEP5YCKFCU+DmVzw+RgDTjKJ+k=;
-        b=tGUn8LM3h6lQaNQPMAYkD3GTm/fv8n8h7W5LbLlCazMmTlj0sGiE5iBoLdIkU2e87f
-         innua+5g0IO6vYWpaGW9pK0/3mNSG/vAinUn7ILhnqnVSyz6PYH9K5NrAyHLLZ4hRipS
-         WDLfmnp19mv6i+qoNsHnz3WrBnJ09/2nEz3ygyWV6tDynHXi8ZmFs0fTJKZLbwz0OH6e
-         rq/fkK2g9liPc7D1PaoaQ65MqEkSfM7NrjpeeOOPU6poAO3pBCja3YWvn0G6yC6r54zc
-         L7KC8VLlMByHFJUAMxoPdBh2MJlN+6FnfewHEgFsnPM+RgZvvqLfLYwcoImak+TP0UMB
-         AwzQ==
-X-Gm-Message-State: AOJu0YyBWKBn40sGmTS4VgP5xXxJlT90lQzckMaOwtER+eQNZyEDlGT2
-	GkyndV7FD5IyQuktFNZ8gJg/MfZKlO3N1jnXlLIoE4c1l/cdRnedkKNl5SLbvBbXo3UM8E7rF99
-	56GQiZEiSfBieqbsFzRPnah/Gk74=
-X-Gm-Gg: ASbGncu+Qz0L+q3ZE2z2ryFyTxvXKzga06jrRTNVlMa8U0CsnkdY9OB7E8qDbiDGZXz
-	+if28xATxbuEJ/04PCpQnUQmlpA1pAtj50UvRgNGS91IrpgSChWiGUYrFuKIOm/DoVAmZ4TzA3i
-	x79UHIc76nTUHRvmLA/LSkrhEgk/I=
-X-Google-Smtp-Source: AGHT+IFlQOjDovxQrAEn0iiKvZxHw9/9dPVGClpS6kQTw+x7BQIHkiT/zTp8ES8x/g5ioPd1T+MjSNIWkfDq6iuBhqk=
-X-Received: by 2002:a05:6214:c6c:b0:6e8:f2bf:7262 with SMTP id
- 6a1803df08f44-6e900681d23mr305588086d6.41.1741877159679; Thu, 13 Mar 2025
- 07:45:59 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 13 Mar 2025 09:45:58 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <69d10d0a-35ac-4543-a699-b3237ae4ccfd@gmail.com>
-References: <38de63ce-6d4e-4f1f-95b1-049df78d9cfc@gmail.com>
- <xmqqy0x9s8mg.fsf@gitster.g> <CAOLa=ZTia95Lib6bkz_nWi2BYEteAaOxsrrX9DqLTEz1t02ggA@mail.gmail.com>
- <69d10d0a-35ac-4543-a699-b3237ae4ccfd@gmail.com>
+        d=1e100.net; s=20230601; t=1741877309; x=1742482109;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LawqL6m6SGQFTrw4Jm6mRdqlKC5lrLjSJKtTtRyKt30=;
+        b=eIPXNEkn8wn1eUxU2wyZ9GeJQ4X6u30F/GgcgVy036dX2cGuHWCPxtDhERumpf0BKL
+         qk7uGKh3K/vUBeHLh/64HPiHoxdmlJv2XujNxQF9aUKAJgoXo06BEalxrT/fnszZ6UDk
+         WGNPyAZTN41u12jFYH3hmZQDOpJD/xGF95MWoFsGU6MIlXGmt8KN/vvqlwDUygYYcfVu
+         rWCFwnXw8T7nY0tbyjuYqyO45PD3F4m1/u6mw1G4roCCKB0B+hLqbPPrrYoL1tDOy3AR
+         yP/GIuNv5WsjuisVS5QBw/3H5iQD0tNz+EhAu1ag5q5YEC2ZhaHm/Kfe+G8DQXOA9ugj
+         wcIQ==
+X-Gm-Message-State: AOJu0YxPRGAL4xpG8Ae/DLfksCKA+2wtNY/SmF1L7QS9EJLFJEIm4aX1
+	9nkHXDaGnpnWv6AJe2NW9S8FKBOPMyuGxY5QPXSqlrbwUYUnP0hr
+X-Gm-Gg: ASbGncu99Lo1Mw5cOTumhinqix62RFdvoow5G6DvuPSTnWdbildTIUjRiagV0PdsP+u
+	uqBI477sbvpqBjblosBPLpQbBtaZ+Q0K0R8kq/e0dvtwhZ2RUxk7DVgl/h955NlRN3HDHy1MJIx
+	VauNIwOlkrsXE2Wlq0fy+jD0yymaYUX0nVKA7ovRoD2NmtEeDe4ZdDdyinvX3jt8Hm1vmRWfEII
+	nxheU5XtidBb/DUXupYbH6+1GSyi353gWwP/vym8id7pDaJbl7nPNWu2rcSvRmgYhS6oF81yYHX
+	XvzKQdHn0qqmfDhHMjvUM1VrNW2OKbDWI7m3Qg==
+X-Google-Smtp-Source: AGHT+IGbhv3qtQahRzru8cDxd4HWvi/7CRgpWWNL4coXh9+oCJ70SFqpadJEodcMcXkGaakqb/dihQ==
+X-Received: by 2002:a05:6820:260a:b0:601:b42c:6316 with SMTP id 006d021491bc7-601c1e2c9c2mr5685289eaf.0.1741877309109;
+        Thu, 13 Mar 2025 07:48:29 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-601db67c639sm219425eaf.16.2025.03.13.07.48.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Mar 2025 07:48:28 -0700 (PDT)
+Date: Thu, 13 Mar 2025 09:44:59 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, peff@peff.net, 
+	ben.knoble@gmail.com
+Subject: Re: [PATCH v2 4/6] rev-list: support delimiting objects with NUL
+ bytes
+Message-ID: <e6d4eld6brhris7gmov6zwn2niywmlc3ik2aqoz4bquvpzwurg@g5mlot5mvrta>
+References: <20250310192829.661692-1-jltobler@gmail.com>
+ <20250313001706.3390502-1-jltobler@gmail.com>
+ <20250313001706.3390502-5-jltobler@gmail.com>
+ <Z9LVxt8urwRXLLcL@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 13 Mar 2025 09:45:58 -0500
-X-Gm-Features: AQ5f1JpODVuTD1ObBdythZp7y3ncy0TMExroz6ok_K_sGu-627VaQwhQgOJLWo0
-Message-ID: <CAOLa=ZRmYP9DV268W=UFMmYvjuLczH2d9yU3q2P4sNMH50RLKQ@mail.gmail.com>
-Subject: Re: [GSoC PATCH] rm: fix sign comparison warnings
-To: Arnav Bhate <bhatearnav@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000058b58606303a61d1"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z9LVxt8urwRXLLcL@pks.im>
 
---00000000000058b58606303a61d1
-Content-Type: text/plain; charset="UTF-8"
+On 25/03/13 01:55PM, Patrick Steinhardt wrote:
+> On Wed, Mar 12, 2025 at 07:17:04PM -0500, Justin Tobler wrote:
+> > diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
+> > index 785c0786e0..166d3cd19e 100644
+> > --- a/Documentation/rev-list-options.adoc
+> > +++ b/Documentation/rev-list-options.adoc
+> > @@ -361,6 +361,29 @@ ifdef::git-rev-list[]
+> >  --progress=<header>::
+> >  	Show progress reports on stderr as objects are considered. The
+> >  	`<header>` text will be printed with each progress update.
+> > +
+> > +-z::
+> > +	Instead of being newline-delimited, each outputted object and its
+> > +	accompanying metadata is delimited using NUL bytes in the following
+> > +	form:
+> > ++
+> > +-----------------------------------------------------------------------
+> > +<OID> NUL [<token>=<value> NUL]...
+> > +-----------------------------------------------------------------------
+> > ++
+> > +Additional object metadata, such as object paths, is printed using the
+> > +`<token>=<value>` form. Token values are printed as-is without any
+> > +encoding/truncation. An OID entry never contains a '=' character and thus
+> > +is used to signal the start of a new object record. Examples:
+> > ++
+> > +-----------------------------------------------------------------------
+> > +<OID> NUL
+> > +<OID> NUL path=<path> NUL
+> > +-----------------------------------------------------------------------
+> > ++
+> > +This mode is only compatible with the `--objects` output option. Also, revision
+> > +and pathspec argument parsing on stdin with the `--stdin` option is NUL byte
+> > +delimited instead of using newlines while in this mode.
+> >  endif::git-rev-list[]
+> >  
+> >  History Simplification
+> 
+> I feel like this last paragraph, where we talk about `--stdin` being
+> NUL-delimited, should already be mentioned in the first paragraph.
 
-Arnav Bhate <bhatearnav@gmail.com> writes:
+That's fair. I'll move the `--stdin` part to the beginning.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Arnav Bhate <bhatearnav@gmail.com> writes:
->>>
->>>>  static int get_ours_cache_pos(const char *path, int pos)
->>>>  {
->>>> -	int i = -pos - 1;
->>>> +	/*
->>>> +	 * This function is only called when pos < 0, so -pos - 1 is
->>>> +	 * greater than or equal to 0, so it can be safely be stored in
->>>> +	 * an unsigned int.
->>>> +	 */
->>>> +	unsigned int i = -pos - 1;
->>>
->>> "Can be safely stored", sure.
->>>
->>> But so is "int i" perfectly adequate to hold such a value, no?
->>>
->>> This is one of the many instances that demonstrate why the
->>> "-Wsign-compare" warning is of dubious value, and invites worse code
->>> than necessary.
->>
->> I have to agree. I think it would a bit cleaner to actually change the
->> functions argument type itself. Perhaps, something like:
->>
->> -- >8 --
->>
->> diff --git a/builtin/rm.c b/builtin/rm.c
->> index 12ae086a55..79e47d6e9e 100644
->> --- a/builtin/rm.c
->> +++ b/builtin/rm.c
->> @@ -40,10 +40,8 @@ static struct {
->>  	} *entry;
->>  } list;
->>
->> -static int get_ours_cache_pos(const char *path, int pos)
->> +static int get_ours_cache_pos(const char *path, unsigned int i)
->>  {
->> -	int i = -pos - 1;
->> -
->>  	while ((i < the_repository->index->cache_nr) &&
->> !strcmp(the_repository->index->cache[i]->name, path)) {
->>  		if (ce_stage(the_repository->index->cache[i]) == 2)
->>  			return i;
->> @@ -83,7 +81,7 @@ static void submodules_absorb_gitdir_if_needed(void)
->>
->>  		pos = index_name_pos(the_repository->index, name, strlen(name));
->>  		if (pos < 0) {
->> -			pos = get_ours_cache_pos(name, pos);
->> +			pos = get_ours_cache_pos(name, -pos - 1);
->>  			if (pos < 0)
->>  				continue;
->>  		}
->> @@ -131,7 +129,7 @@ static int check_local_mod(struct object_id *head,
->> int index_only)
->>  			 * Skip unmerged entries except for populated submodules
->>  			 * that could lose history when removed.
->>  			 */
->> -			pos = get_ours_cache_pos(name, pos);
->> +			pos = get_ours_cache_pos(name, -pos - 1);
->>  			if (pos < 0)
->>  				continue;
->
-> This is a good option, I think, but perhaps 'i' should be renamed to
-> something more descriptive.
->
-
-Of course, that's why I said 'something like' :) This is only a guidance,
-the final changes are left to you.
-
->>>> @@ -58,7 +62,7 @@ static void print_error_files(struct string_list *files_list,
->>>>  			      int *errs)
->>>>  {
->>>>  	if (files_list->nr) {
->>>> -		int i;
->>>> +		unsigned int i;
->>>>  		struct strbuf err_msg = STRBUF_INIT;
->>>>
->>>>  		strbuf_addstr(&err_msg, main_msg);
->>>> @@ -271,6 +275,7 @@ int cmd_rm(int argc,
->>>>  {
->>>>  	struct lock_file lock_file = LOCK_INIT;
->>>>  	int i, ret = 0;
->>>> +	unsigned int j;
->>>>  	struct pathspec pathspec;
->>>>  	char *seen;
->>>>
->>>> @@ -314,8 +319,8 @@ int cmd_rm(int argc,
->>>>  	if (pathspec_needs_expanded_index(the_repository->index, &pathspec))
->>>>  		ensure_full_index(the_repository->index);
->>>>
->>>> -	for (i = 0; i < the_repository->index->cache_nr; i++) {
->>>> -		const struct cache_entry *ce = the_repository->index->cache[i];
->>>> +	for (j = 0; j < the_repository->index->cache_nr; j++) {
->>>> +		const struct cache_entry *ce = the_repository->index->cache[j];
->>>>
->>>>  		if (!include_sparse &&
->>>>  		    (ce_skip_worktree(ce) ||
->
-> --
-> Regards,
-> Arnav Bhate
-> (He/Him)
-
---00000000000058b58606303a61d1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: aa51e2699d75dcdf_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mUzc2VVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM0V2Qy80NFRpTExRZXFMcXZlUXpkQlJXQ09wT1dRYQoyQ1pMdE1mYWFk
-NlR2SmZISmh6STIwWFljajZtSzJzUGdnMDhZRkptbWtQYUdUL0Zid1FGWmVQSkVSVVdEMGlSCjFX
-a3B2QjRDUXpWQ1VtUHZ4TERjaWRURXBPbE1nYm1EaTdGb2VnTnJZTTVsK1pKK2lCQnJ6cWU2ZVA0
-U3FrdkYKcGZOQ3BDTG9qMTVyWnhzbnBuT245QXpMQUpubzFkd0xuUiszYkUwcHNmdWlvU0kzaXNx
-ODFSOExzVncwUUQ1RApsRU5wczEyVFlxc2NCM0FHbFVrZ3JTM0Z3dUVyMGNjOHgvQ2hKVy9LRkxT
-TjJpUjNpaFFXUVJuOHRobml1YWlqCnlwdWpTWjdZU0V2YzRkaE9jbEwwT3hZbHFSRnJGaldCbWxT
-QzJrQVJUVk5Gby9SWUVFYWgzSlVZV0xYSGdSZG8KdVhJRmRSZXJaTk9qTS9KTmlQcXBtUVhTN1ZH
-amF5bE1VVVRDbS9FWGpzWklYR3BYV01hOHcvVmxBc0xuc3hDegpvNEJ5NUYwU08rTWNVQzY2RlNQ
-L1RiRjI5WEFzUE5MMU9aZUNuSDY1c0ZzbXhESUJOSE4zT2tIWnc5T0pvbVRmCmtPTm5aODJ1SVJH
-NnI2MkpQT0YvR1RDWnNaSGFWaTNONjVMdzkyST0KPURDRHcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000058b58606303a61d1--
+-Justin
