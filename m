@@ -1,129 +1,126 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F273269CF2
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 16:45:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AB114D29B
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 16:55:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741884328; cv=none; b=i2/4b+B5ImpLaXhsoAQ5xJq+ogMyyMuHH9xBHvCVwh/lvjr6VyL6QLC2rVO0m9cgAL34brD5SJi/PI5frPBvG3b/KKwgLC4+GjWeY+HwIvDJERRDj9jJ9heNsTPfEKFzHvhSltchCUqcoTlqkCO3l0vz3emwI4Gie502efwm3a4=
+	t=1741884925; cv=none; b=id9PmpAhQ29KQo/TBgvUvIjsBmR9XyfAraSnj6sGFzHeYpWm9GLA7FhM7HdA3UMdYLrpiqjdya0zYPEGfhLROe7xDaayOqMP1b3AaO1smnmIKlHzL8KTVJFTENfd8xUsVhpCbjqqtR6J+ojF/IsOsD5OymPOVEI7AHFfmD+vZ7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741884328; c=relaxed/simple;
-	bh=zIakTqTOyaYDs7w7qngTWCMPkCfJFBBmGHwnPLDNd5s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KYAnrtsDlbR+rdoQ6m2Iw4a1qW2AlhJGpGGFFqh11mC7WUnAbiMVbZ3USgjGbo/0rUenBiu7McMCCZ6MMd529k7tZA9duC3ZeBmud2iBVCmQIcZfF+dO40MJZ5eKhuz2Oe1eQx/zbkJe5WNactIXhY7xWtnOE6p6cz3dZmvdu+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jFCq8tTp; arc=none smtp.client-ip=209.85.167.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741884925; c=relaxed/simple;
+	bh=4fWtcWY450r7g2pb+Ww9Gn+SaQK+K3fIfFGl/rBtrew=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HikW+qeimkq6ttJtmIdIwFN1pOhdQz5LDGgrZaui5NcsKW1FgUKF6LAaBUyRUM97ccwQNqV3rnQ4JdsQ7sw+cYR62PZOj4+EmR1MYj8j8qdpH/ROdu7OHOFiFXg6ygH3AABZMbmQZMpB1D+uwMfcqvSDnbCIN++qFNQX3bntul4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aNMVnZB/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MK05uhDz; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jFCq8tTp"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3fbc00143d6so776439b6e.3
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 09:45:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741884326; x=1742489126; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fQhsnLtnh1QTJKAufF/8VC1yOfjWIlsa4NIp4B2goo8=;
-        b=jFCq8tTpzAZ4bc7DQYQekO2F+jIeS0+p8lT6H7m6GRYn5f0fVTMUQCef6OxjdmOKzQ
-         PuNFlm0WzaR6jlcEUnF45xxwfRrF3hZitk3cnkZYd6sVu2dENR9jze8YvLjQE7IoThYf
-         Z+jyI4rkzB73yii2G2HwLsPsy4sC5NSmJ5vVEesMP9w40kl9szsofqVi/sAh7C86a8nL
-         TMclFzx5ryGy41pdguy1YD5NozNXFoLKNfnPLBI2o53eCvim6AfF7gFb3uU6qyf60c2f
-         Dq9wff7/jv8tid5jB/qofVqRQZbc8bmQGnP0C63GicWzOwKN6Drxt35s76ZCkmiIOn5Z
-         kN3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741884326; x=1742489126;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fQhsnLtnh1QTJKAufF/8VC1yOfjWIlsa4NIp4B2goo8=;
-        b=goWEp2C2Sp/fLbKPpQ1XNKIkjTmgYZkpG1pw1lvO9AXJlCK7zAJaqQWrgReJ8XNOOB
-         SUth21gOJh7cRTfNuabB2bm9vgMa0v8e0VLxcV3svb2ryg2lDRU8FRGGFJGlnD3FxU6A
-         Qp4HrJnvIzyQXZFbidXaM1hK3rZvp6AoAY5PmEROLqhv8OjJyAGmBhqPsbn1H+Z9GwLt
-         9x2edcQ1qiJ66iSeSFI6tKNrLLoDdDgN4cNUHRsRi2d4+B40NlEza9R5Fei99uo6oD06
-         fp0igORgUsDv5W82qj+HreRwycEnmED+A5cn94Q8rtR1IMH+LuZXYtmoSmAyKNGi60/B
-         Lfsg==
-X-Gm-Message-State: AOJu0YyVFm0BTCkdycTZAns9o5MK+XUweSH+ZJwQ/mCaDa0lkV7V7BnA
-	hnfpTJw2/gG2JugSmNv8Mv4lr61JEVxxZejZ6O35ICTqnYM3js4U
-X-Gm-Gg: ASbGncv4IUb9xKTsSHy2lbEgQma9XOTB2POjpbscAWWbGS+OdIGd9L9+BS/UZ/8pxDz
-	AZTST4+sxwFoj8dAXalTmRO1zJ873ihKt11O3A0FOEoTjhbInotxtjPDsr8QHq0f7uCE1YZZdSI
-	906Xj6773dwdN7B2H+ba0jGkAdaBH2+x1AU2fc3R14s/Dre8WG5EcZZgsM6YfAkJaSyyT1qb+I8
-	cZEIakg1jqX65GeALmaO1ctll6/UYc3ThJQ9uZ7Wl8yiXLsvZ38g6nCAJdx8giqdvgrLngMVCeu
-	Mt+R/o4tO+9PY4UG+pQz27b30c6eaU1NGLmiJPjM9P542ZOF
-X-Google-Smtp-Source: AGHT+IH1t+1yUY9LbMdfS3PH/cR+tXf+Ps86us6x1wacpj2S3Wrpxfk3KBYQue4+lBaOIs9Z8imiNw==
-X-Received: by 2002:a05:6808:1396:b0:3fc:105c:430 with SMTP id 5614622812f47-3fda382badfmr166821b6e.39.1741884325859;
-        Thu, 13 Mar 2025 09:45:25 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-3fcd5bfff69sm295063b6e.39.2025.03.13.09.45.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 09:45:25 -0700 (PDT)
-Date: Thu, 13 Mar 2025 11:41:56 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, ps@pks.im, christian.couder@gmail.com
-Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
-Message-ID: <qapd7sijizopaefpxh3slgn7g2ecwdtyhzqzufcypciyv6n3qm@turmldwzipwe>
-References: <20250310192829.661692-1-jltobler@gmail.com>
- <20250311235720.GA73755@coredump.intra.peff.net>
- <sm5xvh7bipyrlpw45bptlctbuhey7v3qktpskal5dzexomt34f@wgfziyhcf3t6>
- <20250313053329.GC94015@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aNMVnZB/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MK05uhDz"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 89045114020B;
+	Thu, 13 Mar 2025 12:55:22 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 13 Mar 2025 12:55:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1741884922;
+	 x=1741971322; bh=5+gci14SZlKySF6gQT4kT9rqD5zWmCvjL8jyynlwQGM=; b=
+	aNMVnZB/J5txketP0rxKc/oC9wZI1lDCI9n54GGNtu56XPie2ffPjjRLQjU4zczb
+	rqXPmslHfFiMVpzrdWrov0fCldT8wWZHVd0tcuRpYDIHNsWOSov72sf5cij+dK8O
+	o4TYDKKP7+6BDFnqyfKl8K+BDcHD5was1Hsu1FM6owIQ0m6axqjSkAfHrXU1ZhUN
+	5unuufgBSJWbQ9lycQN9AuX7ltSlC0P7JTMNrmWy8yPD3CG3pUjrHCgv/fjAlqLt
+	wN5eTY7o9o7Y9XZlM08uZz8zqUQQq/RkX4TwA0RPhNHi2oOgHYKLBXLT3bmzhRBL
+	q6r2P5f2/eW8be6wU0KxGQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741884922; x=
+	1741971322; bh=5+gci14SZlKySF6gQT4kT9rqD5zWmCvjL8jyynlwQGM=; b=M
+	K05uhDzfA1UrsPwEbGWNSm9yZxhDV7SCmm2YYqzqAmw+m/ZrFhEglG3m1qxNDE7p
+	iMI/mkcCueyK42vpFlHmpikX62Mb6wJKxeybfu47rASQOlV63xs/CYt0LOXEgX0Y
+	+/BKjv8JwHmBZcYLNojkJgwUcl3CAMy9GjhdbB/3j88sc9wUvYINndw7tpRNO6WP
+	PNDs2G4mx3Nibp63e+ZbWrP6bT+WVLO7BoYieygNuawx6OKGGviULNzKURhMG8nG
+	L+mi9zV9ySSPQ+QzZzfL3BM68I3kM9uDWo9X5vw6BZcDJLA+pXgBltt+y5C6fpDU
+	WBtm6HEYKjQtpqx3MuA1Q==
+X-ME-Sender: <xms:-g3TZwsqMIZdK6eAZQDGNNcUJykgzSLG1ul_DW4wmmchFzqeyZZnBQ>
+    <xme:-g3TZ9fkYfz3Iy3E3XPtXV6gpo_jMrWd9DhHuo9TikX-aDx3bj7mmirSWshfEytus
+    LTVKdqkhTNa6YfMcA>
+X-ME-Received: <xmr:-g3TZ7zx28h2fI_4cLaesn_QfAYloQIJdqILvsM2kmyOZbgzOD76LHl69NkGBf6HLBoCTiyjthlXhi54YjwUefp8NVPv4xDzCIbbNzM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekgeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
+    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
+    tghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegughhonhgthhgr
+    rhhovhesuhhsvghrshdrshhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:-g3TZzNBCEc5KPNCIFUMXZZUYIivWpcEZ7TlQDz8lBH67ExSbXCxYg>
+    <xmx:-g3TZw9ZXzrJsFTuZ-PfTHcgmY9r0i_4l0PoBJ1bz7ThVrXxYGts1w>
+    <xmx:-g3TZ7UBVyFXboGcL8OQO4ItN5juC1LWWEoSvYVNMM9olDMn4WYolw>
+    <xmx:-g3TZ5fpDVmI7JkWq9VhO33Ft0VWm4nU1Gto2RtSrxSmfBD5HtJIZA>
+    <xmx:-g3TZwwo-Ep3uUKoiirXPBpWw12rNi8Sv276kBKvsQ7aWdJq_TdlPFiX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Mar 2025 12:55:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>,  Elijah Newren via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Dmitry Goncharov
+ <dgoncharov@users.sf.net>
+Subject: Re: [PATCH 2/2] merge-ort: fix slightly overzealous assertion for
+ rename-to-self
+In-Reply-To: <CABPp-BF7iTvqKFvuOZ5wZ3vZADjCvB63iKR-4D5+WeTxnZGThg@mail.gmail.com>
+	(Elijah Newren's message of "Wed, 12 Mar 2025 23:22:56 -0700")
+References: <pull.1873.git.1741275027.gitgitgadget@gmail.com>
+	<f48b3310d4ae8d05780fd25e467083c4dc9852cc.1741275027.git.gitgitgadget@gmail.com>
+	<Z9ID/2zx25qesuJs@nand.local>
+	<CABPp-BH+9JcP6FDP6RFQzZbwW=XOWnWAR8PmrCS6hG4iyd2pPQ@mail.gmail.com>
+	<xmqqr031x2gg.fsf@gitster.g>
+	<CABPp-BF7iTvqKFvuOZ5wZ3vZADjCvB63iKR-4D5+WeTxnZGThg@mail.gmail.com>
+Date: Thu, 13 Mar 2025 09:55:20 -0700
+Message-ID: <xmqqbju4q39j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250313053329.GC94015@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 25/03/13 01:33AM, Jeff King wrote:
-> > Furthermore, revision and pathspec argument parsing is all handled in
-> > `setup_revisions()` so if we want to NUL-delimit arguments parsed on
-> > stdin with -z, we would still need to parse the option early anyway. I
-> > think it should be fine to leave the early -z option parsing as-is.
-> 
-> Makes sense. And I guess we might not want to have setup_revisions() do
-> that handling of "-z" for input, as that would make:
-> 
->   git log --stdin --raw -z
-> 
-> behave differently (since it does not currently change stdin handling,
-> only the diff output). 
+Elijah Newren <newren@gmail.com> writes:
 
-Yes, we won't want to include this '-z' parsing directly in
-`setup_revisions()` or else it would change the behavior of other
-commands.
+> On Wed, Mar 12, 2025 at 4:18 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Elijah Newren <newren@gmail.com> writes:
+>>
+>> > But it might be worth mentioning that having side-effects in
+>> > assertions is a huge no-no, and I understand that when folks have to
+>> > debug one of those (I had to in a separate project years ago which was
+>> > kind of nasty), that they sometimes jump to the conclusion that
+>> > assertions are bad.
+>>
+>> Yes, assert() invites such mistakes.  Why not avoid them when there
+>> are better alternatives like "if (condition) BUG()"?
+>
+> I mean, I just gave my reasons above which you snipped out.  But if
+> you feel it is important for folks to move away from assert(), would
+> you like to see someone create a better alternative to assert, such as
+> BUG_ON(condition), so that they have reason to want to switch?
 
-In version two of this series, NUL-delimited stdin handling for
-`setup_revisions()` is triggered by setting a `nul_delim_stdin` field in
-`setup_revision_opt`. This gives the `setup_revisions()` caller the
-ability to control the parsing delimiter itself. 
+You said "BUG_ON()" is better than "if (condition) BUG()", but I do
+not see a reason why.  It also shares the same problem with assert()
+if we make it honor NDEBUG.
 
-Only in git-rev-list(1) does the stdin parsing behavior change if '-z'
-is also present. The behavior stdin parsing for `git log -z --stdin`
-remains unchanged.
-
-> Though that does mean that these two commands
-> will behave differently:
-> 
->   git log --stdin -z
->   git rev-list --stdin -z
-> 
-> which seems...not great. My earlier suggestion to tie "-z" to stdin
-> handling was for consistency with other tools like grep. But if we
-> already have cases where "-z" is only for output, maybe it is better to
-> stay consistent with other parts of git. I.e., I was worried about us
-> painting ourselves into a corner with your patches, but we may have
-> already done so years ago. ;)
-
-I think to some extent Git is already inconsistent here. IMO it would be
-preferable for both input and output to use NUL as the delimiter when
-machine parsing in git-rev-list(1) as that is the behavior I would
-personally expect. I also agree with Patrick's reasoning else where in
-this thread[1].
-
-I'm open to discuss further though :)
-
-Thanks,
--Justin
-
-[1]: <Z9KNQ8XliWrrYgAT@pks.im>
+Thanks.
