@@ -1,111 +1,118 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0C4153598
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E3A225D6
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:32:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741886634; cv=none; b=syX0aQNjzuFvZtQRk3yAznyM4PP+Pfb2dNz+bMe0XHFzKObqaoII9drQp2j35tQyjBeGzjh1u4j0z735PQf2szHnSocTLPvitcoML/Ua03Q/3V81f7sV6lvQEzuZSBe/7pq3iCd9sf30yLeGZT5xx5JT/Iv5P+U5LlvWYlLJ/QE=
+	t=1741887148; cv=none; b=eJyQLNZg6AS0p2ubFynQSfSETj1o5XycVLfeqryThHVzK9R+8jq0JYhjc+A/YcKojM99W9vMwIHdHtp3PNzU+oqRChie0/Mz0S/cPW++2UkCIGLClDbgaV3CWaCkTxODhkW+mIudfRTK/ewopKUR41lo9jF0RJchlxF+wfbVoxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741886634; c=relaxed/simple;
-	bh=cBzrlW6Lmii+JyM+225WMGg0wr0OzB9UwQV7b4o8FiA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HOQfBoTLqDZj78t6izennzWw+lCIlnzcfXngcSl+qBKPvXDTXWPgqmINbttiphWUIL3QQk6RB7EUFEy4ZlnhN0gkcXB5SDooih+nhRHYe9soe/dn+1pe4VG8WJGJyAkuNIvY6XR7o64lZfBmS87cWaOxLa8IPnZ70yrXb2wOQYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bFM/1YXN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FeRYpsFo; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741887148; c=relaxed/simple;
+	bh=4abdAKnYcC2SW7OFWiq5x4wO6X+4vZx2WB1/ZHfol/U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sEJ5sLgAsUr3Pf8lh7B61cMvAOs898wEbe27ganiRJ4SIrvjdeKWjGuBzZr23kE7mJydIj9g2LPYNzPoPe/vSdNx2Tu7r22TnfyllDumEtmYVXmgIh8cFtIktheGzWbD3V7kpihXgfUwtw4kCACaVEJe/UBh6nC3sWMSJzWlJJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=TBnQGEVt; arc=none smtp.client-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bFM/1YXN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FeRYpsFo"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3A71C1381127;
-	Thu, 13 Mar 2025 13:23:52 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 13 Mar 2025 13:23:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741886632; x=1741973032; bh=bYSx9MYLjz
-	fs/YoRCrP2PWxk5JDszsnBhmk4Ce2sXWs=; b=bFM/1YXNQtD2nFPiV5JLXNe0gH
-	ENsPHJk6yj2v0ezu/FZI3kCcBNEpZS7Quo1EfDAqI2r0xhlx9ReNFLicrvzrF18A
-	60fk6qD05OP9bmVRzbOhItOIUty73EJ5mFqOoP3ASUpHunH+2FYuEtHVzt+lPdqf
-	MCfmFM/OlwmQfv31rpS2KsDHaTqccLiCZ1i95Kz0qsuWzuCUL4AqtdmtZcBlHD93
-	eTz7yvF93iV4Nv3mDnFWHc3G6agmu32goQnjC5v7UlbyN59udc9ccSog1fJb4xQV
-	5YdpuE+xdlT0B4FoLKdTP5L31mHdVXJ4YFViH+WSYrtDDh71F7TYPbQFMbWA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741886632; x=1741973032; bh=bYSx9MYLjzfs/YoRCrP2PWxk5JDszsnBhmk
-	4Ce2sXWs=; b=FeRYpsFoI6cVGmHwqbEfp7Im6QnQGYvQSc8xhOra8Un7ZEjb40P
-	XSEGJKhpYYCCk71UTUf9zl1TSUHmra8ShyAwBNnzXJekVQD2hes9yC6vCoAXxl07
-	RSgK+6jtE/XGmpTTGD9j/44hRJD1+blB0KknzT7f9H12XJmWLdqUfapAz2lTQJGF
-	92myegaX5m6SLv2Ho+i4rJEY2E9aIWb053T04W8p4rOWTGBOZiU9Ip5OmeDY1emt
-	nt5u39pJSl0mqAcKF85TzXWj9yyAb0U2JFLwhY/3pcRUAnbKbNIAfJ93PYwUmk9m
-	iHyznL7fmOHk7cqg6WK6UB/253hI3QC31lQ==
-X-ME-Sender: <xms:pxTTZ9J9N7svkr6MiajP_U6YwLPWyh5x8nSpNMe1gA57wDtO0-Jm6g>
-    <xme:pxTTZ5JaOfOq1QvyAp70aEzh-pyNNvqZfDiyPWu4AxeRcdohHtvbwjIH3rdzCycR-
-    BnaNnwwU9u_WaxyjA>
-X-ME-Received: <xmr:pxTTZ1sUwygHPESiZP-PA-x8h9lj6zKT3iYr8Y1IxBkClnx9OK0Q2P8cqiY32MUXc4BMMHoxQJznamSAJOpPLar7AZaMnQKXbmgJOX0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekheegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
-    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepuddvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsth
-    hirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
-    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdr
-    tghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpd
-    hrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthho
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
-    gtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:pxTTZ-bYIJKb--6OG8FWZZExu-0jQqGxObNqKLPadCVGaYuKzE72lQ>
-    <xmx:pxTTZ0bCJl-kCTAmOPqiy275j7F6ZUrlwv88cEljjr8M3Fq01Co_-g>
-    <xmx:pxTTZyA4eqPFosu9aIfG8WEZxrkvPggAkSSbRJV2_rM1mDAtyNHk3Q>
-    <xmx:pxTTZyY3lFnx31NM-9ufg41U0RqAGzU5G40RCQhgPcAxKi-BlBq0eQ>
-    <xmx:qBTTZwRN9MrVSyD9sd9HIYa6o22_A2fxIAQeJiDoDWQLvAMEqhGAE8wo>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Mar 2025 13:23:51 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
- <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Karthik Nayak <karthik.188@gmail.com>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  "brian m .
- carlson" <sandals@crustytoothpaste.net>,  "Randall S . Becker"
- <rsbecker@nexbridge.com>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v4] promisor-remote: fix segfault when remote URL is
- missing
-In-Reply-To: <xmqqv7scq4iu.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	13 Mar 2025 09:28:09 -0700")
-References: <20250312114628.2744747-1-christian.couder@gmail.com>
-	<20250313103859.817127-1-christian.couder@gmail.com>
-	<xmqqv7scq4iu.fsf@gitster.g>
-Date: Thu, 13 Mar 2025 10:23:50 -0700
-Message-ID: <xmqqsengondl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="TBnQGEVt"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c554d7dc2aso184449785a.3
+        for <git@vger.kernel.org>; Thu, 13 Mar 2025 10:32:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741887145; x=1742491945; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=igtxrGL86lefcfDN/8hIbvOlBxW/raIWLgrjfBhXSy8=;
+        b=TBnQGEVthhbwLiHlYHo03hfMwdwqK20wm1h1LGnpHquZy0WAEJBHIlSu0DQ8HWSCGM
+         cluBvLIznpDeTxdwXYx7xIXMplSMlMcFM73PL5JeTq9fjnTWF5sLjpg9OwBbaakTWch/
+         Q2/G8YVGK4lzc6OWUV8IYgr+r4BzeDkaVJ6rPyXp7Q/X5Llhphjod5v417NkiHPyC6vw
+         4lDsb+WJau1EQCrTSVKhavF0hUIUJAOgr6h2eJawKaxsFWT6EAbH7m9qZ0UmGCnhLMwQ
+         kPI8/QpzbBETv7kLW+/oIxFBzCWaVHmnRc2NwQRE1BTBPTgCSN6SQ8jHavrqYGXlbTj+
+         f+wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741887145; x=1742491945;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=igtxrGL86lefcfDN/8hIbvOlBxW/raIWLgrjfBhXSy8=;
+        b=t9aUon/QTI6WK3yZrnWG0q82IgM/8hoaINY4zWIORUmzJYrCcPNlVVBXu/j+c8dVsl
+         HBn0ayfiP3ODbFKm+bPLBsR1VLTO+oRIJ75RFtpfzx2LCn55CahbFJijeZOdaXVaKDI/
+         HSIEBMMdamUwOXlisbtQX+3aPoTKqH/CkIhHaOgxJ76im2dbhvRUWl87P9cmEE96ybar
+         JvTAaE+47Qk+cIru09Tb/qhTQBLUWGqfrT9qxFQShlMXu0AhuwZq7lrsja8nhSnDXtbd
+         Dn+86ehQISn3QInPTtgWPGPXqL7VfUbI2i4rwHRdFotU/CildeHoJ1DV3wW5n3IOGlYs
+         SJOw==
+X-Gm-Message-State: AOJu0Yw92TUc0eo8k48PbOP064QUg8IVdz9Z1Xnnbgb0NC0RAYsCt4ep
+	tv7JBtz5Lei1yKhsLV2MlB+wIfMyRGqIi0peMokHhvFhfpbV9ISnp96Mn/AdQ80=
+X-Gm-Gg: ASbGncuuyKRY1ZGLsTLPs1KX/dexwaOqg/llbakPOtCBRzPhOA0i1aRS/lGBW90ahhA
+	4U45S36rk8fe2cIePePWSF60nQhSPOZa4Y878HLkheuRBu2BphCBxc524ZVhAZbtCqu4b2pIGYB
+	9guy1hyjmNkNZNrFxhu8qyCuGh7TWtB4Qz75+Bnx3Ni+koD+5YxoNYpZklSm67NrroqStiGqpu5
+	JeFItBVZMoDi6ItcHyxQ6EbzaHJ/jBXXdkaEmZoTNjTKTcr8YLXdeGHIJcihxqenkohIXP+jrNI
+	CFuI80gmTO9bqdts7Va2mXz2VLHmoSV0WQx1zrxgCDAJuu3LSMq6ZGI3AFCm8uErAH8AwnsK/MO
+	K2pbqm8RERd+nYQNY
+X-Google-Smtp-Source: AGHT+IE6M5Vbww84MwqKLfrZ2s6C/+QIGIcVO94+5xTwGEHeccqxXLzGnkgvgzZan2kYKms7B7JVug==
+X-Received: by 2002:a05:620a:2696:b0:7c5:592c:c26 with SMTP id af79cd13be357-7c579eead02mr79821085a.19.1741887144951;
+        Thu, 13 Mar 2025 10:32:24 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c573d6fb8fsm123662685a.72.2025.03.13.10.32.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Mar 2025 10:32:24 -0700 (PDT)
+Date: Thu, 13 Mar 2025 13:32:23 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3 1/1] builtin/pack-objects.c: freshen objects from
+ existing cruft packs
+Message-ID: <Z9MWp6+TqwD+LdxE@nand.local>
+References: <cover.1740680964.git.me@ttaylorr.com>
+ <cover.1741133712.git.me@ttaylorr.com>
+ <6e93471f9a8e6a3dde36342088748ba17e4f7f95.1741133712.git.me@ttaylorr.com>
+ <Z8l5hxNjEOALl_g-@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z8l5hxNjEOALl_g-@pks.im>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Mar 06, 2025 at 11:31:35AM +0100, Patrick Steinhardt wrote:
+> Minor nit: it is a bit unusual that a negative value, which typically
+> indicates an error, is used as a boolean value here to indicate that we
+> don't want to have the object.
 
-> In any case, why do we want to keep these unconfigured remotes in
-> the list of candidate lop-remotes in the first place, and why do we
-> want to treat empty URLs as being so special, more special than say
-> a randomly misspelt URL?  I think I asked these questions on the
-> previous round and I do not think I saw them addressed at all in
-> this round.
+This matches the convention of the other "do we want this object?"
+functions, where returning -1 indicates that we don't yet know whether
+or not we want the object, and should continue looking elsewhere.
 
-Ah, sorry, I saw this new round before seeing the response to v3
-review, in which these are covered.
+Returning -1 from 'want_cruft_object_mtime()' doesn't mean that we can
+necessarily return -1 immediately from its caller in
+'want_found_object()' because we might pick it up from further down in
+that function or in one of its callers.
+
+So I think the return values of that function are consistent. Because
+that function never says "yes, I want this object" and only "no" or
+"maybe", we could return 0/1 indicating "no" or "maybe". But that feels
+like a bug waiting to happen if someone later on mistakes "1" (which in
+this hypothetical would mean "maybe") as "yes".
+
+> > diff --git a/t/t7704-repack-cruft.sh b/t/t7704-repack-cruft.sh
+> > index 959e6e26488..f427150de5b 100755
+> > --- a/t/t7704-repack-cruft.sh
+> > +++ b/t/t7704-repack-cruft.sh
+> > @@ -304,6 +304,69 @@ test_expect_success '--max-cruft-size with freshened objects (packed)' '
+> >  	)
+> >  '
+> >
+> > +test_expect_success '--max-cruft-size with freshened objects (previously cruft)' '
+> > +	git init max-cruft-size-threshold &&
+>
+> Let's also delete the repository via `test_when_finished`.
+
+Eh. The point of naming these uniquely is that we don't have to remember
+to clean them up afterwords, but I can do so if you want.
+
+Thanks,
+Taylor
