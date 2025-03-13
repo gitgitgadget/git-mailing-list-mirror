@@ -1,128 +1,186 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E4D1EE028
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 11:08:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599CF264FBD
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 11:25:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741864108; cv=none; b=bq82LkN6PuEUCroERfrGF796u/akCkAQf8EoRvuqy7dykX1VJ/fEjRN2sONtB5BUkKl3O33RFT9B/Ryvw5coT1qi7Ypxau1RPKCcEd3TH5IVXdnNwkf3ZMvLGWN+XZz33xZrRnc2BKSQ1KgrWkz/Qtm83xWIjZtGeMDgqk5G4Yw=
+	t=1741865111; cv=none; b=D0yV3JgckTYmsJuF7nVKMmWgiVkGJghtkzGWjCh32X56+MF999DbJzIrf0b0vUN8aSZwUyEn1/XU1Qd2WayKyeO+bCGfbp7ZAFJwGRmBTe17gwoHhuZFqfo6614pTgG9LbYfKpmOtSK0jiEIxWHFj4qRWFx1H+WH+pv+vj/Tlp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741864108; c=relaxed/simple;
-	bh=R+cmpYkRedFw1bg0KdiBWeYdNx4yihOa+FAWA4+A2KQ=;
+	s=arc-20240116; t=1741865111; c=relaxed/simple;
+	bh=2N95GN3vaeFXCYTZpnd3VXK7bgGHMa1qB0VekpD0c2w=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EhOhoEJxAvde02zFjJzokMlDXOrtz+SSx99rrZjV45SriOqI6nRoCaQFSsV45qOx55FZJ2gU55OcaFuz4cZAQdnSAcixYp6Ga1/BoGDATBMaHwjkWq6nfCcjuQSrTBhXXaG3thJkGLywNPe5OeONatF5rvueCxDaDlsj9zhOSmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V7qQ/Rbx; arc=none smtp.client-ip=209.85.222.47
+	 To:Cc:Content-Type; b=jPnDKOvQounDpLi4uK+xP3aunPAvgejG6nxoP0Z+MLGLXTt07vtImmEjKwn7kyRMAnf4AbZiEFkJWvNZYkBwKXegdTxBiXB46IbTssgk4apvWonJgtDvnEhUZFrlVrJFm9+Q253JEOVET5m/qkgVv0LRg0wKi+9O8WdVLjkWESU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MizGfCaz; arc=none smtp.client-ip=209.85.221.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V7qQ/Rbx"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-86b9d1f729eso355790241.3
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 04:08:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MizGfCaz"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-5240764f7c1so354435e0c.2
+        for <git@vger.kernel.org>; Thu, 13 Mar 2025 04:25:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741864106; x=1742468906; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741865108; x=1742469908; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kDfrkdwH4S6XQ/meHptiCvoLcW6dpobEsSjzToPDdx4=;
-        b=V7qQ/RbxnRVb2fpWPcB7Qj+QmFh4OZwYe0K7ngnqVHYp9y6yVtVx5WuK4figEG4gJU
-         3LVxICDpucih2pgnK3+XPi5Df67C68baHJnCMBKlv9+c5/87Ai4qoeV/PPZdHHBmQ1ZG
-         RCJItjNV89agFXsmSnLMipAdv98QLruu7IP+nXrMxGG97mxrvKoNfqujeTpQ+mmF6Iza
-         2SWtdeWagkba+VhkPg40MKqzghr0FNYhljxCiEIfnzgmAC/rOTDpxp13fNUDxDe3liuJ
-         H0+8hZGMhFUBlI125Izs7DgFw6xuVxf6KluHn3SYnVZBU5jXcXsq1GuFsr/LDng9EOkM
-         3S5Q==
+        bh=UFk++i5WSIV2Nx7rI1TWn8B6tIocaIwlx9+LgCrT8gY=;
+        b=MizGfCaz7leNkdaMC2iB6niz8I2MmBNl0Reqv1M0/gTz17L+G6YIWp+JF3kTeh9vQk
+         EtFzbqyGDvijz/0gTQrSQZhXRDM89mJK2KhySKxPGNaIKg1iKnjsUdko979180o6+VYv
+         b344tqXcAeb7+6zD4N+7t0og1ew1zhT8NLvHeqHUgK45OjqJuFn8qJyGOGOxzmNE+wOF
+         Q8bPwWACf2hlXb7feZk/nIspvxjebynzTLYtWkabdubI/DbK1zOHbXNDNnyzxtGwoSBz
+         UQ5/tR21/RApQ9rdW+nW3b5eLDH9TgGQOcLc95Cwy7/Aav7cUbMnz79stmbfwTfLThhi
+         YtiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741864106; x=1742468906;
+        d=1e100.net; s=20230601; t=1741865108; x=1742469908;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kDfrkdwH4S6XQ/meHptiCvoLcW6dpobEsSjzToPDdx4=;
-        b=U900VBipguSNP2uumH1f8+JCKbIReuxwuGSzppTLl1fHfJX7pfeajlQF9KaEyG47t9
-         VGXkWaqs/T5FV6V4m2vi46SKeJhA/+BcAJvX8KUxWb41P0Cs3r9cuESJlIVHM0yFAe3q
-         cZTAKGU0uOlHcgjfnAMngUmMPBUyNAXRHL6M27gG0e+sZgiuUdFr2BKnqTaoxD2GveZ3
-         j9q5knh8556AXmR3kzH5/9r+RZpYsgXFUgQ0wnDG8RDA3gXOB8e5XmuWIsCgKr3VPXFW
-         8zUCl385lknXdaf915J9eDTVXp07YlouMlzUk7ZTHCC7jlQ/BAuNwTvCTfxaItWTXV1v
-         qWUA==
-X-Forwarded-Encrypted: i=1; AJvYcCVQky4YQXdYkx0k1/T77vHdENxCFQIKZpa0gfvSPqaWkIcdqMDIi/k/AX4Larbg2Jwitbo=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy1Hf1HOxygsqd+KGquqvaj0XwxEZLTDjslTke7U8KER0u3YpFq
-	XnkEzwRD1vpdeqYHbMTDuRWEXgkw40aBFvFupYxEuUAdCcXUU6jKdvPrM0We/MvhFUEE6lz2GGE
-	vli4Ih5xu5jEdMk6DeJKg8b+JQnE=
-X-Gm-Gg: ASbGncttXi7HXVnzubXeDscSGh62Gij1A6pVVTwxXL8ZdRwsbA09FVwI/mpfGuAUdaR
-	zlqPL45kidfxMy93+cHu6qh/ZWUGOl4r9jtRLtklH9iGwssnc4TbVdS/bu74fc6ZadBngRiUHd9
-	8HOB/wltEmV7O4PULUNQKUuawbbO8=
-X-Google-Smtp-Source: AGHT+IG0q9aLHiXgpp3ZIDKLc8IX9qH/9WHfWqMHQXG44POVTa4TQUTeDFYJc+t14tsjqHXaH4Ch0bdYB2OIVqbsEqc=
-X-Received: by 2002:a05:6102:2927:b0:4c3:577:a8e7 with SMTP id
- ada2fe7eead31-4c30a6816aemr18515157137.16.1741864106211; Thu, 13 Mar 2025
- 04:08:26 -0700 (PDT)
+        bh=UFk++i5WSIV2Nx7rI1TWn8B6tIocaIwlx9+LgCrT8gY=;
+        b=dnExggkm91kcYgMDvuK1vtWPDnrn75PXCbXfal5poWwuOwMcNooaCdiUO+T/aiSoXT
+         dscKKBPwMG7AC8TAEDGpNnOvx+MIb2T+DRSIFBrmG/ICRr5EDoY5OZEhdL8TllbT6kW1
+         gIfnfwP61eO56kKVBxCWvcqLAcXnv6XBCQPlBwHeB30wYcWaoMVV/h5droNbooyVORL3
+         xMNHCRwsh+EDpJBmqrlAPfyAtudIJiqv/unGrY34K2Rpik9kxZw7vcy/iHHbpoXhxFRG
+         I5NL3jfvdAs7oLJhvzq2EsS+OIK+VT1oxFLWpAx1kDmwhmK+6ixOTKZiM8XwT7wVN/mL
+         UKNg==
+X-Gm-Message-State: AOJu0YzpyLgTL6eJFF+v/F7vwqHFELfdukepViz22HstW1x5DnSaMi9X
+	yjO2Qw9kGVmHHLKNsYh30M3YMMPBC7I+74TV3phG47w67ZTHtBoiBKxfYioFgs9DOwHhseaC4Ge
+	LozSp4609LwrR7to0vUCpBlmjJrtOPVQw
+X-Gm-Gg: ASbGncsnqRj4weofmi6l4ANIo8REjEkqOjm9BBdT1LDPO+1RzPCwbg5420u/T54/Xg0
+	tiOCghZ+fh++eDz653kIVW3QGbNLCLTODlNfZ+p77sDhPB+VYZIgXmW5oR6pL0BUryDWKB2xQU+
+	g5VUJRLT3scQ7COcBjxZD4wdSz4C8=
+X-Google-Smtp-Source: AGHT+IHhEUUjXDb0vrb8tjGRGolnkShcmB0oXY3wZA/Sane0Vcoo83akK/2IxLd80x5jPfhr68Z4SAoBXKCV4ffKdGk=
+X-Received: by 2002:a05:6122:918:b0:520:3e1c:500f with SMTP id
+ 71dfb90a1353d-52419948798mr9480262e0c.8.1741865108143; Thu, 13 Mar 2025
+ 04:25:08 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 13 Mar 2025 04:08:25 -0700
+ HTTPREST; Thu, 13 Mar 2025 07:25:07 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
-References: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
+In-Reply-To: <xmqqy0x9s8mg.fsf@gitster.g>
+References: <38de63ce-6d4e-4f1f-95b1-049df78d9cfc@gmail.com> <xmqqy0x9s8mg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 13 Mar 2025 04:08:25 -0700
-X-Gm-Features: AQ5f1JrNYiqv2qRMKboIXYgZQSFBIhXZtHOqPQ_Fb1B9rDBHU1gBrZAXMk3Whi8
-Message-ID: <CAOLa=ZR6Y1rE7BmJ-gUov_b9DNPs1q7ZDz0v0uUShkN6vVtDjw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] meson: improve handling of `-Dbreaking_changes=true`
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="0000000000004c784f0630375768"
+Date: Thu, 13 Mar 2025 07:25:07 -0400
+X-Gm-Features: AQ5f1Jpfafty01A822OKsYlc9CjpdszaAkzD5lrhklHUaSwbUiR6RiSIQ1cZbwE
+Message-ID: <CAOLa=ZTia95Lib6bkz_nWi2BYEteAaOxsrrX9DqLTEz1t02ggA@mail.gmail.com>
+Subject: Re: [GSoC PATCH] rm: fix sign comparison warnings
+To: Junio C Hamano <gitster@pobox.com>, Arnav Bhate <bhatearnav@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000004a69a0630379339"
 
---0000000000004c784f0630375768
+--00000000000004a69a0630379339
 Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Hi,
+> Arnav Bhate <bhatearnav@gmail.com> writes:
 >
-> this small patch series improves handling of the breaking changes option
-> with the Meson build system as discussed in the thread starting at [1].
+>>  static int get_ours_cache_pos(const char *path, int pos)
+>>  {
+>> -	int i = -pos - 1;
+>> +	/*
+>> +	 * This function is only called when pos < 0, so -pos - 1 is
+>> +	 * greater than or equal to 0, so it can be safely be stored in
+>> +	 * an unsigned int.
+>> +	 */
+>> +	unsigned int i = -pos - 1;
 >
-> Thanks!
+> "Can be safely stored", sure.
 >
-> Patrick
+> But so is "int i" perfectly adequate to hold such a value, no?
 >
-> [1]: <56cf842a-7c1f-4354-b191-35bcc1e139bd@gmail.com>
->
+> This is one of the many instances that demonstrate why the
+> "-Wsign-compare" warning is of dubious value, and invites worse code
+> than necessary.
 
-Thanks for picking this up. I think the series looks good, and is inline
-with the discussion we had earlier.
+I have to agree. I think it would a bit cleaner to actually change the
+functions argument type itself. Perhaps, something like:
 
-> ---
-> Patrick Steinhardt (3):
->       meson: define WITH_BREAKING_CHANGES when enabling breaking changes
->       meson: don't compile git-pack-redundant(1) with breaking changes
->       meson: don't install git-pack-redundant(1) docs with breaking changes
->
->  Documentation/Makefile    |  2 +-
->  Documentation/meson.build | 13 +++++++++++--
->  meson.build               | 18 +++++++++++-------
->  3 files changed, 23 insertions(+), 10 deletions(-)
->
->
-> ---
-> base-commit: 87a0bdbf0f72b7561f3cd50636eee33dcb7dbcc3
-> change-id: 20250312-b4-pks-meson-breaking-changes-819afcca2e07
+-- >8 --
 
---0000000000004c784f0630375768
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 12ae086a55..79e47d6e9e 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -40,10 +40,8 @@ static struct {
+ 	} *entry;
+ } list;
+
+-static int get_ours_cache_pos(const char *path, int pos)
++static int get_ours_cache_pos(const char *path, unsigned int i)
+ {
+-	int i = -pos - 1;
+-
+ 	while ((i < the_repository->index->cache_nr) &&
+!strcmp(the_repository->index->cache[i]->name, path)) {
+ 		if (ce_stage(the_repository->index->cache[i]) == 2)
+ 			return i;
+@@ -83,7 +81,7 @@ static void submodules_absorb_gitdir_if_needed(void)
+
+ 		pos = index_name_pos(the_repository->index, name, strlen(name));
+ 		if (pos < 0) {
+-			pos = get_ours_cache_pos(name, pos);
++			pos = get_ours_cache_pos(name, -pos - 1);
+ 			if (pos < 0)
+ 				continue;
+ 		}
+@@ -131,7 +129,7 @@ static int check_local_mod(struct object_id *head,
+int index_only)
+ 			 * Skip unmerged entries except for populated submodules
+ 			 * that could lose history when removed.
+ 			 */
+-			pos = get_ours_cache_pos(name, pos);
++			pos = get_ours_cache_pos(name, -pos - 1);
+ 			if (pos < 0)
+ 				continue;
+
+>> @@ -58,7 +62,7 @@ static void print_error_files(struct string_list *files_list,
+>>  			      int *errs)
+>>  {
+>>  	if (files_list->nr) {
+>> -		int i;
+>> +		unsigned int i;
+>>  		struct strbuf err_msg = STRBUF_INIT;
+>>
+>>  		strbuf_addstr(&err_msg, main_msg);
+>> @@ -271,6 +275,7 @@ int cmd_rm(int argc,
+>>  {
+>>  	struct lock_file lock_file = LOCK_INIT;
+>>  	int i, ret = 0;
+>> +	unsigned int j;
+>>  	struct pathspec pathspec;
+>>  	char *seen;
+>>
+>> @@ -314,8 +319,8 @@ int cmd_rm(int argc,
+>>  	if (pathspec_needs_expanded_index(the_repository->index, &pathspec))
+>>  		ensure_full_index(the_repository->index);
+>>
+>> -	for (i = 0; i < the_repository->index->cache_nr; i++) {
+>> -		const struct cache_entry *ce = the_repository->index->cache[i];
+>> +	for (j = 0; j < the_repository->index->cache_nr; j++) {
+>> +		const struct cache_entry *ce = the_repository->index->cache[j];
+>>
+>>  		if (!include_sparse &&
+>>  		    (ce_skip_worktree(ce) ||
+
+--00000000000004a69a0630379339
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 6622e0b953e10569_0.1
+X-Attachment-Id: 26c49781e75ee51d_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mU3ZLY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMGpCREFDUWhxMnZkSmI3YTZxN1pDbkRCM1Q3NEJxNAprMHl6K1pJellC
-QUE3M3V5UmhQczJjbG8yZ0M4VHZ0Q0h3cHRwM3RRR1o1STZVcEllOC9uU0lwbVdIN3IzbFZxClgv
-Ri9hTmtuUW44cGdab3NadWdJbTV4TUFJd3dTQlpTeHhPM1prWUN5SVR5SFFnbFEwVUxhb2pjMFNX
-MkRYLysKaHN6NGY4WTY0dzgvQ1FselMxSkN5S2dLVll5VEJwOUM1MS9lS1dzVFd2QU41M2RPMmdH
-NmQ2YXFtK3lVcEREZApMSjZLNnJVRXQ2UEl0VUdUZ0kwU25vcTFYeGtXT25qaWJ3cEwyOXdBem4y
-TVRNZTlwMXJ5eDNIbG1pb1Nid0dhCkxQRTFHMGp5UGZzSGVUQjN0ZDdVZE5PdUpYdjBBeGpHaEt2
-Uyt1RFlKSyt3UEJ0YUJGbERYWmphM3BOOU84RVMKcThqVElxVVREazhJSUtNVVltNVpCTmdKcUZr
-ZFBwdWpMUTcxWTc4dUVRODdVSVFuS3owSmkraG80cDlJaTRjcgpPQWlKZDFUSG1sdEdDYVphWi90
-Zmt3Y2JRdjNoQUNqVldUQWlmYTd3VjArSXpEeGtOM01uTWp0TmpBN1Z4WllZClI2a2ovQlB0U05O
-WGQrZGZDVVFqNXNGWGNmNU4zc0I2SWRKNDdXVT0KPW5Pd2IKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mU3dKSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mKzUvQy80NnNmcWJ1ejFoR3FKVndmZXFsNTdhTFl4KwpqalVYejREYVZG
+aE9DdW9NSjZ1NUYrdUkzZENnbTNDNzNmY21RUGl4RXdyd25laXcrMUExbVhXR2lZSXRpd0hKCkc5
+NWxXNVErcmtnaWtFZllMVTZtSDBXckh4QTFsWDQxK05nMms3MXVXbGpVVFh5SXBIQzlodmFYaGNa
+cEZrT1gKc1M0WWU4R0JVRkpxT1JxSm1zWnpUWHpNT1laU1E4bzUyUjhiNTk1M3dvZmhDQ0pLbzZP
+SjJtam5zN1o1WlYvaAoyeDBCQzd4bmxJYjBtUFc1YS96dy9GZW1mNTNRZ2U1UG9IVkJMbmhpM292
+T3M3cUNTMGJ5RVhHbk1JUXdsOWxpCjNrRHhnRTIwODZMV3dwa2w2RWV0WjVoNlpCTk9kMUZGTktD
+RDBaRlJ2Z0wrOHkrdkoySjZCTURTUk56dWFqdE0KQ0pPelJaaUlRbnZUY2VRa2Z3K2NtbVFKVFlI
+bVJFOEN4UHRleUN2cFdmd3BwMlYwV3krZ0c2MjVFNTROOTdVTgp4RlY2UUowbGx4NWFkdWpyVXZM
+REVMU0FZK1I3Y2ZKczVOYjVubGc1WEg5dS9uYWlpaVhEblFsZjJQYit0elY2CmZSejRodDlWODJh
+QlZPTGVsQU5FcnlPd2Nrc3U2R0hhTFVCVURxOD0KPXNvalAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000004c784f0630375768--
+--00000000000004a69a0630379339--
