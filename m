@@ -1,42 +1,43 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35A912F399
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 05:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2269012F399
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 05:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741844808; cv=none; b=mXC8oMSHXf3Ncd4WnPrAy5JV/pBz9C+OhgmyPfZVi2uCcGVpAZ03k0wqX4nGVMlyisKfJKrbTzG08gWbb/RRrC2nbQP2KbcM5YpsDvcS7A7IkU1+7IcsMo8mIK/0tgg1To4cUD4EwLyhiHQXMx5WjAbpSMgnEvKXNMAZD9RflDU=
+	t=1741845013; cv=none; b=p/rslvZkI1UCZ57euzoqfJLlho5Gr9j0GKcsdVX/n+kbFJs2fTydBLIqkAJOWjjpzPrUXyDx2JIBzX5bngfpjICNVDsZKEThfZhgUmOGqmV6yWJkGrypE9nCGLnQKN50gxOAtSeH79A1c+qMXIL1HjfqsjCbhARgCC88ZLg7p4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741844808; c=relaxed/simple;
-	bh=+hnz5rTkcvCkPQwMXVajixnB6TvF2y+tjTOgps6FwlI=;
+	s=arc-20240116; t=1741845013; c=relaxed/simple;
+	bh=3Z2RS4tGSi3FqjNLx9whTzi+PuEUe4Z+ITfTYfmt6sQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gLe/r8nGCC9HqB60gZf8TfrLfobzs4Gcqc9fnpKmI1i9tHIDTLJMXsDGw2lvMKrPmzV5IPt1PjO/nGbtAiEXP4oNfQmBr1Dj6XWck4kDcRuUYXCXiebbRcNlqhFjg4dq+emrRmo3gaECiEHu2dr2TwBbQyl7DvD7Ad3Ozc63uX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ZduOYIH5; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=Tr+x3YJGug7AQh7TAg1zpECf6wVV2qmMLQd/VGZZ4ZwGoxUnCBdDWt0xSYUg5Xt0CmC52vDJ18Sn2nMKDCFMMsHk920r33Wc6ee4y1zKcvMbTYOZbaKVYm7meULl28ce9DT4oYn8GhqoNg8jYa+alYlihr0KV4ddI0t+D9JNyvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ZB6azRJe; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ZduOYIH5"
-Received: (qmail 20988 invoked by uid 109); 13 Mar 2025 05:46:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=+hnz5rTkcvCkPQwMXVajixnB6TvF2y+tjTOgps6FwlI=; b=ZduOYIH5vR1EhjfaMGxPPxLkzQ5ZllbIFy2oq0C/0othhH0A0aD1K2HDsH6+sb+2yxAhL+5+XdGcQcrCxPg74uLedMh/T/baVFh6wBpBcbS82x57+biAhz8GLAG+H1zBlez4MZpzvc6ZkoTIGNlX1jRMvhB9dP3oN2M9+ujX7CVerQhM/093QFWvdHn5jwpDUbi/RDMfQmtuR+DDlaTc2lrmpJP2EhteYXBp/EmmNSdtejHm7m2nPWLUfpq6bEjdvYWmxxlcWjVIwNlG4wbLzm4Qc9ZrMC9pAtiXqag4FyuMG9TxZmhjdnVaIU0eeYkMTc2pYaPU4Q+ytoI9oT1kcA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ZB6azRJe"
+Received: (qmail 21030 invoked by uid 109); 13 Mar 2025 05:50:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3Z2RS4tGSi3FqjNLx9whTzi+PuEUe4Z+ITfTYfmt6sQ=; b=ZB6azRJe3vtWx7s1FZYSEpIkQoUR618id7JSekW3R0czjVe+589lpdNA3mUyzYlYJuBRT30KtlOEz1Cqch5A8lubOu4I7WR05uMHdcnmPVcu8fKhD2cLArqSSbyKkcwWAQirZ2KS/P6cbTbTHhabOaxqcbRJsv69KPOljcrOcEOCIivLHLuAcmXxwkbRjIlc8Wo669KLd4hr7fOlZdvttdW1Jl9B/+nA4Woc1DRRIIY4QrWA10qjYEIzGa9TZmz8WRBkBAtIOliDj/HKPmx58vVMSogCnGUsdg9LbVIl0krP4cq1VPJkJvkKa+f6etaCHtL/E5B+H4qOXbp+UG/2Lw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Mar 2025 05:46:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Mar 2025 05:50:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11700 invoked by uid 111); 13 Mar 2025 05:46:45 -0000
+Received: (qmail 11817 invoked by uid 111); 13 Mar 2025 05:50:10 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Mar 2025 01:46:45 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Mar 2025 01:50:10 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 13 Mar 2025 01:46:44 -0400
+Date: Thu, 13 Mar 2025 01:50:10 -0400
 From: Jeff King <peff@peff.net>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Igor Todorovski <itodorov@ca.ibm.com>,
 	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: Re: [PATCH 6/9] fetch: ask server to advertise HEAD for config-less
- fetch
-Message-ID: <20250313054644.GF94015@coredump.intra.peff.net>
-References: <20250309030101.GA2334064@coredump.intra.peff.net>
- <20250309030847.GF2334191@coredump.intra.peff.net>
- <Z9H//JHtYTGqHI3n@nand.local>
+Subject: Re: [PATCH 0/9] fetch: further ref-prefix cleanups and optimizations
+Message-ID: <20250313055010.GG94015@coredump.intra.peff.net>
+References: <71075837-D0AA-4F01-9F5D-CA10BFE93B63@ca.ibm.com>
+ <61147be4b9a0ee76f1fe0f3376d7316205da350c.1741389941.git.me@ttaylorr.com>
+ <20250309030101.GA2334064@coredump.intra.peff.net>
+ <Z9H8uKevHUxasE4S@nand.local>
+ <Z9IBZmh4Cr2jq7E4@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,56 +46,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z9H//JHtYTGqHI3n@nand.local>
+In-Reply-To: <Z9IBZmh4Cr2jq7E4@nand.local>
 
-On Wed, Mar 12, 2025 at 05:43:24PM -0400, Taylor Blau wrote:
+On Wed, Mar 12, 2025 at 05:49:26PM -0400, Taylor Blau wrote:
 
-> > Note that we'll add "HEAD" to the list of prefixes, and later code for
-> > updating "refs/remotes/<remote>/HEAD" may likewise do so. In theory this
-> > could cause duplicates in the list, but in practice these can't both
-> > trigger. We hit our new case only if there are no refspecs, and the
-> > "<remote>/HEAD" feature is enabled only when we are fetching from a
-> > remote with configured refspecs. We could be defensive with a flag, but
-> > it didn't seem worth it to me (the absolute worse case is a useless
-> > redundant ref-prefix line sent to the server).
+> On Wed, Mar 12, 2025 at 05:29:28PM -0400, Taylor Blau wrote:
+> > >  builtin/fetch.c        | 46 +++++++++++++++++-------------------------
+> > >  refspec.c              | 22 ++++++++++++++------
+> > >  t/t5516-fetch-push.sh  | 12 ++++++-----
+> > >  t/t5702-protocol-v2.sh | 44 +++++++++++++++++++++++++++++++++++++++-
+> > >  4 files changed, 85 insertions(+), 39 deletions(-)
+> >
+> > Kidding, of course, I am looking forward to reviewing it now.
 > 
-> Yeah, I think that we already do this in some instances that you and I
-> talked about off-list, but I can't remember exactly what I did to
-> provoke it. In either case, the server responds correctly, so I don't
-> think it's so urgent to deal with ATM.
-
-Yeah, I thought we did, too, but after looking at the code, I doubt it.
-I think we were always playing with exact-oid refspecs, so we'd always
-hit the "if (rs->nr)" side of that conditional.
-
-In order to hit the case touched by this patch, you can't have refspecs,
-but still need to somehow get a true answer out of
-uses_remote_tracking().
-
-> > +test_expect_success 'set up parent for prefix tests' '
-> > +	git init prefix-parent &&
-> > +	git -C prefix-parent commit --allow-empty -m foo &&
+> This looks great to me. I left a few minor comments throughout, but am
+> unsurprisingly on-board with the overall approach as you and I discussed
+> this off-list a week or two ago.
 > 
-> Any reason to use a bona-fide "commit" here instead of "test_commit"?
-> 
-> Not a big deal either way, of course, I'm just curious.
+>     Reviewed-by: Taylor Blau <me@ttaylorr.com>
 
-Nope, I mostly just reach for "git commit" without thinking because
-that's what I naturally do while debugging or exploring.
+Thanks. My biggest question is on patch 8, and whether the existing
+set_head() feature really ought to be more aggressive about pointing at
+stuff we didn't fetch (and that could even be unborn on our side!).
 
-But since you asked...;)
-
-I do find test_commit a bit bloated in general.  It takes several
-commands versus one, leaves cruft files in the working tree (that you
-need to care about not using again, lest your commit fail with "no
-changes"), and by default makes tags that sometimes cause confusion
-about fetching, reachability, and so on.
-
-The one thing it does do that git-commit doesn't is increment test_tick.
-That sometimes is important (if you care about traversal ordering), but
-usually doesn't.
-
-So I dunno. Maybe I am a bad person for not using test_commit by default
-and we should have a style suggestion there.
+I don't have a strong opinion either way, but it would mean adjusting
+the idea of when set_head() kicks in (e.g., should we do it for every
+fetch, or should exact-oid fetches continue to optimize out the ls-refs
+call?).
 
 -Peff
