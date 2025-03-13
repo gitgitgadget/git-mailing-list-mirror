@@ -1,140 +1,161 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from uggla.sjd.se (uggla.sjd.se [178.174.241.107])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76201DEFE7
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 07:46:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FA125FA1B
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 08:00:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.174.241.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741851983; cv=none; b=cFrgPDp90pyYNoEftA491ZLfjTEOAuKnIIXh0UI08qw8qPpgtf5ficu+9MMo8UyTrWp2FmD7q36TDsgFduXogy9NxS2bi3rvVaj3RdQrvyqoMgLKmQvaF8TRQFjNego1YupA5h/WW+7gYGDYov0+5VQrYNCJj6DxXD7qsRgGF6o=
+	t=1741852808; cv=none; b=IPBrE372ZNKYgYHc20KlJeazK7GHg7Cm4NNX8FW39R3JYchyDUoRI9a3HDGbt/Zue59jjC7RT0EMXFVk8uNnuOOX7Wb4eG+HkZt+xkfwIQedcF05r6uMT/ldqBZKNJoRcTy0RHVM4UQcBR0vHGA6cu8a3kq2AlVtdkaBofk9Rbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741851983; c=relaxed/simple;
-	bh=TEUN81iKJIOo8ee3lE5FBRXZkneDB427pg3X8i76zhQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eHb7LrZZqgRDyk/IcbiAeJ4vQuEEzdvcob5p4VfSoijeeO0cKONa/pYth5K8XmIhB8sZfZ+HMmstMlM34XxrkhO7VSGeaRrgJ411x0AH2ifcI62Fumk+LQSxbIVZJjzGclOssBWqRSQowC+jFpXhW3rTO5L8A+FxeifjIfRrLZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XoGbS/cb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JMtFjOTC; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1741852808; c=relaxed/simple;
+	bh=FlFKxiM9902OsBWGM572eQx2xtoEmndFXXGHRYtGWqo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MmcPxWxtYUlPdMXRD7iqGy9WPg0Em7roaVeYKZYRoH5Hffaz3Liih+wcVQX7dPm8h4UWgJHRUun+4trxlKceKC6FRegSs3u6vVO4Wf5Vk5YyhM7lr0Sq1FF3qSs87LLQDgaY5E9C1GbTWQD9YCA3EV4hDlhdjOhZFBJo0VJO1AQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=josefsson.org; spf=pass smtp.mailfrom=josefsson.org; dkim=permerror (0-bit key) header.d=josefsson.org header.i=@josefsson.org header.b=0eFIxhfg; dkim=temperror (0-bit key) header.d=josefsson.org header.i=@josefsson.org header.b=l55D1W9o; arc=none smtp.client-ip=178.174.241.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=josefsson.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=josefsson.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XoGbS/cb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JMtFjOTC"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id C43351382D86;
-	Thu, 13 Mar 2025 03:46:19 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Thu, 13 Mar 2025 03:46:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1741851979; x=1741938379; bh=pbxZIYNNiw
-	p7bDZszVaf4S92WHN9Mazrw8bTLtYHtpM=; b=XoGbS/cbttAshPuEenQZA3/yBo
-	dazCLXe2iQYkVDcRzMjun1ntVhSc6yyq0SbMlt2Oe1/XPrdYBAfhKaTTK2tmsVsG
-	yrvq7L3L+EMZv6KU+1tyOTdW28zZUUQYJMnf7JWVH52eqMsJuHjB1ul0HtL/2u62
-	O4OhVW27a1e5OAsIJF/EOiGCzeOs+uas2fIDaYoLApJ+/ahPJ028CIFDokLycqxt
-	sguJ488CuAFzY12p6hng6blrR1JvVPKUllu+EGYzqBXhubVH8E8jcZRNBoN5hF5f
-	9JklsvTYtnhZKR/UQ8m8LcyjcNPnwuaVNmHfoc+8zIs/oleyNDHlrHJJ5FOw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741851979; x=1741938379; bh=pbxZIYNNiwp7bDZszVaf4S92WHN9Mazrw8b
-	TLtYHtpM=; b=JMtFjOTCWj1ExulAzpfXCZOUWrlGYFPQGRov0CEsXYiVcMGrnxm
-	3BVNjvDruoFaO1CKQyucNg6GK0oV0FbFmFOih9NpGMF5aAzxni8myVQnSHSlI9cG
-	wvX3sBCEkh9qY2QWUaZtddLz5T82bkLPGj/SiEN7QA47WzkKnHMnhH54DzFNMD7C
-	vdlVJVYs5cMlpbXwHpZlnKRMZvcyJPWp9/0+j/BVgZ5LwXPv8zxTBHveQM01ou+5
-	C5XK8BsRoaYAWS6vh+Ep+rNN1s83qbo7BufNEBl9IiCm93t5cd56S33SgyVW2e68
-	N9D8FsrtMSXQKHQPfCzhpyUszp7KoweT//A==
-X-ME-Sender: <xms:S43SZ0eAHuBjhVe1CPn-rK3LHKtg66KB4unMxOWp29Lh2BRmB57Avw>
-    <xme:S43SZ2OEpu_vY0r7i4CzF4ej4nDHWqeZ7z9LO1j8H9FvaNf4HYRX0XpI6NYM0Irkp
-    pf1IuAYLUkMhyRixQ>
-X-ME-Received: <xmr:S43SZ1ioe4EdWmY21wBtPNt2P3e0mANya0ejkqLpa9OxwcC05v5yBrQh0rb2wCOj2jewN8-B20YzA-Fcusq-mL95cGNYngFCTWvc6CSNiMGOpSHmXg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdejfeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjhhlthhosghlvghr
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtgho
-    mh
-X-ME-Proxy: <xmx:S43SZ58p6QCSvTNmID3NoYeNJ-G5djUEenerz6vQBrAZ9EuGaxdoQQ>
-    <xmx:S43SZwtXg1ubs3DnSDo8SydDUAmVZkET8SC2Bnh33mzJIsBI2GAaIQ>
-    <xmx:S43SZwGOKkCswss-kvYcm34D1I81AfsQfxOod_eXgXeIBdxErVXR-w>
-    <xmx:S43SZ_PtPMc_OS1N-XUh41ch34uQLnFlJZAB6gDzu5s79vzbRqPgRA>
-    <xmx:S43SZ6WY0XrqeZK9bqMU9kzmWvFuC41KKHH6Oqt-LP5PbzS9MNM9FGwU>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Mar 2025 03:46:18 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e7bfb8fa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 13 Mar 2025 07:46:15 +0000 (UTC)
-Date: Thu, 13 Mar 2025 08:46:11 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, Justin Tobler <jltobler@gmail.com>,
-	git@vger.kernel.org, christian.couder@gmail.com
-Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
-Message-ID: <Z9KNQ8XliWrrYgAT@pks.im>
-References: <20250310192829.661692-1-jltobler@gmail.com>
- <20250311235720.GA73755@coredump.intra.peff.net>
- <Z9E60LG6ExSJzmuo@pks.im>
- <xmqqfrji1bvy.fsf@gitster.g>
+	dkim=permerror (0-bit key) header.d=josefsson.org header.i=@josefsson.org header.b="0eFIxhfg";
+	dkim=temperror (0-bit key) header.d=josefsson.org header.i=@josefsson.org header.b="l55D1W9o"
+DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=josefsson.org; s=ed2303; h=Content-Type:MIME-Version:Message-ID:Date:
+	References:In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=f1IYaS2H/YwLNTZTuqOeE0IXU2tuiav7oYkTnhcqIS0=; t=1741852794; x=1743062394; 
+	b=0eFIxhfgW+C6Fx5DWTTMZqPcWka/msPb/M8ccJCTV7aMHbpCzb2vsV0gFCZGdtwm68VGXkAxhfd
+	oM3INRrsLDg==;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=josefsson.org; s=rsa2303; h=Content-Type:MIME-Version:Message-ID:Date:
+	References:In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=f1IYaS2H/YwLNTZTuqOeE0IXU2tuiav7oYkTnhcqIS0=; t=1741852794; x=1743062394; 
+	b=l55D1W9oPhQUnTu1Tr7EaiVPjsDgBBxQWxELUOBLLg8mXoEUpescW25dQjiVV/1WaSI/cFyZDvT
+	MDANEgXYjz9ImhB42FFuDf1XkPjdBubHIHgzgAMD1bdzRMqxAeZzcaXzLiJtpwSPyAHVfSTzQk2MP
+	xHiPKE03ymlKPD4uSKASsIKv1US+1ebdhSYIRTACgpJq5oSB++VjOvjsucAjHarsSNhsEJT0VCEiA
+	As7V5l8g6nlkT5SWMv8FbLTO+1dZXDi5gEPHl3FfdxgQeKTcRT+dVGwzct5GkcA8NsgtQwxQphBYL
+	U/TtdYCkoWCzVlXJ96OmwwyItskK46kXKhGcQyPrPphzuLjtgQ6uhfhSAq2CJ+nB2rwiILzL/reMU
+	tnwJbyxaiybHc/oPVBdBGVrH8I7gkYpTaA8IR7HV8L5OsWasa+YQbMyKcERZkVtcL/h+LQtmt;
+Received: from h-178-174-130-130.a498.priv.bahnhof.se ([178.174.130.130]:36418 helo=kaka)
+	by uggla.sjd.se with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <simon@josefsson.org>)
+	id 1tsdTr-000892-Fz;
+	Thu, 13 Mar 2025 07:59:51 +0000
+From: Simon Josefsson <simon@josefsson.org>
+To: Kyle Lippincott <spectral@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: Making bit-by-bit reproducible Git Bundles?
+In-Reply-To: <CAO_smViryqTa1LfQSsPbBYcSvijs-UkYkHaot3CK1j=uiuEppQ@mail.gmail.com>
+	(Kyle Lippincott's message of "Wed, 12 Mar 2025 20:09:03 -0700")
+References: <871pv2jx4a.fsf@josefsson.org>
+	<CAO_smViryqTa1LfQSsPbBYcSvijs-UkYkHaot3CK1j=uiuEppQ@mail.gmail.com>
+OpenPGP: id=B1D2BD1375BECB784CF4F8C4D73CF638C53C06BE;
+ url=https://josefsson.org/key-20190320.txt
+X-Hashcash: 1:23:250313:spectral@google.com::Hk2Z1SpRiUuDwD/o:3R9X
+X-Hashcash: 1:23:250313:git@vger.kernel.org::g52Qlar4esUDPmFf:BJtS
+Date: Thu, 13 Mar 2025 08:59:36 +0100
+Message-ID: <87tt7xicnr.fsf@josefsson.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqfrji1bvy.fsf@gitster.g>
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha256; protocol="application/pgp-signature"
 
-On Wed, Mar 12, 2025 at 08:56:01AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > On Tue, Mar 11, 2025 at 07:57:20PM -0400, Jeff King wrote:
-> >> On Mon, Mar 10, 2025 at 02:28:25PM -0500, Justin Tobler wrote:
-> >> 
-> >> > To make machine parsing easier, this series introduces a NUL-delimited
-> >> > output mode for git-rev-list(1) via a `-z` option following a suggestion
-> >> > from Junio in a previous thread[1]. In this mode, instead of LF, each
-> >> > object is delimited with two NUL bytes and any object metadata is
-> >> > separated with a single NUL byte. Examples:
-> >> > 
-> >> >         <oid> NUL NUL
-> >> >         <oid> [NUL <path>] NUL NUL
-> >> >         ?<oid> [NUL <token>=<value>]... NUL NUL
-> >> > 
-> >> > In this mode, path and value info are printed as-is without any special
-> >> > encoding or truncation.
-> >> 
-> >> I think this is a good direction, but I have two compatibility
-> >> questions:
-> >> 
-> >>   1. What should "git rev-list -z --stdin" do? In most other programs
-> >>      with a "-z" option it affects both input and output. I don't
-> >>      particularly care about this case myself, but it will be hard to
-> >>      change later. So we probably want to decide now.
-> >
-> > I would lean into the direction of making "-z" change the format both
-> > for stdin and stdout. That's what we do in most cases, and in those
-> > cases where we didn't we came to regret it (git-cat-file(1)).
-> 
-> I've seen "-Z", in addition to "-z", used to differentiate between
-> input and output in some commands.  If we are not going to do that,
-> I agree that making "-z" to affect both input and output is less
-> surprising than having to remember which side is still text.
+--=-=-=
+Content-Type: text/plain
 
-Yeah, "-Z" is what I meant with git-cat-file(1) above. I just think it's
-safer to always use NUL as delimiter in machine parsing -- and while one
-often thinks initially that it may not be needed either in stdin or
-stdout, my learning is that eventually you always find an edge case
-where you do need NUL termination in both. So I'd rather want to push
-application developers into the right direction and make "-z" adjust
-both streams.
+Kyle Lippincott <spectral@google.com> writes:
 
-Patrick
+>> Can anyone explain what is causing the irreproducibility?  Running
+>> diffoscope is not helpful, since the bundle is compressed and diffoscope
+>> doesn't seem to know how to untangle it.
+>
+> Spent some time on this, and when I followed the instructions, the
+> diffs were in the pack file portion of the bundle file, different
+> "tree" objects were produced at different points in the pack file. But
+> it produces identical bundles if I run `git bundle create` multiple
+> times in the same clone. My guess is that the non-determinism is
+> coming from the clone process being multi-threaded, meaning that the
+> order things are created in the filesystem during the clone,
+> presumably due to multithreading happening during the clone process,
+> or maybe during gc? The contents of .git/objects/pack have different
+> hashes across my two clones, and I haven't investigated why.
+
+Yes, my perception is also that the reproducibility problems happens
+during 'git clone'.  Within the same git clone, it is no problem to
+create a bit-by-bit reproducible git bundle.  But if you work in two
+different clones, I haven't been able to find any set of commands that
+leads to identical results.
+
+FWIW, some other ways to do the clone that I have tried but didn't get
+to work (of course I may have made some mistake in my attempts):
+
+# dumb protocol doesn't repack the objects
+GIT_SMART_HTTP=0 git clone https://git.savannah.gnu.org/git/gnulib.git
+
+# using rsync fetches .git identical as upstream
+rsync -av git.savannah.gnu.org::git/gnulib.git/ gnulib
+
+>> If this is not possible today, what do you think about changes to make
+>> this work?
+>
+> What is your end goal with being able to reproduce the bundles?
+
+Good question - I should have made that clear.
+
+The end goal is for someone other than me as uploader of the gnulib git
+bundle to be able re-create it bit-by-bit identical.  This pursuit is in
+the name of improved software security supply-chain security.  Compare
+efforts to make gzip and tarball files reproducible by others:
+
+https://www.gnu.org/software/tar/manual/html_node/Reproducibility.html
+https://www.gnu.org/software/gzip/manual/html_node/Environment.html
+
+> Producing an identical bit-for-bit bundle might be doable by doing
+> some form of sorting of the objects in the pack file, but this would
+> only get us closer to bit-for-bit reproducibility *on the same machine
+> and versions of everything*. There could be some changes to git, zlib,
+> machine architecture, etc. that causes deterministic but different
+> values to be produced. As an example, maybe future versions of zlib
+> compress better, producing an equal result when decompressed, but a
+> different compressed result.
+
+That is an improvement compared to todays situation where nobody can
+reproduce the git bundle at all.  Being able to reproduce it using the
+same environment (toolchain) is better.  This is similar for
+reproducible builds of binaries: typically you need to reproduce a
+similar environment to get reproducible results.
+
+/Simon
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQNoBAEWCAMQFiEEo8ychwudMQq61M8vUXIrCP5HRaIFAmfSkGgUHHNpbW9uQGpv
+c2Vmc3Nvbi5vcmfCHCYAmDMEXJLOtBYJKwYBBAHaRw8BAQdACIcrZIvhrxDBkK9f
+V+QlTmXxo2naObDuGtw58YaxlOu0JVNpbW9uIEpvc2Vmc3NvbiA8c2ltb25Aam9z
+ZWZzc29uLm9yZz6IlgQTFggAPgIbAwULCQgHAgYVCAkKCwIEFgIDAQIeAQIXgBYh
+BLHSvRN1vst4TPT4xNc89jjFPAa+BQJn0XQkBQkNZGbwAAoJENc89jjFPAa+BtIA
+/iR73CfBurG9y8pASh3cbGOMHpDZfMAtosu6jbpO69GHAP4p7l57d+iVty2VQMsx
++3TCSAvZkpr4P/FuTzZ8JZe8BrgzBFySz4EWCSsGAQQB2kcPAQEHQOxTCIOaeXAx
+I2hIX4HK9bQTpNVei708oNr1Klm8qCGKiPUEGBYIACYCGwIWIQSx0r0Tdb7LeEz0
++MTXPPY4xTwGvgUCZ9F0SgUJDWRmSQCBdiAEGRYIAB0WIQSjzJyHC50xCrrUzy9R
+cisI/kdFogUCXJLPgQAKCRBRcisI/kdFoqdMAQCgH45aseZgIrwKOvUOA9QfsmeE
+8GZHYNuFHmM9FEQS6AD6A4x5aYvoY6lo98pgtw2HPDhmcCXFItjXCrV4A0GmJA4J
+ENc89jjFPAa+wUUBAO64fbZek6FPlRK0DrlWsrjCXuLi6PUxyzCAY6lG2nhUAQC6
+qobB9mkZlZ0qihy1x4JRtflqFcqqT9n7iUZkCDIiDbg4BFySz2oSCisGAQQBl1UB
+BQEBB0AxlRumDW6nZY7A+VCfek9VpEx6PJmdJyYPt3lNHMd6HAMBCAeIfgQYFggA
+JgIbDBYhBLHSvRN1vst4TPT4xNc89jjFPAa+BQJn0XTSBQkNZGboAAoJENc89jjF
+PAa+0M0BAPPRq73kLnHYNDMniVBOzUdi2XeF32idjEWWfjvyIJUOAP4wZ+ALxIeh
+is3Uw2BzGZE6ttXQ2Q+DeCJO3TPpIqaXDAAKCRBRcisI/kdFonJFAQD5KhMQv+zq
+1+S4XOo9nmdLVF7KD306fVvQfGhWvA6inwD+NpVaET6HV/l7erJa4R9DkXa2bbGj
+/lkQOHlM3XPdngw=
+=AW/T
+-----END PGP SIGNATURE-----
+--=-=-=--
