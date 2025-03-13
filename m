@@ -1,61 +1,61 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD3C6125
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 00:01:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320812E3385
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 00:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741910506; cv=none; b=GMqsFtQ6M4H42R9Sj7p/BAcL48nhSU4y/i2GytkkhE++iUE6AncSxm39KP9XeHl7vKZdyJIPiJ2oS3HLDGOZvV9AtOnrd6LgxhiEjtiZCchSEWW2gEaSqm5iyGUtCWPcXRqbmEMTYDiJi2l3YFr4KqvL7cjol+xzJQfhXDzW5rE=
+	t=1741910508; cv=none; b=c8FkqGFGIi+9BCJibkdJFm24I7qKI1NZXPXJzLAnkD/RR3RB6XYQoS25jZXio69ciGzbZY1CRE1k8mmCZbipqagWM4BwNMIhSxvdq/AJh9z2psHlE05szLJeCFU+WlelC0zI/+swX0/3VgliKqU1Mf+yMKjfSrJwSZaVCPh+nvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741910506; c=relaxed/simple;
-	bh=opPvqbuSojM7C18Au7j9w0k+hzvHe5F6EHrCLfwU8KE=;
+	s=arc-20240116; t=1741910508; c=relaxed/simple;
+	bh=XW5L3G90FzM5AEckAAFfWU3a2fE6OjPX2Pq2jhr5/c8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BlUSktoIFBXwM6wdXL6llAEi1gIuWxOMy80mNuZUxEFfuzTGyLLtTMxfyaK4MQ6I6x0ZXCzyrwwEXURQuah0IVCPhOM9Ma0x7FKUN3nQhPWwK/BKcYOkIVa4t8UMSZqmzWJLuO9M2hKWB0+KUP9u9aEOUhEJWTBI6dgvTEmq1jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GZh5S/9s; arc=none smtp.client-ip=209.85.210.49
+	 MIME-Version; b=cWoaWof/9dbASwtS508SGYkcF6Hv/G4ORvAZA/uU7IzITEHYynZTuwONOIQ0WIm8dmm68VjHH6jcp3cztmSqhwvSa58QMQr4kZ/gR+ZcJXJTNOA/n+o09474QjOv1hez4r6wnPQIVOfLlDFr+fczNE/UiAdr5Em68uNMyQDZwpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bKermL53; arc=none smtp.client-ip=209.85.210.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZh5S/9s"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-72726a65cbaso1044736a34.0
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:01:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bKermL53"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-72736498817so917488a34.1
+        for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741910503; x=1742515303; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741910505; x=1742515305; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lFid9FOUBgE6oHvchTwDzqtDPMt9SuyhXyG5MJ9m4c4=;
-        b=GZh5S/9sddXdcfK+Y+tghBBW6bZVlQpKPGDxKhX8iFwYGnWWp9Z0ypGOWRY/7Fmy7k
-         cy1GC65YznxVhGa427ZHTuyuTp1T0PYRhZweEZenYBb0w4iQCSjblfesFdt55ecpSkam
-         gfDnblmSP/wwrrBc96/oEJNMye8H/TQvnkuuizRHq0bXSoYJQbJsvqXd9pdA1+nRBU8G
-         Yyvjjroz5J1G9is+91u59NguG7TBnaPhpcre3uHZJyWn11vvWmVmYQY0V41q8vOzdU/A
-         0VuxNbYA/0SsWRzSkBXz8EvvWO2m/+VsP32A5PzEjhNtub2sxOFM0Uuc+QyugWP4HT6t
-         vMEQ==
+        bh=doN1OqOqzF/i94F7+VO7WMeXNO5T3b3R+IP2A8tbVIw=;
+        b=bKermL53YkHvse9XyqHPq1KHwxNNWsRCGbSMKD7C6Y5w0/pMBmTsgqQEUI/N5sYRAa
+         cDQr9RlaCXb2Mu/EIQ2Y9tYIJQOJyvP8I6Rh9dsoanohYLFUZ8wdZBaUOhtVoTKUDzeL
+         6iGoI67P+h+1VzcG5ukjLUav8yvAwwo1u/DfLOJYXVacztdGZwpDz6WZma8v9q6JJPkL
+         gumCMPZtrtNgKZtCUDd2PSYoUY8MTq2KMvgr/KyTMdCHL2eJWGPLia/BPkdhnF6Iddt0
+         M/2NxcdTsyavuSZAQDGvbSOtmZ3Uu8mDC39Dfnasz4kAd//ANckGNX6gYME7LXx5CCBt
+         o7wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741910503; x=1742515303;
+        d=1e100.net; s=20230601; t=1741910505; x=1742515305;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lFid9FOUBgE6oHvchTwDzqtDPMt9SuyhXyG5MJ9m4c4=;
-        b=XotBVdDsQfeIHd4ORAwfvjWVZft3z3DQRyyHr0Rfd0HzpNrJ380Llr9e389Pk3A0vK
-         D9172iTUY6ufAAWrRHccoRwHUnSSJDDESPwpqIYwIuWOQwWnJpJa+8ncWVoUsavRIjhf
-         6nKGuPVocS2JgUU4QCeav4M0KaQc5DDDni7g+t+AEzuD9xJgH22291amBLAy3REy5yXL
-         4g75ekRJV9ZADnZBPIgpndjOUCfJexmSE1MaUcFeCagcTd1wDIwUqzdm0GzwMY/8opV5
-         mywlfgaBqx3fWC2NcSpxzoz2piNRCFYtSCOFDEhuev4oqeQ05srJLjSGIpoQlc/VvcfU
-         i7Bg==
-X-Gm-Message-State: AOJu0Yy4Z839s9GBWFvAFFY29oxT9ZUcQdknBMFDECDOX/0DyYCT9R7T
-	xN6xGEAJmI2DnHsAwo0c6kFewbkGYubGfC8s7o/qAPYOQPcOBCtBRUOQRg==
-X-Gm-Gg: ASbGncuFrs3Qgnzm9W51TOHlOX4B80BpxpxJuefaspsSX9W1+kQnGVdKqmOmnNASP5d
-	xAOhevmr8cKZtdh1hP1pZTC3M54GtW8QCgz+4VeZ1GMGEsTP4Nt22cZVXriiOx8Ev4dmKNuJ5mE
-	8h5lpUFQTexPsjfrECK/PBPmZro+f3TYMA51lUnFasieVMqlysR6q2FhdVVmpxwWqtlNE2lCjCz
-	8P6dtHP0cT9fbsH/YKc4n9CFIKSxUv8pNDtQy1kOwKfMHcuJvIPS6a1fZ5+u7SV8WBV+BAU7sXV
-	6z2uF2kr0MPuz5ardQ+X2pkFKbWlRAtVNuFvIJqfiqfL8aVbtXCI
-X-Google-Smtp-Source: AGHT+IEAwhe15YGMuqY4OplZv+lxUEsA8kHKx2IKkR273OGEhPbbL2qCVrEUKA0/Z7iX4LVPtuXf0g==
-X-Received: by 2002:a05:6830:6995:b0:72a:3a7:a07c with SMTP id 46e09a7af769-72bbc254470mr249406a34.13.1741910503357;
-        Thu, 13 Mar 2025 17:01:43 -0700 (PDT)
+        bh=doN1OqOqzF/i94F7+VO7WMeXNO5T3b3R+IP2A8tbVIw=;
+        b=XWisVVVSC1s/WvRBayiFlZ5aFvzN6BoDunUV3mLZpGLmYQSF7Jiq5RJq9kSZFmrTuU
+         rzqGkfwBpi9binzTy5jRSG3iNMipHugnRZ7lxyEyBBfEaovi+C9XvI+aRdXTHphn7+3M
+         tGils3dhIR8TF34bD3IkjZaE6GFtS3/l/CEi5gNzN9E7P0T+qgttymD1pLgQbPXnyYuu
+         LkhXme4HnRl/TWpxirk3Dk7k9Zx6ud7xrbLDoVe3bJp3B6s+87F07NAp8kq+yJAlpA+J
+         nGZN70JvEsuEfzhJGkCG1z+UKSAyMtL4/JR0w7WVuzmIUK5LVBtnvysOrQjzbhIh0Ncb
+         cSLw==
+X-Gm-Message-State: AOJu0YzlYmm48Af+hM3+cmJQyBKBfBt1JmV++y8x1x4DAfXzz3yoj3h9
+	R/PvZcLNcVfXDiqFFrKqOjQodQ6q8Ae8EnDpk2l1HeJGMYrmWAwYENV3KQ==
+X-Gm-Gg: ASbGnctpUb9/kh0qMESWDC8NEfjzrqeGU4vXz9HtI+iRBK33VtYDxVeA8yTkXOX6Kwj
+	4mWFl8JsQQoTWPRM1N6nndFbc82ks42YfP31Zc2Xwz9jjoWWqK1zPomctWc81+qRRHD6EoIdUiC
+	rygHo+enPwYzgoJKXv0SaaPU2y+p7YxKCjlnZJdxAIjnBn1W+DlZxZrDN4X9vGd4ziYmwwBc+KC
+	RYvD+Y7vUealY38a+s2dAKvuoJn22lbULnhYZCroLEcJa+s/RarI46vcJfNoPUBEhTKJR6DFYJM
+	NuuTIR9419J5mdOMY6RzpIK41tqJjFedEmEMEQajgDuYQyUnmv7m
+X-Google-Smtp-Source: AGHT+IGIi32I6zqxU5C5pw82cFaBLTJr7KrxU/4iQibF6lQ7iwTUEKP0AuA3Gx0VevjQffcqn4FOVg==
+X-Received: by 2002:a05:6830:4413:b0:72b:8f8b:33b with SMTP id 46e09a7af769-72bbc22c96cmr234825a34.10.1741910504946;
+        Thu, 13 Mar 2025 17:01:44 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-72bb274e973sm423485a34.43.2025.03.13.17.01.41
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-72bb274e973sm423485a34.43.2025.03.13.17.01.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 17:01:42 -0700 (PDT)
+        Thu, 13 Mar 2025 17:01:43 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -63,9 +63,9 @@ Cc: ps@pks.im,
 	peff@peff.net,
 	ben.knoble@gmail.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 2/6] rev-list: refactor early option parsing
-Date: Thu, 13 Mar 2025 18:57:43 -0500
-Message-ID: <20250313235747.9583-3-jltobler@gmail.com>
+Subject: [PATCH v3 3/6] revision: support NUL-delimited --stdin mode
+Date: Thu, 13 Mar 2025 18:57:44 -0500
+Message-ID: <20250313235747.9583-4-jltobler@gmail.com>
 X-Mailer: git-send-email 2.49.0.rc2
 In-Reply-To: <20250313235747.9583-1-jltobler@gmail.com>
 References: <20250313001706.3390502-1-jltobler@gmail.com>
@@ -78,55 +78,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Before invoking `setup_revisions()`, the `--missing` and
-`--exclude-promisor-objects` options are parsed early. In a subsequent
-commit, another option is added that must be parsed early.
+When `setup_revisions()` parses the `--stdin` option, revision and
+pathspec arguments are read from stdin. Each line of input is handled as
+a separate argument.
 
-Refactor the code to parse both options in a single early pass.
+Introduce the `nul_delim_stdin` field to `setup_revision_opt` that, when
+enabled, uses a NUL byte to delimit between stdin arguments instead of
+newline.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/rev-list.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ revision.c | 19 +++++++++++--------
+ revision.h |  3 ++-
+ 2 files changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index dcd079c16c..04d9c893b5 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -16,6 +16,7 @@
- #include "object-file.h"
- #include "object-store-ll.h"
- #include "pack-bitmap.h"
-+#include "parse-options.h"
- #include "log-tree.h"
- #include "graph.h"
- #include "bisect.h"
-@@ -639,19 +640,15 @@ int cmd_rev_list(int argc,
- 		if (!strcmp(arg, "--exclude-promisor-objects")) {
- 			fetch_if_missing = 0;
- 			revs.exclude_promisor_objects = 1;
--			break;
--		}
--	}
--	for (i = 1; i < argc; i++) {
--		const char *arg = argv[i];
--		if (skip_prefix(arg, "--missing=", &arg)) {
--			if (revs.exclude_promisor_objects)
--				die(_("options '%s' and '%s' cannot be used together"), "--exclude-promisor-objects", "--missing");
--			if (parse_missing_action_value(arg))
--				break;
-+		} else if (skip_prefix(arg, "--missing=", &arg)) {
-+			parse_missing_action_value(arg);
- 		}
+diff --git a/revision.c b/revision.c
+index 0eaebe4478..5de6309830 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2275,10 +2275,10 @@ int handle_revision_arg(const char *arg, struct rev_info *revs, int flags, unsig
+ 	return ret;
+ }
+ 
+-static void read_pathspec_from_stdin(struct strbuf *sb,
+-				     struct strvec *prune)
++static void read_pathspec_from_stdin(struct strbuf *sb, struct strvec *prune,
++				     int line_term)
+ {
+-	while (strbuf_getline(sb, stdin) != EOF)
++	while (strbuf_getdelim_strip_crlf(sb, stdin, line_term) != EOF)
+ 		strvec_push(prune, sb->buf);
+ }
+ 
+@@ -2905,8 +2905,8 @@ static int handle_revision_pseudo_opt(struct rev_info *revs,
+ 	return 1;
+ }
+ 
+-static void read_revisions_from_stdin(struct rev_info *revs,
+-				      struct strvec *prune)
++static void read_revisions_from_stdin(struct rev_info *revs, struct strvec *prune,
++				      int line_term)
+ {
+ 	struct strbuf sb;
+ 	int seen_dashdash = 0;
+@@ -2918,7 +2918,7 @@ static void read_revisions_from_stdin(struct rev_info *revs,
+ 	warn_on_object_refname_ambiguity = 0;
+ 
+ 	strbuf_init(&sb, 1000);
+-	while (strbuf_getline(&sb, stdin) != EOF) {
++	while (strbuf_getdelim_strip_crlf(&sb, stdin, line_term) != EOF) {
+ 		if (!sb.len)
+ 			break;
+ 
+@@ -2946,7 +2946,7 @@ static void read_revisions_from_stdin(struct rev_info *revs,
+ 			die("bad revision '%s'", sb.buf);
  	}
+ 	if (seen_dashdash)
+-		read_pathspec_from_stdin(&sb, prune);
++		read_pathspec_from_stdin(&sb, prune, line_term);
  
-+	die_for_incompatible_opt2(revs.exclude_promisor_objects,
-+				  "--exclude_promisor_objects",
-+				  arg_missing_action, "--missing");
+ 	strbuf_release(&sb);
+ 	warn_on_object_refname_ambiguity = save_warning;
+@@ -3019,13 +3019,16 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 			}
+ 
+ 			if (!strcmp(arg, "--stdin")) {
++				int term = opt && opt->nul_delim_stdin ? '\0' : '\n';
 +
- 	if (arg_missing_action)
- 		revs.do_not_die_on_missing_objects = 1;
+ 				if (revs->disable_stdin) {
+ 					argv[left++] = arg;
+ 					continue;
+ 				}
+ 				if (revs->read_from_stdin++)
+ 					die("--stdin given twice?");
+-				read_revisions_from_stdin(revs, &prune_data);
++				read_revisions_from_stdin(revs, &prune_data,
++							  term);
+ 				continue;
+ 			}
  
+diff --git a/revision.h b/revision.h
+index 21c6a69899..0e680c3667 100644
+--- a/revision.h
++++ b/revision.h
+@@ -439,7 +439,8 @@ struct setup_revision_opt {
+ 	void (*tweak)(struct rev_info *);
+ 	unsigned int	assume_dashdash:1,
+ 			allow_exclude_promisor_objects:1,
+-			free_removed_argv_elements:1;
++			free_removed_argv_elements:1,
++			nul_delim_stdin:1;
+ 	unsigned revarg_opt;
+ };
+ int setup_revisions(int argc, const char **argv, struct rev_info *revs,
 -- 
 2.49.0.rc2
 
