@@ -1,79 +1,82 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FE82E3379
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 14:17:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CF026773D
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 14:17:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741875480; cv=none; b=HK6yJqajo8pSPdgYOz3fsUh6P5u9A36gM/CZuaICXei2zQnTymHYPCjhQMZ/Sq5BBtPGYX74Dg9hych2+lBRe1YMZrZNgBUT379SK8xJ0sq4TwGYEOuUMCjxOEBP+PWuCTqE8VIzBZHIsiFyZ5ezJV9v+PPSjM0NK/mGgGG1hm4=
+	t=1741875481; cv=none; b=eVt0S3M93laAXxLsUE7l+rvz9KFc6dklruhdqn6FUBOjfRyGUuC0I5i5QFlS9rkoFMPKAXbyOeQL+AqgGXLX5LWPueqLRUZRWVxVJrByOJi+6yKQCA8kKeRopPqo1H5Ky0+BazzHxTH5cyuTGtNeESL1VAncuhl6sguQvKtRTv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741875480; c=relaxed/simple;
-	bh=0QM/UDNUT0rLtld5FtUXa2xojC/LIz1ctq9vYe3hmrw=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=sIWMdBUcAfiI+7eCgq6YkQgD4z+NNB91At/lsXgu0f0J8IQXRVuZ01kf1gkHdjNY5pbJfcCAo07j/cieKanoNh6JANp1hLvWDQvdqxwvntx3k/Y/u8qYYLFiOI4/+HN2sLYoZGHBycIugF1pp7M37COfZRfhqDH8yHHRUqlay3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JwTOk7w5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h1FbXd0y; arc=none smtp.client-ip=103.168.172.154
+	s=arc-20240116; t=1741875481; c=relaxed/simple;
+	bh=EPKBuz+se1g0fsXex8Fez681P4JfntC8LeZVz0DVBcs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=p5XCx3WB2Bc5x+9kMQQvYOnhlA/lcbb2cAQxzvSkXSI4uNY64fw0k86Keej1wWv5bpvZeiBiJiEuTWGi1O3moR3lL73GP74cSiK0ogqHhOsDCU59sIaXShKJwmIVNYi1EhEZkaV3KvCi3U1N4WqyWquj/cVXLpyIfoU8bF6OEGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gwLA5iYi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qxW3uUjx; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JwTOk7w5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h1FbXd0y"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 20F6B1140253;
-	Thu, 13 Mar 2025 10:17:57 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Thu, 13 Mar 2025 10:17:57 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gwLA5iYi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qxW3uUjx"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 83DBD1382D3A;
+	Thu, 13 Mar 2025 10:17:58 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Thu, 13 Mar 2025 10:17:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1741875477; x=1741961877; bh=n0L0OVoemX
-	2yCLv9AEn0Z7jxRHiOzPzzwiW8dE3A6uQ=; b=JwTOk7w5dFoyYmEWec2d52VDgB
-	xRl6jA/Dddnl8YkgLo3LlGfSeSSizWjx+NtGPJQzaRRYcbHWcPbuRBTEFBzcNBEe
-	EsNbiuZBjwpbOpnR5TvKanf8iC987rDTnUwgoRQoJrkGQ0gjrdgphioAfazDv52x
-	IeBr/RW7XQYlVgCdAqxVk0FPINIRPvPRQTU1OVP1rULqYPdpF0TOzc8fifbQhCSY
-	1ooUjlO2aXOWwsgUd0TvYimg65AlsiULd6dztNAUe/X2TiorcWhSZ24SS2nE9zVM
-	gvjgni1VkIi5PBFpnXX8EYbVclDU2KV0v3agNi7BNeC5C6ObkaqsRwEO9ZpQ==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1741875478;
+	 x=1741961878; bh=Uv+2hK3E17AFMT/Sf1tqoz3hDWcQM3JvdPM0flCSKF8=; b=
+	gwLA5iYiiE0Xyv1iXWeHU5Bdw76gN4la9eMxktqxoAPv7XLDFxXgrpD+r37o+JJC
+	rJrI4Fott5inqTc7gAqeMqHO3DbecDX+Cz85Ia37nG8car92CjSnZq65HMSV8Qny
+	agcMWoom+lpVHjBUrNJTz7ggIUyFBs0Tg2k4+e2R5Y1mEXyzXJLusaRU6vugF5M8
+	JaxqIDNN0KNVZ+O9d0V1ZkGmCzNgFUbTzoTOroMdYz+pHf04cQW05mgQpBDJTgfp
+	JWBsZUH/JYPB4car3gC0Os9JBRekmhV0jkT292uoSYD4YkS1l4nxjiBnRftZ8mSR
+	GUitmmfremH9s1jEAzcJHA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1741875477; x=1741961877; bh=n0L0OVoemX2yCLv9AEn0Z7jxRHiO
-	zPzzwiW8dE3A6uQ=; b=h1FbXd0y5WIMC+JK1Th2+p1UqiXNNe95levXorsUU2Od
-	BNmESuXUYk5Z6xzgg/bFwBldYK8ZYwXUpCZpllWp2/38ylpUF3/RxmPR4Vy6S6kn
-	1R4UnDGH+lrmSuinznaa2BUmKbwFHjvASY1TYFUC+B/0G9RuwUxFFOnQn43grEgO
-	CzzsoyzlIcdI/wFj0zHFPAxCnu3ZKcKBpWtzOzT3BjNDsavXmjxEuXUdTbBVjz/1
-	earUNAZLwFU/cx1Ip/82oXje148YkUOJkF0kr5ZgeRqWlXTcGbvs7jF6W2jG6tA/
-	ZiR2atDKU8hbUSPp0i9A9+6PCTXEEYxFugGZIIDI5Q==
-X-ME-Sender: <xms:FOnSZ6NZ69DiMvUAPdHv04-ErDXbLtR22YyJkVm06UMia42li0JkZw>
-    <xme:FOnSZ4-496qfglD_e_jKIu9amfcUi3mxLzrZO3KY4QzcoDYzV4sAQ6AQiLTyEkym6
-    dnFJN2RH0XQweNZdQ>
-X-ME-Received: <xmr:FOnSZxRnfniDldkkI7EkmgSECIachhcK2i4XIgjyWAR6bOtqnh0VOywvfSXNSUctZxirMyo6B8iWTADKN_KfF94Kvv2Uf37J250mT728Y4mdESrjhA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekudejucetufdoteggodetrf
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1741875478; x=
+	1741961878; bh=Uv+2hK3E17AFMT/Sf1tqoz3hDWcQM3JvdPM0flCSKF8=; b=q
+	xW3uUjxg4HQ5Xvj6fVij8wsRmRsrRLOESe4jt66HMnz7vxcI/GZ3Uq7YsY5BGHk9
+	OSGDR9xxig3UnSar/IawIb3EBhRvttFJL/QJDO8ZlNoCKZqgS/EDKraExJo9V34r
+	YGSsDCEJNdqkm5QMIwC1R79vb4hUXDm+Ic1Q5a1pp8WfsVubBS/zBAF659oSy8gQ
+	MxfFtWJITE7OcFoOg3O24mBHCa6pyoM05576lfVEC78xX1nWtNK62h/+LywPAlR0
+	TDurBeefY58ia3SE8lTzZsxZiyHOPxBbJFMA307xKyzG+Hxx64X0VILgkibd6/IB
+	TksT43p3r1h2zJv+LtPnA==
+X-ME-Sender: <xms:FunSZ74E-l9vHrwvRA4ljjsowVCIUfGkwEyX0pemk8nI6j5sfjON4Q>
+    <xme:FunSZw7V1Og1MuC_JOYJ-Yw7fMKtNSR5JsSVw0F7JWmjcaIg9wL8TrP--SzWFHHYD
+    z-LZ0yYJJmYlrvc9A>
+X-ME-Received: <xmr:FunSZyejUd53nPIN7_6JbflGujzoJcQmf9qPIFU03_zVaJ5WcZYJfo1XumWec83pu5iCca6w_SkY99oF1yUhJjq7OXlxyHnJrSoQ128GA-bzgY_JAw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekudeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffufffkgggtgffvvefosehtjeertdertdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevueegkedtteeigeejueehuedugfevleefveehueeh
-    gfetffffvefhuefhueekveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhope
-    hjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:FOnSZ6tHwYGJXD-7bMUn2fXxiq9erpTzNqhtummRiedA18Dq8KH1Uw>
-    <xmx:FOnSZyfqln0tORyDlsKWw0_8-T9XhLw7m4i_003q02jCzibb4xRbXw>
-    <xmx:FOnSZ-1Yez7JuIvSOjdCeUiILW-yjdaJOlt-3DF7BavcQ3FE2HPwiA>
-    <xmx:FOnSZ29cg1-SWISx99cMkBkrRUko2byDTqFaQAi4BYwnFdltpMZPEw>
-    <xmx:FenSZy4PC53QJo8wvmAk3jI2aZAmAs1VtGyHPCB4mgUsMHN3_HN3DKhs>
+    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpeeujeeivdeufefhvdeuteetteffkeehieelgfei
+    feegvdeuleekgfejgedtleehjeenucffohhmrghinhepmhhitghrohhsohhfthdrtghomh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
+    phhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinh
+    esghhmgidruggv
+X-ME-Proxy: <xmx:FunSZ8LtLoCu2gwkPsG7oQ7COHAFfX1-MbGZ7Sh1oyogBzSdCoW_gQ>
+    <xmx:FunSZ_JLs2SyZd64ByqefyY0wiKtLxfXLLwVAqA8RC9TtYh7IIm5iw>
+    <xmx:FunSZ1xekVb7BgKoy-zS0rilQN_PLnKXQ55OjtmTsyRT8gT65d76kQ>
+    <xmx:FunSZ7JmGa5XDzClSCtmjJ616gBJaKbjBYdjhPfBAy9NuludVPVvZg>
+    <xmx:FunSZ32zTB9GMpYm1WZDPd9rgq83fRozFaMDcHzzqmSB8Lkj7mRGw_QR>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Mar 2025 10:17:55 -0400 (EDT)
+ 13 Mar 2025 10:17:57 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 214ec71f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 13 Mar 2025 14:17:53 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7ba5e19e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 13 Mar 2025 14:17:55 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/2] compat/mingw: fix EACCESS when opening files with
+Date: Thu, 13 Mar 2025 15:17:44 +0100
+Subject: [PATCH 2/2] compat/mingw: fix EACCESS when opening files with
  `O_CREAT | O_EXCL`
-Date: Thu, 13 Mar 2025 15:17:42 +0100
-Message-Id: <20250313-b4-pks-mingw-lockfile-flake-v1-0-bc5d3e70f516@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,48 +85,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAbp0mcC/x3MQQqDMBAF0KvIrB3QaKn2KtKFjj92SBolgSqId
- zd0+TbvpISoSPQqTor4adI1ZNRlQfIZwwLWOZtMZR5VUzc8tby5xF8Ny85+FWfVg60fHbjtZyu
- CDk8xlIctwurx34f3dd2C1i6fbQAAAA==
-X-Change-ID: 20250313-b4-pks-mingw-lockfile-flake-49dfcce8e7c2
+Message-Id: <20250313-b4-pks-mingw-lockfile-flake-v1-2-bc5d3e70f516@pks.im>
+References: <20250313-b4-pks-mingw-lockfile-flake-v1-0-bc5d3e70f516@pks.im>
+In-Reply-To: <20250313-b4-pks-mingw-lockfile-flake-v1-0-bc5d3e70f516@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Sixt <j6t@kdbg.org>, 
  Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.2
 
-Hi,
+In our CI systems we can observe that t0610 fails rather frequently.
+This testcase races a bunch of git-update-ref(1) processes with one
+another which are all trying to update a unique reference, where we
+expect that all processes succeed and end up updating the reftable
+stack. The error message in this case looks like the following:
 
-I finally found some time to have a look at why t0610 is failing
-regularly in MinGW. As it turns out the root cause is our emulation of
-open(3p): when trying to open a file with `_wopen(..., O_CREAT|O_EXCL)`
-the call fails in case another process has marked the same file for
-deletion via `DeleteFileW()`. This gets triggered by t0610 because we
-race around locking the reftable stack and thus causes the failure.
+    fatal: update_ref failed for ref 'refs/heads/branch-88': reftable: transaction prepare: I/O error
 
-The fix is simple: we get `ERROR_ACCESS_DENIED` in this situation, so
-instead of translating that error to `EACCESS` we translate it to
-`EEXIST`. This fixes the flake on my machine, but as usual when it comes
-to Windows I would very much like to ask those in the know to point out
-any obvious mistakes I did.
+Instrumenting the code with a couple of calls to `BUG()` in relevant
+sites where we return `REFTABLE_IO_ERROR` quickly leads one to discover
+that this error is caused when calling `flock_acquire()`, which is a
+thin wrapper around our lockfile API. Curiously, the error code we get
+in such cases is `EACCESS`, indicating that we are not allowed to access
+the file.
 
-The other patch is a while-at-it patch that I was wondering about while
-debugging the issue. It's not needed and I'm happy to drop it if you
-don't think we should include it.
+The root cause of this is an oddity of `CreateFileW()`, which is what
+`_wopen()` uses internally. Quoting its documentation [1]:
 
-Thanks!
+    If you call CreateFile on a file that is pending deletion as a
+    result of a previous call to DeleteFile, the function fails. The
+    operating system delays file deletion until all handles to the file
+    are closed. GetLastError returns ERROR_ACCESS_DENIED.
 
-Patrick
+This behaviour is triggered quite often in the above testcase because
+all the processes race with one another trying to acquire the lock for
+the "tables.list" file. This is due to how locking works in the reftable
+library when compacting a stack:
 
+    1. Lock the "tables.list" file and reads its contents.
+
+    2. Decide which tables to compact.
+
+    3. Lock each of the individual tables that we are about to compact.
+
+    4. Unlock the "tables.list" file.
+
+    5. Compact the individual tables into one large table.
+
+    6. Re-lock the "tables.list" file.
+
+    7. Write the new list of tables into it.
+
+    8. Commit the "tables.list" file.
+
+The important step is (4): we don't commit the file directly by renaming
+it into place, but instead we delete the lockfile so that concurrent
+processes can continue to append to the reftable stack while we compact
+the tables. And because we use `DeleteFileW()` to do so, we may now race
+with another process that wants to acquire that lockfile. So if we are
+unlucky, we would now see `ERROR_ACCESS_DENIED` instead of the expected
+`ERROR_FILE_EXISTS`, which the lockfile subsystem isn't prepared to
+handle and thus it will bail out without retrying to acquire the lock.
+
+In theory, the issue is not limited to the reftable library and can be
+triggered by every other user of the lockfile subsystem, as well. My gut
+feeling tells me it's rather unlikely to surface elsewhere though.
+
+Fix the issue by translating the error to `EEXIST`. This makes the
+lockfile subsystem handle the error correctly: in case a timeout is set
+it will now retry acquiring the lockfile until the timeout has expired.
+
+With this, t0610 is now always passing on my machine whereas it was
+previously failing in around 20-30% of all test runs.
+
+[1]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (2):
-      compat/mingw: handle O_CLOEXEC in `mingw_open_existing()`
-      compat/mingw: fix EACCESS when opening files with `O_CREAT | O_EXCL`
+ compat/mingw.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
- compat/mingw.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 101e380c5a3..fb61de759c7 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -644,6 +644,19 @@ int mingw_open (const char *filename, int oflags, ...)
+ 
+ 	fd = open_fn(wfilename, oflags, mode);
+ 
++	/*
++	 * Internally, `_wopen()` uses the `CreateFile()` API with CREATE_NEW,
++	 * which may error out with ERROR_ACCESS_DENIED when the file is
++	 * scheduled for deletion via `DeleteFileW()`. The file essentially
++	 * exists, so we map this error to ERROR_ALREADY_EXISTS so that callers
++	 * don't have to special-case this.
++	 *
++	 * This fixes issues for example with the lockfile interface when one
++	 * process has a lock that it is about to commit or release while
++	 * another process wants to acquire it.
++	 */
++	if (fd < 0 && create && GetLastError() == ERROR_ACCESS_DENIED)
++		errno = EEXIST;
+ 	if (fd < 0 && (oflags & O_ACCMODE) != O_RDONLY && errno == EACCES) {
+ 		DWORD attrs = GetFileAttributesW(wfilename);
+ 		if (attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY))
 
-
----
-base-commit: 4b68faf6b93311254efad80e554780e372deb42f
-change-id: 20250313-b4-pks-mingw-lockfile-flake-49dfcce8e7c2
+-- 
+2.49.0.rc2.394.gf6994c5077.dirty
 
