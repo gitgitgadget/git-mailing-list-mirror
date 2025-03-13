@@ -1,132 +1,123 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C3B26869C
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 14:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79E722612
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 15:12:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741877713; cv=none; b=MM3dkhaqvrQHx6Vbuarckjci+RAdX99Iex0awPgDw/pUq6nUA4PHhhdfHscqltM1gWUrageYievULBYB4LmzIzXPh9zw/21MI/nj066oOt4/jAgB3n5b5Nknyf0zmj+84If+IqR37H2j++VUvHeI/bnXWDTAj6IE0IEB+YeG/2I=
+	t=1741878771; cv=none; b=KmFufv53RuQlMb210WZ0By7AwrUIVXLwMqtj9tVqxW0mumB/Ff4WkM0ZJ+WYSk4nmKd+1o2cHV1tsGAGnYg1F2h2UadOIxqMv+C1poDp4vqufBFUozENVBWq/vMynbWOf2BgxG8GhE8B85J0BaZMM8b1Jjku5fU5DBfzb6ipDus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741877713; c=relaxed/simple;
-	bh=/erXnwYXK6wXVqnla8dqIFfKJvEzVcJsnE/MArgXeCk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e42v1rKxRd5m794XTOmzA85SlGojRBqvz1w9xuaTYlGkc/es7cx6t7IVFyUyqOudHh2jd265KlN5oeD25DjNNxBas4juNQJDA+fXnIDLks9ZUCRt7FZN+WZWQ2lDJKRrXi9Z2T6qzNjTDY+RajKwiRwhdR/HE0FiWbsmyEcFmD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UdrxMOE4; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741878771; c=relaxed/simple;
+	bh=4Je5/XUH/aJqUXDy+sCLFJ658JKF/oo+JXlfAO1YE3o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Vl8RZWUuNkDnh17N2/XXgBTG60B6BIuX/y0mp8y+ro2+ox73QWnKH+uJopilETYIzs6K2qtqa70SLWJ5z1stf/D7mlpiKsFMAMWF4oob1ttz2O8KOFz5p8swpXZM4aP9RjIqn7PQLmj19pX3IIoskz1U7cFQNcsnwgRddcpxyBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XamKCXZB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BXG0VwKu; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UdrxMOE4"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-72726025fa5so272823a34.0
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 07:55:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741877711; x=1742482511; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ObUjYvkvE9Ofa/NUQlmQSLk70YGSU0BB/sQhYd2LSZE=;
-        b=UdrxMOE4R8DN99rXSY+ugWH1qKVp3SyNBk9c90Muqn/m+fdMhY9yxe7uxWfdVSBNDP
-         JLerjOV5jv/QMLJcxO4+aAvQqA1LETCYFgM1hJjjnkyFHN0Etk1fBGglMKsA7O6bQb8W
-         HAJCHZH0bOdeK6MJ+0H2OVlcRbQDaWYr1Hlfat5TolyIs4ylR/+N7PXIzbBBNXL9Kc0H
-         3crIZGkbsdM1liGHC/0sviVu+/eXd9TL3Mar0dVzdLkl7QI6DnekpcFDgv04kefgjCE4
-         H5DvOOKg8Q3FIsRIoNpBZ/yUruYGKFRDMoUKW/W8Eb8U+RHfksi6Rd+mxx2TFO46+CV6
-         vjkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741877711; x=1742482511;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ObUjYvkvE9Ofa/NUQlmQSLk70YGSU0BB/sQhYd2LSZE=;
-        b=FwDzTRchX+f3Lx27HTweuRHwPs2ePRwiAK7G7RNes711cZDAD2/dudqy7fwKf4M5QC
-         c6ge0NJatTfiqXiTTdaApvg0smNwpzgVbMKLRD9pktQN7zeIo1Ehe6Jdlw1KpqTzYMRb
-         rOj3PsdOjMyYRgsvinh4LsNBt+qcHnVyGeNMrt25YJWwMXdwb8zjGSc8SfXAbGeZ8ZPP
-         EcHISn0S4pMpQJlGgoIbLt0sRlNV67IWBc0lL06Gfy9i0e/aSvDUmJKJ7vjOAv45/pZ8
-         2OLijGo6qOZ6YRax6VABXIqe9TmYvVkdW1Hxxfv3N7oiM2qf9CfUgzpMLjRwyP3lCqTe
-         +h4Q==
-X-Gm-Message-State: AOJu0YyyBHrlQ+KUiRso5zB8OrSGvgEI3Tgehw8hJ2it1WDuC4jN0Ta5
-	VBDLUlw0+/pwNhHiKDBjU9gQ/ajmS+VAtm9a/2FLGZQcMG7HiVil
-X-Gm-Gg: ASbGncsBBoi0/C8SvGIC/5pOEPUCRYJ4aCdfHaAm7EiWLd7JhTA1HsqWFVNvcqi+Zna
-	law4ZiEtuhCs2ftCOAGg0IhGpw32jKeOVIf4ZOHV5UT4xYD1L+TXSkRlJIODV1YsP2XRz408nCq
-	rCJ8SMOrhPfJj3rjqTv2EI5Ptgv4qvIhN1AZ56+FooPTy3v5U2HDGY2jQ7ep6lozjh37Bu7Ma43
-	ohMHoRTkfl/fWVL7LjcVRJ8gbf5vAqI8kUWoobNoNVb2nVt6HsR/9w94VYgVABKTZrIabDYvQoI
-	mMKL/AGcieyvZU7oh4FteTCTne33S/GVuUl3Pg==
-X-Google-Smtp-Source: AGHT+IEfxPpAmJ9Qhp/cu2ccvN/b/DPk5iKfKDrElsXqEKtBtfZjKc7xqUsPsVmg1a3NcWBuy305Xw==
-X-Received: by 2002:a05:6808:1529:b0:3f8:3eeb:1192 with SMTP id 5614622812f47-3f83eeb1b7bmr9357764b6e.27.1741877710993;
-        Thu, 13 Mar 2025 07:55:10 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-3fcd403b070sm253325b6e.10.2025.03.13.07.55.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 07:55:10 -0700 (PDT)
-Date: Thu, 13 Mar 2025 09:51:41 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, peff@peff.net, 
-	ben.knoble@gmail.com
-Subject: Re: [PATCH v2 6/6] rev-list: support NUL-delimited --missing option
-Message-ID: <kmfjcyib7ur2qcadzjfq2gjmi5rdpdehjtb3locsw4emmnbr54@qyrnghyf2jg6>
-References: <20250310192829.661692-1-jltobler@gmail.com>
- <20250313001706.3390502-1-jltobler@gmail.com>
- <20250313001706.3390502-7-jltobler@gmail.com>
- <Z9LVzWX4-6KGV6S7@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XamKCXZB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BXG0VwKu"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CF70D1140083;
+	Thu, 13 Mar 2025 11:12:47 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Thu, 13 Mar 2025 11:12:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741878767; x=1741965167; bh=fizZFo1+TJ
+	KB0ae0dqjfZLGyg5NaNioAfXWkvMXIE5w=; b=XamKCXZBG3qMeKCQMTmeSzujH9
+	k6CW6nfZmykQyNG7T2XXd3tW+QyniM/O2cKi20lIb3CzPzTtfHNVoMUgIWqaD/M7
+	hvECAJRajW2WMFyLoDTC6ZJ9x9TXnfSPNZE6d9Wbdiico2/TFltytSNyGxVKIMSz
+	jazTA1LAdE2D7R30iMcJM7v2oCAp2G+DmaLtpCF0Y9ydYLgWRDsOVw2FO+azRl3i
+	MkpfphrWreqBihegvKLwjpDbAT1nm73Jxh9bc3NQyXOfWEk4qLGk1tCAE1m3YOsL
+	Bw6KbMTyqO6J++gJzR5k9R9XDT29X0hFTY30Qoqc6SQeAfsOCmDsYabCYIEw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741878767; x=1741965167; bh=fizZFo1+TJKB0ae0dqjfZLGyg5NaNioAfXW
+	kvMXIE5w=; b=BXG0VwKuchVNTb/+SpVkV0WkkVD2ELGA1r38sHThfBXmfUUVEL6
+	0VZWgBp/onnDzr5MKSs+mOvo5PKmrs8f5GVUNlYlO5VwE/EqGytRmbldxTLV5NCY
+	pZsbOKsOHyudaHuMM3ea/RWGhytGtcqDT9RoreiYiFmoVdcehh/Sb7YwlV8nTWp9
+	V/DcW4xQMvESHY1PwuniCaltfPciUDSMrzbuxU/GkeDYwxF3mXH9J+gvBDU1NcNo
+	nuyIknjZhnj/P7jiSmjj+W6FT7vK3K8+Wf+Bo+YTTGdd4zDmoYGu+KSfOuoloQ/+
+	UKcBRGU/vbnvG3gSg3oRRIaSI/j/o3tkbWA==
+X-ME-Sender: <xms:7_XSZ7ze5551ZvZ88BLRXXsrNnzoWnqiAwi7fVwqZ90yeKrijaltXg>
+    <xme:7_XSZzTaHKCpgqTW5aeBlz52CHAdOwMtwY9OkohFTd6BS69QqAZj7n4_jw9GBtOxW
+    UYt5nRNS4Jw-WCT3Q>
+X-ME-Received: <xmr:7_XSZ1X4o09Frq7lPpPyg5SlEf-A3ICOrX_WJzZWt-OzZRkUpl3bvsVv_flD0KCP_THKJj_f62chV61LfjoC73lR-YSyQhh4O2IIpgU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekvdekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:7_XSZ1iGLCPEQsLOOwyJK5y1W8c0w8AZrbPyRLF0l27PJwzqbodEuA>
+    <xmx:7_XSZ9AHDGAQZBH1QoqgefGBEMZnzHWFo03lKuCqsyAQopssWXBBqQ>
+    <xmx:7_XSZ-LPysiI2IvS3aP01Yw9gb9zMOuELQGyHEDGcjiwI_6S9wFSzw>
+    <xmx:7_XSZ8AgFcgVCHMf1vb3IwftiECdparw3Ei-Ljnx1_HFmYnGL4-BCg>
+    <xmx:7_XSZ_1qOkFokPk1R7bPNGKgSKW0sLhKdmBtFtCybHpou00p6BCWpbLy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Mar 2025 11:12:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  Elijah Newren
+ <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 0/6] pack-objects: freshen objects with multi-cruft
+ packs
+In-Reply-To: <20250313062951.GA96035@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 13 Mar 2025 02:29:51 -0400")
+References: <cover.1740680964.git.me@ttaylorr.com>
+	<cover.1741648467.git.me@ttaylorr.com> <xmqqr0332un3.fsf@gitster.g>
+	<Z9GpQqm4YBvWF7Ff@nand.local> <xmqqfrjixfwe.fsf@gitster.g>
+	<Z9Ha2mFXpojI+aIR@nand.local>
+	<20250313062951.GA96035@coredump.intra.peff.net>
+Date: Thu, 13 Mar 2025 08:12:45 -0700
+Message-ID: <xmqqr031q80i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z9LVzWX4-6KGV6S7@pks.im>
+Content-Type: text/plain
 
-On 25/03/13 01:55PM, Patrick Steinhardt wrote:
-> On Wed, Mar 12, 2025 at 07:17:06PM -0500, Justin Tobler wrote:
-> > diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-> > index d400d76cf2..145ded5c78 100644
-> > --- a/Documentation/rev-list-options.adoc
-> > +++ b/Documentation/rev-list-options.adoc
-> > @@ -371,8 +371,8 @@ ifdef::git-rev-list[]
-> >  <OID> NUL [<token>=<value> NUL]...
-> >  -----------------------------------------------------------------------
-> >  +
-> > -Additional object metadata, such as object paths or boundary objects, is
-> > -printed using the `<token>=<value>` form. Token values are printed as-is
-> > +Additional object metadata, such as object paths or boundary/missing objects,
-> > +is printed using the `<token>=<value>` form. Token values are printed as-is
-> >  without any encoding/truncation. An OID entry never contains a '=' character
-> >  and thus is used to signal the start of a new object record. Examples:
-> >  +
-> 
-> Nit: I don't think we need to update this paragraph here as it is
-> written as a non-exhaustive list anyway.
+Jeff King <peff@peff.net> writes:
 
-Ok, I'll omit this change and only keep the added example.
+> But do we actually care about eventually having a series of 40MB packs?
+> Or do we care about having some cutoff so that we don't rewrite those
+> first 40MB on subsequent repacks?
+>
+> If the latter, then for step 2, what if we don't feed a max size? We'd
+> end up with one 60MB pack (again, having written all of the bytes once).
+> And on the next repack we'd leave it be (since it's over the threshold).
+> We'll start forming new packs, which will eventually aggregate to 40MB
+> (or possibly larger).
+>
+> If I understand the main purpose of the series, it is that we must
+> rescue objects out of cruft packs if they became fresher (by having
+> loose copies made). But that is orthogonal to max pack sizes, isn't it?
+> We just need for pack-objects to be fed those objects (which should be
+> happening already) and decide _not_ to omit them based on their presence
+> in the kept cruft packs (based on the mtime in those cruft packs, of
+> course). Which looks like what your want_cruft_object_mtime() is doing.
 
-> > diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-> > index 7c6d4b25b0..d7b4dd48ff 100644
-> > --- a/builtin/rev-list.c
-> > +++ b/builtin/rev-list.c
-> > @@ -136,24 +136,39 @@ static void print_missing_object(struct missing_objects_map_entry *entry,
-> >  {
-> >  	struct strbuf sb = STRBUF_INIT;
-> >  
-> > +	if (line_term)
-> > +		putchar('?');
-> > +
-> > +	printf("%s", oid_to_hex(&entry->entry.oid));
-> > +
-> > +	if (!line_term)
-> > +		printf("%cmissing=yes", info_term);
-> > +
-> >  	if (!print_missing_info) {
-> > -		printf("?%s\n", oid_to_hex(&entry->entry.oid));
-> > +		putchar(line_term);
-> >  		return;
-> >  	}
-> >  
-> >  	if (entry->path && *entry->path) {
-> >  		struct strbuf path = STRBUF_INIT;
-> 
-> Nit: the variable and its cleanup could be moved closer to where it's
-> used.
+Yeah, no packsize limit on the output side, but making sure that the
+decision to roll up existing cruft packs is made sensibly, is what
+the above gives us, which I life a lot.  The one-before and -after
+confusion came exactly because we somehow tried to have threshold on
+the output side.
 
-Will do. Thanks
 
--Justin
+
