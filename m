@@ -1,68 +1,69 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1253E47B
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 02:46:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE31137923
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 02:46:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741834009; cv=none; b=b1DbZ3CqBziyYYN8Fbc9ngF4wk2GJ6SSK303eJE3BgG0i7X3gr3XCVkTjo/kD8X4M7UGtq95grN4nDUs0Q0Jfurxz9kRS2s/jAsl5TOk1G5MQMTa6erIMgZm859gWVDrXIf0MhayaXgCFz/p0CdBSfGJGBhZ8NSnkppm1MNYO8Q=
+	t=1741834010; cv=none; b=eX/mspYosVUMN7nc7sz704NOpVzCKIh9TPa6ZNEUy16TNfdBMQXZji0JrtuwCL6qbrzgVYjPVCKCwFLtn7SYeOre7gXmQf2C2pSW4Wp6ZzTKYehJxQwwNliKCFdjZi1gHCfhNFs/U93X1o/ySqGnq9qwkYkT9xXKEP+sCorzTxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741834009; c=relaxed/simple;
-	bh=xUVipBK2XPdMX30YWSax2RLZ6B5D9ibh5UAtGaMztOc=;
+	s=arc-20240116; t=1741834010; c=relaxed/simple;
+	bh=nsGHKNcDtwMBPgznnsaZ6t0adM5uk30DmWL9oAlw3YU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rwWVU04dzIiDxIjXS1mm+vtXgMeWy5xWTVW8gU5JWtNnlkngIXQuTgmOFeIp21wt8Wp0RT3qhQvbSsC5dVMbQU8pPGt7XnAIAo4veNrlloJfKuTELVL4O4S5mrdxTu1rZLb/rUJACA86sGxeJKkwi2sIhQOaAa9yVu02dWXlIWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YQ6uhNKT; arc=none smtp.client-ip=209.85.208.53
+	 MIME-Version:To:Cc; b=k1YCBUURYhdem2BEGPH7rqHMGEaGYHEdnTIp7l9JXn/zImq4+BAb+NpNFmsOXk3yZ0S2Xu56P8Fot5sQHG9EYB4ITtwqsNxyBnMGSdzoYmWb9xUPfFrlUREnRp5sOcscNf6camxtW5VdfdNdCLMwPGhDHcPKW6cven+fRe97gBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AfZfzjWi; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YQ6uhNKT"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e5bc066283so630535a12.0
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 19:46:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AfZfzjWi"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-ac25313ea37so102224066b.1
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 19:46:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741834005; x=1742438805; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741834007; x=1742438807; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ANoKBSevl9EaOIVeKcMUvTLHONcyDDRY7s+8bIlu/uI=;
-        b=YQ6uhNKTCxHh/P1bVPfE4cmHx/juxM/asjioMGt5sR2JeoHO7/k4hAG4mIGYbuSeIS
-         9Eiyp7IsDcug11NQICG5E23RqEe3yuHF8LS9GMFzyeGq0GmLiJF1RY15ZcS/TNnIc0AK
-         bjAWS2OIgm9wR1slahcGeSn7owIzsSASTG8EqaiJBgmKEnm2wpHr4biLMdWfAKxSryVw
-         zRlehonZmcU+D+WFB/JCi/+fVLDUVzFLUuJyFaVDNBeeaWmKttcsSle+EjSgacMNHg/M
-         lVuHSAS9LYCjzP4SIlFxTQVrrzHhROy19tTOW6zL+/vNhqV4oyDwimAP1ekWfCAX15+O
-         Kdrw==
+        bh=sojw9SiGz0+X+51vZnmynJtCVIS+mCImu6MKlhc0lCI=;
+        b=AfZfzjWiF4X1yu1aXwPRQJnYgK91GWKwH+e/1AV3xJr4GVSbEy9Z+WLVIPh4jPm+DU
+         jd996LHkDEW+fbMtG/XILUszo+QAaYGvywZ5bEtMioqxWYntnYgauUc6AsOi2+tziKs2
+         h7hBAAN75jvrh8bgTaJ32u9tTey45j69Md6JcdDjTP+haONAdepXZzpdejKEh98eMT4x
+         BHpKniu/+KZP7Cgdl978Ov685vTFNyemJfffrtU0Kf4qhv4PWnWHM7uds8mGFoV8+HY+
+         My9Rsds4b777pQaBAF1bLdJO7y5bRMYF8uyBdKWFnDSWATJAAa8bIy9EtuEostwP86Cc
+         g/sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741834005; x=1742438805;
+        d=1e100.net; s=20230601; t=1741834007; x=1742438807;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ANoKBSevl9EaOIVeKcMUvTLHONcyDDRY7s+8bIlu/uI=;
-        b=rYTOrGk2Nu3Ene2lNj2ddz3aZFwgFIbdVTJZ/YgolqkO6GVie8ckFbdwr0HhE05plz
-         wwnbY3Rnoz0eMbU45Vt115TQ0CU9jc0IlhVu6rcKVwujGdViwEfRiF2UoaSGqAF/zNlG
-         mVIsng05e/UEAsGYCYzfEAvY6ks0sB/KCL52iVhHgzaq9RVb8wDWAMpnYd97eQfGDJCQ
-         MdbXyde/VGwKgYFZOtQaim3IP7uFpkPTQlN3SFR21PZ6Sxs3WY5yVoALLx4ZJaO6tLIo
-         yfOd1QXF6y0I7iC1YIpXRA0S7olyvc2h4jQ1LZ10VIcPMAeaEfz13SG3fJ4eeix88T+r
-         E75g==
-X-Gm-Message-State: AOJu0YxCquJCt/yy5SrRhDO6yxNeG6b23lLYyjQKtV0WULGy2kMHG6P0
-	ZoreLSDqlaoDDDHuuJTFKL+z9CkfiGWaIesLOIM9e4wsyvzn93t/4kpAcQ==
-X-Gm-Gg: ASbGncvoFdB9l+XdWvf8MCguc9ls5OzhIK9u3gkKtbKWTgtQTeBJiC3ScAyb8dk+HgJ
-	CmPVNOBW6lhW0WGCK9oJsCfuPVHgjYvQYNK+auTWCmGArLjoyJVsGX6VhK6bQPJfkr/Qr7xClPz
-	2zIoPbyynQr+Go9swOYIuSVG/QrAUzyIGYFrGS5eT5D4D28I/zAN+vLno7qC2ZLEGa7cQulHgaL
-	wdYuD/BQEFvYib8/Zoy75y4KwDIuj6OeX2AVQEqETqDLQ5QFRtUu3pQO6ZpB8w4Ybt5Nme2MA9c
-	FrEpb1lCdiae2k4lkOUhH0DqPIl7ILauncZ/1HFMimlzH+nrPDb7SUOv
-X-Google-Smtp-Source: AGHT+IFhkKwBRmeHtn5Hh0ujJKlujp/HwoNJ93MlgS2bS78A/Zx98LxMOo1t+UfO1VqrYwd2BKr6xA==
-X-Received: by 2002:a17:907:9492:b0:ac2:d5c6:43ad with SMTP id a640c23a62f3a-ac2d5c64c0dmr787890866b.30.1741834004620;
-        Wed, 12 Mar 2025 19:46:44 -0700 (PDT)
+        bh=sojw9SiGz0+X+51vZnmynJtCVIS+mCImu6MKlhc0lCI=;
+        b=PfEyN/r2xXdDKHOKoih7fe95786TSkDLn3IX7NxbdsIsNQqovU6DGOS2QCOEmO2ihX
+         tDROwrm8faxgQNOzVzAx/r+8LZfNlF+2zEtOSESJSiPXTotkorYsbkyvK2w44uRceHZ8
+         enX39gGwdpPo/ym97Ldc0ml66SnBPyieISPjvJnJRn8wvIWykazoPZCJvyHxQWCJSlLM
+         CYei0qomDp2FTmR0rayl82vkzBFEFYp171eMTFwOdXkZjiz9xcsqaCqj3vepc0PFJrbW
+         vBZrdlWn9ReoJEUluUjYJkJil37fdaacorfWG+DywVQYVMjXQyqjxhtCKD4SbFw3oMPv
+         JuUQ==
+X-Gm-Message-State: AOJu0Yyr225CnlYz5Kklap9Mpw7yToiRVdod7bWoe2A7EHMHnVdx+m5E
+	TttIb48WjKQRnCPCLA023mkioPN/2mtI1zOj3TKRfaXTKhrzwwvYsKrrdw==
+X-Gm-Gg: ASbGnctNcLrp6wfJl5IQAANMGRIfDJYaqmXlcTy4Igz1FWWsHJ2Kh5wuo+RMkfFx52I
+	wC5vRU3ElyZJesUqQCa+NLIUoBXFYRqCRZUXARLrEoT1sV8E+IWsIscWcvtiF0JhSAu0iX76/CI
+	UZY5p9k7h0hyxtdtJQnTx0ExTj5QyaQnwKJF/gGUaflcScnhf9AFj4BuE2/ISLG2wCaNy27EAdW
+	J+rYNZaghPW32eIU8UGQCjrITbdplSeiw+y4e2EehNwRBh2SQasJwkEbBaH0bPqUXKB9bBMrzJQ
+	m1eaKqci6d1Nmk46TVipXnacKuT2UI+aUiOgwLCTyymJkUNtzZQ9bzch
+X-Google-Smtp-Source: AGHT+IGAbvzGh+lELnMVHcEqxTrX7F4B0HRwXe7CEUKkPOqdX88n2cAzVDsDDil3qu/03ulHOn3cjA==
+X-Received: by 2002:a17:907:86a7:b0:ac2:d55b:c35a with SMTP id a640c23a62f3a-ac2d55bcb69mr822903166b.47.1741834006450;
+        Wed, 12 Mar 2025 19:46:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac314a9bcf3sm20780966b.162.2025.03.12.19.46.44
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3149cf22dsm20827866b.111.2025.03.12.19.46.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 19:46:44 -0700 (PDT)
-Message-Id: <f401a8e09676c9c808792665c3ffadd9d2672485.1741834001.git.gitgitgadget@gmail.com>
+        Wed, 12 Mar 2025 19:46:45 -0700 (PDT)
+Message-Id: <fefda4add11074288811752f922c309963c57eea.1741834001.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1875.v2.git.1741834001.gitgitgadget@gmail.com>
 References: <pull.1875.git.1741362522.gitgitgadget@gmail.com>
 	<pull.1875.v2.git.1741834001.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 13 Mar 2025 02:46:37 +0000
-Subject: [PATCH v2 2/6] merge-ort: allow rename detection to be disabled
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 13 Mar 2025 02:46:39 +0000
+Subject: [PATCH v2 4/6] t3650: document bug when directory renames are turned
+ off
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,102 +78,74 @@ Cc: Patrick Steinhardt <ps@pks.im>,
     Taylor Blau <me@ttaylorr.com>,
     Elijah Newren <newren@gmail.com>,
     Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-From: Elijah Newren <newren@gmail.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When merge-ort was written, I did not at first allow rename detection to
-be disabled, because I suspected that most folks disabling rename
-detection were doing so solely for performance reasons.  Since I put a
-lot of working into providing dramatic speedups for rename detection
-performance as used by the merge machinery, I wanted to know if there
-were still real world repositories where rename detection was
-problematic from a performance perspective.  We have had years now to
-collect such information, and while we never received one, waiting
-longer with the option disabled seems unlikely to help surface such
-issues at this point.  Also, there has been at least one request to
-allow rename detection to be disabled for behavioral rather than
-performance reasons (see the thread including
-https://lore.kernel.org/git/CABPp-BG-Nx6SCxxkGXn_Fwd2wseifMFND8eddvWxiZVZk0zRaA@mail.gmail.com/
-), so let's start heeding the config and command line settings.
+There is a bug in the way renames are cached that rears its head when
+`merge.directoryRenames` is set to false; it results in the following
+message:
 
+    merge-ort.c:3002: process_renames: Assertion `newinfo && !newinfo->merged.clean' failed.
+    Aborted
+
+It is quite a curious bug: the same test case will succeed, without any
+assertion, if instead run with `merge.directoryRenames=true`.
+
+Further, the assertion does not manifest while replaying the first
+commit, it manifests while replaying the _second_ commit of the commit
+range. But it does _not_ manifest when the second commit is replayed
+individually.
+
+This would indicate that there is an incomplete rename cache left-over
+from the first replayed commit which is being reused for the second
+commit, and if directory rename detection is enabled, the missing paths
+are somehow regenerated.
+
+Incidentally, the same bug can by triggered by modifying t6429 to switch
+from merge.directoryRenames=true to merge.directoryRenames=false.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+[en: tweaked the commit message slightly, including adjusting the
+ line number of the assertion to the latest version, and the much
+ later discovery that a simple t6429 tweak would also display the
+ issue.]
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/merge-strategies.adoc | 12 ++++++------
- merge-ort.c                         |  5 +++++
- t/t4301-merge-tree-write-tree.sh    |  6 ++++++
- 3 files changed, 17 insertions(+), 6 deletions(-)
+ t/t3650-replay-basics.sh | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/Documentation/merge-strategies.adoc b/Documentation/merge-strategies.adoc
-index 93822ebc4e8..59f5ae36ccb 100644
---- a/Documentation/merge-strategies.adoc
-+++ b/Documentation/merge-strategies.adoc
-@@ -82,6 +82,11 @@ find-renames[=<n>];;
- rename-threshold=<n>;;
- 	Deprecated synonym for `find-renames=<n>`.
- 
-+no-renames;;
-+	Turn off rename detection. This overrides the `merge.renames`
-+	configuration variable.
-+	See also linkgit:git-diff[1] `--no-renames`.
-+
- subtree[=<path>];;
- 	This option is a more advanced form of 'subtree' strategy, where
- 	the strategy makes a guess on how two trees must be shifted to
-@@ -107,7 +112,7 @@ For a path that is a submodule, the same caution as 'ort' applies to this
- strategy.
- +
- The 'recursive' strategy takes the same options as 'ort'.  However,
--there are three additional options that 'ort' ignores (not documented
-+there are two additional options that 'ort' ignores (not documented
- above) that are potentially useful with the 'recursive' strategy:
- 
- patience;;
-@@ -121,11 +126,6 @@ diff-algorithm=[patience|minimal|histogram|myers];;
- 	specifically uses `diff-algorithm=histogram`, while `recursive`
- 	defaults to the `diff.algorithm` config setting.
- 
--no-renames;;
--	Turn off rename detection. This overrides the `merge.renames`
--	configuration variable.
--	See also linkgit:git-diff[1] `--no-renames`.
--
- resolve::
- 	This can only resolve two heads (i.e. the current branch
- 	and another branch you pulled from) using a 3-way merge
-diff --git a/merge-ort.c b/merge-ort.c
-index b4ff24403a1..1d3b690224e 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -3448,6 +3448,11 @@ static int detect_and_process_renames(struct merge_options *opt)
- 
- 	if (!possible_renames(renames))
- 		goto cleanup;
-+	if (!opt->detect_renames) {
-+		renames->redo_after_renames = 0;
-+		renames->cached_pairs_valid_side = 0;
-+		goto cleanup;
-+	}
- 
- 	trace2_region_enter("merge", "regular renames", opt->repo);
- 	detection_run |= detect_regular_renames(opt, MERGE_SIDE1);
-diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-index eea19907b55..44f7d077593 100755
---- a/t/t4301-merge-tree-write-tree.sh
-+++ b/t/t4301-merge-tree-write-tree.sh
-@@ -73,6 +73,12 @@ test_expect_success 'Clean merge' '
- 	test_cmp expect actual
+diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+index 389670262e4..cade7930765 100755
+--- a/t/t3650-replay-basics.sh
++++ b/t/t3650-replay-basics.sh
+@@ -195,4 +195,26 @@ test_expect_success 'using replay on bare repo to rebase multiple divergent bran
+ 	done
  '
  
-+# Repeat the previous test, but turn off rename detection
-+test_expect_success 'Failed merge without rename detection' '
-+	test_must_fail git -c diff.renames=false merge-tree --write-tree side1 side3 >out &&
-+	grep "CONFLICT (modify/delete): numbers deleted" out
++test_expect_failure 'merge.directoryRenames=false' '
++	# create a test case that stress-tests the rename caching
++	git switch -c rename-onto &&
++
++	mkdir -p to-rename &&
++	test_commit to-rename/move &&
++
++	mkdir -p renamed-directory &&
++	git mv to-rename/move* renamed-directory/ &&
++	test_tick &&
++	git commit -m renamed-directory &&
++
++	git switch -c rename-from HEAD^ &&
++	test_commit to-rename/add-a-file &&
++	echo modified >to-rename/add-a-file.t &&
++	test_tick &&
++	git commit -m modified to-rename/add-a-file.t &&
++
++	git -c merge.directoryRenames=false replay \
++		--onto rename-onto rename-onto..rename-from
 +'
 +
- test_expect_success 'Content merge and a few conflicts' '
- 	git checkout side1^0 &&
- 	test_must_fail git merge side2 &&
+ test_done
 -- 
 gitgitgadget
 
