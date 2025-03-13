@@ -1,61 +1,61 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40120134D4
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 00:01:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76101E50B
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 00:01:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741910510; cv=none; b=l60f/UZLmhXKwBpF+Q+xwvBjBpZKHPIiiF270iTE8rZJafr7u1eGVi5JJh2AXChoORr01AZDv8mLuMHpe6SmstZkds6jqS9XHJP10TxXIEt2YMKp9GZxZ+D3MWO9utey1Hgc8Csd8nDCWk9xx7tSax5p6RQqYkhTFAmo55OFW6E=
+	t=1741910512; cv=none; b=XhoJq6JP2HNhXVZBKKawGRYPmuf8E1SMwckOcV6zAij32se0imHQpJoHXZXnYGG6N/49yFLhlkhHjjSjH39CJHCMFBa0hzWyoONXcZ7qNXWQt6zg6/yo8CyiduPZSpaxka0YkE0DMTVoBfrQG5ZeRQwSjSdqCy9997hw0M6X8v4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741910510; c=relaxed/simple;
-	bh=5RX2FQog4BdnWcv9Aziv1UKbUYW647SNrEAo7tDP85I=;
+	s=arc-20240116; t=1741910512; c=relaxed/simple;
+	bh=RDNGzbCsU3kCNV4aQC3gpVOyZI4Nw4JcEZrsQEskI5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHHe+3WjmsieD1EJsFiS7NmVBBqet0tnL+TdpVlq5oj4d6EY6UapMhUIZyJRP6J4bK0Fvzsse30xeR3tMD9W8aGUF4zFiKYElXLYJv3hlz5NkgSTPF+/326sYfKMXY9+lPVlWoFiyvsjMfPSyUKCzpkyr/D8+5FYIoGqtbuCQyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ac3HlXSO; arc=none smtp.client-ip=209.85.210.44
+	 MIME-Version; b=Fzk7RkiCSIySTXDyy0OLxEh3WT94CdCz+I2M00XEyQQGP8KDvB6vtv3al3ReENFWZwyesVkojL6YDky+lVoH/fn2x7dEuLnIYT8BdwvNJ8Sgzfj5MsRsYmE8UGoxZMyfDuFz9jyoDVh0b2A1yP6USSwML6tVy9R9MNgxd53jqvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iM+o8Rys; arc=none smtp.client-ip=209.85.160.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ac3HlXSO"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-71fbb0d035dso1102146a34.2
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:01:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iM+o8Rys"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-2bcc5c887efso1298895fac.2
+        for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:01:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741910507; x=1742515307; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741910509; x=1742515309; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qp/lOqlelI6+YDHbYkUf4MK0mousxO5kVRQKYpeC4ac=;
-        b=ac3HlXSOGvIwMJcPH+KoOl3Y2YZvXo0xp5jyAImaeIbzfE2jb29TXSLOM2sXkmXRfD
-         ADnssa0X+9FWw+ZLjj/7AGDbetIhdOVXWjM+pmJ3lplJ9ayZGzFQnhY/BEkqgQvTsR5P
-         56kdhNUcHnq2WbWGyOgLSd3/an1JlZig/og0gIkRoKStKt78FxEhjHYvzy8HOv9i8gqQ
-         shzULsN8pUtLyjGq8GvXM4bHhiltHVeU8fDvm9H/LfhSP6SZPm2ft5QBYrMxZGAIB0KE
-         SJEQO9MjfPlQVOnVW17en23Vj6enY5mvenN/MKGEh/nbGykC95mFQTWKMAXLA+3m8L09
-         OPyQ==
+        bh=5j143td9iLc7xHjexTds9sz9Dc0acNzIKSmWUTG6dcY=;
+        b=iM+o8Rys8n1xf+C3jj0kWabhpcoIFjO7OmibfuqtVFaBs07uMDPd+w7e4wvIw9ZuC2
+         dw68xsKoN7N9be3743mIurcu7qnE/HTpeSAIpiOb4LszzLkU/JZOkd5Wntl0FAxLPsLX
+         8vyAxUeDbtZTFUJx0lEtn8DUZOmkvaE1Ra4bmbEtNXt7krvQhy6O0zMnEJjy6kLfOoG1
+         5RP6zA/67ZFFH39VMtBORc8aq4yjXHHdDHmYPB7L5Oz89AhxIwZ9ZnXAw5Uv9tgISJeB
+         Tfih0rJaepHramIKePrLo0wBMUcKmAJnOgv+1pTKXHIjAt9OcbmIWMdZ0ty4kwdR4Uyy
+         WsQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741910507; x=1742515307;
+        d=1e100.net; s=20230601; t=1741910509; x=1742515309;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qp/lOqlelI6+YDHbYkUf4MK0mousxO5kVRQKYpeC4ac=;
-        b=Jg7kz2oU6erfhEhcDxAqpxQG6N8CygrebYmbmMCgDAjG8V1rhuwWAT8h7MwlrH1WR0
-         +zeL6la2VRbgckiK9LJFXv/9oe2M5qxOAyBhaAvtgTrN8jU3Lk5XKdJgKbDZUF4TuMUw
-         TYK9QEbzNDL4XEm/0+ncUY9BQnXSC8lYwX3Th8b1eG8r5F+r4ZdFxQtE6tx5khIM52s+
-         T4pRVEEymK7E3dbEIxgvCtv1CYF7XeCSR4hfNGMC9x2p0Pc2dzXg3g9HQoKIkpjmEOHl
-         SDyhCu+H/oqaJkC8jbcSnjCKTSIi7fxJNpgmT8N0S3SluMYEjr4mn0dg1VDZqv9X2eSL
-         h1tA==
-X-Gm-Message-State: AOJu0Yz5iot0/r9Cx8oH/geBEyIjilkXH8ETJKRjlBSKSxar9jhYsCaR
-	cWwvda4IceXkDkSQB+X9aNzeYRP/MbXxgbNT9FWvqiNt4UlD9fjO+/Chkg==
-X-Gm-Gg: ASbGncsZxsGad7D7jHs1kgnQbIss1YbX2NfO+Hntbj5f/6h38ZCUGo3HtzhUo5KR9Mu
-	EcF0cSzaItOF/RDKh/OPmXvS2P7VcmOy244F1L9Juna7hjTFvaDVNkHJuQdjL3aGiPyoLUJpe9q
-	xM2Cobu4JvswQQKSansBnQQsgSe/USkpSp4Zlz2HyjjT0TiAs4EMQOZyoKV9eH2KY750AubAWc8
-	knVfxnpAaL8ay1DPex17SwtZDytgSsos6/xn97QFBrlfU207ozaUJXKJogMxtgDgy4sa0tDoqN5
-	53q49h/6F1+wbfd504Ihk1ImIyTgYEwBpBXZB9kc1CjiVfUHI0ea
-X-Google-Smtp-Source: AGHT+IFfoTOZ2XeS5aafJ7utXyE2QyW7p4tKRVI2vZ3o6Ao8itnvEZTkHzyZ7viHWoNd1chN1RXN/Q==
-X-Received: by 2002:a05:6830:921:b0:72b:8ec3:85a1 with SMTP id 46e09a7af769-72bbc1f67afmr200077a34.2.1741910507009;
-        Thu, 13 Mar 2025 17:01:47 -0700 (PDT)
+        bh=5j143td9iLc7xHjexTds9sz9Dc0acNzIKSmWUTG6dcY=;
+        b=rbzJ0T+E4bYN/MhJsoyy51gZerPTpz7uyWi7eue4S6LNaO9eDqtLu6GkccDvbNmX9j
+         4lRn+03Ijh3R+O8GaaGki/pRTHnsCBMNOs0GSyNtseMGRSwmJqDYHBgblyekVVutU2qz
+         ipll+8vr8934OGCN8zUVj601ZbWFz1OYhTKEVc0mKAdTIJdaBxrX9W7+nDrBiowFjLc2
+         tUc8F3SRwsknpNXNTYI1QHH39VAoLw8RbhIWYI3QqKvj5LQsfmXeIYg/JvFWSkZKws/w
+         yTkvXmChKMaeYzGw4o8u7CNE7AFp7c4w8QevGjy0BpEkjDR/ccXpl8ZMoJvlFlwA7emR
+         Mcfw==
+X-Gm-Message-State: AOJu0Yys2Z2XrdDxs5MyRD2RqutQCfo5fx9PK4sLdQmhXE/MB190xort
+	5/Az7jomgVpc55TrrMWtJ9B2zWDgadOvwxzZfFTwxwbi8ZRk/9T75V1yCw==
+X-Gm-Gg: ASbGnctdgKrRoH7KzpGmuh2nCK6IyI1rBtIALzCE75XPqy8KwbKB0seQrlJ8FRfL/IN
+	gMjBA3rlsK2H46iUrVFiKQT83yQScwdEs6WqqVr+2p8upCUGNHedqWzolldExIejKUzPXRacmOa
+	FKAMLUoceSn16xfAv4hjZxQ0wdO8WkISBNL3fB0UDvtusr04xSBVkE0EtQ5sGEgsCZu7infK2KU
+	JI5wxg3j2VAhPs5UDOI7wmKlR6FK//oXpPWsgmJEprYT5tuFa9UhwfCcTFwA25pu4ASfCe6cvgq
+	dQ3C2EMMUrvs3y+8K5q25HGLxAsuUlPob+H01OabIThK70RDykmN
+X-Google-Smtp-Source: AGHT+IGtqbIjYLifrGc+fB7pYaRzIsm4ej+ppIdOsWhdMTVwKV9teAmnMz9GN8Se880+Ur5dCvNO0Q==
+X-Received: by 2002:a05:6870:eca0:b0:2c2:343d:1368 with SMTP id 586e51a60fabf-2c69114d235mr340754fac.29.1741910509327;
+        Thu, 13 Mar 2025 17:01:49 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-72bb274e973sm423485a34.43.2025.03.13.17.01.45
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-72bb274e973sm423485a34.43.2025.03.13.17.01.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 17:01:45 -0700 (PDT)
+        Thu, 13 Mar 2025 17:01:47 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -63,9 +63,9 @@ Cc: ps@pks.im,
 	peff@peff.net,
 	ben.knoble@gmail.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 4/6] rev-list: support delimiting objects with NUL bytes
-Date: Thu, 13 Mar 2025 18:57:45 -0500
-Message-ID: <20250313235747.9583-5-jltobler@gmail.com>
+Subject: [PATCH v3 5/6] rev-list: support NUL-delimited --boundary option
+Date: Thu, 13 Mar 2025 18:57:46 -0500
+Message-ID: <20250313235747.9583-6-jltobler@gmail.com>
 X-Mailer: git-send-email 2.49.0.rc2
 In-Reply-To: <20250313235747.9583-1-jltobler@gmail.com>
 References: <20250313001706.3390502-1-jltobler@gmail.com>
@@ -78,173 +78,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When walking objects, git-rev-list(1) prints each object entry on a
-separate line. Some options, such as `--objects`, may print additional
-information about tree and blob object on the same line in the form:
+The `--boundary` option for git-rev-list(1) prints boundary objects
+found while performing the object walk in the form:
 
-        $ git rev-list --objects <rev>
-        <tree/blob oid> SP [<path>] LF
+        $ git rev-list --boundary <rev>
+        -<oid> LF
 
-Note that in this form the SP is appended regardless of whether the tree
-or blob object has path information available. Paths containing a
-newline are also truncated at the newline.
+Add support for printing boundary objects in a NUL-delimited format when
+the `-z` option is enabled.
 
-Introduce the `-z` option for git-rev-list(1) which reformats the output
-to use NUL-delimiters between objects and associated info in the
-following form:
+        $ git rev-list -z --boundary <rev>
+        <oid> NUL boundary=yes NUL
 
-        $ git rev-list -z --objects <rev>
-        <oid> NUL [path=<path> NUL]
-
-In this form, the start of each record is signaled by an OID entry that
-is all hexidecimal and does not contain any '='. Additional path info
-from `--objects` is appended to the record as a token/value pair
-`path=<path>` as-is without any truncation.
-
-In this mode, revision and pathspec arguments provided on stdin with the
-`--stdin` option are also separated by a NUL byte instead of being
-newline delimited.
-
-For now, the `--objects` and `--stdin` flag are the only options that
-can be used in combination with `-z`. In a subsequent commit,
-NUL-delimited support for other options is added. Other options that do
-not make sense with be used in combination with `-z` are rejected.
+In this mode, instead of prefixing the boundary OID with '-', a separate
+`boundary=yes` token/value pair is appended.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- Documentation/rev-list-options.adoc | 23 ++++++++++++++++++
- builtin/rev-list.c                  | 36 +++++++++++++++++++++++++----
- t/t6000-rev-list-misc.sh            | 35 ++++++++++++++++++++++++++++
- t/t6017-rev-list-stdin.sh           |  9 ++++++++
- 4 files changed, 98 insertions(+), 5 deletions(-)
+ Documentation/rev-list-options.adoc | 12 +++++++-----
+ builtin/rev-list.c                  |  9 +++++++--
+ t/t6000-rev-list-misc.sh            | 16 ++++++++++++++++
+ 3 files changed, 30 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index 785c0786e0..14d82fdfbf 100644
+index 14d82fdfbf..92ac31a8e8 100644
 --- a/Documentation/rev-list-options.adoc
 +++ b/Documentation/rev-list-options.adoc
-@@ -361,6 +361,29 @@ ifdef::git-rev-list[]
- --progress=<header>::
- 	Show progress reports on stderr as objects are considered. The
- 	`<header>` text will be printed with each progress update.
-+
-+-z::
-+	Instead of being newline-delimited, each outputted object and its
-+	accompanying metadata is delimited using NUL bytes. In this mode, when
-+	the `--stdin` option is provided, revision and pathspec arguments on
-+	stdin are also delimited using a NUL byte. Output is printed in the
-+	following form:
-++
-+-----------------------------------------------------------------------
-+<OID> NUL [<token>=<value> NUL]...
-+-----------------------------------------------------------------------
-++
-+Additional object metadata, such as object paths, is printed using the
-+`<token>=<value>` form. Token values are printed as-is without any
-+encoding/truncation. An OID entry never contains a '=' character and thus
-+is used to signal the start of a new object record. Examples:
-++
-+-----------------------------------------------------------------------
-+<OID> NUL
-+<OID> NUL path=<path> NUL
-+-----------------------------------------------------------------------
-++
-+This mode is only compatible with the `--objects` output option.
+@@ -373,17 +373,19 @@ ifdef::git-rev-list[]
+ <OID> NUL [<token>=<value> NUL]...
+ -----------------------------------------------------------------------
+ +
+-Additional object metadata, such as object paths, is printed using the
+-`<token>=<value>` form. Token values are printed as-is without any
+-encoding/truncation. An OID entry never contains a '=' character and thus
+-is used to signal the start of a new object record. Examples:
++Additional object metadata, such as object paths or boundary objects, is
++printed using the `<token>=<value>` form. Token values are printed as-is
++without any encoding/truncation. An OID entry never contains a '=' character
++and thus is used to signal the start of a new object record. Examples:
+ +
+ -----------------------------------------------------------------------
+ <OID> NUL
+ <OID> NUL path=<path> NUL
++<OID> NUL boundary=yes NUL
+ -----------------------------------------------------------------------
+ +
+-This mode is only compatible with the `--objects` output option.
++This mode is only compatible with the `--objects` and `--boundary` output
++options.
  endif::git-rev-list[]
  
  History Simplification
 diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 04d9c893b5..f048500679 100644
+index f048500679..7c6d4b25b0 100644
 --- a/builtin/rev-list.c
 +++ b/builtin/rev-list.c
-@@ -65,6 +65,7 @@ static const char rev_list_usage[] =
- "    --abbrev-commit\n"
- "    --left-right\n"
- "    --count\n"
-+"    -z\n"
- "  special purpose:\n"
- "    --bisect\n"
- "    --bisect-vars\n"
-@@ -97,6 +98,9 @@ static int arg_show_object_names = 1;
+@@ -240,13 +240,18 @@ static void show_commit(struct commit *commit, void *data)
+ 		fputs(info->header_prefix, stdout);
  
- #define DEFAULT_OIDSET_SIZE     (16*1024)
- 
-+static char line_term = '\n';
-+static char info_term = ' ';
+ 	if (revs->include_header) {
+-		if (!revs->graph)
++		if (!revs->graph && line_term)
+ 			fputs(get_revision_mark(revs, commit), stdout);
+ 		if (revs->abbrev_commit && revs->abbrev)
+ 			fputs(repo_find_unique_abbrev(the_repository, &commit->object.oid, revs->abbrev),
+ 			      stdout);
+ 		else
+ 			fputs(oid_to_hex(&commit->object.oid), stdout);
 +
- static int show_disk_usage;
- static off_t total_disk_usage;
- static int human_readable;
-@@ -264,7 +268,7 @@ static void show_commit(struct commit *commit, void *data)
- 	if (revs->commit_format == CMIT_FMT_ONELINE)
- 		putchar(' ');
- 	else if (revs->include_header)
--		putchar('\n');
-+		putchar(line_term);
- 
- 	if (revs->verbose_header) {
- 		struct strbuf buf = STRBUF_INIT;
-@@ -361,12 +365,16 @@ static void show_object(struct object *obj, const char *name, void *cb_data)
- 	printf("%s", oid_to_hex(&obj->oid));
- 
- 	if (arg_show_object_names) {
--		putchar(' ');
--		for (const char *p = name; *p && *p != '\n'; p++)
--			putchar(*p);
-+		if (line_term) {
-+			putchar(info_term);
-+			for (const char *p = name; *p && *p != '\n'; p++)
-+				putchar(*p);
-+		} else if (*name) {
-+			printf("%cpath=%s", info_term, name);
++		if (!line_term) {
++			if (commit->object.flags & BOUNDARY)
++				printf("%cboundary=yes", info_term);
 +		}
  	}
- 
--	putchar('\n');
-+	putchar(line_term);
- }
- 
- static void show_edge(struct commit *commit)
-@@ -642,6 +650,10 @@ int cmd_rev_list(int argc,
- 			revs.exclude_promisor_objects = 1;
- 		} else if (skip_prefix(arg, "--missing=", &arg)) {
- 			parse_missing_action_value(arg);
-+		} else if (!strcmp(arg, "-z")) {
-+			s_r_opt.nul_delim_stdin = 1;
-+			line_term = '\0';
-+			info_term = '\0';
- 		}
+ 	if (revs->print_parents) {
+ 		struct commit_list *parents = commit->parents;
+@@ -779,7 +784,7 @@ int cmd_rev_list(int argc,
+ 		if (revs.graph || revs.verbose_header || show_disk_usage ||
+ 		    info.show_timestamp || info.header_prefix || bisect_list ||
+ 		    use_bitmap_index || revs.edge_hint || revs.left_right ||
+-		    revs.cherry_mark || arg_missing_action || revs.boundary)
++		    revs.cherry_mark || arg_missing_action)
+ 			die(_("-z option used with unsupported option"));
  	}
  
-@@ -757,6 +769,20 @@ int cmd_rev_list(int argc,
- 		usage(rev_list_usage);
- 
- 	}
-+
-+	/*
-+	 * Reject options currently incompatible with -z. For some options, this
-+	 * is not an inherent limitation and support may be implemented in the
-+	 * future.
-+	 */
-+	if (!line_term) {
-+		if (revs.graph || revs.verbose_header || show_disk_usage ||
-+		    info.show_timestamp || info.header_prefix || bisect_list ||
-+		    use_bitmap_index || revs.edge_hint || revs.left_right ||
-+		    revs.cherry_mark || arg_missing_action || revs.boundary)
-+			die(_("-z option used with unsupported option"));
-+	}
-+
- 	if (revs.commit_format != CMIT_FMT_USERFORMAT)
- 		revs.include_header = 1;
- 	if (revs.commit_format != CMIT_FMT_UNSPECIFIED) {
 diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
-index 6289a2e8b0..dfbbc0aee6 100755
+index dfbbc0aee6..349bf5ec3d 100755
 --- a/t/t6000-rev-list-misc.sh
 +++ b/t/t6000-rev-list-misc.sh
-@@ -182,4 +182,39 @@ test_expect_success 'rev-list --unpacked' '
+@@ -217,4 +217,20 @@ test_expect_success 'rev-list -z --objects' '
  	test_cmp expect actual
  '
  
-+test_expect_success 'rev-list -z' '
++test_expect_success 'rev-list -z --boundary' '
 +	test_when_finished rm -rf repo &&
 +
 +	git init repo &&
@@ -254,45 +180,8 @@ index 6289a2e8b0..dfbbc0aee6 100755
 +	oid1=$(git -C repo rev-parse HEAD) &&
 +	oid2=$(git -C repo rev-parse HEAD~) &&
 +
-+	printf "%s\0%s\0" "$oid1" "$oid2" >expect &&
-+	git -C repo rev-list -z HEAD >actual &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'rev-list -z --objects' '
-+	test_when_finished rm -rf repo &&
-+
-+	git init repo &&
-+	test_commit -C repo 1 &&
-+	test_commit -C repo 2 &&
-+
-+	oid1=$(git -C repo rev-parse HEAD:1.t) &&
-+	oid2=$(git -C repo rev-parse HEAD:2.t) &&
-+	path1=1.t &&
-+	path2=2.t &&
-+
-+	printf "%s\0path=%s\0%s\0path=%s\0" "$oid1" "$path1" "$oid2" "$path2" \
-+		>expect &&
-+	git -C repo rev-list -z --objects HEAD:1.t HEAD:2.t >actual &&
-+
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/t6017-rev-list-stdin.sh b/t/t6017-rev-list-stdin.sh
-index 4821b90e74..362a8b126a 100755
---- a/t/t6017-rev-list-stdin.sh
-+++ b/t/t6017-rev-list-stdin.sh
-@@ -148,4 +148,13 @@ test_expect_success '--not via stdin does not influence revisions from command l
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'NUL-delimited stdin' '
-+	printf "%s\0%s\0%s\0" "HEAD" "--" "file-1" > input &&
-+
-+	git rev-list -z --objects HEAD -- file-1 >expect &&
-+	git rev-list -z --objects --stdin <input >actual &&
++	printf "%s\0%s\0boundary=yes\0" "$oid1" "$oid2" >expect &&
++	git -C repo rev-list -z --boundary HEAD~.. >actual &&
 +
 +	test_cmp expect actual
 +'
