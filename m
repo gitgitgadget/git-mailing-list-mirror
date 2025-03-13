@@ -1,308 +1,169 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C3C42052
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 12:53:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00362676CE
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 12:55:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741870382; cv=none; b=mJOU7sk92RC5e1BCFPBZEcWnBmUVEZNWBm2TMS5LWHX937o1Ji5kEx33JucYEkwkNgtesCsSnpymE5T/bZ7R+PvhmqC+liT5H2uLqZ5I4aL+nfRx24OGwRp60/d0Jmp3zYyTSO+nI7+lYyRY8Dx/KG8O0oNmwd0atCY5F1VwwWQ=
+	t=1741870547; cv=none; b=cIbuhsU++qWTN21lobDKGoAfM/TLytg6vSL0G2y9fgk4jbfuIy/WcASxnYh5+8bxLrzHYJNgO6gtR6mfGC6MZUG260gifP2R157TD7xtG3XKEX4qKVzeDOvn6qSeB13yryP8I7e2v+MZdJTnd9UWkM6NkUxsXQFlzOQ5vP+HcWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741870382; c=relaxed/simple;
-	bh=SSsaGsenZgOgfBZPFmBk5A7DavKBdAMUDuos+WOhunE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=QHoDLGXDW61N+tav9berpeYbIAFgEwuUD2uLRD4uqaDyCZbEnRtx8ggcM3wlo9FqxIqd4O0fymfWhgPG51OiXvdSPxB6Q5WkWOzvZ+SmRXvtpWM2vIaaMosqWrBE4I1GSPbNUjiVp0HRzPSlzRdKErGufpUNmZFXF/6xsWb/MGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iSHmz9mv; arc=none smtp.client-ip=209.85.222.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741870547; c=relaxed/simple;
+	bh=N9VuA0yK0q/iemr4WJRj5tOHnfDVFNwkfIG+edLI464=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hi5MRmDgEKxQoTUzV4e8jDKQnD47EQo79Qaz3cV0xqaHetoZtv1oVCWqLzIFWz1vEZ0Kj04ibY7s2kgjuhipqEnNM3OaZxJ3yNFGEA9VBj0POMH4+fruvVb3DhJyEFeJgPx3FXKD08w4j6UtYhylRCgdwuUTNzEQvEFxVPl2QX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Aqt26N+Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FR4IdaPa; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iSHmz9mv"
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-86d377306ddso420106241.2
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 05:53:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741870380; x=1742475180; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cwPYGQRO9IW9tnvLBNpPOfHIAIF8/g6FRgz23XkzKms=;
-        b=iSHmz9mvlRDsEshBgL04JbVC37QWPAdgOZkm4U74p28XlzFrzD9NHai5oziyKydR37
-         A8sqd7ZpCE10EfdfWz8rqrPvIXCymqBm1FJvQOzVQylHp9gtsEudDkXW9go0l+UMzdEN
-         v5HsQLRgJ9ClCLx/xqrtZ9Do/W1Q58krztDfNAL7gwdsWj8bpcowI9x8eTEeXP01/hAl
-         61KabC4SHD0XmXkU2Bq3s48RmN8SfuBnpEMyzaYyMttx59NeI2yRVTefRyvgrTeozgnp
-         4f4i0DCHf405/h5QZXdgqvz+dtH2bE7w0UiDSKPVa3FjxgxhPHWIKPtp/cEceGwjmIU9
-         YmGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741870380; x=1742475180;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cwPYGQRO9IW9tnvLBNpPOfHIAIF8/g6FRgz23XkzKms=;
-        b=PnuA0QtXThnivzQVTfhjGssNgj6cf7xbApsHNPIbC1VlGzgDQnjjrJPz2IiFxr4NwP
-         RkTUb+eIju14B7kIg9oT7vhItWG5ZQftxZ9bKPYvCKB/4A0PqrEKzANTOC79bz/qDsHq
-         D3j/r/DZwEcQtbNtUTg/HEBm5FHyB19nZ+ZK3/954nUQECud07pP6gh+hlJiG1+/6m0P
-         7qAY+OEbmAg3Xxc17fhmkWNna7XR0Hen4u5jmqA6qAYAOn7g1w2A2G7jCWjpFq+ThLAl
-         P9QbqhPO1E1VsHOffV9o2+MGyLeFF03Em6p6qP+v37j25U34Zg/t0NXNcCS7thro2O4v
-         wRcw==
-X-Forwarded-Encrypted: i=1; AJvYcCX1khw9A9R51Q/c2sOKaFWMvF7aFnWGzCk4VLgMhHY8FrKEZ0DoHJVwV/8aRDteLSWgcIk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxww6hRJ4VI/6RS4gDD3KrmybJdcpL17JPBXz5Don/i9HdUbkF/
-	VL9bvDU3Mgo4mYcRnjK6U+uUOaY7JgSJGZyOunkRSIy15ilt/WkamCpHChpq6GWGnk4w79jMIx9
-	g7pGUiL50PwCgtqU5u+DUiGV68zM=
-X-Gm-Gg: ASbGncsAiZCOrqhatRcr1zbFPM67KvvHqD8IhjjmJnsQ+3a/i8T7/BAVbZXLsP6ii45
-	gWfDZw+AmP5kaEKkBYchgsLG0DuBjCWgRk6/Si4t+uedq1dUIXVkWtXVyzS69li5ptZKyiJNAxe
-	meiwN1WWAPMxZ1zXX3b3o7yXn+pWMoIi0L62ButA==
-X-Google-Smtp-Source: AGHT+IFBqECsk9h7tTyOx2Pgd3aRRRGkm5z/5RSizG2/PaQNaz4pCKGcTTFHFScWifAgDxd1ARmwmvd9yQxmS8CSp8c=
-X-Received: by 2002:a05:6122:8297:b0:51b:a11f:cbdb with SMTP id
- 71dfb90a1353d-523e4172c0amr20429071e0c.4.1741870379641; Thu, 13 Mar 2025
- 05:52:59 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 13 Mar 2025 08:52:59 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <a3aa5f99-63ce-4be5-8d64-fb6e226b3bf9@gmail.com>
-References: <a3aa5f99-63ce-4be5-8d64-fb6e226b3bf9@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Aqt26N+Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FR4IdaPa"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id A67411382D10;
+	Thu, 13 Mar 2025 08:55:43 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Thu, 13 Mar 2025 08:55:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1741870543; x=1741956943; bh=vDBtbFbJ9P
+	7LVluXd+kYvqIuh6lAUoY3KyU6b1RAVig=; b=Aqt26N+YRL+bNZONb0MBcmu869
+	bN/izOINhU3jmGMJat4Uvb42XJXlEiT6KNRFIDZ1Jv+ALdk/KV60K33Fwot4H7RC
+	oxsyNj7CUUBn02G2z0TUrloAOfCunV+rFyzjJLi7cZ4cf/zOlmBbRAri/4Jlxti0
+	PxLbta6PLZ0evqoiAA+AzXCOWAWHn1mj77T/Zp9KoCrNpyiyR62VMFXvMvWmrIm6
+	CBMTFMzroA6sgBEdLslCff+5evjz5vomxfIkvpZb803d3aB/3rzKbq7XQ2rU9z1V
+	PJaBxgVs2wZfVT32xoVQBSLTYBU09nP/ohdBqnYZJF62ju+GDjwp+zlB48VA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741870543; x=1741956943; bh=vDBtbFbJ9P7LVluXd+kYvqIuh6lAUoY3KyU
+	6b1RAVig=; b=FR4IdaPahdRZyAC8eaDIlfgXglyu9GGxmR1fDKrEcjC6Yq/2SEo
+	prRLYJwsaQ5THsPwui2VDidSLYMOBWAeTEmneH3k2oDGw1oPuSuqxhM3IDPvx8cz
+	Jh1eYAAfzBDMVjUOGAiRgF/5h+QOZdBvOMVrxebXRgKlNquWCcnpK3LaUDAqpj/h
+	jYDiiBQJFstjxIye5MWR3irq+LEWsShm1vh5AsrpXl/xt/9n+olp/FpOmznTzf0V
+	s4J24W42raThHKulJD4TgNoM9D40buwYlVDChqd63f3uSkdOBMB/l725laakgGnC
+	by3nlS9chTNTq4Ig1liEHpOJWVfhYDCWtLw==
+X-ME-Sender: <xms:z9XSZ_pj-K1eBoNDgiaSYD7SkcxSY3KNxrqj22rzJK35V81HR1J7RQ>
+    <xme:z9XSZ5pJA3unpqxrbpftTiXdq5Bx83Rb3pXs7FWKw1W21PvAwWEu6f3R6zK1muxry
+    zSuHPeYpprordI6Pw>
+X-ME-Received: <xmr:z9XSZ8MK37FVTDlq3N6DB71I1Wcevv6rKhf7FZodyG2mgMFjfsvnhmhxHSm7OZEtOESwvTvYOFJTvL7P6E7GPvUF70Xsil354gPye2yLOFgwmRz9Fg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdektdduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtth
+    hopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthho
+    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosg
+    hlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhg
+X-ME-Proxy: <xmx:z9XSZy4zSmpoX8KzSw0s7hHNy80T9TzVUihFJQ2YAhZ4nmcEjcwiZA>
+    <xmx:z9XSZ-7iPjpxMV-pSPNNeLJeU5eU_i8meT4mIxMTuf80Ja9t5EkX8Q>
+    <xmx:z9XSZ6gP92S526lQKT6k6EJVgcyyHjiNE5pWVt3vi_6yntFX_P6_lQ>
+    <xmx:z9XSZw4swIYGpK1tgzdKdaUexBNMtLuyBy-DAd18JNQGKTDMfi58Ow>
+    <xmx:z9XSZwSdcN0DvoKL0XJ4Fhov4w39nlXRjBfTPma3ovNf2J37pMSPt1X3>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Mar 2025 08:55:42 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6f3319d4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 13 Mar 2025 12:55:42 +0000 (UTC)
+Date: Thu, 13 Mar 2025 13:55:41 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, peff@peff.net,
+	ben.knoble@gmail.com
+Subject: Re: [PATCH v2 6/6] rev-list: support NUL-delimited --missing option
+Message-ID: <Z9LVzWX4-6KGV6S7@pks.im>
+References: <20250310192829.661692-1-jltobler@gmail.com>
+ <20250313001706.3390502-1-jltobler@gmail.com>
+ <20250313001706.3390502-7-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 13 Mar 2025 08:52:58 -0400
-X-Gm-Features: AQ5f1JogDrvm4JWbtFUBZTtt1jDk-NooNREJJ5k9Wv9aX3aeDhTzhhkM0iad3MQ
-Message-ID: <CAOLa=ZRNJD7NqceGQ4B8ox+50m2q1nU1t29x7O0roc=-_4ww0w@mail.gmail.com>
-Subject: Re: [GSoC PATCH] pathspec: fix sign comparison warnings
-To: Arnav Bhate <bhatearnav@gmail.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000394dfb063038cd9c"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250313001706.3390502-7-jltobler@gmail.com>
 
---000000000000394dfb063038cd9c
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Mar 12, 2025 at 07:17:06PM -0500, Justin Tobler wrote:
+> diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
+> index d400d76cf2..145ded5c78 100644
+> --- a/Documentation/rev-list-options.adoc
+> +++ b/Documentation/rev-list-options.adoc
+> @@ -371,8 +371,8 @@ ifdef::git-rev-list[]
+>  <OID> NUL [<token>=<value> NUL]...
+>  -----------------------------------------------------------------------
+>  +
+> -Additional object metadata, such as object paths or boundary objects, is
+> -printed using the `<token>=<value>` form. Token values are printed as-is
+> +Additional object metadata, such as object paths or boundary/missing objects,
+> +is printed using the `<token>=<value>` form. Token values are printed as-is
+>  without any encoding/truncation. An OID entry never contains a '=' character
+>  and thus is used to signal the start of a new object record. Examples:
+>  +
 
-Arnav Bhate <bhatearnav@gmail.com> writes:
+Nit: I don't think we need to update this paragraph here as it is
+written as a non-exhaustive list anyway.
 
-> There are multiple places, especially in loops, where a signed and an
-> unsigned data type are compared. Git uses a mix of signed and unsigned
-> types to store lengths of arrays. This sometimes leads to using a signed
-> index for an array whose length is stored in an unsigned variable or
-> vice versa.
->
-> Replace signed data types with unsigned data types and vice versa
-> wherever necessary. In some cases, introduce a new variable, where both
-> signed and unsigned data types have been used to store lengths of arrays
-> in the same function, where previously only one variable was used to
-> iterate over both types. In cases where this is not possible, add
-> appropriate cast. Remove #define DISABLE_SIGN_COMPARE_WARNINGS.
->
-> Signed-off-by: Arnav Bhate <bhatearnav@gmail.com>
-> ---
->  pathspec.c | 26 +++++++++++++-------------
->  1 file changed, 13 insertions(+), 13 deletions(-)
->
-> diff --git a/pathspec.c b/pathspec.c
-> index 89663645e1..fd7dfdfd84 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -1,5 +1,4 @@
->  #define USE_THE_REPOSITORY_VARIABLE
-> -#define DISABLE_SIGN_COMPARE_WARNINGS
->
->  #include "git-compat-util.h"
->  #include "abspath.h"
-> @@ -36,6 +35,7 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
->  					enum ps_skip_worktree_action sw_action)
+> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+> index 7c6d4b25b0..d7b4dd48ff 100644
+> --- a/builtin/rev-list.c
+> +++ b/builtin/rev-list.c
+> @@ -136,24 +136,39 @@ static void print_missing_object(struct missing_objects_map_entry *entry,
 >  {
->  	int num_unmatched = 0, i;
-> +	unsigned int j;
->
->  	/*
->  	 * Since we are walking the index as if we were walking the directory,
-> @@ -48,8 +48,8 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
->  			num_unmatched++;
->  	if (!num_unmatched)
+>  	struct strbuf sb = STRBUF_INIT;
+>  
+> +	if (line_term)
+> +		putchar('?');
+> +
+> +	printf("%s", oid_to_hex(&entry->entry.oid));
+> +
+> +	if (!line_term)
+> +		printf("%cmissing=yes", info_term);
+> +
+>  	if (!print_missing_info) {
+> -		printf("?%s\n", oid_to_hex(&entry->entry.oid));
+> +		putchar(line_term);
 >  		return;
-> -	for (i = 0; i < istate->cache_nr; i++) {
-> -		const struct cache_entry *ce = istate->cache[i];
-> +	for (j = 0; j < istate->cache_nr; j++) {
-> +		const struct cache_entry *ce = istate->cache[j];
->  		if (sw_action == PS_IGNORE_SKIP_WORKTREE &&
->  		    (ce_skip_worktree(ce) || !path_in_sparse_checkout(ce->name, istate)))
->  			continue;
+>  	}
+>  
+>  	if (entry->path && *entry->path) {
+>  		struct strbuf path = STRBUF_INIT;
 
-While this is correct, now we have 'i' & 'j' as iteration variables,
-generally this is used in O(n^2) loops to define the outer and inner
-loops. Here, however, we use it to simply define two different types. I
-find this deviation from convention a little confusing.
+Nit: the variable and its cleanup could be moved closer to where it's
+used.
 
-Perhaps, we could simply utilize the option of intializing loop
-variables in the loop itself?
+> -		strbuf_addstr(&sb, " path=");
+> -		quote_path(entry->path, NULL, &path, QUOTE_PATH_QUOTE_SP);
+> -		strbuf_addbuf(&sb, &path);
+> +		strbuf_addf(&sb, "%cpath=", info_term);
+> +
+> +		if (line_term) {
+> +			quote_path(entry->path, NULL, &path, QUOTE_PATH_QUOTE_SP);
+> +			strbuf_addbuf(&sb, &path);
+> +		} else {
+> +			strbuf_addstr(&sb, entry->path);
+> +		}
+>  
+>  		strbuf_release(&path);
+>  	}
+>  	if (entry->type)
+> -		strbuf_addf(&sb, " type=%s", type_name(entry->type));
+> +		strbuf_addf(&sb, "%ctype=%s", info_term, type_name(entry->type));
+> +
+> +	fwrite(sb.buf, sizeof(char), sb.len, stdout);
+> +	putchar(line_term);
+>  
+> -	printf("?%s%s\n", oid_to_hex(&entry->entry.oid), sb.buf);
+>  	strbuf_release(&sb);
+>  }
+>  
 
-  diff --git a/pathspec.c b/pathspec.c
-  index 89663645e1..ff8854afb8 100644
-  --- a/pathspec.c
-  +++ b/pathspec.c
-  @@ -35,7 +35,7 @@ void add_pathspec_matches_against_index(const
-struct pathspec *pathspec,
-   					char *seen,
-   					enum ps_skip_worktree_action sw_action)
-   {
-  -	int num_unmatched = 0, i;
-  +	int num_unmatched = 0;
-
-   	/*
-   	 * Since we are walking the index as if we were walking the directory,
-  @@ -43,12 +43,12 @@ void add_pathspec_matches_against_index(const
-struct pathspec *pathspec,
-   	 * mistakenly think that the user gave a pathspec that did not match
-   	 * anything.
-   	 */
-  -	for (i = 0; i < pathspec->nr; i++)
-  +	for (int i = 0; i < pathspec->nr; i++)
-   		if (!seen[i])
-   			num_unmatched++;
-   	if (!num_unmatched)
-   		return;
-  -	for (i = 0; i < istate->cache_nr; i++) {
-  +	for (unsigned int i = 0; i < istate->cache_nr; i++) {
-   		const struct cache_entry *ce = istate->cache[i];
-   		if (sw_action == PS_IGNORE_SKIP_WORKTREE &&
-   		    (ce_skip_worktree(ce) || !path_in_sparse_checkout(ce->name, istate)))
-
-This would read much cleaner and also avoid two different loop
-variables. WDYT?
-
-Also a bigger question is, shouldn't the type of `pathspec.nr` and
-'istate.cache_nr' be the actual change required? Shouldn't they be set
-to 'size_t'?
-
-> @@ -78,7 +78,7 @@ char *find_pathspecs_matching_skip_worktree(const struct pathspec *pathspec)
->  {
->  	struct index_state *istate = the_repository->index;
->  	char *seen = xcalloc(pathspec->nr, 1);
-> -	int i;
-> +	unsigned int i;
->
-
-Nit: We could also drop this and move the initialization to the line
-below.
-
->  	for (i = 0; i < istate->cache_nr; i++) {
->  		struct cache_entry *ce = istate->cache[i];
-> @@ -130,7 +130,7 @@ static void prefix_magic(struct strbuf *sb, int prefixlen,
->  	if (element[1] != '(') {
->  		/* Process an element in shorthand form (e.g. ":!/<match>") */
->  		strbuf_addstr(sb, ":(");
-> -		for (int i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
-> +		for (unsigned int i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
->  			if ((magic & pathspec_magic[i].bit) &&
->  			    pathspec_magic[i].mnemonic) {
->  				if (sb->buf[sb->len - 1] != '(')
-
-Shouldn't we use 'size_t' for this, since we're iterating over the
-elements of an array?
-
-> @@ -341,7 +341,7 @@ static const char *parse_long_magic(unsigned *magic, int *prefix_len,
->
->  	for (pos = elem + 2; *pos && *pos != ')'; pos = nextat) {
->  		size_t len = strcspn_escaped(pos, ",)");
-> -		int i;
-> +		unsigned int i;
->
-
-This too should be 'size_t'.
-
->  		if (pos[len] == ',')
->  			nextat = pos + len + 1; /* handle ',' */
-> @@ -354,7 +354,7 @@ static const char *parse_long_magic(unsigned *magic, int *prefix_len,
->  		if (starts_with(pos, "prefix:")) {
->  			char *endptr;
->  			*prefix_len = strtol(pos + 7, &endptr, 10);
-> -			if (endptr - pos != len)
-> +			if ((size_t)(endptr - pos) != len)
->  				die(_("invalid parameter for pathspec magic 'prefix'"));
->  			continue;
->  		}
-
-This makes sense. But is it guaranteed that `endptr - pos` is greater
-than 0?
-
-> @@ -400,7 +400,7 @@ static const char *parse_short_magic(unsigned *magic, const char *elem)
->
->  	for (pos = elem + 1; *pos && *pos != ':'; pos++) {
->  		char ch = *pos;
-> -		int i;
-> +		unsigned int i;
->
-
-This too, should be 'size_t'
-
->  		/* Special case alias for '!' */
->  		if (ch == '^') {
-> @@ -564,7 +564,7 @@ static int pathspec_item_cmp(const void *a_, const void *b_)
->
->  void pathspec_magic_names(unsigned magic, struct strbuf *out)
->  {
-> -	int i;
-> +	unsigned int i;
-
-This can be inlined and made 'size_t'.
-
->  	for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
->  		const struct pathspec_magic *m = pathspec_magic + i;
->  		if (!(magic & m->bit))
-> @@ -803,8 +803,8 @@ int match_pathspec_attrs(struct index_state *istate,
->  int pathspec_needs_expanded_index(struct index_state *istate,
->  				  const struct pathspec *pathspec)
->  {
-> -	unsigned int i, pos;
-> -	int res = 0;
-> +	unsigned int pos;
-> +	int i, res = 0;
->  	char *skip_worktree_seen = NULL;
->
-
-This can be inlined, but this change is done to match 'pathspec.nr''s
-type. This goes to my earlier question, I would say we first need to
-modify 'pathspec.nr' itself to be 'size_t'.
-
->  	/*
-> @@ -845,7 +845,7 @@ int pathspec_needs_expanded_index(struct index_state *istate,
->  			 * - not-in-cone/bar*: may need expanded index
->  			 * - **.c: may need expanded index
->  			 */
-> -			if (strspn(item.original + item.nowildcard_len, "*") == item.len - item.nowildcard_len &&
-> +			if (strspn(item.original + item.nowildcard_len, "*") == (unsigned int)(item.len - item.nowildcard_len) &&
->  			    path_in_cone_mode_sparse_checkout(item.original, istate))
->  				continue;
->
-
-Similar here, I see the types of 'item.len' and 'item.nowwildcard_len'
-are 'int'. Do they need to be 'size_t'?
-
-> @@ -860,7 +860,7 @@ int pathspec_needs_expanded_index(struct index_state *istate,
->  				 * directory name and the sparse directory is the first
->  				 * component of the pathspec, need to expand the index.
->  				 */
-> -				if (item.nowildcard_len > ce_namelen(ce) &&
-> +				if ((unsigned int)item.nowildcard_len > ce_namelen(ce) &&
->  				    !strncmp(item.original, ce->name, ce_namelen(ce))) {
->  					res = 1;
->  					break;
-> --
-> 2.48.1
-
-Same question as above!
-
---000000000000394dfb063038cd9c
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 9aedac7d7dc7650d_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mUzFTVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN1VyQy80d0tLa2FBV0ZCbkFQRDlzQURNS3pGWXJaVApYUVlsbDl6Mm4v
-T21rNG9nSUNab0ZuZXMrN05XK3pmSGNTY0VBbTlCc3Zhd2VpTDFFSkpxOTd6L2JadzRYRjE1Cm9P
-c2FzcTVLeFF6cklMc09PcmhSZDZBaHI0MGhKbEJkV0Q2Y3V0RE8zNUxVTFh2RmtoQk52eENIN1Mz
-RzdCeWsKZHZYVSthSDV2OWRUTmFaREUrL3lSRTQveG1KUnhURTVuSVF0amNLWlMzRGF1K08rMXkw
-MEpncHphczA5Q1cwcgpVNEROb09ocVpYcEJ1Z28zdVM0amp0SnUra2gvQThYV0VXS3pGMlJtSDdS
-azVTN1J5c0phdWs5dlkyQ1RQYksrCmkzYXZ4NFRCaW1QTm5Zc0NKSTZwRHY5Qm9WRUxoY1c4Tys2
-R21BbmV2RlB1OCtnY1EwbnJCRytMMFdWUU96bVMKTlQ2NkVOc0k5YlN1S3dQRHRFV1ltbGRyeU5Y
-MTc0MFRSakFnSE4vSC9nNm1hKzlVZFNpMUkwbUcvUy8xUEZaVApleTg3VUZjemhaYVZSTTJ3elZ2
-aGNwTHRtN3Eva2VkcXgwUUM5RkpubjBDQmlJK1N2V0RRaUVxbkVSeHlOOCt2CjVGdElHUmxlVC9G
-VldEMmNVZCtTbkgxSW9vcXVuMUx1ZUNNR1lYRT0KPVZqOTMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000394dfb063038cd9c--
+Patrick
