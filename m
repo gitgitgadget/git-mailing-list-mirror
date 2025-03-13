@@ -1,41 +1,42 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829D72E3395
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 05:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35A912F399
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 05:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741844471; cv=none; b=EgDTrmVzwZT6K8+mPf3NzzxmwjobIUrhlCV8XLl79iSnnREiGvLi8oAUId2R7gfBFG9qRWN+GxTWsNvknFXa3StpPGNzmygstF+xs4aBDggLmuIkEzTfZUCtOmZpTPqT680eXcVOZW91ctqVb1FVD+4IvA4hRRyubeFijqbO8wk=
+	t=1741844808; cv=none; b=mXC8oMSHXf3Ncd4WnPrAy5JV/pBz9C+OhgmyPfZVi2uCcGVpAZ03k0wqX4nGVMlyisKfJKrbTzG08gWbb/RRrC2nbQP2KbcM5YpsDvcS7A7IkU1+7IcsMo8mIK/0tgg1To4cUD4EwLyhiHQXMx5WjAbpSMgnEvKXNMAZD9RflDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741844471; c=relaxed/simple;
-	bh=UtUd8GcYgBP22ZeTUSDdA1A4qTtBYKXM5UDj5XOx3fA=;
+	s=arc-20240116; t=1741844808; c=relaxed/simple;
+	bh=+hnz5rTkcvCkPQwMXVajixnB6TvF2y+tjTOgps6FwlI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ju8EU5s4JbE8VmReP/7kd89CYv9qqsQGnpxJsi95gkT5YpG18lnoLb6kd1Tu+mDKOYx/KSQn7EddM1KURUvWzynUzPWwdVfiUOMD5rHfb6L79wLC98pPUCmUByAV/MHLx1wVt9/8H+dCN1xcEFvHrBAm3aBS9+Ao9Kgz1qRzjCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fXNylool; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=gLe/r8nGCC9HqB60gZf8TfrLfobzs4Gcqc9fnpKmI1i9tHIDTLJMXsDGw2lvMKrPmzV5IPt1PjO/nGbtAiEXP4oNfQmBr1Dj6XWck4kDcRuUYXCXiebbRcNlqhFjg4dq+emrRmo3gaECiEHu2dr2TwBbQyl7DvD7Ad3Ozc63uX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ZduOYIH5; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fXNylool"
-Received: (qmail 20855 invoked by uid 109); 13 Mar 2025 05:41:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=UtUd8GcYgBP22ZeTUSDdA1A4qTtBYKXM5UDj5XOx3fA=; b=fXNyloolkfSersIqzFN9kXabiLeVQtV7E/aT+H5wjXeynnIwthvW2W9ZgwgqxYpTdEEgfq+wo97e4IqIFNtCjMxF6FxWQH7BjElazvYl3GlNrLpVjBEr+EV3umWwZy8bS6Mgcd8Be1OM+EbK11zU9WObWbhT4bx2E/Lii5s2ZWNOuDlmXyyluvKzyql71+nHol+1n6a2g2B6zt/Tbzoqq3ao0xYKINNZhlo0HJk4FDFzDPZi4CPJyzucMM5Raop9LHhBf55kwPh9H9QM47m5XZoELOUYnp09BDYTAhzwxH6xgdJNPPsVIkCHj0LEmm0Cp7DQTDS5iwMcsb+pt7NCoA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ZduOYIH5"
+Received: (qmail 20988 invoked by uid 109); 13 Mar 2025 05:46:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=+hnz5rTkcvCkPQwMXVajixnB6TvF2y+tjTOgps6FwlI=; b=ZduOYIH5vR1EhjfaMGxPPxLkzQ5ZllbIFy2oq0C/0othhH0A0aD1K2HDsH6+sb+2yxAhL+5+XdGcQcrCxPg74uLedMh/T/baVFh6wBpBcbS82x57+biAhz8GLAG+H1zBlez4MZpzvc6ZkoTIGNlX1jRMvhB9dP3oN2M9+ujX7CVerQhM/093QFWvdHn5jwpDUbi/RDMfQmtuR+DDlaTc2lrmpJP2EhteYXBp/EmmNSdtejHm7m2nPWLUfpq6bEjdvYWmxxlcWjVIwNlG4wbLzm4Qc9ZrMC9pAtiXqag4FyuMG9TxZmhjdnVaIU0eeYkMTc2pYaPU4Q+ytoI9oT1kcA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Mar 2025 05:41:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Mar 2025 05:46:46 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11665 invoked by uid 111); 13 Mar 2025 05:41:08 -0000
+Received: (qmail 11700 invoked by uid 111); 13 Mar 2025 05:46:45 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Mar 2025 01:41:08 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Mar 2025 01:46:45 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 13 Mar 2025 01:41:07 -0400
+Date: Thu, 13 Mar 2025 01:46:44 -0400
 From: Jeff King <peff@peff.net>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Igor Todorovski <itodorov@ca.ibm.com>,
 	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: Re: [PATCH 5/9] refspec_ref_prefixes(): clean up refspec_item logic
-Message-ID: <20250313054107.GE94015@coredump.intra.peff.net>
+Subject: Re: [PATCH 6/9] fetch: ask server to advertise HEAD for config-less
+ fetch
+Message-ID: <20250313054644.GF94015@coredump.intra.peff.net>
 References: <20250309030101.GA2334064@coredump.intra.peff.net>
- <20250309030706.GE2334191@coredump.intra.peff.net>
- <Z9H+vWHFkATWNLxt@nand.local>
+ <20250309030847.GF2334191@coredump.intra.peff.net>
+ <Z9H//JHtYTGqHI3n@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,61 +45,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z9H+vWHFkATWNLxt@nand.local>
+In-Reply-To: <Z9H//JHtYTGqHI3n@nand.local>
 
-On Wed, Mar 12, 2025 at 05:38:05PM -0400, Taylor Blau wrote:
+On Wed, Mar 12, 2025 at 05:43:24PM -0400, Taylor Blau wrote:
 
-> On Sat, Mar 08, 2025 at 10:07:06PM -0500, Jeff King wrote:
-> > The point of refspec_ref_prefixes() is to look over the set of refspecs
-> > and set up an appropriate list of "ref-prefix" strings to send to the
-> > server.
+> > Note that we'll add "HEAD" to the list of prefixes, and later code for
+> > updating "refs/remotes/<remote>/HEAD" may likewise do so. In theory this
+> > could cause duplicates in the list, but in practice these can't both
+> > trigger. We hit our new case only if there are no refspecs, and the
+> > "<remote>/HEAD" feature is enabled only when we are fetching from a
+> > remote with configured refspecs. We could be defensive with a flag, but
+> > it didn't seem worth it to me (the absolute worse case is a useless
+> > redundant ref-prefix line sent to the server).
 > 
-> While we're cleaning things up, I wonder if it is worth (slightly)
-> renaming this function to something more descriptive, like:
+> Yeah, I think that we already do this in some instances that you and I
+> talked about off-list, but I can't remember exactly what I did to
+> provoke it. In either case, the server responds correctly, so I don't
+> think it's so urgent to deal with ATM.
+
+Yeah, I thought we did, too, but after looking at the code, I doubt it.
+I think we were always playing with exact-oid refspecs, so we'd always
+hit the "if (rs->nr)" side of that conditional.
+
+In order to hit the case touched by this patch, you can't have refspecs,
+but still need to somehow get a true answer out of
+uses_remote_tracking().
+
+> > +test_expect_success 'set up parent for prefix tests' '
+> > +	git init prefix-parent &&
+> > +	git -C prefix-parent commit --allow-empty -m foo &&
 > 
->     refspecs_to_ref_prefixes()
+> Any reason to use a bona-fide "commit" here instead of "test_commit"?
 > 
-> , where we pluralize "refspec" and add "to" to make it clear that we're
-> converting from one to the other.
+> Not a big deal either way, of course, I'm just curious.
 
-I think a "struct refspec" is plural (despite the name). The singular is
-"refspec_item".
+Nope, I mostly just reach for "git commit" without thinking because
+that's what I naturally do while debugging or exploring.
 
-And...
+But since you asked...;)
 
-> > diff --git a/refspec.c b/refspec.c
-> > index 4cb80b5208..c6ad515f04 100644
-> > --- a/refspec.c
-> > +++ b/refspec.c
-> > @@ -246,14 +246,24 @@ void refspec_ref_prefixes(const struct refspec *rs,
-> >  		const struct refspec_item *item = &rs->items[i];
-> >  		const char *prefix = NULL;
-> >
-> > -		if (item->exact_sha1 || item->negative)
-> > +		if (item->negative)
-> >  			continue;
-> > -		if (rs->fetch == REFSPEC_FETCH)
-> > -			prefix = item->src;
-> > -		else if (item->dst)
-> > -			prefix = item->dst;
-> > -		else if (item->src && !item->exact_sha1)
-> > +
-> > +		if (rs->fetch == REFSPEC_FETCH) {
-> 
-> Do you think it'd be worth handling rs->fetch in a switch/case block? At
-> least that would allow us to catch unknown values more easily, though it
-> seems unlikely we'd ever add any :-).
+I do find test_commit a bit bloated in general.  It takes several
+commands versus one, leaves cruft files in the working tree (that you
+need to care about not using again, lest your commit fail with "no
+changes"), and by default makes tags that sometimes cause confusion
+about fetching, reachability, and so on.
 
-...this whole thing is badly named. It is called "fetch", but the only
-two values are true/false. But for some reason we named them
-REFSPEC_FETCH and REFSPEC_PUSH. Surely it should be "type" or
-"operation" or something if we were going to use an enum and switch?
+The one thing it does do that git-commit doesn't is increment test_tick.
+That sometimes is important (if you care about traversal ordering), but
+usually doesn't.
 
-I tried to limit the extent of my changes on opinionated matters like
-this. I almost dropped the patch entirely, but I did enough
-head-scratching to find that latent bug that I didn't want to lose it.
-
-If you want to fix the name and other clarity issues on top, I don't
-mind, though. ;)
+So I dunno. Maybe I am a bad person for not using test_commit by default
+and we should have a style suggestion there.
 
 -Peff
