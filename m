@@ -1,88 +1,82 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91317266B5D
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 12:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9137C266B68
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 12:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741868806; cv=none; b=t1JyK9oyQffivTMFqVg0+0Ff864g3cIEhnitUf0+hh7RLeolo5OU5mAbFzBe2d+EkCp/iFRxFO3BFIlOLXuVoiKbW8/EFcE0809uIGzfPptlY/ctMUzCpiHautI3rZ9d8+VZ+BAJvcsGAt5QD9LlvuStLEfHzzGzAJh+Lkykiak=
+	t=1741868806; cv=none; b=qg+tUY0dvVQbolSUCCkNyKspgPyAo0ehz5GD0Pz0qTylDl9HuowzP5TT1FeZBLcC3cRexsTnKIvUhfqTSmLcXPKlWxy2fwzmrh+I+Xe+uob6Vl7sJRB05Tgw6fLpn+1utwVRiWoWjZSuT1YFovBqwi3O9M9ygEATmK/XCEMiJ9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1741868806; c=relaxed/simple;
-	bh=n//fW9/On5LsGqvMf0HaTm3/zlRFziUNms+iq+hedIc=;
+	bh=xN764sPpctwAIJUDCUj/NW55yPBLLwwIj416YdP+45E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fRyTrle+i+0Jbb8Xxdu96DoIqp2xkLNCz8parmNjG/ykkm6I71ZnXgUa+I+84q8DrHI2lreHIQlIFmagUnRJSHHAQKi3OwVuPGkKqs0e0F3RKtkY4EDq/o+AXVnLC59SJqWRzo+UcjWeECYhIpA8dW7v3iAzKnzwqeo7hyCR/xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jk8DT/vy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FLMfRKq0; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=ZO1u1OCk8woD0b0mX9h143mOEkfT3NBMzABhiRBVnACF7t0JT5pgn1OJmkgAu9z+TiCG/EhAB0ymIbbt3xv+TPmsv0T6/NZZL0s0DWBdB/UB7JkO2Jmygm5y7BvKj5/iVjx9VOQiy+o2mzE6/7gHk7Jt7qNc0dFmgUouYckl6OY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=enHaxiZq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n3uWv9v4; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jk8DT/vy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FLMfRKq0"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9B7531382D03;
-	Thu, 13 Mar 2025 08:26:43 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Thu, 13 Mar 2025 08:26:43 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="enHaxiZq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n3uWv9v4"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id BD5FB1382D25;
+	Thu, 13 Mar 2025 08:26:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Thu, 13 Mar 2025 08:26:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741868803; x=1741955203; bh=fobzM5yqZh
-	ZnN2A2Q2yEZFQpXFnGBdhCodrkbLzZGCE=; b=Jk8DT/vybzIHKuaKw5l5U+u/WY
-	qKBQ141y82XsPQG1UL1ZBjWWhqDPFQxsZJKWamreQt+GpU5o4prs6CYLBe9MwiSa
-	Qpkoxan9VLM+rWhJZ71VaYWYJP/GxqMBOVQHSv9K1Lvzs40pjUL+LajfLaL1WyKy
-	U9DxGYWmWJkKHmrrrJ0JaHI6pCHDQ7Oeu5sVpSI9mFSxspxdiVjADeKO7XV61G0a
-	UlypT7pNmGvcStIvF5/hHPcM2Y34v+JBbM4sVS6XHG0H0bN4tsCLeI+5GZR49Hbv
-	B4MACEQ/rIiy6+0/FLRz4KzgB4c5ngDOBhUgFL/GkjCtEBvzKJ09UJb/4OSw==
+	:subject:to:to; s=fm3; t=1741868801; x=1741955201; bh=vjLxNe/nkO
+	uHTzNcBb+YST0kE674pSi5HCS4ymLs530=; b=enHaxiZqyJ3s+q5zdcufKznLWq
+	T0epN/jp1ojG2uDqw6/ojKEfTx3S5w+EnbPSDVE5LQqkvq8y2Vl+ArP4kA38uVpn
+	+7p9CAxrAs19mjDI4usfIlkY7E1s7xkHDHslIlisEs3DtSfqBRy/32GSTTcSxI26
+	QtXQY9BgpEa9WrWCLmIcydX+aqZPqACIaN8kFJqg18hcTbfbeD/8rK6aBDuIrInc
+	ccgfd/1C2zWWjq2ZgOdkxeVrk142BQmupylAonLC6RdH0ZfI+K/QK0LOza4Pp+Yx
+	fYg3V4LfSDzGwTknokPosMZnDKkYEmZOdMCScvGLqr6WY9qvWEoSYcNZx1bA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741868803; x=1741955203; bh=fobzM5yqZhZnN2A2Q2yEZFQpXFnGBdhCodr
-	kbLzZGCE=; b=FLMfRKq04EEHQ/NkJYWgSDf0OCo+2/YnhxaKCAi8VNjFssresj7
-	/7GwiI3b6F3dd+9UOn3fLbEvYuTs4mcrjnn42xgLSEEJ5bryDxxWyhUG2LuaPoqL
-	dw8LUeotnCsT40j+nXZ6JocdH01zDqrNZvjEn7v1A1ZvmTQEU6xLv2xoqpZMNzFh
-	6qWCra2wiI8pqCRsrlsxP4iF+QSl/fZDwdHtNfCiP9p92t3RbCJTaB75yOx2dmfb
-	K7zihj9E7f3kVkjeq2BGTGI9UF+CUnXipHsCwhG702a4Kn3BJy9avylY0qmV2bFu
-	bReuT0IGecFLEMyB3wvWDwpRbyAkzVIa6Vg==
-X-ME-Sender: <xms:A8_SZxAKI8igVcmo9hJ7i0S7TCD80mBH8ePsLBZtjfodYodBZ_ER9A>
-    <xme:A8_SZ_jEqyDwVFXHvYRCshYLMIOmaaUbLlva0_NxqoQRYb2bLP4Ijh-VGKsOAhMpa
-    4AWOURORNCvfgBA8g>
-X-ME-Received: <xmr:A8_SZ8kFGthlOcnuLXFJ4GgGGeZCciyv3TEglsyuJ3Irm6dguNirmn19BwJRwbnJcSm9pPS76aqDpyj0fbS_YK8XnoCy4yxk_tgv7g8>
+	1741868801; x=1741955201; bh=vjLxNe/nkOuHTzNcBb+YST0kE674pSi5HCS
+	4ymLs530=; b=n3uWv9v4W4jeKOkTkXKNcGcXHSp+L0ELIixbKPPMpI1Qhwp1CmP
+	ulz9dRz6B1WLlfygawdY2wk0f8FlGQrN3TIALF55Ir2XL/qNmVhaADss6Srb7RV4
+	OeOG2jXHbWbOTBt3ItWjJjmgZiA9PMAuvH9mM0DmiBEZvVYrREG4D8GvDk7Xrk85
+	9lbU+hV0CuQB8bJqcZWoNaEJPXedcpP1zdiSygyWyzLhgFtPM3SljUWXXnNp4K/Z
+	CsvoIg5Ttl0qBpGTjLs+GwkWvcw9HiZObrLyUPqLt00ANt0wANtkwWqyHQBKCAfq
+	iaNDbJjJmu09svmVIC0vf7Jxq8Y6FhRpgig==
+X-ME-Sender: <xms:Ac_SZyht0Y1EousN2ndtiJvsTewA_vjmOoGWf5ZqZ0uYbSBBaPuFdQ>
+    <xme:Ac_SZzCGEyPvnuE-gv3hlX8Ckq12LqoFRrM8pYdt9DT56H64DfJPNVYHyNqAMntFT
+    aitbi7WM4NkAU8Cwg>
+X-ME-Received: <xmr:Ac_SZ6Gaf8WaUZpzgmKezhPAj4h7kYWujAvkwcneBCfjThax1eQeDkB5Ymzals9sQohmYb6fXBxbQzgsfReosi85btMBKehqHCZauvY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdejleegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehithhoughorh
-    hovhestggrrdhisghmrdgtohhmpdhrtghpthhtohepsggvnhgtvgesfhgvrhguihhnrghn
-    ugihrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:A8_SZ7x4dkwlb74S3s3PMpukXWkzEDZUzn2yL57tYIErXxCgAzMN5Q>
-    <xmx:A8_SZ2QUfpDnctMqZ4YsCTCg_A3E7cMkVibjRtI65PVx3_6-EaekJw>
-    <xmx:A8_SZ-YiF9E0Rmyx3GtQ1c9VAPekHMhADT_Kv8XFoE26sLkmXyi1Vg>
-    <xmx:A8_SZ3QR2uKM31MLehQF5UI-ECTkOM1KD0roYz69mlsx5i9922HMUw>
-    <xmx:A8_SZ1ETp1Hbm7vNrhrycpjaMjP29kBDyoDpNW3k8fWPiLOuLNOPxDRZ>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehinhhtvghlfhigsehinhht
+    vghlfhigrdhnrghmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Ac_SZ7TokCvrGmNZIp1UgqDH3HwVwOOPDljvAgFrqo96MrY8Pow-iA>
+    <xmx:Ac_SZ_yQ-JeJQCGjId5pxv_x5KVnQJ9Y5uoPNaPtLe8JTok1C-8Sxw>
+    <xmx:Ac_SZ56_Trgo0f3ustzXfzAgIFyeQhgp0QPwirZ9zAeSmBjLsd_b6g>
+    <xmx:Ac_SZ8wb9VXXg88Et1qRbZJf4HGKpyfbv1PD9B5s-5Lik7T-veRMLQ>
+    <xmx:Ac_SZxvYSV5YtP5hWzw4jJMduM2mTCTwe5kkdIOwJwI3zwxuD2diZtW7>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Mar 2025 08:26:42 -0400 (EDT)
+ 13 Mar 2025 08:26:41 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  Igor Todorovski
- <itodorov@ca.ibm.com>,  Bence Ferdinandy <bence@ferdinandy.com>
-Subject: Re: [PATCH 6/9] fetch: ask server to advertise HEAD for config-less
- fetch
-In-Reply-To: <20250313054644.GF94015@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 13 Mar 2025 01:46:44 -0400")
-References: <20250309030101.GA2334064@coredump.intra.peff.net>
-	<20250309030847.GF2334191@coredump.intra.peff.net>
-	<Z9H//JHtYTGqHI3n@nand.local>
-	<20250313054644.GF94015@coredump.intra.peff.net>
-Date: Thu, 13 Mar 2025 05:26:41 -0700
-Message-ID: <xmqqbju5ru9q.fsf@gitster.g>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Ivan Shapovalov <intelfx@intelfx.name>
+Subject: Re: [PATCH] doc: centrally document various ways spell `true` and
+ `false`
+In-Reply-To: <Z9IH6G7BnM0blOmH@nand.local> (Taylor Blau's message of "Wed, 12
+	Mar 2025 18:17:12 -0400")
+References: <xmqqy0ycz9dk.fsf@gitster.g> <Z9IH6G7BnM0blOmH@nand.local>
+Date: Thu, 13 Mar 2025 05:26:39 -0700
+Message-ID: <xmqqh63xru9s.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,35 +86,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
->> Any reason to use a bona-fide "commit" here instead of "test_commit"?
->> 
->> Not a big deal either way, of course, I'm just curious.
+>> +- 'bool': canonicalize values `true`, `yes`,`on`, and positive
+>> +  numbers as "true", and values `false`, `no`, `off` and `0` as
+>> +  "false".
+> ...
+> I agree with the rest of the patch, but is this true (no pun intended
+> ;-))? I thought that we might canonicalize "yes" to "yes" if the value
+> we are asking about is already something other than a literal "true" or
+> "false", but I don't think we do:
 >
-> Nope, I mostly just reach for "git commit" without thinking because
-> that's what I naturally do while debugging or exploring.
->
-> But since you asked...;)
->
-> I do find test_commit a bit bloated in general.  It takes several
-> commands versus one, leaves cruft files in the working tree (that you
-> need to care about not using again, lest your commit fail with "no
-> changes"), and by default makes tags that sometimes cause confusion
-> about fetching, reachability, and so on.
->
-> The one thing it does do that git-commit doesn't is increment test_tick.
-> That sometimes is important (if you care about traversal ordering), but
-> usually doesn't.
->
-> So I dunno. Maybe I am a bad person for not using test_commit by default
-> and we should have a style suggestion there.
+>     $ git.compile -c foo.bar=yes config --type=bool foo.bar
+>     true
 
-FWIW, my assessment on test_commit exactly matches yours.  The cruft
-files it creates are often not what I want, the tags left by default
-are even worse, and the only good thing about it is the tick support
-but even that does not make much of difference in many scenarios.
+Sorry, but you lost me.  Isn't the above demonstration of 'yes' you
+gave getting canonicalized to 'true'?
 
-To its defence, I _suspect_ the automated creation of default
-changes were useful back when there were no "allow-empty" support.
-But I think it outlived its usefulness.
+	$ for v in yes 1 2 on
+	> do
+	>    git -c foo.bar=$v config --type=bool foo.bar
+	> done
+	true
+	true
+	true
+	true
+
+Or are you saying that the above documents what happens, but you
+think the code is wrong to do so?
+
+
+> So I do think that it is worth saying "you can spell 'true' as 'yes',
+> '1', ..." in the documentation, but I don't think that it is correct
+> that we'll canonicalize "yes" to "true" in the case described here.
