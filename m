@@ -1,54 +1,54 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B821F26659E
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 11:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546D217E
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 12:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741867006; cv=none; b=Pe+dPKgltLyTW8B9y3Tl+Ynir2f8eHR/jTib79Frc0IPvilzMh4Ua65Tb4SgQfu+RtzmIUKkra7mDjTtqlBBlnIOA22Z8x+1pEyfjo6abHPtTiMcXFIdvghJFe/rHXSWWvIblQB2jvdi8bZ++TrGzUnzhOigmyGMrXV7LYCAJMc=
+	t=1741868205; cv=none; b=q2EoxTCyS3EzrXov6sxLEjxgUdRUmlnXHgPrjpEAlR971W6xoSbR1Ax8hkEkoS8m1CmhG5elTZkX/ZxqNoJ8V9EHqiiRCaSJoswAZEWJ1ZYlEZyhOuofcmwjPzI7UU+Bw9kRvgWAKJ2QXfxyEpbT4MPSNmU+zR874kR3rIifnGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741867006; c=relaxed/simple;
-	bh=OrjX+h+GfpIowt2h1JgfThgS5KlV9Q2nfZ/IaAFuPhc=;
+	s=arc-20240116; t=1741868205; c=relaxed/simple;
+	bh=UfMmxeVG3aGuUAmNSG788hF3HU5G32dCugZDgP8q2Pk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YCYUtgRasX0o6UxaSC2b9p4iSKJ0199AzUXULnDGPNW2mBptmpBOk4EQBmJgUinXnNeurDnuyiTTWL9o9QLdxFIVzIa/oZvu29yqBlZyGk4FeSJMSKCirxpnXX1jW2fU/JdNNvk06ZGUAU+ay8LAGD462vV1KMcyZfSoQ3yyswE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S4lgMVpV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=2mxY7W12; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=rxb40cRiDQiBfGCom9HUCB95ZJ0821TYGpGvkc4EQXudobUguaQ6JQi8K5ls6fseGP8bW24O0BWggb7JiSIUibt34K3XB0Lu1epVBxtm0Txf0AdKiET3VVa/RLPJij4B5rGqJNjT5QS6tGG8cAQMIrClkKA4aCjW7xJFLNtiXI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BK/upj45; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mMG1Ch0O; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S4lgMVpV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="2mxY7W12"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9DF881382CFF;
-	Thu, 13 Mar 2025 07:56:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BK/upj45";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mMG1Ch0O"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 607131382D03;
+	Thu, 13 Mar 2025 08:16:42 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 13 Mar 2025 07:56:41 -0400
+  by phl-compute-07.internal (MEProxy); Thu, 13 Mar 2025 08:16:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741867001; x=1741953401; bh=ONlIHYapH+
-	g9kHG8jjFlGy1WyRQnCmBZEOPdqtVdcT8=; b=S4lgMVpVzSCuaiGukGFkNVYyJk
-	oCSFV80z00XI74z5ahBdGeuEnn4+f5mjiwGudQWlLD7kfdY2WFrlq/2TFY2Ximhb
-	XPog23urPANT8BBm2/SeTxi0ioVCdDiRPCNUan2tX1xR5xh7iwgenKmuUz42VgLB
-	Ds4iqcHmrDu54Xq/GXGsTlRu4zJFTFXYaUF+/6NuN8cqDMkLZK9P8qhgSPobjjVs
-	Fhc7jYGkmptHFS99tlEB6xCR5Om1E3Ea0v9pLpjsXA20/ptQUKaDZ0KqDkb3uV54
-	1suiIlbb1gjeQfdki3vFgxB55DQaIeVbovZ+sXWrKZRyhNUEHnicbddjzNNA==
+	:subject:to:to; s=fm3; t=1741868202; x=1741954602; bh=nkf9njxcsz
+	qIRHv2nIc1ZVUGj69yuG1p1DPcIbOglZo=; b=BK/upj45dYAvCni7Sq/DGTs144
+	l+5pDZLFKGwxBEfrt5COsF74mytachlK9Q6pp11d3NNImw4eO78QhrvAGtlwn4q5
+	UbEDppMKxKQ6dsHJlZUlfCcFRw4j46tmq7K3I9NSnOvnk5kKSWw2mn+ssYEMFXCK
+	70leQ5QaIZ663VB4w++UWnCVpnVne+w/vJl+V/ACbcF+syAiMwi9APDz/A/LNPan
+	eidA4hMXJ9ebFzN1Ng3MeOr0wWVaV2eTsKLKZ9Jyh1t1+1MI/h+JOKFGoC0m8tOg
+	Km4nF7/MAimvzZ0B9Aj1zmfABPch7hI3RiTqIdGS2Cyg50b7gelyPe8PVs7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741867001; x=1741953401; bh=ONlIHYapH+g9kHG8jjFlGy1WyRQnCmBZEOP
-	dqtVdcT8=; b=2mxY7W12OfiDTRGolmjAa6c97xuwrldIlH9aZBV52nHcGIlBaL5
-	zNtdicfdMmK0ST2jpN5Ptk+l/V98m2WrdcxIxy9cZadZq9e+UQJ/sx6iR0pKLouo
-	77Mwb+acUJ5A6/c6cAnPFZ4MRuunI0gbPlsj/NGRDrfdE83mW8SgY0ERIVZJ50+u
-	av2ZuS5RqAWo78EzvaPwT17oDc3FJsBWiTOvGSZH5QGf4HV5O6EQJma8D1zNkl7f
-	sVzLgz4j7y794sPUWPkcHsHi8DbX9HSAPGJnQuxAVWVPUgsRKZWANusxf8lIg8ik
-	1nksGySIkb48VUM/vWweDDoMP+2vCSlvRBQ==
-X-ME-Sender: <xms:-cfSZ5YgA4G8A2C0-CWFGpMjOD06gYC_lCFj5wxDz8UxhVW6RcO_WA>
-    <xme:-cfSZwbA2SOQp0smBCAnLgrSYHHRFfdsgt_BUwuMwF2RoCO7Jzrp9nPdfWjfL9-Ql
-    cRTvQp_Fd7AOzy-kg>
-X-ME-Received: <xmr:-cfSZ79-JBcpab6mlnl-_gEZ9AFaC2p-SMZs7D3TbSLRwAldhBUk3yw8IEOQ78Ye1scgjkQZn_OnTOqJ9h70o5gK0OSDwikU32yH2d8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdejkeelucetufdoteggodetrf
+	1741868202; x=1741954602; bh=nkf9njxcszqIRHv2nIc1ZVUGj69yuG1p1DP
+	cIbOglZo=; b=mMG1Ch0O65AFm+6ff5du5zGRSV7qobMxs1w0leIg8wQfkf/C1oh
+	n32EU91hDIVrRTaRLWLAK3342LH9UAC+pINyy5EKnONuen9o5iReFKa/niUV1E9I
+	/laXq/+X/Z4mDSLZNJY6fo3ezPGTiGvqgOz/4vSM5lVrceqGJ0sPjxwoucS1QQX6
+	B2KJymNrxG664XfI5X/BQuyaPypkUC76Y2BAElqo/Mjj20/xbFauLX+NBU9T5NpV
+	t0CVUAcrfpIWUesv9UKQgZ6dN6x89mVFZUlsjAH9c8pXR5NKBX3j99z1N+K68vJC
+	E3TbRZGDgcXTfSlX9SsCRVhBOVRwCCmXddw==
+X-ME-Sender: <xms:qczSZ5Ju-dc4yP_2VUQsvh60umMrTLogprkS8TDF0Q9VGkyx7dlPDA>
+    <xme:qczSZ1JcGeGNzZieu8o6-D7TnNgG1gJS6rmrmH97G4PlEy9bDEO3tQqYR0Vss2675
+    hcTE6c5MHe4cuZICA>
+X-ME-Received: <xmr:qczSZxtTts-6wjgDbygVbm9jRf8_lI1ZFTcANL8IOc11pTH4IO9bxdwwM_oSrDtoiMS7ky2scVSeMZQ0PZaX73uhftX3_aZQ6wjOY8Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdejledvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
@@ -56,28 +56,37 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdejkeelucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
     feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-cfSZ3r9YGNC-emMBuHcDKESddUJ1E3FyjwO51ohNvzwVzxFZxHXDA>
-    <xmx:-cfSZ0pNwyhtt9Ze-1rbDATkIvi4Ts8DIXGktkU6R8O3aZZ_MnrRVw>
-    <xmx:-cfSZ9QAt78Q6iqqeT9Ds1TeWMcy3EyQqTo5QaUYmey3BR7SBoQ16g>
-    <xmx:-cfSZ8pjtxnApkLVFfxdT1b8hnuwqJAqYKy_7Epa97wsNBChrZMziQ>
-    <xmx:-cfSZ_UsZxDr7VZNouwWSyIqDtM5puEABFAnA97GlDS1H1-lTgrDgz5J>
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfh
+    hfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:qczSZ6YQE4t-Uj8fV4_ilsOUyyKx1nJdWihGFFCeCAGht1KWUDOLmw>
+    <xmx:qczSZwb_XuG8JqWtlhjHdeB_z56bJTiVFBJjhXJd3Q0qg8GEGIsjOg>
+    <xmx:qczSZ-CVAB2dhRx_OReBtByZJlfdpbKWmsNN0JLEZezRvqcX02tO9g>
+    <xmx:qczSZ-ahBL3mK89W-SU8GG6imj7Ue0XEo1fq-j-0zXtg-6ITYoFsgA>
+    <xmx:qszSZ1Ocx05S5Q8pKAXXT5dTnYpHSnkm2OREG7ElY9L28U41nhtk85ES>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Mar 2025 07:56:41 -0400 (EDT)
+ 13 Mar 2025 08:16:41 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/6] t: extend test_lazy_prereq
-In-Reply-To: <Z9ExMHf9CkcDwEt1@pks.im> (Patrick Steinhardt's message of "Wed,
-	12 Mar 2025 08:01:04 +0100")
-References: <20250310231652.3742490-1-gitster@pobox.com>
-	<20250311212505.2920181-1-gitster@pobox.com>
-	<20250311212505.2920181-3-gitster@pobox.com> <Z9ExMHf9CkcDwEt1@pks.im>
-Date: Thu, 13 Mar 2025 04:56:39 -0700
-Message-ID: <xmqqsenhrvns.fsf@gitster.g>
+To: Elijah Newren <newren@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  Jeff King
+ <peff@peff.net>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 4/6] pack-objects: generate cruft packs at most one
+ object over threshold
+In-Reply-To: <CABPp-BH35cn1nXSaF=U=dbSKUxTFL5uP+yUvhbXMi66tJMuhLQ@mail.gmail.com>
+	(Elijah Newren's message of "Wed, 12 Mar 2025 13:49:17 -0700")
+References: <cover.1740680964.git.me@ttaylorr.com>
+	<cover.1741648467.git.me@ttaylorr.com>
+	<f2ca92245ada74825806b50f786aab312275fd85.1741648467.git.me@ttaylorr.com>
+	<xmqqikof2pqp.fsf@gitster.g> <Z9Gmo2P3Fnt3JeOs@nand.local>
+	<xmqqjz8uxfyq.fsf@gitster.g> <Z9HaYEyYgBYTiia3@nand.local>
+	<CABPp-BH0rbieCV4Z11pHOX-mwrtEO-FPNdywV0P5HxXnusdRKQ@mail.gmail.com>
+	<xmqq5xkex9md.fsf@gitster.g>
+	<CABPp-BH35cn1nXSaF=U=dbSKUxTFL5uP+yUvhbXMi66tJMuhLQ@mail.gmail.com>
+Date: Thu, 13 Mar 2025 05:16:39 -0700
+Message-ID: <xmqqmsdpruqg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,110 +96,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Elijah Newren <newren@gmail.com> writes:
 
->> +	elif test "$eval_ret" = 125; then
->> +		:;
->>  	else
->>  		say >&3 "prerequisite $1 not satisfied"
->>  	fi
+>> With below-size and max-size set to say 180 and 200 respectively, an
+>> attempt to combine the crufts may end up filling a cruft pack to 170
+>> but the smallest of the remaining cruft may weigh 40, which means
+>> including it would cause the max-size to be exceeded.  In such a
+>> scenario, there may not be a solution to satisfy given constraints,
+>> i.e. go above the below-size without stay below the max-size.
+>>
+>> So I am not sure if the approach would really solve much.
+>>
+>> Other than that a separate names, especially losing "max" from the
+>> threshold that really does not mean "max", would solve the confusion
+>> that comes from naming, that is.
 >
-> The semicolon in ":;" threw me off a bit. Am I missing why we need it or
-> is it superfluous?
+> --max-pack-size is a constraint.  --combine-cruft-below-size is not.
+> Think particularly of the case where the user doesn't even have any
+> cruft packs yet and has only accumulated a little bit of cruft.  That
+> option is merely a guide post to say that if it's smaller than that
+> size, then feel free to keep trying to add to it (so long as it
+> doesn't violate constraints such as --max-pack-size).
 
-The latter, of course -).
-
->> @@ -811,6 +813,9 @@ test_have_prereq () {
->>  				if test_run_lazy_prereq_ "$prerequisite" "$script"
->>  				then
->>  					test_set_prereq $prerequisite
->> +				elif test $? = 125
->> +				then
->> +					BUG "Do not use $prerequisite"
->>  				fi
->>  				lazily_tested_prereq="$lazily_tested_prereq$prerequisite "
->>  			esac
->
-> Hm, okay. It feels quite close to overthinking the whole deprecation
-> cycle around prerequisites as it's nothing that we tend to do very
-> often. But on the other hand the implementation is trivial enough, so I
-> don't mind it much.
-
-I agree that this has nothing to do with breaking changes at the Git
-3.0 boundary.  We just did not have good documentation for lazy
-prerequisites, and we just did not have any good support for marking
-a prerequisite should no longer be used.  [1/6] is for the former,
-and [2/6] is for the latter.
-
-We can avoid the magic 125 by adding a new helper like test_removed_prereq
-and do this instead, which may be cleaner and simpler to reason about.
-
-Another alternative that may make writing tests even be less error
-prone but a bit more verbose is to introduce test_unset_prereq and
-be explicit about unsatisfied prerequisites.  The effect of the
-resulting system becomes larger to include detecting misspelled
-prerequisites, and removed prerequisites would be detected as a
-natural fallout from the same mechanism.
-
-As we have >50 prerequisites defined with test_set_prereq and we'd
-need to add 50 calls to test_unset_prereq to mark them as "known but
-not satisified on this platform" to differentiate them from the ones
-that are misspelt or removed, if we go that route.  I am not sure if
-that is worth it.  Certainly not in the short term, but for a longer
-term, if people ever misspelt a prerequisite SYMLINKS as SYMLINK and
-wasted time wondering why their tests didn't trigger, it might be
-worth it.  I dunno.
-
- t/test-lib-functions.sh | 14 ++++++++++++++
- t/test-lib.sh           |  5 +++--
- 2 files changed, 17 insertions(+), 2 deletions(-)
-
-diff --git c/t/test-lib-functions.sh w/t/test-lib-functions.sh
-index 79377bc0fc..3903344fc1 100644
---- c/t/test-lib-functions.sh
-+++ w/t/test-lib-functions.sh
-@@ -751,7 +751,15 @@ test_set_prereq () {
- 		;;
- 	esac
- }
-+
- satisfied_prereq=" "
-+
-+removed_prereq=
-+# Mark a prerequisite deprecated-and-then-removed
-+test_removed_prereq () {
-+	removed_prereq="$removed_prereq$1 "
-+}
-+
- lazily_testable_prereq= lazily_tested_prereq=
- 
- # Usage: test_lazy_prereq PREREQ 'script'
-@@ -801,6 +809,12 @@ test_have_prereq () {
- 			negative_prereq=
- 		esac
- 
-+		case " $removed_prereq " in
-+		*" $prerequisite "*)
-+			BUG "Do not use $prerequisite"
-+			;;
-+		esac
-+
- 		case " $lazily_tested_prereq " in
- 		*" $prerequisite "*)
- 			;;
-diff --git c/t/test-lib.sh w/t/test-lib.sh
-index 9001ed3a64..c2c96f5e7a 100644
---- c/t/test-lib.sh
-+++ w/t/test-lib.sh
-@@ -1862,8 +1862,9 @@ test_lazy_prereq CURL '
- 	curl --version
- '
- 
--test_lazy_prereq WITHOUT_BREAKING_CHANGES '
--	test -z "$WITH_BREAKING_CHANGES"
-+test_removed_prereq WITHOUT_BREAKING_CHANGES
-+test_lazy_prereq WITH_BREAKING_CHANGES '
-+	test -n "$WITH_BREAKING_CHANGES"
- '
- 
- # SHA1 is a test if the hash algorithm in use is SHA-1.  This is both for tests
+That is correct and it is why I said the suggestion solves the name
+confusion.  But think about the sample situation, before and after
+such a repack with two thresholds.  You had below- and max-size set
+to 180 and 200 respectively, and a cruft pack of size 170, and you
+failed to grow that cruft pack beyond 180 because the next available
+cruft weighed 40.  Then you'll repeat the exercise again, find 170
+that is smaller than the below- threshold, try to cram more and
+would fail.  Isn't that what Taylor's series wanted to prevent from
+happening, and isn't the two-threshod approach supposed to be a way
+to improve on it?
