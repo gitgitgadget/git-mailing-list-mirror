@@ -1,165 +1,129 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB83B269CE6
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 16:40:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F273269CF2
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 16:45:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741884031; cv=none; b=s1QSNaaCa5on219luVtc6NynVCC++kqy5pJSiHjdQTUbdiwQbTJld2s7oq8oxzwLlupiVxkhznVg1kvxvOXmZw4yDIRhthK6sKIfM+DDlyMMnxv9UvLlGjivYfJHFtE/v2vrkxTWjwPWFzW/ZoosEzfpU4yJ1wVi5S/epTCEBuo=
+	t=1741884328; cv=none; b=i2/4b+B5ImpLaXhsoAQ5xJq+ogMyyMuHH9xBHvCVwh/lvjr6VyL6QLC2rVO0m9cgAL34brD5SJi/PI5frPBvG3b/KKwgLC4+GjWeY+HwIvDJERRDj9jJ9heNsTPfEKFzHvhSltchCUqcoTlqkCO3l0vz3emwI4Gie502efwm3a4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741884031; c=relaxed/simple;
-	bh=zNL0wdf3UGPPZGB5FzvuE11zClp7z6IGN7yhjM7T5iE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=erX/ron+K8S2e6fZvywl2hy19q71ow7xNBC6kb6WKhxj0dqEt1PNA9+eTaNWI/0I3M8S9aPOOaZGD1K+MivywXCgYnWM/6cuHJCGePwiZIK2ryCChBkIGzagPgB7MppqCVZ+NBzJC4Rporp9unRYmkPDrfWCFcyPefcn4+yRrUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zAcUnetS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X86dFqqM; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741884328; c=relaxed/simple;
+	bh=zIakTqTOyaYDs7w7qngTWCMPkCfJFBBmGHwnPLDNd5s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KYAnrtsDlbR+rdoQ6m2Iw4a1qW2AlhJGpGGFFqh11mC7WUnAbiMVbZ3USgjGbo/0rUenBiu7McMCCZ6MMd529k7tZA9duC3ZeBmud2iBVCmQIcZfF+dO40MJZ5eKhuz2Oe1eQx/zbkJe5WNactIXhY7xWtnOE6p6cz3dZmvdu+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jFCq8tTp; arc=none smtp.client-ip=209.85.167.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zAcUnetS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X86dFqqM"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id C13C01383175;
-	Thu, 13 Mar 2025 12:40:27 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 13 Mar 2025 12:40:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741884027; x=1741970427; bh=qx3vCD4pcc
-	9khiyWHwG01tQckMVrtMgK1HZZzrQQAOI=; b=zAcUnetS4VJeve5CCjbUP1QHwl
-	AnT0ov66wBzSF4HNgPpV/F5MxahysXQmXeftlxpHUNp0aHQrOnJArt6HEfxI9omC
-	iBKbKWAJ6EzxFX6CX4YgUIuGWoO231HT4xQhjSFGl9zfJP5YEMQjiO2tpLFKTkQN
-	klkySEwFEaVcI1oy2f5Bu5oQgEtj69FltqN6sEDcP831cYszUwChX4vFLC7pZebW
-	KANSpibJQh9DPRWZQgx7/4HwJBLdNPEVFbX641vI4G55Xo0v+j/EQpOQ8rqM+11s
-	lXwYzdsF4eDflcWRjoHRQcIcqTVsGCeRNCRCNSLvs+cut6YjOXLBCvRNVpMg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741884027; x=1741970427; bh=qx3vCD4pcc9khiyWHwG01tQckMVrtMgK1HZ
-	ZzrQQAOI=; b=X86dFqqMCr6LMG8jWLeB3pPwDgFvYSxH/eneUJ09SXqJUau5WPC
-	mqbcPjjTM8slfvFWx6PHWLslyx0DXLahGFGcFYn2LZw6F6OYnSlAuC6c6or4xOO6
-	eahwaSgqRkFDQcJbQ4PEhz2RPfqw2ncSXuSbETpM2J1a+PyEmh6plrOiKoKvB0wk
-	z5tMvjxc067IEwXiLRXa5PaSuBfNa/XOHGyq+X6moG2m/Ek9MU+3sUdoxJe8jTUG
-	A6OpPnZDsyx49bWXqVrnCKaV/c0b+0mzeEEecNZNOi18aUFwTNfhlgIqGJPh9jG5
-	E015lu0nvYOTTQgLi+6kfiSZRefnk+DSXgQ==
-X-ME-Sender: <xms:ewrTZ645QOcVirJhDT1TPWRO_dUkV3TwAmr3daz_-3RnV4QtSmFmFQ>
-    <xme:ewrTZz7_iIIPFjf8PfXz53vYzNcV75crWq06wdNWWxnhwLxGcsBLo4Ubl7zj58WoZ
-    DkQ2edZqmrXOd1oTQ>
-X-ME-Received: <xmr:ewrTZ5e5LrKCWKNk7kRQJdWQPeQ8yAHA8AWXXDjkDeJwM1EooTp7XBoXnQbPEWbYUbANwcGisZNY5WaioLficwLpGY0CmqSZWSxYR3g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekgeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepuddvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsth
-    hirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
-    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdr
-    tghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpd
-    hrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthho
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
-    gtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:ewrTZ3IbuiaDWNuDQD1frbmdDnlZdcrURNNtWN2d6kwSC886OTl-4Q>
-    <xmx:ewrTZ-LfQRc7tjZq2Pn0cqSPe24PuFUjtH9Oki3l25XdgMxsh5vMUA>
-    <xmx:ewrTZ4z7b_cSK7ztYpBmF97XBGlaBE9r-YFoVCCtkFlVlMcLFb_SAw>
-    <xmx:ewrTZyJ0W7Yp0ggtZk8JrgsnpuZKrADTiM5EeS5oq0x-jzMjrpVk1A>
-    <xmx:ewrTZwDBNArxUueif5Ql5nrKLQL-RSSVqmDOl4DopJqSgTDa66i7aMSl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Mar 2025 12:40:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
- <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Karthik Nayak <karthik.188@gmail.com>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  "brian m .
- carlson" <sandals@crustytoothpaste.net>,  "Randall S . Becker"
- <rsbecker@nexbridge.com>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3] promisor-remote: fix segfault when remote URL is
- missing
-In-Reply-To: <CAP8UFD0QqUG5Gu-XxKi58sEA7VfSJk4gy9hb_93dCw+2QMABYA@mail.gmail.com>
-	(Christian Couder's message of "Thu, 13 Mar 2025 11:39:58 +0100")
-References: <20250311152413.1059343-1-christian.couder@gmail.com>
-	<20250312114628.2744747-1-christian.couder@gmail.com>
-	<xmqqecz2yyg2.fsf@gitster.g>
-	<CAP8UFD0QqUG5Gu-XxKi58sEA7VfSJk4gy9hb_93dCw+2QMABYA@mail.gmail.com>
-Date: Thu, 13 Mar 2025 09:40:25 -0700
-Message-ID: <xmqqfrjgq3ye.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jFCq8tTp"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3fbc00143d6so776439b6e.3
+        for <git@vger.kernel.org>; Thu, 13 Mar 2025 09:45:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741884326; x=1742489126; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fQhsnLtnh1QTJKAufF/8VC1yOfjWIlsa4NIp4B2goo8=;
+        b=jFCq8tTpzAZ4bc7DQYQekO2F+jIeS0+p8lT6H7m6GRYn5f0fVTMUQCef6OxjdmOKzQ
+         PuNFlm0WzaR6jlcEUnF45xxwfRrF3hZitk3cnkZYd6sVu2dENR9jze8YvLjQE7IoThYf
+         Z+jyI4rkzB73yii2G2HwLsPsy4sC5NSmJ5vVEesMP9w40kl9szsofqVi/sAh7C86a8nL
+         TMclFzx5ryGy41pdguy1YD5NozNXFoLKNfnPLBI2o53eCvim6AfF7gFb3uU6qyf60c2f
+         Dq9wff7/jv8tid5jB/qofVqRQZbc8bmQGnP0C63GicWzOwKN6Drxt35s76ZCkmiIOn5Z
+         kN3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741884326; x=1742489126;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fQhsnLtnh1QTJKAufF/8VC1yOfjWIlsa4NIp4B2goo8=;
+        b=goWEp2C2Sp/fLbKPpQ1XNKIkjTmgYZkpG1pw1lvO9AXJlCK7zAJaqQWrgReJ8XNOOB
+         SUth21gOJh7cRTfNuabB2bm9vgMa0v8e0VLxcV3svb2ryg2lDRU8FRGGFJGlnD3FxU6A
+         Qp4HrJnvIzyQXZFbidXaM1hK3rZvp6AoAY5PmEROLqhv8OjJyAGmBhqPsbn1H+Z9GwLt
+         9x2edcQ1qiJ66iSeSFI6tKNrLLoDdDgN4cNUHRsRi2d4+B40NlEza9R5Fei99uo6oD06
+         fp0igORgUsDv5W82qj+HreRwycEnmED+A5cn94Q8rtR1IMH+LuZXYtmoSmAyKNGi60/B
+         Lfsg==
+X-Gm-Message-State: AOJu0YyVFm0BTCkdycTZAns9o5MK+XUweSH+ZJwQ/mCaDa0lkV7V7BnA
+	hnfpTJw2/gG2JugSmNv8Mv4lr61JEVxxZejZ6O35ICTqnYM3js4U
+X-Gm-Gg: ASbGncv4IUb9xKTsSHy2lbEgQma9XOTB2POjpbscAWWbGS+OdIGd9L9+BS/UZ/8pxDz
+	AZTST4+sxwFoj8dAXalTmRO1zJ873ihKt11O3A0FOEoTjhbInotxtjPDsr8QHq0f7uCE1YZZdSI
+	906Xj6773dwdN7B2H+ba0jGkAdaBH2+x1AU2fc3R14s/Dre8WG5EcZZgsM6YfAkJaSyyT1qb+I8
+	cZEIakg1jqX65GeALmaO1ctll6/UYc3ThJQ9uZ7Wl8yiXLsvZ38g6nCAJdx8giqdvgrLngMVCeu
+	Mt+R/o4tO+9PY4UG+pQz27b30c6eaU1NGLmiJPjM9P542ZOF
+X-Google-Smtp-Source: AGHT+IH1t+1yUY9LbMdfS3PH/cR+tXf+Ps86us6x1wacpj2S3Wrpxfk3KBYQue4+lBaOIs9Z8imiNw==
+X-Received: by 2002:a05:6808:1396:b0:3fc:105c:430 with SMTP id 5614622812f47-3fda382badfmr166821b6e.39.1741884325859;
+        Thu, 13 Mar 2025 09:45:25 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-3fcd5bfff69sm295063b6e.39.2025.03.13.09.45.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Mar 2025 09:45:25 -0700 (PDT)
+Date: Thu, 13 Mar 2025 11:41:56 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, ps@pks.im, christian.couder@gmail.com
+Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
+Message-ID: <qapd7sijizopaefpxh3slgn7g2ecwdtyhzqzufcypciyv6n3qm@turmldwzipwe>
+References: <20250310192829.661692-1-jltobler@gmail.com>
+ <20250311235720.GA73755@coredump.intra.peff.net>
+ <sm5xvh7bipyrlpw45bptlctbuhey7v3qktpskal5dzexomt34f@wgfziyhcf3t6>
+ <20250313053329.GC94015@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250313053329.GC94015@coredump.intra.peff.net>
 
-Christian Couder <christian.couder@gmail.com> writes:
+On 25/03/13 01:33AM, Jeff King wrote:
+> > Furthermore, revision and pathspec argument parsing is all handled in
+> > `setup_revisions()` so if we want to NUL-delimit arguments parsed on
+> > stdin with -z, we would still need to parse the option early anyway. I
+> > think it should be fine to leave the early -z option parsing as-is.
+> 
+> Makes sense. And I guess we might not want to have setup_revisions() do
+> that handling of "-z" for input, as that would make:
+> 
+>   git log --stdin --raw -z
+> 
+> behave differently (since it does not currently change stdin handling,
+> only the diff output). 
 
-> It could happen that the server, the client and the common promisor
-> remote are all on the same filesystem. Then it would make sense for
-> both the server and the client to rely on just the remote name,
-> without any URL configured, to access the promisor remote. So if we
-> want things to work in this case, then I think the server should
-> advertise the remote name in the "url=" field.
+Yes, we won't want to include this '-z' parsing directly in
+`setup_revisions()` or else it would change the behavior of other
+commands.
 
-Meaning the server and all the clients share the short-and-sweet
-string that is suitable as a remote nickname (i.e. something you the
-client driver would type to "git fetch" command) as a pathname that
-is relative to the current working directory, and because the server
-and these clients must refer to the same repository using this
-mechanism, this in turn means that the server and all the clients
-share the same current working directory?
+In version two of this series, NUL-delimited stdin handling for
+`setup_revisions()` is triggered by setting a `nul_delim_stdin` field in
+`setup_revision_opt`. This gives the `setup_revisions()` caller the
+ability to control the parsing delimiter itself. 
 
-It may be possible, but would that make _any_ practical sense?  I
-doubt it.  I would understand perfectly well that the local single
-machine situation as a good justification to use file:// URL in such
-a setting, but not for the r->name fallback.
+Only in git-rev-list(1) does the stdin parsing behavior change if '-z'
+is also present. The behavior stdin parsing for `git log -z --stdin`
+remains unchanged.
 
->> What other uses do the name/url vectors prepared by
->> promisor_info_vecs() have?  Is it that we use them only to advertise
->> with this code, and then match with what they advertise?
->
-> Yes, I think so.
-> ...
-> Other call sites don't use promisor_info_vecs(). It was introduced by
-> the lop patch series which doesn't change how other code gets the
-> remote names and URLs.
+> Though that does mean that these two commands
+> will behave differently:
+> 
+>   git log --stdin -z
+>   git rev-list --stdin -z
+> 
+> which seems...not great. My earlier suggestion to tie "-z" to stdin
+> handling was for consistency with other tools like grep. But if we
+> already have cases where "-z" is only for output, maybe it is better to
+> stay consistent with other parts of git. I.e., I was worried about us
+> painting ourselves into a corner with your patches, but we may have
+> already done so years ago. ;)
 
-Then it should be simpler to remove r->name entries at the source in
-that function, than having to filter it from the strvec whenever the
-strvec elements are used.
+I think to some extent Git is already inconsistent here. IMO it would be
+preferable for both input and output to use NUL as the delimiter when
+machine parsing in git-rev-list(1) as that is the behavior I would
+personally expect. I also agree with Patrick's reasoning else where in
+this thread[1].
 
->> ... would it be so different to pass an empty string as to pass a
->> misspelt URL received from the other end?  Wouldn't the end result
->> the same (i.e., we thought we had a URL usable as a promisor remote,
->> but it turns out that we cannot reach it)?
->
-> Perhaps but I think it would be weird if URLs are matching when they
-> are empty on both sides. I think it makes more sense and is more
-> helpful to warn with a clear error message and just reject the remote
-> if any of the URL is empty.
+I'm open to discuss further though :)
 
-Smells like over-engineering for nonexisting case to me.
+Thanks,
+-Justin
 
->> The 'i' was obtained by calling remote_nick_find(), which uses
->> strcasecmp() to find named remote (which I doubt it is a sensible
->> design by the way).  This code should be consistent with whatever
->> comparison used there.
->
-> I think comparing remote names case insensitively is fair. It's likely
-> to just make things a bit easier for users.
-
-Meaning it makes it impossible to have two remotes with nicknames
-that are different in case?
-
-Because the "[remote "nick"] fetch = ..." configuration variables
-have the nickname in the second part, the nicknames are case
-insensitive, unlike the first and the third component (i.e.
-"remote.origin.fetch" and "Remote.origin.FETCH" are the same thing,
-but "remote.Origin.fetch" and "remote.origin.fetch" are different).
+[1]: <Z9KNQ8XliWrrYgAT@pks.im>
