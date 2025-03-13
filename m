@@ -1,41 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9951F2E3395
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 05:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829D72E3395
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 05:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741844257; cv=none; b=k26lZP+WS46uKknMr0+0wssio9oFnKk2ZHmaSqyQeVdpEmQKjqFF2LVvEVo6mlyPi3xLil6JzwwfGtmAqPHrcGKvX/Jribre0ttXKacrRWRm8XvGT1+HWibUD8+V9GpE+Kh3OgsdJ8ejAEK0J2HowesRmzH930OUdfiZCArpI5g=
+	t=1741844471; cv=none; b=EgDTrmVzwZT6K8+mPf3NzzxmwjobIUrhlCV8XLl79iSnnREiGvLi8oAUId2R7gfBFG9qRWN+GxTWsNvknFXa3StpPGNzmygstF+xs4aBDggLmuIkEzTfZUCtOmZpTPqT680eXcVOZW91ctqVb1FVD+4IvA4hRRyubeFijqbO8wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741844257; c=relaxed/simple;
-	bh=33lClb7LQtnI2AysI99jjO0TqBosVfgFf79pn5q+9Cw=;
+	s=arc-20240116; t=1741844471; c=relaxed/simple;
+	bh=UtUd8GcYgBP22ZeTUSDdA1A4qTtBYKXM5UDj5XOx3fA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FSbt0/lCQ1qusw7zLpKcSho9zTDqM36o0IkrEfIu/rUhfuf6xaDzwV8pxC6nilUB4XvlllLSYjsOwKVg8qiLwkOjk8VH33jcFG/TerBeDom6KQPQhKj/zAK1xgF2MexSI5sX9sJfJ1qy4c5DjfETgM4gBkEFRq3KiNDuZBBMQis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bLRpayf8; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=ju8EU5s4JbE8VmReP/7kd89CYv9qqsQGnpxJsi95gkT5YpG18lnoLb6kd1Tu+mDKOYx/KSQn7EddM1KURUvWzynUzPWwdVfiUOMD5rHfb6L79wLC98pPUCmUByAV/MHLx1wVt9/8H+dCN1xcEFvHrBAm3aBS9+Ao9Kgz1qRzjCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fXNylool; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bLRpayf8"
-Received: (qmail 20825 invoked by uid 109); 13 Mar 2025 05:37:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=33lClb7LQtnI2AysI99jjO0TqBosVfgFf79pn5q+9Cw=; b=bLRpayf8U415WrX7qustB2uDMxKnfHDFUXyvrGfCaaxD3e5t1fedQVJdRQA4VLTZrjw6rP6s1djzWMh/CNbOaIFewjleSXxJLqGwNzF9RdpsFVsC3Rc1wCWzmOr2jJ1COKPgBE6qdCDWCyRBXem3SbhHBWc48u5VbdifmUtOkOw1dZTXb4EuRIeHtS+wfhwUkANb00gJKrt2Wc58q0gICPB1Ff+lBrNS4rfLlHPaIl3Mgyj2sFR31ZQV/sBLvgfA3eOHJ0SMd2HYr+JYqPnsvMc+Or97Vx/1jt7jgW+uvcU+3hkCBjvMt/nQNCa5opoKRQS8QtiOvw4/9F1yJ3T/6w==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fXNylool"
+Received: (qmail 20855 invoked by uid 109); 13 Mar 2025 05:41:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=UtUd8GcYgBP22ZeTUSDdA1A4qTtBYKXM5UDj5XOx3fA=; b=fXNyloolkfSersIqzFN9kXabiLeVQtV7E/aT+H5wjXeynnIwthvW2W9ZgwgqxYpTdEEgfq+wo97e4IqIFNtCjMxF6FxWQH7BjElazvYl3GlNrLpVjBEr+EV3umWwZy8bS6Mgcd8Be1OM+EbK11zU9WObWbhT4bx2E/Lii5s2ZWNOuDlmXyyluvKzyql71+nHol+1n6a2g2B6zt/Tbzoqq3ao0xYKINNZhlo0HJk4FDFzDPZi4CPJyzucMM5Raop9LHhBf55kwPh9H9QM47m5XZoELOUYnp09BDYTAhzwxH6xgdJNPPsVIkCHj0LEmm0Cp7DQTDS5iwMcsb+pt7NCoA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Mar 2025 05:37:35 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Mar 2025 05:41:09 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11629 invoked by uid 111); 13 Mar 2025 05:37:34 -0000
+Received: (qmail 11665 invoked by uid 111); 13 Mar 2025 05:41:08 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Mar 2025 01:37:34 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Mar 2025 01:41:08 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 13 Mar 2025 01:37:33 -0400
+Date: Thu, 13 Mar 2025 01:41:07 -0400
 From: Jeff King <peff@peff.net>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Igor Todorovski <itodorov@ca.ibm.com>,
 	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: Re: [PATCH 1/9] t5702: fix typo in test name
-Message-ID: <20250313053733.GD94015@coredump.intra.peff.net>
+Subject: Re: [PATCH 5/9] refspec_ref_prefixes(): clean up refspec_item logic
+Message-ID: <20250313054107.GE94015@coredump.intra.peff.net>
 References: <20250309030101.GA2334064@coredump.intra.peff.net>
- <20250309030123.GA2334191@coredump.intra.peff.net>
- <Z9H82waDYvC3RVBH@nand.local>
+ <20250309030706.GE2334191@coredump.intra.peff.net>
+ <Z9H+vWHFkATWNLxt@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,43 +44,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z9H82waDYvC3RVBH@nand.local>
+In-Reply-To: <Z9H+vWHFkATWNLxt@nand.local>
 
-On Wed, Mar 12, 2025 at 05:30:03PM -0400, Taylor Blau wrote:
+On Wed, Mar 12, 2025 at 05:38:05PM -0400, Taylor Blau wrote:
 
-> On Sat, Mar 08, 2025 at 10:01:23PM -0500, Jeff King wrote:
-> > Signed-off-by: Jeff King <peff@peff.net>
-> > ---
-> >  t/t5702-protocol-v2.sh | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> On Sat, Mar 08, 2025 at 10:07:06PM -0500, Jeff King wrote:
+> > The point of refspec_ref_prefixes() is to look over the set of refspecs
+> > and set up an appropriate list of "ref-prefix" strings to send to the
+> > server.
+> 
+> While we're cleaning things up, I wonder if it is worth (slightly)
+> renaming this function to something more descriptive, like:
+> 
+>     refspecs_to_ref_prefixes()
+> 
+> , where we pluralize "refspec" and add "to" to make it clear that we're
+> converting from one to the other.
+
+I think a "struct refspec" is plural (despite the name). The singular is
+"refspec_item".
+
+And...
+
+> > diff --git a/refspec.c b/refspec.c
+> > index 4cb80b5208..c6ad515f04 100644
+> > --- a/refspec.c
+> > +++ b/refspec.c
+> > @@ -246,14 +246,24 @@ void refspec_ref_prefixes(const struct refspec *rs,
+> >  		const struct refspec_item *item = &rs->items[i];
+> >  		const char *prefix = NULL;
 > >
-> > diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-> > index d3df81e785..cea8f92a3d 100755
-> > --- a/t/t5702-protocol-v2.sh
-> > +++ b/t/t5702-protocol-v2.sh
-> > @@ -665,7 +665,7 @@ test_expect_success 'even with handcrafted request, filter does not work if not
-> >  	test-tool -C server serve-v2 --stateless-rpc <in >/dev/null
-> >  '
-> >
-> > -test_expect_success 'default refspec is used to filter ref when fetchcing' '
-> > +test_expect_success 'default refspec is used to filter ref when fetching' '
+> > -		if (item->exact_sha1 || item->negative)
+> > +		if (item->negative)
+> >  			continue;
+> > -		if (rs->fetch == REFSPEC_FETCH)
+> > -			prefix = item->src;
+> > -		else if (item->dst)
+> > -			prefix = item->dst;
+> > -		else if (item->src && !item->exact_sha1)
+> > +
+> > +		if (rs->fetch == REFSPEC_FETCH) {
 > 
-> Maybe I am not seeing enough of the context below to know for sure, but
-> 
->     s/ref/&s
-> 
-> ?
+> Do you think it'd be worth handling rs->fetch in a switch/case block? At
+> least that would allow us to catch unknown values more easily, though it
+> seems unlikely we'd ever add any :-).
 
-Possibly.
+...this whole thing is badly named. It is called "fetch", but the only
+two values are true/false. But for some reason we named them
+REFSPEC_FETCH and REFSPEC_PUSH. Surely it should be "type" or
+"operation" or something if we were going to use an enum and switch?
 
-I think you could read it as "it should filter refs" (which it obviously
-should). But you could also read it as "it should filter some singular
-ref that we do not expect to find in the result". Of course the test
-itself seems to just snoop on the protocol conversation, which I guess
-is more like the first reading.
+I tried to limit the extent of my changes on opinionated matters like
+this. I almost dropped the patch entirely, but I did enough
+head-scratching to find that latent bug that I didn't want to lose it.
 
-I didn't really want to get into word-smithing the test titles. I just
-couldn't handle seeing that typo over and over while working on adjacent
-tests.
+If you want to fix the name and other clarity issues on top, I don't
+mind, though. ;)
 
 -Peff
