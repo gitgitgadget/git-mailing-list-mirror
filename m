@@ -1,121 +1,308 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9137C266B68
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 12:26:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C3C42052
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 12:53:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741868806; cv=none; b=qg+tUY0dvVQbolSUCCkNyKspgPyAo0ehz5GD0Pz0qTylDl9HuowzP5TT1FeZBLcC3cRexsTnKIvUhfqTSmLcXPKlWxy2fwzmrh+I+Xe+uob6Vl7sJRB05Tgw6fLpn+1utwVRiWoWjZSuT1YFovBqwi3O9M9ygEATmK/XCEMiJ9I=
+	t=1741870382; cv=none; b=mJOU7sk92RC5e1BCFPBZEcWnBmUVEZNWBm2TMS5LWHX937o1Ji5kEx33JucYEkwkNgtesCsSnpymE5T/bZ7R+PvhmqC+liT5H2uLqZ5I4aL+nfRx24OGwRp60/d0Jmp3zYyTSO+nI7+lYyRY8Dx/KG8O0oNmwd0atCY5F1VwwWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741868806; c=relaxed/simple;
-	bh=xN764sPpctwAIJUDCUj/NW55yPBLLwwIj416YdP+45E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZO1u1OCk8woD0b0mX9h143mOEkfT3NBMzABhiRBVnACF7t0JT5pgn1OJmkgAu9z+TiCG/EhAB0ymIbbt3xv+TPmsv0T6/NZZL0s0DWBdB/UB7JkO2Jmygm5y7BvKj5/iVjx9VOQiy+o2mzE6/7gHk7Jt7qNc0dFmgUouYckl6OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=enHaxiZq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n3uWv9v4; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741870382; c=relaxed/simple;
+	bh=SSsaGsenZgOgfBZPFmBk5A7DavKBdAMUDuos+WOhunE=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=QHoDLGXDW61N+tav9berpeYbIAFgEwuUD2uLRD4uqaDyCZbEnRtx8ggcM3wlo9FqxIqd4O0fymfWhgPG51OiXvdSPxB6Q5WkWOzvZ+SmRXvtpWM2vIaaMosqWrBE4I1GSPbNUjiVp0HRzPSlzRdKErGufpUNmZFXF/6xsWb/MGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iSHmz9mv; arc=none smtp.client-ip=209.85.222.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="enHaxiZq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n3uWv9v4"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id BD5FB1382D25;
-	Thu, 13 Mar 2025 08:26:41 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 13 Mar 2025 08:26:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741868801; x=1741955201; bh=vjLxNe/nkO
-	uHTzNcBb+YST0kE674pSi5HCS4ymLs530=; b=enHaxiZqyJ3s+q5zdcufKznLWq
-	T0epN/jp1ojG2uDqw6/ojKEfTx3S5w+EnbPSDVE5LQqkvq8y2Vl+ArP4kA38uVpn
-	+7p9CAxrAs19mjDI4usfIlkY7E1s7xkHDHslIlisEs3DtSfqBRy/32GSTTcSxI26
-	QtXQY9BgpEa9WrWCLmIcydX+aqZPqACIaN8kFJqg18hcTbfbeD/8rK6aBDuIrInc
-	ccgfd/1C2zWWjq2ZgOdkxeVrk142BQmupylAonLC6RdH0ZfI+K/QK0LOza4Pp+Yx
-	fYg3V4LfSDzGwTknokPosMZnDKkYEmZOdMCScvGLqr6WY9qvWEoSYcNZx1bA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741868801; x=1741955201; bh=vjLxNe/nkOuHTzNcBb+YST0kE674pSi5HCS
-	4ymLs530=; b=n3uWv9v4W4jeKOkTkXKNcGcXHSp+L0ELIixbKPPMpI1Qhwp1CmP
-	ulz9dRz6B1WLlfygawdY2wk0f8FlGQrN3TIALF55Ir2XL/qNmVhaADss6Srb7RV4
-	OeOG2jXHbWbOTBt3ItWjJjmgZiA9PMAuvH9mM0DmiBEZvVYrREG4D8GvDk7Xrk85
-	9lbU+hV0CuQB8bJqcZWoNaEJPXedcpP1zdiSygyWyzLhgFtPM3SljUWXXnNp4K/Z
-	CsvoIg5Ttl0qBpGTjLs+GwkWvcw9HiZObrLyUPqLt00ANt0wANtkwWqyHQBKCAfq
-	iaNDbJjJmu09svmVIC0vf7Jxq8Y6FhRpgig==
-X-ME-Sender: <xms:Ac_SZyht0Y1EousN2ndtiJvsTewA_vjmOoGWf5ZqZ0uYbSBBaPuFdQ>
-    <xme:Ac_SZzCGEyPvnuE-gv3hlX8Ckq12LqoFRrM8pYdt9DT56H64DfJPNVYHyNqAMntFT
-    aitbi7WM4NkAU8Cwg>
-X-ME-Received: <xmr:Ac_SZ6Gaf8WaUZpzgmKezhPAj4h7kYWujAvkwcneBCfjThax1eQeDkB5Ymzals9sQohmYb6fXBxbQzgsfReosi85btMBKehqHCZauvY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdejleegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehinhhtvghlfhigsehinhht
-    vghlfhigrdhnrghmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Ac_SZ7TokCvrGmNZIp1UgqDH3HwVwOOPDljvAgFrqo96MrY8Pow-iA>
-    <xmx:Ac_SZ_yQ-JeJQCGjId5pxv_x5KVnQJ9Y5uoPNaPtLe8JTok1C-8Sxw>
-    <xmx:Ac_SZ56_Trgo0f3ustzXfzAgIFyeQhgp0QPwirZ9zAeSmBjLsd_b6g>
-    <xmx:Ac_SZ8wb9VXXg88Et1qRbZJf4HGKpyfbv1PD9B5s-5Lik7T-veRMLQ>
-    <xmx:Ac_SZxvYSV5YtP5hWzw4jJMduM2mTCTwe5kkdIOwJwI3zwxuD2diZtW7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Mar 2025 08:26:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Ivan Shapovalov <intelfx@intelfx.name>
-Subject: Re: [PATCH] doc: centrally document various ways spell `true` and
- `false`
-In-Reply-To: <Z9IH6G7BnM0blOmH@nand.local> (Taylor Blau's message of "Wed, 12
-	Mar 2025 18:17:12 -0400")
-References: <xmqqy0ycz9dk.fsf@gitster.g> <Z9IH6G7BnM0blOmH@nand.local>
-Date: Thu, 13 Mar 2025 05:26:39 -0700
-Message-ID: <xmqqh63xru9s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iSHmz9mv"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-86d377306ddso420106241.2
+        for <git@vger.kernel.org>; Thu, 13 Mar 2025 05:53:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741870380; x=1742475180; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cwPYGQRO9IW9tnvLBNpPOfHIAIF8/g6FRgz23XkzKms=;
+        b=iSHmz9mvlRDsEshBgL04JbVC37QWPAdgOZkm4U74p28XlzFrzD9NHai5oziyKydR37
+         A8sqd7ZpCE10EfdfWz8rqrPvIXCymqBm1FJvQOzVQylHp9gtsEudDkXW9go0l+UMzdEN
+         v5HsQLRgJ9ClCLx/xqrtZ9Do/W1Q58krztDfNAL7gwdsWj8bpcowI9x8eTEeXP01/hAl
+         61KabC4SHD0XmXkU2Bq3s48RmN8SfuBnpEMyzaYyMttx59NeI2yRVTefRyvgrTeozgnp
+         4f4i0DCHf405/h5QZXdgqvz+dtH2bE7w0UiDSKPVa3FjxgxhPHWIKPtp/cEceGwjmIU9
+         YmGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741870380; x=1742475180;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cwPYGQRO9IW9tnvLBNpPOfHIAIF8/g6FRgz23XkzKms=;
+        b=PnuA0QtXThnivzQVTfhjGssNgj6cf7xbApsHNPIbC1VlGzgDQnjjrJPz2IiFxr4NwP
+         RkTUb+eIju14B7kIg9oT7vhItWG5ZQftxZ9bKPYvCKB/4A0PqrEKzANTOC79bz/qDsHq
+         D3j/r/DZwEcQtbNtUTg/HEBm5FHyB19nZ+ZK3/954nUQECud07pP6gh+hlJiG1+/6m0P
+         7qAY+OEbmAg3Xxc17fhmkWNna7XR0Hen4u5jmqA6qAYAOn7g1w2A2G7jCWjpFq+ThLAl
+         P9QbqhPO1E1VsHOffV9o2+MGyLeFF03Em6p6qP+v37j25U34Zg/t0NXNcCS7thro2O4v
+         wRcw==
+X-Forwarded-Encrypted: i=1; AJvYcCX1khw9A9R51Q/c2sOKaFWMvF7aFnWGzCk4VLgMhHY8FrKEZ0DoHJVwV/8aRDteLSWgcIk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxww6hRJ4VI/6RS4gDD3KrmybJdcpL17JPBXz5Don/i9HdUbkF/
+	VL9bvDU3Mgo4mYcRnjK6U+uUOaY7JgSJGZyOunkRSIy15ilt/WkamCpHChpq6GWGnk4w79jMIx9
+	g7pGUiL50PwCgtqU5u+DUiGV68zM=
+X-Gm-Gg: ASbGncsAiZCOrqhatRcr1zbFPM67KvvHqD8IhjjmJnsQ+3a/i8T7/BAVbZXLsP6ii45
+	gWfDZw+AmP5kaEKkBYchgsLG0DuBjCWgRk6/Si4t+uedq1dUIXVkWtXVyzS69li5ptZKyiJNAxe
+	meiwN1WWAPMxZ1zXX3b3o7yXn+pWMoIi0L62ButA==
+X-Google-Smtp-Source: AGHT+IFBqECsk9h7tTyOx2Pgd3aRRRGkm5z/5RSizG2/PaQNaz4pCKGcTTFHFScWifAgDxd1ARmwmvd9yQxmS8CSp8c=
+X-Received: by 2002:a05:6122:8297:b0:51b:a11f:cbdb with SMTP id
+ 71dfb90a1353d-523e4172c0amr20429071e0c.4.1741870379641; Thu, 13 Mar 2025
+ 05:52:59 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 13 Mar 2025 08:52:59 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <a3aa5f99-63ce-4be5-8d64-fb6e226b3bf9@gmail.com>
+References: <a3aa5f99-63ce-4be5-8d64-fb6e226b3bf9@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Thu, 13 Mar 2025 08:52:58 -0400
+X-Gm-Features: AQ5f1JogDrvm4JWbtFUBZTtt1jDk-NooNREJJ5k9Wv9aX3aeDhTzhhkM0iad3MQ
+Message-ID: <CAOLa=ZRNJD7NqceGQ4B8ox+50m2q1nU1t29x7O0roc=-_4ww0w@mail.gmail.com>
+Subject: Re: [GSoC PATCH] pathspec: fix sign comparison warnings
+To: Arnav Bhate <bhatearnav@gmail.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000394dfb063038cd9c"
 
-Taylor Blau <me@ttaylorr.com> writes:
+--000000000000394dfb063038cd9c
+Content-Type: text/plain; charset="UTF-8"
 
->> +- 'bool': canonicalize values `true`, `yes`,`on`, and positive
->> +  numbers as "true", and values `false`, `no`, `off` and `0` as
->> +  "false".
-> ...
-> I agree with the rest of the patch, but is this true (no pun intended
-> ;-))? I thought that we might canonicalize "yes" to "yes" if the value
-> we are asking about is already something other than a literal "true" or
-> "false", but I don't think we do:
+Arnav Bhate <bhatearnav@gmail.com> writes:
+
+> There are multiple places, especially in loops, where a signed and an
+> unsigned data type are compared. Git uses a mix of signed and unsigned
+> types to store lengths of arrays. This sometimes leads to using a signed
+> index for an array whose length is stored in an unsigned variable or
+> vice versa.
 >
->     $ git.compile -c foo.bar=yes config --type=bool foo.bar
->     true
+> Replace signed data types with unsigned data types and vice versa
+> wherever necessary. In some cases, introduce a new variable, where both
+> signed and unsigned data types have been used to store lengths of arrays
+> in the same function, where previously only one variable was used to
+> iterate over both types. In cases where this is not possible, add
+> appropriate cast. Remove #define DISABLE_SIGN_COMPARE_WARNINGS.
+>
+> Signed-off-by: Arnav Bhate <bhatearnav@gmail.com>
+> ---
+>  pathspec.c | 26 +++++++++++++-------------
+>  1 file changed, 13 insertions(+), 13 deletions(-)
+>
+> diff --git a/pathspec.c b/pathspec.c
+> index 89663645e1..fd7dfdfd84 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -1,5 +1,4 @@
+>  #define USE_THE_REPOSITORY_VARIABLE
+> -#define DISABLE_SIGN_COMPARE_WARNINGS
+>
+>  #include "git-compat-util.h"
+>  #include "abspath.h"
+> @@ -36,6 +35,7 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
+>  					enum ps_skip_worktree_action sw_action)
+>  {
+>  	int num_unmatched = 0, i;
+> +	unsigned int j;
+>
+>  	/*
+>  	 * Since we are walking the index as if we were walking the directory,
+> @@ -48,8 +48,8 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
+>  			num_unmatched++;
+>  	if (!num_unmatched)
+>  		return;
+> -	for (i = 0; i < istate->cache_nr; i++) {
+> -		const struct cache_entry *ce = istate->cache[i];
+> +	for (j = 0; j < istate->cache_nr; j++) {
+> +		const struct cache_entry *ce = istate->cache[j];
+>  		if (sw_action == PS_IGNORE_SKIP_WORKTREE &&
+>  		    (ce_skip_worktree(ce) || !path_in_sparse_checkout(ce->name, istate)))
+>  			continue;
 
-Sorry, but you lost me.  Isn't the above demonstration of 'yes' you
-gave getting canonicalized to 'true'?
+While this is correct, now we have 'i' & 'j' as iteration variables,
+generally this is used in O(n^2) loops to define the outer and inner
+loops. Here, however, we use it to simply define two different types. I
+find this deviation from convention a little confusing.
 
-	$ for v in yes 1 2 on
-	> do
-	>    git -c foo.bar=$v config --type=bool foo.bar
-	> done
-	true
-	true
-	true
-	true
+Perhaps, we could simply utilize the option of intializing loop
+variables in the loop itself?
 
-Or are you saying that the above documents what happens, but you
-think the code is wrong to do so?
+  diff --git a/pathspec.c b/pathspec.c
+  index 89663645e1..ff8854afb8 100644
+  --- a/pathspec.c
+  +++ b/pathspec.c
+  @@ -35,7 +35,7 @@ void add_pathspec_matches_against_index(const
+struct pathspec *pathspec,
+   					char *seen,
+   					enum ps_skip_worktree_action sw_action)
+   {
+  -	int num_unmatched = 0, i;
+  +	int num_unmatched = 0;
 
+   	/*
+   	 * Since we are walking the index as if we were walking the directory,
+  @@ -43,12 +43,12 @@ void add_pathspec_matches_against_index(const
+struct pathspec *pathspec,
+   	 * mistakenly think that the user gave a pathspec that did not match
+   	 * anything.
+   	 */
+  -	for (i = 0; i < pathspec->nr; i++)
+  +	for (int i = 0; i < pathspec->nr; i++)
+   		if (!seen[i])
+   			num_unmatched++;
+   	if (!num_unmatched)
+   		return;
+  -	for (i = 0; i < istate->cache_nr; i++) {
+  +	for (unsigned int i = 0; i < istate->cache_nr; i++) {
+   		const struct cache_entry *ce = istate->cache[i];
+   		if (sw_action == PS_IGNORE_SKIP_WORKTREE &&
+   		    (ce_skip_worktree(ce) || !path_in_sparse_checkout(ce->name, istate)))
 
-> So I do think that it is worth saying "you can spell 'true' as 'yes',
-> '1', ..." in the documentation, but I don't think that it is correct
-> that we'll canonicalize "yes" to "true" in the case described here.
+This would read much cleaner and also avoid two different loop
+variables. WDYT?
+
+Also a bigger question is, shouldn't the type of `pathspec.nr` and
+'istate.cache_nr' be the actual change required? Shouldn't they be set
+to 'size_t'?
+
+> @@ -78,7 +78,7 @@ char *find_pathspecs_matching_skip_worktree(const struct pathspec *pathspec)
+>  {
+>  	struct index_state *istate = the_repository->index;
+>  	char *seen = xcalloc(pathspec->nr, 1);
+> -	int i;
+> +	unsigned int i;
+>
+
+Nit: We could also drop this and move the initialization to the line
+below.
+
+>  	for (i = 0; i < istate->cache_nr; i++) {
+>  		struct cache_entry *ce = istate->cache[i];
+> @@ -130,7 +130,7 @@ static void prefix_magic(struct strbuf *sb, int prefixlen,
+>  	if (element[1] != '(') {
+>  		/* Process an element in shorthand form (e.g. ":!/<match>") */
+>  		strbuf_addstr(sb, ":(");
+> -		for (int i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
+> +		for (unsigned int i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
+>  			if ((magic & pathspec_magic[i].bit) &&
+>  			    pathspec_magic[i].mnemonic) {
+>  				if (sb->buf[sb->len - 1] != '(')
+
+Shouldn't we use 'size_t' for this, since we're iterating over the
+elements of an array?
+
+> @@ -341,7 +341,7 @@ static const char *parse_long_magic(unsigned *magic, int *prefix_len,
+>
+>  	for (pos = elem + 2; *pos && *pos != ')'; pos = nextat) {
+>  		size_t len = strcspn_escaped(pos, ",)");
+> -		int i;
+> +		unsigned int i;
+>
+
+This too should be 'size_t'.
+
+>  		if (pos[len] == ',')
+>  			nextat = pos + len + 1; /* handle ',' */
+> @@ -354,7 +354,7 @@ static const char *parse_long_magic(unsigned *magic, int *prefix_len,
+>  		if (starts_with(pos, "prefix:")) {
+>  			char *endptr;
+>  			*prefix_len = strtol(pos + 7, &endptr, 10);
+> -			if (endptr - pos != len)
+> +			if ((size_t)(endptr - pos) != len)
+>  				die(_("invalid parameter for pathspec magic 'prefix'"));
+>  			continue;
+>  		}
+
+This makes sense. But is it guaranteed that `endptr - pos` is greater
+than 0?
+
+> @@ -400,7 +400,7 @@ static const char *parse_short_magic(unsigned *magic, const char *elem)
+>
+>  	for (pos = elem + 1; *pos && *pos != ':'; pos++) {
+>  		char ch = *pos;
+> -		int i;
+> +		unsigned int i;
+>
+
+This too, should be 'size_t'
+
+>  		/* Special case alias for '!' */
+>  		if (ch == '^') {
+> @@ -564,7 +564,7 @@ static int pathspec_item_cmp(const void *a_, const void *b_)
+>
+>  void pathspec_magic_names(unsigned magic, struct strbuf *out)
+>  {
+> -	int i;
+> +	unsigned int i;
+
+This can be inlined and made 'size_t'.
+
+>  	for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
+>  		const struct pathspec_magic *m = pathspec_magic + i;
+>  		if (!(magic & m->bit))
+> @@ -803,8 +803,8 @@ int match_pathspec_attrs(struct index_state *istate,
+>  int pathspec_needs_expanded_index(struct index_state *istate,
+>  				  const struct pathspec *pathspec)
+>  {
+> -	unsigned int i, pos;
+> -	int res = 0;
+> +	unsigned int pos;
+> +	int i, res = 0;
+>  	char *skip_worktree_seen = NULL;
+>
+
+This can be inlined, but this change is done to match 'pathspec.nr''s
+type. This goes to my earlier question, I would say we first need to
+modify 'pathspec.nr' itself to be 'size_t'.
+
+>  	/*
+> @@ -845,7 +845,7 @@ int pathspec_needs_expanded_index(struct index_state *istate,
+>  			 * - not-in-cone/bar*: may need expanded index
+>  			 * - **.c: may need expanded index
+>  			 */
+> -			if (strspn(item.original + item.nowildcard_len, "*") == item.len - item.nowildcard_len &&
+> +			if (strspn(item.original + item.nowildcard_len, "*") == (unsigned int)(item.len - item.nowildcard_len) &&
+>  			    path_in_cone_mode_sparse_checkout(item.original, istate))
+>  				continue;
+>
+
+Similar here, I see the types of 'item.len' and 'item.nowwildcard_len'
+are 'int'. Do they need to be 'size_t'?
+
+> @@ -860,7 +860,7 @@ int pathspec_needs_expanded_index(struct index_state *istate,
+>  				 * directory name and the sparse directory is the first
+>  				 * component of the pathspec, need to expand the index.
+>  				 */
+> -				if (item.nowildcard_len > ce_namelen(ce) &&
+> +				if ((unsigned int)item.nowildcard_len > ce_namelen(ce) &&
+>  				    !strncmp(item.original, ce->name, ce_namelen(ce))) {
+>  					res = 1;
+>  					break;
+> --
+> 2.48.1
+
+Same question as above!
+
+--000000000000394dfb063038cd9c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 9aedac7d7dc7650d_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mUzFTVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN1VyQy80d0tLa2FBV0ZCbkFQRDlzQURNS3pGWXJaVApYUVlsbDl6Mm4v
+T21rNG9nSUNab0ZuZXMrN05XK3pmSGNTY0VBbTlCc3Zhd2VpTDFFSkpxOTd6L2JadzRYRjE1Cm9P
+c2FzcTVLeFF6cklMc09PcmhSZDZBaHI0MGhKbEJkV0Q2Y3V0RE8zNUxVTFh2RmtoQk52eENIN1Mz
+RzdCeWsKZHZYVSthSDV2OWRUTmFaREUrL3lSRTQveG1KUnhURTVuSVF0amNLWlMzRGF1K08rMXkw
+MEpncHphczA5Q1cwcgpVNEROb09ocVpYcEJ1Z28zdVM0amp0SnUra2gvQThYV0VXS3pGMlJtSDdS
+azVTN1J5c0phdWs5dlkyQ1RQYksrCmkzYXZ4NFRCaW1QTm5Zc0NKSTZwRHY5Qm9WRUxoY1c4Tys2
+R21BbmV2RlB1OCtnY1EwbnJCRytMMFdWUU96bVMKTlQ2NkVOc0k5YlN1S3dQRHRFV1ltbGRyeU5Y
+MTc0MFRSakFnSE4vSC9nNm1hKzlVZFNpMUkwbUcvUy8xUEZaVApleTg3VUZjemhaYVZSTTJ3elZ2
+aGNwTHRtN3Eva2VkcXgwUUM5RkpubjBDQmlJK1N2V0RRaUVxbkVSeHlOOCt2CjVGdElHUmxlVC9G
+VldEMmNVZCtTbkgxSW9vcXVuMUx1ZUNNR1lYRT0KPVZqOTMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000394dfb063038cd9c--
