@@ -1,129 +1,125 @@
-Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2D02641FD
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 13:30:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC19537FF
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 13:36:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741872647; cv=none; b=mWdr6hsZChNKSKuTS+iaqfamYQ30esDEm6ineYKiwiVLPVku5yuBG1SEJvf4fcb44OT58WlzJm/K8v5FyDKfNPzwixWFdjrEY8blpaGFk186/n03pXHLssRVX/ru0T5mcgllsSXGKvS30ayWLm5GXflxWD+MM1b5hcFh8jzSpD0=
+	t=1741873005; cv=none; b=nplPwXZhJw/O9ZPlOEDeWu7GwxKdPsUvbthil7HLMmpPPjload/MT4NaPJemPICjOdvUq5fdAG1X/CxsLN6lJlsrAl4eDHqkDfYBQe3aParOgL/+sfjcRhG/UuFdSRmZXHwPJGNfuFWVtHgBEPQ+ijSI8lECwFuYXUo+LFbnT7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741872647; c=relaxed/simple;
-	bh=L7uzNK5mKVCNgJvvA8C8Mro4K3pqWhuSBlC5/h1HIUo=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R5f0T8wSpjSJ2v+12/BKkURjTY0jsPKC4YwS8Ebg9IbEHLAKzgm6PPq/3/tiGDUPDEGqnBdm8R1+zqmGz4fkbt7hJCoeF+K8wEtqx1PyHVrV+As/vk0UEOgDkf7OU7ApQ7yMRX6DZIgfNauR+yR5LdAhO0ajBBIvjYWN35SduZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FD9VF/mc; arc=none smtp.client-ip=209.85.222.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741873005; c=relaxed/simple;
+	bh=BGMA/TyV0QwDiAK6olCRSJyF7LPMHW8e2IpXbdVTXfA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VIOT1jW3LDh2DbYrsP81I3ghJYUSA7cZHeZB23ykbu6Qagf9B5bwHO25qwtSNN9n8iZmUYIFaSZCuj7pEtcHGIp9+eoIGelfsrTedBobF0VY68aMVvmjz0MpwkB7+kIHJL++Ok6xxoCQoFbwNlCNewtShiq5l/+GzxJBJuK6a0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Iju2S8b6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=2Mmqi/uQ; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FD9VF/mc"
-Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-86b68e51af4so408182241.1
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 06:30:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741872644; x=1742477444; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=DuP1n1kRW5dBw7ikRSm2QidOxsRh90TTzmrMvL2LbQo=;
-        b=FD9VF/mcDG2UJEwSWEZ/fIm4wy6EG9uX63/waeQbm96WfDHqApTweALA+SIbTuEatV
-         E47gJl4HgqRL9CxxgZ3FGi2gsgN6Qs+d5Pegr2dedgtFMuHUW46dBdwNZvrDjoHuBT8i
-         EdKhDXG4LpMpBAOQZEwiOcv70lDLjrHCcOEoOJOg75MDZwJ7nP2bJBwlPknpSxcfrtIG
-         eGNe+dJKKEJ0lSVSPR3Sc3L0gl3UxYmfwx6RDeZc49YmdinFmUO4d7shbrfEYOKczEpG
-         qbeTPe91pl89EAEsDidIQXC21Lo9O8omzQlZp9lvAsCgvs5CFMqi3CtnklJU9mJAi95W
-         ICpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741872644; x=1742477444;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DuP1n1kRW5dBw7ikRSm2QidOxsRh90TTzmrMvL2LbQo=;
-        b=VS2Q2sgKf7s6C9oGprfRRY/Vnm770eHpaMN+w3QDP0/s7kVZCF6bwvAtHNrjuUurJF
-         3jLI42z63YSS5WOH/z++R08Tpm7+se0MjIDG037kw4LlQrBCylFv2bimq1yRgseY0Wtv
-         vpvZs7M8/foi9NJLgp4WiVhndJFamk9yYy8jnjQMbM5egvBgUa75Y8H+hgLE2c3Qqqy8
-         qBdlnmOaftPy+tEQpw8XsLoxq79Om9jLiI4MiaRRfFejtrLqtooYXCTN1NOaiC4WE0+z
-         AgIYZIS+lxZ0SyK6ItphcoslzLGgUL1rlvRL3bSWOPaLp9Jo4GHlCfN1Ru5frx6jc/Ja
-         puCg==
-X-Gm-Message-State: AOJu0Yw73WKL1WjDWRb4VNSIa7ADpUBLgD8dxxswumFTmRr5IjCDUKhy
-	ydVhoxWVksnzIo+M03J7d+TS4KpTPiJr/p4KvXJ1WIt5jqp3vCHLGrRuu3vnb09t2lD4ySExEXG
-	X6Gnfb7mnCPKZs59vxrF3Zbuhs9U=
-X-Gm-Gg: ASbGncvC+hq51vmhmGxBmMbOQlrJwKXjhRQ5v/N9w3c/eGjVnNypj2n6sIiyQpCHN+7
-	ePKSYTx0zaQf+QLE5K+wfZ3vB8PW9LOC+TaMDBJX+G2/M0vxOVmrECqNjrJA6ZhdRRa8fXujyKB
-	xQpJHbKXgeXJXa5H7y7bTTLGMY
-X-Google-Smtp-Source: AGHT+IFQQZ8vlLabfuze9FXrU2GEz3QUEtq9o2xypWcBUFmpMc+4W8q/mRNhLh+63ISAptwy2EvQQO+DrTRoESDCVpU=
-X-Received: by 2002:a05:6102:2912:b0:4c1:9f48:617e with SMTP id
- ada2fe7eead31-4c34d3760bdmr11885964137.21.1741872643772; Thu, 13 Mar 2025
- 06:30:43 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 13 Mar 2025 08:30:43 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqsenkaoy3.fsf@gitster.g>
-References: <20250307-493-add-command-to-purge-reflog-entries-v1-0-84ab8529cf9e@gmail.com>
- <20250307-493-add-command-to-purge-reflog-entries-v1-1-84ab8529cf9e@gmail.com>
- <xmqqo6ycczdr.fsf@gitster.g> <CAOLa=ZRqMnus=MZV1ASce4pxnMkVRGqhZZ+vZNcGhWdUQE-JRg@mail.gmail.com>
- <xmqqsenkaoy3.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Iju2S8b6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="2Mmqi/uQ"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id A3D681383168;
+	Thu, 13 Mar 2025 09:36:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 13 Mar 2025 09:36:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741873001; x=1741959401; bh=fUFYzzT0nn
+	/D71owpTpMFAbRRJE9lbfAb3II0qriaxc=; b=Iju2S8b6xUxuicF4+YqRwy8LJv
+	4SRytfNQJ3TcuUUg1I7SjOgR02M3sS21uzbqgLXWdEVtTRdqAfZIhPCdba5ExL7t
+	Xt/UJuUB5zNJ1ddN1lJLIBHZYNVPYrUeWYn5jsEI9Sp70bLYnhAk5DqjgOhHZSTO
+	/YxBX2SAGw4cf0anwxZqBix4H9838j7fjOaxhCPR+o5J5MooAGVrHOCILFd2xfmP
+	zfjqU14g5aXwq76FXSXhLqWwFwfsX0dPQfN7wmQgzyC7pd5J/Q0Pko/0EC+BU1m+
+	olYxDPMrI0oAiEBt3JOI5C7DHmMOdAq0igwvM7q5kW8mKbISErl1RLcVmmgg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741873001; x=1741959401; bh=fUFYzzT0nn/D71owpTpMFAbRRJE9lbfAb3I
+	I0qriaxc=; b=2Mmqi/uQvI7fekJLWecWnTWK7WdKvpJvvPFJE4n9J+tF2SaHWGu
+	ZFdsuTSjkN5Z7YXM6epc/vAVqeKEz+TqgY8I6fOOWosuRCVoNSrBtJidx4n5fTje
+	pcSHndFpQFjGenWLmotndXqJSvimp6Tyo6dQ53BzJF896LxF6KEZYLVR6CpYkvZ7
+	/sKWpI/fvv+TVsUF6gwgRqO7N2UV0jJMZtcEdR9/UgLMwgCNGFz2MJvxI9GvvKay
+	iG3v5CkkSnmg6R34v8yRLZk+xRhdf3pAS3H0M6s2bZlcJikOdFdQZs7tdpTDPcCC
+	2DKJD7G3sT3qvzUmmMPwbvs1edQ43UsKjiQ==
+X-ME-Sender: <xms:ad_SZ1O6VUrdi3Tqgt1y2mK2FCXR-sH1Wd-24RneBsGIbBWuIWydjg>
+    <xme:ad_SZ38DYbJkbwaDDcDq9cJKlQPVJ8Zo7BH2u2d3Avhisa-mUiw8w7VxjLDsYYKr-
+    RyRFVdX81FIBXPelw>
+X-ME-Received: <xmr:ad_SZ0Tv5m4kxkdAqmMHgIOefGsHkPOqh0vl1xTOjvohsUK3nB9_NYY2nesMr_oC0e_zhLZPUamfOp0z97E5ScwCWYfcPMPFAJZxmps>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdektdelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
+    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvthdprhgtphhtthhopehsihhmohhnsehjohhsvghfshhsohhnrdhorhhgpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ad_SZxtk3oJt0Cx0-jedU5JiaAJOwzQi59OqVlYcOtFJcmaECF_5TQ>
+    <xmx:ad_SZ9elyHUNyoPgoTjKM_JVYedaxZOWBCab89EhdLgOu0vA2ftQiA>
+    <xmx:ad_SZ91iiECDJ5-mL9SqYsqcB0B8nBjwJT0ucPAvPXuZ_CFFs-wZcg>
+    <xmx:ad_SZ583Pj_C_kozwwBu4Njn5AWNrRZcDFj_uWrELrESYGe3IkMDAw>
+    <xmx:ad_SZ057fesiGKUoVvEiUO5SPajaaZjD2AzM_wN6R22WKkq8wx332cnk>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Mar 2025 09:36:40 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Simon Josefsson <simon@josefsson.org>,  git@vger.kernel.org
+Subject: Re: Making bit-by-bit reproducible Git Bundles?
+In-Reply-To: <20250313051538.GA94015@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 13 Mar 2025 01:15:38 -0400")
+References: <871pv2jx4a.fsf@josefsson.org>
+	<20250313051538.GA94015@coredump.intra.peff.net>
+Date: Thu, 13 Mar 2025 06:36:39 -0700
+Message-ID: <xmqqzfhpqcgo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 13 Mar 2025 08:30:43 -0500
-X-Gm-Features: AQ5f1JorBwdLS-t2vQYjgqV0WBDHuaaHFcM-13KtPtfW6PsZkXee5Jk3s9RGW-g
-Message-ID: <CAOLa=ZQq6ax6Ba4gLN8P_TTV-KOrfN5yyNJB98oFx4fd9SFkhQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] reflog: drop usage of global variables
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000002d44cf063039542a"
+Content-Type: text/plain
 
---0000000000002d44cf063039542a
-Content-Type: text/plain; charset="UTF-8"
+Jeff King <peff@peff.net> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Karthik Nayak <karthik.188@gmail.com> writes:
+> .... But there are some gotchas:
 >
->>> but I also suspect that it is mostly due to the original program
->>> structure that uses OPT_SUBCOMMAND() that the subcommands fail to
->>> respond to "-h" unlike the top-level command, so this may not be a
->>> regression.  I do think however that this change is making it harder
->>> to fix.
->>>
->>
->> Hmm. But this is the existing behavior, no?
+>   1. It's stable only for a given Git version, and with a particular set
+> ...
+>   2. There is no way to pass pack-objects options down through
+> ...
+>   3. It will be really slow. We're throwing out all of the deltas and
+> ...
+There also is 4.
+
+    4. We do not control zlib, so even with the same Git binary, the
+       zlib implementation that is dynamically linked to us is free
+       to produce better compressed base object (or compressed
+       delta).
+
+3. is not a downside if the priority of the requestor is about
+bit-for-bit reproducibility (iow, "no matter what the cost").
+
+>   # print all commits in topological order, with ties broken by
+>   # committer date, which should be stable. And then follow up with the
+>   # trees and blobs for each.
+>   git rev-list --topo-order --objects HEAD >objects
 >
-> Didn't I said I also suspect?
+>   # now print the contents of each object (preceded by its name, type,
+>   # and length, so there's no chance of weird prepending or appending
+>   # attacks). We cut off the path information from rev-list here, since
+>   # the ordered set of objects is all we care about.
+>   cut -d' ' -f1 objects |
+>   git cat-file --batch >content
 >
+>   # and then take a hash over that content; this will be unambiguous.
+>   sha256sum <content
 
-Yes, I misunderstood!
-
->> But point taken, I'll drop this patch in the next version! Thanks
->
-> Yup.  Take your time, as it is already deep in prerelease feature
-> freeze.  I'd prefer to see us leaving spare capacity in our minds to
-> fix regressions introduced during this period once they are noticed,
-> without getting distracted by shiny new toys.
->
-> Thanks.
-
-Fair enough. I only pushed this new topic, because I had mentioned to
-you that I would pick it up and I didn't want to forget about it.
-
-Either ways, I will take it slow here! :)
-
---0000000000002d44cf063039542a
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 241d159cee43f56e_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mUzNnSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meEtjREFDSVpja1dwdHhnM1hweE92QlhmY09RUThDaQpNOXhEcG1LQnhk
-SGdCdFQ5QzErUUUyRjRNSWk0bTMxalpiRktQRWtlOExuYjRIeTNWcnh2Y1BhaHZWcUdzS3hqClJV
-am1LVnFUVHlUQWg1UGxDZ0ZmelJIUjc2QXRZQ0VJaEZETE5qd21PRE5yZkYrOHVsMUEySTVTR0Ex
-WUZEUGQKbUFUSlFYNTZQSnVNcUQ3U2NSVWtoOUgrSUNoUWlSS2kvT1QzeTIzZ3RwdFc0SUZ3cGZS
-a3p2V216bVhCNUJRYgpIaUFZenpLSFVvaHRldmNUWmZ4Y3VIM1U3L2s0ZGdEQUpLQ0x3bkFmdXQ3
-RkU2eW1yVjU1MnlRVmdJNFBsMDdsCmZxZXR0NjVyNjVmend6dFBuakVpb0M3d3dHOENSV3NTMVZk
-UkE2K2hLYVh0cUlSQk9raENMMmRSb0doYlgwdG4Kc0x4bUI2SXI1NUtiN2puUmNncFJoOHFUYmRs
-blF4bnhLZVBQbHF0YzVPczdVUWRIVStaUXhTOXY4UWR4NVpwbwp5V1VPdVVrMmo0TVYrcTNTRlpw
-SlljdWdLSThFVFk0NjlFQldZZklJYjUxSzljZjZPN1k3ckhyYnBna0xEK2Z1Cm1oMW5vS0tvTmwr
-Vm9tNUdpN1JQbUtIU29vMGpDd3E3Rm1ZR0NVOD0KPTJSeCsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000002d44cf063039542a--
+Gross but probably stable ;-)
