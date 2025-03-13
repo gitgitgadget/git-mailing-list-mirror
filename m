@@ -1,82 +1,60 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from uggla.sjd.se (uggla.sjd.se [178.174.241.107])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F341F2B88
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 19:58:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA4E1F461C
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 20:17:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.174.241.107
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741895936; cv=none; b=TcxuBH2IB1Hvq3pFQEzGJHMNMUgYDCphk5jClgZu6UV6UF3eo2sgBRvuPz7OSq4bHpHI1uOeBDRH2XCT3Cgo6W25NebG4K5Qu8k6yxRjeluUPxYat53tE+S6JcFE4yz9z9gaw+D3X7nqymSAOpU50VzDKlY+i4qusChIUomscv4=
+	t=1741897053; cv=none; b=IAldrW80P72G05dyh/PIi8nr4wvtxTgI8ph8+PbtTz1/1w1qUUWHzR/ykdJ55UUs0ezDEQN5GBb4JUbTk/8fKwicDrBfXbNjlAwAPeAhfMmTdtnnQQpCOrzCGNAqFX/8J/h/Q83SljTQBf9tkPGf6bTRu9P1d/mDAYYuRic78wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741895936; c=relaxed/simple;
-	bh=DQMtZebp/Su20CpBOVVbK8X1v8DVX0uGVr0MCgtj5Ms=;
+	s=arc-20240116; t=1741897053; c=relaxed/simple;
+	bh=m6vICqZDs5OE1zMwTCGKoQwVaYncmLgVaTDTJHQj5FY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FepnATh8giDJc1PiP8r/oRUCDpUZxhtrLf8WwM5ZbcQ+3xmUdZ4Jlfso8S8mMDsXdOs+MCDNbOcG+2TaLqj17PVgnQLE7Up9Jo25h6AFeWlu5SoxRfVmtXK7J9Jo8rw/1USo10rBLxAuzASU9oZBbA5Ha20xzdPlGNus6sglxNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I41HQzmU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OAoG/1uz; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=lLbXcZqP+8z6AZN9Ep5l9BszOtG7ylcXTRAtzXguE3F6fQPXw/1szgy4cxQ0qX4VdPgBCV8x9SlyJ46823cs+ik6lsla2+TLkBAERAsbDqa0KNxPqkDtCU2WK9wuEGwPz7Izo/nCmPQ3IzkXXfhFOoBk7+zzGb8zuCXiwQwVpcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=josefsson.org; spf=pass smtp.mailfrom=josefsson.org; dkim=permerror (0-bit key) header.d=josefsson.org header.i=@josefsson.org header.b=OWol8mNO; dkim=temperror (0-bit key) header.d=josefsson.org header.i=@josefsson.org header.b=L6OV1Ve8; arc=none smtp.client-ip=178.174.241.107
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=josefsson.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=josefsson.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I41HQzmU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OAoG/1uz"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5D62C11401C0;
-	Thu, 13 Mar 2025 15:58:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 13 Mar 2025 15:58:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741895933; x=1741982333; bh=T/iQTqfv9/
-	d48h56Sq3Rp2G0v1MD/PQs4XRBzZ6D2ok=; b=I41HQzmU4LiWnuhH5fR1iauzTh
-	RCdUAzs3i8hExVBIPHc+Xrrf0El3sKcTpHqBwlTC1Whz3G/L5cAk9n+3idpnA14l
-	kGCzTRI0Y+6zXs5DS4POzOKYhXIYyMVAu/eGN4zPvuHcUKjnUtHDzX4Xh5jVBYd9
-	k3wTSglc5gY64U/CvosiGO3MKKmahxu3g5TwW7fxSWdPkVVBbsfX+ShOr9Nv0ovw
-	d7WVgk5VAAsGXN2vgpPwXSd1KOcDO5egAQKRt8ikf1nrxZI22zKPOceWUigFC1iR
-	rzdeUTKRnz6Fxh0/P1k3eOhOugXNCq1rJqWih3y+wlmgqF0AzMYUty5mcWWQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741895933; x=1741982333; bh=T/iQTqfv9/d48h56Sq3Rp2G0v1MD/PQs4XR
-	BzZ6D2ok=; b=OAoG/1uzieLk+GGcQE098RXvqubgWBtpqJQxSRlnqaGPqxOGJGg
-	iT9W9LYrQepPqSqb5WM6sP8APs7tQ71z0y35coW7UJyGqUJ3DJ9+oFzfhM/9gk87
-	2br9zwiZlzqshAsBqOJSMQFUFDWtZ7xijM4ZMs1+pf1aD2kkLfI5f5t/4tFwtPoA
-	1KtI1iIRyDrF23Tfm763hN59GzlnXEbs9+YiwM/fX+1hWN9gVw/EUsoX8kbIJPB3
-	a3XBBezoi0d1KpjyP/o/UwRfUHfkiOMeNwJrq7nnjtb9HCtUdVtBb7s4VXnzB4rs
-	Nzy0qZ/roogzQrt7b9RPabmB/JjHa8VHvtg==
-X-ME-Sender: <xms:_TjTZ5skEAybbrf1AGPuOM3BjDzVT4PdMXANe6lNulZVbIfiBn9BoQ>
-    <xme:_TjTZyf0nBRqADChoVon-EqSEQIISAmBhBt5QQdXkypqct-fN1UVfnuIsicpiCPT0
-    ql3GdD59CGPb5PaFg>
-X-ME-Received: <xmr:_TjTZ8xWg6eCMxv5F4N6AK1RTG7I4oDHFmGBdntOH0gs350Uev46L7nkbpP-YDJFN4g1lodSZws4uDRZ_unzdeC5Yx6bqpOO2HxLp3Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdekkeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    dviedvffelffehvdeghfeihfeggfegveeufeeufeeugfegvddtudefheehheetfeenucff
-    ohhmrghinheprhhftgdqvgguihhtohhrrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptdehii
-    ihtheftdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:_TjTZwOp2oMmMsqT6Ja5ChctWSv0s52TkSWK-FMY6K6QJ8Q0T2iiaw>
-    <xmx:_TjTZ59s-jxgrFZMb8PejkCNwFTlDVQirDvnBIqZkjVG84rnPV_QRQ>
-    <xmx:_TjTZwW2sXn9JbuBv67ubl86SgvBvpIzf33fRKZcob_E2udKKzA7dw>
-    <xmx:_TjTZ6ePbA9Jzats3enx5xeRB8iD9d9PIJPPZIAYZl6VMgrdE2JIbA>
-    <xmx:_TjTZ0b3Vl-QNamtS23fK6h_hi27Gj3uH-KBzbkk7gucZRNGpiNYtOWL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Mar 2025 15:58:52 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Zheng Yuting <05zyt30@gmail.com>
+	dkim=permerror (0-bit key) header.d=josefsson.org header.i=@josefsson.org header.b="OWol8mNO";
+	dkim=temperror (0-bit key) header.d=josefsson.org header.i=@josefsson.org header.b="L6OV1Ve8"
+DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=josefsson.org; s=ed2303; h=Content-Type:MIME-Version:Message-ID:Date:
+	References:In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=TLYOqtxLY7w6awNeupZaBXu3JlzicMSGw4v9TTYb4B0=; t=1741897040; x=1743106640; 
+	b=OWol8mNOt6EwT1d/uzeBaiDbZAq/b5wm9cAtR2ngIpdFupV+7PSH+WZioON5FIyQ+J7ZJMyHwVg
+	uMap8Z7mnBw==;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=josefsson.org; s=rsa2303; h=Content-Type:MIME-Version:Message-ID:Date:
+	References:In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=TLYOqtxLY7w6awNeupZaBXu3JlzicMSGw4v9TTYb4B0=; t=1741897040; x=1743106640; 
+	b=L6OV1Ve8fGyQ1i1PE5np7AX6LUVGYLaH1MDsM6RllxcrsrcVccXu8oXIzRucfu4omjsoX54UDbr
+	O2jfq0d9xZ5f/N36oIluIftR+vPzi517WatPFM5stIr0ou6Q/QEcemDliUt5xJx8sokkFk1Sc9XVR
+	qsz/X4WMgMbj7nmUQYzegp+bsCEjndcutTa2EztQLIPjoy4oGBLddqMw5FKyqVFkw3sjf1yZTqlyA
+	ZGwnL8iFOSIHp2JRZ371J/skx8XVFPZnNvkLDl8Y8W/goJ/pvtK5L7BXPMzxEspVv/5ph/fB09rCK
+	XQqxhTxqSNjF6XTYrHbORmDkoPHoO7vxgauPHc6VAd3RkvR7vTf8DBv+0h1zBZFoPipAZPMz7KnCC
+	qR1BK2T8ZCijDucbjARoX/AW4MA1hJhgDYMDivRPj4VgaXxnJEkyB0xUxf/eTLiuj1tlx53Um;
+Received: from 83-233-139-15.cust.bredband2.com ([83.233.139.15]:29169 helo=kaka)
+	by uggla.sjd.se with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <simon@josefsson.org>)
+	id 1tsozP-0012vS-3t;
+	Thu, 13 Mar 2025 20:17:11 +0000
+From: Simon Josefsson <simon@josefsson.org>
+To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org
-Subject: Re: [GSoC PATCH v3 1/1] Unify SMTP auth error handling
-In-Reply-To: <20250312064639.668875-2-05ZYT30@gmail.com> (Zheng Yuting's
-	message of "Wed, 12 Mar 2025 14:46:36 +0800")
-References: <20250312064639.668875-1-05ZYT30@gmail.com>
-	<20250312064639.668875-2-05ZYT30@gmail.com>
-Date: Thu, 13 Mar 2025 12:58:51 -0700
-Message-ID: <xmqqsengn1ms.fsf@gitster.g>
+Subject: Re: Making bit-by-bit reproducible Git Bundles?
+In-Reply-To: <20250313051538.GA94015@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 13 Mar 2025 01:15:38 -0400")
+References: <871pv2jx4a.fsf@josefsson.org>
+	<20250313051538.GA94015@coredump.intra.peff.net>
+OpenPGP: id=B1D2BD1375BECB784CF4F8C4D73CF638C53C06BE;
+ url=https://josefsson.org/key-20190320.txt
+X-Hashcash: 1:23:250313:git@vger.kernel.org::TH+lC2QxvKDA+eRd:g/to
+X-Hashcash: 1:23:250313:peff@peff.net::xLnlEFuGqZyHW3k7:0A6mV
+Date: Thu, 13 Mar 2025 21:16:34 +0100
+Message-ID: <87msdo1yal.fsf@josefsson.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,127 +62,109 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha256; protocol="application/pgp-signature"
+
+--=-=-=
 Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Zheng Yuting <05zyt30@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Refactored SMTP authentication to use a unified error capture block for
-> both SASL and plain methods. Errors are now handled by parsing SMTP status
-> codes (4yz for transient, 5yz for permanent) instead of relying on regex
-> matching. This change improves clarity .
-
-"improves clarity ." is (not well formatted and) a bit subjective
-and does not apply to all three changes the patch is making here,
-does it?
-
-> Signed-off-by: Zheng Yuting <05ZYT30@gmail.com>
-> ---
->  git-send-email.perl | 72 +++++++++++++++++++++++++++------------------
->  1 file changed, 43 insertions(+), 29 deletions(-)
+>   [now without threading]
+>   $ git -c pack.threads=3D1 bundle create --no-progress - HEAD | sha1sum
+>   c897caf9c68d2c37d997d3973196886af3b0b46e  -
 >
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index a012d61abb..532dda264c 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -1411,7 +1411,7 @@ sub smtp_auth_maybe {
->  	eval {
->  		require Authen::SASL;
->  		Authen::SASL->import(qw(Perl));
-> -	};
-> +	}
+>   [and we can do it again. yay!]
+>   $ git -c pack.threads=3D1 bundle create --no-progress - HEAD | sha1sum
+>   c897caf9c68d2c37d997d3973196886af3b0b46e  -
 
-Hmph, the interpreter may tolerate the new block-eval "eval {}"
-simple statement that lacks terminating ';' but is this an
-improvement?  The original look more kosher from syntactic point of
-view.  It seems to be totally unrelated change from the rest of the
-patch.
+That's the commands I use -- it doesn't lead to the same hash in two
+different 'git clone's.  I tried running 'git clone' with the same '-c
+pack.threads=3D1' but it made no difference.
 
-> @@ -1426,42 +1426,56 @@ sub smtp_auth_maybe {
->  		'protocol' => 'smtp',
->  		'host' => smtp_host_string(),
->  		'username' => $smtp_authuser,
-> +		# if there's no password, "git credential fill" will
-> +		# give us one, otherwise it'll just pass this one.
->  		'password' => $smtp_authpass
-> -
+>   2. There is no way to pass pack-objects options down through
+>      git-bundle. So you'd have to either assemble the bundle yourself,
+>      or perhaps generate a stable on-disk pack state, and then generate
+>      the bundle. Perhaps something like:
+>
+>        # make one single pack, with no reuse, using the default options
+>        git -c pack.threads=3D1 repack -adf
 
-We seem to already have the comment added by this hunk, since
-4d31a44a (git-send-email: use git credential to obtain password,
-2013-02-12).  Am I looking at a wrong version of the source (or a
-wrong version of the patch)?
+Yay!  You may have solved this for me.  I have to verify this a bit
+more, but this looks promising (these are two different git clones):
 
->  	}, sub {
->  		my $cred = shift;
->  		my $result;
->  		my $error;
-> -		if ($smtp_auth) {
-> -			my $sasl = Authen::SASL->new(
-> -				mechanism => $smtp_auth,
-> -				callback => {
-> -					user => $cred->{'username'},
-> -					pass => $cred->{'password'},
-> -					authname => $cred->{'username'},
-> -				}
-> -			);
-> -			return !!$smtp->auth($sasl);
-> -		} else {
-> -			# Handle plain authentication errors
-> -			eval {
+jas@kaka:~/t/gnulib-1$ git -c pack.threads=3D1 repack -adf
+jas@kaka:~/t/gnulib-1$ git -c 'pack.threads=3D1' bundle create gnulib.bundl=
+e --all
+jas@kaka:~/t/gnulib-1$ sha256sum gnulib.bundle=20
+c780bb07501cf016e702fbe3f52704b4f64edd6882c13c9be0f3f114c894e890  gnulib.bu=
+ndle
+jas@kaka:~/t/gnulib-1$ cd ../gnulib-2
+jas@kaka:~/t/gnulib-2$ git -c pack.threads=3D1 repack -adf
+jas@kaka:~/t/gnulib-2$ git -c 'pack.threads=3D1' bundle create gnulib.bundl=
+e --all
+jas@kaka:~/t/gnulib-2$ sha256sum gnulib.bundle=20
+c780bb07501cf016e702fbe3f52704b4f64edd6882c13c9be0f3f114c894e890  gnulib.bu=
+ndle
+jas@kaka:~/t/gnulib-2$=20
 
-And curiously we do not seem to have this else clause with the
-comment that is getting removed.
+> So I think it's possible, but I doubt it's very ergonomic. You're
+> probably better off using some checksum over Git's logical model, rather
+> than the stored bytes. The obvious one is that a single Git commit hash
+> unambiguously represents the whole tree and all of history leading up to
+> it, because of the chains of hashes.
+>
+> But that implies you trust Git's object hash algorithm.
 
-> +		# catch all SMTP auth error
-> +		eval {
-> +			if ($smtp_auth) {
-> +				my $sasl = Authen::SASL->new(
-> +					mechanism => $smtp_auth,
-> +					callback => {
-> +						user => $cred->{'username'},
-> +						pass => $cred->{'password'},
-> +						authname => $cred->{'username'},
-> +					}
-> +				);
-> +				$result = $smtp->auth($sasl);
-> +			} else {
->  				$result = $smtp->auth($cred->{'username'}, $cred->{'password'});
-> -				1; # Ensure true value is returned
-> -			} or do {
-> -				$error = $@ || 'Unknown error';
-> -			};
-> -		}
-> -		# Unified error handling logic
-> +			}
-> +			1; # Ensure true value is returned if no exception is thrown.
-> +		} or do {
-> +			$error = $@ || 'Unknown error';
-> +		};
-> +
-> +		#check if an error was captured
+Right -- I think anything but bit-by-bit identical files is going to be
+too complex to verify.
 
-As I do not see two evals in our copy of git-send-email.perl source,
-it may be moot at this point to comment on this patch, but if we did
-have a eval block each of the if/else arms, moving the control
-structure around and turning "if eval {} else eval {}" into "eval {
-if ... else ...}" may make it cleaner to see what is going on,
-especially if we plan to extend the choices and add elsif to the
-chain later.
+>   # print all commits in topological order, with ties broken by
+>   # committer date, which should be stable. And then follow up with the
+>   # trees and blobs for each.
+>   git rev-list --topo-order --objects HEAD >objects
+>
+>   # now print the contents of each object (preceded by its name, type,
+>   # and length, so there's no chance of weird prepending or appending
+>   # attacks). We cut off the path information from rev-list here, since
+>   # the ordered set of objects is all we care about.
+>   cut -d' ' -f1 objects |
+>   git cat-file --batch >content
+>
+>   # and then take a hash over that content; this will be unambiguous.
+>   sha256sum <content
 
->  		if ($error) {
-> -			# Match temporary errors
-> -			if ($error =~ /timeout|temporary|greylist|throttled|quota\s+exceeded|queue|overload|try\s+again|connection\s+lost|network\s+error/i) {
-> -				warn "SMTP temporary error: $error";
-> -				return 1;
-> +			#Parse SMTP status code from error message in:
-> +			#https://www.rfc-editor.org/rfc/rfc5321.html
+How to read this output?  Could this be made git bundle compatible?
 
-Have a SP between "#" and the comment body.
+But if the above is solves it, this part isn't necessary.
 
-Using the numeric error codes allows us to give more precise errors,
-which should be a good change that can be done regardless of the
-eval change.  IOW, this part should be in a separate patch on its
-own, either before or after the if-eval-else-eval change. 
+/Simon
 
-I'll stop here, as the patch does not seem to be designed to apply
-to our source tree.
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQNoBAEWCAMQFiEEo8ychwudMQq61M8vUXIrCP5HRaIFAmfTPSIUHHNpbW9uQGpv
+c2Vmc3Nvbi5vcmfCHCYAmDMEXJLOtBYJKwYBBAHaRw8BAQdACIcrZIvhrxDBkK9f
+V+QlTmXxo2naObDuGtw58YaxlOu0JVNpbW9uIEpvc2Vmc3NvbiA8c2ltb25Aam9z
+ZWZzc29uLm9yZz6IlgQTFggAPgIbAwULCQgHAgYVCAkKCwIEFgIDAQIeAQIXgBYh
+BLHSvRN1vst4TPT4xNc89jjFPAa+BQJn0XQkBQkNZGbwAAoJENc89jjFPAa+BtIA
+/iR73CfBurG9y8pASh3cbGOMHpDZfMAtosu6jbpO69GHAP4p7l57d+iVty2VQMsx
++3TCSAvZkpr4P/FuTzZ8JZe8BrgzBFySz4EWCSsGAQQB2kcPAQEHQOxTCIOaeXAx
+I2hIX4HK9bQTpNVei708oNr1Klm8qCGKiPUEGBYIACYCGwIWIQSx0r0Tdb7LeEz0
++MTXPPY4xTwGvgUCZ9F0SgUJDWRmSQCBdiAEGRYIAB0WIQSjzJyHC50xCrrUzy9R
+cisI/kdFogUCXJLPgQAKCRBRcisI/kdFoqdMAQCgH45aseZgIrwKOvUOA9QfsmeE
+8GZHYNuFHmM9FEQS6AD6A4x5aYvoY6lo98pgtw2HPDhmcCXFItjXCrV4A0GmJA4J
+ENc89jjFPAa+wUUBAO64fbZek6FPlRK0DrlWsrjCXuLi6PUxyzCAY6lG2nhUAQC6
+qobB9mkZlZ0qihy1x4JRtflqFcqqT9n7iUZkCDIiDbg4BFySz2oSCisGAQQBl1UB
+BQEBB0AxlRumDW6nZY7A+VCfek9VpEx6PJmdJyYPt3lNHMd6HAMBCAeIfgQYFggA
+JgIbDBYhBLHSvRN1vst4TPT4xNc89jjFPAa+BQJn0XTSBQkNZGboAAoJENc89jjF
+PAa+0M0BAPPRq73kLnHYNDMniVBOzUdi2XeF32idjEWWfjvyIJUOAP4wZ+ALxIeh
+is3Uw2BzGZE6ttXQ2Q+DeCJO3TPpIqaXDAAKCRBRcisI/kdFooUlAQC+kERCJVV4
+RZzlEKBkfcwL97lKKyPsmVgxFWr2E8f1qgEAxOSqFIGxy4YFGLFD9lH3V0fGtRRu
+MxOsRafTX3KzNwc=
+=XyVV
+-----END PGP SIGNATURE-----
+--=-=-=--
