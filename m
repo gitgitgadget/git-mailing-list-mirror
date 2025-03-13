@@ -1,186 +1,196 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599CF264FBD
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 11:25:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B821F26659E
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 11:56:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741865111; cv=none; b=D0yV3JgckTYmsJuF7nVKMmWgiVkGJghtkzGWjCh32X56+MF999DbJzIrf0b0vUN8aSZwUyEn1/XU1Qd2WayKyeO+bCGfbp7ZAFJwGRmBTe17gwoHhuZFqfo6614pTgG9LbYfKpmOtSK0jiEIxWHFj4qRWFx1H+WH+pv+vj/Tlp0=
+	t=1741867006; cv=none; b=Pe+dPKgltLyTW8B9y3Tl+Ynir2f8eHR/jTib79Frc0IPvilzMh4Ua65Tb4SgQfu+RtzmIUKkra7mDjTtqlBBlnIOA22Z8x+1pEyfjo6abHPtTiMcXFIdvghJFe/rHXSWWvIblQB2jvdi8bZ++TrGzUnzhOigmyGMrXV7LYCAJMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741865111; c=relaxed/simple;
-	bh=2N95GN3vaeFXCYTZpnd3VXK7bgGHMa1qB0VekpD0c2w=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jPnDKOvQounDpLi4uK+xP3aunPAvgejG6nxoP0Z+MLGLXTt07vtImmEjKwn7kyRMAnf4AbZiEFkJWvNZYkBwKXegdTxBiXB46IbTssgk4apvWonJgtDvnEhUZFrlVrJFm9+Q253JEOVET5m/qkgVv0LRg0wKi+9O8WdVLjkWESU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MizGfCaz; arc=none smtp.client-ip=209.85.221.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741867006; c=relaxed/simple;
+	bh=OrjX+h+GfpIowt2h1JgfThgS5KlV9Q2nfZ/IaAFuPhc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YCYUtgRasX0o6UxaSC2b9p4iSKJ0199AzUXULnDGPNW2mBptmpBOk4EQBmJgUinXnNeurDnuyiTTWL9o9QLdxFIVzIa/oZvu29yqBlZyGk4FeSJMSKCirxpnXX1jW2fU/JdNNvk06ZGUAU+ay8LAGD462vV1KMcyZfSoQ3yyswE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S4lgMVpV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=2mxY7W12; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MizGfCaz"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-5240764f7c1so354435e0c.2
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 04:25:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741865108; x=1742469908; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=UFk++i5WSIV2Nx7rI1TWn8B6tIocaIwlx9+LgCrT8gY=;
-        b=MizGfCaz7leNkdaMC2iB6niz8I2MmBNl0Reqv1M0/gTz17L+G6YIWp+JF3kTeh9vQk
-         EtFzbqyGDvijz/0gTQrSQZhXRDM89mJK2KhySKxPGNaIKg1iKnjsUdko979180o6+VYv
-         b344tqXcAeb7+6zD4N+7t0og1ew1zhT8NLvHeqHUgK45OjqJuFn8qJyGOGOxzmNE+wOF
-         Q8bPwWACf2hlXb7feZk/nIspvxjebynzTLYtWkabdubI/DbK1zOHbXNDNnyzxtGwoSBz
-         UQ5/tR21/RApQ9rdW+nW3b5eLDH9TgGQOcLc95Cwy7/Aav7cUbMnz79stmbfwTfLThhi
-         YtiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741865108; x=1742469908;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UFk++i5WSIV2Nx7rI1TWn8B6tIocaIwlx9+LgCrT8gY=;
-        b=dnExggkm91kcYgMDvuK1vtWPDnrn75PXCbXfal5poWwuOwMcNooaCdiUO+T/aiSoXT
-         dscKKBPwMG7AC8TAEDGpNnOvx+MIb2T+DRSIFBrmG/ICRr5EDoY5OZEhdL8TllbT6kW1
-         gIfnfwP61eO56kKVBxCWvcqLAcXnv6XBCQPlBwHeB30wYcWaoMVV/h5droNbooyVORL3
-         xMNHCRwsh+EDpJBmqrlAPfyAtudIJiqv/unGrY34K2Rpik9kxZw7vcy/iHHbpoXhxFRG
-         I5NL3jfvdAs7oLJhvzq2EsS+OIK+VT1oxFLWpAx1kDmwhmK+6ixOTKZiM8XwT7wVN/mL
-         UKNg==
-X-Gm-Message-State: AOJu0YzpyLgTL6eJFF+v/F7vwqHFELfdukepViz22HstW1x5DnSaMi9X
-	yjO2Qw9kGVmHHLKNsYh30M3YMMPBC7I+74TV3phG47w67ZTHtBoiBKxfYioFgs9DOwHhseaC4Ge
-	LozSp4609LwrR7to0vUCpBlmjJrtOPVQw
-X-Gm-Gg: ASbGncsnqRj4weofmi6l4ANIo8REjEkqOjm9BBdT1LDPO+1RzPCwbg5420u/T54/Xg0
-	tiOCghZ+fh++eDz653kIVW3QGbNLCLTODlNfZ+p77sDhPB+VYZIgXmW5oR6pL0BUryDWKB2xQU+
-	g5VUJRLT3scQ7COcBjxZD4wdSz4C8=
-X-Google-Smtp-Source: AGHT+IHhEUUjXDb0vrb8tjGRGolnkShcmB0oXY3wZA/Sane0Vcoo83akK/2IxLd80x5jPfhr68Z4SAoBXKCV4ffKdGk=
-X-Received: by 2002:a05:6122:918:b0:520:3e1c:500f with SMTP id
- 71dfb90a1353d-52419948798mr9480262e0c.8.1741865108143; Thu, 13 Mar 2025
- 04:25:08 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 13 Mar 2025 07:25:07 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqy0x9s8mg.fsf@gitster.g>
-References: <38de63ce-6d4e-4f1f-95b1-049df78d9cfc@gmail.com> <xmqqy0x9s8mg.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S4lgMVpV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="2mxY7W12"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9DF881382CFF;
+	Thu, 13 Mar 2025 07:56:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 13 Mar 2025 07:56:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741867001; x=1741953401; bh=ONlIHYapH+
+	g9kHG8jjFlGy1WyRQnCmBZEOPdqtVdcT8=; b=S4lgMVpVzSCuaiGukGFkNVYyJk
+	oCSFV80z00XI74z5ahBdGeuEnn4+f5mjiwGudQWlLD7kfdY2WFrlq/2TFY2Ximhb
+	XPog23urPANT8BBm2/SeTxi0ioVCdDiRPCNUan2tX1xR5xh7iwgenKmuUz42VgLB
+	Ds4iqcHmrDu54Xq/GXGsTlRu4zJFTFXYaUF+/6NuN8cqDMkLZK9P8qhgSPobjjVs
+	Fhc7jYGkmptHFS99tlEB6xCR5Om1E3Ea0v9pLpjsXA20/ptQUKaDZ0KqDkb3uV54
+	1suiIlbb1gjeQfdki3vFgxB55DQaIeVbovZ+sXWrKZRyhNUEHnicbddjzNNA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741867001; x=1741953401; bh=ONlIHYapH+g9kHG8jjFlGy1WyRQnCmBZEOP
+	dqtVdcT8=; b=2mxY7W12OfiDTRGolmjAa6c97xuwrldIlH9aZBV52nHcGIlBaL5
+	zNtdicfdMmK0ST2jpN5Ptk+l/V98m2WrdcxIxy9cZadZq9e+UQJ/sx6iR0pKLouo
+	77Mwb+acUJ5A6/c6cAnPFZ4MRuunI0gbPlsj/NGRDrfdE83mW8SgY0ERIVZJ50+u
+	av2ZuS5RqAWo78EzvaPwT17oDc3FJsBWiTOvGSZH5QGf4HV5O6EQJma8D1zNkl7f
+	sVzLgz4j7y794sPUWPkcHsHi8DbX9HSAPGJnQuxAVWVPUgsRKZWANusxf8lIg8ik
+	1nksGySIkb48VUM/vWweDDoMP+2vCSlvRBQ==
+X-ME-Sender: <xms:-cfSZ5YgA4G8A2C0-CWFGpMjOD06gYC_lCFj5wxDz8UxhVW6RcO_WA>
+    <xme:-cfSZwbA2SOQp0smBCAnLgrSYHHRFfdsgt_BUwuMwF2RoCO7Jzrp9nPdfWjfL9-Ql
+    cRTvQp_Fd7AOzy-kg>
+X-ME-Received: <xmr:-cfSZ79-JBcpab6mlnl-_gEZ9AFaC2p-SMZs7D3TbSLRwAldhBUk3yw8IEOQ78Ye1scgjkQZn_OnTOqJ9h70o5gK0OSDwikU32yH2d8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdejkeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
+    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-cfSZ3r9YGNC-emMBuHcDKESddUJ1E3FyjwO51ohNvzwVzxFZxHXDA>
+    <xmx:-cfSZ0pNwyhtt9Ze-1rbDATkIvi4Ts8DIXGktkU6R8O3aZZ_MnrRVw>
+    <xmx:-cfSZ9QAt78Q6iqqeT9Ds1TeWMcy3EyQqTo5QaUYmey3BR7SBoQ16g>
+    <xmx:-cfSZ8pjtxnApkLVFfxdT1b8hnuwqJAqYKy_7Epa97wsNBChrZMziQ>
+    <xmx:-cfSZ_UsZxDr7VZNouwWSyIqDtM5puEABFAnA97GlDS1H1-lTgrDgz5J>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Mar 2025 07:56:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 2/6] t: extend test_lazy_prereq
+In-Reply-To: <Z9ExMHf9CkcDwEt1@pks.im> (Patrick Steinhardt's message of "Wed,
+	12 Mar 2025 08:01:04 +0100")
+References: <20250310231652.3742490-1-gitster@pobox.com>
+	<20250311212505.2920181-1-gitster@pobox.com>
+	<20250311212505.2920181-3-gitster@pobox.com> <Z9ExMHf9CkcDwEt1@pks.im>
+Date: Thu, 13 Mar 2025 04:56:39 -0700
+Message-ID: <xmqqsenhrvns.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 13 Mar 2025 07:25:07 -0400
-X-Gm-Features: AQ5f1Jpfafty01A822OKsYlc9CjpdszaAkzD5lrhklHUaSwbUiR6RiSIQ1cZbwE
-Message-ID: <CAOLa=ZTia95Lib6bkz_nWi2BYEteAaOxsrrX9DqLTEz1t02ggA@mail.gmail.com>
-Subject: Re: [GSoC PATCH] rm: fix sign comparison warnings
-To: Junio C Hamano <gitster@pobox.com>, Arnav Bhate <bhatearnav@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000004a69a0630379339"
+Content-Type: text/plain
 
---00000000000004a69a0630379339
-Content-Type: text/plain; charset="UTF-8"
+Patrick Steinhardt <ps@pks.im> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Arnav Bhate <bhatearnav@gmail.com> writes:
+>> +	elif test "$eval_ret" = 125; then
+>> +		:;
+>>  	else
+>>  		say >&3 "prerequisite $1 not satisfied"
+>>  	fi
 >
->>  static int get_ours_cache_pos(const char *path, int pos)
->>  {
->> -	int i = -pos - 1;
->> +	/*
->> +	 * This function is only called when pos < 0, so -pos - 1 is
->> +	 * greater than or equal to 0, so it can be safely be stored in
->> +	 * an unsigned int.
->> +	 */
->> +	unsigned int i = -pos - 1;
+> The semicolon in ":;" threw me off a bit. Am I missing why we need it or
+> is it superfluous?
+
+The latter, of course -).
+
+>> @@ -811,6 +813,9 @@ test_have_prereq () {
+>>  				if test_run_lazy_prereq_ "$prerequisite" "$script"
+>>  				then
+>>  					test_set_prereq $prerequisite
+>> +				elif test $? = 125
+>> +				then
+>> +					BUG "Do not use $prerequisite"
+>>  				fi
+>>  				lazily_tested_prereq="$lazily_tested_prereq$prerequisite "
+>>  			esac
 >
-> "Can be safely stored", sure.
->
-> But so is "int i" perfectly adequate to hold such a value, no?
->
-> This is one of the many instances that demonstrate why the
-> "-Wsign-compare" warning is of dubious value, and invites worse code
-> than necessary.
+> Hm, okay. It feels quite close to overthinking the whole deprecation
+> cycle around prerequisites as it's nothing that we tend to do very
+> often. But on the other hand the implementation is trivial enough, so I
+> don't mind it much.
 
-I have to agree. I think it would a bit cleaner to actually change the
-functions argument type itself. Perhaps, something like:
+I agree that this has nothing to do with breaking changes at the Git
+3.0 boundary.  We just did not have good documentation for lazy
+prerequisites, and we just did not have any good support for marking
+a prerequisite should no longer be used.  [1/6] is for the former,
+and [2/6] is for the latter.
 
--- >8 --
+We can avoid the magic 125 by adding a new helper like test_removed_prereq
+and do this instead, which may be cleaner and simpler to reason about.
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 12ae086a55..79e47d6e9e 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -40,10 +40,8 @@ static struct {
- 	} *entry;
- } list;
+Another alternative that may make writing tests even be less error
+prone but a bit more verbose is to introduce test_unset_prereq and
+be explicit about unsatisfied prerequisites.  The effect of the
+resulting system becomes larger to include detecting misspelled
+prerequisites, and removed prerequisites would be detected as a
+natural fallout from the same mechanism.
 
--static int get_ours_cache_pos(const char *path, int pos)
-+static int get_ours_cache_pos(const char *path, unsigned int i)
- {
--	int i = -pos - 1;
--
- 	while ((i < the_repository->index->cache_nr) &&
-!strcmp(the_repository->index->cache[i]->name, path)) {
- 		if (ce_stage(the_repository->index->cache[i]) == 2)
- 			return i;
-@@ -83,7 +81,7 @@ static void submodules_absorb_gitdir_if_needed(void)
+As we have >50 prerequisites defined with test_set_prereq and we'd
+need to add 50 calls to test_unset_prereq to mark them as "known but
+not satisified on this platform" to differentiate them from the ones
+that are misspelt or removed, if we go that route.  I am not sure if
+that is worth it.  Certainly not in the short term, but for a longer
+term, if people ever misspelt a prerequisite SYMLINKS as SYMLINK and
+wasted time wondering why their tests didn't trigger, it might be
+worth it.  I dunno.
 
- 		pos = index_name_pos(the_repository->index, name, strlen(name));
- 		if (pos < 0) {
--			pos = get_ours_cache_pos(name, pos);
-+			pos = get_ours_cache_pos(name, -pos - 1);
- 			if (pos < 0)
- 				continue;
- 		}
-@@ -131,7 +129,7 @@ static int check_local_mod(struct object_id *head,
-int index_only)
- 			 * Skip unmerged entries except for populated submodules
- 			 * that could lose history when removed.
- 			 */
--			pos = get_ours_cache_pos(name, pos);
-+			pos = get_ours_cache_pos(name, -pos - 1);
- 			if (pos < 0)
- 				continue;
+ t/test-lib-functions.sh | 14 ++++++++++++++
+ t/test-lib.sh           |  5 +++--
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
->> @@ -58,7 +62,7 @@ static void print_error_files(struct string_list *files_list,
->>  			      int *errs)
->>  {
->>  	if (files_list->nr) {
->> -		int i;
->> +		unsigned int i;
->>  		struct strbuf err_msg = STRBUF_INIT;
->>
->>  		strbuf_addstr(&err_msg, main_msg);
->> @@ -271,6 +275,7 @@ int cmd_rm(int argc,
->>  {
->>  	struct lock_file lock_file = LOCK_INIT;
->>  	int i, ret = 0;
->> +	unsigned int j;
->>  	struct pathspec pathspec;
->>  	char *seen;
->>
->> @@ -314,8 +319,8 @@ int cmd_rm(int argc,
->>  	if (pathspec_needs_expanded_index(the_repository->index, &pathspec))
->>  		ensure_full_index(the_repository->index);
->>
->> -	for (i = 0; i < the_repository->index->cache_nr; i++) {
->> -		const struct cache_entry *ce = the_repository->index->cache[i];
->> +	for (j = 0; j < the_repository->index->cache_nr; j++) {
->> +		const struct cache_entry *ce = the_repository->index->cache[j];
->>
->>  		if (!include_sparse &&
->>  		    (ce_skip_worktree(ce) ||
-
---00000000000004a69a0630379339
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 26c49781e75ee51d_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mU3dKSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mKzUvQy80NnNmcWJ1ejFoR3FKVndmZXFsNTdhTFl4KwpqalVYejREYVZG
-aE9DdW9NSjZ1NUYrdUkzZENnbTNDNzNmY21RUGl4RXdyd25laXcrMUExbVhXR2lZSXRpd0hKCkc5
-NWxXNVErcmtnaWtFZllMVTZtSDBXckh4QTFsWDQxK05nMms3MXVXbGpVVFh5SXBIQzlodmFYaGNa
-cEZrT1gKc1M0WWU4R0JVRkpxT1JxSm1zWnpUWHpNT1laU1E4bzUyUjhiNTk1M3dvZmhDQ0pLbzZP
-SjJtam5zN1o1WlYvaAoyeDBCQzd4bmxJYjBtUFc1YS96dy9GZW1mNTNRZ2U1UG9IVkJMbmhpM292
-T3M3cUNTMGJ5RVhHbk1JUXdsOWxpCjNrRHhnRTIwODZMV3dwa2w2RWV0WjVoNlpCTk9kMUZGTktD
-RDBaRlJ2Z0wrOHkrdkoySjZCTURTUk56dWFqdE0KQ0pPelJaaUlRbnZUY2VRa2Z3K2NtbVFKVFlI
-bVJFOEN4UHRleUN2cFdmd3BwMlYwV3krZ0c2MjVFNTROOTdVTgp4RlY2UUowbGx4NWFkdWpyVXZM
-REVMU0FZK1I3Y2ZKczVOYjVubGc1WEg5dS9uYWlpaVhEblFsZjJQYit0elY2CmZSejRodDlWODJh
-QlZPTGVsQU5FcnlPd2Nrc3U2R0hhTFVCVURxOD0KPXNvalAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000004a69a0630379339--
+diff --git c/t/test-lib-functions.sh w/t/test-lib-functions.sh
+index 79377bc0fc..3903344fc1 100644
+--- c/t/test-lib-functions.sh
++++ w/t/test-lib-functions.sh
+@@ -751,7 +751,15 @@ test_set_prereq () {
+ 		;;
+ 	esac
+ }
++
+ satisfied_prereq=" "
++
++removed_prereq=
++# Mark a prerequisite deprecated-and-then-removed
++test_removed_prereq () {
++	removed_prereq="$removed_prereq$1 "
++}
++
+ lazily_testable_prereq= lazily_tested_prereq=
+ 
+ # Usage: test_lazy_prereq PREREQ 'script'
+@@ -801,6 +809,12 @@ test_have_prereq () {
+ 			negative_prereq=
+ 		esac
+ 
++		case " $removed_prereq " in
++		*" $prerequisite "*)
++			BUG "Do not use $prerequisite"
++			;;
++		esac
++
+ 		case " $lazily_tested_prereq " in
+ 		*" $prerequisite "*)
+ 			;;
+diff --git c/t/test-lib.sh w/t/test-lib.sh
+index 9001ed3a64..c2c96f5e7a 100644
+--- c/t/test-lib.sh
++++ w/t/test-lib.sh
+@@ -1862,8 +1862,9 @@ test_lazy_prereq CURL '
+ 	curl --version
+ '
+ 
+-test_lazy_prereq WITHOUT_BREAKING_CHANGES '
+-	test -z "$WITH_BREAKING_CHANGES"
++test_removed_prereq WITHOUT_BREAKING_CHANGES
++test_lazy_prereq WITH_BREAKING_CHANGES '
++	test -n "$WITH_BREAKING_CHANGES"
+ '
+ 
+ # SHA1 is a test if the hash algorithm in use is SHA-1.  This is both for tests
