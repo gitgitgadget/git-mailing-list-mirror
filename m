@@ -1,313 +1,291 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F35116BE17
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 10:39:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD3A16BE17
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 10:40:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741862361; cv=none; b=KdeEVJ7jzbFg+GbL8S8u7t2nqfwrcRFbJOCHWp35QSvhzN5QNMPUMOPa9C/4o2x2K/fpD2OnGQZ6h3u2LQcFBFUKNNmSLY6KoL6qhKR9nHnMn3Fb4rFeXhZGmkqax+8XG3kAS4F1IyruxKKPuA+DAu0jI+xyfzGtk7No/kZy1YI=
+	t=1741862415; cv=none; b=VP7SUI2r2DVEvyCmmi2GTM9zMaYu69ntV1HKO1gb1JVEvZY4kg7SSn0Fj00BCGUAne9d1pyZyCfcqcPs0Dc3SKLd81FXGRnHY/45LPEmc7j1u56pR/UMQfXyvXlpwQBxXWClkZIpMQsF9fpnmC1UHDe+9Ch6/xpsFneT3BpCeWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741862361; c=relaxed/simple;
-	bh=X5v50eOJfbvI++Hh2mF2SkoZ+Cs2tY1aNwcZH0/bpxo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NjJwKlnZB6e9Xpsnw0rpfF8IYMQ6V8muPFmWsjHHBSUbYHM7ozwXmB8npPWxddxXxBaHqoPDP17Ll1cxsXUttMIZoYz/7mQ5pEQjgWpR6Xu0NI6KzMtF6PE3HoK1ur5S9zydYKt2SvHnR/dRe1VegU1BLoSxzy0ad2hxj1fXMD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nIztKwBc; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1741862415; c=relaxed/simple;
+	bh=8CvkrDB0XUHX+QRGebeI7TuZGQrDIXxzpepFWgS24BU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jGZg7hJw8Dwpn90y3fzvo486iro0jKjXquM4QQOIci9JIA+TP8mcvowoxCNDfluVIXB0Li3Ei0qPXrPUSDpZn22HpYaCRHs/15xL1C8+c73XBEoOw4pQWxLQLGkPfdX4wL4u9JdtuzqSPEl4hxftDEP0319rFatm2wap1iSvfLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zcd5bpH0; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nIztKwBc"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-390fdaf2897so672366f8f.0
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 03:39:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zcd5bpH0"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5e673822f76so1278005a12.2
+        for <git@vger.kernel.org>; Thu, 13 Mar 2025 03:40:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741862357; x=1742467157; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1741862411; x=1742467211; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hWjBR91yJiWc0W0FMczNyaxN3Z1J3mYuzUjzU0VlCD4=;
-        b=nIztKwBcgIj/nWhYekSP1Lil52v0OCeBYubq6U3cFYO1GulRKOe54mg74QT0CH+mz8
-         WewkbZYeCukG0gTNMd1trybFgape8dwJbf3zXe5rL8S5XGVQtetdGIXgXFR1AqM3wCU0
-         oNfGh1vbxdC5ZcvRXSoabCvKx0vGiQ62IWVnO31KF9hFSEWSrAET8uk26cposUARml5I
-         4ENogzmaMegZkgNr/OtPi8448EoAnBSc2ZNXHYdYkVXH7Su1ygpO2361YWqdgBzxRwYc
-         VBL3mjZ8bSKuxk2NqipjToKd2Msen/gGlkGXmDC579tuIFvwWGmvaZbwLfaUnDiGfMvA
-         TYOw==
+        bh=OMrt/z6cZpnQoL4j7Yqq6lBv+cPzMPjU/8dZCaySJ/w=;
+        b=Zcd5bpH0gWzOvxvSyvx8AiMi43wkgfuWvoZGpDhFd0piQR299+4rINaVuNSd1j1NxX
+         c9kbFDmG/VOvQjcgN5Q20j+yrs+fBjGvtBRju/R8X8jhgsE8X3XVKVqAHW1biFQUIHHY
+         NufLymDPWj0/S8dQKpcSYj1ZX7MTRDcdtP/ExKYTM89Qe5XkVCnuhJ379jS6uAWPYpHX
+         ZxgtXYWFGQDevQWUZlQzzFM+bu2qEdel4zpduCr6fU1SU+Y0oDw7qs1J7a/KeOHlyQK2
+         HMLK3ezOq/IQfr9geGWtw7mMEvIT2CE7YjRDAcnTvpepJOEvg3NWozauhU3RKlvGl/b2
+         RZxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741862357; x=1742467157;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1741862411; x=1742467211;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hWjBR91yJiWc0W0FMczNyaxN3Z1J3mYuzUjzU0VlCD4=;
-        b=cnoBRm+yFVdZ0hibJ9UY7fw14GjY94xBdViW0jzIkjJfU8/ASHONLaqj9uViH1audr
-         VvQixfonNR2vHmGFXztdjtm64jvSZ4rBYZqD1h/nME9ajHtUoWNG0ubUuhBoCmpKBIE7
-         s4XhfZMS7F5T/tFuSF8hpaApi/KXCPenUf0VoyIH/FLSR7rouogeMAKgVSifGCIc8l88
-         0r74yott0Y3jBUP6Y7poZRBz16xjJ7MAP/ufPJnyb4VWSKeZEFbVR6sGX1asA+8rRQji
-         SZ3wwAXpSi46Yo0bDjdWie/v1u1EKH85uvdsOLzB5QN9jJvABICwDmmvMZKrPkeIVLKW
-         oa3w==
-X-Gm-Message-State: AOJu0Yyx/ukvzz8SpxEqMQWG0nBDLEK8urVt76dB1N3degYTZyDs9qZG
-	MtUp5fa5lxYyZO434+9aA+pR9f++s+SaHeLpmdaIs5KD3mwwkrFb3HMgAg==
-X-Gm-Gg: ASbGncsuhLiYfzWHZZvuMGnwnmALB5D9fw2zQMAVwElGPe71QBEWiC92g9I8Qy9rWN8
-	44L/XCEBk5/EkRRRtdbdBNf5GCZmLhcyGlVZD9TrJVvM8EurEFD01ZQWuhUcI9RKpurzvqWC78T
-	rEb8DciniEO1gEshD9WrpoEU6Hib2QqGnenn3LY9/b3KbQjQ/T+teLPGqn8hZfwo6h3V5ZZga1S
-	7snezVe3UgCdtuGynrvOyQYkIK+OPIGgdl7MAn6nFGUP5IVnhbM0taoOtgmel6z3nX184hzOc/P
-	TfibdEjLnHNMo5oTOj/cjZjilTl9hFjO66rlrswFwjpxsmEWaHYsWvBQMfUKWJH4pPxRMk3SaV8
-	ZXaq5YlTUZdtep7SgUS/dFw2VFe8=
-X-Google-Smtp-Source: AGHT+IF62Eckl8Gmm6/BT64bO5qcZOaJD9bkRhg2AKInyDE0u9Tkj6fWas01YkdKvCjh2cZM1xF/vQ==
-X-Received: by 2002:a5d:6d0f:0:b0:390:e46f:4454 with SMTP id ffacd0b85a97d-39132d72c52mr22058801f8f.32.1741862356433;
-        Thu, 13 Mar 2025 03:39:16 -0700 (PDT)
-Received: from christian-Precision-5550.. (176-138-135-207.abo.bbox.fr. [176.138.135.207])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395cb7eb93csm1627313f8f.86.2025.03.13.03.39.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 03:39:15 -0700 (PDT)
-From: Christian Couder <christian.couder@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>,
-	Taylor Blau <me@ttaylorr.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	"Randall S . Becker" <rsbecker@nexbridge.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4] promisor-remote: fix segfault when remote URL is missing
-Date: Thu, 13 Mar 2025 11:38:59 +0100
-Message-ID: <20250313103859.817127-1-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.49.0.rc2.1.gf94452eaa2
-In-Reply-To: <20250312114628.2744747-1-christian.couder@gmail.com>
-References: <20250312114628.2744747-1-christian.couder@gmail.com>
+        bh=OMrt/z6cZpnQoL4j7Yqq6lBv+cPzMPjU/8dZCaySJ/w=;
+        b=MrhADFvEVgmKOqhz90WpVDAy7oCFJo1tUzufrQxoTVMon9ovpDwQcgkIX+anmpDWHr
+         ygdlqP2hKt7qYkuuuHxPctjP1Vqew3GBGH2lEjCJ07ofQQj1gmq/DZzomw0j7iz9muIG
+         xR8fm4mVvf6SPQ+KkunC2+VatXUbCfb/7/y8syD6S/OdJwgzc7OXFS0JAmlPKwJAkwJ1
+         t4I/BR0vUbUjl5qy4SeKZovphreiGS6OwgiNylhokqCtur1OKtISUfPmWyOLGY3S8jHQ
+         i5YDRiH5nAKnEyqO7S8Nh3h4mvxx5AzUHxCHlm6lHD70JDcHMCYITazJRvu3fj5n+mNP
+         rGWQ==
+X-Gm-Message-State: AOJu0Yx0Px1r6srvjt1ZCn5FjqMcdFo4lI2nwm6mLwTpzgvP0wUeAyDK
+	OzH7n8kc2juNrzB2xqTwlvugZDxidYbNnl+vPFW+ayiGwvjoRCGVA46fmk340XB25qAAZonPiRZ
+	jXiXieU5Qo/ywvE99GBZOoBLxxsA=
+X-Gm-Gg: ASbGncsk2azotezXP4Ywe1k2NuZTKdtV51xvGwsjW2Q7cLflKvnnr9COCyaGUhsAvgm
+	RyM0mAZ3+MCIno7nZxuuB5pLcvJutKkMYFPHy4Yunhzzclk98vtnhR+w285c+7e1q3gqUNAhm6b
+	wO2UtLXKf1BAyFQuaJcswo98lE7Mp783Tv0HkYrhE=
+X-Google-Smtp-Source: AGHT+IE7If1YK+lgZSbYHeRMRyeKIRN0zMHiq7NQdvcgxToPvw9++ZZIRbWZVaVSErevF+qi4BRo06w1Uv/dR3XUaWw=
+X-Received: by 2002:a05:6402:2157:b0:5e5:e78a:c501 with SMTP id
+ 4fb4d7f45d1cf-5e5e78ac8f9mr25521991a12.13.1741862411212; Thu, 13 Mar 2025
+ 03:40:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250311152413.1059343-1-christian.couder@gmail.com>
+ <20250312114628.2744747-1-christian.couder@gmail.com> <xmqqecz2yyg2.fsf@gitster.g>
+In-Reply-To: <xmqqecz2yyg2.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 13 Mar 2025 11:39:58 +0100
+X-Gm-Features: AQ5f1Jor6E1yhsQCqMEJCeMmpe7JKMSvNnyc-b_loXQ63A9KGGEMLtFSxueHL5Y
+Message-ID: <CAP8UFD0QqUG5Gu-XxKi58sEA7VfSJk4gy9hb_93dCw+2QMABYA@mail.gmail.com>
+Subject: Re: [PATCH v3] promisor-remote: fix segfault when remote URL is missing
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, 
+	Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Karthik Nayak <karthik.188@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+	"brian m . carlson" <sandals@crustytoothpaste.net>, 
+	"Randall S . Becker" <rsbecker@nexbridge.com>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Using strvec_push() to push `NULL` into a 'strvec' results in a
-segfault, because `xstrdup(NULL)` crashes.
+On Wed, Mar 12, 2025 at 6:02=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> >       for (r =3D repo->promisor_remote_config->promisors; r; r =3D r->n=
+ext) {
+> > +             const char *url;
+> >               char *url_key =3D xstrfmt("remote.%s.url", r->name);
+> >
+> >               strvec_push(names, r->name);
+> >
+> > +             /*
+> > +              * No URL defaults to the name of the remote, like
+> > +              * elsewhere in Git (e.g. `git fetch` or `git remote
+> > +              * get-url`). It's still possible that an empty URL is
+> > +              * configured.
+> > +              */
+>
+> Not a huge deal as it is not telling any lies, but does the second
+> sentence need to be said?  An element in the urls strvec being an
+> empty string is not all that more interesting than it being an
+> incorrect or malformed URL to those who are reading this piece of
+> code, is it?  It is also possible that an unreachable URL or
+> misspelt URL is configured, but it is not a job of this piece of
+> code to worry about them, just like it is none of the business of
+> this code if the configured URL is an empty string, no?
 
-So when an URL is missing from the config, let's push the remote name
-instead of `NULL` into the 'strvec' that stores URLs. This is
-similar to what other Git commands do. For example `git fetch` uses
-the remote name to fetch if no url has been configured. Similarly
-`git remote get-url` reports the remote name if no url has been
-configured.
+Yeah, right, I have removed the second sentence in the next version.
 
-We leave improving the strvec API and/or xstrdup() for a future
-separate effort.
+> > +             strvec_push(urls, git_config_get_string_tmp(url_key, &url=
+) ? r->name : url);
+>
+> More on this below.  Unlike "git fetch" and "git push" used as the
+> source and destination, the remote URL used in this context are
+> exposed to the outside world, and I am not sure the usual r->name
+> fallback makes sense.
+>
+> >               free(url_key);
+> >       }
+> >  }
+> > @@ -356,7 +362,7 @@ char *promisor_remote_info(struct repository *repo)
+> >                       strbuf_addch(&sb, ';');
+> >               strbuf_addstr(&sb, "name=3D");
+> >               strbuf_addstr_urlencode(&sb, names.v[i], allow_unsanitize=
+d);
+> > -             if (urls.v[i]) {
+> > +             if (*urls.v[i]) {
+> >                       strbuf_addstr(&sb, ",url=3D");
+> >                       strbuf_addstr_urlencode(&sb, urls.v[i], allow_uns=
+anitized);
+>
+> We used to advertise an empty string name to the other end, but we
+> no longer do, which is a good hygiene to be strict on what we send
+> out.
+>
+> But now our updated promisor_info_vecs() pushes our local name
+> r->name as a fallback. The idea of r->name fallback is to use it as
+> a local directory path for "git fetch" and friends, but the local
+> pathname has no meaning to the other side, does it?  Is it something
+> we want to let the other side even know???
 
-Note that an empty URL can still be configured using something like
-`git remote add foo ""`.
+It could happen that the server, the client and the common promisor
+remote are all on the same filesystem. Then it would make sense for
+both the server and the client to rely on just the remote name,
+without any URL configured, to access the promisor remote. So if we
+want things to work in this case, then I think the server should
+advertise the remote name in the "url=3D" field.
 
-While at it, let's warn and reject the remote, in the 'KnownUrl' case,
-when no URL or an empty URL is advertised by the server, or when an
-empty URL is configured on the client for a remote name advertised by
-the server and configured on the client. This is on par with a warning
-already emitted when URLs are different in the same case.
+Also it's not like the server is giving away secret information as it
+already passes the remote name anyway in the "name=3D" field.
 
-Let's also warn if the remote is rejected because name and url are the
-same, as it could mean the url has not been configured.
+And yeah, the client could be configured with "KnownName" instead of
+"KnownURL" in this case, but that wouldn't work if there are other
+promisor remotes that the client and the server want to share and that
+are not local and therefore need a URL configured on both sides.
 
-While at it, let's also use git_config_get_string_tmp() instead of
-git_config_get_string() to simplify memory management.
+> What other uses do the name/url vectors prepared by
+> promisor_info_vecs() have?  Is it that we use them only to advertise
+> with this code, and then match with what they advertise?
 
-Also let's spell "URL" with uppercase letters in all the warnings.
+Yes, I think so.
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
+> If we are
+> not using these names and urls locally to fetch from in code paths,
+> I am inclined to suggest that promisor_info_vecs() should not shove
+> these fallback URLs (local directory name implicitly inferred) into
+> the names/urls vectors.
 
-Only 2 small changes since v3:
+We could do that but I think it would make it more difficult to make
+things work in the case I discussed above (where the client and the
+common promisor remote are all on the same filesystem, and both the
+server and the client rely on just the remote name to access the
+promisor remote).
 
-  - a sentence in a code comment has been removed,
-  - a strcmp() has been replaced with strcasecmp()
+> On the other hand, if other callsites that use the names/urls
+> obtained from that function do want to see such local pathnames, we
+> cannot lose information at the source, so we'd somehow need to
+> filter them at various places, I guess.  And this place that builds
+> up the string to be sent as capability response should be one of
+> these places that must filter.
 
-Range diff since v3:
+Other call sites don't use promisor_info_vecs(). It was introduced by
+the lop patch series which doesn't change how other code gets the
+remote names and URLs.
 
-1:  ea3c8347de ! 1:  f94452eaa2 promisor-remote: fix segfault when remote URL is missing
-    @@ promisor-remote.c: static void promisor_info_vecs(struct repository *repo,
-      
-     -          free(url);
-     +          /*
-    -+           * No URL defaults to the name of the remote, like
-    -+           * elsewhere in Git (e.g. `git fetch` or `git remote
-    -+           * get-url`). It's still possible that an empty URL is
-    -+           * configured.
-    ++           * No URL defaults to the name of the remote, like elsewhere
-    ++           * in Git (e.g. `git fetch` or `git remote get-url`).
-     +           */
-     +          strvec_push(urls, git_config_get_string_tmp(url_key, &url) ? r->name : url);
-     +
-    @@ promisor-remote.c: static int should_accept_remote(enum accept_promisor accept,
-     +  warning(_("known remote named '%s' but with URL '%s' instead of '%s'"),
-                remote_name, urls->v[i], remote_url);
-      
-    -+  if (!strcmp(remote_name, urls->v[i]))
-    ++  if (!strcasecmp(remote_name, urls->v[i]))
-     +          warning(_("remote name and URL are the same '%s', "
-     +                    "maybe the URL is not configured locally"),
-     +                  remote_name);
+> > @@ -409,12 +415,42 @@ static int should_accept_remote(enum accept_promi=
+sor accept,
+> >       if (accept !=3D ACCEPT_KNOWN_URL)
+> >               BUG("Unhandled 'enum accept_promisor' value '%d'", accept=
+);
+> >
+> > +     if (!remote_url) {
+> > +             warning(_("no URL advertised for remote '%s'"), remote_na=
+me);
+> > +             return 0;
+> > +     }
+>
+> Except for the above "no URL advertised" warning and returning,
+> which is absolutely a good thing to do, I am still not sure how
+> relevant various checks for an empty string new code added by this
+> patch makes are ...
+>
+> > +     if (!*remote_url) {
+> > +             /*
+> > +              * This shouldn't happen with a Git server, but not
+> > +              * sure how other servers will be implemented in the
+> > +              * future.
+> > +              */
+> > +             warning(_("empty URL advertised for remote '%s'"), remote=
+_name);
+> > +             return 0;
+> > +     }
+> > +
+> > +     if (!*urls->v[i]) {
+> > +             warning(_("empty URL configured for remote '%s'"), remote=
+_name);
+> > +             return 0;
+> > +     }
+> > +
+>
+> ... would it be so different to pass an empty string as to pass a
+> misspelt URL received from the other end?  Wouldn't the end result
+> the same (i.e., we thought we had a URL usable as a promisor remote,
+> but it turns out that we cannot reach it)?
 
- promisor-remote.c                     | 44 +++++++++++++++++---
- t/t5710-promisor-remote-capability.sh | 59 +++++++++++++++++++++++++++
- 2 files changed, 98 insertions(+), 5 deletions(-)
+Perhaps but I think it would be weird if URLs are matching when they
+are empty on both sides. I think it makes more sense and is more
+helpful to warn with a clear error message and just reject the remote
+if any of the URL is empty.
 
-diff --git a/promisor-remote.c b/promisor-remote.c
-index 6a0a61382f..dd589dd4ea 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -323,13 +323,17 @@ static void promisor_info_vecs(struct repository *repo,
- 	promisor_remote_init(repo);
- 
- 	for (r = repo->promisor_remote_config->promisors; r; r = r->next) {
--		char *url;
-+		const char *url;
- 		char *url_key = xstrfmt("remote.%s.url", r->name);
- 
- 		strvec_push(names, r->name);
--		strvec_push(urls, git_config_get_string(url_key, &url) ? NULL : url);
- 
--		free(url);
-+		/*
-+		 * No URL defaults to the name of the remote, like elsewhere
-+		 * in Git (e.g. `git fetch` or `git remote get-url`).
-+		 */
-+		strvec_push(urls, git_config_get_string_tmp(url_key, &url) ? r->name : url);
-+
- 		free(url_key);
- 	}
- }
-@@ -356,7 +360,7 @@ char *promisor_remote_info(struct repository *repo)
- 			strbuf_addch(&sb, ';');
- 		strbuf_addstr(&sb, "name=");
- 		strbuf_addstr_urlencode(&sb, names.v[i], allow_unsanitized);
--		if (urls.v[i]) {
-+		if (*urls.v[i]) {
- 			strbuf_addstr(&sb, ",url=");
- 			strbuf_addstr_urlencode(&sb, urls.v[i], allow_unsanitized);
- 		}
-@@ -409,12 +413,42 @@ static int should_accept_remote(enum accept_promisor accept,
- 	if (accept != ACCEPT_KNOWN_URL)
- 		BUG("Unhandled 'enum accept_promisor' value '%d'", accept);
- 
-+	if (!remote_url) {
-+		warning(_("no URL advertised for remote '%s'"), remote_name);
-+		return 0;
-+	}
-+
-+	if (!*remote_url) {
-+		/*
-+		 * This shouldn't happen with a Git server, but not
-+		 * sure how other servers will be implemented in the
-+		 * future.
-+		 */
-+		warning(_("empty URL advertised for remote '%s'"), remote_name);
-+		return 0;
-+	}
-+
-+	if (!*urls->v[i]) {
-+		warning(_("empty URL configured for remote '%s'"), remote_name);
-+		return 0;
-+	}
-+
- 	if (!strcmp(urls->v[i], remote_url))
- 		return 1;
- 
--	warning(_("known remote named '%s' but with url '%s' instead of '%s'"),
-+	warning(_("known remote named '%s' but with URL '%s' instead of '%s'"),
- 		remote_name, urls->v[i], remote_url);
- 
-+	if (!strcasecmp(remote_name, urls->v[i]))
-+		warning(_("remote name and URL are the same '%s', "
-+			  "maybe the URL is not configured locally"),
-+			remote_name);
-+
-+	if (!strcmp(remote_name, remote_url))
-+		warning(_("remote name and URL are the same '%s', "
-+			  "maybe the URL is not configured on the remote side"),
-+			remote_name);
-+
- 	return 0;
- }
- 
-diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
-index d2cc69a17e..05ae96d1f7 100755
---- a/t/t5710-promisor-remote-capability.sh
-+++ b/t/t5710-promisor-remote-capability.sh
-@@ -193,6 +193,25 @@ test_expect_success "clone with 'KnownName' and different remote names" '
- 	initialize_server 1 "$oid"
- '
- 
-+test_expect_success "clone with 'KnownName' and missing URL in the config" '
-+	git -C server config promisor.advertise true &&
-+
-+	# Clone from server to create a client
-+	# Lazy fetching by the client from the LOP will fail because of the
-+	# missing URL in the client config, so the server will have to lazy
-+	# fetch from the LOP.
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
-+		-c promisor.acceptfromserver=KnownName \
-+		--no-local --filter="blob:limit=5k" server client &&
-+	test_when_finished "rm -rf client" &&
-+
-+	# Check that the largest object is not missing on the server
-+	check_missing_objects server 0 "" &&
-+
-+	# Reinitialize server so that the largest object is missing again
-+	initialize_server 1 "$oid"
-+'
-+
- test_expect_success "clone with promisor.acceptfromserver set to 'KnownUrl'" '
- 	git -C server config promisor.advertise true &&
- 
-@@ -228,6 +247,46 @@ test_expect_success "clone with 'KnownUrl' and different remote urls" '
- 	initialize_server 1 "$oid"
- '
- 
-+test_expect_success "clone with 'KnownUrl' and url not configured on the server" '
-+	git -C server config promisor.advertise true &&
-+
-+	git -C server config unset remote.lop.url &&
-+	test_when_finished "git -C server config set remote.lop.url \"file://$(pwd)/lop\"" &&
-+
-+	# Clone from server to create a client
-+	# It should fail because the client will reject the LOP as URLs are
-+	# different, and the server cannot lazy fetch as the LOP URL is
-+	# missing, so the remote name will be used instead which will fail.
-+	test_must_fail env GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
-+		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
-+		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c promisor.acceptfromserver=KnownUrl \
-+		--no-local --filter="blob:limit=5k" server client &&
-+
-+	# Check that the largest object is still missing on the server
-+	check_missing_objects server 1 "$oid"
-+'
-+
-+test_expect_success "clone with 'KnownUrl' and empty url, so not advertised" '
-+	git -C server config promisor.advertise true &&
-+
-+	git -C server config set remote.lop.url "" &&
-+	test_when_finished "git -C server config set remote.lop.url \"file://$(pwd)/lop\"" &&
-+
-+	# Clone from server to create a client
-+	# It should fail because the client will reject the LOP as an empty URL is
-+	# not advertised, and the server cannot lazy fetch as the LOP URL is empty,
-+	# so the remote name will be used instead which will fail.
-+	test_must_fail env GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
-+		-c remote.lop.fetch="+refs/heads/*:refs/remotes/lop/*" \
-+		-c remote.lop.url="file://$(pwd)/lop" \
-+		-c promisor.acceptfromserver=KnownUrl \
-+		--no-local --filter="blob:limit=5k" server client &&
-+
-+	# Check that the largest object is still missing on the server
-+	check_missing_objects server 1 "$oid"
-+'
-+
- test_expect_success "clone with promisor.advertise set to 'true' but don't delete the client" '
- 	git -C server config promisor.advertise true &&
- 
--- 
-2.49.0.rc2.1.gf94452eaa2
+> >       if (!strcmp(urls->v[i], remote_url))
+> >               return 1;
+>
+> Past this point, I am not sure what the points of these checks and
+> warnings are; even with these "problematic" remote_name and remote_url
+> combinations these warnings attempt to warn against are used, as long
+> as the above check said it is OK, we'd silently said "should accept"
+> already to the caller.
 
+Past this point we are in the case where remote names matched but
+remote URLs didn't match. So I think we should help diagnose things
+(with warnings) because it's likely that the intent was for the URL to
+also match but a mistake prevented that from happening.
+
+> > -     warning(_("known remote named '%s' but with url '%s' instead of '=
+%s'"),
+> > +     warning(_("known remote named '%s' but with URL '%s' instead of '=
+%s'"),
+> >               remote_name, urls->v[i], remote_url);
+> >
+> > +     if (!strcmp(remote_name, urls->v[i]))
+>
+> The 'i' was obtained by calling remote_nick_find(), which uses
+> strcasecmp() to find named remote (which I doubt it is a sensible
+> design by the way).  This code should be consistent with whatever
+> comparison used there.
+
+I think comparing remote names case insensitively is fair. It's likely
+to just make things a bit easier for users.
+
+In the next version, I have changed the comparison to strcasecmp()
+here as I agree it could help if the comparisons are consistent.
+
+> > +             warning(_("remote name and URL are the same '%s', "
+> > +                       "maybe the URL is not configured locally"),
+> > +                     remote_name);
+> > +
+> > +     if (!strcmp(remote_name, remote_url))
+>
+> This is matching what r->name fallback did so it is correct to be
+> strcmp().  But (1) it may be way too late after the above "return
+> 1", and (2) if we are *not* going to use it, perhaps we shouldn't
+> place it in the resulting strvec from promisor_info_vecs() in the
+> first place?
+
+We are in the case the URLs didn't match. So yeah we are not going to
+use the remote info because we are going to reject the remote (with
+`return 0;`) a few lines below. But it would be nice if we can help
+users diagnose what happened.
+
+If we notice that remote_name and remote_url are the same it might be
+because the URL is not configured on the server side, so the server
+passed the remote name instead. It can be nice to tell users that this
+might have happened to help them debug.
+
+> > +             warning(_("remote name and URL are the same '%s', "
+> > +                       "maybe the URL is not configured on the remote =
+side"),
+> > +                     remote_name);
+> > +
+> >       return 0;
+> >  }
