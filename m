@@ -1,107 +1,118 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F81E18A6CE
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:35:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD70199934
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:40:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741887326; cv=none; b=YQh9FCBlowphBp9NPOi4bi64up9+o1u4eG6GCoSMM22GqG1+8VVUgKvseG48XLwwhofuML4nvcwVZx66DHVctAKjlVLhMUwITLVZ2Zz2trdLHV0pUzdh4WcNpBz5FbBWAVycyfzCQZrVd11Ho/yxEaOO9X1wpH6hs51V3iWsvkg=
+	t=1741887661; cv=none; b=uk2fWAAX25gCY0GsYAhwwVMwJqv1cghpl2fIEIw2mQCDjOroQsDOZ9LFHhQqbyaNcqtE1A0jXqajWBNFXEDC3R/TRGJlPyX5/zPVBM0RJg9MPL6iOeK6xuvQrTNFXuKnmVkS8PHp4XmayaNOnJ9Lzu9tdEIp8+DduCuok7tSkgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741887326; c=relaxed/simple;
-	bh=2BiZfMQs3uaAIZ4azjjG042kPouoyBk1NHdUwP7Yp54=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EMQ+smPMwyiqldd28Bl4nKYRZGllOV8KY+W/VK+vPauCismMYPZ+UODd6QMmlMzSoHu3k/3QGExlRajclA0m3K51Dk61rSplU73iwUx6wSpFI1F22CcYkls2MJfz9YdzTFagk83hnq323wbGlke9eSi+IK4T/e7hRYt5pn/ikDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=eIW/QR/J; arc=none smtp.client-ip=209.85.160.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1741887661; c=relaxed/simple;
+	bh=eMJZU8M6G/IUMHupR9xur+1BHlh3GTWvFnZk41p+nYw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ti+1wcziRlb5XVSPFib4XG0N1mj2BH40UzL+l6dhNAhTZgdwvT3naanjqaLzWr1cDKJhXPS30Zvq4kosTeihZi1UHtLBhmaaxeEWliU2wuBHC3zdz8y8bU9qbuGRCbM5BxW4EE1CSs0B6z4BSgdxQsefvLo2EriikkGHTS8r1uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G3EeLF94; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="eIW/QR/J"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-4766cb762b6so12970791cf.0
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 10:35:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G3EeLF94"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5dccaaca646so2281253a12.0
+        for <git@vger.kernel.org>; Thu, 13 Mar 2025 10:40:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741887323; x=1742492123; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AQ7e5WO6wzH3559EaDmknAUrcWc5LammY4VuO/Gdw+c=;
-        b=eIW/QR/J8prnAJcCVwT2F/tWhoNqm0bStgvv/60pGJqEHXEQOUHA/qWqS+gVH1RjAU
-         tKUodn8v/YHvtN/TZqoYbTgcMJH38gdAcYTguDfpugvHsZOtvCuXhI4FN+ucnB1mwSFt
-         4+nnafaq+61EeqBnTkEnpoyOOVnXBg2OsSuDIIGit3QNRZ0iK8kzxsfGD89u+0rnO73+
-         XQ8Browmf83Cq46zdxbx71birXxiOrB6DCb9CBk67vkWzNdxgLosGiC99ac0eSX/UG5T
-         ysp01vy+lUatbZuYjPmUbDgypyUQE/TxCaahhQt7h0+KL+whfR3XQry5p04YDkoJH0b9
-         oSIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741887323; x=1742492123;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1741887657; x=1742492457; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AQ7e5WO6wzH3559EaDmknAUrcWc5LammY4VuO/Gdw+c=;
-        b=PpIrY5awyaHbQSOrmJ/ncOHMrQ0Wam+mGCyRXMoW8g/3HAMKeweFwaEg9EOoTqdYQU
-         E34wBdgqfM9A0WCcwyclv8BdtLVzD7/oQGLsNjL86HBbQaqc4qv9btSIA0nJOLT+Imaz
-         RXGyAdIXpLJx2Npvg202TQR7H+/fZcuFo8S2lMklLuz8Zqjg3n6eXWf2eFgOiy2vDpjd
-         DnRSKdo48iI9JH/OLzkAbubTiMhFDV8/s420xNoZv/HshqUeAWPGKnSYZWmvcncygObk
-         KPwrjFfJBeJqK8xL6IgDfDddSixXkM0nKglnwhcGdk67X5EbwvpowrwPnwgpifPDeLR7
-         0REQ==
-X-Gm-Message-State: AOJu0Yw8kEgF1uBY6IsBlUSgiKd4XKZPPfBtuc6Sbi4Lh4XG8WN899Uf
-	hqw4nBbZaZ1I2yHQfuiRrrGR0g8mqYbwu79fejXyYJvFaSGPHTRg1lx6p4mL95w2B2aaODY5IY6
-	wmfo=
-X-Gm-Gg: ASbGncs9tXRSO9p5zbCyf52BUZcGyYJ77psBRZAdNhksGoEhkvKi6SHiqTTTMJpfV4s
-	oxZmQiNBQFJ5IjnF3pjZGWZtOyAFT3CeY06jlPw+6dHVvJZxbFiwj9BmJEWbMpdYdCa2J+o3X2p
-	8SIW30RXEyB53ULxOR9Cb+aEtv6SeO/FMoEcl6QORJLIMD8BKkg3sQbAOIWBoXs35HWvdpGQkzM
-	aBXFsltXVmtZcqY+N7eiVD4ToFc/kwcARhT7Nju5F8ffpTVCYgIn755bjgMjNUC9ZaJRYtGYD/p
-	JTy3Z44WBUrjUraYWq2seVkiaOsviDYUNOyWJGrr0WNfVJ/mCrleg6qN8g/XZKvql9DtHiA/9MU
-	bKL+ljswx69NPH4cf
-X-Google-Smtp-Source: AGHT+IHpS7exUqIdRRTZwfVPL+eru1U7zSpcf/LwlhuH+TCPqPbhHQBrxbmFd+esD+94BCdf/uFTtA==
-X-Received: by 2002:a05:622a:2a0a:b0:471:80ef:35e7 with SMTP id d75a77b69052e-476ba88e974mr49776261cf.4.1741887323228;
-        Thu, 13 Mar 2025 10:35:23 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-476bb660c5esm11869611cf.40.2025.03.13.10.35.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 10:35:22 -0700 (PDT)
-Date: Thu, 13 Mar 2025 13:35:21 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 0/6] pack-objects: freshen objects with multi-cruft
- packs
-Message-ID: <Z9MXWeXd5G1d4kY5@nand.local>
-References: <cover.1740680964.git.me@ttaylorr.com>
- <cover.1741648467.git.me@ttaylorr.com>
- <xmqqr0332un3.fsf@gitster.g>
- <Z9GpQqm4YBvWF7Ff@nand.local>
- <xmqqfrjixfwe.fsf@gitster.g>
- <Z9Ha2mFXpojI+aIR@nand.local>
- <xmqqa59qxc9b.fsf@gitster.g>
- <Z9Hl+UpnEq07qFeW@nand.local>
- <xmqq1pv0q27u.fsf@gitster.g>
+        bh=qEoHMSBIUerbCnOgE/4OLrzdpNaXsPOXoJJT5p6o15E=;
+        b=G3EeLF94nX2SMeVj2VwRmZD9GU8y/4VjoNQbYjuwe+e4bBYYxxKMyYXVnMdcalCMyT
+         JNGkR1zhLJ/66LBPI8nt2FDoddGE99AqhpwqbJZlmPyAuHtsvaUoO2rYVXgtVQh0rABX
+         mwAFT5aKMzpfpK4uLU+kVeuW/0WUHkZ+qDOrAwgG+YbU5xMO/4Orxqu8XmWOmdahIXVn
+         jYIzB6Z8evEL36Apsu4ac3grp9New4IJ1YKGwWNOZREY6LMca08EX6qhkJEJTEGOzWwR
+         SjxVR7GSXRTeZyqMHXHYsn8HuFlqpVNxUZ/4nesnsLFRd9L0v9JB+4G6I1Y9zePOd9ix
+         62aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741887657; x=1742492457;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qEoHMSBIUerbCnOgE/4OLrzdpNaXsPOXoJJT5p6o15E=;
+        b=r6qau69id8XK4ZesGrKr+bJ26WBTAkuMDxtu4PVfcr3z4ePaWTpXBg4/U+ItbaIU6I
+         6KCAlU7TwI5ALTD9lyAe3KobhH3rQSduxK7rQTziKw536oB9PzahNZzL5DYIe9yyQqBw
+         fGI90CraWpP/tePYhLOdPf8JBQg4LTxoLg1hkSO6lwEgFpLgViCdLszSU9/62y30SUeG
+         j4hsWnszj2BCKZY1cQeZonh8n5b/08zQ7AJTnz8Qs4x0etAQV8Xp9DLwNRCmHm1MwIFl
+         PuKuL3yZlCtvsq9yz0kEUAfVvezBdg+znehRKmrynDxtuwb7tEea5NTD3m57tB0x3/S1
+         dzfw==
+X-Forwarded-Encrypted: i=1; AJvYcCXd077TM/PhyaOf9i7GMZGJR//71NwPqlb9LeLfkmLeTLxi8RUimiTUaZcEE++/fNuCyME=@vger.kernel.org
+X-Gm-Message-State: AOJu0YymNWm8M9htGo+mhBf2+vCoEjONvnTv2FjpiMvrUs91aCfLxzhy
+	JTVTifmhOG22SWPjHce40zt0albpthjCHEsQglAC5i108o1Jel2RiaqQZVkHRJ3GlNNqrXwHPnv
+	xvnU5EUFkIQKb9UDs5FqpKkFXOCY=
+X-Gm-Gg: ASbGncurhtdsqaukpakrYJPtHlLynO18zsHRmU9/qT4GCkaB6LQk2hzO8+a5ndFe8R7
+	uqnP3JLKya404CyfVoqW4OsdX/5CZt2klUMgTF2AEDFahxPRaqQUbBXi1kV73NEdSUsjsBizALz
+	CUdVHVbtzwIFlXJb5kxJ00/NcdkmD0SqtvlUD8A+kl9OwwhtimyabVy2w7ekIf
+X-Google-Smtp-Source: AGHT+IGhpZ7ts6CH7HmjlHY1A5benpX9ZNPaQa59S1xOp1Q4dK+NQOirwLmjfc6G/rbgqzqmehOX0goTV0Z3rGqxpRQ=
+X-Received: by 2002:a05:6402:42ca:b0:5e4:d2c2:b8e8 with SMTP id
+ 4fb4d7f45d1cf-5e814ee4a12mr3895436a12.16.1741887657360; Thu, 13 Mar 2025
+ 10:40:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1pv0q27u.fsf@gitster.g>
+References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
+ <95ffa62df6ce394249a8ddabb84fb2b517825fe3.1740901525.git.gitgitgadget@gmail.com>
+ <c03192bc-68d3-4645-9bd3-93a338a7496f@gmail.com> <2323bb52-f43d-4f40-8955-4c648677a93e@mandelberg.org>
+ <65d903c0-6b4b-4a55-b7e4-4a277417f0f1@gmail.com> <42dfc06e-8eb1-46da-9971-9d102f1390ad@mandelberg.org>
+ <CALnO6CBDjQgc2TNaXbBWiUNqWV=RgrL2Ry-7HzRu3Ozuqazzvw@mail.gmail.com> <e06caa06-0176-4340-958e-4c43650b40e3@mandelberg.org>
+In-Reply-To: <e06caa06-0176-4340-958e-4c43650b40e3@mandelberg.org>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 13 Mar 2025 13:40:45 -0400
+X-Gm-Features: AQ5f1JomBY9WfvFKGLAXCG2kkjCAlHGluCUIpsDBHgbQOsBfLYmhVkvX-R5owlQ
+Message-ID: <CALnO6CBurvi=gXzSdYDqSWDj9+R_uXY0rMZvz+dVKa+Bcfe=6A@mail.gmail.com>
+Subject: Re: [PATCH 3/3] completion: fix bugs with slashes in remote names
+To: David Mandelberg <david@mandelberg.org>
+Cc: phillip.wood@dunelm.org.uk, 
+	David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Jacob Keller <jacob.keller@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 13, 2025 at 10:17:57AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Fri, Mar 7, 2025 at 4:46=E2=80=AFPM David Mandelberg <david@mandelberg.o=
+rg> wrote:
 >
-> > Perhaps in the longer term, but I think for the reasons above that the
-> > existing behavior (plus the new patch from v3, which we should still
-> > queue) is sufficient.
+> Op 2025-03-06 om 15:24 schreef D. Ben Knoble:
+> > I'm willing to manually test the patch if I can understand how to
+> > reproduce the issue=E2=80=94it sounds like having a remote name with a =
+slash
+> > is sufficient?
 >
-> The older iteration has a few loose ends <Z8l5hxNjEOALl_g-@pks.im>
-> we would want to tie.  Elijah's "decision to combine should be made
-> at half or below the max size to always make a progress" would also
-> makes sense.
+> Yup. I was able to reproduce it with these commands:
+>
+> /tmp/tmp.zOjfmdMx1i$ git init foo
+> Initialized empty Git repository in /tmp/tmp.zOjfmdMx1i/foo/.git/
+> /tmp/tmp.zOjfmdMx1i$ cd foo
+> /tmp/tmp.zOjfmdMx1i/foo$ git remote add with/slash /path/does/not/matter
+> /tmp/tmp.zOjfmdMx1i/foo$ git commit -m 'test' --allow-empty
+> [main (root-commit) 4b95a99] test
+> /tmp/tmp.zOjfmdMx1i/foo$ git update-ref refs/remotes/with/slash/main 4b95=
+a99
+>
+> Then type:
+>
+> git push with/slash :ma<Tab>
 
-Let's split these two out. This series (or single patch, as it will
-shortly become in v5) is fixing a legitimate bug in freshening
-unreachable objects when they appear in multiple cruft packs.
+Thanks; in Zsh the results after :<Tab> are HEAD and main. After
+:ma<Tab>, just main. The results with _no_ colon are HEAD, main,
+with/slash/main. I think that's all the expected results?
 
-That will allow us a little more time to think through the more
-complicated issues while fixing the more straightforward ones quickly.
+My test procedure was to
 
-Thanks,
-Taylor
+git fetch <your PR tip>
+mv /usr/local/share/zsh/site-functions/git-completion.bash{,.bak}
+git show FETCH_HEAD:contrib/completion/git-completion.bash  >
+/usr/local/share/zsh/site-functions/git-completion.bash
+# adjust startup files to use `compinit -D` to avoid caches
+<your test procedure>
+
+--=20
+D. Ben Knoble
