@@ -1,186 +1,95 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D34A13CF9C
-	for <git@vger.kernel.org>; Thu, 13 Mar 2025 02:46:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F263E47B
+	for <git@vger.kernel.org>; Thu, 13 Mar 2025 02:57:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741834012; cv=none; b=MMUWDqxW2+FKXsl9rn1srfzMcIP+9vmCT08eO/3R1XeNIR0vbpIUPWSFKc1AvozKGih4TQz/VWqIz6IWBE8zTXkqqpgD7iRQ8Qi9Vco7YD3YCJ4yGI8ESgfQDLVhG8wiUfcvgc5+tExvUnVhm/+YpVdwmDbH/RKtJy9DfdIINvI=
+	t=1741834651; cv=none; b=Zxa5kxiViL0eaHN751v3+gIoQLoWOgnV1MMnqIWwmyNtmBSqhCcC7WnQnpJSzJBoFey8trGmHdXKoK3OqDtu8JSVKCtFDrCPqAQc62do7wMuyqjocgHk61qcEaDLZx96sHx7M0I1s5we6F9iU9NuFd6rc84ae+OK0t8mEVsdzFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741834012; c=relaxed/simple;
-	bh=UUFw6+VUYHBmkpKv70O/p8+k2qGd1MG81EaFBOZNAvI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Y8gaGVpy5TRxH0ekoXoqGo9RANZ5IZkTg2pWnLLfGyBYdPnroljo9Q8kdKZL6ebyEowUt+9T1FjJy/uIqTODKrZWjrXxr+FipCJFhBEZYftAHsocq/ndi8hKGsjs5bQ2xUN5oD/I97ZenBHJH10ahRMFYsRtDmzxboRYK8yDguM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iyxmDTDe; arc=none smtp.client-ip=209.85.208.50
+	s=arc-20240116; t=1741834651; c=relaxed/simple;
+	bh=w5ld+1RS4VijpRhcXk9s3yYexRnZ9ghBt1lRZPxfZ5A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lg/9l5haz6WLwfp4PJwlXUnwvP2shoPg0t28PoEWhNxMRtBGJUTA4q5kosLznt7T0gFlRYd0y6iJeKF0ja9NY4qklCFS/ucfMdsvdTspgJyFCvmBgHcpUedaV6T17S4GdtHcyVBzjK7629XM4xmA77M+ZTQ6YIOKiICV8W5sX80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Em3htjSA; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iyxmDTDe"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5e5e22e6ed2so554490a12.3
-        for <git@vger.kernel.org>; Wed, 12 Mar 2025 19:46:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Em3htjSA"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-22113560c57so9081485ad.2
+        for <git@vger.kernel.org>; Wed, 12 Mar 2025 19:57:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741834008; x=1742438808; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0L2g553xjOaDOe60VhZzNnI/qTrlgsQ+SYs2p0s4Dvk=;
-        b=iyxmDTDeZlQr34FlcEkF9xcymJkp5aj7VePFYolpJ4ZJ3PvAOVt++Hg6UHOGaOlnJh
-         K30qa0iqtNzxN9cIhZB124s+SWZATSwKBzmwopV7gnTrZQvO/lkgb7A7D6z7OKMJm4ui
-         c8cZWl5fqVnWCdse4I5jBkN4MxhN2IcZCgtbUYOI6abnGKy1VbaSfSUpodXSjl3EZrmy
-         P6zOL9UiXHXhx9dXbfnI08caBv9OakyZjPbImSs3T8KnfrwCVZxR7n+3XI43rMDe03Hu
-         1IV9ojw3ENF3KmbEWC89I8/JvPxBZVlYiuU74Lk0kGyaP6Ev94uWcEY4Ae8Lq4myoWiJ
-         Ppfg==
+        d=gmail.com; s=20230601; t=1741834649; x=1742439449; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dEzXYxv1mmqzDl9nkgRe05pWYo+NExgrIRQ2hJeMTd4=;
+        b=Em3htjSAXlC7+Do2gxcXQYNqfoj3C9JwB45S6U9aNKc46A+SnJSUFRG1iylE7f8jLZ
+         jjR+lO7U9b6QErRf79HCj1+NQ1FLhXrtnjHTi5Q1dJSMPZzZ2LO/4L4onkvmC2LjaqwW
+         NmkcV0gF4iAjc6Q8F1P2l0J+mNSKbSvnswp4EtmG4xfDaEkVTi07StdeEBuzzRYp5jIR
+         54oT6ugr8bon3Tg1yVlz+Nrf7EGUhErMeFV5k66+Rkhjji/dbJjbve2Lyrmh+UmOcn1+
+         4rJCCVO8yh70sDzXPuGsFws6npLWDbKRvj5gU2iU8higKxRRR/ZEnSZW+M+iCjKs9iRR
+         viTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741834008; x=1742438808;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0L2g553xjOaDOe60VhZzNnI/qTrlgsQ+SYs2p0s4Dvk=;
-        b=BsIy6upPHzRreD9lS/XGzSBu4y039hLt+f/t3ziyhlKrEQV0nL1Ew6VRyoyPGN5djN
-         Z4V0fOw0ZwVpQoBWqhlS8zy9ngaQZneUysitpuKQ2TUxFYGuHUQVc6UvIRvOlsPBR/Wf
-         x507RuuCgwV1fHOdojuSpoRMiQjIYf7es6mdmr8Ss0wod3yK9VcKx8l/Wmk8cZBVPMOo
-         eXa4rC0b+YtHlUpLonvCqPbuvbBTiCvVAXvpampaaSfSFsNlj/Co+Rsj+aTOghiAkxn6
-         BB6tdGPMmOX67ajp2lSv8XyoJ2Hk0tciEytGE9uxFUI0HaJ3Q7HLR9WUlIKgQ9QeMF2g
-         0eOg==
-X-Gm-Message-State: AOJu0YzmMlGWGA6uOeAXr7sKv9RvpxrfCeiiObDvebuLviezqU/VvFWt
-	GbzFAPbP7wlR1X+3pVhm1rlTioW9CBG29T/xYlsEl5rWo5wIZpvmyNxrcg==
-X-Gm-Gg: ASbGnctf1yjj58uaGL47P+diUXzNxNTrs5SGyai5MKY3as6bEvMNgb4vbpFZ1MUpK6D
-	/npzKmIXmRHqLO1KczMKMpxZYXxIsCk0BCUOlBJAa4mK3ewllcOJ0GAlbmmNTxPUwDbRQX5/xKy
-	AGZsKvP2IZjspsysjUYmhRZA4f0EbsvSVjoGr6Av00cUJWtlLqn2dL3IWjM+5WF94Iz5BP/2TLJ
-	J68ddl8JJiUh2gr5oW9LWy+KZ5MyJjb2cjJuOsB6lw/eJaYmnTERLCu+SxBw2TPzh04cNadReRa
-	AfgcMetmTMHY+hzufQ65+eIlpFE1hXdlLSfmh3nyqRHLX2UHiwwUi170
-X-Google-Smtp-Source: AGHT+IFeAZ7Dznnq5mJMD1elny6nSaoBSEqziKVW6WOjRPeLa+E7QODVmw8lwnDVXcGJByq7AVlvgQ==
-X-Received: by 2002:a05:6402:518a:b0:5e5:437b:74a7 with SMTP id 4fb4d7f45d1cf-5e5e22d915amr27911425a12.8.1741834007875;
-        Wed, 12 Mar 2025 19:46:47 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e816ad38f3sm195482a12.63.2025.03.12.19.46.47
+        d=1e100.net; s=20230601; t=1741834649; x=1742439449;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dEzXYxv1mmqzDl9nkgRe05pWYo+NExgrIRQ2hJeMTd4=;
+        b=eI+g+wjExf6DgalSwZ+h/54r/ao/ZUxlMOuiPE4lThGs9wzIcxdGOjEmLcjabI7OTK
+         nWN3FVpRN6g/DzqkeIssx7Urxjcm+2ai/D0QcKWksjkorK2j4L6/hS0HZp2H83BbFFRT
+         Re+dhWqdekh1HV4F7OgAhDfn9U6RDjMp2pxukx9tbMxhtQOS4KCAuPTPEQUgrUZO1AKJ
+         VG7YOlL8jspyveTRJiSEnbJF3zshh4Nuc2mpVKYHtEYV4gOj0/zIP4sPDcu3ivJ8ROh5
+         FR8caw3pdNUrPKzvsYL3qcK5/q/P6nwYdqlUkdfCUIs9QTOng282lI8r2wINxCQBmxPH
+         QXbw==
+X-Gm-Message-State: AOJu0Yybjayl6/zTRcf2rsLmg8ffbM+pHG/t32LFcFCVO+cBhrq/KWJw
+	Q15Apsu0t+UjS5Uvkh0L6pgIlnRtVVaChv3SWWMgsdzLeJ2/qcPd
+X-Gm-Gg: ASbGncsq6XW2VkfBqtkgloPMw3hMqN4U3eLqgIb1oNnhecJf3wuotIL37i0yyDSEN8U
+	xCQWeYVzToAQJGk4bCu1uHXNfdr3IrspqUJ+3SrHDtdYR7lMbjQkfJqgnzgLe2caDP/Fm8IUIqW
+	8s1fMX8x8g2RjR6RNyRZVtdQI2VeisVVlsbNbkpP3jIeMGBcbca1HgBOlM8K2jnTXZYiYakyx0P
+	cGE0bgl1IKtWRFtteg5tydjCV3og7/1bcCyeAvLOqnYL70ef4onAVq7jggkis7SaKBIbB14c1/M
+	eX1qEOioGTeZt36OWcu6IKq7jb6NTNxs5OOjUUFD
+X-Google-Smtp-Source: AGHT+IHjLwX/evqEjXg4ayYqf0PYqU8i0f0wf9MNXXF6mSDW285hTAySvVzFWQ5N+YXeI/zF83qy4A==
+X-Received: by 2002:a17:903:8c6:b0:21f:35fd:1b7b with SMTP id d9443c01a7336-22428ad49f1mr354101705ad.50.1741834649379;
+        Wed, 12 Mar 2025 19:57:29 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-225c6bbcdd2sm2923335ad.172.2025.03.12.19.57.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Mar 2025 19:46:47 -0700 (PDT)
-Message-Id: <3f4b74eb3b934c62edb23b69db7460e3e0b44877.1741834001.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1875.v2.git.1741834001.gitgitgadget@gmail.com>
-References: <pull.1875.git.1741362522.gitgitgadget@gmail.com>
-	<pull.1875.v2.git.1741834001.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 13 Mar 2025 02:46:41 +0000
-Subject: [PATCH v2 6/6] am: switch from merge_recursive_generic() to
- merge_ort_generic()
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 12 Mar 2025 19:57:28 -0700 (PDT)
+Date: Thu, 13 Mar 2025 10:57:40 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v6 00/16] refs: batch refname availability checks
+Message-ID: <Z9JJpJkz66VVgDLy@ArchLinux>
+References: <20250217-pks-update-ref-optimization-v1-0-a2b6d87a24af@pks.im>
+ <20250312-pks-update-ref-optimization-v6-0-f778e0414f55@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Taylor Blau <me@ttaylorr.com>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250312-pks-update-ref-optimization-v6-0-f778e0414f55@pks.im>
 
-From: Elijah Newren <newren@gmail.com>
+On Wed, Mar 12, 2025 at 04:56:06PM +0100, Patrick Steinhardt wrote:
+> Changes in v6:
+>   - Use `for_each_string_list()` instead of manually iterating through
+>     the string list.
+>   - Stop sorting refs passed to `refs_verify_refnames_available()`.
+>   - Revive a comment that has been deleted during one of the
+>     refactorings.
+>   - Link to v5: https://lore.kernel.org/r/20250306-pks-update-ref-optimization-v5-0-dcb2ee037e97@pks.im
+> 
+> Thanks!
+> 
+> Patrick
 
-Switch from merge-recursive to merge-ort.  Adjust the following
-testcases due to the switch:
+The range-diff looks good to me. Thanks for your efforts.
 
-* t4151: This test left an untracked file in the way of the merge.
-  merge-recursive could only sometimes tell when untracked files were
-  in the way, and by the time it discovers others, it has already made
-  too many changes to back out of the merge.  So, instead of writing the
-  results to e.g. 'file1' it would instead write them to
-  'file1~branch1'.  This is confusing for users, because they might not
-  notice 'file1~branch1' and accidentally add and commit 'file1'.
-  In contrast, merge-ort correctly notices the file in the way before
-  making any changes and aborts.  Since this test didn't care about the
-  file in the way, just remove it before calling git-am.
-
-* t4255: Usage of merge-ort allows us to change two known failures into
-  successes.
-
-* t6427: As noted a few commits ago, the choice of conflict label for
-  diff3 markers for the ancestor commit was previously handled by
-  merge-recursive.c rather than by callers.  Since that has now changed,
-  `git am` needs to specify that label.  Although the previous conflict
-  label ("constructed merge base") was already fairly somewhat slanted
-  towards `git am`, let's use wording more along the lines of the
-  related command-line flag from `git apply` and function involved to
-  tie it more closely to `git am`.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/am.c                      | 5 +++--
- t/t4151-am-abort.sh               | 2 +-
- t/t4255-am-submodule.sh           | 1 -
- t/t6427-diff3-conflict-markers.sh | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/am.c b/builtin/am.c
-index 2921bb89ef1..3b61bd4c333 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -31,7 +31,7 @@
- #include "preload-index.h"
- #include "sequencer.h"
- #include "revision.h"
--#include "merge-recursive.h"
-+#include "merge-ort-wrappers.h"
- #include "log-tree.h"
- #include "notes-utils.h"
- #include "rerere.h"
-@@ -1638,12 +1638,13 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 	o.branch1 = "HEAD";
- 	their_tree_name = xstrfmt("%.*s", linelen(state->msg), state->msg);
- 	o.branch2 = their_tree_name;
-+	o.ancestor = "constructed fake ancestor";
- 	o.detect_directory_renames = MERGE_DIRECTORY_RENAMES_NONE;
- 
- 	if (state->quiet)
- 		o.verbosity = 0;
- 
--	if (merge_recursive_generic(&o, &our_tree, &their_tree, 1, bases, &result)) {
-+	if (merge_ort_generic(&o, &our_tree, &their_tree, 1, bases, &result)) {
- 		repo_rerere(the_repository, state->allow_rerere_autoupdate);
- 		free(their_tree_name);
- 		return error(_("Failed to merge in the changes."));
-diff --git a/t/t4151-am-abort.sh b/t/t4151-am-abort.sh
-index edb38da7010..8e1ecf8a685 100755
---- a/t/t4151-am-abort.sh
-+++ b/t/t4151-am-abort.sh
-@@ -112,7 +112,7 @@ test_expect_success 'am --abort will keep dirty index intact' '
- test_expect_success 'am -3 stops on conflict on unborn branch' '
- 	git checkout -f --orphan orphan &&
- 	git reset &&
--	rm -f otherfile-4 &&
-+	rm -f file-1 otherfile-4 &&
- 	test_must_fail git am -3 0003-*.patch &&
- 	test 2 -eq $(git ls-files -u | wc -l) &&
- 	test 4 = "$(cat otherfile-4)"
-diff --git a/t/t4255-am-submodule.sh b/t/t4255-am-submodule.sh
-index a7ba08f728c..e6679a01b44 100755
---- a/t/t4255-am-submodule.sh
-+++ b/t/t4255-am-submodule.sh
-@@ -19,7 +19,6 @@ am_3way () {
- 	$2 git am --3way patch
- }
- 
--KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
- test_submodule_switch_func "am_3way"
- 
- test_expect_success 'setup diff.submodule' '
-diff --git a/t/t6427-diff3-conflict-markers.sh b/t/t6427-diff3-conflict-markers.sh
-index dd5fe6a4021..57569c4f4bd 100755
---- a/t/t6427-diff3-conflict-markers.sh
-+++ b/t/t6427-diff3-conflict-markers.sh
-@@ -207,7 +207,7 @@ test_expect_success 'rebase --apply describes fake ancestor base' '
- 		cd rebase &&
- 		git rebase --abort &&
- 		test_must_fail git -c merge.conflictstyle=diff3 rebase --apply main &&
--		grep "||||||| constructed merge base" file
-+		grep "||||||| constructed fake ancestor" file
- 	)
- '
- 
--- 
-gitgitgadget
+Thanks,
+Jialuo
