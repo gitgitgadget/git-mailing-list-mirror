@@ -1,70 +1,70 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADFA2054F3
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 20:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223082054F3
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 20:18:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741983522; cv=none; b=XdrEE9XJ++muyr7CIyU+/IoLdUQAXI6mH/rY2y/Soa7ALI0x5Y/vnz9sYRLQt8DrFpHn7Hlrd8DzyKJuCVw6bbm5aGn7bOElhRT/EG2LO5iFpTAVcpPxxIG5o/MXH3fYP2MM5GMSy2uepUACZ6rTk1d79f5TaUq08ApIIQRye+M=
+	t=1741983526; cv=none; b=EhifaAnjr22h52MBROo1FKmbMDSvPDPK7SNQbNcNWGm2qnZ+JYMMbxP+Oj8ESr5irGdd3Gmy04sGaBMTDKzQJ7LTGJlHDCY+OMYp9QylU9R4kCUOMAe9pnmlXHojRxghlHjC7Tf3zhi+sFkTnW8hnnH73RKz5sOGF24gvTkAcw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741983522; c=relaxed/simple;
-	bh=KM2bJA0MViNUnwdYT0Bz58VxPzDp7jMGau/ps4mS4+U=;
+	s=arc-20240116; t=1741983526; c=relaxed/simple;
+	bh=wwH0XQaRbqNlb+WxfwmWe7VSWT+4MMMeQm70uzZAzoA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lQ3epPiWvZxrYxEyxM3GeX4uBbrupY01FBLiyLFbdDaVtsB6yPK4w8Xr56ilRnFoFsT1hYogemt1aEVL+2JeQ4i3hxAfEWtJfytNqEH0WeI18TgO/8A5wN1gwoc8452EfI33frmJfM+71b/If9RdFsBgclYx6oXTQ9l1Ko8KXsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=1F+5CEzS; arc=none smtp.client-ip=209.85.219.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=IWuWT/+fnTF9/vSPIw6q/gL6cBrQB8mBhwWrtBLszgsgjfMqRFpV29bDXMk+UW6uE44M90yYcvWAGsqtWTVBnzEVE8dUyTEyINNt0W8Ggrq/2lE/gPAYKtilTGOnxOIeskN2lhLeIfrk+HjqSYWXeN0gx+pz1fefM0UT8iNiV5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=MoaDpiR6; arc=none smtp.client-ip=209.85.222.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="1F+5CEzS"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6e91d323346so26834656d6.1
-        for <git@vger.kernel.org>; Fri, 14 Mar 2025 13:18:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="MoaDpiR6"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7c55500cf80so196115885a.1
+        for <git@vger.kernel.org>; Fri, 14 Mar 2025 13:18:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741983520; x=1742588320; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741983523; x=1742588323; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kP2Cp4/Wu0NP1Cmz9gq1/23FRXWJPZdjWHo2ATLqG3Q=;
-        b=1F+5CEzSg15IulRDEuA16DSU0A/Ix7CPVmker9Bv821bAr5YHJZH7ZwWWqbNgi9hQ8
-         wyDWhvRCCLGO476UpG5LNzbbS7mNC7jlMRnCfcRThqlrVB2kafSGwG6eoKZKYzRiNHNO
-         qpw0N1eqbbdO69evaN0T0Sfr6qtpi8DrihyHOGwr+gMU52/spY4Iu7xqEmevcNbJ54N4
-         EITIvEyC9x8xw7TQPCvEZrDwDUpHx1LJhtW13HTANcOd/w62gfoWc2VNGX0PFLnT13pI
-         GjSlvP454gTNt2g+WvwnBIQKjqm6RAFYls20H4SsQSxhjkfzEQC0mGVAqzT8VaMWsu3/
-         im7w==
+        bh=nUi1fV5CbQ0P51wBkNONPREMhlgs8lPVXE/LfhfBuNg=;
+        b=MoaDpiR6C3E9fI5/L582jrufoS1vKGZOSZK1+mHuay+v+ZR6bPWss6APQkjGufFDNY
+         z9Pwia4jqgDuuRZOYR0gZo18/17YcTRUlvaugjlaR9IBe9O3yeohzWp9DO/gnRcgcARl
+         Q54kFJYHiv3o7u+AQ7jnox11I/MdfvTXQmsv6Inc3Uget0EzCltIMqHdJ/R24Bp4eYU1
+         tRCGtOH3Lo9Sdmoh9e2HqEBz5JtF4cX56tEwGgzUBRw8K3UKtJy4tlpQUG55sN9z3nvy
+         4DGwF7DBKfrHZGLiCSxGqvVQnyn1v0QJz0xB71+BE3HDZuZFRo/cgW2etZ0t7TMnpkqW
+         7cQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741983520; x=1742588320;
+        d=1e100.net; s=20230601; t=1741983523; x=1742588323;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kP2Cp4/Wu0NP1Cmz9gq1/23FRXWJPZdjWHo2ATLqG3Q=;
-        b=DLOqhRIyV8/0u0zML6mnBnkta9RXPZ1sG5WAmjUqIcsYekmgMCAl3WbDTbWJmT+bzz
-         DLNd+JIyZxhQd8IrlHeII5nZZjSidmXtiWgVwEDRxjK+oIsftXoiXnWiFkkzCoXxgGC0
-         ZRR7uj8LR4fnwYIYjsDrQUBPO/LHZKHRsjpvt7eOZS5gWV3jMw4E4xbzaAdmLx1qjgcd
-         rfpi+SufQ7r48ZcDQHVXIqha0ztbbIPG9dzl7jWPIaEGegavwQrdS72s/wLCJcYA92zI
-         gg1ms3Cw2g2tJV8mV7UsTdHziKu4Yo8dz+D9D2vFmV7KWiJmYfmarJFv+7fCOtLVimXv
-         U+4g==
-X-Gm-Message-State: AOJu0YxwPzSeHVfUslH7BZRjj2UKK5Yz/yiDsXJ5Zu9iouBL7BBUa+01
-	KF+Mth7akQOuLA2Ylf/A66H1/B+py3nyjrdieQSJVWuIoMLvunU+u2clxi1NjIPm1Px+J/BE5rT
-	BDe4=
-X-Gm-Gg: ASbGncvMKSgHcn5e1kTOkkwIlgVC8rdOY5TdJXRDv0gxiD9UFbFjbuOJcKaOeusgUp0
-	mJ/g0dn3YbRh0/5hn+iyFVO65qsa/6t5sjBkWpiRqItDmU76M4QxzJvNsbJwe0fps1lA5hp8x3o
-	ev4i4OoVgRk2pZ7iPX+bCuPPhpoyHyl1EH7VqOZ/GaJO8GX5zUAS3P94/LFkERvYkDAeIdkaa6w
-	VrGQx7/oV87xh3QRzcGY3Kl5uW61f+bG9TG/YiOamx7s3jH06JROYOhOZhX7fwZ6cTCr6sp2AT9
-	Kpf8l5QEatOvJ8rve+QT1kr440nzismQPQJf4kTEob+pWVhlVjmiFgp6eD5N/FGKYzUbN7XHDI8
-	PYy2BJGpiepaMx7h7
-X-Google-Smtp-Source: AGHT+IGBQJCpYZ5N4TQlhEu+xSIy20+lq30heDAmGZezrBxqeZeWhkoTtZSDUu2Aso5lKhd/kpq5cQ==
-X-Received: by 2002:ad4:5c49:0:b0:6e2:4da9:4e2d with SMTP id 6a1803df08f44-6eaeac211b7mr51370116d6.9.1741983519053;
-        Fri, 14 Mar 2025 13:18:39 -0700 (PDT)
+        bh=nUi1fV5CbQ0P51wBkNONPREMhlgs8lPVXE/LfhfBuNg=;
+        b=qZObTlWlbeBSO9iBog3qYpWIcePyqbov6qWINQ1vRRzOguIYtf7PymMNoawEuMkQRq
+         h+8NEH5nHkobRaCjVT2dDqqpqWkg17gLTOx8oJf/5GFBOf9sXOX5w8TvpFWEZk1lsWJH
+         hXVnOumDmVLqh62IcIFwYxSA4UqQEKvc3orhVaGV/8Gxd6TaGk9SnHkcykDBJpXadlNO
+         DfpxHXXjsPSkDLEv/aLjdAK69+6W7OC7ASAZ8V/bYWrLoKjAJAb3Tn888BQPBpRn6ZJi
+         2dZJvhtRTbbzMmJZPiOpazCYVUTzNAFm6Q+MrSsrJVE+xpQ6ONE47SqcxfxQJ062/N5G
+         nThw==
+X-Gm-Message-State: AOJu0YyEmhRfo7YKxLFQ9GKG85Wv8QqGijogyPpcaEeulYW/9yq/ng+I
+	aUIlfVPSckv/PpInLm/e6bcVILz0rNplkt6OrHrZDlxLO0vV7beLomWPBb6mhVavwDiT4yrBZaF
+	W1ds=
+X-Gm-Gg: ASbGnctZUI3QWfIjWSYQMabjhxWwIM570u81b3h7HVmErnp2FjOtajJTW5GsmcfyIig
+	BDOivkBOzkq2fMJlm+FX+jYLqVe8h7ZcP8p52Eb6LaQx9vopVgp3I+kp1t0kpK5BC7GPv2uebS8
+	kusWaBLRgWlPOxe78vu8Q0oldEoOEiAS1WgQPJsEnRjsse8PnqSt9aKeAVU+Vzsvqwela2jG+dE
+	DSxbHpdp9xcgzpGsweWo6luL0sifBtBdq3m/W9wFuoQh9kWw7kbnFZWYNYooZqzcQIjyyvhcWsY
+	YTkq8ggj1r5UVzjje0LqGxi2GCCztBMZ6bvt9LNLcYIq0AUav9iGWdUPIvVEgWRqwNhCnCA5dfw
+	UennGwiAFdYaNC2TC
+X-Google-Smtp-Source: AGHT+IECe4CHLsc6BKmFACyDXxT8B7939TGaNHbwaUVfZLC9PGag3dFgY6ryRoDfPWR0jQL3hH/CgQ==
+X-Received: by 2002:a05:620a:4550:b0:7c5:49b7:237a with SMTP id af79cd13be357-7c57c7e22d5mr415952185a.19.1741983522739;
+        Fri, 14 Mar 2025 13:18:42 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eade209bcdsm28018196d6.24.2025.03.14.13.18.38
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c573c4db57sm297931485a.8.2025.03.14.13.18.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Mar 2025 13:18:38 -0700 (PDT)
-Date: Fri, 14 Mar 2025 16:18:37 -0400
+        Fri, 14 Mar 2025 13:18:42 -0700 (PDT)
+Date: Fri, 14 Mar 2025 16:18:41 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 06/13] pack-bitmap.c: support bitmap pack-reuse with
+Subject: [PATCH v4 07/13] pack-bitmap.c: teach `rev-list --test-bitmap` about
  incremental MIDXs
-Message-ID: <14d3d80c3d301233048004fe9de18154aa597782.1741983492.git.me@ttaylorr.com>
+Message-ID: <b45a9ccbc20180e3358e314b4fd5e46bfa566241.1741983492.git.me@ttaylorr.com>
 References: <cover.1723755667.git.me@ttaylorr.com>
  <cover.1741983492.git.me@ttaylorr.com>
 Precedence: bulk
@@ -77,54 +77,221 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1741983492.git.me@ttaylorr.com>
 
-In a similar fashion as previous commits in the first phase of
-incremental MIDXs, enumerate not just the packs in the current
-incremental MIDX layer, but previous ones as well.
+Implement support for the special `--test-bitmap` mode of `git rev-list`
+when using incremental MIDXs.
 
-Likewise, in reuse_partial_packfile_from_bitmap(), when reusing only a
-single pack from a MIDX, use the oldest layer's preferred pack as it is
-likely to contain the most amount of reusable sections.
+The bitmap_test_data structure is extended to contain a "base" pointer
+that mirrors the structure of the bitmap chain that it is being used to
+test.
+
+When we find a commit to test, we first chase down the ->base pointer to
+find the appropriate bitmap_test_data for the bitmap layer that the
+given commit is contained within, and then perform the test on that
+bitmap.
+
+In order to implement this, light modifications are made to
+bitmap_for_commit() to reimplement it in terms of a new function,
+find_bitmap_for_commit(), which fills out a pointer which indicates the
+bitmap layer which contains the given commit.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ pack-bitmap.c | 107 ++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 86 insertions(+), 21 deletions(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 1b4fec0033..7a41535425 100644
+index 7a41535425..bb09ce3cf5 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -2333,7 +2333,8 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 		multi_pack_reuse = 0;
+@@ -938,8 +938,9 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+ 	return NULL;
+ }
  
- 	if (multi_pack_reuse) {
--		for (i = 0; i < bitmap_git->midx->num_packs; i++) {
-+		struct multi_pack_index *m = bitmap_git->midx;
-+		for (i = 0; i < m->num_packs + m->num_packs_in_base; i++) {
- 			struct bitmapped_pack pack;
- 			if (nth_bitmapped_pack(r, bitmap_git->midx, &pack, i) < 0) {
- 				warning(_("unable to load pack: '%s', disabling pack-reuse"),
-@@ -2359,14 +2360,18 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 		uint32_t pack_int_id;
+-struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
+-				      struct commit *commit)
++static struct ewah_bitmap *find_bitmap_for_commit(struct bitmap_index *bitmap_git,
++						  struct commit *commit,
++						  struct bitmap_index **found)
+ {
+ 	khiter_t hash_pos;
+ 	if (!bitmap_git)
+@@ -949,18 +950,30 @@ struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
+ 	if (hash_pos >= kh_end(bitmap_git->bitmaps)) {
+ 		struct stored_bitmap *bitmap = NULL;
+ 		if (!bitmap_git->table_lookup)
+-			return bitmap_for_commit(bitmap_git->base, commit);
++			return find_bitmap_for_commit(bitmap_git->base, commit,
++						      found);
  
- 		if (bitmap_is_midx(bitmap_git)) {
-+			struct multi_pack_index *m = bitmap_git->midx;
- 			uint32_t preferred_pack_pos;
+ 		/* this is a fairly hot codepath - no trace2_region please */
+ 		/* NEEDSWORK: cache misses aren't recorded */
+ 		bitmap = lazy_bitmap_for_commit(bitmap_git, commit);
+ 		if (!bitmap)
+-			return bitmap_for_commit(bitmap_git->base, commit);
++			return find_bitmap_for_commit(bitmap_git->base, commit,
++						      found);
++		if (found)
++			*found = bitmap_git;
+ 		return lookup_stored_bitmap(bitmap);
+ 	}
++	if (found)
++		*found = bitmap_git;
+ 	return lookup_stored_bitmap(kh_value(bitmap_git->bitmaps, hash_pos));
+ }
  
--			if (midx_preferred_pack(bitmap_git->midx, &preferred_pack_pos) < 0) {
-+			while (m->base_midx)
-+				m = m->base_midx;
++struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
++				      struct commit *commit)
++{
++	return find_bitmap_for_commit(bitmap_git, commit, NULL);
++}
 +
-+			if (midx_preferred_pack(m, &preferred_pack_pos) < 0) {
- 				warning(_("unable to compute preferred pack, disabling pack-reuse"));
- 				return;
- 			}
+ static inline int bitmap_position_extended(struct bitmap_index *bitmap_git,
+ 					   const struct object_id *oid)
+ {
+@@ -2511,6 +2524,8 @@ struct bitmap_test_data {
+ 	struct bitmap *tags;
+ 	struct progress *prg;
+ 	size_t seen;
++
++	struct bitmap_test_data *base_tdata;
+ };
  
--			pack = bitmap_git->midx->packs[preferred_pack_pos];
-+			pack = nth_midxed_pack(m, preferred_pack_pos);
- 			pack_int_id = preferred_pack_pos;
- 		} else {
- 			pack = bitmap_git->pack;
+ static void test_bitmap_type(struct bitmap_test_data *tdata,
+@@ -2519,6 +2534,11 @@ static void test_bitmap_type(struct bitmap_test_data *tdata,
+ 	enum object_type bitmap_type = OBJ_NONE;
+ 	int bitmaps_nr = 0;
+ 
++	if (bitmap_is_midx(tdata->bitmap_git)) {
++		while (pos < tdata->bitmap_git->midx->num_objects_in_base)
++			tdata = tdata->base_tdata;
++	}
++
+ 	if (bitmap_get(tdata->commits, pos)) {
+ 		bitmap_type = OBJ_COMMIT;
+ 		bitmaps_nr++;
+@@ -2582,13 +2602,57 @@ static void test_show_commit(struct commit *commit, void *data)
+ 	display_progress(tdata->prg, ++tdata->seen);
+ }
+ 
++static uint32_t bitmap_total_entry_count(struct bitmap_index *bitmap_git)
++{
++	uint32_t total = 0;
++	do {
++		total = st_add(total, bitmap_git->entry_count);
++		bitmap_git = bitmap_git->base;
++	} while (bitmap_git);
++
++	return total;
++}
++
++static void bitmap_test_data_prepare(struct bitmap_test_data *tdata,
++				     struct bitmap_index *bitmap_git)
++{
++	memset(tdata, 0, sizeof(struct bitmap_test_data));
++
++	tdata->bitmap_git = bitmap_git;
++	tdata->base = bitmap_new();
++	tdata->commits = ewah_to_bitmap(bitmap_git->commits);
++	tdata->trees = ewah_to_bitmap(bitmap_git->trees);
++	tdata->blobs = ewah_to_bitmap(bitmap_git->blobs);
++	tdata->tags = ewah_to_bitmap(bitmap_git->tags);
++
++	if (bitmap_git->base) {
++		CALLOC_ARRAY(tdata->base_tdata, 1);
++		bitmap_test_data_prepare(tdata->base_tdata, bitmap_git->base);
++	}
++}
++
++static void bitmap_test_data_release(struct bitmap_test_data *tdata)
++{
++	if (!tdata)
++		return;
++
++	bitmap_test_data_release(tdata->base_tdata);
++	free(tdata->base_tdata);
++
++	bitmap_free(tdata->base);
++	bitmap_free(tdata->commits);
++	bitmap_free(tdata->trees);
++	bitmap_free(tdata->blobs);
++	bitmap_free(tdata->tags);
++}
++
+ void test_bitmap_walk(struct rev_info *revs)
+ {
+ 	struct object *root;
+ 	struct bitmap *result = NULL;
+ 	size_t result_popcnt;
+ 	struct bitmap_test_data tdata;
+-	struct bitmap_index *bitmap_git;
++	struct bitmap_index *bitmap_git, *found;
+ 	struct ewah_bitmap *bm;
+ 
+ 	if (!(bitmap_git = prepare_bitmap_git(revs->repo)))
+@@ -2597,17 +2661,28 @@ void test_bitmap_walk(struct rev_info *revs)
+ 	if (revs->pending.nr != 1)
+ 		die(_("you must specify exactly one commit to test"));
+ 
+-	fprintf_ln(stderr, "Bitmap v%d test (%d entries%s)",
++	fprintf_ln(stderr, "Bitmap v%d test (%d entries%s, %d total)",
+ 		bitmap_git->version,
+ 		bitmap_git->entry_count,
+-		bitmap_git->table_lookup ? "" : " loaded");
++		bitmap_git->table_lookup ? "" : " loaded",
++		bitmap_total_entry_count(bitmap_git));
+ 
+ 	root = revs->pending.objects[0].item;
+-	bm = bitmap_for_commit(bitmap_git, (struct commit *)root);
++	bm = find_bitmap_for_commit(bitmap_git, (struct commit *)root, &found);
+ 
+ 	if (bm) {
+ 		fprintf_ln(stderr, "Found bitmap for '%s'. %d bits / %08x checksum",
+-			oid_to_hex(&root->oid), (int)bm->bit_size, ewah_checksum(bm));
++			oid_to_hex(&root->oid),
++			(int)bm->bit_size, ewah_checksum(bm));
++
++		if (bitmap_is_midx(found))
++			fprintf_ln(stderr, "Located via MIDX '%s'.",
++				   hash_to_hex_algop(get_midx_checksum(found->midx),
++						     revs->repo->hash_algo));
++		else
++			fprintf_ln(stderr, "Located via pack '%s'.",
++				   hash_to_hex_algop(found->pack->hash,
++						     revs->repo->hash_algo));
+ 
+ 		result = ewah_to_bitmap(bm);
+ 	}
+@@ -2624,16 +2699,10 @@ void test_bitmap_walk(struct rev_info *revs)
+ 	if (prepare_revision_walk(revs))
+ 		die(_("revision walk setup failed"));
+ 
+-	tdata.bitmap_git = bitmap_git;
+-	tdata.base = bitmap_new();
+-	tdata.commits = ewah_to_bitmap(bitmap_git->commits);
+-	tdata.trees = ewah_to_bitmap(bitmap_git->trees);
+-	tdata.blobs = ewah_to_bitmap(bitmap_git->blobs);
+-	tdata.tags = ewah_to_bitmap(bitmap_git->tags);
++	bitmap_test_data_prepare(&tdata, bitmap_git);
+ 	tdata.prg = start_progress(revs->repo,
+ 				   "Verifying bitmap entries",
+ 				   result_popcnt);
+-	tdata.seen = 0;
+ 
+ 	traverse_commit_list(revs, &test_show_commit, &test_show_object, &tdata);
+ 
+@@ -2645,11 +2714,7 @@ void test_bitmap_walk(struct rev_info *revs)
+ 		die(_("mismatch in bitmap results"));
+ 
+ 	bitmap_free(result);
+-	bitmap_free(tdata.base);
+-	bitmap_free(tdata.commits);
+-	bitmap_free(tdata.trees);
+-	bitmap_free(tdata.blobs);
+-	bitmap_free(tdata.tags);
++	bitmap_test_data_release(&tdata);
+ 	free_bitmap_index(bitmap_git);
+ }
+ 
 -- 
 2.49.0.13.gd0d564685b
 
