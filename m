@@ -1,123 +1,147 @@
-Received: from mail-il1-f226.google.com (mail-il1-f226.google.com [209.85.166.226])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1A51547E2
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 22:37:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.226
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B80E13541B
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 23:15:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741991877; cv=none; b=dwFYDBbRvV6ZHjX7U+QaLZ2UtpCfmHZ8CA/F/WDoVm5ghMyeJ+UCAXS8DZMg3NYwna3djfGwVgpTIlp9JXtwjie2Afd+8o//NzoBaUiWBAOici4u2jWLszdQJdPBUxB8jB46AayqPR1757sgmnrjv3kHeonXcMua9Tr4DG0VnkU=
+	t=1741994109; cv=none; b=OH32kMenmLvyLu2vkAjbUv6Uu6R/S4KM39Kq3YCyhtoV8eZHgqG6MUcEQgW+u9qlVh6OiLe2b2P011ldN/rLEeojrH30FVARllp9iEJvMP7F05k0qzLYdJa6WR1Jwme95DIWzQeQvMrTEi08MBHN9p2o1tAwBcAOZO6aMYkph2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741991877; c=relaxed/simple;
-	bh=VvWQZ2yH//xole178SlSiv25uDlhdt7dHHPH3yN51gc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IRerAP5UN3T2iIO6MTxgXsskxLES0Gx7ohO7Im7TczZ9Uo/rGGRWMK6V1whzRI3oe6GDP8Qyxe4pEHqJEN8FolVD5m14PHirvG5m88/LzEERQVzqm14oDKsWx8KP44rrPFR21V0+fHCq38ild0wo0DXYx/3PvWKjpZ3FA2lkWjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org; spf=pass smtp.mailfrom=mandelberg.org; dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=qQaJnDHB; dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=S5Y7gjKJ; arc=none smtp.client-ip=209.85.166.226
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mandelberg.org
+	s=arc-20240116; t=1741994109; c=relaxed/simple;
+	bh=dWSbHzzfPC/8b1zAjF3xzjtleT2r7ppiKZf9dKGM/pw=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ab4SVRSIArOTGcMuDsAzyUFSntgKf5aJI+fdtel/pE5eVoj8HoU8pjzmc7DTbARQWeUfDGVI24nsARUNH3wO9uCunYvEvldcEPXye1mL//pwY0ayjOd09LZEamdLSXamOHrZBb4cUl/XGCwK7rmASHoLMQMUffSs1XfG1Es3uFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=V7n7Ii1O; arc=none smtp.client-ip=185.70.40.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="qQaJnDHB";
-	dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="S5Y7gjKJ"
-Received: by mail-il1-f226.google.com with SMTP id e9e14a558f8ab-3d4436ba324so18974345ab.2
-        for <git@vger.kernel.org>; Fri, 14 Mar 2025 15:37:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741991875; x=1742596675;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :dkim-signature:dkim-signature:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=4EkHC+fwQ/ehzoxJWY6qNRVGeLiW366lFfaouuDOUMU=;
-        b=JLVoIzatp8PUV3abNM7kg1Mn/Q2AtzIRFSvoKZLDemW0nPUEWLB+q0SUer5s89edlq
-         zGAvKGElzQZETx2IbmS6qVhMsn71XRUmjYo9CWB8Kf61Bd0Mh2suJ0KEPzfv4Ub5juft
-         UXtzsDb82XCLoaycbN23tNCoEU5tNetykmnu5SaHkpFUUlf8SErrbOcrKMvrwTeql+ND
-         ueCWf9yU5nawvEeomO6OXB43NfY4KmKlvF9gT/WEm+4ykWyJgX/DoQky/EpaLN07Romj
-         3P0uXx+Gs/agcF7t6HOHVF6PMR7WorKzxgk2KlLa5YsnKNhjUqm1lygpLh6xpgX6nl9W
-         RLug==
-X-Forwarded-Encrypted: i=1; AJvYcCVW+aXsiljLFBsORfOwREYzeE1SiVHJAKSxO+qG0Voq3q3ImeyObCNWqv7SBTGt1MZ2Kj8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5tt0LNJGz9mQsEtrFMamTyAoaF21rzYzGM8qHkLxycvUgpJv4
-	dXmLvsNPFURIV5gyLViLqk9cxtwgmZ6+ZdvpfblLXqotx6DMRhhepEvQh8lyILnkSxCKhqEa1JN
-	G/CUODJOYrHGHauN6zMPnG5cgqwxcL+H3
-X-Gm-Gg: ASbGncvaMNfhGj+zRa7N72nNSLvxYlNSjuTYgkoAsXjkC54pqSuAIuWJFwRrNQ8Pzoo
-	L8w/l3qyFu3AFPmNhlveH1trzyd24AT+r2v5piIs2s0xiWtwLiKYBli9PS9nSRwkch3jatxgiUe
-	hIPVJTyDpjp+O1UZkoVdv4g2kLrxfG4XuGvJTKagPF6Ko/EP+h09V7GlI9qlDrvqd+rGbcA8SRU
-	hKiV4ixf61u+8LIUVgT+WqLn7OAptSLekUj8RitHoxprmrPVAOopUN6fYZmuQm7GR+SfG5JzLJg
-	tGKj19DiGRWIC62h7kaCb9cxWcBzZUOqd+Cl4+d88npMFJykWf+8p15RKBnt1JNnfvkD5ljUe40
-	lC4sN8kCCekETgJwkNZzKS+3H3U0DYQ==
-X-Google-Smtp-Source: AGHT+IGhO2oAVDEna5O7JzwMQHRbSAgwZ1nC7mF+4dVhthtgV5M2hTu7IjBIGcERvIYu/J+M2JA6cElCLRfe
-X-Received: by 2002:a05:6e02:3c02:b0:3d3:fdb8:1796 with SMTP id e9e14a558f8ab-3d4839f5f81mr43610085ab.2.1741991875035;
-        Fri, 14 Mar 2025 15:37:55 -0700 (PDT)
-Received: from mail-outbound-e14cf917.virgo.mandelberg.org (pool-108-49-41-183.bstnma.fios.verizon.net. [108.49.41.183])
-        by smtp-relay.gmail.com with ESMTPS id e9e14a558f8ab-3d47a64f763sm1999855ab.2.2025.03.14.15.37.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Mar 2025 15:37:55 -0700 (PDT)
-X-Relaying-Domain: mandelberg.org
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple;
- d=mandelberg.org; i=@mandelberg.org; q=dns/txt;
- s=mail-outbound-e14cf917-597d7abb; t=1741991874; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding : from;
- bh=VvWQZ2yH//xole178SlSiv25uDlhdt7dHHPH3yN51gc=;
- b=qQaJnDHBbUStrX7h2Xg5GpiwtCwehF++aTk7a/EMDEcqxtNxo3X6npM6mLw0b55bo/+7F
- YTWNjkXV+tokozrBw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mandelberg.org;
- i=@mandelberg.org; q=dns/txt; s=mail-outbound-e14cf917-e56dad1c;
- t=1741991874; h=message-id : date : mime-version : subject : to : cc :
- references : from : in-reply-to : content-type :
- content-transfer-encoding : from;
- bh=VvWQZ2yH//xole178SlSiv25uDlhdt7dHHPH3yN51gc=;
- b=S5Y7gjKJ5V3GW58ebAdqNHsMB5RNwwuc3DqM2S6MXZ2Uw1PJroMfFiryUu8wjJEsDvlls
- 3jC7VfsJOuyeBjX6LIX76ctza0bSOfcxkCJDsOyhGaqFJxQwesY/QzaDy9uQEFk8dV4P/WF
- O/25AOpEpHoVG2NtUtK5d5RqHPgIwVf0YOrqxpN9y/NkX0UmMxYhvrSa3wbj/xYRrhIJ2gu
- eOWDVMb1A5vpOjOxyrjNfbD2yEYxdXct++cHFjJoaTdF8YXHsGpu7ShbJo+fhSYPS4v3+en
- vYS4HjzgAfs/BOCQPEEBD3YkhRdwxhnsxM/o0E2NTpjuzW1aHeFXmgoorBxQ==
-Received: from [IPV6:fde5:2b79:35f0:2::166] (unknown [IPv6:fde5:2b79:35f0:2::166])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (secp384r1) server-digest SHA384)
-	(No client certificate requested)
-	by mail-outbound-e14cf917.virgo.mandelberg.org (Postfix) with ESMTPSA id 4ZDzlk1CSkzySw;
-	Fri, 14 Mar 2025 22:37:54 +0000 (UTC)
-Message-ID: <015b89f8-63eb-4203-8d43-47c9a6d65cda@mandelberg.org>
-Date: Fri, 14 Mar 2025 18:37:53 -0400
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="V7n7Ii1O"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1741994104; x=1742253304;
+	bh=dWSbHzzfPC/8b1zAjF3xzjtleT2r7ppiKZf9dKGM/pw=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=V7n7Ii1OVlCpHZ9A5CyobiC6CztQN+qLb385UowhtL4WpliiwLvwo5w4Z+R/OVDU7
+	 32AP9/Sn5rhuy/hlalu0GKSFRGDcf+k1O6qR9pM6qnnYkR02nlzGrHHPGdGZfrsTwY
+	 TfMdtiC9rpeKgn9Fw2tPreG5FFY0INdkwWdt7tPPqmzY3RzebFayPryJXUz9IouACy
+	 LyEpdGDpAYcW0DF2L3ycoebzfP24JLUnbVpC8B60gnQXnoEJ5Q+j1a7ytz+QIhdUD2
+	 Q22kQVraNMUMK9pXlQhuDfSA1RRiHq6lvTUwoBDPgskmC4aqGmR2zJAs3e8eCvKRi/
+	 1mOPKPVTitSiw==
+Date: Fri, 14 Mar 2025 23:14:59 +0000
+To: =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+From: Jason Cho <jason11choca@proton.me>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] xdiff: avoid arithmetic overflow in xdl_get_hunk()
+Message-ID: <gq3mW6C-_CzvRWe7vlXuDni4d2hDajYwmVqqjBC9h-2HhGU9qiyvmzxveXEVwIhBE4X4vkVKsHHYWayWLnQ9gso8HHYbjXi2TxeZaaMnf0g=@proton.me>
+In-Reply-To: <4e9b6b4c-aaa1-4c6f-93f4-7bb04607e843@web.de>
+References: <xXWgbH3mlNEvFcdGLqBHwcclZoeZNPoLg8Hr6YCipHXvS5eKaHeTppzFM-l_wyB46BB1R1T0j6g_jWRXIj7-GRJh1LPxi1ta3GkQ5t8F4-0=@proton.me> <NYMqsJ7uttDzFT2OOEg5LLsxCSoQhTzqBs16KrMHGEKC7LzOAiYnYTEZavRQWqGH41UgjdwScwer7MssNzI7AEDHnD8GTBWvoBIqJ2e7D6g=@proton.me> <4e9b6b4c-aaa1-4c6f-93f4-7bb04607e843@web.de>
+Feedback-ID: 126703824:user:proton
+X-Pm-Message-ID: a35673d3fba4dd72703cdacdb999d719a3317203
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] completion: fix bugs with slashes in remote names
-To: Junio C Hamano <gitster@pobox.com>
-Cc: David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
- Phillip Wood <phillip.wood123@gmail.com>
-References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
- <1587533591c81d38977e62165784f8eb@mandelberg.org>
- <c80d20d93c92422437150084f402ac36@mandelberg.org>
- <xmqqo6y3dzno.fsf@gitster.g>
-Content-Language: en-US
-From: David Mandelberg <david@mandelberg.org>
-In-Reply-To: <xmqqo6y3dzno.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Op 2025-03-14 om 18:18 schreef Junio C Hamano:
-> David Mandelberg <david@mandelberg.org> writes:
-> 
->> +	__git for-each-ref --format='%(refname)' 'refs/remotes/**' |
-> 
-> Just a bit of curiosity, but how would this be different from using
-> 
-> 	__git for-each-ref --format='%(refname)' refs/remotes/
-> 
-> i.e. the prefix match, here?  Does the wildmatcher clever enough to
-> optimize "**" away and make it just to iterate over refs/remotes/
-> hierarchy without filtering anything?
+Dear Ren=C3=A9,
 
-Oh right, I lost track of that bit. When I wrote that, I didn't know 
-that for-each-ref did prefix matching. Phillip Wood pointed it out:
+What a thorough analysis. I didn't know this bug is only on Windows.
 
-> If there are no glob characters then "git for-each-ref" does a prefix match so strictly speaking you don't need the '**' but I don't think it matters in practice.
+Thank you for submitting the fix. I am excited to see it in a new release.
 
-But I forgot about it when I sent v3.
+For now I will cherrypick your patch to my fork of git.
 
-Do you want me to change it? Should I send a v4 now, or just make a 
-fixup commit locally so I don't forget it when I send a v4 in the future?
+Best regards,
+Jason Cho
+
+
+On Friday, March 14th, 2025 at 11:00 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> w=
+rote:
+
+> xdl_get_hunk() calculates the maximum number of common lines between two
+> changes that would fit into the same hunk for the given context options.
+> It involves doubling and addition and thus can overflow if the terms are
+> huge.
+>=20
+> The type of ctxlen and interhunkctxlen in xdemitconf_t is long, while
+> the type of the corresponding context and interhunkcontext in struct
+> diff_options is int. On many platforms longs are bigger that ints,
+> which prevents the overflow. On Windows they have the same range and
+> the overflow manifests as hunks that are split erroneously and lines
+> being repeated between them.
+>=20
+> Fix the overflow by checking and not going beyond LONG_MAX. This allows
+> specifying a huge context line count and getting all lines of a changed
+> files in a single hunk, as expected.
+>=20
+> Reported-by: Jason Cho jason11choca@proton.me
+>=20
+> Signed-off-by: Ren=C3=A9 Scharfe l.s.r@web.de
+>=20
+> ---
+> t/t4055-diff-context.sh | 10 ++++++++++
+> xdiff/xemit.c | 8 +++++++-
+> 2 files changed, 17 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/t/t4055-diff-context.sh b/t/t4055-diff-context.sh
+> index f7ff234cf9..ec2804eea6 100755
+> --- a/t/t4055-diff-context.sh
+> +++ b/t/t4055-diff-context.sh
+> @@ -89,4 +89,14 @@ test_expect_success '-U0 is valid, so is diff.context=
+=3D0' '
+> grep "^+MODIFIED" output
+> '
+>=20
+> +test_expect_success '-U2147483647 works' '
+> + echo APPENDED >>x &&
+>=20
+> + test_line_count =3D 16 x &&
+> + git diff -U2147483647 >output &&
+>=20
+> + test_line_count =3D 22 output &&
+> + grep "^-ADDED" output &&
+> + grep "^+MODIFIED" output &&
+> + grep "^+APPENDED" output
+> +'
+> +
+> test_done
+> diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+> index f8e3f25b03..1d40c9cb40 100644
+> --- a/xdiff/xemit.c
+> +++ b/xdiff/xemit.c
+> @@ -43,6 +43,10 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, cha=
+r const pre, xdemitcb_t *
+> return 0;
+> }
+>=20
+> +static long saturating_add(long a, long b)
+> +{
+> + return signed_add_overflows(a, b) ? LONG_MAX : a + b;
+> +}
+>=20
+> /
+> * Starting at the passed change atom, find the latest change atom to be i=
+ncluded
+> @@ -52,7 +56,9 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, char=
+ const *pre, xdemitcb_t *
+> xdchange_t *xdl_get_hunk(xdchange_t **xscr, xdemitconf_t const *xecfg)
+> {
+> xdchange_t *xch, *xchp, *lxch;
+> - long max_common =3D 2 * xecfg->ctxlen + xecfg->interhunkctxlen;
+>=20
+> + long max_common =3D saturating_add(saturating_add(xecfg->ctxlen,
+>=20
+> + xecfg->ctxlen),
+>=20
+> + xecfg->interhunkctxlen);
+>=20
+> long max_ignorable =3D xecfg->ctxlen;
+>=20
+> long ignored =3D 0; /* number of ignored blank lines */
+>=20
+> --
+> 2.48.1
