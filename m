@@ -1,194 +1,114 @@
-Received: from mailout10.t-online.de (mailout10.t-online.de [194.25.134.21])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CAE1FF5EB
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 14:24:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.25.134.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FA01FFC5B
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 15:00:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741962267; cv=none; b=OOFvBHYOhZ/jv0qCl9wvP6d+Pp28HnN0iXCY/tJst7JKH5LaK2O7+iLuA0+6NyNEn04Ia7Do+KnxtJh32LuRrU9CznIkCFyFdpxIULjZFle9w5LwprTOnARkwcAoUPJEu4iWXXKB+LIep8EUgDmdtlEuHfUhHuSfIIdfaTWQnFI=
+	t=1741964441; cv=none; b=lUFhCNd7OC27tCBLVLmYhhgDeSizQ/loTJg9r9Zi9KEkgQgFq3MH6f3Q1Bh3GW8TvSfbU4GsHTwJQZZUEeLIANn0xHIGihY3Dd2VJ8wu2mJ6821ThKQXP5V8rYMKM10GRIJ5lFO3iEvvG5O2kUj1FUBe84FenmDUgq0SCSX0TA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741962267; c=relaxed/simple;
-	bh=iBiQQax1mhWhCN700e9TIOkOjEUsgUBDCVPLMiohAsE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZTQgVr5jvYlTb7XsNjechma/wRz4V8AvZ3abS05+WS6NWfsj6X2+u3mvlJIYPC/7m+AaPL2od1e7ZsNs4Xy8Kwc+g9BSS9sQskSfpIz4yUOO6NwvnUmHdXkSkH7ic9MSywzAhsMnc6MwdzS83WpFhwkm4NKCHKL6AKfhUMPLZAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=t-online.de; spf=pass smtp.mailfrom=t-online.de; arc=none smtp.client-ip=194.25.134.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=t-online.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=t-online.de
-Received: from fwd71.aul.t-online.de (fwd71.aul.t-online.de [10.223.144.97])
-	by mailout10.t-online.de (Postfix) with SMTP id B50AFF88;
-	Fri, 14 Mar 2025 15:18:57 +0100 (CET)
-Received: from [192.168.178.52] ([77.20.184.84]) by fwd71.t-online.de
-	with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
-	esmtp id 1tt5sF-2Tw5Tc0; Fri, 14 Mar 2025 15:18:57 +0100
-Message-ID: <de954c02-8711-43e9-8f4c-259718034497@t-online.de>
-Date: Fri, 14 Mar 2025 15:18:55 +0100
+	s=arc-20240116; t=1741964441; c=relaxed/simple;
+	bh=vnewZKT/HIK8M7ytWMFSjp3EIGI8gkqkyDOJXOlWdss=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JAtKz08FULNvyQ/pacgAoXqI6RBa32eucvVWXBdXQY1S8tzfLJrJDi2BwaRB06p48lw/fAvi0I9Citbd5SALFr8p+cZkRXdAwEodB7dpWzDQOT4jmN/mLeGbqLN4afLbXNXgvdvSgORhpvQPHFjI3fgL1YVgHUSrGnodgkCafZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mo+2tOwN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vehGgvva; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mo+2tOwN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vehGgvva"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 517ED1383184;
+	Fri, 14 Mar 2025 11:00:37 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Fri, 14 Mar 2025 11:00:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1741964437; x=1742050837; bh=cw0aNnZoXK
+	7FOJDx4+MyufjTMqdIeny8e8IeWcimlRI=; b=mo+2tOwNW5MR5Hn8LRZ9wY4flw
+	5ksaEA/VBbbW3IaPRm+IM5zkALtdH7k8DigcwlNPh6lHZg28eDe4Z7Maw0WE2bUQ
+	WCK9x57Jyk0mDPlZsZ5Afb7hsBC50o+IlkYnFwQstgWjnYDBFFSMuAwjelqNaZNZ
+	A4im55eZ4YuCLylCLkRciek+Z+5NLOwI5Yw4BWCbJPhEVBOX2zr94F6e2gL0Lo0e
+	PwvmNivJq2e18QyDR/TjWrl/14/ZLsXTsr24T/0+4Ut6cZJ8mtNzUQSNoru5k+MY
+	BfezdxgifbTBaLw+dRZX0MHgvlm4zT/mZVgIxcqd8W1t7f4Wdrplo8dEdXeA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741964437; x=1742050837; bh=cw0aNnZoXK7FOJDx4+MyufjTMqdIeny8e8I
+	eWcimlRI=; b=vehGgvvaiB88SQvmQLpsApLkMsC8m57CATEbE+nkMhXESwjX7/Z
+	sLs2+VMeKcDeLLZNMf3bbCp5QUKIzu83521S6h7Y2zdx6PiPTQvfD8qQUoF0z85a
+	BPYlMAvR+jpnTYVRv+IvN+NhIHFh/LcZzGkn47pw4oDZNju6/mX0oyWbA3x8FcNS
+	jVFreKhsihDqtg63zJYvPN5iiQf5A42USI+7plmU9GacqCkJL7rLpIfqk8dmmfLH
+	fRb2S135j6BOuJW6q9WWmd94/lAYu7g5AV3Bvh0iyns4fMp+iaY3YBFvrK3hCsC3
+	uXKi3locup35lBltUOZp243GG75aNc2DyAg==
+X-ME-Sender: <xms:lETUZyvBrxfm3lpdZ79uNeXQUBfS0-ItWYK_Pi-P4kCXsLJ-wuCL6A>
+    <xme:lETUZ3f9-6KRaiTLqwl_EUaxM6buQIHk4DNawHkUKTvhDZhw-p6-qwKFQ5VSOkfks
+    gEesuxkoi5Jd5kXkA>
+X-ME-Received: <xmr:lETUZ9wtGJ5p7Z8vSwNwtgc0LESt4-5JHve1PlKoH4Qn9b0jjH3vVa46gWiHKvJB9hOZacA4AHHCYA8-eJdhyhFbeAzION3EoKAW_0Cg3x8T>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufeduudefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdu
+    gfehtefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
+    ihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopeii
+    ohhtthgvlhgsrghrthesthdqohhnlhhinhgvrdguvgdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjheitheskhgusghgrdhorhhg
+X-ME-Proxy: <xmx:lETUZ9OaMl1uAmMItIMocN4AowUh6iaQfN5lgkjUy-rF-MbqkhRf-w>
+    <xmx:lETUZy9CbRZ2UDmNvdqiDginl23ojwT2ryTrrOHwFkWZQwrsAESA6w>
+    <xmx:lETUZ1UENvzMhdq6N-0QNVQwsI5kYX0cjintfdh0jyjB514uYx4eeQ>
+    <xmx:lETUZ7fH3RFS7iIDiaWoU4aERbmAQqOeObieWtah5aiI4v6pQ5hB0Q>
+    <xmx:lUTUZ2b2Bej5NlGWsQJ1T-NvQ5P8wPrA9fF2Gmh9eWOESOT-x0LFPILs>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Mar 2025 11:00:35 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4175c8e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 14 Mar 2025 15:00:33 +0000 (UTC)
+Date: Fri, 14 Mar 2025 16:00:28 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Christian Reich <Zottelbart@t-online.de>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] reftable: ignore file-in-use errors when unlink(3p)
+ fails on Windows
+Message-ID: <Z9REjHgrhzUzWoqJ@pks.im>
+References: <20250125-b4-pks-reftable-win32-in-use-errors-v1-1-356dbc783b4f@pks.im>
+ <20250206-b4-pks-reftable-win32-in-use-errors-v2-1-56985a4f6186@pks.im>
+ <de954c02-8711-43e9-8f4c-259718034497@t-online.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] reftable: ignore file-in-use errors when unlink(3p)
- fails on Windows
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Johannes Sixt <j6t@kdbg.org>
-References: <20250125-b4-pks-reftable-win32-in-use-errors-v1-1-356dbc783b4f@pks.im>
- <20250206-b4-pks-reftable-win32-in-use-errors-v2-1-56985a4f6186@pks.im>
-From: Christian Reich <Zottelbart@t-online.de>
-In-Reply-To: <20250206-b4-pks-reftable-win32-in-use-errors-v2-1-56985a4f6186@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TOI-EXPURGATEID: 150726::1741961937-E0FF7594-A5ECDE95/10/3626336762 SUSPECT URL
-X-TOI-MSGID: fd66fee9-9ebe-40d3-a28d-de67ba02eca6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <de954c02-8711-43e9-8f4c-259718034497@t-online.de>
 
-Greetings,
+On Fri, Mar 14, 2025 at 03:18:55PM +0100, Christian Reich wrote:
+> Greetings,
+> 
+> the patch didn't find the way in next git version.
+> 
+> But there is a change in git for windows, which prevents multiple asks the
+> same questions:
+> 
+> https://github.com/git-for-windows/git/commit/dba1473162b4319a0a2c7f74ab48ed4a826f7ac7
+> 
+> The other option to prevent the asks, is to set GIT_ASK_YESNO but the sleeps
+> slow down the process.
 
-the patch didn't find the way in next git version.
+The patch is still blocked because [1] hasn't landed yet. Once it does I
+expect the patch to be merged. But yes, this will not be part of Git
+v2.49, but of the next release.
 
-But there is a change in git for windows, which prevents multiple asks 
-the same questions:
+Patrick
 
-https://github.com/git-for-windows/git/commit/dba1473162b4319a0a2c7f74ab48ed4a826f7ac7
-
-The other option to prevent the asks, is to set GIT_ASK_YESNO but the 
-sleeps slow down the process.
-
-Best Regards
-
-Christian
-
-Am 06.02.2025 um 08:53 schrieb Patrick Steinhardt:
-> Unlinking a file may fail on Windows systems when the file is still held
-> open by another process. This is incompatible with POSIX semantics and
-> by extension with Git's assumed semantics when unlinking files, which
-> is that files can be unlinked regardless of whether they are still open
-> or not. To counteract this incompatibility, we have some custom error
-> handling in the `mingw_unlink()` wrapper that first retries the deletion
-> with some delay, and then asks the user whether we should continue to
-> retry.
->
-> While this logic might be sensible in many callsites throughout Git, it
-> is less when used in the reftable library. We only use unlink(3) there
-> to delete tables which aren't referenced anymore, and the code is very
-> aware of the limitations on Windows. As such, all calls to unlink(3p)
-> don't perform any error checking at all and are fine with the call
-> failing.
->
-> Instead, the library provides the `reftable_stack_clean()` function,
-> which Git knows to execute in git-pack-refs(1) after compacting a stack.
-> The effect of this function is that all stale tables will eventually get
-> deleted once they aren't kept open anymore.
->
-> So while we're fine with unlink(3p) failing, the Windows-emulation of
-> that function will still perform several sleeps and ultimately end up
-> asking the user:
->
->      $ git pack-refs
->      Unlink of file 'C:/temp/jgittest/jgit/.git/reftable/0x000000000002-0x000000000004-50486d0e.ref' failed. Should I try again? (y/n) n
->      Unlink of file 'C:/temp/jgittest/jgit/.git/reftable/0x000000000002-0x000000000004-50486d0e.ref' failed. Should I try again? (y/n) n
->      Unlink of file 'C:/temp/jgittest/jgit/.git/reftable/0x000000000002-0x000000000004-50486d0e.ref' failed. Should I try again? (y/n) n
->
-> It even asks multiple times, which is doubly annoying and puzzling to
-> the user:
->
->    1. It asks when trying to delete the old file after having written the
->       compacted stack.
->
->    2. It asks when reloading the stack, where it will try to unlink
->       now-unreferenced tables.
->
->    3. It asks when calling `reftable_stack_clean()`, where it will try to
->       unlink now-stale tables.
->
-> Fix the issue by making it possible to disable this behaviour with a
-> preprocessor define. As "git-compat-util.h" is only included from
-> "system.h", and given that "system.h" is only ever included by headers
-> and code that are internal to the reftable library, we can set that
-> macro in this header without impacting anything else but the reftable
-> library.
->
-> Reported-by: Christian Reich <Zottelbart@t-online.de>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-> Hi,
->
-> This patch fixes the issue reported in [1].
->
-> Changes in v2:
->    - Rebased the patch on top of ps/reftable-sans-compat-util at
->      3f172f1391 (Makefile: skip reftable library for Coccinelle,
->      2025-02-03). This is done to fix a semantic merge conflict.
->    - Link to v1: https://lore.kernel.org/r/20250125-b4-pks-reftable-win32-in-use-errors-v1-1-356dbc783b4f@pks.im
->
-> Thanks!
->
-> Patrick
->
-> [1]: <d7fd0b1c-98fe-4cc3-b657-c2c3d0bc5c47@t-online.de>
-> ---
->   compat/mingw/compat-util.c | 5 ++++-
->   compat/mingw/posix.h       | 8 ++++++--
->   reftable/system.h          | 1 +
->   3 files changed, 11 insertions(+), 3 deletions(-)
->
-> diff --git a/compat/mingw/compat-util.c b/compat/mingw/compat-util.c
-> index 1d5b211b54..0e4b6a70a4 100644
-> --- a/compat/mingw/compat-util.c
-> +++ b/compat/mingw/compat-util.c
-> @@ -302,7 +302,7 @@ static wchar_t *normalize_ntpath(wchar_t *wbuf)
->   	return wbuf;
->   }
->   
-> -int mingw_unlink(const char *pathname)
-> +int mingw_unlink(const char *pathname, int handle_in_use_error)
->   {
->   	int ret, tries = 0;
->   	wchar_t wpathname[MAX_PATH];
-> @@ -317,6 +317,9 @@ int mingw_unlink(const char *pathname)
->   	while ((ret = _wunlink(wpathname)) == -1 && tries < ARRAY_SIZE(delay)) {
->   		if (!is_file_in_use_error(GetLastError()))
->   			break;
-> +		if (!handle_in_use_error)
-> +			return ret;
-> +
->   		/*
->   		 * We assume that some other process had the source or
->   		 * destination file open at the wrong moment and retry.
-> diff --git a/compat/mingw/posix.h b/compat/mingw/posix.h
-> index 8dddfa818d..88e0cf9292 100644
-> --- a/compat/mingw/posix.h
-> +++ b/compat/mingw/posix.h
-> @@ -201,8 +201,12 @@ int uname(struct utsname *buf);
->    * replacements of existing functions
->    */
->   
-> -int mingw_unlink(const char *pathname);
-> -#define unlink mingw_unlink
-> +int mingw_unlink(const char *pathname, int handle_in_use_error);
-> +#ifdef MINGW_DONT_HANDLE_IN_USE_ERROR
-> +# define unlink(path) mingw_unlink(path, 0)
-> +#else
-> +# define unlink(path) mingw_unlink(path, 1)
-> +#endif
->   
->   int mingw_rmdir(const char *path);
->   #define rmdir mingw_rmdir
-> diff --git a/reftable/system.h b/reftable/system.h
-> index dccdf11f76..1492bf6d70 100644
-> --- a/reftable/system.h
-> +++ b/reftable/system.h
-> @@ -11,6 +11,7 @@ license that can be found in the LICENSE file or at
->   
->   /* This header glues the reftable library to the rest of Git */
->   
-> +#define MINGW_DONT_HANDLE_IN_USE_ERROR
->   #include "../compat/posix.h"
->   #include <zlib.h>
->   
->
-> ---
-> base-commit: 0fb5c2116049c665c6550d7e0419971a277af345
-> change-id: 20250124-b4-pks-reftable-win32-in-use-errors-969494f2fdf7
->
+[1]: <20250127-pks-reftable-drop-git-compat-util-v1-0-6e280a564877@pks.im>
