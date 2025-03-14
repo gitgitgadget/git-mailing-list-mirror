@@ -1,83 +1,80 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004EB1C84B4
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 21:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFF11C54AA
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 21:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741986555; cv=none; b=X7pF5Ug0igWmycqbvdOA+J1pEuRblR+ukH8abhDNv2Gi6adskQjEFKxT5NVoqrlQ4kmJSv4QUoZIoCQGsT9H8O30+dKg+d4LjdotQP2gu+LuYmGuk9NoGo9th2Ur5TAKFiDW7+cvGkntz+Uex3uVRKYObwx97vdk7DrTHQtSNi4=
+	t=1741986557; cv=none; b=T79fyzNbxZaGjKT0oWWahRe49nRH1PhgcryjPWNSRF6UJ2VMZRBWp/aWwvAM/a2PO06YvpZfkuUKNliSqF/jH8N7/G5TZSYL+U8MT8BvkVRZGKgtIRIAvOkYHEsrJl/ok1tScx0SatPu3PbBr2x4tT2tLdEPbuC0FRWW30Lnxtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741986555; c=relaxed/simple;
-	bh=nztRyHPLRus+D5cMHDpWbK5db/m5T/PCyLq08NI2bL4=;
+	s=arc-20240116; t=1741986557; c=relaxed/simple;
+	bh=yqoP2NQTbIfjzkh8xxhI58gGZzBlbSQ8DQwe+LsgSLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HnQV8kTLNPRMP5XzgHQq9ycp/JlEy0aOUbpggx5Pfqk7SM1/XQEGh9OTfB+f9xX9I4Y3hNLl3LIAmCpjepb+aq5fHBvmNpbNDxM0OwlapP1x6xoVmAWa0rLZ/GSPkMOrg3ghAtBvO0l615uJF21SpO5WDu5fhTP1FZdseTK1DTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fJ4ngi63; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4CFo3GZw; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version; b=fisPHZ5NqyDzMmUFuAJYfxGPj/0ntZGgrWWd2zGsAUlisBe5hVL/9aW+4AFpIs5XGUo9vMtr9jrOcIwO4EfUt0BBfLKJFO4KTaAMdNzF+M71B/tLh89+RQR1rOkx62EkyesRlriWbJYauMfOkRCUeQJ7c8Kb1X3FQ2Rk4/kMJIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=perC2XCI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UNbIjzkz; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fJ4ngi63";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4CFo3GZw"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="perC2XCI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UNbIjzkz"
 Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id EE5C01140191;
-	Fri, 14 Mar 2025 17:09:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Fri, 14 Mar 2025 17:09:13 -0400
+	by mailfout.stl.internal (Postfix) with ESMTP id E34CB114018F;
+	Fri, 14 Mar 2025 17:09:14 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Fri, 14 Mar 2025 17:09:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1741986552; x=
-	1742072952; bh=De1sAcvmN/EETQtxluBbapW0ontDkZuFVSTDGzeWFHA=; b=f
-	J4ngi636bpJo9gQbeTGEgKTm5EEC2WuSzwsz8nKlMF9O08keMcmH2NBai9ums0y9
-	W4N/KVbmSjciftvHC4Jcpbl7FcdchPFd2Lc/LTH5y0IymASXwPeO4qURfYldpoqF
-	Jh/2FcV5yCHqG4GzQPPfHVBs9K2/LYVKr8dl80shU8AZbNinqCwAfIBNRBE6w8CM
-	rkEmxvTc5FjK4vEGS47i/QRippuAAaQyHw75GPzEjfgxycPhHE9XRLkoo/tyqGvD
-	vDIQc7MywrT1+0mROJwCJ5DwyzBudZEyhx+RdnT76NmHBxG5B5VXpo5oHjC9tYz5
-	I/GQHTLgDzUqFLKPqVjWQ==
+	:reply-to:subject:subject:to:to; s=fm3; t=1741986554; x=
+	1742072954; bh=zwRx977EW+vFccB3zUTMvfH4RQSGXpTjvIKjVDnEU0o=; b=p
+	erC2XCIA3Pderk4lynQhBIV3lF+5pBZK1edN8BDOjyAKX6vi7t2KYLcU1W4EHYKn
+	DBZyvXy32Niwl2bFmyQ3/xMmMWxupced4R6r9SFYOJ21cUJGhwTbhtHySewW0lEB
+	8LgrrdVwb7lgt3qZg9vNujUSOgy7+GtrKpbhozdzTwSJvDFgGsQHchT6k9DEnyaH
+	6lt/3zgwEGSYSjU5l1nNmj0Pp95CENjRz3fOpBKgSAuvlCUheCBPNUwfGJF41jvT
+	eptxXcGv1Uf1t9BUxUI0i98RhPXh1zruu3zZmmWo974In56xBWTHM6lVvQaBx/uZ
+	03NlEZIiV6i8McEwKG1Og==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1741986552; x=1742072952; bh=D
-	e1sAcvmN/EETQtxluBbapW0ontDkZuFVSTDGzeWFHA=; b=4CFo3GZwmm7E9dHmp
-	POM/CsqYZhW2CERhdiZnPIP3Boz7n+6DgQjPABnifPYz+PUxz0V+wScO+VMF3oST
-	AyZpQpLHrb8dd4NDTWZ1hINK4Z3sIxYtzqAVs9yCHf+Wkj/de6CPPskssx/Q6O1V
-	p6yFOUryevIa/R2Pm3ydSUS9LkceBOsSBJiK6Skfjxx26HPc8H6rko3qvkhyz7s1
-	8fvCy1EckebugiQw37m2Rldva81N+xhJJTcePx9VWdGuEBnue6z1VJjqZWoo+Lrr
-	R2TK/mJZBnuYLyg/zAC0mTwE+raP/6Rc7IPtN7pAYeN4dS1EklxRuxBm4WpNWXy1
-	aPVBQ==
-X-ME-Sender: <xms:-JrUZz1chcfD44jxPMeSQk7IEG2x66kdyxiIusE3acxC4NcdMcZx3Q>
-    <xme:-JrUZyEw2fpCkP4Xa15bGpltxDrze_39IHJtigTCRcAxzIZn_gLrzaxkgsXuOvPY7
-    4w7aJQwrbr9fgg4RA>
-X-ME-Received: <xmr:-JrUZz58g-MjqJaD_ZdGcK0TzW5D7uHTh_R5A12zfjmoETHbLKPpM8mkTN9xxHNqSIPTxCE9JHdbS5eAmMCnhHa4r1cnhP80DU-D0nM>
+	:x-me-sender:x-sasl-enc; s=fm1; t=1741986554; x=1742072954; bh=z
+	wRx977EW+vFccB3zUTMvfH4RQSGXpTjvIKjVDnEU0o=; b=UNbIjzkzHXWBbcexD
+	h9DnEmgSf7D0//eLuPT1AZNWl3LVSHvUpCcJX5DCMGXhWhZZeGRiEFoZm6Rbq28Y
+	sVcotRvg32TU+OrEFBhMZbeGIfaUHVHEXKdEfSkCjWRF66TwCXn5knr5AehdcWGp
+	GQv8rRsn5wGF6zHsOUM+HOrpo1ycpYRjs2YmpMVFMd0yHQnfPpKoxjuLDaLlRK67
+	Yp9nMrYBRTG6bTNskt3Ro3PVlqTKjF6lqnu2VY1+dNCt7ntzyoY0kVCKRjv62YBW
+	tr3B20TWU9u6hy4JyNRDeUQDeasPgBRZ9Huex3MwktHnxpEAZFnBzy83YLJ++a41
+	3w0RQ==
+X-ME-Sender: <xms:-prUZ0rtbTeyH-PKGOi0suphHBAcIEoeIxHIGJmAJQ68k0lgrB8-rg>
+    <xme:-prUZ6qgLJGGztO73sH1Mfu5ruLEZPUmLYn00pthcGN9s-FZH0jmAlN4h85mEEq3p
+    I2cKiQTfVROOFU0bg>
+X-ME-Received: <xmr:-prUZ5N8cWjRIijXcqqwh7zPCWZxc91dhovuoB7bWGxNC86z96KBkVjGJcUtioNwzjAtfr3qEeLqUZwraM9jm06NbuineiOJ9jznUaQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufedukeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefufffkofgjfhgggfestdekredtredt
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepleeviefgleegfeeiffegfeetvdettddt
-    ffeigffgleevieeuveduffefgfevtdelnecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
-    dpshhtrggtkhhovhgvrhhflhhofidrtghomhdpmhgrkhdruggvvhenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfse
-    hpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-JrUZ40Gp5IhEDPC5GtOoIiBOKF9m1sTlELKKruIfuQRpHsH3LrJ-Q>
-    <xmx:-JrUZ2E8QA29Wub1d79WuGHiD1GfXl84W1-lV2QvAqT-vZatNiyYhg>
-    <xmx:-JrUZ59366KXT2cO-kuNdNXeURIQSrFnqASE4mVVK-NGkdVANnWq7w>
-    <xmx:-JrUZzla7IbGAIYKvs8bZzH-e0xIvAI6yMeFeCSD0-7nK0TLqjxYwg>
-    <xmx:-JrUZyiXr_adreImR5ahhLJpneFHcdlGtRMLvweAS82wJBjlgtPgCZ2n>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    evufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    dvffelhfeutefgkeettdfhudelffduteelfeeiueelhfdvudeiueekhfdtvddukeenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:-prUZ76IpQRr8V1hbSfUL9EvhhHZDacq61pOOVKRZJixfOkS1tL-tg>
+    <xmx:-prUZz6xwcLpaJ082JZKZXLmtsm02ftgWckhH6JZu7fI4gSMYiXGcA>
+    <xmx:-prUZ7jHxJs8S2ZdQ0dsvrDdA27XsIaK2hvKRnKat1A9g6-0hdnogw>
+    <xmx:-prUZ97qdT7WtuUdgiU3MkdxPz4Yagvxu7WGwBridow2lTM8ZmvS2g>
+    <xmx:-prUZ1lsqVc8LWHna10GSfPDc-1aKkEKvYF0xQbBWcPvld0JkaHAMHOq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Mar 2025 17:09:12 -0400 (EDT)
+ 14 Mar 2025 17:09:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 1/3] config.mak.dev: enable -Wunreachable-code
-Date: Fri, 14 Mar 2025 14:09:07 -0700
-Message-ID: <20250314210909.3776678-2-gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>
+Subject: [PATCH v2 2/3] run-command: use errno to check for sigfillset() error
+Date: Fri, 14 Mar 2025 14:09:08 -0700
+Message-ID: <20250314210909.3776678-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.49.0-188-g35fcca2323
 In-Reply-To: <20250314210909.3776678-1-gitster@pobox.com>
 References: <20250307225444.GA42758@coredump.intra.peff.net>
@@ -92,61 +89,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff King <peff@peff.net>
 
-Having the compiler point out unreachable code can help avoid bugs, like
-the one discussed in:
+Since enabling -Wunreachable-code, builds with clang on macOS now fail,
+complaining that the die_errno() call in:
 
-  https://lore.kernel.org/git/20250307195057.GA3675279@coredump.intra.peff.net/
+  if (sigfillset(&all))
+	die_errno("sigfillset");
 
-In that case it was found by Coverity, but finding it earlier saves
-everybody time and effort.
+is unreachable. On that platform the manpage documents that sigfillset()
+always returns success, and presumably the implementation is a macro or
+inline function that does so in a way that is transparent to the
+compiler.
 
-We can use -Wunreachable-code to get some help from the compiler here.
-Interestingly, this is a noop in gcc. It was a real warning up until gcc
-4.x, when it was removed for being too flaky, but they left the
-command-line option to avoid breaking users. See:
+But we should continue to check on other platforms, since POSIX says it
+may return an error.
 
-  https://stackoverflow.com/questions/17249934/why-does-gcc-not-warn-for-unreachable-code
-
-However, clang does implement this option, and it finds the case
-mentioned above (and no other cases within the code base). And since we
-run clang in several of our CI jobs, that's enough to get an early
-warning of breakage.
-
-We could enable it only for clang, but since gcc is happy to ignore it,
-it's simpler to just turn it on for all developer builds.
+We could solve this with a compile-time knob to split the two cases
+(assuming success on macOS and checking for the error elsewhere). But we
+can also work around it more directly by relying on errno to check the
+outcome (since POSIX dictates that errno will be set on error). And that
+works around the compiler's cleverness, since it doesn't know the
+semantics of errno (though I suppose if sigfillset() is simple enough,
+it could perhaps realize that no writes to errno are possible; however
+this does seem to work in practice).
 
 Signed-off-by: Jeff King <peff@peff.net>
-[jc: squashed meson.build change sent by Patrick]
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- config.mak.dev | 1 +
- meson.build    | 1 +
- 2 files changed, 2 insertions(+)
+ run-command.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/config.mak.dev b/config.mak.dev
-index 0fd8cc4d35..95b7bc46ae 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -39,6 +39,7 @@ DEVELOPER_CFLAGS += -Wunused
- DEVELOPER_CFLAGS += -Wvla
- DEVELOPER_CFLAGS += -Wwrite-strings
- DEVELOPER_CFLAGS += -fno-common
-+DEVELOPER_CFLAGS += -Wunreachable-code
+diff --git a/run-command.c b/run-command.c
+index 402138b8b5..d527c46175 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -515,7 +515,15 @@ static void atfork_prepare(struct atfork_state *as)
+ {
+ 	sigset_t all;
  
- ifneq ($(filter clang4,$(COMPILER_FEATURES)),)
- DEVELOPER_CFLAGS += -Wtautological-constant-out-of-range-compare
-diff --git a/meson.build b/meson.build
-index 0064eb64f5..f60f3f49e4 100644
---- a/meson.build
-+++ b/meson.build
-@@ -697,6 +697,7 @@ if get_option('warning_level') in ['2','3', 'everything'] and compiler.get_argum
-     '-Woverflow',
-     '-Wpointer-arith',
-     '-Wstrict-prototypes',
-+    '-Wunreachable-code',
-     '-Wunused',
-     '-Wvla',
-     '-Wwrite-strings',
+-	if (sigfillset(&all))
++	/*
++	 * Do not use the return value of sigfillset(). It is transparently 0
++	 * on some platforms, meaning a clever compiler may complain that
++	 * the conditional body is dead code. Instead, check for error via
++	 * errno, which outsmarts the compiler.
++	 */
++	errno = 0;
++	sigfillset(&all);
++	if (errno)
+ 		die_errno("sigfillset");
+ #ifdef NO_PTHREADS
+ 	if (sigprocmask(SIG_SETMASK, &all, &as->old))
 -- 
 2.49.0-188-g35fcca2323
 
