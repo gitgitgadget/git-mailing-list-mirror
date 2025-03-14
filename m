@@ -1,147 +1,127 @@
-Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B80E13541B
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 23:15:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5ECD17BA1
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 23:23:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741994109; cv=none; b=OH32kMenmLvyLu2vkAjbUv6Uu6R/S4KM39Kq3YCyhtoV8eZHgqG6MUcEQgW+u9qlVh6OiLe2b2P011ldN/rLEeojrH30FVARllp9iEJvMP7F05k0qzLYdJa6WR1Jwme95DIWzQeQvMrTEi08MBHN9p2o1tAwBcAOZO6aMYkph2E=
+	t=1741994628; cv=none; b=piamSzgIVxJdtxel3puWB5vhKKkgUZQdIUUuufRT6J114JEwgdXgb2wRP4+iEjghwKihcXhkLomFsc1OId2CG6G38B01wNTHs1I89LfM6k3L+5joeJkBtKuVzWDMNxWWWt0dZJuC2Nm3erYHafrFw9yHDdbVtd9bTp88GJDoZYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741994109; c=relaxed/simple;
-	bh=dWSbHzzfPC/8b1zAjF3xzjtleT2r7ppiKZf9dKGM/pw=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ab4SVRSIArOTGcMuDsAzyUFSntgKf5aJI+fdtel/pE5eVoj8HoU8pjzmc7DTbARQWeUfDGVI24nsARUNH3wO9uCunYvEvldcEPXye1mL//pwY0ayjOd09LZEamdLSXamOHrZBb4cUl/XGCwK7rmASHoLMQMUffSs1XfG1Es3uFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=V7n7Ii1O; arc=none smtp.client-ip=185.70.40.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	s=arc-20240116; t=1741994628; c=relaxed/simple;
+	bh=3MZ4diqYpDsBuji//o+IpIq3hHUjHplv1yTt5QAnnqs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Uq3GmIp6hvIDiopmG40mjrZqiZTKVnmlQU5JX1KmIivz3lGkrX3IhHHzUwTA4l8V9M+5/+mT4/yvE3qj/3NyXEjHwYx5rtF5EHRz7tY5yZwm1W6vq3AU27LLWUnd6RuGClO662tVTIlgDu0dWRbQOQN1xgH9yh6/GQEfQKO6DK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e83hs7ns; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gYquuH72; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="V7n7Ii1O"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1741994104; x=1742253304;
-	bh=dWSbHzzfPC/8b1zAjF3xzjtleT2r7ppiKZf9dKGM/pw=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=V7n7Ii1OVlCpHZ9A5CyobiC6CztQN+qLb385UowhtL4WpliiwLvwo5w4Z+R/OVDU7
-	 32AP9/Sn5rhuy/hlalu0GKSFRGDcf+k1O6qR9pM6qnnYkR02nlzGrHHPGdGZfrsTwY
-	 TfMdtiC9rpeKgn9Fw2tPreG5FFY0INdkwWdt7tPPqmzY3RzebFayPryJXUz9IouACy
-	 LyEpdGDpAYcW0DF2L3ycoebzfP24JLUnbVpC8B60gnQXnoEJ5Q+j1a7ytz+QIhdUD2
-	 Q22kQVraNMUMK9pXlQhuDfSA1RRiHq6lvTUwoBDPgskmC4aqGmR2zJAs3e8eCvKRi/
-	 1mOPKPVTitSiw==
-Date: Fri, 14 Mar 2025 23:14:59 +0000
-To: =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-From: Jason Cho <jason11choca@proton.me>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] xdiff: avoid arithmetic overflow in xdl_get_hunk()
-Message-ID: <gq3mW6C-_CzvRWe7vlXuDni4d2hDajYwmVqqjBC9h-2HhGU9qiyvmzxveXEVwIhBE4X4vkVKsHHYWayWLnQ9gso8HHYbjXi2TxeZaaMnf0g=@proton.me>
-In-Reply-To: <4e9b6b4c-aaa1-4c6f-93f4-7bb04607e843@web.de>
-References: <xXWgbH3mlNEvFcdGLqBHwcclZoeZNPoLg8Hr6YCipHXvS5eKaHeTppzFM-l_wyB46BB1R1T0j6g_jWRXIj7-GRJh1LPxi1ta3GkQ5t8F4-0=@proton.me> <NYMqsJ7uttDzFT2OOEg5LLsxCSoQhTzqBs16KrMHGEKC7LzOAiYnYTEZavRQWqGH41UgjdwScwer7MssNzI7AEDHnD8GTBWvoBIqJ2e7D6g=@proton.me> <4e9b6b4c-aaa1-4c6f-93f4-7bb04607e843@web.de>
-Feedback-ID: 126703824:user:proton
-X-Pm-Message-ID: a35673d3fba4dd72703cdacdb999d719a3317203
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e83hs7ns";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gYquuH72"
+Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E87D51140227;
+	Fri, 14 Mar 2025 19:23:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-13.internal (MEProxy); Fri, 14 Mar 2025 19:23:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741994610; x=1742081010; bh=EuQbK8m+ST
+	PjH/iT3GEBNrFqwYliiuHxj1vJofFp1+M=; b=e83hs7nsP9TCLkDr6NsslCe4Vn
+	e/2BdEidVgx/RQMjClFQ8UF5o0hmTMAvDA3n/dPw6xLXIjhUiMJsHv+VT+VwKGXt
+	wtl4/Y8sQe+E0j+vXt2BNijn7EOSG3/S3pbU9gYvdaT84+gNdd99tkiqYQ9kq3Rp
+	cIdIEjutBzd/dGFDN48wyJQRVkoCYoM2cEsx5iJUmaKRgKb2SK6UiZxbHDUt6ol1
+	iaw4N2gBl3JT6DuxYwYRXD6A6ct3LjsvYKo38UAf9sKyrMN/ilroLZpw8eBHXrhF
+	zMTEQPwwDcp4b0qkfcCgO28Mxbir5TP+t6XFZ8QAWPz1jEdpaFMswqZwGdbw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741994610; x=1742081010; bh=EuQbK8m+STPjH/iT3GEBNrFqwYliiuHxj1v
+	JofFp1+M=; b=gYquuH72X+F+/aweYi8ixXih/IPnbH8UVOYE01GpAzwxq03Qv9J
+	AW4hTFqFq90LoYo7W4e6BsKjgt+CxmWc7DcwaKwdygP/3cn6qvnlBjyQXPeeLVhl
+	fXb+KlKAFtNsVHYV7boaZFTahUwbCR6gdoKGHlrQtmp/GuQwfw6OVtFiqns5G41/
+	5GVdYsQ9RRRwfMiicoCb9UM0PNGR/NrDd1KxVCj3Q/2MMjRjj472Tv36RQjLWTgD
+	t5eYWwca37vqx49dY41k4XRtBNfLk1KDQ2CIXrc5tWDjKfKze/Go1JM/nOecRq4k
+	Ty2bmFfP06OSOcuL2RYr0+ImMXjPEdCcMsw==
+X-ME-Sender: <xms:cbrUZyUnZm6rrH7A6vtwRRJgm_QZIn_Z0tI-oOuU5_DkpohzMWTqEQ>
+    <xme:cbrUZ-kEvDwqlfA5AAZEWgX1ooUU1fpZqPNqqdEAkPYuZszHjLdnsS_0_9aswcOtc
+    lWbVOUZNuunwuSl8g>
+X-ME-Received: <xmr:cbrUZ2bFo1QiLbv6fXiIfNSyWZ7rtpmdjJs7Oo6Yhn_JH9PnkCqtueQffcxVsNd8LgxoaChTjks62QSejZmrdmpB8QdQqkDE96NkTWU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufedvudegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggrvhhiugesmh
+    grnhguvghlsggvrhhgrdhorhhgpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtghomhdprhgtphht
+    thhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:cbrUZ5UcAOAhzWWy5Z0_xdGxa-V_pANDGhtOarIb4ls592olXcQVwQ>
+    <xmx:cbrUZ8nNWUVU0ZflRrMLGtAwxTQ1SXfz4-VUhxcQOkIFrOdmE9q5zg>
+    <xmx:cbrUZ-fQUbo3MEx5L8TFpCN1VB6eTM6daqtD3lkwfifMNUkc0TFmQQ>
+    <xmx:cbrUZ-ENFzDw4wmwFHLYdsuXbW0NlUDndCum_jFx2JuOl0EyCg5ybw>
+    <xmx:crrUZ6afbxyKGJpTBVVKOioPg5lDxRq9WZvYaQg62d_GxlITswcqIemE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Mar 2025 19:23:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: David Mandelberg <david@mandelberg.org>
+Cc: David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Jacob Keller <jacob.keller@gmail.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 2/2] completion: fix bugs with slashes in remote names
+In-Reply-To: <015b89f8-63eb-4203-8d43-47c9a6d65cda@mandelberg.org> (David
+	Mandelberg's message of "Fri, 14 Mar 2025 18:37:53 -0400")
+References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
+	<1587533591c81d38977e62165784f8eb@mandelberg.org>
+	<c80d20d93c92422437150084f402ac36@mandelberg.org>
+	<xmqqo6y3dzno.fsf@gitster.g>
+	<015b89f8-63eb-4203-8d43-47c9a6d65cda@mandelberg.org>
+Date: Fri, 14 Mar 2025 16:23:26 -0700
+Message-ID: <xmqq34ffdwnl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Dear Ren=C3=A9,
+David Mandelberg <david@mandelberg.org> writes:
 
-What a thorough analysis. I didn't know this bug is only on Windows.
+> Op 2025-03-14 om 18:18 schreef Junio C Hamano:
+>> David Mandelberg <david@mandelberg.org> writes:
+>> 
+>>> +	__git for-each-ref --format='%(refname)' 'refs/remotes/**' |
+>> Just a bit of curiosity, but how would this be different from using
+>> 	__git for-each-ref --format='%(refname)' refs/remotes/
+>> i.e. the prefix match, here?  Does the wildmatcher clever enough to
+>> optimize "**" away and make it just to iterate over refs/remotes/
+>> hierarchy without filtering anything?
+>
+> Oh right, I lost track of that bit. When I wrote that, I didn't know
+> that for-each-ref did prefix matching. Phillip Wood pointed it out:
+>
+>> If there are no glob characters then "git for-each-ref" does a prefix match so strictly speaking you don't need the '**' but I don't think it matters in practice.
+>
+> But I forgot about it when I sent v3.
+>
+> Do you want me to change it? Should I send a v4 now, or just make a
+> fixup commit locally so I don't forget it when I send a v4 in the
+> future?
 
-Thank you for submitting the fix. I am excited to see it in a new release.
+Entirely up to you.  I do not plan to perform an in-detail review on
+the topic (I do not consider myself quite qualified), but others who
+saw earlier rounds of the patch may want to say "now this is perfect"
+or "now this is perfect with this and that changes", and if you do not
+think the differenes between v3 and your upcoming v4 are small enough,
+it may be more efficient to wait for a bit to collect more comments.
 
-For now I will cherrypick your patch to my fork of git.
-
-Best regards,
-Jason Cho
-
-
-On Friday, March 14th, 2025 at 11:00 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> w=
-rote:
-
-> xdl_get_hunk() calculates the maximum number of common lines between two
-> changes that would fit into the same hunk for the given context options.
-> It involves doubling and addition and thus can overflow if the terms are
-> huge.
->=20
-> The type of ctxlen and interhunkctxlen in xdemitconf_t is long, while
-> the type of the corresponding context and interhunkcontext in struct
-> diff_options is int. On many platforms longs are bigger that ints,
-> which prevents the overflow. On Windows they have the same range and
-> the overflow manifests as hunks that are split erroneously and lines
-> being repeated between them.
->=20
-> Fix the overflow by checking and not going beyond LONG_MAX. This allows
-> specifying a huge context line count and getting all lines of a changed
-> files in a single hunk, as expected.
->=20
-> Reported-by: Jason Cho jason11choca@proton.me
->=20
-> Signed-off-by: Ren=C3=A9 Scharfe l.s.r@web.de
->=20
-> ---
-> t/t4055-diff-context.sh | 10 ++++++++++
-> xdiff/xemit.c | 8 +++++++-
-> 2 files changed, 17 insertions(+), 1 deletion(-)
->=20
-> diff --git a/t/t4055-diff-context.sh b/t/t4055-diff-context.sh
-> index f7ff234cf9..ec2804eea6 100755
-> --- a/t/t4055-diff-context.sh
-> +++ b/t/t4055-diff-context.sh
-> @@ -89,4 +89,14 @@ test_expect_success '-U0 is valid, so is diff.context=
-=3D0' '
-> grep "^+MODIFIED" output
-> '
->=20
-> +test_expect_success '-U2147483647 works' '
-> + echo APPENDED >>x &&
->=20
-> + test_line_count =3D 16 x &&
-> + git diff -U2147483647 >output &&
->=20
-> + test_line_count =3D 22 output &&
-> + grep "^-ADDED" output &&
-> + grep "^+MODIFIED" output &&
-> + grep "^+APPENDED" output
-> +'
-> +
-> test_done
-> diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-> index f8e3f25b03..1d40c9cb40 100644
-> --- a/xdiff/xemit.c
-> +++ b/xdiff/xemit.c
-> @@ -43,6 +43,10 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, cha=
-r const pre, xdemitcb_t *
-> return 0;
-> }
->=20
-> +static long saturating_add(long a, long b)
-> +{
-> + return signed_add_overflows(a, b) ? LONG_MAX : a + b;
-> +}
->=20
-> /
-> * Starting at the passed change atom, find the latest change atom to be i=
-ncluded
-> @@ -52,7 +56,9 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, char=
- const *pre, xdemitcb_t *
-> xdchange_t *xdl_get_hunk(xdchange_t **xscr, xdemitconf_t const *xecfg)
-> {
-> xdchange_t *xch, *xchp, *lxch;
-> - long max_common =3D 2 * xecfg->ctxlen + xecfg->interhunkctxlen;
->=20
-> + long max_common =3D saturating_add(saturating_add(xecfg->ctxlen,
->=20
-> + xecfg->ctxlen),
->=20
-> + xecfg->interhunkctxlen);
->=20
-> long max_ignorable =3D xecfg->ctxlen;
->=20
-> long ignored =3D 0; /* number of ignored blank lines */
->=20
-> --
-> 2.48.1
+Thanks.
