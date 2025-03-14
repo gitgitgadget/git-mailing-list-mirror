@@ -1,98 +1,65 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FAC72E3389
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 18:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622101E5B9E
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 18:41:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741975576; cv=none; b=fuChJp0e/267fA9l+SV9+AIuzeih4sTGLZZ5cXTHqg9nLDiEscddFWgl1+rzR0PqzPMQJYWeIUlqkRFYdlCs+O3r9fGFf/oW9lIQoOgsJ7iY6bUGWj5PvvJHp5TplL9+CPoES0PcDsj1DCR4mhbvfLHmqbSomKxDUOELoL9fyIE=
+	t=1741977694; cv=none; b=PwnvjFvUQEbtIzdzQCjKfNaNjGJqlIKy86BrEQFowshJTxdTULphuDlzAaTkJaMzQgGQPGGCWbLYdZC/bdbKgOxeX7dJ8frUizxJftROx3a/aP864YqiPGOt72WFQsU4lSQFqYwzmXPbAC6RSYmy2gzTcnb+tMZFxtZyrTaOivg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741975576; c=relaxed/simple;
-	bh=pSeK9/qHm4ZqHpqJwVdpgL24s3of2JF9nYlVM58lor4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BlrR6xnY6vUvcuXNI3fN8bCeSrOUpnvV+sqU/uJeFb3QWyPjYGEK8oXGykObcd1SS0enjTWiLOGzm6Gze9JX+BPVlVEQXGmfT0jWWtYnSP4a7VZEofDRrZ5tSmyarKfuildAcIRw/nmc8PGyX8SaaKpkLI+S7cuGbp3zNuASGZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from mop.. (unknown [82.8.138.118])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: sam@gentoo.org)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id E1138343083;
-	Fri, 14 Mar 2025 18:06:13 +0000 (UTC)
-From: Sam James <sam@gentoo.org>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Sam James <sam@gentoo.org>
-Subject: [PATCH v2] meson: use test_environment conditionally.
-Date: Fri, 14 Mar 2025 18:05:57 +0000
-Message-ID: <3d127f293818f935efdb9ca7bb556e6a8f233ef7.1741975557.git.sam@gentoo.org>
-X-Mailer: git-send-email 2.48.1
+	s=arc-20240116; t=1741977694; c=relaxed/simple;
+	bh=8Py0mWF16hVt2lTe3cIV5NqWPCJ8J7LJ3CZrdLtfIJU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MFrc7lVeL4StAeMyb5L42mCCVmmH3T07D42j8FLuZvLwY34fXH/JCCQh1ZIUra/Vx9aiudOkBqFk5t+Ipq0BCSHDQCeBbrvlED2qRtl77sDdxRculGVx3vDaKVJ1w1M+8sJCxkSux/45ryyB7cefqtzehRx7wz3eM4kLmGm/7Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WkJ1h8vR; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WkJ1h8vR"
+Received: (qmail 23138 invoked by uid 109); 14 Mar 2025 18:41:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=8Py0mWF16hVt2lTe3cIV5NqWPCJ8J7LJ3CZrdLtfIJU=; b=WkJ1h8vRfSjFdkIgJ0MNwdUbnaAL2FMEfwUGxudUgFi4a4n/K8lR4ecXLEpXE0/JgRZpdeiGbikedXcy70YGLRhySc/YNBfxaR6qC+Oyih5uF1CYn0YePPJNg9SdPOWrcQ9GnwxkbaFlodXR8HBZCbTCym/Bc7otrd7lEhWOdZQDCs8OcWN3zacy/MC2a0uDwN5miJXvhsBwRZKpoO8tvn/pCwlrrfd024isZc+6wCmgyvFP1fX3Y1zYMGgfel5VQy+noa8cStP+6MyODt6rU+9QvE3mKlNROpHL838Ow4t+ADN34GodaNlcXF+1nWCOQO1wObrkBRMvDTGe04Wx4w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Mar 2025 18:41:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7734 invoked by uid 111); 14 Mar 2025 18:41:30 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Mar 2025 14:41:30 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 14 Mar 2025 14:41:30 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2025, #04; Fri, 14)
+Message-ID: <20250314184130.GA578421@coredump.intra.peff.net>
+References: <xmqqv7sbfra0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqv7sbfra0.fsf@gitster.g>
 
-test_environment is only defined with -Dtests, so use it conditionally
-and define a stub environment() instead, to avoid erroring out:
+On Fri, Mar 14, 2025 at 10:36:39AM -0700, Junio C Hamano wrote:
 
-```
-$ meson setup -Dtests=false -Dcontrib=subtree build
-[...]
+> * ps/ci-meson-check-build-docs (2025-03-12) 1 commit
+>  - ci: perform build and smoke tests for Meson docs
+> 
+>  CI update.
+> 
+>  Will merge to 'next'.
+>  source: <20250312-b4-pks-ci-meson-docs-v1-1-5e7cf7ac959a@pks.im>
 
-contrib/subtree/meson.build:15:27: ERROR: Unknown variable "test_environment".
-```
+I didn't dig into it, but I'd imagine this topic is the source of CI
+failures on the "documentation" job like this:
 
-Do the same for 'netrc' in contrib/ as it uses the same pattern.
----
-v2: Use syntax that actually works in netrc.
+  2025-03-14T17:50:13.8749066Z + meson setup build-asciidoc -Ddocs=html,man -Ddocs_backend=asciidoc
+  2025-03-14T17:50:13.8752287Z ci/test-documentation.sh: line 50: meson: command not found
+  2025-03-14T17:50:13.8769502Z ##[error]Process completed with exit code 127.
 
- contrib/credential/netrc/meson.build | 8 ++++++--
- contrib/subtree/meson.build          | 8 ++++++--
- 2 files changed, 12 insertions(+), 4 deletions(-)
+that I'm seeing in jch (and looks like you have a similar one in the
+latest build of 'seen')
 
-diff --git a/contrib/credential/netrc/meson.build b/contrib/credential/netrc/meson.build
-index a990dbb86d..337c82c992 100644
---- a/contrib/credential/netrc/meson.build
-+++ b/contrib/credential/netrc/meson.build
-@@ -7,8 +7,12 @@ credential_netrc = custom_target(
-   install_dir: get_option('libexecdir') / 'git-core',
- )
- 
--credential_netrc_testenv = test_environment
--credential_netrc_testenv.set('CREDENTIAL_NETRC_PATH', credential_netrc.full_path())
-+if get_option('tests')
-+  credential_netrc_testenv = test_environment
-+  credential_netrc_testenv.set('CREDENTIAL_NETRC_PATH', credential_netrc.full_path())
-+else
-+  credential_netrc_testenv = environment()
-+endif
- 
- test('t-git-credential-netrc',
-   shell,
-diff --git a/contrib/subtree/meson.build b/contrib/subtree/meson.build
-index 9c72b23625..d18f188216 100644
---- a/contrib/subtree/meson.build
-+++ b/contrib/subtree/meson.build
-@@ -12,8 +12,12 @@ git_subtree = custom_target(
-   install_dir: get_option('libexecdir') / 'git-core',
- )
- 
--subtree_test_environment = test_environment
--subtree_test_environment.prepend('PATH', meson.current_build_dir())
-+if get_option('tests')
-+  subtree_test_environment = test_environment
-+  subtree_test_environment.prepend('PATH', meson.current_build_dir())
-+else
-+  subtree_test_environment = environment()
-+endif
- 
- test('t7900-subtree', shell,
-   args: [ 't7900-subtree.sh' ],
--- 
-2.48.1
-
+-Peff
