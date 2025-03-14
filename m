@@ -1,131 +1,153 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67986204C18
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 17:40:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125221FDE35
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 17:43:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741974029; cv=none; b=XQH0n5KbLVAIfg+CZ2o9Tw7bvgfYs90MsrSK7TZn5RKnPIAT8Uul5Pq07TK0F3H4BmWM6CZgPDSoRIV3F1TSime0ZTYAGdQzXZrkwlKzJa1nbenlrrvdVQCcExxkg/dGz60wXYXngbkKekEFbOo9oHKY5RYxc0sjCQ3/qhD8ln0=
+	t=1741974224; cv=none; b=f2rQiIuKG6q5yFkrimx49Op21YkMM4puLC+qEdBnDVg0OFFYmbhzal18ZhFDxKyiaMJW83/lwfALdgIS1UTkI+iWY5Y/Xdc93RUzoaTX/B0Q0/gHPnCfZeYcyDGl4f4ArZ5e5DEI9WSg+k/MdvvQbIbQ65X+XrY2NjT7QDBd6II=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741974029; c=relaxed/simple;
-	bh=pFNBqBnyaWc/nrURPfE3l9qY688Omr43y1y1ztmUycA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QU9+8iZ8VsbyZcu206Enkc+z6yqqjT9zROel5WO7vQM6P/6qZRydwzBPVM9uCY0vM2CgAr0gXof1Hze4OYgNpaujIDcjfMzjCBGOt75hSKRRZBGFGRkhAy7C7I4yqVFc5bC4I656BoODZkDurVuCftfgdoS327j/0nZclsT6/kY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=O/9obzGC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uQ3raw/F; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741974224; c=relaxed/simple;
+	bh=OJYMikqwlxaIMQunpun/jmG23Slc9d5zQDvrjQStjsI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qcUeDEq8fZXb3qa+2iC/UCPrSIgi2q2xdXEDE7MoL3xmQ+dtFAr68w7ZzMJLo5J5xHWOkOucZQ2ExiVfaZvywZuk8FSsXpvHNF4euhdNLAiJwZvB9kHKV4kPCnM8NtYFAQkRctZni3CrfANQqhVBKrpBl0m8HBzzravxl3A6jnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QCedFrUA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BtKs6dHz; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="O/9obzGC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uQ3raw/F"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6EBA71382DEA;
-	Fri, 14 Mar 2025 13:40:26 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Fri, 14 Mar 2025 13:40:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QCedFrUA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BtKs6dHz"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 167AF11400AF;
+	Fri, 14 Mar 2025 13:43:41 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Fri, 14 Mar 2025 13:43:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741974026; x=1742060426; bh=ljhmqOrs3k
-	Ykv2PcFCwC/QiwDCb/x7htvfkGlmBeIik=; b=O/9obzGCv3d7na0pm/S+a7P3Du
-	Q2qpYnrQNHVKSZ88kTRXQngg92S40y0FFgLRrZadD61vm6JcyC1qHQ5pwvaCbJ2X
-	Jxq/439VhNDoUavwD2OKiTg9c2uJut50k8qu3bVKmhoGsq54yqR4/mzOKTEImW0M
-	AFOG26dklyRucWSz1SGHf/8D1V2qxrRhNrpoJHrhHo9csii3f6KgAsTasnk3ELh4
-	S+Rv/K03oHoykzPwmq4PHBW86vi6nWQ6LRNb1swP5N6eoz7nGcqPFEBsnf+wioRK
-	0Fk+5v3hhhKewkAxWz74Z4AUPfVWQ10JQ87cUdHngZiGaK0Yb84zQPqBpsQw==
+	:subject:to:to; s=fm1; t=1741974221; x=1742060621; bh=aHEkxf47nU
+	2FxcXNuxYAHJJdAb9fNPrQzvFLfPJVDUM=; b=QCedFrUAKSiBQuAoNkJQU1I3GO
+	OnNy2Sv6jo7GENECHgzy90jcDY6UFCt8HJRtDZvBn/6K/Q4/9gh6K/CI+D6a+/7X
+	Aoz5/D/c1aqRzc3ey7cHvkmOpq+X7rrw0cKLT53Rl97rvc8QruDPjxxQiCyyFuG8
+	WhBFvTkhIWlNOfYx4bbKA65cN/KIsZm7RfcBjcYWu7YvNR8TISOGIlDgFravzJ1M
+	CHE2IrBioF1jGk0WqV0y1RhHEJIPptdZmpHvPyQEjNvOxvi5drmu0C2Hum63+gNg
+	9TMVK/sRZMeI3Z7SPFE3+vOfjP94L4tEaLAtLYhlNGgrPUAoamxwPuDAM7QQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741974026; x=1742060426; bh=ljhmqOrs3kYkv2PcFCwC/QiwDCb/x7htvfk
-	GlmBeIik=; b=uQ3raw/FtKQglIpTHXPHcKdW3ryowy9AlqIEoOx+h1QCtxoQFcG
-	Gc168kpAxL3tSfc+bEuSXPHA/RTnUlD5P1s9zOFLFJf/paf0pXSWkKMY8dNsyvDO
-	OazYshl4gJUDZxnPUrRJV3JBGvqwozm86ubxRei6R2xulw3qHH9N8BqHypT5Oj/G
-	EKOYWVr3v8jh1IofEWSqaZHqZQUm7AqCrJ+JcM5bG/3PS5E/C/YdnOFf4Atmkfup
-	rlFdHPONtOYe5Ge+r76m+gyTVblXmIxm7LDMve76y23S7BiDh+Kr9fk+cUmr6s7V
-	jd4lVm6Omh4ecWKQKBCbgTv+Afuo1JbYljA==
-X-ME-Sender: <xms:CmrUZ_SbGmvWSeR5g2BLOszFBVxvVt9mB4WNG_vA1Wf-TCH84KbtBg>
-    <xme:CmrUZwy7Vyf9nJbCN42w1gzAqsXMyomVI0PHrICa6y_kniaeGDrNKr0sR60SbDiEG
-    ju3o7G-xwjivjpUWg>
-X-ME-Received: <xmr:CmrUZ03E12BTyy_QrMD9AqzlHwj7cTHRfxO717UdfL9TfBnjo7tqeE1fMuwEScN7FPehE-ZuOXrIIEuxaz4bj68Znztm0vzf70mcKpI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufedugeehucetufdoteggodetrf
+	1741974221; x=1742060621; bh=aHEkxf47nU2FxcXNuxYAHJJdAb9fNPrQzvF
+	LfPJVDUM=; b=BtKs6dHzSoE/tVnUeZPmcZ6Kji00U6TeWKfHpbKux+XVooSiSi1
+	gl0r0iOik39JIoqhT40HOFIwUGGhvjNS9JBQjkhAQDLJqHnKPrvlkjQ2mBlqKH0n
+	SJydsNAz1OEfs2chebW7q80zHyzFrPmwIwM7tJ/TD+y0Ktx/3OPasn/Guga6MpBt
+	wCkmr1JiWyLtTidLzESyMhkvK0EUTRCOHDPQiQXx+VTcUOGMVNh4lMwyTvYSWBYd
+	LwyBHUmiKaDgl43PEVmTZj0OW7ep5UgHcKYRB4rzKwkKLGtjMyPV9HIn+mZpyYgB
+	D5n6NnRkkd5Drt+1M1FLJfI5+Nk+kN9NNzA==
+X-ME-Sender: <xms:zGrUZ6WZJKlOtllU2SbkArGAyK1F2dZBHzdDFe9hZ9lHnh4MBgXy9g>
+    <xme:zGrUZ2nFseg9Jly7ApivAvWuEyfSWYnwVjUxAuKCATvBUl6_jELOEk2z8YI57rQLo
+    c1VOY9O5rGUM7NnNQ>
+X-ME-Received: <xmr:zGrUZ-a7Oc05DnQGyxX4DL0JxPptcuQRMRGN8befi-mKj6tMvFn9MVCNd4XuPoaT1ERL2KjOg4N332s1uxDb8Hhs4COrXZnuFvOh81RY7Q-D>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufedugeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfefgvdefudetudekteetveehiefgvddt
-    jefftdekfeejffeghffggfeggeeffeetnecuffhomhgrihhnpehmrghkrdguvghvnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
-    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehkrghrthhh
-    ihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhl
-    thhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihooh
-    guuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:CmrUZ_AuGxhreigb0kORM5-aqj-uu7Yb4CyrTMGkGRQHRph4dqObKw>
-    <xmx:CmrUZ4hgQlGO5a2eKMLDijlhddYDbR8dgJrfsZIO3Ux1en_CuDZVLA>
-    <xmx:CmrUZzrmQ6oFXcWTC2KnkMjW0MxYQtlYllThsCxtfW4fU-ACUJmTpw>
-    <xmx:CmrUZzi01nui8fJ2UuyvBLnk_7_1OGu_IFuQ-Xq0oFmPNu2K7sXz6w>
-    <xmx:CmrUZ0ggluD-8E40j6Ev4HbxuwKy9kIlEzl4ARkRgjQhLhJrYO6VB3ZE>
-Feedback-ID: if26b431b:Fastmail
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepleelteegkeeftdevheetheevteekhfejieffheek
+    hfdvledufeevveevgeetfeefnecuffhomhgrihhnpehmrghkrdguvghvnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
+    nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhih
+    hllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhh
+    ihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
+    gvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:zGrUZxURUTE4Y9kL11m12kgF-XzgVTil1gvWTsYrHyFGTt-l_A4llQ>
+    <xmx:zGrUZ0nofAY3LS1i8IeLP1VdIj-t8xHLtKbMoBVSADqaXtQf0TrK8A>
+    <xmx:zGrUZ2cZE-6W4ywKBRPfYOh0en_DFlP5wVfEDcPRfg_lu2pW3-RFvA>
+    <xmx:zGrUZ2HshbZrU7oQZAPSGaWXWEqncKkcdpMcqg0uSrmRjv3gAdSQxg>
+    <xmx:zWrUZyayr2X_513NloH9huZBQoamekzf_S73dqo28VfuJn1LW_MeSQct>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Mar 2025 13:40:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,  ps@pks.im,
-  jltobler@gmail.com,  phillip.wood123@gmail.com
+ 14 Mar 2025 13:43:39 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2d4e6cbe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 14 Mar 2025 17:43:37 +0000 (UTC)
+Date: Fri, 14 Mar 2025 18:43:35 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>,
+	git@vger.kernel.org, jltobler@gmail.com, phillip.wood123@gmail.com
 Subject: Re: [PATCH] config.mak.dev: enable -Wunreachable-code
-In-Reply-To: <xmqqv7sbh698.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	14 Mar 2025 10:27:47 -0700")
-References: <20250305-245-partially-atomic-ref-updates-v3-0-0c64e3052354@gmail.com>
-	<20250305-245-partially-atomic-ref-updates-v3-6-0c64e3052354@gmail.com>
-	<20250307195057.GA3675279@coredump.intra.peff.net>
-	<xmqq34foefh8.fsf@gitster.g>
-	<20250307225444.GA42758@coredump.intra.peff.net>
-	<20250308032309.GA584028@coredump.intra.peff.net>
-	<xmqqfrjkao75.fsf@gitster.g>
-	<20250310160440.GA26189@coredump.intra.peff.net>
-	<xmqqsenk7mab.fsf@gitster.g>
-	<20250314161010.GA8522@coredump.intra.peff.net>
-	<20250314161347.GA9440@coredump.intra.peff.net>
-	<xmqqv7sbh698.fsf@gitster.g>
-Date: Fri, 14 Mar 2025 10:40:24 -0700
-Message-ID: <xmqqr02zfr3r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Message-ID: <Z9Rqx6CuXB_6JQoL@pks.im>
+References: <xmqq34foefh8.fsf@gitster.g>
+ <20250307225444.GA42758@coredump.intra.peff.net>
+ <20250308032309.GA584028@coredump.intra.peff.net>
+ <xmqqfrjkao75.fsf@gitster.g>
+ <20250310160440.GA26189@coredump.intra.peff.net>
+ <xmqqsenk7mab.fsf@gitster.g>
+ <20250314161010.GA8522@coredump.intra.peff.net>
+ <20250314161347.GA9440@coredump.intra.peff.net>
+ <xmqqv7sbh698.fsf@gitster.g>
+ <xmqqr02zfr3r.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqr02zfr3r.fsf@gitster.g>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Mar 14, 2025 at 10:40:24AM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Jeff King <peff@peff.net> writes:
+> >
+> >> -- >8 --
+> >> Subject: [PATCH] run-command: use errno to check for sigfillset() error
+> >>
+> >> Since enabling -Wunreachable-code, builds with clang on macOS now fail,
+> >> complaining that the die_errno() call in:
+> >>
+> >>   if (sigfillset(&all))
+> >> 	die_errno("sigfillset");
+> >>
+> >> is unreachable. On that platform the manpage documents that sigfillset()
+> >> always returns success, and presumably the implementation is a macro or
+> >> inline function that does so in a way that is transparent to the
+> >> compiler.
+> >
+> > Would it work to instead do this here
+> > ...
+> 
+> I forgot to say a more important thing.  Between the "let's excempt
+> developers on macOS" and the "let's see how far we can go with the
+> warning turned on everywhere and wack-a-mole this particular one
+> with errno check" patches, I prefer the latter at least for a short
+> term.
 
-> Jeff King <peff@peff.net> writes:
->
->> -- >8 --
->> Subject: [PATCH] run-command: use errno to check for sigfillset() error
->>
->> Since enabling -Wunreachable-code, builds with clang on macOS now fail,
->> complaining that the die_errno() call in:
->>
->>   if (sigfillset(&all))
->> 	die_errno("sigfillset");
->>
->> is unreachable. On that platform the manpage documents that sigfillset()
->> always returns success, and presumably the implementation is a macro or
->> inline function that does so in a way that is transparent to the
->> compiler.
->
-> Would it work to instead do this here
-> ...
+Yeah, I'm also in favor of generally enabling the warning and seeing
+whether it will end up being a pain or not. This particular edge case
+here is ugly, but it's manageable and may protect us from mistakes in
+other places going forward.
 
-I forgot to say a more important thing.  Between the "let's excempt
-developers on macOS" and the "let's see how far we can go with the
-warning turned on everywhere and wack-a-mole this particular one
-with errno check" patches, I prefer the latter at least for a short
-term.
+If we do so, could we please also include the following patch for Meson?
 
-Thanks.
+Thanks!
+
+Patrick
+
+diff --git a/meson.build b/meson.build
+index efe2871c9d..a0a602864a 100644
+--- a/meson.build
++++ b/meson.build
+@@ -721,6 +721,7 @@ if get_option('warning_level') in ['2','3', 'everything'] and compiler.get_argum
+     '-Woverflow',
+     '-Wpointer-arith',
+     '-Wstrict-prototypes',
++    '-Wunreachable-code',
+     '-Wunused',
+     '-Wvla',
+     '-Wwrite-strings',
