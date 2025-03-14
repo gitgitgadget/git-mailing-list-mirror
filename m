@@ -1,70 +1,70 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798862066DB
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 20:18:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9430D2066E5
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 20:18:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741983538; cv=none; b=lBWuaptWzBTEBZIaiRxffARWdcFlf2BVb+KB7bhw0Pl+lc6LCjlw1PgwCrjxhLn5f5nIPuV2GO5q2g7vofDFX9c4zOqSJzEtC07imh3kINa7PWJMzCByLSdXAL1EJGD7QujeXR0pKQ6IoNFSruczicXrIo6LW1PvUxPGFjqMydQ=
+	t=1741983541; cv=none; b=QbQZPrMGZussW81gyz9GPCZrY9iRt+dKyXoyLdy/IhiQ55pyK0H9/XJ24pAvmrheulNnsMGEt4QQ0cKhncnca3RszLmVTHg7y6ezHFj9HztaqydJxaeCVyRi+0zS25BfGMNqZ5JHbS6duD9clarI2p9mxq3WNB8ggmyucECbsY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741983538; c=relaxed/simple;
-	bh=J0/YefXaYWBkw+PcGEkx1pOjFrjKfBDFigogdDtW2Tc=;
+	s=arc-20240116; t=1741983541; c=relaxed/simple;
+	bh=/bu6KGzgR8fHXsbbS4P3fTttwzBY9K58GIjhsPqtaU0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cMm752bqqpLAG54WTiEPhZ+/ww5iFXyJX4JyBH9Ps4VmiNjXIpADOyIkiTg9maGBaBw6q4adMVabXZlxAfn+XgD6zrPqGdJztXKvpSQUvyKVfrpGgEAVt4+fL+FlxtGY7fe3YblUWwrV5+RftXnLQxNS8vQ9Fom9t64pINRPZMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=TV82YcU/; arc=none smtp.client-ip=209.85.222.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=jPLWlAtVhbE7eVTRg+fD7fEbQEzZt7J0GPv9sNyFQCH85uYX/df5ftNUywpbog+VZJAFh81bOCsmu8zCHcmQ2HKqF/s2cDNcmqRyK2bM8VlZtgh0jhpR3c1fPOHI6DnZ4NRUsCPDVSXAvXk1WOV4YzPM1f6CEHSkSNJewU+GX+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=iVmVQMTo; arc=none smtp.client-ip=209.85.160.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="TV82YcU/"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c542ffec37so255012285a.2
-        for <git@vger.kernel.org>; Fri, 14 Mar 2025 13:18:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="iVmVQMTo"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-476a720e806so22307841cf.0
+        for <git@vger.kernel.org>; Fri, 14 Mar 2025 13:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741983535; x=1742588335; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1741983538; x=1742588338; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EmzxNlob+PFgER2n2B7XGmwg5I58P/R5fpgwzx815nc=;
-        b=TV82YcU/GiNGu6Czsuft2ztRRchw9ZGNbFCyf+G9Lly5h+trM+BYwE2OS3HlWaJAfK
-         H2zDblJnkt2J6ap4yv2WOMZo4BZHhHVllUc6zIqzeesIIgPAXow/afJfrRLQno2xLIns
-         /YzXB8iFSvoEDOupAdF0oLOB+wsyCluwQ61reDOIq3J7KUj5nyRcKGA8qbDM7NEgHPWn
-         dWmlj4VXXQYkujUPk1txliUpxjch7ABoKEWRMMHIjsQomRQUBFdwcB6jcMcpEFIIerjl
-         t7upxaUelvoxByToaHWpgBJRRp04roZHKFADNwVf5C2aRPgQvHVHdDwrb1wIQnZF35Pi
-         876w==
+        bh=aQyAqbdmyme6Qp/tL9FNrqeA6P9nUXQjtQWkQCnZUsQ=;
+        b=iVmVQMTo5Rur2qTTTRq/mReq97AS4guifHcP/qY685redzIXDNd5Kk6xdcgx6+V9bx
+         9WcAhkavFl2ePlEznGVKbtuWJGwtnO7IQ22xQ7mjRkJ9bZryuLo0eCx9DHa3LbVQupVZ
+         xdi+hRwB/MYBHJjvh84JyP33lalPjNL85BmxD2A6LeCHUkd+Lhc+1IY7oKO45DL1DBAY
+         TimLaLe7BmA/NPwKWKGBTuyJoB9vFOS2lpUug2nPmK9zOGxo5W6NJIp1SpdkXwKxn5Ss
+         /86fpqy2rs2N5g7ZY03aq4gguyjq9LEMG8lFwS9ppiPGFJnri41uyiJEG25AYAQG80E4
+         Tx/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741983535; x=1742588335;
+        d=1e100.net; s=20230601; t=1741983538; x=1742588338;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EmzxNlob+PFgER2n2B7XGmwg5I58P/R5fpgwzx815nc=;
-        b=Ub9kfSwW6xS5z1gwblYb5uhSJA0Y+rFzMqM8rWAoWafCzROqn1FJWD+2wAiuneqWbe
-         2XOguwm1ztQk7YRiBjOQT1U8RaEhUFOo6G6KUUKSIRo9Hhve2fN96aIJ6vPShEpEcLZJ
-         utNoAaeuCJvoFhiaBQTHKBMrtoK0o+oRNa18fH6QKhyPnLHpn9OYO2g8W7eSkgXdVyYA
-         Rgk/XYd0nv4x3Cqxbb1QJ08Dv3+y2vW/1UBxnn5UJ04BJn2m97w7UFAfRXWrGT/OU3Jr
-         HuMKQp66ZlvPaZs4t5bBHCq0yF2jzM/HvnNWOaKlY92CLqT7aQX80NCcPCFjzzMk8wcJ
-         6cEw==
-X-Gm-Message-State: AOJu0YyF6FQSEkC6/bHUaI3sQ+Y3tL8QcspkCZQZzNV6MHsVNKKllS9U
-	7lZva7IH0jcVVxA8NmAhvdLHBjBiNbgcNzfJJj6jqDreS2Y72cefeq5gA4yTLPIU+Bam5jEVAD2
-	qFAs=
-X-Gm-Gg: ASbGncsXNTi+HjwkKKuN2wvfV8j2say/5ueNADcSR45Be4LclJDZv67DydaZMJSdNvb
-	E0uDoHlgW1sNUgTErWTUBVt3k13Jgmh4YlhEAhLdmApIy1kraVc4eM41oT2xbC2eMQ9UzGzX/eS
-	B+UnCdm8cwDmyABBXo7Hm9C39UOz1shlr+sp68zFm5u++dsrmSiypfIbcgQ4MeqoV0uGLSWTpDa
-	wnMow+IaA5UvKGzlZBJTwYPKyQN3u51c8UjVkhEcfofcxZu1rjAijh+FyHxUYHfGfM+2YcbyNDe
-	QWQWl9UZZifBxNGGD3pPRU1Kh3Q+9vsV2AmP/3qznHw3YQxdg21uzSwa43zn3nprUZcjL5AFaua
-	UpokEhD8ZhajEcoh1
-X-Google-Smtp-Source: AGHT+IEO1Bslg/4xqUehbqWx+b7xclr4RNYylN+dRjL/aGGAsJZZttK2Sy4WILD5QMXWzivB5bBRwA==
-X-Received: by 2002:a05:620a:1a88:b0:7c5:4788:a152 with SMTP id af79cd13be357-7c57c9191d0mr651156285a.49.1741983535129;
-        Fri, 14 Mar 2025 13:18:55 -0700 (PDT)
+        bh=aQyAqbdmyme6Qp/tL9FNrqeA6P9nUXQjtQWkQCnZUsQ=;
+        b=hrMKSta8dmGM3ujBtfRSnqQPqwM7Q2p7C0VHS8vyL5k4VWozgCQpDTWRknTXv7GgRO
+         WugOkhfWdvveaNAU37EZvD/LeClwQoU0rZzUar2130pOUHqWFSNiMV677VyETymzobMU
+         Ww0VhN6OK785XfUF1okGV2Rf9f9b/k2ZVU4Rgz5ULcS7+B7GETie7ozEr3eFxM97p3+M
+         +gwIm1iKAzprSl4u26Wol9sBrbYjicgd6EELHypWN74ibTliip/nCmBo6zVfRm7oY7RY
+         AosiE+rMaTrOueJikLYCHvVq4V3DjtxUIEJEPcqJAvVea8RvDc2hlxUD6rFRV+IywPC1
+         FVpQ==
+X-Gm-Message-State: AOJu0Yyg5Nj5AeSOtT7MSWiAEmpQBic59buzO4A7fofZB03ciQbrBoVU
+	TvzwiJAdThvxymdLU61ofiI8j1O4Iwp2sOFHg4srMLIC4MCalFIGzqk6Wvt0poC9ogBfKpgK9vH
+	ld7Q=
+X-Gm-Gg: ASbGncvRDG+YjPHLpeOrVpjBvjJVTXe+q8HbghAsxik8Uc5/Uz/sCvHz1F6sIS2T7Rn
+	kV+hTUfMNd6hapEX8vdvJ/ufGklKQz33ktNwPVB06wPuHq0Ae8uJclpNY58BIaxnajT5FY+/6NY
+	sNnPVrxbBGOMp6oAQe7+k9C+6xgg9YbpIEoGrKLC1QCD/Vf0BSR2AFODIirQvl7jm/y9fRpSgtk
+	foslIa6cWtBGbJ5B7y0tLpXJVTyBCN5op5pt+IFTlD8Grm6rRz9loySWxV7FkbltyrYBlJI4SNJ
+	H4GLQVv38uGgQyWByHSSBVy7C6+zhWaTAX2XfANTAzDQjruBhelm546U5QquCyQYXpzc5Vce8Ot
+	E/iC3lKPqryHEmJCIn5/6Eo0DfIU=
+X-Google-Smtp-Source: AGHT+IHvCrSQO307EtKOR/giHS5+84aUWBZOggS+lxuQ6LXNdU1CsbCLSuiGG+f7VE7npxuYP8G2yQ==
+X-Received: by 2002:a05:622a:178c:b0:476:790c:73a7 with SMTP id d75a77b69052e-476c81c3807mr50601361cf.40.1741983538277;
+        Fri, 14 Mar 2025 13:18:58 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c573c7853fsm294471485a.43.2025.03.14.13.18.54
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-476bb6370aasm27057511cf.20.2025.03.14.13.18.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Mar 2025 13:18:54 -0700 (PDT)
-Date: Fri, 14 Mar 2025 16:18:53 -0400
+        Fri, 14 Mar 2025 13:18:58 -0700 (PDT)
+Date: Fri, 14 Mar 2025 16:18:56 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 11/13] pack-bitmap.c: keep track of each layer's type
- bitmaps
-Message-ID: <a29f4ee60d519318d36a8d3c812b4bad039b891e.1741983492.git.me@ttaylorr.com>
+Subject: [PATCH v4 12/13] pack-bitmap.c: use `ewah_or_iterator` for type
+ bitmap iterators
+Message-ID: <a1cf65bedc94ab6e318ff81a6d48eb30b6fc7868.1741983492.git.me@ttaylorr.com>
 References: <cover.1723755667.git.me@ttaylorr.com>
  <cover.1741983492.git.me@ttaylorr.com>
 Precedence: bulk
@@ -77,125 +77,181 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1741983492.git.me@ttaylorr.com>
 
-Prepare for reading the type-level bitmaps from previous bitmap layers
-by maintaining an array for each type, where each element in that type's
-array corresponds to one layer's bitmap for that type.
-
-These fields will be used in a later commit to instantiate the 'struct
-ewah_or_iterator' for each type.
+Now that we have initialized arrays for each bitmap layer's type bitmaps
+in the previous commit, adjust existing callers to use them in
+preparation for multi-layered bitmaps.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 58 +++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 54 insertions(+), 4 deletions(-)
+ pack-bitmap.c | 42 +++++++++++++++++++++++++++---------------
+ 1 file changed, 27 insertions(+), 15 deletions(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 00acf5ec73..3517972892 100644
+index 3517972892..5e6d4ace58 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -81,6 +81,24 @@ struct bitmap_index {
- 	struct ewah_bitmap *blobs;
- 	struct ewah_bitmap *tags;
- 
-+	/*
-+	 * Type index arrays when this bitmap is associated with an
-+	 * incremental multi-pack index chain.
-+	 *
-+	 * If n is the number of unique layers in the MIDX chain, then
-+	 * commits_all[n-1] is this structs 'commits' field,
-+	 * commits_all[n-2] is the commits field of this bitmap's
-+	 * 'base', and so on.
-+	 *
-+	 * When either associated either with a non-incremental MIDX, or
-+	 * a single packfile, these arrays each contain a single
-+	 * element.
-+	 */
-+	struct ewah_bitmap **commits_all;
-+	struct ewah_bitmap **trees_all;
-+	struct ewah_bitmap **blobs_all;
-+	struct ewah_bitmap **tags_all;
-+
- 	/* Map from object ID -> `stored_bitmap` for all the bitmapped commits */
- 	kh_oid_map_t *bitmaps;
- 
-@@ -581,7 +599,32 @@ static int load_reverse_index(struct repository *r, struct bitmap_index *bitmap_
- 	return load_pack_revindex(r, bitmap_git->pack);
+@@ -1629,25 +1629,29 @@ static void show_extended_objects(struct bitmap_index *bitmap_git,
+ 	}
  }
  
--static int load_bitmap(struct repository *r, struct bitmap_index *bitmap_git)
-+static void load_all_type_bitmaps(struct bitmap_index *bitmap_git)
-+{
-+	struct bitmap_index *curr = bitmap_git;
-+	size_t i = bitmap_git->base_nr;
-+
-+	ALLOC_ARRAY(bitmap_git->commits_all, bitmap_git->base_nr + 1);
-+	ALLOC_ARRAY(bitmap_git->trees_all, bitmap_git->base_nr + 1);
-+	ALLOC_ARRAY(bitmap_git->blobs_all, bitmap_git->base_nr + 1);
-+	ALLOC_ARRAY(bitmap_git->tags_all, bitmap_git->base_nr + 1);
-+
-+	while (curr) {
-+		bitmap_git->commits_all[i] = curr->commits;
-+		bitmap_git->trees_all[i] = curr->trees;
-+		bitmap_git->blobs_all[i] = curr->blobs;
-+		bitmap_git->tags_all[i] = curr->tags;
-+
-+		curr = curr->base;
-+		if (curr && !i)
-+			BUG("unexpected number of bitmap layers, expected %"PRIu32,
-+			    bitmap_git->base_nr + 1);
-+		i -= 1;
-+	}
-+}
-+
-+static int load_bitmap(struct repository *r, struct bitmap_index *bitmap_git,
-+		       int recursing)
+-static void init_type_iterator(struct ewah_iterator *it,
++static void init_type_iterator(struct ewah_or_iterator *it,
+ 			       struct bitmap_index *bitmap_git,
+ 			       enum object_type type)
  {
- 	assert(bitmap_git->map);
+ 	switch (type) {
+ 	case OBJ_COMMIT:
+-		ewah_iterator_init(it, bitmap_git->commits);
++		ewah_or_iterator_init(it, bitmap_git->commits_all,
++				      bitmap_git->base_nr + 1);
+ 		break;
  
-@@ -603,10 +646,13 @@ static int load_bitmap(struct repository *r, struct bitmap_index *bitmap_git)
- 	if (bitmap_git->base) {
- 		if (!bitmap_is_midx(bitmap_git))
- 			BUG("non-MIDX bitmap has non-NULL base bitmap index");
--		if (load_bitmap(r, bitmap_git->base) < 0)
-+		if (load_bitmap(r, bitmap_git->base, 1) < 0)
- 			goto failed;
+ 	case OBJ_TREE:
+-		ewah_iterator_init(it, bitmap_git->trees);
++		ewah_or_iterator_init(it, bitmap_git->trees_all,
++				      bitmap_git->base_nr + 1);
+ 		break;
+ 
+ 	case OBJ_BLOB:
+-		ewah_iterator_init(it, bitmap_git->blobs);
++		ewah_or_iterator_init(it, bitmap_git->blobs_all,
++				      bitmap_git->base_nr + 1);
+ 		break;
+ 
+ 	case OBJ_TAG:
+-		ewah_iterator_init(it, bitmap_git->tags);
++		ewah_or_iterator_init(it, bitmap_git->tags_all,
++				      bitmap_git->base_nr + 1);
+ 		break;
+ 
+ 	default:
+@@ -1664,7 +1668,7 @@ static void show_objects_for_type(
+ 	size_t i = 0;
+ 	uint32_t offset;
+ 
+-	struct ewah_iterator it;
++	struct ewah_or_iterator it;
+ 	eword_t filter;
+ 
+ 	struct bitmap *objects = bitmap_git->result;
+@@ -1672,7 +1676,7 @@ static void show_objects_for_type(
+ 	init_type_iterator(&it, bitmap_git, object_type);
+ 
+ 	for (i = 0; i < objects->word_alloc &&
+-			ewah_iterator_next(&filter, &it); i++) {
++			ewah_or_iterator_next(&filter, &it); i++) {
+ 		eword_t word = objects->words[i] & filter;
+ 		size_t pos = (i * BITS_IN_EWORD);
+ 
+@@ -1714,6 +1718,8 @@ static void show_objects_for_type(
+ 			show_reach(&oid, object_type, 0, hash, pack, ofs);
+ 		}
+ 	}
++
++	ewah_or_iterator_free(&it);
+ }
+ 
+ static int in_bitmapped_pack(struct bitmap_index *bitmap_git,
+@@ -1765,7 +1771,7 @@ static void filter_bitmap_exclude_type(struct bitmap_index *bitmap_git,
+ {
+ 	struct eindex *eindex = &bitmap_git->ext_index;
+ 	struct bitmap *tips;
+-	struct ewah_iterator it;
++	struct ewah_or_iterator it;
+ 	eword_t mask;
+ 	uint32_t i;
+ 
+@@ -1782,7 +1788,7 @@ static void filter_bitmap_exclude_type(struct bitmap_index *bitmap_git,
+ 	 * packfile.
+ 	 */
+ 	for (i = 0, init_type_iterator(&it, bitmap_git, type);
+-	     i < to_filter->word_alloc && ewah_iterator_next(&mask, &it);
++	     i < to_filter->word_alloc && ewah_or_iterator_next(&mask, &it);
+ 	     i++) {
+ 		if (i < tips->word_alloc)
+ 			mask &= ~tips->words[i];
+@@ -1802,6 +1808,7 @@ static void filter_bitmap_exclude_type(struct bitmap_index *bitmap_git,
+ 			bitmap_unset(to_filter, pos);
  	}
  
-+	if (!recursing)
-+		load_all_type_bitmaps(bitmap_git);
-+
- 	return 0;
++	ewah_or_iterator_free(&it);
+ 	bitmap_free(tips);
+ }
  
- failed:
-@@ -682,7 +728,7 @@ struct bitmap_index *prepare_bitmap_git(struct repository *r)
+@@ -1861,14 +1868,14 @@ static void filter_bitmap_blob_limit(struct bitmap_index *bitmap_git,
  {
- 	struct bitmap_index *bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+ 	struct eindex *eindex = &bitmap_git->ext_index;
+ 	struct bitmap *tips;
+-	struct ewah_iterator it;
++	struct ewah_or_iterator it;
+ 	eword_t mask;
+ 	uint32_t i;
  
--	if (!open_bitmap(r, bitmap_git) && !load_bitmap(r, bitmap_git))
-+	if (!open_bitmap(r, bitmap_git) && !load_bitmap(r, bitmap_git, 0))
- 		return bitmap_git;
+ 	tips = find_tip_objects(bitmap_git, tip_objects, OBJ_BLOB);
  
- 	free_bitmap_index(bitmap_git);
-@@ -2050,7 +2096,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 	 * from disk. this is the point of no return; after this the rev_list
- 	 * becomes invalidated and we must perform the revwalk through bitmaps
- 	 */
--	if (load_bitmap(revs->repo, bitmap_git) < 0)
-+	if (load_bitmap(revs->repo, bitmap_git, 0) < 0)
- 		goto cleanup;
+ 	for (i = 0, init_type_iterator(&it, bitmap_git, OBJ_BLOB);
+-	     i < to_filter->word_alloc && ewah_iterator_next(&mask, &it);
++	     i < to_filter->word_alloc && ewah_or_iterator_next(&mask, &it);
+ 	     i++) {
+ 		eword_t word = to_filter->words[i] & mask;
+ 		unsigned offset;
+@@ -1896,6 +1903,7 @@ static void filter_bitmap_blob_limit(struct bitmap_index *bitmap_git,
+ 			bitmap_unset(to_filter, pos);
+ 	}
  
- 	if (!use_boundary_traversal)
-@@ -2983,6 +3029,10 @@ void free_bitmap_index(struct bitmap_index *b)
- 	ewah_pool_free(b->trees);
- 	ewah_pool_free(b->blobs);
- 	ewah_pool_free(b->tags);
-+	free(b->commits_all);
-+	free(b->trees_all);
-+	free(b->blobs_all);
-+	free(b->tags_all);
- 	if (b->bitmaps) {
- 		struct stored_bitmap *sb;
- 		kh_foreach_value(b->bitmaps, sb, {
++	ewah_or_iterator_free(&it);
+ 	bitmap_free(tips);
+ }
+ 
+@@ -2527,12 +2535,12 @@ static uint32_t count_object_type(struct bitmap_index *bitmap_git,
+ 	struct eindex *eindex = &bitmap_git->ext_index;
+ 
+ 	uint32_t i = 0, count = 0;
+-	struct ewah_iterator it;
++	struct ewah_or_iterator it;
+ 	eword_t filter;
+ 
+ 	init_type_iterator(&it, bitmap_git, type);
+ 
+-	while (i < objects->word_alloc && ewah_iterator_next(&filter, &it)) {
++	while (i < objects->word_alloc && ewah_or_iterator_next(&filter, &it)) {
+ 		eword_t word = objects->words[i++] & filter;
+ 		count += ewah_bit_popcount64(word);
+ 	}
+@@ -2544,6 +2552,8 @@ static uint32_t count_object_type(struct bitmap_index *bitmap_git,
+ 			count++;
+ 	}
+ 
++	ewah_or_iterator_free(&it);
++
+ 	return count;
+ }
+ 
+@@ -3076,13 +3086,13 @@ static off_t get_disk_usage_for_type(struct bitmap_index *bitmap_git,
+ {
+ 	struct bitmap *result = bitmap_git->result;
+ 	off_t total = 0;
+-	struct ewah_iterator it;
++	struct ewah_or_iterator it;
+ 	eword_t filter;
+ 	size_t i;
+ 
+ 	init_type_iterator(&it, bitmap_git, object_type);
+ 	for (i = 0; i < result->word_alloc &&
+-			ewah_iterator_next(&filter, &it); i++) {
++			ewah_or_iterator_next(&filter, &it); i++) {
+ 		eword_t word = result->words[i] & filter;
+ 		size_t base = (i * BITS_IN_EWORD);
+ 		unsigned offset;
+@@ -3123,6 +3133,8 @@ static off_t get_disk_usage_for_type(struct bitmap_index *bitmap_git,
+ 		}
+ 	}
+ 
++	ewah_or_iterator_free(&it);
++
+ 	return total;
+ }
+ 
 -- 
 2.49.0.13.gd0d564685b
 
