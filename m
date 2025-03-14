@@ -1,131 +1,105 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390221BC3C
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 14:10:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F441EB3E
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 14:12:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741961425; cv=none; b=W6VekQH9JlAz3mE/TeFx0EUrLoQ/JX81VJR/fQz2i1WFxdC1elXnOXQ1L5f9Qxl9xdwxfnzccVwOftS/A+AsEio2+PeGGvVvBHZkpMitivlfGkQn11uAy6AvsFFa9T77QLkEQ/uFkt0CKO23CSH6voMgxfox1lkuV/F8PmYoe6g=
+	t=1741961538; cv=none; b=Dztszu19vjQ0ceS8GkL0boGI42i+fsQfwx/+nqLfr/J7YZithdah6/RycG8AfrmxBuDosacFjSF46CFDp++wTYDZpmQpOKfCABGDWSFlSU4lNJRjvaxQFPToIiGvC0rcfwV6MiPiX6pb4Wtr25K4/ZoZEAO347QjrmS/3qAyZqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741961425; c=relaxed/simple;
-	bh=M6OyzZGNq91TkHZYkc2r6DGuMkp7hRaUYHAEpDa4/Rk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jd32FRlspMDd0kAO5C0XdsLf4inw1LuNON0jRcXvxXsdrZw3tnmDK8U7qPhrdxepnjQV0DjYtkKxnr3FZwWnKrY05SmCYP/2rQYiD1otJxpyzlBanykH16ArBkjj5oidKZDkCE6KJh22Rj6HtMoDhqNzzv+iOxfkJSsHo5THi3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ccycx5uc; arc=none smtp.client-ip=209.85.218.43
+	s=arc-20240116; t=1741961538; c=relaxed/simple;
+	bh=ew4Mve1x+Xiw9D2nWUzk4RzZzZwdMXypbW228Ik/EDY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JTxRRVJWhLchKi9DLV5WvlfclrcCBRVyCVn8vhdvJWY0ZdueBzVlbtVS4rxME0ZZiz29vCD6ZYwmV6MacvXARL4ri6EGhChYeYQMb0tgxUmLzgymRdwKBSPTlPR5orZoN4Jf+Qz6mOMlggyyl8JHrwiFozSow/6HgWLKkjEwSsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HbWDSGgV; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ccycx5uc"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ac2af2f15d1so307646166b.1
-        for <git@vger.kernel.org>; Fri, 14 Mar 2025 07:10:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HbWDSGgV"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43cf680d351so20705015e9.0
+        for <git@vger.kernel.org>; Fri, 14 Mar 2025 07:12:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741961422; x=1742566222; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1741961533; x=1742566333; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5LFKe8AiT3/DaIlppk+Loby96MZDcqUGUSdpwXKLRfs=;
-        b=ccycx5ucoCDE8ZKEfAjUwoEpLaBJ3jUrdWpLiBMCV1U9rAMgqlDBh66R7HuxiNhURm
-         c4Sq79UlqqSQqtgYd2OjSpZTnDzVATX2F/jFSpCidOrD5dCv/ErtJC4irCiQp/RY+R58
-         KS76f59zlvkdyO1kIBDaoqHhUNdbQgHVBbJ2cMKfdTmD0+7DhXWVBIIPcb0b7c0eZlRR
-         347R0beRWWP2WD5+yCPjfSJcU0/gB1a3H8rO+KAsYtSYoLHj8VJ/Tfd3PZpxFk35WQGd
-         l2fR6smJ2GJ9/PE5eTUjgoQog8vrCmJxI7sfLlXB4u0ME4CMPnceuYBWB1DDXwxfJrh8
-         QGRA==
+        bh=W1UzlamXE04mZyZKh7O3F/VryXtDBhQqzRx+cvUj4aI=;
+        b=HbWDSGgVcXpW1tZcc8zg+JzQ7mJewqHycWc1jMEVOdUB8B74sYRJupxOKfAPIY+Z/d
+         /RIZqWKd7SJ2gcwLwyji0MS3XldAJJsHJizxWUdpxBuTF2jD1MfyjQJIDxz0qlPJPBcg
+         yASjwGnHjYbt/ReKC8Ykbk5Fy+/59Xx3A1MKjfylMc6LsJXd9mXeGblafMTkbaBUyNyq
+         neyRv9tfhSI7767w1LtXO4VyxJ53vWgtBPQPCEA4ieskiB5rWY+m60icOr4bc8I26FXG
+         LjUqQhAvLAjAnNzFOsR9Vf3+PW1MnpyZVr5r6qDnlal3WUbAUgMEKjhvBz80359b2lAt
+         Fzig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741961422; x=1742566222;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1741961533; x=1742566333;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5LFKe8AiT3/DaIlppk+Loby96MZDcqUGUSdpwXKLRfs=;
-        b=DBLaoWxwSPSveAn6A2llUkN9FPDVWXDytYObkutuM1wRDRw6cScVCwSWs7x3f3LPnp
-         FIPxue63XIWQpkuod1hmnHSSNGSZ5qhyxgUT+srZJ+oUD8xKJWmNozCYawkl495Szajx
-         Mi6TfeNsfxb0N0XMw/ayumz/iLVMGPIWpuDY1e2lxw3zk5Hpal8/HrFcc+32K2xuQQlD
-         fs+hP/fRMJiixcOhwc41Zj/A/QTcojB1jaz9OcIiSkYopDV97GnwGRM9lc4eYkswqcEl
-         W2hce9LdwvVdOb3BN2hyNsb7sysGpJ49ZfbKbsbhBt0oL9m2bTiO71nrZ3tkJKSgP1eB
-         g+8A==
-X-Gm-Message-State: AOJu0Yy8XakWmQgyJOJ31+26j/VM0/MHEsXtRNcrK9SlNuwSx+e1ELOw
-	IseCdz2gU0Cd4jDRSoNal1m0C0uBFJlDkmee2j6NysYuzLwaOZztu0X6Gc0n83nfBeoEmwOy7hV
-	dp9xoYpC8zB/08SC7raNc3md5Iiw=
-X-Gm-Gg: ASbGncuJLjqFzpeOvJE+z0Asbe0kA/X77L9+KnDImG+cvsuCK+htz6+CzkU8tm/vg1Y
-	fr8Q7ex1f1ETwgoLxLrpk02jtwnEkQW36AW9jRxryq24+DE7EwB4Hsx5Cobx5INry7tO9dNebYb
-	Qfi4FBEroHnSxNaSrG01aAg7PJZNYq92ymfUpr2AY=
-X-Google-Smtp-Source: AGHT+IEaOhvvceH0HZEBm3qninABXf3d25m9W0hWkHTqfzpfn7Jf8T4vil3GWagdybRvKo4dEsAmNzwQPlXNMxMfbaA=
-X-Received: by 2002:a17:907:7d92:b0:ac1:fa31:78cf with SMTP id
- a640c23a62f3a-ac3303716f0mr324685466b.35.1741961422017; Fri, 14 Mar 2025
- 07:10:22 -0700 (PDT)
+        bh=W1UzlamXE04mZyZKh7O3F/VryXtDBhQqzRx+cvUj4aI=;
+        b=Dowk8NhiMsfXJ/NQnBLwNAJssQW3cNnbzNmf/Y2qGB6HkOgzNapW+Jqe74WvpmLWFT
+         X4fgdaq0YR0185bq7RVkkNDiCbaiOh6KtybD7wiKvp7nZWoFQY6FAppv6rLtFDO6zrWz
+         +b9FmIV5rtEIN5N+8Cw7Xbgk4pSCnZATv056szCmQMbu9x5YpKNyxvc/OcI9YveGC+pE
+         bB8VlaSuEwdNIzxJs6pWoDQ7ylVH2Vzb1Bll+G4Z/UdjLtRTpqjY41JcChU/RwzIHOV+
+         MSAZFHN5tK7LQRyQat1MQmaPiF1c9amfbLFFPncSgStM8rrRbADz7f4jo3nQicCgYt5z
+         Ochw==
+X-Gm-Message-State: AOJu0YwFFMhP+hCdNkke3EVfPheWplGVhKlTkeTWKQ/e9ra0dYigp2yg
+	O94pE4k812eZlQONZrChRh2kMQYfPQxBe0DXN6/4HvDmM3EQ5r5J0oe/pQ==
+X-Gm-Gg: ASbGnctxFjKP5u6I6VwRQiW1kn57OXuo15JR0OR+CS7pEz6I8ZpRrF8T2yMyEZgmwWo
+	vnbkd9JqZay6KrKl21C1+zpFdITMTYte4H9hSK+yUvCfJ4s/EoVWTgoehZQwDogpy2L71BYKciu
+	AlK0THfnu6sd/WMFo1yweChgreI7Wify1JyQM3S6+IVuXZggZcPbOkoEe/LtmyTz2I4lynTQIdy
+	U9ird5iU9Qzdg0Uvst7RGZB2KNQmLg6QKQHN0fVgMf37eEEc8+6LRkXyCzZml0xSG40upNOfg7a
+	nWq1LdZOAbyu7Btfn/m8BnXwygOJDrvDZRs33gAuxCchoIY8TnXHJOLiV9IO0tsWAyLX8aKMiXa
+	cDmewFvr7BmI68S4LL/UlILwGpALq/2LXAeNHbg==
+X-Google-Smtp-Source: AGHT+IHrk26ISfeX9h/fpayyopwiDWdX9GUptsR0/z7A91XAtinb1Gcm9xo/OTkGK8GHo/u5Ojiidw==
+X-Received: by 2002:a05:600c:4f87:b0:43b:c6a7:ac60 with SMTP id 5b1f17b1804b1-43d1f235e45mr34107605e9.10.1741961533438;
+        Fri, 14 Mar 2025 07:12:13 -0700 (PDT)
+Received: from christian-Precision-5550.. (176-138-135-207.abo.bbox.fr. [176.138.135.207])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d1fe3a8cdsm8418255e9.2.2025.03.14.07.12.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Mar 2025 07:12:12 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>,
+	Taylor Blau <me@ttaylorr.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	"Randall S . Becker" <rsbecker@nexbridge.com>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v5 0/3] "promisor-remote" capability fixes
+Date: Fri, 14 Mar 2025 15:12:00 +0100
+Message-ID: <20250314141203.2548803-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.49.0.rc2.36.ga8a9f9b33b
+In-Reply-To: <20250313103859.817127-1-christian.couder@gmail.com>
+References: <20250313103859.817127-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250312114628.2744747-1-christian.couder@gmail.com>
- <20250313103859.817127-1-christian.couder@gmail.com> <xmqqv7scq4iu.fsf@gitster.g>
-In-Reply-To: <xmqqv7scq4iu.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 14 Mar 2025 15:10:09 +0100
-X-Gm-Features: AQ5f1Jrhzsvu8EmkqthTKIAeu1wPVucJSGojfJIIpGPc_tBcXajR0RNTcTvRGuw
-Message-ID: <CAP8UFD3O9_22br2vxUp2YqsE39JYHwyf-G0FJ3PqQg6mO5q3+w@mail.gmail.com>
-Subject: Re: [PATCH v4] promisor-remote: fix segfault when remote URL is missing
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, 
-	Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	"brian m . carlson" <sandals@crustytoothpaste.net>, 
-	"Randall S . Becker" <rsbecker@nexbridge.com>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Mar 13, 2025 at 5:28=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > While at it, let's warn and reject the remote, in the 'KnownUrl' case,
-> > when no URL or an empty URL is advertised by the server, or when an
-> > empty URL is configured on the client for a remote name advertised by
-> > the server and configured on the client. This is on par with a warning
-> > already emitted when URLs are different in the same case.
->
-> That explanation makes it unclear why we need a new one.  If the
-> configured and davertised are both empty and the same, according to
-> that "warning already emitted", that is not a warning-worthy event,
-> is it?
+As a number of different issues and fixes were found and discussed in
+the previous iterations, I thought it made sense to split the patch
+into a small 3 patch series.
 
-We have to check that remote_url is not NULL before using it in
-strcmp(). If it is NULL, we need to reject the remote, and it makes
-sense to warn before doing that with `return 0;` because we warn
-otherwise when a remote is rejected to try to help diagnose things at
-the end of the function.
+There are a lot of changes again compared to the previous version, so
+I don't think it makes sense to provide a range-diff.
 
-And while we are checking that remote_url is not NULL and warning if
-it is, it makes sense to also help diagnose the case where remote_url
-is empty with something like:
+Christian Couder (3):
+  promisor-remote: fix segfault when remote URL is missing
+  promisor-remote: fix possible issue when no URL is advertised
+  promisor-remote: compare remote names case sensitively
 
-    if (!remote_url || !*remote_url) {
-        warning(_("no or empty URL advertised for remote '%s'"), remote_nam=
-e);
-        return 0;
-    }
+ Documentation/config/promisor.adoc    |  4 +-
+ promisor-remote.c                     | 27 +++++++-----
+ t/t5710-promisor-remote-capability.sh | 59 +++++++++++++++++++++++++++
+ 3 files changed, 77 insertions(+), 13 deletions(-)
 
-I have used the above in the next version. Also I think this part
-deserves its own patch too, so it is in a separate patch in the next
-version.
+-- 
+2.49.0.rc2.1.gf94452eaa2
 
-> > Let's also warn if the remote is rejected because name and url are the
-> > same, as it could mean the url has not been configured.
->
-> Are we rejecting a remote _because_ r->name is used?  I thought the
-> code did something quite different.  We reject because the url does
-> not match, and then after that give an extra warning if remote nick
-> was used as a fallback URL.  Even if URL is configured as 'orogin'
-> for a remote with nick 'origin', the code would have rejected the
-> remote with the same logic in the same code path, wouldn't it?  It
-> is a bit confusiong to call such a situation "rejected because name
-> and URL are the same".
-
-Yeah, I have removed the above code as it's not needed anyway if we
-don't process the remotes when they don't have a non-empty URL
-configured.
-
-Thanks.
