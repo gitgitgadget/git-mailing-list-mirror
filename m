@@ -1,72 +1,71 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95661BC3C
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 14:10:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390221BC3C
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 14:10:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741961407; cv=none; b=TmRqCqJOdCgk0H1tF9X9rbjBsQmiYRs8WV/JKGR2JjRGDItrAffS8MgU002qs8C/ne+/E9tX2Pf97GU6jPYYoP34CJTmLmRx3up/W50+94m8Q43g/crXbr4G+D/I3IM7sAjDZHvwSyi41/Y5al6lu4Md7sSEmegkca8hle1fJxk=
+	t=1741961425; cv=none; b=W6VekQH9JlAz3mE/TeFx0EUrLoQ/JX81VJR/fQz2i1WFxdC1elXnOXQ1L5f9Qxl9xdwxfnzccVwOftS/A+AsEio2+PeGGvVvBHZkpMitivlfGkQn11uAy6AvsFFa9T77QLkEQ/uFkt0CKO23CSH6voMgxfox1lkuV/F8PmYoe6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741961407; c=relaxed/simple;
-	bh=rKJQN3tu0iRAkPu6ia6K8LKP8+dETv3UPAlmKNvlfxk=;
+	s=arc-20240116; t=1741961425; c=relaxed/simple;
+	bh=M6OyzZGNq91TkHZYkc2r6DGuMkp7hRaUYHAEpDa4/Rk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OL00dXKdpFu7N4DBTqf+Is+6PrRcekjWOJF/Syvy/+0b8QIgAAZE9qqmEb7cUtolbIpo7ptTulr1LNWash+17yjZa8JCOFdBxJtdgqYBOc4CCW7kWEylU2y/OtD2drFV+pZFoTuu4xy1ocpSegbGf6AQx1sU4dkLVj2TfTZTQF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C07K9xpQ; arc=none smtp.client-ip=209.85.208.53
+	 To:Cc:Content-Type; b=jd32FRlspMDd0kAO5C0XdsLf4inw1LuNON0jRcXvxXsdrZw3tnmDK8U7qPhrdxepnjQV0DjYtkKxnr3FZwWnKrY05SmCYP/2rQYiD1otJxpyzlBanykH16ArBkjj5oidKZDkCE6KJh22Rj6HtMoDhqNzzv+iOxfkJSsHo5THi3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ccycx5uc; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C07K9xpQ"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e5bc066283so3195906a12.0
-        for <git@vger.kernel.org>; Fri, 14 Mar 2025 07:10:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ccycx5uc"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ac2af2f15d1so307646166b.1
+        for <git@vger.kernel.org>; Fri, 14 Mar 2025 07:10:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741961404; x=1742566204; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741961422; x=1742566222; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tl4H87Mu7TXzp2lKLasM0UOkrZyoOAKcXbCXU5JbXsc=;
-        b=C07K9xpQUBDPbc0T3F+iw87Yu4yRT0sNGAGC1jAO8o5sVFapHBpZLG219zwPmBfBHl
-         PqsrVwuuys+aVXKdImTrEq7fLppclcElzDeYazXmuMZt4P9E2KevxoZwpyZ2ug/QEKYk
-         H7pQ1o+h/GV4+t+4eqmLPejb+Va8njPFJl8LUtCYnFAf17YPCQGkysNmCtZs680h6Sm8
-         RHn5csF+Ui7V+VLlcgw45wBDXbobP1ik7e2gl9um4c0297QY4UuyTf8pnxNS+Ie1TnE8
-         xOayZKM75c+KpKKyiQgrOG0TL5hSp/aWztmG8bT5rbiC1AgDGVGpfveiUjgL+tzgUmWz
-         B2JA==
+        bh=5LFKe8AiT3/DaIlppk+Loby96MZDcqUGUSdpwXKLRfs=;
+        b=ccycx5ucoCDE8ZKEfAjUwoEpLaBJ3jUrdWpLiBMCV1U9rAMgqlDBh66R7HuxiNhURm
+         c4Sq79UlqqSQqtgYd2OjSpZTnDzVATX2F/jFSpCidOrD5dCv/ErtJC4irCiQp/RY+R58
+         KS76f59zlvkdyO1kIBDaoqHhUNdbQgHVBbJ2cMKfdTmD0+7DhXWVBIIPcb0b7c0eZlRR
+         347R0beRWWP2WD5+yCPjfSJcU0/gB1a3H8rO+KAsYtSYoLHj8VJ/Tfd3PZpxFk35WQGd
+         l2fR6smJ2GJ9/PE5eTUjgoQog8vrCmJxI7sfLlXB4u0ME4CMPnceuYBWB1DDXwxfJrh8
+         QGRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741961404; x=1742566204;
+        d=1e100.net; s=20230601; t=1741961422; x=1742566222;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tl4H87Mu7TXzp2lKLasM0UOkrZyoOAKcXbCXU5JbXsc=;
-        b=cpTrR/xZ04d7WADB1g846MywCVlg5z97J39hPs1DVO3+HTCiQgso98FlVHNwAwiQI/
-         OLysZwz0OmQ+ZUssqosIdijl2M/TDzERfQuaJbF0wZatdr4tF0mt/8tLtkSF1i/+d4sg
-         0HNFtTwarrwWEGO49aIynFBEJrI2Hhi+9HvPvfSHPEjfqAvfUP+fzgjngzKAGz8BCK28
-         q0fx0V0eWT8FiIjnLKGPomDXofiiXVgIy75Ue3/akj8eG7XzmMaAbGAbfSE/UB4wkA1u
-         8GlwU0MYAdZfIcQ2wDMG9iMm7m4kVdnGlGZuRl8tebD5G3JzjlysCR9vbtt0NZB07RR4
-         2uGg==
-X-Gm-Message-State: AOJu0Yxq/aBcexRqeuPzOJ3KMuO3STsuyFyw4A+KXA9ZKzrGrt0vVjAW
-	p5jSyAMubnzvAmPXIEo1HJwF3CV5uwgws2IiqO4fiYGE8DmMlMghCbWVeNL1V0DSH/WyJCtR1ue
-	eFDwSfVSMTGOYz4v76cTl+m0dXQ4=
-X-Gm-Gg: ASbGnctD7SmWpSFaT+AdjrMCA2uN7jHT29JajMTyNAP2S2xwNHU2nmKOlFC2z2xhE/Y
-	02a+BZeUafdJ68naYkQwgGn/vd5NtjQ9/P2QDVIEPNHLK+7x6EHHtU/2w/1o+iCIRwTghpJNWcK
-	HO7QOaoAueH+e3soZUgCHE0abLd9OC
-X-Google-Smtp-Source: AGHT+IF9WtsBGnOuNU2TQfehAJ0CAv2l5/cjcPI/au8F2RDHELrjCKI2pFzrtGbzdAqb4GMQB/ZjiLHNUeuoFEHA0N0=
-X-Received: by 2002:a05:6402:2551:b0:5dc:c9ce:b01b with SMTP id
- 4fb4d7f45d1cf-5e89f150f7cmr2670184a12.8.1741961403513; Fri, 14 Mar 2025
- 07:10:03 -0700 (PDT)
+        bh=5LFKe8AiT3/DaIlppk+Loby96MZDcqUGUSdpwXKLRfs=;
+        b=DBLaoWxwSPSveAn6A2llUkN9FPDVWXDytYObkutuM1wRDRw6cScVCwSWs7x3f3LPnp
+         FIPxue63XIWQpkuod1hmnHSSNGSZ5qhyxgUT+srZJ+oUD8xKJWmNozCYawkl495Szajx
+         Mi6TfeNsfxb0N0XMw/ayumz/iLVMGPIWpuDY1e2lxw3zk5Hpal8/HrFcc+32K2xuQQlD
+         fs+hP/fRMJiixcOhwc41Zj/A/QTcojB1jaz9OcIiSkYopDV97GnwGRM9lc4eYkswqcEl
+         W2hce9LdwvVdOb3BN2hyNsb7sysGpJ49ZfbKbsbhBt0oL9m2bTiO71nrZ3tkJKSgP1eB
+         g+8A==
+X-Gm-Message-State: AOJu0Yy8XakWmQgyJOJ31+26j/VM0/MHEsXtRNcrK9SlNuwSx+e1ELOw
+	IseCdz2gU0Cd4jDRSoNal1m0C0uBFJlDkmee2j6NysYuzLwaOZztu0X6Gc0n83nfBeoEmwOy7hV
+	dp9xoYpC8zB/08SC7raNc3md5Iiw=
+X-Gm-Gg: ASbGncuJLjqFzpeOvJE+z0Asbe0kA/X77L9+KnDImG+cvsuCK+htz6+CzkU8tm/vg1Y
+	fr8Q7ex1f1ETwgoLxLrpk02jtwnEkQW36AW9jRxryq24+DE7EwB4Hsx5Cobx5INry7tO9dNebYb
+	Qfi4FBEroHnSxNaSrG01aAg7PJZNYq92ymfUpr2AY=
+X-Google-Smtp-Source: AGHT+IEaOhvvceH0HZEBm3qninABXf3d25m9W0hWkHTqfzpfn7Jf8T4vil3GWagdybRvKo4dEsAmNzwQPlXNMxMfbaA=
+X-Received: by 2002:a17:907:7d92:b0:ac1:fa31:78cf with SMTP id
+ a640c23a62f3a-ac3303716f0mr324685466b.35.1741961422017; Fri, 14 Mar 2025
+ 07:10:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250311152413.1059343-1-christian.couder@gmail.com>
- <20250312114628.2744747-1-christian.couder@gmail.com> <xmqqecz2yyg2.fsf@gitster.g>
- <CAP8UFD0QqUG5Gu-XxKi58sEA7VfSJk4gy9hb_93dCw+2QMABYA@mail.gmail.com> <xmqqfrjgq3ye.fsf@gitster.g>
-In-Reply-To: <xmqqfrjgq3ye.fsf@gitster.g>
+References: <20250312114628.2744747-1-christian.couder@gmail.com>
+ <20250313103859.817127-1-christian.couder@gmail.com> <xmqqv7scq4iu.fsf@gitster.g>
+In-Reply-To: <xmqqv7scq4iu.fsf@gitster.g>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 14 Mar 2025 15:09:50 +0100
-X-Gm-Features: AQ5f1JqI7OhT04Y1C4PPokzjgxR1ZhlE9q1dXaifbaz3xZpktGR2D0Ymu4DYN4k
-Message-ID: <CAP8UFD3HtG0QSZ+89K79ZKxfFkdDUjfbTbF8zTvquwRWU8c9Vw@mail.gmail.com>
-Subject: Re: [PATCH v3] promisor-remote: fix segfault when remote URL is missing
+Date: Fri, 14 Mar 2025 15:10:09 +0100
+X-Gm-Features: AQ5f1Jrhzsvu8EmkqthTKIAeu1wPVucJSGojfJIIpGPc_tBcXajR0RNTcTvRGuw
+Message-ID: <CAP8UFD3O9_22br2vxUp2YqsE39JYHwyf-G0FJ3PqQg6mO5q3+w@mail.gmail.com>
+Subject: Re: [PATCH v4] promisor-remote: fix segfault when remote URL is missing
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, 
 	Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>, 
@@ -77,109 +76,56 @@ Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.i
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 13, 2025 at 5:40=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+On Thu, Mar 13, 2025 at 5:28=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
 wrote:
 >
 > Christian Couder <christian.couder@gmail.com> writes:
 >
-> > It could happen that the server, the client and the common promisor
-> > remote are all on the same filesystem. Then it would make sense for
-> > both the server and the client to rely on just the remote name,
-> > without any URL configured, to access the promisor remote. So if we
-> > want things to work in this case, then I think the server should
-> > advertise the remote name in the "url=3D" field.
+> > While at it, let's warn and reject the remote, in the 'KnownUrl' case,
+> > when no URL or an empty URL is advertised by the server, or when an
+> > empty URL is configured on the client for a remote name advertised by
+> > the server and configured on the client. This is on par with a warning
+> > already emitted when URLs are different in the same case.
 >
-> Meaning the server and all the clients share the short-and-sweet
-> string that is suitable as a remote nickname (i.e. something you the
-> client driver would type to "git fetch" command) as a pathname that
-> is relative to the current working directory, and because the server
-> and these clients must refer to the same repository using this
-> mechanism, this in turn means that the server and all the clients
-> share the same current working directory?
+> That explanation makes it unclear why we need a new one.  If the
+> configured and davertised are both empty and the same, according to
+> that "warning already emitted", that is not a warning-worthy event,
+> is it?
 
-Maybe they don't share the same directory but there is a symlink to or
-a mount of the remote directory. I agree it's a rare case, but the
-case with no URL is a rare case too.
+We have to check that remote_url is not NULL before using it in
+strcmp(). If it is NULL, we need to reject the remote, and it makes
+sense to warn before doing that with `return 0;` because we warn
+otherwise when a remote is rejected to try to help diagnose things at
+the end of the function.
 
-Also I just tested the following:
+And while we are checking that remote_url is not NULL and warning if
+it is, it makes sense to also help diagnose the case where remote_url
+is empty with something like:
 
-$ mkdir test_git
-$ cd test_git
-$ git init
-$ git config remote."../git".fetch '+refs/heads/*:refs/remotes/git/*'
-$ git fetch "../git"
+    if (!remote_url || !*remote_url) {
+        warning(_("no or empty URL advertised for remote '%s'"), remote_nam=
+e);
+        return 0;
+    }
 
-which works if ../git is a valid path to a repo.
+I have used the above in the next version. Also I think this part
+deserves its own patch too, so it is in a separate patch in the next
+version.
 
-So even if `git remote add "../stuff" url` is rejected, one can
-actually create working remotes with names that point to any directory
-on the current filesystem.
-
-> It may be possible, but would that make _any_ practical sense?  I
-> doubt it.  I would understand perfectly well that the local single
-> machine situation as a good justification to use file:// URL in such
-> a setting, but not for the r->name fallback.
+> > Let's also warn if the remote is rejected because name and url are the
+> > same, as it could mean the url has not been configured.
 >
-> >> What other uses do the name/url vectors prepared by
-> >> promisor_info_vecs() have?  Is it that we use them only to advertise
-> >> with this code, and then match with what they advertise?
-> >
-> > Yes, I think so.
-> > ...
-> > Other call sites don't use promisor_info_vecs(). It was introduced by
-> > the lop patch series which doesn't change how other code gets the
-> > remote names and URLs.
->
-> Then it should be simpler to remove r->name entries at the source in
-> that function, than having to filter it from the strvec whenever the
-> strvec elements are used.
+> Are we rejecting a remote _because_ r->name is used?  I thought the
+> code did something quite different.  We reject because the url does
+> not match, and then after that give an extra warning if remote nick
+> was used as a fallback URL.  Even if URL is configured as 'orogin'
+> for a remote with nick 'origin', the code would have rejected the
+> remote with the same logic in the same code path, wouldn't it?  It
+> is a bit confusiong to call such a situation "rejected because name
+> and URL are the same".
 
-I am fine with this solution. The case with no URL isn't likely to
-happen in the first place, and if needed, it can be easily worked
-around by just specifying an URL that can be the same as the remote
-name. So in the next version, only remotes with an URL configured are
-pushed into the 'names' and 'urls' strvecs.
+Yeah, I have removed the above code as it's not needed anyway if we
+don't process the remotes when they don't have a non-empty URL
+configured.
 
-> >> ... would it be so different to pass an empty string as to pass a
-> >> misspelt URL received from the other end?  Wouldn't the end result
-> >> the same (i.e., we thought we had a URL usable as a promisor remote,
-> >> but it turns out that we cannot reach it)?
-> >
-> > Perhaps but I think it would be weird if URLs are matching when they
-> > are empty on both sides. I think it makes more sense and is more
-> > helpful to warn with a clear error message and just reject the remote
-> > if any of the URL is empty.
->
-> Smells like over-engineering for nonexisting case to me.
-
-I am fine with not worrying about this. Then I think it's just simpler
-to ignore any remote with an empty URL and not even push them into the
-strvecs in the first place, like we are now also doing for remote with
-no URL. So I have implemented this in the next version. It just
-simplifies a lot of things.
-
-It also seems that when an URL is empty, Git uses the remote name to
-fetch, like when the URL is missing. So it makes sense to process
-missing and empty URLs in the same way.
-
-> >> The 'i' was obtained by calling remote_nick_find(), which uses
-> >> strcasecmp() to find named remote (which I doubt it is a sensible
-> >> design by the way).  This code should be consistent with whatever
-> >> comparison used there.
-> >
-> > I think comparing remote names case insensitively is fair. It's likely
-> > to just make things a bit easier for users.
->
-> Meaning it makes it impossible to have two remotes with nicknames
-> that are different in case?
->
-> Because the "[remote "nick"] fetch =3D ..." configuration variables
-> have the nickname in the second part, the nicknames are case
-> insensitive, unlike the first and the third component (i.e.
-
-I think you mean "the nicknames are case sensitive" here.
-
-> "remote.origin.fetch" and "Remote.origin.FETCH" are the same thing,
-> but "remote.Origin.fetch" and "remote.origin.fetch" are different).
-
-Ok, then I have fixed this in a separate patch in the next version.
+Thanks.
