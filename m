@@ -1,80 +1,101 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E8E1F957
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 02:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A45B67F
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 06:08:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741920573; cv=none; b=AEky5UbMKVX3MhNVQMftgpwnb0srrN4bLVhe5OPzbGZa0UvIyV4V9dpv2c7fCPis6shPm9vYll/PNDBU0bmethsIUtpPmW+OzHPMgI+jXGCRGShL9ahBLy8L7kV8pLerRf6aWYTtmKb6OxhsRE6W20vMa6JHyLZjwix5qErPdZ0=
+	t=1741932498; cv=none; b=hQx2H6LSea1LHxyTzPs+CdJlNtHac9kBSwR6NfNcEON9tcwFeREf5Kw3NAUGNjWJNwPSxSr+U4DTCZyEcRKi6FJUUlJS/yJtaH3uA9EMXdhGffjz5euILjuTNI3cp8mwkqjmrIkv497nsCiQ/gNtnZ9Y8TlUZTEMmaFISvziSH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741920573; c=relaxed/simple;
-	bh=3Ff3vh7O0UbXmjvFdvKFLEND+4Ep51ouJWNMDBnJMwY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gc74A4rJ3fbLH3cZBzmxmAelgZLbf+fKzDZHT7vqfHGJRmMMfRYLjHwoQw2uqGxmtTIfFwuPbZVSu1O1M2z3JiUC1tShtoppJBiFLGsZ/SEiQMFm7JHZrDhL+TlbdOVqqFYwszjhDSiUbd5QQsTGsYl0UTM2N/1n0WEJctNRAqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SrmNLkoQ; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1741932498; c=relaxed/simple;
+	bh=dTP514ek9LksNv7YlVEOtYkotgROJLuu+aPxARgMf3o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WM1KwWlJHLBHQPdN6XhacK1p70Twzh/3EbkTbeYXYh1rFp4UxqVU5GVCmBZENY00KoYxcjaVD1fMQSyx+Z6CzA3rG1Qs4K33CttIQWQYeNAP8KWQRUTF5Pa8GKIWCXcsvrcqNxcDqnd5/pYO3RkM/jc9ZL1K1YrNrGJe7vkqHGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RThjLVA/; arc=none smtp.client-ip=209.85.166.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SrmNLkoQ"
-Received: (qmail 2057 invoked by uid 109); 14 Mar 2025 02:49:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3Ff3vh7O0UbXmjvFdvKFLEND+4Ep51ouJWNMDBnJMwY=; b=SrmNLkoQdyQQ1W6eWkSPejkx8K+SDEu0fFOKjAMUIrNeCb0gQu8XAEQuD1HhmqQcYrTJAnOf2D3vrn9KXdvjSPbjbXSV2WbnoiVJ/UpfD4I2ZfLvPeC+veI3FcFi7NYG4Lk9N5HQcdfqKJHnH48zFDPS8eGZ/PD2zutDuYgDmkq/SPly1qNWjwxL7Oph5eA53g8+hEF2iEdSD0IPSepw8VVOjepNmzI6IEeKtUPGDvMA+vab7Vid2iBGljOq+o31YhNFOIsFdW2gg9kVd6iVLSya8bnKbO7N2s1baGmeMzwyZ0pU5tiBm/zV5S95mC4UjiwdYVlSQHX+wCbK1FyrQQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Mar 2025 02:49:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27445 invoked by uid 111); 14 Mar 2025 02:49:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Mar 2025 22:49:30 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 13 Mar 2025 22:49:29 -0400
-From: Jeff King <peff@peff.net>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, christian.couder@gmail.com
-Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
-Message-ID: <20250314024929.GB114103@coredump.intra.peff.net>
-References: <20250310192829.661692-1-jltobler@gmail.com>
- <20250311235720.GA73755@coredump.intra.peff.net>
- <sm5xvh7bipyrlpw45bptlctbuhey7v3qktpskal5dzexomt34f@wgfziyhcf3t6>
- <20250313053329.GC94015@coredump.intra.peff.net>
- <qapd7sijizopaefpxh3slgn7g2ecwdtyhzqzufcypciyv6n3qm@turmldwzipwe>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RThjLVA/"
+Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3d45503af24so15110355ab.2
+        for <git@vger.kernel.org>; Thu, 13 Mar 2025 23:08:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741932494; x=1742537294; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dTP514ek9LksNv7YlVEOtYkotgROJLuu+aPxARgMf3o=;
+        b=RThjLVA/TKX/0Dmi08bJqJNuQQiar7AASkn5jtQn4E9XcS2z3x8c2RMogoslI3b16Q
+         T6zDS+620RQvMfBOO2oYSR7PCFYoO5e0nCKOMEPiuSy/nBut0d9zijES+CWNA/s7SI6I
+         qAfZS8XSoLi+sWpofJyNv+9pkZM8DPgXMSX990YdP3Bot0j35yrMxpB4zi2vpsVXO7TX
+         PdwvV0xApj87TTKs60FyvLybvBvt2lp1nW5WXDWrGojRgCDbakoxW2UDJ2VqcGr9St16
+         sMajokk5JRW4DH+Ib/5oM34isNdyB2J6WzCRpDf0TSTXu9wvGVxjjFCy+E1FmZubNqv7
+         jncA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741932494; x=1742537294;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dTP514ek9LksNv7YlVEOtYkotgROJLuu+aPxARgMf3o=;
+        b=DWbgxrEWA5z3a1M+qJh2Xlbs3uKda4sX5dIToF/3NYN4SIW4h94bod7XUl9SAk+LOM
+         Xj4j0P/fxRR+l6lVEJcT5NO1Hz9DatN+hlzVJ0pTmOosxID+qBAAM3CbEpZBwObLwTjM
+         MwVtmdVDVbCp/KFm8pksnlK1mXx57kGBlgHM4Q+ULG5UZlR2C/VSm8uVvWEKzSVo4mdj
+         pAhK4Y8HgSUHP+VAIt88URobvNapvC9WcuBUPFayCrRokDChpuWFYEMigpC92M16MSO3
+         7oTEf8DZ1H5tenyTE35a6YFQG5pl7MaYH6GFfR8V5JQPOrd1+Pnakq3FY0Eb3YR+r6/N
+         mXGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWfRVf9gXXdgjZHi/k6QndMRuS8e54it0YFNa4uVmaXJ1Z9rtYB2NRJ1sSSjueq7//8D/k=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz6YapiGz1ilSttyUXOm/uljALKoc5vGRJDbaAWqjUA/b+bVLi7
+	S21jJADLd1vx/K5aAp+8bsRVYnRoMFJbsO3v74GZIq7sFRBxHfr6blNJeBRPNPJnpRQc6sgIIxL
+	Itm1j4ZMeVH/0tm9RIunb1FTEkF1thTEd
+X-Gm-Gg: ASbGnctnFEkHQ2LJvRYrbG4AXNVAMgHi65ix+DEIXyxKSEfQoz3ee9OgMZGt2IvUgBg
+	kif6wbwDOfS1mWEtV8zOHwDLY7JzaUtCU5nO9pomQ3fP/6oQ4I9YqumhvN3vpQmBy3gREIiI5jj
+	sSoSnlffmCt+ANBppEAys/CpIbVyGG+ALntsBnYZ0lxEllEszTrw4vhG8EIlA=
+X-Google-Smtp-Source: AGHT+IFUjUF+0E5U1z7GoB8KsNk6klNYrk5vxmOiuz6Z1ro+7HmI7A6zKe10RkEEONNM/KJlb0ZiZAKbatEK/3LoFW8=
+X-Received: by 2002:a05:6e02:144c:b0:3a7:88f2:cfa9 with SMTP id
+ e9e14a558f8ab-3d483a19d2bmr9373695ab.11.1741932493786; Thu, 13 Mar 2025
+ 23:08:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <qapd7sijizopaefpxh3slgn7g2ecwdtyhzqzufcypciyv6n3qm@turmldwzipwe>
+References: <20240920112228.3d1130f5.olaf@aepfle.de> <20240920130729.GA7349@peff.net>
+In-Reply-To: <20240920130729.GA7349@peff.net>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 13 Mar 2025 23:08:02 -0700
+X-Gm-Features: AQ5f1JqdKWPNTGao2cJ23zaBT6QMZzIUTeMFT_Qt9F_ry8mCYjeZNhZ-Rb6kjdI
+Message-ID: <CABPp-BFb1d7dbWdPwA9q_e6pLT6OHPr2SQC5ZwqXwkS74dXqdQ@mail.gmail.com>
+Subject: Re: BUG: diffcore-rename.c:1674: tracking failed somehow; failed to
+ find associated dst for broken pair
+To: Jeff King <peff@peff.net>
+Cc: Olaf Hering <olaf@aepfle.de>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 13, 2025 at 11:41:56AM -0500, Justin Tobler wrote:
+On Fri, Sep 20, 2024 at 6:07=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+>
+> On Fri, Sep 20, 2024 at 11:22:28AM +0200, Olaf Hering wrote:
+>
+> > The following issue left my terminal in a weird state.
+> > Is this a bug in the repository, or a bug in git 2.43/46?
+> >
+> > set -ex
+> > pushd /dev/shm
+> > test -d x.git || git clone https://github.com/intel/linux-sgx.git x.git
+> > cd $_
+> > git checkout -b $PPID.$$ a53adeaab7a8176fabb415bfcdf6d29fe4060678
+> > d=3Dexternal/ippcp_internal/inc
+> > git log -p -b -B -w --stat --follow "$d" |& tail
+> > cd $d
+> > git log -p -b -B -w --stat --follow . |& tail
+>
+> Definitely a bug in Git, since we're hitting a BUG(). Looks like it
+> reproduces with just "-B --follow" on the path in question. Bisecting
+> leads to 9db2ac5616 (diffcore-rename: accelerate rename_dst setup,
+> 2020-12-11). +cc Elijah.
+>
+> -Peff
 
-> > Though that does mean that these two commands
-> > will behave differently:
-> > 
-> >   git log --stdin -z
-> >   git rev-list --stdin -z
-> > 
-> > which seems...not great. My earlier suggestion to tie "-z" to stdin
-> > handling was for consistency with other tools like grep. But if we
-> > already have cases where "-z" is only for output, maybe it is better to
-> > stay consistent with other parts of git. I.e., I was worried about us
-> > painting ourselves into a corner with your patches, but we may have
-> > already done so years ago. ;)
-> 
-> I think to some extent Git is already inconsistent here. IMO it would be
-> preferable for both input and output to use NUL as the delimiter when
-> machine parsing in git-rev-list(1) as that is the behavior I would
-> personally expect. I also agree with Patrick's reasoning else where in
-> this thread[1].
-> 
-> I'm open to discuss further though :)
-
-Nope, I don't have anything further to add. I just wanted to make sure
-my suggestion in the earlier part of the thread was not leading us
-accidentally down a bad path. ;) If the inconsistencies have been
-considered and we're OK with them, that sounds good to me (and the
-option handling in your v2 does seem to faithfully implement that).
-
-Thanks for all your responses.
-
--Peff
+Sorry for the lengthy delay; fix over here:
+https://lore.kernel.org/git/pull.1876.git.1741395615315.gitgitgadget@gmail.=
+com/
