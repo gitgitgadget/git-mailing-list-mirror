@@ -1,132 +1,157 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from mout.web.de (mout.web.de [212.227.15.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B309BA38
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 21:17:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33AD1CD21C
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 22:00:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741987023; cv=none; b=FEYbGwSQER6D3Yiyj0IIab6nry7iJaWO2l2g4ruRzkxOsVD53jvvj1k+ldc0dCtudX6EPIsOO3lraSumcS4h09609PjYzVhz0Y6kVh2f44Up/UeaVzOkUUO0yGygNhNDN+tyr+7xK66dKj7XcllxnbHgEJXJfK94tcW+vH2hp4o=
+	t=1741989653; cv=none; b=ugbZTFty2nbbZrnqfPjfg6YMGrwfphpVmQN3sobCusIM2P0X22dZlsByJqJ5NycqqOHHpyNY6BsXJsX5LEqvdOL/odKQEFTYqBq4NAHN9fxs13Y54l8xnEP3sUWnlPaUCX/ic2THJOsJNMhliAe15u4BzBaoOr3vu6vX3HW7WXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741987023; c=relaxed/simple;
-	bh=ReqtiL7BJKEMSVzNQqgCSMnQjkZ75y0110u54bLM02U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YDnUIHH64MoND3AzIc+kxrw51y0FQmbyG01UjJvNAB9KAuz7iz16UH1TQ3aTmoI98kNUGuKvN/fPjaAUUJIT9SByRpa8MIh8mVYNs0f7SdygQBfIJHANL4tmhpjH+VuqCwmTwQweiYDy9O8hupevOfIBYWE1rP8J0yE7x564w0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GIWR1yKp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rwLISR5B; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741989653; c=relaxed/simple;
+	bh=f6Tjgqyw+uISSvRqOeZKO6UAkEajJYS5467KrVpn34U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=CI24g34Fw6SpMz3QxSdO0AJyUZmlvZsba6NhielCsyT+xKXEzZIA2M/kTBUh11Tx1doEezGrCZfsPLsygQF47aNo/fzW+2c+Il3xVWgyjMbPrt1sKSu97eJr/KFJ+RDJ7vtztfCVlvNywLM8ja6GXGEDi3DBScxgApEQ4SPKpWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=ZZ3bAXb5; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GIWR1yKp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rwLISR5B"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 90554254017A;
-	Fri, 14 Mar 2025 17:17:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Fri, 14 Mar 2025 17:17:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741987020; x=1742073420; bh=LRUp8X3q33
-	tkOYoja75yerjHjxInqhvDIC3tFAbo04g=; b=GIWR1yKpYl+1Y6D/xYTW+1X4b1
-	XqHtyN0SEeptZZwfAYTLMSoIHmxg+M7GIxOatDgRoht87hR7FXoUQMt0PPla/XTo
-	pp7bjPCok6UGJnsn9kzBuksIRD7pZ3lvoIS55VbbYuzEcW7jHU9II8TBhUcZQeB6
-	EB6jBwKb1SkAIgUUhlJPFMa/8Jgwbh97pSvH7jo7luYTC8+j7k6+jK3Aw1xQbEVT
-	9yCuFEJv+Q6wVAviNHoRtZf8ikflQKsrWGnLorB7NtXKirkRCa48yHJLSOKfrs9Q
-	1CHFdn9PPU+E0GBZUnncxu54WuQeW8z8po81amICMQsOihZ6jp5akwCAfBYQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741987020; x=1742073420; bh=LRUp8X3q33tkOYoja75yerjHjxInqhvDIC3
-	tFAbo04g=; b=rwLISR5B7qQ6VJ9TXLVSW2uiCXWzDkMIOyVvRcszu3AgUdGh5Py
-	SIS1ycrySTWrdcn6FFREALeH+goTOm9TE7Sv/qIIZaVvdHLk89uDMSTE/8BHoVGK
-	OD2kj/9kEEG5qZN2uPoe6NUKY/kOIPTwpL/onhXEBWdmqKELMzOmR6OuzUhhuGQi
-	GDBdD4/sESjF3JzRJJIeyKaRNiYAfB93Oaw1aEVSw2mM5rVwA4XEnS8YzvcDNsJo
-	t4ZeXVjKesTBKymGeVo2FCpXQnAOyUwRcfPWz6Eb2oVRWyRtUrzcAkaEhKcrFcyV
-	gWQ7eRo0LrCevgpiR5FtYX8TW4RUwWcvAyQ==
-X-ME-Sender: <xms:zJzUZ5CcbBFcERWe9Q84uKiqguL7c2L7CbQyEwEfA9AW4X94JvZwbg>
-    <xme:zJzUZ3glnnz3ar3gtOVT3AAX2LQ0u4k12ZPDGuitjAkkEj8BFoFSGiGAtvJtVDwsV
-    94i8gjj6AILwcrwJA>
-X-ME-Received: <xmr:zJzUZ0kcALclh7Jl0WZ7OMkU_0Cbt-V61JgCNhGp1pmYIsIYno22AXHmc-JkmVpNF5UBF2VTxnXLz72hrWUUjZjVXD8ckW-H8jZ-Id8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufedukeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhsse
-    hpkhhsrdhimhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zJzUZzwNpar92vI1bHLrQdXOdktX1YxIo5WC-_rOTyeHIyH9Ln8DPg>
-    <xmx:zJzUZ-ROvmmTIhi9KOlWGBNSZ8B41pCN-i0OQ_1FP88gvi8SrtG5eg>
-    <xmx:zJzUZ2YL__Oqi0oBxUoDlA1SuSarYq4ajJimbV7dUeCU6_SNOLDZ7Q>
-    <xmx:zJzUZ_QPe3B9J03qXrhhVJzXIB11q85d9axmv1G2Mbcl-IjtrqvsSg>
-    <xmx:zJzUZ9FFeuJHKvV7FScHjuqQxsGaWHK3dYLTerTltWYZ7lL9DMaZmO_Z>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Mar 2025 17:16:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  ps@pks.im,
-  christian.couder@gmail.com
-Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
-In-Reply-To: <po5vjngxt6afwdkg7bvpw5j4dhot5h4uz5yudb3o4eug4k2nqu@rwp5rpe5d3u6>
-	(Justin Tobler's message of "Fri, 14 Mar 2025 14:53:05 -0500")
-References: <20250310192829.661692-1-jltobler@gmail.com>
-	<20250311235720.GA73755@coredump.intra.peff.net>
-	<sm5xvh7bipyrlpw45bptlctbuhey7v3qktpskal5dzexomt34f@wgfziyhcf3t6>
-	<20250313053329.GC94015@coredump.intra.peff.net>
-	<qapd7sijizopaefpxh3slgn7g2ecwdtyhzqzufcypciyv6n3qm@turmldwzipwe>
-	<20250314024929.GB114103@coredump.intra.peff.net>
-	<xmqqsenfk0ks.fsf@gitster.g>
-	<20250314185914.GD578421@coredump.intra.peff.net>
-	<po5vjngxt6afwdkg7bvpw5j4dhot5h4uz5yudb3o4eug4k2nqu@rwp5rpe5d3u6>
-Date: Fri, 14 Mar 2025 14:16:58 -0700
-Message-ID: <xmqqtt7ve2id.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="ZZ3bAXb5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1741989643; x=1742594443; i=l.s.r@web.de;
+	bh=0bo/9LoUfBzjNYYgA6QhzsNj5tZvWJj/qtxgKUW+r4Y=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=ZZ3bAXb5gWUbAmt1Cp340g9uriraaSAemdnrX1TMEn+poERAs+UEJZLKYU4rGUjq
+	 bnxCThbkGfuDG/4Oy41sve2z1AvMZQ3PnQJ3tD+QwKhsp6WJhm/etN9vcPsIdDiEB
+	 1k9MXlXcIBiUU6bmigPtPfHxtEFzJSjb1ValLyk1MKjLaUgWv60hDpVo2dushbjjm
+	 0uyyN2U18C6FxM3zq0iiU+S0gmxSFRILgTUuQSkTbb/0o5YyAMMZ2bTWMMjoeB+sl
+	 CFJXQn7O6Mh4RkGr++FqOIP5TjQs50rlBoX8UtZfmTts3zPDR5lnvG5ZfMl0mRN7P
+	 F0z+On6+Z8umOjurmw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.29.218]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MoNZM-1tQSyx1036-00nCIL; Fri, 14
+ Mar 2025 23:00:43 +0100
+Message-ID: <4e9b6b4c-aaa1-4c6f-93f4-7bb04607e843@web.de>
+Date: Fri, 14 Mar 2025 23:00:42 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH] xdiff: avoid arithmetic overflow in xdl_get_hunk()
+To: Jason Cho <jason11choca@proton.me>,
+ "git@vger.kernel.org" <git@vger.kernel.org>
+References: <xXWgbH3mlNEvFcdGLqBHwcclZoeZNPoLg8Hr6YCipHXvS5eKaHeTppzFM-l_wyB46BB1R1T0j6g_jWRXIj7-GRJh1LPxi1ta3GkQ5t8F4-0=@proton.me>
+ <NYMqsJ7uttDzFT2OOEg5LLsxCSoQhTzqBs16KrMHGEKC7LzOAiYnYTEZavRQWqGH41UgjdwScwer7MssNzI7AEDHnD8GTBWvoBIqJ2e7D6g=@proton.me>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <NYMqsJ7uttDzFT2OOEg5LLsxCSoQhTzqBs16KrMHGEKC7LzOAiYnYTEZavRQWqGH41UgjdwScwer7MssNzI7AEDHnD8GTBWvoBIqJ2e7D6g=@proton.me>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:rVkfZxSGcbyb3KK9ncjCO1Z60ZbKn26ixEAVynAHFEFntYZAj/Q
+ oAgCnSFLVOvUPBbvFHq9TkaxP++S9zUIHuddCONOyZEuApioBNskFCES8c3DXIBbI9kG8n5
+ f6SnlploE4XxRE334sLDm8TDP4I2pm0DltHjzaMb7mGyWJ9LDfWmjiqOrsxnxjimj5YnCTR
+ gdzKUk7nKtSLUmQqdhvaw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:WxMNOqGPuRM=;yvQAOYLCMYFLD5FNeyNMb82mgvu
+ cbRtVeCukNnjnGJMiBTZMzpRGXd6gElSNQCK9pFZxe8oE46EXDpqwgUwGnM2GQclXAOAVZrzg
+ C3Ht/qnrJekzGQoJY+107VMtgRO05Myv6wJ28sfxCngoro3g+m2syccVREkArpuxcBErkl7KR
+ rMqbNJTT+IQBkSrmRoOmrkKhjFAAo5uXPTHOyE0rxIUJOLzBtkC5IVq3WS6Rpq8hW8uWzNbnD
+ WuprmBR1pw1CiG0fkQG+4vIiI4EYd76pKvCyqewJodCdI8tlZ7Ez6diNNPVWS19VkYuPAskKN
+ Y1eoWWeT7QMOR3C1LtZo6ZXrNTxlEPIwAO1/3whi3ns7zAS8NHqSnG+9gFdnBAJdqmpCSvSfK
+ l2+p6PAo5E8bPuAMj7tXApuNeOkbS2yuz/4ERBglc5kTCCIVM4eDv8BoeKt1pRgMOjQoo2HdI
+ lDRsWfVREHj8hVD/bohLg+C6yarRo3W2xnT5Hvh8p0Kie/SKZiWCjth51Gc5DtP0VR7qxVP9I
+ mgC7LylMoY4mI8FqbeADfHx4luMbo+V4Rxpa6F6Y2+vXsr3Hp7qMEMxvqlc4rbixyxMkO98Eo
+ JRACi4m2NV/DEdITuKa+qPP/R7wQiSp8LWoIpX2RRDExrdsPVlci3PzacmleB9FneChyMWTtR
+ 6O4F68wSFbZ+fbWE004+6NuAZzJeockaIncv76bcMP5YLmIMH0VwOaeNxaZchN+CKTwEWlrpL
+ BM+/fwvaIEOUVxJZGUhVFDnefVNheMKkeV01FDbRgfY7yMolY7N3ChA1gUr3z8XdPlPcVFmKu
+ 8ceaX8CRMRnso51oZZ9O7yt56tn5T2nyEfVSZuAO00Wrm8NDQsjNJ53XExRzTswwPn2ujdycZ
+ LA1e23Z6fLnLNVLA/uCN/32mmwIaGjLe5HVwrcB96ZYaJ2HmUIcunZNlsEFwKAbt9Znd6HAam
+ FM61rE7N8ZcdZP3cv8kBk+sKPJ9TrvlbxyhXB1RDJUskamdeBy9s+nCLd3Uw6XXWz7ebxz+jx
+ O/PV7W8XOwBjBdFVaGB/N/LUXg1/i9KJYZea3WhfJj/+WT0z7SSX19utOiA5kAmhrj/j+IPOi
+ 4aPs6n791AY1MU4Dr0MpGVC1/RZPiGhqlVcTSZgIhnlckm8BuHft2RXkiv9kHbcNj3QNcmZFC
+ 7YrizpadBo+V7Hb98bqGat9vHwQbYXraTsuWlepiQq5zB8JJz0gzgqyVEb0yS9Ph2OzvnYa1w
+ hrFfg82/IzPO9JaPdJWwcUgziZrgT4FoVHQpI8vaUF5v8e3MQ+MhmhgPQIOtua1HggGO+ljKJ
+ HK9x/+aYvq3gLAlXeK3LhkQzl7J1JaifphTfxquwBXjCSiyIkoicG3ctywmpvEwnJN1ExPdvC
+ /huN62tvCiu45LU4Xdyt42PMck/4Zxzm+4irFSmPWThwiWey2vvflsOB8RS6xaDxfnwSHRwxj
+ H9SwWQA==
 
-Justin Tobler <jltobler@gmail.com> writes:
+xdl_get_hunk() calculates the maximum number of common lines between two
+changes that would fit into the same hunk for the given context options.
+It involves doubling and addition and thus can overflow if the terms are
+huge.
 
-> If we want to adopt less ambiguous long options names for NUL-delimited
-> input/output options as an alternative to "-z", maybe we could do
-> something like:
->
->     $ git rev-list --nul-delimited={all,input,output}
->
-> where the default for the `--nul-delimited` could be both input/output. 
+The type of ctxlen and interhunkctxlen in xdemitconf_t is long, while
+the type of the corresponding context and interhunkcontext in struct
+diff_options is int.  On many platforms longs are bigger that ints,
+which prevents the overflow.  On Windows they have the same range and
+the overflow manifests as hunks that are split erroneously and lines
+being repeated between them.
 
-I'd prefer not to see that route taken, as it does not look any
-"less ambiguous" at least to me.  Making individual selections are
-almost the same in either syntax, and the only difference is that
---nul-delimited-input --nul-delimited-output can be independently
-chosen and given and happen to end up selecting both.
+Fix the overflow by checking and not going beyond LONG_MAX.  This allows
+specifying a huge context line count and getting all lines of a changed
+files in a single hunk, as expected.
 
-But with --nul-delimited=<value>, you have to plan ahead and choose
-"all".  When your script first wants NUL delimited I/O on the output
-side, you'd write "output".  When later you want to allow it to
-optionally take NUL delimited I/O on the input side, you have to
-notice that you have "output" there already and replace it with "all".
-If the initial version did not have NUL-delimited output, your change
-to add support for NUL-delimited input would be different.
+Reported-by: Jason Cho <jason11choca@proton.me>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/t4055-diff-context.sh | 10 ++++++++++
+ xdiff/xemit.c           |  8 +++++++-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-And you also have to remember that it has to be spelled "all" and
-not "both" when you replace existing "output".
+diff --git a/t/t4055-diff-context.sh b/t/t4055-diff-context.sh
+index f7ff234cf9..ec2804eea6 100755
+=2D-- a/t/t4055-diff-context.sh
++++ b/t/t4055-diff-context.sh
+@@ -89,4 +89,14 @@ test_expect_success '-U0 is valid, so is diff.context=
+=3D0' '
+ 	grep "^+MODIFIED" output
+ '
 
-In other words, I'd prefer to leave independent/orthogonal things as
-such, even if such a general design principle may make the result a
-bit more verbose, at the plumbing level.
++test_expect_success '-U2147483647 works' '
++	echo APPENDED >>x &&
++	test_line_count =3D 16 x &&
++	git diff -U2147483647 >output &&
++	test_line_count =3D 22 output &&
++	grep "^-ADDED" output &&
++	grep "^+MODIFIED" output &&
++	grep "^+APPENDED" output
++'
++
+ test_done
+diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+index f8e3f25b03..1d40c9cb40 100644
+=2D-- a/xdiff/xemit.c
++++ b/xdiff/xemit.c
+@@ -43,6 +43,10 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, char=
+ const *pre, xdemitcb_t *
+ 	return 0;
+ }
 
-Thanks.
++static long saturating_add(long a, long b)
++{
++	return signed_add_overflows(a, b) ? LONG_MAX : a + b;
++}
 
+ /*
+  * Starting at the passed change atom, find the latest change atom to be =
+included
+@@ -52,7 +56,9 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, char =
+const *pre, xdemitcb_t *
+ xdchange_t *xdl_get_hunk(xdchange_t **xscr, xdemitconf_t const *xecfg)
+ {
+ 	xdchange_t *xch, *xchp, *lxch;
+-	long max_common =3D 2 * xecfg->ctxlen + xecfg->interhunkctxlen;
++	long max_common =3D saturating_add(saturating_add(xecfg->ctxlen,
++							xecfg->ctxlen),
++					 xecfg->interhunkctxlen);
+ 	long max_ignorable =3D xecfg->ctxlen;
+ 	long ignored =3D 0; /* number of ignored blank lines */
 
+=2D-
+2.48.1
