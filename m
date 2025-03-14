@@ -1,122 +1,110 @@
-Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091F01FF1AF
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 12:55:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228C51FECA2
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 13:40:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741956938; cv=none; b=VU4nESgF1QaZVkITwOp/O2Za1GS4PS6bUCcCVwm8HgDmh+lSeOrdE9kZ1/Tm8wrCAC8WmozQ9WF+61DKK1SPOLQpPNqly2aiUuI+4afzFjzxdSFIsbXKhndiJvO//jT+aCMh6/boJG4QkWBzJXCpOWkh+c+xIW2Y/HKnlC6oCGQ=
+	t=1741959630; cv=none; b=iOkuZxLZW5qZFs1AzOA/9DZmkTaaCS2Z0IEJdCZDJzZ5kVL/VKTxlJNTCBbs+jVUyFlx6nFgC4qKrKmqUm6vBoEZC+/l6TsQJIAromlmouOIXPPTUQ0ZrHO4p5k9PbRp9Qd2WqGqAx4ZkPJTXNcB8QFN9rlhjHavS9n1iOUKkUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741956938; c=relaxed/simple;
-	bh=uPWGkrSEPMDyW/sVZ5g/czXo2KYgH416SObCNcAgn3g=;
+	s=arc-20240116; t=1741959630; c=relaxed/simple;
+	bh=ir1fbO+c7ATvtss6TI9ZUFzEE9Ngc4CID04EFt4Ygt0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pUvqx1Vr5Gb/5O22lJlVXA2GbaylZwEMS/DbDr8+W9bFsilm0n60v54/pGdL6EnFOkyaIHLIfx7Twz1tpHMdcdyA2j1bV35fyx3KQV3zhkrFmezkEk/Ucs9AZ9SpWDcvSL4gXlHPiJ4Bqw2HGY9uYqkb0qTLP/Iy07iNhYSVxwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EvQOcfkq; arc=none smtp.client-ip=209.85.222.48
+	 To:Cc:Content-Type; b=KJKjEi4KdGLlA9v0+C4RM8bEduubEwqCKBTkQ3OWUwOd2iZzYLa5aN86Jft78u0fKMkn8a+FPBzH1hK+svyp/bUNclrWENA4Bmdrt6IpYd3/Xwh19YUnakoIXitojrETRre42fqfe9lK/aaMqlHQhgnNvial7NZgikrTuJBQFuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SAmChVkp; arc=none smtp.client-ip=209.85.160.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EvQOcfkq"
-Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-86d377306ddso905348241.2
-        for <git@vger.kernel.org>; Fri, 14 Mar 2025 05:55:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SAmChVkp"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-4767e969b94so33635811cf.2
+        for <git@vger.kernel.org>; Fri, 14 Mar 2025 06:40:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741956936; x=1742561736; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1741959628; x=1742564428; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=n7245VEGyaYK7dTKzOL0fWFASmN5Y45iOZygceEcl6Q=;
-        b=EvQOcfkqtqnuf86c7VNwPMcFOO5/P0Wg5PmsbXLu02mzwt7+1TYu453Pr89JejJjax
-         ukESxSga/F2u23mSK1aSgqbpKeU3D74ev01wPnTtwmNb+MEmQ6BQNaISNJ0UnXLfBTiQ
-         VFDbcFDcxNaXk9n3MGF7wOW+WG6oJXOaYV41A5IfriPG++C3nfFUX0D9jQSECSlACqZV
-         CaFGcI0trrHzeXYxXUq++xE5z+MOGXkijb/WvYQM2ZiR/HskfN/ncaiC2U7/gFWIeroa
-         IAfLrs8wcTJfHgeRGUvUBhGrJyQU+qA1vme8/LIOOLDZPLXjaIETQk4GZ2f0L7aosvRX
-         5jxA==
+        bh=CSr9jHEsC24NfvoxzYpIn7Nbgzu1xTeI4asWcV0Byeg=;
+        b=SAmChVkpwlXMmPelz2cV2L3Yp2Hdyj4/Lo1TGZOAY2g/HyC7ZioP6kdVFBru8iGGY0
+         H0MvGShdQj5QSuwaThbHXG0WTNJr+7toUFDHac1duXPfD1ds1/SzxgieqJfPT7jc/YfU
+         3ozmVt/6nliPouDn4pWO5OpaRwOsJMPMxZ4O6h+/kw4n3nkp6w+BIH7bubHZBcMOTQLQ
+         cZsK+iz+RU//kMuD3QCB8ZuOfREbMtOEUvggeM9YemM3vbgANPcP10SGfGwPUSzR3puR
+         seywX4r45ZmrSWu5OkZ4VACGAuFXxab3fI5qAvBuiD65nbXHYHEhIvxdFbew/ORhb9Zx
+         TZ6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741956936; x=1742561736;
+        d=1e100.net; s=20230601; t=1741959628; x=1742564428;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=n7245VEGyaYK7dTKzOL0fWFASmN5Y45iOZygceEcl6Q=;
-        b=ioDstbf8GBltPUbAP4xDkIkzVcm/ACYiarCg9ivfRHc5xGABEI1MoRte0VgLxl8t0U
-         bCKWZT6J5KQuTOxV7XQZSRor4IOQfX5tgJstrxSmvQdVhVnd0VuZsumNXY7lQQPm89h0
-         HFvfR6luQCyFDZskUsWo6Y8PZ/4K2ny39HnfpG8CZ9Suzz/LFvcktkYCSB4eGdgIEgxF
-         CypZv6cijFMOTpjfJwS6hagHzRuvs4wajKHD4VhUwci/QLhvkeuHaswu6qKiDOQACOkE
-         9vVJssx6DpeQrQEDrif8tB0VpYNpYm+KJ/QTEaGL5FCjNLtHQ88FSfdNZojzXuWKJeUp
-         zPSg==
-X-Gm-Message-State: AOJu0YyAQjLpVS/4UaFy+uw3PfaUXbU+sdvAW/YtbYW/LUbdBJLdRbxm
-	xEedm3kXttG/6a/Ii2UESfRMOGRpVbdyyasZMse0SfTAap0YNzuOvcpEkq2LDc3A7yo8kGmKxQM
-	ij9Sg84eKo13LNV8fR4wBg3AOQIQ=
-X-Gm-Gg: ASbGncv+2I/9swiMskPgmnhNZLGkqhkbxkGxuGt46ZeUv5vIvpy8Xy0xgpsxkVnyuNh
-	aGhoaaZKvNBNy+GAxlwWKaPgxO5ENuKtsvghM+y10cYzUADWaC7UBBS3BapkUvulvckTjO4cjsS
-	DHnIQiooHOdYNG+W1R0iR+x1GbNUlRBWWg3KG6y+gQaciwAOu7LXoS2ipTKEHQ
-X-Google-Smtp-Source: AGHT+IGXsBlSdmC77dedzJELdnXa8udTzN8nRXjHS3OCnExHaglio/I2F+p2wjmwJxn9yDt/guH23on+GdVDu9xNsTw=
-X-Received: by 2002:a05:6102:3ec3:b0:4ba:9923:fa57 with SMTP id
- ada2fe7eead31-4c3831626bcmr1188561137.15.1741956935784; Fri, 14 Mar 2025
- 05:55:35 -0700 (PDT)
+        bh=CSr9jHEsC24NfvoxzYpIn7Nbgzu1xTeI4asWcV0Byeg=;
+        b=ut4TcDIIktgLImfDqrwLhv/6uFn8oU6XeGRL5l2YbbTm6WjSE9yhltUFPxMZF+1TYE
+         Z4GiPF9NPayQYUbqe5yW3jDY9egN13lK99C6Gd3jfQrSfwlm61X0lvkCGT4arJsT7p0k
+         +ZZW4pXmIPpbAg320vBbfkDbgTQHA7/ALXn4FuqMixMBkkQx69sbN+2C81hUBogexPVY
+         vnfn3QKoN0DuF2rpX8WFT8YGbIv9dfaVUO70WKo59syTig3oAkrD0sCEiRd+XZzdLer2
+         UFLKRmwg1D6mFTZq9uiCZ+PaHR9juNvixnwKSWYKDJPIgfs0CqU5MZ9YUvlS0AjSs4+K
+         pumQ==
+X-Gm-Message-State: AOJu0YwD47eCYjMG7G+PGwImo5Vp6xqsb/LSXAapGSPdg6MufjUG5j+f
+	dPw6tIbU/5AGx2wt5xCqpyCil2l49XG9ALe6vo3t4qdVGuS/NDWqP+2L0oLhDbe6ldo6PXAZdm7
+	Art6rDV780/fmpQEtYSxI+I98HvsNz+7a
+X-Gm-Gg: ASbGnctnvEsyGyKIIbGAXaCbCBuF18kBPIVet3az0YEv4vMm16XtC8xF/89CnKZP+PO
+	KOw5zv11AMb6es/kQSwcpCHP6IJGeViF5s5lr3hXCCz1h9qoEIJVPxWbMC28tsIzsgHW2ixzm24
+	X3f5OJ0kueEW9/lEpdA5AK0kK9tT8ETobiJ+TS5pvDCJBpHnCr0Zg+npHlJTEPjC8KlXbH7A==
+X-Google-Smtp-Source: AGHT+IEAaBbE4Ut8XEyuDljgLr3BjpEdGY5fTUi5QONSvVh8R5NID9Fek5bLVCMnBIOQFNPRZNfTLxORoJ0REavoez8=
+X-Received: by 2002:ac8:5a46:0:b0:476:b79b:2e34 with SMTP id
+ d75a77b69052e-476c81b821bmr38781741cf.39.1741959627850; Fri, 14 Mar 2025
+ 06:40:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250312064639.668875-1-05ZYT30@gmail.com> <20250312064639.668875-2-05ZYT30@gmail.com>
- <xmqqsengn1ms.fsf@gitster.g>
-In-Reply-To: <xmqqsengn1ms.fsf@gitster.g>
-From: Yuting Zheng <05zyt30@gmail.com>
-Date: Fri, 14 Mar 2025 20:55:22 +0800
-X-Gm-Features: AQ5f1JrDSM4qAC4viE-pH0iD429F41YNJasy76wyb_01Tv969gGNTjVBAg4GsKQ
-Message-ID: <CAMvj1+pn_+8PRXCUds0NHrRPBWh1uUzOOeNGhXTmHRTg_DGqHg@mail.gmail.com>
-Subject: Re: [GSoC PATCH v3 1/1] Unify SMTP auth error handling
-To: Junio C Hamano <gitster@pobox.com>
+References: <20250312081534.75536-1-jayatheerthkulkarni2005@gmail.com> <CALnO6CCvo+EiabE3LG2pmPZhM=M9_d80Mp_MyozXmHjE9srAWg@mail.gmail.com>
+In-Reply-To: <CALnO6CCvo+EiabE3LG2pmPZhM=M9_d80Mp_MyozXmHjE9srAWg@mail.gmail.com>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Fri, 14 Mar 2025 19:10:16 +0530
+X-Gm-Features: AQ5f1JoP1wmRRByAHddmV_QuoyrRPG6mOoiLR6Jk5e0onTMBwl1l3YBJO_0vjO8
+Message-ID: <CA+rGoLfrJ-+QVb5=zc=j84sM=MTz3nt8NMYgXVZdfYf70AuDZA@mail.gmail.com>
+Subject: Re: [PATCH] [GSOC] Update MyFirstContribution.adoc to current codebase
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
 Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri Mar 14, 2025 at 3:58 AM CST, Junio C Hamano wrote:
+Hey Ben,
+thanks for the response
 
-Thank you for the thorough review. As a newcomer, I really appreciate you
-taking time to help me improve.
-
-> "improves clarity ." is (not well formatted and) a bit subjective
-> and does not apply to all three changes the patch is making here,
-> does it?
-
-I'll reformat the commit message and split the patch into more detailed
-parts.
-
-> Hmph, the interpreter may tolerate the new block-eval "eval {}"
-> simple statement that lacks terminating ';' but is this an
-> improvement?  The original look more kosher from syntactic point of
-> view.  It seems to be totally unrelated change from the rest of the
-> patch.
-
-I'll revert it to the original state.
-
-> We seem to already have the comment added by this hunk, since
-> 4d31a44a (git-send-email: use git credential to obtain password,
-> 2013-02-12).  Am I looking at a wrong version of the source (or a
-> wrong version of the patch)?
 >
-> And curiously we do not seem to have this else clause with the
-> comment that is getting removed.
+> I'm in a poor position to judge, but I suspect reviewing this commit
+> would be easier if each bullet was a separate commit. See
+> Documentation/SubmittingPatches [[separate-commits]] (HTML:
+> https://git-scm.com/docs/SubmittingPatches#separate-commits).
+>
+Actually that's an amazing point. I was thinking the same and will
+start a new patch with individual bullet patches within a thread as
+soon as possible.
 
-You're correct - this was caused by my failure to rebase before
-submission.I'll clean up all duplicate comments.
+>
+> Agreed as discussed in the other thread, thanks for doing this!
+>
+> >
+> > ...
+> > @@ -149,8 +143,14 @@ subcommand and contained within `builtin/`. So it makes sense to implement your
+> >  command in `builtin/psuh.c`. Create that file, and within it, write the entry
+> >  point for your command in a function matching the style and signature:
+> >
+> > +The following line represents the function signature for any builtin/<filename.c> file that we add:
+>
+> This line doesn't look necessary, or should at least replace the
+> sentence immediately prior (which shows up in the hunk context).
+>
 
-> As I do not see two evals in our copy of git-send-email.perl source,
-> it may be moot at this point to comment on this patch, but if we did
-> have a eval block each of the if/else arms, moving the control
-> structure around and turning "if eval {} else eval {}" into "eval {
-> if ... else ...}" may make it cleaner to see what is going on,
-> especially if we plan to extend the choices and add elsif to the
-> chain later.
+Ok I will once check and make sure the updated patch has this rectified.
+Thanks for the feedback
 
-I'll use if/else structure which is more extensible.
+> > +----
 
-> Have a SP between "#" and the comment body.
+>
+>
+> --
+> D. Ben Knoble
 
-Understood. I'll rigorously adhere to code style guidelines by adding
-space after comment markers.
-
-> I'll stop here, as the patch does not seem to be designed to apply
-> to our source tree.
-
-This was caused by my local branch being several commits behind upstream.
-I've now synchronized and will resubmit properly.
+Thanks,
+Jay
