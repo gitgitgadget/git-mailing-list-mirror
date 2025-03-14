@@ -1,47 +1,44 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB371FF601
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 18:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E38202C3D
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 18:59:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741978408; cv=none; b=kItkjpvfpFk1QHrBAGQfCgExjszENL1OPZGA6ppSKjoSYxdcY7hPcejnNJ5RepCz21tkCLjWeD4cQUwTj//Ty+MlDn669LGlfIIRo/6nu5vY2z/ihdPtSOkVpLDkUgoTngDflcXLTDOP31pyYQsjmbsLC/DW0t5YANMIfSgLQIs=
+	t=1741978759; cv=none; b=jZ8GgkNfkCDINEsTAr6dBajBhiZ+Cn8BXOJ0HYwYfqQjHwa2SYSJmtLIFyt5fwd+KpSzXy8PbbWFt5JqBWnMNImzaolGxPNOTKXo6aM16g54sphonppliS56jyf4bdpb9GqrPzoPW1zDiaEQsm13pnOYpuJBX7xbSlVr1O1Bmto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741978408; c=relaxed/simple;
-	bh=N2qNpCXPKdKq7h/M5HgNeRLC4W8nTNNo5eAQBxtgTEE=;
+	s=arc-20240116; t=1741978759; c=relaxed/simple;
+	bh=SzW1Pi/fTLpb/uKgn9MfDuUbGqWhuo+gsQVylu/BT1U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X4qhxvQppCDf+lxkVnaggfdOZfKT9Z0v35wQN+pqBPA0i2h/WceGeUprB+lQzbfvG6Pw7cKTlQg/gkQtkpfZsUe4pcXzRt/iAM9o5NJoLCHIo7JhCjFy4/AqZw4UQfuTwKTINHj1gDZgLB1eTn0PWjsOu1HPLhLk9HPYq1aUGV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VB0h06Ba; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ue5IKp+0l5BVDYexnPELI5r8QvTR1WjGfZ/r2sgbnWBLYZ5nS+kqDwrYkqzY4WoSQc2woqEG/RBvP1Yj6qZH5xzTArNRp6z7aqDEPZByjsRlaUIRzxKZjX7zB6DvRwVlEAjcYg6dusBSXJbzAh+4lEjFUn9aIz95gH+5WBYlz14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Kj3RAWEa; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VB0h06Ba"
-Received: (qmail 23455 invoked by uid 109); 14 Mar 2025 18:53:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=N2qNpCXPKdKq7h/M5HgNeRLC4W8nTNNo5eAQBxtgTEE=; b=VB0h06BaN3HKq7ezkwxFqAe9unZceuYYOBpjR4EoTvQQRDE0KwSNRH9DK1Pdf3KUlfM3ZySlvp+CpX7NvByC0lMyVFnaZHjb2csmYYsLHmfgyvo+NWmoqN8eo8/U1Cx2cosikU0DAmH2uXUjE7jYDDdxw3KvIWo1JyBVExXXvWfKMUrqel7locPEezF43OvGIl+wKSeBjhwtAMandqNBqTU48NIXqMOi2eM9tueigGvMY0rHm4jm5Sgie0iyzXQx4RNj3WnKbS3jbQtCxtxgFM0B8tjI2VW+Cp6Z6VODdyfVYmGIJpU3qs8Ng9Y0MmHUK1qFL+oSEBJ8EX2wBPTp8Q==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Kj3RAWEa"
+Received: (qmail 23609 invoked by uid 109); 14 Mar 2025 18:59:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=SzW1Pi/fTLpb/uKgn9MfDuUbGqWhuo+gsQVylu/BT1U=; b=Kj3RAWEaZkYo7CzEqUiDMTTvuxMe0FKbojUt/lGKNQ6KCLygJ+NM4YTwFGgucY4wv4imdUCHig32d143am9v+RO1G7eIeX0C5+TfkyF3vSwVrghA8GJeqZVYIRE0+0Bz1VNrKsdo6rdddeCk9JRW/ejc+fGAQ2V6Ba4LRAdrNdKyo95+VqVg1qxfn6MBewrXyr2JUFb0kllTBqmv9IOAXm6eDF18m2Id2oW4pINmh1xbh/IC0HKusD0XWbZoSrLU/7HFoOM66He7EVmZ79NCCHWp40wQK5Jnls9PFBkhrVmhcSYAFhk4RtvhUAtdF8NNzYBW192Srxz1IHQjU0QXcQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Mar 2025 18:53:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Mar 2025 18:59:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7917 invoked by uid 111); 14 Mar 2025 18:53:25 -0000
+Received: (qmail 7972 invoked by uid 111); 14 Mar 2025 18:59:14 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Mar 2025 14:53:25 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Mar 2025 14:59:14 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 14 Mar 2025 14:53:25 -0400
+Date: Fri, 14 Mar 2025 14:59:14 -0400
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, ps@pks.im,
-	jltobler@gmail.com, phillip.wood123@gmail.com
-Subject: Re: [PATCH] config.mak.dev: enable -Wunreachable-code
-Message-ID: <20250314185325.GC578421@coredump.intra.peff.net>
-References: <xmqq34foefh8.fsf@gitster.g>
- <20250307225444.GA42758@coredump.intra.peff.net>
- <20250308032309.GA584028@coredump.intra.peff.net>
- <xmqqfrjkao75.fsf@gitster.g>
- <20250310160440.GA26189@coredump.intra.peff.net>
- <xmqqsenk7mab.fsf@gitster.g>
- <20250314161010.GA8522@coredump.intra.peff.net>
- <20250314161347.GA9440@coredump.intra.peff.net>
- <xmqqv7sbh698.fsf@gitster.g>
- <xmqqr02zfr3r.fsf@gitster.g>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org, ps@pks.im,
+	christian.couder@gmail.com
+Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
+Message-ID: <20250314185914.GD578421@coredump.intra.peff.net>
+References: <20250310192829.661692-1-jltobler@gmail.com>
+ <20250311235720.GA73755@coredump.intra.peff.net>
+ <sm5xvh7bipyrlpw45bptlctbuhey7v3qktpskal5dzexomt34f@wgfziyhcf3t6>
+ <20250313053329.GC94015@coredump.intra.peff.net>
+ <qapd7sijizopaefpxh3slgn7g2ecwdtyhzqzufcypciyv6n3qm@turmldwzipwe>
+ <20250314024929.GB114103@coredump.intra.peff.net>
+ <xmqqsenfk0ks.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -50,43 +47,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqr02zfr3r.fsf@gitster.g>
+In-Reply-To: <xmqqsenfk0ks.fsf@gitster.g>
 
-On Fri, Mar 14, 2025 at 10:40:24AM -0700, Junio C Hamano wrote:
+On Fri, Mar 14, 2025 at 10:02:11AM -0700, Junio C Hamano wrote:
 
-> >> -- >8 --
-> >> Subject: [PATCH] run-command: use errno to check for sigfillset() error
-> >>
-> >> Since enabling -Wunreachable-code, builds with clang on macOS now fail,
-> >> complaining that the die_errno() call in:
-> >>
-> >>   if (sigfillset(&all))
-> >> 	die_errno("sigfillset");
-> >>
-> >> is unreachable. On that platform the manpage documents that sigfillset()
-> >> always returns success, and presumably the implementation is a macro or
-> >> inline function that does so in a way that is transparent to the
-> >> compiler.
-> >
-> > Would it work to instead do this here
-> > ...
-> 
-> I forgot to say a more important thing.  Between the "let's excempt
-> developers on macOS" and the "let's see how far we can go with the
-> warning turned on everywhere and wack-a-mole this particular one
-> with errno check" patches, I prefer the latter at least for a short
-> term.
+> The developers who know that the revision walk infrastructure is
+> shared between rev-list and log may wish that "-z" to mean the same
+> thing for these two commands, but the end-users do not have to, no?
 
-That's my gut feeling, too. I wasn't sure how people would feel about
-actually touching the code (whereas the other patches were purely
-turning compiler knobs). It may turn into wack-a-mole, but finding out
-is part of the experiment.
+I think of them as related in a user-facing way, but it is likely that
+my mind is poisoned by knowing too much of Git's internals. :)
 
-Your CAN_BE_TAKEN() approach is certainly less subtle, and can be
-applied in a more general way. If this is the only spot needed it may be
-overkill, but the readability improvement alone probably makes it
-worthwhile.
+> After all, "git log" accepts "-z" but "git rev-list" does not in the
+> current system and nobody complained about the discrepancy so far.
 
-Do you want to turn that into a patch?
+Well, rev-list _does_ take "-z", but it just happens that it cannot ever
+do anything because you cannot convince it to produce a diff. But even
+knowing that is true is probably again a sign of my poisoned mind.
+
+> Having said that, at the plumbing level, my preference is to have
+> two independent options "--nul-delimited-{output,input}".  It does
+> not prevent us from starting with a single "-z" that works as a
+> short-hand that flips both on (and is inconsistent with "git log" at
+> the Porcelain level), but we can make "-z" only for output for
+> consistency.  As long as we agree on the design to allow us to
+> control both sides independently, starting with "-z" that is only
+> for output may be the best way forward.
+
+Yeah, I almost suggested earlier having longer, unambiguous names. And
+then that punts the issue from "which functionality should be available"
+to "which functionality should be mapped to short-and-sweet -z".
+
+I do think it's still worth considering what "-z" should do _now_,
+though, because it will be painful/impossible to switch its behavior
+later. And people seemed to like the "both input and output" direction.
+That would leave the longer names as escape hatches. I.e., I'd expect:
+
+  git rev-list -z --no-nul-delimited-input --stdin
+
+to use newlines for the input and NULs for the output.
 
 -Peff
