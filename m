@@ -1,126 +1,155 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD55645
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 00:25:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4524F2E3374
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 01:06:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741911911; cv=none; b=UtAL3y4Mye5Y4VlT7oeufRL3anhShiOl2sl2u1c1MWWT17h/k3ZOew4bveLAdkT5ZM+9Kt++ftxjXRvXo4c37sQckKxYdaVaGB8hB/5N/m57peKeq79dvb3JZXS+uVWlpe2BW4MkuG6sc/0im9mkwGJ8Imm5jDAS4uLHJ847/RY=
+	t=1741914386; cv=none; b=j4GnsD/8awo9PS29srrZDzZz8EJlKjKnKmylP9+ennL+S7OTB+uH8jXh4W+L+UQYcAQU+R/YrsDjHYJKN2P87sISXtPLQj3EHlFKl1GEjUHqjtDA8MiiM3UKNW87q0pH6YHsn1waTSOi9YewBpus1gz4zqYZ6EQXlKe8S0pZD84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741911911; c=relaxed/simple;
-	bh=2PP6jd9nubwXj0eeOgqpQy04rod2gX8XMm7R4sWdxW8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sjfbTF/yNn5jGgD7QxpIENFXMfduz5NicHvSxfFgxvUotyBDtWms1RWmco425cnlxjay2o2qcbYlSPLUiXYdMZXSAuqeSlTx4sgVBH0Yvsk7szqvARyWRUT9Au6hP2/GKEawjkyUEkVCkcbmljHt/695m+ZBmIfWgdcr1IYbbvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lf4hyhw/; arc=none smtp.client-ip=209.85.166.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741914386; c=relaxed/simple;
+	bh=YSJIGA/pDw8qX/bmB2V2LhZYQkzbif2qtyzbIp3NffA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qSTX+WcnhVP2Id/HQy+m8DievRN6fPsXkr8FCGeEYyiJh3aMWgWQwrjYKU5A1cWMJfR/RgSP7MmYQRxNWSwA05CNrjkY9dH/1XdNbS7F0MpcWXZhlxpf3kWLZFn5lSGu2WKGXYmr6vwxZj/HGn29yU9/MZv/zYLzo/BKYPVdGgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V9nYa8/s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WniMoTJP; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lf4hyhw/"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3d03ac846a7so5549485ab.2
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:25:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741911909; x=1742516709; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=j5hqtG84zN2YaFW6sm3IKhClnq6AYGBtlYmzlLWRXUE=;
-        b=Lf4hyhw/ti3F8VKmfF8mstZlc9EpiQZ2Ilf0Ih01U0y/CHiFG5tKlERtrU6D8xMR6Z
-         3kVhUyOKMhb9VMHcMIXowZe4VpnmKfRpnEx2njz8bpqMqoUnq4f345ZPTn4oi9KjvVjs
-         uWEGjsyIb47il54c81vbCM3taxv+rJMLCc7IKeSi10yVLyedLrJ7ijKk1LQ7h273Evby
-         9tRrm9QVPAd6GQwi51wo4Qf0Owg6/heX7+Qqphb+1r0nFG/NWYkXCxbQBan6Uw41V1Hx
-         9e4B5ywU9bqtnwHcKD/MMtLMxA+XsW55frmfi/+OH4WKjl6p5NU3EwVGtLXQNkEKnE/k
-         v2FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741911909; x=1742516709;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=j5hqtG84zN2YaFW6sm3IKhClnq6AYGBtlYmzlLWRXUE=;
-        b=n7bDXUXH5svGOe+BUjZFN0OBjuU0A31SL71eyuEaCXibjDYyb5g2nSzi7GNQ+9wBFc
-         w32aHIhg/VjUG7i5n3tNCEzDG/eGUWpyj7twc6LlBw3I5a6wfzbsJrY+Ld5582OcayUr
-         OTK1M4/sN/Pze2+L2+PkngQ/b7mNnvnbLMqmD6mr7F0N79xTWIac6SKtnC5iFRGnr/Cy
-         Pnlcuc2EHro/1qmXcUQeiZE8x8gfHatfbhIRE8RpouxMwJahn+Umlc1P88XYB7QuYsFj
-         watS32/fMLMM4ga/OEPHNgAfYDIxkfn+GWlHhGR7lr6xqyudGizqFHga91mgL8RVyWTT
-         aYlg==
-X-Forwarded-Encrypted: i=1; AJvYcCWhYBbLIH3cHqqulUZwaDM6GPSVdDXhpssIsm8Ov05vkf9cC6tEzcsP2bsqvsu2IsBkeP0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLn/M7RVlm/BuiIbUT5W/A4aS68MfVq9G/eGEUPLwxiganOm0T
-	wbNHtkR2xuE1C4MUQBAIxv0LfzNf+Utb60HpwjF0X58jv99mq8I30/kYTSEuWSh2BzCNvH2ad43
-	G3bBAWSLEcywVwn52JjUvzQ3TdzM=
-X-Gm-Gg: ASbGncvFcYnYMuHf8rS6uOwgiXz13pOclAVALokwyEP5ZTEA1Hzb2Rnx7huCeRhtxS0
-	QRRERR//Z6DAy2x9u/gFyJ/LILBwFkeAewR6e+iK47vcQs54299YJni6PpWCV/fqXTUBh/uqDU6
-	GidAj0hZfp/NWmN/CGBL1nbyDlAGvJMOYueFjkOm7SW8PO5y30Kbt9xE2cr8rYNqzN3jPspQ==
-X-Google-Smtp-Source: AGHT+IH/zaJIl0MI6upbjkGLygoLjeAs9+31741i8ahkUSF4Oe7lLRxjq4fP5Ok29/M0TWNVsdnOQTsfhL71zn0k2FY=
-X-Received: by 2002:a05:6e02:1a27:b0:3d1:78f1:8a9e with SMTP id
- e9e14a558f8ab-3d483a80000mr4301085ab.20.1741911909141; Thu, 13 Mar 2025
- 17:25:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V9nYa8/s";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WniMoTJP"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 506D3114012F;
+	Thu, 13 Mar 2025 21:06:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Thu, 13 Mar 2025 21:06:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1741914383; x=1742000783; bh=XNEmoSLs1c
+	Xh79v1v2L+qMHh4CnKg9P8MubRupEKwYM=; b=V9nYa8/sU4ACbuYJ2hEGanqzt+
+	l7O7m8ZOHG3ldfkSN9rRjcYQC7DuHLfLCe3GjoaWWR/ZlJjVitewEXFxFxTQZ+ml
+	Ps8T0Kb9KrASeJtoAcjbpe/5Wp81PL6nG422QHKwkCsTRrL28oEX1Bau/VFBVxaO
+	ouMDfO8MoqK2tglNUvx8/04Y76HTO+1cedC0DuepWGL0sqSllmgG2Hr7RKYtQQ2H
+	ElBfmOuPpQmZ8WnDhYx8W8Ft0lpmkUdRxy7c0/2baIpdIsloek+hERttfgKzvR9b
+	fSPF4OSG8mhAZRZkAOdNyMxSHAyYLxQWTy3hgTDJBimSTvWofWztl157edGg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1741914383; x=1742000783; bh=XNEmoSLs1cXh79v1v2L+qMHh4CnKg9P8Mub
+	RupEKwYM=; b=WniMoTJP2SiwFyiGL3Ka0cpa/CicV6mol5oFusWrslm8E5S/PG/
+	HbZwur2A3FUHPzytgKT1lTzsn0CYbumsSprP9S4GXHTKAd+sIrIcar9II8AeIvw3
+	oiy37wZxZk3mhFlaNIZjdOAKTaeDXtxK30Cwk09AJ1R7Ylu6SkV0erv/aDo66LME
+	ShBvCqquaYF3sdviAb8X/NLld68Rom0OF7LLOCbsEORFQtaJvodPv9S8nU6A7wcB
+	XMw0M20/f9DC8vCabSaKsOwgEstIwn0/ea1Afr638E9ZQQkTr27MtAF8rR7CASkD
+	+XOVKD/ZSl0te9Tq8HVXUROHvWgNogAzBZA==
+X-ME-Sender: <xms:D4HTZ_UqF0Qoq4O0EdyQlR-Ee-Jg2LYfhP6g6TpkrsuHOygA1O-CRA>
+    <xme:D4HTZ3mERya3eYApYXU_6E63Mvsri8eO-Ip9h3Vb6NkIDS42bM1s6kgQhf2mBXEMX
+    tu-hCaFVFONTvgHsQ>
+X-ME-Received: <xmr:D4HTZ7Z1ZJI5x3UahZQ0imug06K62ou7jzs2vfHJWv6gle4BW5a6IQoTDbjevuJjHUKqaYK5uV78LGlQ9tyomMJJr4gbG29i73HqCc0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdelgeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepieegtdffvdeileevueevhfekgefgveeh
+    leeggfegveeuvedtuedtudfgffejudeunecuffhomhgrihhnpehrvghfvghrvghntggvrd
+    htohenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepsh
+    hmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:D4HTZ6UOMzMQU9ALam8oqV8e4_uHV7I-vSL17vQgMp_ffUSEq5ToyA>
+    <xmx:D4HTZ5k-RX6VkfGQBezwdjYJbXAwlBrG_Q2e-6jdlrBREwZqle9voA>
+    <xmx:D4HTZ3e5q92hwtR-bwhRhsBMVjHK1fVVh_Kmj52_k6Ravi0ge5pp2A>
+    <xmx:D4HTZzFzEEk7IGfzSea_RWjU7B91h4cYyT7pw2GdAMhH12E0c9ZG0g>
+    <xmx:D4HTZyDXsAzKJoVgKoXsSYcYRuXaPdIqfvmmr7TDGakj_0wtrApt8naJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Mar 2025 21:06:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/3] ci: add build checking for side-effects in assert()
+ calls
+In-Reply-To: <80dcc2ba3aa0ef72abe18f8525d571ea39ac6382.1741911652.git.gitgitgadget@gmail.com>
+	(Elijah Newren via GitGitGadget's message of "Fri, 14 Mar 2025
+	00:20:51 +0000")
+References: <pull.1881.git.1741911652.gitgitgadget@gmail.com>
+	<80dcc2ba3aa0ef72abe18f8525d571ea39ac6382.1741911652.git.gitgitgadget@gmail.com>
+Date: Thu, 13 Mar 2025 18:06:21 -0700
+Message-ID: <xmqqy0x8l8tu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1873.git.1741275027.gitgitgadget@gmail.com>
- <f48b3310d4ae8d05780fd25e467083c4dc9852cc.1741275027.git.gitgitgadget@gmail.com>
- <Z9ID/2zx25qesuJs@nand.local> <CABPp-BH+9JcP6FDP6RFQzZbwW=XOWnWAR8PmrCS6hG4iyd2pPQ@mail.gmail.com>
- <xmqqr031x2gg.fsf@gitster.g> <CABPp-BF7iTvqKFvuOZ5wZ3vZADjCvB63iKR-4D5+WeTxnZGThg@mail.gmail.com>
- <xmqqbju4q39j.fsf@gitster.g> <CABPp-BF01a8bEZ2mfp7H_=HKsv6mSE4+ee8bi9D9xKWbH=0b5g@mail.gmail.com>
- <xmqqcyekok4g.fsf@gitster.g>
-In-Reply-To: <xmqqcyekok4g.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 13 Mar 2025 17:24:56 -0700
-X-Gm-Features: AQ5f1Jq_IYFQOur_ZN3SQqnAO_PPT-KUx9ogQTOwTjorMmYJb3zzKAtGYUzidUE
-Message-ID: <CABPp-BG-7RYskvG6K+gYYNQxqRkVSQYLPvcFaFaT3u-w3bBrYg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] merge-ort: fix slightly overzealous assertion for rename-to-self
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, 
-	Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Dmitry Goncharov <dgoncharov@users.sf.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Mar 13, 2025 at 11:34=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > "if (condition) BUG()" is invalid; it needs more arguments.  "if
-> > (condition) BUG(something)" requires a separate "something", which
-> > requires awkward additional wording and/or is needlessly duplicative.
->
-> Ah, obviously we differ on that point.
->
-> I consider it an advantage that <something> can be more descriptive
-> in a developer friendly way than <condition> expression alone.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I think there's been a communication disconnect.  I too like "if
-(condition) BUG (something)" and often use it, as I pointed out
-earlier in this thread.  The fact that it _can_ be more descriptive is
-an advantage in some situations (and you provided a great example.)
+> +make CHECK_ASSERTION_SIDE_EFFECTS=1 >compiler_output 2>compiler_error
+> +if test $? != 0
+> +then
+> +    echo "ERROR: The compiler could not verify the following assert()" >&2
+> +    echo "       calls are free of side-effects.  Please replace with" >&2
+> +    echo "       BUG_IF_NOT() calls." >&2
+> +    grep undefined.reference.to..not_supposed_to_survive compiler_error \
+> +      | sed -e s/:[^:]*$// | sort | uniq | tr ':' ' ' \
+> +      | while read f l
 
-The problem is that some situations !=3D all situations, and I find it
-worse when trying to force it for all the other cases.  If we still
-disagree on that point, that's fine, but I wanted to make it clear
-that I am a fan of and use "if (condition) BUG (something)" where it
-fits.
+A few style guides:
 
-[...]
-> > If you don't want to see assert in the codebase because of NDEBUG,
-> > then obviously we'd leave NDEBUG out of BUG_ON().
->
-> Absolutely, because the largest problem with assert() is that the
-> condition can be compiled away while the compiler does not help
-> ensure that the condition part is free of side effects.  If we drop
-> NDEBUG, that problem goes away.
+ - doing multiple echo into the same descriptor is easier to read if
+   you have redirection near the beginning, i.e.
 
-Or we can just add a static analysis job that will error whenever the
-compiler/linker can't prove that assertions have no side effects, and
-suggest folks use an alternative macro for those instances.   I just
-submitted a series to do that over here:
-https://lore.kernel.org/git/pull.1881.git.1741911652.gitgitgadget@gmail.com=
-/
+	echo >&2 "message one"
+	echo >&2 "message two that may way be longer than the previous"
+        ehco >&2 "message three"
 
-That should be far more thorough than any CodingGuideline at making
-sure we don't have asserts with side effects, be far less effort than
-attempting to change our several hundred existing assert() invocations
-in the code base, and should be enough to consider the problem solved
-and let us move on to something more interesting.
+ - multi-line pipelines are easier to follow without backslash by
+   ending the previous line with a '|', i.e.
+
+	grep ... file |
+	sed -e ... |
+	while read file line
+	do
+		...
+
+ - I thought our "one indent one tab" standard extends to shell
+   scripts as well?
+
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index c3415ad7e0a..0aefd763751 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -1584,4 +1584,10 @@ static inline void *container_of_or_null_offset(void *ptr, size_t offset)
+>  	((uintptr_t)&(ptr)->member - (uintptr_t)(ptr))
+>  #endif /* !__GNUC__ */
+>  
+> +#ifdef CHECK_ASSERTION_SIDE_EFFECTS
+> +#undef assert
+> +extern int not_supposed_to_survive;
+> +#define assert(expr) ((void)(not_supposed_to_survive || (expr)))
+> +#endif /* CHECK_ASSERTION_SIDE_EFFECTS */
+
+Cute.  As this checking assert is in void context, the optimizing
+compiler knows that the entire thing can be optimized away ONLY IF
+it can somehow prove that (expr) has no side effect.  And if it does
+not optimize it away, you will hit an error from the linker, saying
+that the undefined variable is being used.
+
+This requires a fairly good optimizing compiler that can peek into
+(as in "inline") what is in expr to notice, so it cannot be free of
+false positive, but at least when the optimization works as expected,
+it is provably (modulo optimizer bugs) side-effect free.
+
+Is this something we can use in our project?  I am just double
+checking.
+
+Thanks.
+
