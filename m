@@ -1,111 +1,111 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAD11096F
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 01:20:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2342517BA1
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 01:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741915259; cv=none; b=TdCF8w3jbGQb60o8NbwjfbCLgFkY2ZvQUVFklmfLr66JfZC1G874pKR3C7iJtl+O2ajpqjK6Yp0MPE8xvHm25AWfJhj+SxNwhXKQaIjdcWNl0lOUv68DydztgVuKisomXpdTNM4pVMT2C+6fE1ivNiOOglRWdaEtafwD39hLom0=
+	t=1741915683; cv=none; b=re11VIbzveifH+95VC0sPTtY6kSHLwglrzbxuD0m3nr4jCFl8/dPvSs2mDNgObWEeTKaBGZy8/uSd4s5VrSYhPCShGOgDdOfEXCKH/ThrFIJwDLjfOqCrJpXu0/NOWTPKPE5LIuQqCeEP84/TN8xWNfIFwhK2yLxmNOen+XWeqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741915259; c=relaxed/simple;
-	bh=oDYvd6vWSD3amkWkcMMFJHg/6vBRff3giglf/b70a3A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Io8bUzZUO5vVF6ScGQG+qMGb06K+VPkhghpxvYdzvI4tYhibbW/s36jVNEAVeoePQnZrwvZqjfVimOLHApfm2MCl8LyNhaZFlu91UMeMWUQjCeZ4hojNElMcIfhXEYOAHOy9IYnzzDNU6wBcPXnD1morOVAPvmwZFOGD8Ga5eYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hpWO8Vef; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pLnn2mco; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741915683; c=relaxed/simple;
+	bh=rYvV4Xcr7d03CNE4lKYcPwvaFZb/Ndbxp/9Te6bQm7s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oyO4w/EzYmTtDSxKU4hxJVDFw/rC3zVRAJPwhQTkjmiPL6tjIIoMAZBN/AO6/jOxusenbT2oAzvG7HYLLkcRwhxO1gY0w00NnfvvabHvFaIKeFUFfIPetUuluAWvhhHSwVr5r1jroMzcl1u/qeDKjZcfY/APf9yO35ghLX7iiTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hmqFiu4o; arc=none smtp.client-ip=209.85.166.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hpWO8Vef";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pLnn2mco"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 522FB1140122;
-	Thu, 13 Mar 2025 21:20:56 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Thu, 13 Mar 2025 21:20:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741915256; x=1742001656; bh=Dr9DXzyzFI
-	L6NeM1ERRsvOtFSlxraV7ay5F35JfPHMI=; b=hpWO8VefSWLVl64xTeXkuLuxas
-	z8YXnX/yZf5B/DkiNegUVxOHHtKlyzMVOFcg00q/Ude0Z+qgSo+RXxD4l8mtO6a6
-	sZSqT4SimAztXCCr28SsDsO2QzjHVnz3ncrAVciSixpMPQcjm5qeFNDDyzxkNY3e
-	eKhg70bXC4i+XAQdF6yqf6HBpRqd23+ZXOBI1uJWBelYL2k3Jd9mtjuxgZJSydsi
-	o4hCmDn6yP3EDI8l6t7W8y5YcRk8sUc3wppzQqNz18Mck/suGcz4MxlCzDvDRPbb
-	7BKawxHeqFEAHIiJzic/AKIT9u2tTPnNx4ferTrpiyXdYxufjqjXtVIUbpcQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741915256; x=1742001656; bh=Dr9DXzyzFIL6NeM1ERRsvOtFSlxraV7ay5F
-	35JfPHMI=; b=pLnn2mcozr5YG4qe4/uMoh+o6Q5mBG7lbDA733ymY1Vj/kQwr0n
-	LV6s35hPlpu3boMsUh0/eF7U4FU7QmXFo+1oPjUrCF60lC+mWD81LNcmThyknceN
-	gdILBM/+DeO62cFBt7cFvUcGJiHvCPcetTbDcvD0QkenXFklXbUjfjY7VNho5CNz
-	UJKnduv2izMHjpNrtG4qcEIruvGp955y/wm0zaQZWhu/w+4gBw0B1H5WTtul++N/
-	xxQhOqVOY0aXktH/cl7RkXgVrkrMOlJyvSE2ifzkl67jWpwNGD5ThMvBfQR6lDWc
-	QTHC4EvKIme5hHztDocAFWmI/SW42MDk9Zw==
-X-ME-Sender: <xms:eITTZyUR682fn2FOx439jGeFvgyJvo9kzTKKOvB6x_oJT9cjPBELYA>
-    <xme:eITTZ-mmjwrDxbkp4PafA2KCCfkKgKRRO2bF1fIiUEO33ZXBamQW_RXeDaVnSQh6M
-    4wQY8pMBO7yLcclOg>
-X-ME-Received: <xmr:eITTZ2a_S3PLfy71HFwILpyumE-1Be7jq1whtNB7kcpvSC1Tto9xUXFXn9yUVcrThNgqEnlZ6bqDEDulbx8a5dMbCEiCXkzobzRyBh4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduvdelgeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlsh
-    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhgihht
-    ghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:eITTZ5WOIVCWL6zNAXk9YrRIVI35JJeGUYDngqyfzMeAKJqZcgPaqg>
-    <xmx:eITTZ8lXAygSAxqeTcjahXd5ZK79uHF4UMXgZbh1F2TE5by9BVkQ7g>
-    <xmx:eITTZ-eSfcbIEqWS5bQBE4HJmvebE2ti6ZGIQsx5IRq1lNpxGZhXXw>
-    <xmx:eITTZ-GnBIevCW4dUq1RIWN8tPOjNp72GiuVdl9_8W07XVg7GEC79g>
-    <xmx:eITTZ7vLdFxsw3QcVQZjdEuOJGhRD4rRkW6yF4Fn3BQNPYorL8AGewGL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Mar 2025 21:20:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 2/3] ci: add build checking for side-effects in assert()
- calls
-In-Reply-To: <Z9OD8ihB-tiCdBmp@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 14 Mar 2025 01:18:42 +0000")
-References: <pull.1881.git.1741911652.gitgitgadget@gmail.com>
-	<80dcc2ba3aa0ef72abe18f8525d571ea39ac6382.1741911652.git.gitgitgadget@gmail.com>
-	<xmqqy0x8l8tu.fsf@gitster.g>
-	<Z9OD8ihB-tiCdBmp@tapette.crustytoothpaste.net>
-Date: Thu, 13 Mar 2025 18:20:54 -0700
-Message-ID: <xmqqtt7wl85l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hmqFiu4o"
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-85b44094782so48938239f.3
+        for <git@vger.kernel.org>; Thu, 13 Mar 2025 18:28:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741915681; x=1742520481; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qxTIrJEqpDWswH22yGtVa6NLIFbueixA9v8Eiy4KUlk=;
+        b=hmqFiu4oqxmZZB2YGph3Fkfm/5u+jQCPmDUU0Akpdwv2FD1lsOe13SA8Ubs81lGr53
+         CLsCYK3rE6VV+/SW+K4vDYyiEF3Y+sl4qsy4llsaesP5wg4+o4rYXrw0NtDpOtUtTtTo
+         4ks2zi8xIf+8lXHSTYBkqjIQU1EtJlp4uqBSVTg0QVUFqiHuXmGRv0VzAK7yxBukCG7E
+         LO9i+2yqxt3VsT3CPro61PPbTrRj+zth5FRm05YpbfqZ+p3u85ku35S/+SchiCwFlCk+
+         TSjTDWE1QE++zB9a06MPaBlQwgCHz9rNBftPnMcMunVRndurwCtRG8j7eB3fFcNFocDz
+         wggw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741915681; x=1742520481;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qxTIrJEqpDWswH22yGtVa6NLIFbueixA9v8Eiy4KUlk=;
+        b=MMcEVS2V4HyTJxeo6dxcfOeCsOJBoCBFw8JHS90QfiaAnfB6w0GjiSoObcr06IRUJO
+         lhwcIZ5bQl+OFGdXxmWAn+iKDWEiFpXrr8KauFgeBvCozh3IMvkzvSr4sjc93xqirH0y
+         /hZlAD2Kr4dDMhDj2eUvobuh+WnmycdfbTeugbnPsTfqUzoliXcUUB3suUnpRnDmVD6+
+         7bZy3bFkjywRQ64q0mTHZCL2ycFmcQmMfARUNhoezx5pmnHIYkazF3bGXqGWP7p9DFud
+         WgqOqETWtusjY4KpLpxGfmY/GPKewEXStACIDMEOMWOGN1aV7l0uG94CINLiqQiTtJIL
+         MX6A==
+X-Forwarded-Encrypted: i=1; AJvYcCUO36lFahQ+A/2e1biGHI3PWqN4D04hjBM5cSphGXGF1v3YSE7vpXHbTf8Hmb31ebYy7q0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyvoR8lNxnehtC97s97c2lGLCQdxA1SuAtvDYxwQRPlJpuqHrJn
+	vupI/delcx92BhugFE3Tzj27Xv3+ABThBiroGblp7xRkhv15HTGrB1YqMD52nZeLGLeOZW7KM7b
+	nMBxBMNISO7bgXbxLS5LTYOsygD073Oyf
+X-Gm-Gg: ASbGncsQHAjP/gQbUfg1fiI5d1KotpNU6gvMkslS+Mz4ebXnHgbhzHygK5KBGYOdpWW
+	641RUSaVgc0WedhjKsWMax4vymGhctkVfaaeO7bKU/CjTXtHj4eehcWzcTXwXHB2Yp+avQfr5Mg
+	eSqxIyfK1gHX6L1B18C1zzatuyhiZ6GerkL4BaDGbegdKuRyRlo8lpkyJmuBArZlfjp7fgVQ==
+X-Google-Smtp-Source: AGHT+IGn/sB06D5ZWTMPlLxedfX5u+H2nEzw65u3D1kh2dNGqVD2RUzIQQXNQAMUiC2AO5IXM8n9UeD+aDgVkZWqN94=
+X-Received: by 2002:a05:6602:3890:b0:85d:a235:e90e with SMTP id
+ ca18e2360f4ac-85dc48abe9emr74510139f.13.1741915681110; Thu, 13 Mar 2025
+ 18:28:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1881.git.1741911652.gitgitgadget@gmail.com>
+ <80dcc2ba3aa0ef72abe18f8525d571ea39ac6382.1741911652.git.gitgitgadget@gmail.com>
+ <xmqqy0x8l8tu.fsf@gitster.g> <Z9OD8ihB-tiCdBmp@tapette.crustytoothpaste.net> <xmqqtt7wl85l.fsf@gitster.g>
+In-Reply-To: <xmqqtt7wl85l.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 13 Mar 2025 18:27:50 -0700
+X-Gm-Features: AQ5f1JqM1sCm1u2MZEXUAGU0l9rmedGQaZ9WnAYTR3UPu9AsoFPPw3QOTze00n0
+Message-ID: <CABPp-BHRSnNE0zj9kRjrVm4-NXt33tYBT_iSgZU-5JU9Y2vp3w@mail.gmail.com>
+Subject: Re: [PATCH 2/3] ci: add build checking for side-effects in assert() calls
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-
->> Is this something we can use in our project?  I am just double
->> checking.
+On Thu, Mar 13, 2025 at 6:20=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> I believe it's valid in C99.  Certainly some compiler might be bad at
-> optimizing, or a user may have compiled with -O0, but this is run in CI,
-> where we have known good compilers and can control the optimization
-> flags.  I doubt GCC, Clang, or MSVC will have problems here, and since
-> this is not on by default, users using something less capable (the Tiny
-> C Compiler, maybe?) or a vendor compiler won't even see it.
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 >
-> Was there some other case that you were concerned about?
+> >> Is this something we can use in our project?  I am just double
+> >> checking.
+> >
+> > I believe it's valid in C99.  Certainly some compiler might be bad at
+> > optimizing, or a user may have compiled with -O0, but this is run in CI=
+,
+> > where we have known good compilers and can control the optimization
+> > flags.  I doubt GCC, Clang, or MSVC will have problems here, and since
+> > this is not on by default, users using something less capable (the Tiny
+> > C Compiler, maybe?) or a vendor compiler won't even see it.
+> >
+> > Was there some other case that you were concerned about?
+>
+> Licensing, mostly, as clever things we see are not necessarily home
+> grown.  I know the patch came with DCO sign-off, but it does not
+> hurt to double check.
 
-Licensing, mostly, as clever things we see are not necessarily home
-grown.  I know the patch came with DCO sign-off, but it does not
-hurt to double check.
+These two lines:
+
+> +extern int not_supposed_to_survive;
+> +#define assert(expr) ((void)(not_supposed_to_survive || (expr)))
+
+, which serve as the core trick, I had used elsewhere before.  Doing
+some searches, it looks like those likely came from
+https://stackoverflow.com/questions/10593492/catching-assert-with-side-effe=
+cts.
+And it appears that StackOverflow is CC-BY-SA-3.0 or -4.0.  Doh,
+sorry.  Anyone got a clever alternative?
+
+The rest of the patch was all written by me.
