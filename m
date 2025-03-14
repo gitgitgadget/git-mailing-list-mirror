@@ -1,223 +1,122 @@
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AB0B666
-	for <git@vger.kernel.org>; Fri, 14 Mar 2025 00:01:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A4E2E3393
+	for <git@vger.kernel.org>; Fri, 14 Mar 2025 00:20:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741910516; cv=none; b=lzmId/Lr3tbHv7QIkhnFy6rJeKVNvPn1RVUvrp1eaZgWCrTH515vmcSCHiBkrhOhrA7EKFJXIS1oYE2M6ORHHBYx0Iij5NhxrITv2xXxOwlsmOaKCbgsrZ3hDaMv7ERvRCsf/KQaVgMhWTKHOqOvZFrQIQPITbaovdSOUv6I6PE=
+	t=1741911658; cv=none; b=LQs+ZTRGNoli1+umQYdsg/Qq8ulNiv81X9N8SDVTVslXxCJMVadGiJdcJolKt4/FXW75FRhCbyMC8SqQ9dCxNaMmHZ3/oXrQJNM5cwwCkmoN/Z3trPsUFOYlqhmXQJ9HB+DqxlFL54hH1tOGGUFvN++Y+vp/N+QkLmHxdjYx8YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741910516; c=relaxed/simple;
-	bh=88FZpwprawUSteQxa3xEbaTsl6pxzgSNK6v8lTNWCa0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HgqouZv0sfj3UvtJEtdgeSkVI/124y4kIENj8DpzD3pxGJZZdkSxkzF0uDt314GGHXhMbFYj1KEUHFVsRsmNFtEo/a1g/N3CbkSJ26ml2Id/tkImSirWNyxs/wonceTfNHaNHX9ezPiSFI/VqJdaHJAU3WyyVPzzddwh1qn4IKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AcynQeiZ; arc=none smtp.client-ip=209.85.210.54
+	s=arc-20240116; t=1741911658; c=relaxed/simple;
+	bh=+oARwFbq45lMp4Z3MeeOCoOoIDgOgOFMnKrmjSweHPc=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=JddhLipr3C92HhIAIWpz5LLFFxvAnwJtzRc3E2tcOrB8emz5Cb3FDuw1se7izFfHwKJeUyXoUyHoCNgGSxP6XpjFSa/Do3uEOgAqtIkaZXuP//dpaqDvgmklbzReEHt50z+SDTjQZ4qo3RigSIaC2XDmbe+QnxwufMTwGZZaBnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l7HkeFIr; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AcynQeiZ"
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-72726e4f96cso1082256a34.0
-        for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:01:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l7HkeFIr"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4393dc02b78so9886515e9.3
+        for <git@vger.kernel.org>; Thu, 13 Mar 2025 17:20:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741910513; x=1742515313; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KHIaAkLgr1QyCTUkWHHHsjUZcVf5huqVvZpIuQz5XdU=;
-        b=AcynQeiZ4yaLy0fUDrX7UaY2eDuAVO+SUhkDecuot9yvYwzj6KjFPN3pcyvV0MKwoj
-         dsC45Frgrn3xMN2PKuwf+a7QBJwceuXxEmUmgtis4YHUoBgHjzITJ2vWm3WDkg5XGwwH
-         RDdiOLRmc6T5A4BkvCUtF7NubCv2f5CgXb640Ydu0P+DUag3/DaZ548NmyL1tnCSU0qd
-         B4ofhxBhE/kSH5XExaLtJc/ckd6vaOF7oGQjYdeSw14405Wcsxc2gRR9Q1ko3L6l2HdH
-         s0TR/1up+FxBZKzwSuH67OR9wLadzz5JyZUGmLa6mJr6DpRdyYcK8j8hOQFvAQDZNZ0u
-         WDPw==
+        d=gmail.com; s=20230601; t=1741911654; x=1742516454; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LdRUSnfqFGIIXNq3wpd0zdYxwexefuKO0h/QkcGuSyY=;
+        b=l7HkeFIrz/HAkqjFEoDX/SO30B92JEZpBygbGK6e0OpgodAcf0Eg/QpACXxLrZ7kKh
+         sk2WZYeMFKRLdiUomd1F71MOq8l6g5Nwqlab/HgPRphpcyJcHEB12MijGJJVExe1aG/i
+         m3uWXrOuHOYgqIbAVfzZ+eI58x+o9X2i5gwE+t35zdrqx9T860xEkP5gdUL2zD1+isIG
+         VdDQt3CGOmBG3uHQzZOQQax2wXTmq+InQnPXHJKTU3llInegu79CZFzZvZDGZr4mrnmX
+         W44iAij9xCJt4N8alk1PXL780vI0PR7dZdCjHBAfazEObEQZqetbo/3l4Wj18d7UhcqY
+         aT+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741910513; x=1742515313;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KHIaAkLgr1QyCTUkWHHHsjUZcVf5huqVvZpIuQz5XdU=;
-        b=wAi1iMUjJMWYxQj+ebeUWMb7Mjd6iUWZ+ZHpJkd0iu2wfjsk0kRRxGQqsI3ZYsf/Mw
-         upHs8m5G+8Ms3pADQV2gC55jeDVZqozwLNYXPTnZDBzswlMliC5GdFW7GDsZTTDE1UIi
-         Rx7ZYtyC8N/qk4mUQFLRGA+VSZnrOZOOYVOIvz4+uGlbTNwH9+rEhAkJls/zZShDoNUa
-         lQEtBIlKJozHw4sKo2bLSHJaKlRtZ/997oIIkzDnaLTQJWVd9rCXhEFvzFH3537Bt53V
-         QN0tkyiMU5rwNbbTrP0VMCaWVrB9YJTJFcworQ490npKjFiQPqideNC7VURwUw7fRi/t
-         lGfQ==
-X-Gm-Message-State: AOJu0YxsSTtLIkfAndoPP8SSBsLH+fl+n9uQwuLvXi2oPjpEPvXhyfEb
-	PXxOrVcgtyyrOv5+myRCE5HegMdOvseh+zzoS9ghoD7hius9tjmns5MM9w==
-X-Gm-Gg: ASbGncvOPdQfY+BumRzksw78k4As/EdXiD4Ybte648P8M5ObJHjPSOEhyDbPAotuuvR
-	bm5yg4zSXWQw6I9dG3GFqoOfzhxQ/e63etJk98tGzg3fsOj8qYVoGwGOX9r0vd+HK3/b7OiLMSB
-	MXA4CQVhIAkc/Z5XJBjQXVQ0+qp2Ho2HUOQuzlIzT1BOoj5y7PXHTucIDIO6Lu3dZE9ujLcV5DR
-	sHjlOlnv2Vvs6rul/0zQ5+pGu/+ovkTYkF61ULZQ5bfQE01EnqAl2GvD0vtSDyRRbjlDq0gwSpF
-	QnnPDMXvNo4kdBQs0jcHkNASs9vIvm3wS1wGK0qxtPbUYpnGFFIa
-X-Google-Smtp-Source: AGHT+IHNjDwVpfzJBna2j+/Nri2ki6eNo3+TYnXOwE0Xv7tsBweM/a0PIue5mZcEwhF4BJCgwaVDEA==
-X-Received: by 2002:a05:6830:2aa6:b0:72b:a06b:dd71 with SMTP id 46e09a7af769-72bbc23fc86mr250909a34.5.1741910513031;
-        Thu, 13 Mar 2025 17:01:53 -0700 (PDT)
-Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-72bb274e973sm423485a34.43.2025.03.13.17.01.49
+        d=1e100.net; s=20230601; t=1741911654; x=1742516454;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LdRUSnfqFGIIXNq3wpd0zdYxwexefuKO0h/QkcGuSyY=;
+        b=FuTssCUkYLwntUWEv3piYBC3vGHzyJcSIHl7M/KKOvr/J6tgntvlHz8zANuh69KFsf
+         fV9owYAK42E6Tug+C/QZyNTbFZ7mVd7egrBf1fWvzlC6NwJf7+unvxehzySlDQMjm9JP
+         FwyhJc9ZgX3P1zkkFV6AzRS1kgVYzA4b02Yw8+hZzAIxp39IZq+Illw/2ZNPpM6Nleni
+         i4219LwcXj1S1AhuiyqGeEDCWSkycR2ToJlsGYPymvTnSkWmvP88rw0rBg1/U0CyFbrp
+         DnvpRS/ciVmEeW4nQzxAMqYj3Nbw7A4hDeGy/zmJ+LIzN78YmX3eDMpfywVK/KdO3i2C
+         kZEA==
+X-Gm-Message-State: AOJu0Yw/dnj4hqNt9wlsVDncD28Sv0QaRz1FJsT95jXf18K1ukfLK+zF
+	M67F5VU2XI+MiO4zRYpG8Su7inuG1FY2Y7aT4Lro2IgD9f3rKjFIzgecOg==
+X-Gm-Gg: ASbGncuUsWq/4Wo616iG0k0xV+ZrYC+UiiaAFm2nDsq1dmnfcX41UtNZmIm4WFTkbLs
+	NZoG2qvtlQwPmM5TX0vB7l0N/YKyyOrJRYeeKRc/G5SlagMeLOl236i0Ok4YmemBVvGyxZ3n7aG
+	jVB0aLdDTetSbYpnHlFmTMavaLWMSgM7qt2t33lIELgbT2xGvP64d8cWjGMsZBSiaHbmsVOqs5v
+	T5yAhcE6frFYcWr9khDV1E0xDHryws6HJMKRkjBemQvk0sfFzpUYpoV2b8DZ+ABZKyXPc/4Bu/4
+	25wb7wjzCxkfRY1g++qLFN6kek0dgK77X7so5fvSc6KfGWLAs7/5fbst
+X-Google-Smtp-Source: AGHT+IEQMUGCPkEMnHyzbMaoMlZeOwun44gF80NV+gH4MyhgszYt3q5prJgvROV8xZ6g4nk3nD9HKA==
+X-Received: by 2002:a05:600c:511c:b0:43c:fbba:41ba with SMTP id 5b1f17b1804b1-43d1ecd60c1mr5896585e9.28.1741911653440;
+        Thu, 13 Mar 2025 17:20:53 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c82c23ffsm3632108f8f.22.2025.03.13.17.20.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 17:01:49 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	christian.couder@gmail.com,
-	peff@peff.net,
-	ben.knoble@gmail.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 6/6] rev-list: support NUL-delimited --missing option
-Date: Thu, 13 Mar 2025 18:57:47 -0500
-Message-ID: <20250313235747.9583-7-jltobler@gmail.com>
-X-Mailer: git-send-email 2.49.0.rc2
-In-Reply-To: <20250313235747.9583-1-jltobler@gmail.com>
-References: <20250313001706.3390502-1-jltobler@gmail.com>
- <20250313235747.9583-1-jltobler@gmail.com>
+        Thu, 13 Mar 2025 17:20:52 -0700 (PDT)
+Message-Id: <pull.1881.git.1741911652.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 14 Mar 2025 00:20:49 +0000
+Subject: [PATCH 0/3] Add a static analysis job to prevent assertions with side effects
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>
 
-The `--missing={print,print-info}` option for git-rev-list(1) prints
-missing objects found while performing the object walk in the form:
+We have several hundred assert() invocations in our code base. Some have
+suggested that we should add a recommendation in our CodingGuidelines to
+avoid their use, because there is a risk that someone might include
+something with a side-effect in their assertion, which can lead to a very
+difficult to debug problem. However, CodingGuidelines are going to be less
+effective at preventing that foot-gun than a CI job which can warn of
+assertions that possibly have side-effects. So, let's add a CI job instead.
 
-        $ git rev-list --missing=print-info <rev>
-        ?<oid> [SP <token>=<value>]... LF
+While it is difficult to perfectly determine whether any expression has side
+effects, a simple compiler/linker hack can prove that all but 9 of our
+several hundred assert() calls are indeed free from them. While I believe
+the remaining 9 are also free of side effects, it's easier to just convert
+those 9 to a new macro (which will not be compiled out when NDEBUG is
+defined), and instruct any future assertion writers to likewise switch to
+that alternative macro if they have a slightly more involved assert()
+invocation.
 
-Add support for printing missing objects in a NUL-delimited format when
-the `-z` option is enabled.
+See
+https://github.com/newren/git/actions/runs/13845548634/job/38743076293#step:4:1938
+for an example of it running in CI and reporting possibly problematic
+assertions (sample output also included in the commit message of the middle
+commit in this series if you don't have access to view the link; I'm not
+sure what the rules on that are).
 
-        $ git rev-list -z --missing=print-info <rev>
-        <oid> NUL missing=yes NUL [<token>=<value> NUL]...
+Elijah Newren (3):
+  git-compat-util: introduce BUG_IF_NOT() macro
+  ci: add build checking for side-effects in assert() calls
+  treewide: replace assert() with BUG_IF_NOT() in special cases
 
-In this mode, values containing special characters or spaces are printed
-as-is without being escaped or quoted. Instead of prefixing the missing
-OID with '?', a separate `missing=yes` token/value pair is appended.
+ Makefile                      |  4 ++++
+ ci/check-unsafe-assertions.sh | 18 ++++++++++++++++++
+ ci/run-static-analysis.sh     |  2 ++
+ diffcore-rename.c             |  2 +-
+ git-compat-util.h             |  7 +++++++
+ merge-ort.c                   |  4 ++--
+ merge-recursive.c             |  2 +-
+ object-file.c                 |  2 +-
+ parallel-checkout.c           |  2 +-
+ scalar.c                      |  4 ++--
+ sequencer.c                   |  2 +-
+ 11 files changed, 40 insertions(+), 9 deletions(-)
+ create mode 100755 ci/check-unsafe-assertions.sh
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- Documentation/rev-list-options.adoc |  5 +++--
- builtin/rev-list.c                  | 31 ++++++++++++++++++++---------
- t/t6022-rev-list-missing.sh         | 31 +++++++++++++++++++++++++++++
- 3 files changed, 56 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index 92ac31a8e8..f4764b72f5 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -382,10 +382,11 @@ and thus is used to signal the start of a new object record. Examples:
- <OID> NUL
- <OID> NUL path=<path> NUL
- <OID> NUL boundary=yes NUL
-+<OID> NUL missing=yes NUL [<token>=<value> NUL]...
- -----------------------------------------------------------------------
- +
--This mode is only compatible with the `--objects` and `--boundary` output
--options.
-+This mode is only compatible with the `--objects`, `--boundary`, and
-+`--missing` output options.
- endif::git-rev-list[]
- 
- History Simplification
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 7c6d4b25b0..036fcc26d5 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -136,24 +136,37 @@ static void print_missing_object(struct missing_objects_map_entry *entry,
- {
- 	struct strbuf sb = STRBUF_INIT;
- 
-+	if (line_term)
-+		printf("?%s", oid_to_hex(&entry->entry.oid));
-+	else
-+		printf("%s%cmissing=yes", oid_to_hex(&entry->entry.oid),
-+		       info_term);
-+
- 	if (!print_missing_info) {
--		printf("?%s\n", oid_to_hex(&entry->entry.oid));
-+		putchar(line_term);
- 		return;
- 	}
- 
- 	if (entry->path && *entry->path) {
--		struct strbuf path = STRBUF_INIT;
-+		strbuf_addf(&sb, "%cpath=", info_term);
-+
-+		if (line_term) {
-+			struct strbuf path = STRBUF_INIT;
- 
--		strbuf_addstr(&sb, " path=");
--		quote_path(entry->path, NULL, &path, QUOTE_PATH_QUOTE_SP);
--		strbuf_addbuf(&sb, &path);
-+			quote_path(entry->path, NULL, &path, QUOTE_PATH_QUOTE_SP);
-+			strbuf_addbuf(&sb, &path);
- 
--		strbuf_release(&path);
-+			strbuf_release(&path);
-+		} else {
-+			strbuf_addstr(&sb, entry->path);
-+		}
- 	}
- 	if (entry->type)
--		strbuf_addf(&sb, " type=%s", type_name(entry->type));
-+		strbuf_addf(&sb, "%ctype=%s", info_term, type_name(entry->type));
-+
-+	fwrite(sb.buf, sizeof(char), sb.len, stdout);
-+	putchar(line_term);
- 
--	printf("?%s%s\n", oid_to_hex(&entry->entry.oid), sb.buf);
- 	strbuf_release(&sb);
- }
- 
-@@ -784,7 +797,7 @@ int cmd_rev_list(int argc,
- 		if (revs.graph || revs.verbose_header || show_disk_usage ||
- 		    info.show_timestamp || info.header_prefix || bisect_list ||
- 		    use_bitmap_index || revs.edge_hint || revs.left_right ||
--		    revs.cherry_mark || arg_missing_action)
-+		    revs.cherry_mark)
- 			die(_("-z option used with unsupported option"));
- 	}
- 
-diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
-index 3e2790d4c8..08e92dd002 100755
---- a/t/t6022-rev-list-missing.sh
-+++ b/t/t6022-rev-list-missing.sh
-@@ -198,4 +198,35 @@ do
- 	'
- done
- 
-+test_expect_success "-z nul-delimited --missing" '
-+	test_when_finished rm -rf repo &&
-+
-+	git init repo &&
-+	(
-+		cd repo &&
-+		git commit --allow-empty -m first &&
-+
-+		path="foo bar" &&
-+		echo foobar >"$path" &&
-+		git add -A &&
-+		git commit -m second &&
-+
-+		oid=$(git rev-parse "HEAD:$path") &&
-+		type="$(git cat-file -t $oid)" &&
-+
-+		obj_path=".git/objects/$(test_oid_to_path $oid)" &&
-+
-+		git rev-list -z --objects --no-object-names \
-+			HEAD ^"$oid" >expect &&
-+		printf "%s\0missing=yes\0path=%s\0type=%s\0" "$oid" "$path" \
-+			"$type" >>expect &&
-+
-+		mv "$obj_path" "$obj_path.hidden" &&
-+		git rev-list -z --objects --no-object-names \
-+			--missing=print-info HEAD >actual &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
+base-commit: 4b68faf6b93311254efad80e554780e372deb42f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1881%2Fnewren%2Fassertion-side-effects-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1881/newren/assertion-side-effects-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1881
 -- 
-2.49.0.rc2
-
+gitgitgadget
