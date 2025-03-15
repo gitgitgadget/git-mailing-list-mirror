@@ -1,160 +1,91 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFC8EC0
-	for <git@vger.kernel.org>; Sat, 15 Mar 2025 00:02:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD5910F1
+	for <git@vger.kernel.org>; Sat, 15 Mar 2025 00:33:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741996989; cv=none; b=XCJ8KSKg8n5CA+GJfQ4jpc+3yPUTJSaSbJ9yLthCrMTDHxx8ayv45UQ6EkOATNw/mmz8JceodXyIwxe0AkZk3viZiZ2MUwHNc68+EXtX+kjwjY+jYuyn2p6O26IQto2Qb1yRO8gnEloVs2d33wv5E483O1lXokDDtdoOnGPojj0=
+	t=1741998795; cv=none; b=pzu6QhoZm43UwVPTe/UzSyjJkvotuZEXrP4nLhCOZ+WVfqy8rVphiOVIn2rlXgVdvFTwJDJxIXWLUVSgvcBU8YSlh27w6rVLScZW7X9YFX7Cu7xGgq+sMMR+58w1jl2fZdIWXmDao4JjtQ+pCSyeFIIAA1kxAwDuWA6hYa8NjOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741996989; c=relaxed/simple;
-	bh=HUxRg4doIoQC3wMIkFN2HDcAPwESQlC4IXiz4kdzXpQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=otdPJeRs737nDfMjsYBeVyP4Ztl0nK9f8tAdl2Zk1DDuJQp5EBkVJFKLWKFZxerGp8RMawtlR8r1g8iTX2e3TYDNu1Rsq0j/avGv75YbIMwc4dTfSJaYVZKTutq6cK7UEswdVtROUQUjvxZPFObMOOwfxEJs10DTcorGV+qB6Gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HYqFwPnc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cbs3IKz/; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1741998795; c=relaxed/simple;
+	bh=esDANfG1XSw5iTeXfaqRl/9gSCdSF9OtbBCzr+ZCUeM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QUDFLBRcNzXWqzj/iDlHYtf9qqR8dhAnGUBk4Jx42o/Dgm5W5X6HyYgjLP5loFwbrDdnqSpFj1nohipLG86d1UqGRPKbIbh87infFRlEX9Xf6BLaXO3+cm1/SB7HrIRKClJB7a/JKR67CPozGjlCn2kRO9r59RYad+SyfpQvpcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XUonsQEV; arc=none smtp.client-ip=209.85.166.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HYqFwPnc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cbs3IKz/"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 075D011400C4;
-	Fri, 14 Mar 2025 20:02:54 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Fri, 14 Mar 2025 20:02:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1741996974; x=1742083374; bh=KO0HQUd4p9
-	ZH/vMIFZYSh4nAUL4IKlsRjNR7oEkF8fQ=; b=HYqFwPncSnmyKbhvHDxeBGUVH+
-	c9d7kcjjqiey8CFNp98HMjrfnE/+p1AQ2QMzQ0laXk2b6m+Kih/Vd3XR3SyMap6D
-	j7Qoi4NwPMt2bo/P9nSj8twnRUD/3Q2/vkPlZmSUF1HRUAkBz1ai8kGmZuaHuXdX
-	cgKc0srsBq3CPOQB1HTFleyAj3DGAXzdxh9qAuUHo6hPZjt7Ha8YO1xdIyLzd0dJ
-	u5D0jfcwYhvY8EZhD6Tsg9sSWg4q64ZuBDV2P6PmNyiXdqYW2AVJT6sDtS/c5Wz3
-	+kvdChZVLQwfJinlRxjU9+eDfamwNHDRWMDyPqjILDyNhEj07tpKMAZ1klXg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1741996974; x=1742083374; bh=KO0HQUd4p9ZH/vMIFZYSh4nAUL4IKlsRjNR
-	7oEkF8fQ=; b=Cbs3IKz/qJ6+De/KSRUQgtnatNcFTLAPYoxzBda7SIF4heJMg1M
-	KhzWr/xIV7kAH+SlDHiKg5+9TeWmriI3NY6eUJRUGLbYXmKcy1kmBZl9wHuQVMCS
-	So2oE7b0ZTtl5QI7GEUcUgNwiQNdPTJkF7zs2yFIh9x4j76bnwcMMY0zCqpvOSq6
-	HEyi+Jx9d2rt4lde8vvBeoZThYO+PWJ7SYQbtObFaXQ7TBYTJX4MRBkaPazXNOMk
-	uF6/HUhrLtEbZP9NYvMXHk++FU7MSteU/OSdvgKFVUpIvOpXV2LYdZ2zy9eykwxt
-	KYu6E9BwVY58mx4oNfhm2YLFlgRVAhSK8qQ==
-X-ME-Sender: <xms:rMPUZ6ge1bsmVm8iS8zdbD-7BnDlvFW89P40cX5CLBtoYPczEVLmuw>
-    <xme:rMPUZ7AZH66NRqGgdnz5ExCkKc8n4-Jgi2JQjWswua1gJonDI-gTC_quYmo8xGmnF
-    5iFcd3Qw0OygIfDuQ>
-X-ME-Received: <xmr:rMPUZyFo8lnd693ZtRHSQ9L55zhIq7RkTMgOzF8biWHt1ICOo7JTrauCyUPIFUcOTwznX1e-GiHgVsh3riNQIPkM2T6CFGhuEkq-6Xc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufedvvddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeeg
-    fefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:rMPUZzRoE_dr4fk5q1old1trgCVYNHCu73TxRfEduCw4yJtOD8VfxQ>
-    <xmx:rMPUZ3zaFQcVBf9yT8VhzEWiR6sjWGKQggGrYGn7DIu9sPAFVQJbDg>
-    <xmx:rMPUZx4L0Bm02hNDe84PMm3_7MDTKc9ZPpk7g33oAdIdK2fFLBcUmg>
-    <xmx:rMPUZ0xB152JxR_nYz4TfLbL_DTdlbHVERZ-6EBNB7XCPfgokWbQbA>
-    <xmx:rcPUZ5stOwNWyElyoVU3GsHbDNdyrLLnEvNbKdyAdq_eB6ZWMLCU_GGo>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Mar 2025 20:02:52 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Mar 2025, #04; Fri, 14)
-In-Reply-To: <20250314184130.GA578421@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 14 Mar 2025 14:41:30 -0400")
-References: <xmqqv7sbfra0.fsf@gitster.g>
-	<20250314184130.GA578421@coredump.intra.peff.net>
-Date: Fri, 14 Mar 2025 17:02:50 -0700
-Message-ID: <xmqqy0x7cg9h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XUonsQEV"
+Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-851c4ee2a37so182721139f.3
+        for <git@vger.kernel.org>; Fri, 14 Mar 2025 17:33:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741998791; x=1742603591; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VZZlVwbLLdAlhLe0I+oN5VDWh5+qx0JOlL3Qcq3gnFY=;
+        b=XUonsQEVWvQRp4qw75+VHXyHWqdloAHPRUqGsT8gCtFVXaElyWlmEcSPL5w6+kV5Rj
+         3I03gIn51GGF9TSgbs17bC8L0Y1NeEYN09aeos/02+55D2It8yZtyE/TNPSM5ZHdrV8O
+         gMqo+BH/qVaq4RGgGyL5uxCkjIabnt5U2lqW7b1Tlsc5IcdAXSiZapxp+v7mrdvc2WVJ
+         6aMa0WXK2e4isEnUYhjeuXBkcSg192GH7gcv2/vpL2xce9tb8rTJ2pdh7C2oH/S10F/r
+         FES8rLcrJ5J2NQ9Bk0KLPpg7AdfdHc0EmfWrgblZKHJeFdgPbpquUnbBoVk/CvuqFaQL
+         AjzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741998791; x=1742603591;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VZZlVwbLLdAlhLe0I+oN5VDWh5+qx0JOlL3Qcq3gnFY=;
+        b=fyyRVqNe3Yz/InI1H2k+jll0m4LSunBkGQWj3ZWgYr+qPentZ9GiWdQiLFy1HLxh7j
+         CCi5iE5yxjJJ4K+Sbzwp4v3cP6txkA4uELRCHrpZCk3qYv+rvcrsL7f+Ko/7otlb8cSY
+         Ls/dliybQEImQO0srjF/tSpQvV71JDOuXO63TvqJijZ9JxdToGlu9vDJNjczJ7oLAgx+
+         vLtwWB5c1TlIC9FMpH8gDmKb9kRN4FjgW7kcqa4PzkbgP65KSARufrNG/zgPsZwdkbL9
+         sZUsotjZC1vM0zq53Q8jhH/BLAe/J1+R6z+jYATeIqpPuukd2L7fvDdAi1WnpcYO4XG6
+         7G0g==
+X-Gm-Message-State: AOJu0YxPybNDwop1YbudlINjJ+lqeRhMPqTcr8ctlRCkUJMdLiX5V0kl
+	rb/ipc+yU2PzYWFSZzH26/RTr0ZsE5HNNByuJzB9ygP3J5TulzMc5RoikVzgXPUXLmwS3jOOR6p
+	VCi4RXzZxx+MNVAKhC++2O2F0B6/ccw==
+X-Gm-Gg: ASbGncv9uCee8ZbIbMOiYmXg+BTrHJRsdcoV+07n7crioKfINAPsY6S/mtk/UtJg/Xa
+	0t5Am7vmrAg8ivZwdwnO5zn50vOu4UpqMVJEe6uWBNMFmBHIRj4cYqJgFfGaZeSkkLt4VNzErhC
+	iSb9pRucRe+IWaZfGe/oCurfeyWbjbeNdlguC58g7hkhwnnYKBL9c/uRNanvo=
+X-Google-Smtp-Source: AGHT+IGQOYVY2eJBoiwuzxWFJT1m8zIKaNsH0zFZ46w/+86ZINdjZ77gHSEIy+Z8OkY0obvtocexTQymLUuJn1R+IjE=
+X-Received: by 2002:a05:6602:4a03:b0:85d:a077:e1c3 with SMTP id
+ ca18e2360f4ac-85dc4789694mr570634739f.3.1741998791178; Fri, 14 Mar 2025
+ 17:33:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqqv7sbfra0.fsf@gitster.g>
+In-Reply-To: <xmqqv7sbfra0.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 14 Mar 2025 17:32:59 -0700
+X-Gm-Features: AQ5f1JpSfyCdkzxSLsVqN5aC8m845W8__YzWW1AJ-C2SJKd-WurkRn0dkJCDR3E
+Message-ID: <CABPp-BFZkiJgdMqTJCxAMkbA7c_S8Qx3aSRqiLAfqrY1Y3es2w@mail.gmail.com>
+Subject: en/diff-rename-follow-fix (Was: Re: What's cooking in git.git (Mar
+ 2025, #04; Fri, 14))
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
-
-> On Fri, Mar 14, 2025 at 10:36:39AM -0700, Junio C Hamano wrote:
+On Fri, Mar 14, 2025 at 10:42=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
->> * ps/ci-meson-check-build-docs (2025-03-12) 1 commit
->>  - ci: perform build and smoke tests for Meson docs
->> 
->>  CI update.
->> 
->>  Will merge to 'next'.
->>  source: <20250312-b4-pks-ci-meson-docs-v1-1-5e7cf7ac959a@pks.im>
+[...]
+> * en/diff-rename-follow-fix (2025-03-13) 1 commit
+>  - diffcore-rename: fix BUG when break detection and --follow used togeth=
+er
 >
-> I didn't dig into it, but I'd imagine this topic is the source of CI
-> failures on the "documentation" job like this:
+>  A corner-case bug in "git log --follow -B" has been fixed.
 >
->   2025-03-14T17:50:13.8749066Z + meson setup build-asciidoc -Ddocs=html,man -Ddocs_backend=asciidoc
->   2025-03-14T17:50:13.8752287Z ci/test-documentation.sh: line 50: meson: command not found
->   2025-03-14T17:50:13.8769502Z ##[error]Process completed with exit code 127.
->
-> that I'm seeing in jch (and looks like you have a similar one in the
-> latest build of 'seen')
->
-> -Peff
+>  Will merge to 'next'.
+>  source: <pull.1876.git.1741395615315.gitgitgadget@gmail.com>
 
-Somebody more clueful than me about how the CI dependency set-up is
-supposed to happen should rewrite the proposed log message
-altogether.  The install-dependencies script pretends as if two
-case..esac blocks are orthogonal (the former switches on $distro,
-the latter that we see in the patch switches on $jobname), but I
-somehow do not get the feeling that we can move Documentation job
-from ubuntu-latest to alpine-latest for example.
-
-In any case, the change seems to "fix" the issue for me
-
-(bad)
-https://github.com/git/git/actions/runs/13867157977/job/38808418127
-
-(good)
-https://github.com/git/git/actions/runs/13867208725/job/38808554478
-
-
-Thanks.
-
---- >8 ---
-Subject: [PATCH] install meson for Documentation job
-
-Why should we even do this?  Doesn't it run on ubuntu-latest which
-has its own apt--get install for meson in the $distro specific
-set-up before this part?
-
-
----
- ci/install-dependencies.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 0df74610d0..fdeeaabaca 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -123,7 +123,7 @@ sparse)
- 	;;
- Documentation)
- 	sudo apt-get -q update
--	sudo apt-get -q -y install asciidoc xmlto docbook-xsl-ns make
-+	sudo apt-get -q -y install asciidoc xmlto docbook-xsl-ns make meson
- 
- 	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
- 	sudo gem install --version 1.5.8 asciidoctor
--- 
-2.49.0-205-gbb947d5b2d
-
+Thanks, but due to Peff's further questioning I dug a lot harder and
+found another testcase that perhaps helps explain the issue a bit
+more.  I added it and added a little bit more info to the commit
+message to try to help answer his questions.  Could you wait to merge
+until I send out v2?
