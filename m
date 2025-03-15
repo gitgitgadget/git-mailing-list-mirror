@@ -1,94 +1,96 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from avasout-peh-003.plus.net (avasout-peh-003.plus.net [212.159.14.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A22166F29
-	for <git@vger.kernel.org>; Sat, 15 Mar 2025 01:22:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110892EB1D
+	for <git@vger.kernel.org>; Sat, 15 Mar 2025 02:47:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742001769; cv=none; b=oLiM24d2XZr1rruaI8HCuwC4fbw1fLyl6VXnmVhX+wuKH2YUNStsmZj6algCNXlDwfP43/2bH5CKuwHZxIGVv5dNXjokqhub+pjqhyiI/j7ayK7brzQUutGHNWgsKtQHbtzzyehDl0zKySw/G7W0pdLT4MDO8l3SQoLJ71iw6sc=
+	t=1742006872; cv=none; b=cgP4tcO6k/bUzinOoSiqtkJm2+DX6UC4f6bBOT7MtIwoLKdRBRGgqF98Xb3hb/vE7RYtMwxgh/EdK0cGBcgrxQs8gzLbjKhD9JDVPAxpqeJH3v+uycBeDrzdt1nc5gseZV2StK5KxsL7ilYh5el6TZQpWh69m/+MZ1zgS4yx8po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742001769; c=relaxed/simple;
-	bh=MLpQPvx/2SAdzBjSqEl2UaZWxUefeea14u24hlNgakY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MRQ0adcRjve0IzlSV9lY12nSLri8vYwSsEAazsX9JxsNDc7V0R1CssejiccGwEGtCveHbrSPvplwLdhzHSyJ+97uwPM/BpgDnclqqMRQIpuiWEokmvArqvJyYqDH4zXbQuIVMllXRsphNMLo4Pqhqf8XWCMYE0kEACuQP1yodOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=B5nyHF8N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b7+2ZGSE; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742006872; c=relaxed/simple;
+	bh=n5pszrZJLmuFE6ReA219ojxPxVsq4Bi6hYP8rvl07ws=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=O3LG+geE+SANnWTv07NpZaTFkwyC4Doda6XOnsLj7D6UvmFztJzrHhgqLjfdhz7IwmylJlwYIrNmrzp+M7+8l1dagf9S9OGVM8z4wyJCQdU6nMwa7qaWsj8bZJhiVzp3Xbvpv0xRtM4JakJ01OU+Xee+DnFXt+S0OTZc2HjUSD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=nEwrJkVx; arc=none smtp.client-ip=212.159.14.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="B5nyHF8N";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b7+2ZGSE"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 095281382D07;
-	Fri, 14 Mar 2025 21:22:40 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 14 Mar 2025 21:22:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742001760; x=1742088160; bh=LqV6tV3o5p
-	gLlfzntTOHJrikKovb60/SMfKdqX/cU2s=; b=B5nyHF8Nzt+JCS6wzT+t+s9xZA
-	lIPR1zYMvoPNJFc/G1NAaGlIKAESjObTrbnXqkLJ2kFiOA1L4GJMgR/cbLe3gn57
-	8fzJUIu3/M96zVaTEewSX5TmqcAT+x2P3DqT/XsHsL6Isr7SQINabFIUDToSt7Qf
-	Z3Hzxyt+jBW0HDdRDRLfXmPrADZN4aF+g79yBSTObayeFmeja5989Cpj39OXkSOX
-	9WI4ghmXJOD1ir6It7L8ytnxnnzo/vu8QLp1FoB6Ma4k76vzwYO3J+1espO5sidz
-	BYrH71d/u7gkRsQHv0yerwAmvaOWFftzT2SOgNDUYxuqOcg4Q6aRrDusEvEw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742001760; x=1742088160; bh=LqV6tV3o5pgLlfzntTOHJrikKovb60/SMfK
-	dqX/cU2s=; b=b7+2ZGSE7XtAvQ0Tw5iKfLv1SiIRRlFNuG6uTjsaJKgZBbWZOxJ
-	nb5Gl1uGWrojsTwsETKKBZq0i4T6jCWhriGK6KH1pEf9i+P44K3LIYx8mBRdTyxZ
-	XG4aPYgaoRWDz7FVpCiRW/nji+PflUHleJwRXerb7zvs29H8b/urOoC+kfKgy4HP
-	39++X7XmK0KFNczeXlIfGHK0QFz1P8HyGr1AJvXr7Fe8BTOZpktwhVAXPEThmacU
-	lf9xrO6wykM82I5KhYfQZIit4GPbnPZ3nmBp2bCNZF1xeEzKedUvYJIqNRzDi4hu
-	nVeHKh5d7swuk8P7JdtJNFA7sy58UGZrOFQ==
-X-ME-Sender: <xms:XtbUZ8AlU61ivrg59byCZ-PqML3ubZHdF8nM7DeEcSpvKRTuNK1-iw>
-    <xme:XtbUZ-iuRxVoZrO9RhqaN2f2L8ZzTFiwaYKdLxLbkwNPclBGJB9ati2Ux6M_pegzH
-    umKeV8PsxEU4Ierbg>
-X-ME-Received: <xmr:XtbUZ_lA6tttqnjLH2dwWJc557n4nuEMGhPvomf5LZ5suK9KdRXn13hA5T_4_wkapWfWUmipFkSs-7wGBmKk4VgNOEoVZ1mC160V20E>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufedvfeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:XtbUZyzMjDGdqm6x1hpHKISX5zj1PDuzEOlBAz3QIHn0_fhDgprvKw>
-    <xmx:XtbUZxQ7NjVI4GgBukfTLJrzQ9Ap9hBLFB89KWZnGy8TUZTHmhPDxQ>
-    <xmx:XtbUZ9a7gbBoiafZSDXYd-eJ1Zm6gHyzUAps86pDH9ABcei4dv2m2Q>
-    <xmx:XtbUZ6TP5OUoqyoY77WDXD8lkdUGS8kKbPz27dGcTqezY7WLKKrxJQ>
-    <xmx:YNbUZzeG-Ukld_ElOfZ0h4YHhXBA40PBbesrJTFsCltI71GYI3N32a9e>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Mar 2025 21:22:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Subject: Re: en/diff-rename-follow-fix
-In-Reply-To: <CABPp-BFZkiJgdMqTJCxAMkbA7c_S8Qx3aSRqiLAfqrY1Y3es2w@mail.gmail.com>
-	(Elijah Newren's message of "Fri, 14 Mar 2025 17:32:59 -0700")
-References: <xmqqv7sbfra0.fsf@gitster.g>
-	<CABPp-BFZkiJgdMqTJCxAMkbA7c_S8Qx3aSRqiLAfqrY1Y3es2w@mail.gmail.com>
-Date: Fri, 14 Mar 2025 18:22:35 -0700
-Message-ID: <xmqqtt7vcckk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="nEwrJkVx"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id tHYvtGMuevxWAtHYwteQC0; Sat, 15 Mar 2025 02:47:46 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1742006866; bh=7Ip2jX5ojmIyIRj1sjKJXheJqs0bI/Ab4S1YGMLyXw0=;
+	h=Date:To:Cc:From:Subject;
+	b=nEwrJkVxNzjoxUl5d+ACwHbJnRjkNiamnyWxPnB/SXlJsnwkIO3+1WQQ6EH5FuyDy
+	 LqLBPpVvEjfw1Ex/kXaKGfK5Ke7akKX9sZURZcHUvdO+zzwMvOvW/QAnzFztfeB4cN
+	 LGd2J2bagJzzI+mprzFCipF5RI60H2jhIrV4K02zEKFqZaUUSZy2kaS7UKIPhaGR4m
+	 I9bNZ4082g4jg8X2MRcHOhg3yRLVUZwDPUi4MpGIlQ5/kXsvKMUImpOTNm7b0yG2l9
+	 JLVyuixeKA/v/c3QKJAR2N9716GJC0wIpAc8yTHWuJl/7gRUrH6DuIXPsh6gsKxvpa
+	 sAcRJesyJd6Bg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=QbDFvdbv c=1 sm=1 tr=0 ts=67d4ea52
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=-MV70WsdUszZJaylRL4A:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <a4272c4a-7073-4671-a883-50e9413b0384@ramsayjones.plus.com>
+Date: Sat, 15 Mar 2025 02:47:44 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
+ Adam Dinwoodie <git@dinwoodie.org>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH 06/12] config.mak.uname: only set NO_REGEX on cygwin for v1.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfBxUBVwGjxqdGaAJjrAJfpyhlFmpfIWdZyQHvlgzo/nGqeNjMZ4EvUtO/ZBNJqG4y3bnZ5O5s+zdSQvQeEWgRbw7l8/as8/Ki94lCDfDrI2sfWVZfjTE
+ kFLujacQ3P9ppwacy2K8Bywocdn6QQdUyFRLgV5q/Lmd/5xLMjs3lZA8V3Z9lVVBFME7fQWZpLV3VlMmvh+H1Kw6lFKXeMXKBNk=
 
-Elijah Newren <newren@gmail.com> writes:
 
-> message to try to help answer his questions.  Could you wait to merge
-> until I send out v2?
+Commit 92f63d2b05 ("Cygwin 1.7 needs compat/regex", 2013-07-19) set
+the NO_REGEX build variable because the platform regex library failed
+some of the tests (t4018 and t4034), which passed just fine with the
+compat library.
 
-Thanks for stopping me.  No problem.
+After some time (may a year or two), the platform library had been
+updated (with an import from FreeBSD, I believe) and now passed the full
+test-suite. This would be about the time of the v1.7 -> v2.0 transition
+in 2015. I had a patch ready to send, but just didn't get around to
+submitting it to the list. At some point in the interim, the official
+cygwin git package used the autoconf build system, which sets the
+NO_REGEX variable to use the platform regex library functions. The new
+meson build system does likewise.
+
+In order to produce the same NO_REGEX configuration from autoconf, meson
+and make, modify config.mak.uname to only set NO_REGEX for cygwin v1.7.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+ config.mak.uname | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/config.mak.uname b/config.mak.uname
+index ae6ba15586..b6adce0bc4 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -245,7 +245,9 @@ ifeq ($(uname_O),Cygwin)
+ 		# Try commenting this out if you suspect MMAP is more efficient
+ 		NO_MMAP = YesPlease
+         else
+-		NO_REGEX = UnfortunatelyYes
++                ifeq ($(shell expr "$(uname_R)" : '1\.7\.'),4)
++		        NO_REGEX = UnfortunatelyYes
++                endif
+         endif
+ 	HAVE_DEV_TTY = YesPlease
+ 	HAVE_ALLOCA_H = YesPlease
+-- 
+2.49.0
