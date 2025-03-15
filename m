@@ -1,69 +1,69 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37422205ACF
-	for <git@vger.kernel.org>; Sat, 15 Mar 2025 18:15:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CF1205AA6
+	for <git@vger.kernel.org>; Sat, 15 Mar 2025 18:15:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742062517; cv=none; b=Y5P9bOLy9XA3MfX4WSIzpRD7B4+GZ2+whr0EPZ+C42w2OLHuzzYPTNcN/RsddGPVsDAqgeB6cP9adphXNI6tFYLUvU8UllWE6qoI8ixICDLMywXdhw0yNtdBRkXuIwPp+z19oyKD3iuplBjmfKOOLGkkOxRqWczA669OuhFuKUE=
+	t=1742062518; cv=none; b=ehL13C1S2tat+RNy4TLr/8ObcvVBamr/fZg6Emrk2QFiq8Y0l/fU/ImTn/QCsdt/5SCg8M3QbLolz6UgC8MxU1IVpBjHfAkd3lVW5f/3CoRSJFHJ0eW/DJWF6qxXo6LIoRu9PNaLuosOOeLP2kTaKKsVDp0rTztMowlB/wZ7n2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742062517; c=relaxed/simple;
-	bh=A6ao4jgqLgWJiihjDe4WTxogNHeN0SizcfUywNqf6as=;
+	s=arc-20240116; t=1742062518; c=relaxed/simple;
+	bh=+Juhdx+PRJREza7SIeLc14mxZQtjySGEHk4DlnKf0Xs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dk3n7Bu6NXG4vQDzQVvSRnZMfyupmo3T17pHLtsFnF9mtwtMKo8t8DHMFj2Jz61Gv+AX9NUn6HzkI06X8h+gQp36OKoHf8aIyIfkiUcTC+n1ON7Xl1GLujX63mGiFjg3+oxulPx43g4VGdwY0xtSpONQ9ShmfG7OiC/QDi3JVoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HUbPPypv; arc=none smtp.client-ip=209.85.214.169
+	 MIME-Version; b=DCnKEDSI3i67yyXteEQXP2Ln/M6++G5isc+hEDjk2V3DRX16XByuKnBR30PHNmjhoMJ/abuPpgTbMjtMcF6QOQdYm5QrBjaFJ8nIpvyKIIvIvV3TCGdP0zhVp6izqquKq4mtk2Wo4LVPTcKiRuLVHvXw/hoOjUO6YMjD5EMnaGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bO65Gu0f; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HUbPPypv"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-22113560c57so1495725ad.2
-        for <git@vger.kernel.org>; Sat, 15 Mar 2025 11:15:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bO65Gu0f"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2254e0b4b79so76956885ad.2
+        for <git@vger.kernel.org>; Sat, 15 Mar 2025 11:15:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742062513; x=1742667313; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742062516; x=1742667316; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FDstDvHAoMhU651BbLyiZkyQBhhcmDL/esNn3kE0xPU=;
-        b=HUbPPypvt/gEKH/9uhVL3lVDdp6JNfmESmjkGdabsDQrUlyMBCr2qbMoEjDKQs+cbK
-         WRMcl+nuKtt1ZWrUjwXkIPfv8LxmG/D094YaLjJpcMijHcWWgLHqaTMCX9OxE8wiJNUd
-         rW6TZHlmLiOuhICDP0czxXFDZxF6iQOIJRAxX+sg8SksgzPTWbVHMncXFTphE11/q6YV
-         o5Fa98U6MM86wYNvE3Ac7Q5FzxeGZOVuvoYxKmyA0NecLmFoqcxy8l1me4bALg9DKTPd
-         xmL2Zr35fwLHySUEnz8u8uIpaaMFCzhBH9eHqiXZnMlOEx9wyxHz3kAtum/u5pdghCfL
-         unUw==
+        bh=WvW8h6o7oKyNh8LceolnALHpZvTciFqkIlIzHMER3FM=;
+        b=bO65Gu0foLCM93zG1rljThc6u7ucxjx5Pi/dxwV6BrKXJ0Z0ss77n7jS2bkOTE47av
+         ucTFz3TRWr9skuf5wHDbVT54MW5/vrR9vBGaZk5WsGlpJBASSPiPTmwMYGLoJ8BgfG2B
+         EQzh8F5hiWHQLnvL99SOFbzenrDLi60CATQhnHfv1zhrwRqpPB+uiv07Z3fXfdyQUU/3
+         u1W9jOy2G1gT0dBTq4yI8ZRyDG+aFoIqJC8C0i7np+jSuk0ipjqkdfZ33RpcV8ByUss/
+         S+TUm/vUSln/f0JagPgEX/yF/S1LqcpHiRVQlUjpHA2a/0OBhCQL4aaNJ6jf6dNtAIUP
+         A/iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742062513; x=1742667313;
+        d=1e100.net; s=20230601; t=1742062516; x=1742667316;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FDstDvHAoMhU651BbLyiZkyQBhhcmDL/esNn3kE0xPU=;
-        b=h+JO2tCvHMFy8WdmDdLsLgN3R1Z7ZUBX+akrKY9koKSDshvQGQNQ1E+Qu2TDvEMyVX
-         Jhp1MrFspAIaKZxQbNz3aWap8Um+rPXa/8OUewDTbPtDh60CNdEkQ0wSeOwR7qYJBJCS
-         CmylCi2sjwbc3hGHJa4E2JW4zvrc8jMgI7JSsY3Aho2f8QV8+mu80EnFbBaFkztUvZdV
-         SIt/Pz0rB12i+jUERUIkQ4AS9IMVV9tqghCo4AhcjSa7LEKoR70nnlq2AdEm2yRxSjGI
-         kwLshO6pr1nUW7IoVGfU555WWxRt4NyN3WvOtZOSy1PwWXm29lc94Vn+1e0OJ6643MM/
-         kKGw==
-X-Gm-Message-State: AOJu0YyUoWQFbD9TwE+9d2wYnd9+hYUMjRpHySzKvt998Vho4ZStb6ei
-	bZrSOVrXqgnI7/Ml7E9erp172hr49vh4/oUSrHgJgOIP4EDT1v2b/Kpszobz
-X-Gm-Gg: ASbGncvWxD+UV4OmI/R/Hu/rG+sUXfwWiNSUSY1QyONyhzZy37S2oyDwzFisK0BmzjR
-	17kXtF01D6S3qhSFFAY0fhJ663XD8+jsnOjF8PNZEMptnR6bpyEpli/m660KU8g8QC1MRG/3D01
-	7yszwHjTCdUmOs2bv/pwxdQqviIswWX1gbjgBtVv3v8hC8ImUPyptXrnyuJtbhQK8yGKnNL6ddZ
-	Y3Tl+VbR3uhDe24XCDZFqKJMLfJbanvBIVI2BQPND8EwTf2uFWndS0Dcvne6+5xJolQvnSW4OCB
-	iNeVAspGGorAyKfwr9HX6DgC2I+M1UisEnCRFJNrE2oZ+aw525tQd3S+S5vXfi2emwmoNdjeegY
-	er04=
-X-Google-Smtp-Source: AGHT+IGAKnyZDiI6ONtllgbVhGY6gYYbmEUsV+ALx3YbTt7NjZew4ofjjH7mS+kK7vDk5K4tCbbSVQ==
-X-Received: by 2002:a17:902:f54f:b0:220:c164:6ee1 with SMTP id d9443c01a7336-225e0ae6dcdmr71671945ad.32.1742062513232;
-        Sat, 15 Mar 2025 11:15:13 -0700 (PDT)
+        bh=WvW8h6o7oKyNh8LceolnALHpZvTciFqkIlIzHMER3FM=;
+        b=tQx+1gfElxbkmWr0IIav2Ckt5K7A7RZC5TyBOzNTRhuJrxCGwRnKBT6I4ihPL2i38g
+         2L7MKBHlPv31zfJejbe4HYc7jaFnUC60mQ5j4w/Atlz2WFnIeejxZJQPcVIvkukdxC9n
+         GKGUPrWZauK/OAgesloTJTOyvF41KhYj+UdCrucV7ovNW6o2HLoJMjzDnq1plcurLoo1
+         h8BAChuwgTwmYMvtvpRXuL4o9SL9/wOoX3Yxprkt4Pb5WRlCqtRC0JqP9UL7RX0E4Ui3
+         eUH5Dt9LK3UItQVDj5/G5IrS1huI3Phay+5g8VDyzXkU09EdM1gKc/EW+uSVNIcCyvPY
+         eijQ==
+X-Gm-Message-State: AOJu0YwyU4+O4yjzXv2oeZgFk4wCR06zkfdj8XJhF/Ze2wp2xrXNj0e2
+	vV1CvXjvO0qBjsSqLN/T5Ud+joC2344AP/WVZi7SHuCh/yCvh2ii+4ZbO6Px
+X-Gm-Gg: ASbGncsPNnmGjnUF7/FnAulPyip1oZR46R8bGGN4wwen78DM7R7FxWFixN2fNbPlvy1
+	3zh9UW1Myh3A4KszYzbLuvt2f0qXVY10NU4D7+wmrZI2w/ZZjb2oyIEnf7mPwVfiFFcLf62IN6v
+	KtsYftyR8O2odyiiFAN2MWJvji//rP1ub51dHE1Vdm0SYjpIlnuNk84KVCj5FiLYEh+1ChgZHUJ
+	vqIX9yC6mjmyK53Urr2lfC+sPqXawUGWI+MqU9R7Wz+OnRJdySQE5TX1CZ7XChoHtbyyvkbIaeF
+	nlEqzoBuhYPrxKvtvzbPvM09UI1m9GZkIzZXlHTMEnJxSdQwCqQkAOoqywCaGI86Hq2K9VFdWyr
+	SpLVwGrDV39kZRA==
+X-Google-Smtp-Source: AGHT+IHJqE6r/lJLc78hNyQMmaDaLH7KxHR/xbLTwutVIk2s1Byerh1eloINvXnXCXj2ukyeFxbg/g==
+X-Received: by 2002:a17:902:f689:b0:223:4b88:780f with SMTP id d9443c01a7336-225e0a3ae99mr71927535ad.17.1742062516174;
+        Sat, 15 Mar 2025 11:15:16 -0700 (PDT)
 Received: from localhost.localdomain ([2405:201:c005:b018:5841:514c:af52:5598])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6bd4e0dsm47269775ad.221.2025.03.15.11.15.11
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6bd4e0dsm47269775ad.221.2025.03.15.11.15.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Mar 2025 11:15:12 -0700 (PDT)
+        Sat, 15 Mar 2025 11:15:15 -0700 (PDT)
 From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 To: git@vger.kernel.org
 Cc: ben.knoble@gmail.com,
 	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Subject: [GSOC][PATCH 2/3] Update function signature and UNUSED to include struct repository and modify builtin.h accordingly
-Date: Sat, 15 Mar 2025 23:45:03 +0530
-Message-ID: <20250315181504.65069-2-jayatheerthkulkarni2005@gmail.com>
+Subject: [GSOC][PATCH 3/3] Replace git_config(...) with repo_config(...) for modern Git compatibility
+Date: Sat, 15 Mar 2025 23:45:04 +0530
+Message-ID: <20250315181504.65069-3-jayatheerthkulkarni2005@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250315181504.65069-1-jayatheerthkulkarni2005@gmail.com>
 References: <20250315181504.65069-1-jayatheerthkulkarni2005@gmail.com>
@@ -77,76 +77,100 @@ Content-Transfer-Encoding: 8bit
 
 Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 ---
- Documentation/MyFirstContribution.adoc | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ Documentation/MyFirstContribution.adoc | 57 ++++++++++++++++++--------
+ 1 file changed, 39 insertions(+), 18 deletions(-)
 
 diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index f7e510e6c1..34a0336898 100644
+index 34a0336898..8f52ebea0c 100644
 --- a/Documentation/MyFirstContribution.adoc
 +++ b/Documentation/MyFirstContribution.adoc
-@@ -142,9 +142,13 @@ followed by the name of the subcommand, in a source file named after the
- subcommand and contained within `builtin/`. So it makes sense to implement your
- command in `builtin/psuh.c`. Create that file, and within it, write the entry
- point for your command in a function matching the style and signature:
--
+@@ -316,26 +316,47 @@ on the command line, including the name of our command. (If `prefix` is empty
+ for you, try `cd Documentation/ && ../bin-wrappers/git psuh`). That's not so
+ helpful. So what other context can we get?
+ 
+-Add a line to `#include "config.h"`. Then, add the following bits to the
++Add `#include "config.h"` and `#include "repository.h"`. Then, add the following bits to the
+ function body:
+ 
  ----
--int cmd_psuh(int argc, const char **argv, const char *prefix)
+-	const char *cfg_name;
++#include "builtin.h"
++#include "gettext.h"
++#include "config.h"
++#include "repository.h"  // Required for repo_config_get_string_tmp()
+ 
+-...
 +int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo)
-+----
-+Before proceeding further, we should use the UNUSED macro to suppress warnings about unused parameters in the function.
-+This prevents the compiler from generating warnings when certain parameters are not used within the function body:
-+----
-+int cmd_psuh(int argc UNUSED, const char **argv UNUSED, const char *prefix UNUSED, struct repository *repo UNUSED)
- ----
- 
- We'll also need to add the declaration of psuh; open up `builtin.h`, find the
-@@ -152,7 +156,7 @@ declaration for `cmd_pull`, and add a new line for `psuh` immediately before it,
- in order to keep the declarations alphabetically sorted:
- 
- ----
--int cmd_psuh(int argc, const char **argv, const char *prefix);
-+int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo);
- ----
- 
- Be sure to `#include "builtin.h"` in your `psuh.c`. You'll also need to
-@@ -168,7 +172,7 @@ Throughout the tutorial, we will mark strings for translation as necessary; you
- should also do so when writing your user-facing commands in the future.
- 
- ----
--int cmd_psuh(int argc, const char **argv, const char *prefix)
-+int cmd_psuh(int argc UNUSED, const char **argv UNUSED, const char *prefix UNUSED, struct repository *repo UNUSED)
- {
- 	printf(_("Pony saying hello goes here.\n"));
- 	return 0;
-@@ -199,6 +203,9 @@ with the command name, a function pointer to the command implementation, and a
- setup option flag. For now, let's keep mimicking `push`. Find the line where
- `cmd_push` is registered, copy it, and modify it for `cmd_psuh`, placing the new
- line in alphabetical order (immediately before `cmd_pull`).
-+----
-+{ "psuh", cmd_psuh, RUN_SETUP}
-+----
- 
- The options are documented in `builtin.h` under "Adding a new built-in." Since
- we hope to print some data about the user's current workspace context later,
-@@ -285,6 +292,8 @@ Modify your `cmd_psuh` implementation to dump the args you're passed, keeping
- existing `printf()` calls in place:
- 
- ----
-+int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo UNUSED)
 +{
- 	int i;
++    const char *cfg_name;
++
++    printf(Q_("Your args (there is %d):\n",
++              "Your args (there are %d):\n",
++              argc),
++           argc);
++
++    for (int i = 0; i < argc; i++) {
++        printf("%d: %s\n", i, argv[i]);
++    }
  
- 	...
-@@ -298,7 +307,8 @@ existing `printf()` calls in place:
- 
- 	printf(_("Your current working directory:\n<top-level>%s%s\n"),
- 	       prefix ? "/" : "", prefix ? prefix : "");
--
-+	...
+-	git_config(git_default_config, NULL);
+-	if (git_config_get_string_tmp("user.name", &cfg_name) > 0)
+-		printf(_("No name is found in config\n"));
+-	else
+-		printf(_("Your name: %s\n"), cfg_name);
++    printf(_("Your current working directory:\n<top-level>%s%s\n"),
++           prefix ? "/" : "", prefix ? prefix : "");
++
++    repo_config(repo, git_default_config, NULL);
++
++    if (repo_config_get_string_tmp(repo, "user.name", &cfg_name))
++        printf(_("No name is found in config\n"));
++    else
++        printf(_("Your name: %s\n"), cfg_name);
++
++    return 0;
 +}
  ----
  
- Build and try it. As you may expect, there's pretty much just whatever we give
+-`git_config()` will grab the configuration from config files known to Git and
+-apply standard precedence rules. `git_config_get_string_tmp()` will look up
++`repo_config()` will grab the configuration from config files known to Git and
++apply standard precedence rules. `repo_config_get_string_tmp()` will look up
+ a specific key ("user.name") and give you the value. There are a number of
+ single-key lookup functions like this one; you can see them all (and more info
+-about how to use `git_config()`) in `Documentation/technical/api-config.adoc`.
++about how to use `repo_config()` ) in `Documentation/git-config.adoc`.
+ 
+ You should see that the name printed matches the one you see when you run:
+ 
+@@ -383,8 +404,8 @@ prepare it, and print its contents:
+ 
+ ...
+ 
+-	wt_status_prepare(the_repository, &status);
+-	git_config(git_default_config, &status);
++	wt_status_prepare(repo, &status);
++	repo_config(repo, git_default_config, &status);
+ 
+ ...
+ 
+@@ -1093,11 +1114,11 @@ The one generated for `psuh` from the sample implementation looks like this:
+ 
+ ----
+  Documentation/git-psuh.adoc | 40 +++++++++++++++++++++
+- Makefile                    |  1 +
+- builtin.h                   |  1 +
+- builtin/psuh.c              | 73 ++++++++++++++++++++++++++++++++++++++
+- git.c                       |  1 +
+- t/t9999-psuh-tutorial.sh    | 12 +++++++
++ Makefile                   |  1 +
++ builtin.h                  |  1 +
++ builtin/psuh.c             | 73 ++++++++++++++++++++++++++++++++++++++
++ git.c                      |  1 +
++ t/t9999-psuh-tutorial.sh   | 12 +++++++
+  6 files changed, 128 insertions(+)
+  create mode 100644 Documentation/git-psuh.adoc
+  create mode 100644 builtin/psuh.c
 -- 
 2.48.1
 
