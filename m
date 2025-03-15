@@ -1,41 +1,41 @@
 Received: from avasout-peh-003.plus.net (avasout-peh-003.plus.net [212.159.14.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA35F9E8
-	for <git@vger.kernel.org>; Sat, 15 Mar 2025 02:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB552EB1D
+	for <git@vger.kernel.org>; Sat, 15 Mar 2025 02:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742007018; cv=none; b=INDLk2ktvGLPHFzsHhqXYY6cMFJja3O8wrVVrhRRHQlBpHsr+l3BF3irtp8oV6zEPr4rzvk7NgRqZzhqFyOcElUY7kNtwt7UIzbtB3EjHHd7nSr1+s047DVn3XEmqB/aE8xDfT0aMVFXxcMLbUZjBHTJDA2UZSE3Ve5eb+3Xl58=
+	t=1742007032; cv=none; b=HE6U6G/cjn/gmZN/uI2Z2JjljST1d/svLu9aaSpre1OOnSV9XWBO5Noj2D3hs59Af0v4/Lh6PUk/MAxVmofCI4uRvDRH1WtdL48qaSKRiAf/5UirW4W5RRm2QDvBGkfU1BjWloN/wytiOuihNKKj7UuAQkEFLSgp19Tp8vieoXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742007018; c=relaxed/simple;
-	bh=rwk4RMpBukACJ4FMA8mh3F9GyzerP/fqoWEIWHpI8/w=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=izmzkR3dZF17MD+VOVIhI76ZI6rHlnDrCxd2KBAWw7wS5OjpH7mxr5ZS/vuUJx3mB1VHGszkdnYXPnAcG/bmx351yEFgFrpu2Tas6sWOgsr1lpKOHcVXBmStd0ExdTp2ExAJRlbyMgLQld2Qpo0I7NDaVqS1iEJv0gWoUjafqlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=AzQsF72q; arc=none smtp.client-ip=212.159.14.19
+	s=arc-20240116; t=1742007032; c=relaxed/simple;
+	bh=E8dCf67V3hnwc/foh1Iax6n91fE44I5imhFgZ3YQxSw=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=eTFzNM/cjQUPnqDdwOtHsWcep9Lb+c0TqslnhmV1Nv5y3oT+HtWTW3sBp3yz+b9He+ryXr7Yw129/6zGRD+UDwVX+WUiyEZvdaIB/qKagX4D+thgIKmoBeKfdC1MPuyQ0yTW1sKHivNKtgo+2fvbyAHlKkSN1jFKNnSTBRA8hMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=joRTqBMm; arc=none smtp.client-ip=212.159.14.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="AzQsF72q"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="joRTqBMm"
 Received: from [10.0.2.15] ([80.189.83.109])
 	by smtp with ESMTPA
-	id tHYQtGMsLvxWAtHYRteQBq; Sat, 15 Mar 2025 02:47:16 +0000
+	id tHYdtGMtUvxWAtHYfteQBu; Sat, 15 Mar 2025 02:47:29 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1742006836; bh=cvvI1RTQ0Bci1xzTnR1YWCIhBbWNU3wRMrNfr2qUpvQ=;
+	t=1742006849; bh=8pINdvtOrZejwqEDmdH/CJOm6n8/6gghfHbuxzfCmto=;
 	h=Date:To:Cc:From:Subject;
-	b=AzQsF72qi/VtL++y5YWb9hS+x0LdvAGCJZkpGbnPKt1x0AG9OlekmqvNyTqrXVDcl
-	 yikoSEwcQwSGEh5O1whnRMYvzvuSHBjJ7Tu4nauyfj8Obb/7DdqJKMtVFBb9I1BQwW
-	 +i8oyUpS9zYDHAjBEjM0HWmyO1Vxq+Of9O7JF2CMhvcC1MNdyYRGFIodMsHfV/kcMc
-	 pFF8NjJSyyEe9yp//O3L4/X/jf/ZarbRVjBCaWmhHlc/8zeogjqDimSB1IPrVZG4Ud
-	 d0XqChDk3q9D58GmXePjsXDdPPJPkW7Pau05KnM9tHoI8LgAZvzBSmQzVgZ/3ePO3z
-	 py93W1nQa7BBQ==
+	b=joRTqBMmJIBzTz3PuwTEFHmEKmEdpNpX5Xtzhnn0p7jqsSEteqQ8pvCcuVzshYClV
+	 qNM6c1x1YyWDxxPC52m6WnWL6hUNY1JuDnIFvfsz97EoUnNxbxaAQKQpF/N140OCJJ
+	 VDrutQzO4kt3YohV2c4yRqedHcVxekIwUQe+bISCR7jY9VD9HBv6xSwDYj3cVduTkL
+	 TWDEWaqxXJSru67AH9nYNqyU+mPy8MedcVvsx+UJu4Lhqgn978GUtmRCgUCndu3RVM
+	 VAGyvZ0KNiNogupkELm/movqZSC1fc1BbMFeV0F+akyKG6+yeoqE6VCqI4SiT3aEiN
+	 sl9gGW0J0x8Mg==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=QbDFvdbv c=1 sm=1 tr=0 ts=67d4ea34
+X-CNFS-Analysis: v=2.4 cv=QbDFvdbv c=1 sm=1 tr=0 ts=67d4ea41
  a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=MwKkaEpK1oP1WH10rxgA:9 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=fVsHCq2i0Zt6NT_ZDjwA:9 a=QEXdDO2ut3YA:10
  a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
-Message-ID: <bb895671-ad11-4ddd-b8f3-ec6479bf4da4@ramsayjones.plus.com>
-Date: Sat, 15 Mar 2025 02:47:14 +0000
+Message-ID: <a3dbc1df-61e4-4216-96c8-3414d68b82e9@ramsayjones.plus.com>
+Date: Sat, 15 Mar 2025 02:47:27 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,85 +48,47 @@ To: Junio C Hamano <gitster@pobox.com>
 Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
  Adam Dinwoodie <git@dinwoodie.org>
 From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH 04/12] Makefile: remove NEEDS_LIBRT build variable
+Subject: [PATCH 05/12] config.mak.uname: add a note about NO_STRLCPY for Linux
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfO+PQvxmE5aQ/k0C0hVg2d8r2CN3hxMetS8IPMXWe+Iyee9YGOQYmOH8RtTdZja4Rx/UT3Fi/i/KRxOOR1wSV5PfBxmXUSK6fUWsoI3XizG7fUEhggff
- wJJUhRKGxQ+ZlZJgAJfYRDAPR8OzWT1nL7znc/Vdv0mDJvW8ZIlaSiTGd/acmtfxSOpZxArFH2Ca72nAQSQAonhhgnWBWyqHDFk=
+X-CMAE-Envelope: MS4xfBBjrRIhqpJ1xoh+90xcIkO0opkCNhLoHeALsUqrsF3oOW7QRKyYWR2L0gMuTZQBaZ8PLA8deeHCRzx5eL/N8x0bBiilwaLCEjX3FPuudkXbWEqZcMB4
+ LLFaWbZg3kfbzp6SpMzpfEwWvNm/JexvFB/lxLG4B2s+j0Zxtny+nqj0xnZC5mehNTvzvLrGeGF9Y2J/lI/UmJ2MHmPKcuDDjPc=
 
 
-Commit d19e3a5b21 ("Makefile: add NEEDS_LIBRT to optionally link with
-librt", 2016-07-07) introduced the NEEDS_LIBRT build variable to
-disassociate the HAVE_CLOCK_GETTIME variable with the unconditional
-linking of the librt library. At one time, the clock_gettime() function
-was not available as part of the libc library and (on some unix systems)
-required linking with librt.
+Commit 817151e61a ("Rename safe_strncpy() to strlcpy().", 2006-06-24)
+added the NO_STRLCPY make variable to allow the conditional use of
+the gitstrlcpy() compat function on those platforms which didn't
+provide the 'standard' strlcpy() function.
 
-Commit 52fcec75ce ("config.mak.uname: define NEEDS_LIBRT under Linux, for
-now", 2016-07-10) set the NEEDS_LIBRT variable in the Linux section of
-the config.mak.uname file, since Debian 7 (wheezy) was one of the few
-remaining distributions, with glibc 2.13, that required linking with
-librt for clock_gettime(). Note that from glibc version 2.17, this is no
-longer necessary.
+Recently, in the summer of 2023, the strlcpy() and strlcat() functions
+were added to the glibc library (v2.38), so some of the more up-to-date
+Linux distributions no longer need to set NO_STRLCPY. For example, both
+Ubuntu 24.04 LTS and RHEL 10 beta have glibc v2.39. However, several
+distributions, which are still within their support window, have an
+earlier version and must still use the 'compat' version of strlcpy().
 
-Note that Debian 7.0 was released on May 4th, 2013 and benefited from
-long term support until May 2018 when it went end-of-life. Since that
-time, Linux distributions use a more up-to-date library, for example:
-
-    Distribution   version  end of support
-
-    Debian 8       2.19     30th June 2020
-    RHEL   8       2.28     31st May  2024 *
-    Ubuntu 16.04   2.23     30th Apr  2021
-
-* paid 'Maintenance support' ends 31st May 2029
-
-Since it is no longer required, remove NEEDS_LIBRT from the Makefile and
-config.mak.uname.
+If the meson or autoconf build systems are used on newer platforms, then
+they will be configured to to use strlcpy() from glibc, whereas the make
+build will always choose the 'compat' function instead. Add a note to
+the config.mak.uname file, in the Linux section, to prompt make users to
+override NO_STRLCPY in the config.mak file, if appropriate.
 
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- Makefile         | 7 -------
- config.mak.uname | 2 --
- 2 files changed, 9 deletions(-)
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Makefile b/Makefile
-index 818dde32a9..8fa4d2664e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -340,9 +340,6 @@ include shared.mak
- #
- # Define HAVE_SYNC_FILE_RANGE if your platform has sync_file_range.
- #
--# Define NEEDS_LIBRT if your platform requires linking with librt (glibc version
--# before 2.17) for clock_gettime and CLOCK_MONOTONIC.
--#
- # Define HAVE_BSD_SYSCTL if your platform has a BSD-compatible sysctl function.
- #
- # Define HAVE_GETDELIM if your system has the getdelim() function.
-@@ -2171,10 +2168,6 @@ ifdef HAVE_SYNC_FILE_RANGE
- 	BASIC_CFLAGS += -DHAVE_SYNC_FILE_RANGE
- endif
- 
--ifdef NEEDS_LIBRT
--	EXTLIBS += -lrt
--endif
--
- ifdef HAVE_BSD_SYSCTL
- 	BASIC_CFLAGS += -DHAVE_BSD_SYSCTL
- endif
 diff --git a/config.mak.uname b/config.mak.uname
-index b12d4e168a..88007c4f13 100644
+index 88007c4f13..ae6ba15586 100644
 --- a/config.mak.uname
 +++ b/config.mak.uname
-@@ -54,8 +54,6 @@ ifeq ($(uname_S),Linux)
- 	HAVE_DEV_TTY = YesPlease
- 	HAVE_CLOCK_GETTIME = YesPlease
- 	HAVE_CLOCK_MONOTONIC = YesPlease
--	# -lrt is needed for clock_gettime on glibc <= 2.16
--	NEEDS_LIBRT = YesPlease
- 	HAVE_SYNC_FILE_RANGE = YesPlease
- 	HAVE_GETDELIM = YesPlease
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+@@ -48,6 +48,7 @@ ifeq ($(uname_S),OSF1)
+ endif
+ ifeq ($(uname_S),Linux)
+ 	HAVE_ALLOCA_H = YesPlease
++	# override in config.mak if you have glibc >= 2.38
+ 	NO_STRLCPY = YesPlease
+ 	HAVE_PATHS_H = YesPlease
+ 	LIBC_CONTAINS_LIBINTL = YesPlease
 -- 
 2.49.0
