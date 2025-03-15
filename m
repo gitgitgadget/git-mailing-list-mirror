@@ -1,41 +1,41 @@
 Received: from avasout-peh-003.plus.net (avasout-peh-003.plus.net [212.159.14.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110892EB1D
-	for <git@vger.kernel.org>; Sat, 15 Mar 2025 02:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD4C2E3392
+	for <git@vger.kernel.org>; Sat, 15 Mar 2025 02:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742006872; cv=none; b=cgP4tcO6k/bUzinOoSiqtkJm2+DX6UC4f6bBOT7MtIwoLKdRBRGgqF98Xb3hb/vE7RYtMwxgh/EdK0cGBcgrxQs8gzLbjKhD9JDVPAxpqeJH3v+uycBeDrzdt1nc5gseZV2StK5KxsL7ilYh5el6TZQpWh69m/+MZ1zgS4yx8po=
+	t=1742006882; cv=none; b=giSOL9t2VzHwCjT/pv6PgEPGDIKH9aEM7cb7IsrY89zZXTi+kcnUWWZK76x0Ut+a9rew5fZsXXt463wgesW+RJej/efqOHIFdGpbk/m/uKRK9GfNRtIah/E69OWI5eGWPTsYYB1mzgnK/G9zDl0RHP3X6b0zl7pqe/1AJPBW/wA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742006872; c=relaxed/simple;
-	bh=n5pszrZJLmuFE6ReA219ojxPxVsq4Bi6hYP8rvl07ws=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=O3LG+geE+SANnWTv07NpZaTFkwyC4Doda6XOnsLj7D6UvmFztJzrHhgqLjfdhz7IwmylJlwYIrNmrzp+M7+8l1dagf9S9OGVM8z4wyJCQdU6nMwa7qaWsj8bZJhiVzp3Xbvpv0xRtM4JakJ01OU+Xee+DnFXt+S0OTZc2HjUSD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=nEwrJkVx; arc=none smtp.client-ip=212.159.14.19
+	s=arc-20240116; t=1742006882; c=relaxed/simple;
+	bh=H6dtQQkW3gL2rwJSBnZ+4RpeXSQEwYskXYghF1PWuyg=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=kqg9CJt4eXUmDoWtSVRF9hpGi4tUy2TMSDJRcPnRBbYuuHV7BZytWYRrCrzRrXMaxE5hNANr2SUjvhRaAjt2EquAqqaDKztVhSSrs68chfuPAiXyiFdBM5FuosGZkYz/3kIQaprREjwItdIG5Z2ThzFOxeDiwVYKfvn98EsEWmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=F5vSf7Nn; arc=none smtp.client-ip=212.159.14.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="nEwrJkVx"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="F5vSf7Nn"
 Received: from [10.0.2.15] ([80.189.83.109])
 	by smtp with ESMTPA
-	id tHYvtGMuevxWAtHYwteQC0; Sat, 15 Mar 2025 02:47:46 +0000
+	id tHZ7tGMvvvxWAtHZ9teQC5; Sat, 15 Mar 2025 02:47:59 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1742006866; bh=7Ip2jX5ojmIyIRj1sjKJXheJqs0bI/Ab4S1YGMLyXw0=;
+	t=1742006879; bh=NaDym7njn1N77KB9O4fkFJyowFgvj5EL6ZEWxKSQZYA=;
 	h=Date:To:Cc:From:Subject;
-	b=nEwrJkVxNzjoxUl5d+ACwHbJnRjkNiamnyWxPnB/SXlJsnwkIO3+1WQQ6EH5FuyDy
-	 LqLBPpVvEjfw1Ex/kXaKGfK5Ke7akKX9sZURZcHUvdO+zzwMvOvW/QAnzFztfeB4cN
-	 LGd2J2bagJzzI+mprzFCipF5RI60H2jhIrV4K02zEKFqZaUUSZy2kaS7UKIPhaGR4m
-	 I9bNZ4082g4jg8X2MRcHOhg3yRLVUZwDPUi4MpGIlQ5/kXsvKMUImpOTNm7b0yG2l9
-	 JLVyuixeKA/v/c3QKJAR2N9716GJC0wIpAc8yTHWuJl/7gRUrH6DuIXPsh6gsKxvpa
-	 sAcRJesyJd6Bg==
+	b=F5vSf7NnH0xGlW+FvBKd+uTNNTJ8ZpNr4vvlV6xhkMxq+a6WTag7vBt6arCANpkAt
+	 QqD9k/CxP+GWqGSE5SdbZceWeWxKxcI9N3/EUFUZxKDM4sn1zB/ul5Qth91AT0hm4e
+	 603UJdcfuTjIjdL6gJW1VvSsC/09W2WGXR5mjicZq4PQUid8YX4y0/BSUlOpFsJ0OU
+	 UyAboMX0M3wO9Xn2xEjGj50+fRxYM505srH1BknPE5hdKL5tLzAww4xZgtLr/q+nUu
+	 5N9/LC0LpZlV68Ndi05OYsLoUJ2nC8vmKLA3Zvodkyq7PrRvkzO6KbDsNGBlFOiFQD
+	 qecJ/W2XndP9g==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=QbDFvdbv c=1 sm=1 tr=0 ts=67d4ea52
+X-CNFS-Analysis: v=2.4 cv=QbDFvdbv c=1 sm=1 tr=0 ts=67d4ea5f
  a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=-MV70WsdUszZJaylRL4A:9 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=5XmO7F8k-BOE0I3eWfsA:9 a=QEXdDO2ut3YA:10
  a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
-Message-ID: <a4272c4a-7073-4671-a883-50e9413b0384@ramsayjones.plus.com>
-Date: Sat, 15 Mar 2025 02:47:44 +0000
+Message-ID: <a415eb92-bad2-491e-99e1-1b28b9ce73a4@ramsayjones.plus.com>
+Date: Sat, 15 Mar 2025 02:47:57 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,49 +48,36 @@ To: Junio C Hamano <gitster@pobox.com>
 Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
  Adam Dinwoodie <git@dinwoodie.org>
 From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH 06/12] config.mak.uname: only set NO_REGEX on cygwin for v1.7
+Subject: [PATCH 07/12] config.mak.uname: add HAVE_GETDELIM to the cygwin
+ section
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfBxUBVwGjxqdGaAJjrAJfpyhlFmpfIWdZyQHvlgzo/nGqeNjMZ4EvUtO/ZBNJqG4y3bnZ5O5s+zdSQvQeEWgRbw7l8/as8/Ki94lCDfDrI2sfWVZfjTE
- kFLujacQ3P9ppwacy2K8Bywocdn6QQdUyFRLgV5q/Lmd/5xLMjs3lZA8V3Z9lVVBFME7fQWZpLV3VlMmvh+H1Kw6lFKXeMXKBNk=
+X-CMAE-Envelope: MS4xfD95vY5QFt3JcT8HhhNGmdubeQ5W8n2YpSDHaJbOB2WAfqard9ZWoVnCoRqdQjkk8MufYh03P0OB229yw1mmV4pCbEoTTaLlJ3mQUc52GHkx/sI8lD8n
+ pWrTTFXmi9ydm/Amt6Yb5HlwZT1suQoxXUSuotOASW2QxmBq2pherzyVsTgmmBKuM1ECbapNLv5totVNR39yW1TgIQes4nOT5UE=
 
 
-Commit 92f63d2b05 ("Cygwin 1.7 needs compat/regex", 2013-07-19) set
-the NO_REGEX build variable because the platform regex library failed
-some of the tests (t4018 and t4034), which passed just fine with the
-compat library.
-
-After some time (may a year or two), the platform library had been
-updated (with an import from FreeBSD, I believe) and now passed the full
-test-suite. This would be about the time of the v1.7 -> v2.0 transition
-in 2015. I had a patch ready to send, but just didn't get around to
-submitting it to the list. At some point in the interim, the official
-cygwin git package used the autoconf build system, which sets the
-NO_REGEX variable to use the platform regex library functions. The new
-meson build system does likewise.
-
-In order to produce the same NO_REGEX configuration from autoconf, meson
-and make, modify config.mak.uname to only set NO_REGEX for cygwin v1.7.
+Cygwin has provided the getdelim() function as far back as (at least)
+2011. The autoconf and meson builds enable the use of this symbol.
+In order to have the same configuration for autoconf, meson and make,
+enable the HAVE_GETDELIM build variable in the cygwin section of the
+config.mak.uname file.
 
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- config.mak.uname | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/config.mak.uname b/config.mak.uname
-index ae6ba15586..b6adce0bc4 100644
+index b6adce0bc4..1b3ba8a341 100644
 --- a/config.mak.uname
 +++ b/config.mak.uname
-@@ -245,7 +245,9 @@ ifeq ($(uname_O),Cygwin)
- 		# Try commenting this out if you suspect MMAP is more efficient
- 		NO_MMAP = YesPlease
-         else
--		NO_REGEX = UnfortunatelyYes
-+                ifeq ($(shell expr "$(uname_R)" : '1\.7\.'),4)
-+		        NO_REGEX = UnfortunatelyYes
-+                endif
+@@ -250,6 +250,7 @@ ifeq ($(uname_O),Cygwin)
+                 endif
          endif
  	HAVE_DEV_TTY = YesPlease
++	HAVE_GETDELIM = YesPlease
  	HAVE_ALLOCA_H = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
 -- 
 2.49.0
