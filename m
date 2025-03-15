@@ -1,102 +1,142 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46D013B58A
-	for <git@vger.kernel.org>; Sat, 15 Mar 2025 06:44:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0181DB15B
+	for <git@vger.kernel.org>; Sat, 15 Mar 2025 08:21:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742021071; cv=none; b=RimW5acoK5WPbbAvPfvxeht2H2PHEdohJL1K7XDJNC7CcVwyUjGBatXOhVvWN6fLbIIti8wNsdcGLDvc2HZUSizHzy+WFscw9zx7oJY9Zpo9oLVWy2Hwl3pdu2exoqvryvLtPsKWfMfQs/P69nh3zNGMbRFa4gxaj+Vgpa4UaXI=
+	t=1742026871; cv=none; b=Tmi/yFFbTf9V0b0wm1O6z74IkDN442WEwBVYRF/eupqE2bvNC0uSdJ9+0yPt9RPK6qa6IcTMV9iInl7V3SgQwUEneLKbX1ZHZ2nY35+12k1agQifzG6S/hP636jZlnAVcAVbSiycLH6Vv4JqttQWPQAjKq94xrSlqjvNAfUxY3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742021071; c=relaxed/simple;
-	bh=2Kxi0I//m//gGAVTzHXNq3SK+Yx2jX/ZJmn0c/vMYQ4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Jw0nTNIoO3qoMgJq7A5iV9SDckv4ovm4BUR3Ac6arxyX0g492b41jcWzWrjHKkA9CicXso28BZX6F0iR6EEAGaEg/yvEXXAqnreNrFqYGpZPAWYOqMTUz9lS8/xLW9ygL7Mf3D835qND227UNHcVxNUuiaHg/YrawAafM8emAPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=UeNy5b1q; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1742026871; c=relaxed/simple;
+	bh=w0UECCxG2HVReaCVefsomVboygeCnL2RvXUQK5nOBg4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=awvXMeYrK3jjzLcm/8NNkhYXYx0vxXAGMFUACpxY4B3V1EbJpOh8PSwHDeD6Q8pwV4vWAZs/JIMRrgZl6D2pU2P/EK7wNmfVm63NGfTppR76j7yoip3OZO5eoNwR4MklDMjw0k8k1gcaAfDGY1mDLmO2bnxJEjPYonExLBBwqOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iBX2vbMb; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="UeNy5b1q"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1742021060; x=1742625860; i=l.s.r@web.de;
-	bh=paOxzqiSXqRKIRz1f/k+59BKz3LofacmkCDMXOu3hMI=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=UeNy5b1qv85jtRiQ1etnaqmy8CZbDrBKtXme+lAtwaXmN4lunAvpRXurllIYo2wW
-	 V5hZzkXv/v6me1wj0pYMsSHnuKyy3w/oJKW5/4soUPIrGfdTi7pAspiCJZreQtwcX
-	 0Q/4aGK104BmwjYI8V/nLFhiOP7x80nQiufXL10wRGaqnE4CFCBmkiVLNRXdaFcyU
-	 EXsRvZDYPpeiCpSPjhtZxvq9rqK7DyXIG8aUsXMksXcqM0c6c3KJqGOZLWtT03lzA
-	 2w/Y7V2rd1N5dKTnqtzvShGn9GTAfwE7UZFHFmUINlJBsp1zBpxuYBywg+TBoW/Oo
-	 3aXapuv5/F7yQhiqWg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.29.218]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N8Vop-1t6rIY4785-014CrV; Sat, 15
- Mar 2025 07:39:00 +0100
-Message-ID: <8c9a3966-2746-4619-9f77-ca95797dcab8@web.de>
-Date: Sat, 15 Mar 2025 07:38:59 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iBX2vbMb"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6feaa0319d8so22756837b3.2
+        for <git@vger.kernel.org>; Sat, 15 Mar 2025 01:21:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742026869; x=1742631669; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8w2V/ZdbyfQ07R/hI/vW4acT3Ovf31xnpuaOqnDroEE=;
+        b=iBX2vbMbLo0L/aZ9z5OVHJEgsPRCgkF4CYdJg9y0gYuceAUMLB22fl/AgGQ2Qs5XA8
+         9Ds857nSSweZL7TTfSf3b+Z4OQYjRQzE0x2vpBk7JavXQ9GyBd/6yUoRasA22XjsFQJ3
+         4A1NZbM0qWz9QNunV1SLe9+915lG5LGobCgQ98tBcsBhAlQg+Si6lE6x5HreoFRj8T5p
+         61U/rqEvsUXMss3zAjAKN/EQNcDVWUEBbHu+eVrYZ6yKWCtAmEGEa9/tXZl2gLrqe7MF
+         zrzfyKn9GdG5B3m4MbWuLjMINk5rbwnv/Eqtm1zfLKGK/OFp/ZFhuZimJiCTjpgsOAgU
+         /JXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742026869; x=1742631669;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8w2V/ZdbyfQ07R/hI/vW4acT3Ovf31xnpuaOqnDroEE=;
+        b=Z+WLxPoDv1a35TxE5UFQ+UiPIWEmsdv1Dz0ZXaSq4NBlqhPSF30Io6MDC3uqAsWu04
+         2LR1ZvoSbsxRzNJYAzf2bcSGq0gLppAH8W2xzgO97DYo6QwmSgWGNzI/1BcvkuT4hKL8
+         TEskD1WygGaJ/O8zLizkPQobXzgnTZ9f/UBRfMidk5DFXLr9bmjKQkkEbZpGVZjCT4+s
+         txzyEo52Y2Xo1l5ReRLlOxhGBktCB1l3tMKS2CvC2juTGnB4Uttq+7kGRu94VpG6nWvX
+         +gusnD38FX2eGxWIre9SQGU8/j8vS8AAwlZH3QFCzKBWA+phuNjldSdMzA22sGBg62vM
+         4Hbw==
+X-Gm-Message-State: AOJu0Yydqfh3qhcJYKROjd92OxrozU7tVK8sfVFnLGsz0+rdcLhNWHQW
+	GgZGvtVOly1zWTVFF6B57DPkrKgxDWP7Wdek+Efnd2BnxYEeV0dIGilNS/fvuWyGMaastluag2D
+	m8Homk3hPSNsNUgVv1O+QoN98GG4=
+X-Gm-Gg: ASbGncsAHhnkUJ9Wf42fyO8AQ82HluKQWAwRUdrEBelNUBl2QUFW30c/ueevxs38ihf
+	ge8PNUwHX8E+Q/kdNX/41ac7Kpm9l/rA+2ZM70hswrG6NBS3MkcUoALjZfhyWbe5sTqYJde0mqD
+	9uHnEh/3RLh/CVhyBrmuhDzs1PEL4NAb1gYCxrQFJ/5WneNene/NVIe3gIYOQ=
+X-Google-Smtp-Source: AGHT+IFlq4BbrOlj7e1Pckdixh3FPrQlLqgmeWoNYomLMnUPwsRJsaAALxy7koVVyDnJMVfiF1hKNEVEkTLBvIoRsyI=
+X-Received: by 2002:a05:690c:700d:b0:6f9:af1f:53a4 with SMTP id
+ 00721157ae682-6ff460fa017mr66739867b3.32.1742026869419; Sat, 15 Mar 2025
+ 01:21:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] xdiff: avoid arithmetic overflow in xdl_get_hunk()
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jason Cho <jason11choca@proton.me>,
- "git@vger.kernel.org" <git@vger.kernel.org>
-References: <xXWgbH3mlNEvFcdGLqBHwcclZoeZNPoLg8Hr6YCipHXvS5eKaHeTppzFM-l_wyB46BB1R1T0j6g_jWRXIj7-GRJh1LPxi1ta3GkQ5t8F4-0=@proton.me>
- <NYMqsJ7uttDzFT2OOEg5LLsxCSoQhTzqBs16KrMHGEKC7LzOAiYnYTEZavRQWqGH41UgjdwScwer7MssNzI7AEDHnD8GTBWvoBIqJ2e7D6g=@proton.me>
- <4e9b6b4c-aaa1-4c6f-93f4-7bb04607e843@web.de> <xmqqikobdz7l.fsf@gitster.g>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqikobdz7l.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+References: <CANrWfmRq=7Q=vCPgmcLcek=fRsw83BPqTX7gTpcLb=JpQpYZEw@mail.gmail.com>
+ <CABPp-BHPAEcJibTaiMVE1K7AvYE+TYmOt7=6XUtcZbm7wsWhDQ@mail.gmail.com>
+In-Reply-To: <CABPp-BHPAEcJibTaiMVE1K7AvYE+TYmOt7=6XUtcZbm7wsWhDQ@mail.gmail.com>
+From: Han Jiang <jhcarl0814@gmail.com>
+Date: Sat, 15 Mar 2025 21:20:58 +1300
+X-Gm-Features: AQ5f1JoVaWCAW21eFR2jAbPSgYk8aZcM15NQeaVYeEj4exCpoh3wJC2qZSSHrYw
+Message-ID: <CANrWfmRpDFuqv+fkCf_p_ggHTrRjD3Vgviqrai_rA7Lu-YFEMA@mail.gmail.com>
+Subject: Re: `--ancestry-path` documentation has wrong graph
+To: Elijah Newren <newren@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:JTZlrp1teeqmq8nGgxCmks0m92D9wwDPzzIHGgP2Y72AMolfvBi
- qph+AuhYTV3wREyZqxxQhjcxffjulxBvCpgcPlEGkXL3E3e1MjX4+qrsbvThmN7l/VX88Ug
- 8//aTzXm+MKyhh/M53jaE+yj5nT/Ra/Is25Y8c2pce2ifKvj/4ogeHbxXqcUsused6s73mP
- HRyquuRiPRo8iqb2IZ0sA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:oZrr+J0Eazk=;9T3Pzj42xIQZt940PdHJ8V5lc4H
- izlxeoLRIs6RPeFflvTbiIGcTAYcT1RlYjpSxz6Eff2XGi/vSYYFcAWhfI1R/7k9KOwm+zCV4
- SWDM6h1ignQOMAfVan7hQGXsNv5Jiq0cEDT77BB03Te8rDmNJFvs+BTaErI9pyP1xd6LtyEVD
- et8b7IISfIITqTNmnL1GjWxMa/76Hi7pCZVWcb5Q0hxiesG11wG+GghOGnWjn6B5F0WcMbplG
- lek9+8R38LjPx34/WSeZRWPzwr999cfXhGHLowxVXRCP6uxFpwSzp1y13mmwIGbFucb+iG3MP
- 0Hvlzu+E4f4qZqLoOvZ4F8uaFiQPBZ65338KOgkIBnUEV3sJRJ2ZioabIVU1+o55Iuf3bXFOm
- iKbX6uo5i7omThMiiOAtLbwgMoiB16KV/cCBUw1zFQbbNZA4C+vVEuklWmtX4eyu4bErDnxJf
- KwK104lz34F/RhQB2SMLVjwQtFxc4zitclZAEeH9CTBVIzJv5n+Ul6M3yIwR9kx7TVQ142g3w
- A+pgf8nLhscj1/CQsHpqyUZq5nfvki+CZxUlHW7MbYYs5Huq/81dkuTUCEO8MxQineCtYrOm4
- Fs4qvYDq2HmFcET1OyZbbUkz6mq3Gg/nM64ATBlKRixLVPZI0eKvVU91HzgBnAGbNxAA91Jc6
- Judmc5+qcWc2Jw/JCgr07JTcWd3jV7uJxD7iYLZW/2qIXRzz8mYJXz1A/nuYBkG//nYRjrems
- 8IFPUbkOO72XPhMCbLX8/SNUyj7fxsDx5uvr5oFlndtn3iuVLhw5BqB1cHgwnlLTiD1cPFcKe
- AzKK7BODVpNX06DdHE9Tlkvui6Sxa6F7x4kz73JRWpRZQIDcJgF2FqcYYluMdYkMHHb3/4rJQ
- 8qbmXJQ7nkdy5dhveRh9xI03Weab4kB6PdbwzkFhwhNFbOtP66/hpugFU57CA4wWvcP3yjRwM
- PU+GYM0PuaDejann+orhc/UnyPL0h8NuOn+hYwX0x0T9sqyqrxonz5KhCtJ/zjd+f/Xu4J1UN
- nxPFZa6wWJkbgBw+jYxFuxL/Pmru9CX/KcDxg/vxXyQCKPwwla+DonOGYBFrhTIcC6zXg1sva
- 8VRlVO3nb/a2gD3AIVNTP5FKytPjSkflsOJi4dNbU12/mvfgTejYiyw4MD1/m2D/HO9b36sr4
- 0bOfx3PguSZjbDh26gjKShn7Tjkixh8tHnuWjQYfZVn2f9XxR6C0a8u9EbBWKKivg4a+xMxUl
- 9B2EtFA014ZVUKDQt+gXE0arhPuMdiPsYVr01OoA9O1HRUtvm9us5QVUEvRaCwl2XniMZelND
- dCW1ike09M8EfYVcULR5mkAtb/9Qqoh4cidozZi6bOgGQEO4W+UCwkWBcyOGPW2JHgYZ4kiU/
- ojkD45avEMjOpO8UrpjPKqRyjt4ZQk8pOkNKoW3ofTh5Uc4x3pjqeFDK0kFp+JLPyGYLsBWuw
- j1ABtFQ==
 
-Am 14.03.25 um 23:28 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On Sat, Mar 15, 2025 at 6:16=E2=80=AFAM Elijah Newren <newren@gmail.com> wr=
+ote:
 >
->>  t/t4055-diff-context.sh | 10 ++++++++++
->>  xdiff/xemit.c           |  8 +++++++-
->>  2 files changed, 17 insertions(+), 1 deletion(-)
+> On Thu, Mar 13, 2025 at 2:04=E2=80=AFPM Han Jiang <jhcarl0814@gmail.com> =
+wrote:
+> >
+> > Git - git-log Documentation --ancestry-path[=3D<commit>]
+> > https://git-scm.com/docs/git-log#Documentation/git-log.txt---ancestry-p=
+athltcommitgt-1
+> >
+> > The graph for `--ancestry-path=3DH D..M` should contain commit C.
 >
-> Oh, I love a patch like this that is well thought out to carefully
-> check the bounds, instead of blindly say "ah, counting number of
-> things in size_t solves everything" ;-)
+> Indeed; D..H contains C, and C is an ancestor of H.  I apparently
+> overlooked C in that example when writing that documentation.  Would
+> you like to submit a patch, or would you like me to do so and record
+> you as the reporter?  I'm fine with either, but if you want to give it
+> a try, the relevant file is Documentation/rev-list-options.adoc in the
+> repository.
 
-Converting xdiff from long to size_t is still a good idea, I think, but
-would be lot more effort and thus more risky.  Comparisons to upstream
-would become a lot more noisy as well.
+Thank you for the clarification! I'd like to try sending a patch.
+After doing some research on how to make contributions today, I
+decided to try GitGitGadget way first. But I got some questions that
+the doc doesn't clearly explain:
 
-Ren=C3=A9
+[Git - CodingGuidelines
+Documentation](https://git-scm.com/docs/CodingGuidelines) says:
+For C programs: We use tabs to indent, and interpret tabs as taking up
+to 8 spaces.
+1. It seems adoc files treats tabs as 8 spaces too, is that true?
+(The prepared commit in forked repository is at
+https://github.com/jhcarl0814/git/commit/ce568e4a87dff14df4e7104af89be3f126=
+16f5de
+. The source diff shows tabs as 4 spaces. The rich diff shows tabs as
+8 spaces. When I was editting the number defaults to 8 and is
+adjustable in editor options.)
 
+[Git - MyFirstContribution
+Documentation](https://git-scm.com/docs/MyFirstContribution) says:
+For single-patch contributions, your commit message should already be
+meaningful and explain at a high level the purpose (what is happening
+and why) of your patch, so you usually do not need any additional
+context. In that case, remove the PR description that GitHub
+automatically generates from your commit message (your PR description
+should be empty).
+2. For single-patch contributions, is the pull request title or the
+first line of commit message that will become Subject of the email?
+
+[Git - SubmittingPatches
+Documentation](https://git-scm.com/docs/SubmittingPatches) says:
+It is a common convention to prefix your subject line with [PATCH].
+3. Which one of GitGitGadget or the pull request creator is the one
+who add "[PATCH]" at the beginning of the title?
+
+[Git - MyFirstContribution
+Documentation](https://git-scm.com/docs/MyFirstContribution) says:
+Now that your CI is passing and someone has granted you permission to
+use GitGitGadget with the `/allow` command, sending out for review is
+as simple as commenting on your PR with `/submit`.
+4. Who is able to use `/submit` to trigger email sending action? Is it
+the pull request creator (when `/allow`ed) or anyone (`/allow`ed)?
+5. If `/submit` sends email, then how to cc all relevant people
+(including myself) at the moment of `/submit`? Is there a place to
+fill in this parameter?
+6. Where does `/submit` send the email to, as a brand new post or as a
+reply under this post? How to configure?
+
+----
+
+7. How to make Gmail web client default to bottom-posting?
