@@ -1,300 +1,94 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187784C8E
-	for <git@vger.kernel.org>; Sat, 15 Mar 2025 01:08:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A22166F29
+	for <git@vger.kernel.org>; Sat, 15 Mar 2025 01:22:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742000900; cv=none; b=qwclSGsJl2o15Mqo42bnl8taPAivyRcsF2wJn7hue03x24lWplm4SRcMdDEM/FmgkguFsjV5cKF5pjzS0P1kxakeyta1QVBP7boE8IiW01T0Ue2C1h539OsZZ9OqbyMhnr282iNEV0vwmfVItvE8wu5mSj5jz+Lm0pn4I7vW+tU=
+	t=1742001769; cv=none; b=oLiM24d2XZr1rruaI8HCuwC4fbw1fLyl6VXnmVhX+wuKH2YUNStsmZj6algCNXlDwfP43/2bH5CKuwHZxIGVv5dNXjokqhub+pjqhyiI/j7ayK7brzQUutGHNWgsKtQHbtzzyehDl0zKySw/G7W0pdLT4MDO8l3SQoLJ71iw6sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742000900; c=relaxed/simple;
-	bh=YvGbHSnHUtJ5Rq25VHNgN56mmZZb3N5S1M2oWi3k6Uw=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=KAnAdYs1OBinVjiFM1CKN2L9b0nX+/n4a8u+aW6YyF1CogEKguPIvwkw2c4A2GeHEeqEAe8ArVjkcweS4fSRTOueyoDGskgQ2b+RNJP3iQv7MfgsLCETMiWYozNwUYohj2NO+J90NRSY2MS4CgOjWwgwAokg3je4RYUX2VvZpZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MU4gHNeB; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742001769; c=relaxed/simple;
+	bh=MLpQPvx/2SAdzBjSqEl2UaZWxUefeea14u24hlNgakY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MRQ0adcRjve0IzlSV9lY12nSLri8vYwSsEAazsX9JxsNDc7V0R1CssejiccGwEGtCveHbrSPvplwLdhzHSyJ+97uwPM/BpgDnclqqMRQIpuiWEokmvArqvJyYqDH4zXbQuIVMllXRsphNMLo4Pqhqf8XWCMYE0kEACuQP1yodOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=B5nyHF8N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b7+2ZGSE; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MU4gHNeB"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3913fdd003bso1381057f8f.1
-        for <git@vger.kernel.org>; Fri, 14 Mar 2025 18:08:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742000896; x=1742605696; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mFvseNnS6CH+UlvirefYTBn/CL52N9GgF+C4Q7zkeqA=;
-        b=MU4gHNeB47LpKAnqlbfinuIap6PYhQr9XncV/xdx77APrSFW9TWPNR1mpMGv9b3Tvq
-         JxbBUbmHrDDd8sQ7PKhT2SaMuI2KNw0DiCPqcM8i9iRiPepVOu993KvsFFL1f/hywH7i
-         LAVOIWIuyzYOibnPKzZGri8aCEkW7ai5MGc2jNwcVIzVnJuT4NGS03nPbDOnr8SmQA1/
-         F9kYUKfeFKdJyw2r4eWbKXyA1vrUcuIcV+SX8FqF3tnvSKl1thKyyV0+F+Dacpl9vesq
-         JjO1q3d2Kzl1IsQnjQVv9r9ZOmee66HCfZCJxjbJDE83eUQWccOzcaYMU2sspitdQC+r
-         55rQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742000896; x=1742605696;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mFvseNnS6CH+UlvirefYTBn/CL52N9GgF+C4Q7zkeqA=;
-        b=bERmok/2JXVAdjJX5E5P4aixbY89XWs4kkb+/DnXP4lKjajYgWSFoYf6MMNRxaoZv9
-         Wxpr3ClchpVfzs374BumLQ0NeTc6Ct8L5p5tvtnCa5vvFi2d12EKrgewCOcw3BF2sfZM
-         4goxJHtn/pQ3dneO5w1k7LfmOuXU5K0InM9jvvU75D5sxB67C/v4SU2rII8aUfUTN2xF
-         +UK2WUB+kVQqZjNeE4JAtjwZj1UGIM5eDB45gB9GqUuZ5LPP8pY+EU/MTP6ZUML6vhOA
-         ED6igAveERGTvvBb3OLHXJAIesMN0jIXtAw951hIAggoxOVGGi+zuY9T2Ist0Ljk9RuT
-         mIyA==
-X-Gm-Message-State: AOJu0YxGqeh/WuJQtiwwTEH365mhurDx6SwSCfCSN/0ptIv838+5JGes
-	SJTK9jHd4wNw4wLALqYwdbVf0RnX2fqkE9t8/O/39M8JbeqjwwOvJH5BQQ==
-X-Gm-Gg: ASbGncuOh6jgmavqoFfmMmcXXVBIwrEeWratuOvnIgjLKgB3+haIYRImk4W/uTpeE4H
-	/WJsNi6kbywl8hm56miJSjiM0cmTJU5dTJH3Nl1L/QSxd3wwPXBLoODLz3ACKEheDemUAYC6k3n
-	9tYTbWqIuOuwrTtXimCubgGjP6gNMNQoSFzLxGFXtEBZvyTVt/igbK0rOR5+ju2EBBo05UvWXeQ
-	0sQXqqB/2qWY8KXvCcAFbYtrJyAduNN9ibzewsnC/NtN4s+r9ExGHZet2uS0D2Zm+NCgDu+iYp+
-	FUCglhdfi+mdbO+6obQotf/AjGRtbjbDuF9lDc4xbtOx/A==
-X-Google-Smtp-Source: AGHT+IHeICvjeKsSwLrojPdDF+9GDOW3d6nuaGl1gzo3FPIdzQkOiScwfDtViNc66yuFLylWNUzvaA==
-X-Received: by 2002:a5d:598d:0:b0:38d:b028:d906 with SMTP id ffacd0b85a97d-3971d616f56mr6837932f8f.21.1742000895645;
-        Fri, 14 Mar 2025 18:08:15 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395cb7ea16csm7079925f8f.82.2025.03.14.18.08.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Mar 2025 18:08:14 -0700 (PDT)
-Message-Id: <pull.1876.v2.git.1742000894041.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1876.git.1741395615315.gitgitgadget@gmail.com>
-References: <pull.1876.git.1741395615315.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 15 Mar 2025 01:08:13 +0000
-Subject: [PATCH v2] diffcore-rename: fix BUG when break detection and --follow
- used together
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="B5nyHF8N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b7+2ZGSE"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 095281382D07;
+	Fri, 14 Mar 2025 21:22:40 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 14 Mar 2025 21:22:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1742001760; x=1742088160; bh=LqV6tV3o5p
+	gLlfzntTOHJrikKovb60/SMfKdqX/cU2s=; b=B5nyHF8Nzt+JCS6wzT+t+s9xZA
+	lIPR1zYMvoPNJFc/G1NAaGlIKAESjObTrbnXqkLJ2kFiOA1L4GJMgR/cbLe3gn57
+	8fzJUIu3/M96zVaTEewSX5TmqcAT+x2P3DqT/XsHsL6Isr7SQINabFIUDToSt7Qf
+	Z3Hzxyt+jBW0HDdRDRLfXmPrADZN4aF+g79yBSTObayeFmeja5989Cpj39OXkSOX
+	9WI4ghmXJOD1ir6It7L8ytnxnnzo/vu8QLp1FoB6Ma4k76vzwYO3J+1espO5sidz
+	BYrH71d/u7gkRsQHv0yerwAmvaOWFftzT2SOgNDUYxuqOcg4Q6aRrDusEvEw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1742001760; x=1742088160; bh=LqV6tV3o5pgLlfzntTOHJrikKovb60/SMfK
+	dqX/cU2s=; b=b7+2ZGSE7XtAvQ0Tw5iKfLv1SiIRRlFNuG6uTjsaJKgZBbWZOxJ
+	nb5Gl1uGWrojsTwsETKKBZq0i4T6jCWhriGK6KH1pEf9i+P44K3LIYx8mBRdTyxZ
+	XG4aPYgaoRWDz7FVpCiRW/nji+PflUHleJwRXerb7zvs29H8b/urOoC+kfKgy4HP
+	39++X7XmK0KFNczeXlIfGHK0QFz1P8HyGr1AJvXr7Fe8BTOZpktwhVAXPEThmacU
+	lf9xrO6wykM82I5KhYfQZIit4GPbnPZ3nmBp2bCNZF1xeEzKedUvYJIqNRzDi4hu
+	nVeHKh5d7swuk8P7JdtJNFA7sy58UGZrOFQ==
+X-ME-Sender: <xms:XtbUZ8AlU61ivrg59byCZ-PqML3ubZHdF8nM7DeEcSpvKRTuNK1-iw>
+    <xme:XtbUZ-iuRxVoZrO9RhqaN2f2L8ZzTFiwaYKdLxLbkwNPclBGJB9ati2Ux6M_pegzH
+    umKeV8PsxEU4Ierbg>
+X-ME-Received: <xmr:XtbUZ_lA6tttqnjLH2dwWJc557n4nuEMGhPvomf5LZ5suK9KdRXn13hA5T_4_wkapWfWUmipFkSs-7wGBmKk4VgNOEoVZ1mC160V20E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufedvfeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:XtbUZyzMjDGdqm6x1hpHKISX5zj1PDuzEOlBAz3QIHn0_fhDgprvKw>
+    <xmx:XtbUZxQ7NjVI4GgBukfTLJrzQ9Ap9hBLFB89KWZnGy8TUZTHmhPDxQ>
+    <xmx:XtbUZ9a7gbBoiafZSDXYd-eJ1Zm6gHyzUAps86pDH9ABcei4dv2m2Q>
+    <xmx:XtbUZ6TP5OUoqyoY77WDXD8lkdUGS8kKbPz27dGcTqezY7WLKKrxJQ>
+    <xmx:YNbUZzeG-Ukld_ElOfZ0h4YHhXBA40PBbesrJTFsCltI71GYI3N32a9e>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Mar 2025 21:22:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Re: en/diff-rename-follow-fix
+In-Reply-To: <CABPp-BFZkiJgdMqTJCxAMkbA7c_S8Qx3aSRqiLAfqrY1Y3es2w@mail.gmail.com>
+	(Elijah Newren's message of "Fri, 14 Mar 2025 17:32:59 -0700")
+References: <xmqqv7sbfra0.fsf@gitster.g>
+	<CABPp-BFZkiJgdMqTJCxAMkbA7c_S8Qx3aSRqiLAfqrY1Y3es2w@mail.gmail.com>
+Date: Fri, 14 Mar 2025 18:22:35 -0700
+Message-ID: <xmqqtt7vcckk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
+Content-Type: text/plain
 
-From: Elijah Newren <newren@gmail.com>
+Elijah Newren <newren@gmail.com> writes:
 
-Prior to commit 9db2ac56168e (diffcore-rename: accelerate rename_dst
-setup, 2020-12-11), the function add_rename_dst() resulted in quadratic
-runtime since each call inserted the new entry into the array in sorted
-order.  The reason for the sorted order requirement was so that
-locate_rename_dst(), used when break detection is turned on, could find
-the appropriate entry in logarithmic time via bisection on string
-comparisons.  (It's better to be quadratic in moving pointers than
-quadratic in string comparisons, so this made some sense.)  However,
-since break detection always sticks the broken pairs adjacent to each
-other, that commit decided to simply append entries to rename_dst, and
-record the mapping of (filename) -> (index within rename_dst) via a
-strintmap.  Doing this relied on the fact that when adding the source of
-a broken pair via register_rename_src(), that the next item we'd process
-was the other half of the same broken pair and would be added to
-rename_dst via add_rename_dst().  This assumption was fine under break
-detection alone, but the combination of break detection and
-single_follow violated that assumption because of this code:
+> message to try to help answer his questions.  Could you wait to merge
+> until I send out v2?
 
-		else if (options->single_follow &&
-			 strcmp(options->single_follow, p->two->path))
-			continue; /* not interested */
-
-which would end up skipping calling add_rename_dst() below that point.
-Since I knew I was assuming that the dst pair of a break would always be
-added right after the src pair of a break, I added a new BUG() directive
-as part of that commit later on at time of use that would check my
-assumptions held.  That BUG() didn't trip for nearly 4 years...which
-sadly meant I had long since forgotten the related details.  Anyway...
-
-When the dst half of a broken pair is skipped like this, it means that
-not only could my recorded index be invalid (just past the end of the
-array), it could also point to some unrelated dst that just happened to
-be the next one added to the array.  So, to fix this, we need to add a
-little more safety around the checks for the recorded break_idx.
-
-It turns out that making a testcase to trigger this is quite the
-challenge.  I actually added two testscases:
-  * One testcase which uses --follow incorrectly (it uses its single
-    pathspec to specifying something other than a single filename), and
-    which triggers the same bug reported-by Olaf.  This triggers a
-    special case within locate_rename_dst() where idx evaluates to 0
-    and rename_dst is NULL, meaning that our return value of
-    &rename_dst[idx] happens to evaluate to NULL as well.  This
-    addressing of an index into a NULL array hints at deeper problems,
-    which are raised in the next testcase...
-  * A second testcase which when run under valgrind shows that the code
-    actually depends upon unintialized memory, in particular the entry
-    just after the end of the rename_dst array.
-
-In short, when the two rare options -B and --follow are used together,
-fix the accidental find of the wrong dst entry (which would often be
-uninitialized memory just past the end of the array, but also could
-have just been a dst for an unrelated path if no dst was recorded for
-the expected path).  Do so by adding a little more care around checking
-the recorded indices in break_idx.
-
-Reported-by: Olaf Hering <olaf@aepfle.de>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    diffcore-rename: fix BUG when break detection and --follow used together
-    
-    Bug dates back to Git v2.31.0, and was discovered and reported about
-    four years later over at
-    https://lore.kernel.org/git/20240920112228.3d1130f5.olaf@aepfle.de/.
-    Sadly, took me about half a year to get back to this one...
-    
-    Changes since v1:
-    
-     * Added a testcase, and extended the commit message slightly
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1876%2Fnewren%2Ffix-break-follow-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1876/newren/fix-break-follow-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1876
-
-Range-diff vs v1:
-
- 1:  e14c1193905 ! 1:  a68e7fe19f7 diffcore-rename: fix BUG when break detection and --follow used together
-     @@ Commit message
-          be the next one added to the array.  So, to fix this, we need to add a
-          little more safety around the checks for the recorded break_idx.
-      
-     -    It turns out that making a testcase to trigger this is a bit challenging
-     -    too.  I added a simple testcase which tickles the necessary area, but
-     -    running it normally actually passes for me.  However, running it under
-     -    valgrind shows that it is depending upon uninitialized memory.  I
-     -    suspect that to get a reliable reproduction case, I might need to have
-     -    several more paths involved, but that might make the testcase more
-     -    difficult to understand.  So, I instead just embedded a warning within
-     -    the testname that the test triggered uninitialized memory use.
-     +    It turns out that making a testcase to trigger this is quite the
-     +    challenge.  I actually added two testscases:
-     +      * One testcase which uses --follow incorrectly (it uses its single
-     +        pathspec to specifying something other than a single filename), and
-     +        which triggers the same bug reported-by Olaf.  This triggers a
-     +        special case within locate_rename_dst() where idx evaluates to 0
-     +        and rename_dst is NULL, meaning that our return value of
-     +        &rename_dst[idx] happens to evaluate to NULL as well.  This
-     +        addressing of an index into a NULL array hints at deeper problems,
-     +        which are raised in the next testcase...
-     +      * A second testcase which when run under valgrind shows that the code
-     +        actually depends upon unintialized memory, in particular the entry
-     +        just after the end of the rename_dst array.
-      
-     -    In short, when these two rare options are used together, fix the
-     -    accidental find of the wrong dst entry (which would often be
-     -    uninitialized memory just past the end of the array), by adding a little
-     -    more care around the recorded indices for break_idx.
-     +    In short, when the two rare options -B and --follow are used together,
-     +    fix the accidental find of the wrong dst entry (which would often be
-     +    uninitialized memory just past the end of the array, but also could
-     +    have just been a dst for an unrelated path if no dst was recorded for
-     +    the expected path).  Do so by adding a little more care around checking
-     +    the recorded indices in break_idx.
-      
-          Reported-by: Olaf Hering <olaf@aepfle.de>
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-     @@ t/t4206-log-follow-harder-copies.sh: test_expect_success 'validate the output.'
-       	compare_diff_patch current expected
-       '
-       
-     -+test_expect_success 'log --follow -B does not die or use uninitialized memory' '
-     ++test_expect_success 'log --follow -B does not BUG' '
-      +	git switch --orphan break_and_follow_are_icky_so_use_both &&
-     ++
-     ++	test_seq 1 127 >numbers &&
-     ++	git add numbers &&
-     ++	git commit -m "numbers" &&
-     ++
-     ++	printf "%s\n" A B C D E F G H I J K L M N O Q R S T U V W X Y Z >pool &&
-     ++	echo changed >numbers &&
-     ++	git add pool numbers &&
-     ++	git commit -m "pool" &&
-     ++
-     ++	git log -1 -B --raw --follow -- "p*"
-     ++'
-     ++
-     ++test_expect_success 'log --follow -B does not die or use uninitialized memory' '
-      +	printf "%s\n" A B C D E F G H I J K L M N O P Q R S T U V W X Y Z >z &&
-      +	git add z &&
-      +	git commit -m "Initial" &&
-
-
- diffcore-rename.c                   |  9 ++++----
- t/t4206-log-follow-harder-copies.sh | 32 +++++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+), 4 deletions(-)
-
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 10bb0321b10..cb4be5be63c 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -33,7 +33,7 @@ static struct diff_rename_dst *locate_rename_dst(struct diff_filepair *p)
- {
- 	/* Lookup by p->ONE->path */
- 	int idx = break_idx ? strintmap_get(break_idx, p->one->path) : -1;
--	return (idx == -1) ? NULL : &rename_dst[idx];
-+	return (idx == -1 || idx == rename_dst_nr) ? NULL : &rename_dst[idx];
- }
- 
- /*
-@@ -1668,9 +1668,10 @@ void diffcore_rename_extended(struct diff_options *options,
- 			if (DIFF_PAIR_BROKEN(p)) {
- 				/* broken delete */
- 				struct diff_rename_dst *dst = locate_rename_dst(p);
--				if (!dst)
--					BUG("tracking failed somehow; failed to find associated dst for broken pair");
--				if (dst->is_rename)
-+				if (options->single_follow && dst &&
-+				    strcmp(dst->p->two->path, p->two->path))
-+					dst = NULL;
-+				if (dst && dst->is_rename)
- 					/* counterpart is now rename/copy */
- 					pair_to_free = p;
- 			}
-diff --git a/t/t4206-log-follow-harder-copies.sh b/t/t4206-log-follow-harder-copies.sh
-index bcab71c8e84..190c4843211 100755
---- a/t/t4206-log-follow-harder-copies.sh
-+++ b/t/t4206-log-follow-harder-copies.sh
-@@ -54,4 +54,36 @@ test_expect_success 'validate the output.' '
- 	compare_diff_patch current expected
- '
- 
-+test_expect_success 'log --follow -B does not BUG' '
-+	git switch --orphan break_and_follow_are_icky_so_use_both &&
-+
-+	test_seq 1 127 >numbers &&
-+	git add numbers &&
-+	git commit -m "numbers" &&
-+
-+	printf "%s\n" A B C D E F G H I J K L M N O Q R S T U V W X Y Z >pool &&
-+	echo changed >numbers &&
-+	git add pool numbers &&
-+	git commit -m "pool" &&
-+
-+	git log -1 -B --raw --follow -- "p*"
-+'
-+
-+test_expect_success 'log --follow -B does not die or use uninitialized memory' '
-+	printf "%s\n" A B C D E F G H I J K L M N O P Q R S T U V W X Y Z >z &&
-+	git add z &&
-+	git commit -m "Initial" &&
-+
-+	test_seq 1 130 >z &&
-+	echo lame >somefile &&
-+	git add z somefile &&
-+	git commit -m "Rewrite z, introduce lame somefile" &&
-+
-+	echo Content >somefile &&
-+	git add somefile &&
-+	git commit -m "Rewrite somefile" &&
-+
-+	git log -B --follow somefile
-+'
-+
- test_done
-
-base-commit: f93ff170b93a1782659637824b25923245ac9dd1
--- 
-gitgitgadget
+Thanks for stopping me.  No problem.
