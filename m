@@ -1,66 +1,24 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24CB42A8B
-	for <git@vger.kernel.org>; Sun, 16 Mar 2025 15:19:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8159133987
+	for <git@vger.kernel.org>; Sun, 16 Mar 2025 16:21:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742138393; cv=none; b=RbDyEjwfSWKqZoum6f+HWftM1NlQjT2fZT8hl4uRa1ROWL7R3rCjuE5jbFGedH0XXtSOP+6ZMaD0ijF/z6isr6FZ5Sn+wnYRQ+ZUYwYPBJ5uB1nMFarhwRjMJIuXMi2/aiXKa8ToCpLGRnMGKRoEXkUFyezm0+C1SWZsz4nQKxo=
+	t=1742142109; cv=none; b=LSE5KvATq8uT6NHl082jgTiVYwG5Yyag9IbF2bJEzBU4yCpxwSoHadc3SYMOroUL2AQ6FgfkdDU6KHyoYkrKrVrvrL5E1O2A8tAaxM9OIUUiA8P5NgrL8IiB5MzPak0/VoXf1dV3YRVPUda1w3Opa5ipL7hJLIoG9NER2p6H1EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742138393; c=relaxed/simple;
-	bh=V1c8AJD20tXa1h0RrbUCwaDpLQNFeyJrcP3cr2FhEHo=;
+	s=arc-20240116; t=1742142109; c=relaxed/simple;
+	bh=QTbLtqDKezZXG9QdJUXHnpb4pPi5NBPfgbz7x5aTu0g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ze7xC0C3NRcI5/DLZm/oPl+H5L2S1OyE8a0AFrUEiK/euBrm8h4OacVikO987/TW66Kc68cyihhXp07x75iNyuzS8xIWBfc3oJRw+i7Tl6nF4ClL1f7xm0Bta6WDlbVCvAoK3TzqOtwnjWdC6u8IsKB4VHsw1OEkGL9VuNTn96I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZawVfrtL; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZawVfrtL"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43d0782d787so8437885e9.0
-        for <git@vger.kernel.org>; Sun, 16 Mar 2025 08:19:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742138390; x=1742743190; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ho2KgFprDShXC6tWbov/q5g8l+BckMOVV1WjRksFNCo=;
-        b=ZawVfrtLeTvGe3ntwLgjfQCDunLHJ/mueADV7cRYPMPRm8rEmUJX9KTPx23G2CO4qG
-         ik3rNdXJ1ZO4K20HxzfO2QMziv5JoVjwICN2j2mAtQq1ay4L5aZFt1Kza/CcnHaoVBZV
-         9KDTWPlqM0jKJAooKehnKYvaGeDssdq59wz83mal90cDohXHPMEMhmCkATF6iM9NrPZ+
-         S1xAAzKfMdczlX8a1aH2xiKJdhVFq2UT2INcGFo/xtQvE4J9iWegLtEg8gjOiv00CzN5
-         Halg3WHRXNNiwmA2yW7zodGl3yeeic89fKivoHDzCvoISqAckwgx2Rzm34fFJ6Cg6iBl
-         A5Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742138390; x=1742743190;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ho2KgFprDShXC6tWbov/q5g8l+BckMOVV1WjRksFNCo=;
-        b=aY3dLUnNBO2efWsWmVJoZOjtZA43U3J5jVWsXZHjTZzEj6+zzfNkL/Kp+GPV3Xa69p
-         aexBoymle/Ij5JYXhomw3G67PRLiUoH5g8w3AsZEUbd0x6zVkUWlkGF/z8SaiZyNHgOs
-         /pfmDgiPFRTyj9KLHyB68lLFhj06fA1CucSkwlEHCCFEyhDEsqwmhiH5hPmR3rPiZO4g
-         tKjU7X4Nsd0D+F7PmoSxFOYvcxyJrGFfNV/wrieRztgA7r6j6+erEtqRsThdEqjl9vkh
-         tLeB5OvZ8IwSKgyE80wfsXmqUZI5VHajeaTUAzhH8GxfIUsD0KbXsk4h/uVgUB6ec4NA
-         DHhA==
-X-Forwarded-Encrypted: i=1; AJvYcCVZsl0qoWvW1skUr60hr2Kb7ZJxl9zfW53uHD84pWOXIQY2lRRqcPkl9ahMxmqaBHmxtZY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCy7aZjkAv5zwYSrJVdII5AnBEIiNzs/YxRKLBn1cuEg+CTnPH
-	+Hn8FkWSyAWuXMDpHMqsOsjsNFuyIdAW5DDY8xyN7bSMDofwtz7j
-X-Gm-Gg: ASbGnctG54BIqanIPCinIQK/iAwuP7D6H8Dj3i5KRaNXH4TLbXkASe7Pwd6yqjk+Ko4
-	dINsqf2be2qZiurWlmFyFucB/SqgohYBJvfbf47k7bcj5sAuUQKe7B84JZ0ok7WtX/lf1j2zkkN
-	JgKwQM+oB5YQyp3/3Tqg/eSJ2kvny198vzJs3pnUXzH3ihp/7GXp1kN+2pVlQ0o2r5PRTjMGouy
-	oedN4QYbcvdW7Px5jcD8uMDlWHOkszPHNod2Xtjbpai+UsTOt2TnsacXujM/wP8cvkURJupGyCL
-	NYarLsJrdvGEyldnR0HfzdPjuQvvinKlaWrz0i1fRTYRV8SzYRIFnwf0zYxwCwNa/+iUGUgeHy3
-	qwpe1Zk8ebHtn8Ht/53Yc
-X-Google-Smtp-Source: AGHT+IFSvOcTTguquq54I7m5kAAY9q52+LB6/+axfYVs47iPErA1+NKPLvbOm7pxyJtmT2f9QPUEUg==
-X-Received: by 2002:a05:6000:156c:b0:391:456b:6ac8 with SMTP id ffacd0b85a97d-3971d8022f9mr11186249f8f.24.1742138390065;
-        Sun, 16 Mar 2025 08:19:50 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395cb7eb876sm12164592f8f.83.2025.03.16.08.19.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Mar 2025 08:19:49 -0700 (PDT)
-Message-ID: <44a3ad4e-fb50-447f-bb66-f43b5c5ae012@gmail.com>
-Date: Sun, 16 Mar 2025 15:19:48 +0000
+	 In-Reply-To:Content-Type; b=dZfqvtr2bpAsjPPBGUeXYjxd3GD8wassCwLgv2yh0EmBQfkcpU2OpsAvM9xdIzAnai448troGBZVi0RYyDPqaFHq7cq9Nwuf06t0Jc2G45nRFlK1EGEC2Fh3tOUhuUFUsA9TFdx5uxoYq58Cc8Bal9l2QzyVn7QLvcZq7MkMUG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.106] (unknown [93.83.142.38])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4ZG3Jm4CkTzRnlK;
+	Sun, 16 Mar 2025 17:21:44 +0100 (CET)
+Message-ID: <53c5aed4-ce4f-4ad7-8e90-a97fd3c973cd@kdbg.org>
+Date: Sun, 16 Mar 2025 17:21:44 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,49 +26,46 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/3] meson: don't install git-pack-redundant(1) docs with
- breaking changes
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
- <20250312-b4-pks-meson-breaking-changes-v1-3-b89e9a59d228@pks.im>
+Subject: Re: [PATCH v3] gitk: added external diff file rename detection
 Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20250312-b4-pks-meson-breaking-changes-v1-3-b89e9a59d228@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: ToBoMi <tobias.boesch@miele.com>
+Cc: git@vger.kernel.org, ToBoMi via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.1774.v2.git.1725607698680.gitgitgadget@gmail.com>
+ <pull.1774.v3.git.1741093275742.gitgitgadget@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <pull.1774.v3.git.1741093275742.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hi Patrick
+Am 04.03.25 um 14:01 schrieb ToBoMi via GitGitGadget:
+> From: Tobias Boesch <tobias.boesch@miele.com>
+> 
+> * If a file was renamed between commits and an external diff is started
+>   through gitk on the original or the renamed file name,
+>   gitk was unable to open the renamed file in the external diff editor.
+>   It failed to fetch the renamed file from git, because it fetched it
+>   using its original path in contrast to using the renamed path of the
+>   file.
+> * With this change gitk detects the rename and opens the external diff
+>   with the original and the renamed file instead of no file (it is able
+>   to fetch the renamed file path and name now from git).
+> * Since git doesn't destinguish between move or rename this also works
+>   for moved files.
+> * Showing the external diff with the original and the renamed file
+>   works when either of the files is selected in gitk.
+> 
+> Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
+> ---
 
-On 12/03/2025 13:17, Patrick Steinhardt wrote:
+I've picked up this patch, but haven't found time to look at it in
+detail. It will take some time. Please bear with me.
 
-Thanks for taking this forward
+The commit message would need to be rewritten to match our usual style:
 
-> +manpages_breaking_changes = {
-> +  'git-pack-redundant.adoc' : 1,
-> +}
-> +
-> +if not get_option('breaking_changes')
-> +  manpages += manpages_breaking_changes
-> +endif
-> +
->   docs_backend = get_option('docs_backend')
->   if docs_backend == 'auto'
->     if find_program('asciidoc', dirs: program_path, required: false).found()
-> @@ -479,7 +486,9 @@ endif
->   # Sanity check that we are not missing any tests present in 't/'. This check
->   # only runs once at configure time and is thus best-effort, only. Furthermore,
->   # it only verifies man pages for the sake of simplicity.
-> -configured_manpages = manpages.keys() + [ 'git-bisect-lk2009.adoc', 'git-tools.adoc' ]
-> +configured_manpages = manpages.keys()
-> +configured_manpages += manpages_breaking_changes.keys()
-> +configured_manpages += [ 'git-bisect-lk2009.adoc', 'git-tools.adoc' ]
+- We do not use bullet points for normal text paragraphs.
+- We describe the status quo in present tense,
+- and then the changes in imperative mood. (Like, "code, become so!")
+- The subject is not in past tense, but usually also imperative.
 
-I don't think we need this hunk as we add manpages_breaking_changes into 
-manpages in the hunk above.
-
-Best Wishes
-
-Phillip
+-- Hannes
 
