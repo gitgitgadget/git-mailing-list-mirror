@@ -1,116 +1,135 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF7C33F7
-	for <git@vger.kernel.org>; Sun, 16 Mar 2025 01:59:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A7D376
+	for <git@vger.kernel.org>; Sun, 16 Mar 2025 02:37:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742090376; cv=none; b=IySz+Fg09MrzUFzZZVCBjQWiUNlGQBEv/Ck9i3IGCPll6b417Y+bBSwq7WymPpgzVwHmuiZjYdiaw9wc8M2AyssH1t544d7wvLg/N5FKw0WYIgo60Gs/0RhvyNPGF5IX+xZTSw49kpQECySTadEuUzXOS/qItAH5sLaDY46Zq00=
+	t=1742092670; cv=none; b=I4fPTqg1lUbZjyKx/0DFclQbatr1okYxXxfjOR4g0J8V44CIcPVMqFAJb5MTSoaTPUQsxtwo7Zq+mrqdf5tu1atlhTFterCIHHYOC/cxvm0XLTEZYXWbxPGh+BnWeXrtITdyFpxG6GKMgQkEnD8hYEd05swAgrJnaqr3hD1/khQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742090376; c=relaxed/simple;
-	bh=E1jbDhH5SNBqGI57qg1Bd/oQ6aW4f9H22IGrAHTUO9E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tawuF+ax0ODSlj9ZY6MVytyuE0uzoK6sATyIq0+R/JNpnJw3OmijbK6F5r7tg1qwOIt2GqtgQ8JlSFsKJuvX1lk1B/JJID3LKm7ZheEG/ZQm/XTVOwjIsIMa/mSfbHkAIYsO6UKws2JFFQG3QTGZQpNk2l1B6JVdQ9BEGJwjYbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QVvgFq4S; arc=none smtp.client-ip=209.85.219.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742092670; c=relaxed/simple;
+	bh=r7RaZfDgkqCj4igKj1EXQ1CVjw2/MqCfLfFho/DB66U=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=AWHNwgD6eUcMPYxa02HCzhbqeCk/Kt7gVmLYCSXxEvwBe9EVq7G8vfhYP79vNp1CTrTqqPsVKp+IlhKNNO5iQGd2SF10Y57G5sM4pBSqxRMuDK8sDBCnlLV5sxplBV8WXrv91SMBZ3h8I6k8XKuRHDmAImoe2LlM4/fjLca0yjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=DyJNoP2v; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QVvgFq4S"
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e573136107bso3112473276.3
-        for <git@vger.kernel.org>; Sat, 15 Mar 2025 18:59:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742090374; x=1742695174; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E1jbDhH5SNBqGI57qg1Bd/oQ6aW4f9H22IGrAHTUO9E=;
-        b=QVvgFq4SsWz3J6K7rWDsynovuVzp1XDm30BGp7xYzav3pNzeAFAtyZ8BL0kFGQr+6K
-         10ByNZ9h0Cm7Zb3WV1GABs1bbQs/8pQWx+j0qK2mLYHhCO41m7Bfqo5x/UmbNfn/D2up
-         lBKWafyMghW9i00n07irduVAvm+bC2QchgxTsBNoTUpG3JvjPf3GArtrTewGNWqgzjt6
-         XJcH/cyTixRrNCH0T5PnMuQdz8L6kqKsanwEvonMlDiq2V7w1NCit6uis//eMTrsVk9Q
-         QFy/6F8j7L/VKiKVj1F7XYBrGBQ8ZkjXsovXRGkyGc6wQgKFPBbjkldpYNHjRbawZK/1
-         WCLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742090374; x=1742695174;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E1jbDhH5SNBqGI57qg1Bd/oQ6aW4f9H22IGrAHTUO9E=;
-        b=Wkh0XkN2EqH+IWbu1AkbfhNNvnSekBXFVW7TXsOYvSm+TyUXNwVOMleOzCv9D75qwD
-         6t6BAkFO9SSmxxx5qTSnGhlwpuS9SYBZy5CzKtLhU0mNIYxCF6I+gRBih7zhDdUPko3f
-         tn93ka9R2S123iSVjCBDM3tOGM6hASk9b5/GJx/45JZLL/uL8+GlvEQEBho6QdX8OSlK
-         5oDwEiNUZzHiI37pxS2KhUuPEK0W2jcqwr24Ew6ziamjcOAqbvgK7hxmOncR5+yswRTv
-         wVH7sJq+r6yHgrLF98+SjJJlZAi5gcNu0Q9Z+yDrv9Qmrj5BiCmOVbA1Kv75pjsE02Tj
-         GCLw==
-X-Forwarded-Encrypted: i=1; AJvYcCUyAQZXhyBl55S3sqXeqhUoemPFysfkd7sguChwfRG/ybZgWlfPTM2c6gwE/7ImP7z+6t0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YylGRxMkZ/UWAJKgpBzMT9Bhf07q03AtmjAkQg3sw3lWzioC6V6
-	pDIFzAz4+xKQp3d4zmCOFVVZUTm28OJ6Xft2bS63VDStZorMj62/5esZFrLbSIV4MqkdgZvQv/+
-	lri4RCTUnxCy5IZK/ka0kBZVyq5Q=
-X-Gm-Gg: ASbGncsqccO5/E0KncQCU0JrWl4P1WtPOyc8ppD6Udb2qp1UWxeFILZ0CgjhE4WkWeG
-	e1OP0DLCFqWdjDCJCAO4aGvZ5xY2NwmbIP53nNE2jSRiUnwIjSQqaAzlygQ/FrllBz7YvLFDWDg
-	JtGBO4TlmW1QkQJSS1RRME/5vyDlO3ccrunLCkdC2OswdMXqU6ZWbAPU5u12OP
-X-Google-Smtp-Source: AGHT+IE1rcNHNlzNY4hi8gmWHEZfswlkX14O2v5rBANiy9CM3/78XKn2xDt389QBoTJhP7Hj7AunnTRCrqh7Ocv2IE0=
-X-Received: by 2002:a05:690c:a8b:b0:6f9:50aa:b7e2 with SMTP id
- 00721157ae682-6ff45efc20dmr101444047b3.21.1742090373873; Sat, 15 Mar 2025
- 18:59:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="DyJNoP2v"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1742092666; x=1742697466;
+	i=johannes.schindelin@gmx.de;
+	bh=PBOEugWlfkSCGUR7JAKlg8aHf39xKpoaNhzvaIm66R8=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=DyJNoP2vB1cmmxBJC9MJA7EfT0bD+FPDYi1SP25xPQglCWmGjQDbVwmEbEYFknJH
+	 v8KvX8uGq/6tzv/Wj63s9JxgQSbdY6+zxwXdQjStGp+kXvx2/SU1qml1+ELjeCoKX
+	 6Jed6TyThnDIb6BZrTB7zRB5Y6uEkN3bihRnq4Dh1IT8daBHEnAQ/QQc9BLJ6KqAs
+	 vj8fbeNAvOvxvdkJGkT7pAGUKbbPqUHWsrRZJUxvfW4t1Ce3pAZeK4rLbvtq6adSt
+	 l3oMAHg//nLSu0xy7KAk8qTvuiuIeARnNXfGkhqqyfPM9qo6ENnH42EfaAKBLA6M6
+	 G55JEyJBSo8uQEZCXA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.73]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N0XD2-1sxXW13Vcy-00zyfi; Sun, 16
+ Mar 2025 03:37:45 +0100
+Date: Sun, 16 Mar 2025 03:37:45 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Zejun Zhao <jelly.zhao.42@gmail.com>
+cc: git@vger.kernel.org
+Subject: Re: [PATCH] contrib/vscode: respect configurable options of
+ IntelliSense
+In-Reply-To: <20250204125721.11357-1-jelly.zhao.42@gmail.com>
+Message-ID: <fdd8e2c6-9adc-4e53-d65c-ba75da0758f9@gmx.de>
+References: <20250204125721.11357-1-jelly.zhao.42@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANrWfmRq=7Q=vCPgmcLcek=fRsw83BPqTX7gTpcLb=JpQpYZEw@mail.gmail.com>
- <CABPp-BHPAEcJibTaiMVE1K7AvYE+TYmOt7=6XUtcZbm7wsWhDQ@mail.gmail.com>
- <CANrWfmRpDFuqv+fkCf_p_ggHTrRjD3Vgviqrai_rA7Lu-YFEMA@mail.gmail.com>
- <CALnO6CCppGXFHoL1jSkUWQUh41=RHb346hW6Qr9hFJpTawEW=Q@mail.gmail.com> <CANrWfmQdnrGmGW3ot9e0DU0vEbstrOsqzh9Puv9dy0Zsr7zQcQ@mail.gmail.com>
-In-Reply-To: <CANrWfmQdnrGmGW3ot9e0DU0vEbstrOsqzh9Puv9dy0Zsr7zQcQ@mail.gmail.com>
-From: Han Jiang <jhcarl0814@gmail.com>
-Date: Sun, 16 Mar 2025 14:59:23 +1300
-X-Gm-Features: AQ5f1JrbOWFgkh1yHLmUrPVwczWB5_mZaLSSMtWEz_nYimHn9whGzluria4hiPU
-Message-ID: <CANrWfmTFavk=q_h2yk6ORZnWyqyaANPnQ5vWiWXWXze5ng5C7Q@mail.gmail.com>
-Subject: Re: `--ancestry-path` documentation has wrong graph
-To: Elijah Newren <newren@gmail.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:/iyLwJ1UveCbbxxuxVUgKnzjE0qw2xzkxIzcuKKD9mbfXwvMQev
+ A4aLieN8/Jrqb9rkXg9V057XgZzF7XEqFfeagDQTNWPL+pwTv04WCKqSFqAM54ZviIVkERR
+ JV3u75LpADm8Wv0sj5CeTAUGQhduyshnkQb3IZKu3LsnJWRLaj8ZQuWu0+ehlV9R/gBzh7j
+ s/gdIuopXBDCz+EbNq6GQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:PCrDE29D0lw=;y9jQWnjb+kLdWsruwr34wILcfkG
+ IvlQhshE1N2k1I1rum6de65VEg/L2zsAmr+m5gs1BxhPst+e6UVTOAUPMd/70JIlMHVD1HAW+
+ UM+lIkTXuq4Dvbf5G+xJ/P0LH3bjF+r9XPHNA/Rl9IrMOkhpbWKl0sfE+je8xsYOS08foKqif
+ 9vJcWh0Q63yOytgOSS3XG7NUEHnsnGed8Yxk+oPjbOiQgrVlv+dtQ5AiogdGggKsmvdLT/Yt7
+ +HxTMOfqbZKsFb1/WmO0V01DBgPPAcsaN0yOU3uqNbGTenWjSTsj7KQLWSqqU73GMwZhRxMlR
+ qz1AiVHBKIW4we5cvArXsqHRDN/CwHOYqYQgEkMCzPmrai/C+VYiHlAsr/3IfDoMQP9IBwNqU
+ FQ1OslpgZhGkdkuEdS+0H2tWYwOHljCXO15Y48HLDHOyH6oIJFhfakcnKkD6ITDDhJcON5AcO
+ 3Q1kEs3YldMBrLPO9VmK63+trubq+cKCtsZE5L9XB9d1H9p3QSt2qAlAQ7vcrAqxRkNJ1X3H+
+ WBGqOk+39Xp6f/1dPMfa2vib0lzMEvYLvHmqgZxdkMAH/D4tD5keXTNnGXp5CHo0L9gy9sI83
+ bOY3Bmraa3Y+emFypFCBzRVK0w5w5ceUsKATUIBdh9t9p0fGIH4LYLWFWJyTLdCMVWUZQBUya
+ jVxQpIbHIZ2ulNcONIsngrItvvnbKrCQp3dK1FvshG7ZwOuH4cDR9Ayu7heynEvhFVvkMi332
+ 1GjaqZ6N5lWBxKB33lm8njUQsa48KEnEGvZFzVlZyVz/i6aIPS5YsnKSaX9ffmSTK7T+SF94M
+ Tq8Sbl/GpFOOqaRPsstPE6lqDQx42SWWkYmMDSegX6/YrPcrp0eeGaAoGhjFO6Za6z4F24IKj
+ wgeggaV80HbA+yHlEheA9nHl+znd3MPIc0NoDbwzlmQ2jEUwtkEoSrKxU6+s/HZ9GRbXo0yH4
+ 2r88ER2IQ4JH37apeVQpqc+wFK1MvePxHxj7aQehsZITytQAY+v+BhWT13LJnDCyyuFwmkhT3
+ F1/o9HNMhc2GyIPwBF/dr0bLbfLbCPk7MGhwPLBssZQmvbxpBcLbhcVblOE68NA/8HKOFNrer
+ +8yyAtNHEdVL6fL4JEvpZA1jRd62EtRu/r18kb1/2yjW01tOHCuac0DgSsYmlOONh4/aTtHpB
+ PyxWpnQfcFzaipAspsTb8iSK89unQorunUc+0/4ICrAMPZKKhQ69UwzmNTnSD7dIVvyv0djph
+ l3/ZocuTKYPQlk7tiO/LCWDoaJ7cTqhI6LGQoP7rW9/AfIkj98NujsKQH3YV5QMUOfTKSg74N
+ 7xHEaTP/zH1sd5+hI9PEFUzW60SmPh6gzTO1YBUu3Esy1xtOYpUijDD62Js0xL66E+sVU2e5q
+ z2RyOelXHc8RW4dBCJ000GIAS470kzn5V40siIlCqNjBHKX0ca5KGxWmyZjEpIYVr2i5zgdDj
+ lLpNV1+b/80Isat+5DupUFQwavZ//3cXjP5mKvhjBEq4WRU35
 Content-Transfer-Encoding: quoted-printable
 
-The patch is `/submit`ted to the mailing list:
-https://lore.kernel.org/git/pull.1883.git.1742089659610.gitgitgadget@gmail.=
-com/
-.
-Seems either or both of changing case of case-insensitive header and
-removing optional spaces prevented the bot from parsing the cc line
-correctly. (And I somehow got cc-ed twice.) I'll try again in the
-future someday when I have a chance.
+Hi Zejun,
 
-On Sun, Mar 16, 2025 at 12:51=E2=80=AFPM Han Jiang <jhcarl0814@gmail.com> w=
-rote:
+On Tue, 4 Feb 2025, Zejun Zhao wrote:
+
+> The initialization script of VSCode development environment uses removed=
+ configurable options of IntelliSense, e.g. C_Cpp.intelliSenseEngineFallba=
+ck and therefore triggers some warnings.
 >
-> Thank you for the help!
-> The pull request has been created:
-> https://github.com/gitgitgadget/git/pull/1883 . I'll `/submit` when
-> someone `/allow`s me. (I'll also `/submit` before I'm `/allow`ed to
-> see what the bot would say.)
-> According to https://datatracker.ietf.org/doc/html/rfc4021 and
-> https://datatracker.ietf.org/doc/html/rfc5322 mails can use `:`
-> instead of `:<at least one whitespace>` to separate mail header and
-> address list, use `,` instead of `,<at least one whitespace>` to
-> separate multiple `address`es. According to
-> https://datatracker.ietf.org/doc/html/rfc5322 and
-> https://datatracker.ietf.org/doc/html/rfc5234, strings such as "Cc:"
-> are case-insensitive. I'm just testing these in the `Cc` field.
+> Fix this by strictly respecting the latest configuration manual of VSCod=
+e IntelliSense.
 >
-> On Sun, Mar 16, 2025 at 10:50=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.=
-com> wrote:
-> >
-> > On Sat, Mar 15, 2025 at 4:21=E2=80=AFAM Han Jiang <jhcarl0814@gmail.com=
-> wrote:
-> > >
-> > >
-> > > 7. How to make Gmail web client default to bottom-posting?
-> >
-> > AFAIK, you cannot :/
-> >
-> >
-> > --
-> > D. Ben Knoble
+> Signed-off-by: Zejun Zhao <jelly.zhao.42@gmail.com>
+> ---
+>  contrib/vscode/init.sh | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git a/contrib/vscode/init.sh b/contrib/vscode/init.sh
+> index f2d61bb0e6..17f5b6161e 100755
+> --- a/contrib/vscode/init.sh
+> +++ b/contrib/vscode/init.sh
+> @@ -15,8 +15,7 @@ die "Could not create .vscode/"
+>
+>  cat >.vscode/settings.json.new <<\EOF ||
+>  {
+> -    "C_Cpp.intelliSenseEngine": "Default",
+> -    "C_Cpp.intelliSenseEngineFallback": "Disabled",
+> +    "C_Cpp.intelliSenseEngine": "default",
+
+This looks good to me!
+
+Thank you,
+Johannes
+
+>      "[git-commit]": {
+>          "editor.wordWrap": "wordWrapColumn",
+>          "editor.wordWrapColumn": 72
+> @@ -203,8 +202,8 @@ cat >.vscode/settings.json.new <<\EOF ||
+>          "\\Wchar *\\*\\W*utfs\\W",
+>          "cURL's",
+>          "nedmalloc'ed",
+> -        "ntifs\\.h",
+> -    ],
+> +        "ntifs\\.h"
+> +    ]
+>  }
+>  EOF
+>  die "Could not write settings.json"
+>
+> base-commit: f93ff170b93a1782659637824b25923245ac9dd1
+> --
+> 2.43.0
+>
+>
+>
