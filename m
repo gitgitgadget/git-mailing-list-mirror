@@ -1,67 +1,67 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E9118DB07
-	for <git@vger.kernel.org>; Sun, 16 Mar 2025 06:59:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC361607A4
+	for <git@vger.kernel.org>; Sun, 16 Mar 2025 06:59:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742108348; cv=none; b=EIg5/7rQZmkENTXz8j4TU+ZWdDQSH3oN/blrPuY1wSbgKTYX6akb2/Wvfzs+Ca4jSdeD9UIyqjFBdph67ZXnUjZ9VdCYQSFfpYAojfoX5jBx5IDWcVzfzrdxK4ilB1CKkvLKQMwc7de82CJsMpJqZo7gHF6eKGRonJab+AaW1Aw=
+	t=1742108349; cv=none; b=CSUQCmqzc5KVL2v0mws1gvIn5v8gph2xYNNIzxSE/xWAANfKP2uhbuWERNoER1w68z+CNOoORNaNbaEPg5h8TFVTGr4Rb8o86JNTuaGLzdLI/8qvuI86v406OPKKoyMPOw1mMTHf6lykUupy6NU0yg2AFJI6QedT29ueg/z0M1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742108348; c=relaxed/simple;
-	bh=Qe6J1M+VTSx+DBvWYuiJMmLY9MSxlvidroncW2A9/N0=;
+	s=arc-20240116; t=1742108349; c=relaxed/simple;
+	bh=r1D1q9vbFEDkxnTBkh84ndO2VKBQ6/xqNfpfON4jhKI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=G00JGl3yWnT/9nDP40jckbkBpNDb7Y+wZSHocX/9v8hV1l4NWHYAIYUXGAu81C2GvPEPzu/zCYmj+FaC7YBWdBWSwWCQNRr7Plc6tp5D4U6Wof4tHqbfcrR32sJTWBhMbjxL+CoyRdpwQeKGMefmWsOwYkw1ScpvicVo49HC4yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mBIZJBbp; arc=none smtp.client-ip=209.85.128.53
+	 MIME-Version:To:Cc; b=J1hdEgQjG2QPVQ55vXU+D9dSHStCKpPQHjWlXb6QwT+Y6d9frTKX84dBxU1HXFhydpp5JD0qUiSkJ0+J3RKqHJe+CUAog+fXPM8ET+EopegfW3bRrw65yeH5luRJyUpjx25QspBci90yEdNKZs+LGp7qw+45rO7F4kBnLOT+DTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QRwi5s7e; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mBIZJBbp"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43d2d952eb1so1162515e9.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QRwi5s7e"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3913d45a148so2894492f8f.3
         for <git@vger.kernel.org>; Sat, 15 Mar 2025 23:59:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742108344; x=1742713144; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742108345; x=1742713145; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Av5G7+2sI8ZZYyMpK6C4iIUMbJ4BzFe17X7p0gq9SSU=;
-        b=mBIZJBbpVnCfYmpbtzTimwqXyfZO85NBgk4oa659tmIR9iZChOQdF3LFpgF6WCQAfU
-         98a8Oi5oJFeD4TW/nal7jVX1nbyO3U8HYwaP6kJITytq7xE00l9hg+v8HD/2Gv12UVeS
-         3YHCxsDEEOmcxDgUTrSvXd1uW3dCsjuCm5K6XULG8tzNjwOFwoi6J/O44+8W1WYGLdOI
-         XcEcXG/u5hXKeF96wpC3hFBM+yJ2id5vgkm6kICXK2J4X7xETEbFpO1+oFKLPlYxjnDm
-         MvImPMLYsWnWWwlMiG7gIBLJHjzJ+yl4kUvfXq2eKWJGfK0wO6mwuPMkJJJYC09PsfKl
-         ToMg==
+        bh=E0OTLFfr6Ixlpi/43DgGt8U/OrRG926lRjCOafepzBE=;
+        b=QRwi5s7ekOOji9eUTjIFxTvRuicvWyQJDLLxZvgRXPfcPbAxW+8nemgvZcTZU9FDsr
+         fgiJcRRXO3C3nxpyBWDkF9xTezydq3NMGkogGZDMgEPUNFu2DScf61bFzcRhADd2XFsT
+         C12rivIAj907+V4TyLUPBR9ihe6O3DuVYgnsdiBNbjSPo4VjlhrtHDJ3i2lLqj6GSFGf
+         X8RO/G7RrcEESvLXhSugsm9cmkINgVhDHN2CYR+3nAzamUqGWxE0IwG2cSMALRpJMmzv
+         cHrfsSp52pb05SF5Ky6MQMRlF5c7EzH6vjmfAQoh4Vp9PDrPV8pCBZK+n6qHBPXaQ4aJ
+         zOhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742108344; x=1742713144;
+        d=1e100.net; s=20230601; t=1742108345; x=1742713145;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Av5G7+2sI8ZZYyMpK6C4iIUMbJ4BzFe17X7p0gq9SSU=;
-        b=HxrxnuTbWKdJWfh4A8hGaQdVwVhPqHdSaefiPQ4XiPgv4RTMUJonTyFIh8F6faE6+B
-         SuIrxNDXs0N1994qESm4DxdQeC5wXP6/cuxUTzTbY7hGfRZfR3liYBWa/fe+FeC3JQBH
-         Qd0OkMU8rqes0bzHRLCzpz/PgGRFoSndhcYNZKO+39O3VP3db273KeyfHlKW41bLpdB7
-         WTWXBbyGwjhuocM9rr7NuTRYBSgsUljUa+rfYmV51qtNtOgCbeY5URWichTWO1IHZouD
-         eCktr8CEia56td2VtMQnGJKxJS7ZIbpvbHorgf1EJDiDrXbuBYr35x7htFz6BlUPTa50
-         ubMg==
-X-Gm-Message-State: AOJu0YxXN4XJjZsKmFJ7bDLMkSLNr7ky8VGyuKKQ8T8GcaSjBy6bgFxR
-	uCq/RQmQb7qEqNyI7Cgl6IRoi6O90sUZcurh/oI7R5er4vVbeMiQw+OAiQ==
-X-Gm-Gg: ASbGncuZD6RRi2Cx+/FDxGHS3lZn8rtNnlMTuy299t9p+MLfXOuZeX3wIiGgef1d3+7
-	lluHZ8+tw83IRy9v8kxpPFNYJ0Q4gZKvUoH9lR0Y6gOTqw+upzHbev7lz+1d9tlu1ItwLbPd+Lr
-	skjjNeuXaNedjzIMNYXoI5KNp3ueqxEh8KyxiS9Npg6yRKgOcCaDJqjDjQ7bqawYFBYomvFeLAZ
-	gwR6STHkuaY+jDnrGYQ2fhJfcjc7tLyYRQlPLQHzmZIv61Wcsz5iLkrgVm8ieVcSieZB5WJXiDj
-	YgP0FazGMEeGa0EP+a9/smip0wNJLbxvxDlru3nXbWGlFw==
-X-Google-Smtp-Source: AGHT+IHP772vivxIYnT6vamWYIAoWV5EE+zjv/yhJsv5ofivfuHJyP6f+L9QgA/zD6JRYKekVIUreA==
-X-Received: by 2002:a05:600c:511c:b0:43c:fceb:91a with SMTP id 5b1f17b1804b1-43d1ec729a9mr107440935e9.11.1742108344154;
-        Sat, 15 Mar 2025 23:59:04 -0700 (PDT)
+        bh=E0OTLFfr6Ixlpi/43DgGt8U/OrRG926lRjCOafepzBE=;
+        b=pGXN0wQlPCWyR7w4rfeXH11mQcgOu/EvLzgcsjWXbj1HCu99rhDz++si1DZU1TAkkT
+         oq+oLYupaXyF6+ahBLLyFgNmNyhRP9xh7hCFceT0XXsjEgDsNv7vz1Ip/4bA3ruGjufl
+         4MwUZ+Ayga7+tWQUfh/lmw7M2zeJiOK4YcbAOctocBWjO31bJuBrEuPk1pa5X1We5VT8
+         YLdsoXIFYaglCeDvt1D6V9Qa5zaewt5Z7Q366pD/1g90I9pOmdtZZZXm08ZOZMwVcIry
+         09ZPqJ6yEWpklSOTnKe0vUcv8kOoGIyvlS05qzyLugQtsH5JcGW8Q6z6x9gagJCVv3/L
+         45bg==
+X-Gm-Message-State: AOJu0Yz4fIfGzEdRmJNB0TpWIGYpi5Xy/n7iBgHSMHu+V0Tp2UsbmBPg
+	yfySVno+MmVA5YVp9uUhAxaMRh6byxXiBkbNg+kqDPQsPRvfRy2idkSKmQ==
+X-Gm-Gg: ASbGncu+2wZOQKVqgC9PxtnxsVGEXwLGuTTZtPqL8tFMm84ey8t/owsIcmTvmbNv1wg
+	zrVM4bx4lnUXEmrxaWD7WVDkIpiGs/6+sf2iBv85y+7xSYTLdK/tcesIN4981r66dudvpRm9aCX
+	lxU2+rf+wMmaW+voRMcy8behHJ9s2d/n30pM1E5buaazssCqWjDmBdG/nMyMnWaDBhyRED7T6g3
+	rIdEzPZdYvS/VBOaxjJdTqpXvMy2VQyJQosqoCaJGIoQhiPXWgRZISyMI+8fiR2X57zSRzl9xem
+	HzZUsj561WiNYWizjmMa9KrFKvCaOkXYtfyhJNVmLP4ghDML/7VusuDp
+X-Google-Smtp-Source: AGHT+IEKuFb+0uSSozmHBYGcKRcK+XkSD9eDUDk+AxkOKt3nSS4ZTv9l9PcZpjOCwMjw3mLPOtLBvg==
+X-Received: by 2002:a5d:6c6a:0:b0:390:f6aa:4e7c with SMTP id ffacd0b85a97d-3971dbe0f3emr7578780f8f.28.1742108345265;
+        Sat, 15 Mar 2025 23:59:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d1fe2927fsm69809145e9.18.2025.03.15.23.59.03
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c83b6e87sm11578127f8f.32.2025.03.15.23.59.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Mar 2025 23:59:03 -0700 (PDT)
-Message-Id: <97fa3d73e88edb5d07ae073c4bf9afa521982600.1742108339.git.gitgitgadget@gmail.com>
+        Sat, 15 Mar 2025 23:59:04 -0700 (PDT)
+Message-Id: <456a30ff72a3126439e8253238423b37b772c914.1742108339.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1882.git.1742108339.gitgitgadget@gmail.com>
 References: <pull.1882.git.1742108339.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 16 Mar 2025 06:58:58 +0000
-Subject: [PATCH 4/5] merge-ort: fix accidental strset<->strintmap
+Date: Sun, 16 Mar 2025 06:58:59 +0000
+Subject: [PATCH 5/5] merge-ort: remove extraneous word in comment
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,35 +77,29 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-Both strset_for_each_entry and strintmap_for_each_entry are macros that
-evaluate to the same thing, so they are technically interchangeable.
-However, the intent is that we use the one matching the variable type we
-are passing.  Unfortunately, I somehow mistakenly got one of these wrong
-in 7bee6c100431 (merge-ort: avoid recursing into directories when we
-don't need to, 2021-07-16) -- possibly related to the fact that
-relevant_sources was initially a strset and later refactored into a
-strintmap.  Correct which macro we use.
+"is was" -> "was"
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ merge-ort.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 46e78c3ffa6..a12aa213b06 100644
+index a12aa213b06..9efc2285a94 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -1517,8 +1517,8 @@ static int handle_deferred_entries(struct merge_options *opt,
- 		struct strintmap copy;
+@@ -3423,9 +3423,9 @@ static int collect_renames(struct merge_options *opt,
  
- 		/* Loop over the set of paths we need to know rename info for */
--		strset_for_each_entry(&renames->relevant_sources[side],
--				      &iter, entry) {
-+		strintmap_for_each_entry(&renames->relevant_sources[side],
-+					 &iter, entry) {
- 			char *rename_target, *dir, *dir_marker;
- 			struct strmap_entry *e;
- 
+ 		/*
+ 		 * p->score comes back from diffcore_rename_extended() with
+-		 * the similarity of the renamed file.  The similarity is
+-		 * was used to determine that the two files were related
+-		 * and are a rename, which we have already used, but beyond
++		 * the similarity of the renamed file.  The similarity was
++		 * used to determine that the two files were related and
++		 * are a rename, which we have already used, but beyond
+ 		 * that we have no use for the similarity.  So p->score is
+ 		 * now irrelevant.  However, process_renames() will need to
+ 		 * know which side of the merge this rename was associated
 -- 
 gitgitgadget
-
