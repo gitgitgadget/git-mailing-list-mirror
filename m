@@ -1,67 +1,67 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E10718D626
-	for <git@vger.kernel.org>; Sun, 16 Mar 2025 06:59:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E9118DB07
+	for <git@vger.kernel.org>; Sun, 16 Mar 2025 06:59:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742108347; cv=none; b=XvrNBCaMu6Lv7Pjeuqgq/yf8F1xtvAUJR4Ixm71XBY9pJ2MaXabub/BuY++81Z6mfWoFR+x4sk0E/Qm6o1MP0ZlmwaRxhQ+r7/qS1L02c/gHsuQEfXdnDs6SVVWYDwuqOKmlE1tsVhvV7gwFODHNNTnRVZ7r5v/4asm81XeXT00=
+	t=1742108348; cv=none; b=EIg5/7rQZmkENTXz8j4TU+ZWdDQSH3oN/blrPuY1wSbgKTYX6akb2/Wvfzs+Ca4jSdeD9UIyqjFBdph67ZXnUjZ9VdCYQSFfpYAojfoX5jBx5IDWcVzfzrdxK4ilB1CKkvLKQMwc7de82CJsMpJqZo7gHF6eKGRonJab+AaW1Aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742108347; c=relaxed/simple;
-	bh=P0AihyQtwl+k4TA3rt8C/P4D9lb00MM93DtUo8WFoIA=;
+	s=arc-20240116; t=1742108348; c=relaxed/simple;
+	bh=Qe6J1M+VTSx+DBvWYuiJMmLY9MSxlvidroncW2A9/N0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=QBmIa3XVAekdQMth+qozQsjSGWR+mSKDfMj8xBr2G132NawcVy7+7VtoZafYdtBotH7TLRWRuifNzTekLwDWsipdLae5ISft4nq6I1cq7td1omDJFh/gAZKrgSAaeggct69FaNfgX0It3pxjv9PvHoNu2Wkj3f30KhX/3k7Hik8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eYkzvglk; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version:To:Cc; b=G00JGl3yWnT/9nDP40jckbkBpNDb7Y+wZSHocX/9v8hV1l4NWHYAIYUXGAu81C2GvPEPzu/zCYmj+FaC7YBWdBWSwWCQNRr7Plc6tp5D4U6Wof4tHqbfcrR32sJTWBhMbjxL+CoyRdpwQeKGMefmWsOwYkw1ScpvicVo49HC4yM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mBIZJBbp; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eYkzvglk"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4394345e4d5so7205395e9.0
-        for <git@vger.kernel.org>; Sat, 15 Mar 2025 23:59:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mBIZJBbp"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43d2d952eb1so1162515e9.1
+        for <git@vger.kernel.org>; Sat, 15 Mar 2025 23:59:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1742108344; x=1742713144; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hllZ1uHsA8dJwFQtBkOFIWs9+0fnyx5kVbDHNJ2Mdtg=;
-        b=eYkzvglkrldgTsuJeyNT97IbFjs9mbyq9QKxF1FTPzN6O2OSuCLFnv8U0f0V45xqy1
-         UsjjJ63jG72IEdDiv0i1298nTR0HsSbN+LHN9TmGlbic3kdveSiMcyhJg4Xl4HRjuhf+
-         3lDU4/dHW8tdt4NhqRweObYCpkWrwk+WVD6Cxob9Ru57mraHf8oYzlLUYN7TPB7ZCZY6
-         0SJpX5ETDCKLWhsJ+ExPgPcY4UJCGT7XuqXFWa6uzau5NkTCilDhcFR8ISZwqHTgN6iN
-         SMcBKV7tNLpSnBUrsvfAruO4vRytjdG1VkifonnZ/sK2B1MYS4Adqc5rWi7GfoKV/+yn
-         9aYg==
+        bh=Av5G7+2sI8ZZYyMpK6C4iIUMbJ4BzFe17X7p0gq9SSU=;
+        b=mBIZJBbpVnCfYmpbtzTimwqXyfZO85NBgk4oa659tmIR9iZChOQdF3LFpgF6WCQAfU
+         98a8Oi5oJFeD4TW/nal7jVX1nbyO3U8HYwaP6kJITytq7xE00l9hg+v8HD/2Gv12UVeS
+         3YHCxsDEEOmcxDgUTrSvXd1uW3dCsjuCm5K6XULG8tzNjwOFwoi6J/O44+8W1WYGLdOI
+         XcEcXG/u5hXKeF96wpC3hFBM+yJ2id5vgkm6kICXK2J4X7xETEbFpO1+oFKLPlYxjnDm
+         MvImPMLYsWnWWwlMiG7gIBLJHjzJ+yl4kUvfXq2eKWJGfK0wO6mwuPMkJJJYC09PsfKl
+         ToMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1742108344; x=1742713144;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hllZ1uHsA8dJwFQtBkOFIWs9+0fnyx5kVbDHNJ2Mdtg=;
-        b=B77xC0oW0jPOG9ur/uFwIJZ2XI5EENLJJ+lrZcvpQbLgDAZ87zNxcr/ZuMIsuEIFtP
-         EABI2A91aU58YjHAuJil/QcIKMRUoksHox+cMpDauHB5pnRymWIdttnZr6zYu3vUD1fk
-         3LgYtJ7fgPsk4U/5Zyt4j5dq3Aela6BgJsW4IqHDNRDRxbcreCWZmoG1NcTrd4KPihPY
-         pQIKJpkCOenP07jviFMwnQ5gKW9U9JL2dewjqmjMa9Elcgn1piOyi92g5V/7dqXZqD9P
-         5WPIYCxcIkVza87/0K8wc5R2SBV66N4RatG8y/6RjEzCTfGU7RiJeVEaQNtFCq8FeLuJ
-         8Cfg==
-X-Gm-Message-State: AOJu0YxVrjedpIlwWsRp/QUem0XjC7IopiAu/g8zA/7MvGG3vzMW/LxV
-	rX/HoOWKxqjJr63IfR6djNyGulxMwxnDSbTcRKQMmFHSQKwun8iMTMvt2w==
-X-Gm-Gg: ASbGnctL635IqwLfh8X+MB0q4pDxmJTcIojznrA3dmj9ra9uC2dC5fnfBGlsRnggF0y
-	wIvu4+9sRx6mKzOQE3r2rQ2wYgm3PcKHsv95IKQ1Rp6t8n5Q/56Z3zXrnfi4L2g/dQXqW+AXxi7
-	nlNrHVQfqD0Eq84p5MlLEV7h1trRlRuwg9fnwo+11eITqzN05Ctt77bQp4wLdKNM40cpFfcDBnk
-	PXxhrE64u2m32OqYeX2PqdBZMncO9KFzCsfuqc3xdpBUCyNNBRBmWGkUzcFDUtP321Qqu5z7TiB
-	QHVd9sQrT7bIUj9f4PvlQ40pdOwH4pQQ+1qViXN7ha10PA==
-X-Google-Smtp-Source: AGHT+IFXz7XhBbNRhbpjPBQHm6BLXi5Rhb/LFaSOwxfbAie2QGjdb6PVKM2vV6uxNqZFiVxFf8yjeA==
-X-Received: by 2002:a05:600d:1c:b0:43d:79:ae1b with SMTP id 5b1f17b1804b1-43d2018096amr100318325e9.14.1742108343498;
-        Sat, 15 Mar 2025 23:59:03 -0700 (PDT)
+        bh=Av5G7+2sI8ZZYyMpK6C4iIUMbJ4BzFe17X7p0gq9SSU=;
+        b=HxrxnuTbWKdJWfh4A8hGaQdVwVhPqHdSaefiPQ4XiPgv4RTMUJonTyFIh8F6faE6+B
+         SuIrxNDXs0N1994qESm4DxdQeC5wXP6/cuxUTzTbY7hGfRZfR3liYBWa/fe+FeC3JQBH
+         Qd0OkMU8rqes0bzHRLCzpz/PgGRFoSndhcYNZKO+39O3VP3db273KeyfHlKW41bLpdB7
+         WTWXBbyGwjhuocM9rr7NuTRYBSgsUljUa+rfYmV51qtNtOgCbeY5URWichTWO1IHZouD
+         eCktr8CEia56td2VtMQnGJKxJS7ZIbpvbHorgf1EJDiDrXbuBYr35x7htFz6BlUPTa50
+         ubMg==
+X-Gm-Message-State: AOJu0YxXN4XJjZsKmFJ7bDLMkSLNr7ky8VGyuKKQ8T8GcaSjBy6bgFxR
+	uCq/RQmQb7qEqNyI7Cgl6IRoi6O90sUZcurh/oI7R5er4vVbeMiQw+OAiQ==
+X-Gm-Gg: ASbGncuZD6RRi2Cx+/FDxGHS3lZn8rtNnlMTuy299t9p+MLfXOuZeX3wIiGgef1d3+7
+	lluHZ8+tw83IRy9v8kxpPFNYJ0Q4gZKvUoH9lR0Y6gOTqw+upzHbev7lz+1d9tlu1ItwLbPd+Lr
+	skjjNeuXaNedjzIMNYXoI5KNp3ueqxEh8KyxiS9Npg6yRKgOcCaDJqjDjQ7bqawYFBYomvFeLAZ
+	gwR6STHkuaY+jDnrGYQ2fhJfcjc7tLyYRQlPLQHzmZIv61Wcsz5iLkrgVm8ieVcSieZB5WJXiDj
+	YgP0FazGMEeGa0EP+a9/smip0wNJLbxvxDlru3nXbWGlFw==
+X-Google-Smtp-Source: AGHT+IHP772vivxIYnT6vamWYIAoWV5EE+zjv/yhJsv5ofivfuHJyP6f+L9QgA/zD6JRYKekVIUreA==
+X-Received: by 2002:a05:600c:511c:b0:43c:fceb:91a with SMTP id 5b1f17b1804b1-43d1ec729a9mr107440935e9.11.1742108344154;
+        Sat, 15 Mar 2025 23:59:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d200fad64sm69749515e9.25.2025.03.15.23.59.03
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d1fe2927fsm69809145e9.18.2025.03.15.23.59.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 15 Mar 2025 23:59:03 -0700 (PDT)
-Message-Id: <9f6a1669f39d26db8c9cd5c9db290f8708dce89b.1742108339.git.gitgitgadget@gmail.com>
+Message-Id: <97fa3d73e88edb5d07ae073c4bf9afa521982600.1742108339.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1882.git.1742108339.gitgitgadget@gmail.com>
 References: <pull.1882.git.1742108339.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 16 Mar 2025 06:58:57 +0000
-Subject: [PATCH 3/5] t7615: be more explicit about diff algorithm used
+Date: Sun, 16 Mar 2025 06:58:58 +0000
+Subject: [PATCH 4/5] merge-ort: fix accidental strset<->strintmap
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,41 +77,35 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-t7615 is entirely about testing the differences about different
-diff algorithms, but it doesn't specify any diff algorithm when it
-is testing myers.  Given that we have discussed potentially switching
-defaults (https://lore.kernel.org/git/xmqqed873vgn.fsf@gitster.g/), it
-makes sense in tests that are about different diff algorithms to be
-explicitly about which one is intended to be used in each test.  Add
-that specificity.
+Both strset_for_each_entry and strintmap_for_each_entry are macros that
+evaluate to the same thing, so they are technically interchangeable.
+However, the intent is that we use the one matching the variable type we
+are passing.  Unfortunately, I somehow mistakenly got one of these wrong
+in 7bee6c100431 (merge-ort: avoid recursing into directories when we
+don't need to, 2021-07-16) -- possibly related to the fact that
+relevant_sources was initially a strset and later refactored into a
+strintmap.  Correct which macro we use.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t7615-diff-algo-with-mergy-operations.sh | 4 ++--
+ merge-ort.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7615-diff-algo-with-mergy-operations.sh b/t/t7615-diff-algo-with-mergy-operations.sh
-index 3b1aad0167a..ac5863e788c 100755
---- a/t/t7615-diff-algo-with-mergy-operations.sh
-+++ b/t/t7615-diff-algo-with-mergy-operations.sh
-@@ -26,7 +26,7 @@ GIT_TEST_MERGE_ALGORITHM=recursive
+diff --git a/merge-ort.c b/merge-ort.c
+index 46e78c3ffa6..a12aa213b06 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -1517,8 +1517,8 @@ static int handle_deferred_entries(struct merge_options *opt,
+ 		struct strintmap copy;
  
- test_expect_success 'merge c2 to c1 with recursive merge strategy fails with the current default myers diff algorithm' '
- 	git reset --hard c1 &&
--	test_must_fail git merge -s recursive c2
-+	test_must_fail git merge -s recursive -Xdiff-algorithm=myers c2
- '
+ 		/* Loop over the set of paths we need to know rename info for */
+-		strset_for_each_entry(&renames->relevant_sources[side],
+-				      &iter, entry) {
++		strintmap_for_each_entry(&renames->relevant_sources[side],
++					 &iter, entry) {
+ 			char *rename_target, *dir, *dir_marker;
+ 			struct strmap_entry *e;
  
- test_expect_success 'merge c2 to c1 with recursive merge strategy succeeds with -Xdiff-algorithm=histogram' '
-@@ -42,7 +42,7 @@ test_expect_success 'merge c2 to c1 with recursive merge strategy succeeds with
- 
- test_expect_success 'cherry-pick c2 to c1 with recursive merge strategy fails with the current default myers diff algorithm' '
- 	git reset --hard c1 &&
--	test_must_fail git cherry-pick -s recursive c2
-+	test_must_fail git cherry-pick -s recursive -Xdiff-algorithm=myers c2
- '
- 
- test_expect_success 'cherry-pick c2 to c1 with recursive merge strategy succeeds with -Xdiff-algorithm=histogram' '
 -- 
 gitgitgadget
 
