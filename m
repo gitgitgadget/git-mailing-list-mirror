@@ -1,108 +1,116 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14CF63CF
-	for <git@vger.kernel.org>; Sun, 16 Mar 2025 01:47:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF7C33F7
+	for <git@vger.kernel.org>; Sun, 16 Mar 2025 01:59:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742089665; cv=none; b=DyLcnORR/v2lByppl8SN9NTk7egHsLkQe+DkDF8eP/s2lNf+GuwfwMqnkBVusD4R9yfikdNzYlxy8vZJeH+9XJnA0A3O6+BfNsZ8CTrc2/HCnj638xIjbhPBLIOQ1090JvWfl1jH0Lgz+pr/YDUeW1Pnn9ZxhR84vECfGsxQzNc=
+	t=1742090376; cv=none; b=IySz+Fg09MrzUFzZZVCBjQWiUNlGQBEv/Ck9i3IGCPll6b417Y+bBSwq7WymPpgzVwHmuiZjYdiaw9wc8M2AyssH1t544d7wvLg/N5FKw0WYIgo60Gs/0RhvyNPGF5IX+xZTSw49kpQECySTadEuUzXOS/qItAH5sLaDY46Zq00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742089665; c=relaxed/simple;
-	bh=ZfZmeK1HsMqW5YWGMraFS6CaeSd/A4hM/LNa+hTmR6g=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=px6ampvtLASpe3XtUwDKbexqx3Oj415vC8y4XSt8bTPjZ633+wsq24n4twDNDV7k/EHan9ELj+4o20D/5XUc+bsDrItQROBBH3v1HNdE/X7k/ko5D2vVFwwyUHlzQW/oThSyh5WRZGULbnqfDZT/ypdfxY30CkhZ06bqkeFZQHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZSq8uI8x; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1742090376; c=relaxed/simple;
+	bh=E1jbDhH5SNBqGI57qg1Bd/oQ6aW4f9H22IGrAHTUO9E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tawuF+ax0ODSlj9ZY6MVytyuE0uzoK6sATyIq0+R/JNpnJw3OmijbK6F5r7tg1qwOIt2GqtgQ8JlSFsKJuvX1lk1B/JJID3LKm7ZheEG/ZQm/XTVOwjIsIMa/mSfbHkAIYsO6UKws2JFFQG3QTGZQpNk2l1B6JVdQ9BEGJwjYbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QVvgFq4S; arc=none smtp.client-ip=209.85.219.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZSq8uI8x"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43cfe63c592so10599085e9.2
-        for <git@vger.kernel.org>; Sat, 15 Mar 2025 18:47:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QVvgFq4S"
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e573136107bso3112473276.3
+        for <git@vger.kernel.org>; Sat, 15 Mar 2025 18:59:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742089661; x=1742694461; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=j5IvM4g/R21BFEsXDDXwbZnQPuYcc8cwFy03s3tMSoQ=;
-        b=ZSq8uI8xFq2jGtMWRvAtjtAHNOFpwU+1J6FFCsUrIj4Rh2dMMWqvjt5LQ+c8OJgXij
-         /hZmMfl831OeY2jqvlhwuW1B/ZIt6QdfEnQLqyp9J8bddZn+8Wmv998f/ZxESAiCKN9C
-         AZm+PTKRQdpdlNeGgkqRQSHm1OqaLEoY4KnJmvhPkVyW2+Zp1dl2k9obS1DhpXrcddvA
-         7v9yZLPiwr+flPT2yiByRBGkfJe8k2BRw//aitbId0YcCNZxX8uVay8RKjmCZ3YuEyor
-         25jK/NscTYdffXFtwPKBtvuKGESmLaOP8+Dvdzm6s217m7qhX76bsffm6qyIwRz1vy6B
-         ogPQ==
+        d=gmail.com; s=20230601; t=1742090374; x=1742695174; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=E1jbDhH5SNBqGI57qg1Bd/oQ6aW4f9H22IGrAHTUO9E=;
+        b=QVvgFq4SsWz3J6K7rWDsynovuVzp1XDm30BGp7xYzav3pNzeAFAtyZ8BL0kFGQr+6K
+         10ByNZ9h0Cm7Zb3WV1GABs1bbQs/8pQWx+j0qK2mLYHhCO41m7Bfqo5x/UmbNfn/D2up
+         lBKWafyMghW9i00n07irduVAvm+bC2QchgxTsBNoTUpG3JvjPf3GArtrTewGNWqgzjt6
+         XJcH/cyTixRrNCH0T5PnMuQdz8L6kqKsanwEvonMlDiq2V7w1NCit6uis//eMTrsVk9Q
+         QFy/6F8j7L/VKiKVj1F7XYBrGBQ8ZkjXsovXRGkyGc6wQgKFPBbjkldpYNHjRbawZK/1
+         WCLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742089661; x=1742694461;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j5IvM4g/R21BFEsXDDXwbZnQPuYcc8cwFy03s3tMSoQ=;
-        b=gPcjTBHfQ2uUgliVcBT8ApeWNsZSA5cvoPJ3Tzth0kOcBUA/Zk7U5nfAH+vOt34/RN
-         5sWWFEnn+4XeGtKrh4NYB983laEXbmhj6wRfAmm2sPACMfXZhZsl/untlyl16GnOxACe
-         OTPDrHvw3fYMibIpUVmen38vqUIf8i5XEMh2lKnq6BDK+yMtNd0zhNFiK4rpcAMJUyw0
-         VLMavARPh6GMjgW1WHqnD+muH/woTN8bTWEjkKXCRGKzqoUwKzXDj44zCjjOXTfRtKC1
-         RxKTAqnV6RL5fiGELuarnoPfCMj2wkGxswDS2tNY1QP3PtPScN9nakZmvrzDtB4cM19K
-         JTPg==
-X-Gm-Message-State: AOJu0YzluPZ6yFUkDpJHQBkFDoGYJvpY68Ov+cQzgHxOPZHPLZOIPzph
-	Z++xfJzQbcLruUXgqothl8sAeosaR6/URl0m2d+oO8l/7+xuVIFvH9mfHA==
-X-Gm-Gg: ASbGncvU1EM826Pz0knKEUUC14J/eVh6slxkHua1mjeDaBe0zUG9T/XjxXNh5Mqxcqk
-	7ZLMXbo/TTZdF8vUyjQsOU92scE+aGoRWXLzFdIB7h78ImRMaB25wf42UGXzcNTr5NaTS7O4OU8
-	4nLcZ0MkKUURtfNoWGlhxVzjOji9oNALqdeLadFv6eimmIjpNB05ZZcPyh1ymPwZFflIfR2Ksxe
-	JTAc1q7ZPd6ujRgcu2BEjNPEqdaObIzZC9iGE2oZSk+qBoVXW5ca6a+ycLXduQst3zetPPJ5Z6W
-	OSvr6EmCrCu4L9hjatlMD7mrubjd2gXui39URP+Fw3bT7Q==
-X-Google-Smtp-Source: AGHT+IHKxeIgjOD+UITTYBTynIwOIDg5q4kWyvE5IdlEo9OtmpABKWY2ENZitVn+rRa5JsFAa3mjgQ==
-X-Received: by 2002:a05:600c:3b1f:b0:43d:83a:417d with SMTP id 5b1f17b1804b1-43d1ec8d85emr93313595e9.12.1742089660960;
-        Sat, 15 Mar 2025 18:47:40 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d1fe658d4sm64523505e9.33.2025.03.15.18.47.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Mar 2025 18:47:40 -0700 (PDT)
-Message-Id: <pull.1883.git.1742089659610.gitgitgadget@gmail.com>
-From: "Han Jiang via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 16 Mar 2025 01:47:39 +0000
-Subject: [PATCH] doc: add missing commit C to the graph for --ancestry-path=H
- D..M
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1742090374; x=1742695174;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=E1jbDhH5SNBqGI57qg1Bd/oQ6aW4f9H22IGrAHTUO9E=;
+        b=Wkh0XkN2EqH+IWbu1AkbfhNNvnSekBXFVW7TXsOYvSm+TyUXNwVOMleOzCv9D75qwD
+         6t6BAkFO9SSmxxx5qTSnGhlwpuS9SYBZy5CzKtLhU0mNIYxCF6I+gRBih7zhDdUPko3f
+         tn93ka9R2S123iSVjCBDM3tOGM6hASk9b5/GJx/45JZLL/uL8+GlvEQEBho6QdX8OSlK
+         5oDwEiNUZzHiI37pxS2KhUuPEK0W2jcqwr24Ew6ziamjcOAqbvgK7hxmOncR5+yswRTv
+         wVH7sJq+r6yHgrLF98+SjJJlZAi5gcNu0Q9Z+yDrv9Qmrj5BiCmOVbA1Kv75pjsE02Tj
+         GCLw==
+X-Forwarded-Encrypted: i=1; AJvYcCUyAQZXhyBl55S3sqXeqhUoemPFysfkd7sguChwfRG/ybZgWlfPTM2c6gwE/7ImP7z+6t0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YylGRxMkZ/UWAJKgpBzMT9Bhf07q03AtmjAkQg3sw3lWzioC6V6
+	pDIFzAz4+xKQp3d4zmCOFVVZUTm28OJ6Xft2bS63VDStZorMj62/5esZFrLbSIV4MqkdgZvQv/+
+	lri4RCTUnxCy5IZK/ka0kBZVyq5Q=
+X-Gm-Gg: ASbGncsqccO5/E0KncQCU0JrWl4P1WtPOyc8ppD6Udb2qp1UWxeFILZ0CgjhE4WkWeG
+	e1OP0DLCFqWdjDCJCAO4aGvZ5xY2NwmbIP53nNE2jSRiUnwIjSQqaAzlygQ/FrllBz7YvLFDWDg
+	JtGBO4TlmW1QkQJSS1RRME/5vyDlO3ccrunLCkdC2OswdMXqU6ZWbAPU5u12OP
+X-Google-Smtp-Source: AGHT+IE1rcNHNlzNY4hi8gmWHEZfswlkX14O2v5rBANiy9CM3/78XKn2xDt389QBoTJhP7Hj7AunnTRCrqh7Ocv2IE0=
+X-Received: by 2002:a05:690c:a8b:b0:6f9:50aa:b7e2 with SMTP id
+ 00721157ae682-6ff45efc20dmr101444047b3.21.1742090373873; Sat, 15 Mar 2025
+ 18:59:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Han Jiang <jhcarl0814@gmail.com>,
-    Han Jiang <jhcarl0814@gmail.com>
-
+References: <CANrWfmRq=7Q=vCPgmcLcek=fRsw83BPqTX7gTpcLb=JpQpYZEw@mail.gmail.com>
+ <CABPp-BHPAEcJibTaiMVE1K7AvYE+TYmOt7=6XUtcZbm7wsWhDQ@mail.gmail.com>
+ <CANrWfmRpDFuqv+fkCf_p_ggHTrRjD3Vgviqrai_rA7Lu-YFEMA@mail.gmail.com>
+ <CALnO6CCppGXFHoL1jSkUWQUh41=RHb346hW6Qr9hFJpTawEW=Q@mail.gmail.com> <CANrWfmQdnrGmGW3ot9e0DU0vEbstrOsqzh9Puv9dy0Zsr7zQcQ@mail.gmail.com>
+In-Reply-To: <CANrWfmQdnrGmGW3ot9e0DU0vEbstrOsqzh9Puv9dy0Zsr7zQcQ@mail.gmail.com>
 From: Han Jiang <jhcarl0814@gmail.com>
+Date: Sun, 16 Mar 2025 14:59:23 +1300
+X-Gm-Features: AQ5f1JrbOWFgkh1yHLmUrPVwczWB5_mZaLSSMtWEz_nYimHn9whGzluria4hiPU
+Message-ID: <CANrWfmTFavk=q_h2yk6ORZnWyqyaANPnQ5vWiWXWXze5ng5C7Q@mail.gmail.com>
+Subject: Re: `--ancestry-path` documentation has wrong graph
+To: Elijah Newren <newren@gmail.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The graph for `--ancestry-path=H D..M` should contain commit C.
+The patch is `/submit`ted to the mailing list:
+https://lore.kernel.org/git/pull.1883.git.1742089659610.gitgitgadget@gmail.=
+com/
+.
+Seems either or both of changing case of case-insensitive header and
+removing optional spaces prevented the bot from parsing the cc line
+correctly. (And I somehow got cc-ed twice.) I'll try again in the
+future someday when I have a chance.
 
-Signed-off-by: Han Jiang <jhcarl0814@gmail.com>
----
-    doc: add missing commit C to the graph for --ancestry-path=H D..M
-    
-    cc:Elijah Newren newren@gmail.com,D. Ben Knoble ben.knoble@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1883%2Fjhcarl0814%2Fpatch_ancestry_path_doc_graph_20250315-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1883/jhcarl0814/patch_ancestry_path_doc_graph_20250315-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1883
-
- Documentation/rev-list-options.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index 785c0786e0c..5e5cedb9127 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -640,7 +640,7 @@ commits affected by that topic, we may only want to view the subset of
- -----------------------------------------------------------------------
- 		E
- 		 \
--		  G---H---I---J
-+	      C---G---H---I---J
- 			       \
- 				L--M
- -----------------------------------------------------------------------
-
-base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
--- 
-gitgitgadget
+On Sun, Mar 16, 2025 at 12:51=E2=80=AFPM Han Jiang <jhcarl0814@gmail.com> w=
+rote:
+>
+> Thank you for the help!
+> The pull request has been created:
+> https://github.com/gitgitgadget/git/pull/1883 . I'll `/submit` when
+> someone `/allow`s me. (I'll also `/submit` before I'm `/allow`ed to
+> see what the bot would say.)
+> According to https://datatracker.ietf.org/doc/html/rfc4021 and
+> https://datatracker.ietf.org/doc/html/rfc5322 mails can use `:`
+> instead of `:<at least one whitespace>` to separate mail header and
+> address list, use `,` instead of `,<at least one whitespace>` to
+> separate multiple `address`es. According to
+> https://datatracker.ietf.org/doc/html/rfc5322 and
+> https://datatracker.ietf.org/doc/html/rfc5234, strings such as "Cc:"
+> are case-insensitive. I'm just testing these in the `Cc` field.
+>
+> On Sun, Mar 16, 2025 at 10:50=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.=
+com> wrote:
+> >
+> > On Sat, Mar 15, 2025 at 4:21=E2=80=AFAM Han Jiang <jhcarl0814@gmail.com=
+> wrote:
+> > >
+> > >
+> > > 7. How to make Gmail web client default to bottom-posting?
+> >
+> > AFAIK, you cannot :/
+> >
+> >
+> > --
+> > D. Ben Knoble
