@@ -1,43 +1,43 @@
 Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11337174EF0
-	for <git@vger.kernel.org>; Sun, 16 Mar 2025 21:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CD4174EF0
+	for <git@vger.kernel.org>; Sun, 16 Mar 2025 21:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.250
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742162102; cv=none; b=CpcrCgdTnqfsj/FewJiSlY+gi2bLzHB9UDILdo+DioPn5ofI0RC+gZxfxlki0Os0EYomBktfBrBujbOJDEcjEQa/tkE6OWICPA2Dfktyz+9s962BQ6KcuOnHrihe1/9Odn7kiyqlw+5KzXonWXu4GHtPYOZpuFCb5cClnFRjSkg=
+	t=1742162271; cv=none; b=A6ycbJQgUqZIPqL41kC8wpDu+/c9shl48D3slxLD2ApK8vrGLK+KHz+E/FGSyej04j0+NzsKdcBSuqPbonV0fm5mRQ8XDSdwnXHuO7T0v/g7iKhic3gIFz2iE8s2IWKRZp0VXdr5dPkrddriGn3JqiPVp7Wh2unPfdN68YN88sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742162102; c=relaxed/simple;
-	bh=AKZAdG6dyZbz2dLr9A5D+GkncRKAiUEz670vYELHiPw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=c4M0ZWpPXENCsaeJcdRGH169wcfJQQlZVOxI8h4C9Okqth83MfhKKWl29/6bOOtAO+gPF839ECG7uaJOwopY9mzja9QJwHvEOSs9ofirhLtQt+bfSxsjhZ2Mkja7X+ggRAL3H/s9quIORrw2ZPhmACOcXk+Z8OWMxADvRtAQbsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=osDufZyA; arc=none smtp.client-ip=84.93.230.250
+	s=arc-20240116; t=1742162271; c=relaxed/simple;
+	bh=/xH6uUQ2Ps+buX97rjBUHggb1C2U3lf/l/kv31Ksx7k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BuuIyNmuuePeZjfo9QCJ7TFTspX1wlpVLUVRYMVzF4lAk+aOPGtj1LKgh/7Bru3bkNUWB9UKtxwWeQJaVwchopvprYWoRKj/EPtn90/bnrgB8qA/752lHmABa+C7/LXtc2JHlPJVG2R3Y5nYu23tJcpHkvMIk5xGBkITpeClPBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=NAv0o9uY; arc=none smtp.client-ip=84.93.230.250
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="osDufZyA"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="NAv0o9uY"
 Received: from [10.0.2.15] ([80.189.83.109])
 	by smtp with ESMTPA
-	id tvtZtzD1OBiaNtvtatb0Z2; Sun, 16 Mar 2025 21:51:49 +0000
+	id tvzLtzDYmBiaNtvzMtb0gv; Sun, 16 Mar 2025 21:57:46 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1742161909; bh=IJDukYua2axzzAiLCXke7o8lwU+nwvRVT/6RsDoq91w=;
-	h=Date:Subject:To:References:From:In-Reply-To;
-	b=osDufZyA8OvIhbv7mvcluqKHvrzUhaq8hAA1m4v9MsxQKVhJ1m4onMcdl9MOgD2uE
-	 aHkNxfoG66L1uzHyTQdAiz+5fZDXTnDCM0YtxX0JrqFq1pDH3Zk79QjTLolaNjUuyh
-	 QW7BX7Bs8824GDcy47MjZq1OQYV/boQDIaS3WysWqxaGLBr8ltQPv98jujvwjkq4OD
-	 UkB8SV6K4vVjl0WT1bwpGzP2HiAPMPp8J8X9VVrzgonTDbVj4zUCl9TeXvkpKka4Eg
-	 GKgOOwHnp8iF3Y11XAeaPovu/tbT8Wj/G8+DGWC04qkx29O1BoqdR334uJ/CgGmdH8
-	 sFjTipXLj0scg==
+	t=1742162266; bh=rnj4uNov+NdYw/DsrGTl6VG196sslCcUC4dcJ5d076Y=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=NAv0o9uYjygChmwk/tRugi2YPP6rPGfl/0Zfy5FznKoyvDWoK8i8uiH8n+JZmQx7D
+	 1R7HdRjH5XgKTbwphCzemBTavm5jBTaue2tCD2xXzu05OjZLTDwfKNi0pBZnWi3D1N
+	 peKgA4tuq6tTWb7tMYAOuzboL6mGm38vG5qUoWPpyrz1sJCdTzVBN8rkcK22LYyUuw
+	 poq5MoaRNIg/xnXy8QEaktaQUCeMIumVL1de1n3TZJZCrzOmNNRC1vvbNm1dzNJu65
+	 pNvIaRBYEbqNcksiJFyzNysjHNhHa3CeFCMZXjxtTqmP7v2Twdvfu8atdRKMsaI7IT
+	 LJedy2fRm45vg==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=W8CbVgWk c=1 sm=1 tr=0 ts=67d747f5
+X-CNFS-Analysis: v=2.4 cv=W8CbVgWk c=1 sm=1 tr=0 ts=67d7495a
  a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=myXZRyagAAAA:8 a=w_pzkKWiAAAA:8 a=HgY7LeBcWuHF6Z0jSYIA:9
- a=QEXdDO2ut3YA:10 a=GVE3WtEoFoEA:10 a=d1HSLr3dS4cA:10 a=1M-rvJEN9yIA:10
- a=HLzuktEnZYP5j5lAoacw:22 a=sRI3_1zDfAgwuvI8zelB:22
+ a=IkcTkHD0fZMA:10 a=8VpDeP3kAAAA:8 a=CCpqsmhAAAAA:8 a=iKrn8l-KAAAA:8
+ a=nUlTXbo3HiVlBCeFl2EA:9 a=QEXdDO2ut3YA:10 a=x58pXJj3Pl9T3GLWE5Uy:22
+ a=ul9cdbp4aOFLsgKbc677:22 a=vz8bQswTWcriz0i0jksL:22
 X-AUTH: ramsayjones@:2500
-Message-ID: <654de230-07cb-4ffe-bfc4-ca0e1d6d3572@ramsayjones.plus.com>
-Date: Sun, 16 Mar 2025 21:51:45 +0000
+Message-ID: <9c815bdc-4cc6-4614-a203-105811ebbb59@ramsayjones.plus.com>
+Date: Sun, 16 Mar 2025 21:57:43 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,104 +47,53 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 12/12] config.mak.uname: add a note about CSPRNG_METHOD
  for Linux
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Junio C Hamano <gitster@pobox.com>, GIT Mailing-list <git@vger.kernel.org>,
- Patrick Steinhardt <ps@pks.im>, Adam Dinwoodie <git@dinwoodie.org>
+To: Junio C Hamano <gitster@pobox.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
+ Adam Dinwoodie <git@dinwoodie.org>
 References: <8c8e16ae-87a2-44bf-a87b-7422eb04fec2@ramsayjones.plus.com>
- <Z9YbJFJjtXNYnTzk@tapette.crustytoothpaste.net>
+ <Z9YbJFJjtXNYnTzk@tapette.crustytoothpaste.net> <xmqqr02wbtdn.fsf@gitster.g>
 Content-Language: en-US
 From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <Z9YbJFJjtXNYnTzk@tapette.crustytoothpaste.net>
+In-Reply-To: <xmqqr02wbtdn.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfPdBquvLGJiLpV/pdt0E/lQSlWL9x5K0P5P4Q6Bj9oFMNUpI5ufcGDj7wLYLZSD9siOrZNJnU8RXAYCWHI92Y0IsMfcWJkv3sByJrQpmlhLpTX3qMcAv
- 9lndZnGCc12z0t4VKCNDlWSigv8dP4Bb5XXk5mhqS9dpRPlWYmIpujKIdXotESAi5ph5fpEW9ui0VT2cfF85Rutl2En6pFH0R1c=
+X-CMAE-Envelope: MS4xfC5rKppGTtQcmw1rTh+45ttm2hQR07gNIEl4Wri/PsdMZAZML0r6d+p8CzQfO3NF72kGHjBKGq6t4g43WEkbMyy1ZnJHqe2p29vMnKlRGE4CFl6UU8Er
+ Q4ZlOPgfYdG8yUFLrWGoTw3VmnzYVd5Zl6Wn2JfIUqK074cl+CuOQnzk3bu8fmgG607JpXwj7evgoo7IxbDP+d0WAnc2e0eY4vw=
 
-Hi Brian,
 
-On 16/03/2025 00:28, brian m. carlson wrote:
-> On 2025-03-15 at 02:49:18, Ramsay Jones wrote:
-[snip]
->> If the meson build system is used on a newer platform, then they will be
->> configured to use 'arc4random', whereas the make build will currently
->> default to using '/dev/urandom'. Add a note to the config.mak.uname file,
->> in the Linux section, to prompt make users to override CSPRNG_METHOD in
->> the config.mak file, if appropriate.
+
+On 16/03/2025 20:41, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 > 
-> arc4random operates differently on Linux than it does on the BSDs, and
-> the right choice on Linux is `getrandom`.
+>> When arc4random was added to glibc, the Linux kernel CSPRNG maintainer
+>> argued that it was not a secure approach (I disagree), and convinced the
+>> glibc maintainers to just make it a wrapper around the Linux kernel
+>> CSPRNG, which it now is.  So there's no actual benefit to calling
+>> arc4random versus getrandom, and since it's newer and less commonly
+>> available than getrandom, as well as slightly slower (because of an
+>> extra function call), getrandom should be preferred.
 > 
-> The reason is that on the BSDs, a userspace ChaCha20 which is seeded
-> from the kernel is used, along with an integer representing whether it's
-> inititalize, and this state is stored in a page that is zeroed on fork,
-> so that it automatically becomes uninitialized then (and is hence
-> reseeded).  Because it is in userspace, it avoids the overhead of a
-> syscall, and is thus usually faster.  arc4random has also been around
-> longer than getrandom or getentropy on the BSDs and is widely supported
-> there, and so it's generally the right choice (and hence, the default).
+> This
 > 
-> When arc4random was added to glibc, the Linux kernel CSPRNG maintainer
-> argued that it was not a secure approach (I disagree), and convinced the
-> glibc maintainers to just make it a wrapper around the Linux kernel
-> CSPRNG, which it now is.  So there's no actual benefit to calling
-> arc4random versus getrandom, and since it's newer and less commonly
-> available than getrandom, as well as slightly slower (because of an
-> extra function call), getrandom should be preferred.
-
-Ah, OK, thanks! While researching this I was only concerned about when
-the functions were available. I didn't give quality/performance a minutes
-thought! ;)
-
-[I am aware, of course, that newer doesn't automatically mean better. It
-seems I forgot about that here - my bad! :( ]
-
-However, this afternoon, while I was waiting for the 'meson test' on cygwin
-to finish, I had a quick look at the implementation(s) on glibc and cygwin.
-
-On cygwin, the arc4random_buf() implementation seems to have been imported
-from OpenBSD, and uses a chacha_encrypt_bytes() function call during the
-process of creating the random bytes (see newlib/libc/stdlib/arc4random.c
-in the cygwin repo [0]). Also, the getrandom() and getentropy() functions
-are simple wrappers around an RtlGenRandom() call (see winsup/cygwin/libc/\
-getentropy.cc in [0]).
-
-The glibc implementation of arc4random_buf() (see [1]), as you say, is just
-a simple wrapper around the Linux 'getrandom syscall'. In addition, we can
-also confirm that getrandom() (see [2]) and getentropy() (see [3]) are also
-simple wrappers around the 'getrandom syscall'. However, I don't see the
-'extra function call' you refer to above. (Yes, all the layers of macros does
-obscure things somewhat, but I don't see that extra function call).
-
-What am I missing?
-
-[I haven't actually done any tests for quality/performance, so I am quite
-prepared to take your word for it! :) ]
-
-As you say, arc4random() is less available on Linux, so getrandom() makes
-for a better default.
-
-Anyway, I guess that means the meson build needs to be modified, since it
-currently selects arc4random() on Linux (this is OK on cygwin, see above).
-
-[I was writing an autoconf test for this, which will also need to change!]
-
-
-[0] git://cygwin.com/git/newlib-cygwin.git
-[1] https://codebrowser.dev/glibc/glibc/stdlib/arc4random.c.html
-[2] https://codebrowser.dev/glibc/glibc/sysdeps/unix/sysv/linux/getrandom.c.html
-[3] https://codebrowser.dev/glibc/glibc/sysdeps/unix/sysv/linux/getentropy.c.html
-
+> https://www.phoronix.com/news/GNU-Glibc-arc4random-Functions
 > 
-> All Linux distros within our current support window have glibc 2.25 or
-> newer (RHEL 8 being the oldest one), so we may want to just default to
-> getrandom on Linux.
+> was the first hit of my search in the area, but I think you are
+> referring to
+> 
+> https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=eaad4f9
+> 
+> that happened 5 days after the thing got in and the code there tells
+> me that your summary of the situation is quite accurate.
+> 
+> So I agree that dropping this patch makes sense, but do we want to
+> do a bit more to improve the situation?
+> 
 
-So, Yes, this patch needs to be dropped.
-
-Thanks!
+Yes, this patch should be dropped. (See my reply to Brian; our emails
+crossed!).
 
 ATB,
 Ramsay Jones
-
 
 
