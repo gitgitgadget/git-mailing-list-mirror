@@ -1,92 +1,149 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF9A8F64
-	for <git@vger.kernel.org>; Sun, 16 Mar 2025 10:27:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A482519CC3E
+	for <git@vger.kernel.org>; Sun, 16 Mar 2025 11:02:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742120879; cv=none; b=oL0fwy8Rd2q4bcKSj13/wdUl3Eomrxs9r6VQakHMCZF/m7KPk2MM7NZ19xtIU82r6nWmO+y8P6Ve9Ybn1qwjKooX9Uku6ZjgXzwDK/mnNwe6JD/JfaDYFH1KRXcDq1zAIeTrZ8H0pFX8sL5dThZgpAgoJGJ85xA2Wl/QatPeRKQ=
+	t=1742122964; cv=none; b=kYty7zUAPBfFptaIUoapkwpuTE8ZfSebe+pC9pKpUmeF4mU89pkJV8iewhcIrfmp3J7t9QFWKmlFjcTWryJL0EtdsgHhfx0GDZa/nff2JWkk5U5fQzS2lAnzZxeYZBowdURunYBhSpLPPmjU9cU2WispyS80lLkb7bXkRusdSSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742120879; c=relaxed/simple;
-	bh=WhXe0iGrdOfnxX0tQZ9kmPYEriyUipk/Z0cj7JcAxp0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gziJCQsltSO480XZmjsKSrQMUBq60Dd2wVaPcCdhHVDmZKgNzTicufwCdjyl6pUvaTppRcE8QraLq82w7EBtFvmCdHpttdbMnKM3uB8YeUzTGwjLMwW6DZFHhjwhdYC4e+p5b+y8BLz4FlcYkO+cu8isU3URN8xMYBQWxvILv/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=CygBNyWe; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="CygBNyWe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1742120875; x=1742725675;
-	i=oswald.buddenhagen@gmx.de;
-	bh=3wsgcPLBY1+zm+PqShWpwAruCK2+TnJDCnfSjkyJSq8=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=CygBNyWeYSo/jglNEqD/rNNoun8FDhPDRTmcqerGoT8MuZCVtFv5a680b8eBtO8O
-	 Ch374cq7FhfsWxK6UXheF/kPZ8fh0aL/Z60mYUX8Mjik/epd2zCLpaSuH83Wh094L
-	 bf+N1FIG76aBB+n3zikUwUrYgPOhF/101kGp2JQG5QPc2US5tt95MCZrqyrPrgftq
-	 999tYeauxhyHWrcAWHeUtWcpr8HBEdVicdtIB1pA4ZY7BVlFySH1xUMWtla7Cyo9w
-	 VzEnX4nHek7rwsWbJyKstsPbNBKM7PLTl2mAuu5HUI+OA0N8MouuY3h4bcxNlEabm
-	 Oly/LJRE7yl9vUcmog==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from ugly.fritz.box ([89.247.162.126]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N63RQ-1t9UBe3i9o-00wlpo; Sun, 16
- Mar 2025 11:27:54 +0100
-Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
-	id 1ttlDm-kVf-00; Sun, 16 Mar 2025 11:27:54 +0100
-Date: Sun, 16 Mar 2025 11:27:54 +0100
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] git-gui: heed core.commentChar/commentString
-Message-ID: <Z9anqjBmKFpPuTP9@ugly>
-References: <20250315140913.577422-1-oswald.buddenhagen@gmx.de>
- <a62035cf-b67e-4291-acf6-d2454a9459bb@kdbg.org>
+	s=arc-20240116; t=1742122964; c=relaxed/simple;
+	bh=VUKu4FDIWRh9DmmRv2V8fNZTdnyxuAdvXUTnDGFTMsk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=DYibxCs09vBMk4jn1fQjxpTWVuw9KnTn8J8zwVx1jsgAEJ/2ty4N7p2VTBoztX4bb7MHljGCuo9pVIQWZK0bVZrOVikFiytQegWe2ErriSOMCwUP65S8cgpFlNdWHEADcB6A+VIv9HKelgeYr9kuuwJmgj+7F9pwDIjvJqyKh1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp1.bon.at (unknown [192.168.181.104])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4ZFvL46xpxz7QSyc
+	for <git@vger.kernel.org>; Sun, 16 Mar 2025 11:22:20 +0100 (CET)
+Received: from [192.168.0.106] (unknown [93.83.142.38])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4ZFvKw5c7JzRnmS;
+	Sun, 16 Mar 2025 11:22:12 +0100 (CET)
+Message-ID: <a62035cf-b67e-4291-acf6-d2454a9459bb@kdbg.org>
+Date: Sun, 16 Mar 2025 11:22:12 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <a62035cf-b67e-4291-acf6-d2454a9459bb@kdbg.org>
-X-Provags-ID: V03:K1:7NUcIXD0WEGBI/HOH5aoD/0Tf3R1oKA0va2vkSY9c9+lkvnfPmk
- 7FhIk9XJxBLBcl+nkVe40aDkgv0VQ4x1uGrscWKbzWag3F5B6d2uwXuS/B7uXxwi0zwwiTV
- As2l0Qe5HQYBY0j3QHAzh82g+ntYh0UtZnhFT3lnZqNnVAKUQtxQ3jmVgosiZtgEflsf8YL
- KJaDFvJqGI5vyj0rN6Fjw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:xqcCL2waEHc=;5YJbAE3A4C9zynHhZdAxMkFTxNR
- CXuvv97cHcUWRWE5isL2dC+yfQ2XM5bvHquXPFpZjAQI90naKfVWXkQlduT6EJCmKAEARk4vC
- G1CivE64uc3nBYd3nZYKDJWlC59+4NwxZoZPTGeoEhW5jR+RzgBAeJkrNxmG0ksATb4XFZc7l
- YujMgrED/0oTG/oWSn54yUMGetu+WzeObS2KnVbsNa20Sbu+IoPeu/Lre5Xfd8+NPsw3/+Y6r
- 729MkrxQDkBxvuBRrnAmrh2hyQFkio9vvkRAKhpi2Zd5UDhnx8vrfw38GwftYr9ngxjNVfGJj
- aoEBQwIsOC+9KlyYK5/bWD1e/Ohed4MdS5Ru/5d7PxSMhQnzJA/IDb5p9AbYOoipMtIzWUukv
- nOCcrxkJoyL7bvX421X6SIBotV+RgHPjyOHqJunj68gh6rgIGrNmdDUcvCu1ETNEdhp9POgOC
- 59m2moawbMmhG/1qP2p7cIrVOCbmuhLo8jx0EIWcRFWQrtZ3L3E9x8cTT3iplPo04wUL0zdz2
- izWCmmFkDRbwNnNXvONrv+pVb9bi8Cu3J6jLRTT4cuZW05/670WXJTeUOdjCUfTy87t1srMAY
- iLTIXvckB1wnBaJfJ8b8OKjGWvciqZ1NHqjP9hfQ4WgGxDfLqeT0n4/k9h8xpY/DuPBRQ1yuO
- MLtNReUve3sWpeF+zPwbqjcUmlo+cUbANkbU4TKOPMyzjNsLtbZ6KxB+mDUDV9d7T6fzde8zb
- yNRGus7TltYvI6YqKNFYb7yWhrMGGy9yDk3VUIVRBnSXfG02FmI3JOByZhftWBfyUhrgrnz2O
- 5/7hs19Got/301iEnArZCJbaAeCktbE1dP5p8X988Bh7GVThG6Y1AqIsUZ7c0kTgOgmymYZdA
- kwhfPeycHthpu40unewjtWjHgXHRijkPxUEASZCZIraJe3BUvfR8qlhATgog/BbWQ7x14Wdpc
- vPeKi39FkBTG+QgHfD1qgczDrTtJQcYMLBmNMOj5aKtf7GCDlfI1G85uPnSiviTFncey3Ti1T
- ifPNcYM90WP/9bkuUWpG/fWi3NP9NqR4Ov24C0LWwyx+TPENJ0F5i/V0aqLciB3UVbkx5c0OQ
- awFoCDMFTGfzQGdyYqQ33+iKx1z7HDj6NSN3QuY/i9PwhrCnZPUuReJsFlqmiOONgn1TiyQVu
- WgXtmTKyCbeXFH0cQ99zqWpCrmflrNyTdZ6g+xfx8gNEAVYf4UcAuhLsVVeeEpu17b/CA6pvd
- 8p53SOeOZEP0X3YIW7SUqH3tXGNWdsgDrkQ11LNBmJh0hBUQi8fiiwbzfIldaXbe6ZbZ1HWWY
- QkqpAKhmvM1MMb4+CjZNwCSKv7OwBTtfIPZ5qj1VPsM/1V3CBHEfVrWYdGA3/MG3wMfuFGIWy
- pf/p9oyeipJ0La8MJkPVXjEYbZ0QTfTqUiZl8XQVpzV08FR+uMW9qX86d9yyXn/XX/q7eVSEy
- r7+OzahroA7R44dyss8lmhE31uiRPKoOfphhYLFARP/jrAqYG
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] git-gui: heed core.commentChar/commentString
+Content-Language: en-US
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+References: <20250315140913.577422-1-oswald.buddenhagen@gmx.de>
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <20250315140913.577422-1-oswald.buddenhagen@gmx.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, Mar 16, 2025 at 11:22:12AM +0100, Johannes Sixt wrote:
->Am 15.03.25 um 15:09 schrieb Oswald Buddenhagen:
->> +	append txt [mc " (Lines starting with '%s' will be discarded)" $comment_string]
->
->Like you said in the introduction, this does look messy. Would you
->approve that I remove this hunk while queuing?
->
-yep, go ahead!
+Am 15.03.25 um 15:09 schrieb Oswald Buddenhagen:
+> This amends 1ae85ff6d (git-gui: strip comments and consecutive empty
+> lines from commit messages, 2024-08-13) to deal with custom comment
+> characters/strings.
+> 
+> The magic commentString value "auto" is not handled, because the option
+> makes no sense to me - it does not support comments in templates and
+> hook output, and it seems far-fetched that someone would introduce
+> comments during editing the message.
+> 
+> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+> Change-Id: Iafc0580e818cb5058cfacbafe6e5da40679a1b1c
+> 
+> --
+> 
+> Cc: Johannes Sixt <j6t@kdbg.org>
+> 
+> the textfield label munging is modeled after b9a43869c9 (without
+> introducing the same compatibility problem with tcl 8.5), but i'm not
+> positive it's actually a good idea to have it - it looks a bit messy,
+> while providing info that the command line client assumes to be known.
+
+See below.
+
+> ---
+>  git-gui/git-gui.sh     | 11 ++++++++++-
+>  git-gui/lib/commit.tcl |  4 +++-
+>  2 files changed, 13 insertions(+), 2 deletions(-)
+> 
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index 887d6d596c..ed14ba679b 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -880,16 +880,24 @@ proc apply_config {} {
+>  			color::sync_with_theme
+>  		}
+>  	}
+> +
+> +	global comment_string
+> +	set comment_string [get_config core.commentstring]
+> +	if {$comment_string eq {}} {
+> +		set comment_string [get_config core.commentchar]
+> +	}
+
+Taking care of both forms. Good!
+
+>  }
+>  
+>  set default_config(branch.autosetupmerge) true
+>  set default_config(merge.tool) {}
+>  set default_config(mergetool.keepbackup) true
+>  set default_config(merge.diffstat) true
+>  set default_config(merge.summary) false
+>  set default_config(merge.verbosity) 2
+>  set default_config(user.name) {}
+>  set default_config(user.email) {}
+> +set default_config(core.commentchar) "#"
+> +set default_config(core.commentstring) {}
+>  
+>  set default_config(gui.encoding) [encoding system]
+>  set default_config(gui.matchtrackingbranch) false
+
+> @@ -3416,15 +3424,16 @@ ${NS}::label $ui_coml \
+>  	-anchor w \
+>  	-justify left
+>  proc trace_commit_type {varname args} {
+> -	global ui_coml commit_type
+> +	global ui_coml commit_type comment_string
+>  	switch -glob -- $commit_type {
+>  	initial       {set txt [mc "Initial Commit Message:"]}
+>  	amend         {set txt [mc "Amended Commit Message:"]}
+>  	amend-initial {set txt [mc "Amended Initial Commit Message:"]}
+>  	amend-merge   {set txt [mc "Amended Merge Commit Message:"]}
+>  	merge         {set txt [mc "Merge Commit Message:"]}
+>  	*             {set txt [mc "Commit Message:"]}
+>  	}
+> +	append txt [mc " (Lines starting with '%s' will be discarded)" $comment_string]
+>  	$ui_coml conf -text $txt
+>  }
+>  trace add variable commit_type write trace_commit_type
+
+Like you said in the introduction, this does look messy. Would you
+approve that I remove this hunk while queuing?
+
+> diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
+> index 208dc2817c..a570f9cdc6 100644
+> --- a/git-gui/lib/commit.tcl
+> +++ b/git-gui/lib/commit.tcl
+> @@ -211,7 +211,9 @@ You must stage at least 1 file before you can commit.
+>  	# Strip trailing whitespace
+>  	regsub -all -line {[ \t\r]+$} $msg {} msg
+>  	# Strip comment lines
+> -	regsub -all {(^|\n)#[^\n]*} $msg {\1} msg
+> +	global comment_string
+> +	set cmt_rx [strcat {(^|\n)} [regsub -all {\W} $comment_string {\\&}] {[^\n]*}]
+
+This escapes all non-word characters so that they lose their special
+meaning in a regular expression. Good.
+
+> +	regsub -all $cmt_rx $msg {\1} msg
+>  	# Strip leading empty lines
+>  	regsub {^\n*} $msg {} msg
+>  	# Compress consecutive empty lines
+
+Thank you very much!
+
+-- Hannes
 
