@@ -1,233 +1,139 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B78F23BB
-	for <git@vger.kernel.org>; Sun, 16 Mar 2025 00:01:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E224689
+	for <git@vger.kernel.org>; Sun, 16 Mar 2025 00:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742083290; cv=none; b=Ol7tVMzfN7G2qh3n3CLaNa1Bm0bvN2pWNMXl4/V5IaX2d7bEt0rnVmr7T2ZXT9gWOPMQyRv71H+jMIUZtq+pqGSDGVOLgQaJl4v9JHlep+7vmpUAH6LWNE4mTX66ejcpvovTy2Y6qTsXxx0BTlprnAot1DN1/0qN3YPofWpsVW0=
+	t=1742084912; cv=none; b=bbMJAtOPexGbHRmNYDznaUadQFbKlzpU62thv8/wgRnUFCtxkk2Ry4/LF9vC1yKuvFRX+thCRsw8O8k9BMGTiLocwfCu9qbarzembIaMi0ljCS2QWwaQPRvuUypdIr0C5DgivYenWca7nWvNlAmvp0NmQVPxdgIbCVTczVMYWeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742083290; c=relaxed/simple;
-	bh=fNxKb5u2q5rroaAlO1dhIvvDLVm1O0xhBhFGFrsYAg8=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=T8MyTPv2IqvXd0K3r/GFbF7YXt1d1c8z0TmAC4ZTa2trF3i5/ksb6Xj3bjbZe/rWoBDjWU9d2AjP7BNsyBCHHT70YGzf+F36XF1sM30ypR9JzNFP+mbypW610K+FBznzPlJ3f5+Z9aXe0BcKbd1sNtsK9PWrtMZ7jpJody+sw7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=Qq4GUFwi; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1742084912; c=relaxed/simple;
+	bh=NRLBOG2DgjQ2hFHDDJW5ghNUrsquopjUq5sajyBAyOM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eblJxvU1FDLSjoQz3IuVCDr6n1wlspo+XtVtx3Itl6xhbJutJqNrW2RXz7zJ3ufPw65APCONKcHWPCz5D/drAtCY+S+Hf1Qhow+pcMrDacuyDL+WmFBswwh8BwCn/yl5EoN0nmw1drDFyujQokdORgPgIHk+MlnD8D5rtGac/qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=P3tdTAEF; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="Qq4GUFwi"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1742083285; x=1742688085;
-	i=johannes.schindelin@gmx.de;
-	bh=q0CTeYLEnK0zQ96Ry3gnlEN3YhSO9XqWN0R/Wq/ERgY=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=Qq4GUFwiA8SjCEuMJh4g6l4x3SoiieRIGxxtmI38A0pTuP1ZrfoHvWbZSxtzNs3J
-	 dkxCIFCKNUTck9lWFhjr6tw6H/geeia/bam69wzpSGXtOu4XSpf23dEyJgaH/G0Ps
-	 WN3lYVlXwr1JmBIcanWxqT/RM/Ey5Zj8WYW/X6EbKg7P5GUmAmXMqYDMvH2FLtPmd
-	 acOIOIaLL2mbkPEW7wpykxu3V63XL2QcolKmT/Uu1wLL2Ut5RlYGl7hQRYgbSqYvo
-	 4UfDFVIk/0V9/VVvQL1VHNpnNqdPRAKCZXD39Z4WNRTkDBR16ZJM2QJOx66sTyBUz
-	 UTJITrXWKKO0znuV4Q==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.73]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1ML9uU-1tbWat31QA-00Uem3; Sun, 16
- Mar 2025 01:01:25 +0100
-Date: Sun, 16 Mar 2025 01:01:25 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 2/2] compat/mingw: fix EACCESS when opening files with
- `O_CREAT | O_EXCL`
-In-Reply-To: <20250313-b4-pks-mingw-lockfile-flake-v1-2-bc5d3e70f516@pks.im>
-Message-ID: <239e4222-cdce-90b6-2a8b-ee48c3e024eb@gmx.de>
-References: <20250313-b4-pks-mingw-lockfile-flake-v1-0-bc5d3e70f516@pks.im> <20250313-b4-pks-mingw-lockfile-flake-v1-2-bc5d3e70f516@pks.im>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="P3tdTAEF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1742084901;
+	bh=NRLBOG2DgjQ2hFHDDJW5ghNUrsquopjUq5sajyBAyOM=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=P3tdTAEF1UBabMfo2AlHVXshOS+H+vFxrDqSlFNABfxapDxzaxKUxI14Us8pchfX2
+	 2lRALbsMxoBL380GFPnNitn53/u3DHTy3WSDLJzGZggUrWeEfpreffFfiEaVtn0VZ1
+	 iw0cYpUFnf2thZ3moCSpb+X5G9rZLTWzIeg0WwLV6nBZO/Pryk8gHIdaAT85QMmNNu
+	 TV1Fq1rX2MZXOCs7qk/CzQJTbVNtaYV/pJSvTEC0kJ0UFaXnEz7ZVmjQpqq/Sp0FYc
+	 +E6PM2WsXL9rTTlonlEiGbnAgXzGUsGhohMmnapxH5GYFfEPBF4cKmtuIAlhbDUtfI
+	 kYMJgOKTz/VQe0sDtc6rnDkY3aDitxDaEOK3si/OAZ5KHsYIAD2P9iY1ZBal3/Ijr7
+	 39Bp151WpB9N9Th7qmk5CA8H5jN+HgeJMmWhJkznLhPIR6PW0J7oimtgKcgoAfz8ii
+	 K4PmnbB9MP/rTyd4p6PbNLWtDy7WJZjQicvlWSP2ItbvwDJfTsp
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9ec0:b846:49f:a41d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 95303200B7;
+	Sun, 16 Mar 2025 00:28:21 +0000 (UTC)
+Date: Sun, 16 Mar 2025 00:28:20 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Patrick Steinhardt <ps@pks.im>, Adam Dinwoodie <git@dinwoodie.org>
+Subject: Re: [PATCH 12/12] config.mak.uname: add a note about CSPRNG_METHOD
+ for Linux
+Message-ID: <Z9YbJFJjtXNYnTzk@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Patrick Steinhardt <ps@pks.im>, Adam Dinwoodie <git@dinwoodie.org>
+References: <8c8e16ae-87a2-44bf-a87b-7422eb04fec2@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:iuMzA9bTe6BjeXayHL6MDcJdnM/lxW5wh/oGm/ytzOZmpF++uq9
- I5cU4NCktq71UupykFyju8t1IhHZEqtEwUvVXnZKrxLBXJJe+g/3qTS+oDgAl/KGcQMtmkr
- muh1eDEkAWkhs/c4EjDxGhnv+XPesr2CPDdcIr+ZnR9efHl3p822nbrWbIIUlKXkrA0AXdi
- PnRaRMG6fpkWkPhwEvmcA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:EWvGNVuIE30=;KeMq/lhDBa3GAnmdRaarmpJsQZ5
- CbciqfF7VFalGj8Fs0+ein+gtJuf9/vtub8Y9F8qclPu3E7+kxxQkA8fFQiso3TbijeQufuZJ
- YAKl+dKGSdsWwCKg+xVV8SsLPqWv88KK1JsHxFxkS7VV6mUb6kEgM12zQ/Vzskdaha0JWMTRL
- MsGgd5wjFJFqY9Cg772r4E77z2f50uatnTSiy3gmbHjXsD7HDGZ/4e1hZheM/VRmpKTpYBPdz
- 48Fs5MAZ3Susg0+lIg4U4k1wilF/hw4B4zRR23JBe2rwOhSPckMxkLw26DZJ0yxKPPMnw0Ji5
- JCMvVNbuPchKQ4qlQ+8sXlzmNZkF1mjAl2FlUSeqWlDJJKUOlIdPAKBCDqTiBjrdny2tXGgv2
- HSP+yfUj+jnU/7s02lLZQ7XjRgefQ19MOX9HGdzlNGRY65iB//WhjrDg+duWTMBsK5eBpFLOk
- pJKPtweUd0RogeDtl0sAxIPY7m1dJM7Eoz65sfXr/lA3T/Iq7RJpItszPQFOR4UAEmaIxJVSO
- c0m7Fo5sCWtiFoeBFw56/1g5xUhhfi5u6wDUwOY1tiI+RG6PyceflRKorpHOhWiHIbMfHBP/6
- JqoO/j4Yn+KjGZs6AU30DazXwIBaRIOu0hLzYtSRAhnsDOXw5zkAmB1erC8dXefqE92Xndo6h
- vkUlmO4Jqa0eWpw+13knldrJIOsbs2A8yFt/1ec2kPu6DzSO1Gs9r/2y1mvQ548BbPXT62CVk
- BkWS2CxV/PshlryIT5ANSG14Y8J0uVyoj16yIBatoUKpn2aqJizP36vLwKdnxPpgH3+XQPDJW
- rLqqOBNca3u3G8erJOzn01K1UuVu3c+4/ZUwD/juyfVBrkyBFUPwIBqzNWcjHzbWBSrogU3Y4
- zr9jrkFrufXDjBHqWm/TWmdXHf6g2qjXdDScwtU7gS9XE4BjviiUB/EDGAVhgePCKefVQ3AtZ
- I7Rf1iHKIiib1Mg2sy8ENsj3nQYxWXc5l9o1ybN/ixo3HD1d/R4cFf9FmV7tMt+N3TA8Tv8U2
- X2WIjPK6d4vAdFTYYgWbc9UCrkfDAh1fN17+Ex+hoh+ic0o78P6W/cK6wrZ/vBpn2vIcOukTG
- JuPTgEjMswTIS2x+ZGeY7ssy4hAZ8OLY9sI7wX67+72pSHN81wvZrQweFAWodTcigSUSicBFa
- Dn2WwVFO6YPRXXeL9S0v8jkmsBz62cSx3zyIU6xYpnHCXgmBgR8mExGORGNrDB4S+sfAaDJCS
- Nwa/2vFhvLpdZeVM0HBNkm9TZJUPstpAIlz3qtkKTEwmlp+UwXXPtdrF0D1zs8cxjUIE5H97W
- qkc54yVOwdL1i+yG23uDBtAw5gfGDNhE3gyT9x0pOq3qzNlTYFU9StPz+l2ZiBezCb+huCKJg
- wkN/t7nohMun5LwnFCTZjiU+IJOdOGl4sfxc9qJC8gndmPizSFfCJTmTxkdizC7X3rn/KstPC
- enSWTz2gm8M0DyHy1YS7Zv7uURD89Yn9wzOMNMyUJpkLDXT7o
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="BTPnoUmH0A9p2kPD"
+Content-Disposition: inline
+In-Reply-To: <8c8e16ae-87a2-44bf-a87b-7422eb04fec2@ramsayjones.plus.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--BTPnoUmH0A9p2kPD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Patrick,
+On 2025-03-15 at 02:49:18, Ramsay Jones wrote:
+>=20
+> Commit 05cd988dce ("wrapper: add a helper to generate numbers from a
+> CSPRNG", 2022-01-17) added a csprng_bytes() function which used one
+> of several interfaces to provide a source of cryptographically secure
+> pseudorandom numbers. The CSPRNG_METHOD make variable was provided to
+> determine the choice of available 'backends' for the source of random
+> bytes.
+>=20
+> Commit 05cd988dce did not set CSPRNG_METHOD in the Linux section of
+> the config.mak.uname file, so it defaults to using '/dev/urandom' as
+> the source of random bytes. The 'backend' values which could be used
+> on Linux, in order of preference, are 'arc4random', 'getrandom' or
+> 'getentropy' ('openssl' is an option, but seems to be discouraged).
+>=20
+> The arc4random routines (ar4random_buf() is the one actually used) were
+> added to glibc in version 2.36, while both getrandom() and getentropy()
+> were included in 2.25. So, some of the more up-to-date distributions of
+> Linux (eg Debian 12, Ubuntu 24.04) would be able to use the preferred
+> 'arc4random' setting.
+>=20
+> If the meson build system is used on a newer platform, then they will be
+> configured to use 'arc4random', whereas the make build will currently
+> default to using '/dev/urandom'. Add a note to the config.mak.uname file,
+> in the Linux section, to prompt make users to override CSPRNG_METHOD in
+> the config.mak file, if appropriate.
 
-On Thu, 13 Mar 2025, Patrick Steinhardt wrote:
+arc4random operates differently on Linux than it does on the BSDs, and
+the right choice on Linux is `getrandom`.
 
-> In our CI systems we can observe that t0610 fails rather frequently.
-> This testcase races a bunch of git-update-ref(1) processes with one
-> another which are all trying to update a unique reference, where we
-> expect that all processes succeed and end up updating the reftable
-> stack. The error message in this case looks like the following:
->
->     fatal: update_ref failed for ref 'refs/heads/branch-88': reftable: t=
-ransaction prepare: I/O error
+The reason is that on the BSDs, a userspace ChaCha20 which is seeded
+=66rom the kernel is used, along with an integer representing whether it's
+inititalize, and this state is stored in a page that is zeroed on fork,
+so that it automatically becomes uninitialized then (and is hence
+reseeded).  Because it is in userspace, it avoids the overhead of a
+syscall, and is thus usually faster.  arc4random has also been around
+longer than getrandom or getentropy on the BSDs and is widely supported
+there, and so it's generally the right choice (and hence, the default).
 
-I saw this error plenty of times and was wondering whether there would be
-a way to get more useful information in the error message.
+When arc4random was added to glibc, the Linux kernel CSPRNG maintainer
+argued that it was not a secure approach (I disagree), and convinced the
+glibc maintainers to just make it a wrapper around the Linux kernel
+CSPRNG, which it now is.  So there's no actual benefit to calling
+arc4random versus getrandom, and since it's newer and less commonly
+available than getrandom, as well as slightly slower (because of an
+extra function call), getrandom should be preferred.
 
-After all, I/O errors come in all shapes and forms, and telling the user
-that _something_ was wrong but forcing them to recreate the issue in a GDB
-session is an excellent recipe to cause frustration.
+All Linux distros within our current support window have glibc 2.25 or
+newer (RHEL 8 being the oldest one), so we may want to just default to
+getrandom on Linux.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-So I'd like to suggest to improve the user experience substantially by
-augmenting the rather generic `I/O error` with details as to what
-operation failed, with what exact error, on what file.
+--BTPnoUmH0A9p2kPD
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> Instrumenting the code with a couple of calls to `BUG()` in relevant
-> sites where we return `REFTABLE_IO_ERROR` quickly leads one to discover
-> that this error is caused when calling `flock_acquire()`, which is a
-> thin wrapper around our lockfile API. Curiously, the error code we get
-> in such cases is `EACCESS`, indicating that we are not allowed to access
-> the file.
->
-> The root cause of this is an oddity of `CreateFileW()`, which is what
-> `_wopen()` uses internally. Quoting its documentation [1]:
->
->     If you call CreateFile on a file that is pending deletion as a
->     result of a previous call to DeleteFile, the function fails. The
->     operating system delays file deletion until all handles to the file
->     are closed. GetLastError returns ERROR_ACCESS_DENIED.
->
-> This behaviour is triggered quite often in the above testcase because
-> all the processes race with one another trying to acquire the lock for
-> the "tables.list" file. This is due to how locking works in the reftable
-> library when compacting a stack:
->
->     1. Lock the "tables.list" file and reads its contents.
->
->     2. Decide which tables to compact.
->
->     3. Lock each of the individual tables that we are about to compact.
->
->     4. Unlock the "tables.list" file.
->
->     5. Compact the individual tables into one large table.
->
->     6. Re-lock the "tables.list" file.
->
->     7. Write the new list of tables into it.
->
->     8. Commit the "tables.list" file.
->
-> The important step is (4): we don't commit the file directly by renaming
-> it into place, but instead we delete the lockfile so that concurrent
-> processes can continue to append to the reftable stack while we compact
-> the tables. And because we use `DeleteFileW()` to do so, we may now race
-> with another process that wants to acquire that lockfile. So if we are
-> unlucky, we would now see `ERROR_ACCESS_DENIED` instead of the expected
-> `ERROR_FILE_EXISTS`, which the lockfile subsystem isn't prepared to
-> handle and thus it will bail out without retrying to acquire the lock.
->
-> In theory, the issue is not limited to the reftable library and can be
-> triggered by every other user of the lockfile subsystem, as well. My gut
-> feeling tells me it's rather unlikely to surface elsewhere though.
->
-> Fix the issue by translating the error to `EEXIST`. This makes the
-> lockfile subsystem handle the error correctly: in case a timeout is set
-> it will now retry acquiring the lockfile until the timeout has expired.
->
-> With this, t0610 is now always passing on my machine whereas it was
-> previously failing in around 20-30% of all test runs.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
 
-It is good that you fixed this issue!
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ9YbJAAKCRB8DEliiIei
+gZFDAQDDHUqknhGyIIzGTWUchBnOjsYgAK11p+3bImpg7L9dXwD9EiTOqbs6rL/2
+9kOjidp1v3T39vP8ndZWbpmmOlwDXwo=
+=hdI+
+-----END PGP SIGNATURE-----
 
-However, `ERROR_ACCESS_DENIED` most often means one of two things:
-
-- The file in question exists but is opened exclusively by another process
-  (which might be Defender, the anti-malware scanner), or
-
-- The current user lacks the permission to create this particular file,
-  i.e. it is really what `EACCES` would mean on Linux.
-
-While the first condition clearly can be interpreted as "file exists" in
-the way this patch wants to do, the latter cannot be. And the patch
-touches a function that is exclusively used by the `lockfile` machinery,
-each and every caller of `open(..., ... O_CREAT)` is affected by this
-change.
-
-This has ramifications e.g. when running in a worktree where the user has
-no write permission (but which they indicated as safe via
-`safe.directory`). Git would then no longer report correctly whe it cannot
-write files because the user lacks permission to do that, but would
-instead claim that the file already exists, when that is not true.
-
-Maybe there is a place higher in the stack trace where Git could instead
-learn to handle `EACCES`? E.g. treat it the same as `EEXIST`, or maybe
-alternatively make it Windows-specific and introduce a back-off plan?
-
-Ciao,
-Johannes
-
->
-> [1]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-file=
-api-createfilew
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  compat/mingw.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
->
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 101e380c5a3..fb61de759c7 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -644,6 +644,19 @@ int mingw_open (const char *filename, int oflags, .=
-..)
->
->  	fd =3D open_fn(wfilename, oflags, mode);
->
-> +	/*
-> +	 * Internally, `_wopen()` uses the `CreateFile()` API with CREATE_NEW,
-> +	 * which may error out with ERROR_ACCESS_DENIED when the file is
-> +	 * scheduled for deletion via `DeleteFileW()`. The file essentially
-> +	 * exists, so we map this error to ERROR_ALREADY_EXISTS so that caller=
-s
-> +	 * don't have to special-case this.
-> +	 *
-> +	 * This fixes issues for example with the lockfile interface when one
-> +	 * process has a lock that it is about to commit or release while
-> +	 * another process wants to acquire it.
-> +	 */
-> +	if (fd < 0 && create && GetLastError() =3D=3D ERROR_ACCESS_DENIED)
-> +		errno =3D EEXIST;
->  	if (fd < 0 && (oflags & O_ACCMODE) !=3D O_RDONLY && errno =3D=3D EACCE=
-S) {
->  		DWORD attrs =3D GetFileAttributesW(wfilename);
->  		if (attrs !=3D INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIR=
-ECTORY))
->
-> --
-> 2.49.0.rc2.394.gf6994c5077.dirty
->
->
->
+--BTPnoUmH0A9p2kPD--
