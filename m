@@ -1,123 +1,98 @@
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC081D531
-	for <git@vger.kernel.org>; Sun, 16 Mar 2025 06:53:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA3E140E3C
+	for <git@vger.kernel.org>; Sun, 16 Mar 2025 06:59:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742108018; cv=none; b=ervTtBEpAggz5/wTl+rhXrOdoJsFN/ykQkGpLYGoS0YsHLsCr43T2RcOYE90C6MVgB4g3Tik0Ntk/qj7zpv9MNB+9cTv8TuQWwGcNtSEJFk1dnsfQ1tjsoUNRgqDG6ICHgkaD4RXpGpXXSMpPPOH4JZhxMEPJvRz2orcz4qdxSw=
+	t=1742108344; cv=none; b=n8x+mbdUBWYCFLHl0N7/gOKs8ZQhRqoHvh8N+m75j9FyvE+GjmrZXAmo1SYu5OPszSx3bCBb80vlHKX5pskkvrtGocYJurqd/tpD9tEE+iOchhUb2zPrPCFnaDLEFuuxOeqgCPhbvRowYSx2ilpuhHddJpJy4dGw2tqRNQATqew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742108018; c=relaxed/simple;
-	bh=PZw0SKWtq7beyS8sOWcEBkHVsrAYfvpUhT0DQdY21tc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uXxlPpiOL0wX8/WVvruQMJ7b1ievvlWfF3eoSv1/2RyDQjihCubNwUJuRRwt+TAhXopKi92WZ0/Nq7tI4pNS6QbH3nSPwXR+4+kO8EStTfXewz5w7NxM+iIu9mjYOll3Ho6vkay9UB9fq+/jpfCVcaDI5fNKLwG8iGAxf0zTjic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WlkjQ42+; arc=none smtp.client-ip=209.85.166.178
+	s=arc-20240116; t=1742108344; c=relaxed/simple;
+	bh=apP5UqMZGXwb0DZ88mta8rRxcDr+aebkLur4UtaB6Do=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=G49bRVG7Ni/s5JPBcGMIJdB77rT49TMFYwLJYBg2cP3Fnr2QFz3R6ECvKiToN2S3yW2435tsQbz6Vc2+PTXt5dzVM20oDc94zqNxMrt6YPwychafK99/S7Y9/sQW8y/oEqh6rNOMO/HxTYCUt4NX80o7aXL5WFBV8F0LXv3TWnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XhEoJbmp; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WlkjQ42+"
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3d46aaf36a2so28625985ab.3
-        for <git@vger.kernel.org>; Sat, 15 Mar 2025 23:53:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XhEoJbmp"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-39149bccb69so3237149f8f.2
+        for <git@vger.kernel.org>; Sat, 15 Mar 2025 23:59:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742108016; x=1742712816; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tf98MlhEajKeYcODGVfeQqz5TNbqsC402D+nQdZSUcI=;
-        b=WlkjQ42+TIlhs5PfgOWIQg1R4+f8wG43fyk+yuUxWm/z6Yzw7HE+FMFa1nt5LVzW6D
-         MOJQKCetYXcxo+h1fxvOZTvOuNnhT61QXy49IxAAV1ffpzXDDvOKpGK+bkcqTB0RmVAf
-         dSuUQBtOJT82JhTv4zvG0wDNieyi1FI1JFblMfdwKakwAQTJozNgpi69PYR4xVQQHZLX
-         9ev2cgHwCFprAdYJe2LN9ToxM//qEIKjk0QKd/YrK12cQgVuSDzFcCjfD4D0kC7cgjgh
-         WlIlzcHc56RMKUPsbVVYB0LwTVXB2mBT/vkl273KfBjbKvYddb3nDXMbaN6UW34KIccq
-         zs6g==
+        d=gmail.com; s=20230601; t=1742108340; x=1742713140; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pEzcRiFgIMURa9nqT9zJfnAId0aaeDxMsudrucdW6H0=;
+        b=XhEoJbmpSGrplvU/BYr40rezk9xwZ4QHHIWr4urLN3g9TJN3W5D3JDWeryQv0z7567
+         PD76woWQJ/AyNg6tRGhf6FEDrbjY/F0n6/vQ99XOHKmorNMn00sqqRlArUnXF8Bdw6V3
+         y/fT/LKkoWiUpyy+pDmCSrdMNQ/rCgWTir6Gn30SQKJlEv87EEDGjy7GM3QK1TGzKSe7
+         opUYW61NWX4sISXDIATpktVK0iUM99joPbqD6UYCD4zW5CB4H0TEgD/7u+HGJZKjqCc1
+         81gzE9idgtUbIUBoDUPbw3+s6QEr8hMVwZyaOpU0mWcEtpSE789NPyT3wet7XcR6acnQ
+         22WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742108016; x=1742712816;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tf98MlhEajKeYcODGVfeQqz5TNbqsC402D+nQdZSUcI=;
-        b=sb8HZuX5HMVyJ5f3SfEhwinE0O7Dnp2V5PVzgSuzEuet1uCLsKhPp9yMk4H7I03vrR
-         IDNVDJkqQmcopKXktvoHWSSV2sIdDt6KfNavo41+2/c9hLWMFgHmZHrqYw4G2El55H1T
-         c6gWgFX2UVb5U/hmS0mfu/j/QFBPOWkt3FO9GM910cqqAv8UDR8jrwCQKlxS61evN6e6
-         tlECkYmLlYmZseBCPW1RJ9TU5EubCtuLSE5RU/mD5nOJUsBrtq6iwFH6WCISdERelpae
-         hbeIKxi3tW3PhKUPAbWh7zEYp4hn/HYlJESz9RHXEJEQ7rmpoAy4SDMWnrlw79a9IUeK
-         +H1w==
-X-Gm-Message-State: AOJu0YwXOvPmNrUfn2on2a8F1uG5ida1WcAZovdO3u2+0bOqg8MQYrDH
-	ohoUfpNCiJQkasxR9NFOJNUXyAvAcMx9oHRglDuFqLBtGRJZEuJVtVxKyqif4f82TEbEFhv4L1S
-	mD+kMCpSCzMZvtE2dIRdJDc4nJo1/Og==
-X-Gm-Gg: ASbGnctn2Gvj2EgDYXr5AakeMJH2EfcZE84kHz5AKKreSNXjB5KbFKXi4uJl2tyRIYB
-	aulo6hYj15ogfAkWOoy++VH4mjRncgPK5Zu3tEHZZXM2OsX++NGphq1kZ/T8TO7PayqCjPonxip
-	R2eOvpl4hb/KE3BjAzJ1ByAAfmUTXgmgU9/fpCeWQXkuzRvirlmF4DD/iUvTEDIXCTKQCz
-X-Google-Smtp-Source: AGHT+IE9RQaMFC1MDkjMQKKEU1a5rTJ7t8s89pNb1bO5uOOCmDDGua0kMjOkjo6YPkqSOFpB5++Wi7+Md6CkJcSIoSc=
-X-Received: by 2002:a05:6e02:1f11:b0:3d1:a75e:65f6 with SMTP id
- e9e14a558f8ab-3d483a6eb23mr127596355ab.18.1742108015849; Sat, 15 Mar 2025
- 23:53:35 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742108340; x=1742713140;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pEzcRiFgIMURa9nqT9zJfnAId0aaeDxMsudrucdW6H0=;
+        b=eGBMPNXeZ7dABUN1aCr06iJqCt4FvrBgb+Gijy0qBnwjI+GIUFWH9RP7xxEZHorivq
+         fOOx75/Zr+7B/AMthbH7wCRemrXJlkn4pjkDPQkxngWD1u5lopaa+J2lwrlx8g2doqT5
+         A6S66OIAwibAEyxNy4deQ3e0VJgAIUEb8vZHcLQ6wYD1h022BqD17WS2TxVu7ivU/siY
+         Tv8M0PYw0ZrNoPCFBmtlZ8pJHZskHTnnFdDi5gdOH4XTMC9486hVxNo53/MMjSPSWK2d
+         1bb5603vBWeGsGEKBP8FcAML0DPtJw029Oh36Vq5QJMCIaOjDXFaajBXByYAdja53i1l
+         P92Q==
+X-Gm-Message-State: AOJu0YxotPqvVIULgMdykK2LReThztO3IIsKm9PJui4wAJAmqHRHwgvG
+	b+wGpvWcybYv8vx7/HXknELrt3xFPMNcuuwG11BgK/SVY35pdmOB2+7hcQ==
+X-Gm-Gg: ASbGncuUlSU8bWwDHsf8lHiBVjLeSnb71D/xmfkbOCFVMfH8zhpGwEuM4rdA0wdOf7D
+	Yr70XkLepAcNAIR9gYcnfiattLnlxGwIO3OagyPNTwL6d1vxtiH9Bkpc+750WiEz0fjMih22klB
+	ry8WfmIG8TeRgecswlbcWq2fRTg2eFKE0tLoOsYW2dy3EDyzr5mmb1j1VEL/My/t7UxvzRH2Mem
+	u5z0+qrcnXrcwWfuBp8aLRWHqBPbjb8WdR3jzFBEQG5xk69zc8KHKA8pftQmkJC6z/jYedi14I8
+	TzM28HEbAEOalVAMLo5p7dBIG0G2EvXPPeqZZTeaFKSsDQ==
+X-Google-Smtp-Source: AGHT+IGCLOA12E3xJZKVUBs2J94WqJ3BH3M1C6sSn0i0DJmkgkOJ6AON24RZ/8fUUAI9OUPkMMV0dA==
+X-Received: by 2002:a5d:6d06:0:b0:391:2ba9:4c59 with SMTP id ffacd0b85a97d-3971e971f44mr9864802f8f.43.1742108340299;
+        Sat, 15 Mar 2025 23:59:00 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c83b6b37sm11362784f8f.37.2025.03.15.23.58.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 15 Mar 2025 23:58:59 -0700 (PDT)
+Message-Id: <pull.1882.git.1742108339.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 16 Mar 2025 06:58:54 +0000
+Subject: [PATCH 0/5] Miscellaneous fixups preparing for the removal of merge-recursive
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1883.git.1742089659610.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1883.git.1742089659610.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Sat, 15 Mar 2025 23:53:24 -0700
-X-Gm-Features: AQ5f1JpiGCzyYADK8y3Vywt0uCKyTPd8mo_AiEMkm3TqFjgdgecV2gl2quJNmZ0
-Message-ID: <CABPp-BGbyKPmx=jNFE9TpvhSO0DcvqA8AETAYRt35_dG20rABQ@mail.gmail.com>
-Subject: Re: [PATCH] doc: add missing commit C to the graph for
- --ancestry-path=H D..M
-To: Han Jiang via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Han Jiang <jhcarl0814@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>
 
-On Sat, Mar 15, 2025 at 6:47=E2=80=AFPM Han Jiang via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Han Jiang <jhcarl0814@gmail.com>
->
-> The graph for `--ancestry-path=3DH D..M` should contain commit C.
+While working on the removal of merge recursive, there were a handful of
+miscellaneous fixups, none of which changed any behavior. Each is a very
+small localized change. This does not depend on any other PRs, and in fact
+each commit in this series is orthogonal. I'm just grouping them because
+they are all tiny, miscellaneous fixups.
 
-Yep, C is in the range D..M and C is also an ancestor of H.
+Elijah Newren (5):
+  stash: remove merge-recursive.h include
+  t6423: fix a comment that accidentally reversed two commits
+  t7615: be more explicit about diff algorithm used
+  merge-ort: fix accidental strset<->strintmap
+  merge-ort: remove extraneous word in comment
 
-> Signed-off-by: Han Jiang <jhcarl0814@gmail.com>
-> ---
->     doc: add missing commit C to the graph for --ancestry-path=3DH D..M
->
->     cc:Elijah Newren newren@gmail.com,D. Ben Knoble ben.knoble@gmail.com
+ builtin/stash.c                            |  1 -
+ merge-ort.c                                | 10 +++++-----
+ t/t6423-merge-rename-directories.sh        |  6 +++---
+ t/t7615-diff-algo-with-mergy-operations.sh |  4 ++--
+ 4 files changed, 10 insertions(+), 11 deletions(-)
 
-In the future, you'll probably want to use separate cc lines for each
-person you are cc'ing; I think gitgitgadget expects that to work.  You
-also might want to add a space after the "cc:", though I don't know if
-that's required.
 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1883%2F=
-jhcarl0814%2Fpatch_ancestry_path_doc_graph_20250315-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1883/jhcar=
-l0814/patch_ancestry_path_doc_graph_20250315-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1883
->
->  Documentation/rev-list-options.adoc | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list=
--options.adoc
-> index 785c0786e0c..5e5cedb9127 100644
-> --- a/Documentation/rev-list-options.adoc
-> +++ b/Documentation/rev-list-options.adoc
-> @@ -640,7 +640,7 @@ commits affected by that topic, we may only want to v=
-iew the subset of
->  -----------------------------------------------------------------------
->                 E
->                  \
-> -                 G---H---I---J
-> +             C---G---H---I---J
->                                \
->                                 L--M
->  -----------------------------------------------------------------------
->
-> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
-> --
-> gitgitgadget
-
-Patch looks good.
+base-commit: c9d3534de317f31915f37e9d9c0d52d4cf901482
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1882%2Fnewren%2Fendit-misc-fixups-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1882/newren/endit-misc-fixups-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1882
+-- 
+gitgitgadget
