@@ -1,48 +1,48 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A7D376
-	for <git@vger.kernel.org>; Sun, 16 Mar 2025 02:37:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A182F2E337A
+	for <git@vger.kernel.org>; Sun, 16 Mar 2025 03:34:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742092670; cv=none; b=I4fPTqg1lUbZjyKx/0DFclQbatr1okYxXxfjOR4g0J8V44CIcPVMqFAJb5MTSoaTPUQsxtwo7Zq+mrqdf5tu1atlhTFterCIHHYOC/cxvm0XLTEZYXWbxPGh+BnWeXrtITdyFpxG6GKMgQkEnD8hYEd05swAgrJnaqr3hD1/khQ=
+	t=1742096081; cv=none; b=oOFjaon6ud91Eu4yrbKUFtAGm2CBTJWkKun4TI4FG0YoBwCg/k0LUJtjssXJDkij60KgVxjhhL5ZDU0qhyFx46UW35cMxbwHj2WsITOF9oDOMaEimpza7Dh3DdOSEhsOv2nGDI4YCIvBWXFcHs/z3m9W66Me3lTmSr6z+VtZmNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742092670; c=relaxed/simple;
-	bh=r7RaZfDgkqCj4igKj1EXQ1CVjw2/MqCfLfFho/DB66U=;
+	s=arc-20240116; t=1742096081; c=relaxed/simple;
+	bh=UohHwNPl9AcZe0B+IhYbfyrQSyA0432PyAoMoepgZGE=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=AWHNwgD6eUcMPYxa02HCzhbqeCk/Kt7gVmLYCSXxEvwBe9EVq7G8vfhYP79vNp1CTrTqqPsVKp+IlhKNNO5iQGd2SF10Y57G5sM4pBSqxRMuDK8sDBCnlLV5sxplBV8WXrv91SMBZ3h8I6k8XKuRHDmAImoe2LlM4/fjLca0yjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=DyJNoP2v; arc=none smtp.client-ip=212.227.17.20
+	 MIME-Version:Content-Type; b=moSFOcgW9GFBOKkNdO+ySrHYBs1kWu0fvMgI5dvkEtaDhXwZAwCDfW69KRTwStojBM5mjxtW4J3dSkMnKDvnofa4NWS9xvOGgaPpPAefEIU1mTq+6ULTCJm4bZT1N08MjoEIaMiAnOU1OrBY1pXLQWqrZ0ijzYL9ocbFBx8XcPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=a/xTk1Vz; arc=none smtp.client-ip=212.227.15.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="DyJNoP2v"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="a/xTk1Vz"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1742092666; x=1742697466;
+	s=s31663417; t=1742096076; x=1742700876;
 	i=johannes.schindelin@gmx.de;
-	bh=PBOEugWlfkSCGUR7JAKlg8aHf39xKpoaNhzvaIm66R8=;
+	bh=UohHwNPl9AcZe0B+IhYbfyrQSyA0432PyAoMoepgZGE=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=DyJNoP2vB1cmmxBJC9MJA7EfT0bD+FPDYi1SP25xPQglCWmGjQDbVwmEbEYFknJH
-	 v8KvX8uGq/6tzv/Wj63s9JxgQSbdY6+zxwXdQjStGp+kXvx2/SU1qml1+ELjeCoKX
-	 6Jed6TyThnDIb6BZrTB7zRB5Y6uEkN3bihRnq4Dh1IT8daBHEnAQ/QQc9BLJ6KqAs
-	 vj8fbeNAvOvxvdkJGkT7pAGUKbbPqUHWsrRZJUxvfW4t1Ce3pAZeK4rLbvtq6adSt
-	 l3oMAHg//nLSu0xy7KAk8qTvuiuIeARnNXfGkhqqyfPM9qo6ENnH42EfaAKBLA6M6
-	 G55JEyJBSo8uQEZCXA==
+	b=a/xTk1VzmP3mmwR1b2ki4ReBi1r8D+/4IoqHIMnhzKKuzibVvW4rGkWXmJy8errQ
+	 xObo+hSLYwftrEwOAeEatrkako8iqFr+MVYpZUrcZrMy/W1hYFI/ZkAqUlfqFnJy3
+	 LEAIrkm7D3nE8xt2sTCBbPvfN79u4LIjohQxciW60rL5Z6yCgTUFBhV9BRcxgM4CV
+	 99UjVl3XxDFM271HLuOUufaFdhGGvLCex3K2YlmYj2nxy44MnoczDEAGUWEQujnl1
+	 2Jjy25Eaq4IUFmeKrlUe7vhB8FaEDRZ2u5jMuuwUG0MnIG+0mm+s6Cbh+LCzumoE/
+	 CHKf6XVY89+oucLdjw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.73]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N0XD2-1sxXW13Vcy-00zyfi; Sun, 16
- Mar 2025 03:37:45 +0100
-Date: Sun, 16 Mar 2025 03:37:45 +0100 (CET)
+Received: from [172.23.242.68] ([213.196.212.73]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M5QJD-1tspQH2q9N-008Loe; Sun, 16
+ Mar 2025 04:34:36 +0100
+Date: Sun, 16 Mar 2025 04:34:36 +0100 (CET)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Zejun Zhao <jelly.zhao.42@gmail.com>
+To: Dan Demp <drdemp@gmail.com>
 cc: git@vger.kernel.org
-Subject: Re: [PATCH] contrib/vscode: respect configurable options of
- IntelliSense
-In-Reply-To: <20250204125721.11357-1-jelly.zhao.42@gmail.com>
-Message-ID: <fdd8e2c6-9adc-4e53-d65c-ba75da0758f9@gmx.de>
-References: <20250204125721.11357-1-jelly.zhao.42@gmail.com>
+Subject: Re: Git Bug Report: git add --patch > "e" makes keyboard
+ unresponsive
+In-Reply-To: <CADs5QabwDtUpehNY3hr6BzKyfpp-Ts54TANGkygWPcN3T=OSOg@mail.gmail.com>
+Message-ID: <84c3ccdb-2aaf-9b34-91c5-cf5c27f53dcb@gmx.de>
+References: <CADs5QabwDtUpehNY3hr6BzKyfpp-Ts54TANGkygWPcN3T=OSOg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -50,86 +50,99 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/iyLwJ1UveCbbxxuxVUgKnzjE0qw2xzkxIzcuKKD9mbfXwvMQev
- A4aLieN8/Jrqb9rkXg9V057XgZzF7XEqFfeagDQTNWPL+pwTv04WCKqSFqAM54ZviIVkERR
- JV3u75LpADm8Wv0sj5CeTAUGQhduyshnkQb3IZKu3LsnJWRLaj8ZQuWu0+ehlV9R/gBzh7j
- s/gdIuopXBDCz+EbNq6GQ==
+X-Provags-ID: V03:K1:KbuoCvfbCZutLgcCdl/MthGRO03dwOZx9qCupTeGeU6pT3x/Ews
+ z4wgQ+ZqDdeV0P0bD9PSqqCAAogl/Xf68XJ3KDDigz2aJPEREMxZ2EVXHigYiPEzWBLohTA
+ yL68cnjVFnG5fAgCxIUOGIls44jrYK39MIE/m7hxdmZufRBDFyP5JP6tu2K/Tmr/XB2xr91
+ PT2Wzr4YBVEFFR9RSJQZg==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:PCrDE29D0lw=;y9jQWnjb+kLdWsruwr34wILcfkG
- IvlQhshE1N2k1I1rum6de65VEg/L2zsAmr+m5gs1BxhPst+e6UVTOAUPMd/70JIlMHVD1HAW+
- UM+lIkTXuq4Dvbf5G+xJ/P0LH3bjF+r9XPHNA/Rl9IrMOkhpbWKl0sfE+je8xsYOS08foKqif
- 9vJcWh0Q63yOytgOSS3XG7NUEHnsnGed8Yxk+oPjbOiQgrVlv+dtQ5AiogdGggKsmvdLT/Yt7
- +HxTMOfqbZKsFb1/WmO0V01DBgPPAcsaN0yOU3uqNbGTenWjSTsj7KQLWSqqU73GMwZhRxMlR
- qz1AiVHBKIW4we5cvArXsqHRDN/CwHOYqYQgEkMCzPmrai/C+VYiHlAsr/3IfDoMQP9IBwNqU
- FQ1OslpgZhGkdkuEdS+0H2tWYwOHljCXO15Y48HLDHOyH6oIJFhfakcnKkD6ITDDhJcON5AcO
- 3Q1kEs3YldMBrLPO9VmK63+trubq+cKCtsZE5L9XB9d1H9p3QSt2qAlAQ7vcrAqxRkNJ1X3H+
- WBGqOk+39Xp6f/1dPMfa2vib0lzMEvYLvHmqgZxdkMAH/D4tD5keXTNnGXp5CHo0L9gy9sI83
- bOY3Bmraa3Y+emFypFCBzRVK0w5w5ceUsKATUIBdh9t9p0fGIH4LYLWFWJyTLdCMVWUZQBUya
- jVxQpIbHIZ2ulNcONIsngrItvvnbKrCQp3dK1FvshG7ZwOuH4cDR9Ayu7heynEvhFVvkMi332
- 1GjaqZ6N5lWBxKB33lm8njUQsa48KEnEGvZFzVlZyVz/i6aIPS5YsnKSaX9ffmSTK7T+SF94M
- Tq8Sbl/GpFOOqaRPsstPE6lqDQx42SWWkYmMDSegX6/YrPcrp0eeGaAoGhjFO6Za6z4F24IKj
- wgeggaV80HbA+yHlEheA9nHl+znd3MPIc0NoDbwzlmQ2jEUwtkEoSrKxU6+s/HZ9GRbXo0yH4
- 2r88ER2IQ4JH37apeVQpqc+wFK1MvePxHxj7aQehsZITytQAY+v+BhWT13LJnDCyyuFwmkhT3
- F1/o9HNMhc2GyIPwBF/dr0bLbfLbCPk7MGhwPLBssZQmvbxpBcLbhcVblOE68NA/8HKOFNrer
- +8yyAtNHEdVL6fL4JEvpZA1jRd62EtRu/r18kb1/2yjW01tOHCuac0DgSsYmlOONh4/aTtHpB
- PyxWpnQfcFzaipAspsTb8iSK89unQorunUc+0/4ICrAMPZKKhQ69UwzmNTnSD7dIVvyv0djph
- l3/ZocuTKYPQlk7tiO/LCWDoaJ7cTqhI6LGQoP7rW9/AfIkj98NujsKQH3YV5QMUOfTKSg74N
- 7xHEaTP/zH1sd5+hI9PEFUzW60SmPh6gzTO1YBUu3Esy1xtOYpUijDD62Js0xL66E+sVU2e5q
- z2RyOelXHc8RW4dBCJ000GIAS470kzn5V40siIlCqNjBHKX0ca5KGxWmyZjEpIYVr2i5zgdDj
- lLpNV1+b/80Isat+5DupUFQwavZ//3cXjP5mKvhjBEq4WRU35
+UI-OutboundReport: notjunk:1;M01:P0:ataoxTR7q1E=;ClzwSvR9CpjcoLAHclyWMj+wqfK
+ z8DA3acmg/A947mFSdaA0MU3yk7TeLCxdMqEZlVT8bkOvEpWKAwFKa0+7RNEddbpErthM+ZP0
+ 2PD2ivIB06JmBYBoloaDemYiunV+efbwpTYB/BUG43ai7HgMC8gceJDZlJ2aD90ZCcNelV3V6
+ SMwMDdKRRE+2KRFsUi5lnk5nqfKE0fpzFqKP+P7JXAyQb9JMKVDGrly7Yj23QejfsS1uvLgA+
+ YHZfmYMGb5VLgO3tZ6Rm6pWbIv4sAVbDPiNTj+2t19pPzVxs0IK3xd8a1+XVJHTcDboeWPl8+
+ +qlat6Bl7gakGAQ3QOsix5aUHNs6uo87+UoGkNw1NyKBfHrXp0Mkk2Z/omHDsnChL+Q+zqcMl
+ 3XRoPToSbcRCVgZaW36AyUE9ExJ96gTj0N8cpXW4a3Yx66WIvmhR0fYv0VigJDBxVR7crG6js
+ b7/Zyj2IO6TVRkMgRpCQxf/brx1MKSu1ig7mcFZiYIe7IinlvMzzg4F8dJXMcXLvqdADErsba
+ L2wq70DMLrK/Jcip9ApLUMOVP1+fYCeQJfkVhfcGjIP9U8wXb5TBCjgSrUCpvp4peO3207XoE
+ RQqtNz5hnZTeGq+CzG82G0RcEvgf7CL8yWmxTTi9+JtKS36NuwFezQKjgs5nzWFYouBEMvG/u
+ KNkhwu9ERrSkynDaPao7fSntO07aoQSnbwNgMaK4zYYanVTDTX6XDYUgNBb1e0PtPmbn5gqCd
+ pnJJfjz2fER8dqcGAxGLtu+IyYZHa3aJ8BcvThgIpOJLgPKSKH2V52MN+3vFxOcYcjfIJLdxf
+ fwAt+WuPdEeFQebTEhLJBhgOTaFRqlDRBmFpEsiHMhC3nvhiGZEb6Zueuydpjn9sFkkfapi2O
+ SOXmouoBCw9TZ5/E7ZiIMij3do2Gv2qkNy81xl7dGDi+74OZAGGD9rQ/kSxx1YaD6OFLuKfTD
+ +QcVRbi6ToXD1TuVFP0sLU00jJbxTMepgowByxx0Ir3t2HEm6Stb3cO3E9FR0DmmzMUTB54fu
+ A4du372n19XQxyVDR8SgRzUA2mx+wm/F52JXZNwBVwyHt6LOUisj31ydT9E0A1brwmVidmE5g
+ SQR+KdUoAYrKxzVc/6BPckjN7HlnS/NS1WVtrVYeK9sN2m/TPTsNpVYiIaOPFYDSMF0J94++4
+ m5lkISkdkJ9sWSmvkhsfQFtz7B35tDjVEecb4+WBGK3+kosAh1r+kkrMPLyZfgdc03s4ZRDAz
+ VwWJSGdGyszymaIxCLiwDrBKgR+b/t85WyEMlLctphCKbqG21Ffe1/b/LCC0L+TATUVbYgkFW
+ cKdraxDIWQfitVbsqFiHB0hAjz5Z8wWQ+T75+mdeXLeuSgGC3UEwE7rkqPaJtValkpbdEO63H
+ jTtseUvn7kxE5F+RFYnpg1mMNUAH5Imh+FDh9SEiaFPxIKLyOnWdeXOp+6pzxeH6DasJJdZvi
+ ur7nwgHZhZKprA1XFJdpDRbR6QnzBc+/DZT9Tf2Mjo7wIqZGxnSWpxynsN7GR885LRY0jWCqG
+ edsg9X41FDgazVCAIAanZKLaaBunE7eeQ9ny7+Qx
 Content-Transfer-Encoding: quoted-printable
 
-Hi Zejun,
+Hi Dan,
 
-On Tue, 4 Feb 2025, Zejun Zhao wrote:
+On Wed, 24 Apr 2024, Dan Demp wrote:
 
-> The initialization script of VSCode development environment uses removed=
- configurable options of IntelliSense, e.g. C_Cpp.intelliSenseEngineFallba=
-ck and therefore triggers some warnings.
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
 >
-> Fix this by strictly respecting the latest configuration manual of VSCod=
-e IntelliSense.
+> What did you do before the bug happened? (Steps to reproduce your issue)
 >
-> Signed-off-by: Zejun Zhao <jelly.zhao.42@gmail.com>
-> ---
->  contrib/vscode/init.sh | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
->
-> diff --git a/contrib/vscode/init.sh b/contrib/vscode/init.sh
-> index f2d61bb0e6..17f5b6161e 100755
-> --- a/contrib/vscode/init.sh
-> +++ b/contrib/vscode/init.sh
-> @@ -15,8 +15,7 @@ die "Could not create .vscode/"
->
->  cat >.vscode/settings.json.new <<\EOF ||
->  {
-> -    "C_Cpp.intelliSenseEngine": "Default",
-> -    "C_Cpp.intelliSenseEngineFallback": "Disabled",
-> +    "C_Cpp.intelliSenseEngine": "default",
+> When doing a git add --patch, I used the "e" option to edit a diff I
+> couldn't split sufficiently. This worked, however when it moved on to
+> the next diff, my keyboard became unresponsive.
 
-This looks good to me!
+It is likely that this is related to
+https://github.com/git-for-windows/git/issues/4776 (but I can't be sure
+because your bug report did not mention overriding the editor), and will
+be fixed in Git for Windows v2.49.0.
 
-Thank you,
+I refused to release on a Friday (absent any good reason) which is why
+this version is scheduled to appear this coming Monday.
+
+Ciao,
 Johannes
 
->      "[git-commit]": {
->          "editor.wordWrap": "wordWrapColumn",
->          "editor.wordWrapColumn": 72
-> @@ -203,8 +202,8 @@ cat >.vscode/settings.json.new <<\EOF ||
->          "\\Wchar *\\*\\W*utfs\\W",
->          "cURL's",
->          "nedmalloc'ed",
-> -        "ntifs\\.h",
-> -    ],
-> +        "ntifs\\.h"
-> +    ]
->  }
->  EOF
->  die "Could not write settings.json"
 >
-> base-commit: f93ff170b93a1782659637824b25923245ac9dd1
-> --
-> 2.43.0
+> What did you expect to happen? (Expected behavior)
 >
+> Not make my keyboard unresponsive.
+>
+> What happened instead? (Actual behavior)
+>
+> I was unable to enter any option to proceed with the patch, and even
+> Ctrl+C failed to kill the git command. I ended up having to close my
+> Git Bash process and open a new one.
+>
+> What's different between what you expected and what actually happened?
+>
+> Keyboard unresponsive.
+>
+> Anything else you want to add:
+>
+> I've reproduced this every subsequent time I've tried this, and it's
+> specific to using the "e" option with --patch.
+>
+> Please review the rest of the bug report below.
+> You can delete any lines you don't wish to share.
+>
+>
+> [System Info]
+> git version:
+> git version 2.42.0.windows.2
+> cpu: x86_64
+> sizeof-long: 4
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> feature: fsmonitor--daemon
+> uname: Windows 10.0 19045
+> compiler info: gnuc: 13.2
+> libc info: no libc information available
+> $SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash=
+.exe
+>
+>
+> [Enabled Hooks]
 >
 >
