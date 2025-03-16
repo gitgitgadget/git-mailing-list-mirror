@@ -1,106 +1,92 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F3A39ACC
-	for <git@vger.kernel.org>; Sun, 16 Mar 2025 10:14:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF9A8F64
+	for <git@vger.kernel.org>; Sun, 16 Mar 2025 10:27:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742120100; cv=none; b=RIJDCvspLBQtwYYZZihuOe31twJ5CxWNO8O1UUCu1xMEhw9jiEBkg9c0zGnNYO1TBTgLNEOLPc2NQZzore96VjPCQViJ4bPzJ1YhryCz+JDspDrvd93nUDGrHm+Y2FjpD6siIyqqHhQxQzKlNtpG14YwOjGtf0w0lI9e2bwx6Fc=
+	t=1742120879; cv=none; b=oL0fwy8Rd2q4bcKSj13/wdUl3Eomrxs9r6VQakHMCZF/m7KPk2MM7NZ19xtIU82r6nWmO+y8P6Ve9Ybn1qwjKooX9Uku6ZjgXzwDK/mnNwe6JD/JfaDYFH1KRXcDq1zAIeTrZ8H0pFX8sL5dThZgpAgoJGJ85xA2Wl/QatPeRKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742120100; c=relaxed/simple;
-	bh=WeI5rtirK4I0w5YkIhSV142gOha7IAR4z9RI/gCT0cU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oO6KtyUOGWpsfAuYyFeEV2ofLBh9yDc/dQ4GCiU+atJIv3uHuLiW+OhuOnmKUaL/YWpJP1V1NV/mSVu+BAqRkvpAxCHDUj2AixEr1xYgrpFkPvrG12yN83SzS4M9/Wj02yBKNGZLT7WGXc2i4gUEC81aF3RKOjmVZzUUD06wfSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XG2jYei5; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742120879; c=relaxed/simple;
+	bh=WhXe0iGrdOfnxX0tQZ9kmPYEriyUipk/Z0cj7JcAxp0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gziJCQsltSO480XZmjsKSrQMUBq60Dd2wVaPcCdhHVDmZKgNzTicufwCdjyl6pUvaTppRcE8QraLq82w7EBtFvmCdHpttdbMnKM3uB8YeUzTGwjLMwW6DZFHhjwhdYC4e+p5b+y8BLz4FlcYkO+cu8isU3URN8xMYBQWxvILv/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=CygBNyWe; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XG2jYei5"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2ff80290e44so2090310a91.0
-        for <git@vger.kernel.org>; Sun, 16 Mar 2025 03:14:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742120098; x=1742724898; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Kkh7Gs6f9tozVDWQHE00O73ERCRpoaCm7ZGlef2zJPg=;
-        b=XG2jYei5hV1drSB2PKZ5l0ZunqnXWjnDyXvMvrFDGxH5Gjuf10v5eocqajtqiCz3tT
-         CAhWWrwGxZ6DCj5jEZv4TNIKHt+OKfW0sPF45/zc9bxwZmhVZs+HEjy+f+K2ORMNvTyN
-         d/Yv5hMVBkmWPe5YyXrItRcu/NthNnVV7U7gHxQwUGRQiA1CU9WWtdLzkRcIwVqD7mw1
-         Orc1R1XQhTq56bCeyI+moYLgkBAcg7MK0AhqUBtiwXlOu149yFPP1s+bvusQ6YTzgqj7
-         TttVcwjlN+d7F8I0JJtSYUymvE5ccjpSf+ZyHQ5YeJfQSS8R8VMZp1VlIl1YvL474ue3
-         X6tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742120098; x=1742724898;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kkh7Gs6f9tozVDWQHE00O73ERCRpoaCm7ZGlef2zJPg=;
-        b=A0hx7unHEniOjw/sEmz7PVQn2SB8C0lKkNpb9O/p2UPLFq+mo7X7gwObr+XEl+9wIf
-         61eXeeF/4IRUp/i0xLWXkiWRgV3wfgFPWfboYuA729+feJra+OyLCMGmCLIBt8E97Qdu
-         0EfkIIeAurauxVnLLBTYjZ6KcKvW4s+/s+K0/COyiVlcgsGgaCyScQrU3UIIUlT0f7SN
-         Eqr7Pq5a3aq4b7ugdCZI7SKLhD5laDc6yxcs7/DSQxSb7rj4X3ronJiZWExpsrjRyD41
-         Wneg3+q9SEQyR7qZ8igC3wGQDVqNyWRgagJgLXpV/5Mlp4iPolc8vmzJKdFJgFRN8VHm
-         QzTw==
-X-Gm-Message-State: AOJu0YxeqFKzBRVytWZWC6yebOBaY+ODIkHitT3bS4DzyfYIKmOU3a7g
-	T+ZOFDkxWyeqoxIkH417ZlLtJotnu7bvJiZmI6QgbDwxwAh6u2my
-X-Gm-Gg: ASbGncur6w/y/3EHGDOmk82tnyO3CgVXdJ96RZZspK+kPOGoC1VTzQf8H9/2GPkFqDQ
-	x06MPwzmyE1lfleF8xiS/E5ooEEcVoSUTKmZ28qarSFkiIz6ujgQNLoEFpmMexpfDANOm26EtML
-	0QV1q+4l7FSETRlq5Nmj0ZlYzNm3O00aT7Jx7KHzu5h3USOxfEeuus3ts2kymDvlTOnvVLPwZPL
-	zLyNZUcPyZRWbpweLhkdEhDJ/6lotYj017736+GceyMQwCAry3SnJ9LRKK1r/3AXxlNR/XVZND4
-	oJq6vr72kUanwNMeB36HUE8OwLYyN751Kz9XtPU3xLszwbbCnItaSmrzHArAkOpWUqj1rbZe3D6
-	5wUMi6GjLUR9iNCM=
-X-Google-Smtp-Source: AGHT+IG9nE68nzjKhm0RjsJ+6H+XAk1wszSlGvw2UnNxBNZ7UL6CVUdDHqDXQNdAuRSuz7iwC7Jvug==
-X-Received: by 2002:a17:90b:3d85:b0:2fe:a79e:f56f with SMTP id 98e67ed59e1d1-30151ca0b77mr10485473a91.13.1742120097932;
-        Sun, 16 Mar 2025 03:14:57 -0700 (PDT)
-Received: from ?IPV6:2400:1f00:2:fe0a:50c9:c0c5:fb7d:882? ([2400:1f00:2:fe0a:50c9:c0c5:fb7d:882])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30153afe73esm4447800a91.25.2025.03.16.03.14.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Mar 2025 03:14:57 -0700 (PDT)
-Message-ID: <a720058a-f8cd-422c-a8c3-af7536bfc880@gmail.com>
-Date: Sun, 16 Mar 2025 15:44:54 +0530
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="CygBNyWe"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1742120875; x=1742725675;
+	i=oswald.buddenhagen@gmx.de;
+	bh=3wsgcPLBY1+zm+PqShWpwAruCK2+TnJDCnfSjkyJSq8=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=CygBNyWeYSo/jglNEqD/rNNoun8FDhPDRTmcqerGoT8MuZCVtFv5a680b8eBtO8O
+	 Ch374cq7FhfsWxK6UXheF/kPZ8fh0aL/Z60mYUX8Mjik/epd2zCLpaSuH83Wh094L
+	 bf+N1FIG76aBB+n3zikUwUrYgPOhF/101kGp2JQG5QPc2US5tt95MCZrqyrPrgftq
+	 999tYeauxhyHWrcAWHeUtWcpr8HBEdVicdtIB1pA4ZY7BVlFySH1xUMWtla7Cyo9w
+	 VzEnX4nHek7rwsWbJyKstsPbNBKM7PLTl2mAuu5HUI+OA0N8MouuY3h4bcxNlEabm
+	 Oly/LJRE7yl9vUcmog==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from ugly.fritz.box ([89.247.162.126]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N63RQ-1t9UBe3i9o-00wlpo; Sun, 16
+ Mar 2025 11:27:54 +0100
+Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
+	id 1ttlDm-kVf-00; Sun, 16 Mar 2025 11:27:54 +0100
+Date: Sun, 16 Mar 2025 11:27:54 +0100
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] git-gui: heed core.commentChar/commentString
+Message-ID: <Z9anqjBmKFpPuTP9@ugly>
+References: <20250315140913.577422-1-oswald.buddenhagen@gmx.de>
+ <a62035cf-b67e-4291-acf6-d2454a9459bb@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GSoC PATCH] pathspec: fix sign comparison warnings
-To: Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-References: <a3aa5f99-63ce-4be5-8d64-fb6e226b3bf9@gmail.com>
- <CAOLa=ZRNJD7NqceGQ4B8ox+50m2q1nU1t29x7O0roc=-_4ww0w@mail.gmail.com>
- <xmqqcyelq714.fsf@gitster.g>
-Content-Language: en-US
-From: Arnav Bhate <bhatearnav@gmail.com>
-In-Reply-To: <xmqqcyelq714.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <a62035cf-b67e-4291-acf6-d2454a9459bb@kdbg.org>
+X-Provags-ID: V03:K1:7NUcIXD0WEGBI/HOH5aoD/0Tf3R1oKA0va2vkSY9c9+lkvnfPmk
+ 7FhIk9XJxBLBcl+nkVe40aDkgv0VQ4x1uGrscWKbzWag3F5B6d2uwXuS/B7uXxwi0zwwiTV
+ As2l0Qe5HQYBY0j3QHAzh82g+ntYh0UtZnhFT3lnZqNnVAKUQtxQ3jmVgosiZtgEflsf8YL
+ KJaDFvJqGI5vyj0rN6Fjw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:xqcCL2waEHc=;5YJbAE3A4C9zynHhZdAxMkFTxNR
+ CXuvv97cHcUWRWE5isL2dC+yfQ2XM5bvHquXPFpZjAQI90naKfVWXkQlduT6EJCmKAEARk4vC
+ G1CivE64uc3nBYd3nZYKDJWlC59+4NwxZoZPTGeoEhW5jR+RzgBAeJkrNxmG0ksATb4XFZc7l
+ YujMgrED/0oTG/oWSn54yUMGetu+WzeObS2KnVbsNa20Sbu+IoPeu/Lre5Xfd8+NPsw3/+Y6r
+ 729MkrxQDkBxvuBRrnAmrh2hyQFkio9vvkRAKhpi2Zd5UDhnx8vrfw38GwftYr9ngxjNVfGJj
+ aoEBQwIsOC+9KlyYK5/bWD1e/Ohed4MdS5Ru/5d7PxSMhQnzJA/IDb5p9AbYOoipMtIzWUukv
+ nOCcrxkJoyL7bvX421X6SIBotV+RgHPjyOHqJunj68gh6rgIGrNmdDUcvCu1ETNEdhp9POgOC
+ 59m2moawbMmhG/1qP2p7cIrVOCbmuhLo8jx0EIWcRFWQrtZ3L3E9x8cTT3iplPo04wUL0zdz2
+ izWCmmFkDRbwNnNXvONrv+pVb9bi8Cu3J6jLRTT4cuZW05/670WXJTeUOdjCUfTy87t1srMAY
+ iLTIXvckB1wnBaJfJ8b8OKjGWvciqZ1NHqjP9hfQ4WgGxDfLqeT0n4/k9h8xpY/DuPBRQ1yuO
+ MLtNReUve3sWpeF+zPwbqjcUmlo+cUbANkbU4TKOPMyzjNsLtbZ6KxB+mDUDV9d7T6fzde8zb
+ yNRGus7TltYvI6YqKNFYb7yWhrMGGy9yDk3VUIVRBnSXfG02FmI3JOByZhftWBfyUhrgrnz2O
+ 5/7hs19Got/301iEnArZCJbaAeCktbE1dP5p8X988Bh7GVThG6Y1AqIsUZ7c0kTgOgmymYZdA
+ kwhfPeycHthpu40unewjtWjHgXHRijkPxUEASZCZIraJe3BUvfR8qlhATgog/BbWQ7x14Wdpc
+ vPeKi39FkBTG+QgHfD1qgczDrTtJQcYMLBmNMOj5aKtf7GCDlfI1G85uPnSiviTFncey3Ti1T
+ ifPNcYM90WP/9bkuUWpG/fWi3NP9NqR4Ov24C0LWwyx+TPENJ0F5i/V0aqLciB3UVbkx5c0OQ
+ awFoCDMFTGfzQGdyYqQ33+iKx1z7HDj6NSN3QuY/i9PwhrCnZPUuReJsFlqmiOONgn1TiyQVu
+ WgXtmTKyCbeXFH0cQ99zqWpCrmflrNyTdZ6g+xfx8gNEAVYf4UcAuhLsVVeeEpu17b/CA6pvd
+ 8p53SOeOZEP0X3YIW7SUqH3tXGNWdsgDrkQ11LNBmJh0hBUQi8fiiwbzfIldaXbe6ZbZ1HWWY
+ QkqpAKhmvM1MMb4+CjZNwCSKv7OwBTtfIPZ5qj1VPsM/1V3CBHEfVrWYdGA3/MG3wMfuFGIWy
+ pf/p9oyeipJ0La8MJkPVXjEYbZ0QTfTqUiZl8XQVpzV08FR+uMW9qX86d9yyXn/XX/q7eVSEy
+ r7+OzahroA7R44dyss8lmhE31uiRPKoOfphhYLFARP/jrAqYG
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Karthik Nayak <karthik.188@gmail.com> writes:
-> 
->> Also a bigger question is, shouldn't the type of `pathspec.nr` and
->> 'istate.cache_nr' be the actual change required? Shouldn't they be set
->> to 'size_t'?
-> 
-> Please do not blindly advocate the idea that size_t is always the
-> right type for any countables.  It is not.  
-> 
-> Platform natural way to count things is either "unsigned int", if
-> you are only counting, or "int", if you need to be able to signal an
-> unusual state other than "here is now many we have in the set", like
-> how index related functions uses (-pos-1) to signal a location in
-> the same range with different meanings.
-
-I did notice that negative states were sometimes used for such things,
-which why I said I didn't want to do the change to unsigned, it would
-be too complicated to change such things, and I do not think any
-alternative would be better.
-
--- 
-Regards,
-Arnav Bhate
-(He/Him)
+On Sun, Mar 16, 2025 at 11:22:12AM +0100, Johannes Sixt wrote:
+>Am 15.03.25 um 15:09 schrieb Oswald Buddenhagen:
+>> +	append txt [mc " (Lines starting with '%s' will be discarded)" $comment_string]
+>
+>Like you said in the introduction, this does look messy. Would you
+>approve that I remove this hunk while queuing?
+>
+yep, go ahead!
 
