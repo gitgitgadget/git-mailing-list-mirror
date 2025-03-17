@@ -1,74 +1,134 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7BB4C9F
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 18:53:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CEC4A06
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 19:01:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742237604; cv=none; b=kthotfsTljK+vxNZFdfhukFAe+VJopEUny8poO6+iqzqSzFx6oSODDks8duMBptl4Xo+vlM99RY22TBfTb2qQ01PSuO67pUHoM1W+ohMts7NuA8pe6g9uIwShiA0tMlaFXj/XJr9MF1+Wk32fVcjHlbOJ3QbzUCGYLKORRgCCsI=
+	t=1742238087; cv=none; b=jaJJUvLC2vAUFHSVdNr8a3BfQGSh2jAFuIqicDHl2AF2x/ZELm7mFaMyfc2R8ZYmwgNSdf1Q/i4kvhO/GPbTf7OV8+cmvEUh9+2jB/opVG+O2JFQFxKgf22Nj+cXZf9JHPKRF1VmNsvqFtbJ2+xXwVQLWzpGEKHcbY/A3E5D6zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742237604; c=relaxed/simple;
-	bh=uTB9wxfyhe+AQ6XjKXXH+nVFb9yP+kq2rhM87Be+Kls=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=OR2kuY3M3PLTh1Zo1Ke6ENQmC3KV3749HjQ3KwOj9hTVA9eguO5DadHvXhnR0CdzR21t2an8f9XN0QVklrHRifUhAAwcODNk10PGGWLs3pGPusAGuh04pHp6X5H66JlHf3CHUZRLqCiJk4vaXyUQ4sRFjfP8GhiRff1Wod/sMho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=block.xyz; spf=pass smtp.mailfrom=block.xyz; dkim=pass (1024-bit key) header.d=block.xyz header.i=@block.xyz header.b=I/JA+96U; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=block.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=block.xyz
+	s=arc-20240116; t=1742238087; c=relaxed/simple;
+	bh=rc942rmNDc/HUcq865GTt/9RKvzEzJVbsPk28HHysJk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jqlY0Jxl1CXW+t5Psvg66Cp2UlZKoF4DdnADOUexnXcFZAZLCFGb2uXATv056UExuns+PS7YI/Xh0l4kZBOEW+TCQe6wd7naMoQvKJmJ6ta85z1nQ1swn4lKNb5GJQCKlfTXs+KUtUQ1cxRTATaKuJNmcRmCLqVi33NgZhvvva4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=q5pTokgQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wnSVNjpk; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=block.xyz header.i=@block.xyz header.b="I/JA+96U"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3995ff6b066so1166864f8f.3
-        for <git@vger.kernel.org>; Mon, 17 Mar 2025 11:53:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=block.xyz; s=google; t=1742237601; x=1742842401; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=uTB9wxfyhe+AQ6XjKXXH+nVFb9yP+kq2rhM87Be+Kls=;
-        b=I/JA+96UuEXn5VzU3gNEko/yZNClXI67tEYI/jD7SzzHy99cWIMrJtObqFNlJNTxyy
-         pCFIU+VGQ0HrL92hgTOSi7ev8kbweiiBEhbpQVJfCrjadcxwWi67LoHH/gTVBd2NJ5g3
-         dHnPobYQUdlIxUSpIuB7cDBkilNS7kjeJy79A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742237601; x=1742842401;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uTB9wxfyhe+AQ6XjKXXH+nVFb9yP+kq2rhM87Be+Kls=;
-        b=l4YQOArT8DHoO++BJp0hqKYxXlPyVMA6h62P8DO2RWSMgNye9iBjDTZCjLKL8b/6W/
-         i9chQFEbyHQE1nlmBM+WX9Uody8jtTzdsbaCkA5U8dd1jZLJHSOkspjULDo0tBuu4JNX
-         soH9wxX/uIOqlEsjSr1Nl+R/vjnklIj2h2rx+WBL4x3JAcErbpHPxhs7fYu+oYi6mL/8
-         w4xXdoaGqJ4sxLXARsaDeiFrUMlSfiHaRzduaSbhXQgMbOydNl9Tj09kaf2IHOWcfoLI
-         eHghvLq5KRkxuIVYmVg7D5WH5ybphcvEPyovKfvracFt/0bkthT37XP0vH3wwI7t+P+E
-         EgLA==
-X-Gm-Message-State: AOJu0YyyjKnDSBz+3crva5oFnOUpif82iSDbne3kQCpLQ2zljm4ZwvpL
-	zPbpZgALFSGs5Q30YP3uDHAubpfjT3K0RgjLqHH7J84C73DSMJqxE4+7qvz+PM6klu66NsLABCz
-	koI4Ds0O3M5sUcs9A/XZx93SQdXHUSAz8+xYUD5MOw3EuatDSXUl/Bg==
-X-Gm-Gg: ASbGncs7sAnWz/6YS0mIAvkz17d/XbTyjjPYBABsfUB1j2+VNrxQknwAnjWcr11z2jN
-	lCoXC6cBp/iF1XBVmOcoWGezjAO7Y/8Mdgq4fUCO18sYUoJFG/F3zgpuGABGV5Qpw7u876FL7VB
-	72gC2+sr1qIYpIGbgAnBSI1xMNhH3R
-X-Google-Smtp-Source: AGHT+IEVeRivHCYBx51GxfVUi/M6V6Zvy42w1vjusSgT0WKhqKKr/MNGC4qjvQ6aoSaLGh3olNqju/wH1l/KSIXRdsU=
-X-Received: by 2002:a5d:6da2:0:b0:390:f394:6271 with SMTP id
- ffacd0b85a97d-39720966395mr14574757f8f.43.1742237600951; Mon, 17 Mar 2025
- 11:53:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="q5pTokgQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wnSVNjpk"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E7BED1140168;
+	Mon, 17 Mar 2025 15:01:23 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 17 Mar 2025 15:01:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1742238083; x=1742324483; bh=6kREtnlyVY
+	ouGOWIkL/y+YWb3ZjSkrC9ymCgBHzvNB8=; b=q5pTokgQ2V5bQZC1mm18PUKQly
+	JrVQndSegqza1jssuNIXxkRhHXE9jfcu4V5aUGTY1P7i3zg5wZHiFjQriakPJ7cK
+	FBr5Z+GL3I6qnzcDuZNszgmIxUMUEu/IafE+S1YtzV+vnoNy8MG82qr0ZRR2GCF7
+	IrZKk43GYaFTLDPJXhNGDZAOs/cdOJLylZViXmj30dgUUpOa+oDSGbM70fl5RSKG
+	31rf1Qk7yKUXsnFw4/ZEr2ZwFHi4JrkqjT7OB9IO1BZtTSvpozKJZ66JBbQXh4Tq
+	ApuEfhIdTld6w7NEHY237yVZyekqfpw5HN6I8oa290sGF1KiQYa0sagc/kjA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1742238083; x=1742324483; bh=6kREtnlyVYouGOWIkL/y+YWb3ZjSkrC9ymC
+	gBHzvNB8=; b=wnSVNjpk7tRYK/i8rDLeZf6S+AAcu8/6L+Ywi9mnam8ougJjww+
+	/AQN0e0GM28nKKvmrqHVnrfMlk/Tt5cy8EUIMn1UMdXRwaKILWgDj8asCm171d0x
+	tRp3gI6WVn3L/3dUZJo9hIDVg4tkSmx5Rvhm795kBAOR2Mlw9Hgn/QyuIPmIiDXE
+	TDgn83WtVd5cRChWgrqOpcRu7BRy+jjWrOXWECzRpdA3RVhf++LBzsmMkFR+SlLp
+	Li6RmV8zVzZ53wkez5eXhNz+2WwFM9k/TLSK+x+e46NpRkKYCYmiAv5zRJRDcne/
+	cjwBkQSSw6zq1qdBMGM9k4eVgLziZUOgDWg==
+X-ME-Sender: <xms:g3HYZxblimq2Hw6Fzo5F6HaEE0dZq67im9fG9y-ICK7MwZscSQFwOA>
+    <xme:g3HYZ4ZqM7NksoxGNq9jupOtwVzsrHpKOOt26Vs9TASt5avXkYGpdSDhSuHSW7Zt8
+    IIpIFlhpzDhrAus_w>
+X-ME-Received: <xmr:g3HYZz8Xgd31hxP--sKi7jUS85lExzsAHJFtvr7Palqx4cbItAWczb6AZTXWCORWIaNaHCDy_7MmCVBpLf9Rm8OUwaFnKi6MSqzAzU0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedtfeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehithhoughorh
+    hovhestggrrdhisghmrdgtohhmpdhrtghpthhtohepsggvnhgtvgesfhgvrhguihhnrghn
+    ugihrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:g3HYZ_rr0J9KKDbtH9nNN0dVSdvrH0SwaR69IoNZ7fzF_LrEtHMfTg>
+    <xmx:g3HYZ8rZslJuhN5JPFsQvIcx2gOTOdvxZum7-4CGFq6suW-YK2Tyag>
+    <xmx:g3HYZ1TT8FhptPMPrK_-BphIxDJ6sE-DP_HLgIDbj5cy3Y9BdhdxWA>
+    <xmx:g3HYZ0oEdVh3m580Vmvt1ypnDa1QSG1aucm7MPHpOsxWwAxhV0-6sQ>
+    <xmx:g3HYZ9e7c9wkvt-zOC4gQHo7WGucUc-W6vecWwrU0M9l76MGmfbCrsbC>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 17 Mar 2025 15:01:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  Igor Todorovski
+ <itodorov@ca.ibm.com>,  Bence Ferdinandy <bence@ferdinandy.com>
+Subject: Re: [PATCH 8/9] fetch: avoid ls-refs only to ask for HEAD symref
+ update
+In-Reply-To: <20250317180604.GB704553@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 17 Mar 2025 14:06:04 -0400")
+References: <20250309030101.GA2334064@coredump.intra.peff.net>
+	<20250309032016.GH2334191@coredump.intra.peff.net>
+	<xmqq4izxq63y.fsf@gitster.g>
+	<20250317180604.GB704553@coredump.intra.peff.net>
+Date: Mon, 17 Mar 2025 12:01:21 -0700
+Message-ID: <xmqq1puva3cu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Yissachar Radcliffe <yissachar@block.xyz>
-Date: Mon, 17 Mar 2025 14:53:10 -0400
-X-Gm-Features: AQ5f1Jp1BC6k48Nj-9LGnVujiXN13I0hKN4otUpaKtrgVc56GrzlTDQ4VwPbDXU
-Message-ID: <CAOHNGAW7ucD+xqvEuvq2GHMc42+WdKJX44XGguadK_y=pMf0Vg@mail.gmail.com>
-Subject: Slow git add . performance in large repo
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-We have a relatively large git repo and have noticed that `git add .`
-operations are slow (~1.5-2s). We have core.fsmonitor and
-core.untrackedCache set to true and `git status` executes in ~300ms.
-When I turn on trace2 I can see that almost all the time is spent in
-read_directo and it's visiting 26960 directories and 77989 paths.
+Jeff King <peff@peff.net> writes:
 
-I can use `git add <foo>` or `git add -u .` to speed things up but
-`git add .` is the most convenient for us. I created a small script to
-pipe the results of `git status` to `git add` and that runs in <500ms.
-This leaves me confused as to why the built-in performance is so slow.
+> That was my intuition, too, but there's a case in between. Doing:
+>
+>   git fetch origin main
+>
+> will update HEAD, too (with the current code).
 
-git version is 2.49.0, mac os x 15.3
+Good point, and I do not think it should.
+
+> But if and only if it
+> points to "main"! Is that something we want to keep? It feels like it
+> could sometimes be useful, but it is awfully hard to explain.
+
+Again, I do not think it should update HEAD.  Is this something hard
+to fix?  When I say "please tell me where their main branch is",
+that is what I mean.  I didn't ask about their HEAD, period.  Unlike
+"git fetch" (that default to 'origin') and "git fetch origin", which
+is "please update our view of 'origin'" and should update HEAD if it
+is missing (or configured to be updated every time).
+
+> So I could see going in two different directions:
+>
+>   1. Only do the HEAD update when we are using the configured refspecs.
+>
+>   2. Do the HEAD update even when we are not fetching its destination,
+>      but do not otherwise trigger ls-refs to discover it (so basically,
+>      not on object-only fetches). This kicks in for more cases, but is
+>      hard to explain.
+>
+> Both are a user-visible divergence from how the feature behaves now (and
+> so I did not want to touch that in my series), but if we are all in
+> agreement, we can fix it on top. I do think option 1 (i.e., what you are
+> suggesting in your email) is how I would have done it if starting from
+> scratch. And the current rules are weird enough and the feature is new
+> enough that I think it is OK to change.
+
+Yup, I do think #1 is the way to go.
+
+Thanks.
