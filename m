@@ -1,99 +1,74 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF34143748
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 18:49:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7BB4C9F
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 18:53:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742237358; cv=none; b=AixDMEFb9P/1YWHKCY3LrPc4oL8DgcwgnjWmnAzij7Zfcb0sDuju4/W2BMLWdA0q8xjEc933e1LLRB44DkcPx7u/0/5y1l1AWElOEbGgR/mQQXBOm+rjgzYLFUoi9mdFndkv0g0HcLbD+F01o1md5xB/zZLYOxbSOFveKUZEDoU=
+	t=1742237604; cv=none; b=kthotfsTljK+vxNZFdfhukFAe+VJopEUny8poO6+iqzqSzFx6oSODDks8duMBptl4Xo+vlM99RY22TBfTb2qQ01PSuO67pUHoM1W+ohMts7NuA8pe6g9uIwShiA0tMlaFXj/XJr9MF1+Wk32fVcjHlbOJ3QbzUCGYLKORRgCCsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742237358; c=relaxed/simple;
-	bh=cTljCD3yBh1qbpl/tbvLMRfqDl0e0qPcURlIQs3fRhE=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pIwZMu3NQKhsa/6j7rxTCrTzjTz1n54XEI8j6fsghUs98MZdHXw1AN/Ew0/M60usHv4Cv0hcKwZAkXEwgyXoQwTREEx4a4QyjsioCRRwj4NDlU9y7qgfJXcCK8Y4JX5juzJTMCp6uOTwLHvgdzqvNRqAeXmVT1UAppcHgXz8D/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dtp+U3ut; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1742237604; c=relaxed/simple;
+	bh=uTB9wxfyhe+AQ6XjKXXH+nVFb9yP+kq2rhM87Be+Kls=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=OR2kuY3M3PLTh1Zo1Ke6ENQmC3KV3749HjQ3KwOj9hTVA9eguO5DadHvXhnR0CdzR21t2an8f9XN0QVklrHRifUhAAwcODNk10PGGWLs3pGPusAGuh04pHp6X5H66JlHf3CHUZRLqCiJk4vaXyUQ4sRFjfP8GhiRff1Wod/sMho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=block.xyz; spf=pass smtp.mailfrom=block.xyz; dkim=pass (1024-bit key) header.d=block.xyz header.i=@block.xyz header.b=I/JA+96U; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=block.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=block.xyz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dtp+U3ut"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-225489a0ae6so13425ad.0
-        for <git@vger.kernel.org>; Mon, 17 Mar 2025 11:49:16 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=block.xyz header.i=@block.xyz header.b="I/JA+96U"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3995ff6b066so1166864f8f.3
+        for <git@vger.kernel.org>; Mon, 17 Mar 2025 11:53:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1742237356; x=1742842156; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:to:from:date:from:to:cc:subject
+        d=block.xyz; s=google; t=1742237601; x=1742842401; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=VPLkkd66LuHl9bDve/ITvpG9oAjR6YWTZoW8zRQ8x6Q=;
-        b=dtp+U3ut81IUzKLbbDg56HaLM4FtnUPsxQ/GNBDmqm7olBYhrp5/SUoo1KF58NTEwE
-         eqQQDdjtT1b88/BG7exw6ajIPnPhXQMYtluow2BlPltspYhGzqV20peL2HBESHTON9l+
-         uA+x1HsoTnUtKfi/61ecoEHqzaBZlntNar0TADfbBIEjagu8OubBfw8Z8bHnQvHc52DV
-         VF0hyK3GA5w3i8sUtD7q8odHJDEgK7gU8PaFwxyzyitC3ip4sODbEuboXyOMjlQiW42K
-         b+cLGE4A6qyJo4nZ2bROGdXhpjzN/PHheFbR+fRHwMB8K5RoPQhVOKPg/jnWn73DBiQx
-         x94w==
+        bh=uTB9wxfyhe+AQ6XjKXXH+nVFb9yP+kq2rhM87Be+Kls=;
+        b=I/JA+96UuEXn5VzU3gNEko/yZNClXI67tEYI/jD7SzzHy99cWIMrJtObqFNlJNTxyy
+         pCFIU+VGQ0HrL92hgTOSi7ev8kbweiiBEhbpQVJfCrjadcxwWi67LoHH/gTVBd2NJ5g3
+         dHnPobYQUdlIxUSpIuB7cDBkilNS7kjeJy79A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742237356; x=1742842156;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:to:from:date:x-gm-message-state
+        d=1e100.net; s=20230601; t=1742237601; x=1742842401;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=VPLkkd66LuHl9bDve/ITvpG9oAjR6YWTZoW8zRQ8x6Q=;
-        b=vXd3mbXnUeUNLG1ur9uZytHBDi3Rdmd/uGaJaK1gjPEJ9XlDIEjgOiqYgDE87pmU7Z
-         lnprxcd0Y9mN1Pdv95kr/PSz1ezv6KO27LJf3GNE9Y+K1EBihxcPlrDYMTube3itL5h/
-         FdzpEYoyAy6sLevIkM99nlOQwalAfRCZYWIQEAGUTbwkuUUyWLU3ikKnnXOa8rrN6MIH
-         Geax2IC/+IfNxjuFHyAJq+aIUHPeAY66RDJrD0rR+tC03KMV/e0QwBrnkGLhsTMMH1QZ
-         nX2Z1SdULnS4kOYOaWWmJ1f2VjzFhf5hqTBwT129/Hq1NW43gPdyTmXtZm6S+W89rFmv
-         FknA==
-X-Forwarded-Encrypted: i=1; AJvYcCX/rfm9v2IXcVtSfB1noMmr+0AefSpiXGO7xBT6cCUK5cXfy78GQJw1B12R/beY0B5wR2k=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwD3RnLSBZXYq4ehqT8SllkiE6oC0Xg/A5FoZojIez8Rj2T4cwa
-	s+3LMVuyfFs+enRzNeTN1bltq1b7x6Y0O501How8MeSnDuMnVFPMgbEXD3xOm/I3r7SnbT/wJGl
-	xnw==
-X-Gm-Gg: ASbGncu/bZhXKd4KODfSEmExgLpU9npnfS1F+IRWSeyON1YIXXbTxHJZCiQNLXUK4UW
-	4tAevio/lgWIWiHoe+/hnpi3ujF0Z5BaFg5sq1kI3HpwAC9DVBbUjDfSl5FxJyxj/77Sq7akqKR
-	q3s2k+FK1TKMtIwIU9dlcZ4zykAAdU5Lf0m72J9ujB8i+TSEzEVEwTGQh6KXDIo7dN7Qp02oCHi
-	aUaVGUVUwmC1qKr/xsYzm17VL7O39v9ndUAZZn92TH1umaLFh0V2v+MBRlmCi5x9CRLyuk6K00Q
-	296ph2QdpkwgScmQlG7umKvmxeGdHWCrKz/dtargUOE=
-X-Google-Smtp-Source: AGHT+IFZprYx9OWlVk2BcS6lsxTCmtb+RuJ/etMf4pA9UeDhNS8JVyfth/OXatHzBflyT/pGuvNADA==
-X-Received: by 2002:a17:903:234c:b0:21f:3e29:9cd4 with SMTP id d9443c01a7336-2262e648ca8mr287145ad.20.1742237355639;
-        Mon, 17 Mar 2025 11:49:15 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:6174:6afd:698d:3dc1])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-301535a53f1sm6631811a91.1.2025.03.17.11.49.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Mar 2025 11:49:14 -0700 (PDT)
-Date: Mon, 17 Mar 2025 11:49:09 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	git-packagers@googlegroups.com, "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Problems publishing Rust crates (was: [ANNOUNCE] Git v2.49.0)
-Message-ID: <y53krdpxppjsc7qnua6otf7e7vx5yxhiyzilacie5a6vsle3s4@qhvmyqyf63jq>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, git-packagers@googlegroups.com, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-References: <xmqqfrjfilc8.fsf@gitster.g>
- <4zi3re4viluih7qwvwlu7mp3j6e6gjexz2bppa5am45nnqkezz@7vtwmyrfdwvi>
+        bh=uTB9wxfyhe+AQ6XjKXXH+nVFb9yP+kq2rhM87Be+Kls=;
+        b=l4YQOArT8DHoO++BJp0hqKYxXlPyVMA6h62P8DO2RWSMgNye9iBjDTZCjLKL8b/6W/
+         i9chQFEbyHQE1nlmBM+WX9Uody8jtTzdsbaCkA5U8dd1jZLJHSOkspjULDo0tBuu4JNX
+         soH9wxX/uIOqlEsjSr1Nl+R/vjnklIj2h2rx+WBL4x3JAcErbpHPxhs7fYu+oYi6mL/8
+         w4xXdoaGqJ4sxLXARsaDeiFrUMlSfiHaRzduaSbhXQgMbOydNl9Tj09kaf2IHOWcfoLI
+         eHghvLq5KRkxuIVYmVg7D5WH5ybphcvEPyovKfvracFt/0bkthT37XP0vH3wwI7t+P+E
+         EgLA==
+X-Gm-Message-State: AOJu0YyyjKnDSBz+3crva5oFnOUpif82iSDbne3kQCpLQ2zljm4ZwvpL
+	zPbpZgALFSGs5Q30YP3uDHAubpfjT3K0RgjLqHH7J84C73DSMJqxE4+7qvz+PM6klu66NsLABCz
+	koI4Ds0O3M5sUcs9A/XZx93SQdXHUSAz8+xYUD5MOw3EuatDSXUl/Bg==
+X-Gm-Gg: ASbGncs7sAnWz/6YS0mIAvkz17d/XbTyjjPYBABsfUB1j2+VNrxQknwAnjWcr11z2jN
+	lCoXC6cBp/iF1XBVmOcoWGezjAO7Y/8Mdgq4fUCO18sYUoJFG/F3zgpuGABGV5Qpw7u876FL7VB
+	72gC2+sr1qIYpIGbgAnBSI1xMNhH3R
+X-Google-Smtp-Source: AGHT+IEVeRivHCYBx51GxfVUi/M6V6Zvy42w1vjusSgT0WKhqKKr/MNGC4qjvQ6aoSaLGh3olNqju/wH1l/KSIXRdsU=
+X-Received: by 2002:a5d:6da2:0:b0:390:f394:6271 with SMTP id
+ ffacd0b85a97d-39720966395mr14574757f8f.43.1742237600951; Mon, 17 Mar 2025
+ 11:53:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4zi3re4viluih7qwvwlu7mp3j6e6gjexz2bppa5am45nnqkezz@7vtwmyrfdwvi>
+From: Yissachar Radcliffe <yissachar@block.xyz>
+Date: Mon, 17 Mar 2025 14:53:10 -0400
+X-Gm-Features: AQ5f1Jp1BC6k48Nj-9LGnVujiXN13I0hKN4otUpaKtrgVc56GrzlTDQ4VwPbDXU
+Message-ID: <CAOHNGAW7ucD+xqvEuvq2GHMc42+WdKJX44XGguadK_y=pMf0Vg@mail.gmail.com>
+Subject: Slow git add . performance in large repo
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 2025.03.14 12:43, Josh Steadmon wrote:
-> On 2025.03.14 10:16, Junio C Hamano wrote:
-> >  * Foreign language interface for Rust into our code base has been added.
-> 
-> Unfortunately, I've run into problems publishing the new crates to
-> crates.io. Specifically, the build process for `cargo publish` is
-> different from `cargo build` in that the root of the repository is not
-> included, and therefore our build.rs scripts cannot find the top-level
-> Makefile or any of the Git sources outside of `contrib/libgit-*`.
-> 
-> To prevent squatters from stealing the libgit* crate names, I've
-> published placeholder crates, which we can replace once we've fixed the
-> build issues.
+We have a relatively large git repo and have noticed that `git add .`
+operations are slow (~1.5-2s). We have core.fsmonitor and
+core.untrackedCache set to true and `git status` executes in ~300ms.
+When I turn on trace2 I can see that almost all the time is spent in
+read_directo and it's visiting 26960 directories and 77989 paths.
 
-I have some pre-RFC-quality fixes for this. I'll need to split them up
-into logical changes, add some explanation and discuss alternatives
-considered, etc. I should be able to send them to the list sometime
-tomorrow.
+I can use `git add <foo>` or `git add -u .` to speed things up but
+`git add .` is the most convenient for us. I created a small script to
+pipe the results of `git status` to `git add` and that runs in <500ms.
+This leaves me confused as to why the built-in performance is so slow.
+
+git version is 2.49.0, mac os x 15.3
