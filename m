@@ -1,83 +1,86 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF962054E2
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 23:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0637F14A4C6
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 23:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742252471; cv=none; b=jqjRGz75SXDRgRGCRuDzTv85HhvwW+1MjPp1OWEkTTj0QWh8pdQwq2OZ7s6Z5lxvE46aFKPyq//zu+nsEla6EvfuyQcMb1/1NOqMlGPvWSE3tcYEgQega0RoDO5IeO7N/6a0nxJ8GrxvgCdKvPS5f6BB7w3PbuO0FlKa1Ca7FKs=
+	t=1742253150; cv=none; b=Mgazb1Vf0CMiwkLZVc+mBfA0znryZb3FhptCityFwL0/vwTUvVOBQ59Xd1mhlp1pmfzJ9lvUSOnvW2ObJlMEjGtv6qy9vSqEumVpn1DWGd9lxAUa0FZURPba4Z4RSNJ916wDdMSGLkrxnx+d3jKHPS0gc2wTC+QJ+lmTkz17C50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742252471; c=relaxed/simple;
-	bh=khtaKfzVhSGR3VzM/Ryv7AscpphOzMF3BZVP160i4rc=;
+	s=arc-20240116; t=1742253150; c=relaxed/simple;
+	bh=qkmXsWF14O7HSyURs+tM4S2+pSIOpJxgtv1jGjODIiQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DPQO8kmJ12ROgC+lmea9PhbbjVDf5qJSfTboh+YNunqxaTT/brlSVNqVCDLy0DSUO9J1b1HzI4wC8Nx61pGkJ86DFNKmduYCnSq/949lgnYuvtB2NN+rZP6iEtJXJMu41nvoKnQpslI90Wh5rwLFA60sTjpyhoxmm/b880rrDNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NWWiMBfd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O87uiQur; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=XIBREfxEhxTBjVH7WrKK8AcLrdkP4sT3H2baDh5Nh1rbt3CbN3rfEY5OFQXg23majapPwBL5FsbqnlNGsqN1wtq0Cdq5W0bYdGgxUG5pCIwP3QfZ/X5hDh9Wz7ZYY5UL4MhJnkAEGd4y+5Oz7puW5p0jMFQ46aDdHR14rhm5XvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=y/TFz39S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ap+Mdgs1; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NWWiMBfd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O87uiQur"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3BAD61140271;
-	Mon, 17 Mar 2025 19:01:08 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="y/TFz39S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ap+Mdgs1"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1865411401A0;
+	Mon, 17 Mar 2025 19:12:28 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 17 Mar 2025 19:01:08 -0400
+  by phl-compute-09.internal (MEProxy); Mon, 17 Mar 2025 19:12:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742252468; x=1742338868; bh=EUA3NI9sMH
-	AQIE9+u9rgNvzmSdjNf8P04EbYLIXAUQc=; b=NWWiMBfd1hb5gjwM4vFPW+Yj2x
-	//xdUcf6FvXGMPhycOG6mF+cqQmc/QzNGcSJBkZwDLPZ48TNvwiTx3nIGcaA8sNT
-	IImkAtOnhqwxf2BZ+h4Jl+oFCyqkk7ro5jm7gR6McBlGIV+VFtTkk5E2ltivOlS+
-	ghYt/TPR+YzuPS/Sa+hYwxdUdsXs4YEl7UkFXHbb/jWEHUqUYkJp9tmW/x2G0+hB
-	dBykvWghukAjP1EcxNrX7qZXPvwRTZjeIbG3f879aX6ChRo/NjWkOaHPSnwGeq5U
-	Uhgc/IPf8WQlEoKHwtMNfS3g7SJ+JLXr0bXjiA+Tw4twZJlHUK9G2jvVn6Hg==
+	:subject:to:to; s=fm3; t=1742253148; x=1742339548; bh=qNmiIxU4kb
+	l9EwT6FGRVjw5m7laeSf0dqee3DD0OjfU=; b=y/TFz39SI+FHKHR+ltLMTLeCpN
+	rHEaHpSAgmDO1YAIcAaUkPDxVUtw6kQ7WPA6zzeO8SZeE28JleaiiljeX84KcTgb
+	HTuyeGOvd/fKJ6Kt4FOpyxGWQgOyYq2CJEZlv8tkTmG/3PmdICAqpsri7RBKF3wS
+	jIphr/5tfkM+S7Imi1usBysgH4QMndqC2ax0Dy+6nNNWq/PFaL+k+97/rKVYtmdM
+	Tv3tQJbluAjCI11QVU1fDViGULSfqDUVZt8xM58ow3b0Xr0vJJjibyTZIaLLy8tE
+	BKTbUlb9GZ+WFi3tyoljTCRCk7ES+P+jVMKMD6F3j52ZuQiD3iQcRTcThL4w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742252468; x=1742338868; bh=EUA3NI9sMHAQIE9+u9rgNvzmSdjNf8P04Eb
-	YLIXAUQc=; b=O87uiQurwTMQ3w9VHZOr1Lga6JEAfr6ycTyaYaTwaM+bQboUefV
-	WsNPdipKwusS9fDOjyQSmf8/QMlaBfYa7IGE0RQszndX1h8JzxumFHL8zy/mzLwb
-	tkLr17qYjrkLIJo198cIf/lVq7o618pfzIKKa1KndiYvweYCDj8mndWwAv/Lx1/l
-	71hj2KjQKw4c2lPuWqw1Nw7QNYFXmo65CE4mthAkcc4ef6IoGM6vbywd+oDiBJzv
-	HkYjoGiXq4UBJypcRS0+2I5DRS6OYC6I3Z9VIoZa7DBOcdnQLxth3w7dHX8jPsmR
-	8EW/7I5+YwfktyanBQvEySuRXQqW01S405Q==
-X-ME-Sender: <xms:tKnYZ-R6DbfrMmg3KjQNXTmzIWcM_4Lhc6CqyVJM-87Gx3m_9opIDg>
-    <xme:tKnYZzxHTFdHbvekFEK8PWTioKoY8KxQQEQTldiiPt5m1I6E3hQidfZdY-XWbIJmN
-    aU_7jQWdICDcNNMfg>
-X-ME-Received: <xmr:tKnYZ72UKl4-l3P1hH8qtbxkEGe8uLi5YjPz3CyBTd5k80mQpZViT4YyDjWK0wKG438qR6oIm_57lWKuAHfpL5-qIbSgqo88mvskG9M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedtjeelucetufdoteggodetrf
+	1742253148; x=1742339548; bh=qNmiIxU4kbl9EwT6FGRVjw5m7laeSf0dqee
+	3DD0OjfU=; b=ap+Mdgs1LhXecXic07XZa3RgWN2kPIuws3ZADsKUIfyky0sW5al
+	eiEGOv+wmTqpxTcv6of6Lr/kM9uxKuL+UDL0WKLq1rJ1uxE2w7VQlAnlOvX2n0W8
+	ZDGQZy+f+GF971Lzonv35gwiITSNTj7z/x3r4ZXeGORJCXUJS+0n4bYOWu/aRr19
+	yujX3RBxNWosr6LEw4XbqCgT4W4qnRnBELrKGD9t9o3IWW4x9+cQjFi/uT2TLqVh
+	30GtInUZap71iSS61vI4kzgWS38CXEFjf9Mt4g64XQwi+8q7zoMKqFCqYa+ZVuR6
+	RVcN7yO3hOVohjz0bMQYsd2OqbZ1Fi8R/7w==
+X-ME-Sender: <xms:W6zYZ1xx0BsbG67zagydrFu_udW6mbcfg6ozv8Smll2gTcFOp04S-w>
+    <xme:W6zYZ1QIX66F8UNRBfvyuAs_gI-mUb3V_pr2SzuthtPcZy1CApIcuTKmboiNPtEk1
+    Wo-GpvRDS-1Htmmfg>
+X-ME-Received: <xmr:W6zYZ_VbwhxfFkg0zlbohtS3TZnXsBzpt5l5ujtnPsnu4ZyDKquJRINkF4RkWzt9K8IAanb1MVxi9HcJgIDjEA3Vat3KPJb5hEgc5FM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedtkedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
     evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
     rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopedtheiihihtfedtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:tKnYZ6CO4qLUh1Etl7hDUUtesyryttyOcxiG0lUiaWGkS34PAp-ooQ>
-    <xmx:tKnYZ3g-Xl7LlJdC7zvaHS2itdT6QzI-rI7QkPnwrox5hZuI2eNjgg>
-    <xmx:tKnYZ2oFxwGoRT_bYxXSaWiwpLAMd9SLVU0GQJLLCbHJlCGpX8wuPg>
-    <xmx:tKnYZ6gb8OyZKX7or1KV2Glbi-1L8n5WJauch3tVx8PJjdNxj9beYg>
-    <xmx:tKnYZ0vu_lr02W99daYGW8mH1jxd9oUOfA2jhbRKMbNCPM0ld74PaACE>
+    efgfdvfedutedukeetteevheeigfdvtdejffdtkeefjeffgefhgffggeegfeefteenucff
+    ohhmrghinhepmhgrkhdruggvvhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorh
+    hrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:W6zYZ3ixHl4D3KMIIg-dlxSfzR_i8i3TZ3PvQXrrENod_TfQ7u9nWg>
+    <xmx:W6zYZ3AkZ43Y9sJGxHxhwL_pMGqMsIkiuQ2qAkLdt451PN3KGNZ7-w>
+    <xmx:W6zYZwLAzRc_YQ7B1L5-NtZcEYOgd6BXy6qm88BAH7NyAnGm-F8hsg>
+    <xmx:W6zYZ2Aeki1zb6cHJU-Ibc9KUaAkGOspOg0RsJk3SFBmjPD_1Y8GfA>
+    <xmx:XKzYZy8Zhfl6BAuhdhYpAVrVd5xzevIgCItHXYA7IU-MAEVpPlvuqrdE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Mar 2025 19:01:07 -0400 (EDT)
+ 17 Mar 2025 19:12:27 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Zheng Yuting <05zyt30@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [GSoC PATCH v4 0/2] smtp_auth_maybe: unified error capture and
- status code processing optimization
-In-Reply-To: <20250316050920.3264895-1-05ZYT30@gmail.com> (Zheng Yuting's
-	message of "Sun, 16 Mar 2025 13:09:18 +0800")
-References: <xmqqsengn1ms.fsf@gitster.g>
-	<20250316050920.3264895-1-05ZYT30@gmail.com>
-Date: Mon, 17 Mar 2025 16:01:06 -0700
-Message-ID: <xmqq5xk76z4d.fsf@gitster.g>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/3] run-command: use errno to check for sigfillset()
+ error
+In-Reply-To: <Z9iUe3Hg30W5LFSZ@nand.local> (Taylor Blau's message of "Mon, 17
+	Mar 2025 17:30:35 -0400")
+References: <20250307225444.GA42758@coredump.intra.peff.net>
+	<20250314210909.3776678-1-gitster@pobox.com>
+	<20250314210909.3776678-3-gitster@pobox.com>
+	<Z9iUe3Hg30W5LFSZ@nand.local>
+Date: Mon, 17 Mar 2025 16:12:26 -0700
+Message-ID: <xmqqwmcn5k11.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,49 +90,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Zheng Yuting <05zyt30@gmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> This v4 patch series includes two improvements:
+> On Fri, Mar 14, 2025 at 02:09:08PM -0700, Junio C Hamano wrote:
+>> From: Jeff King <peff@peff.net>
+>>
+>> Since enabling -Wunreachable-code, builds with clang on macOS now fail,
+>> complaining that the die_errno() call in:
+>>
+>>   if (sigfillset(&all))
+>> 	die_errno("sigfillset");
 >
-> 1. Unified error capture:
-> Consolidate exception handling within a single eval block by introducing
-> local variables to store results and error states, thereby streamlining
-> code structure and enabling future extensibility.
+> Hmm. Would it have made sense to swap the order of this and the first
+> patch so we don't have a DEVELOPER=1 breakage (for macOS with Clang) in
+> history?
 >
-> 2. Status code processing optimization:
-> After catching the authentication exception, parse the three-digit status
-> code in the error message, For temporary errors (4yz), only print warnings
-> and return success, while for permanent errors (5xx), return failure,
-> Unrecognized status codes are treated as permanent errors by default.
->
-> Zheng Yuting (2):
->   Unify capture of SMTP errors
->   Error handling for SMTP status codes
+> I think it's too late now since this topic is already on 'next', but it
+> occurred to me idly while reading this patch.
 
-Give title your commits following the project convention
-(Documentation/SubmittingPatches:summary-section).
-
-I think these two can share "sendemail:" as their "<area>:" part.
-
-	sendemail: capture errors in an eval {} block
-	sendemail: finer-grained SMTP error handling
-
-or something like that, perhaps.
-
-For both patches, the usual way to compose a log message of this
-project is to
-
- - Give an observation on how the current system work in the present
-   tense (so no need to say "Currently X is Y", just "X is Y"), and
-   discuss what you perceive as a problem in it.
-
- - Propose a solution (optional---often, problem description
-   trivially leads to an obvious solution in reader's minds).
-
- - Give commands to the codebase to "become like so".
-
-in this order.  I got an impression that at least your 1/2 it was
-unclear which part was explaining the state before the patch and
-which part was about the state after the patch.
-
-Thanks.
+I thought db1d1f5d (config.mak.dev: enable -Wunreachable-code,
+2025-03-14) aka jk/use-wunreachable-code-for-devs~2 is still out of
+'next'?
