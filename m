@@ -1,124 +1,135 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F141514A4C6
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 23:00:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF962054E2
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 23:01:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742252457; cv=none; b=JULVVlfkLd0BvfwunDjO31l+yyKE+uqiYRmodvTY3WJAZHeAVVLnJjTR74tZYsRJKNsF1+s8SRpXSVG0mYaYItSA/uV+f5hjOrrWxpgM4/i1BOETb/6xaqSJtyQHSaEbpyg8LiSHp8Z52jpjCtwLrno08ybcuCcOI7WDKbp1X2I=
+	t=1742252471; cv=none; b=jqjRGz75SXDRgRGCRuDzTv85HhvwW+1MjPp1OWEkTTj0QWh8pdQwq2OZ7s6Z5lxvE46aFKPyq//zu+nsEla6EvfuyQcMb1/1NOqMlGPvWSE3tcYEgQega0RoDO5IeO7N/6a0nxJ8GrxvgCdKvPS5f6BB7w3PbuO0FlKa1Ca7FKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742252457; c=relaxed/simple;
-	bh=a0Dx1WWmN7aqwxVMwr+GKizkAHjFResu9b+bCUEn94I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s6wk747nlzuMbRozIHCx5RKI6R+/2Q//tqV5oLsUQcZZnK5Y3agC39AszEkIfkG2WvaTkpw5fjZVNxTAO+GxfU8T2R/xTbc3jIrVe+YWvkale9iXNfjEvaf/0b9XkqDs9saB0pLhrF+KegcU/Y3mFHW5dJdWNPmJr/KK9Jq9QM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=x9eT5RQh; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1742252471; c=relaxed/simple;
+	bh=khtaKfzVhSGR3VzM/Ryv7AscpphOzMF3BZVP160i4rc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DPQO8kmJ12ROgC+lmea9PhbbjVDf5qJSfTboh+YNunqxaTT/brlSVNqVCDLy0DSUO9J1b1HzI4wC8Nx61pGkJ86DFNKmduYCnSq/949lgnYuvtB2NN+rZP6iEtJXJMu41nvoKnQpslI90Wh5rwLFA60sTjpyhoxmm/b880rrDNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NWWiMBfd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O87uiQur; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="x9eT5RQh"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1742252448;
-	bh=a0Dx1WWmN7aqwxVMwr+GKizkAHjFResu9b+bCUEn94I=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=x9eT5RQhthTZ+9qnXnyB4Em84opMoED+UAO3VPCf1SU3Qj+a7y50AlAF+BUYtGLYX
-	 EpXvvMIXBK7F6lzMmZx1sVo4iZw4sJ0wbFcIExC5Vqmb/BaNBZZGNkQsWMGhpQHGo6
-	 pF9tIf5i8LQvJgTbF7Sy7kvljbGnXCe8nSiPtp7qLET9otAs+52ZdRKqVY84QfEsUF
-	 Ppxb/XeemBMe2DuyF124KEZOgvwnKLl0StTiTOUApdUKtpcGqulWJRHCC8e8UWg/Tl
-	 OKnFxm5qM9Kr9uhAizaLwhvJlOduJV/jbaO4TZ0SulF2e7NNGDHDukorhyDkRqB2x9
-	 IyPKVNGTunxgbzMcbfkqXrUJSlEsH7JZuRQcEIVCMPRmqMJu4KCs5H6PpFLbRYIs6K
-	 sPCScVU3oX/Yh2tnrQg2QP9kJL1ysIXTzspooq9SKgEqjMRdZqp3jlQnaXKbAy4Wef
-	 6bM1C54yPQORlie6DeicfCp/NGQIBAdEE0l3JdK49t61YGKytYC
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9ec0:b846:49f:a41d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 73E7D200C0;
-	Mon, 17 Mar 2025 23:00:48 +0000 (UTC)
-Date: Mon, 17 Mar 2025 23:00:47 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Yissachar Radcliffe <yissachar@block.xyz>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NWWiMBfd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O87uiQur"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3BAD61140271;
+	Mon, 17 Mar 2025 19:01:08 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 17 Mar 2025 19:01:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1742252468; x=1742338868; bh=EUA3NI9sMH
+	AQIE9+u9rgNvzmSdjNf8P04EbYLIXAUQc=; b=NWWiMBfd1hb5gjwM4vFPW+Yj2x
+	//xdUcf6FvXGMPhycOG6mF+cqQmc/QzNGcSJBkZwDLPZ48TNvwiTx3nIGcaA8sNT
+	IImkAtOnhqwxf2BZ+h4Jl+oFCyqkk7ro5jm7gR6McBlGIV+VFtTkk5E2ltivOlS+
+	ghYt/TPR+YzuPS/Sa+hYwxdUdsXs4YEl7UkFXHbb/jWEHUqUYkJp9tmW/x2G0+hB
+	dBykvWghukAjP1EcxNrX7qZXPvwRTZjeIbG3f879aX6ChRo/NjWkOaHPSnwGeq5U
+	Uhgc/IPf8WQlEoKHwtMNfS3g7SJ+JLXr0bXjiA+Tw4twZJlHUK9G2jvVn6Hg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1742252468; x=1742338868; bh=EUA3NI9sMHAQIE9+u9rgNvzmSdjNf8P04Eb
+	YLIXAUQc=; b=O87uiQurwTMQ3w9VHZOr1Lga6JEAfr6ycTyaYaTwaM+bQboUefV
+	WsNPdipKwusS9fDOjyQSmf8/QMlaBfYa7IGE0RQszndX1h8JzxumFHL8zy/mzLwb
+	tkLr17qYjrkLIJo198cIf/lVq7o618pfzIKKa1KndiYvweYCDj8mndWwAv/Lx1/l
+	71hj2KjQKw4c2lPuWqw1Nw7QNYFXmo65CE4mthAkcc4ef6IoGM6vbywd+oDiBJzv
+	HkYjoGiXq4UBJypcRS0+2I5DRS6OYC6I3Z9VIoZa7DBOcdnQLxth3w7dHX8jPsmR
+	8EW/7I5+YwfktyanBQvEySuRXQqW01S405Q==
+X-ME-Sender: <xms:tKnYZ-R6DbfrMmg3KjQNXTmzIWcM_4Lhc6CqyVJM-87Gx3m_9opIDg>
+    <xme:tKnYZzxHTFdHbvekFEK8PWTioKoY8KxQQEQTldiiPt5m1I6E3hQidfZdY-XWbIJmN
+    aU_7jQWdICDcNNMfg>
+X-ME-Received: <xmr:tKnYZ72UKl4-l3P1hH8qtbxkEGe8uLi5YjPz3CyBTd5k80mQpZViT4YyDjWK0wKG438qR6oIm_57lWKuAHfpL5-qIbSgqo88mvskG9M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedtjeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopedtheiihihtfedtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:tKnYZ6CO4qLUh1Etl7hDUUtesyryttyOcxiG0lUiaWGkS34PAp-ooQ>
+    <xmx:tKnYZ3g-Xl7LlJdC7zvaHS2itdT6QzI-rI7QkPnwrox5hZuI2eNjgg>
+    <xmx:tKnYZ2oFxwGoRT_bYxXSaWiwpLAMd9SLVU0GQJLLCbHJlCGpX8wuPg>
+    <xmx:tKnYZ6gb8OyZKX7or1KV2Glbi-1L8n5WJauch3tVx8PJjdNxj9beYg>
+    <xmx:tKnYZ0vu_lr02W99daYGW8mH1jxd9oUOfA2jhbRKMbNCPM0ld74PaACE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 17 Mar 2025 19:01:07 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Zheng Yuting <05zyt30@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: Slow git add . performance in large repo
-Message-ID: <Z9ipn_-J-ZKbnVQh@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Yissachar Radcliffe <yissachar@block.xyz>, git@vger.kernel.org
-References: <CAOHNGAW7ucD+xqvEuvq2GHMc42+WdKJX44XGguadK_y=pMf0Vg@mail.gmail.com>
+Subject: Re: [GSoC PATCH v4 0/2] smtp_auth_maybe: unified error capture and
+ status code processing optimization
+In-Reply-To: <20250316050920.3264895-1-05ZYT30@gmail.com> (Zheng Yuting's
+	message of "Sun, 16 Mar 2025 13:09:18 +0800")
+References: <xmqqsengn1ms.fsf@gitster.g>
+	<20250316050920.3264895-1-05ZYT30@gmail.com>
+Date: Mon, 17 Mar 2025 16:01:06 -0700
+Message-ID: <xmqq5xk76z4d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YHugw+UGx0UvHawv"
-Content-Disposition: inline
-In-Reply-To: <CAOHNGAW7ucD+xqvEuvq2GHMc42+WdKJX44XGguadK_y=pMf0Vg@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Zheng Yuting <05zyt30@gmail.com> writes:
 
---YHugw+UGx0UvHawv
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> This v4 patch series includes two improvements:
+>
+> 1. Unified error capture:
+> Consolidate exception handling within a single eval block by introducing
+> local variables to store results and error states, thereby streamlining
+> code structure and enabling future extensibility.
+>
+> 2. Status code processing optimization:
+> After catching the authentication exception, parse the three-digit status
+> code in the error message, For temporary errors (4yz), only print warnings
+> and return success, while for permanent errors (5xx), return failure,
+> Unrecognized status codes are treated as permanent errors by default.
+>
+> Zheng Yuting (2):
+>   Unify capture of SMTP errors
+>   Error handling for SMTP status codes
 
-On 2025-03-17 at 18:53:10, Yissachar Radcliffe wrote:
-> We have a relatively large git repo and have noticed that `git add .`
-> operations are slow (~1.5-2s). We have core.fsmonitor and
-> core.untrackedCache set to true and `git status` executes in ~300ms.
-> When I turn on trace2 I can see that almost all the time is spent in
-> read_directo and it's visiting 26960 directories and 77989 paths.
->=20
-> I can use `git add <foo>` or `git add -u .` to speed things up but
-> `git add .` is the most convenient for us. I created a small script to
-> pipe the results of `git status` to `git add` and that runs in <500ms.
-> This leaves me confused as to why the built-in performance is so slow.
+Give title your commits following the project convention
+(Documentation/SubmittingPatches:summary-section).
 
-What you're asking for with those commands is different.  `git add -u .`
-says, "Please enumerate only those files that are in the index, and if
-they are modified or removed, update the index."  `git add .` says,
-"Please enumerate every file in the working tree recursively and
-determine if there are any non-ignored changes, and then update the
-index."  (Note that a file that matches an ignore pattern but is already
-tracked is not ignored, which affects the performance here.)
+I think these two can share "sendemail:" as their "<area>:" part.
 
-Notably, the former does not add new files that are untracked, but the
-latter does.  That means that the code needs to know if there are any
-new untracked files.  The untracked cache is not used when you specify
-a pathspec on the command line because in the general case, it doesn't
-have to be just `.` and it could be something like a match on an
-attribute or a glob pattern, which would make the code very complex in
-dealing with that case.  It is, however, used when you _don't_ specify a
-pathspec (such as `git add -u`), as well as for `git status`, since
-those operate on the whole tree without any pathspecs.
+	sendemail: capture errors in an eval {} block
+	sendemail: finer-grained SMTP error handling
 
-When you pipe the results of `git status` to `git add`, you are
-effectively using the `-u` option, since that will only ever list files
-that are tracked.
+or something like that, perhaps.
 
-I realize `git add .` is very convenient, but it does ask to do
-substantially more work than `git add -u` (which I use quite
-frequently), and so it can definitely perform worse, especially in
-large repositories.  You can, of course, continue to use it, but you
-can't expect them to perform identically.  My recommendation would be to
-use `git add -u` unless you need to add new files, since that's going to
-perform better.  Once you get used to it, it's pretty easy to use.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+For both patches, the usual way to compose a log message of this
+project is to
 
---YHugw+UGx0UvHawv
-Content-Type: application/pgp-signature; name="signature.asc"
+ - Give an observation on how the current system work in the present
+   tense (so no need to say "Currently X is Y", just "X is Y"), and
+   discuss what you perceive as a problem in it.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
+ - Propose a solution (optional---often, problem description
+   trivially leads to an obvious solution in reader's minds).
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ9ipngAKCRB8DEliiIei
-gcr8AQDfScBiV0g0eUFWBjFveePEAQoLBq8NfeyOWTdRMa5qbQEAtNgEYZtzp7yj
-ww9zPbn5KzJoYyPHRjwLRZK96AhbpQ0=
-=Pvr8
------END PGP SIGNATURE-----
+ - Give commands to the codebase to "become like so".
 
---YHugw+UGx0UvHawv--
+in this order.  I got an impression that at least your 1/2 it was
+unclear which part was explaining the state before the patch and
+which part was about the state after the patch.
+
+Thanks.
