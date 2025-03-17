@@ -1,130 +1,125 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ABDEAC6
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 22:37:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F199F204F63
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 22:39:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742251047; cv=none; b=l51hyam/RbLBPXXvpegWOLlCB0Z79UJY3OhxNxu9mF6BXa+ScgCATBQmmiVzlLNVr+3JTId1j9HEmYjToPp8tXrPgnn4mo3uc2IocY7Z88PpOa+d1McCOVrmL3I8u4oPCvJLQCD1yW++mjFsJIZwgZV89seE8jALae0tXWkJPtk=
+	t=1742251188; cv=none; b=nvRLRDwtft3gI1MGdXF0T/0R1G7SACyF00yoXe3xBb5tIMW3nH+vOkd0YtbKvI2y1GiKwqmIL1PxkJpurIIa+wSUY5DRUdeFM+d2SfY+e03WyGmeJFUA3Pe7BR+JlABv/km4fIlL2SuezIQ6NkcQ9kZXcULCG6sGavwQipmHTiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742251047; c=relaxed/simple;
-	bh=Y4G9zjw/p8ffZxp8G5RV6cOzbuy6KwIZLku6XFnN9ik=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=T2QNMVwLbNWmiV0jrYVnpz6svAO9lIOy4f9Afs5pSPNsVnQdyhnGQL0PekL+zx0Eu+9Dnek3E8vRCsvJ5Lq063yACJhwl0Mw1qsqeJqMx07iLj6dByNvu6tDl1FSIeCrVyXOLlBM8zW1gO9TAryhprvGCKJopkgtDqlMXCwe7vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UkPsGx+A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=7bgH0Zkp; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742251188; c=relaxed/simple;
+	bh=dXLKbCoad2VToh121fyPV6oAWttBCjZ6eMXYBN+w6Mo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q93Wllh98SEfSBMREV4w+2gHLPQkl9m/BM7CwAJjquOMbo5drkz4AB4RskoF5HZ2rm6BN7HOrdsCYzsRvLrNyh3OIqJmBFXAa5wsDwXwdvDqdddDNH6KR3atUU2jrkme4OAstenrJYgY3nVJGeO0Ku/rv7TF7O6J6JiJd1qBYZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=zqtg2VkP; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UkPsGx+A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="7bgH0Zkp"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 60ABA1140250;
-	Mon, 17 Mar 2025 18:37:24 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 17 Mar 2025 18:37:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742251044; x=1742337444; bh=roQIAc5GRd
-	fI7ihUA0Xmf3Iil7epCp9UKnGI1p1a0AU=; b=UkPsGx+A3ILK00kb3VF9sGTfs9
-	+kQuWIWPTb0Mph6hLfTh36Hbuz9NTZdwdQk0+XTACAC9Ue5XC8dIcZhnxcSmFHTL
-	PT7COzc6RWCupkGnehV4wNmbcMaNy/Cm5jZdoeFW1gXcNWfOyQ3WAOMAkvCGc8qM
-	Bg0kF1QWxnhS2QZ4i29mzUkYoqziJCuHevFzWqFgSn0Mmi/mYFmutsje3rT/dp8I
-	F558RoLcnQBTBS+dObfa/fP18h5S64ieaTDpsiBzkW1ylqs/abTSJ5Nw+CSQxyNl
-	jjRy+DfZhXw63Qeg8ZheDZ1dNzDub8WCyq4YQ5pZf5fuM3zLijblhTHM1xSg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742251044; x=1742337444; bh=roQIAc5GRdfI7ihUA0Xmf3Iil7epCp9UKnG
-	I1p1a0AU=; b=7bgH0ZkpgOmH9iUifaFGKm/ZdPjAXq+qsrYY3VpIY40lkfQUgrC
-	F9a+nC9XnKySK/jUXi7WiJ8dBw16eGEWdBW9JSSYfHCZrcVybhaQAmynN4FZGFwr
-	HZ4IFcRJPNQSdA9YlSPQRfuphx7tSTa3j2dJ9Dy1hTuog6Ghws5go94suFUJMR4L
-	X13e4Tj920huFgkqJvI/ZKByAfsYrUmsuLletX86dNrq+ru22DALtbLn4YhsYDgA
-	tAeLRRtDp8DvEYNwTe1zEGTBjMcNFZdySzeyKoSiSmN6dWYFi/FH4vvQrSS3DSVZ
-	7U1UpDPqrC2ApAjMZgdhJmgxej79OWLmqfw==
-X-ME-Sender: <xms:JKTYZ5e_s7M_u5SpTo6gJ6g3xcdwz6LfYcpsYHOXXlWKoOjNgUWXkA>
-    <xme:JKTYZ3NZ1NroBmSRcuy2MFHT22XlvLFCvKbRiXsnpl4aT_mmRTJkMZegDlvXICyud
-    1SQIQfrWZ4ForCIWw>
-X-ME-Received: <xmr:JKTYZyjAKxxEQimR7p3GpZONSMVohw-Utv-uDlU5emM0ltNJwwuAOgCvYp3RvPpfBuc7b7I9DnrUTZr-825ism0ks-HtYsBbPOPie-c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedtjeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepudevvdffudekieduvdduueeugeegjeej
-    tdfgheeuudfhffdtueefheetffetfffgnecuffhomhgrihhnpehsthgrtghkohhvvghrfh
-    hlohifrdgtohhmpdhrvghfvghrvghntggvrdhtohenucevlhhushhtvghrufhiiigvpedt
-    necurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
-    ghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthho
-    ohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:JKTYZy8tCGflMeSlJxSGbguoM5YTzAk88yJWppO_EuSkKA6UWrCYOQ>
-    <xmx:JKTYZ1s7q9x55LQVqs7me7pIhhx2uIAEoLp2uOwDx4DWLepZ2XA_lg>
-    <xmx:JKTYZxGkBu8_THtx1U0dd_OCW8JCY6erx6vybjw5alOdPtlm-_x-Ug>
-    <xmx:JKTYZ8OyhC3xwzl0mXvMVv7HSDFsLqCwkHCReu3q933Spz7aXi_6zg>
-    <xmx:JKTYZzVHJoG3qTZ1lacB38gPbh1erU2lYsF90XRWN6bZZcPZ_VrZtCH0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Mar 2025 18:37:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 2/3] ci: add build checking for side-effects in
- assert() calls
-In-Reply-To: <58cb8f6a1609b10d761e86bdad541d1c018cb582.1742107322.git.gitgitgadget@gmail.com>
-	(Elijah Newren via GitGitGadget's message of "Sun, 16 Mar 2025
-	06:42:01 +0000")
-References: <pull.1881.git.1741911652.gitgitgadget@gmail.com>
-	<pull.1881.v2.git.1742107322.gitgitgadget@gmail.com>
-	<58cb8f6a1609b10d761e86bdad541d1c018cb582.1742107322.git.gitgitgadget@gmail.com>
-Date: Mon, 17 Mar 2025 15:37:22 -0700
-Message-ID: <xmqqfrjb707x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="zqtg2VkP"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7c59e7039eeso7764185a.2
+        for <git@vger.kernel.org>; Mon, 17 Mar 2025 15:39:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742251186; x=1742855986; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=tjlfbmMbyHZ4ry2yURrNWoTbQm/eI4EE+2pZKDq/VQ4=;
+        b=zqtg2VkPgWw0p+29S1RCnp0UEAk8FeAWzIvIO90Y/2L0WjGD5MQo+7o23JqiJ8XDnr
+         H20C1Q0FaWucFP582LKVezGLpzqz1sk0zH8zIEckZUHkzvSOWpp6PAaBkNe28ZrijmcY
+         PFT2oSxHf7u4Cf5K+oOUJgD/x0s7XOOx8vlsPdiRAI78sCH87E222vDIfUddvqqd3wTm
+         5CZM7jzXZ/R/wp/JGajoemABhNjq6ys/LfLDKwl9oJ8tTdKzNfJ440IOUIbBVBc8OG7G
+         rKqwyPuhZGvX7bFEGCU7cTc8J9jZ0S01hZHfHMDaMPLcScoxP2Bgaj6oGdSZFi8JEScP
+         JjOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742251186; x=1742855986;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tjlfbmMbyHZ4ry2yURrNWoTbQm/eI4EE+2pZKDq/VQ4=;
+        b=ebS3Fy4QgxrwpQO7B1yl3iyjW4URmfvv0gBbWaNAaNkI4N4icMFDWNV1dr3Cu4cQkK
+         N9TgEiXcz7f/fIUtzwakJg1audDI02V4sLO9FJ8E5UXrkQ/hTrJD2/3h1BdeicO2zF02
+         S9ICwIVZT29cmX4RWoyHRE4H9XBI0JCziDf297If6QIuTGk/ZBFCWlosedTrR/KAUVYG
+         sI0vYm5IMrCvSv6hFvPLTRlhchW2R63A/D4TXlezuN2crKPb+/ByyN4/T+AbpcQVbxzN
+         8QJ4v4P3eJjANgzcCw8xgalGmkZr9bhpHk+T34w5z7Wn4zkUPTfPGJk/zof+Rnsv3JZI
+         BhtA==
+X-Gm-Message-State: AOJu0Ywh90XqomkZtwLlCz1+tYsGGlWB/HhdSioPggam3C4RBH++waj9
+	EA29DSRY/UocrNsEj9eRNLVC3lhzZIy442iWc9xlrDE0NuBYOzsO8wxky8+MPJw=
+X-Gm-Gg: ASbGncslFc1MEKuV3i1hj7tbwZJlyzV811UBQFfzHbvlG+rk2f83b4uIn9DoehMaJPK
+	JDOi5d1zFPCaR2K2hNjpoXegMK+M361eoYd4j66H4J/BwhbrYKsEf5jOuITQntI7pjdX8+K/eLj
+	e4Bi1shKwwp5RMn0+E9BRPHYHMXxjlfbjny5X/AObY4ZH0mXCyQLXhxgL2erfACi16odwupkVbZ
+	fd/GLhmVdohUeQ/E7SAM5jvk9rxYhxNH4DmgVWbZV1oj3aduGI6bVFSkTckDDOhUfUw72wQqOtD
+	9KkRReE+8tHWXZvO4mUyXBA+/oF12e2KslHlL6pkAk0IQuuB3qSmn+hevrSFbqu1IVluspYqRpk
+	CHeEojccOUwXmMhfd
+X-Google-Smtp-Source: AGHT+IFXMInpd2TOGYBGW96X6oKt7Cd6hGmtmhtVmLKwbADxzKYbcUqhdaI0fHXi2DJhWYVSUUQW7A==
+X-Received: by 2002:a05:620a:2787:b0:7c5:431f:f5eb with SMTP id af79cd13be357-7c57c7d6ccamr1927332585a.20.1742251185825;
+        Mon, 17 Mar 2025 15:39:45 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c573d6fc89sm638464985a.87.2025.03.17.15.39.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Mar 2025 15:39:45 -0700 (PDT)
+Date: Mon, 17 Mar 2025 18:39:44 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2025, #03; Wed, 12)
+Message-ID: <Z9iksBa4g2bUkX1u@nand.local>
+References: <xmqqh63xx23f.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh63xx23f.fsf@gitster.g>
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Mar 12, 2025 at 04:26:28PM -0700, Junio C Hamano wrote:
+> * tb/multi-cruft-pack-refresh-fix (2025-03-11) 6 commits
+>  - builtin/pack-objects.c: freshen objects from existing cruft packs
+>  - builtin/repack.c: simplify cruft pack aggregation
+>  - pack-objects: generate cruft packs at most one object over threshold
+>  - t/lib-cruft.sh: extract some cruft-related helpers
+>  - t7704-repack-cruft.sh: consolidate `write_blob()`
+>  - t/t5329-pack-objects-cruft.sh: evict 'repack'-related tests
+>
+>  Certain "cruft" objects would have never been refreshed when there
+>  are multiple cruft packs in the repository, which has been
+>  corrected.
+>  source: <cover.1741648467.git.me@ttaylorr.com>
 
-> ...  All but 9 of them can be determined by gcc to be free of side
-> effects with a clever redefine of assert() provided by Bruno De Fraine
-> (from
-> https://stackoverflow.com/questions/10593492/catching-assert-with-side-effects),
-> who upon request has graciously placed his two-liner into the public
-> domain without warranty of any kind.
+This one can be replaced with "v5" of this topic, which only fixes the
+freshening bug, and punts on the --max-pack-size versus
+--combine-cruft-below-size debacle.
 
-Nice.
+I'll send a separate series to address the latter shortly.
 
-> diff --git a/ci/check-unsafe-assertions.sh b/ci/check-unsafe-assertions.sh
-> new file mode 100755
-> index 00000000000..d66091efd22
-> --- /dev/null
-> +++ b/ci/check-unsafe-assertions.sh
-> @@ -0,0 +1,18 @@
-> +#!/bin/sh
-> +
-> +make CHECK_ASSERTION_SIDE_EFFECTS=1 >compiler_output 2>compiler_error
-> +if test $? != 0
-> +then
-> +    echo "ERROR: The compiler could not verify the following assert()" >&2
-> +    echo "       calls are free of side-effects.  Please replace with" >&2
-> +    echo "       BUG_IF_NOT() calls." >&2
-> +    grep undefined.reference.to..not_supposed_to_survive compiler_error \
-> +      | sed -e s/:[^:]*$// | sort | uniq | tr ':' ' ' \
-> +      | while read f l
+> * tb/incremental-midx-part-2 (2024-11-20) 15 commits
+>  - midx: implement writing incremental MIDX bitmaps
+>  - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
+>  - pack-bitmap.c: keep track of each layer's type bitmaps
+>  - ewah: implement `struct ewah_or_iterator`
+>  - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
+>  - pack-bitmap.c: compute disk-usage with incremental MIDXs
+>  - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
+>  - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
+>  - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
+>  - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
+>  - pack-bitmap.c: open and store incremental bitmap layers
+>  - pack-revindex: prepare for incremental MIDX bitmaps
+>  - Documentation: describe incremental MIDX bitmaps
+>  - Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
+>  - Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
+>
+>  Incrementally updating multi-pack index files.
+>
+>  Expecting a (hopefully minor and final) reroll.
+>  cf. <Z8JSreTnEFlocYQ9@nand.local> <Z8JLbxBQh7XUpplz@nand.local>
+>  source: <cover.1732054032.git.me@ttaylorr.com>
 
-Let's lose the unsightly backslash by ending each line with "|"
-instead.
+Thanks. This is rerolled, but it would be good to get some review from
+others that are familiar with bitmaps before merging. It's not a very
+long series by lines of code, but it is rather subtle, so the more
+careful reviews it gets the better.
 
-Also let's stick to HT indentation, not whitespaces.
-
-Thanks.
+Thanks,
+Taylor
