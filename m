@@ -1,141 +1,129 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BD710A1F
-	for <git@vger.kernel.org>; Sun, 16 Mar 2025 23:52:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB2E1AAE28
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 10:34:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742169131; cv=none; b=kwXFDMsrGIgzUAup5YpCSlzLPi8Suzbkw/eIRbBsHf4jpYU/RSV2tbcY8EQeYzyHEFRku6+EbNnnZGS/Uqdk9ngEpPSm0bDRBggJ/V9Q2hjOOgPqd/0mAy0CBxSVqE+tZ4PoLEJYhHqryoP0K01W7gqLZ8BJMvtflm/p5ikuTc8=
+	t=1742207648; cv=none; b=K/fsrSHFz732c6FB40kX6tz0YTvhOvhM14IW9Z12SvbMP87uT4foGp3m7r63TXPPXhlg2kJqJJcoNXXsCMMlxvpAkuRzW/zOOtdx+Fy7AXszbtYstOrmWABclAqa3ZQpB0A9pXkt70fu3YqlpehrYq7WnZeyI2uMZJLNNUoSH1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742169131; c=relaxed/simple;
-	bh=zoiy1I9ZIESaYoG7hCT56156O8cjNtJLkx9rJ/gD8qo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=afagv69LUxnrD1OrWGS9clSJpL4XXC176WJFlXLYlSB53FxS6BKERHaGYkZDO7gA+eCHj/ELZ4z5EtsTVBWfUR//JfuoxTEpi3ZnBsdeoyzweK4mMccEMcZ5NmOGHFvRAFP6z25M3pQ//0651Y3IwjGbWtHy5Vi697Ia+ZxQcNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=N4bv5z8l; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1742207648; c=relaxed/simple;
+	bh=BRFm0nWtgSKMFQMUaBTofC3zEpl90fkdTUwV0Lg0MFg=;
+	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=IjUkI3w1dR+nJj+wtW330bj6xlwLK7lyKF6Sb5iiWrB81by75MkPBxvAtwGdNPxI7XoHbkCpsrmcvSsHNcrib6tzZrUAvuz14k1DOPeIrmLDBG9/3/jKUeBYmD9F5KW1RciB1iaahC/sjFvLDtuFi+vlV0YK56x+kxU2siFKhDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=EZyeQ7NY; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="N4bv5z8l"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1742169127;
-	bh=zoiy1I9ZIESaYoG7hCT56156O8cjNtJLkx9rJ/gD8qo=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=N4bv5z8lG8EuWOC/ATMocKRc5mk0CgMZjIQ43sjvS+g+gENEb95d0rC3kjvm0ypsF
-	 gs0ODWlW2pAakYZIVibEicS5h2gYm0IGvaFL6VFCVhITHpMR5GagC+1mdSIwghXhk6
-	 n4J1eChfwUPKy831NyITVhA3HbhSKa7kcB8EhxYPJUwIpvAmIm6pFPaQzTTNImAn5f
-	 v11avnBhlEj9F2KdpGYuHG9gqHibWWZiA/M2j+2/MN/U9TcD305xfLZkOvoc5bzLwk
-	 JK1/vuVAUNpat1ov51iK4hdQLehtmEPs+h8nvJ5x+2QFGHHHhLOUyeuEa9zSiC7D/C
-	 nib1yUuvXU3PVLlnNmYH01A1Z1sAvxDkQuW1wVHFNyfHcVvkZAaFs2Z2qRINSrTGr8
-	 NOaNihgRRIByj3YPv+1wqiTSWfCpX0RhUoaiKSqQVb+Ch3ADBZ4wbhyjm8Q0L2Zltt
-	 ugV8AP3kYQgXpE+DIoV7lmdhkc1/Nls+RP/VoVZGnTY8cKY/0t7
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9ec0:b846:49f:a41d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 49ADA200B7;
-	Sun, 16 Mar 2025 23:52:07 +0000 (UTC)
-Date: Sun, 16 Mar 2025 23:52:05 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Patrick Steinhardt <ps@pks.im>, Adam Dinwoodie <git@dinwoodie.org>
-Subject: Re: [PATCH 12/12] config.mak.uname: add a note about CSPRNG_METHOD
- for Linux
-Message-ID: <Z9dkJb-HOIQmsEqs@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Patrick Steinhardt <ps@pks.im>, Adam Dinwoodie <git@dinwoodie.org>
-References: <8c8e16ae-87a2-44bf-a87b-7422eb04fec2@ramsayjones.plus.com>
- <Z9YbJFJjtXNYnTzk@tapette.crustytoothpaste.net>
- <654de230-07cb-4ffe-bfc4-ca0e1d6d3572@ramsayjones.plus.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="EZyeQ7NY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1742207643; x=1742812443;
+	i=johannes.schindelin@gmx.de;
+	bh=KsLRZzeidAvw5Gb2HMiMWUYZnbZ+N4rbPjaOz+qPqCE=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
+	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=EZyeQ7NYS4+T+Pmzsf1fEYIhRjQu04Q0T+zKbCXsELci5Q9/iW4PBHkTMWGDnNfa
+	 tQfqlIS+sKRVc9zHsPjztFPK8L2g1wLD7tNhXxm9re91hUxGjyjUZMKBbVpsawgiB
+	 LC91L7InnL8bqjm9AsgRw3uSMcM07lrFuai+ExXsjxrBeBnFalLgmS9kEJZ+1me2P
+	 iDMdKerABruBURg7xFWeIKcjDPl2qevAype4spQh6rHeS3ZYxXfM2b7pM2qUVJf7J
+	 r61/iRlxWOYWeYoLuDz/MqiIfHBY6n1hAllzDWTcLMkTSWQ+DDMElDF01emx9NavJ
+	 Voank1xQLfCmB2y/Jg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.73]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mxm3Q-1szFRd1BVu-00rqQm; Mon, 17
+ Mar 2025 11:34:03 +0100
+Date: Mon, 17 Mar 2025 11:34:02 +0100 (CET)
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.49.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="QidtjR9nx087DF+Q"
-Content-Disposition: inline
-In-Reply-To: <654de230-07cb-4ffe-bfc4-ca0e1d6d3572@ramsayjones.plus.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain; charset=US-ASCII
+Message-ID: <1MSbxD-1tn8ja1MCn-00W0XL@mail.gmx.net>
+X-Provags-ID: V03:K1:qWh5vkVBfmjt8J7Tc4jztFY7LDmtji0UlfH2VXOoesvVoM0RDM5
+ /Op/hdAS3TR1RRil+Vo/PpWaWFv+ZcNo+HF0SzvAGM6VgjONdoheYtjt47GXllVwxogtVKy
+ z9kTp6wrXi7N/DD/bhot9gLYUYhNG8277bQZUA8hy1YLc6yfW5zZU6ZZEHrdREvyO027pxI
+ rx88aqXmPOk3S1r3FN4lg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:R3QjPt+AHSE=;+okOFUhEUsjy/JF1jkWMJjwUT+P
+ l6MunO55Nu0cVAAKSrTnxxQy81jv2ebCY7uQ2X3oWyRuHsZT7e0dmjixXtWrlV7gUtdrbuZb2
+ +A4Cxmvt0d8DA2nzcVYm3WW0h/hHomkZJCIpdaSddKjoNYbejRw5K7ZBb1GEasF1xdDBDfsBZ
+ uQu2sw6kuKKjsLRKWsg427hfj2mDkQ69LbzJLdFYqbcBG6WKLF8ba09FPZ+b1kXyiRTAv32+M
+ PpEFWlGbROCix8EiBLKialOH9JH/n+30VuYknHiXXnNOPk9CjzkAINdmxJ8EHloC4Zmc/e4ja
+ fJzUEwSvlYbAZPpVL4bRdx74QyZkfqFLLYrzgENnZeuW0+fFMlHLW8hMrFDmCBkHVcJJUjl/s
+ FI7ApuN1ikhJEqv+o8yFqggr4vkmr1F2DwMJtNOjQkPD+Ps4HSjWLXkL9Lsa2o0wHO2dM8DnV
+ TbJylmxCvva9suA0fMV7AFwopTYRNFM8FY+jMfQSdz7H16d9mmzHiApvnLJnF3BsEu7zSbYT1
+ 0LT43TfMvqgBr7fPYBlXU/m+BFWbRsRO+jjD+NS2CK32b7TF06hbweGo0DCLRL7Nxpnm3NQoN
+ QlgGtpmqmK/+hj3jd+f73P2cbIXkOpXj9fIPXpEO26uEXhuncBMP3P6YVZ7qpxMT4nvRuwI6d
+ DJ/Ecgf6Nf5IQs9KKYX9KTolvgHCq8b44axJK7ohb3+rbyKWqqCN3HmpLwYR5ulcjI58T7qw0
+ PmCPvEN9hQpnYRAKqW29wFCwN/JPxFjk7xqk4B3tBc+0A5kzreV+HLXPslOCPLBem4ny8oFRy
+ GoSK+6QvbgRS7RbLeOKIJN6KlxJeNOUydaqbDIFmljYJn0NQjnBXzEMlBQ0sRZ1zcYTN7v/S4
+ 7Xs8SOrItoVwu9zCx7G2EbvNzHTeXd+arEP5pBpckQIfLb0hRV2o5stfS5vwSuQ16ssSMXhng
+ 4FylmL8whn42Tp2sa7r+AE9l1Wv7VvY005Xx3hZSKDb1pD9TYyORFzY/KUTrgB8U8xBnIuoiz
+ c+nW+psR0hSLIFJlnFrDZPCCWEuJDu6Dc3uKkpYgJdnvuN/xVGYxOMyV8OfQq0LTVcwyxJPag
+ wIOpyOvMoHokcHgPYDFmgj/lfC4XCRlPQQ7BsMlj8D217JsnB9cVEo2fEiD93F+An0Zbvrhai
+ Xp/7otWlI5GlxzzRWhPsgeTr8qFcNllJaIIKyt6SYJ4tvAo5OghjawgW7jAXhGDa27Yc1FI2j
+ a3Gn4R+gzgyGowm4E8jqD5l5mpS+qNhNGwxBp19jUFoBPbC9PO2JjUZpKiJowrSBeH5rt+FX1
+ TzaR84gFuWpV2KOE/QPDWNmA0URxXycxDhH/qH5UW+lu6PfkHdpueW23+HwF3vz+HWzMLtXiq
+ 133Yhew76xOKzHBmJjq7eBcXri3z4W+9I3iZxTJHiPtBkRelphQtEy7+Vnj8CIyzF/OYmV2Ff
+ xuaO4bAlbnFB23tdz7nA0vY3WD/kT+9+bnlS50rKppia1Kc11
 
+Dear Git users,
 
---QidtjR9nx087DF+Q
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I hereby announce that Git for Windows 2.49.0 is available from:
 
-On 2025-03-16 at 21:51:45, Ramsay Jones wrote:
-> Ah, OK, thanks! While researching this I was only concerned about when
-> On cygwin, the arc4random_buf() implementation seems to have been imported
-> from OpenBSD, and uses a chacha_encrypt_bytes() function call during the
-> process of creating the random bytes (see newlib/libc/stdlib/arc4random.c
-> in the cygwin repo [0]). Also, the getrandom() and getentropy() functions
-> are simple wrappers around an RtlGenRandom() call (see winsup/cygwin/libc=
-/\
-> getentropy.cc in [0]).
+    https://gitforwindows.org/
 
-Yeah, that's similar to what I'd expect to see on the BSDs, except that
-`getrandom` or `getentropy` is the actual system call.
+Changes since Git for Windows v2.48.1 (February 13th 2025)
 
-> The glibc implementation of arc4random_buf() (see [1]), as you say, is ju=
-st
-> a simple wrapper around the Linux 'getrandom syscall'. In addition, we can
-> also confirm that getrandom() (see [2]) and getentropy() (see [3]) are al=
-so
-> simple wrappers around the 'getrandom syscall'. However, I don't see the
-> 'extra function call' you refer to above. (Yes, all the layers of macros =
-does
-> obscure things somewhat, but I don't see that extra function call).
+Due to persistent maintenance challenges and the community's limited
+engagement and usage, git svn support in Git for Windows will be phased
+out over the next few months.
 
-There's a call to `__getrandom_nocancel` in a loop, which I believe is the
-function wrapping the system call.  It's probably inlined, so it's not
-that big a deal, though.
+Git for Windows v2.48.1 was the last version to ship with the i686
+("32-bit") variant of the installer, portable Git and archive. Only
+32-bit MinGit will be built for future versions, until April 2029.
 
-> As you say, arc4random() is less available on Linux, so getrandom() makes
-> for a better default.
->=20
-> Anyway, I guess that means the meson build needs to be modified, since it
-> currently selects arc4random() on Linux (this is OK on cygwin, see above).
+New Features
 
-It's not the end of the world if the meson build system automatically
-prefers `arc4random` over `getrandom`.  That's a sensible default in the
-general case, and I believe that the use case is generating temporary
-files, which will always incur the cost of a context switch and a disk
-access, so in general the performance difference would be negligible
-anyway.  It's not a hot path, since nobody expects us to write millions
-of loose objects, pack files, or other temporary files in the typical
-case.
+  * Comes with Git v2.49.0.
+  * Comes with OpenSSH v9.9.P2.
+  * Comes with PCRE2 v10.45.
+  * The previously-experimental --full-name-hash option has been
+    accepted into upstream Git as --name-hash-version=2 and is no
+    longer experimental.
+  * The git backfill command has been accepted into upstream Git; Its
+    --batch-size=<n> option has been renamed to --min-batch-size=<n>,
+    though.
 
-I _do_ think that if we're specifying a default in `config.mak` on
-Linux, `getrandom` is the right choice, and I think we can probably just
-hard-code that now and let people override it if they're using a system
-older than our supported environments that needs `/dev/urandom`.
+Bug Fixes
 
-POSIX 1003.1-2024 specifies `getentropy`, so my guess is that we'll see
-that on more and more systems as we go on, and the other choices will be
-less and less necessary, but we're not there yet.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+  * A change in upstream Git v2.48.0 broke renaming symlinks, which was
+    fixed.
+  * On a recent Insider Windows version, users experienced the message:
+    "Cygwin WARNING: Couldn't compute FAST_CWD pointer", which has been
+    fixed.
+  * A bug has been fixed that, when calling git add -p from VS Code's
+    internal terminal, after using the edit command, caused the
+    internal terminal got stuck and no further command was accepted.
+  * The syntax highlighting of the nano editor was recently disabled in
+    Git for Windows by mistake, which was fixed.
 
---QidtjR9nx087DF+Q
-Content-Type: application/pgp-signature; name="signature.asc"
+Git-2.49.0-64-bit.exe | 726056328967f242fe6e9afbfe7823903a928aff577dcf6f517f2fb6da6ce83c
+Git-2.49.0-arm64.exe | 490ea5c2a1cb3ca4071079e262d1cba9331252cad1b76f9df1e89f04a09e761b
+PortableGit-2.49.0-64-bit.7z.exe | bc980a64e875304ea5aa88386fda37e8a0089d0f2023616b9995b1ca75b471dd
+PortableGit-2.49.0-arm64.7z.exe | 8fa7e49b319b1109173a90a110aaeb0e9004600ff2ed44adc7dfe56ab21e4148
+MinGit-2.49.0-64-bit.zip | 971cdee7c0feaa1e41369c46da88d1000a24e79a6f50191c820100338fb7eca5
+MinGit-2.49.0-arm64.zip | 847bbe519443cd24c716f490a769056a35f42474cafb757663e1dceca159e911
+MinGit-2.49.0-32-bit.zip | 6d6439436d537624f619ffbf5dba49bcdc4ee1219c5c2756277669928fba2b74
+MinGit-2.49.0-busybox-64-bit.zip | 600d27b4ed7d86f9bc908c3e6563cfdd14f746dee1e91d5f714bfc9e7472cfb1
+MinGit-2.49.0-busybox-32-bit.zip | a6f1b25a1c910381b0886ff37baa3d77d3b662e0a54114ca19244a3f3e9381b6
+Git-2.49.0-64-bit.tar.bz2 | 6c5d66e3dd6cd44e50ba7892e9e24ace57934f277a3424c9702a400b3fedc1eb
+Git-2.49.0-arm64.tar.bz2 | 48109aaccc5387df498c6b91e5f25c27201dac80b62cae3c576d922b3129a66e
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ9dkJQAKCRB8DEliiIei
-gVhjAP95grKEoE2iAsL5ViGRTG4xr0X0VnkGFuZ3Xq4t3G8kyQEAtjVnyRICLU9f
-oh1cbsRH6k4fh5e2b6tpWB177AuocQM=
-=PkWU
------END PGP SIGNATURE-----
-
---QidtjR9nx087DF+Q--
+Ciao,
+Johannes
