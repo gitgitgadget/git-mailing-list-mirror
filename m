@@ -1,87 +1,84 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8852617A2ED
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 15:56:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4214B1A0BCD
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 16:47:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742226985; cv=none; b=Ygh+7WzTnO2TudAiNB/M2xAd5wnboVyP8zTDL3tVEtTrjbqSQ79C19aL4FcjLNoHscGyIpX31dqz2idKQgRl5ShJzswU1bjVDGraaKruw9wO5gzBEM2YSbTz+vFTYbMxvbqgYtTY9nZ4LRUN31pRKgqPN28KNS7frReC9iJGjWI=
+	t=1742230077; cv=none; b=eyTyhlVt+X196+isP//ml/kkByEJJ139qx1t+LSAmfZLrZ7JAJGVsCbjnq0sRhpMAmxHUdSbv3KpyrtnCWX0II/YobGBpvJFTXU7rLUYpMl5xvOZ3WE491vGrC6u5FcHaNyuHTznW+G/pM2wKwgFSzY5/gTZsm2HUpP3NuLDH3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742226985; c=relaxed/simple;
-	bh=MadOHQSOSGK2XfsHf5gYqHhpxF0SbPdRNMRu6qpKeys=;
+	s=arc-20240116; t=1742230077; c=relaxed/simple;
+	bh=uJeQWcnXHQxNoRB4EfQIHKWYfg7R1thDYtmCg3S2Zds=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hFbl6ryBiTJ1DZyKRUBhZOqKsG97Ur1SbWoQ6T+8xXEJ28K2L4au1iLtSlYBJDYLy+Xe2cJwbZK2+/u4Ut/Z+G7YLevpub260b9YXQVp35h3mch/09S31GsC/egvrUov7LuRZsJIPNRc3YW297MAstfrOm2U6iGOvkM8zRTZQOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q08Y+fJc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DUMb26t5; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=QMSrmgNdp0FN6uNmRjLNtExhm9U1qX4D+q/fHdHw7XzlcUJJS+lWTi+t+BB+5vFuZ5/sWdTKT6hvlL8WUE7r68BEdu8fTjhc/dFnPwRoeitU5bRtC8xFb2Dw1SIyTTSmBbzeYf0u5iJix/Nt2LcdciboOma1iGRPohDG6jEnE+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X+sGrkuW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tNjkIqYr; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q08Y+fJc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DUMb26t5"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8AF4C25401CB;
-	Mon, 17 Mar 2025 11:56:22 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 17 Mar 2025 11:56:22 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X+sGrkuW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tNjkIqYr"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 26819114019B;
+	Mon, 17 Mar 2025 12:47:54 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Mon, 17 Mar 2025 12:47:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742226982; x=1742313382; bh=GeSGpzP7jf
-	qbrVCyqFcymkhkR2JSB2QEd+CS27U1OK4=; b=Q08Y+fJcpOOIhw42tQ+ppDS5MW
-	LLStSyOenAnyR1Zd7GF0SP7gGS7kA4j3OjyG56NQtydz5rL3jFSgkPbk93x4ZrtE
-	GAOrMfMWO3foyquIglvHMcRw8g7h0tYxJAvE/am4XR7hDdEhIE212hU8DQhMh7RB
-	fA29W1WdgN8ofm/iai2cKgDZx/6484hfBZE8dXk3QNvSFSpewWIFH/2qqp8LvB+J
-	KQBkQcDxvOJjA8dHMjBmlFpTNbFyuihwF5k6SDEdvC+T59Fflw2AL5D+rFIKx6xZ
-	3/YBliceOWTIpd62bFv1FTkxp57qo5Ap5jhJZYl93B7U4gwF7Aa30ZGvaGYQ==
+	:subject:to:to; s=fm3; t=1742230074; x=1742316474; bh=E2NTwiT3ih
+	ovzv6m4jiM//9KwA8DaLXa2sy4SpzuxxA=; b=X+sGrkuW+AAiWP1FYmJZpIRIeN
+	7XyQKM9HSNOZTjSg8dr8/bkq8/qX8OVGB0KSpyS56ymBiAAd2F5ExFtfVGN6lkVb
+	dK1FJZhADewy86kTMDwc3feoi28VfS56yrUn6WgvShc0MmB70EVsbgA68CrLg/qZ
+	8n4fhe0F1KqSA9YiQmnoy2+lnPf0Xsvcq7W4zvNiPpng6+LiAA++z1oVbHIf8qPB
+	LNdtLPJFapZlKC+ujUhsVrwCZJKg6N7oBIcNPoOqzpyfT5nPwSal4dKd9pFL9qsz
+	chYyMHlVtOcOQBdcs/Skx+Ib3rq+YO9cJi4PhP1c5gXGTvLEElrThRlooUTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742226982; x=1742313382; bh=GeSGpzP7jfqbrVCyqFcymkhkR2JSB2QEd+C
-	S27U1OK4=; b=DUMb26t55Yao/IWQJZGNmOk9hReyB6lxPa6vts5PkaBKl9hpMnn
-	uieJrV2GSz/yS1xaNq/DHckyXxhjRIsHIzAGCV1N5vEurGCt0/Aa8bHSK+14XaEQ
-	8AhhisMHo/8wM6CtM1hlA9A9yy9ZCMzvR13jr7w7xYErA7tzSYJIF/YymbHBU8RJ
-	4mDvPU+qY7JYIGIGXeSpw8le81W1exOhKBKvZMix0vMWRqxgCV9v3tJ6kNjqJhJt
-	i/oro1+c/RgDdCXAxUgRmSab7rZXHcVOXWk5DQt9twIcpRtMDQMt9EZUduRy+8At
-	snBbvOX0yRTTwm8UY/JfBHpLTxnm7v12nBA==
-X-ME-Sender: <xms:JUbYZ7vCn7T_t__kyarbR8By8SyeHy5CJYBF7ujgfFdKGVjVE2_8XA>
-    <xme:JUbYZ8cHVGeVqO2l_ffmsnOqW6GC2m9b0RhjtJAWJxXsyqlpTIYwAZSUGYPzN7gTs
-    dUKBTiJShoV9qVeiQ>
-X-ME-Received: <xmr:JUbYZ-xxmDJUVrT-5l9JRoHu4xDNXL8tAZVIwXEQ06eHxo8mpDlDOgP_-Tl9dqyN1Mlfzlbl0_cCwD7fLnLhiTTKfHJwYtJOVwEOpv4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufeelledvucetufdoteggodetrf
+	1742230074; x=1742316474; bh=E2NTwiT3ihovzv6m4jiM//9KwA8DaLXa2sy
+	4SpzuxxA=; b=tNjkIqYrlkEL/v2ewThoBCafFdZ2vK3satIUZDqRRevG9TgD/W9
+	7XmmFtzZJiBIXGppkXaKp05lXz7ZGLORC7NtB3oziiENwEAiWVa8Jsi5R5TzGJvx
+	BQqisD327P5TPn4PqjJQyyru6vvjlkpGkuZLz8rZoAGFHs7kX+uTbIWILLXYsg07
+	TdvzbZ5sXQ+y0Vg5Xizs+t0InGRhf+K9FoHiXugBcBB3d6RPNaufcs6S5JnEMjgl
+	zQjHtCJxdJw6HJs6OCAGR5ce+yZCLJ5275SjaqEHsTqq0OixtmGIr45ad94WhzYk
+	JBsats9DJCuSddKFG4b93jjcwNBlSm+D16w==
+X-ME-Sender: <xms:OVLYZ2P3DRI7KPrlSncnp4p8dc_o0M4XJs6ugcLUqaDJgscbLlNyeA>
+    <xme:OVLYZ09jb227myoYJNvr5B_UUpfS2rNhJfPNd7_s-ep5oBRJKDjR_2ugERffpcUsO
+    0nuxsKkEneD_Oh6Xg>
+X-ME-Received: <xmr:OVLYZ9Sa2rGIL8uxAMq9UypFCPwvNZI87JdhX_s2MKTbV9Q8-GkAM_hzLfH-IjxL96p2PIgLwFYO6mnT-mmKFEVRFpX_xJUi5KSZQqo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedttdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffgffkfggtgesthdtofdttder
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepvdetkedtteduveeludekheffudehvdeu
-    udffvdethfeileetgfduheffhfegtdevnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihse
-    hrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
-    hopehgihhtseguihhnfihoohguihgvrdhorhhgpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:JUbYZ6P1tXPpWO2v8Ua3TK21QpEoHpKz8L6FmLm0vZkIP2haoOJUYg>
-    <xmx:JUbYZ7_MscdZUXPe9pES71I74zJ2zmANEPokuU7L-n-_cI550-iMWg>
-    <xmx:JUbYZ6VjoqfA79MwGIHNOolLHGpEqZcGcQTkMqqQkmfTgBBsUCGtKA>
-    <xmx:JUbYZ8c8ZKp0gjK7SdFzFPTGevCYGhdGVFkRlDLTK50m0CHgywtxYA>
-    <xmx:JkbYZ2nlp1oivBugc_KhNSKmBXMdlacbkjnuzY4WBHwhNX8zapeyydIb>
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsghhrghtvggrrh
+    hnrghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:OVLYZ2vQgfkIFXc7H0sZsESJVrUgRdFK22gSxaakPs2jLv32RWsfyA>
+    <xmx:OVLYZ-ejbQaJO8eSk9mAn7HeHE6Jx0gVHiOSh3Jm8a_lb_wIhKSckw>
+    <xmx:OVLYZ63vyim6kyB6BfI3Uduzy5NNn8LnHY76gUM5IhWFFo8_uZDfKw>
+    <xmx:OVLYZy8M14qPwExxLws7PJCwDCin-QiU72vclbR6JyljBJXWyJVesw>
+    <xmx:OVLYZ95RBr-bL0qVvvnr5Fw9CfRuW44MiwsY9F_B8z9JBkJE23svUfOD>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Mar 2025 11:56:21 -0400 (EDT)
+ 17 Mar 2025 12:47:53 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,
-  Adam Dinwoodie <git@dinwoodie.org>
-Subject: Re: [PATCH 06/12] config.mak.uname: only set NO_REGEX on cygwin for
- v1.7
-In-Reply-To: <33561996-3b7f-4d0e-825f-5b2369d7d010@ramsayjones.plus.com>
-	(Ramsay Jones's message of "Sun, 16 Mar 2025 22:24:18 +0000")
-References: <a4272c4a-7073-4671-a883-50e9413b0384@ramsayjones.plus.com>
-	<33561996-3b7f-4d0e-825f-5b2369d7d010@ramsayjones.plus.com>
+To: Arnav Bhate <bhatearnav@gmail.com>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [GSoC PATCH v2] rm: fix sign comparison warnings
+In-Reply-To: <71098ea7-9136-4ab2-8e15-27017773e054@gmail.com> (Arnav Bhate's
+	message of "Sun, 16 Mar 2025 15:43:03 +0530")
+References: <38de63ce-6d4e-4f1f-95b1-049df78d9cfc@gmail.com>
+	<71098ea7-9136-4ab2-8e15-27017773e054@gmail.com>
+Date: Mon, 17 Mar 2025 09:47:51 -0700
+Message-ID: <xmqq1puvbo3s.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Mon, 17 Mar 2025 08:56:20 -0700
-Message-ID: <xmqqecyvbqhn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,65 +87,122 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Arnav Bhate <bhatearnav@gmail.com> writes:
 
->> After some time (may a year or two), the platform library had been
->> updated (with an import from FreeBSD, I believe) and now passed the full
->> test-suite. This would be about the time of the v1.7 -> v2.0 transition
->> in 2015. I had a patch ready to send, but just didn't get around to
->> submitting it to the list.
+> -static int get_ours_cache_pos(const char *path, int pos)
+> +static int get_ours_cache_pos(const char *path, unsigned int inverted_pos)
 
-So is it safe for us to just drop the bit that sets NO_REGEX and
-require Cygwin that is less than 10 years old?  As long as people
-are willing to actively maintain the compatibility wart for older
-systems there is no strong reason to do so, but at some point it
-would become diminishing returns even for those who have hardware to
-develop, build, and test on, when the reason they keep such an old
-system becomes only to maintain it instead of actively using it,
-and I am wondering if Cygwin 1.7 has past that point.
+This renaming of parameter is not right.  
 
-> I forgot to mention, that one of the reasons that I didn't get around
-> to submitting this patch then, was because of a '# TODO known breakage
-> vanished' in test t7815-grep-binary.sh:
-> ...
-> The platform regex library is happy to match a NUL byte with the '.'
-> pattern. (presumably this is also true on FreeBSD?).
+At this point when the value comes to this function, it *IS* the
+position, there is nothing inverted about it.  It points at the
+position in the .cache[] array where an cache_entry at a higher
+stage would appear.
 
-In this test, the haystack has "binary\0file\0m..." and the needle
-to be sought is ".fi".  The system I have at hand uses glibc 2.40
-and it refuses to match NUL with '.', it seems.
+It is perfectly fine to state that the value that is returned from
+index_name_pos() is potentially inverted.  The function is given a
+path name (without any stage information) and
 
-> I could not decide on the best way to 'fix' this issue. The options
-> seemed to be: do nothing (it's not hurting anyone), disable the test
-> on cygwin or simply remove the test.
+ - returns a non-negative number, the position in the .cache[] array,
+   where a cache_entry at stage #0 (i.e. an entry for a path that does
+   not require conflict resolution), or
 
-The part "On Cygwin" somewhat puzzled me; aren't folks on various
-BSD variants seeing the same symptom?
+ - returns a negative number, when there is no such cache_entry
+   exists.  The caller can "invert" the value to recover a position
+   in the .cache[] array, where a cache_entry for the path at stage
+   #0 _would_ _have_ been found, if existed.  Due to the way the
+   cache entries are sorted in the .cache[] array, when you are
+   interested in finding cache entries for a path at higher stages,
+   like this function is, you can start scanning at this point until
+   you see an entry for a different path.
 
-Do we want to eventually turn it to test_expect_success?  I think
-the "fix" depends on this single question, and I am not sure if we
-do.
+Calling the parameter "pos" is the right thing to do.  The value
+used to come here _could_ have been called "inverted", and the
+result of (-inverted_pos-1) can be assigned to "pos".  But because
+the patch moves the inversion to the caller, what the code in the
+while loop sees is no longer "inverted".
 
-Is the behaviour that '.' matches NUL on some platform and doesn't
-on some others hurting anybody?  I dislike a tool that behaves
-differently depending on the platform, but not strongly enough in
-this case somehow.
+>  {
+> -	int i = -pos - 1;
+> -
+> -	while ((i < the_repository->index->cache_nr) && !strcmp(the_repository->index->cache[i]->name, path)) {
+> -		if (ce_stage(the_repository->index->cache[i]) == 2)
+> -			return i;
+> -		i++;
+> +	while ((inverted_pos < the_repository->index->cache_nr) && !strcmp(the_repository->index->cache[inverted_pos]->name, path)) {
+> +		if (ce_stage(the_repository->index->cache[inverted_pos]) == 2)
+> +			return inverted_pos;
+> +		inverted_pos++;
+>  	}
+>  	return -1;
+>  }
+> @@ -58,7 +55,7 @@ static void print_error_files(struct string_list *files_list,
+>  			      int *errs)
+>  {
+>  	if (files_list->nr) {
+> -		int i;
+> +		unsigned int i;
+>  		struct strbuf err_msg = STRBUF_INIT;
+>  
+>  		strbuf_addstr(&err_msg, main_msg);
+> @@ -83,7 +80,7 @@ static void submodules_absorb_gitdir_if_needed(void)
+>  
+>  		pos = index_name_pos(the_repository->index, name, strlen(name));
+>  		if (pos < 0) {
 
-On the same system, GNU grep and sed seem to consider that '.'
-matches NUL there, i.e.
+Here is where the caller notices that index_name_pos() did not see a
+stage #0 entry.  This caller wants to see "ours" entry at stage #2,
+so it "inverts" the returned value and asks the helper function if
+it sees such an entry in the .cache[] array.
 
-    $ grep -a '.fi' a | cat -v -T
-    binary^@file^@m[*]c^@*M-CM-&^@M-CM-0
-    $ sed -n -e '/.fi/p' a | cat -v -T
-    binary^@file^@m[*]c^@*M-CM-&^@M-CM-0
+A handful of prerequisite pieces of knowledge to understand this
+code are:
 
-They ought to be using the same library as Git compiled on this
-system does, so it is somewhat curious.
+ - The index (i.e. the .cache[] array) is sorted by full path name
+   (down from the top level of the working tree).
 
-> [I think I prefer to simply delete the test, since it doesn't seem to
-> be testing anything useful, as far as I can see.]
->
-> What do you think?
->
-> ATB,
-> Ramsay Jones
+ - The index can have at most one stage #0 entry for each path name.
+   When a stage #0 entry exists for a path name, there cannot be
+   higher stage entries (the path is called "resolved").
+
+ - The cache entries in the .cache[] array for the same path name
+   are sorted by their stage number.
+
+ - There can be at most one stage #2 entry for each path name, which
+   are called "ours".  Entries at stage #1 are from common ancestor,
+   entries at stage #3 are from "their" tree.  These higher (i.e.
+   more than zero) stage entries appear only for "conflicting"
+   paths in the .cache[] array.
+
+With the understanding above, you can see why "our" position is
+computed only when index_name_pos() returns negative in this hunk.
+
+> -			pos = get_ours_cache_pos(name, pos);
+> +			pos = get_ours_cache_pos(name, -pos - 1);
+>  			if (pos < 0)
+>  				continue;
+>  		}
+> @@ -131,7 +128,7 @@ static int check_local_mod(struct object_id *head, int index_only)
+>  			 * Skip unmerged entries except for populated submodules
+>  			 * that could lose history when removed.
+>  			 */
+> -			pos = get_ours_cache_pos(name, pos);
+> +			pos = get_ours_cache_pos(name, -pos - 1);
+>  			if (pos < 0)
+>  				continue;
+
+The above hunks are perfectly fine.  
+
+> @@ -314,7 +311,7 @@ int cmd_rm(int argc,
+>  	if (pathspec_needs_expanded_index(the_repository->index, &pathspec))
+>  		ensure_full_index(the_repository->index);
+>  
+> -	for (i = 0; i < the_repository->index->cache_nr; i++) {
+> +	for (unsigned int i = 0; i < the_repository->index->cache_nr; i++) {
+>  		const struct cache_entry *ce = the_repository->index->cache[i];
+>  
+>  		if (!include_sparse &&
+
+OK.
+
+Thanks.
