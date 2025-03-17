@@ -1,71 +1,75 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBC429CE8
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 22:34:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1A51A2846
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 22:36:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742250855; cv=none; b=Mpctmifih3p9e7AbV1dLxHOL4T3Xup+ms0OEkYDJgZsJ1xdKgD+jaAtvZXxlick90CYhnodfnO+N94JcbHSEWFoIOHwejvLiR2ALVVbckvTDrMBiMibnoGP50k9xAt51B0l2RGw8qXipudprfSNdg3CuAcR5PVsIj/DUwXyUTGg=
+	t=1742250995; cv=none; b=Efx5Y2YnPfH3MuBqlWH2ef+TGwArqFrl3tGASrx3q4UNusEWTobmADEmq6JPZi+oSAMlkxoB7BvIrEYbuTMDMKVBF2ugUY5xYwBbrEcLD2T2i86P3XbXHzjJlY4hmIiZdjsAlg0NESK+dtR3Fm6W6lkGoYxUY+n4IM/wrWL8WbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742250855; c=relaxed/simple;
-	bh=qx4wu3xRbQs4eXEIiBkGt4V66LALFIjiLAU4zuNfcOg=;
+	s=arc-20240116; t=1742250995; c=relaxed/simple;
+	bh=19kmTqJwxrRxxZyUxYdUgT6AzxnAD/4CsZn5rUaEgCo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W8iKGh9wE8cPco2T8dAg93lrExs6UrKXOWkEKPkywDDghg1lFzBbxrJ1fHQ7m0tIWsqYqJCcejzeEcSqSuLtBfRDScms94VeI1JJJqmgR52yPauDm8v15H3mIvV6VzafLp9CHil31x4Uh9cmp4I3JMtvbmUOxL7LnVaaAhLcx/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Fvfj8N2n; arc=none smtp.client-ip=209.85.219.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=HY1owiUkOpl8DrCCC9j2vTkkeFpKRc+d1HKrzD7cceH3nlz/qjmTTX5TcUoVzBCWjs8ZbfTmx6SV5dyB3WA/hi6DCcfux2z9tlmL8pLvo7JMFmTZubFLzW6nUgzBiDD1Boav6FQQ6tOEhUZKPgFR/RA5ZbLma/xOvArdsbzQPe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=SIFGGgcR; arc=none smtp.client-ip=209.85.222.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Fvfj8N2n"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6e900a7ce55so70023046d6.3
-        for <git@vger.kernel.org>; Mon, 17 Mar 2025 15:34:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="SIFGGgcR"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7c3bf231660so589744285a.0
+        for <git@vger.kernel.org>; Mon, 17 Mar 2025 15:36:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742250852; x=1742855652; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742250993; x=1742855793; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RlbsrMgfFY0TMQTlT3ufvo8CPwgR8yRhKNHGaxFW4fs=;
-        b=Fvfj8N2naNPuYZIvzi7e0T1wwqvFJeq5YJ5BPd7B72XRr+jEYkDCgKntwSOtvgfFSE
-         Or+Rwrc4g0sJJf2SdgQ4wn8Y1O4Cd2/95rPU9G1x4W99iLNnUjbrPIaxFtoN7Tcj5YwE
-         EvBYXhDQvsOjC5WPC/XipStP3FM5ThPYQmIc0PyJFsl1O6hhwt4cjJm1PofS0E75o8y/
-         P4chNWgxcO35Ea5lFEbkdm3lKlCwRf06m4sLY2SgqgmNHeOg6I+w7qzNLyjnQMUei5Ty
-         jq0VIAEVfQcQnyPo8fvtHiHnIX3SzNeKM2ywePjnv6RQOPesyoVYdP5UykppOfBspQRd
-         8zpA==
+        bh=ihg92YmKNyUuyINn8ezi+RefcZ7jq9YBhtmq4nhKLUY=;
+        b=SIFGGgcRF+GVQDaa4k0qlDU0FdtLwEEybFF9dlfsq+9rzA7bYT7PJjRafGIQg0gA3v
+         5D9UOYAt0LN3ZvPVc//QtKWyxneDkmms/p2a1fuajBmoiW6lD+m+paAq75Nv275xXpyU
+         brJRHqUHspvhO0sSfXLxiGXPzQEeSIohmnxFxgLblrWwjeoGYEHfBvBNnNs70iz35CaS
+         YXURBtxfgAkt3LkUERnT21tt4Mrqp8ROf8EUTdnNcON9tWdJMCWAmE9MAoCred/JT5ZZ
+         7dKxE6AZOuQ9yiUaGFskVQxu39yAAe2DFHoU9KzvqtpPwLJFdV2U5B88WInEMB618hs0
+         jTyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742250852; x=1742855652;
+        d=1e100.net; s=20230601; t=1742250993; x=1742855793;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RlbsrMgfFY0TMQTlT3ufvo8CPwgR8yRhKNHGaxFW4fs=;
-        b=JFddreewq3b2igY7ymH11/ZSc/4dYY5vPsZklX5aMp6irS6rB0imu40zr/a2THCHFb
-         jVegX19nmVeSvG3dxg1MDIRXeMdQSBWj7DMQT/jmfUzFcgDgZ0TQ6lJrYyvryAAjaBUE
-         i5GXSI+v+mLdob14BERaiWYsKy3mZlCWR5wDrntsLQp3KGKEtopE1kTUApxLgHGGmXBY
-         LlEIn8Y8vkZ7+ZX9NnYJ/dpc+27S1gfU4o5pp/Llj3JiYr3hlZUjtielU2qJnv6zfr3+
-         6ioWNvdlFBefgKfgEmCQzcuOOMTAT3Q2BXBZMFyGjkWUBT4tNpOltJ728elZyeeIyGPV
-         igug==
-X-Gm-Message-State: AOJu0Yz5GG4Id7O3MEN7YZlSlGc6Vl28VIpO4mb2tgxkexegKTBeYe/y
-	oD7L2mV3pyQ0QnX5+X606pCTk8vgtKnmY3A66M2NKP0qDBodpWCTbk4sSZl6X7o=
-X-Gm-Gg: ASbGncv1sK1V1iEVhAL/11oJbGcZ4toWfdcWjboKLhCEMUynJoHro3G6BbF+M1uy4J/
-	7OoXujTxVB4iDINBZLUYpaczFDUr6n19Vjp4+4msXeid5xM3DXgC0kVMGErFMhEn4eSD9O1N1GD
-	s6SxLxKFp8aPth5hbQzJQx+FBc4Jpr49Lj7J294YI9uwLVxQ1PDd8tCD2+K/qCix0Aa7vZ+YD3F
-	lKv9d3xAeL+G2IseHMrB3LixcvKiTbONQjpr7hpljZccE2GD2BGK2vm8RT8rbR0DwWTknSWVnr4
-	HSeUEMyv5YyZaDo/cCKsU6Osw4LpLJx9CFt4FbkLxG7r+T9544BWGFzk5CfZHq0Y5e06Vj6Pv0j
-	G6S/bHNbpn1Fy16J2
-X-Google-Smtp-Source: AGHT+IE9P4qgwu5p2IKwFFxtfG85haBpZ32ZVKIWrQmygty8uYjc9i9PWu52iScd4Kb2tx6RttUdPg==
-X-Received: by 2002:a05:6214:27c9:b0:6e8:f470:2b0d with SMTP id 6a1803df08f44-6eaeaa52367mr268883616d6.19.1742250852363;
-        Mon, 17 Mar 2025 15:34:12 -0700 (PDT)
+        bh=ihg92YmKNyUuyINn8ezi+RefcZ7jq9YBhtmq4nhKLUY=;
+        b=NUIcG1FjqdQHAAepLrOr0h0LNOfAk+6vRI6D82agq39dMtAJy8oaAWXYdrrJS2NLIF
+         v5tTe9rjIXmfHsCxuKM+Sf89WT4RiajeARSlw7T9TXp6J6A9ZpS1zBbWdQmxWpO7k+xD
+         B6pNB2WFA0C8hpffr4EDocL8G82MRiRERiBm9K59bvDbuoJmkhGHo9LfUDQ7pkYNEbxI
+         D8HGV7Zm7jO8MozbchmS/o9vkGtI+8f0IkTBNOS+qWZQO12UHXpXiFXhSEgZrgymrIPx
+         GiCq5F0RJwLzN3h4AtcHQNeahVqUd1WWhJMn6YZKQge/UMxxMlMUdKCuSvercZTK9y7k
+         YyFA==
+X-Forwarded-Encrypted: i=1; AJvYcCWgD+9cW9GFL81tK2XPNxDr1PjQEPa3/7SCC2SYSZrtukRCgeHPcN+7F3mXSNSb5qs53cg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzNIG6QE3Q/2Wm8REOXWgh3xIRyYk7CIr/Lfb29gJamH7gEd3Mg
+	q4nny9r0pl5Li1psV+FxUwWScScRZiu71/H2tIwTsMGplaP5Jq8t3QdOUnE2ciA=
+X-Gm-Gg: ASbGncv/2J/WbWG43jVGMW7N660QU2Psa1ZqDC11Pt1jpbqi0Lw1t3qUQ4PfEDaGSl7
+	5/iaX+9TYR+EsTfqp5Kbnpwibed41f5nxpdnekkxj3z1aNHD7Eqalh2aJcdk+5NG9S36gLxrQFS
+	276v8ikq7a8/sIG6F7hJfAvgNUGComNObfE60pRjhVmB6RrsFDMzAkxeASyDHCzy9RvTHDC37px
+	CjuPTb5Jip+5kAqWD3Ywfy2x3WnqlU9O9rijGx7r62Wq/iqoHvKLApTC9J7r0shRknrC9HMKptM
+	S9gQXRwOkqY0QSTKlS5yFGOM31olERPwNOIxQrI4VSHNoF5yKyDhma0g1szabxIn38fTgXJPJm+
+	WZxgPjgYldxP8AbCRP+hBTsoVVbk=
+X-Google-Smtp-Source: AGHT+IHp1+eLMdrMgP+0Ha+/0voVvuslUY/nux+gfovu/qpKNILcEGjWFnRDXzir4RFWEKu3L+4Baw==
+X-Received: by 2002:a05:620a:1921:b0:7c5:5e9f:eb30 with SMTP id af79cd13be357-7c57c79c59cmr1750839785a.15.1742250993225;
+        Mon, 17 Mar 2025 15:36:33 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eade237957sm59682036d6.42.2025.03.17.15.34.11
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c573c55e95sm640558085a.17.2025.03.17.15.36.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Mar 2025 15:34:12 -0700 (PDT)
-Date: Mon, 17 Mar 2025 18:34:10 -0400
+        Mon, 17 Mar 2025 15:36:32 -0700 (PDT)
+Date: Mon, 17 Mar 2025 18:36:31 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 0/3] Add a static analysis job to prevent assertions
- with side effects
-Message-ID: <Z9ijYliQPX7PI/0h@nand.local>
+Subject: Re: [PATCH v2 1/3] git-compat-util: introduce BUG_IF_NOT() macro
+Message-ID: <Z9ij72MASlTLT6+8@nand.local>
 References: <pull.1881.git.1741911652.gitgitgadget@gmail.com>
  <pull.1881.v2.git.1742107322.gitgitgadget@gmail.com>
+ <109060ccb8665c73aa0c4f73e3cbbddcd135bde4.1742107322.git.gitgitgadget@gmail.com>
+ <xmqqjz8n70dt.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,20 +78,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.1881.v2.git.1742107322.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqjz8n70dt.fsf@gitster.g>
 
-On Sun, Mar 16, 2025 at 06:41:59AM +0000, Elijah Newren via GitGitGadget wrote:
-> Elijah Newren (3):
->   git-compat-util: introduce BUG_IF_NOT() macro
->   ci: add build checking for side-effects in assert() calls
->   treewide: replace assert() with BUG_IF_NOT() in special cases
+On Mon, Mar 17, 2025 at 03:33:50PM -0700, Junio C Hamano wrote:
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > Create a BUG_IF_NOT() macro which is similar to assert(), but will not be
+> > compiled out when NDEBUG is defined, and is thus safe to use even if its
+> > argument has side-effects.
+>
+> If this is meant to be "similar to" assert, let's not call it
+> BUG_IF_NOT().  The point of BUG() is that the developer can mark the
+> problem with something more than just a conditional, and it feels
+> funny to call a facility that lacks that central feature with a name
+> with BUG in it.
+>
+> ASSERT(), safer_assert(), safe_assert(), sane_assert()?
+>
+> The last one is in line with safe_istest() that is used on
+> sane_ctype[] and sane_qsort(), with the intention to allow
+> developers to write right code more easily than using the plain
+> vanilla C.
 
-Nice, this version looks great to me. I left a couple of notes
-throughout, but they range from "could be done later" to idle
-commentary. Thanks for working on this, and I'm sorry to have sent you
-down such a rabbit hole ;-).
-
-    Reviewed-by: Taylor Blau <me@ttaylorr.com>
+For my $.02, I prefer ASSERT() to the other options. It's clear, but
+indicates that it's a macro and thus not the same as assert(3). But I
+don't have a strong opinion here.
 
 Thanks,
 Taylor
