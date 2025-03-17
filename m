@@ -1,103 +1,125 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3651C6FF1
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 22:24:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACBB1FECB6
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 22:24:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742250252; cv=none; b=MTY/4her/+lnDabnTYJOjQjqwF8GkqVSS0KlkzrEBr9cpBstpV1hBIlJyj52PU8dwEUn5iGs/oe3oNy43572J5rPyLz4+T8nhadzgUMomwJL9p8oK5hzlimjXwAnlwc8nfTPnvnyfgYULeQyauoG4olyKtU1UpOt2+f2/8cV4dA=
+	t=1742250264; cv=none; b=JaFfuiyv/FznyQ9lAPXZU7M7hcU0VnpBqzqmisGSf/Y91G8NEqvUG11uA35Ig/+dV6kVcyOVdVqUM6XwZxpLrDXgV3WhFfMElGUdv7Nat3zInLetlu4KwKx6gFyu9liruvgbJpXXNX9xs88Zluvh2peBBs+IkovUtqhI+M8DHZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742250252; c=relaxed/simple;
-	bh=VcY9/V+ZOgcnk1ESQUHtSGo2pfS3tZlMQtN61S1X5hQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=g/j+Sbc86z5A6SG8n82j8KjdEvaYnT4QRufOnZM6pQo5OC6hDgK0qSTi4UW4/nY5UvWSP+IVYID7QYA2yQap85Xmgx0bdNdGUMMAxaSQ0ZJ2hTN7yXFQZrDkSzjnyYs40cD5M6ORYVZws571bsxbl2yagGLflwI1TIGMRT6tcq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c/fh/kcA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qqD+6/Cq; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742250264; c=relaxed/simple;
+	bh=nkn/JGhbKIX0cOIqRGb8J+RTErQ2d3vBuXmSoG+mU08=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XcgEKPfZTT2jXmJvPD4cR2aV9sbYCdomla/5mQbogEgl+PCM7+vx7c87nt1Je+pc4bh17ZgxiRJ8PiDXZIDPeZNeqyzLF/5RTMT3aj8NsbSPaUPEj27pbBeLM5Lgp59yo4LtZGilfKOeYNORc5q4BEnwWCyWGhRy+a1ztPrNEkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=m3LfaZYB; arc=none smtp.client-ip=209.85.222.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c/fh/kcA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qqD+6/Cq"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EA19F114015B;
-	Mon, 17 Mar 2025 18:24:08 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 17 Mar 2025 18:24:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742250248; x=1742336648; bh=M7vtfw/tHv
-	9EY6jUt1wCPqzXVYimmpJMDshQADL9sGM=; b=c/fh/kcA5DV516EQ6LGQvGGi7f
-	/LIhFbBtgzcwIuaXYAjzSeggjd0wv7l0P46uOj9DHMgrYqyIujshdQRUp4ZcxVdZ
-	zAK/WDtBhdPofppH/lUsQtaR44PyDoxBKkbl4Ifg+HWOuygcLmQDQrMGAptSMhN6
-	Lx6Bnz8VLCi80AoLBBQuMHGtXmQrykr5fy6Pg3WW3y0pS//wALQusuTRa8XM5+ur
-	/M0aITNa4p9PIn5iZPk6N3SywsfyYvIIp93cN24Oz95GWKNs4RqqiX4/T5MU5AzS
-	Yp7nsCDAfQfw0EstCL+JJrYm5cjTY8FZrioNCvywLgG+VWIL0CpVtyBA01+w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742250248; x=1742336648; bh=M7vtfw/tHv9EY6jUt1wCPqzXVYimmpJMDsh
-	QADL9sGM=; b=qqD+6/CqPj38HFkOmNS+nN5uGl/y24K8X5iRhR8VisIeeyYUzzg
-	1EnAU8K4Qheu8pu6kKUBCznvIJaNpkAXQPR0we19QfQg2C9PPSkKNilSzJbxH/a0
-	jVS3lWbjgtCBexvaRkYAyKFToO3XNxLwXPospwe6J7YRcpFAL5DSBYFlBPOdziL1
-	KtlVmLw/oYSXaVSNJaXRVE8uzBeCBZ8GtNumamNbKM7PybTbRMUQPcR8VtciuphL
-	JfdkppUj9cUxXov4Jcrsji/pW/xgpRMm2H3qFKlnmHRRmsBC1Yc8fwQU+urLveSp
-	YfbJe40YEsZN1boLUFDcFJE5+nBUC8GM90A==
-X-ME-Sender: <xms:CKHYZ4w72Av9ttHZPxog4kgrPa2qBt4P-VPnFeDFkJhXnB3QqJ2ArA>
-    <xme:CKHYZ8Q-l-VQ5kt8GbZIMKGzXfSmPwq519V9nJLJSR6V8CyNxbLf_zOKtmBjjMBmc
-    qcAOR2yYOOuy9kg0A>
-X-ME-Received: <xmr:CKHYZ6Up2m9hYZLyzioThHaWGKYB6ieSRSery5Z0d6uVNIM6fClNeFBmOrHvd2fxQcnRkcVg_6B_EAyIBjG9xyFIEfhlrAcN0oviB-k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedtjedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvg
-    hsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:CKHYZ2hlTWCzKDVO4RNoLRZSs6kZQXVGuYX5MXwzF4qLhUQeYgMbMA>
-    <xmx:CKHYZ6BhM3LoD_1FqMp3uHWzPVlzrBLMVtk1AhUlT2ctlYOFcw0p0w>
-    <xmx:CKHYZ3Lt_AneiPBlqCW9m88v1DltBc80YHggGzbuJNhzf4ajc3n7xQ>
-    <xmx:CKHYZxAXu7GCFV_OiAsof8s3Qs6aFS11d_MBTFVfiXVUtEOpmmcgTQ>
-    <xmx:CKHYZ1PPNmbkwyeOeiK_kIWOJjgzX8XV6Udl9qCeySSk9paQyy5SbfJP>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Mar 2025 18:24:08 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org
-Subject: Re: Git Bug Report: git add --patch > "e" makes keyboard unresponsive
-In-Reply-To: <84c3ccdb-2aaf-9b34-91c5-cf5c27f53dcb@gmx.de> (Johannes
-	Schindelin's message of "Sun, 16 Mar 2025 04:34:36 +0100 (CET)")
-References: <CADs5QabwDtUpehNY3hr6BzKyfpp-Ts54TANGkygWPcN3T=OSOg@mail.gmail.com>
-	<84c3ccdb-2aaf-9b34-91c5-cf5c27f53dcb@gmx.de>
-Date: Mon, 17 Mar 2025 15:24:07 -0700
-Message-ID: <xmqqsenb70u0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="m3LfaZYB"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-7c3bf231660so588964485a.0
+        for <git@vger.kernel.org>; Mon, 17 Mar 2025 15:24:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742250261; x=1742855061; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=aL7jlaGfCoQozccNsG3Yr70aSABzjXaxP6rqw6tZ3mM=;
+        b=m3LfaZYBD3qYawE4H5TF4oWkfm9CLMJoxdYQCXwW2FqwWZ8/jiUQHiDbzRjvYT3iLR
+         Zj3gNAGHBuS5XrSDIhfCCgmpSuO7emgYeWmjPJahGzsyFDi6DiTqkCWCukbGID/OPYDL
+         qFOOCHiBrIEwBNgPtG8AY/w6/36JI3svMhu1H03ESSbfnOgnKm11+zOcPhPwpO/jHtIM
+         KqDU7RYw1TIqKi24ujY0q6slios9kqNbv0rv9fT7wP9+T9iFDDDCUk8iMbMo3euGA3QN
+         1IEniJtipgjZjYP5rSBZLM7H+NZXWv83Hb73byAMlq/OlNpu5q93FSBPy6BfkJScM+WQ
+         DNwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742250261; x=1742855061;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aL7jlaGfCoQozccNsG3Yr70aSABzjXaxP6rqw6tZ3mM=;
+        b=PHhFt1C3A6D5DEUGylkkWGujNRddudIU2ZJ+//XK/jTkZkxFTEpWd1cpOZwGQrgWbK
+         xr6JElCKxeIO/5r8+PyJncO7rPyk/ZeifAj5X8qC5HuBwuhel5o0VBj9Iuos+feATV1+
+         mDnt5kq47BeRIwREVKUwWflf/rgsF4EISaJivSzQa++QGyc6W+KHWT2lhc80vvUwmCdy
+         EH08N3d+HNeGTYO1oc6E1PK3w5Z/QTx9G7Q+1y3v6tXKLdHw7H+VhkmTXDH8mhnrZKl5
+         b1bn5PEnHt4bh1oCNtj+UFdGkM3KgsqsY6KZgpR1LTZfNYSK6EYHG0hDTsM/jZsSVTCF
+         sQSQ==
+X-Gm-Message-State: AOJu0Yzcq22aEQNFnkIyn2R19zXx2OhMjmPz7wuc3u4by/5xw7lk6eVo
+	U5N8h7sFNqquwyQ9botg2SU2JyP4V08INNXJLpF5A4qkOKYHJsRRcu/7Sgsq2ty3AVTwztrvG5C
+	recg=
+X-Gm-Gg: ASbGnctv9euL+i+rKNPtNrx0oP5lTXuGZ2Qc+6xGw+p/IOpnhvpXgyx7E5m5JUqZ6Qn
+	M296kjFLoQe/act97n8IX2EPHkfBS3Vj3dLGbqaJUOt1uUcRD0x5yrhCN5FE4+IMw6WY2s1XuZf
+	njWIWPpegUqpF/OT5DPsx5ACo9xofQLGRusZrE70dQR0gcNEqJHa69zxSSgq7K0kebuBO4oj9bz
+	AUd1I2P9jdRhrkm/rLPCT1zhAkm1yk+bh/VLZlI0W0MZyW81HYhYloNcatlq02uqanbgID7hvvw
+	zXtcuZ9rFm88Q2Ok7JwBLtsn/2s5mWxD9IcSV37REGaJRPWVZa5Ej6GW9yu182mYTfxC1CdRXUi
+	9TZg6JrZVBktVb9qdR0m2cy5LEoI=
+X-Google-Smtp-Source: AGHT+IF440WyOhvNB2b8Y90I3kOsL1Nrf67RnWujAVSeZLGsaVX3US5S4ImfjvQN2qOZQCcQuMcmAA==
+X-Received: by 2002:a05:620a:601b:b0:7c5:5670:bd6f with SMTP id af79cd13be357-7c57c8fb8f5mr2297050185a.53.1742250261440;
+        Mon, 17 Mar 2025 15:24:21 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c573d8a062sm636463685a.94.2025.03.17.15.24.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Mar 2025 15:24:21 -0700 (PDT)
+Date: Mon, 17 Mar 2025 18:24:20 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Igor Todorovski <itodorov@ca.ibm.com>,
+	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH 0/4] refspec: treat 'fetch' as a Boolean value
+Message-ID: <cover.1742250259.git.me@ttaylorr.com>
+References: <xmqq5xkdrrhs.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq5xkdrrhs.fsf@gitster.g>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+This series explores treating the 'fetch' field of 'struct refspec' as a
+Boolean, instead of taking on values called "REFSPEC_FETCH" and
+"REFSPEC_PUSH".
 
-> I refused to release on a Friday (absent any good reason) which is why
-> this version is scheduled to appear this coming Monday.
+The refactoring takes place in a couple of steps, but IMHO the end
+result is pleasing and an improvement in clarity over the existing API.
 
-Not on-topic for any particular bug, but do you want to probably
-coordinate on what day of the week a release is made, perhaps?  I've
-been trying to stick to the same time-of-the-day we established
-earlier for embargoed coordinated releases, which is 1700 UTC - 2600
-Asia/Tokyo.  But the choice of the day-of-the-week has been more or
-less arbitrary picked by me to happen on Fridays for the past few
-releases; it seems 2.47 was done on Monday.
+For reference, in one of the patches above, I had suggested replacing
+something like:
 
-Any preferences?
+    if (refspec->fetch == REFSPEC_FETCH) {
+      /* something */
+    } else {
+      /* something else */
+    }
+
+with a switch/case-statement, only to realize that 'refspec->fetch' is
+really a Boolean in disguise.
+
+I am not overly attached to these patches one way or the other. I think
+they do improve the refspec.h API, but they're also ripe for
+bike-shedding. So if we agree that they are good, I'm happy to see them
+move forward. But if not, I'd rather not spend the list's time
+bike-shedding here, so I'd just as soon drop them.
+
+Thanks in advance for your review!
+
+Taylor Blau (4):
+  refspec: treat 'fetch' as a Boolean value
+  refspec: replace `refspec_init()` with fetch/push variants
+  refspec: remove refspec_item_init_or_die()
+  refspec: replace `refspec_item_init()` with fetch/push variants
+
+ builtin/fetch.c    |   2 +-
+ builtin/pull.c     |   3 ++-
+ git-diff-pairs     | Bin 0 -> 12166200 bytes
+ refspec.c          |  38 +++++++++++++++++++++++++++-----------
+ refspec.h          |  18 +++++++-----------
+ remote.c           |   4 ++--
+ transport-helper.c |   2 +-
+ 7 files changed, 40 insertions(+), 27 deletions(-)
+ create mode 100755 git-diff-pairs
+
+
+base-commit: c702dd48567cfebca3d4a06b691de97da3f8dc4a
+-- 
+2.49.0.rc2.13.g95783265fd
