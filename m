@@ -1,162 +1,147 @@
-Received: from avasout-ptp-002.plus.net (avasout-ptp-002.plus.net [84.93.230.235])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76361B0434
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 20:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C8B171658
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 20:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742244420; cv=none; b=LIUApJ8l62eZvqIy91TfXmBVzTaK5hbzhJ6RrOPFB2vvjWeuIpGutUiHvjBKAchhGyJicafuS6rw2HnBPUcwDWuE+EVtmgxbfGJi1zLqNJOJw/XN52aKNv5PXMwhxMVubWQfHHP5kIMtF5nzVXCkBWXTjUtPvXAmf4hRCJ/arQg=
+	t=1742244739; cv=none; b=tcFYlceYCizZ4W9j8q78xU5qoKqSYOkdtRzPvo94ImbdK/s+aEuvUib0P9PgpBhpFJxK3PEpzE6hvDyF1qk950/fqKAqaLNQ4+fdjoWhupTPqqXv1MQLT3BuTOL3SfWUemiBildKEQcl5k/xlaUTUI0DgLchjjq7zevFlNVciJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742244420; c=relaxed/simple;
-	bh=QvSuKmoDfFY5mbGfGfqNVn0LKWOEpBBQVb0iw17H8Zg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Wq+G6kgQyMCkn2sYChFv2Eu4JUKPprpRAun9kKTkKMhcxII5KUn2pK5hytJXV5rF6QdXLWtaj+2pqv5GxirkwjkP0NdVMvahXcdWM4fpsBLg4wjPx0B+F6Sg7x3iMFBTzfplcZKOIy+rfpBQpGXMQ+ls2f91VFThw9YBYARc6fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=GcpWEsId; arc=none smtp.client-ip=84.93.230.235
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1742244739; c=relaxed/simple;
+	bh=Xy74JhJ+wqaaD9e0AU38HLo4b0bxlJLFE1w0V79treQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aArh4omtyhZFQMsYB0Y6KXsJR33Z9PSgNhxZQKKcjycCMOHneRIKfDyhG7bhTs4uF0hW0OzNGICDq7275nwQH5LZhisSw8at7o2BRstM4GPiLkKU6zdRgMJgvqIrqhc611VEfSYjq4hc2AnsMNM30oRio4ZWlzmZE819SrEcHso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cYF4o46u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZVbFLIAa; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="GcpWEsId"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id uHJKteDLAeYyCuHJLtZ4Vr; Mon, 17 Mar 2025 20:43:48 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1742244228; bh=8tt9hLKXzplfpaFqSIoVLZzVLK1J8HqyTmV8smteIYw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=GcpWEsIdnnET+zvMxj2Cn2PSbih/Rqw6mybUP7U0OzsM4SN4vT36RE3wQkAmg2dxu
-	 LSxkn4g347TOSGgqO9unUjWC+Bs8UBoUpptZahXKD2qppKye1BTb4/BY4ydxfZPJT5
-	 h1mfmrF7halvj/q5pTgtZsVS4v/VuSDPn4C24ObaQhv6zmNAmRycO1TEOexmcGcRhs
-	 Yq+XCm3B6kFjqMZ9IuzVTfbuckv9w4B37gRwLA7WBnWSqzlK41fnIhFh34zZhnUk5/
-	 Qr4fXic4Ra0sexnZC7r3vgTgwhd8vQXIbqWD7XFrbakvtX9UxaFjT5h9/+k614fVAf
-	 towbvQmUdXccA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=ac7Cngot c=1 sm=1 tr=0 ts=67d88984
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=CWkIQ_dwkXbIpV46u1MA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <13ab486c-45b8-4dc4-885b-55db17c4641e@ramsayjones.plus.com>
-Date: Mon, 17 Mar 2025 20:43:45 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cYF4o46u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZVbFLIAa"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 061621382E0D;
+	Mon, 17 Mar 2025 16:52:16 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 17 Mar 2025 16:52:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1742244736;
+	 x=1742331136; bh=mLHn0Z9C8fhhX8hSyfdKlqywlAmF4O5c/KX+YTnZQ90=; b=
+	cYF4o46uQuSbVvMopKodvcJGESUaZNCvNyEyRzXHM9mV6Hzl/UW3ag46ism88sKl
+	cBA+DB9sy3Gved/RpXI9K7Hni0dkQ2xoSDk5yWPaR6Yap2l5Ovyq+hjuf3JCh+PW
+	/o7XYt/ONdDAbLRqNUwLkZfesJXjAbZf7DcZFNzFujGHJvqzjSgU3aulJyLt2JVh
+	jd1kpnAEwMT5vfT3nYbs8UylysTgdUlfZIsCCgf/a9+dV6uks2i58acavnz0zm00
+	r++N8mmEVLwIKK1F3ByqsiqkRpEyZZ5+beBLxPMe14QEFYqMrVJeEf9Swl5WEuKZ
+	xGOUeiSIV8SaD4/QgfE9hA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742244736; x=
+	1742331136; bh=mLHn0Z9C8fhhX8hSyfdKlqywlAmF4O5c/KX+YTnZQ90=; b=Z
+	VbFLIAav7iS7zsPLCEJob3DNw1AItZWUwgSnccz56Fp82vnMNdpjjIUtf/o7VLlD
+	9U60Bd1toruI6fZuxSNtnuc6JFu9dtjadtUWocE0GHO1KhjpLqYioYVUKZqKbfaT
+	Dm2al2xqxiojFv5+BSDK175kolIC7OiilEokQ4HjQbKWGBtApo5UJCbEf8888MQW
+	aMd3Y+5ZOgPmr69Jf7Kee2j/upJu6c8ow3q3YZR7x+kGkBnQShI/phHsNqfB6OUo
+	CwBUxp8o7tpOeJguOMGKQq3KQq8LTNWLMHk5iwGksuZRDnSHn10t+c4IA/dFw8ME
+	99PMY0vBpPA7sX89qonCA==
+X-ME-Sender: <xms:f4vYZ7R2keR2kDXVdxOF3SR9C9sqAul7KDWrsJ0rhzJAWVCC6OND4Q>
+    <xme:f4vYZ8xee9CytfRLchsbTtjIXWfvOcXPVldSA-YyU_nP0TGViBSDk0_exc-90dQJw
+    ZMYN21Je4HmEXCXXA>
+X-ME-Received: <xmr:f4vYZw39It9j6EEjIoqhlBxtVBnGXfke9umhdpnyNFAWa3U5jY7kfyK6i4ilTYLx3NDzCq2ZTdQBfcDLP34xKGuj_9vXVEpmUZnjm_U>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedtheegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
+    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhith
+    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:f4vYZ7DYHkR9nCneELC3HRT9Bpx2oz5fftjF-BPCn29Z3sd7i8h24w>
+    <xmx:f4vYZ0gnVFZeYPn_8FPCe1iRhh6jfd3otCt5V4n0GqmU6ciMjzfITw>
+    <xmx:f4vYZ_oFZoT3zfpSEUYhEES8dqi6TtH3LVM1NyxT5C9aH42Dij4A9g>
+    <xmx:f4vYZ_i45Mm1G-VIarnKO8tpzsJ9TZcx0thg925She_EzO7xT80bGg>
+    <xmx:gIvYZ8duJy7RA0qyaaepNr0QlJu_kmwGIcick8P8ePsKbsQFFokpcwDb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 17 Mar 2025 16:52:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH 1/2] completion: take into account the formatting
+ backticks for options
+In-Reply-To: <f8883d83f3096ce16e5dfc9647a41970396693f4.1742056310.git.gitgitgadget@gmail.com>
+	(=?utf-8?Q?=22Jean-No=C3=ABl?= Avila via GitGitGadget"'s message of "Sat,
+ 15 Mar 2025
+	16:31:49 +0000")
+References: <pull.1880.git.1742056310.gitgitgadget@gmail.com>
+	<f8883d83f3096ce16e5dfc9647a41970396693f4.1742056310.git.gitgitgadget@gmail.com>
+Date: Mon, 17 Mar 2025 13:52:13 -0700
+Message-ID: <xmqqplif8jnm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/12] config.mak.uname: only set NO_REGEX on cygwin for
- v1.7
-To: Junio C Hamano <gitster@pobox.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
- Adam Dinwoodie <git@dinwoodie.org>
-References: <a4272c4a-7073-4671-a883-50e9413b0384@ramsayjones.plus.com>
- <33561996-3b7f-4d0e-825f-5b2369d7d010@ramsayjones.plus.com>
- <xmqqecyvbqhn.fsf@gitster.g>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <xmqqecyvbqhn.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfFZg0ciQjSSqO+K8/R+pFCvy9U8mYrbif3QSh18yhl8fP1R6ydyWaaPCVcyBFil8kEcHEvSAqYK9mq1A+0N/eMpNO8bPcwWHo9qWZG7Rk/bCbPF/jx7S
- FBGA89NurwTiLgAlAwz1JZEJcjSpOKW/j88oji1A4Cy4pE/BXK4j/z5CaQCTGYfT7uBhQ3POC/5X3XlpP5WEIhVdFtNRpYplVGQ=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
+"Jean-Noël Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
+> From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+>
+> With the modern formatting of the manpages, the options and commands are now
+> backticked in their definition lists. This patch updates the generation of
+> the completion list to take into account this new format.
+>
+> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+> ---
+>  generate-configlist.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/generate-configlist.sh b/generate-configlist.sh
+> index dffdaada8b5..802178daad4 100755
+> --- a/generate-configlist.sh
+> +++ b/generate-configlist.sh
+> @@ -13,8 +13,8 @@ print_config_list () {
+>  	cat <<EOF
+>  static const char *config_name_list[] = {
+>  EOF
+> -	grep -h '^[a-zA-Z].*\..*::$' "$SOURCE_DIR"/Documentation/*config.adoc "$SOURCE_DIR"/Documentation/config/*.adoc |
+> -	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
+> +	grep -h '^`\?[a-zA-Z].*\..*`\?::$' "$SOURCE_DIR"/Documentation/*config.adoc "$SOURCE_DIR"/Documentation/config/*.adoc |
 
-On 17/03/2025 15:56, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
->>> After some time (may a year or two), the platform library had been
->>> updated (with an import from FreeBSD, I believe) and now passed the full
->>> test-suite. This would be about the time of the v1.7 -> v2.0 transition
->>> in 2015. I had a patch ready to send, but just didn't get around to
->>> submitting it to the list.
-> 
-> So is it safe for us to just drop the bit that sets NO_REGEX and
-> require Cygwin that is less than 10 years old?  As long as people
-> are willing to actively maintain the compatibility wart for older
-> systems there is no strong reason to do so, but at some point it
-> would become diminishing returns even for those who have hardware to
-> develop, build, and test on, when the reason they keep such an old
-> system becomes only to maintain it instead of actively using it,
-> and I am wondering if Cygwin 1.7 has past that point.
+Using \? in BRE as a short-hand for \{0,1\} (or trying to use any
+single regexp magic in BRE by adding a backslash when that magic is
+only available in ERE) is a GNUism, isn't it?
 
-Heh, I have a patch (without a commit message) which I had intended
-to add at the very end, so that it is easy to drop, that looks like:
+We probably should rewrite the thing as ERE, perhaps like
 
-  diff --git a/config.mak.uname b/config.mak.uname
-  index 1a897bd022..1dc69fc65b 100644
-  --- a/config.mak.uname
-  +++ b/config.mak.uname
-  @@ -235,22 +235,6 @@ ifeq ($(uname_S),SunOS)
-   	BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__
-   endif
-   ifeq ($(uname_O),Cygwin)
-  -        ifeq ($(shell expr "$(uname_R)" : '1\.[1-6]\.'),4)
-  -		NO_D_TYPE_IN_DIRENT = YesPlease
-  -		NO_STRCASESTR = YesPlease
-  -		NO_MEMMEM = YesPlease
-  -		NO_SYMLINK_HEAD = YesPlease
-  -		NO_IPV6 = YesPlease
-  -		OLD_ICONV = UnfortunatelyYes
-  -		# There are conflicting reports about this.
-  -		# On some boxes NO_MMAP is needed, and not so elsewhere.
-  -		# Try commenting this out if you suspect MMAP is more efficient
-  -		NO_MMAP = YesPlease
-  -        else
-  -                ifeq ($(shell expr "$(uname_R)" : '1\.7\.'),4)
-  -		        NO_REGEX = UnfortunatelyYes
-  -                endif
-  -        endif
-   	HAVE_DEV_TTY = YesPlease
-   	HAVE_GETDELIM = YesPlease
-   	HAVE_CLOCK_GETTIME=YesPlease
+	grep -E -h '^`?[a-zA-Z].*\..*`?::$' ...
 
-This would effectively drop 'support' for cygwin versions less than
-the v2.0 (which was tagged on 27-apr-2015). Note that I don't know
-if it is possible to build git from source on those versions, even
-with that conditional intact, but I guess it's more likely!
+Also, if we can avoid piping grep into sed or awk, we should do so,
+when it does not lose readability.  Perhaps we can do something like
 
-Given that it is unlikely to be me fielding the complaints from the
-cygwin git community, I wanted Adam (cygwin git maintainer) to
-provide his input into the decision to incorporate such a patch. :)
+	sed -E -n -e '/... that pattern .../{
+		/deprecated/d;
+		s/::$//;
+		...
+	}' "$SOURCE_DIR"/Documentation/*config.adoc ... |
+        sort |
+	...
 
-[I doubt there are many people building git from source on a very old
-version of cygwin, but I just don't know! ;) ]
+in this case?
 
-I have been building (and running) git from source since about 2006,
-on both Linux and cygwin, but I suspect that the vast majority of
-cygwin users just install Adam's package.
-
->> I forgot to mention, that one of the reasons that I didn't get around
->> to submitting this patch then, was because of a '# TODO known breakage
->> vanished' in test t7815-grep-binary.sh:
->> ...
->> The platform regex library is happy to match a NUL byte with the '.'
->> pattern. (presumably this is also true on FreeBSD?).
-> 
-> In this test, the haystack has "binary\0file\0m..." and the needle
-> to be sought is ".fi".  The system I have at hand uses glibc 2.40
-> and it refuses to match NUL with '.', it seems.
-> 
->> I could not decide on the best way to 'fix' this issue. The options
->> seemed to be: do nothing (it's not hurting anyone), disable the test
->> on cygwin or simply remove the test.
-> 
-> The part "On Cygwin" somewhat puzzled me; aren't folks on various
-> BSD variants seeing the same symptom?
-
-Again 'I don't know what I don't know'. :) I would have thought that
-(at least) FreeBSD users should also be seeing this 'known breakage
-vanished' issue, but we have not heard about it, so ... we *know*
-that cygwin has this issue, hence the suggestion to disable the
-test there.
-
-[Also, it is possible that either cygwin or FreeBSD changed the
-implementation after the import.]
-
-Thanks.
-
-ATB,
-Ramsay Jones
-
-
+> +	sed '/deprecated/d; s/::$//; s/`//g; s/,  */\n/g' |
+>  	sort |
+>  	sed 's/^.*$/	"&",/'
+>  	cat <<EOF
