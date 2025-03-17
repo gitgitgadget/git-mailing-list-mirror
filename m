@@ -1,101 +1,150 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0C418787A
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 16:50:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863CF17A2EA
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 17:03:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742230231; cv=none; b=BGt7EQCdwStWWaJv15Y0wEuoYNZcDKKQXGCRNMyLszr4jZc+6tRNsTwa9mjLxv7Gk55mL1KQqwxzTi8Ek3TUFtE49gqt+xKVxSlIqkfp3bMyv/t79SIoqH4MxO5xLgq4WfM85BnKGtiunv+kNoXdKUTyG1xvUF+r86BQDe+Lv/0=
+	t=1742231021; cv=none; b=j3X92wGm8CvOMLMSIaf7DNOJDSUMYLpU9J6YZTAY+FkAiFk056U/OJtLN9jOFXMEM64jKUOb9g0rEY0D8LskYHGxZU4DRNC68UySvMDL2e0yIB2sxJFkfQRjtY0LHdUKuJArspMH9G8OfTlFrs1lmxdyfQSkc6tyx4HqvoOY0O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742230231; c=relaxed/simple;
-	bh=n2RgVa99cCqWiUCoez4RiGKHLgz+HiWeNhDjopodnGA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kduM4exQhI2v0I4NKowTHXgqqAb6d6Q9m5/1iHj6/VMPy/0VK9B9dCHqZxAmj1EuBS97+NbV5KCRxJdGpha/vAtQ4l0GHtjtnuwW+l3TbNdf4XD/A4pAT2wiJf9dD72d3m3c1lhPdU1GxIK3v+CICgFcjxG/hFnFW1vzPj/ILDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=aL3E+40r; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1742231021; c=relaxed/simple;
+	bh=YeGL4eH33vT9f/5DRzfep/leo/4nIkd2ovyY/wFuO3I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tOtox1/wtcMyC5QRCbqPOG9og8M6Cb8nactPE14Hs4O2DLIrYlyfzGMHuxWORsNJ0eDz5BqOKV9lBwVDUC4+0400yPKUbdm64bjkIyORev+sxMyu8gBYbGOOo4rcqPVqPRtpyyGByd2yEi3S2dns6ILtDVFohkwqV/OKeHW8uEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zplMabRz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sN5w7vfi; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="aL3E+40r"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1742230214; x=1742835014; i=l.s.r@web.de;
-	bh=9+rc+7z+j5qvVbVcj7E7QtXSs8iNvNMKGmeWK7DiBMI=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=aL3E+40rbJk9RdSVHp4j3XkRAelY6qQLA2nS6ydQynBTWFX+hZHn25K6ODZc2rIe
-	 VWL6iLriQxqnW7NnJKBIZA/FIMYQTrKRPcAKwZIX/e255No7IBySgt6+ZEpX1Nds3
-	 iBMpwDz3kzd0T7sYGA+8gQNwpT09TGDRgObBjsCy8rzK50fMCR5s0Z2c3rujYxE2I
-	 LaLoQDa0qUkO8hRwsN4oQchXrOqoiTWyRjFG1Tqjmpm/LMArrHRPCkQ45ss6Kr/+X
-	 Mc5FcyR+rLwJEmiACp5zi69EaydyO8mzpDtIVLtEGPQ19cmZCTrOVrnv80uZjbEmc
-	 0/L3nEC3p0RDU2H0xQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.29.218]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N01Za-1t0j4K2nbi-00xyj4; Mon, 17
- Mar 2025 17:50:14 +0100
-Message-ID: <136bbdac-aca2-411c-8367-8de4472fa858@web.de>
-Date: Mon, 17 Mar 2025 17:50:14 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zplMabRz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sN5w7vfi"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 973A1114008A;
+	Mon, 17 Mar 2025 13:03:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 17 Mar 2025 13:03:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1742231018; x=1742317418; bh=gxgzi/L/0R
+	YESlot86ZbYYIX1UU3rM49Y+gMr5midvA=; b=zplMabRzSDQRWTjpTTM+hwIn/v
+	sPXX2jZFizBFqUMzeJsyAmrazZkWdf9KOADjqKZmUOwhvbaNYzvynWqShg9zv/Pt
+	xhwKvB6zZD1vI++KwT/KzvS2P1VsC5nBjsnIgmnFzMIhE577jjd6Xc4blbbU+mwr
+	tuH0NHwPpD3jVguGfVMH+RCBa2UmYV7XZUGgyHfJsvdGONAn3Qz3GFsCwl3i47G2
+	OT6ykNnjcvzMULl3i8pjXNkGkseS3dAWoYzn8xju+MoJ/Owa2YUqu2FurAa8dg0Q
+	b37CMM9mVVloHI06qMAh17GgwlQ8OI33meNUhLjNvVA/o90i9YDSyZzUCYrA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1742231018; x=1742317418; bh=gxgzi/L/0RYESlot86ZbYYIX1UU3rM49Y+g
+	Mr5midvA=; b=sN5w7vfiT5tiPAR2j3yP2v7f6ptvDFmcYhT2VQ53nCR0aAIZVrB
+	TJSV6zh3mm3XRRvFW7n5svEMDS2wSE1skNBle1gSTreelWh+fEK6fIwQTcl/Q8oH
+	MiXgo7k9dO9ZXX4Bo7wOb+VDRdo5GDf1XSUBSm7bknccECVpRaYytZrPCunhMI/E
+	vGMYwbXSRXwBhpjc9oSbFCo8VYw50frxmKbiqJdkdUDIX/pGE/lthQztZ/Tq+BMc
+	NCCuzWtZis5w8DYjP9ZxJOuf4JaPZMRdsZVgxgh6MYPFFQyGg4uvEsLiKTgPFBuP
+	945VGFjHC+BWmEsvg4D4YYDauBGSjo3ajww==
+X-ME-Sender: <xms:6lXYZ4_6tKhiJKPZuLAO2iXJ22BcBPqAxef44dcCnI-bS6_rysUVYg>
+    <xme:6lXYZwtF9bP4C1LpMdII6Mu1C7_LaVnCH6fQG1khz8PHRnhccLMvWiuW9PSET8O01
+    5QQDuMBxPw6lAn_4g>
+X-ME-Received: <xmr:6lXYZ-Cf-iJ9m5ZogM-yBF-NIHUcI5enJDaNFwDERRx8aLf9Xk2k8RcqtLodOEq5taTVnsUiEcXfCUEQQs2W0Ysx7ZQSxQ54R-2BnJI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedttdejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepkeeuffdukeejvefhgeeuhfeiueeggfek
+    uefhffekuedugfettdekleeludffueejnecuffhomhgrihhnpehgihhtfhhorhifihhnug
+    hofihsrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
+    rhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmh
+    houggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggv
+    lhhinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehgihhtqdhprggtkhgrghgvrhhssehgohhoghhlvghgrhhouhhp
+    shdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:6lXYZ4e-vPc9ufYSOgJc8hW0VqjUqFQdhFU0B-ynNwzWHqz7eUfv-A>
+    <xmx:6lXYZ9MtQgExmsS_9Yq27Vdcppi3tp2sGDcbLcj53ZtijRT-P3wMDA>
+    <xmx:6lXYZymxw7cu_xfdTPLePlmm7YxPAxZqG9zUv44AjMRo0YhHpu2Hcw>
+    <xmx:6lXYZ_vV5mHYpJdxUlib5lI6dATZzhkiS17sqddrQc9zKE6TRmrN_w>
+    <xmx:6lXYZyoJ4STYMuwXRo_sJ_7zvZ-VMP4xtW29_UEOWRJmltSJoGzz5vJQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 17 Mar 2025 13:03:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: git@vger.kernel.org,  git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git for Windows 2.49.0
+In-Reply-To: <1MSbxD-1tn8ja1MCn-00W0XL@mail.gmx.net> (Johannes Schindelin's
+	message of "Mon, 17 Mar 2025 11:34:02 +0100 (CET)")
+References: <1MSbxD-1tn8ja1MCn-00W0XL@mail.gmx.net>
+Date: Mon, 17 Mar 2025 10:03:36 -0700
+Message-ID: <xmqqwmcna8t3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] xdiff: avoid arithmetic overflow in xdl_get_hunk()
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jason Cho <jason11choca@proton.me>,
- "git@vger.kernel.org" <git@vger.kernel.org>
-References: <xXWgbH3mlNEvFcdGLqBHwcclZoeZNPoLg8Hr6YCipHXvS5eKaHeTppzFM-l_wyB46BB1R1T0j6g_jWRXIj7-GRJh1LPxi1ta3GkQ5t8F4-0=@proton.me>
- <NYMqsJ7uttDzFT2OOEg5LLsxCSoQhTzqBs16KrMHGEKC7LzOAiYnYTEZavRQWqGH41UgjdwScwer7MssNzI7AEDHnD8GTBWvoBIqJ2e7D6g=@proton.me>
- <4e9b6b4c-aaa1-4c6f-93f4-7bb04607e843@web.de> <xmqqikobdz7l.fsf@gitster.g>
- <8c9a3966-2746-4619-9f77-ca95797dcab8@web.de> <xmqqiko8da63.fsf@gitster.g>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqiko8da63.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:nlFosCWJmhX7cghWxqUIGwiOmgs7kP4YGbd+knBgQR+a8hxZ07B
- OcmMWLYWYGjBkvpKUeEn7FxSmFv/3HliMN7xyTLLHSttuTHMF2HfP+Enyf6MZcqkBdwhHmU
- OCEXBBPXF20zu/j/IERHPK++fEazVLpZkyojWMWV8SR8c7mg38zF2xJI4c8AW/L1UNsuS5F
- b2aFHGehLIihzRhqfdoQA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:HXlcU6+hOgI=;/WFuB/XSf2XqvKrrX6peqWOLFxo
- 0xive/UVuntnueI6POuP82fKWOnUVEFeU/FfvxehhjGvlKEX0ymFv8AiaNzgEXcYv7joVCfyn
- 1e22pKez4Lg8opCznzOE3m1NycsFGgshwtc48uqdI2yDQcBdaNrn8BbtL8I+twfLBaPQ64pdp
- WaktHFzdwbzF/GghLalmqok2zXURp3p/QvqF1MUtpwvFcJ1qN7ax/wMgDJEQQq3ocpk8tcXBn
- DkMNQiuCauj4J4ciO6+Eh7tvi4wCcypXnUSnQtKxdiUgidL7CZEUPdqY0def4NQwqPxXZcwj6
- moC3qrbByNfkKhpd6pSTLK4LzJCC/75V3itdQrXJr2ZmCF1eAuqryHAy6WCtNE9swBuvfsFgI
- b3Or5AikoubQC1g6cgpSf0BRd4YPCdRU32yKmHnmSMEtqjuJ2TkvN8AwqE6OjNKyy8gkiYMLG
- tbeM+PZhzXALT1v/SaxGSNGeALSH9/68dN1vvXH+15idrQounWimuBn1yvO8WGvin8gkb6RjO
- ymnHBadYe9fBSzysLxcaXeetj3UfeddKiz8DRpQBiSBj9vH0p0jPtr55mm0c0/WUmzgStvf0i
- QWRZlECOw6Xxy7APM6Yvkph7Me/JncglsAgn6W1GuGCBpNfi5Gcm6HjBwpmomZU6EkDiJs6ZO
- fBO3KIZR9LvO4DoEWoSj60FvBAE8c7FMvbaEOaOE4b2SjdYnLvZUOJRiXpgXnuXANY9ZkBjXE
- wZbicpIU21XZo8FdksKNrHvVXVgaw8UaE2DVLEXNUlYikShdUJPaLf+uC7HhLsWP4ahjx38BV
- QEw5k1FNvDj5ZXn0NCpHgeO8kmHLi8aK4Y6AazeZuYDHqpQ/2bp6cfxQrWoxf0+cmpkwjAJB3
- 41LF1pbQ28CpKPyzIr6W4nmE6YnufYyAEsWdSs8Wu0Q5KJty9GcuGpoD2FMmUXfZ1Xb6eTaAz
- 0CBuUMp3Vpw5dXPAUI1p26d6kSxSUPxMWmE0UVvcsf80ULPMT5gyyb9kFro6EsfELRk1LH1rA
- QHyBW7cBchSMxwQhgWHfGZm7S0kPERYUi/YE7DZN9yPmJmAIRaEYuQsbmmp8wZ+M140GaVHEJ
- sa650ZSnY6YYYmzKasxz45X6J3gyyLTqd4akwKVGOAXj+3lg95rpVjWV2uIxbDiSaku9icvxU
- o+5Y498kVc75hbyC6ZhTgtZ5RSPnuB+n1qjM5jf1fy5Tsl4Ry7sDAkwKgQODPNFTve3PcO4F1
- lNl31iyEmVCuFgXVtrv1kqc8WVfnZE4EeOcYMLOmzEGPnElHiGlllzi7wH4oBxy1XLKbTicPM
- UETzf521fXA952I95mSdXbubze/ea1r//dKYkOBxy4EJ7KjIG0zYe4gRkODkf/2tu0EEWRtuX
- iGVYddm0gsWKSfjZGu6yFkfkk/R7UeK/HfIo7arveICVGcb8K0LidKb0HAB3i/enc6Gn0jWPV
- kv728G7zeprOJToazZkFUF6vW+24=
+Content-Type: text/plain
 
-Am 16.03.25 um 20:53 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+
+> Dear Git users,
 >
->> Comparisons to upstream
->> would become a lot more noisy as well.
+> I hereby announce that Git for Windows 2.49.0 is available from:
 >
-> I am not sure how much of that matters these days, though.  Are they
-> still active, or is the code perfect and pretty much done?  I somehow
-> had the impression it has been the latter for a long time...
+>     https://gitforwindows.org/
 
-http://www.xmailserver.org/xdiff-lib.html offers libxdiff-0.23.tar.gz,
-whose entries bear the timestamp 2008-11-12.  Solid.
+Thanks.
 
-Ren=C3=A9
+> Changes since Git for Windows v2.48.1 (February 13th 2025)
+>
+> Due to persistent maintenance challenges and the community's limited
+> engagement and usage, git svn support in Git for Windows will be phased
+> out over the next few months.
+>
+> Git for Windows v2.48.1 was the last version to ship with the i686
+> ("32-bit") variant of the installer, portable Git and archive. Only
+> 32-bit MinGit will be built for future versions, until April 2029.
 
+
+>
+> New Features
+>
+>   * Comes with Git v2.49.0.
+>   * Comes with OpenSSH v9.9.P2.
+>   * Comes with PCRE2 v10.45.
+>   * The previously-experimental --full-name-hash option has been
+>     accepted into upstream Git as --name-hash-version=2 and is no
+>     longer experimental.
+>   * The git backfill command has been accepted into upstream Git; Its
+>     --batch-size=<n> option has been renamed to --min-batch-size=<n>,
+>     though.
+>
+> Bug Fixes
+>
+>   * A change in upstream Git v2.48.0 broke renaming symlinks, which was
+>     fixed.
+>   * On a recent Insider Windows version, users experienced the message:
+>     "Cygwin WARNING: Couldn't compute FAST_CWD pointer", which has been
+>     fixed.
+>   * A bug has been fixed that, when calling git add -p from VS Code's
+>     internal terminal, after using the edit command, caused the
+>     internal terminal got stuck and no further command was accepted.
+>   * The syntax highlighting of the nano editor was recently disabled in
+>     Git for Windows by mistake, which was fixed.
+>
+> Git-2.49.0-64-bit.exe | 726056328967f242fe6e9afbfe7823903a928aff577dcf6f517f2fb6da6ce83c
+> Git-2.49.0-arm64.exe | 490ea5c2a1cb3ca4071079e262d1cba9331252cad1b76f9df1e89f04a09e761b
+> PortableGit-2.49.0-64-bit.7z.exe | bc980a64e875304ea5aa88386fda37e8a0089d0f2023616b9995b1ca75b471dd
+> PortableGit-2.49.0-arm64.7z.exe | 8fa7e49b319b1109173a90a110aaeb0e9004600ff2ed44adc7dfe56ab21e4148
+> MinGit-2.49.0-64-bit.zip | 971cdee7c0feaa1e41369c46da88d1000a24e79a6f50191c820100338fb7eca5
+> MinGit-2.49.0-arm64.zip | 847bbe519443cd24c716f490a769056a35f42474cafb757663e1dceca159e911
+> MinGit-2.49.0-32-bit.zip | 6d6439436d537624f619ffbf5dba49bcdc4ee1219c5c2756277669928fba2b74
+> MinGit-2.49.0-busybox-64-bit.zip | 600d27b4ed7d86f9bc908c3e6563cfdd14f746dee1e91d5f714bfc9e7472cfb1
+> MinGit-2.49.0-busybox-32-bit.zip | a6f1b25a1c910381b0886ff37baa3d77d3b662e0a54114ca19244a3f3e9381b6
+> Git-2.49.0-64-bit.tar.bz2 | 6c5d66e3dd6cd44e50ba7892e9e24ace57934f277a3424c9702a400b3fedc1eb
+> Git-2.49.0-arm64.tar.bz2 | 48109aaccc5387df498c6b91e5f25c27201dac80b62cae3c576d922b3129a66e
+>
+> Ciao,
+> Johannes
