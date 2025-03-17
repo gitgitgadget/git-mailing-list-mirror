@@ -1,150 +1,211 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863CF17A2EA
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 17:03:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D9218787A
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 17:05:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742231021; cv=none; b=j3X92wGm8CvOMLMSIaf7DNOJDSUMYLpU9J6YZTAY+FkAiFk056U/OJtLN9jOFXMEM64jKUOb9g0rEY0D8LskYHGxZU4DRNC68UySvMDL2e0yIB2sxJFkfQRjtY0LHdUKuJArspMH9G8OfTlFrs1lmxdyfQSkc6tyx4HqvoOY0O4=
+	t=1742231150; cv=none; b=R7x37wqetkyx1mnuBPCCQOZ27VfDElbUIuHTRbCumBkQJKuxNVB2VE0OmVNtD6VOcOT2wMBNbnPtHBIyQbuStB8/kPfKvwgIWuhZ+k3nv89UeeVmvCOOqMHLA4x0SS6RdkW0FZ7m58SIEswEaSwyOsOG2CNymzArrmfGSnqfyCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742231021; c=relaxed/simple;
-	bh=YeGL4eH33vT9f/5DRzfep/leo/4nIkd2ovyY/wFuO3I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tOtox1/wtcMyC5QRCbqPOG9og8M6Cb8nactPE14Hs4O2DLIrYlyfzGMHuxWORsNJ0eDz5BqOKV9lBwVDUC4+0400yPKUbdm64bjkIyORev+sxMyu8gBYbGOOo4rcqPVqPRtpyyGByd2yEi3S2dns6ILtDVFohkwqV/OKeHW8uEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zplMabRz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sN5w7vfi; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742231150; c=relaxed/simple;
+	bh=1Lct27ps85KAzZx0t+S7/OIqeM4AkucuOFXieJkjybE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MzHa/NQJE8CWAccl8c/uscMHn5VUcENhjFNt8caC38bz39p63h27vymERLNQi5mThVyvoa9Ytu8873GtSSyTG9m3aswB19nNFXA1yJMTuiT7L8LzGZNtdl9DrWoc8YLG90rOdKarOOKeSair8zmnSzjV1kkHuAhvG1k4CHd7chE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hF367hNR; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zplMabRz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sN5w7vfi"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 973A1114008A;
-	Mon, 17 Mar 2025 13:03:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 17 Mar 2025 13:03:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742231018; x=1742317418; bh=gxgzi/L/0R
-	YESlot86ZbYYIX1UU3rM49Y+gMr5midvA=; b=zplMabRzSDQRWTjpTTM+hwIn/v
-	sPXX2jZFizBFqUMzeJsyAmrazZkWdf9KOADjqKZmUOwhvbaNYzvynWqShg9zv/Pt
-	xhwKvB6zZD1vI++KwT/KzvS2P1VsC5nBjsnIgmnFzMIhE577jjd6Xc4blbbU+mwr
-	tuH0NHwPpD3jVguGfVMH+RCBa2UmYV7XZUGgyHfJsvdGONAn3Qz3GFsCwl3i47G2
-	OT6ykNnjcvzMULl3i8pjXNkGkseS3dAWoYzn8xju+MoJ/Owa2YUqu2FurAa8dg0Q
-	b37CMM9mVVloHI06qMAh17GgwlQ8OI33meNUhLjNvVA/o90i9YDSyZzUCYrA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742231018; x=1742317418; bh=gxgzi/L/0RYESlot86ZbYYIX1UU3rM49Y+g
-	Mr5midvA=; b=sN5w7vfiT5tiPAR2j3yP2v7f6ptvDFmcYhT2VQ53nCR0aAIZVrB
-	TJSV6zh3mm3XRRvFW7n5svEMDS2wSE1skNBle1gSTreelWh+fEK6fIwQTcl/Q8oH
-	MiXgo7k9dO9ZXX4Bo7wOb+VDRdo5GDf1XSUBSm7bknccECVpRaYytZrPCunhMI/E
-	vGMYwbXSRXwBhpjc9oSbFCo8VYw50frxmKbiqJdkdUDIX/pGE/lthQztZ/Tq+BMc
-	NCCuzWtZis5w8DYjP9ZxJOuf4JaPZMRdsZVgxgh6MYPFFQyGg4uvEsLiKTgPFBuP
-	945VGFjHC+BWmEsvg4D4YYDauBGSjo3ajww==
-X-ME-Sender: <xms:6lXYZ4_6tKhiJKPZuLAO2iXJ22BcBPqAxef44dcCnI-bS6_rysUVYg>
-    <xme:6lXYZwtF9bP4C1LpMdII6Mu1C7_LaVnCH6fQG1khz8PHRnhccLMvWiuW9PSET8O01
-    5QQDuMBxPw6lAn_4g>
-X-ME-Received: <xmr:6lXYZ-Cf-iJ9m5ZogM-yBF-NIHUcI5enJDaNFwDERRx8aLf9Xk2k8RcqtLodOEq5taTVnsUiEcXfCUEQQs2W0Ysx7ZQSxQ54R-2BnJI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedttdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepkeeuffdukeejvefhgeeuhfeiueeggfek
-    uefhffekuedugfettdekleeludffueejnecuffhomhgrihhnpehgihhtfhhorhifihhnug
-    hofihsrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
-    rhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggv
-    lhhinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehgihhtqdhprggtkhgrghgvrhhssehgohhoghhlvghgrhhouhhp
-    shdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:6lXYZ4e-vPc9ufYSOgJc8hW0VqjUqFQdhFU0B-ynNwzWHqz7eUfv-A>
-    <xmx:6lXYZ9MtQgExmsS_9Yq27Vdcppi3tp2sGDcbLcj53ZtijRT-P3wMDA>
-    <xmx:6lXYZymxw7cu_xfdTPLePlmm7YxPAxZqG9zUv44AjMRo0YhHpu2Hcw>
-    <xmx:6lXYZ_vV5mHYpJdxUlib5lI6dATZzhkiS17sqddrQc9zKE6TRmrN_w>
-    <xmx:6lXYZyoJ4STYMuwXRo_sJ_7zvZ-VMP4xtW29_UEOWRJmltSJoGzz5vJQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Mar 2025 13:03:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc: git@vger.kernel.org,  git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git for Windows 2.49.0
-In-Reply-To: <1MSbxD-1tn8ja1MCn-00W0XL@mail.gmx.net> (Johannes Schindelin's
-	message of "Mon, 17 Mar 2025 11:34:02 +0100 (CET)")
-References: <1MSbxD-1tn8ja1MCn-00W0XL@mail.gmx.net>
-Date: Mon, 17 Mar 2025 10:03:36 -0700
-Message-ID: <xmqqwmcna8t3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hF367hNR"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2255003f4c6so80363825ad.0
+        for <git@vger.kernel.org>; Mon, 17 Mar 2025 10:05:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742231147; x=1742835947; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0YlXTxHj+sdq7+/c8BI2fFi0U5/qQpp5X8i3D3JCfj0=;
+        b=hF367hNRBwcRp0rB43/bXoQ4gmqRcHECYubeafxOX4pRsCvG8ylqiPPMF5qM16IzQP
+         7kSq6CQXHw5LAtZMYJJFAt/zJP6XaM9YTwzETUaQG/oF/pf9xeOLikK/BEzWalW+zB4o
+         rCEit8EJo0BdBLB78ABUA74twXXuYX9dVNZRGw+tCIeQ3DDnlYsAZLejNYuvqIcSwwzy
+         Nix5ajLysavCBtVSMhq9d+wVVSkEEg+1mwOKqZsADKdEj4hhoKMLdHESbOvHsgxQ7Olm
+         W1lGa1NGR+Y4GHM3947rxKemL5WBIzZC//vFG27r8+jYf28GofmRvX78uonsSTb6JX0m
+         DuiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742231147; x=1742835947;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0YlXTxHj+sdq7+/c8BI2fFi0U5/qQpp5X8i3D3JCfj0=;
+        b=XT4E2nqizHhCDF4qltzQy5jKxrGNbFcyrMP2zor4FZP5MUtRvToAtC2j4gT0xMt/jM
+         2V9px/k17iZpqUmwY7aNn9QxQO2w9DUNC4fV9lq440fudHQ5AF3g2T+UrBndAkVQWIJ5
+         dn4dPyEDOwNbgyQcHXLJh3yi/B2qFN+6ck0dlTdggc5uvG6DU6kCkfYF4Xd6n4BMp8+N
+         r5u1e6XQvZNfd7X49yWeF54JYNvfW8tvF94DrQbCPVjoFUpZPflamIUUlaQ05UAlScAp
+         06aVp94TZd2aHVKPfxSF0Bg8xxm5Kk18rqswIQFEWagDPBTShufeYn0BnVoaITWFqMzq
+         rhrQ==
+X-Gm-Message-State: AOJu0YzRhbDXERGWAtcEaiYEATg9OHDqvqfabCJCH6CO89S9CtjXiMeL
+	cQBZRYu2WTnH7wlA/762bkmB0gfL0VNHEo9mtlu6OfM9NQyIoAyU
+X-Gm-Gg: ASbGncv3x+WWg/AO1oXJZB/m7cZ5z2nF3CF4Hv8iROjfk5JyTsO0PZwzGdT4mAhltRs
+	28bJAVhGZB/y1LUcJKWWIQnE9C2q4BsLON4QzyFYVN2eQifGl+cQ7pb1CTuhyzQoCCL4EpVrXIY
+	F4XOHym0oR9VmcWUeSUj6A2d6ucTrQkCSo6QBNJyLxdXfq8h4AN/9eyUE+U7LZKKrmGNVKJQYN5
+	WqZcC4AaWMQxSy5ztHUI/UYgjOpEV5qdSRybZlIRkFqbkfr8TZG0zpNF9Z4BlsJrm9/e8NdoSN6
+	TiHNwFfuMPn9hqutFJz8852Rt4KxubrXhGkbVlIn/JxG0rOnbLNCDwWZj7qUp2Y=
+X-Google-Smtp-Source: AGHT+IHgVzhFunM2yqHxUmEAeCnnogllpq0muHPoRYj19RhIVscYAYNV4ghO5mO4iFNpzV8tM8sgyg==
+X-Received: by 2002:a17:902:da82:b0:215:89a0:416f with SMTP id d9443c01a7336-225e0a92d7fmr142501735ad.30.1742231147360;
+        Mon, 17 Mar 2025 10:05:47 -0700 (PDT)
+Received: from [10.53.2.153] (125-86.iitb.ac.in. [103.21.125.86])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c68a4095sm77953405ad.66.2025.03.17.10.05.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Mar 2025 10:05:46 -0700 (PDT)
+Message-ID: <741cda93-5dd0-4e7c-9ecf-66af84603cca@gmail.com>
+Date: Mon, 17 Mar 2025 22:35:43 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC PATCH v2] rm: fix sign comparison warnings
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+References: <38de63ce-6d4e-4f1f-95b1-049df78d9cfc@gmail.com>
+ <71098ea7-9136-4ab2-8e15-27017773e054@gmail.com> <xmqq1puvbo3s.fsf@gitster.g>
+Content-Language: en-US
+From: Arnav Bhate <bhatearnav@gmail.com>
+In-Reply-To: <xmqq1puvbo3s.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Dear Git users,
->
-> I hereby announce that Git for Windows 2.49.0 is available from:
->
->     https://gitforwindows.org/
+> Arnav Bhate <bhatearnav@gmail.com> writes:
+> 
+>> -static int get_ours_cache_pos(const char *path, int pos)
+>> +static int get_ours_cache_pos(const char *path, unsigned int inverted_pos)
+> 
+> This renaming of parameter is not right.  
+> 
+> At this point when the value comes to this function, it *IS* the
+> position, there is nothing inverted about it.  It points at the
+> position in the .cache[] array where an cache_entry at a higher
+> stage would appear.
+> 
+> It is perfectly fine to state that the value that is returned from
+> index_name_pos() is potentially inverted.  The function is given a
+> path name (without any stage information) and
+> 
+>  - returns a non-negative number, the position in the .cache[] array,
+>    where a cache_entry at stage #0 (i.e. an entry for a path that does
+>    not require conflict resolution), or
+> 
+>  - returns a negative number, when there is no such cache_entry
+>    exists.  The caller can "invert" the value to recover a position
+>    in the .cache[] array, where a cache_entry for the path at stage
+>    #0 _would_ _have_ been found, if existed.  Due to the way the
+>    cache entries are sorted in the .cache[] array, when you are
+>    interested in finding cache entries for a path at higher stages,
+>    like this function is, you can start scanning at this point until
+>    you see an entry for a different path.
+> 
+> Calling the parameter "pos" is the right thing to do.  The value
+> used to come here _could_ have been called "inverted", and the
+> result of (-inverted_pos-1) can be assigned to "pos".  But because
+> the patch moves the inversion to the caller, what the code in the
+> while loop sees is no longer "inverted".
 
-Thanks.
+My logic was that it was the inversion of the variable pos, but your
+logic makes more sense. I'll make the change.
+ 
+>>  {
+>> -	int i = -pos - 1;
+>> -
+>> -	while ((i < the_repository->index->cache_nr) && !strcmp(the_repository->index->cache[i]->name, path)) {
+>> -		if (ce_stage(the_repository->index->cache[i]) == 2)
+>> -			return i;
+>> -		i++;
+>> +	while ((inverted_pos < the_repository->index->cache_nr) && !strcmp(the_repository->index->cache[inverted_pos]->name, path)) {
+>> +		if (ce_stage(the_repository->index->cache[inverted_pos]) == 2)
+>> +			return inverted_pos;
+>> +		inverted_pos++;
+>>  	}
+>>  	return -1;
+>>  }
+>> @@ -58,7 +55,7 @@ static void print_error_files(struct string_list *files_list,
+>>  			      int *errs)
+>>  {
+>>  	if (files_list->nr) {
+>> -		int i;
+>> +		unsigned int i;
+>>  		struct strbuf err_msg = STRBUF_INIT;
+>>  
+>>  		strbuf_addstr(&err_msg, main_msg);
+>> @@ -83,7 +80,7 @@ static void submodules_absorb_gitdir_if_needed(void)
+>>  
+>>  		pos = index_name_pos(the_repository->index, name, strlen(name));
+>>  		if (pos < 0) {
+> 
+> Here is where the caller notices that index_name_pos() did not see a
+> stage #0 entry.  This caller wants to see "ours" entry at stage #2,
+> so it "inverts" the returned value and asks the helper function if
+> it sees such an entry in the .cache[] array.
+> 
+> A handful of prerequisite pieces of knowledge to understand this
+> code are:
+> 
+>  - The index (i.e. the .cache[] array) is sorted by full path name
+>    (down from the top level of the working tree).
+> 
+>  - The index can have at most one stage #0 entry for each path name.
+>    When a stage #0 entry exists for a path name, there cannot be
+>    higher stage entries (the path is called "resolved").
+> 
+>  - The cache entries in the .cache[] array for the same path name
+>    are sorted by their stage number.
+> 
+>  - There can be at most one stage #2 entry for each path name, which
+>    are called "ours".  Entries at stage #1 are from common ancestor,
+>    entries at stage #3 are from "their" tree.  These higher (i.e.
+>    more than zero) stage entries appear only for "conflicting"
+>    paths in the .cache[] array.
+> 
+> With the understanding above, you can see why "our" position is
+> computed only when index_name_pos() returns negative in this hunk.
 
-> Changes since Git for Windows v2.48.1 (February 13th 2025)
->
-> Due to persistent maintenance challenges and the community's limited
-> engagement and usage, git svn support in Git for Windows will be phased
-> out over the next few months.
->
-> Git for Windows v2.48.1 was the last version to ship with the i686
-> ("32-bit") variant of the installer, portable Git and archive. Only
-> 32-bit MinGit will be built for future versions, until April 2029.
+Thanks for the explanation, I was not able to get this from the code.
 
+> 
+>> -			pos = get_ours_cache_pos(name, pos);
+>> +			pos = get_ours_cache_pos(name, -pos - 1);
+>>  			if (pos < 0)
+>>  				continue;
+>>  		}
+>> @@ -131,7 +128,7 @@ static int check_local_mod(struct object_id *head, int index_only)
+>>  			 * Skip unmerged entries except for populated submodules
+>>  			 * that could lose history when removed.
+>>  			 */
+>> -			pos = get_ours_cache_pos(name, pos);
+>> +			pos = get_ours_cache_pos(name, -pos - 1);
+>>  			if (pos < 0)
+>>  				continue;
+> 
+> The above hunks are perfectly fine.  
+> 
+>> @@ -314,7 +311,7 @@ int cmd_rm(int argc,
+>>  	if (pathspec_needs_expanded_index(the_repository->index, &pathspec))
+>>  		ensure_full_index(the_repository->index);
+>>  
+>> -	for (i = 0; i < the_repository->index->cache_nr; i++) {
+>> +	for (unsigned int i = 0; i < the_repository->index->cache_nr; i++) {
+>>  		const struct cache_entry *ce = the_repository->index->cache[i];
+>>  
+>>  		if (!include_sparse &&
+> 
+> OK.
+> 
+> Thanks.
 
->
-> New Features
->
->   * Comes with Git v2.49.0.
->   * Comes with OpenSSH v9.9.P2.
->   * Comes with PCRE2 v10.45.
->   * The previously-experimental --full-name-hash option has been
->     accepted into upstream Git as --name-hash-version=2 and is no
->     longer experimental.
->   * The git backfill command has been accepted into upstream Git; Its
->     --batch-size=<n> option has been renamed to --min-batch-size=<n>,
->     though.
->
-> Bug Fixes
->
->   * A change in upstream Git v2.48.0 broke renaming symlinks, which was
->     fixed.
->   * On a recent Insider Windows version, users experienced the message:
->     "Cygwin WARNING: Couldn't compute FAST_CWD pointer", which has been
->     fixed.
->   * A bug has been fixed that, when calling git add -p from VS Code's
->     internal terminal, after using the edit command, caused the
->     internal terminal got stuck and no further command was accepted.
->   * The syntax highlighting of the nano editor was recently disabled in
->     Git for Windows by mistake, which was fixed.
->
-> Git-2.49.0-64-bit.exe | 726056328967f242fe6e9afbfe7823903a928aff577dcf6f517f2fb6da6ce83c
-> Git-2.49.0-arm64.exe | 490ea5c2a1cb3ca4071079e262d1cba9331252cad1b76f9df1e89f04a09e761b
-> PortableGit-2.49.0-64-bit.7z.exe | bc980a64e875304ea5aa88386fda37e8a0089d0f2023616b9995b1ca75b471dd
-> PortableGit-2.49.0-arm64.7z.exe | 8fa7e49b319b1109173a90a110aaeb0e9004600ff2ed44adc7dfe56ab21e4148
-> MinGit-2.49.0-64-bit.zip | 971cdee7c0feaa1e41369c46da88d1000a24e79a6f50191c820100338fb7eca5
-> MinGit-2.49.0-arm64.zip | 847bbe519443cd24c716f490a769056a35f42474cafb757663e1dceca159e911
-> MinGit-2.49.0-32-bit.zip | 6d6439436d537624f619ffbf5dba49bcdc4ee1219c5c2756277669928fba2b74
-> MinGit-2.49.0-busybox-64-bit.zip | 600d27b4ed7d86f9bc908c3e6563cfdd14f746dee1e91d5f714bfc9e7472cfb1
-> MinGit-2.49.0-busybox-32-bit.zip | a6f1b25a1c910381b0886ff37baa3d77d3b662e0a54114ca19244a3f3e9381b6
-> Git-2.49.0-64-bit.tar.bz2 | 6c5d66e3dd6cd44e50ba7892e9e24ace57934f277a3424c9702a400b3fedc1eb
-> Git-2.49.0-arm64.tar.bz2 | 48109aaccc5387df498c6b91e5f25c27201dac80b62cae3c576d922b3129a66e
->
-> Ciao,
-> Johannes
+-- 
+Regards,
+Arnav Bhate
+(He/Him)
+
