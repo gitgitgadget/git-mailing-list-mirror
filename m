@@ -1,136 +1,145 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0700C78F43
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 14:01:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB65D221F1A
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 14:51:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742220083; cv=none; b=e7JBPcrV4tVbySDjZxgHn1DHd9PJoVTZ9ynXjBGS7PlmRjwatDYmlEpSHaqbe7byLsKT8Cu9QrWhdH8ebeloGgW6fzUC09iIhat/XHaZHCu/iq+z3Nu1tV8aeFfEN3bfmbuqR+Sf395aJEkMJPr9D8YsOIyKCk4LcJilKgHUkd0=
+	t=1742223065; cv=none; b=EPlGiUEQibfXIWDFBTlTbFKSmRjxG8hkLtzgMSWNjZpSsv1TGXCdaGQAZXJnhBBtr1Sl0rNrRKDJcXTKZHMuQkJauLoMQm3u2/57mPRZMQNByrWsIe2UHo+5WYaS7rcqqNbbis4AwJCdm7IroQ3UZdrGxkOHNvRci9WyS3eBErY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742220083; c=relaxed/simple;
-	bh=ZFhZtPBLiq81mrZixdAXeeQ7jhlUSGyrwg7zBvl0OAw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OCw8XkCIzyIW0Duqoh2PivCTqgnWIu2jDdzgPNGyu0Ple0wtHpJh5xTJoD7EpyivBAD3+p87CohYqahT/ql5+7wR3O4NdSt3w8UkIVCTeNi1A7EGAOZlCUnRl9rPPpP5mwyhJobfRX8FkpNIY+lhONLM8id6oQu9rdQdguB3EAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DqULB3ZW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=8Az5yMeA; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1742223065; c=relaxed/simple;
+	bh=sZV/efoURznTXBZlTe7OBiWBP5GH01Bd9JuBAnyFoDk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nVUUTTaw92r+hjM0dS+omnSNtEUz79Btc6cvI3nPPTTS3ECCSKM++/5YjO8NXqZW7KrJgLRC/SIh8oLyEnsTH1/odB+pgb41nooWCmHxS9l69/+R9e9xAfDb2b6coV51zfEk8HHaL0adGxohz4WJCWYROlfLke4TDmbXYAIjWvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=alo4F/5B; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DqULB3ZW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="8Az5yMeA"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D64DA2540187;
-	Mon, 17 Mar 2025 10:01:19 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 17 Mar 2025 10:01:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1742220079; x=1742306479; bh=6szMwz3qwn
-	0JsjI/6VvosrPAEjbJ0XIHBR65e9V9zVU=; b=DqULB3ZWod26qqBCZ2WfJ+61Tr
-	dVNYno/K/vIalTyFp5s8zKamaHjnSvsnH/LM6d5dd25IeXNXJu6Mak7uLNVO/Ubn
-	NJUQjqkMsl7aZwlxc0dC71A/NZZdKMfN4jerPHPOItcrRQoWdHmfi+JL421DZd10
-	vE3V0A4iHHgW8MBA6qnWmqZ1huq4eoFuxpsJDS/xPGYpumPplKr2YGgSj0In9dgX
-	LHSOA2wfRFfIol1Vn2cyYW8RSU+I5ahBRBMiNUAzh2OPkJ4hgh0EDt5T+74p5aKF
-	iKio7WoTUlC34alWgxx93h36c6Z5g9K1CSoPzg74CEq6AcojPtvDQwE0GENA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742220079; x=1742306479; bh=6szMwz3qwn0JsjI/6VvosrPAEjbJ0XIHBR6
-	5e9V9zVU=; b=8Az5yMeALaVuh/K6OK3PVk+pXuavAW21+cJz8MB0W7OeYszNd4C
-	XrJfiIhKglZteh8+Fykggs1sOC81tadwa60uwFafPBK/1SkDsnLSmUkNh6Yn5a97
-	pF8Wo4HBjgngfWze2BvYqzHjoJixN2crHT1YeoXnSQhGmFgfXr9rlSvYxZrsLjPy
-	Zq/l1JQ2n9plXpo7tVLN19ffKRbExf8+llkWIIf8MHeqye1fe7KqP7RdHussGFF1
-	iJY7jfGNy7WWD5bhzKkNNZUJ4v1d5u4OqLySCcBocukpfx2fTBLdNnLWzu/twrai
-	vZRbsNTfc9bnxlFUgrBWLVbYZIZZCs+q2zg==
-X-ME-Sender: <xms:LyvYZ1b4-PaoY41KwWYdBfi_iC8zrq3FO2_yHr1IXtItDkVDWUBM6w>
-    <xme:LyvYZ8YcXaJbM7EGrVvUg9PfQJM_p4MOpz2XPMYNzELWROdIvABg2gbRmUZ9wmcsW
-    cS8mrXotpOMl4PyMw>
-X-ME-Received: <xmr:LyvYZ398Z_uuXvRhes6oUlH17L4n7Cxf4qqC0BVTuV_i8fkwx572AsxRuvnkOdDpLLBArOz8juQ2K5PmCDax9gNBcCcDJb9bv3DY3QJbln_YgtvC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddufeeljedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepkeekledtgefhkeevffelieelteekudeitddtuddt
-    fedtveevheeiteeugfelvdeinecuffhomhgrihhnpehgvghnthhoohdrohhrghenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
-    ihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hsrghmsehgvghnthhoohdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhg
-X-ME-Proxy: <xmx:LyvYZzqI4TBX8LXVTPP5Ys8jqt7YZlLkCDAxFQl9lH9LS_Bpo0IXGQ>
-    <xmx:LyvYZwrhJo5UCaaOemZ5fb2cLJfR97TmIlUf8MVnjdB3ba_A6gYDkw>
-    <xmx:LyvYZ5Rp2xbWleCWt-GMg7PbPvoslR14_cvwN9bpjQFbJqTf6GMi8A>
-    <xmx:LyvYZ4p9VPv0cLlu3i3FaZNdBSKOnilHJlmRVBpk9b4fhOHovec3IA>
-    <xmx:LyvYZ7Xt50xpGUKT8gzT09fCCwtSqc50uctnZUhOFK5F9t1om7dSGiOW>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Mar 2025 10:01:18 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b720205b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 17 Mar 2025 14:01:17 +0000 (UTC)
-Date: Mon, 17 Mar 2025 15:01:16 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: git@vger.kernel.org, Sam James <sam@gentoo.org>
-Subject: Re: [PATCH] meson: fix perl detection when docs are enabled, but
- perl bindings aren't
-Message-ID: <Z9grLNimSDd8-Pen@pks.im>
-References: <20250316060605.166364-1-eschwartz@gentoo.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="alo4F/5B"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-391342fc0b5so3796200f8f.3
+        for <git@vger.kernel.org>; Mon, 17 Mar 2025 07:51:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742223062; x=1742827862; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=mNiSvv7tmS67U4mY0MIyQ/WhNVekCMnd9SxFM5PCqVU=;
+        b=alo4F/5BQ2jJlZ/JUHFuakXqeSSRqwP9qCxmq4v++n7juj2ni3Kfl0f/7knxLb5Oof
+         alHBDLUDikxfhHVnZun/xYsRUwQYK9LASjE/KLGUiHfD4PVIgmIGeCih8/oPspJMg3zG
+         WdQTESlSKkO8wgx0jEVK2KFIrOJDgp3tDtXixLMHCZBFv/3jIUs5SXB2LaAE4R4K9gzm
+         Ks+5Y+dw/QknBvAu1r+4B0r3bNWpeEGU1+PUVPVdee1JDHdDwL6gDM6BUJirVw7jf89+
+         c5RSBEkKpwweMZUVaMriYqoEV7XVIib5aMY8Z/pRpkn927aGRBPh2IzRNYfMaAPcRFhv
+         s/MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742223062; x=1742827862;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mNiSvv7tmS67U4mY0MIyQ/WhNVekCMnd9SxFM5PCqVU=;
+        b=hZY4H0Ft+33bxGZEVKoQ4ABiLmbNhsKm4+1zM6kMdGLpOz9ZqbgJLLAUP0D74Swv72
+         UPYhuUIbIRT0fgNNV6RYQa48zySw4y9ZmC6hJaazjJukQzf4hu4Cq97bWyXbUhO2MlRK
+         AB6xtNcs0rlmSyCgzjFIJgpVFiMziKdf3Jc4+kpRD5Jr629wXxWnwZAOsD3vLAvf8cqp
+         7DxqQYhKkqxjv91jKqrLKv8QYMBN7AtOMxEmx5evwEz3BWwggIUJ7KMtMWIShZiAdg11
+         zW4ew7pClvXQkJS0htp+/xk+pZcG9qsFNXGV2WZNKp30KukSBWG6xVy2E67z47CTXbGv
+         N8KQ==
+X-Gm-Message-State: AOJu0Yx2HoQO3Yot8NTwF48O8dPYhkvBzSpqBX/iXY9w0in4+9b/+Qup
+	m+MNhldZ1Y1LSk1u4nMGQzCp5H48fr7Oty1XJPJ2khw7sM8yPBEg
+X-Gm-Gg: ASbGncsvSZHQg9ozetOi0P1yxS7VJ4OxmIjYrSJZbqEtlu3KK9sbxfTDNkAd7vxqWAe
+	lGTNmrRqINBLic0Qfgnz5NHSxEg9O1C2tPtKxE6D7ksSbj26Qz6rtGjD+5wduz/vOsDI4Zw+ZPq
+	JOV/zE7mD9sZhnPb8tbS9pcF7LAOY+7OImIbGuqJwf+JY9HKXflvcbwrculQrPV8rZjjZ+jD5o5
+	ltC30KpP/InAIvjTycpJm4IABIJhOADk1dpqV4aPlZDyXB3G+cIJzmTaoPEMNbTJoq6jm/9eUod
+	siloZ91HVcxhZESNeSjq3GMJ6G41cA8MUvfJOigEnY0P0XMVS6W+PVdfVDlo70UFgrxehYslsOp
+	PhRrTHymjBsVWUrdzWO4C
+X-Google-Smtp-Source: AGHT+IEj8M1gFBBQq/CYQwfhz6aeDOLGbv09fZOX/6rVFYhC7yw3Hmn0WJwDO1sNc39nf5Oyzkb8UA==
+X-Received: by 2002:adf:e04b:0:b0:391:3915:cffb with SMTP id ffacd0b85a97d-3972029e6e1mr10338604f8f.43.1742223061777;
+        Mon, 17 Mar 2025 07:51:01 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c83b6b43sm15411456f8f.35.2025.03.17.07.51.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Mar 2025 07:51:00 -0700 (PDT)
+Message-ID: <d341777a-a6e5-46fe-8004-9fe885321905@gmail.com>
+Date: Mon, 17 Mar 2025 14:50:56 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250316060605.166364-1-eschwartz@gentoo.org>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 3/3] meson: don't install git-pack-redundant(1) docs with
+ breaking changes
+To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+References: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
+ <20250312-b4-pks-meson-breaking-changes-v1-3-b89e9a59d228@pks.im>
+ <44a3ad4e-fb50-447f-bb66-f43b5c5ae012@gmail.com> <Z9gqP3ng0a9Zfpqc@pks.im>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <Z9gqP3ng0a9Zfpqc@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Mar 16, 2025 at 02:06:05AM -0400, Eli Schwartz wrote:
-> The `perl` variable in meson.build is assigned to a program lookup,
-> which may have the value "not-found object" if configuring with
-> `-Dperl=disabled`.
-> 
-> There is already a list of other cases where we do need a perl command,
-> even when not building perl bindings. Building documentation should be
-> one of those cases, but was missing from the list. Add it.
-> 
-> Fixes:
-> 
-> ```
-> $ meson setup builddir/ -Ddocs=man -Dperl=disabled -Dtests=false
-> [...]
-> Documentation/meson.build:308:22: ERROR: Tried to use not-found external program in "command"
-> ```
-> 
-> Bug: https://bugs.gentoo.org/949247
+Hi Patrick
 
-Nit: we typically don't include Bug trailers.
+On 17/03/2025 13:57, Patrick Steinhardt wrote:
+> On Sun, Mar 16, 2025 at 03:19:48PM +0000, Phillip Wood wrote:
+>> On 12/03/2025 13:17, Patrick Steinhardt wrote:
+>>> +manpages_breaking_changes = {
+>>> +  'git-pack-redundant.adoc' : 1,
+>>> +}
+>>> +
+>>> +if not get_option('breaking_changes')
+>>> +  manpages += manpages_breaking_changes
+>>> +endif
+>>> +
+>>>    docs_backend = get_option('docs_backend')
+>>>    if docs_backend == 'auto'
+>>>      if find_program('asciidoc', dirs: program_path, required: false).found()
+>>> @@ -479,7 +486,9 @@ endif
+>>>    # Sanity check that we are not missing any tests present in 't/'. This check
 
-> Signed-off-by: Eli Schwartz <eschwartz@gentoo.org>
-> ---
->  meson.build | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+I think this part of the comment must have been copied from somewhere else
+
+>>>    # only runs once at configure time and is thus best-effort, only. Furthermore,
+>>>    # it only verifies man pages for the sake of simplicity.
+>>> -configured_manpages = manpages.keys() + [ 'git-bisect-lk2009.adoc', 'git-tools.adoc' ]
+>>> +configured_manpages = manpages.keys()
+>>> +configured_manpages += manpages_breaking_changes.keys()
+>>> +configured_manpages += [ 'git-bisect-lk2009.adoc', 'git-tools.adoc' ]
+>>
+>> I don't think we need this hunk as we add manpages_breaking_changes into
+>> manpages in the hunk above.
 > 
-> diff --git a/meson.build b/meson.build
-> index efe2871c9d..c6241c7a12 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -772,7 +772,7 @@ endif
->  # features. It is optional if you want to neither execute tests nor use any of
->  # these optional features.
->  perl_required = get_option('perl')
-> -if get_option('tests') or get_option('gitweb').enabled() or 'netrc' in get_option('credential_helpers')
-> +if get_option('tests') or get_option('gitweb').enabled() or 'netrc' in get_option('credential_helpers') or get_option('docs') != []
->    perl_required = true
->  endif
+> We indeed need it: it's required in case the 'breaking_changes' option
+> is enabled. In that case we still need to have the man pages here in
+> this variable because we use it to check that the manpage is handled at
+> all. Otherwise we would error out because Meson thinks that we forgot to
+> wire up this manpage that we found in the source directory.
 
-This change does indeed make sense. We require Perl in order to generate
-command lists. Ideally we would get rid of this dependency so that it
-does become possible to build documentation without Perl, as this is the
-only part of the build system that requires it. But until then I'm fine
-with making the requirement explicit here.
+Oh so if we have selected breaking_changes then manpages.keys() does not 
+include "git-pack-redundant.adoc" but that file exists and so we need to 
+add it to the list of configured man pages. If breaking_changes is 
+selected then don't we end up adding "git-pack-redundant.adoc" to 
+configured_manpages twice? Does that matter when we come to do
 
-Patrick
+actual_manpages = run_command(shell, '-c', 'ls git*.adoc scalar.adoc',
+   check: true,
+   env: script_environment,
+).stdout().strip().split('\n')
+
+if configured_manpages != actual_manpages
+   ...
+
+? Also I'm confused as to how that comparison works without sorting 
+configured_manpages. Even if manpages.keys() sorts the keys (the 
+documentation at [1] is silent on that) we add some out-of-order entries 
+to the end of the list.
+
+Best Wishes
+
+Phillip
+
+[1] https://mesonbuild.com/Reference-manual_elementary_dict.html#dictkeys
