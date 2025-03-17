@@ -1,41 +1,42 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C6B1527B4
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 18:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1802BA47
+	for <git@vger.kernel.org>; Mon, 17 Mar 2025 18:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742234419; cv=none; b=TxKNEr2m44z06zD6Qh54yv8kUaW1U1VrXgYWTOp7pp31s1MTcPSwN25dHqIG32Sn2dVwkTWjVIrIhOO6vSaM7RazlIZaLQQElIPyNMu4ZTPlV8P/d2LWzZ2YYCx/FyaaFrxrFzz0ouaG6d8yoiJvlh2IIPXOssSQgoQL4bBqCqM=
+	t=1742234767; cv=none; b=ICwCR54SmZl+C8OWJzEUkmlz+05/pgWhuTHgqR+VNeU0vz5xJWkNBYr78NK4zWzLPHwPaJ6rVJL+O902kfWKLCRKKN1rQclga+hdhLOsVSdpoWNuiApNr+1o25kWOn4DY4Vs29ERgz+GVzVFOzND2DtXxhSj13LQ9lKydmmPgjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742234419; c=relaxed/simple;
-	bh=agTLVfGH7vWvUcXhGIvX0H0JwcZXTNXMAe3dbj8qb90=;
+	s=arc-20240116; t=1742234767; c=relaxed/simple;
+	bh=ijd+i03w6Udlzn1U24G2nLo7TlOnYnu++nMXw3DZ8C8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sztUAhsmhJGD0PrbpzhthfpEkAdR5nj0dWZQySjVyxFmL9Aad5LAJO5ArhLxO5kX/dsmi4l6cA46PtyfvoGxC8xjwfs4Tz0a4NmUsyvIDiaOT9tBd2to+TqY9GTkr7htqNVq+WZGs5Kl1iiVfiA5qaKz//Sh9koBE4mgD+Qtv2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aLjrdej5; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=iI7mQ1oEYwhRiaFIGZA/M/0BbwMtJggqYlTm1baGluMFyq9bWaCnpwRskyq/CRCB630KqAemQYO1m7jjtsoxOZh23QkhFYjHdDQCTYmNOdmPFha1WXNBa/iTMjclhWlkiUoSsrXKarIEdyYD69Cq+Q5kOzID1KwRtdgsQ16YtxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Gr8KCv9d; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aLjrdej5"
-Received: (qmail 21391 invoked by uid 109); 17 Mar 2025 18:00:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=agTLVfGH7vWvUcXhGIvX0H0JwcZXTNXMAe3dbj8qb90=; b=aLjrdej55DvpKSj2Q4f49TF26cL/fTwtyHqxuGtp/OwzaUy8f4GIZBgmKLMO63fyi68E9f0J3T+noTgfmeMbqF5CZJU9vvG9NQV5+3KQeky7FuSw7EdEvXxeM732HI8BEdXWC8J6B8AG0lQEakbSHWI8/ixEFe1YKwxr4Lwi2Pvg6KUy/t/bAAwsnmr7OmEYez/7BhFXKravMvCCN9glv48GrWofsOdWAH1rNQecGcMG7c/2UVAhAOFFsX8BfdAc5U4VGZ9u2nLAk3Dx6YR7SaWse0IzzpXPtYIzj3Q/AJatJqnyCJ4Lf16xsVXaTcBtM6atAJpyxThYgfgd7e2LJA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Gr8KCv9d"
+Received: (qmail 21533 invoked by uid 109); 17 Mar 2025 18:06:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ijd+i03w6Udlzn1U24G2nLo7TlOnYnu++nMXw3DZ8C8=; b=Gr8KCv9dT9MDc2RKS1Vhov8+VCWOnfS4f/F1dIW1/PrDdp2AZ1F/Sj1UKYazwkc0ar0sw9b6TwY5JcFoGQNSOC8PW6+0pkmsz1HgwoPKhWAxenm3nXgUt2ZGGRxFtWOPmuyyuDrKv0G9zg735r9h2KRIZMm3FiHnbwDVPt5UpOIVJhrxck54qoHNwxqHYw1Zt4YirTAQFP72nZieY3kHfe70/ChPt7+MqVPAcb8H+UCJd7hVtLk+a2i9nYsQWEaRn0XzWxh3CRhbsOsxGhfsUKtbbBiS8DDkSljm9mwMr1VqZ9rq09m0lNP5gbtWsbEV9grl4IomLCIVdSOV00htkw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 17 Mar 2025 18:00:15 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 17 Mar 2025 18:06:05 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28072 invoked by uid 111); 17 Mar 2025 18:00:14 -0000
+Received: (qmail 28164 invoked by uid 111); 17 Mar 2025 18:06:04 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Mar 2025 14:00:14 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Mar 2025 14:06:04 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 17 Mar 2025 14:00:14 -0400
+Date: Mon, 17 Mar 2025 14:06:04 -0400
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 3/3] git-compat-util: add NOT_A_CONST macro and use it
- in atfork_prepare()
-Message-ID: <20250317180014.GA704553@coredump.intra.peff.net>
-References: <20250307225444.GA42758@coredump.intra.peff.net>
- <20250314210909.3776678-1-gitster@pobox.com>
- <20250314210909.3776678-4-gitster@pobox.com>
- <xmqqecyzdz4t.fsf@gitster.g>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Igor Todorovski <itodorov@ca.ibm.com>,
+	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: Re: [PATCH 8/9] fetch: avoid ls-refs only to ask for HEAD symref
+ update
+Message-ID: <20250317180604.GB704553@coredump.intra.peff.net>
+References: <20250309030101.GA2334064@coredump.intra.peff.net>
+ <20250309032016.GH2334191@coredump.intra.peff.net>
+ <xmqq4izxq63y.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,100 +45,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqecyzdz4t.fsf@gitster.g>
+In-Reply-To: <xmqq4izxq63y.fsf@gitster.g>
 
-On Fri, Mar 14, 2025 at 03:29:54PM -0700, Junio C Hamano wrote:
+On Thu, Mar 13, 2025 at 08:53:53AM -0700, Junio C Hamano wrote:
 
-> ---- >8 ----
-> Our hope is that the number of code paths that falsely trigger
-> warnings with the -Wunreachable-code compilation option are small,
-> and they can be worked around case-by-case basis, like we just did
-> in the previous commit.  If we need such a workaround a bit more
-> often, however, we may benefit from a more generic and descriptive
-> facility that helps document the cases we need such workarounds.
+> > In other words, a fetch like this:
+> >
+> >   git fetch origin $exact_oid:refs/heads/foo
+> >
+> > can never update HEAD, because we will never have fetched (nor even see
+> > the advertisement for) the ref that HEAD points to.
 > 
->     Side note: if we need the workaround all over the place, it
->     simply means -Wunreachable-code is not a good tool for us to
->     save engineering effort to catch mistakes.  We are still
->     exploring if it helps us, so let's assume that it is not the
->     case.
-
-Yup, I very much agree with this, especially the side note. (I'd
-probably have just dropped patch 2 and gone straight here, but I don't
-mind leaving it in as documentation of that other direction).
-
-> Introduce NOT_A_CONST() macro, with which, the developer can tell
-> the compiler:
+> Good observation, and I actually think it would be counter-intuitive
+> if remote HEAD gets updated by a fetch that does not even update the
+> remote-tracking branches.
 > 
->     Do not optimize this expression out, because, despite whatever
->     you are told by the system headers, this expression should *not*
->     be treated as a constant.
+> My preference is to keep the rule simple.
+> 
+>     If you fetch using the configured fetch refspec, i.e. "git fetch
+>     [<remote>]" without any refspec command line arguments, that is
+>     an operation to maintain your remote-tracking branches for that
+>     remote up-to-date, hence we also try to flip remote-tracking
+>     HEAD (if you told us to) during such a fetch.
+> 
+> If you are doing a single-object fetch (perhaps as a lazy-fill from
+> promisor remote), I do not think I want to see anything else happen
+> than that the single-object comes here.
 
-This is definitely better than the other name. I might spell it out
-as "NOT_A_CONSTANT", just because "const" to me is a variable annotation
-(for something that _could_ change, but we are not allowed to). Whereas
-"constant" is something defined to a single value in the program. Maybe
-splitting hairs, but as somebody who read NOT_A_CONST(foo) I might
-expect it to be casting away "const" or something.
+That was my intuition, too, but there's a case in between. Doing:
 
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1018,6 +1018,7 @@ LIB_OBJS += ewah/ewah_bitmap.o
->  LIB_OBJS += ewah/ewah_io.o
->  LIB_OBJS += ewah/ewah_rlw.o
->  LIB_OBJS += exec-cmd.o
-> +LIB_OBJS += fbtcdnki.o
+  git fetch origin main
 
-That name is a mouthful, for sure. The long name is really an
-implementation detail. Would calling it not-constant.c or something be
-more descriptive? (Yes, the macro itself does not appear in the file,
-but hopefully it links the two semantically in the reader's head).
+will update HEAD, too (with the current code). But if and only if it
+points to "main"! Is that something we want to keep? It feels like it
+could sometimes be useful, but it is awfully hard to explain.
 
-I almost want to suggest a name like "compiler-tricks.c", but part of
-the point of this particular trick is that there's nothing else in its
-translation unit. So later when somebody adds another trick, it cannot
-use this macro. ;)
+So I could see going in two different directions:
 
-> +/*
-> + * Prevent an overly clever compiler from optimizing an expression
-> + * out, triggering a false positive when building with the
-> + * -Wunreachable-code option. false_but_the_compiler_does_not_know_it_
-> + * is defined in a compilation unit separate from where the macro is
-> + * used, initialized to 0, and never modified.
-> + */
-> +#define NOT_A_CONST(expr) ((expr) || false_but_the_compiler_does_not_know_it_)
-> +extern int false_but_the_compiler_does_not_know_it_;
+  1. Only do the HEAD update when we are using the configured refspecs.
 
-Good explanation. I do wonder if we'd eventually see a compiler that
-reaches across translation units to optimize, but I'd hope we probably
-bought ourselves a decade or two.
+  2. Do the HEAD update even when we are not fetching its destination,
+     but do not otherwise trigger ls-refs to discover it (so basically,
+     not on object-only fetches). This kicks in for more cases, but is
+     hard to explain.
 
-> diff --git a/run-command.c b/run-command.c
-> index d527c46175..535c73a059 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -516,14 +516,12 @@ static void atfork_prepare(struct atfork_state *as)
->  	sigset_t all;
->  
->  	/*
-> -	 * Do not use the return value of sigfillset(). It is transparently 0
-> -	 * on some platforms, meaning a clever compiler may complain that
-> -	 * the conditional body is dead code. Instead, check for error via
-> -	 * errno, which outsmarts the compiler.
-> +	 * POSIX says sitfillset() can fail, but an overly clever
-> +	 * compiler can see through the header files and decide
-> +	 * it cannot fail on a particular platform it is compiling for,
-> +	 * triggering -Wunreachable-code false positive.
->  	 */
-> -	errno = 0;
-> -	sigfillset(&all);
-> -	if (errno)
-> +	if (NOT_A_CONST(sigfillset(&all)))
->  		die_errno("sigfillset");
-
-And this looks much nicer and more descriptive. You could probably even
-get away without the comment, but I certainly do not mind it.
-
-s/sitfillset/sigfillset/ in your comment text, though.
+Both are a user-visible divergence from how the feature behaves now (and
+so I did not want to touch that in my series), but if we are all in
+agreement, we can fix it on top. I do think option 1 (i.e., what you are
+suggesting in your email) is how I would have done it if starting from
+scratch. And the current rules are weird enough and the feature is new
+enough that I think it is OK to change.
 
 -Peff
