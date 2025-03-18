@@ -1,138 +1,102 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791D41A264A
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 05:31:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE3F1D90A5
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 05:39:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742275879; cv=none; b=DlbZ3iX8wLY3yzKuTG9vPAHYUpjZMMQZp8TOJ3QIF6b/uMWuf2Jbx+zlLkXUvg7s/Jr+HLKiW8LUsMo5Z+z/qCjY2t/9LjDcLEfexGD8Z7l4HOpOZ5vW2rVBza/9lJeuwTZNoNa2BkUKB0gBNDNY+seoanxC/nn/iC/yXgm/kNI=
+	t=1742276350; cv=none; b=OtGtEXS2FdtFaE0tEiIGJrywtOvlLX9AHjWapO8ILckt47Mkyr8bHJ7UPLoJuhKd+dmC4YN7JPqLb/Qady672rDOdLC+v2DHdTFgTcD0GkvIXUf3YJNp70ibVECQV4cH7Hy3IdByF+IN9NEan0SUI5Ji0fAudr7Z8wJkI5sYbfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742275879; c=relaxed/simple;
-	bh=IUyUdSmPWQGL1gBYgvdITwV30QQKdnNpAwMcqniLUsY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nw8IqgNnKDTwoVM5NAD9fIWfq7v1WwZyKCTviNw19lpVzIBtrw0OqE/93yimMg0oNHgP2R6kgskqIEugSHlN56m61ooigYJ3Ecy6pqFrbQkgI7IfAvH7dkI3frL1q/1/apNUWkljJZzE2QRfVlts3yzOeI1DoZtpcEixgV+ayu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PkzBN1Pu; arc=none smtp.client-ip=209.85.166.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742276350; c=relaxed/simple;
+	bh=xh3OfVe7H4J1tk/U/xa6AJl8BRa4oVbdX4WzbZbjGS8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y7SMEjCFHOcJipaphQXdhpxx6QOjSZUm+AX+W86UyaeN/r+eIp968S3/7Q0KdAxww0oCV+TVqWw3Tj/IURVMUxTIrrcVWkn51hfaKEshYTdB0sbJG5f3b4Bor8dUZw5KZYk8KSeCOaaBPTm8we1e6YW/wDV1uKuns/cqUU5epNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=UAjqtNUn; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PkzBN1Pu"
-Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-85b4170f1f5so105297539f.3
-        for <git@vger.kernel.org>; Mon, 17 Mar 2025 22:31:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742275877; x=1742880677; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gcL9vQbh6s5k3HAIh5HZFPyKWo9dPRJgNZ6bfGvA1zs=;
-        b=PkzBN1PuAqQoAHhjLJCVjF4umHerUn1kKphw2hnH6ZnFbZlPqPlUiMGBdb6Zb/6IE1
-         yIDkHWMnjZ248ZGAiVvV3zmbRRvXX7DjA83e3FMH64N3BfPIR3wvyg2dfrCv6fktDKd+
-         ri/dzE1nxivM6dVDP31geJ0hf5T2OtViLHhDZ786HX8y9XCYNmC7wxErgxPkEJ9pSXYA
-         lEobiWbrIXYE4brtThvTIZqr5M74rJZfLe4Bi2bMztekzqvzAUaiDKtEEnv5s5ageOyR
-         8EpH+KzeOLAmab+TPAfWUI2BtJwKq7BuJy5Hm0WNdRq0R5Of7z1wsbHk1xxzAmsK0IqE
-         56+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742275877; x=1742880677;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gcL9vQbh6s5k3HAIh5HZFPyKWo9dPRJgNZ6bfGvA1zs=;
-        b=Wit01iZ4z/yfqQaEV+Gg+56zW0zTx0qk2ztAMlNCGcMawJ21tsSvuVfIkfs+KT6mVo
-         nUk5hUVhWXhPO/NNsJ8JmUZR6VsSA4qDiFc+sW7lkSOXFaJvaoNvapEsy+D0DDYeItrG
-         x2cFIZlyxZ+ocEO6Mg+hcG3u3LzNWXu6ZRIF50l8TEgrBnZfo2oZ+3mDxNDv7iq4tzyf
-         fUf7Q+EDqQ4MWR5bpa3US4kT6SEQ03tBr/XfjHoo9q6IUsqwbDn8fTdCOZAuxUADnN6o
-         viTCCuAdHuDTIILbnqmXEoQf29RK8tcAAU/3cGbGPkz/Jw5Sl7lmwgqkrTPaOlMEa+41
-         0HPA==
-X-Gm-Message-State: AOJu0Yyg8Q/ZBm4Sj185GCFyKmtqfy25SzKxOxHjUz/vbqdeZVbefN4Y
-	BZFrDPHe/uie1jrHSE4N0THGTUPY/CNt9bVcxABoCiAWGfL5htO43u0qlS6TCMGLSX6gI9PMVZd
-	yHYqEbffPmo7s1rHaURsN/I7lSRs=
-X-Gm-Gg: ASbGnctUHAqrgrxqCoFJ6pxj7F05cY48AQj4H/FqstIULKIrwMT0X7MLf7tdTQrkSWe
-	qupsppn4UbEucXu4Cyg3YIV31Z1LTFCol5iqKQta63idACoDmUCklzS4rdNPTy1mz4RvsEr9tD+
-	q6E2YwG53YohIJ5Z4PNupU/PsNX95Y/e2G/WhbqgZoQiSEat3aj64ViXbgrEA=
-X-Google-Smtp-Source: AGHT+IGJJthaM4m4I4FADqZcgUEI4uq+75rb4lqoyNsockpOUKQ0J8G3biM3xh7CZOcBcs+P0AUz2XHc8PZ7/J7SZi4=
-X-Received: by 2002:a05:6602:2983:b0:85d:a173:323c with SMTP id
- ca18e2360f4ac-85e00545d8dmr236734739f.8.1742275877448; Mon, 17 Mar 2025
- 22:31:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="UAjqtNUn"
+Received: (qmail 28310 invoked by uid 109); 18 Mar 2025 05:39:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=xh3OfVe7H4J1tk/U/xa6AJl8BRa4oVbdX4WzbZbjGS8=; b=UAjqtNUnBc3+G4w5olbVZltzsJLBIf77XfqCHgqvRe2JdMLH0nLYRxAkljIVm2cNYpEqLsyicJROjeSF0ww2pOgSPG13n660TnkFWSQDQQ9e5c3RM4FynZT0mk3+RN8weB0bWPqmKMao3ifmzmfZiA1WKxP1lsw9MeN9y6gJ1J6NBxf17Qq8aTffX/+0yMwynHqinUKOB0/9VVei0/FQP9pI3gATNiFSm5ieHnQuxiG1qqf1N7ejFezx8/HurADbqkwc3OjSLHPxRIeX5NjY6EMCAslQj2CDqAzDRFXsPccY8WHp070dJP4ErqB3DwIqYmUzqPYPbkPP0ZwiSvGJvg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Mar 2025 05:39:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6150 invoked by uid 111); 18 Mar 2025 05:39:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Mar 2025 01:39:06 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 18 Mar 2025 01:39:05 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Igor Todorovski <itodorov@ca.ibm.com>,
+	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH 0/2] limiting followRemoteHEAD being used
+Message-ID: <20250318053905.GA2051217@coredump.intra.peff.net>
+References: <20250309030101.GA2334064@coredump.intra.peff.net>
+ <20250309032016.GH2334191@coredump.intra.peff.net>
+ <xmqq4izxq63y.fsf@gitster.g>
+ <20250317180604.GB704553@coredump.intra.peff.net>
+ <xmqq1puva3cu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1723755667.git.me@ttaylorr.com> <cover.1741983492.git.me@ttaylorr.com>
- <b45a9ccbc20180e3358e314b4fd5e46bfa566241.1741983492.git.me@ttaylorr.com>
-In-Reply-To: <b45a9ccbc20180e3358e314b4fd5e46bfa566241.1741983492.git.me@ttaylorr.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 17 Mar 2025 22:31:06 -0700
-X-Gm-Features: AQ5f1JqTqip0SHiEHrOqDl9tPbqI2Oeyen7K8m0Y_4FklvExqUpGzPs6AM4cb-k
-Message-ID: <CABPp-BEyKkbVMs=7AgSf1P9CTXqA5CY5epG-piuSzppAWfPe4g@mail.gmail.com>
-Subject: Re: [PATCH v4 07/13] pack-bitmap.c: teach `rev-list --test-bitmap`
- about incremental MIDXs
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq1puva3cu.fsf@gitster.g>
 
-On Fri, Mar 14, 2025 at 1:18=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
-:
->
-> Implement support for the special `--test-bitmap` mode of `git rev-list`
-> when using incremental MIDXs.
->
-> The bitmap_test_data structure is extended to contain a "base" pointer
-> that mirrors the structure of the bitmap chain that it is being used to
-> test.
->
-> When we find a commit to test, we first chase down the ->base pointer to
-> find the appropriate bitmap_test_data for the bitmap layer that the
-> given commit is contained within, and then perform the test on that
-> bitmap.
->
-> In order to implement this, light modifications are made to
-> bitmap_for_commit() to reimplement it in terms of a new function,
-> find_bitmap_for_commit(), which fills out a pointer which indicates the
-> bitmap layer which contains the given commit.
->
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  pack-bitmap.c | 107 ++++++++++++++++++++++++++++++++++++++++----------
->  1 file changed, 86 insertions(+), 21 deletions(-)
->
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index 7a41535425..bb09ce3cf5 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-[...]
-> +
-> +static void bitmap_test_data_prepare(struct bitmap_test_data *tdata,
-> +                                    struct bitmap_index *bitmap_git)
-> +{
-> +       memset(tdata, 0, sizeof(struct bitmap_test_data));
+On Mon, Mar 17, 2025 at 12:01:21PM -0700, Junio C Hamano wrote:
 
-So, the first thing this function does is 0 out tdata.
+> > So I could see going in two different directions:
+> >
+> >   1. Only do the HEAD update when we are using the configured refspecs.
+> >
+> >   2. Do the HEAD update even when we are not fetching its destination,
+> >      but do not otherwise trigger ls-refs to discover it (so basically,
+> >      not on object-only fetches). This kicks in for more cases, but is
+> >      hard to explain.
+> >
+> > Both are a user-visible divergence from how the feature behaves now (and
+> > so I did not want to touch that in my series), but if we are all in
+> > agreement, we can fix it on top. I do think option 1 (i.e., what you are
+> > suggesting in your email) is how I would have done it if starting from
+> > scratch. And the current rules are weird enough and the feature is new
+> > enough that I think it is OK to change.
+> 
+> Yup, I do think #1 is the way to go.
 
-> +
-> +       tdata->bitmap_git =3D bitmap_git;
-> +       tdata->base =3D bitmap_new();
-> +       tdata->commits =3D ewah_to_bitmap(bitmap_git->commits);
-> +       tdata->trees =3D ewah_to_bitmap(bitmap_git->trees);
-> +       tdata->blobs =3D ewah_to_bitmap(bitmap_git->blobs);
-> +       tdata->tags =3D ewah_to_bitmap(bitmap_git->tags);
-> +
-> +       if (bitmap_git->base) {
-> +               CALLOC_ARRAY(tdata->base_tdata, 1);
+It turned out to be pretty easy to do; the code ends up even shorter.
+These patches apply on top of jk/fetch-ref-prefix-cleanup.
 
-We use CALLOC to both allocate the array and set it all to 0...
+There is one interesting case we haven't discussed. What should:
 
-> +               bitmap_test_data_prepare(tdata->base_tdata, bitmap_git->b=
-ase);
+  git fetch origin HEAD
 
-and then call bitmap_test_data_prepare() which will re-zero it all out.
+do with respect to refs/remotes/origin/HEAD? Right now it does nothing
+(at least with the v2 protocol). We ask about HEAD, but since we didn't
+fetch the matching ref, set_head() won't accept it. And after my
+patches, we would not even try to call set_head() at all (since we are
+not using the full refspecs).
 
-Should we either ditch the zeroing at the beginning of the function,
-or use xmalloc instead of CALLOC_ARRAY, to avoid duplicate zeroing?
+But it's also something I could see somebody doing to try to update
+refs/remotes/origin/HEAD. I've left it alone for now, since my series
+does not change the behavior either way. But it might be something we
+could do on top (though it gets funny, because with the code as it is
+now, we'd have to ask for all of refs/heads/ to see the pointed-to
+branch advertised).
 
-> +       }
-> +}
+Anyway, here's what I think we should do now. The first one is the
+change we discussed, and the second is a related optimization I noticed.
 
-Didn't spot anything else.
+  [1/2]: fetch: only respect followRemoteHEAD with configured refspecs
+  [2/2]: fetch: don't ask for remote HEAD if followRemoteHEAD is "never"
+
+ Documentation/config/remote.adoc |  3 ++-
+ builtin/fetch.c                  | 29 +++++++----------------------
+ t/t5505-remote.sh                |  2 +-
+ t/t5510-fetch.sh                 | 19 ++++++++++++++++++-
+ 4 files changed, 28 insertions(+), 25 deletions(-)
+
