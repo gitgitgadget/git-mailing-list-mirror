@@ -1,154 +1,396 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46381DC9B4
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 20:21:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47AA1DE883
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 20:26:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742329315; cv=none; b=MEZNsElRZ7eebMOyi48F13UsGpyOFXYyhggEMYWJ/inW2VX27b10/XwpzRkmS0AwXOHaum1BVBUBzwztc5pJfeC0cxvxWV90a3pWPhBnbwERvDnd+7ZrBUkxbwyk0cHNvjkP5HVbecYVL2ojR2rzXB3Z7akFLDPzfH6pgkvpefA=
+	t=1742329577; cv=none; b=PWqQZIP7zyriMmqv8UuRGMDwi+Q3xPFh0PgUWh0fCrNglZWXF1NqUS47oJKflDytRo3zqKYgVQqEmZFf49CLfXpb1etKg+Jcw9zitJLbdD9tlrBWPk9CVHDwmrugfAsF0+ju0Oy+4/WD/tBMwYcocXkjEzeXTtD/F4iWL+Lz1aM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742329315; c=relaxed/simple;
-	bh=nBOYuz2vB/3DSa+RyAka4ux7hHelgwCJ2iRp/hAMQ88=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pD9v2Rhp/yZPYeDtFla72yaohSZ1V3g33rH2m+A/mtdPvEHqlALnvjIKDHHZ7pxg1y7L7LsiP4rhtW8SqwjRJM4CryUmpi8wopT369BCwJeS7pfzddzcxXkTMlKTuXKISQlOIZtAx7Jrkl876nI0+joV9mhCAic6CimEh3m6nT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jgfhEcev; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mj/o/d9i; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742329577; c=relaxed/simple;
+	bh=5bnKJUmDCaR8Z1CYcJdtbRi0T/VPzo2mV5kZn8gtV0s=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=mjRVrOTA7ZTE5ltItLXKDIeXbp02zu3KvzOyN1CVwUM0Z5grVA7ZxYE/PbdMvd/TiFMBKBXG1pUD0PnHbJ+NxvBn8LhEdnIThU3DhBqcWCbKuso1jT6Ii6q0aGD/tDhVLsoQN6nk9vs/5LkuNo6i2ISNMz/czQenv67Rf7Z5UvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BLqFbBed; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jgfhEcev";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mj/o/d9i"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F1BEE11400E7;
-	Tue, 18 Mar 2025 16:21:51 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Tue, 18 Mar 2025 16:21:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742329311; x=1742415711; bh=eKmGAi1VK8
-	9QVJE4uaGL2znH7Qh8zqTpZ2kWZ6ngf6A=; b=jgfhEcevbxY4PIswhQoRu7XfSg
-	mH0fyn7b/Df2MoUfGw7L8GTgA6kzuGtzmX9MM950HDIpZsYR2eRWJFs3nBrmQlNm
-	t5vcqk/Hg/w61DRCl/4T1c/iCIT5+BxhYstbXEy9Iq2rzZBQmi1rnJv0Tf4nQppu
-	jtXWtFhGeL25rLnCdYgNq2ixOf1uoduF/xy15nBS+efIbXLcPB6iyPO20YLll1hb
-	KUyHf3Vu0rU2Um/kGwazM+dEgZXvaRINGFhLJ8frG4ncrESj1JDMngtKP+dTKCXc
-	GqqANLNVpcIfOvkt8aIKeYBrDM+JjpX8pS58uKzFweGdzDuJZ5kJCwlaUVQQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742329311; x=1742415711; bh=eKmGAi1VK89QVJE4uaGL2znH7Qh8zqTpZ2k
-	WZ6ngf6A=; b=Mj/o/d9iCXrN0rMPW9NBSSodLS7DsSaun00w4T4juqQY5CsvjtN
-	lNOj7W9kvt4impSPCc+Aid/QkAmHUX4x7zoFK28f/iIXfajcsi+GSzyX1F3d0ZW/
-	L6KoNyz4wpKrUb0zPd24B/7M7OUl7jvFxkdQrr/SD7FtIu3KU5ATckpvTzo/RKK1
-	o/HgWV/4QWfY/uOwo5KawNaC5hV5mhvM8jl79Ht74uvTGtvhVJ947mk5+Jjpx4Eb
-	XMCpC1HsGDSQkENSSa8pg1vEqkMbxtpABbIr94eeSHR8tOEw96OnJTy1aHLiORdu
-	BWt3S833mrhJEXx/YftKR+lsr/MyqG3BVcQ==
-X-ME-Sender: <xms:39XZZ41lvsdZYhpAiZFpyF0NivsdYiVcNPC7KkVW1nbNz5ZQy7vYGw>
-    <xme:39XZZzEHQEeajmhe-f7y275aJzVIVr0nwPeNfAs2X3Rrz0Zu3hfRpmYe9COVwspXk
-    B3C9fVQBty1S-6w2Q>
-X-ME-Received: <xmr:39XZZw5uRfNeFCAoMRm6ls0U8A4e1L0t_Fy1ftG0yKGRRoqjDqsSBe-1u4kvDhw52DHuGqaSIE2leHHzZjTjClWEnQg8HIkP6cGH4fU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeeffeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptdfffedvledvudefjeegudelteegfeeg
-    udegheevuddtveeitedvjeeuudffjeeknecuffhomhgrihhnpehpuhgslhhitgdqihhnsg
-    hogidrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
-    ohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtthhope
-    hmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohgu
-    uddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpth
-    htohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:39XZZx3cO9O2g5uQlmjZMSW8W-4iGsM_FxxLk6C5H_FVIjsS9xrykg>
-    <xmx:39XZZ7GKPgUxkSpiiruiD83yZE2vJ5l4z2rNc7kdvh0bDQgHREIGiA>
-    <xmx:39XZZ6-vTkYh1XbxKzAYJqrqEra4xWwoQByrKSjBInbdevRODegoDA>
-    <xmx:39XZZwmZScshPKb91jHCyVhaXqye4lzRy-7YYyed1ENr0YEAY1mi3A>
-    <xmx:39XZZyA-JNQ2MMzCk003w70kOSs9U4KmLKHREZ77lgwBhNLrCou6dE40>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Mar 2025 16:21:51 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,  johncai86@gmail.com,
-  me@ttaylorr.com,  phillip.wood123@gmail.com,  ps@pks.im,
-  shejialuo@gmail.com
-Subject: Re: [PATCH 0/9] remove unnecessary if statement
-In-Reply-To: <20250318115912.2978992-1-usmanakinyemi202@gmail.com> (Usman
-	Akinyemi's message of "Tue, 18 Mar 2025 17:28:52 +0530")
-References: <20250318115912.2978992-1-usmanakinyemi202@gmail.com>
-Date: Tue, 18 Mar 2025 13:21:49 -0700
-Message-ID: <xmqqmsdi144i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BLqFbBed"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3912fdddf8fso17560f8f.1
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 13:26:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742329572; x=1742934372; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4z8w5H2WYtiiRtnIgCLi2cKpqmoZ3o/oc99rPAZOc6k=;
+        b=BLqFbBeduubNcZVcOizwON07ftAzK3r5tcEEMoS6/U+RWOqR7knsUsGH1iOPa1yXcR
+         PeoaRM0ZpITCKS8JMnrA5x/UpODf+/1WNID8TAFoB+OuAJxt3bYOeyhzUeOOgu7ENFSL
+         C+ALrDmw4dDyD2XfdEdZ5Q55d/5lusz/u0bUfHEfWb2UvWXpMFCMRw1IVBEYVib31CpS
+         w5b1xQZdJFSq0Fu8RYp837uI90BnBAs4OUZjw9uSdPtTJvCkq1ZugPGtjnrIyt4QRYg7
+         UhzUuUY1hyMGIq40i+zDwDyqBlJuH6ZM0nfOWqjlRrkb84iZPmw3x70HIA/aXsxKnLLl
+         2U1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742329572; x=1742934372;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4z8w5H2WYtiiRtnIgCLi2cKpqmoZ3o/oc99rPAZOc6k=;
+        b=I+iayDBriYXB0g3Y6hfSTTXnatFeUxrNVBQZ/DVw3qhUydEUkx5iwTL1TIO13GyfPO
+         ZNUVIMb8bGmx4Tznf0HSPF4n7yNKgBPd+bwHf2aa2pyBks4uZkQQ48iL1C2+lrIlzA68
+         xjLAoar1NDz6sKYBtrG4ksMKlsUuU6oEByvTOILc33Z/di9k9uKHAPjPR+NVdnVahZGh
+         ff4QdpQVLVQNS8SonDmbSEh7dJvB9yxxLputxJBSQrIoyIQ6JsXxRzXmMC9Y12AluQi9
+         fDCT1+yqV3ofPi8SsswThhHWqhMM7bVluuKkY8DmRqnGr+8i2aQzEldXTgYT8v2jjI+G
+         Or+w==
+X-Gm-Message-State: AOJu0YwuYOLaeDLptfb/4u/K8kk4lKFEQeGHDWOyhRNQv2NZDc8EGLVD
+	vjPu6a0Dq7S4liCqJmM0ndc+vradoQTBY23T9vwex/kGywTJuX+Sk3ZpKg==
+X-Gm-Gg: ASbGncvilcV9RUoj0o8MOeu2TQqG7ROvikNpPAlmIOyCsGA0edCyQKhNlxDYC0GMn+c
+	xVP6UUwaTze2Fd6NdMPUiteBm7ZbMhW4oRBH0Cyx9MLd0VAt+uy385oWfLRW79IodEysCp/Xcwk
+	llGmyyBDs+jcFCdqeEp9jehVDsa/IQJK2NSEQLdOz5Y/l6SmzrPUTfTLTkJffvL2+vERaicVkR3
+	VeCQc16HBc31szyL40Bd8fPoCwzThE6krD5u9Dlb8cuvO61hPQR7YCS7IxiPkyO2Ncp6rrohI9T
+	Z1ayTQx7ysaa5ljCDpfz6l1NKW2HKAA31iQcIBbzbjyX4A==
+X-Google-Smtp-Source: AGHT+IGResZMmtir/l75A/UCp8BMuMN/Ca+gxnmDXwWJewuJq6I7qdvIfi7k/rC+rnJN++4W7pv3Kg==
+X-Received: by 2002:a05:6000:400f:b0:391:23e6:f0ac with SMTP id ffacd0b85a97d-3996bb44c4fmr4439094f8f.11.1742329572269;
+        Tue, 18 Mar 2025 13:26:12 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d1fe15470sm143111985e9.15.2025.03.18.13.26.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Mar 2025 13:26:11 -0700 (PDT)
+Message-Id: <pull.1923.git.git.1742329571265.gitgitgadget@gmail.com>
+From: "Sampriyo Guin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 18 Mar 2025 20:26:11 +0000
+Subject: [PATCH] =?UTF-8?q?[GSoC=20Patch]=20Modernize=20Test=20Path=20Chec?=
+ =?UTF-8?q?king=20in=20Git=E2=80=99s=20Test=20Suite?=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: "Patrick Steinhardt [ ]" <ps@pks.im>,
+    "Karthik Nayak [ ]" <karthik.188@gmail.com>,
+    "Jialuo She [ ]" <shejialuo@gmail.com>,
+    "Christian Couder [ ]" <christian.couder@gmail.com>,
+    "Ghanshyam Thakkar [ ]" <shyamthakkar001@gmail.com>,
+    "Eric Sunshine [ ]" <sunshine@sunshineco.com>,
+    Sampriyo Guin <sampriyoguin@gmail.com>,
+    Sampriyo Guin <sampriyoguin@gmail.com>
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+From: Sampriyo Guin <sampriyoguin@gmail.com>
 
-> In an earlier patch[1] which has been merged to the master,
-> We checked `repo` is not NULL before making call to `repo_config()`.
-> Later, in another patch series[2] which has been merged to next,
-> `repo_config()` was taught to allow `repo` to be NULL.
->
-> So there is not need for checking if the `repo` is NULL before calling
-> repo_config() in the earlier patch.
+test -(e|f|d) does not provide a proper error message when hit
+test failures. So test_path_exists, test_path_is_dir,
+test_parh_is_file used.
+Added changes for files from t/t0007-git-var.sh
+to t/t1700-split-index.sh.
 
-OK, that sounds good.
+Signed-off-by: Sampriyo Guin <sampriyoguin@gmail.com>
+---
+    [GSoC Patch] Modernize Test Path Checking in Git’s Test Suite
+    
+    test -(e|f|d) does not provide a proper error message when hit test
+    failures. So test_path_exists, test_path_is_dir, test_path_is_file used.
+    
+    Added changes for files from t/t0007-git-var.sh to
+    t/t1700-split-index.sh.
+    
+    Signed-off-by: Sampriyo Guin <sampriyoguin@gmail.com>
 
-Are we confident that our half-hearted choice of "there is no repo,
-so just do a very-early-config thing" is appropriate for any code
-paths?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1923%2FRimoGuin%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1923/RimoGuin/master-v1
+Pull-Request: https://github.com/git/git/pull/1923
 
-At least we should be perfectly happy with that choice applied to
-all of these code paths touched by this series.
+ t/t0007-git-var.sh            |  2 +-
+ t/t0081-find-pack.sh          |  2 +-
+ t/t0200-gettext-basic.sh      |  4 ++--
+ t/t0410-partial-clone.sh      |  2 +-
+ t/t0601-reffiles-pack-refs.sh | 28 ++++++++++++++--------------
+ t/t1001-read-tree-m-2way.sh   |  2 +-
+ t/t1005-read-tree-reset.sh    | 10 +++++-----
+ t/t1300-config.sh             |  4 ++--
+ t/t1403-show-ref.sh           |  2 +-
+ t/t1410-reflog.sh             |  8 ++++----
+ t/t1420-lost-found.sh         |  4 ++--
+ t/t1700-split-index.sh        |  2 +-
+ 12 files changed, 35 insertions(+), 35 deletions(-)
 
-> Note, I have already sent the first 8 patches in [2] but, the 9th
-> patch depends on the first patch of that series. 
+diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
+index 2b60317758c..6a8fe69c089 100755
+--- a/t/t0007-git-var.sh
++++ b/t/t0007-git-var.sh
+@@ -156,7 +156,7 @@ test_expect_success POSIXPERM 'GIT_SHELL_PATH points to a valid executable' '
+ test_expect_success MINGW 'GIT_SHELL_PATH points to a suitable shell' '
+ 	shellpath=$(git var GIT_SHELL_PATH) &&
+ 	case "$shellpath" in
+-	[A-Z]:/*/sh.exe) test -f "$shellpath";;
++	[A-Z]:/*/sh.exe) test_path_is_file "$shellpath";;
+ 	*) return 1;;
+ 	esac
+ '
+diff --git a/t/t0081-find-pack.sh b/t/t0081-find-pack.sh
+index 5a628bf7356..cb2825769ca 100755
+--- a/t/t0081-find-pack.sh
++++ b/t/t0081-find-pack.sh
+@@ -32,7 +32,7 @@ test_expect_success 'repack everything into a single packfile' '
+ 		".git/objects/pack/pack-"*".pack") true ;;
+ 		*) false ;;
+ 	esac &&
+-	test -f "$head_commit_pack" &&
++	test_path_is_file "$head_commit_pack" &&
+ 
+ 	# Everything is in the same pack
+ 	test "$head_commit_pack" = "$head_tree_pack" &&
+diff --git a/t/t0200-gettext-basic.sh b/t/t0200-gettext-basic.sh
+index 8853d8afb92..89d0899a5bd 100755
+--- a/t/t0200-gettext-basic.sh
++++ b/t/t0200-gettext-basic.sh
+@@ -31,12 +31,12 @@ test_expect_success 'xgettext sanity: Comment extraction with --add-comments sto
+ '
+ 
+ test_expect_success GETTEXT 'sanity: $TEXTDOMAINDIR exists without NO_GETTEXT=YesPlease' '
+-    test -d "$TEXTDOMAINDIR" &&
++    test_path_is_dir "$TEXTDOMAINDIR" &&
+     test "$TEXTDOMAINDIR" = "$GIT_TEXTDOMAINDIR"
+ '
+ 
+ test_expect_success GETTEXT 'sanity: Icelandic locale was compiled' '
+-    test -f "$TEXTDOMAINDIR/is/LC_MESSAGES/git.mo"
++    test_path_is_file "$TEXTDOMAINDIR/is/LC_MESSAGES/git.mo"
+ '
+ 
+ # TODO: When we have more locales, generalize this to test them
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 2a5bdbeeb87..615983067a9 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -606,7 +606,7 @@ test_expect_success 'gc stops traversal when a missing but promised object is re
+ 	git -C repo gc &&
+ 
+ 	# Ensure that the promisor packfile still exists, and remove it
+-	test -e repo/.git/objects/pack/pack-$HASH.pack &&
++	test_path_exists repo/.git/objects/pack/pack-$HASH.pack &&
+ 	rm repo/.git/objects/pack/pack-$HASH.* &&
+ 
+ 	# Ensure that the single other pack contains the commit, but not the tree
+diff --git a/t/t0601-reffiles-pack-refs.sh b/t/t0601-reffiles-pack-refs.sh
+index aa7f6ecd813..f76471a3375 100755
+--- a/t/t0601-reffiles-pack-refs.sh
++++ b/t/t0601-reffiles-pack-refs.sh
+@@ -78,13 +78,13 @@ test_expect_success 'see if a branch still exists after git pack-refs --prune' '
+ test_expect_success 'see if git pack-refs --prune remove ref files' '
+ 	git branch f &&
+ 	git pack-refs --all --prune &&
+-	! test -f .git/refs/heads/f
++	! test_path_is_file .git/refs/heads/f
+ '
+ 
+ test_expect_success 'see if git pack-refs --prune removes empty dirs' '
+ 	git branch r/s/t &&
+ 	git pack-refs --all --prune &&
+-	! test -e .git/refs/heads/r
++	! test_path_exists .git/refs/heads/r
+ '
+ 
+ test_expect_success 'git branch g should work when git branch g/h has been deleted' '
+@@ -128,43 +128,43 @@ test_expect_success 'test excluded refs are not packed' '
+ 	git branch dont_pack2 &&
+ 	git branch pack_this &&
+ 	git pack-refs --all --exclude "refs/heads/dont_pack*" &&
+-	test -f .git/refs/heads/dont_pack1 &&
+-	test -f .git/refs/heads/dont_pack2 &&
+-	! test -f .git/refs/heads/pack_this'
++	test_path_is_file .git/refs/heads/dont_pack1 &&
++	test_path_is_file .git/refs/heads/dont_pack2 &&
++	! test_path_is_file .git/refs/heads/pack_this'
+ 
+ test_expect_success 'test --no-exclude refs clears excluded refs' '
+ 	git branch dont_pack3 &&
+ 	git branch dont_pack4 &&
+ 	git pack-refs --all --exclude "refs/heads/dont_pack*" --no-exclude &&
+-	! test -f .git/refs/heads/dont_pack3 &&
+-	! test -f .git/refs/heads/dont_pack4'
++	! test_path_is_file .git/refs/heads/dont_pack3 &&
++	! test_path_is_file .git/refs/heads/dont_pack4'
+ 
+ test_expect_success 'test only included refs are packed' '
+ 	git branch pack_this1 &&
+ 	git branch pack_this2 &&
+ 	git tag dont_pack5 &&
+ 	git pack-refs --include "refs/heads/pack_this*" &&
+-	test -f .git/refs/tags/dont_pack5 &&
+-	! test -f .git/refs/heads/pack_this1 &&
+-	! test -f .git/refs/heads/pack_this2'
++	test_path_is_file .git/refs/tags/dont_pack5 &&
++	! test_path_is_file .git/refs/heads/pack_this1 &&
++	! test_path_is_file .git/refs/heads/pack_this2'
+ 
+ test_expect_success 'test --no-include refs clears included refs' '
+ 	git branch pack1 &&
+ 	git branch pack2 &&
+ 	git pack-refs --include "refs/heads/pack*" --no-include &&
+-	test -f .git/refs/heads/pack1 &&
+-	test -f .git/refs/heads/pack2'
++	test_path_is_file .git/refs/heads/pack1 &&
++	test_path_is_file .git/refs/heads/pack2'
+ 
+ test_expect_success 'test --exclude takes precedence over --include' '
+ 	git branch dont_pack5 &&
+ 	git pack-refs --include "refs/heads/pack*" --exclude "refs/heads/pack*" &&
+-	test -f .git/refs/heads/dont_pack5'
++	test_path_is_file .git/refs/heads/dont_pack5'
+ 
+ test_expect_success 'see if up-to-date packed refs are preserved' '
+ 	git branch q &&
+ 	git pack-refs --all --prune &&
+ 	git update-ref refs/heads/q refs/heads/q &&
+-	! test -f .git/refs/heads/q
++	! test_path_is_file .git/refs/heads/q
+ '
+ 
+ test_expect_success 'pack, prune and repack' '
+diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
+index 4a88bb9ef0c..2e8d9384e1b 100755
+--- a/t/t1001-read-tree-m-2way.sh
++++ b/t/t1001-read-tree-m-2way.sh
+@@ -362,7 +362,7 @@ test_expect_success 'a/b (untracked) vs a case setup.' '
+ test_expect_success 'a/b (untracked) vs a, plus c/d case test.' '
+ 	read_tree_u_must_fail -u -m "$treeH" "$treeM" &&
+ 	git ls-files --stage &&
+-	test -f a/b
++	test_path_is_file a/b
+ '
+ 
+ test_expect_success 'read-tree supports the super-prefix' '
+diff --git a/t/t1005-read-tree-reset.sh b/t/t1005-read-tree-reset.sh
+index 6b5033d0ce3..12b127eb7e6 100755
+--- a/t/t1005-read-tree-reset.sh
++++ b/t/t1005-read-tree-reset.sh
+@@ -40,7 +40,7 @@ test_expect_success 'reset should remove remnants from a failed merge' '
+ 	git ls-files -s &&
+ 	read_tree_u_must_succeed --reset -u HEAD &&
+ 	git ls-files -s >actual &&
+-	! test -f old &&
++	! test_path_is_file old &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -56,7 +56,7 @@ test_expect_success 'two-way reset should remove remnants too' '
+ 	git ls-files -s &&
+ 	read_tree_u_must_succeed --reset -u HEAD HEAD &&
+ 	git ls-files -s >actual &&
+-	! test -f old &&
++	! test_path_is_file old &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -72,7 +72,7 @@ test_expect_success 'Porcelain reset should remove remnants too' '
+ 	git ls-files -s &&
+ 	git reset --hard &&
+ 	git ls-files -s >actual &&
+-	! test -f old &&
++	! test_path_is_file old &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -88,7 +88,7 @@ test_expect_success 'Porcelain checkout -f should remove remnants too' '
+ 	git ls-files -s &&
+ 	git checkout -f &&
+ 	git ls-files -s >actual &&
+-	! test -f old &&
++	! test_path_is_file old &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -104,7 +104,7 @@ test_expect_success 'Porcelain checkout -f HEAD should remove remnants too' '
+ 	git ls-files -s &&
+ 	git checkout -f HEAD &&
+ 	git ls-files -s >actual &&
+-	! test -f old &&
++	! test_path_is_file old &&
+ 	test_cmp expect actual
+ '
+ 
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 51a85e83c27..9820d2348bc 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1236,11 +1236,11 @@ test_expect_success SYMLINKS 'symlinked configuration' '
+ 	ln -s notyet myconfig &&
+ 	git config --file=myconfig test.frotz nitfol &&
+ 	test -h myconfig &&
+-	test -f notyet &&
++	test_path_is_file notyet &&
+ 	test "z$(git config --file=notyet test.frotz)" = znitfol &&
+ 	git config --file=myconfig test.xyzzy rezrov &&
+ 	test -h myconfig &&
+-	test -f notyet &&
++	test_path_is_file notyet &&
+ 	cat >expect <<-\EOF &&
+ 	nitfol
+ 	rezrov
+diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
+index 9d698b3cc35..12f7b600244 100755
+--- a/t/t1403-show-ref.sh
++++ b/t/t1403-show-ref.sh
+@@ -196,7 +196,7 @@ test_expect_success 'show-ref --verify with dangling ref' '
+ 
+ 	remove_object() {
+ 		file=$(sha1_file "$*") &&
+-		test -e "$file" &&
++		test_path_exists "$file" &&
+ 		rm -f "$file"
+ 	} &&
+ 
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 388fdf9ae57..429ff59d2cb 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -130,10 +130,10 @@ test_expect_success 'pass through -- to sub-command' '
+ 
+ test_expect_success rewind '
+ 	test_tick && git reset --hard HEAD~2 &&
+-	test -f C &&
+-	test -f A/B/E &&
+-	! test -f F &&
+-	! test -f A/G &&
++	test_path_is_file C &&
++	test_path_is_file A/B/E &&
++	! test_path_is_file F &&
++	! test_path_is_file A/G &&
+ 
+ 	check_have A B C D E F G H I J K L &&
+ 
+diff --git a/t/t1420-lost-found.sh b/t/t1420-lost-found.sh
+index 2fb2f44f021..5fbb1d10ede 100755
+--- a/t/t1420-lost-found.sh
++++ b/t/t1420-lost-found.sh
+@@ -29,8 +29,8 @@ test_expect_success 'lost and found something' '
+ 	git reset --hard HEAD^ &&
+ 	git fsck --lost-found &&
+ 	test 2 = $(ls .git/lost-found/*/* | wc -l) &&
+-	test -f .git/lost-found/commit/$(cat lost-commit) &&
+-	test -f .git/lost-found/other/$(cat lost-other)
++	test_path_is_file .git/lost-found/commit/$(cat lost-commit) &&
++	test_path_is_file .git/lost-found/other/$(cat lost-other)
+ '
+ 
+ test_done
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index ac4a5b2734c..38d6f19152a 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -460,7 +460,7 @@ test_expect_success POSIXPERM,SANITY 'graceful handling when splitting index is
+ 		cd ro &&
+ 		test_commit initial &&
+ 		git update-index --split-index &&
+-		test -f .git/sharedindex.*
++		test_path_is_file .git/sharedindex.*
+ 	) &&
+ 	cp ro/.git/index new-index &&
+ 	test_when_finished "chmod u+w ro/.git" &&
 
-So, is this [v2 0/9] of ua/some-builtins-wo-the-repository?
-
-I think that topic has long been merged to 'next', and it is way too
-late to do a wholesale replacement like this.
-
-> [1] https://public-inbox.org/git/20250210181103.3609495-1-usmanakinyemi202@gmail.com/
-> [2] https://public-inbox.org/git/20250307233543.1721552-1-usmanakinyemi202@gmail.com/
->
-> Usman Akinyemi (9):
->   config: teach repo_config to allow `repo` to be NULL
->   builtin/verify-tag: stop using `the_repository`
->   builtin/verify-commit: stop using `the_repository`
->   builtin/send-pack: stop using `the_repository`
->   builtin/pack-refs: stop using `the_repository`
->   builtin/ls-files: stop using `the_repository`
->   builtin/for-each-ref: stop using `the_repository`
->   builtin/checkout-index: stop using `the_repository`
->   builtin/update-server-info: remove unnecessary if statement
->
->  builtin/checkout-index.c        | 43 ++++++++++++++++-----------------
->  builtin/for-each-ref.c          |  5 ++--
->  builtin/ls-files.c              | 32 ++++++++++++------------
->  builtin/pack-refs.c             |  8 +++---
->  builtin/send-pack.c             |  7 +++---
->  builtin/update-server-info.c    |  4 +--
->  builtin/verify-commit.c         | 13 +++++-----
->  builtin/verify-tag.c            |  7 +++---
->  config.c                        |  4 +++
->  config.h                        |  9 +++++++
->  t/t0610-reftable-basics.sh      |  7 ++++++
->  t/t2006-checkout-index-basic.sh |  7 ++++++
->  t/t3004-ls-files-basic.sh       |  7 ++++++
->  t/t5400-send-pack.sh            |  7 ++++++
->  t/t6300-for-each-ref.sh         |  7 ++++++
->  t/t7030-verify-tag.sh           |  7 ++++++
->  t/t7510-signed-commit.sh        |  7 ++++++
->  17 files changed, 118 insertions(+), 63 deletions(-)
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+-- 
+gitgitgadget
