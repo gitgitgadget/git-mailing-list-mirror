@@ -1,77 +1,71 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7461C85626
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 22:47:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3D72063FE
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 22:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742338051; cv=none; b=RrVNlVWA1w37JoHqQVS4PH6pyMn4xe1fVXJ4ErwtFB1urDaC53pEdFH8QZdicH6cqx9hxkPD8KBhj0+TY4lFTJn5FzZCt/0N2yu6gPUXPkV6xLcjBDS4t0cV5/8vr/K4bCXe5pOhCktts2sTb3wzLGuPQGom/AdvOuEjguGnXDU=
+	t=1742338219; cv=none; b=p/xkJ2Ul1MYURMbiaRPpcCFok3SubNqREy1vWhVEt9uN9dk4xEB4vnkYXyzKzrz7XDuo/wV/d7syAMZSO9dZx1YV5U5q/ExpPrK4tLFnl1KP0DUrbtEoZ6kVhBMNEElKhawTz86N1MRQOIlIlwWe4U3leffGsQgNgueO1mRjr+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742338051; c=relaxed/simple;
-	bh=QKOvErqau86vJ5ZrGHkOFg8YPtUfPuRqMQfr/HWt80I=;
+	s=arc-20240116; t=1742338219; c=relaxed/simple;
+	bh=2x7uAul9LTMUT+4mahHD+wDgU35EIRXAZ6eetOgZqt0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R5cgxdtD/5nYFTMssZL8w3GHi9TOEm0Emw0u3dlHBAbhDLZKq8Ylq9/Q77zM3oQIrblBkZk5ov95mx+8eZOP6Nx4VjPW/SjPQPWBzI6WXpOnKypVZcayijXLv6Sin8eblbUylH1+g/PsHz1Gy+H0USe2ZBJWPxo6Bn1aYZ0cbeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Tk7ERjT+; arc=none smtp.client-ip=209.85.222.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=FlOJLyJT3HCI5iY5p+ACNsZMTn11q7K3yrIxjv3WoHEwBPenyrsHsCfBH1ytaFVcm64oAxl4STcykncXNSYuLUvRG6k/vOITsBLRNIcpLcL8/Q8p+rotk6w9jFEId1H/7REDrVuRkmQIKPZo9qR+VWDY9LhhOS0mIbywl9WNSjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=lQXHv1Ru; arc=none smtp.client-ip=209.85.222.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Tk7ERjT+"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7c59e7039eeso158154485a.2
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 15:47:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="lQXHv1Ru"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7c58974ed57so324315885a.2
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 15:50:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742338048; x=1742942848; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742338215; x=1742943015; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=o65gc8xIW4+pPfx5UXWfwZhcZSro2aGpxAbbREyFbjU=;
-        b=Tk7ERjT+/A+axcG26UIHbXtpKrYW+I3vloZC5LnGfT13Z4mgffDZDiMRDv3Z+kTR+B
-         Z2WCRlvncdb41ySXBTDrpFrKxRonZUHHecaGWl+2Xt+agGOvLqCabTViHNunbr6bbkW+
-         gUWHTBV6f0srfaxJUEKf/y61z9IzENva/G0wscaUN00B0C9Z2qmlghApqQnYrM3cbBpq
-         VK84EOfnFSZD8/3dvKYTAP5JuJ74azAk846CVa49/KKrtc+QevzxOHyjfR/t59WVS3r1
-         KURVP5aK9CPRc2cKLV0fiaI2xukMeyu0ZbfHA8wHRf6OxIU56nYodkL1qGMEXurb2bXt
-         Qg9A==
+        bh=g5dvccv93SrH/1qLljpuVv2S5Py25wnhrgMoKpDvkbQ=;
+        b=lQXHv1Rua1ExFRwxLrmjtdoTeU1IbDk6QE+Bq3cl9s+0D5eUBj4rw9nesEcSE4oClW
+         6Lhd8C3qi/75N340OaJeFLho0f+bxJu8eKmKq2TlsevfDnIdScXmI+ZyuA0haeKd59O0
+         9TBKj25VkgnyYFD4yuRyV2CrG6IOH5qKiGFN2ek74kVar/Wg4UVg4BuoPWucMxnEmE/T
+         BGuEwnUyroGzX5WTG4KUf9DDT9AXjN87HaCLjlCM0niJAGOmMhWlI61805mSlPXnXBI0
+         +XI9gWN8e5VOJEqsiTYQSUoJFr728LahyO5XP9aZY0+SWqfA00QiXY0DJjw4Qpt27eYN
+         PMKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742338048; x=1742942848;
+        d=1e100.net; s=20230601; t=1742338215; x=1742943015;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=o65gc8xIW4+pPfx5UXWfwZhcZSro2aGpxAbbREyFbjU=;
-        b=u5AhtRiQO3ldmxZdh+OJQG6eKaYcgoa4APbx+dngY1asypuJWNWDJAVz9VzUPkO+rE
-         +0FFfRWyk7yuYtdEMIUpyBnq/wwqxJfHA+KPulJf5CoIxQR1lrMN/K6zAsm8fNalpwGl
-         9JObesAavbN8ZLeeAozesTWuMOLJPrPUTJXA8BC5Nij/G2lQqiaodzLbO5wTElqS84MD
-         BOKdVQDci2vtAmbivdJAYnI82IcDhob8Fot37JcrnyojT1I1qApSIhMafKkHNLI4UPDL
-         0f8HjO+lnyjXUOBYvEjMjh1ilFtjWRwinQxp2UsYMrJCrhSzk2Z6Am8iMVLaVAiMfyS+
-         C2GA==
-X-Forwarded-Encrypted: i=1; AJvYcCXHrNE40DQFlB4TP7B4GUWLkLJue2kvFSraTyRNPcy0aeMzAJzVGlarIAKFK9WhDwBXkxE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOfS4Sn7Ojo1AMDL8Oekcvd18YEzIBao0uhv9+/+o4/qrzAgOM
-	8aKYtA/8zUaPaRADBg9AaiJZftHF4QZWrfKWWbjCsuvLeeIZvQx6WoP7jH0uVg/Gia/lY7r1OW7
-	Coho=
-X-Gm-Gg: ASbGnctr8SZq/sC9Ps1Xt/UOZ39q94rTEV4y0q5L88yQkFI2+qRIgOdaSpqKos2rFzq
-	Q5TdqSSUF07I7cy+YF8QVx+02lRhnbPMzZP7y/a5u5GwJ3k1hYJSz/XqhcgP//P/9Dv6LPGgt08
-	EQodlJbv0XAsZwX24bfQmxBAzKMUBMem5OP3OAICXYKHMFuDM2Uqm1tYLRpfq6riC2U+MBJa44+
-	pZtNqnYwX7gxj2ev4QgN6hMI6zzd9kgLIKVwyMffXgEQ+/B1O4heDgPGeXM0D32wDMQHKIA3di5
-	6W/muxpjnRnZMbNz3kuJkzJ4cP+NTWSIDlrpiGLGPfzKJPGsYLnFdf9FbFZqF1cu6mzi2J54v1/
-	0eba7XhQYYDzeYael
-X-Google-Smtp-Source: AGHT+IGGSCNOQ5g1Bz5pMbUH5FqhEWp+pP8D1dr9rjA44JzJC0y0Y8ZN2UTRC7de7NgU+acE2Xxajw==
-X-Received: by 2002:a05:620a:40d2:b0:7c5:49e8:993b with SMTP id af79cd13be357-7c5a84ba628mr59391685a.56.1742338048286;
-        Tue, 18 Mar 2025 15:47:28 -0700 (PDT)
+        bh=g5dvccv93SrH/1qLljpuVv2S5Py25wnhrgMoKpDvkbQ=;
+        b=vnS38aKBhKw6y3B7lthqNea9wVZFYVEhDJQe5CJFMl+dGm806vAl10eE+9Es7g/K8q
+         Zo/vXUcmy8hBf0T2zT3In+Cjh5fPTIPpUi5MhXoLRbHXMs1Riz2HxRKqglX51D0+8ZJk
+         vQxq/fNXgjFxA5ibIYtSxslRdfhan/wcjTMAs+7VnwPlboC2QWqtP+/VWItDU2vqN/aC
+         dHhqcEKDvPm+t2uqaBYVxni2YZxkMmxApCthdWcMuqaJGGNase3vzXm98Pv+UBsoKW6s
+         WR/x/cXhwx3lYqoIF8FHd6op8OF1Pc3IplKw7qg5ydZgTDK89SZA5p4fmB3YvnqQTvWE
+         SF1w==
+X-Gm-Message-State: AOJu0YxaVMrvGWC9HKd5V8madr4zGIVWF2AtCmW5qCycCi4xdLYAmJyk
+	1gpGujYNeMSYvSkYKyhBjOGZ16emP23dEf9u2WX5ElImWr7g9Oaax00ZjS9zxKam+NHHig3Z9K2
+	K4+I=
+X-Gm-Gg: ASbGncvXJ+kACPMoAfUNXReYUX8zHdr3q481yP61tQLhV1sAVsYRKub2JA+wbnOSrN5
+	dE7Epw6hB0YOzixWtovvC7kOYtZ/k6TB0s4Lm2NLSxmKn1SsVNbtX2IbydYmDJLdgmwL5VhLmax
+	iUpOFW80u+VtBW8BHOm7jlAM9yMcbS4yOOWIvV3bBGqOMXqgfXcni6g5F/duohsA/5Al1NlQ4Zy
+	QmhFhiPoARh8o3w2tmooX6YY9Ylh63f2/ONHp79LKmgRAPmyYW5ksyhLr5bGcvP/qqVxggRE3vM
+	6/ar0ShQms2bx0OfCn7wjICK9xmduOpoOqJwenqXhEPUzb12vFsG87hDw9BCSIEqVHfQcesrZmq
+	ygT4y2JByFAyG6MqJMbZR9vxa5dk=
+X-Google-Smtp-Source: AGHT+IGN6OzhTWlaqgtEfcg5iSZHSevjeRKf1YZHcrrTI9O1kSHKouy6STHYJWuaqTX2Gl0EQvVtTg==
+X-Received: by 2002:a05:622a:4d4f:b0:476:9548:4734 with SMTP id d75a77b69052e-4770829158emr11664391cf.6.1742338215552;
+        Tue, 18 Mar 2025 15:50:15 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c573d89cbdsm768147485a.107.2025.03.18.15.47.27
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-476bb611dbdsm72413691cf.4.2025.03.18.15.50.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Mar 2025 15:47:27 -0700 (PDT)
-Date: Tue, 18 Mar 2025 18:47:26 -0400
+        Tue, 18 Mar 2025 15:50:15 -0700 (PDT)
+Date: Tue, 18 Mar 2025 18:50:13 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Igor Todorovski <itodorov@ca.ibm.com>,
 	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: Re: [PATCH 5/9] refspec_ref_prefixes(): clean up refspec_item logic
-Message-ID: <Z9n3/vLYNALHnbSN@nand.local>
-References: <20250309030101.GA2334064@coredump.intra.peff.net>
- <20250309030706.GE2334191@coredump.intra.peff.net>
- <Z9H+vWHFkATWNLxt@nand.local>
- <20250313054107.GE94015@coredump.intra.peff.net>
- <Z9ibhJxjlc2DxKdX@nand.local>
- <xmqqplif5jfw.fsf@gitster.g>
+Subject: [PATCH v2 0/4] refspec: treat 'fetch' as a Boolean value
+Message-ID: <cover.1742338207.git.me@ttaylorr.com>
+References: <xmqq5xkdrrhs.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,43 +74,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqplif5jfw.fsf@gitster.g>
+In-Reply-To: <xmqq5xkdrrhs.fsf@gitster.g>
 
-On Mon, Mar 17, 2025 at 04:25:07PM -0700, Junio C Hamano wrote:
-> So, if we can reasonably expect that the choice will stay between
-> fetch and push and we wouldn't be adding a new kind, I think
-> reverting the meaning of .fetch to yes/no and getting rid of
-> REFSPEC_{FETCH,PUSH} may be a better approach.  If we stil want to
-> keep the descriptive CPP macro, then perhaps .transfer (or
-> .direction) that lets us choose between fetch or push?  I dunno.
+Here's a small reroll that cleans up some wording in the first patch,
+and drops the accidental inclusion of a stray 'git-diff-pairs' binary
+that was sitting in my working tree at the time of writing the initial
+commit.
 
-I suppose adding a new direction/mode/transfer/etc is always possible.
-But I think that it's unlikely enough to happen any time soon (if at
-all) in my view that we should simplify the code anyway. If that changes
-in the future *and* those changes fit will in the design of
-REFSPEC_FETCH and friends, then we can always resurrect those macros and
-reinterpret this field.
+Otherwise the series is unchanged, but a range-diff is attached
+nonetheless. Thanks for reviewing :-).
 
-But I don't think that we should carry this extra baggage around in the
-meantime if we don't need to.
+Taylor Blau (4):
+  refspec: treat 'fetch' as a Boolean value
+  refspec: replace `refspec_init()` with fetch/push variants
+  refspec: remove refspec_item_init_or_die()
+  refspec: replace `refspec_item_init()` with fetch/push variants
 
-> > , which gives us the "default" case in the switch statement. But this
-> > really is a boolean. I wonder if we should just use 0/1 constants and
-> > leave the field name alone. That would turn something like:
-> >
-> >     if (rs->fetch == REFSPEC_FETCH) { ... }
-> >
-> > into:
-> >
-> >     if (rs->fetch) { ... }
-> >
-> > , which I think is cleaner. There's no reason to rename true/false to
-> > FETCH and PUSH if the field name itself is already 'fetch'.
->
-> Yup, that makes two of us.
+ builtin/fetch.c    |  2 +-
+ builtin/pull.c     |  3 ++-
+ refspec.c          | 38 +++++++++++++++++++++++++++-----------
+ refspec.h          | 18 +++++++-----------
+ remote.c           |  4 ++--
+ transport-helper.c |  2 +-
+ 6 files changed, 40 insertions(+), 27 deletions(-)
 
-Good :-). I'll send a small reroll of the topic anyway to avoid sending
-a patch that has a git-diff-pairs binary in it :-<.
+Range-diff against v1:
+1:  7e662acb5a ! 1:  04e1ab8209 refspec: treat 'fetch' as a Boolean value
+    @@ Commit message
+         refspec: treat 'fetch' as a Boolean value
+     
+         Since 6d4c057859 (refspec: introduce struct refspec, 2018-05-16), we
+    -    have constants called REFSPEC_FETCH and REFSPEC_PUSH. This misleadingly
+    -    suggests that we might introduce other modes in the future.
+    +    have macros called REFSPEC_FETCH and REFSPEC_PUSH. This confusingly
+    +    suggests that we might introduce other modes in the future, which, while
+    +    possible, is highly unlikely.
+     
+         But these values are treated as a Boolean, and stored in a struct field
+         called 'fetch'. So the following:
+    @@ Commit message
+             if (refspec->fetch) { ... }
+     
+         are equivalent. Let's avoid renaming the Boolean values "true" and
+    -    "false" here and remove the two REFSPEC_ constants mentioned above.
+    +    "false" here and remove the two REFSPEC_ macros mentioned above.
+     
+         Since this value is truly a Boolean and will only ever take on a value
+         of 0 or 1, we can declare it as a single bit unsigned field. In
+    @@ builtin/pull.c: static const char *get_tracking_branch(const char *remote, const
+      	if (!*spec_src || !strcmp(spec_src, "HEAD"))
+      		spec_src = "HEAD";
+     
+    - ## git-diff-pairs (new) ##
+    - Binary files /dev/null and git-diff-pairs differ
+    -
+      ## refspec.c ##
+     @@ refspec.c: void refspec_clear(struct refspec *rs)
+      int valid_fetch_refspec(const char *fetch_refspec_str)
+2:  fd2354dade = 2:  c3021b82ce refspec: replace `refspec_init()` with fetch/push variants
+3:  49b470de61 = 3:  88f6a91c46 refspec: remove refspec_item_init_or_die()
+4:  95783265fd = 4:  f0c323988f refspec: replace `refspec_item_init()` with fetch/push variants
 
-Thanks,
-Taylor
+base-commit: c702dd48567cfebca3d4a06b691de97da3f8dc4a
+-- 
+2.49.0.3.gbb7a4a684c.dirty
