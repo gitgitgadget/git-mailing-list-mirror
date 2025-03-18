@@ -1,150 +1,136 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6707F1DEFDA
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 21:49:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF98BDDC5
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 22:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742334579; cv=none; b=BY+QJTYcDnAh1jBCFylmWwowB8yYkdWDtwptwnT6tzucjXuWWcWLdNYVDMuYHDGM/nDpqWds2uI7+LIyPYI8/kv3xAqH/IjfqvhTTNPigNln388acM95eyIVM0aeWReztQ0SqSJOVaErJhpn5nb9q/Vnc00m2W4hKfkRr+dFrTQ=
+	t=1742335517; cv=none; b=LJi1PJxg4EiWrCLAV82BF7edu/Vl26A8LhRMRIkfscsIu1RaYXrpCy9u3ECVAuWhWZm8sGhgD7nVJVaHMq+9uMJnvsHodzx66WRLBpb0HZz9ejawqXrWqcWlUPuINNmOnHx4lu+hxM9iv5f6g3jeL3b+YUf4YcPx07s7agq6Fck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742334579; c=relaxed/simple;
-	bh=Si+2D5PdQ1VOZCvxf+0oc4oYaxzkdsj6jdnolKnRIuk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gcZlvssYtlyseh9Tm5o3wtgMMrH2Ewnpg7UuR0iWTMNYDh9wZ1YSZ1g/sPz806RzSVe7ygk0buEIyHWbhNb1+ybdt0NJuS7gvWw9cDUTWl0+Z/RECYnhjIdPDY6cLNlMjTNGcHu0ehUvkLPCCGET1v7P3A7z6f/zvdgm85ujmJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7c5528c98bdso23521385a.1
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 14:49:37 -0700 (PDT)
+	s=arc-20240116; t=1742335517; c=relaxed/simple;
+	bh=EGaLoI2knLmD7Ga4a6XkMdkoBOYILPE8Ii1xYz2J/rM=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=aFz1zKkKaDicihGV+hhhVwGMQ1KezUjJdoeal3WeI2FSiCXgrVmhP62GrS7sufK4Lxa4hDNzIXpl6y4aAqoZP4PnkPIurqF6RHzc7WJv15M199bKA8y/Rd+/acK+BzvoF3+iluwYAL+yZlJBMaXyo+AinCGII8syllee5KicvmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BIiPl6Z1; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BIiPl6Z1"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2ff7aecba07so5932303a91.2
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 15:05:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1742335514; x=1742940314; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=CiRmqh8lCSmdbKo2Y77BHoL1suzcO3chsVekJetT0dg=;
+        b=BIiPl6Z1f9JZS0sio/523knOSCSRyyOc5uhjTKXz6xzlzYh7lWQXRK/rrg7mHLhwT8
+         R9e1LYwUwNLFWLPIIB9SKW0Aal9UgHg2nWr0ro89kuP0tKE/6oZLGK42vWm3r0phR31E
+         CstN2aWzTQcPW2OSLfvrL5q+9kDfaf1y/eHDmJ6yAof1pOnQNcXf8R2iwRASu20IJDT1
+         +ONRCjp30ap8a7wP7PktFjqZF9kv+A9/4l1SNwGbOLIHVfQ8n9tXvWZ2dB41UpNeHOo+
+         nnoawV4uou+RIvt1b2730ED2kVOVse9PwWVW1fCMPozT1jO0wxmOrxhM7Ug3ruN4sxlZ
+         ppPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742334576; x=1742939376;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+Ue0uQH7qR0x7Mb9Ds7fxyMnY8ZcAzhwC6ksSCLEBuU=;
-        b=FHmVebZLPIo88yLMxbK1wG2/TSeJsFKa6qtpBRP6QYo3eDtdUS+N4zIh6MS1iFc40D
-         HoTcO6ZNlCYVAE2JiwXsTIpQOsxhXt3ysDfx8t/zuKqXwL4mHAddYlEIAS/BdQnn2JaZ
-         e1wnA5vWKjTnj9AXDqQkSnCAE09E2orUY67BF90kP/OVgAOY8DTw/4sCHUgy/4VJPNfO
-         EOFfTU9xewQg1JuQnLnxpPxLMZKvYZH620lR10ETyy69PHnJeUPL7USv4CAsoJrbvOuF
-         tPNcwzARBUu00Surruy3cYMSb4HUfawaAfBbfY1BQw0Yu/JQ0spp2AjIjp5wmXr6XS9g
-         3Hrg==
-X-Forwarded-Encrypted: i=1; AJvYcCWs2cJta1k/9c02ME5gCxDnovb+GAvYflmE0t+Ty1mxbQR13FC+MWJpWzuJm+pt8y7WdSI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHSqYJTiYrv93HOJttW9rC8vBieFMl0z7/FKH4ywTDzus7wiwk
-	9D1ItqHW74jo8czA8ftNF5bxAAiYydxJCRn+QmSb5lHzjuh6VALgh2Qy3RbtmqbDXdLOOF/nH6A
-	sTk9ZkMF30//tAizzHTklewSGkTY=
-X-Gm-Gg: ASbGncvBuOo/yy/Ido7g3iNYn6Or3F3//dNRHX43MQexzb8nh6V0uQl3DdC+iyXYTCP
-	FB2qsKxfuZs89NUVbfrT49v5w5lKOrpv+DPEEsEFBnf7H5zCR1HvGrcCkMNhsmVt03jaIPnT5HB
-	5rhReMEnJ2Q/6q5J8xF88zd7puGFQnUpH37yNrcfQo63eJAceTYLqn0fbG2os=
-X-Google-Smtp-Source: AGHT+IG4h7wkAg81cytsw1wWTkYp9/Pqko+2l4Y/o/vYhhIZ/SFkPPleqjC5aAQ3VJ2v5O2joZ5R+gx1wVR69KeUvl0=
-X-Received: by 2002:a05:620a:24d6:b0:7c0:c42a:707d with SMTP id
- af79cd13be357-7c5a84e2336mr14821385a.15.1742334576121; Tue, 18 Mar 2025
- 14:49:36 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742335514; x=1742940314;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CiRmqh8lCSmdbKo2Y77BHoL1suzcO3chsVekJetT0dg=;
+        b=QIq6p3mFvY/spFhlDYifUv1p1kAXBZIEcByfWZUnGqvzYoiz0QVBNqE48X0ulUpmIX
+         2TxCmpaMi3/RHTYAqsxJIc0WbtR2IuJD28j/dOoGx4B/PjN7SgCj2wbtKnoHRAbDRh4k
+         bhf/kzZ1e89XNl+A+kOEtmE+jnD0k6eneuCme+l4dbqKLANsC8PFd+LnFNL+PtG2Dnfp
+         bKPCwacGTbWBTDYkgfnKyd/rLQrC4MZPdIfC294FgpclxvxDVYD02meypG/QUOw83sbx
+         YP3gPf1f7RgI018YAivUDWiewZUzYNcIPDKVnM+SOAR8grpCCue3o4lQbp8pbd64LhlN
+         JFvg==
+X-Forwarded-Encrypted: i=1; AJvYcCWvkJDJI2h9YhcIkFeTsEgoyZ6ehibQrJBMdhEMFEYJyNYiGK65jIYFRtV8PcuXQGVn8Cw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz0MROvFHkQtuKweizjKWzPRrBQKSXJIDA+FkCIpKmL9SCETwb0
+	sdcOvhEV1Irmigvo0ypDa336ylK2Q4/A8gwvxDVlD8Jq4a5CR+fM/NtF//cJkRIyd6bTDJMstdz
+	JCBJFWjqUbyW0bg==
+X-Google-Smtp-Source: AGHT+IGPpoXNvvbKjqpDhZcAiTkq9fiOeJGYO5HgA9wHSwTnOgq934XdQmtB6GPmGzxKk9s8mxvHHVNHQs4qgZA=
+X-Received: from pjbpq18.prod.google.com ([2002:a17:90b:3d92:b0:2fc:1158:9fe5])
+ (user=calvinwan job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:90b:2541:b0:2f2:ab09:c256 with SMTP id 98e67ed59e1d1-301be2341edmr518367a91.33.1742335513919;
+ Tue, 18 Mar 2025 15:05:13 -0700 (PDT)
+Date: Tue, 18 Mar 2025 22:04:53 +0000
+In-Reply-To: <20250317235329.809302-3-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <pull.1923.git.git.1742329571265.gitgitgadget@gmail.com> <xmqq5xk611o3.fsf@gitster.g>
-In-Reply-To: <xmqq5xk611o3.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 18 Mar 2025 17:49:24 -0400
-X-Gm-Features: AQ5f1JrZjhatNDLnvBt9xE_aAPct8VMWpODPXxHQUFllcUY90cKl9Rl9TWicvuo
-Message-ID: <CAPig+cSXiKOBq_+9+uDTFOLf5F8+KPocwXVX2VzPQAxJHQL99w@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH=5D_=5BGSoC_Patch=5D_Modernize_Test_Path_Checkin?=
-	=?UTF-8?Q?g_in_Git=E2=80=99s_Test_Suite?=
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.49.0.395.g12beb8f557-goog
+Message-ID: <20250318220453.1937685-1-calvinwan@google.com>
+Subject: Re: [PATCH v3 2/3] git-compat-util: add NOT_CONSTANT macro and use it
+ in atfork_prepare()
+From: Calvin Wan <calvinwan@google.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Sampriyo Guin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"Patrick Steinhardt [ ]" <ps@pks.im>, "Karthik Nayak [ ]" <karthik.188@gmail.com>, 
-	"Jialuo She [ ]" <shejialuo@gmail.com>, "Christian Couder [ ]" <christian.couder@gmail.com>, 
-	"Ghanshyam Thakkar [ ]" <shyamthakkar001@gmail.com>, Sampriyo Guin <sampriyoguin@gmail.com>
+Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 18, 2025 at 5:14=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> "Sampriyo Guin via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >  test_expect_success MINGW 'GIT_SHELL_PATH points to a suitable shell' =
-'
-> >       shellpath=3D$(git var GIT_SHELL_PATH) &&
-> >       case "$shellpath" in
-> > -     [A-Z]:/*/sh.exe) test -f "$shellpath";;
-> > +     [A-Z]:/*/sh.exe) test_path_is_file "$shellpath";;
-> >       *) return 1;;
-> >       esac
-> >  '
->
-> ... this one is iffy.  How well does it mesh with the "return 1"
-> case in the same case/esac?  I do not use Windows, but if
-> GIT_SHELL_PATH set by that system is not in a form that the platform
-> expects (i.e. a drive letter and then path to a file "sh.exe"), it
-> is just as grave a problem worth reporting as the path given is not
-> a regular file, yet "return 1" case does not give any specific error
-> message (instead it just lets the test fail), so it feels a bit
-> uneven to make the "test -f" failure alone louder than it currently
-> is.
+Junio C Hamano <gitster@pobox.com> writes:
+> Our hope is that the number of code paths that falsely trigger
+> warnings with the -Wunreachable-code compilation option are small,
+> and they can be worked around case-by-case basis, like we just did
+> in the previous commit.  If we need such a workaround a bit more
+> often, however, we may benefit from a more generic and descriptive
+> facility that helps document the cases we need such workarounds.
+> 
+>     Side note: if we need the workaround all over the place, it
+>     simply means -Wunreachable-code is not a good tool for us to
+>     save engineering effort to catch mistakes.  We are still
+>     exploring if it helps us, so let's assume that it is not the
+>     case.
+> 
+> Introduce NOT_CONSTANT() macro, with which, the developer can tell
+> the compiler:
+> 
+>     Do not optimize this expression out, because, despite whatever
+>     you are told by the system headers, this expression should *not*
+>     be treated as a constant.
+> 
+> and use it as a replacement for the workaround we used that was
+> somewhat specific to the sigfillset case.  If the compiler already
+> knows that the call to sigfillset() cannot fail on a particular
+> platform it is compiling for and declares that the if() condition
+> would not hold, it is plausible that the next version of the
+> compiler may learn that sigfillset() that never fails would not
+> touch errno and decide that in this sequence:
+> 
+> 	errno = 0;
+> 	sigfillset(&all)
+> 	if (errno)
+> 		die_errno("sigfillset");
+> 
+> the if() statement will never trigger.  Marking that the value
+> returned by sigfillset() cannot be a constant would document our
+> intention better and would not break with such a new version of
+> compiler that is even more "clever".  With the marco, the above
+> sequence can be rewritten:
+> 
+> 	if (NOT_CONSTANT(sigfillset(&all)))
+> 		die_errno("sigfillset");
+> 
+> which looks almost like other innocuous annotations we have,
+> e.g. UNUSED.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Makefile                         |  1 +
+>  compiler-tricks/not-a-constant.c |  2 ++
+>  git-compat-util.h                |  9 +++++++++
+>  meson.build                      |  1 +
+>  run-command.c                    | 12 +++++-------
+>  5 files changed, 18 insertions(+), 7 deletions(-)
+>  create mode 100644 compiler-tricks/not-a-constant.c
+> 
+> diff --git a/Makefile b/Makefile
+> index 97e8385b66..605e2d7f61 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -985,6 +985,7 @@ LIB_OBJS += compat/nonblock.o
+>  LIB_OBJS += compat/obstack.o
+>  LIB_OBJS += compat/terminal.o
+>  LIB_OBJS += compat/zlib-uncompress2.o
+> +LIB_OBJS += compiler-tricks/not-a-constant.o
 
-Thanks for stating what I was thinking upon seeing this change.
-
-> >  test_expect_success 'see if git pack-refs --prune remove ref files' '
-> >       git branch f &&
-> >       git pack-refs --all --prune &&
-> > -     ! test -f .git/refs/heads/f
-> > +     ! test_path_is_file .git/refs/heads/f
-> >  '
->
-> This conversion is wrong.  [...]
->
->     test_path_is_file () {
->             test "$#" -ne 1 && BUG "1 param"
->             if ! test -f "$1"
->             then
->                     echo "File $1 doesn't exist"
->                     false
->             fi
->     }
->
-> The test wants to make sure that 'f' is not a file.  So you want to
-> see a loud complaint when 'f' exists as a file.  Does it do so when
-> you say
->
->         ! test_path_is_file .git/refs/heads/f
->
-> in this test?  No, it will not enter the "then" block and silently
-> succeed, and that return status is negated by that "!", so the test
-> will notice that the expectation is not met, but you didn't achieve
-> your goal of making it louder when it fail.  Worse, if the file is
-> not there, as the test expects when Git is working correctly, your
->
->         ! test_path_is_file .git/refs/heads/f
->
-> will enter the "then" block, complain that the file does not exist,
-> returns a failure, and your "!" will turn it into a success.  The
-> test passes, but the user is given an error message when the test is
-> run with "-v" option.
-
-And, again, you've said everything I was going to say, thus saving me
-the effort of doing so.
-
-Referring to the other thread at [*], perhaps this (avoiding `!` in
-front of test_path_*) is yet another clarification which ought to be
-added to the microproject description in order to lead candidates in a
-more profitable direction.
-
-[*]: https://lore.kernel.org/git/CAPig+cRm+sc+Rk-4SuQ5CrPeZLG2Nzz9B7+6OZxCq=
-7tV5mzmBA@mail.gmail.com/
-
-> I'll stop here.  I think all "! test_path_foo" changes in this patch
-> are wrong.
->
-> Unlike "test_grep" that lets you write "test_grep ! foo bar" to make
-> sure that file 'bar' has no 'foo' in it (and complains loudly if
-> 'foo' appears in 'bar'), test_path_foo family of helper functions do
-> not let you write "test_path_exists ! no-such-file" unfortunately.
-> So my recommendation for a microproject sample is to just drop these
-> negations from the changes and stop there.
-
-One other recommendation I would make is to restrict the microproject
-submission to just a single test script (rather than updating twelve
-of them) in order to avoid exhausting the pool for other potential
-candidates.
+The name is correctly added here, but in `next,` this name is set to
+`compiler-tricks/not-constant.o`.
