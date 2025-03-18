@@ -1,193 +1,126 @@
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4E8207667
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 23:24:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C761E1E0C
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 23:53:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742340275; cv=none; b=L0Te1qYpOJE9H9ibG5AhtlvmetQoeStbUfLZqwvzifFg7QocA3njJFb15E0oXUXAhP5tTdVtrdxmvqQBVPnPMVJVnpOT45wJ+LoEgJf652gfbOA3OwSHLDDffmIWW8KzSX4BFjRcaVFZ4Ji6fDnFnrTGN9Dmynv1YQZ00Qcgqyo=
+	t=1742342034; cv=none; b=jmw/6L+u8rxcS4ijmUoB5pnLTtAYfI5iZgqZ+H4y7bAZ1gXQ4AtUobk3xkNRrda37GXAOJfQcVMAi6/id8lbX6wUVCj+RTsEhmMbUz0Z71dJDEIL9EH20/kUo1qeuwH5kDnP6Vq0YdLv4jBSNWt9TQvs+aY9bck+BmWDJGw9h78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742340275; c=relaxed/simple;
-	bh=pDDqEUY35UZCBK2KEGJB9dQvPCDROMhyzeMjes3P2I0=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Td28DoWzAo3iAOTC/uve4fhgh2neKefmMj/Zq0MckWcYHjJnscDzyP4O+fsxFJuuxTH8u+/cTBep+amM3S4gQeg8R0iBOeyKbvHUaasgUBVCT5iNcgJfdJLRI4UJSrJgaFTHzkOVcENJVI7JDRXI9ail7mrdDXUEpiDPHWp4egs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=oWNR4qXY; arc=none smtp.client-ip=209.85.216.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
+	s=arc-20240116; t=1742342034; c=relaxed/simple;
+	bh=lzdoojog7UbqZQghHgvVvVhUUz8NRnbCOI3AplFLVEc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oLXMEDaehhHrIVOAFr4b77qsKcGr+mpBh1m90B7TkzVcG2HQCHE6LJIqP4ZSvsHWqP6ba9wCxKzE5f3SEuBX6hcIM823lgMpok13vEh8ZgODi32vBdbuENequb6tk1C4S15euokfHrDcs+U5u+ol2GCw1fkZTfM9rlwsyvLk3qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tgQ64Fvp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L+Y44xmm; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="oWNR4qXY"
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-2ff798e8c3bso6676606a91.2
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 16:24:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1742340273; x=1742945073; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zYuUOdSwt7gcTEjgg0vjyAebV+1EDCjlpvkJSkWhiM8=;
-        b=oWNR4qXYJPa9+TDZh6Ei/+ydwh0IfYqfbp025MflL7c2f8tXhXIMtzGEW/u8PDqvHn
-         9C0U4kBAdKoJGhL5rABnoUkq+lkfN44/jSrtB79clWmVjN3wIPJWpy4gggdpJcAbmM7+
-         cWjctqDH9fvEKa7bqDPruQPds2GRb4YPrDZRKRlzyv43TWF65Mz3sBFnqEW68VFR1S41
-         JyFbPIdZbE0YsP43MoQrnZ5X2Q89vAJc8CKWNDBX8IZHn9HOVHCMYVa7kZHIbk5cByIO
-         ReCF8RlMkAdj1hx0keox7sRJeyTbMqCkuOl43MayszjSAcyRxMav4A5oSBIyyQxnEPFj
-         oRiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742340273; x=1742945073;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zYuUOdSwt7gcTEjgg0vjyAebV+1EDCjlpvkJSkWhiM8=;
-        b=OsIfil7PV6K1gjJ1SimWLW68+VH22v7bpVDz8BO0fECpaige+qkzcGChoXAuhRvexW
-         x/P6IGtGc5YRui7ZDAI/3dpXLXTQ7Ol7qngS6tkV/YlfaoOzIdbjMW4IuER0Vd6OjpRf
-         sHYo9p8/JqhdWdpjL2BZUdE3jMuzu/sca6TMdUJwR2uKebSS8OIREfHRvnYSKFklAayy
-         MAHid/GbVQZ5gmYgLPsqD9YS6uTerp300NaAkTjFetK7LaNu+eXo88UTqOU5anJRoK/x
-         luR9V/+086jxv3ilZQl0VjPN4BW/9OnIHaQx0AFSPaLZD57UsCOxJgOM/Pg/WT5UHvCx
-         k79A==
-X-Gm-Message-State: AOJu0YyvXmsQmGVQt8C9noMZvR2NomnmJHJ4j1m/6vk5eaYl2v6ZWoAS
-	8Zk5KFUQYwYgXBmhgfZAsqOsngMCcNBI/OlXUC9d0pM4zTnPGsNUU7XiE0mmGTzjIN575KP/weP
-	cm3NB1FatZZyjwHBpmy4J6fs9PkHydsg4fnoCI6s+YWr3zN0z5f5pGn6Ap857SFyU1+grL3uixK
-	uDkO1r+96H0WFjgn689f/gilV6Cd2h4yypWlOI8kU=
-X-Google-Smtp-Source: AGHT+IEibM7gnY3bUv7up703qGv4MtubFUyULRH1ANFX7JiawSHCRFQfv29tKIFI4RbgQ/jhyVjPNggAG9nH5w==
-X-Received: from pjbpw8.prod.google.com ([2002:a17:90b:2788:b0:2fa:15aa:4d2b])
- (user=steadmon job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:180f:b0:2ef:114d:7bf8 with SMTP id 98e67ed59e1d1-301bde359demr739527a91.6.1742340272576;
- Tue, 18 Mar 2025 16:24:32 -0700 (PDT)
-Date: Tue, 18 Mar 2025 16:24:22 -0700
-In-Reply-To: <cover.1742339107.git.josh@steadmon.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tgQ64Fvp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L+Y44xmm"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 20B6A114021F;
+	Tue, 18 Mar 2025 19:53:51 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Tue, 18 Mar 2025 19:53:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1742342031; x=1742428431; bh=eF2g/4Emg0
+	wAFCa8iBMahgSESFWhsvfVTUG/N+Pcv7Q=; b=tgQ64FvpuuTd0JIpjJpdY8xcH/
+	faFhW/X9YbAFUFnUx4valq83P6qVSZpDhXc2BPmVdfcCJO4opZUIHXQvtSmMfy99
+	Vc+hdXzd26LYpy154yTRXp5cvzIxcr6bvpOLILj6nOkzdVWjxRDJP7DvPsO8DXqy
+	cEx8qosZTrmEYY3RypMxLfB/kwWH0rGPo8+OS0mT+CKPcgIz8/UfOOBj31yyV1Cp
+	8h//GDmiwqfexlpcISNpL3oma/Ie4uHNygi5h0EAcHnk+yXZbONcR+eUF6zWnhdz
+	3nHGj4PGNBqxm3HiGOLqriZ/K7rBFWUf7u/LCco5hsuMhC1yUhHCi0wwj6AA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1742342031; x=1742428431; bh=eF2g/4Emg0wAFCa8iBMahgSESFWhsvfVTUG
+	/N+Pcv7Q=; b=L+Y44xmmf2a9Io7JPDRFmmiKeVMvc9WYX3E2+7AiNxFGw4aFchE
+	Z7LgTTqrI9QlzzOsE/YvuXCkncUBP67StGIdvAjzGMrLkfZS11QJ8KVnI4NRsSoa
+	o7fs78mBVkWghprv65SC7i6Uy2Pei1O3aKVQHci14lb6Xk+xFFBlovC9ciI8w6mh
+	4dM4qtJOFVlI27lK23jb8fCzLlMg926LY8IwQff2qMa4MreOJIFR725aYXuxcofL
+	+v9HHggm9LiftfXEaolpeHX8oSitS/RifQ0GtW1yI0cEWcYQhtCDgqp1SOqntinF
+	kCSaAyU0c7i9uoLuSGtXd+W9teNXaBQENNQ==
+X-ME-Sender: <xms:jgfaZ_bE1H99hVv-5m1qSwZwJ1lZrqmDqmoNSYyhTum2SCOTYZyIcA>
+    <xme:jgfaZ-b8SsVzQCYC6Wg1XAg1J9ukoMX13vcJm3PP5IxR4FA-BzsL7rC9ectvYOo4l
+    zW63194Vj6SL1ofeQ>
+X-ME-Received: <xmr:jgfaZx-qjO9Y0l-n42y9TLQpTaL2-9vjblnE9u-Y_Urf0oJpLMDT0n-U6udnlSqOJ--YA7cJm4BYMBcvvz9kTUHXFbGA8l2_c_J3m9M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeefkedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeeugeegkeehhfdugfelveehtdeuveet
+    kedvfeehudehfeduuddvfeejtdelfeegnecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehsmh
+    htphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtgho
+    mhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopegt
+    hhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehshh
+    ihrghmthhhrghkkhgrrhdttddusehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrmhhp
+    rhhihihoghhuihhnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:jgfaZ1q1M1uOffpfrxcUXq33Bqh8vaL4tPhTr2WJBHeTSUtvQ24TNQ>
+    <xmx:jgfaZ6rXLsHURer3eoa8LrCkofICpYAZBSOnfm3hAh4KA6s-5Qjgvg>
+    <xmx:jgfaZ7QrUxQ36FKqfegBxt3Jbvttid7-yTW_VBPpkJB3LxgVjbHp1w>
+    <xmx:jgfaZyrlOjXHLYKm42gV4a3AypIip-MSdPSsSO9-VO7rOrfBwprrKg>
+    <xmx:jwfaZ3ioAnQdJGauY0btPEmxQWdSOBGBvtNINgcttT4jRMhHqDJoFoMH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Mar 2025 19:53:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Sampriyo Guin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  "Patrick Steinhardt [ ]" <ps@pks.im>,  "Karthik
+ Nayak [ ]" <karthik.188@gmail.com>,  "Jialuo She [ ]"
+ <shejialuo@gmail.com>,  "Christian Couder [ ]"
+ <christian.couder@gmail.com>,  "Ghanshyam Thakkar [ ]"
+ <shyamthakkar001@gmail.com>,  Sampriyo Guin <sampriyoguin@gmail.com>
+Subject: Re: [PATCH] [GSoC Patch] Modernize Test Path Checking in
+ =?utf-8?Q?Git=E2=80=99s?= Test
+ Suite
+In-Reply-To: <CAPig+cSXiKOBq_+9+uDTFOLf5F8+KPocwXVX2VzPQAxJHQL99w@mail.gmail.com>
+	(Eric Sunshine's message of "Tue, 18 Mar 2025 17:49:24 -0400")
+References: <pull.1923.git.git.1742329571265.gitgitgadget@gmail.com>
+	<xmqq5xk611o3.fsf@gitster.g>
+	<CAPig+cSXiKOBq_+9+uDTFOLf5F8+KPocwXVX2VzPQAxJHQL99w@mail.gmail.com>
+Date: Tue, 18 Mar 2025 16:53:49 -0700
+Message-ID: <xmqqldt1zyia.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <cover.1742339107.git.josh@steadmon.net>
-X-Mailer: git-send-email 2.49.0.rc1.451.g8f38331e32-goog
-Message-ID: <8bd61ee5dd33d0529240b677caaff361876ec271.1742339107.git.josh@steadmon.net>
-Subject: [RFC PATCH v1 4/4] libgit-sys: exclude unnecessary directories in git-src
-From: Josh Steadmon <steadmon@google.com>
-To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
 
-We can avoid copying tens of megabytes of unnecessary source files by excluding
-a few directories which are not needed to compile libgitpub.a. This helps us
-stay below crates.io's 10 MB size limit.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- Makefile                      | 14 +++++++++++++-
- contrib/libgit-sys/Cargo.toml | 12 ++++++++++++
- contrib/libgit-sys/build.rs   |  8 +++++++-
- 3 files changed, 32 insertions(+), 2 deletions(-)
+> Referring to the other thread at [*], perhaps this (avoiding `!` in
+> front of test_path_*) is yet another clarification which ought to be
+> added to the microproject description in order to lead candidates in a
+> more profitable direction.
+>
+> [*]: https://lore.kernel.org/git/CAPig+cRm+sc+Rk-4SuQ5CrPeZLG2Nzz9B7+6OZxCq7tV5mzmBA@mail.gmail.com/
 
-diff --git a/Makefile b/Makefile
-index e7d8786e4e..c75f1d0208 100644
---- a/Makefile
-+++ b/Makefile
-@@ -651,6 +651,7 @@ export prefix bindir sharedir sysconfdir perllibdir localedir
- CC = cc
- AR = ar
- RM = rm -f
-+RMDIR = rmdir --ignore-fail-on-non-empty
- DIFF = diff
- TAR = tar
- FIND = find
-@@ -3477,13 +3478,13 @@ coccicheck-pending: $(COCCICHECK_PATCHES_PENDING_INTREE)
- 
- # "Sub"-Makefiles, not really because they can't be run stand-alone,
- # only there to contain directory-specific rules and variables
-+ifndef NO_GITWEB
- ## gitweb/Makefile inclusion:
- MAK_DIR_GITWEB = gitweb/
- include gitweb/Makefile
- 
- .PHONY: gitweb
- gitweb: $(MAK_DIR_GITWEB_ALL)
--ifndef NO_GITWEB
- all:: gitweb
- endif
- 
-@@ -3763,7 +3764,9 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) -r .dist-tmp-dir .doc-tmp-dir
- 	$(RM) $(GIT_TARNAME).tar.gz
- 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
-+ifndef INCLUDE_LIBGIT_RS
- 	$(MAKE) -C Documentation/ clean
-+endif
- 	$(RM) Documentation/GIT-EXCLUDED-PROGRAMS
- ifndef PRESERVE_LIBGIT_TARGET
- 	$(RM) -r contrib/libgit-sys/target contrib/libgit-rs/target
-@@ -3775,7 +3778,9 @@ ifndef NO_PERL
- 	$(RM) -r perl/build/
- endif
- 	$(MAKE) -C templates/ clean
-+ifndef INCLUDE_LIBGIT_RS
- 	$(MAKE) -C t/ clean
-+endif
- ifndef NO_TCLTK
- 	$(MAKE) -C gitk-git clean
- 	$(MAKE) -C git-gui clean
-@@ -3798,6 +3803,13 @@ ifdef MSVC
- 	$(RM) compat/vcbuild/MSVC-DEFS-GEN
- endif
- 
-+# Handle additional cleanup needed for running `cargo package` for libgit-sys.
-+ifdef INCLUDE_LIBGIT_RS
-+libgit-pkg-clean: clean
-+	$(RMDIR) t/helper t/unit-tests/clar t/unit-tests t
-+	$(RMDIR) oss-fuzz
-+endif
-+
- .PHONY: all install profile-clean cocciclean clean strip
- .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_modern_shell
- .PHONY: FORCE
-diff --git a/contrib/libgit-sys/Cargo.toml b/contrib/libgit-sys/Cargo.toml
-index e0623022c3..4b8facccfe 100644
---- a/contrib/libgit-sys/Cargo.toml
-+++ b/contrib/libgit-sys/Cargo.toml
-@@ -7,6 +7,18 @@ links = "gitpub"
- rust-version = "1.63" # TODO: Once we hit 1.84 or newer, we may want to remove Cargo.lock from
-                       # version control. See https://lore.kernel.org/git/Z47jgK-oMjFRSslr@tapette.crustytoothpaste.net/
- description = "Native bindings to a portion of libgit"
-+exclude = [
-+  "git-src/.github",
-+  "git-src/ci",
-+  "git-src/Documentation",
-+  "git-src/git-gui",
-+  "git-src/gitk-git",
-+  "git-src/gitweb",
-+  "git-src/oss-fuzz",
-+  "git-src/perl",
-+  "git-src/po",
-+  "git-src/t"
-+]
- 
- [lib]
- path = "src/lib.rs"
-diff --git a/contrib/libgit-sys/build.rs b/contrib/libgit-sys/build.rs
-index 16e0d66afb..0a72040726 100644
---- a/contrib/libgit-sys/build.rs
-+++ b/contrib/libgit-sys/build.rs
-@@ -17,6 +17,9 @@ pub fn main() -> std::io::Result<()> {
-         .current_dir(git_root.clone())
-         .args([
-             "INCLUDE_LIBGIT_RS=YesPlease",
-+            "NO_GITWEB=YesPlease",
-+            "NO_PERL=YesPlease",
-+            "NO_TCLTK=YesPlease",
-             "contrib/libgitpub/libgitpub.a",
-         ])
-         .output()
-@@ -40,8 +43,11 @@ pub fn main() -> std::io::Result<()> {
-         .current_dir(git_root.clone())
-         .args([
-             "INCLUDE_LIBGIT_RS=YesPlease",
-+            "NO_GITWEB=YesPlease",
-+            "NO_PERL=YesPlease",
-+            "NO_TCLTK=YesPlease",
-             "PRESERVE_LIBGIT_TARGET=YesPlease",
--            "clean",
-+            "libgit-pkg-clean",
-         ])
-         .output()
-         .expect("`make clean` failed to run");
--- 
-2.49.0.rc1.451.g8f38331e32-goog
+While mentors do that, I'd prefer to see others extend support for 
 
+	test_path_is_file ! this-should-not-be-file
+
+so that the students have a better tool to work with.
+
+> One other recommendation I would make is to restrict the microproject
+> submission to just a single test script (rather than updating twelve
+> of them) in order to avoid exhausting the pool for other potential
+> candidates.
+
+Yes, you made that point in the other thread, and I agree with it
+100%.
+
+Thanks.
