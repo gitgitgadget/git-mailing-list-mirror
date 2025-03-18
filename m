@@ -1,143 +1,380 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238A020B1E1
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 15:36:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2541F18A959
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 15:57:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742312182; cv=none; b=Srmx6EPk7u/XBlFiW7IJOVRhNxRxNyjs6NzAZUBIR80DzvBbY83zADB3mrWu/BiPSPMLiYOlNBlSh1ZGDf2t1ssarJMBKQmNSQ4wCF8dZrMkoEOaiLpC0TcHQ0aKJjATTtYGU7ScGW/C7xOFrM3glJ+cJbM87IQjOP1cSkRrBd0=
+	t=1742313429; cv=none; b=aa9dp0/XEt/bHY3iZfIvVNmPbVmt7A82ywpCukWYZc3UppbgjxeAMUxhBkixTUAy1cttiulvAxbv4rIreac/XCB+IcusMYHIpeufhV5gfVu3Cm6WxLcRrW2xAlsyMuLa2CbnlK5cF5X6sQ0iltI67AXBkT5khVGprFsmI+x9/C8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742312182; c=relaxed/simple;
-	bh=sJer6G71vc60UzpEDoI/6/PjVf7Bb6ga792Sf+Qmmm4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=uTZvMutz9wNBXS1U0wZksZmqm/Zs/Xez5pckZ1gZOPHKN27ggPux6nuyVzMIDuXZLlUMGlz1yncsUUvJH1rRQ4yuosl32B62quOfljCmZK+T+Wmql06GnPTMWz07au/UDNNJCrP9VBzDoSceIunJ3NHo+UBVv68Qvkpk2iiWzAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LT0nzOyq; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742313429; c=relaxed/simple;
+	bh=NWmHHLxVzBHIY4qs5JDs96JLkWcG8E+4MvwiOg7v5rY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=olQcGMHs2HsN9TxvbmMcTCpAsNbTRYCZtDVUfIU2JxsCpSCcUOnF833yK4EcvNO05zxc9kVD05BkRalQXexyF5cDS7IQsZ0CrehwBkvIbsEyrJvAIrFhH7qs2CywQEQz6z+ScjL/JSAlHXgxLXkTtORbgqpIutxXvnwSFBdm0sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=f81U3OQg; arc=none smtp.client-ip=91.218.175.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LT0nzOyq"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43cf034d4abso37366985e9.3
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 08:36:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742312175; x=1742916975; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KzWIZpU5QypkgbctemCD4yo3tnLTjZmdz0N3ZK1GDCs=;
-        b=LT0nzOyqQT16u+GEsNtcQkOMKhgAt5Xe/qihCFpWlE0rj1SIoPZWhYZ3T6674SRodN
-         7g8TZr88lHS7SF1tc8ZC00Lpx1X7PGidRk9KCpIGOgB/6NjhhVY28c6HmeKo9Q/ps1/1
-         rDnsv7aCRjnufTjfMY5iZqPEL+E5Jx5op80LkKQ3iaxxlRbi8knMTMu4w4XNHT8p+MZU
-         RTx2a5wF8Uvkz4VBEHZRb8Mi7y/L0FroMmNy6ie32AMnXjJMJC/vvqYgTGsYGuGakMn7
-         G/BN9w9nBeBArdWy2hO0HYB2G8PIHf38FooKYVvg7As1WYR/wQpekDutF2WC2lmuY22M
-         YxYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742312175; x=1742916975;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KzWIZpU5QypkgbctemCD4yo3tnLTjZmdz0N3ZK1GDCs=;
-        b=HRIq8nHqghzcoDGy+nBG6g3gkLIo3OM7MtfZCWQxNOYo9GanwKn31DceIomol+wpBb
-         hYO+M/JlV8C1LoqiU7D1SJYkYNDPvJPK3yJDYNvFS2af0KQNhKU0wky83W6hgJ/3QwEy
-         xl2IRFvbGT+Tn9t7ZC3CC3iEhQHFDRrkSza45XXFCtb2kVqMN5Ju6G+G3btAIEd+kbEn
-         7KRZYGjmQ3V2U30M8KAgnpMD/siI95OmYfk8HHVHnziTjA9Nj/QoYszhXVRhigHuAyGs
-         oWUPt7bq57It0Q267c+uNs+/aTApuCnll2Ab6dZdrt83zXEdzIviTT5oFn8u6k3saGHq
-         ThPw==
-X-Gm-Message-State: AOJu0YyGpRxXcCrQqGhgxPa8QXeTOvItFeBNh2O1H1rOal2I0HFaE6rs
-	0fIRXILt7bcenjCjOcXgKc9gtSUqUdra8VApkcPaDoOcO/D1opk2iIv1cw==
-X-Gm-Gg: ASbGncsu9lPtovG24ARKHdEZNikxHZ3GN9Iy51I4P6JvjNBHp2Qn8UZ7F7wGUEYzwGP
-	40GMUOHH1XJovTQ4MDhes/HD4ii+3keIJRk9KXfdOv6IGoIU7zmr230/F6864wRQTMOj1vEvRbz
-	IuB9jp3UcTuT/WxmaXVRuBJNqxJIWDk8Vv1z5pW65nSRVZo8lVmMGyU7DBMP7Nxk6R9VdhSfYZI
-	Uou8VWtbvrlj6bULsO8A7zbFowhIsPTRSXQNpxavVxwgwLwIQexhPV/VIe7beY+6yl5A+/SuunC
-	NwoAzHPuc6nWw5ly7w/0zCWrhBbwlZao4i2qzLN/ftaYDA==
-X-Google-Smtp-Source: AGHT+IGOSt6sZmxzrW5jiYTxInQvfW2SVr33ii7YlnYbmHDyFDDCfE7nH5RhkV1QZp/I5S0kegTBVg==
-X-Received: by 2002:a05:600c:3ca6:b0:43c:f8fc:f6a6 with SMTP id 5b1f17b1804b1-43d3b9865c2mr31815955e9.9.1742312174726;
-        Tue, 18 Mar 2025 08:36:14 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d1fdda29esm139214525e9.7.2025.03.18.08.36.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Mar 2025 08:36:14 -0700 (PDT)
-Message-Id: <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1897.v2.git.git.1740825238.gitgitgadget@gmail.com>
-References: <pull.1897.v2.git.git.1740825238.gitgitgadget@gmail.com>
-From: "Scott Chacon via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 18 Mar 2025 15:36:11 +0000
-Subject: [PATCH v3 0/2] bundle-uri: copy all bundle references ino the refs/bundle space
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="f81U3OQg"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1742313420;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HCynlV70QMD7Wl/dxpzaivPC7MdJRUF8kG3u5nIyM7o=;
+	b=f81U3OQgPKemHWCLPS7YtHMeRlA96nABUGLYPrI/P7prJEgLJTR7IxrAwCs2wi2Kl70N3U
+	3011S5RNov8EaI/lNiTy8dS06ocBG9kMg8P4rbmLDQhjo6Ush1ZiPuhsjRg1tNyD/GDLee
+	DOAJzLuIcA7Pbkdl6L6yeEhi1jch4DQ=
+From: Toon Claes <toon@iotcl.com>
+To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im, kristofferhaugsbakk@fastmail.com, gitster@pobox.com, Karthik
+ Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 2/2] reflog: implement subcommand to drop reflogs
+In-Reply-To: <20250314-493-add-command-to-purge-reflog-entries-v3-2-c24e23a6146d@gmail.com>
+References: <20250314-493-add-command-to-purge-reflog-entries-v3-0-c24e23a6146d@gmail.com>
+ <20250314-493-add-command-to-purge-reflog-entries-v3-2-c24e23a6146d@gmail.com>
+Date: Tue, 18 Mar 2025 16:56:49 +0100
+Message-ID: <8734fagwn2.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>,
-    Scott Chacon <schacon@gmail.com>
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Rebased the series onto current master and squashed the patch that modified
-the existing test into the main patch.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> bundle-uri: copy all bundle references ino the refs/bundle space
-> bundle-uri: update bundle clone tests with new refspec path
+> While 'git-reflog(1)' currently allows users to expire reflogs and
+> delete individual entries, it lacks functionality to completely remove
+> reflogs for specific references. This becomes problematic in
+> repositories where reflogs are not needed but continue to accumulate
+> entries despite setting 'core.logAllRefUpdates=false'.
+>
+> Add a new 'drop' subcommand to git-reflog that allows users to delete
+> the entire reflog for a specified reference. Include an '--all' flag to
+> enable dropping all reflogs from all worktrees and an addon flag
+> '--single-worktree', to only drop all reflogs from the current worktree.
+>
+> While here, remove an extraneous newline in the file.
+>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  Documentation/git-reflog.adoc |  23 ++++++--
+>  builtin/reflog.c              |  66 ++++++++++++++++++++++-
+>  t/t1410-reflog.sh             | 122 ++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 206 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/git-reflog.adoc b/Documentation/git-reflog.adoc
+> index a929c52982..b55c060569 100644
+> --- a/Documentation/git-reflog.adoc
+> +++ b/Documentation/git-reflog.adoc
+> @@ -16,6 +16,7 @@ SYNOPSIS
+>  	[--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]
+>  'git reflog delete' [--rewrite] [--updateref]
+>  	[--dry-run | -n] [--verbose] <ref>@{<specifier>}...
+> +'git reflog drop' [--all [--single-worktree] | <refs>...]
+>  'git reflog exists' <ref>
+>  
+>  DESCRIPTION
+> @@ -48,10 +49,14 @@ and not reachable from the current tip, are removed from the reflog.
+>  This is typically not used directly by end users -- instead, see
+>  linkgit:git-gc[1].
+>  
+> -The "delete" subcommand deletes single entries from the reflog. Its
+> -argument must be an _exact_ entry (e.g. "`git reflog delete
+> -master@{2}`"). This subcommand is also typically not used directly by
+> -end users.
+> +The "delete" subcommand deletes single entries from the reflog, but
+> +not the reflog itself. Its argument must be an _exact_ entry (e.g. "`git
+> +reflog delete master@{2}`"). This subcommand is also typically not used
+> +directly by end users.
+> +
+> +The "drop" subcommand completely removes the reflog for the specified
+> +references. This is in contrast to "expire" and "delete", both of which
+> +can be used to delete reflog entries, but not the reflog itself.
+>  
+>  The "exists" subcommand checks whether a ref has a reflog.  It exits
+>  with zero status if the reflog exists, and non-zero status if it does
+> @@ -132,6 +137,16 @@ Options for `delete`
+>  `--dry-run`, and `--verbose`, with the same meanings as when they are
+>  used with `expire`.
+>  
+> +Options for `drop`
+> +~~~~~~~~~~~~~~~~~~~~
+> +
+> +--all::
+> +	Drop the reflogs of all references from all worktrees.
+> +
+> +--single-worktree::
+> +	By default when `--all` is specified, reflogs from all working
+> +	trees are dropped. This option limits the processing to reflogs
+> +	from the current working tree only.
+>  
+>  GIT
+>  ---
+> diff --git a/builtin/reflog.c b/builtin/reflog.c
+> index 762719315e..a3652e69f1 100644
+> --- a/builtin/reflog.c
+> +++ b/builtin/reflog.c
+> @@ -29,6 +29,9 @@
+>  #define BUILTIN_REFLOG_EXISTS_USAGE \
+>  	N_("git reflog exists <ref>")
+>  
+> +#define BUILTIN_REFLOG_DROP_USAGE \
+> +	N_("git reflog drop [--all [--single-worktree] | <refs>...]")
+> +
+>  static const char *const reflog_show_usage[] = {
+>  	BUILTIN_REFLOG_SHOW_USAGE,
+>  	NULL,
+> @@ -54,11 +57,17 @@ static const char *const reflog_exists_usage[] = {
+>  	NULL,
+>  };
+>  
+> +static const char *const reflog_drop_usage[] = {
+> +	BUILTIN_REFLOG_DROP_USAGE,
+> +	NULL,
+> +};
+> +
+>  static const char *const reflog_usage[] = {
+>  	BUILTIN_REFLOG_SHOW_USAGE,
+>  	BUILTIN_REFLOG_LIST_USAGE,
+>  	BUILTIN_REFLOG_EXPIRE_USAGE,
+>  	BUILTIN_REFLOG_DELETE_USAGE,
+> +	BUILTIN_REFLOG_DROP_USAGE,
+>  	BUILTIN_REFLOG_EXISTS_USAGE,
+>  	NULL
+>  };
+> @@ -449,10 +458,64 @@ static int cmd_reflog_exists(int argc, const char **argv, const char *prefix,
+>  				   refname);
+>  }
+>  
+> +static int cmd_reflog_drop(int argc, const char **argv, const char *prefix,
+> +			   struct repository *repo)
+> +{
+> +	int ret = 0, do_all = 0, single_worktree = 0;
+> +	const struct option options[] = {
+> +		OPT_BOOL(0, "all", &do_all, N_("drop the reflogs of all references")),
+> +		OPT_BOOL(0, "single-worktree", &single_worktree,
+> +			 N_("drop reflogs from the current worktree only")),
+> +		OPT_END()
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, options, reflog_drop_usage, 0);
+> +
+> +	if (argc && do_all)
+> +		usage(_("references specified along with --all"));
 
-Scott Chacon (2):
-  bundle-uri: copy all bundle references ino the refs/bundle space
-  bundle-uri: add test for bundle-uri clones with tags
+What is the intended behavior when both `--all` and `<refs>` are
+omitted? It seems nothing happens at the moment. And no error nor
+warning is printed, that feels a bit odd to me.
 
- bundle-uri.c                |   2 +-
- t/t5558-clone-bundle-uri.sh | 203 +++++++++++++++++++++---------------
- 2 files changed, 118 insertions(+), 87 deletions(-)
+Now, when you do `git reflog expire --expire=all` it also seems to be
+doing nothing at all. I also think this is weird. And I don't see any
+test coverage for `git reflog expire` without `--all`.
 
+But what is the expected behavior when you omit `--all` and `<refs>`?
+Should it give an error or warning? Should it use HEAD, just like `git
+reflog show` does?
 
-base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1897%2Fschacon%2Fsc-more-bundle-refs-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1897/schacon/sc-more-bundle-refs-v3
-Pull-Request: https://github.com/git/git/pull/1897
+> +
+> +	if (do_all) {
+> +		struct worktree_reflogs collected = {
+> +			.reflogs = STRING_LIST_INIT_DUP,
+> +		};
+> +		struct string_list_item *item;
+> +		struct worktree **worktrees, **p;
+> +
+> +		worktrees = get_worktrees();
+> +		for (p = worktrees; *p; p++) {
+> +			if (single_worktree && !(*p)->is_current)
+> +				continue;
+> +			collected.worktree = *p;
+> +			refs_for_each_reflog(get_worktree_ref_store(*p),
+> +					     collect_reflog, &collected);
+> +		}
+> +		free_worktrees(worktrees);
+> +
+> +		for_each_string_list_item(item, &collected.reflogs)
+> +			ret |= refs_delete_reflog(get_main_ref_store(repo),
+> +						     item->string);
+> +		string_list_clear(&collected.reflogs, 0);
+> +
+> +		return ret;
+> +	}
+> +
+> +	for (int i = 0; i < argc; i++) {
+> +		char *ref;
+> +		if (!repo_dwim_log(repo, argv[i], strlen(argv[i]), NULL, &ref)) {
+> +			ret |= error(_("reflog could not be found: '%s'"), argv[i]);
+> +			continue;
+> +		}
+> +
+> +		ret |= refs_delete_reflog(get_main_ref_store(repo), ref);
+> +		free(ref);
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+>  /*
+>   * main "reflog"
+>   */
+> -
+>  int cmd_reflog(int argc,
+>  	       const char **argv,
+>  	       const char *prefix,
+> @@ -465,6 +528,7 @@ int cmd_reflog(int argc,
+>  		OPT_SUBCOMMAND("expire", &fn, cmd_reflog_expire),
+>  		OPT_SUBCOMMAND("delete", &fn, cmd_reflog_delete),
+>  		OPT_SUBCOMMAND("exists", &fn, cmd_reflog_exists),
+> +		OPT_SUBCOMMAND("drop", &fn, cmd_reflog_drop),
+>  		OPT_END()
+>  	};
+>  
+> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+> index 1f7249be76..42b501f163 100755
+> --- a/t/t1410-reflog.sh
+> +++ b/t/t1410-reflog.sh
+> @@ -551,4 +551,126 @@ test_expect_success 'reflog with invalid object ID can be listed' '
+>  	)
+>  '
+>  
+> +test_expect_success 'reflog drop non-existent ref' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_must_fail git reflog exists refs/heads/non-existent &&
+> +		test_must_fail git reflog drop refs/heads/non-existent 2>stderr &&
+> +		test_grep "error: reflog could not be found: ${SQ}refs/heads/non-existent${SQ}" stderr
+> +	)
+> +'
+> +
+> +test_expect_success 'reflog drop' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit A &&
+> +		test_commit_bulk --ref=refs/heads/branch 1 &&
+> +		git reflog exists refs/heads/main &&
+> +		git reflog exists refs/heads/branch &&
+> +		git reflog drop refs/heads/main &&
+> +		test_must_fail git reflog exists refs/heads/main &&
+> +		git reflog exists refs/heads/branch
+> +	)
+> +'
+> +
+> +test_expect_success 'reflog drop multiple references' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit A &&
+> +		test_commit_bulk --ref=refs/heads/branch 1 &&
+> +		git reflog exists refs/heads/main &&
+> +		git reflog exists refs/heads/branch &&
+> +		git reflog drop refs/heads/main refs/heads/branch &&
+> +		test_must_fail git reflog exists refs/heads/main &&
+> +		test_must_fail git reflog exists refs/heads/branch
+> +	)
+> +'
+> +
+> +test_expect_success 'reflog drop multiple references some non-existent' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit A &&
+> +		test_commit_bulk --ref=refs/heads/branch 1 &&
+> +		git reflog exists refs/heads/main &&
+> +		git reflog exists refs/heads/branch &&
+> +		test_must_fail git reflog exists refs/heads/non-existent &&
+> +		test_must_fail git reflog drop refs/heads/main refs/heads/non-existent refs/heads/branch 2>stderr &&
+> +		test_must_fail git reflog exists refs/heads/main &&
+> +		test_must_fail git reflog exists refs/heads/branch &&
+> +		test_must_fail git reflog exists refs/heads/non-existent &&
+> +		test_grep "error: reflog could not be found: ${SQ}refs/heads/non-existent${SQ}" stderr
+> +	)
+> +'
+> +
+> +test_expect_success 'reflog drop --all' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit A &&
+> +		test_commit_bulk --ref=refs/heads/branch 1 &&
+> +		git reflog exists refs/heads/main &&
+> +		git reflog exists refs/heads/branch &&
+> +		git reflog drop --all &&
+> +		test_must_fail git reflog exists refs/heads/main &&
+> +		test_must_fail git reflog exists refs/heads/branch
 
-Range-diff vs v2:
+Should we test output of `git reflog list`?
 
- 1:  b36bc876fe1 < -:  ----------- bundle-uri: copy all bundle references ino the refs/bundle space
- 2:  5e198ba5c66 ! 1:  2ccbfdcc2dc bundle-uri: update bundle clone tests with new refspec path
-     @@ Metadata
-      Author: Scott Chacon <schacon@gmail.com>
-      
-       ## Commit message ##
-     -    bundle-uri: update bundle clone tests with new refspec path
-     +    bundle-uri: copy all bundle references ino the refs/bundle space
-     +
-     +    When downloading bundles via the bundle-uri functionality, we only copy the
-     +    references from refs/heads into the refs/bundle space. I'm not sure why this
-     +    refspec is hardcoded to be so limited, but it makes the ref negotiation on
-     +    the subsequent fetch suboptimal, since it won't use objects that are
-     +    referenced outside of the current heads of the bundled repository.
-     +
-     +    This change to copy everything in refs/ in the bundle to refs/bundles/
-     +    significantly helps the subsequent fetch, since nearly all the references
-     +    are now included in the negotiation.
-      
-          The update to the bundle-uri unbundling refspec puts all the heads from a
-          bundle file into refs/bundle/heads instead of directly into refs/bundle/ so
-     -    the tests need to be updated to look in the new heirarchy.
-     +    the tests also need to be updated to look in the new heirarchy.
-      
-          Signed-off-by: Scott Chacon <schacon@gmail.com>
-      
-     + ## bundle-uri.c ##
-     +@@ bundle-uri.c: static int unbundle_from_file(struct repository *r, const char *file)
-     + 		const char *branch_name;
-     + 		int has_old;
-     + 
-     +-		if (!skip_prefix(refname->string, "refs/heads/", &branch_name))
-     ++		if (!skip_prefix(refname->string, "refs/", &branch_name))
-     + 			continue;
-     + 
-     + 		strbuf_setlen(&bundle_ref, bundle_prefix_len);
-     +
-       ## t/t5558-clone-bundle-uri.sh ##
-      @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'create bundle' '
-       test_expect_success 'clone with path bundle' '
- 3:  ea204679cb0 = 2:  d148b14c390 bundle-uri: add test for bundle-uri clones with tags
+> +	)
+> +'
+> +
+> +test_expect_success 'reflog drop --all multiple worktrees' '
+> +	test_when_finished "rm -rf repo" &&
+> +	test_when_finished "rm -rf wt" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit A &&
+> +		git worktree add ../wt &&
+> +		test_commit_bulk -C ../wt --ref=refs/heads/branch 1 &&
+> +		git reflog exists refs/heads/main &&
+> +		git reflog exists refs/heads/branch &&
+> +		git reflog drop --all &&
+> +		test_must_fail git reflog exists refs/heads/main &&
+> +		test_must_fail git reflog exists refs/heads/branch
 
--- 
-gitgitgadget
+Shall we test HEAD in both worktrees does not exists?
+
+> +	)
+> +'
+> +
+> +test_expect_success 'reflog drop --all --single-worktree' '
+> +	test_when_finished "rm -rf repo" &&
+> +	test_when_finished "rm -rf wt" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit A &&
+> +		git worktree add ../wt &&
+> +		test_commit -C ../wt foobar &&
+> +		git reflog exists refs/heads/main &&
+> +		git reflog exists refs/heads/wt &&
+> +		test-tool ref-store worktree:wt reflog-exists HEAD &&
+> +		git reflog drop --all --single-worktree &&
+> +		test_must_fail git reflog exists refs/heads/main &&
+> +		test_must_fail git reflog exists refs/heads/wt &&
+> +		test_must_fail test-tool ref-store worktree:main reflog-exists HEAD &&
+> +		test-tool ref-store worktree:wt reflog-exists HEAD
+
+Naive question: why is `test-tool ref-store` used and not
+`git -C ../wt reflog exist`?
+
+> +	)
+> +'
+> +
+> +test_expect_success 'reflog drop --all with reference' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit A &&
+> +		test_must_fail git reflog drop --all refs/heads/main 2>stderr &&
+> +		test_grep "usage: references specified along with --all" stderr
+> +	)
+> +'
+> +
+>  test_done
+>
+> -- 
+> 2.48.1
