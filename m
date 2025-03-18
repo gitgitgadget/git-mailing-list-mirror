@@ -1,91 +1,72 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4889418FC84
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 02:04:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A9B15B0EE
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 02:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742263498; cv=none; b=AhhfRnHxwPLiwUIrGnCiwgqACIuPL1Za0XF4sdwN4ExezZMIwSicMILyWuCGfaKPCQxgOZpxAAixaFZhDwSZbcP9gh0zapLIxcWUxGpOgJMI9RtBVF1YgXVmcbjuzTg/d+jvCPv433XZXIU3Z9qvO6NF/+HrjNIqsEh5C5rMLJY=
+	t=1742263530; cv=none; b=Gp80eEkBpUdo88B/r8add5sRLS+OCBbq+wq7hcZbeRhIK4xoNCScEIHlD2f3PjklpjDrDT4WnERHrMmZJ/rGMO1yUD+rGz473J1a9bys87/Xa0AJpcjiLU96ey6LzRKie/P1Ga9j8NFziK+76Zz8nGGtkZ2t9GHWxJqdOmlXyEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742263498; c=relaxed/simple;
-	bh=t7UwZhtcqQpB3IFv2pWMCWmz4B8X+jzUi8JWqKjFdws=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=tQtT+tbXQLWKESuyr3elJCyij7ZHpAzy952E1ntG1syZTeU7KWyn0xGthco8e/Wf3qs11DOzK9NNQYR0bNr3jNyEP8H4rH1uctcNi4xQZ9A2+3ilDY+bhAMrjWEaUC/qTnLg2h90tfj8p8tfkNSJ1ll6PFSlChmbMAKnHEnb9C8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=block.xyz; spf=pass smtp.mailfrom=block.xyz; dkim=pass (1024-bit key) header.d=block.xyz header.i=@block.xyz header.b=P3DwRtV8; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=block.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=block.xyz
+	s=arc-20240116; t=1742263530; c=relaxed/simple;
+	bh=T5lO6QIIHnM/Wwt4dPYJiubuBzf0fkkBxGBGvsw/KwY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mN+jX22QzDpnSpjZEa/c0HT433jRcXp1S18gBDjvSJFvA0D6+AzGbNkE3vixB5aOFwfr6zRkPfFGVfJrLIjL+fuIXGAGwb4o1n4Ax35IsazpqAriuRG+gqwIcSVUIB1HEuIq09/rAvLcblus8y780gREsdnfYB6FRniuAitm/Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DBXS0IFl; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=block.xyz header.i=@block.xyz header.b="P3DwRtV8"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-390f5f48eafso3191023f8f.0
-        for <git@vger.kernel.org>; Mon, 17 Mar 2025 19:04:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=block.xyz; s=google; t=1742263494; x=1742868294; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=t7UwZhtcqQpB3IFv2pWMCWmz4B8X+jzUi8JWqKjFdws=;
-        b=P3DwRtV8ZndXLQ3Yt56JYtiwDF43uHpF5cl3cItyHEorKUkpB9TduyOy7rHIU2rx5L
-         Hi/LqjEb+NVQ117oGLj7VXaFa2tw0mh0UlfiKAZl0p3JFyHBDOfLXGvIZRJSwA4dv8vn
-         3B1Px8NqHWxP7iFJDU2DZUSI1Pi9+4gurjNNs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742263494; x=1742868294;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t7UwZhtcqQpB3IFv2pWMCWmz4B8X+jzUi8JWqKjFdws=;
-        b=kC638isP2nXuXbBABR9bgXPAev0cerk0HydhAb1MGysTf8s5rG9fy/9QehWmxmx+Oy
-         gYfknv5LDdp4Z5fjK4NvDXcI74O+ZZToCtWD1Sn15xRZSebFvqDKlC7Yi0pfD5A+e32n
-         MoegXkylNeSrvbzbPeLFNa0R8ub9SXFpGtKtrTdJNJZ2hvOl2L3ve2jEOb6C6WbXc7Yz
-         q4ALN9hO9RZnK/jFy49yCslnCM70d0LElxerXhIPmylZG7DloTpQRKkwP/TSN0mQfDqD
-         +oja5Q+SM2nmLTY9F/kvCSi/ZDeOAundOVGGP6TjFhafQ4JtcbuOPP6mMHhPwEfYiae9
-         heNQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWoulyB80ZHNu01iZH3sQkvNeQ0UT8RdEyuYIujjRCI3fYRULR9TMPp3jxfbET530TAN3U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwzuVd/tFSvBLaeTVLhzvEvVlLIJcnrNMDRoy4tM7C0MglLuaL+
-	3xbVOkkw4BeSnYSVsMqmVFTuxNANexrlr97/0xBSPEIoKcnh24S3xPhvs0UMbdxwt88w0RIJvn7
-	wtdNRmNRKYCnJVDejbIjUkN9UwboM08bhpddTwIS0Q0vTZmD5BNzSXQ==
-X-Gm-Gg: ASbGncvbDMrDwloA69IOm5T+EUNfF91Auq192r6GC4jW9waOsWPboH843cpl6/juGyw
-	xv/fj/XZZayTMr4Ncy+9CWFi2vswRlnjWDEo0LwWEtJogouGANzWsHV8xIodKuRIlFiMrj0xPBL
-	TMVX9MHp8AgHsw21ANcHKLKPel8aNyvfpOOSsomTQ=
-X-Google-Smtp-Source: AGHT+IHQcljiHB4oNA30pYLIVphcmeYaD7dN1vpX1GuOJrIFUa9GicGbDq7hS5ZFWtkpEdG3pkmzROMf7DF0gRp8m9o=
-X-Received: by 2002:a05:6000:1acd:b0:38f:3e39:20ae with SMTP id
- ffacd0b85a97d-3996b4999b2mr1539216f8f.43.1742263494575; Mon, 17 Mar 2025
- 19:04:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DBXS0IFl"
+Received: (qmail 26728 invoked by uid 109); 18 Mar 2025 02:05:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=T5lO6QIIHnM/Wwt4dPYJiubuBzf0fkkBxGBGvsw/KwY=; b=DBXS0IFlOjig3pQdQckplvlX07A9vFDd5ZwUYDMqil2kHhlLfpgrDZl4YRzGrOcAuLM6WkeAPHhRMQknCssr/PjU+auk3a62V/ijliMscPSSMAzEOqk5MfUo81oWl5S/6RbFrx3BwM328cNzkfJ6RkriFvv5hI0ZNKZ6IggjH4Uj1kB9vEUJv0vcMCLQmNs3flXujae53aqua6uK+M2fubYk26ezoS5uox/AUUXAhGIfuSeCnW1DcH+vVQDykkZRN7fvYF1L4icIc7feYu/GvbW/WK89VGQyPjA/gyVCTeKq/OH9vUSgOitQim/K2Q4WskIrhfohqhJL1lgUfr8CFg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Mar 2025 02:05:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3825 invoked by uid 111); 18 Mar 2025 02:05:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Mar 2025 22:05:27 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 17 Mar 2025 22:05:26 -0400
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 12/13] pack-bitmap.c: use `ewah_or_iterator` for type
+ bitmap iterators
+Message-ID: <20250318020526.GB1473033@coredump.intra.peff.net>
+References: <cover.1723755667.git.me@ttaylorr.com>
+ <cover.1741983492.git.me@ttaylorr.com>
+ <a1cf65bedc94ab6e318ff81a6d48eb30b6fc7868.1741983492.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOHNGAW7ucD+xqvEuvq2GHMc42+WdKJX44XGguadK_y=pMf0Vg@mail.gmail.com>
- <Z9ipn_-J-ZKbnVQh@tapette.crustytoothpaste.net>
-In-Reply-To: <Z9ipn_-J-ZKbnVQh@tapette.crustytoothpaste.net>
-From: Yissachar Radcliffe <yissachar@block.xyz>
-Date: Mon, 17 Mar 2025 22:04:43 -0400
-X-Gm-Features: AQ5f1Jq7SCdCEbshisHOnohQEW5-WDWxR29TycbOy0TBTOXTTQG86oh_1bQJic8
-Message-ID: <CAOHNGAUWR0K4RtEMU7WjQUhw9=rNekKfQ-1_rLNniiLKRgVzaA@mail.gmail.com>
-Subject: Re: Slow git add . performance in large repo
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Yissachar Radcliffe <yissachar@block.xyz>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <a1cf65bedc94ab6e318ff81a6d48eb30b6fc7868.1741983492.git.me@ttaylorr.com>
 
-> When you pipe the results of `git status` to `git add`, you are
-> effectively using the `-u` option, since that will only ever list files
-> that are tracked.
+On Fri, Mar 14, 2025 at 04:18:56PM -0400, Taylor Blau wrote:
 
-I'm not sure what you mean by this; `git status` lists untracked
-files. For instance, if I `touch foo.txt` and `git add -u .` then
-foo.txt will not be staged. But if I pipe the changes from `git
-status` into `git add` then it will be added.
+> -static void init_type_iterator(struct ewah_iterator *it,
+> +static void init_type_iterator(struct ewah_or_iterator *it,
+>  			       struct bitmap_index *bitmap_git,
+>  			       enum object_type type)
+>  {
+>  	switch (type) {
+>  	case OBJ_COMMIT:
+> -		ewah_iterator_init(it, bitmap_git->commits);
+> +		ewah_or_iterator_init(it, bitmap_git->commits_all,
+> +				      bitmap_git->base_nr + 1);
 
-> The untracked cache is not used when you specify
-> a pathspec on the command line because in the general case, it doesn't
-> have to be just `.` and it could be something like a match on an
-> attribute or a glob pattern, which would make the code very complex in
-> dealing with that case.
-Is there a reason `git add .` couldn't use the untracked cache even if
-other pathspecs didn't? I have to imagine that `.` is by far the most
-common pathspec used and there would be value in speeding that up.
+This certainly makes sense. It looks like we now use the or_iterator
+unconditionally, even for non-layered queries. It's probably a little
+slower in practice, just because it's an extra layer of indirection. But
+I don't know if trying to micro-optimize here is worth it. In general
+I'd say no, but sometimes there are surprising tight loops with bitmaps.
 
-> You can, of course, continue to use it, but you
-> can't expect them to perform identically.
-I wouldn't expect them to perform identically, but given how much
-faster it runs when piping in the data from `git status` I think it's
-reasonable to expect it to run much faster than it does today.
+I dunno. I guess it would be easy enough to do a simple before/after
+benchmark on a single packfile with this series. I wouldn't expect it to
+find anything, but might not hurt to double check.
+
+-Peff
