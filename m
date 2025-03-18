@@ -1,90 +1,89 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC2A20322
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 19:34:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46381DC9B4
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 20:21:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742326467; cv=none; b=Evr/bCqStEYF6g3b9bry9pL5TnhFrS+PbI1OpbAcExF2cfFQSVU2XLLi8wgZplOJOUN31hdkGf1XKo1V5M5kJlUUxYiZitFzGGgjLaEuwgv9Bus0s8k9vFtDIL34h1ISiP+zD0gjQUyuftgtPKEw0Rj/pxOg180y2inw0Lnjjkc=
+	t=1742329315; cv=none; b=MEZNsElRZ7eebMOyi48F13UsGpyOFXYyhggEMYWJ/inW2VX27b10/XwpzRkmS0AwXOHaum1BVBUBzwztc5pJfeC0cxvxWV90a3pWPhBnbwERvDnd+7ZrBUkxbwyk0cHNvjkP5HVbecYVL2ojR2rzXB3Z7akFLDPzfH6pgkvpefA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742326467; c=relaxed/simple;
-	bh=/BMHNedJE0B1of6oz2s+a+eeRww+MmOwWG78pjin52A=;
+	s=arc-20240116; t=1742329315; c=relaxed/simple;
+	bh=nBOYuz2vB/3DSa+RyAka4ux7hHelgwCJ2iRp/hAMQ88=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dcX30sScPkxidJLpJxc7WVCq5C8wMss7UNNC1rECikGo7IEA9fZDX9p5NFNXom/PAFcdUVsrrNiK9/ew8EGCxFFyQpYZyj1dCViilocz8+rlG11D3I//soTf2FNRb2NLyVvRM/Ndu2ck29DIcp13WvmYuSJo6PTO8KDBq02pV+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eMSuVzDw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=At51YP4z; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=pD9v2Rhp/yZPYeDtFla72yaohSZ1V3g33rH2m+A/mtdPvEHqlALnvjIKDHHZ7pxg1y7L7LsiP4rhtW8SqwjRJM4CryUmpi8wopT369BCwJeS7pfzddzcxXkTMlKTuXKISQlOIZtAx7Jrkl876nI0+joV9mhCAic6CimEh3m6nT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jgfhEcev; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mj/o/d9i; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eMSuVzDw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="At51YP4z"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id AE29C1382D18;
-	Tue, 18 Mar 2025 15:34:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jgfhEcev";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mj/o/d9i"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F1BEE11400E7;
+	Tue, 18 Mar 2025 16:21:51 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 18 Mar 2025 15:34:20 -0400
+  by phl-compute-08.internal (MEProxy); Tue, 18 Mar 2025 16:21:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1742326460;
-	 x=1742412860; bh=0Hb8QGyJT170wP6IG9D8xVCxrycNXL2wy0r0IZ3oAOQ=; b=
-	eMSuVzDw3VPt0HtYpzICyqXamRVTwbTd+Pcjx2rBm7uaCD8/nqkpchvyBb5rbM46
-	txm0l5ZDZ3vlcvDMy/wfzJWWjZA4m/aQd6Buj7EURnlk5NXzUe35+gNYIW/ihhlu
-	BKEEU72a9YZwB/2tDsqy9B+zpk1UTCqqfyj1DFBVeBKt8JbFM7v1YAlrV96AyVV4
-	g8qky2bxmwKml/bnJnS3yAaFK38NYHqa5nruHUgzypBY1vm0OM+Y1YGnJgp90bw0
-	RGvlV773pvgOf5tZNonvIo1Vq2T7fgTo+LDJKyOS7oHJBZzxR/t9u655c6t+b2SM
-	BisTd/OtmHpAubwnu3biaA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1742329311; x=1742415711; bh=eKmGAi1VK8
+	9QVJE4uaGL2znH7Qh8zqTpZ2kWZ6ngf6A=; b=jgfhEcevbxY4PIswhQoRu7XfSg
+	mH0fyn7b/Df2MoUfGw7L8GTgA6kzuGtzmX9MM950HDIpZsYR2eRWJFs3nBrmQlNm
+	t5vcqk/Hg/w61DRCl/4T1c/iCIT5+BxhYstbXEy9Iq2rzZBQmi1rnJv0Tf4nQppu
+	jtXWtFhGeL25rLnCdYgNq2ixOf1uoduF/xy15nBS+efIbXLcPB6iyPO20YLll1hb
+	KUyHf3Vu0rU2Um/kGwazM+dEgZXvaRINGFhLJ8frG4ncrESj1JDMngtKP+dTKCXc
+	GqqANLNVpcIfOvkt8aIKeYBrDM+JjpX8pS58uKzFweGdzDuJZ5kJCwlaUVQQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742326460; x=
-	1742412860; bh=0Hb8QGyJT170wP6IG9D8xVCxrycNXL2wy0r0IZ3oAOQ=; b=A
-	t51YP4zxO/bX9DK0uhH3E/0VI42HXcCkMSe0E0bsCoMzbtxro9MPYUekVjCQai8I
-	W0NfUKtScyyYFym93rTqXQaObF+J59u1pKVc06kREZVet/M782H7V/Rbl0EfwyFo
-	26+IZEh2tVv8GJCqdjjRBnhcGIMye29akcs4aWlimZ43coliSfyjSCrTJwGR6Sid
-	wn5pPEUK65JLeMkTOsdImhxSvgsfxABpNPRF+0GI4xEliB8+JK4er2N0OmY/Gvfd
-	E4Q/fm6hFRJ1GHXZCH11iVhSTSh6goM3CGsjbqhzaMbrnE5VjNimyS3u+/kp7ENG
-	9XY6WrbGxcsh1WYUQCksA==
-X-ME-Sender: <xms:vMrZZ9z-oTCZXDzdbebyB6rgc4vIGEx5ypWM4pfdprJdB4BecNXuPA>
-    <xme:vMrZZ9RHuUJgcCIrMQJT2fJxnG0WPqOqIv8q1ka3vzWbFLxLtd09d9zza9iSpzopU
-    nGI6sN8wpCC1DOzyw>
-X-ME-Received: <xmr:vMrZZ3VlPOZMnFrAV0fXmyxZ2EHfT-dZYLBp5i3qFbcq1ubcRpOVvcpgCTxaOFkzqQ2hZkdxWOMxt9j5g8y6TZ-W440E-vDMBrlhWC0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeefvdelucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1742329311; x=1742415711; bh=eKmGAi1VK89QVJE4uaGL2znH7Qh8zqTpZ2k
+	WZ6ngf6A=; b=Mj/o/d9iCXrN0rMPW9NBSSodLS7DsSaun00w4T4juqQY5CsvjtN
+	lNOj7W9kvt4impSPCc+Aid/QkAmHUX4x7zoFK28f/iIXfajcsi+GSzyX1F3d0ZW/
+	L6KoNyz4wpKrUb0zPd24B/7M7OUl7jvFxkdQrr/SD7FtIu3KU5ATckpvTzo/RKK1
+	o/HgWV/4QWfY/uOwo5KawNaC5hV5mhvM8jl79Ht74uvTGtvhVJ947mk5+Jjpx4Eb
+	XMCpC1HsGDSQkENSSa8pg1vEqkMbxtpABbIr94eeSHR8tOEw96OnJTy1aHLiORdu
+	BWt3S833mrhJEXx/YftKR+lsr/MyqG3BVcQ==
+X-ME-Sender: <xms:39XZZ41lvsdZYhpAiZFpyF0NivsdYiVcNPC7KkVW1nbNz5ZQy7vYGw>
+    <xme:39XZZzEHQEeajmhe-f7y275aJzVIVr0nwPeNfAs2X3Rrz0Zu3hfRpmYe9COVwspXk
+    B3C9fVQBty1S-6w2Q>
+X-ME-Received: <xmr:39XZZw5uRfNeFCAoMRm6ls0U8A4e1L0t_Fy1ftG0yKGRRoqjDqsSBe-1u4kvDhw52DHuGqaSIE2leHHzZjTjClWEnQg8HIkP6cGH4fU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeeffeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpefhtedvjeehudehgeelheefieevtdeg
-    leefvdfftdevtdduffeikeeiieejvdelhfenucffohhmrghinhepkhgvrhhnvghlrdhorh
-    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhi
-    thhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmh
-    htphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtgho
-    mhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
-    khhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepshgrmhhprhhihihoghhuihhnsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:vMrZZ_i8nY3uauPZ6L8uD2l4otXpFDzxddyoY7hgTnHQlzyMe4xBEQ>
-    <xmx:vMrZZ_AJ1IQh0qerldhhRHVy3ZF5UjkHTkaEV-FmOmLnbgKd8e5VQw>
-    <xmx:vMrZZ4J3XNlIUgTqVgL0O0IMS1c_juGT302CxWciCsDteWVL3pNyug>
-    <xmx:vMrZZ-A_M_pZbkBCp6PQ_n06sRXgjWjkr6_jKUdAGaHccfbQycNpCw>
-    <xmx:vMrZZxBvFGIJoCO6qOC-n92Pcb6sFtYGOp6Vg7tAsJS_ZqBjkruO60-g>
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptdfffedvledvudefjeegudelteegfeeg
+    udegheevuddtveeitedvjeeuudffjeeknecuffhomhgrihhnpehpuhgslhhitgdqihhnsg
+    hogidrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
+    ohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtthhope
+    hmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohgu
+    uddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpth
+    htohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:39XZZx3cO9O2g5uQlmjZMSW8W-4iGsM_FxxLk6C5H_FVIjsS9xrykg>
+    <xmx:39XZZ7GKPgUxkSpiiruiD83yZE2vJ5l4z2rNc7kdvh0bDQgHREIGiA>
+    <xmx:39XZZ6-vTkYh1XbxKzAYJqrqEra4xWwoQByrKSjBInbdevRODegoDA>
+    <xmx:39XZZwmZScshPKb91jHCyVhaXqye4lzRy-7YYyed1ENr0YEAY1mi3A>
+    <xmx:39XZZyA-JNQ2MMzCk003w70kOSs9U4KmLKHREZ77lgwBhNLrCou6dE40>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Mar 2025 15:34:19 -0400 (EDT)
+ 18 Mar 2025 16:21:51 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Sampriyo Guin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
- <karthik.188@gmail.com>,  Sampriyo Guin <sampriyoguin@gmail.com>
-Subject: Re: [PATCH] [GSoC Patch] Modernize Test Path Checking: test -(e|f|d)
-In-Reply-To: <CAPig+cQrCdtN4+hyZyPWQuvnoetarbcgkwKU7cD-TpzfzK=jzw@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 18 Mar 2025 13:39:35 -0400")
-References: <pull.1918.git.git.1742299111861.gitgitgadget@gmail.com>
-	<CAPig+cQrCdtN4+hyZyPWQuvnoetarbcgkwKU7cD-TpzfzK=jzw@mail.gmail.com>
-Date: Tue, 18 Mar 2025 12:34:18 -0700
-Message-ID: <xmqqiko62kw5.fsf@gitster.g>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  johncai86@gmail.com,
+  me@ttaylorr.com,  phillip.wood123@gmail.com,  ps@pks.im,
+  shejialuo@gmail.com
+Subject: Re: [PATCH 0/9] remove unnecessary if statement
+In-Reply-To: <20250318115912.2978992-1-usmanakinyemi202@gmail.com> (Usman
+	Akinyemi's message of "Tue, 18 Mar 2025 17:28:52 +0530")
+References: <20250318115912.2978992-1-usmanakinyemi202@gmail.com>
+Date: Tue, 18 Mar 2025 13:21:49 -0700
+Message-ID: <xmqqmsdi144i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,68 +91,64 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-> Thanks for submitting this GSoC microproject. See comments below...
+> In an earlier patch[1] which has been merged to the master,
+> We checked `repo` is not NULL before making call to `repo_config()`.
+> Later, in another patch series[2] which has been merged to next,
+> `repo_config()` was taught to allow `repo` to be NULL.
 >
-> On Tue, Mar 18, 2025 at 7:58 AM Sampriyo Guin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> From: rimo <sampriyoguin@gmail.com>
->
-> This name should match the Signed-off-by: name. Since the "From:"
-> header is generated from the author information in the commit, you
-> probably need to adjust your "user.name" configuration to fix this.
->
->> test -e changed to test_path_exists
->> test -f changed to test_path_is_file
->
-> People reading the patch would like to know why a change is being
-> made, so this is where you should explain the reason (for instance,
-> "the test_path_* functions provide better diagnostics upon failure" or
-> such). As Karthik mentioned[*], read the "Describe your changes well"
-> section in Documentation/SubmittingPatches to learn how to craft a
-> good commit message.
->
-> [*]: https://lore.kernel.org/git/CAOLa=ZSkMp+H9PZeBZXK47=fx1sH=S54AuPT=oUosm7F7V8MGg@mail.gmail.com/
->
->> Signed-off-by: Sampriyo Guin <sampriyoguin@gmail.com>
->> ---
->>     , Jialuo She shejialuo@gmail.com , Christian Couder
->>     christian.couder@gmail.com, Ghanshyam Thakkar shyamthakkar001@gmail.com
->
-> It appears that GitGitGadget didn't like how this list was formatted.
-> Instead, place each recipient on its own Cc: line.
->
->>  t/chainlint/chained-subshell.expect | 2 +-
->>  t/chainlint/chained-subshell.test   | 2 +-
->>  t/chainlint/function.expect         | 2 +-
->>  t/chainlint/function.test           | 2 +-
->>  4 files changed, 4 insertions(+), 4 deletions(-)
->
-> Let's not touch any of the "chainlint" files; they are checking
-> validity of a completely separate tool ("chainlint"), and have nothing
-> to do with checking Git itself. Instead, pick one of the t/t???-*.sh
-> files.
+> So there is not need for checking if the `repo` is NULL before calling
+> repo_config() in the earlier patch.
 
-Yeah, these changes to make them use test_path_* are not "fixes" but
-something else.  The first step for a contributor is to understand
-why "test_path_*" are preferred over "test -[def]" and in what
-context, but touching these files shows that such understanding is
-missing, unfortunately.
+OK, that sounds good.
 
-I find the "as specified in Git Microprojects" in the patch
-description the most disturbing,
+Are we confident that our half-hearted choice of "there is no repo,
+so just do a very-early-config thing" is appropriate for any code
+paths?
 
-    A simple fix as specified in Git Microprojects.
+At least we should be perfectly happy with that choice applied to
+all of these code paths touched by this series.
 
-as it may be an indication that some introductory write-up is
-misleading potential students in a wrong direction.  Our mentors may
-need a bit more handholding at this early stage of dipping your toes
-in the water step, perhaps?  Or is it up to the aspiring students to
-do their homework?
+> Note, I have already sent the first 8 patches in [2] but, the 9th
+> patch depends on the first patch of that series. 
 
+So, is this [v2 0/9] of ua/some-builtins-wo-the-repository?
 
+I think that topic has long been merged to 'next', and it is way too
+late to do a wholesale replacement like this.
 
+> [1] https://public-inbox.org/git/20250210181103.3609495-1-usmanakinyemi202@gmail.com/
+> [2] https://public-inbox.org/git/20250307233543.1721552-1-usmanakinyemi202@gmail.com/
+>
+> Usman Akinyemi (9):
+>   config: teach repo_config to allow `repo` to be NULL
+>   builtin/verify-tag: stop using `the_repository`
+>   builtin/verify-commit: stop using `the_repository`
+>   builtin/send-pack: stop using `the_repository`
+>   builtin/pack-refs: stop using `the_repository`
+>   builtin/ls-files: stop using `the_repository`
+>   builtin/for-each-ref: stop using `the_repository`
+>   builtin/checkout-index: stop using `the_repository`
+>   builtin/update-server-info: remove unnecessary if statement
+>
+>  builtin/checkout-index.c        | 43 ++++++++++++++++-----------------
+>  builtin/for-each-ref.c          |  5 ++--
+>  builtin/ls-files.c              | 32 ++++++++++++------------
+>  builtin/pack-refs.c             |  8 +++---
+>  builtin/send-pack.c             |  7 +++---
+>  builtin/update-server-info.c    |  4 +--
+>  builtin/verify-commit.c         | 13 +++++-----
+>  builtin/verify-tag.c            |  7 +++---
+>  config.c                        |  4 +++
+>  config.h                        |  9 +++++++
+>  t/t0610-reftable-basics.sh      |  7 ++++++
+>  t/t2006-checkout-index-basic.sh |  7 ++++++
+>  t/t3004-ls-files-basic.sh       |  7 ++++++
+>  t/t5400-send-pack.sh            |  7 ++++++
+>  t/t6300-for-each-ref.sh         |  7 ++++++
+>  t/t7030-verify-tag.sh           |  7 ++++++
+>  t/t7510-signed-commit.sh        |  7 ++++++
+>  17 files changed, 118 insertions(+), 63 deletions(-)
