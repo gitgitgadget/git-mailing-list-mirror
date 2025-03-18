@@ -1,112 +1,150 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D331922FD
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 11:16:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F1120B1E1
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 11:43:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742296588; cv=none; b=A82OhZ6BXVH6vSDlMjUp/WMRDTNcuCgXIlXJ1gv3aMCdo5O5XUb+zyr2FiKeJd7bFXYhTwVhgruAKF5MPoIMMh+7wyQbf1I4O9sSYhVS3EP9YZaEajUB5oA2e0i8U3PKQwfCASzHYgB+2aFdipkshQ6ZhH0kiMTSKXyM0S55bHU=
+	t=1742298210; cv=none; b=PHvqiupeTgq1PmHIBhw0A8K0SJX3eLRaS0I6HBTgPCQX2oc5oQ5QCH263zgDGg2LstFfXT3SHWo108loAhJnhSsFzJrA+uryKuxBgoriDO2m/Wr7QZpQkdbTnufcsSl/C/0w70vGoJob23jj/GUoHnXYM64mY0bFsFBl7Yp3QIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742296588; c=relaxed/simple;
-	bh=yLR0c4bdLKFHulJmE/VRgIiV3qG6Yv2Fg7A3/UAJ58c=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BRsiPo2U1p/uhPLm0Ylrub0rFvBcKWminkfqTv3cyVeSH1gIdgHZCfVomsl4JNsB0L72+YYRZs107T4MaciAVRkeYg0rixtRVVKuDP8OYiufmFso9BJTiWnGrwF3ZcSQOfFnJkqfNeTnx7yDgUE3m5Jc0QBAC/zmN+XhnpKFtv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RvQY1ISQ; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742298210; c=relaxed/simple;
+	bh=CWmQJPlZ2oo1ZVeim8MgPxS2yoHC8K7VmRc5Xl4t5f0=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=Pc7FsjgnLfghnsNWUXOt9eCiDrQTkbSfty5s0n4yb4PzhtOhCplzY6ppOxur222SLX5p5m25P/eis7G5l9gynVMHCE/d2UdWVC7t2kYYm9wrlwRXG/dnNVMM3cUG43AZA+SOrKw0OCnCYuvDHNVHRwigEkyEcn5bWv9tZ57hPMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=q22sH6yz; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RvQY1ISQ"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-225b5448519so101452935ad.0
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 04:16:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742296585; x=1742901385; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ALJupLDkIBbGbD3ZOJhXYzaHVTUzVilUYmH+is2/XiU=;
-        b=RvQY1ISQDqlLq8QucTJCEXqPeN5F+ZbV5EOolhYmxJf2vb6GDHZ2LO2rtTEgFuT5l5
-         ZtRymkS90U2T+uzkpYXiWCZLZILmj6jBwOetyyN4hdQWAnogm/Sc3eugCarjyzHKkbLo
-         KmaUAn9GkxNt7utg2n1ASw1hpBQCsqB68WvBiPZNDB+zfA4Dy3+fqjb42WSh2q8IyKsZ
-         y48mLI9RVG7vhqWcGOCyA20vPhbGaeqoR4OmpSECvM5jz/iNENlLVA0yYNPdQsE5oB2s
-         5KoEPuNCxtlH9xKgs7wfhIzqVjJsM9WesVPFqxY1uzz2y9DH565uUiogkxVVE9r3Oipk
-         qprg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742296585; x=1742901385;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ALJupLDkIBbGbD3ZOJhXYzaHVTUzVilUYmH+is2/XiU=;
-        b=A42czcdBMM3dZz+xzzZ6VzxkaR7roM20rArY+Vc05cOBXTMz2dH/t+BVAOF6gswipe
-         9y/MHrnVakql3ZwJRsQbQ5w+KapZ/zAoyS3YN7yo8gd/1AKiv62ytm/Ft+9u9aK7yd32
-         1tev7ZIf9MiT9yYPWFwvmq6vg8jIvrhGkWFdHIlIEhGzAti/uNjWCF1nHFcWoTSbGV+F
-         0+z3eHqyaRT8I67ixbqhIyG3EH+f0wqx3iQkmvWvxg5eXhM9j3EbwmOxxVTYNEnIg/iO
-         J+dYtqJ1xA5WKqH/JpV70Z2cVMe5WG8tOk8TeX0nq9xGXSshIYTrRZbDF+qcgERIo838
-         2jnA==
-X-Gm-Message-State: AOJu0YxmkpHaBqS4titdFcg0dczcudfkDPQOmsOtL6eYaOHufmDDRPM6
-	DF+ujgxleziuPZ9pX6YC+5yAtCaFyaxq+0GWQks7OWVDTxrYi7xUMxsK6nz5iB4=
-X-Gm-Gg: ASbGncuQER9WcSkO9ahRI+QlWc/1k1VSyrPD6Nfqbi7Wm/AoujDvo5d0dINnFx6ODuy
-	MRQV8uPOV5uyu4ynOj0nkvuUMY0tzsbZQqfcCjimHfms6Z+gmjyVYqxlCLky2cj5JG+Utt/C62i
-	TlTWcshhH+yE6SnkZ5BNLNWo07qvs5Hv5b99yj0d8gPWl6ifsfCFlu7qar0Ki0Chltg6AnnTEP2
-	silyUurce0VJ8q23BiLeSl6NNXTPxdwI07GBI9WJTdFCI0rumhsAsGM97NW7Lkv9A4WEUnx+9zV
-	UXqAgV7KG1soL4UkJ2q7P6BV2iDYq3zIMJum47A2PSC+TBut7iBUOZE6A7RhDdM=
-X-Google-Smtp-Source: AGHT+IG0MiVK3/hZ/vSPWkmn7Tx0DaeeCSzTOpjX9I8qKxvN7gAde6jgDqN/WJhCxSI2ueRRwoucnA==
-X-Received: by 2002:a17:902:e750:b0:223:66bc:f1de with SMTP id d9443c01a7336-225e0a67c2dmr223562775ad.21.1742296585580;
-        Tue, 18 Mar 2025 04:16:25 -0700 (PDT)
-Received: from localhost.localdomain ([119.130.107.8])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6bbcdd2sm91599995ad.172.2025.03.18.04.16.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Mar 2025 04:16:25 -0700 (PDT)
-From: Jensen Huang <hmz007@gmail.com>
-To: git@vger.kernel.org
-Cc: Jensen Huang <hmz007@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH] index-pack, unpack-objects: restore missing ->init_fn
-Date: Tue, 18 Mar 2025 19:16:10 +0800
-Message-ID: <20250318111616.113941-1-hmz007@gmail.com>
-X-Mailer: git-send-email 2.49.0-1
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="q22sH6yz"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1742298206; x=1742903006;
+	i=oswald.buddenhagen@gmx.de;
+	bh=BPHYNCiioHozZvB97DZII1vz+6twtkys9R+UqWSoLj0=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=q22sH6yzIl8Wka3F/fKyKmdKZbftFWt1D+DVlNgQtGtwpHADXcIRaqXFqvKZr00A
+	 C6XUdkCjP4Cyj7zBhUgzWa5hgh/wa7sgVgdHq2cENS4DU7wefPfjBP5XgyCkgnFeW
+	 woAp4YRqbY85IKOpiIP3woQXAx4b9hLYvxvFbTKcw5z1PVjVe3Rwj3+9A3tUHl0ib
+	 HVf/NC7+Q3jyQMKRaD3+gZthupf2W4fx/kkahczdnUWhMuGCMEOh5+e/Z3UpOu5md
+	 e55AT0R+3yNEFFsFaP19OFwtaeZpKETDe640e7QRprXnMY03GTTyAVPIydUeunKu2
+	 eAvqr6LPoKAXwrwmBQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from ugly.fritz.box ([89.247.162.127]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MjjCF-1tSLg648uR-00b6U1; Tue, 18
+ Mar 2025 12:43:26 +0100
+Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
+	id 1tuVLx-g3H-00; Tue, 18 Mar 2025 12:43:25 +0100
+Date: Tue, 18 Mar 2025 12:43:25 +0100
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] docs: clarify meaning of core.commentString=auto
+Message-ID: <Z9lcXR6sL3UWlL33@ugly>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <Z9iVVD988M4XUyYO@nand.local>
+ <xmqqv7s78l8t.fsf@gitster.g>
+X-Provags-ID: V03:K1:lACTCU6lE7htqvqpy+bx0/1lRZfHoz0v9cCb9i9oqKGHLgDDZw+
+ Y/vCxFnHjbjCVh6zHE9UIsZ/ULM5ICdw6YdRVQy9T3ROinW6jkvw6YdYV4nepF8TEsW2OHR
+ Y9r4QQ1Wub49nxnMd9v2RMcdztFfff8lJJQjMlparWI8WYL/pn/nD/dTxFO+Oo2daT6Aoa+
+ gOwYkQxOYQg92FJ6D3B0A==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:qsOilcaSgE8=;kJp6Xkt660S2w2etoGbWrsPJE2B
+ WACKStQdL00WP4dMWvFR2EytpSvKy9S0UHTcZwVE53psKgcG4SdapT6KoAWr+UjzOw3qSqLm1
+ DkGSL3jhIy6frjBzXL0oRupEynd5f4rpXIIZzKpmq4F4/6W2MYapWw0LZmhq/M9Z8HytFVnev
+ XbyNyP7WvnUUnj1GxGBl1oD8Fp3Hegs1/AgC936xAxyCwemp54YsOxTXl86+rtlgxF4Z1VEem
+ CTwnKQL8Ji26QK8tgmz2M9j5lPawJRPDy8yXxDjZZqIPvf1JCDBJQKfmOkIdkDrxBzhcLguRW
+ GiG4Wgjf5qTzu1UHdjE8dcsSw5Ex25VuXKdj8zWF+QI87uLSTH4kPVHJ3qbGQBg/UKqLJeyxE
+ s6fbGjAd4Asf3vKJTGBMMQmnorQDhSicWj3fU+Z6tNbCrotbzuhmyvSFA5CQ+t5zh9NskbwYC
+ xLHIxzBWd10O+bFHC9W2DDEfMgf/AlzdsRfUeLYySOrL0Tbe5dPvWNcvHbzgwri6U431yPAqZ
+ IP6lKB5u53FWuEU3GXGwMr2Ur1w93wFMmelWhq/0A0H7brq5GpbEgRjXlsfqh6JhadqePauu6
+ I/9NWNdEq6m341WkpdFIghe7q5hoijj7HC/CxPS4S8zKTGJWl+wxV/VE5pHeIey0KUAj0VDSo
+ VVJ3ZEz8W0K4jIsa0Ccv144DrmBoLDEis2kLAF6lc7MxFz3d9CObF7Yzwud4yGIuksWSdHbeA
+ IDWJqIjlimOVFoxsjybPkWEd6JCjVwlpNC0Uy8zm2GwqAicSTa5Cq/pL/b7J13NaJORflS8Gu
+ O5cLHTj9SKduwaMTWprIC+Xp1kK07VA6SZ78HvdD3QaWd84TtM1PVtUuRNyKqc312SuTyixLZ
+ YwM2Nnzkuw4RZsKeI/as+93eXl/x/BVc8uTPT2rwpVCp18e2tZvxeiTRLVvynYDs4NpTzcpT4
+ oGqm/SN4hoVR4ONSBrY5DkLjeSlhBVldJTCTbuzMrG3BMXlKxoPa9P6s3LkefQD4xk95R0AMo
+ xgj4pMJx+wR43jtibXOP/mqaJsXEVt4IyRhXiqonVVG9siwLUZXqu8epQAHgLirkN+gcf1+0o
+ 2beMAAqOiO0+oZ0Z0Tvu+UPUNxmRHs9a5O1gg5xk/I0BXKYnKq3Y65irUP6jO7wvfidzmVxvD
+ CHljnEK4HvGuX7TqDkZCP/IHyvvsM5TLFQoDKtH1DfKMlgkrb2C3nGXZyHhkzh8l/FQev9zLp
+ fbubPdAylElkKqBlnMBvlJGcJxgBnkw9E6a5TlOYe7L3J9ZVxq6D4Y+vR/fcYxwzk0Z9KtWKF
+ 4w1ujyDx1tIkCyNcBErl09+AXjsNTc/dlYQwXhtqtTq1/mzimMGQNETWDY5JAwPbL651rGaxL
+ WCHrLxwskQh20o36NvtZpzmg+SBiT3CFPhwl4grm4FTWOl1zmi54uOBve3WgdTduEPTu1HlAW
+ jtOxHlVxDDJlnWU/OLqjP3ecnXFJJfDFBi7B4oAitBDiIqNCg
+Content-Transfer-Encoding: quoted-printable
 
-Commit 0578f1e66a ("global: adapt callers to use generic hash context helpers")
-accidentally removed `->init_fn`, which is required for OpenSSL 3+ SHA1.
+On Mon, Mar 17, 2025 at 01:17:54PM -0700, Junio C Hamano wrote:
+>Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+>
+>> -If set to "auto", `git-commit` would select a character that is not
+>> -the beginning character of any line in existing commit messages.
+>
+>This is so far in the past but I suspect this was deliberately left
+>vague so that we can add (or subtract) the set of possible letters
+>to use.
+>
+no such consideration was voiced at any point.
+https://lore.kernel.org/git/CALy3b+m7YkYB+mPEnAQnjKFAwUS_PqCUFtuxzN7hwhmNf=
+Mrw3Q@mail.gmail.com/T/#u
 
-This fixes the following error on fetch:
-  fatal: fetch-pack: invalid index-pack output
+On Mon, Mar 17, 2025 at 05:34:12PM -0400, Taylor Blau wrote:
+>I had a similar thought while reading. The vague wording of the
+>existing
+>text gives us freedom to change that set of characters in the code
+>without the possibility of the documentation becoming stale.
+>
+>That's pretty academic, though, so I don't have a strong feeling against
+>this portion of the patch, but I do vaguely prefer the existing wording.
+>
+apart from changing it being academic, the feature is also formally
+useless without documenting the candidate comment characters. formally,
+because in practice the user would just guess, but that doesn't make the
+omission a good thing.
 
-Signed-off-by: Jensen Huang <hmz007@gmail.com>
----
- builtin/index-pack.c     | 1 +
- builtin/unpack-objects.c | 1 +
- 2 files changed, 2 insertions(+)
+On Mon, Mar 17, 2025 at 01:17:54PM -0700, Junio C Hamano wrote:
+>> +Note that this makes it impossible to include comments in the
+>> +prepare-commit-msg hook's output or the commit message template.
+>
+>Care to rephrase?  There are degrees of possibilities and "makes it
+>impossible" is being overly broad.
+>
+>I suspect you are saying that it is not nice to make it the
+>responsibility of the end-user who chooses "auto" to ensure that
+>they adjust the default '#' comments injected from the template or
+>hook output when
+>
+> - they have a line that begins with '#' in their message;
+> - the "auto" mechanism chooses to use ';' as the comment character;
+> - the template is written assuming '#' as the comment character and
+>   has comments.
+>
+>before making a commit.  But "this makes it impossible" does not
+>quite convey that to casual readers.
+>
+no, i meant what i wrote: it makes it _literally_ impossible. it follows
+from the preceding sentence that _whatever_ is in the template will NOT
+be the comment char. the commit that introduced that feature (84c9dc2c5)
+already mentioned that limitation.
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 52cc97d52c..50573ba049 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1286,6 +1286,7 @@ static void parse_pack_objects(unsigned char *hash)
- 
- 	/* Check pack integrity */
- 	flush();
-+	the_hash_algo->init_fn(&tmp_ctx);
- 	git_hash_clone(&tmp_ctx, &input_ctx);
- 	git_hash_final(hash, &tmp_ctx);
- 	if (!hasheq(fill(the_hash_algo->rawsz), hash, the_repository->hash_algo))
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 8383bcf404..c5a6dca856 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -668,6 +668,7 @@ int cmd_unpack_objects(int argc,
- 	the_hash_algo->init_fn(&ctx);
- 	unpack_all();
- 	git_hash_update(&ctx, buffer, offset);
-+	the_hash_algo->init_fn(&tmp_ctx);
- 	git_hash_clone(&tmp_ctx, &ctx);
- 	git_hash_final_oid(&oid, &tmp_ctx);
- 	if (strict) {
--- 
-2.49.0-1
+reading through the thread of the original submission, the feature is a
+workaround for `commit -m` and `commit --amend` being inconsistent wrt.
+message washing. i find it surprising that this patch didn't get any
+push-back, even though the thread mentioned the correct way to enforce
+consistency (use --amend with --no-edit), and the fact that the user
+should have set the commentChar to non-'#' even if his primary method to
+create commit messages was with -m. i don't see how (or why) anyone
+would integrate this option into any practical workflow, and therefore
+consider it a mis-feature that should be done away with. but knowing how
+people here react to such proposals, it seems most practical to document
+the feature sufficiently well to enable users to easily draw the
+conclusion that it is, in fact, nonsense.
 
