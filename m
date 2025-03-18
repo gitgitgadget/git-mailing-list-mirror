@@ -1,44 +1,47 @@
 Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27CB214222
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 18:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800BF849C
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 18:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742321003; cv=none; b=Pqqzg3LWmR9hQurlkOS2yF845hseB4P2WR+WALd/HntmDbUXjFzc4GirsoF0s8Pr1fFEi4c86CApVrNYpNL/AQzaVdVSLq16yUB3uDc6R6L9MqWn829LsB/q9Dy2fIt8BNV0OE1mzqJ4mceEIwVTZAD+Z6m9r67WV71kmPBRTdU=
+	t=1742321868; cv=none; b=aG2Qv/kMbzokpzeBr58xZj700fxaqzZBU011vxfxSh7JNXPs0D8ivdXOMI5j469bvbIvJnzvYvDeAsdZaIoeQ6XqqKKOU/27OCMgpRvP3eZCawNnZucw7buDs9aAzkiuvOSrIKWXKF1QjnT51pajWf+2Kbx3GPswR1bmL6DRO+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742321003; c=relaxed/simple;
-	bh=qhZE+Hq/9C1A1BytGvjT/NC2rzmgMG/a7oLndbe3oYc=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=CBpuufpQbRAtavBHxl7+o6us76vRpTBdLmmTbz6vBu8I5f6Sm5fOfoG/yPL13yBgFCHHqGdfpwg4JQlEDJO/tRLew9z4ESdz9FMcBZJmCvj+RwdDneWB9jdwhexbhSSOPfkJ/ufn2yw/rSJYknyrzpkbZw75vPgR+QpC6iYfJ0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=n89QSRa/; arc=none smtp.client-ip=130.232.247.4
+	s=arc-20240116; t=1742321868; c=relaxed/simple;
+	bh=DSeQuNzFE1R0aCZP6vSB4oPK1oLTNrwKLHTqXaxKLMg=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Clza7u6uWyUz5hRTy8Q/8V1vPSObkXOwTAYtDyeVOUrezmSpC1dVRqm6gbmoS1FA9g1MVx6eLpLxDkOguuN522T+9P3T4m1ugTm4fqSDhi/C56umu1GjLQI8hOtE8Mk8i2hafrBli4aLseeStqSAJ5ZsMCCv6LAaBLlicjrNWlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=QzMXXT53; arc=none smtp.client-ip=130.232.247.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="n89QSRa/"
-Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
-	by fortymile.utu.fi  with ESMTPS id 52II3DIQ021995-52II3DIS021995
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="QzMXXT53"
+Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
+	by fortymile.utu.fi  with ESMTPS id 52II2XaT021418-52II2XaV021418
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 20:03:13 +0200
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 20:02:33 +0200
 Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.93)
 	(envelope-from <taahol@utu.fi>)
-	id 1tubHV-000DcU-6v
-	for git@vger.kernel.org; Tue, 18 Mar 2025 20:03:13 +0200
+	id 1tubGr-000DZ3-5N
+	for git@vger.kernel.org; Tue, 18 Mar 2025 20:02:33 +0200
 Received: from localhost (194.111.69.129) by ex19-06.utu.fi (130.232.247.46)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.39; Tue, 18 Mar
- 2025 20:03:12 +0200
+ 2025 20:02:32 +0200
 Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 4f1b49a9;
-	Tue, 18 Mar 2025 18:03:11 +0000 (UTC)
+	by localhost (OpenSMTPD) with ESMTPA id 209c7ddd;
+	Tue, 18 Mar 2025 18:02:31 +0000 (UTC)
 From: Tuomas Ahola <taahol@utu.fi>
 To: <git@vger.kernel.org>
 CC: Tuomas Ahola <taahol@utu.fi>
-Subject: [PATCH] format-patch: use raw format for notes
-Date: Tue, 18 Mar 2025 20:02:51 +0200
-Message-ID: <20250318180251.3712-1-taahol@utu.fi>
+Subject: [PATCH 2/2] approxidate: overwrite tm_mday for `now` and `yesterday`
+Date: Tue, 18 Mar 2025 20:02:01 +0200
+Message-ID: <20250318180201.3653-3-taahol@utu.fi>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20250318180201.3653-1-taahol@utu.fi>
+References: <20250318180201.3653-1-taahol@utu.fi>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,47 +50,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: ex19-11.utu.fi (130.232.247.51) To ex19-06.utu.fi
+X-ClientProxiedBy: ex19-13.utu.fi (130.232.247.53) To ex19-06.utu.fi
  (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lWFxYWFhYWFBeUVxfSFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZbWEhQSFhIWEhZSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWA==
-X-FEAS-Client-IP: 130.232.207.30
-X-FE-Last-Public-Client-IP: 130.232.207.30
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lWFxYWFhYWFBeUVxfSFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZcX0hQSFhIWEhZSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWA==
+X-FEAS-Client-IP: 130.232.207.47
+X-FE-Last-Public-Client-IP: 130.232.207.47
 X-FE-Policy-ID: 3:5:2:SYSTEM
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=from:to:cc:subject:date:message-id:mime-version:content-type;
- bh=sSdD0OBpvV4uasJAufMMIf95yKv/swiHLeGqZ7ZXQ+E=;
- b=n89QSRa/GWV0SBnO5OhZRnJDgTAtQk1sd+MCsP3NrlPS3zD4nxiffcezH+WjizWHkZMoeOO8dItJ
-	HXcNKxIXmOr4H8e47GfFjJrkQDIH/ZHIjX1ZVPERd9+zfXuoktKhvfCqpPp4Kun9HVY4ehKqoKzs
-	jruO2Daiv9f3+DsqaiQWcTma/pTxwdAIoMrTGp3G8XO/37vU0zKdQEq9m+2I8pSqzxXW779jfnMA
-	ddQ7rSUD47Mns9oVhSz0FWsUSpVR+BB/EGxyDhtDAT5sUYrRFnfVxEnjV1guv3y4zokjbFsIJ7R1
-	IuQmujFy1BJYUTOV5gAt36yxBp/bretJPfYyQg==
+ h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
+ bh=SbWUSV4kHD2wuv+xHh77eDjgLLKdLONNPEPwc0TXdaM=;
+ b=QzMXXT53HHYYo7Fmt2Am6aHjYuFXVNy+W7PrpZ4gcSSDRH64hVU8vpiVc5Kn+AR8iSTrfLm+JJHh
+	yRyhiBPFM/hkC1RI3mAlcPnxuedO/D2arq+3pciv+5aJoTjPNSMkr9ZhIdlsXr8EalRy6fC5aDAZ
+	086oHXudEmi4LHSogAiFWC+znY99vqm0R7Ftlt0/Mo3E7ws4veYtEBcuhX9ola2T7u/ZnixdVI1V
+	l7ba+cbocQFkuk40MK4gcFdY/doaM6yrsjUvSRrj401J8ICVM6y2XiWzzHDLHTbXB7LVLN28KV2/
+	sjM3VExQO8D3jOD6AZYcgyUXOqlrELHQsMSVpA==
 
-The default formatting of commit notes by git format-patch --notes
-doesn't make a very good fit.  It would be more beneficial to use the
-raw format for CMIT_FMT_EMAIL and CMIT_FMT_MBOXRD.
+Date specifications now (or today) and yesterday should refer to
+actual current or previous day.  Especially "noon today" or "noon
+yesterday" should override the usual logic of using the first previous
+noon depending on the current time.
 
 Signed-off-by: Tuomas Ahola <taahol@utu.fi>
 ---
- log-tree.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ date.c          | 3 +++
+ t/t0006-date.sh | 4 ++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/log-tree.c b/log-tree.c
-index 8b184d6776..c40a7599d0 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -857,7 +857,9 @@ void show_log(struct rev_info *opt)
- 		int raw;
- 		struct strbuf notebuf = STRBUF_INIT;
+diff --git a/date.c b/date.c
+index 482a2f8c99..2a8a942d64 100644
+--- a/date.c
++++ b/date.c
+@@ -1121,12 +1121,14 @@ static void pending_number(struct tm *tm, int *num)
+ static void date_now(struct tm *tm, struct tm *now, int *num)
+ {
+ 	*num = 0;
++	tm->tm_mday = -1;
+ 	update_tm(tm, now, 0);
+ }
  
--		raw = (opt->commit_format == CMIT_FMT_USERFORMAT);
-+		raw = (opt->commit_format == CMIT_FMT_USERFORMAT ||
-+		       opt->commit_format == CMIT_FMT_EMAIL ||
-+		       opt->commit_format == CMIT_FMT_MBOXRD);
- 		format_display_notes(&commit->object.oid, &notebuf,
- 				     get_log_output_encoding(), raw);
- 		ctx.notes_message = strbuf_detach(&notebuf, NULL);
-
-base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+ static void date_yesterday(struct tm *tm, struct tm *now, int *num)
+ {
+ 	*num = 0;
++	tm->tm_mday = -1;
+ 	update_tm(tm, now, 24*60*60);
+ }
+ 
+@@ -1204,6 +1206,7 @@ static const struct special {
+ 	{ "AM", date_am },
+ 	{ "never", date_never },
+ 	{ "now", date_now },
++	{ "today", date_now },
+ 	{ NULL }
+ };
+ 
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index 5db4b23e0b..6ad931dfb3 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -178,10 +178,10 @@ check_approxidate '6am yesterday' '2009-08-29 06:00:00'
+ check_approxidate '6pm yesterday' '2009-08-29 18:00:00'
+ check_approxidate '3:00' '2009-08-30 03:00:00'
+ check_approxidate '15:00' '2009-08-30 15:00:00'
+-check_approxidate 'noon today' '2009-08-30 12:00:00'
+-check_approxidate 'noon yesterday' '2009-08-29 12:00:00'
+ (
+ 	GIT_TEST_DATE_NOW=$(($GIT_TEST_DATE_NOW-12*60*60)); export GIT_TEST_DATE_NOW
++	check_approxidate 'noon today' '2009-08-30 12:00:00'
++	check_approxidate 'noon yesterday' '2009-08-29 12:00:00'
+ 	check_approxidate 'January 5th noon pm' '2009-01-05 12:00:00'
+ )
+ check_approxidate '10am noon' '2009-08-29 12:00:00'
 -- 
 2.30.2
 
