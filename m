@@ -1,73 +1,73 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA251189F57
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 22:40:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BBC7E9
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 22:44:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742337605; cv=none; b=n/bYJWGmYpK3blel/eLUj1NaeGFdcELySB817RsReF3lz0niOf5mIe/oBO/cQCqHHNGtE0HMfz2cFUSvp3KsnoT9cHDYXroPUmtmyb5cK+U7JW0eJh7ZjHi4MP3MgAPL+mIBl6Q4dgI/4fTwSfBXqxIq4ryBSecVXqxVakQ5pIY=
+	t=1742337860; cv=none; b=q255FX7wdZYYDAYkdBd4Vaf6HwsvsDyodL2+TT9KKPwcn32y/WS9I9Hpv2ZDRUT+gegs7ASJCq01dN7IDgBWHPnvd8vqsE1AL1h+XorIaa2ZJlu3JEwKBozKwrXMLefnmf1Org/nvt8cBgMECr7csirJDzwUv4ICf1OR+UWravw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742337605; c=relaxed/simple;
-	bh=Fbi7oEmUGxUMw4jwEU2DqcDua2oESQ4pVn3klMK66to=;
+	s=arc-20240116; t=1742337860; c=relaxed/simple;
+	bh=hUvdBRPowklsOHPOFEym8Y/igBRzM7zRjLAvJRbg0wQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OKszDrY05T3T409MD8avwuMCBQxn67mAAQAkixbvPZ2t8l8YeeegknliqiVspNhHWvIZRxcMv9EZq/fgl7FGIX24DfEBo/z63n+c0Wlf5h+6WI5WYFenSAN8L319FKhi6xpULYfxeey7mwgtlSLLl7GsW2I+AR1BLrEWCeflG/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=DpFfGLH4; arc=none smtp.client-ip=209.85.160.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=KSKR0H2d8L2ywQ2vj43kj+KbOOa/B0NhU8MSCotdZKswlz3BvXKH4Sjz7lTZaEOZ3YGf3znFvvnxK24l5OHzWz3R7jPATYJQQXLstwNpOj1z2JRBnDNJaene/42vJm3ApvZHw0AHNbdEvbUPssTRJQE9RbHiQrZalEXfHaFtUGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=bosK7oy6; arc=none smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="DpFfGLH4"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4769b16d4fbso33529501cf.2
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 15:40:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="bosK7oy6"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6e8ec399427so48049696d6.2
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 15:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742337602; x=1742942402; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742337858; x=1742942658; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q3eF1byUKv9QBKHNv36uvUp76d9EU5UMIWjGw4nvpnk=;
-        b=DpFfGLH4XIS1+WfFa+Vu/cM8f5xncTXk6ebAM5CAeweWjG3H0I5xyJdfS628QC5w5L
-         hoUvSuJzuPWK7693OkfW/WLFkzJrYEENT0oeUpS4MrReUB43hDTRpHqEY94C9DR6HAkq
-         ChTJv3Pjj/Ol4L97FjNbeuwqNqn3Ry7sNwB0eQnpfE2UwlSdEGKFQe5Q3Mg75jDbnO45
-         AWWXvjr9+j0GkkpMLq7GgMxDrcQZhD0kv8WWKMPX9XLpz0jovE0r7S0ary4OKaSNR4Eh
-         uJ2jU1JUFiQgFzNjmmJi0eFw/R/4t4rmcr1uPngRDNPG6SS6+YwdjxcCgjuJ6pdteRJR
-         FpzQ==
+        bh=OWaCrpeXXEj5cNykqLz+3k13Mnxv9QhDxzUFEMB/Aes=;
+        b=bosK7oy6Q1lb1YfuW+fHmKiVpdT7h2VLiJURpvpMASg74talKh90LxHJhCcbgd3jSK
+         oHvhusa8QLjTL8hr3boHk3lsTdEeL5atfFBSG89YNmQxrCAtzxBjkPZKdaHEakHUAXaf
+         9ChzhASgG5QahYD0orWgzKWt3LwjvGZ+0C/ce1oE0yF8UkFLz9xYywroRaSEKwTVzQCS
+         FkpxVtnfZ55CYyXQdhgXX06cgrAHnvVnZTpknmei6jtwAui5EtWwkt+rs8ljocSZZBaG
+         EESadPv3XZ8G2SWGVRAyBsQGK3nt86K/JsOJH/l4bzXoKhnV8nLyArmtTOh17l5EeGwk
+         8MUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742337602; x=1742942402;
+        d=1e100.net; s=20230601; t=1742337858; x=1742942658;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q3eF1byUKv9QBKHNv36uvUp76d9EU5UMIWjGw4nvpnk=;
-        b=cS7a2FaMH7NgBS6YzhnBB1447kZWN6+EdU3Pp+NIBzR7nR0qxRBoQq4jWZthrw1qVW
-         CFPeUS5q6324KzhRDbNae+TMLKj6buan6MNVdogcLKxxfw+HCIMu0LzcK7ZNTyHL0zSc
-         W6mvoXhVG0G/IHmb5tC49FNxIJKR2gjvECGfN83uln3+SbWbJmqAtEDlTJq/kTP7QKLr
-         Xu0eUSoxcXtmcawVXHs3CnoiW7gtlDZDHPSB4JOg4omfUaLt/J+DSU1ryc8EJhCFjrhE
-         i9UmVk+TjEzNNcAvLvz2+PdEiXQz4df9BpAUX/tFxD2ZNSckMrY74d0raJxZYr3B92I9
-         Qc+g==
-X-Gm-Message-State: AOJu0Yz1QQmlSCH7fOs13H0HIdrryvioslyYUo38dnxCqn45AX8ofARs
-	pGG4MfmlxgL/NlyXXL6+ac4hlgqwVxUk0CCnhgeG7qeoYT3aRA9CX34MY4UxNCrOPBDAG+Y9VNe
-	LGfk=
-X-Gm-Gg: ASbGnctCBuqmYYYGqFe+6edHfn/XBS5mf6oWwBXkvDr09FD24Te3eKTA5bybiAGTjnr
-	7i/eKrvuq7IXwYziDjp1ziDYPWoYEJomVkfdTfGD/CN1CFdW8uJ6ytmRV5Zx7KilEOZtoQhtECt
-	tZBRNNOQfxkuCYfMeVosQqgj1TbUOv4JptMNQr41DBycFOcSLD1pgdIpryxV++sw1N/A2sgQOsC
-	BUgIi4Vihb0PWPSS0IHZfdBag0XvTgKJgmWB+BzFYS0koPbQmZV/opDLiAb55vj2Ms/l5La875i
-	sjPU9c8vxrnMe8RhXC9TmMl6eRkBkV206frmtr1paVvR8sr6BDrmHYYdN3g2S9Y5qJYAuLjmCnv
-	/ljhV5tBjBLx40/oZJXvNh0jSheQ=
-X-Google-Smtp-Source: AGHT+IGCn1ovnQB4gb8aJJYONLvmgJ2KRUYB8v/krHeuW0/Mz555I6rRT3VY2mQt4hyFe8ChedtZCQ==
-X-Received: by 2002:a05:622a:993:b0:476:8825:99bd with SMTP id d75a77b69052e-477082c4461mr13794841cf.5.1742337602704;
-        Tue, 18 Mar 2025 15:40:02 -0700 (PDT)
+        bh=OWaCrpeXXEj5cNykqLz+3k13Mnxv9QhDxzUFEMB/Aes=;
+        b=ECdwISEGb9jrHnh+M8YQeCf9X6897AMHmANWcw6tLA3Qn+7wMXGXo4SXE2JeLUJWR5
+         bxoPMmglpH4sMbyqdeA91mLAD6ylTmAiBK+OI5A34wkSthahKEd577CDFCWpm+IHIiBB
+         QT6kfGCRZlXPIohfmU6RlIy81HLblf5YRvtNpHa82pNkRTTDgTTT/aTK5Pg32Kly+9Lc
+         GOU62Zaz47ribGB3YogKBnshFEocUnGWAFfuAPOnKA8sMFBzmPn3r4hnfkKd3vk7cjE4
+         e5NOwFzt/wXM0k5XqBbnn/ugpS7fl1xi4KcaGDI5wRstV0JKFmxp5kcDFAMIJS6U9ZQL
+         1eDA==
+X-Gm-Message-State: AOJu0YzX3ff6OEAfFjknprsbMPXClXyWFsWl5i07rxKCoVhQVTaVyHkW
+	uWRHdMYI6Lu1PYhMIvDrBEYgD1fwXJRKuNpnl87HfWSjHOZ62rC54lfPho1Z8mk=
+X-Gm-Gg: ASbGncsFnkPra69VIq+klcRHF3vI4u1+Hp379stymqnpHIuINTPT9TdLCbnTv/T967f
+	mqevtuNN2QcoeF66bOkdJC8BoU33kduq5mVKA0Xu1WpxX1cRtmae23f+eGhulc08bt0lcLLu9KE
+	OE4ArzTlAKXMtAw0v3uJxqGRbBf9gsAIoAEnGcgjHKSauzS1+3PrTssDeCsQpaB4H8HXi6XQTlo
+	qtIGrTmjGIiUto496jA40KuxMAJyj0D5RGcMtpQjTB2nd2MyB616bzLVe5grUo8t+FTjdmPfIJP
+	dcJluL+radmRqGi23glFgFTVovR6f1FCJYhXrGoRVmI3kTe8CRefRXSA0+g+HRTeb462HTwomA7
+	YgCGmaGrWMuO7m6l5B/IpgkavLZc=
+X-Google-Smtp-Source: AGHT+IGiLL1gAFRqmyBS8waiXrwoohxq3iuc2pQnc8NlPxObJTgu2e/F3TUn00bdBlPo/ieX/ME9+A==
+X-Received: by 2002:ad4:5c67:0:b0:6e4:4484:f35b with SMTP id 6a1803df08f44-6eb29467a44mr10831736d6.30.1742337857708;
+        Tue, 18 Mar 2025 15:44:17 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-47704538509sm6525021cf.69.2025.03.18.15.40.02
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eade34c5f7sm72272766d6.96.2025.03.18.15.44.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Mar 2025 15:40:02 -0700 (PDT)
-Date: Tue, 18 Mar 2025 18:40:01 -0400
+        Tue, 18 Mar 2025 15:44:17 -0700 (PDT)
+Date: Tue, 18 Mar 2025 18:44:16 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Igor Todorovski <itodorov@ca.ibm.com>,
 	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: Re: [PATCH 0/4] refspec: treat 'fetch' as a Boolean value
-Message-ID: <Z9n2Qa1KJ5obtvPu@nand.local>
+Subject: Re: [PATCH 1/4] refspec: treat 'fetch' as a Boolean value
+Message-ID: <Z9n3QGmNYsp3QJoJ@nand.local>
 References: <xmqq5xkdrrhs.fsf@gitster.g>
  <cover.1742250259.git.me@ttaylorr.com>
- <xmqqldt35jdn.fsf@gitster.g>
+ <7e662acb5ac50b778917cbf2f9f791d35e95e31d.1742250259.git.me@ttaylorr.com>
+ <20250318002436.GC1470172@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,22 +76,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqldt35jdn.fsf@gitster.g>
+In-Reply-To: <20250318002436.GC1470172@coredump.intra.peff.net>
 
-On Mon, Mar 17, 2025 at 04:26:28PM -0700, Junio C Hamano wrote:
-> >  builtin/fetch.c    |   2 +-
-> >  builtin/pull.c     |   3 ++-
-> >  git-diff-pairs     | Bin 0 -> 12166200 bytes
-> >  refspec.c          |  38 +++++++++++++++++++++++++++-----------
-> >  refspec.h          |  18 +++++++-----------
-> >  remote.c           |   4 ++--
-> >  transport-helper.c |   2 +-
-> >  7 files changed, 40 insertions(+), 27 deletions(-)
-> >  create mode 100755 git-diff-pairs
+On Mon, Mar 17, 2025 at 08:24:36PM -0400, Jeff King wrote:
+> On Mon, Mar 17, 2025 at 06:24:24PM -0400, Taylor Blau wrote:
 >
-> Somebody does not proofread their cover letter.  Sheesh ;-)
+> > Since 6d4c057859 (refspec: introduce struct refspec, 2018-05-16), we
+> > have constants called REFSPEC_FETCH and REFSPEC_PUSH. This misleadingly
+> > suggests that we might introduce other modes in the future.
+>
+> I don't know that I'd call it misleading. We _could_ introduce new modes
+> if we had new operations. But I do agree it's unlikely (even if we had
+> other operations like git-archive, cat-file, etc, they would probably
+> not have refspecs).
+>
+> So it seems like a reasonable direction to me.
 
-Ugh, for goodness sake. Sorry about that, I'll send another round.
+Fair, I think a more accurate statement might be to swap "misleadingly"
+for "confusingly". I'll swap that and amend the paragraph to say "[...],
+which is possible, but highly unlikely"
+
+> The one thing I don't like is:
+>
+> > diff --git a/builtin/pull.c b/builtin/pull.c
+> > index 9c4a00620a..8bbfcce729 100644
+> > --- a/builtin/pull.c
+> > +++ b/builtin/pull.c
+> > @@ -738,7 +738,7 @@ static const char *get_tracking_branch(const char *remote, const char *refspec)
+> >  	const char *spec_src;
+> >  	const char *merge_branch;
+> >
+> > -	refspec_item_init_or_die(&spec, refspec, REFSPEC_FETCH);
+> > +	refspec_item_init_or_die(&spec, refspec, 1);
+>
+> The third argument here (and elsewhere) becomes much more mysterious to
+> the reader.  Maybe not a big deal, though.
+
+Hmm. I see later on in the thread that the final patch resolves this
+awkwardness. I figured that readers might have a similar thought here,
+which is why I included "Note that this introduces some awkwardness like
+[...]", so perhaps there is a way to clarify that. But...
+
+> > diff --git a/git-diff-pairs b/git-diff-pairs
+>
+> Hmm.... :)
+
+...I could forgive you for not noticing given this ugliness ;-).
 
 Thanks,
 Taylor
