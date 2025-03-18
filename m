@@ -1,62 +1,62 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F45EAC6
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 11:00:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5ABE209673
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 11:00:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742295627; cv=none; b=rfImsuCOeqneE/iY0m5hSDqxItOF8BDlEnPvfnsiWxQAW6QwidUCMiX3SLnhie+Xd7wYLDgzaR555GiKbqSGw4LJgJp6DyVi0otMLL1rvZtmg7EuqbIQl9vSzdCZoKZK0sT5x14A0outYypsMH+aK3fOxn6475jk1gXkunqH5B0=
+	t=1742295629; cv=none; b=Y/UL2m7X1Iqif8bWGfu2NpXIgdqg+hsYVwo2R3PlYCxAQPHDwElGf5g/X4IgDsQfalnH5Ln2lb8vhybHYxDjpD4t4M5bRRuTZFGNSARXTAXgD5uuG9yWx2MeUcgWUmTIxsWcILVy8LsojNBjvglzkm++pNFYzip++Z5sO5vgVoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742295627; c=relaxed/simple;
-	bh=GcvntGJJMfOwg/u2WcjRHiphPXmmzv434lmkxDDMPss=;
+	s=arc-20240116; t=1742295629; c=relaxed/simple;
+	bh=x+4ITheMFV15srN/DNeCL8OOej5Cz/3Iokphcl0qfFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eNlcHZ7LDQaS/+ioKsaQN1pXol2tHIQVlfIJFgnaNBVtAFQ8WTYmL53y8rQRB4xxev7Gy7V05T1pN3ntvMxAARNXoqbw3EpGmewo208ZYHuBSlJnxdMVshVwp6uDRIvrGeO1onrpm8joZcjpCJFAYuXY8mrTqWA9NppyVv1/URI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aTvoRLkw; arc=none smtp.client-ip=209.85.128.43
+	 MIME-Version; b=u2/C4d6eXlO2ukhK+wB3jj6EnoAuJDPs5aW4FDck430sh3+nQgagsWQSVe03PnT1KPdDLEnnia3YAkdNlayakj4+lcNrM/cIJ9qb5YbWwH8mLKO7gZkYDyu/FWoSgZXE00ngLWTRUuBmKr2qQdI6bdC2HrvaXSfsuoRVHjZX7CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XaN/p3C4; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aTvoRLkw"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43d04ea9d9aso14332945e9.3
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 04:00:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XaN/p3C4"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4393dc02b78so20182345e9.3
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 04:00:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742295623; x=1742900423; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742295625; x=1742900425; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jYdM3Ap2VYGz2tjlWR83QAo3yOJUB8rw8Eqzf96q/Bg=;
-        b=aTvoRLkw4aqffugrP0C3XBZQVPyvgrO1TGRfEYDelqQMAegesORHfTCARTUX7oa/eX
-         Dr+Fr0wJ/GTskW5mG0+Q8lQt2vMZlBytGg8AoMZxr+xHw9AK/5HGkAXmE05AuEK+m4Ht
-         ctUAq5txvG6bkHhdiSi/EtQ9z6VP9jQehL6Tuj8YHjhJep7KdY1NajFT1MBC6tpbxHiY
-         Zc/8pbDMg901TJrBVxH7OJpRmbXZyILTpZptqYS0BLjYKIETqLGi76zoC/TwVECOGETI
-         7wu3Y3kFuD5YUw1MmCMYtwjgU/FVbv+dAehFZ5Me2Xrm8XIJsH+jcFpIgauC8gwsnGKC
-         984g==
+        bh=wO3y36G9A/pjzGu/899mnIFGDJqjSV8cLgeTdoBqFkc=;
+        b=XaN/p3C4uViedWqKpJJriCoZhEYah4vyBV5KtqU0jI/yvla1rJONqZ1hUSXvdKA+qE
+         YegvRoOQumZSv1NHqyYDkG9IteF731Y+xf7WqlaXiVt3w7lqhfNzzzr7IgUx/vRw+KK2
+         EqIEUksCL2EBcdy5898CUQ1A4sLRNJ5xrVJDeiUQzZfisHdvEh0TgSOrkaBhxa38YSBE
+         HXctimHo0451JRrs0bncaBa+I/Fnddqy7P4Ew3yYqT02RL4y+Zy7yIZkRstTz5pa9CHX
+         nY3RemfJaoMtY2u8mV65SM8xoEdwFmgvH5Gx8Ib2aC227RrMiEDhAZtw8eyhbpO4sM/a
+         q6vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742295623; x=1742900423;
+        d=1e100.net; s=20230601; t=1742295625; x=1742900425;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jYdM3Ap2VYGz2tjlWR83QAo3yOJUB8rw8Eqzf96q/Bg=;
-        b=FaLW2J5Z8WwJFsxk5mVG717kEl6dCFLNjmCLHd+r7O1ix3sSlOxuSuUzBRFOmrssaa
-         JMw35mzPE2hKPmb4pwO9UkfGVE74Hp01X7c98SPTd4IYYGxKL7N6Nk3uKvWPFQ2FAmcv
-         NprRiHWYDNrj8pEkdBHVX4eKu0oofywUVzGv0vgwKd9FaK7wnuq6w3YGcrH5HEFx5DId
-         da2BnrXVpXGTo62nAMJSsiH8n2Tn5hlqom6vdp5PfGx1ZJWRIhJhQxRFWvdRddVxMGLx
-         1/HIBxFDVXiz1+on/nLAzHz8XAIyo4LHmQm2QeFEfkN4qxQjhnVsGcJNlWauMqK24U1V
-         uEUQ==
-X-Gm-Message-State: AOJu0YySqmFBUUwnqqZ2E0YzkysJn4gGydW5DT3YdVlJjTVBPnL+tIUM
-	4VEGfTZzsphJMS16TiM1NLYAkdw0f6Qy1Y2dlkj+6BslDIo9SFXEmu1NIg==
-X-Gm-Gg: ASbGncs5d7DjVJ28O5FW8dhuzUJplD0mleQkgX4GaV18NOueTuw8PH44T5mdId0J7ni
-	DtfIrY6ExvzhpacmaARjt5uJzjc++3X+Xy6B/BUZFPz29B7QLu7/j5obnC1mCGGifASbcXd6mBU
-	fJeexQGQmevmP44wTw7yDYtmTj15ECSeyIXvmxsZNM0dGQJvy6MeOZjcupo6swKsZnhndNmLjso
-	GQD1bSy4xYGtDjbCJ/0UszSe7uxLn7kvspqK5xlZbrxXwijZCdsWM2KE4uQbItGjuiqrkdRcbsF
-	7OAhDRFGKtZU72MqykulH9vxk68Xf5b2HNl0VVJQ+/BFz0X7AHnOtaw7Tq0xO5rn30o5sI+86A4
-	DZA==
-X-Google-Smtp-Source: AGHT+IFTgJ1Xr6iDkOawnxzgtz/6Vy5kT7VJFvkuCqaAcVO1t/VS3A3NTmidbYriOUefCvMgvHAFSQ==
-X-Received: by 2002:a05:600c:3584:b0:43d:47e:3205 with SMTP id 5b1f17b1804b1-43d3b99b8e2mr17573345e9.11.1742295622286;
-        Tue, 18 Mar 2025 04:00:22 -0700 (PDT)
+        bh=wO3y36G9A/pjzGu/899mnIFGDJqjSV8cLgeTdoBqFkc=;
+        b=prDpf+lBEljMc99Wm1351twisvxlWh13T5d7X3YXyKgwiir5/48jTQrDMz8NmkreHW
+         chnRc8znfK+L6TZp/GUpX0bR98RUg6Hvfhg8xYbWl+LIzFhCIBZk/LcMJhKcxF7s3pfN
+         6HPkmb7SIZparDLBjyIQsy1eGDzfDYM3k+Q2aWcb3Y97UC8ZDXMBA6IoHzHdnFSyJmVi
+         S0nAr+s5oioJL3Dj342m4kXHtKf50sLE8iAqh1pPqsL7ofTvDyFY5RkmJndmC09nWoch
+         kIkkdm6epp/sZZp11MKRy2I5vr27kABp1Fqm/6QXqDqD7MKXojodBKIMZpR349X3XhwH
+         ak1Q==
+X-Gm-Message-State: AOJu0YxZV0HncQlU+Kpg+J5W2kjPAO5FTbAFKchbpnB8zVL7ktyvhLqJ
+	kudgU0n7VI8unx98N6D7zJVGz1ZM3Fzf4tc7W45ciUe9bHA0WW6m0B+wpw==
+X-Gm-Gg: ASbGncvysf4cGF0nhPj3Xd8zSLPizh/aaKAlPQjDIFZAf8P8qSGYtAUl97107Jcb6HD
+	rgFwA4VSTMpsWtyVhhSN7lUt8lE9j3MJNP8FHz/8KsHsRbHcJLjrJWZesu6G3AI0i3atnlHEgP7
+	YYon351nMSCDf4sDBTO1213QMksFUZFhyItXuvq1M/WNskors2Vvp3LTQW0bo/AzsIsJPSLfUZs
+	YFQBeWTA1jtIO2cgEz25ebkefypUh4ltqe1I3DRMw/FNl0P7jkWbMtYJyQ9uMQZy1WQTmdpEnX2
+	FJaUXmmNcY70q4Ypt3x/W4BO/TpciB5ACtu/wgdd7p0349KpOieoGTpyMiqSo8wYSRIbHBxPLdI
+	VXQ==
+X-Google-Smtp-Source: AGHT+IG/S68QlVbYrBCsM3+UQsHZcNRPQRr/LXh2bu8fzllVQizHTMtkq4/MIRWz4mrumHIb4jOyyA==
+X-Received: by 2002:a05:600c:1d8d:b0:43c:f81d:34 with SMTP id 5b1f17b1804b1-43d3ca66b80mr14577705e9.9.1742295625034;
+        Tue, 18 Mar 2025 04:00:25 -0700 (PDT)
 Received: from christian-Precision-5550.. ([2a04:cec0:f066:6e28:cef1:9d6a:ca5b:64d9])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d1fe60951sm131169515e9.26.2025.03.18.04.00.20
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d1fe60951sm131169515e9.26.2025.03.18.04.00.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Mar 2025 04:00:21 -0700 (PDT)
+        Tue, 18 Mar 2025 04:00:22 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -68,13 +68,15 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	"Randall S . Becker" <rsbecker@nexbridge.com>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v6 0/4] "promisor-remote" capability fixes
-Date: Tue, 18 Mar 2025 12:00:04 +0100
-Message-ID: <20250318110008.656695-1-christian.couder@gmail.com>
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v6 1/4] t5710: arrange to delete the client before cloning
+Date: Tue, 18 Mar 2025 12:00:05 +0100
+Message-ID: <20250318110008.656695-2-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.49.0.4.g81387f61c3
-In-Reply-To: <20250314141203.2548803-1-christian.couder@gmail.com>
+In-Reply-To: <20250318110008.656695-1-christian.couder@gmail.com>
 References: <20250314141203.2548803-1-christian.couder@gmail.com>
+ <20250318110008.656695-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,102 +85,146 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This addresses a number of different issues found after the
-"promisor-remote" capability patch series was merged.
+If `test_when_finished "rm -rf client"` is run after we clone, it
+will not run if the clone failed, so the "client" directory might
+not be removed at the end of the test.
 
-Changes since v5:
+`git clone` does try to remove the directory when it fails, but
+let's be safe and try to protect against possibly weird clone
+failures by moving `test_when_finished "rm -rf client"` before
+the clone. It just makes more sense this way around.
 
-There are only changes in the "t5710-promisor-remote-capability.sh"
-test script since v5:
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/t5710-promisor-remote-capability.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-  - Patch 1/4 ("t5710: arrange to delete the client before cloning")
-    is new. It moves `test_when_finished "rm -rf client"` before we
-    clone. It's a preparatory patch to avoid possible issues in the
-    following tests if a clone ever fails in a weird way.
-
-  - In patch 2/4 ("promisor-remote: fix segfault when remote URL is
-    missing"), the tests have been improved in a few ways:
-
-      - a `test_when_finished "rm -rf client"` has been moved before a
-        clone instruction to avoid possible issues in the following
-        tests if the clone fails in a weird way,
-
-      - some instructions to reset `remote.lop.url` on the server to
-        it's original value ("file://$(pwd)/lop") have been moved
-        before the instructions that unset it or set it to an empty
-        value,
-
-      - some `test_when_finished "rm -rf client"` have been added into
-        the new tests where the clone is expected to fail, to avoid
-        possible issues in the following tests in case the clone
-        actually succeeds.
-
-Range diff since v5:
-
--:  ---------- > 1:  12e6251c65 t5710: arrange to delete the client before cloning
-1:  f01457943d ! 2:  9fe0844b72 promisor-remote: fix segfault when remote URL is missing
-    @@ t/t5710-promisor-remote-capability.sh: test_expect_success "clone with 'KnownNam
-      
-     +test_expect_success "clone with 'KnownName' and missing URL in the config" '
-     +  git -C server config promisor.advertise true &&
-    ++  test_when_finished "rm -rf client" &&
-     +
-     +  # Clone from server to create a client
-     +  # Lazy fetching by the client from the LOP will fail because of the
-    @@ t/t5710-promisor-remote-capability.sh: test_expect_success "clone with 'KnownNam
-     +  GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
-     +          -c promisor.acceptfromserver=KnownName \
-     +          --no-local --filter="blob:limit=5k" server client &&
-    -+  test_when_finished "rm -rf client" &&
-     +
-     +  # Check that the largest object is not missing on the server
-     +  check_missing_objects server 0 "" &&
-    @@ t/t5710-promisor-remote-capability.sh: test_expect_success "clone with 'KnownNam
-     +
-      test_expect_success "clone with promisor.acceptfromserver set to 'KnownUrl'" '
-        git -C server config promisor.advertise true &&
-    - 
-    +   test_when_finished "rm -rf client" &&
-     @@ t/t5710-promisor-remote-capability.sh: test_expect_success "clone with 'KnownUrl' and different remote urls" '
-        initialize_server 1 "$oid"
-      '
-      
-     +test_expect_success "clone with 'KnownUrl' and url not configured on the server" '
-     +  git -C server config promisor.advertise true &&
-    ++  test_when_finished "rm -rf client" &&
-     +
-    -+  git -C server config unset remote.lop.url &&
-     +  test_when_finished "git -C server config set remote.lop.url \"file://$(pwd)/lop\"" &&
-    ++  git -C server config unset remote.lop.url &&
-     +
-     +  # Clone from server to create a client
-     +  # It should fail because the client will reject the LOP as URLs are
-    @@ t/t5710-promisor-remote-capability.sh: test_expect_success "clone with 'KnownUrl
-     +
-     +test_expect_success "clone with 'KnownUrl' and empty url, so not advertised" '
-     +  git -C server config promisor.advertise true &&
-    ++  test_when_finished "rm -rf client" &&
-     +
-    -+  git -C server config set remote.lop.url "" &&
-     +  test_when_finished "git -C server config set remote.lop.url \"file://$(pwd)/lop\"" &&
-    ++  git -C server config set remote.lop.url "" &&
-     +
-     +  # Clone from server to create a client
-     +  # It should fail because the client will reject the LOP as an empty URL is
-2:  8981eb9dae = 3:  f56dccc5e2 promisor-remote: fix possible issue when no URL is advertised
-3:  a8a9f9b33b = 4:  81387f61c3 promisor-remote: compare remote names case sensitively
-
-Christian Couder (4):
-  t5710: arrange to delete the client before cloning
-  promisor-remote: fix segfault when remote URL is missing
-  promisor-remote: fix possible issue when no URL is advertised
-  promisor-remote: compare remote names case sensitively
-
- Documentation/config/promisor.adoc    |  4 +-
- promisor-remote.c                     | 27 ++++++----
- t/t5710-promisor-remote-capability.sh | 75 ++++++++++++++++++++++++---
- 3 files changed, 86 insertions(+), 20 deletions(-)
-
+diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
+index d2cc69a17e..e26a97f588 100755
+--- a/t/t5710-promisor-remote-capability.sh
++++ b/t/t5710-promisor-remote-capability.sh
+@@ -93,6 +93,7 @@ test_expect_success "setup for testing promisor remote advertisement" '
+ 
+ test_expect_success "clone with promisor.advertise set to 'true'" '
+ 	git -C server config promisor.advertise true &&
++	test_when_finished "rm -rf client" &&
+ 
+ 	# Clone from server to create a client
+ 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
+@@ -100,7 +101,6 @@ test_expect_success "clone with promisor.advertise set to 'true'" '
+ 		-c remote.lop.url="file://$(pwd)/lop" \
+ 		-c promisor.acceptfromserver=All \
+ 		--no-local --filter="blob:limit=5k" server client &&
+-	test_when_finished "rm -rf client" &&
+ 
+ 	# Check that the largest object is still missing on the server
+ 	check_missing_objects server 1 "$oid"
+@@ -108,6 +108,7 @@ test_expect_success "clone with promisor.advertise set to 'true'" '
+ 
+ test_expect_success "clone with promisor.advertise set to 'false'" '
+ 	git -C server config promisor.advertise false &&
++	test_when_finished "rm -rf client" &&
+ 
+ 	# Clone from server to create a client
+ 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
+@@ -115,7 +116,6 @@ test_expect_success "clone with promisor.advertise set to 'false'" '
+ 		-c remote.lop.url="file://$(pwd)/lop" \
+ 		-c promisor.acceptfromserver=All \
+ 		--no-local --filter="blob:limit=5k" server client &&
+-	test_when_finished "rm -rf client" &&
+ 
+ 	# Check that the largest object is not missing on the server
+ 	check_missing_objects server 0 "" &&
+@@ -126,6 +126,7 @@ test_expect_success "clone with promisor.advertise set to 'false'" '
+ 
+ test_expect_success "clone with promisor.acceptfromserver set to 'None'" '
+ 	git -C server config promisor.advertise true &&
++	test_when_finished "rm -rf client" &&
+ 
+ 	# Clone from server to create a client
+ 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
+@@ -133,7 +134,6 @@ test_expect_success "clone with promisor.acceptfromserver set to 'None'" '
+ 		-c remote.lop.url="file://$(pwd)/lop" \
+ 		-c promisor.acceptfromserver=None \
+ 		--no-local --filter="blob:limit=5k" server client &&
+-	test_when_finished "rm -rf client" &&
+ 
+ 	# Check that the largest object is not missing on the server
+ 	check_missing_objects server 0 "" &&
+@@ -144,8 +144,8 @@ test_expect_success "clone with promisor.acceptfromserver set to 'None'" '
+ 
+ test_expect_success "init + fetch with promisor.advertise set to 'true'" '
+ 	git -C server config promisor.advertise true &&
+-
+ 	test_when_finished "rm -rf client" &&
++
+ 	mkdir client &&
+ 	git -C client init &&
+ 	git -C client config remote.lop.promisor true &&
+@@ -162,6 +162,7 @@ test_expect_success "init + fetch with promisor.advertise set to 'true'" '
+ 
+ test_expect_success "clone with promisor.acceptfromserver set to 'KnownName'" '
+ 	git -C server config promisor.advertise true &&
++	test_when_finished "rm -rf client" &&
+ 
+ 	# Clone from server to create a client
+ 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
+@@ -169,7 +170,6 @@ test_expect_success "clone with promisor.acceptfromserver set to 'KnownName'" '
+ 		-c remote.lop.url="file://$(pwd)/lop" \
+ 		-c promisor.acceptfromserver=KnownName \
+ 		--no-local --filter="blob:limit=5k" server client &&
+-	test_when_finished "rm -rf client" &&
+ 
+ 	# Check that the largest object is still missing on the server
+ 	check_missing_objects server 1 "$oid"
+@@ -177,6 +177,7 @@ test_expect_success "clone with promisor.acceptfromserver set to 'KnownName'" '
+ 
+ test_expect_success "clone with 'KnownName' and different remote names" '
+ 	git -C server config promisor.advertise true &&
++	test_when_finished "rm -rf client" &&
+ 
+ 	# Clone from server to create a client
+ 	GIT_NO_LAZY_FETCH=0 git clone -c remote.serverTwo.promisor=true \
+@@ -184,7 +185,6 @@ test_expect_success "clone with 'KnownName' and different remote names" '
+ 		-c remote.serverTwo.url="file://$(pwd)/lop" \
+ 		-c promisor.acceptfromserver=KnownName \
+ 		--no-local --filter="blob:limit=5k" server client &&
+-	test_when_finished "rm -rf client" &&
+ 
+ 	# Check that the largest object is not missing on the server
+ 	check_missing_objects server 0 "" &&
+@@ -195,6 +195,7 @@ test_expect_success "clone with 'KnownName' and different remote names" '
+ 
+ test_expect_success "clone with promisor.acceptfromserver set to 'KnownUrl'" '
+ 	git -C server config promisor.advertise true &&
++	test_when_finished "rm -rf client" &&
+ 
+ 	# Clone from server to create a client
+ 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
+@@ -202,7 +203,6 @@ test_expect_success "clone with promisor.acceptfromserver set to 'KnownUrl'" '
+ 		-c remote.lop.url="file://$(pwd)/lop" \
+ 		-c promisor.acceptfromserver=KnownUrl \
+ 		--no-local --filter="blob:limit=5k" server client &&
+-	test_when_finished "rm -rf client" &&
+ 
+ 	# Check that the largest object is still missing on the server
+ 	check_missing_objects server 1 "$oid"
+@@ -212,6 +212,7 @@ test_expect_success "clone with 'KnownUrl' and different remote urls" '
+ 	ln -s lop serverTwo &&
+ 
+ 	git -C server config promisor.advertise true &&
++	test_when_finished "rm -rf client" &&
+ 
+ 	# Clone from server to create a client
+ 	GIT_NO_LAZY_FETCH=0 git clone -c remote.lop.promisor=true \
+@@ -219,7 +220,6 @@ test_expect_success "clone with 'KnownUrl' and different remote urls" '
+ 		-c remote.lop.url="file://$(pwd)/serverTwo" \
+ 		-c promisor.acceptfromserver=KnownUrl \
+ 		--no-local --filter="blob:limit=5k" server client &&
+-	test_when_finished "rm -rf client" &&
+ 
+ 	# Check that the largest object is not missing on the server
+ 	check_missing_objects server 0 "" &&
 -- 
 2.49.0.1.g12e6251c65
 
