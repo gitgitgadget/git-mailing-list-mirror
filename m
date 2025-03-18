@@ -1,156 +1,142 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9752020B1E6
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 11:58:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6065E207E12
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 11:59:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742299121; cv=none; b=RXWIEph1ExBouMzgbS7tI0LdyWq8yFxtfpceyyqeUGZf4dJmyMfewo38xDzrsxyX/rOfDNYX+jgM8CGVfGIlPFmeIYbcjwDNFhZRrQApjRhwwc9/S9WshpyWY6UvUS6+Jiwx6YshmFeg6rUvEsuqEva1/a6V8EPi1GmaGAZWFCk=
+	t=1742299163; cv=none; b=DTY+GLrjsEPjWb2IXuZr+B+b5MkgqrpxwKu8LLXHXKiPeB+4VNgEqjoBj0umQc/GITX+2/NOvrZi2x/dzlaNejenjxZ1G3g5iSjRXSvbNk9SiLmSrgXBMlt+vRYgUdYvH9jTPuxTivWzYuuoa4ZhXLUYOReIGhRpyTLRP9m6dZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742299121; c=relaxed/simple;
-	bh=6RDRG+e6Lad8luH6RwQT+ZrmOrLBUP/E7iIlR2BW9Rg=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=LivIBhTa236cmPcftPEh8D6fPoM/AYOMHWkpSTe3gESZ1OvYf1+U5/HFUh7NxmOT/Imt14f1mJTFI5gfkY0SN1ikCOH7fXbH8BEiVkVxZ5uBZllljETNYdpQznPAcY9jIJlCWfCZLrV5KcId0G/gL5vC9NsX3UfamIBxGB4S9Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OTUONv5a; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1742299163; c=relaxed/simple;
+	bh=woOoairnn3V7YUBFIsN9goJ7MaLPKg/0DbHSrav+ITw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GKOtuDRzwVOtsCaQmzpQrmHKFl/AOjWH9sLQlCnDrWNDdIGfQz17bhCJb6o6RlEp5WT6YR+92ZHMHRJSMahrlYgXXIpnAbX/Op1WCGici8knxt4IeMxshrPYiNfbEYrNDWUz5VvQWNkh1jeogl1k5G7LgE34yMDw8Dwg+XUl4mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XhwbTUxf; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OTUONv5a"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so21489355e9.1
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 04:58:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XhwbTUxf"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-225e3002dffso56898845ad.1
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 04:59:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742299113; x=1742903913; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=mtEg4O6CQwb1zUbAWqHTzayp15WYCTLUxUln/LBmE/A=;
-        b=OTUONv5aRZQF/ldTxiLTW4SL9PwGvP88O8ft26Ppt+bZSrdGY59ORE5V64TqqeuWu3
-         jsZiJR9NBfxknY1MldQrQXScEnf1jAzorjavmmh0V0c1jWoE7cLWaaYs0xfgRlITJFnO
-         iMQuYGyZDkGhWx+42p74CsyiePmaE5ABkv12iSGNd9GQONVa+LH4JHB24+VlJzbVE++7
-         aFnC987xWt/V03dPU9jy2TAW3/2fq2DQAhSmXUwFC5SZDx0QgYmvYlNGB0mV/SvDXWq7
-         prbazLKgWOg8vELhTiCIgvycbs765WtClNJ8CfSjK1rzLCs2jbwUDYQCTPJt+hnAhpIX
-         yvpw==
+        d=gmail.com; s=20230601; t=1742299161; x=1742903961; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5qsH/l+jtisR3hlPMI2mnPlbMuso0oQLu6ZqtpCkH5E=;
+        b=XhwbTUxfpgHpjPzMwwx8iCw/gW6qt/5naszPpcu7CLhL/3dGbYJ9FFqrhgKs058Jpm
+         ++G56K9Wc8xBimapnNNcMIzaZrzUgfcRKvQpkIA56GE01HdCyS2hkW5z0XmrDODOJmSG
+         KlYFq0l868oC03X6HlZQW47OMx4pJlFykWV0GQ31YcrRNeZ02iLVAZal23ZqX1j5lSe3
+         W2U2OZfaaKld/pWtfnB8+fFzcbYcMN+tR5By1KsYmdv8wzBGIpj+oL6UBiMxwQYG+1f8
+         P9zwPCvrmIjb+3sM9W7ZTzXbDgb4ap4hePzt6ndB73N9wGowmSj9hlvNN12XleWZbB2q
+         kk6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742299113; x=1742903913;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mtEg4O6CQwb1zUbAWqHTzayp15WYCTLUxUln/LBmE/A=;
-        b=krmwKDbGSJUYrNDSnUnXkCUfHJwv277dC3Heeovj0daF7LUy7zZTHGziTr8X/JvGzV
-         XXwKfMWfdqIuJA1Y17G65pg3cHJDMTolWJ3023kW7Eg6TDSD4S374sYf6G4tPcGUbVfB
-         j6D4MT3JL2pELyIRvslxXYYaEEfQqx7quX83OBHJKFVSnD4KV3nDWTGqiDqK0ufsSMIR
-         Qqo54WpQ/UuhJ9Usy2Wf214ypRj8QOr9DPnLE4Qfiv56Caf4LXvXrZkDYZaaO5xT5vPV
-         B5L0P7Gky36X11FnswIm95hbaNGUP09QexEUMd2G4dizPJGCQNqFUDH/SGHTr+lrNX68
-         pHVQ==
-X-Gm-Message-State: AOJu0YySPVgWSiUH+gKfBMF56BkTi2naVgn4I6+ea7UocH/FAm8YHxQo
-	rM4lVUPvgD2QTGBviSeTS//nUAaLQTHQDuZ4biGo+po6z9iPdEDm/ca5GA==
-X-Gm-Gg: ASbGncuLrvWHo3bfDmM4r0lOPXPSXI6gOuG/8BDJ/u754o+auleRHXqTE/AGCsE2c4H
-	9Hop3WNaAIB2JjfIEF1Ti4l1QRSr8KXKSBr9nZIAYeY+o1+Ra4YREw5+AHf1qB3POez08QTKbHH
-	U5fDUKJ2G8ARJJw4nrE+ifzGXmCAsAeD0ky/FKEjN3yGaEXAe4YG7xmIINy7/MC/7MImL+zTav5
-	xe5LUo/T7l4boIZulfhQX/EYRa8s7sbb8vuNNOgA0o6Sd1kHxt8wJfJaed6liVdlIPTyvt5CfJB
-	DB73yyEhWew8WBgcppjVlSIb7wGKHwEh/BhfSsK59nTBj6cattTqUl1T
-X-Google-Smtp-Source: AGHT+IH6IDvy6EET9btJWg+hGcRheLTyQC4qDPwcG3lKwnPSt3HbqPFmTaQwuQ/krGbTGN+L2/ObNw==
-X-Received: by 2002:a05:600c:154c:b0:434:fa55:eb56 with SMTP id 5b1f17b1804b1-43d3b97f0bdmr16622605e9.7.1742299113233;
-        Tue, 18 Mar 2025 04:58:33 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d1ffb6292sm133577495e9.1.2025.03.18.04.58.32
+        d=1e100.net; s=20230601; t=1742299161; x=1742903961;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5qsH/l+jtisR3hlPMI2mnPlbMuso0oQLu6ZqtpCkH5E=;
+        b=ktIMstyFZIuLMGJet8p8xGY3O3GLZwD0rVqLhvsGTz/KuZhEH2PjyVtPb0qCOyfrZH
+         tUIOCkqHA+RjbeHYyxKc9CingxQnH8pskaGjzr5dtgtIXYD50IGac2azb7DkB8yUNXZV
+         KUYwLTaP+VrJIxXsrdros6gkEaS8MgAJK+mFu0nqGWWIrMZDB+i0poLP9sa8o2hH3twO
+         /3PWaOYQ5O3srO0M6wrf5mEe5JKBi+a1HvL17yXHQxgJ2f1vbBbHIrpyFQRgYJI5Z5xe
+         jqNr14sELXHOBmtaBJE4rL8GA60sMNZukHzoe5vDlWxsZtmBdGu8kRD5AOuiXJOw4VYR
+         7cXQ==
+X-Gm-Message-State: AOJu0YxMPFPcpuR3wu1+u03M5Xbj4MkGduEdHxGhVrUCNiobPc7pr5m0
+	Sci5lK2fOiZnysuC3c/EsUB86gXFFOpHvoD4tBwMETCy30d38O44bFtlxf5s
+X-Gm-Gg: ASbGncuwdccHUhBOKgT+Ze1paOPtplwkyHlvLDyhZZrf3tDAh6/GRosUqMGr4R7xMfb
+	9/H2NXsHM9zSYlO2JEjptecc5Cesn1uKA4t7SREFAUlGCJahgLSIDGM5u9HaBqV1b+TT2+58mnH
+	o8YQ9Xu5kFSX0C1PBi18b+v7T1iSrZl8V0VP0iu/NUhqoFkpL8NLLj2Bv//sjD++SI4B2c5qw73
+	VhNYEstavXhGYMycohTZNA1eKGQUcmnC6RZgvfAX1DUZ2urVcverIP3n6s1w4/GuHbNQ0EanswV
+	ZSRHtWqCS3HQ8/WVtx5OwWHxOcc9Nyk1k3SiG2ftcBbVuufbEha49bGuqOKiEJGeU49VDQ==
+X-Google-Smtp-Source: AGHT+IFihrZmPMxiU3Y85cpWWXBZjcfq/hVAu3R54g8peZErJ6ML9Fm7xLD/uv+tJ9F4r+DqBMDJ4w==
+X-Received: by 2002:a17:902:e884:b0:224:249f:9723 with SMTP id d9443c01a7336-2262c6241bbmr34244305ad.51.1742299161226;
+        Tue, 18 Mar 2025 04:59:21 -0700 (PDT)
+Received: from archlinux.plaksha.edu.in ([182.75.25.162])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6bc012bsm92101605ad.205.2025.03.18.04.59.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Mar 2025 04:58:32 -0700 (PDT)
-Message-Id: <pull.1918.git.git.1742299111861.gitgitgadget@gmail.com>
-From: "Sampriyo Guin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 18 Mar 2025 11:58:31 +0000
-Subject: [PATCH] [GSoC Patch] Modernize Test Path Checking: test -(e|f|d)
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 18 Mar 2025 04:59:20 -0700 (PDT)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: git@vger.kernel.org,
+	christian.couder@gmail.com
+Cc: gitster@pobox.com,
+	johncai86@gmail.com,
+	me@ttaylorr.com,
+	phillip.wood123@gmail.com,
+	ps@pks.im,
+	shejialuo@gmail.com,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/9] config: teach repo_config to allow `repo` to be NULL
+Date: Tue, 18 Mar 2025 17:28:53 +0530
+Message-ID: <20250318115912.2978992-2-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250318115912.2978992-1-usmanakinyemi202@gmail.com>
+References: <20250318115912.2978992-1-usmanakinyemi202@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Karthik Nayak <karthik.188@gmail.com>,
-    Sampriyo Guin <sampriyoguin@gmail.com>,
-    rimo <sampriyoguin@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: rimo <sampriyoguin@gmail.com>
+The `repo` value can be NULL if a builtin command is run outside
+any repository. The current implementation of `repo_config()` will
+fail if `repo` is NULL.
 
-test -e changed to test_path_exists
-test -f changed to test_path_is_file
+If the `repo` is NULL the `repo_config()` can ignore the repository
+configuration but it should read the other configuration sources like
+the system-side configuration instead of failing.
 
-Signed-off-by: Sampriyo Guin <sampriyoguin@gmail.com>
+Teach the `repo_config()` to allow `repo` to be NULL by calling the
+`read_very_early_config()` which read config but only enumerate system
+and global settings.
+
+This will be useful in the following commits.
+
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 ---
-    [GSoC Patch] Modernize Test Path Checking in Git’s Test Suite
-    
-    This is my first git contribution. A simple fix as specified in Git
-    Microprojects. I have tested using Github Actions on my private
-    repository. Your comments and feedbacks are much appreciated. Thanks!
-    
-    , Jialuo She shejialuo@gmail.com , Christian Couder
-    christian.couder@gmail.com, Ghanshyam Thakkar shyamthakkar001@gmail.com
+ config.c | 4 ++++
+ config.h | 9 +++++++++
+ 2 files changed, 13 insertions(+)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1918%2FRimoGuin%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1918/RimoGuin/master-v1
-Pull-Request: https://github.com/git/git/pull/1918
-
- t/chainlint/chained-subshell.expect | 2 +-
- t/chainlint/chained-subshell.test   | 2 +-
- t/chainlint/function.expect         | 2 +-
- t/chainlint/function.test           | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/t/chainlint/chained-subshell.expect b/t/chainlint/chained-subshell.expect
-index 93fb1a6578b..76393efcd20 100644
---- a/t/chainlint/chained-subshell.expect
-+++ b/t/chainlint/chained-subshell.expect
-@@ -5,6 +5,6 @@
- 6 ) &&
- 7 
- 8 cut "-d " -f actual | (read s1 s2 s3 &&
--9 test -f $s1 ?!LINT: missing '&&'?!
-+9 test_path_is_file $s1 ?!LINT: missing '&&'?!
- 10 test $(cat $s2) = tree2path1 &&
- 11 test $(cat $s3) = tree3path1)
-diff --git a/t/chainlint/chained-subshell.test b/t/chainlint/chained-subshell.test
-index 1f11f653982..997f30eadd7 100644
---- a/t/chainlint/chained-subshell.test
-+++ b/t/chainlint/chained-subshell.test
-@@ -8,7 +8,7 @@ mkdir sub && (
+diff --git a/config.c b/config.c
+index 658569af08..e127afaa8f 100644
+--- a/config.c
++++ b/config.c
+@@ -2521,6 +2521,10 @@ void repo_config_clear(struct repository *repo)
  
- # LINT: preceding command pipes to subshell on same line
- cut "-d " -f actual | (read s1 s2 s3 &&
--test -f $s1
-+test_path_is_file $s1
- test $(cat $s2) = tree2path1 &&
- # LINT: closing subshell ")" correctly detected on same line as "$(...)"
- test $(cat $s3) = tree3path1)
-diff --git a/t/chainlint/function.expect b/t/chainlint/function.expect
-index 9e46a3554a1..2edbeb5e4e2 100644
---- a/t/chainlint/function.expect
-+++ b/t/chainlint/function.expect
-@@ -4,7 +4,7 @@
- 5 
- 6 remove_object() {
- 7 	file=$(sha1_file "$*") &&
--8 	test -e "$file" ?!LINT: missing '&&'?!
-+8 	test_path_exists "$file" ?!LINT: missing '&&'?!
- 9 	rm -f "$file"
- 10 } ?!LINT: missing '&&'?!
- 11 
-diff --git a/t/chainlint/function.test b/t/chainlint/function.test
-index 763fcf3f878..2f2a5c251f4 100644
---- a/t/chainlint/function.test
-+++ b/t/chainlint/function.test
-@@ -7,7 +7,7 @@ sha1_file() {
- # LINT: broken &&-chain in function and after function
- remove_object() {
- 	file=$(sha1_file "$*") &&
--	test -e "$file"
-+	test_path_exists "$file"
- 	rm -f "$file"
+ void repo_config(struct repository *repo, config_fn_t fn, void *data)
+ {
++	if (!repo) {
++		read_very_early_config(fn, data);
++		return;
++	}
+ 	git_config_check_init(repo);
+ 	configset_iter(repo->config, fn, data);
  }
- 
-
-base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+diff --git a/config.h b/config.h
+index 5c730c4f89..29a0277483 100644
+--- a/config.h
++++ b/config.h
+@@ -219,6 +219,15 @@ void read_very_early_config(config_fn_t cb, void *data);
+  * repo-specific one; by overwriting, the higher-priority repo-specific
+  * value is left at the end).
+  *
++ * In cases where the repository variable is NULL, repo_config() will
++ * skip the per-repository config but retain system and global configs
++ * by calling read_very_early_config() which also ignores one-time
++ * overrides like "git -c var=val". This is to support handling "git foo -h"
++ * (which lets git.c:run_builtin() to pass NULL and have the cmd_foo()
++ * call repo_config() before calling parse_options() to notice "-h", give
++ * help and exit) for a command that ordinarily require a repository
++ * so this limitation may be OK (but if needed you are welcome to fix it).
++ *
+  * Unlike git_config_from_file(), this function respects includes.
+  */
+ void repo_config(struct repository *r, config_fn_t fn, void *);
 -- 
-gitgitgadget
+2.48.1
+
