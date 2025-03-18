@@ -1,41 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A21A1F4C9C
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 01:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA408158545
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 01:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742262102; cv=none; b=iFiwB5KDH8D3/RYgv/QENhQvPhKGcuTzwcyUED/YE6PRRmdiNjnus7irQ46G1oFPoii2YW+v6FXEU8nCBFMln09aHo6SRTYkGtS7VHIWoZ4cZL4UoO5yQ8mMMnpqmaBkAEk2Ip2IlJjxhJmI5z1qRj5YwDRznNZuhhK7HWjptCs=
+	t=1742262262; cv=none; b=O9GZCJ11pY9chZ/t5COmdEMH8caFuwO/9hsRfxfCRDFvBbYxbYA/b1ywO8cKyESAEwgjNvpM9dEk+ZYaLSEHz0lPNZgKkSnRQ/UZKxR9jAAbZ5fxbrzwlJ0CRhxVF5WUkpvYofuuC3I7/7X50W6lIQg2oXVXVsNmxKpHhs+EIiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742262102; c=relaxed/simple;
-	bh=ok0XHqWeEzrPelDpONxBjX+fZIJiGSa0Z936p55k7tM=;
+	s=arc-20240116; t=1742262262; c=relaxed/simple;
+	bh=pJbU2sMVBipElwbUJFVaYVghu8X8TsXiOeQaPDVDQNA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rBmVj5aA4A9wv+HmRBSE2IHKv7Hi6gsQnicCB1xMKfY5jHeSsYOPC5HLSRRkCU4yaZT0PFxVWC0YUYHPa86wPu6M6FNV/7ShHOazhHGZqX8PdxK35vQKKur8CgGnq9Ybrc2f8wb7VQpvSkUPIdmLNuV00+IxGkYZjZu9keJXC8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Sj4IXQkI; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=QVrnxJz1WknCIKcAdahMfqbe5u6s+e4D67uw1nrbdlT1IPzmaiOpd2pxlSVv7LaU0y7kryxsOhC1GEEnAZ7tPwGLqwzgPGvPOKkXMaUzU6SabBAVNckWjYkDlXQC2Lt9WmnXOIX5UfXuJazl+B7D40v1pTmv5CEqP5nIRsSab30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YYLhh2b3; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Sj4IXQkI"
-Received: (qmail 26483 invoked by uid 109); 18 Mar 2025 01:41:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ok0XHqWeEzrPelDpONxBjX+fZIJiGSa0Z936p55k7tM=; b=Sj4IXQkIoFFYOUQYlcN9jKyPOohrbiRjLREJmwV3nREJIF+kjNgCmaM5/ysv1CrZBjmPWqkyWY489FNYG0D0OBkHICBozyqopj+p51SqB3tTT+Nk2Hi2NPnbZY/w/QEiY7eGN/CxYWKXmN74QCswRPI36W99GMKDmxJx3ms1sMcNAN/hVZdwNcdefTXo1CLhDui54oh6ZY6BG/f91QTsh2SSNyNxf8O7KjiOTlL8x1jQKxDCABflDO1/Wb5+Q96qGxpU12KUL4O8ooacNrZBAqVoySowkblgmeplWTrnPR+H5VYKeHpycbgL8yr9u+plwT75NkhWdTgqxDexSiiQdg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YYLhh2b3"
+Received: (qmail 26520 invoked by uid 109); 18 Mar 2025 01:44:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=pJbU2sMVBipElwbUJFVaYVghu8X8TsXiOeQaPDVDQNA=; b=YYLhh2b3vH++CVuLJm0//tyGA9Ix6uwBAAZ1MpSc1fxc7/QTcTC5LPQ2cFjzLNovpmPIK8lE/hvnnliQGn066UmV3izmjBBgqDmwkxk6MGSxglh8kJD7UC4H5sxuIRj5GpAQGNUqUSmH/qawldWR15LtxMW/FqzsDcPEZhGKxu9uza6BJYhopWSNO6h/Tjz9aHAauakdLUHf9D+HwsumAWtWiLMA7Pawb7aVa/WKbSqT30i6plI6lYu7IEvEiVUyOiPHnswHFYbjfU9es5CAipDpwq8RjwRufiGP+6o0+OF9tRO9pVKMVW1/h+WKjALBj3HNR2UqiopFleagM85DNA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Mar 2025 01:41:40 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Mar 2025 01:44:19 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3489 invoked by uid 111); 18 Mar 2025 01:41:39 -0000
+Received: (qmail 3507 invoked by uid 111); 18 Mar 2025 01:44:18 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Mar 2025 21:41:39 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Mar 2025 21:44:18 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 17 Mar 2025 21:41:39 -0400
+Date: Mon, 17 Mar 2025 21:44:17 -0400
 From: Jeff King <peff@peff.net>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 08/13] pack-bitmap.c: compute disk-usage with
- incremental MIDXs
-Message-ID: <20250318014139.GD1471939@coredump.intra.peff.net>
+Subject: Re: [PATCH v4 10/13] ewah: implement `struct ewah_or_iterator`
+Message-ID: <20250318014417.GE1471939@coredump.intra.peff.net>
 References: <cover.1723755667.git.me@ttaylorr.com>
  <cover.1741983492.git.me@ttaylorr.com>
- <c1eefeae993f2c8778dd0ec9626f977dbb2011a2.1741983492.git.me@ttaylorr.com>
+ <cb08ad6a62092b9521a11c0524f23bd8831c0409.1741983492.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,17 +43,16 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c1eefeae993f2c8778dd0ec9626f977dbb2011a2.1741983492.git.me@ttaylorr.com>
+In-Reply-To: <cb08ad6a62092b9521a11c0524f23bd8831c0409.1741983492.git.me@ttaylorr.com>
 
-On Fri, Mar 14, 2025 at 04:18:44PM -0400, Taylor Blau wrote:
+On Fri, Mar 14, 2025 at 04:18:50PM -0400, Taylor Blau wrote:
 
-> In a similar fashion as previous commits, use nth_midxed_pack() instead
-> of accessing the MIDX's ->packs array directly to support incremental
-> MIDXs.
+> +void ewah_or_iterator_free(struct ewah_or_iterator *it)
+> +{
+> +	free(it->its);
+> +}
 
-Probably not worth it to change it in an actual patch, but is it worth
-renaming midx->packs to something else to make sure we catch all of the
-spots that need to be considered? Or maybe you already did that, which
-is how you found all of these. :)
+Hmm, I thought this was going to be come "_release()" based on the last
+round?
 
 -Peff
