@@ -1,83 +1,36 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC58206F02
-	for <git@vger.kernel.org>; Mon, 17 Mar 2025 23:53:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD8019A
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 00:18:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742255618; cv=none; b=Nxdk9bNNB4saTcBSi9GqH/40m00o9MTIM7uuh9BtO2KoaHxUQzW2H4j0lbmkor/CJ13A63JnQ7CPaiaI6sDVldUkYcoFmKg5JbTclP1KkGpRtLEDEOCQT89VXv0CxoQdBVWEIx0EgrGsJ+qsbhdiClL74Z1dHaSXNiNMHm1HbH0=
+	t=1742257121; cv=none; b=az8lAKEa4FBKvVjUVO8xgULQ+kO4glVBAxP5VlTioSFPXp60CBXkcSpmEphSyTElMyHZiGjffS91ZbXaoopX2U4NcJ/hPcqrg7751UA7ncc5zxshpBtukDomh/DJwHBYqjwwbXaQMIzxuz7WSbFp8HsXye7e5n5/fObJFUdYOEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742255618; c=relaxed/simple;
-	bh=bGdhZ9IiHyWntm97SONjhEL0UfyywXjg70q6HOrWMpM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATydyk2j3nwZyTr21rQuCFlVbt8Be4q+9xAfOfZnGi1CfvuhkBWYcOe248mzy4sIXC8VTdS4p3zPtHzEO84PdFD8l2o2E1g+yjtDZutANEnDzyZUDG0rwi0F4aP4hRiGwh6e0nagpMukl02gcti53pUUy1a3bVTmbs63MEeDrhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zvOhq64e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o3VmZl7l; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742257121; c=relaxed/simple;
+	bh=kFOjqzCF5MDK8VIlzvnTFDJ0l0JLbDHO/Sc1RRiKcms=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ckikobv7Bhsib7wLKXZTo5ENZkbvGUq7fyRnLBYLhQk+voZ6IOu2HO/QxN3U4hXBRGqisj+hR5PNZdmYh+VecjY+hTFS8IsrOkZ8a5FE0u65kbnqzk78Y+L4eE1Hmgasmko5DL+tVW758iwNG9QmKnbHtFA7dSw4XuxKCoowy9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Svsli9aN; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zvOhq64e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o3VmZl7l"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3B51A13833D1;
-	Mon, 17 Mar 2025 19:53:36 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Mon, 17 Mar 2025 19:53:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1742255616; x=
-	1742342016; bh=p8Wr1apITdRz3Ry/xFoAmQ39yukL6fGj7U8PpnWf4rc=; b=z
-	vOhq64eI569uMFYPPvISIQ6TFpH0lgIg4IlaLy8/ON55hq7rIxTWFdmuU25haxvu
-	OC6HUt/pU1cS6pjCdSjQvfDVtwd/Y7f4bRIanvW+okoKsC4Ube3p3SmnrWjXBJ/I
-	BXcAA5dlYvH0mOfSHPTn9MHy/AxGijiRaE2ZHKPq6OZzaKWCydbbIcGTPM3fsLvl
-	wo0kYnestyyFW+8sYgG4aoB9DgcE/ZeLBhTfWfuG55h7TCdWZ+gyEsZw2yMqfs6x
-	/mevQkslOo/vVQ6Hd1tzukEx1r880KbPfKlZQeWVGoqFbmnO6bKoXvvXW+fOTnaQ
-	dlCtaz/iWStsp+OwebRiA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1742255616; x=1742342016; bh=p
-	8Wr1apITdRz3Ry/xFoAmQ39yukL6fGj7U8PpnWf4rc=; b=o3VmZl7lPkuHUcosE
-	7On3JvFZXTUI1gd/72j1EwobeMGP+Z1x01bviT5Xkh/Y/x1flYSYLVgzY/wrERsT
-	gzRc/TYnqyCjT9DNsaTL7qRbw+4E/bAPLGtG9jMNmIXToQKj8vO7Ol0maV25UxnG
-	NmQtOOzvHmCR7T9EN+nKqZmTViajbJdbuarEkNHtTwDJ2n8A6Jp9I1FqMy2s7K2V
-	n/5DWTYIqchRYhX1LDj0SIvTUVmC9SgTRK53+uioCe0ihYaocTDbT05CZIoer4Ag
-	X78dmRnu1yyHNMU6luvm+xQzwe6uYswgLJuuHOUkr6pAnfxVg7o8Iwin7WZF1E+9
-	C4T9A==
-X-ME-Sender: <xms:ALbYZ0-3HtW1rzR9LMq7NPHd_LTpngXA3uEVFAGFafEW2f3X6bvWQA>
-    <xme:ALbYZ8sijx2EBkMfbnFZtYOGoNkJNT84zdbyYskLvoYGaWod4mTXy7AYocWwHdpHP
-    x3LP9GIDYLP04wsmQ>
-X-ME-Received: <xmr:ALbYZ6CKuENf-FgvYU6SlqgLY6VpV82k9dHtWOavM01T9TkgbTAA45ADktDTGfJHMsj_Ws2DqkBw-c7uw-vea1zHhuDg9LDrvjnLoiQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedtledtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    elveeigfelgeefieffgeeftedvtedttdffiefggfelveeiueevudfffefgvedtleenucff
-    ohhmrghinhepkhgvrhhnvghlrdhorhhgpdhsthgrtghkohhvvghrfhhlohifrdgtohhmpd
-    hmrghkrdguvghvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
-    rhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ALbYZ0cygnKo3Yz6odjBLEvbFhDYiny2EMdouA5bm7GexNhpv4dwgQ>
-    <xmx:ALbYZ5P2UuKHopwbTLX3hwzUjuDuuxdKpUujqcbWlOygd-VSJMN3fQ>
-    <xmx:ALbYZ-mqRTHXTOapao2ge6dbBDFLXtzwzLVT8HjFrXmtf6rKT53_xg>
-    <xmx:ALbYZ7usoKH9FnyfMfqpBXy0eVJd7-gBHjaxKEpzIDiuLKCdDS15Dg>
-    <xmx:ALbYZ6okd--ujW3NQAZh304HH-8J0ehHEmjIBIIkP0HHEiB-lQhabmn1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Mar 2025 19:53:35 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>
-Subject: [PATCH v3 3/3] config.mak.dev: enable -Wunreachable-code
-Date: Mon, 17 Mar 2025 16:53:29 -0700
-Message-ID: <20250317235329.809302-4-gitster@pobox.com>
-X-Mailer: git-send-email 2.49.0-207-gc8924421c3
-In-Reply-To: <20250317235329.809302-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Svsli9aN"
+Received: (qmail 25788 invoked by uid 109); 18 Mar 2025 00:18:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=kFOjqzCF5MDK8VIlzvnTFDJ0l0JLbDHO/Sc1RRiKcms=; b=Svsli9aNI+ccmjZeEnMbCni1H7nqxBqmC/5Jw3BHTW1rS7TsxQYj4qXlgm/0aBJh+4JlBtI0Tv3uWS0ouLqnRbOynfOvRYqIzoOO08lk2Qo1a3Kiz+koZDDYMLtEdO0A3IQ3anSII2G33kci7yl23oQU23++TcXnNqDzRECmArFKCuWvfdETJz9u/cV7Pe2PKN7AV9UmLjFPwxYF+8rqux0H9B+QFsdv1hPtwHUN2uyvAgA9ckqfnoi4MW1rQ6tRKYD7HtMEFXrnuWxjQbNKhdjA3QOB3cL43DlGa7+bLdFyEEFC0UjLrzNJPtWbPHAyT9oiv46koB/SLawvvrimkQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Mar 2025 00:18:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2105 invoked by uid 111); 18 Mar 2025 00:18:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Mar 2025 20:18:35 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 17 Mar 2025 20:18:35 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 0/3] -Wunreachable-code
+Message-ID: <20250318001835.GA1470172@coredump.intra.peff.net>
 References: <20250314210909.3776678-1-gitster@pobox.com>
  <20250317235329.809302-1-gitster@pobox.com>
 Precedence: bulk
@@ -86,65 +39,72 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250317235329.809302-1-gitster@pobox.com>
 
-From: Jeff King <peff@peff.net>
+On Mon, Mar 17, 2025 at 04:53:26PM -0700, Junio C Hamano wrote:
 
-Having the compiler point out unreachable code can help avoid bugs, like
-the one discussed in:
+> As Taylor noticed, we can still help macOS users by first dealing
+> with the false positive in the code, and then flip the warning
+> option for developers on.
 
-  https://lore.kernel.org/git/20250307195057.GA3675279@coredump.intra.peff.net/
+Yeah, this is worth doing.
 
-In that case it was found by Coverity, but finding it earlier saves
-everybody time and effort.
+> This is totally offtopic, but I often find the short-log (list of
+> commits, grouped by author) in the cover letter very awkward to work
+> with.  Between v2 and v3, aside from the NOT_CONSTANT() improvements
+> in the patch [2/3] that used to be [3/3], one large change is the
+> reordering of the patches but that is not seen in the shortlog (I
+> ran "git log --oneline -reverse" to prepare the list of commits in
+> the order they are applied to describe them in the above list).
+> 
+> Jeff King (2):
+>   run-command: use errno to check for sigfillset() error
+>   config.mak.dev: enable -Wunreachable-code
+> 
+> Junio C Hamano (1):
+>   git-compat-util: add NOT_CONSTANT macro and use it in atfork_prepare()
 
-We can use -Wunreachable-code to get some help from the compiler here.
-Interestingly, this is a noop in gcc. It was a real warning up until gcc
-4.x, when it was removed for being too flaky, but they left the
-command-line option to avoid breaking users. See:
+The re-ordering does appear in the range-diff, if you provide one. But I
+agree that the organized-by-name shortlog does not make much sense for
+most series. As a reviewer, I care most about the patches, not the
+authors.
 
-  https://stackoverflow.com/questions/17249934/why-does-gcc-not-warn-for-unreachable-code
+I make my cover letters with something like this (part of a larger
+script):
 
-However, clang does implement this option, and it finds the case
-mentioned above (and no other cases within the code base). And since we
-run clang in several of our CI jobs, that's enough to get an early
-warning of breakage.
+    git format-patch --stdout origin..$topic |
+    perl -lne '
+      if (/^Subject: (.*)/) {
+        $subject = $1;
+      }
+      elsif ($subject && /^\s+(.*)/) {
+        $subject .= " $1";
+      }
+      elsif ($subject) {
+        print $subject;
+        $subject = undef;
+      }
+    ' |
+    sed -e 's/\[PATCH /[/' \
+        -e 's/]/]:/' \
+        -e 's/^/  /'
 
-We could enable it only for clang, but since gcc is happy to ignore it,
-it's simpler to just turn it on for all developer builds.
+which yields something like (for the older version of this series):
 
-Signed-off-by: Jeff King <peff@peff.net>
-[jc: squashed meson.build change sent by Patrick]
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- config.mak.dev | 1 +
- meson.build    | 1 +
- 2 files changed, 2 insertions(+)
+  [1/3]: config.mak.dev: enable -Wunreachable-code
+  [2/3]: run-command: use errno to check for sigfillset() error
+  [3/3]: git-compat-util: add NOT_A_CONST macro and use it in atfork_prepare()
 
-diff --git a/config.mak.dev b/config.mak.dev
-index 0fd8cc4d35..95b7bc46ae 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -39,6 +39,7 @@ DEVELOPER_CFLAGS += -Wunused
- DEVELOPER_CFLAGS += -Wvla
- DEVELOPER_CFLAGS += -Wwrite-strings
- DEVELOPER_CFLAGS += -fno-common
-+DEVELOPER_CFLAGS += -Wunreachable-code
- 
- ifneq ($(filter clang4,$(COMPILER_FEATURES)),)
- DEVELOPER_CFLAGS += -Wtautological-constant-out-of-range-compare
-diff --git a/meson.build b/meson.build
-index 373524dad2..fdccc59945 100644
---- a/meson.build
-+++ b/meson.build
-@@ -698,6 +698,7 @@ if get_option('warning_level') in ['2','3', 'everything'] and compiler.get_argum
-     '-Woverflow',
-     '-Wpointer-arith',
-     '-Wstrict-prototypes',
-+    '-Wunreachable-code',
-     '-Wunused',
-     '-Wvla',
-     '-Wwrite-strings',
--- 
-2.49.0-207-gc8924421c3
+Having the correct order and the matching numbering next to each one
+makes it much easier if you're going to comment on them inline.
 
+The perl in the script above is required to handle rfc822 wrapping /
+line continuation. I never bothered to implement rfc2047 unquoting. I
+don't tend to use non-ascii chars in my subject lines. ;)
+
+It would be nice if we had a format-patch option to avoid quoting and
+wrapping in order to make text processing like this easier.
+
+-Peff
