@@ -1,114 +1,103 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB97020E70F
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 16:30:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71838191F92
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 17:02:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742315423; cv=none; b=E8rPH8Sx2Gox9idFN/VQga4DCTAbvKrzylVCcPh6RBxOd55fcSgkbeAyNvDHMXnxGpTmBeSI9qw8OQcbl+GX4S+QXNyG+4rvXRIctta1gJUNciYcwLEIW9ONYWEdTdbEP3oB4xDN27de4zyf1n0xwCERGtAWnlYn8sOYzbLU4NI=
+	t=1742317336; cv=none; b=XvE2tJsgkhb9z8YkyGqp2l2JZYdVdX/dez1hMRqgGdrzL8gZ+QqLYVtyCUmJNUjXvJRfseZTB9856VRTlprCp/5P2yoTp6BrpNrGENkEcqRf9BuvnLtHK8evTmDI/k9klWgWrZFjPaIfX2WDVKb/e9uRd3jWEKWGLHZg8SnCleM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742315423; c=relaxed/simple;
-	bh=AMpbzjHYLJvalhtvAj56X934vNVFM5BNh/JeVe3zfKc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZRPuaGj3hRunIYKQCwfImy6ecu+Iq1Zsfil5Uhl+8k9+2G1d28DP96I1N1ZOcYx9/2Mra5zKf74Jb0/ZIMIW5gZaNGYhXnX1PptCau+MKPfaFvRb6/6SW3xOdCz9MmO41jwKNkmaIQg5Sqj1c5MiPgUc5SPKyL+od91TYtnQi7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sOBgUEq7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bX/2zBYS; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742317336; c=relaxed/simple;
+	bh=/GEqP6967RXFqRHmIUwWEEJHCG6xwKpWDb0n5mJIyDc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jGaz+ZN/rcdVfYpIHnxbg73vqTkwntvrrgXQ06rYQXget8Z0ABXeIV8OoExBjjsppDSKcIHvjVTSYUiMqvwVGEZHFhp14O34U+Nd4/qkVBoGH70k//IPtlptqVGWtn+BM70qD4pj0OtR6ZQd3MQdtVeWZpZ5ZT6Iw6bMdULJBLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LJSFoOyO; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sOBgUEq7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bX/2zBYS"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 93CB01140175;
-	Tue, 18 Mar 2025 12:30:16 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 18 Mar 2025 12:30:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742315416; x=1742401816; bh=EvpGHnOlar
-	W7bAEFPB9rDJ5A1U1kn1qoHCHTrSc1wOw=; b=sOBgUEq7TV11ByjfOd5ubF0oz8
-	HDR6E7vVTzCiZMyMogjlekpOaq2YldXyPqJ2GkK7LpZgbG0qwqlgg57FCviqvHAq
-	4vmj+zJ4tn35SlLwZyb8x2eksTgicfAuLE+hDRtyWzM6qb9Lf0x0lsDxrOqMlOjA
-	pp59dLooQK/Bek3Q14CbtvhCBa1NuylyLG54EzBCt8ce2jHZSCqF+Md/50mb6VAs
-	sgfI3sA9OqZ+X1uvl/XI+hoq+7Bb5scGDIYHb0dOuOYHIIhjnFou4bl1sCUEy5Wh
-	ThGlBTEQXFWw/opamO9z9Jq4lMAx8mDYAlHdvfuTfc1MeQtCUVnvItcakiwg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742315416; x=1742401816; bh=EvpGHnOlarW7bAEFPB9rDJ5A1U1kn1qoHCH
-	TrSc1wOw=; b=bX/2zBYSIjFgIZ6ngr3SlWmMhYArpZ8o3s2NzD1ETOqOVsqzetl
-	yOzEwohHmzcuuxUFRCLMx8OFDoQyyLHegUyrNRvX27NjbHa9zE1eNzMv50J8K0Ou
-	ttmUo3UBmrqK+LGFPLmNsDYonMLh73hjSgGVWPsjTm5YHXOAW24pxUN8Kb0hR17n
-	Q2FUDf4AjLMa3j8WjrslwjlKt/ySe9l+WtO69rvpRK3ax6LZCmYK+Syvh1+v7V11
-	9zjWR7xl8vK6khPC4Sw8k5seWqiJ+BJkLkPDb+v42FEOT1W6hG+lxabiBHbpNidY
-	Zp0t368xUD2mqAUGMUMCCrD8qDqA4ZHKHJg==
-X-ME-Sender: <xms:mJ_ZZw7cdiKIK8IQSRTVOv7GIz9MNjT6otlILBDDCZ7Bvb_t6oTsJQ>
-    <xme:mJ_ZZx5iLr87kgLK_XsBkyePKfhBayu_v5rSGbMwJiM_NIsrV7BAKh4gdMjneTi8O
-    q5zDjXhCoCxzqEjrQ>
-X-ME-Received: <xmr:mJ_ZZ_cS74G8FzpdpBcTj5l-e5K2QeH7-mjt5pYu2qIk85NjkFw1OkyI9twu2jcZ4tVDBeyvY2XihVuhbQ8jMJqSCFavJJcmc3EosOA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedvledvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
-    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:mJ_ZZ1JpbBDbZgN4_kL9UqaWMfOXiPQZN8qVrciARqoFtQnXDpxdZQ>
-    <xmx:mJ_ZZ0JIpNTnNB0X_xAD1nEaRHlYE6czKB6FTauvLcdufxIoQLEE3A>
-    <xmx:mJ_ZZ2ysnHwnxYl7NpRHmFstBOa0sa0hWvi8vNymk6_6-qjokgKcKQ>
-    <xmx:mJ_ZZ4IDzN_nCaQbgeICbGrNpAmrJe1Z7NJsW80iu2CEpvhrX28xig>
-    <xmx:mJ_ZZ-g52i0stn9dw-8ut0oUAAYGhGcawqTiklF9DC5vSFznthmS7ykp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Mar 2025 12:30:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH 5/5] repack: begin combining cruft packs with
- `--combine-cruft-below-size`
-In-Reply-To: <7f120c35e95dcf41282c87dc2d1b2640ecdc5d84.1742252411.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Mon, 17 Mar 2025 19:00:28 -0400")
-References: <cover.1742252411.git.me@ttaylorr.com>
-	<7f120c35e95dcf41282c87dc2d1b2640ecdc5d84.1742252411.git.me@ttaylorr.com>
-Date: Tue, 18 Mar 2025 09:30:14 -0700
-Message-ID: <xmqqh63q47zd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LJSFoOyO"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43d0c18e84eso17824345e9.3
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 10:02:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742317329; x=1742922129; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=omJvNua4fr1d7IhlWS/0cEUm755WAhX+R4367SucrtE=;
+        b=LJSFoOyOGKN1JumRAJPAwkkGrxmLrV9n90BjThKNqJ4eqPrlRt+1Sqrd/WcBHt4zY/
+         hV0KrBTerze+zNLP9Q7+WNJb8pHIDvoH8KPNg4LtU6CFb5jdu5QAMCi3b7mAAGgpQK5f
+         6LZScmjh8VMaDl1NvP6qmpR7Ql/xGlnid/XGoeTy1C4UKPz0bW0yNqSUviYrBDEeHBYg
+         5EH9Siyk5CV8E1FhcOvWjrmirGwF138dMmwHG5qg5pjDNwXEJdVrIVjt8vDK4rCR+IqG
+         DCPydIbzcuVsNqRwhHf5bb/+CQduq1YwiccKzZAZhiOIM5nGkGlMeVeBrUWAxofPSgpV
+         d3wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742317329; x=1742922129;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=omJvNua4fr1d7IhlWS/0cEUm755WAhX+R4367SucrtE=;
+        b=KHiWYTepyfK2haGXFSZhsBX3RcHCf4cCvgNuCIVYiKcApNDFkROa+xhwBWAUz2leKS
+         eg0YxGqiHMcxmxt5mmy2NC8NKE2JWRF7iAIEYOGTzJcgAAYPh+1plkseXvbM9aoXh2to
+         Ug8kloBRxOtnS4aqxIvQBMdl7r4w7GgBsiyIsWwTzSz+Ra2p+jhPZC8Sl8KY6x2y43HC
+         ep7yemHgLFX/JD/yJ/gX11jKQcWc1O2SX/JX9rVrirwtiG1fLgBoJ9nMOn7M9ew824wE
+         Bqj/SSCtHdmVMIUIwY06UqYTjWw0fNDER1rALUU/sfK1S8KivYk8jqe3KB2HloVgKUuJ
+         dyAw==
+X-Forwarded-Encrypted: i=1; AJvYcCWtMurYikb4zYYe3Y0tTXwbKrgCjznVQsMMOZL9c4QMNmfH5cGIyCEDQ+v0oj8yquZOTL0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz84TsxM8yLk2iomarziEfzI14fzrZiOaretM9iQgB1UD88JlKu
+	cTF+YcHhJ4/fBUl8EzczfVLh4B4llvYYeyTomDuFVI/E04BWoeze
+X-Gm-Gg: ASbGncucrvy8tobBMoHfgQkP4pjz/TO/yH8KQqUsPN391rsB1Ow1ESpOJMV4KxtIwWO
+	GQHPl9vWHrFXilaYWb62nJR7vwH98TaiQzCgm86d/IF4zLGfY9vIjYc7Qz1rl1NAAnQQ9qmFpWW
+	/szufrAuWvtvKJ0KZuhUBX8y5/u8ksIipiNksa6GmQ96C6zmq2M/x67nsLqTIojB0n0Pa6NuMFg
+	rkAQZeDt/r46wsDMqJg+q6vqHyP8BjdWm3dc+lVNPILpRT8GmgRURkLTmRfh8j5uODxScZMo+UU
+	swvpaAmgeAgdcQKTsukIz2xSLGC/+WcvWd61LpbqUFYxXiKsZ9D2Ldc8Q9bN3FCTVmhN+XSR7lb
+	nRMBWAbJfJZVvZ3tc72bT
+X-Google-Smtp-Source: AGHT+IFKNU+T2sulbpkzYsYDKoAG8VpMZlNim6ZPOI5EjEM6DOMppU4dfnTAEsCMx+2npSTVnT+kgQ==
+X-Received: by 2002:a05:600c:1c02:b0:43d:abd:ad1c with SMTP id 5b1f17b1804b1-43d3b94ff70mr30772985e9.6.1742317328244;
+        Tue, 18 Mar 2025 10:02:08 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c83b6a32sm18957270f8f.33.2025.03.18.10.02.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Mar 2025 10:02:07 -0700 (PDT)
+Message-ID: <d6945541-c106-49a2-8072-2a4e1b8903eb@gmail.com>
+Date: Tue, 18 Mar 2025 17:02:03 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 2/2] completion: fix bugs with slashes in remote names
+To: Junio C Hamano <gitster@pobox.com>,
+ David Mandelberg <david@mandelberg.org>
+Cc: David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
+ <1587533591c81d38977e62165784f8eb@mandelberg.org>
+ <c80d20d93c92422437150084f402ac36@mandelberg.org>
+ <xmqqo6y3dzno.fsf@gitster.g>
+ <015b89f8-63eb-4203-8d43-47c9a6d65cda@mandelberg.org>
+ <xmqq34ffdwnl.fsf@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqq34ffdwnl.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Taylor Blau <me@ttaylorr.com> writes:
+On 14/03/2025 23:23, Junio C Hamano wrote:
+> 
+> Entirely up to you.  I do not plan to perform an in-detail review on
+> the topic (I do not consider myself quite qualified), but others who
+> saw earlier rounds of the patch may want to say "now this is perfect"
+> or "now this is perfect with this and that changes", and if you do not
+> think the differenes between v3 and your upcoming v4 are small enough,
+> it may be more efficient to wait for a bit to collect more comments.
 
-> @@ -81,6 +81,14 @@ to the new separate pack will be written.
->  	`--max-pack-size` (if any) by default. See the documentation for
->  	`--max-pack-size` for more details.
->  
-> +--combine-cruft-below-size=<n>::
-> +	When generating cruft packs without pruning, only repack
-> +	existing cruft packs whose size is strictly less than `<n>`.
-> +	Cruft packs whose size is greater than or equal to `<n>` are
-> +	left as-is and not repacked. Useful when you want to avoid
-> +	repacking large cruft pack(s) in repositories that have many
-> +	and/or large unreachable objects.
-> +
+I'm not an expert on our completion script but from a general shell 
+scripting perspective this version looks fine to me.
 
-Shared with existing entries in this file, but let's strive to make
-sure we explicitly mention units.  --max-cruft-size=<n> is explained
-to cramp below '<n>' bytes, which is great, --max-pack-size=<n> says
-it accepts k/m/g suffixes and its minimum size is 1 MiB, which is
-explicit enough hint that this is counted in bytes.  This new entry
-should hint that this is also counted in bytes.
+Best Wishes
 
-
+Phillip
