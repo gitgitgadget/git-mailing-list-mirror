@@ -1,204 +1,90 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10624155753
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 22:21:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A7CF9DA
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 22:26:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742336506; cv=none; b=tKIPAJfNvQjO9wX4kPOxreAKT1eRQxdGLEQgVuruNDrpF87k+yX6ysfud8kqrrVy62Cii7t3kYW71Q9zDyWm1o2A3eYzQfrcletW2lJV8KA47RId6NQdp8BJe3TR7bYIXTkrPwSz3J5ELhN/VXycvLYjk7JOCSdiqR8vNg82nyA=
+	t=1742336804; cv=none; b=bytGN98EkyE8w8PBp6t/s+/s7IjADCd8OpTuV3MDqLHj8vpT3CIXKpziI2osjuxfLwFCYfQOPxbx4bmhOiFpraS2rIbp8NZiEw9Z2elPAAEFYELME6i/ipdXKn0Ap3UlSx5I32XtxEQfA4H+CAdXY8FfTJyescyAUyxt3sJAFM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742336506; c=relaxed/simple;
-	bh=29u+Iv4Z7pFxYvt9JwJPx39IusKec5crMboChv5mBQI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K45Y10DXDZlKf3Xxza5k1leWU73Vo6nBgTKf7Qg1f3Z05qAroZNB9Tq5v6KXCC9y+Dd8oUNcGg1p4HOzi5Ypab7WCSoxTld/FWAbmCd1Lve/YapKgD3b1WFGlU7rQQCYciObV++l6Wmfu/EFkVGl9H3XYF7J7W7R+tn2b5DDDXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=a80ehm26; arc=none smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1742336804; c=relaxed/simple;
+	bh=jDD2r7UqrbtbAdeXoRc5yYxX2DheFuEpvpQdImWWV7Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kqw9yCRL8xd7Z/siR/ICfFCtymvshfjavgBrTjgRxgN2/c8qE89gd4wdK+NtCt1rECmRa+2K+7pAwaSo4yt6AUvEKWUP+2Qf/BtFRw7WyCywIvU9Td0gdS4TFNpuhTdGRoo2pxkoEvHtHntPksEGVkt44Ei5WQCujBIVErCVUMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QeOuEY3t; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="a80ehm26"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-476ae781d21so60077521cf.3
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 15:21:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QeOuEY3t"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5e5cbd8b19bso1840a12.1
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 15:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742336503; x=1742941303; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=C/FXNVAMaoJsLH04y6DmqLHS3Gf88mohQWCg4yIc3AM=;
-        b=a80ehm26RfyC2jsJhYrHO9rjYphExZWAVomaCnLNo3bMXLbNVbCDFj+CxF77PHtsT5
-         uTC+mJJHtV/TnrhBqNnR2dmcXrBGstIaj06t1fx1z5r7BeU6/rsl9FIkcUAHOm5F037U
-         OwuQfE1sgyC/67fl331kBxH1alU2Pg2DZjyb4gINamDQTWOeWKMHTYKeYx1pbMSysMni
-         IY5tDy+iwDlSz8RXdn8q/fXaI1mHVUiivvvj2X1xPe+0gy4lZEi6sF2P0S+VYTFDaZLU
-         octBWGL/Ze3xvk5QYXt0TgfcTyEwvUrkzLcEy+qdq+5SZuoim6WfpX1HfpUcqsVZnOr1
-         NspQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742336503; x=1742941303;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1742336801; x=1742941601; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=C/FXNVAMaoJsLH04y6DmqLHS3Gf88mohQWCg4yIc3AM=;
-        b=YJ5wRgPeilXvRd6TJRJ7FbLNM7Nl2XnWH32e5iznO3kuvuK1a0FKAjAeCLVYaAMXrs
-         Vxb7pHUcxlly+izHD0u6ovoOYDF4a/XQZzij9TGzjjE3Pv9KKVa1kGteL5JnpiVdeVC4
-         6qUNMSC8LbkMkuoanBgSRgJQ/5t06MzVg3LGEdwQIMfxxX1bIStspiWrOiW1iAha9gL7
-         PEz9J0Yx0PvLZmRU7bPujWk7TDNRqyMlj76tcVkiLVZld8GIYBadHqp/JvisA9DbQxOm
-         GSEs5DUKvlLO46Zm6KrzDNZ7xAi5RE/B5J7B5S5Ayi4J2KGQD/TNDztYxvU5k+Ca7Vhl
-         JIdw==
-X-Gm-Message-State: AOJu0Yy/8OE4YPGi93PxqCwVJaCQckXVZ7UP0sNrhlKuLEQCtu47X908
-	mBhp+4IzRuU+QNzxR7ASHF+d1OZPzliUn/rp01Yc+Yl+oMoJGALH/QnLqhazAshb08I5ITY/tfG
-	j5Ys=
-X-Gm-Gg: ASbGncv6G8LbRjMaTMX1CqdbiVpOrdWNPqH5ZclhG7MqoqIJEifHwJIQTJCIZllEYcx
-	wYiEzG2GGXJ/CjomMFTtb1VfSstITM8tZReYLavBuuEoN9+xKqyr2Urz3uvtijcqEHDWVGIypQ4
-	S2kMy87QPDfOTiv5KVBGkA1si1tiuDD/JnjR5l3s7CWarV4YExkTWBnqZG/ecRpO5h73yRQIbOw
-	X3hDYhF/RIvLCndEkuFAIsv27p8W1+X5R8D0dDyP4cPc6XlGJMve6sJoOSO6Qh0A2WezVYfLLgy
-	GaBnh8+YRcujSnSj/b3AYLzx5FZ/olHQlfjODkv/XbVo7oDhojp+CyXZrKnzYlhDhkFgwrSD11+
-	2o+yt4D5ZiV8UhMoz
-X-Google-Smtp-Source: AGHT+IHU7CKsuoy1429jAd8LMYg7zcnuGVgWMTXMjj2/23PZhTCFxPS1RO5EPqX+6TzTjisBKViZlg==
-X-Received: by 2002:ac8:690f:0:b0:476:83d6:75ea with SMTP id d75a77b69052e-47708333f79mr10275191cf.15.1742336502708;
-        Tue, 18 Mar 2025 15:21:42 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-476bb63ab9fsm72734081cf.26.2025.03.18.15.21.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Mar 2025 15:21:42 -0700 (PDT)
-Date: Tue, 18 Mar 2025 18:21:41 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>
-Subject: [PATCH 3/3] http.c: allow custom TCP keepalive behavior via config
-Message-ID: <d84041580895a653648ee2370e21d7d2aa4fc4bb.1742336481.git.me@ttaylorr.com>
-References: <cover.1742336481.git.me@ttaylorr.com>
+        bh=VthF02+A8Gkku5qw4K1F2IEmsxzBOvmNFfXQePb/OGM=;
+        b=QeOuEY3thm0yTA31GjuVdf2v404/z8ofQ2Ew6XO6kAV2nzUNZiffco/ZAqAcdPw9d9
+         X5/AA/xcbAquXyU/yUDJj54BDkCnz29O5KZkH4DCF4EXioYw2ScFd09db5ja57Mjjc6J
+         ItVFyAFmIfhkAuMZcL0wYhdbM61S+MaqCJ5WMkbaul3jmFcWRBR/GayYvzZTn77diTVn
+         bHjDAL3lImRUYG14F7GnRJdEG8QWHF34iljERNfzLbn9gbNx1nHA09b7olBorhH3nwwq
+         5otAbtZSn5XVSIVzRQtpQrfzU0d2QekdRebUtR+XzvgnNySMTRcyvVsshT9Koj8upCuu
+         wOrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742336801; x=1742941601;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VthF02+A8Gkku5qw4K1F2IEmsxzBOvmNFfXQePb/OGM=;
+        b=Gt1pIwzb/Dek54a23cTDxILF+qoC43fTH6ITipgtUi/elGlBrtIHlRAT2lAFzwM3Lq
+         z/DJaR1k38DWCa8VYSYy2XfDoHNzeOPfTgFZ4XtneBWyFpO1tBxGsk9DbAkAKfHrutPf
+         bkpk3z3Px5HR/FTYEzmpNf6QBfDcB0l7+X3hF8n/vaFAGWZxD4BLgzB1Hu0b5e3DQzcy
+         vioD1g97GZ1jZe9moqIuUdoJOXS8zhrZbH+BAp3UoF8bjdWH6Ld4Y6MxClLvFxbn2oR5
+         ccBFS6CXAPzas7eq08A6rwM1FRPVNjLWEue3dCuyqlIVIVpfxaNGCqqjTe6GVhDsZJvr
+         Sx9Q==
+X-Gm-Message-State: AOJu0YzyPzk9jw4Xx/h2+osE5x0ID9HU/4EIstCOIUP+iF14EES0PYCW
+	EO1I3Ox3kDWkWxu70sgk33AOuxz4gCEhe/XWIVTTfARXr/c3nWuqDi7fFt2bg4AAfh76e+Xhdb9
+	vIG0+1m1pKh6gIHrKxKKhNNOO5j1k1x1VwE7h
+X-Gm-Gg: ASbGnctxUqshgS5AnDZ+4BA3XFgjBBCKy7HQnDwExywVV9lPX2yDkMezEk3qUPjW9l/
+	wxWFgdGkC69gLcIQ3pk3mPXGnI6XBjJD15IjHyD+OpyZso9worJ0wvNC+ykQofbWiCwoRkEF1JM
+	g3l160X5dMVthCLjSFMK2ox9Zo1RXM4BfJ1bo2qy+mF2Pc3KzuXE+snk22eBM=
+X-Google-Smtp-Source: AGHT+IEVVgcogfM8D2HCUbpJYirkLEc7X63M/+R8a3sB4OOGWjRfYvjmEbp1M6AeKO3PjNnmGEJ6VIRg9EiDnlVV9Es=
+X-Received: by 2002:a05:6402:2072:b0:5e6:15d3:ffe7 with SMTP id
+ 4fb4d7f45d1cf-5eb81ca377cmr11772a12.7.1742336801154; Tue, 18 Mar 2025
+ 15:26:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1742336481.git.me@ttaylorr.com>
+References: <20250317235329.809302-3-gitster@pobox.com> <20250318220453.1937685-1-calvinwan@google.com>
+In-Reply-To: <20250318220453.1937685-1-calvinwan@google.com>
+From: Calvin Wan <calvinwan@google.com>
+Date: Tue, 18 Mar 2025 15:26:30 -0700
+X-Gm-Features: AQ5f1JpoZM2kX1lkBOyqds3bmbfjHqGMrvnXEJFZqHKz9WQDWJKOtUod4t2SDqY
+Message-ID: <CAFySSZC=qxs43ahZSRUeFxFTXDq905OdZ8-4beGUoaScaj=ugg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] git-compat-util: add NOT_CONSTANT macro and use it
+ in atfork_prepare()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-curl supports a few options to control when and how often it should
-instruct the OS to send TCP keepalives, like KEEPIDLE, KEEPINTVL, and
-KEEPCNT. Until this point, there hasn't been a way for users to change
-what values are used for these options, forcing them to rely on curl's
-defaults.
+On Tue, Mar 18, 2025 at 3:05=E2=80=AFPM Calvin Wan <calvinwan@google.com> w=
+rote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+> > Our hope is that the number of code paths that falsely trigger
+> > @@ -985,6 +985,7 @@ LIB_OBJS +=3D compat/nonblock.o
+> >  LIB_OBJS +=3D compat/obstack.o
+> >  LIB_OBJS +=3D compat/terminal.o
+> >  LIB_OBJS +=3D compat/zlib-uncompress2.o
+> > +LIB_OBJS +=3D compiler-tricks/not-a-constant.o
+>
+> The name is correctly added here, but in `next,` this name is set to
+> `compiler-tricks/not-constant.o`.
 
-But we do unconditionally enable TCP keepalives without giving users an
-ability to tweak any fine-grained parameters. Ordinarily this isn't a
-problem, particularly for users that have fast-enough connections,
-and/or are talking to a server that has generous or nonexistent
-thresholds for killing a connection it hasn't heard from in a while.
-
-But it can present a problem when one or both of those assumptions fail.
-For instance, I can reliably get an in-progress clone to be killed from
-the remote end when cloning from some forges while using trickle to
-limit my clone's bandwidth.
-
-For those users and others who wish to more finely tune the OS's
-keepalive behavior, expose configuration and environment variables which
-allow setting curl's KEEPIDLE, KEEPINTVL, and KEEPCNT options.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/config/http.adoc | 18 ++++++++++++++++++
- http.c                         | 31 ++++++++++++++++++++++++++++++-
- 2 files changed, 48 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/config/http.adoc b/Documentation/config/http.adoc
-index 22a8803dea..67393282fa 100644
---- a/Documentation/config/http.adoc
-+++ b/Documentation/config/http.adoc
-@@ -296,6 +296,24 @@ http.lowSpeedLimit, http.lowSpeedTime::
- 	Can be overridden by the `GIT_HTTP_LOW_SPEED_LIMIT` and
- 	`GIT_HTTP_LOW_SPEED_TIME` environment variables.
- 
-+http.keepAliveIdle::
-+	Specifies how long in seconds to wait on an idle connection
-+	before sending TCP keepalive probes (if supported by the OS). If
-+	unset, curl's default value is used. Can be overridden by the
-+	`GIT_HTTP_KEEPALIVE_IDLE` environment variable.
-+
-+http.keepAliveInterval::
-+	Specifies how long in seconds to wait between TCP keepalive
-+	probes (if supported by the OS). If unset, curl's default value
-+	is used. Can be overridden by the `GIT_HTTP_KEEPALIVE_INTERVAL`
-+	environment variable.
-+
-+http.keepAliveCount::
-+	Specifies how many TCP keepalive probes to send before giving up
-+	and terminating the connection (if supported by the OS). If
-+	unset, curl's default value is used. Can be overridden by the
-+	`GIT_HTTP_KEEPALIVE_COUNT` environment variable.
-+
- http.noEPSV::
- 	A boolean which disables using of EPSV ftp command by curl.
- 	This can be helpful with some "poor" ftp servers which don't
-diff --git a/http.c b/http.c
-index 526f9680f9..c13c7da530 100644
---- a/http.c
-+++ b/http.c
-@@ -104,6 +104,10 @@ static struct {
- };
- #endif
- 
-+static long curl_tcp_keepidle = -1;
-+static long curl_tcp_keepintvl = -1;
-+static long curl_tcp_keepcnt = -1;
-+
- enum proactive_auth {
- 	PROACTIVE_AUTH_NONE = 0,
- 	PROACTIVE_AUTH_IF_CREDENTIALS,
-@@ -557,6 +561,19 @@ static int http_options(const char *var, const char *value,
- 		return 0;
- 	}
- 
-+	if (!strcmp("http.keepaliveidle", var)) {
-+		curl_tcp_keepidle = (long)git_config_int(var, value, ctx->kvi);
-+		return 0;
-+	}
-+	if (!strcmp("http.keepaliveinterval", var)) {
-+		curl_tcp_keepintvl = (long)git_config_int(var, value, ctx->kvi);
-+		return 0;
-+	}
-+	if (!strcmp("http.keepalivecount", var)) {
-+		curl_tcp_keepcnt = (long)git_config_int(var, value, ctx->kvi);
-+		return 0;
-+	}
-+
- 	/* Fall back on the default ones */
- 	return git_default_config(var, value, ctx, data);
- }
-@@ -704,7 +721,6 @@ static int has_proxy_cert_password(void)
- 	return 1;
- }
- 
--
- /* Return 1 if redactions have been made, 0 otherwise. */
- static int redact_sensitive_header(struct strbuf *header, size_t offset)
- {
-@@ -1240,6 +1256,15 @@ static CURL *get_curl_handle(void)
- 
- 	curl_easy_setopt(result, CURLOPT_TCP_KEEPALIVE, 1);
- 
-+	if (curl_tcp_keepidle > -1)
-+		curl_easy_setopt(result, CURLOPT_TCP_KEEPIDLE,
-+				 curl_tcp_keepidle);
-+	if (curl_tcp_keepintvl > -1)
-+		curl_easy_setopt(result, CURLOPT_TCP_KEEPINTVL,
-+				 curl_tcp_keepintvl);
-+	if (curl_tcp_keepcnt > -1)
-+		curl_easy_setopt(result, CURLOPT_TCP_KEEPCNT, curl_tcp_keepcnt);
-+
- 	return result;
- }
- 
-@@ -1367,6 +1392,10 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 			ssl_cert_password_required = 1;
- 	}
- 
-+	set_long_from_env(&curl_tcp_keepidle, "GIT_TCP_KEEPIDLE");
-+	set_long_from_env(&curl_tcp_keepintvl, "GIT_TCP_KEEPINTVL");
-+	set_long_from_env(&curl_tcp_keepcnt, "GIT_TCP_KEEPCNT");
-+
- 	curl_default = get_curl_handle();
- }
- 
--- 
-2.49.0.3.gbb7a4a684c.dirty
+Apologies you can ignore this -- we needed to add a reference to the new fo=
+lder
+internally so this was a red herring for our broken build.
