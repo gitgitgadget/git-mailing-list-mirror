@@ -1,111 +1,110 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629CB204F97
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 10:06:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D2B205AC1
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 10:13:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742292422; cv=none; b=Qgu8ZzkKH9eKvwEVeukwESUFisEQeMbpeBuoIRrhHndmx6MjDy2BXRSxx/jUZmH04brSn61WNy6MewYhJJVF6Q4ojs1nH+3CEREb/YfWu2NgQUgLHJAi9TPKjnSVv34mLynxucjMAWTiCdaVZjMEaWAtp/mxCYwp8EZIcLtxb8w=
+	t=1742292803; cv=none; b=pSzKgi/wLT+DLFzL1VxPE1ghXHDdyFMx2RUQHd58Gf8VvcDfgwFJmNV4v+n0kcOB2Y25sZr3sACVUyD92nM4QZ1AcVlQAFdRCBFCyReFvnYxciJWtrDdRuTOpJ5iN/DTzdHFCuWLPKvboZlcZo6dJgcKvI7i6a7a+0Qxf22Qs9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742292422; c=relaxed/simple;
-	bh=QtAACuGFLRM/nuBamO7HKRFWmg6Hgfunmmy66onRFGQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=a+Txcuvf5WeZ5rxhwDefsSY3qDBc3BL7EIfY62P4GZhVFAJuO1P0nYwyR1RW8viIslvAqn+12n1I9t3QswiZ+FEwouOL7lHwc/UEBKnZs3KZR2FbJlx8fS/C3T3boqNASW2xpK978M92jVUgN9xmiV/Ck6TgMfkmgctPYXYbQiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eJu30bwp; arc=none smtp.client-ip=209.85.221.54
+	s=arc-20240116; t=1742292803; c=relaxed/simple;
+	bh=dMLbPyKxrwPj5PLkrgLYYRFS/Opf78AhkSZzmkxp0EI=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=AR9kWE0IRMj3AVDDXtu24ktil5KH/QTtwVrT9ZatcvynrgM0A8DBPIYY7j/dfCeezd8rZHR0U3UqYlBpvXkyR7o8ek8LPOVGjQGvzwYDYtYSSQDpf44gU+MokSwpdgCNFeINFgV/gVvHh1hZHrlvg7BPAocdms4fii7Aiob76Xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S7HtOMwB; arc=none smtp.client-ip=209.85.222.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eJu30bwp"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3914bc3e01aso3578814f8f.2
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 03:06:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S7HtOMwB"
+Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-86d6fd581f4so5284298241.1
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 03:13:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742292415; x=1742897215; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1742292800; x=1742897600; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JYOqCYzWB+3Yx6QlHeW3m0NsELFFSmaFRhn6h4fQjp0=;
-        b=eJu30bwpklpo3I4FtS3Pj5obZmOsp6gN5dBVOfUGmp2DDB/GMvWLtqLjt1XP9PZlSD
-         cbq6r+z2uJVj9Yp3VHnwld5jtpOqpA29wqjOm6c02KgI/nRSVXEJw0kDTLyjxlUyRAaL
-         Rwiy+hWjzUMcUgfARxOXsVpuJmr0GI7ST/IPqzEk5c5ppX433RQA1UP2j9ddvCKCyXjr
-         flbStP83wGREn33NpdtdSMgEyg9rerQC7hCg9VCRLBMBxirUy+1o9/e5QAsJk7/jtarE
-         4k4kKerJ5rPqr2E41J47UaVgiOihngiNs4oL/zKMLh2hRciNJjgdzqcSCJCy2xpiMynE
-         IFfA==
+        bh=mHRl5FA165b0bNE+QF+cCBEYVh9rmFk2wQ0at36soe8=;
+        b=S7HtOMwBk7rbfCW92p8Y59KUho0uN0Mahfl/O4mbHUjz92+I49Z0Mbtnrk5F6a6DbD
+         iO1O8scjCYBIoWOzbz8+FmjK0x3Cj12/tJDjJ4luTrUCCQOipkYNan4B5qmgyaZcoiNG
+         Ym0dKkIDkaTGj2YPzvEeFK4fTIoJoTmm5J6/OYQs/bt6gLh6oxabF1hG+Ao3ojcgGsBy
+         avmj86rRw5EE3rqnmJ7qGU3sxdCDAnxPrEhkpCwE04cCF7bWfWNoVa+BiIes15CziO1j
+         Li+TPDEIxav3n8minrLjPLvtT+DgwEghaclldrFG6rb6JB2ejxj3sxv3L/IHkc9IbVyM
+         4UxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742292415; x=1742897215;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1742292800; x=1742897600;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JYOqCYzWB+3Yx6QlHeW3m0NsELFFSmaFRhn6h4fQjp0=;
-        b=atFz+mhTeV69NIfZb2R/qN9zp3ANi3sBRxLqhmZwVWF3QNzcgOg6/mVCkEX2exxn45
-         U8xMwSG8+fZr7gqDNHthwmOm4Yt3PwG4iR6k/2Qnoy2qrDrDd18AkMYzFc3tb0XOcfIN
-         Ayfk15VNM2+PbjIj0+DiRF3IQw+j+eJCJj7VcKeCMHDA61/SqbCAykCNVHAyoKxF+W4a
-         tFCJNOmTMBL5ECwq7iaJ0KxbJQWZa5LOhu/ztZhCWAg6VzV6+O8b1rgocFPTrxBTA/pU
-         RdWBqeWM92MCOOa5xgoYm0dlC6yhnN2pPu7PKtLDBB4tBHg3sj/376RP9K+YJk4joqAx
-         0WUg==
-X-Gm-Message-State: AOJu0Yyt8eRFjI1bQpVgce8IJ1+pk3qdKLmvJWe3balflmiK6c95VEnJ
-	pqosz60vblSuD8S1iAtzC0Uai90qpuf8xgRYjUiglpbVGs3GsLxT
-X-Gm-Gg: ASbGnctYHjMziandMb0EB9JT8kMI9EUQqT/5NXCsY5ShGSqTY1ZJkbGW7tcr8qhCuIR
-	FQp8wkPj5IcC/9Olw6uSOI+G3fefSEy7rlPvERIqLxgDomiDk9zFDws64jQwWdftUiMp5z8w3Bn
-	l0wY56k22jNpWAm4Oq29tucV9NMCshJvZAfD9fw6u2e9+8reu/Eo+THbZPT9VUXS77wksMobgPA
-	fvhTU/2nhaIXnhfq6SlcoI/ZLtUkp03ZPErqnxEg1syYLmM3ykV4sN6wdVmwjkUZ3Bew5TF3+al
-	ljCgIjIZwIreiwQnrP7fMcwWq1ujGNWeGW7Dlbr1f6N0EZkMITv4VXryq5QjpjeBdDTQ0q/TnYS
-	J1MvOJUAYyDnvroBf2RSYEhHjx8TQMgQ=
-X-Google-Smtp-Source: AGHT+IGm8u8p1D921WlGRCTj8mlo0u03cWZ+Gawqc2t3ynQyA59iw4UuAzbzz55uAD7+s8VaDV9fZg==
-X-Received: by 2002:a05:6000:156a:b0:391:2dea:c984 with SMTP id ffacd0b85a97d-3971d133670mr16678728f8f.11.1742292415402;
-        Tue, 18 Mar 2025 03:06:55 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d1ffbfa90sm129180865e9.16.2025.03.18.03.06.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Mar 2025 03:06:54 -0700 (PDT)
-Message-ID: <7fee83f7-995b-4c84-9216-caa6803a69d9@gmail.com>
-Date: Tue, 18 Mar 2025 10:06:51 +0000
+        bh=mHRl5FA165b0bNE+QF+cCBEYVh9rmFk2wQ0at36soe8=;
+        b=euZuuLtY2WFQZEzpip5v6XITxRQHq9o3snRTS+yPLZLvQNCkuTvrbw8FTGlHtddZpm
+         AR3v4nlhD3bOBU9hdF0abWt1uS0tYpUlyaU2cajWiu6PHHjzGkAVOfVWs1GnEEtaBU7v
+         /xdNpzsvZPQBZ4F81DLrkBFHGyJLIb+AtsuR0aR2kf8uAtptUIFulAEdBf5V3to6hXud
+         w3pT4IshEO4YInkMN0x6iBVaxWRvtALcR4FZo67Gp706LZzvnPjkbVDDyfONzkFF4t6K
+         FCdPN/MoRSUQw8q6GATl3Bw4YHLjoJDX1kdM+1en9aQNT8kKpE2JHflum6SRIwAbWss0
+         YhbA==
+X-Forwarded-Encrypted: i=1; AJvYcCV9k5KAksQ8hfI6PjCAfilEqCit3efJ8ow0KiupruzInk20yG4WJ2XJAheLe73v1qBglhE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/VXTdQk7EVGfmvg53pBT5XLu814/uFHvD7ObMCkQGEFZAZrky
+	MzCHJq7zdEiEgAeA8SaG5dHg0BvspXys82acpSrQ77nLIpeG/A1T55x0tLfaiS8ztcjIRJ70lTs
+	mwG7terEAv7JfP/3ApVcAjul+siN8iUXE
+X-Gm-Gg: ASbGncvneMeTxb3sp/3lYdt5A7OfCbvbu542691ldzog9FRMsfwP/t6sC80OjXzmso6
+	OSHNdPHetKUhycOI4HsyZ/jgoNpVOIoL+fSldFsa2QFtMY7q9SqLDA4w6kgoLp0QiOz5Ij6cp7O
+	4cV+TRQiykwlRu1NyPNZR+U6Vj
+X-Google-Smtp-Source: AGHT+IHNuR3rN4OkoeS4sNSK+GOjOjcrmgCjFlUDLm0q8om2CTYWHlbtCvJbNLrb5cKQTnaDj93haigFJmyeJQyUuoE=
+X-Received: by 2002:a67:ef87:0:b0:4c1:8ded:2d66 with SMTP id
+ ada2fe7eead31-4c4da81cc33mr1522954137.12.1742292800454; Tue, 18 Mar 2025
+ 03:13:20 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 18 Mar 2025 03:13:19 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqh63xx23f.fsf@gitster.g>
+References: <xmqqh63xx23f.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/3] meson: don't install git-pack-redundant(1) docs with
- breaking changes
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-References: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
- <20250312-b4-pks-meson-breaking-changes-v1-3-b89e9a59d228@pks.im>
- <44a3ad4e-fb50-447f-bb66-f43b5c5ae012@gmail.com> <Z9gqP3ng0a9Zfpqc@pks.im>
- <d341777a-a6e5-46fe-8004-9fe885321905@gmail.com>
-Content-Language: en-US
-In-Reply-To: <d341777a-a6e5-46fe-8004-9fe885321905@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Date: Tue, 18 Mar 2025 03:13:19 -0700
+X-Gm-Features: AQ5f1Jo4mATv2k6b9YVQtTV_4wulreyxnk0scCNpeBJfFpRwbSAX2cXnHEm5ZWc
+Message-ID: <CAOLa=ZRpDHkqWc=-pnERM-4E3OTzQk7XBy+J07Ek4TKdyATTJw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2025, #03; Wed, 12)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000077628f06309b272b"
 
-On 17/03/2025 14:50, Phillip Wood wrote:
-> 
-> Oh so if we have selected breaking_changes then manpages.keys() does not 
-> include "git-pack-redundant.adoc" but that file exists and so we need to 
-> add it to the list of configured man pages. If breaking_changes is 
-> selected then don't we end up adding "git-pack-redundant.adoc" to 
-> configured_manpages twice? Does that matter when we come to do
-> 
-> actual_manpages = run_command(shell, '-c', 'ls git*.adoc scalar.adoc',
->    check: true,
->    env: script_environment,
-> ).stdout().strip().split('\n')
-> 
-> if configured_manpages != actual_manpages
->    ...
-> 
-> ? Also I'm confused as to how that comparison works without sorting 
-> configured_manpages. Even if manpages.keys() sorts the keys (the 
-> documentation at [1] is silent on that) we add some out-of-order entries 
-> to the end of the list.
+--00000000000077628f06309b272b
+Content-Type: text/plain; charset="UTF-8"
 
-I think the answer is that the comparison always fails but as there are 
-no missing or superfluous man pages the body of the if does not error out.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Best Wishes
 
-Phillip
+> * kn/reflog-drop (2025-03-10) 1 commit
+>  - reflog: implement subcommand to drop reflogs
+>
+>  "git reflog" learns "drop" subcommand, that discards the entire
+>  reflog data for a ref.
+>
+>  Will merge to 'next'?
+>  source: <20250310-493-add-command-to-purge-reflog-entries-v2-1-05caa92e0bfa@gmail.com>
+>
+
+I did a re-roll here, with some fixes based on Patrick's review. I will
+try and get another review before we move this forward. Thanks!
+
+--00000000000077628f06309b272b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 368818a03db7bb18_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mWlJ6d1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN1gxQy80N3VVMzlzM2ZyNkEzVXBUeFpudllrRWFDMQpYOW02SEZucDlS
+RW5pSDg3MWpocTczNDN1WUVmL1RyYXZ2akdDUzBYSVlHSjRFVjZnaGFDQ292TVBicnlXK1J2CndP
+S3Q1aG44Mk4xQzBmejFxdjlldFgyVy9SOCszaUxIcDZWdWZSZEs3QUFZUHM4c3lPcEpWWmF1UG1q
+TUUrVnEKUHUrZncyeXF1VVg0RHVRUW9kdEdFc0J2TlRuMzRmYVFVV1BxMzhObzAvcXcwYTQrWEt1
+eGxPSkRCZTZLMnFvOAozZklKVVJtWm04bnB4NFhoS0FBcWF2bmtLL2lPWm5kOGQxVC9sQ1l6ZmxF
+V0NXQTRUN1RqNGo1TS91eUd2cVN0Cm5YN2M0YTZ1MUFXWEYrNzFHNEVnUXc3WmNMZFFtdnJwYng2
+d1JLZk9SZFJrVnB3VkM0Vld0ZW0yeXl4b0N5VjIKTGZDUEVDZ0Y4RnBtM3VVbjYya1ZhMkdqUk53
+ZTFoeEpZV0hYTUZscXBVbzdpRy82MmtJVXY4UXUyZ3A4U3NEVgp0VW5kZXpsT1VOaWR0eExwOVBC
+d0dZdnJkVDZ2c3BDWGR0MlN5WUxqbXd0OTVRZzJ2QnVUSU9RVnZYSHV1UE1RCm11VkloSVFCNFFE
+V2xVM0kyWjFwQ2NYRExlTDFOVVNyaFBQYzdOWT0KPU5YZHoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000077628f06309b272b--
