@@ -1,116 +1,112 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7F31F3B85
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 11:04:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D331922FD
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 11:16:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742295862; cv=none; b=HPQthUQA5sd5NcLopblBzO8XYYdt8fcfOkfrC0MIDookORi51HPl6ECFaDyThAJSnNAshpVEW/Hvtp0oxlzlCmn3nsep41vUPmjE550IPCIcqgU9DrXO/wAomngjzzQIFuNfb07QIJxiW1LXSlOPeTuVh0LkWyRAvrDLBKrnqzY=
+	t=1742296588; cv=none; b=A82OhZ6BXVH6vSDlMjUp/WMRDTNcuCgXIlXJ1gv3aMCdo5O5XUb+zyr2FiKeJd7bFXYhTwVhgruAKF5MPoIMMh+7wyQbf1I4O9sSYhVS3EP9YZaEajUB5oA2e0i8U3PKQwfCASzHYgB+2aFdipkshQ6ZhH0kiMTSKXyM0S55bHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742295862; c=relaxed/simple;
-	bh=G7OgombhE7WWNvXeh2UkWCU5zwbZgWDKMhoD4pc6rQI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VTLZ64ntNSQ6gsyinaUNeywWSSXvKrx8OyWJrGxUp7qItRm1PSNrPZiZtvU3/fr3nrpNazzDzTq8kx5PWxp6PYskv4LRUEfh4hJRt1F5fzCmLuFpPxzrYdqeid8w0MmWtdNF1245RsB8kEg1/1FLVUhxb7RnFU069BwhE/TMDQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GZi+syxr; arc=none smtp.client-ip=209.85.208.49
+	s=arc-20240116; t=1742296588; c=relaxed/simple;
+	bh=yLR0c4bdLKFHulJmE/VRgIiV3qG6Yv2Fg7A3/UAJ58c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BRsiPo2U1p/uhPLm0Ylrub0rFvBcKWminkfqTv3cyVeSH1gIdgHZCfVomsl4JNsB0L72+YYRZs107T4MaciAVRkeYg0rixtRVVKuDP8OYiufmFso9BJTiWnGrwF3ZcSQOfFnJkqfNeTnx7yDgUE3m5Jc0QBAC/zmN+XhnpKFtv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RvQY1ISQ; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZi+syxr"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5e5e34f4e89so9850933a12.1
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 04:04:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RvQY1ISQ"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-225b5448519so101452935ad.0
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 04:16:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742295855; x=1742900655; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E4GFu4jgZuNGEomZmcIweinwQJkVr/23YgAEbNON4po=;
-        b=GZi+syxr2u5NP4UFjQqKeB+jWWQhGQpkL7IcK7KoKre595Xm+j8hGeHboxHeGBLaHU
-         e+dy5zGLmk5kWfYvRzJx3zUUI+b0Ek6wDfS9X/sjq5FNwVh2RE6dSWA6D1IHTeQeUwFn
-         LT5PrpPCGoeqgH5zP5qNBE6Xe4lsL4173QXmlxJFGN4126xd4/RQ/6yHw1fgG9Sxlu1L
-         NoiSKK8BI+Ci57q5xXQ8Ez3+fLcMvpSP0qS8BSCLFUJWGYnEZC5tt0cpakQmgYTVnace
-         +XU2xpcn1oNuMw8R3qlNOLYa4S0/U/hJnImxGYn3xEAlXhpDWUbQbroRy5yObjpG5vfi
-         dQHA==
+        d=gmail.com; s=20230601; t=1742296585; x=1742901385; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ALJupLDkIBbGbD3ZOJhXYzaHVTUzVilUYmH+is2/XiU=;
+        b=RvQY1ISQDqlLq8QucTJCEXqPeN5F+ZbV5EOolhYmxJf2vb6GDHZ2LO2rtTEgFuT5l5
+         ZtRymkS90U2T+uzkpYXiWCZLZILmj6jBwOetyyN4hdQWAnogm/Sc3eugCarjyzHKkbLo
+         KmaUAn9GkxNt7utg2n1ASw1hpBQCsqB68WvBiPZNDB+zfA4Dy3+fqjb42WSh2q8IyKsZ
+         y48mLI9RVG7vhqWcGOCyA20vPhbGaeqoR4OmpSECvM5jz/iNENlLVA0yYNPdQsE5oB2s
+         5KoEPuNCxtlH9xKgs7wfhIzqVjJsM9WesVPFqxY1uzz2y9DH565uUiogkxVVE9r3Oipk
+         qprg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742295855; x=1742900655;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E4GFu4jgZuNGEomZmcIweinwQJkVr/23YgAEbNON4po=;
-        b=Vqr2koQVREzUogK793CSgH6vXRsYKbQgZI3eqlagRBavHFjdx9l8/7d9JTcu6s+UU/
-         XlkfPEdU4kuFx0nBInaM4Cmz8z9kGwiop0J2dCrrNnyLGd+z/0xYJV47v/bhzuTP4k+R
-         MZo3zOlY/UVjm6pWABpTQtN1Q4IUPizcfN/W2KJdcCKBDpEXrIOojPVoU6ZwKR+2loz9
-         m2wO8zY21yXTiR3jN2fbcMumB4B1gcwWzhzOKkUAXhVEJ9kcG5cuLkhJZZIcZzYOm5QA
-         c+XY2EqPTAezDXWOfT/XMRckrtCkT7ua5XpGOFLj8Yt59zNn0uweoyxKKHzp7eXeRwU5
-         wN/A==
-X-Gm-Message-State: AOJu0Ywx5KF/SGFftaPpumSPbRk6zcR/2p9zKwBygcEIiGiwm7G3tKUq
-	jm0QmuLhICSPEfCd0YI4ZHHm9BmR9/XrKbiGx9ynVy6fjglQ8veuavUEqL/AhfxJODMckvI9iNN
-	/UdgGOkykKGaTSJcxq4CyoiW6JkY=
-X-Gm-Gg: ASbGncs0dpDv1VTLiw4dgj5wMXKMfv6Bkmp1V5z7FbORefiP9gunyRjg8TwFCOvRwDV
-	mJ2Nqc6jSG8BpFCuahUQirJ6VYBEPcU0aLj0FnjQ/CHMi4NG/uk/qbLC+08JWW7oEyvKIzdmueX
-	Nn8V1wdB9UOWE9YOxy35yvb5W+noTrSGMgofSjw12BHIFFL72BRdiDhO0pdggg
-X-Google-Smtp-Source: AGHT+IFWcEQwx+0RcwRZGgFVo+3eimNzllBvnA8VO9yqRm4cADoL3PL1lAwN1dG9+Ghaaq265UyapLB0y1dsXKp8cCA=
-X-Received: by 2002:aa7:cc10:0:b0:5eb:4e69:2578 with SMTP id
- 4fb4d7f45d1cf-5eb4e6929c6mr1106908a12.13.1742295855182; Tue, 18 Mar 2025
- 04:04:15 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742296585; x=1742901385;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ALJupLDkIBbGbD3ZOJhXYzaHVTUzVilUYmH+is2/XiU=;
+        b=A42czcdBMM3dZz+xzzZ6VzxkaR7roM20rArY+Vc05cOBXTMz2dH/t+BVAOF6gswipe
+         9y/MHrnVakql3ZwJRsQbQ5w+KapZ/zAoyS3YN7yo8gd/1AKiv62ytm/Ft+9u9aK7yd32
+         1tev7ZIf9MiT9yYPWFwvmq6vg8jIvrhGkWFdHIlIEhGzAti/uNjWCF1nHFcWoTSbGV+F
+         0+z3eHqyaRT8I67ixbqhIyG3EH+f0wqx3iQkmvWvxg5eXhM9j3EbwmOxxVTYNEnIg/iO
+         J+dYtqJ1xA5WKqH/JpV70Z2cVMe5WG8tOk8TeX0nq9xGXSshIYTrRZbDF+qcgERIo838
+         2jnA==
+X-Gm-Message-State: AOJu0YxmkpHaBqS4titdFcg0dczcudfkDPQOmsOtL6eYaOHufmDDRPM6
+	DF+ujgxleziuPZ9pX6YC+5yAtCaFyaxq+0GWQks7OWVDTxrYi7xUMxsK6nz5iB4=
+X-Gm-Gg: ASbGncuQER9WcSkO9ahRI+QlWc/1k1VSyrPD6Nfqbi7Wm/AoujDvo5d0dINnFx6ODuy
+	MRQV8uPOV5uyu4ynOj0nkvuUMY0tzsbZQqfcCjimHfms6Z+gmjyVYqxlCLky2cj5JG+Utt/C62i
+	TlTWcshhH+yE6SnkZ5BNLNWo07qvs5Hv5b99yj0d8gPWl6ifsfCFlu7qar0Ki0Chltg6AnnTEP2
+	silyUurce0VJ8q23BiLeSl6NNXTPxdwI07GBI9WJTdFCI0rumhsAsGM97NW7Lkv9A4WEUnx+9zV
+	UXqAgV7KG1soL4UkJ2q7P6BV2iDYq3zIMJum47A2PSC+TBut7iBUOZE6A7RhDdM=
+X-Google-Smtp-Source: AGHT+IG0MiVK3/hZ/vSPWkmn7Tx0DaeeCSzTOpjX9I8qKxvN7gAde6jgDqN/WJhCxSI2ueRRwoucnA==
+X-Received: by 2002:a17:902:e750:b0:223:66bc:f1de with SMTP id d9443c01a7336-225e0a67c2dmr223562775ad.21.1742296585580;
+        Tue, 18 Mar 2025 04:16:25 -0700 (PDT)
+Received: from localhost.localdomain ([119.130.107.8])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6bbcdd2sm91599995ad.172.2025.03.18.04.16.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Mar 2025 04:16:25 -0700 (PDT)
+From: Jensen Huang <hmz007@gmail.com>
+To: git@vger.kernel.org
+Cc: Jensen Huang <hmz007@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH] index-pack, unpack-objects: restore missing ->init_fn
+Date: Tue, 18 Mar 2025 19:16:10 +0800
+Message-ID: <20250318111616.113941-1-hmz007@gmail.com>
+X-Mailer: git-send-email 2.49.0-1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250313103859.817127-1-christian.couder@gmail.com>
- <20250314141203.2548803-1-christian.couder@gmail.com> <20250314141203.2548803-4-christian.couder@gmail.com>
- <xmqqo6y3h67u.fsf@gitster.g>
-In-Reply-To: <xmqqo6y3h67u.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 18 Mar 2025 12:04:03 +0100
-X-Gm-Features: AQ5f1JokpfXgv-YmhhSb4bDIX6SONwEcA7ogbFNKChJynX7zMcfyU-Cor8tPCfw
-Message-ID: <CAP8UFD1oNNgEkYCX8QZo4CbEe-=_P2M0bGup-RvLPXNhpYDh8A@mail.gmail.com>
-Subject: Re: [PATCH v5 3/3] promisor-remote: compare remote names case sensitively
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, 
-	Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	"brian m . carlson" <sandals@crustytoothpaste.net>, 
-	"Randall S . Becker" <rsbecker@nexbridge.com>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Mar 14, 2025 at 6:28=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > Because the "[remote "nick"] fetch =3D ..." configuration variables
-> > have the nickname in the second part, the nicknames are case
-> > sensitive, unlike the first and the third component (i.e.
-> > "remote.origin.fetch" and "Remote.origin.FETCH" are the same thing,
-> > but "remote.Origin.fetch" and "remote.origin.fetch" are different).
->
-> I double-checked what the control flow that passes through
-> remote.c:handle_config() does, and the above is in line with what
-> remote_get() does.
->
-> remote.c:read_config() populates the nickname-to-remote hashmap by
-> using handle_config() callback, which calls make_remote() with the
-> second level name (e.g. "Origin" and "origin" in the last example of
-> the above), which is passed to memhash() not memihash() when looking
-> up or registering the remote.
->
-> If we used case insensitive comparison in the new code, a malicious
-> large-object promisor remote could have told us to use "Origin" as
-> an extra promisor and in response the new code may noticed that we
-> have "origin" and tried to equate it with what the other side told
-> us.  But when the existing code actually interacts with the promisor
-> remote, it wouldn't have found any configured remote under the name
-> "Origin", and something funny would start from there.  By using the
-> right remote consistently throughout the system, we would not get
-> confused that way, which is good.
+Commit 0578f1e66a ("global: adapt callers to use generic hash context helpers")
+accidentally removed `->init_fn`, which is required for OpenSSL 3+ SHA1.
 
-Yeah, right. Thanks for looking into it.
+This fixes the following error on fetch:
+  fatal: fetch-pack: invalid index-pack output
 
-I don't think this needs to be in the commit message, so I haven't
-changed this patch in the next version. But I would be fine with
-adding your explanations or something similar if someone thinks it's
-worth it.
+Signed-off-by: Jensen Huang <hmz007@gmail.com>
+---
+ builtin/index-pack.c     | 1 +
+ builtin/unpack-objects.c | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 52cc97d52c..50573ba049 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1286,6 +1286,7 @@ static void parse_pack_objects(unsigned char *hash)
+ 
+ 	/* Check pack integrity */
+ 	flush();
++	the_hash_algo->init_fn(&tmp_ctx);
+ 	git_hash_clone(&tmp_ctx, &input_ctx);
+ 	git_hash_final(hash, &tmp_ctx);
+ 	if (!hasheq(fill(the_hash_algo->rawsz), hash, the_repository->hash_algo))
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 8383bcf404..c5a6dca856 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -668,6 +668,7 @@ int cmd_unpack_objects(int argc,
+ 	the_hash_algo->init_fn(&ctx);
+ 	unpack_all();
+ 	git_hash_update(&ctx, buffer, offset);
++	the_hash_algo->init_fn(&tmp_ctx);
+ 	git_hash_clone(&tmp_ctx, &ctx);
+ 	git_hash_final_oid(&oid, &tmp_ctx);
+ 	if (strict) {
+-- 
+2.49.0-1
+
