@@ -1,94 +1,81 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB307E1
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 21:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A5D143748
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 21:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742332497; cv=none; b=a6uPl/rzqhufn+7vJE8J5sjjQkupJLI0dlM84MqNIEaCh80+NypqEBuGKtp8C3gnXlxUy0x6mt8dU2eROqF3OEQZ7aA2jBBECIxzliJFwrdCRVEEA2fcwLD6GX12KNJgNUoF8BeeIMXm2Ewu+WUE7jRpZA8n1Ry2iqHBWEuNi+Y=
+	t=1742332657; cv=none; b=CZVvGl5KxzqY57G+FUu2ZMSObQFgICifO8mWbvP7Vuod6blAGrnQ3yFaPS1IdvBieGJcX9TC9gEWVXe6/UROk2yNt8TRvnRXlF4WQBaF0/Gg1OhZxpZJapbU6kP/zs9rhYsPZN2TM9cMdOvEXIZmWv5SAbqM/mu3HQbHiRFJxjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742332497; c=relaxed/simple;
-	bh=0BQgQ3Ew2KPUoyOtkgiwhYbQZAVLAkO6EAjVj0lmbYk=;
+	s=arc-20240116; t=1742332657; c=relaxed/simple;
+	bh=W8K4/cuxuppiU9DqdB+Kpj3GHrlPpAoUE4icvdEz2AA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KFlTzGdaRyO498KnCyCE8llLLcuSNldA95K7iu5Gd6b7V2RfREZ0IkG0KyemRtPWtLgZpT+nihraj+50TtcZKboEuTHh2oH5l8i0a6+PyYxx+addU5rKiMAreFhadKsETtY5jWti9D1XJw93a5tNJIeeCHVxUN+FhYp0CoGTi/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SxQ0Qun8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B01E8f3x; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=J0rYPBCzhHWOehpX9JNjg8dVXufhA6JXbce/oTI1MgpEsbqlSiRRqXuC7+66T4NgpKpzDCLdfsERH8qlQg2kcH4h+yrdosOPGMaaSc/PvPE/xkIU1YmIKWOIcHwHBvTNzzdEFZpCVc+dJQSNKaD+uQTWcO/qSbqW9BPVYMbUu8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gtChvyq2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WeXP4fXK; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SxQ0Qun8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B01E8f3x"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id A889513833C3;
-	Tue, 18 Mar 2025 17:14:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gtChvyq2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WeXP4fXK"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id E54CE1382D03;
+	Tue, 18 Mar 2025 17:17:34 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 18 Mar 2025 17:14:54 -0400
+  by phl-compute-07.internal (MEProxy); Tue, 18 Mar 2025 17:17:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742332494; x=1742418894; bh=MFPfUQF3wu
-	mbtOdjxOtz/Vin9Q1xa6Kf4bwZpOpGRnw=; b=SxQ0Qun8s/QCeq2LlwEClCJgMn
-	iXHS8+VWPML+is5+X4ZpLGjZAwP1NyUowBwvuaQ9FN8boC5rx34xKeQPIyKRPvJJ
-	S0/sKCwxma2ZppYb/SUTVGL5SI0XtbwgOir3FIttNA9cZxYOJX0gDsyHk+jZXaK6
-	SW2QnPQXue7T7g+xXTtPZBgSpioWbCIJUhwovV1vD/Ib5x/M0doCJ0TqEtvYnBeL
-	WmWDSYpOX+Uw7rM5l8HExAmQtYOGDgNZk4XC9xRNttacxPlwEM6jT/uOFed1rmt5
-	YzaoNqr71mf8+KZR5uhVstSSxLxTtGZT11CoUbfyogqFlMN5tkE3leIaFasQ==
+	:subject:to:to; s=fm3; t=1742332654; x=1742419054; bh=8t115/rU7T
+	OmocIPA7Ojqh/r+a+PkaGmOtB66j+R0xU=; b=gtChvyq2b6BvhsAOIslTebjoM+
+	jr5/3iBk1r11/g5oO+07xTVLyCUGFM1iIRD7P2sbMZo9KBpxsz9FcfRmJSW6+fJw
+	aFdg2NoTq4i1XUE01kQzbjpAUcWVJ9Aw5P6ZxZnG2FNz7lhUh1JmFiUzOQPbwFBn
+	716qz4WWOtQOO5B0gvD7TDNWSmdSeGOYs6Oldw3s9s4x7VO18vvdD6qEoHgobzMt
+	fW1JSfy8XRM+ndVZBhKepn+o29dkovBXNYgF0m55DJNO5rxGzm7lw/kVKbmgDyIs
+	+wKyLj+tDU4FAdj4eTHxfbwHCO0Yejs2Ggmhde6E2zwovCXl5naTcqF5mWjg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742332494; x=1742418894; bh=MFPfUQF3wumbtOdjxOtz/Vin9Q1xa6Kf4bw
-	ZpOpGRnw=; b=B01E8f3xdQ4lWSXw2iiJFqrkuAZYSx09XPjUGCDP+rVA+qCi5qQ
-	+Wt1xUYOtrdyKZW4+quut1TvAgscuXpJwjqP9RwMQhTxYdFS3didYcJ4ZSsX7jRb
-	qcqQ5VgQbXAeYex/Ne+m8tIXG6XItI0pZkwBlISAQ7AfVspYcHPby1BYf+lmAd9f
-	vhp1+U1RzEduqGlJOcXGUyy3GVvMJtDsFZEPhVjM5KqUV0VyLgOGWuoGRuHwnPEt
-	+6Xl5GQlw5dlq/oNQ4T8r2Y7rpUMZE9LBGvIeh2PrQb80+071HVY0h7JoIPwjKCc
-	UfJ73hwMBv/REtYRzR0qWGiR0eHIHmHuhxA==
-X-ME-Sender: <xms:TuLZZ6HToz6EXHswCP1e2iWcqBiKpZ2iiRvdQElHQ8g4_6NXZ3yIQA>
-    <xme:TuLZZ7XdRdqJ6Jea2n0puVCdunFVMCC19FH9dEsWXtOJgJuR543MTPUWPjVapoHiO
-    KhMW0RcWphpRCH_og>
-X-ME-Received: <xmr:TuLZZ0JcLAWyHXC3VMBxwlwy4p-S0c8T_y-e0fLSimMcQKOaEOuhEf8odw-_9P9D8ARfeW4bA3V11qjoWn0x-CD3H1lsJU53KHgVKsk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeefgeelucetufdoteggodetrf
+	1742332654; x=1742419054; bh=8t115/rU7TOmocIPA7Ojqh/r+a+PkaGmOtB
+	66j+R0xU=; b=WeXP4fXK/JBByczHgboILLAedi4JVhSOQo4dIOlI0QcVodjcGt5
+	/7DvMCiSwGBDTm7JO+70hDTFu6Ex47pqZWON22iambJI3OK/Y5SNf8L69tXd/2XM
+	cAy+0SR8JB00k2wAh/CRRioMi79/4783pVLOaWQ2g7OfSHWynf4UJAhUdAWg94+1
+	ry7wE7JbZiNrNCNbsJhmYunk3jsjL0kX4KzL25KLmvAG4TWHyBle/YTuAnbDqgVF
+	xqtnjFY1Jv8kQtO3jbXcoROXP+IAYazQLafkb0eVs7I4D7N/z7OnG/Thc5lA3tgW
+	3ZsKNMm3nvK50XyUm7rZguwQAmcLjoxXWzA==
+X-ME-Sender: <xms:7uLZZxxEqf3mrYeAI9ZvLemRTz2oLKiSatG74s3_gfkfP6jDqPYIJw>
+    <xme:7uLZZxRECW5erK2hrAh_kFdFkSZ0mmRLUlGbMAQOVR_K-qP12ejr2nlsWjaMG-0FN
+    avfe1UVmRNemspkug>
+X-ME-Received: <xmr:7uLZZ7VM7D6VoHk_yuQkG4WEsbPI1_3iFAP5uO12d51J5XWIA5zLhJmw9ecd3Ip_EhbT3omu1Eu15fjl0IhDsFyHqyxS7coVKu6FmXU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeefhedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepgfetheeukeejkeffheduhffglefgvdev
-    hfelleduudduffejjefgteeltdeiueeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhith
-    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehkrg
-    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhu
-    ohesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehshhihrghmthhhrghkkhgrrhdttddusehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtoh
-    drtghomhdprhgtphhtthhopehsrghmphhrihihohhguhhinhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:TuLZZ0EAgpyl-Napl6be0jfIGeqNf0eVafjWOBcrqE7ssQkeEwZXZQ>
-    <xmx:TuLZZwVGxEWUKa5L2L3pbxgiFLefKGaggkef4ZCVT0HtIS35D5atUQ>
-    <xmx:TuLZZ3Pq_G4Q7b9VDXqqzIhHmHYYU0CzyNgWgYgLvMaWec4p2uQl8A>
-    <xmx:TuLZZ3229MqHIAmLFTuUrrF2ZueuPpy8fFCjeShyCPEKBqrsfIf0KQ>
-    <xmx:TuLZZ5NjDGpjSQF5CxQuoaWsA6y6xh2HiDfApQ_boWVU3wv5eCLA0Ofk>
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthgrrghhohhlse
+    huthhurdhfihdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:7uLZZzizRgnG-0hjLr_En1VEYWaQZGZftmByppN1HQPiEAtTXWVYBw>
+    <xmx:7uLZZzBjAnzC8CpslXvvKNC_aNQD5SHG8_qcqLeI7Fgs3gREXgBHiQ>
+    <xmx:7uLZZ8L3R4O9nhxMYIy8DeUXK92RghZQgVJuw9i91ZqpcEtu4hvGFw>
+    <xmx:7uLZZyBbsqO7H-GVAh6BJ7Vu7NOE-hLRqllQqg7Ly9mpuOS2tcSdNA>
+    <xmx:7uLZZ6PT2tGniwHN_ZmTlqc8MulacmoD6-qM0CwSSbgXNhNYwY6l1B00>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Mar 2025 17:14:53 -0400 (EDT)
+ 18 Mar 2025 17:17:34 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Sampriyo Guin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "Patrick Steinhardt [ ]" <ps@pks.im>,  "Karthik
- Nayak [ ]" <karthik.188@gmail.com>,  "Jialuo She [ ]"
- <shejialuo@gmail.com>,  "Christian Couder [ ]"
- <christian.couder@gmail.com>,  "Ghanshyam Thakkar [ ]"
- <shyamthakkar001@gmail.com>,  "Eric Sunshine [ ]"
- <sunshine@sunshineco.com>,  Sampriyo Guin <sampriyoguin@gmail.com>
-Subject: Re: [PATCH] [GSoC Patch] Modernize Test Path Checking in
- =?utf-8?Q?Git=E2=80=99s?= Test
- Suite
-In-Reply-To: <pull.1923.git.git.1742329571265.gitgitgadget@gmail.com>
-	(Sampriyo Guin via GitGitGadget's message of "Tue, 18 Mar 2025
-	20:26:11 +0000")
-References: <pull.1923.git.git.1742329571265.gitgitgadget@gmail.com>
-Date: Tue, 18 Mar 2025 14:14:52 -0700
-Message-ID: <xmqq5xk611o3.fsf@gitster.g>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: <git@vger.kernel.org>
+Subject: Re: [PATCH] format-patch: use raw format for notes
+In-Reply-To: <20250318180251.3712-1-taahol@utu.fi> (Tuomas Ahola's message of
+	"Tue, 18 Mar 2025 20:02:51 +0200")
+References: <20250318180251.3712-1-taahol@utu.fi>
+Date: Tue, 18 Mar 2025 14:17:32 -0700
+Message-ID: <xmqqy0x2yr6b.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,114 +85,80 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Sampriyo Guin via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Tuomas Ahola <taahol@utu.fi> writes:
 
-> From: Sampriyo Guin <sampriyoguin@gmail.com>
+> The default formatting of commit notes by git format-patch --notes
+> doesn't make a very good fit.  It would be more beneficial to use the
+> raw format for CMIT_FMT_EMAIL and CMIT_FMT_MBOXRD.
+
+Hmph.  That is unfortunately quite subjective.  "doesn't make a very
+good fit" why?  "more benefitial" why?
+
+And it turns out that using "raw" is not a good choice in the
+context of e-mailed patches.  Read on.
+
+> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+> ---
+>  log-tree.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> test -(e|f|d) does not provide a proper error message when hit
-> test failures. So test_path_exists, test_path_is_dir,
-> test_parh_is_file used.
+> diff --git a/log-tree.c b/log-tree.c
+> index 8b184d6776..c40a7599d0 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -857,7 +857,9 @@ void show_log(struct rev_info *opt)
+>  		int raw;
+>  		struct strbuf notebuf = STRBUF_INIT;
+>  
+> -		raw = (opt->commit_format == CMIT_FMT_USERFORMAT);
+> +		raw = (opt->commit_format == CMIT_FMT_USERFORMAT ||
+> +		       opt->commit_format == CMIT_FMT_EMAIL ||
+> +		       opt->commit_format == CMIT_FMT_MBOXRD);
 
-Correct but ...
+After applying this patch and running
 
-> diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
-> index 2b60317758c..6a8fe69c089 100755
-> --- a/t/t0007-git-var.sh
-> +++ b/t/t0007-git-var.sh
-> @@ -156,7 +156,7 @@ test_expect_success POSIXPERM 'GIT_SHELL_PATH points to a valid executable' '
->  test_expect_success MINGW 'GIT_SHELL_PATH points to a suitable shell' '
->  	shellpath=$(git var GIT_SHELL_PATH) &&
->  	case "$shellpath" in
-> -	[A-Z]:/*/sh.exe) test -f "$shellpath";;
-> +	[A-Z]:/*/sh.exe) test_path_is_file "$shellpath";;
->  	*) return 1;;
->  	esac
->  '
+    $ git format-patch --notes=amlog -1
 
-... this one is iffy.  How well does it mesh with the "return 1"
-case in the same case/esac?  I do not use Windows, but if
-GIT_SHELL_PATH set by that system is not in a form that the platform
-expects (i.e. a drive letter and then path to a file "sh.exe"), it
-is just as grave a problem worth reporting as the path given is not
-a regular file, yet "return 1" case does not give any specific error
-message (instead it just lets the test fail), so it feels a bit
-uneven to make the "test -f" failure alone louder than it currently
-is.
+(where refs/notes/amlog holds commit to original e-mail mapping), I
+get this:
 
-> diff --git a/t/t0601-reffiles-pack-refs.sh b/t/t0601-reffiles-pack-refs.sh
-> index aa7f6ecd813..f76471a3375 100755
-> --- a/t/t0601-reffiles-pack-refs.sh
-> +++ b/t/t0601-reffiles-pack-refs.sh
-> @@ -78,13 +78,13 @@ test_expect_success 'see if a branch still exists after git pack-refs --prune' '
->  test_expect_success 'see if git pack-refs --prune remove ref files' '
->  	git branch f &&
->  	git pack-refs --all --prune &&
-> -	! test -f .git/refs/heads/f
-> +	! test_path_is_file .git/refs/heads/f
->  '
+    ...
+    Subject: [PATCH] format-patch: use raw format for notes
 
-This conversion is wrong.  We are expecting that the file does *not*
-exist, and your complaint and the reason why you are rewriting this
-line is that "! test -f" does not give loud message when that file
-does exist.  What does "! test_path_is_file foo" do when 'foo'
-exists?
+    ...
+    Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    ---
 
-You can find the implementation of test_path_is_file with "git grep"
-and see for yourself.
+    Notes (amlog):
+        Message-Id: <20250318180251.3712-1-taahol@utu.fi>
 
-    # debugging-friendly alternatives to "test [-f|-d|-e]"
-    # The commands test the existence or non-existence of $1
-    test_path_is_file () {
-            test "$#" -ne 1 && BUG "1 param"
-            if ! test -f "$1"
-            then
-                    echo "File $1 doesn't exist"
-                    false
-            fi
-    }
+     log-tree.c | 4 +++-
+     1 file changed, 3 insertions(+), 1 deletion(-)
+    ...
 
-The test wants to make sure that 'f' is not a file.  So you want to
-see a loud complaint when 'f' exists as a file.  Does it do so when
-you say
+But with this patch in place, I instead get this:
 
-	! test_path_is_file .git/refs/heads/f
+    ...
+    Subject: [PATCH] format-patch: use raw format for notes
 
-in this test?  No, it will not enter the "then" block and silently
-succeed, and that return status is negated by that "!", so the test
-will notice that the expectation is not met, but you didn't achieve
-your goal of making it louder when it fail.  Worse, if the file is
-not there, as the test expects when Git is working correctly, your
+    ...
+    Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    ---
+    Message-Id: <20250318180251.3712-1-taahol@utu.fi>
 
-	! test_path_is_file .git/refs/heads/f
+     log-tree.c | 4 +++-
+     1 file changed, 3 insertions(+), 1 deletion(-)
+    ...
 
-will enter the "then" block, complain that the file does not exist,
-returns a failure, and your "!" will turn it into a success.  The
-test passes, but the user is given an error message when the test is
-run with "-v" option.
+There is no indication where the note came from, and more
+importantly, the contents of the note loses its crucial leading
+spaces that makes sure that any random lines in the note that happen
+to begin with "diff", "---", etc. are not mistaken as the beginning
+of the first patch.
 
->  test_expect_success 'see if git pack-refs --prune removes empty dirs' '
->  	git branch r/s/t &&
->  	git pack-refs --all --prune &&
-> -	! test -e .git/refs/heads/r
-> +	! test_path_exists .git/refs/heads/r
->  '
+So, no, this change is not a good thing to do, at least in its
+current form.  Besides, unconditional change like this will break
+existing users.
 
-Ditto.
-
-I'll stop here.  I think all "! test_path_foo" changes in this patch
-are wrong.
-
-Unlike "test_grep" that lets you write "test_grep ! foo bar" to make
-sure that file 'bar' has no 'foo' in it (and complains loudly if
-'foo' appears in 'bar'), test_path_foo family of helper functions do
-not let you write "test_path_exists ! no-such-file" unfortunately.
-So my recommendation for a microproject sample is to just drop these
-negations from the changes and stop there.
-
-If this were a patch for real, it would make sense to give a
-preliminary update to test_path_foo helpers to allow them to take
-negated "test_path_exists ! no-such-file" form, and then convert
-the negative form as well, but I think that would be a bit more than
-what a typical microproject would take.
-
-Thanks.
