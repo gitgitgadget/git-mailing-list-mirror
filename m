@@ -1,137 +1,119 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940492F37
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 13:11:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8254A14B08E
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 14:01:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742303478; cv=none; b=AOWSTypbsUCO7hPePwQIjI8TKUtGn95FSM6WTbTo/jRKiLYK7Lb0E7I9R5HmD9WBwaw6P2rEXixLQ/jlGQhTTzf2z7y7QKtBck1vN0ouKYcG3dmLcHFQArY6vhZjs0gAM/mfUbEhSbZpCD6bfTd9ZEyUVkL9cW3g6Y4MtE8+ShE=
+	t=1742306497; cv=none; b=J2ofZXbBjFMtgzhr3jqZDQEFuYF8PqSxukjkzLT6y54tht3khC1uUSr6A4IIuyOBk4mmTZPRMwo6s2Pm2Tw+/K9xbglhZ7w8HDOnm2Kugyzz7wT2NPG3IusCqxJ2igquSryoFTbPSE2end0FqxfdUxGbS6kG8ocAKLm4ynEHQvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742303478; c=relaxed/simple;
-	bh=7mPfS5cq5st3zc0RU1KvQmECFkzTfRJEgL0nEzhCvoo=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=U4bUCuHthHOmcC98Oo8AzJEyDgSUrMOA0ugQnRrbf91XbZbJ/eqKu06nxs/wkL0YZNA+/V1DcZZ7IJ30cs38kdvK6QHs3BVBNv98ixjHyZRj8EeP3xM0+/8LFzxlzC2p5cyy4tAb0ZGgePhGke96OaqTHaGJpHOFOxjL3DjW/3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aynp.dev; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aynp.dev
+	s=arc-20240116; t=1742306497; c=relaxed/simple;
+	bh=k8xGgUh+M0tddw7cZtNtDsbo+EG5z/BH5OiUkKOcqK0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GwJ0jnj+d0hWEgHlgSQgnXy7XloFz3KcBCfGWYjDTvt1uXDht40+gMkXXSVDDr78oBg8EOAwcOTWYuC+xZaVusP/h3r1guyeI4SR+MMcnEivQ61R09wOQCDSRKd3V1Xv/mELzrFuyT4RFeV9FMs6ukca3mGBRJ0dcpQ3r+tcxnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QrCVjVrd; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-225df540edcso76162565ad.0
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 06:11:16 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QrCVjVrd"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5e5e8274a74so9033252a12.1
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 07:01:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742306490; x=1742911290; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wP+0jQ2p0RyHlOSbhZjVXbcai6KDTJSQwP8TtYuuuC8=;
+        b=QrCVjVrdlfFAX5N63a9FgwABF4yPiaJZvlPf0FeJ7cI+vwhNtlaeGynh/xqLMVeQcg
+         Rg9SsSB+xwW+nI+bzFvutA4S/8rDMf03dI0ufwy4IoA5Xmc0TLzBMmAY+ZjHm+q9gC/E
+         nB9ksLXQxJgQz45Jsw5VvUTxD9EuAl2hATsAxEZD+VXzUvSXmum4Ul3xaOI3vCb8dy7A
+         0/Jfm6vsLzSTypkZrHqX0JYUsN0uXRu4yTRcIVcdgTnNnO7vkkyj2KgTR1H4q9MH2yL9
+         IL4wN+7LCpxPsp0Reb/6fiQbVvwE3mGghsX66pcd8yCHVa+KKgJYF+1nb6cTr+6SHCAL
+         ejEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742303476; x=1742908276;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1742306490; x=1742911290;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Axh9l3SRJfNfLD9/e00Dqb4WAems+mXMOEVSh7UhBHI=;
-        b=XG7oe74hxqSaiTtRq6VGXYQrNJxa4w9ehL67A2ATK4aGQWcQP9tiGvtBXpdkJQTG5n
-         QRqbD9gklXd4y7/Ck35N+WjnoxEH1qgh3hP9McxHSBdCJRY57i+p/PnEBpx8pxNkgcgt
-         Q2axbA1tvm6OXlSWIEt5XIJNRiuUT8PGD6l4k4eQPMy5svgUH4Tv0rJVZQSNNOafRvjs
-         d6AVX7/YNPW3IAiinsHs4RaUWHIIqQ2JNM+zEL6dLUuMHhDV7S6R8e+3pacntMZTyPWg
-         SAZ6jIBQGrcDcj3dC3mFn4RpmrNZRacgISo+Uuu10rpZYdWf6bQ33KOChwHEVhYH8fBi
-         rniA==
-X-Forwarded-Encrypted: i=1; AJvYcCXbjD6DdPr7g5rb0SXx10mjrgxQRzwybH8bH+wBMYLOC+gePyCzWNq0jKhqJa18PgsUVX4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxdrkiKSGrrrXPqDdhcLmCjT4EmXTRlRnhSJwEOGPdTF8aY7Xba
-	ocAdEOWNNw2pwDttwr8G1Z/pqushFgtaOSNtz2DULOqsdMi6d2yU
-X-Gm-Gg: ASbGnculCuD9A8N+y4VeEVPAFWGcAUnN+nRaR7623WBQQSXVVYqTC4bmSRf37w3J/wC
-	gj3xna/WN7TozWWVuebRwHhsds0l2aPdR4/HQCPpBeDSWkLJKv/EAOFTwhYSISNZ4xWGFSIgFZQ
-	xc1O2e4LWVPZdvGhOtOnZw4CVTD5NUauxbmi7iLKCcjm0RUKNSmyhCN8+jDlb56c3hbnMjUCkEG
-	HOaeRyh3klMZnSg0zeRP0LsrgnT7Mun8wom4UCKM8HrcruQqr5hcWee+gXAO2PnpPtXh9h4Fnei
-	QU/QxbZ/46b7TrMYor/bRWoqR9hOfONcvW7pelPEmcdcmIj0c437A8LrupHX033PGwUc/sU4fXw
-	aifQVPZHgwamPiPOm9cU=
-X-Google-Smtp-Source: AGHT+IH/eTIHlVgJYPyTiesmXTHhiiRb3I6MIn4U0/GjaQAT5U+5j0xuz7N1df48dmtJ3TmvLa0Ebg==
-X-Received: by 2002:aa7:9312:0:b0:736:bced:f4cf with SMTP id d2e1a72fcca58-737575391e1mr5608219b3a.0.1742303475674;
-        Tue, 18 Mar 2025 06:11:15 -0700 (PDT)
-Received: from L6X9J4F4CV.flets-east.jp ([2405:6580:9580:2e00:f08d:22ea:59aa:bc50])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73711529526sm9440399b3a.24.2025.03.18.06.11.14
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 18 Mar 2025 06:11:15 -0700 (PDT)
-From: Aryan Pathania <contact@aynp.dev>
-To: ps@pks.im,
-	gitster@pobox.com,
-	git@vger.kernel.org
-Cc: Aryan Pathania <contact@aynp.dev>
-Subject: [GSoC PATCH v2] Use `test_path_*` helper functions instead of `test -[efd]`.
-Date: Tue, 18 Mar 2025 22:10:33 +0900
-Message-Id: <20250318131033.48691-1-contact@aynp.dev>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250308090358.25429-1-contact@aynp.dev>
-References: <20250308090358.25429-1-contact@aynp.dev>
+        bh=wP+0jQ2p0RyHlOSbhZjVXbcai6KDTJSQwP8TtYuuuC8=;
+        b=lItYa4kLiVK2sUWYzpSJ7Pvkz1SNaKHbllWdrkDKNdf4vuMcwLZhdy0b9MXtgTn3ev
+         7SGs9E0Zc767B+p49TntWHyoUWP4D0otZ3eDC2xvNcVbYKISsL+1aX4GlPrC2Ef9RV68
+         5/ZhGDeqZSkevs7jYSCv5y1BxwF0aKQxLuGrbZw/oO66JYSRd5aNQQ7Djxj+HCih9EGw
+         HdI75e6cfWIwN+cO7VaNQJ3stn7LZnxGyX3TsC1fyg9U12C8yZVerQ+z68LjWa8Bi5Q1
+         3NFgrCvEJUD/clc2A8qd0TuHH/IeAFsL+Zj0ChUQCHkcEbb3Alc83HVfqfmF9pF9qImW
+         +Xjg==
+X-Gm-Message-State: AOJu0YwSCgqohaujWDvitdFjAjOfkkgHT7nZDAGUvbGYkNzofANX8jUI
+	eGAoepA6YkM0jbHnTPNZnPPKdiYLwb5qk9BVpTG7tKiwRBku9ckrnDC9KjbPh/yNfoYV493LKA6
+	9hLnxYDGkUvch7bTfCg8zXSCgub8=
+X-Gm-Gg: ASbGncuR0P974erfFkXGw7Nyfs1peA1EJbkZUwhpp8wmuI96yHIdgFmaRkayUI2Yx9q
+	7188sQup7vpswO9YZCpREX8p5z8Mip/oE30iICHPANgj1h8lFb7bVkCyablmbwV8kX1uDprESAk
+	1zwwuqJSesUHG3bXlDmI67vPXHFyeu/DtE7vGJiksvMqFGWGkmAtezDqNbw47Q
+X-Google-Smtp-Source: AGHT+IGr0Qm+bFTSd8C3rjpoYKbitXRk4fwRazCcznNUlM3APq+7Os5rGgPDeJkLW4054GN/B+reeGWO1Q5N0Z8wpnc=
+X-Received: by 2002:a05:6402:50c9:b0:5dc:9589:9f64 with SMTP id
+ 4fb4d7f45d1cf-5e89f54cdc4mr18077437a12.13.1742306489270; Tue, 18 Mar 2025
+ 07:01:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250314-493-add-command-to-purge-reflog-entries-v3-0-c24e23a6146d@gmail.com>
+ <20250314-493-add-command-to-purge-reflog-entries-v3-2-c24e23a6146d@gmail.com>
+In-Reply-To: <20250314-493-add-command-to-purge-reflog-entries-v3-2-c24e23a6146d@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 18 Mar 2025 15:01:16 +0100
+X-Gm-Features: AQ5f1JoUbHORjTBGicVcV9eUZwU-tvXI1e1cWcSer7D73zM2iqQ3ar3M9kIQ4lc
+Message-ID: <CAP8UFD2+xQQbUevHTQangg__dq2M615pHLhYYUf7b9shpShD9Q@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] reflog: implement subcommand to drop reflogs
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, kristofferhaugsbakk@fastmail.com, 
+	gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Change testcase `gitcvs.enabled = false` to check for missing path
-instead of a missing file. The change is justified as new assertion is
-stronger.
+On Fri, Mar 14, 2025 at 9:41=E2=80=AFAM Karthik Nayak <karthik.188@gmail.co=
+m> wrote:
 
-All other testcases remain equivalent.
----
- t/t9400-git-cvsserver-server.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+> +Options for `drop`
+> +~~~~~~~~~~~~~~~~~~~~
+> +
+> +--all::
+> +       Drop the reflogs of all references from all worktrees.
+> +
+> +--single-worktree::
+> +       By default when `--all` is specified, reflogs from all working
+> +       trees are dropped. This option limits the processing to reflogs
+> +       from the current working tree only.
 
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-index e499c7f955..4ddde382e8 100755
---- a/t/t9400-git-cvsserver-server.sh
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -254,7 +254,7 @@ test_expect_success 'gitcvs.enabled = false' \
-      true
-    fi &&
-    grep "GITCVS emulation disabled" cvs.log &&
--   test ! -d cvswork2'
-+   test_path_is_missing cvswork2'
- 
- rm -fr cvswork2
- test_expect_success 'gitcvs.ext.enabled = true' '
-@@ -276,7 +276,7 @@ test_expect_success 'gitcvs.ext.enabled = false' '
- 		true
- 	fi &&
- 	grep "GITCVS emulation disabled" cvs.log &&
--	test ! -d cvswork2
-+	test_path_is_missing cvswork2
- '
- 
- rm -fr cvswork2
-@@ -285,7 +285,7 @@ test_expect_success 'gitcvs.dbname' '
- 	GIT_DIR="$SERVERDIR" git config gitcvs.dbname %Ggitcvs.%a.%m.sqlite &&
- 	GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 main >cvs.log 2>&1 &&
- 	test_cmp cvswork cvswork2 &&
--	test -f "$SERVERDIR/gitcvs.ext.main.sqlite" &&
-+	test_path_is_file "$SERVERDIR/gitcvs.ext.main.sqlite" &&
- 	cmp "$SERVERDIR/gitcvs.main.sqlite" "$SERVERDIR/gitcvs.ext.main.sqlite"
- '
- 
-@@ -296,8 +296,8 @@ test_expect_success 'gitcvs.ext.dbname' '
- 	GIT_DIR="$SERVERDIR" git config gitcvs.dbname %Ggitcvs2.%a.%m.sqlite &&
- 	GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 main >cvs.log 2>&1 &&
- 	test_cmp cvswork cvswork2 &&
--	test -f "$SERVERDIR/gitcvs1.ext.main.sqlite" &&
--	test ! -f "$SERVERDIR/gitcvs2.ext.main.sqlite" &&
-+	test_path_is_file "$SERVERDIR/gitcvs1.ext.main.sqlite" &&
-+	test_path_is_missing "$SERVERDIR/gitcvs2.ext.main.sqlite" &&
- 	cmp "$SERVERDIR/gitcvs.main.sqlite" "$SERVERDIR/gitcvs1.ext.main.sqlite"
- '
- 
-@@ -346,7 +346,7 @@ test_expect_failure "cvs update w/o -d doesn't create subdir (TODO)" '
- 	git push gitcvs.git >/dev/null &&
- 	cd cvswork &&
- 	GIT_CONFIG="$git_config" cvs -Q update &&
--	test ! -d test
-+	test_path_is_missing test
- '
- 
- cd "$WORKDIR"
-@@ -379,7 +379,7 @@ test_expect_success 'cvs update (delete file)' '
- 	cd cvswork &&
- 	GIT_CONFIG="$git_config" cvs -Q update &&
- 	test -z "$(grep testfile1 CVS/Entries)" &&
--	test ! -f testfile1
-+	test_path_is_missing testfile1
- '
- 
- cd "$WORKDIR"
--- 
-2.39.5 (Apple Git-154)
+It seems to me that "--current-worktree" would have been clearer than
+"--single-worktree", but I understand that it would have been
+confusing to have a different name for basically the same option in
+`git reflog expire` and `git reflog drop`.
 
+> +       argc =3D parse_options(argc, argv, prefix, options, reflog_drop_u=
+sage, 0);
+> +
+> +       if (argc && do_all)
+> +               usage(_("references specified along with --all"));
+> +
+> +       if (do_all) {
+> +               struct worktree_reflogs collected =3D {
+> +                       .reflogs =3D STRING_LIST_INIT_DUP,
+> +               };
+> +               struct string_list_item *item;
+> +               struct worktree **worktrees, **p;
+> +
+> +               worktrees =3D get_worktrees();
+> +               for (p =3D worktrees; *p; p++) {
+> +                       if (single_worktree && !(*p)->is_current)
+
+It looks like 'single_worktree' is only used here. This means that if
+a user forgets to add --all and only uses --single-worktree, nothing
+will happen and it seems to me that the command will exit with code 0.
+Even if `git reflog expire` already works like that, I think this is a
+bit unfortunate.
+
+Otherwise this patch series looks very well done to me.
+
+Thanks!
