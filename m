@@ -1,41 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A9B15B0EE
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 02:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203483FE4
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 02:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742263530; cv=none; b=Gp80eEkBpUdo88B/r8add5sRLS+OCBbq+wq7hcZbeRhIK4xoNCScEIHlD2f3PjklpjDrDT4WnERHrMmZJ/rGMO1yUD+rGz473J1a9bys87/Xa0AJpcjiLU96ey6LzRKie/P1Ga9j8NFziK+76Zz8nGGtkZ2t9GHWxJqdOmlXyEw=
+	t=1742264169; cv=none; b=ttkzmChp2LaXTO3xD3IaZWstVrWb7JdfrLbQAR95GYyR4kzzEkfKtdlyXHtfss6xlhGjoHMeM3fzFLG6U4q2nsEKpJTzHP6y3mHUngnBahlAYB17abRfwiEWHKTxKuK7y3FvrHMtxnHZdeGleM96UKexCMz93AaYpHo9YbuKAFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742263530; c=relaxed/simple;
-	bh=T5lO6QIIHnM/Wwt4dPYJiubuBzf0fkkBxGBGvsw/KwY=;
+	s=arc-20240116; t=1742264169; c=relaxed/simple;
+	bh=B2XeBhyKKsjIPqQiKpELe/7nLkIHk6ZylOOIPwrSfFA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mN+jX22QzDpnSpjZEa/c0HT433jRcXp1S18gBDjvSJFvA0D6+AzGbNkE3vixB5aOFwfr6zRkPfFGVfJrLIjL+fuIXGAGwb4o1n4Ax35IsazpqAriuRG+gqwIcSVUIB1HEuIq09/rAvLcblus8y780gREsdnfYB6FRniuAitm/Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DBXS0IFl; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=e+As/bNozxfOXhC7RMO7zmRcyx0IXDvkMas2MHZtbjgz1b7v2MqcFW0FkGNiJ6zfHYFTQ+MuXbUE7zVsHjxtdcnKgvsqWBuMPVHw66YiM2E3t6jXfwOSb9p0O3lCyeuYtCvWzwoDx++l3p5CRxIUNY0dc5RwJ8OvQYOX0hS/QUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FqNcEPDT; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DBXS0IFl"
-Received: (qmail 26728 invoked by uid 109); 18 Mar 2025 02:05:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=T5lO6QIIHnM/Wwt4dPYJiubuBzf0fkkBxGBGvsw/KwY=; b=DBXS0IFlOjig3pQdQckplvlX07A9vFDd5ZwUYDMqil2kHhlLfpgrDZl4YRzGrOcAuLM6WkeAPHhRMQknCssr/PjU+auk3a62V/ijliMscPSSMAzEOqk5MfUo81oWl5S/6RbFrx3BwM328cNzkfJ6RkriFvv5hI0ZNKZ6IggjH4Uj1kB9vEUJv0vcMCLQmNs3flXujae53aqua6uK+M2fubYk26ezoS5uox/AUUXAhGIfuSeCnW1DcH+vVQDykkZRN7fvYF1L4icIc7feYu/GvbW/WK89VGQyPjA/gyVCTeKq/OH9vUSgOitQim/K2Q4WskIrhfohqhJL1lgUfr8CFg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FqNcEPDT"
+Received: (qmail 26841 invoked by uid 109); 18 Mar 2025 02:16:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=B2XeBhyKKsjIPqQiKpELe/7nLkIHk6ZylOOIPwrSfFA=; b=FqNcEPDT7GOlziLBTu+SgkIAJS0XaBE7NVlph6Pv6UmxsH66UKEh/GfzLz0lWJvoqvGWcCFNecpXdPDIplbvzbImK02lV34QHwQlmpk/iBYoy+4ZN0rMAFfhBYeUX1swLmCPzd/9MUibi3UF8l7bo4hxXFBtWqvO4X20d0w0cy8MTcQWY0X1bTwkeyV4SoPNIbdWiaY/6sHb9Xn2wlwzDy0WObqyJ20yYELYekmmpytcQhhhdxw4E8+mpWAE0q17Ad0XTStR5+1x2tZu7c17qngIi2NnJFtnUOtUvhKsAwphmEeptTLqjGxzv5pqAl/ELPsRTFStu0R+JoAyKkKMBw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Mar 2025 02:05:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Mar 2025 02:16:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3825 invoked by uid 111); 18 Mar 2025 02:05:27 -0000
+Received: (qmail 3948 invoked by uid 111); 18 Mar 2025 02:16:05 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Mar 2025 22:05:27 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Mar 2025 22:16:05 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 17 Mar 2025 22:05:26 -0400
+Date: Mon, 17 Mar 2025 22:16:05 -0400
 From: Jeff King <peff@peff.net>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 12/13] pack-bitmap.c: use `ewah_or_iterator` for type
- bitmap iterators
-Message-ID: <20250318020526.GB1473033@coredump.intra.peff.net>
+Subject: Re: [PATCH v4 13/13] midx: implement writing incremental MIDX bitmaps
+Message-ID: <20250318021605.GC1473033@coredump.intra.peff.net>
 References: <cover.1723755667.git.me@ttaylorr.com>
  <cover.1741983492.git.me@ttaylorr.com>
- <a1cf65bedc94ab6e318ff81a6d48eb30b6fc7868.1741983492.git.me@ttaylorr.com>
+ <d0d564685bc66df71b4c3ed1093452e58e0f54fd.1741983492.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,29 +43,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <a1cf65bedc94ab6e318ff81a6d48eb30b6fc7868.1741983492.git.me@ttaylorr.com>
+In-Reply-To: <d0d564685bc66df71b4c3ed1093452e58e0f54fd.1741983492.git.me@ttaylorr.com>
 
-On Fri, Mar 14, 2025 at 04:18:56PM -0400, Taylor Blau wrote:
+On Fri, Mar 14, 2025 at 04:19:00PM -0400, Taylor Blau wrote:
 
-> -static void init_type_iterator(struct ewah_iterator *it,
-> +static void init_type_iterator(struct ewah_or_iterator *it,
->  			       struct bitmap_index *bitmap_git,
->  			       enum object_type type)
->  {
->  	switch (type) {
->  	case OBJ_COMMIT:
-> -		ewah_iterator_init(it, bitmap_git->commits);
-> +		ewah_or_iterator_init(it, bitmap_git->commits_all,
-> +				      bitmap_git->base_nr + 1);
+> +write_midx_layer () {
+> +	n=1
+> +	if test -f $midx_chain
+> +	then
+> +		n="$(($(wc -l <$midx_chain) + 1))"
+> +	fi
+> +
+> +	for i in 1 2
+> +	do
+> +		test_commit $n.$i &&
+> +		git repack -d || return 1
+> +	done &&
+> +	git multi-pack-index write --bitmap --incremental
+> +}
+> +
+> +test_expect_success 'write initial MIDX layer' '
+> +	git repack -ad &&
+> +	write_midx_layer
+> +'
+> +
+> +test_expect_success 'read bitmap from first MIDX layer' '
+> +	git rev-list --test-bitmap 1.2
+> +'
+> +
+> +test_expect_success 'write another MIDX layer' '
+> +	write_midx_layer
+> +'
+> +
+> +test_expect_success 'midx verify with multiple layers' '
+> +	git multi-pack-index verify
+> +'
 
-This certainly makes sense. It looks like we now use the or_iterator
-unconditionally, even for non-layered queries. It's probably a little
-slower in practice, just because it's an extra layer of indirection. But
-I don't know if trying to micro-optimize here is worth it. In general
-I'd say no, but sometimes there are surprising tight loops with bitmaps.
+Perhaps a silly suggestion, but do you want to confirm in one of these
+tests that there are in fact multiple layers of bitmaps? (I expect it to
+be true, but just trying to cover all bases in the test).
 
-I dunno. I guess it would be easy enough to do a simple before/after
-benchmark on a single packfile with this series. I wouldn't expect it to
-find anything, but might not hurt to double check.
+I guess that happens somewhat here:
+
+> +test_expect_success 'relink existing MIDX layer' '
+> +	rm -fr "$midxdir" &&
+> +
+> +	GIT_TEST_MIDX_WRITE_REV=1 git multi-pack-index write --bitmap &&
+> +
+> +	midx_hash="$(test-tool read-midx --checksum $objdir)" &&
+> +
+> +	test_path_is_file "$packdir/multi-pack-index" &&
+> +	test_path_is_file "$packdir/multi-pack-index-$midx_hash.bitmap" &&
+> +	test_path_is_file "$packdir/multi-pack-index-$midx_hash.rev" &&
+> +
+> +	test_commit another &&
+> +	git repack -d &&
+> +	git multi-pack-index write --bitmap --incremental &&
+> +
+> +	test_path_is_missing "$packdir/multi-pack-index" &&
+> +	test_path_is_missing "$packdir/multi-pack-index-$midx_hash.bitmap" &&
+> +	test_path_is_missing "$packdir/multi-pack-index-$midx_hash.rev" &&
+> +
+> +	test_path_is_file "$midxdir/multi-pack-index-$midx_hash.midx" &&
+> +	test_path_is_file "$midxdir/multi-pack-index-$midx_hash.bitmap" &&
+> +	test_path_is_file "$midxdir/multi-pack-index-$midx_hash.rev" &&
+> +	test_line_count = 2 "$midx_chain"
+
+where we check that we switched to $midxdir.
 
 -Peff
