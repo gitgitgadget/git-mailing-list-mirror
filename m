@@ -1,113 +1,101 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C9B20F078
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 17:27:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E48F1B3957
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 17:39:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742318852; cv=none; b=rBSU31EoF22EvDPisDlj03J4PMdh0ZLIeStAWtQJh/6PYYOeFgAy65ksfC81HS5aCiW/RgAfDFta1VaUApEuiAmV2Pmb+SMP0BZjE4SdRtAmziApPvdncoff/tCyU2B92nHBJ0H8EQvwZ5uDDCJeJQ+L8aAOpqnEQ6Sl5//7ltc=
+	t=1742319590; cv=none; b=RIvJ8ekjMalYwLkOeh6FghghoXrKPvN+wdN8q5tMtyA68rjbPUbQT4USsAKxEfawBK4jnUZSGNywj+fv2KtWy6hDdVYzB9P8eHVCVnBh55mxsxlsSW0ZjYv9AgN/Dm/LtXx1pbi9RGOSIBTP/KR1KpnHgR743sRHM1YsQR7gSBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742318852; c=relaxed/simple;
-	bh=zfF4yuS6cBlkgFkful2YvcrMMnlTRu7MmzOO17D81S0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cxZ+XZiIi5S2yJhEbes1JKOC0Jj8VagHvrIEIWtW8uGHZx0Mr+ud8TVr/N7h+5p+Efn/Ahu+ZN20xHQywh4eLN9Y+ZA851EYC3mbEzbGEO8K7+hLIAYu6GA8z003JDAj9SuQph2VRLeCttahYpGAmWB9Uap8DboESfuBhcjcrQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q3hZhzdi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zNYsMMNz; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q3hZhzdi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zNYsMMNz"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 305DF25401B4;
-	Tue, 18 Mar 2025 13:27:26 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 18 Mar 2025 13:27:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742318846; x=1742405246; bh=n9aVZHW6JR
-	SXEmwLv9JR6nRRkKD/6aMMcx++SVQX3oQ=; b=Q3hZhzdiQgAsCtm4nYMrkO+f3Q
-	ghz8vZeDXVWNVohb4D9N12pd/ZX/n4pihJ0wHhkciu839Vbz0lZwHgrhw2/ejnix
-	SFwQVhotAs+PlZGZRR9i9GdHKhqvPEpD+HTOD+6WpKxynojqOxsNOYvfuQhCrhhX
-	zXQc4Crd98nbfX0g2Ry6dDKHuNVKAXsDDNeJKrrrR4b6yB5Ox30FCxeHTWJxCOOu
-	XP1wKItJ3EHlSjmNO9SWUxgjqDxvg0pLTYp+Hil9zvP6gZ1srTQXxTYAxcqy3O/4
-	ziFflH957h003khnYgZDWQ0f5caFZA7bkgAQKAcPvKNVMNrn5OWtxRy6Fm4g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742318846; x=1742405246; bh=n9aVZHW6JRSXEmwLv9JR6nRRkKD/6aMMcx+
-	+SVQX3oQ=; b=zNYsMMNz6N+5YKSqU0Q5HWPH9SHO9mpl0u0Ds4fgAE3YkPANZqc
-	Bnlox44FeAFwgCWqnL7Q6LoXEBn2zMfjZbX5fUaleF/yD/hBMl++RGL1IO4p583n
-	GFF+hYefXjsLSw1lGx3osVT6jLApputeV4NRXutNR7RxPOU+RmenqLOY5ggCf1pK
-	q/QT/RYuqzD3E0GwHTRNZhmExUzY1SWSugd7xFC68pMu5GslAAli6eEuSZOTOX1l
-	Pi/FqgHAxMQ8/qlHJZnk8oZQ0EQQ0izNioSuO9rG37/ZtQNdKa75qVsbLA1b5HoB
-	d0/ndYZKYIu9RMCvfgY+R2GeftCREtg+4Pw==
-X-ME-Sender: <xms:_azZZ_csgu5t67-p2p0cDd9Xacr7d9niYiXHkSxxF8ncwZgmpNKK9g>
-    <xme:_azZZ1MrfW8ftj6Z-aYsfz10lxqb7hHT8Sa7lTYTRftSATPyG6-hT-3hXIEtmgb-g
-    ridYs9TnOJcjqUUlA>
-X-ME-Received: <xmr:_azZZ4hcHM8U3ADMUT6ApzuR6Nh7Z7DCUa2Cfa_wT4CxXwltuFYVxpN2HeHGL1sdMARDeLU2dRYV9_qObpsU-UaiZCUdjJvhpYTDYfU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeeftdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegurghvihgusehmrghn
-    uggvlhgsvghrghdrohhrghdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepjhgrtghosgdrkhgvlhhlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:_azZZw8CeSz3DO2EXgtlXxoWFqTew0Q1nMggZIkblAy8G0A9j6FbXw>
-    <xmx:_azZZ7sed8tUU7z15k4psZUsnnEhLkDRH1QuHNOHvIbfNmFXBRC7CA>
-    <xmx:_azZZ_GznqZfFQSJ4aQSl3ZL3XsccfvdfkgG_9fGd_A5ZJNQHCMRYQ>
-    <xmx:_azZZyO1BtqjJXyK8Wvdqn7anZR0WpGOXueZAOD1VN6AaVN8iryhpg>
-    <xmx:_qzZZ_i9wD796y2CUY8rRR6xkbz5kC95CgATwmiHRX5MLzrxTeDoiW7O>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Mar 2025 13:27:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: David Mandelberg <david@mandelberg.org>,  David Mandelberg via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Jacob Keller
- <jacob.keller@gmail.com>
-Subject: Re: [PATCH v3 2/2] completion: fix bugs with slashes in remote names
-In-Reply-To: <d6945541-c106-49a2-8072-2a4e1b8903eb@gmail.com> (Phillip Wood's
-	message of "Tue, 18 Mar 2025 17:02:03 +0000")
-References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
-	<1587533591c81d38977e62165784f8eb@mandelberg.org>
-	<c80d20d93c92422437150084f402ac36@mandelberg.org>
-	<xmqqo6y3dzno.fsf@gitster.g>
-	<015b89f8-63eb-4203-8d43-47c9a6d65cda@mandelberg.org>
-	<xmqq34ffdwnl.fsf@gitster.g>
-	<d6945541-c106-49a2-8072-2a4e1b8903eb@gmail.com>
-Date: Tue, 18 Mar 2025 10:27:24 -0700
-Message-ID: <xmqq4izq45c3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1742319590; c=relaxed/simple;
+	bh=VedrHk2XNROp/dFHZqmDrvK1R35korbUSeU3E2pUmrE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IiUl2j3T3qQOrmw8LziUiCRjqeXY5yur5G3BGyB8JV+E0tbHrW2C5Vn9+uWdwdP3flwg+MqwNptKAYwk+pBnqJPO8kJ7m9FVXbvN6k2DYQ9lA4kxNohSxqf1rGomVdf/db7JNZGwqjyZ2rTDKz/kRS8cZyhDfwCRhAjESOfTdho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6eaf348103cso6955486d6.0
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 10:39:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742319587; x=1742924387;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=P/cWLyeZl633FObgrMhLUweMaq0BkdT8th6OrxFNvR8=;
+        b=sKUi5SSD4Jr+n8aAYZlQZKd9oL44Tbbutgg/6V6Kt6PZ0YNFqyg9SenQ2j7qN2S2YY
+         ZEEGatQz5S3gAc2oReVcb19gxQMSiGZSncLkTKCzL5NDl2bOsCuPkQFhQmfHczEzfjBE
+         lvpfLVRN03BQ0sfL6a7+3Ey75vm2CMAw7IXYSodbdpIK3eGVavN/s3Q9Zlp0DwnVsXJp
+         bnsO1ZHzRTuwT6CxM4akycIZQklwNOWS1bD6NVR6E1pvX6Yn1TrcrDqQNEIJ1g0R86hL
+         sF89+fCQ4UL+c2ssIl2fAqHMkzrYnvrJYAaZnVPTPBqqcqZGa+cjVWod/2MkmBMSPPbe
+         x+Nw==
+X-Gm-Message-State: AOJu0Yzqi5Dr8VtwVgTqVI2xQsBwhH4pG8MA+hkJx00VU0QFcKUDkH+9
+	DGSgH51KOXVGfcdM4EavzFqxiz8uxuWMbUm69YPqdru7W/CEEPS48vgos1xXIIxNCxnVp9Q+R9Q
+	gjk3NEPjBdk7VysuLWzs3qDbCoSrqp56U
+X-Gm-Gg: ASbGnctfB8FINIECYY2YwTqBiG4itYdscZzHPp7K/uT9XDLXkgGCuyV18l8I7RFaK88
+	GcA70UBnp+qH3wJwUgSwjeXNQZ5I/fepGOErXWJPcCUZUFTQ/dSDf55YPOy3G2631+cgVTnrz2P
+	wNKUa7zc2M5fgP85ccF7BJU0l9p3+rK2cDwUE2cLYncm7VS0d5XgNxxUrqfXVic4W4kTbgYw==
+X-Google-Smtp-Source: AGHT+IEKHUcVhtyjkagDEqOfNrJKpjKap9l88Hep6OkiqBusSRTWUQKRHhuGRpBD0BkvA4z0xtYe8zkwgl4EZLRJQVs=
+X-Received: by 2002:a05:6214:260d:b0:6e6:62fb:3504 with SMTP id
+ 6a1803df08f44-6eaeaabd7aamr92583476d6.8.1742319586962; Tue, 18 Mar 2025
+ 10:39:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1918.git.git.1742299111861.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1918.git.git.1742299111861.gitgitgadget@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 18 Mar 2025 13:39:35 -0400
+X-Gm-Features: AQ5f1JoN2-7wiNr88OzkNLq6VNU_RO72U_gaEHG5s6HV2621Aitfdg2RGD_h4KI
+Message-ID: <CAPig+cQrCdtN4+hyZyPWQuvnoetarbcgkwKU7cD-TpzfzK=jzw@mail.gmail.com>
+Subject: Re: [PATCH] [GSoC Patch] Modernize Test Path Checking: test -(e|f|d)
+To: Sampriyo Guin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, 
+	Sampriyo Guin <sampriyoguin@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Thanks for submitting this GSoC microproject. See comments below...
 
-> On 14/03/2025 23:23, Junio C Hamano wrote:
->> Entirely up to you.  I do not plan to perform an in-detail review on
->> the topic (I do not consider myself quite qualified), but others who
->> saw earlier rounds of the patch may want to say "now this is perfect"
->> or "now this is perfect with this and that changes", and if you do not
->> think the differenes between v3 and your upcoming v4 are small enough,
->> it may be more efficient to wait for a bit to collect more comments.
->
-> I'm not an expert on our completion script but from a general shell
-> scripting perspective this version looks fine to me.
+On Tue, Mar 18, 2025 at 7:58=E2=80=AFAM Sampriyo Guin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> From: rimo <sampriyoguin@gmail.com>
 
-OK, then let me see if I can squash in before merging the topic to
-'next'.
+This name should match the Signed-off-by: name. Since the "From:"
+header is generated from the author information in the commit, you
+probably need to adjust your "user.name" configuration to fix this.
+
+> test -e changed to test_path_exists
+> test -f changed to test_path_is_file
+
+People reading the patch would like to know why a change is being
+made, so this is where you should explain the reason (for instance,
+"the test_path_* functions provide better diagnostics upon failure" or
+such). As Karthik mentioned[*], read the "Describe your changes well"
+section in Documentation/SubmittingPatches to learn how to craft a
+good commit message.
+
+[*]: https://lore.kernel.org/git/CAOLa=3DZSkMp+H9PZeBZXK47=3Dfx1sH=3DS54AuP=
+T=3DoUosm7F7V8MGg@mail.gmail.com/
+
+> Signed-off-by: Sampriyo Guin <sampriyoguin@gmail.com>
+> ---
+>     , Jialuo She shejialuo@gmail.com , Christian Couder
+>     christian.couder@gmail.com, Ghanshyam Thakkar shyamthakkar001@gmail.c=
+om
+
+It appears that GitGitGadget didn't like how this list was formatted.
+Instead, place each recipient on its own Cc: line.
+
+>  t/chainlint/chained-subshell.expect | 2 +-
+>  t/chainlint/chained-subshell.test   | 2 +-
+>  t/chainlint/function.expect         | 2 +-
+>  t/chainlint/function.test           | 2 +-
+>  4 files changed, 4 insertions(+), 4 deletions(-)
+
+Let's not touch any of the "chainlint" files; they are checking
+validity of a completely separate tool ("chainlint"), and have nothing
+to do with checking Git itself. Instead, pick one of the t/t???-*.sh
+files.
