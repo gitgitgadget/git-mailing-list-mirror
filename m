@@ -1,228 +1,114 @@
-Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0409421128F
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 16:19:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB97020E70F
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 16:30:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742314777; cv=none; b=hcgyeuuLI2ry16b0F1JYWe+G3cUhJIdCBtrggJBBm4W07y0QDtLG8HjtSLpL/7JTxvL0F1DvX0NNM9neUULiyJySr0Yc/qa+dsci7iJSgXS9Qew7q1GMa3BgLMu5Mt+Y/ZznyiQbcZcqCFj78wZLtVqhfq0QSkgMllJed7+m2K8=
+	t=1742315423; cv=none; b=E8rPH8Sx2Gox9idFN/VQga4DCTAbvKrzylVCcPh6RBxOd55fcSgkbeAyNvDHMXnxGpTmBeSI9qw8OQcbl+GX4S+QXNyG+4rvXRIctta1gJUNciYcwLEIW9ONYWEdTdbEP3oB4xDN27de4zyf1n0xwCERGtAWnlYn8sOYzbLU4NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742314777; c=relaxed/simple;
-	bh=a1YL7KR50qbJPglmUrb91WWiwgY1BkWUHS9jz84J8Xc=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uFpNsD96fIBj3xpmWzLgMmS6m7lXoF5YB2Wrp5uBJPF0HhDzvVqwRHGOt6PldrLeemrf54rVQCC4LvwlUk/RaWIFBu8OZYx8/ljfwi4lNi9dCmFlZjIAfxZx9NUBaJ9O/5l6bILPR2O43FSBa3DcBt3iyN09ffmjmoHrFvcFI/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A/Body/F; arc=none smtp.client-ip=209.85.222.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742315423; c=relaxed/simple;
+	bh=AMpbzjHYLJvalhtvAj56X934vNVFM5BNh/JeVe3zfKc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZRPuaGj3hRunIYKQCwfImy6ecu+Iq1Zsfil5Uhl+8k9+2G1d28DP96I1N1ZOcYx9/2Mra5zKf74Jb0/ZIMIW5gZaNGYhXnX1PptCau+MKPfaFvRb6/6SW3xOdCz9MmO41jwKNkmaIQg5Sqj1c5MiPgUc5SPKyL+od91TYtnQi7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sOBgUEq7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bX/2zBYS; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A/Body/F"
-Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-8670fd79990so2304850241.3
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 09:19:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742314773; x=1742919573; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jNFECFyakBF3t+6bphp7324j4i2sDWX7RtHvPIp0fkY=;
-        b=A/Body/FJfRn01m/faaknddCdpDPQJcGYhd6TJuW3qoqw3AduuBKlhpXcEQyhGjSHW
-         fKf/mrarZaMWEhYvONFZawhIdBOtnS9aEr5rbGyy524UezLunpJZ8TbZqP/vsZ1YeF6c
-         8sGPMqzzvcFsaBCkjNc9p/+EFdEmkbev/MW+Uag1d/TGIV+JtoSw5kt3CI0FhkQ8LSEh
-         cL4J3Y/uGK+l3FASO31lCk1+GUSFXK2SXUFv6sPx36tVqvzraLQZmwJS6MyCsKkqtmPA
-         5CUy2V7nANJmr2yFFRQ9MwyvLPcwVJdp5A9hdPXm3SUqb5JaQ3/zfZBMm2xtTg1FWvkx
-         p1mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742314773; x=1742919573;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jNFECFyakBF3t+6bphp7324j4i2sDWX7RtHvPIp0fkY=;
-        b=OQzmZV6/jy20APpH9KXOvRohar9jigeZLYNNc6xDd6yT6AtTJZi7nDE1uO/Frn9Iwe
-         Mm6SlnUGuuPT+3vqWm7wsbLA/4pz5hzxRb6NyBo4me3/b3RNBmwXBLE+LBQVCfLycsnX
-         jtRicVeRl1jMGG1nlrm9gsSxDcimZ+xh2WMefNPB6K22PBCjxhX/SEFYiNW71YWNcnaf
-         8bsu2jtIvHsVyGXmP4p5GXIwDGKruk4hK3UsHEjPmyDds84U5X0j2iqqA2LzND0tMRX7
-         WkYi2FWieEhZ2xHXHlHKSJQht5FytRtkKBhCpqM3ArLz5LIkXB4FsC+EDF0ycLtJs1W4
-         MSAg==
-X-Forwarded-Encrypted: i=1; AJvYcCUkQPThpHi5DfiL+rPUQXDLAwLemc9rXdMzQ/mYkBNVJaNOBgIF49YN9aSvqxu+EwGLvxk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwTXN9mwNEr0UxPkXxlESCRfbzVy5ZszV2GASmfRGjU8ydi5T3j
-	chOAegGp4L9HyUnpI/OOCJqd8+I1TeUfQKIFyQEiyoBDRrPVmKzBlPuLnEKN6+34Ny7Qee4e48r
-	8hfKMb6i2IAhLF0JPeI6YWjburclYoRp7
-X-Gm-Gg: ASbGncval2+ay/s4SExUeho22xJwRhONMX7GXNYzpJ3EqR0ILbNU0ygZGAQylzwJVNP
-	AiPAxD6RfM4C0xlBDKm4xH3CW6ABWTXK/UdVX4L0L29urnuydym3BbaODlkSyg4w5cacJR5rfNK
-	9O0E7T4zwFwKrfD5mTmY8vLUwImRTinAFTiOO02w==
-X-Google-Smtp-Source: AGHT+IFmUkho/Q5+RRxJp77wAgAll7ZHv9oMUOI+oGx4x2UOOm54ndixO44gHfmnR9K4WLLyoOn7h8Y+TNvlswdynvI=
-X-Received: by 2002:a05:6102:1797:b0:4c4:e018:326f with SMTP id
- ada2fe7eead31-4c4e0183678mr1647672137.10.1742314772576; Tue, 18 Mar 2025
- 09:19:32 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 18 Mar 2025 16:19:31 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqmsdi49h8.fsf_-_@gitster.g>
-References: <xmqqv7sbfra0.fsf@gitster.g> <20250314184130.GA578421@coredump.intra.peff.net>
- <xmqqy0x7cg9h.fsf@gitster.g> <xmqqmsdi49h8.fsf_-_@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sOBgUEq7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bX/2zBYS"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 93CB01140175;
+	Tue, 18 Mar 2025 12:30:16 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 18 Mar 2025 12:30:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1742315416; x=1742401816; bh=EvpGHnOlar
+	W7bAEFPB9rDJ5A1U1kn1qoHCHTrSc1wOw=; b=sOBgUEq7TV11ByjfOd5ubF0oz8
+	HDR6E7vVTzCiZMyMogjlekpOaq2YldXyPqJ2GkK7LpZgbG0qwqlgg57FCviqvHAq
+	4vmj+zJ4tn35SlLwZyb8x2eksTgicfAuLE+hDRtyWzM6qb9Lf0x0lsDxrOqMlOjA
+	pp59dLooQK/Bek3Q14CbtvhCBa1NuylyLG54EzBCt8ce2jHZSCqF+Md/50mb6VAs
+	sgfI3sA9OqZ+X1uvl/XI+hoq+7Bb5scGDIYHb0dOuOYHIIhjnFou4bl1sCUEy5Wh
+	ThGlBTEQXFWw/opamO9z9Jq4lMAx8mDYAlHdvfuTfc1MeQtCUVnvItcakiwg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1742315416; x=1742401816; bh=EvpGHnOlarW7bAEFPB9rDJ5A1U1kn1qoHCH
+	TrSc1wOw=; b=bX/2zBYSIjFgIZ6ngr3SlWmMhYArpZ8o3s2NzD1ETOqOVsqzetl
+	yOzEwohHmzcuuxUFRCLMx8OFDoQyyLHegUyrNRvX27NjbHa9zE1eNzMv50J8K0Ou
+	ttmUo3UBmrqK+LGFPLmNsDYonMLh73hjSgGVWPsjTm5YHXOAW24pxUN8Kb0hR17n
+	Q2FUDf4AjLMa3j8WjrslwjlKt/ySe9l+WtO69rvpRK3ax6LZCmYK+Syvh1+v7V11
+	9zjWR7xl8vK6khPC4Sw8k5seWqiJ+BJkLkPDb+v42FEOT1W6hG+lxabiBHbpNidY
+	Zp0t368xUD2mqAUGMUMCCrD8qDqA4ZHKHJg==
+X-ME-Sender: <xms:mJ_ZZw7cdiKIK8IQSRTVOv7GIz9MNjT6otlILBDDCZ7Bvb_t6oTsJQ>
+    <xme:mJ_ZZx5iLr87kgLK_XsBkyePKfhBayu_v5rSGbMwJiM_NIsrV7BAKh4gdMjneTi8O
+    q5zDjXhCoCxzqEjrQ>
+X-ME-Received: <xmr:mJ_ZZ_cS74G8FzpdpBcTj5l-e5K2QeH7-mjt5pYu2qIk85NjkFw1OkyI9twu2jcZ4tVDBeyvY2XihVuhbQ8jMJqSCFavJJcmc3EosOA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugedvledvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
+    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:mJ_ZZ1JpbBDbZgN4_kL9UqaWMfOXiPQZN8qVrciARqoFtQnXDpxdZQ>
+    <xmx:mJ_ZZ0JIpNTnNB0X_xAD1nEaRHlYE6czKB6FTauvLcdufxIoQLEE3A>
+    <xmx:mJ_ZZ2ysnHwnxYl7NpRHmFstBOa0sa0hWvi8vNymk6_6-qjokgKcKQ>
+    <xmx:mJ_ZZ4IDzN_nCaQbgeICbGrNpAmrJe1Z7NJsW80iu2CEpvhrX28xig>
+    <xmx:mJ_ZZ-g52i0stn9dw-8ut0oUAAYGhGcawqTiklF9DC5vSFznthmS7ykp>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Mar 2025 12:30:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [PATCH 5/5] repack: begin combining cruft packs with
+ `--combine-cruft-below-size`
+In-Reply-To: <7f120c35e95dcf41282c87dc2d1b2640ecdc5d84.1742252411.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Mon, 17 Mar 2025 19:00:28 -0400")
+References: <cover.1742252411.git.me@ttaylorr.com>
+	<7f120c35e95dcf41282c87dc2d1b2640ecdc5d84.1742252411.git.me@ttaylorr.com>
+Date: Tue, 18 Mar 2025 09:30:14 -0700
+Message-ID: <xmqqh63q47zd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 18 Mar 2025 16:19:31 +0000
-X-Gm-Features: AQ5f1JpAzHGmRS-LNgzCUWC-W2AmVvtyg--B7dUFHq6b8bivHu7Vg5oM2C3XseE
-Message-ID: <CAOLa=ZRODjYfDXQ8m+hDosV7RBGDWeehzSvsR-+-HCmbS+tAcQ@mail.gmail.com>
-Subject: Re: [PATCH] install meson for Documentation job
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
-Content-Type: multipart/mixed; boundary="0000000000001b5c430630a0458d"
+Content-Type: text/plain
 
---0000000000001b5c430630a0458d
-Content-Type: text/plain; charset="UTF-8"
+Taylor Blau <me@ttaylorr.com> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
+> @@ -81,6 +81,14 @@ to the new separate pack will be written.
+>  	`--max-pack-size` (if any) by default. See the documentation for
+>  	`--max-pack-size` for more details.
+>  
+> +--combine-cruft-below-size=<n>::
+> +	When generating cruft packs without pruning, only repack
+> +	existing cruft packs whose size is strictly less than `<n>`.
+> +	Cruft packs whose size is greater than or equal to `<n>` are
+> +	left as-is and not repacked. Useful when you want to avoid
+> +	repacking large cruft pack(s) in repositories that have many
+> +	and/or large unreachable objects.
+> +
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Jeff King <peff@peff.net> writes:
->>
->>> On Fri, Mar 14, 2025 at 10:36:39AM -0700, Junio C Hamano wrote:
->>>
->>>> * ps/ci-meson-check-build-docs (2025-03-12) 1 commit
->>>>  - ci: perform build and smoke tests for Meson docs
->>>>
->>>>  CI update.
->>>>
->>>>  Will merge to 'next'.
->>>>  source: <20250312-b4-pks-ci-meson-docs-v1-1-5e7cf7ac959a@pks.im>
->>>
->>> I didn't dig into it, but I'd imagine this topic is the source of CI
->>> failures on the "documentation" job like this:
->>>
->>>   2025-03-14T17:50:13.8749066Z + meson setup build-asciidoc -Ddocs=html,man -Ddocs_backend=asciidoc
->>>   2025-03-14T17:50:13.8752287Z ci/test-documentation.sh: line 50: meson: command not found
->>>   2025-03-14T17:50:13.8769502Z ##[error]Process completed with exit code 127.
->>>
->>> that I'm seeing in jch (and looks like you have a similar one in the
->>> latest build of 'seen')
->>>
->>> -Peff
->>
->> Somebody more clueful than me about how the CI dependency set-up is
->> supposed to happen should rewrite the proposed log message
->> altogether.  The install-dependencies script pretends as if two
->> case..esac blocks are orthogonal (the former switches on $distro,
->> the latter that we see in the patch switches on $jobname), but I
->> somehow do not get the feeling that we can move Documentation job
->> from ubuntu-latest to alpine-latest for example.
->
-> Ping?  Anybody wants to help explain how this part of CI works to
-> the commit log message?
->
-
-Weird. From the looks of
-https://github.com/git/git/actions/runs/13867157977/job/38808418127, it
-seems like the '$distro' variable in 'ci/install-dependencies.sh' is not
-being correctly initialized. We can see this in the logs of the CI:
-
-  CI setup via install-dependencies.sh
-    + set -e
-    + export TERM=dumb
-    + export MAKEFLAGS=
-    + test true = true
-    + CI_TYPE=github-actions
-    + CI_BRANCH=refs/heads/seen
-    + CI_COMMIT=d5389e37e21d864f40f4167280db799ffe8983c2
-    + echo Linux
-    + tr A-Z a-z
-    + CI_OS_NAME=linux
-    + test macos != linux
-    + CI_REPO_SLUG=git/git
-    + CI_JOB_ID=13867157977
-    + CC=gcc
-    + DONT_SKIP_TAGS=t
-    + cache_dir=/home/runner/none
-    + GIT_TEST_OPTS=--github-workflow-markup
-    + JOBS=10
-    + echo
-    + tr : -
-    + distro=
-    ...
-
-So in 'ci/lib.sh' we set `distro=$(echo "$CI_JOB_IMAGE" | tr : -)`. So
-this means the distro is based on '$CI_JOB_IMAGE' env variable.
-
-From '.github/workflows/main.yml' we can see that this is not set for
-the 'Documentation' job. I'm not sure why this the way it is though. I
-didn't look into the history.
-
-An untested fix, which should fix (is it a bug?) the root cause:
-
--- 8< --
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 9959b61ece..2679a32508 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -473,6 +473,7 @@ jobs:
-       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent
-== 'yes' }}
-     env:
-       jobname: Documentation
-+      CI_JOB_IMAGE: ubuntu-latest
-     runs-on: ubuntu-latest
-     steps:
-     - uses: actions/checkout@v4
+Shared with existing entries in this file, but let's strive to make
+sure we explicitly mention units.  --max-cruft-size=<n> is explained
+to cramp below '<n>' bytes, which is great, --max-pack-size=<n> says
+it accepts k/m/g suffixes and its minimum size is 1 MiB, which is
+explicit enough hint that this is counted in bytes.  This new entry
+should hint that this is also counted in bytes.
 
 
->> In any case, the change seems to "fix" the issue for me
->>
->> (bad)
->> https://github.com/git/git/actions/runs/13867157977/job/38808418127
->>
->> (good)
->> https://github.com/git/git/actions/runs/13867208725/job/38808554478
->>
->>
->> Thanks.
->>
->> --- >8 ---
->> Subject: [PATCH] install meson for Documentation job
->>
->> Why should we even do this?  Doesn't it run on ubuntu-latest which
->> has its own apt--get install for meson in the $distro specific
->> set-up before this part?
->>
->>
->> ---
->>  ci/install-dependencies.sh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
->> index 0df74610d0..fdeeaabaca 100755
->> --- a/ci/install-dependencies.sh
->> +++ b/ci/install-dependencies.sh
->> @@ -123,7 +123,7 @@ sparse)
->>  	;;
->>  Documentation)
->>  	sudo apt-get -q update
->> -	sudo apt-get -q -y install asciidoc xmlto docbook-xsl-ns make
->> +	sudo apt-get -q -y install asciidoc xmlto docbook-xsl-ns make meson
->>
->>  	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
->>  	sudo gem install --version 1.5.8 asciidoctor
-
---0000000000001b5c430630a0458d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: d86835f413846b13_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mWm5SSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN1hpREFDQ2dCVlQyUFVhdFFIS2ltcnVsME0yMlRMcgpac2tIK0kwY0ZT
-Z0Z4YWNBcG5jZkhiNmlaWE1uaGlsUGRhNWZRZzNQM1FkdXlwa0RmVG5Ib0N1MVREcXRheDZSCkVj
-cXVtUmZPcDRkNzBNQWw4MVJtVWFTQU8zT3dXWG9kU3RhY2ZiZzBMVmVuaFJJaUt4V1g0OUpVOGFZ
-eVlIdUYKVVJRRWs0WndpelBVSzBYeElDNzFUcW9sTnFzSDRRayt3YUtIWFNDWEtNM1ljNit5VDZD
-eW85ZFFHT21ySTNiVQozT3NlSFR3RUIvV2RsMzlqUm5uR3l3THQwRjhxVFhRbmJDMk1TVWNVemsy
-ckFVLzNXa0tLajBNOFo5ZW1JK2pEClg3TDlZb1NFYkdhMXMwaWQzaU1Fbm1YM0tlSUlrTy9IVmJu
-Y0VibGtIcmZGYWQrd1pSTzBGVEc5UU5QQXI4RXQKbytoMm9RYUpZenRHSjNWLzlLdmZLU0tCa05B
-UlZpeFpGT2dnWUVZKzRrNlZyK3NacjRGWWZLU2kyYnIzZUJrKwpEWE9OMjlKQUVRdEhlRzZEdkx1
-N1lORzQ3OTNXZHhnbEdPYzBPdVNad2wzb2YybDF3eVg2cFV4ekhlVXVaYzhVCkhWV005ZUJva25r
-ckN5VmtSTEljNmpNMi9BVjhmeTk5UWJSVUxlMD0KPWZFN0QKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000001b5c430630a0458d--
