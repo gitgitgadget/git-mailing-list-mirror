@@ -1,41 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE327081F
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 01:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0677320DF4
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 01:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742261250; cv=none; b=GywcC3ddbyZi2G80d7qbGNT40ryuLxLqlmRoh4zclJw0dDNUpQbqou6TjRjAv1Yq+UWl0gNE2nG6pZBqVsT+AAba7PIH3wXPyj1Say8pjWrtsJs0rEc/SbEMytXLB4/QHnyDT8LSUJ0JjID4HASar1iZCAgC+p5ienlH9zoLSNY=
+	t=1742261907; cv=none; b=Sr8dCz0Tsv/CNwYStVyIOLdm81K9iiWxuiGymXWo+t1M/u4xoID+fjOXhp4C1uEMtyIQNIc4dmimw1/o46i65gi5OZdrBnB9hRcowdhjDyhxP4c8aJcAgXw+BCHAJzzWGkWANqHGTvMbGlVFPnB3hlRBqSECiP4mfN5Z+BfREFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742261250; c=relaxed/simple;
-	bh=dvhfEYXMv5mLMxMcZFyKBC8pWzbyv58mOC4mQBHwWZo=;
+	s=arc-20240116; t=1742261907; c=relaxed/simple;
+	bh=rYpVbYe2Tnu9OnTZBEbYirPtZoi/bGGD0bZjsjo+uKo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X6RbruB7axkCz1tFK8KeEhqKg1RcTIjEYSRU83prHiCc85NPq2Jrw3rDnvnY92K5emUf/X6q1xP3bT+KrJhTaGSW1N3NDdYglntCISWG2wngJa29IjZa8a4+QFt5DAW1CUcq3ZsHQBZvRzN+Eshy+HQdRCEWaqhXQPwMrA1NjiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XK06xTjB; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q9uPT9aQBLI4eCWkeJ0vXRYTCPvOuxroKhlZgz3X+ZfiK/f9XH3Mq6C0c+V3B7xLcB0QZEdRkRhf9VWPrM+WUozndjaZzs2mGbYnq2/DAybI9r23K9KCSWxiXLKAvNxaMvCOuoIxFr9e13uRMYad7dyAzSdwj8saR4k2nhnqRBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MmaPWFXB; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XK06xTjB"
-Received: (qmail 26352 invoked by uid 109); 18 Mar 2025 01:27:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=dvhfEYXMv5mLMxMcZFyKBC8pWzbyv58mOC4mQBHwWZo=; b=XK06xTjB0DvVx+nBzRFZ9ADRCr9Pmaq4MjMXoC0rBQ1tmuHoC7iQjK98M2EmI3wcNS6lb9U8Irdk5aglhTh/0XziQDCJCJeIKAsiwRbQ+j0AeMgWWKccWwEsj8Em0uKisUwY0Ebl6S3cRnUCiU3BMgVFpNl4GHUilYcl79XuZ65CMCiXcXpGEQfElerCyJXcaQ9kSFZiy5Dfa6cKgCvN6jtfj18LKPeNUyaw9RyhBO+pTgYwKUKKE97OqTNb57I5OHuRY+Z3eQ35QDAhscWvDGfIF9ayFNtGwpmiaR1Y0EizUKtRbfgjx5hDzc0tKM5wfmxMSCDWOLADwy5UeTosOw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MmaPWFXB"
+Received: (qmail 26427 invoked by uid 109); 18 Mar 2025 01:38:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=rYpVbYe2Tnu9OnTZBEbYirPtZoi/bGGD0bZjsjo+uKo=; b=MmaPWFXBcLXniyvAb3BzcDhghF7AaBVEvLhI6R5Hxn52GkHMVZAERm+yHhKepGcgoz179hPZwlhAcY9MW/MgQ59t5Q7xu5q1FEF/ht70oBGnvtav7G+qGhTCpKWE1j0BrT69oOFRabdKyZ4bwutRFlnIXAtDzaBFAGs8DXyKzedHWshBxadlWJTvkrw/8gfIjMEDsPk1Ft7925plnqm5lsn1BHKZ8wPfrtXSTrzND0NU8Azyj1z/B1B4Qzbrz1yzcytBx+jU2bP8z875DUTj4vadejjVAjHKZcMekFjq5CH0ZkyeDwvThd+dYA/btFYwyHa/DNElrT0XKyq0qryfmA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Mar 2025 01:27:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Mar 2025 01:38:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3165 invoked by uid 111); 18 Mar 2025 01:27:27 -0000
+Received: (qmail 3451 invoked by uid 111); 18 Mar 2025 01:38:24 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Mar 2025 21:27:27 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 Mar 2025 21:38:24 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 17 Mar 2025 21:27:26 -0400
+Date: Mon, 17 Mar 2025 21:38:23 -0400
 From: Jeff King <peff@peff.net>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 02/13] pack-revindex: prepare for incremental MIDX
- bitmaps
-Message-ID: <20250318012726.GB1471939@coredump.intra.peff.net>
+Subject: Re: [PATCH v4 04/13] pack-bitmap.c: teach `bitmap_for_commit()`
+ about incremental MIDXs
+Message-ID: <20250318013823.GC1471939@coredump.intra.peff.net>
 References: <cover.1723755667.git.me@ttaylorr.com>
  <cover.1741983492.git.me@ttaylorr.com>
- <f2a232e556a066c1a5083f02584ddc3637ecfc48.1741983492.git.me@ttaylorr.com>
+ <832fd0e8dc3a37e36b3d59085e448f8de84ce4b4.1741983492.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,47 +44,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <f2a232e556a066c1a5083f02584ddc3637ecfc48.1741983492.git.me@ttaylorr.com>
+In-Reply-To: <832fd0e8dc3a37e36b3d59085e448f8de84ce4b4.1741983492.git.me@ttaylorr.com>
 
-On Fri, Mar 14, 2025 at 04:18:24PM -0400, Taylor Blau wrote:
+On Fri, Mar 14, 2025 at 04:18:31PM -0400, Taylor Blau wrote:
 
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index 6406953d32..c26d85b5db 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -170,6 +170,15 @@ static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
->  	return read_bitmap(index->map, index->map_size, &index->map_pos);
->  }
->  
-> +static uint32_t bitmap_non_extended_bits(struct bitmap_index *index)
-> +{
-> +	if (index->midx) {
-> +		struct multi_pack_index *m = index->midx;
-> +		return m->num_objects + m->num_objects_in_base;
-> +	}
-> +	return index->pack->num_objects;
-> +}
+> The pack-bitmap machinery uses `bitmap_for_commit()` to locate the
+> EWAH-compressed bitmap corresponding to some given commit object.
+> 
+> Teach this function about incremental MIDX bitmaps by teaching it to
+> recur on earlier bitmap layers when it fails to find a given commit in
+> the current layer.
+> 
+> The changes to do so are as follows:
+> 
+>   - Avoid initializing hash_pos at its declaration, since
+>     bitmap_for_commit() is now a recursive function and may receive a
+>     NULL bitmap_index pointer as its first argument.
+> 
+>   - In cases where we would previously return NULL (to indicate that a
+>     lookup failed and the given bitmap_index does not contain an entry
+>     corresponding to the given commit), recursively call the function on
+>     the previous bitmap layer.
 
-I understand why we need to account for the objects in the base to
-offset our total size.
+This makes sense, though it does make me wonder if we could/should store
+a (midx/pack,pos) pair. I.e., a master hash table stored once for the
+whole midx stack. And then you wouldn't need to recurse; it would just
+be a single lookup.
 
-Similar to Patrick's comments on v3, I wondered about why we couldn't
-just modify bitmap_num_objects() here, and why some callers would be
-left with the other.
+Or would that work badly with the lazy nature? You'd need to load all of
+the layers to fill it (rather than doing each incrementally). OTOH, if
+you ask for the bitmap for commit X you're eventually going to have to
+figure out what's in all of the layers as soon as you have a miss and
+have to check them all. And I think the lookup table extension is what's
+supposed to make that cheap-ish.
 
-I guess sometimes we still need to consider a single layer. We can't
-quite just access m->num_objects there, because we still need the midx
-vs pack abstraction layer. I just thought there'd be more discussion
-here, but it looks the same as v3.
-
-I wonder if it is worth renaming bitmap_num_objects() to indicate that
-it is a single layer (and make sure other callers are examined). I
-dunno.
-
-I also suspect from previous forays into bitmap indexing that it will be
-easy to mix up positions in various units (local to the layer vs in the
-global pseudo-pack ordering, for example). In theory we could use types
-to help us with this, but they're kind of weak in C (unless we wrap all
-of the ints in structs). Maybe not worth it.
+I dunno. It has been a long time since I dug into this (and the whole
+khash-of-commits thing is just a hack around the lack of the lookup
+table in the first place, I think?).
 
 -Peff
