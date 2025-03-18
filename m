@@ -1,89 +1,90 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DD3199924
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 19:18:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC2A20322
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 19:34:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742325529; cv=none; b=I9cuR4fut3DirWlIJDkMsZl54FdLskMdd5+7ltdI4JS2hSIzTCsPxsT7C4mULyueXiImlkafhOoQzltNboonoTOYveK/HuVVitHwaGnOcTSJrD2hheJlzifFighBRlvSEbCMEubELtKajiZeKvZYWETg9kYP56tzDJ+QSSolcIY=
+	t=1742326467; cv=none; b=Evr/bCqStEYF6g3b9bry9pL5TnhFrS+PbI1OpbAcExF2cfFQSVU2XLLi8wgZplOJOUN31hdkGf1XKo1V5M5kJlUUxYiZitFzGGgjLaEuwgv9Bus0s8k9vFtDIL34h1ISiP+zD0gjQUyuftgtPKEw0Rj/pxOg180y2inw0Lnjjkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742325529; c=relaxed/simple;
-	bh=tRpcvOAZzzoPnqCnsQLvLvrNI3Up3GfGRVfrA2JPWlA=;
+	s=arc-20240116; t=1742326467; c=relaxed/simple;
+	bh=/BMHNedJE0B1of6oz2s+a+eeRww+MmOwWG78pjin52A=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uKu6m4+M3+5DhQDllUV/PPwF84iqVtmwM2J9KZ04Bjfs1nRnHJ3vxdp/L9S9i6fVT0r5o+C3CsrsRclsF3ZQ+EjvXiNkfi1ZaaDyGIzk3XTFpOk7IHFULrew8JT7wJ/ZmIIoxTSoqg0v3j8slbcjj2S//zawj1YxtHu++RpRdDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=N2TCESnf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5+Zf4xiW; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=dcX30sScPkxidJLpJxc7WVCq5C8wMss7UNNC1rECikGo7IEA9fZDX9p5NFNXom/PAFcdUVsrrNiK9/ew8EGCxFFyQpYZyj1dCViilocz8+rlG11D3I//soTf2FNRb2NLyVvRM/Ndu2ck29DIcp13WvmYuSJo6PTO8KDBq02pV+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eMSuVzDw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=At51YP4z; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="N2TCESnf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5+Zf4xiW"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0EF9311401BA;
-	Tue, 18 Mar 2025 15:18:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eMSuVzDw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="At51YP4z"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id AE29C1382D18;
+	Tue, 18 Mar 2025 15:34:20 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Tue, 18 Mar 2025 15:18:44 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 18 Mar 2025 15:34:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742325524; x=1742411924; bh=9aQcghvL2F
-	wuH/b9jX61fFHEERBS5e11D5SMoU1DjPg=; b=N2TCESnfCGHt/FuCALOmZ9R1g3
-	iFHbrYvBKabplfZoxcYBkgKykEW/ruRjeWSiWFRB9C4sn0NKaZujGksxeOPL42UM
-	lc9gl4uBNjz2dE/vgfCMbwWZvsywlR6ch+sV26IXYqy2BJIjLBADK5AjxrcgwCS/
-	PhC6Cbu7OzNUCPljYMFuhQOxMasdk9mc37XIt+Aozo65acHnJjkruSqy3L5S5ibE
-	QPpYWTF5WXDBmMuBlJL5jAyzYpgByO4w15anjHgKjdhHUwknM+HeAbEyOPN8G+dV
-	CYVBzA0HWRVrABldUfXAN4tTPXTlcbtIJ5jqKdYeliqhvb7hhxr5o61H6Tvw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1742326460;
+	 x=1742412860; bh=0Hb8QGyJT170wP6IG9D8xVCxrycNXL2wy0r0IZ3oAOQ=; b=
+	eMSuVzDw3VPt0HtYpzICyqXamRVTwbTd+Pcjx2rBm7uaCD8/nqkpchvyBb5rbM46
+	txm0l5ZDZ3vlcvDMy/wfzJWWjZA4m/aQd6Buj7EURnlk5NXzUe35+gNYIW/ihhlu
+	BKEEU72a9YZwB/2tDsqy9B+zpk1UTCqqfyj1DFBVeBKt8JbFM7v1YAlrV96AyVV4
+	g8qky2bxmwKml/bnJnS3yAaFK38NYHqa5nruHUgzypBY1vm0OM+Y1YGnJgp90bw0
+	RGvlV773pvgOf5tZNonvIo1Vq2T7fgTo+LDJKyOS7oHJBZzxR/t9u655c6t+b2SM
+	BisTd/OtmHpAubwnu3biaA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742325524; x=1742411924; bh=9aQcghvL2FwuH/b9jX61fFHEERBS5e11D5S
-	MoU1DjPg=; b=5+Zf4xiWgNmcsz/ifqdoKlEOJrz2N1wkX/FaFUEbsxaKaFrQ/D5
-	ujyO0YVvHw5pLcTPnPPXOxfMvnd2u+ewx61DTA35VwanQ0afZK1lhrtS3hEEV4T5
-	rzlj+vZu/aUKhYIgtKVhkbGDmp9xMXEtELILMe95q2U+vCLJ1guQxOqehU2WlOeW
-	2UP/wk9a+WxAB2PAD9wMHUAOwpYjaRLMR7iY4n8Q6dI3tMnElkIpypMKV5bGUOXq
-	59PMioddURV1NE7pMrR3mnbOJr04lrSM5Y+XVamwh1Sg3Vs4xlXT8xswPI1x0cPX
-	D+4Fj7bnJRUv6hBaZ0Q8aGq+Pzk09yrPtZA==
-X-ME-Sender: <xms:E8fZZ6uZSP1-Hw2sV5AQoi49XvABqNR02EtxlIz1Ot894J6UbYZSWw>
-    <xme:E8fZZ_crk01Gj3zJjVhShaiA7gqhnISBdwMkPwdhbCUn4Kf3ZUmYoLY254LZZXfbB
-    s73dXsBbtkJl7p6yg>
-X-ME-Received: <xmr:E8fZZ1z6PfKa8CbFqGyrcJDLMdp2xyP2jVdtbTSrXy175bK3L72svnXywWjLWbYzff5CKre_c1oqR3MGDFKRTrG5UYIPt5Wu9almk1U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeefvdeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742326460; x=
+	1742412860; bh=0Hb8QGyJT170wP6IG9D8xVCxrycNXL2wy0r0IZ3oAOQ=; b=A
+	t51YP4zxO/bX9DK0uhH3E/0VI42HXcCkMSe0E0bsCoMzbtxro9MPYUekVjCQai8I
+	W0NfUKtScyyYFym93rTqXQaObF+J59u1pKVc06kREZVet/M782H7V/Rbl0EfwyFo
+	26+IZEh2tVv8GJCqdjjRBnhcGIMye29akcs4aWlimZ43coliSfyjSCrTJwGR6Sid
+	wn5pPEUK65JLeMkTOsdImhxSvgsfxABpNPRF+0GI4xEliB8+JK4er2N0OmY/Gvfd
+	E4Q/fm6hFRJ1GHXZCH11iVhSTSh6goM3CGsjbqhzaMbrnE5VjNimyS3u+/kp7ENG
+	9XY6WrbGxcsh1WYUQCksA==
+X-ME-Sender: <xms:vMrZZ9z-oTCZXDzdbebyB6rgc4vIGEx5ypWM4pfdprJdB4BecNXuPA>
+    <xme:vMrZZ9RHuUJgcCIrMQJT2fJxnG0WPqOqIv8q1ka3vzWbFLxLtd09d9zza9iSpzopU
+    nGI6sN8wpCC1DOzyw>
+X-ME-Received: <xmr:vMrZZ3VlPOZMnFrAV0fXmyxZ2EHfT-dZYLBp5i3qFbcq1ubcRpOVvcpgCTxaOFkzqQ2hZkdxWOMxt9j5g8y6TZ-W440E-vDMBrlhWC0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeefvdelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehithhoughorh
-    hovhestggrrdhisghmrdgtohhmpdhrtghpthhtohepsggvnhgtvgesfhgvrhguihhnrghn
-    ugihrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:E8fZZ1OtBa0yrSwlqomyqqpgtODYj7ZVpY_WEA2M6lPHI_Ik-ykQIQ>
-    <xmx:E8fZZ68i68OXXGD1XR1DEl76_NdwFfRsXvJVWnQ2ohARnRvnAc9upg>
-    <xmx:E8fZZ9WageiTRF96hnY6uJyWzchz1bPGVZZVH-h4eToR6NizNKubgw>
-    <xmx:E8fZZzfcQ1W_ARi9j3TzYAkl-uesKNuMsGPbN-MEFIsKNEsyxV4KYQ>
-    <xmx:FMfZZ6y_i02QW5Pq3vroDUhDlxG2VKcB3otB8XDnwrA-rUeAVZJTm6uz>
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpefhtedvjeehudehgeelheefieevtdeg
+    leefvdfftdevtdduffeikeeiieejvdelhfenucffohhmrghinhepkhgvrhhnvghlrdhorh
+    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhi
+    thhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmh
+    htphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtgho
+    mhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepshgrmhhprhhihihoghhuihhnsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:vMrZZ_i8nY3uauPZ6L8uD2l4otXpFDzxddyoY7hgTnHQlzyMe4xBEQ>
+    <xmx:vMrZZ_AJ1IQh0qerldhhRHVy3ZF5UjkHTkaEV-FmOmLnbgKd8e5VQw>
+    <xmx:vMrZZ4J3XNlIUgTqVgL0O0IMS1c_juGT302CxWciCsDteWVL3pNyug>
+    <xmx:vMrZZ-A_M_pZbkBCp6PQ_n06sRXgjWjkr6_jKUdAGaHccfbQycNpCw>
+    <xmx:vMrZZxBvFGIJoCO6qOC-n92Pcb6sFtYGOp6Vg7tAsJS_ZqBjkruO60-g>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Mar 2025 15:18:42 -0400 (EDT)
+ 18 Mar 2025 15:34:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  Igor Todorovski
- <itodorov@ca.ibm.com>,  Bence Ferdinandy <bence@ferdinandy.com>
-Subject: Re: [PATCH 0/2] limiting followRemoteHEAD being used
-In-Reply-To: <20250318053905.GA2051217@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 18 Mar 2025 01:39:05 -0400")
-References: <20250309030101.GA2334064@coredump.intra.peff.net>
-	<20250309032016.GH2334191@coredump.intra.peff.net>
-	<xmqq4izxq63y.fsf@gitster.g>
-	<20250317180604.GB704553@coredump.intra.peff.net>
-	<xmqq1puva3cu.fsf@gitster.g>
-	<20250318053905.GA2051217@coredump.intra.peff.net>
-Date: Tue, 18 Mar 2025 12:18:41 -0700
-Message-ID: <xmqqmsdi2lm6.fsf@gitster.g>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Sampriyo Guin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Sampriyo Guin <sampriyoguin@gmail.com>
+Subject: Re: [PATCH] [GSoC Patch] Modernize Test Path Checking: test -(e|f|d)
+In-Reply-To: <CAPig+cQrCdtN4+hyZyPWQuvnoetarbcgkwKU7cD-TpzfzK=jzw@mail.gmail.com>
+	(Eric Sunshine's message of "Tue, 18 Mar 2025 13:39:35 -0400")
+References: <pull.1918.git.git.1742299111861.gitgitgadget@gmail.com>
+	<CAPig+cQrCdtN4+hyZyPWQuvnoetarbcgkwKU7cD-TpzfzK=jzw@mail.gmail.com>
+Date: Tue, 18 Mar 2025 12:34:18 -0700
+Message-ID: <xmqqiko62kw5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,34 +92,68 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> There is one interesting case we haven't discussed. What should:
+> Thanks for submitting this GSoC microproject. See comments below...
 >
->   git fetch origin HEAD
+> On Tue, Mar 18, 2025 at 7:58 AM Sampriyo Guin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> From: rimo <sampriyoguin@gmail.com>
 >
-> do with respect to refs/remotes/origin/HEAD? Right now it does nothing
-> (at least with the v2 protocol). We ask about HEAD, but since we didn't
-> fetch the matching ref, set_head() won't accept it. And after my
-> patches, we would not even try to call set_head() at all (since we are
-> not using the full refspecs).
+> This name should match the Signed-off-by: name. Since the "From:"
+> header is generated from the author information in the commit, you
+> probably need to adjust your "user.name" configuration to fix this.
 >
-> But it's also something I could see somebody doing to try to update
-> refs/remotes/origin/HEAD. I've left it alone for now, since my series
-> does not change the behavior either way. But it might be something we
-> could do on top (though it gets funny, because with the code as it is
-> now, we'd have to ask for all of refs/heads/ to see the pointed-to
-> branch advertised).
+>> test -e changed to test_path_exists
+>> test -f changed to test_path_is_file
+>
+> People reading the patch would like to know why a change is being
+> made, so this is where you should explain the reason (for instance,
+> "the test_path_* functions provide better diagnostics upon failure" or
+> such). As Karthik mentioned[*], read the "Describe your changes well"
+> section in Documentation/SubmittingPatches to learn how to craft a
+> good commit message.
+>
+> [*]: https://lore.kernel.org/git/CAOLa=ZSkMp+H9PZeBZXK47=fx1sH=S54AuPT=oUosm7F7V8MGg@mail.gmail.com/
+>
+>> Signed-off-by: Sampriyo Guin <sampriyoguin@gmail.com>
+>> ---
+>>     , Jialuo She shejialuo@gmail.com , Christian Couder
+>>     christian.couder@gmail.com, Ghanshyam Thakkar shyamthakkar001@gmail.com
+>
+> It appears that GitGitGadget didn't like how this list was formatted.
+> Instead, place each recipient on its own Cc: line.
+>
+>>  t/chainlint/chained-subshell.expect | 2 +-
+>>  t/chainlint/chained-subshell.test   | 2 +-
+>>  t/chainlint/function.expect         | 2 +-
+>>  t/chainlint/function.test           | 2 +-
+>>  4 files changed, 4 insertions(+), 4 deletions(-)
+>
+> Let's not touch any of the "chainlint" files; they are checking
+> validity of a completely separate tool ("chainlint"), and have nothing
+> to do with checking Git itself. Instead, pick one of the t/t???-*.sh
+> files.
 
-With v2 protocol, we have direct knowledge of where their HEAD
-points at (when we ask for it), so we shouldn't even have to know
-about what they have under "refs/heads/".  I do not think it is
-within our contract that we'd somehow make sure that HEAD in a
-remote-tracking hierarchy is not dangling, or something.
+Yeah, these changes to make them use test_path_* are not "fixes" but
+something else.  The first step for a contributor is to understand
+why "test_path_*" are preferred over "test -[def]" and in what
+context, but touching these files shows that such understanding is
+missing, unfortunately.
 
-In any case, I agree that it is sensible to leave it out of these
-changes for now.
+I find the "as specified in Git Microprojects" in the patch
+description the most disturbing,
 
-Thanks.
+    A simple fix as specified in Git Microprojects.
+
+as it may be an indication that some introductory write-up is
+misleading potential students in a wrong direction.  Our mentors may
+need a bit more handholding at this early stage of dipping your toes
+in the water step, perhaps?  Or is it up to the aspiring students to
+do their homework?
+
+
+
