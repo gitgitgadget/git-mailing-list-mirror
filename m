@@ -1,109 +1,94 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A19228373
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 05:41:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481F419F40A
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 06:43:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742276485; cv=none; b=kWiIOrUjR287Jc3A2dvkYsUcjQ/7KKuTjEuwtSqtXAVj7GcXMJUdJjvsJYOo7CvOFHbRiyEtWbLgbhO6jDtHUA+2xgYkZZCPZR3AIUCHgR4lRr3FEvJPpJiRqXd2p/2u8ImUGzx9gwbSILYOdWiReLkNFUjiqxRxMaOuF+Q0/RY=
+	t=1742280240; cv=none; b=HUXZ+TvjGLG4B0cgwYN7MiC43RLLacsqlA01TtNpxCvEDJBCCLJ5mtKarv3EKNS2CuKkdMK/bDx5vP2zj6v+uVOfhr8NymPqLn6aJ18gorrCEZLrtp8IKE/hLRcdqdYqZ7aOS6Mwieo1yfAAiVdw8LWNPPph1TQ7pdongL9tMLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742276485; c=relaxed/simple;
-	bh=uz8TmVVtw9e0oYwUumdUKYNsiGnn3OFYBHHRuPJFc1M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MH9uUQgZvhMcWV3HRWP6EwSHoPgxb4DHhhJjbER2PQz8n0zzPSFl/ytKNsWe1GYDn/RoJcLcvutBekKsaKxzGnKEycPnMrYUDEf/WYy7c63YclVF87mOsLJhuvenatJ+CPzG5g243wEfvN1+fQJ3f45VsPtRlc53xOFXqcrDSrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GMQqBxgQ; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1742280240; c=relaxed/simple;
+	bh=siuzb3n8e72mdGvjqbku8Y68BG66jsb01foOxB7zo8E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=N1se7IF71SkhaP0qL0fpq7e5wMupnM1ZjjXy/Hq2I5HNgOoLyWUkCRfAyRusbuy696WjqCoumH6gEtpR0JFOOFCia/aVkoSF5IZc8mz1CmbBQsMh7G44DQu3BqSLs43zXDK2jlTPeSxq2MYt2uhMwgPBSwS9fpmIFcOu+UXn/0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f0ZuBssb; arc=none smtp.client-ip=209.85.166.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GMQqBxgQ"
-Received: (qmail 28346 invoked by uid 109); 18 Mar 2025 05:41:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=uz8TmVVtw9e0oYwUumdUKYNsiGnn3OFYBHHRuPJFc1M=; b=GMQqBxgQYig68UnnZJ7jVbNlvsF44a2Lo/oC2/cASExE59mC95ts8EhALpLVSoqbQrYAbvHp3vE6pmnGCY6xn40RFbzPsPFWDg6W0AEexwAR9M6vxaikCYz63P0Z+KcsOWpLwkwWOpgWZ7ad1+aF86rT/XNBdEgriGyuVo1ScCSLhgss0brVmI4skJk7yOeq1Slb7MinomvBawgB4u0NhHjExu8ifkGTPF1AINU2hGvL9tkT1KX2Wr/pCkQqJOWXxKdyGvf1dAiwhsBCB+Pn357Ef2Oi3/Nn63aqchXT+aKuSMqNUCI0Fkrd3QozcM66jFmun+vUDHgGMbV/8vj97w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Mar 2025 05:41:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6228 invoked by uid 111); 18 Mar 2025 05:41:22 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Mar 2025 01:41:22 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 18 Mar 2025 01:41:22 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Igor Todorovski <itodorov@ca.ibm.com>,
-	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [PATCH 2/2] fetch: don't ask for remote HEAD if followRemoteHEAD is
- "never"
-Message-ID: <20250318054122.GB2051617@coredump.intra.peff.net>
-References: <20250318053905.GA2051217@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f0ZuBssb"
+Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-85df99da233so89394039f.3
+        for <git@vger.kernel.org>; Mon, 17 Mar 2025 23:43:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742280238; x=1742885038; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BpNG0wsVoRo2FWBtIwtcBoWA7qaqdPY//t3QRJBwJuA=;
+        b=f0ZuBssbk9nlazGBSV0UlOmP76TdhwlQozPJ8wqK8RY/DgRWUkLXZTqt+xkhPkSFpz
+         bYS18Ck/odxO60KMJRtWB6dDxfA9bex7tug8xJQznh98XwYBDSX6cCvt+yXT7tGwni1d
+         zTpHwpL7QFafz7E3khm6T3OEtLhWmsz0368azMD1ddSnxLDNUUx5vR0X7zCyTF9/IllU
+         TrKZqMjQvwhxQmml281cZQFsgHYgVDo2d0XNYR9jycL3QQwFkfXD6N2ztEVy35JvpgNs
+         s0kCkDL0DPXBrUfyXcAekSKzCmv/UkEUi+N+f6BMxSf7nLKmigdcWmgiFKZauIiHMpuJ
+         wx6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742280238; x=1742885038;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BpNG0wsVoRo2FWBtIwtcBoWA7qaqdPY//t3QRJBwJuA=;
+        b=D069oFBx4Cq8n0sCo7/db8PQj+QHassmoGPuY3gBapxkhtcbudzqsiOrJhrPwRa1Uj
+         UotlzMVvUz5YAvR2hblZA3Cj4D/xBpMZqkcAJGfKOgQWkkcLG3gObTkW5OwnDnrbDVdy
+         WNBX/F+L1Y5G2LGcnnGvRvvY7aVgooreMDmmm/aPu1QrcSr5txfekRuxQYm/IT56VkMq
+         uVMUD3SboLSGGiUUriwiaFFWwgJrp5yacA5GIlbAm2pR2mwNQpuflq5eT80XZhIxtJZC
+         KVb6FzHtPzV4M+rE3AmiEcC/BA/VElV8z6rQOZiZR5YOZoljtOgx51SHset8f/4HkV0O
+         JpMQ==
+X-Gm-Message-State: AOJu0YxLk6uQJsQ5PljfNwz46R6hVpSaXUNXhjSbtXVfNEQShgTbEs8K
+	uKe+Fx3ql4K3/oMPPiDB4fDnGW6ZFbk8t43dDC5LSLIpclS1HQ4N+sOHqaj+ojeRPKYuKyueKC4
+	5N+iDxr+YCimYa8DGFUarKBaHJN0=
+X-Gm-Gg: ASbGncupmeB6mDimbsNT1WlnTSJDNsCxNsRwv7/eIL/YY80w/hOldR2fJpJ+ufGWexa
+	gzTWFAAh3xPgU7cTX14ZkExNQI5h6wN7dLdl13NubV5BiBy56HiG6efTjjmxGorPi7HQgTmOC12
+	1e34pwIUUg9WScmg51/IUjgpU3akRcEUPeV5viG+yc1fwYLMg9DmuljqAEagA=
+X-Google-Smtp-Source: AGHT+IH6e6ax+sQl52jN1j7U7Bpleb8XAW3PfhO6e7xVLEbGlsVXoDRlGqsncYzokW+Y5O7J6CuQPqseG3Wd5O6UHBk=
+X-Received: by 2002:a05:6602:3710:b0:85b:577b:37da with SMTP id
+ ca18e2360f4ac-85dc48782e5mr1801466939f.9.1742280238358; Mon, 17 Mar 2025
+ 23:43:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250318053905.GA2051217@coredump.intra.peff.net>
+References: <cover.1723755667.git.me@ttaylorr.com> <cover.1741983492.git.me@ttaylorr.com>
+ <a29f4ee60d519318d36a8d3c812b4bad039b891e.1741983492.git.me@ttaylorr.com>
+In-Reply-To: <a29f4ee60d519318d36a8d3c812b4bad039b891e.1741983492.git.me@ttaylorr.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 17 Mar 2025 23:43:47 -0700
+X-Gm-Features: AQ5f1Jorgbgkmly7KChDenZRMX6iu7Bpr4VpUunY4XA-PTAQRz18mbLFGI-vxRg
+Message-ID: <CABPp-BE3dfXa8xda2M2zMH_Qhf_RPggBpC=tx8qaDpCmbr9hWA@mail.gmail.com>
+Subject: Re: [PATCH v4 11/13] pack-bitmap.c: keep track of each layer's type bitmaps
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
+	Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When we are going to consider updating the refs/remotes/*/HEAD symref,
-we have to ask the remote side where its HEAD points. But if we know
-that the feature is disabled by config, we don't need to bother!
+On Fri, Mar 14, 2025 at 1:18=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> Prepare for reading the type-level bitmaps from previous bitmap layers
+> by maintaining an array for each type, where each element in that type's
+> array corresponds to one layer's bitmap for that type.
+>
+> These fields will be used in a later commit to instantiate the 'struct
+> ewah_or_iterator' for each type.
+>
 
-This saves a little bit of work and network communication for the
-server. And even a little bit of effort on the client, as our local
-set_head() function did a bit of work matching the remote HEAD before
-realizing that we're not going to do anything with it.
+All I spotted was some possible wording fixups...
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I guess we could leave the check inside set_head() in case somebody else
-ever called it without checking the value of follow_remote_head. But
-it's a static function that is called once, so I'd rather not keep the
-dead code around.
+> +        *
+> +        * When either associated either with a non-incremental MIDX, or
+> +        * a single packfile, these arrays each contain a single
+> +        * element.
+> +        */
 
- builtin/fetch.c  | 6 ++----
- t/t5510-fetch.sh | 5 ++++-
- 2 files changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 66f5ae31b6..3658509740 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1643,9 +1643,6 @@ static int set_head(const struct ref *remote_refs, struct remote *remote)
- 		string_list_append(&heads, strip_refshead(ref->name));
- 	}
- 
--	if (follow_remote_head == FOLLOW_REMOTE_NEVER)
--		goto cleanup;
--
- 	if (!heads.nr)
- 		result = 1;
- 	else if (heads.nr > 1)
-@@ -1729,7 +1726,8 @@ static int do_fetch(struct transport *transport,
- 		if (transport->remote->fetch.nr) {
- 			refspec_ref_prefixes(&transport->remote->fetch,
- 					     &transport_ls_refs_options.ref_prefixes);
--			do_set_head = 1;
-+			if (transport->remote->follow_remote_head != FOLLOW_REMOTE_NEVER)
-+				do_set_head = 1;
- 		}
- 		if (branch_has_merge_config(branch) &&
- 		    !strcmp(branch->remote_name, transport->remote->name)) {
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index ad23dd11ef..5f0eb5684e 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -119,7 +119,10 @@ test_expect_success "fetch test followRemoteHEAD never" '
- 		cd two &&
- 		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
- 		git config set remote.origin.followRemoteHEAD "never" &&
--		git fetch &&
-+		GIT_TRACE_PACKET=$PWD/trace.out git fetch &&
-+		# Confirm that we do not even ask for HEAD when we are
-+		# not going to act on it.
-+		test_grep ! "ref-prefix HEAD" trace.out &&
- 		test_must_fail git rev-parse --verify refs/remotes/origin/HEAD
- 	)
- '
--- 
-2.49.0.390.gc9996a6a6c
+Drop the first "either", and the first comma?
