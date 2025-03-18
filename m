@@ -1,71 +1,72 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3D72063FE
-	for <git@vger.kernel.org>; Tue, 18 Mar 2025 22:50:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193F12080D2
+	for <git@vger.kernel.org>; Tue, 18 Mar 2025 22:50:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742338219; cv=none; b=p/xkJ2Ul1MYURMbiaRPpcCFok3SubNqREy1vWhVEt9uN9dk4xEB4vnkYXyzKzrz7XDuo/wV/d7syAMZSO9dZx1YV5U5q/ExpPrK4tLFnl1KP0DUrbtEoZ6kVhBMNEElKhawTz86N1MRQOIlIlwWe4U3leffGsQgNgueO1mRjr+Y=
+	t=1742338222; cv=none; b=DOyo4cDAhe64IU17L9uCKABGTae2VAOJ8bQDJr/kGR3XNaS/ksK99frNK9zETFp0egh3oNKHxkj5WMgvgYbogTbNAuZKjyQRbwxdoQKz7huKQVaQ0ww6DFq/YLedPqtysVlfc5u9eVOkhAOc00I+IGvIji8I6AIcXg1q98nPN20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742338219; c=relaxed/simple;
-	bh=2x7uAul9LTMUT+4mahHD+wDgU35EIRXAZ6eetOgZqt0=;
+	s=arc-20240116; t=1742338222; c=relaxed/simple;
+	bh=lNE5XGZbIz2+zA8cBL8TSJmElQzrN09X/pBXOI/GG0w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FlOJLyJT3HCI5iY5p+ACNsZMTn11q7K3yrIxjv3WoHEwBPenyrsHsCfBH1ytaFVcm64oAxl4STcykncXNSYuLUvRG6k/vOITsBLRNIcpLcL8/Q8p+rotk6w9jFEId1H/7REDrVuRkmQIKPZo9qR+VWDY9LhhOS0mIbywl9WNSjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=lQXHv1Ru; arc=none smtp.client-ip=209.85.222.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=dUYWoTKTtVuSLRULFrT1kplBnoPEUHyy6DhBnDlAaZ5suQxZ/mcHMzYVRd/vmLHERQCPs6iiwmtBuesJXu/U3NySBY9V/wM9fc/rbztKrPDFGnxPzhNApC7pAa49gxj5Un6SKTzk4zGaUrwQfDxEDrLN/lAjOJCAEm00cWLA3co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ZBK7/MFw; arc=none smtp.client-ip=209.85.160.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="lQXHv1Ru"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7c58974ed57so324315885a.2
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 15:50:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ZBK7/MFw"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-47691d82bfbso49561861cf.0
+        for <git@vger.kernel.org>; Tue, 18 Mar 2025 15:50:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742338215; x=1742943015; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742338220; x=1742943020; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=g5dvccv93SrH/1qLljpuVv2S5Py25wnhrgMoKpDvkbQ=;
-        b=lQXHv1Rua1ExFRwxLrmjtdoTeU1IbDk6QE+Bq3cl9s+0D5eUBj4rw9nesEcSE4oClW
-         6Lhd8C3qi/75N340OaJeFLho0f+bxJu8eKmKq2TlsevfDnIdScXmI+ZyuA0haeKd59O0
-         9TBKj25VkgnyYFD4yuRyV2CrG6IOH5qKiGFN2ek74kVar/Wg4UVg4BuoPWucMxnEmE/T
-         BGuEwnUyroGzX5WTG4KUf9DDT9AXjN87HaCLjlCM0niJAGOmMhWlI61805mSlPXnXBI0
-         +XI9gWN8e5VOJEqsiTYQSUoJFr728LahyO5XP9aZY0+SWqfA00QiXY0DJjw4Qpt27eYN
-         PMKg==
+        bh=o8sfQmFPwSKKwJMcleJdYOo70+FYdCRwGe7dY4FqCx0=;
+        b=ZBK7/MFwZKOo81CiSmSdeqjxlX0Akrmft+Qc5Q86QPutdMgd5a6r91YgSs4/ld7/bW
+         yaR55R7bcDxTZ55I3bPYWmki1q0bhNQRmg4rx2M5HBAPu2KrO6dYZw4u0jTLVjTB4Kpt
+         L3/F0A+jY6NpgWFo8KzPRXvaW7851MtB7eo3XI77NrujwMn6G+JZFgzxJyHq6DqOGwTO
+         ZmPyJ/6JJozNBVotuRmtQyhXvVnkB80EnTraL51eE5n7nVA+aDVF5PWreJ42KRNvb6dC
+         Tqwzdqlthx9Z6dxW09ZPK6zzYzCfShTEgA0UAnf/+r7uCrv5dig99fgTbBtJAmZy741I
+         VX5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742338215; x=1742943015;
+        d=1e100.net; s=20230601; t=1742338220; x=1742943020;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=g5dvccv93SrH/1qLljpuVv2S5Py25wnhrgMoKpDvkbQ=;
-        b=vnS38aKBhKw6y3B7lthqNea9wVZFYVEhDJQe5CJFMl+dGm806vAl10eE+9Es7g/K8q
-         Zo/vXUcmy8hBf0T2zT3In+Cjh5fPTIPpUi5MhXoLRbHXMs1Riz2HxRKqglX51D0+8ZJk
-         vQxq/fNXgjFxA5ibIYtSxslRdfhan/wcjTMAs+7VnwPlboC2QWqtP+/VWItDU2vqN/aC
-         dHhqcEKDvPm+t2uqaBYVxni2YZxkMmxApCthdWcMuqaJGGNase3vzXm98Pv+UBsoKW6s
-         WR/x/cXhwx3lYqoIF8FHd6op8OF1Pc3IplKw7qg5ydZgTDK89SZA5p4fmB3YvnqQTvWE
-         SF1w==
-X-Gm-Message-State: AOJu0YxaVMrvGWC9HKd5V8madr4zGIVWF2AtCmW5qCycCi4xdLYAmJyk
-	1gpGujYNeMSYvSkYKyhBjOGZ16emP23dEf9u2WX5ElImWr7g9Oaax00ZjS9zxKam+NHHig3Z9K2
-	K4+I=
-X-Gm-Gg: ASbGncvXJ+kACPMoAfUNXReYUX8zHdr3q481yP61tQLhV1sAVsYRKub2JA+wbnOSrN5
-	dE7Epw6hB0YOzixWtovvC7kOYtZ/k6TB0s4Lm2NLSxmKn1SsVNbtX2IbydYmDJLdgmwL5VhLmax
-	iUpOFW80u+VtBW8BHOm7jlAM9yMcbS4yOOWIvV3bBGqOMXqgfXcni6g5F/duohsA/5Al1NlQ4Zy
-	QmhFhiPoARh8o3w2tmooX6YY9Ylh63f2/ONHp79LKmgRAPmyYW5ksyhLr5bGcvP/qqVxggRE3vM
-	6/ar0ShQms2bx0OfCn7wjICK9xmduOpoOqJwenqXhEPUzb12vFsG87hDw9BCSIEqVHfQcesrZmq
-	ygT4y2JByFAyG6MqJMbZR9vxa5dk=
-X-Google-Smtp-Source: AGHT+IGN6OzhTWlaqgtEfcg5iSZHSevjeRKf1YZHcrrTI9O1kSHKouy6STHYJWuaqTX2Gl0EQvVtTg==
-X-Received: by 2002:a05:622a:4d4f:b0:476:9548:4734 with SMTP id d75a77b69052e-4770829158emr11664391cf.6.1742338215552;
-        Tue, 18 Mar 2025 15:50:15 -0700 (PDT)
+        bh=o8sfQmFPwSKKwJMcleJdYOo70+FYdCRwGe7dY4FqCx0=;
+        b=qJmnCHr6DICARug8Vuz3GxjLuTCmdgM3i9jw2zHJR5DOHnd8ZOo+26e+/cata0nbg6
+         sqw2LUvGYRaufJ9/RnCi5sI3OYASnaCLPCxbM2++sm9Wv2gU6YCTQSb+e1755F3G5u2r
+         dc62hhYaOcDmI5K5fR6Zw/UM1C7o4L8PSGFcSOlJvIAW/1Tjj/m5uyo3fFlMW/bZYv2E
+         1iMmvBmQVBpH5WyjztfeUM88SeYXQUjQseRYfYbfu+bx+G6Ns/DkeuTgFj7T0MXTH359
+         wdeEAVrR93T5fJZcPCQd6Uu2sFfgx6br6pPCy55d+8FbGVUMqQNufu13vBMfkUD28bIP
+         l9Qg==
+X-Gm-Message-State: AOJu0YxGWiWI1852LwhH6He/gL2fGcrxdUXwHBQA3rnbAjYaX5LlDRCw
+	rB46UYZUlskCYnH/SYoEAkaHfB5Fpd8i6bk4C73ARJZ64dOnkFAHOOF7J6x0nw0HyEfoghyKNal
+	tQ6Q=
+X-Gm-Gg: ASbGncvaD2Dx4c1Z8uA9UnhCW7RdCDt1RDMQET2mZRzgcR5Bosm9/3PrZzdzmGgesAs
+	+/KiQTR1i2sMWktSc6gFnWKXzqKc3ZWb/R8BIale27T6D+QAT2FWFO234vUT43M5toGmqagKMbd
+	+2f26bJ6r+Qtq+VKnzv6Av6a6iTOuqYwSMujh9d9wddYFmzplYfoMpIJd/KWWPOg5+IUHy5RvBB
+	z1RfZw5CgdPTNqFmKXy4/DH3v1m5z91a/nzHqaVW6sOiEDiXouh39loDueWM3j0p4bqMjwdyr05
+	/xNoteO92dN/O9jTcPY0+Mb1LQjTxgXLZuW4QEQsMe4LiSQjcAsvjNkZ6sIV9UfMXoKWmCbHSs2
+	D66nMYQpAiXj5nBjf
+X-Google-Smtp-Source: AGHT+IGGaFjZr8xA/dO8Cj7IWeIhFgt0mItukrxf43044U3sH3FmKsfFTXRPq9nhtFofusvnNaYABA==
+X-Received: by 2002:a05:622a:1e95:b0:476:af21:9d4b with SMTP id d75a77b69052e-4770841faedmr13371811cf.37.1742338219810;
+        Tue, 18 Mar 2025 15:50:19 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-476bb611dbdsm72413691cf.4.2025.03.18.15.50.14
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-476bb824a8csm72222271cf.65.2025.03.18.15.50.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Mar 2025 15:50:15 -0700 (PDT)
-Date: Tue, 18 Mar 2025 18:50:13 -0400
+        Tue, 18 Mar 2025 15:50:19 -0700 (PDT)
+Date: Tue, 18 Mar 2025 18:50:18 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Igor Todorovski <itodorov@ca.ibm.com>,
 	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [PATCH v2 0/4] refspec: treat 'fetch' as a Boolean value
-Message-ID: <cover.1742338207.git.me@ttaylorr.com>
+Subject: [PATCH v2 1/4] refspec: treat 'fetch' as a Boolean value
+Message-ID: <04e1ab8209681f9090ff880fb4e0b452ff0d747a.1742338207.git.me@ttaylorr.com>
 References: <xmqq5xkdrrhs.fsf@gitster.g>
+ <cover.1742338207.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,67 +75,136 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq5xkdrrhs.fsf@gitster.g>
+In-Reply-To: <cover.1742338207.git.me@ttaylorr.com>
 
-Here's a small reroll that cleans up some wording in the first patch,
-and drops the accidental inclusion of a stray 'git-diff-pairs' binary
-that was sitting in my working tree at the time of writing the initial
-commit.
+Since 6d4c057859 (refspec: introduce struct refspec, 2018-05-16), we
+have macros called REFSPEC_FETCH and REFSPEC_PUSH. This confusingly
+suggests that we might introduce other modes in the future, which, while
+possible, is highly unlikely.
 
-Otherwise the series is unchanged, but a range-diff is attached
-nonetheless. Thanks for reviewing :-).
+But these values are treated as a Boolean, and stored in a struct field
+called 'fetch'. So the following:
 
-Taylor Blau (4):
-  refspec: treat 'fetch' as a Boolean value
-  refspec: replace `refspec_init()` with fetch/push variants
-  refspec: remove refspec_item_init_or_die()
-  refspec: replace `refspec_item_init()` with fetch/push variants
+    if (refspec->fetch == REFSPEC_FETCH) { ... }
 
- builtin/fetch.c    |  2 +-
- builtin/pull.c     |  3 ++-
- refspec.c          | 38 +++++++++++++++++++++++++++-----------
- refspec.h          | 18 +++++++-----------
- remote.c           |  4 ++--
- transport-helper.c |  2 +-
- 6 files changed, 40 insertions(+), 27 deletions(-)
+, and
 
-Range-diff against v1:
-1:  7e662acb5a ! 1:  04e1ab8209 refspec: treat 'fetch' as a Boolean value
-    @@ Commit message
-         refspec: treat 'fetch' as a Boolean value
-     
-         Since 6d4c057859 (refspec: introduce struct refspec, 2018-05-16), we
-    -    have constants called REFSPEC_FETCH and REFSPEC_PUSH. This misleadingly
-    -    suggests that we might introduce other modes in the future.
-    +    have macros called REFSPEC_FETCH and REFSPEC_PUSH. This confusingly
-    +    suggests that we might introduce other modes in the future, which, while
-    +    possible, is highly unlikely.
-     
-         But these values are treated as a Boolean, and stored in a struct field
-         called 'fetch'. So the following:
-    @@ Commit message
-             if (refspec->fetch) { ... }
-     
-         are equivalent. Let's avoid renaming the Boolean values "true" and
-    -    "false" here and remove the two REFSPEC_ constants mentioned above.
-    +    "false" here and remove the two REFSPEC_ macros mentioned above.
-     
-         Since this value is truly a Boolean and will only ever take on a value
-         of 0 or 1, we can declare it as a single bit unsigned field. In
-    @@ builtin/pull.c: static const char *get_tracking_branch(const char *remote, const
-      	if (!*spec_src || !strcmp(spec_src, "HEAD"))
-      		spec_src = "HEAD";
-     
-    - ## git-diff-pairs (new) ##
-    - Binary files /dev/null and git-diff-pairs differ
-    -
-      ## refspec.c ##
-     @@ refspec.c: void refspec_clear(struct refspec *rs)
-      int valid_fetch_refspec(const char *fetch_refspec_str)
-2:  fd2354dade = 2:  c3021b82ce refspec: replace `refspec_init()` with fetch/push variants
-3:  49b470de61 = 3:  88f6a91c46 refspec: remove refspec_item_init_or_die()
-4:  95783265fd = 4:  f0c323988f refspec: replace `refspec_item_init()` with fetch/push variants
+    if (refspec->fetch) { ... }
 
-base-commit: c702dd48567cfebca3d4a06b691de97da3f8dc4a
+are equivalent. Let's avoid renaming the Boolean values "true" and
+"false" here and remove the two REFSPEC_ macros mentioned above.
+
+Since this value is truly a Boolean and will only ever take on a value
+of 0 or 1, we can declare it as a single bit unsigned field. In
+practice this won't shrink the size of 'struct refspec', but it more
+clearly indicates the intent.
+
+Note that this introduces some awkwardness like:
+
+    refspec_item_init_or_die(&spec, refspec, 1);
+
+, where it's unclear what the final "1" does. This will be addressed in
+the following commits.
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ builtin/pull.c     | 2 +-
+ refspec.c          | 4 ++--
+ refspec.h          | 9 +++------
+ remote.c           | 4 ++--
+ transport-helper.c | 2 +-
+ 5 files changed, 9 insertions(+), 12 deletions(-)
+
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 9c4a00620a..8bbfcce729 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -738,7 +738,7 @@ static const char *get_tracking_branch(const char *remote, const char *refspec)
+ 	const char *spec_src;
+ 	const char *merge_branch;
+ 
+-	refspec_item_init_or_die(&spec, refspec, REFSPEC_FETCH);
++	refspec_item_init_or_die(&spec, refspec, 1);
+ 	spec_src = spec.src;
+ 	if (!*spec_src || !strcmp(spec_src, "HEAD"))
+ 		spec_src = "HEAD";
+diff --git a/refspec.c b/refspec.c
+index c6ad515f04..db5a1c34a5 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -233,7 +233,7 @@ void refspec_clear(struct refspec *rs)
+ int valid_fetch_refspec(const char *fetch_refspec_str)
+ {
+ 	struct refspec_item refspec;
+-	int ret = refspec_item_init(&refspec, fetch_refspec_str, REFSPEC_FETCH);
++	int ret = refspec_item_init(&refspec, fetch_refspec_str, 1);
+ 	refspec_item_clear(&refspec);
+ 	return ret;
+ }
+@@ -249,7 +249,7 @@ void refspec_ref_prefixes(const struct refspec *rs,
+ 		if (item->negative)
+ 			continue;
+ 
+-		if (rs->fetch == REFSPEC_FETCH) {
++		if (rs->fetch) {
+ 			if (item->exact_sha1)
+ 				continue;
+ 			prefix = item->src;
+diff --git a/refspec.h b/refspec.h
+index e2b5cc54ef..155494cd3a 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -32,11 +32,8 @@ struct refspec_item {
+ 
+ struct string_list;
+ 
+-#define REFSPEC_FETCH 1
+-#define REFSPEC_PUSH 0
+-
+-#define REFSPEC_INIT_FETCH { .fetch = REFSPEC_FETCH }
+-#define REFSPEC_INIT_PUSH { .fetch = REFSPEC_PUSH }
++#define REFSPEC_INIT_FETCH { .fetch = 1 }
++#define REFSPEC_INIT_PUSH { .fetch = 0 }
+ 
+ /**
+  * An array of strings can be parsed into a struct refspec using
+@@ -47,7 +44,7 @@ struct refspec {
+ 	int alloc;
+ 	int nr;
+ 
+-	int fetch;
++	unsigned fetch : 1;
+ };
+ 
+ int refspec_item_init(struct refspec_item *item, const char *refspec,
+diff --git a/remote.c b/remote.c
+index e609cf5c56..addd4a9999 100644
+--- a/remote.c
++++ b/remote.c
+@@ -143,8 +143,8 @@ static struct remote *make_remote(struct remote_state *remote_state,
+ 	ret->prune = -1;  /* unspecified */
+ 	ret->prune_tags = -1;  /* unspecified */
+ 	ret->name = xstrndup(name, len);
+-	refspec_init(&ret->push, REFSPEC_PUSH);
+-	refspec_init(&ret->fetch, REFSPEC_FETCH);
++	refspec_init(&ret->push, 0);
++	refspec_init(&ret->fetch, 1);
+ 	string_list_init_dup(&ret->server_options);
+ 
+ 	ALLOC_GROW(remote_state->remotes, remote_state->remotes_nr + 1,
+diff --git a/transport-helper.c b/transport-helper.c
+index d457b42550..43cd760119 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -162,7 +162,7 @@ static struct child_process *get_helper(struct transport *transport)
+ 
+ 	data->helper = helper;
+ 	data->no_disconnect_req = 0;
+-	refspec_init(&data->rs, REFSPEC_FETCH);
++	refspec_init(&data->rs, 1);
+ 
+ 	/*
+ 	 * Open the output as FILE* so strbuf_getline_*() family of
 -- 
 2.49.0.3.gbb7a4a684c.dirty
+
