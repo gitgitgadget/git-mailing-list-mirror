@@ -1,67 +1,67 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BF21991CD
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 07:25:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA021991CD
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 07:25:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742369110; cv=none; b=d1qWUtTnhSBmux5aPmnuu3BHoZXavS8bcKzgX22qS+erevl3OjIg9suJPmHSODhBWvy76B7qlLJvnBhFts2SK7S8SRxj3oT8Zk3KpLizgN8cEpwDKoWJ44wLMJwqbF8QUMiL2hN6Mxs8O+WbBEoQWQp+FgOQkZeXh1PWhfzWcmI=
+	t=1742369116; cv=none; b=PRNLMeF2cdjbX4wTJ1edS+DaCwkKuOiB1ibN55B0zLfRfkjSnAZZ1aX99HYRAEiwZ2VsFL8hVBK2CeosEglkJ7FcLCnfadIPkR3pDEQcOzLvOz1PuFBjgK4ThoiamuoLtk00Qd4j4FBQmezFKLBgA14Of1/RFKkeIOPBcNKKqs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742369110; c=relaxed/simple;
-	bh=ZN4Fc891vezb4fHhCtGKxW+ds1kQv9SdD+KI7ux0BRk=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JiGw5xCwFCj/6xCcm7ltrpC0vdtGZrqZ29ZcPJ8k3C5X/VkGI9DBkaSt3f4M0nDTTVCrqH6TQMmEd8Xfg1jKJQHE2XeuxxRYE2JKxmhfL+dfLL3ljnCot2KEWhaDT4HOXudb93kT0aCxGWs3r38IdXT4zAtsETHf+ezftZMvAEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TMK09jq3; arc=none smtp.client-ip=209.85.208.181
+	s=arc-20240116; t=1742369116; c=relaxed/simple;
+	bh=q36Nn5XXkvbG0TLNsLQw6og1YVIOTItPwlGSTs20ltQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Hw3+brfFVVNbc2fW3ZmWjWzt3UiB4duHth3LjBAyK9OcX/yUA7UxnJheFVTBHD8KdoaR3RkITfgA8DZFMGznkzHITs9awi3BRfhNRTFbGyyhPJc1hGioUU5ItrF9p9hre8VpRuFKRAFok3oBSve/7yyEaG93wAMVMJ6u5AOOUHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H0aFORCe; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TMK09jq3"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30bf1d48843so61769841fa.2
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 00:25:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H0aFORCe"
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-30bf3f3539dso4278621fa.1
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 00:25:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742369106; x=1742973906; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742369112; x=1742973912; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W9GI9SBf3YemZmUeOSNpHs+f1KiT1YsnXerp+OInJ0E=;
-        b=TMK09jq3eoIvF3jcMAEdWAZwkVbeoG50Tv5x7SlndKCuMtgQP+6C8fbNwviZpij0Ri
-         bH8dRijaPN9XcRYJIOKMD7zSnLXthmt54DZsrXyOBAxKANRFj9mhpNNK0lV/v09U3tqf
-         PsEI5N2fozfBUkOV4xJxde6q9k+RpCTPRLoxqNR/RqoDSwYqkj9SLz6iOuzXFMM+ruus
-         kUQAPfjSyfYuhKUP05LSJOhE07aFUosIMUWw4QGRay4UqeAtteacHEMd7YXNxe3a32mc
-         3qNFiyHQnKsE+W5mJsH1KYUUJPCTMAHMqL+ZBx/1AcBf2AE1bNJqqcnOCG511Pg9avRW
-         h/Iw==
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8Jqef0PRuNiD0Qcz0fE3OpQ99Td1DgpGZlcLaT7BCMw=;
+        b=H0aFORCeMt2Rg+TLp6ae9GJeiRlB0yRbteNVGu2ro70JGAWTH9J3rlBKXjyzoaBk4M
+         lZRzhL7cP92nDrgRDabaE/a19D22yykFPU+h7dtWNIA8CiysIcDR9kLrhJ5/T/AdS+HP
+         gw+N1iHGMWqpb9gAfBfdIADCDKBGe2cgciJKZ4lE2AnFoJ6g9y/RIolfR/+7gFs8hvq6
+         frVdaxfIi8t3BFHXlB6fSa4K8MtwuSHhei2+xbP4KLdCu46xYzk1JVdKaUbV3hqA9tCz
+         YEpAWEjI6TzwJUL1Za06csIYIahTlMqLDXlEiAaAZoX8m4Hu9XBSEKtJp57D4LR/XNpk
+         GSjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742369106; x=1742973906;
+        d=1e100.net; s=20230601; t=1742369112; x=1742973912;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=W9GI9SBf3YemZmUeOSNpHs+f1KiT1YsnXerp+OInJ0E=;
-        b=DVJFUJJV9n8WRwg31aVLuV6+RpwEfN8SDkCg058p44ivrnPKp5uX6Mh5ASuCh/OgLv
-         ZJ2wFAQ/xJVrSMtBMPtYTyeRISaMRXzuajvC35a4h6DIJF115gFjiauVkbJHgS5goYgL
-         7nE8eSh5wLGyLY2Hek8KD2HDVrtrlotBhW20m0XG98hZnUymmti3kbvIx9qe2uBq3UPA
-         hxrVYOZZAE9//CIcuzLEO7RUpdOiNFyspQeRX7YxSEG9rRrXwQFXd70RX6gqn0qcNt8P
-         8dwaAEA0RbUq+ajwEVNwDK0HVRpZ3HKd0+aEGnUtBFaUl9KPgIgppxBu/rT54/c/te2F
-         1M2Q==
-X-Gm-Message-State: AOJu0YwB0D6IDriKYsWSMjcO/7tWxfJ35lx4KvcY7t1GI45M7EUdWtR7
-	7Y1UkBUgi4IdGcW+thxBOMRVBADqZLbJxM/jdD+igQkzZDWuQfy2dHe2vA==
-X-Gm-Gg: ASbGncsbwEdP/eF4GuomK7jurRZzTfIdY8Puy1xJ7j/UVzIM/sC4QKgQHzpelghLqOX
-	XGD1em8sG/HdxzrAHg+XlvIHRfTN5Vn2zZ6eeckOwZTAAytSDQT0z7umEha+6GVKyXX6PF6dnYx
-	rUUOkYBZ00wh+WudDZFPcudFNowaqYfM9R5voUBYKh479njo/UqLctcpCuVh1y8Trq7zEPsy1yY
-	BGuqRVCyZ4M1srxjN1sm0/ezd1SDRznZ9Nq/eh/D/sJ6R0QCgjiwep87lDo8rRL86dnx8huZCTI
-	RjCzTpUUXeZCNcjKo3RlemvQAEVI6f///or79robR4dg8u19d3w0CIddPV0F9Q==
-X-Google-Smtp-Source: AGHT+IFyRtvUr3fGUNcDUM+jPIVCOo0SGY6BzhzlcT1ogwPwlB40n/qC1bd4IXLRe6XTd6Rd/cKlcQ==
-X-Received: by 2002:a05:651c:2313:b0:30b:cd41:89c7 with SMTP id 38308e7fff4ca-30d6a3fa027mr6233861fa.22.1742369105900;
-        Wed, 19 Mar 2025 00:25:05 -0700 (PDT)
+        bh=8Jqef0PRuNiD0Qcz0fE3OpQ99Td1DgpGZlcLaT7BCMw=;
+        b=rL0cNQYH+VAHqPRvRRCbKn+do5M4m9C/Li8hrUzTeaRPTDkcAiOYM/LH/oO5IT6IEs
+         WFC75XFq6OW2zIAJoXqOa0SYxqTU2xX0Sq/QGGbW4vV+FbG8Ar30BYZm7BvcltMIZWGH
+         nYjIKmaM3BvHRrhqTS1TojTyOKoIH3KPq7BWrnHEK7219yn/5uBymgFjGsq3GJWepst5
+         5dKegFCnqbSrkwdhW8xUm6mUhK0LijhscHXefiZIgHflAjZ1dQNXItjfygeeu9SNaCw5
+         iopFtFg181kF465mbm8ra40oNRsgCi/5mY1mw0+gfGeL6vXtt7vhcGkTJ9z/JaXjJ2oL
+         us1Q==
+X-Gm-Message-State: AOJu0YxKUoVNabKlvdy5ghX+SUYNGvC3hIgLUfof2TBgsZCHxwGTlia2
+	CYZIGGhqrrsqR8I6L++4KFmbGi4jI1cD3b20ccV7WzX1vGsdqa0afpSPqA==
+X-Gm-Gg: ASbGnctd+20+9BtWkeHwheXU1LGzzEfJJaqiiXZErNgazEbjH4jETKGSCO2IBW9/CtV
+	Fz7BJm9ELkJ8SieOWvg9Tvzhhe/Mr27U4vTkSFtSUykPZQvRekgz4suDqAaYA1b2ZKN/NVCl4kI
+	PCez5JhCJUSmvnC8MTgeufDoAGp9va9veCbezkzCUxCGA3fvOzzyW3oD7d0EWrkkKY8Zoc7KXAF
+	esVlF83DXrNUvTZoEwcXE4K1XE2XgFDpfby+sd3uBnC3Fh1AWWjNR7GY5hpw7qD3JXQl8s4tNIj
+	BpBvrn+FsLmgTV4pZb1OD+3as9tAJdC5yLPWoVwyYIcm+bCVXxDohiax+4OouA==
+X-Google-Smtp-Source: AGHT+IHDfVv9zJAknPDy3USml4foE9wveQuc5SuKVwDyK1aCb/bdp2Gl7BFRO8fqkxKIPHrY+IMzmg==
+X-Received: by 2002:a2e:9cd2:0:b0:30b:f599:d78f with SMTP id 38308e7fff4ca-30cd95bc544mr33747631fa.7.1742369111791;
+        Wed, 19 Mar 2025 00:25:11 -0700 (PDT)
 Received: from localhost.localdomain ([217.116.228.14])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30c3f209d6esm22089541fa.112.2025.03.19.00.25.04
-        for <git@vger.kernel.org>
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30c3f209d6esm22089541fa.112.2025.03.19.00.25.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Mar 2025 00:25:04 -0700 (PDT)
+        Wed, 19 Mar 2025 00:25:10 -0700 (PDT)
 From: =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To: git@vger.kernel.org
-Subject: [PATCH 1/8] pretty: tighten function signature to not take `void *`
-Date: Wed, 19 Mar 2025 08:23:34 +0100
-Message-ID: <192fc78dd869f28cb6ae91f3a26a05eb6b6a4bbf.1742367347.git.martin.agren@gmail.com>
+Cc: Jeff King <peff@peff.net>
+Subject: [PATCH 2/8] pretty: simplify if-else to reduce code duplication
+Date: Wed, 19 Mar 2025 08:23:35 +0100
+Message-ID: <5f787ddac2d80391feadb8cf6be379fc8e58652f.1742367347.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.49.0.472.ge94155a9ec
 In-Reply-To: <cover.1742367347.git.martin.agren@gmail.com>
 References: <cover.1742367347.git.martin.agren@gmail.com>
@@ -74,30 +74,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-We take a `void *` and immediately cast it. Both callers already have
-this pointer as the right type, so tighten the interface and stop
-casting.
+First we look for "auto,", then we try "always,", then we fall back to
+the default, which is to do exactly the same thing as we do for "auto,".
+The amount of code duplication isn't huge, but still: reading this code
+carefully requires spending at least *some* time on making sure the two
+blocks of code are indeed identical.
+
+Rearrange the checks so that we end with the default case,
+opportunistically consuming the "auto," which may or may not be there.
+
+In the "always," case, we don't actually *do* anything, so if we were
+into golfing, we'd just write the whole thing as a single
+
+  if (!skip_prefix(begin, "always,", &begin)) {
+    ...
+  }
+
+If we ever learn something new besides "always," and "auto," we'd need
+to pull things apart again. Plus we still need somewhere to place the
+comment. Let's focus on code de-duplication rather than golfing for now.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- pretty.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ pretty.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/pretty.c b/pretty.c
-index 0bc8ad8a9a..a4e5fc5c50 100644
+index a4e5fc5c50..6a4264dd01 100644
 --- a/pretty.c
 +++ b/pretty.c
-@@ -1437,9 +1437,8 @@ static void free_decoration_options(const struct decoration_options *opts)
+@@ -1076,13 +1076,11 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
+ 		if (!end)
+ 			return 0;
  
- static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 				const char *placeholder,
--				void *context)
-+				struct format_commit_context *c)
- {
--	struct format_commit_context *c = context;
- 	const struct commit *commit = c->commit;
- 	const char *msg = c->message;
- 	struct commit_list *p;
+-		if (skip_prefix(begin, "auto,", &begin)) {
+-			if (!want_color(c->pretty_ctx->color))
+-				return end - placeholder + 1;
+-		} else if (skip_prefix(begin, "always,", &begin)) {
++		if (skip_prefix(begin, "always,", &begin)) {
+ 			/* nothing to do; we do not respect want_color at all */
+ 		} else {
+ 			/* the default is the same as "auto" */
++			skip_prefix(begin, "auto,", &begin);
+ 			if (!want_color(c->pretty_ctx->color))
+ 				return end - placeholder + 1;
+ 		}
 -- 
 2.49.0.472.ge94155a9ec
 
