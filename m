@@ -1,100 +1,131 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07299253F21
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8237B2505CA
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742376813; cv=none; b=jJ7gqqZsE+wOXDWUtz6wNsGVa8XyxeM7Y0tWycGg5Pe6/VVVMHYd3iMN6GLu9G2sfgwLAVAs1osAXGs48K+CXCImfJF3MEQEy7SA4s8qBqIXMq/Prsgc5SQ6iRWu93IhnLeVDnZcU1bwrvzSBJQPOA5IIU3T4cwlJV64L08PVEA=
+	t=1742377030; cv=none; b=bb+yIeoyJ0WLBxUhPlVqK3u7Yaabf7CBePURs31iUOkYy2yLT9W6RL4n8x6A5omdY2V4+adv7lUWPuaZye45N1eIGIgJ6GZyoSHDIyUT7mG2YwR6aRyKBj/YLpk0msYbLaCmprwpWQgiDRU2IULPJ7RalPEo+l2Z0lEM3hkN0YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742376813; c=relaxed/simple;
-	bh=tzR6v2Dbp3HN2V6okPcq91JBgQq0TI0ycVbXIoK9ih0=;
+	s=arc-20240116; t=1742377030; c=relaxed/simple;
+	bh=KJHl+Ktyh+2QZ0V9Aq7EMw+BJZpGiIaspnlYlygYufg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uP+l96HpRRuPDv9oaXKwJk0Cyq4A8abKIBBy+MGC1/pADrtNc6KQUGRSKXXFB+x7Az5+lXA36jBFTdTVtiuyx8FkSaF3nxqUyf9va9WzYOWvrXLdNfZFx9mI5TshcrDxrpdQRdCvTB66mVKGd6iCutcRXTQVRRiu1p4W6lgdyVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L7Ak4Yv5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LQgVctlf; arc=none smtp.client-ip=202.12.124.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=QCsKmIAV3T3brun1WOT1fVf+pSpHGclyWhCJqHmpsVhHp+/2eEFePCmoacJY//jcVAuEvcU+jYlmKH9oAzF5ObcVRwFa64hAeaacDAETOsK+wsA4JUaSeCxi2p5cjjW30e/RTY9FWNHmcKZ3rvADHpzqFfDIfX7ZIcIYwFqyJec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TD8PaL/w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ctoG7/6e; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L7Ak4Yv5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LQgVctlf"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 02D5C114012B;
-	Wed, 19 Mar 2025 05:33:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TD8PaL/w";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ctoG7/6e"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 89A7011400C6;
+	Wed, 19 Mar 2025 05:37:07 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Wed, 19 Mar 2025 05:33:31 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 19 Mar 2025 05:37:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1742376810; x=1742463210; bh=KPB3pCmOhe
-	eeGm/eefS/rxhpQa+74/j4Nx1ELXsX7V8=; b=L7Ak4Yv5gvj/QvB057RCxEJ1q9
-	QVC4hKBJbtA2mvrFMyd/ToB0nHSDMr0UnaI3ZxuL1QzasP4/BHbWlDGRwg5g6Lvm
-	fPncVePI/Gsz2HbqoCHupf0lavQa4EWFoBXRLHdPFbQiBhSM5y4XT6VKQNYJucGT
-	ZNeLSnmYtB68Ix1beVAWMtaD5tsU/PhoB2PQumV0WAYr/jnYjjUCAz1Gb1GyGo7B
-	0GLQ5wWS8MkWn7BHSYE6+e+pTyaXQOsxUxFhXlxHOtWcyciH0mp60FCO2X73qcKG
-	xVswhT55JJz5PqWlp2uaMepUHnR1d/xP+kIWglSRHQ3zaPdrDHvUjl4VhEAA==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1742377027;
+	 x=1742463427; bh=wloUW2mrMB8xnv5OwjMCxQZCftlDpplVVvInU4vatH8=; b=
+	TD8PaL/wjjF6iZ3svxf4tkDsJkaafFkCQrVGWWI34f+0tS4vjXJkT5u7ey4KZQyO
+	YwokpoN1K+W1ME8L2jGE4aexbliUJBvOt73lwLr/qHZScM9n4AOSH3nrLQtevo3S
+	/eaktX9+udwnE0EaooWRrxUe9d3GaQXTgF5X+07NSpwYHAsebniV/yIPjQOyOILJ
+	AQNTZdctlLWWxhsITLXYWGKqSUdAlv+YHZb4DbIgfpzIwpzobUgZ914XxOxfrz9M
+	GfWIibIyn6U90bBisjzVvWHWVAObOv15u+B3gECcqfPXcJVezon8kX3yG4ripJ38
+	BaVb3dCYC+xsBDxKl0CFNw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742376810; x=1742463210; bh=KPB3pCmOheeeGm/eefS/rxhpQa+74/j4Nx1
-	ELXsX7V8=; b=LQgVctlfREgjfUiRdOhca9hMSTvaDHIJMEvWvNNfNGB7VOJAjn1
-	mFcUtkAm/175FO9VpJPi2fJLWz6eHSzmbYP3mqf0eJlcHabpYiueJSFhgaEMPkK6
-	WyVeCBBLplY0ry4yKGgbSjBFcyxbPuoV+U//t46SMtBixn0BlIjhyxjKpVXhyjWX
-	AUxwwIeWjDfkK0kd/r/DYy+mArEX8NrEeN9Doml4csXYnCdJ0xRETmyD8WUNfcw7
-	go1P8kUcWSc7fNXO1cJY4aEy/2kv0QGDmmFpB2UW1qCeIRK1Kb2naA3CxOBDlbUv
-	ZQvDTxcHFS9GyVPbGRSmS+xxlUr1Qz+wEjQ==
-X-ME-Sender: <xms:ao_aZzAGP2JuoQu28qtdsbDnsUqW2Hsm39FW-fe_ssRkEO9Pd3HFXw>
-    <xme:ao_aZ5jemhBcHqjweeDXz_9Xc4j2qZyxBEVuc2d6k0T16y0sFvOomkkf5V3tQ37qs
-    Y-otqsF3fo72N_uWw>
-X-ME-Received: <xmr:ao_aZ-mubTGB6NCk47g13RehzJkjh7RRBzenliWJ8geO0UPu7Te-henHna3OMT_O11IPQwjOM9v-6TZbM41fEI1p0T9uobLn4L90SlCl8iCEjRO3Rg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeegleekucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742377027; x=
+	1742463427; bh=wloUW2mrMB8xnv5OwjMCxQZCftlDpplVVvInU4vatH8=; b=c
+	toG7/6epDkVCfYo79+IwGlcYRQqQR0awbg2h2rMfedCxLwVNSS024xmURQTm5O4K
+	MsFkX2JQwyaF03OgHNuewp5it5ce+UU+oXWU6ZGbQI4nkzMSegF2jfelTYfnd9Xo
+	At9R46qnZ8Cz2jmSJrQSfWdODt/xuEsGz4Z5Bgzu5YuedzaD3HhF/qLkhFaSBU8I
+	w+CI1y6cQiDHUFfX9tFTgIFVN3Z+mvG8xorYHRwbljURHXREnwfDUNM2283vOvFD
+	IHf5lrUk2zTXyL5XgGHEZp3C7wlijVvZ9d2Q5ejnswep+CRpqlwvaR9J6lhpmlus
+	5g0YkAjRAM9Kx0VncDFzw==
+X-ME-Sender: <xms:Q5DaZ9tRPzrckkrctZzU-7dM1R8LoNiyJ-xaZyIXDafeyw8tmv1iQg>
+    <xme:Q5DaZ2e4WlgUpx90Iv3Hs3tARpSYvRSvJKIWWDa6nz9QEuLZwyBUijX3OT8c078ls
+    P5frTNWSH1VIgRiVA>
+X-ME-Received: <xmr:Q5DaZwxmoWhLsF2Tgtndsuy8nk1F1nunvXxWCJuaiGTsdXnRpgisYbbfvMAj5bLukD3gabDqcUcDoKYj05a3Lhktw3REoEt8eeCP0xv9GgYBUZOV-A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeegleelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphht
-    thhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukh
-X-ME-Proxy: <xmx:ao_aZ1w7iCj8KpRI6xe0VqkLuqDzdnUgXLIlqJyNgUNba7tLNcYA6g>
-    <xmx:ao_aZ4SyaWTWjHhayrvDxbo-OtLrcKf1l4UlF0TAUlq8a09bpdrIVg>
-    <xmx:ao_aZ4Y2-kGrNGdBIqzkvND0vtyVYk0Dk3FSZtVK1lDRpWRqAJhWOQ>
-    <xmx:ao_aZ5Qsq844ZI5iBJ2kpZvMB1zgYZ7FzIXDviXAnVp4YDriOYekYw>
-    <xmx:ao_aZ-emJOrQcv3PSgfK5sT3bXwe1WN7k9e2D4Zc8QBGaW011AbdankZ>
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
+    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
+    thhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Q5DaZ0OnWk4zSFgcnZHjWlgOcIqIrCpPLGEsHynQELNnjAiWyZ6umw>
+    <xmx:Q5DaZ98t51aqrROQjfO4cre2_ogjA-vZCJ1-uAwXNk8cHhdAhdJa7w>
+    <xmx:Q5DaZ0V-H-BQDCA4W8mRCOQCL1vT4VEriFNO5TUZhzDnPfnlaqFYhg>
+    <xmx:Q5DaZ-dSFGmTajj97dY3Svynlq1EDJwzSMBeViUutwsaB06RwsXjMA>
+    <xmx:Q5DaZ5a3cPQWn0poJKSWYhik-VLjXiOOGAIkqRqTG_WCMKDyqu1U6DS7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Mar 2025 05:33:29 -0400 (EDT)
+ 19 Mar 2025 05:37:06 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 65f1d288 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 19 Mar 2025 09:33:28 +0000 (UTC)
-Date: Wed, 19 Mar 2025 10:33:27 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e0769feb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Mar 2025 09:37:05 +0000 (UTC)
+Date: Wed, 19 Mar 2025 10:37:04 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] docs: add BreakingChanges to TECH_DOCS target
-Message-ID: <Z9qPZ_7VVV6L95WE@pks.im>
-References: <pull.1921.git.git.1742308900290.gitgitgadget@gmail.com>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] meson: don't install git-pack-redundant(1) docs with
+ breaking changes
+Message-ID: <Z9qQQAhFk-MNwiom@pks.im>
+References: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
+ <20250312-b4-pks-meson-breaking-changes-v1-3-b89e9a59d228@pks.im>
+ <44a3ad4e-fb50-447f-bb66-f43b5c5ae012@gmail.com>
+ <Z9gqP3ng0a9Zfpqc@pks.im>
+ <d341777a-a6e5-46fe-8004-9fe885321905@gmail.com>
+ <7fee83f7-995b-4c84-9216-caa6803a69d9@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.1921.git.git.1742308900290.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7fee83f7-995b-4c84-9216-caa6803a69d9@gmail.com>
 
-On Tue, Mar 18, 2025 at 02:41:40PM +0000, Phillip Wood via GitGitGadget wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Tue, Mar 18, 2025 at 10:06:51AM +0000, Phillip Wood wrote:
+> On 17/03/2025 14:50, Phillip Wood wrote:
+> > 
+> > Oh so if we have selected breaking_changes then manpages.keys() does not
+> > include "git-pack-redundant.adoc" but that file exists and so we need to
+> > add it to the list of configured man pages. If breaking_changes is
+> > selected then don't we end up adding "git-pack-redundant.adoc" to
+> > configured_manpages twice? Does that matter when we come to do
+> > 
+> > actual_manpages = run_command(shell, '-c', 'ls git*.adoc scalar.adoc',
+> >    check: true,
+> >    env: script_environment,
+> > ).stdout().strip().split('\n')
+> > 
+> > if configured_manpages != actual_manpages
+> >    ...
+> > 
+> > ? Also I'm confused as to how that comparison works without sorting
+> > configured_manpages. Even if manpages.keys() sorts the keys (the
+> > documentation at [1] is silent on that) we add some out-of-order entries
+> > to the end of the list.
 > 
-> When BreakingChanges.txt was added in 57ec9254eb9 (docs: introduce
-> document to announce breaking changes, 2024-06-14) there was no
-> corresponding change to the Makefile to build it. Fix that by adding it
-> to the TECH_DOCS target.
+> I think the answer is that the comparison always fails but as there are no
+> missing or superfluous man pages the body of the if does not error out.
 
-Makes sense, thanks for this improvement!
+Yeah. We indeed may have it multiple times now, but as you noticed it
+ultimately still works. I didn't care too deeply to avoid the
+duplication because in the end this step is only used to verify that we
+have all manpages wired up in Meson.
 
 Patrick
