@@ -1,230 +1,140 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933C72135C3
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:16:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9168324E4A6
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:24:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742375773; cv=none; b=nvimE10Dkn3S3ZRMCsyWnGSCPkUor6FkkAwpArV/v0UBapFx1oDa2q35OQeSnY2G8A4FoM/uWRZy3taVMtofI952vVj1/iMBM7kFkJY6KL9xLw7o0g68wC+TGAwhMVHF7Ek/WxSlOm39LBSi7XX2z/m61TM6iWNGo6sSjWOus/w=
+	t=1742376257; cv=none; b=MdwYp1o/qIrSFVCglQCuaqIcb5Gg4LD0Y3tS+2N6hqPvwugwUOC68CzOoRlyqknC0RllvbIkKJPH1IVVS7flqcgWPWdmJKzqGAg833jg+zB99GL/s3FDaaEI7naFAhuWZCUafVJfWHfTCZO9f1ez/2YyD7oPD/+Ltt2Vvljkxqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742375773; c=relaxed/simple;
-	bh=/QYNcKjTHTCWQy8rY8Q0vnCKb4oGEvvTNk8Fn+TXqtw=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pjoJsnr6kLb0mXf0bc2iK5u0vuMHpwSvtH37eOdGXuUOa/PUAQ1IzsuEXpDS+XJoioD5CbCD06K6JJeyskZkKKe3Ufg6aAaLIaPDNpCRWK9U0xO2YwmBpEd8/Loj5UyPZwwDHMc0vk8YnFkSZwZXGp9QGiWMLf1MLvoK7UgS3ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N/itlQDe; arc=none smtp.client-ip=209.85.221.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742376257; c=relaxed/simple;
+	bh=/LWEBEBe6NtnlOYdDE/N50t6Uu2rse4yLM0l5JL/+kM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=em5u1WR2GESjhnyu7oKHZ0gwi8B/QGS7FDfdc710qlqySt5vbb4fQVA0pTbjuRmZWPkGVBbLUb28i/86l2+lZl0DpB2/zulm769VNejL7siFyaMV550bMF1pGkQLu/xYkdmHa0qvoAB+wyOz9c5pfexQsnUNhZLDHxe3wmkUNqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FAPmboj2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g2anENNm; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N/itlQDe"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-523dc190f95so3215205e0c.1
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 02:16:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742375770; x=1742980570; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TOglMw6pbt/hppclOqC32WEULGpQPbmSKDIeRGbYY1M=;
-        b=N/itlQDecoVYL2jULrQsnQckIUpMt28WB3CrmGKk8UkhprwdpDJm803Q2/XUQ0QG3i
-         dinV335eZ7R04Ha1zztFzHFDJ/r4P1JVOUFdUJGcQsGU1+m/hVY9nDjsnDjxTsH64QKx
-         7SPFnF7jpIScpHZuUP+nQpz+OajrF8YvYGCW9tiYrVBIHHEkKe4VQ3R/KolBu4JDQrUj
-         G5bgVZ0YLq71uiIb8m5nFS4hplXedvV4RzQXqk7RwVX/heD34LH3I8c4zCGHULGOqnhC
-         yijmbO5Zh7fKezxJ/uxO+YLz4C+loXumClh6kKRBKvhff2Aj/1yjRzRT/NWFqtahxQsI
-         Ih0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742375770; x=1742980570;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TOglMw6pbt/hppclOqC32WEULGpQPbmSKDIeRGbYY1M=;
-        b=EjcVhHPEI5pbS5I7oBa4M2odgJ4JQ8s1vLImaLQlqQfZ+wUqzO1Lzt1mam4PMxBDrG
-         5wM+he9Ug2D4dsCAAbEwsmF9XWTlbFj+D76tBo+W4e/nXXILaVd/UUKGojuuMYe5SJ0S
-         FI2e0Y20xQ3MMBmEkmhOHOGjhTg4ZfzhBpTjjxiXCUTjbLmfuh6ZWG132WEgrBZKwsmB
-         GqAXXEUhl6dc0sBR45A7BiodIvnqKuyZUIHI4xJVVD+VeuUKosqpnw8m8XJRs526Baq8
-         91rqejnlTS0rT1pVJTGvuZd3QsWqwb3+VC8Ptqouj8BdKgOpQqtLebEX/Ti5nFa1qt7l
-         HBSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCULlvhkHOTkXyDgo+dldKVzwNqTPLGK8hQlbPMgb9umE9iO4OaKigI1lDXOAr55Xp/Cqeo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwqBjA8B0f2J5z/DCTcTR+u6WIJsL9yE6uLGOpVJuzOR8NflAsF
-	aiOdaCQxorGRXdvCORxrV1cEteewtZQCLIIqKZ4cwOSDd5bQcgHTkyNsnEmtWRsuaVDEeQsaGJl
-	DWSQOp0zQsBl1EptW6/HXOE4wgol9SuQX
-X-Gm-Gg: ASbGncuuDZ1fI3VlSM4PMGTNa55yXBMPIFCfjJCGuQP4M1O0oC7OOIk9lXK8ZcCuBkI
-	XSjMgISRI13DC8cTHVwJWZVpqlog4Yia+OfliQjua/cU6MBhiSPPXEf1e6fN4wdCgwqG41PIlrb
-	5t9vQTVvjby5R8V9vIkardxjLDXfebZj7UyuJwTZmZNgSVjbPoPsG941Xkui4V
-X-Google-Smtp-Source: AGHT+IHa+yRx36/gFtcMvdTnw26z04aj2ZxsQb9H/8plhLrJbEfrdgR1QBX4sIwp9UnDb3/IV/72sowRZbc8hvqldIk=
-X-Received: by 2002:a05:6122:4004:b0:50d:a31c:678c with SMTP id
- 71dfb90a1353d-525890b2accmr1113323e0c.2.1742375770264; Wed, 19 Mar 2025
- 02:16:10 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 19 Mar 2025 02:16:09 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <8734fagwn2.fsf@iotcl.com>
-References: <20250314-493-add-command-to-purge-reflog-entries-v3-0-c24e23a6146d@gmail.com>
- <20250314-493-add-command-to-purge-reflog-entries-v3-2-c24e23a6146d@gmail.com>
- <8734fagwn2.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FAPmboj2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g2anENNm"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6176411400C6;
+	Wed, 19 Mar 2025 05:24:13 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Wed, 19 Mar 2025 05:24:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1742376253; x=1742462653; bh=lcPE89yVSc
+	oKKkVK6PRS8GaSkAtgAQ2RiEYCJx7Hnhs=; b=FAPmboj2b1g4e1tKQQoDa8GmhV
+	ZD8FoxT+c/KndcO0U3N9WpatbxojKnYbpWYT7JyVcNf4okdDLP2kIBJZOYGgqbm0
+	QAqf5JJdzq6aH3EO40zVdMhkqRV32y5YfT+Iut2qIJVW1P+xL+yGpyO9tudxsyRP
+	X/MLcIgx70EWCgeiq3PZ25ssYWRvCBGkQSlPAYCqhsDy54zC2V3K5VWE/2RsysZb
+	p1WZDvbbHdXa46/mK0rOamesiB0HFSXaItCs0+AUSlmC+BjOgWur2DraWy6TdYvG
+	LOSZcyFKWrw5fCxNRNOkl0V3xx9I0Um/7FoHz9H2b/DYq+pgboj+jvAOwavQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1742376253; x=1742462653; bh=lcPE89yVScoKKkVK6PRS8GaSkAtgAQ2RiEY
+	CJx7Hnhs=; b=g2anENNmZeUsHNz2jOzb3InJ35fPtGGll4RK7Rm02X2KUQe71EM
+	qIkMlnDJegqZdaXa2G7aWBdc1m3bXuBijksKgNY/ZcFaDUEYuGhriKl3SM/i5K0k
+	dywBW+eXWu9KrojvJXfThcsOrZUvqoBxCSZjhlCVsPOiikHM4FekzeQA5OVXHMx1
+	H93JIym6RwRp3Hn5CIRSj6X6k/zpQq7JmGCCliE9a2bnthP0gsiT0QBCemkZml2s
+	7GzTI7pLbnYMDC0jRK+hXEe79yqbsPX6M/wqf4sJuavODSVlLEe5ozyGCVsqb9YK
+	JHTjYN3GZTalT+aIxXQlrkDitzg01vViMhg==
+X-ME-Sender: <xms:PY3aZ8kdkw0mS6yInisD9XO8VvthhQpyzebbnLLrZSajersNae5HJA>
+    <xme:PY3aZ71gqP-PR0yqHU2vpY4VgPcwsXOBdWS_dwmzkFaa9DpCec4iPG7FpaXl2h_Y5
+    W2V02JJqLTD0Af_tg>
+X-ME-Received: <xmr:PY3aZ6pWNy1tzSZi028ZaXk9UF53fy4q63LxSM3Zj1s1s-cKWYg5W91ecH3kilTYteZLgykZ7UPshK6yU7jikUpYewL0s0TfNAgkdF-o-woxRffBeg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeegleejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdu
+    gfehtefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
+    ihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudek
+    keesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:PY3aZ4kOCI6XNciyva4MtZ8c3ZSu415v1jrTc1M108C5GOiYadLCuQ>
+    <xmx:PY3aZ60KDSc9JfEbzGb9lspCAwkIEdroqWDuy7wZ3TPUc4530dVRCg>
+    <xmx:PY3aZ_uVh7Zh7xWoK2VBx09kWK3UG-PPH7YPaEpBtceTfvGydtb-uQ>
+    <xmx:PY3aZ2Xve-gvRr3b5o4aTV1I_8P3I27vcocgbD7YUEvwtb2LIFAk0g>
+    <xmx:PY3aZ9QlNJsqIySu_wxBlRB45cJguYvbO9ATBDVlBoDuXYQckjQ_oEbv>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 19 Mar 2025 05:24:12 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0709feb9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Mar 2025 09:24:10 +0000 (UTC)
+Date: Wed, 19 Mar 2025 10:24:06 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH] install meson for Documentation job
+Message-ID: <Z9qNNq0p10YJCZYo@pks.im>
+References: <xmqqv7sbfra0.fsf@gitster.g>
+ <20250314184130.GA578421@coredump.intra.peff.net>
+ <xmqqy0x7cg9h.fsf@gitster.g>
+ <xmqqmsdi49h8.fsf_-_@gitster.g>
+ <CAOLa=ZRODjYfDXQ8m+hDosV7RBGDWeehzSvsR-+-HCmbS+tAcQ@mail.gmail.com>
+ <xmqqiko613a0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 19 Mar 2025 02:16:09 -0700
-X-Gm-Features: AQ5f1JqxDsDxDQPaIuM5lAXpVowAXAZqazgSkRzQH46qsNU3Ch9H5iqunV9ysBw
-Message-ID: <CAOLa=ZQ-ndKuYMABLveNjLnbR181+RD9_NGHAJsZbdc9eV2nEw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] reflog: implement subcommand to drop reflogs
-To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Cc: ps@pks.im, kristofferhaugsbakk@fastmail.com, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="000000000000da3dfe0630ae78cc"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqiko613a0.fsf@gitster.g>
 
---000000000000da3dfe0630ae78cc
-Content-Type: text/plain; charset="UTF-8"
-
-Toon Claes <toon@iotcl.com> writes:
-
+On Tue, Mar 18, 2025 at 01:40:07PM -0700, Junio C Hamano wrote:
 > Karthik Nayak <karthik.188@gmail.com> writes:
->
+> 
+> > Weird. From the looks of
+> > https://github.com/git/git/actions/runs/13867157977/job/38808418127, it
+> > seems like the '$distro' variable in 'ci/install-dependencies.sh' is not
+> > being correctly initialized. We can see this in the logs of the CI:
+> >
+> >   CI setup via install-dependencies.sh
+> >     + set -e
+> >     + export TERM=dumb
+> >     + export MAKEFLAGS=
+> >     + test true = true
+> >     + CI_TYPE=github-actions
+> >     + CI_BRANCH=refs/heads/seen
+> >     + CI_COMMIT=d5389e37e21d864f40f4167280db799ffe8983c2
+> >     + echo Linux
+> >     + tr A-Z a-z
+> >     + CI_OS_NAME=linux
+> >     + test macos != linux
+> >     + CI_REPO_SLUG=git/git
+> >     + CI_JOB_ID=13867157977
+> >     + CC=gcc
+> >     + DONT_SKIP_TAGS=t
+> >     + cache_dir=/home/runner/none
+> >     + GIT_TEST_OPTS=--github-workflow-markup
+> >     + JOBS=10
+> >     + echo
+> >     + tr : -
+> >     + distro=
+> >     ...
+> 
+> Nice digging.
 
-[snip]
+Thanks all for discovering and debugging this, I somehow missed this
+thread and haven't been able to keep up with the mailing list for the
+last couple days.
 
->> +static int cmd_reflog_drop(int argc, const char **argv, const char *prefix,
->> +			   struct repository *repo)
->> +{
->> +	int ret = 0, do_all = 0, single_worktree = 0;
->> +	const struct option options[] = {
->> +		OPT_BOOL(0, "all", &do_all, N_("drop the reflogs of all references")),
->> +		OPT_BOOL(0, "single-worktree", &single_worktree,
->> +			 N_("drop reflogs from the current worktree only")),
->> +		OPT_END()
->> +	};
->> +
->> +	argc = parse_options(argc, argv, prefix, options, reflog_drop_usage, 0);
->> +
->> +	if (argc && do_all)
->> +		usage(_("references specified along with --all"));
->
-> What is the intended behavior when both `--all` and `<refs>` are
-> omitted? It seems nothing happens at the moment. And no error nor
-> warning is printed, that feels a bit odd to me.
->
-> Now, when you do `git reflog expire --expire=all` it also seems to be
-> doing nothing at all. I also think this is weird. And I don't see any
-> test coverage for `git reflog expire` without `--all`.
->
-> But what is the expected behavior when you omit `--all` and `<refs>`?
-> Should it give an error or warning? Should it use HEAD, just like `git
-> reflog show` does?
->
+I see 4451a164e5a (install meson for Documentation job, 2025-03-14) has
+been merged, but as far as I understand we also have to take Karthik's
+patch to fix installing dependencies? In case I'm correct, do you plan
+to send this as a proper patch, Karthik?
 
-As discussed in the other thread [1], ideally this should be raised as
-an error. I'm leaving it for now.
-
-[snip]
-
->> +
->> +test_expect_success 'reflog drop --all' '
->> +	test_when_finished "rm -rf repo" &&
->> +	git init repo &&
->> +	(
->> +		cd repo &&
->> +		test_commit A &&
->> +		test_commit_bulk --ref=refs/heads/branch 1 &&
->> +		git reflog exists refs/heads/main &&
->> +		git reflog exists refs/heads/branch &&
->> +		git reflog drop --all &&
->> +		test_must_fail git reflog exists refs/heads/main &&
->> +		test_must_fail git reflog exists refs/heads/branch
->
-> Should we test output of `git reflog list`?
->
-
-I don't see why, we're concerned with individual reflogs and 'exists'
-help check against those individual reflogs.
-
->> +	)
->> +'
->> +
->> +test_expect_success 'reflog drop --all multiple worktrees' '
->> +	test_when_finished "rm -rf repo" &&
->> +	test_when_finished "rm -rf wt" &&
->> +	git init repo &&
->> +	(
->> +		cd repo &&
->> +		test_commit A &&
->> +		git worktree add ../wt &&
->> +		test_commit_bulk -C ../wt --ref=refs/heads/branch 1 &&
->> +		git reflog exists refs/heads/main &&
->> +		git reflog exists refs/heads/branch &&
->> +		git reflog drop --all &&
->> +		test_must_fail git reflog exists refs/heads/main &&
->> +		test_must_fail git reflog exists refs/heads/branch
->
-> Shall we test HEAD in both worktrees does not exists?
->
-
-I think it would be a good addition, but I'm not sure if its worthy of a
-re-roll.
-
->> +	)
->> +'
->> +
->> +test_expect_success 'reflog drop --all --single-worktree' '
->> +	test_when_finished "rm -rf repo" &&
->> +	test_when_finished "rm -rf wt" &&
->> +	git init repo &&
->> +	(
->> +		cd repo &&
->> +		test_commit A &&
->> +		git worktree add ../wt &&
->> +		test_commit -C ../wt foobar &&
->> +		git reflog exists refs/heads/main &&
->> +		git reflog exists refs/heads/wt &&
->> +		test-tool ref-store worktree:wt reflog-exists HEAD &&
->> +		git reflog drop --all --single-worktree &&
->> +		test_must_fail git reflog exists refs/heads/main &&
->> +		test_must_fail git reflog exists refs/heads/wt &&
->> +		test_must_fail test-tool ref-store worktree:main reflog-exists HEAD &&
->> +		test-tool ref-store worktree:wt reflog-exists HEAD
->
-> Naive question: why is `test-tool ref-store` used and not
-> `git -C ../wt reflog exist`?
->
-
-That should work too :)
-
->> +	)
->> +'
->> +
->> +test_expect_success 'reflog drop --all with reference' '
->> +	test_when_finished "rm -rf repo" &&
->> +	git init repo &&
->> +	(
->> +		cd repo &&
->> +		test_commit A &&
->> +		test_must_fail git reflog drop --all refs/heads/main 2>stderr &&
->> +		test_grep "usage: references specified along with --all" stderr
->> +	)
->> +'
->> +
->>  test_done
->>
->> --
->> 2.48.1
-
-[1]: CAOLa=ZSj11TSTs6CywSX1Q9AAfW28zssS2yrGf8PmBOgd06Etg@mail.gmail.com
-
---000000000000da3dfe0630ae78cc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 583221155cbdce50_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEpCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mYWkxZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNnEyQy9kUlYyMGNscDlRQVVJNWxLNUNPWjVqUVRUagoyMExUVVhjemFw
-U2JQSncyRGd1UXNOemQwdFZQWU5kYmYzSk02R3hzd2FydWV0MkdDbDBnR3ZqaXR2QjhyV3lQCnl6
-dkVBN0pNVWRmWW96TEg1OUx2S2NuREc4cTNmNmxjRnFkT1hJUHZLb2dyUG44clBjWVp3ZklRL1lK
-Wnc5eGYKQ3M0RmVJZGJtTUY1Z3BVSmtPS1pFVmZmRW16MEdZc3FwWDFKL1lnaGM0UDV1N1dDTGtw
-ekpuME8xQzBYL3BpUQp4UXNVU1dHcjNkZFl3TmUwWVhzT25JSjUxallyalpxaTFzRmRmMjM2R1Rk
-N0RqMnVKZmNsOUxQTmZESXB0bFozClUrL252VVFQRE1wYTl3OVErZUJacnFVaVg4SGF2aEpWWnMv
-dUN2T3lWbkpBaTZnVTNyeVp3OVhOSjJzSXd6dUsKeVF1S2hhZ0FQRHFDeFArNUN0clJpUlUxV0N3
-R1Z3WVpkaTJKMUNDRnVPL0t3S1JuSy8wMmJ3cU5TUlVudkFRZgpKNFhHL1hHWGFqU1ZsdkFFZlgy
-cVF4VHNKQ2twaUxTdkppV3V3VHJ5OTdTSHBDTWwyWEdvRC9udzZvOWwzMkpSCmhUOU5tWG45SXJW
-YWhaUmZNN3hTVkR1a2IyM1UxWnZ3aktpTWdBPT0KPURhYnoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000da3dfe0630ae78cc--
+Patrick
