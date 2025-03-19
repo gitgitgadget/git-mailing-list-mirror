@@ -1,133 +1,135 @@
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E4442048
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 16:01:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642D442048
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 16:01:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742400096; cv=none; b=BiYMW5HXpzS/ehkblL98ZIac9u7v9Cghezqn1TkIR3E0Vop9X6nFKaA/d5UN0M1v7yVKcqNqS3jOTjbkkHYEBLxwJ/ruDOWwdtTvDVc9zr2HFRHor06NxlN3ojYS+xujLmktGJmq/1SsHxiVXMcgvRK73xCb4+csHD6QWD3IfTc=
+	t=1742400113; cv=none; b=mQ1Bjx/7shQip8rLkPUSV0YTHEnXvSvTl5iQCgiHhnCTNFSqExLvXUAV0n4IXSOwXOWU+DBErKTH3Jw86NjJrx2N2p0UbR3adFpvzNpIF38XCq9Pl+v9dmD4B30/MhSLWqEHVgO7UJOnf88HRl/4qLtm0HYZRdEVYddtDtlWSFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742400096; c=relaxed/simple;
-	bh=UA710YOwrQMFY1ohPIE994Z0vbdwGSqNXYDJt7RgV5M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ka+jSFe0Nsq/QP+yIhDAiqnsXnVuKJdHi0rlPAgMGi2Uhdgt4mHb1GDyCthBRQ7aV2ln3yAxPIYtlB2jD3dcTc1pnEMemJqYjeM8BiLNsmz48chVIFPcrISO86dwbvb04A8na3jPU4hT7dcCrRMU8pUpC2E5TlIsdSRNrK6BJvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e6VWil9B; arc=none smtp.client-ip=209.85.166.52
+	s=arc-20240116; t=1742400113; c=relaxed/simple;
+	bh=7XYsN1Sp4pLLSaTp/Qnc3Gw5opwnRCvaeUekwzEbnus=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HNBl0wSTqahS5Kr5dwiqIApedBYealq1J4xJGZTOt/0HRyJmMfVtUOwUBdmq0XnsNuojfSAziFIRBkxj5u2/H6nMIWSQRK+9FPK2PZ0Fvf5ThxuF0FO6wOxCUvkL3aRdqubIpKflXi0xJod1w633QAGf+uXaWP0TxKSZ8IXw/dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fwccCc84; arc=none smtp.client-ip=209.85.160.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e6VWil9B"
-Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-85b515e4521so217174639f.1
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:01:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fwccCc84"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-2bcca6aae0bso5557432fac.1
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742400094; x=1743004894; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EQGUfYLiKh2/Xb0yzOQLMorV7bSvWvgw4pDMuy4aRa8=;
-        b=e6VWil9BjHWiABwMEpL26SqNAQIVrBjmTyVKCTrY6pQYTpJ2I9Bp6Goutd4mH9PGie
-         tkepeU36D5VEVjwMeGBtlB7u84iqE0Wa/NKMT2bXiuuuZQd/+DqEX4BOeCRofFw98t5i
-         FU1l1zKY0gXpgDc8KkKjgROwsamBVgEcyUfc0qv4efD3OvKmUSNm7TUHvAiIVsUtH/HV
-         eUnD6ePmmTwY6ioI2gAc521pIdFsf6NSAA/qf86knSzUzSqO/+dRcjvm8BaULK+KPOFW
-         QkmpIZkReuruPsdRe0OWPvK2SpHU7cLqTA77rou/Mjo+7641YqkSZ7n/RbpNH+eLs3Tw
-         SHkA==
+        d=gmail.com; s=20230601; t=1742400111; x=1743004911; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=29bABbAEsULfwR5CoefzF6opZ+mxI+JvIVkk0pY0iD0=;
+        b=fwccCc840VlXUMtl2/lG6299ZHXu/LAEOKtQO3ihQLSvHOJfXc2UX4aHhJ00EZVL2L
+         6gq5j3h19ZEo5zJnoYIg4CZYRPDJpOIQVJbkY/ywcKmvNYpsbQ/a2dCwZlmeONGuExBy
+         dFFsUUkYdJYY8lvssIXl8n0fbRcrzzuiCW9zdPjksWgDeMD3Lbt0MRw8bVhayOkPuxfw
+         z1xs5cZrbHfO7ZOMc/s15tB89pMW1BBGHFdiiapWqjHAgc4FQZhAucJjfg3VLOKkyudI
+         5nTQCb4Zjm0SILSNgL0K0iI9nVJnbiqUvrx/e3+ZsF05jPnjSiva7pgQWcMq3CB/SqdK
+         XznQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742400094; x=1743004894;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EQGUfYLiKh2/Xb0yzOQLMorV7bSvWvgw4pDMuy4aRa8=;
-        b=FPlESipM4EjWa4wuyQ26NJEUx1aH8fvwE8BCdGsYvwVcOtojTTMYpa8oV5aarFrKK7
-         183+sLEH8OZOkePxrsCwzYQReSArG5kCAdaRYdj9dlHjeyxhFI8krGYpPhZEwXR1d6yA
-         8Lwt6V1QEK9ljU85sOOhqTtRuIFd2tFsIHpL6V72HHeVma7lqpYT2iuZHwU7hlhngdY4
-         cN+SQBU1j7MWbCj2hWb2IdQmSBjQ0XDHGaakILlYzDYlhodYq0Fc4vRoNOlntxwkk9T5
-         8iYeEcqvpX4U8BgT0Sc6xNNvNriCDKdMJczeRusiD4T94AJy78NKSYVSlbBc4qpBYywj
-         pESg==
-X-Gm-Message-State: AOJu0YxkJDVUqAz8QjSPs2wRvu8GY1zvbV+RRlss/R8bW3Ax1dwbZUH2
-	t07wNRrPJTCzyOKS4ZvCDHAsHKmd77bcvNdp5QymQcYWAjZENBd21rBQnBKsV/QhHukbkLx2Mo9
-	uv55DHZWpOvUhT9ZaBhEToVVzOqc=
-X-Gm-Gg: ASbGncs3sQz+QeML28bTRVsRQjPTnYdaoaO+nhL4x1tKQQXSbjSGksifsZyB59XbO2K
-	nZY4x4YZuYUzdfq8cCt/y1zcMSn7IiGxreE4qnX6W1MWdwPBx/sMS6/H2O4k9KINbwwaLTzbJzK
-	pIS0P+wFpWhr871+TLnR8pI1cW/4ECWR7bt6lmzbw=
-X-Google-Smtp-Source: AGHT+IGgrZpGTtft8UIJQq9hk6nrVNjOxyzTyu+mtmoP7YC25bQA8cgLD2gZW81GP93jsklmI9TIk9N13DOoLnFwgZs=
-X-Received: by 2002:a05:6602:3a89:b0:85b:46b5:6fb5 with SMTP id
- ca18e2360f4ac-85e1384abb6mr389927439f.11.1742400093561; Wed, 19 Mar 2025
- 09:01:33 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742400111; x=1743004911;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=29bABbAEsULfwR5CoefzF6opZ+mxI+JvIVkk0pY0iD0=;
+        b=bO4wIP1qhPMA0bBtOJkOR2UMB3Pd+qxMiP5WUXKl+p380Bp70KVTfrnceyBRFDNCNn
+         1vCqfbDxwFbt892nyer4OmnJdYP4s7T4+/wnBwHEKv0tI5SKOE0AGu0wMtTyii60sWF/
+         aZ/RsRCBKPV0zbp3mZL4G+7xaVWLQa3vA+TVTmuZl0vjK6lU7lHj7IzbOuXxmnpZrUpO
+         KLsPVOCMciXWTvSp1JJ4xjpkz/pfFrY7Mj1i0PzgqrK9XeT3RZL5dwYjogrbwm3rFO2e
+         NOTZI2cMOT29U/fgzR8LakFHK+mDngtYEpY6x0B3CXPspoHzI6JeWQzD3GiS7Y3yDYhg
+         e8UQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUYOeOCxXxO7YbIcyuhnGAqFdzhS0GSvkw5OEZLS0cAv2y1Ca7X2tL4zJeXXPKgMflGgok=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyRvA0EqV0ZXpQo0aGo32XvdfkBS2+pGCc2OJ2ERUTeGehRF7G9
+	eFeqQqTL9S+hOcgKRcBuhqzTAaCPRCn7bdZRw441AklUwuUaaajfwy3NFw==
+X-Gm-Gg: ASbGncsjaHPnokiFeZgrW1dxcpHTGID5Cv3fIjvZhspouKXUDDyDtu8CM25nqFQCs2Z
+	nqNXZDoLUapB58GsPci5De2nP03HUGIwBhm7y4F37NYpPCYMengdO5Ng9sPrzHAMhFKQ7A8mDh9
+	8FDZs9g5eQbGyD/pr9Xzz2Yo9r/JXA8J98OP4eQ0hhOiwf/tVhybuMqbCXRQ7nlzzuKiirxThfF
+	D+Uy6zos/VYiSdrCCjT36ZR3Lt0r1Og/aJiuSWFfpJjXnLNkc8ce89HG05yQHmRVsgc8hafs2Uq
+	KpYe7xF787jNEPqCZaVw3tD0fmV0wz91jfwEGg==
+X-Google-Smtp-Source: AGHT+IGuMfnEouarfAvMw4B1vcKop5Oh03dsP/j3dTY55Cj/680lNPKCvnnoXvZAs/zQHXIMQqbBQA==
+X-Received: by 2002:a05:6870:328b:b0:2a7:d856:94a with SMTP id 586e51a60fabf-2c74559f0e4mr2108750fac.22.1742400111383;
+        Wed, 19 Mar 2025 09:01:51 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-72bb274ed28sm2478275a34.53.2025.03.19.09.01.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Mar 2025 09:01:50 -0700 (PDT)
+Date: Wed, 19 Mar 2025 10:58:17 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, ps@pks.im, 
+	christian.couder@gmail.com
+Subject: Re: [PATCH 0/4] rev-list: introduce NUL-delimited output mode
+Message-ID: <2aqtmbdpzi5lupflthm4rvoya3pqksv4sqnv5if6camw7tkzuz@ydecphmvo4dc>
+References: <20250310192829.661692-1-jltobler@gmail.com>
+ <20250311235720.GA73755@coredump.intra.peff.net>
+ <sm5xvh7bipyrlpw45bptlctbuhey7v3qktpskal5dzexomt34f@wgfziyhcf3t6>
+ <20250313053329.GC94015@coredump.intra.peff.net>
+ <qapd7sijizopaefpxh3slgn7g2ecwdtyhzqzufcypciyv6n3qm@turmldwzipwe>
+ <20250314024929.GB114103@coredump.intra.peff.net>
+ <xmqqsenfk0ks.fsf@gitster.g>
+ <20250314185914.GD578421@coredump.intra.peff.net>
+ <po5vjngxt6afwdkg7bvpw5j4dhot5h4uz5yudb3o4eug4k2nqu@rwp5rpe5d3u6>
+ <xmqqtt7ve2id.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1742336481.git.me@ttaylorr.com> <a05269552fc2c17519b935c3b9c279c2e231c5c5.1742336481.git.me@ttaylorr.com>
-In-Reply-To: <a05269552fc2c17519b935c3b9c279c2e231c5c5.1742336481.git.me@ttaylorr.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 19 Mar 2025 09:01:22 -0700
-X-Gm-Features: AQ5f1JpP5vEakZXXPqKt_mElM12atwKtWnnD1GT0ekL3zq-j1Z1RlHEfBisy1Ug
-Message-ID: <CABPp-BEpVhP3rKXAVVZ4MUSsUZUF=YeqA23fnp0-h2S-Hk4bEw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] http.c: inline `set_curl_keepalive()`
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtt7ve2id.fsf@gitster.g>
 
-On Tue, Mar 18, 2025 at 3:21=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
-:
->
-> At the end of `get_curl_handle()` we call `set_curl_keepalive()` to
-> enable TCP keepalive probes on our CURL handle. `set_curl_keepalive()`
-> dates back to 47ce115370 (http: use curl's tcp keepalive if available,
-> 2013-10-14), which conditionally compiled different variants of
-> `set_curl_keepalive()` depending on what version of curl we were
-> compiled with[^1].
->
-> As of f7c094060c (git-curl-compat: remove check for curl 7.25.0,
-> 2024-10-23), we no longer conditionally compile `set_curl_keepalive()`
-> since we no longer support pre-7.25.0 versions of curl. But the version
-> of that function that we kept is really just a thin wrapper around
-> setting the TCP_KEEPALIVE option, so there's no reason to keep it in its
-> own function.
->
-> Inline the definition of `set_curl_keepalive()` to within
-> `get_curl_handle()` so that the setup of our CURL handle is
-> self-contained.
->
-> [1]: The details are spelled out in 47ce115370, but the gist is curl
->   7.25.0 and newer use CURLOPT_TCP_KEEPALIVE, older versions use
->   CURLOPT_SOCKOPTFUNCTION with a custom callback, and older versions
->   that predate even that option do nothing.
->
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  http.c | 6 +-----
->  1 file changed, 1 insertion(+), 5 deletions(-)
->
-> diff --git a/http.c b/http.c
-> index be564fd520..526f9680f9 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -704,10 +704,6 @@ static int has_proxy_cert_password(void)
->         return 1;
->  }
->
-> -static void set_curl_keepalive(CURL *c)
-> -{
-> -       curl_easy_setopt(c, CURLOPT_TCP_KEEPALIVE, 1);
-> -}
->
->  /* Return 1 if redactions have been made, 0 otherwise. */
->  static int redact_sensitive_header(struct strbuf *header, size_t offset)
-> @@ -1242,7 +1238,7 @@ static CURL *get_curl_handle(void)
->         }
->         init_curl_proxy_auth(result);
->
-> -       set_curl_keepalive(result);
-> +       curl_easy_setopt(result, CURLOPT_TCP_KEEPALIVE, 1);
->
->         return result;
->  }
-> --
-> 2.49.0.3.gbb7a4a684c.dirty
+On 25/03/14 02:16PM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > If we want to adopt less ambiguous long options names for NUL-delimited
+> > input/output options as an alternative to "-z", maybe we could do
+> > something like:
+> >
+> >     $ git rev-list --nul-delimited={all,input,output}
+> >
+> > where the default for the `--nul-delimited` could be both input/output. 
+> 
+> I'd prefer not to see that route taken, as it does not look any
+> "less ambiguous" at least to me.  Making individual selections are
+> almost the same in either syntax, and the only difference is that
+> --nul-delimited-input --nul-delimited-output can be independently
+> chosen and given and happen to end up selecting both.
+> 
+> But with --nul-delimited=<value>, you have to plan ahead and choose
+> "all".  When your script first wants NUL delimited I/O on the output
+> side, you'd write "output".  When later you want to allow it to
+> optionally take NUL delimited I/O on the input side, you have to
+> notice that you have "output" there already and replace it with "all".
+> If the initial version did not have NUL-delimited output, your change
+> to add support for NUL-delimited input would be different.
+> 
+> And you also have to remember that it has to be spelled "all" and
+> not "both" when you replace existing "output".
+> 
+> In other words, I'd prefer to leave independent/orthogonal things as
+> such, even if such a general design principle may make the result a
+> bit more verbose, at the plumbing level.
 
-In contrast to the last patch, this simply dispenses with rather than
-adds a convenience function.  That makes sense in this case, since it
-was only a single line of code anyway.
+That's fair. I agree the explicitness of having two separate options is
+nice and, while more verbose, that is probably not a big deal at the
+plumbing level.
+
+In my next version I'll return the "-z" option to only setting the
+output to be NUL-delimited which would better match the log family of
+commands. If we also want to support NUL-delimited stdin parsing, I can
+submit a followup series which teaches git-rev-list(1) the
+"--nul-delimited-{input,output}" options.
+
+On a side note, I also noticed that git-commit(1) uses the "--null"
+option as an alias to "-z". I think it would be nice if going forward
+there was greater consistency around the options used to control
+input/output delimiters. Maybe "--nul-delimited-{input,output}" could be
+that in the future.
+
+Thanks,
+-Justin
