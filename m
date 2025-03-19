@@ -1,70 +1,71 @@
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31F814B950
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 14:20:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC151B2182
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 14:20:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742394019; cv=none; b=b2PaTXeTHnDPWe1KhhMPBONbvw6cXSNUwTWMbGhTYd5QlTG3PU/xxvVULT7BfkBywJFLVqlP2Y7CTIBc+kbhmWymekrVg3q8GxMb/vDEzrRvlgwmWq7exspFLghyR4TVyIC6lQZ72+fLGlmAGU7P38KCQrH99P9RpmAzGHL0xr4=
+	t=1742394025; cv=none; b=JQS+dFLzIpEzfC0wQUAJuusCNWqZP+Dp6IJefdnkF5qdeA0n4KA9oMf4cYYLu/4PmWHOMNHZ9kzBqu5Q8POYWB5IEz+anW4z6OHQQmKPcmLEK2WnD0UKSeT174LdUqx/LGWpXjKhhrYFi4XMX/t+mVoturDl2H383wkgxTAMLhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742394019; c=relaxed/simple;
-	bh=Rvs70VC2cKBsq77jl0+g6IxdzU8MakXBOYxjYEnMkNw=;
+	s=arc-20240116; t=1742394025; c=relaxed/simple;
+	bh=E+NcCKVFaQ0UJxtt897WrU0BLSaoZXcpdwEYv3PM1VE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Yka960MfxOAyA8xUyvPtolv7j1UHOsACZa4KhC+7f6JBTqgzb2k1TRm9ih46BX5vUjQFIBPNaUnulnJZTFWuqaNKPWP/ioI/uDc7oN9IND6gI5tA0pipvrwhsfo84kBfbyezAduGQzRc3Pi2g/9QLZufg87kqEwbD2OJGdnOkqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AE3pjUHB; arc=none smtp.client-ip=209.85.166.52
+	 To:Cc:Content-Type; b=tp9P108PF553jdeqicYlAW/TomEHpiIU5KtSdynKa9CL+Gn1UZOdduGve2uFq0eM0zAscvexvxVnjhv5CcBTYtY4HuiaunOKMyeHPnHnIR4mKNpZ5s/E3vFd0iGe7gQlrQwHenzIMrbExXkkjppOtlw4V5kMcW+DXSmbtOLy2pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YJNr3Ntd; arc=none smtp.client-ip=209.85.166.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AE3pjUHB"
-Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-85e15dc801aso54672539f.2
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 07:20:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YJNr3Ntd"
+Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3cf880d90bdso25150635ab.3
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 07:20:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742394017; x=1742998817; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742394023; x=1742998823; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oCcoTq+YFkbDXDqW+lIuMlQ/giUbWY3+657FQWI6UTY=;
-        b=AE3pjUHBAhMAk/fi3bW1XNHcr08zEktDrvsSwazJ4hVMQOrBcQ4jSk+w6iYvw19/sz
-         6wlLZqlTlCovFPeMI58TCMKPgnA7Mypo7W0uKo9V5ImZgz7zujEU6dDPvo60d9qBmeTd
-         Hiw+JyLfN6Gul6ZTmuRPA4SiAva0DLfK1e8eLX0A6mcwR5EjkKG9CVjtORYD4OgvpnTz
-         GgXxBk431YxgBT3IZA1+fcyGIxRyZhWqZ46xum45g9WOqDoCeuUD5YfQUEbBEvbC4aq+
-         x7ZOeKlNo+udmq2GnLNOoyd/haXgZjB50S0tKsd69/Gd1lAB1C/ctWfwupWd33TybUU6
-         GOgQ==
+        bh=Wms8Rx5cxF2jWdfgScsw/XwDmpT9TCwqPhSAcnqufNI=;
+        b=YJNr3NtdR4pyT7PsJczlS6/fnlI08wr3VwMyzqo9duC7vSe8zviO2A8EJ9sVd9wmlG
+         8nn7H4x9W4axl1WFo33Ylyj2jkxeSzb7ncmbb+VIecbHzY4JGhm3jT0XarHKtxBIBF0y
+         nKeUIoDvW6Hxdem0/32uo/QL2omXjb8KhDuNVF/tnaW7yVIv3lJCXCFkSDULmmNIYmPD
+         xEnuWs3cQ1z0AMJuG+i5nUXv25v6Ik1xGHjh5AboatchUwNWQQWUcV7+oA4ihRueK4+z
+         Q3gzBkGo3UMe2s9eMUL6xchVqGMg3Z8uOSssmzyTneXysYudQYAgCXYg0J1k4wgEcrEQ
+         zwWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742394017; x=1742998817;
+        d=1e100.net; s=20230601; t=1742394023; x=1742998823;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oCcoTq+YFkbDXDqW+lIuMlQ/giUbWY3+657FQWI6UTY=;
-        b=I3YyX6vVOOuri5GvfScbSoRuZkOU4kmhDDxHzkEUrAdT9KyeZxsP2pwzvmaiVMyLDO
-         o+El9SD5zeqBdZN20GZz+N9blpAVke662C+wcyxYkXspwNPVAuAIFsAg7AiLIm9EEyWv
-         IlIs75lHY0rsrKPGVFpxcoPp+Vnja/4HuWRg4Vir+wObL6lFwGEf4AhHl1EAONwfNRMI
-         49n0R1iig+eneSupkYqeS08nWZW1j8Qraco38Y2IkCsz8Wu7YpKe5DT8vXsuU7zNI1Bm
-         umoHCBfa4A7KnKTisnKeX/R/3jOmisG7bwFeg/M+Sll1UjUxp6r2TsVY1Tv2sd9lfO5L
-         L1fw==
-X-Gm-Message-State: AOJu0Yzxl9Dk8TO9Qob8iiEWJe9T7l2vfnXFqhvwKeSQ3x8By8wUIBia
-	uc/AHeOzGHgboH0H808DkGm06x0nQeiSRkeQPYH/NT8XIW/CqouMzGLiSgBld6/dQK44rg3ZXTv
-	aS4bb9XhpNPyn/lhte71d3LQyVpk=
-X-Gm-Gg: ASbGncvG2VBJX8EpKvn+Qrl338G2fTpP9leXlkq9uS5CnYvvbcSfFk0EBtaQLelPfkW
-	lsUVpCcCM5NvGKyDbbjrpv0/JxJIEhGlfAlv1eccknEDf3LXWLoSOqg2/rpfDxe7EM7h23X6fmK
-	hbdxIKXiyBl0+O7Nz/pOfHaCC07i56
-X-Google-Smtp-Source: AGHT+IGho2IJ5CSCYNFbX+uyX1iLQtA+u8Ufjsrc8NthTkBTcAoLKEVV0R611LIlLir9gsIRmspcH6vQ08XUNkheYq0=
-X-Received: by 2002:a05:6e02:3b83:b0:3d2:aa73:7b65 with SMTP id
- e9e14a558f8ab-3d586b403bamr28525465ab.6.1742394016646; Wed, 19 Mar 2025
- 07:20:16 -0700 (PDT)
+        bh=Wms8Rx5cxF2jWdfgScsw/XwDmpT9TCwqPhSAcnqufNI=;
+        b=Il5h/ubszKt8arlcIKHRd0eA+p7pRvK82lVxlVVsHYwkEza2KOj0SaTG03Q0HBCmBP
+         zowS7HuZxP2eNOFq2GQZcLUHb3VU/8qN3fK9wleJEL90C3EjMeS+fkfJdUCADE7U+yBl
+         jOKpVaW5xWby5I/XczIAZQwES/V7oD2/BwoS2AcgxUZJdigT5YVxAru1iSRFZBx9rg1o
+         VCEVpc0LY1ZMbYfJ94B6wJOHT2iRYI8wpbN5jOeNkh6SQFM2UPYMOD9d72SncNFCzOwO
+         DCF3tAAYJYlMASMqZI+QHerhj7alnEy9tJVJgamtX4cCg6ffh35oEv/WgXD6Xq34wvKC
+         twvw==
+X-Gm-Message-State: AOJu0YwZCh+y4D8BfAfI+/7GJxSEZmrU0LgO0pxt/stWLgevS4MJqbBU
+	OuOX6DRQGJ2GFQFdgRI+Wk1Rz8+AVF8OSaqvmZxoIEcIrHy963A10saB40xKpM3GfxuXhxXCBk0
+	hmdSUzYfYPfsW0W8ANXh8+UVzfHc=
+X-Gm-Gg: ASbGncvCiNyK+OWLmsTe45TvRQBQMhEZZWlaTvU0MrtujYUkepeTy4gxyIlEKuZXWHA
+	Ug0+fqG6uzSgucvOttmuf56NS1w0BVuVVkUk0vMrAWnKhUCx0PzSwtJGiaTbptB9+on3BbAycW/
+	RaiGOTt4vUUgtPtuLs591w1dirP+MW
+X-Google-Smtp-Source: AGHT+IGt4aJKVqP7gg8Wntg1IT8w5rUfC7/wTsSZV0uZzF+ROVCWbp7TJT82wRiV2jnqjrBzTH1IvOHkB3K6V545AvQ=
+X-Received: by 2002:a92:c263:0:b0:3d3:fdb8:1792 with SMTP id
+ e9e14a558f8ab-3d586ba4e6emr22342995ab.14.1742394022478; Wed, 19 Mar 2025
+ 07:20:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1742252411.git.me@ttaylorr.com> <0aa8aa65c130fd62d38b4944c1ce2a97451b0064.1742252411.git.me@ttaylorr.com>
-In-Reply-To: <0aa8aa65c130fd62d38b4944c1ce2a97451b0064.1742252411.git.me@ttaylorr.com>
+References: <cover.1742252411.git.me@ttaylorr.com> <5e8bd3e66e304f42d4e84ec2aa9f06b82321d64b.1742252411.git.me@ttaylorr.com>
+In-Reply-To: <5e8bd3e66e304f42d4e84ec2aa9f06b82321d64b.1742252411.git.me@ttaylorr.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Wed, 19 Mar 2025 07:20:05 -0700
-X-Gm-Features: AQ5f1JqNdtaFyZpSqvKV1dmN32DXHpbjA_Eiwt1jAV4W59zdMk3OiNxBkVlq1BE
-Message-ID: <CABPp-BF1ivo2+tR0-KnU-KF6omtswp-ZMWiBgWPmmgOaRu8RhQ@mail.gmail.com>
-Subject: Re: [PATCH 1/5] t/t5329-pack-objects-cruft.sh: evict 'repack'-related tests
+Date: Wed, 19 Mar 2025 07:20:11 -0700
+X-Gm-Features: AQ5f1JouehHiIVMO4fQu_MNJ2W8XdGLfKw9wTopNaSTpjHp3aMxQyZZnASV_DS0
+Message-ID: <CABPp-BHmFCHX85e4SrLpTshMVx2nbAkLhnZoZ5LRX15V8MEs8A@mail.gmail.com>
+Subject: Re: [PATCH 2/5] t/t7704-repack-cruft.sh: clarify wording in
+ --max-cruft-size tests
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -73,29 +74,117 @@ Content-Transfer-Encoding: quoted-printable
 On Mon, Mar 17, 2025 at 4:00=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
 :
 >
-> The cruft pack feature has two primary test scripts which exercise
-> various parts of it, which are:
+> Now that a number of new tests have landed in t7704, make sure that they
+> all make sense and are testing the things they say they are.
 >
->   - t5329-pack-objects-cruft.sh
->   - t7704-repack-cruft.sh
+> Things are mostly OK, but a handful of tests needed tweaks. Those tweaks
+> are as follows:
 >
-> The former is designed to test low-level pack generation mechanics at
-> the 'git pack-objects --cruft'-level, which is plumbing. The latter, on
-> the other hand, is designed to test the user-facing behavior through
-> 'git repack --cruft', which is porcelain (under the "ancillary
-> manipulators" sub-section).
+>   - Use the terms "too large" or "too small" in tests that exercise the
+>     '--max-cruft-size' behavior. This has historically been treated as a
+>     threshold beneath which to combine cruft packs, but that will change
+>     in a subsequent commit. Prepare for that by using a more generic
+>     term.
 >
-> At some point a handful of tests which should have been added to the
-> latter script were instead written to the former. This isn't a huge
-> deal, but rectifying it is straightforward. Move a handful of
-> 'repack'-related tests out of t5329 and into their rightful home in
-> t7704.
+>   - Remove references to "--max-cruft-size" in the freshening tests.
+>     These tests provide coverage of our ability to record updated mtimes
+>     for objects already in cruft packs whose mtimes are upserted from
+>     various sources (loose objects, finding that object in a new pack,
+>     another cruft pack, etc.).
+>
+>     These have nothing to do with the '--max-cruft-size' feature, and in
+>     fact none of the tests even *use* '--max-cruft-size'. Name them
+>     appropriately to make it clear that these tests exercise freshening
+>     behavior, not '--max-cruft-size' behavior.
 >
 > Signed-off-by: Taylor Blau <me@ttaylorr.com>
 > ---
->  t/t5329-pack-objects-cruft.sh | 250 ----------------------------------
->  t/t7704-repack-cruft.sh       | 250 ++++++++++++++++++++++++++++++++++
->  2 files changed, 250 insertions(+), 250 deletions(-)
+>  t/t7704-repack-cruft.sh | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
+>
+> diff --git a/t/t7704-repack-cruft.sh b/t/t7704-repack-cruft.sh
+> index cd452040ea..e6e4c2fad8 100755
+> --- a/t/t7704-repack-cruft.sh
+> +++ b/t/t7704-repack-cruft.sh
+> @@ -149,7 +149,7 @@ generate_cruft_pack () {
+>         echo "$packdir/pack-$pack.mtimes"
+>  }
+>
+> -test_expect_success '--max-cruft-size creates new packs when above thres=
+hold' '
+> +test_expect_success '--max-cruft-size creates new packs when too large' =
+'
+>         git init max-cruft-size-large &&
+>         (
+>                 cd max-cruft-size-large &&
+> @@ -173,7 +173,7 @@ test_expect_success '--max-cruft-size creates new pac=
+ks when above threshold' '
+>         )
+>  '
+>
+> -test_expect_success '--max-cruft-size combines existing packs when below=
+ threshold' '
+> +test_expect_success '--max-cruft-size combines existing packs when not t=
+oo large' '
+>         git init max-cruft-size-small &&
+>         (
+>                 cd max-cruft-size-small &&
+> @@ -236,10 +236,10 @@ test_expect_success '--max-cruft-size combines smal=
+ler packs first' '
+>         )
+>  '
+>
+> -test_expect_success 'setup --max-cruft-size with freshened objects' '
+> -       git init max-cruft-size-freshen &&
+> +test_expect_success 'setup cruft with freshened objects' '
+> +       git init cruft-freshen &&
+>         (
+> -               cd max-cruft-size-freshen &&
+> +               cd cruft-freshen &&
+>
+>                 test_commit base &&
+>                 git repack -ad &&
+> @@ -257,9 +257,9 @@ test_expect_success 'setup --max-cruft-size with fres=
+hened objects' '
+>         )
+>  '
+>
+> -test_expect_success '--max-cruft-size with freshened objects (loose)' '
+> +test_expect_success 'cruft with freshened objects (loose)' '
+>         (
+> -               cd max-cruft-size-freshen &&
+> +               cd cruft-freshen &&
+>
+>                 # regenerate the object, setting its mtime to be more rec=
+ent
+>                 foo=3D"$(generate_random_blob foo 64)" &&
+> @@ -275,9 +275,9 @@ test_expect_success '--max-cruft-size with freshened =
+objects (loose)' '
+>         )
+>  '
+>
+> -test_expect_success '--max-cruft-size with freshened objects (packed)' '
+> +test_expect_success 'cruft with freshened objects (packed)' '
+>         (
+> -               cd max-cruft-size-freshen &&
+> +               cd cruft-freshen &&
+>
+>                 # regenerate the object and store it in a packfile,
+>                 # setting its mtime to be more recent
+> @@ -304,7 +304,7 @@ test_expect_success '--max-cruft-size with freshened =
+objects (packed)' '
+>         )
+>  '
+>
+> -test_expect_success '--max-cruft-size with freshened objects (previously=
+ cruft)' '
+> +test_expect_success 'multi-cruft with freshened objects (previously cruf=
+t)' '
+>         repo=3D"max-cruft-size-threshold" &&
+>
+>         test_when_finished "rm -fr $repo" &&
+> --
+> 2.49.0.rc0.6.g7f120c35e9
 
-A quick view with --color-moved makes it easy to verify that the tests
-simply moved.
+Using --color-words for this diff makes it easy to see the small
+wording clarifications; looks good.
