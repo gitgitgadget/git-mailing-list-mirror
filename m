@@ -1,134 +1,230 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758C72512EB
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:06:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933C72135C3
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:16:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742375178; cv=none; b=cx29AiKFmzu+SeQdGKdHuxl+A51DLiMZZB09FMCMEvkANbGJVvl4msNIYl8IbdVfFX4Kq8JvR+fqJD0zPvqt1iJr1jDDl26WF+99XeA7deNut9Hur+zcOMgAnzYrJa9PObqcXz4c+eIJ0e+UvHM8WFw8JRdukQy8w7X6DTLkjr8=
+	t=1742375773; cv=none; b=nvimE10Dkn3S3ZRMCsyWnGSCPkUor6FkkAwpArV/v0UBapFx1oDa2q35OQeSnY2G8A4FoM/uWRZy3taVMtofI952vVj1/iMBM7kFkJY6KL9xLw7o0g68wC+TGAwhMVHF7Ek/WxSlOm39LBSi7XX2z/m61TM6iWNGo6sSjWOus/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742375178; c=relaxed/simple;
-	bh=VCxc34QL3nNmfHFsNYI6LiExz2lUxbi2ZYaJ9iBxh/w=;
+	s=arc-20240116; t=1742375773; c=relaxed/simple;
+	bh=/QYNcKjTHTCWQy8rY8Q0vnCKb4oGEvvTNk8Fn+TXqtw=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=inis3NXSpVsu03EyhKqwAZSiF8Urvcvrxu8naX9ktSsC6rQ38r36KWWVCFexHVAsn8w9k20To7ukKD7g535ghr8Z0/L5yDuPHGOFG8YGeZ4wklWEtJSIU+Hp5K37ixGj+414UOV2LDayhQgIi4RfLxD7YMatBWQ7vNiorZxjsJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dMOfMF5S; arc=none smtp.client-ip=209.85.222.54
+	 To:Cc:Content-Type; b=pjoJsnr6kLb0mXf0bc2iK5u0vuMHpwSvtH37eOdGXuUOa/PUAQ1IzsuEXpDS+XJoioD5CbCD06K6JJeyskZkKKe3Ufg6aAaLIaPDNpCRWK9U0xO2YwmBpEd8/Loj5UyPZwwDHMc0vk8YnFkSZwZXGp9QGiWMLf1MLvoK7UgS3ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N/itlQDe; arc=none smtp.client-ip=209.85.221.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dMOfMF5S"
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-86d3ac0fec0so6240895241.1
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 02:06:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N/itlQDe"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-523dc190f95so3215205e0c.1
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 02:16:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742375175; x=1742979975; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742375770; x=1742980570; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6Mt6xlyLVkgXyJ9Tw0INo1VgR9t4ljImMaJwxHJa06I=;
-        b=dMOfMF5SRZxt7nv/jhMxVEuiOOb6u6eXSWYfNVU8cYhEDKzo0NJRmLMoc4qNPzVuSv
-         3M2O9Fy31NPbmdII2KQXgld0tc3bvT0N+oxSAJrJfveGOipgUKBJc9R/DDGzpguE+Lz5
-         1SCzTivZgvzN9YS6Qa9iuL/tkUfQMySPC6TVRMI+V4ig/1Cjxxufk3uAh6KFcpQlGi/m
-         aQO1ERsQsEi+eaBiDN6+jLToeTUMV2nXWuZSqciIIPtaPreLDANkLmQuPJf/EiiaH4Co
-         hQESyVFYrMfx2i9U4wOOxTn8uZYYKHATYHUn64Wujy3OyshOxhwhYpUmJQGUPaDUiP/b
-         5VQg==
+        bh=TOglMw6pbt/hppclOqC32WEULGpQPbmSKDIeRGbYY1M=;
+        b=N/itlQDecoVYL2jULrQsnQckIUpMt28WB3CrmGKk8UkhprwdpDJm803Q2/XUQ0QG3i
+         dinV335eZ7R04Ha1zztFzHFDJ/r4P1JVOUFdUJGcQsGU1+m/hVY9nDjsnDjxTsH64QKx
+         7SPFnF7jpIScpHZuUP+nQpz+OajrF8YvYGCW9tiYrVBIHHEkKe4VQ3R/KolBu4JDQrUj
+         G5bgVZ0YLq71uiIb8m5nFS4hplXedvV4RzQXqk7RwVX/heD34LH3I8c4zCGHULGOqnhC
+         yijmbO5Zh7fKezxJ/uxO+YLz4C+loXumClh6kKRBKvhff2Aj/1yjRzRT/NWFqtahxQsI
+         Ih0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742375175; x=1742979975;
+        d=1e100.net; s=20230601; t=1742375770; x=1742980570;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6Mt6xlyLVkgXyJ9Tw0INo1VgR9t4ljImMaJwxHJa06I=;
-        b=OkkZbvDLZNJHCiz+7rbegm1lQ3lGrTZGZk8kq3xV6NdIoGAOvfY4L0zTi5OhEV8ifs
-         FxWkbbwfmZMBFP3mCXcn+6Y3f4gZKR7A1V4uG9vdjALxO8FkpLI6ItrFV/JBTwBOgSZ5
-         CLl2rrwcHouPQGJ74EbKdmtKCw0p6dU6ckM2E16DZ1xeINgIBQCpr8udt3FyLHcmEVEm
-         7qNa0MhZw5g7lae0Gk9vbIFqp3+Ox3aUFw7/d0NuW7BMbwJ6F46G193vftTV9fQxELhg
-         sgWCQOR7Cpq2ejeW6ds1jDc4bWU0X4z4kq3Y8nkzcfYQGQuC7GA/iG2UTQUOFpILj+dO
-         H0Lw==
-X-Gm-Message-State: AOJu0YwPSdHdiiQUiwXPSzJRqELIiYJP7G8sGlgG058EUaSugHrXDrrX
-	csW0Dt0JEYcLz2sdFFAwrugr7dFlSn8RgzaQyj0qUiEm0JBOMrQWinepONSEp3vCZa7504RKrTl
-	aaoHiIyl9gGdl/Yzs1z6H0fblLgk=
-X-Gm-Gg: ASbGncstD6g6hubAM2H3t88yLBgkjHkBYfgJvi3wFegU28ZNNgRpBsRpL3Hos9S1ksn
-	JU98OhL/bRZO1Ppwk1XRfpH0kqXvB6X2Z1DZPZM8TJr1YTpzfYSKSoNjXtCw+OpPmfWVlwiQWX1
-	EknLgLHtA22PKrk2VPbOblDH7cNhcCC83UraoAuCmb6ZZDiU/QUZXsoCd/Ng8n
-X-Google-Smtp-Source: AGHT+IE2KFvsR3ZXdW5fVR3BYhDLAsVHQDnZnRlKHKnn0jhWkyNU8AvTDVfJpHz2I4rATLNn5g66gdJtECEiKJpeLmc=
-X-Received: by 2002:a05:6102:8008:b0:4c1:806a:3b44 with SMTP id
- ada2fe7eead31-4c4ec6304e6mr1177322137.2.1742375175122; Wed, 19 Mar 2025
- 02:06:15 -0700 (PDT)
+        bh=TOglMw6pbt/hppclOqC32WEULGpQPbmSKDIeRGbYY1M=;
+        b=EjcVhHPEI5pbS5I7oBa4M2odgJ4JQ8s1vLImaLQlqQfZ+wUqzO1Lzt1mam4PMxBDrG
+         5wM+he9Ug2D4dsCAAbEwsmF9XWTlbFj+D76tBo+W4e/nXXILaVd/UUKGojuuMYe5SJ0S
+         FI2e0Y20xQ3MMBmEkmhOHOGjhTg4ZfzhBpTjjxiXCUTjbLmfuh6ZWG132WEgrBZKwsmB
+         GqAXXEUhl6dc0sBR45A7BiodIvnqKuyZUIHI4xJVVD+VeuUKosqpnw8m8XJRs526Baq8
+         91rqejnlTS0rT1pVJTGvuZd3QsWqwb3+VC8Ptqouj8BdKgOpQqtLebEX/Ti5nFa1qt7l
+         HBSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCULlvhkHOTkXyDgo+dldKVzwNqTPLGK8hQlbPMgb9umE9iO4OaKigI1lDXOAr55Xp/Cqeo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwqBjA8B0f2J5z/DCTcTR+u6WIJsL9yE6uLGOpVJuzOR8NflAsF
+	aiOdaCQxorGRXdvCORxrV1cEteewtZQCLIIqKZ4cwOSDd5bQcgHTkyNsnEmtWRsuaVDEeQsaGJl
+	DWSQOp0zQsBl1EptW6/HXOE4wgol9SuQX
+X-Gm-Gg: ASbGncuuDZ1fI3VlSM4PMGTNa55yXBMPIFCfjJCGuQP4M1O0oC7OOIk9lXK8ZcCuBkI
+	XSjMgISRI13DC8cTHVwJWZVpqlog4Yia+OfliQjua/cU6MBhiSPPXEf1e6fN4wdCgwqG41PIlrb
+	5t9vQTVvjby5R8V9vIkardxjLDXfebZj7UyuJwTZmZNgSVjbPoPsG941Xkui4V
+X-Google-Smtp-Source: AGHT+IHa+yRx36/gFtcMvdTnw26z04aj2ZxsQb9H/8plhLrJbEfrdgR1QBX4sIwp9UnDb3/IV/72sowRZbc8hvqldIk=
+X-Received: by 2002:a05:6122:4004:b0:50d:a31c:678c with SMTP id
+ 71dfb90a1353d-525890b2accmr1113323e0c.2.1742375770264; Wed, 19 Mar 2025
+ 02:16:10 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 19 Mar 2025 04:06:14 -0500
+ HTTPREST; Wed, 19 Mar 2025 02:16:09 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <CAP8UFD1vTkPH=5b++6+=koozC31=wD1gQszvdFmzb73B9HM4Aw@mail.gmail.com>
+In-Reply-To: <8734fagwn2.fsf@iotcl.com>
 References: <20250314-493-add-command-to-purge-reflog-entries-v3-0-c24e23a6146d@gmail.com>
  <20250314-493-add-command-to-purge-reflog-entries-v3-2-c24e23a6146d@gmail.com>
- <CAP8UFD2+xQQbUevHTQangg__dq2M615pHLhYYUf7b9shpShD9Q@mail.gmail.com>
- <xmqqsena2pzh.fsf@gitster.g> <CAP8UFD1vTkPH=5b++6+=koozC31=wD1gQszvdFmzb73B9HM4Aw@mail.gmail.com>
+ <8734fagwn2.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 19 Mar 2025 04:06:14 -0500
-X-Gm-Features: AQ5f1JqEWvk5vTL5K8aStd7CBCTXqfRkRhsV3szBszKGz3wSFTXNvrn5UbiJMoU
-Message-ID: <CAOLa=ZSj11TSTs6CywSX1Q9AAfW28zssS2yrGf8PmBOgd06Etg@mail.gmail.com>
+Date: Wed, 19 Mar 2025 02:16:09 -0700
+X-Gm-Features: AQ5f1JqxDsDxDQPaIuM5lAXpVowAXAZqazgSkRzQH46qsNU3Ch9H5iqunV9ysBw
+Message-ID: <CAOLa=ZQ-ndKuYMABLveNjLnbR181+RD9_NGHAJsZbdc9eV2nEw@mail.gmail.com>
 Subject: Re: [PATCH v3 2/2] reflog: implement subcommand to drop reflogs
-To: Christian Couder <christian.couder@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, kristofferhaugsbakk@fastmail.com
-Content-Type: multipart/mixed; boundary="0000000000006119980630ae5525"
+To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
+Cc: ps@pks.im, kristofferhaugsbakk@fastmail.com, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="000000000000da3dfe0630ae78cc"
 
---0000000000006119980630ae5525
+--000000000000da3dfe0630ae78cc
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> On Tue, Mar 18, 2025 at 6:44=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+
+[snip]
+
+>> +static int cmd_reflog_drop(int argc, const char **argv, const char *prefix,
+>> +			   struct repository *repo)
+>> +{
+>> +	int ret = 0, do_all = 0, single_worktree = 0;
+>> +	const struct option options[] = {
+>> +		OPT_BOOL(0, "all", &do_all, N_("drop the reflogs of all references")),
+>> +		OPT_BOOL(0, "single-worktree", &single_worktree,
+>> +			 N_("drop reflogs from the current worktree only")),
+>> +		OPT_END()
+>> +	};
+>> +
+>> +	argc = parse_options(argc, argv, prefix, options, reflog_drop_usage, 0);
+>> +
+>> +	if (argc && do_all)
+>> +		usage(_("references specified along with --all"));
+>
+> What is the intended behavior when both `--all` and `<refs>` are
+> omitted? It seems nothing happens at the moment. And no error nor
+> warning is printed, that feels a bit odd to me.
+>
+> Now, when you do `git reflog expire --expire=all` it also seems to be
+> doing nothing at all. I also think this is weird. And I don't see any
+> test coverage for `git reflog expire` without `--all`.
+>
+> But what is the expected behavior when you omit `--all` and `<refs>`?
+> Should it give an error or warning? Should it use HEAD, just like `git
+> reflog show` does?
+>
+
+As discussed in the other thread [1], ideally this should be raised as
+an error. I'm leaving it for now.
+
+[snip]
+
+>> +
+>> +test_expect_success 'reflog drop --all' '
+>> +	test_when_finished "rm -rf repo" &&
+>> +	git init repo &&
+>> +	(
+>> +		cd repo &&
+>> +		test_commit A &&
+>> +		test_commit_bulk --ref=refs/heads/branch 1 &&
+>> +		git reflog exists refs/heads/main &&
+>> +		git reflog exists refs/heads/branch &&
+>> +		git reflog drop --all &&
+>> +		test_must_fail git reflog exists refs/heads/main &&
+>> +		test_must_fail git reflog exists refs/heads/branch
+>
+> Should we test output of `git reflog list`?
+>
+
+I don't see why, we're concerned with individual reflogs and 'exists'
+help check against those individual reflogs.
+
+>> +	)
+>> +'
+>> +
+>> +test_expect_success 'reflog drop --all multiple worktrees' '
+>> +	test_when_finished "rm -rf repo" &&
+>> +	test_when_finished "rm -rf wt" &&
+>> +	git init repo &&
+>> +	(
+>> +		cd repo &&
+>> +		test_commit A &&
+>> +		git worktree add ../wt &&
+>> +		test_commit_bulk -C ../wt --ref=refs/heads/branch 1 &&
+>> +		git reflog exists refs/heads/main &&
+>> +		git reflog exists refs/heads/branch &&
+>> +		git reflog drop --all &&
+>> +		test_must_fail git reflog exists refs/heads/main &&
+>> +		test_must_fail git reflog exists refs/heads/branch
+>
+> Shall we test HEAD in both worktrees does not exists?
+>
+
+I think it would be a good addition, but I'm not sure if its worthy of a
+re-roll.
+
+>> +	)
+>> +'
+>> +
+>> +test_expect_success 'reflog drop --all --single-worktree' '
+>> +	test_when_finished "rm -rf repo" &&
+>> +	test_when_finished "rm -rf wt" &&
+>> +	git init repo &&
+>> +	(
+>> +		cd repo &&
+>> +		test_commit A &&
+>> +		git worktree add ../wt &&
+>> +		test_commit -C ../wt foobar &&
+>> +		git reflog exists refs/heads/main &&
+>> +		git reflog exists refs/heads/wt &&
+>> +		test-tool ref-store worktree:wt reflog-exists HEAD &&
+>> +		git reflog drop --all --single-worktree &&
+>> +		test_must_fail git reflog exists refs/heads/main &&
+>> +		test_must_fail git reflog exists refs/heads/wt &&
+>> +		test_must_fail test-tool ref-store worktree:main reflog-exists HEAD &&
+>> +		test-tool ref-store worktree:wt reflog-exists HEAD
+>
+> Naive question: why is `test-tool ref-store` used and not
+> `git -C ../wt reflog exist`?
+>
+
+That should work too :)
+
+>> +	)
+>> +'
+>> +
+>> +test_expect_success 'reflog drop --all with reference' '
+>> +	test_when_finished "rm -rf repo" &&
+>> +	git init repo &&
+>> +	(
+>> +		cd repo &&
+>> +		test_commit A &&
+>> +		test_must_fail git reflog drop --all refs/heads/main 2>stderr &&
+>> +		test_grep "usage: references specified along with --all" stderr
+>> +	)
+>> +'
+>> +
+>>  test_done
 >>
->> Christian Couder <christian.couder@gmail.com> writes:
->>
->> > It looks like 'single_worktree' is only used here. This means that if
->> > a user forgets to add --all and only uses --single-worktree, nothing
->> > will happen and it seems to me that the command will exit with code 0.
->> > Even if `git reflog expire` already works like that, I think this is a
->> > bit unfortunate.
->> >
->> > Otherwise this patch series looks very well done to me.
->>
->> In the thread Toon too seems to have noticed the same "what if there
->> is no --all and --single-worktree is given?" gotcha.  Together with
->> the "current would be better name than single", we can consider that
->> these funnies are to be "consistent" with the "expire" thing, and I
->> am OK to see us move on.
->
-> I am OK with moving on too. We can "fix" the behavior and naming later
-> in a dedicated separate patch series.
->
+>> --
+>> 2.48.1
 
-Seems good, let's do that then. I'll see if I can follow up but this
-could also be #leftoverbits if someone wants to pick it up!
+[1]: CAOLa=ZSj11TSTs6CywSX1Q9AAfW28zssS2yrGf8PmBOgd06Etg@mail.gmail.com
 
->> An alternative is to "fix" the behaviour
->> and naming of the "expire" first, and then use the same improved
->> behaviour and naming when adding "drop" as a new thing.
->
-> I would be OK with that too.
->
-> Thanks.
-
---0000000000006119980630ae5525
+--000000000000da3dfe0630ae78cc
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: c4c525a23b8b3b09_0.1
+X-Attachment-Id: 583221155cbdce50_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mYWlRVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL0VMQy80aituWnMyajFMYVRWSXplelVZV1A3bVVhQwpIWnJtNEJLOFFl
-NEk2QXQzQzNXUlJCdnZDc0xWQlRUY1VYRHZYK0UzVFlveWwzMlFuUmFyc0pTYmxFQXVzWkxJCmNo
-aWdOYlBsYzRDMVcvQSthVTQrejFJYTF5ZFdFRFFabGwxd1pFalVWM3JaaWV3NWQrL3NZZHllSHkw
-VDdac2oKbm5ySDN6dDljbDFEQlF3cFpDNmJraU0zZEdsZ0RGWk1BVVIvWHhkUEhGeUxlTmZRamhH
-YkFYOUwxd25LcGVoTgpQLzlqUHdkRHI4b0c2b1JZd1M2S1ZNWkdSb1YvVk01aXV5VTMvWW13V2d1
-cjNyZi9HRVluYlN4SXhxNmExalVDCmhURi9YdjBLTDFHaFd0MTJDRkhtck92NXdaL0RIcGZlSENq
-MzZpc0JPR2hMSk9kRmF3UUViNHRjY3RueUllQ00KM0NVSGxtWEZIcXA2aVJPMjlFNkZDYW03UWtq
-K0JzbXpodTlXaFFXcTJOMGxtenhDOUtJYVpkQXV4MjRsK2NnaQp2WjFPcDlJUzlOck9GN3ZRdmtr
-Um05N09TTHlNWm9BbWNsZzRzb0JuR2lxQWltbVFYQVgrU2tqSHlwVEdrSUxMCnp0aGpqbk83bEhI
-dDA0dElaS3Zoa1RNdGdoNkJzTnMzVVRsRC93TT0KPTBhYXEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEpCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mYWkxZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNnEyQy9kUlYyMGNscDlRQVVJNWxLNUNPWjVqUVRUagoyMExUVVhjemFw
+U2JQSncyRGd1UXNOemQwdFZQWU5kYmYzSk02R3hzd2FydWV0MkdDbDBnR3ZqaXR2QjhyV3lQCnl6
+dkVBN0pNVWRmWW96TEg1OUx2S2NuREc4cTNmNmxjRnFkT1hJUHZLb2dyUG44clBjWVp3ZklRL1lK
+Wnc5eGYKQ3M0RmVJZGJtTUY1Z3BVSmtPS1pFVmZmRW16MEdZc3FwWDFKL1lnaGM0UDV1N1dDTGtw
+ekpuME8xQzBYL3BpUQp4UXNVU1dHcjNkZFl3TmUwWVhzT25JSjUxallyalpxaTFzRmRmMjM2R1Rk
+N0RqMnVKZmNsOUxQTmZESXB0bFozClUrL252VVFQRE1wYTl3OVErZUJacnFVaVg4SGF2aEpWWnMv
+dUN2T3lWbkpBaTZnVTNyeVp3OVhOSjJzSXd6dUsKeVF1S2hhZ0FQRHFDeFArNUN0clJpUlUxV0N3
+R1Z3WVpkaTJKMUNDRnVPL0t3S1JuSy8wMmJ3cU5TUlVudkFRZgpKNFhHL1hHWGFqU1ZsdkFFZlgy
+cVF4VHNKQ2twaUxTdkppV3V3VHJ5OTdTSHBDTWwyWEdvRC9udzZvOWwzMkpSCmhUOU5tWG45SXJW
+YWhaUmZNN3hTVkR1a2IyM1UxWnZ3aktpTWdBPT0KPURhYnoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000006119980630ae5525--
+--000000000000da3dfe0630ae78cc--
