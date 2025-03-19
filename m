@@ -1,75 +1,72 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC571E231D
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 17:50:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C161D1AF0D7
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 18:02:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742406640; cv=none; b=lCxe9PxBzn/lmyzmc/UEmkEDpKVpPh0eYzjL/xrHNqZYTU8w2FDI5PCTj6fGJMgsszPQOn0eIAe2D1z7Yd7oDUsqSW4IWDtS7/5dONUsteF6F20t/yn3QMBPT/qELFwR/ZqDbo4BHGciA3jeNX2TdrwCGaAb1bJKm9S7yUZTMwE=
+	t=1742407378; cv=none; b=vEK0PiIAwVZbRCRqC/dJsRx3vCeNIJNGs7tHFt20egy0pLPf5906ePEIUBsLjHWnZ3AMpnOTJM6atlijhUX/z7LfBCCSSMEEYF89r2Rr3ZusbA82Tn1eAr7Adi7uOD5oITBsCMj8E2znO6RXYEQhAYsA2u4zHik+WKmC/DTjR+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742406640; c=relaxed/simple;
-	bh=siOF+63JTs+lrBkhe5UyK41/zHVgYw7BnooK+bOxX04=;
+	s=arc-20240116; t=1742407378; c=relaxed/simple;
+	bh=BLTcp49zYtPBUTf6hMexNq0+3mPL06pjQflImxU7hVc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jpyk9w0/cfO3vk/ll3ZRL8v89ayX0LTRicnyEIQqkWtRot2eY5hPcMATv23bhw0utxhLv4Is4hoL7bxphd3fUipfyqOWG8qV11N3ie2aMv85Ss1loyWgeYnLcTV5jOCRsYHWOnU8LTJM7oJAO3CV2u+aBEoc4uRDS1MAdqnanHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=I7AcbDnf; arc=none smtp.client-ip=209.85.222.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=Itg82hKCElU21rKLuoSxN+gP6lBzC+/+0aoxTSSR6KT/KKchXn3ddi2NDv9lakfqfen8BwsYj0iWcMt1V6I39uF1sFLnz9YsCIHyoqrt37+iWh63PRPbhhGYvnd6dr3Hn8BDlIpT/mtyCqutWx3CiB8YgZoRappZcVmWg0kELWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=iCC/LTB8; arc=none smtp.client-ip=209.85.160.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="I7AcbDnf"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7c592764e24so98840885a.0
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 10:50:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="iCC/LTB8"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-476ae781d21so69487051cf.3
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 11:02:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742406637; x=1743011437; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742407375; x=1743012175; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lcmine9A2eotyEFLy+cCeSwNlGcAD70NeU+bvVrIJiM=;
-        b=I7AcbDnfrKrnKbVIIRtmVO3gkboolo7KRmCaMUwRVoaSkX9PopaRGRNmjG2gkkshRB
-         HWchUsmv3b46FoSobTBC/waNnwMFcivIQkvf5VHVWcxUTBoWYXvsYeqIjTu+2RLVmtvh
-         aG4lI+8LKGsz9k7qmUTuofy8q+ltBzb6w6ZQjCW5gg7h0vcAUN88atVABWa8sAusMtvm
-         ejWB9rNhLca4sbIsMymgyfhS91qogM36dGsn40vVvxHK7izipYiHEygQ0DLt6nkxSTPn
-         YkO6tdmIlSebzawptz9HLQTwqq5O69qnKX+EFyC74nxu+TjsRfHMDQYYAsijN1nc0JeU
-         7Mvw==
+        bh=82V+9OBVhfz1rl0X3ToLYFEKpkQWbuoU72EMdi4LkX4=;
+        b=iCC/LTB8TVADAYaiVSORHgkprC85S/LNbvb0QZUTnTbvgDXQtmh2GHzoJt8wY9PceL
+         MZvi3rGi3MZQtJdetmGkpQp6vcsuL21Na/8Kq34R3UQDt4olfHSy0nEh6pf+GrYYXFgR
+         W8lt3uzgozXjs6FLhP5mzLBJX40TM/mp3UDNQEDyZCKN9m+sgXQQj2vms/yNDtlnrb3u
+         0LdWIdDD+5PKVnooMl2XW50wbMHps5aKb5bNRs52RfXCy4FqndaPBIJqS2yI4qrjNGEx
+         r66pyK+ojSoNNSgaSRdV+MWz8hmUnbpzpbMVRw6l7yr5NfwCSYfBKtjp/J1NbdzTNp0i
+         oPyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742406637; x=1743011437;
+        d=1e100.net; s=20230601; t=1742407375; x=1743012175;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Lcmine9A2eotyEFLy+cCeSwNlGcAD70NeU+bvVrIJiM=;
-        b=X+YYx07vireUU4X6liMfXWGfOOQk0hC0Ctp97Wm7fC+P11ngVTpF/j4tfOkm+nj6wQ
-         DnYgooUz1hIiMQbQ0Qadl+C07kxEp2h37QTei5YK4M3TQ8m2dMZdRJ9sEmbFgtoyrgXT
-         T42IGeh/Vd58avQpHhHgpn5pFK3/69Rvvt99pztng4Vrx65J3s9vrVhcYUa579A52dmT
-         m62jied/BIWky/GsBqVVlFHNGDPluABNqOD+wb1FZEEUWmRek53IKwcnsYNwRonvB2OA
-         fHmpSS7XzwBr7TSDFosHM33b2UQRw1m/zWFcD6X/gT1udcbXn72MJebFA18VeDpbp3Np
-         1fgg==
-X-Forwarded-Encrypted: i=1; AJvYcCUwjMq5c77RkQE/AVYf8TB6bTse0iHYQZ/qwysiJ6Cx7R4SDGUNmWIW6SkemoJaqVf0FhA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyc0PjQVdnk5ForpkgBbDc8eMeU55EENZVlvJ/7uMyj7Aoaz+U8
-	8nnq5I84/qysGu7XprF0CpPq0D3zH1NARrhozEypZNM/hL6dX20lhvKUAHSriP0=
-X-Gm-Gg: ASbGncujxwJhdufEG6U/vYFhIKRooGuShYSQY1r+TV6sFklQgCxvYajjz/+w0awHkM7
-	sHEC4zgM6HmnkbZeSZQShogz3nvMWNuepdXwajYmhviop/aMLDprMk/y4j6Bbn3Wy/omJ3V55Je
-	kYAAWPgj21JV6X1L/Pq661JoLj1NsCLXk2wydgVbhBsGzLKq+oVROlWLBHTiAsCydan0Pq4YZFS
-	SJ0qTiDSreriTY4jH7wCpOpg0s88fRs18uaE7s14hurd4eEqpjH4ym/42R2tbZlw6U77rZ/ZhNy
-	UmppWH5+1GVKKVp74mEwRMtkyvMBmnld1oz+H9UkjQQ0vQBW8DeWo3adFsbGzRRw6TgrcCYOzS3
-	F7gXFysMBkX06+4duurVz2XQ5AVw=
-X-Google-Smtp-Source: AGHT+IEn55NRNCcReP9KcVt4OPxg1eDbYoVTQPieYu50N7/KM0yjNkb1snbaW3bjJBeVbT/yGi+6ig==
-X-Received: by 2002:a05:620a:2981:b0:7c5:438b:78 with SMTP id af79cd13be357-7c5b04f238dmr62349185a.6.1742406637590;
-        Wed, 19 Mar 2025 10:50:37 -0700 (PDT)
+        bh=82V+9OBVhfz1rl0X3ToLYFEKpkQWbuoU72EMdi4LkX4=;
+        b=SNEQ7GkK4tfpd721czpbtNuUkrS90OlwgWSVT62ZuWnpyneD2n8R+X/RKalTowynrK
+         0r8yIYrt5XXmDWWz+zimFTwMkwlWg+SjLIR9T0BA3EyX6e/ypwgps+ZdoUlaQeZYAShi
+         yq0gcQ8FkDdOK0Ngzz0Vf84dG5MsA3ZrhvFmjB7shjNiZpIK+vA01dPU2AjWyL3/tR2a
+         5bT8cPSksXrc37MOzBTYx7k84/5Huu4X2acLOgp74qcendjt5bHtU1MyBvIh2rfkssaD
+         X5Y7Mbz/FQjAslr/2I/0x5c7AqBKj0JgbhZrqhJ1Pn9Wg1NHxW424dcG5KlMmbY5CJQR
+         qhQg==
+X-Gm-Message-State: AOJu0YxTODjxoXiJEDvOH0/Il2+6FQX8uPNfulbbL6pCfRgMXNfgzo8+
+	edb1HFDpC75RHryNKLcX9d3QIpYNCnm6Q/ibfU8By/63nxwadpuZIf1aNomURIc=
+X-Gm-Gg: ASbGncueViwst5wjAgZA3/RnG0cpkxz51Htb6zMVSi/QgttxBy/fhA52RIlEieMxrWD
+	urUb8rgGeVhqUA/5B911ZodMDPfOkzh9MOdJcxwXfiSWh9VLgA5i46ptiZWvhCo12M4R82xStog
+	hYQ+fZrjSSNfU3fQMVFNCYjqd7D6FNQS4rytNJUQqzhnywuatxusdyUmrAW6hoSjECGA10b/83c
+	82Y4uU9yBlDGqN2qU/+lypCxQKpv+cQsiZsipFyc/ciYwj9JxyQaymt8hR4tvFOH+mNFWFLeBz1
+	qwPENPVeP2g7CcLDTJ21AiCtU+1ezeMebs00q9KQLM54C+iL5yu2nnIoKw8wbX/m2XEoxQYeTrH
+	ToGLrxEYe8JykkIb14IO5zcc3jXs=
+X-Google-Smtp-Source: AGHT+IGk1X7i21F4hTj7lbF2xRYXW4VUrTZZyEziEGyq3zd/B0h4lmtDiJLNXuy14GXDQo2GvgzxTA==
+X-Received: by 2002:a05:622a:578f:b0:476:8eb5:1669 with SMTP id d75a77b69052e-477083dec00mr64773771cf.32.1742407375464;
+        Wed, 19 Mar 2025 11:02:55 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c573c9e081sm885031185a.56.2025.03.19.10.50.37
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-476bb6735d0sm83603721cf.44.2025.03.19.11.02.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Mar 2025 10:50:37 -0700 (PDT)
-Date: Wed, 19 Mar 2025 13:50:35 -0400
+        Wed, 19 Mar 2025 11:02:55 -0700 (PDT)
+Date: Wed, 19 Mar 2025 14:02:53 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: phillip.wood@dunelm.org.uk
-Cc: Scott Chacon via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Scott Chacon <schacon@gmail.com>
-Subject: Re: [PATCH v3 2/2] bundle-uri: add test for bundle-uri clones with
- tags
-Message-ID: <Z9sD63+d+EQKSMXM@nand.local>
-References: <pull.1897.v2.git.git.1740825238.gitgitgadget@gmail.com>
- <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com>
- <d148b14c390f74e86bfa14c05e9e186fdcecbeb8.1742312173.git.gitgitgadget@gmail.com>
- <e4244e04-d2f3-43ab-88cf-58d9804731b8@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/3] http.c: introduce `set_long_from_env()` for
+ convenience
+Message-ID: <Z9sGzWNU5Gn5c/+8@nand.local>
+References: <cover.1742336481.git.me@ttaylorr.com>
+ <ba22a121fa699e490de00eba988552b6c10fe2fd.1742336481.git.me@ttaylorr.com>
+ <Z9rqK8QSs2dA7t6S@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,78 +75,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <e4244e04-d2f3-43ab-88cf-58d9804731b8@gmail.com>
+In-Reply-To: <Z9rqK8QSs2dA7t6S@pks.im>
 
-On Wed, Mar 19, 2025 at 10:33:48AM +0000, Phillip Wood wrote:
-> Hi Scott
->
-> On 18/03/2025 15:36, Scott Chacon via GitGitGadget wrote:
-> > From: Scott Chacon <schacon@gmail.com>
+On Wed, Mar 19, 2025 at 05:00:43PM +0100, Patrick Steinhardt wrote:
+> > diff --git a/http.c b/http.c
+> > index 0c9a872809..be564fd520 100644
+> > --- a/http.c
+> > +++ b/http.c
+> > @@ -1256,10 +1256,15 @@ static void set_from_env(char **var, const char *envname)
+> >  	}
+> >  }
 > >
-> > +test_expect_success 'clone with tags bundle' '
-> > +	git clone --bundle-uri="clone-from-tags/ALL.bundle" \
-> > +		clone-from-tags clone-tags-path &&
-> > +	git -C clone-tags-path for-each-ref --format="%(refname)" >refs &&
-> > +	grep "refs/bundles/tags/" refs >actual &&
+> > +static void set_long_from_env(long *var, const char *envname)
+> > +{
+> > +	const char *val = getenv(envname);
+> > +	if (val)
+> > +		*var = strtol(val, NULL, 10);
+> > +}
 >
-> Thanks for adding this test. Calling "git for-each-ref" followed by "grep"
-> follows the pattern of the existing tests but I'm not sure why they don't
-> just pass the pattern to "for-each-ref" and avoid the extra process.
+> Hm. We don't perform any error checking at all for whether or not the
+> value of the environment variable is a valid integer. This isn't a new
+> issue introduced by your patch, but now that we have a central place
+> where it's being parsed I wonder whether we should be checking for
+> errors?
 
-Indeed.
+Yeah, I guess it's technically not "new" in the sense that we were
+already doing:
 
-> Do we want to just test for tags or are we really interested to see all the
-> bundle refs created when cloning? This applies to the previous patch as well
-> - we obviously need to change the expected output but I'm not sure changing
-> the ref pattern is necessarily a good idea. After all the point of this
-> series is to create refs under refs/bundles for all the refs in the bundle.
+    xyz = getenv("XYZ");
+    if (xyz)
+        *var = strtol(xyz, NULL, 10);
 
-I think we should be testing that all of the refs we expect to have made
-it over actually did so. This diff (applied on top of your series) does
-that:
+I suppose we could do something like:
 
 --- 8< ---
-diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-index b1276ba295..9b211a626b 100755
---- a/t/t5558-clone-bundle-uri.sh
-+++ b/t/t5558-clone-bundle-uri.sh
-@@ -128,13 +128,12 @@ test_expect_success 'create bundle with tags' '
- test_expect_success 'clone with tags bundle' '
- 	git clone --bundle-uri="clone-from-tags/ALL.bundle" \
- 		clone-from-tags clone-tags-path &&
--	git -C clone-tags-path for-each-ref --format="%(refname)" >refs &&
--	grep "refs/bundles/tags/" refs >actual &&
--	cat >expect <<-\EOF &&
--	refs/bundles/tags/A
--	refs/bundles/tags/B
--	refs/bundles/tags/tag-A
--	EOF
-+
-+	git -C clone-from-tags for-each-ref --format="%(refname:lstrip=1)" \
-+		>expect &&
-+	git -C clone-tags-path for-each-ref --format="%(refname:lstrip=2)" \
-+		refs/bundles >actual &&
-+
- 	test_cmp expect actual
- '
+diff --git a/http.c b/http.c
+index c13c7da530..6b01ad7a53 100644
+--- a/http.c
++++ b/http.c
+@@ -1280,8 +1280,20 @@ static void set_from_env(char **var, const char *envname)
+ static void set_long_from_env(long *var, const char *envname)
+ {
+ 	const char *val = getenv(envname);
+-	if (val)
+-		*var = strtol(val, NULL, 10);
++	if (val) {
++		long tmp;
++		char *endp;
++		errno = 0;
++		tmp = strtol(val, &endp, 10);
++		if (errno)
++			warning_errno(_("failed to parse '%s' (%s) as long"),
++				      envname, val);
++		else if (endp == val)
++			warning(_("failed to parse '%s' (%s) as long"), envname,
++				val);
++		else
++			*var = tmp;
++	}
+ }
+
+ void http_init(struct remote *remote, const char *url, int proactive_auth)
 --- >8 ---
 
-While writing the above, I wasn't quite sure how to follow the test
-setup. It looks like it creates the following structure:
-
-    $ git log --oneline --graph
-    * d9df450 (HEAD -> base, tag: B) B
-    * 0ddfaf1 (tag: tag-A, tag: A) A
-
-, which we could do with just:
-
-    test_commit A &&
-    test_commit B
-
-But even then, I don't think we really need to have more than one tag
-here to exercise this functionality. So I think it would be fine to
-simplify the test to just create a single tag, which a simple
-"test_commit A" should do.
+On top, but TBH I'm not sure how much value it adds. This is only used
+for reading GIT_XYZ variables out of the environment, and we're already
+pretty lax about strtol() errors in other places. Since this isn't the
+interface we expect users to use, I'm OK to punt on it for now unless
+you feel strongly otherwise.
 
 Thanks,
 Taylor
