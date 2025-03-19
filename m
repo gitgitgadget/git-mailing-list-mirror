@@ -1,172 +1,182 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46951211707
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 07:25:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D092505BF
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 08:00:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742369130; cv=none; b=eer7ntjbNzEZlXzbUD+lLqUrsmYVIdiGgJbYi4RQVNtr/IczVDlBIxJ2+ywdUSX9s4Vl7ldY7ptYtR5PdkfRYbQ4Zq1K+ZtyGj4K0Fw524b+GvrD9bXlR8AfCJtHYmuF8jRIXse8OoN13yVYlma9gXvrOjSM02zhJIMEA7n8quY=
+	t=1742371205; cv=none; b=rl/qSKpYWapgLeQhmulPK2T+wT+JLHcaH1gImOpoOkIFJWfuRPdi+3/c2HW9Vdx5vIsX7cH/E9WmFyyPCt41S2hNauQwUkezMVdekqFMKCpWv7I/yUejl5COBpAVeWFW7DrxC7JKncJffa0krCaBdDAHw+3QqHx8GlhuH/fBzO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742369130; c=relaxed/simple;
-	bh=SNgM7ev5oZspnkXilnvWJHzdTH0jQUnMKeqq/Ju1mJI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MNpSb4dbeP0INP87yqqY1vaBeJ47VSFmmHkMeS9z3rTCmHPOeNOZ1avgxnXY8+S5ckBc3QYzE2mRbTCVW3Ox6E2KhciNJQn9FHD24Tmc+jwhQvPkjyGf2mYXZQEPA1icN9KrfP/noQVhfhA0hAYmCnLsOLEb+2TPaL/E2imAIvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JGFCtujF; arc=none smtp.client-ip=209.85.208.178
+	s=arc-20240116; t=1742371205; c=relaxed/simple;
+	bh=ga4Pb0P06pCEXo5/nu6deGtIdVT5Jws2Q+zxw7nACLc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=VJLdWueZKJL1yC2rKwLEuqeBGwOk242PYkzjl9IvvBK86CQNZv+TAc0SRZaPHoefeIfJzTCoxcbP6zU86F/Bv3Ita2bFW7O5zhc5OM2GG4eic1TdZ9OXSHXAwgdlWF3MOuO9BXqQDbGCAlO3eLNaizx3R7FRUwhgayBRyPC42NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aF3hMKop; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JGFCtujF"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-30bd21f887aso59480461fa.1
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 00:25:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aF3hMKop"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-226185948ffso60182585ad.0
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 01:00:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742369126; x=1742973926; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742371202; x=1742976002; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IDLZMLZ/XVx0yVCqbwA8+osvBsxeqEQ9KVgNVlqfG04=;
-        b=JGFCtujFlEemQ4zq240PEsqEBVjrYMeRd+q+934hYfO8s/gFm1JKh0ma4XCKO+l3O3
-         9K/h7w4ot3vUuXpPoWm4uD1n9FXRnrD7LH1eKgrfKNv7jOjbyjZK5R6zfpalpusOz8r8
-         9DfGtqbYDdd2m3fKpvleBBf0ZPjH3pS6i80VJnW15bx74PYUGmsyEAFc2Y8+gKVlW27i
-         ciQlTZc2rP3KnZgjTjV98k0TlPbBzeNvK209/NtjPBp6fWhjgd6njH1NWUXo/+X+M1TU
-         M9BxbnVzmfYkJ6kJ/0McG5RMTfDjnz6O3ENQsjbWrxQKBNFVFkhrf5HWhxR++9oZkD1r
-         i5rA==
+        bh=SzPQhCR5k/0ZhGhfXW9EzM0w5vww2LFzXukmkbATTdo=;
+        b=aF3hMKop76iKaDzhE0PPCOhYofHQkRJT7PHwoAWdrr9KyB2oi7N+KC3tMLA+5vYcL/
+         7fsG2YQDSg9NaLT8XjgEs9Xcm9ux6EpWMoUag2iIJeai6rak2y5+frirqZ2nIM2nAZjB
+         5c76xab8kl7g0GEgfQRTnfkXXwCsLrHUCw58k4HHmuCJ+5qrh5kibu6b5iGHVi4dKP2t
+         6Hgci0c4n/AXQ79hHBVkmvYLLkZ6yEyBD6v4UATaLf0iCWQylp18Y/1YTdCBg9InUxGP
+         LWFN8wVaAAKRQV+G6uQReLAUTkOrxq7DDbk9rTo7nNbywg+D2FanvflZn4pNPIc1573y
+         U4qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742369126; x=1742973926;
+        d=1e100.net; s=20230601; t=1742371202; x=1742976002;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IDLZMLZ/XVx0yVCqbwA8+osvBsxeqEQ9KVgNVlqfG04=;
-        b=I7wi1rsm3I4SirrQyaJhf1EzxEe2pFsVzl3GkPuN/VbSTALZ9biJKcmjtV748gdVi1
-         sHLyqEa+sU9TqvtYsR6WK3e2kZnVbxpZgMGulkR3je04rSmMG2l+c0SdNMyIlodXn+s1
-         R3BMuhcZkBQkBAYydJtkK2nZQfchjnCzZeGFrbpfX5f5Yjm8Y3G0XJb6T5GyEN35vTFW
-         7V/uVKh725FDKU5QVTA24WF0dpEhytUuZyznLKyllg3uUjdyGXgqVkmx+o2zclKT8SeM
-         FeaT0BSOa2FH21zlUMnSzeoyRIXGUCGCAwUDE9j8KBaW7arKMYZVl7MBQSj97LV6ZyV/
-         k+aw==
-X-Gm-Message-State: AOJu0YypGZQ4s6WLIfUOMKRr/sS6llPnB/Q2PY6tNcpPb9QQJ8DDi9Xk
-	qvp6AtLPcUqR1dwgkZML1QIeXQghoiEhIDm/Lfh++TWLAKy1olquUoO+Qw==
-X-Gm-Gg: ASbGncv0zyPx7qYxbu+pq2MGBo73jKYY3uMQ9D/N6itynDothz8DKGAdUqc1oFatTjj
-	RiaxOPxfT/Wpy/zD8kiMDPhXrorJlrj2GzUdmgHhT3kyjTx49TI1WsKDy1oKeuSXpTeh4HIM1k6
-	EMw1WQl4mpYBqlW5SO7pzSo4skvRwgrF0hX9YYDr7CryOA1RWy1/eQ0FkBD+90RQGbMfNEIn563
-	xVU8BhruRr0lHl14FZautkBPlhq7puH8RQjieGOz0uOaf/AsvPmGxbpiXrztDbIEbKj5pZhGRFx
-	dWh0pz1Ss3uoqP1fvg/UJMGneZo2hQa+sJg/4qhGXcMfVI0vFfQLk5a9ls5GuDCfMKlS+Biu
-X-Google-Smtp-Source: AGHT+IEukpp04nOZD5cg2LCxdZDGdDa4BcPg/2c5C6esupfWq/ubQAXfW6TRF5CfnoEEmAwKigbozw==
-X-Received: by 2002:a2e:a582:0:b0:30b:d05a:c103 with SMTP id 38308e7fff4ca-30d6a43c383mr4774181fa.29.1742369125749;
-        Wed, 19 Mar 2025 00:25:25 -0700 (PDT)
-Received: from localhost.localdomain ([217.116.228.14])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30c3f209d6esm22089541fa.112.2025.03.19.00.25.24
+        bh=SzPQhCR5k/0ZhGhfXW9EzM0w5vww2LFzXukmkbATTdo=;
+        b=iLxHQlJ4Bde2oFXZHDaVJ+wwtG8vsvmfHN4IIW7uh8HMadIyNSxZdPDFp8XTvzaypy
+         /C5h4LPBYVrx4CJGQBztwJ/lPsgsA8soBPTBfXXt64ta+Wt2OF0MdCy/m3prpuXTA3V6
+         UYckfioayv45xtfjQ25SJd6DNXun609HnHjgcCdg3xp9swpz19M8BmvSZ6OiJkhpxVY5
+         DniqLkDjO/JMrz2AYE72JakwPKkTSQl8kzgTbEbqcx1/fAOlwDdvkKeKl7XjuOTrX/oR
+         AaU+BdQPvUKnFGtEQpZq1UNnNIQCpcP3A+6yIy8uxFCBqVb4FKLpjulAyBfAfhOlHYCA
+         Upbw==
+X-Gm-Message-State: AOJu0Yx4rf/fqxHwXKTQOczChV+krbsAZ2WaD8yf7XBKACJ9JC0o4nt4
+	y5NbP5XPtcz3cKfvacGmEL+u2oXNrs57LUkkve/xkJ5fevnLHgB+dzfrnQ==
+X-Gm-Gg: ASbGncs9VCcSep1OU+2J+/zxw7RhQJ2UHmPtk4mpS0nWX+eQfvALSF/PBQFP4hy0Bkt
+	YmVv8WDkFl1wdIoRern7hTfCaK5P2Dmbs9RtGsID+x3BSkAr+5rh5ZtjXDDw/s0Vdlg7kbpuahH
+	m9blSeQBg+pYpjk0QULc1S3twVTP2VnsunJn0TIrrIF9HjlF0G3bx6r+W8KKHXBRKFYw6Mup7d/
+	o1nN/VelD4Y45wsk9oGY2qvmP496SFPn6gM6ChPGxfZD64q8Dn3r/KPQaKDGRgvIWEvL2u/6DfI
+	EteIBsfGkJl63K6kBTCDRx3O/V9JwQ2/4eNck8Qu
+X-Google-Smtp-Source: AGHT+IGDG6Xe6s5TmzPqRkvmyIYPjzofgz+ro8grRjGV1biJCRYw/4UXShpl9fB7oQhieKkJtcyp9w==
+X-Received: by 2002:a17:903:2f90:b0:223:5645:8e26 with SMTP id d9443c01a7336-22649817becmr20523405ad.20.1742371202091;
+        Wed, 19 Mar 2025 01:00:02 -0700 (PDT)
+Received: from meet.. ([103.86.19.121])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22629cfbcb2sm32866715ad.176.2025.03.19.00.59.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Mar 2025 00:25:24 -0700 (PDT)
-From: =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+        Wed, 19 Mar 2025 01:00:01 -0700 (PDT)
+From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
-Cc: Andy Koppe <andy.koppe@gmail.com>
-Subject: [PATCH 8/8] pretty: refactor parsing of decoration options
-Date: Wed, 19 Mar 2025 08:23:41 +0100
-Message-ID: <f4d0d5c00ab7d314d19d82335d7381959ee6fb41.1742367347.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.49.0.472.ge94155a9ec
-In-Reply-To: <cover.1742367347.git.martin.agren@gmail.com>
-References: <cover.1742367347.git.martin.agren@gmail.com>
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	Meet Soni <meetsoni3017@gmail.com>
+Subject: [GSoC PATCH v4 0/3] reftable: return proper error codes from block_writer_add
+Date: Wed, 19 Mar 2025 13:29:40 +0530
+Message-Id: <20250319075943.28904-1-meetsoni3017@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250312121148.1879604-1-meetsoni3017@gmail.com>
+References: <20250312121148.1879604-1-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-After having spotted "%(decorate", we see if there's a ':' and, if so,
-reach out to `parse_decoration_options()`. We then verify there's a
-closing ')' before actually considering the placeholder valid. Pull the
-handling of ':' and ')' into `parse_decoration_options()` so that it's
-more of a one-stop shop for handling everything after "%(decorate". Let
-this include freeing up resources in the error path to make it really
-easy to use this function.
+This patch attempts to avoid making an assumption regarding error codes
+returned by block_writer_add().
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- pretty.c | 52 ++++++++++++++++++++++++++++++----------------------
- 1 file changed, 30 insertions(+), 22 deletions(-)
+Changes since v3:
+    - split commit based on the functions it alters
+    - add comment back that was earlier removed.
 
-diff --git a/pretty.c b/pretty.c
-index ddc7fd6aab..d5a8ceb7ef 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1430,17 +1430,6 @@ static int parse_decoration_option(const char **arg,
- 	return 0;
- }
- 
--static void parse_decoration_options(const char **arg,
--				     struct decoration_options *opts)
--{
--	while (parse_decoration_option(arg, "prefix", &opts->prefix) ||
--	       parse_decoration_option(arg, "suffix", &opts->suffix) ||
--	       parse_decoration_option(arg, "separator", &opts->separator) ||
--	       parse_decoration_option(arg, "pointer", &opts->pointer) ||
--	       parse_decoration_option(arg, "tag", &opts->tag))
--		;
--}
--
- static void free_decoration_options(const struct decoration_options *opts)
- {
- 	free(opts->prefix);
-@@ -1450,6 +1439,30 @@ static void free_decoration_options(const struct decoration_options *opts)
- 	free(opts->tag);
- }
- 
-+static int parse_decoration_options(const char **arg,
-+				    struct decoration_options *opts)
-+{
-+	memset(opts, 0, sizeof(*opts));
-+
-+	if (**arg == ':') {
-+		(*arg)++;
-+		while (parse_decoration_option(arg, "prefix", &opts->prefix) ||
-+		       parse_decoration_option(arg, "suffix", &opts->suffix) ||
-+		       parse_decoration_option(arg, "separator", &opts->separator) ||
-+		       parse_decoration_option(arg, "pointer", &opts->pointer) ||
-+		       parse_decoration_option(arg, "tag", &opts->tag))
-+			;
-+	}
-+
-+	if (**arg != ')') {
-+		free_decoration_options(opts);
-+		return -1;
-+	}
-+	(*arg)++;
-+
-+	return 0;
-+}
-+
- static size_t parse_rewrap(const char *placeholder, struct rewrap_args *rewrap)
- {
- 	unsigned long width = 0, indent1 = 0, indent2 = 0;
-@@ -1735,20 +1748,15 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 	}
- 
- 	if (skip_prefix(placeholder, "(decorate", &arg)) {
--		struct decoration_options opts = { NULL };
--		size_t ret = 0;
-+		struct decoration_options opts;
- 
--		if (*arg == ':') {
--			arg++;
--			parse_decoration_options(&arg, &opts);
--		}
--		if (*arg == ')') {
--			format_decorations(sb, commit, c->auto_color, &opts);
--			ret = arg - placeholder + 1;
--		}
-+		if (parse_decoration_options(&arg, &opts) < 0)
-+			return 0;
-+
-+		format_decorations(sb, commit, c->auto_color, &opts);
- 
- 		free_decoration_options(&opts);
--		return ret;
-+		return arg - placeholder;
- 	}
- 
- 	/* For the rest we have to parse the commit header. */
+Meet Soni (3):
+  reftable: propagate specific error codes in block_writer_add()
+  reftable: adapt writer_add_record() to propagate block_writer_add()
+    errors
+  reftable: adapt write_object_record() to propagate block_writer_add()
+    errors
+
+ reftable/block.c  | 13 ++++++------
+ reftable/block.h  |  2 +-
+ reftable/record.c | 53 +++++++++++++++++++++--------------------------
+ reftable/writer.c | 27 +++++++++++++++---------
+ 4 files changed, 49 insertions(+), 46 deletions(-)
+
+Range-diff against v3:
+1:  6ab35d569c = 1:  6ab35d569c reftable: propagate specific error codes in block_writer_add()
+2:  a54d440dd3 ! 2:  7f0bdc27e1 reftable: adapt writer code to propagate block_writer_add() errors
+    @@ Metadata
+     Author: Meet Soni <meetsoni3017@gmail.com>
+     
+      ## Commit message ##
+    -    reftable: adapt writer code to propagate block_writer_add() errors
+    +    reftable: adapt writer_add_record() to propagate block_writer_add() errors
+     
+    -    Previously, writer_add_record() and write_object_record() would flush the
+    -    current block and retry appending the record whenever block_writer_add()
+    -    returned any nonzero error. This forced an assumption that every failure
+    -    meant the block was full, even when errors such as memory allocation or
+    -    I/O failures occurred.
+    +        Previously, writer_add_record() would flush the current block and
+    +        retry appending the record whenever block_writer_add() returned any
+    +        nonzero error. This forced an assumption that every failure meant
+    +        the block was full, even when errors such as memory allocation or I/O
+    +        failures occurred.
+     
+    -    Update the writer code to inspect the error code returned by
+    -    block_writer_add() and only flush and reinitialize the writer when the
+    -    error is REFTABLE_ENTRY_TOO_BIG_ERROR. For any other error, immediately
+    -    propagate it.
+    -
+    -    All call sites now handle various error codes returned by
+    -    block_writer_add().
+    +        Update the writer_add_record() to inspect the error code returned by
+    +        block_writer_add() and only flush and reinitialize the writer when the
+    +        error is REFTABLE_ENTRY_TOO_BIG_ERROR. For any other error, immediately
+    +        propagate it.
+     
+         Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
+     
+    @@ reftable/writer.c: static int writer_add_record(struct reftable_writer *w,
+      	 * The current block is full, so we need to flush and reinitialize the
+      	 * writer to start writing the next block.
+     @@ reftable/writer.c: static int writer_add_record(struct reftable_writer *w,
+    - 		goto done;
+    - 
+      	/*
+    --	 * Try to add the record to the writer again. If this still fails then
+    --	 * the record does not fit into the block size.
+    + 	 * Try to add the record to the writer again. If this still fails then
+    + 	 * the record does not fit into the block size.
+     -	 *
+     -	 * TODO: it would be great to have `block_writer_add()` return proper
+     -	 *       error codes so that we don't have to second-guess the failure
+     -	 *       mode here.
+    -+	 * Try to add the record to the writer again.
+      	 */
+      	err = block_writer_add(w->block_writer, rec);
+     -	if (err) {
+    @@ reftable/writer.c: static int writer_add_record(struct reftable_writer *w,
+      
+      done:
+      	return err;
+    -@@ reftable/writer.c: static void write_object_record(void *void_arg, void *key)
+    - 	if (arg->err < 0)
+    - 		goto done;
+    - 
+    -+	/*
+    -+	 * Try to add the record to the writer. If this succeeds then we're
+    -+	 * done. Otherwise the block writer may have hit the block size limit
+    -+	 * and needs to be flushed.
+    -+	 */
+    - 	arg->err = block_writer_add(arg->w->block_writer, &rec);
+    - 	if (arg->err == 0)
+    - 		goto done;
+    - 
+    -+	if (arg->err != REFTABLE_ENTRY_TOO_BIG_ERROR)
+    -+		goto done;
+    -+
+    -+	/*
+    -+	 * The current block is full, so we need to flush and reinitialize the
+    -+	 * writer to start writing the next block.
+    -+	 */
+    - 	arg->err = writer_flush_block(arg->w);
+    - 	if (arg->err < 0)
+    - 		goto done;
+-:  ---------- > 3:  480ac27797 reftable: adapt write_object_record() to propagate block_writer_add() errors
 -- 
-2.49.0.472.ge94155a9ec
+2.34.1
 
