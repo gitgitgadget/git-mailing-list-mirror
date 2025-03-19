@@ -1,73 +1,70 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33EAC21CC44
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 22:50:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F47A1E0DF5
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 22:52:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742424620; cv=none; b=eysWAl4iOlhUeuAtI48Ve6MmUyMEA0kKFZECC2axxp4Ck7UR1XNWS96ipdj/YeREzZfXkCGC0yl/D36VrTkWLx0TuxXxPLGH1C5Qu9Oc0GuXyo6UVnf8e1J4L6rrwTmioEAaWNKWD3xnhHB16fMDLcawsbJdqtrIk1GJFXNacOk=
+	t=1742424767; cv=none; b=iRUwHEhwQhgXUQby+L4YuTKEno6iNbO70O75EjVgr6RM24Pzq4lHOUWcCzRWJK0bVLLqwFWL6i13R2RKIzaOxMtfsqnAdUEvKaaJu5uL1WDFVvDLeYagcVdevUwQBEJuKOo2xbaLQTpVsNFkLB5wxXcqY1ov8bakEa273O0fW7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742424620; c=relaxed/simple;
-	bh=PHeAQKTbFvllxsqIIUVfMlVJ+wXtqx7jvHZa3ePQORM=;
+	s=arc-20240116; t=1742424767; c=relaxed/simple;
+	bh=gmwTELdaYXyVFzlqkvbuwMq0RzmqA1+Tvoq0at7HkfI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QbWr58CjfzYdeCkJco4NVEZgMmXRKqhWDJ5Jg05/icog7tCDI6PoiQVooMKFeuZ0iaOJaAGDY3jv/9vkBsAz0Gb5Im6EhQbWv1RuSBf3Sjq696MjOmw4HVS6GcEz4WknC47mggGzt6lqEcpOLgG7yXAp0ltbwEQ8I46jTxXhmGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=tXzAjVo/; arc=none smtp.client-ip=209.85.219.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=LmtRPi0R7SZHblucAYbIgjbBag8fScyDOfGS9QjOA1m6va2P4Yb95F+OsQNtt4QtzyxPCJIR2sbpfgbsX3f3VRN+EVrJlwGHB1i9IbBNK2aWgDh8iOXe2bHomCiExRzGYsFIXHWkG/yieJTPR+uTxqoVSggdTrDnHk9D1zZEDuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ci6Q8l5E; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="tXzAjVo/"
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6e8f6970326so1454856d6.0
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 15:50:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ci6Q8l5E"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c3bf231660so29614085a.0
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 15:52:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742424617; x=1743029417; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vfDufkGD8JdzoKBYDmq9DhpiVN5i9KzWKGRPY5QbG7s=;
-        b=tXzAjVo/g7/S6GjivAWpBgm1pev8d3UHj5h0nj0QCk8rgI8xDjZ5Wlft/3NmPOpyR9
-         U6C5+fYyixOAwb2aX7tqhNGKSPdMabROClyHmxdeNR0zk8OwQIIZmS+q1mlBlxRR0fhc
-         fNIhOx9xi4DD8d+VZoNWdJqwhTZNcSLTRFwnqygQ+JO5sT8zHiMq7ckw6B4bab883yPL
-         obALtCQ5aXvKyKfpa/wxSjfEvMS9Ui9GZLr/HBdRCKhmRwSx5fX53vo/IrnkvgNyTvNY
-         sHlnQc8/ZmPu94vXW6jUvTaWYkzVXtvY472TfxhYXkkrmwbRbkaa0I4kJp+c9AUY/4qZ
-         1XSA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742424764; x=1743029564; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1PZBXIkJy4rH0ipfYQmyJS0g3i6n/Z4a1fx+VdjAOpE=;
+        b=ci6Q8l5EN/dUZWhZwpspLk6pXkMBMtmaH3F9e3krDjK+8FceyYvfGZJrWlDMA8qeNJ
+         pQHcw8RxTuTBobILL3ZLj9zZAyLW51OEC7UDx/32xUYR6xk98U2/8tZgyiufnIPTukHX
+         gSJ1sxroMQvZqgcrGkbjL2psGaA0/IOhh+c6NVlydM0VADTLLI7mBN+7Z+ZwnKBkjMtr
+         KnWhopLINfqe00HBpXwYDRoA4lKIheJvp5FLgK4CiL85ly27Nse1W3q2HnCIsodw3iVW
+         bB5pz45d6TMLrqU7hvogMVYo+pkRmgbYWzTQWMgrtp1vfx8UAR6vPcDdpKgVOgFlYzVz
+         ig3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742424617; x=1743029417;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vfDufkGD8JdzoKBYDmq9DhpiVN5i9KzWKGRPY5QbG7s=;
-        b=p3SfbaEjMbc7/F+BmDw6neT8kRswsfgPOa+je29cuyUxhTNUftXj8lBEJDK8mET+6q
-         ur584znebTkUONLRSa+AOTLv0dS/XZTd1mkf7lBNvNMsVuhuVnVGexeud8nSL372Ct8Z
-         tJId2KcSzZUV65I6n8iJptO1qA1HlnZj9Af5Cwc2zIyhVv8EERf4ImkIKChJC2i9jnOU
-         Zl7TRXux0WuS66qpdnB1KcTa+HsLC2LcZuXkprtIVdq9w4Hb59Lf0Aj4e97DalxevHnZ
-         mgc17ZYRe+VTkWkjXHI0XxjyTRvXFEtWqapkVwU/xWPybhw5tfy0X6VdCZpkqJasGT2p
-         aCpA==
-X-Gm-Message-State: AOJu0YwMAgC3V4w6js5pNAZSRsepoPrwY5em7r2YEs0/u0XUOJ2pbvAr
-	bxgzxd4h3B5DV3DvG/SYadAQU+g6rHcSd5fOuF/QU7H9OjZZTX2Tq5V0r9+Yf2E=
-X-Gm-Gg: ASbGnctD4u6/+PpTIt6t/AZ1spJdcucmQEAAsbx5ipo6GeJkLUDSAvwjqTemF/Kvs0P
-	zu5C+kaHii29Dqkm9K68yJQAhj5PtnkynGHKLyM9SRrIrrZE6vW/rDSjS2WkTg5mhNynMLKLy+g
-	67hxSJr4wxF8Y7r6B0RjfL66PRZyRSjtd5o8mguaGkWgfX95lS8zVPIv7sKBYdJZEfXHyGAClhI
-	ihgK9cNux+65k7xSFe8oUm3whr1gKYFH5AszcqvQPKoZTehxAoSFJUhT+vpAP7Te3sMp8geYH60
-	boqxrp3R/QMIN/35QLdBMZEQOphFkGkSCoHbBJ07yZ8k23xXzINy59hEaHaBXsPhyq+5V3n1lEs
-	dQV7ox/NvKZiSFJLG
-X-Google-Smtp-Source: AGHT+IG6O8sjUrbcbZeaAbxTq+rJmiOXskkXRjkF2rWNKXM2Jj7AohFosGE/0Y6AlNVdBgiM880tfw==
-X-Received: by 2002:ad4:5d4b:0:b0:6e8:ebc6:fd5f with SMTP id 6a1803df08f44-6eb2939fb0cmr69468076d6.20.1742424616938;
-        Wed, 19 Mar 2025 15:50:16 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742424764; x=1743029564;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1PZBXIkJy4rH0ipfYQmyJS0g3i6n/Z4a1fx+VdjAOpE=;
+        b=lN2q4wc45n501ScSvkgX55KbdEqscmg6Mx8oG9ic3L+DzBleDREWwaaQlfNX226Z3z
+         dxszioNz1hgJwgtZC4JxJvbqlzFGUP6xAPcGHofgW4LEAvVr/gZeX7O9vpWqgVqDd7+6
+         Zs5jQquM7kNS0jzez6TPZCtfRbdmpTY5hw9TLt9Age9W6tjUwB/wUJwxpJIWvLho33Lh
+         CWqLBs87IDKlAyx/3qyYYWRxxvUyM8m7wbmhkP3kBW6fobSAXeCchNht9IuA+b/mpyET
+         vAyLMSYTg5HyxJi7vnW6UQaFE6noD1IXjK3mIuk/6MJWM15GI946+brXYLCFAdO64wQX
+         dQZA==
+X-Gm-Message-State: AOJu0YzUP8GA1JvgBLEdg+O5ULBcqscPO0GSviGZtqPuvsQ44P8PL22s
+	uUBwdhX6rxev61/ziRw0dUT7LIVi2DcQgNxdxrTI303IcIqaoAaH64VLKq81QPSdIj5I2N95+Jp
+	MFGI=
+X-Gm-Gg: ASbGncsIWXGGWiThG0BWsTs+YSh/SZwk9Ln+z46iiW7ft9Vc+M4IjBUykK8jo5A3l/b
+	PxL46EAtK/B1ipoKbH5/Jeha5EVE66oeZ/qFAmSLW/YboZRH/she7h4YCM0h/phr5NAPgs/H+XP
+	AjqY3oDviTsloAmHNEiBb5IsPYRdthYEBNBy6fPuJkERGEv1gTYY8DQC2YHUGgnnBJrx8VRMUTw
+	8tuduOsbyYIV/jtZJG2u9TSw5fCqCBGRuyxg3K6StDSQMhwphr2RMMJjibH1FxQay+htxcwnTPG
+	NxbZQu8ptPN2tt2LEYP8VgYzTUxzl180W9mQ4ziV7qUE0FjM6CFTTeC52c2Xpd54RQIHwBWAEHi
+	SwN896VVh92vLEUR6
+X-Google-Smtp-Source: AGHT+IFpgQZbWHfe0aSaH4DdQ8Tmbn79PaKUksN9QMeJ9dYvHiyN7b4IWMSvggBwjC9JPObLG//YOg==
+X-Received: by 2002:a05:620a:3903:b0:7c5:9a1b:4f22 with SMTP id af79cd13be357-7c5a84bd488mr691662985a.56.1742424764205;
+        Wed, 19 Mar 2025 15:52:44 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eade34ba77sm85049986d6.95.2025.03.19.15.50.16
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c573d9253asm909171185a.104.2025.03.19.15.52.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Mar 2025 15:50:16 -0700 (PDT)
-Date: Wed, 19 Mar 2025 18:50:15 -0400
+        Wed, 19 Mar 2025 15:52:43 -0700 (PDT)
+Date: Wed, 19 Mar 2025 18:52:42 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] repack: begin combining cruft packs with
- `--combine-cruft-below-size`
-Message-ID: <Z9tKJ47+3ffiB2fx@nand.local>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: [PATCH v2 0/5] repack: introduce '--combine-cruft-below-size'
+Message-ID: <cover.1742424671.git.me@ttaylorr.com>
 References: <cover.1742252411.git.me@ttaylorr.com>
- <7f120c35e95dcf41282c87dc2d1b2640ecdc5d84.1742252411.git.me@ttaylorr.com>
- <CABPp-BFhZ1JGR_qWSgmcZm=Pix2n6z1AQ+-R-mw9Q_fWFi=_Ew@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,93 +73,113 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BFhZ1JGR_qWSgmcZm=Pix2n6z1AQ+-R-mw9Q_fWFi=_Ew@mail.gmail.com>
+In-Reply-To: <cover.1742252411.git.me@ttaylorr.com>
 
-On Wed, Mar 19, 2025 at 07:21:01AM -0700, Elijah Newren wrote:
-> On Mon, Mar 17, 2025 at 4:00 PM Taylor Blau <me@ttaylorr.com> wrote:
-> >
-> > The previous commit changed the behavior of repack's '--max-cruft-size'
-> > to specify a cruft pack-specific override for '--max-pack-size'.
-> >
-> > Introduce a new flag, '--combine-cruft-below-size' which is a
-> > replacement for the old behavior of '--max-cruft-size'. This new flag
-> > does explicitly what it says: it combines together cruft packs which are
-> > smaller than a given threshold, and prohibits repacking ones which are
-> > larger.
->
-> To me "prohibits" suggests some kind of stronger action that
-> potentially persists beyond the end of this operation. Perhaps this
-> could be reworded to something like
-> s/prohibits repacking ones/leaves alone packs/ ?
+Here is a small reroll of my series to introduce a new 'repack' flag
+called '--combine-cruft-below-size'. There aren't any functional changes
+in this round, and the changes that do exist are limited to
+documentation and commit message tweaks in the final patch.
 
-Fair enough, I went with "leaves alone ones which are larger".
+A range-diff is included below, as well as the original cover letter:
 
-> > This accomplishes the original intent of '--max-cruft-size', which was
-> > to avoid repacking cruft packs larger than the given threshold.
-> >
-> > The new behavior is slightly different. Instead of building up small
-> > packs together until the threshold is met, '--combine-cruft-below-size'
-> > packs up *all* cruft packs smaller than the threshold. This means that
-> > we may make a pack much larger than the given threshold (e.g., if you
-> > aggregate 5 packs which are each 99 MiB in size with a threshold of 100
-> > MiB).
-> >
-> > But that's OK: the point isn't to restrict the size of the cruft packs
-> > we generate, it's to avoid working with ones that have already grown too
-> > large. If repositories still want to limit the size of the generated
-> > cruft pack(s), they may use '--max-cruft-size' instead.
->
-> ...but then they wouldn't get any cruft packs being combined.  Did you
-> mean s/instead/together with --combine-cruft-below-size/ ?
+(This is based on tb/multi-cruft-pack-refresh-fix from Junio's tree,
+which is at 08f612ba70 (builtin/pack-objects.c: freshen objects from
+existing cruft packs, 2025-03-13) at the time of writing).
 
-Oops, yeah; I meant to imply that '--max-cruft-size' was/is still an
-option, not that one excludes the other. I went for s/instead//.
+This series replaces something close to the existing behavior of
+repack's '--max-cruft-size' flag with '--combine-cruft-below-size'.
 
-> > There's some minor test fallout as a result of the slight differences in
-> > behavior between the old meaning of '--max-cruft-size' and the behavior
-> > of '--combine-cruft-below-size'. In the test which is now called
-> > "--combine-cruft-below-size combines packs", we need to use the new flag
-> > over the old one to exercise that test's intended behavior. The
-> > remainder of the changes there are to improve the clarity of the
-> > comments.
-> >
-> > Suggested-by: Elijah Newren <newren@gmail.com>
-> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> > ---
-> >  Documentation/git-repack.adoc |  8 ++++++++
-> >  builtin/repack.c              | 38 +++++++++++++++++++++++------------
-> >  t/t7704-repack-cruft.sh       | 22 +++++++++++---------
-> >  3 files changed, 46 insertions(+), 22 deletions(-)
-> >
-> > diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
-> > index 11db43b1c5..8e6d61aa2f 100644
-> > --- a/Documentation/git-repack.adoc
-> > +++ b/Documentation/git-repack.adoc
-> > @@ -81,6 +81,14 @@ to the new separate pack will be written.
-> >         `--max-pack-size` (if any) by default. See the documentation for
-> >         `--max-pack-size` for more details.
-> >
-> > +--combine-cruft-below-size=<n>::
-> > +       When generating cruft packs without pruning, only repack
-> > +       existing cruft packs whose size is strictly less than `<n>`.
-> > +       Cruft packs whose size is greater than or equal to `<n>` are
-> > +       left as-is and not repacked. Useful when you want to avoid
-> > +       repacking large cruft pack(s) in repositories that have many
-> > +       and/or large unreachable objects.
-> > +
->
-> Does it make sense to modify the documentation for either the
-> --max-cruft-szie or --combine-cruft-below-size options to suggest that
-> if both are used, it is recommended to make --max-cruft-size twice (or
-> more) the value of --combine-cruft-below-size ?
+The new flag is much clearer in its intent and function, and avoids the
+lack of clarity between the two that was discussed in
 
-Ehhh... I kind of want to avoid mentioning it TBH. Part of the reason
-there is that I think the explanation of "why" is a little too detailed
-to spell out meaningfully in the documentation while still keeping it
-concise. But more importantly I want to avoid encouraging people to use
-the '--max-{pack,cruft}-size' flags to begin with, since there really is
-no reason to use them outside of filesystem constraints.
+  <cover.1741648467.git.me@ttaylorr.com>
 
-Thanks,
-Taylor
+The new behavior is as follows:
+
+  - '--max-cruft-size' is a cruft pack-specific override for repack's
+    '--max-pack-size' command-line flag.
+
+  - '--combine-cruft-below-size' instructs repack to only combine cruft
+    packs which are smaller than the given threshold. This will likely
+    result in packs which are larger than the threshold. But that is OK:
+    the point is to limit the size of the individual packs on input, not
+    the size of the outgoing pack.
+
+This series does break the existing behavior of '--max-cruft-size'. But
+I think breaking backwards compatibility here is OK, since the existing
+behavior was so broken to begin with. I'm happy to consider other
+alternatives if others feel that this isn't OK.
+
+The series has an interesting structure that I feel may be worth calling
+out. The first three patches are trivial test cleanups. The fourth patch
+modifies the existing behavior of '--max-cruft-size', but does so while
+keeping some of the old infrastructure around.
+
+That may seem like an unnecessarily complicated approach, but it greatly
+simplifies introducing the new behavior in the following (and final)
+commit. I think that this results in a series that is a little easier to
+review (since we don't see a ton of code being removed in one commit and
+then re-added in another immediately following it). But if others feel
+like this was a mistake, please let me know ;-).
+
+Thanks in advance for your review!
+
+Taylor Blau (5):
+  t/t5329-pack-objects-cruft.sh: evict 'repack'-related tests
+  t/t7704-repack-cruft.sh: clarify wording in --max-cruft-size tests
+  t/t7704-repack-cruft.sh: consolidate `write_blob()`
+  repack: avoid combining cruft packs with `--max-cruft-size`
+  repack: begin combining cruft packs with `--combine-cruft-below-size`
+
+ Documentation/git-repack.adoc |  21 ++-
+ builtin/repack.c              |  62 +++----
+ t/t5329-pack-objects-cruft.sh | 302 ++++++----------------------------
+ t/t7704-repack-cruft.sh       | 293 ++++++++++++++++++++++++++++++---
+ 4 files changed, 355 insertions(+), 323 deletions(-)
+
+Range-diff against v1:
+1:  0aa8aa65c1 = 1:  0aa8aa65c1 t/t5329-pack-objects-cruft.sh: evict 'repack'-related tests
+2:  5e8bd3e66e = 2:  5e8bd3e66e t/t7704-repack-cruft.sh: clarify wording in --max-cruft-size tests
+3:  b075ad8601 = 3:  b075ad8601 t/t7704-repack-cruft.sh: consolidate `write_blob()`
+4:  7941997e33 = 4:  7941997e33 repack: avoid combining cruft packs with `--max-cruft-size`
+5:  7f120c35e9 ! 5:  dee780a2aa repack: begin combining cruft packs with `--combine-cruft-below-size`
+    @@ Commit message
+         Introduce a new flag, '--combine-cruft-below-size' which is a
+         replacement for the old behavior of '--max-cruft-size'. This new flag
+         does explicitly what it says: it combines together cruft packs which are
+    -    smaller than a given threshold, and prohibits repacking ones which are
+    +    smaller than a given threshold, and leaves alone ones which are
+         larger.
+
+         This accomplishes the original intent of '--max-cruft-size', which was
+    @@ Commit message
+         But that's OK: the point isn't to restrict the size of the cruft packs
+         we generate, it's to avoid working with ones that have already grown too
+         large. If repositories still want to limit the size of the generated
+    -    cruft pack(s), they may use '--max-cruft-size' instead.
+    +    cruft pack(s), they may use '--max-cruft-size'.
+
+         There's some minor test fallout as a result of the slight differences in
+         behavior between the old meaning of '--max-cruft-size' and the behavior
+    @@ Documentation/git-repack.adoc: to the new separate pack will be written.
+
+     +--combine-cruft-below-size=<n>::
+     +	When generating cruft packs without pruning, only repack
+    -+	existing cruft packs whose size is strictly less than `<n>`.
+    -+	Cruft packs whose size is greater than or equal to `<n>` are
+    -+	left as-is and not repacked. Useful when you want to avoid
+    -+	repacking large cruft pack(s) in repositories that have many
+    -+	and/or large unreachable objects.
+    ++	existing cruft packs whose size is strictly less than `<n>`,
+    ++	where `<n>` represents a number of bytes, which can optionally
+    ++	be suffixed with "k", "m", or "g". Cruft packs whose size is
+    ++	greater than or equal to `<n>` are left as-is and not repacked.
+    ++	Useful when you want to avoid repacking large cruft pack(s) in
+    ++	repositories that have many and/or large unreachable objects.
+     +
+      --expire-to=<dir>::
+      	Write a cruft pack containing pruned objects (if any) to the
+
+base-commit: 08f612ba7000bf181ef6d8baed9ece322e567efd
+--
+2.49.0.4.ge59cf92f8d
