@@ -1,74 +1,73 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CAA1DE3A3
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 16:33:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207A11F0988
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 17:03:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742402017; cv=none; b=Hnxhfk0N7XDZOmn0subcz0fRqzwc0lutACfFbiLJA43JABf1EwA7rNHD6KFgOZvPBfn66jAk3lileUPuZgdv6HZtwFl+Au+dyWzbmRWgXEBCNjHcKiM4dX5kgOvnySCi8zckdMJyfx4opLkbVZ7wT9oQUhyw5nGb1oA5tMyzl5A=
+	t=1742403793; cv=none; b=l/zYi9JouoUfdixdhpbRnZqF6+U1HXfj1sSDbiIKjGGwNiI1bg2zgp8ehhL1Pb+3BMvpq++DRWxohhjIg46bcGEFnbglXXA8mMX4z/0UGVp3CPgWjKa2HEKRmI4quBzHb0J8HL0OL9XArJznLn6T7oHA2lzT7qg44bc2xEymV1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742402017; c=relaxed/simple;
-	bh=7Dhyc3NUtv0QrVTa1FpWqrPWa8Zy5KsDiRYxS27I1L0=;
+	s=arc-20240116; t=1742403793; c=relaxed/simple;
+	bh=Vj0uBa7WXh5jt0XfKEcfijla9nCZvF0KceQkoGgim7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IP5yQLSRaDK8Ey94Eo70EJ9G/UGj61flpDlQog6TXlrAwiDwHloAX9/gs9UH2cuNQVH0Gsiwm5chf5yhvt+fGmKIAnvP84XTXudT5N9zd+qa6esAS1WSZiT3S8bPQCusqffLOrLY1tQwHp1FfdyvWBAu4KbUQn7yLTMGHmHJQOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ih9mqM1B; arc=none smtp.client-ip=209.85.208.47
+	 MIME-Version; b=H4ieARD2x+wzEBDpL2SDj4V2wmLvONx+xXRl18pg5AOEwi535YNKdfXtRv1u3YcJJcI/zd1ekZXcjwgvhp0pcGkLlG5NDUtV5/0eePAQulwkx1ATkw31ljXxNitBqwgY2ii8IubSoiQ42lZff70KLVyjQTC19g1S3YFBWBU/zEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NAHwQtJg; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ih9mqM1B"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5dca468c5e4so12282038a12.1
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:33:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NAHwQtJg"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-223a7065ff8so59148355ad.0
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 10:03:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742402013; x=1743006813; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742403790; x=1743008590; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=q8RNLz0Gcz5ZslsGhdjpSH2+hpo97+ntKNX6HhGf5PI=;
-        b=ih9mqM1BW1TBFhgWCmoxlfSEWNnJrv+Q9bNN16Hvx/KoEIa3jJEcRXJXF05Tth3Af8
-         ZPyohovTiG2wpf3P5aSsdlKzglDHkoEQ6a3Ju/Ae6hHZ8Xohw6+5Nd5l45zAX5Gndzh9
-         WndV9bFS/Hv4qTkFmlu0Ax/4XYuWtGwg+pMW9zjoW+N0TFl1tiI3cilgWOAquILhHAIn
-         hmmPAJ+DwUIN62/8OFFu6Bh8FTkD+TLVT8OV5ljJYgojPBMcU9cf5KUHS2YvvQt7r6Yk
-         ILDNGZNxgaF4rocUdMHGrW8eGPWfhjuQoKNocD98Es6ysumRPRMuqO5/DTOSZ4l6Sbm6
-         bXyg==
+        bh=jvpayGurnGJck1Q4MoMZed0M77RIJAD4D6/4qgmq6vQ=;
+        b=NAHwQtJghMLhsCA7n9HbYX62VSz/Z8hqjGX28vj+/I/xar7hu8sxQmdHhsamYWyu7+
+         pcZve9INOWX6NZt7QDPQmLmciLtBrbkXw4N6avEKzvmmdgPSpZz6Du+1yBdA+PiWaIGj
+         M3HviKgpEbkwdccvOYFjfOLDaYB8RekEaF1Q/j248qy4ZwTK+iECLjhbzK4aXZ/DEEIZ
+         /XdkC0jeuWgejFtOEtRNn8henCwTvszbzFOCgPp8F4p9+VL4vtkByf2kH72h9BzV82Wa
+         +yvYhWZHfV/DKssSOswQHE1UU30y+bSfpICtfsTx41HJCRwvXJ9wKtGySiEntUESO0BI
+         KJVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742402013; x=1743006813;
+        d=1e100.net; s=20230601; t=1742403790; x=1743008590;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=q8RNLz0Gcz5ZslsGhdjpSH2+hpo97+ntKNX6HhGf5PI=;
-        b=HZNEGdOhO481vWtZ9ksxch/Svm9p+bahjYtf8xO6Zx+Xj71t2l9UA7IpWqC1fnvnW+
-         P8TUCpRzBALE4Hj4QDt44LAi6+yXTGCffk/0aiAtlSWMfj2PaJAOTAnRKOb3HHLz4MC2
-         b8rnjb2hoV3iXyISitb8PJUKr1mNUNug5cFwpuDIHWVw5apsMFICDOWMHIMAJjAm/HOV
-         ArSQ8QltK0Kk/iuSiL96404QRD5DhcQOhfc/5IhD6lYgQVT2wU1wGjBCkjMWFZd1wkkF
-         7b+6HQdE6dG2Uw+JB4DUKyq4dGdwL+ar+dwSyYs97BzGIHZqSAO7fNB9lf/Vwl1GrID+
-         0uNA==
-X-Gm-Message-State: AOJu0Yz//c5XIpbKcDajphQHjpGQEH8hCV0GR0L5e7qqugrVguhIwksG
-	IjQLKrCnp7UUpnwvQ9pKNi5UxCEp8c6GEIwZrkt8seXoOGrrO9lJQf0Tt2jk
-X-Gm-Gg: ASbGnctY/JeqMebWN+Tpu/5XqsbisGchWbUVzewY1S/0qxp4SZvF6db4KXiBvxJKJ2/
-	Nt+3LdbY2978shyWcIXkvd0eI6mCIJ4YbKfAxdL5q8Kr9Nbz0Vm3TTycT2zA49xIb0/YQE4HYEt
-	ZFvQzglfqavvhV9sABuHzP4jAOfZfT/Ti0RZb01tNmXb2qdjSGBYYJO3xOytdJXbtQYbmnjOrE+
-	FT3Yw/TeKDLYNqvaNfX9/uQDdMkPrKTILMszwd14FdRTXqkiub2rTLgiEhQRRCOCdN8816X/IYA
-	W9o2nF2uZmrYlvO3+XErGX8WJGbh8rPtotNsTGXaA1jh4tPl5eUUMazfIFjBYP1w8xUjjJw/1nc
-	rbzE=
-X-Google-Smtp-Source: AGHT+IGfykz9Es2EBAO52hmu3Duvxc5DDzaVdYcVDw14r+dMZ3hGTptb0FLcdcOxJyehH2uUyEjByQ==
-X-Received: by 2002:a05:6402:40c9:b0:5e5:b3cb:38aa with SMTP id 4fb4d7f45d1cf-5eb80f72b9bmr3312129a12.25.1742402012063;
-        Wed, 19 Mar 2025 09:33:32 -0700 (PDT)
-Received: from knayak--20220801-595b8.fritz.box ([2a02:2455:8268:bc00:18c8:d9c2:4846:5175])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e816afe201sm9230977a12.68.2025.03.19.09.33.31
+        bh=jvpayGurnGJck1Q4MoMZed0M77RIJAD4D6/4qgmq6vQ=;
+        b=fWE2H0GXfC0Kxrikgs4OK84DMC74YSlx/Un31sxR0x0gezsTKaAFxESreYS1ghOYhk
+         drjp+9iNG8PuG6HIwzpti+BjsTanlFKfEc35bfugzb4tI9S0TUEKEQt/1IpdzHb5A0FP
+         PFBvb23cx14YadoWrwi95F4sPl7zcAlZKhhrM+HycI3hlKHDKXl1zzB1+zmWCOeEhoCz
+         sIFVRITuBDlbQVihMsvZn5zJSFSeXDh+KBluzjU/BSZKPAUpPoFmTivegDffp/0VuI/K
+         prb5nPJfgoF06fRqfGCpoqC1akOQr9jSfGRCS7BBRI7aST4iu25MJv++CHxD3GwnyKkz
+         SOJw==
+X-Gm-Message-State: AOJu0YwFt6dh2HjT0432JVCG71kFa51VldSLlzf9LTOTHBaAkqDCIKSv
+	y+BJGCY7Hnjq12qO21xceLbp1Tv0K+1NCf2akTvI5KmZSPyqCobhgVy1wO7J
+X-Gm-Gg: ASbGncuSixKSHZH6hB599/A0JZlEw+F8fi/QlI2NvhmkHwBL89GokP8oN53mpQrNeWh
+	7+cT6147/w/L/u/ePYjxfexzvqFK1dwyw2bHDMifU/LnFh6IT3IYH6DrQYmEO/yKso0PbkF+tM7
+	zegk4mD7ds/egknDLZzlX5QcCMCyzYN69LeAEdGEJ4zlLX5zg6rnXaS9qd+p3nxuE76+ZKXArRZ
+	6IXZuYi+/Lnm0h0gwg3tyiMGZVqb7nhdU/Yft+lOmAPD9T5BbIST8T2k8jiRO3dY/T9Yir9i/Hl
+	CetPMCkc1/yJ/exR877hic3V8QiFl4TDIrMgdbj2B9eDsIZqlutPqs/WRydp2NJoLeyEpYOA9ux
+	7qIs=
+X-Google-Smtp-Source: AGHT+IEQ7x76/pegNneM6X/7g9tkjeSkt8ZWx9oRGcBOAsNMnLOi8lTqHPMXLAVpop/3H/Wfma/iKw==
+X-Received: by 2002:a17:902:d2cf:b0:226:252e:b6ef with SMTP id d9443c01a7336-2264981d649mr56267095ad.7.1742403790038;
+        Wed, 19 Mar 2025 10:03:10 -0700 (PDT)
+Received: from localhost.localdomain ([2405:201:c005:b018:5841:514c:af52:5598])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c68a40a7sm117110335ad.59.2025.03.19.10.03.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Mar 2025 09:33:31 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-To: ps@pks.im
-Cc: git@vger.kernel.org,
+        Wed, 19 Mar 2025 10:03:09 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: git@vger.kernel.org
+Cc: ben.knoble@gmail.com,
 	gitster@pobox.com,
-	karthik.188@gmail.com,
-	peff@peff.net
-Subject: [PATCH] ci/github: add missing 'CI_JOB_IMAGE' env variable
-Date: Wed, 19 Mar 2025 17:33:28 +0100
-Message-ID: <20250319163328.525284-1-karthik.188@gmail.com>
+	jayatheerthkulkarni2005@gmail.com
+Subject: [GSOC][PATCH v2] Remove outdated mentoring mailing list reference
+Date: Wed, 19 Mar 2025 22:32:44 +0530
+Message-ID: <20250319170244.32912-1-jayatheerthkulkarni2005@gmail.com>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <Z9qNNq0p10YJCZYo@pks.im>
-References: <Z9qNNq0p10YJCZYo@pks.im>
+In-Reply-To: <xmqqa59j8gml.fsf@gitster.g>
+References: <xmqqa59j8gml.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,66 +76,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The CI setups of GitLab and GitHub use a common dependency management
-script 'ci/install-dependencies.sh'. The script install the necessary
-packages based on a combination of the "$distro" and "$jobname" env
-variables.
+and clarify tutorial prerequisites
 
-The "$distro" variable is derived from the "CI_JOB_IMAGE" env variable
-set by the CI configs. In the GitHub CI config, some of the jobs are
-missing this variable. For the 'Documentation' job which depends on
-'meson' being installed, this raises an error since the 'meson'
-dependency is never installed.
-
-Fix this by adding the 'CI_JOB_IMAGE' variable to all missing jobs. We
-don't add it the windows jobs, since they manager their dependency as
-part of the CI config and no further dependency management is needed.
-
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 ---
+ Documentation/MyFirstContribution.adoc | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-Junio, not sure if you wanted a patch here, since you already had a fix
-yourself. But I'm providing one nonetheless, feel free to drop it.
-
- .github/workflows/main.yml | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 9959b61ece..37541f3d10 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -349,6 +349,7 @@ jobs:
-     if: needs.ci-config.outputs.enabled == 'yes'
-     env:
-       CC: clang
-+      CI_JOB_IMAGE: ubuntu-latest
-     runs-on: ubuntu-latest
-     steps:
-     - uses: actions/checkout@v4
-@@ -432,6 +433,7 @@ jobs:
-     if: needs.ci-config.outputs.enabled == 'yes'
-     env:
-       jobname: StaticAnalysis
-+      CI_JOB_IMAGE: ubuntu-22.04
-     runs-on: ubuntu-22.04
-     concurrency:
-       group: static-analysis-${{ github.ref }}
-@@ -446,6 +448,7 @@ jobs:
-     if: needs.ci-config.outputs.enabled == 'yes'
-     env:
-       jobname: sparse
-+      CI_JOB_IMAGE: ubuntu-20.04
-     runs-on: ubuntu-20.04
-     concurrency:
-       group: sparse-${{ github.ref }}
-@@ -473,6 +476,7 @@ jobs:
-       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent == 'yes' }}
-     env:
-       jobname: Documentation
-+      CI_JOB_IMAGE: ubuntu-latest
-     runs-on: ubuntu-latest
-     steps:
-     - uses: actions/checkout@v4
+diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+index afcf4b46c1..7b856be41e 100644
+--- a/Documentation/MyFirstContribution.adoc
++++ b/Documentation/MyFirstContribution.adoc
+@@ -13,6 +13,7 @@ the Git tree, sending it for review, and making changes based on comments.
+ 
+ This tutorial assumes you're already fairly familiar with using Git to manage
+ source code.  The Git workflow steps will largely remain unexplained.
++This tutorial also assumes you know/understand C programming.
+ 
+ [[related-reading]]
+ === Related Reading
+@@ -40,13 +41,6 @@ the list by sending an email to <git+subscribe@vger.kernel.org>
+ The https://lore.kernel.org/git[archive] of this mailing list is
+ available to view in a browser.
+ 
+-==== https://groups.google.com/forum/#!forum/git-mentoring[git-mentoring@googlegroups.com]
+-
+-This mailing list is targeted to new contributors and was created as a place to
+-post questions and receive answers outside of the public eye of the main list.
+-Veteran contributors who are especially interested in helping mentor newcomers
+-are present on the list. In order to avoid search indexers, group membership is
+-required to view messages; anyone can join and no approval is required.
+ 
+ ==== https://web.libera.chat/#git-devel[#git-devel] on Libera Chat
+ 
 -- 
 2.48.1
 
