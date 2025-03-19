@@ -1,113 +1,269 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B6821CFE0
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 22:40:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE64202C5C
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 22:49:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742424043; cv=none; b=TR8P59Y5xcwe6ljku/NuMHcrrkTGqS+Jz2nEftmqoh22sdbl7tdLYI8h5hoIwVJZZXOqMr4KFeoHOUprUmr4J3gPN3mhBVMj44nCURw9kQ1fyElpAwmLD8FD4w4MT0tYvY9w2KzLR/TVL22c9B36Q78vOfBQ+S19T5qxdg+4cvw=
+	t=1742424566; cv=none; b=ect8ZmwSFktX4vBJnVQywAxFnPX1JTtNjROuNXCQGNns8fDG15ejX/5eJTo5Y3WFmvRRhc1YJvtOxw/ulbUCaQReXmY+Il42cu67k6EO/8s3u26jaH6woTPNuQd6Lt3VeNVWTEajyXYedXk3BmmUNPUAXsiHKapR2CEIIACim5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742424043; c=relaxed/simple;
-	bh=moqpLYnrHKhLCwNWpTWw427o8TtT04xY3mhAFump8IY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qvCC+7FRu2LQHxHP5Np7yJaqaP+EMnhZoG3GcW+i9sCN+oWf1HDSN/y68DW2oIt7vInZndOzYMKdqngVqB55GqWhZM0ciZurXfz7xyHLt1yijFKLkeZCzQVGcznT3na6tsNGzCPMtUCYwzS2/xBItGwlo+fUwzET+5ZO/oGiCAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=PGlKw1gO; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1742424566; c=relaxed/simple;
+	bh=sL2T3X+s/gf5io8lsKjbyVWyLdT6yKhHh6aqsHTi8io=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hX/W4wpH+/eWou+HLSVt+y8aYFx3xf6l9ZSUDBUJ7iPa7LR2NQKaiOiDDiabif7D2z7MrDo+hCXIeGax5JWxxZZUqxPBigjToN2mDTaKUxJSyB+I/TTYC1Yo41y5cP8lOYJqoqexAItGjxxrCnuAXs1GR2gk5Q9wK3zJz7UMCT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WD54SlCa; arc=none smtp.client-ip=209.85.166.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="PGlKw1gO"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7c54c52d8easo138098885a.0
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 15:40:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WD54SlCa"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-3d45875d440so1408305ab.0
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 15:49:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742424041; x=1743028841; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=l8nWa+BirRIAxjYYWH/vIeGOn1TIzn6/i7wo/v46YdM=;
-        b=PGlKw1gOjEfcgstGJa0uj3+u3C6oX+5PpjtYh5I9N+gR7a3JWX9RuUoQrTH3o0MMl0
-         WVE5Ig4QpixfryulFHryKyHeBJZ0CsIfYml2n78tMALNY5uSbNdgIJ+hqrBMH9XRWHTM
-         XZt550JRcmcRH16FT1vZtqWfytrtCgb5bzGY2bS9ie8ondkq/KhlyLWrTfGbtW1MsfUB
-         mQDpchVs8QffNp05a2AIxjIeYquf3I9/gR0TrOmnkJTWWHE8wU4d1LLCjJhGe64iASj6
-         zF9lHlinqLDq0s9wUkS5NZSIeEeKaMPKtL0F0BkEu3qGWpGRAgB6w0lSb18s6MVg5cyM
-         uT6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742424041; x=1743028841;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1742424564; x=1743029364; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=l8nWa+BirRIAxjYYWH/vIeGOn1TIzn6/i7wo/v46YdM=;
-        b=X1+LgzsCUIbFdIBa1tXhdB7/j0q7+XnvVDY7YNfZMqF1+0NxH9PPk2PPayCWZf5iUY
-         hXhr/yK2p87NKYmV8eLHcIEDLMe+vlFOZbGJuKkY4+RXEsbRUqnMvEJx9fLsT/AY18fM
-         RXU41ZVTrR77YIh6K8qg72X9dtoCp8O2BPHdcDet750iWineI+yeb1joN20Mcy08/4a1
-         p980tRPhbj9rJwAUFaN3KAH8I9FHZAox87YMDwNeO0qug4uPrGvKzTIFNYRusyr87TlX
-         YnnpusBE+sl2UWHKd8Qka2ZGmt0DWdoh9SzkyidLNOjE9EbMPyME/Mw0mXfkZ7H2pyAY
-         vlcw==
-X-Gm-Message-State: AOJu0YyeBzmbze0PphE8UeeprDuUPR3+j1SSMIkpJqfL/jtagMUbNvO7
-	vlesbpwVQo9eBmrFOD51tCd3rWDOB1o1VM0bQAKGFOiyL+Nf96+GGF0tcsue0IaJRbRmuBdL5+l
-	YP88=
-X-Gm-Gg: ASbGnctumOc+yPPTwpm3TojQDSDSmWRfn01L8Ps9er/BL8ZPKkkhRnQk4FqwAfsdYZ2
-	omwizWcVkb/4XxVzYzEPDmh80FbWOj4q6nFdV15XVNjLMq7lA6G9GeulAU1sLUW4ll5HqXueGKU
-	Rj/B9VSyYiXelCF3hzeQKQJ6zu2msx3S1mSKz4X0U7GI6A/jbOaqgxZCbVTymC0XMAXvHf02cXe
-	Z4uKY85HpDkQGMWAiX73Yd83IaaetrDzyqeHm1YhGIHlel6cubnZYCYQjTq8Gn6nLcI3A/GhCCr
-	Ir/0f8bLgO8nhnSZPV2Obf17FsqkVGuRTi39KD8c9i6ahCl303xft7UKPHu6S8+R4PGK8uzYuen
-	P0UMIeVUf17gZc9ql
-X-Google-Smtp-Source: AGHT+IFWiG6qcl0wXOiWvb1jsACFmeuvCQU8h2qbduc3xqSO20ABc9/O1IRTUs6NkLxhniEASldo1A==
-X-Received: by 2002:a05:6214:dc3:b0:6ea:ee53:5751 with SMTP id 6a1803df08f44-6eb34a394f6mr22302626d6.21.1742424040928;
-        Wed, 19 Mar 2025 15:40:40 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eb28bc98b2sm14971856d6.107.2025.03.19.15.40.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Mar 2025 15:40:40 -0700 (PDT)
-Date: Wed, 19 Mar 2025 18:40:39 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 5/5] repack: begin combining cruft packs with
- `--combine-cruft-below-size`
-Message-ID: <Z9tH5zbZ/eWC1e6p@nand.local>
-References: <cover.1742252411.git.me@ttaylorr.com>
- <7f120c35e95dcf41282c87dc2d1b2640ecdc5d84.1742252411.git.me@ttaylorr.com>
- <xmqqh63q47zd.fsf@gitster.g>
+        bh=ttTsU6sJg2ORrLMatToTxz6J7aEGQ70sknjnbCrKgfg=;
+        b=WD54SlCaciacsy5ixpLZt8V0cFQB4SBvPoBUgwaA3Qugj9egmK72SdHIGCyWzOVuHK
+         A85MoBjTj75XLKQPxjuog2RATw8fQU9UKcpn10LU/R1+MD2ua8V7oLGEFjBl5z84FsEX
+         toWasKb+kyXwEvZPA8qRIUQ8JRPwfDL+J2JciZQGqlbH1IZsMoyFfm/xNI0L+4J62vn6
+         wEMVZM0AM8N5mRyHu8ye4tSe1o+ZeDfyKiTMx5eqsfaBctQkLggSyg41BSZcpVwEetdU
+         DHTDDw+6I7w7IYG0jzlXhBB6Dehk3mgErkF2nKBMKupJIkzQI6txoudNMaXytqFeTeiH
+         F8NA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742424564; x=1743029364;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ttTsU6sJg2ORrLMatToTxz6J7aEGQ70sknjnbCrKgfg=;
+        b=VKl6LLTSoB4mR4U/mlltodqpH1BZRftNW2HSic3Q7lsKjBOfVd7d9tniuaUCrbfOuA
+         JMsS4IjvK1UE3kAwJI06Dv1xYqH6gW7PzKtHa6nuDXz7sumGsTQmYlzn2EXP4Jy4yssl
+         k2rwVrODHfnoWGUcsw9TKOFkcf+h6cba9ReG0SY6fs18zhprFt6OAcm6ojL8sNQm7LZW
+         22FKjFrP2s1SunYLu95mMceQByuxY+vGgrZUKifF20+5CxM02mwjMUs8RoZ5Ph3Tx9Fp
+         NOtwERzXW1wtxF32hoOiQ8m7W3uSQWz545XSuK9eqfrHes6Df6WntPCblnB5rpMZPJay
+         U+Ng==
+X-Gm-Message-State: AOJu0YzEzaA5Kk5YqHgUtkXi46ReTEnNnN6Q4QZ4sNGi4Ac7S6pae+GO
+	EMh1MoPyoByCdNHRD+oHe+Y7NzGdCzDrJ826vA+PXKqJps6QwPYDXQC42oBQENV2e+ZTiChmatV
+	l9qIAu1ZHnpIaugcm/TCtSQEPvds=
+X-Gm-Gg: ASbGnctwe33sTsDJVr42yPttkJyJlpFZUw3wN3/GVHNqfHUyLLWEWXRQDqGpYypqxIv
+	EFkQdlkGK9PwMX8sqoS6j1XmNE8n+WT+whxi8jNw8qinulP7iD5bFfTrUXKcLhC4uCYjNCKxEQK
+	hWcnRFxuk2UtCRkk3c2LhI3xNUneP5UFdLQfgph6nIlnAgLD4JSUtQUNWkjQ==
+X-Google-Smtp-Source: AGHT+IGMFPR2F/+0pPzkUOHCfzwnYlDgT8Cb+ose2LE5mlDkYIqmG6PswpYoUx11ncd5mEKBwzCfm7vltImEe4AhSHM=
+X-Received: by 2002:a05:6602:2767:b0:85b:4ad2:16ef with SMTP id
+ ca18e2360f4ac-85e1385b0cfmr528542639f.9.1742424563856; Wed, 19 Mar 2025
+ 15:49:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh63q47zd.fsf@gitster.g>
+References: <cover.1742336481.git.me@ttaylorr.com> <cover.1742423021.git.me@ttaylorr.com>
+In-Reply-To: <cover.1742423021.git.me@ttaylorr.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 19 Mar 2025 15:49:12 -0700
+X-Gm-Features: AQ5f1JriL-FsFNm8IDS3vUJkUNBm8AaW8cqvQoW0loCzVdwlWfNwyIw-VFcKie8
+Message-ID: <CABPp-BEn+NfGu1c=ZWjwnFBJgmsxRVSq+Roin-KDQGqKPdDhCg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] http: support fine-tuning curl's keepalive behavior
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
+	Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 18, 2025 at 09:30:14AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Wed, Mar 19, 2025 at 3:37=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
 >
-> > @@ -81,6 +81,14 @@ to the new separate pack will be written.
-> >  	`--max-pack-size` (if any) by default. See the documentation for
-> >  	`--max-pack-size` for more details.
-> >
-> > +--combine-cruft-below-size=<n>::
-> > +	When generating cruft packs without pruning, only repack
-> > +	existing cruft packs whose size is strictly less than `<n>`.
-> > +	Cruft packs whose size is greater than or equal to `<n>` are
-> > +	left as-is and not repacked. Useful when you want to avoid
-> > +	repacking large cruft pack(s) in repositories that have many
-> > +	and/or large unreachable objects.
-> > +
+> Here's a reroll of my series to introduce new http.* knobs to control
+> curl's TCP keepalive behavior.
 >
-> Shared with existing entries in this file, but let's strive to make
-> sure we explicitly mention units.  --max-cruft-size=<n> is explained
-> to cramp below '<n>' bytes, which is great, --max-pack-size=<n> says
-> it accepts k/m/g suffixes and its minimum size is 1 MiB, which is
-> explicit enough hint that this is counted in bytes.  This new entry
-> should hint that this is also counted in bytes.
+> This reroll is mostly minor, with the notable differences being limited
+> to:
+>
+>   - Added error handling in the new http.c::set_long_from_env().
+>
+>   - Removed unnecessary casts from int -> long.
+>
+>   - Only set CURLOPT_TCP_KEEPCNT when compiled with a version of curl
+>     that knows about that option to begin with (>8.9.0).
+>
+> As usual, a range-diff is included below for convenience. Thanks again
+> for reviewing!
+>
+> =3D=3D Original cover letter
+>
+> This short series introduces a few new http.* configuration options to
+> control curl's behavior around TCP keepalive packets. The details are
+> spelled out in the final patch, but the gist is:
+>
+>   - http.keepAliveIdle specifies how long in seconds to wait on an idle
+>     connection before beginning to send keepalive packets.
+>
+>   - http.keepAliveInterval does the same but controls the interval
+>     between successive keepalive packets.
+>
+>   - http.keepAliveCount specifies how many keepalive packets to send
+>     before closing down the connection.
+>
+> The first two commits of the series are general code clean-up of a
+> couple of small things I noticed while reading through the http.c code,
+> and the final patch implements these new options.
+>
+> I couldn't think of a great way to test these new configuration
+> settings, and given the simplicity of the final patch I opted for no
+> tests there. But if someone has a good idea of how to test this
+> behavior, please let me know.
+>
+> In either case, thanks in advance for your review!
+>
+> Taylor Blau (4):
+>   http.c: remove unnecessary casts to long
+>   http.c: introduce `set_long_from_env()` for convenience
+>   http.c: inline `set_curl_keepalive()`
+>   http.c: allow custom TCP keepalive behavior via config
+>
+>  Documentation/config/http.adoc | 18 ++++++++
+>  git-curl-compat.h              |  7 ++++
+>  http.c                         | 75 ++++++++++++++++++++++++++--------
+>  3 files changed, 84 insertions(+), 16 deletions(-)
+>
+> Range-diff against v1:
+> -:  ---------- > 1:  204e5e18d2 http.c: remove unnecessary casts to long
+> 1:  ba22a121fa ! 2:  2e39a78e87 http.c: introduce `set_long_from_env()` f=
+or convenience
+>     @@ Commit message
+>          Replace those two instances with a new cousin of 'set_from_env()=
+' called
+>          'set_long_from_env()', which does what its name suggests. This a=
+llows us
+>          to remove the temporary variables and clean up some minor code
+>     -    duplication. More importantly, however, it prepares us for a fut=
+ure
+>     -    commit which will introduce more instances of assigning an envir=
+onment
+>     -    variable to a long.
+>     +    duplication while also adding more robust error handling.
+>     +
+>     +    More importantly, however, it prepares us for a future commit wh=
+ich will
+>     +    introduce more instances of assigning an environment variable to=
+ a long.
+>
+>          Signed-off-by: Taylor Blau <me@ttaylorr.com>
+>
+>     @@ http.c: static void set_from_env(char **var, const char *envname)
+>      +static void set_long_from_env(long *var, const char *envname)
+>      +{
+>      +  const char *val =3D getenv(envname);
+>     -+  if (val)
+>     -+          *var =3D strtol(val, NULL, 10);
+>     ++  if (val) {
+>     ++          long tmp;
+>     ++          char *endp;
+>     ++          int saved_errno =3D errno;
+>     ++
+>     ++          errno =3D 0;
+>     ++          tmp =3D strtol(val, &endp, 10);
+>     ++
+>     ++          if (errno)
+>     ++                  warning_errno(_("failed to parse %s"), envname);
+>     ++          else if (*endp || endp =3D=3D val)
+>     ++                  warning(_("failed to parse %s"), envname);
+>     ++          else
+>     ++                  *var =3D tmp;
+>     ++
+>     ++          errno =3D saved_errno;
+>     ++  }
+>      +}
+>      +
+>       void http_init(struct remote *remote, const char *url, int proactiv=
+e_auth)
+> 2:  a05269552f =3D 3:  cdfc9baa8d http.c: inline `set_curl_keepalive()`
+> 3:  d840415808 ! 4:  3fe62181e5 http.c: allow custom TCP keepalive behavi=
+or via config
+>     @@ Commit message
+>          keepalive behavior, expose configuration and environment variabl=
+es which
+>          allow setting curl's KEEPIDLE, KEEPINTVL, and KEEPCNT options.
+>
+>     +    Note that while KEEPIDLE and KEEPINTVL were added in curl 7.25.0=
+,
+>     +    KEEPCNT was added much more recently in curl 8.9.0. Per f7c09406=
+0c
+>     +    (git-curl-compat: remove check for curl 7.25.0, 2024-10-23), bot=
+h
+>     +    KEEPIDLE and KEEPINTVL are set unconditionally. But since we may=
+ be
+>     +    compiled with a curl that isn't as new as 8.9.0, only set KEEPCN=
+T when
+>     +    we have CURLOPT_TCP_KEEPCNT to begin with.
+>     +
+>          Signed-off-by: Taylor Blau <me@ttaylorr.com>
+>
+>       ## Documentation/config/http.adoc ##
+>     @@ Documentation/config/http.adoc: http.lowSpeedLimit, http.lowSpeedT=
+ime::
+>         A boolean which disables using of EPSV ftp command by curl.
+>         This can be helpful with some "poor" ftp servers which don't
+>
+>     + ## git-curl-compat.h ##
+>     +@@
+>     + #define GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR 1
+>     + #endif
+>     +
+>     ++/**
+>     ++ * CURLOPT_TCP_KEEPCNT was added in 8.9.0, released in July, 2024.
+>     ++ */
+>     ++#if LIBCURL_VERSION_NUM >=3D 0x080900
+>     ++#define GIT_CURL_HAVE_CURLOPT_TCP_KEEPCNT
+>     ++#endif
+>     ++
+>     + #endif
+>     +
+>       ## http.c ##
+>      @@ http.c: static struct {
+>       };
+>     @@ http.c: static int http_options(const char *var, const char *value=
+,
+>         }
+>
+>      +  if (!strcmp("http.keepaliveidle", var)) {
+>     -+          curl_tcp_keepidle =3D (long)git_config_int(var, value, ct=
+x->kvi);
+>     ++          curl_tcp_keepidle =3D git_config_int(var, value, ctx->kvi=
+);
+>      +          return 0;
+>      +  }
+>      +  if (!strcmp("http.keepaliveinterval", var)) {
+>     -+          curl_tcp_keepintvl =3D (long)git_config_int(var, value, c=
+tx->kvi);
+>     ++          curl_tcp_keepintvl =3D git_config_int(var, value, ctx->kv=
+i);
+>      +          return 0;
+>      +  }
+>      +  if (!strcmp("http.keepalivecount", var)) {
+>     -+          curl_tcp_keepcnt =3D (long)git_config_int(var, value, ctx=
+->kvi);
+>     ++          curl_tcp_keepcnt =3D git_config_int(var, value, ctx->kvi)=
+;
+>      +          return 0;
+>      +  }
+>      +
+>     @@ http.c: static CURL *get_curl_handle(void)
+>      +  if (curl_tcp_keepintvl > -1)
+>      +          curl_easy_setopt(result, CURLOPT_TCP_KEEPINTVL,
+>      +                           curl_tcp_keepintvl);
+>     ++#ifdef GIT_CURL_HAVE_CURLOPT_TCP_KEEPCNT
+>      +  if (curl_tcp_keepcnt > -1)
+>      +          curl_easy_setopt(result, CURLOPT_TCP_KEEPCNT, curl_tcp_ke=
+epcnt);
+>     ++#endif
+>      +
+>         return result;
+>       }
+>
+> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+> --
+> 2.49.0.4.ge59cf92f8d
 
-Definitely an oversight on my part, I certainly agree with this
-sentiment.
-
-FWIW, '--max-cruft-size' no longer explicitly says "in bytes", but
-mostly because it (a) doesn't describe `<n>` at all, because (b) it
-refers readers to the documentation on `--max-pack-size`. No need to
-cover it twice there.
-
-Thanks,
-Taylor
+The new patch and range-diff look good to me.
