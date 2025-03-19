@@ -1,68 +1,68 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C181EF391
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 17:20:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A221E5B84
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 17:20:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742404829; cv=none; b=hpJGRwZwxu4EiN/zkuniNO4Jg4Q1SyAnTs6CJlYXQ+mond6er2A5l82EmaD6zZfkW03GFDIGcA0jV6XGv8fJQONHXnnhjxTq8p3sU1j4e1TAxnJKg40/jWRMvF3yIPs6J56vGyhWklyD6OmrPEBeBt0zzhjvEs5MOVYOv0vQg0g=
+	t=1742404834; cv=none; b=lQMGyYKlJhyFm4hHifgZQPldnEOe86y4MPaFpKHXcmZdtSjgecsACRjvvE9s1ZsBxnQTDbXAEwPPtfPmeS2cs9LA/4b36CW8KNtcZZ/J0HBIdIvYuziH/3abU9QsoFREKpfnDHnCdoVzKMWN7QIQKzxSwoaoiLuwkHiLm0YwA7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742404829; c=relaxed/simple;
-	bh=R7LzlCq4tWcsN/TCwybpDmz35fg/1rQWxc+WV3UMuE8=;
+	s=arc-20240116; t=1742404834; c=relaxed/simple;
+	bh=8dhV5nvcBm405GBe6kcUc4v3lnx4AjFgVTCBm/MIFpE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=n0s9Es+zJomqjukbwWdrlO6Y2P6THCGklQsuwDEpiWuECkygDNRePdo+bEb0wUjkj7xN1gYoD6RShkD2kPryjjC4XWQ/YKfjlC7GRc6UvAW/8SmDwK7Ox3hZZZ5YWHiqG4dOYdeAifsZcr2fUwdDe5JHUkSvlFMA8pYS3wEgqTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W+WDLZyX; arc=none smtp.client-ip=209.85.214.175
+	 MIME-Version; b=jTSHy74bLQ1cAsuBGAraaXI8SYGcHTNfoNcPnCsNK8/DJgjX2U/s4wu+k9+LfJ+3PyBONMBZr8brpoGHBEyolXkWJhqDhKRnnPWXikEEyCiPcI2NopIymjhxuSCXa9PhfJW0go9xNpgL3Bh9ZR8wlWMJMQbKbne7jDCk3YHRbsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j47TPP80; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W+WDLZyX"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-224019ad9edso31533715ad.1
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 10:20:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j47TPP80"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-225b5448519so140121475ad.0
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 10:20:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742404826; x=1743009626; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742404830; x=1743009630; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0G5xOgvlvaICiEt5D5nECPnfHAK3kaAj0OSuIm0iz+c=;
-        b=W+WDLZyXW39YFG8aiYdHbAnOaUKshUsu5jOqrBbFqCC4lk8pWsvL6ONdxUkqnndxuW
-         JtOsOydig0iJ6WHyT07C5Vk4APzHiSjfNNHygxjcwF/jyMcsXH6zaxmp/ETPUvIN7/+P
-         EBaFt4mdQqDcQNcWkEfrPeJOoRuDMCVISrL1bA54C7MSNuZf4hY0mNDBXzkmnX7fn3b2
-         dirJih1tmQsEOFdMNQ981RwkiUn7ON1fsOpwrXYD19MJ0sYTyrgO4oCB3QRG6oNLqF1v
-         6dFQKblZ2mqrMjkNArWO8aqTsRrEn2rk7HV73fZkhuJ5lcim/YQkvaJKYf8dKZzgF+Yz
-         TKcA==
+        bh=QHC8ustxVwuIaQBCVdDr9llLsraw+z8ocCQE1Cm2Aj4=;
+        b=j47TPP80Po3WqVDGpIjv0/o+9fEANWDIKp8f/ZeDXXGoSAjIeYN0S9Rv5/wwmlGB53
+         xTWySvAXAjaC6+nFgG6I+JN2YSdTkaEkwogeDwCr2T19ILfYbOGDUXP+gXZp22M6EItH
+         7X4x74VmlK6WpitCATn5qKFuo7BFXFjmSUVl01ImJDMJo03vhHpzgHyd1NrmGkYlMOWF
+         pqeIWZVX889PxUVeExMF1S7TopfZGd9l12FPmhWkpCPSfte5y0mt9/IBk+I5fr8r/jPq
+         OWTG+kSAvnQqD21C0r6muVvf43Ujy39g7dmqfNuVLlOhiq/P4WYWcOLUaKMSM9J/NlQS
+         Efcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742404826; x=1743009626;
+        d=1e100.net; s=20230601; t=1742404830; x=1743009630;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0G5xOgvlvaICiEt5D5nECPnfHAK3kaAj0OSuIm0iz+c=;
-        b=kl642aaNpxVssnMpLAQJys8u4oR0j9WzJJ0qkjAcKZaQPNLqaWAFU7/InIi/ED67Ho
-         5Q79FIJq6ntQSyItqCJrF3VJXlF8xxWGI9CUefgYrBqa2ZJbgweU1m32Y2J2W7H3KbAK
-         tiCIro9HNCVrqiqpgdiCxQYvDVpPRc5ToXNvSnKhf/IfQtCdenJMKn3UZgDudOvZHJTy
-         wJ+xHUoFlw3OwnR9sMgQ6v2OdFrBEtq/tQjLP/W1no5RsLkNtUe9cp+UMiAsbOWjp4V0
-         wmMAamEDO/jRIuRmALC+b35pe7WR2pM/Ds1j3nUjTZfhFsYjX8qA2xWZdVxGkbhsS63Q
-         hwNg==
-X-Gm-Message-State: AOJu0Yy0xBk4vON2nIWjn+RiXgZVhEda+XjW218ROmMc/yWeIPHytsV5
-	AnEkVQuaJaj/Gng58b4OisZySybsbx5S3+03EItOUex2D8SU/UVlNVvf4Q==
-X-Gm-Gg: ASbGncuEet8CV7WjH9mep1oLgEDL9SA7kZyl9SCHCMujqgVroAEpKwz817IRH/gNN2B
-	0r+uqa40YXpH07KsUQDpwkzG+7MJh+5XW5aZpzvZOuKd5VU20YY34CRA+ROlxFY6i/gDsdN4og4
-	EnI05fPTXS7eVHN56HbHGNu1LB/LiF/HNDg3CwgGu0L5E4/rt8Iulx8g248uODCdtG6riF8XWV2
-	PZ4kcCMdRSCJ79fpDT4WStY2hitGHXm/H3GrApuiNCS4dZ+RCQaY1uGbuio4mgDy2iTfjlTXrhr
-	Spp2xDSUaRbhu1772owJA6XHRzgUkP3FEryiG6OywUBUKAsEcqZD8AsgwzPbHzXa76sfTjdgilU
+        bh=QHC8ustxVwuIaQBCVdDr9llLsraw+z8ocCQE1Cm2Aj4=;
+        b=jeX5Wwqu0k8wbQYQ6dS1gbVAxViSyx9D0do0fx9nbtbpHwGOueBbGrcaoJji7IP0+V
+         Bqw3Vck03yVU3ar4HqDTOmL+9sS5Rio6/DDrmBAg94kAr5ExkyRuEFaPEheIS4ldo1Vz
+         XZj/EKti90bc5OjHqpFkNkZmZE4CjFSy0UQ7BD3VwmfKmZrRqbvOOFjGwqbxBJKtKprH
+         Zrhw7Uvsgp0qoBhLN3h8FT3tnlG0ewdOlQ7Mre+57198RnUxfgsjNzCHmVfMRv/we1xP
+         m5BFzuHmxIp3Rg4dxt2g9vlnXHlelZ9kIt/AaGY8GuPC4tJO2/UWxqz1fzce2RcfQVi1
+         k2zw==
+X-Gm-Message-State: AOJu0Yyio0aUBKuIWADYloG76sqDbFymbEVqQl4FueBZGXaOdQOtr1Ca
+	zF9wxMV2fpdplk5NiwsuXJhIpVE6MVrcZZT6pvjUDtD1lInLkiQzWc6Tlw==
+X-Gm-Gg: ASbGncukMv903qsxzO7ozbW213nhYcFDKhe3yfMuMEhq+vq/dO4DJ598LRvlc8bl/QP
+	crDZWHr+GVLIUVn+0q21IfLlGe24ndPr9fyfngnZPfjx/DbGx5ale0ab23zp4ZTsVDvyav2a1YS
+	aXTdyWIh6zraOnRbnzwz8BrXm0L22QUdc3zpF9z2ijQNA3hjr4E56pyC1/tb2Nvfmq5EFlVpfdA
+	8z5HFRJqkzCFMLDEqjBlyQm3LJ1DqSO5hIfRAmgzagpCpEImFmLkQy5JX6eNhUlsLtMFqxFjuAJ
+	7rgT/gtxHc2rczegzn85xyf1ceRy8JAeP9BDvQOzAG0yJHG+Fb8BZsIKdkPtZpiz1bZV/2yi1Xs
 	=
-X-Google-Smtp-Source: AGHT+IFN+ENwHb+O967xc92hokf1tEuc/ymjaX+KwJDECLmo0OxgELSzeynnO8wzA5bW60qCm4/YOw==
-X-Received: by 2002:a17:903:2301:b0:224:76f:9e44 with SMTP id d9443c01a7336-22649828e20mr41508795ad.8.1742404826373;
-        Wed, 19 Mar 2025 10:20:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFjKgtfqL/p3zi/ErIaHapC2c/4mX8z8fsmPSfidyGctwvgnPmNyLRRzF3Oud1PLJxp9cFbCw==
+X-Received: by 2002:a17:902:e846:b0:223:37ec:63d3 with SMTP id d9443c01a7336-22649a2f067mr45086365ad.18.1742404829945;
+        Wed, 19 Mar 2025 10:20:29 -0700 (PDT)
 Received: from localhost.localdomain ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6bd3c59sm117240305ad.218.2025.03.19.10.20.24
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6bd3c59sm117240305ad.218.2025.03.19.10.20.28
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 19 Mar 2025 10:20:25 -0700 (PDT)
+        Wed, 19 Mar 2025 10:20:29 -0700 (PDT)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH 1/2] userdiff: add builtin driver for gitconfig syntax
-Date: Wed, 19 Mar 2025 14:20:15 -0300
-Message-Id: <20250319172016.2115-2-lucasseikioshiro@gmail.com>
+Subject: [GSoC PATCH 2/2] t4018: add tests for gitconfig in userdiff
+Date: Wed, 19 Mar 2025 14:20:16 -0300
+Message-Id: <20250319172016.2115-3-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250319172016.2115-1-lucasseikioshiro@gmail.com>
 References: <20250319172016.2115-1-lucasseikioshiro@gmail.com>
@@ -74,55 +74,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From Documentation/config.adoc:
-
-"""
-The file consists of sections and variables. A section begins with
-the name of the section in square brackets and continues until the next
-section begins. Section names are case-insensitive. Only alphanumeric
-characters, `-` and `.` are allowed in section names. Each variable
-must belong to some section, which means that there must be a section
-header before the first setting of a variable.
-
-[...]
-
-Subsection names are case sensitive and can contain any characters except
-newline and the null byte.
-
-The variable names are case-insensitive, allow only alphanumeric characters
-and `-`, and must start with an alphabetic character.
-"""
-
-Then, add a new builtin driver for gitconfig files, where:
-
-- the funcname regular expression matches sections and subsections,
-  i. e. the pattern [SECTION] or [SECTION "SUBSECTION"], where the
-  section is composed by alphanumeric numbers, `-` and `.`, and
-  subsection names may be composed by any characters;
-
-- word_regex is more permissive, matching any word with one or more
-  non-whitespace characters.
+Add userdiff tests for gitconfig files. These files define sections and
+subsections, with and without indentation.
 
 Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 ---
- userdiff.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ t/t4018/gitconfig-section             | 5 +++++
+ t/t4018/gitconfig-section-noindent    | 5 +++++
+ t/t4018/gitconfig-subsection          | 7 +++++++
+ t/t4018/gitconfig-subsection-noindent | 7 +++++++
+ 4 files changed, 24 insertions(+)
+ create mode 100644 t/t4018/gitconfig-section
+ create mode 100644 t/t4018/gitconfig-section-noindent
+ create mode 100644 t/t4018/gitconfig-subsection
+ create mode 100644 t/t4018/gitconfig-subsection-noindent
 
-diff --git a/userdiff.c b/userdiff.c
-index 340c4eb4f7..5bbcc2b690 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -198,6 +198,10 @@ IPATTERN("fountain",
- 	 "^((\\.[^.]|(int|ext|est|int\\.?/ext|i/e)[. ]).*)$",
- 	 /* -- */
- 	 "[^ \t-]+"),
-+PATTERNS("gitconfig",
-+         "^\\[[a-zA-Z0-9]+\\]|\\[[a-zA-Z0-9]+[ \t]+\".+\"\\]$",
-+         /* -- */
-+         "[^ \t]+"),
- PATTERNS("golang",
- 	 /* Functions */
- 	 "^[ \t]*(func[ \t]*.*(\\{[ \t]*)?)\n"
+diff --git a/t/t4018/gitconfig-section b/t/t4018/gitconfig-section
+new file mode 100644
+index 0000000000..866aa70b24
+--- /dev/null
++++ b/t/t4018/gitconfig-section
+@@ -0,0 +1,5 @@
++[RIGHT]
++        # comment
++        ; comment
++        name = value
++        ChangeMe
+\ No newline at end of file
+diff --git a/t/t4018/gitconfig-section-noindent b/t/t4018/gitconfig-section-noindent
+new file mode 100644
+index 0000000000..75a401b24b
+--- /dev/null
++++ b/t/t4018/gitconfig-section-noindent
+@@ -0,0 +1,5 @@
++[RIGHT]
++# comment
++; comment
++name = value
++ChangeMe
+\ No newline at end of file
+diff --git a/t/t4018/gitconfig-subsection b/t/t4018/gitconfig-subsection
+new file mode 100644
+index 0000000000..06243db626
+--- /dev/null
++++ b/t/t4018/gitconfig-subsection
+@@ -0,0 +1,7 @@
++[LEFT]
++
++[LEFT "RIGHT"]
++      # comment
++      ; comment
++      name = value
++      ChangeMe
+\ No newline at end of file
+diff --git a/t/t4018/gitconfig-subsection-noindent b/t/t4018/gitconfig-subsection-noindent
+new file mode 100644
+index 0000000000..a100b81cf1
+--- /dev/null
++++ b/t/t4018/gitconfig-subsection-noindent
+@@ -0,0 +1,7 @@
++[LEFT]
++
++[LEFT "RIGHT"]
++# comment
++; comment
++name = value
++ChangeMe
+\ No newline at end of file
 -- 
 2.39.5 (Apple Git-154)
 
