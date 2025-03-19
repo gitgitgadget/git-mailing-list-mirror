@@ -1,53 +1,53 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8F1A29
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 13:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5FD1F4E37
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 13:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742391415; cv=none; b=uQm54ciQwzu5g3NEuWZ7cCPcSljfxkhDP53vW47G4MZ+sXuRMJ0vSOqn9m/EsLyAQbtEGWOibd5KjCzhmAnBRrZFoKZxzleLX3vK/Lw6i0BAW4EL3/vVRJCjiD1uc5OkskcAmDuMzhrVC8u8wkI+5xoXCDpQBcsk66f3Fbfc+t8=
+	t=1742391578; cv=none; b=t9gU6QhubaIFvUG4elUYKodFX9MGTtsswMxVD5QGvXZ3gdgxzdSe4vXhHT343YkQ2nxhI7xBE4TKix9u9xUcglKII9lCBEyk78/wS/PmG7PS0PnrMRoMjfl6ASCZyde9D537iUXWD0GX0m7YlQttVLGI8s9FK0JUaEsdG9wAg/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742391415; c=relaxed/simple;
-	bh=c2y4ZuCOTkLB6L0DqMJRt75xsJe+5PXKzQW04d/U8IM=;
+	s=arc-20240116; t=1742391578; c=relaxed/simple;
+	bh=SIiHozKuLioHebajV3pjGliEJkwiH39TA9ZOMBXzqoE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UUATj3pWj46SJkC38B6RrW31oejuXqobfJzlDmQVwDe/HiE8iPKzQ4ItHJhiCxVyw4Cg0nK4M8Ds8UiGgN2PYoXVJgwnDn/Vtc42/t6KJtIBaACxGeRcVSS7PR5oXhjZNl+zLoLJ8PM8ArtIJ2/4jC9mzNimVAsg9enSCrHv1AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XhJnpEkp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NxTClN2w; arc=none smtp.client-ip=202.12.124.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=GVxCFzqRO7Td2m6JS17N+r6rrddvKEHCmDdL/R9adsbOTdhPEZ7cp9r8f4UfjfuJNlt6zDYKuBuXuyu+gsJC67o0lepd7GAb3yci23GOq3CWTuGN9hQ8RY+7ADDDYmn5J8TitnB4wmAIAy2jPajpJm9kVSRaA0suigzK3sWH0x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZzAUqyal; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TN+fgass; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XhJnpEkp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NxTClN2w"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3DA7F25401EA;
-	Wed, 19 Mar 2025 09:36:52 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 19 Mar 2025 09:36:52 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZzAUqyal";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TN+fgass"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9237A2540217;
+	Wed, 19 Mar 2025 09:39:35 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Wed, 19 Mar 2025 09:39:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1742391412; x=1742477812; bh=UG2NBFb56W
-	+QLFYS/hQk3MxuGHubxdgWqVkFxj6TRd8=; b=XhJnpEkpEkxdP6Rf+4nHU461Mk
-	eDYk6VlVla6o0iU6TApNSX0/wUJ7YUMwuXds86T3mPfBkkbw45k17JvFmVWN4reh
-	APS1ro7vbli0R3DmNzR0i/x8cwKx602TpbacFC1d5SB3B9ivGZT3V0hLfC0ze40n
-	u61h5W4MIVurtm/j5AOdEnYstzjIE4d0bjRZ+RiwaC0GDkEvaDVtB+z0/cDthe/Z
-	rH+/DTBNKJIyg9wTnnANoa1I4OXI6C2JMzwOoWwDbHCbcYzkcoxJLDvMSynOIGCF
-	dIiDdzBirEBgikbwktsSeEyHg7RsNV+T339T6UmWy1JOcLBACfB9oOh3TQeA==
+	:subject:to:to; s=fm1; t=1742391575; x=1742477975; bh=3MnTnhcpIV
+	RifjWdfi9pmUYQsry6bbtoSuAQFUXlf8A=; b=ZzAUqyalOzL55uPgKTrrWiHJxy
+	SPU3dRw3YPlVlzz4/r9G+Z/btWwtp+90+1ijYx/nhvvnoaKfvYjeMa9SpJfHJFmh
+	q0ICfU768IK+Bzi9qHIEPOeFKY7uoPkhMlw3+UPbeu5jNLNR4QKOvHrEBa0nI8F7
+	0pD44lp8JJWC7PO6IHgc8bCn3pBf/OwmxPBarYWHzIlSdc3lnbh0GBUD819Om07A
+	RgHWbQvpxRJXPoaW5Vc+5Y8gGhnTsEbcOp64JB0WmFzuM1dPlPp4Ad1RNJPKtMmD
+	bYFkyEjZIosxNKpALxwDjTdZ8eYsEtf8vTvTV63H6Mnsl7/J+dztlWE9Iotg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742391412; x=1742477812; bh=UG2NBFb56W+QLFYS/hQk3MxuGHubxdgWqVk
-	Fxj6TRd8=; b=NxTClN2w9RQRRecK06BpIRONSN3B4FqZ+OMaG+71+ZwMARrUjPk
-	vjtH8KvW+9jlezLIhSXlhfEDmHahImzRckUJW4eF1LdEFx2wd+uIqxeZGGRRgzeq
-	PsxnGgXD0XTc8of3A38HSDlkCfGpURyCHXjKRh5V9uYl790p0IGOY7894xmEfjpU
-	uemHW4rHZbu2lDTN/E0Ypy3Pvic/p4EEKnvrZTaRaiBS4zNWEgA7m72cuevjbO0L
-	wgJoPZnrDuTva4MHDHlKNoS9YURU9WNkj/6WrdIa4BNjc6FQkKrV2vxbQCoIg7jt
-	evHeEIlhwz2lLqzefyVvPH1Kt8Vk6mbzjxw==
-X-ME-Sender: <xms:c8jaZ9GEM5SoJIxIX4C4cZyJ7WngzOdHixu-Ue2cihsfyOBeB0ocgA>
-    <xme:c8jaZyVv5VnXNQy4MTBiIazQzWtEQAUoFLUnJvZ-oD5lRRHmhC1yRC516f0IUbNlF
-    Vt8j8S7iiYbgbpNQA>
-X-ME-Received: <xmr:c8jaZ_LoB-yPMRMIgq3ohpP7F2ZAINLDnmXANREMKlXnzjJQdtR76USzvNA1SFEGkDTz72_u1lDibWHV1i3g9zQ_jwWekTeYoLyHxEC4a5G0FwtITA>
+	1742391575; x=1742477975; bh=3MnTnhcpIVRifjWdfi9pmUYQsry6bbtoSuA
+	QFUXlf8A=; b=TN+fgasshZPBxPucyBS8KqYPMOs+AsHH1RA8jE6APgugLC9wCMs
+	24ymf8bYDBr20JQKDzDGlkVSXsdXD6QllpTeWp2UHS8asT9nmd3Ze/XujUBisT9N
+	7hvVKzp+gNjZKEdTPtUpGro6N+cEc/BTnTJvk4T4c42QRwen+dnppjBmyOi0Je7A
+	pKTuh7gXUskcm1Ks+kd0P0e6/gOk/0DK5WjbnNOMfYZcaUv20CUPzKSsov76F8Oi
+	Fq7v2jBLnkxerruV9IcPFfkFL6mztM/v1tABa+lZJbRHUoigso3g8xzSSCpv4UV6
+	8h0tCXdz9J+Jrlvp1vPt6OVLVxuv8jz426Q==
+X-ME-Sender: <xms:F8naZ1XtMsRuUf97FvBce2labwbtYROy31qbbYzKSQojxxBn_lBvPw>
+    <xme:F8naZ1mHOxM8-zmpmRYIeBUCEjbuMu9SLv4M8pKHommUreeqKN-YQhZhycj9WiFvP
+    fS0hRqa5OSojDjjAg>
+X-ME-Received: <xmr:F8naZxbvXpfnzMJuogNloUesyDcymHyN6gIpUQgaBVzf9b1H6c-ViQ_sVr4w5lGuP2N5PZJ1b1_trSFqi7Zd_YOrP0PoxgBEwohOVV8x860glLIxIw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeehgeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -55,31 +55,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeehgeejucetufdote
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
     himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
     ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehgihhtseguihhnfihoohguihgvrdhorhhgpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrg
-    ihjhhonhgvshdrphhluhhsrdgtohhm
-X-ME-Proxy: <xmx:c8jaZzEHo3oE9q8TrxgrQZCP2GK6QAuiJpFnMyYYjM9HMKNlwrPtog>
-    <xmx:c8jaZzXaTwunndi9PGJEOUHtbKgzs3MhcfXdaDoYwmFUz62tLShjcQ>
-    <xmx:c8jaZ-Mizi6FIX7BC5renIynC1IzeYVyY-IlaX8CVwJf5SdZjcgrAw>
-    <xmx:c8jaZy1e_pbUW-aob2_7WLWn6Y2jBg4zS4ElO_-PGoLxsrn2YelLkQ>
-    <xmx:dMjaZ5yluld5RNT8mdtahXgJmNNWlYLlOEb1-5eBdeAgAM3ITCSB9jj2>
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepshgrmhesghgvnhhtohhordhorhhgpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvshgthhif
+    rghrthiisehgvghnthhoohdrohhrgh
+X-ME-Proxy: <xmx:F8naZ4X8ZH8QUCS5xGe2YLJqw9oVgFbAx6PMqWyCmEdBuRjSHHKtuA>
+    <xmx:F8naZ_nGvlUctWITrmfpOmVaKlKBczAaX4UV0gKci37RC95gSn8efQ>
+    <xmx:F8naZ1cKccWK4nLJTMQlwaQ_v371juLeSZgsyV04SWs-Buk8og-AlA>
+    <xmx:F8naZ5EiPQ36rthH9oN1qhnFCjQAtVEGZCcCsG4Hn-N0FN51rha0DA>
+    <xmx:F8naZ9jDORZ1AtliOKXad2EvBtaZlqOvi7me7wz2PjycTmwIoKDERwsl>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Mar 2025 09:36:50 -0400 (EDT)
+ 19 Mar 2025 09:39:34 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e5573dd8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 19 Mar 2025 13:36:48 +0000 (UTC)
-Date: Wed, 19 Mar 2025 14:36:48 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id d9eeee02 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Mar 2025 13:39:33 +0000 (UTC)
+Date: Wed, 19 Mar 2025 14:39:32 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Adam Dinwoodie <git@dinwoodie.org>
-Subject: Re: [PATCH 01/12] meson.build: remove -DCURL_DISABLE_TYPECHECK
-Message-ID: <Z9rIcPprrsKtJkmV@pks.im>
-References: <d230e5a7-1b3d-4cf9-b30e-69471d1fbe9a@ramsayjones.plus.com>
+To: Sam James <sam@gentoo.org>
+Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>
+Subject: Re: [PATCH] meson: use test_environment conditionally.
+Message-ID: <Z9rJFG7aOVg3gDTM@pks.im>
+References: <310a34bace801d288e369c6a01a8d04ffc4c3c06.1741975367.git.sam@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,26 +85,139 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d230e5a7-1b3d-4cf9-b30e-69471d1fbe9a@ramsayjones.plus.com>
+In-Reply-To: <310a34bace801d288e369c6a01a8d04ffc4c3c06.1741975367.git.sam@gentoo.org>
 
-On Sat, Mar 15, 2025 at 02:46:23AM +0000, Ramsay Jones wrote:
+On Fri, Mar 14, 2025 at 06:02:47PM +0000, Sam James wrote:
+> test_environment is only defined with -Dtests, so use it conditionally
+> and define a stub environment() instead, to avoid erroring out:
 > 
-> Commit 9371322a60 ("sparse: suppress some \"using sizeof on a function\"
-> warnings", 2013-10-06) used target-specific variable assignments to add
-> -DCURL_DISABLE_TYPECHECK to SPARSE_FLAGS for each of the files affected
-> by the "typecheck-gcc.h" warnings. (http-push.c, http.c, http-walker.c
-> and remote-curl.c).
+> ```
+> $ meson setup -Dtests=false -Dcontrib=subtree build
+> [...]
 > 
-> These warnings are only issued by sparse, and not by gcc, so we do not
-> want to disable the 'type checking' for non-sparse targets. The meson
-> build does not provide any sparse targets, so there is no need to use
-> the CURL_DISABLE_TYPECHECK preprocessor flag with the c compiler.
+> contrib/subtree/meson.build:15:27: ERROR: Unknown variable "test_environment".
+> ```
 > 
-> In order to re-enable the curl 'type checking' in the meson build, remove
-> the assignment of -DCURL_DISABLE_TYPECHECK to libgit_c_args.
+> Do the same for 'netrc' in contrib/ as it uses the same pattern.
+> ---
+> Not sure if we can do better here somehow or not (with a disabler?)
 > 
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>  contrib/credential/netrc/meson.build | 8 ++++++--
+>  contrib/subtree/meson.build          | 8 ++++++--
+>  2 files changed, 12 insertions(+), 4 deletions(-)
+> 
+> diff --git a/contrib/credential/netrc/meson.build b/contrib/credential/netrc/meson.build
+> index a990dbb86d..6d815d01c4 100644
+> --- a/contrib/credential/netrc/meson.build
+> +++ b/contrib/credential/netrc/meson.build
+> @@ -7,8 +7,12 @@ credential_netrc = custom_target(
+>    install_dir: get_option('libexecdir') / 'git-core',
+>  )
+>  
+> -credential_netrc_testenv = test_environment
+> -credential_netrc_testenv.set('CREDENTIAL_NETRC_PATH', credential_netrc.full_path())
+> +if get_option('tests')
+> +  credential_netrc_testenv = test_environment
+> +  credential_netrc_testenv.set('CREDENTIAL_NETRC_PATH', credential_netrc.full_path())
+> +else
+> +  credential_netrc_testenv = environment()
+> +fi
+>  
+>  test('t-git-credential-netrc',
+>    shell,
+> diff --git a/contrib/subtree/meson.build b/contrib/subtree/meson.build
+> index 9c72b23625..d18f188216 100644
+> --- a/contrib/subtree/meson.build
+> +++ b/contrib/subtree/meson.build
+> @@ -12,8 +12,12 @@ git_subtree = custom_target(
+>    install_dir: get_option('libexecdir') / 'git-core',
+>  )
+>  
+> -subtree_test_environment = test_environment
+> -subtree_test_environment.prepend('PATH', meson.current_build_dir())
+> +if get_option('tests')
+> +  subtree_test_environment = test_environment
+> +  subtree_test_environment.prepend('PATH', meson.current_build_dir())
+> +else
+> +  subtree_test_environment = environment()
+> +endif
+>  
+>  test('t7900-subtree', shell,
+>    args: [ 't7900-subtree.sh' ],
 
-Makes sense indeed.
+Thanks for the fix! I think it doesn't quite go far enough though, does
+it? I would have expected us to completely disable tests in case we have
+`!get_option("tests")`, e.g. like the below patch.
+
+I see this patch has already been merged to `next` though, so we'd have
+to send a follow-up fix that builds on top of it. Do you want to do it
+or shall I send this patch?
+
+Thanks!
 
 Patrick
+
+diff --git a/contrib/credential/netrc/meson.build b/contrib/credential/netrc/meson.build
+index a990dbb86da..3d74547c8ae 100644
+--- a/contrib/credential/netrc/meson.build
++++ b/contrib/credential/netrc/meson.build
+@@ -7,14 +7,16 @@ credential_netrc = custom_target(
+   install_dir: get_option('libexecdir') / 'git-core',
+ )
+ 
+-credential_netrc_testenv = test_environment
+-credential_netrc_testenv.set('CREDENTIAL_NETRC_PATH', credential_netrc.full_path())
++if get_option('tests')
++  credential_netrc_testenv = test_environment
++  credential_netrc_testenv.set('CREDENTIAL_NETRC_PATH', credential_netrc.full_path())
+ 
+-test('t-git-credential-netrc',
+-  shell,
+-  args: [ meson.current_source_dir() / 't-git-credential-netrc.sh' ],
+-  workdir: meson.current_source_dir(),
+-  env: credential_netrc_testenv,
+-  depends: test_dependencies + bin_wrappers + [credential_netrc],
+-  timeout: 0,
+-)
++  test('t-git-credential-netrc',
++    shell,
++    args: [ meson.current_source_dir() / 't-git-credential-netrc.sh' ],
++    workdir: meson.current_source_dir(),
++    env: credential_netrc_testenv,
++    depends: test_dependencies + bin_wrappers + [credential_netrc],
++    timeout: 0,
++  )
++endif
+diff --git a/contrib/subtree/meson.build b/contrib/subtree/meson.build
+index 9c72b236259..63714166a61 100644
+--- a/contrib/subtree/meson.build
++++ b/contrib/subtree/meson.build
+@@ -12,16 +12,18 @@ git_subtree = custom_target(
+   install_dir: get_option('libexecdir') / 'git-core',
+ )
+ 
+-subtree_test_environment = test_environment
+-subtree_test_environment.prepend('PATH', meson.current_build_dir())
++if get_option('tests')
++  subtree_test_environment = test_environment
++  subtree_test_environment.prepend('PATH', meson.current_build_dir())
+ 
+-test('t7900-subtree', shell,
+-  args: [ 't7900-subtree.sh' ],
+-  env: subtree_test_environment,
+-  workdir: meson.current_source_dir() / 't',
+-  depends: test_dependencies + bin_wrappers + [ git_subtree ],
+-  timeout: 0,
+-)
++  test('t7900-subtree', shell,
++    args: [ 't7900-subtree.sh' ],
++    env: subtree_test_environment,
++    workdir: meson.current_source_dir() / 't',
++    depends: test_dependencies + bin_wrappers + [ git_subtree ],
++    timeout: 0,
++  )
++endif
+ 
+ if get_option('docs').contains('man')
+   subtree_xml = custom_target(
+
