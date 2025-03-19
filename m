@@ -1,104 +1,186 @@
-Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E0F15574E
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 14:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC7635976
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 15:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742395544; cv=none; b=uZfFvZ9lT03BQt0+1WOggqcYS1StBH7HaSZfkxLIUFbLpLLEXWKS6GkGc2kzyD7CsDl0avmRDNSUhfUsRVQf7DKdEHiwTGt6mABZx2AD4unhrRr+QbBS2qdNbeTKmxdFIahOSZdKiyLcvMnZzNLsLN1kt1V82dcxIQ0JyuOz/+4=
+	t=1742398186; cv=none; b=YaYBgVPGI5lcTgEUM1XGIP2KQQ231QdzCBcyZHlvWghUlfxVn4bB+jlJJKi0Wo+pT3hi/szgbuhaE8RF86ZGy1XHG/Jb9z89TyovTeMdsiNZF3Yo4GdM/hDKrvKlXmkSG9Ct20Z/sPMX3XePO4Wx9SVUL8+Xn4okXusP3VsWXuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742395544; c=relaxed/simple;
-	bh=MVb2tdqchBbRosQ5o4C6L7LD3nhWvB+yskaNUqHrmGE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Uhu4ydXK1npbfEpIcLzPZxVEp98rZRoBamtO/PH4qu1Iedvp5OgZhO2Dp651U/IpnsPb3wkoAcA4h1gs1sjfVnfbyig/vgIitQRaN7+AuLVDweJsjkv6wA7U5/Qh2WnFB2ytCaO55VD4xeod42PWgjkt42nLrjIwKvRU6/h/M4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kfv+1hm+; arc=none smtp.client-ip=209.85.166.45
+	s=arc-20240116; t=1742398186; c=relaxed/simple;
+	bh=wIgQbevd8qZwRixwtJSoZxrk2bY9OczVr2ZPMGMz2UM=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=HbNErc0bBP8G8TEW9H/glgkiiQlv3/pUDrOLszS6Ocq5pQpFRkMst7YYzyieRJxU4YQ0Xng6wp1Frk2wKmr19dSowXreMEedtHEHRkgDmSCZfLbX3Dh/6ixnxu3jKtTYISj9R8iXi29atu2h92MN5s0fleE8AJ0/wsBVheJ+EZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YID4tkup; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kfv+1hm+"
-Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-85e1b1f08a5so11258339f.2
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 07:45:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YID4tkup"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-225df540edcso19479985ad.0
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 08:29:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742395542; x=1743000342; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1742398183; x=1743002983; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MVb2tdqchBbRosQ5o4C6L7LD3nhWvB+yskaNUqHrmGE=;
-        b=Kfv+1hm+1J3LJEjWSGzxRC3KCdxbGRDGaZKABJcSvDydyW2wwptS79emSUTOX8hYJa
-         LOPP8rRz+pHMc604XPXB3+f6i7bzrnSO5tOgvYWqDrtRP7G7rdTyWE/qCGbYFCtBOmKc
-         zoGiDd42Rj3eY1thh0thgY6GL3ELGM1TBnNTFngjLjbsfu3YPX+rSJ0SAfCLmajH7COu
-         JdcX1b9AuZYzRWiYIarlHl8a4boxJlgrIX9qT6fR1y5Q2p3Hj1iHRIR8yhvObDiotIOo
-         DD/BVT7ehzwhRFfALyLdDF+GA7hoMQ4veRlRd2L3PW+cA5VzzF0BQ7RUCdXxZe25lmb1
-         DUwg==
+        bh=0NVNgzFAc35IoLbJa50aNCVmZaBkJlMu+GXurSmO3cM=;
+        b=YID4tkupvmVKJ9WzCVKEBAjDWKyIq3hxREQ067VwHudBFjqRQdyMagB0T81KCT05r3
+         k1QSOSjPDXloT3j0YBTRNFDYGTgfj4UQyszAh0d67xIlnbebZVr6Dt1FXoisC+aOKMU3
+         dHRvGszq8EwsRTX/R/Rqb4wae/DLadgBuX8lvscI+ma4z2HdOS5eJt5zDS9ID7sRi1hM
+         PhU5UeYjdsQ0t07Y8diY+H/6bFgQGO1dhQGBujvcVwEaYSX5MQyu3DHcOF20YjvRPhSB
+         VROn+z9h8FcuHfNQfQ4Arz3IAfGFm8bxvfUJByDV6wXnTBugMgaGc8XHPVgqk40UAQbU
+         vaJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742395542; x=1743000342;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1742398183; x=1743002983;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MVb2tdqchBbRosQ5o4C6L7LD3nhWvB+yskaNUqHrmGE=;
-        b=epjikEEvmrPPsemVGU19muBemN6tByb5/yzrAK7H7VsOyvb3qwxesqj0i/t1rM8GdB
-         pmrpSan84AkuURyPAaQ3AMpDbzql7RUTQQyDSBzHF4DW9d9spUPGZB/+SDO11niAcycB
-         woWLm+B5fonGCtHc6HHtEbgEkx4YsHjYb210eTwrBYober/HDBeZj7AaH2uHh7Fa16Bq
-         0wwuqS7PTASPIQP7+lobu4tUW9eayALhSSxcX9+KbSRMcTw54+cZeS3JzNVntIzleD6Y
-         t29dWUKxPHBvhI78A5/dXRRWIG9PY5b0ZUWcXz0nzpnGGE3L/L/GNjP9suvPPDpfyzgY
-         oyzA==
-X-Gm-Message-State: AOJu0YxZN/t0tSAIUJSNv5+ogNEuKw2+ed0yCb75MmNVeTVp/hMKhbct
-	Ly/wVUyEU8FTYNWCSH5QBC80U0+uLLjGoLd2pCp+1jPzG/aTkBcKQyLZFKGucuvUHyqis1a+h8q
-	k/7/Qqjk82f1f4V7RA1bcYYWU55U=
-X-Gm-Gg: ASbGnctBrsXk4Qd+quRX/CK2UbMXDSsRbHy+1v5fs4jpgvP9MyJmKpqQYaHwNNBsehu
-	uCoMj1go+HTM53Zbv9Rb2gwb5KDFG8eksb8eceoi3whjVhKiJpxvHr7COzPISrDj/H9+3KqY4XN
-	ZYItOMp3cGhdsVbp6FE8BeWy+FbRkb
-X-Google-Smtp-Source: AGHT+IE+XNiKqtaNr4HBFyOJRyOF0Mfj/oiyjQLcpa/eFDJE4CXxstCIjanaklOJMePaazl06bRb5bmuumtGvvKHyp4=
-X-Received: by 2002:a05:6602:3819:b0:85b:3885:1595 with SMTP id
- ca18e2360f4ac-85e1378bb9bmr363075539f.3.1742395542417; Wed, 19 Mar 2025
- 07:45:42 -0700 (PDT)
+        bh=0NVNgzFAc35IoLbJa50aNCVmZaBkJlMu+GXurSmO3cM=;
+        b=HUPMY8oGhfxYtUYVD8ySMyxZQdLKVVLN0qdJNEIm3+gBbEL83AwGJ3KzDhG1igONv1
+         TeSy4Z4Rk3cO+SFanWlPdrApSB9AUkUwydRFdA0DACfYgSL4TdcPMJ5a4wbaKoIpUyRb
+         1zsRPDIr7fwKFbPW34xE8eToeK26JsXW8lwuMctaLUZDzBqSIyF7pphf7DXYBEPuvFzq
+         NHXlVFecwyNJFsiClDaN9QArGXvojWIMz+uDhu4xnslXA5mSPJKSfeSfo8Oy93HywC4k
+         AzV1fXbneN5/83+Og9QyKKHvnKrgOGX3048zqq8oqrC1BQpU4QMILTToX7PRzmm0k8e0
+         47Xw==
+X-Gm-Message-State: AOJu0YwownrUU1Xc8ZLdvhC1lnJSm/0wFoQkUcMjrk0VzGP9PzIgKycY
+	Qa4/IWEDDyFZZyj7w0drilJQvxOqwHEPjvZdG4uOGXZzB6TG5JOGOje0RQ==
+X-Gm-Gg: ASbGnctBz7i36k+XXUyJVL9nUAc1mwAT8lVfca05GvvF4iygTZB77inIM/oqKamgj7V
+	NcYJinDMsVJIsEUZlu9WIf0hAQ25umtfy8y9WciyM84ZUv8VU7Dd0gTknvRIfFXObK9PIorQPx8
+	2mDi0qzM6qtMgTeCHJr5AkvJNxwTK7E2AF0LRgwlvSItEdwM7qzszLRK9zCXRonL4pl/tnripYq
+	+9ICdTIiH19lJT9YG9G93pVp3FQpYsJEMsO0a6vvEcVllRTkEcPVyn67DdsI4wrFFssLO6PF5SU
+	Ql2BKn4fMoI/Wsb4K/06mfSMGO2DAuSRONk+Ignt
+X-Google-Smtp-Source: AGHT+IEuqnW83JvOJxWhcqIpPrnUemhQTbp82pHXFJC4KEcD+9QKu+aRsMuoQYXxpqKEFj8plZUQxg==
+X-Received: by 2002:a17:902:da8c:b0:21a:7e04:7021 with SMTP id d9443c01a7336-22648f0cf6fmr42884345ad.24.1742398182852;
+        Wed, 19 Mar 2025 08:29:42 -0700 (PDT)
+Received: from meet.. ([103.86.19.121])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c68a6865sm115889305ad.75.2025.03.19.08.29.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Mar 2025 08:29:42 -0700 (PDT)
+From: Meet Soni <meetsoni3017@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	Meet Soni <meetsoni3017@gmail.com>
+Subject: [GSoC PATCH v5 0/3] reftable: return proper error codes from block_writer_add
+Date: Wed, 19 Mar 2025 20:59:24 +0530
+Message-Id: <20250319152927.1263033-1-meetsoni3017@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250319075943.28904-1-meetsoni3017@gmail.com>
+References: <20250319075943.28904-1-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <7EC98E2F-144D-4974-94F6-FC24B443651D@norbauer.com>
-In-Reply-To: <7EC98E2F-144D-4974-94F6-FC24B443651D@norbauer.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 19 Mar 2025 07:45:30 -0700
-X-Gm-Features: AQ5f1Jrw0XTyvDG25s7Kw8uW1vz68UUQxbYCyIvEMQgMXNTD6O2uAe2SxnJlafY
-Message-ID: <CABPp-BGTrEfGqX=o3W5rfqZiRdEuAzdKJuT8W0J=6kSY9ME4LQ@mail.gmail.com>
-Subject: Re: bug: git shows hints that should be suppressed
-To: alan@norbauer.com
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 19, 2025 at 2:59=E2=80=AFAM <alan@norbauer.com> wrote:
->
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> `GIT_CONFIG_GLOBAL=3D/dev/null GIT_CONFIG_SYSTEM=3D/dev/null GIT_CONFIG_N=
-OSYSTEM=3D0 GIT_ADVICE=3D0 git clone --quiet /Volumes/sourcecode/npm-packag=
-es/packages/repository-tools/node_modules/.cache/@altano/repository-tools/2=
-078b9db1d71a4f4a5422e25a7016c75/git.bundle .`
->
-> What did you expect to happen? (Expected behavior)
-> I would expect the clone to happen without any hints because I provided b=
-oth `GIT_ADVICE=3D0` _and_ `--quiet` to the command. Both should suppress t=
-he hint.
->
-> What happened instead? (Actual behavior)
-> I received the "hint: Using 'master' as the name for the initial branch. =
-This default branch name" on stderr, which caused my tests to fail (I am us=
-ing git programmatically in a test).
->
-> What's different between what you expected and what actually happened?
-> The hint on stderr was displayed.
->
-> Anything else you want to add:
-> This behavior is NOT observed on git v2.44.0 and is observed on git v2.48=
-.1. So the bug started occurring somewhere in between those versions. I can=
- find the exact version the bug was introduced manually with some effort if=
- that would be helpful.
+This patch series attempts to avoid making an assumption regarding error codes
+returned by block_writer_add().
 
-Bisects to 199f44cb2ead (builtin/clone: allow remote helpers to detect
-repo, 2024-02-27); cc'ing its author.
+Changes since v4:
+    - update commit message.
+    - add documentation comment.
+
+
+Meet Soni (3):
+  reftable: propagate specific error codes in block_writer_add()
+  reftable: adapt writer_add_record() to propagate block_writer_add()
+    errors
+  reftable: adapt write_object_record() to propagate block_writer_add()
+    errors
+
+ reftable/block.c  | 13 ++++++------
+ reftable/block.h  |  2 +-
+ reftable/record.c | 53 +++++++++++++++++++++--------------------------
+ reftable/writer.c | 34 +++++++++++++++++++++---------
+ 4 files changed, 56 insertions(+), 46 deletions(-)
+
+Range-diff against v4:
+1:  6ab35d569c = 1:  6ab35d569c reftable: propagate specific error codes in block_writer_add()
+2:  7f0bdc27e1 ! 2:  873a991a2c reftable: adapt writer_add_record() to propagate block_writer_add() errors
+    @@ Metadata
+      ## Commit message ##
+         reftable: adapt writer_add_record() to propagate block_writer_add() errors
+     
+    -        Previously, writer_add_record() would flush the current block and
+    -        retry appending the record whenever block_writer_add() returned any
+    -        nonzero error. This forced an assumption that every failure meant
+    -        the block was full, even when errors such as memory allocation or I/O
+    -        failures occurred.
+    +    Previously, writer_add_record() would flush the current block and retry
+    +    appending the record whenever block_writer_add() returned any nonzero
+    +    error. This forced an assumption that every failure meant the block was
+    +    full, even when errors such as memory allocation or I/O failures occurred.
+     
+    -        Update the writer_add_record() to inspect the error code returned by
+    -        block_writer_add() and only flush and reinitialize the writer when the
+    -        error is REFTABLE_ENTRY_TOO_BIG_ERROR. For any other error, immediately
+    -        propagate it.
+    +    Update the writer_add_record() to inspect the error code returned by
+    +    block_writer_add() and only flush and reinitialize the writer when the
+    +    error is REFTABLE_ENTRY_TOO_BIG_ERROR. For any other error, immediately
+    +    propagate it.
+     
+         Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
+     
+3:  480ac27797 ! 3:  1e2f7ff83f reftable: adapt write_object_record() to propagate block_writer_add() errors
+    @@ Metadata
+      ## Commit message ##
+         reftable: adapt write_object_record() to propagate block_writer_add() errors
+     
+    -        Previously, write_object_record() would flush the current block and
+    -        retry appending the record whenever block_writer_add() returned any
+    -        nonzero error. This forced an assumption that every failure meant the
+    -        block was full, even when errors such as memory allocation or I/O
+    -        failures occurred.
+    +    Previously, write_object_record() would flush the current block and retry
+    +    appending the record whenever block_writer_add() returned any nonzero
+    +    error. This forced an assumption that every failure meant the block was
+    +    full, even when errors such as memory allocation or I/O failures occurred.
+     
+    -        Update the write_object_record() to inspect the error code returned by
+    -        block_writer_add() and only flush and reinitialize the writer when the
+    -        error is REFTABLE_ENTRY_TOO_BIG_ERROR. For any other error, immediately
+    -        propagate it.
+    +    Update the write_object_record() to inspect the error code returned by
+    +    block_writer_add() and flush and reinitialize the writer iff the
+    +    error is REFTABLE_ENTRY_TOO_BIG_ERROR. For any other error, immediately
+    +    propagate it.
+     
+    -        All call sites now handle various error codes returned by
+    -        block_writer_add().
+    +    If the flush and reinitialization still fail with
+    +    REFTABLE_ENTRY_TOO_BIG_ERROR, reset the record's offset length to zero
+    +    before a final attempt.
+    +
+    +    All call sites now handle various error codes returned by
+    +    block_writer_add().
+     
+         Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
+     
+    @@ reftable/writer.c: static void write_object_record(void *void_arg, void *key)
+      	arg->err = writer_flush_block(arg->w);
+      	if (arg->err < 0)
+      		goto done;
+    +@@ reftable/writer.c: static void write_object_record(void *void_arg, void *key)
+    + 	if (arg->err < 0)
+    + 		goto done;
+    + 
+    ++	/*
+    ++	 * If this still fails then we may need to reset record's offset
+    ++	 * length to reduce the data size to be written.
+    ++	 */
+    + 	arg->err = block_writer_add(arg->w->block_writer, &rec);
+    + 	if (arg->err == 0)
+    + 		goto done;
+    + 
+    ++	if (arg->err != REFTABLE_ENTRY_TOO_BIG_ERROR)
+    ++		goto done;
+    ++
+    + 	rec.u.obj.offset_len = 0;
+    + 	arg->err = block_writer_add(arg->w->block_writer, &rec);
+    + 
+-- 
+2.34.1
+
