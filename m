@@ -1,105 +1,134 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E15A24F5A9
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 08:17:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758C72512EB
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:06:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742372278; cv=none; b=V9DDo5KjpRbd4FzY+x8dyfpM7UZMc24l75dU7Km5/H2Qh0Ug/jmaIQeT9ii10enTTTLh7aa5Us39JNwzlMSkUFlzSY7NX891Q6G8V7QboGvK8aJkRsmOszk4Nbb86ysyGif84rTgZFU9CBkLVH54gWzc9F0wBLujqc6X3kS2JOs=
+	t=1742375178; cv=none; b=cx29AiKFmzu+SeQdGKdHuxl+A51DLiMZZB09FMCMEvkANbGJVvl4msNIYl8IbdVfFX4Kq8JvR+fqJD0zPvqt1iJr1jDDl26WF+99XeA7deNut9Hur+zcOMgAnzYrJa9PObqcXz4c+eIJ0e+UvHM8WFw8JRdukQy8w7X6DTLkjr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742372278; c=relaxed/simple;
-	bh=6D0cnCQhaDOZ90StdkmlWRwfuHDk6dLOM3zDPQZBqPY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sWojfQ6kYXaXuMzaAiNCSc9JG/vOaSaxFJcAqA2d6fHDSRiqRwf1hRlCoiRRHx1KahDUyU47Djh0WoWJrm7f9J7fvOApdDCZBIYTIvxGnCD9hSzAZI2xohy4a8CzSuKryFyZ8YzpXyy6pFQQJis4bSr2Xh+/C3bzzL6jYkMDMmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RTqVBnbw; arc=none smtp.client-ip=209.85.218.52
+	s=arc-20240116; t=1742375178; c=relaxed/simple;
+	bh=VCxc34QL3nNmfHFsNYI6LiExz2lUxbi2ZYaJ9iBxh/w=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=inis3NXSpVsu03EyhKqwAZSiF8Urvcvrxu8naX9ktSsC6rQ38r36KWWVCFexHVAsn8w9k20To7ukKD7g535ghr8Z0/L5yDuPHGOFG8YGeZ4wklWEtJSIU+Hp5K37ixGj+414UOV2LDayhQgIi4RfLxD7YMatBWQ7vNiorZxjsJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dMOfMF5S; arc=none smtp.client-ip=209.85.222.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RTqVBnbw"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-ab7430e27b2so42245066b.3
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 01:17:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dMOfMF5S"
+Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-86d3ac0fec0so6240895241.1
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 02:06:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742372275; x=1742977075; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pTCa5YSJ3e/KSn5nwnU5wd5x5Abv8W/F+aykHtJrNmc=;
-        b=RTqVBnbwfNmvPOdCJYDyOoxv5QJ5KIQ+qG77Mruk0HyFHxanI5W6tICSNLRQBjiGbg
-         ZI3mhlTnW8/zpghx9Wix5XC2mcXltbi/SkTFL0pQTjYagXoTbRmmg2VaZAlybllZKP99
-         M18oVucs1G2uzItxDtWv1ivuGRVbXGTPAq4N4VAmgFmnlsHvX1ZwjgoOMIeNVi6s1lNr
-         Zaz2qpV9Wkkp3DCKiyMmTPbeVNcLkA0etmv1Q1KLhZZzgQ24s0mueG4eQ99xG7trj6pF
-         BmUZQEfsWot2jUCTLlBeWnQhgJyHuwecqvvT3kLBWFVkgGDw7JNP/HgjNYOLD/h3gbSV
-         WwIg==
+        d=gmail.com; s=20230601; t=1742375175; x=1742979975; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6Mt6xlyLVkgXyJ9Tw0INo1VgR9t4ljImMaJwxHJa06I=;
+        b=dMOfMF5SRZxt7nv/jhMxVEuiOOb6u6eXSWYfNVU8cYhEDKzo0NJRmLMoc4qNPzVuSv
+         3M2O9Fy31NPbmdII2KQXgld0tc3bvT0N+oxSAJrJfveGOipgUKBJc9R/DDGzpguE+Lz5
+         1SCzTivZgvzN9YS6Qa9iuL/tkUfQMySPC6TVRMI+V4ig/1Cjxxufk3uAh6KFcpQlGi/m
+         aQO1ERsQsEi+eaBiDN6+jLToeTUMV2nXWuZSqciIIPtaPreLDANkLmQuPJf/EiiaH4Co
+         hQESyVFYrMfx2i9U4wOOxTn8uZYYKHATYHUn64Wujy3OyshOxhwhYpUmJQGUPaDUiP/b
+         5VQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742372275; x=1742977075;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pTCa5YSJ3e/KSn5nwnU5wd5x5Abv8W/F+aykHtJrNmc=;
-        b=XdjcGTUqyeGFIUmC0u5l7tpC76+ecdgMFzVYxaCtvrBJy1G0KLBJS6N18d9wWf3E8Q
-         YVWgWm9V0biDSlN9KN7ZRVYZ9dGr++WXrCgrx6BxF50hbvROyZ9n2NT91wrY9dDx+7RK
-         X1Ix7IIfpbaFZE3+Ub+idWXTktTh1uosu8aU+8M9TSkPBabJZVnudUwAI5nWLs02IphG
-         yyF0lYXx2Jk61fejScdwj2bFVweQ2TuaikP00kNwLxh8UXPA2o9r5xv7WTcjE9doDFXH
-         BetLCEQvb+m/Ew3wpsX7LuS10qA8LwJUTP5okZ9EHVo7U37EkkJFZOChdUkNn7O8cstE
-         gwcg==
-X-Forwarded-Encrypted: i=1; AJvYcCV6tI2MrLW9NRhC3JtIPFVSfjw8kQXDsVMnwF/wYYlwNmglpENx6b3ybw5M34hRyaXWwKU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzO1BkGxWIkGd1d8RquPUWB36MY0wnes+HKyvT9neKPjQZex6wb
-	eIEMdYEZsZNr+HrOIC8J9EeJ/832g0L2gS8oBzdanGUQDo9ESUtGEi1YbLXhf0jXjDtqkfUcz6/
-	LmVrXg64Ramuxt2R14A5nMSqZGaE=
-X-Gm-Gg: ASbGncuexOkUS4aKSBxdvRHgdEjSl6qCUm2eVqOqaQOBztD8OSuHfpoz4Paw3ka6MUu
-	6pti5Gm4PSSjKRJUTW1qYfG6+BgqGzEL0CvqwcK1rogyw1fenHvS12HKFkIggyannxCvnDJTNqD
-	ftEOPthCg1wC+e43j1f1f4K5RvdxW6oNgJu+Oz3sUHU5Mb/aRyTpwOrC2whn7PLjeyg6cm
-X-Google-Smtp-Source: AGHT+IGdXfETh5cBFZLcUFQDvkyhXLQs38/TMcM6qe90IE+/AupQ5CGPYp4sHQIYdBYApAOblBuY0iJjFWgkbs2+Ehg=
-X-Received: by 2002:a17:906:dc95:b0:ac3:3f11:58ff with SMTP id
- a640c23a62f3a-ac3b7f73047mr183274166b.45.1742372274384; Wed, 19 Mar 2025
- 01:17:54 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742375175; x=1742979975;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6Mt6xlyLVkgXyJ9Tw0INo1VgR9t4ljImMaJwxHJa06I=;
+        b=OkkZbvDLZNJHCiz+7rbegm1lQ3lGrTZGZk8kq3xV6NdIoGAOvfY4L0zTi5OhEV8ifs
+         FxWkbbwfmZMBFP3mCXcn+6Y3f4gZKR7A1V4uG9vdjALxO8FkpLI6ItrFV/JBTwBOgSZ5
+         CLl2rrwcHouPQGJ74EbKdmtKCw0p6dU6ckM2E16DZ1xeINgIBQCpr8udt3FyLHcmEVEm
+         7qNa0MhZw5g7lae0Gk9vbIFqp3+Ox3aUFw7/d0NuW7BMbwJ6F46G193vftTV9fQxELhg
+         sgWCQOR7Cpq2ejeW6ds1jDc4bWU0X4z4kq3Y8nkzcfYQGQuC7GA/iG2UTQUOFpILj+dO
+         H0Lw==
+X-Gm-Message-State: AOJu0YwPSdHdiiQUiwXPSzJRqELIiYJP7G8sGlgG058EUaSugHrXDrrX
+	csW0Dt0JEYcLz2sdFFAwrugr7dFlSn8RgzaQyj0qUiEm0JBOMrQWinepONSEp3vCZa7504RKrTl
+	aaoHiIyl9gGdl/Yzs1z6H0fblLgk=
+X-Gm-Gg: ASbGncstD6g6hubAM2H3t88yLBgkjHkBYfgJvi3wFegU28ZNNgRpBsRpL3Hos9S1ksn
+	JU98OhL/bRZO1Ppwk1XRfpH0kqXvB6X2Z1DZPZM8TJr1YTpzfYSKSoNjXtCw+OpPmfWVlwiQWX1
+	EknLgLHtA22PKrk2VPbOblDH7cNhcCC83UraoAuCmb6ZZDiU/QUZXsoCd/Ng8n
+X-Google-Smtp-Source: AGHT+IE2KFvsR3ZXdW5fVR3BYhDLAsVHQDnZnRlKHKnn0jhWkyNU8AvTDVfJpHz2I4rATLNn5g66gdJtECEiKJpeLmc=
+X-Received: by 2002:a05:6102:8008:b0:4c1:806a:3b44 with SMTP id
+ ada2fe7eead31-4c4ec6304e6mr1177322137.2.1742375175122; Wed, 19 Mar 2025
+ 02:06:15 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 19 Mar 2025 04:06:14 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <CAP8UFD1vTkPH=5b++6+=koozC31=wD1gQszvdFmzb73B9HM4Aw@mail.gmail.com>
+References: <20250314-493-add-command-to-purge-reflog-entries-v3-0-c24e23a6146d@gmail.com>
+ <20250314-493-add-command-to-purge-reflog-entries-v3-2-c24e23a6146d@gmail.com>
+ <CAP8UFD2+xQQbUevHTQangg__dq2M615pHLhYYUf7b9shpShD9Q@mail.gmail.com>
+ <xmqqsena2pzh.fsf@gitster.g> <CAP8UFD1vTkPH=5b++6+=koozC31=wD1gQszvdFmzb73B9HM4Aw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250314-493-add-command-to-purge-reflog-entries-v3-0-c24e23a6146d@gmail.com>
- <20250314-493-add-command-to-purge-reflog-entries-v3-2-c24e23a6146d@gmail.com>
- <CAP8UFD2+xQQbUevHTQangg__dq2M615pHLhYYUf7b9shpShD9Q@mail.gmail.com> <xmqqsena2pzh.fsf@gitster.g>
-In-Reply-To: <xmqqsena2pzh.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 19 Mar 2025 09:17:42 +0100
-X-Gm-Features: AQ5f1JqMboNCRlk-Xv4LL5e7Y-UomKZZW4qrG8C2_12ijfhB5AmdMaZy5hWrT5A
-Message-ID: <CAP8UFD1vTkPH=5b++6+=koozC31=wD1gQszvdFmzb73B9HM4Aw@mail.gmail.com>
+Date: Wed, 19 Mar 2025 04:06:14 -0500
+X-Gm-Features: AQ5f1JqEWvk5vTL5K8aStd7CBCTXqfRkRhsV3szBszKGz3wSFTXNvrn5UbiJMoU
+Message-ID: <CAOLa=ZSj11TSTs6CywSX1Q9AAfW28zssS2yrGf8PmBOgd06Etg@mail.gmail.com>
 Subject: Re: [PATCH v3 2/2] reflog: implement subcommand to drop reflogs
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, ps@pks.im, 
-	kristofferhaugsbakk@fastmail.com
+To: Christian Couder <christian.couder@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, kristofferhaugsbakk@fastmail.com
+Content-Type: multipart/mixed; boundary="0000000000006119980630ae5525"
+
+--0000000000006119980630ae5525
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 18, 2025 at 6:44=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+Christian Couder <christian.couder@gmail.com> writes:
+
+> On Tue, Mar 18, 2025 at 6:44=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
+> wrote:
+>>
+>> Christian Couder <christian.couder@gmail.com> writes:
+>>
+>> > It looks like 'single_worktree' is only used here. This means that if
+>> > a user forgets to add --all and only uses --single-worktree, nothing
+>> > will happen and it seems to me that the command will exit with code 0.
+>> > Even if `git reflog expire` already works like that, I think this is a
+>> > bit unfortunate.
+>> >
+>> > Otherwise this patch series looks very well done to me.
+>>
+>> In the thread Toon too seems to have noticed the same "what if there
+>> is no --all and --single-worktree is given?" gotcha.  Together with
+>> the "current would be better name than single", we can consider that
+>> these funnies are to be "consistent" with the "expire" thing, and I
+>> am OK to see us move on.
 >
-> Christian Couder <christian.couder@gmail.com> writes:
+> I am OK with moving on too. We can "fix" the behavior and naming later
+> in a dedicated separate patch series.
 >
-> > It looks like 'single_worktree' is only used here. This means that if
-> > a user forgets to add --all and only uses --single-worktree, nothing
-> > will happen and it seems to me that the command will exit with code 0.
-> > Even if `git reflog expire` already works like that, I think this is a
-> > bit unfortunate.
-> >
-> > Otherwise this patch series looks very well done to me.
+
+Seems good, let's do that then. I'll see if I can follow up but this
+could also be #leftoverbits if someone wants to pick it up!
+
+>> An alternative is to "fix" the behaviour
+>> and naming of the "expire" first, and then use the same improved
+>> behaviour and naming when adding "drop" as a new thing.
 >
-> In the thread Toon too seems to have noticed the same "what if there
-> is no --all and --single-worktree is given?" gotcha.  Together with
-> the "current would be better name than single", we can consider that
-> these funnies are to be "consistent" with the "expire" thing, and I
-> am OK to see us move on.
+> I would be OK with that too.
+>
+> Thanks.
 
-I am OK with moving on too. We can "fix" the behavior and naming later
-in a dedicated separate patch series.
+--0000000000006119980630ae5525
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: c4c525a23b8b3b09_0.1
 
-> An alternative is to "fix" the behaviour
-> and naming of the "expire" first, and then use the same improved
-> behaviour and naming when adding "drop" as a new thing.
-
-I would be OK with that too.
-
-Thanks.
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mYWlRVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL0VMQy80aituWnMyajFMYVRWSXplelVZV1A3bVVhQwpIWnJtNEJLOFFl
+NEk2QXQzQzNXUlJCdnZDc0xWQlRUY1VYRHZYK0UzVFlveWwzMlFuUmFyc0pTYmxFQXVzWkxJCmNo
+aWdOYlBsYzRDMVcvQSthVTQrejFJYTF5ZFdFRFFabGwxd1pFalVWM3JaaWV3NWQrL3NZZHllSHkw
+VDdac2oKbm5ySDN6dDljbDFEQlF3cFpDNmJraU0zZEdsZ0RGWk1BVVIvWHhkUEhGeUxlTmZRamhH
+YkFYOUwxd25LcGVoTgpQLzlqUHdkRHI4b0c2b1JZd1M2S1ZNWkdSb1YvVk01aXV5VTMvWW13V2d1
+cjNyZi9HRVluYlN4SXhxNmExalVDCmhURi9YdjBLTDFHaFd0MTJDRkhtck92NXdaL0RIcGZlSENq
+MzZpc0JPR2hMSk9kRmF3UUViNHRjY3RueUllQ00KM0NVSGxtWEZIcXA2aVJPMjlFNkZDYW03UWtq
+K0JzbXpodTlXaFFXcTJOMGxtenhDOUtJYVpkQXV4MjRsK2NnaQp2WjFPcDlJUzlOck9GN3ZRdmtr
+Um05N09TTHlNWm9BbWNsZzRzb0JuR2lxQWltbVFYQVgrU2tqSHlwVEdrSUxMCnp0aGpqbk83bEhI
+dDA0dElaS3Zoa1RNdGdoNkJzTnMzVVRsRC93TT0KPTBhYXEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000006119980630ae5525--
