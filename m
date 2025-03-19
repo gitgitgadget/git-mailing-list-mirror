@@ -1,100 +1,117 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857F035972
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 06:35:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96C41991CD
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 07:24:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742366160; cv=none; b=NtrZ+vJBzSKY9HHrc0U48XIjsqebd2bpGqLnK2AGuKz1XmDHRsI5OC2J+grxlwGPw7c4d0UGbHwtfcN4hNhZO2tjXRjQAS0OSUopJhq89sqywBwlzLEHrYfd1ssb9SO4gupbxWbIfe1iCxnBQoMa4970exdpnm14oR93ZwOKvqI=
+	t=1742369098; cv=none; b=A4hCc0bREPcsJMzBiOlM44Yo67SN34EUBn/3mYwP23ZBzlbuPnKnG/EffPJMISKTY3ysPpPr2J1R/l7AY+CcuL2pfP7oxI1QBjp+Y9/1XPU4ezyocvUqFq0NwqLR8uDRFrhwQh0KIaZU1j0jucLwtZ8I0TodMaQNdYDzQIqrMRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742366160; c=relaxed/simple;
-	bh=zkwW0bDExM1BH23zPj27vRqyAIsz9k7xToNXEg7Mm5k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jdCrIxXOK6QRiomKxDsR3SR62C8I7en+mloCdjbbg+3xnwvYvWk6IoqSIkhm/CyKWa5P6NViNjOzhui6Nm4DLZ1rcp/Cdk5oUTWTjHrjWf8ats1x/Pc6Y/jnOHnqFliU58KClvGMImEl0N7Nm803tZUQmEeziI261c7kV7iIlaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VqCbCJrW; arc=none smtp.client-ip=209.85.208.179
+	s=arc-20240116; t=1742369098; c=relaxed/simple;
+	bh=hR56AVElvj1UlNEJrUqmGsIqylCTdHjGv9Sym+DTpuc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ecPJwCWfzODk/S0w/DEGf8GoX4XIPhqvTDNUjPAij7hDpHCmbW/tAO+z7Qdu7oUZQys6T5mxWcoXuRBb5Aa30rjEgwwwO8DZ6Uv2+2/wW80k8IpvFVqNhjs1OBLOvPnhpmcQ9eNcaiMt+SXfug7EjSa/iPr/QZELcG1fxNhVrYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ESU6bT7w; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VqCbCJrW"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-30bae572157so64820371fa.3
-        for <git@vger.kernel.org>; Tue, 18 Mar 2025 23:35:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ESU6bT7w"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-30c0517142bso57447701fa.1
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 00:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742366156; x=1742970956; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ETEBblt7xSxTkVkttdzlUq7xc4h+tQJhAH11LfXgLlc=;
-        b=VqCbCJrWJp5J3VSs1OCKY5lHNBgYWvriqsKXvVn3GTZeYBzy67r+PLSYdLpPliBuEs
-         rSL+t6ibz0noUzFnUv+fM/dtDo82W1ouQ2tELJnnG8rt1SW+6nN1/p5+mzR26+ONch5k
-         yxB3R1Uy10A/SH8fzAqzGST0V0W7OI+Y82UCUwkFcnCp9JCAgFBNp76oYsgOSS9n/5tR
-         d6UD/Nck1FbszwxecOqOqQd171Y13y4OtdbP5yfBmPcd7jG6bILSsqK2fNFczgZBA4h3
-         iKVgV9sEj5YhWSiCp5EF433uIAa7lbKjVLrff0dOXNKS5fnxKo2pv5EYnU/slr040Ww3
-         xoPw==
+        d=gmail.com; s=20230601; t=1742369094; x=1742973894; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=svTpOJ4Q6htNj2kZKEdQxez5OELn2VVaAhRO/LsvGDE=;
+        b=ESU6bT7w/PrHLfbSNQw7CGShLwEa4L3sKsKIIJuMgMdsblhBlgNt1obOkLvVelWjmw
+         ETaAGA7+F6+M9YHP3OE915tHbDwNXD8xV+mMqfz/5q44RR2qYgAXVx6dXIFMzsqWljWG
+         L1M/XTZuL6Fh7hiPT/6/f0UX+aFmZtPUG1roaxylRAqmWLHwiDz6TIKEkyqdAuYPuVA3
+         ATLhHgmc6inKA+3UrE0ORPiF5mjm+0FtIDH4YQaQ17doaiX2ym+QLsdQT1PwTOBEIkYh
+         yrwEojsj1UACamLBWbSKPJ/6byaqcnAOW9M5CQqmbTL9czwBnzW8XV2IiRvas3LVVENo
+         4D4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742366156; x=1742970956;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1742369094; x=1742973894;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ETEBblt7xSxTkVkttdzlUq7xc4h+tQJhAH11LfXgLlc=;
-        b=PYQSMWwEcxYXcxYU+DULWdN4eseJoI2D1eMprJ1UFSUiuSNLh4oZh7JqpO0pwvxKXS
-         CMTS/gBbT2skQgPBiwWrE3x30QzVAv4yhCxgpy4k/Y+UqackNfpSyRebfzB82qGw5q9E
-         pD17ORKoldHbjRu1FzzGl3iyxW7H0MoqvBvVIUqu00lz0YXZwnnvoPPG04oyHdEwKIPp
-         k4h3vSFAjN+bUQBCCyhD/Feoxu46YEAdsVwzjRt6OpdLUbQQNyjgyk/nImgN4SPS2gtK
-         0P5S7UXybOklivZO56tmeZlpqCQu/N5SGDB3YJT8p7CrL8QBtx0G8SyPFHmo7S/dOfmx
-         ivLQ==
-X-Gm-Message-State: AOJu0YyYv0K7/u1LL845obk/3toHqYVAIwLezD4eHJnPkHT/csy0DOoT
-	tFEqb5MNQuwcoy0mS3qQgUJc4uYYQZoM6PmGz7o/6duDEfpoR39RTiGFWyQHmRJYl0N8w5DiXw/
-	cG7oFH0DLbi/KKD8XsF8beBkFNMZgHQ==
-X-Gm-Gg: ASbGncuYXFgjg/2MPohI6EKxGvcyLMgE4XzIfPyyalbBQ4POEhiY+nhk1/b3hDoH+aw
-	wpndJ/arkBjgu1pBeXy/0de4aRdZhgt/szg+TREdZsa8eSsmBfDOSbCqGEJvONUQl/6dOmzTUfj
-	wwwR2axiDju9uE8oout67Ipg6YWA==
-X-Google-Smtp-Source: AGHT+IGIe1aT5ngtU+esHjlbfVnVLoe4xPuwwjXiQYGPA8NBSldt3Pr2xZrUxRuRcqoTOVRi6Z15zyiTgMeaFlEwqEU=
-X-Received: by 2002:a05:6512:ac3:b0:545:2f5d:d5ab with SMTP id
- 2adb3069b0e04-54acb2052d9mr458850e87.37.1742366156191; Tue, 18 Mar 2025
- 23:35:56 -0700 (PDT)
+        bh=svTpOJ4Q6htNj2kZKEdQxez5OELn2VVaAhRO/LsvGDE=;
+        b=ZJLs3U0dE+oGhUHaG9yreCUt2tpCm3j4qVtTY4EPEDdH2yzXIOtwN4gi78LNeQBz06
+         7TGbBBeKcARfbVLKt5U8shOJh+EEHvL24EnbvVKT6u4Kvq65CmOu9M7XhsscRITA1Z7M
+         PcG8draT02SmBaSP+lTNGviUCKPSx7fwQlWaNTRD4fYaVvfHGSsnPUesCENFcOnBG9XE
+         Lz8LCCloEaNpwYhAPeYnGWHlB8Y1SDiSwr3DHFFFJtDk970jstO4RMxvRFNJ4qXlKu57
+         is4ousR67mKzuIFmoHSAVBmdi2t4Nxz/jojqzi0fnkbzUQk8MHvpuVfJ+yWDjovwTr/n
+         wVMg==
+X-Gm-Message-State: AOJu0YxjRJ6eGBlR2ZSOcOx+HB6bPmkPI11v73LMQWo4SoVbtGqNW9Dx
+	oO5k4KwFKPDtqk/jeJBIRh+hxXIFNzAznoDLc5L39X8BMViU6GvylG1T2Q==
+X-Gm-Gg: ASbGnctz1GUuk6jz+BhFUrByxswMeDbS5oqKVTIh55rHxQs0+61EMeFVUues/6Hvl2i
+	hkKcQwH2R23JtXlVQiRWPKGEJ9x6opmxTjf1l4GipOMzMkmuC87pr6qHUB9yGYOHyTs3zxNytmk
+	a9RSwe87yrIYXk630pyqBOwikCiFzLrm1PJf5w5lDs/NDhVTwWbhG1wKt7uIQdcYPNKeZYtR68k
+	6wa98Q+dPLNwDOCPVZVNtyTwvtwh16VXS9c7Hbn73MsPGq23p/osZPGXJbeLEmn4yC0qz6+fzVg
+	OErdW9WWqESQDQ9JzxDAXZnx26hT4wnfun39I2/jjuDv3SJIfmaz/HAPTyzHJw==
+X-Google-Smtp-Source: AGHT+IF9hZrUxF2wetnERlNwWt9YJ4aD38cGdAsX0y8Ll02YyDhgiyHI5Ya296viU6KKytrjDZEqmw==
+X-Received: by 2002:a05:651c:4ca:b0:30b:f775:baf5 with SMTP id 38308e7fff4ca-30d6a1c402amr6249441fa.0.1742369093671;
+        Wed, 19 Mar 2025 00:24:53 -0700 (PDT)
+Received: from localhost.localdomain ([217.116.228.14])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30c3f209d6esm22089541fa.112.2025.03.19.00.24.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Mar 2025 00:24:52 -0700 (PDT)
+From: =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Jeff King <peff@peff.net>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Andy Koppe <andy.koppe@gmail.com>
+Subject: [PATCH 0/8] pretty: minor bugfixing, some refactorings
+Date: Wed, 19 Mar 2025 08:23:33 +0100
+Message-ID: <cover.1742367347.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.49.0.472.ge94155a9ec
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250316050920.3264895-1-05ZYT30@gmail.com> <20250319020221.2160371-1-05ZYT30@gmail.com>
-In-Reply-To: <20250319020221.2160371-1-05ZYT30@gmail.com>
-From: Meet Soni <meetsoni3017@gmail.com>
-Date: Wed, 19 Mar 2025 12:05:45 +0530
-X-Gm-Features: AQ5f1Jq55xSGvaVF45lFp6f_paimKc3Z9Fi5ifDwQ3_O_b9Nu10j2063p3gjrbQ
-Message-ID: <CAPhwyn0Sq0hDktPtf53Qs6LKwNsmn6yXuVyEfcYzyXK4yjd7HA@mail.gmail.com>
-Subject: Re: [GSoC PATCH v5 0/2] sendemail: improve error capture and status
- code handling
-To: Zheng Yuting <05zyt30@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, 19 Mar 2025 at 07:32, Zheng Yuting <05zyt30@gmail.com> wrote:
->
-> This patch series improves SMTP authentication error handling.
->
-> Auth relied solely on return values without capturing exceptions,
-> misjudging non-credential errors as authentication failures.
->
-> Patch v5 1/2 wraps the auth process in an eval {} block to catch all
-> exceptions, adds var error for future handling, and var result to return
-> auth state.
->
-> Patch v5 2/2 introduces finer-grained SMTP error handling, extracting
-> status codes per RFC 5321 to differentiate between temporary (4yz) and
-> permanent (5yz) errors. Unrecognized codes are treated as permanent
-> failures. Otherwise return the authentication result.
->
->
-> Zheng Yuting (2):
->   sendemail: capture errors in an eval {} block
->   sendemail: finer-grained SMTP error handling
->
-I'm not sure if this is worth a re-roll but, `sendemail` should be `send-email`.
->  git-send-email.perl | 62 ++++++++++++++++++++++++++++++++-------------
->  1 file changed, 45 insertions(+), 17 deletions(-)
->
-> --
-> 2.48.1
->
-Thanks
+Hi,
+
+I've been going through pretty.c with an eye to pulling apart parsing of
+placeholders and formatting of strings. These are some initial cleanups
+I've accumulated in the process. I think they should be valuable on
+their own, even if I eventually abandon the bigger project.
+
+Martin Ågren (8):
+  pretty: tighten function signature to not take `void *`
+  pretty: simplify if-else to reduce code duplication
+
+Two more or less simple cleanups.
+
+  pretty: collect padding-related fields in separate struct
+  pretty: fix parsing of half-valid "%<" and "%>" placeholders
+  pretty: after padding, reset padding info
+
+Fix a bug or two in parsing and handling of padding placeholders.
+
+  pretty: refactor parsing of line-wrapping "%w" placeholder
+  pretty: refactor parsing of magic
+  pretty: refactor parsing of decoration options
+
+Further splitting without any intended changes in behavior. These
+refactorings aren't followed by any patch that actually benefits from
+them. Still, I do think these end up making the code a tiny bit easier
+to understand by way of having smaller functions and collecting related
+pieces of data into smaller structs.
+
+Unless the original authors are (TTBOMK) no longer around, I'm cc-ing
+them on the individual patches and on this cover letter.
+
+Martin
+
+ pretty.c                      | 300 +++++++++++++++++++++-------------
+ t/t4205-log-pretty-formats.sh |  15 ++
+ 2 files changed, 197 insertions(+), 118 deletions(-)
+
+-- 
+2.49.0.472.ge94155a9ec
+
