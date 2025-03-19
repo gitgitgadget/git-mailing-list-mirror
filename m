@@ -1,131 +1,108 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from p00-icloudmta-asmtp-us-west-2a-60-percent-3.p00-icloudmta-asmtp-vip.icloud-mail-production.svc.kube.us-west-2a.k8s.cloud.apple.com (p-west2-cluster3-host11-snip4-7.eps.apple.com [57.103.69.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8237B2505CA
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:37:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222A81AB50D
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:54:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.69.30
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742377030; cv=none; b=bb+yIeoyJ0WLBxUhPlVqK3u7Yaabf7CBePURs31iUOkYy2yLT9W6RL4n8x6A5omdY2V4+adv7lUWPuaZye45N1eIGIgJ6GZyoSHDIyUT7mG2YwR6aRyKBj/YLpk0msYbLaCmprwpWQgiDRU2IULPJ7RalPEo+l2Z0lEM3hkN0YM=
+	t=1742378052; cv=none; b=IXFL+uT7SSakjgswSLiJni3B63DlWMpAm/r/AHGc884FtUsO7CBlbamembBaBria2cWJvJBKhXqguOrYwgkvj+khhaFbEQ/RGMv8Fp//btHEBuY8qjcGXmNnxyZeoz4GfasXrrR2k3g+mqqS450bimR6nAV9lXSmSSmILGrSB1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742377030; c=relaxed/simple;
-	bh=KJHl+Ktyh+2QZ0V9Aq7EMw+BJZpGiIaspnlYlygYufg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QCsKmIAV3T3brun1WOT1fVf+pSpHGclyWhCJqHmpsVhHp+/2eEFePCmoacJY//jcVAuEvcU+jYlmKH9oAzF5ObcVRwFa64hAeaacDAETOsK+wsA4JUaSeCxi2p5cjjW30e/RTY9FWNHmcKZ3rvADHpzqFfDIfX7ZIcIYwFqyJec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TD8PaL/w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ctoG7/6e; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1742378052; c=relaxed/simple;
+	bh=peLCNJMY5TTinb3N/OtI6N4hVwU0FKr96AUKIIFWmJ0=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=IvKOvsIbiy7DAeVGy4iihZZZvh+RKazc5KeN+EzGz2F6kQff1HYQ6qzep1LDDf6qEJyuEX4OBXt1GfBfpJZwiSw6ui9oAgVBd7EEy2gDjjgOQ8JIjWj51ev2qmy4PleEiqddOrmBC24geFuhuvPkPwkG4d0cPgFk5FsqUpUqIuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=norbauer.com; spf=pass smtp.mailfrom=norbauer.com; dkim=pass (2048-bit key) header.d=norbauer.com header.i=@norbauer.com header.b=YxaBvymf; arc=none smtp.client-ip=57.103.69.30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=norbauer.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=norbauer.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TD8PaL/w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ctoG7/6e"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 89A7011400C6;
-	Wed, 19 Mar 2025 05:37:07 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 19 Mar 2025 05:37:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1742377027;
-	 x=1742463427; bh=wloUW2mrMB8xnv5OwjMCxQZCftlDpplVVvInU4vatH8=; b=
-	TD8PaL/wjjF6iZ3svxf4tkDsJkaafFkCQrVGWWI34f+0tS4vjXJkT5u7ey4KZQyO
-	YwokpoN1K+W1ME8L2jGE4aexbliUJBvOt73lwLr/qHZScM9n4AOSH3nrLQtevo3S
-	/eaktX9+udwnE0EaooWRrxUe9d3GaQXTgF5X+07NSpwYHAsebniV/yIPjQOyOILJ
-	AQNTZdctlLWWxhsITLXYWGKqSUdAlv+YHZb4DbIgfpzIwpzobUgZ914XxOxfrz9M
-	GfWIibIyn6U90bBisjzVvWHWVAObOv15u+B3gECcqfPXcJVezon8kX3yG4ripJ38
-	BaVb3dCYC+xsBDxKl0CFNw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742377027; x=
-	1742463427; bh=wloUW2mrMB8xnv5OwjMCxQZCftlDpplVVvInU4vatH8=; b=c
-	toG7/6epDkVCfYo79+IwGlcYRQqQR0awbg2h2rMfedCxLwVNSS024xmURQTm5O4K
-	MsFkX2JQwyaF03OgHNuewp5it5ce+UU+oXWU6ZGbQI4nkzMSegF2jfelTYfnd9Xo
-	At9R46qnZ8Cz2jmSJrQSfWdODt/xuEsGz4Z5Bgzu5YuedzaD3HhF/qLkhFaSBU8I
-	w+CI1y6cQiDHUFfX9tFTgIFVN3Z+mvG8xorYHRwbljURHXREnwfDUNM2283vOvFD
-	IHf5lrUk2zTXyL5XgGHEZp3C7wlijVvZ9d2Q5ejnswep+CRpqlwvaR9J6lhpmlus
-	5g0YkAjRAM9Kx0VncDFzw==
-X-ME-Sender: <xms:Q5DaZ9tRPzrckkrctZzU-7dM1R8LoNiyJ-xaZyIXDafeyw8tmv1iQg>
-    <xme:Q5DaZ2e4WlgUpx90Iv3Hs3tARpSYvRSvJKIWWDa6nz9QEuLZwyBUijX3OT8c078ls
-    P5frTNWSH1VIgRiVA>
-X-ME-Received: <xmr:Q5DaZwxmoWhLsF2Tgtndsuy8nk1F1nunvXxWCJuaiGTsdXnRpgisYbbfvMAj5bLukD3gabDqcUcDoKYj05a3Lhktw3REoEt8eeCP0xv9GgYBUZOV-A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeegleelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
-    thhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Q5DaZ0OnWk4zSFgcnZHjWlgOcIqIrCpPLGEsHynQELNnjAiWyZ6umw>
-    <xmx:Q5DaZ98t51aqrROQjfO4cre2_ogjA-vZCJ1-uAwXNk8cHhdAhdJa7w>
-    <xmx:Q5DaZ0V-H-BQDCA4W8mRCOQCL1vT4VEriFNO5TUZhzDnPfnlaqFYhg>
-    <xmx:Q5DaZ-dSFGmTajj97dY3Svynlq1EDJwzSMBeViUutwsaB06RwsXjMA>
-    <xmx:Q5DaZ5a3cPQWn0poJKSWYhik-VLjXiOOGAIkqRqTG_WCMKDyqu1U6DS7>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Mar 2025 05:37:06 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e0769feb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 19 Mar 2025 09:37:05 +0000 (UTC)
-Date: Wed, 19 Mar 2025 10:37:04 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] meson: don't install git-pack-redundant(1) docs with
- breaking changes
-Message-ID: <Z9qQQAhFk-MNwiom@pks.im>
-References: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
- <20250312-b4-pks-meson-breaking-changes-v1-3-b89e9a59d228@pks.im>
- <44a3ad4e-fb50-447f-bb66-f43b5c5ae012@gmail.com>
- <Z9gqP3ng0a9Zfpqc@pks.im>
- <d341777a-a6e5-46fe-8004-9fe885321905@gmail.com>
- <7fee83f7-995b-4c84-9216-caa6803a69d9@gmail.com>
+	dkim=pass (2048-bit key) header.d=norbauer.com header.i=@norbauer.com header.b="YxaBvymf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=norbauer.com;
+	s=sig1; bh=Z12DTHybphPGpwlHzP/gB4mVkm9BrSBN12EfWhFMkPI=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To:x-icloud-hme;
+	b=YxaBvymfahzFxr9qU3jVLHqSy4TLXg0Hf8srT332ZtO419hj16liZhwXxVeth96jX
+	 dF+c5VZi5OOkXgHfuBkdrWKGhPsI+3a9DsoxGtCQuOGJBKDg0+nySmD2z8gBcHkPic
+	 msvXFd+HIx2F1KGZYyUYbkKWU30n+Sv6lT5pUyREb2MP6a+/e56kAJYK5rLL/vhlzj
+	 Cw1KuU2z3NTlx05Eufp6iC+ATJj/QYtmy+X9L+TYko52T1FkI9IKotubqvVDKGHKAp
+	 Gscn92aPG+a8Ph3OgzybJ2IxJApfgQVXvabFL7/BcbtiZeML4h4Mu7QUqMqw6/mM3R
+	 fD21Sk+Wgmuxg==
+Received: from smtpclient.apple (mr-asmtp-me-k8s.p00.prod.me.com [17.57.152.38])
+	by p00-icloudmta-asmtp-us-west-2a-60-percent-3.p00-icloudmta-asmtp-vip.icloud-mail-production.svc.kube.us-west-2a.k8s.cloud.apple.com (Postfix) with ESMTPSA id 7C8B418001C6
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 09:54:08 +0000 (UTC)
+From: alan@norbauer.com
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7fee83f7-995b-4c84-9216-caa6803a69d9@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.400.131.1.6\))
+Subject: bug: git shows hints that should be suppressed
+Message-Id: <7EC98E2F-144D-4974-94F6-FC24B443651D@norbauer.com>
+Date: Wed, 19 Mar 2025 02:53:56 -0700
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3826.400.131.1.6)
+X-Proofpoint-ORIG-GUID: ty3auunEXx6GZJ2SOWl-ZdPenRUGhRrc
+X-Proofpoint-GUID: ty3auunEXx6GZJ2SOWl-ZdPenRUGhRrc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-19_03,2025-03-17_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 suspectscore=0
+ clxscore=1030 mlxscore=0 mlxlogscore=980 phishscore=0 adultscore=0
+ malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2503190068
 
-On Tue, Mar 18, 2025 at 10:06:51AM +0000, Phillip Wood wrote:
-> On 17/03/2025 14:50, Phillip Wood wrote:
-> > 
-> > Oh so if we have selected breaking_changes then manpages.keys() does not
-> > include "git-pack-redundant.adoc" but that file exists and so we need to
-> > add it to the list of configured man pages. If breaking_changes is
-> > selected then don't we end up adding "git-pack-redundant.adoc" to
-> > configured_manpages twice? Does that matter when we come to do
-> > 
-> > actual_manpages = run_command(shell, '-c', 'ls git*.adoc scalar.adoc',
-> >    check: true,
-> >    env: script_environment,
-> > ).stdout().strip().split('\n')
-> > 
-> > if configured_manpages != actual_manpages
-> >    ...
-> > 
-> > ? Also I'm confused as to how that comparison works without sorting
-> > configured_manpages. Even if manpages.keys() sorts the keys (the
-> > documentation at [1] is silent on that) we add some out-of-order entries
-> > to the end of the list.
-> 
-> I think the answer is that the comparison always fails but as there are no
-> missing or superfluous man pages the body of the if does not error out.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Yeah. We indeed may have it multiple times now, but as you noticed it
-ultimately still works. I didn't care too deeply to avoid the
-duplication because in the end this step is only used to verify that we
-have all manpages wired up in Meson.
+What did you do before the bug happened? (Steps to reproduce your issue)
+`GIT_CONFIG_GLOBAL=3D/dev/null GIT_CONFIG_SYSTEM=3D/dev/null =
+GIT_CONFIG_NOSYSTEM=3D0 GIT_ADVICE=3D0 git clone --quiet =
+/Volumes/sourcecode/npm-packages/packages/repository-tools/node_modules/.c=
+ache/@altano/repository-tools/2078b9db1d71a4f4a5422e25a7016c75/git.bundle =
+.`
 
-Patrick
+What did you expect to happen? (Expected behavior)
+I would expect the clone to happen without any hints because I provided =
+both `GIT_ADVICE=3D0` _and_ `--quiet` to the command. Both should =
+suppress the hint.
+
+What happened instead? (Actual behavior)
+I received the "hint: Using 'master' as the name for the initial branch. =
+This default branch name" on stderr, which caused my tests to fail (I am =
+using git programmatically in a test).
+
+What's different between what you expected and what actually happened?
+The hint on stderr was displayed.
+
+Anything else you want to add:
+This behavior is NOT observed on git v2.44.0 and is observed on git =
+v2.48.1. So the bug started occurring somewhere in between those =
+versions. I can find the exact version the bug was introduced manually =
+with some effort if that would be helpful.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.48.1
+cpu: aarch64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: =
+/nix/store/hmffg6n6ylbl4c30pqc9i71mwqzrd0iv-bash-5.2p37/bin/bash
+feature: fsmonitor--daemon
+libcurl: 8.12.1
+OpenSSL: OpenSSL 3.4.1 11 Feb 2025
+zlib: 1.3.1
+uname: Darwin 24.3.0 Darwin Kernel Version 24.3.0: Thu Jan  2 20:24:23 =
+PST 2025; root:xnu-11215.81.4~3/RELEASE_ARM64_T6020 arm64
+compiler info: clang: 19.1.7=20
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]=
