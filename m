@@ -1,111 +1,124 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF838212B02
-	for <git@vger.kernel.org>; Wed, 19 Mar 2025 12:35:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076D6254B1F
+	for <git@vger.kernel.org>; Wed, 19 Mar 2025 13:12:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742387736; cv=none; b=XrWYYIex7zEQjPgnhnb2AAe8KIguh4DeZVSZ48g4lKznAmPbQepzidqW8pTtN0VHqMsJAKENzFaz7AYrZ9zccX6Xt2dDuIl20jkUI6UjQvt0LpoXI4uCL3noyrz+lMIqPuGzzAYfwQLGZRAIiO0/GXklp833mRuZ3R48Z8+ak28=
+	t=1742389978; cv=none; b=MBeD2A3/o6c0UNXPZu6S9l/THAkiXYhdkYihHhmRQlpOCEVx3sy5xbQiSWSxvVRT6yxrUPcnrsryBTCdUeNVJ1FfH1+fLSYYVDOvstMerWoFgalHGJMS4fXeMN5dn8wvAO+V3A1nlkiyl35XtHf3qelEr/aOPNXhDQ6VK7QKThQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742387736; c=relaxed/simple;
-	bh=XTM59BcL/C9GZnEmWI5JXvIpYPE8WVSsSFf6s4S+kNU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SiMKRt4sIv1bzcphF4DUzZLEFkG7sadBRwX2f9sGr1KBIUxZABhl0iLRiTFXLFxoq0WQBQPcZHPWoScBmiDJB5vVqc3T3NuKDtE7/JeG/b8X+G/4NjwP0KQ0+6z6PLG/3wsEZNOwI4VnP0i1fmmi4A7vka3+OF8bs+tTBhtyucE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fnxho5Mw; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742389978; c=relaxed/simple;
+	bh=hQcQqGYf2WZblR+eM1Aw7TeC6S1hyzICSJ561RqERcg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=guGQZGZxeB8gihWhRMuYnW1SL7qdtIqCZwNbPiY6iE3XRlEc3Wwujc8lKjCt3vBWyyXBHNeYiq4ZgWC5TBguNWfBh8U8aDJTzH/Qn8EBCh9AGPIt+mEeTUOEc2tRFJhbvK3ZsNLn16LC58cZiQEydXtB/dIzxCdDy1z48dPHLT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=I+nnJsuC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dpWeDFav; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fnxho5Mw"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5e66407963fso3098790a12.2
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 05:35:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742387732; x=1742992532; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JTavdg6rsC7kTTkEdfFNAkH7OBl1cZyzQAJnPPIZgy4=;
-        b=Fnxho5MwZ/rkCE3Q+VNe80QNQ4JN5KaPawQk3XGeJtqCt0m3FnyzRQmOROXfDDZNI0
-         uYlSXBRjqf58tTFSZ7eaosnN6Ysfmqqnmbn2j0gNLQSzo1lWlyqRdqSzW2qL18puyAxH
-         cG99HsbS3wCAcRju5Tet207TMW29PEH2topDuVINVr5OjPrQ1TJyKXQOd2KT/7yvQBzm
-         OepW7GZ8scWL6YUWapnrfhtQoHad9tjwbfYneiQYur8I5COL+FwCB/qWVFeQtn2g9TKy
-         LR+6j8b8gHXUFGlEzAHM83TxRaNlt9mK0EOXAVeZgzDhz23vguYL+rwuK6rIcDNNlGri
-         L49Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742387732; x=1742992532;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JTavdg6rsC7kTTkEdfFNAkH7OBl1cZyzQAJnPPIZgy4=;
-        b=qnM+SvVEa3RaZNgqdyhNQxBEwOrtGiJXtBs9oWKWdhle2f+a6F6NanRbI1cYD8+Jdy
-         NVzvc/Gjpo6J6zAHzlRtNlUKOTPk8MutWyFFYL0IkArDbPB+iCx1Qd3qoy0EU4jDpBNV
-         QiaZ/sUCpXabi4A1SFX2+/30u6Y88xMVlRGgjVuyAgk3QsoTQunbgmmzAhTgQT84RV4U
-         aJQ+X8vfyVB97x8K0tKoh2gIE8Dk/N52BagX3HfZKRjx8AD/sWuujGVHZEVVaJ01Qs2r
-         oS1iRILQ3HrU0xvsBfwJ4rY/MgvjI7ZRD2UD4aCHy+dcZ/wgiBI48rPajqEzWlalWAge
-         cepw==
-X-Gm-Message-State: AOJu0YzzdCS/jO3HThEuW9Idg7pZa0aqpdUUMOJcJ1UDJWwAeBbmma74
-	7SvBF9DOxnWITwid1GikXM+QnD2EAV/9KxeR0yoJzeQIadsiic2aEZ8AIZFR8fwOYiBViAy67Iz
-	2v9MLpQxSfTjSZZRRvuyjYlo1qNs=
-X-Gm-Gg: ASbGnctLzBbnEkaQBBhUjcwrR+EEKxy/9pKTGCcx6HAc2KBEBoBnxxyra+zyaTlfMgZ
-	vpCUkdkd2YJfjRwVZNHGqnXXis1XirNsBd91mJ5azorhKnYnsAKgu9eZciwP6Gjpp3fUjR3V0VP
-	EuK0bPXQ7GRtxeEexcNFnhlrObFMZqXXitbs+iejxamwUzSfZGS903TUbF5A==
-X-Google-Smtp-Source: AGHT+IEJp2lpXkuEQWzClHJNPXawrLNqjosRb4dWyDK7zgqBJvJyRA6gODhkdVkdgynng4LfC3u5IaTS1a19QsVCP7A=
-X-Received: by 2002:a17:907:7fa6:b0:ac1:fab4:a83 with SMTP id
- a640c23a62f3a-ac3b7ddf808mr203069266b.25.1742387731747; Wed, 19 Mar 2025
- 05:35:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="I+nnJsuC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dpWeDFav"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 05A651140091;
+	Wed, 19 Mar 2025 09:12:54 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Wed, 19 Mar 2025 09:12:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1742389974;
+	 x=1742476374; bh=7NN1jxOW/Oy32tAW7OhL9YPi8mmeGdFZOBuRQPjMK00=; b=
+	I+nnJsuCtwa6Wa+a90ATC4kxgAZeYBuLeQpcQjoPWRFSjz8NBk1bUCkMzrD3hUmL
+	jeg9VtI8Q1YUI6+Oh8Vi6ui74KxKUNErmjP0vGH1eTf68hGmyq8vRtQ1QABqH+H3
+	5/OGSs5oIz5R7AlzzDXVg7PJn5YAaBsWU06NowgomWRZg29uVt3dIY4zTZNveiz+
+	waDo7Hh5nClniJBfsc8gtvhzkMxdvw0TWTWyoZvCczS+9WNQYt6F+yVuJf3Y8ysN
+	gVchnR2IyDb09lwhm6qyz9UMcVVqhByLxPlt2PVxWxhoZtCBBuuNiAZYGhY58Hxh
+	3IcLW9N5acOl6XG9ZERmiw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742389974; x=
+	1742476374; bh=7NN1jxOW/Oy32tAW7OhL9YPi8mmeGdFZOBuRQPjMK00=; b=d
+	pWeDFav4bc69MCrIBWrdg3vqTe7vkeaMUcUmJwwSYicdAbtpa3yFLppurPLl+mgu
+	SxKnM1Befk6scKB3khcK0cboyEkRa0SXC09SzKfYtaWR7AAq4vkZIDT8qUUxEj9/
+	wyOqWlbo5bDu+Elj8KRQiOGPMBka/fXariMpumXL0KksUkXpz8sdxuOKpr80Ci9v
+	Lgcdam4Mce3+48hpO55jZLAIklVu0IyvptUL/ifTPBUZOrMnyqnJmguIXIZZ8QDD
+	eMLdSRpDY/DIr2KiZANSEsmVIbsAndyKtn3k6n3PJo2kXyd7EixTFfPk1B/bj1rz
+	NgJ0Pwd812x9G/kIjSVFA==
+X-ME-Sender: <xms:1sLaZ4s7lA89dn3RJjlFjctpPA578x9eqd99jmjn5-MKJy6bB2wBUQ>
+    <xme:1sLaZ1dYtoUKadgqDbqHu8nWvIYN-EjVE8SkziRVSQS4GoVVqvmJ-l6LwHArz4GoJ
+    PJ2P_XbRpo1vbbQog>
+X-ME-Received: <xmr:1sLaZzwflpvAzxxCVGkkIwx7i_TenXtMhZsLZ2mZg3ZHtVpvK8JaUFZDD3tD2aDzDSXfQhvCZK3GOSiZLgO2mKa1z8KnuYTS5UbXDaUb1nG_El5Xmw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeehgedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufht
+    vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefje
+    eitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+    dpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohephhhmiidttdejsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:1sLaZ7OgLjd0810deEkL02F_HjyRQJw1S0Niq3eC_Db7l-_bWSUTQQ>
+    <xmx:1sLaZ48Cg_5Xq_oKXuR87PujIj5z_lJDqrMevgroJ59yT36FfV72Uw>
+    <xmx:1sLaZzUtz_DlnYPV7IPuQ72lqszmwvTbnsH0twem4S7KhkoA94SQcQ>
+    <xmx:1sLaZxdvTcCcPWN6GoqTOsJ0leX3QYQ5GCntHpMj37No78JOtkoh6Q>
+    <xmx:1sLaZ3YkGhEg_e9ZI7JPOOkr-vyYkLfZvMFnkoO-an7kOiJqSl6xR9Rj>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 19 Mar 2025 09:12:53 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 947250d9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Mar 2025 13:12:50 +0000 (UTC)
+Date: Wed, 19 Mar 2025 14:12:49 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: "gtXfined H." <hmz007@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] index-pack, unpack-objects: restore missing ->init_fn
+Message-ID: <Z9rC0VCbh8Noaq4e@pks.im>
+References: <20250318111616.113941-1-hmz007@gmail.com>
+ <Z9qPMvclpdEIjQ3l@pks.im>
+ <CAGr7CZnNdTsUuJU+Z8HBX6wQu_HF-faDPPhuLx7u-Y=TGeop+w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250313001706.3390502-1-jltobler@gmail.com> <20250313235747.9583-1-jltobler@gmail.com>
- <20250313235747.9583-5-jltobler@gmail.com>
-In-Reply-To: <20250313235747.9583-5-jltobler@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 19 Mar 2025 13:35:19 +0100
-X-Gm-Features: AQ5f1Jq3SC2hJEY6732zVVMwyhqBkjlMe3VwZybAPjMsTLG2LTzs9WxhGA1DYNM
-Message-ID: <CAP8UFD1JAkTESnEOP621uECvoFGFmQ8SRd372hPLDhNzALAN+A@mail.gmail.com>
-Subject: Re: [PATCH v3 4/6] rev-list: support delimiting objects with NUL bytes
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, peff@peff.net, ben.knoble@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGr7CZnNdTsUuJU+Z8HBX6wQu_HF-faDPPhuLx7u-Y=TGeop+w@mail.gmail.com>
 
-On Fri, Mar 14, 2025 at 1:01=E2=80=AFAM Justin Tobler <jltobler@gmail.com> =
-wrote:
+On Wed, Mar 19, 2025 at 07:53:36PM +0800, gtXfined H. wrote:
+> On Wed, Mar 19, 2025 at 5:32 PM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > On Tue, Mar 18, 2025 at 07:16:10PM +0800, Jensen Huang wrote:
+> > > Commit 0578f1e66a ("global: adapt callers to use generic hash context helpers")
+> > > accidentally removed `->init_fn`, which is required for OpenSSL 3+ SHA1.
+> > >
+> > > This fixes the following error on fetch:
+> > >   fatal: fetch-pack: invalid index-pack output
+> >
+> > The change makes sense indeed. I do wonder though: can we maybe improve
+> > `git_hash_clone()` so that it is not required to initialize the context
+> > beforehand?
+> 
+> Thanks for the review!
+> The idea of improving git_hash_clone() so that it doesn't require
+> explicit init_fn() calls sounds interesting. However, based on my
+> current understanding of the code, I'm not sure how to implement this
+> properly while ensuring it works correctly for all hash
+> implementations.
+> If you have any suggestions or guidance on how this could be
+> approached, I'd appreciate the input!
 
-> For now, the `--objects` and `--stdin` flag are the only options that
-> can be used in combination with `-z`. In a subsequent commit,
-> NUL-delimited support for other options is added. Other options that do
-> not make sense with be used in combination with `-z` are rejected.
+Fair enough. I'm also fine with the patch as-is as it addresses the
+issue true to the original spirit. Improving `git_hash_clone()` would be
+an extra step that doesn't need to be part of this series, nor does it
+have to be you who implements it.
 
-s/with be used/when used/
+Thanks!
 
-[...]
-
-> +test_expect_success 'rev-list -z' '
-> +       test_when_finished rm -rf repo &&
-> +
-> +       git init repo &&
-> +       test_commit -C repo 1 &&
-> +       test_commit -C repo 2 &&
-> +
-> +       oid1=3D$(git -C repo rev-parse HEAD) &&
-> +       oid2=3D$(git -C repo rev-parse HEAD~) &&
-
-It seems to me that HEAD is at commit 2 and HEAD~ at commit 1 instead
-of the other way around.
-
-It looks like there is the same issue in the test added in the next
-patch ("[PATCH v3 5/6] rev-list: support NUL-delimited --boundary
-option")
-
-> +       printf "%s\0%s\0" "$oid1" "$oid2" >expect &&
-> +       git -C repo rev-list -z HEAD >actual &&
-> +
-> +       test_cmp expect actual
-> +'
-
-Otherwise the whole patch series looks good to me.
-
-Thanks.
+Patrick
