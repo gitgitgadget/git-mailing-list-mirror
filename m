@@ -1,83 +1,81 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0657214A98
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 10:37:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF9022423E
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 10:37:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742467073; cv=none; b=WRQnH161cuLT2KSnXSOZjAoLmneqLvOq84Nk+mOHnEKPQv1A/A6kVDy74ylf0EPULt7Zv8B5enMMB9rf9UOi25tbyMnJu8C1jFCh2elJQo/51B7bGCh/FD+V25ermxn5DdPP0cKyxj+uFJbwaAXtitntlA66AFBRlYIxda7r/co=
+	t=1742467076; cv=none; b=Azo7Nhd/PPcvi3AUOWePLvBNEso3OOZMddjKGLSaKaHIm7Q0CmQYDNG4uun+w4zKe/jmMLlLvkYY00Q3s5c0Axm5A9C7A4wVype5RLa4onBp9ArluLSyMOybnhEGP2LYssgqP55v6vqbDO8dUws++dQTEBBVZxvPGS3T+gAeAZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742467073; c=relaxed/simple;
-	bh=mPqE2VqcF80QODNLFTBHZmRFPN4mylyfOvzjX7EElOA=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=hs76/B0GPjOaFfQJH6NMjzhCCYpxOfkwEpJ/M7UC8TO2ahgvHzADjeNPZP+rAulJasWpWiaA3+iAl5ohnGmv4TRA6532DhqVTEDqhM+3jw2iRjbvVzi/arkn4sEhfkZdS01pTdmK1E+JLz2/Ov5GrrlSTjCr9wbdzzcllfNNbzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LR6LVJzW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RgVTf000; arc=none smtp.client-ip=202.12.124.156
+	s=arc-20240116; t=1742467076; c=relaxed/simple;
+	bh=d5D6qxExZjm6KM9/kQgPWXiW2Ibql8cbu2pytnWtyp8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=jv89DhA6cM7PWukSOYzsH/4KSUYBi17wG1cbJw06KaT1FHIwgotBgdn7ldtynhaniCyW3tw9YY6wna1jw6TN1JkrXXzF9yyxRbTxmib5XXlTvmeGspERdLutes2AiPTO5INbmxSKaNu4BTviChDtZaiane62ejBY2WaRedH+MHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aLhj+Cph; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=carTIbpA; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LR6LVJzW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RgVTf000"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id ECF2A25400CC;
-	Thu, 20 Mar 2025 06:37:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aLhj+Cph";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="carTIbpA"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 732A8114012C;
+	Thu, 20 Mar 2025 06:37:52 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Thu, 20 Mar 2025 06:37:51 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 20 Mar 2025 06:37:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1742467070;
-	 x=1742553470; bh=HL7RqBSz99o6CZoMVhSQFf0R2uOFtHwiUB4pYHCbII0=; b=
-	LR6LVJzWU0pE8nmYZQ/2TUFJZw0XPYQJ1LovZu1+6sI+qnX5sFi3fwmfCYM+rA0b
-	bavTjzd6/WGsTMmBFuFJw0mkOkE8rVJU0m1vfYF5WrOfdTozJq8b25R++Agvnjp3
-	k173inLvdJ115klANshOjylTjsSz4gzt6+9ptcXt+Q3itHtkGRfXrSAjci59I1M7
-	ed7HW2yf+bKEUUiSUfeQ/zlchL433kBivrGj4oG/3yGmuJurGGQZJRfstimmdSBo
-	H30eDeRk0PFkpYu5vuAojFpz4RKDaWzZaANnKTKSE+eG6jnZHEvlkh16ptW3iPUK
-	8A1kCckGbIfW/razV11diQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1742467072;
+	 x=1742553472; bh=NspBGRepFb9KaEFYaXSRe2yU0MPHKHOaDPuRcjn3yeg=; b=
+	aLhj+CphsrZpOM1seWLq0XTDTAwvsGpPu836y7EIF+j+5K4QOy3Gbfct1QFn0hij
+	Ldk47opLibaZqYvoEZkamiGzR0z87q6NHs2tTjMvS7KmJpnuFm7ABkFmSmLgySa4
+	ERZML9vUs5bQOQZNjyGRIrp6xsqLEFC/U/5K3gHBVM2K6/Fi3U/8RkKE7y/Io+Os
+	Uh0QuyrFuDJuQRU1um9PMO3mblMMKDK/H/du4AwYsdp0ZAD5PnfmTxV9ILSGeRZd
+	OZ/4shUfHL61mtf6o2YJPQY9s48qWzRgwNI4GaNIxYs5XubuSHp5mQDhFNe/W3z1
+	jMubkqWuADNFnOzcqFxq9Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742467070; x=
-	1742553470; bh=HL7RqBSz99o6CZoMVhSQFf0R2uOFtHwiUB4pYHCbII0=; b=R
-	gVTf000gB8NQ47g5JJO1rDWbVwfO0FWAUR9KMjCISGa/4tnS7F7xdUCwTc9f55fU
-	FdTxxnoiwN+pAKYE1YWN6i47vPyKAE9aTZI0LIVe6+2XQfg43dKG059pCd3lBQsd
-	AIgKZzJlkVsvcGa8ETUZLi1JbkqJwLaH8l+WzW1F6NUhY152ZsmpiT2vh4N1PT9b
-	5MHjaCemoF/ZxpWSr7AvVwAQKUReKmyewj9UarfBRdyYsEbkrchuJMs05e8a4tq9
-	yx4PBx9ajhVXly7+1F+lnsITkjhgOXfRcKNndmkJO0bT7fAiYArLjmZ4UtvNEfYf
-	5HlOYmFb8jd4DRRggSXYQ==
-X-ME-Sender: <xms:_u_bZzaWE3cGdtWE5fvtg8GImfCgEsFzh6tLt33U1NUTHu2DO8qTzw>
-    <xme:_u_bZyaVCeK8h8aukGkG5GVQniu877K76yWPItDx6CSAOzycBxeMrwBw2ir-JOxxy
-    5TLFOqZNO0GnwrdRQ>
-X-ME-Received: <xmr:_u_bZ1_9fEQlwlAg4scnL-ao47cLjv3CiqGk7pQCZKVG_pTwYPibdBCW3CTWNwPwMYiPVHhmLB303fTAvK9oYyKc5YF2vJnWHavWdSVonlkuDsk>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742467072; x=
+	1742553472; bh=NspBGRepFb9KaEFYaXSRe2yU0MPHKHOaDPuRcjn3yeg=; b=c
+	arTIbpAs04oW2b8JeceZm7JZ70qE6aEsfmyPU6ow5SGDbTJ4ID6pqkc7WEknIvvV
+	MGRiswrWiOB2Y/PPqAB/4ui/kV18uQZ0Ju+rUVyY/TEOKHLd3moJFiZUaV7c9bSg
+	Bcy2G+JlDbU6trKOCGkjhZMYfwEwUcjI9k6xVAcdWtl9uyKgRjPl4khv4ePrJ0/v
+	BT6f2XxxM+vrhvUiLnnIKb56UktBjAGapkdSBPb3IUUtiFXfYus+N9C7NPjZtlLw
+	uEJJ6VA3Mg5LZ2mXr//KC4REis82VzejJMeHBIEoS0CVrGtUuvNRnIxJhts3r/0u
+	3rH+DtY6QkeILYni7i5/w==
+X-ME-Sender: <xms:APDbZ2nWWxIBe-x7fHdoiA77Rv88ioc7khycfZa6VxGrRDAUEGx0XQ>
+    <xme:APDbZ928flJnJO39QUnMX4daKQYUG1lrS61LNBMRFoXwsoDb6Zg85e_5xMHpujpzm
+    VoCjCXBo6k8nDldMw>
+X-ME-Received: <xmr:APDbZ0pQwbaXjO60x-IiS8SGHLmceqFty4fUnDHaDNrSO155r_aNL2WotRMCiZZhX_ZB-uhJshYJhC9maMjrdcsA89rJd0LUrCYZ_P9QgsW-KI0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeejleelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffufffkgggtgfgjfhfvvefosehtjeertder
+    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedt
-    heefhfegffevgeegtdfhheeuvdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
-    rdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlh
-    hinhesghhmgidruggvpdhrtghpthhtohepjheitheskhgusghgrdhorhhg
-X-ME-Proxy: <xmx:_u_bZ5qnUq-TS8BgRei2InIlNAuB7kKnmQyac8qarwL7mO17Sx1Gag>
-    <xmx:_u_bZ-p8ATMuEgjb14A23SN6uzhW5PmRcfQN0x4_a42AlzOmruuxKg>
-    <xmx:_u_bZ_QHe6KWJnSBicZ5MczOk6wmvTu4SKy-dRKs4bWYVIgYRtCA8Q>
-    <xmx:_u_bZ2osFRedMffPj0nEhYpqRgHrAkPd5Gqnl8klIz9QXzG1I85zhg>
-    <xmx:_u_bZ3kelLbaDq-RQUV3zl9WFs2ZmZp2zBjio2ddADGlUIkQw9iXl_iK>
+    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
+    hnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjie
+    htsehkuggsghdrohhrgh
+X-ME-Proxy: <xmx:APDbZ6kXjfN06Pode4XxnSfbbgLqWqQfhoz-eXN9J0SvgglbaeUctg>
+    <xmx:APDbZ02tZBBk8tigEvPbWvp-3zmYagtXqs61FPdhNmcM2sTOUH0Q2w>
+    <xmx:APDbZxuUc3gJd0PBYZn2FdnT6NClvOLAz8ak2Q9yjg1xHWmFi8CcUQ>
+    <xmx:APDbZwXjx4UfOHl0s6xosyqY7ETQmtdSDKEwVxgYh5lNGCAq0x2FUg>
+    <xmx:APDbZ3TtbqTFwzpDFyQ4wrFE9hSlq7quhd_Jn4X_UQBra_6flOUN5nz0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Mar 2025 06:37:49 -0400 (EDT)
+ 20 Mar 2025 06:37:51 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 75c3a7fc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Mar 2025 10:37:48 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 942d7c7f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Mar 2025 10:37:49 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/2] compat/mingw: fix EACCESS when opening files with
- `O_CREAT | O_EXCL`
-Date: Thu, 20 Mar 2025 11:37:45 +0100
-Message-Id: <20250320-b4-pks-mingw-lockfile-flake-v2-0-a84c90cfc6c2@pks.im>
+Date: Thu, 20 Mar 2025 11:37:46 +0100
+Subject: [PATCH v2 1/2] meson: fix compat sources when compiling with MSVC
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,72 +84,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPnv22cC/42NTQ6CMBBGr0Jm7Zi2gCgr72FYQDuFCb9pTdWQ3
- t3KCVy+ly/v28GTY/JQZzs4Cux5XRKoUwZ6aJeekE1iUEKVIpc5dgVuo8eZl/6F06pHyxOhndq
- RsLgZqzVdqdIKUmFzZPl91B9N4oH9c3Wf4yzIn/2vGyQK7HRpcqqELeXlnqZnnqGJMX4BY3uNR
- 8MAAAA=
-X-Change-ID: 20250313-b4-pks-mingw-lockfile-flake-49dfcce8e7c2
-In-Reply-To: <20250313-b4-pks-mingw-lockfile-flake-v1-0-bc5d3e70f516@pks.im>
-References: <20250313-b4-pks-mingw-lockfile-flake-v1-0-bc5d3e70f516@pks.im>
+Message-Id: <20250320-b4-pks-mingw-lockfile-flake-v2-1-a84c90cfc6c2@pks.im>
+References: <20250320-b4-pks-mingw-lockfile-flake-v2-0-a84c90cfc6c2@pks.im>
+In-Reply-To: <20250320-b4-pks-mingw-lockfile-flake-v2-0-a84c90cfc6c2@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Sixt <j6t@kdbg.org>, 
  Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Hi,
+In our compat library we have both "msvc.c" and "mingw.c". The former is
+mostly a thin wrapper around the latter as it directly includes it, but
+it has a couple of extra headers that aren't included in "mingw.c" and
+is expected to be used with the Visual Studio compiler toolchain.
 
-I finally found some time to have a look at why t0610 is failing
-regularly in MinGW. As it turns out the root cause is our emulation of
-open(3p): when trying to open a file with `_wopen(..., O_CREAT|O_EXCL)`
-the call fails in case another process has marked the same file for
-deletion via `DeleteFileW()`. This gets triggered by t0610 because we
-race around locking the reftable stack and thus causes the failure.
+While our Makefile knows to pick up the correct file depending on
+whether or not the Visual Studio toolchain is used, we don't do the same
+with Meson. Fix this.
 
-The fix is simple: we get `ERROR_ACCESS_DENIED` in this situation, so
-instead of translating that error to `EACCESS` we translate it to
-`EEXIST`. This fixes the flake on my machine, but as usual when it comes
-to Windows I would very much like to ask those in the know to point out
-any obvious mistakes I did.
-
-The other patch is a while-at-it patch that I was wondering about while
-debugging the issue. It's not needed and I'm happy to drop it if you
-don't think we should include it.
-
-Changes in v2:
-  - Make the workaround more specific by also paying attention to the
-    NtStatus code. Like this, we only translate the error when we see
-    that the error code was `STATUS_DELETE_PENDING`, which should rule
-    out that the translation triggers in unintended cases.
-  - A new patch for Meson that makes us pull in "compat/msvc.c" instead
-    of "compat/mingw.c". This is more of a while-at-it fix that I
-    spotted while working on this patch series. It doesn't have any
-    ramifications for what I'm doing.
-  - Drop the patch that makes us handle O_CLOEXEC. It's not needed, and
-    I'd rather focus on changes that actually improve the situation.
-  - Link to v1: https://lore.kernel.org/r/20250313-b4-pks-mingw-lockfile-flake-v1-0-bc5d3e70f516@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (2):
-      meson: fix compat sources when compiling with MSVC
-      compat/mingw: fix EACCESS when opening files with `O_CREAT | O_EXCL`
+ meson.build | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
- compat/mingw.c | 20 ++++++++++++++++++++
- meson.build    |  4 +++-
- 2 files changed, 23 insertions(+), 1 deletion(-)
+diff --git a/meson.build b/meson.build
+index efe2871c9db..2cf9da3474b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1107,7 +1107,6 @@ if host_machine.system() == 'cygwin'
+   ]
+ elif host_machine.system() == 'windows'
+   libgit_sources += [
+-    'compat/mingw.c',
+     'compat/winansi.c',
+     'compat/win32/dirent.c',
+     'compat/win32/flush.c',
+@@ -1134,6 +1133,9 @@ elif host_machine.system() == 'windows'
+   libgit_include_directories += 'compat/win32'
+   if compiler.get_id() == 'msvc'
+     libgit_include_directories += 'compat/vcbuild/include'
++    libgit_sources += 'compat/msvc.c'
++  else
++    libgit_sources += 'compat/mingw.c'
+   endif
+ endif
+ 
 
-Range-diff versus v1:
-
-1:  c2c1f988729 < -:  ----------- compat/mingw: handle O_CLOEXEC in `mingw_open_existing()`
-2:  fd698866034 < -:  ----------- compat/mingw: fix EACCESS when opening files with `O_CREAT | O_EXCL`
--:  ----------- > 1:  9a2798b1b63 meson: fix compat sources when compiling with MSVC
--:  ----------- > 2:  ff5bf477747 compat/mingw: fix EACCESS when opening files with `O_CREAT | O_EXCL`
-
----
-base-commit: 4b68faf6b93311254efad80e554780e372deb42f
-change-id: 20250313-b4-pks-mingw-lockfile-flake-49dfcce8e7c2
+-- 
+2.49.0.472.ge94155a9ec.dirty
 
