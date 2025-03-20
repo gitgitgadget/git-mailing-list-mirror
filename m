@@ -1,134 +1,201 @@
-Received: from p00-icloudmta-asmtp-us-west-2a-100-percent-7.p00-icloudmta-asmtp-vip.icloud-mail-production.svc.kube.us-west-2a.k8s.cloud.apple.com (p-west2-cluster3-host8-snip4-10.eps.apple.com [57.103.69.63])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D038F6F
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 04:05:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.69.63
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A85C1DFE8
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 04:30:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742443533; cv=none; b=iee95KiFThaSudH/7Y/RODU3lh/8qA7Tv4/DWBBJ2wfylKjgSbN1WlZLunA5t4QqfoKuTPkG1CeZ3V89oEuaxOX31YzE1zejEGx3HJaSIe6b68z+kgxb6Qz9V+PRO7naEMR0z9XoFvFPQNAmVSa8V4tvO9YINcgCP+oAtg6Ep+Y=
+	t=1742445038; cv=none; b=emA638LYNG0404gXl8utnnvTSvyC5m9xSF2o8G3kmpUWLmF1arwo/QoMLyiUEtp1ysW4m+xjYfGCxjmakvVMK9uV0XWmix3UNKkUTwzSyduDNMnIaGw/qdsBJj6DTmr9F15pBcXcb/aoIIuDPyTMplBAU2xOcSAKkP4uJjuv9ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742443533; c=relaxed/simple;
-	bh=/DWXiwaiyZUSDa0YtXLYxTxHpzQESK9JN5xGs+lspck=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=WIMuLiwQtFgUgYImI6JMaHTCk1RHljl2PjI+S/I3YDdrIJGgoV48u6YN/zl0AsYm9c+dkohI+rQBkLs9qawC7A+Dd2C9r2C2LlPb5EyYQ8OKTmtdCq6cnryacd7anPbtgfo4NlPMwx/5oZIpjsqjPFMLhDhtZq2s9CGjhY+KVZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=norbauer.com; spf=pass smtp.mailfrom=norbauer.com; dkim=pass (2048-bit key) header.d=norbauer.com header.i=@norbauer.com header.b=FPHU9yZG; arc=none smtp.client-ip=57.103.69.63
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=norbauer.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=norbauer.com
+	s=arc-20240116; t=1742445038; c=relaxed/simple;
+	bh=Ue05K/I/PGfEDicBJjTM06PQeua08xVchR2PvxIjPeo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mHXsoTkfyCvktXJudkMNsGcDOI5Is65IluHeLbfd3p1hvxStF1AgOVpoj6q6bznBCCbcYetwIaERGzWrVdY2xeFEcSvQ8UbQRz28AyCWE5Q6LAcCGdTKIAg5hnmyMRfAB2YBAkAmEaiQIcbOwKgw7dOCN3ePuMxPfYEE2fUwb4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MSfMP0sv; arc=none smtp.client-ip=209.85.166.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=norbauer.com header.i=@norbauer.com header.b="FPHU9yZG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=norbauer.com;
-	s=sig1; bh=/DWXiwaiyZUSDa0YtXLYxTxHpzQESK9JN5xGs+lspck=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:To:x-icloud-hme;
-	b=FPHU9yZGcPIwUIrS71UhedoGmrE+PtWCRFLuojxu+gzDH9DxW/6Fskh1igezDjgJH
-	 G4E7fFxYtLjSejy3glywO4fYH+p4YQGIqs/+JNFyyHrYKupP7iD3Vtr6eGCdYVLSNh
-	 GKZIZ6AAbxiH9MUi4lfDBuy+Q3EVuC7vVXZ/I+tZgoG91VGa0NIMMXb5c6OaIavX85
-	 qXWtNOg3KYsVg46yCNpwNbmb/3+mxcD0XiSYWbE+b1fHIS5BaEdaI5pYQHBIZqbBsz
-	 J6Q5fPc5q3XR/0DLQuq0GqRXVN79RbW8q6N4+IEY7lVRe1IZxIG1GtRWgMjQsM01rB
-	 uNk0WmxFsOiQw==
-Received: from smtpclient.apple (mr-asmtp-me-k8s.p00.prod.me.com [17.57.152.38])
-	by p00-icloudmta-asmtp-us-west-2a-100-percent-7.p00-icloudmta-asmtp-vip.icloud-mail-production.svc.kube.us-west-2a.k8s.cloud.apple.com (Postfix) with ESMTPSA id B9BCB18000A9;
-	Thu, 20 Mar 2025 04:05:28 +0000 (UTC)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: alan@norbauer.com
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MSfMP0sv"
+Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3cfc8772469so1793665ab.3
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 21:30:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742445035; x=1743049835; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PNMf5zjBOhBTUslDyYlIxy4+jmczWkEiTB7jyjeDGyo=;
+        b=MSfMP0svL/+a2DTBtW32IoQfh0eCVY7Ognueo+dHPZxQyHpgPecdyD0RkKyT4WDZ2K
+         naGT6hxbiTH6zFcqpv7skQ7xT+ze5qIMOqVaXgKWdG8VmQuYVEJffC8agQOh7blVpDEc
+         covRMe5V1lx5UETwy/jxNdLi5cNrOyBjbfvIFKm8lS4t8RhtlvkT2ayZ4ioRLcenoNKp
+         DUwQYcessVVqh5CR5Mu9s+v18eiTZ5EH2ugd2hdsTtr/hBbcq/fV/9nr0nHgOb6UQ6Kw
+         onFmoiSlS7eLzNWe6ID43Z2fzY3vi/Dt2BqtEiJoQ9DuimGuXKfF5WfaGjOj6sbqmYRC
+         61Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742445035; x=1743049835;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PNMf5zjBOhBTUslDyYlIxy4+jmczWkEiTB7jyjeDGyo=;
+        b=Up2zEfl7NSflt2bUEOklRYCGGBxpG2+sUXQgJIfit/mxKZg1qe4j9PVG29xeVCW3vF
+         vnK4pOdzca2RLWwlJgad8RdvaiFKjjkBjPY7pxqWbcGtyc9CO+NLunoJYuwxre9raHAY
+         1kWVcRz5O54bXOO4884kZwlLW700qKMaM62aNSzP6+DVrIO79HOBHIxGgd2w8q9yXcht
+         ueew1dlLOHSXBZByil1vQSB5pIy0PHxwcelY/0pi8bD32EjmnVy5ulH8UgIne36I+TLQ
+         94X/YUiXqn5YryrfTzbEZ7KLKH9uNzVRMXzZOtu/DBMcQLoqOI1mBhs8zXEHqqOgSs6g
+         cdPQ==
+X-Gm-Message-State: AOJu0YxekBa/3XvantJJpwKN+Xw4X54LvCMqZKmqwHIrNGuu2JjbgwpL
+	nZuB79ZAgv80YClVE225bECxaxtRiZ/57SKYogUkLmSGrmGh4abEDhxSqivKMqU4/w5CxUdHpRx
+	hL9AamUiaSZ9xJS6owhcOzdMHdX8=
+X-Gm-Gg: ASbGncvezTJRB7WcNdCntcu+VBCOsvIyOYE7uxSDkngoJgYsNkhC6hLFY6Xi3l5bQre
+	zBY1R474YyZPo4D1eEijSUg6BPVSE3dEE6e8CtqK0FTG1Mav9PWG8pesRLzlUrS4ggwvfunIo2B
+	lxLCnuIaJCVUhNTVvZ5bBIVV89FUHi
+X-Google-Smtp-Source: AGHT+IGUXcP1GQxb3GMJ73izmar71gzXDb4imC428VeQ31+QtONRMwui9xxqChG143ldBdGAZ3yPPUrOhjSzeGcDOZE=
+X-Received: by 2002:a05:6e02:1aac:b0:3d5:8908:c388 with SMTP id
+ e9e14a558f8ab-3d58ea973c8mr17842915ab.0.1742445035332; Wed, 19 Mar 2025
+ 21:30:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: bug: git shows hints that should be suppressed
-Date: Wed, 19 Mar 2025 21:05:07 -0700
-Message-Id: <00213714-D232-49BB-BE8F-300E74758E8C@norbauer.com>
-References: <fff634dh5qeb4rgjqn7cru7v4a2voj4us4thvwtttxjcdnu2bu@jvv3htcon2ul>
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>
-In-Reply-To: <fff634dh5qeb4rgjqn7cru7v4a2voj4us4thvwtttxjcdnu2bu@jvv3htcon2ul>
-To: Justin Tobler <jltobler@gmail.com>
-X-Mailer: iPhone Mail (22D82)
-X-Proofpoint-ORIG-GUID: E0IJvNplpAop4YwGVFa4d2f9XTFluzi2
-X-Proofpoint-GUID: E0IJvNplpAop4YwGVFa4d2f9XTFluzi2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-20_01,2025-03-19_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 clxscore=1030
- suspectscore=0 mlxlogscore=999 malwarescore=0 spamscore=0 bulkscore=0
- phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2308100000 definitions=main-2503200024
+MIME-Version: 1.0
+References: <cover.1742252411.git.me@ttaylorr.com> <cover.1742424671.git.me@ttaylorr.com>
+In-Reply-To: <cover.1742424671.git.me@ttaylorr.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 19 Mar 2025 21:30:24 -0700
+X-Gm-Features: AQ5f1JoVmZKldCgTHBiJ1-qiYXNnZn71WfXtTlh5J3ZnOikgPNIfvHZFaPF4lHM
+Message-ID: <CABPp-BF-i5Npbnp+tHoW1QbvrYzCngwny9dMTOnf+0-y5yxc2g@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] repack: introduce '--combine-cruft-below-size'
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you, Justin and Elijah. I really appreciate you digging in.
+On Wed, Mar 19, 2025 at 3:52=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> Here is a small reroll of my series to introduce a new 'repack' flag
+> called '--combine-cruft-below-size'. There aren't any functional changes
+> in this round, and the changes that do exist are limited to
+> documentation and commit message tweaks in the final patch.
+>
+> A range-diff is included below, as well as the original cover letter:
+>
+> (This is based on tb/multi-cruft-pack-refresh-fix from Junio's tree,
+> which is at 08f612ba70 (builtin/pack-objects.c: freshen objects from
+> existing cruft packs, 2025-03-13) at the time of writing).
+>
+> This series replaces something close to the existing behavior of
+> repack's '--max-cruft-size' flag with '--combine-cruft-below-size'.
+>
+> The new flag is much clearer in its intent and function, and avoids the
+> lack of clarity between the two that was discussed in
+>
+>   <cover.1741648467.git.me@ttaylorr.com>
+>
+> The new behavior is as follows:
+>
+>   - '--max-cruft-size' is a cruft pack-specific override for repack's
+>     '--max-pack-size' command-line flag.
+>
+>   - '--combine-cruft-below-size' instructs repack to only combine cruft
+>     packs which are smaller than the given threshold. This will likely
+>     result in packs which are larger than the threshold. But that is OK:
+>     the point is to limit the size of the individual packs on input, not
+>     the size of the outgoing pack.
+>
+> This series does break the existing behavior of '--max-cruft-size'. But
+> I think breaking backwards compatibility here is OK, since the existing
+> behavior was so broken to begin with. I'm happy to consider other
+> alternatives if others feel that this isn't OK.
+>
+> The series has an interesting structure that I feel may be worth calling
+> out. The first three patches are trivial test cleanups. The fourth patch
+> modifies the existing behavior of '--max-cruft-size', but does so while
+> keeping some of the old infrastructure around.
+>
+> That may seem like an unnecessarily complicated approach, but it greatly
+> simplifies introducing the new behavior in the following (and final)
+> commit. I think that this results in a series that is a little easier to
+> review (since we don't see a ton of code being removed in one commit and
+> then re-added in another immediately following it). But if others feel
+> like this was a mistake, please let me know ;-).
+>
+> Thanks in advance for your review!
+>
+> Taylor Blau (5):
+>   t/t5329-pack-objects-cruft.sh: evict 'repack'-related tests
+>   t/t7704-repack-cruft.sh: clarify wording in --max-cruft-size tests
+>   t/t7704-repack-cruft.sh: consolidate `write_blob()`
+>   repack: avoid combining cruft packs with `--max-cruft-size`
+>   repack: begin combining cruft packs with `--combine-cruft-below-size`
+>
+>  Documentation/git-repack.adoc |  21 ++-
+>  builtin/repack.c              |  62 +++----
+>  t/t5329-pack-objects-cruft.sh | 302 ++++++----------------------------
+>  t/t7704-repack-cruft.sh       | 293 ++++++++++++++++++++++++++++++---
+>  4 files changed, 355 insertions(+), 323 deletions(-)
+>
+> Range-diff against v1:
+> 1:  0aa8aa65c1 =3D 1:  0aa8aa65c1 t/t5329-pack-objects-cruft.sh: evict 'r=
+epack'-related tests
+> 2:  5e8bd3e66e =3D 2:  5e8bd3e66e t/t7704-repack-cruft.sh: clarify wordin=
+g in --max-cruft-size tests
+> 3:  b075ad8601 =3D 3:  b075ad8601 t/t7704-repack-cruft.sh: consolidate `w=
+rite_blob()`
+> 4:  7941997e33 =3D 4:  7941997e33 repack: avoid combining cruft packs wit=
+h `--max-cruft-size`
+> 5:  7f120c35e9 ! 5:  dee780a2aa repack: begin combining cruft packs with =
+`--combine-cruft-below-size`
+>     @@ Commit message
+>          Introduce a new flag, '--combine-cruft-below-size' which is a
+>          replacement for the old behavior of '--max-cruft-size'. This new=
+ flag
+>          does explicitly what it says: it combines together cruft packs w=
+hich are
+>     -    smaller than a given threshold, and prohibits repacking ones whi=
+ch are
+>     +    smaller than a given threshold, and leaves alone ones which are
+>          larger.
+>
+>          This accomplishes the original intent of '--max-cruft-size', whi=
+ch was
+>     @@ Commit message
+>          But that's OK: the point isn't to restrict the size of the cruft=
+ packs
+>          we generate, it's to avoid working with ones that have already g=
+rown too
+>          large. If repositories still want to limit the size of the gener=
+ated
+>     -    cruft pack(s), they may use '--max-cruft-size' instead.
+>     +    cruft pack(s), they may use '--max-cruft-size'.
+>
+>          There's some minor test fallout as a result of the slight differ=
+ences in
+>          behavior between the old meaning of '--max-cruft-size' and the b=
+ehavior
+>     @@ Documentation/git-repack.adoc: to the new separate pack will be wr=
+itten.
+>
+>      +--combine-cruft-below-size=3D<n>::
+>      +  When generating cruft packs without pruning, only repack
+>     -+  existing cruft packs whose size is strictly less than `<n>`.
+>     -+  Cruft packs whose size is greater than or equal to `<n>` are
+>     -+  left as-is and not repacked. Useful when you want to avoid
+>     -+  repacking large cruft pack(s) in repositories that have many
+>     -+  and/or large unreachable objects.
+>     ++  existing cruft packs whose size is strictly less than `<n>`,
+>     ++  where `<n>` represents a number of bytes, which can optionally
+>     ++  be suffixed with "k", "m", or "g". Cruft packs whose size is
+>     ++  greater than or equal to `<n>` are left as-is and not repacked.
+>     ++  Useful when you want to avoid repacking large cruft pack(s) in
+>     ++  repositories that have many and/or large unreachable objects.
+>      +
+>       --expire-to=3D<dir>::
+>         Write a cruft pack containing pruned objects (if any) to the
+>
+> base-commit: 08f612ba7000bf181ef6d8baed9ece322e567efd
+> --
+> 2.49.0.4.ge59cf92f8d
 
-> On Mar 19, 2025, at 6:40=E2=80=AFPM, Justin Tobler <jltobler@gmail.com> wr=
-ote:
->=20
-> =EF=BB=BFOn 25/03/19 07:45AM, Elijah Newren wrote:
->>> On Wed, Mar 19, 2025 at 2:59=E2=80=AFAM <alan@norbauer.com> wrote:
->>>=20
->>> Thank you for filling out a Git bug report!
->>> Please answer the following questions to help us understand your issue.
->>>=20
->>> What did you do before the bug happened? (Steps to reproduce your issue)=
-
->>> `GIT_CONFIG_GLOBAL=3D/dev/null GIT_CONFIG_SYSTEM=3D/dev/null GIT_CONFIG_=
-NOSYSTEM=3D0 GIT_ADVICE=3D0 git clone --quiet /Volumes/sourcecode/npm-packag=
-es/packages/repository-tools/node_modules/.cache/@altano/repository-tools/20=
-78b9db1d71a4f4a5422e25a7016c75/git.bundle .`
->>>=20
->>> What did you expect to happen? (Expected behavior)
->>> I would expect the clone to happen without any hints because I provided b=
-oth `GIT_ADVICE=3D0` _and_ `--quiet` to the command. Both should suppress th=
-e hint.
->>>=20
->>> What happened instead? (Actual behavior)
->>> I received the "hint: Using 'master' as the name for the initial branch.=
- This default branch name" on stderr, which caused my tests to fail (I am us=
-ing git programmatically in a test).
->>>=20
->>> What's different between what you expected and what actually happened?
->>> The hint on stderr was displayed.
->>>=20
->>> Anything else you want to add:
->>> This behavior is NOT observed on git v2.44.0 and is observed on git v2.4=
-8.1. So the bug started occurring somewhere in between those versions. I can=
- find the exact version the bug was introduced manually with some effort if t=
-hat would be helpful.
->>=20
->> Bisects to 199f44cb2ead (builtin/clone: allow remote helpers to detect
->> repo, 2024-02-27); cc'ing its author.
->=20
-> It looks like prior to 199f44cb2ead (builtin/clone: allow remote helpers
-> to detect repo, 2024-02-27), the default branch name advice message
-> would never be printed when cloning from a bundle regardless of whether
-> `--quiet` option was set. This particual advice message also doesn't
-> respect `GIT_ADVICE` either. So something about the change has made the
-> message start printing when it previously did not.
->=20
-> Digging a bit further, this change started partially initializing the
-> refdb with a HEAD file which had a side-effect of changing the location
-> where the first `git_default_branch_name()` was invoked. This matters
-> because `git_default_branch_name()` only computes the default branch
-> name once and uses a cached value for subsequent invocations.
->=20
-> Previously, `create_reference_database()` was the first
-> `git_default_branch_name()` call site and was configured to always
-> suppress the advice message. Due to the refdb being partially
-> initialized with a HEAD file, `create_reference_database()` stopped
-> invoking `git_default_branch_name()` altogether and the default branch
-> name computation was defferred to a subsequent potential call site
-> `guess_remote_head()`. At this location, `git_default_branch_name()` is
-> configured to not suppress advice messages.
->=20
-> Also, `guess_remote_head()` only invokes `git_default_branch_name()` in
-> cases where the transport is unable to figure out the remote HEAD and
-> must guess. This explains why the advice message gets printed for bundle
-> clones, but not all clones.
->=20
-> One option to fix this would be to adapt `guess_remote_head()` to
-> support configuring the underlying `git_default_branch_name()`, which
-> has since been renamed to `repo_default_branch_name()`, to be quiet and
-> suppress the advice message. The call site in clone could then be
-> updated accordingly.
->=20
-> I'll submit a patch that does this.
->=20
-> -Justin
+v2 + your comments address all my feedback from v1, so this round
+looks good to me.
