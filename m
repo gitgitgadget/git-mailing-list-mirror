@@ -1,79 +1,79 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96CB225412
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 09:35:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9D022541F
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 09:35:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742463353; cv=none; b=qZtPnHRmfHWnjeh2B2YY11nhGnh7hfcKAuo/d36EIyL28go49bUyUiaZmWfyL6/Ni5TfHB9aFNyRoIUfE+tP2ulcR6vppzv9pUwdpdUUnpDUwxRZmknaLx/4p0tw2+H3aZUfHxXqmCAI6820aEKIlp+MmKwH8Yqhkq0kgbgSXdY=
+	t=1742463354; cv=none; b=n18svbRA4ul67as5FBflrOLeK/8cmmIfdRWdunSNb9qcYazjiDupHMHvb9v++ykRWWhfmwDdTborHYwzk876L9F/lL7pTZDZ/I3BMMZnDFhLd6pxHGTPrF4nWlJ8fy+eBwL4ov8EC7y7d0H2wnWC5uIuRFHqLGjWJYpPcYktxIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742463353; c=relaxed/simple;
-	bh=VOGHVEB5DBeBsc1IOz0MKfPvuvyDiSI9QbAo+vfau2E=;
+	s=arc-20240116; t=1742463354; c=relaxed/simple;
+	bh=0vDLZtJoO0JWlSJGdB1334hkWHi1ZII88VJ3KTVuw4M=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uO0rKg7GxP3NPj5Q8/JfrHqDJPJjmCwyO26AA6pYNBirFO0C9l26lz7atcxhB8LUVOr+AUcyhR5bJeURlM9UWRf3KcgnAOXb0CjjDXH+Dwu+qjI3U7QtCTHQw+LflmulaPyHwFaC9vg47o/8YJnCd0AaV02JSmjo4/FBN/whkpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dKeBUTxZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lr9AmMs3; arc=none smtp.client-ip=202.12.124.147
+	 In-Reply-To:To:Cc; b=I10L7TuJ4R9K77wWGz3oW/NYJ5Wc8Cu+7wpTLwhtSSzMf71GEPxV6PuGqm3SNPZtjZPHArF5JxS56w8Tlr6B619YfzWZxA9/bJXiTAFiAAvNoyk9qCpgQFobkW4cUepyP+tz+Rrpm5C36W2N/dEd5h0CwIxEvF6YiF5VkHek4Bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PuxxUQ68; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=6szfIjF3; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dKeBUTxZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lr9AmMs3"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id E657A11401B1;
-	Thu, 20 Mar 2025 05:35:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PuxxUQ68";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="6szfIjF3"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0F5672540099;
+	Thu, 20 Mar 2025 05:35:52 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Thu, 20 Mar 2025 05:35:50 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 20 Mar 2025 05:35:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1742463350;
-	 x=1742549750; bh=0JV8nY16uI93FpC8oc8O/Ba/p4JfeYQlUD8rsognpdk=; b=
-	dKeBUTxZWEdWGD+4fbjzVgJS87Q1O3BayyqVG1gDVcRzLDoNXG6rQMiVH0umpriR
-	aw1zZdJPq9Op68Qd2zylHFLcYoKHtBvNzyZMzcgmZHlzybvK8mxKkA0X+tnkCIc3
-	Woe+PxmJqz0TJqNcu1GGppBcU7UXy9HpEfYo5mV9zfsqJhm10G9Lj1Ibx9cVZGvR
-	3DR9j5e0mnF2Z0NDzQYFiZisS4zQUaTgSSnKRBTos/FEWPf4uxPNrTcAviw/Wf3y
-	8xBY7VHLmV5crLFFuC84/vusYdGVRcPD8XVuH6fsIDyWyVYsm2s/JGsGyBbLpxI4
-	RhvaKklvOow8AcH21UuKdQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1742463351;
+	 x=1742549751; bh=8mNJ6Dr3p2I6SWEWYBP3GmUzLBsShSYpobEZZTH9ZWE=; b=
+	PuxxUQ68KIXd6S8N7g3h0x40ql/B4ei9AWBVHG2ebKloooN4noALT3gG0479q9Zj
+	G9sQY+k7a0nMPtORAVCFvGolm3rUHll66vgnRV5RGDJ1LH8cuTqS1UZelaNHVteK
+	z8rvFHttAkkPnbb6S/Bkd1hulWvbcVGP+U0La1BQk3gQFXuj9P0369nTU1SFU1Ea
+	Pp2JcIq8BMl6yqaaVDwNgUe0C8Ttc/kflG6ltu9IL9vxS7s7i7HgO1KQyC/XAjyW
+	d/9NPedK8LV37awlDOr/qp3XG4Mwl/mDIh2cNdZO7B1IatSW2CFUBqEOyKY5TsV7
+	Z2JxMJzTWEFaPA7mSBhIuA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742463350; x=
-	1742549750; bh=0JV8nY16uI93FpC8oc8O/Ba/p4JfeYQlUD8rsognpdk=; b=L
-	r9AmMs322BLTWBpXb9aU3SQ7lJen1sVLYI6nYQ8ofTiYWi1c13i4jlxiQyAJdbXo
-	nd1s5CB5nhtXqKixsgwVbxlthpPZnC+tb3PRNAskrqUKzU9Q2WANiTtrw6LSXcL5
-	yuKvGN/ujgJdYshobhhTccoadz4p9HQD2LKlbC2ad3OEDmGxeL6XtdoqG1fC717q
-	wu+FQvvYy5+ADihyT85YcNwtfij7af0dCpeZ825tLMJ4nWChpoEgBr+wtXRD5nIC
-	MXbzm1P/6sjwiQNcrIzzEj6ecp9joGcTG8HryQdYQNtDKnIaEfGSxe2xgnOhTjz1
-	B58fdgu8DA/UzbmgjP1kA==
-X-ME-Sender: <xms:duHbZwTFGRyHsoeIRySEEh60wdkQF7wB5nMd7IOkHCEXFcdI198fEw>
-    <xme:duHbZ9yWoH2HBze736G982y0I5Hu-4k1ht1Es1QmDpI-z7Joyu7znwNEBZ8F6451w
-    DINgd6KVjximaoHNQ>
-X-ME-Received: <xmr:duHbZ907GpdE2bFcSDPpOa-tDB38DojMX9vTqFiYXjjMxMIzisPE9Vb-_U-huvrGV9QtNqcqVy4i1USzCsnVgoO1UJOklQd2cJKGTwrAsRHtAOM>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742463351; x=
+	1742549751; bh=8mNJ6Dr3p2I6SWEWYBP3GmUzLBsShSYpobEZZTH9ZWE=; b=6
+	szfIjF37lPATkZ7ALJ9SztkFbT7wRIZ6Du/KcZN81biNqUji6InOF1++B5gatQfL
+	Na0g4CYYOziTEnPjxlLrl8XMLFQ4+asKknl+RknNKp9QH7ALKTpZtVxAhfpPMySr
+	1Ku0rs6e4GfQLuUMx8BsSM7A7ao0u4YOXZ66d7INu5ZmOxJuApLjzY0lnCoVOl0p
+	l2e/Kfr73kaSq40FaHgP0miCL8DY/tDJke3NofT2wYwPnzBZL4Oknnjn6dEIEU6r
+	wudqArLS8UrWyxhqT7f4t2RQTMRD68Udqz5UlJm+SXeg2me8i4RQPOxqMYzUXBO9
+	Z+Q6MrzoL6rPQVyBDtvZA==
+X-ME-Sender: <xms:d-HbZ3sOx852xjjABkiwm2yNAd_aV3l9gggpkxfSiUVS39cIhRT53Q>
+    <xme:d-HbZ4fIHS3rE_ud3T_xDAm33YDvK1pz2-Z-sUtugG3P88lk1hFY56fOmMMCj5cE0
+    qTgl-wdTyVDs_DIfg>
+X-ME-Received: <xmr:d-HbZ6wDrN1qgj4OLqx6IDMpRy9AwntpcR4xbexqjd2giufZ5L3CoP37sK6iJnh5fqMcXPad6Gy84LGkyzpj_3mWwTyOLO2F_TYKfZcxJp92JPE>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeejkeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
-    hnsehgmhigrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:duHbZ0B3kwKYg2hgUq8mTYzvPjwHwPHq5BcYvbFJCeLwNUVfWiM_DA>
-    <xmx:duHbZ5gKMUH05V6D0eabamlnPJAihcSV24jmr4ZFGIftAMH0Ypndtg>
-    <xmx:duHbZwqvbOZayTTqoermJ_-LPgl8_VjB-ScqP4EPfLZUTj4v20O9pw>
-    <xmx:duHbZ8gUXz39rl-kXwpAzJ--rl7MWKm7hPbpQuZFqm7JshOACWAWUw>
-    <xmx:duHbZ8vSqYlO8qD2Zr3_Z9V-EWwZTP5vmBIyJV9BCCFUxyqX1hQ3weXW>
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:d-HbZ2OE_bxRfsOHzoSLwXkrdAUlBQDJOcfY8dr9x4N-8CqbEW7Ihg>
+    <xmx:d-HbZ38Ual6fjfJIVyQ3ujbxI_93uA_mC64625w7AJ1XMwT2_-63kQ>
+    <xmx:d-HbZ2VwjwmUlw8HpCFOlEoyve6VAgQBwAlw_AZyhrW_Bqkf9wUyyg>
+    <xmx:d-HbZ4cqx5bhWXLacT_fTBL2Z1MzUM5Q2Fww_1Epkb-8SHQNbyeMXA>
+    <xmx:d-HbZ5KSjaJTR_-WLJSvrnG80yGa3FEybl8e-O3HU3fJuxguzADtpmng>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Mar 2025 05:35:49 -0400 (EDT)
+ 20 Mar 2025 05:35:51 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id dfd2fad1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Mar 2025 09:35:48 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 402e6d98 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Mar 2025 09:35:49 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 20 Mar 2025 10:35:46 +0100
-Subject: [PATCH 19/20] t5316: refactor `max_chain()` to not depend on Perl
+Date: Thu, 20 Mar 2025 10:35:47 +0100
+Subject: [PATCH 20/20] t5703: refactor test to not depend on Perl
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,80 +82,112 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250320-b4-pks-t-perlless-v1-19-b1eefe27ac55@pks.im>
+Message-Id: <20250320-b4-pks-t-perlless-v1-20-b1eefe27ac55@pks.im>
 References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
 In-Reply-To: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.2
 
-The `max_chain()` helper function is used to extract the maximum delta
-chain of a packfile as printed by git-index-pack(1). The script uses
-Perl to extract that data, but it can be trivially refactored to use
-awk(1) instead.
+We use Perl due to two different reasons in t5703:
 
-Refactor the helper accordingly so that we can drop a couple of
-PERL_TEST_HELPERS prerequisites.
+  - To filter advertised capabilities.
+
+  - To set up a CGI script with HTTPD.
+
+Refactor the first category to use `test_grep` instead. Refactoring the
+second category would be a bit more involved, so instead we add the
+PERL_TEST_HELPERS prerequisite to those individual tests now.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t5316-pack-delta-depth.sh | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ t/t5703-upload-pack-ref-in-want.sh | 25 ++++++++-----------------
+ 1 file changed, 8 insertions(+), 17 deletions(-)
 
-diff --git a/t/t5316-pack-delta-depth.sh b/t/t5316-pack-delta-depth.sh
-index cd947b5a5ef..defaa06d650 100755
---- a/t/t5316-pack-delta-depth.sh
-+++ b/t/t5316-pack-delta-depth.sh
-@@ -76,18 +76,18 @@ test_expect_success 'create series of packs' '
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+index ac7266126a0..1ab3191d72d 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -4,12 +4,6 @@ test_description='upload-pack ref-in-want'
  
- max_chain() {
- 	git index-pack --verify-stat-only "$1" >output &&
--	perl -lne '
--	  BEGIN { $len = 0 }
--	  /chain length = (\d+)/ and $len = $1;
--	  END { print $len }
--	' output
-+	awk '
-+		BEGIN { len=0 }
-+		/chain length = [0-9]+:/{ len=$4 }
-+		END { print len }
-+	' <output | tr -d ':'
+ . ./test-lib.sh
+ 
+-if ! test_have_prereq PERL_TEST_HELPERS
+-then
+-	skip_all='skipping upload-pack ref-in-want tests; Perl not available'
+-	test_done
+-fi
+-
+ get_actual_refs () {
+ 	sed -n -e '/wanted-refs/,/0001/{
+ 		/wanted-refs/d
+@@ -89,18 +83,15 @@ test_expect_success 'setup repository' '
+ 
+ test_expect_success 'config controls ref-in-want advertisement' '
+ 	test-tool serve-v2 --advertise-capabilities >out &&
+-	perl -ne "/ref-in-want/ and print" out >out.filter &&
+-	test_must_be_empty out.filter &&
++	test_grep ! "ref-in-want" out &&
+ 
+ 	git config uploadpack.allowRefInWant false &&
+ 	test-tool serve-v2 --advertise-capabilities >out &&
+-	perl -ne "/ref-in-want/ and print" out >out.filter &&
+-	test_must_be_empty out.filter &&
++	test_grep ! "ref-in-want" out &&
+ 
+ 	git config uploadpack.allowRefInWant true &&
+ 	test-tool serve-v2 --advertise-capabilities >out &&
+-	perl -ne "/ref-in-want/ and print" out >out.filter &&
+-	test_file_not_empty out.filter
++	test_grep "ref-in-want" out
+ '
+ 
+ test_expect_success 'invalid want-ref line' '
+@@ -486,7 +477,7 @@ inconsistency () {
+ 	EOF
  }
  
- # Note that this whole setup is pretty reliant on the current
- # packing heuristics. We double-check that our test case
- # actually produces a long chain. If it doesn't, it should be
- # adjusted (or scrapped if the heuristics have become too unreliable)
--test_expect_success PERL_TEST_HELPERS 'packing produces a long delta' '
-+test_expect_success 'packing produces a long delta' '
- 	# Use --window=0 to make sure we are seeing reused deltas,
- 	# not computing a new long chain.
- 	pack=$(git pack-objects --all --window=0 </dev/null pack) &&
-@@ -96,21 +96,21 @@ test_expect_success PERL_TEST_HELPERS 'packing produces a long delta' '
- 	test_cmp expect actual
+-test_expect_success 'server is initially ahead - no ref in want' '
++test_expect_success PERL_TEST_HELPERS 'server is initially ahead - no ref in want' '
+ 	git -C "$REPO" config uploadpack.allowRefInWant false &&
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
+@@ -495,7 +486,7 @@ test_expect_success 'server is initially ahead - no ref in want' '
+ 	test_grep "fatal: remote error: upload-pack: not our ref" err
  '
  
--test_expect_success PERL_TEST_HELPERS '--depth limits depth' '
-+test_expect_success '--depth limits depth' '
- 	pack=$(git pack-objects --all --depth=5 </dev/null pack) &&
- 	echo 5 >expect &&
- 	max_chain pack-$pack.pack >actual &&
- 	test_cmp expect actual
+-test_expect_success 'server is initially ahead - ref in want' '
++test_expect_success PERL_TEST_HELPERS 'server is initially ahead - ref in want' '
+ 	git -C "$REPO" config uploadpack.allowRefInWant true &&
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
+@@ -507,7 +498,7 @@ test_expect_success 'server is initially ahead - ref in want' '
+ 	test_cmp expected actual
  '
  
--test_expect_success PERL_TEST_HELPERS '--depth=0 disables deltas' '
-+test_expect_success '--depth=0 disables deltas' '
- 	pack=$(git pack-objects --all --depth=0 </dev/null pack) &&
- 	echo 0 >expect &&
- 	max_chain pack-$pack.pack >actual &&
- 	test_cmp expect actual
+-test_expect_success 'server is initially behind - no ref in want' '
++test_expect_success PERL_TEST_HELPERS 'server is initially behind - no ref in want' '
+ 	git -C "$REPO" config uploadpack.allowRefInWant false &&
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
+@@ -519,7 +510,7 @@ test_expect_success 'server is initially behind - no ref in want' '
+ 	test_cmp expected actual
  '
  
--test_expect_success PERL_TEST_HELPERS 'negative depth disables deltas' '
-+test_expect_success 'negative depth disables deltas' '
- 	pack=$(git pack-objects --all --depth=-1 </dev/null pack) &&
- 	echo 0 >expect &&
- 	max_chain pack-$pack.pack >actual &&
+-test_expect_success 'server is initially behind - ref in want' '
++test_expect_success PERL_TEST_HELPERS 'server is initially behind - ref in want' '
+ 	git -C "$REPO" config uploadpack.allowRefInWant true &&
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
+@@ -531,7 +522,7 @@ test_expect_success 'server is initially behind - ref in want' '
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_success 'server loses a ref - ref in want' '
++test_expect_success PERL_TEST_HELPERS 'server loses a ref - ref in want' '
+ 	git -C "$REPO" config uploadpack.allowRefInWant true &&
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
 
 -- 
 2.49.0.472.ge94155a9ec.dirty
