@@ -1,201 +1,107 @@
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A85C1DFE8
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 04:30:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B755218FC74
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 05:13:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742445038; cv=none; b=emA638LYNG0404gXl8utnnvTSvyC5m9xSF2o8G3kmpUWLmF1arwo/QoMLyiUEtp1ysW4m+xjYfGCxjmakvVMK9uV0XWmix3UNKkUTwzSyduDNMnIaGw/qdsBJj6DTmr9F15pBcXcb/aoIIuDPyTMplBAU2xOcSAKkP4uJjuv9ao=
+	t=1742447640; cv=none; b=GtVGxSUT0Bnsd1besBPP5Tcaonw4J1N8WQNYp0E8P0Uk1JHIBAdKHgi2yxbYxgNLGyVS/UFtRxEVYl0RDl3tqF+XGmeJzZkZ3Wu4u9P9C0o8XQFIfCglppm+Odf0WuGDK5KXvq8X6ncjpRL6XWiRP8txp4TCgBZDlReV6nOAq9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742445038; c=relaxed/simple;
-	bh=Ue05K/I/PGfEDicBJjTM06PQeua08xVchR2PvxIjPeo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mHXsoTkfyCvktXJudkMNsGcDOI5Is65IluHeLbfd3p1hvxStF1AgOVpoj6q6bznBCCbcYetwIaERGzWrVdY2xeFEcSvQ8UbQRz28AyCWE5Q6LAcCGdTKIAg5hnmyMRfAB2YBAkAmEaiQIcbOwKgw7dOCN3ePuMxPfYEE2fUwb4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MSfMP0sv; arc=none smtp.client-ip=209.85.166.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742447640; c=relaxed/simple;
+	bh=qpTIqRt0sDI2QkPB7e07q9ErHMpvyFbH4Kx2ebDncM4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fGq8P7xNKkRH9i7PxBcMJ3MC4Wkrvxv8HSfniXGk8WSILOyWtU6flqltSb5SbcJ1K0YRM/CJ/6BxYZl+DSAgvBRFzGLHRTRT7kt2AJWJNZrygFwrWUu5uwo8CuXLB7eQyzqLEsn5/Nxn2SIHPWSfWfXBTykIN3hgn64DplecjuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ibzSfv9K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oWtAmrA2; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MSfMP0sv"
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3cfc8772469so1793665ab.3
-        for <git@vger.kernel.org>; Wed, 19 Mar 2025 21:30:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742445035; x=1743049835; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PNMf5zjBOhBTUslDyYlIxy4+jmczWkEiTB7jyjeDGyo=;
-        b=MSfMP0svL/+a2DTBtW32IoQfh0eCVY7Ognueo+dHPZxQyHpgPecdyD0RkKyT4WDZ2K
-         naGT6hxbiTH6zFcqpv7skQ7xT+ze5qIMOqVaXgKWdG8VmQuYVEJffC8agQOh7blVpDEc
-         covRMe5V1lx5UETwy/jxNdLi5cNrOyBjbfvIFKm8lS4t8RhtlvkT2ayZ4ioRLcenoNKp
-         DUwQYcessVVqh5CR5Mu9s+v18eiTZ5EH2ugd2hdsTtr/hBbcq/fV/9nr0nHgOb6UQ6Kw
-         onFmoiSlS7eLzNWe6ID43Z2fzY3vi/Dt2BqtEiJoQ9DuimGuXKfF5WfaGjOj6sbqmYRC
-         61Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742445035; x=1743049835;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PNMf5zjBOhBTUslDyYlIxy4+jmczWkEiTB7jyjeDGyo=;
-        b=Up2zEfl7NSflt2bUEOklRYCGGBxpG2+sUXQgJIfit/mxKZg1qe4j9PVG29xeVCW3vF
-         vnK4pOdzca2RLWwlJgad8RdvaiFKjjkBjPY7pxqWbcGtyc9CO+NLunoJYuwxre9raHAY
-         1kWVcRz5O54bXOO4884kZwlLW700qKMaM62aNSzP6+DVrIO79HOBHIxGgd2w8q9yXcht
-         ueew1dlLOHSXBZByil1vQSB5pIy0PHxwcelY/0pi8bD32EjmnVy5ulH8UgIne36I+TLQ
-         94X/YUiXqn5YryrfTzbEZ7KLKH9uNzVRMXzZOtu/DBMcQLoqOI1mBhs8zXEHqqOgSs6g
-         cdPQ==
-X-Gm-Message-State: AOJu0YxekBa/3XvantJJpwKN+Xw4X54LvCMqZKmqwHIrNGuu2JjbgwpL
-	nZuB79ZAgv80YClVE225bECxaxtRiZ/57SKYogUkLmSGrmGh4abEDhxSqivKMqU4/w5CxUdHpRx
-	hL9AamUiaSZ9xJS6owhcOzdMHdX8=
-X-Gm-Gg: ASbGncvezTJRB7WcNdCntcu+VBCOsvIyOYE7uxSDkngoJgYsNkhC6hLFY6Xi3l5bQre
-	zBY1R474YyZPo4D1eEijSUg6BPVSE3dEE6e8CtqK0FTG1Mav9PWG8pesRLzlUrS4ggwvfunIo2B
-	lxLCnuIaJCVUhNTVvZ5bBIVV89FUHi
-X-Google-Smtp-Source: AGHT+IGUXcP1GQxb3GMJ73izmar71gzXDb4imC428VeQ31+QtONRMwui9xxqChG143ldBdGAZ3yPPUrOhjSzeGcDOZE=
-X-Received: by 2002:a05:6e02:1aac:b0:3d5:8908:c388 with SMTP id
- e9e14a558f8ab-3d58ea973c8mr17842915ab.0.1742445035332; Wed, 19 Mar 2025
- 21:30:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ibzSfv9K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oWtAmrA2"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8A3FD25401D3;
+	Thu, 20 Mar 2025 01:13:55 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Thu, 20 Mar 2025 01:13:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1742447635; x=1742534035; bh=DTSKK8zFYT
+	wcdhzZh2j16fxY8qpr2MA/VnsF94+9RZo=; b=ibzSfv9KYm9ucImWQYRQDIMWyJ
+	kkl/OfCUt1s3k8eW6aEqzZV3eMqDzOleUBUr2RJbthx2K9S+0oSt5pnZi0lzgWgc
+	XuKCD9wlRppNcy4bwkliUgQDLPtT9SqqMipjMRFC+wWEdT1cvmgm6Tfb8PioFUZB
+	v60xQWWg13+D5gXLyMjjNINsgwRbrmfSHJNi9KEbnbvd4V0GBB9+x4eRL77i97K8
+	pljCCYMgUnCm4Lav2FQvtnv/BVtHRFPgg/sIiJndspLYDpfcChhxYjn4R0f9uRX5
+	eW1hYTK4wgrf2inHKD3wFDm+q3MpqWaXmRmWDvR0Lu4j28PjkSTlaAjisofw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1742447635; x=1742534035; bh=DTSKK8zFYTwcdhzZh2j16fxY8qpr2MA/Vns
+	F94+9RZo=; b=oWtAmrA22z0Rh8pEpKrgIadUwn81PbL1MeQplY+E3J3/qMJtz3q
+	0a79Qbro3ZOOHTYe+TgyGuWPXJcTTK7gEo4am6Fh41vT/SpqKdqDeKWmdn1fZZxm
+	M0glcGQdqcTl4g1Z7Ad2MBnn5RgdhpOOeXAkgWzQA6OmXAuPs5BtAVJW8cBfQu1Y
+	JH0IA9mUEMDdch9dEEYl+UEHgGye1RJxIen9c2VOUHZkyC413OWmrfGEvQgDp7Nx
+	UCOztEkh+DCffc0ujAOEjYa4iZ16gbS/vqkJ2quCGpQQANMmrW04q9ztkv6KM4M9
+	YeuHd6UhCPv7yM7uwOOwuG3XKLPk9IOwYcg==
+X-ME-Sender: <xms:E6TbZ-36eji6klMi3ieanVBKQG4MSY-Mgg212eEb0dzWyOelJecMkQ>
+    <xme:E6TbZxHhP6qRjvX6gzNlFiOg3a_bsyur01ME4TekYCGZypJRLTtktLvWgKmkD3Twy
+    TKTilnk66FdSs7BSA>
+X-ME-Received: <xmr:E6TbZ25ydBJvoVsriSVt2SUedwFq_H0qEVgWVps_5rQ8GgFF7itnm7WoSH_-kXhTytN2PxFi0nmE0pvyPsTdiKCfitN9P2OGLTYQG7dc8vOIHlE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeejfeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:E6TbZ_34rqDzmSiqSxJ8Fr_CN-RXb979oNjDVOxRbe_zMndnalUJIQ>
+    <xmx:E6TbZxEWs8mJzOQ9rKl_Pf6SCCBzzaO5OoTOf_mPkeIBgAsUB56z0w>
+    <xmx:E6TbZ49Hpl1XtFiNKB1qyXvcN69lfeAq-kGtO6PtvFPnsDCXeQq5uw>
+    <xmx:E6TbZ2mDiLBvPGnisY-DogjSIZmQ7m3X4nSyO-9o5LeC-Ak7ciCMxw>
+    <xmx:E6TbZ2R0CrcO1rRLmuiyzuWER_nfJvEgU_wnisWq8hHBPoJrkS1y4qIX>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 20 Mar 2025 01:13:54 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 947a4561 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Mar 2025 05:13:51 +0000 (UTC)
+Date: Thu, 20 Mar 2025 06:13:50 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] remote: allow `guess_remote_head()` to suppress
+ advice
+Message-ID: <Z9ukDuvsLXhYTQAP@pks.im>
+References: <fff634dh5qeb4rgjqn7cru7v4a2voj4us4thvwtttxjcdnu2bu@jvv3htcon2ul>
+ <20250320014646.2899791-1-jltobler@gmail.com>
+ <20250320014646.2899791-2-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1742252411.git.me@ttaylorr.com> <cover.1742424671.git.me@ttaylorr.com>
-In-Reply-To: <cover.1742424671.git.me@ttaylorr.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 19 Mar 2025 21:30:24 -0700
-X-Gm-Features: AQ5f1JoVmZKldCgTHBiJ1-qiYXNnZn71WfXtTlh5J3ZnOikgPNIfvHZFaPF4lHM
-Message-ID: <CABPp-BF-i5Npbnp+tHoW1QbvrYzCngwny9dMTOnf+0-y5yxc2g@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] repack: introduce '--combine-cruft-below-size'
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250320014646.2899791-2-jltobler@gmail.com>
 
-On Wed, Mar 19, 2025 at 3:52=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
-:
->
-> Here is a small reroll of my series to introduce a new 'repack' flag
-> called '--combine-cruft-below-size'. There aren't any functional changes
-> in this round, and the changes that do exist are limited to
-> documentation and commit message tweaks in the final patch.
->
-> A range-diff is included below, as well as the original cover letter:
->
-> (This is based on tb/multi-cruft-pack-refresh-fix from Junio's tree,
-> which is at 08f612ba70 (builtin/pack-objects.c: freshen objects from
-> existing cruft packs, 2025-03-13) at the time of writing).
->
-> This series replaces something close to the existing behavior of
-> repack's '--max-cruft-size' flag with '--combine-cruft-below-size'.
->
-> The new flag is much clearer in its intent and function, and avoids the
-> lack of clarity between the two that was discussed in
->
->   <cover.1741648467.git.me@ttaylorr.com>
->
-> The new behavior is as follows:
->
->   - '--max-cruft-size' is a cruft pack-specific override for repack's
->     '--max-pack-size' command-line flag.
->
->   - '--combine-cruft-below-size' instructs repack to only combine cruft
->     packs which are smaller than the given threshold. This will likely
->     result in packs which are larger than the threshold. But that is OK:
->     the point is to limit the size of the individual packs on input, not
->     the size of the outgoing pack.
->
-> This series does break the existing behavior of '--max-cruft-size'. But
-> I think breaking backwards compatibility here is OK, since the existing
-> behavior was so broken to begin with. I'm happy to consider other
-> alternatives if others feel that this isn't OK.
->
-> The series has an interesting structure that I feel may be worth calling
-> out. The first three patches are trivial test cleanups. The fourth patch
-> modifies the existing behavior of '--max-cruft-size', but does so while
-> keeping some of the old infrastructure around.
->
-> That may seem like an unnecessarily complicated approach, but it greatly
-> simplifies introducing the new behavior in the following (and final)
-> commit. I think that this results in a series that is a little easier to
-> review (since we don't see a ton of code being removed in one commit and
-> then re-added in another immediately following it). But if others feel
-> like this was a mistake, please let me know ;-).
->
-> Thanks in advance for your review!
->
-> Taylor Blau (5):
->   t/t5329-pack-objects-cruft.sh: evict 'repack'-related tests
->   t/t7704-repack-cruft.sh: clarify wording in --max-cruft-size tests
->   t/t7704-repack-cruft.sh: consolidate `write_blob()`
->   repack: avoid combining cruft packs with `--max-cruft-size`
->   repack: begin combining cruft packs with `--combine-cruft-below-size`
->
->  Documentation/git-repack.adoc |  21 ++-
->  builtin/repack.c              |  62 +++----
->  t/t5329-pack-objects-cruft.sh | 302 ++++++----------------------------
->  t/t7704-repack-cruft.sh       | 293 ++++++++++++++++++++++++++++++---
->  4 files changed, 355 insertions(+), 323 deletions(-)
->
-> Range-diff against v1:
-> 1:  0aa8aa65c1 =3D 1:  0aa8aa65c1 t/t5329-pack-objects-cruft.sh: evict 'r=
-epack'-related tests
-> 2:  5e8bd3e66e =3D 2:  5e8bd3e66e t/t7704-repack-cruft.sh: clarify wordin=
-g in --max-cruft-size tests
-> 3:  b075ad8601 =3D 3:  b075ad8601 t/t7704-repack-cruft.sh: consolidate `w=
-rite_blob()`
-> 4:  7941997e33 =3D 4:  7941997e33 repack: avoid combining cruft packs wit=
-h `--max-cruft-size`
-> 5:  7f120c35e9 ! 5:  dee780a2aa repack: begin combining cruft packs with =
-`--combine-cruft-below-size`
->     @@ Commit message
->          Introduce a new flag, '--combine-cruft-below-size' which is a
->          replacement for the old behavior of '--max-cruft-size'. This new=
- flag
->          does explicitly what it says: it combines together cruft packs w=
-hich are
->     -    smaller than a given threshold, and prohibits repacking ones whi=
-ch are
->     +    smaller than a given threshold, and leaves alone ones which are
->          larger.
->
->          This accomplishes the original intent of '--max-cruft-size', whi=
-ch was
->     @@ Commit message
->          But that's OK: the point isn't to restrict the size of the cruft=
- packs
->          we generate, it's to avoid working with ones that have already g=
-rown too
->          large. If repositories still want to limit the size of the gener=
-ated
->     -    cruft pack(s), they may use '--max-cruft-size' instead.
->     +    cruft pack(s), they may use '--max-cruft-size'.
->
->          There's some minor test fallout as a result of the slight differ=
-ences in
->          behavior between the old meaning of '--max-cruft-size' and the b=
-ehavior
->     @@ Documentation/git-repack.adoc: to the new separate pack will be wr=
-itten.
->
->      +--combine-cruft-below-size=3D<n>::
->      +  When generating cruft packs without pruning, only repack
->     -+  existing cruft packs whose size is strictly less than `<n>`.
->     -+  Cruft packs whose size is greater than or equal to `<n>` are
->     -+  left as-is and not repacked. Useful when you want to avoid
->     -+  repacking large cruft pack(s) in repositories that have many
->     -+  and/or large unreachable objects.
->     ++  existing cruft packs whose size is strictly less than `<n>`,
->     ++  where `<n>` represents a number of bytes, which can optionally
->     ++  be suffixed with "k", "m", or "g". Cruft packs whose size is
->     ++  greater than or equal to `<n>` are left as-is and not repacked.
->     ++  Useful when you want to avoid repacking large cruft pack(s) in
->     ++  repositories that have many and/or large unreachable objects.
->      +
->       --expire-to=3D<dir>::
->         Write a cruft pack containing pruned objects (if any) to the
->
-> base-commit: 08f612ba7000bf181ef6d8baed9ece322e567efd
-> --
-> 2.49.0.4.ge59cf92f8d
+On Wed, Mar 19, 2025 at 08:46:45PM -0500, Justin Tobler wrote:
+> diff --git a/remote.h b/remote.h
+> index 6be5031f64..49c7b644bb 100644
+> --- a/remote.h
+> +++ b/remote.h
+> @@ -395,7 +395,7 @@ struct ref *get_local_heads(void);
+>   */
+>  struct ref *guess_remote_head(const struct ref *head,
+>  			      const struct ref *refs,
+> -			      int all);
+> +			      int all, int quiet);
 
-v2 + your comments address all my feedback from v1, so this round
-looks good to me.
+I think instead of introducing another boolean parameter it would be
+preferable to have a preparatory commit that turns `all` into `flags`.
+
+Patrick
