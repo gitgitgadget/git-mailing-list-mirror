@@ -1,79 +1,79 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E538214A98
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 09:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9494422258F
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 09:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742463338; cv=none; b=rOQ+DYwGjbxh71tlfnNjEMuXdakV9sHlWJvwL/N9Wq+10vGwZe9+kRcGO3Oh7ZXKWKoFXgAI41zHZ0KffqUGfUneNyygWowRAVECM9Jh+hIPGRetIiZXk7p/HoW+V7gQ6SEhIARQEH2AueqqyF6F8KUfq8c2XC+yLkFNZcbCKIo=
+	t=1742463339; cv=none; b=DXY/Gz6vAhbzGj6nUea7yFEQFVlA2jX6jOA2n3HBxBRDxK/8+bBUCuKcKC1ZQiFZvC9cenSBPrxE3KLwdCUnUAoWY0ALPGpG8W5r+blvGPTiwx8/DwbXG/01FcGI/pfLiRLElIiKXVqCApVtlaTjDuWBi7vJoKnkrLi+QMMk7KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742463338; c=relaxed/simple;
-	bh=mnP/eIeyddsprQjbJ5j4kWT5R94K7zpMiz8gFfvNNhQ=;
+	s=arc-20240116; t=1742463339; c=relaxed/simple;
+	bh=QjgKs2zBlmqc+C10EXoziYvrwPFdIEO6RN7X/4TjnLY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=g7n8O8nIbdf9kfQ+Lkf9VBTfwCGrJm5+IyOTS8I+6Y38pCKsMBu8r7nWAOs+CEoKMeFgHgGyljxxZQJ03DlspRiP5lfzYdijC92Ij3EA4LqC1U72ovT044JRuDIvgj0Hmbol3hIxGXxz+0Y5crElLGVTEs2qBKnJ+mC5PHzez4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ww+AvOLw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1iRtRnOm; arc=none smtp.client-ip=202.12.124.155
+	 In-Reply-To:To:Cc; b=pIM1y/BytKB/yn5nkuu8FrzwuR7vooV3M1im2p3fo/ztGQt4s9WaYZuIwx/j7xq6IQIzjpx38j0CzPergSdzRzMGL4lkv7wjXp5t6ZsRGfOmxDXUXjlM3rMe82v9YkBrPyWKJOMuPA0vBXNNrdQsytgaVawLFwIjMZQee6skwW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pL0AmuIR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v/9Lgq2s; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ww+AvOLw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1iRtRnOm"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pL0AmuIR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v/9Lgq2s"
 Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7829F25400E3;
-	Thu, 20 Mar 2025 05:35:34 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Thu, 20 Mar 2025 05:35:34 -0400
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9C9732540164;
+	Thu, 20 Mar 2025 05:35:36 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Thu, 20 Mar 2025 05:35:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1742463334;
-	 x=1742549734; bh=06AlNuR4CTpgnkt91LHbVtA+Vq9aPaC5SAotSYkUmBY=; b=
-	Ww+AvOLw5GHsaX4iq0wI+VRLdXXIW5Tthcmi4MYpPTLYrg812DQKV1S6qoFTp0t/
-	VHJP11eOfTw6TVP1FfAzMme7ubqFZUTqihKbCoiPS0N8pvm6cRakia5KbD9C0+dJ
-	YEOPDsZPCbfRKwtlCYAetOWNJij7IeRN33NM16acxjqpq4aURkl+AyGNr35+dh4Q
-	7jC1I/c5303rEHdSY3lKpV07f7wuU/vGKNqpaPoLtPtOl6hPKRVzKtZMmO3VPFr3
-	81iCN5IYVFMp3xOQHLPUQafNCBo1ImQY1fPde0pw7ZQpLiZV8mNdDVjBdO8Wxas5
-	rfx6tlXq4PMnZUREeUyUwA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1742463336;
+	 x=1742549736; bh=FVRzN5probz2tBNOBHZiwqoUS1ZTExFewoPw5q+Mbg4=; b=
+	pL0AmuIRKFi8MPOX70/zi5Qa8P54pnKol/ei8AZP1CPVeit01rteQB4/BCFPpzqA
+	AYMApJKlF4T0wYfmlEvyv3kHaDTYV0qcr86F5ezy3lJqUTUephpvNbyPoy1jVT1J
+	j6zw1Kb91uBEG1wR7JmVZlc5Hn7/4mwOeq7j4g9ryuscXdIxfsZ4RUFtsGZpDDPY
+	Lzp9/oy0FI695RXoIEib54EM5TZvw+s+rT/0EPU+2Z8q6/rRW8p0u6r8rOz0mTbR
+	TYGLNoPPoMVNg+c9o8+khz6W/THH3k6GC7Q6r6RHoB63zgqs9FLRLX5UD7c6dTdz
+	+5gNM9+YzHzJbjxh8o1yZw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742463334; x=
-	1742549734; bh=06AlNuR4CTpgnkt91LHbVtA+Vq9aPaC5SAotSYkUmBY=; b=1
-	iRtRnOmmKJI34mBMw7cC7lB7ZCysigZMyV3yb6Oi49+A3J1PE66D04Af3HqGlZDn
-	80gKHP6x4b85HCzPK9djG3qs89o/tfQyfXzAcjUWMpec+WcDtcOhn+ER1SMfyaM2
-	V/SIXFHaUZ1OO3etgCV1wANixfJz650DMniTpcruTCcVb1XJuXpZYizT/YhIHNmB
-	Q58QMKI/YL6kubYUSgysw4Qj7wNRJmWUBURCzgC6MAVejZt0fUsUorPIvs2ZrmBE
-	ffKk7rnBqtBEGiYwm2n4j6CblEpWawD2+8emC5aVCYdVVAuoCU34mbKx84X3lPc3
-	lwjmRj6daHaqvMfO4rxDQ==
-X-ME-Sender: <xms:ZuHbZ1IViO0o_7mAxGUQ2gl3oEq8vNosC7vtGURnabmIwdBKKv1ACA>
-    <xme:ZuHbZxLcpnG3QdfemP_aU47tRDoYRsncYwxWJKpUQrYMUivPmzPqI1z1na-XUvvnk
-    rouV1q-VkjBE4oYYw>
-X-ME-Received: <xmr:ZuHbZ9s3vMHLz5lA2NGNHm-Rq0c2htTqB4IbqREW-_yl4D8JVNA9dksNrB71xwKMxZ_wShKs4iNiHAl-Zn6v1c6RxdPePlPPql-dLODRWrgE314>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742463336; x=
+	1742549736; bh=FVRzN5probz2tBNOBHZiwqoUS1ZTExFewoPw5q+Mbg4=; b=v
+	/9Lgq2sfB/rWQge2ktXye+7noIXSQd17pi7a9f2Z/06V9+U+txxzT0hMwrmRXVvI
+	tYVP4RTI+7cie7FOVWCUjYwCPPo/6t+2Mad+jD9cYv5PcyetfOVR+vGdXdYfbIxy
+	p8tpX7VfANkvFJT/bbKzk5eJbDY0YVjq6Sliz1NCempnJ84kK7UsXvHgW/Prt0UC
+	AiLqS+SDHC32bdEbTiG4amB2677gl2Zb8eqUBUSOZvmQ7aTFxmJ1kn+RJrwD7BCs
+	AXhqrwebemBzNs/crZmdwl44d/UvDIPYez9BtRycnHUmYHgil5BskVuC90oDInLq
+	r1THeBv467Qa6FmWmi87Q==
+X-ME-Sender: <xms:aOHbZyOzXUmtnN_E4o3FRD6jLzE9ANFo2SpepowuPCAIZ1W2D7nd5A>
+    <xme:aOHbZw_UEDLVXsQB8gXNjBgWO3TEPiej6674ycS873m6qQaDWEEK0Cr6JrO4J4ubP
+    pjWMCAFA1ldIq3Mbw>
+X-ME-Received: <xmr:aOHbZ5Qc5OZWdNDIhORbedcCxGOrbXPzHhI28zjFprkY0miCZJxL6TyNdNskrKcVxucsjEstE2jXfAZFBgpVTxRNUK73L8VNAPohI4ErzScb2JI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeejkeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohgu
     vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
     hgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
-X-ME-Proxy: <xmx:ZuHbZ2b2GUQvJbk7FYUb-uiR10LBkzU_VkiaHJF8HjLBmmlhvx8GSw>
-    <xmx:ZuHbZ8ZRuSimYfiWASEGGq7umyF-fRrB9dElN7aPafjjqnpmUdexjA>
-    <xmx:ZuHbZ6BRzm0RmAoKjWFsfQ6tmGVMOOOR04YZo3iZh5y47JbQ3ZhX8g>
-    <xmx:ZuHbZ6YSTJD6kKlAvLaXBJgwnfWEhtFFpdeCrc34y1c8wFkwMYrXHw>
-    <xmx:ZuHbZ7mRFuIC5RTm31xMv5AWlKf-YhgIcnC5AjphIJLeAYDHrw6bEl2n>
+X-ME-Proxy: <xmx:aOHbZyuPIDagJmIPe6vylKlSTHykRGWcKscKnWDXa7PVlYdCSpdEBA>
+    <xmx:aOHbZ6dbZc56kcPxqK-oVW7EscWVVhqv4aPaAh2F4dyAsc8Q2MoZOA>
+    <xmx:aOHbZ22sWsLr3YB4h-R9vj-fSX967pfu6FMq1mzdPnsmv-1w115brw>
+    <xmx:aOHbZ-_pniRqzDYMmjzl-cd-mUItSbp7FpFuusQPY7tmeLZWjyrYdA>
+    <xmx:aOHbZ7qW60OLhSZohw4ahxMqppfBUrRQ3oa1ENrcOEMa2gG8QX28pCih>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Mar 2025 05:35:33 -0400 (EDT)
+ 20 Mar 2025 05:35:35 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d15e9480 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Mar 2025 09:35:32 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id e0fb2388 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Mar 2025 09:35:34 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 20 Mar 2025 10:35:29 +0100
-Subject: [PATCH 02/20] t: refactor environment sanitization to not use Perl
+Date: Thu, 20 Mar 2025 10:35:31 +0100
+Subject: [PATCH 04/20] t: adapt `test_copy_bytes()` to not use Perl
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,75 +82,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250320-b4-pks-t-perlless-v1-2-b1eefe27ac55@pks.im>
+Message-Id: <20250320-b4-pks-t-perlless-v1-4-b1eefe27ac55@pks.im>
 References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
 In-Reply-To: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.2
 
-Before executing tests we first sanitize the environment. Part of the
-sanitization is to unset a couple of environment variables that we know
-will change the behaviour of Git. This is done with a small Perl script,
-which has the consequence that having a Perl interpreter available is a
-strict requirement for running our unit tests.
+The `test_copy_bytes()` helper function copies up to N bytes from stdin
+to stdout. This is implemented using Perl, but it can be trivially
+adapted to instead use dd(1).
 
-The logic itself isn't particularly involved: we simply unset every
-environment variable whose key starts with 'GIT_', but then explicitly
-allow a subset of these.
+Refactor the helper accordingly, which allows a bunch of tests to pass
+when Perl is not available.
 
-Refactor the logic to instead use sed(1) so that it becomes possible to
-execute our tests without Perl.
-
-Based-on-patch-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/test-lib.sh | 32 ++++++++++++++------------------
- 1 file changed, 14 insertions(+), 18 deletions(-)
+ t/test-lib-functions.sh | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 1ce3b32fcac..a62699d6c79 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -499,24 +499,20 @@ EDITOR=:
- # /usr/xpg4/bin/sh and /bin/ksh to bail out.  So keep the unsets
- # deriving from the command substitution clustered with the other
- # ones.
--unset VISUAL EMAIL LANGUAGE $("$PERL_PATH" -e '
--	my @env = keys %ENV;
--	my $ok = join("|", qw(
--		TRACE
--		DEBUG
--		TEST
--		.*_TEST
--		PROVE
--		VALGRIND
--		UNZIP
--		PERF_
--		CURL_VERBOSE
--		TRACE_CURL
--		BUILD_DIR
--	));
--	my @vars = grep(/^GIT_/ && !/^GIT_($ok)/o, @env);
--	print join("\n", @vars);
--')
-+unset VISUAL EMAIL LANGUAGE $(env | sed -n \
-+	-e '/^GIT_TRACE/d' \
-+	-e '/^GIT_DEBUG/d' \
-+	-e '/^GIT_TEST/d' \
-+	-e '/^GIT_.*_TEST/d' \
-+	-e '/^GIT_PROVE/d' \
-+	-e '/^GIT_VALGRIND/d' \
-+	-e '/^GIT_UNZIP/d' \
-+	-e '/^GIT_PERF_/d' \
-+	-e '/^GIT_CURL_VERBOSE/d' \
-+	-e '/^GIT_TRACE_CURL/d' \
-+	-e '/^GIT_BUILD_DIR/d' \
-+	-e 's/^\(GIT_[^=]*\)=.*/\1/p'
-+)
- unset XDG_CACHE_HOME
- unset XDG_CONFIG_HOME
- unset GITPERLLIB
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 377f08a1428..c4b4d3a4c7f 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1640,17 +1640,7 @@ test_match_signal () {
+ 
+ # Read up to "$1" bytes (or to EOF) from stdin and write them to stdout.
+ test_copy_bytes () {
+-	perl -e '
+-		my $len = $ARGV[1];
+-		while ($len > 0) {
+-			my $s;
+-			my $nread = sysread(STDIN, $s, $len);
+-			die "cannot read: $!" unless defined($nread);
+-			last unless $nread;
+-			print $s;
+-			$len -= $nread;
+-		}
+-	' - "$1"
++	dd ibs=1 count="$1" 2>/dev/null
+ }
+ 
+ # run "$@" inside a non-git directory
 
 -- 
 2.49.0.472.ge94155a9ec.dirty
