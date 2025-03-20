@@ -1,264 +1,89 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84F51E98F3
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 15:41:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DCC1E32C3
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 16:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742485319; cv=none; b=pgamEBNQRq/6EmFOsq35WVemzWbAswadtDUUMb24GECJqrVb4xGasfkjf5bM5CyZ22cHuhyW7bbUNjOlPXmnMEC0FfqlgTFhaXFgpAyL2+zp6pkrXTObDulsO2TnC2kk70Rw1rrmNa9ExMFS2BRHKdJSc7SlU39f+260PBw1PgE=
+	t=1742487066; cv=none; b=TcMOqL5qtMfQ/jYmt1wy7El3NubPaqILuoEIU2phyy+thlPZYlDQLlLIdQv4rSvTT5CwcJNZma9nAyzBG24W74DvVR364ez3kajeIBHqsc4lJQhKRSsPTHygT4mw9UQKoiaDKTGpSOrA7XXgh2Ex9xThu+fiAhWUvlhxr9qXRbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742485319; c=relaxed/simple;
-	bh=IaERstxGSkLYUt5gqkIff0TVINw9Q02o1F2PgGJ7tnc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ssocRc2agWW7QpCtRxScrmMzzWbxnsQst1Xc7HK9V91l/tu7JfGx7xChjkcXVf0Ja/hP3mJV0O3wKliOKzww7N7RbkZaX6np1u8XLTVDZYZ5bfVQj1eSPP3VIapWRPWARUv1woGYu3tgfFxWzriFPUOfACG3E3b6xzmUZUFKHLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=cRXuYScD; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=FfYdHd5y; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=cRXuYScD; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=FfYdHd5y; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1742487066; c=relaxed/simple;
+	bh=5kSrwi3UvKwq+W0+faUlt87fLBzFQMq3KClY0uJVZwo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=D7Tpl0i/5z9nBMRYY+aZQvx2QSdAHRDJr1RO86GE/2392vEHU/wt/WFSY0L07EoxMDCfuUrWbh7J9rQuNbt8tUbHrgbSez89aBr6EnZ36ItcnmIrHrITwjrxHX8DFITuvnjILjhFqMdIQMtYu6HSAnxNmt/xAhJAWi1AR+PBHwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aUyucq7w; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="cRXuYScD";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="FfYdHd5y";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="cRXuYScD";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="FfYdHd5y"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id D245F1F7A8;
-	Thu, 20 Mar 2025 15:41:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1742485302; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Ld2FgKO93WN/5Sf2dsRXR7m9h1BdLEsMEY31IbXo3/M=;
-	b=cRXuYScDwTRQCfbS/fT0rwlc2oHj8I/yEVVYBP5pwYu4frq6j1pVbBN5tqJ/9a3V+KVFYt
-	BnyzDWiZsSu/hHvmrSN6qc5QAKYEVrsTQ67DacvxdDPS+e1v2Um6yn2B5+5LHaS32UzqHx
-	csfW1Y/RKzGXY3Lfzbn+2wXJolInezs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1742485302;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Ld2FgKO93WN/5Sf2dsRXR7m9h1BdLEsMEY31IbXo3/M=;
-	b=FfYdHd5y4ZJYIkXf3D0uVGrTs8HIRYEKIBpqU3CylKYuGNIHqvo8knEEMgPuCTq57th6Gs
-	VPk49hdd3WN6bUBA==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=cRXuYScD;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=FfYdHd5y
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1742485302; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Ld2FgKO93WN/5Sf2dsRXR7m9h1BdLEsMEY31IbXo3/M=;
-	b=cRXuYScDwTRQCfbS/fT0rwlc2oHj8I/yEVVYBP5pwYu4frq6j1pVbBN5tqJ/9a3V+KVFYt
-	BnyzDWiZsSu/hHvmrSN6qc5QAKYEVrsTQ67DacvxdDPS+e1v2Um6yn2B5+5LHaS32UzqHx
-	csfW1Y/RKzGXY3Lfzbn+2wXJolInezs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1742485302;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Ld2FgKO93WN/5Sf2dsRXR7m9h1BdLEsMEY31IbXo3/M=;
-	b=FfYdHd5y4ZJYIkXf3D0uVGrTs8HIRYEKIBpqU3CylKYuGNIHqvo8knEEMgPuCTq57th6Gs
-	VPk49hdd3WN6bUBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 94F4F13757;
-	Thu, 20 Mar 2025 15:41:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 4F8LIzY33GcueAAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Thu, 20 Mar 2025 15:41:42 +0000
-From: Takashi Iwai <tiwai@suse.de>
-To: git@vger.kernel.org
-Cc: Denton Liu <liu.denton@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Eric Huber <echuber2@illinois.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Avi Halachmi <avihpit@yahoo.com>,
-	Christoph Sommer <sommer@cms-labs.org>,
-	Paul Mackerras <paulus@ozlabs.org>
-Subject: [PATCH 2/2] gitk: Add auto-select length preference for SHA256
-Date: Thu, 20 Mar 2025 16:41:34 +0100
-Message-ID: <20250320154136.23262-3-tiwai@suse.de>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250320154136.23262-1-tiwai@suse.de>
-References: <20250320154136.23262-1-tiwai@suse.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aUyucq7w"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-39141ffa9fcso910941f8f.0
+        for <git@vger.kernel.org>; Thu, 20 Mar 2025 09:11:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742487063; x=1743091863; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5kSrwi3UvKwq+W0+faUlt87fLBzFQMq3KClY0uJVZwo=;
+        b=aUyucq7wDApAyZwz6wAe1KnM4lBO6rA4DQHhceIOHVJS7sYj+op6lwS47vLCkHRwsP
+         xA7yQUuDuREX+NTZ0W0Lc8+rU4GUKfWrL3igWnAs0k+SBmO3PHXBlovfpViJHAQksjle
+         ZOuO7xQgEHb0w/higzAPq4sAoNLooUxi8rNHxyw3tUJ1kBA96tmFf/Aqvi7QCwpaWmDS
+         O00vspCUNEsBtXEI8Iglg+1umIBU54ta5Cmwkkfi6n73sa73e6KokOwW0yFB3k0a5lVg
+         WRhUn+MpQMACudOz0prc+1VnRRSz3CqJDT5BQX/OrSKUL7co0RPi5KBABGAxX3rqxF8a
+         ttkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742487063; x=1743091863;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5kSrwi3UvKwq+W0+faUlt87fLBzFQMq3KClY0uJVZwo=;
+        b=BFhY5/x88o7a94MoxjqWGqQJUp03ppnBJKUOeL7V0BbGKqK8fuh3JfXNrpux3tX1Zz
+         Zfjxu2fL9aKAPGlfVhrSMFTbxWjTrUG/atoh3WsbWT7u5i+mq4ySvPmxCliF85pKatZb
+         LW9OLGDxVGvcF1y+Ca1USADFxHE72sEXdJWY4ktMNnGSVfgn0ObQmeWlJ05oO6ttBkmA
+         CiEbyjFHTWDGMASAbAR5F/LZp0aSCSoUm+uOl95M8ptpOb+VrJz/9Yu8GuiA7qikpmYZ
+         1bkb/K32lVghMKy+b9gCh3cEYHcrFN88ehR1ow+YTwyhMukxkT/q4JpL0PRkU07ANo/2
+         nOnQ==
+X-Gm-Message-State: AOJu0YyVGe4CjfXP14NAnKXHKtpCX8wf2w9IrsWHMjEp0ZdKIDGAx0Jc
+	eHwXDqce+3cD3CJPhmhYZgORnLERNIx3RwUE91QLWCIS5xTXVvE5DQGPQQ2SO3YlettcE40JZTu
+	0LP11f5xnBB718tc+u7Xyn399IZkHGw==
+X-Gm-Gg: ASbGncsEyDEuThHatuXG0deF1TfzkxqdcVy9uvu5HNAHRxOLHbfKDHzXso3Qs5kqZCc
+	T3+pvTcVIVV81YiHeSyTBfLJN1dBsLjDHiLuAnhf03nWVqeNJwInPQR7bVegOGn4/jh3JhLuIp1
+	MTuovsNXB2KYHbRw4toySgDSkEpkkN
+X-Google-Smtp-Source: AGHT+IGaRkzdXXLFfEPlM4bMr5ZxYkhWjqgYb3SkcTDy0JwsDm8jXLPelA1ixZRlnB9Ju9a9T2lyHRukrSPuQgnoXak=
+X-Received: by 2002:a05:6000:154a:b0:391:2ba9:4c51 with SMTP id
+ ffacd0b85a97d-3997f939077mr76647f8f.44.1742487062443; Thu, 20 Mar 2025
+ 09:11:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: D245F1F7A8
-X-Spam-Score: -1.51
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-1.51 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	FREEMAIL_CC(0.00)[gmail.com,kdbg.org,illinois.edu,gmx.de,yahoo.com,cms-labs.org,ozlabs.org];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.de:email];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	TAGGED_RCPT(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	DKIM_TRACE(0.00)[suse.de:+];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de,yahoo.com]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Flag: NO
-X-Spam-Level: 
+References: <cover.1742367347.git.martin.agren@gmail.com> <5f787ddac2d80391feadb8cf6be379fc8e58652f.1742367347.git.martin.agren@gmail.com>
+ <Z9vdQPtmUiuobOP6@pks.im>
+In-Reply-To: <Z9vdQPtmUiuobOP6@pks.im>
+From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date: Thu, 20 Mar 2025 17:10:50 +0100
+X-Gm-Features: AQ5f1JrFSs79uilmraq6ttWcglqUHKF5bVI3juXon334F2yBvDicH02putlyOCc
+Message-ID: <CAN0heSpHZo=+ZwM5wJXQtFVD5jsMJGu8+KmRVcMDUT_ipgtMRw@mail.gmail.com>
+Subject: Re: [PATCH 2/8] pretty: simplify if-else to reduce code duplication
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This implements the missing preference setup of the auto select length
-for SHA256. The variable set via the preference menu is switched
-depending on the hash algorithm.
+Hi Patrick,
 
-The default auto-select length is set to 64 for SHA256, and
-saved/restored as "autosellensha256" in the config.
+Thanks for reviewing!
 
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
----
- gitk-git/gitk | 39 +++++++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 10 deletions(-)
+On Thu, 20 Mar 2025 at 10:18, Patrick Steinhardt <ps@pks.im> wrote:
+>
+> On Wed, Mar 19, 2025 at 08:23:35AM +0100, Martin =C3=85gren wrote:
+> > First we look for "auto,", then we try "always,", then we fall back to
+>
+> Nit: we typically have the body carry enough context so that it makes
+> sense even without reading the commit subject.
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 1e85cfef2ee3..b364d9e7dc93 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -7488,6 +7488,16 @@ proc make_idmark {id} {
-     $canv raise $t
- }
- 
-+proc get_autosellen {} {
-+    global hashalgorithm autosellen autosellensha256
-+
-+    if {$hashalgorithm == "SHA256"} {
-+        return $autosellensha256
-+    } else {
-+        return $autosellen
-+    }
-+}
-+
- proc selectline {l isnew {desired_loc {}} {switch_to_patch 0}} {
-     global canv ctext commitinfo selectedline
-     global canvy0 linespc parents children curview
-@@ -7496,7 +7506,7 @@ proc selectline {l isnew {desired_loc {}} {switch_to_patch 0}} {
-     global mergemax numcommits pending_select
-     global cmitmode showneartags allcommits
-     global targetrow targetid lastscrollrows
--    global autocopy autoselect autosellen jump_to_here
-+    global autocopy autoselect jump_to_here
-     global vinlinediff
- 
-     unset -nocomplain pending_select
-@@ -7563,11 +7573,11 @@ proc selectline {l isnew {desired_loc {}} {switch_to_patch 0}} {
-     $sha1entry delete 0 end
-     $sha1entry insert 0 $id
-     if {$autoselect && [haveselectionclipboard]} {
--        $sha1entry selection range 0 $autosellen
-+        $sha1entry selection range 0 [get_autosellen]
-     }
-     if {$autocopy} {
-         clipboard clear
--        clipboard append [string range $id 0 [expr $autosellen - 1]]
-+        clipboard append [string range $id 0 [expr [get_autosellen] - 1]]
-     }
-     rhighlight_sel $id
- 
-@@ -9629,13 +9639,14 @@ proc mktaggo {} {
- }
- 
- proc copyreference {} {
--    global rowmenuid autosellen
-+    global rowmenuid
-     global hashlength
- 
-     set format "%h (\"%s\", %ad)"
-     set cmd [list git show -s --pretty=format:$format --date=short]
--    if {$autosellen < $hashlength} {
--        lappend cmd --abbrev=$autosellen
-+    set alen [get_autosellen]
-+    if {$alen < $hashlength} {
-+        lappend cmd --abbrev=$alen
-     }
-     set reference [eval exec $cmd $rowmenuid]
- 
-@@ -11741,8 +11752,9 @@ proc create_prefs_page {w} {
- proc prefspage_general {notebook} {
-     global NS maxwidth maxgraphpct showneartags showlocalchanges
-     global tabstop wrapcomment wrapdefault limitdiffs
--    global autocopy autoselect autosellen extdifftool perfile_attrs
-+    global autocopy autoselect extdifftool perfile_attrs
-     global hideremotes want_ttk have_ttk maxrefs web_browser
-+    global hashalgorithm hashlength
- 
-     set page [create_prefs_page $notebook.general]
- 
-@@ -11771,7 +11783,13 @@ proc prefspage_general {notebook} {
-             -variable autoselect
-         grid x $page.autoselect -sticky w
-     }
--    spinbox $page.autosellen -from 1 -to 40 -width 4 -textvariable autosellen
-+
-+    if {$hashalgorithm == "SHA256"} {
-+        set autolenvar "autosellensha256"
-+    } else {
-+        set autolenvar "autosellen"
-+    }
-+    spinbox $page.autosellen -from 1 -to $hashlength -width 4 -textvariable $autolenvar
-     ${NS}::label $page.autosellenl -text [mc "Length of commit ID to copy"]
-     grid x $page.autosellenl $page.autosellen -sticky w
- 
-@@ -11908,7 +11926,7 @@ proc doprefs {} {
-     global maxwidth maxgraphpct use_ttk NS
-     global oldprefs prefstop showneartags showlocalchanges
-     global uicolor bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
--    global tabstop limitdiffs autoselect autosellen extdifftool perfile_attrs
-+    global tabstop limitdiffs autoselect extdifftool perfile_attrs
-     global hideremotes want_ttk have_ttk wrapcomment wrapdefault
- 
-     set top .gitkprefs
-@@ -12606,6 +12624,7 @@ set datetimeformat "%Y-%m-%d %H:%M:%S"
- set autocopy 0
- set autoselect 1
- set autosellen 40
-+set autosellensha256 64
- set perfile_attrs 0
- set want_ttk 1
- 
-@@ -12702,7 +12721,7 @@ config_check_tmp_exists 50
- set config_variables {
-     mainfont textfont uifont tabstop findmergefiles maxgraphpct maxwidth
-     cmitmode wrapcomment wrapdefault autocopy autoselect autosellen
--    showneartags maxrefs visiblerefs
-+    autosellensha256 showneartags maxrefs visiblerefs
-     hideremotes showlocalchanges datetimeformat limitdiffs uicolor want_ttk
-     bgcolor fgcolor uifgcolor uifgdisabledcolor colors diffcolors mergecolors
-     markbgcolor diffcontext selectbgcolor foundbgcolor currentsearchhitbgcolor
--- 
-2.49.0
+Thanks. I'll add some context: "After spotting "%C", we first ..."
 
+
+Martin
