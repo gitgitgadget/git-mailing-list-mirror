@@ -1,84 +1,84 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704DE2066DC
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 18:36:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65676226D1C
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 18:55:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742495810; cv=none; b=lbvDgu+13QLJVRiIzgj0QjPFh0u/oQNGcJuwKXVJwApqtvtXSCk05SmVI690LRBBVDXLqO4EZJelMl+WmVuy85e/zAB7ZZI0B4i/OXqcg1jGSKP/Nx9HMzOqwDnvJNDcm8o9e0LqOlS2LpCBRvWfg0i87dc+w+HZJuQX9k0+QP4=
+	t=1742496949; cv=none; b=cmXjFzxWAi2XHEMqs4chSn0imjdSHvN2ZvnNntZ/ZksQDeuy9pjgVvh5v/FBZoW427G8xbgzY64AUjmOE2o1Qk2j+52RSEraYviN/jW429myTzkaE5ruQLUPiahZSBSz3Vjc9eBK9XQboopgCXCPtuGng93BNitrkf93jHgtJlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742495810; c=relaxed/simple;
-	bh=uhu+K7bpFWzF8NkepwREb0l7vfQQiSaA5XaciNGySD4=;
+	s=arc-20240116; t=1742496949; c=relaxed/simple;
+	bh=VPrg/0+1U6PMM7lUWKZLrTvUKDvOS0co96mxPxViLAI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iS6IK0I75nc6OEKT80ngAskZgUui26AX9nKcckmEJbMkfsmKhFGUfpNoKd0NWb7RUzTmVe277ZeKZ2EWN4Fdqd4j8hp+xRCMReUCns7FP9EWPIcHEBj85RHk1UWERRYHbLq8O1oMH/JqXq/WkBR0bq9lOGk1gtA15IYbEZoEmfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.173
+	 To:Cc:Content-Type; b=lz3pWdjvNXa2vDvf4eCtOY/X4saIq1SKjSfyDApyEJTdQHBY4bbwCWOxF/ScUNfyXHpSsqUeq0CwU89dRkcuZ8n1vrjGJDFpSV60OwOfbOiNN0EDmSB5CIz3BBqlSYNuTUYTHlK3OqpU9BuqCD18oBBULPQJ2z0oGYYrf6xtEN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4767d8e5b8dso304721cf.0
-        for <git@vger.kernel.org>; Thu, 20 Mar 2025 11:36:48 -0700 (PDT)
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7c5a3334fddso26497185a.1
+        for <git@vger.kernel.org>; Thu, 20 Mar 2025 11:55:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742495807; x=1743100607;
+        d=1e100.net; s=20230601; t=1742496946; x=1743101746;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uhu+K7bpFWzF8NkepwREb0l7vfQQiSaA5XaciNGySD4=;
-        b=mlXa0IclCsYWKq0bw8DEIGuMquitkPClPnKa+iOfi0thUgQ6ExesH0cRYUhmGdGcii
-         BjZq23jn64LS38f4B+vmWYmlRya/MRjcIx66zFmZWGmW7rJ9Bs8y0yM53iBQe/shnZ4z
-         cTpdgL6Dzl/ip/E7CCVEe4iCle8iqSYo9q+K38dUh+xLhi+mE3CFtmYTPGRwGfVQI1tQ
-         gLSOZ6di7yet0/7STl7SaDIJnLXc/TjOPetUEESPT32eWm3odwPIiY2iOiNR4N+G4HLh
-         s1yk2w9xJjNH33vLqr6L4r80L3B60IfBGJrLudbaaiM0P+G6po6qp+W64ZWw0/YqKGDj
-         z3rA==
-X-Gm-Message-State: AOJu0Ywie5UsyYYfzJEUJzuFW72sTKIJycpy1HlTGM0Ry+zSoySGuuoh
-	CH9mdXyOzS/VnUWtOoUVfmkkOnXGNzu001rGmFvxoeLk1xIw2pH4FcExw7DoDWgKPQPAL2iEkBH
-	NzIFrEA3oD5Vz6YL4Q7FrhzXm1Qc=
-X-Gm-Gg: ASbGnctRztfBKYzIo43FqKC3isTtNQTklmRi63WYMJwDZ2SqM3tqvA3Mw8q9nE6bD2N
-	5Spo1Q2na96qvcUNqvdDXTr+ayoReegMmyblwqGTy3DbiAMI8PEJIure1kFgN3SXnb4UuW9aiU1
-	WUcbSA8CievngLzucJfL0f02v9
-X-Google-Smtp-Source: AGHT+IE0S2d3+ZjTxdkWFkv+LCARjtHl2XohB+xdl+lFjZfj1IOpv/8/lV+2h9droywwBqPkIa7KSqkh/qTMCuU0gxc=
-X-Received: by 2002:a05:6214:c2a:b0:6e4:29f8:1e9e with SMTP id
- 6a1803df08f44-6eb3f1b21d3mr2669666d6.0.1742495807252; Thu, 20 Mar 2025
- 11:36:47 -0700 (PDT)
+        bh=Vv1Dwm9l6UhhxWXnQKB+2yl02cKn92w/IZp3xc73JRE=;
+        b=a9m8Yl1rucVKVipQJJokFJV52nVwP/WSPDPZSGiVqSq63dAB2B6+Z59I8KdeRkjVvj
+         1Wo6/Ie/eftw47/nV5yQMgODrZmmXz/WVZK90swuomV/D1j/idshYB48QrmegMFRLm4v
+         efGTZqvV88s/8JAkK7wADt/85QPwldgYMoCKd4evrANnL+fJFgA29l4Gz/qtmOtwGwIw
+         mi8jqmzXl8QldKr4VWuhxG6l00MNFSdUgyKgAbkloN+0uIzm+l+hw8y1AYhLMqCdimnn
+         IYLpOPeQFb/eY4z9rwXpWHMi0/YZOJM5hDtAmWGO2rJONaSowSZ36Cv57efbtqyFS0H1
+         D1kA==
+X-Gm-Message-State: AOJu0YyQg/HUKf96nXyC5ShuvfzVN48fXvxJCAXs5l+x4QW31NzpZX8O
+	gKjxmulO35ojcE6OqTagkWCkyXZs6kyISNOf6TN33GwDywBylabI8ImIiyjWZSrjR77BlozQWCQ
+	FS4lUKKa3dKrFXWf0n/UrqUeiRhM=
+X-Gm-Gg: ASbGncvs2cT8BtT2J+HKgsWkjI5ioMXUcIn7bCpdPK3nDsHRI1/Jycgjkchzgr3dZYz
+	LTQB9p2IxfW4xVhnKZytvL6rTdL8xuy3MRSjrXgnj3NSt2JllNllGbEL4BlZKXsVlW9EtIaI3To
+	Zljffd2rr0sJji1eq1VxBw2OCE
+X-Google-Smtp-Source: AGHT+IF4OouOfAkIUHbSnSOFO8ywnMrW/PU5cvczXMgDO4FeOryz97XTcL0pYvCTQwFGsGN33kcIo5YmONWS2gGnV8M=
+X-Received: by 2002:a05:6214:20cb:b0:6d9:2fac:c208 with SMTP id
+ 6a1803df08f44-6eb3f335f78mr2755636d6.6.1742496945881; Thu, 20 Mar 2025
+ 11:55:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im> <20250320-b4-pks-t-perlless-v1-1-b1eefe27ac55@pks.im>
-In-Reply-To: <20250320-b4-pks-t-perlless-v1-1-b1eefe27ac55@pks.im>
+References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im> <20250320-b4-pks-t-perlless-v1-6-b1eefe27ac55@pks.im>
+In-Reply-To: <20250320-b4-pks-t-perlless-v1-6-b1eefe27ac55@pks.im>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 20 Mar 2025 14:36:36 -0400
-X-Gm-Features: AQ5f1Jqn-qW3DCAU0daHf33PPRcYRtafh6l-nhg8QzRmI-oTyHPEpKHlvT13wqY
-Message-ID: <CAPig+cQ0ny060F1fdnCqZ=kALgMe5msxvKE-Dq+ECKxwwgfRFQ@mail.gmail.com>
-Subject: Re: [PATCH 01/20] t: skip chain lint when PERL_PATH is unset
+Date: Thu, 20 Mar 2025 14:55:34 -0400
+X-Gm-Features: AQ5f1JoBs9bvM3QNBPMNHI_OJ3gMJfPn5VE3IfxiOFLlYinHHfymiHnSZ5zxXyM
+Message-ID: <CAPig+cSPi0CV14o92FNFB0p2Z+nVTZ0mF67vd2ywsV6gGn7YSQ@mail.gmail.com>
+Subject: Re: [PATCH 06/20] t: introduce PERL_TEST_HELPERS prerequisite
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 20, 2025 at 5:35=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+On Thu, Mar 20, 2025 at 5:36=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
 e:
-> Our chainlint scripts verify that test files have proper '&&' chains.
-
-It's just a single script, so: s/scripts verify/script verifies/
-
-> These scripts are written in Perl and are executed for every test file
-
-s/These scripts/This script/
-s/are/is/g
-
-> before executing the test logic itself.
->
-> In subsequent commits we're about to refactor our test suite so that
-> Perl becomes an optional dependency, only. And while it is already
-> possible to disable this linter, developers that don't have Perl
-> available at all would always have to disable the linter manually, which
-> is rather cumbersome.
->
-> Disable the chain linter automatically in case PERL_PATH isn't set to
-> make this a bit less annoying. Bail out with an error in case the
-> developer has asked explicitly for the chain linter.
->
+> [...]
+> Introduce a new PERL_TEST_HELPERS prerequisite that guards all tests
+> that require Perl. This prerequisite is explicitly different than the
+> preexisting PERL prerequisite:
+> [...]
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+> @@ -5,6 +5,12 @@ test_description=3Dcheck-ignore
+> +if ! test_have_prereq PERL_TEST_HELPERS
+> +then
+> +       skip_all=3D'skipping ignores tests; Perl not available'
+> +       test_done
+> +fi
+> diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
+> @@ -11,6 +11,12 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> +if ! test_have_prereq PERL_TEST_HELPERS
+> +then
+> +       skip_all=3D'skipping ignores tests; Perl not available'
+> +       test_done
+> +fi
 
-Not worth a reroll, of course.
+This message seems to have been copy/pasted. Should it be instead
+"skipping apply-binary tests; Perl not available"?
