@@ -1,119 +1,118 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBD822258E
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 10:21:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2199A21B9F5
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 10:31:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742466076; cv=none; b=ThmEHgVG8UBOe0UNW9IdAvrBOSrPPXTsgKZ7FRas1vrsqE8NenqXEP/ldTj9taPBdnQVnKzv+A9qq/Yxe/UgqkkAZwR3S/qEqqZFZD/CXn6dUDSFbG/+T4D1/5NrKQ1y53UU82yzFkcj+TzyfoPsSWjqyxlmtle6e/gOrNoUAG0=
+	t=1742466713; cv=none; b=Piy5ivFYQvlsX8yB/tsXn9WVL0GGKYSNRVF2Dl84CttkwfPaGuZ3ugltxEEkPI78l/tchljFNwGFbCbnPsrr/ZDRQ3xYdMOBgXSEJMWRKprb2ihI7drtm3EAOzKbo2oF9ytyKhx/sCcLhIiT8XupZzKqLtuFr5c4yutsj8mZ87g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742466076; c=relaxed/simple;
-	bh=iEDx9/h0EWYMLc7xOvmVs19EfVJDlc29B+GE7Sue5CQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jqOaqr1l9sA9g4dilBpfKd1GW1SFB0zam1LIcxuwI52Yet58MJet4IBmI0zhmTWc3eN1cq/FM1Td3x/rbcABBlxfHt9lhp48mAgRRd2M6zVRaLxX5RTzbaaAjf42qFUrPgQFY/wkLCwOOK6l3UM20DfiiQ7aQwDfajUPj3EEaAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JHodCZI3; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742466713; c=relaxed/simple;
+	bh=b9Apomq+Aj4oiZj9bPNuX/8nynLeHfax+vzrkDlPjZQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=kDFrX4HGlVzbQQlrSqIcLxWGaSKReTrBbWWKsk0lHfApOIOLWG6T+aIOr9ln/W81d7MjaC6cSOKDF6+CC8ME49t/S2rnQiV3Al6JD2laC7CrETD7anrwBLnXoyOVIp+GrUzsWTWpXHoIdfi7fCyPce1m4DcxwOPKlJp9pWLXhFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y3KUPI8n; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eN7ugYcx; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JHodCZI3"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3995ff6b066so292112f8f.3
-        for <git@vger.kernel.org>; Thu, 20 Mar 2025 03:21:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742466073; x=1743070873; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=jOJJ9DaUFlWlsGW6B9ehAhb8EKXDjSxCePQdd6r1TK0=;
-        b=JHodCZI3C+xCRt/pNhpV14C5fgXhkP7urPZw7XxLpVclAJK/i0RleGu5Ax9yKLGzQC
-         GYdLzjBSaWKzWXOwRKFUTvRMFaM3JsLc+Z8hhNZeKeQet52+HiIwqWFGSaGesnaiWYcN
-         2D5cegx9u+BpwEmXSQxoActmZvbXMSFNg45A62laVfeoMcFePqFncPIKiZBJIIBsDKQx
-         ALV7naTDOm0fYw07Fl4AwAYd3iGhViLBEqQMfAqPVO6Xa3V7jsrDqGMN66JwIKjmW2R0
-         vbBZLu9Y/fW1ZSxS6GrV+6TkSgGhDoTf8ErCFUBl1AIaclOlO/qDWNJ5a16r4/dVgATI
-         bcYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742466073; x=1743070873;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jOJJ9DaUFlWlsGW6B9ehAhb8EKXDjSxCePQdd6r1TK0=;
-        b=C6aCHa3QFbVN2ZA+5bhFgxe/uw84Q/QxD8RrEq/eq7Df79TQmL5c6iQGuPNVdIb66w
-         fpbwREZ02MCya2oL88vzjCQnRomvaveEFaA3GHtapTAlIF5CKfB9fao3qkp5ct1Lbz+g
-         qrzpxz6OmdTD/gb45Ki7bT8EucyzutJj7omFUOO2dWMK4mIgLHHa3yJ8OLu2yXvEzUPY
-         CdfwgN42WDepXsnsySmWgKuFumhB6UNfVrPxMWBYMzu0Y/BDhbGKhGV1cwh2IgRn0CMa
-         wHRv30VYA3l1vwnNzQJqcMAjnnJQ7mbwNiNTG1QnkazdZBbsJFBS8DEI0H3q2c+SmpSg
-         xzOA==
-X-Forwarded-Encrypted: i=1; AJvYcCWj10i5uaPRIMlYj9t4ngZmQ5rTLvgtRzm++vpZLU2WMi3JhAjCT0niDkUhwxDipnef370=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxdmSkNpazLWcPaUABFuzP3H0S0kv9mmAMrUpR8xikzRwsqOsj
-	U30iqhkZ5RtWPZL7uGgECkWhpZ0tQz4rijsBlhY5qUP3I9yCp969lS1Dvg==
-X-Gm-Gg: ASbGnct5fWY9C+80todwKXaMCo/7pobsOo2ilpQSgjm5NAFqvikQah7vfHe8sDOt0i+
-	nB+8U+QekXcG3XbSDZIHmnt1Vkhl6CVGKfgh4sKzl0ISUidRFQTKB2NVY843I17qs7BxdFe/pWX
-	YFqN+HIutMS0WboEXwcVrE0cA7KdClxpw1a1Q+IY/5Hb5NveojJf2WZY+/gh+z6Hau2tsiVlHt7
-	MqSxwnbx4pwxNJSiy22oFa9LlP4B+I9j8VdNPrGC7BPxdOvzgoWnB8EmVOUJGPuQnuoPppzdHUl
-	nmbfFlr/hOvU3JYSiozvHN8JsDn0NgrFyal+8Qsd3eLn++ufjTLTrjDwrBUmIFCrwcdYH3nkV/4
-	vWsEqnYHxfno/4lenF/vp
-X-Google-Smtp-Source: AGHT+IFSs+kQosrxGan/i0ZPbXKDvshJLAbSfD+vm19VkvkgdDmuT3NiiIqhvoMMxFe8nLvxv6fDUQ==
-X-Received: by 2002:a05:6000:1ace:b0:391:2d61:453f with SMTP id ffacd0b85a97d-399739c8c7amr4960295f8f.24.1742466072402;
-        Thu, 20 Mar 2025 03:21:12 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c8975bdfsm23028145f8f.49.2025.03.20.03.21.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Mar 2025 03:21:11 -0700 (PDT)
-Message-ID: <6a3154e0-e7bc-45ae-b554-67ccab18727a@gmail.com>
-Date: Thu, 20 Mar 2025 10:21:10 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y3KUPI8n";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eN7ugYcx"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 03558254015C;
+	Thu, 20 Mar 2025 06:31:49 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Thu, 20 Mar 2025 06:31:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1742466709; x=1742553109; bh=k33nsassBkBfjXF1hirsGHhClShZ2bC6
+	pfFkmCv04iA=; b=Y3KUPI8nE7JMOOR/KHDljFIUZzEZk0ExTi7xQXi9TQO2QBRg
+	X7IKjpv9OA1N5VbleuMpJVLDtAAebjtZNLfU2oaNsMl3ApaCamU6CdmCp27g2XRn
+	kMJK6wBfUiNyF99XUcIY3eTobc0eJEr08x1RW/FXhv9GQlUcijV+bbU26hQJVUTX
+	7aAp4YzfS+10EYWLd3+I7A80Sj9/ddlcBcA8aOhBQ7GNefOjoGClZQbfJjOkC7gQ
+	inVTwA9EecvVAISu7S30rDdWkuWMaavlUB2oaf3HqUQnoMs53RSlG45zVO3fqfJ5
+	ZRGLjzcXzJA2TkTNOU4ObFKlE4WcNMMDz5zzew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742466709; x=
+	1742553109; bh=k33nsassBkBfjXF1hirsGHhClShZ2bC6pfFkmCv04iA=; b=e
+	N7ugYcxIgPnGMasOjeK6SqrNuipVhMBj187tLH8EI/e8cXKVVoaRJ9bSqXq+gUgZ
+	5zirHOYP8ijyFd5XrDEEIvPohu5YkLHzYn5nciu91GNZtUqJAbnQMz+W0uzDLU/C
+	g2oxgbJFsHScP3dg0AKX8EW+8Ly3P3wnWmukBalOOQejiz/f9b3xbYKXU8ULChly
+	90OPNUg+PuRqooD2rWLBwhKFAINRONPzqYwECIkBNKmbacstTw5nrogp6406uoPo
+	QgvX+wvAWOpvkU//Y6r+QHYAG1Xz4RnGGFhd71x9zFgEEdSj+ZB86gpSsosPhHxs
+	TIO1hWtUosRwwzzXwGg4w==
+X-ME-Sender: <xms:le7bZ9XrcjFx1LgjFM1bnE6D5eDiSk6Na7WEFwwcuHrmZ-OMMm_YxA>
+    <xme:le7bZ9njIbSJvpIPqE1k9Fred-E-_hpKqrB9F-IRdIdnZIPgaz9XYvJfycOO5bry9
+    xNGvk77QkCh50Jh2w>
+X-ME-Received: <xmr:le7bZ5ZRj1ZU5SZBaKM7EgwYsDDH_d7Jg_j6m8L59NdrLtYcmyP-KIc1q6cIkbSMMza6M0hz56g-rwD0fUHVUh3KhynEUY_er4mO8l4up-LEjhI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeejleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfggtggusehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeiuedvhfette
+    elgffhhedtvdehlefhtdffhffhgfeljeefvdetfeevledtueeivdenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthht
+    rgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrgh
+X-ME-Proxy: <xmx:le7bZwXtfS2OoRFH-avzvyOp3fSOqZJdq7OrgtozLHZ0mggucVZQwA>
+    <xmx:le7bZ3ktcJQ5sC0V3M61SqLn-b0Xk6BNjmklS1RKDiZNa_FVxJgRhw>
+    <xmx:le7bZ9euEFfjcAjFojgDKoFUFjghS217SfeGlPC6nGwYqMuBxctdhA>
+    <xmx:le7bZxEtASJ-6YP_RkUzeFSwaDfU60N6ODbaA_HBmJUSbUSGmp0jgg>
+    <xmx:le7bZ8wQ_ESC6jZHQAgx_SI9YwdwGDNYLuc7l2R-YeKnavoFjiTCSV-Q>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 20 Mar 2025 06:31:49 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id ded2f95c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Mar 2025 10:31:46 +0000 (UTC)
+Date: Thu, 20 Mar 2025 11:31:36 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>
+Subject: Possible venues for Git Merge 2025
+Message-ID: <Z9vuiCnKcMRRXHOR@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] docs: clarify meaning of core.commentString=auto
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
- Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-References: <Z9lcXR6sL3UWlL33@ugly> <xmqqa59i45wc.fsf@gitster.g>
- <Z9sLAEbE9lAInBXz@ugly>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <Z9sLAEbE9lAInBXz@ugly>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 19/03/2025 18:20, Oswald Buddenhagen wrote:
-> On Tue, Mar 18, 2025 at 10:15:15AM -0700, Junio C Hamano wrote:
->>> reading through the thread of the original submission, the feature is a
->>> workaround for `commit -m` and `commit --amend` being inconsistent wrt.
->>> message washing.
->>
->> Perhaps somebody can be talked into fixing it ;-)
->>
->> With a clear explanation, I am OK if somebody wants to advocate to
->> deprecate (and remove at Git 3.0 boundary) the "auto" support ;-)
+Hi,
 
-I think that may be best. Looking at the sequencer I don't think 
-append_conflicts_hint(), the "fixup" or "squash" commands of "rebase 
--i", or the "--reference" option of "git revert" are compatible with 
-core.commentStr=auto. For rebase making it work would mean scanning the 
-messages of all the commits to be squash before picking the first one 
-which is a pain.
+given that this year is the 20th anniversary of the Git project it would
+be great to host another Git Merge so that the wider community can come
+together and celebrate. Taylor and I have been chatting about this
+opportunity a bit to figure out what we're going to do this year.
 
-> how would we go about this in practice? just a notice in the docu, or
-> some mechanism which would complain at runtime? under what circumstances
-> (i.e., how to enable/squelch it)?
+We have been discussing two different options:
 
-I think we'd want to start printing some advice when 
-core.commentStr=auto explaining why it has been deprecated and that it 
-will be removed when Git 3.0 is released. We should allow that advice to 
-be suppressed setting advice.autoCommentStr (other name suggestions 
-welcome). We would also want to add an item to BreakingChanges.adoc 
-explaining why it is being removed and add "#ifndef 
-WITH_BREAKING_CHANGES" around the code that handles core.commentStr=auto 
-in builtin/commit.c and guard the documentation with 
-"ifdef::with_breaking_changes[]". We may want to make 
-core.commentStr=auto an error when breaking changes are enabled as well.
+  - Hosting in the US in San Francisco at the GitHub HQ.
 
-Best Wishes
+  - Hosting in the EU in Amsterdam colocated with the Open Source
+    Summit Europe.
 
-Phillip
+Typically, the location is alternating on a yearly basis between the US
+and the EU. So given that last year it was hosted in Berlin it would be
+the US' turn. But given the recent political climate in the US I'm
+afraid that many people would not feel comfortable traveling there right
+now. So in the spirit of being inclusive I think we should at least
+consider whether we may want to break the typical alternating cycle and
+host in the EU again.
+
+I have been reaching out to the Linux Foundation, and initial feedback
+has been positive that colocating would be possible. I do not yet have
+any details though, so we'd know for sure in the first half of April
+whether this is an option in the first place.
+
+Until then I wanted to get a bit of feedback from the community so that
+we can assess better whether my fear is unfounded or not, and what the
+majority's preference would be.
+
+Patrick
