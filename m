@@ -1,117 +1,98 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCC6229B38
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 22:09:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B518215770
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 23:34:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742508581; cv=none; b=raRkqyuz951IavU3Sowt/l+oQngVB5SAJo5wHQFcovBXeiBl15jAQ7LOQlF7NADo/w8RUMwpa6JQV4XJBCGzP8Bxz+w1aLJmxtPQzKzfvmTHAtZBxTpDSBAJ3NtIS44gBhe91OIrlM0Lz7JUm8OhgVQib9NsbOJqywjgI1XUL+U=
+	t=1742513657; cv=none; b=AmRuXeka3+YIsOgBbtjbMJM12oUkyAKEMUTlPaEkhUgZog8YslNnCsvAuJQ5ONUq2PO4cCUkSaAev/RkDTRI0H1EhpQufYIgQhnvuLi5j54qz/8D2fwGpEqCqjsmXFuQG2uzSyO9oEKyfucp3/y6LFotqc9jU2IeHQy4pblyJA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742508581; c=relaxed/simple;
-	bh=jUi23mHQrRqZL1BSKYSH890mTk0SQHPJ3/E3CHR0/+w=;
+	s=arc-20240116; t=1742513657; c=relaxed/simple;
+	bh=JBeVLjDyYqdor9lg5oA+Jvblnidt/qcYC17VJLfnixA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BBvc4/JsJRnBOhT6ez/c25AovlyU+VjvkKRl3+li6iEKFNHHwJsx6+0u2cUFLbGA29Y8JxnTO5y4GdrbPtdK39wGgo/lOu/0OJoT/Z8zZBVnQq51uIXJO52yqnwwVX0QPBJw2OHtoiL0khuXhSUs0fimEvEeMgXlG/KRo6DDJkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=nl5YUObD; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=RGksrAFtpRiH3q7gqWSzsCLdLoOR/qi67Ahg6AuR2PKzhG5vsk/K/KnsZEgkEk3+WUOtyUfQ3log5mIuHv8r9MV2VumGd3CI/o4Jt22m6IF7dmyUi6vXhNVB/YKMsbB56sI2R24ZTD3zqoF3B0QLmxbsnA/Nvr6gN2B/oaWSrvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fwxO5eES; arc=none smtp.client-ip=209.85.160.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="nl5YUObD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1742508571;
-	bh=jUi23mHQrRqZL1BSKYSH890mTk0SQHPJ3/E3CHR0/+w=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=nl5YUObDNjhTmVVX9vRUPprH1L8OXBYTimJ6nsU6JO/jYPkZTy2pZTYcJz24hy7wL
-	 4ff93zVtkz3qhL/29Y9slAhhZjpi+j7F7I5VE66sNAsPhSej5W+itkQ0BS5RsmdIW+
-	 /BzvRrzDmbA5cQafZaeE4V6CtS7lI9nhQuSWVqmVW4pqUkbtcTEVBFE0RnQBzOnJAT
-	 XusA1+BE17CDYQoKnV5mFNT/qAMQaDoOmrshNm7GiMaLqvekOCyZZqItNZ0P/Vf6Ab
-	 0JaFK2EHwCtYKOlgH6mySPSGoosBXzTZ/g1NQKXOKMU016YfXZLdeXxH1aouci2b1i
-	 8H5EdK/Eqlxnf74+kzmGs+aO/RFYktIi0uEYdTo/F/LVDt/PnlPm8x9ibfckNadDc+
-	 NYWMvpSJCoxCfjt8K6w9K9Gkpln066evkgVn/nzr5mVUFQy9h5PmcOCjdbtT0IcxiP
-	 2S6YBZldnsT4RbxKJVUPMRNMkF0xBPZHIJpiZDnuI8Wzib2X9FR
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d5c6:e1bb:f3a5:7a20])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 687E1200BA;
-	Thu, 20 Mar 2025 22:09:31 +0000 (UTC)
-Date: Thu, 20 Mar 2025 22:09:29 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fwxO5eES"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-2c6f27599abso353283fac.2
+        for <git@vger.kernel.org>; Thu, 20 Mar 2025 16:34:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742513655; x=1743118455; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xpefBbqPFFGHNPgFor7WAYi64RPGZnQqFpknvL9t60M=;
+        b=fwxO5eESqz3biexQYrRa8VMqrrVrKF0h1No8e5awQ2dY8nZOP/aL8NWcqX6112oolj
+         fmYsyIXvujtm46MhAHxyR+pbybxA/PzDiQ/sr5bIZwQNTOqad9VM3PokYoh/YMViYmAX
+         WhoyJ3hxmdV1pXJNua1Q7NnY9cf7fm0sq5VuZK0GdK0E5wBBPjw6u9cGSDZkO8ii+AEW
+         PQP9DVFX6lM14uFG35buPKoZemYHh5lwHLq0cxVJRN+0RYme6qQRmpP7PLEw4PiKweRQ
+         DinYvPEU78ZeDDZbQzGx95rR7Wld747oClKXsoTSKuEEUqh6mAafouS627kQqC6ORFUA
+         2QXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742513655; x=1743118455;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xpefBbqPFFGHNPgFor7WAYi64RPGZnQqFpknvL9t60M=;
+        b=eV2LPGiv730QVKeYBfU4tJZhVMjXbzf21X30e46t9CLrnfv1lJwKkDjXHfk9H5Zqyq
+         pg3d/v17unxFp/nClHMDANLo3bGXuzE6uks6z35RAGn8QP0oYvlDWlTkluFNG65qPDkI
+         eDy/lR/InGRKl8QbLoZ3VRwwsmrirthRf4fQLLZyhK/aSQYp3oR0Fw5ljq70wtMefD+H
+         mHbIBm9AGld6SiKJtqC/HREscR0ok59t9gxrZFGRA2z+ckpQRt6hwrdeIIonzahl8X3h
+         zEWcS3UopSC/3mSosEXCHGE/ulmtZfO/iYXOiz8bIkN7pwEHLGfbMLdhyS0YDEHiEysw
+         XPmA==
+X-Gm-Message-State: AOJu0YxNlk6cnr2vm6VID5UPe1CRQpgoygC+rpEniHN1+yoh5I8L7XOj
+	j+tT1eKGPWWBshOt9tcs8TIlU9LKMy06D4CRUIn9wtnC/RyDB4DYiS+9NA==
+X-Gm-Gg: ASbGncvxzWyJ/PHFQvWhJ0nh1MdfWV15HhWfWnl1OsHTr2UYjNDzxpnBvVCBklxkUpc
+	hdkrXViueheBjH8QZda6Yi2R8GteIvbETtAMT9iQRcVRwv5eHibcZpmf3+UFkEnQyNVJKvnWs94
+	tiDz8d8ayLBBA7fqJzI3aYCPVKhnuS2hjpEmY2agZsp4WKOSZjM/Uj0a4oSL+XgGqap4iO3zSbv
+	ZN6tzl8f8faO6KJdOlB5bwSkvlDZCchaIGwyjvMd2n5HaQkfzPYMseWO57PSUjcDinhnwB7T9m7
+	JdAAfzNNo8wpgD0IFVEmRKYtyRGDDRTp6iJ7ljvTJIh6tpAx
+X-Google-Smtp-Source: AGHT+IEBHJxxLMVmCOnXuEWBadYO2jnzpkzXadNHsRqMe1KliBEvw35L5Y8YmiDETLrilMRF3vwHKg==
+X-Received: by 2002:a05:6870:2150:b0:29e:671b:6003 with SMTP id 586e51a60fabf-2c78055e5b0mr970513fac.32.1742513654947;
+        Thu, 20 Mar 2025 16:34:14 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2c77f0f3fbcsm191551fac.49.2025.03.20.16.34.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Mar 2025 16:34:14 -0700 (PDT)
+Date: Thu, 20 Mar 2025 18:30:39 -0500
+From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: Possible venues for Git Merge 2025
-Message-ID: <Z9ySGbE4sq0JfgKs@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Taylor Blau <me@ttaylorr.com>
-References: <Z9vuiCnKcMRRXHOR@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] remote: allow `guess_remote_head()` to suppress
+ advice
+Message-ID: <rbuwquadvjmqbyhbikmupwd53xt6dpu6rpv6oyso2pscihddzw@eoovi3vqkzud>
+References: <fff634dh5qeb4rgjqn7cru7v4a2voj4us4thvwtttxjcdnu2bu@jvv3htcon2ul>
+ <20250320014646.2899791-1-jltobler@gmail.com>
+ <20250320014646.2899791-2-jltobler@gmail.com>
+ <Z9ukDuvsLXhYTQAP@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cYI3Su7oSgZ/5FuY"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z9vuiCnKcMRRXHOR@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+In-Reply-To: <Z9ukDuvsLXhYTQAP@pks.im>
 
+On 25/03/20 06:13AM, Patrick Steinhardt wrote:
+> On Wed, Mar 19, 2025 at 08:46:45PM -0500, Justin Tobler wrote:
+> > diff --git a/remote.h b/remote.h
+> > index 6be5031f64..49c7b644bb 100644
+> > --- a/remote.h
+> > +++ b/remote.h
+> > @@ -395,7 +395,7 @@ struct ref *get_local_heads(void);
+> >   */
+> >  struct ref *guess_remote_head(const struct ref *head,
+> >  			      const struct ref *refs,
+> > -			      int all);
+> > +			      int all, int quiet);
+> 
+> I think instead of introducing another boolean parameter it would be
+> preferable to have a preparatory commit that turns `all` into `flags`.
 
---cYI3Su7oSgZ/5FuY
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That makes sense. I'll adapt the next version accordingly.
 
-On 2025-03-20 at 10:31:36, Patrick Steinhardt wrote:
-> given that this year is the 20th anniversary of the Git project it would
-> be great to host another Git Merge so that the wider community can come
-> together and celebrate. Taylor and I have been chatting about this
-> opportunity a bit to figure out what we're going to do this year.
->=20
-> We have been discussing two different options:
->=20
->   - Hosting in the US in San Francisco at the GitHub HQ.
->=20
->   - Hosting in the EU in Amsterdam colocated with the Open Source
->     Summit Europe.
->=20
-> Typically, the location is alternating on a yearly basis between the US
-> and the EU. So given that last year it was hosted in Berlin it would be
-> the US' turn. But given the recent political climate in the US I'm
-> afraid that many people would not feel comfortable traveling there right
-> now. So in the spirit of being inclusive I think we should at least
-> consider whether we may want to break the typical alternating cycle and
-> host in the EU again.
-
-Yes, I do think that given current circumstances the U.S. is not a good
-place to host events.  Perhaps that will change in the future, but I
-don't think that would be a prudent choice right now.  I've talked to
-several people who are uncomfortable traveling there, so we'd probably
-get better attendance hosting elsewhere.
-
-I would be fine with Amsterdam, and I might also suggest a major
-Canadian city (such as Toronto, Montreal, or Vancouver) if we preferred
-to do this in North America (since we've traditionally alternated
-continents).  I can imagine other locations outside of the U.S. that
-might be fine as well, so I'm willing to keep an open mind if a good
-opportunity comes up.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---cYI3Su7oSgZ/5FuY
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ9ySGQAKCRB8DEliiIei
-gZ2HAP4ncOGAMPlzZeGwBLGLP+XV9CtHQiFBWmjxsGpYAjoQ0wD+I9AWYFGVEbF7
-cwje26/WtSQ2qDg8/1b0YDhkAPWuSgs=
-=GjIb
------END PGP SIGNATURE-----
-
---cYI3Su7oSgZ/5FuY--
+Thanks,
+-Justin
