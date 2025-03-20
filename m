@@ -1,64 +1,64 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB7A1DDA39
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 19:48:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B9370824
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 19:57:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742500139; cv=none; b=UbsaXOmSQrxHSalDWyg++XFXIF74CwJJwbDiX0AjadPyLofLvNywkKNftPey+7weILUpfvp2EWrImsViFA0WE2bDqMGautUwuKdQq1V1xqSb6JMyM10RfnhLfhs6qoG/ER4+9xVMNZrHBlT79N+YARI8gJoE4PyFKmjTeUhI8dY=
+	t=1742500633; cv=none; b=jB1ByfBg4qvgCxiGzy4ldZfjoysWg7LbUGFiVLCSQDuVC7oCS8BoXsjIMqLluefdepgLH7b908EEBlYv4WiQdCwk3NWE9V7FTmiQWFVkbdqIHf+5yzYaH/e43tZqKpNopCvc5qnm+BsYjM1oczI8IgW9pLGotHVpr9NTw231nlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742500139; c=relaxed/simple;
-	bh=/utpsqwR8oPalpPmasJ9e/duxmF0QKLjveEBD4HmcYU=;
+	s=arc-20240116; t=1742500633; c=relaxed/simple;
+	bh=aTf5IO+XiNCZIkWxnBPFYe84Bn7MGYrDPVvK/mmUuB4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mmRwQUg4x8bi/tjJY4pytsPPFt6kYNkfuF53cCSVTHTic+JzeN3f/jktw9dsn3RkNAk2KVKSLvu/6kdsjWlwoTesbBSZNtWI1N/pISRShe1XPu8pnDntkNoYtD7J3WzbCE4IIXGlyxkYeNaIStRVILwtwDKUELMx98Dd8dLLL94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=REkJ4nOE; arc=none smtp.client-ip=209.85.219.175
+	 In-Reply-To:Content-Type; b=RlxjCxqp2XO7Lok6t66KwyRGSFFeNmS9lup+RG3euS09gc6TmwpceXChtpbT/7xsaZZLe44QlR5vjAVEIIBENjUhdbS/gz+issYD2nNIz6HFEQCYpfndirLXXNKlu40emCbX9jgiqBRfP3MBMU2AyOmeCBMqxfrXrLx8fgRZk7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ctv5/hdl; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="REkJ4nOE"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e63504bedd0so899232276.0
-        for <git@vger.kernel.org>; Thu, 20 Mar 2025 12:48:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ctv5/hdl"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6ff2adbba3fso10327657b3.2
+        for <git@vger.kernel.org>; Thu, 20 Mar 2025 12:57:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742500136; x=1743104936; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742500630; x=1743105430; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=U3V9iawZX/ZzFAzw1IOawHIBW9m25Y9Ag1I5ncUXMRM=;
-        b=REkJ4nOEOec7a0c4D5giX8Cdhw776sYhhRKIFjgfDUws1whK4tnws9JTJwK4Z7xbNW
-         TmcTNvJ+I7EJoiwFtS9w/80R9DmX+KC0vuSiifJG4skCcmcxRVzqG/usR94pXR1/rMtL
-         +Ni5T/jTxbaosM0DVMTwzq0XEi3feNRvbybzfk9uBf7o8aNmqmVHDYWbnfKrbsN/O+Tr
-         9/gpf+rqx3ZBfwsXcqCYUtRasDpOv0Pa4uKFccDKgO0NuoI1HCBEpGlSMeRI593qFwO7
-         gPst0eSqyvk7hTzHxk3uMI4igyHzTWXKVfBqJrit+VjLGxoV8VKX9DWywQR23y3c2smZ
-         ZvCA==
+        bh=bh0OpTOWwctOqEiKmQmZlpQMWn1rwtK+wtUvZGOaTB0=;
+        b=Ctv5/hdlAC4WZjSdp4c7gMjWrVbRHhP97dQo/4EhhisTzjjIE2f85avp55ZhqVdDdp
+         5wtKnPlduQwbryzoGFpSlANDjVrGVbGqHDfvCXJaspn+HR3Ye0pIIqantUBDlJ6He/t6
+         zr35+xiSlp8G2kmD5OnBaJvLyfBCQ81abnVS3nWBhRMkd9DgN42HEfoxTLk/b8xWDHF+
+         heJYlL8vJTmHxUf0ARdSAW7UEjnxC6OsfbL3V/WXuvzt/DoRXkpy1GtEBYisq5D0lg9X
+         FX4H7BXj6s6+H5u6xsGVZcA6fpZ7zBTajwXaVAuptHdGg1XrQMKyarFPxhVc1+gbQ5Va
+         Kn1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742500136; x=1743104936;
+        d=1e100.net; s=20230601; t=1742500630; x=1743105430;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U3V9iawZX/ZzFAzw1IOawHIBW9m25Y9Ag1I5ncUXMRM=;
-        b=P+EN9OP2jZO8wAynuNlcZqBW0Pgdd2R3kLM8X+XpyvaRqFY4iu3cmOokjq5WsOrUe6
-         y8vyUCGE29chxtZSIpqdkt/fdgWKQ2Ft85TmS+RX/AYWhxSc15ejoxHFl01ZI0ZNoJlT
-         14aKFLRK13AF6jtam03JMRo6WEFn6ZDuJq884aJRoHl62kl0mOBliADD8dAae5TJ/Ifl
-         qrWN9+tBp5ei4YkxZeb8bvsxwGt7u0rI4RZrXdv9Wfkt2fB/e/R+e7j6HIvXJE9XcpVF
-         wFBvcoRL8BFXtxHsZxig9sxaO3tfgcYuSIeQV/5N7rjjW6NPqU5HKffO67ChJUIhbeQL
-         bFGA==
-X-Gm-Message-State: AOJu0YwzXifqX3GNtl+VdD4v+Krkzlitij+RJaFSfx4QtO1t4xHRAaPY
-	tnqqX+sj6HgQuKwQpOQkTdnDawgIm2DrX7PqYYwRGXPjj97UPcdk
-X-Gm-Gg: ASbGncvqjvGUbN4aYLZ06Lb5RJRBrBWRMV4fqnVbC91xRvrbjS3SCcBcp+cZoWZ2K3S
-	2Ix5D/lbkcOmWSSiZq8QZG1HLpFxRwcPCbKxtsJQmiqz4g5vHbd9k1JpTOjQ+9uWUP/URizdmOM
-	HYUtSZSRXUs+OWq380g2g5XtHggU6zKWfHmZbUzTP9g9Dh6wCTRSU71jax0AOjtjp+h1uHx66j2
-	YpBPsFqXg+aePy7YLENepZAVscvscFXptBEiJEv+vjJ9VehkhoQ9U+j6xrZLKFNUVSfGp5x9kyQ
-	Hc7hVChx9VF/TYt0jzLBw24SM+aBdkpGwV9frhba7NbwdeP0xPq2z2SVkmI3kGzCRfOt5V95w81
-	LI5oJxw7l9lw1+DR3Yk8X
-X-Google-Smtp-Source: AGHT+IFnS1ZT7PRdN+GSjt3WHe+Fu9PdH3fEPGHh3K0aKTSxWwcWvEVd0YjG28QSa4QTiaufWcdqrw==
-X-Received: by 2002:a05:6902:260c:b0:e60:9d5b:b882 with SMTP id 3f1490d57ef6-e66a4dac942mr601269276.27.1742500136518;
-        Thu, 20 Mar 2025 12:48:56 -0700 (PDT)
+        bh=bh0OpTOWwctOqEiKmQmZlpQMWn1rwtK+wtUvZGOaTB0=;
+        b=nExmkE/YKEfmd0PjUdSGQIT51tLRAoKtem1eFAshJ106G/dH1gpWIkNm6xeZA+uJEG
+         WTi6P7AXexOeDZNLoyfIMfQC/FolhJpoLS8Es7F8KzevC/RwmH8bbuvUVQAM20mJwqJg
+         0ilZf1F7eaE9cR8kfHUqFLdCdAcIBf51097i3Sg2VgYrsyOgq6NLt3xSAg/P4G1rAV+Y
+         9+XVvir47mGZzZn5V+Vg8XetiX5iYdKevWdvomWymoCxhkhHreOPYk19p21v06Ft59RM
+         /KC9Xq63qeOSojkjIM3QaKwhRx7h7SjXgfo2vnP9dwMuSm01X7WWKynt+IUkc8BZdGOE
+         JP6Q==
+X-Gm-Message-State: AOJu0YwlyH/hgIisIjq20FSRk2uBC+3HHP7TRgA4QGJjA1ZxVy/vox/F
+	b3GJ9RzgmH7LDe/T595GYkU9jt1+GQNwJkt/uaG7+RZL0ABZ4GwY
+X-Gm-Gg: ASbGnctVfNq5h9X1r6lenDpfgd1bA3v/wm36a3dOJ7P0gUJf0sQcIt+nMOGcFtMqgmV
+	/+/UZtuIGfKaa+mJVrbsYZQhx175N0LACMvtt7//ElWaFKqCbBgfPQ5TkucP9K+XMWCFxDtlJUe
+	zX/R3JA3Bab+oHRj2cfmfjXsgriCfkoXopejb5tTgTDmBqpfiU0+Fr/IS4yTYugqRY/QoKkODYS
+	XXQzd+sgTkdQE3etgdKZRBiUNPku54neVdJN5XItVCZw6P1k+Iu407QCPikmqcnPsyd3osu9JHB
+	qxmx6lu132euJ56C4LBl2H1wykJs6EjcZsC0aKSFhSH+rYvIzlntseX7gTaljnqLCR1WOwp3Wd6
+	QUb+igzAQsuBAe10M1cT0KLT1MY55PRU=
+X-Google-Smtp-Source: AGHT+IG5oA1/4cJUzwij4bv23ywr0mqLNIrLYNZStK/9vSfGqKcfKUZn/7NhNklqFPBxqPTrOPPECQ==
+X-Received: by 2002:a05:690c:2501:b0:6fe:bfb9:b2f1 with SMTP id 00721157ae682-700babfd535mr10085747b3.2.1742500630119;
+        Thu, 20 Mar 2025 12:57:10 -0700 (PDT)
 Received: from ?IPV6:2600:1700:60ba:9810:f12b:82ea:4a0b:3183? ([2600:1700:60ba:9810:f12b:82ea:4a0b:3183])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e66a4264fc7sm52811276.24.2025.03.20.12.48.55
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-700ba793580sm767127b3.66.2025.03.20.12.57.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Mar 2025 12:48:55 -0700 (PDT)
-Message-ID: <afa6b6a2-c301-45e5-a931-66d146392ad1@gmail.com>
-Date: Thu, 20 Mar 2025 15:48:55 -0400
+        Thu, 20 Mar 2025 12:57:09 -0700 (PDT)
+Message-ID: <58750d8c-fb1e-4c6d-a356-7cd0e59c621d@gmail.com>
+Date: Thu, 20 Mar 2025 15:57:09 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,7 +66,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/13] pack-objects: extract should_attempt_deltas()
+Subject: Re: [PATCH 10/13] pack-objects: refactor path-walk delta phase
 To: Taylor Blau <me@ttaylorr.com>,
  Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
@@ -74,34 +74,44 @@ Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
  karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com, newren@gmail.com,
  peff@peff.net, ps@pks.im
 References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
- <a2ed1f2d4e3946c563f934fcaf149050d50f255f.1741571455.git.gitgitgadget@gmail.com>
- <Z9H2E9hEWgaS9NnP@nand.local>
+ <c047fbd7f275ef79695b5e1356075705e6fd7bc8.1741571455.git.gitgitgadget@gmail.com>
+ <Z9H65fCcv/cybKRa@nand.local>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <Z9H2E9hEWgaS9NnP@nand.local>
+In-Reply-To: <Z9H65fCcv/cybKRa@nand.local>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
+On 3/12/2025 5:21 PM, Taylor Blau wrote:
+> On Mon, Mar 10, 2025 at 01:50:52AM +0000, Derrick Stolee via GitGitGadget wrote:
 
-On 3/12/2025 5:01 PM, Taylor Blau wrote:
-> On Mon, Mar 10, 2025 at 01:50:43AM +0000, Derrick Stolee via GitGitGadget wrote:
+>> +static void find_deltas_for_region(struct object_entry *list UNUSED,
+> 
+> Interesting, it looks like "list" here is UNUSED in this patch. On first
+> read I figured that you were going to make use of it in later patches,
+> but it looks like it remains UNUSED at the tip of my local copy of this
+> series.
+> 
+> Is this a stray change from when you were writing this? Something else?
 
->> +static int should_attempt_deltas(struct object_entry *entry)
+Actually, the intention was to make this method less focused on globals,
+but it in fact uses 'to_pack.objects' when it should use 'list'. Thanks
+for the careful eye here. 
+>> +				   struct packing_region *region,
+>> +				   unsigned int *processed)
 >> +{
->> +	if (DELTA(entry))
->> +		return 0;
->> +
-...>> -		if (DELTA(entry))
->> -			/* This happens if we decided to reuse existing
->> -			 * delta from a pack.  "reuse_delta &&" is implied.
->> -			 */
+>> +	struct object_entry **delta_list;
+>> +	uint32_t delta_list_nr = 0;
 > 
-> It looks like this comment went away when this part of prepare_pack()
-> was extracted into should_attempt_deltas().
-> 
->> -			continue;
-
-Good catch. 
+> I know that we have a lot of "_nr" and "_alloc" variables in the
+> pack-objects code that use uint32_t as their type, but we should prefer
+> size_t for these in the future, even if it breaks the existing pattern.
+Unfortunately, the fact that these are used in the find_deltas() method
+as an 'unsigned *' reference, these types need to be as they are. I'm
+hesitant to use 64-bit integers that will eventually cast down to 32-bit
+in these instances.
 
 Thanks,
 -Stolee
+
+
