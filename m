@@ -1,71 +1,73 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7A3226520
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 17:57:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB5C225413
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 17:58:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742493433; cv=none; b=aeJW1vGfAs48cCLizinkPNZ8eaZJACbCvTetqbh0gDC/wa4AUqxWlUWg+/wtHxt6GC9oeoC/5Uy6UJLYaMeUFJvPqucuXIaq+NKOPa6SOsYsn0oRHdXkan4LOc7T2QbCAr/pgwve2A9I/k2PyTlRItjkiXEBa0zg/C92Qn7yx04=
+	t=1742493495; cv=none; b=UuMAmGd7zhh6zOuLeD2vyszJl4OM8FRmK4T9uzoFxBFWFZaYqDCN0vJfwfQcEsHzEZmq8TUNMdfQq41mHGPBceiHL5BwkwTjVdg6hRuniuwoolWhekSv2zURtnfiuAmtapig4d4o7pVNGPbo6Hl7W+5V0ewlU0XsvUvVP2kWSxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742493433; c=relaxed/simple;
-	bh=o9+BGg2BAJZkLhPc7UJDkCHZHAzJ1pd4jTBqQObC6iQ=;
+	s=arc-20240116; t=1742493495; c=relaxed/simple;
+	bh=3OsnMhfJDvo5kVjhXtyPLDMglD8dv1l2QYZvvtLsGtE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i3E3ez4MTcJH8seC1S1H2grandx+O9eccK31Rrb9kBeHDQO69ufdNVFntx7RqD3j9SbZCLEwu5U6ISAeyb/vITFQLLvk3PWV7Z9TWFcWjW0ewHahYH0MiU9gROkcaNq4IJNbP9flODRpj8M3qH5I2vdvMTJT1S5nG+cis7Cp494=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ZfrrLeqY; arc=none smtp.client-ip=209.85.160.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=IfETkFxHTR3gBlPbduM0c0F1nvPhjEg+kZUxUQE4YfPq/Ny/jmJxCfvLgCrTPTuK47hqFY2bNDqWljQWHCENFXTSMHZt01DKsP6rq1WSWsE3N6C9SqV2x8D4Hw1kqBiia5ZWaDxjNTNEWkGZqEOjIfbHfXQyejb4f9t/0RBwlLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=R3fdXuZD; arc=none smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ZfrrLeqY"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4769f3e19a9so6990321cf.0
-        for <git@vger.kernel.org>; Thu, 20 Mar 2025 10:57:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="R3fdXuZD"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6ddcff5a823so8793216d6.0
+        for <git@vger.kernel.org>; Thu, 20 Mar 2025 10:58:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742493430; x=1743098230; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742493493; x=1743098293; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gk2WS6Ej0HV1rs0jz/nxfhLNsT+AmIuwPbZcCf3QfOg=;
-        b=ZfrrLeqYfqznT8f74D0gcMW3YNxSfZajRmmB1931cFL4MFfCs2N1n2hrRfjpfU7MrY
-         x6c91+VLpZ/llY6XxBfjlji/0vYgNxTF7ndgda9E0eheUjBI7c+dx9uyT2fZCgUcmPzJ
-         MeOTujTMS/UZdVOXaHo2XAzBsLlX9Zx0byROEsUQm64y7BRtB5BzpLAVgXRWjsl3SAmg
-         yHe7ZqXCtORVaOjgJkY0Obv71tNM/1YX38a6bywI0azOwqiNasmi6NFtAKlMBXdzTNLJ
-         CH6FIXz1GP4NB+l5D4yl0FQirbWsuPZRkqO19rqx21phHp6H4eguvdUtg0wrc20zo/9u
-         yElA==
+        bh=xCBMlqoIiEIlRWM6kpd95kaSBwByHKdEbw2L1ZCVwrA=;
+        b=R3fdXuZDH28bhhY1Xn3t9KHgOIZUXPCzsF7SLIUinAKhSza0Rz87wo4Vcc7/u+o1IF
+         5yzfGgBNQcqxDPt0pqbm2Vx/p24czWafC3n7i0fEHUDK06ufOyrpPxjJLPm7J9Nj6+OG
+         56Amp0vBUpHKQtgsMVbxaL9HJG/U4mK5o3AIM4y5VQjCJ+P/fBPQ9o5wQfl0MzxP0kMW
+         o0xhGzjhngi5Ch6m8Hl7Ap3vtRA260Fcv66Qdcdlv7+SW7+mc9kSopZqBBujrFOVTiMI
+         lBTEJC6co5tGCLF7jr6qHY3zatoPE2f5Im5Lf12bVAXi7lCrB0FwfJcXXuHt1JccgFru
+         upLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742493430; x=1743098230;
+        d=1e100.net; s=20230601; t=1742493493; x=1743098293;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gk2WS6Ej0HV1rs0jz/nxfhLNsT+AmIuwPbZcCf3QfOg=;
-        b=HLqQtRv2gLQccuH30jHTCDIV9ca3PI80khRqiKx/xoynSmusQeqa3oeNxSmfUXWsTg
-         XnSb2rhWJKNDi1/yyA11rywVgE7v4ieiESuBYEwqReWQrZ49gJyJl6TV71OKa6t8x1Z2
-         SsiUBjg+9kC7Fw9t8SmQP7n83zwUpUoSUjaaKJqZrT/etY3U2YNvpxoeIQDeNrIxvH8d
-         hosBCfNjQItm3+DlFKRgsQLQcOT4qG75jslRIA75Y8MZu8rkFkUu2BDt77URgeIef2R6
-         UX5MvmtkZtb6Wyzwm7+jSEf3fxaXWQKxH8BMhGQGB50hNfejFbICrFAEZJbYX/3nAQyt
-         guzA==
-X-Gm-Message-State: AOJu0YzzzkxSRoQ0vdUAjQYBS/YdmqAqpYYJx7qmj2+NMvTP99D2tAg9
-	qmSUhaCHq/EoQl8qVNAnuXK1wUPkVhY9nNkuw8rdOZix+2aKrut51oAl9dnAveiip1kKsaCx/bE
-	4UIo=
-X-Gm-Gg: ASbGncvfEchZQGRNis9FGOxUssoG3+71K4CSyglIEDyV5lHxXAyNGn19myX7Ku0fgwV
-	0tV606uqh8F5sb9OBnfSf+5/5kId5Hjk/ElGmWRn4kn5SbqYe4enyWplBYT5MwhcF4TYDuLYtSo
-	+BIo2Pt5RSBeGDgVa3hSNipmd0zDTqxLmozoof1YL5Fjdpxt5dcd4WOI/ZyjIWnZ9p4ma6/s6L0
-	U3PclYoaQDawSh/23Ds+GH1CFzYphm/+rhSZVmz5hLYDVLq7uI6FKllcRsUrk7Gu9AAL/84tev0
-	aZd4mr2WFWyoOspMLQ82Oh2YxVHkNNo6wYE5ivI6Wq5UioALkrkjHhqS2E5yYLiWcKfuTtB7Y9/
-	lNj4AxCuR8YJHoOKTPJInNSsaFgM=
-X-Google-Smtp-Source: AGHT+IGR1b0d8LLhM8Xjd89Zv+Y901Ge3ZQz3NOukwE2Pp6h49HJ5oHs/UDh5X4oppu0bEYUEj+DTg==
-X-Received: by 2002:a05:622a:4a19:b0:476:76bc:cfb8 with SMTP id d75a77b69052e-4771dddea0bmr4161271cf.31.1742493430404;
-        Thu, 20 Mar 2025 10:57:10 -0700 (PDT)
+        bh=xCBMlqoIiEIlRWM6kpd95kaSBwByHKdEbw2L1ZCVwrA=;
+        b=GYzbnKgiGvMkF483+YY24GINuMllbT3hVeZumhBBfsySYDWUX9dFdyW6oyCLXrZzfX
+         9U9aiTprXPx5n/Lk+d+adnTjgPBUnCogR8i0XUOjEy7IcSuERdot4wJOex1FBwzPAP+d
+         2sgBOv5NkXTksq+wEJE0uH+uwQwvoXyuec9NCONX64xvUh7HnmMIXHNgDnDDK22v4Vg/
+         gvIcCmmWZmvCjhpndwGCLgC9dhKCCvIA4Mh99nhYmF6LuztsFf0BhGJNvpKyyHrg5/Kh
+         FgETIOqBIN9bE7Ud0hc7SlPuPRiOXlVnAHsgfkbinmH1jEwIEMAJkRSfJARR3ivTfX0s
+         PONQ==
+X-Gm-Message-State: AOJu0YwTuBUF4fFWzgZoSQic4ZS2KxJCpBc+htoWhFIcr8ObhJJaPaxz
+	UowVduWbAdSwbMIoWlqvPdwf+60TVJRATofVPHxgHUUayhtlfOKlIXogRE1mQgZgjFQUqwWLp/x
+	VK6Q=
+X-Gm-Gg: ASbGncuq9eogtmCMc1lkaLuD0gSzKcJ4apEXYwm667lRIpeuuMAi3k2XnxChX4q+z+5
+	RqmC4X5kpIj3q1+9fjb80Os7xYn8LuEt28dgjbQ8hJZMGIkQfKa8T7o9bEwHgVl1k0OuJWg1EO4
+	hH0sCPR3bwWzyz3/vsEHC8bwFXJpoe2mJ9KxlhBG/5Mvc7eb/CITh74QhKwKG6TT+wkkZPcjYCu
+	g8zys9t9lV6UkoGbx/EICD4jF+5Vp0k6bk1ohnYdhgZdL+RgTSwckarJU9Hdaff06KHwfGUwJsF
+	qfKnwzXHHeNdt9C1OIh69idHQcxeV54KgcTyQOWTmWtKawLNR6xKY+RdGhzVjY65Y7Aoxs4wC3a
+	4rTNu4S7xWg6OqIS4
+X-Google-Smtp-Source: AGHT+IGxjfWe/ohVKtIc7MSKLaqh9l6VKALWWMoJqw2QrV7/nC/Uq+NNSYvifZc+ELXLvwki7ce21g==
+X-Received: by 2002:a05:6214:508c:b0:6e6:6bd8:3a86 with SMTP id 6a1803df08f44-6eb3f27da4fmr4141206d6.6.1742493492844;
+        Thu, 20 Mar 2025 10:58:12 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4771d63597dsm1420581cf.71.2025.03.20.10.57.09
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eb3ef1f887sm1149876d6.30.2025.03.20.10.58.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Mar 2025 10:57:10 -0700 (PDT)
-Date: Thu, 20 Mar 2025 13:57:08 -0400
+        Thu, 20 Mar 2025 10:58:12 -0700 (PDT)
+Date: Thu, 20 Mar 2025 13:58:11 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v5 14/14] midx: implement writing incremental MIDX bitmaps
-Message-ID: <13568cfa3b8a9efcc9238d08b9f940e7c0650681.1742493373.git.me@ttaylorr.com>
+Subject: Re: [PATCH v5 08/14] pack-bitmap.c: teach `rev-list --test-bitmap`
+ about incremental MIDXs
+Message-ID: <Z9xXM2DB+3cllQQA@nand.local>
 References: <cover.1723755667.git.me@ttaylorr.com>
  <cover.1742493373.git.me@ttaylorr.com>
+ <20250320175652.huJnykbhBJ9dLM6drZm3omfLTisaJX-eq1TQ5FN52h4@z>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,469 +76,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1742493373.git.me@ttaylorr.com>
+In-Reply-To: <20250320175652.huJnykbhBJ9dLM6drZm3omfLTisaJX-eq1TQ5FN52h4@z>
 
-Now that the pack-bitmap machinery has learned how to read and interact
-with an incremental MIDX bitmap, teach the pack-bitmap-write.c machinery
-(and relevant callers from within the MIDX machinery) to write such
-bitmaps.
+On Thu, Mar 20, 2025 at 01:56:52PM -0400, Taylor Blau wrote:
+> ---
+>  pack-bitmap.c | 107 ++++++++++++++++++++++++++++++++++++++++----------
+>  1 file changed, 86 insertions(+), 21 deletions(-)
 
-The details for doing so are mostly straightforward. The main changes
-are as follows:
+Oops. I moved the wrong direction from 9->8 instead of 9->10 when
+submitting, hence the duplicate patch here.
 
-  - find_object_pos() now makes use of an extra MIDX parameter which is
-    used to locate the bit positions of objects which are from previous
-    layers (and thus do not exist in the current layer's pack_order
-    field).
+Please disregard this one, though the rest of the round is fine.
 
-    (Note also that the pack_order field is moved into struct
-    write_midx_context to further simplify the callers for
-    write_midx_bitmap()).
-
-  - bitmap_writer_build_type_index() first determines how many objects
-    precede the current bitmap layer and offsets the bits it sets in
-    each respective type-level bitmap by that amount so they can be OR'd
-    together.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/pack-objects.c                  |  3 +-
- midx-write.c                            | 57 ++++++++++------
- pack-bitmap-write.c                     | 65 +++++++++++++-----
- pack-bitmap.h                           |  4 +-
- t/t5334-incremental-multi-pack-index.sh | 87 +++++++++++++++++++++++++
- 5 files changed, 179 insertions(+), 37 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 58a9b16126..a7e4bb7904 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1397,7 +1397,8 @@ static void write_pack_file(void)
- 
- 			if (write_bitmap_index) {
- 				bitmap_writer_init(&bitmap_writer,
--						   the_repository, &to_pack);
-+						   the_repository, &to_pack,
-+						   NULL);
- 				bitmap_writer_set_checksum(&bitmap_writer, hash);
- 				bitmap_writer_build_type_index(&bitmap_writer,
- 							       written_list);
-diff --git a/midx-write.c b/midx-write.c
-index 48d6558253..0897cbd829 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -647,16 +647,22 @@ static uint32_t *midx_pack_order(struct write_midx_context *ctx)
- 	return pack_order;
- }
- 
--static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
--				     struct write_midx_context *ctx)
-+static void write_midx_reverse_index(struct write_midx_context *ctx,
-+				     const char *object_dir,
-+				     unsigned char *midx_hash)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	char *tmp_file;
- 
- 	trace2_region_enter("midx", "write_midx_reverse_index", ctx->repo);
- 
--	strbuf_addf(&buf, "%s-%s.rev", midx_name, hash_to_hex_algop(midx_hash,
--								    ctx->repo->hash_algo));
-+	if (ctx->incremental)
-+		get_split_midx_filename_ext(ctx->repo->hash_algo, &buf,
-+					    object_dir, midx_hash,
-+					    MIDX_EXT_REV);
-+	else
-+		get_midx_filename_ext(ctx->repo->hash_algo, &buf, object_dir,
-+				      midx_hash, MIDX_EXT_REV);
- 
- 	tmp_file = write_rev_file_order(ctx->repo->hash_algo, NULL, ctx->pack_order,
- 					ctx->entries_nr, midx_hash, WRITE_REV);
-@@ -829,22 +835,29 @@ static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr
- 	return cb.commits;
- }
- 
--static int write_midx_bitmap(struct repository *r, const char *midx_name,
-+static int write_midx_bitmap(struct write_midx_context *ctx,
-+			     const char *object_dir,
- 			     const unsigned char *midx_hash,
- 			     struct packing_data *pdata,
- 			     struct commit **commits,
- 			     uint32_t commits_nr,
--			     uint32_t *pack_order,
- 			     unsigned flags)
- {
- 	int ret, i;
- 	uint16_t options = 0;
- 	struct bitmap_writer writer;
- 	struct pack_idx_entry **index;
--	char *bitmap_name = xstrfmt("%s-%s.bitmap", midx_name,
--				    hash_to_hex_algop(midx_hash, r->hash_algo));
-+	struct strbuf bitmap_name = STRBUF_INIT;
- 
--	trace2_region_enter("midx", "write_midx_bitmap", r);
-+	trace2_region_enter("midx", "write_midx_bitmap", ctx->repo);
-+
-+	if (ctx->incremental)
-+		get_split_midx_filename_ext(ctx->repo->hash_algo, &bitmap_name,
-+					    object_dir, midx_hash,
-+					    MIDX_EXT_BITMAP);
-+	else
-+		get_midx_filename_ext(ctx->repo->hash_algo, &bitmap_name,
-+				      object_dir, midx_hash, MIDX_EXT_BITMAP);
- 
- 	if (flags & MIDX_WRITE_BITMAP_HASH_CACHE)
- 		options |= BITMAP_OPT_HASH_CACHE;
-@@ -861,7 +874,8 @@ static int write_midx_bitmap(struct repository *r, const char *midx_name,
- 	for (i = 0; i < pdata->nr_objects; i++)
- 		index[i] = &pdata->objects[i].idx;
- 
--	bitmap_writer_init(&writer, r, pdata);
-+	bitmap_writer_init(&writer, ctx->repo, pdata,
-+			   ctx->incremental ? ctx->base_midx : NULL);
- 	bitmap_writer_show_progress(&writer, flags & MIDX_PROGRESS);
- 	bitmap_writer_build_type_index(&writer, index);
- 
-@@ -879,7 +893,7 @@ static int write_midx_bitmap(struct repository *r, const char *midx_name,
- 	 * bitmap_writer_finish().
- 	 */
- 	for (i = 0; i < pdata->nr_objects; i++)
--		index[pack_order[i]] = &pdata->objects[i].idx;
-+		index[ctx->pack_order[i]] = &pdata->objects[i].idx;
- 
- 	bitmap_writer_select_commits(&writer, commits, commits_nr);
- 	ret = bitmap_writer_build(&writer);
-@@ -887,14 +901,14 @@ static int write_midx_bitmap(struct repository *r, const char *midx_name,
- 		goto cleanup;
- 
- 	bitmap_writer_set_checksum(&writer, midx_hash);
--	bitmap_writer_finish(&writer, index, bitmap_name, options);
-+	bitmap_writer_finish(&writer, index, bitmap_name.buf, options);
- 
- cleanup:
- 	free(index);
--	free(bitmap_name);
-+	strbuf_release(&bitmap_name);
- 	bitmap_writer_free(&writer);
- 
--	trace2_region_leave("midx", "write_midx_bitmap", r);
-+	trace2_region_leave("midx", "write_midx_bitmap", ctx->repo);
- 
- 	return ret;
- }
-@@ -1077,8 +1091,6 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 	ctx.repo = r;
- 
- 	ctx.incremental = !!(flags & MIDX_WRITE_INCREMENTAL);
--	if (ctx.incremental && (flags & MIDX_WRITE_BITMAP))
--		die(_("cannot write incremental MIDX with bitmap"));
- 
- 	if (ctx.incremental)
- 		strbuf_addf(&midx_name,
-@@ -1119,6 +1131,13 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 	if (ctx.incremental) {
- 		struct multi_pack_index *m = ctx.base_midx;
- 		while (m) {
-+			if (flags & MIDX_WRITE_BITMAP && load_midx_revindex(m)) {
-+				error(_("could not load reverse index for MIDX %s"),
-+				      hash_to_hex_algop(get_midx_checksum(m),
-+							m->repo->hash_algo));
-+				result = 1;
-+				goto cleanup;
-+			}
- 			ctx.num_multi_pack_indexes_before++;
- 			m = m->base_midx;
- 		}
-@@ -1387,7 +1406,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 
- 	if (flags & MIDX_WRITE_REV_INDEX &&
- 	    git_env_bool("GIT_TEST_MIDX_WRITE_REV", 0))
--		write_midx_reverse_index(midx_name.buf, midx_hash, &ctx);
-+		write_midx_reverse_index(&ctx, object_dir, midx_hash);
- 
- 	if (flags & MIDX_WRITE_BITMAP) {
- 		struct packing_data pdata;
-@@ -1410,8 +1429,8 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 		FREE_AND_NULL(ctx.entries);
- 		ctx.entries_nr = 0;
- 
--		if (write_midx_bitmap(r, midx_name.buf, midx_hash, &pdata,
--				      commits, commits_nr, ctx.pack_order,
-+		if (write_midx_bitmap(&ctx, object_dir,
-+				      midx_hash, &pdata, commits, commits_nr,
- 				      flags) < 0) {
- 			error(_("could not write multi-pack bitmap"));
- 			result = 1;
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 34e86d4994..8a30853d2e 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -26,6 +26,8 @@
- #include "alloc.h"
- #include "refs.h"
- #include "strmap.h"
-+#include "midx.h"
-+#include "pack-revindex.h"
- 
- struct bitmapped_commit {
- 	struct commit *commit;
-@@ -43,7 +45,8 @@ static inline int bitmap_writer_nr_selected_commits(struct bitmap_writer *writer
- }
- 
- void bitmap_writer_init(struct bitmap_writer *writer, struct repository *r,
--			struct packing_data *pdata)
-+			struct packing_data *pdata,
-+			struct multi_pack_index *midx)
- {
- 	memset(writer, 0, sizeof(struct bitmap_writer));
- 	if (writer->bitmaps)
-@@ -51,6 +54,7 @@ void bitmap_writer_init(struct bitmap_writer *writer, struct repository *r,
- 	writer->bitmaps = kh_init_oid_map();
- 	writer->pseudo_merge_commits = kh_init_oid_map();
- 	writer->to_pack = pdata;
-+	writer->midx = midx;
- 
- 	string_list_init_dup(&writer->pseudo_merge_groups);
- 
-@@ -113,6 +117,11 @@ void bitmap_writer_build_type_index(struct bitmap_writer *writer,
- 				    struct pack_idx_entry **index)
- {
- 	uint32_t i;
-+	uint32_t base_objects = 0;
-+
-+	if (writer->midx)
-+		base_objects = writer->midx->num_objects +
-+			writer->midx->num_objects_in_base;
- 
- 	writer->commits = ewah_new();
- 	writer->trees = ewah_new();
-@@ -142,19 +151,19 @@ void bitmap_writer_build_type_index(struct bitmap_writer *writer,
- 
- 		switch (real_type) {
- 		case OBJ_COMMIT:
--			ewah_set(writer->commits, i);
-+			ewah_set(writer->commits, i + base_objects);
- 			break;
- 
- 		case OBJ_TREE:
--			ewah_set(writer->trees, i);
-+			ewah_set(writer->trees, i + base_objects);
- 			break;
- 
- 		case OBJ_BLOB:
--			ewah_set(writer->blobs, i);
-+			ewah_set(writer->blobs, i + base_objects);
- 			break;
- 
- 		case OBJ_TAG:
--			ewah_set(writer->tags, i);
-+			ewah_set(writer->tags, i + base_objects);
- 			break;
- 
- 		default:
-@@ -207,19 +216,37 @@ void bitmap_writer_push_commit(struct bitmap_writer *writer,
- static uint32_t find_object_pos(struct bitmap_writer *writer,
- 				const struct object_id *oid, int *found)
- {
--	struct object_entry *entry = packlist_find(writer->to_pack, oid);
-+	struct object_entry *entry;
-+
-+	entry = packlist_find(writer->to_pack, oid);
-+	if (entry) {
-+		uint32_t base_objects = 0;
-+		if (writer->midx)
-+			base_objects = writer->midx->num_objects +
-+				writer->midx->num_objects_in_base;
-+
-+		if (found)
-+			*found = 1;
-+		return oe_in_pack_pos(writer->to_pack, entry) + base_objects;
-+	} else if (writer->midx) {
-+		uint32_t at, pos;
-+
-+		if (!bsearch_midx(oid, writer->midx, &at))
-+			goto missing;
-+		if (midx_to_pack_pos(writer->midx, at, &pos) < 0)
-+			goto missing;
- 
--	if (!entry) {
- 		if (found)
--			*found = 0;
--		warning("Failed to write bitmap index. Packfile doesn't have full closure "
--			"(object %s is missing)", oid_to_hex(oid));
--		return 0;
-+			*found = 1;
-+		return pos;
- 	}
- 
-+missing:
- 	if (found)
--		*found = 1;
--	return oe_in_pack_pos(writer->to_pack, entry);
-+		*found = 0;
-+	warning("Failed to write bitmap index. Packfile doesn't have full closure "
-+		"(object %s is missing)", oid_to_hex(oid));
-+	return 0;
- }
- 
- static void compute_xor_offsets(struct bitmap_writer *writer)
-@@ -586,7 +613,7 @@ int bitmap_writer_build(struct bitmap_writer *writer)
- 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
- 	struct prio_queue tree_queue = { NULL };
- 	struct bitmap_index *old_bitmap;
--	uint32_t *mapping;
-+	uint32_t *mapping = NULL;
- 	int closed = 1; /* until proven otherwise */
- 
- 	if (writer->show_progress)
-@@ -1021,7 +1048,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
- 	struct strbuf tmp_file = STRBUF_INIT;
- 	struct hashfile *f;
- 	off_t *offsets = NULL;
--	uint32_t i;
-+	uint32_t i, base_objects;
- 
- 	struct bitmap_disk_header header;
- 
-@@ -1047,6 +1074,12 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
- 	if (options & BITMAP_OPT_LOOKUP_TABLE)
- 		CALLOC_ARRAY(offsets, writer->to_pack->nr_objects);
- 
-+	if (writer->midx)
-+		base_objects = writer->midx->num_objects +
-+			writer->midx->num_objects_in_base;
-+	else
-+		base_objects = 0;
-+
- 	for (i = 0; i < bitmap_writer_nr_selected_commits(writer); i++) {
- 		struct bitmapped_commit *stored = &writer->selected[i];
- 		int commit_pos = oid_pos(&stored->commit->object.oid, index,
-@@ -1055,7 +1088,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
- 
- 		if (commit_pos < 0)
- 			BUG(_("trying to write commit not in index"));
--		stored->commit_pos = commit_pos;
-+		stored->commit_pos = commit_pos + base_objects;
- 	}
- 
- 	write_selected_commits_v1(writer, f, offsets);
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index d7f4b8b8e9..dd0951088f 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -111,6 +111,7 @@ struct bitmap_writer {
- 
- 	kh_oid_map_t *bitmaps;
- 	struct packing_data *to_pack;
-+	struct multi_pack_index *midx; /* if appending to a MIDX chain */
- 
- 	struct bitmapped_commit *selected;
- 	unsigned int selected_nr, selected_alloc;
-@@ -125,7 +126,8 @@ struct bitmap_writer {
- };
- 
- void bitmap_writer_init(struct bitmap_writer *writer, struct repository *r,
--			struct packing_data *pdata);
-+			struct packing_data *pdata,
-+			struct multi_pack_index *midx);
- void bitmap_writer_show_progress(struct bitmap_writer *writer, int show);
- void bitmap_writer_set_checksum(struct bitmap_writer *writer,
- 				const unsigned char *sha1);
-diff --git a/t/t5334-incremental-multi-pack-index.sh b/t/t5334-incremental-multi-pack-index.sh
-index 26257e5660..d30d7253d6 100755
---- a/t/t5334-incremental-multi-pack-index.sh
-+++ b/t/t5334-incremental-multi-pack-index.sh
-@@ -44,4 +44,91 @@ test_expect_success 'convert incremental to non-incremental' '
- 
- compare_results_with_midx 'non-incremental MIDX conversion'
- 
-+write_midx_layer () {
-+	n=1
-+	if test -f $midx_chain
-+	then
-+		n="$(($(wc -l <$midx_chain) + 1))"
-+	fi
-+
-+	for i in 1 2
-+	do
-+		test_commit $n.$i &&
-+		git repack -d || return 1
-+	done &&
-+	git multi-pack-index write --bitmap --incremental
-+}
-+
-+test_expect_success 'write initial MIDX layer' '
-+	git repack -ad &&
-+	write_midx_layer
-+'
-+
-+test_expect_success 'read bitmap from first MIDX layer' '
-+	git rev-list --test-bitmap 1.2
-+'
-+
-+test_expect_success 'write another MIDX layer' '
-+	write_midx_layer
-+'
-+
-+test_expect_success 'midx verify with multiple layers' '
-+	test_path_is_file "$midx_chain" &&
-+	test_line_count = 2 "$midx_chain" &&
-+
-+	git multi-pack-index verify
-+'
-+
-+test_expect_success 'read bitmap from second MIDX layer' '
-+	git rev-list --test-bitmap 2.2
-+'
-+
-+test_expect_success 'read earlier bitmap from second MIDX layer' '
-+	git rev-list --test-bitmap 1.2
-+'
-+
-+test_expect_success 'show object from first pack' '
-+	git cat-file -p 1.1
-+'
-+
-+test_expect_success 'show object from second pack' '
-+	git cat-file -p 2.2
-+'
-+
-+for reuse in false single multi
-+do
-+	test_expect_success "full clone (pack.allowPackReuse=$reuse)" '
-+		rm -fr clone.git &&
-+
-+		git config pack.allowPackReuse $reuse &&
-+		git clone --no-local --bare . clone.git
-+	'
-+done
-+
-+test_expect_success 'relink existing MIDX layer' '
-+	rm -fr "$midxdir" &&
-+
-+	GIT_TEST_MIDX_WRITE_REV=1 git multi-pack-index write --bitmap &&
-+
-+	midx_hash="$(test-tool read-midx --checksum $objdir)" &&
-+
-+	test_path_is_file "$packdir/multi-pack-index" &&
-+	test_path_is_file "$packdir/multi-pack-index-$midx_hash.bitmap" &&
-+	test_path_is_file "$packdir/multi-pack-index-$midx_hash.rev" &&
-+
-+	test_commit another &&
-+	git repack -d &&
-+	git multi-pack-index write --bitmap --incremental &&
-+
-+	test_path_is_missing "$packdir/multi-pack-index" &&
-+	test_path_is_missing "$packdir/multi-pack-index-$midx_hash.bitmap" &&
-+	test_path_is_missing "$packdir/multi-pack-index-$midx_hash.rev" &&
-+
-+	test_path_is_file "$midxdir/multi-pack-index-$midx_hash.midx" &&
-+	test_path_is_file "$midxdir/multi-pack-index-$midx_hash.bitmap" &&
-+	test_path_is_file "$midxdir/multi-pack-index-$midx_hash.rev" &&
-+	test_line_count = 2 "$midx_chain"
-+
-+'
-+
- test_done
--- 
-2.49.0.14.g88b49c1b34
+Thanks,
+Taylor
