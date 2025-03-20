@@ -1,194 +1,119 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9D022541F
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 09:35:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBD822258E
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 10:21:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742463354; cv=none; b=n18svbRA4ul67as5FBflrOLeK/8cmmIfdRWdunSNb9qcYazjiDupHMHvb9v++ykRWWhfmwDdTborHYwzk876L9F/lL7pTZDZ/I3BMMZnDFhLd6pxHGTPrF4nWlJ8fy+eBwL4ov8EC7y7d0H2wnWC5uIuRFHqLGjWJYpPcYktxIw=
+	t=1742466076; cv=none; b=ThmEHgVG8UBOe0UNW9IdAvrBOSrPPXTsgKZ7FRas1vrsqE8NenqXEP/ldTj9taPBdnQVnKzv+A9qq/Yxe/UgqkkAZwR3S/qEqqZFZD/CXn6dUDSFbG/+T4D1/5NrKQ1y53UU82yzFkcj+TzyfoPsSWjqyxlmtle6e/gOrNoUAG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742463354; c=relaxed/simple;
-	bh=0vDLZtJoO0JWlSJGdB1334hkWHi1ZII88VJ3KTVuw4M=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=I10L7TuJ4R9K77wWGz3oW/NYJ5Wc8Cu+7wpTLwhtSSzMf71GEPxV6PuGqm3SNPZtjZPHArF5JxS56w8Tlr6B619YfzWZxA9/bJXiTAFiAAvNoyk9qCpgQFobkW4cUepyP+tz+Rrpm5C36W2N/dEd5h0CwIxEvF6YiF5VkHek4Bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PuxxUQ68; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=6szfIjF3; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1742466076; c=relaxed/simple;
+	bh=iEDx9/h0EWYMLc7xOvmVs19EfVJDlc29B+GE7Sue5CQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jqOaqr1l9sA9g4dilBpfKd1GW1SFB0zam1LIcxuwI52Yet58MJet4IBmI0zhmTWc3eN1cq/FM1Td3x/rbcABBlxfHt9lhp48mAgRRd2M6zVRaLxX5RTzbaaAjf42qFUrPgQFY/wkLCwOOK6l3UM20DfiiQ7aQwDfajUPj3EEaAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JHodCZI3; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PuxxUQ68";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="6szfIjF3"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0F5672540099;
-	Thu, 20 Mar 2025 05:35:52 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Thu, 20 Mar 2025 05:35:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1742463351;
-	 x=1742549751; bh=8mNJ6Dr3p2I6SWEWYBP3GmUzLBsShSYpobEZZTH9ZWE=; b=
-	PuxxUQ68KIXd6S8N7g3h0x40ql/B4ei9AWBVHG2ebKloooN4noALT3gG0479q9Zj
-	G9sQY+k7a0nMPtORAVCFvGolm3rUHll66vgnRV5RGDJ1LH8cuTqS1UZelaNHVteK
-	z8rvFHttAkkPnbb6S/Bkd1hulWvbcVGP+U0La1BQk3gQFXuj9P0369nTU1SFU1Ea
-	Pp2JcIq8BMl6yqaaVDwNgUe0C8Ttc/kflG6ltu9IL9vxS7s7i7HgO1KQyC/XAjyW
-	d/9NPedK8LV37awlDOr/qp3XG4Mwl/mDIh2cNdZO7B1IatSW2CFUBqEOyKY5TsV7
-	Z2JxMJzTWEFaPA7mSBhIuA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742463351; x=
-	1742549751; bh=8mNJ6Dr3p2I6SWEWYBP3GmUzLBsShSYpobEZZTH9ZWE=; b=6
-	szfIjF37lPATkZ7ALJ9SztkFbT7wRIZ6Du/KcZN81biNqUji6InOF1++B5gatQfL
-	Na0g4CYYOziTEnPjxlLrl8XMLFQ4+asKknl+RknNKp9QH7ALKTpZtVxAhfpPMySr
-	1Ku0rs6e4GfQLuUMx8BsSM7A7ao0u4YOXZ66d7INu5ZmOxJuApLjzY0lnCoVOl0p
-	l2e/Kfr73kaSq40FaHgP0miCL8DY/tDJke3NofT2wYwPnzBZL4Oknnjn6dEIEU6r
-	wudqArLS8UrWyxhqT7f4t2RQTMRD68Udqz5UlJm+SXeg2me8i4RQPOxqMYzUXBO9
-	Z+Q6MrzoL6rPQVyBDtvZA==
-X-ME-Sender: <xms:d-HbZ3sOx852xjjABkiwm2yNAd_aV3l9gggpkxfSiUVS39cIhRT53Q>
-    <xme:d-HbZ4fIHS3rE_ud3T_xDAm33YDvK1pz2-Z-sUtugG3P88lk1hFY56fOmMMCj5cE0
-    qTgl-wdTyVDs_DIfg>
-X-ME-Received: <xmr:d-HbZ6wDrN1qgj4OLqx6IDMpRy9AwntpcR4xbexqjd2giufZ5L3CoP37sK6iJnh5fqMcXPad6Gy84LGkyzpj_3mWwTyOLO2F_TYKfZcxJp92JPE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeejkeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
-X-ME-Proxy: <xmx:d-HbZ2OE_bxRfsOHzoSLwXkrdAUlBQDJOcfY8dr9x4N-8CqbEW7Ihg>
-    <xmx:d-HbZ38Ual6fjfJIVyQ3ujbxI_93uA_mC64625w7AJ1XMwT2_-63kQ>
-    <xmx:d-HbZ2VwjwmUlw8HpCFOlEoyve6VAgQBwAlw_AZyhrW_Bqkf9wUyyg>
-    <xmx:d-HbZ4cqx5bhWXLacT_fTBL2Z1MzUM5Q2Fww_1Epkb-8SHQNbyeMXA>
-    <xmx:d-HbZ5KSjaJTR_-WLJSvrnG80yGa3FEybl8e-O3HU3fJuxguzADtpmng>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Mar 2025 05:35:51 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 402e6d98 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Mar 2025 09:35:49 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 20 Mar 2025 10:35:47 +0100
-Subject: [PATCH 20/20] t5703: refactor test to not depend on Perl
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JHodCZI3"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3995ff6b066so292112f8f.3
+        for <git@vger.kernel.org>; Thu, 20 Mar 2025 03:21:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742466073; x=1743070873; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=jOJJ9DaUFlWlsGW6B9ehAhb8EKXDjSxCePQdd6r1TK0=;
+        b=JHodCZI3C+xCRt/pNhpV14C5fgXhkP7urPZw7XxLpVclAJK/i0RleGu5Ax9yKLGzQC
+         GYdLzjBSaWKzWXOwRKFUTvRMFaM3JsLc+Z8hhNZeKeQet52+HiIwqWFGSaGesnaiWYcN
+         2D5cegx9u+BpwEmXSQxoActmZvbXMSFNg45A62laVfeoMcFePqFncPIKiZBJIIBsDKQx
+         ALV7naTDOm0fYw07Fl4AwAYd3iGhViLBEqQMfAqPVO6Xa3V7jsrDqGMN66JwIKjmW2R0
+         vbBZLu9Y/fW1ZSxS6GrV+6TkSgGhDoTf8ErCFUBl1AIaclOlO/qDWNJ5a16r4/dVgATI
+         bcYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742466073; x=1743070873;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jOJJ9DaUFlWlsGW6B9ehAhb8EKXDjSxCePQdd6r1TK0=;
+        b=C6aCHa3QFbVN2ZA+5bhFgxe/uw84Q/QxD8RrEq/eq7Df79TQmL5c6iQGuPNVdIb66w
+         fpbwREZ02MCya2oL88vzjCQnRomvaveEFaA3GHtapTAlIF5CKfB9fao3qkp5ct1Lbz+g
+         qrzpxz6OmdTD/gb45Ki7bT8EucyzutJj7omFUOO2dWMK4mIgLHHa3yJ8OLu2yXvEzUPY
+         CdfwgN42WDepXsnsySmWgKuFumhB6UNfVrPxMWBYMzu0Y/BDhbGKhGV1cwh2IgRn0CMa
+         wHRv30VYA3l1vwnNzQJqcMAjnnJQ7mbwNiNTG1QnkazdZBbsJFBS8DEI0H3q2c+SmpSg
+         xzOA==
+X-Forwarded-Encrypted: i=1; AJvYcCWj10i5uaPRIMlYj9t4ngZmQ5rTLvgtRzm++vpZLU2WMi3JhAjCT0niDkUhwxDipnef370=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxdmSkNpazLWcPaUABFuzP3H0S0kv9mmAMrUpR8xikzRwsqOsj
+	U30iqhkZ5RtWPZL7uGgECkWhpZ0tQz4rijsBlhY5qUP3I9yCp969lS1Dvg==
+X-Gm-Gg: ASbGnct5fWY9C+80todwKXaMCo/7pobsOo2ilpQSgjm5NAFqvikQah7vfHe8sDOt0i+
+	nB+8U+QekXcG3XbSDZIHmnt1Vkhl6CVGKfgh4sKzl0ISUidRFQTKB2NVY843I17qs7BxdFe/pWX
+	YFqN+HIutMS0WboEXwcVrE0cA7KdClxpw1a1Q+IY/5Hb5NveojJf2WZY+/gh+z6Hau2tsiVlHt7
+	MqSxwnbx4pwxNJSiy22oFa9LlP4B+I9j8VdNPrGC7BPxdOvzgoWnB8EmVOUJGPuQnuoPppzdHUl
+	nmbfFlr/hOvU3JYSiozvHN8JsDn0NgrFyal+8Qsd3eLn++ufjTLTrjDwrBUmIFCrwcdYH3nkV/4
+	vWsEqnYHxfno/4lenF/vp
+X-Google-Smtp-Source: AGHT+IFSs+kQosrxGan/i0ZPbXKDvshJLAbSfD+vm19VkvkgdDmuT3NiiIqhvoMMxFe8nLvxv6fDUQ==
+X-Received: by 2002:a05:6000:1ace:b0:391:2d61:453f with SMTP id ffacd0b85a97d-399739c8c7amr4960295f8f.24.1742466072402;
+        Thu, 20 Mar 2025 03:21:12 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-395c8975bdfsm23028145f8f.49.2025.03.20.03.21.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Mar 2025 03:21:11 -0700 (PDT)
+Message-ID: <6a3154e0-e7bc-45ae-b554-67ccab18727a@gmail.com>
+Date: Thu, 20 Mar 2025 10:21:10 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] docs: clarify meaning of core.commentString=auto
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+References: <Z9lcXR6sL3UWlL33@ugly> <xmqqa59i45wc.fsf@gitster.g>
+ <Z9sLAEbE9lAInBXz@ugly>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <Z9sLAEbE9lAInBXz@ugly>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250320-b4-pks-t-perlless-v1-20-b1eefe27ac55@pks.im>
-References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
-In-Reply-To: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-Mailer: b4 0.14.2
 
-We use Perl due to two different reasons in t5703:
+On 19/03/2025 18:20, Oswald Buddenhagen wrote:
+> On Tue, Mar 18, 2025 at 10:15:15AM -0700, Junio C Hamano wrote:
+>>> reading through the thread of the original submission, the feature is a
+>>> workaround for `commit -m` and `commit --amend` being inconsistent wrt.
+>>> message washing.
+>>
+>> Perhaps somebody can be talked into fixing it ;-)
+>>
+>> With a clear explanation, I am OK if somebody wants to advocate to
+>> deprecate (and remove at Git 3.0 boundary) the "auto" support ;-)
 
-  - To filter advertised capabilities.
+I think that may be best. Looking at the sequencer I don't think 
+append_conflicts_hint(), the "fixup" or "squash" commands of "rebase 
+-i", or the "--reference" option of "git revert" are compatible with 
+core.commentStr=auto. For rebase making it work would mean scanning the 
+messages of all the commits to be squash before picking the first one 
+which is a pain.
 
-  - To set up a CGI script with HTTPD.
+> how would we go about this in practice? just a notice in the docu, or
+> some mechanism which would complain at runtime? under what circumstances
+> (i.e., how to enable/squelch it)?
 
-Refactor the first category to use `test_grep` instead. Refactoring the
-second category would be a bit more involved, so instead we add the
-PERL_TEST_HELPERS prerequisite to those individual tests now.
+I think we'd want to start printing some advice when 
+core.commentStr=auto explaining why it has been deprecated and that it 
+will be removed when Git 3.0 is released. We should allow that advice to 
+be suppressed setting advice.autoCommentStr (other name suggestions 
+welcome). We would also want to add an item to BreakingChanges.adoc 
+explaining why it is being removed and add "#ifndef 
+WITH_BREAKING_CHANGES" around the code that handles core.commentStr=auto 
+in builtin/commit.c and guard the documentation with 
+"ifdef::with_breaking_changes[]". We may want to make 
+core.commentStr=auto an error when breaking changes are enabled as well.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t5703-upload-pack-ref-in-want.sh | 25 ++++++++-----------------
- 1 file changed, 8 insertions(+), 17 deletions(-)
+Best Wishes
 
-diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
-index ac7266126a0..1ab3191d72d 100755
---- a/t/t5703-upload-pack-ref-in-want.sh
-+++ b/t/t5703-upload-pack-ref-in-want.sh
-@@ -4,12 +4,6 @@ test_description='upload-pack ref-in-want'
- 
- . ./test-lib.sh
- 
--if ! test_have_prereq PERL_TEST_HELPERS
--then
--	skip_all='skipping upload-pack ref-in-want tests; Perl not available'
--	test_done
--fi
--
- get_actual_refs () {
- 	sed -n -e '/wanted-refs/,/0001/{
- 		/wanted-refs/d
-@@ -89,18 +83,15 @@ test_expect_success 'setup repository' '
- 
- test_expect_success 'config controls ref-in-want advertisement' '
- 	test-tool serve-v2 --advertise-capabilities >out &&
--	perl -ne "/ref-in-want/ and print" out >out.filter &&
--	test_must_be_empty out.filter &&
-+	test_grep ! "ref-in-want" out &&
- 
- 	git config uploadpack.allowRefInWant false &&
- 	test-tool serve-v2 --advertise-capabilities >out &&
--	perl -ne "/ref-in-want/ and print" out >out.filter &&
--	test_must_be_empty out.filter &&
-+	test_grep ! "ref-in-want" out &&
- 
- 	git config uploadpack.allowRefInWant true &&
- 	test-tool serve-v2 --advertise-capabilities >out &&
--	perl -ne "/ref-in-want/ and print" out >out.filter &&
--	test_file_not_empty out.filter
-+	test_grep "ref-in-want" out
- '
- 
- test_expect_success 'invalid want-ref line' '
-@@ -486,7 +477,7 @@ inconsistency () {
- 	EOF
- }
- 
--test_expect_success 'server is initially ahead - no ref in want' '
-+test_expect_success PERL_TEST_HELPERS 'server is initially ahead - no ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant false &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
-@@ -495,7 +486,7 @@ test_expect_success 'server is initially ahead - no ref in want' '
- 	test_grep "fatal: remote error: upload-pack: not our ref" err
- '
- 
--test_expect_success 'server is initially ahead - ref in want' '
-+test_expect_success PERL_TEST_HELPERS 'server is initially ahead - ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant true &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
-@@ -507,7 +498,7 @@ test_expect_success 'server is initially ahead - ref in want' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'server is initially behind - no ref in want' '
-+test_expect_success PERL_TEST_HELPERS 'server is initially behind - no ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant false &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
-@@ -519,7 +510,7 @@ test_expect_success 'server is initially behind - no ref in want' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'server is initially behind - ref in want' '
-+test_expect_success PERL_TEST_HELPERS 'server is initially behind - ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant true &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
-@@ -531,7 +522,7 @@ test_expect_success 'server is initially behind - ref in want' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'server loses a ref - ref in want' '
-+test_expect_success PERL_TEST_HELPERS 'server loses a ref - ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant true &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
-
--- 
-2.49.0.472.ge94155a9ec.dirty
-
+Phillip
