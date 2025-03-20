@@ -1,64 +1,64 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6C38F6B
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 19:46:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB7A1DDA39
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 19:48:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742499970; cv=none; b=WYeGm/aRiWh++HThpPVvnhyAODFBW92LM9lZQV3JchjO2T86S1muO8nuTGrFGQ8XJhboOsxU8YcWZHqdi9XWKKMUZNzowbL9en2g67OAf+YdrzQh+RtzYvqZJUrP23hMqyNxjlhtdgIqOHiZoOFTMP8gmnrDSlqprylTuSsHwuc=
+	t=1742500139; cv=none; b=UbsaXOmSQrxHSalDWyg++XFXIF74CwJJwbDiX0AjadPyLofLvNywkKNftPey+7weILUpfvp2EWrImsViFA0WE2bDqMGautUwuKdQq1V1xqSb6JMyM10RfnhLfhs6qoG/ER4+9xVMNZrHBlT79N+YARI8gJoE4PyFKmjTeUhI8dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742499970; c=relaxed/simple;
-	bh=GSXz3J2zEu1zfd4vXHG9LoR29VaQ1MLa3ydc9SsB70I=;
+	s=arc-20240116; t=1742500139; c=relaxed/simple;
+	bh=/utpsqwR8oPalpPmasJ9e/duxmF0QKLjveEBD4HmcYU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KKP83ewxvDyGk4ZzdBOM/VszAWc7R3KWb9twKwP9Ilc54GQMCLnoIHVhVv+OQnBUHVGpleGREhha+rNVZmsy0NCvZMDHAzKGtaAuunRtEOOtsaPTiCdZA7oiCUns8fybMNqBoF6rQkyEIv0pL327OxAg5Y84Ip7I15lK/NLzj+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FahaVOuN; arc=none smtp.client-ip=209.85.128.176
+	 In-Reply-To:Content-Type; b=mmRwQUg4x8bi/tjJY4pytsPPFt6kYNkfuF53cCSVTHTic+JzeN3f/jktw9dsn3RkNAk2KVKSLvu/6kdsjWlwoTesbBSZNtWI1N/pISRShe1XPu8pnDntkNoYtD7J3WzbCE4IIXGlyxkYeNaIStRVILwtwDKUELMx98Dd8dLLL94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=REkJ4nOE; arc=none smtp.client-ip=209.85.219.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FahaVOuN"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6feafc707d3so11551897b3.1
-        for <git@vger.kernel.org>; Thu, 20 Mar 2025 12:46:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="REkJ4nOE"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e63504bedd0so899232276.0
+        for <git@vger.kernel.org>; Thu, 20 Mar 2025 12:48:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742499967; x=1743104767; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742500136; x=1743104936; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=GpyBYmjNENS5k6NHuYJgzDSG9pYNH5kjqTNw+iiMP0Y=;
-        b=FahaVOuNqEBgZuY+XPA6xlhfRa/hNVqB62AupdZWBiTh5bc96xgMDyJtFDc8fx1kTM
-         8oskZM4/I1u3T41QEDDS5YLmY5pMRvm0DxPFsn26pZGsnDVjHQ1+M4cALOieHyTTESnP
-         2k7gWZlXVCEVtlWx9ehbh1jeZ4LyieO1WPHQozNTkUGQB5APdmD4wMeC02iq2yOT9Kr+
-         hRnId00o8tyHY3Jpv3zSDZPADwAbnr71YPQx7uySB/GbgbImu0dIXPSwFQr+MOV0LfJe
-         yY7J1/buj2quPEnFm22yvhl7Ay7JMrXI4pjgUHpT9F4249McE75f6xTT216vndYekl6P
-         Qdfw==
+        bh=U3V9iawZX/ZzFAzw1IOawHIBW9m25Y9Ag1I5ncUXMRM=;
+        b=REkJ4nOEOec7a0c4D5giX8Cdhw776sYhhRKIFjgfDUws1whK4tnws9JTJwK4Z7xbNW
+         TmcTNvJ+I7EJoiwFtS9w/80R9DmX+KC0vuSiifJG4skCcmcxRVzqG/usR94pXR1/rMtL
+         +Ni5T/jTxbaosM0DVMTwzq0XEi3feNRvbybzfk9uBf7o8aNmqmVHDYWbnfKrbsN/O+Tr
+         9/gpf+rqx3ZBfwsXcqCYUtRasDpOv0Pa4uKFccDKgO0NuoI1HCBEpGlSMeRI593qFwO7
+         gPst0eSqyvk7hTzHxk3uMI4igyHzTWXKVfBqJrit+VjLGxoV8VKX9DWywQR23y3c2smZ
+         ZvCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742499967; x=1743104767;
+        d=1e100.net; s=20230601; t=1742500136; x=1743104936;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GpyBYmjNENS5k6NHuYJgzDSG9pYNH5kjqTNw+iiMP0Y=;
-        b=MuXttqNKf8icbhBV+lUYLELh0ToAhKGD7TD3ObigAmxCGzsWT6d+FgIvWuvzX+Rs74
-         THQCTWWinh2tq8L0Zsg8KzuSfhTFVwmdNuJWWR8eATyLPGz57Kl56QggVxXZ43h18T95
-         qr4SkuVQ7MfvIOGMQWiO9wDA0S0AT6fy9PCGiJnLzMjQIRg6OR744OfCpx5zvCCETZPm
-         Zan/V9eRZLcdqg9m6X6HywF7t51FM8kJC30Uoqlf2G4+BtFwn77cWvkxw7AUN9wVXnbC
-         lYjigj4GPl2CPRSFy+h65ly4cltSBP8v1LUyz37CYXJNJTFmQKFV53gnqr9qhmOcjheA
-         U3/w==
-X-Gm-Message-State: AOJu0YyY7BjhCMEKdIxppS6CbHLE/cunYLPcqOvFuaNyoUjzf8w7m3LJ
-	qb++xeI1IScK21S18+SYjzp14s0WhiwS5ZS3FI4LVxcuBX+mLSo4
-X-Gm-Gg: ASbGnctaG2RDiM3ZlZITejH0cqI530wxqq5v/XuE80CRDbBwkpmzxH1yw6qOqCBMA33
-	2/iSkSWFMWSyH32gOYPHfgwKb9L268Oo35UJ+O+KajLQ2DfYQ8QX5KEMFdbmUG1943uBWmbc6ky
-	AUYRrK85ed1w7oeQhY8K5z5IrvvH4vStboMedtQzRGXonxJMFpoCnlTn6fyekevjxenCVpigYAg
-	SRTdh6YtlJTsC4WigjRNOAXjv74/kyOkqcs+BozV11yk0XyB9h7djhEpAOjQq9p5G916kBHFUf9
-	9o5+haq9eLeUNYDMb4lhfBUzhgGjg+zPG0h7nwhCnxLrYWpFrcP8DBO5Yd7+ByKMGu/9+badu+S
-	46EhlQu79lKlI2lWZriB6
-X-Google-Smtp-Source: AGHT+IGAxOClsU1H7GEnslwchKt2M7/tmYPF1K8+Lp1p83x8K9+iZonHQYsps1hm327RTKq8m/F2Rg==
-X-Received: by 2002:a05:690c:6c06:b0:6f9:4bb6:eb4e with SMTP id 00721157ae682-700bad42ac4mr8516427b3.31.1742499967350;
-        Thu, 20 Mar 2025 12:46:07 -0700 (PDT)
+        bh=U3V9iawZX/ZzFAzw1IOawHIBW9m25Y9Ag1I5ncUXMRM=;
+        b=P+EN9OP2jZO8wAynuNlcZqBW0Pgdd2R3kLM8X+XpyvaRqFY4iu3cmOokjq5WsOrUe6
+         y8vyUCGE29chxtZSIpqdkt/fdgWKQ2Ft85TmS+RX/AYWhxSc15ejoxHFl01ZI0ZNoJlT
+         14aKFLRK13AF6jtam03JMRo6WEFn6ZDuJq884aJRoHl62kl0mOBliADD8dAae5TJ/Ifl
+         qrWN9+tBp5ei4YkxZeb8bvsxwGt7u0rI4RZrXdv9Wfkt2fB/e/R+e7j6HIvXJE9XcpVF
+         wFBvcoRL8BFXtxHsZxig9sxaO3tfgcYuSIeQV/5N7rjjW6NPqU5HKffO67ChJUIhbeQL
+         bFGA==
+X-Gm-Message-State: AOJu0YwzXifqX3GNtl+VdD4v+Krkzlitij+RJaFSfx4QtO1t4xHRAaPY
+	tnqqX+sj6HgQuKwQpOQkTdnDawgIm2DrX7PqYYwRGXPjj97UPcdk
+X-Gm-Gg: ASbGncvqjvGUbN4aYLZ06Lb5RJRBrBWRMV4fqnVbC91xRvrbjS3SCcBcp+cZoWZ2K3S
+	2Ix5D/lbkcOmWSSiZq8QZG1HLpFxRwcPCbKxtsJQmiqz4g5vHbd9k1JpTOjQ+9uWUP/URizdmOM
+	HYUtSZSRXUs+OWq380g2g5XtHggU6zKWfHmZbUzTP9g9Dh6wCTRSU71jax0AOjtjp+h1uHx66j2
+	YpBPsFqXg+aePy7YLENepZAVscvscFXptBEiJEv+vjJ9VehkhoQ9U+j6xrZLKFNUVSfGp5x9kyQ
+	Hc7hVChx9VF/TYt0jzLBw24SM+aBdkpGwV9frhba7NbwdeP0xPq2z2SVkmI3kGzCRfOt5V95w81
+	LI5oJxw7l9lw1+DR3Yk8X
+X-Google-Smtp-Source: AGHT+IFnS1ZT7PRdN+GSjt3WHe+Fu9PdH3fEPGHh3K0aKTSxWwcWvEVd0YjG28QSa4QTiaufWcdqrw==
+X-Received: by 2002:a05:6902:260c:b0:e60:9d5b:b882 with SMTP id 3f1490d57ef6-e66a4dac942mr601269276.27.1742500136518;
+        Thu, 20 Mar 2025 12:48:56 -0700 (PDT)
 Received: from ?IPV6:2600:1700:60ba:9810:f12b:82ea:4a0b:3183? ([2600:1700:60ba:9810:f12b:82ea:4a0b:3183])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-700ba883cccsm698197b3.105.2025.03.20.12.46.06
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e66a4264fc7sm52811276.24.2025.03.20.12.48.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Mar 2025 12:46:06 -0700 (PDT)
-Message-ID: <2649010e-e4c7-4c39-b697-ecf89549c0d4@gmail.com>
-Date: Thu, 20 Mar 2025 15:46:05 -0400
+        Thu, 20 Mar 2025 12:48:55 -0700 (PDT)
+Message-ID: <afa6b6a2-c301-45e5-a931-66d146392ad1@gmail.com>
+Date: Thu, 20 Mar 2025 15:48:55 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,7 +66,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/13] pack-objects: add --path-walk option
+Subject: Re: [PATCH 01/13] pack-objects: extract should_attempt_deltas()
 To: Taylor Blau <me@ttaylorr.com>,
  Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
@@ -74,38 +74,34 @@ Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
  karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com, newren@gmail.com,
  peff@peff.net, ps@pks.im
 References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
- <9b31dc87bb61f4d73eced02a24baea58bc51aa5e.1741571455.git.gitgitgadget@gmail.com>
- <Z9H5JsicyLWXagxS@nand.local>
+ <a2ed1f2d4e3946c563f934fcaf149050d50f255f.1741571455.git.gitgitgadget@gmail.com>
+ <Z9H2E9hEWgaS9NnP@nand.local>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <Z9H5JsicyLWXagxS@nand.local>
+In-Reply-To: <Z9H2E9hEWgaS9NnP@nand.local>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 3/12/2025 5:14 PM, Taylor Blau wrote:
-> On Mon, Mar 10, 2025 at 01:50:44AM +0000, Derrick Stolee via GitGitGadget wrote:
->> From: Derrick Stolee <stolee@gmail.com>
 
->> +--path-walk::
->> +	By default, `git pack-objects` walks objects in an order that
->> +	presents trees and blobs in an order unrelated to the path they
->> +	appear relative to a commit's root tree. The `--path-walk` option
->> +	enables a different walking algorithm that organizes trees and
->> +	blobs by path. This has the potential to improve delta compression
->> +	especially in the presence of filenames that cause collisions in
->> +	Git's default name-hash algorithm. Due to changing how the objects
->> +	are walked, this option is not compatible with `--delta-islands`,
->> +	`--shallow`, or `--filter`.
+On 3/12/2025 5:01 PM, Taylor Blau wrote:
+> On Mon, Mar 10, 2025 at 01:50:43AM +0000, Derrick Stolee via GitGitGadget wrote:
+
+>> +static int should_attempt_deltas(struct object_entry *entry)
+>> +{
+>> +	if (DELTA(entry))
+>> +		return 0;
+>> +
+...>> -		if (DELTA(entry))
+>> -			/* This happens if we decided to reuse existing
+>> -			 * delta from a pack.  "reuse_delta &&" is implied.
+>> -			 */
 > 
-> I think from reading further below that this feature is somewhat
-> incompatible with --use-bitmap-index, at least in the sense that we
-> implicitly disable the latter whenever we see the former. Would that be
-> worth mentioning here?
+> It looks like this comment went away when this part of prepare_pack()
+> was extracted into should_attempt_deltas().
+> 
+>> -			continue;
 
-While it is not incompatible and does not even include a warning, the
---use-bitmap-index option gets silently ignored. This matches how
---shallow does similar things. I'll still add to this doc as I agree
-it would be helpful.
+Good catch. 
 
 Thanks,
 -Stolee
