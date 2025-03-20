@@ -1,238 +1,182 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A6E22258E
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 09:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACB7221F13
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 09:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742462297; cv=none; b=ZTzr6ye3JvljsAuxeYXlBA57LYMg69Qb4VaDSNzIMjIAOdYun8WNsU48JsdOOvHrSXA2xrZrGZwLvzR+f4M4Zsy+AgWPVg9JHFTkfCiQ2uOA8RuuQwBCVgVyRShNojyAnWXIzk0Isf0Xt2wFV9hw0/WSg0zEBDnsh+SHibcFttM=
+	t=1742462773; cv=none; b=SferoGVaEWf0FehWHTTpTIhF+VL46+40cok4VW/8G0/V+mev9KTfCeFdQhXvr46g3443E1XxSiK88J340UFkNSYL3fGTugfPCAmvNZXEw1t0RR0XHUvIHwIPQB3LQG+HLpXprBXwpsAfUvGYgbAztGnN20s/4wcTjvO3zTFYynA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742462297; c=relaxed/simple;
-	bh=CtV/PTwyfeaHR1J8l+ehHvzqEtx7aoqWbuVK8U9QoOk=;
+	s=arc-20240116; t=1742462773; c=relaxed/simple;
+	bh=J1P9Fv5/tNk0ERZHAh2bK/+3bW67keewfcPbMFx2e6Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZuP6ykQWBEjA+40wg4DdWQdhGc4ZeS3/dTzENPDhGt/fiFgsm9inCIHmfrYPo/EHqSvHMalFrzt6Vn/ZjFi/BeNO3tSuvnDP4nPhNMB6JLPBQHmF4ZXTUUIyz5oLb3tUAVlWmtXLG5zFX5EC86GX+P41ixo2M/T1XjZKdnFGP+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VOBjROfi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LEqw4PKm; arc=none smtp.client-ip=202.12.124.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZosbTNP+ukC5/PNv5wsCbvA1DoztpAmE7T9syqZaSRMhxYWwRc3veapy2cdghDgHqJyEC72K6wthjstVRw+x9RCI1ih+MwPJR6T3/s8w0zEJTx0mJVcorc0B3EMzk5N3VRCHmZo55SpD8sxIonIjeao40nVfruxsIEQUOaipCfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=o2X7z3Xr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Imyp90CM; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VOBjROfi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LEqw4PKm"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EEF702540192;
-	Thu, 20 Mar 2025 05:18:14 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 20 Mar 2025 05:18:15 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="o2X7z3Xr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Imyp90CM"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3E4842540099;
+	Thu, 20 Mar 2025 05:26:10 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Thu, 20 Mar 2025 05:26:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1742462294;
-	 x=1742548694; bh=iaLg2CBOtEnM62I0BSXorjwgeyjQc1vvWkhP6SKjvm4=; b=
-	VOBjROfihriSSm8Go2XcKp4oEIMG+haFGhySloQFac30nbAxTygbqDkVIm7EKSuP
-	ncSxmJ0kGgDZSoUp7BWIOswlTX+67ygUJ+ecdoZbRCaWkWS/aDLE2YcqikVNV1oX
-	WDMcDjSzEOILGC2NXHHr+rPnCeV8MDgwIBk5GKo+slZD9JUV8B9engoanxJviJjL
-	4vmEj887zT2Y+XzumB3sOjYOer71tcUkYLefVKIgKI8o1LhucD2lGAuUslsZgLOO
-	Z6AiaZbpHwLUMvdzW6TfOZ7YydMEQHbNxbi+3xO9F4qgBuekhatV1h7Z/TPIh9Ie
-	8HlAWcvXsas85KKOhXLIkQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1742462770; x=1742549170; bh=WK8HIyWWqm
+	VCpH1CXDJ16kC3k2b/rtjlNE5kTE46UKY=; b=o2X7z3XrtvUoAsYsXcdWRFfVio
+	rgudQyi2zOpqZUyaBDBTDerT48OezdSbFh7iarbwfNtcT7+jB6toCH0rpO3IIfNT
+	GHJhdjPRlN3drKIqOe0zeMgqAJ/820WYV5lHAENVhA/TPGOA3TankcuqUe0vZEVm
+	Q/vTl1Ao0Ue1dYKOOnYIraD1SYkpMKZH9erJgT9mCv8mRfcCXL2TFp33q8GBWmPj
+	8Tj7jN13Mje/1JAe3w6m2CStuTURPDzYyGOjpWQzIcIy6msS1G12l5D8agTALbiW
+	Y+GHps9Vxy6+EcO0gJ8hQLGXbI1x5IaOBAeqzJsPhKYLJ0pxeYlXeRcGiiZg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1742462294; x=
-	1742548694; bh=iaLg2CBOtEnM62I0BSXorjwgeyjQc1vvWkhP6SKjvm4=; b=L
-	Eqw4PKmnphbwCZ6522qlJfwrvmEAYl1VR7efokZX/cMQzFHzjLczbNQVoXaUSl82
-	ahsn+0rrAvtIClxQsznJ9m1iMpcFPaBGP5aEFMEyuTfOIwwgkFxSxrFSfowbdZNz
-	sXwKbnm/VNfvOiatNTB8WttYBpJsiOIdxgzCqqR2JbnBtDdZfRylBD5KqO1Fyznd
-	qB+lv67WPRV10Sa2KiMoLJt8cdOvd70iwn5sfCUF7OYhqQUig2rA0bbbalTcydL5
-	baMXQR4Re6QCyMnbR/xEEPOSdPRzBEIjeHITlRRghz9rgjs7F95Q4qx41ieQf5At
-	EJ+I4Slud/NQ5lUO5TCKA==
-X-ME-Sender: <xms:Vt3bZ8RgyT3_Sr7qeVkJmma3goG3mcQIqKGk_7bO8He_8E_RtVlKIQ>
-    <xme:Vt3bZ5xnVLB6wlaECxy2x88M5DZcC5gMuucIwC8esOMyfWMmlCNj-BPRgYt5rOHQ_
-    B8aBD_oAUjRAxnZRw>
-X-ME-Received: <xmr:Vt3bZ52dNqxThaRZ29D8afWZEzLk5FvuMluA1VDMuAQR82MDvLTnbertv-wqpNylbFtki6tHXUtsA8Nxy1PXszdzkAlTFYvdclJbSFUkpDesbQc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeejkeefucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1742462770; x=1742549170; bh=WK8HIyWWqmVCpH1CXDJ16kC3k2b/rtjlNE5
+	kTE46UKY=; b=Imyp90CMVQAKz3vcNIVvhhOMGAzGpqJuGFPImej0wu5J/kP4fqD
+	AMwDY6t8FGXhHAIjdgoecpAeUP8GtuWsPkAVyM4ai5umZlUGdoU2Il52QLIu2ewk
+	BC7F2ZJvkWuft1t6l6bjbW+ieNPkKSfTk/6JVT0woTO3paZvsAGhkFxo1wPhKtAw
+	TImPkzveCgs69rFEBRjfscZDb9DeydEI/QAZa55DB3Aedd2AdPv6Yt0LeJ6xy1V6
+	g/0ls+UcZe40Se9tt0yl/HoxWf6PdsGyQyfEQ15sj0k3AjZaJ52FDtx97nxquRMo
+	yplOsbKUNIy+/a7Pn1Bx7rb4ueuXiJpMsnQ==
+X-ME-Sender: <xms:Md_bZydC36oerSIecj6aujGbak7hn5-giF4TdJUJRlBinK27UIFAfQ>
+    <xme:Md_bZ8NQaGx_LaaKaU-NmYUfG7peh7nyspgKD6j6yU3RB_-taYcJGuOTJp6yAgJcr
+    JQLZMPiYpbSrIA2bg>
+X-ME-Received: <xmr:Md_bZzjtHWbPfytkyXIRiKIRMjLLMC9rLN-9jjSbPs-MOPgxsqHUIhzEoQHd7Ny8JR2-WaQFoey5rsL6vgjcO-EhX5uGbkyivdSOujKgBMwkMLw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddugeejkeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehm
-    rghrthhinhdrrghgrhgvnhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:Vt3bZwCWexzEP9ffbyZ1TReb1OIAUq9Wl3MMalQeq6Cb7licJq38lA>
-    <xmx:Vt3bZ1iipq2G-xrkl9kEvK934co1kGo-PSiB6l9-RpwDWMcwlaqC3A>
-    <xmx:Vt3bZ8rL1B-1O-HVqoox9O-sNFFVN4uvwxqRVqkyTUJK62BEKfPAzw>
-    <xmx:Vt3bZ4jShzlRVcTkeSpq92cbQJcJRkMKPJmFo4IiX9BqS3NpSympqw>
-    <xmx:Vt3bZ6sg2xSmrcRdgRArdinP_B2bB0CPy1j2abS5PLNbBDt0dJqwNdY3>
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepfffgffefudfhvdejudduieejtdffgfegvdekiefg
+    keetveekgefhfeduueetvdehnecuffhomhgrihhnpehmvghsohhnsghuihhlugdrtghomh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
+    phhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehgihhtseguihhnfihoohguihgvrdhorhhgpdhrtghpthhtoheprhgrmhhsrgih
+    sehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrgh
+X-ME-Proxy: <xmx:Md_bZ_-8YeL61LY2jBdUBH9Amtb7PRqYEYNbZ_DlzFALlmlCt8OLzQ>
+    <xmx:Md_bZ-tWwsyz72nd5cg7Fo1sxDgaw6SuTU0_7sgLvghj8kc5wBHgqg>
+    <xmx:Md_bZ2HAYDSGcYP95FNF9bTBIjdMTSVmOtW3leRqAFJbQ0lIV7NxJg>
+    <xmx:Md_bZ9OgEiRYTivtf9BfAHzRYWDEdFVia7OT74eC81vLBK4LTrMlIA>
+    <xmx:Mt_bZwJXuti6FElLwuBTpqSvNppILBnNoVcIWNBb4N4Aj811V1HXcwLt>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Mar 2025 05:18:13 -0400 (EDT)
+ 20 Mar 2025 05:26:08 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id aa832f46 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 20 Mar 2025 09:18:13 +0000 (UTC)
-Date: Thu, 20 Mar 2025 10:18:12 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1385fec1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 20 Mar 2025 09:26:07 +0000 (UTC)
+Date: Thu, 20 Mar 2025 10:26:06 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/8] pretty: refactor parsing of magic
-Message-ID: <Z9vdVP4edeaRawsz@pks.im>
-References: <cover.1742367347.git.martin.agren@gmail.com>
- <7c96899bb520ab945a650205982f54d65461d5bd.1742367347.git.martin.agren@gmail.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Adam Dinwoodie <git@dinwoodie.org>
+Subject: Re: [PATCH 03/12] meson.build: only set build variables for
+ non-default values
+Message-ID: <Z9vfLjnfhqKBE9X4@pks.im>
+References: <5d0112ae-98b5-46f2-91ad-35ed11358c3e@ramsayjones.plus.com>
+ <Z9rIQlUtutWPiPgD@pks.im>
+ <77f8930d-dcfe-4612-b10d-1904e7530f38@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7c96899bb520ab945a650205982f54d65461d5bd.1742367347.git.martin.agren@gmail.com>
+In-Reply-To: <77f8930d-dcfe-4612-b10d-1904e7530f38@ramsayjones.plus.com>
 
-On Wed, Mar 19, 2025 at 08:23:40AM +0100, Martin Ågren wrote:
-> Similar to the previous commit, pull out our parsing of initial
-> placeholder magic into a separate function. This helps make it a bit
-> easier to get an overview of `format_commit_item()`. It also represents
-> another small step towards separating the parsing of placeholders from
-> subsequent usage of the parsed information.
+On Thu, Mar 20, 2025 at 02:22:22AM +0000, Ramsay Jones wrote:
 > 
-> This diff might be a bit easier to read with `-w`.
 > 
-> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-> ---
->  pretty.c | 69 ++++++++++++++++++++++++++++++++++----------------------
->  1 file changed, 42 insertions(+), 27 deletions(-)
+> On 19/03/2025 13:36, Patrick Steinhardt wrote:
+> > On Sat, Mar 15, 2025 at 02:46:59AM +0000, Ramsay Jones wrote:
+> >>
+> >> Some preprocessor -Defines have defaults sets in the source code when
+> >> they have not been provided to the C compiler. In this case, there is
+> >> no need to pass them on the command-line, unless the build requires a
+> >> non-standard value.
+> >>
+> >> The build variables for DEFAULT_EDITOR, DEFAULT_HELP_FORMAT along with
+> >> DEFAULT_PAGER have appropriate defaults ('vi', 'man' and 'less') set in
+> >> the code. Add the preprocessor -Defines to the 'libgit_c_args' only if
+> >> the values set with the corresponding 'options' are different to these
+> >> standard values.
+> > 
+> > Hm. Does this really change anything though? The behaviour before and
+> > after this patch are exactly the same as far as I understand, and by
+> > explicitly handling the defaults we basically have to hard-code more
+> > assumptions. So in the current form I don't see that this patch adds
+> > much.
 > 
-> diff --git a/pretty.c b/pretty.c
-> index c44ff87481..ddc7fd6aab 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -1929,17 +1929,17 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
->  	return total_consumed;
->  }
->  
-> -static size_t format_commit_item(struct strbuf *sb, /* in UTF-8 */
-> -				 const char *placeholder,
-> -				 struct format_commit_context *context)
-> +enum magic {
-> +	NO_MAGIC,
-> +	ADD_LF_BEFORE_NON_EMPTY,
-> +	DEL_LF_BEFORE_EMPTY,
-> +	ADD_SP_BEFORE_NON_EMPTY
-> +};
-> +
+> Hmm, I suppose it kinda depends on how you view it! :)
+> 
+> I have been looking at how the three build systems (well, mainly make
+> and meson) differ in various ways, in order to try and determine if
+> there are any significant differences and (most important) bugs.
+> Reducing the differences allows me to more clearly identify the bugs. ;)
 
-It would be nice to give all of these enums a common prefix, e.g.:
+Fair.
 
-    enum magic {
-            MAGIC_NONE,
-            MAGIC_ADD_LF_BEFORE_NON_EMPTY,
-            MAGIC_DEL_LF_BEFORE_EMPTY,
-            MAGIC_ADD_SP_BEFORE_NON_EMPTY
-    };
+> In this case, the original author(s) had clearly intended that the
+> default values were included in the code, with the ability to override
+> the values from the command-line/environment only for 'non-standard' or
+> platform-specific uses. For example, on Windows and MINGW the
+> DEFAULT_HELP_FORMAT is html, which is specified in the 'config.mak.uname'
+> file. (I don't see this override in the meson build).
+> 
+> Also, the documentation (see git-var.adoc) has a statement of the compiled
+> in choice for the default pager and default editor, *only* if they are *not*
+> the standard values. I have a note, from several months ago, that says the
+> meson build does not pass the 'git-default-pager' and 'git-default-editor'
+> attributes to asciidoc. The make build only sets those attributes if the
+> DEFAULT_PAGER and DEFAULT_EDITOR variables are *defined* (and they should
+> *not* be defined to the 'standard' values or the docs would not read well).
+> (see git-var.adoc lines 49-51 and 67-69, Documentation/Makefile lines 239-242
+> and 244-247).
+> 
+> Also, I believe (ie I need to check) that the make build relies on the main
+> Makefile export-ing DEFAULT_EDITOR and DEFAULT_PAGER (see line #2923) to
+> make that work.
+> 
+> I haven't looked into all of that yet (it's one of the part #2 un-written
+> patches), and I don't yet know how those values get 'transmitted' to the
+> docs meson.build file.
 
-Makes it easier to see that things belong together and it provides
-proper namespacing.
+Okay. I very much appreciate the work that you're investing into this
+area!
 
-> +/* 2 for 'bad magic', otherwise whether we consumed 0 or 1 chars. */
-> +static size_t parse_magic(const char *placeholder, enum magic *ret)
->  {
-> -	size_t consumed, orig_len;
-> -	enum {
-> -		NO_MAGIC,
-> -		ADD_LF_BEFORE_NON_EMPTY,
-> -		DEL_LF_BEFORE_EMPTY,
-> -		ADD_SP_BEFORE_NON_EMPTY
-> -	} magic = NO_MAGIC;
-> +	enum magic magic;
->  
->  	switch (placeholder[0]) {
->  	case '-':
+> Also, although I have found some meson documentation (https://mesonbuild.com/),
+> I haven't had the time to actually study it, so I have just used search to
+> try and get some answers (it seems my search-fu leaves a lot to be desired).
+> I was half expecting you to say something like 'hey, you don't do it like
+> that ... do this instead ...'. ;)
+> 
+> [I tried searching for a option 'is_defined()' or 'is_default()' method or
+> similar, but didn't find anything].
 
-On the other hand you simply retain existing names. I don't insist on
-the refactoring, but still thing it would be nice as the enum has wider
-scope now.
+No, there isn't anything like that. What I'd do is to set the default
+values to the empty string, which makes it easy enough to see whether
+the user has overridden the value to something sensible. And instead of
+having the default values defined in Meson, as well, we'd be able to use
+the default as specified in code.
 
-> @@ -1952,28 +1952,43 @@ static size_t format_commit_item(struct strbuf *sb, /* in UTF-8 */
->  		magic = ADD_SP_BEFORE_NON_EMPTY;
->  		break;
->  	default:
-> -		break;
-> +		*ret = NO_MAGIC;
-> +		return 0;
->  	}
-> -	if (magic != NO_MAGIC) {
-> -		placeholder++;
->  
-> -		switch (placeholder[0]) {
-> -		case 'w':
-> -			/*
-> -			 * `%+w()` cannot ever expand to a non-empty string,
-> -			 * and it potentially changes the layout of preceding
-> -			 * contents. We're thus not able to handle the magic in
-> -			 * this combination and refuse the pattern.
-> -			 */
-> -			return 0;
-> -		};
-> -	}
-> +	switch (placeholder[1]) {
-> +	case 'w':
-> +		/*
-> +		 * `%+w()` cannot ever expand to a non-empty string,
-> +		 * and it potentially changes the layout of preceding
-> +		 * contents. We're thus not able to handle the magic in
-> +		 * this combination and refuse the pattern.
-> +		 */
-> +		*ret = NO_MAGIC;
-> +		return 2;
-> +	};
-> +
-> +	*ret = magic;
-> +	return 1;
-> +}
-> +
-> +static size_t format_commit_item(struct strbuf *sb, /* in UTF-8 */
-> +				 const char *placeholder,
-> +				 struct format_commit_context *context)
-> +{
-> +	size_t consumed, orig_len;
-> +	enum magic magic;
-> +
-> +	consumed = parse_magic(placeholder, &magic);
-> +	if (consumed > 1)
-> +		return 0;
-> +	placeholder += consumed;
->  
->  	orig_len = sb->len;
->  	if (context->pad.flush_type == no_flush)
-> -		consumed = format_commit_one(sb, placeholder, context);
-> +		consumed += format_commit_one(sb, placeholder, context);
->  	else
-> -		consumed = format_and_pad_commit(sb, placeholder, context);
-> +		consumed += format_and_pad_commit(sb, placeholder, context);
->  	if (magic == NO_MAGIC)
->  		return consumed;
->  
-> @@ -1986,7 +2001,7 @@ static size_t format_commit_item(struct strbuf *sb, /* in UTF-8 */
->  		else if (magic == ADD_SP_BEFORE_NON_EMPTY)
->  			strbuf_insertstr(sb, orig_len, " ");
->  	}
-> -	return consumed + 1;
-> +	return consumed;
+For the `default_help_format` variable it's a bit different as it's a
+combo option. But what you can do is to e.g. add a third choice
+'platform' and make that the default value. We could then check for it
+and either set it to the empty string on non-Windows systems so that the
+default defined in our code gets used. And on Windows you'd override it
+to 'html'.
 
-It took me a bit to figure out why this is equivalent to what we had
-before. But:
-
-  - If `parse_magic()` returns bigger than 1 we'd have exited early, so
-    this return here is never hit.
-
-  - If it returns `0` we have hit `NO_MAGIC`, and we have another early
-    return for this case.
-
-So we only end up here in case `consumed = parse_magic(...)` is 1, and
-then we add the result from `format_and_pad_commit()` to that value.
-Which means that the refactoring is true to the original spirit.
+Alternatively we could also refactor this option so that the default
+value gets defined entirely in code and then add an empty choice.
 
 Patrick
