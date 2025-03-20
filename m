@@ -1,122 +1,138 @@
-Received: from avasout-ptp-001.plus.net (avasout-ptp-001.plus.net [84.93.230.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065A9BA34
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 01:31:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53C3372
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 01:40:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742434308; cv=none; b=s4UAIypJ9AIGlbePfSGMHAID8/r2e92lqtHwxXvK64jFoJI9jm+VsOc/e5+jiMEWa4e2cpxuJVnStCHzVKySDY6PZq54jfor77OYjxTWxm0q7gf9fphKWXDbnrX73mD3nKKOdXaEq0A5UbvhVaMKKpmmKta89x3adXPg2ZjnO+o=
+	t=1742434828; cv=none; b=ZCrL5GuGpWEO6XY94po3iwtwGqleXolaTHiLtaunYW31Rar8Fd5TJVRGjThwkMmQGaleQXuqx1uX/HDdn1yUP0i6U5lKXjf0+T8kKbgWwd5vE1JErZJGEpOAdhIKvWty9lxwKpuRaMqpDSOUQGFyAlgXVr2KuR/tK3CZ6Ey521Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742434308; c=relaxed/simple;
-	bh=5jy0fwajJbbiG7YUrktGpRpBXnKoOoCx+49DEPADEAg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jFowrD6oBg7YTMJ5cHXHckyXE+HDDWpJHtQq7cbsqa4iifjo2FCDuSVT2n1EaSiIXuvU+nkT7Al+zaUx9LsUm9CYf/Q2odco8Tn7ZkwfKnHY4JIYATi30fPzHUxaMdsjFnjcY4H5NmEE6B/BzPPryXyAiX6qrM/ljV64xp1/CJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=d4YQDwM2; arc=none smtp.client-ip=84.93.230.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1742434828; c=relaxed/simple;
+	bh=7GarbPdXVQ68u6K0/fZUUKaeLwU3eoxlk7UuXvochlU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u0pLsjehNFRfaf3uxM+rRvU9z7vieMCb3zO++C7cvYOGXtwh/ibcWra8KRI63hWimR5bQm1ZLDCFBQlTU8oeInvbLNPp8UrsYvQf5+hRzYra9WOwwevnNHgVr1R7Ow9mxpKKf2cKop2KydqhaEZ35yfPjqKu7JmnbKF/vKFvHZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kUy8SxhA; arc=none smtp.client-ip=209.85.210.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="d4YQDwM2"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id v4hztxwMpbpaNv4i0tlrfk; Thu, 20 Mar 2025 01:28:34 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1742434114; bh=3u95huR2vrfT0v8xQ8OgfAGsUcbiubWuyI3aFInnK2E=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=d4YQDwM2WvFDsZ0rAbmQxTUR1D12awA1IrDER/odPvNh5qB3p6cpKHbF5+bF0y7yb
-	 hg9Ss+DR4VUL20ShP9uxXIrXxr0X5KU+yDgDSb9STCQWICz5d+Ws/hHuD84z4uRk/c
-	 jstaVnd/d9Jz8G9nHRvHubvToxXFPC5ncLpNN0gZAyLtVFDo/a103BNK+4DiLhlxPf
-	 lCb3ccCy8MXp0gISgBYvdRaRXOSh/n+LGIWM535qV9YTgptflXl54uscI0Z55eRPl4
-	 begMR7/+jf9MWN+kXpRpcB49drEQNIBMZrVBBjOtWufEXeG2oCERGvBOC5g5+oXfV9
-	 ztRWzPeN65+WA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=frZ/Z04f c=1 sm=1 tr=0 ts=67db6f42
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=8VpDeP3kAAAA:8 a=CCpqsmhAAAAA:8 a=iKrn8l-KAAAA:8
- a=KRg-NW-S1eV8qHJdAMEA:9 a=QEXdDO2ut3YA:10 a=x58pXJj3Pl9T3GLWE5Uy:22
- a=ul9cdbp4aOFLsgKbc677:22 a=vz8bQswTWcriz0i0jksL:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <74b2838e-1d7b-4ee0-a4a7-e3d21f4e6597@ramsayjones.plus.com>
-Date: Thu, 20 Mar 2025 01:28:31 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kUy8SxhA"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-72726e4f96cso245670a34.0
+        for <git@vger.kernel.org>; Wed, 19 Mar 2025 18:40:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742434826; x=1743039626; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=LFPvPgu1nbM0r6AG46IARMkG3jl4n58nfOXJSDKDP+s=;
+        b=kUy8SxhAtRv99foQqzbBaVPNaLkob+XnxQ++d8T0zKUNlSeoE2Hb/P91Q2Mn2cywLW
+         O/Q5LdZR+cyZSDlBoFeo2DF7NsBxc4uF18apvc73YLfbBQBhZlWlfEv+k2JnyBzqPebj
+         rwDqZMOGh3A+nm2s8wOL9OV+6a8sSJx7lrWupFlLKnwaOrPsyMK7kwDI01tMJGMQwXIn
+         3De2Bp3nN6296GfzKNW6qrLf14U1QG7umVH6lSWrb+D+XQWU7x/lHYmyMH8gTD3m06bt
+         T86m/UdYmesDbHZhQJIIqhI+SHC19ERWKORoyi57SXyoCaE3DDuftuiLTfSXbo72RlTC
+         mijg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742434826; x=1743039626;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LFPvPgu1nbM0r6AG46IARMkG3jl4n58nfOXJSDKDP+s=;
+        b=FigKUI0uAeJ3Pqi2hsMtcuXq2NFlZUt/v2yE/ndRyOrphlm77HCZUsRSE6gQnVSyh+
+         woK/gkzFl81lQBfWv9AmNPNtgCxJ00pOUbMbseLchaUv+52j+gVY9aTTw0N9T6MT0dha
+         8cBU5d09quALm8OF4aRKRxPlKKTYCjttu5LvKCxCzaw7wjH6nqY1lT8z/CHBQnfm7E03
+         um2YO68B4bGCzAOJz/wtA+rD08DukICu1KqqtcrNmXAAVt5Lf9R/LJV7x7toa+K3cRz7
+         ZkmcSGKsbGEOWct/FfoJoea9Np8qGEIwkdXpMJtng1FyPgLivnrLrkvSSvz548wiHxNK
+         i9eA==
+X-Forwarded-Encrypted: i=1; AJvYcCUHk7J+Ze5BYtzXRWt0WSRGRPD3NfUJkOQuY2VGl869kay42x+5oDziMrzm18kfsuX2gbM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzVC4twS4PEom1RXzLKn0MgV7SByVWxhn8n1Ype6YZ2CnksVE/k
+	TfMn/NxGOteMD8+B9H97VWstdh8pHxMEqjji3lICRS5N7hbr8Co5
+X-Gm-Gg: ASbGncu2p4eQnWLUyVmiNxE+qaNWcbmZzYexDRvKy79NRtdX8EqdmCbLudIeJwpuDks
+	LXV9zHHMmkOUAw9CN7P6A1QO5CxzUDPPIdnaaTLKNvJJkmoxDIDXxXkRK9XxKLazZlf3UNo3ZHJ
+	0ROu5bbO6fk3/pcS0jsz0qoQQel+v/deXLS9fSkYVwG/Hef4DAsDDqXnam/QNetS8jJrvBhuUB1
+	+KaFMD9FWrwKGMwmZBo0/uv8+Bp6/lG1hQ8e91wvHpG9ZXwEEQsDYoNkjC17LaZBJmczotERUyv
+	VUmwm59DBQyxZwg4qJuMSmeKbgqaftzso3L4rg==
+X-Google-Smtp-Source: AGHT+IHTJM4ZnR/ctXZHGuBuSMsZjZizSEuNfxN3jg/d4QYqyI/9NpiZ3PuZH1Zc6y4cxq+c/i2Mkw==
+X-Received: by 2002:a05:6830:6e02:b0:72b:98f8:5c95 with SMTP id 46e09a7af769-72c02e1897dmr1246431a34.1.1742434825879;
+        Wed, 19 Mar 2025 18:40:25 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-72bb274ea93sm2790011a34.55.2025.03.19.18.40.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Mar 2025 18:40:25 -0700 (PDT)
+Date: Wed, 19 Mar 2025 20:36:51 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: alan@norbauer.com, git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: bug: git shows hints that should be suppressed
+Message-ID: <fff634dh5qeb4rgjqn7cru7v4a2voj4us4thvwtttxjcdnu2bu@jvv3htcon2ul>
+References: <7EC98E2F-144D-4974-94F6-FC24B443651D@norbauer.com>
+ <CABPp-BGTrEfGqX=o3W5rfqZiRdEuAzdKJuT8W0J=6kSY9ME4LQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/12] config.mak.uname: add a note about CSPRNG_METHOD
- for Linux
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
- GIT Mailing-list <git@vger.kernel.org>, Adam Dinwoodie <git@dinwoodie.org>
-References: <8c8e16ae-87a2-44bf-a87b-7422eb04fec2@ramsayjones.plus.com>
- <Z9YbJFJjtXNYnTzk@tapette.crustytoothpaste.net> <xmqqr02wbtdn.fsf@gitster.g>
- <Z9rG3JVA5vSoYynt@pks.im>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <Z9rG3JVA5vSoYynt@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfA1PPWeZfuuO8jVQRzCfyiVS7svi9udX5xnR80Lxb1UBnAmWzeXjIxXbcSq9WivAV/mGxMIVOIewcPUX5QHvA/765HNH4f++US6eV79Xc3hRt05yGdQx
- pHby45AXnRmHDWAiqKFvdlFTHCZ2FBUf5p56bve9jxtXXZ5YrDmjTBv2QkoGhnnAfORrEKHGWnubn9d6piHUuvsr3j8yVii9GvI=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BGTrEfGqX=o3W5rfqZiRdEuAzdKJuT8W0J=6kSY9ME4LQ@mail.gmail.com>
 
-
-
-On 19/03/2025 13:30, Patrick Steinhardt wrote:
-> On Sun, Mar 16, 2025 at 01:41:40PM -0700, Junio C Hamano wrote:
->> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->>
->>> When arc4random was added to glibc, the Linux kernel CSPRNG maintainer
->>> argued that it was not a secure approach (I disagree), and convinced the
->>> glibc maintainers to just make it a wrapper around the Linux kernel
->>> CSPRNG, which it now is.  So there's no actual benefit to calling
->>> arc4random versus getrandom, and since it's newer and less commonly
->>> available than getrandom, as well as slightly slower (because of an
->>> extra function call), getrandom should be preferred.
->>
->> This
->>
->> https://www.phoronix.com/news/GNU-Glibc-arc4random-Functions
->>
->> was the first hit of my search in the area, but I think you are
->> referring to
->>
->> https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=eaad4f9
->>
->> that happened 5 days after the thing got in and the code there tells
->> me that your summary of the situation is quite accurate.
->>
->> So I agree that dropping this patch makes sense, but do we want to
->> do a bit more to improve the situation?
->>
->> Here is an attempt to improve what we have in Makefile (and possibly
->> the Linux section in config.mak.uname, but that is improving what we
->> do not have) to tell folks that arc4random in glibc is only for
->> compatibility and they should pick getrandom() until the situation
->> changes.
->>
->> --- >8 ---
->> Subject: config/Makefile: a note on CSPRNG_METHOD choice for Linux
->>
->> arc4random() was added to glibc in July 2022, but quickly replaced
->> by a stub implementation that wraps around getrandom().  Hence there
->> is no actual benefit to calling arc4random() over getrandom() on
->> glibc based systems, at least for now.
->>
->> To avoid enticing Linux users to choose arc4random(), leave a note
->> that their arc4random() in glibc is not the same as what their
->> friends use on other platforms, and guide them to use getrandom()
->> instead in the meantime.
+On 25/03/19 07:45AM, Elijah Newren wrote:
+> On Wed, Mar 19, 2025 at 2:59 AM <alan@norbauer.com> wrote:
+> >
+> > Thank you for filling out a Git bug report!
+> > Please answer the following questions to help us understand your issue.
+> >
+> > What did you do before the bug happened? (Steps to reproduce your issue)
+> > `GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_SYSTEM=/dev/null GIT_CONFIG_NOSYSTEM=0 GIT_ADVICE=0 git clone --quiet /Volumes/sourcecode/npm-packages/packages/repository-tools/node_modules/.cache/@altano/repository-tools/2078b9db1d71a4f4a5422e25a7016c75/git.bundle .`
+> >
+> > What did you expect to happen? (Expected behavior)
+> > I would expect the clone to happen without any hints because I provided both `GIT_ADVICE=0` _and_ `--quiet` to the command. Both should suppress the hint.
+> >
+> > What happened instead? (Actual behavior)
+> > I received the "hint: Using 'master' as the name for the initial branch. This default branch name" on stderr, which caused my tests to fail (I am using git programmatically in a test).
+> >
+> > What's different between what you expected and what actually happened?
+> > The hint on stderr was displayed.
+> >
+> > Anything else you want to add:
+> > This behavior is NOT observed on git v2.44.0 and is observed on git v2.48.1. So the bug started occurring somewhere in between those versions. I can find the exact version the bug was introduced manually with some effort if that would be helpful.
 > 
-> Makes me wonder whether we should also change the order in which Meson
-> auto-detects functions. That is, do we want the following patch that
-> favors getrandom over arc4random?
-> 
+> Bisects to 199f44cb2ead (builtin/clone: allow remote helpers to detect
+> repo, 2024-02-27); cc'ing its author.
 
-That was my immediate thought also. :)
+It looks like prior to 199f44cb2ead (builtin/clone: allow remote helpers
+to detect repo, 2024-02-27), the default branch name advice message
+would never be printed when cloning from a bundle regardless of whether
+`--quiet` option was set. This particual advice message also doesn't
+respect `GIT_ADVICE` either. So something about the change has made the
+message start printing when it previously did not.
 
-ATB,
-Ramsay Jones
+Digging a bit further, this change started partially initializing the
+refdb with a HEAD file which had a side-effect of changing the location
+where the first `git_default_branch_name()` was invoked. This matters
+because `git_default_branch_name()` only computes the default branch
+name once and uses a cached value for subsequent invocations.
 
+Previously, `create_reference_database()` was the first
+`git_default_branch_name()` call site and was configured to always
+suppress the advice message. Due to the refdb being partially
+initialized with a HEAD file, `create_reference_database()` stopped
+invoking `git_default_branch_name()` altogether and the default branch
+name computation was defferred to a subsequent potential call site
+`guess_remote_head()`. At this location, `git_default_branch_name()` is
+configured to not suppress advice messages.
 
+Also, `guess_remote_head()` only invokes `git_default_branch_name()` in
+cases where the transport is unable to figure out the remote HEAD and
+must guess. This explains why the advice message gets printed for bundle
+clones, but not all clones.
+
+One option to fix this would be to adapt `guess_remote_head()` to
+support configuring the underlying `git_default_branch_name()`, which
+has since been renamed to `repo_default_branch_name()`, to be quiet and
+suppress the advice message. The call site in clone could then be
+updated accordingly.
+
+I'll submit a patch that does this.
+
+-Justin
