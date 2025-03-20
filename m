@@ -1,70 +1,70 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B928226D15
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 17:56:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429FE226D15
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 17:56:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742493401; cv=none; b=F4KHwgLBsHilAGoMQUqyyGoWXGLC1AgUrpU3ap81YIm65Sca6UaOzMBDJNUm/3q9i4aVDjDf3pZ0kYMZd0MTvXyLxYZ3OZCZZ6OoRsKB/UZBwz8Sfrnc2TEgUMoDqqxDLZVcE/R09Gxm5fpLmAEVYTwCO10ihGpomXk1S+Tr8GQ=
+	t=1742493404; cv=none; b=iyzzku/dhm83eH8viwubGm0LyircWsi6hK1wwnOPkVVcjxAYcRA7U7/J0ZL1fRWWjc6CY5BrnZvM/GsU2B8GyOU/ucM2OJCgE2Jay8Kib+8RJk3qkpRokKpoLdMlmcobOUxTv1C95FXgVfpu0kmcjw5zR/O3XzgeQB/+lnFkB9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742493401; c=relaxed/simple;
-	bh=vkWXuI5XQwptlWXD8LJXY5ETixKyybnQCmQNn9+ccUg=;
+	s=arc-20240116; t=1742493404; c=relaxed/simple;
+	bh=vF4WlOV9bawcZjc0vNeIB+6OF3dMVBLiaRXb514GCPo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XHHqclzrOcIFp33LOl9+G3rwCeuBZzYffp9+ar2BAyJwrMXzA21nNykoYSfpDKAQ/CJE1B/0UAtIm4tzKdfu/NA6xG4efYx66A0FmNhk37gLLYYfxoVWoEDkvQKVtBBbfNzpoj97CJsUZZNvxOy4DgFWYC0fuRju84AP6vWirJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=m2NIzx7f; arc=none smtp.client-ip=209.85.219.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=TEwqA2O3I8bL+MgTQwyfDfxvA+du7CcYAqA7z4KUCNvw2efwf6UvZHX0OOZghpF7Hc+OGFuvm/ZtpRF+ggaq+V+UJKP0oz/bVwkIJ82kI8kjcA+v4X5PIPaEhK77bNgibOcRYBG63GBtJos7AXHqaWHtPc9nfGiBovnsNCEi8nE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=adUQA28Y; arc=none smtp.client-ip=209.85.219.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="m2NIzx7f"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6dd1962a75bso8392156d6.3
-        for <git@vger.kernel.org>; Thu, 20 Mar 2025 10:56:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="adUQA28Y"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6eafac1f047so18338606d6.2
+        for <git@vger.kernel.org>; Thu, 20 Mar 2025 10:56:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742493399; x=1743098199; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742493402; x=1743098202; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iuJYfc2WVdHkQ1d4xMSLkhVlfdAMjk3b4MIrQVtjuRg=;
-        b=m2NIzx7fPpU68es8kdPTGliLyMO2adwKzOseEduv4p0e1XKBTwea3ksmCPYFlS20Px
-         SGjwq0L+UibiXXmNDCaN4rMmcznKAjjd4AXMQUVkflPKXttHVln+c72rY/fdcpIZviRk
-         occ9Le/g2XYzc4ggyvY5EpEUcPJTqhCTWWkR05LDypMBVQIb3Bs0lq9bmZ2EHv0zop+c
-         dWDbS4bqqKzLyqTqaH5ERrei3pjmJm3XXZ5Urb71DvykG/HPA6/Ms1UQUZWq07QLS+2I
-         4iv54reQxEkwyAebjxh7/EqjvYfr8kMNWcVuM2f3L+ECWeN9ElH4peUnQvp94g5Yb7b/
-         Rijg==
+        bh=FtPKtDait40Au1zUqhsov8C0sfX8Zx4r0DqaogDLTBQ=;
+        b=adUQA28Y6FDmIor8bIperg/adm++B4jH3URBcxiYClaVtgcmqV9QjhpUNCt2jCnNgc
+         o5xftQPiRg3ZQ+6qpGRbm2xuCyUFy3ae40N0McxBgLt5PsHxpX+fQVjbb1QYy4+Q15lY
+         J/Si1xU1sUyu0WVuPdBnlNQhWbCvgF9BPKrjVVO21RCUS6lvO5oubjPEBsmVGxOGzbyF
+         G5hUlZl6dXrhZCU5UsRg1qTw+uJZkAfvwN8oQTMgKljLPRclf1ItHbtxzuh0g/V3r73W
+         R2umETxSvEJtDzINI+A7VAHztPq+kPzAELqQ6c1SqKkki/PxJJLsaV4WYMsomkbwbqRc
+         YG4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742493399; x=1743098199;
+        d=1e100.net; s=20230601; t=1742493402; x=1743098202;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iuJYfc2WVdHkQ1d4xMSLkhVlfdAMjk3b4MIrQVtjuRg=;
-        b=BIKwFDzwqbbIaQFNCv2kSOa7D1hio/Ly/cFh09+m1kmc2Qe1nhh9U/5jCnY4+G6+lH
-         nBmOlp7v9Q73wA8Ne1ggHcwVBtRzPTrYhKTaGE6JPYUX5GFrzvfwZ4lJKvWJQpTKlKhs
-         NXWT5iTICChmoq9iH56p5Q31hgZWQjVl6hwS+5kdSm3sM/rriZ857+pOJY4/wWk6uPlb
-         V45vtKKeDjBe83h7XfGOQRyp3DyHxjJM0Qy3OKM4q3NWy0WzOZ0B5E7ehsRsxJCMx3GW
-         O1/xwmcfe6xJ0kITS8rECSXGnFfUK8sF6YJS4REbx8Spk/mkO+vQdBfYLhF+xpGDGa4M
-         BZUA==
-X-Gm-Message-State: AOJu0YylhX4xoAAlce6/jBwHfso3LAmYUt3EAKgvxwQTb8gH2m2MqySC
-	oe4QELMTNTe+LCXb6y4FuZYw46ASR6boQwbWeEfdrXCPHxGeG5zVnrSt/QcJRHTetqare1ZdSzj
-	Keks=
-X-Gm-Gg: ASbGncvrIPsGT7Qa8Rma7ZSwvJFWce2nbAghhLCrrClvGXamog58TBKxyGVYGvQrZOk
-	c7rvlNgt48fb4hK6wWhLDengpRreODQk/YUKnIL7xe5FeLM6eusPAF+/dn/W98tAe9IITppejUg
-	JOFeQfDXuiv0jKhJ/C2wHuiox2uFTBbG8Z3ni/oNAYDu388ZdyFPgklrjcAVs227IwLjaj/aR+W
-	3FXAXH2KSpDneyLWgMt9a5/j7tYlQhuf2rvLZAQMFGdYuPc1djsihswiAwQZj1TYfxf0ak//kH9
-	OBmDf+EKigogtCpTzo17mi1IhkoLLcS6ADJVKW4MjZzTfEIU2QwEtHaQvKSha5FSDYmZF61nEBT
-	1VGweZw1aw4eX8+j+
-X-Google-Smtp-Source: AGHT+IFnIa5Vzkwp+NrCLiYHECs6dxK4Z03yCu8TjtIilL3N/llIwh4nOfWXwaWGVB5ZRK5uRNfWyg==
-X-Received: by 2002:ad4:5beb:0:b0:6e8:ffb6:2f90 with SMTP id 6a1803df08f44-6eb3f2c84a7mr3911886d6.11.1742493398805;
-        Thu, 20 Mar 2025 10:56:38 -0700 (PDT)
+        bh=FtPKtDait40Au1zUqhsov8C0sfX8Zx4r0DqaogDLTBQ=;
+        b=jcIk7RPlmDm4DWYQoKnMoFEhKhNJ1GJWy7b6RmapfiYz2M831L39zzZ8s/+EamJsqT
+         6//9w7qiSr63C6zOIbJrdUgUMT5SLXPikXylN8pmfQh//bt5dANdaLDxEzK33l4X409k
+         +gTpMyyzSH81IQh6MMCIhdN8+MwIv1ouW/Hk+RXVIIVuYkJXsZ5pGIgcE+fa6NSGdUSs
+         it0Q8M3K2xWnSuXd2bbywkDskAzfqKlPUHv2aYwaEaCQPy6K7PoZphQUF5cC7/Bez9lY
+         nZ4udBes1wI1wsAc3/6ap+g+03C4BWbIjnCEQu3oujRqbuJgNPZHqi75aij23vxfT5bh
+         sZeA==
+X-Gm-Message-State: AOJu0Yw1m4PfWcipMmgisQCLfbrUK+qtzLKMPFHvkSeTTnvaLdaBCGTa
+	KybqwNscsd5BjlyVCoiMah7ws604KC4rQGvRTWxGxOtDgld4uERj/+oQht4De3TmCYnvBlJiC9i
+	sF2Y=
+X-Gm-Gg: ASbGncsNBtbccOiDOXHyS3oPUMtj0HoOgOi6K3l4YasGwZvJTCj93x9wFsN2/YcO2wJ
+	cKZFNQi/lwlZeDT1OVczCqiUzVY/Qkmmvpr6+Kgsv3yJvWOnCL/9Xy1EjiJrpIgBaBHZKRXgA3o
+	9t/GycBplGIWvFAtE55ZdgiYWmVwk3ya0WEjHA5z4gs8qZ68bn2y6V2hhEjtJfvPMnVCvwEjgG+
+	Y9d2JWOd27QjTAa31vQQnihkzPSMqj5ZcMaFpiJJl01vSz65fc9aO3oi4mFr06DLSlV5iAFOzxV
+	ERDZfSpI58qSClpn0tde4dWnd5POoYyWPn1P/ZMxLZuP8KLkXY9H31U8DkHJj1+FCCbxfduoBLL
+	A+BYNJ8FtTG1xw/SG
+X-Google-Smtp-Source: AGHT+IF4Z5t8VgXEv5gwyO1d/SBbgci5YUQkGTpMVE2heJE0oRJohjHHVBBSjGRO3P3RI29UpSq+UQ==
+X-Received: by 2002:a05:6214:2a83:b0:6e8:fbe2:2db0 with SMTP id 6a1803df08f44-6eb3f36c234mr3962456d6.30.1742493401953;
+        Thu, 20 Mar 2025 10:56:41 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eb3ef1f82asm1132856d6.32.2025.03.20.10.56.38
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eb3ef344eesm1122456d6.59.2025.03.20.10.56.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Mar 2025 10:56:38 -0700 (PDT)
-Date: Thu, 20 Mar 2025 13:56:37 -0400
+        Thu, 20 Mar 2025 10:56:41 -0700 (PDT)
+Date: Thu, 20 Mar 2025 13:56:40 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v5 05/14] pack-bitmap.c: teach `bitmap_for_commit()` about
- incremental MIDXs
-Message-ID: <8fedd9661497c4f74f061f55438014f2726d199d.1742493373.git.me@ttaylorr.com>
+Subject: [PATCH v5 06/14] pack-bitmap.c: teach `show_objects_for_type()`
+ about incremental MIDXs
+Message-ID: <dccc1b2d2ecf99abc88fa454ed55b36025500c60.1742493373.git.me@ttaylorr.com>
 References: <cover.1723755667.git.me@ttaylorr.com>
  <cover.1742493373.git.me@ttaylorr.com>
 Precedence: bulk
@@ -77,59 +77,28 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1742493373.git.me@ttaylorr.com>
 
-The pack-bitmap machinery uses `bitmap_for_commit()` to locate the
-EWAH-compressed bitmap corresponding to some given commit object.
-
-Teach this function about incremental MIDX bitmaps by teaching it to
-recur on earlier bitmap layers when it fails to find a given commit in
-the current layer.
-
-The changes to do so are as follows:
-
-  - Avoid initializing hash_pos at its declaration, since
-    bitmap_for_commit() is now a recursive function and may receive a
-    NULL bitmap_index pointer as its first argument.
-
-  - In cases where we would previously return NULL (to indicate that a
-    lookup failed and the given bitmap_index does not contain an entry
-    corresponding to the given commit), recursively call the function on
-    the previous bitmap layer.
+Since we may ask for a pack_id that is in an earlier MIDX layer relative
+to the one corresponding to our bitmap, use nth_midxed_pack() instead of
+accessing the ->packs array directly.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ pack-bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index e84211de15..17f1087fba 100644
+index 17f1087fba..f3ef9e43ef 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -941,18 +941,21 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
- struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
- 				      struct commit *commit)
- {
--	khiter_t hash_pos = kh_get_oid_map(bitmap_git->bitmaps,
--					   commit->object.oid);
-+	khiter_t hash_pos;
-+	if (!bitmap_git)
-+		return NULL;
-+
-+	hash_pos = kh_get_oid_map(bitmap_git->bitmaps, commit->object.oid);
- 	if (hash_pos >= kh_end(bitmap_git->bitmaps)) {
- 		struct stored_bitmap *bitmap = NULL;
- 		if (!bitmap_git->table_lookup)
--			return NULL;
-+			return bitmap_for_commit(bitmap_git->base, commit);
+@@ -1636,7 +1636,7 @@ static void show_objects_for_type(
+ 				nth_midxed_object_oid(&oid, m, index_pos);
  
- 		/* this is a fairly hot codepath - no trace2_region please */
- 		/* NEEDSWORK: cache misses aren't recorded */
- 		bitmap = lazy_bitmap_for_commit(bitmap_git, commit);
- 		if (!bitmap)
--			return NULL;
-+			return bitmap_for_commit(bitmap_git->base, commit);
- 		return lookup_stored_bitmap(bitmap);
- 	}
- 	return lookup_stored_bitmap(kh_value(bitmap_git->bitmaps, hash_pos));
+ 				pack_id = nth_midxed_pack_int_id(m, index_pos);
+-				pack = bitmap_git->midx->packs[pack_id];
++				pack = nth_midxed_pack(bitmap_git->midx, pack_id);
+ 			} else {
+ 				index_pos = pack_pos_to_index(bitmap_git->pack, pos + offset);
+ 				ofs = pack_pos_to_offset(bitmap_git->pack, pos + offset);
 -- 
 2.49.0.14.g88b49c1b34
 
