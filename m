@@ -1,556 +1,228 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9B3227B9C
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 20:00:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42CB15A8
+	for <git@vger.kernel.org>; Thu, 20 Mar 2025 20:18:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742500831; cv=none; b=lkwLLZ/tuB24r2ch+iBQh0/MeuVDlP+UKagDZK5By9LtjvP7pFiVcvwDcgdFxdX/Y4USaHgU7z+MG/XdjNIFSin7kkKqzz4xp49RrCxPOUWj1QLNpfKtypH4kCagrJsW/fKuZOgPC53vx9np1lbDmKeoQy2Iol5ceGX2JvF/l2s=
+	t=1742501916; cv=none; b=ZyeykB8MB8VsOfXU8dBqAT43EXJLoPRYRtLPQGAumClmekB4ol5WzRBn3+pbfc3kFfPSLvukXeei/1CZnshAir5CHrTm+N+ZhhJm+tPv35ee6XzERi/+EQchWZFhymdkf+uqBWq38pUggynp+5ZoRkbbwxFvvtVOGP5jYEGmFjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742500831; c=relaxed/simple;
-	bh=0pDX/OPh2yOQ6pcXOdqBMczJcOmLTVLGKwUeQNBJ63o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qrNhKKE/GX70e7wXlJpMrCD0IkkIptfzz5X6cVuplsXiiuJyKyVkOXBqPHnVRmrKwMuFeXLIgGx0M6aAI/81kV9SdurXQWjV/JXk6XNs+hBwF5iULey8MyUu3nrr5+fvks3CCNxoA+2RQPunwEqdlU9pfeSipxndtBFREmwZUTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lLoplePH; arc=none smtp.client-ip=209.85.166.180
+	s=arc-20240116; t=1742501916; c=relaxed/simple;
+	bh=q81UqyN5asyZ9g9AWQobzgkFOJqHHfZEysTBAo+v3wY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BYd/DBLTfWsv2gYZsXiUoZZBqOip+Wkw+KOkbLo06Cv96sLhjBsLNyeFTLx9/l7V4axDDimSt761PtGAYptdF+PbSI0hSuQY+4HTO1QXhuhtRIAtyoKdw4rrP5gYuyXJnnINYUIOMZHUX6kjUL7opfBq4q4jWrtxR/b3n//8pB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eCLAmDPO; arc=none smtp.client-ip=209.85.128.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lLoplePH"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3cfce97a3d9so4890125ab.2
-        for <git@vger.kernel.org>; Thu, 20 Mar 2025 13:00:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eCLAmDPO"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6efe4e3d698so11996257b3.0
+        for <git@vger.kernel.org>; Thu, 20 Mar 2025 13:18:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742500828; x=1743105628; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k14H01b9CzS2sn1fX4h1G9dYxRNEg5E2xs/RYReSQfg=;
-        b=lLoplePHpvEFqaxEMz1U5d5hCmRyEBMBK4kICeUDaW33nC69eXoA5Hhcm1WKVV5e4N
-         7+ecHsUQ/lUq/rYE+zlqRLGG9bo2jIJg0t4OzzMFP7gdltI3pJxyFAnZ5mvOUluhIIeV
-         iLn1ox/fSZvNCSNemmJvuviTYlry/aLIa5+Lry7CrRWy1km/Czd5qyNtXFwKB5JmsTqI
-         UE8dMXBMHxFYq8k9zJdLoYpOqJ2IaUAGYYUqyQHVmjZ6y3rqsFiHx1Xdlzc7O8fxoXbW
-         jyVb2x37jSad5Z/tzNkgko5z14oVBaeHuHz/6SSW6CPseXaP5qOXzz0LCXiVa9BLzsu5
-         T/UA==
+        d=gmail.com; s=20230601; t=1742501914; x=1743106714; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yMUInmQJgP2rBESLL5Nh66Ku7ocXql70V/yJm5o76TU=;
+        b=eCLAmDPOM/YRT1ZeIK08kwpXJC8vdG4zalcwZ/N6ZI/njxrPpF3agEg/k1VgYsN8h6
+         mr8nc3VwxRn/Q74fh3fCTE+17C0XK72+eIUcTWWn0btcNqg6/MXKwQdvycnCu+OQ8rte
+         fKTnAml53Qy6IMqCmNUVOK1TZ4Hg9hkrTQuVV4qC+MaOFiz9whaKBKyoJBjDlg3/BRLK
+         CXrHt64jKWM7WO4+gkjEI5OOrH6gP9DPursGTocbT00ZELx7Qpnh2gOirnT+xVmAoWlg
+         9TROWeD5ulQjtcEMq0wVvh2hn9PBIOO4E4gZwxoFGYqRaOB+vvbPp100armJymKZMCaV
+         3YQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742500828; x=1743105628;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=k14H01b9CzS2sn1fX4h1G9dYxRNEg5E2xs/RYReSQfg=;
-        b=Tc+8mdSg3N+D58BwJdcKRb4q2i7he8us9wcwA95rqXp90zdL2EiX7Nafqx/zjsNTsV
-         mnaKfHrCtNathgSJy9L7J1SXCa2vlY24mktqDOnnYF8jC34nqdh9KbFE2UJe7RpiIaZC
-         h3+PxKMMkKlAfHo1zfdrV4RlgHNKeObM+0/ZJyMw8FXeccT4S0ephkAG4Kf50QabYFF1
-         AKREOiz2N8PnhJ9XQ5CJc1V2j8FCeDqDV7u8G+/FskGwmnCXhpbDuRNIO0+3Y8hsSwLf
-         v9W/0JwxSeA1M5EOzqQQ6wd0unu4jgrnRRz416Fb7Qy0z8hJUTXoF5zpcueL3kgScDNP
-         2nhw==
-X-Gm-Message-State: AOJu0Yw1As8MwGY3NLF+0njGKn0F0b1LhDomoC9mCkWcSNqIV6N6VZSD
-	I+wv9wJRvVo24/94eivSbowW7QesrUr3npX8mMXxg4BjUoxlTL8Qq9IzizNTfWuAhaUZBespzyK
-	1vgT3y/HfMFNWLzG+uVheDUFohfk=
-X-Gm-Gg: ASbGncvuO30A1asjaFp43TJfJMM1SXJBU74Fx7iP+8p0uULWftZ6VWvYnJ6U948NxwT
-	sxQoG1sQVGQyLuoSreJE3pbAvlJD5V3Ux7jASMifBGfedkCXkVF6C/DlfhxUPTENi7KxcO79/te
-	94JhMx+aCSWMKyABScYDopjlqi8lIE
-X-Google-Smtp-Source: AGHT+IGDIjsYbxh1m1bnDDThlYBBBy5ptx9M+eNR12XkcwfxRYy4lmz+La+zCoQ6h7zNk+/s7GAI3aAy4sCgUTXKP9s=
-X-Received: by 2002:a05:6e02:1f05:b0:3d3:fdb8:17a7 with SMTP id
- e9e14a558f8ab-3d5960e1e34mr9904085ab.6.1742500828002; Thu, 20 Mar 2025
- 13:00:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742501914; x=1743106714;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yMUInmQJgP2rBESLL5Nh66Ku7ocXql70V/yJm5o76TU=;
+        b=AO/3ZiJLysMEBmPMAtjCegpy2udr3WFW04Ur/EsUCs7GMqfuAhbbmWXVg8IfGVqfYv
+         MwwtZrfTJFKIFalmvELdNQRRDS2SR+NRu0sKy7PdcFId1YSFN6YBto3Fc/lStTB5IVQr
+         MFi+0k7307sDMsI80sx3O1jz9YCx2Bug71EOe1W1GHPyovCkFN/anrSLFb9QGZFHdhR6
+         yzIkaNzyuUHJgUKY/iiGMw9AtG0Jv7uJkSaIFJoq7ONbjWZDcBAjQEkxbMdG/k5DRZlo
+         eg5mZ7vyl35+PdsVX00nyi0pOj6kp78hgYAWtawWe6NsRWa85T+Tnl50oTN3TCrlYFfU
+         Bs/A==
+X-Forwarded-Encrypted: i=1; AJvYcCUbz/ayaE9B5xFyl7PYRftWjlnkJQm5B7e1/AF7tPbGoNSZd3+GFY2pX3FJmDwbRhxhUSg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXhwLRDYoV6bWpETyyAGDMX0lDy5/+KEtXyjw3vNeunN89AmsY
+	s8PgyIgdl1PyXMg53G5GemBFJm06TdhB7d5W8QSgItMcruyBLr4S
+X-Gm-Gg: ASbGncuDoJRIZiVuRdAvr6cEQywd9yiEUDh55RRRgCTmPqbNArWq+hf1xQJ+N4RHT8O
+	wgD3b4g2aY8Uo5HQ9GbYpKlnjmt38KENNEA+2QBWNv9TsKnbZvgbbT8UQE2NvjooooFA7RMNCEk
+	vwbFyfi0doYoxZ8ens7FlDtY3H4anl51b1Tk28wzc1fozNAOajm4mi0xSB2YxQFx0tADHuXw9IK
+	KkVtLEaPV02BRyg8pFErUql6dn0arJTqAv4PYbB6raG564+pNJzlnGlGSfpl5YakR65wK22bik0
+	DM1kEitFI5aTdy4URHS7//rEjs1bOnlri5XDMACldYwnMNfrLsV6bWfy2RyZXpWd3vtlDHKMokX
+	NYkq4fptgXDYK9YnGQmyt
+X-Google-Smtp-Source: AGHT+IEYUQ0RL8bw3XC24AUk0+qfGnUDRLMasFvq3PQ3JAzvLEnUATeho9PPuGClWM+dU3cuKPGJaQ==
+X-Received: by 2002:a05:690c:368e:b0:6fb:b2a1:3157 with SMTP id 00721157ae682-700babfd346mr10354337b3.3.1742501913404;
+        Thu, 20 Mar 2025 13:18:33 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:f12b:82ea:4a0b:3183? ([2600:1700:60ba:9810:f12b:82ea:4a0b:3183])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-700ba8820desm802097b3.102.2025.03.20.13.18.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Mar 2025 13:18:33 -0700 (PDT)
+Message-ID: <192714d0-d351-405b-9186-367c5212aeca@gmail.com>
+Date: Thu, 20 Mar 2025 16:18:32 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1723755667.git.me@ttaylorr.com> <cover.1742493373.git.me@ttaylorr.com>
-In-Reply-To: <cover.1742493373.git.me@ttaylorr.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 20 Mar 2025 13:00:00 -0700
-X-Gm-Features: AQ5f1Jrae2CBzGTR_u9lzN2U-Do7ew8BRNIfmc71NO0BPAAahW1jVCKIlDX2O6k
-Message-ID: <CABPp-BGv_KDdviT0C6khs0gaoHLSt+ZfmbAVrAkTyT9PC1=Unw@mail.gmail.com>
-Subject: Re: [PATCH v5 00/14] midx: incremental multi-pack indexes, part two
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/13] PATH WALK II: Add --path-walk option to 'git
+ pack-objects'
+To: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, christian.couder@gmail.com, johannes.schindelin@gmx.de,
+ johncai86@gmail.com, jonathantanmy@google.com, karthik.188@gmail.com,
+ kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net, ps@pks.im
+References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
+ <xmqqwmcw7q2x.fsf@gitster.g> <Z9Hy6Yk2XM1RCsNC@nand.local>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <Z9Hy6Yk2XM1RCsNC@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 20, 2025 at 10:56=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrot=
-e:
->
-> This is another new round of my series to implement bitmap support for
-> incremental multi-pack indexes (MIDXs). It is still based on 683c54c999
-> (Git 2.49, 2025-03-14).
->
-> =3D=3D Changes since last time
->
-> This round addresses thorough review from Elijah and Peff. The series
-> substantively is unchanged, but there are lots of little quality-of-life
-> and commit message readability improvements throughout. As usual, there
-> is a range-diff below for convenience.
->
-[...]
-> Range-diff against v4:
->  -:  ---------- >  1:  6af65fdaac Documentation: remove a "future work" i=
-tem from the MIDX docs
->  1:  f565f2fff1 !  2:  0897359506 Documentation: describe incremental MID=
-X bitmaps
->     @@ Documentation/technical/multi-pack-index.adoc: objects_nr($H2) + o=
-bjects_nr($H1)
->      +`o1` and `o2` are compared as follows:
->      +
->      +1. If `o1` appears in an earlier layer of the MIDX chain than `o2`,=
- then
->     -+  `o1` is considered less than `o2`.
->     ++  `o1` sorts ahead of `o2`.
->      +
->      +2. Otherwise, if `o1` and `o2` appear in the same MIDX layer, and t=
-hat
->      +   MIDX layer has no base, then if one of `pack(o1)` and `pack(o2)`=
- is
->     -+   preferred and the other is not, then the preferred one sorts fir=
-st. If
->     -+   there is a base layer (i.e. the MIDX layer is not the first laye=
-r in
->     -+   the chain), then if `pack(o1)` appears earlier in that MIDX laye=
-r's
->     -+   pack order, than `o1` is less than `o2`. Likewise if `pack(o2)`
->     -+   appears earlier, than the opposite is true.
->     ++   preferred and the other is not, then the preferred one sorts ahe=
-ad of
->     ++   the non-preferred one. If there is a base layer (i.e. the MIDX l=
-ayer
->     ++   is not the first layer in the chain), then if `pack(o1)` appears
->     ++   earlier in that MIDX layer's pack order, then `o1` sorts ahead o=
-f
->     ++   `o2`. Likewise if `pack(o2)` appears earlier, then the opposite =
-is
->     ++   true.
->      +
->      +3. Otherwise, `o1` and `o2` appear in the same pack, and thus in th=
-e
->      +   same MIDX layer. Sort `o1` and `o2` by their offset within their
->     @@ Documentation/technical/multi-pack-index.adoc: objects_nr($H2) + o=
-bjects_nr($H1)
->      +The structure of a `*.bitmap` file belonging to an incremental MIDX
->      +chain is identical to that of a non-incremental MIDX bitmap, or a
->      +classic single-pack bitmap. Since objects are added to the end of t=
-he
->     -+incremental MIDX's pseudo-pack order (see: above), it is possible t=
-o
->     ++incremental MIDX's pseudo-pack order (see above), it is possible to
->      +extend a bitmap when appending to the end of a MIDX chain.
->      +
->      +(Note: it is possible likewise to compress a contiguous sequence of=
- MIDX
->     -+incremental layers, and their `*.bitmap`(s) into a single layer and
->     ++incremental layers, and their `*.bitmap` files into a single layer =
-and
->      +`*.bitmap`, but this is not yet implemented.)
->      +
->      +The object positions used are global within the pseudo-pack order, =
-so
->  2:  f2a232e556 !  3:  5eac0d1485 pack-revindex: prepare for incremental =
-MIDX bitmaps
->     @@ Commit message
->              incremental or not.
->
->            - pack_pos_to_midx() and midx_to_pack_pos() now both take in a=
- global
->     -        object position in the MIDX pseudo-pack order, and finds the
->     +        object position in the MIDX pseudo-pack order, and find the
->              earliest containing MIDX (similar to midx.c::midx_for_object=
-().
->
->            - midx_pack_order_cmp() adjusts its call to pack_pos_to_midx()=
- by the
->     @@ pack-bitmap.c: static struct ewah_bitmap *read_bitmap_1(struct bit=
-map_index *ind
->         return read_bitmap(index->map, index->map_size, &index->map_pos);
->       }
->
->     -+static uint32_t bitmap_non_extended_bits(struct bitmap_index *index=
-)
->     ++static uint32_t bitmap_num_objects_total(struct bitmap_index *index=
-)
->      +{
->      +  if (index->midx) {
->      +          struct multi_pack_index *m =3D index->midx;
->     @@ pack-bitmap.c: static inline int bitmap_position_extended(struct b=
-itmap_index *b
->         if (pos < kh_end(positions)) {
->                 int bitmap_pos =3D kh_value(positions, pos);
->      -          return bitmap_pos + bitmap_num_objects(bitmap_git);
->     -+          return bitmap_pos + bitmap_non_extended_bits(bitmap_git);
->     ++          return bitmap_pos + bitmap_num_objects_total(bitmap_git);
->         }
->
->         return -1;
->     @@ pack-bitmap.c: static int ext_index_add_object(struct bitmap_index=
- *bitmap_git,
->         }
->
->      -  return bitmap_pos + bitmap_num_objects(bitmap_git);
->     -+  return bitmap_pos + bitmap_non_extended_bits(bitmap_git);
->     ++  return bitmap_pos + bitmap_num_objects_total(bitmap_git);
->       }
->
->       struct bitmap_show_data {
->     @@ pack-bitmap.c: static void show_extended_objects(struct bitmap_ind=
-ex *bitmap_git
->
->      -          if (!bitmap_get(objects, st_add(bitmap_num_objects(bitmap=
-_git), i)))
->      +          if (!bitmap_get(objects,
->     -+                          st_add(bitmap_non_extended_bits(bitmap_gi=
-t), i)))
->     ++                          st_add(bitmap_num_objects_total(bitmap_gi=
-t),
->     ++                                 i)))
->                         continue;
->
->                 obj =3D eindex->objects[i];
->     @@ pack-bitmap.c: static void filter_bitmap_exclude_type(struct bitma=
-p_index *bitma
->          */
->         for (i =3D 0; i < eindex->count; i++) {
->      -          size_t pos =3D st_add(i, bitmap_num_objects(bitmap_git));
->     -+          size_t pos =3D st_add(i, bitmap_non_extended_bits(bitmap_=
-git));
->     ++          size_t pos =3D st_add(i, bitmap_num_objects_total(bitmap_=
-git));
->                 if (eindex->objects[i]->type =3D=3D type &&
->                     bitmap_get(to_filter, pos) &&
->                     !bitmap_get(tips, pos))
->     @@ pack-bitmap.c: static unsigned long get_size_by_pos(struct bitmap_=
-index *bitmap_
->         oi.sizep =3D &size;
->
->      -  if (pos < bitmap_num_objects(bitmap_git)) {
->     -+  if (pos < bitmap_non_extended_bits(bitmap_git)) {
->     ++  if (pos < bitmap_num_objects_total(bitmap_git)) {
->                 struct packed_git *pack;
->                 off_t ofs;
->
->      @@ pack-bitmap.c: static unsigned long get_size_by_pos(struct bitmap=
-_index *bitmap_git,
->     +                   die(_("unable to get size of %s"), oid_to_hex(&oi=
-d));
->                 }
->         } else {
->     ++          size_t eindex_pos =3D pos - bitmap_num_objects_total(bitm=
-ap_git);
->                 struct eindex *eindex =3D &bitmap_git->ext_index;
->      -          struct object *obj =3D eindex->objects[pos - bitmap_num_o=
-bjects(bitmap_git)];
->     -+          struct object *obj =3D eindex->objects[pos - bitmap_non_e=
-xtended_bits(bitmap_git)];
->     ++          struct object *obj =3D eindex->objects[eindex_pos];
->                 if (oid_object_info_extended(bitmap_repo(bitmap_git), &ob=
-j->oid,
->                                              &oi, 0) < 0)
->                         die(_("unable to get size of %s"), oid_to_hex(&ob=
-j->oid));
->     @@ pack-bitmap.c: static void filter_packed_objects_from_bitmap(struc=
-t bitmap_index
->         size_t i, pos;
->
->      -  objects_nr =3D bitmap_num_objects(bitmap_git);
->     -+  objects_nr =3D bitmap_non_extended_bits(bitmap_git);
->     ++  objects_nr =3D bitmap_num_objects_total(bitmap_git);
->         pos =3D objects_nr / BITS_IN_EWORD;
->
->         if (pos > result->word_alloc)
->     @@ pack-bitmap.c: static uint32_t count_object_type(struct bitmap_ind=
-ex *bitmap_git
->                 if (eindex->objects[i]->type =3D=3D type &&
->                     bitmap_get(objects,
->      -                         st_add(bitmap_num_objects(bitmap_git), i))=
-)
->     -+                         st_add(bitmap_non_extended_bits(bitmap_git=
-), i)))
->     ++                         st_add(bitmap_num_objects_total(bitmap_git=
-), i)))
->                         count++;
->         }
->
->     @@ pack-bitmap.c: uint32_t *create_bitmap_mapping(struct bitmap_index=
- *bitmap_git,
->                     "extension");
->
->      -  num_objects =3D bitmap_num_objects(bitmap_git);
->     -+  num_objects =3D bitmap_non_extended_bits(bitmap_git);
->     ++  num_objects =3D bitmap_num_objects_total(bitmap_git);
->         CALLOC_ARRAY(reposition, num_objects);
->
->         for (i =3D 0; i < num_objects; ++i) {
->     @@ pack-bitmap.c: static off_t get_disk_usage_for_extended(struct bit=
-map_index *bit
->
->                 if (!bitmap_get(result,
->      -                          st_add(bitmap_num_objects(bitmap_git), i)=
-))
->     -+                          st_add(bitmap_non_extended_bits(bitmap_gi=
-t), i)))
->     ++                          st_add(bitmap_num_objects_total(bitmap_gi=
-t),
->     ++                                 i)))
->                         continue;
->
->                 if (oid_object_info_extended(bitmap_repo(bitmap_git), &ob=
-j->oid,
->  3:  aca0318fb1 !  4:  922ea2f607 pack-bitmap.c: open and store increment=
-al bitmap layers
->     @@ Commit message
->          with the previous MIDX layer.
->
->          The changes in this commit are mostly boilerplate to open the co=
-rrect
->     -    bitmap(s), add them to the chain bitmap layers along the "base" =
-pointer,
->     -    ensures that the correct packs and their reverse indexes are loa=
-ded
->     -    across MIDX layers, etc.
->     +    bitmap(s), add them to the chain of bitmap layers along the "bas=
-e"
->     +    pointer, ensure that the correct packs and their reverse indexes=
- are
->     +    loaded across MIDX layers, etc.
->
->          While we're at it, keep track of a base_nr field to indicate how=
- many
->          bitmap layers (including the current bitmap) exist. This will be=
- used in
->  4:  832fd0e8dc =3D  5:  8fedd96614 pack-bitmap.c: teach `bitmap_for_comm=
-it()` about incremental MIDXs
->  5:  c7c9f89956 =3D  6:  dccc1b2d2e pack-bitmap.c: teach `show_objects_fo=
-r_type()` about incremental MIDXs
->  6:  14d3d80c3d !  7:  e31bddd240 pack-bitmap.c: support bitmap pack-reus=
-e with incremental MIDXs
->     @@ Commit message
->
->          Likewise, in reuse_partial_packfile_from_bitmap(), when reusing =
-only a
->          single pack from a MIDX, use the oldest layer's preferred pack a=
-s it is
->     -    likely to contain the most amount of reusable sections.
->     +    likely to contain the largest number of reusable sections.
->
->          Signed-off-by: Taylor Blau <me@ttaylorr.com>
->
->  7:  b45a9ccbc2 !  8:  d9dfcb5a1b pack-bitmap.c: teach `rev-list --test-b=
-itmap` about incremental MIDXs
->     @@ pack-bitmap.c: static void test_show_commit(struct commit *commit,=
- void *data)
->      +  tdata->tags =3D ewah_to_bitmap(bitmap_git->tags);
->      +
->      +  if (bitmap_git->base) {
->     -+          CALLOC_ARRAY(tdata->base_tdata, 1);
->     ++          tdata->base_tdata =3D xmalloc(sizeof(struct bitmap_test_d=
-ata));
->      +          bitmap_test_data_prepare(tdata->base_tdata, bitmap_git->b=
-ase);
->      +  }
->      +}
->  8:  c1eefeae99 =3D  9:  b1bd60d25d pack-bitmap.c: compute disk-usage wit=
-h incremental MIDXs
->  9:  11c4b7b949 =3D 10:  7477a8ac03 pack-bitmap.c: apply pseudo-merge com=
-mits with incremental MIDXs
-> 10:  cb08ad6a62 ! 11:  0fbef17acc ewah: implement `struct ewah_or_iterato=
-r`
->     @@ ewah/ewah_bitmap.c: void ewah_iterator_init(struct ewah_iterator *=
-it, struct ewa
->      +  return ret;
->      +}
->      +
->     -+void ewah_or_iterator_free(struct ewah_or_iterator *it)
->     ++void ewah_or_iterator_release(struct ewah_or_iterator *it)
->      +{
->      +  free(it->its);
->      +}
->     @@ ewah/ewok.h: void ewah_iterator_init(struct ewah_iterator *it, str=
-uct ewah_bitma
->      +
->      +int ewah_or_iterator_next(eword_t *next, struct ewah_or_iterator *i=
-t);
->      +
->     -+void ewah_or_iterator_free(struct ewah_or_iterator *it);
->     ++void ewah_or_iterator_release(struct ewah_or_iterator *it);
->      +
->       void ewah_xor(
->         struct ewah_bitmap *ewah_i,
-> 11:  a29f4ee60d ! 12:  439e743fd5 pack-bitmap.c: keep track of each layer=
-'s type bitmaps
->     @@ pack-bitmap.c: struct bitmap_index {
->      +   * commits_all[n-2] is the commits field of this bitmap's
->      +   * 'base', and so on.
->      +   *
->     -+   * When either associated either with a non-incremental MIDX, or
->     -+   * a single packfile, these arrays each contain a single
->     -+   * element.
->     ++   * When associated either with a non-incremental MIDX or a
->     ++   * single packfile, these arrays each contain a single element.
->      +   */
->      +  struct ewah_bitmap **commits_all;
->      +  struct ewah_bitmap **trees_all;
-> 12:  a1cf65bedc ! 13:  dcb45e349e pack-bitmap.c: use `ewah_or_iterator` f=
-or type bitmap iterators
->     @@ pack-bitmap.c: static void show_objects_for_type(
->                 }
->         }
->      +
->     -+  ewah_or_iterator_free(&it);
->     ++  ewah_or_iterator_release(&it);
->       }
->
->       static int in_bitmapped_pack(struct bitmap_index *bitmap_git,
->     @@ pack-bitmap.c: static void filter_bitmap_exclude_type(struct bitma=
-p_index *bitma
->                         bitmap_unset(to_filter, pos);
->         }
->
->     -+  ewah_or_iterator_free(&it);
->     ++  ewah_or_iterator_release(&it);
->         bitmap_free(tips);
->       }
->
->     @@ pack-bitmap.c: static void filter_bitmap_blob_limit(struct bitmap_=
-index *bitmap_
->                         bitmap_unset(to_filter, pos);
->         }
->
->     -+  ewah_or_iterator_free(&it);
->     ++  ewah_or_iterator_release(&it);
->         bitmap_free(tips);
->       }
->
->     @@ pack-bitmap.c: static uint32_t count_object_type(struct bitmap_ind=
-ex *bitmap_git
->                         count++;
->         }
->
->     -+  ewah_or_iterator_free(&it);
->     ++  ewah_or_iterator_release(&it);
->      +
->         return count;
->       }
->     @@ pack-bitmap.c: static off_t get_disk_usage_for_type(struct bitmap_=
-index *bitmap_
->                 }
->         }
->
->     -+  ewah_or_iterator_free(&it);
->     ++  ewah_or_iterator_release(&it);
->      +
->         return total;
->       }
-> 13:  d0d564685b ! 14:  13568cfa3b midx: implement writing incremental MID=
-X bitmaps
->     @@ builtin/pack-objects.c: static void write_pack_file(void)
->                                 bitmap_writer_build_type_index(&bitmap_wr=
-iter,
->                                                                written_li=
-st);
->
->     - ## ewah/ewah_bitmap.c ##
->     -@@ ewah/ewah_bitmap.c: int ewah_or_iterator_next(eword_t *next, stru=
-ct ewah_or_iterator *it)
->     -   return ret;
->     - }
->     -
->     --void ewah_or_iterator_free(struct ewah_or_iterator *it)
->     -+void ewah_or_iterator_release(struct ewah_or_iterator *it)
->     - {
->     -   free(it->its);
->     - }
->     -
->     - ## ewah/ewok.h ##
->     -@@ ewah/ewok.h: void ewah_or_iterator_init(struct ewah_or_iterator *=
-it,
->     -
->     - int ewah_or_iterator_next(eword_t *next, struct ewah_or_iterator *i=
-t);
->     -
->     --void ewah_or_iterator_free(struct ewah_or_iterator *it);
->     -+void ewah_or_iterator_release(struct ewah_or_iterator *it);
->     -
->     - void ewah_xor(
->     -   struct ewah_bitmap *ewah_i,
->     -
->       ## midx-write.c ##
->      @@ midx-write.c: static uint32_t *midx_pack_order(struct write_midx_=
-context *ctx)
->         return pack_order;
->     @@ pack-bitmap-write.c: void bitmap_writer_finish(struct bitmap_write=
-r *writer,
->
->         write_selected_commits_v1(writer, f, offsets);
->
->     - ## pack-bitmap.c ##
->     -@@ pack-bitmap.c: static void show_objects_for_type(
->     -           }
->     -   }
->     -
->     --  ewah_or_iterator_free(&it);
->     -+  ewah_or_iterator_release(&it);
->     - }
->     -
->     - static int in_bitmapped_pack(struct bitmap_index *bitmap_git,
->     -@@ pack-bitmap.c: static void filter_bitmap_exclude_type(struct bitm=
-ap_index *bitmap_git,
->     -                   bitmap_unset(to_filter, pos);
->     -   }
->     -
->     --  ewah_or_iterator_free(&it);
->     -+  ewah_or_iterator_release(&it);
->     -   bitmap_free(tips);
->     - }
->     -
->     -@@ pack-bitmap.c: static void filter_bitmap_blob_limit(struct bitmap=
-_index *bitmap_git,
->     -                   bitmap_unset(to_filter, pos);
->     -   }
->     -
->     --  ewah_or_iterator_free(&it);
->     -+  ewah_or_iterator_release(&it);
->     -   bitmap_free(tips);
->     - }
->     -
->     -@@ pack-bitmap.c: static uint32_t count_object_type(struct bitmap_in=
-dex *bitmap_git,
->     -                   count++;
->     -   }
->     -
->     --  ewah_or_iterator_free(&it);
->     -+  ewah_or_iterator_release(&it);
->     -
->     -   return count;
->     - }
->     -@@ pack-bitmap.c: static off_t get_disk_usage_for_type(struct bitmap=
-_index *bitmap_git,
->     -           }
->     -   }
->     -
->     --  ewah_or_iterator_free(&it);
->     -+  ewah_or_iterator_release(&it);
->     -
->     -   return total;
->     - }
->     -
->       ## pack-bitmap.h ##
->      @@ pack-bitmap.h: struct bitmap_writer {
->
->     @@ t/t5334-incremental-multi-pack-index.sh: test_expect_success 'conv=
-ert incrementa
->      +'
->      +
->      +test_expect_success 'midx verify with multiple layers' '
->     ++  test_path_is_file "$midx_chain" &&
->     ++  test_line_count =3D 2 "$midx_chain" &&
->     ++
->      +  git multi-pack-index verify
->      +'
->      +
->
-> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
-> --
-> 2.49.0.14.g88b49c1b34
+On 3/12/2025 4:47 PM, Taylor Blau wrote:
+> On Mon, Mar 10, 2025 at 10:28:22AM -0700, Junio C Hamano wrote:
+>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Reading the range-diff plus the new first patch, all my feedback has
-been addressed with this round.
+> In the above three examples we see some trade-offs between pack size and
+> the time it took to generate it. I think it's worth discussing whether
+> or not the potential benefit of such a trade-off is worth the
+> significant complexity and code that this feature will introduce. (To be
+> clear, I don't have a strong opinion here one way or the other, but I do
+> think that it's at least worth discussing).
+> 
+> I wonder how much of the benefits of path-walk over the hash v2 approach
+> could be had by simply widening the pack.window during delta selection?
+> 
+> I tried to run a similar experiment as you did above on the
+> microsoft/fluentui repository and got the following:
+> 
+>     Repack Method       Pack Size       Time
+>     ------------------------------------------
+>     Hash v1              447.2MiB      932.41s
+>     Hash v2              154.1MiB      404.35s
+>     Hash v2 (window=20)  146.7MiB      472.66s
+>     Hash v2 (window=50)  138.3MiB      622.13s
+>     Path Walk            140.8MiB      168.86s
+> 
+> In your experiment above on the same repository, the path walk feature
+> represents an 11.873% reduction in pack size, but at the cost of a 30.9%
+> regression in runtime.
+> 
+> When I set pack.window to "50" (over the default value of "10"), I get a
+> ~10.3% reduction in pack size at the cost of a 54% increase in runtime
+> (relative to just --name-hash-version=2 with the default pack.window
+> settings).
+> 
+> But when I set the pack.window to "20", the relative values (again
+> comparing against --name-hash-version=2 with the default pack.window)
+> are 4.8% reduction in pack size and a 16.9% increase in runtime.
+
+You're right that I wasn't including data around the --window option in
+my analysis. This option presents folks with the opportunity to add CPU
+time in order to improve the possibility of better compression due to
+considering more object pairs.
+
+But it's also important to note that that option still works with
+--path-walk, except that the --path-walk option is focused on improving
+the quality of objects being considered within a window. There's also the
+aspect that there are two passes (one path-based and one name-hash-based)
+so increasing the --window size has a larger impact on the --path-walk
+option.
+
+With regards to the microsoft/fluentui repo, I had previously been using
+an old clone using --bare. The size changes if I use --mirror as well,
+since it will get the fork hint refs corresponding to objects in public
+forks that are not actually in the core repo. This changes the clone size
+as well as the repacked size.
+
+(To save time, I didn't repeat the --window option tests for name hash
+v1 as name hash v2 is clearly superior to that option in this repo.)
+
+Cloned with --bare:
+
+| Type         | Window: 10     | Window: 20     | Window: 50     |
+|--------------|----------------|----------------|----------------|
+| name hash v1 | 451 M | 1m 42s |       |        |       |        |
+| name hash v2 | 160 M | 35.4 s | 151 M | 25.4 s | 141 M | 31.0 s |
+| --path-walk  | 141 M | 31.0 s | 136 M | 35.7 s | 129 M | 49.3 s |
+
+Cloned with --mirror:
+
+| Type         | Window: 10     | Window: 20     | Window: 50      |
+|--------------|----------------|----------------|-----------------|
+| name hash v1 | 882 M | 3m 27s |       |        |       |         |
+| name hash v2 | 584 M | 70.4 s | 554 M | 54.6 s | 530 M | 69.4 s  |
+| --path-walk  | 548 M | 79.8 s | 523 M | 93.9 s | 507 M | 126.2 s |
+
+Running on a slightly-larger Javascript repo with the same CHANGLOG
+filename issue, I get these results:
+
+| Type         | Window: 10     | Window: 20     | Window: 50     |
+|--------------|----------------|----------------|----------------|
+| name hash v1 | 6.4 G | 36m 9s |       |        |       |        |
+| name hash v2 | 920 M | 7m 39s | 767 M | 5m 49s | 665 M | 6m 12s |
+| --path-walk  | 834 M | 4m 48s | 697 M | 7m 39s | 615 M | 8m 42s |
+
+> But these numbers are pretty confusing to me, TBH. The reduction in pack
+> sizes makes sense, and here I see numbers that are on-par with what you
+> noted above for the same repository. But the runtimes are wildly
+> different (e.g., hash v1 takes you just 87s while mine takes 932s).
+
+I wonder if it's related to threading? I'm using as many cores as I can.
+
+> There must be something in our environment that is different. I'm
+> starting with a bare clone of microsoft/fluentui from GitHub, and made
+> several 'cp -al' copies of it for the different experiments. In the
+> penultimate one, I ran:
+> 
+>     $ time git.compile -c pack.window=50 repack --name-hash-version=2 \
+>         -adF --no-write-bitmap-index
+
+There's also some strange things with my numbers because I'm not copying
+the same data into multiple places but instead running the test on the
+same repo. Thus, the "input size" is changing with each run and this is
+probably a big factor in the larger tests.
+
+So the order in my tables is left-to-right, top-to-bottom, like reading
+a page in English. Thus, the short time for --path-walk --window=10 in
+the last example is maybe a bit faster because it is starting from the
+665 M from the --name-hash-version=2 --window=50 example. 
+> In any event, it seems like at least in this example we can get
+> performance that is on-par with path-walk by simply widening the
+> pack.window when using hash v2. On my machine that seems to cost more
+> time than it does for you to the point where it's slower than my
+> path-walk. But I think I need to understand what the differences are
+> here before we can draw any conclusions on the size or timing.
+
+I'd be very curious to see if more folks have bandwidth to do similar
+testing. My default mode is that I like giving users more options to
+explore which may work better for them. 
+> If the overwhelming majority of cases where the --path-walk feature
+> presents a significant benefit over hash v2 at various pack.window sizes
+> (where we could get approximately the same reduction in pack size with
+> approximately the same end-to-end runtime of 'git repack'), then I feel
+> we might want to reconsider whether or not the complexity of this feature
+> is worthwhile.
+> 
+> But if the --path-walk feature either gives us a significant size
+> benefit that we can't get with hash v2 and a wider pack.window without
+> paying a significant runtime cost (or vice-versa), then this feature
+> would indeed be worthwhile.
+> 
+> I also have no idea how representative the above is of your intended
+> use-case, which seems much more oriented around pushes than from-scratch
+> repacks, which would also affect our conclusions here.The push story is valuable, but I'm also interested in helping users shrink their local repositories in whatever means they are
+willing to wait for.
+
+---
+
+Meta-response to your patch review: I have made adjustments to my local
+branch in response to the points you brought up. I'll hold off on v2
+for a few more days to give more opportunity for review.
+
+Thanks,
+-Stolee
+
