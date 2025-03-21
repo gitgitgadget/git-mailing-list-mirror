@@ -1,207 +1,130 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED2D78F30
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 16:39:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB44C1BEF77
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 16:42:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742575161; cv=none; b=BpDqxeC96yYcIYEHBNG+arUYJTSBjmu9L28jjmI9NRDE2eC+PVgsIhfDyGRjnxO/1f5R7OD4zrrwZ7TMDaLHWvKlNMXTBZxBjDjowCkf86yANqLBZrIc1vdVKqCCnGpGvZhmQqJaMAnR1HHDFJBPzyIBirMAmNk0NK5SIF4XQsU=
+	t=1742575336; cv=none; b=SLWlmDNpzlYNYE8e/ppOlP+zVQ/vwrRS2pTnfBMOalAKtOOwd6fsLAktFITIiY8aoGklRlf/s5AzoRuWXfinMEFYZ4WoKNhmtx/48MfEyW6uvKYAb0/+BSFP529bS/skZxauF95UCfVgFL+Xt4PZrAq/VoktgR4BhksqU+jhPHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742575161; c=relaxed/simple;
-	bh=MDFUNZlcB1/DQnf2Bg7WulmVeGVtB66cPj6Gw0uQ5no=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=RfA0RspTFhrTjwk7t9kWLOiOPLdH9lr9jv+famgyNeengqf7qqXwYjVyyM8BEMB0qr6zf75eRcTFwStRznm/xKzzO6hzuUHrn9KFWOwk1hl9Pbjvj3j76lHcAowpt1882FY5i5TvWJVXaqvKImD5rk6+vvUzGrmHm4gvu7e13I4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m2pSZlkV; arc=none smtp.client-ip=209.85.218.46
+	s=arc-20240116; t=1742575336; c=relaxed/simple;
+	bh=bWjAhw66k6odcGDq9ssnBP84cPpXv69qlL6iQwbzp24=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=E5AbyzLnLSsoZ9fSruqD3IzSPSvDdP0ZFZmPIcM6lQ4LF21H7V9HtQKLBM4kaEBRCQJh3T5oWRAkhj/F1Mu7e/5E3qhzdoslHPWTq3X8XtHTp+j6yQnHa3XWahgGyYxl8gSMduj4suTpC4zc+XydZ0qb3ZHf8i/zuKg1kWuBvJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QHQXNp6m; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m2pSZlkV"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ac2ab99e16eso435606566b.0
-        for <git@vger.kernel.org>; Fri, 21 Mar 2025 09:39:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QHQXNp6m"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43d0618746bso15515635e9.2
+        for <git@vger.kernel.org>; Fri, 21 Mar 2025 09:42:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742575158; x=1743179958; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oLmzeK9gakIQf9flDiks/rHpH+AC3XjvwG6Mx0qEuh8=;
-        b=m2pSZlkVUtVlfBvRE3N3LrxY9bNPGDIFYWmJroKe11BnNt6jwJTytjkASOtI1UpkfF
-         cOzHrQxo8mhGCqhKTZMaKqmyGag+ZcKcWY0KzV/RrbUdBQnAp91GegiqH04gDWe36xW1
-         KJzJ4SD+glwRembgeWE1DYsr+qvngOl14JCHxcQ4GQ1RMuk0HCKxo3yyuxGu9Q1Hvzp8
-         MF/TIob+W8hf/usUq98rvJ5lwwlPTEwlf7i/MgpCvmRdmfbzAFGl6Qwt1wneuXrJt5bF
-         vYOoTe3F9I7wPItDOoQDqGELZuAhYeRKDHoowaOqIA5fru+9o3uYHP2/dbuu++qYDUIM
-         dV+w==
+        d=gmail.com; s=20230601; t=1742575333; x=1743180133; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=5SKYt3sHHGtmxEbzGtA8VcDHjqrPC95q+6qjv67gS2E=;
+        b=QHQXNp6mKuBl7EXXxb6LTOIHepxPDwoUr1VjhY4WMP9f24qXD7r3v/yvV9LnC+ENj3
+         811zT+DCeMGE9745GyV3Yebn2giAgZVucHLTm/k/ISpaeDY0qw6Mtr+SsvTTdEHns0j0
+         EgYZEAjFH8MF7PLabjE2Yoz8Pm9UAjH9tzTDmoXpJhT0IUnSnRMD2Q40jKuj953Fvlik
+         fgBJxSD3E7eH3AKF5wZJcRge3GH3vclbHNTCAcCSQzMKGv1dGaKrWaL82Em0Q9O+VOFX
+         h+SPUV3p5bVMY+gAQyQFFi7pdJapHl61asuzrLTMWEthIxdXQiGjRO3keRp/oJ+QECpf
+         OaHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742575158; x=1743179958;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1742575333; x=1743180133;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=oLmzeK9gakIQf9flDiks/rHpH+AC3XjvwG6Mx0qEuh8=;
-        b=XLeF/HstNfjGSdVEIFI8lOnpFHnclqjT2sF0P7LHPxm7Szw1WIVFZ/zCmLWTfxhIMw
-         CBVUT+/P6DKCmaBQUxI8uzObXQhBz8nQ8Ue4DKQhD1JkcX/Go3jeZL4tpXnk+R6tldsw
-         qXD59G+v3JIMdhom32c20mBFLgH5PC1fhRqan7NGG/k14ypDhLZJUm2nQXLpu3viA2XH
-         TOZnRI1PfttaSEZoadaEhBVECI6QKFpNP+ytyLGB2U9si7xaByU5vrF+nzGLx9sBoE3T
-         tCJMw9oyJeSGDWu58smXdwkYqhHXnK2TgtH6b3wt00N6y2ltR/zRaJFKfg5BeR86Ip8s
-         CiSg==
-X-Gm-Message-State: AOJu0Yyom0q0QmZ/Z2cavQV3fORSkq2FSIxJJYo+A56Gu4RMwt/x7+vt
-	t0+BWbH0zC/vBOGqKJ17lajDXkJW8PloSscikn7cvYRAWlzklM4vPdxVptQU
-X-Gm-Gg: ASbGncvsTx/EymShZSdAPOeUIMYcblQcd3tnGfv7MCMIL4YWjdMHhb0IWptXW1aPAR8
-	MaR0F7bR9T0M1IY3pfswihr8I8+3K/1utHdgx6YGl0qab/RHEHW5nn/4BDLgZqzEJRJwzLPUEA2
-	2iLFEUrSbuuT8mcdy/3VbX5IG/0z639Zv29+cMRQ0DlMGywTKIu8HQRrRi+ptzljYR5LGpNDj9n
-	5JM2Id86FMcwIqMI8trShnu/jc7NJksuaTTz4dRzel/B5gD3KdX9/hWzxxUy+ja4ZGYMPYwyUuT
-	R3KHpMIEWgj4E6RWS+2KjPcPDGyoBo066g0szg7mnLju
-X-Google-Smtp-Source: AGHT+IGrOnR+TUXcrjY/Q2/qeE3CeoJmZNuWzUGruWwO6hCs4GZYL5RWNtiGq+usvZegCb/Ijg6Gjw==
-X-Received: by 2002:a17:907:9728:b0:ac3:26ff:11a0 with SMTP id a640c23a62f3a-ac3f251ac63mr423795066b.38.1742575157853;
-        Fri, 21 Mar 2025 09:39:17 -0700 (PDT)
-Received: from [127.0.0.2] ([217.110.80.4])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3ef8e5105sm185576066b.50.2025.03.21.09.39.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Mar 2025 09:39:17 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Fri, 21 Mar 2025 17:39:14 +0100
-Subject: [PATCH] blame: fix unblamable and ignored lines in porcelain mode
+        bh=5SKYt3sHHGtmxEbzGtA8VcDHjqrPC95q+6qjv67gS2E=;
+        b=EZFnbVx2ClRFhEd8njPBm/Xd4bacbSloGnBlMl3qyudt1WXnREweynfBPzAqbdlGGd
+         v/W/YipL9oSDideE5xkX4url3wI7rSyy3weifJtZkWRtYG4J/tGn0DI05xRUIbSeCdcE
+         U5JZc9QpYuRS+BJ/HLSmgFyXPEvh1KRc+TRPRqdO1aeqF4GEZMlaX3jaF6UulFC3UqgM
+         Ee8D8LyS6/h9a5tJc5Fiwy1iPGMopdY12E6oVTXNnX4qQ9AAvjh7/3n9HVo9JLIraobv
+         Vu2KDFA8WZFxgdF1LMEUx9kq+hRKda70GTOkigGiReDHPFDoGt/LeF3+TUQNtkRdBwB+
+         4+Tg==
+X-Gm-Message-State: AOJu0YxfoL1GNsRrzt4NRlvFjyNy3yevrG+2kS6XFftml4HoZydrFNO3
+	ZEzot2ipGbxg7qzt2rrRj8rIqdENXfCrkOu+SC9LGYLhBc111RCDWKaXNg==
+X-Gm-Gg: ASbGnctiUN+PJMoebZlJaH47v6MIToDRNQ0ADMJuofQIj86NjXSZENFI69NUrHWRxkU
+	HGH0kkDwuJlxMZmsSMuaUl+YZ5ygRsD6h9rgHHF3wwjkLPUeKJ1on1y6XlHMKhz8n7iFN8yLdZx
+	mQJxk4jXJ/E4iG/6QhRAJ4ndNa6TbmvEP8LYXzG4Yb2kzB7vSD1XQO6xK/uMI5m+aeUv+mLV5Y2
+	EAan9Eri2cAuCa+oT8YrVqzVckliUcnXEwQRV4SsubLDzDxvQFaGlrni6hVNilZUjEu1ODvnoRJ
+	PaOgUiEmqbFWwh5RVnUhfzmhHA1e1SDRRteybuKKKb3llohv1CHQmNCUYcJT9pIaXP7G/GCAmip
+	uprPnDLvD22c5K/91mwxc
+X-Google-Smtp-Source: AGHT+IG4Il1IbILkWBgUstwbjXK2kCF1MnwswXHCe9ilgpP1Hnw3FZGlioTot+SOFwhQ3gJWdQ2Lsw==
+X-Received: by 2002:a05:600c:4503:b0:43c:fabf:9146 with SMTP id 5b1f17b1804b1-43d509f5a43mr45737555e9.17.1742575332829;
+        Fri, 21 Mar 2025 09:42:12 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9efe61sm2837322f8f.97.2025.03.21.09.42.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Mar 2025 09:42:12 -0700 (PDT)
+Message-ID: <1849284e-b5cc-40fd-ba59-43559a20ac2e@gmail.com>
+Date: Fri, 21 Mar 2025 16:42:10 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/2] clone: suppress unexpected advice message during
+ clone
+To: Justin Tobler <jltobler@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, ps@pks.im
+References: <fff634dh5qeb4rgjqn7cru7v4a2voj4us4thvwtttxjcdnu2bu@jvv3htcon2ul>
+ <20250320014646.2899791-1-jltobler@gmail.com>
+ <926210f4-a8ff-4ac2-8b7f-85cd5598d77b@gmail.com>
+ <yyeid3njdsmws7rl3kcsxne52fuadd7q4emqdlvatwvcrnyl42@rfnk26mvcgoa>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <yyeid3njdsmws7rl3kcsxne52fuadd7q4emqdlvatwvcrnyl42@rfnk26mvcgoa>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
-X-B4-Tracking: v=1; b=H4sIADGW3WcC/x2OwQrCMBAFf0Vy9kETUxV/RTxsm21dbDclSUUo/
- Xejx4GBmc1kTsLZ3A6bSfyWLFEr2OPB9E/SkSGhsnGNa5uTs2itxygF3UQzwyJjianniUQR17K
- sBSFyhsYCnqu46k+lbmKQBsioMXHATOnFKcPT4M9D467+wqZWl8SDfP5H98e+fwG7PDqnoQAAA
- A==
-X-Change-ID: 20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-4af46f02847e
-To: git@vger.kernel.org
-Cc: jltobler@gmail.com, Christian Couder <chriscool@tuxfamily.org>, 
- Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3750; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=MDFUNZlcB1/DQnf2Bg7WulmVeGVtB66cPj6Gw0uQ5no=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGfdljXWl9BhhTTa77Y9egBAWFFa7a48DmFhf
- IUHHwrcaCwjU4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJn3ZY1AAoJED7VnySO
- Rox/AC8L/ROvv/NkPBoNPHNic0noNV/dbXXvNZFsSyBMtHR6lHkG7rbJX8/C/nq8wYsCi9aSbPn
- 14IHB75Y5ag+kB6t9HjatjJiNhtT1MTPLfwI9kYCV71BXamhpe6QEbeJKDzV+OmmQ8aUmppvuMS
- VooAxfZhZhIGLa8Prj7qg8ZU1Cvuqv11VBgqW0tJ4QK2k+maql5VFQaqdl8K34p3IbHm/C2YO/C
- fKRBbOr+A3dHVxwky9w4xBJXAlY7MiIT93khPeQFVpv5YGXSQOCS9AYWHQxrbJrRxARRe9HEITK
- /LGRzJAhBvNHdY3MPNx3IjJmuRJnWNAGtcQ+OQxH6OGcxkDttzDwMndOUSpFrlq0mlcdYyAF+NH
- ljS1yQinhlENbHHrfTdnBD2mDZq3fvg0Sezaqo9Z3kj7bEWE+s6P6PimNHt+18Qw3qghgXnlCiL
- 1LzZjdLi5r4CT5T8uk8ro3Pu9MAlaOYD19P7vJcM92iO3ptpOiG2YOWZ9X1BUgWgEhUmmuJtbx4
- aU=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The 'git-blame(1)' command allows users to ignore specific revisions via
-the '--ignore-rev <rev>' and '--ignore-revs-file <file>' flags. These
-flags are often combined with the 'blame.markIgnoredLines' and
-'blame.markUnblamableLines' config options. These config options prefix
-ignored and unblamable lines with a '?' and '*', respectively.
+On 20/03/2025 23:48, Justin Tobler wrote:
+> On 25/03/20 11:10AM, Phillip Wood wrote:
+>> Hi Justin
+>>
+>> On 20/03/2025 01:46, Justin Tobler wrote:
+>>>
+>>> A side-effect of this change is that the location of the first
+>>> `git_default_branch_name()` gets deferred to a later point of execution.
+>>> This matters because `git_default_branch_name()` only computes the
+>>> default branch name once and returns a cached value for subsequent
+>>> invocations. After this change, the `git_default_branch_name()` call
+>>> site that actually computes the value becomes `guess_remote_head()` and
+>>> is configured to always show the advice message.
+>>
+>> Isn't the fundamental cause of this bug that advise() ignores GIT_ADVICE?
+>> I'm not really clear why "git --no-advice" only applies to advice that is
+>> guarded by advice_enabled() when it is documented as disabling all advice
+>> hints.
+> 
+>  From my point of view, this advice message should never be presented in
+> this particular scenario regardless of the configuration as it doesn't
+> make much sense here. This also happens to be the original behavior so I
+> think we should probably return to that state.
 
-However, this option was never extended to the porcelain mode of
-'git-blame(1)'. Since the documentation does not indicate this
-exclusion, it is a bug.
+Oh, good point. So the original report actually highlights two bugs - 
+the regression you're fixing here and the fact that "--no-advice" does 
+not suppress the advice.
 
-Fix this by ensuring porcelain mode also prints the markers and add
-tests to verify the behavior.
+> I was also a bit suprised to see that not all advice messages respect
+> the `--no-advice` option. I'm not sure if there is a reason for this, or if
+> `advise_if_enabled()` just came later and not everything was converted.
+> 
+> In general though, other users of the default branch name advice message
+> should probably follow the `--no-advice` option. I'll add another patch
+> that does this in the next version.
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- builtin/blame.c              | 10 ++++++++++
- t/t8013-blame-ignore-revs.sh | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+)
-
-Karthik Nayak (1):
-      blame: fix unblamable and ignored lines in porcelain mode
-
-
-
-base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
-change-id: 20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-4af46f02847e
+That would be great,
 
 Thanks
-- Karthik
----
 
----
- builtin/blame.c              | 10 ++++++++++
- t/t8013-blame-ignore-revs.sh | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+)
+Phillip
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index c470654c7e..9a8d7ce7af 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -360,6 +360,11 @@ static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
- 	struct blame_origin *suspect = ent->suspect;
- 	char hex[GIT_MAX_HEXSZ + 1];
- 
-+	if (mark_unblamable_lines && ent->unblamable)
-+		putchar('*');
-+	if (mark_ignored_lines && ent->ignored)
-+		putchar('?');
-+
- 	oid_to_hex_r(hex, &suspect->commit->object.oid);
- 	printf("%s %d %d %d\n",
- 	       hex,
-@@ -372,6 +377,11 @@ static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
- 	for (cnt = 0; cnt < ent->num_lines; cnt++) {
- 		char ch;
- 		if (cnt) {
-+			if (mark_unblamable_lines && ent->unblamable)
-+				putchar('*');
-+			if (mark_ignored_lines && ent->ignored)
-+				putchar('?');
-+
- 			printf("%s %d %d\n", hex,
- 			       ent->s_lno + 1 + cnt,
- 			       ent->lno + 1 + cnt);
-diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
-index 370b768149..2722eb4598 100755
---- a/t/t8013-blame-ignore-revs.sh
-+++ b/t/t8013-blame-ignore-revs.sh
-@@ -158,6 +158,16 @@ test_expect_success mark_unblamable_lines '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'mark_unblamable_lines porcelain' '
-+	sha=$(git rev-parse Y) &&
-+
-+	git -c blame.markUnblamableLines=false blame -p --ignore-rev Y file >blame_raw &&
-+	sed "s/^${sha}/*${sha}/g" blame_raw >expect &&
-+
-+	git -c blame.markUnblamableLines=true blame -p --ignore-rev Y file >actual &&
-+	test_cmp expect actual
-+'
-+
- # Commit Z will touch the first two lines.  Y touched all four.
- # 	A--B--X--Y--Z
- # The blame output when ignoring Z should be:
-@@ -191,6 +201,26 @@ test_expect_success mark_ignored_lines '
- 	! test_cmp expect actual
- '
- 
-+test_expect_success 'mark_ignored_lines porcelain' '
-+	sha=$(git rev-parse Y) &&
-+
-+	git -c blame.markIgnoredLines=true blame -p --ignore-rev Z file | grep $sha >blame_raw &&
-+
-+	echo "?" >expect &&
-+
-+	sed -n "1p" blame_raw | cut -c1 >actual &&
-+	test_cmp expect actual &&
-+
-+	sed -n "2p" blame_raw | cut -c1 >actual &&
-+	test_cmp expect actual &&
-+
-+	sed -n "3p" blame_raw | cut -c1 >actual &&
-+	! test_cmp expect actual &&
-+
-+	sed -n "4p" blame_raw | cut -c1 >actual &&
-+	! test_cmp expect actual
-+'
-+
- # For ignored revs that added 'unblamable' lines and more recent commits changed
- # the blamable lines, mark the unblamable lines with a
- # '*'
-
-
+> Thanks,
+> -Justin
+> 
 
