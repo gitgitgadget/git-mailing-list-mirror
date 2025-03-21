@@ -1,112 +1,170 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84ADA1EE7DD
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 08:52:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBEB1F2B99
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 09:52:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742547180; cv=none; b=Moba7ZAyRYEI5M6zDkchYsK8n4P9xebPOELCVejMO+SqRJ8Dwjij6q1x0DQBWUWiwBH5yrctEkdIMmD+r8v96Vb2wP65ARWC0IDo/O3EugZFIrkIFC2IzDulc9oxSLMXqLLwSxwKWoUGxCClghz6QsihMdCzXWEtSG1CsNoDhjg=
+	t=1742550769; cv=none; b=Q/UbfaVUBri2sHNxXrXrbJyHv4bvLtV/5pVsMlnbk5gqwitWIGv/C5iyqMKUD/UOTyXN6CZcz8YtGUxKEaSGQnYqpJ8i08KLvcxDd2aNVl4emCnzYtMi9mIDell0f2TFPLCHYAo7MjVevzQc+G+isrbrXlyjLLXI2fNYwxNLj/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742547180; c=relaxed/simple;
-	bh=KHhE/Cyh+pl1q8WlC5DkitpSfEsZaUYnuLOhdujS/5I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Qjh7O+mhMiSUfFcInQHuTKG/nTTS3F1bwro000r6oGFjVY0TFkge7cJ/cGOaIz5IjbrutWMAqUie1ZJAfcirkXaSYOQ8Hc5wUPO+U175TlScJmiYqJWtVUYx1acgOm+lzJPkf6iJt081+GKNLQ8mROoKcMm0vXGF/pNM9DaNawc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=woYmaSts; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=flMeS1ZB; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742550769; c=relaxed/simple;
+	bh=hukOrt9sNmKRGG/33q5LUXNBuukBkBiWxv+3mn8ZHRI=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QeogqXxKx7Vo2VwcE7ZpXQxj3Cc8Ze9fJVn4jqjtg5kowmT8zxRxj0vR47v1tSiyBxa0Q9OFJXQ52HZ+YUKVROeghfGU2g+N8ysbvcWAkdgJzNy/1CMipfNO6m1AGwOP5vff8vr/tisOvwF7oAtTfw3/xFZjh/lWixzeqfWfJEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b+1pZH4x; arc=none smtp.client-ip=209.85.221.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="woYmaSts";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="flMeS1ZB"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 56C77254012D;
-	Fri, 21 Mar 2025 04:52:56 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Fri, 21 Mar 2025 04:52:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742547176; x=1742633576; bh=VYh9PpV1+q
-	JxydeQmsiDyJCsRqZgM7DBtHzhhRUboEs=; b=woYmaStsNMimJ5OwdIQW/zYGbn
-	3XLEq8QRUQgFzsRSTq356qb94EgLXxuKZgOx9VcOKi/VhUVc/hnVqj/RCvDnvgAU
-	qTmFJWsaR5vldX6mXF/gI957bxk7hu2OuFfhBqYlfIgTVVOm7V+cVfvu8ayP1HFd
-	iuON/fnjf6X2el/otM4zYOkQG4BNgMqcU5nhRlQsI1wTY4gCGyRoO/+r+3JRvpKi
-	8QGiJjTV7Er7VrBcz1xi3nf9dnFP0GQPw77E7bgJKeYmx1k9MXXnOVsMmmdwpRWl
-	suyLeC+zm1nESP4Sodxpdmh4wl0QOUww5cNoC6hQetgcAcTgreQLQe02DCFQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742547176; x=1742633576; bh=VYh9PpV1+qJxydeQmsiDyJCsRqZgM7DBtHz
-	hhRUboEs=; b=flMeS1ZBvifiosYqfETT2Ze64lM6ZNqmkfZgcMer9r8tXVheRKH
-	o7CjdTRqRSdh6b4OCv6ZPDXrgQNufshxT2OQFspuv+qqxTBg+whz/F0KVrGxE9ra
-	/PRsSZSSc6pYlzTv9HGSQKpazHIBa8EkX2vPLC/QpwGegbOBasetAGI7ktpKpLgI
-	XfWjGwjAFRS+yt0h2IdgwHEoi4Gg4ahpQEa7u+mpCGrRpMGh7ioTAVlOWwAvfchB
-	xD+cLOWu9xmx2HAKiyHJBoVv490ZBn0+vL0+mXjhJhxxGk9Wh9pLVkg69OY/j56F
-	lv0QhOULqn3mP7bFrlFq/c//CZiPzr2yLLg==
-X-ME-Sender: <xms:6CjdZ6gHMoD_yZ77kWvmHslnJW_9Zpf040YQYgHfMT2kejkad8s1rA>
-    <xme:6CjdZ7BOBI-EHMbJrM2vSocmeeFETWfC1LGgUBgcTQUVYuDcfzxyKJjxUUfS8mTqJ
-    3lV_TkGirkxqAGsUA>
-X-ME-Received: <xmr:6CjdZyH5J-WDjvG-nOPUdP7fZnBXTcgZozbemVT_Xr5KQlcArjMRexwuvMY7TGDdku1uwUBO09LmtoG0X8bmSB-IzZvvIw1iGZ7smG4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduhedtieeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:6CjdZzQlKAmnEss1LtAblOLF2q6_patHTvkukhvrXrSrmJuRY6CnIQ>
-    <xmx:6CjdZ3xTuJcs_zD28qak6SrsHhLdXcL1shEi7dt40O9zbkUavrLDbg>
-    <xmx:6CjdZx6QszP18nUU0QDpwUnryT6Zzs0r6k3evCub51jlxsYivQeVVw>
-    <xmx:6CjdZ0ziNKlmjplGGYUdTGxtpHsCw4gsoDud_Ikn7GdXXrK28bOw8A>
-    <xmx:6CjdZ5vuS-Z7fVSzfbCI9auGEspF_uENj1UZ_NO8t-1xG78pmGYpw02a>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Mar 2025 04:52:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/2] remote: allow `guess_remote_head()` to suppress advice
-In-Reply-To: <Z9ukDuvsLXhYTQAP@pks.im> (Patrick Steinhardt's message of "Thu,
-	20 Mar 2025 06:13:50 +0100")
-References: <fff634dh5qeb4rgjqn7cru7v4a2voj4us4thvwtttxjcdnu2bu@jvv3htcon2ul>
-	<20250320014646.2899791-1-jltobler@gmail.com>
-	<20250320014646.2899791-2-jltobler@gmail.com>
-	<Z9ukDuvsLXhYTQAP@pks.im>
-Date: Fri, 21 Mar 2025 01:52:54 -0700
-Message-ID: <xmqqjz8ivk7t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b+1pZH4x"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-523dc190f95so979590e0c.1
+        for <git@vger.kernel.org>; Fri, 21 Mar 2025 02:52:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742550766; x=1743155566; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gEN1mqj0iHBmP2BcrXqPoBrUpMj9hBJdlbhrRfx2n+s=;
+        b=b+1pZH4xNv7xjJg5TfiomnuLvU6Cq6WOJSXTzg41kp0p3mlzZ724pGmLEcn7oi5VSX
+         jdiGZ/dPDyN2K+PeWq4/rsY6GBIgZv6xmeuKpFXDN+DG8aV8B5B08ZQPmF7OmORzRejM
+         oDHN9W+RMGVItl3xYoEHVmpylmOOfr5i6z6Ef+SuwKMigGXZcgv8K4KWBpamZ3jxTbPL
+         rMrwO62nBSwYLF4OkX5erxI0pPubJ1blcIlYev5fZJHPrlPLjXqARijqaqXk0VmfX8Z/
+         vyfGvWGRcFpXFJpukm5niOlqoGjE7aNQZ6ZqIeA840dLihQnJy1trGlc2Ke1j5Namld2
+         NIZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742550766; x=1743155566;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gEN1mqj0iHBmP2BcrXqPoBrUpMj9hBJdlbhrRfx2n+s=;
+        b=T5EGcVZ8gqlIWmlIeVIyQ9mL/OZVRD3RqTqFM7hH8duoToWE7wE/gTKmvW9pFDRr76
+         m9+EfptzblmaQsbH3blZwPNwqdAYuxYoLzDDB3ASjLh0lcuLQjRZEglRGE1ncEnn3sAS
+         1wfr8AFd1UL3TKk8ygI/+/ZSHdJ/+B5QPCkl1ST7mmCBnXQlGs4s9dIky5G122DNRBqB
+         3reVVMOT6EAI/4ugP6oSKUMgLoFr3hBeybXSbhd0r/Vg35uZBhSXhbDcKaLvBrJSh0IF
+         VVxu1eEZdpHSNKBeA7/GnS3OErT6yWE9qz47yfKZ4e6ht/1igcBS1Vj26WGVmBLYDwrA
+         /ZCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV52VmEXmEq6750z2F5d3RIUZBe9pC3tGNnntKPBpgayHBBS/n1/aODsS4Nlm66+nDfNMk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwFqDSIOln+SDj9yrS0Dh/Za0lspcVyclklrqTntgqGz5wOdPYR
+	bcTRme+unVqv71nlWaclN3MgDnZglJm7ipif23q3a363ZYVQXTtUk5v6xEyg1XvkiiF6FjVbs2f
+	yg6g5RqEjNXw5Ur/mxH5REQ4sDyE=
+X-Gm-Gg: ASbGnctGPnnB+r83pCdcXK4Lo+/409bqOY8kE4dZJ2vOUCYgW6lwKTkjp8K0hnEUwl9
+	z0Jf1V0gFV1xALVgj/kIP03JqmjttZgHMv0ZS9wIpkspiFZl51+8JnZMJ7z+hDUQ/3pb9Jbq78B
+	ygFzHyCUJJOBnxoN1/1xAgx227
+X-Google-Smtp-Source: AGHT+IHO4u4jhLxpLkZvXSZnWvwawXbJmRHaibELKSiWPk5kWSiGOru85VP/ouePHVXJirPrSPblrYkJewQVff5iMwI=
+X-Received: by 2002:a05:6102:2d0e:b0:4b2:ae3a:35d6 with SMTP id
+ ada2fe7eead31-4c50d5fa6e6mr2015626137.19.1742550766052; Fri, 21 Mar 2025
+ 02:52:46 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 21 Mar 2025 04:52:45 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250320-b4-pks-t-perlless-v1-2-b1eefe27ac55@pks.im>
+References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im> <20250320-b4-pks-t-perlless-v1-2-b1eefe27ac55@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Fri, 21 Mar 2025 04:52:45 -0500
+X-Gm-Features: AQ5f1JrutdJI1XrWFK1Hg7bT19L7GggUebaKmn83EiiTnReuPutqqw4FEsrnsdE
+Message-ID: <CAOLa=ZR3V9e33oU5ard+eZLCUQgMybGwcj9PLMr7hy+4wNgM_Q@mail.gmail.com>
+Subject: Re: [PATCH 02/20] t: refactor environment sanitization to not use Perl
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: multipart/mixed; boundary="0000000000006a09950630d737c0"
+
+--0000000000006a09950630d737c0
+Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Wed, Mar 19, 2025 at 08:46:45PM -0500, Justin Tobler wrote:
->> diff --git a/remote.h b/remote.h
->> index 6be5031f64..49c7b644bb 100644
->> --- a/remote.h
->> +++ b/remote.h
->> @@ -395,7 +395,7 @@ struct ref *get_local_heads(void);
->>   */
->>  struct ref *guess_remote_head(const struct ref *head,
->>  			      const struct ref *refs,
->> -			      int all);
->> +			      int all, int quiet);
+> Before executing tests we first sanitize the environment. Part of the
+> sanitization is to unset a couple of environment variables that we know
+> will change the behaviour of Git. This is done with a small Perl script,
+> which has the consequence that having a Perl interpreter available is a
+> strict requirement for running our unit tests.
 >
-> I think instead of introducing another boolean parameter it would be
-> preferable to have a preparatory commit that turns `all` into `flags`.
+> The logic itself isn't particularly involved: we simply unset every
+> environment variable whose key starts with 'GIT_', but then explicitly
+> allow a subset of these.
+>
+> Refactor the logic to instead use sed(1) so that it becomes possible to
+> execute our tests without Perl.
+>
+> Based-on-patch-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  t/test-lib.sh | 32 ++++++++++++++------------------
+>  1 file changed, 14 insertions(+), 18 deletions(-)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 1ce3b32fcac..a62699d6c79 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -499,24 +499,20 @@ EDITOR=:
+>  # /usr/xpg4/bin/sh and /bin/ksh to bail out.  So keep the unsets
+>  # deriving from the command substitution clustered with the other
+>  # ones.
+> -unset VISUAL EMAIL LANGUAGE $("$PERL_PATH" -e '
+> -	my @env = keys %ENV;
+> -	my $ok = join("|", qw(
+> -		TRACE
+> -		DEBUG
+> -		TEST
+> -		.*_TEST
+> -		PROVE
+> -		VALGRIND
+> -		UNZIP
+> -		PERF_
+> -		CURL_VERBOSE
+> -		TRACE_CURL
+> -		BUILD_DIR
+> -	));
+> -	my @vars = grep(/^GIT_/ && !/^GIT_($ok)/o, @env);
+> -	print join("\n", @vars);
+> -')
+> +unset VISUAL EMAIL LANGUAGE $(env | sed -n \
+> +	-e '/^GIT_TRACE/d' \
+> +	-e '/^GIT_DEBUG/d' \
+> +	-e '/^GIT_TEST/d' \
+> +	-e '/^GIT_.*_TEST/d' \
+> +	-e '/^GIT_PROVE/d' \
+> +	-e '/^GIT_VALGRIND/d' \
+> +	-e '/^GIT_UNZIP/d' \
+> +	-e '/^GIT_PERF_/d' \
+> +	-e '/^GIT_CURL_VERBOSE/d' \
+> +	-e '/^GIT_TRACE_CURL/d' \
+> +	-e '/^GIT_BUILD_DIR/d' \
 
-Good.  And when we turn that into a set of bits "flags", make sure
-we make it unsigned, not signed int.
+So we delete all of the following from the stream of env.
 
-Thanks.
+> +	-e 's/^\(GIT_[^=]*\)=.*/\1/p'
+
+But any other `GIT_*` env variable is printed to be `unset`. Ok makes
+sense. This is much more readable than the perl version!
+
+> +)
+>  unset XDG_CACHE_HOME
+>  unset XDG_CONFIG_HOME
+>  unset GITPERLLIB
+>
+> --
+> 2.49.0.472.ge94155a9ec.dirty
+
+--0000000000006a09950630d737c0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 326867b0952b8008_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mZE51c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMnVWQy85Rzlyak9OY05Gd0ZLaDRxdFpJS291WG9nZQpDS1pQaWp5YnBX
+eU55UGNXbTlGU0FuK0E1SDZja0tncWpiQWhvdTlDMFhaVE5VUFgvZEd5WXRQM1d5VWFqVkEvCkZB
+akFtWmV5MlQ5VC9nL2o4Szk1a3pnSFB0SldNdWZnRi9FREI5Q1V6WDRLa2hicW4reWxhRVZUcXRy
+OGZnbHAKSEFGVUtzUDI2OTVCZWdnZ1p0WTRCOEQ3NWlGY0QxWmtiUkI1MDVYSlZtQ2NBYzJqbWJY
+cVJXTDlSbkRVN0pZNwpyNHZMVEVpUXNkU3hEUlYwMEhwR0plVXRKempZUkVYc2hzTmY4dUJlUnND
+cVlxYXJUY1hwTWhwckwrSEd6empRClFKY3BuTW5GZ1RDMjVlQkZVanVUZnUveHhEV09VTkE3dUMy
+R2NERm1pK1RBU3lOYjVjTXlrK1pydnE5T0w4NFEKc00zQTZHY2VuT3RNOEJYenJZVHRlODZyZHRs
+ZDZaQW9ldDVTV2NWWmdXUlIxSnNvRUo5am55TStNaHZGUSszSApQY2Y0MkZueCs4TTZ1WFNrUFNn
+NStvanhrcnZYVHZBQTdFM2IrZzBESktiN0gxbG82bnNyZVRoYzk4RVdyQ0pkCmFWUFFaVk1SU01u
+RFI3V3cyZFIyMTA3N05BTUpKZ1lHVDk5SGpiZz0KPTZ2SEUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000006a09950630d737c0--
