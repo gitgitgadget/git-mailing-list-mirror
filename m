@@ -1,182 +1,114 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9B722098
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 14:30:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C158380C02
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 14:33:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742567446; cv=none; b=ZDqDcKpiSWVkjSnvnd3XBaJZmQjr/pG2/z9h7Nm2trLZ5Pw4Jx9W/sQ0YIQkWFpGgv57etkve38RyYWBIacWyn73UAu4Q3SBaxX9DIRn0TtkeZFC6Re+uTY+/2XORNXrluq7YGElzQRa1mqVlu6D//2HHL7ntzbMu5fiVwHbc2M=
+	t=1742567585; cv=none; b=iTpPCl1t8ipDGTa3hLoi9sMuH51lEMtJx42LgJARsSYEpEXTYVVlFXXGs/WES1G8L5GeqAjH+CJDkkDsWceylJun/zcBpu5zIzJ3NBAr87Rl1hiWjsFSB+o2ex1dQ98KVQNVZNR3fCT8KS++6Y28280s5T8qYECsWm53axpYFtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742567446; c=relaxed/simple;
-	bh=ZwmmIJAr382YCdQ8yrbSYxXUlbs8CGZ0aeqGtN8Xhi0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ivkhy8M2KXlbo6FBIadRaSfA8CMtR19REuVbpR51UaejVDXnUKgNG0l6B3fsMd1VYkLw+ptuLZ+U4cvaijRFTvYkQEHTXS2TKYQkE3L8AFDQLdGhZdeZkKL6pxc+GV/ExcCBykHARl0SKur5AEmSTPBH7Kjho7Wq+89f/tf1sVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J3svCI3R; arc=none smtp.client-ip=209.85.214.179
+	s=arc-20240116; t=1742567585; c=relaxed/simple;
+	bh=rcPUQl9lP+Rg0a2YDUfaCQ28rcMZxjP/4XTmU8ZwpfI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZVFb2zZ1vMQar4s8oq81gii1CTvxhTk48cRGjYtCvgW2QB1pthiEPkeneejFMYxHyqmwXnPQzcOmfnxCAlc1b005j8lYMLOV24sD09iAh7yNEvUzHfRQhsd+IdY+kN1BqCoj4ctdE7uijkfQi09FX2gJJtkhw1edeKvi3ZbNIGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CfeDREAW; arc=none smtp.client-ip=209.85.160.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J3svCI3R"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-223fb0f619dso42837895ad.1
-        for <git@vger.kernel.org>; Fri, 21 Mar 2025 07:30:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CfeDREAW"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-476a304a8edso18519711cf.3
+        for <git@vger.kernel.org>; Fri, 21 Mar 2025 07:33:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742567443; x=1743172243; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1742567582; x=1743172382; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1dma/oxvUFzMetSfshD/u+J12dhz7oB+VAmElmibua8=;
-        b=J3svCI3R8r54j2SaJ3/OClK+c7asv7jgGnkNN5nO57JcnoTGcLvgsXLdN0P+r8qSeV
-         //TmndRfsFbiqEsv4UjX+nKRSseLTQtsuLOT/P5UXuUnSDMu/GNdJ0QFyjQdBJb5y/t9
-         C27e0HRQiygQ/QX/y4pI/sr5m9tbXjiBpfS2fNldmgwxpM9210CFCDV2u+kae1l3cMDf
-         QJ7tFgBMuyl59FN5z7sp7VGsw50ORznt6Jj+Gi1xcsTbqISHZSf4DGy05XvU5pq+QuWf
-         nn8qR56xi90YN9uUwGAFlUeYO1Q9rYhNg0faNDbG5POVsMedCa/tlhbsJQUw7M4NaTd4
-         wIYg==
+        bh=8qNv4FM6W8CZZpPqTVibi8HULd8Qtp4wmKff7iNNr0Q=;
+        b=CfeDREAWusyKRJExKveMz2qy7kF+TUJpbpcWubC9IzdTvkmFM91LmMMp//hb4dIEbA
+         iUN9BqPxt2+VJ+y3Ru6+cQIt/SXjCXLH939yLHuJAYpy9iBOArI/+j/OzpGwepOBdCZv
+         I7rpplwdvl44FDCjQHN3quDXlLC7qzBEDjIkQkkdW5GQyf3xZdAGGdfI4/LlhjWgfVHC
+         jg+rHwvOYuqpinwr0Uzb/YJ7K8F3+98yisu4eax1ZZNkHpwODftfRxbHAGIXjHu2r3Fb
+         cK0RfrXXNK6dMHk2yd5RH4XHQawW3DfMLW15z6PkHzgZk7g3Z3kZ0bUowI3ORm7z8ftO
+         9gWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742567443; x=1743172243;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1742567582; x=1743172382;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1dma/oxvUFzMetSfshD/u+J12dhz7oB+VAmElmibua8=;
-        b=Aur5yN3giI+tyIdAv1r5Lutp7WG1Lug/o6uMKv6bPWoXnwFsw5FsSwz95XFyFg33Yq
-         hfU+kzxzFxSmUVujeVSL54/tRQqA2B7yvl4XkQxcbPZztXStd5Tqbc5dsh9EoofcAbLX
-         DRWRa3socFr7GfJ3NkUlkB1P7haiWNGj+vFWdXNPvkosvVt1s7CEg1oUUFNa/S1GJkim
-         Lf7pJcg/mS6kuUMwHM1YlkSdbp/+6AQB6Pj9yDcRnyzB5MSA5rJBKyoPH5FWQnfpPHhQ
-         EPOw4EX4h6O9VDZbHIbRve4b2rsw9i39v1+RjZX/2aYLrkJxOUZxhyWGAqqOY3oWlPWs
-         37GQ==
-X-Gm-Message-State: AOJu0Yxs5CMjTP9QW20n5k0Bvpihl4yteoGDqYifKEKZAKj2cF8lDEAP
-	aInj3nZeoloW8v77dr5bR/G3OoepUAjzbKBEuWlkPyqhG8nSLAb7e0zyUrd2
-X-Gm-Gg: ASbGncvb69wzODkNQ4YKQvbXvf/o+JzneVFE6i20T/Sl0f0JQnJJnoHeMLImoJy0vA8
-	aXSOKeXIbzS5Gn9laXkfhh2L/9IEQqJdFq4uf3JjB5YczmaksIo4zFf9b8/Qh8QiR/LibYY0h3G
-	nap8n6cCFp+eeYHhzaC5PU1fklt24BAo2DeoaqOPQ04ZG8HlkawikJvf4ADWpV024ylaqR2nuI4
-	t0T1Yxj+VBKCxy1jErkMfjE8cgyXwCPIlr7EMUHOFogycPFVWvaFBxSvIZqPQdq6zm/9PgqPj/U
-	E2Poz/q10teYfvEmFQuZG+JaGPLxil6/tMdSEqgwkiWOxLAg/8f2c8aZwbmuKcj5Fae/HPcW9ls
-	BAazVZslk7PmnUw==
-X-Google-Smtp-Source: AGHT+IHB8OjGh5oOP+jMD8SKwBSCvpaX1zRRhiKq+7MHODF5ju8AS2VCZEzQ6XYRH8r7FNgifBbmNw==
-X-Received: by 2002:a17:902:c411:b0:220:f7bb:842 with SMTP id d9443c01a7336-22780e10c6emr52451445ad.42.1742567442893;
-        Fri, 21 Mar 2025 07:30:42 -0700 (PDT)
-Received: from localhost.localdomain ([2405:201:c005:b018:5841:514c:af52:5598])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-227811bafabsm17054835ad.139.2025.03.21.07.30.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Mar 2025 07:30:42 -0700 (PDT)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ben.knoble@gmail.com,
-	jayatheerthkulkarni2005@gmail.com
-Subject: [[GSOC][PATCH v3] 3/3] docs: replace git_config with repo_config
-Date: Fri, 21 Mar 2025 20:00:22 +0530
-Message-ID: <20250321143022.5406-3-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250321143022.5406-1-jayatheerthkulkarni2005@gmail.com>
-References: <xmqqa59evffd.fsf@gitster.g>
- <20250321143022.5406-1-jayatheerthkulkarni2005@gmail.com>
+        bh=8qNv4FM6W8CZZpPqTVibi8HULd8Qtp4wmKff7iNNr0Q=;
+        b=kHfoxggqGLaUri8O+BJj5dOYLLpl4vfRMMb+tCxVPjsERJLHKrhOLXXE05SJBbQoDI
+         eax61b2Fj0TXUziQtFvaC62iqFU/Z2K1xMOZfPjkL4oTIw9Mb10PxpMWL+8+uMdhCNhy
+         9jPQIqpfIB0VjzGBKcJGG1EVsqFWn5MK2A0slNd1lDF291/E5wQ+0wdlAiSl/IFVW5eI
+         G0FzbPpH3Axh/TPqFkSkJa0zJg+FS8+LM1ZdaKSrKXxoJ0U9Z+31PotUq9IMR+iP6Yu7
+         4Ss1t/StUUYkLSfTzqCor77S6oRXb//BRMxSQoe0yHw60al8aOYZ80R1TA/V6b79mo7e
+         TxFA==
+X-Gm-Message-State: AOJu0YyvoSEmU6iPW79YcC3NgsVQuG/U1oNzZPDrSeKtpiKpsRY+bcTX
+	RmvoF0d5WhCVRSYFr5xNPfinXf/h3WBsIXtWkl/w2cb9LX8ys/xJSfnVtzV2y8U1KKEML2TMs0I
+	fVa3/1q0GsriLcC9Y+IfZ1u9fNSs=
+X-Gm-Gg: ASbGncuO3u7I+Y7HsKktxyKqZUauSqXKKdVf1LuBvxYs7pXRj5YZ5L3P5QcEPZdA2qJ
+	NZY3VhC3nE1q1Y9HZhZ8kawzlUR9wYvBWHIUfo/NG+k4MUvwsbMLZxLNFAIWV+qjyoC3faNoVhd
+	7Kl2oJ9IFpy9ZEQeGwSyccuNLvAvGpSfBhHsB0b8ml92vk8DBjb/UJT48SemE=
+X-Google-Smtp-Source: AGHT+IG7grZiIRKyLewy/B/hnI5eF6U3qb70De5GVvghe6vq/eJrLjw7m3cfXxBXw4jnFmMOK1nmd5S7edhWVVBPKa8=
+X-Received: by 2002:a05:622a:5c08:b0:476:9295:d4a3 with SMTP id
+ d75a77b69052e-4771de11607mr46685491cf.35.1742567582409; Fri, 21 Mar 2025
+ 07:33:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <xmqqa59j8gml.fsf@gitster.g> <20250319170244.32912-1-jayatheerthkulkarni2005@gmail.com>
+ <xmqqa59evffd.fsf@gitster.g>
+In-Reply-To: <xmqqa59evffd.fsf@gitster.g>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Fri, 21 Mar 2025 20:02:50 +0530
+X-Gm-Features: AQ5f1JpRv3Eh2VdfvF1dGORimHxp8bjII7ru3i88E-p2sekZlfzQh8AeYyViJiM
+Message-ID: <CA+rGoLeYJEbpC6=mUPuOr=i6pE9w20OeJSOzG0SQPVpBWDbTgQ@mail.gmail.com>
+Subject: Re: [GSOC][PATCH v2] Remove outdated mentoring mailing list reference
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ben.knoble@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Refactor config handling by replacing git_config(...)
-with repo_config(...) for better repository context
-awareness and alignment with modern Git practices.
+On Fri, Mar 21, 2025 at 4:06=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+>
+> > Subject: Re: [GSOC][PATCH v2] Remove outdated mentoring mailing list re=
+ference
+>
+> [Documentation/SubmittingPatches]
+>
+>     The first line of the commit message should be a short description (5=
+0
+>     characters is the soft limit, see DISCUSSION in linkgit:git-commit[1]=
+),
+>     and should skip the full stop.  It is also conventional in most cases=
+ to
+>     prefix the first line with "area: " where the area is a filename or
+>     identifier for the general area of the code being modified, e.g.
+>
 
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
----
- Documentation/MyFirstContribution.adoc | 57 ++++++++++++++++++--------
- 1 file changed, 39 insertions(+), 18 deletions(-)
+Went through the discussion
 
-diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index 45efe117ab..3ae85016d4 100644
---- a/Documentation/MyFirstContribution.adoc
-+++ b/Documentation/MyFirstContribution.adoc
-@@ -316,26 +316,47 @@ on the command line, including the name of our command. (If `prefix` is empty
- for you, try `cd Documentation/ && ../bin-wrappers/git psuh`). That's not so
- helpful. So what other context can we get?
- 
--Add a line to `#include "config.h"`. Then, add the following bits to the
-+Add `#include "config.h"` and `#include "repository.h"`. Then, add the following bits to the
- function body:
- 
- ----
--	const char *cfg_name;
-+#include "builtin.h"
-+#include "gettext.h"
-+#include "config.h"
-+#include "repository.h"  // Required for repo_config_get_string_tmp()
- 
--...
-+int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo)
-+{
-+    const char *cfg_name;
-+
-+    printf(Q_("Your args (there is %d):\n",
-+              "Your args (there are %d):\n",
-+              argc),
-+           argc);
-+
-+    for (int i = 0; i < argc; i++) {
-+        printf("%d: %s\n", i, argv[i]);
-+    }
- 
--	git_config(git_default_config, NULL);
--	if (git_config_get_string_tmp("user.name", &cfg_name) > 0)
--		printf(_("No name is found in config\n"));
--	else
--		printf(_("Your name: %s\n"), cfg_name);
-+    printf(_("Your current working directory:\n<top-level>%s%s\n"),
-+           prefix ? "/" : "", prefix ? prefix : "");
-+
-+    repo_config(repo, git_default_config, NULL);
-+
-+    if (repo_config_get_string_tmp(repo, "user.name", &cfg_name))
-+        printf(_("No name is found in config\n"));
-+    else
-+        printf(_("Your name: %s\n"), cfg_name);
-+
-+    return 0;
-+}
- ----
- 
--`git_config()` will grab the configuration from config files known to Git and
--apply standard precedence rules. `git_config_get_string_tmp()` will look up
-+`repo_config()` will grab the configuration from config files known to Git and
-+apply standard precedence rules. `repo_config_get_string_tmp()` will look up
- a specific key ("user.name") and give you the value. There are a number of
- single-key lookup functions like this one; you can see them all (and more info
--about how to use `git_config()`) in `Documentation/technical/api-config.adoc`.
-+about how to use `repo_config()` ) in `Documentation/git-config.adoc`.
- 
- You should see that the name printed matches the one you see when you run:
- 
-@@ -383,8 +404,8 @@ prepare it, and print its contents:
- 
- ...
- 
--	wt_status_prepare(the_repository, &status);
--	git_config(git_default_config, &status);
-+	wt_status_prepare(repo, &status);
-+	repo_config(repo, git_default_config, &status);
- 
- ...
- 
-@@ -1093,11 +1114,11 @@ The one generated for `psuh` from the sample implementation looks like this:
- 
- ----
-  Documentation/git-psuh.adoc | 40 +++++++++++++++++++++
-- Makefile                    |  1 +
-- builtin.h                   |  1 +
-- builtin/psuh.c              | 73 ++++++++++++++++++++++++++++++++++++++
-- git.c                       |  1 +
-- t/t9999-psuh-tutorial.sh    | 12 +++++++
-+ Makefile                   |  1 +
-+ builtin.h                  |  1 +
-+ builtin/psuh.c             | 73 ++++++++++++++++++++++++++++++++++++++
-+ git.c                      |  1 +
-+ t/t9999-psuh-tutorial.sh   | 12 +++++++
-  6 files changed, 128 insertions(+)
-  create mode 100644 Documentation/git-psuh.adoc
-  create mode 100644 builtin/psuh.c
--- 
-2.48.1
+>     * doc: clarify distinction between sign-off and pgp-signing
+>     * githooks.txt: improve the intro section
+>
+>     If in doubt which identifier to use, run `git log --no-merges` on the
+>     files you are modifying to see the current conventions.
+>
+> > and clarify tutorial prerequisites
+>
+> Do not do this.  What you have on the e-mail "Subject:" line is the
+> first paragraph (whose definition is block of text delineated by
+> blank lines) of the commit log message, and the first paratraph in
+> the body of a patch e-mail is the second paragraph.  You do not
+> start your second paragraph at half-sentence, as if it were a
+> continuation of an incomplete previous sentence.
+>
+Thank you for the feedback, I will make sure not to repeat them in the
+further patches
 
+-Jay
