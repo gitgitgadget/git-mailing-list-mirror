@@ -1,114 +1,105 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C158380C02
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 14:33:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3144F1CEEBE
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 15:38:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742567585; cv=none; b=iTpPCl1t8ipDGTa3hLoi9sMuH51lEMtJx42LgJARsSYEpEXTYVVlFXXGs/WES1G8L5GeqAjH+CJDkkDsWceylJun/zcBpu5zIzJ3NBAr87Rl1hiWjsFSB+o2ex1dQ98KVQNVZNR3fCT8KS++6Y28280s5T8qYECsWm53axpYFtk=
+	t=1742571517; cv=none; b=gJZbWr/BzZ16qRnhEp4NpE1A4kBaZU1tdZAP2jdXA6/scQgZl5Opmpd2el8dr6Xne6t0cBnKzUzjSCBtIiU5LuQDwEfskaHfFLLPjhurf7sOdkEo4snpZyyaldXs67yZ/Se9CS11uD7REbLHdEjtC8Ze1JX9AcOJqcmCyXzO7oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742567585; c=relaxed/simple;
-	bh=rcPUQl9lP+Rg0a2YDUfaCQ28rcMZxjP/4XTmU8ZwpfI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZVFb2zZ1vMQar4s8oq81gii1CTvxhTk48cRGjYtCvgW2QB1pthiEPkeneejFMYxHyqmwXnPQzcOmfnxCAlc1b005j8lYMLOV24sD09iAh7yNEvUzHfRQhsd+IdY+kN1BqCoj4ctdE7uijkfQi09FX2gJJtkhw1edeKvi3ZbNIGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CfeDREAW; arc=none smtp.client-ip=209.85.160.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742571517; c=relaxed/simple;
+	bh=X3ZQp+jJNXxs6R8cHuVenhl5tmt72DcGu5EXDtS2gD0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OQzsRvjnqQZNSdyn8IlMIb9D0xMwX2OjfadP/a5tlhrlcRvUpHRj6hL8y7omPHbzMZ8YOfY7G4zrzuY2uP0DDVW1W3o3B24sNjGpgS516cAZ5wjifI8SjEZC56Xb32EmKBq12Fry+p88z3vicFqnlD4Mfr/Nn9A3nIP8UCMf2Q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ei6vRVsX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B273i/2Q; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CfeDREAW"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-476a304a8edso18519711cf.3
-        for <git@vger.kernel.org>; Fri, 21 Mar 2025 07:33:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742567582; x=1743172382; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8qNv4FM6W8CZZpPqTVibi8HULd8Qtp4wmKff7iNNr0Q=;
-        b=CfeDREAWusyKRJExKveMz2qy7kF+TUJpbpcWubC9IzdTvkmFM91LmMMp//hb4dIEbA
-         iUN9BqPxt2+VJ+y3Ru6+cQIt/SXjCXLH939yLHuJAYpy9iBOArI/+j/OzpGwepOBdCZv
-         I7rpplwdvl44FDCjQHN3quDXlLC7qzBEDjIkQkkdW5GQyf3xZdAGGdfI4/LlhjWgfVHC
-         jg+rHwvOYuqpinwr0Uzb/YJ7K8F3+98yisu4eax1ZZNkHpwODftfRxbHAGIXjHu2r3Fb
-         cK0RfrXXNK6dMHk2yd5RH4XHQawW3DfMLW15z6PkHzgZk7g3Z3kZ0bUowI3ORm7z8ftO
-         9gWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742567582; x=1743172382;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8qNv4FM6W8CZZpPqTVibi8HULd8Qtp4wmKff7iNNr0Q=;
-        b=kHfoxggqGLaUri8O+BJj5dOYLLpl4vfRMMb+tCxVPjsERJLHKrhOLXXE05SJBbQoDI
-         eax61b2Fj0TXUziQtFvaC62iqFU/Z2K1xMOZfPjkL4oTIw9Mb10PxpMWL+8+uMdhCNhy
-         9jPQIqpfIB0VjzGBKcJGG1EVsqFWn5MK2A0slNd1lDF291/E5wQ+0wdlAiSl/IFVW5eI
-         G0FzbPpH3Axh/TPqFkSkJa0zJg+FS8+LM1ZdaKSrKXxoJ0U9Z+31PotUq9IMR+iP6Yu7
-         4Ss1t/StUUYkLSfTzqCor77S6oRXb//BRMxSQoe0yHw60al8aOYZ80R1TA/V6b79mo7e
-         TxFA==
-X-Gm-Message-State: AOJu0YyvoSEmU6iPW79YcC3NgsVQuG/U1oNzZPDrSeKtpiKpsRY+bcTX
-	RmvoF0d5WhCVRSYFr5xNPfinXf/h3WBsIXtWkl/w2cb9LX8ys/xJSfnVtzV2y8U1KKEML2TMs0I
-	fVa3/1q0GsriLcC9Y+IfZ1u9fNSs=
-X-Gm-Gg: ASbGncuO3u7I+Y7HsKktxyKqZUauSqXKKdVf1LuBvxYs7pXRj5YZ5L3P5QcEPZdA2qJ
-	NZY3VhC3nE1q1Y9HZhZ8kawzlUR9wYvBWHIUfo/NG+k4MUvwsbMLZxLNFAIWV+qjyoC3faNoVhd
-	7Kl2oJ9IFpy9ZEQeGwSyccuNLvAvGpSfBhHsB0b8ml92vk8DBjb/UJT48SemE=
-X-Google-Smtp-Source: AGHT+IG7grZiIRKyLewy/B/hnI5eF6U3qb70De5GVvghe6vq/eJrLjw7m3cfXxBXw4jnFmMOK1nmd5S7edhWVVBPKa8=
-X-Received: by 2002:a05:622a:5c08:b0:476:9295:d4a3 with SMTP id
- d75a77b69052e-4771de11607mr46685491cf.35.1742567582409; Fri, 21 Mar 2025
- 07:33:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ei6vRVsX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B273i/2Q"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 307E113833CC;
+	Fri, 21 Mar 2025 11:38:34 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Fri, 21 Mar 2025 11:38:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1742571514; x=1742657914; bh=pOdZ7UjywQ
+	fHSuqcK9ivFWAHXC9BiLaczeciDkGJW3k=; b=Ei6vRVsX40wucGrv//IQRncb9H
+	z+irAP3AhPhtjMhBbAdcBdPRCoIxxkGfG5Z1zKeY06ehXR6eeq0lMPZXjsBI9rWg
+	u3cL4bVLlA8lR1FlohZ0fR7eHQXQgxndqMKh3DbPrdXcBK1nYErZhhfGihNPwwVb
+	haLEeVXawirLXan82E49KH78ymLbaYvyuuHgm91IYguTT8wo64oKvIA0/MNTtYG/
+	c39LNBPHbS5Lhuhdlfkzltq9NB5DlbChyx/0JFP1aU4MlTKNdrEsVAMjC9PXe+Uq
+	bqRivDs1NWO+bGQMUxbV/bB8dMbVx9XqW5hMbv0JFBtMVLSA2sWWP4CxRTQA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1742571514; x=1742657914; bh=pOdZ7UjywQfHSuqcK9ivFWAHXC9BiLaczec
+	iDkGJW3k=; b=B273i/2Q4W7HKcxBDOKn2lwlHn4Ppusc/U86f4IgRi0BSA6BGXC
+	CblKOXLlIRWcQ8HicPQ/Sw3fqaX4q+dSYQf9+xSSYn7P79CIagIGgtQxSrcxfyjS
+	dPv90XfrDlYZNgD+HVHkOxW+4BRXqqoPmmspCJJAB6EdCVsJrLnakUpWC7BeFDMM
+	TQ3U5xPrQtoo0BtqELeasAHKrOOdL3kF4xTdqbmh16yMmVAgsEW9GbIkg0Qc8B0l
+	kh/WfpuAAREFA0aCwJF+pYIBbCCfoo/GTADP008hLNf5hIbJU7JIRDb5YIyR8dNu
+	yz4lw7ZBEqUl2CxO5AR3bZAzHcOQzbm1gWg==
+X-ME-Sender: <xms:-ofdZw6_z7hMpwzG4iHLsXzhMyOsqN09K4STAu98aipI5fCITdms_w>
+    <xme:-ofdZx4J-eLddyOlO2nKxmrpmWGWv5yfKywOFzo7NsBrS-YsH-nrVpDCfTimt9Mdy
+    mi8CD_26PDDfQAWGg>
+X-ME-Received: <xmr:-ofdZ_ctQsWhVsYCmnm8QbU62xAl5eZiehpVVToQenl5dWcJI7q0-mwyYpygcIbwGSF7P3gywLywh52DHa5wWtahb3LUUx6Zmmi59Qo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduhedugeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopedtheiihihtfedtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvggvthhsohhnihef
+    tddujeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:-ofdZ1LoEEnWiFoNJ4bRqtsdfbhz1pEoCCqSLpokU0mNvfuNboOidQ>
+    <xmx:-ofdZ0JbyNC6dnEER4rBksGAIVZWHnIzbbqqSIHmuzr3nSiYHF1TEw>
+    <xmx:-ofdZ2zDCsWHoRea67Vm4_8LI-Re2YcrzC3znelF_PdAQWVlTK3jyw>
+    <xmx:-ofdZ4LOVdMuFvwT8m-3g9dIpC20V5yn1rFjpb7WQTnPY5q2Bon35w>
+    <xmx:-ofdZ5HrDXXE_FGuXDkNWc2GkXmBr5cOQD8MERFKv7afWJeB6xoLeXK7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 21 Mar 2025 11:38:33 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Zheng Yuting <05zyt30@gmail.com>
+Cc: git@vger.kernel.org,  meetsoni3017@gmail.com
+Subject: Re: [GSoC PATCH v6 0/2] send-email: improve error capture and
+ status code handling
+In-Reply-To: <20250321025128.68463-1-05ZYT30@gmail.com> (Zheng Yuting's
+	message of "Fri, 21 Mar 2025 10:51:26 +0800")
+References: <20250319020221.2160371-1-05ZYT30@gmail.com>
+	<20250321025128.68463-1-05ZYT30@gmail.com>
+Date: Fri, 21 Mar 2025 08:38:31 -0700
+Message-ID: <xmqqo6xutmvc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqa59j8gml.fsf@gitster.g> <20250319170244.32912-1-jayatheerthkulkarni2005@gmail.com>
- <xmqqa59evffd.fsf@gitster.g>
-In-Reply-To: <xmqqa59evffd.fsf@gitster.g>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Fri, 21 Mar 2025 20:02:50 +0530
-X-Gm-Features: AQ5f1JpRv3Eh2VdfvF1dGORimHxp8bjII7ru3i88E-p2sekZlfzQh8AeYyViJiM
-Message-ID: <CA+rGoLeYJEbpC6=mUPuOr=i6pE9w20OeJSOzG0SQPVpBWDbTgQ@mail.gmail.com>
-Subject: Re: [GSOC][PATCH v2] Remove outdated mentoring mailing list reference
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ben.knoble@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Mar 21, 2025 at 4:06=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
->
-> > Subject: Re: [GSOC][PATCH v2] Remove outdated mentoring mailing list re=
-ference
->
-> [Documentation/SubmittingPatches]
->
->     The first line of the commit message should be a short description (5=
-0
->     characters is the soft limit, see DISCUSSION in linkgit:git-commit[1]=
-),
->     and should skip the full stop.  It is also conventional in most cases=
- to
->     prefix the first line with "area: " where the area is a filename or
->     identifier for the general area of the code being modified, e.g.
->
+Does not pass t9001 when applied to Git 2.49.0.
 
-Went through the discussion
 
->     * doc: clarify distinction between sign-off and pgp-signing
->     * githooks.txt: improve the intro section
->
->     If in doubt which identifier to use, run `git log --no-merges` on the
->     files you are modifying to see the current conventions.
->
-> > and clarify tutorial prerequisites
->
-> Do not do this.  What you have on the e-mail "Subject:" line is the
-> first paragraph (whose definition is block of text delineated by
-> blank lines) of the commit log message, and the first paratraph in
-> the body of a patch e-mail is the second paragraph.  You do not
-> start your second paragraph at half-sentence, as if it were a
-> continuation of an incomplete previous sentence.
->
-Thank you for the feedback, I will make sure not to repeat them in the
-further patches
 
--Jay
+Test Summary Report
+-------------------
+t9001-send-email.sh (Wstat: 256 (exited 1) Tests: 215 Failed: 169)
+  Failed tests:  4-7, 9-10, 12-13, 15, 17, 19, 21-28, 31-35
+                37, 39-60, 62, 64-66, 68, 70, 72, 74, 76
+                78, 80, 82, 84-91, 94-99, 101-112, 114-127
+                130, 132-135, 138, 140-142, 144, 146, 148
+                151, 153-167, 169-189, 194-203, 205-215
+  Non-zero exit status: 1
+Files=1, Tests=215, 24 wallclock secs ( 0.19 usr  0.02 sys +  9.31 cusr 10.44 csys = 19.96 CPU)
+Result: FAIL
