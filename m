@@ -1,57 +1,57 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDA11E0E15
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 06:57:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31ECF33F6
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 07:00:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742540228; cv=none; b=CuiYfYEhdBUJFRQyYb3gvetlFX+J/2Ww/Yi2w1A39Fu4fXihoEDrnRXaLRukRfenmYBmgFMcgceey+TkBND12JJQaX2gzYrE+azYFnsyXdDogA3GJnvQrhUm17kT/Y0ix3A+OYF2TAwaqUdXt+maBOOjdL00dGPI4bPz9rA8wUY=
+	t=1742540449; cv=none; b=FXUQvewyoqdLpIuXImFBL0vVin9/r3JFmrizUHRPkRoMrF6KpuLeXUOnL7DwYi1ZLpO/fdc0E03bZIREg/8CBvAy4RPGcxeYKnqQrQNdTqV80NGRQPJFoPJYpC2W2BZxQ+/kHP1b7YFXRrhwxRsRWl7GgbTFlevo4ywmdMpNC24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742540228; c=relaxed/simple;
-	bh=DR7eMML9AZL/Xkm5dFfKOP6idIM59KicHOn5xNVrxiU=;
+	s=arc-20240116; t=1742540449; c=relaxed/simple;
+	bh=WUJTOAYuw3EYHwKjIT3fWMWEcQ9SbmgT6MusL440UQA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BlcyxS+6Po46WbtCuc0ZS/xX5aT4GQ9G09k8hgYAppmzJ1iOKlC2BKkxJbb0yshIe5sYwiDdHxRksi6A7zmfGqHe0BWsbXApslkvwchBboa3165N/CPVlXfe+UGl+nPZWKzyMsJBLg5W3NBOnqWkiRI9KxPglDucGRe+ErpWQB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XTdLgShI; arc=none smtp.client-ip=209.85.222.51
+	 To:Cc:Content-Type; b=txFZKJc0I3sXw6RvLBEfbc9lr6Z9J26eCIXp2C+kTFsyswnVWC5KrX93a5DyfODU1V2B03CnQxVqAbNpdLgH+T76jca4HoN9/YQSQacRVXKAtIgqYQKse+ZSbd0HYRJ2yDWST84+kbtFT+oIsmplC5DsEtBCC36WSEZu4ZzASvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B5jkm21G; arc=none smtp.client-ip=209.85.221.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XTdLgShI"
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-86f9c719d63so458193241.1
-        for <git@vger.kernel.org>; Thu, 20 Mar 2025 23:57:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B5jkm21G"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-523dc190f95so912575e0c.1
+        for <git@vger.kernel.org>; Fri, 21 Mar 2025 00:00:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742540226; x=1743145026; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742540447; x=1743145247; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GW5F0Y5hrozsasIClZB6fBiUOK9BPDK0UButMM2VswY=;
-        b=XTdLgShI2gxZYHh/So41x9a3Znidskxke1N6xYK7M3+E0pmDfFcAk3/JL1ez5n78pi
-         h4BWNb7ToYpyveobyv2fN6QzcM3EOzX32y7Kgjzy1U9cQNoyrON9w66r73OLDYVZWcCF
-         Mv0m41sVQ21k1x9hHEy6bZZo2PCjQJwXBxbHTtfzuwmmHoLPQCDi7+vitm4kqD60wRCH
-         lXB7W+rWjSQPEAXFcfeSODFjBVROVbO7vaGlPbwvJasdh8Fh0jwzmeocNfy3c67/rQQK
-         cni7Giuuk6Yu0GFrcMDB7JU0c8pBnw7vkuQJC9qMOA2AlFWHHTEN/PEX0xattF5pAj/H
-         jnCw==
+        bh=jX++onmaPwgTT0fVb4GVHwjhmtViJIo3ev2+QF2W+Ls=;
+        b=B5jkm21G8zCguc21stTx1tJcW0yZT2/ugbJ/p5gBpF3aEAADe2MWxsKxjBhZDr7+GQ
+         y9hbpsWsXOHD9OZu4NdwE5MECcbEK9qIcsBQtqgZzqDkzMcofAdb1iKvmTLdNummuYBO
+         Yj+up1lR2+2fqiEB4S3vfgNdH0pMnO/652PqgRL85xg1H6NHdJCL+zzzUw9OcaUuKMdz
+         QVY/oOcFFFy9GaEFwONDq2PrhXgENYEoSpOcLYHze+LW8FE7ike95BNRFHMxeWRHfYc7
+         v16kgPUtlm2MFisWo83EldA39jRFkAvJJBtbHtDaxMv8V/7KwaghHjgCE7qrxXoON6FV
+         rRyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742540226; x=1743145026;
+        d=1e100.net; s=20230601; t=1742540447; x=1743145247;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GW5F0Y5hrozsasIClZB6fBiUOK9BPDK0UButMM2VswY=;
-        b=WR2dFV4CEAoTfvLB/I4JcosghHU3HXrGLG3XhZHiqRWriZidjEGifKPtI18QTM4LcP
-         vQvXUb52Km28gWLF63HSC3DvB61itPYHhUA4KXGi0uG7EuYsPqMz/QlZ4O7ciCdGgCla
-         ONYHX303k8mf56EhuJGbQ2BM6vUJeuJFB9r6gLwG7kNNULDkvpJDZJQHz82bWlx1vHjM
-         3lWI+gOQVwHPFZXEvUTL8EbnjiroRjBV0liwj7BxoqABgERXTdPtHwdBCcc0twp02Sb9
-         H5NTMK7jh7BRW6UDplGaaQnxu6SGDxNs1gkbliM5SU39hOgM8C6hqLsqyYTNayzApcp8
-         /awg==
-X-Gm-Message-State: AOJu0Yy1fZlG4+ZZr7Sen+AwzkhubZHJTDhaggzjlWxKJlU6pHzVP386
-	Fm++4nK6u0G/23yzFT45sxfVXmkVJfGJNbzl6kbQ9v6y1TS9Fc8WmT0C1pW1USZWXDCE3LZJWdw
-	lCmgi8em0lpPobMLHoFMBsWp6RKw=
-X-Gm-Gg: ASbGncvNtb5A0Ki1PwXG31U5jmuw0DC0pd/oZrG9PUIATgAnkrjK65q03FARfIDlfMN
-	eDCtmGUSJ1cXAX7VI8GEVtpwIQJfulg/iCeFmqoow5uVPvxG1QpseTUtyrqK+ZW20RbmpXRBWZm
-	uN3NTdM9rZwqFghRhK/pySo8JpFg==
-X-Google-Smtp-Source: AGHT+IFqJgRKy9Yt3pIhfAIRKFDwtamTbLblcn1awK414b9nFdGmNjMTelKUPfy6MZMRWxqC/q+QpCpFNM4SBgJ4BrY=
-X-Received: by 2002:a05:6102:2ac3:b0:4bb:d062:420 with SMTP id
- ada2fe7eead31-4c50d491d1bmr1477932137.1.1742540225759; Thu, 20 Mar 2025
- 23:57:05 -0700 (PDT)
+        bh=jX++onmaPwgTT0fVb4GVHwjhmtViJIo3ev2+QF2W+Ls=;
+        b=v7ojY1XHQASnfyrOByflP7wUUzFXhg09VvXFTyhxugQ9AKJEwJSMdkQPNo12y2hayB
+         E1OyUfy6AeM2kO0sIfPD8yx3aXwJwUqkdiCfbq7eZ6ItRD4Fz+wXL//AtEmF2T3lFi4D
+         7BpqYXDMiRSQhiZgkyACBuZRmZhUlRip5NAbIiSw8pUK4OnUToRkL/Ss82J2P2PZi5xr
+         89AmMs8V+EBnfTpYilzt6/S3IMOcaUDJc45pO4Dhh3QTuRyb8qeDe1SxgKXApz12Bp61
+         DA4RmD7ZwedjKThrgtV9oZnM70YRpz+w9rwPxegnDxN6kvnT3gs0P7JyJY2MGAeIcMdK
+         3/ig==
+X-Gm-Message-State: AOJu0Yz8bnFrk4lftzauahNDMN6YnzdlVtJ3U5iGZhHMd7pJLvn1DgDn
+	MV3/CtP/p6KfVF9i3PRx2Azxr3C1bNEnp/4PmNannZaD4ancML7CncCjGa2jym5u2mK0aHr+BGv
+	G+30v0r+6seSQlHQtIxCmfjTaazw=
+X-Gm-Gg: ASbGnct+PCEsff70YPLp1giMZ69F2D2r7mEVpI342CV2xzsFiRLvlR2xKj87EoLzR8X
+	oh5ngwhvvNuooUXbdv3iB9S3AufX/FiiWoX6X+wUbasO7TMNpeBHNOzz3zAA1pCOvwE2SvhFIBe
+	BeV+/Qhv3mXYnwANcK4nnS2tnNKA==
+X-Google-Smtp-Source: AGHT+IGE1LMPEr9TscwoKA3mlAKBL3FQifMgF3E8jiUBfvfhuz++kComZ/wmGyTGeuOOulOGq2U8Mb8wkiLcdC7tikQ=
+X-Received: by 2002:a05:6122:88c:b0:520:60c2:3f1 with SMTP id
+ 71dfb90a1353d-525a80d0547mr1573306e0c.0.1742540446816; Fri, 21 Mar 2025
+ 00:00:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,13 +59,13 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250318115912.2978992-1-usmanakinyemi202@gmail.com>
- <20250318115912.2978992-2-usmanakinyemi202@gmail.com> <Z9vB-Mm9YpIcv6UK@pks.im>
-In-Reply-To: <Z9vB-Mm9YpIcv6UK@pks.im>
+ <20250318115912.2978992-10-usmanakinyemi202@gmail.com> <Z9vCCfZJBsyp8Y3-@pks.im>
+In-Reply-To: <Z9vCCfZJBsyp8Y3-@pks.im>
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Fri, 21 Mar 2025 12:26:54 +0530
-X-Gm-Features: AQ5f1Jq_nv-_TkSk5BKnc5ksQD5Q-MuRo_s_8xs7l3sbCRi1PofMMCTMhugBLPY
-Message-ID: <CAPSxiM9RDiBqqGsQmAFD5RvCh6ABXegUvpyzOC81Te3-NKX7Yg@mail.gmail.com>
-Subject: Re: [PATCH 1/9] config: teach repo_config to allow `repo` to be NULL
+Date: Fri, 21 Mar 2025 12:30:35 +0530
+X-Gm-Features: AQ5f1JqrKntW3Np46nglxJ6XBLkQVOptd_tGT8GzdmfdMfdDIey65qoMGUXK2X8
+Message-ID: <CAPSxiM8i=BRsn=7E5e28T1HndebefzrE8nuwZ0CdN+P+YymV4w@mail.gmail.com>
+Subject: Re: [PATCH 9/9] builtin/update-server-info: remove unnecessary if statement
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com, 
 	johncai86@gmail.com, me@ttaylorr.com, phillip.wood123@gmail.com, 
@@ -76,37 +76,30 @@ Content-Transfer-Encoding: quoted-printable
 On Thu, Mar 20, 2025 at 12:51=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
 te:
 >
-> On Tue, Mar 18, 2025 at 05:28:53PM +0530, Usman Akinyemi wrote:
-> > diff --git a/config.c b/config.c
-> > index 658569af08..e127afaa8f 100644
-> > --- a/config.c
-> > +++ b/config.c
-> > @@ -2521,6 +2521,10 @@ void repo_config_clear(struct repository *repo)
-> >
-> >  void repo_config(struct repository *repo, config_fn_t fn, void *data)
-> >  {
-> > +     if (!repo) {
-> > +             read_very_early_config(fn, data);
-> > +             return;
-> > +     }
+> On Tue, Mar 18, 2025 at 05:29:01PM +0530, Usman Akinyemi wrote:
+> > Since we already teach the `repo_config()` to allow `repo`
+> > to be NULL, no need to check if `repo` is NULL before calling
+> > `repo_config()`.
 >
-> I remember discussion that `read_very_early_config()` may not be a good
-> fit here. Most importantly, it ignores any configuration passed on the
-> command line, which I would think is very surprising behaviour. So
-> should we adapt this to instead manually call `config_with_options()`
-> with the expected bits set?
-Hi Patrick,
+> I think it would be preferable to reorder this patch so that it comes
+> immediately after the one where you adapt `repo_config()`.
+>
+> We also have a couple of additional sites where we call the function
+> conditionally:
+>
+>   - builtin/add.c
+>   - builtin/difftool.c
+>   - builtin/update-server-info.c
+>
+> It would probably make sense to also adapt those.
 
-Sorry for the confusion.
+Yeah, it has caused a little confusion. Maybe, let's just ignore this
+patch series.
 
-There was a discussion about this here.
-https://public-inbox.org/git/xmqqbjum2ayc.fsf@gitster.g/
-https://public-inbox.org/git/xmqqcyeuhwqb.fsf@gitster.g/
+The other series which introduces the first 8 patches of this has been
+marked to be merged to master. I will resend the 9th patch(
+builtin/update-server-info.c) then other functions like difftool.
 
-Mainliy ignoring the configuration passed from cmdline for this purpose.
-
-I was sending this patch again mainly for the 9/9 patch.
-
-Thanks.
+Thank you.
 >
 > Patrick
