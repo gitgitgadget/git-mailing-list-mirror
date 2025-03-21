@@ -1,151 +1,180 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0BE1519BE
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 22:14:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC961EE7DF
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 22:14:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742595256; cv=none; b=VfQACbGWNvxbzWIU4wDQ0dlB8g1/kwaV4aRN4qoqZdCd7DycTuMMV3yfFUxaGk7MWV1onfJLeZ6ZthVIp2SVMzfJgiqHZQFA/XQQFrVmHzD3UNaPeF5Vjtl7v2VMW4Elr/hhGfkt7/8u4RaTZZn8P8Q/jjsfy7GQjmEqEbOA7v8=
+	t=1742595261; cv=none; b=r87O/w4mInxPZGr31Bi7mBj6JneCJJWp+Ae+SZ5VWxF5Eq3IWbVTPmsl27wdiUzUueR0oPH5VipyeizMdYW3n9Q5JqmhEekrImlmyWuw4Z4RUHVmAZTYi5UqmlN8whUvR7bVvq6bElS9F9VWCq2pNOO00gqxVGTiHFRzDcTGX5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742595256; c=relaxed/simple;
-	bh=6DVymf5fE9b56Df/i8UuyKNan+MxhtnkTISpeTeTtbs=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xo1qZhSUj/JAcCCzB3RcmRYGxaCIInVzFTz5jggZM+BBnulDO9t6V65NtU1f5YCmj1NqYAaBYBu3vwYKnhjmvPNbW8V33o9bNe7ETpgJx5rjUQ5IfIlfsPJZmyFeW4ykgtp5uXj7tNM09Vg2mDiIkxES7EI8lgN61/mkYSrfUz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=nH591Hi0; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	s=arc-20240116; t=1742595261; c=relaxed/simple;
+	bh=z19qv0Tpiz6iEt+JY2Cxa/HknOw9Ful9sFfIYD/TPdQ=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=LrylVEhPBD9A6uVPqp9WGFBMJuQAo5ckucXI8vQ1Ju6iWXJeRa5e6Lv0QfOXwg2+uL0ADu/vNIv/w7iCc15Qt/CbuZ34AUZsEtTqco49wiWz5xyCR+YBi1DPQvgCnsQT+4wNxtORJThABujpszGbQb0D5ejLWad2I9zneHkRKnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vQcZul4O; arc=none smtp.client-ip=209.85.214.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="nH591Hi0"
-Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
-	by fortymile.utu.fi  with ESMTPS id 52LME9CB018881-52LME9CD018881
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Sat, 22 Mar 2025 00:14:09 +0200
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <taahol@utu.fi>)
-	id 1tvkcz-006VLb-An; Sat, 22 Mar 2025 00:14:09 +0200
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.39; Sat, 22 Mar
- 2025 00:14:08 +0200
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 241b0d1c;
-	Fri, 21 Mar 2025 22:14:08 +0000 (UTC)
-From: Tuomas Ahola <taahol@utu.fi>
-To: <git@vger.kernel.org>
-CC: Karthik Nayak <karthik.188@gmail.com>, Tuomas Ahola <taahol@utu.fi>
-Subject: [PATCH v2] bulk-checkin: fix sign compare warnings
-Date: Sat, 22 Mar 2025 00:14:04 +0200
-Message-ID: <20250321221404.10727-1-taahol@utu.fi>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <CAOLa=ZRN5m0bccMdabUYwNJLg4HX6jcOe3PN-aBTHXBOuM71hw@mail.gmail.com>
-References: <CAOLa=ZRN5m0bccMdabUYwNJLg4HX6jcOe3PN-aBTHXBOuM71hw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vQcZul4O"
+Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-22650077995so61810755ad.3
+        for <git@vger.kernel.org>; Fri, 21 Mar 2025 15:14:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1742595256; x=1743200056; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=p2J8J8zr1M88D69/p3MFDyLpOxKJc+Zxy1Ic51TISZU=;
+        b=vQcZul4O7+yfDTMOXtvNY9fhwe364pU0841FgYQagNesrXSvbI+PF+pgxF5VNHA/hL
+         qKruYCi1U43BMINFeqU0Cej6h2/lQw6UcYWPXiN+pOvneCe1fnflIb1ApxwZB6FqyvEu
+         1tLlM4d+bA5dTQNveNKg6sgq4Uv4HhZRQ9Y4/kohvTWcbFmHrA2s6BiHt8H5dkMQrXIK
+         2WYRG16ywbIpyYbAh8ES6u2VY6QMzGoYAJzY8tO63Z/M86CXmi1CqBaaGXgaWKDRw4Qj
+         AnE6652NkFAbehNs98IKPzFs/rmheUNl46EAzCA1qLXlx8eirwzQ8TSM9cX7Hi2Fx7wl
+         cjcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742595256; x=1743200056;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p2J8J8zr1M88D69/p3MFDyLpOxKJc+Zxy1Ic51TISZU=;
+        b=knCSxi5NK2/m21R7QrbeB+ouYqstVnDFOZ+sC/Hs+vRVFwHj1xRPZTx2wYrXvxdR1/
+         50o7Pesoey83SODE0eyKeRjUDsGlQzRbQIuZFz0Uosa03qrLWNjdXnWmwpblVOH7mnhp
+         3ivBZL7+wyCCcydVAreG7yBCJCr6myHmwpkw0BnFHGdaQkpJyDAWzV7GJ6EC8/Ulm5QP
+         ouEce1Bb+e7RkmAbbv6RIrOGcEbOcjUZilp9b3J9nMkIeh1tHnN7hCxeYoVUfJXUR68A
+         4WL0/IY+n51WjvJmz/ZY3NlrhzI+4nVka2fMJEeLWn4Jm8CbMh74JkgThMrgehvJFY4V
+         YLTA==
+X-Gm-Message-State: AOJu0YwA3M9lPcUAIcw9aSLpmjCzP845PZ3MIlAqitlf+BVjq1igcI9H
+	oKDIskyB72OZdIoKK3TpL8iLDRN+lAUTWl83v1xnKjhf1YgoKQw8WpbJN94+O+Jt5K/u5pLxLpR
+	/EMFVzKz9RYc/XzXXmqOeLRnP2xdOZ+xPwfjDRfrQ4v/XhiC9CFNJt4X+diT7T2k2AJ6VuFzETm
+	6sAEqvQbE4zq9uEg+DcT52ZbnJ7S8ihW4RAXBiJ+o=
+X-Google-Smtp-Source: AGHT+IETQPCPw8BIu8KlFxGTicPf0V0xOL8GzJHZ8haRr0EHt9DbgOpahgOgWiwLFuRWhkiYx1xfUFoPupiRBg==
+X-Received: from pjl4.prod.google.com ([2002:a17:90b:2f84:b0:2fc:2f33:e07d])
+ (user=steadmon job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:902:e844:b0:220:e896:54e1 with SMTP id d9443c01a7336-22780d8c42emr78227935ad.26.1742595255977;
+ Fri, 21 Mar 2025 15:14:15 -0700 (PDT)
+Date: Fri, 21 Mar 2025 15:14:07 -0700
+In-Reply-To: <cover.1742594960.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: ex19-11.utu.fi (130.232.247.51) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lWFxYWFhYWFBeUVxfSFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZcX0hQSFhIWEhaSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWEhaWUgDCRocAAEDRllQUCgPBQkBBEYLBwVIWA==
-X-FEAS-Client-IP: 130.232.207.47
-X-FE-Last-Public-Client-IP: 130.232.207.47
-X-FE-Policy-ID: 3:5:2:SYSTEM
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
- bh=k1RuXFRFqtgudGPA8LyZbJlghkaZy1ejoE2diDmU7Zk=;
- b=nH591Hi0OHCjvRVpBluKk1+XBmtppcaasfodnN7/9ud5GLjPbNeSFuXhh9PSHys5AoZBgRSqvndB
-	bRkXAd1dNgoaY1hd71kxDIsRCNPoT0hViNM+MYdoEvK1cDWz6BTLozNDWJztLBZLBJN7paUMLRkd
-	g+K3/eE2JwCKi+4LXX/L6LLbU2TpqKWx7lqSQDZPRn1CzqwbLQe4w0FAVaYiAXezEHUFa/h5mdan
-	AKg9rh6VvodqJe6KdUxbvtoYjjL1afciqRc+GDhxjlOzElU/51UX2tNQvYko1F44+wrR1mMG5RY8
-	qq0aTsiBHmd/SDtraS3P0Jv2z2YiS+X7CR+pAA==
+Mime-Version: 1.0
+References: <cover.1742339107.git.josh@steadmon.net> <cover.1742594960.git.steadmon@google.com>
+X-Mailer: git-send-email 2.49.0.395.g12beb8f557-goog
+Message-ID: <28e10e1092bff1d3185c29b905f6410b2ea0d13d.1742594960.git.steadmon@google.com>
+Subject: [PATCH v2 1/5] libgitpub: move to separate contrib/ directory
+From: Josh Steadmon <steadmon@google.com>
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-In file bulk-checkin.c, three warnings are emitted by
-"-Wsign-compare", two of which are caused by trivial loop iterator
-type mismatches.  The third one is also an uncomplicated case for
-which a simple cast is a safe and sufficient action as the variable in
-question only holds positive values (from sizeof() expression).
+For Cargo packaging purposes, it is better for any dependencies built with Git's
+Makefile to live outside the libgit-{sys,rs} crates. This, plus some future
+changes to the crates, will allow `cargo package` to treat all of the non-Rust
+source as a separate tree apart from the Cargo-managed inputs.
 
-Fix issues accordingly, and enable sign compare warnings for the file.
-
-Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
-Intervall-diff mot v1:
-1:  25b56dae76 ! 1:  289f3a0278 bulk-checkin: fix sign compare warnings
-    @@ Commit message
-         In file bulk-checkin.c, three warnings are emitted by
-         "-Wsign-compare", two of which are caused by trivial loop iterator
-         type mismatches.  The third one is also an uncomplicated case for
-    -    which a simple cast is a sufficient remedy.
-    +    which a simple cast is a safe and sufficient action as the variable in
-    +    question only holds positive values (from sizeof() expression).
-     
-         Fix issues accordingly, and enable sign compare warnings for the file.
-     
+ Makefile                                         | 16 ++++++++--------
+ contrib/libgit-sys/build.rs                      |  4 ++--
+ .../public_symbol_export.c                       |  2 +-
+ .../public_symbol_export.h                       |  0
+ 4 files changed, 11 insertions(+), 11 deletions(-)
+ rename contrib/{libgit-sys => libgitpub}/public_symbol_export.c (96%)
+ rename contrib/{libgit-sys => libgitpub}/public_symbol_export.h (100%)
 
- bulk-checkin.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
-
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 20f2da67b9..0133427132 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -3,7 +3,6 @@
-  */
+diff --git a/Makefile b/Makefile
+index 7315507381..52eed88dde 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2764,7 +2764,7 @@ OBJECTS += $(CLAR_TEST_OBJS)
+ OBJECTS += $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
  
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
+ ifdef INCLUDE_LIBGIT_RS
+-	OBJECTS += contrib/libgit-sys/public_symbol_export.o
++	OBJECTS += contrib/libgitpub/public_symbol_export.o
+ endif
+ 
+ ifndef NO_CURL
+@@ -3762,9 +3762,9 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(MAKE) -C Documentation/ clean
+ 	$(RM) Documentation/GIT-EXCLUDED-PROGRAMS
+ 	$(RM) -r contrib/libgit-sys/target contrib/libgit-rs/target
+-	$(RM) contrib/libgit-sys/partial_symbol_export.o
+-	$(RM) contrib/libgit-sys/hidden_symbol_export.o
+-	$(RM) contrib/libgit-sys/libgitpub.a
++	$(RM) contrib/libgitpub/partial_symbol_export.o
++	$(RM) contrib/libgitpub/hidden_symbol_export.o
++	$(RM) contrib/libgitpub/libgitpub.a
+ ifndef NO_PERL
+ 	$(RM) -r perl/build/
+ endif
+@@ -3937,14 +3937,14 @@ ifdef INCLUDE_LIBGIT_RS
+ all:: libgit-sys libgit-rs
+ endif
+ 
+-LIBGIT_PUB_OBJS += contrib/libgit-sys/public_symbol_export.o
++LIBGIT_PUB_OBJS += contrib/libgitpub/public_symbol_export.o
+ LIBGIT_PUB_OBJS += libgit.a
+ LIBGIT_PUB_OBJS += reftable/libreftable.a
+ LIBGIT_PUB_OBJS += xdiff/lib.a
+ 
+-LIBGIT_PARTIAL_EXPORT = contrib/libgit-sys/partial_symbol_export.o
++LIBGIT_PARTIAL_EXPORT = contrib/libgitpub/partial_symbol_export.o
+ 
+-LIBGIT_HIDDEN_EXPORT = contrib/libgit-sys/hidden_symbol_export.o
++LIBGIT_HIDDEN_EXPORT = contrib/libgitpub/hidden_symbol_export.o
+ 
+ $(LIBGIT_PARTIAL_EXPORT): $(LIBGIT_PUB_OBJS)
+ 	$(LD) -r $^ -o $@
+@@ -3952,5 +3952,5 @@ $(LIBGIT_PARTIAL_EXPORT): $(LIBGIT_PUB_OBJS)
+ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+ 	$(OBJCOPY) --localize-hidden $^ $@
+ 
+-contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
++contrib/libgitpub/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+ 	$(AR) $(ARFLAGS) $@ $^
+diff --git a/contrib/libgit-sys/build.rs b/contrib/libgit-sys/build.rs
+index 3ffd80ad91..e0d979c196 100644
+--- a/contrib/libgit-sys/build.rs
++++ b/contrib/libgit-sys/build.rs
+@@ -15,7 +15,7 @@ pub fn main() -> std::io::Result<()> {
+         .current_dir(git_root.clone())
+         .args([
+             "INCLUDE_LIBGIT_RS=YesPlease",
+-            "contrib/libgit-sys/libgitpub.a",
++            "contrib/libgitpub/libgitpub.a",
+         ])
+         .output()
+         .expect("Make failed to run");
+@@ -26,7 +26,7 @@ pub fn main() -> std::io::Result<()> {
+             String::from_utf8(make_output.stderr).unwrap()
+         );
+     }
+-    std::fs::copy(crate_root.join("libgitpub.a"), dst.join("libgitpub.a"))?;
++    std::fs::copy(git_root.join("contrib/libgitpub/libgitpub.a"), dst.join("libgitpub.a"))?;
+     println!("cargo:rustc-link-search=native={}", dst.display());
+     println!("cargo:rustc-link-lib=gitpub");
+     println!("cargo:rerun-if-changed={}", git_root.display());
+diff --git a/contrib/libgit-sys/public_symbol_export.c b/contrib/libgitpub/public_symbol_export.c
+similarity index 96%
+rename from contrib/libgit-sys/public_symbol_export.c
+rename to contrib/libgitpub/public_symbol_export.c
+index dfbb257115..de5f6943c2 100644
+--- a/contrib/libgit-sys/public_symbol_export.c
++++ b/contrib/libgitpub/public_symbol_export.c
+@@ -6,7 +6,7 @@
  
  #include "git-compat-util.h"
- #include "bulk-checkin.h"
-@@ -56,7 +55,6 @@ static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
- {
- 	unsigned char hash[GIT_MAX_RAWSZ];
- 	struct strbuf packname = STRBUF_INIT;
--	int i;
+ #include "config.h"
+-#include "contrib/libgit-sys/public_symbol_export.h"
++#include "contrib/libgitpub/public_symbol_export.h"
+ #include "version.h"
  
- 	if (!state->f)
- 		return;
-@@ -82,7 +80,7 @@ static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
- 	finish_tmp_packfile(&packname, state->pack_tmp_name,
- 			    state->written, state->nr_written,
- 			    &state->pack_idx_opts, hash);
--	for (i = 0; i < state->nr_written; i++)
-+	for (uint32_t i = 0; i < state->nr_written; i++)
- 		free(state->written[i]);
- 
- clear_exit:
-@@ -131,14 +129,12 @@ static void flush_batch_fsync(void)
- 
- static int already_written(struct bulk_checkin_packfile *state, struct object_id *oid)
- {
--	int i;
--
- 	/* The object may already exist in the repository */
- 	if (repo_has_object_file(the_repository, oid))
- 		return 1;
- 
- 	/* Might want to keep the list sorted */
--	for (i = 0; i < state->nr_written; i++)
-+	for (uint32_t i = 0; i < state->nr_written; i++)
- 		if (oideq(&state->written[i]->oid, oid))
- 			return 1;
- 
-@@ -192,7 +188,7 @@ static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
- 			offset += rsize;
- 			if (*already_hashed_to < offset) {
- 				size_t hsize = offset - *already_hashed_to;
--				if (rsize < hsize)
-+				if ((size_t)rsize < hsize)
- 					hsize = rsize;
- 				if (hsize)
- 					git_hash_update(ctx, ibuf, hsize);
-
-base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+ #pragma GCC visibility push(default)
+diff --git a/contrib/libgit-sys/public_symbol_export.h b/contrib/libgitpub/public_symbol_export.h
+similarity index 100%
+rename from contrib/libgit-sys/public_symbol_export.h
+rename to contrib/libgitpub/public_symbol_export.h
 -- 
-2.30.2
+2.49.0.395.g12beb8f557-goog
 
