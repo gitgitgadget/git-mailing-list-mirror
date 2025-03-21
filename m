@@ -1,110 +1,139 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+Received: from mail-oa1-f73.google.com (mail-oa1-f73.google.com [209.85.160.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FEA22F173
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 21:10:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE5F1EE7DF
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 22:14:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742591456; cv=none; b=LaL8Pe28aBeaikTzlT1luNcZ7O+4LeJtJYXBj1T/YsyBQLFQp5fahmeQnon7RfJYynrmABX4hi9emrgPpEYsu8c7pyJU85kvtFtu/yWsENso++O6Wbynjv3yexvs3kr4ex5PrVnYj8ngDqxtBCFTdWX6dJZ3Q2x6HYOPY65eE6w=
+	t=1742595257; cv=none; b=gSCMKa6ToPbY6DL8tdRlqOUEMp6GhoWZw/IKHAjWJkOUihaPMabjRBeO61SCRob6sBFoHpAT6Jnyyz+sdG6e1BO3eCSYeEMsvadPx+ndZEUvc3SkpVNzL3IbgLYfkntcb7Oh4Kb5AZ/SagygxZ7rFCfRaCmsrky9GezO+aPfR3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742591456; c=relaxed/simple;
-	bh=4orbeBIy+0WFlMcqO2SJtYm19ii51xbqy5vNMXjkJ/g=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=nlf3Oe0HdV/ajOI6Kl3iZJNHZLEtNxjhpR5gx4iSB9Y8iA20ygBHiQDZbcK1GrlZ/zpWu6YF6zJWDhMCgR/kBQBnfLERuRa/yNfEiCj9ZW9CCriR096aeP0mCQY5mf4Y8DqsxsIBwhyvN11Ywch7lYIb91NmucKWLn+JUPzXSdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SIfIbtqB; arc=none smtp.client-ip=209.85.221.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742595257; c=relaxed/simple;
+	bh=U0eg0+jsZOeGfLxus45uDP0tgVW3w/oAZ+JHhm7qnQg=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=ug/hS702qshiSfeBRTO+ScFHXbQiVdWc+lK7Wezc8/1WHphYP3CMfy9xYE0tVXHQ9lhfblZa1y23iOAFtPWA/YcMTjiq6JmsateXG97KgWkwx+JbRYFTjmC6O8JtkvbH7ZvIUC4FC0GzM+Kcb00FhHXazLjYwVRJl/SZklcwq7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ory5nRMY; arc=none smtp.client-ip=209.85.160.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SIfIbtqB"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-523eb86b31aso1110065e0c.0
-        for <git@vger.kernel.org>; Fri, 21 Mar 2025 14:10:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ory5nRMY"
+Received: by mail-oa1-f73.google.com with SMTP id 586e51a60fabf-2c2c24379a1so1637557fac.2
+        for <git@vger.kernel.org>; Fri, 21 Mar 2025 15:14:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742591453; x=1743196253; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+w3ZSAeTEqniFyvNXvGyzg4NVSINshFZrl1maVbFNvA=;
-        b=SIfIbtqBWqaO/5IZz3XtyH3U6L8bHNF3TJ0WsvnWzPSPq3hEMSIwlDrQaYzk00KWJX
-         pR8sYRha3q9l8kgo3Jeta+Tgy3yXswbuMvCBtu3VANuZxWSI1YlNAqnGtlHSkB3d66SH
-         RBxNMqf7PhXGnYJV5WZB7epDMbG1ccvJnZCDyKAbSHA8hKq2hr/pSBQJORGMYlBGuyUy
-         ec/xDvzTAkWTsGy6zPmjeH42q4Cr/ofmT0g19CsxXashi8mOaQgA1NZKUl39m3DfXa9M
-         XOHBFR+gJJuWpRwxRcRhS4s54OQFBcckewu7EUlyzAtcnN/aURWGE5iInorNUC00yVfR
-         6gQA==
+        d=google.com; s=20230601; t=1742595254; x=1743200054; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5oYUJt6W1Ik82bSdUhQKQmcQe/tRXDQfeMsoXywrQOY=;
+        b=ory5nRMYmQZ+3gCo0EHD/h64gPCeH6vM8NYsX0gUOfXYH6p+KUZbSvUyfRVT9z7+Fq
+         yWjTF0nB/2N1r+WtaZzVQ/RfXZmY7CzlaUwlrZNWSAGgDjRZUyBNtrOA/hMYyr2N9tKO
+         jA8uVmDgdB0kA8qzy+FsmPRaLzg+2boVG2SN4JrR8d6qRFp6cRuYvx7L7oEm7g795GYE
+         6uixe7DFKT5bDg8U0+pJsIHPclyVt24RBxQEFgJBd3Tt9unLeaHdsEnnKmB2TRkKaNKd
+         EHsRvoI9+Wbsef5OU4d7v/BApDz5br1XEe4n8BJUALIKWckDxpS0NX7LTqXxG1aQsaxO
+         a3Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742591453; x=1743196253;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+w3ZSAeTEqniFyvNXvGyzg4NVSINshFZrl1maVbFNvA=;
-        b=cnhLpgc2b84tnJW1rCP/uL5EEWdidKVClbuhkYeQOEDQhln/d4CIVBbZs7UQFMF0Z+
-         MvJa39jNRYWkqOZheSQ2Ih2/4oHNfNNhH/frhnGlp1AsboCVMjFIxSmNypN0YhrxOaC0
-         YXgsNpL3xpQw2mGCoUccyz7guYYRz1O0VbvfIzknjKL2gEMp9ItF7pdSTuOky0OOnFyk
-         tYrRWL79gagYErEGPaiy35V/QKCF4XyYh/tZZI5CD6X65OaSWSwH6h0YGN0q5oYn3pcz
-         iholNlDDc5jWshgonO5DhRzr3kdbmKnGNrRX7C/wccZIopVdX28DCmGj4jDXMk397dBn
-         EV7w==
-X-Forwarded-Encrypted: i=1; AJvYcCW/gBem40vncSB1hR7lkUydwa7qDhRh341/aYHnX12XN3Sj3TfV0jLIuOdXKh0njy52EiE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwNmur78h9C6NNq8MbElUK0M2gZtfIzwS8i/taq4tIrVx0dRN2s
-	xgOmruvkjhur3arPMwTCn3UKfaNp0nXkcL+FF4i5c7xdxrb3iHPPY65hYe9DCrcCoS2XRIGZZUl
-	vZe2CarbUmXFcrdU3QL0QUe9TA2U=
-X-Gm-Gg: ASbGncuVkQ95l7BaI4tr2uwrUY6iB8VTsL/cvSYmVIzYxvTD6Snhj9NqcDVGP3UBBwv
-	j02jPCXSWFXJM0DWcz9WROMOX3LR+tcLnSCT8uX0vXAIg0MOyiq5srQkgdAbdCkXRNh0Qey2Tlj
-	4/jjwKKEMEHbH3TqhkC5PAmTdKuWW7QS02LhBcfepkgiHg7cxaOyolFr5DXuEt
-X-Google-Smtp-Source: AGHT+IE9yf3n0MUfVRJcFuepC9erujb8iJVh43jOGh/tXjtSDIoYkN/wpv+AH/IEdImxpWoJ0IQRxMNGrlRojB8/F9U=
-X-Received: by 2002:a05:6122:1c8e:b0:525:9ddc:381a with SMTP id
- 71dfb90a1353d-525a850e31fmr4191785e0c.6.1742591453441; Fri, 21 Mar 2025
- 14:10:53 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 21 Mar 2025 16:10:52 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqiko2tguo.fsf@gitster.g>
-References: <xmqqiko2tguo.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1742595254; x=1743200054;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5oYUJt6W1Ik82bSdUhQKQmcQe/tRXDQfeMsoXywrQOY=;
+        b=IjRawsnmSAv668HSTv3ngDbc6kndM3tDFdoDfFcppOOseqVImIrgT9S8vzoAZZfrq7
+         6B2PQhCN/GHrlRnoKoGPlnIh9jG9NRA4PZIdSLOvQCq6VtpspUJFjyzZ/ZQifGD52Grx
+         CPcEuobtezw7iy5XamR63llHaiK9eRCNang10UEWvsHPyRCDdFb4JpIOj+Wz0s5Qx8so
+         ZEsBitRk71tdW+tfWQpnXikuefeY9Hw51V9D5ThexMJJfjK4EbouKOcGIWKr1lnyls8T
+         CZbQGWf+8jSM8OBURLCn85pL/z7euRSc3ey91TmsL/X/Yncfzxq9QOM1Ya5/3+70c0Iv
+         OKpA==
+X-Gm-Message-State: AOJu0YxeQtKu0QSd5Ghxhqpo0PHujJ7eYDELOeMJaCf4jUgaZWcFEi8q
+	WC0QNNakmJBslgpHQLdclSLYjdvhwXOjT4U/H/BdVA3EySWec29y6WJxROR47dv0wbZHSuL9Lfh
+	mnvdQF7OnTUFchtAUlrV+V+cMkxN3BzLLGtk/CMX2K49PtgcYKoGBn1iZjsxVj2GgtilA8kJNrb
+	tJBoWM92uyPg/dDUaVwvJS7nZUt0ePRav10XsDFsE=
+X-Google-Smtp-Source: AGHT+IEiRVPU5PDYPUFy1n09CWr1oqL/qiaCJPdrRvz0RGU49T3y0CYofI5dIw3zvxMKGHjAi4uXWLMNdz23Ew==
+X-Received: from oabho27.prod.google.com ([2002:a05:6870:499b:b0:2c2:5b99:3e17])
+ (user=steadmon job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6870:7e11:b0:296:dd30:e90f with SMTP id 586e51a60fabf-2c780299312mr3516576fac.16.1742595253921;
+ Fri, 21 Mar 2025 15:14:13 -0700 (PDT)
+Date: Fri, 21 Mar 2025 15:14:06 -0700
+In-Reply-To: <cover.1742339107.git.josh@steadmon.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Date: Fri, 21 Mar 2025 16:10:52 -0500
-X-Gm-Features: AQ5f1Jr6NakzmIY3hCMUMTUJhsQr_BdzxkE27Lb_6NHLjeGDQYgLpsa2NA4SygQ
-Message-ID: <CAOLa=ZTAEKyFBc7HY7HxGLHCiM66i=RhM7=trG6tb5j04g7vfA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2025, #06; Fri, 21)
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000924f550630e0b053"
-
---000000000000924f550630e0b053
+Mime-Version: 1.0
+References: <cover.1742339107.git.josh@steadmon.net>
+X-Mailer: git-send-email 2.49.0.395.g12beb8f557-goog
+Message-ID: <cover.1742594960.git.steadmon@google.com>
+Subject: [PATCH v2 0/5] Fix `cargo package` for libgit-sys
+From: Josh Steadmon <steadmon@google.com>
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Fix `cargo package` for the libgit-sys crate by providing a pristine
+copy of the Git source tree at package time, and by building object
+files and other generated files outside of this tree. While we're at it,
+improve parallel builds by plumbing Cargo's make flags to the make
+command invoked in our build.rs script.
 
-> * kn/reflog-drop (2025-03-17) 2 commits
->  - reflog: implement subcommand to drop reflogs
->  - reflog: improve error for when reflog is not found
->
->  "git reflog" learns "drop" subcommand, that discards the entire
->  reflog data for a ref.
->
->  Will merge to 'next'?
->  source: <20250314-493-add-command-to-purge-reflog-entries-v3-0-c24e23a6146d@gmail.com>
+We also fix a few problems that would prevent us from publishing the
+libgit-sys crate: we add a license and description to Cargo.toml, and we
+exclude unnecessary files from the packaged source, to stay below
+crates.io's 10 MB limit.
 
-This should be good to go, Christian and Toon reviewed the last version.
-While they did have some suggestions, those were inline with how 'git
-reflog expire' works. So we can take that up for later.
+`cargo package` for the libgit-rs crate is still broken for now, because
+it will require publishing the libgit-sys crate first.
 
---000000000000924f550630e0b053
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 78438f6806e7d7d7_0.1
+Changes from V1:
+* Reworked patch #2 to build outside of the source tree rather than
+  running `make clean` after the build.
+* Simplified patch #4 now that cleaning is no longer necessary.
+* Added patch #5 to add some required Cargo.toml fields.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mZDFkc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOUsyQy85aWtpTjRGTmk4bDhoUElpYnoxOTBrZE9UVQo0WVV4V0JiYS9C
-VWk2V25pc2Rrc0FJSnRtT0c2UDJFcnA4eVlqRE16bzhvLyt3L1ZZUkpGVkZjTG5uWW14NjZ6CmFZ
-RWpSTW9WVFRUSzdMWU1tVVEvMDh5ZVJEUGd0U1ZDU01DV0h2eGZCdHRtZElmWWRVeWZqV3pXTVJy
-QWIzcC8KdFNjb0U4YWhaL0M0TkM4N3h5REFlNUVlcnJzTTE5T2duNksxMTlncGVod0xwU1liWGVF
-SnI2ZzVjbkRvWTlXOQpYM29yY0d3SVhBYjBjUnFueVJNUk1sbHc4VDZmcHl0TmxsckZCd1dYUXli
-d3lWWHQxcVJ2Y3FxclZFeVUwMFo2ClpTVC9rV0NRSk9VVFNqMmExREZHdUNFemdvNUZIZmJobVkv
-dXpOTSs4VDdlT1BSY2QxTnRqSUpFK2NlSXNUNjEKc3hRWkVxVENxSjdGQlNHMHBkUVIvcGUvamp4
-ZGY5MDVEMnVWZElLV0ZQSGtlbDBGU3FmUk9VcjVrdFpPdElTZgpHWUg1YlpxKzBOU01aTUJ3NnZ1
-VlhRN3lZaEU2bHB0ZEgrNEtjOEcvTGJsV3VrdXJZZUpaVnprdGZwYmF0alRSCkFqbkFHWTQ0ejFu
-TDJERUZlODVudFNuWGNqYUtNNzJVTVQxLzFidz0KPUNwSGMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000924f550630e0b053--
+
+Josh Steadmon (5):
+  libgitpub: move to separate contrib/ directory
+  libgit-sys: add symlink to git repo root and build out of tree
+  libgit-sys: parallelize build with Cargo's jobserver
+  libgit-sys: exclude unnecessary directories in git-src
+  libgit-{sys,rs}: add license and description fields
+
+ Makefile                                      | 145 +++++++++++-------
+ contrib/libgit-rs/Cargo.toml                  |   2 +
+ contrib/libgit-sys/Cargo.toml                 |  13 ++
+ contrib/libgit-sys/build.rs                   |  12 +-
+ contrib/libgit-sys/git-src                    |   1 +
+ .../public_symbol_export.c                    |   2 +-
+ .../public_symbol_export.h                    |   0
+ shared.mak                                    |   5 +
+ 8 files changed, 117 insertions(+), 63 deletions(-)
+ create mode 120000 contrib/libgit-sys/git-src
+ rename contrib/{libgit-sys => libgitpub}/public_symbol_export.c (96%)
+ rename contrib/{libgit-sys => libgitpub}/public_symbol_export.h (100%)
+
+Range-diff against v1:
+1:  28e10e1092 = 1:  28e10e1092 libgitpub: move to separate contrib/ directory
+2:  58111043a1 < -:  ---------- libgit-sys: add symlink to git repo root and clean after build
+-:  ---------- > 2:  6befc95a2d libgit-sys: add symlink to git repo root and build out of tree
+3:  4cf9996096 ! 3:  a34e23a83d libgit-sys: parallelize build with Cargo's jobserver
+    @@ contrib/libgit-sys/build.rs: pub fn main() -> std::io::Result<()> {
+          let dst = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+     +    let makeflags = env::var_os("CARGO_MAKEFLAGS").unwrap();
+
+    -     let make_output = make_cmd::gnu_make()
+    -         .env("DEVELOPER", "1")
+    -+        .env("MAKEFLAGS", &makeflags)
+    -         .env_remove("PROFILE")
+    -         .current_dir(git_root.clone())
+    -         .args([
+    -@@ contrib/libgit-sys/build.rs: pub fn main() -> std::io::Result<()> {
+    -
+          let make_output = make_cmd::gnu_make()
+              .env("DEVELOPER", "1")
+     +        .env("MAKEFLAGS", &makeflags)
+4:  9b5d4aa140 < -:  ---------- libgit-sys: exclude unnecessary directories in git-src
+-:  ---------- > 4:  390695ac1f libgit-sys: exclude unnecessary directories in git-src
+-:  ---------- > 5:  3a87f54693 libgit-{sys,rs}: add license and description fields
+
+
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+-- 
+2.49.0.395.g12beb8f557-goog
+
