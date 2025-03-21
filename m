@@ -1,136 +1,175 @@
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF7F2AF1B
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 21:02:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBDB2AF1B
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 21:08:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742590930; cv=none; b=fBNLNuJK8ovkTq6VYjVuHLdxjA6v7iHrHKrld1FqWwkLGqr1Pl3qP70sIaWCg75g3UbJGcog5uCvogqaT6vhjU930sA50HM5Calb2UJ7HvxB8TRgQbJGRVPvJp9NydTCvQb1LK8+zHs/55KttL/mzEMsWEemvqO7rEWDRHhbnGU=
+	t=1742591290; cv=none; b=X9nj96D3ouR35sMfn/mnFk2JCKnvTxNDfEVQlNv1kE88oDnwCbbc0pUTcOTmoAUWBnkJ/1QuV0j3cObzNJIF7FzhuXrxsBcRWWVHE3OUQDpqlXOXVLX3l58CNIL2sfvchP7NcJLqELNSXZq1jy9KLticHhrzw9pcc2SbzjNXr6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742590930; c=relaxed/simple;
-	bh=YhIkoyRfQbh0Q7ZCzuZWDbO6HZOt0tgf2yZECdOBv84=;
+	s=arc-20240116; t=1742591290; c=relaxed/simple;
+	bh=UO5QoE96EaJVCP5G36ERKlPwY740fpBNIEy4I5bR+vQ=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BSChsfkR6RgKIp583/uqrZsOYZXpuoGhzXObx7wPp2ieWZO84F8+dyAo+5PIAZLNANUCmWORTX4Rojhpzb5sDya7XJ9DZK5zrYlGbfwjzYS8a1SrrGN+Y5HmaXBdO0b+lUCxGI5nUG472UoahH4a1m2lJ8bwbfkkXLjdERrudSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZLPuqM7F; arc=none smtp.client-ip=209.85.221.171
+	 To:Content-Type; b=WXgupNTTowrfuEri+R8usf2jZmKE0jfsCUw7Y4ziaajcKS1JmgoO0Zew8Yu0NV6XXr7McP1rdeDb5wuVDEO6dvYCKIye5XETz9RwBJA32Puue2JJm1KHMdUry51Vo3wKrV69gjSPaR2h3FPpNBS8/iWpHB+RWgvhjcgCXS/Kk00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PBGC6icj; arc=none smtp.client-ip=209.85.222.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZLPuqM7F"
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-525b44ec88aso232260e0c.3
-        for <git@vger.kernel.org>; Fri, 21 Mar 2025 14:02:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PBGC6icj"
+Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-86d42f08219so1020544241.0
+        for <git@vger.kernel.org>; Fri, 21 Mar 2025 14:08:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742590928; x=1743195728; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=whMvqd7LP6MpluZkiKemWR3QWokeat//FUjplwVMIqA=;
-        b=ZLPuqM7FtUNu3j50jPROBmjSzWlE0fAKvM8Sr4PvPuRFS4X1//Yw0CtyCFSHcSdaju
-         7o52p2X4t3fTbhKbwnhuvIWwmDRrLtLUFcsm4KLT5jTgaBHmInSZVe6nubcEdsH3M56u
-         YO2t6uA0z1M2UdYJzsz8/nvwgnUPkPCNAMcoWkyR0Y/IS+H0zvV/3yL/Q4/avWFyuX5g
-         0X5EWY4NbEz0XHlJTK6qP7FflMrByghcqVnvYe3Z4FEdziH7O6tKaJcy15Bn2C0fvst+
-         D5HPyxk2cuGE+P8OcY3lxsaxmsv0xR06nbgsd8p470OZoYvZTQKxGkuuI6K4708lrzAO
-         A9Dw==
+        d=gmail.com; s=20230601; t=1742591287; x=1743196087; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8UXuoFlC4OYsU3mZfLAvxQxnZatPS5Bl7GtEg6uGJ3Q=;
+        b=PBGC6icj+ohCiSlzhidMG/GHJ9zarVmPbPwEu5nXtmhyiG+WM5gpc6NjgoiUM6MxZT
+         jp18c5tIjKhQJFEmiWc/fH/DZUPIP0JfvSNY88zu1CCTu8w8TY6l7GBWKPnPjyKBLFgK
+         Gy6aSfSLjc0GURZFQADFrLftJHn72wu/rhRR7/ohGBDIxm08KJdH1U3xT3J085ow02Cr
+         uCjYCs25qau9Kw9N4za+SQj4YSwbY+Vmm1FRcp1CA2IsRGcTFabSa9CDtAcCeM5bTZHo
+         N+SP8wQnzqnqS2ZCxUSjnFX4NkSFWCr7H3HRgZP2CrwSM56ch6UyxSaF0nFrkQcp2VFr
+         J7Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742590928; x=1743195728;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=whMvqd7LP6MpluZkiKemWR3QWokeat//FUjplwVMIqA=;
-        b=mfVMMkzfenEIx2NJWzFF6wCYpMpqJqJmo7/JCOVPkInoQeJZsVIxKKrgFp0dxBpPZy
-         YQMdrUnz8cd/n2/Bjspe/l/4OJec3cdfY11Ko55XkuJiI68O8R1M8g/vojw1PzLYwk0T
-         6vJs+St7pW0+nsQLo5E4xlsfwI0XczzgGRavhlSQQoXDVUEi3F/anC/wm/2vNACPtnv1
-         eS3Bykptr/zzVzxN+oYTqC05Ss+B63Gsgfne3iNlYGa6VvvTrZRyWoAu9uH5VRrbTmrt
-         yWR8b6qhNlX5kgiP7f28xctIP3WFMxHKUsfD+lN0arYHzZN/Fu4H3IfVVvSETLW/37Ls
-         +zzg==
-X-Forwarded-Encrypted: i=1; AJvYcCWT6FHLir9bRVi+WuPNmq/Nj3kS8Y6KQO8A5ZnsNub+U1fiPYrLC6TybWB7EmR50diuOqQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwIG+hmzCAmrY66fnJOMBPmxRJratwrLwhue1f9V6Cou9LXNGF1
-	6wXPS//Hat6J9qD3Apapy0TJGtKpWrJTryFbY8IdSc1qQli+Ma2mRLq313jkN89C4In7u+ZyVsO
-	ryQHOab4W3WMPRAeSkZMvxW3V/HU=
-X-Gm-Gg: ASbGncu0b+HEs+LCuCmVlClWDTWd29B8gOYd7fBnXOdtlOsgY5L+twWD6ehJjnccL5v
-	l38mRwEW0Y/pUcfaGITKlu+oT8o0MArIOI3ieqa9nwYmkysQEAO2oDSSOi7vhVYwhOtStSIlaSv
-	cI83qTQbL6E2lZWmRUZy10gBUpFLiPew6dNvU+5NRQbhTt8va07tWlsSScZBxVYfRHzEwm3Hg=
-X-Google-Smtp-Source: AGHT+IE8/mtaFgIA/3Qla8PQwI3HxWButaaUDm5uNH9/i2c9+AKDJUoJ/Nv5kRuTsxx5wzcpOt5cDGwyOIW1sAm8pbQ=
-X-Received: by 2002:a05:6122:d95:b0:518:a261:adca with SMTP id
- 71dfb90a1353d-525a8503af8mr3740970e0c.8.1742590928050; Fri, 21 Mar 2025
- 14:02:08 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742591287; x=1743196087;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8UXuoFlC4OYsU3mZfLAvxQxnZatPS5Bl7GtEg6uGJ3Q=;
+        b=A4IuVOzwtLdP/ubgcEsdvnRG2gmN60jmi0mgFKxRxGh4GpEi5KWhQw3cDIR+3poCzO
+         Nd2RbC6Trhsl/3H3FKa6DK5nvNk9fOwxF7ioRg3jSEMPCSaamfDWutgomdlNKmYwP9YU
+         Da+x9GEQV9BDmmDi8rH6RqefUrbIVU7IT4HdcvJmJF4/KLowB5ewM7nGsM020VxHoVl/
+         ktRKztUJFiMHBy41c7YKGgWsCLR6HBFpukl5Zd9MiK0r3dRCIKhLPXG+qGTIuks6GzZO
+         Q84VpQvP3aRlgIwrtnJJER/QL2CH2/tFHxOtj1VMeMedXW7qKx8Eb+Mn5lMJbG4WQNQL
+         fm6w==
+X-Forwarded-Encrypted: i=1; AJvYcCV39MsW1RzHZ6PnRYNR/fCuImcKUNI2Qs04MoHFazqt3Ue6MMJs+4nVSkD4FR2IQpzRQPM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYCLiSjeio2OZVJGGWYbiiISqD2tKQDfpXpCHXry/AIT8KbHzV
+	6/qpOUbMDkK5e3AQl0iOVh6Bw27cIiL2lnunq6yBhY9JKwbyhkXwcPM0VbaJ7iI+ef9AZ6mIbGH
+	2azcGsA7O2eVT9ozek3HBCarEty3yCJ0l
+X-Gm-Gg: ASbGncuNz+aUjE2Khegjnz7JHmfKSs7+5Pw1TL67IzRqSbehBwTMLu0WwqlfmBZtogf
+	mJfbyixlDPb5CaPiJBn7+BHzkVe8XPXs9/o2rOrZ9x6vN7AxtFXy8q3HNHx2WPm2GJ9abtAHgQJ
+	oiaWNUbbvolFqDx30oy1NcCdfKqPX1wLkw5orvBVwJyQzjbpP428RjxZ43ZWd2
+X-Google-Smtp-Source: AGHT+IHfbzNdTxVxc+4jbTNeUu8e+msNkHPwW3/CpcFkMgJTZ8MPUf49f+RvvF5kLmFrXkssBTbNXsEZiJLGNyAGP2c=
+X-Received: by 2002:a05:6102:2ad5:b0:4c4:e42c:38ba with SMTP id
+ ada2fe7eead31-4c50d4fa2a8mr4202722137.13.1742591287356; Fri, 21 Mar 2025
+ 14:08:07 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 21 Mar 2025 17:02:07 -0400
+ HTTPREST; Fri, 21 Mar 2025 17:08:06 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ffefdd01-ec80-4af4-b011-723ad1260f68@gmail.com>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
- <Z432QXJb_TfzNBa2@pks.im> <c39c5424-71d0-4b6d-90b1-a6a70f2ee61b@gmail.com>
- <cd90cf17-6113-4634-a774-6df707b73e95@gmail.com> <d5cba1a9-fe51-4f3f-970b-3ef8a7a2e459@gmail.com>
- <CAP8UFD0GEmsJDFzVAV1bgBNeD6K3auH4paWEKE6=f0=_E6gifA@mail.gmail.com>
- <a2a76725-5778-4b7d-a266-c3a1431316ce@gmail.com> <Z6Xmrfut7jdsVAfg@pks.im>
- <fa9ad3c6-3b3c-4f3c-89c6-101ed1b51eb6@gmail.com> <D7TVXVKVWRS8.S2BJN32QHZ0O@gmail.com>
- <59004310-f270-468d-a248-c83c97de4a1f@gmail.com> <CAOLa=ZRM3bLcR3s6nE8nXFv32zX8-mL6fSh1vbsVetJcp9KFhw@mail.gmail.com>
- <ffefdd01-ec80-4af4-b011-723ad1260f68@gmail.com>
+In-Reply-To: <20250321200715.3338-1-taahol@utu.fi>
+References: <20250321200715.3338-1-taahol@utu.fi>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 21 Mar 2025 17:02:07 -0400
-X-Gm-Features: AQ5f1Jps9MZ75W0SqsLhHXTyQXweGMTXckZ1Nhh7KsI022Z-ID4nEksG4CVu218
-Message-ID: <CAOLa=ZTsp-N3h5bbquFjEY_XSBV=GqCwDWUDCykBfERbxg8PNg@mail.gmail.com>
-Subject: Re: Git in GSoC 2025
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: Jialuo She <shejialuo@gmail.com>, Ghanshyam Thakkar <shyamthakkar001@gmail.com>, 
-	Git Mailing List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
-	Christian Couder <christian.couder@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="0000000000004181420630e09181"
+Date: Fri, 21 Mar 2025 17:08:06 -0400
+X-Gm-Features: AQ5f1JqW2ZOFw0_IRfP-u-qvvOScSB5IrXS2vouu1Wipm8mIUhi0xl2psbN_itw
+Message-ID: <CAOLa=ZRN5m0bccMdabUYwNJLg4HX6jcOe3PN-aBTHXBOuM71hw@mail.gmail.com>
+Subject: Re: [PATCH] bulk-checkin: fix sign compare warnings
+To: Tuomas Ahola <taahol@utu.fi>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000ac0a550630e0a654"
 
---0000000000004181420630e09181
+--000000000000ac0a550630e0a654
 Content-Type: text/plain; charset="UTF-8"
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+Tuomas Ahola <taahol@utu.fi> writes:
 
-> Hi Karthik,
->
-> Sorry for the delayed response! I kind of missed to respond unintentionally.
->
-> On 07/03/25 15:31, Karthik Nayak wrote:
->>
->> I wonder if with Ghanshyam also mentoring, if this statement still
->> holds true
->>
->>    Note about limit of project selection
->>
->>    Kindly note that considering the bandwidth of available mentors, the
->>    Git project would only mentor up to 3 contributors this year.
->>
->> Maybe we can do 4 projects this year?
->>
->
-> While we do have 5 volunteers for mentoring students this year, we only
-> have 3 candidates who could play the role of the primary mentor.
-> Ghanshyam and Jialuo only prefer to co-mentor as far as I could
-> understand. So, that still gives us a limit of 3 projects doesn't it?
->
-> Kindly correct me in case I'm missing anything.
+> In file bulk-checkin.c, three warnings are emitted by
+> "-Wsign-compare", two of which are caused by trivial loop iterator
+> type mismatches.  The third one is also an uncomplicated case for
+> which a simple cast is a sufficient remedy.
 >
 
-You're right, I didn't think of that :)
+Nit: it would be nice if you expanded on why 'a simple cast is a
+sufficient remedy' and more importantly how that casting is safe.
 
+> Fix issues accordingly, and enable sign compare warnings for the file.
+>
+> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+> ---
+>  bulk-checkin.c | 10 +++-------
+>  1 file changed, 3 insertions(+), 7 deletions(-)
+>
+> diff --git a/bulk-checkin.c b/bulk-checkin.c
+> index 20f2da67b9..0133427132 100644
+> --- a/bulk-checkin.c
+> +++ b/bulk-checkin.c
+> @@ -3,7 +3,6 @@
+>   */
+>
+>  #define USE_THE_REPOSITORY_VARIABLE
+> -#define DISABLE_SIGN_COMPARE_WARNINGS
+>
+>  #include "git-compat-util.h"
+>  #include "bulk-checkin.h"
+> @@ -56,7 +55,6 @@ static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
+>  {
+>  	unsigned char hash[GIT_MAX_RAWSZ];
+>  	struct strbuf packname = STRBUF_INIT;
+> -	int i;
+>
+>  	if (!state->f)
+>  		return;
+> @@ -82,7 +80,7 @@ static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
+>  	finish_tmp_packfile(&packname, state->pack_tmp_name,
+>  			    state->written, state->nr_written,
+>  			    &state->pack_idx_opts, hash);
+> -	for (i = 0; i < state->nr_written; i++)
+> +	for (uint32_t i = 0; i < state->nr_written; i++)
+>  		free(state->written[i]);
+>
+>  clear_exit:
+> @@ -131,14 +129,12 @@ static void flush_batch_fsync(void)
+>
+>  static int already_written(struct bulk_checkin_packfile *state, struct object_id *oid)
+>  {
+> -	int i;
+> -
+>  	/* The object may already exist in the repository */
+>  	if (repo_has_object_file(the_repository, oid))
+>  		return 1;
+>
+>  	/* Might want to keep the list sorted */
+> -	for (i = 0; i < state->nr_written; i++)
+> +	for (uint32_t i = 0; i < state->nr_written; i++)
+>  		if (oideq(&state->written[i]->oid, oid))
+>  			return 1;
+>
+> @@ -192,7 +188,7 @@ static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
+>  			offset += rsize;
+>  			if (*already_hashed_to < offset) {
+>  				size_t hsize = offset - *already_hashed_to;
+> -				if (rsize < hsize)
+> +				if ((size_t)rsize < hsize)
+
+Something I found peculiar here is that `rsize` is of type ssize_t'.
+But it only seems to store a positive value.
+
+>  					hsize = rsize;
+>  				if (hsize)
+>  					git_hash_update(ctx, ibuf, hsize);
+>
+> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
 > --
-> Sivaraam
+> 2.30.2
 
---0000000000004181420630e09181
+--000000000000ac0a550630e0a654
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 38e0a067cf0688f6_0.1
+X-Attachment-Id: 52eed25dccbdfa1a_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mZDA4MFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOVpuQy80OEdpSWNGSTBYY3IvTlQ1bFZlMHFycE5TeQpSRXYvZlAvRzlI
-bFNZZ2FUS3F4VlF4NUJNUTRlNmt3SDlsTHMzZDRlUTZPRzVaVktWaGJBakU4N0xRbFhzTWIvCkZI
-cUx2M05KSUV2emFvblNyYTlyb2VwQ3UwWXIrVkJJOGtsQjF0WW1RMUVvUFMwSG05Qm9XOGp4VHk2
-Mlc1Zk8KQVk5YTNtcGhNVWl2UEd4aFhUS2hkN3JVYVh1WmhoTGhzS1puT1JpRWRic2hsMFdRM2cv
-RkpPYlA5SE1QZnFvNQpiRFcrazlHeHF1aWxRekNaWXVEaWM5T2I2S1c4UXhXbXlpcEZRdVowbEJG
-Mm9DQ1JVS2FFekZVWmNETWFNQm1nCkdQUWJubVVsQytBUFVDWGFDWFZBVlpkWHZyU3g5T1U5cXlN
-Nk5NQUFsM0RCRVNzakdlWTcwbGEzTldaYlV0YVQKbGtZUHBaZExhWTVVd3FxUXBjTG1VaC9qYUFM
-MnRXQkdlSjVaYWxxOEE2SThWNzFucHMraTh3SWJCeWUzb3ZhUwpjQVpOWG9BSXovWFN4VTJTeWo5
-M2hVRGRyZ2xKa3gxNE5xWXhaWVRsOW15VFVwNFA5RktKby9uTkZMclpXVURqCllDNUZWSzVaTTB1
-alRScjRZSEk2RitreEwyd1B0VU9ENXVHWkMxdz0KPVJXY1gKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mZDFUVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL0lrQy85Z3pod2x4UXJKNm5BMzkrNHVYdDJhc1FURgpkc3Bkc3c3SEcr
+Nms5WFY5QSt5MlV0ekYzQVhXbWFpcEEyUlhqM3o4aDAwaU9qZ0hEOGxuWUErUTJPOW5OZXJ6CkI4
+NVd6ejNZSzJSZU1jRzFtaHJxV2lLTThsY3lzV0NlU201VUUyUmpQbHl4a1BIQ2lwaGIrTGQvbXBC
+eVlLVjcKSTI5UWZNL29jQ2UyVCtMK0xpNDlxLzl0WUpnQ2FwL0E3cHpHWWhZMVpGRUpZYjZQY0NN
+UEttQkhWZnhmR1FONgpNSGtUb2J0OWNJbEJxc29rZ3lhUjFYdGtPb2ZxMEx3VnB6Zk9IOGF2bVJX
+dFQ4QllMZFM1eHNRelFwSHNySG5HCmNna1FoSDVNVUJoSW4vdTNKaHNaRFVINHh0LzBDNVlwY1BD
+QlZJQ0VWajFxUm9QTDFoMTVaaklhQlJZamNWY3YKM0V6U0RwcE9wSm5lbkhLdmlGRlN4c0QxNGIr
+emVzQjZyVzhHTXV5Z1g4dnRhYlVTd0NhRlZEUmVQeWVZQVpPSAozS2JXeVg4Vm1lamphWjRyeWd1
+Rlhnck1ZeXZGNGNOMFNhNS9PWHFRTklyYi9KQjVwSGt5bmUzdGpMOHpBVVAyCndCd2JUTng2ZXNu
+cHpMUEVBZzZGLzhlTzQwekhZOC9HVnBFMmZIYz0KPWwrc0oKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000004181420630e09181--
+--000000000000ac0a550630e0a654--
