@@ -1,70 +1,70 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF85F21C9ED
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 23:20:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05911EB9E5
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 23:20:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742599237; cv=none; b=FiWwgAW3oXJyH5DKqObAi369bOjgyu+Q+0zKrgj3rB3HK6YpHkDDUMoiypnHP78TWXPMrTlfYxHgrJ+UxA0qP7ZgArXj5+A6d4nEKtZld7ii1cx9OyNWCFNwzBCtMkh+whxjLHQamvGmQyVd2WLyGg0xIWRSiijEXe+NqVWvbGk=
+	t=1742599237; cv=none; b=afXYuAXpLvAxYpg28iLGTkSG9iQESsTs4SeT1Wfkpm6BThvKYoEOv66Je/dSpC/1pdSdG30ABptm34Lkie3Ly3k6Aq+HLhDrmGB2y8EQrRZ9LDNv+8Qv9sqSrDpHxpfOqHNQ7L8BvkLwqy9W4dATq0Lg5f2FWaTtYtg+BIDt96M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742599237; c=relaxed/simple;
-	bh=Y3vQmvn5xOd+9o+/2lmA3xPqe4MEyzHOD5ULKeGIm+g=;
+	bh=2eJ5BNzH7tcDLGBs/snwtQo8y1maOrZY1ER0CmgvYsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrvT5SkbOL2YImK1tjmSm2lMTa83xOErVRvoqOuE2gCTO/f4aXwNMmvc8fqDsg9Iesh9yuG+ucH57uS4VLeduMtRjruWeBDeEjmYd5meuqa8+iVb1aRxON1C2VVL3jtjD0+RtjRiLNJv4/E8/pf2/ULYKolconmo06It2nEI5gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gd+e4pVs; arc=none smtp.client-ip=209.85.161.48
+	 MIME-Version; b=YxBzbx4rHgKsPQALpLEHjgvYaiJ3Bw+1m1zOap0loBXhxFn7PxjbBOdXvFf+DAZyDt/fgtlPAsdynU+zQO1V7dXRvzhekWAQIFQLgzJE7wIWk2LBDjp3daHbrg4UsElX9ImIxM6NIJZSsyz855r4XGN59pMSj6TWiUWo5AefUR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eGtYWzft; arc=none smtp.client-ip=209.85.210.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gd+e4pVs"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-601fcbff303so1193015eaf.3
-        for <git@vger.kernel.org>; Fri, 21 Mar 2025 16:20:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eGtYWzft"
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-72bd5f25ea6so733440a34.1
+        for <git@vger.kernel.org>; Fri, 21 Mar 2025 16:20:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742599234; x=1743204034; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742599233; x=1743204033; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TrxUs4G0NW04sAu7dWieoazwet9JY9XLY3hcpI7TbG0=;
-        b=Gd+e4pVschsxtanNEDtK0mZhmLs8L7g8+IFHpefb5lsLKZTBonRevwgAkOOrIzjdSy
-         X6yfbRD6Hd4k2Sdnu9obwX0UOAk8rSwLWuG0kiiAckfA1s3fbB+7FmRxZix0v/wWiJmv
-         mUiherUr9vZv7MjnETh+NVjjeqkSbVXX9WHMnOGWyBJxQi1Vu+FY3OKfJLG/mHOY4VkQ
-         qylsfBnkUMoBa6R/ASfn8ruZidlUtvodPjTTP2En7Nf3E+wtWaWy5Es+4J5hrWqAY8dp
-         3yANJvemvBX2TbYg77yP0NMXM7k/+4o+HebLrGNQaOv6gDkaWlvbCa02WjhsD6aCDCar
-         TUXw==
+        bh=eSbO26uzvg2PRdA73hjAzjaq9HGkRU+Bx+FlwdjiTlI=;
+        b=eGtYWzftbHUcwJcb5B45Oo5ZwxT242vvwlDTNnM1UTy02WxefzIXmXgVV6sUIlHSZG
+         W6ABy/J2wT0RV1QSez0KUQB4ZfO/524wTrT0LZv+85eCMBgwFa/eIJHPW+Sh+J6YVQVs
+         8IGKOX6cuSX0D+j1UP7SX4e2z28OvLbvcnXAf49kvCOLZAWliHTES8R9JDN6yBiHBh2z
+         0xAliPw5olZq8hfqstmR5ektHr9mEGL46SwUe3NfoaUvDL3bYLPQoTJ7TdKisaubODJF
+         T5issTBA7D74bvBniuE68QE3TgCHvLOOF1HNaYTFkKeLEgy4LuWSQDJlbNi3UDl6/rHT
+         Fo8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742599234; x=1743204034;
+        d=1e100.net; s=20230601; t=1742599233; x=1743204033;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TrxUs4G0NW04sAu7dWieoazwet9JY9XLY3hcpI7TbG0=;
-        b=OVGw729HB/3csk7qj93FLkIXEDlrP5gqDyOk8N8/YS46jnA67SvPNCpf+1b9yu5v8x
-         /3uMHpfapfxNdPfTBOwVxhiF7IUg6QIdUDEMf+9LuteoCUWR8bK6l53mw/ipzu6oR2J+
-         xyr1KamuPBrGnIORN3hkguuaRMlDK0hQWKl7tHM6rzW7ZhXPmIIhgEGUS8YbBr1HzTbR
-         eBQuOSM3S+QhDdzocGQZFDGXxQMipEVu0gREL+cu1MlRvxhblilHkk1a8Tvdfz9uaAbO
-         jimnvsz4ckDM6fKqvBPtk611O6sRfx1EaP7NOTPURpKrJ7A0Wqc7DoSNOKhzHmxzLyEu
-         3TXA==
-X-Gm-Message-State: AOJu0YxBiF8i9ErppM4wia8lk5/xD08Ou2NsMuFMLdGcvrr8hej2aFWx
-	qPgv7vQ/cwoox1mZ/6a7O2m0YfQhkXOFVCliuV47Gl1z9+knjdkntMIVqA==
-X-Gm-Gg: ASbGncuqmzm+hdmjM3Cll2xSPvZekKg/jut6+ThQwVzvkHevdcOO0+/yNYRYJmC1dzS
-	KwILZaK4WHBNJCDKIeFu2yJP1V32u13Di65lKKIshMFUhE+5sxH3gLZjeXEtU3AEyfOwyp21n5n
-	O0gJLkKDHeBz9cIVOKz1Fgyc8Hh0Cd/YVCBza0hpuiSME62Rdlug5GpAoVRwgZ6r5ztEV2f9Q9f
-	p8Mhx4IxdF06T2fWm93CA+JDQVdBq1Kw+rud/9TR8/KgeerHg6JDkn9seNk2wU2FfpZFmiN+VDH
-	exzRp3k3QSFJnz6EgH8GehlfqloRciPoUt8tyl4Ifh2TfJsk2PmC
-X-Google-Smtp-Source: AGHT+IF4OpbV3Gzo+3BbTF5dxYSPiBaGLHjFukPGa/hC/0opdvU5iZSkKCtwWHkKq1cALoCW5FWr9w==
-X-Received: by 2002:a05:6871:200c:b0:2c6:64da:5af1 with SMTP id 586e51a60fabf-2c7802022bdmr3442090fac.3.1742599234407;
-        Fri, 21 Mar 2025 16:20:34 -0700 (PDT)
+        bh=eSbO26uzvg2PRdA73hjAzjaq9HGkRU+Bx+FlwdjiTlI=;
+        b=jhFD7oP2snzZGdYoA9wyKFTbtS7+vY7UYfmaH/4/MpFG2oI/msf6pOaXeZckxnf+dk
+         WfoDFCxlxTYgFubuIxWFNNZvooSzR15mPGj3Vnad7X64kiyRfRxAo5ACnNaWDcbUjZon
+         Q8Io/iwNFkYg3STQ+A8apKpRF5gVjzbN1RZPRtOSE17hEUtKD8OvHBDU4MY6U/uwpnNL
+         x7wmnZOdS3COvTpUJ4IeqGskav1JhPLVbyx7cwgeGrh6Q9Byuw38jFEwyoYno3kM4Jz5
+         NkYplz0GlT2qB0riLKh2nkTDyuprs38IM7C0OM2re3uleMt3Cgc1r4C9Dv2WlU31pyYL
+         vIsg==
+X-Gm-Message-State: AOJu0Ywy//QI1Fpk/R8FHmtiXxoKzTg0fLU/gk/H7TWgfLMO4eliKrVA
+	DC6CwvSo+4jFtV9PZqwraiS6omhk4Zhwa9yoF2hNHuewHuQWKXFG1Chs4g==
+X-Gm-Gg: ASbGncsdVR3F1EuDfIwPc/AGQm1WdMeh2YgEqGWECwmL0KZkoJ8h5eCBuNKzIm8ajJO
+	0fyeCJSjGfgdlM4ezZ1NfJGxf9vjcAXyp4ibfXiHr27ZiuPGDOyPKT0S+5aamAsHQUsQdt6TzUU
+	9lonQRq3mD6lf+c69yJFUL5b8JB3M6A+a6B80jiNHb5mrNV/DWpzxVQptK2M+WSCpkyaK/lQHEs
+	rn80jCDr0leMFwQlhuWVd54uOHLSYCWv825vWFQ84/Fh6dQhVsS3JrE6zJZP0tISFrV2nD8RF4A
+	U8fqkarBngvJOoeWmTT5HFK4kGMD8Eg+w6GpODiGxNwXiGQHuVUsbuN1Lb8hmDw=
+X-Google-Smtp-Source: AGHT+IHKGH0wRdmMT+MyFKgvehJmRhrUFsSwP9OETE6ADX8hZdWdrxvOKzJMXxD6Xco7xvkaY06YHA==
+X-Received: by 2002:a05:6870:8199:b0:29d:c624:7cad with SMTP id 586e51a60fabf-2c78026e8d6mr3363553fac.3.1742599233471;
+        Fri, 21 Mar 2025 16:20:33 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2c77f0ed8easm715097fac.46.2025.03.21.16.20.33
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2c77f0ed8easm715097fac.46.2025.03.21.16.20.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Mar 2025 16:20:34 -0700 (PDT)
+        Fri, 21 Mar 2025 16:20:32 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	phillip.wood123@gmail.com,
 	alan@norbauer.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 2/3] builtin/clone: suppress unexpected default branch advice
-Date: Fri, 21 Mar 2025 18:16:38 -0500
-Message-ID: <20250321231639.180762-3-jltobler@gmail.com>
+Subject: [PATCH v2 1/3] remote: allow `guess_remote_head()` to suppress advice
+Date: Fri, 21 Mar 2025 18:16:37 -0500
+Message-ID: <20250321231639.180762-2-jltobler@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250321231639.180762-1-jltobler@gmail.com>
 References: <20250320014646.2899791-1-jltobler@gmail.com>
@@ -77,67 +77,109 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In 199f44cb2ead (builtin/clone: allow remote helpers to detect repo,
-2024-02-27), clones started partially initializing the refdb before
-executing the remote helpers by creating a HEAD file and "refs/"
-directory. This has resulted in some scenarios where git-clone(1) now
-prints the default branch name advice message where it previously did
-not.
+The `repo_default_branch_name()` invoked through `guess_remote_head()`
+is configured to always display the default branch advice message.
 
-A side-effect of the HEAD file already existing, is that computation of
-the default branch name is handled later in execution. This matters
-because prior to 97abaab5f6 (refs: drop `git_default_branch_name()`,
-2024-05-17), the default branch value would be computed during its first
-execution and cached. Subsequent invocations would simply return the
-cached value. Since the next `git_default_branch_name()` call site,
-which is invoked through `guess_remote_head()`, is not configured to
-suppress the advice message, computing the default branch name results
-in the advice message being printed.
-
-Configure `guess_remote_head()` to suppress the advice message,
-restoring the previous behavior.
+Adapt `guess_remote_head()` to accept flags and convert the `all`
+parameter to a flag. Add the `REMOTE_GUESS_HEAD_QUIET` flag to to enable
+suppression of advice messages. Call sites are updated accordingly.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/clone.c         |  3 ++-
- t/t5607-clone-bundle.sh | 12 ++++++++++++
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ builtin/fetch.c  |  2 +-
+ builtin/remote.c |  2 +-
+ remote.c         | 10 ++++++----
+ remote.h         | 11 +++++++----
+ 4 files changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index f14229abf4..a4008715ec 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1523,7 +1523,8 @@ int cmd_clone(int argc,
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 95fd0018b9..763314bfcb 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1638,7 +1638,7 @@ static int set_head(const struct ref *remote_refs, struct remote *remote)
+ 
+ 	get_fetch_map(remote_refs, &refspec, &fetch_map_tail, 0);
+ 	matches = guess_remote_head(find_ref_by_name(remote_refs, "HEAD"),
+-				    fetch_map, 1);
++				    fetch_map, REMOTE_GUESS_HEAD_ALL);
+ 	for (ref = matches; ref; ref = ref->next) {
+ 		string_list_append(&heads, strip_refshead(ref->name));
  	}
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 1b7aad8838..d2aeb5ba1f 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -511,7 +511,7 @@ static int get_head_names(const struct ref *remote_refs, struct ref_states *stat
  
- 	remote_head = find_ref_by_name(refs, "HEAD");
--	remote_head_points_at = guess_remote_head(remote_head, mapped_refs, 0);
-+	remote_head_points_at = guess_remote_head(remote_head, mapped_refs,
-+						  REMOTE_GUESS_HEAD_QUIET);
+ 	get_fetch_map(remote_refs, &refspec, &fetch_map_tail, 0);
+ 	matches = guess_remote_head(find_ref_by_name(remote_refs, "HEAD"),
+-				    fetch_map, 1);
++				    fetch_map, REMOTE_GUESS_HEAD_ALL);
+ 	for (ref = matches; ref; ref = ref->next)
+ 		string_list_append(&states->heads, abbrev_branch(ref->name));
  
- 	if (option_branch) {
- 		our_head_points_at = find_remote_branch(mapped_refs, option_branch);
-diff --git a/t/t5607-clone-bundle.sh b/t/t5607-clone-bundle.sh
-index 82e3621ec5..f526bb1c69 100755
---- a/t/t5607-clone-bundle.sh
-+++ b/t/t5607-clone-bundle.sh
-@@ -211,4 +211,16 @@ test_expect_success 'git bundle v3 rejects unknown capabilities' '
- 	test_grep "unknown capability .unknown=silly." output
- '
+diff --git a/remote.c b/remote.c
+index e609cf5c56..1db88beaf3 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2297,7 +2297,7 @@ struct ref *get_local_heads(void)
  
-+test_expect_success 'cloning bundle suppresses default branch name advice' '
-+	test_when_finished "rm -rf bundle-repo clone-repo" &&
+ struct ref *guess_remote_head(const struct ref *head,
+ 			      const struct ref *refs,
+-			      int all)
++			      unsigned flags)
+ {
+ 	const struct ref *r;
+ 	struct ref *list = NULL;
+@@ -2315,8 +2315,10 @@ struct ref *guess_remote_head(const struct ref *head,
+ 		return copy_ref(find_ref_by_name(refs, head->symref));
+ 
+ 	/* If a remote branch exists with the default branch name, let's use it. */
+-	if (!all) {
+-		char *default_branch = repo_default_branch_name(the_repository, 0);
++	if (!(flags & REMOTE_GUESS_HEAD_ALL)) {
++		char *default_branch =
++			repo_default_branch_name(the_repository,
++						 flags & REMOTE_GUESS_HEAD_QUIET);
+ 		char *ref = xstrfmt("refs/heads/%s", default_branch);
+ 
+ 		r = find_ref_by_name(refs, ref);
+@@ -2339,7 +2341,7 @@ struct ref *guess_remote_head(const struct ref *head,
+ 		    oideq(&r->old_oid, &head->old_oid)) {
+ 			*tail = copy_ref(r);
+ 			tail = &((*tail)->next);
+-			if (!all)
++			if (!(flags & REMOTE_GUESS_HEAD_ALL))
+ 				break;
+ 		}
+ 	}
+diff --git a/remote.h b/remote.h
+index 6be5031f64..7e4943ae3a 100644
+--- a/remote.h
++++ b/remote.h
+@@ -387,15 +387,18 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 			 int show_divergence_advice);
+ 
+ struct ref *get_local_heads(void);
 +
-+	git init bundle-repo &&
-+	git -C bundle-repo commit --allow-empty -m init &&
-+	git -C bundle-repo bundle create repo.bundle --all &&
-+	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-+		git clone bundle-repo/repo.bundle clone-repo 2>err &&
-+
-+	test_grep ! "hint: " err
-+'
-+
- test_done
+ /*
+  * Find refs from a list which are likely to be pointed to by the given HEAD
+- * ref. If 'all' is false, returns the most likely ref; otherwise, returns a
+- * list of all candidate refs. If no match is found (or 'head' is NULL),
+- * returns NULL. All returns are newly allocated and should be freed.
++ * ref. If REMOTE_GUESS_HEAD_ALL is set, return a list of all candidate refs;
++ * otherwise, return the most likely ref. If no match is found (or 'head' is
++ * NULL), returns NULL. All returns are newly allocated and should be freed.
+  */
++#define REMOTE_GUESS_HEAD_ALL	(1 << 0)
++#define REMOTE_GUESS_HEAD_QUIET (1 << 1)
+ struct ref *guess_remote_head(const struct ref *head,
+ 			      const struct ref *refs,
+-			      int all);
++			      unsigned flags);
+ 
+ /* Return refs which no longer exist on remote */
+ struct ref *get_stale_heads(struct refspec *rs, struct ref *fetch_map);
 -- 
 2.49.0
 
