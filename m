@@ -1,55 +1,55 @@
-Received: from mail-oo1-f74.google.com (mail-oo1-f74.google.com [209.85.161.74])
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B7223312D
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 22:14:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1C622FF4D
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 22:14:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742595263; cv=none; b=SQkwHuoDFRjqCMjddWD4cET3fY1IXmvMfts5e1eQ33gdqNzndNNNu9y4zaI3J0olgxAT/DRmpeiI1D6sYwfaY/e987PvKDwxaYznlYywjrSQltKsOi0tStfAJliuyskQO1kauuo04AbK+8Uq8cvOexlTP6il4ZZ/BjfOr29IRR4=
+	t=1742595265; cv=none; b=d2NS0iGEGWNeKwNkiFoaAg1G/B5D5k1EDhb3aEIbJFnYGlXgkoCdq61N7pf/r6ZAEriBzjdnHZRPFhDS+mav6Ea5YziFyxZYRSz2C34opxXDwhAUFcltMUAl71iHffb8zx1R7FdzPz/w5+pykeV/wIjtHvfoEJGvy8jtQORbw78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742595263; c=relaxed/simple;
-	bh=ETecl+UdDj1OOsvYoQNIAWQidEPB5s3z94BMhToIy8A=;
+	s=arc-20240116; t=1742595265; c=relaxed/simple;
+	bh=SXQxqvcl51eQdBFx6XgZhjdKY+isdFKWWwkPxXhmGZI=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=ZlcD/TOOu6DqIDJ7yXqAc6PHMxzRvbYf+kjJozvyf8u9NCeHlFH5b5O044ogVld0DO9TPNbjVqUcjgs8rM7jPxe9R4+y5zX+HuS+DCbhsdARgw0vp3GMFlL/3R0gAsFKjweOuxkKwEpSfOL/911XZRqR7TaKarIDpTI+oYhK154=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Oe9pnLCj; arc=none smtp.client-ip=209.85.161.74
+	 To:Cc:Content-Type; b=FwXNoNOCXgIMKH2Loh5a4pjKHNxViBOg+Uqs5hXLrYyMW1onkqtHESgJoQDTwFPBmPJXoBPhTuNquidwNQJsPot9oUCLaeycsacHPb0gh/akgkeSsBEWV2YZtCwv91c3azHwi36W5FUc6vae+6hMRaoeoEGlEPRcqk2vrT3cyEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=gcGRJOSN; arc=none smtp.client-ip=209.85.216.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Oe9pnLCj"
-Received: by mail-oo1-f74.google.com with SMTP id 006d021491bc7-601e231e8d2so1484108eaf.3
-        for <git@vger.kernel.org>; Fri, 21 Mar 2025 15:14:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gcGRJOSN"
+Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-2ff69646218so6080290a91.3
+        for <git@vger.kernel.org>; Fri, 21 Mar 2025 15:14:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1742595260; x=1743200060; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1742595262; x=1743200062; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TsLjmM+cZHdukY3VI/Tt/97n2gAmHQgX0ISkWP9p+u0=;
-        b=Oe9pnLCj5h2Pf95ga9uNqdOak6HNZM1zZkkZv1Jh4eFnP9XXPHj9qTlS0JaUr5ZnmL
-         3FmTXDn7HF6d1Y7v34WBmKja0/iGb98Yrcgc5Fw33eeUKzSUWVL3JbM/QF40deD1Ebw3
-         hz9gO9R6OqdaDBRgVOO1IefOzVTM7CQvNrSjy12j9Mc8vbNDZZHg9BLy/Zxx7qYHCpbJ
-         A8p/4AcljgXFKUN8g9wwsjFWAljuRXw+ZWqVdTPS+O4PPL/QnbP1tGHRyV+oCeDngpv5
-         2egIx0pEcocTMb8jgX74Xdeem3DLS54WwYI64sg3PgcKGAvaJon5PzKNQ3TRw/T35p+K
-         0h0A==
+        bh=gvj0h43I4xmzFi92yvvKoyUcHm2ce3WpkFuhpwJQti4=;
+        b=gcGRJOSNh8aBdTMpXJoH7gPy9grNmUacg4PDAAuXvbOD0a2SVMTDNTMLHfmF0QumWi
+         o+r2atCBcq2oydWmqROEohBKqf5zI0M2Fr2j56cVl90eKuAPq4JMmzndXcYG7FHr1HN+
+         3AbntDyiSoB/QU8ip+XOp87WEp0pHTxo432qdh+vHV4d0TsG3SOUlHE6MCh/HCItRb4b
+         fcXwPBbrNYBz6p3ylhPSH4e03LfLZrhwO4hj0qKuGW2V6TYO3rdgZa3mtFvMxB3Pr/Qq
+         HhPibFrZqxgcC/YmF2o+VMtiEqtaWrTIgSVc3ph8VmQuEuXHcqd1QyA8eAQB+441xsML
+         Togw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742595260; x=1743200060;
+        d=1e100.net; s=20230601; t=1742595262; x=1743200062;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TsLjmM+cZHdukY3VI/Tt/97n2gAmHQgX0ISkWP9p+u0=;
-        b=HZtdlEyQwoFUdwVABKvQDAVsDrVvSS0elEiWXHl/I0VH/9iaNJEyze5mu05l7plQ6N
-         /ZEyVKy3PpR9XNoliRTU71n/k7rBiVzUbdYUYHqDLbL+Vnp+XjRVgUHMB7fyxesUVawD
-         x1QvL39TiiIMli1mebCwaz7lWN0qVH62qC6q9wDaVOfHqzk2siBirDyq+mZ2CwtenLJB
-         89Xvv0/r672021+7TEujL9o72E3afyT3vQr3tWhw3rnvgyKnV7eXCGaFRWhM4r+lFhzV
-         igWi58sE/4cwZmooiWA1oCI6zNWhCawns5uck5ZT78DdWR3yWyOV0dvCAr+vYcdy5/pe
-         aDRA==
-X-Gm-Message-State: AOJu0Yxw7MAvssa0h2L/nF5Ww9ofz7i0PQCih9RzkhARhaWd+OiRgyM4
-	73r2bHGQlRYVmVA0E/fmRHelr/chC2xi68Z1KndVZsL7+/EYcRcqyWLMLQOuxXiNmGSH/T4I7We
-	M5OrvQaGm4X6m/DAiXT+alU7zLauTFVSFw3J+EdJ8hPug5UjnNLKR12OOUJ5Ig88AsxwbfTxahF
-	lebZYMiu98t5wO1egIeel3C9l73SSSiI6k1fEnPkY=
-X-Google-Smtp-Source: AGHT+IG61Gh3dVaQ8m8E+VJ1cbKzNFAo/sJPloLl5SAzhNvbvMvlJDBuL2H7YmDpEAImrZyK7G/+7sFFyBZUtA==
-X-Received: from oacpy22.prod.google.com ([2002:a05:6871:e416:b0:2bc:6860:2684])
+        bh=gvj0h43I4xmzFi92yvvKoyUcHm2ce3WpkFuhpwJQti4=;
+        b=CEZ6e6QG2GNIyctyIBK0MrKajoJ02ZaUvGjx7v4Kt6+673vZ5oetyIvjTzn+VG6z42
+         DDLUonsbVD8vBXsrgfReB4wbqN/AnFgFr9GEtHil9lJG0FYoDA/mgbgzIAy8poFBi6Pe
+         aFVHDxuxGuSeU9vLVrEGebAvPDVWVjyWS+1x/qLnGezmVbBpwfmj/8lBCAZtf8ffmQtG
+         ShcSOJC778Ib31FVorBiOdsaO/8EvKIFOycUJq10gclAeJuewnfQngX46GiIj4zuhJXP
+         shB6v26nXSwbRY4tmdhFbb+EXAs7nPZ79Lb3Jz6jOsTQveUMJOh83r8lkHZLJldLHkjG
+         3xzg==
+X-Gm-Message-State: AOJu0Yy8cJOyrFl+ayCK+g18hAFir1WDeSvRAv/WBf1poZ+Re89FKIqo
+	wYYPKJp2pf/CAIo3Qq+4Lo0UsCjERoFoGt7MfLxiwXNmBEUj5qiqKr2kD++jA4Brut2QQIn7dvH
+	thqH5Ie1YgLWvcYj41eYJxwhILskXmjHJuv+LenIYXZh6tHoO3xVoBULy7FOC6BLgWKEXn4pcK1
+	Uy4O/8veGt/oQc1AJ03pPveoadGOxM3FLc0oRKNVM=
+X-Google-Smtp-Source: AGHT+IGL8drlTa6gcqMcEhzh8GZdYLkcgUij7x3D9GtZeaBH2wQFAUjKQPqm8wsNlahj24J+H3CwYpLv6m7Gvw==
+X-Received: from pjg8.prod.google.com ([2002:a17:90b:3f48:b0:2e9:38ea:ca0f])
  (user=steadmon job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6871:a58f:b0:2bc:8c86:ea31 with SMTP id 586e51a60fabf-2c7802fff9emr3108785fac.20.1742595260197;
- Fri, 21 Mar 2025 15:14:20 -0700 (PDT)
-Date: Fri, 21 Mar 2025 15:14:09 -0700
+ 2002:a17:90b:4c4a:b0:2f4:4003:f3ea with SMTP id 98e67ed59e1d1-3030ff21efdmr8762900a91.33.1742595262043;
+ Fri, 21 Mar 2025 15:14:22 -0700 (PDT)
+Date: Fri, 21 Mar 2025 15:14:10 -0700
 In-Reply-To: <cover.1742594960.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,39 +59,81 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1742339107.git.josh@steadmon.net> <cover.1742594960.git.steadmon@google.com>
 X-Mailer: git-send-email 2.49.0.395.g12beb8f557-goog
-Message-ID: <a34e23a83d66feafcd8245419ee3f6681f4c93f3.1742594960.git.steadmon@google.com>
-Subject: [PATCH v2 3/5] libgit-sys: parallelize build with Cargo's jobserver
+Message-ID: <390695ac1f929727478e6c8c26f5c69b9a6c068a.1742594960.git.steadmon@google.com>
+Subject: [PATCH v2 4/5] libgit-sys: exclude unnecessary directories in git-src
 From: Josh Steadmon <steadmon@google.com>
 To: git@vger.kernel.org
 Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
 	Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Cargo provides GNU Make flags that can be used to connect to its jobserver for
-managing parallel builds. They are not automatically passed to any `make`
-invocations, so let's add that to our build.rs script.
+We can avoid copying tens of megabytes of unnecessary source files by excluding
+a few directories which are not needed to compile libgitpub.a. This helps us
+stay below crates.io's 10 MB size limit.
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- contrib/libgit-sys/build.rs | 2 ++
- 1 file changed, 2 insertions(+)
+ Makefile                      |  2 +-
+ contrib/libgit-sys/Cargo.toml | 12 ++++++++++++
+ contrib/libgit-sys/build.rs   |  3 +++
+ 3 files changed, 16 insertions(+), 1 deletion(-)
 
+diff --git a/Makefile b/Makefile
+index 91677448ba..1574fc76e2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3500,13 +3500,13 @@ coccicheck-pending: $(COCCICHECK_PATCHES_PENDING_INTREE)
+ 
+ # "Sub"-Makefiles, not really because they can't be run stand-alone,
+ # only there to contain directory-specific rules and variables
++ifndef NO_GITWEB
+ ## gitweb/Makefile inclusion:
+ MAK_DIR_GITWEB = gitweb/
+ include gitweb/Makefile
+ 
+ .PHONY: gitweb
+ gitweb: $(MAK_DIR_GITWEB_ALL)
+-ifndef NO_GITWEB
+ all:: gitweb
+ endif
+ 
+diff --git a/contrib/libgit-sys/Cargo.toml b/contrib/libgit-sys/Cargo.toml
+index e0623022c3..1c1efb6211 100644
+--- a/contrib/libgit-sys/Cargo.toml
++++ b/contrib/libgit-sys/Cargo.toml
+@@ -7,6 +7,18 @@ links = "gitpub"
+ rust-version = "1.63" # TODO: Once we hit 1.84 or newer, we may want to remove Cargo.lock from
+                       # version control. See https://lore.kernel.org/git/Z47jgK-oMjFRSslr@tapette.crustytoothpaste.net/
+ description = "Native bindings to a portion of libgit"
++exclude = [
++  "git-src/.github",
++  "git-src/Documentation",
++  "git-src/ci",
++  "git-src/git-gui",
++  "git-src/gitk-git",
++  "git-src/gitweb",
++  "git-src/oss-fuzz",
++  "git-src/perl",
++  "git-src/po",
++  "git-src/t"
++]
+ 
+ [lib]
+ path = "src/lib.rs"
 diff --git a/contrib/libgit-sys/build.rs b/contrib/libgit-sys/build.rs
-index 19407663f5..1237c9a37f 100644
+index 1237c9a37f..7e1244fcd5 100644
 --- a/contrib/libgit-sys/build.rs
 +++ b/contrib/libgit-sys/build.rs
-@@ -8,9 +8,11 @@ pub fn main() -> std::io::Result<()> {
-     let crate_root = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap());
-     let git_root = crate_root.join("git-src");
-     let dst = PathBuf::from(env::var_os("OUT_DIR").unwrap());
-+    let makeflags = env::var_os("CARGO_MAKEFLAGS").unwrap();
- 
-     let make_output = make_cmd::gnu_make()
-         .env("DEVELOPER", "1")
-+        .env("MAKEFLAGS", &makeflags)
-         .env_remove("PROFILE")
+@@ -17,6 +17,9 @@ pub fn main() -> std::io::Result<()> {
          .current_dir(git_root.clone())
          .args([
+             &format!("CARGO_OUT_DIR={}", dst.display()),
++            "NO_GITWEB=YesPlease",
++            "NO_PERL=YesPlease",
++            "NO_TCLTK=YesPlease",
+             "INCLUDE_LIBGIT_RS=YesPlease",
+             &format!("{}/contrib/libgitpub/libgitpub.a", dst.display()),
+         ])
 -- 
 2.49.0.395.g12beb8f557-goog
 
