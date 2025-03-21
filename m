@@ -1,104 +1,135 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650E51E8348
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 19:50:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B7B22FF32
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 20:07:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742586602; cv=none; b=d2r6GyxGFEs5EqEp3/aibfvBo1DGghUwt5LB9r7EwWJmCB8uEmQ8RJmP+xsiuaQeKaqNU0093MfqqRfNMhbSUDrCPGKM+bSswpDUWuUkTeE8rqaFD8mvM1+fmXpUqgQ2aa6+pMdHrJJ0JI0/0srPN78ce/XMjSvDGyWtk2jx/M0=
+	t=1742587651; cv=none; b=aef2ifkqtqAwEBYkawmhEP8jzDqHh4i5uudSVr7xlk4G17A+yJW59YoG57CCOqGTi56g4tcmJxhjt1oaFzcIEPK4sc2NNJTHhCTwHBRJNKtTUg0ZHVFQVATaep5X5Hrg1qFm6vTBeINs3t8ZRuvECTK+e9H46eRzw/3WkNrDQ7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742586602; c=relaxed/simple;
-	bh=3aexS6ZmwoRsmLxOs3cDby8bPoIaZitvRvUC6+4MoEM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a0ecjbYkMt3nmQhpEpQzCbjnhdLdSS8DD6v7ReugDaEPVJ94FXtaRveUtWzgVZeZutSk4VyymuCNAQvwts69e4AHoeeR+z00AvFTXlzfOudjjM0NKh7CK+wADwrPkZgwlQYzMz/e+OwJjrTBi9VuyfLH1y0vpw5xOPF4f9jR6T0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OXjxjk20; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1742587651; c=relaxed/simple;
+	bh=vX/5zYeeyY0ZtNNLx7Q/DxN6CYPMREh0QqW6Ze+7fds=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GfhgSJJxhbwI6foq+5UYfCIRE4nC7g4Ud5dWeRmSixpVnlhS5rwOIMYUwNGnAFjbCNDiC3QOftKPThHM6WRWbHMQWhBBxvaL01EsRekg5zFoZofAsLEBZgKvtGLVFmpuQpZyjXrqrUgm+Td3hs+/DYApSNa2s90qmdy257m35FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=MATFD3En; arc=none smtp.client-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OXjxjk20"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2240aad70f2so50025ad.0
-        for <git@vger.kernel.org>; Fri, 21 Mar 2025 12:50:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1742586600; x=1743191400; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9E5uLEnx52oqd42L+X533EKOED3DsmJHU9cGU7sdD9c=;
-        b=OXjxjk204nFIMo0qolhpD/uDDfp0RLIuBwfVa9RkK3ThR0n0HzGkkmuVlRtJQtUihg
-         PwqW8r5fsa/5tFHoOAY+E3QbNeckcDXiBLO6tKcGe348XyMxh1FxV79yBPOxFGFXaknF
-         EImgwjoCb5t7aVx4D9jHUOzV+JlioeZ7a9BdFIFK6DHdgAU1dNG+f96CDIj371AzZT9x
-         up7j8Z36DA21f9TWunftBi6MNmxs1A5WZUGCTBbNAf6OtbmLxwOVCaDkfn136BQdtHyR
-         Lh9MnjakYlYusCC033Hq32aydnw7/4ZjQ74W+Gy/vB2fKf9LCghKtRaKkpaUl4LjRIEW
-         k4SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742586600; x=1743191400;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9E5uLEnx52oqd42L+X533EKOED3DsmJHU9cGU7sdD9c=;
-        b=KbNXV9eoU67iPifzSsDVlNu18+l5mTFGbQUuSBUEaDqnPDz/Fzsyn7maimsZD6dn+W
-         o66oVPll9nXO37Zz5ADgpeFpxmhjCWzVSsfzapJRx6BxAC0CM4KcAs5nYfSMBCWl3gYi
-         bvA0ii2UPLsaVQ2SLnbK/IjVqvOlQpYjIVAh7D7cvCXtTk1gApfQzUjMu4XpljuDKCll
-         eux4TUhwKNiXlHFKDbQtoM2dkDJfDrX3y3ObhBq2p1Le/lDqF3AD7GrBJRbaA4DLWmeW
-         2gw4sYRRBKU+UqqP+VAACoadh0bG4lHtr/pcUMHKK12NF6WRxBTSezRF4AzI+TA57b7C
-         znAA==
-X-Gm-Message-State: AOJu0YxVSQiBQ7k2DxwPsjzTfek6Mk9gx1qk0F2vCzMvQFez+en1mWvM
-	vXjTY1xqbX5XLuf4Rp/ZEHoIzFThezoo5VBXD1BjCr2bzxShORfS7Iiv55T4+w==
-X-Gm-Gg: ASbGncvcsdKkYUkOm/ZgjDIsgnsPqghqVcKBCsvWwIfhfZptdPmJAF8DfR6tMYwpLzc
-	VgMVnBGHqwxEvqGgqYM5ssnp51OOvFIeLvL0MtzEdyg+D7uIo/5mZ0OKkryGq+YCHqU9IfWTu28
-	N1mvAesDmnveerl5lWRwHi3HB0C2F/waJYx86C7fM82eRouW8le667Gy/r9aMuanorgYiWCVx9D
-	626SoEFEVrcsTx9x9aFAgddEb39F+yGH5WyfN+q4Jz4p5Nks4XDDFc5O6K9N74UtpzNJqdJP7qy
-	JZTcFeunXinGa6f8s37juP3BuqMdiJhTDsoz0XNOsBk=
-X-Google-Smtp-Source: AGHT+IG+i0Rzz04Y6XZG9O6PBryZuNUtkcbfpcczEVBYjLjum7v2DbMWbkbwLX4GovquefBk3ZvXBQ==
-X-Received: by 2002:a17:902:f607:b0:217:8612:b690 with SMTP id d9443c01a7336-227982a7b83mr522255ad.8.1742586600291;
-        Fri, 21 Mar 2025 12:50:00 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:f0dc:20d3:8aea:87e1])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-227811dd182sm21423045ad.196.2025.03.21.12.49.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Mar 2025 12:49:59 -0700 (PDT)
-Date: Fri, 21 Mar 2025 12:49:54 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [RFC PATCH v1 2/4] libgit-sys: add symlink to git repo root and
- clean after build
-Message-ID: <fyl4ogjine7tclhrdklwqv5hnd572ba6tmpecws7qt4hexhtoy@h77drm7odksx>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	phillip.wood@dunelm.org.uk, git@vger.kernel.org, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-References: <cover.1742339107.git.josh@steadmon.net>
- <d592a3c2e3f56aa4f6915a07307a2ed349296272.1742339107.git.josh@steadmon.net>
- <uu4s2acl4lwhj2rycojebnkygwqvdhge7iwh6uaedsmvkphchz@vg75gxitvqvn>
- <03110f30-54e8-49c4-86bc-f4c0f5641f41@gmail.com>
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="MATFD3En"
+Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
+	by fortymile.utu.fi  with ESMTPS id 52LK7H70012032-52LK7H72012032
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 22:07:20 +0200
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.93)
+	(envelope-from <taahol@utu.fi>)
+	id 1tvieD-0065HO-4c
+	for git@vger.kernel.org; Fri, 21 Mar 2025 22:07:17 +0200
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.39; Fri, 21 Mar
+ 2025 22:07:16 +0200
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id 08e4da9b;
+	Fri, 21 Mar 2025 20:07:16 +0000 (UTC)
+From: Tuomas Ahola <taahol@utu.fi>
+To: <git@vger.kernel.org>
+CC: Tuomas Ahola <taahol@utu.fi>
+Subject: [PATCH] bulk-checkin: fix sign compare warnings
+Date: Fri, 21 Mar 2025 22:07:15 +0200
+Message-ID: <20250321200715.3338-1-taahol@utu.fi>
+X-Mailer: git-send-email 2.30.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <03110f30-54e8-49c4-86bc-f4c0f5641f41@gmail.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-14.utu.fi (130.232.247.54) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lWFxYWFhYWFBeUVxfSFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZbWEhQSFhIWEhZSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWA==
+X-FEAS-Client-IP: 130.232.207.30
+X-FE-Last-Public-Client-IP: 130.232.207.30
+X-FE-Policy-ID: 3:5:2:SYSTEM
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=from:to:cc:subject:date:message-id:mime-version:content-type;
+ bh=NhHdgG/6GTKx4hZnkZZiGVAZdsQvleqNhXQDLPT8fkk=;
+ b=MATFD3EnFWPgjO9YFbRB6gAvRb+AkKXs6lvzB/OCtxNX6PXL6f+NyfzWbvkaBcGKl7LRR/pz+ciB
+	rBQREAgzpevHzhhJHfOZma4na830dgLkgJCaae6TKODCn1tdchKHkJYEDYvXcx85gstiS3OHiMKh
+	e6HRoKpK6dE8/knIaHxbtymuAIn+quqqpS2BwzEsflgI2waNFSXwlRLWMI/L9Pu0V562rJvjPocq
+	xFWazFeAJqPIGL7xMzSA9VFguJsYa4mggrtynO/qjgm/JnFFbbWsVGt51CcFoUurEzmhhAnSoo1L
+	N2JLIWOcf/xTueChSqvuFgnuSMsNyUMbFSdCcg==
 
-On 2025.03.20 11:10, Phillip Wood wrote:
-> Hi Josh
-> 
-> On 19/03/2025 22:23, Josh Steadmon wrote:
-> > On 2025.03.18 16:24, Josh Steadmon wrote:
-> > 
-> > I'm currently working on an alternate solution where we build the object
-> > files in Cargo's working directory, rather than in the source tree. This
-> > will (mostly) avoid the need to clean after the build. I hope to send a
-> > v2 with this change in the next few days.
-> 
-> Meson has builtin support for out-of-tree builds which would make building
-> in Cargo's OUT_DIR trivial. Our meson build is still experimental though so
-> you may not want to rely on it.
-> 
-> Best Wishes
-> 
-> Phillip
+In file bulk-checkin.c, three warnings are emitted by
+"-Wsign-compare", two of which are caused by trivial loop iterator
+type mismatches.  The third one is also an uncomplicated case for
+which a simple cast is a sufficient remedy.
 
-Thanks for the pointer! I have a working Makefile solution which I'll be
-sending out soon, but I'll keep meson in mind as a backup if the list
-doesn't like my V2.
+Fix issues accordingly, and enable sign compare warnings for the file.
+
+Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+---
+ bulk-checkin.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
+
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 20f2da67b9..0133427132 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -3,7 +3,6 @@
+  */
+ 
+ #define USE_THE_REPOSITORY_VARIABLE
+-#define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "git-compat-util.h"
+ #include "bulk-checkin.h"
+@@ -56,7 +55,6 @@ static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
+ {
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+ 	struct strbuf packname = STRBUF_INIT;
+-	int i;
+ 
+ 	if (!state->f)
+ 		return;
+@@ -82,7 +80,7 @@ static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
+ 	finish_tmp_packfile(&packname, state->pack_tmp_name,
+ 			    state->written, state->nr_written,
+ 			    &state->pack_idx_opts, hash);
+-	for (i = 0; i < state->nr_written; i++)
++	for (uint32_t i = 0; i < state->nr_written; i++)
+ 		free(state->written[i]);
+ 
+ clear_exit:
+@@ -131,14 +129,12 @@ static void flush_batch_fsync(void)
+ 
+ static int already_written(struct bulk_checkin_packfile *state, struct object_id *oid)
+ {
+-	int i;
+-
+ 	/* The object may already exist in the repository */
+ 	if (repo_has_object_file(the_repository, oid))
+ 		return 1;
+ 
+ 	/* Might want to keep the list sorted */
+-	for (i = 0; i < state->nr_written; i++)
++	for (uint32_t i = 0; i < state->nr_written; i++)
+ 		if (oideq(&state->written[i]->oid, oid))
+ 			return 1;
+ 
+@@ -192,7 +188,7 @@ static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
+ 			offset += rsize;
+ 			if (*already_hashed_to < offset) {
+ 				size_t hsize = offset - *already_hashed_to;
+-				if (rsize < hsize)
++				if ((size_t)rsize < hsize)
+ 					hsize = rsize;
+ 				if (hsize)
+ 					git_hash_update(ctx, ibuf, hsize);
+
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+-- 
+2.30.2
+
