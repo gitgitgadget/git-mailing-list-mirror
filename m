@@ -1,61 +1,61 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E26F1E51F2
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 02:51:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA801E51F2
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 02:51:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742525509; cv=none; b=YEkhnLsD4szk99/MN89PvL7MhADRXBBpIlkZ6K5oE1NU9Phut5ai45yNkYZI+84QugDkEFc3RQ6vUECe+qFKKDH/lxLMbyCmIZnvuiXsG0u+QNZlCrlNL7W9EfMsH3y0H092IMvaccC3DqDlrzAO4QFhNcygwPWea3cj4248CIc=
+	t=1742525514; cv=none; b=HDYljOCx7imRG6W4pU5Q2AMQgcX3Fm0mpg8arioQTnM5T2fwkzx3VGsVEquagVj8/BpqTxO0EC6qrzGVQW5nJwxEIqCSuh7pao1p1Tpby1dwS95uz1JNXd7hgZAcRoDv++Jywcg9CiDevGIfRtsMvSzMm5izDZfRSTvvzQMPKJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742525509; c=relaxed/simple;
-	bh=bM0Zm6RTStjSTSF59a3MCw42siAvD+qhnzUbGNKV2WY=;
+	s=arc-20240116; t=1742525514; c=relaxed/simple;
+	bh=totuXfzUshR0g2AgFZjjJn9EkkByT7CsiuSsl90O84w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uPtRqVU+8wHpXQ/BCHkceo/UwYxlJ1078gAImmY9BCsCQnCZMR/qDI9CQcDspJZssB9JjLV/beKUQRndE2VAPN0+3BBtGFbBjq7DEiyTGizgu856B52c05waZeC0GAIbzbAljWtFtXEb2LJqaazU28XH9Q0A/A+3HCeS0HSrMhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XeZPRinV; arc=none smtp.client-ip=209.85.214.171
+	 MIME-Version; b=HYkaFGdfkUJnxCz6XvHYUMkFC1RJsUY592wksYlVX3ZcKnPyEmag9OL0m4Hd4kFrI58/So68ATygPThIKOXzWLni8h94AlNa9KWajqP/JKXrkOMJCRQi/x0aE7j5xXX1K1G0QH7Ox5hguSQDifxvHnPgY9x/b+2OW6HnnciJgtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LGvumA3A; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XeZPRinV"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-224191d92e4so29342685ad.3
-        for <git@vger.kernel.org>; Thu, 20 Mar 2025 19:51:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LGvumA3A"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-301918a4e3bso2799013a91.3
+        for <git@vger.kernel.org>; Thu, 20 Mar 2025 19:51:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742525507; x=1743130307; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742525510; x=1743130310; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TQc3FkaZauuu56gmZYov9zFLU+0jjThD9LxM/amNd44=;
-        b=XeZPRinVlZxhI4CR6T79PA2EFPS22HBqEfvpb337h2/0PjgnzWlkSm3Wm9rOJN0hyv
-         zdcZXswpR7hu/Z1LPUekyg3IRR36yD3BvRdNGY0Zcao0i1nQtQgQPPquqww3bfwfhiPz
-         0JRQ9ZJFXjgd4cP1RvFP3bOfbw9WsSKcy+fhwXQ3XJLuw7J83BSG+Hnnu+IyBCcIXKOI
-         i3+rMZ3AiOx1obrSCf0MIvbsWZp+LfuvbyU9DqdNFz1Xya8LqaUOpLfn+IAMH8cPSCQq
-         gIAEeYCzWhwpxR7wxV3AEU1C60I2hXs/DR8VM5ahbfyGZBgdP+AIqZX73Os6o5VOTCWU
-         A8Xw==
+        bh=7mOA1YZhOX2eTonvPGr8pvWi++Ajpg7zb3WxIat1feM=;
+        b=LGvumA3AluomAGsJi9Be89gL+Af8sE3JLQhr44Cjupwg2+TtKYnGW8yJ24iNuVSMfO
+         BeGEvGjB0N12y0GSjsKcnqNTjPLXzpcnpKgtWfDKYhMhRmJoxdDILfViYp99nX8MWOZi
+         dSSAql4mGwqsyORqlZK9eBDASYl+dE1iNu1yO2VyRIRarbdVl/qAEjeZJ/qmi7ZQ0gRL
+         I13JU+gErGIlJu5cxzqs+KaJFhGJ6Ihxtni7NZDJSwy03reiZ8bEEfyfL5ioLvIUrvQQ
+         7oU2EhHO63JngL/+iufuAZZYqeY5KRkB/Behzdw4u5r+eXYRfKuPyBozd6I/Sa2lUf++
+         /SHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742525507; x=1743130307;
+        d=1e100.net; s=20230601; t=1742525510; x=1743130310;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TQc3FkaZauuu56gmZYov9zFLU+0jjThD9LxM/amNd44=;
-        b=pfREOub+3xV4vM+/opgCDq84FFaGyAJeP0OKs+XmQyflzVutrc2qgsMLDUGD9LwOE9
-         MySJWiH6XG646flYwAkfg4oUWW4VR5nJZG6eZhSJkXwtHrcIvmbfkvXxE/lP7dUuc3oS
-         YKuBhZKr3afMJXJIeL4cd8c3wjT0+Ju3SCkEKPTBVK9kdWVTabP8quZw5Wn8mOBO+fJJ
-         OUS0NVpdWaicREzJbUKwsFweUlWEkPmcG2U/s/lzsE2jwu2WyULYv8HB7Z5Uc+cj2ahh
-         +TFgJFx0fREAPRwsdYNCL27qnHzjj91QObahk2sEV/4PLbmRFPWdof4KI6jnfmPIrCNC
-         p2EQ==
-X-Gm-Message-State: AOJu0Yz627+HeFN45Y2jniXw8MHAKFPI4RbkyY/oiqKQ8I0j8Ukt7/fc
-	oNpx9EcEPbrTaYFlqom2q6iWH7YRScYOFdo1Ug2IOv5Rjlg0HoJjnBuX6ubs/80=
-X-Gm-Gg: ASbGncsX66qwlEULTa536McS9Tk5BiMVT8/QbzhemTohHZPiBBQ52PygVQwatNUB7dp
-	ssrhM45XlR1WSeUjzqYgHyklEVOkkXshAgq1jdzrQV3yG5wkZOud/eMlY9f+QclpSvlD11EMJ0Z
-	TVXqj0g4kmquqEC6Kx9zqmcJ/vSisj05JnpnwZEw+fwnjJu0/4hThL8+EukuqCLUUih+Lk+JdB8
-	/mb3sP3grmdXW2u+lbn2pmhmcq9y+SXBORD1/iQKflOvx3Exl44pNHMHir2hM63EFeFkT8/faom
-	rVhvdxU/b/QHkq3EQE5CGv4R8xaI9/Bmylu1RDE8owG0z7nU6drT
-X-Google-Smtp-Source: AGHT+IEbww1d0E2piXL/d/v+J7enoVPmN6tXLPUPKPWlcjy9EUpBG+0D/kgdhPyKO/KdM70dAecS6g==
-X-Received: by 2002:a17:902:f64d:b0:21f:6a36:7bf3 with SMTP id d9443c01a7336-22780d8b817mr31201245ad.12.1742525507614;
-        Thu, 20 Mar 2025 19:51:47 -0700 (PDT)
+        bh=7mOA1YZhOX2eTonvPGr8pvWi++Ajpg7zb3WxIat1feM=;
+        b=HVo4z88f80eESVmDylQEd6ZxMBbfj0NN+MtiS+mBoWOOmoovvmNjm707Psg71Ahly1
+         up/EIcMA7eyL55IaJ3gPHikAqEuk88Wc+oKQE98wrEwzrP7BU3pZxrt6Hl78GwOImMOC
+         XMH5G5gatWuDzxIcY6T35ADqizxvV1I4PW1Uh/HQBO+9y4S11oVVAkEK1T/Cm+hVezkQ
+         o/eUrlg+NNSOMaqZnNOTlfBbNXyhG8fsB+bKutGBqR49cTgw9r3Dn2DMbHoe4Bl3Exa0
+         vatv4WrjxFICwvSfcOfKfLOdPJcUn6HUsLn5rwkf7QJdsYjhCleHRg3Fa06vAInqEMfS
+         /y4w==
+X-Gm-Message-State: AOJu0YwXd7294f2+V/2p3F5HGHjqVsKj0i7hoXApkjunyOkkFB/ZvqJY
+	jrce3dJk/l7A4+K78P+/WeIPzOeZCna0YcWZdKdg+vhUlLJ9z9d1UFrOG4JwPyc=
+X-Gm-Gg: ASbGnctN+VGWpwSho3mRhgInIf2uJbdjWvijIJQET/+agpBPJeBQmLK4b1ICjg29vy3
+	aIeMSZ9345x+ouRSJEAQihHS3jeGrUzzETxEenME8zpdjUJ8l+PBCQfYmv8H5m5HEMuPpKArLSZ
+	FEXL0W+rAXdJfzq2LLhr5+d1ekhmzpXotD4P2YBOZNBNksaPSibq/3ijIVnfNhJ/XQBalnYGrGj
+	kMJbaQNBbr2RnVrdZXzLld/O4H6CGWXCv9dffFpHw/j3sg4DQG6Kvv/4k8IBu0lThdqzHWDO7r5
+	zrj1Q7uhXFyIB1iivnaTwbby586wfDngi/9KWm6XTWD4YHai96p4
+X-Google-Smtp-Source: AGHT+IFpIfVI74xIFEnPg8tkGszBBauGlPaoFJprJMGWR48mVvdwCuVb4WMDollmDDWGKewLwiuz7w==
+X-Received: by 2002:a17:90b:2247:b0:2ff:64c3:3bd4 with SMTP id 98e67ed59e1d1-3030ff046fdmr2315102a91.31.1742525510511;
+        Thu, 20 Mar 2025 19:51:50 -0700 (PDT)
 Received: from localhost.localdomain ([39.184.61.67])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-227811bae9asm5591395ad.138.2025.03.20.19.51.44
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-227811bae9asm5591395ad.138.2025.03.20.19.51.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Mar 2025 19:51:47 -0700 (PDT)
+        Thu, 20 Mar 2025 19:51:50 -0700 (PDT)
 From: Zheng Yuting <05zyt30@gmail.com>
 X-Google-Original-From: Zheng Yuting <05ZYT30@gmail.com>
 To: git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc: 05zyt30@gmail.com,
 	meetsoni3017@gmail.com,
 	gitster@pobox.com,
 	Zheng Yuting <05ZYT30@gmail.com>
-Subject: [GSoC PATCH v6 1/2] send-email: capture errors in an eval {} block
-Date: Fri, 21 Mar 2025 10:51:27 +0800
-Message-ID: <20250321025128.68463-2-05ZYT30@gmail.com>
+Subject: [GSoC PATCH v6 2/2] send-email: finer-grained SMTP error handling
+Date: Fri, 21 Mar 2025 10:51:28 +0800
+Message-ID: <20250321025128.68463-3-05ZYT30@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250321025128.68463-1-05ZYT30@gmail.com>
 References: <20250319020221.2160371-1-05ZYT30@gmail.com>
@@ -78,83 +78,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Auth relied solely on return values without catching errors. This misjudges
-non-credential errors as auth failure without error info.
+Code captured errors but did not process them further.
+This treated all failures the same without distinguishing SMTP status.
 
-Patch wraps the entire auth process in an eval {} block to catch
-all exceptions, including non-credential errors. It adds a new $error var,
-uses 'or do' to prevent flow break, and returns $result ? 1 : 0. And merges
-if/else branches, integrates SASL and basic auth, with comments for
-future status code handling.
+Add a regex to extract status codes as defined in RFC 5321:
+
+- For 4yz (temporary errors), return 1 and allow retries.
+- For 5yz (permanent errors), return 0 as failure.
+- For unrecognized codes, treat as permanent errors.
+- If no error occurs, return the authentication result.
 
 Signed-off-by: Zheng Yuting <05ZYT30@gmail.com>
 ---
- git-send-email.perl | 45 ++++++++++++++++++++++++++-------------------
- 1 file changed, 26 insertions(+), 19 deletions(-)
+ git-send-email.perl | 27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
 diff --git a/git-send-email.perl b/git-send-email.perl
-index 798d59b84f..8feb43e9f7 100755
+index 8feb43e9f7..69ba328653 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -1419,7 +1419,7 @@ sub smtp_auth_maybe {
- 		die "invalid smtp auth: '${smtp_auth}'";
- 	}
-
--	# TODO: Authentication may fail not because credentials were
-+	# Authentication may fail not because credentials were
- 	# invalid but due to other reasons, in which we should not
- 	# reject credentials.
- 	$auth = Git::credential({
-@@ -1431,25 +1431,32 @@ sub smtp_auth_maybe {
- 		'password' => $smtp_authpass
- 	}, sub {
- 		my $cred = shift;
-+		my $result;
-+		my $error;
-+
-+		# catch all SMTP auth error in a unified eval block
-+		eval {
-+			if ($smtp_auth) {
-+				my $sasl = Authen::SASL->new(
-+					mechanism => $smtp_auth,
-+					callback => {
-+						user     => $cred->{'username'},
-+						pass     => $cred->{'password'},
-+						authname => $cred->{'username'},
-+					}
-+				);
-+				$result = $smtp->auth($sasl);
-+			} else {
-+				$result = $smtp->auth($cred->{'username'}, $cred->{'password'});
+@@ -1454,9 +1454,30 @@ sub smtp_auth_maybe {
+ 			$error = $@ || 'Unknown error';
+ 		};
+ 
+-		# NOTE: SMTP status code handling will be added in a subsequent commit
+-		return $result ? 1 : 0;
+-	}
++		# check if an error was captured
++		if ($error) {
++			# parse SMTP status code from error message in:
++			# https://www.rfc-editor.org/rfc/rfc5321.html
++			if ($error =~ /\b(\d{3})\b/) {
++				my $status_code = $1;
++				if ($status_code =~ /^4/) {
++					# 4yz: Transient Negative Completion reply
++					warn "SMTP temporary error (status code $status_code): $error";
++					return 1;
++				} elsif ($status_code =~ /^5/) {
++					# 5yz: Permanent Negative Completion reply
++					warn "SMTP permanent error (status code $status_code): $error";
++					return 0;
++				}
++				# if no recognized status code is found, treat as permanent error
++				warn "SMTP unknown error: $error";
++				return 0;
 +			}
-+			1; # ensure true value is returned if no exception is thrown
-+		} or do {
-+			$error = $@ || 'Unknown error';
-+		};
-
--		if ($smtp_auth) {
--			my $sasl = Authen::SASL->new(
--				mechanism => $smtp_auth,
--				callback => {
--					user => $cred->{'username'},
--					pass => $cred->{'password'},
--					authname => $cred->{'username'},
--				}
--			);
--
--			return !!$smtp->auth($sasl);
--		}
--
--		return !!$smtp->auth($cred->{'username'}, $cred->{'password'});
--	});
--
--	return $auth;
--}
-+		# NOTE: SMTP status code handling will be added in a subsequent commit
-+		return $result ? 1 : 0;
-+	}
-
++			return $result ? 1 : 0;
++		} else {
++			return $result ? 1 : 0;
++		}
++}
+ 
  sub ssl_verify_params {
  	eval {
---
+-- 
 2.48.1
+
