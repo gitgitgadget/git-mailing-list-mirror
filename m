@@ -1,110 +1,194 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE3286352
-	for <git@vger.kernel.org>; Thu, 20 Mar 2025 23:51:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03448C13B
+	for <git@vger.kernel.org>; Fri, 21 Mar 2025 00:57:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742514719; cv=none; b=QVdhzhfxFRhq7YPJCM9aZMPWHCMYuOzgHgEiRq28fXv4nd7U5y+4vYUF8lODgL7h6lwSiOvdkzdFyjOZ9cC23Z7eudr3Jk2Wu8AmKfrgNoQnlZP6e7EjkhcgTG+uaLGciwUY4Fp/Y/duLYx87Djbm06sqev9DmndtilGUT2NYDw=
+	t=1742518671; cv=none; b=dmoe8+nb2ljn32GIehhJhQQnC65sjp/8RV94cyUK2oWU5bgqpDrjm/b+RsIZSbGQ849KgLkYIQ0eHIZkD+bEjlIi/k+jEmH5geSWshnkNHLQx0Jr8DxrREaejugMCTgi31Gem9FMXgS8/cHXanpEcTJcUSQ9s30yUCqI7C6C53k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742514719; c=relaxed/simple;
-	bh=quilwg5iEofFvDhBvBZ7bl93AUMMvt6dqcOfgY/zB4w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ti2rJMrwYp83s1NhWT0wOEzBn2M0sI2rHO6OnB7BfewD1YsMXOkwCiYXkzBxEgyjce3loS0tUCJbwte74pEZeNDz2mRtBRidapX+dMvMltdITUqTtFgf9tXEfl7IIXGf1lWXOBwBdpMjoNGK64rqhLAwypbCTi89sFim0FqGch4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mOuuTTiD; arc=none smtp.client-ip=209.85.210.49
+	s=arc-20240116; t=1742518671; c=relaxed/simple;
+	bh=D/k+GqruaHy5uFMS7fnJcX7wskn7TUw+VT7dwvVi8as=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=t4rd85X8f5drUrdkDIu8UXTGmGqLfW7IEpb8AfMKi+D5Wc3ZRFAXkZcGQgyw0Y4lgXrcTmB/3Nj4KVpgvHhEMKBmmBItegUOGmxTBiW+1wu4f09pXUj1+sstokWJTpf5kSOiuodmJCoYG8nOsLPGfctOL8c5AjdJcMWXWG1+XYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cGR8K2aa; arc=none smtp.client-ip=209.85.160.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mOuuTTiD"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-72bbfb6f3c0so719504a34.2
-        for <git@vger.kernel.org>; Thu, 20 Mar 2025 16:51:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cGR8K2aa"
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-2c6ed7efb1dso766786fac.2
+        for <git@vger.kernel.org>; Thu, 20 Mar 2025 17:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742514716; x=1743119516; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pYr68NdXhxGMHYfQo8njiYKMvSnBBEcu9Z499gZ1eUQ=;
-        b=mOuuTTiDfxAJE1TAMdsHrazXhMRyaWwoF0lJdoU1fmH3H2wdCZuxQeN3DcI/XpM3or
-         koS7LlxRrxsS+Wm5lRLN3+CsfyerZLBA5MhhRvKaYiHv1+LKjDyZX23FD0qCYUYwIGP8
-         FLX6kRbhEmiAUd1U30F+Z1fDJab96hg9mXUvJrIDHFHhtL4RXjuImBureTHqiVMRE4mT
-         nPvSXl9VHOm9ybTJ77drkQGy0uR0wDw5lyMtUl1GjJ3WpS4XTWH//ZNLLIQPfwRvs1LR
-         mGT6XWelO+aPNvMaT5nOIIUPFi6EmabrjFSBbH2NEm7kTZrhjGVqLj9uMtKjwWgcM7tg
-         z0yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742514716; x=1743119516;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1742518666; x=1743123466; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pYr68NdXhxGMHYfQo8njiYKMvSnBBEcu9Z499gZ1eUQ=;
-        b=my2n+7c0ZBHjbjVgknevXe1Ph23gmkRKwPBsRJSPAgSirm01UZEfMLTuuu6PsEyVXZ
-         tT5OHQnxgU2bf0DipqHeacEaMN5B0pXjCKQ2CKXuXVjTXFr0k0CUcZcyq7HtCTF9Tc/d
-         H0VNL1u8bGyDfdznGPXep6j8iPvdhoE1XsT+YVbUEPrmme0yxYVR3kB6CpfYBqttMkXe
-         ahdEWUTh5zW4cLqq3VRXHEIZffY03YQSF4IjhFGXgRUpjV8eQKhadaDQS8s2BQTcx+GO
-         RLWXbukcWDn07RDjkB/nAZqE4EppnSa/BDeocRf6u2ys9mpfoiGyD5JtronQvxnLtZX3
-         ekvQ==
-X-Gm-Message-State: AOJu0YytqQs+vTg4bOvBP/LjdpX40D+PiZ68OlkArc7jc3xOdATi1NZJ
-	3Zkx2mKk7TumMcIofyjJ9HNJloDjsabgYYUqvh5k1YE0WvTKth5Q
-X-Gm-Gg: ASbGncuv9J7Y4pjincprOWx+y7UUPvi+9WDI9c21nNvZLBE3TFb2v1IPw+je6tSh688
-	tXwJ330W0jho9dAvTbGw4RGFlIHDTGw1oy6NRSGTzP0r02Xle87eSonvWU6fjW3VPckjrAWR7pW
-	bKkrWG7XsjgWwEBi6yzX31gubviPZcer+rbi+tu7JqRfTQTpxHwNUMepJHA2p+cfCIlowb0rKLd
-	q0/Z5jYNbeTJD1i2JRbzRx1gthYPWdxmP8J4wdKbwwheC8UINQlqyEl0xDGd4mEoPnLq2AFGfIW
-	g6nDwWaXbMsXpc/zWodYLHAXsKfbmz/L0A6XYw==
-X-Google-Smtp-Source: AGHT+IHSk5g79b0JfhOwbkNdVEyOHnxgZHnL/XLQZpSzJuMq9JskXK1aSN1pa9g4Qgd5cLIFoICX5A==
-X-Received: by 2002:a05:6830:490a:b0:72a:1821:aa9c with SMTP id 46e09a7af769-72c0ae6a168mr1072409a34.8.1742514716225;
-        Thu, 20 Mar 2025 16:51:56 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-72c0abb941esm161958a34.16.2025.03.20.16.51.55
+        bh=sJY16DkN46gMUmDLS6j/PKhieBu69FFxoI8wLStdmAM=;
+        b=cGR8K2aaXoUSi20MWVIH8Q+Z6VHLUxXfd09crYAcP8HomKuJgKLUl2ADXm8Va7aFwC
+         OBnvxJ7JmZkJ06wHLa4WRFYVqQSW1EMPRQFCr3RFjaNtQpu3OoUguWMV4A4bcsgC76dg
+         qnB3mudbn41uMv1gUrVLO3TDQuy4gm4PuX7ZjARCenpUUMd/GqpKKHoujfnmHBqaM4lK
+         3LM+jwrczaEkRUoccLp//N0je8+fxMHpEGlcKC8w2PgCrUEhXnCR4uaNHv4UhunoWIaA
+         SECv2INoNaDCsqocTcod7epxxvkRD8d6NDKBGKVJNHnsUHJO3Sz6Z4WZrngVLT6YatWp
+         1QQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742518666; x=1743123466;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sJY16DkN46gMUmDLS6j/PKhieBu69FFxoI8wLStdmAM=;
+        b=VrkDlXWn0lV7i7VdwWv7Ib40sdq4D3S4BEH8ZkrvZfhCPTUUKq/pDCUtoh8ta7d9sa
+         9ijIAZMJPWm3OmmQ13ZAZaEAA60Dl8E/XzgTttXEmamU6HdB9bCZzCVWPbRoz086WVzv
+         l7wdPSw7chk8yb9xLTjDZvhE2HLbUDwdMabv8UQkyayPG6HIDj3lc1R+Wv1uTS/RK0M7
+         sbQ0PWreZQ47SAz3iJGMenpzKgrUhYlAdscgheQAAj3E1rthrWcy5HT3Tz5natXj+jSE
+         TZhXymzQI1SVBWbK4lTuW32T1qCFNdeRzlfmE68xchZQZK8WoYNGEkoC0p+LXkIEfeGI
+         0fMg==
+X-Gm-Message-State: AOJu0YzJbi6/ulXPLlkVDOPcd6hNBqs4nkBVsspkn7wFtZwHm5nftuWj
+	RXX7XG/igo9T7xWZ0oRS9L+BZXDLoBKqC+GUGle6VsTi6iy+amYyTP1ixQ==
+X-Gm-Gg: ASbGncsEbwwVGTraKkvf6qfeor8ELl1OUpGpUJgndQM3y692InrLgxqsdeu+VrWH7Vt
+	0Y+zxoC6mrdxM/OPq0aoa2Nwv77udVF2DF24hiPrYFzRElRBcD/6R7HzsDyO9P39JG9KZmq8EMP
+	7Vo9PEpIIHg10Iu3zwT0wFWveToG1pZ1O8sF3uKY0PBMRTn0O+zeXpD7yCao8wgvB4Js3BrFX3B
+	+K/b9K2VApoivEU9j+vMXPJmu8hsNQtissii98x9s0lHyu0fOhJpixGqztJLV4INvlATl1dV1Nb
+	qrSR+XXxw/KoonLV59+6cwNM95HjrPOBUX9Iw7wvI6Qs6S2vcGG5
+X-Google-Smtp-Source: AGHT+IFm/NophmZBn2Mo9mLjoFfgZM1WDLOdcNXx6qQm7V7OPFTsRgD5MrSX9RxtnIh7ofvxtgzMjQ==
+X-Received: by 2002:a05:6870:cd83:b0:29e:2bbd:51ba with SMTP id 586e51a60fabf-2c780288fecmr1201227fac.9.1742518666353;
+        Thu, 20 Mar 2025 17:57:46 -0700 (PDT)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-72c0abcc17esm179875a34.34.2025.03.20.17.57.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Mar 2025 16:51:55 -0700 (PDT)
-Date: Thu, 20 Mar 2025 18:48:21 -0500
+        Thu, 20 Mar 2025 17:57:45 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH 0/2] clone: suppress unexpected advice message during
- clone
-Message-ID: <yyeid3njdsmws7rl3kcsxne52fuadd7q4emqdlvatwvcrnyl42@rfnk26mvcgoa>
-References: <fff634dh5qeb4rgjqn7cru7v4a2voj4us4thvwtttxjcdnu2bu@jvv3htcon2ul>
- <20250320014646.2899791-1-jltobler@gmail.com>
- <926210f4-a8ff-4ac2-8b7f-85cd5598d77b@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	likui@oschina.cn,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH] builtin/fetch: avoid aborting closed reference transaction
+Date: Thu, 20 Mar 2025 19:44:37 -0500
+Message-ID: <20250321004437.505461-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <g4baz2kt25ysb6wcesoqxhvw2ooxkmqio3dj6b44h6gt5l6z3r@rocsjlys5nqs>
+References: <g4baz2kt25ysb6wcesoqxhvw2ooxkmqio3dj6b44h6gt5l6z3r@rocsjlys5nqs>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <926210f4-a8ff-4ac2-8b7f-85cd5598d77b@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On 25/03/20 11:10AM, Phillip Wood wrote:
-> Hi Justin
-> 
-> On 20/03/2025 01:46, Justin Tobler wrote:
-> > 
-> > A side-effect of this change is that the location of the first
-> > `git_default_branch_name()` gets deferred to a later point of execution.
-> > This matters because `git_default_branch_name()` only computes the
-> > default branch name once and returns a cached value for subsequent
-> > invocations. After this change, the `git_default_branch_name()` call
-> > site that actually computes the value becomes `guess_remote_head()` and
-> > is configured to always show the advice message.
-> 
-> Isn't the fundamental cause of this bug that advise() ignores GIT_ADVICE?
-> I'm not really clear why "git --no-advice" only applies to advice that is
-> guarded by advice_enabled() when it is documented as disabling all advice
-> hints.
+As part of the reference transaction commit phase, the transaction is
+set to a closed state regardless of whether it was successful of not.
+Attempting to abort a closed transaction via `ref_transaction_abort()`
+results in a `BUG()`.
 
-From my point of view, this advice message should never be presented in
-this particular scenario regardless of the configuration as it doesn't
-make much sense here. This also happens to be the original behavior so I
-think we should probably return to that state.
+In c92abe71df (builtin/fetch: fix leaking transaction with `--atomic`,
+2024-08-22), logic to free a transaction after the commit phase is moved
+to the centralized exit path. In cases where the transaction commit
+failed, this results in a closed transaction being aborted and signaling
+a bug.
 
-I was also a bit suprised to see that not all advice messages respect
-the `--no-advice` option. I'm not sure if there is a reason for this, or if
-`advise_if_enabled()` just came later and not everything was converted.
+Free the transaction and set it to NULL when the commit fails. This
+allows the exit path to correctly handle the error without attempting to
+abort the transaction.
 
-In general though, other users of the default branch name advice message
-should probably follow the `--no-advice` option. I'll add another patch
-that does this in the next version.
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
 
-Thanks,
+Greetings,
+
+It has been reported[1] that executing git-fetch(1) using transactions
+can result in an unexpected bug message appearing in some scenarios
+where it previously did not. This issue can be reproduced with the
+following commands:
+
+        git init foo &&
+        git -C foo commit --allow-empty -m 1 &&
+        git clone --mirror foo bar &&
+        git -C foo commit --allow-empty -m 2 &&
+        touch bar/refs/heads/master.lock &&
+        git -C bar fetch --atomic origin master
+
+In this example, the reference updates for the fetch are done in a
+transaction. Since one of the references is already locked, the
+transaction is expected to fail, but an unexpected "BUG: refs.c:2435:
+abort called on a closed reference transaction" message also gets
+printed.
+
+This issue bisects to c92abe71df (builtin/fetch: fix leaking transaction
+with `--atomic`, 2024-08-22) which changes how transaction cleanup is
+handled to address a memory leak. This change starts relying on using
+`ref_transaction_abort()` to free the transaction when an error occurs
+during `ref_transaction_commit()`. This is problematic because
+`ref_transaction_commit()` always closes the transaction and
+`ref_transaction_abort()` cannot be invoked on a closed transaction.
+This explains why we start to see the `BUG()` message.
+
+This patch takes a simple approach to fix the issue by explicitly
+freeing the transaction and setting it to NULL if the commit phase
+fails.
+
+I've included a test that expects the reference transaction to fail when
+a reference is already locked. If the `BUG()` was still being printed
+the process would be aborted resulting in the test failing. This test
+unfortunately relies on the files backend to create the lock file. I
+would prefer to be reference backend agnostic, but am unsure of an easy
+way to exercise the issue.
+
 -Justin
+
+[1]: <e8789a03-41ea-42e2-9f2d-5124b849277a.likui@oschina.cn>
+
+---
+ builtin/fetch.c  |  9 ++++++++-
+ t/t5510-fetch.sh | 13 +++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 95fd0018b9..f2555731f4 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1867,8 +1867,15 @@ static int do_fetch(struct transport *transport,
+ 			goto cleanup;
+ 
+ 		retcode = ref_transaction_commit(transaction, &err);
+-		if (retcode)
++		if (retcode) {
++			/*
++			 * Explicitly handle transaction cleanup to avoid
++			 * aborting an already closed transaction.
++			 */
++			ref_transaction_free(transaction);
++			transaction = NULL;
+ 			goto cleanup;
++		}
+ 	}
+ 
+ 	commit_fetch_head(&fetch_head);
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 5f350facf5..690755d2a8 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -537,6 +537,19 @@ test_expect_success 'fetch --atomic --append appends to FETCH_HEAD' '
+ 	test_cmp expected atomic/.git/FETCH_HEAD
+ '
+ 
++test_expect_success REFFILES 'fetch --atomic fails transaction if reference locked' '
++	test_when_finished "rm -rf upstream repo" &&
++
++	git init upstream &&
++	git -C upstream commit --allow-empty -m 1 &&
++	git -C upstream switch -c foobar &&
++	git clone --mirror upstream repo &&
++	git -C upstream commit --allow-empty -m 2 &&
++	touch repo/refs/heads/foobar.lock &&
++
++	test_must_fail git -C repo fetch --atomic origin
++'
++
+ test_expect_success '--refmap="" ignores configured refspec' '
+ 	cd "$TRASH_DIRECTORY" &&
+ 	git clone "$D" remote-refs &&
+
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+-- 
+2.49.0
+
