@@ -1,113 +1,92 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693DD1632C7
-	for <git@vger.kernel.org>; Sat, 22 Mar 2025 13:43:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BCC2E3384
+	for <git@vger.kernel.org>; Sat, 22 Mar 2025 17:39:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742650994; cv=none; b=Lz5uE6qxoJQ73zwjN7GDCeeEMd7EHi5n2r/7sVWyaYVEBsUnsK7qkIMtVFjSo3WkfgQrIBi1mQ3BUhZb2+f/CBv/6uspGkHHlg7FoEWjTzpEymbAjpA+kLRX8N30kP15+JX/EXI3E56xHA47zGGUNz1OAn9dyWXY+m5nvwghqzQ=
+	t=1742665187; cv=none; b=KNYNZGEvKFB+QkgLlmpqhhkqQpUHA2OSxLvz5tdQ97+UzzJRHfcLW5N6fm9QI5o5MktF4L8nOtrA9IZpCZXq4Gtos7kWAZ/umZLWNmtPjUJ0WImF9jXBhw3KkFGe28DZI2WyzUIK6Yr79SZZLaNcaIP1uUuEVSql/nbPKrsRB4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742650994; c=relaxed/simple;
-	bh=+/P73Z9w6Lh++C1CePIn3qj558FW371bOthftowhWnM=;
+	s=arc-20240116; t=1742665187; c=relaxed/simple;
+	bh=P5meqyYuznEFhBKqI1ig7jPgNF7iOLYrjCmpYkNhHJ0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y25KPUQL1q3U4GE7pStau2bNeb/wh0EvEukTKgfdCjUxnQCcCBjBX9SjzlHVk8HVAKHH4a4mgpHcddewEy5uViXEH1VPSuYc63pKVKOJxOFNtHOqc+GjXaOtp26z0ReBAjShjkzeHK3W9SMizfP1T9q355zadR3lbz8nd/ufocM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MgorioU8; arc=none smtp.client-ip=209.85.218.43
+	 To:Cc:Content-Type; b=t4w9FOMk3f+7EdJRirVR8ttboqtxXTYIRhZiiRiAnbDsD3jZvmmJHMqvVKN4+wAEOrYkz0k7sCElvjircSlwdvOwdQAfkJaCD5APyBtwcgx62faqYQlfE7sk+dhsCOHY4Q5S50F8of/hT/o7l6DNryym55Iz9EZ7EMnkDTEaIxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TFEqhyHC; arc=none smtp.client-ip=209.85.166.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MgorioU8"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ac3b12e8518so637373666b.0
-        for <git@vger.kernel.org>; Sat, 22 Mar 2025 06:43:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TFEqhyHC"
+Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3d46693a5e9so27277815ab.3
+        for <git@vger.kernel.org>; Sat, 22 Mar 2025 10:39:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742650990; x=1743255790; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742665185; x=1743269985; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=re7MC/1u9pcGzLuTR/rL2ptWtrr4bf9zL3R10gtvyQ0=;
-        b=MgorioU8/SkJjPDZpYlMEdW7zKs0N+ANgmsslGtYY+NWJNxBQi7EsglM+kp84+vI7q
-         lJE0Eaa9HNZbj46OfZ0sR6Xy4AqKvIuDSi+XvjscwR+KBYLzhul74XY9XntmMchOymxa
-         QnKwOG+zOGJlIVEkfmZVOpJdYNxZNRRPpfU1xbeM46noj0lGpr6OGf9Ws4BsYjQJ9MKa
-         N6mFM5NXJSloRu9QpSevHYfFp2PX5siSDlApEkLKvgzhzquAyJ25sCqJSipHK70+EgD4
-         5rbGgjdWCG/cwJ8MCipcZU8yRX3WuIOYBrp3d5m1dXXnnDFoZkn1Jj+JCqfY5x1Nk1pJ
-         dKkA==
+        bh=P5meqyYuznEFhBKqI1ig7jPgNF7iOLYrjCmpYkNhHJ0=;
+        b=TFEqhyHCOvz2wq5o8Y8kJ8Pi9dIYSth4XjMtFoDfFyZ/67Q9Jm+w5fz2zr+WWD3r2G
+         MaSkrT+7g1pO/DLJ/btFErLnR/CpsuJg6auuKsQi4Klb0hjk9HKzPe6CspLoQNBoqklL
+         PWBSjYXDhbE/TWkVGq53vMhginb/UjRDVPdaFXsdv3KFy+DEyFESbJwBhCNGUc/YuAhW
+         NdiaPJ+1dPJPNFYubDTK6vvVrUG5fTfGJBOyGEDjXqnx6lcGIghhMT+QekIJTcP5kwv9
+         uxufu4aXMYT3AyUUftphz25O5Rnnji/T97CMGdjPiEN66O1L8YS07fpocPtgerOZbPl+
+         Kg1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742650990; x=1743255790;
+        d=1e100.net; s=20230601; t=1742665185; x=1743269985;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=re7MC/1u9pcGzLuTR/rL2ptWtrr4bf9zL3R10gtvyQ0=;
-        b=nIMS0egg1LTAvOzaxQ7SltuxnbEwSvyGIjMrM3UU6087B/oSqqT/l+G613sIReAwIi
-         LpM39jJ7LCEmv8tfxParueDJlokqJg2PMnJ61SHuEFDJFRoxpDSFNBMfbySmSKzsLq/A
-         LESJH3H03Cse6EiqnkDLzOLcupB41GbQSo24MitwQrsCGynqVWI9re1Jrw1aXMkddp8R
-         GPVOt7ZHJMi+XGbkQYinC0tV2QyUJhGG5skksViSI7G2mMsKJFte64syijbVEb2I2dBe
-         9S692rBXaokgp2/TyD0vj45gG9zZkRIhtKn7IuqzFN/Cie0CSgPQ9Ou1yrq0ELVjYQ73
-         QKvw==
-X-Forwarded-Encrypted: i=1; AJvYcCUvh007OczU3EHh3IDvMrOR5DASUBOkoIxjBdl/qq9yr7LaDlWufsxjj8u1FqbrohO6vz0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWtqoGtmvU7vqW+SBli9Hiwq0qhyAXa/G/K6sXHXi9hcOUF/mE
-	mVFNDQbNsZNZ2saMj2O2jMVyhXQMCeK6cs9c9gQdyLjhrr1Zy9kQybUnaXj6wnGq4B+8lYjFhoZ
-	RBUoecL8dky2Vq/MmPC6jxBxfMFs=
-X-Gm-Gg: ASbGncuGqJUFCh6UG+iYvgDlXB1D2biS8LZn2LzvCiF3xSx703KwB+wF6IvhcXImZYc
-	9lRtSE6ctNKu60L2KPeZzVIMJhxevBtj38shAlzwMlXAynF3U7OM0qG4DNnSJcr9Y1hzq6gNORW
-	PplKxAs1UiuvwQIp2f5E5jYZ/FMK3toCflRc7U
-X-Google-Smtp-Source: AGHT+IHdyhqo+mtwwexwIFzwk2+nCh4FGFmI0l8DkQY3LqjR5SeVagY0+8fVwtcD90Sd+1G1M1xQSjIuelaYPSuR0mw=
-X-Received: by 2002:a17:907:958a:b0:ab7:b30:42ed with SMTP id
- a640c23a62f3a-ac3f1de5aabmr740386066b.0.1742650990422; Sat, 22 Mar 2025
- 06:43:10 -0700 (PDT)
+        bh=P5meqyYuznEFhBKqI1ig7jPgNF7iOLYrjCmpYkNhHJ0=;
+        b=iIf0qqcrUpMZ9RsGRdpDKlhLen9k3UNqjkIXKPFBUg3dA3GQLhAOgeuoDSU8zJ1PDx
+         EPDXggx567fTUnBemvUEMpWxP1LnG8JDjb2TFyJgxBlIMo/NBwDE++viZnrKUXVngVm/
+         FIut8qdOVxALyrAv85yXwTzBZVOmuA22tNmgYbws2kfDlJRwOYD/AVDcS2SaGUW4H0Gl
+         vjvzCdL8uAsko+ofWJLG15Xux/06CVxfZQ2pZp795PY3GGa0kY52RyYhzk7epXApDX9x
+         A9u7F6IecHCdXMlZsnB5NnTXGfH6oPffhTdPN68aqLdAxWDt4h87WL4d67bXcDr8XHrc
+         X+bw==
+X-Gm-Message-State: AOJu0YwxNjr4meXcaM67t4wywmiI0FY0RPjjCEuR2QrVG+KfGhX2WCrA
+	WDmkZqG35QQ8CTyC9il9RgOHB0hD0GMLBQhKoTzsIKR4CQ4YhBMNhY4TwJ6xKWSzybtC2W5+wae
+	KynWrmePYiFkdcHPNMBofYjSabDSa4A==
+X-Gm-Gg: ASbGncvqA7zROWBf4YZtPeCxZn/m2opj3tm9u3m+R2/9F8T9ezV3CogsiXxgUkoMRlA
+	h6Z4ieWn1zkauwaG51fVRUNfepseurlBj/rpflbguCKUPK0xQbwsTrEqsEXPQIOyFQCUsqKxtie
+	EUZjq9zdZCkDpendltxQpNeIQCpGT3
+X-Google-Smtp-Source: AGHT+IH9qfmwFMLbHcPXZ5MJTvtWwd00YIUpf15fStiEP10zlqFN8D5MwuMhUC9yF6D4ONbYfsck7I78KThzFNeX+PQ=
+X-Received: by 2002:a05:6e02:320d:b0:3d0:4c9c:965f with SMTP id
+ e9e14a558f8ab-3d5961cb4c7mr98620175ab.20.1742665184818; Sat, 22 Mar 2025
+ 10:39:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAHp75VfTQZ8vFQXZKgbsedG2BOad-pv9fCVkNkX+kFAxhnhhXQ@mail.gmail.com>
- <CAHp75VcZJPysc2-NXTC53XvOwbx-UfPO9SbsBJFb72JGHFyO1A@mail.gmail.com>
- <CAHp75Vc419vikJ184syJHN7rxyaspHzgtT9a_uFA=CT=cdqo-w@mail.gmail.com> <20230320170158.GA2614670@coredump.intra.peff.net>
-In-Reply-To: <20230320170158.GA2614670@coredump.intra.peff.net>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Sat, 22 Mar 2025 15:42:34 +0200
-X-Gm-Features: AQ5f1JqbnfzM4bLkqPKrv7AmOKWyXWf_8vvan208fdcGb2aWuLHkoN-2-SE5Y1I
-Message-ID: <CAHp75Vf8bB8o9feJHe4FpNo0TnfoRLG+C0roD4a1OaqN3NDj-A@mail.gmail.com>
-Subject: Re: git rebase issue
-To: Jeff King <peff@peff.net>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git <git@vger.kernel.org>, 
-	Junio C Hamano <gitster@pobox.com>
+References: <pull.1930.git.git.1742637713157.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1930.git.git.1742637713157.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Sat, 22 Mar 2025 10:39:33 -0700
+X-Gm-Features: AQ5f1JrnOg_JIL257KCooZLysqS3pcV7QdXqAz9AoPf6R0ml-15w3KFvkylJ8Zs
+Message-ID: <CABPp-BH9ia_GRNYx+zRCht3n0V=X-uLq2Zg+QWTWCyJfMkeznA@mail.gmail.com>
+Subject: Re: [PATCH] [RFC] shell: allow overriding built-in commands
+To: Ayman Bagabas via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Ayman Bagabas <ayman.bagabas@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 20, 2023 at 7:02=E2=80=AFPM Jeff King <peff@peff.net> wrote:
-> On Mon, Mar 20, 2023 at 02:10:38PM +0200, Andy Shevchenko wrote:
+On Sat, Mar 22, 2025 at 3:02=E2=80=AFAM Ayman Bagabas via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> > > > With the new release I have got an error
-> > > >
-> > > >   fatal: 'netboot' is already checked out at ...
-> > > >
-> > > > To work around this I have to split the above to
-> > > >
-> > > >   git checkout --ignore-other-worktrees "$branch"
-> > > >   git rebase --rebase-merges -X ours --onto "$newbase" "$oldbase"
-> > > >
-> > > > which makes all these too inconvenient.
-> > > >
-> > > > Any suggestions?
-> >
-> > So, what should I do? Today I got again to help manually with my (used
-> > to working) scripts.
+> From: Ayman Bagabas <ayman.bagabas@gmail.com>
 >
-> Running "git log --grep=3Dalready.checked.out" suggests that it may be
-> b5cabb4a967 (rebase: refuse to switch to branch already checked out
-> elsewhere, 2020-02-23).
+> This patch allows overriding built-in commands by placing a script
+> with the same name under git-shell-commands directory.
 >
-> Adding its author to the cc, who may be able to say more. But my
-> understanding is that this was probably fixing a bug (though I don't
-> know all the implications of having a branch checked out in multiple
-> worktrees).
+> This is useful for users who want to extend the built-in commands
+> without replacing the original command binary. For instance, a user
+> wanting to allow only a subset of users to run the git-receive-pack
+> can override the command with a script that checks the user and
+> calls the original command if the user is allowed.
 
-FWIW, the last couple of versions (since I was not updating Git from
-the sources too often, usually once per half a  year or so, I don't
-know the exact version which fixes it to me, and I don't want spend
-time to find that, because it works :) of Git seem to work properly to
-me. Thank you to everyone who made that happen!
+Sounds like it'd open a window to generating numerous security
+vulnerabilities, break git's own commands that exec another git
+subprocess (e.g. git-stash), make debugging git bug reports harder,
+and likely break programs that use plumbing commands.
 
---=20
-With Best Regards,
-Andy Shevchenko
+I'd rather we didn't.
