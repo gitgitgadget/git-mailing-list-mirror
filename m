@@ -1,156 +1,136 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3077721D3E9
-	for <git@vger.kernel.org>; Fri, 21 Mar 2025 23:20:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754021C5F1E
+	for <git@vger.kernel.org>; Sat, 22 Mar 2025 10:01:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742599238; cv=none; b=cdv6gmh5QHNtyv9xxDXvFhk3r1owP+bF1PyBZlzVAOn6mdz6EHc4PwI3XYmeCcyRxIfAXVxjP7WZWIh6iWVo7sWGta9bOltWueqjQkJdk6lhmSz1+v3dn8TmCyHg/7qsc/l6DKFMlznn1VhTKz9TWE5gB4I3DQzc/Q1zSlGETWE=
+	t=1742637719; cv=none; b=szuC3FcZdspXKlx/JIpSkFLVvem8miYHT4qoUpsXpkjxFakhCwo3K/RRc1IRa0zpwr7E8bddKBbZJjuHOnJWMao88Q9j5ULlaaDMAk+f5H3NV2QoCrgb1eCO0h98CZEbxls108lOKh+w8BVRG+ZWD4p1baAoGqNyNjQZK9DpUYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742599238; c=relaxed/simple;
-	bh=OhuuvLAzXfBUJtmzxuRYIifux1MuRkp64l+jJcffW0Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+g++pEUN4MZFKakGmbQjy+LSd71XLJWhcGflxalzlum4MMX2yaeoW+aDnQUruWp7vnu86yVdo764IYGLBhj7M5OPvqcV9B6/vau2VjbGh/2RiLZtl/ybqB1nmAPjHmv37wE2WDmkpjK5/NviLI39iDedLRn+bQlqNFLJDIyq1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WtSOczuu; arc=none smtp.client-ip=209.85.160.54
+	s=arc-20240116; t=1742637719; c=relaxed/simple;
+	bh=3iy1uGvhl0DWsf/LinCj7OGw3waI9YGMLerylynLexg=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=CGdTv/oLiEt7YtoykJyW+9adgsIFeic2n8HaN70wQzyL97pbiRyJqkaO8Yq1MmcNFZdRixqNCq9MQd6z8jcskxv09VA4xlQuQZiOa1d163KlwCMKj5C4sBsYFvEqC4Ek3Ig4Yrn9Jvb74en61O4zc+M3gyPMJvLXSA/t3CElVOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eQODe5Z2; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WtSOczuu"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-2c787506611so326150fac.3
-        for <git@vger.kernel.org>; Fri, 21 Mar 2025 16:20:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eQODe5Z2"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3913fdd0120so1581136f8f.0
+        for <git@vger.kernel.org>; Sat, 22 Mar 2025 03:01:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742599236; x=1743204036; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yd3oltE/uxbCecctEkRNByk8f5NSGLoeHxJ8n7hm3Ew=;
-        b=WtSOczuu1Ci1XB8/DCVHULxCCAU8cKxJvQB4f4BwXEIIrout+nbIJJbW3wEvYwBNeX
-         Y3KISAeJeIAoidzWHPgJCpaGo3UCXtVAWsztqpDmzWSMQoqsR1/BBYPmqG+U40ftUyQT
-         zPQVPP4FuHGMKvh3mHnpWbTqK4/wBgiJJ8iF+Tez1WUM+udw/pvRnzptBWblVLuv3nv1
-         ytr6OGx7YlIRdKXrTxgf9wUVo2AAQCwnNjoQpLArK4nylI1P0F2C0rPha+w8Rt64e7r1
-         BP6q2YG5yt8ix3twM7ZywgUAeuIGbHD40LhRcqNwF4g5+dKfHvlK+45kpdI/m0ubkZak
-         dEEg==
+        d=gmail.com; s=20230601; t=1742637715; x=1743242515; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=j5g/XAizywkYpObZzY5OBSViIfJ2HwuiANa0fOqMnaM=;
+        b=eQODe5Z2QmRURbI1R0ZHI1/vg4AQ1HBF08/qT9Tiwq9mzNy5yiDYp4Vp7P26ldScEH
+         kDhpLKUwbuIf4b7q+xPABUtPADFKifUNsV29Drw27ksg7odhwdiveyzvDH2LEnwsKGNB
+         qyM0dwiQhTZiG4gPK4wpcv8tqwGUzwZTGETN2aevAjC2sHN1Knx/kDVIRYB89UJ0NegM
+         zlg4ofp7ureml9IJCely3Q45sDwnvcdC8IN2rRRLzdOj9EikEIZysSyzCrJwwCeyn294
+         n1Q1gyvqRBQHIlpD1FrUkoz5yZ42d6JazS7/vUzvT3lQOnO5/pf/lSOgSzA6PMCdCqPs
+         PfiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742599236; x=1743204036;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yd3oltE/uxbCecctEkRNByk8f5NSGLoeHxJ8n7hm3Ew=;
-        b=FAdO1h/v8BGg7E9cuO6N8aTQ6FCPRZ9eQ0ExJaOcnPVySw8rVs/EXz8DjpOh7kZQD+
-         gDG1RX6eHJ5tHrLjx4SwTgESsmGVp4w2OAK/aCPfcHYrCpHwnxz6kGj8jSvBlLv083Rc
-         9Y5p+KApUaMnwsBqUkHK1EB39h0AT9gIRaztrpcwWUKgoZafblMf89GEEVnv/numo9p7
-         sHg0NimZAOS1haV2gGrn4zlhG76sJlD7rgg2upjojtMxXEIVwCdFomxtdMTD0WRtcpTE
-         WaJ6Wec9T58Sl3s4rx1isRSSfOjywNWkzk0pFiftJcmbgmdjKF7FsGTcNfuSfntaYRBA
-         iBhA==
-X-Gm-Message-State: AOJu0YzuqFUI5wHL4tTpzOpvWLL83vSSGfnaih/zDXyLuiwLM1ISJvBH
-	crnxtimhuyBydQsvlWCDILj0adawI72uQU3FO56AArpFPFv7hSM+PxwkVw==
-X-Gm-Gg: ASbGnct9uGpGcAKfag/F0lKwZ1mH85SDcDf3trDy9Xka9cNs9zOjkyxz7Hdti74Zqva
-	f5l1Yvmpw8wm+Ar7ulJDtn9s7t1HgKFYcIx3Mj7nUk0HO4QpaqnObaFVZjKtyVMho9beHpEg+HU
-	ONsATtuIc6G+qzcNVcdM2I8GcokjuLAtjx4eAs1jk+yF8lF/mWhhYGN71T9UWZQTYrmemgvUpyc
-	p5Cqe1N5llB9WSdE/YlWD0Pzh+j3IOS9TfZhQO55aNbM/RfVCysXNB6k2ZfbHQyoAiYFXoafRl4
-	gQQ9S1h1Y27Qxb0LAZ2n2w/4/tb/DCBdsMmH5kQKoVJkOwHh9kdBYoa//KzN+R0=
-X-Google-Smtp-Source: AGHT+IFSen2tCOkB8vXpAtcfGk4kJUJFonun4IyCfc1BTQP5hWUmZq40ECiIlksP4pU7Hua4bBTsTg==
-X-Received: by 2002:a05:6870:41ce:b0:29e:76d1:db3b with SMTP id 586e51a60fabf-2c78020229bmr3767570fac.5.1742599235709;
-        Fri, 21 Mar 2025 16:20:35 -0700 (PDT)
-Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2c77f0ed8easm715097fac.46.2025.03.21.16.20.34
+        d=1e100.net; s=20230601; t=1742637715; x=1743242515;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j5g/XAizywkYpObZzY5OBSViIfJ2HwuiANa0fOqMnaM=;
+        b=VMZn++EN9Kb02vxe4GwVtOkNq+r3xHv0qybmjGa2gefPQfJgrMIVD4W8P7IYm9K+FA
+         eyBdLbwtfrAY+zuwW+W9kgT9AhneQC+IuqH9/vZAePJdLh+UeU79tO5wj2XAg3UKIrSE
+         acvkRgxZGkD41Fx8aGaogCONmwSVulOM/4iRFXbs84BD6vqth37XhAYy4xeSUJCthMWG
+         K8yxfUFeJAKDjfXe3qd8EldkIMw3fqCRuzeEu5Fgrfc6DUIy8dyaTZL0CVTeOfb6hx0b
+         ZyawJJgg/mHHHwmUxf8a5oRZXXXlWqlcP1QhRz6cPzM1XAK/maF4H0xI3cLAz2qeUMs5
+         j+oA==
+X-Gm-Message-State: AOJu0Yzxhhc+HvO6bY3diTdjK0sW6poNR/397twp4vj8BlV36snoeIKH
+	0lWtQjcpimcxbVCpevICi+mB/NYrkY42cMGZT4Gyqe0PeMrxLJwks7X8ag==
+X-Gm-Gg: ASbGnctA5ONzEZ2Mfb4lPUeVhydYZEVnvNaY1qzg+uMw6aj1HLLgLXhEkRFa3EZdv3B
+	ejX9d0O4Rel+MyGUfiLLtznIupLqVTlLMlls7wUX/D7wkGTLKB1plX+2TazYmkRtGolNCbj4r2K
+	PvxQC7KWfBPO5wczij9RdMcq5KSS+lINEM8VZLSmwPWEqiNfZmMBVajwdwr0dlidtMCb1oKCd8B
+	aw8FUFshDaDqQLflT7Cb33kw0K4fgwDcdtw7XdngtmaejkL2JzE5rENeCxz0JzwU2fCEQLPggRY
+	yX/lMeEyQwY2sCDZqRBwVRsHQ0pM6ocYwQK/lW2B4/31FA==
+X-Google-Smtp-Source: AGHT+IH8lN/1ob+nT4SnV1CivLEqgbz1e0LZDKHMv3Ulc/AXYkOiOjKLA3yCIVB1PR69WmZR2T8ORA==
+X-Received: by 2002:a5d:47c8:0:b0:391:2e58:f085 with SMTP id ffacd0b85a97d-3997f93d39dmr5278924f8f.54.1742637714698;
+        Sat, 22 Mar 2025 03:01:54 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9f0107sm4819424f8f.99.2025.03.22.03.01.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Mar 2025 16:20:35 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	phillip.wood123@gmail.com,
-	alan@norbauer.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 3/3] advice: allow disabling default branch name advice
-Date: Fri, 21 Mar 2025 18:16:39 -0500
-Message-ID: <20250321231639.180762-4-jltobler@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250321231639.180762-1-jltobler@gmail.com>
-References: <20250320014646.2899791-1-jltobler@gmail.com>
- <20250321231639.180762-1-jltobler@gmail.com>
+        Sat, 22 Mar 2025 03:01:53 -0700 (PDT)
+Message-Id: <pull.1930.git.git.1742637713157.gitgitgadget@gmail.com>
+From: "Ayman Bagabas via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 22 Mar 2025 10:01:53 +0000
+Subject: [PATCH] [RFC] shell: allow overriding built-in commands
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Ayman Bagabas <ayman.bagabas@gmail.com>,
+    Ayman Bagabas <ayman.bagabas@gmail.com>
 
-The default branch name advice message is displayed when
-`repo_default_branch_name()` is invoked and the `init.defaultBranch`
-config is not set. In this scenario, the advice message is always shown
-even if the `--no-advice` option is used.
+From: Ayman Bagabas <ayman.bagabas@gmail.com>
 
-Adapt `repo_default_branch_name()` to allow the default branch name
-advice message to be disabled with the `--no-advice` option and
-corresponding configuration.
+This patch allows overriding built-in commands by placing a script
+with the same name under git-shell-commands directory.
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
+This is useful for users who want to extend the built-in commands
+without replacing the original command binary. For instance, a user
+wanting to allow only a subset of users to run the git-receive-pack
+can override the command with a script that checks the user and
+calls the original command if the user is allowed.
+
+CC: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+CC: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Ayman Bagabas <ayman.bagabas@gmail.com>
 ---
- advice.c        | 1 +
- advice.h        | 1 +
- refs.c          | 3 ++-
- t/t0001-init.sh | 8 ++++++++
- 4 files changed, 12 insertions(+), 1 deletion(-)
+    [RFC] shell: allow overriding built-in commands
 
-diff --git a/advice.c b/advice.c
-index 1df43b7536..e5f0ff8449 100644
---- a/advice.c
-+++ b/advice.c
-@@ -51,6 +51,7 @@ static struct {
- 	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir" },
- 	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName" },
- 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge" },
-+	[ADVICE_DEFAULT_BRANCH_NAME]			= { "defaultBranchName" },
- 	[ADVICE_DETACHED_HEAD]				= { "detachedHead" },
- 	[ADVICE_DIVERGING]				= { "diverging" },
- 	[ADVICE_FETCH_SET_HEAD_WARN]			= { "fetchRemoteHEADWarn" },
-diff --git a/advice.h b/advice.h
-index d233cfc693..727dcecf4a 100644
---- a/advice.h
-+++ b/advice.h
-@@ -18,6 +18,7 @@ enum advice_type {
- 	ADVICE_AM_WORK_DIR,
- 	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
- 	ADVICE_COMMIT_BEFORE_MERGE,
-+	ADVICE_DEFAULT_BRANCH_NAME,
- 	ADVICE_DETACHED_HEAD,
- 	ADVICE_DIVERGING,
- 	ADVICE_FETCH_SET_HEAD_WARN,
-diff --git a/refs.c b/refs.c
-index 118465271d..bf9a40d6af 100644
---- a/refs.c
-+++ b/refs.c
-@@ -664,7 +664,8 @@ char *repo_default_branch_name(struct repository *r, int quiet)
- 	if (!ret) {
- 		ret = xstrdup("master");
- 		if (!quiet)
--			advise(_(default_branch_name_advice), ret);
-+			advise_if_enabled(ADVICE_DEFAULT_BRANCH_NAME,
-+					  _(default_branch_name_advice), ret);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1930%2Faymanbagabas%2Fshell-override-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1930/aymanbagabas/shell-override-v1
+Pull-Request: https://github.com/git/git/pull/1930
+
+ shell.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/shell.c b/shell.c
+index 76333c80686..3a6d2e8a044 100644
+--- a/shell.c
++++ b/shell.c
+@@ -194,9 +194,11 @@ int cmd_main(int argc, const char **argv)
+ 		/* Accept "git foo" as if the caller said "git-foo". */
+ 		prog[3] = '-';
+ 
++	cd_to_homedir();
+ 	for (cmd = cmd_list ; cmd->name ; cmd++) {
+ 		int len = strlen(cmd->name);
+ 		char *arg;
++		char *full_cmd;
+ 		if (strncmp(cmd->name, prog, len))
+ 			continue;
+ 		arg = NULL;
+@@ -210,10 +212,16 @@ int cmd_main(int argc, const char **argv)
+ 		default:
+ 			continue;
+ 		}
+-		return cmd->exec(cmd->name, arg);
++		/* Allow overriding built-in commands */
++		full_cmd = make_cmd(cmd->name);
++		if (!access(full_cmd, F_OK)) {
++			const char *argv[3] = { cmd->name, arg, NULL };
++			return execv(full_cmd, (char *const *) argv);
++		} else {
++			return cmd->exec(cmd->name, arg);
++		}
  	}
  
- 	full_ref = xstrfmt("refs/heads/%s", ret);
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index c49d9e0d38..f11a40811f 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -830,6 +830,14 @@ test_expect_success 'advice on unconfigured init.defaultBranch' '
- 	test_grep "<YELLOW>hint: " decoded
- '
- 
-+test_expect_success 'advice on unconfigured init.defaultBranch disabled' '
-+	test_when_finished "rm -rf no-advice" &&
-+
-+	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-+		git -c advice.defaultBranchName=false init no-advice 2>err &&
-+	test_grep ! "hint: " err
-+'
-+
- test_expect_success 'overridden default main branch name (env)' '
- 	test_config_global init.defaultBranch nmb &&
- 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=env git init main-branch-env &&
--- 
-2.49.0
+-	cd_to_homedir();
+ 	count = split_cmdline(prog, &user_argv);
+ 	if (count >= 0) {
+ 		if (is_valid_cmd_name(user_argv[0])) {
 
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+-- 
+gitgitgadget
