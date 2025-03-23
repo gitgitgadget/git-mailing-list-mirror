@@ -1,76 +1,94 @@
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A2D15ADA6
-	for <git@vger.kernel.org>; Sun, 23 Mar 2025 11:24:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD8117E
+	for <git@vger.kernel.org>; Sun, 23 Mar 2025 13:37:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742729090; cv=none; b=FgoXO3wynTmnRV0ZgcrPSAmzFoC69b7fzHsReOlWZ7pYciXeeMXmIkyH1Adw1JnuG0xVBFiQxjAx08orJB0syIg+5laeDsOFm1mN9xeNHigtKQ99KT/hSvoS+/cAlgAwDuHaUwMrCFY9lFoXBUPr/7Lrz3wGAbm184gbzKZtwCM=
+	t=1742737026; cv=none; b=Q7GPR3dZuXwuYKf1ck5Nr3Iy+kR/4/OQXoTTWMCSAfPR8czSvEEKQZLVcKov2Qk4YWZC1cZfWRUHeWcube7MKc3jhdF33cU7NxwRGd9Fjp1ABorkSj4KJ7cp99mJNQUxcM7pSxWuEALOsKaVvz40H9WhD/bP3x6UIqYQvquLaLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742729090; c=relaxed/simple;
-	bh=rG8NGWtX/CBu1DrU76fR6wavBLjftAzJu63UvRne9A8=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Oy6DIX9Ixw4mTdWq3flA9BQ4UkHZYkGCzyS4YAjeLXwjKRbxtiub0Scb17g61yX7FO4peiw1PmZ1QWAqRJBbfK025ogQqNn5lt+OlGgCwzclidYJQ90YeXGNmPhH39C3LeByxSLf548EJ1WxqJEh3gyT24yFwvYtfsk33qJBvNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=TNLe9Qzz; arc=none smtp.client-ip=212.27.42.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1742737026; c=relaxed/simple;
+	bh=PksrTAnrQUf7G6aqfz5gPM19ORIvlxudlQ1sdDuOM24=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=UZk/Yes50r72tR4wiEpV/JZbkrhEFmbY+lE1TLzTHudY5PIcy6lgeC6oDHvWSliB4gNBknJs0g8lj8yVtrgzi/6eYzQdQSqhtZdEN9daWbMhNt/hn2nkwtnNrlao6pBLzPDLxhKtZ8K6C63rr9VRWIKe3SGkOUdJLhT3ODRap3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Modt1tRR; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="TNLe9Qzz"
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:c2d2:c7d2:a4cd:bda7])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 30A5313F8BA;
-	Sun, 23 Mar 2025 12:24:39 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1742729080;
-	bh=rG8NGWtX/CBu1DrU76fR6wavBLjftAzJu63UvRne9A8=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=TNLe9QzzWuCytbmTUyTwF5NYqM+gFJUcyFlDsa/NkRQXqLRDqSbvLI5vX+WIXXdHu
-	 AmiabtfSz335oDGWG9l7A/6JWMkqMKTfT0Dyo52Ss14y5CFVjpfN2IPzrx0Ij7dLjz
-	 zwuMgiFc5kNq+78H59i0UWyf1B8igQHvZKW2lftNB5yPklh0kcr14ywcL8aIwm4Os2
-	 8GAe25y72IgCg8AtCbu8T8yyLm4JZYhtenKvv/7NUcxINFkl8FvPybIjnO+F4YARDu
-	 RIHx1wY/FJWPUCI7595COXlpbByIBGaNiZIPO+/3yQ/odbaU2Yyu2YdtArAiJje3r6
-	 UXnpHcH5he1uQ==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: git@vger.kernel.org, Marinos Nisiotis <nisiotis.mr@gmail.com>
-Subject: Re: Contribute to Git Book in Greek Version
-Date: Sun, 23 Mar 2025 12:24:38 +0100
-Message-ID: <1916456.tdWV9SEqCh@cayenne>
-In-Reply-To:
- <CAFGd_EvVTdP2BKoB5-31cnBj+sjZE7Z=Y3mcpJGYdt70SLj28w@mail.gmail.com>
-References:
- <CAFGd_EvVTdP2BKoB5-31cnBj+sjZE7Z=Y3mcpJGYdt70SLj28w@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Modt1tRR"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-54957f0c657so3728416e87.0
+        for <git@vger.kernel.org>; Sun, 23 Mar 2025 06:37:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742737023; x=1743341823; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=PksrTAnrQUf7G6aqfz5gPM19ORIvlxudlQ1sdDuOM24=;
+        b=Modt1tRR6QOYF0yyp7+b418rGhtIQpBtjTogm5nyV/g5AKd/VeMCCk+R1NFqAwGZaf
+         EWPhmQUyWYsCcxOcrkiJjTWGEqngGbDc1E6XUmU1OzcJ+mvC8fXxHciLkqSaPWjVmVJ4
+         6JBVqHewIivC2BwpNwy1dzlBjEf4/aKp/1MVX7BxZAeDLKfmo6mMbvDnIuQ4eBkwbE6Y
+         fP1RrjFKbY8GKPehsfaKHCj4p+QwDNtnUupr/25/0RckLNgm7FLCKNfd+BEAMwqnGYGh
+         bDDL4qKxIUhT/7BJsppA1eX58eSpdLtSJSQypUDzMFWjk8zCiMwo0lEsK9I/oBccZ+tk
+         oohA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742737023; x=1743341823;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PksrTAnrQUf7G6aqfz5gPM19ORIvlxudlQ1sdDuOM24=;
+        b=b/LBlEkl/2xPDzCxEhCLlqaTiK2wcjbbdH2XUd28kA8ioiatjLAPz7Zic/RvG2QAcH
+         xTMwJY0BnIc2b9lutPpEnIZJCTsC7yIz0vTz/2DpbNYpaxCmd97NnT8LC7B5YQnvIrRY
+         T59e5Gix2HLGZdcCMvRvtWuPU49BfTN5Zggimf7Pw75FJZgp/fJbFPe2z6pc44FhOmAY
+         Za8XK+T0rLyH81EsfVnn7rk9IdkKbbZqdqx7yx+xpaPdRmIkC/uWszuUJZYsQCnpgMvF
+         SUBrcRdoAtXoyDN2/iSkLxdRlqRWJog3/bPW8izGVfjdb/d7ojSKJEMrRtUN9DXksIBJ
+         s+tg==
+X-Gm-Message-State: AOJu0Yy8j5N3m6WsWm194nb3w0q8kTlDGHU39NDlyuSpCUqhdXAICPMn
+	WlNb1EAuR5IP6renA34VFM/QB8rBXa5A88R80iShnPVq/4yz5Bj7Y2+rfH0hs/IrzYKzruluxZX
+	jajV9bPhw1UjNv+IqZx9Ld30NQAD1tEAKGgY=
+X-Gm-Gg: ASbGncvPGU7Savh/h/mFS1G11WlUAKWw2neZXxdwFa2iLRy1dO9GMQoEcQIL1iW+Ng5
+	ZUXz+Op0gumV4n6Wipjei2MVaRFVImW5s78JYrqsmEQstE8VNMrv68z/BRTMQqm9EqzqCD6Kg4k
+	kvIUChDX+F2rWw22OLQRcDaPrrBPPksZurjisX9UJGpdDGq+v07yqSh83GaUZg
+X-Google-Smtp-Source: AGHT+IEw0bWjRJm5DHyF7eFpHiyVi61hxS9BNEMdTnc4Rd7c/60wbTh+7T9G+rWA02eITjo6SDivoqNR8BNfiLbQ4Jg=
+X-Received: by 2002:a05:6512:1092:b0:548:878b:ccb3 with SMTP id
+ 2adb3069b0e04-54ad609dd6fmr3015028e87.25.1742737022440; Sun, 23 Mar 2025
+ 06:37:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+From: Yuting Zheng <05zyt30@gmail.com>
+Date: Sun, 23 Mar 2025 21:36:51 +0800
+X-Gm-Features: AQ5f1JrRx5Tk9nZiAMj0uxwj-ZyBcAorHBKp06d9mACEC3CAC86S8PJM2UyxPNA
+Message-ID: <CAMvj1+rbYKFNeWEvvN76MTpzfuWc4TN4ViXRE4nTfWy7ZMspWg@mail.gmail.com>
+Subject: [GSoC] Proposal Discussion: git-refs Project
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Dear Git Community,
 
-On Saturday, 22 March 2025 14:02:40 CET Marinos Nisiotis wrote:
-> Hello,
-> I would like to contribute to the Git Book, in the Greek Language
-> version. How can I do that? Where should I start?
-> Thanks in advance,
-> Nisiotis Marinos
+I am very interested in applying for the GSoC 2025 project "Consolidate
+ref-related functionality into git-refs". I have reviewed the relevant
+code, documentation, and mailing lists, and as part of the application
+prerequisites, I have submitted a microproject patch
+(https://lore.kernel.org/git/20250323022111.20226-1-05ZYT30@gmail.com/).
 
-Hello,
+My current idea is to extend the `git-refs` command=E2=80=94by calling into=
+ the
+existing code=E2=80=94to add subcommands. This approach would replace the
+functionalities of the mentioned commands while ensuring that I do not
+modify the code underlying them. This guarantees that the new `git-refs`
+subcommand meets the new requirements without affecting the usage of the
+existing commands.
 
-If you are talking about the Progit book available on https://git-scm.com/
-book/, there was a startup of Greek translation which is already online.
+However, when searching the mailing lists with keywords
+=E2=80=9Cnq:consolidate ref=E2=80=9D and =E2=80=9Cs: refs=E2=80=9D, I did n=
+ot find any discussion about
+merging these commands. If anyone has come across any previous discussions
+or could kindly provide additional insights on this matter, I would greatly
+appreciate your help.
 
-The translation effort is taking place at the following project: https://
-github.com/progit2-gr/progit2 and this is were you can present yourself and 
-propose your help.
+Thank you for your guidance.
 
-Arguably, the repository has been quiet for two years and the owners of the 
-project may have let it down. In this case, we could bring it in the progit 
-organization and give you editing rights.
-
-In any case, you can ping me on Github, with the @jnavila pseudo.
-
-JN
-
-
+Best regards,
+Zheng Yuting
