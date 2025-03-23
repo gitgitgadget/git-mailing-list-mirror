@@ -1,147 +1,95 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947D21FFC60
-	for <git@vger.kernel.org>; Sun, 23 Mar 2025 02:21:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AC81D5CCC
+	for <git@vger.kernel.org>; Sun, 23 Mar 2025 09:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742696495; cv=none; b=usg3f6iZEpt4zRKQos58O/z0gBuRyrB1f2QnYiQmDXS5IMfl/oIiC2Dir6TUUmATA8uBhOxV/Xylbo5R9pVMRavqki/Nitivau71kPmc+k6tDpTATORnd8UHEUEGXHSEwo0ERr/mcqEOAZij5+XHpvHY963H7hpubTPzzcUzXKE=
+	t=1742720925; cv=none; b=ZjQoRg+m8NBgvg+w/+wi1979EkK+pbQ2CRfkJkreZS+XagNDyhBT0o4OEpZBeitLJjvcfLe63qiC0Y094JUM3hhKxZxmHUaap2Ucyg05Cxwf6ReQJlBub0z8bw6h3PxsmqEmbUJd9JNysm5uX2COJRqRuccyvuVzHSfBu93cbNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742696495; c=relaxed/simple;
-	bh=oqkjPJ7NEZST4lmA49o+n5I46WhDO503EIfMlYL5raw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9RBbX6oyHan+Ux1Sbv9lyd220ycUPBiQX+6CCMqAJQwxwHqZDqVUMOXoznaMtPu9w9Bc3jXYoXr6muvOu3ls1TWk00COg0XoXmdQ9tV5GTXdGAiK6aiV68llwfc5+lGnAluME38ZAtoD2xeQp/ZNhmBP9T0nxkq9dxl7WX6pUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IwZiV/WJ; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742720925; c=relaxed/simple;
+	bh=MWv8KkRROhhep178ImUFnxYvIcnrswEGoGKhZIx3IdU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DW79v+ETYQ40eZIiBA+uCVmlHkzZE9S86TngPss24mSyZgr/eNAyvDpwQvRfswuarjfYS7bkzG+N/eWE67KPb0P49FuQotTHnTR3u4DbGZu9VsOXncxDQXx3CzgAb1rqZy4y/6y7ZT/HJKJRwbMlfNOPEWAvdkQG0jsRPSkpRlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=OAhiztTr; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IwZiV/WJ"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-22398e09e39so65133925ad.3
-        for <git@vger.kernel.org>; Sat, 22 Mar 2025 19:21:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742696493; x=1743301293; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0mjeY5zESViOTfKh22wrELCw/LcTTtYx3HNj1ORR6w0=;
-        b=IwZiV/WJ3Udk8k1+xw2VcVy7vnjX20D90zt1KdIP0Z3Sxdec+jlUvORFA4Lyu5cSnE
-         rV20ZZ00de1xDKOp+SQnVkel8FhoWXrqknls94p+y7aEPC7/sylB2i5dznMdsfw7USRN
-         TkO0Ete/NVXoqE/dk49P4ppFCXDKChqlmHRG2huVzEkVPwqUyKDxmnCF8c6swA33T3P8
-         1vSL8yfGE/NkcOhTmQnv3WnBF6IBfOzTtfO1cpu2LisqDRKi87st2FLZwDZI07bzgB0Z
-         1I4Mgc1jRFsMxjaixWolmPYwOmH+OChJ74P5814diOZ6gada+Zsu7JRPsO76etzkpkGr
-         ZOBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742696493; x=1743301293;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0mjeY5zESViOTfKh22wrELCw/LcTTtYx3HNj1ORR6w0=;
-        b=IxnZ0/Tpw4JMR/ZT9hUKnX/YGjO1qAFHE/gs2mkDCxGW9Rc7Cj27p8ypBcfx7/pe+f
-         Yz1Ss1W1xNHfWYFJYV/BiM+wKPFM49EKFEmTRTeWxaDNlJJEWJqB822ynSl02wsoouGB
-         Qd1nZ/rPahGpU46tSE0RaqHd4yFBevHPtvdpz1tmCsuZ2GjLGDMr3Ay5/OoYVpJ31yXZ
-         Ahw5TOMzcTz+HiDdmrDqw7/aE45AW6IIZw9y+YJd56PXUZahC6ON/jO+fKMlBlI9q3bk
-         KPOt8U0gYtnfkuks2urZmqAobiGSOnDCygIBIy/gOn9ZS0vubLRP7HYsanGFada5J21Q
-         vb+g==
-X-Gm-Message-State: AOJu0YwG+BIne/VcRQ5ZFOIjfkDj6YsLDufzTvaOMRqiWbRBg93WASkv
-	edLHsOT+rc/PVxEW548ErlULZIrDbfTsD6lEW8tBu2tLtwuMDCXKuirThkGZ4h0=
-X-Gm-Gg: ASbGncvIwAXKT/Aew3kX9M8NmjE4zkse6vioHJN7mlYFGgYFdml+ndiSERfUa50sINI
-	UyZdE8zIYaM4m/u+py/VA7z7EyXRDpAbWlZzeTaZsBqxV+riRzN4nzYtcTmf99Gq1xNZWZp/XK7
-	Kx0DV0+3t5R/F49FM9mT4SaOnY/fYSk4MlPrTwKuoAEvr9vPVO3BEZRduYbsJUIZ7zvGUm/Ugb+
-	3j2iXrAd4C6UnM9YnYIgY2BpQMjHDM/iMaLcfL8dJ2QrNg5xTQU8kqtK3tzyDv0FarSfOptWQ0J
-	/HDsQSDrf7Oad+gALXZqcy5yYiHnvOmG4/YS33Cz2ieZ09gvPZAv
-X-Google-Smtp-Source: AGHT+IGLuPFI480Dq1mtrWbcj28ii5Qi3YJjE6ggsDqKfdU0gNOZQ75hRE1eR8EJQZKHl9xyL8VHHg==
-X-Received: by 2002:a17:902:f609:b0:220:c34c:5760 with SMTP id d9443c01a7336-22780e3b33bmr128203985ad.51.1742696492760;
-        Sat, 22 Mar 2025 19:21:32 -0700 (PDT)
-Received: from localhost.localdomain ([39.184.61.67])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22780f3a2e0sm42817135ad.39.2025.03.22.19.21.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Mar 2025 19:21:32 -0700 (PDT)
-From: Zheng Yuting <05zyt30@gmail.com>
-X-Google-Original-From: Zheng Yuting <05ZYT30@gmail.com>
-To: 05zyt30@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	meetsoni3017@gmail.com,
-	Zheng Yuting <05ZYT30@gmail.com>
-Subject: [GSoC PATCH v7 2/2] send-email: finer-grained SMTP error handling
-Date: Sun, 23 Mar 2025 10:21:11 +0800
-Message-ID: <20250323022111.20226-3-05ZYT30@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250323022111.20226-1-05ZYT30@gmail.com>
-References: <20250321025128.68463-1-05ZYT30@gmail.com>
- <20250323022111.20226-1-05ZYT30@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="OAhiztTr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1742720915;
+	bh=MWv8KkRROhhep178ImUFnxYvIcnrswEGoGKhZIx3IdU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=OAhiztTrhafvCh9gO9uRefgaeYunq0gUmMsdg3A+l3cU5Q1kR4cZJc+ZZWaH5T1Bp
+	 VApYs9HIWMBlR5AsdQf2M/SLiHt/Rp8lYSgpzMt01ZOdNHnpnoVvCGqjabseGzBz4X
+	 ksK2p6zt8Zhr3ROPl8vddIP9YxILnzSaWgnMC8efo5otnJAcrfgAnXSl3RKk3fY/bZ
+	 D4jR3QvbWCBnCHmRobOVChu9IOoqAxcII6At+xmCFCzN6SLTuXRsC+t7P8IXaok2eD
+	 xGIxqi9o2pGhT0z5fic7Vx8yfJDsj6ZNpRDlaN+NmBizHcKubbe7j/RHnmxQlq7/yo
+	 WG+Xq0LXNd3xl1H4kfgOvZaqFTIIpRYwA/SGzMJ2M8o3JAhtkuTN7izP5+qCNvB67L
+	 kNtl8LL63DZ+eeIKY3r2xjWKBc5FlNhXMfSaMpVdmxyd+lspfeOQ+A7PsZAujrVWjp
+	 guCnt7sAiiu/9B7UqTpV4rbj0yugbbrplFNgwJLtkGr6NWU+2sP
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d5c6:e1bb:f3a5:7a20])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 616D3200BE;
+	Sun, 23 Mar 2025 09:08:35 +0000 (UTC)
+Date: Sun, 23 Mar 2025 09:08:33 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Eugen Konkov <kes-kes@yandex.ru>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Re: Why merge conflict block is located at the wrong place?
+Message-ID: <Z9_Pkb7N1J_J9ECo@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Eugen Konkov <kes-kes@yandex.ru>,
+	Git Mailing List <git@vger.kernel.org>
+References: <1145598425.20250322191649@yandex.ru>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="E5DkBgdB+hi5+5yr"
+Content-Disposition: inline
+In-Reply-To: <1145598425.20250322191649@yandex.ru>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Code captured errors but did not process them further.
-This treated all failures the same without distinguishing SMTP status.
 
-Add a regex to extract status codes as defined in RFC 5321:
+--E5DkBgdB+hi5+5yr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-- For 4yz (transient errors), return 1 and allow retries.
-- For 5yz (permanent errors), return 0 as failure.
-- For unrecognized codes, return 1 as transient errors.
-- For errors where the status code was not caught, return 1 as transient
-errors.
-- If no error and no result is returned, return 1 as a transient error.
-- If no error occurs with result defined, return the authentication result.
+On 2025-03-22 at 23:16:49, Eugen Konkov wrote:
+> Hello Git,
 
-Signed-off-by: Zheng Yuting <05ZYT30@gmail.com>
----
- git-send-email.perl | 35 ++++++++++++++++++++++++++++++++---
- 1 file changed, 32 insertions(+), 3 deletions(-)
+Hi,
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 0f05f55e50..e09a4a316f 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1454,9 +1454,38 @@ sub smtp_auth_maybe {
- 			$error = $@ || 'Unknown error';
- 		};
- 
--		# NOTE: SMTP status code handling will be added in a subsequent commit,
--		# return 1 when failed due to non-credential reasons
--		return $error ? 1 : ($result ? 1 : 0);
-+		if ($error) {
-+			# check if an error was captured
-+			# parse SMTP status code from error message in:
-+			# https://www.rfc-editor.org/rfc/rfc5321.html
-+			if ($error =~ /\b(\d{3})\b/) {
-+				my $status_code = $1;
-+				if ($status_code =~ /^4/) {
-+					# 4yz: Transient Negative Completion reply
-+					warn "SMTP temporary error (status code $status_code): $error";
-+					return 1;
-+				} elsif ($status_code =~ /^5/) {
-+					# 5yz: Permanent Negative Completion reply
-+					warn "SMTP permanent error (status code $status_code): $error";
-+					return 0;
-+				} else {
-+					# if no recognized status code is found, treat as transient error
-+					warn "SMTP unknown error: $error. Treating as permanent failure.";
-+					return 1;
-+				}
-+			} else {
-+				# if no status code is found, treat as transient error
-+				warn "SMTP generic error: $error";
-+				return 1;
-+			}
-+		} elsif (!defined $result) {
-+			# if no error and no result is returned, treat as transient error
-+			warn "SMTP no result error: $error";
-+		    return 1; 
-+		}
-+		else {
-+			return $result ? 1 : 0;
-+		}
- 	});
- 
- 	return $auth;
--- 
-2.49.0
+> Why merge conflict block is located at the wrong place?
 
+I think it's a little hard for us to comment on why this happens without
+a reproducible testcase.  Do you perhaps have a public repository that
+you're working with that you can use to demonstrate this, or a shell
+script that shows the problem?
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--E5DkBgdB+hi5+5yr
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ9/PkQAKCRB8DEliiIei
+gZHtAQCuK1gpVS3WzKnhxFXAVZfQnLuzq3qJ1Lu5jMLVtUglgAD/TPsEMUyuljwn
+15hodub6ZiWo762EGw0cbhRCEy4aTw4=
+=l3WB
+-----END PGP SIGNATURE-----
+
+--E5DkBgdB+hi5+5yr--
