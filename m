@@ -1,78 +1,106 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD8F2E337D
-	for <git@vger.kernel.org>; Sun, 23 Mar 2025 01:47:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A2B1FFC67
+	for <git@vger.kernel.org>; Sun, 23 Mar 2025 02:21:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742694423; cv=none; b=umj/NXzz+N27fjOClrg0RguqNqXxjl+G2Z28U9RET5fPPW0CqckBOBr0pHbpXHPXOyoq85Y+a45aTjSW1PHyPsIAxDMTSpWEKaGL1s/BH1j+GUvDdx2b2hq1J1PBgnvZjMiKuaUU2HepcxVTAs0ropZn8JJtVQRMsqHqQr+Bgls=
+	t=1742696487; cv=none; b=oJE/VkFRLQHY7ifBCdzzb3odc0u3A/1jtcAq3cIN8sgAIHs2pzw3lK2iwreXWAR0OUWrsY8qye8mcsGBzuEL6nNS8N5qWxo4+W8YgoVJH6ez2R9KoU7SG2ZxAbFGZQd9MFiPrYj95RdDCYr4V3tl0X5JWJeBx4jG8okMNGw5PrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742694423; c=relaxed/simple;
-	bh=WobnLaUfwLF8TtQsrqmyAutFrEDGxsBi6O5r0hoe/lo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PMsjXdZcDlr4mFS6fFKl97s/PuEyf47gudERyya/6PTAGHh+j/8/UpbsbZRumiUWJnXPXJdoa/NfYUGLkr+OQim71UqbMUWWrKE0RiBegD8AlYjvCnJ+GgdeRlrIwua7zgX4zIr2InzSy5QPKahonilajLA21G/og43NGzz8Db4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1742696487; c=relaxed/simple;
+	bh=83z6ZwqCgpOSVpsvmigwzfD2CMulMNACC2heuNHM93k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=tVLwg8/IqRzvX8lat3GH/xEfdnLsSzltAbX9tqgOBAoKEZKr+S+07Z4nHtXAxs4ZF3uZdiowvZT1kpUQlqrD1u/9EerR14yIqE0GSKnK6Dl14xSCkXhFgPUWUdf6WbrCjlQXAAEvZY8bS01eUcYLKMaE9jajx5OmWzBaN9NoCMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VWlewU/X; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4768a4fdf8cso1744841cf.3
-        for <git@vger.kernel.org>; Sat, 22 Mar 2025 18:47:01 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VWlewU/X"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-224191d92e4so61516415ad.3
+        for <git@vger.kernel.org>; Sat, 22 Mar 2025 19:21:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742696485; x=1743301285; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W/pBGuoc4v5+b8tS+bRa1ujet3nI6rROqWTHlenIPWo=;
+        b=VWlewU/XDSIk6QXj0sdlkMoWkaFPI+uQEFBZ6810eg/IFqhOGO08PhJX0P6p8yM/it
+         hZ1CQBK4COrnfXi+TvjxWuzg2BNlXI/ceFoTgQW5/l8CJtEuQO/o1tVrfsP38Qyz3dVf
+         3L/gcjq7qV019szwr8ap9m7U3zq06l40GzuWuWGuM9WCASZEuKG5VV/fzaxjyvrXReyt
+         MejK1Trq1d8/XwfPfgMnMHiyVdtxR1AlZZeBZBPBeRCHvA16iw6JE1AtcRbyalcWyke+
+         4cjvdsbUWTx0YZCBwQBRbAIOoez48hib8PtVML/pobR8DjcvZhFmjxg3jeP8xLsP1sMR
+         f+fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742694420; x=1743299220;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1742696485; x=1743301285;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WobnLaUfwLF8TtQsrqmyAutFrEDGxsBi6O5r0hoe/lo=;
-        b=vO5Zal02Ja30y1PVevD3ExblU/iGK/JW18lfF28lVIeJ3X/t+pJnwu5kDizGoN4WHO
-         E9aCPvldrgmFKz/awdwWjCkRgqU2gyw7U3fCjeUN5DUbFNjlSgc19xOwk2okyv+kxrxE
-         dzcsLySMYRvaEAeqmII9htHCG4sGGDzII2/RfVWP3ZiPRAbUr5L5uBnuxV0AkYsIvgnS
-         Ch+qvVsh0lg/v+20aP/K00kmS2O7ESyg2UnfsvcPepOCKDbwzRfAOTcKHLmS4QEE62JE
-         FL2ldbKq/PFrva0l+oklpchYhyoIV0uOtpC3RsYZqfN+O07xjBP2NASr9ygpdivjrYiX
-         QbiQ==
-X-Gm-Message-State: AOJu0YzKaxDVrpcDSCDRThY4HvCdDeP2L/yFPwZx5DFdWrRNjDy+v1fO
-	KilEwCfKEAj+jRudzzAOkqnSdfLnKQFRg+h1v2SCb6GyvRMVGvc1gSBy0G3X6YpinEhrTex7VAP
-	5M2mXYKu+HQRQe+7Xq+p8mWRIT0jPZI9s
-X-Gm-Gg: ASbGncuGrx4B7LS8YlQMWBkr3q5lHajoNomhKvHodpmFmM4mj4DpCCS82VrZW5YGBpI
-	N+P63qNtI7NDN7um9rOAG7TOT1HEeZbzH4brtrPqSinb1oXPHrXcJ+/Oz1VqkDMVb2eFMmxWCpr
-	SNxClnBVyDRr/9pVAnx3kyxeBa
-X-Google-Smtp-Source: AGHT+IFn6oCX2jOmdpLyLw3Id3gXUOpwm1BckqeKewHcInfC02+tGbGs4KbMhlP7O/+3BBLYCXiHtPY72jstkoHoCaQ=
-X-Received: by 2002:a05:6214:cc8:b0:6d8:8283:445c with SMTP id
- 6a1803df08f44-6eb3f2858ccmr39353966d6.4.1742694420463; Sat, 22 Mar 2025
- 18:47:00 -0700 (PDT)
+        bh=W/pBGuoc4v5+b8tS+bRa1ujet3nI6rROqWTHlenIPWo=;
+        b=Qd6NDYYCoyD2ONp/Po29FTPOnemopUDY+i4aRnlsVLASXCIZjvGuVmnmZG7LEDzdoS
+         MjAjgCUx6miXg4LX4RowiGjSAm3vZTF1LucI43r9Eb3i5aTE6jIJPPMXeBVkzdMLX7A4
+         j2rNHxcDYOOLNlGOBoNKjzQa2GmtfiKW3mX9Rx1kw6rTR4SZdk6zfUxw0ZEG0rlt9zv9
+         2PivemiqDimwH1j0oh0cz4KtMMbOqLftUoYEe66ggRI9KYCsyfZYI8GB+ug2ynfipeTH
+         UcGTfbzI/7Tgb7/vKAmahcKGqCCSw67hRKKCRMplegirx8eqDm+0K5+R3lzB4+XKjqof
+         fS5Q==
+X-Gm-Message-State: AOJu0Yx/MgPoFvI0ecgNAXByr5fISN1B/Ls0Jvu1gExL/diiaIsJzHAN
+	MCzCrbRXQeIdLIQlCUbT2WoiAT5z/OxuJqDGTS6gdcwYEmxGHTG+GCzHwrJi2fQ=
+X-Gm-Gg: ASbGncuYRyD841Nk5zUev5HZGXBHGWvd0yi721ADuP6hjSs2Ue4mMKJJiKVcjI1YOmw
+	n1VpYELaYFukD9WqCcSuW5OPQZjW8gj2tL5zJB53KSW741hP/5pXhquFNi5HHB76eQgukEVkcrY
+	h5ffAv39mJvSo+SL2jPSkQuec7Lb7N8QHYJkgY5e6HFT5zQwddwKU6L98ptBoWAx4ikE5ziJbf3
+	cEjyQeE0MQVSW5J7MTW+3zBFaGjZqNYGwSYbP1QXz6T7MPt702WS62sJdpoPS1jqLW9DYSV19YW
+	O6GzKgUNUgMNQwulub2Q+0h7ceERv54GTLw/qNafvaxhqat4jv+J
+X-Google-Smtp-Source: AGHT+IFw704Y3HmQKYqrBbwxadiAH5Aw9mg28RUINEpxWbSPxo/g9viM08Y9E6MIhM1Pzl0SpW4aLA==
+X-Received: by 2002:a17:902:ce01:b0:223:faf5:c82 with SMTP id d9443c01a7336-22780c7e05fmr111805685ad.8.1742696485344;
+        Sat, 22 Mar 2025 19:21:25 -0700 (PDT)
+Received: from localhost.localdomain ([39.184.61.67])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22780f3a2e0sm42817135ad.39.2025.03.22.19.21.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 22 Mar 2025 19:21:24 -0700 (PDT)
+From: Zheng Yuting <05zyt30@gmail.com>
+X-Google-Original-From: Zheng Yuting <05ZYT30@gmail.com>
+To: 05zyt30@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	meetsoni3017@gmail.com,
+	Zheng Yuting <05ZYT30@gmail.com>
+Subject: [GSoC PATCH v7 0/2] send-email: improve error capture and status code handling
+Date: Sun, 23 Mar 2025 10:21:09 +0800
+Message-ID: <20250323022111.20226-1-05ZYT30@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250321025128.68463-1-05ZYT30@gmail.com>
+References: <20250321025128.68463-1-05ZYT30@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1742339107.git.josh@steadmon.net> <cover.1742594960.git.steadmon@google.com>
- <6befc95a2d0893aa269142a18d60ad07e79c6e88.1742594960.git.steadmon@google.com>
-In-Reply-To: <6befc95a2d0893aa269142a18d60ad07e79c6e88.1742594960.git.steadmon@google.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sat, 22 Mar 2025 21:46:49 -0400
-X-Gm-Features: AQ5f1Jr6mD34bCs1OtFw_PHcvH5eH-913SyO9PvUDEGlZl2-1JP6zDY8P5gc1cU
-Message-ID: <CAPig+cQ+05r0iJO3me2=yz1KWaU_S_WQmbeciOqZGxYWgbT8dw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] libgit-sys: add symlink to git repo root and build
- out of tree
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Mar 21, 2025 at 6:14=E2=80=AFPM Josh Steadmon <steadmon@google.com>=
- wrote:
-> Unlike `cargo build`, `cargo package` does not get access to the entire G=
-it repo
-> containing a Rust crate. Instead, it prepares a directory starting from t=
-he
-> crate root (potentially excluding files, such as those not under version
-> control, or explicity excluded in the Cargo.toml file).
+This patch series improves SMTP authentication error handling.
 
-s/explicity/explicitly/
+Auth relied solely on return values without capturing exceptions,
+misjudging non-credential errors as authentication failures.
 
-> diff --git a/contrib/libgit-sys/git-src b/contrib/libgit-sys/git-src
-> @@ -0,0 +1 @@
-> +../..
-> \ No newline at end of file
+Patch v7 1/2 wraps the auth process in an eval {} block to catch all
+exceptions, adds var error for future handling, and var result to return
+auth state.
 
-Meh.
+Patch v7 2/2 introduces finer-grained SMTP error handling, extracting
+status codes per RFC 5321 to differentiate between temporary (4yz) and
+permanent (5yz) errors. For 4yz (transient errors), return 1 and allow
+retries. For 5yz (permanent errors), return 0 as failure. Unrecognized
+codes are treated as transient errors by returning 1. If the status code
+is not caught or no error occurs but no result is defined, return 1 as a
+transient error. Otherwise, return the authentication result.
+
+Zheng Yuting (2):
+  send-email: capture errors in an eval {} block
+  send-email: finer-grained SMTP error handling
+
+ git-send-email.perl | 68 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 54 insertions(+), 14 deletions(-)
+
+-- 
+2.49.0
+
