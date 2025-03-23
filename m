@@ -1,94 +1,82 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD8117E
-	for <git@vger.kernel.org>; Sun, 23 Mar 2025 13:37:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894072E339A
+	for <git@vger.kernel.org>; Sun, 23 Mar 2025 14:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742737026; cv=none; b=Q7GPR3dZuXwuYKf1ck5Nr3Iy+kR/4/OQXoTTWMCSAfPR8czSvEEKQZLVcKov2Qk4YWZC1cZfWRUHeWcube7MKc3jhdF33cU7NxwRGd9Fjp1ABorkSj4KJ7cp99mJNQUxcM7pSxWuEALOsKaVvz40H9WhD/bP3x6UIqYQvquLaLg=
+	t=1742741432; cv=none; b=lxqjv19XDANuB9+DBIYLqpbu1i7y6XzWj3gjqwc123wIwy6Cg72fxbJNzSsCNx7hQJwKqMhUpRQPVtRTzM0Flig9mibf+dxI3mgd63GU3mIrNyZ5D2uRk3cb63kjmD8/OEWAH6HhL5IIK9XxhRzL+U0Co1Zx+ptinyqY/E1sKjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742737026; c=relaxed/simple;
-	bh=PksrTAnrQUf7G6aqfz5gPM19ORIvlxudlQ1sdDuOM24=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=UZk/Yes50r72tR4wiEpV/JZbkrhEFmbY+lE1TLzTHudY5PIcy6lgeC6oDHvWSliB4gNBknJs0g8lj8yVtrgzi/6eYzQdQSqhtZdEN9daWbMhNt/hn2nkwtnNrlao6pBLzPDLxhKtZ8K6C63rr9VRWIKe3SGkOUdJLhT3ODRap3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Modt1tRR; arc=none smtp.client-ip=209.85.167.52
+	s=arc-20240116; t=1742741432; c=relaxed/simple;
+	bh=QPmb22lRI5X9W90ruEVsg763i96ODBu6+3SwtLgiyZg=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=raOcrdR1N7VBOy0bxT7WndoEZlTwkGgqXYM0GwyOEdgVXxGc3TDJq4xRdXKJ8xZGHoQXuKJhc1NOmxTvZ47fPbccm0rBC5EWvQ/YI6N5qrpFfEYU/iKkgLIu9ZcHvszfl9jnjyVghDBvuIAZTMON2r9WjyDTdhZRHbT29fPP648=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wh9fqQdP; arc=none smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Modt1tRR"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-54957f0c657so3728416e87.0
-        for <git@vger.kernel.org>; Sun, 23 Mar 2025 06:37:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wh9fqQdP"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-47677b77725so32128351cf.3
+        for <git@vger.kernel.org>; Sun, 23 Mar 2025 07:50:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742737023; x=1743341823; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742741429; x=1743346229; darn=vger.kernel.org;
         h=content-transfer-encoding:to:subject:message-id:date:from
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PksrTAnrQUf7G6aqfz5gPM19ORIvlxudlQ1sdDuOM24=;
-        b=Modt1tRR6QOYF0yyp7+b418rGhtIQpBtjTogm5nyV/g5AKd/VeMCCk+R1NFqAwGZaf
-         EWPhmQUyWYsCcxOcrkiJjTWGEqngGbDc1E6XUmU1OzcJ+mvC8fXxHciLkqSaPWjVmVJ4
-         6JBVqHewIivC2BwpNwy1dzlBjEf4/aKp/1MVX7BxZAeDLKfmo6mMbvDnIuQ4eBkwbE6Y
-         fP1RrjFKbY8GKPehsfaKHCj4p+QwDNtnUupr/25/0RckLNgm7FLCKNfd+BEAMwqnGYGh
-         bDDL4qKxIUhT/7BJsppA1eX58eSpdLtSJSQypUDzMFWjk8zCiMwo0lEsK9I/oBccZ+tk
-         oohA==
+        bh=QPmb22lRI5X9W90ruEVsg763i96ODBu6+3SwtLgiyZg=;
+        b=Wh9fqQdPn9P7l0si9WR2XwyF2/ZUNwL7/NcfG+TKMrixUErOPY1g6xrd7t4SXqc63n
+         ZFN5UVxjfGJZ42I7ydMzrUIuXrZ7muCkSi/1M5SWS08feZ9lURPtqXCxp1muGQWqHJ7I
+         HFU/vOZLiwD+i/bs+neEYVot33t83af6NZ5xJmCvEgygt6cQZW99rnjU+VCxDfog7F8E
+         5pJpHUd5luAJZhFdlrLu6U18i78IVCY9SQXJFeGjjPesAJ/y4CD+WxrJEfAAZlbuWRM3
+         JuDDWXPStc2XGGbNe2m3hxH+JCB7xo5i3c6bkq2XyLyUH+gcOUxebRvP1Vq4oF/+t9AZ
+         +ZGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742737023; x=1743341823;
+        d=1e100.net; s=20230601; t=1742741429; x=1743346229;
         h=content-transfer-encoding:to:subject:message-id:date:from
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PksrTAnrQUf7G6aqfz5gPM19ORIvlxudlQ1sdDuOM24=;
-        b=b/LBlEkl/2xPDzCxEhCLlqaTiK2wcjbbdH2XUd28kA8ioiatjLAPz7Zic/RvG2QAcH
-         xTMwJY0BnIc2b9lutPpEnIZJCTsC7yIz0vTz/2DpbNYpaxCmd97NnT8LC7B5YQnvIrRY
-         T59e5Gix2HLGZdcCMvRvtWuPU49BfTN5Zggimf7Pw75FJZgp/fJbFPe2z6pc44FhOmAY
-         Za8XK+T0rLyH81EsfVnn7rk9IdkKbbZqdqx7yx+xpaPdRmIkC/uWszuUJZYsQCnpgMvF
-         SUBrcRdoAtXoyDN2/iSkLxdRlqRWJog3/bPW8izGVfjdb/d7ojSKJEMrRtUN9DXksIBJ
-         s+tg==
-X-Gm-Message-State: AOJu0Yy8j5N3m6WsWm194nb3w0q8kTlDGHU39NDlyuSpCUqhdXAICPMn
-	WlNb1EAuR5IP6renA34VFM/QB8rBXa5A88R80iShnPVq/4yz5Bj7Y2+rfH0hs/IrzYKzruluxZX
-	jajV9bPhw1UjNv+IqZx9Ld30NQAD1tEAKGgY=
-X-Gm-Gg: ASbGncvPGU7Savh/h/mFS1G11WlUAKWw2neZXxdwFa2iLRy1dO9GMQoEcQIL1iW+Ng5
-	ZUXz+Op0gumV4n6Wipjei2MVaRFVImW5s78JYrqsmEQstE8VNMrv68z/BRTMQqm9EqzqCD6Kg4k
-	kvIUChDX+F2rWw22OLQRcDaPrrBPPksZurjisX9UJGpdDGq+v07yqSh83GaUZg
-X-Google-Smtp-Source: AGHT+IEw0bWjRJm5DHyF7eFpHiyVi61hxS9BNEMdTnc4Rd7c/60wbTh+7T9G+rWA02eITjo6SDivoqNR8BNfiLbQ4Jg=
-X-Received: by 2002:a05:6512:1092:b0:548:878b:ccb3 with SMTP id
- 2adb3069b0e04-54ad609dd6fmr3015028e87.25.1742737022440; Sun, 23 Mar 2025
- 06:37:02 -0700 (PDT)
+        bh=QPmb22lRI5X9W90ruEVsg763i96ODBu6+3SwtLgiyZg=;
+        b=nk7QVe5NbZTmL9BaO5DXqK2qQ4ArpFtEfAzl7S40j659NN8aNhu1tbtwQUQmLBiKur
+         r8d+cBlRr/K6oqNmljTM+yuEulvPupMqTagz6+x5W7qFlhyk+swsQNuLD9t35AeoXq1z
+         GxOo+pMlnytko64zRVIWD3aj1liUdX2BxLZbVIjzjJnyO268rQT97LXeNtzFU5evDWrh
+         oedxA5lF26Txd4z03L2VzgrlwONtlNdrCYmvupQYI5S++pJUhe0KcKCbw4aWn8HLK4Cx
+         pPMc2B5UGL0bRVPdoduHq0754iXYNmFd8zlO6+1Uo+zJnXCTLw5HQBz2G7jHsIFeHoOl
+         MZzw==
+X-Gm-Message-State: AOJu0YxCLgcfXbY4wxorqtNuOlmzz8tye3FuDxnAgSsdVvqERwdQ3s5e
+	PDSjdrw+g7dBn0ig9Jllq5vJGYto9/msJvFA+lL7abHeYbpQNyNAbDiQj77/6jiIh4D0RXF0QpB
+	Cti4L1MyNqQ1hiOM3qrGUwP3vQsXsUVPG
+X-Gm-Gg: ASbGnct+XNvYAclAIwVcMen5yJtg9xkYYQJPbUik1G2LcnZfKg8HkzieUUObk3hh667
+	m169lfW8Ey4QvXqFTcKsQ/0GwRRRhZPi8uKtWsWRArIudtom1L2OvRJZm4P4e5ZsJ/jiua/Z2ZH
+	Yw/TdgFVl5omblgbH5bhPsC6bnG3kE6ygU9HkEbCW0JgwX8J+/R7KKIsnT3NI=
+X-Google-Smtp-Source: AGHT+IF5k2ZVsHvHSiE/umxJWyNlH76oh4+LocJ7WvArY3mAEh+fTp52kXCetRv4HPYdFjPuuR4nDn0BXwU1HCN1qEQ=
+X-Received: by 2002:a05:622a:244f:b0:476:77ba:f7 with SMTP id
+ d75a77b69052e-4771de41cdcmr197915671cf.34.1742741429227; Sun, 23 Mar 2025
+ 07:50:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Yuting Zheng <05zyt30@gmail.com>
-Date: Sun, 23 Mar 2025 21:36:51 +0800
-X-Gm-Features: AQ5f1JrRx5Tk9nZiAMj0uxwj-ZyBcAorHBKp06d9mACEC3CAC86S8PJM2UyxPNA
-Message-ID: <CAMvj1+rbYKFNeWEvvN76MTpzfuWc4TN4ViXRE4nTfWy7ZMspWg@mail.gmail.com>
-Subject: [GSoC] Proposal Discussion: git-refs Project
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Sun, 23 Mar 2025 20:20:18 +0530
+X-Gm-Features: AQ5f1JpUUYDpU7uQACX-4LPkPppo7DJY2MRaHvojjWYBNQ1Vg2jpSgguIlJXh7k
+Message-ID: <CA+rGoLdvY+JdgdzgE04EJoF9KGUpd39+2S_AgpFyucP38mdFgA@mail.gmail.com>
+Subject: [GSOC] Machine-Readable Repository Information Query Tool
 To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Dear Git Community,
+With GSoC proposal submissions starting tomorrow, I=E2=80=99d like to
+understand more about the procedure.
 
-I am very interested in applying for the GSoC 2025 project "Consolidate
-ref-related functionality into git-refs". I have reviewed the relevant
-code, documentation, and mailing lists, and as part of the application
-prerequisites, I have submitted a microproject patch
-(https://lore.kernel.org/git/20250323022111.20226-1-05ZYT30@gmail.com/).
+As part of my microproject, I worked on modifying tutorials where we
+create new Git commands[1]. I also have strong experience with C and
+Shell Scripting and would like to contribute by developing a dedicated
+command to fulfill what git-rev-parse was originally intended for.
 
-My current idea is to extend the `git-refs` command=E2=80=94by calling into=
- the
-existing code=E2=80=94to add subcommands. This approach would replace the
-functionalities of the mentioned commands while ensuring that I do not
-modify the code underlying them. This guarantees that the new `git-refs`
-subcommand meets the new requirements without affecting the usage of the
-existing commands.
+Could you provide more details on how to proceed?
 
-However, when searching the mailing lists with keywords
-=E2=80=9Cnq:consolidate ref=E2=80=9D and =E2=80=9Cs: refs=E2=80=9D, I did n=
-ot find any discussion about
-merging these commands. If anyone has come across any previous discussions
-or could kindly provide additional insights on this matter, I would greatly
-appreciate your help.
+[1] - https://lore.kernel.org/git/20250321143022.5406-1-jayatheerthkulkarni=
+2005@gmail.com/T/#u
 
-Thank you for your guidance.
-
-Best regards,
-Zheng Yuting
+Thank you,
+Jay
