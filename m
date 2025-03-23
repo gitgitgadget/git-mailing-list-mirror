@@ -1,156 +1,126 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEDA14012
-	for <git@vger.kernel.org>; Sun, 23 Mar 2025 15:29:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D085417E
+	for <git@vger.kernel.org>; Sun, 23 Mar 2025 15:58:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742743776; cv=none; b=sRuLCW8FhT+fp/tJy60Mnhbhra3XCWiOEMxamngYnD4ncPHApik0c3qUAm+QLcfEZMZnuHQX/fBuFA47htWQr1hzkQSIOrJFnKE5lB+jkdlwhsKjeuierCxgxlaLhH2eNEBYe4aspxP9gdsDYopvy6uRZlbH0gZVam/avnmKikc=
+	t=1742745489; cv=none; b=CZLFhsj/Vzh+zcKs2M62IJvvYg4ZJ9zkynEQSZjAhGDYATIKR7AHUfii/pPwhdML/hXosgEPHdyld9+coE0+qWoHML1G0eJsSnJs6H4tFT0bhTe3DZT97LNX9Z/qbH03QInKgdbkRHQpuKnXZfJ5B3SDmf1hGGzThxJIBxvxeJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742743776; c=relaxed/simple;
-	bh=3XHRyTca49+4utzUcA+OpaxPMp5rVAtUtKKlPtRTfVw=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=DNO1dha4hTe4t5g6I5SJP3EpQz9XXhr6BJvcvLVINC9u6oqNACjbT6z4vXZoHnnFaYxahtHFfy6cmEJc4ebFtLHpNUYpv91TKHYm162G5VtFq4rm/ktEamzKIqK5P+WK6T4UaSZXQVAXD0r/Xr1+hiIWV276KVcHA00Mkk0vLXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l4COqBXh; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742745489; c=relaxed/simple;
+	bh=O9jRgoN2kAh5048pNYVIad5WakPg2zmuEChmLEjbHOY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Gv44JWUPDHCMhAntWYISeuBfptVkoeAt69x+MY2X32RI4qSaxar1jurVLQnqslTubX3Dv9RxKAQTnzoDoH2k/L7SBtTsZq1m2cBRDrmnH2zcZmo7uLI1qoR0Fxgzbv/4REweOBoqaHImzYUPUBWXxFxyPVoEJwjcMW/4mjPpsCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rrltclPd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fDFaHolH; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l4COqBXh"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43bb6b0b898so32754405e9.1
-        for <git@vger.kernel.org>; Sun, 23 Mar 2025 08:29:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742743773; x=1743348573; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XlDwTVMY6SZcKSN4UG7s04O34HY+gbQaF4B7+e+C8QM=;
-        b=l4COqBXhlhGCbP9fa+YtT9N0uevZWs28F5k15R3B6D7cvHUzkcvwrI4Wyk/3zQqRAK
-         MSfBQU0HM2ahL4e3RCZqHMUo2K8Wr5zaxg+Aowp3UsFVUREUWhCxBgGWtglcJCo2RgaK
-         2Yp8rTKmAGIpV1gAoNC18lSRPEk9QuJfPdwJ2zlj21RnDZelTGTUiJOBpPuFjipnzELz
-         WbnSKjsyM8mHqSK1+siq8Qg2OO1I0r8D4VDzNNi31giYcA5hvdOoEDHedtKiEEM2EaNV
-         RXxHyIe87Fhy8MrjtazorjfquEHgss5NsOZFDGxbLB2tZa/P6VdDl6cuPd21ETiTn07o
-         r0XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742743773; x=1743348573;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XlDwTVMY6SZcKSN4UG7s04O34HY+gbQaF4B7+e+C8QM=;
-        b=iREsscmAQxfe7cbwgLuhMddiMIFZVCDf8SN4qqra6POh0WXEELTVhE49h2IyewKeo9
-         kJSJPmRSki/bTTPfzS1JBfEOUb9p6PyYLc9tedZ8oo/iKGsAjRqGG7tPLqn/sjRTovUp
-         CzsjzNd1EjubIUjfZ3gFQQlL0XMp5t3YCT5Sfpd3NXTJekbH1jPB6s2nTSN0oRZ99xO8
-         cEmoxOiE4sOl/tk7HpmCtzInIyhD1CmYUNjaqXsgHE7d/cNa2pA+h/JAOoymrkbxrm4c
-         cOeid3OGy2NNzX9XOd8QYA5NyG8+/pQb2kBLwUcwGf7cegJ1U/LYwQ7idWql3htUzqUT
-         tXhw==
-X-Gm-Message-State: AOJu0YwvUqk/ZGg7kZknAsS9QKC1OC4J39ozdEcpkyVbUKUSBI6Y2z8V
-	ka8Cva70gYyp/ieG2bpCgHMmkQLFgrc+HcG/qY//27x08j8Wp4yx8gPSiQ==
-X-Gm-Gg: ASbGncv7DeHZatBcGHt+e8kQ22b+OWemXOZXEvhx9IWMyCugbwPytZPLPhwRr7vRvBy
-	GUnvbux6HKLWVz9Jb2GBYbI1s/3dMMgjDT5T5yFpiOTIdZutSUVxUMXCFS0DZru10zZCw5LbdN1
-	5UDKa26uYWoMXeE2thJuojB7dlMyPz+GwAIr1a+KHZFiUiEMsFPl2pvNAnqr5a8rzHZijjySBJv
-	dRMsPCEnuOJlXNXzmi+Nw8mBEHo6fGvOub73apfxl6sTXz2B43iSZ3YZmYO+7kqSL9xTINUI+9G
-	Krozxu+GmuNg3XmwQcOvgYzyeLwT79i0OrflBiW/2JNWipcWdlU9ORhq
-X-Google-Smtp-Source: AGHT+IHYvVwS2qmuF6F+5gejQv8K9P9ZXUbmDm+DXbvs7vReLCIA4XPA9DSJa2L7wdcFtXM3ZJZfpw==
-X-Received: by 2002:a05:600c:4584:b0:43c:efed:733e with SMTP id 5b1f17b1804b1-43d509f58b4mr85623925e9.14.1742743772564;
-        Sun, 23 Mar 2025 08:29:32 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9e6676sm8113304f8f.62.2025.03.23.08.29.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Mar 2025 08:29:32 -0700 (PDT)
-Message-Id: <pull.1930.v3.git.git.1742743771108.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1930.v2.git.git.1742688740650.gitgitgadget@gmail.com>
-References: <pull.1930.v2.git.git.1742688740650.gitgitgadget@gmail.com>
-From: "Ayman Bagabas via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 23 Mar 2025 15:29:30 +0000
-Subject: [PATCH v3] shell: allow overriding built-in commands
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rrltclPd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fDFaHolH"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 96B732540127;
+	Sun, 23 Mar 2025 11:58:05 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sun, 23 Mar 2025 11:58:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1742745485; x=1742831885; bh=0VNiQ8v7sH
+	FnjC6DUPGSSTU66WOeLaAovXR1vFy8EkI=; b=rrltclPdgkxD7B98BEqpzQSEAu
+	SBrEEfN5ma3N/h5C3OmStnHjoRv8W4IXwqQEBPRg8jxYHO8o8QFKClMxJmMGRVMZ
+	V7PnJreaDsyLZNcVP2sDBacNK+sC4fWNAd9MR/lHQLeEfGr+OHPiRT7EXhPu/lPN
+	fqwna9pLhPuiikfKYWNWfIs3420UrsMs7lEUCbOM3fsow4oaxRS7pjJ7T24IzjpY
+	PFU4y+B/HKGxtWqzp2G3/ejn01RV0YyF3DR6+eevXPpv3BuBRN4ibB87SOFv4lW/
+	XZHQV7dK22+2RX/fE2bU/5uGH/adlp7fcyMuCfsfHjmn6Mmxe1M8JEnAr7TA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1742745485; x=1742831885; bh=0VNiQ8v7sHFnjC6DUPGSSTU66WOeLaAovXR
+	1vFy8EkI=; b=fDFaHolHqMl5v+LN+ixb6aOSqLQ9jlUYKplmyrOj5tbLQW/OAjZ
+	uOljTEQ83OF83/xDz49QrcTGP7KtDF+98+t33R5/oSjechi8U7K/lKD7HbbYc/nR
+	OsbNSRzOKAtFX39DvPdTSA0eEktV9LnKQB2TmKrBpY6pSW3mt9Eghwc3fXW5Tavi
+	5Gk2+RzMxzMg1e63Clm7nmBMGymHiuOiB5LVWDmKI8ebp4n7hqrW2enmazpOWkj+
+	loNgTJabrSGXMkQFyubCVrPJku/ilBpWSMPNuyskGqJPKvT3LCyheIfyYI1htUBC
+	UgkpU0CWJlRo8lVm6kgQsF9wK64fLRsa66w==
+X-ME-Sender: <xms:jS_gZxw3ql9VtPFJPSy2mP3KEIChQdqWlpF4lyi2ZpOyVzzZSSHRng>
+    <xme:jS_gZxS7wgZMLG4XjYULZp0bWwkc412e20wi1f9yZFWyqwXXdmez6QmFRnw8weq9k
+    CCHl0kWea1GdlZpfA>
+X-ME-Received: <xmr:jS_gZ7X3zZr6NCXghNwhXPk_kNkTVQlgQRXwumPMto3luYgqnYW83LmFhFuGQ-Ob6ndim9ECVENstjKYF30ooxQOagXlWqSJwPuUtHg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduheejvdelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikh
+    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:jS_gZziC_ot-IJ0Y1ZnDKxc_A6hlMK6Oon-xKHj4TLPxM0KEfY9slQ>
+    <xmx:jS_gZzCGPxwieiMMSO-ZnRaaYfaarXqs6rMEG0QSDcDY2RamDFu1lg>
+    <xmx:jS_gZ8Lewe4j8FHjI0nnUSgWos_WLGCTyJ12-ogPRPHE3vDwckOrog>
+    <xmx:jS_gZyC2I-DN-iVsZgBye4gcFWAdp5bwPMY1W6mzsshVGyQaJxRsiA>
+    <xmx:jS_gZ-7dW0uRr2c5HnbS-oDOCtYIvudiRNKBSSwWacE2hh7UZDWgCH0A>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 23 Mar 2025 11:58:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  jltobler@gmail.com,  Christian Couder
+ <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] blame: fix unblamable and ignored lines in porcelain mode
+In-Reply-To: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
+	(Karthik Nayak's message of "Fri, 21 Mar 2025 17:39:14 +0100")
+References: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
+Date: Sun, 23 Mar 2025 08:58:03 -0700
+Message-ID: <xmqqzfhbrb78.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Jeff King <peff@peff.net>,
-    Taylor Blau <me@ttaylorr.com>,
-    =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
-    Chris Torek <chris.torek@gmail.com>,
-    Ayman Bagabas <ayman.bagabas@gmail.com>,
-    Ayman Bagabas <ayman.bagabas@gmail.com>
+Content-Type: text/plain
 
-From: Ayman Bagabas <ayman.bagabas@gmail.com>
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-This patch allows overriding the shell built-in commands by placing a
-script with the same name under git-shell-commands directory.
+> However, this option was never extended to the porcelain mode of
+> 'git-blame(1)'. Since the documentation does not indicate this
+> exclusion, it is a bug.
 
-This is useful for users who want to extend the shell built-in commands
-without replacing the original command binary. For instance, a user
-wanting to allow only a subset of users to run the git-receive-pack can
-override the command with a script that checks the user and calls the
-original command if the user is allowed.
+I agree it is a bug when people added ignore or unblamable support
+that they did not _consider_ what to do with their new pieces of
+information to help porcelain writers.  It is not a bug in the code
+per-se, but it is a bug in the brain of these people ;-)
 
-Signed-off-by: Ayman Bagabas <ayman.bagabas@gmail.com>
----
-    shell: allow overriding built-in commands
+But prefixing random garbage to the commit object name line in the
+porcelain mode output does not sound like the right solution to the
+bug, either.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1930%2Faymanbagabas%2Fshell-override-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1930/aymanbagabas/shell-override-v3
-Pull-Request: https://github.com/git/git/pull/1930
+When enhancing an existing output format, make sure that your
+changes will have minimum empact to existing parsers that do not
+know about your extension.  It is reasonably expected that existing
+Porcelain scripts reading from --porcelain mode output works by
 
-Range-diff vs v2:
+ - Recognizing a line that match "^[0-9a-f]{40} \d+ \d+ \d+$" and
+   take it as the beginning of a new record;
 
- 1:  60c6339e790 ! 1:  7e6996d199e shell: allow overriding built-in commands
-     @@ shell.c: int cmd_main(int argc, const char **argv)
-       		}
-      +		/* Allow overriding built-in commands */
-      +		full_cmd = make_cmd(cmd->name);
-     -+		if (!access(full_cmd, F_OK)) {
-     ++		if (!access(full_cmd, X_OK)) {
-      +			const char *argv[3] = { cmd->name, arg, NULL };
-      +			return execv(full_cmd, (char *const *) argv);
-      +		}
+ - Collect all info lines before the payload line.  Lines that
+   describe per-commit information are not repeated if it is already
+   shown, so remember them when you see the commit for the first
+   time, and recall them when you recognize the commit you already
+   saw.
 
+ - A payload line is indented with HT and terminates the record.
 
- shell.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/shell.c b/shell.c
-index 76333c80686..8c7f4388bd5 100644
---- a/shell.c
-+++ b/shell.c
-@@ -194,9 +194,11 @@ int cmd_main(int argc, const char **argv)
- 		/* Accept "git foo" as if the caller said "git-foo". */
- 		prog[3] = '-';
- 
-+	cd_to_homedir();
- 	for (cmd = cmd_list ; cmd->name ; cmd++) {
- 		int len = strlen(cmd->name);
- 		char *arg;
-+		char *full_cmd;
- 		if (strncmp(cmd->name, prog, len))
- 			continue;
- 		arg = NULL;
-@@ -210,10 +212,15 @@ int cmd_main(int argc, const char **argv)
- 		default:
- 			continue;
- 		}
-+		/* Allow overriding built-in commands */
-+		full_cmd = make_cmd(cmd->name);
-+		if (!access(full_cmd, X_OK)) {
-+			const char *argv[3] = { cmd->name, arg, NULL };
-+			return execv(full_cmd, (char *const *) argv);
-+		}
- 		return cmd->exec(cmd->name, arg);
- 	}
- 
--	cd_to_homedir();
- 	count = split_cmdline(prog, &user_argv);
- 	if (count >= 0) {
- 		if (is_valid_cmd_name(user_argv[0])) {
-
-base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
--- 
-gitgitgadget
+If you start to add unrecognizable garbage to the line with very
+well known fixed format that is used as record delimiter, you would
+break the existing parsers, which is not a very nice thing to do.
+Are there other and better ways you can think of to add new pieces
+of information like this in a way with less severe damage?
