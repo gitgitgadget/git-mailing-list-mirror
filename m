@@ -1,110 +1,165 @@
-Received: from mail-io1-f99.google.com (mail-io1-f99.google.com [209.85.166.99])
+Received: from mail-qv1-f100.google.com (mail-qv1-f100.google.com [209.85.219.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857C518F2DF
-	for <git@vger.kernel.org>; Sun, 23 Mar 2025 21:04:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EB73A8C1
+	for <git@vger.kernel.org>; Sun, 23 Mar 2025 21:05:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742763895; cv=none; b=R15/z44qPNoEvuGpOctlyS/e+UIePjgvNEnTTR8WRfrlc/G8iEyv3xMctdI+sRh/iJzDI4fiLF7dUU4sLnEAX5JUthU+g4CAtpFU3iLTTCThSZKareUvDE4mFYHvKQVJ/Elr3QEZ8IsD/QnZzoKGqvX4rQlp2g70ytLuYZstMoY=
+	t=1742763950; cv=none; b=llH7gU4B+MSa3lKwV4sDbjot9dVHPQCmi7k4qsiihf+BlradFLr+M/rf0/aCmmNGA4jsv9xv2ZhyvEE86ldcbH1I9XMD3fUxu/NjQZ4jmKuZmE6YXazvdn2a6jVfH2qZV8aJaOmaQe+QX52aO/QDflihyuEcbyGiriawkgTpsK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742763895; c=relaxed/simple;
-	bh=2Dj5ovAqfDY7M3++Tq9DM5l8qCR6h1AW5oQjbpmXa38=;
+	s=arc-20240116; t=1742763950; c=relaxed/simple;
+	bh=zzC/0NtNXO/xJEdLNnUD7GrcFDmSQfH0mWHyPjCbryQ=;
 	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=cP6Gs3OiuVV+h9R2axnhDGJhyrQ25/CUCp9wv0CcgPQ4pl+trg3nvqwUebvPGkKWzWIwXeN+XbYPhaBIZg1DLUtsuNCpIF62x9YkUVinmkfYyXua+Tl+r2AnKcwSlLgtr6+c1HmZpHSk5KnDy8NKXhU375sXWhS1T18/rSxvF/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org; spf=pass smtp.mailfrom=mandelberg.org; dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=UZSY0Pyd; dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=bknT7bZD; arc=none smtp.client-ip=209.85.166.99
+	 Message-ID:Content-Type; b=RHcxogyI3vnLyjNxgCfCLWeswdXmVLT8eokDwRjlgr3zLsMzWhBrsybrnzJaZcaCV9UFQm/OTcTjOQxEti840pCe1CkLMgZagoTCCrQvqYxhoV/YHRI3sJrLyehwSzuWYGnaEqSOISAp9Cz1Im96fnU/BiB12B4V1ro1za0Z6dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org; spf=pass smtp.mailfrom=mandelberg.org; dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=Bzraq4w0; dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b=D2SQRvAl; arc=none smtp.client-ip=209.85.219.100
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mandelberg.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mandelberg.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="UZSY0Pyd";
-	dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="bknT7bZD"
-Received: by mail-io1-f99.google.com with SMTP id ca18e2360f4ac-85b515e4521so123869639f.1
-        for <git@vger.kernel.org>; Sun, 23 Mar 2025 14:04:53 -0700 (PDT)
+	dkim=permerror (0-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="Bzraq4w0";
+	dkim=pass (2048-bit key) header.d=mandelberg.org header.i=@mandelberg.org header.b="D2SQRvAl"
+Received: by mail-qv1-f100.google.com with SMTP id 6a1803df08f44-6e8fb83e137so30214316d6.0
+        for <git@vger.kernel.org>; Sun, 23 Mar 2025 14:05:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742763892; x=1743368692;
+        d=1e100.net; s=20230601; t=1742763947; x=1743368747;
         h=content-transfer-encoding:message-id:references:in-reply-to:subject
          :cc:to:from:date:mime-version:dkim-signature:dkim-signature
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/V3Y/PGSiUZMBlj7MGKkFF0BP+00636S+Kz6VCt54+c=;
-        b=YAlgnzE67Dcp8HX/BckO+cBu7BpNM66DqNxk+fNNFvHoXSgSrKMGHu4xF8Fl15tgcT
-         FCrMCQoFJ/Oj59PSPh6ZmD51fwSjtjJ874YmIDfaKkjEN9GwSXKbTGD1N8rzhguH1oeO
-         XFdiU/U7Dt7RNnUwuZsLW52ASrAjx1ICfBdgNfdBRGZLtHI6N8d2GRoi+WNKfkeldp3u
-         2Q8SogkjkU+vwecIoxKpS7btPN8HVEtizc3WIbBLkuHki8MqA88YmVRjNdpzn5klftWf
-         8a9LAu15ZLdVudcDQB5w1Zow3/IvNZLFYALmWIpUAx/PNRMBnhLyG7hJpn36pj6gcOWS
-         jGtg==
-X-Gm-Message-State: AOJu0YzG9ZSRlamBfnyuwPuBfRkVTlAHMh4ofk4CHnZyUz6hFDg8IbuS
-	tsBBtIkPh0KfO5ylu8OPOWkGtK3ZXw38QFKAU35aXqsYJOB2C3gF386sqTtWBsThgE7iSkhmzxK
-	timIdlL8SdXVtoFLFXesIWZ9P7rlLrgsSyyOvI8XDly/4oe70
-X-Gm-Gg: ASbGnctqTENf5uAxC5pZqZSHzlYpCcL4zZJCEjGkM9MGdQIc2sX1hiLmJ3z4keUjp7B
-	TEZojcBaVxciS9GGGtGhKvu7jkGB10clPsvLQviGDuKetefrB2fZ0FN17ohOUBgxrkzJuYxN6Cz
-	B3qjZnaxKmIjR8pzQBBU74kzRITUivraiLUZYGTVlv3Db6+IxsttX49Jy+m6dXPE9dwWLtgD3dM
-	jpUmCF8Z0aJINvtRYhHZ6yaTTXQn9RbVtBcM8bCoingifVFUerygIz/ancEn2Ks8vnD/x0shPje
-	XG/l3eChGao61bCW5TspSYoHPl0JDh7Vt08kcU0h
-X-Google-Smtp-Source: AGHT+IGEnZ5/QG6cjsSDmdMznW4L7gG7L5K1Pw5exaprujqMyLf7hRhi7bdWGLeL5RII99rg/HIyC2TyHwe6
-X-Received: by 2002:a05:6602:298b:b0:85b:3fda:7dbf with SMTP id ca18e2360f4ac-85e2cb4607dmr981933639f.9.1742763892397;
-        Sun, 23 Mar 2025 14:04:52 -0700 (PDT)
-Received: from mail-outbound-e14cf917.virgo.mandelberg.org ([2600:4040:52f1:f606::8])
-        by smtp-relay.gmail.com with ESMTPS id 8926c6da1cb9f-4f2cbf28b7asm280505173.69.2025.03.23.14.04.52
+        bh=YF3p4JpKe0GgTVk6uxY4SFKTckJfEeugqPF2Cxo0Ccg=;
+        b=REsb9nYmtMk8fjMcBZvUUwpPLfnnM1mzTEcHw4reB7TWYNJO4EVm7fz0u9WUM4LsbG
+         WaJomLkx4ci0RkAHfPV4GH88nlL92TQuFzN1Qx5QYjpqUjWRCus+xLhXZBaaNV27+RWo
+         mNP2xLV8vIxHs7AGIF1FjFmN9p44bVcvJWTchwouBqOXnv77xMV/03FIygRol+vTEKVr
+         au8j6TOIyC77SLBl3GSBLDk69ybLzGxDqiuUbK7irKjhxTX9qXrP2L8aANXdbMScznNI
+         +xbClqC0fi7S7O4qY9p1Zzt3Dux/zBwl0Py/hMM+RMAhZEW26JAzR37TpWfTDjSkeSHl
+         R1Fw==
+X-Gm-Message-State: AOJu0Yyfn8hz8q56e9aMFdKaq3LbGOfR2CVDhlZiTOWua2WXwy4Bnu8m
+	gcc3HifQ3ZTeiOqfgyLLsQ7HhBMiXLmrLIGw7SuyKZuZQHKlr31260rPHOXx2PmtWw+o27848NQ
+	oJGYSRgQPFV7Mdocs+aAYkU77fqZnQXEj
+X-Gm-Gg: ASbGncuftq5WhqeS6pFkupsuQlpTbEE4dbx1J9iuFevwJI4zQzTAypBI7eHRgNIheN/
+	F+2RMJTYhjcc6JT/YSKjcYbpTneZuvqrxwK1Xw2Kiz/62S6m11I5KAVMG9ZVT9/YwpsxepWrFeu
+	ulGSZpeAx9EMC2zTi+ehBqMrxh1XfHjhXFVFyXhe2drM57P6yGO0CT7ei7a/1T5VGrTgAizzOse
+	KcgY/MHDo1Bh6PsGjRJK3G5q5N1asFT5gpipWLFyiWrRHJ3t6FZrU0WTsQVnBGsFKraABVB0jl4
+	wd2T19KAvStbywOY6urvurxNBaJjtZgbeTgQC3/t4JgkgDi0Caj71k3U6ZqflOMNwDXTQRqOmPm
+	AaTCPDEeEyCUUdo2OD9bqyd9v+S55nQ==
+X-Google-Smtp-Source: AGHT+IHHNc68hC641RGOtnDCBP23yrtnSt8VfjVHvDn4YmYnc54A8XN4e3AtetDWZpGd7Mrh/Y599B/FbltG
+X-Received: by 2002:a05:6214:48e:b0:6e8:ee44:ce9f with SMTP id 6a1803df08f44-6eb3f2e47dbmr166278586d6.20.1742763947121;
+        Sun, 23 Mar 2025 14:05:47 -0700 (PDT)
+Received: from mail-outbound-e14cf917.virgo.mandelberg.org (pool-108-49-41-183.bstnma.fios.verizon.net. [108.49.41.183])
+        by smtp-relay.gmail.com with ESMTPS id 6a1803df08f44-6eb3efc16f2sm3447456d6.40.2025.03.23.14.05.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Mar 2025 14:04:52 -0700 (PDT)
+        Sun, 23 Mar 2025 14:05:47 -0700 (PDT)
 X-Relaying-Domain: mandelberg.org
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple;
  d=mandelberg.org; i=@mandelberg.org; q=dns/txt;
- s=mail-outbound-e14cf917-597d7abb; t=1742763891; h=mime-version : date
+ s=mail-outbound-e14cf917-597d7abb; t=1742763946; h=mime-version : date
  : from : to : cc : subject : in-reply-to : references : message-id :
  content-type : content-transfer-encoding : from;
- bh=2Dj5ovAqfDY7M3++Tq9DM5l8qCR6h1AW5oQjbpmXa38=;
- b=UZSY0Pydc+MnlkMjhVU6oYo+oHaGavakBhxBPb0THz8Mo9pMZjDu5SEp3pm2WgBnB0IpW
- Ib5kaR/8PwqBSsHBw==
+ bh=zzC/0NtNXO/xJEdLNnUD7GrcFDmSQfH0mWHyPjCbryQ=;
+ b=Bzraq4w0C4EkKx98FHqrPievTWkGP7tsLr+b9pi8yEjKjuLi222SxVeMfXZLq9j2e47w5
+ 2FAc8/kLYIs3R7NBg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mandelberg.org;
  i=@mandelberg.org; q=dns/txt; s=mail-outbound-e14cf917-e56dad1c;
- t=1742763891; h=mime-version : date : from : to : cc : subject :
+ t=1742763946; h=mime-version : date : from : to : cc : subject :
  in-reply-to : references : message-id : content-type :
  content-transfer-encoding : from;
- bh=2Dj5ovAqfDY7M3++Tq9DM5l8qCR6h1AW5oQjbpmXa38=;
- b=bknT7bZD3HH+vVFXYTnKXdPTC3YtQuwUQoO9RIuQnrSxTxk0uPp91NZeEP2jjx9mPChBo
- V4fiED235KbM9soCgtm9z41X6CShYOOE2DZ5ArvCzJo4eR7pei8bkOhtnnazTXdBe9fZFzJ
- ojkPED75BpQ1Qvyyfxed6p/wrb6OS4JvYymBdHtPqI+Ni9Rr79hcf47wqU/BTKC1stpmAoA
- YYvPtWoKKwrUWWXcbpL7v3KtDKPitewp/HbqR6ADl2sdAXiRQBC+n+cp7khR71PDGlU65ri
- JckjgloZ10R9wXaBs0/KCB5sOkzXoGjlRt5aV2iknwzFdA0XkQGex9gICCpA==
+ bh=zzC/0NtNXO/xJEdLNnUD7GrcFDmSQfH0mWHyPjCbryQ=;
+ b=D2SQRvAlpzer6X9vhGBmZAQY+gWUkkkDOY/YTC2oT+iF2cVwSoSrmcaYSxSObHRfz3Jaf
+ qYTFkUnq8kWONIWiYJu8FvsWgg8+RHCoNPHInsB/MOg8KwipMCRYT39bwmLYU5MG58uyhH+
+ 8Pn85U67OV9gIipHSQwu6cyudgyQNihVz0m2cdziKjfnTEFdrE8RSLBUQY9DWxaN3vZCOyf
+ 0bnhZ2NHD7Cxy6FCiF6khHPYDYrfWsl23UOL4ZQHO16RB35uI8P5cT/yQCdAXosiIc/4gyW
+ QkthDx0SX+ofnGv43C6PkpMj1qA+ASul4nbEmSgyPp6ciepgrGyvP3iBJv8g==
 Received: from webmail.mandelberg.org (mail-web-d031b246.virgo.mandelberg.org [10.0.6.15])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X448 server-signature ECDSA (secp384r1) server-digest SHA384)
+	 key-exchange X448 server-signature ECDSA (secp384r1))
 	(No client certificate requested)
-	by mail-outbound-e14cf917.virgo.mandelberg.org (Postfix) with ESMTPSA id 4ZLTGC40N8z10dZ;
-	Sun, 23 Mar 2025 21:04:51 +0000 (UTC)
+	by mail-outbound-e14cf917.virgo.mandelberg.org (Postfix) with ESMTPSA id 4ZLTHG4KHsz10dZ;
+	Sun, 23 Mar 2025 21:05:46 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 23 Mar 2025 17:04:51 -0400
+Date: Sun, 23 Mar 2025 17:05:46 -0400
 From: David Mandelberg <david@mandelberg.org>
 To: David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>, Junio C
  Hamano <gitster@pobox.com>
-Subject: [PATCH v4 0/2] completion: fix bugs with slashes in remote names
-In-Reply-To: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
+Subject: [PATCH v4 1/2] completion: add helper to count path components
+In-Reply-To: <17274df2746d304db876ebd82ad8d932@mandelberg.org>
 References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
-Message-ID: <17274df2746d304db876ebd82ad8d932@mandelberg.org>
+ <17274df2746d304db876ebd82ad8d932@mandelberg.org>
+Message-ID: <dcfec0ed2ca2ce26f523e9531f5d3e76@mandelberg.org>
 X-Sender: david@mandelberg.org
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-Another minor change, as suggested by
-https://lore.kernel.org/git/xmqqo6y3dzno.fsf@gitster.g/
+A follow-up commit will use this with for-each-ref to strip the right
+number of path components from refnames.
 
-I'm not sure what the expectations are around updating patches that are
-scheduled to be merged to next but haven't been merged yet. If it's too
-late, I'm happy with the previous v3, or I could send a separate patch.
+Signed-off-by: David Mandelberg <david@mandelberg.org>
+---
+ contrib/completion/git-completion.bash | 11 +++++++++++
+ t/t9902-completion.sh                  | 26 ++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+)
 
-David Mandelberg (2):
-  completion: add helper to count path components
-  completion: fix bugs with slashes in remote names
-
- contrib/completion/git-completion.bash |  49 +++++-
- t/t9902-completion.sh                  | 206 ++++++++++++++++++++++---
- 2 files changed, 226 insertions(+), 29 deletions(-)
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 413911be3b..5fdc71208e 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -234,6 +234,17 @@ __git_dequote ()
+ 	done
+ }
+ 
++# Prints the number of slash-separated components in a path.
++# 1: Path to count components of.
++__git_count_path_components ()
++{
++	local path="$1"
++	local relative="${path#/}"
++	relative="${relative%/}"
++	local slashes="/${relative//[^\/]}"
++	echo "${#slashes}"
++}
++
+ # The following function is based on code from:
+ #
+ #   bash_completion - programmable completion functions for bash 3.2+
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 51bd750837..015289c776 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -455,6 +455,32 @@ test_expect_success '__git_dequote - open double quote' '
+ '
+ 
+ 
++test_expect_success '__git_count_path_components - no slashes' '
++	echo 1 >expected &&
++	__git_count_path_components a >"$actual" &&
++	test_cmp expected "$actual"
++'
++
++test_expect_success '__git_count_path_components - relative' '
++	echo 3 >expected &&
++	__git_count_path_components a/b/c >"$actual" &&
++	test_cmp expected "$actual"
++
++'
++
++test_expect_success '__git_count_path_components - absolute' '
++	echo 3 >expected &&
++	__git_count_path_components /a/b/c >"$actual" &&
++	test_cmp expected "$actual"
++'
++
++test_expect_success '__git_count_path_components - trailing slash' '
++	echo 3 >expected &&
++	__git_count_path_components a/b/c/ >"$actual" &&
++	test_cmp expected "$actual"
++'
++
++
+ test_expect_success '__gitcomp_direct - puts everything into COMPREPLY as-is' '
+ 	sed -e "s/Z$//g" >expected <<-EOF &&
+ 	with-trailing-space Z
 -- 
 2.47.2
