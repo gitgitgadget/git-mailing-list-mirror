@@ -1,86 +1,83 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF819250BFC
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 10:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6D578C91
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 10:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742811398; cv=none; b=KOgQWgRlYLuYWauD9cFpgyD+0W7uk+cdHZ6vHAktR+uLtiXdc1+Fvecn6eBvp6/i793KQOacwDiIATjRCpObS/Re47OZbYC0v5G7/CICGyl69MBQ8wFyiWXnx/rhYPuBv7gLgRPyQLZonXn9lSP4JuMBhspDJCiw43JftcndBS8=
+	t=1742811603; cv=none; b=qZN1+hBuyo5pUrQROLGHPb6uSVyMPY1sv2mmQMTX2m2NeXe7hT26ew7X599tmyOiHp6T7I607Hx1BTxzzAVW4Ga+5YSoLmBP1lXJY9UUngOX5sFZU1UMulUFbmBtnVQoO4TpWf8aaF6rpB8+Nrr8n7QWzRj+QD3p17lWPDSTGNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742811398; c=relaxed/simple;
-	bh=0BskvjjZ71ZVVPTR8M21hHJMIB523KFF4IjIXerhzwc=;
+	s=arc-20240116; t=1742811603; c=relaxed/simple;
+	bh=o7BnD2PVE66YOJacAFY/uvnCQrqgM2hrOgCDPdc2k94=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pwm9uURGeXE2dWj3CF7omdPS8NwOgoacD3Nf4gK+Cj8AQPhEkFvDJ24MUX9btLhnLDhdlfgPc63dJNCsH/W1YY7U2UeGh64IH0nYIczEOoMsFjv6IP++cozMcmCu6LLEfwH2k09AqKJYr5QGirbxkHCZvCqLD6N/scnnLFIGZFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=n49RYeNL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eBnK0s25; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZQfrWCTvZoJXI2Jl46QOEKhso4xGATuoO3fJ4erWpRRS+4iEvHDCCLEtK9vxOLvEvlGP+W3jhU2UiGedqEQXkit5121o1bJUAa4bU/hSADQ7OZBRSSzM6VEeXY+QU7YHlmPV6pHQzr8dsr0QRiGd/hbHCWJcQTOpwPbx0VoOi7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KNCl5973; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XEEwKfGq; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="n49RYeNL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eBnK0s25"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id BC2F91383156;
-	Mon, 24 Mar 2025 06:16:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KNCl5973";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XEEwKfGq"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 034E013833A8;
+	Mon, 24 Mar 2025 06:20:01 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Mon, 24 Mar 2025 06:16:35 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 24 Mar 2025 06:20:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1742811395; x=1742897795; bh=Vc2Vx6TSHt
-	v1Po94EE3vUkewlM19iFNbGspb5UB9umI=; b=n49RYeNLfE7ebQ1uqwWh/E5RgM
-	LmTGkt7atIsDEq9w2NWSDAf6HF34fqZsRMjlOrvZXsXgYJkRvA8YCNILSiQOu1M3
-	YZBhJGmD1b5ujQomquNrvyVQqWk+ioGBMyDvn3Aq2iKyTiDzADLthTveIa+vYDo6
-	3dMKNamh+kIn+DjkagSE3DF3rkbRkdIpUsqaQhdFLTKARVLwZxnKsvuhYNpgdyKS
-	lqChLLQzr0X5egBHwUnZ3ms1l1BYotj5jlB7IkzUwu1LNyiQbgGAwrinTi4vbSyJ
-	K1Cqqy9EhUnOQYn2wRR4lVcfk+GebAMSbko7p27ISd88PYgjLQuD9BpPgVWA==
+	:subject:to:to; s=fm2; t=1742811601; x=1742898001; bh=XsQsm72Y2x
+	Tn/5LudkmOJDRLrzNDaXPnH126Hs0c8to=; b=KNCl5973usZhHpzcNrGgmzURR1
+	OKNqFot0ts/2RK0zVV85sRUc72Tp+n8bMiV3FpGJVlFV4N2r9rTn05qBmevTB/gE
+	idK4mQvcLzQYd5fz8VpHBY23ImozWudA3f8UihbCIPut1QP4s7DHxR+4Rdk04Cmt
+	URO5NNQgYgLxSwFqgjnP65ich6tk5i6zFTImNuPATBStUv0hUG+KEEEKnI7UUPlS
+	AeyNrtuTTWNHEifBkQ/RyHy3sQAwo/uJBA0TKfgaaBocE01mK7479uPr3q6X3Ece
+	X2IohvVMCZxGQ060lB+g7XV0VENSM08Q4UUUObN5tI5Ow66LQgpwBm5PzlbQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1742811395; x=1742897795; bh=Vc2Vx6TSHtv1Po94EE3vUkewlM19iFNbGsp
-	b5UB9umI=; b=eBnK0s25iLNAeJZb8MBhFtm/JpYIfo/9BWiyISdKFqpefnOJNL0
-	bHfIlaaqA263io3qPC1w9hSeaJmdLqlGhCmkSdiUtR11PYy88N4K6JEptaA/EqGa
-	bgG8FYPc3EOmcqSz6CR/wP9l9iqNPVAp8b2lGVOLzYOLAnZoa1PoDZtjidyXTvUJ
-	OzLzu3hoPki6FGM8teBgYSt6BQHkShCzTqmyEuYzACapxHgryrEr+S96zPo+ctms
-	fj14fLDrmASxvwI0pkaM3B2u2wkVe+JTXlysRPmLEGAC6/vwnKm0jnHDnU2kn5uP
-	/4GBmAQiF96sh4MntjkWPxeLBw1HeceXF7w==
-X-ME-Sender: <xms:AzHhZ6Zye0JfB268drcqAEXDjSioEs79j2x9N4lSvB7JvZybzfDOWA>
-    <xme:AzHhZ9YQjySQm5xGG-MJs0_CESerpFgRM4k8L9rHduQtT75v7TboZ8yfR6mHCVuPF
-    XpkM5MopVYSqs59Fg>
-X-ME-Received: <xmr:AzHhZ0_Hsipsepj8L7vjQRhlEmAJZnCSAr1-oh0LxBr42ABlekgxHTWGZQ9_yfCtFgKf4XOBPYAorLmzUjnqgPnhARGynGZNUTsFMMy3QJzvQJg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduheelhedtucetufdoteggodetrf
+	1742811601; x=1742898001; bh=XsQsm72Y2xTn/5LudkmOJDRLrzNDaXPnH12
+	6Hs0c8to=; b=XEEwKfGqYZUXtigrWmVcub4H/4SkcT3OBZb6dCn+Xy6waglS0FF
+	nDyU9Z3o4VaXGlw2NVGyqeIvQsqCA3OyQNnD51baiZI22TjDYy6MhttrBeVIMFvb
+	jct71hHvuevnzbgm3NDZeorcXXc/COpHhxN0HPDWOKCrdF44lz6+cWJWOcMv6ZrV
+	WHNMOeM9fZ1K4kKhNjuEXkRzz68sVR+EvBkl0QRPSPgvvDW1oUu1QNo4RMRaDgCS
+	vGYfoRSYcgj4UGVDFObvkgT/hEool3s8choS1fT3uSM99HUhdgXIoc92CX4aUrEc
+	MaaMh2WRLcuUsW8fsQG4kqRgsu9z/YHX6Ow==
+X-ME-Sender: <xms:0DHhZ7XD_oSElw_itJtJKLqCPegvdQZqi3e6E2_EN7PhmweODmdQGw>
+    <xme:0DHhZzkOIC3WyqIkJ6MqebcTzZuOGa8eH8nIbNQDc053_HXM_sXNTbnrXMD_OJE6i
+    HeHmnGVKTBLqlng5g>
+X-ME-Received: <xmr:0DHhZ3acWYWC31A7Un-pzUWWo0CIlLW46xBIkgPMbLCCyZ6rKLCWIhD5QY9UMnC8khBxPI-NylTxlzwJopI7fAa2Hwcj4Fh-IfLF9VqEaWtjwg0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduheelheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegthhhr
-    ihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhg
-X-ME-Proxy: <xmx:AzHhZ8pC51D5CD9I_79n2rByyugn49S7HbaCHAcU2DFDdu0msKLkXg>
-    <xmx:AzHhZ1qw9DJhIovrQBqZli4t1pridUvlnGV1ZWs1p24p5O8McPcC0Q>
-    <xmx:AzHhZ6SOfqhGZHONwXbS-H3i7emwBP3Tms95HSKXX1Sdr9qbTwVdhQ>
-    <xmx:AzHhZ1ql15u_W0AyfYZV2uaceuIKPvZKt28S4qkuT02yY13iNzr-xQ>
-    <xmx:AzHhZ-BZTyiGW1qiShHHKGV0Ow_l_mepg_BKRQlMqOYEWqaPMzksG-yq>
+    himheqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdu
+    gfehtefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
+    ihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
+    hnsehgmhigrdguvg
+X-ME-Proxy: <xmx:0DHhZ2UOZR_PsGg6Uzrw6q8vQywyS8yGrh9SmYsd7DLix8pBHrywBw>
+    <xmx:0DHhZ1mjVUA-5g8VW7KbhUYZv0feuGQG9jzjcvGr_ZWgjXDF2vDSFA>
+    <xmx:0DHhZzcfK5oNj8kvMD1yapkGy1vFcOFiS3V65ktuTSZI1A7IqfwqWg>
+    <xmx:0DHhZ_FFuU0Q9gIBcoOkSx42ArfCwGqvXNO8KI_UvLqAlzTjirj9wA>
+    <xmx:0DHhZ7iUjTmfvKpQotWnGsI7X2B0aeAZEUSqE09p8XZH7OEms2esUsAn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Mar 2025 06:16:34 -0400 (EDT)
+ 24 Mar 2025 06:20:00 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f8cd6f82 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 24 Mar 2025 10:16:32 +0000 (UTC)
-Date: Mon, 24 Mar 2025 11:16:31 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 12f59b78 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 24 Mar 2025 10:19:59 +0000 (UTC)
+Date: Mon, 24 Mar 2025 11:19:58 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	jltobler@gmail.com, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] blame: fix unblamable and ignored lines in porcelain mode
-Message-ID: <Z-Ew_12NWX_5qATN@pks.im>
-References: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
- <xmqqzfhbrb78.fsf@gitster.g>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Mar 2025, #06; Fri, 21)
+Message-ID: <Z-ExzkjgAor2JQ2r@pks.im>
+References: <xmqqiko2tguo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,119 +86,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqzfhbrb78.fsf@gitster.g>
+In-Reply-To: <xmqqiko2tguo.fsf@gitster.g>
 
-On Sun, Mar 23, 2025 at 08:58:03AM -0700, Junio C Hamano wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
+On Fri, Mar 21, 2025 at 10:48:31AM -0700, Junio C Hamano wrote:
+> * ps/reftable-sans-compat-util (2025-02-18) 18 commits
+>  - Makefile: skip reftable library for Coccinelle
+>  - reftable: decouple from Git codebase by pulling in "compat/posix.h"
+>  - git-compat-util.h: split out POSIX-emulating bits
+>  - compat/mingw: split out POSIX-related bits
+>  - reftable/basics: introduce `REFTABLE_UNUSED` annotation
+>  - reftable/basics: stop using `SWAP()` macro
+>  - reftable/stack: stop using `sleep_millisec()`
+>  - reftable/system: introduce `reftable_rand()`
+>  - reftable/reader: stop using `ARRAY_SIZE()` macro
+>  - reftable/basics: provide wrappers for big endian conversion
+>  - reftable/basics: stop using `st_mult()` in array allocators
+>  - reftable: stop using `BUG()` in trivial cases
+>  - reftable/record: don't `BUG()` in `reftable_record_cmp()`
+>  - reftable/record: stop using `BUG()` in `reftable_record_init()`
+>  - reftable/record: stop using `COPY_ARRAY()`
+>  - reftable/blocksource: stop using `xmmap()`
+>  - reftable/stack: stop using `write_in_full()`
+>  - reftable/stack: stop using `read_in_full()`
+>  (this branch is used by ps/reftable-windows-unlink-fix.)
 > 
-> > However, this option was never extended to the porcelain mode of
-> > 'git-blame(1)'. Since the documentation does not indicate this
-> > exclusion, it is a bug.
+>  Make the code in reftable library less reliant on the service
+>  routines it used to borrow from Git proper, to make it easier to
+>  use by external users of the library.
 > 
-> I agree it is a bug when people added ignore or unblamable support
-> that they did not _consider_ what to do with their new pieces of
-> information to help porcelain writers.  It is not a bug in the code
-> per-se, but it is a bug in the brain of these people ;-)
-> 
-> But prefixing random garbage to the commit object name line in the
-> porcelain mode output does not sound like the right solution to the
-> bug, either.
-> 
-> When enhancing an existing output format, make sure that your
-> changes will have minimum empact to existing parsers that do not
-> know about your extension.  It is reasonably expected that existing
-> Porcelain scripts reading from --porcelain mode output works by
-> 
->  - Recognizing a line that match "^[0-9a-f]{40} \d+ \d+ \d+$" and
->    take it as the beginning of a new record;
-> 
->  - Collect all info lines before the payload line.  Lines that
->    describe per-commit information are not repeated if it is already
->    shown, so remember them when you see the commit for the first
->    time, and recall them when you recognize the commit you already
->    saw.
-> 
->  - A payload line is indented with HT and terminates the record.
-> 
-> If you start to add unrecognizable garbage to the line with very
-> well known fixed format that is used as record delimiter, you would
-> break the existing parsers, which is not a very nice thing to do.
-> Are there other and better ways you can think of to add new pieces
-> of information like this in a way with less severe damage?
+>  Waiting for Acks, especially for Windows bits?
+>  source: <20250218-pks-reftable-drop-git-compat-util-v6-0-8c1f39fb4c02@pks.im>
 
-I think the porcelain mode is already built so that it can be extended
-with arbitrary new information, no? In `emit_one_suspect_detail()` we
-end up printing one line per info we want to display. I would have
-expected that we can extend that function to also print information
-around unblamable or ignored commits, like we already do for boundary
-commits. E.g. something like the patch further down.
-
-Thanks!
+Johannes mentioned [1] that we can move forward with this topic, so I
+think it can be merged now. Thanks!
 
 Patrick
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index c470654c7ec..cd8322e2619 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -255,7 +255,8 @@ static void write_filename_info(struct blame_origin *suspect)
-  * the first time each commit appears in the output (unless the
-  * user has specifically asked for us to repeat).
-  */
--static int emit_one_suspect_detail(struct blame_origin *suspect, int repeat)
-+static int emit_one_suspect_detail(struct blame_entry *ent,
-+				   struct blame_origin *suspect, int repeat)
- {
- 	struct commit_info ci = COMMIT_INFO_INIT;
- 
-@@ -275,6 +276,10 @@ static int emit_one_suspect_detail(struct blame_origin *suspect, int repeat)
- 	printf("summary %s\n", ci.summary.buf);
- 	if (suspect->commit->object.flags & UNINTERESTING)
- 		printf("boundary\n");
-+	if (mark_unblamable_lines && ent->unblamable)
-+		printf("unblamable\n");
-+	if (mark_ignored_lines && ent->ignored)
-+		printf("ignored\n");
- 
- 	commit_info_destroy(&ci);
- 
-@@ -295,7 +300,7 @@ static void found_guilty_entry(struct blame_entry *ent, void *data)
- 		printf("%s %d %d %d\n",
- 		       oid_to_hex(&suspect->commit->object.oid),
- 		       ent->s_lno + 1, ent->lno + 1, ent->num_lines);
--		emit_one_suspect_detail(suspect, 0);
-+		emit_one_suspect_detail(ent, suspect, 0);
- 		write_filename_info(suspect);
- 		maybe_flush_or_die(stdout, "stdout");
- 	}
-@@ -344,9 +349,10 @@ static const char *format_time(timestamp_t time, const char *tz_str,
- #define OUTPUT_COLOR_LINE           (1U<<10)
- #define OUTPUT_SHOW_AGE_WITH_COLOR  (1U<<11)
- 
--static void emit_porcelain_details(struct blame_origin *suspect, int repeat)
-+static void emit_porcelain_details(struct blame_entry *ent,
-+				   struct blame_origin *suspect, int repeat)
- {
--	if (emit_one_suspect_detail(suspect, repeat) ||
-+	if (emit_one_suspect_detail(ent, suspect, repeat) ||
- 	    (suspect->commit->object.flags & MORE_THAN_ONE_PATH))
- 		write_filename_info(suspect);
- }
-@@ -366,7 +372,7 @@ static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
- 	       ent->s_lno + 1,
- 	       ent->lno + 1,
- 	       ent->num_lines);
--	emit_porcelain_details(suspect, repeat);
-+	emit_porcelain_details(ent, suspect, repeat);
- 
- 	cp = blame_nth_line(sb, ent->lno);
- 	for (cnt = 0; cnt < ent->num_lines; cnt++) {
-@@ -376,7 +382,7 @@ static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
- 			       ent->s_lno + 1 + cnt,
- 			       ent->lno + 1 + cnt);
- 			if (repeat)
--				emit_porcelain_details(suspect, 1);
-+				emit_porcelain_details(ent, suspect, 1);
- 		}
- 		putchar('\t');
- 		do {
+[1]: https://github.com/gitgitgadget/git/pull/1874#issuecomment-2740342672
