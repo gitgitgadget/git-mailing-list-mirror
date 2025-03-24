@@ -1,42 +1,45 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062DB41C69
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 03:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18915273FD
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 03:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742786755; cv=none; b=IjCaX5esw1rH7B9bXsjfQl0L5XvBW0cZ6UlRI/BSk8/IPHA9FUsvG/7q6gQAL91l4zgbhCdzQr1Y/jYhioFokChguPxDFQ++9q1QO35CGVqx44R61vbT6+dw4L0jE+2hyjJ/DdNro0XeJJ/CtQs+gqrID0z0+FbT0i+t/rIuD34=
+	t=1742787567; cv=none; b=LL6/oUDLyd1FxfDnBCnV3cI9/+fGJwgDif8ptXoirCcO3U3r2bTQo2vjTosN2RzbZfCo1o6JS4lyM6hcrIQtANGD91r9wdXeR3+CglfiDLqnrFmJ7VLnHUJvpBYMK8p02ynQsashkKXSrnidxkfPdL1td0F7ef115pjG9tUjYG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742786755; c=relaxed/simple;
-	bh=5/zVZR/CjkAziNT4BZzyYF1TeAIYb5jJeLQxmQ05TGw=;
+	s=arc-20240116; t=1742787567; c=relaxed/simple;
+	bh=KYHyWZpWpeIrg+ByLZkIauFs7I02d41ib3ZbfgZa3Rc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nh6kRrj4llKfZXdCvRWxgfK85bkYe2VjDicsBrlBif0tMo56JXruaNsJVr+ZcG2Iq9GyndG49nMpVHqIQ7NxZQT5zZpIuDx6sEoDRnkhrevmABGCHejrKEnJOnoIex3UgA47VQ2FIvL/K618bT0VGcA8VOmoHEWBJNjsFwGig7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VpxJCiRj; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=lKU0ZxT6R9ukUTPo8r06/GJQUP887uYIq8zepK4NE4F59CuAn8pGKpEk5l7ejbM0lBF/SyYm1WI0WEpmGOzuBZyU6jHzf+F/opOWxuWLC301oAzjmcYW11SulunTvHqmFefKjICmjFmRlsnne5iDXBOjfXeBO6i+4k7G7mqBnB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=b8fR60bJ; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VpxJCiRj"
-Received: (qmail 15377 invoked by uid 109); 24 Mar 2025 03:25:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=5/zVZR/CjkAziNT4BZzyYF1TeAIYb5jJeLQxmQ05TGw=; b=VpxJCiRjND+CJa+4myHA1OqxjSz5xE69z/sD7SwJOZY9BbQL+1/EsKce14K7Io6bLIVgoU/UbMW9aAyrPG9HRAUabMiS1CmsssgBUBgLDHF/OALdz8Z5m8Mi3QnLMufzxHbFqa5fSv58+1ILPKJDOu8B6D7eakYxEcLYOBpDoqkYjLJ0Gkpn7PTIT+C3FIw3etUmmD8slNkYuiKjhvisBHUrDFlBMEC8MrOpN04B6dOZgriQrjNPXMJQ66iNqAjv7BctN1IYP2SL8BOLeSSaVJEgGRd44Oh+6YFDEw/r4CXLMR+uGJ0/jRpTtQnL8jen5GAZoPmOQcsZ2aYlZBzVUQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="b8fR60bJ"
+Received: (qmail 15482 invoked by uid 109); 24 Mar 2025 03:39:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=KYHyWZpWpeIrg+ByLZkIauFs7I02d41ib3ZbfgZa3Rc=; b=b8fR60bJFz3SJ9U//gX5FJv/AgKgSaxTHY6qNde4Or7n4jyHt32z2S/ff4E7RrISlEigUJnq/EFw0AT9MWEbKd+7dQg2zQgzkuh0qMKdqTXUkUaqA4fyNqdIvJ5JUHtj5iBVBXKjvLwNE5Ycs2ADK+4pCoA48Y6ob1SSiftmasrq+YVxqGzvhvg6IBqGF1rprT6aO8xZeehZP3J99/ug+Db0R+CvrbBA5jEZPvVNzNZdatHhw6Xho9d+aoR88yjrfJAfKMmTVxh4oo2vguwZ2CgLOHxoMCXJ2XJl3NkK5nPBow3GENEzD+F7Kk0zbXnt/JxmQCyXusKJHHsH23dOBg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Mar 2025 03:25:52 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Mar 2025 03:39:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17088 invoked by uid 111); 24 Mar 2025 03:25:51 -0000
+Received: (qmail 17253 invoked by uid 111); 24 Mar 2025 03:39:23 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 23 Mar 2025 23:25:51 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 23 Mar 2025 23:39:23 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sun, 23 Mar 2025 23:25:50 -0400
+Date: Sun, 23 Mar 2025 23:39:22 -0400
 From: Jeff King <peff@peff.net>
-To: Ayman Bagabas via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Chris Torek <chris.torek@gmail.com>,
-	Ayman Bagabas <ayman.bagabas@gmail.com>
-Subject: Re: [PATCH v3] shell: allow overriding built-in commands
-Message-ID: <20250324032550.GA690093@coredump.intra.peff.net>
-References: <pull.1930.v2.git.git.1742688740650.gitgitgadget@gmail.com>
- <pull.1930.v3.git.git.1742743771108.gitgitgadget@gmail.com>
+To: Peijian Ju <eric.peijian@gmail.com>
+Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com,
+	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com,
+	jltobler@gmail.com
+Subject: Re: [PATCH v11 8/8] cat-file: add remote-object-info to batch-command
+Message-ID: <20250324033922.GB690093@coredump.intra.peff.net>
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20250221190451.12536-1-eric.peijian@gmail.com>
+ <20250221190451.12536-9-eric.peijian@gmail.com>
+ <20250224234720.GC729825@coredump.intra.peff.net>
+ <CAN2LT1CsjA7V_y-OqDNREkpERHEBcx627JhCrzg9GHfWS=b0NA@mail.gmail.com>
+ <20250313060250.GH94015@coredump.intra.peff.net>
+ <CAN2LT1D3d=yMYVhBjpj5PvyjfTVjwqcFPNViuCJ=f49YbCZuJg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,112 +48,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.1930.v3.git.git.1742743771108.gitgitgadget@gmail.com>
+In-Reply-To: <CAN2LT1D3d=yMYVhBjpj5PvyjfTVjwqcFPNViuCJ=f49YbCZuJg@mail.gmail.com>
 
-On Sun, Mar 23, 2025 at 03:29:30PM +0000, Ayman Bagabas via GitGitGadget wrote:
+On Fri, Mar 21, 2025 at 02:24:05PM -0400, Peijian Ju wrote:
 
-> From: Ayman Bagabas <ayman.bagabas@gmail.com>
 > 
-> This patch allows overriding the shell built-in commands by placing a
-> script with the same name under git-shell-commands directory.
+> Thank you Peff. I like the idea "... it is not an error to ask for
+> %(objecttype), but you will just not get useful data for those
+> entries."
 > 
-> This is useful for users who want to extend the shell built-in commands
-> without replacing the original command binary. For instance, a user
-> wanting to allow only a subset of users to run the git-receive-pack can
-> override the command with a script that checks the user and calls the
-> original command if the user is allowed.
+> So if we do remote-object-info with format "%(objectname)
+> %(objectsize) %(objecttype) %(objectsize:disk)", the response can be:
+> 
+> 4346b22767c07e31d0f9b524fcb377972d957313 199 ??? ???
+> 
+> 
+> Where ??? means the placeholder is not yet supported. In this way we
+> don't have to change the default format, and as new support for the
+> placeholders is added, ??? will be replaced by meaningful data.
 
-OK. We do not allow users to override normal Git commands with aliases,
-etc. But in the case of git-shell, those names are really a well-known
-API that a client is using, and this is the only opportunity an admin
-has to plug in between the client request and Git just running the
-command.
+Yes, something like that. I don't know what the placeholder should be.
+In similar situations for the ref-filter printer, I think we use the
+empty string for unsupported cases. E.g.:
 
-So it seems like a reasonable goal. A more restricted approach might be
-to provide a more formal hook/plugin interface. E.g., to run a hook
-script with the command name and arguments, and have it return
-success/failure to allow the to proceed.
+  git for-each-ref --format='%(refname) %(tagger)'
 
-That's not quite as flexible (in your approach I could replace what
-upload-pack is doing entirely, cache its output, and so on). But it
-might be harder for admins to screw up. I dunno.
+will show the empty string for %(tagger) of non-tags. That lets you use
+conditionals like %(if) to switch behavior. The cat-file formatter
+doesn't use ref-filter now, but I think in the long run we'd want to
+unify them. So it probably makes sense to match its behavior.
 
-Let's look at the patch...
+> About intermixing remote and local object requests, do you mean what
+> happens when remote-object-info is passed oids of objects that are
+> available locally instead of on a remote? If so, I have these
+> scenarios:
 
-> diff --git a/shell.c b/shell.c
-> index 76333c80686..8c7f4388bd5 100644
-> --- a/shell.c
-> +++ b/shell.c
-> @@ -194,9 +194,11 @@ int cmd_main(int argc, const char **argv)
->  		/* Accept "git foo" as if the caller said "git-foo". */
->  		prog[3] = '-';
->  
-> +	cd_to_homedir();
->  	for (cmd = cmd_list ; cmd->name ; cmd++) {
+No, I meant that --batch-command takes a single format string, but you
+can issue both local and remote requests to it. So for example:
 
-Hmm, so we have moved the cd_to_homedir() call up, which used to happen
-after this loop. This means that when running a builtin command found in
-the loop, our working directory will potentially be different now than
-it was before your patch.
+  git cat-file --batch-command='%(objectname) %(objecttype) %(objectsize)' <<\EOF
+  info 683c54c999c301c2cd6f715c411407c413b1d84e
+  remote-object-info c9d3534de317f31915f37e9d9c0d52d4cf901482
+  EOF
 
-That seems like an unintended side effect. Though I admit I am not sure
-why git-shell would be running in anything but the user's homedir in the
-first place.
+would show the local info for the first object, and remote info for the
+other. If you're only issuing remote-object-info commands, obviously
+it's dumb to include %(objecttype) which cannot be filled. But in the
+example above, it is possibly useful to get more data on the local
+objects, and a reduced set of data for the remote ones.
 
-> +		char *full_cmd;
->  		if (strncmp(cmd->name, prog, len))
->  			continue;
->  		arg = NULL;
-> @@ -210,10 +212,15 @@ int cmd_main(int argc, const char **argv)
->  		default:
->  			continue;
->  		}
-> +		/* Allow overriding built-in commands */
-> +		full_cmd = make_cmd(cmd->name);
-> +		if (!access(full_cmd, X_OK)) {
-> +			const char *argv[3] = { cmd->name, arg, NULL };
-> +			return execv(full_cmd, (char *const *) argv);
-> +		}
->  		return cmd->exec(cmd->name, arg);
+> 1. An object is on remote but not on local. This is what
+> `remote-object-info` primarily focuses on: we retrieve info from
+> remote without downloading the object.
+> 2. An object is on remote as well as on local. I think
+> `remote-object-info` should still retrieve info from remote instead of
+> checking local data. After all, if the user knows the object is on
+> local, they can use the `info` command. If remote-object-info is used,
+> it means we are interested in the information stored on the remote.
+> 3. An object is not on remote, but only on local. I think
+> remote-object-info should fail in this case, since the remote doesn't
+> have the object. The info command should be used in this case.
 
-This leaks full_cmd if the exec call fails, I'd think?
-
-> +			const char *argv[3] = { cmd->name, arg, NULL };
-> +			return execv(full_cmd, (char *const *) argv);
-
-So we just stuff "arg" into the argv we pass to the script. But isn't it
-supposed to be a shell command, that could have quoted arguments? For
-user-defined commands, we call split_cmdline() to get the real array,
-and pass it to the sub-program.  For the built-in commands, we seem to
-cheat a little and just assume it is a single string, which we pick
-apart with sq_dequote().
-
-But either way what your patch is doing seems wrong. Your custom
-git-upload-pack (or whatever) script will get passed the quoted value,
-and have to unquote itself. I guess if that were documented it _could_
-be the right thing, but it seems rather unfriendly and unlike how the
-other user-defined commands work (and of course it's not actually
-documented).
-
-You also miss out on the option-injection protections from 3ec804490a
-(shell: disallow repo names beginning with dash, 2017-04-29). We skip
-those for user-defined commands, but I think you'd probably want them
-for something meant to be a wrapper around the built-in command.
-Likewise the setup_path() magic done by do_generic_cmd().
-
-So it seems like rather than running execv() ourselves here, this should
-probably do one of:
-
-  a. Break out of the loop, skipping the built-in command, so that we
-     can run it as a regular user-defined command.
-
-  b. Hook into do_generic_cmd() instead, after we've done our de-quoting
-     and checked for option injection.
-
-Of the two, I think (b) is probably the least surprising in terms of
-what the wrapper script has to do.
-
-If this were just a hook that asked "can we run this command", then none
-of this would matter. Running it would be a separate step.
+Yeah, agreed. remote-object-info should always predictably ask the
+remote.
 
 -Peff
