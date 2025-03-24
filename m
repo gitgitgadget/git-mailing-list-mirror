@@ -1,68 +1,68 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F249261579
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 15:22:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F93261594
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 15:23:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742829782; cv=none; b=gWzmP4mYaelV5br9ZQxKYegC9ZZMdeZU2XI+Q7Dhn3ovawlSL/Qb/LvwExO5aAa2dDvGmCkbeLM49X5O+HY7x9ZY2+ftxBzONa4PESilVy9sCJWwfcEn2pH3rG+zS1mpIHJvsvPf+0AY+riwfzvLzxFVRENhdWjj71KJyArx3hs=
+	t=1742829783; cv=none; b=JAT0zDv3UZax6rHpT/iiQySi4yxkbA49MEpvyYTKBaclmF5T0Xs9yrquRAoiGVjszqcXqLseI5k2Jjw2V8TmiT9fjrrj2YLl2XoJ2xfWjjsteHP++K7Vp9MP51gG1xmR1UGk5o0xqOB9WdMNLBW8aVsSQB5H9dEtIeidRAEXx38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742829782; c=relaxed/simple;
-	bh=Ozk8IgfyJ3mcAMG+bQI5fsfUHfSlUppBKuNxEYcjTMg=;
+	s=arc-20240116; t=1742829783; c=relaxed/simple;
+	bh=4AwLyE89BTbtB8276ywJjtRK8FMYKyfFOjqaZLwgxmM=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=jUWD+Zel+XpJt0zN+rCMBx9dwHB5i55428SZAtN2/Bt1SyV9N4hoglaXv5fTssFAue0hj1MdJS7+g+23mZ0XdBx4J9DqoNjBC4cPgDhNa2BDvA/4S23YNles2HQ98pvRwr+0tApiTx8tz3ywOToM/+0QFzkMFbX5kKuMQKY2mUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F5g1+MUm; arc=none smtp.client-ip=209.85.128.42
+	 MIME-Version:To:Cc; b=adfw0cHr/3qOqh9sRGSXgrdOoRX2z/czs+7bPIlrcCF0Fw5q7jDTsEhvbvwQyPtq5Gxa3ZUl2nzesORJY1cJgnM6d8CJqdvwLRNiFwRUCsDhSAtv9kL0oTjeIPTzTl9O9o2rAHF7260lwWWhjv92DFdvoO+ng6nIxng+Bdlr4L4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JmQ0f3aO; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F5g1+MUm"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43cfebc343dso34121205e9.2
-        for <git@vger.kernel.org>; Mon, 24 Mar 2025 08:22:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JmQ0f3aO"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43cf257158fso30396735e9.2
+        for <git@vger.kernel.org>; Mon, 24 Mar 2025 08:23:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742829778; x=1743434578; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742829779; x=1743434579; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=E+R5Z7dwj3AKQVsEvyHHmOXdY2/pssak2gAENUwGf0k=;
-        b=F5g1+MUmOdUmF4G2MNI4gmN0iWMohWre+CJbniRvKFKnWDXfBS4glFAbppxQNdAp1Y
-         MifMXki2c61dnG4IN4ANXjrBPwnaiA97UqSxAkNjLWloz8E+B9Uu4kZNwQo6f7CJlnKd
-         t+t7szx+PqxEOgef9jgpEXqy7nd5mvKi5Ijqxv/6PkPVIZOVJ2FmZ+unrb3CnpcgiKmc
-         Gc6fzPXQNiV/N5xvvEyvubvq9rZzidqI1+dfIb58XkH3rjfaECfu6M0GC3/GtQB7U9Cf
-         WjR/lHwSd+CFYutuKfLzgytFPSBIb9Z/OItoWOcPgubGPLtSVcWHhEFLYVJq9E7lXinl
-         SHSA==
+        bh=Ou91yL31Lp3YEdeTTNqzuv8dZ2PP4OkJpOBU+CP0Icw=;
+        b=JmQ0f3aOMnazKakMvaibAXU9EY8RBncUJP0iTJVnxhtvfqm/3CT2aV//G4G638Ltx8
+         UrZEfZhUjGMyzN/AThn4Q2jRMWihZ/pltI879YuCF+miUvZSFkla9QBBdmxHC8W/WjZK
+         3smh2tNWBjoWSLnPOTl1Tbr40/ZCxdBDNI5lHFdN5iNiO/huIPitfY8wDhn/phcWW9Ev
+         QfUQ9PHaChP4UF3FCVWXEjDZWOspUPcJWc68uGLiCJVzu9KWxP8669Nrxx4L3ulz/pRE
+         EBRR9uXPFJHrLsEYqx5TFImOQmp/PMzE/wZwdLog1pzGO5tScdxwo0iOCXpxpqLb5hlz
+         Fcfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742829778; x=1743434578;
+        d=1e100.net; s=20230601; t=1742829779; x=1743434579;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=E+R5Z7dwj3AKQVsEvyHHmOXdY2/pssak2gAENUwGf0k=;
-        b=NpiZAbVt1j4S31Q1kCW4eRV7E624GsuaR3yTdU/wf7ppR/5W39PUCBMf8ty4eb5ZOd
-         X3HNJhllsnLfnPl2laqSPjY9ka4zM2zBeslmsKrhzGtMMg6mioweX+11UyNwv0J+tOIT
-         fE7sJmgYGv++967utpsTFhW4npliPyK6ByDUmXqfgDUoZDCt7WV4eHBt4EXqZEeco6rC
-         DlPiiiR5aaZmY25DtnlXMw4NxonuqawtUVyBI7cjQajnRHXHL1zDjxsib4mHAiCUoZCQ
-         E8JOuTyimKM43vP3k4dW51EoTrTe3FAPWPhvyooQPlC4kklVhx2BMvfOHe+sQNbOQ/7F
-         pD0g==
-X-Gm-Message-State: AOJu0YzoKEADAf4ghr2skQ2c/vkG3u3gqpA+wIxyRDbD8homRI6jK5UM
-	h7h2a9qJ1mtPLY8/Ttt7Vu5lLE0R35J7rkaXHUx5gMBXI66fcKON+ZI6hA==
-X-Gm-Gg: ASbGncvU6e/kXfzy0wHAlVA/oj8ZIQWkuOsAJpR1AdT2I6OJ6Sl7wodwnHVebI65SGi
-	rbWNSAlk7R+sKUHvqbtkI3dQUBcnLohFRnWiOobnTcs2s9HhJy0pyR9Ii2Gh7JDZQg9m/SKyXhz
-	fkx5/NGOuUzrLobZolZnfZrXqr/pDX82dl8puFmh/klsakha30/uR63WF0AFmViTCDfHWNpEetD
-	3h2YvHSMy3ZSXEYoZ+XzjfiaTxTqmqRawfbClaMcNTg4TjA5YwFFNuwTWCksL+zp5xTkzJ6cXpp
-	CXD8FCOLQZQl1+myBQu+McplLUoNgw4rIiZFi/xkDjfWTg==
-X-Google-Smtp-Source: AGHT+IEK1th9Fct5ZoKISJ2TbFqfIeMC1dq2agpjpw0dTLxJIjjet141JzcmtY7/BvCHJHXcd7YMyg==
-X-Received: by 2002:a05:600c:8411:b0:43c:e9d0:9ee5 with SMTP id 5b1f17b1804b1-43d68a4df4emr27624595e9.18.1742829776968;
-        Mon, 24 Mar 2025 08:22:56 -0700 (PDT)
+        bh=Ou91yL31Lp3YEdeTTNqzuv8dZ2PP4OkJpOBU+CP0Icw=;
+        b=WzopR4eUAcC9X2yali6mVv+t55pyrXVKaAsGR3ClYoDXZcR3+BMN6SRs3OdNDBxjSn
+         8ZjA3GN6NnwoQrGI0FbpFG5rPdZeNL7EM/8iF4fe5+gsZLKL94tpjUEaRRrwCYCNf6dR
+         pgYJeWfb1k1VBBU74H6KG+k82uwlHK6sGUtoNF4GjlejkabFeYdBKPhSEsnj/SxI69EL
+         C3O2W/+iUIBZLLTocplX8J8EGP+vOMo2fq1Es6cK+cGyU1JhYQ/m7xqPUQi0YeFIrD1d
+         P3rChOhGsBMy0H1xhuxmUIQezZ6F3tkOPi1M0qK25rREhiXug/5dHwQaMSF+EgGyhL33
+         c5JA==
+X-Gm-Message-State: AOJu0YxVvQa3sWvXnZoBsc8vqptF/nqYQiwZZu9n6O5p60m6VlVtbM8c
+	zKnbO/9wJOhdkKDLQTLyZdP83XFdeSRujy46vFyY6OcrMpoWdCqT+N2u8g==
+X-Gm-Gg: ASbGncuyCHm+oatiCwHf6GSsNy7U2pZ2WjpS+maeNvSW5QlrJ/3GKqNpOB8Quz7kj32
+	BW60tPpWAONmA5rljKL0McaiBRLcCxne4Y4E7+aCteskoRR599B7HNHg56V7hDBZEYv4N08UhjP
+	60NyDcyUA1WID3BDz8XqlTFq1GTXD78AAx+IrwAW3atMlsOs/IIB/+HktTZKcsM5rmIqeuWLFgM
+	2R01O+zlFwR9xB57/vrhNkiuKJkuNlmwgf9GigifV1lfo6qM/+wq+mq7wjihK+m3LAuCo06rwEh
+	6B40mN4knti9ZVqNIulOHFmsmqgGBemhsvr688xU37gGmA==
+X-Google-Smtp-Source: AGHT+IGFbBKuz+8Zb/E0aLVzAoQIc07/tStQNqAfiq3V9gSAj95CJziBt1TtsRVDqaXrPGWfsBEdfA==
+X-Received: by 2002:a05:600c:cc6:b0:43d:16a0:d82c with SMTP id 5b1f17b1804b1-43d509e6539mr128281365e9.2.1742829779025;
+        Mon, 24 Mar 2025 08:22:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d43f55750sm178041215e9.21.2025.03.24.08.22.56
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d4fd9df6bsm123015615e9.31.2025.03.24.08.22.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Mar 2025 08:22:56 -0700 (PDT)
-Message-Id: <0d49bb3d30add66676280ec7fabed12351d5b3ac.1742829770.git.gitgitgadget@gmail.com>
+        Mon, 24 Mar 2025 08:22:58 -0700 (PDT)
+Message-Id: <11767e7653e5212622ed7f82cad3b1a118621e8c.1742829770.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
 References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
 	<pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 24 Mar 2025 15:22:41 +0000
-Subject: [PATCH v2 05/13] pack-objects: introduce GIT_TEST_PACK_PATH_WALK
+Date: Mon, 24 Mar 2025 15:22:43 +0000
+Subject: [PATCH v2 07/13] repack: add --path-walk option
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -89,267 +89,205 @@ Cc: christian.couder@gmail.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-There are many tests that validate whether 'git pack-objects' works as
-expected. Instead of duplicating these tests, add a new test environment
-variable, GIT_TEST_PACK_PATH_WALK, that implies --path-walk by default
-when specified.
+Since 'git pack-objects' supports a --path-walk option, allow passing it
+through in 'git repack'. This presents interesting testing opportunities for
+comparing the different repacking strategies against each other.
 
-This was useful in testing the implementation of the --path-walk
-implementation, especially in conjunction with test such as:
+Add the --path-walk option to the performance tests in p5313.
 
- - t0411-clone-from-partial.sh : One test fetches from a repo that does
-   not have the boundary objects. This causes the path-based walk to
-   fail. Disable the variable for this test.
+For the microsoft/fluentui repo [1] checked out at a specific commit [2],
+the --path-walk tests in p5313 look like this:
 
- - t5306-pack-nobase.sh : Similar to t0411, one test fetches from a repo
-   without a boundary object.
+Test                                                     this tree
+-------------------------------------------------------------------------
+5313.18: thin pack with --path-walk                      0.08(0.06+0.02)
+5313.19: thin pack size with --path-walk                           18.4K
+5313.20: big pack with --path-walk                       2.10(7.80+0.26)
+5313.21: big pack size with --path-walk                            19.8M
+5313.22: shallow fetch pack with --path-walk             1.62(3.38+0.17)
+5313.23: shallow pack size with --path-walk                        33.6M
+5313.24: repack with --path-walk                         81.29(96.08+0.71)
+5313.25: repack size with --path-walk                             142.5M
 
- - t5310-pack-bitmaps.sh : One test compares the case when packing with
-   bitmaps to the case when packing without them. Since we disable the
-   test variable when writing bitmaps, this causes a difference in the
-   object list (the --path-walk option adds an extra object). Specify
-   --no-path-walk in both processes for the comparison. Another test
-   checks for a specific delta base, but when computing dynamically
-   without using bitmaps, the base object it too small to be considered
-   in the delta calculations so no base is used.
+[1] https://github.com/microsoft/fluentui
+[2] e70848ebac1cd720875bccaa3026f4a9ed700e08
 
- - t5316-pack-delta-depth.sh : This script cares about certain delta
-   choices and their chain lengths. The --path-walk option changes how
-   these chains are selected, and thus changes the results of this test.
+Along with the earlier tests in p5313, I'll instead reformat the
+comparison as follows:
 
- - t5322-pack-objects-sparse.sh : This demonstrates the effectiveness of
-   the --sparse option and how it combines with --path-walk.
+Repack Method    Pack Size       Time
+---------------------------------------
+Hash v1             439.4M      87.24s
+Hash v2             161.7M      21.51s
+Path Walk           142.5M      81.29s
 
- - t5332-multi-pack-reuse.sh : This test verifies that the preferred
-   pack is used for delta reuse when possible. The --path-walk option is
-   not currently aware of the preferred pack at all, so finds a
-   different delta base.
+There are a few things to notice here:
 
- - t7406-submodule-update.sh : When using the variable, the --depth
-   option collides with the --path-walk feature, resulting in a warning
-   message. Disable the variable so this warning does not appear.
+ 1. The benefits of --name-hash-version=2 over --name-hash-version=1 are
+    significant, but --path-walk still compresses better than that
+    option.
 
-I want to call out one specific test change that is only temporary:
+ 2. The --path-walk command is still using --name-hash-version=1 for the
+    second pass of delta computation, using the increased name hash
+    collisions as a potential method for opportunistic compression on
+    top of the path-focused compression.
 
- - t5530-upload-pack-error.sh : One test cares specifically about an
-   "unable to read" error message. Since the current implementation
-   performs delta calculations within the path-walk API callback, a
-   different "unable to get size" error message appears. When this
-   is changed in a future refactoring, this test change can be reverted.
+ 3. The --path-walk algorithm is currently sequential and does not use
+    multiple threads for delta compression. Threading will be
+    implemented in a future change so the computation time will improve
+    to better compete in this metric.
 
-Similar to GIT_TEST_NAME_HASH_VERSION, we do not add this option to the
-linux-TEST-vars CI build as that's already an overloaded build.
+There are small benefits in size for my copy of the Git repository:
+
+Repack Method    Pack Size       Time
+---------------------------------------
+Hash v1             248.8M      30.44s
+Hash v2             249.0M      30.15s
+Path Walk           213.2M     142.50s
+
+As well as in the nodejs/node repository [3]:
+
+Repack Method    Pack Size       Time
+---------------------------------------
+Hash v1             739.9M      71.18s
+Hash v2             764.6M      67.82s
+Path Walk           698.1M     208.10s
+
+[3] https://github.com/nodejs/node
+
+This benefit also repeats in my copy of the Linux kernel repository:
+
+Repack Method    Pack Size       Time
+---------------------------------------
+Hash v1               2.5G     554.41s
+Hash v2               2.5G     549.62s
+Path Walk             2.2G    1562.36s
+
+It is important to see that even when the repository shape does not have
+many name-hash collisions, there is a slight space boost to be found
+using this method.
+
+As this repacking strategy was released in Git for Windows 2.47.0, some
+users have reported cases where the --path-walk compression is slightly
+worse than the --name-hash-version=2 option. In those cases, it may be
+beneficial to combine the two options. However, there has not been a
+released version of Git that has both options and I don't have access to
+these repos for testing.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- builtin/pack-objects.c        | 12 ++++++++++--
- t/README                      |  4 ++++
- t/t0411-clone-from-partial.sh |  6 ++++++
- t/t5306-pack-nobase.sh        |  5 +++++
- t/t5310-pack-bitmaps.sh       | 13 +++++++++++--
- t/t5316-pack-delta-depth.sh   |  9 ++++++---
- t/t5332-multi-pack-reuse.sh   |  7 +++++++
- t/t5530-upload-pack-error.sh  |  6 ++++++
- t/t7406-submodule-update.sh   |  3 +++
- 9 files changed, 58 insertions(+), 7 deletions(-)
+ Documentation/git-repack.adoc | 14 +++++++++++++-
+ builtin/repack.c              |  7 ++++++-
+ t/perf/p5313-pack-objects.sh  | 18 ++++++++----------
+ 3 files changed, 27 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 75a6545cca1..a6b8a78d42a 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -226,7 +226,7 @@ static int delta_search_threads;
- static int pack_to_stdout;
- static int sparse;
- static int thin;
--static int path_walk;
-+static int path_walk = -1;
- static int num_preferred_base;
- static struct progress *progress_state;
+diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
+index 5852a5c9736..2199eb3b94f 100644
+--- a/Documentation/git-repack.adoc
++++ b/Documentation/git-repack.adoc
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
+ 	[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
+-	[--write-midx] [--name-hash-version=<n>]
++	[--write-midx] [--name-hash-version=<n>] [--path-walk]
  
-@@ -4230,7 +4230,7 @@ static int add_objects_by_path(const char *path,
- 		struct object_id *oid = &oids->oid[i];
+ DESCRIPTION
+ -----------
+@@ -255,6 +255,18 @@ linkgit:git-multi-pack-index[1]).
+ 	Provide this argument to the underlying `git pack-objects` process.
+ 	See linkgit:git-pack-objects[1] for full details.
  
- 		/* Skip objects that do not exist locally. */
--		if (exclude_promisor_objects &&
-+		if ((exclude_promisor_objects || arg_missing_action != MA_ERROR) &&
- 		    oid_object_info_extended(the_repository, oid, &oi,
- 					     OBJECT_INFO_FOR_PREFETCH) < 0)
- 			continue;
-@@ -4648,6 +4648,14 @@ int cmd_pack_objects(int argc,
- 	if (pack_to_stdout != !base_name || argc)
- 		usage_with_options(pack_usage, pack_objects_options);
++--path-walk::
++	This option passes the `--path-walk` option to the underlying
++	`git pack-options` process (see linkgit:git-pack-objects[1]).
++	By default, `git pack-objects` walks objects in an order that
++	presents trees and blobs in an order unrelated to the path they
++	appear relative to a commit's root tree. The `--path-walk` option
++	enables a different walking algorithm that organizes trees and
++	blobs by path. This has the potential to improve delta compression
++	especially in the presence of filenames that cause collisions in
++	Git's default name-hash algorithm. Due to changing how the objects
++	are walked, this option is not compatible with `--delta-islands`
++	or `--filter`.
  
-+	if (path_walk < 0) {
-+		if (use_bitmap_index > 0 ||
-+		    !use_internal_rev_list)
-+			path_walk = 0;
-+		else
-+			path_walk = git_env_bool("GIT_TEST_PACK_PATH_WALK", 0);
-+	}
-+
- 	if (depth < 0)
- 		depth = 0;
- 	if (depth >= (1 << OE_DEPTH_BITS)) {
-diff --git a/t/README b/t/README
-index 53e5b4a7107..ae06e628815 100644
---- a/t/README
-+++ b/t/README
-@@ -415,6 +415,10 @@ GIT_TEST_PACK_SPARSE=<boolean> if disabled will default the pack-objects
- builtin to use the non-sparse object walk. This can still be overridden by
- the --sparse command-line argument.
+ CONFIGURATION
+ -------------
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 75e3752353a..d7f798280c0 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -43,7 +43,7 @@ static char *packdir, *packtmp_name, *packtmp;
+ static const char *const git_repack_usage[] = {
+ 	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
+ 	   "[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]\n"
+-	   "[--write-midx] [--name-hash-version=<n>]"),
++	   "[--write-midx] [--name-hash-version=<n>] [--path-walk]"),
+ 	NULL
+ };
  
-+GIT_TEST_PACK_PATH_WALK=<boolean> if enabled will default the pack-objects
-+builtin to use the path-walk API for the object walk. This can still be
-+overridden by the --no-path-walk command-line argument.
-+
- GIT_TEST_PRELOAD_INDEX=<boolean> exercises the preload-index code path
- by overriding the minimum number of cache entries required per thread.
+@@ -63,6 +63,7 @@ struct pack_objects_args {
+ 	int quiet;
+ 	int local;
+ 	int name_hash_version;
++	int path_walk;
+ 	struct list_objects_filter_options filter_options;
+ };
  
-diff --git a/t/t0411-clone-from-partial.sh b/t/t0411-clone-from-partial.sh
-index 196fc617843..9e6bca56255 100755
---- a/t/t0411-clone-from-partial.sh
-+++ b/t/t0411-clone-from-partial.sh
-@@ -59,6 +59,12 @@ test_expect_success 'pack-objects should fetch from promisor remote and execute
+@@ -313,6 +314,8 @@ static void prepare_pack_objects(struct child_process *cmd,
+ 		strvec_pushf(&cmd->args, "--no-reuse-object");
+ 	if (args->name_hash_version)
+ 		strvec_pushf(&cmd->args, "--name-hash-version=%d", args->name_hash_version);
++	if (args->path_walk)
++		strvec_pushf(&cmd->args, "--path-walk");
+ 	if (args->local)
+ 		strvec_push(&cmd->args,  "--local");
+ 	if (args->quiet)
+@@ -1212,6 +1215,8 @@ int cmd_repack(int argc,
+ 				N_("pass --no-reuse-object to git-pack-objects")),
+ 		OPT_INTEGER(0, "name-hash-version", &po_args.name_hash_version,
+ 				N_("specify the name hash version to use for grouping similar objects by path")),
++		OPT_BOOL(0, "path-walk", &po_args.path_walk,
++				N_("pass --path-walk to git-pack-objects")),
+ 		OPT_NEGBIT('n', NULL, &run_update_server_info,
+ 				N_("do not run git-update-server-info"), 1),
+ 		OPT__QUIET(&po_args.quiet, N_("be quiet")),
+diff --git a/t/perf/p5313-pack-objects.sh b/t/perf/p5313-pack-objects.sh
+index cd6dd3abb71..98748b0e203 100755
+--- a/t/perf/p5313-pack-objects.sh
++++ b/t/perf/p5313-pack-objects.sh
+@@ -55,23 +55,21 @@ test_all_with_args () {
+ 	test_size "shallow pack size with $parameter" '
+ 		test_file_size out
+ 	'
+-}
+-
+-for version in 1 2
+-do
+-	export version
+-
+-	test_all_with_args --name-hash-version=$version
  
- test_expect_success 'clone from promisor remote does not lazy-fetch by default' '
- 	rm -f script-executed &&
-+
-+	# The --path-walk feature of "git pack-objects" is not
-+	# compatible with this kind of fetch from an incomplete repo.
-+	GIT_TEST_PACK_PATH_WALK=0 &&
-+	export GIT_TEST_PACK_PATH_WALK &&
-+
- 	test_must_fail git clone evil no-lazy 2>err &&
- 	test_grep "lazy fetching disabled" err &&
- 	test_path_is_missing script-executed
-diff --git a/t/t5306-pack-nobase.sh b/t/t5306-pack-nobase.sh
-index 805d60ff317..609399d54fb 100755
---- a/t/t5306-pack-nobase.sh
-+++ b/t/t5306-pack-nobase.sh
-@@ -59,6 +59,11 @@ test_expect_success 'indirectly clone patch_clone' '
- 	 git pull ../.git &&
- 	 test $(git rev-parse HEAD) = $B &&
+-	test_perf "repack with --name-hash-version=$version" '
+-		git repack -adf --name-hash-version=$version
++	test_perf "repack with $parameter" '
++		git repack -adf $parameter
+ 	'
  
-+	# The --path-walk feature of "git pack-objects" is not
-+	# compatible with this kind of fetch from an incomplete repo.
-+	GIT_TEST_PACK_PATH_WALK=0 &&
-+	export GIT_TEST_PACK_PATH_WALK &&
+-	test_size "repack size with --name-hash-version=$version" '
++	test_size "repack size with $parameter" '
+ 		gitdir=$(git rev-parse --git-dir) &&
+ 		pack=$(ls $gitdir/objects/pack/pack-*.pack) &&
+ 		test_file_size "$pack"
+ 	'
++}
 +
- 	 git pull ../patch_clone/.git &&
- 	 test $(git rev-parse HEAD) = $C
- 	)
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index 621bbbdd26e..e01df807a62 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -158,8 +158,9 @@ test_bitmap_cases () {
- 		ls .git/objects/pack/ | grep bitmap >output &&
- 		test_line_count = 1 output &&
- 		# verify equivalent packs are generated with/without using bitmap index
--		packasha1=$(git pack-objects --no-use-bitmap-index --all packa </dev/null) &&
--		packbsha1=$(git pack-objects --use-bitmap-index --all packb </dev/null) &&
-+		# Be careful to not use the path-walk option in either case.
-+		packasha1=$(git pack-objects --no-use-bitmap-index --no-path-walk --all packa </dev/null) &&
-+		packbsha1=$(git pack-objects --use-bitmap-index --no-path-walk --all packb </dev/null) &&
- 		list_packed_objects packa-$packasha1.idx >packa.objects &&
- 		list_packed_objects packb-$packbsha1.idx >packb.objects &&
- 		test_cmp packa.objects packb.objects
-@@ -388,6 +389,14 @@ test_bitmap_cases () {
- 		git init --bare client.git &&
- 		(
- 			cd client.git &&
-+
-+			# This test relies on reusing a delta, but if the
-+			# path-walk machinery is engaged, the base object
-+			# is considered too small to use during the
-+			# dynamic computation, so is not used.
-+			GIT_TEST_PACK_PATH_WALK=0 &&
-+			export GIT_TEST_PACK_PATH_WALK &&
-+
- 			git config transfer.unpackLimit 1 &&
- 			git fetch .. delta-reuse-old:delta-reuse-old &&
- 			git fetch .. delta-reuse-new:delta-reuse-new &&
-diff --git a/t/t5316-pack-delta-depth.sh b/t/t5316-pack-delta-depth.sh
-index 32cf4227451..167c3a35234 100755
---- a/t/t5316-pack-delta-depth.sh
-+++ b/t/t5316-pack-delta-depth.sh
-@@ -89,15 +89,18 @@ max_chain() {
- # adjusted (or scrapped if the heuristics have become too unreliable)
- test_expect_success 'packing produces a long delta' '
- 	# Use --window=0 to make sure we are seeing reused deltas,
--	# not computing a new long chain.
--	pack=$(git pack-objects --all --window=0 </dev/null pack) &&
-+	# not computing a new long chain. (Also avoid the --path-walk
-+	# option as it may break delta chains.)
-+	pack=$(git pack-objects --all --window=0 --no-path-walk </dev/null pack) &&
- 	echo 9 >expect &&
- 	max_chain pack-$pack.pack >actual &&
- 	test_cmp expect actual
- '
++for version in 1 2
++do
++	test_all_with_args --name-hash-version=$version
+ done
  
- test_expect_success '--depth limits depth' '
--	pack=$(git pack-objects --all --depth=5 </dev/null pack) &&
-+	# Avoid --path-walk to avoid breaking delta chains across path
-+	# boundaries.
-+	pack=$(git pack-objects --all --depth=5 --no-path-walk </dev/null pack) &&
- 	echo 5 >expect &&
- 	max_chain pack-$pack.pack >actual &&
- 	test_cmp expect actual
-diff --git a/t/t5332-multi-pack-reuse.sh b/t/t5332-multi-pack-reuse.sh
-index 57cad7708f8..395d09444ce 100755
---- a/t/t5332-multi-pack-reuse.sh
-+++ b/t/t5332-multi-pack-reuse.sh
-@@ -7,6 +7,13 @@ test_description='pack-objects multi-pack reuse'
- 
- GIT_TEST_MULTI_PACK_INDEX=0
- GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=0
-+
-+# The --path-walk option does not consider the preferred pack
-+# at all for reusing deltas, so this variable changes the
-+# behavior of this test, if enabled.
-+GIT_TEST_PACK_PATH_WALK=0
-+export GIT_TEST_PACK_PATH_WALK
-+
- objdir=.git/objects
- packdir=$objdir/pack
- 
-diff --git a/t/t5530-upload-pack-error.sh b/t/t5530-upload-pack-error.sh
-index 558eedf25a4..8eb6fea839a 100755
---- a/t/t5530-upload-pack-error.sh
-+++ b/t/t5530-upload-pack-error.sh
-@@ -34,6 +34,12 @@ test_expect_success 'upload-pack fails due to error in pack-objects packing' '
- 	hexsz=$(test_oid hexsz) &&
- 	printf "%04xwant %s\n00000009done\n0000" \
- 		$(($hexsz + 10)) $head >input &&
-+
-+	# The current implementation of path-walk causes a different
-+	# error message. This will be changed by a future refactoring.
-+	GIT_TEST_PACK_PATH_WALK=0 &&
-+	export GIT_TEST_PACK_PATH_WALK &&
-+
- 	test_must_fail git upload-pack . <input >/dev/null 2>output.err &&
- 	test_grep "unable to read" output.err &&
- 	test_grep "pack-objects died" output.err
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index c562bad042a..ab76d4b6dc4 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -1095,12 +1095,15 @@ test_expect_success 'submodule update --quiet passes quietness to fetch with a s
- 	(cd super5 &&
- 	 # This test var can mess with the stderr output checked in this test.
- 	 GIT_TEST_NAME_HASH_VERSION=1 \
-+	 GIT_TEST_PACK_PATH_WALK=0 \
- 		git submodule update --quiet --init --depth=1 submodule3 >out 2>err &&
- 	 test_must_be_empty out &&
- 	 test_must_be_empty err
- 	) &&
- 	git clone super4 super6 &&
- 	(cd super6 &&
-+	 # This test variable will create a "warning" message to stderr
-+	 GIT_TEST_PACK_PATH_WALK=0 \
- 	 git submodule update --init --depth=1 submodule3 >out 2>err &&
- 	 test_file_not_empty out &&
- 	 test_file_not_empty err
+ test_all_with_args --path-walk
 -- 
 gitgitgadget
 
