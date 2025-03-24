@@ -1,97 +1,90 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAC917E0
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 20:23:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D041C8613
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 20:28:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742847800; cv=none; b=Nz1o9YIgtOFYyDZxybJZ2J5kRt6alWU16rG1GMESfd3YDGi37pV5TutEuQymB5cpUHQBpaLz3T7G+1OH83D9F5vbSQDSw30nntZO7scSzNBs1655K++0I+X2ryQ7Zfj/sU9ziI7dsOECxcNaQ/1ZYapDKeug3IKiZANB9Felobk=
+	t=1742848122; cv=none; b=dBbyACuTXdMPHSpOX647EmtN9YQLYRki2wtkwxSV6ypqycCqoS0zvLMusZlVk8MJoqwWiaoWsW62dq4QJShwmEMQBOm73RU+vO2agG7TIUeb9v1l6wFjOuw0f0wuUcGXmSysMJSUpIMrvHbFZtzg0qfS+qx3iYL/Cla5D/oyER8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742847800; c=relaxed/simple;
-	bh=vPvt3Y/bB3hVtboO12G/MVhX0Dz6zbhwDP8SOjJcp3o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BLqbzKU2GIcX3L454bQFzkOlBZCJyD1Cmj6M4Yfl7ou4b6cZ4yqDDm3EKSzK3E6XaemFjL7AN81VkRN6c0hPcwfoEr/6yKvG4FtRtu0in4KXBiwBSMLTyR7wjN+LgWfUfPhBuJkJ5EMoiPa+E7CpMqKcOgDdoMS4ouFu0erAhSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TEWLotxt; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742848122; c=relaxed/simple;
+	bh=QL0zNWCSLfiMiI7ImpPSEhdX9MCBpjx/mmZcO0JkyjA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=INeeWVZERgHjRa8DaGaPTgN7pFBMl949y0XjgF8kdX+I0q3n9bBY/ZzaPacmiWpAHEqjUbSqBtQ2UJajHgC2zPe5uycfSfs/qWpPhgD6Y+noiG1g+k1joXkhgKZO81fDisiY7s5fiTvbp6FqW4tzfeNeNHfqwRxVgKwfXcWwDqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ifMYB3kY; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TEWLotxt"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5e5cd420781so8592660a12.2
-        for <git@vger.kernel.org>; Mon, 24 Mar 2025 13:23:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742847794; x=1743452594; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vPvt3Y/bB3hVtboO12G/MVhX0Dz6zbhwDP8SOjJcp3o=;
-        b=TEWLotxt+2GoiuLLAa8tG69VU2eAk4bf/G/x1AhWzvaucw69uc7qyz8nq/qu+5QA5T
-         PF4k+7CAcxUNhMW3ZlIyBsg4qaZyVPpXxvDU7XtK1Z2fB78DsEgzD0OqksBk6B3M+WK2
-         LM69AIISftF1P0WsOPXZfY4VBL+LVsNYfKY9eVWCeq/nkJQRGIlM3y7WcIEbEelj5OPW
-         afA9fCtdS3fz/qlRZpRXD/WtVIchOY0V+A1bHY5QBVZhiSPb3jn/k0xJB6KJAgEc1NWK
-         knVpcsWZJwwE3K9VrppQ7Qzr7h30PEygrQ5jKlBBHbvJ1aLRaeMhutskQ3cm025KxydF
-         yMsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742847794; x=1743452594;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vPvt3Y/bB3hVtboO12G/MVhX0Dz6zbhwDP8SOjJcp3o=;
-        b=BT4VHmgtzkQHc+9GJNygMIUsZNSxsNY730JNx0+TW4oumym+2x3NlRrqcKwNTyAtDZ
-         DKvXdSq8hLRgkEx70hW2kYgNzp+uyIBtofZZP91MJv7mtSzgqYZwcvgN2ZuZsKiA21WF
-         xxD7viebkmcI+PxAD6IBKhfxt3e0gORkTbsvgNMEzM2FnYrSNvRNQuMxVrajDlN3TK3P
-         5/rUNu2A6BH/SpCS1yBTdhLQwX2wTiRTi5vDsCVWZ37eR4BevaMpZPwTLr/L6X2lRUOL
-         4tEzyvUY7vUxGRbE9RokXRS9e0dd0IoCV40kOmUBzNXw+WLVKl/e1CCUt5soOAirdFhD
-         26gg==
-X-Forwarded-Encrypted: i=1; AJvYcCV6/SBjHHoypojk8ElIUO5ZMFH9ZKjYCtsbUUm1g+YZ3g3bKf8BQv5Jo43npxDYTyFLjpE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzu5mm4Q/REq9/sx34yL/EagsVBg4Oj76v5wSZPre6rNEtpLNbl
-	GQ9el0viIVIJJRY71PDLiZ39ps7YSMs/gZ0uIUux48CN7gc0CqcARj3/pOAeEgZ9PKY7mN6pBqt
-	1bTD3T55pbQmFx1O/8T/7Y3u7XWA=
-X-Gm-Gg: ASbGncvg0bWCeCZv2uHI8TyvG0lKrZB8dw2KohRYajeAvu+Klk+EOvSMuBnzeJZ3tHt
-	Gpqlvc7zDcAnDm+LZC9xcgOpYl58qIHc08kzgmNgAJp7vRZ4djixxBHEsTfKj9QbkuUR1KHcJB5
-	OmbC00+SH7l5h/W91hNAlFbYvuv8HG8Jv3Dm5lvlocci33c+OilnuxtV0hsRZR
-X-Google-Smtp-Source: AGHT+IHMfjPniackru8+wizRyeqZusu/pfthANQHjTDyPN6I+IsmpCgqWHcbSki3XYrpVxvo+Z1sPNkJ+c3don1oGvI=
-X-Received: by 2002:a05:6402:51ce:b0:5ec:cc79:84f5 with SMTP id
- 4fb4d7f45d1cf-5eccc798841mr3107502a12.7.1742847793625; Mon, 24 Mar 2025
- 13:23:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ifMYB3kY"
+Received: (qmail 23011 invoked by uid 109); 24 Mar 2025 20:28:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=QL0zNWCSLfiMiI7ImpPSEhdX9MCBpjx/mmZcO0JkyjA=; b=ifMYB3kYnt+ghgvDpsPG51cW31BgShjv6BbtaIWgjvG1ca4SU5dvg5WLDsXgaEP6uZHRIhtrKYS5k4uE8p7g6QCSbg2vLEAyUtLui4kY/jwV8RG2kDgzwD7qUcH/yt9P1Ly+cyVDov6PHYlfQX69wFYKlj/LV9c2376dROpn9xH47o4Pprnq2beOqnQD/scDrHAa+gWDjbaDScW8pZwxaI/VNXXMqK/YO/oAVk2gbZBV0152ZlhE3Jl06pki8M6ZLk6zX0ghh1oiaWomiMZdPZa0L02ykO4AiMw8u/wGiii7Wurh7dVT3uI4gh7Ge996tRCariu5SmzqDawPqr98RA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Mar 2025 20:28:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4762 invoked by uid 111); 24 Mar 2025 20:28:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Mar 2025 16:28:38 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 24 Mar 2025 16:28:38 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ayman Bagabas via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Chris Torek <chris.torek@gmail.com>,
+	Ayman Bagabas <ayman.bagabas@gmail.com>
+Subject: Re: [PATCH v3] shell: allow overriding built-in commands
+Message-ID: <20250324202838.GB777700@coredump.intra.peff.net>
+References: <pull.1930.v2.git.git.1742688740650.gitgitgadget@gmail.com>
+ <pull.1930.v3.git.git.1742743771108.gitgitgadget@gmail.com>
+ <20250324032550.GA690093@coredump.intra.peff.net>
+ <xmqqy0wvov5n.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250324021101.7483-1-lucasseikioshiro@gmail.com> <d4c0c9a4-0402-4456-9fa0-3102b5bcc3dc@kdbg.org>
-In-Reply-To: <d4c0c9a4-0402-4456-9fa0-3102b5bcc3dc@kdbg.org>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 24 Mar 2025 16:23:02 -0400
-X-Gm-Features: AQ5f1Jr8IyDQEfLR99Sb9fcLArkGULZv1dMvqjhwJ-YXGz2zJHwHfm6eXUysUfk
-Message-ID: <CALnO6CAsF1J39MeO-KY80bQfFL1V3UHT08-Va2R6QNh0JqwZ9A@mail.gmail.com>
-Subject: Re: [GSoC PATCH v2] userdiff: add builtin driver for gitconfig syntax
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy0wvov5n.fsf@gitster.g>
 
-On Mon, Mar 24, 2025 at 3:18=E2=80=AFAM Johannes Sixt <j6t@kdbg.org> wrote:
->
->
-> You have now managed to avoid the "No newline at end of file", but have
-> added a blank line instead. Not a big deal, but unconventional.
->
+On Sun, Mar 23, 2025 at 10:27:32PM -0700, Junio C Hamano wrote:
 
-I missed the opportunity to reply to the original patch on this front,
-but here's the information I usually give out:
-- VS Code's default settings do not respect POSIX end-of-file newline
-standards, so you should probably change them [1]
-- There's a similar setting for Intellij IDEA [2] and Vim [3], but
-they might have saner defaults (Vim certainly does)
-- If your editor or IDE picks up on editorconfig settings, you'll be
-able to avoid this
-- Git can warn you with diff or show saying "No newline at end of
-file," so a careful self-review also catches these.
+> Jeff King <peff@peff.net> writes:
+> 
+> > So it seems like a reasonable goal. A more restricted approach might be
+> > to provide a more formal hook/plugin interface. E.g., to run a hook
+> > script with the command name and arguments, and have it return
+> > success/failure to allow the to proceed.
+> >
+> > That's not quite as flexible (in your approach I could replace what
+> > upload-pack is doing entirely, cache its output, and so on). But it
+> > might be harder for admins to screw up. I dunno.
+> 
+> Yeah, we usually try not to be overly flexible for that reason, but
+> given that "git shell" is so limited that rewriting its services
+> wholesale is not all that much of a deal, I think it is OK.
+> 
+> I however wonder if it is worth admins' time and effort to add
+> features to "git-shell" using this new facility, or if they are
+> better off using something more established like gitolite once they
+> want to go fancier beyond what the basic "git-shell" offers.
 
-[1]: https://stackoverflow.com/q/44704968/4400820
-[2]: https://stackoverflow.com/q/16761227/4400820
-[3]: https://vimhelp.org/options.txt.html#%27endofline%27
+Yeah, I left my general opinions on git-shell unspoken. ;)
 
---=20
-D. Ben Knoble
+For features, I think you are probably better off with something like
+gitolite (which I think does have some access control).
+
+For security, I'd be a little scared of git-shell, just because it's not
+run all that frequently and we've had issues with it before (e.g.,
+integer overflows). If you're taking requests from untrusted clients,
+you're probably better off configuring http service.
+
+I also imagine there may be restricted shell implementations that are
+more general and more battle-hardened, that you could configure to only
+run a few commands. But I haven't looked at that space (because again,
+I'd suggest just git-over-http).
+
+-Peff
