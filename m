@@ -1,181 +1,106 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C871AD3E0
-	for <git@vger.kernel.org>; Sun, 23 Mar 2025 22:08:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19ED9B667
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 00:51:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742767692; cv=none; b=calIRxupP2QV0ql1yPzvB+SJURV2p7V9WcMMMMQ0yl9SmwKxPNHpeiZBZW5yP9I65pEOHb24FttKjNM9JCZqJAslmvxUQ2+EH8pZDokk9wnnyste7ln51mq4Yx79vGqap137Bca4slc5b0EuZ1ppI4i9cG6hUYEUa04Eu7TyXTA=
+	t=1742777517; cv=none; b=UmuTByGGDOj8bLIz/PTovXh1LK0eo3PYxjdZd0eErz71q+TRHjvo3JI1hQxft08XKuT/N2rLYpHoBq+Xcy3lasHUC+s4sGlSwZiI0ebFdjSbnUtTcDFgGwD5LqTNetIoJVY+s06Deq+TzarUVa8faDHiIXZkwIl+UzteAkX/QRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742767692; c=relaxed/simple;
-	bh=Z6y6ho0v63qanTnz7QelsmifVT/gMvTGBCwIVpMUiWY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kuCyD8e35NiUm7UL4xQfOp9nVuvnRKTm5PuizYdDGTIO6TzsKycYZDPNsQnsOhAY1ci87/iBHAtRXwrME1D4WHbZbNnsOuJJQRXfrNttX+Qkc/sIW1SDsfO2n1fkfokldXj2EI2r5TESg2Hm6IJoCEsuTmQgxosS0e5+YIZ1ShA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DK9yXxzT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZKYoTBUz; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742777517; c=relaxed/simple;
+	bh=CeF1RUYKzZIDjAVd7v/sxhEGCf8D0oVLV6z4jyBxOZk=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Z3GmdlPD9Pbyzr9NJUOW57JHHd/jfVlRpmCXDQaeMfFNsl2EmLe9p3ghiPeD0yrunUmQJZho/rXVoTaMQqMoNCBxVgotYR9UCPFiFxlkI87vsBDLzBucuvjl1V9pOdr08o1K8qOtHY/cau+HYoYpuU1gnZGkYUAywKE6ED+x0jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E8vV4KBV; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DK9yXxzT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZKYoTBUz"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8CB20114008C;
-	Sun, 23 Mar 2025 18:08:09 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sun, 23 Mar 2025 18:08:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742767689; x=1742854089; bh=lNZ5QtpsfM
-	bQzJSrW5bNpgQYZKx5Se9gCO44kX6nx7k=; b=DK9yXxzTV2hxBe2m7w7VanrvAh
-	ftgIdVPzxlOcvX9yuhme+KTqqTAQSv0GT2o0qo837Pxrw4CrbI3D31KaVEfIKpyS
-	1yt0l29vu1oulTg+C4GBbfPIphaHBIu7LclIbo8r6SUaYYGtjqIik+5F0mOoNUOw
-	1NLMY4llqa/aYBrafjoJ3wVNjtEVPoTS7X/0VhwXJNtsRHvO+1zFCScmIDRMY5Bd
-	8dTnjSHkGvjMTb7cpGIyUMqpzV9rM7NY0pGIZbQh1nRKT0aDh5RWRTXjeEINcdJ9
-	PJ3Le67B7Rc5ox7KJ1Q24JK4dNUHkZpKDnmq/nGd9lh60rzOYU7hNJcOUHgQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742767689; x=1742854089; bh=lNZ5QtpsfMbQzJSrW5bNpgQYZKx5Se9gCO4
-	4kX6nx7k=; b=ZKYoTBUz5ADENb7/GNmMG0Ibm+9vv/vNltNX6rwk1/YzHx/ZvXP
-	3L6vVaQ0j65x53ckZidLbVVgs13jWcMXQn4e3pbNBafTTqbMRXVxYNegA5Y6qQGM
-	sUTwb/1e3Mk3GqT3zJKoDe+Lnnp2zdCYlqy8xJ4aev5Em3lrEUgL+L4964QtrS6J
-	8+nOQOFG9FsrQo6vGFmhyoxAfbKuzZ9H9kzkFtVCWYqSQe9JqsPyUAFPxqem8cZO
-	OyFaBWm8TACFFXbq5KBv/38sBHBPJNpHpPH/MKQnoYgUV8SU5lTfasZkzbiajUrH
-	cf4oTc7npmpGCKhFA8zsiPaeta3+AoGO7zQ==
-X-ME-Sender: <xms:SYbgZ9pndji2Kagv5Fg_QbZJQpglqXRxWkIuOw7Cv1rEnV0yG2vcoA>
-    <xme:SYbgZ_ovpnwDkZE8yfOHJvpkVm6DlhKFQl8vaDaa83o2ka-H-0Smkx73j6wL9CXwe
-    P_rCHN_kjKfZW48SQ>
-X-ME-Received: <xmr:SYbgZ6NhtV8PDrZB1ZMpa8M-cjwRTbMpOUr7v5fNmmdUI7Jk9RdUPrcRVDmX3kxwv_znjfUcgq_gmge5kUmqfdRURzdUoU7XbOnImlo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduheektdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgepudenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrhigrthhhvg
-    gvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslh
-    gvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:SYbgZ45wGldaZTL5zncpGf3UE0krFvmYw-wcVUo6Qm9vzpqQ-fLwxQ>
-    <xmx:SYbgZ85EjfpzKn4GY-E_1hI9BnZi_xvmiTsb4LSROhJFziRihcuvIQ>
-    <xmx:SYbgZwj8xSxo0SnHAfWj3J5FxWd6e9-qPNVoIeuRP9YifEltjdz2Vg>
-    <xmx:SYbgZ-4Quar9jB2UgmX3zJnSVzsDFWAvm1iXwifixyfmXQK0DHsSZQ>
-    <xmx:SYbgZ32PtoyZ9X-o3y1gAZ3NMoRns3vYpEnpg-q-JSwK06HqbaaMJRjV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 23 Mar 2025 18:08:08 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org,  ben.knoble@gmail.com
-Subject: Re: [[GSOC][PATCH v3] 2/3] docs: update function signature, add
- UNUSED macro
-In-Reply-To: <20250321143022.5406-2-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Fri, 21 Mar 2025 20:00:21 +0530")
-References: <xmqqa59evffd.fsf@gitster.g>
-	<20250321143022.5406-1-jayatheerthkulkarni2005@gmail.com>
-	<20250321143022.5406-2-jayatheerthkulkarni2005@gmail.com>
-Date: Sun, 23 Mar 2025 15:08:08 -0700
-Message-ID: <xmqqcye7qu2f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E8vV4KBV"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43cf034d4abso42130235e9.3
+        for <git@vger.kernel.org>; Sun, 23 Mar 2025 17:51:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742777514; x=1743382314; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=UN+2vo2lMq1ofLiN3ucrTQLKEXVuSBJvu7wlwC5nRvs=;
+        b=E8vV4KBVOyC/cjY65kcUkM98XezZaYVxf9WR0kl9F899uadCMDV4f1T0CnvX21MDmm
+         l8HvGoA+hwTtezxPz1beqD/x31JHz6pIjL3c151+4OiKJHkipLPQDGjZbpfRPEGd2+Ld
+         VQzptEKRa+cPNr60KRJt85az7pwgLTc1ysWrLB0A0+OUpJbcpVvdUv8BXykKN222PQDw
+         B9G7yZpMI6RaDtTDL5aXD3mC195EvwDasvqtziWn7uWI276nQYDuVufwhSjUuDspd/Ze
+         XDaj5JjhYZ8MQGcFI5sof8xlA6uVs1d9XLxpFsm+JLBSI7USALI4O18SeuGaBw9sZzte
+         vbjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742777514; x=1743382314;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UN+2vo2lMq1ofLiN3ucrTQLKEXVuSBJvu7wlwC5nRvs=;
+        b=t4D9riSK3E53V3qmhMm5N4XT/kUulMlkbqc+kUywjnM40FJtUzB1yTvhxWmgfSAKE3
+         7HlUOXigw2/SyeIuceG5IiRbd51E8YJ+z3oXUDnaHdlxjDRxXTzzOsJ9Wuav4Y2fWqFY
+         wyQ+BzrRWraIdOG5y7DEQS/fP69PV7FtXqo1ybYzOlRFB3ryl5ZCrUmz5P3ti7ortQX7
+         QiLpz+SHMyDtSEGvlPx809APNHhc4LKlGq5hOo5Qr/kKTHIRHdVL9rMRhiCbEz/fiQmv
+         TZlY7IC+rJ7M8oQqYDlyow+85FxDb58Az4YP0uIWoiwyKLPKUib8Y/xyf7Yg730efVd9
+         Q4Vw==
+X-Gm-Message-State: AOJu0YxlsZISdlKLIEnHWxIaW/xVGHOZWsd5V0yCaTVx2E6yT4PI7iAm
+	XdAPmj3g8t7VBsX0NWicmP7E82OInHrb7AWFz20M9qc3zn713/x0oBjN+Q==
+X-Gm-Gg: ASbGncv9rbWNAod5lVLLN0efZMDpN3w6LZtHrrEIbHLsoiIyk6RRIfEETeoVysVfaj0
+	h1NJKMtM3MPAJlSNEtH80CNRph1wF7luCP4VwvUPxT8AI1QHnz3GYXbwNG/Rsa7hBbbHqh77F0B
+	HnlskYNAXS+17uN1GZqkDyfQ7jW1xt8E5eY4l6u6Jkm8bTbcMWYam5cXGJD0y2QB0GXY9xF2B7+
+	siTv/v6TQkt9pngeeBVjFtIo7qcKQRMHdDWpDYeJFa3I6MmzDn51+tWYAlMfJxhsx0a09SeaB7h
+	KY3FHaQ8zpq99czhTJlTwEvvXI+RJ5TW2RP8ues00fO3qQ==
+X-Google-Smtp-Source: AGHT+IEXMyJxcj81XfRYyCtcG4i4V8WR3y+cM71eyMWOcMFsCMlWYAXgmtoWX0uj9g9vymzJWV8Xlg==
+X-Received: by 2002:a05:600c:4e41:b0:43d:1824:aadc with SMTP id 5b1f17b1804b1-43d50a3632emr106644825e9.29.1742777513456;
+        Sun, 23 Mar 2025 17:51:53 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d440ed786sm152563115e9.38.2025.03.23.17.51.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Mar 2025 17:51:52 -0700 (PDT)
+Message-Id: <pull.1885.git.1742777512.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 24 Mar 2025 00:51:49 +0000
+Subject: [PATCH 0/2] Allow configuration for loose-objects maintenance task
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    Derrick Stolee <stolee@gmail.com>
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+The loose-objects task for the git maintenance run command has a hard-coded
+limit. The limit exists by default for the purposes of background
+maintenance, but can be misleading if users truly want to clean up all loose
+objects in one command (and don't want to use git repack). This adds a new
+maintenance.loose-objects.batchSize config option to help users adjust this
+value up or down.
 
-> Modify function signatures to include struct repository
-> for better compatibility. Also update builtin.h
-> accordingly and use UNUSED to prevent warnings.
+When testing, I noticed that progress indicators were not always provided
+when isatty(2) is false. This is because the --[no-]quiet option was not
+appropriately passing to child processes. A small change fixes this before
+the config is added, so we can test the results using stderr output.
 
-You want to be a bit stronger than "better compatibility" here
-(besides, it is unclear what you are trying to be compatible).
+Thanks,
+
+ * Stolee
+
+Derrick Stolee (2):
+  maintenance: force progress/no-quiet to children
+  maintenance: add loose-objects.batchSize config
+
+ Documentation/config/maintenance.adoc |  5 +++++
+ Documentation/git-maintenance.adoc    | 18 ++++++++++-------
+ builtin/gc.c                          | 20 +++++++++++++++++++
+ t/t7900-maintenance.sh                | 28 +++++++++++++++++++++++++++
+ 4 files changed, 64 insertions(+), 7 deletions(-)
 
 
-    Since 9b1cb507 (builtin: add a repository parameter for builtin
-    functions, 2024-09-13), a built-in implementation like cmd_psuh
-    is called with a pointer to a "struct repository"; adjust the
-    examples to match the current practice.
-
-or something, perhaps?
-
-> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-> ---
->  Documentation/MyFirstContribution.adoc | 20 +++++++++++++++-----
->  1 file changed, 15 insertions(+), 5 deletions(-)
->
-> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-> index 7b856be41e..45efe117ab 100644
-> --- a/Documentation/MyFirstContribution.adoc
-> +++ b/Documentation/MyFirstContribution.adoc
-> @@ -142,9 +142,13 @@ followed by the name of the subcommand, in a source file named after the
->  subcommand and contained within `builtin/`. So it makes sense to implement your
->  command in `builtin/psuh.c`. Create that file, and within it, write the entry
->  point for your command in a function matching the style and signature:
-> -
->  ----
-> -int cmd_psuh(int argc, const char **argv, const char *prefix)
-> +int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo)
-> +----
-> +Before proceeding further, we should use the UNUSED macro to suppress warnings about unused parameters in the function.
-> +This prevents the compiler from generating warnings when certain parameters are not used within the function body:
-> +----
-> +int cmd_psuh(int argc UNUSED, const char **argv UNUSED, const char *prefix UNUSED, struct repository *repo UNUSED)
->  ----
->  
->  We'll also need to add the declaration of psuh; open up `builtin.h`, find the
-> @@ -152,7 +156,7 @@ declaration for `cmd_pull`, and add a new line for `psuh` immediately before it,
->  in order to keep the declarations alphabetically sorted:
->  
->  ----
-> -int cmd_psuh(int argc, const char **argv, const char *prefix);
-> +int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo);
->  ----
->  
->  Be sure to `#include "builtin.h"` in your `psuh.c`. You'll also need to
-> @@ -168,7 +172,7 @@ Throughout the tutorial, we will mark strings for translation as necessary; you
->  should also do so when writing your user-facing commands in the future.
->  
->  ----
-> -int cmd_psuh(int argc, const char **argv, const char *prefix)
-> +int cmd_psuh(int argc UNUSED, const char **argv UNUSED, const char *prefix UNUSED, struct repository *repo UNUSED)
->  {
->  	printf(_("Pony saying hello goes here.\n"));
->  	return 0;
-> @@ -199,6 +203,9 @@ with the command name, a function pointer to the command implementation, and a
->  setup option flag. For now, let's keep mimicking `push`. Find the line where
->  `cmd_push` is registered, copy it, and modify it for `cmd_psuh`, placing the new
->  line in alphabetical order (immediately before `cmd_pull`).
-> +----
-> +{ "psuh", cmd_psuh, RUN_SETUP}
-> +----
->  
->  The options are documented in `builtin.h` under "Adding a new built-in." Since
->  we hope to print some data about the user's current workspace context later,
-> @@ -285,6 +292,8 @@ Modify your `cmd_psuh` implementation to dump the args you're passed, keeping
->  existing `printf()` calls in place:
->  
->  ----
-> +int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo UNUSED)
-> +{
->  	int i;
->  
->  	...
-> @@ -298,7 +307,8 @@ existing `printf()` calls in place:
->  
->  	printf(_("Your current working directory:\n<top-level>%s%s\n"),
->  	       prefix ? "/" : "", prefix ? prefix : "");
-> -
-> +	...
-> +}
->  ----
->  
->  Build and try it. As you may expect, there's pretty much just whatever we give
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1885%2Fderrickstolee%2Floose-objects-batch-size-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1885/derrickstolee/loose-objects-batch-size-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1885
+-- 
+gitgitgadget
