@@ -1,193 +1,200 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D5B26281C
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 16:16:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22990261364
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 17:48:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742832986; cv=none; b=iXzK7Xi0EP6EoEyPkJ22QYN0spJ7CEpaBWINdJl6bpz7wnjyrBDmvQnx49TPV+PfYGoccyaH6a86T1wWL7aF1EzYU+9ogVhKsggo4+Wg3d/j6cazjO/aY61GHM77nMo9hj8UZdkUrq01uxIOKq8jiyRLH1oFbJfsQhYKTYEkLYs=
+	t=1742838516; cv=none; b=NnRkl+C9EsAWg0igrenNObYAV3LekubaQk+uCZdydUkQtX/kQfbYdimJtTKGQbkOA7l6zO3Fii3bWxvIMyp46+Yg3lqUTeVyMBt6Zwzhsq5SCB9yNT1S2zNadHmDfWzBSjy9fgXxgxV3K74ZCgSdwX/DShZ78UVgxcZInjvW3Xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742832986; c=relaxed/simple;
-	bh=GROUECrL8i4MGhdbWIBVVlM6c74Vzdf3t9pHTRUZnBA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b41N30toI5dQJLpcQU3CHE/ZGR1jVTJigXL0LP5gdUF/558nnIrBzKnyewpcUGK/pkksC5BsNsTHP7kAERhLUcdZpq3Dnk/YjB5yV2jCriz1Wo3b7OFOXtyfvKkgCvG7aB5yFUrZ2E7UTF1eRCvaY45O/PP2C2eSMrzCJLaRMNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=izc0oGsl; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1742838516; c=relaxed/simple;
+	bh=n8bf4CXei2pEROOJ0xU16z2OnyNcu+m1KrwncMQW52E=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=U4IGrXHSxA871gpBuqhQ5/q3ZSTr3FtcBMbD5Q4udmf0h90Cq0n2SRqSxE9n/cjQNw0Hekzvxi+hx4oShSa6L07SbySE5qPliGELjXh12oEXQTszfbXibNJ06LwZidO1LDdRIpSNZxaEQW6UZ8mUvWLLAYAExaFuNOEdSbR4nSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yunjnv+k; arc=none smtp.client-ip=209.85.222.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="izc0oGsl"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43cf0d787eeso49644145e9.3
-        for <git@vger.kernel.org>; Mon, 24 Mar 2025 09:16:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yunjnv+k"
+Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-86d30c329f2so4525947241.0
+        for <git@vger.kernel.org>; Mon, 24 Mar 2025 10:48:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742832983; x=1743437783; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6eyaywt2xJg14Qfrc4ZcbN2H64wmxNKCBXsxJ0yQrQc=;
-        b=izc0oGslCI+jMdl0C+kdiiSwPAEu4LbUYmpCARbUSF1JkD4e9vG5c8503hTOiRRbxb
-         gH4j8tU0w/tmCtWLqAecpdXG8hYMAsSw075/Ei9hSxV/R7eNBftyPXBpBMKOMtpMM504
-         LrplNFwJ4paMTnM3tCqBKhZj7Fue17Y6Ucb7JuXyGuqP2mr3Kz8FIgmziRBv9Eal/jYC
-         blYdvEEkNP7BhcLHpkDjSRHxWe21AfjrYQa/fUaOnyb7KyyJAKrFq1jRDjRxAcCq2+1l
-         Cr0Xj9/jGmuEjQqtepn2Ut5Wrp6PSTktt76ERJ0yDNxPZBNG3R7TQ4FvieBzwAeLQKZT
-         a4QQ==
+        d=gmail.com; s=20230601; t=1742838514; x=1743443314; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=v1B484i0ra0RUrZpio1n+UmcEgXNn7tsApDMrSXfLY4=;
+        b=Yunjnv+k7luFRgijsiolbQVCWHiQO2nbDr6/GBoTi5TvdW6P6hI1dwDa8q/kTt20Fo
+         WI0inUxwGpxHK5BlXIK3erhWKI4Ns+JRsLHngrnCnHJP90vFIDUP3KV17TbhuBgAGUhK
+         8jYkBLTdQ4noiWlWecLooPNTOByhRMeVYBy5aCeDjMDC310ExZFEFPBN6siZJVCh9x7E
+         ru507awodmu600fV1e10DIuIlMltahHFgrKMg70jyxyFbC5LsrhIVF6ZxKsVorf5a41T
+         HNI9jOPPHjZCTaTd0mPVa9GkJVF3eglwL45NJijJZlf5zoxSA175CRHHJ8j214BZe7jx
+         LGWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742832983; x=1743437783;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6eyaywt2xJg14Qfrc4ZcbN2H64wmxNKCBXsxJ0yQrQc=;
-        b=rp2gWCqb4fBMLSM+niZEPoQp5tZTQXc7TOB0VP0JivUbnCjTswrfGV0hiW9mswvk/Y
-         NBHFzQOMSHUSPHkV7sroZc5f5wlLXyedys0gLgICEPBV0TVf5MNjjqiTxB7nOpzc+mwz
-         Surxn9odBbwXRJHdEiVcEWMer0Q0VEvPy1SqSKMi3/eDC31l+6RugOsJBdhiqELNBDnG
-         z03sjKRTpfFxXyumtV9JwMwCSfgr6l2AlcJGGomoEFCKPXwPUmA5u25xNHNKqk9yLpbK
-         eF2bG5U46w+++Jhqmy1bHWVWdsGAFuUxE7rDlNWvvd2TLcN8gdmRWzeKP+U7nZNAtPBX
-         IsOw==
-X-Forwarded-Encrypted: i=1; AJvYcCVajhCcchCeER5vgufGYfj2/3c3BksW/oQUVSkAWGzjm5hrn19OXctvMii2/JvVnAxOWiU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz4xZ3hIOKnbEBDsP9nN3440KDhn7yo0s8vkvV0jHxFVDXcMAmB
-	8WJffpG2J1sYMAC10aOXh/VWchSIS280gS+Se4gwULigm0hnjpZH
-X-Gm-Gg: ASbGncsbT+epillppEBrRlxCOu3UWOkmKxZmcZ/KM4sWcvSH8akQKURtC71kuBzIGjg
-	lMl4qVsAPiXi2PIjEz7saGTcPvMRrbEt1vb+WB4Sg/sC7csPFhet8E4FBIpoDOz1fly8og4dDH6
-	Bn1DierudgY3QX4bl/cqwu7m7LVyDF484u/oAjDaAJ4hf08qXsE83wCel2RD+CDV6+MiSe2NmrY
-	rrKkhGR+iThkLPdik8fdZxM6n81Z6TGAEGG1WF0KO8s6qOUOZnPOUTZ6xTkv9+iwhicLt/pQenW
-	KXq+1mk7ZqtQZVkVmJjLhrewUv8ZtKu+Dh9W/0BzXkTZYMzW+iI9+OBLsGxhFvI4daUQbPVOAhL
-	4tfn7+nh5vvASFS5nUCZu
-X-Google-Smtp-Source: AGHT+IF6h3Km3sykbcOPA0B1OKPKaa4MC/qSLenX6bfmNVcpxACoRQ3VLby7TJDbBLIfyg1tB5/JXA==
-X-Received: by 2002:a05:600c:4e42:b0:43c:fad6:fa5a with SMTP id 5b1f17b1804b1-43d50a1cfb6mr107188815e9.24.1742832982992;
-        Mon, 24 Mar 2025 09:16:22 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9ef23esm11282247f8f.81.2025.03.24.09.16.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Mar 2025 09:16:22 -0700 (PDT)
-Message-ID: <80c2e84e-6603-4e96-8934-8219c55d4d36@gmail.com>
-Date: Mon, 24 Mar 2025 16:16:22 +0000
+        d=1e100.net; s=20230601; t=1742838514; x=1743443314;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=v1B484i0ra0RUrZpio1n+UmcEgXNn7tsApDMrSXfLY4=;
+        b=HCa8Gj/ZvB4K2uBAm8RUNlN7r0G1YGC3rUvvdcsIox/km8t7GDVwFDY9j+Hv932mlc
+         E8/VhfsdH3YeNzqADjOUhakOmwNRQgjgYCuPrCBHZFCkE0f/RMsne/IHF9YeALuXwpPy
+         ZWFDVW0mPa38QOFh0/VGa4JWWP18IXRWXawuV0Em48RsMcVGfJFEfferlbUs3+ei1IJ/
+         s5tNDCX0ZLc2kYi3oOX50dakwgqg84tO9RRPhI9/EngGxKODaTmly26kj86ME9gdxVcI
+         5ISgsFZWpmzbsN35mMpGiURbsOtYaswuUvx021vwAadXdjOuVRDx6CZjZTKjIW9fXcMb
+         LJqw==
+X-Gm-Message-State: AOJu0Ywoc3UJ3CwiOrCZr4L8Wf8X83MQaScjHt3SEX3ZGeazWvIVBdHe
+	dmDzB3F1K7B2PxyWViY+bmODXWMVHBazCECjDJoL5/dNP5KdWbZm/PVRaQ/SfQHogdOZOgLrB4B
+	NH4bh8i70NbcoaWtkEKbvZYXaHVc=
+X-Gm-Gg: ASbGnctzvy+NFdSKTWR0cVb7SluxIlrNbf79CdYTh34WOog7lQ9SsPpX+eEAmp6QZa6
+	yt5q51A7Eus5B+xaAH2z9ZVBLJZnP3FYAwSuoKBn6Au/gr2pwcurR9tc0IhSCRZN7ER8UUlS2iZ
+	Tvw+1qqyR2Zr6OFZFSTr4zUOmyY12PAdc4sc5lR+PXXg2drBI/zrl/A7JKIMg=
+X-Google-Smtp-Source: AGHT+IEMdhakeoOGAAUBRj3F8MD1olHw9qTjgsas4peMi2WI2WOCE3zK6YduuCvy1VdrlHAr7XdhpqSlf5qxyPWRCXE=
+X-Received: by 2002:a05:6102:3f08:b0:4c3:346:29ef with SMTP id
+ ada2fe7eead31-4c50c8eed23mr9163586137.11.1742838513649; Mon, 24 Mar 2025
+ 10:48:33 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 24 Mar 2025 17:48:32 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <Z-FZObjvIN-qzvlj@pks.im>
+References: <20250320-245-partially-atomic-ref-updates-v4-0-3dcc1b311dc9@gmail.com>
+ <20250320-245-partially-atomic-ref-updates-v4-7-3dcc1b311dc9@gmail.com> <Z-FZObjvIN-qzvlj@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 13/20] t: refactor tests depending on Perl for textconv
- scripts
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
- <20250320-b4-pks-t-perlless-v1-13-b1eefe27ac55@pks.im>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20250320-b4-pks-t-perlless-v1-13-b1eefe27ac55@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Date: Mon, 24 Mar 2025 17:48:32 +0000
+X-Gm-Features: AQ5f1Jrt9xNt35Cx_c0l6p94f2FRymX7j_Szg7PvHsFT8FWBa3dgumQWfhoAniM
+Message-ID: <CAOLa=ZRx8gt=_J2cRFEsUEi31ia7qNL7SZ-WBWuWSyU=8SRt+g@mail.gmail.com>
+Subject: Re: [PATCH v4 7/8] refs: support rejection in batch updates during
+ F/D checks
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, jltobler@gmail.com, phillip.wood123@gmail.com
+Content-Type: multipart/mixed; boundary="00000000000081e6f306311a36f4"
 
-Hi Patrick
+--00000000000081e6f306311a36f4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 20/03/2025 09:35, Patrick Steinhardt wrote:
-> We have a couple of tests that depend on Perl for textconv scripts.
-> Refactor these tests to instead be implemented via shell utilities so
-> that we can drop a couple of PERL_TEST_HELPERS prerequisites.
-> 
-> Note that not all of the conversions are a one-to-one equivalent to the
-> previous textconv scripts. But that's not really needed in the first
-> place: we only care that the textconv script does something, and that
-> can be verified trivially without having a full-blown invocation of
-> hexdump. So at times, the implementation of the textconv scripts is
-> reduced to their bare minimum.
- > > -cat >hexdump <<'EOF'
-> -#!/bin/sh
-> -"$PERL_PATH" -e '$/ = undef; $_ = <>; s/./ord($&)/ge; print $_' < "$1"
-> -EOF
-> -chmod +x hexdump
-> -
->   test_expect_success 'setup binary file with history' '
-> +	write_script hexdump <<-\EOF &&
-> +	tr "\000\001" "01" <"$1"
-I guess it is fine just to handle the characters we expect at the moment 
-(is that what the second paragraph of the commit message is referring 
-to?), but the script it was more tolerant of future changes to the test 
-data. We could always just use 'test-tool hexdump' here like the tests 
-below but it is probably not worth a re-roll on its own.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Overall this series looks like a useful improvement.
+> On Thu, Mar 20, 2025 at 12:44:02PM +0100, Karthik Nayak wrote:
+>> diff --git a/refs.c b/refs.c
+>> index b34ec198f5..f719046f47 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -2540,6 +2540,7 @@ enum ref_transaction_error refs_verify_refnames_av=
+ailable(struct ref_store *refs
+>>  					  const struct string_list *refnames,
+>>  					  const struct string_list *extras,
+>>  					  const struct string_list *skip,
+>> +					  struct ref_transaction *transaction,
+>>  					  unsigned int initial_transaction,
+>>  					  struct strbuf *err)
+>>  {
+>> @@ -2599,12 +2601,26 @@ enum ref_transaction_error refs_verify_refnames_=
+available(struct ref_store *refs
+>>  			if (!initial_transaction &&
+>>  			    !refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
+>>  					       &type, &ignore_errno)) {
+>> +				if (transaction && ref_transaction_maybe_set_rejected(
+>> +					    transaction, *update_idx,
+>> +					    REF_TRANSACTION_ERROR_NAME_CONFLICT)) {
+>> +					strset_remove(&dirnames, dirname.buf);
+>> +					continue;
+>> +				}
+>> +
+>
+> Okay. We have to remove the dirname from `dirnames` again so that the
+> next reference that creates a reference in the same directory would also
+> be marked as conflicting. It does have the consequence that we now have
+> to read the dirname N times again, where N is the number of refs that
+> are created below that directory.
+>
+> We could probably improve this by using another map that contains the
+> conflicting names, right?
+>
 
-Thanks
+Yes that's definitely possible, I will go ahead and add it!
 
-Phillip
+>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> index be758ffff5..1d50d4013c 100644
+>> --- a/refs/files-backend.c
+>> +++ b/refs/files-backend.c
+>> @@ -864,7 +868,9 @@ static enum ref_transaction_error lock_raw_ref(struc=
+t files_ref_store *refs,
+>>  		 * make sure there is no existing packed ref that conflicts
+>>  		 * with refname. This check is deferred so that we can batch it.
+>>  		 */
+>> -		string_list_append(refnames_to_check, refname);
+>> +		item =3D string_list_append(refnames_to_check, refname);
+>> +		item->util =3D xmalloc(sizeof(update_idx));
+>> +		memcpy(item->util, &update_idx, sizeof(update_idx));
+>>  	}
+>>
+>>  	ret =3D 0;
+>
+> Hm, so we have to allocate the `util` field now to store the update
+> index, which is a bit unfortunate because all of this is part of the hot
+> loop. We cannot store a direct pointer though because the array of
+> updates may be reallocated, which would invalidate any pointers pointing
+> into the array.
+>
 
-> +	EOF
->   	test_commit --printf one file "\\0\\n" &&
->   	test_commit --printf --append two file "\\01\\n"
->   '
-> diff --git a/t/t4031-diff-rewrite-binary.sh b/t/t4031-diff-rewrite-binary.sh
-> index cbe50b15772..15e012ccc7c 100755
-> --- a/t/t4031-diff-rewrite-binary.sh
-> +++ b/t/t4031-diff-rewrite-binary.sh
-> @@ -57,24 +57,19 @@ test_expect_success 'diff --stat counts binary rewrite as 0 lines' '
->   	grep " rewrite file" diff
->   '
->   
-> -{
-> -	echo "#!$SHELL_PATH"
-> -	cat <<'EOF'
-> -"$PERL_PATH" -e '$/ = undef; $_ = <>; s/./ord($&)/ge; print $_' < "$1"
-> -EOF
-> -} >dump
-> -chmod +x dump
-> -
->   test_expect_success 'setup textconv' '
-> +	write_script dump <<-\EOF &&
-> +	test-tool hexdump <"$1"
-> +	EOF
->   	echo file diff=foo >.gitattributes &&
->   	git config diff.foo.textconv "\"$(pwd)\""/dump
->   '
->   
-> -test_expect_success PERL_TEST_HELPERS 'rewrite diff respects textconv' '
-> +test_expect_success 'rewrite diff respects textconv' '
->   	git diff -B >diff &&
-> -	grep "dissimilarity index" diff &&
-> -	grep "^-61" diff &&
-> -	grep "^-0" diff
-> +	test_grep "dissimilarity index" diff &&
-> +	test_grep "^-3d 0a 00" diff &&
-> +	test_grep "^+3d 0a 01" diff
->   '
->   
->   test_done
-> diff --git a/t/t7815-grep-binary.sh b/t/t7815-grep-binary.sh
-> index b2730d200c8..3bd91da9707 100755
-> --- a/t/t7815-grep-binary.sh
-> +++ b/t/t7815-grep-binary.sh
-> @@ -4,12 +4,6 @@ test_description='git grep in binary files'
->   
->   . ./test-lib.sh
->   
-> -if ! test_have_prereq PERL_TEST_HELPERS
-> -then
-> -	skip_all='skipping grep binary tests; Perl not available'
-> -	test_done
-> -fi
-> -
->   test_expect_success 'setup' "
->   	echo 'binaryQfileQm[*]cQ*æQð' | q_to_nul >a &&
->   	git add a &&
-> @@ -120,13 +114,10 @@ test_expect_success 'grep respects not-binary diff attribute' '
->   	test_cmp expect actual
->   '
->   
-> -cat >nul_to_q_textconv <<'EOF'
-> -#!/bin/sh
-> -"$PERL_PATH" -pe 'y/\000/Q/' < "$1"
-> -EOF
-> -chmod +x nul_to_q_textconv
-> -
->   test_expect_success 'setup textconv filters' '
-> +	write_script nul_to_q_textconv <<-\EOF &&
-> +	tr "\000" "Q" <"$1"
-> +	EOF
->   	echo a diff=foo >.gitattributes &&
->   	git config diff.foo.textconv "\"$(pwd)\""/nul_to_q_textconv
->   '
-> 
+Yes, your inference is on point.
 
+> I was wondering whether we could abuse an `uintptr_t` and use it to
+> store the update index as a pointer. It does feel somewhat dirty though.
+>
+
+We can do something like this, it would be _clever_ but does feel very
+hacky.
+
+I did so some benchmarking here
+
+Benchmark 1: update-ref: create many refs (refformat =3D files, refcount
+=3D 100000, revision =3D master)
+  Time (mean =C2=B1 =CF=83):      7.396 s =C2=B1  0.175 s    [User: 0.962 s=
+, System: 6.312 s]
+  Range (min =E2=80=A6 max):    7.145 s =E2=80=A6  7.688 s    10 runs
+
+Benchmark 2: update-ref: create many refs (refformat =3D files, refcount
+=3D 100000, revision =3D b4/245-partially-atomic-ref-updates)
+  Time (mean =C2=B1 =CF=83):      7.514 s =C2=B1  0.144 s    [User: 0.919 s=
+, System: 6.438 s]
+  Range (min =E2=80=A6 max):    7.297 s =E2=80=A6  7.750 s    10 runs
+
+Summary
+  update-ref: create many refs (refformat =3D files, refcount =3D 100000,
+revision =3D master) ran
+    1.02 =C2=B1 0.03 times faster than update-ref: create many refs
+(refformat =3D files, refcount =3D 100000, revision =3D
+b4/245-partially-atomic-ref-updates)
+
+Overall the perf degradation is very minimal. I also looked at the
+flamegraph to see if there is something. But most of the time seems to
+be spent in IO (reading refs and creating locks).
+
+So I think we should be ok here, wdyt?
+
+> Patrick
+
+--00000000000081e6f306311a36f4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 230ce1955dc4da32_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1maG11OFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNE5rQy85dG5QTmk0c1lIVVlNZE5zTXl5M1MyZnpWUgpiNlVPZk1tWGNO
+eU5ERHlLVzBESDYyTkxSSFpxeUduMkZPWEdZZU9sNVpQYlk2RXNtUDdHS0dnN1RBRnVPcktKCkNG
+b2ZwM0xtWGxtTUZ3VG9HT3FuZFM0bE9NbTZpenR5ZWtKU3J3ZFlOdDl1NGtvUXNSYWgzNGhpWSs1
+Mk02YWcKWGFxOVg0dGRrbnNXdSt1blhhbUdXcFRlbHFLN3lvWVdxa0JwSlJmTGVIS01oMjE0ZWVO
+eUhSS1VlQldzdUU1WAoydE85UHhaWFJTM2lSZm1Zejc3alYvdEhwckJ1NFd1M1l3KzZKUUQ5L0Yx
+Q0J1NVMwV1ZFU0NSdTdrS1hVNzlECmQzL0lWUkpKQXhzQk1yNDZQaFZQTDlpMmtKNXYwMjdMUERE
+L2JpMkg0RHh5bklzUDAwWjlRQmdiRzdkQTRhZW4Kci9uY1N1dkt2TERUbGN3NVVSNWhjTXd3cjVn
+Wjc5T09Bd29oYWg4QnQxeVVDblFZSEFBME0rb1BsTGdvekIwdApCdXB3VGRjbmZKOTU0N1JOZ2N5
+RGIxR1l1OExGMkxXamRQSWJmU2pnaldvcG5uTzRZQWRybk5ZcHZRcnQ1RGZyCnBOSUg1c1d1Nllx
+L0t5dHJGV25taXFSdGNEZjVnb2htaGVxUWlHYz0KPXFQa2IKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000081e6f306311a36f4--
