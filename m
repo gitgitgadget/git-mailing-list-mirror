@@ -1,56 +1,56 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B966863D
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 12:46:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535276F06B
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 12:46:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742820381; cv=none; b=lKsW7HhJtuodjbYN/IKMvAyq9IIWyG/YlWrydCB585ZERWKP5vNGqHPqvGpYFZAh1F1qsoYouzy2qjAO0sOveNAo3KWpeymDzeUnumdco43vQvmnX2cnL60bBKmxDNlsIsFL0lxYXCgpJWuKUBNY0rCvD440F3/3+cMBeRtMbe4=
+	t=1742820384; cv=none; b=P/Dasb85Ey8qMi1CpAEGscZMTfqJVP2DP1GiMNFrr0Q98BzuUWa2IyVwmwYnllUOJIo+a8fDU3qjhsBs8THSND8b9cIS8IB8bfn+6eFfEyS3OkcbDcisQ7cPpkZEhR+HielPPx7tXt7npyv0KGSo38snEebhwyWakb/BYwGU+qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742820381; c=relaxed/simple;
-	bh=1BGW6HxfOYTWw+OpHNjNAtSxu8ldOfJM4w4WOKobUh0=;
+	s=arc-20240116; t=1742820384; c=relaxed/simple;
+	bh=izQg3xgqe0Y2yeUdNEXvp3zgIhVIMu2twKUY8Dt3dng=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZRwD9LJM+IWphW8q8YYJPsVxaXhrh52Fm2PIuYCB9qHx7Qr6iBVH6lpMR4cyJK4mxqtxqrhqQRH2LVkfnqMEu0CzhNQxrjyxnfgSEs0eGVEdJXeH3eUFcG64FKLcrlsEm3+PPLAbg1mPzxZHHuSnX4S5ncH91GlAQj6sLCOu/0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rz2+Lq7v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IgUVB4K3; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=i61NqL6t7hAP2XGqQehxLTSGm7buSenRwJkOVOyZg0M9m9xY12Y/hIUKgGoSxflS6ypsU8W+t9vN5wAJ5iRfsSj1PN4Z4p1ILUdQjtPqjKolNRfhoIhzcFiqtDsJIrmfOca4lMtyhvAO65nJdysCFjN+BIIhsKiyVre7GqLemtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YkuTSfcz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WESgC+VQ; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rz2+Lq7v";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IgUVB4K3"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id A90411140146;
-	Mon, 24 Mar 2025 08:46:18 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YkuTSfcz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WESgC+VQ"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3631825401E5;
+	Mon, 24 Mar 2025 08:46:21 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 24 Mar 2025 08:46:18 -0400
+  by phl-compute-07.internal (MEProxy); Mon, 24 Mar 2025 08:46:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1742820378;
-	 x=1742906778; bh=2F6FSjY1NjTr6Tt99aaxzV4h0syrcpIl9CA35vjZuRs=; b=
-	rz2+Lq7vNJrqmGCGKdTcOQNjV7QFEEk8O9jTUVf8FYMTBD2VkYZE5bpJcCRe+Dl7
-	3Xfqv9pbxWuUnzl83mwCzJKvGUqcWvR3j8uJ/IYUCfI1fdry9YBXPHrNpvFNg0+T
-	h8uhB/OjlWknh+/aSWEtdCV0TlE7Oye9EWiERyGWyORzSHx3Dx8cVi67sFRkl+Xh
-	Db0WsyoAojKQSlSUcqIsS3iJ76wcnI3EvvKxqbleNuZ275bqos0zQZV32zPmqlHU
-	hen22A/J+IuGVMpAl3AxnDhg020wDxbwHVr9SVRn4CVHuzk9gJiF5DdFuavxuL2U
-	OMqDrT+rFsjBMctWJMjkgg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1742820381;
+	 x=1742906781; bh=rNK3tQAcxOsmJsFU62/dcy3bFh3vwyFYgfo5qiWfR0M=; b=
+	YkuTSfczVWR9w49SE7aRzuwymSzWNx7IhQL6aPwo+KYv9rrC6idsQlGj9qVSNk65
+	VmtpmmDkf/oUm/VaN7mQcKmHLAChSz5/zpQlTV/IiFLOt6aq9fWnpJqXcGHPU6Wd
+	rS91dpl+xU5QurMwfWdZd5UFGMmeB6+7k+GZAuEjexrC21gLHgOmlEsMJ1BewrO4
+	GWX7Coy417Ybf8NkHekyKe3qf9ow/29ZfTf9j4gmnFnqQtxHb5tHQDn5NT5N0yKL
+	PAMHWG/YbPgM7MiC7JRlKW/Bj522dlZedEPpbCt89sb7NgQss4bFOs6cGzQeOmlF
+	JHZBl84mLI0k9k/wX9gNpA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742820378; x=
-	1742906778; bh=2F6FSjY1NjTr6Tt99aaxzV4h0syrcpIl9CA35vjZuRs=; b=I
-	gUVB4K3v9JSfhyxzbojw4tasO+/3Db62k9h5vWiMR/w1c9k9fCW3jfVZpuU6rffb
-	bMqjz//lAhB5r+As9TGkGSDwEjS4NFMNIQ8lhvitokLvge6zrW4LnrwWNgQqw3+D
-	cTweLmsJz4WL2Mj4tlqR3TV5m7GkPH73ecurFRCRtN5iYJT8l/v+0yHblGI7RshL
-	n8EJeVFemiXCfmIgZxSa8jbvCGRb1EsVSU9xdw5jdkb3ttGnvEYQQj8+Qx6c8vN9
-	mqCNkqyf5/dCJen0Y38TnrpMDpm3QoPqP+u02ozSb4NmoO+Ek+PwmkSo62atGowa
-	QZyEBDSrnQtdFYtjcm3wQ==
-X-ME-Sender: <xms:GlThZ-lwQpULQ3mgHFeALirdnoZ67uUvZ1vo2PSMi-IDPBNjQYCXeg>
-    <xme:GlThZ12Ffasz8bKPQHSbAft2Tibdgmo9oTVaQ7Rqf2T6c87Zq2Ct09zpcFJBbmzPJ
-    7E87-lHYwvQpoooIQ>
-X-ME-Received: <xmr:GlThZ8quX1memxzIqEPvkCeDUahnBdMqYfSDXoLmld9Be4Iagov99gOwHAdj9R1iWcYkw75jf6h6prts2dpDjKfPiO50Py5kx427q5GOieBjdaE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduheelkeduucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742820381; x=
+	1742906781; bh=rNK3tQAcxOsmJsFU62/dcy3bFh3vwyFYgfo5qiWfR0M=; b=W
+	ESgC+VQLlhkZmbj0FGWzR99aXteyzWo46rHJwF5q+xkG08oQGq7Ha+Kfs7VnQtvN
+	Gq1zUVmT4aRwHEQN6w+RMkug9qqE3geCImLdZxg0L9kTSTSd4P0hXPwJDuX2zlJn
+	KJL/+wS6mGGufQeopsS2rCTJ8uwJLhITfXUABQtxZ+V8qMhBFhj9UNA8rb7c7Xfq
+	L+87LdSX5T5efrSOina/TUmRRsb6m55X6fnyQ1C/EOnVP1vL8MBovgKrvS50WXKz
+	t11kLBum24kb2tLxbthklbsaVR2yK5lY52VnGRne1eKr46Ct245E7KjhiQGYhjf2
+	TInGv1z7lvW2vWZcjCkEw==
+X-ME-Sender: <xms:HFThZ4KfaJ6lp3ewK8iYSDnkp9bqfr0-_z97kB6NbRPo2BD4sKUdAA>
+    <xme:HFThZ4LSqIFdFR60wMsANZkX6Ffd_k-jGYWRyPWcX30dGURP0p0aZ-dvhA4PLABtr
+    fLdl6dOOwaWts5zIA>
+X-ME-Received: <xmr:HFThZ4vFOqU0FzGhGZnn4_azEJQAh51RuxiNhv8e1ept2rq91HdpuTbXGA6qYZbIleOf0FA4E7d4FbeMAtvJ-cKV78qaDw7aV-EpQ1aEKEz14Wk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduheelkedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
@@ -58,30 +58,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduheelkeduucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
     veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtg
-    hordgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhm
-    gidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:GlThZylU4pfQAf2Fk1X_Dlvn03loV7Zr0akujH_X-ziSM80KiNfW7Q>
-    <xmx:GlThZ81vCmN5smygzvM0IhMARAoH0Fsr6k8YccvDW9bZn9HeWyzBZw>
-    <xmx:GlThZ5tkxuNMyWsZ-p0t46ajMDgMlJvOoFUHX9Z1QF3VWYFIfqyScg>
-    <xmx:GlThZ4WpXdWEVLNj-aPTouOJD4iTQEhhbny9Z8-MdgLSbW_YTI0V7Q>
-    <xmx:GlThZ5yiHkqCqCfnUjDor0-WE2Pk_GVk4o6ZI6rRNGrBvZX4QvUEbsjB>
+    vgepshhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
+    hnsehgmhigrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
+X-ME-Proxy: <xmx:HFThZ1ZqiBIp4-2PgCqTVhnHM4NyL16T6IqcqZ6opcnh_HiPq6v-zw>
+    <xmx:HFThZ_ZOKksVAuI9RCekru0lpjkrgRO0haSTQWMAab-zGbybinIWvg>
+    <xmx:HFThZxA_o6PIlOFnl9HIGGpZWAGMqzEKeWKUUSJ2QqBlK1AYKwMoGg>
+    <xmx:HFThZ1bLh8yecNNVJIqAjPnju48EWBeYpFaNcvIUpL8W6meDkRZI3w>
+    <xmx:HVThZ7F2Lm-PDIObGMBTmMwqmOF89sqFz-rc2mmQ8xMrv9pH-GO_kRGJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Mar 2025 08:46:17 -0400 (EDT)
+ 24 Mar 2025 08:46:19 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e98697ef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 24 Mar 2025 12:46:15 +0000 (UTC)
-Date: Mon, 24 Mar 2025 13:46:10 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id bf245c01 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 24 Mar 2025 12:46:19 +0000 (UTC)
+Date: Mon, 24 Mar 2025 13:46:18 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Eric Sunshine <sunshine@sunshineco.com>
 Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 13/20] t: refactor tests depending on Perl for textconv
- scripts
-Message-ID: <Z-FUEhraLaDODbmO@pks.im>
+Subject: Re: [PATCH 06/20] t: introduce PERL_TEST_HELPERS prerequisite
+Message-ID: <Z-FUGuLAiAq87pHx@pks.im>
 References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
- <20250320-b4-pks-t-perlless-v1-13-b1eefe27ac55@pks.im>
- <CAPig+cQdoZwY3u-xr49Jb8aaQmE69p4i4RUdy=cRv-V7VoWENg@mail.gmail.com>
+ <20250320-b4-pks-t-perlless-v1-6-b1eefe27ac55@pks.im>
+ <CAPig+cSPi0CV14o92FNFB0p2Z+nVTZ0mF67vd2ywsV6gGn7YSQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,41 +90,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cQdoZwY3u-xr49Jb8aaQmE69p4i4RUdy=cRv-V7VoWENg@mail.gmail.com>
+In-Reply-To: <CAPig+cSPi0CV14o92FNFB0p2Z+nVTZ0mF67vd2ywsV6gGn7YSQ@mail.gmail.com>
 
-On Thu, Mar 20, 2025 at 03:37:08PM -0400, Eric Sunshine wrote:
-> On Thu, Mar 20, 2025 at 5:37 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > We have a couple of tests that depend on Perl for textconv scripts.
-> > Refactor these tests to instead be implemented via shell utilities so
-> > that we can drop a couple of PERL_TEST_HELPERS prerequisites.
-> >
-> > Note that not all of the conversions are a one-to-one equivalent to the
-> > previous textconv scripts. But that's not really needed in the first
-> > place: we only care that the textconv script does something, and that
-> > can be verified trivially without having a full-blown invocation of
-> > hexdump. So at times, the implementation of the textconv scripts is
-> > reduced to their bare minimum.
-> >
+On Thu, Mar 20, 2025 at 02:55:34PM -0400, Eric Sunshine wrote:
+> On Thu, Mar 20, 2025 at 5:36 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > [...]
+> > Introduce a new PERL_TEST_HELPERS prerequisite that guards all tests
+> > that require Perl. This prerequisite is explicitly different than the
+> > preexisting PERL prerequisite:
+> > [...]
 > > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > > ---
-> > -test_expect_success PERL_TEST_HELPERS 'rewrite diff respects textconv' '
-> > +test_expect_success 'rewrite diff respects textconv' '
-> >         git diff -B >diff &&
-> > -       grep "dissimilarity index" diff &&
-> > -       grep "^-61" diff &&
-> > -       grep "^-0" diff
-> > +       test_grep "dissimilarity index" diff &&
-> > +       test_grep "^-3d 0a 00" diff &&
-> > +       test_grep "^+3d 0a 01" diff
-> >  '
+> > diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+> > @@ -5,6 +5,12 @@ test_description=check-ignore
+> > +if ! test_have_prereq PERL_TEST_HELPERS
+> > +then
+> > +       skip_all='skipping ignores tests; Perl not available'
+> > +       test_done
+> > +fi
+> > diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
+> > @@ -11,6 +11,12 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> > +if ! test_have_prereq PERL_TEST_HELPERS
+> > +then
+> > +       skip_all='skipping ignores tests; Perl not available'
+> > +       test_done
+> > +fi
 > 
-> This change seems unrelated to the stated purpose (`textconv`) of this patch(?).
+> This message seems to have been copy/pasted. Should it be instead
+> "skipping apply-binary tests; Perl not available"?
 
-Not quite. The test previously didn't run because it depends on the
-Perl-based textconv script. Now that this textconv script was adapted
-to use shell scripting instead it can run, but as explained in the
-commit message the output of the textconv script changed. We don't
-really care for the exact output at all, we only care that textconv did
-its thing. But we do have to adapt the test accordingly.
+Yup, good catch!
 
 Patrick
