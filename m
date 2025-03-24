@@ -1,187 +1,134 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3AD143736
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 02:11:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E516723A9
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 02:59:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742782272; cv=none; b=e1NOh+FozuWp89VJKmnE81ZInn0UsHTucei1ClcGFkrXa6oPwOYV1Tuu9ttKwhdSwY6YIX7j50+NHhhFkPJfsUl+ALGzn6JgMJn4Anlns7EcnbJTbtR7v+ET0RDtBrGLllyNqV9lysnd0gr4ReAIPKcfUtbvVY+HzqJsXNE5BsY=
+	t=1742785189; cv=none; b=OhWtvID0RyTiGcqo69JnsNQR4StNVTR2ny8wHcrlaU3cIFm9VjC0sr99r/OUkm+Dbyl3cf+Y/t2hjyf48RBPIPcVau2SwJRJQLdjPatBPNnqIo1zbFhRS44rArFS6YEWUbEr+RmvFz5eeffZkLiq5b7i7TpVMJGvDG/fLjwV+tY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742782272; c=relaxed/simple;
-	bh=8x7+qJs8CTx09ttZa6L63ZAcJwEirt3YjtFjSSyezhY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=av6xXQWfdnuKjxdnSm9TIsO7KYrucOIPozETIYJrEhqg7igwJaBZYtsz9I/IDPSFIQpVnYJFyFb9Fqh++NYDtUcvWgxpryVEadRVkFCZ09KeWNdgdFuKMdb93Tu7Vqc6g/xX08T42b8MDlsfXWHY9/sW1gEgT2ntbdqQIZVKQXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=idu5BaA5; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742785189; c=relaxed/simple;
+	bh=kCeFHweKThYK041ToX18BjsQaWhpnh33bkbDPhEPYKI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ur3l+OFuNJgiVn15PCC/AowBj1kQdtjVVta2UDMbQZxtDmKgGa/HEKgB7uG/mG5f0ekUjZ49vpkshQGDsttEiEn3ZEGMWIhMCo464H4Ya9lGpMmye+eVEl+aNmCye8+5Mc7zIn2ZfnbmLutu7iNzFYEqhMPaPcll+O46j3Z1wD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=U4ae8Piy; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="idu5BaA5"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2260c915749so48314685ad.3
-        for <git@vger.kernel.org>; Sun, 23 Mar 2025 19:11:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742782269; x=1743387069; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LG0ls1jJfjsoJJHwe3YsjgmRJ4JLk3LJsjb7nYs7J4s=;
-        b=idu5BaA5YvEbKo+RDGTMgo2NwLAzqvG0VQXdWn71BmQSpE+l4Q3p4/Ump2NlpZs+do
-         i2HcCtADsN7pcbs0swR1o3GeORXBHVC+QWqgrvljj2/PNQlrFahbRIm0iUjIOz4XxDi8
-         fkYlU8ghWhbnKdHpD0SJW+JIgoeu+sdcugU+nKK6SP3IDOx9XxmqHCaOSMAmHM5oNfYR
-         WkI/Po/SdUyZrReEw+dDhPheLBOLolhu1t3cPVVYfQ7lfQRWGEIBgCR4L+Bkx2oObd8C
-         rn7Y9BkC5WZsNBb2iKwKB1BXl49icnClTAKdWWcVu5gJ8DKy4GHndxoKxvKw8vWyMrdD
-         JYpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742782269; x=1743387069;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LG0ls1jJfjsoJJHwe3YsjgmRJ4JLk3LJsjb7nYs7J4s=;
-        b=X3rFnPl+k4th6mazaIw4a8NrxlIwrJT7CMO8eLhRGgyGboL5W8QY21qfoVQGaHQ/wQ
-         vCAuahK23C2D9st1i88Lzj4p6i/UF82NGPCQG2A9qjZXukA3MiCzUL8hHqQn17SgoP/x
-         Pzz2w9HwmhWzXC4Rw+4QbArnq04K0Vgp907nLlaOhldyoky3b+od24EOMjj3EFXSVRBN
-         nwumm5zzn/YRwV+Z7Wd6XAoIHKO0ko24NtBuAkcMN8YgZrfxYKpZIHUheOX7Pfyl/oyg
-         6qgUYfy0xGTwAIFrhds8a1thTwES4ygxCIPnKVwVENkDHluulg9oPfy+7lB/wLOdibYJ
-         +0gQ==
-X-Gm-Message-State: AOJu0Yznjyr1lNnoJdiN9aAQ+YDKn7Rdq9A5HvSBD7u29nnEwtULwHyT
-	Br22dqiuu2wozLo/ORA9A3gll3cqgZuZymNk+wQJBV0ImVfLrrQOMCPgjQ==
-X-Gm-Gg: ASbGncs0PEg/bHjakFmHvJERWgHaRL7OlQyAtXfdTVkNpkjCCh02YXbZUumShtcvVjJ
-	ZhqUUo1TgGw8tIi+dOeNVrd3tTbKemHz8RvNblLodW59efr59huLoXKSD3Psu4nXIZQnd2KetWI
-	enZF+JCKHMPzlgYUGHdg1Pvm6r7ngtIpiFosxGNG33Kv+BkPoFAXePbyI1pxBfjPlALGenvswLc
-	Ee9kboBtVeIP1RAxo7VJDgJltZJkBU00WruVhL0gsKYi595wDunrMzSQZiWLSe6FYN1OeetGOvd
-	1aZmx5ZHqSZtkFW2fZ7FRMspe1V8wjc19d1zJwKq+jI9eRkJOb0Q5adMajTy9bgUAGgvWH7Bqkv
-	jAjbB3dM0Y4A=
-X-Google-Smtp-Source: AGHT+IHDZzZ+Gxr23H8p9eopdxKSbCKxWlj1rkDRdc8t6psQrGIjrBa6oqMaAozjTn2fd5n1plMuRQ==
-X-Received: by 2002:a05:6a00:3d43:b0:732:2923:b70f with SMTP id d2e1a72fcca58-7390599ea49mr19472198b3a.11.1742782268617;
-        Sun, 23 Mar 2025 19:11:08 -0700 (PDT)
-Received: from localhost.localdomain ([2804:7f0:b77d:1b50:1d6c:cbd3:c52f:6b5d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73905fd57f7sm6592913b3a.44.2025.03.23.19.11.06
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 23 Mar 2025 19:11:08 -0700 (PDT)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-To: git@vger.kernel.org
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	"D . Ben Knoble" <ben.knoble@gmail.com>
-Subject: [GSoC PATCH v2] userdiff: add builtin driver for gitconfig syntax
-Date: Sun, 23 Mar 2025 23:11:01 -0300
-Message-Id: <20250324021101.7483-1-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="U4ae8Piy"
+Received: (qmail 15109 invoked by uid 109); 24 Mar 2025 02:53:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=kCeFHweKThYK041ToX18BjsQaWhpnh33bkbDPhEPYKI=; b=U4ae8PiyK9572C8NNhGgHDJZd4r51PGIRw0pq+DQ2UuMZt/uXYp3TFXDZ5lCCCnI45DMysjT6O+OSTfiPncdzFXponTMWlx8883FSX5JAJIL2pW/PJSgNcPO3sXwNVL4CM5vV1pWVYaP9kOMqrAwiTwzaKse90xwaXEIa4gBzmXfiyEg97mdeiACacW8XAG7hkd+xcki31qdKJhQkYh/pVml21Q74G/Fu0EocRbpSE1PNcIyBoGRUg76OKvhWSsOZ7dIGjPhaoRKh18hTe/N0l78Zw+Yzwa7wesz8Kw5j6TaJTcUYS0XqYsggS99OTsUfOiEZl+v4xFEsQ70g30nzw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Mar 2025 02:53:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16727 invoked by uid 111); 24 Mar 2025 02:53:01 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 23 Mar 2025 22:53:01 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sun, 23 Mar 2025 22:53:00 -0400
+From: Jeff King <peff@peff.net>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Tuomas Ahola <taahol@utu.fi>, git@vger.kernel.org
+Subject: Re: [PATCH] bulk-checkin: fix sign compare warnings
+Message-ID: <20250324025300.GA690113@coredump.intra.peff.net>
+References: <20250321200715.3338-1-taahol@utu.fi>
+ <CAOLa=ZRN5m0bccMdabUYwNJLg4HX6jcOe3PN-aBTHXBOuM71hw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZRN5m0bccMdabUYwNJLg4HX6jcOe3PN-aBTHXBOuM71hw@mail.gmail.com>
 
-From Documentation/config.adoc:
+On Fri, Mar 21, 2025 at 05:08:06PM -0400, Karthik Nayak wrote:
 
-Add a new builtin driver for gitconfig files, where:
+> > @@ -192,7 +188,7 @@ static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
+> >  			offset += rsize;
+> >  			if (*already_hashed_to < offset) {
+> >  				size_t hsize = offset - *already_hashed_to;
+> > -				if (rsize < hsize)
+> > +				if ((size_t)rsize < hsize)
+> 
+> Something I found peculiar here is that `rsize` is of type ssize_t'.
+> But it only seems to store a positive value.
 
-- the funcname regular expression matches sections and subsections,
-  i. e. the pattern [SECTION] or [SECTION "SUBSECTION"], where the
-  section is composed by alphanumeric numbers, `-` and `.`, and
-  subsection names may be composed by any characters;
+I assumed it was ssize_t because it would hold the result of a read
+call. But it doesn't! We put that into the "read_result" variable.
 
-- word_regex is more permissive than the syntax specification, matching
-  any word with one or more non-whitespace characters without checking
-  if it is a valid variable name or value.
+So it could just be a size_t in the first place. And indeed it is better
+as one, because we assign from "size", which is itself a size_t. We do
+not yet warn about type mismatches outside of comparisons, but really it
+is equally bad.
 
-A more detailed description on the format of gitconfig syntax can be
-seen by running `git show cfd409:Documentation/config.txt`.
+However, if you switch it, then we get a different -Wsign-compare
+problem: we compare "rsize" and "read_result". So you still have to
+cast, but at a different spot.
 
-Also add tests for the new userdiff driver. These files define sections
-and subsections, with and without indentation.
+If we are doing this a lot (and really this conversion is necessary any
+time you look at the outcome of a read call), I do still wonder if we
+should have a helper like:
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Helped-by: D. Ben Knoble <ben.knoble@gmail.com>
-Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
----
+static inline int safe_scast(ssize_t ret, size_t *out)
+{
+	if (ret < 0)
+		return 0;
+	/* cast is safe because of check above */
+	*out = (size_t)ret;
+	return 1;
+}
 
-Hi!
+(yes, I know the name is lousy). That would allow something like this:
 
-This v2 removes the quoted text from the commit message, using a reference to
-the documentation file and the commit that last changed the lines where it was
-copied before.
-
-I'm also adding the missing newlines at the end of the test files.
-
- t/t4018/gitconfig-section             | 6 ++++++
- t/t4018/gitconfig-section-noindent    | 6 ++++++
- t/t4018/gitconfig-subsection          | 8 ++++++++
- t/t4018/gitconfig-subsection-noindent | 8 ++++++++
- userdiff.c                            | 4 ++++
- 5 files changed, 32 insertions(+)
- create mode 100644 t/t4018/gitconfig-section
- create mode 100644 t/t4018/gitconfig-section-noindent
- create mode 100644 t/t4018/gitconfig-subsection
- create mode 100644 t/t4018/gitconfig-subsection-noindent
-
-diff --git a/t/t4018/gitconfig-section b/t/t4018/gitconfig-section
-new file mode 100644
-index 0000000000..18c85eb613
---- /dev/null
-+++ b/t/t4018/gitconfig-section
-@@ -0,0 +1,6 @@
-+[RIGHT]
-+        # comment
-+        ; comment
-+        name = value
-+        ChangeMe
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index f6f79cb9e2..fbffc7c8d6 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -178,9 +178,10 @@ static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
+ 
+ 	while (status != Z_STREAM_END) {
+ 		if (size && !s.avail_in) {
+-			ssize_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
+-			ssize_t read_result = read_in_full(fd, ibuf, rsize);
+-			if (read_result < 0)
++			size_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
++			size_t read_result;
 +
-diff --git a/t/t4018/gitconfig-section-noindent b/t/t4018/gitconfig-section-noindent
-new file mode 100644
-index 0000000000..5c58a7ac92
---- /dev/null
-+++ b/t/t4018/gitconfig-section-noindent
-@@ -0,0 +1,6 @@
-+[RIGHT]
-+# comment
-+; comment
-+name = value
-+ChangeMe
-+
-diff --git a/t/t4018/gitconfig-subsection b/t/t4018/gitconfig-subsection
-new file mode 100644
-index 0000000000..569be04a32
---- /dev/null
-+++ b/t/t4018/gitconfig-subsection
-@@ -0,0 +1,8 @@
-+[LEFT]
-+
-+[LEFT "RIGHT"]
-+      # comment
-+      ; comment
-+      name = value
-+      ChangeMe
-+
-diff --git a/t/t4018/gitconfig-subsection-noindent b/t/t4018/gitconfig-subsection-noindent
-new file mode 100644
-index 0000000000..85c5074f47
---- /dev/null
-+++ b/t/t4018/gitconfig-subsection-noindent
-@@ -0,0 +1,8 @@
-+[LEFT]
-+
-+[LEFT "RIGHT"]
-+# comment
-+; comment
-+name = value
-+ChangeMe
-+
-diff --git a/userdiff.c b/userdiff.c
-index 340c4eb4f7..5bbcc2b690 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -198,6 +198,10 @@ IPATTERN("fountain",
- 	 "^((\\.[^.]|(int|ext|est|int\\.?/ext|i/e)[. ]).*)$",
- 	 /* -- */
- 	 "[^ \t-]+"),
-+PATTERNS("gitconfig",
-+         "^\\[[a-zA-Z0-9]+\\]|\\[[a-zA-Z0-9]+[ \t]+\".+\"\\]$",
-+         /* -- */
-+         "[^ \t]+"),
- PATTERNS("golang",
- 	 /* Functions */
- 	 "^[ \t]*(func[ \t]*.*(\\{[ \t]*)?)\n"
--- 
-2.39.5 (Apple Git-154)
++			if (!safe_scast(read_in_full(fd, ibuf, rsize), &read_result))
+ 				die_errno("failed to read from '%s'", path);
+ 			if (read_result != rsize)
+ 				die("failed to read %d bytes from '%s'",
 
+Though it does kind of obscure the call to read_in_full(). You can use
+two variables, like:
+
+  ssize_t read_result;
+  size_t bytes_read;
+
+  read_result = read_in_full(fd, ibuf, rsize);
+  if (!safe_scast(read_result, &bytes_read))
+	die_errno(...);
+
+which is a bit more verbose but perhaps clearer.
+
+This reminded me a bit of the issues we had with write_in_full() before,
+where:
+
+  if (write_in_full(fd, buf, len) < len)
+
+behaves unexpectedly because of integer conversions. There the solution
+was to never check against "len", because write_in_full() either writes
+everything or returns an error. So:
+
+  if (write_in_full(fd, buf, len) < 0)
+
+is correct and sufficient.
+
+But alas, we can't do the same here, because reading returns three
+cases: error, a full read, or a partial read (maybe even EOF!). So we
+really do need to record and compare the return value between what we
+asked for and what we got.
+
+-Peff
