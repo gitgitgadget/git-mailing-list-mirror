@@ -1,135 +1,123 @@
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A629125C6FE
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 15:39:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645A425D530
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 15:42:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742830767; cv=none; b=jkgEojACrQEy2UJrGn+rQJhzurk1dfMnhz6pCk1Ea0W55ujt9gA80i0XiUXIwfJ9JmlyPLkeKAhu2KdLIrUyvKvftgyRBw8ciu+MhGrLEzt+qtu1ZpMr2WNKZxDYMYAIU7PFttVsZ7pb9rBaBlzE308SnFtul81JfZIHOl21bj4=
+	t=1742830979; cv=none; b=rQOkeM2L1Z9NKv6CY2FGLMlP6JSPYRPS1X6XLsb05AMLNAnqcSfH6Oy0j4dZyeOeGnfADFIyfkyLIzvWEJU5hhSjktQ/eHKIqHkyVL3MezrgjOpDgxIv4lEjb9A7sWyrp/KhMEoT1dXFD0xwNuTO96q0vOea7dd20G9ey+MxqrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742830767; c=relaxed/simple;
-	bh=Wa+u+YO9wXmQ1Jpo+KaRpC0Fhd8w56+jsNKD2fRnLdU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pkA033RFYjpWt/c7pyjwn5HAoiQEiW0Tg0nKUsZcy2HIi/6CVz9KPZHTgcyPAK1613v8DwAdODuXK3NGd/IiX+bd0ZOR+vBIPjHqpuQP3S3kOIk2L3g4wNpqmmjYrmD0vjvOQGfW5poXRBRBgS7fFZoPFmVMM6/R+36qvpt2vVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OALqnf14; arc=none smtp.client-ip=209.85.160.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742830979; c=relaxed/simple;
+	bh=PaGITsKVvDwR0OMzvf4FCYD3cVHcby3KFeMzZBvzE20=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PDCrcetM1be+V64pe++lshQ0Fo9KQqjEy4CL7zQZY99HDVkqvJLLaNe4Bow7IhEtmfO3zh+7muladLlkwuh9yGvCa+uF/Xt4OxcmLWRUxTHOo7c2dLJJFSa1ZYWGuiqBaZN49+g7rDXQSTrjronuipqhCg3Eh7Flj/tCZXXBKBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K3hZFHfw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aacHElsC; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OALqnf14"
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-2c75830b455so2529426fac.1
-        for <git@vger.kernel.org>; Mon, 24 Mar 2025 08:39:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742830764; x=1743435564; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iLtOXkM3SSMJzSiLUv+OmL3AvGRgGOParhDDCI1UmvU=;
-        b=OALqnf145a95d1iQNQqUQs6Mn+M5zb5BybvQtHGEOumkrRgrgUdujRE9ELlYGEuksH
-         jvgVQX3E5iwZuBNNq18oTT38rGDlBdjU8G/cLMFs7V3RFJC/CCD8sFZGtwo56dFV7x+D
-         Rzz3cXvSE3VAeHFxT2vjkDZKY0q3HoXXspk2gQWwHrOueVWuRXkC3rJnlqzPlWhoSLtR
-         DHri+cgE3svF8oXOXn6orH60swwx5zSx7WMLRPjotLn7vjCUCdTn+2EDSAYVRqbO1q1K
-         op0f9aN2JNeaMnm0tHOGdkseWu4dO+A/AzQ73KFDmoZiAwxVoJv+JbI/SRnemYuYAuzk
-         h2uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742830764; x=1743435564;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iLtOXkM3SSMJzSiLUv+OmL3AvGRgGOParhDDCI1UmvU=;
-        b=oYSewhNIr47GdCOEw/ehY6gYV2Yht1o2kvRfBWga+Py7X06Ma55a5RiOaFutHx3gwo
-         nxi+FSWBXl65b4o7BjMNUUxCQbHN+yfsgxOVUiuTusv0yEIib4XMejS+pwxxTKzFdPgn
-         LRX0R43M2ZtnT9x3Eu1g7wBPMcFbtkev+dajxOXAc2Buukx8rov8wlf0OOxFtrXswB9H
-         tpLRzftOlZT9n2mKSma+6BG4hZe2UOktcudMPQCuvgil9foIJdGEUo3g9HGnVneavXWz
-         gowzWqHqtVhGVgXTurT0GgVtWlZs7JMURd6gny11bE522QkpCH6eEI7p336zpiGubf3R
-         vRiw==
-X-Gm-Message-State: AOJu0YzVGRw4i6g1gIDRmFqmY1E/DGdcmPLj6IGHpaNAescIGaxdNjio
-	Hb2+LWl5Y9gBIJOOMm9BRpG+QkHJg4e9kQOagw/NDPySJw/IJmzBDWhAZA==
-X-Gm-Gg: ASbGncvLYu3cwlRUfjdUkJ+JvQ5IEjSjubG98BMPHZrhvFTXiKnJ2XvX1AIXGR/urRV
-	Yi1MF5a3ge7v7EwJXJGpXBTbI3FPBVGrVB6mvQqh4RfMbF/hnL9GC6wejL35vMEHLrSGwpyvX71
-	nN83Z1TcEkW66mH+w7rThqKOxQb1zR7FjBH2VWikYLqcQnSZB/VV9eEv+QbTQsCnySwl2elUUE1
-	+39rxktFBQ1Ew7XrzomGT2Ekl96Yrc6zk8u6tibFc5YGSbRYtUBb4d+GyIzkDKFohC4wTLh0Yfz
-	VLxCf5sV3ot/90MQw6QQcV0MkdGLhdX1Rrp4Ww==
-X-Google-Smtp-Source: AGHT+IGdhgXHK8KYpiKFd6sR+ErSLsnl1i/hkKuXrqPUNkzoxHt5AldvtHeu9BksDALHP/qzDJfnjg==
-X-Received: by 2002:a05:6871:10a:b0:29e:6f32:6da1 with SMTP id 586e51a60fabf-2c78047e05emr9033600fac.31.1742830764493;
-        Mon, 24 Mar 2025 08:39:24 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2c77ebc8dc5sm2070032fac.4.2025.03.24.08.39.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Mar 2025 08:39:24 -0700 (PDT)
-Date: Mon, 24 Mar 2025 10:35:45 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, ps@pks.im, alan@norbauer.com
-Subject: Re: [PATCH v2 2/3] builtin/clone: suppress unexpected default branch
- advice
-Message-ID: <w7kbqucqwajzo5q6qfty2o52tytvzkzsio755mz6cforuenaap@hx3zfd3nns6e>
-References: <20250320014646.2899791-1-jltobler@gmail.com>
- <20250321231639.180762-1-jltobler@gmail.com>
- <20250321231639.180762-3-jltobler@gmail.com>
- <966aa1cc-fd4a-42b7-a241-0537767021ed@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K3hZFHfw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aacHElsC"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 87A8A1140094;
+	Mon, 24 Mar 2025 11:42:56 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 24 Mar 2025 11:42:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1742830976;
+	 x=1742917376; bh=PaGITsKVvDwR0OMzvf4FCYD3cVHcby3KFeMzZBvzE20=; b=
+	K3hZFHfwInUZZwCgoMST3IXct92VCqTfHx9VJtmw7nIyfQUblQlSvqcqtcPJIzSr
+	csnWvs3zO85FtFXNetW/HlgFPZQjPQ2T8VA1C3Do5/+Twa/QOyMkOW1L3zzZk8V2
+	v1bdG/VVnUL6/rKweBhJp8aus7ilWoRvve4H5Fl8EkNSywqNcbT6b/4J3x7FVGoo
+	Ujx9K++VUxpIUPkfU4+R2RoNseulOapDNdZVL3FgGD4tIa1v4NibYu/kHpfcQOLt
+	TpNUk5o27D3fs9OJvWPt8EES3y3G3TtYSAQdxZvqrFV/vbjOk/iyh3n8jvGYL70R
+	317BDlHPEl5ouwcGyykY4w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742830976; x=
+	1742917376; bh=PaGITsKVvDwR0OMzvf4FCYD3cVHcby3KFeMzZBvzE20=; b=a
+	acHElsCnSiSPkTFr2Dt4sqRPWJTEinSNgFmWo7cImpxE7QWYtvepArNcMoFcFQcv
+	rzUNV8okN4HJG8ynLghj+IH3Ga/UvRlY5Ixd9+WK64VUythMCDz70FskSCq4HF1K
+	3P7IrGMoOCErq+KMWX78fZe25vu/j5DB3IruuQLAxtBlZu4hWHcLzm0DPN/ZcUAI
+	xD1h+VQelNq1DCthfnzR7JgaJIcyyJiBs2hd1IbWUnNe5nbuvUcOCKDGP35zzvgJ
+	2RwmppZqSMyrGe+d7uc74wkwsZkcILZbPWlHxZTi8VqpN6gj+xYv8YVE15oCiTdp
+	on93oLKFe7La3nazjIuYQ==
+X-ME-Sender: <xms:gH3hZ5Yq_4wt819eBaOET8TdSxrriLVq6vi323IS6NjBJT4b46Ij-g>
+    <xme:gH3hZwYCJudHlxmN2Lgwnz_svsSkNgcYi8KdYrUA9PDsmVBHI0-rk1loGDEF1IcU2
+    sDr5jwRnTNUeKduoA>
+X-ME-Received: <xmr:gH3hZ7-Y6JnUv0Feuj_otK2TCZPVLd30UBnZnLIhm8WuXhEdfykTG6EK_w694i2NZChcT8siwNKz5CfrKT_sQmaLIxwPIt8PN4dk_TI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedtudeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeggefhudefkeegueeigfejhfejvdej
+    vedtheeguedukefgieelfeeuteejieeuleenucffohhmrghinhepghhithhhuhgsrdgtoh
+    hmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhi
+    thhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmh
+    htphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtgho
+    mhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsrghnuggrlhhs
+    segtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:gH3hZ3oPPDgnELbgti9y_rS-l7kjtMizXmShwtFz1LzYo95wq6UcEw>
+    <xmx:gH3hZ0r3NTTU942Wh4JimhNJvPfB9f50CsHnL5dgamux1-hFGJ__nA>
+    <xmx:gH3hZ9RiRVy0CpfVfi9JjDvtMR4JxNRU0VLRNPHM5jM4BFeVROtwrw>
+    <xmx:gH3hZ8odYwYSEGolRecXwl7fdapyKX1uEoUtwatQXW4BbKTr5ESLmA>
+    <xmx:gH3hZ1dhhAIzh3wo67Bdj85FXSLQNK05OMMXQhbLpB1OrzQmozNWdhA6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 24 Mar 2025 11:42:55 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Josh Steadmon <steadmon@google.com>,  git@vger.kernel.org,  "brian m.
+ carlson" <sandals@crustytoothpaste.net>,  Phillip Wood
+ <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 2/5] libgit-sys: add symlink to git repo root and
+ build out of tree
+In-Reply-To: <CAPig+cQ+05r0iJO3me2=yz1KWaU_S_WQmbeciOqZGxYWgbT8dw@mail.gmail.com>
+	(Eric Sunshine's message of "Sat, 22 Mar 2025 21:46:49 -0400")
+References: <cover.1742339107.git.josh@steadmon.net>
+	<cover.1742594960.git.steadmon@google.com>
+	<6befc95a2d0893aa269142a18d60ad07e79c6e88.1742594960.git.steadmon@google.com>
+	<CAPig+cQ+05r0iJO3me2=yz1KWaU_S_WQmbeciOqZGxYWgbT8dw@mail.gmail.com>
+Date: Mon, 24 Mar 2025 08:42:54 -0700
+Message-ID: <xmqqo6xqo2o1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <966aa1cc-fd4a-42b7-a241-0537767021ed@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 25/03/24 09:32AM, Phillip Wood wrote:
-> Hi Justin
-> 
-> On 21/03/2025 23:16, Justin Tobler wrote:
-> > In 199f44cb2ead (builtin/clone: allow remote helpers to detect repo,
-> > 2024-02-27), clones started partially initializing the refdb before
-> > executing the remote helpers by creating a HEAD file and "refs/"
-> > directory. This has resulted in some scenarios where git-clone(1) now
-> > prints the default branch name advice message where it previously did
-> > not.
-> > 
-> > A side-effect of the HEAD file already existing, is that computation of
-> > the default branch name is handled later in execution. This matters
-> > because prior to 97abaab5f6 (refs: drop `git_default_branch_name()`,
-> > 2024-05-17), the default branch value would be computed during its first
-> > execution and cached. Subsequent invocations would simply return the
-> > cached value. Since the next `git_default_branch_name()` call site,
-> > which is invoked through `guess_remote_head()`, is not configured to
-> > suppress the advice message, computing the default branch name results
-> > in the advice message being printed.
-> > 
-> > Configure `guess_remote_head()` to suppress the advice message,
-> > restoring the previous behavior.
-> > 
-> > Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> > ---
-> >   builtin/clone.c         |  3 ++-
-> >   t/t5607-clone-bundle.sh | 12 ++++++++++++
-> >   2 files changed, 14 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > index f14229abf4..a4008715ec 100644
-> > --- a/builtin/clone.c
-> > +++ b/builtin/clone.c
-> > @@ -1523,7 +1523,8 @@ int cmd_clone(int argc,
-> >   	}
-> >   	remote_head = find_ref_by_name(refs, "HEAD");
-> > -	remote_head_points_at = guess_remote_head(remote_head, mapped_refs, 0);
-> > +	remote_head_points_at = guess_remote_head(remote_head, mapped_refs,
-> > +						  REMOTE_GUESS_HEAD_QUIET);
-> 
-> There is another caller of guess_remote_head() in wanted_peer_refs() which I
-> think we probably want to be quiet as well. I don't see how it is helpful to
-> the user to prompt them about setting the default branch name used when
-> creating local repositories during a clone of a remote repository.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-For `wanted_peer_refs()` to invoke `guess_remote_head()`, the
-`--single-branch` option must be set. This means, outside of the bundle
-clone example, there is another way to get unexpected advice message to
-print. Interestingly, if you perform a bundle clone with the
-`--single-branch` option, the same advice message prints twice.
+> On Fri, Mar 21, 2025 at 6:14 PM Josh Steadmon <steadmon@google.com> wrote:
+>> Unlike `cargo build`, `cargo package` does not get access to the entire Git repo
+>> containing a Rust crate. Instead, it prepares a directory starting from the
+>> crate root (potentially excluding files, such as those not under version
+>> control, or explicity excluded in the Cargo.toml file).
+>
+> s/explicity/explicitly/
+>
+>> diff --git a/contrib/libgit-sys/git-src b/contrib/libgit-sys/git-src
+>> @@ -0,0 +1 @@
+>> +../..
+>> \ No newline at end of file
+>
+> Meh.
 
-I'll send a followup version that also suppresses the unwanted advice
-message from `wanted_peer_refs()`.
+https://github.com/git/git/actions/runs/14030831429/job/39278185588#step:3:1
 
-Thanks,
--Justin
+All of the Windows test jobs (not build ones) are broken due to the
+presence of ../.. symbolic link.
+
+Is that ugly hack the only way we can make this work?
