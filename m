@@ -1,183 +1,152 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5489525EFB4
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 13:04:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B20C25C6FE
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 13:08:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742821443; cv=none; b=iyXOVZRYIhEfIl3HlP+qw7TY7ho/dmPnSzjlKeYfnkfhix0XdiLAKnPOg4tCOWSrwhOvYk+X1fYsuv0xcGoADiRwVcSkrPskW8J5ZiKk8MVNpunY5RsePVNxZj7n8WSfU4mXFQG1FBTmGB8PNvo8WoOcRtdf6itS7jXx5+7Dlyw=
+	t=1742821701; cv=none; b=X0XQrDhf8sI2/qm83sfxSYGgOUrs3h460RoNFRVZIFRKn1zAhNz4wM16dtJUatnFiLANCri2B7dNrFDlltkPwfiBWWJKlcyeQGshcNbNttKqQfldrKxzWCfXCo7KwWl6EwaSdbqnXtkv5SBXU9ZJP2xJazBN1GAFwABxE/MZoR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742821443; c=relaxed/simple;
-	bh=iojjAU7q2253b/uD9cv5QZrK8BJ7rVJ2XUuXBZOnLQM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iLgOlXzK6gkfUCJ8SWfDI7NpdrAHKY6NrciuTZi0IyQ+QP8upq8UM6B7hS7izmkk9x8oVmZ5taQzkLXf4Kq4v/RpvnAN8EUSI1tLXyQl7/JynN67iUbtZj8PVek84NiQFAwHmr6AsHVPkhs9emNNlTpHdcHy5sZ7HeGL8Om4wpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fRT9RwlF; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742821701; c=relaxed/simple;
+	bh=wNJTIoO7PKH8GaQbv48ZQPA7mr4I3+buoRmgN4WJPm4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OTwrpfMBHv7zkY8Yu5RiE/IY+FypRA8wqu51xIrvlRcwWth30yGOvf01d70o3N8WNv5XH5ci4kehe/cW2bX+ycsZddLnDrq0hh+vbwnN44+m1m+P2FtnPOMMaMJGm/3t4uxdY43NIMITsdw3mL3K2ArrJPQQSmMnUPCnWSP4nsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AGgNWCou; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v19CH7EP; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fRT9RwlF"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-22423adf751so77589125ad.2
-        for <git@vger.kernel.org>; Mon, 24 Mar 2025 06:04:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742821441; x=1743426241; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fNvWKUWYgdxGPk86jeeMPlMbc/9lN33Azk4S234thP4=;
-        b=fRT9RwlFOBx3rAeps8OFJPEu5UO6A0NXmIMGOspHd0gs6sWWbz7FLrrn9DoR/Z3yPk
-         DFb+67ioZeEvTs9nv8T7+C7wJWf0g8ZnteoO8siejNa86dcZDTEC7pj4goHo2QI5GTpo
-         +NOXHF5k6gtT1S/jvMZVsuzZp6XmlWdR/Za6qpwOpgCKP7XOaMinSqJv94tc+p0DzkIb
-         pClHLKxqPM20BTtreRYbHqX2t8h93bWWpoUJA4ZYIIC3f75hLUHQEJRatp+oOIlYQf+3
-         RZGj7RxE43yEhYZJuko/g0i/0ZXYMbPTW1Vp9d5LiAEYmABXcUx67XjF0mtAanMkWpxT
-         Nspg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742821441; x=1743426241;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fNvWKUWYgdxGPk86jeeMPlMbc/9lN33Azk4S234thP4=;
-        b=quffnJq4bdUbZa/frwjCRVn3I/gsx1bHzNxgoieUsNkeHHnMy8mfd/VM9tflVetjXf
-         JskxICQGSvb/0KMc9/o/rSYznOhK9m6goiR2f5E1GjVjn9kr1CQMsvmTxYlerHZ1Cmy1
-         XOJUvInwlHEQIkRJRgxNWXHUGCwg8/nI3lWOaNij67pX633fDow/YZURy77D3fkVGoQo
-         fKloPUjlKrZwCHLoBRyr2t0h6hh5OfOe/y1iXhRnt0DZ2UhpP8+qPShrJtmZpFu3oQjs
-         zDfZwyiiFNHfaTI2lxJ0oH+qzlI/eeq603veYYF2jvPhn6icl9Kx07IpX91vsIL9MNAf
-         XTCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX7rKBm95juCmz0WJL+e74fLh7ntb/+ktSgnrrrIpy+hzr9Ls2pn+WxgTEMOQAXyA6+pbc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YziopMVCaj6yl335Brdy0NVo91LYo7cBzWvheabrVdiNodxmCAu
-	pmpbAlm13GN50YxL3tdziSvoQ1zKO27suwdtAKY9rmiEy22JlByF
-X-Gm-Gg: ASbGncvV+qHzEy+ArAYA9pVKEgLtgypVgTFkN3Ai2KNhWvRSmZq/5XtPm4cj4w1t5Pw
-	b3GG9FWhYXDUxF8l+1KlfItMVt9PCXl6oe4iRHPHrHOJlvUVkQCe/3e52my7kTi4qL004o505d1
-	QEjAabaogq5XIrsRhXj4R1ik+isMPhLj2eeEfBe1dX8FuQ0avoPWnmJJzlO3i+Y+WbJYz7GD8Do
-	iJ7s9eJCFit7wRfjS6ZyenonIUDD8cAO7Q5wjNqxMkB1r49sg1dz4mxjFqTKSsVVEZQ33nX+/dv
-	CxaEQ7/995w8SfZ1qFWY+cwCQ/8c1xgA/AwwJvyMgJP7qZH/IxiFhOZbCCXtQMpVwdWfXnirGkM
-	77Gc=
-X-Google-Smtp-Source: AGHT+IHQRZTvhJlMYoz8eEdEiqAXBnQK7XSoeTywgTEft2ojuca++ZyMiRZF4HAb8XPZOXjz6nUbhg==
-X-Received: by 2002:a05:6a00:84d:b0:736:a540:c9b5 with SMTP id d2e1a72fcca58-73905a2763bmr17414911b3a.22.1742821441069;
-        Mon, 24 Mar 2025 06:04:01 -0700 (PDT)
-Received: from localhost.localdomain ([2405:201:c005:b018:5841:514c:af52:5598])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7390618dd29sm7795807b3a.167.2025.03.24.06.03.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Mar 2025 06:04:00 -0700 (PDT)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: gitster@pobox.com
-Cc: ben.knoble@gmail.com,
-	git@vger.kernel.org,
-	jayatheerthkulkarni2005@gmail.com
-Subject: [[GSOC][PATCH v4] 3/3] docs: replace git_config with repo_config
-Date: Mon, 24 Mar 2025 18:33:43 +0530
-Message-ID: <20250324130343.113629-2-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250324130343.113629-1-jayatheerthkulkarni2005@gmail.com>
-References: <xmqq34f3qbna.fsf@gitster.g>
- <20250324130343.113629-1-jayatheerthkulkarni2005@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AGgNWCou";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v19CH7EP"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 553782540187;
+	Mon, 24 Mar 2025 09:08:18 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Mon, 24 Mar 2025 09:08:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1742821698; x=1742908098; bh=YG7r0N7UZ5
+	Fd/Z/Xd+c5V/pHUHBSuwC8cF8m0pBmqbo=; b=AGgNWCouDGQDpC4HP7DMZll8xZ
+	MBxszDFeXlklwDCRMq3aFPMKUhHsixtdjz6UjxDyhVyjax0ud/+yQbEcfw87Bsu9
+	7niO9gmnHAT67EoEB/zDNFiya2HTDh19dhTUkVY8k2UI4aM6qI1fSsXRDg9T/itv
+	SH0T32Dvbu7wIILxHtgybl9Ls2P7xIRW8ytgX2jr+ke07ParXEMyg6qRK1v19QCc
+	N7CQRzGC75j6Np5ScTghMlKA6eni/TOvdBHtvbCr3nWKtcfgaw5WATumpm6w3h8u
+	FSgFrvnal3dVqlw1cvL+QO0/QPzAqyJ2idekoiMj5M5fpzTLuHE3Pnh8hQ3A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1742821698; x=1742908098; bh=YG7r0N7UZ5Fd/Z/Xd+c5V/pHUHBSuwC8cF8
+	m0pBmqbo=; b=v19CH7EPrgg3a+sWXAaLGuNsCOimknbWDGmgUh0iGk4ivXPzWLc
+	jToPq5PvpPjb98EjXCnJ4oZfaGSNyBmzkQk/8MMIXE8PIX7f9c9jZSogDBrWeYUN
+	mV1CCDuA5CVwr9vtsQjp94hSEqLmI4pxikvJzPJoR+I+g30jDHvpLQPRJWM+mlXE
+	AVQwKe012R6reJQcpA8slX5xTTu7ejEYZxnLdEaoblBfOL6Weq/pE/43Ss+ZnDZF
+	B0mz+gWeg0XkFjrS6AVh/ZUSPKd3vOVLCDTrUvkkXpmg6Zz/h5M1T+dGNxYTrrKz
+	1Vnx/LqnfVR4awiPIwAnVr9nFId0X82JTrg==
+X-ME-Sender: <xms:QlnhZ83TugLnevR8ecTldwTFE4IiyBeuiNOQwNVHISwsE-6jpWX30w>
+    <xme:QlnhZ3F4yFIjylE5Ui-BQLP0uhKoXUjRrnmPcuwT9eD8USD0sPATGxxcjtqK_54vM
+    FaVCgtHjjpsKcmO6w>
+X-ME-Received: <xmr:QlnhZ04mHVkKkTyT1sp5qm9_DYrW0sRv1UnE7AZaYpHLJ-Pf091ImbSiu_FgE7V7fOpzaV--0XnnIadrUyCSxmWrPZqVLitWymy_ulGqtIpwyis>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduheelkeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthho
+    pehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:QlnhZ13Pnlqu-XZfJyofWldAUt4lN8SmNYHSdQys1F5HkaCyjsagaQ>
+    <xmx:QlnhZ_Gc60-3av5LwALw8W1x5Hp6MNDmJxI6wGcfF5WGhxVi1uzTNw>
+    <xmx:QlnhZ-_0ZOO4RPWYGyM37B543Ni38Pgjcwy3li7DjbC7CaK8eI95ZA>
+    <xmx:QlnhZ0mV_AaElY3ZkZoPsqX_ezfenI3PNR3B_4ov9Jxm75-LmWHmxQ>
+    <xmx:QlnhZzgkxgaTpnOIR9jie0pM3VdaAuDXIupM3A3WSMX2ZIhjS-0DZasq>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 24 Mar 2025 09:08:17 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7a9024f3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 24 Mar 2025 13:08:14 +0000 (UTC)
+Date: Mon, 24 Mar 2025 14:08:09 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, phillip.wood123@gmail.com
+Subject: Re: [PATCH v4 7/8] refs: support rejection in batch updates during
+ F/D checks
+Message-ID: <Z-FZObjvIN-qzvlj@pks.im>
+References: <20250320-245-partially-atomic-ref-updates-v4-0-3dcc1b311dc9@gmail.com>
+ <20250320-245-partially-atomic-ref-updates-v4-7-3dcc1b311dc9@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250320-245-partially-atomic-ref-updates-v4-7-3dcc1b311dc9@gmail.com>
 
-Refactor config handling by replacing git_config(...)
-with repo_config(...) for better repository context
-awareness and alignment with modern Git practices.
+On Thu, Mar 20, 2025 at 12:44:02PM +0100, Karthik Nayak wrote:
+> diff --git a/refs.c b/refs.c
+> index b34ec198f5..f719046f47 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2540,6 +2540,7 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
+>  					  const struct string_list *refnames,
+>  					  const struct string_list *extras,
+>  					  const struct string_list *skip,
+> +					  struct ref_transaction *transaction,
+>  					  unsigned int initial_transaction,
+>  					  struct strbuf *err)
+>  {
+> @@ -2599,12 +2601,26 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
+>  			if (!initial_transaction &&
+>  			    !refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
+>  					       &type, &ignore_errno)) {
+> +				if (transaction && ref_transaction_maybe_set_rejected(
+> +					    transaction, *update_idx,
+> +					    REF_TRANSACTION_ERROR_NAME_CONFLICT)) {
+> +					strset_remove(&dirnames, dirname.buf);
+> +					continue;
+> +				}
+> +
 
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
----
- Documentation/MyFirstContribution.adoc | 57 ++++++++++++++++++--------
- 1 file changed, 39 insertions(+), 18 deletions(-)
+Okay. We have to remove the dirname from `dirnames` again so that the
+next reference that creates a reference in the same directory would also
+be marked as conflicting. It does have the consequence that we now have
+to read the dirname N times again, where N is the number of refs that
+are created below that directory.
 
-diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index 45efe117ab..04c19ac0b2 100644
---- a/Documentation/MyFirstContribution.adoc
-+++ b/Documentation/MyFirstContribution.adoc
-@@ -316,26 +316,47 @@ on the command line, including the name of our command. (If `prefix` is empty
- for you, try `cd Documentation/ && ../bin-wrappers/git psuh`). That's not so
- helpful. So what other context can we get?
- 
--Add a line to `#include "config.h"`. Then, add the following bits to the
-+Add `#include "config.h"` and `#include "repository.h"`. Then, add the following bits to the
- function body:
- 
- ----
--	const char *cfg_name;
-+#include "builtin.h"
-+#include "gettext.h"
-+#include "config.h"
-+#include "repository.h"  
- 
--...
-+int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo)
-+{
-+    const char *cfg_name;
-+
-+    printf(Q_("Your args (there is %d):\n",
-+              "Your args (there are %d):\n",
-+              argc),
-+           argc);
-+
-+    for (int i = 0; i < argc; i++) {
-+        printf("%d: %s\n", i, argv[i]);
-+    }
- 
--	git_config(git_default_config, NULL);
--	if (git_config_get_string_tmp("user.name", &cfg_name) > 0)
--		printf(_("No name is found in config\n"));
--	else
--		printf(_("Your name: %s\n"), cfg_name);
-+    printf(_("Your current working directory:\n<top-level>%s%s\n"),
-+           prefix ? "/" : "", prefix ? prefix : "");
-+
-+    repo_config(repo, git_default_config, NULL);
-+
-+    if (repo_config_get_string_tmp(repo, "user.name", &cfg_name))
-+        printf(_("No name is found in config\n"));
-+    else
-+        printf(_("Your name: %s\n"), cfg_name);
-+
-+    return 0;
-+}
- ----
- 
--`git_config()` will grab the configuration from config files known to Git and
--apply standard precedence rules. `git_config_get_string_tmp()` will look up
-+`repo_config()` will grab the configuration from config files known to Git and
-+apply standard precedence rules. `repo_config_get_string_tmp()` will look up
- a specific key ("user.name") and give you the value. There are a number of
- single-key lookup functions like this one; you can see them all (and more info
--about how to use `git_config()`) in `Documentation/technical/api-config.adoc`.
-+about how to use `repo_config()` ) in `Documentation/git-config.adoc`.
- 
- You should see that the name printed matches the one you see when you run:
- 
-@@ -383,8 +404,8 @@ prepare it, and print its contents:
- 
- ...
- 
--	wt_status_prepare(the_repository, &status);
--	git_config(git_default_config, &status);
-+	wt_status_prepare(repo, &status);
-+	repo_config(repo, git_default_config, &status);
- 
- ...
- 
-@@ -1093,11 +1114,11 @@ The one generated for `psuh` from the sample implementation looks like this:
- 
- ----
-  Documentation/git-psuh.adoc | 40 +++++++++++++++++++++
-- Makefile                    |  1 +
-- builtin.h                   |  1 +
-- builtin/psuh.c              | 73 ++++++++++++++++++++++++++++++++++++++
-- git.c                       |  1 +
-- t/t9999-psuh-tutorial.sh    | 12 +++++++
-+ Makefile                   |  1 +
-+ builtin.h                  |  1 +
-+ builtin/psuh.c             | 73 ++++++++++++++++++++++++++++++++++++++
-+ git.c                      |  1 +
-+ t/t9999-psuh-tutorial.sh   | 12 +++++++
-  6 files changed, 128 insertions(+)
-  create mode 100644 Documentation/git-psuh.adoc
-  create mode 100644 builtin/psuh.c
--- 
-2.48.1
+We could probably improve this by using another map that contains the
+conflicting names, right?
 
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index be758ffff5..1d50d4013c 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -864,7 +868,9 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
+>  		 * make sure there is no existing packed ref that conflicts
+>  		 * with refname. This check is deferred so that we can batch it.
+>  		 */
+> -		string_list_append(refnames_to_check, refname);
+> +		item = string_list_append(refnames_to_check, refname);
+> +		item->util = xmalloc(sizeof(update_idx));
+> +		memcpy(item->util, &update_idx, sizeof(update_idx));
+>  	}
+>  
+>  	ret = 0;
+
+Hm, so we have to allocate the `util` field now to store the update
+index, which is a bit unfortunate because all of this is part of the hot
+loop. We cannot store a direct pointer though because the array of
+updates may be reallocated, which would invalidate any pointers pointing
+into the array.
+
+I was wondering whether we could abuse an `uintptr_t` and use it to
+store the update index as a pointer. It does feel somewhat dirty though.
+
+Patrick
