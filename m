@@ -1,142 +1,109 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC1A1B3F3D
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 20:35:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70AA9190477
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 20:46:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742848542; cv=none; b=khyimBcIpm84r7WX5V4qxhjnkwNSn822FcPtVAN8mi31TilSdHNpmNiLwoflpkCC5rAPh1FXU4vm0nb13Pi7QOAAM+Mi4qZubOlesIdEFlm8xMOdqTSMdaIhwY+NlZ5+q4bJcVTjlsSrti6WWWIGZSrAeyqQ4p6+WMbeYEKQ51M=
+	t=1742849170; cv=none; b=eOC3Tl8otcf2ppWjxXvBBsTvrvbrVlA8m+XZiEO5IVITf82swC+JSiPts62n44Wux3Im/hu7lBq1K2EtJagrOxN1BZA8+M92686N7Q0KRanEOb3BCkw+hnymfGamkrBx4j8nSFohKyukcH0zfEPuj5EUC71Ts9p+oudcQC0Ltt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742848542; c=relaxed/simple;
-	bh=KJQTzH2YjsG3quu9IqH4CfNGob/I89NU8XqhSluuqqg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NABZQRijSXfGgreWeq9LpVX4rVGzQQK679+tK/rs99NSEAKzJB+SBpi3CdsxMUn986RuaScitZCpVnu7B/dZTT57/13RrY4dYuSSM5m9mREtIsHaU9BJZyXRp1A6Ruv3G4XdsVglEQJRecde34oNssfkpCZN+b7krBc87SET2ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=deHvFrxh; arc=none smtp.client-ip=209.85.208.50
+	s=arc-20240116; t=1742849170; c=relaxed/simple;
+	bh=b5EquYI+OYbf3zw3K76TPKSDspiYvX9P5dsAqmJF450=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TjQ9trgo2+J0cUPCyNHpZoUEc4zIRI9qVrqELk1e3nhe8BIko0sAHWo9ft670hJIzwgH6Nxjekw1dsjxfGg0LoRYRipfON6qa+w+LnJsqF3u61qKOXG687SqJnw5Dce2LwkPVTU0dZQsB7gw6ImGsvI0EAtN9Bk8IpArlC4QfM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SCXfuS+h; arc=none smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="deHvFrxh"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5e5c9662131so7771234a12.3
-        for <git@vger.kernel.org>; Mon, 24 Mar 2025 13:35:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SCXfuS+h"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6ef7c9e9592so39987617b3.1
+        for <git@vger.kernel.org>; Mon, 24 Mar 2025 13:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742848539; x=1743453339; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KJQTzH2YjsG3quu9IqH4CfNGob/I89NU8XqhSluuqqg=;
-        b=deHvFrxh8nOZnynPIvEIilFaVyW+sYKHc2ERx9TNcSKom2YdbprNH3jE+9c3ySotbA
-         vtV+z7eH+Ez2WvY27Om/N+F9RiWRAZSuRQl+3tWM8zjyrXcHGxlBH++I09RgWrzktY+2
-         lA7xDsZBsMJTqI7tx6itcTHSS6UqaJkItmlphyyYiBxvkBNYLePjmzVe47/r7CIWmSYt
-         bMpXWns8dskM83XYniDvI3WbdZA6vTW+DjrINkgdBLLa7fR3R+FwflirUwl5920MHv6N
-         xzm3qYkgoiFWy36T1aPrdEkTTmNC2PeJ4GyRTMz+zyY1zMtKs1fVJdhXj1DwQTW8A9ey
-         J/TQ==
+        d=gmail.com; s=20230601; t=1742849167; x=1743453967; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=BAhGKSAh5tlJA1H+gVh2AYMRLSV+kW1TVfWs8PASe5A=;
+        b=SCXfuS+h3yq/Tm5ROyj4mQQT+BOde9Pncq74kYEIu6+UqM2ZZWMBuXkz+hoLvmTPzP
+         gznNPhIQvFolm6sFaP1xXb6i+b4mDS9RaHL8taS3WgNyvNO8XqyYfyyuFZgwcEdQbCT6
+         CMFaLTrII3szbg7rdwKN9hZSd/vjFQ2fe4/PE8Mm9AJyUCEpFcKxV22aqwcfJ7bsKT2l
+         qNYsZOQwfPspufslA1GO3hYnjTTm91SfABCdnzVFChhuhEa92m8jq+h963a8k9304b0D
+         M4doP4OJT4WZCHe1U3HYlVnFEyqsK+s5BjD7+HESRAnFTmTaD53AmY05gokOnDtgK66v
+         1yQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742848539; x=1743453339;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KJQTzH2YjsG3quu9IqH4CfNGob/I89NU8XqhSluuqqg=;
-        b=AY1sBcPrEoedP/sc+5GV45FolOJ3amJRQDczt6UHHpvi+8MP4n+U+tVnWw0FJg2SZQ
-         2MfJumi62/8uoETWRt0XWJ+2fnGhgtMr2br39kcodpeLXjLlO7XwnhP2kAcaWCIoeyVS
-         Try+8dkxwSefTKXmd9gvhxA7EEJknLEMvZm0UtFMowOgwNknXkAyEhItUdncvvm4hz01
-         94PRd5Ic/eSosQWZlPMILEy64UE5hxTCu2p3gtMLw3SgY1oJSEmZG/Y7iTZW94uiYdE1
-         JBHD3dCCwV7vmUD3pzRv9+zRlksAJu3Ky95p70AecU1uCzfUflUVOO69fdi5H8BaO7aS
-         HDcw==
-X-Gm-Message-State: AOJu0YxfrDppTeRCo/x8/2MtwRUNgZinaO/S4I2CQLzwNg2wfaCEfwWV
-	A80rtacvQe++Q44sGA3CKSpDmelsGTFGouI/qM8GV/nr1wLsSXo9uBfxLbxqkec5WXFBkJKq6cQ
-	4gcgWmSxsaOioXobvyyCwFvkDLMhOoLV+Qcc=
-X-Gm-Gg: ASbGncsfG99iSoNMeIqxxkvlJ6eqeSz50Zy9h453Dyy2XTtY/Wc3NpD36RLU8M5SAOb
-	tKkE5Tkz6ccUm+8DrGVTqledUvjL/JVEuYhS8alIKuqWr72ubXRJGHr5um3DJfuzVsNuntQ8kow
-	Vg1pxuCJjRf6w2qD2KWif3H1FWR4ZiqQJSZoV3ZgIvHnotKqY1iFKrGb8pUfDL82OjRG/FJYI=
-X-Google-Smtp-Source: AGHT+IHeeDfE+1eDjojW9PmokbLyJpWshqavfXpmbqNupwG/DCrv7AQW/Qh9PeIlW4RiFwviHoreM/fzeO4tFi0DwdA=
-X-Received: by 2002:a05:6402:2551:b0:5e5:bde4:755f with SMTP id
- 4fb4d7f45d1cf-5ebcd433fffmr13537541a12.14.1742848539264; Mon, 24 Mar 2025
- 13:35:39 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742849167; x=1743453967;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BAhGKSAh5tlJA1H+gVh2AYMRLSV+kW1TVfWs8PASe5A=;
+        b=Eph0ttt9MvQuJL//sjPbHJFsDXSy5xi7Q6DuNU9LW7g0hERWTUnz5ZTcpRXkQENZi/
+         fpD9giG3onILr1wYLQUDdj6ggqilrOPss2W6rAzEOA0+yOgSyWaqOHmCJa6+akHkb1N6
+         9vWHOofU0Sw4+qWvAyUkYeUHg33Hv5n4q563aLOyBO9cPYUDBg1WTB0+IOwfbMR9DnG5
+         H3wQlCnZjx8ktj4OqLW/ab5f6uv5jQ+VVmFRMG2GbG6GAnT1e5lCUTH1KQS5lYELZGWQ
+         KRh7lN48vmudBJ+yRwKY7WOw4b4YReM0kmHYUb0YLBTRn7hxCPpzllPV33B+N8b/kbZ3
+         8qsA==
+X-Gm-Message-State: AOJu0YzdVQDAHQRuX4aQb2eUbyS+6bSjyM3QAqXIUJdnGPBrLqPupP3T
+	Ofp10NTNAuoc/SRSCZQnJ75PQP6BfFGDCXUmJzIxpNXccLrEnj463u1DENwR
+X-Gm-Gg: ASbGncuq3DgsYCDdBqZXfmYcX9OdOCZWlQd0HJuaguH42SuGyvoAB/kumcoyVWiXzQk
+	q/E3FIPkhxwEU+rEkG81yK5YJtHTmrkvbIMt8PTMG/lFQc5ur6JbuUEr5e5HhwVIbhA6OMCXi8z
+	Dtfs4uMQncxR0mXFfi4q70ukBETDzxPk6vCN/6w8aHCGmGHHRPB7AVFeTwYIfCcU13O6k7x1nA0
+	42Nb5BtWSNQ1tUR+A5HIucuXvbWSucJtcXGKSD4IoTNj2Fi9VYVoCYLLD3355WCKe6a7p3K/ev8
+	SGrfkoEXyaW8KTtN8Wwuw0s/pw9oXlCZh1ZqdiVB1ATjtKSSWToZURQMYkIJgjOrzdKampvDzAp
+	1btSTdM9cqC4ebArsD/c=
+X-Google-Smtp-Source: AGHT+IEPfXtHo2r6rWWs75/XQvfHRz1ZREAiZl86m6f3DyOS5iFSKm0l0j5MCwa+OzDPzNfSXMxz2w==
+X-Received: by 2002:a05:690c:4d82:b0:6f6:ca9a:e9da with SMTP id 00721157ae682-700babf622bmr182773137b3.4.1742849167259;
+        Mon, 24 Mar 2025 13:46:07 -0700 (PDT)
+Received: from localhost.localdomain ([2605:a601:9085:3000:f45e:232c:5c43:1e93])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-700ba76d24bsm17173907b3.33.2025.03.24.13.46.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Mar 2025 13:46:06 -0700 (PDT)
+Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
+	Fernando Ramos <greenfoo@u92.eu>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] vimdiff: clarify the sigil used for marking the buffer to save
+Date: Mon, 24 Mar 2025 16:45:55 -0400
+Message-ID: <20250324204558.76145-1-ben.knoble+github@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAC6paJg19ue7W0VxTnGH-1ra3Zkk+pRnj6McEC755RD54xDzCA@mail.gmail.com>
-In-Reply-To: <CAC6paJg19ue7W0VxTnGH-1ra3Zkk+pRnj6McEC755RD54xDzCA@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 24 Mar 2025 16:35:28 -0400
-X-Gm-Features: AQ5f1JowBWIESARws8nSWJIv_YPDk3399MH-fItQUaeFX6p3HS61qnNUAEjHByM
-Message-ID: <CALnO6CD=ghMyWm6s8u3=iH4neRMWnTTAQWUAokcgM1HOBqNC6A@mail.gmail.com>
-Subject: Re: mergetool.vimdiff.layout behavior differs from documentation
-To: kawarimidoll <kawarimidoll+git@gmail.com>
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>, 
-	Fernando Ramos <greenfoo@u92.eu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Mar 24, 2025 at 10:54=E2=80=AFAM kawarimidoll
-<kawarimidoll+git@gmail.com> wrote:
->
-> Hello,
->
-> This is my first time reporting an issue with Git. I am not a native
-> English speaker, so I apologize if there are any translation mistakes.
->
-> Below is my response to `git bugreport`:
->
-> > What did you do before the bug happened? (Steps to reproduce your issue=
-)
-> 1. I checked the `git mergetool --help` documentation and configured
-> `$ git config --global mergetool.vimdiff.layout "@REMOTE"`.
-> 2. In a repository with merge conflicts, I opened vimdiff using `git
-> mergetool`, updated the REMOTE buffer, and saved the changes.
->
-> > What did you expect to happen? (Expected behavior)
-> I expected the changes made to the REMOTE buffer to be reflected in the f=
-ile.
->
-> > What happened instead? (Actual behavior)
-> The changes made to the REMOTE buffer were **not** reflected in the file.
->
-> > What=E2=80=99s different between what you expected and what actually ha=
-ppened?
-> The documentation states:
-> =E2=80=9D@ is used to indicate the file containing the final version afte=
-r
-> solving the conflicts. If not present, MERGED will be used by
-> default.=E2=80=9D
-> So I thought that the changes made to the REMOTE buffer will be
-> reflected in the file if I use @REMOTE.
-> However, in my tests, @LOCAL and @MERGED worked as expected, but @BASE
-> and @REMOTE did not behave correctly.
+The original documentation from 7b5cf8be18 (vimdiff: add tool
+documentation, 2022-03-30) mistakenly described the marker as an
+asterisk, which is the character "*". The code and examples have always
+looked for an arobase ("@").
+---
 
-Interesting; I haven't tried to reproduce this, but the docs appear to
-(vaguely) indicate that this is the case.
-I've CC'd the author of most of that mergetool for some help, but the
-issue is likely here (lines 298=E2=80=93310 of the script mergetools/vimdif=
-f
-on 683c54c999 (Git 2.49, 2025-03-14)):
+NB The (French) name arobase for "@" is gaining popularity in English writing
+but is not yet universally standard. Use of a different name when picking is
+fine by me.
 
-# Search for a "@" in one of the files identifiers ("LOCAL", "BASE",
-# "REMOTE", "MERGED"). If not found, use "MERGE" as the default file
-# where changes will be saved.
+I also did not attempt to clarify the behavior from the recent bug report [1]
+because I hope it is repared rather than documented.
 
-if echo "$LAYOUT" | grep @LOCAL >/dev/null
-then
-FINAL_TARGET=3D"LOCAL"
-elif echo "$LAYOUT" | grep @BASE >/dev/null
-then
-FINAL_TARGET=3D"BASE"
-else
-FINAL_TARGET=3D"MERGED"
-fi
+[1]: https://lore.kernel.org/git/CAC6paJg19ue7W0VxTnGH-1ra3Zkk+pRnj6McEC755RD54xDzCA@mail.gmail.com/
 
-(Apologies that my mail client appears to strip leading indentation on
-paste, ugh)
+ Documentation/mergetools/vimdiff.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-A GitHub link, for those who prefer it:
-https://github.com/git/git/blob/683c54c999c301c2cd6f715c411407c413b1d84e/me=
-rgetools/vimdiff#L298-L310
+diff --git a/Documentation/mergetools/vimdiff.adoc b/Documentation/mergetools/vimdiff.adoc
+index befa86d692..ab915df408 100644
+--- a/Documentation/mergetools/vimdiff.adoc
++++ b/Documentation/mergetools/vimdiff.adoc
+@@ -86,7 +86,7 @@ command.
+ +
+ --
+ When `MERGED` is not present in the layout, you must "mark" one of the
+-buffers with an asterisk. That will become the buffer you need to edit and
++buffers with an arobase (`@`). That will become the buffer you need to edit and
+ save after resolving the conflicts.
+ ....
+ ------------------------------------------
+-- 
+2.48.1
 
-That code goes back to 0041797449 (vimdiff: new implementation with
-layout support, 2022-03-30), whose author is also CC'd.
-
---=20
-D. Ben Knoble
