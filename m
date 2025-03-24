@@ -1,123 +1,93 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645A425D530
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 15:42:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6096241C85
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 16:08:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742830979; cv=none; b=rQOkeM2L1Z9NKv6CY2FGLMlP6JSPYRPS1X6XLsb05AMLNAnqcSfH6Oy0j4dZyeOeGnfADFIyfkyLIzvWEJU5hhSjktQ/eHKIqHkyVL3MezrgjOpDgxIv4lEjb9A7sWyrp/KhMEoT1dXFD0xwNuTO96q0vOea7dd20G9ey+MxqrI=
+	t=1742832488; cv=none; b=rR+rhLyiTgY1+L6PXWEy1sejZDfwV696RmQ7vEH3SMcRht+I6fuuOXxRV7kCSS+hCUbCBlGTnnhhBeNPAGBAh9N/OIRJexVZM+3Ow00aAxuNMN7mK5m60nOxbLb6bI9Y/5H6nTo3LI0RILmOW/eFopy8h1SFsof3GZLjJvTpcgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742830979; c=relaxed/simple;
-	bh=PaGITsKVvDwR0OMzvf4FCYD3cVHcby3KFeMzZBvzE20=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PDCrcetM1be+V64pe++lshQ0Fo9KQqjEy4CL7zQZY99HDVkqvJLLaNe4Bow7IhEtmfO3zh+7muladLlkwuh9yGvCa+uF/Xt4OxcmLWRUxTHOo7c2dLJJFSa1ZYWGuiqBaZN49+g7rDXQSTrjronuipqhCg3Eh7Flj/tCZXXBKBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K3hZFHfw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aacHElsC; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K3hZFHfw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aacHElsC"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 87A8A1140094;
-	Mon, 24 Mar 2025 11:42:56 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 24 Mar 2025 11:42:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1742830976;
-	 x=1742917376; bh=PaGITsKVvDwR0OMzvf4FCYD3cVHcby3KFeMzZBvzE20=; b=
-	K3hZFHfwInUZZwCgoMST3IXct92VCqTfHx9VJtmw7nIyfQUblQlSvqcqtcPJIzSr
-	csnWvs3zO85FtFXNetW/HlgFPZQjPQ2T8VA1C3Do5/+Twa/QOyMkOW1L3zzZk8V2
-	v1bdG/VVnUL6/rKweBhJp8aus7ilWoRvve4H5Fl8EkNSywqNcbT6b/4J3x7FVGoo
-	Ujx9K++VUxpIUPkfU4+R2RoNseulOapDNdZVL3FgGD4tIa1v4NibYu/kHpfcQOLt
-	TpNUk5o27D3fs9OJvWPt8EES3y3G3TtYSAQdxZvqrFV/vbjOk/iyh3n8jvGYL70R
-	317BDlHPEl5ouwcGyykY4w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742830976; x=
-	1742917376; bh=PaGITsKVvDwR0OMzvf4FCYD3cVHcby3KFeMzZBvzE20=; b=a
-	acHElsCnSiSPkTFr2Dt4sqRPWJTEinSNgFmWo7cImpxE7QWYtvepArNcMoFcFQcv
-	rzUNV8okN4HJG8ynLghj+IH3Ga/UvRlY5Ixd9+WK64VUythMCDz70FskSCq4HF1K
-	3P7IrGMoOCErq+KMWX78fZe25vu/j5DB3IruuQLAxtBlZu4hWHcLzm0DPN/ZcUAI
-	xD1h+VQelNq1DCthfnzR7JgaJIcyyJiBs2hd1IbWUnNe5nbuvUcOCKDGP35zzvgJ
-	2RwmppZqSMyrGe+d7uc74wkwsZkcILZbPWlHxZTi8VqpN6gj+xYv8YVE15oCiTdp
-	on93oLKFe7La3nazjIuYQ==
-X-ME-Sender: <xms:gH3hZ5Yq_4wt819eBaOET8TdSxrriLVq6vi323IS6NjBJT4b46Ij-g>
-    <xme:gH3hZwYCJudHlxmN2Lgwnz_svsSkNgcYi8KdYrUA9PDsmVBHI0-rk1loGDEF1IcU2
-    sDr5jwRnTNUeKduoA>
-X-ME-Received: <xmr:gH3hZ7-Y6JnUv0Feuj_otK2TCZPVLd30UBnZnLIhm8WuXhEdfykTG6EK_w694i2NZChcT8siwNKz5CfrKT_sQmaLIxwPIt8PN4dk_TI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedtudeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeggefhudefkeegueeigfejhfejvdej
-    vedtheeguedukefgieelfeeuteejieeuleenucffohhmrghinhepghhithhhuhgsrdgtoh
-    hmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhi
-    thhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmh
-    htphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtgho
-    mhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsrghnuggrlhhs
-    segtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehphhhilhhlih
-    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:gH3hZ3oPPDgnELbgti9y_rS-l7kjtMizXmShwtFz1LzYo95wq6UcEw>
-    <xmx:gH3hZ0r3NTTU942Wh4JimhNJvPfB9f50CsHnL5dgamux1-hFGJ__nA>
-    <xmx:gH3hZ9RiRVy0CpfVfi9JjDvtMR4JxNRU0VLRNPHM5jM4BFeVROtwrw>
-    <xmx:gH3hZ8odYwYSEGolRecXwl7fdapyKX1uEoUtwatQXW4BbKTr5ESLmA>
-    <xmx:gH3hZ1dhhAIzh3wo67Bdj85FXSLQNK05OMMXQhbLpB1OrzQmozNWdhA6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Mar 2025 11:42:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Josh Steadmon <steadmon@google.com>,  git@vger.kernel.org,  "brian m.
- carlson" <sandals@crustytoothpaste.net>,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 2/5] libgit-sys: add symlink to git repo root and
- build out of tree
-In-Reply-To: <CAPig+cQ+05r0iJO3me2=yz1KWaU_S_WQmbeciOqZGxYWgbT8dw@mail.gmail.com>
-	(Eric Sunshine's message of "Sat, 22 Mar 2025 21:46:49 -0400")
-References: <cover.1742339107.git.josh@steadmon.net>
-	<cover.1742594960.git.steadmon@google.com>
-	<6befc95a2d0893aa269142a18d60ad07e79c6e88.1742594960.git.steadmon@google.com>
-	<CAPig+cQ+05r0iJO3me2=yz1KWaU_S_WQmbeciOqZGxYWgbT8dw@mail.gmail.com>
-Date: Mon, 24 Mar 2025 08:42:54 -0700
-Message-ID: <xmqqo6xqo2o1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1742832488; c=relaxed/simple;
+	bh=P3WGrEUh1vr1A34knmR8WkVk6Xfm7Mq5QJ+OKbkm8V0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gbSrjTMtsc+mwes65WQj2bnuNZQvre9t+UROFk59otcO4IA0NOulYBJ4YBq8HdSgKOeYLYVFactBnEGt3SwHAWTL40cAs7uQ+qI/MveLepyxqsHmgBNt1uIhGbdpwynlqsh7qQpcI91adVFN7QBSsW+nS6A85guPNzLGYZ2OLFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6e4231ae149so5984446d6.2
+        for <git@vger.kernel.org>; Mon, 24 Mar 2025 09:08:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742832485; x=1743437285;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MpsUXqRlSSMMT2tJflImpx4/hL0Qu2dP2LhDOfavyoM=;
+        b=VKog9ytcnTX/lpczgvsrW5arxxtiUv+Nfd2GkatEkTDsvcBPREqhxkfO0yF6loPpBZ
+         cxpLcZrblZCzSPMInuasD3jOSCYH6jueYfhKhoSXJtcTWhKQUvitsNpBZ9gZm0+WdZc7
+         ZCD9R5QpzpIbCIy7A0jNnSenahzu7iNRA0bXhyHu8qOsGfiD5LZuFLoEK41jgJ9t56kw
+         Tc22JujFM6xwC8i0ZwRSgz6x98cq4TbDbeH8JaxNg2wEfRdTUp/WkJAxI0xWeHoX3uNQ
+         6nAwocMHqzj+Gl9F0OouARZ5qbPRE1MGIAsVIiKYxckMSAp+jMrh4+qM6hpuCKt7L5p3
+         x3aQ==
+X-Gm-Message-State: AOJu0YxzRx1kbjAyySl3B8iyBz1Wtxn5wfzhUfZbrKP9RfUnN4Q9wxOV
+	M4Y2Rdhcfk0bGr/oUwQFszwiYOXRHs1ecicddIjPwH1ZtpYo9qwgbIhcKgHp0YRprL90fZC6wb/
+	Ozc4r2nf+lINSv/Ea70cvk+tIJRrSqA==
+X-Gm-Gg: ASbGncsw5Hm+gfZBdHDnkeGQ+Fy+2V7rLDiQ4eMXw292zqGDcm9rki3I3H/imXH4ewM
+	8mQbjRMIbRdtmFnz6dHI90GKm6RIXzqb6hp4xuHnuLaTUVLtsmBtaQ+ip38/PkEBEc/68mldSVN
+	KibLgr6nkKt46ZJyoLkp+RoWGoNYq0JsNWKj8=
+X-Google-Smtp-Source: AGHT+IGwbeAj0NBwItZWR2FT21b2rXIKCUtBpa3Ca2Kw/12ExJrI5wk6gzNrOc+CDC31YUjJN+T6c0VKBHHZVijNng0=
+X-Received: by 2002:ad4:5bab:0:b0:6e8:fd2b:1801 with SMTP id
+ 6a1803df08f44-6eb3f26fd23mr63375316d6.2.1742832484877; Mon, 24 Mar 2025
+ 09:08:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
+ <20250320-b4-pks-t-perlless-v1-13-b1eefe27ac55@pks.im> <CAPig+cQdoZwY3u-xr49Jb8aaQmE69p4i4RUdy=cRv-V7VoWENg@mail.gmail.com>
+ <Z-FUEhraLaDODbmO@pks.im>
+In-Reply-To: <Z-FUEhraLaDODbmO@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 24 Mar 2025 12:07:52 -0400
+X-Gm-Features: AQ5f1JqhoHnJNF-Izu8azCCs_1EnuTrhKGjlTpVFJQD0xV1PLZV-yAaWW_hJPAE
+Message-ID: <CAPig+cSN5hU=XP1Gd8z=5XyvSEqJcTBiWhgyJxYNBPJWAi3yLw@mail.gmail.com>
+Subject: Re: [PATCH 13/20] t: refactor tests depending on Perl for textconv scripts
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> On Fri, Mar 21, 2025 at 6:14 PM Josh Steadmon <steadmon@google.com> wrote:
->> Unlike `cargo build`, `cargo package` does not get access to the entire Git repo
->> containing a Rust crate. Instead, it prepares a directory starting from the
->> crate root (potentially excluding files, such as those not under version
->> control, or explicity excluded in the Cargo.toml file).
+On Mon, Mar 24, 2025 at 8:46=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> On Thu, Mar 20, 2025 at 03:37:08PM -0400, Eric Sunshine wrote:
+> > On Thu, Mar 20, 2025 at 5:37=E2=80=AFAM Patrick Steinhardt <ps@pks.im> =
+wrote:
+> > > -test_expect_success PERL_TEST_HELPERS 'rewrite diff respects textcon=
+v' '
+> > > +test_expect_success 'rewrite diff respects textconv' '
+> > >         git diff -B >diff &&
+> > > -       grep "dissimilarity index" diff &&
+> > > -       grep "^-61" diff &&
+> > > -       grep "^-0" diff
+> > > +       test_grep "dissimilarity index" diff &&
+> > > +       test_grep "^-3d 0a 00" diff &&
+> > > +       test_grep "^+3d 0a 01" diff
+> > >  '
+> >
+> > This change seems unrelated to the stated purpose (`textconv`) of this =
+patch(?).
 >
-> s/explicity/explicitly/
->
->> diff --git a/contrib/libgit-sys/git-src b/contrib/libgit-sys/git-src
->> @@ -0,0 +1 @@
->> +../..
->> \ No newline at end of file
->
-> Meh.
+> Not quite. The test previously didn't run because it depends on the
+> Perl-based textconv script. Now that this textconv script was adapted
+> to use shell scripting instead it can run, but as explained in the
+> commit message the output of the textconv script changed. We don't
+> really care for the exact output at all, we only care that textconv did
+> its thing. But we do have to adapt the test accordingly.
 
-https://github.com/git/git/actions/runs/14030831429/job/39278185588#step:3:1
-
-All of the Windows test jobs (not build ones) are broken due to the
-presence of ../.. symbolic link.
-
-Is that ugly hack the only way we can make this work?
+Okay, I see that now that I have read your response and examined the
+change more closely. The unrelated `grep` to `test_grep` change
+visually overwhelms the diff, so much so that I overlooked the other
+smaller necessary changes. Perhaps it would make sense to mention the
+unrelated change in the commit message but is not itself worth a
+reroll.
