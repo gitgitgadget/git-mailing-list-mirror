@@ -1,116 +1,216 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2EC19CD1B
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 19:30:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF2F194AC7
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 19:49:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742844605; cv=none; b=nxNkBg6LHTRc0NabFq1cMzCYMZVxD6E2RyY9Toep1UK9K8PKgz9BzZO8CrWv41WVOTEEsKwhxTJ6DPByiHGlPQ/4DfNhk9h0ET6NFmR/0FvKC9fdtcxqqbMv2gPV4jDKI4Fzio6WQ6000ekQ5Mtg1j4l0J/IoKIxvsxb1dN0C04=
+	t=1742845743; cv=none; b=oCg7uFiniV/uKxO1LT59sMgtFbZ27/wNZtR/ltJe5WqmO79geUL+2vhelW+ACGgRECfIPY20aeIpjggeQk/o09fp9puL4NXwiAZtmpqydMR6aNA16Fbwf8Rc6enB2VEo+dL+e9EYtM6tURUUAr33RCcCU9W8rwSAk1mI9uVgD70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742844605; c=relaxed/simple;
-	bh=79roUXn6Jq+OgvYR1OO09zfi7NrpWnczSuvQlQiEVks=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Glgs7WJfcJCQfmUpDQgnkc7w+6t79AHuZZjgloiOoDQZyGHThpLYRgcjP6uFB1qI+mVJFHzWGzXHq0YztZcTka7Ys0bAeVBAQOtOhNvEDxaVva973ul0Osn0wqR8j8ebmsg8fN3auzOFTR3CCK5LsIKctcVwnIHXcemsShl4XcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HoJGwQ9Y; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1742845743; c=relaxed/simple;
+	bh=dJWBierSR2BHpcFkmMxL62yv/6geJkoY54GgnnuGOac=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GOWSVi4VMEQwkcMhA9XQ/jUg9LOQRKAEVwkfh825bqDOR6wLY1fcVTZ5in47lIpDAd+lM0aI/vuucZdLWvbngd7yS46NOC5IhYshiKToMAhGPVXepOoBXvyZ2G8UhxaAidWQEXJWi92rHybSrYVwKrYVUiFp7+iZJfiwcvGB4Hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nymw/092; arc=none smtp.client-ip=209.85.222.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HoJGwQ9Y"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43cfebc343dso36387035e9.2
-        for <git@vger.kernel.org>; Mon, 24 Mar 2025 12:30:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nymw/092"
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-86d6ac4d5a9so2102561241.1
+        for <git@vger.kernel.org>; Mon, 24 Mar 2025 12:49:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742844602; x=1743449402; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Rhlu7k+KY1mPz3ctOY5kVPIvseemZEhz5eH0bgfsFc0=;
-        b=HoJGwQ9YJNod8oXrNA9UcTQQ2vSGSZomOa6JV3+X5TGqs28dML5YOd7GlmnmXQUL6n
-         cVFNNhSh8mmSRcGsms53sQUg78fiZLAA33K6ZTDij4q4kOAjRpvPzmk0NEhApLRUbrrL
-         QWoMZblKbBEiS86z388LbJx1hlo1lrU+VxVcub5HTSeS8WzjkLpRJGE+GQJIzVi4tWJY
-         YN8MqsGS+1Y5Mssi0d7PWRQCr9bVzsnQCwD73XNxPa+MU8IIEaJ7Jr3h4EfO3GAjpSla
-         3FOKURCD3rE7eYNul7tWiKl+9coRjwk+o4PCKETYECfnLLsKr/kWaExGta8gEbJ14nk6
-         EEIQ==
+        d=gmail.com; s=20230601; t=1742845741; x=1743450541; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=irw18ltBmDdgJdO/LgYbPr4Nw0BELXAPIAC3vMOg6VQ=;
+        b=Nymw/092zZ+HtaxOuqzu+r5V51AFlRs34aIjG53d4wKGrmDj1oOa4d0A1nnH1XO4MO
+         OLRg5z+DdpgYG2E0ybB9mbjEnHmvFbqVdN5Thutiu6Wirlp6nn7t+G1g0gnQ7UuZOwgR
+         gTHxW0J//ynZYdBeWEU584CCeYj29j+VMkV1MSaDvHCU9k5MfTLX/gNSNY9Gy1ykyis0
+         xjAteQiFpWtvMqfW14zCbTrVzY5wocOvs5Lr3rUlT8gsscJtutN8V1aNnvt75jpkR+Vx
+         udkRthOF1v6T0O1zT02xpYoYcP1U9zk6EHZa833Rr4hc6zX738ByGQCktVKrwU87odTw
+         RGCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742844602; x=1743449402;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rhlu7k+KY1mPz3ctOY5kVPIvseemZEhz5eH0bgfsFc0=;
-        b=sB5NpunhDAlZiEYaEY1uBNJbQRIstq2Az10TnZDK0+hL/hvKcz5dCbEyC+0+wxEzI1
-         m10d6xkMfNuJDXOOJ1BnCAJHO6mMjg6Bs8hRhLz1CvHcSkrnjH73tjvIdxe2C/QwP97E
-         +FIg+xf1UlVvBMrfbAgu8wqxFvSl9PHd52Ax9WnxYq59sIxGRbKP/kxWhkUVhHrMLHv6
-         h1zhMGFsU3nsuO/fZGBXoaulfZVTCVeMI8ncqmQrYTcxIGBY6uyC7++y8yO0WqF/FB7X
-         CllXzKMQtF046agmHAgE7Fun77U0a6tIpk1u8/grQ6mhu1R1rTZRDhdiR3hIOya9S+lM
-         i+Ag==
-X-Gm-Message-State: AOJu0YwtS092j94AlhM/v1Usoe/AiIl7EEEsDWY3gZKjCj8NgCpxJRCg
-	xTp00kq5a9vFm1zPUUXtDMetiC/RE+wW4jgEePg0wvgfy/qZTnqv
-X-Gm-Gg: ASbGnctWe2CrSond0OQF2MkiWoz/hMQbexS/LMrekgWuzI3WT0LaJdfTa9tVYH8u5qi
-	sO/xFRXqniL6HNUK04Z7w739lPVufYGeFgwyjXBqKVEGqAeba5sYgQSKj+ntO8Yf5Yx3ua/jbn8
-	vXYLPFSx3RmrPoDIA1AsWJfQS4EkV7e9YpeuWmJeCVePncK1RLXLxrynLLbHeMsGPe723f25iNA
-	2O9K/H9x67B5WbsKSPouAn2h3NOTFmU4y09dhiC0L5xVCXM+YkiYSV7z0uKRioZ7iaLhHni+Enx
-	VPFyJbOoioRptiq5gpBDJe2kbTm4PWFju49qm0vUoAUQxfeEvPtK0hoylSOnZDz3nf8Pjz84FiD
-	W7A7+W+lxdRmQ+Ig9km/u
-X-Google-Smtp-Source: AGHT+IErPcpe9KJ0VMRRnkND48Ye2/yfbgsKRz+8qnsVgagL6PnUQqPDLBD3mkvrS+Ev7lIet+IMyA==
-X-Received: by 2002:a05:600c:1d85:b0:439:8c80:6af4 with SMTP id 5b1f17b1804b1-43d50a218bcmr139748355e9.19.1742844601890;
-        Mon, 24 Mar 2025 12:30:01 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9e64casm11753572f8f.73.2025.03.24.12.30.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Mar 2025 12:30:01 -0700 (PDT)
-Message-ID: <884dc4b3-d470-46f6-b129-c6d20817daf7@gmail.com>
-Date: Mon, 24 Mar 2025 19:29:59 +0000
+        d=1e100.net; s=20230601; t=1742845741; x=1743450541;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=irw18ltBmDdgJdO/LgYbPr4Nw0BELXAPIAC3vMOg6VQ=;
+        b=YEH7ifrCS+kEJ2fqd1g+3cGau+3lHs0WegWyWceB/YG3/N1meaTHHXxTFtJOmZDq/T
+         rIzt9NCuy8/9BEf+2YbLHOV9gTWEUo/j6XWMCtVPjXMG1bUV/LltRHrEwQqrBxCw8CTN
+         jiBMMgZG0B5khxLLoWpNSht04X96M0BoeydJ3liLJkKUfbGY2SUNFFC92Ln2k/8kl1TP
+         UQe4IY+o8teBYtsBdoryjLcK5MWgjTq9Dk3EtjJazC1BLk8Vp1vWNBvKwLvfQ499+05A
+         uN9yQKoMGtSRC6uUb4J/XWkQ6B5s9GZzrhAjRdVdzlqmMTDuz6J0s7KEPEnDgr8B0EjD
+         0Zeg==
+X-Forwarded-Encrypted: i=1; AJvYcCV8xOo7b7+Yqu/SayyQjNy3u8fJdfvPZsDgffPnGCFX6AG14vswNnnu/hoH/tdHOce9owg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWOBSGinmIkwjPcLKi6hcV+hwJvCN/UIFS4YOln5BwSz6OphA9
+	GO+UIAuFOyIoYC48LIb04guzAmGVp96tKrhYQZvc+VqmKAjvzUPhgLQjhVS67UuLzc3Q3J3YanV
+	lQ5rmAQ+30zSlGB/d+msa1/1DuAg=
+X-Gm-Gg: ASbGncu2Yqs3IT4tYI7IVY7UkXAyMI/FxMOyj4PefRY8P/sEwOEYhUlddJ6sYmvAY/1
+	wszEMmxmvpNq/5K8sxTyFO2Bn9F0XqO+DE3/sAjeBJm+5AtS3+6CkUismUo46rMUmQv7DPagtSc
+	S71XDBgW1G7QgeSMiHBZVbHyFYyevoRURHnz6v2ahDyR3HrV6ihAEJB2RcxXw=
+X-Google-Smtp-Source: AGHT+IHDjDI1zpUDCQlcye0ntf0bKlKI6BkeShjnAXyUepsH+llOTA453EXPjh8loKNL63DnkM96dMRacGHK9hxHuFs=
+X-Received: by 2002:a05:6102:3ed3:b0:4c4:e0e0:f7bd with SMTP id
+ ada2fe7eead31-4c50d5f1661mr10272136137.19.1742845740450; Mon, 24 Mar 2025
+ 12:49:00 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 24 Mar 2025 19:48:59 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250324025300.GA690113@coredump.intra.peff.net>
+References: <20250321200715.3338-1-taahol@utu.fi> <CAOLa=ZRN5m0bccMdabUYwNJLg4HX6jcOe3PN-aBTHXBOuM71hw@mail.gmail.com>
+ <20250324025300.GA690113@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/3] remote: allow `guess_remote_head()` to suppress
- advice
-To: Justin Tobler <jltobler@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, ps@pks.im, alan@norbauer.com
-References: <20250320014646.2899791-1-jltobler@gmail.com>
- <20250321231639.180762-1-jltobler@gmail.com>
- <20250321231639.180762-2-jltobler@gmail.com>
- <106cecbf-6a7c-46bd-8115-2b5fb06cc9af@gmail.com>
- <3rcpapodk473swxbdgubhuqijvgwe6rz5iqsfykglsmjbanuu7@mh6tvrhyyrx5>
-Content-Language: en-US
-In-Reply-To: <3rcpapodk473swxbdgubhuqijvgwe6rz5iqsfykglsmjbanuu7@mh6tvrhyyrx5>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Mon, 24 Mar 2025 19:48:59 +0000
+X-Gm-Features: AQ5f1Jq4aIR_gkkxkXshZ5cgiLvBdM6CxCFk95QcZ1pnd-cLQkIuCYKaD9k-Q90
+Message-ID: <CAOLa=ZRkzp6A+S-bqbUMnkovazrczFi=B8tG06xqTzsNQB2enA@mail.gmail.com>
+Subject: Re: [PATCH] bulk-checkin: fix sign compare warnings
+To: Jeff King <peff@peff.net>
+Cc: Tuomas Ahola <taahol@utu.fi>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000422b3f06311be5e3"
 
-Hi Justin
+--000000000000422b3f06311be5e3
+Content-Type: text/plain; charset="UTF-8"
 
-On 24/03/2025 15:21, Justin Tobler wrote:
-> On 25/03/24 09:31AM, Phillip Wood wrote:
->> On 21/03/2025 23:16, Justin Tobler wrote:
->>> The `repo_default_branch_name()` invoked through `guess_remote_head()`
->>> is configured to always display the default branch advice message.
->>>
->>> Adapt `guess_remote_head()` to accept flags and convert the `all`
->>> parameter to a flag.
+Jeff King <peff@peff.net> writes:
+
+> On Fri, Mar 21, 2025 at 05:08:06PM -0400, Karthik Nayak wrote:
+>
+>> > @@ -192,7 +188,7 @@ static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
+>> >  			offset += rsize;
+>> >  			if (*already_hashed_to < offset) {
+>> >  				size_t hsize = offset - *already_hashed_to;
+>> > -				if (rsize < hsize)
+>> > +				if ((size_t)rsize < hsize)
 >>
->> This makes sense if we want to convert the boolean argument to a flags
->> argument. However the only callers that do not set `all` when calling this
->> function are in git clone where we don't want to emit the warning. It is
->> probably not worth a re-roll but I wonder if we really need to do this
->> conversion or if we should just hard code guess_remote_head() to be quiet
->> when it calls repo_default_branch_name()
-> 
-> Good point. We could just rely on the fact that all current
-> `guess_remote_head()` callers that do not set `all` also do not want the
-> advice to be printed.
-> 
-> I have a slight preference to keep this as-is and favor the explicit
-> configuration, but ultimately I don't feel strongly either way. I am
-> open to change in a followup version though. :)
+>> Something I found peculiar here is that `rsize` is of type ssize_t'.
+>> But it only seems to store a positive value.
+>
+> I assumed it was ssize_t because it would hold the result of a read
+> call. But it doesn't! We put that into the "read_result" variable.
+>
+> So it could just be a size_t in the first place. And indeed it is better
+> as one, because we assign from "size", which is itself a size_t. We do
+> not yet warn about type mismatches outside of comparisons, but really it
+> is equally bad.
 
-I'm fine either way so lets keep it as-is if you want
+Nice, thanks for exploring this thought out more. I did look at the
+code, but was more cursory.
 
-Thanks
+> However, if you switch it, then we get a different -Wsign-compare
+> problem: we compare "rsize" and "read_result". So you still have to
+> cast, but at a different spot.
+>
 
-Phillip
+True. But this would be better in my regards, since this would directly
+follow the
 
+  if (read_result < 0)
+     die_errno("failed to read from '%s'", path);
+
+code, so a `if ((size_t)read_result != rsize)` here makes logical sense
+since we can clearly see that this section is only reached when
+`read_result` has a positive value.
+
+> If we are doing this a lot (and really this conversion is necessary any
+> time you look at the outcome of a read call), I do still wonder if we
+> should have a helper like:
+>
+> static inline int safe_scast(ssize_t ret, size_t *out)
+> {
+> 	if (ret < 0)
+> 		return 0;
+> 	/* cast is safe because of check above */
+> 	*out = (size_t)ret;
+> 	return 1;
+> }
+>
+> (yes, I know the name is lousy). That would allow something like this:
+>
+> diff --git a/bulk-checkin.c b/bulk-checkin.c
+> index f6f79cb9e2..fbffc7c8d6 100644
+> --- a/bulk-checkin.c
+> +++ b/bulk-checkin.c
+> @@ -178,9 +178,10 @@ static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
+>
+>  	while (status != Z_STREAM_END) {
+>  		if (size && !s.avail_in) {
+> -			ssize_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
+> -			ssize_t read_result = read_in_full(fd, ibuf, rsize);
+> -			if (read_result < 0)
+> +			size_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
+> +			size_t read_result;
+> +
+> +			if (!safe_scast(read_in_full(fd, ibuf, rsize), &read_result))
+>  				die_errno("failed to read from '%s'", path);
+>  			if (read_result != rsize)
+>  				die("failed to read %d bytes from '%s'",
+>
+
+This does look nice, but I'm worried something like `safe_scast` would
+just not be used througout the codebase, causing inconsistencies. But I
+think we can drive that through reviews.
+
+> Though it does kind of obscure the call to read_in_full(). You can use
+> two variables, like:
+>
+>   ssize_t read_result;
+>   size_t bytes_read;
+>
+>   read_result = read_in_full(fd, ibuf, rsize);
+>   if (!safe_scast(read_result, &bytes_read))
+> 	die_errno(...);
+>
+> which is a bit more verbose but perhaps clearer.
+
+Yeah this is much better too.
+
+> This reminded me a bit of the issues we had with write_in_full() before,
+> where:
+>
+>   if (write_in_full(fd, buf, len) < len)
+>
+> behaves unexpectedly because of integer conversions. There the solution
+> was to never check against "len", because write_in_full() either writes
+> everything or returns an error. So:
+>
+>   if (write_in_full(fd, buf, len) < 0)
+>
+> is correct and sufficient.
+>
+> But alas, we can't do the same here, because reading returns three
+> cases: error, a full read, or a partial read (maybe even EOF!). So we
+> really do need to record and compare the return value between what we
+> asked for and what we got.
+>
+
+This is to some extent a flaw in the way errors are generally
+structured where the error indication (-1 here) and a potential result
+(bytes read) are combined into a single return.
+
+It is unfortunate indeed.
+
+> -Peff
+
+--000000000000422b3f06311be5e3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e2d66d0c096381a6_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1maHR5b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK0FyQy80cEFHWWZma0pjaS8xRFdvZjZoSDFHOTllTQpwbG1oNGJxR2Q0
+QmMzaHRtRkhsMENXYkZ5K05MblZNejdPWXMrZm5kVDRPZUtHcG81L3ZSMXZ6MjZEaXNzbWJ2Cm1n
+VFgxSXRiaW1nQ0FoUExkb3FaTi9ZaFhYWEwvbmZZTmJadHJVRXRKa1o4ZU1IQjBzMkNPLzJSRGph
+N2NiZGkKN0I2R2Nhdk94NWErRXd4QjA2dDk5MnQ5T1FJaVJmR1J0V1VzR2ZOeUNvT1ZoSkVFRDVJ
+aGhCM1VRNC9RZjNWYQpoWFd2NElMRjEvQlYyOGlkM3JIZGEyajZPNkR3SERjUXM0dXNsRytzeSt2
+SmFZaDR3TGExVWhGdWk5ZFN0S1gxClpnNEQ4Wll3OURqQjg4cTNmd25rMklaMVZVWkFaTXJnL0Z6
+UkZjNEdEZFE4d0dpYmdRZ1hRWGNiRU9UdW5lVEYKb04zMnRKdTNVSFFVZmVwZnBoQVZPRTRsWU1B
+a3ZVaVl4ZjUxQWRMNVVGOFQ4V0N0MmFVL3QwbzJVSXN3NW1XdwpuSVdaOWtaYzZvdEdHaHd6bC9p
+NVg4WmcvZ0UxMGpJSVNWRXhwZ3pZT3RyNEo1Y0ZnakJ4M1Q1WHdHRm1TWEQ3CkMrRmNZckZSRGx1
+MjVRbTV0RXNLVktmQjh5STJIQ1prZEJJREFBWT0KPUREYlYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000422b3f06311be5e3--
