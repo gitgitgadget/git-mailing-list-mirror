@@ -1,127 +1,105 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3FC2E3366
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 14:52:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D022E3366
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 14:53:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742827976; cv=none; b=OiVPnmNF7d4Yqq45qlQ8A/yodIfDe7uzZL3rLuIP/hHvNB1vwyiFXHMhGYGe/W922RNKBhri418P8tWXlqTrfXmb/Pk4k1WidlZdmYlJ5r9T2t/k5jyVxCm2a49Q/IWMmaWucJY+Ufam56VrycGtvOlYZVzmejZ7OzeFIsPoR1g=
+	t=1742828033; cv=none; b=XR2dwzl9Kp8sW3/qzTAZjD8T34vulDSkjncuQcjiALhwlUMhW1E9mHIBFpbqA1/UPfulVs6ZnwCixuHDFadAVr8Wn77OFuINQkeqmZMZMQ6mWgJUO/ehaDkxHejzjvtAI88KDKmayL8hsQ/830LXlBvFjbuctvQRVNwPtrfkMJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742827976; c=relaxed/simple;
-	bh=R4YEmMfJswdqmc44ENE7g7m/qaH2hGsbUI77cX8pies=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=qpPoH1yKylJYroW/Th2DllXMhnmAMYOcmeSWbUrl1zLM9SnF5RHsWob4j6z93J4brwEzo+g2s76r/YQNq4YvrNTH4aaiyrX/41/JnFLJFGbjsNnlkNZ4rYO3PVLHIZFtH2vo+fo0smjmBx5DTDJ/9Lt4Ca/PDEHergPbJSAxEf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DlCi2Lie; arc=none smtp.client-ip=209.85.167.54
+	s=arc-20240116; t=1742828033; c=relaxed/simple;
+	bh=qKMEL4l2h25lb5vEnCFWKcHcpTg8xGFPyYc0OYw5Dpo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=c2fHv0HwAFGCDXkiCevm7fy+vmErLI1u916Lni6GnwRJPcE35JmtFVax0oVDtXxau21MX5+tvEmqSgwFzY1oHZQzQ2mthW2SGp0552HEIrP6RXOnFUwkOTD+e3S1L4ReFtoD1yXQY95AQqh06zycUUQ0/00n7A0tyOeQT+DYBT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OsWDXtUA; arc=none smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DlCi2Lie"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-549644ae382so5645991e87.1
-        for <git@vger.kernel.org>; Mon, 24 Mar 2025 07:52:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OsWDXtUA"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3035858c687so1029241a91.2
+        for <git@vger.kernel.org>; Mon, 24 Mar 2025 07:53:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742827972; x=1743432772; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QXpTjNZcG7FZXaB33vKgClpk3n1LriBNPGsxzYFwksc=;
-        b=DlCi2LiehsfSHwDa+uGSiO6CqhwUFLE7QoJp34Ok8USy0Uc32/F7t2cIKdy/aTs/ia
-         yaTRx+L6h8KtiTdA6MtLvwmAsqaIeMTTwmnarqOq9kLftDxCwZQ0W53amzFiHh8sALUO
-         ndGMi8tbwfQcBH84QGm9y/kdNXyprDEQa62i2zQe9OD02eVhgZKXHfpDHkaaR20TH8LQ
-         CrJZFGw8sqTq3YDSUPcdRvhy6JYpbbaVS/pI6bElJpk/yfI1WDDK4E4c/bSVuXLiSaYE
-         6V9seKwhXMt01lXuWL9KgMKGQrvCrR3KJZznK8ciRWEuIXzper65bc5wKLl9aDQCKrpp
-         6BxA==
+        d=gmail.com; s=20230601; t=1742828031; x=1743432831; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hRIA8D8fd/LDPq+98hhLUwNlp1t//5KozxKt/oMMeLc=;
+        b=OsWDXtUAf2/iDU+LY3BjqIOIRyGXU60HHUgjrBchhWZkfutpRV82zt2999yFMiyb4P
+         shmLcjQAzb/NV7Fkb1ZeB/CZazHRMrLmfnrfFGVYbBoqIBRyOm8FVUHOiAstfXrLvCog
+         9AKw7Mlm0u9ZHMolUD9JN+gtXKepnwKEeSC4IhBpnOd9/T4PO1NsCZ0dMQsn9l8fc+A8
+         2XHNalsfNtgRWzWRxbGnrEFS6UyZv4+JXBH/ycWmlf9wfXl2R2XgjlvGhk9UbyEZF1Jc
+         PV2k1mdHHf4G5OFFcFENEuYuawRxAPqTPNfOKkc6CGgIVrlkbCA3LEA0z9VUvnHSd+Z1
+         Fq7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742827972; x=1743432772;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QXpTjNZcG7FZXaB33vKgClpk3n1LriBNPGsxzYFwksc=;
-        b=sI1/GZFb35c88+adEJ/OTKuiuOIxsKJEb5cNxvnzrQyxKB53f6E1ngHz42JFGFOCmr
-         8kD4JGpX8sq1LoPzThwZS9h7Pdh0/Dl8ZPItNNMGmSfiaRRErJPQmRk5fdz4LSoDGjmr
-         8WIXCWJybkHQDxYQKE8ZvFOz+0jccs/lnjg/l3X2v+49gniESdXJS5uPsevw3Cgg5sz9
-         KEV9J0BIxmMTu1eAsrtIVAtesAY28MsWOBpEIowItL6S4joZTzl43nx7XP/+Ngk1yxA7
-         HeGSUqHranO/IX2HUuZ81RZSfxcYkmwurqWLGtHqxJlUFKF7Bf4wQEsZtPo5ntwG67dF
-         spBQ==
-X-Gm-Message-State: AOJu0YxrH39YZ9b4wv7KB1MeB+5qJBvYPkt8fkcaNDTbkaeNn7qPGTcN
-	1HPgRJhclY83k3aD0yu/mG41itxDrN96IHhtcp1XSMmK8uTmf0IAfkzm7HjLxQNkAx6LWrII6ia
-	uVx4z8LAs4K0SwOD1bYKI0eUO3H4C3qui
-X-Gm-Gg: ASbGncsfKZeiiw/b/9A6jY6XZIIgStd0I0mlyPhQNjbaqohT99vmkgC5TqQnE58phgY
-	Hjt36uCIdvWOg4rpE1Wy9nnd061yCJQ44qvg/J3Ka/z8g0S2TMY4LQq3IvoiaWPLVp00aTPf5dt
-	m+iwWEJ1Q6iARDb2w3uOCBrWxOOjZnfD4s7RBNMtH4qjzsE0rIj0KFdw==
-X-Google-Smtp-Source: AGHT+IGAbcodt19L6UBgsDwFEaqla0OANobAenIyXGtM2Cehs7YU/emv/5engdazbma1AdRIl3/+3UdhGRUDgAQr4yU=
-X-Received: by 2002:a05:6512:b03:b0:545:c7d:1796 with SMTP id
- 2adb3069b0e04-54ad64fbe26mr5245897e87.43.1742827971878; Mon, 24 Mar 2025
- 07:52:51 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1742828031; x=1743432831;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hRIA8D8fd/LDPq+98hhLUwNlp1t//5KozxKt/oMMeLc=;
+        b=FOvL2asNvHDdwE0WnI6bTMnN7w6PovGtiBBm61RSai+YBfIbQf/ll0Alpg0Ju4xH42
+         rvDDRSX9YfzKNgaMKeI21XrtyceLSU63YIMfMxVG68fcAHYQwHX0AjQ+AmXt0++2GXyW
+         7Dy9OXr0RgyyEN0ekzTLqRxYfUzEnQOiBmzMgFGWel+tWiS639gDWwgw8TeO+mcL1h5O
+         XsOP4vzf+qwx4hcpvTXPCtV1rGt5oPcrgFn5bYesfRXa1p3hsYw9THqJ1YalxKZEJuE9
+         3uPNHYqNkWr7mFcYP/XutcPWcErL0Yxa1suqizcoCnqkBpOH0pZbTZCgVynky/7YvcJ/
+         F38Q==
+X-Gm-Message-State: AOJu0Yz8tM2UUN3U4iceqEu8atzAekIUpM8ff2K842ty1TyzXApx63UL
+	aszhFRX2++BKDgREtBf6MLb+UHMUyaqpBf7pmurU29lNqjDSKS2r4CtRyHa8
+X-Gm-Gg: ASbGncsu3tv53QF9TPTKZCFOii5A5qPj8kDEH2rh0PjrlUqoPAhTHeLw52zkZW5TtSc
+	pY41BCGoBeanBBtl0Cq32RChagwPVFheA4AP6v5eF77jJRS9mG+djW5z7ashNLK9D9glGkv4TS2
+	IEY9JhJISsek5rbYWAVrFo/me7+9KPaGYgthq+CVuplGNuxM+11hESMl8HO4qVxYJ6jNzTpr53m
+	R/MEG3Ezr8beR5OmRq3GsXn8OzvGkhm/uabt66vl4MoHp/GGYoVNnt0MHNjQyBpy99lTqz+SNJO
+	QrmRVRvw/rUm1Itu70wa9bOujFNvBhUb8n/kt3S/FQuv3GQdIZXH
+X-Google-Smtp-Source: AGHT+IFENH2DIPLkfpUUpiDdmcUzKHMXxXjptezSWOjrbwmiksje7XQCUi1+s+QOJvcKbM5ZBLwhYw==
+X-Received: by 2002:a17:90b:384c:b0:2fe:7fea:ca34 with SMTP id 98e67ed59e1d1-3030fefe329mr19005776a91.32.1742828031228;
+        Mon, 24 Mar 2025 07:53:51 -0700 (PDT)
+Received: from localhost.localdomain ([39.184.61.67])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-301bf635929sm13464061a91.40.2025.03.24.07.53.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Mar 2025 07:53:50 -0700 (PDT)
+From: Zheng Yuting <05zyt30@gmail.com>
+X-Google-Original-From: Zheng Yuting <05ZYT30@gmail.com>
+To: 05zyt30@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	meetsoni3017@gmail.com,
+	Zheng Yuting <05ZYT30@gmail.com>
+Subject: [GSoC PATCH v8 0/2] send-email: improve error capture and status code handling
+Date: Mon, 24 Mar 2025 22:53:30 +0800
+Message-ID: <20250324145332.571813-1-05ZYT30@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250321025128.68463-1-05ZYT30@gmail.com>
+References: <20250321025128.68463-1-05ZYT30@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: kawarimidoll <kawarimidoll+git@gmail.com>
-Date: Mon, 24 Mar 2025 23:52:40 +0900
-X-Gm-Features: AQ5f1JrC62e4p9JX8CdOxBC1xJ7ZyppVLPaAdowlVv1DD1jy8Tl3orjMDUunzME
-Message-ID: <CAC6paJg19ue7W0VxTnGH-1ra3Zkk+pRnj6McEC755RD54xDzCA@mail.gmail.com>
-Subject: mergetool.vimdiff.layout behavior differs from documentation
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hello,
+This patch series improves SMTP authentication error handling.
 
-This is my first time reporting an issue with Git. I am not a native
-English speaker, so I apologize if there are any translation mistakes.
+Auth relied solely on return values without capturing exceptions,
+misjudging non-credential errors as authentication failures.
 
-Below is my response to `git bugreport`:
+Patch v8 1/2 wraps the auth process in an eval {} block to catch all
+exceptions, adds var error for future handling, and var result to return
+auth state.
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-1. I checked the `git mergetool --help` documentation and configured
-`$ git config --global mergetool.vimdiff.layout "@REMOTE"`.
-2. In a repository with merge conflicts, I opened vimdiff using `git
-mergetool`, updated the REMOTE buffer, and saved the changes.
-
-> What did you expect to happen? (Expected behavior)
-I expected the changes made to the REMOTE buffer to be reflected in the fil=
-e.
-
-> What happened instead? (Actual behavior)
-The changes made to the REMOTE buffer were **not** reflected in the file.
-
-> What=E2=80=99s different between what you expected and what actually happ=
-ened?
-The documentation states:
-=E2=80=9D@ is used to indicate the file containing the final version after
-solving the conflicts. If not present, MERGED will be used by
-default.=E2=80=9D
-So I thought that the changes made to the REMOTE buffer will be
-reflected in the file if I use @REMOTE.
-However, in my tests, @LOCAL and @MERGED worked as expected, but @BASE
-and @REMOTE did not behave correctly.
-
-> Anything else you want to add:
-I=E2=80=99ve uploaded a video reproducing this issue to a GitHub Gist.
-Please check here:
-https://gist.github.com/kawarimidoll/3e603664432702e434c27f343fb35f85
-
-[System Info]
-git version:
-git version 2.48.1
-cpu: aarch64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /nix/store/3z1jypscq2ld48kl089ywgwd8ri2rjxq-bash-5.2p37/bin/bas=
-h
-feature: fsmonitor--daemon
-libcurl: 8.12.1
-OpenSSL: OpenSSL 3.4.1 11 Feb 2025
-zlib: 1.3.1
-uname: Darwin 24.3.0 Darwin Kernel Version 24.3.0: Thu Jan  2 20:24:23
-PST 2025; root:xnu-11215.81.4~3/RELEASE_ARM64_T8122 arm64
-compiler info: clang: 19.1.7
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
+Patch v8 2/2 introduces finer-grained SMTP error handling by extracting
+status codes per RFC 5321. For 4yz (transient) errors, return 1 and allow
+retries; for 5yz (permanent) errors, return 0. Unrecognized or uncaught
+status codes are treated as transient errors (return 1). If no error is
+present and no result is defined, return 1 as a transient error; otherwise,
+return the authentication result.
 
 
-I appreciate your time in reviewing this. Thank you!
+ Zheng Yuting (2):
+  send-email: capture errors in an eval {} block
+  send-email: finer-grained SMTP error handling
 
-kawarimidoll
-GitHub: https://github.com/kawarimidoll
+ git-send-email.perl | 69 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 54 insertions(+), 15 deletions(-)
+
+--
+2.49.0
