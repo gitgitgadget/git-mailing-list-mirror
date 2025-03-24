@@ -1,118 +1,194 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDED1C84A7
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 20:53:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F107E2E3367
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 21:47:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742849614; cv=none; b=qGMPVLG5TWA6Jzu9ZGZ3QekS4++C8Pp4FxHqD9LPszo1A8IY1hfPDCT2c3JEKFCaq3qEc7BDFgwUc/jRYVEv6um6DH977j37cUSosxTBxc00ie67BoMg8C/rlRdzHARpn4SWIO82ItYWkQQ5YYRu4bluSiTyqRKA3XQjWMx+pdQ=
+	t=1742852860; cv=none; b=qbrWn0PV+G89YmxcoqPlsEvpi3fg8e/rCdmuivZzGET5qwZ1oH8RL/WFRoMPj41lZ7evpOh9oa9EuDkrh0x/kWkfxqfKHrnnAyZHkGaiNTD/8O/P0xjxqH3ePkXCPK4AKyYsravremNHp1k4OVrn3ZW3gCAvyX3ShpxQUimSn+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742849614; c=relaxed/simple;
-	bh=hOXE1B8viWzlCjNn/J6Cd7e+LUlu8GH/VqSuNUONmrg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=tQ6EKIRu4uQSnMM27u6+2gaZ7cllakyWq0Ahk8EErnw7Jd29AbLLyn81B5ZnkkrKAs/Ufp4URXBtQHyngh6YuLIzI+vi+s8pTMBIesuE+YJhGBzjweyPOZO3xUvqVbepzwTgWDgxsD53nrU3HWrTX10Ko4wQmNWD5I+nmsriulo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e0maTyfD; arc=none smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742852860; c=relaxed/simple;
+	bh=8Z1rOZQr0DQAgR2UPOFD+0OdTPr5W+aMV9F52XJCWb0=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qH7/5xKS1hpAHc27NIyoGGuwC6R2wEX3PubqGykkPrQuRBGNGZ1PW2NyXJe7qnyT/qHel0ictjOPS+JWnfOHEY7vlnr+rXp+X+WQlgQFsta5I0sICTSlnC+6zQx5NBrbtt4EjpyvIcODnqsdnCO/sHU76cKaBoTA19jEGqiqj4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=jESNbh9G; arc=none smtp.client-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e0maTyfD"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6fead015247so38829447b3.2
-        for <git@vger.kernel.org>; Mon, 24 Mar 2025 13:53:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742849612; x=1743454412; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=YZ81+jgyU4HCZnUGrVIORPiEuq+J5FOfPnlXYQZAuEM=;
-        b=e0maTyfDy1/zcMpK6UHe51ohupwuUmOJYap+iHyckJguJNP3awxMFmQgM+nClLJM2D
-         etaM/a4VVcuvX0FvYhD1IMHSzkuE8HgF1Dx1fkH/958DHKGe0Lbm4Hj6cQRKPUWojVo7
-         lXdxk0ftL69cQRx8bystnM+HooklbvlcErlpw9cY/2qDPPauuiPeYhXC3vL3mEzasy/G
-         kXKshyO0baq6FzPc/HZ8iBFgyzNuxksffYaNDmlSM2hEyOaabAQy3gXWBPGc5Ri0+tEK
-         lsM2n1xM+Pu3UN4Vfn13BB7DfwAq5CYr8CszsilRbrBQyNPWjZNGXZgGh8gFtOLLHcrQ
-         PR0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742849612; x=1743454412;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:sender:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YZ81+jgyU4HCZnUGrVIORPiEuq+J5FOfPnlXYQZAuEM=;
-        b=jgsXryEIzacuN4wvNfxRzS4J88SGnZmLVLS9NJr3HTNTuzFhd2mVKSZroPXLMimdBH
-         tJqOmJa1Ebzc7z0VZWSS7JtQxDTJK3Ayo9MpOqW5Q5dh54eMCTPi/F/HAvBioiw5LNM/
-         jINsIb+yUM75o7dF5MRoPU5UhjTL/Ldl2j6eaOS+rzCHwJBteLxwNS4dmRQJ+T0G/IH9
-         LoZj/UDhnrX8xtgCfHRhNRykxYrAaJSjXboGtVMtQ0/aZjM177ge0zMkOmrrm/Jjw6jR
-         oSoKTPUY5eU5jN28Xkp0jzm+SZ1XSCx4PH/nxQSOyHDDLNoDX/IBozBbDB4gQW8FBJL8
-         S4Xw==
-X-Gm-Message-State: AOJu0Ywg+eB927gEh4NqGzhd8kJiVH+0zK8+TQBCnftLNNd7/YMk+u1b
-	hAeI9UnN4NokvFsTJQPjSzmoecp2TIPdQZ2+pRGRMTN7A5P11MNhwTxzDhb5
-X-Gm-Gg: ASbGncvoGHl84e0foPyKMHbLKkQ/nTrOYHEVRVm/BmGOxhM77FmjxpzQ0tSO5xqGqiE
-	ab1Qe6Jb1HjoM4dNACraI/Cb094nOpn+SxXRuW1fnWdDV8U2ExcQyAKkiueuzPu76fN+0N7wywk
-	qrizQhnMViLESNsWg0ZdhrYJ5OCQLmd75hjRzCdG2KmY3lIll9Sbo8EmbN4w5U04hIeXQB+5NUf
-	1if2a94BAw77Y0S9Lqg+IvNFroDQhAZbNjMHcGxZolgsOgI1ak7vO0d5pPwOtYoAmf9sQcvL2Fs
-	16v7JJK2ZrNeJiAtPbbbe+3N4puLbw7HV6O4+06KpK0nzjJW+cqCa7AN/gVQ31KE3t6GIwJcGzm
-	mBJBY2w9xhRk+yRefXyg=
-X-Google-Smtp-Source: AGHT+IGyV3ZV8Rsi/qY1EgoTTYLgGm7UacCn0l8iiZuZP/mIt8+ao/JQh0JkmRViUhxesGgyK3Og0A==
-X-Received: by 2002:a05:690c:3393:b0:6f9:871e:6903 with SMTP id 00721157ae682-700bad24c17mr204967167b3.37.1742849611690;
-        Mon, 24 Mar 2025 13:53:31 -0700 (PDT)
-Received: from localhost.localdomain ([2605:a601:9085:3000:f45e:232c:5c43:1e93])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-700ba8c7f65sm17114127b3.122.2025.03.24.13.53.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Mar 2025 13:53:30 -0700 (PDT)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Fernando Ramos <greenfoo@u92.eu>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] vimdiff: clarify the sigil used for marking the buffer to save
-Date: Mon, 24 Mar 2025 16:52:23 -0400
-Message-ID: <20250324205327.79627-1-ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.48.1
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="jESNbh9G"
+Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
+	by fortymile.utu.fi  with ESMTPS id 52OLlLps006824-52OLlLpu006824
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Mon, 24 Mar 2025 23:47:22 +0200
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.93)
+	(envelope-from <taahol@utu.fi>)
+	id 1twpdh-00BWfz-3A; Mon, 24 Mar 2025 23:47:21 +0200
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.39; Mon, 24 Mar
+ 2025 23:47:20 +0200
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id 7e8e1af7;
+	Mon, 24 Mar 2025 21:47:20 +0000 (UTC)
+From: Tuomas Ahola <taahol@utu.fi>
+To: <git@vger.kernel.org>
+CC: <peff@peff.net>, <karthik.188@gmail.com>, <gitster@pobox.com>,
+	<taahol@utu.fi>
+Subject: [PATCH v3] bulk-checkin: fix sign compare warnings
+Date: Mon, 24 Mar 2025 23:47:03 +0200
+Message-ID: <20250324214703.7547-1-taahol@utu.fi>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20250321200715.3338-1-taahol@utu.fi>
+References: <20250321200715.3338-1-taahol@utu.fi>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-07.utu.fi (130.232.247.47) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lWFxYWFhYWFBeUVxfSFlbSBwJCQAHBCgdHB1GDgFIWUhZW0gYDQ4OKBgNDg5GBg0cSFhIWkhZXEhZW1hGWltaRlpYX0ZcX0hQSFhIWEhcSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWEhZX0gPARwbHA0aKBgHCgcQRgsHBUhYSFpZSAMJGhwAAQNGWVBQKA8FCQEERgsHBUhYSFlbSBgNDg4oGA0ODkYGDRxIWA==
+X-FEAS-Client-IP: 130.232.207.47
+X-FE-Last-Public-Client-IP: 130.232.207.47
+X-FE-Policy-ID: 3:5:2:SYSTEM
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
+ bh=okA55YMaf48cKiQI+9RCxlv1sF/rqcr9CKjuhr7KW/Y=;
+ b=jESNbh9G4Fs8suvVuSylb8uAVX7kWCyyQdDL2gzh8pEPlZli+ou0K3CtXPKJ6xY9pnGReHBIelMv
+	XWxMeWWijBpjBZAD+tWz94hHkrb+7B43Fj/6tJzC7TzilKgOQNlr6fIPQk/EeO934yMhjlcMUd9P
+	mliOm7CTaW6zkBGV5YtJ9bB1TVwLTz2TEF3XX0NAr7XaFyKVL+0bvmm5kuNY3qw2ioGc6N8oTbGK
+	YdvjmxkBw9mHypNyg7Lfx8wINJ94fJKSwZX7POVGVvoG3WuBLdMm//+/uZ3SVKsKDLzrlpEgZ16I
+	usA4je8vM9/xpokusXT2P5VMq+lyCcSvUivNXA==
 
-The original documentation from 7b5cf8be18 (vimdiff: add tool
-documentation, 2022-03-30) mistakenly described the marker as an
-asterisk, which is the character "*". The code and examples have always
-looked for an arobase ("@").
+In file bulk-checkin.c, three warnings are emitted by
+"-Wsign-compare", two of which are caused by trivial loop iterator
+type mismatches.  For the third case, the type of `rsize` from
 
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+			ssize_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
+
+can be changed to size_t as both options of the ternary expression are
+unsigned and the signedness of the variable isn't really needed
+anywhere.
+
+To prevent `read_result != rsize` making a clash, it is to be noted
+that `read_result` is checked not to hold negative values.  Therefore
+casting the variable to size_t is a safe operation and enough to
+remove the sign-compare warning.
+
+Fix issues accordingly, and remove `DISABLE_SIGN_COMPARE_WARNINGS` to
+enable "-Wsign-compare" for the file.
+
+Signed-off-by: Tuomas Ahola <taahol@utu.fi>
 ---
 
-- v2 signs off the patch ;)
-- v1 with notes on the name arobase and scope of change: https://lore.kernel.org/git/CAPig+cQg_VTN7Ug3FTdLdkVwSPZGiQHJZSpCkA2pTxwBiT29bw@mail.gmail.com/
+Notes:
+    Okay, I think I got it know.  Thanks for bearing with me.
+    
+    Range-diff against v2:
+    
+          ## bulk-checkin.c ##
+         @@
+           */
+        @@ bulk-checkin.c: static void flush_batch_fsync(void)
+          			return 1;
+    
+         @@ bulk-checkin.c: static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
+        +
+        + 	while (status != Z_STREAM_END) {
+        + 		if (size && !s.avail_in) {
+        +-			ssize_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
+        ++			size_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
+        + 			ssize_t read_result = read_in_full(fd, ibuf, rsize);
+        + 			if (read_result < 0)
+        + 				die_errno("failed to read from '%s'", path);
+        +-			if (read_result != rsize)
+        +-				die("failed to read %d bytes from '%s'",
+        +-				    (int)rsize, path);
+        ++			if ((size_t)read_result != rsize)
+        ++				die("failed to read %u bytes from '%s'",
+        ++				    (unsigned)rsize, path);
+          			offset += rsize;
+          			if (*already_hashed_to < offset) {
+          				size_t hsize = offset - *already_hashed_to;
+        --				if (rsize < hsize)
+        -+				if ((size_t)rsize < hsize)
+        - 					hsize = rsize;
+        - 				if (hsize)
+        - 					git_hash_update(ctx, ibuf, hsize);
 
- Documentation/mergetools/vimdiff.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ bulk-checkin.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/mergetools/vimdiff.adoc b/Documentation/mergetools/vimdiff.adoc
-index befa86d692..ab915df408 100644
---- a/Documentation/mergetools/vimdiff.adoc
-+++ b/Documentation/mergetools/vimdiff.adoc
-@@ -86,7 +86,7 @@ command.
- +
- --
- When `MERGED` is not present in the layout, you must "mark" one of the
--buffers with an asterisk. That will become the buffer you need to edit and
-+buffers with an arobase (`@`). That will become the buffer you need to edit and
- save after resolving the conflicts.
- ....
- ------------------------------------------
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 20f2da67b9..a5a3395188 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -3,7 +3,6 @@
+  */
+ 
+ #define USE_THE_REPOSITORY_VARIABLE
+-#define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "git-compat-util.h"
+ #include "bulk-checkin.h"
+@@ -56,7 +55,6 @@ static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
+ {
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+ 	struct strbuf packname = STRBUF_INIT;
+-	int i;
+ 
+ 	if (!state->f)
+ 		return;
+@@ -82,7 +80,7 @@ static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
+ 	finish_tmp_packfile(&packname, state->pack_tmp_name,
+ 			    state->written, state->nr_written,
+ 			    &state->pack_idx_opts, hash);
+-	for (i = 0; i < state->nr_written; i++)
++	for (uint32_t i = 0; i < state->nr_written; i++)
+ 		free(state->written[i]);
+ 
+ clear_exit:
+@@ -131,14 +129,12 @@ static void flush_batch_fsync(void)
+ 
+ static int already_written(struct bulk_checkin_packfile *state, struct object_id *oid)
+ {
+-	int i;
+-
+ 	/* The object may already exist in the repository */
+ 	if (repo_has_object_file(the_repository, oid))
+ 		return 1;
+ 
+ 	/* Might want to keep the list sorted */
+-	for (i = 0; i < state->nr_written; i++)
++	for (uint32_t i = 0; i < state->nr_written; i++)
+ 		if (oideq(&state->written[i]->oid, oid))
+ 			return 1;
+ 
+@@ -182,13 +178,13 @@ static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
+ 
+ 	while (status != Z_STREAM_END) {
+ 		if (size && !s.avail_in) {
+-			ssize_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
++			size_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
+ 			ssize_t read_result = read_in_full(fd, ibuf, rsize);
+ 			if (read_result < 0)
+ 				die_errno("failed to read from '%s'", path);
+-			if (read_result != rsize)
+-				die("failed to read %d bytes from '%s'",
+-				    (int)rsize, path);
++			if ((size_t)read_result != rsize)
++				die("failed to read %u bytes from '%s'",
++				    (unsigned)rsize, path);
+ 			offset += rsize;
+ 			if (*already_hashed_to < offset) {
+ 				size_t hsize = offset - *already_hashed_to;
 
-Diff-intervalle contre v1 :
-1:  5b8b824e61 ! 1:  4ab274c3c4 vimdiff: clarify the sigil used for marking the buffer to save
-    @@ Commit message
-         asterisk, which is the character "*". The code and examples have always
-         looked for an arobase ("@").
-     
-    +    Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-    +
-      ## Documentation/mergetools/vimdiff.adoc ##
-     @@ Documentation/mergetools/vimdiff.adoc: command.
-      +
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
 -- 
-2.48.1
+2.30.2
 
