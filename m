@@ -1,154 +1,105 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AFC2627F5
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 15:23:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E6C26AFC
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 15:25:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742829789; cv=none; b=naYQUmeP3ILXbONkQpOrCiJ/nLKrAW1FszOyvWZ4ibQnAPLc1zWSwFSsS6moPe9BFhpxB+TZFLDxO4Qt0yC1gspUhzEh9+Jw0J/YQI0K2TgO1Os8IP7j0nG/UocJGq90nmMz0aTzklnOoJq0HjzqfeJIY7ixsVDJkN8pO8c1xoo=
+	t=1742829936; cv=none; b=nvwwi0pvFzwk32BJMc9runTVQqpH3ovpeNEryLk6heiC2HuU9ZCzZSEWBZJcNtyZtkSX0+bys/SYZlUo8Ehmgrf5KOHQOF8q1n4yCvc3LmEjGCSCokyhw8Vyfk/fSPyWhnYsC+ZD0X2y97qzTo/ML8Dsw5ADsTvGKve6xMninRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742829789; c=relaxed/simple;
-	bh=y2yLdVXTzuUR9U6946xR2co/LPKHpI/jaZLnI6FZ+UA=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=M85rQBkrtEhaqvW1+YtCeWG79oPvDzHwnEMgIgnF0YEJIr3AMp+mJJS4qkqCt1etVeP0dMOgNyfVmDl4V0SoxTIPE/Tm6oQOv6rbpTWlHphvwvViJ2JlctzQl6tGkL4FvhNeOePEcrKUnq8X9y4e9QEujINIApxQTWXXAWX2r2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DlNtz9Uf; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1742829936; c=relaxed/simple;
+	bh=l7yeYGzbCL6myd4WzMnRMyNRjMEiNogYCv3aIoicbiw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iX6sPGqqv/HcEg/AX7r8Yuc5WAJgpFyWhzDYRpDG1359rWRBuw3A1zllq3yCXAXOABzvmEfoF9GpHLJD9ZScR5b4zmzdfGrpKLY34PjZyWrwbYcYzDVRvjo7fA69DO1B/e4DlW7ATfZ9sczE5sUdVof/Ix0jleVP539zfcpzXQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j2ZxTblQ; arc=none smtp.client-ip=209.85.167.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DlNtz9Uf"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-390f5f48eafso2522746f8f.0
-        for <git@vger.kernel.org>; Mon, 24 Mar 2025 08:23:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j2ZxTblQ"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3f68460865aso2642295b6e.0
+        for <git@vger.kernel.org>; Mon, 24 Mar 2025 08:25:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742829785; x=1743434585; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uFxQHlpqrcIeL8CIdIswv4Pg1SOP2VmsLhHOZfh2EfU=;
-        b=DlNtz9UfQfN/RqBtEEgK29tgjAoq1jrcSJFaH2PGjtTAvjWuVRsqnZuaD/drqda+G1
-         YeU/1Hph8YLikTNx1lwJDeOVJ41urYOrvDquhBkNPCK1Dw7EdVkely5yrMsJVzvUAPvp
-         GkYdSD+G8VrOKU+rgewOBVSOrt3Zo4sIA120weKEr/ajG4DbIhNW2Lc+BiWJ892ex7M8
-         U2MPVTKDYD+Y5qcb6bhHb+dCCIyR2coQWJs4H+Q3IsTk3ebw1dAPvyzsw7JRAMQ4FCt+
-         U1awrSCjGlrIkoORJolN4W6WFl/d9KIy3pUzNV2FeyQCgCqxTMwX/aGFUvWK7ELa+Odf
-         l2vg==
+        d=gmail.com; s=20230601; t=1742829933; x=1743434733; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=rw15d2TWWdzVJoyeFvpK+ueWOY5S1s9SqanggXZzmHY=;
+        b=j2ZxTblQipRcXx4qDQaSKiY5y6b6RO4YyFOiARSydd5oeNY069KrKX5u26UY0Uttbq
+         cn6TLhyxgpO7csIp29pZDZcr3lJtLIdx/RFbGmyBvQZoDu9G1CA4XZ2roOgTol+frGDT
+         vORp0UztVUwrBIVXnMWCR+SdqIxbp3U096wAwHJPR1DrdCvujpoARzwz4bJIUaDcbY9+
+         5ppiNhu/LWWeDGaS95M1c9SsnuREc5lTgoQwROasYkFSk6qQV0Ca7xphfe3dNWD5+sss
+         K+d/Xb4aS4hloI8VR4bXQDy3FxurWgT0K4almQ6BzTftLPO5ETwjS2XL05iPa639OpFq
+         yUPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742829785; x=1743434585;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uFxQHlpqrcIeL8CIdIswv4Pg1SOP2VmsLhHOZfh2EfU=;
-        b=bdoRAoaHcnBPyDuAGypxs8lhFo+a+8r5QW1MJKgRixXnrp0NwhvfkHK1E6rboltgwS
-         75qB1ZvCWQfOL8hTHNOOwfVqsB/OxHrlgWmvlJJ/lPGglaWxyrYkjsh2nrbujwnpXykT
-         PU1Cu3TAFzKh8LGnotWnmyLrgbBQyEAc1/GOCHYbEdJY6VBySs9qcX69ziKf8es34JGU
-         782aKoMQcPU/ED70rtZl8xS0ONVHiDcytGJfes9edUj5zq79ubcM+8iwST6DAzcJixCT
-         0BVFTanbYZeDdFRGepJ/Zthp/kqzQOrgQBTmA1Nj6QRmZtrISJXYvB63ItHaq+to87ho
-         /cLw==
-X-Gm-Message-State: AOJu0YyjuNbjcRoWE6o1bcg5BauIOF0DecODwwhDcT9GlEe5A7d2YiHJ
-	gxRRU8Q1qHvp8f5GIDXVGd3ed86N13xSCFjivbgn1wa2qQ80wOi1jhPjsw==
-X-Gm-Gg: ASbGnctQc1xE3Hz4O1kpCksVxlsIznNKrqoL6FDayjdCmvLuDaMfsGziDGjqmVDeQ3g
-	gzZZVk/D491TJn7oLFmx5aG0pI6lgNrotxPKALqEP2EEHl9WH/2WY6e24fjLdsq9HrsWoVuw5t5
-	Pq/50BNKDRrW4Elu8kF3086FWGr/54w5CC88bTv5stMlSR7KUdvsL8/rLRPXM9SalLtICtobTfC
-	bImc0cOw60dWCK3yiQ/jFrYzdmfZjN9tkZwT49v3T1NEn/b+2kDbRTrU1/UBHDXl+xjNOJ5L0OI
-	epPyETpe88RBaG6QvbdJKPZ7jIV0YFKM+j1VFOry99DNaw==
-X-Google-Smtp-Source: AGHT+IEs7euRAe3FSb8QDnMSmBdwgq1W67XiDk+u737s7XU7zK+5ftwbsjDDxM/79p/N0Cflvh3WIg==
-X-Received: by 2002:a05:6000:418a:b0:391:4b8e:a200 with SMTP id ffacd0b85a97d-3997f9127f6mr8182302f8f.32.1742829784901;
-        Mon, 24 Mar 2025 08:23:04 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9b5b8dsm11392313f8f.59.2025.03.24.08.23.04
+        d=1e100.net; s=20230601; t=1742829933; x=1743434733;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rw15d2TWWdzVJoyeFvpK+ueWOY5S1s9SqanggXZzmHY=;
+        b=kfids++/vhhXre6cIbu2xv+ZoJkV9dRTEyzzF5Or2dDcxBIogCu0HK0k/VlyXg2BEN
+         5uTXAAp88tcBR7ZvwVoiJgK9uCmzTmndb++w0Ps6tkGk+5uuYtCunKVO5TyV/XFYLfzp
+         Vzi3jaNgOnB+9pSKPz47yVTKq1ff5+fnnowychWDkpXHsS61/1HR+jK5cpkSBdGp7Cqu
+         dbY8C28Uf7a6xwzN+tJ/IJTMwh6TydnR2dW/0MdPif73mD2DkUzHq2kao1lVav+V5uWD
+         h5tsJptYh7SW2PsZ04j+cDWYUinpAfiG9XyFwrR9Efbm1dulL/zohZaALRTotGpig3lz
+         RGFw==
+X-Gm-Message-State: AOJu0YxcfD33F2eQz/PQPwGY3eWLuB3fcB4wGtTmLkcYNhbCGVrbKe0Z
+	Dcuc4ZvE0PBkIPDQ25FhmCKEubToA4auGopLntxjMl4pfTDDqEKk
+X-Gm-Gg: ASbGncty5OFgbH3X6CiP36AvH5d4Yd5fmngLQI0YS+TbS9GtuDZeYiisdVKCZbYPpO9
+	g6qu94p6iCqDmJH534v5hlArbp4ylLt2bMXmqgph0vNn/NlcBtjCnpFU1YLezIP8qiKnKIg+V/Y
+	fBP0aC8fdexlz7lNKcUR+u/9McR2ZmcS48Avwdjw5HxQFuCcwJkqhBwp5cI9JLSrTd5wB3KzIBA
+	tJkhBFXujgcH+YfOHcOP7UjNmKSeAIjHpHV+h+0mYsXaxd54N5goGnvkTbWXh+SuSlwwu0CXvNY
+	tYwxI5+2jMl+eiSUs3ibMg011NHGfOZSYeHVFg==
+X-Google-Smtp-Source: AGHT+IEuXTJBvDvmkuYlvDVIjxcE5CfmLvypLOgcQ9RzKOpFchQLPxdHsm+CTkFSBP39pCN9qU4bNA==
+X-Received: by 2002:a05:6808:14c8:b0:3fa:d6c:cdb5 with SMTP id 5614622812f47-3febf797d75mr9094916b6e.34.1742829933018;
+        Mon, 24 Mar 2025 08:25:33 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-3febf79dd92sm1579029b6e.46.2025.03.24.08.25.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Mar 2025 08:23:04 -0700 (PDT)
-Message-Id: <d5484ebd9428f4d7dce05e43c5067d741dc37a9d.1742829770.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
-References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
-	<pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 24 Mar 2025 15:22:49 +0000
-Subject: [PATCH v2 13/13] pack-objects: allow --shallow and --path-walk
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 24 Mar 2025 08:25:32 -0700 (PDT)
+Date: Mon, 24 Mar 2025 10:21:54 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, ps@pks.im, alan@norbauer.com
+Subject: Re: [PATCH v2 1/3] remote: allow `guess_remote_head()` to suppress
+ advice
+Message-ID: <3rcpapodk473swxbdgubhuqijvgwe6rz5iqsfykglsmjbanuu7@mh6tvrhyyrx5>
+References: <20250320014646.2899791-1-jltobler@gmail.com>
+ <20250321231639.180762-1-jltobler@gmail.com>
+ <20250321231639.180762-2-jltobler@gmail.com>
+ <106cecbf-6a7c-46bd-8115-2b5fb06cc9af@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-    gitster@pobox.com,
-    johannes.schindelin@gmx.de,
-    johncai86@gmail.com,
-    jonathantanmy@google.com,
-    karthik.188@gmail.com,
-    kristofferhaugsbakk@fastmail.com,
-    me@ttaylorr.com,
-    newren@gmail.com,
-    peff@peff.net,
-    ps@pks.im,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <106cecbf-6a7c-46bd-8115-2b5fb06cc9af@gmail.com>
 
-From: Derrick Stolee <stolee@gmail.com>
+On 25/03/24 09:31AM, Phillip Wood wrote:
+> Hi Justin
+> 
+> On 21/03/2025 23:16, Justin Tobler wrote:
+> > The `repo_default_branch_name()` invoked through `guess_remote_head()`
+> > is configured to always display the default branch advice message.
+> > 
+> > Adapt `guess_remote_head()` to accept flags and convert the `all`
+> > parameter to a flag.
+> 
+> This makes sense if we want to convert the boolean argument to a flags
+> argument. However the only callers that do not set `all` when calling this
+> function are in git clone where we don't want to emit the warning. It is
+> probably not worth a re-roll but I wonder if we really need to do this
+> conversion or if we should just hard code guess_remote_head() to be quiet
+> when it calls repo_default_branch_name()
 
-There does not appear to be anything particularly incompatible about the
---shallow and --path-walk options of 'git pack-objects'. If shallow
-commits are to be handled differently, then it is by the revision walk
-that defines the commit set and which are interesting or uninteresting.
+Good point. We could just rely on the fact that all current
+`guess_remote_head()` callers that do not set `all` also do not want the
+advice to be printed.
 
-However, before the previous change, a trivial removal of the warning
-would cause a failure in t5500-fetch-pack.sh when
-GIT_TEST_PACK_PATH_WALK is enabled. The shallow fetch would provide more
-objects than we desired, due to some incorrect behavior of the path-walk
-API, especially around walking uninteresting objects.
+I have a slight preference to keep this as-is and favor the explicit
+configuration, but ultimately I don't feel strongly either way. I am
+open to change in a followup version though. :)
 
-The recently-added tests in t5538-push-shallow.sh help to confirm this
-behavior is working with the --path-walk option if
-GIT_TEST_PACK_PATH_WALK is enabled. These tests passed previously due to
-the --path-walk feature being disabled in the presence of a shallow
-clone.
-
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- builtin/pack-objects.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 2a6246c1e78..7db2ebc7962 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -209,6 +209,7 @@ static int keep_unreachable, unpack_unreachable, include_tag;
- static timestamp_t unpack_unreachable_expiration;
- static int pack_loose_unreachable;
- static int cruft;
-+static int shallow = 0;
- static timestamp_t cruft_expiration;
- static int local;
- static int have_non_local_packs;
-@@ -4486,6 +4487,7 @@ static void get_object_list_path_walk(struct rev_info *revs)
- 	 * base objects.
- 	 */
- 	info.prune_all_uninteresting = sparse;
-+	info.edge_aggressive = shallow;
- 
- 	if (walk_objects_by_path(&info))
- 		die(_("failed to pack objects via path-walk"));
-@@ -4687,7 +4689,6 @@ int cmd_pack_objects(int argc,
- 		     struct repository *repo UNUSED)
- {
- 	int use_internal_rev_list = 0;
--	int shallow = 0;
- 	int all_progress_implied = 0;
- 	struct strvec rp = STRVEC_INIT;
- 	int rev_list_unpacked = 0, rev_list_all = 0, rev_list_reflog = 0;
-@@ -4875,10 +4876,6 @@ int cmd_pack_objects(int argc,
- 		warning(_("cannot use delta islands with --path-walk"));
- 		path_walk = 0;
- 	}
--	if (path_walk && shallow) {
--		warning(_("cannot use --shallow with --path-walk"));
--		path_walk = 0;
--	}
- 	if (path_walk) {
- 		strvec_push(&rp, "--boundary");
- 		 /*
--- 
-gitgitgadget
+Thanks,
+-Justin
