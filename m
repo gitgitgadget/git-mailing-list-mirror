@@ -1,86 +1,92 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F11F2CA9
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 04:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735E06AA7
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 05:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742791570; cv=none; b=t17DydlK9rhGHXRmgGTQ2Yp3PzHUTIt8qSIazTEQxea4FiR5xvJAE99UDpfLFD9uxntwrDgYt8Z4PWqQaMQeOJdHqy+O4ipeIERxz7kjavSbWepO5ZT4h6MbsM3mz729lQSr0EUyEjorLlcL3N1PYGscfF6SdThs4ejcQ8ztLgE=
+	t=1742794058; cv=none; b=tl2BlgSNbS3xD9biz7MNk193/LD1sPkgamf10C1fsmX3jGP2y9rKuqfYI9rfIfyxrnx2O1FGXIo/VdXoFoIfgpt807ylMdUNsxCJzSmgDhwurS3ZFt0cIN6nVY871Xhk4oPqLG4QV8/9R+uuR1pI25msJIJB2E0M8Vo71pjdy/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742791570; c=relaxed/simple;
-	bh=cTtl3aKjCl3Bvfr8um8TgoIXE0WzHA/6F0yQZXCEcqI=;
+	s=arc-20240116; t=1742794058; c=relaxed/simple;
+	bh=gi5RHUisJUP8g7HzNJMiIifsIzbkd+cTbOu4xMAAMTQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jzzKBae0QCENrL7UmKNO2lEykGqjgqTGYVOWjy1QDhqi+J0mhuH8hzPpeBdMAz9u3+GyrwDyNLpzw4Xq2QzL+RxZWV5TN3KtIuzROiMZLYkXsFjHOQ1p39DtASzbybKubC25XCnPWmhE80n1diyRGbHkyVGejhNjZBYvk8+UD/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HprF4Py2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ln9mJ0FR; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=J5cfKGaS6nZR+sxNKLl+CdNHU1Fk+L/OVCUlnIydgEdpRXrLX6MbXfJaxMQNPXO8QP2DsxHez8hDnJ1gwQ6+Yo4UuQ1KhzBCvVQbMj0/ExWECGhD7naRgPYWVzSpZ2/w7yu4lTV/yAEB9k2oTiu4zkB0pHqxFH9dJGkl3ANA8ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wd4+ohiA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jh2eGynt; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HprF4Py2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ln9mJ0FR"
-Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3E3121382D0B;
-	Mon, 24 Mar 2025 00:46:03 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-13.internal (MEProxy); Mon, 24 Mar 2025 00:46:03 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wd4+ohiA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jh2eGynt"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7C1F41382CF0;
+	Mon, 24 Mar 2025 01:27:34 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Mon, 24 Mar 2025 01:27:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1742791563; x=1742877963; bh=o9sKzbn8sS
-	hNpn4uBu2c3fe6Mn0WIPGn/xEwETkcUAA=; b=HprF4Py2zhkOohqtzSyZYV6In8
-	GZ8EsIuRQWcxTydwlL607ggQZQI4XUxLaqIFzaYms03PgYG98tgI4dPG9MvaV/JE
-	TElyuCevpkUST0E5vpmjWZywGJdNeMeW3sn1JAHWM8IEGZ7Q2cnr8AcB5eARz7MN
-	TANftnNFpuA3QQ8TCs45qtS5kyT7BkfzBmr/pO1+cmBjtJq5azmFxrhyffL3qquO
-	S/J509nXs8jIh6ToDAOcX2wtwmCH3G8vC+ii61k2VupAbMVFZx4KsYaioMph7qc+
-	JV7g+YXzLHW+3cD6QNmDfLguv3HXBeU8z84wL3JLLuzgvXfxYcHIrYxD+WNg==
+	:subject:to:to; s=fm3; t=1742794054; x=1742880454; bh=gi5RHUisJU
+	P8g7HzNJMiIifsIzbkd+cTbOu4xMAAMTQ=; b=wd4+ohiAzKQe43Tj94fn+++nZ5
+	NusxAq7Tpl0wIgi9qEUusWSjAqPSiLbI6j2J4hRFff8tYfHe2mDyhM3jGnO9sg9d
+	66MNYOX8Tm+4VCFcbSxvx3lMHDezzGBhLCPCsO+0CHlVkrJQSc/RIOjkXgO6zd8P
+	Wp2IH0DpztKzmFz0k1L5gNTHumDrJI51Ba2EtpycZXn59mXiGU6iTy5b/F0+35KG
+	BjN8+12o9h4/R5130abNC+a7IvqPIz1yEhpAuJ/dlSe5YU7gSHuUDpkdPwoqEqtJ
+	Khak1xNhEhc9Pz98JAd5cw2HJ9IFZXOFCyJ9Di5vIp+yVfFWgs938HlqBBEw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1742791563; x=1742877963; bh=o9sKzbn8sShNpn4uBu2c3fe6Mn0WIPGn/xE
-	wETkcUAA=; b=ln9mJ0FRkGZMgMhMlgYD9dovslniXi9FB4YZkjAkYkTmYC2Lhfd
-	aUGOT+EU1m0IOUVj3fzd03Ec9KbRsVsOrGIWY+9sHKwtVNDpK4W6dbN9r3tVzu4l
-	+Yu7fj8ZchPBD4E302kdWwU/+iVB9uIo67SKk6aSe8aTDaAtdqj9gBMD39/EGJec
-	rYiiWd+5PQjBQsZ2lplBfZb3gRS8V9i5AQUCyL/RjdkJHz6RX7Y0bX/zsCyeJVwt
-	vMPmOdCKJiy6GhPiTOrF+vYnHV8hmVUn5RT10FDk8kZJVZaA+9o6J7jRfJ4LEOKY
-	L3vbky4e6jyTNzYRm8gOMApfYtWbCKbs0lw==
-X-ME-Sender: <xms:i-PgZ28Q5unDqoX6SGQXooxJgS7hGngyXDKX-RR2sA1_OVN14f8m_A>
-    <xme:i-PgZ2vVAvrnQ9NQNDkH8EknDF2J96s4NIWCJIRCFYwqINGE2s1VV30fawEGMmf2w
-    MuOYluSUrXsT444sQ>
-X-ME-Received: <xmr:i-PgZ8BY936pi8xo-dpw-M3qhIy8bCEC38k6LEPgwtGUagnPA8Nh9JHD6FknjluTngeDAQh_CJzUvorwPpe0Cj95ZLdYRsoqJw-tmwU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduheekkeefucetufdoteggodetrf
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1742794054; x=1742880454; bh=gi5RHUisJUP8g7HzNJMiIifsIzbkd+cTbOu
+	4xMAAMTQ=; b=Jh2eGyntu/YZDZwiusDopB1nxV7hMkaz0Pm7io+9jrrXpo/DGUd
+	GezvKLnqkUjF+twG4fnjhVTMmNm3flCXiOzEBEYKvlPYFxpz/1LvuLFWWhqm5BKN
+	3h19FbiXpdUaGMGS9f5/+hFG3ToJqp8tppPJoe9jjOOAcN2COd5/UN0dz0AO5gcf
+	1Jf/WKBNhHh6UDF0QVZvtMXExBK7Q8qoVyUg8TP+Ykcph1HVYV3G1lKVklU83CLU
+	hG0IqdIfjtkibEV39COEe7ltzNl6TvVVp6eg4jifbZvr8MgPMi9eMItH5ApxGjAt
+	eKdOwJLHjzpKKWOH5AlnmITQb2kR2gcaTaA==
+X-ME-Sender: <xms:Ru3gZ6KrT92eUd2c6DRCHkoFx8fF7JAV-UUKpI0hs9zh2iHfMOZ5WA>
+    <xme:Ru3gZyK8bczamQFP00XWQUUHGbYHNFWny20iqwWbmFlWjuG-2lwwXWFmpIvb-r1v4
+    j8-3UfQDD9JymjtcA>
+X-ME-Received: <xmr:Ru3gZ6v-d4T4Ym_M2S8AXSKecxY2dWGQKjR-idxJBmYdXxcLfVhQmr4VZi_Sxbo6V2xl3A2l81KjkDq0ga7vWqo86NT4haz5k83fMJ4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduheekleefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopehjrgihrghthhgvvghrthhhkhhulhhkrghrnhhivddttdehsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:i-PgZ-e18N4P1e5k8WYnxR7xuFfit8kP1Lc92E0EAXHv6lJAJBpoag>
-    <xmx:i-PgZ7PBIm_n22WZw6mYMfTd6MSmwacvelc_SSDDxV8l5nhsy07c_Q>
-    <xmx:i-PgZ4nnvdcZ-44bxetsSX0baYBLuT4hKn1Pfs7yDo9oetDJJ2C9iA>
-    <xmx:i-PgZ9s8yiz59Ju2NQCRnXRthlEyCLNzUC95iAAorHUopwHJE_Vp-w>
-    <xmx:i-PgZwpsdofOSjmEgJpZ9TSTrzjCv11g2VEav5XUsw0e8iGVTi7_2GsF>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhr
+    rhdrtghomhdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtth
+    hopegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtoheprgihmhgr
+    nhdrsggrghgrsggrshesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Ru3gZ_Z8bIrmSAg-IKqzByx73zgoBw7iMqFOBWa360wRDbng2rhvjg>
+    <xmx:Ru3gZxb9gSsXs00hRQ44y9ndyM38V7-x7SSRi492WdkNzY0EOWfuoA>
+    <xmx:Ru3gZ7Ai6TQy4OZyTpHCF1MJLK3YgqV9cbS4LUNp-9YlP2hFhn1dww>
+    <xmx:Ru3gZ3Z2SwlZ9WQ5OtTHXHbMZH0uJY6g6X042NxrIEcObwPYioNLOg>
+    <xmx:Ru3gZznHEvtpoye6az4Su5_3A0foGPdlRPMcmGT-aHvzXp_dIa1EbjHs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Mar 2025 00:46:02 -0400 (EDT)
+ 24 Mar 2025 01:27:33 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org,  ben.knoble@gmail.com
-Subject: Re: [[GSOC][PATCH v3] 3/3] docs: replace git_config with repo_config
-In-Reply-To: <CA+rGoLfALoTvQuAzQPx7rqd-Zy+wMiyEbF5Y8_-2Yi-yE-2qpA@mail.gmail.com>
-	(JAYATHEERTH K.'s message of "Mon, 24 Mar 2025 07:12:09 +0530")
-References: <xmqqa59evffd.fsf@gitster.g>
-	<20250321143022.5406-1-jayatheerthkulkarni2005@gmail.com>
-	<20250321143022.5406-3-jayatheerthkulkarni2005@gmail.com>
-	<xmqqiknzqu2h.fsf@gitster.g>
-	<CA+rGoLfALoTvQuAzQPx7rqd-Zy+wMiyEbF5Y8_-2Yi-yE-2qpA@mail.gmail.com>
-Date: Sun, 23 Mar 2025 21:46:01 -0700
-Message-ID: <xmqq34f3qbna.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Ayman Bagabas via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Taylor Blau
+ <me@ttaylorr.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>,  Chris
+ Torek <chris.torek@gmail.com>,  Ayman Bagabas <ayman.bagabas@gmail.com>
+Subject: Re: [PATCH v3] shell: allow overriding built-in commands
+In-Reply-To: <20250324032550.GA690093@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 23 Mar 2025 23:25:50 -0400")
+References: <pull.1930.v2.git.git.1742688740650.gitgitgadget@gmail.com>
+	<pull.1930.v3.git.git.1742743771108.gitgitgadget@gmail.com>
+	<20250324032550.GA690093@coredump.intra.peff.net>
+Date: Sun, 23 Mar 2025 22:27:32 -0700
+Message-ID: <xmqqy0wvov5n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,51 +96,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> > +#include "builtin.h"
->> > +#include "gettext.h"
->> > +#include "config.h"
->> > +#include "repository.h"  // Required for repo_config_get_string_tmp()
->>
->> I do not think we updated Coding Guidelines to allow // comments.
->>
-> Since this was a tutorial I thought this was helpful, anyways I will
-> remove the comments, because I get that this would be bad practice for
-> newbies.
+> So it seems like a reasonable goal. A more restricted approach might be
+> to provide a more formal hook/plugin interface. E.g., to run a hook
+> script with the command name and arguments, and have it return
+> success/failure to allow the to proceed.
+>
+> That's not quite as flexible (in your approach I could replace what
+> upload-pack is doing entirely, cache its output, and so on). But it
+> might be harder for admins to screw up. I dunno.
 
-I meant that I think our guidelines frowns upon
+Yeah, we usually try not to be overly flexible for that reason, but
+given that "git shell" is so limited that rewriting its services
+wholesale is not all that much of a deal, I think it is OK.
 
-	#include "foo.h" // for bar()
-
-I didn't mean a comment is necessarily bad.  IOW,
-
-	#include "foo.h" /* for bar() */
-
-may be OK.
-
-But real programs will evolve and API elements that are used from a
-header file will change over time, so it may not be a good idea to
-single out a function like that in the comment.  It would be much
-better to explain _why_ each change is made in the text that
-precedes the sample code.  E.g.
-
-    Add `#include "config.h"` because you want to use X and Y,
-    and `#include "repository.h"` because you want to use Z.
-
-    Then, add the following bits to the function body:
-
-     ----
-    #include "builtin.h"
-    #include "gettext.h"
-    #include "config.h"
-    #include "repository.h"
-    ...
-    int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo)
-    {
-        const char *cfg_name;
-
-        printf(Q_("Your args (there is %d):\n",
-
+I however wonder if it is worth admins' time and effort to add
+features to "git-shell" using this new facility, or if they are
+better off using something more established like gitolite once they
+want to go fancier beyond what the basic "git-shell" offers.
 
 
