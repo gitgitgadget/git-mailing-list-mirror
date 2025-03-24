@@ -1,157 +1,165 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BFEB674
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 12:46:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F87200CB
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 13:03:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742820412; cv=none; b=Z95QkeX4SYaj+IdneGXl9yzBbgmJ3DXg30OlHPUl8CyhvAefR+XJZjV37r5LfCvRjIyhqTFHJQC8zcoTGdUxCNwssTyEapdQnXVO+cMhYD2DZIfDSefnuFT/HfvWumV/mBrsXR8PHhmlC8rWB1sX0LhaGqa6xTp2UgEQYTRJgsE=
+	t=1742821440; cv=none; b=SDulll/M3T4lS3zhQSL32Ckm3WLqowc17WpnWuXXmIE/HinsEwUBfWwjZBhnvDaes02/SAj01u8XCOHdZnUzZrtJVxuYZjTCyzDADHfjvqt9j+RSkMdaLeXbnzrvQ5hKRpcG/W/YPf3Z43lGSHmQczyOE63t6/62nlvts+pM0uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742820412; c=relaxed/simple;
-	bh=d4tsXNJfhhUPGesclj8d3Vy/h4zRUMH+X/PjTzFd6gw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OzazFGx3WDd5NyrXl98wgWBtePAh9AuTA3zuiKU/b5nth7uuaQMZt8yxArDpgmg6kGaG1HNQqRW7OOU/zzecb9j2b5MdShffdRn2YSMQNkX/G9lLTzjlN7qm8A1SAKe6k0wlyVV+ZS3COTsvAE8B3L6gCNrRCgbJWVnBAeAkjbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EIqh+86E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q/7bb3lZ; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1742821440; c=relaxed/simple;
+	bh=H3XjKr6TpgCM9fpvcKPK+NaqSy8QEliyIJF+A8uTxb0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=XkLNrM+sgKMyVT7e2qiC1SHbfKkFYwv5lOW4COUaZ6pV0yNQtj4o7SZRPLIReyAE6sVrJ754TQ5l1kdxnDU7TDak87QIZD9Vh/saOZGDdBtY8LvSlArkTQLOkrL4aNAlpR7Gi6ZJVvSnGaoLr95Bupv2LRPJqeO+pw8GqFPiU9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RWJcH5Sr; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EIqh+86E";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q/7bb3lZ"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BA45D2540189;
-	Mon, 24 Mar 2025 08:46:49 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 24 Mar 2025 08:46:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1742820409;
-	 x=1742906809; bh=cqOo8Vqw+zixyGyrGFJg98hDhwdd1AEQOfReoIPHj7s=; b=
-	EIqh+86EdqeBRCTEKkg82P2rOp7fP5Fzx/nuX2TBzSwQT0jwqC2MegPZ4JZeEaR3
-	vvFm7pEKxc269edHPnmqFbdx1l4KlbTLt1avyGQzbeXMeJm/a7lKLKcjICjycwDs
-	K8ZuFyaZW8a5kLvOmhR8ocusuhew82GFVweAmCFsFfLPDWIDSRZgusn8wQY8jE5W
-	xF6Ezjw8AHy8gkAykOsI7ZdVSSXmv6hvPbe/cJOc0BJVQoCKpBjUVcQ6wb3L68DO
-	/o/yEuhFJxVkQlSsgQ+Gzxpyp6zNI0fHjrpFMqTu1z4EbzuRePtRaCE9T+z0kQGx
-	Gn9iN2h1FpdNinyob5xdbw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742820409; x=
-	1742906809; bh=cqOo8Vqw+zixyGyrGFJg98hDhwdd1AEQOfReoIPHj7s=; b=Q
-	/7bb3lZCg+AQWxD107EB0SeGpBvITD7JgEYSvzhv36EoDBtyWAiTa8j4A3i+mK4E
-	B+EnNu/XztmmAGjDhi82cDcDhvcdhAJ7aRgVJF6OJLF3hnredkG4iF497c9WvGc8
-	FTn8idjYQSl/RVijPIdbfSNYHRTqFxq5fh0VxxxGHy1kGgIBT9VWeRVNk4K3RJtk
-	kUUiF7ydnoP5BJSPPevAy097Ttq6yoZAk4t64kA5ERW0p2LOJ76In185dSqc1Bws
-	Kyd9x78FpRvRK0bDbrPX/bN7LRg5XsQ+G47zc4/NSuJPO6xLycbCHVPN876GFd7b
-	Q16RFGucZe7TEX3e3hqxw==
-X-ME-Sender: <xms:OVThZwaYwsWjFW_HO8SQTCrZX6gSmG7F86MDtenCxqG55MMZYwFIww>
-    <xme:OVThZ7Y67qntAG4YxyoI6TJzl7-Ze6JJSZowjCmuUMnZR9i5CSidHXBtIaqjxZx-k
-    A3JQmrCbfouTVtA6A>
-X-ME-Received: <xmr:OVThZ6_bVk6ZRqMUIFgetgLCOqk3Cwd7JymymdH9zihFpGdXqGQREgMrMEnIRbFmz1b3MpNmZWgKvUgq7y2ktXB7ooWs0lFBoTDywvL0A0laRFM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduheelkeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtg
-    hordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:OVThZ6ovkvCoT4ODJ6DxMDL3xQcmj-WEG_LxJUxZhgYulFwmryNkQg>
-    <xmx:OVThZ7rLDF4eXFTm9hYO8PRMasGb_twh82JIkqmRTnX_BVKcsSkEew>
-    <xmx:OVThZ4R22iYZzdDhqAcdOFDsq-2BCYZmbPtHskP14aL47GDq8eWFIg>
-    <xmx:OVThZ7qfzP2BrbiqBka1-7MDtQW_Sc_tpQ_0gZsL035c6iqVRxdgiw>
-    <xmx:OVThZ6WogbRw09CHw2B3bgLjVougm1w6ZZQueYbfJt1v8PG85YhGc1t9>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Mar 2025 08:46:48 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c550d963 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 24 Mar 2025 12:46:47 +0000 (UTC)
-Date: Mon, 24 Mar 2025 13:46:46 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 12/20] t: refactor tests depending on Perl to print data
-Message-ID: <Z-FUNgmY9hTsnzds@pks.im>
-References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
- <20250320-b4-pks-t-perlless-v1-12-b1eefe27ac55@pks.im>
- <CAPig+cSC3zdur1fCsa7RMNZDcgUK4pUGKb22tpgdANxR6OxNMA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RWJcH5Sr"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-22409077c06so80056785ad.1
+        for <git@vger.kernel.org>; Mon, 24 Mar 2025 06:03:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742821438; x=1743426238; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1G/yYpYw2nuxnGVXCypvuCz5hX9Nxf8oq7N+cjuKkAM=;
+        b=RWJcH5Sr4ZgwiGo7zHWu4jFVTeobTLPJnGRCWPHLXuVFYQOHxO51w1USbEF4QLyJP5
+         FbDCbR5ZRlFJKVCz6N62+n+2EquVrpQt/1t7VPa94tNSbM3bv2Tv/qpJbXX/Fjm3LYZl
+         uf2QREJVOWrj5WdqOzmLkEDDcPKkOD+2pYeCFwPR2yXSblh3/9CSvs96w82IjagJT9Ef
+         fzXn+TyrEkaPjGA118/Ncs6oPuG9fdcvaUrYOlm3rN5VthPSfWnaInDEXJ9SziOstlKq
+         kPqStMZTWYLyQAoVg89Mtzj8ZbLC7092SBRjhdFr+qhlf6ohjOrwaifuo+xFO41j5ytF
+         jIdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742821438; x=1743426238;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1G/yYpYw2nuxnGVXCypvuCz5hX9Nxf8oq7N+cjuKkAM=;
+        b=DO8tBz8DmpC4MW/HUZeY806VPKaR8GFxzcgM7uuMLNS4kMd9UeVHMszF0dVPpI+QX5
+         Du3rfw1tsbntOIH6xchSlTWRstSdpsMIFJF0iATwlaT1fn734OSnmn1exkaankC21f3i
+         UeoqPha0Zt+470iHqSvASJWzDrYXDCySJ2CeyVO2vKLx8IADzQOWta4HT4XhZ3tCcMQB
+         qrbmVG9LwsUQXFgazFG160IaR0OStBMumuouqgKi5U6FakNEm4qPoT1AeJTtChkNIYAt
+         FNE38+/SiNdhzerTUNgkao8OLFUrqtrfjpaOZnzvchp7AwUohOs4KSXnv5gW4VIoMGL1
+         7PRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUojWRAN0oIKfmChZCtRoJq+4CpTvA/kzkdXaGaIXZOVu5Fon+QwcXo6XFZU8yEGJT7NWw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyUB1i+lwpjzKdXKSoEsXf5xo4Zqo1hkVqq8tfSQROiO10bDcZr
+	+e1QreUJvqa0jHysR+kuTDtmEAs6gKcfKMuv+m0RWA5rjDBQql27
+X-Gm-Gg: ASbGnct8s1dBiVXOGZTXA/AGsaQLV77XoLdkDdor1FR5k1VwEerG2QmmZ6RdZWG4ErR
+	4CyJBaf1urJVfQU6IQ6WWGkZ1gk9WpAb7EMLxp9qkWaWDZGHJqYrvJqVW9F0meQO4rr9q4X5zSH
+	jLISvBZbLqWOozj8k9dCKToEZL3twcQSW2jcl4EjoyP9dTRN89dLw7fzjKvhYF8sOyeRt+JMs9p
+	lo2jgbGmzZwrcWrcUhHh+dDn9hLSmdeOGw8QOJggOdQA6rm53FyZCa7Efg1hTHah37BqZ5r+VYG
+	zdJNvduPc6dgXcTAR3foxYM9KpLI+YaABrkIH4caLlT/CN5ApTB4Jey/RDAkGYQl2ZoibLLYPs6
+	2SHHz8BkaJr+56A==
+X-Google-Smtp-Source: AGHT+IERQ0wxtqrD07ILUVYzx3XQypaeLe6HEDyngyvROMHstaplDhfzPs9QD64cAUGik+uQ2koYcA==
+X-Received: by 2002:a17:903:1d2:b0:223:536d:f67b with SMTP id d9443c01a7336-22780e0947bmr164527385ad.38.1742821437744;
+        Mon, 24 Mar 2025 06:03:57 -0700 (PDT)
+Received: from localhost.localdomain ([2405:201:c005:b018:5841:514c:af52:5598])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7390618dd29sm7795807b3a.167.2025.03.24.06.03.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Mar 2025 06:03:57 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: gitster@pobox.com
+Cc: ben.knoble@gmail.com,
+	git@vger.kernel.org,
+	jayatheerthkulkarni2005@gmail.com
+Subject: [[GSOC][PATCH v4] 2/3] docs: update function signature, add UNUSED macro
+Date: Mon, 24 Mar 2025 18:33:42 +0530
+Message-ID: <20250324130343.113629-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <xmqq34f3qbna.fsf@gitster.g>
+References: <xmqq34f3qbna.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cSC3zdur1fCsa7RMNZDcgUK4pUGKb22tpgdANxR6OxNMA@mail.gmail.com>
 
-On Thu, Mar 20, 2025 at 03:33:44PM -0400, Eric Sunshine wrote:
-> On Thu, Mar 20, 2025 at 5:36 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > A bunch of tests rely on Perl to print data in various different ways.
-> > These usages fall into the following categories:
-> >
-> >   - Print data conditionally by matching patterns. These usecases can be
-> >     converted to use awk(1) rather easily.
-> >
-> >   - Print data repeatedly. These usecases can typically be converted to
-> >     use a combination of `test-tool genzeros` and sed(1).
-> >
-> >   - Print data in reverse. These usecases can be converted to use
-> >     awk(1).
-> >
-> > Refactor the tests accordingly so that we can drop a couple of
-> > PERL_TEST_HELPERS prerequisites.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> > diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-> > @@ -643,12 +643,11 @@ test_expect_success 'basic: commit and list refs' '
-> > -test_expect_success PERL_TEST_HELPERS 'basic: can write large commit message' '
-> > +test_expect_success 'basic: can write large commit message' '
-> >         test_when_finished "rm -rf repo" &&
-> >         git init repo &&
-> > -       perl -e "
-> > -               print \"this is a long commit message\" x 50000
-> > -       " >commit-msg &&
-> > +
-> > +       awk "BEGIN { for (i = 0; i < 50000; i++) print \"this is a long commit message\" }" >commit-msg &&
-> >         git -C repo commit --allow-empty --file=../commit-msg
-> >  '
-> 
-> The original Perl version emitted the entire message as a single-line,
-> whereas the awk replacement emits 50,000 lines. Was the intent of the
-> original specifically to check whether it handled an extremely long
-> line correctly, or was it merely checking whether an overall very
-> lengthy content was handled correctly? If the former, then this
-> semantic change is inconsistent with what this test wants to be
-> checking; if the latter, then this semantic change is harmless.
+Since 9b1cb507 (builtin: add a repository parameter
+for builtin functions,  2024-09-13), built-in
+commands now receive a `struct repository *` argument
+for improved repository context handling.
+Update example function signatures in the documentation
+to align with this current convention.
 
-It really only wants to check for a big message, the exact format does
-not matter at all. So in theory, we could even adapt this to use
-`test-tool genzeros | tr "\000" "a"` or something like that, but I
-didn't want to argue why that change is okay. The fact that we now have
-a newline was unintentional.
+Also, update `builtin.h` accordingly
+and use the `UNUSED` macro to suppress
+warnings for unused parameters in example code.
 
-> Also, it is possible to do this entirely in shell without running an
-> external program (assuming `test` and `printf` are builtins):
-> 
->   i=0 &&
->   while test $i -lt 50000
->   do
->     echo "this is a long commit message" &&
->     i=$(($i+1)) ||
->     return 1
->   done &&
+Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+---
+ Documentation/MyFirstContribution.adoc | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-True, but it's significantly slower. We already use awk in many places,
-so we can just as well use it here. I'll adapt the refactoring to drop
-the newlines.
+diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+index 7b856be41e..45efe117ab 100644
+--- a/Documentation/MyFirstContribution.adoc
++++ b/Documentation/MyFirstContribution.adoc
+@@ -142,9 +142,13 @@ followed by the name of the subcommand, in a source file named after the
+ subcommand and contained within `builtin/`. So it makes sense to implement your
+ command in `builtin/psuh.c`. Create that file, and within it, write the entry
+ point for your command in a function matching the style and signature:
+-
+ ----
+-int cmd_psuh(int argc, const char **argv, const char *prefix)
++int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo)
++----
++Before proceeding further, we should use the UNUSED macro to suppress warnings about unused parameters in the function.
++This prevents the compiler from generating warnings when certain parameters are not used within the function body:
++----
++int cmd_psuh(int argc UNUSED, const char **argv UNUSED, const char *prefix UNUSED, struct repository *repo UNUSED)
+ ----
+ 
+ We'll also need to add the declaration of psuh; open up `builtin.h`, find the
+@@ -152,7 +156,7 @@ declaration for `cmd_pull`, and add a new line for `psuh` immediately before it,
+ in order to keep the declarations alphabetically sorted:
+ 
+ ----
+-int cmd_psuh(int argc, const char **argv, const char *prefix);
++int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo);
+ ----
+ 
+ Be sure to `#include "builtin.h"` in your `psuh.c`. You'll also need to
+@@ -168,7 +172,7 @@ Throughout the tutorial, we will mark strings for translation as necessary; you
+ should also do so when writing your user-facing commands in the future.
+ 
+ ----
+-int cmd_psuh(int argc, const char **argv, const char *prefix)
++int cmd_psuh(int argc UNUSED, const char **argv UNUSED, const char *prefix UNUSED, struct repository *repo UNUSED)
+ {
+ 	printf(_("Pony saying hello goes here.\n"));
+ 	return 0;
+@@ -199,6 +203,9 @@ with the command name, a function pointer to the command implementation, and a
+ setup option flag. For now, let's keep mimicking `push`. Find the line where
+ `cmd_push` is registered, copy it, and modify it for `cmd_psuh`, placing the new
+ line in alphabetical order (immediately before `cmd_pull`).
++----
++{ "psuh", cmd_psuh, RUN_SETUP}
++----
+ 
+ The options are documented in `builtin.h` under "Adding a new built-in." Since
+ we hope to print some data about the user's current workspace context later,
+@@ -285,6 +292,8 @@ Modify your `cmd_psuh` implementation to dump the args you're passed, keeping
+ existing `printf()` calls in place:
+ 
+ ----
++int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo UNUSED)
++{
+ 	int i;
+ 
+ 	...
+@@ -298,7 +307,8 @@ existing `printf()` calls in place:
+ 
+ 	printf(_("Your current working directory:\n<top-level>%s%s\n"),
+ 	       prefix ? "/" : "", prefix ? prefix : "");
+-
++	...
++}
+ ----
+ 
+ Build and try it. As you may expect, there's pretty much just whatever we give
+-- 
+2.48.1
 
-Patrick
