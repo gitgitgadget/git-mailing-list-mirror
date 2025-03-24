@@ -1,121 +1,180 @@
-Received: from mail-lf1-f65.google.com (mail-lf1-f65.google.com [209.85.167.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9228813A244
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 07:28:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5F61A29A
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 07:56:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742801314; cv=none; b=q/cr0vNpF/hqNunNVPkzag39ERQTkUqqrwHHDe0ruAlSXDO/9cuePSkeUTOS8j+uPbXgGjlL9PMSLyz6Bp84Iht2AA+6pOUFPJO0pbXonb2U8tYfqTbm1Efv07Mkr+wHKGNdHJs/+STCAinsjO60b7Ee9uFF+mwx0Hz39wkdNMg=
+	t=1742802982; cv=none; b=iMUZWXFQdSQDICwu91tSkN64jJE5ooxCy/3jEs3djVSb+/FCK4tvF5MrH64fp0uLqMZKA17leFP4xjBe8Nt6MFa1vaT0ou9AhZjbL1M8zg+DKzPGTz9CxZ3Iff8PfWwH3Ly5VxNo0xIWE0o/byP0IHjo/hpdjEglEHml075/bq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742801314; c=relaxed/simple;
-	bh=o84mVZYfCqypdgqV/xcs5/K7/ziQugAPdMofx9PlLVk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rpjRyjCxixoU5OYPj0z0YpKXMS8RfVHzgGFoWHDzpxEFo6OvRKsiurH266NrRJs1AYy0Tr91d9WpRtbPRxzaX3VHs8lN6JO7EY9JibP1ATsct65JkcAEEFgslG9IGqTX/7o/NM1PouQDjqXbHF27x7ocCe2sqq8Tl0n1XjQAHmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SV50LPn9; arc=none smtp.client-ip=209.85.167.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SV50LPn9"
-Received: by mail-lf1-f65.google.com with SMTP id 2adb3069b0e04-5499659e669so4509824e87.3
-        for <git@vger.kernel.org>; Mon, 24 Mar 2025 00:28:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742801311; x=1743406111; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o84mVZYfCqypdgqV/xcs5/K7/ziQugAPdMofx9PlLVk=;
-        b=SV50LPn9kaNoolTRSTBoJHtDfRNg42+UzmZYhb03a5ew/orO6XIve/9dJsaU55HUhF
-         43wuAqcw+dzQ6a6nFmgOaEW++F+CcziEYLBWcHopiZRMoXg6HDJCvI6pfHpBL0W2bIUO
-         DuBLpAHsBFEHUEjZDuK2GS+koCrLkTJNqCqxGcdaZMUBMceG1dYsVgJcy4sEKWHU7nFZ
-         ko0NqBcj2NdKSzTuLtay7QnN6eHSBJipU7ku+H3N2MbV0vCaEwHNB+VUGfMDyFf+gdlp
-         wOG0UGlSSK+JbYNyvjpuy+YTwfe8KwV/iLjkHklKVXs/Zb2OVfCkIIJfJn4vkN/Nb4Li
-         pEnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742801311; x=1743406111;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=o84mVZYfCqypdgqV/xcs5/K7/ziQugAPdMofx9PlLVk=;
-        b=B6Z5hvDtghm0/vA+g5ppxl9dsdqS3hnsX758LUc34N45I/PNgoJEPRpyTCP9ya0KuF
-         Bw/DvD7VL40IjsUnkH77o/75bEyGemDqEeySXRgZKnFMPCGTMvgUciOwByTlswkm1hHB
-         dIFyXUUQlRlL/TF95JV7owAEPWUt6P9WrlwOoxnEv2khbxkiD//ZDIHPQoK/DL/SXnOu
-         Kys0ED8ifxggKlAtWsZAoKtiGcXbiQEe5gfpSM+NZMGgdhreEvVcuITIslbTsNeivWKR
-         ktlRof8/dqIJj90ZWp+rB29evw3Mwkmg/dSJ6aGUxlIcrU/7x/w0Xq9xO7xO29/q+pQX
-         QtGA==
-X-Gm-Message-State: AOJu0YwEO+V/z86Ol0P5UUKgL2o2lTq67iEz8lZnsmGwZb49pSvtWsT6
-	R+uVexIT/s6WC1zlvQAFJGJqZbNf1U91xqPT1PHHe7f8WpInvOAlJqSrgyY7yKMHbiYMss3ybro
-	QE0sZIh4xan5tM3sUgndGo1A77BU=
-X-Gm-Gg: ASbGncs+Ws0rbRzyHka8rnVQjJiiwmkSm6K3sdDDpR8LyfND94J5wZZYZyloMUfAcZ8
-	Xi65sVCZLbaT1TbHWQbLRVlaBaJDZRrBNy65MJJeJZ0uykEwvDRbn5pCJbWmd6u3bBxybYFlQ24
-	+zt1ax3s+rSo6nJ2LnSIM56ImUioNmM4cVTJxQHXUEGcWOfIikeYqA1T9rXw==
-X-Google-Smtp-Source: AGHT+IE6rqkt9Kogz8GjM1WNi4hBoWNe+BNCZjNQdAtshtDd+0Ib1WuiWJFAeRq9gnj/nMKDqxxYQKkfstecnMq8g9s=
-X-Received: by 2002:a05:6512:3d17:b0:545:d54:2ebe with SMTP id
- 2adb3069b0e04-54ad650ca5emr4554532e87.43.1742801310324; Mon, 24 Mar 2025
- 00:28:30 -0700 (PDT)
+	s=arc-20240116; t=1742802982; c=relaxed/simple;
+	bh=AXt2Zioq9u1EpyqNH4ydSD/O+Ks8R0lz5s0V7caScI8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=J2trRAaecndbtIoHqnQnmqgNRz6dqoVzO+SmGgmbGFLCS9GMwzlYusOtywsk0BKPLfYBa9ddD7g+tViLxoQYwIOH2ZR4/P5juxpM0/d8pMu7Fng0DYU9kOL2jEE2/4ii3nQXy0/gqEy7ZkGQTot+BB8lw7Y2NjrFwHVE+mry5sA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp1.bon.at (unknown [192.168.181.104])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4ZLktw4K5Pz7QZsJ
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 08:19:04 +0100 (CET)
+Received: from [192.168.0.106] (unknown [93.83.142.38])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4ZLktl5YY8zRpKr;
+	Mon, 24 Mar 2025 08:18:55 +0100 (CET)
+Message-ID: <d4c0c9a4-0402-4456-9fa0-3102b5bcc3dc@kdbg.org>
+Date: Mon, 24 Mar 2025 08:18:55 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFGd_EvVTdP2BKoB5-31cnBj+sjZE7Z=Y3mcpJGYdt70SLj28w@mail.gmail.com>
- <1916456.tdWV9SEqCh@cayenne>
-In-Reply-To: <1916456.tdWV9SEqCh@cayenne>
-From: Marinos Nisiotis <nisiotis.mr@gmail.com>
-Date: Mon, 24 Mar 2025 09:27:54 +0200
-X-Gm-Features: AQ5f1Jp4sni1pqq_-lKevp6s3t5ggpFTG-AWb2x0caes2fgLYjpZQJPqIczSDpc
-Message-ID: <CAFGd_EvaSkUQbsh_PevSgz9_Zin-mimPzPDsSb8DAk6GC3wxSA@mail.gmail.com>
-Subject: Re: Contribute to Git Book in Greek Version
-To: =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC PATCH v2] userdiff: add builtin driver for gitconfig syntax
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, "D . Ben Knoble" <ben.knoble@gmail.com>,
+ git@vger.kernel.org
+References: <20250324021101.7483-1-lucasseikioshiro@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <20250324021101.7483-1-lucasseikioshiro@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hello Jean-No=C3=ABl,
+Am 24.03.25 um 03:11 schrieb Lucas Seiki Oshiro:
+> From Documentation/config.adoc:
+> 
+> Add a new builtin driver for gitconfig files, where:
+> 
+> - the funcname regular expression matches sections and subsections,
+>   i. e. the pattern [SECTION] or [SECTION "SUBSECTION"], where the
+>   section is composed by alphanumeric numbers, `-` and `.`, and
+>   subsection names may be composed by any characters;
+> 
+> - word_regex is more permissive than the syntax specification, matching
+>   any word with one or more non-whitespace characters without checking
+>   if it is a valid variable name or value.
+> 
+> A more detailed description on the format of gitconfig syntax can be
+> seen by running `git show cfd409:Documentation/config.txt`.
 
-Thanks for your quick response. Yeah, I am talking about the Progit book. S=
-orry
-for not clarifying at first.
+Can we please have a more recent reference? The difference of config.txt
+here and config.adoc above is very surprising.
 
-I checked the repo, and indeed it hasn't been updated
-for the last 2 years. I'll try to contact with people who wrote the
-documentation
-and see if I can get some access to it, or not. Either way, I'll reach
-back to you to
-inform you so you can have the whole picture.
+> Also add tests for the new userdiff driver. These files define sections
+> and subsections, with and without indentation.
+> 
+> Helped-by: Patrick Steinhardt <ps@pks.im>
+> Helped-by: D. Ben Knoble <ben.knoble@gmail.com>
+> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 
-Nisiotis Marinos
+Thank you for your contribution.
 
-On Sun, Mar 23, 2025 at 1:24=E2=80=AFPM Jean-No=C3=ABl AVILA <jn.avila@free=
-.fr> wrote:
->
->
-> On Saturday, 22 March 2025 14:02:40 CET Marinos Nisiotis wrote:
-> > Hello,
-> > I would like to contribute to the Git Book, in the Greek Language
-> > version. How can I do that? Where should I start?
-> > Thanks in advance,
-> > Nisiotis Marinos
->
-> Hello,
->
-> If you are talking about the Progit book available on https://git-scm.com=
-/
-> book/, there was a startup of Greek translation which is already online.
->
-> The translation effort is taking place at the following project: https://
-> github.com/progit2-gr/progit2 and this is were you can present yourself a=
-nd
-> propose your help.
->
-> Arguably, the repository has been quiet for two years and the owners of t=
-he
-> project may have let it down. In this case, we could bring it in the prog=
-it
-> organization and give you editing rights.
->
-> In any case, you can ping me on Github, with the @jnavila pseudo.
->
-> JN
->
->
+The file format of .git/config files isn't specific to .git/config; it's
+called "ini-file" and is already very old. Wouldn't it make sense to
+generalize the format? It would be just a matter of choosing a different
+name; the regular expressions would not have to change.
+
+> diff --git a/t/t4018/gitconfig-section b/t/t4018/gitconfig-section
+> new file mode 100644
+> index 0000000000..18c85eb613
+> --- /dev/null
+> +++ b/t/t4018/gitconfig-section
+> @@ -0,0 +1,6 @@
+> +[RIGHT]
+> +        # comment
+> +        ; comment
+> +        name = value
+> +        ChangeMe
+> +
+
+This could test two sections in a row and ensure that the later one is
+chosen.
+
+You have now managed to avoid the "No newline at end of file", but have
+added a blank line instead. Not a big deal, but unconventional.
+
+> diff --git a/t/t4018/gitconfig-section-noindent b/t/t4018/gitconfig-section-noindent
+> new file mode 100644
+> index 0000000000..5c58a7ac92
+> --- /dev/null
+> +++ b/t/t4018/gitconfig-section-noindent
+> @@ -0,0 +1,6 @@
+> +[RIGHT]
+> +# comment
+> +; comment
+> +name = value
+> +ChangeMe
+> +
+> diff --git a/t/t4018/gitconfig-subsection b/t/t4018/gitconfig-subsection
+> new file mode 100644
+> index 0000000000..569be04a32
+> --- /dev/null
+> +++ b/t/t4018/gitconfig-subsection
+> @@ -0,0 +1,8 @@
+> +[LEFT]
+> +
+> +[LEFT "RIGHT"]
+> +      # comment
+> +      ; comment
+> +      name = value
+> +      ChangeMe
+> +
+
+This could test two sub-sections in a row and ensure that the later one
+is chosen.
+
+What happens if there is an *indented* header after the "RIGHT" one?
+Should it be chosen or not? Can this happen in a valid file?
+
+> diff --git a/t/t4018/gitconfig-subsection-noindent b/t/t4018/gitconfig-subsection-noindent
+> new file mode 100644
+> index 0000000000..85c5074f47
+> --- /dev/null
+> +++ b/t/t4018/gitconfig-subsection-noindent
+> @@ -0,0 +1,8 @@
+> +[LEFT]
+> +
+> +[LEFT "RIGHT"]
+> +# comment
+> +; comment
+> +name = value
+> +ChangeMe
+> +
+> diff --git a/userdiff.c b/userdiff.c
+> index 340c4eb4f7..5bbcc2b690 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -198,6 +198,10 @@ IPATTERN("fountain",
+>  	 "^((\\.[^.]|(int|ext|est|int\\.?/ext|i/e)[. ]).*)$",
+>  	 /* -- */
+>  	 "[^ \t-]+"),
+> +PATTERNS("gitconfig",
+> +         "^\\[[a-zA-Z0-9]+\\]|\\[[a-zA-Z0-9]+[ \t]+\".+\"\\]$",
+
+The regular expression can assume that the syntax of the processed file
+is correct. For example,
+
+   [!not a section!]
+
+cannot be a section header and will not occur in a valid file. Or can it?
+
+Therefore, it would be sufficient to just take everything after the '['
+at the beginning of the line without further inspection.
+
+Furthermore, a valid file can look like this:
+
+[section] key = value
+  another_key = more values
+
+but your pattern would not pick up this header, because it insists in
+that the closing bracket is at the end of the line. Having a test for
+this case would be great.
+
+> +         /* -- */
+> +         "[^ \t]+"),
+>  PATTERNS("golang",
+>  	 /* Functions */
+>  	 "^[ \t]*(func[ \t]*.*(\\{[ \t]*)?)\n"
+
+-- Hannes
+
