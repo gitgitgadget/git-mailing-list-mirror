@@ -1,122 +1,131 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021C32C80
-	for <git@vger.kernel.org>; Mon, 24 Mar 2025 12:28:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B966863D
+	for <git@vger.kernel.org>; Mon, 24 Mar 2025 12:46:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742819287; cv=none; b=NZLj7MqfqDqPfeT26HgxR/Ccy5Mt9jVuFuh8b0K+KI6vCgc/lI+EnBzZkgUUsvZPYLqYdQxEd3N15j17jbRUDeWHxlGmf6YoVn20UrWcsSM9YQFOH3rcnLKShgT9PGx/rb7U19pZr47tWiCFSmS9UM0yTdyzjwdsLL26RoQDwDE=
+	t=1742820381; cv=none; b=lKsW7HhJtuodjbYN/IKMvAyq9IIWyG/YlWrydCB585ZERWKP5vNGqHPqvGpYFZAh1F1qsoYouzy2qjAO0sOveNAo3KWpeymDzeUnumdco43vQvmnX2cnL60bBKmxDNlsIsFL0lxYXCgpJWuKUBNY0rCvD440F3/3+cMBeRtMbe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742819287; c=relaxed/simple;
-	bh=+NzSrvVLsgObA6+c4WX3MQCD2eqLecWreZD06C40D0I=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=H9m2CM19ppoC57mFElGGtnBvDC27b/8Qv829yP3H9WBDmeHYGCIJBIGcltQbQI3450e1dnGdBsYzZe/qQ+LVH6/C0DdBekzdneGOTV7qNd8u9bAenv58tkQHCL4MZl3lJ8eRhFp1/6G0iIeOya9FX6yjkGRZw++ucxye1fK+u7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UoTJXLSM; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742820381; c=relaxed/simple;
+	bh=1BGW6HxfOYTWw+OpHNjNAtSxu8ldOfJM4w4WOKobUh0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZRwD9LJM+IWphW8q8YYJPsVxaXhrh52Fm2PIuYCB9qHx7Qr6iBVH6lpMR4cyJK4mxqtxqrhqQRH2LVkfnqMEu0CzhNQxrjyxnfgSEs0eGVEdJXeH3eUFcG64FKLcrlsEm3+PPLAbg1mPzxZHHuSnX4S5ncH91GlAQj6sLCOu/0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rz2+Lq7v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IgUVB4K3; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UoTJXLSM"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-39133f709f5so2247851f8f.0
-        for <git@vger.kernel.org>; Mon, 24 Mar 2025 05:28:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742819284; x=1743424084; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=aFJn7tu7zwp3zHtOwSXduwu+ijXKLS5GOKRr5ZHhxxI=;
-        b=UoTJXLSMdD2ydc3grpnTM+AAfVmxkCEmOPxnMDQRZJz+lRcV3/N77yaYjY7yKJctJi
-         87/bquFg2ccjwYb5z6WFG6wQKNqQ+dVl4kJ7CKF+NvWY+/q+U7ljJuDMakU2pVr7M8y0
-         FGmVQix4GWUyNYihWxpGtxysO/rjqo4OTdpG5HrCrX/zyKzBBMVKAm+jDfvKKmH4AIQF
-         bakJydgoBgDsLkVTouEDujZ6opUAwbQdLaH9TN1P8m4UrCNlIF56vxTZ2MFxEtyKDYiv
-         VhQeTltMMDNTTMRo1U2PDFO6AvossYUhwWzh5dMFQevFSrbzqr7JFoDQJDwMvbtEfE9S
-         TAoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742819284; x=1743424084;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aFJn7tu7zwp3zHtOwSXduwu+ijXKLS5GOKRr5ZHhxxI=;
-        b=k2sbazoFHnQQ2lJB4I9g7r9VKt7xXqpEJ03JutmHSutFzajpiIoGVzwjSwNkDc80aF
-         LQ7iz9jY4h9rupYyGxmek+S/nDVLvQSZmSp9b2kR5FMxkGvYIkPQ4uZenMCpW7HX1RJv
-         CZkNVirCIIOIvkDEOyeLX01opPGxMoBD8DIyG8qHWfdpLtvJpfrpm5AmhtgA8LyT1qlL
-         crPQyw/nlves0LdTh4Nwm+V3vnksCQda42TNNZ53e+kPszg+p+oRH0X6aiUEsmRcEnUg
-         pE802bCt8gi0vQYYCMCOiGLuwCS6oYR3i4Tc+5GwnuGrck8ZfhA22juFdPX1qV4cgCGJ
-         cLVA==
-X-Gm-Message-State: AOJu0YyrivU+7IWF2wXR0oAZ+lhQLnPlJIkCYAQRDxCbu+wHcAfro3+T
-	dx3iKOl5OJCcNxQTbxNyuBTtE6ljF15QyWlU6Gu4i/vqk2+hVX+le2hLCw==
-X-Gm-Gg: ASbGncsuqq1Z0pTLWG1mZ/E1W7fIgNpt1VfB3x9sLFkoktxjbIqN4FAC38oDHcxCaHd
-	2+ddG3lBfF0bRdVH3xM+mTV4bUV94yCMy4vUeTWOciyRMjGwqJlZHT2OSQvKRqe6NzRcowohA5I
-	XjDcSSVCV+/KQ+1+RDZYBBj5/A8lEkr/w+dRSadkLYjByr8/0UP6WfuQy5mzvrxaRen3q6pUKXF
-	fcX0Qgbi3rbbpn2bqeEVOFf0wSN1E2sphb3j305RipEK1wsfshkDGA+i8a4IapzCremOR255M7a
-	LyhoRRX6PaGduXgecWg5+X7de1tqKpE+K//Ifm1433uGGw==
-X-Google-Smtp-Source: AGHT+IHHncal8UrTxEkjPtQydMlYJMNrRQZa9/s+sZgbDVV9tZ7YLpGUJIGq0s3nOQGXe3kqnVROhw==
-X-Received: by 2002:a05:6000:184e:b0:39a:c6c1:3408 with SMTP id ffacd0b85a97d-39ac6c13529mr244649f8f.37.1742819283473;
-        Mon, 24 Mar 2025 05:28:03 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9eff79sm10926794f8f.95.2025.03.24.05.28.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Mar 2025 05:28:03 -0700 (PDT)
-Message-Id: <pull.1886.git.1742819282360.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 24 Mar 2025 12:28:02 +0000
-Subject: [PATCH] imap-send: explicitly verify the peer certificate
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rz2+Lq7v";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IgUVB4K3"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id A90411140146;
+	Mon, 24 Mar 2025 08:46:18 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Mon, 24 Mar 2025 08:46:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1742820378;
+	 x=1742906778; bh=2F6FSjY1NjTr6Tt99aaxzV4h0syrcpIl9CA35vjZuRs=; b=
+	rz2+Lq7vNJrqmGCGKdTcOQNjV7QFEEk8O9jTUVf8FYMTBD2VkYZE5bpJcCRe+Dl7
+	3Xfqv9pbxWuUnzl83mwCzJKvGUqcWvR3j8uJ/IYUCfI1fdry9YBXPHrNpvFNg0+T
+	h8uhB/OjlWknh+/aSWEtdCV0TlE7Oye9EWiERyGWyORzSHx3Dx8cVi67sFRkl+Xh
+	Db0WsyoAojKQSlSUcqIsS3iJ76wcnI3EvvKxqbleNuZ275bqos0zQZV32zPmqlHU
+	hen22A/J+IuGVMpAl3AxnDhg020wDxbwHVr9SVRn4CVHuzk9gJiF5DdFuavxuL2U
+	OMqDrT+rFsjBMctWJMjkgg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742820378; x=
+	1742906778; bh=2F6FSjY1NjTr6Tt99aaxzV4h0syrcpIl9CA35vjZuRs=; b=I
+	gUVB4K3v9JSfhyxzbojw4tasO+/3Db62k9h5vWiMR/w1c9k9fCW3jfVZpuU6rffb
+	bMqjz//lAhB5r+As9TGkGSDwEjS4NFMNIQ8lhvitokLvge6zrW4LnrwWNgQqw3+D
+	cTweLmsJz4WL2Mj4tlqR3TV5m7GkPH73ecurFRCRtN5iYJT8l/v+0yHblGI7RshL
+	n8EJeVFemiXCfmIgZxSa8jbvCGRb1EsVSU9xdw5jdkb3ttGnvEYQQj8+Qx6c8vN9
+	mqCNkqyf5/dCJen0Y38TnrpMDpm3QoPqP+u02ozSb4NmoO+Ek+PwmkSo62atGowa
+	QZyEBDSrnQtdFYtjcm3wQ==
+X-ME-Sender: <xms:GlThZ-lwQpULQ3mgHFeALirdnoZ67uUvZ1vo2PSMi-IDPBNjQYCXeg>
+    <xme:GlThZ12Ffasz8bKPQHSbAft2Tibdgmo9oTVaQ7Rqf2T6c87Zq2Ct09zpcFJBbmzPJ
+    7E87-lHYwvQpoooIQ>
+X-ME-Received: <xmr:GlThZ8quX1memxzIqEPvkCeDUahnBdMqYfSDXoLmld9Be4Iagov99gOwHAdj9R1iWcYkw75jf6h6prts2dpDjKfPiO50Py5kx427q5GOieBjdaE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduheelkeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
+    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtg
+    hordgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhm
+    gidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:GlThZylU4pfQAf2Fk1X_Dlvn03loV7Zr0akujH_X-ziSM80KiNfW7Q>
+    <xmx:GlThZ81vCmN5smygzvM0IhMARAoH0Fsr6k8YccvDW9bZn9HeWyzBZw>
+    <xmx:GlThZ5tkxuNMyWsZ-p0t46ajMDgMlJvOoFUHX9Z1QF3VWYFIfqyScg>
+    <xmx:GlThZ4WpXdWEVLNj-aPTouOJD4iTQEhhbny9Z8-MdgLSbW_YTI0V7Q>
+    <xmx:GlThZ5yiHkqCqCfnUjDor0-WE2Pk_GVk4o6ZI6rRNGrBvZX4QvUEbsjB>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 24 Mar 2025 08:46:17 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id e98697ef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 24 Mar 2025 12:46:15 +0000 (UTC)
+Date: Mon, 24 Mar 2025 13:46:10 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 13/20] t: refactor tests depending on Perl for textconv
+ scripts
+Message-ID: <Z-FUEhraLaDODbmO@pks.im>
+References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
+ <20250320-b4-pks-t-perlless-v1-13-b1eefe27ac55@pks.im>
+ <CAPig+cQdoZwY3u-xr49Jb8aaQmE69p4i4RUdy=cRv-V7VoWENg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cQdoZwY3u-xr49Jb8aaQmE69p4i4RUdy=cRv-V7VoWENg@mail.gmail.com>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Thu, Mar 20, 2025 at 03:37:08PM -0400, Eric Sunshine wrote:
+> On Thu, Mar 20, 2025 at 5:37 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > We have a couple of tests that depend on Perl for textconv scripts.
+> > Refactor these tests to instead be implemented via shell utilities so
+> > that we can drop a couple of PERL_TEST_HELPERS prerequisites.
+> >
+> > Note that not all of the conversions are a one-to-one equivalent to the
+> > previous textconv scripts. But that's not really needed in the first
+> > place: we only care that the textconv script does something, and that
+> > can be verified trivially without having a full-blown invocation of
+> > hexdump. So at times, the implementation of the textconv scripts is
+> > reduced to their bare minimum.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> > -test_expect_success PERL_TEST_HELPERS 'rewrite diff respects textconv' '
+> > +test_expect_success 'rewrite diff respects textconv' '
+> >         git diff -B >diff &&
+> > -       grep "dissimilarity index" diff &&
+> > -       grep "^-61" diff &&
+> > -       grep "^-0" diff
+> > +       test_grep "dissimilarity index" diff &&
+> > +       test_grep "^-3d 0a 00" diff &&
+> > +       test_grep "^+3d 0a 01" diff
+> >  '
+> 
+> This change seems unrelated to the stated purpose (`textconv`) of this patch(?).
 
-It is a bug to obtain the peer certificate without verifying it.
+Not quite. The test previously didn't run because it depends on the
+Perl-based textconv script. Now that this textconv script was adapted
+to use shell scripting instead it can run, but as explained in the
+commit message the output of the textconv script changed. We don't
+really care for the exact output at all, we only care that textconv did
+its thing. But we do have to adapt the test accordingly.
 
-Having said that, from my reading of
-https://www.openssl.org/docs/man1.1.1/man3/SSL_set_verify.html, it would
-appear that Git is saved by the fact that it calls
-`SSL_CTX_set_verify(ctx, SSL_VERIFY_PEER, NULL)` already early on.
-
-In other words, that `SSL_VERIFY_PEER` combined with the `NULL`
-parameter (i.e. no overridden callback) would _already_ verify the peer
-certificate.  The fact that we later call `SSL_get_peer_certificate()`
-is mistaken by CodeQL to mean that that peer certificate still needs to
-be verified, but that had already happened at that point.
-
-Nevertheless, it is better to verify the peer certificate explicitly
-than to rely on some side effect that is really hard to reason about
-(and that took me more than one business day to analyze fully). It also
-makes it easier for static analyzers to validate the correctness of the
-code.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    imap-send: explicitly verify the peer certificate
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1886%2Fdscho%2Fimap-send-verify-peer-certificate-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1886/dscho/imap-send-verify-peer-certificate-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1886
-
- imap-send.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/imap-send.c b/imap-send.c
-index 6c8f84e836b..27dc033c7f8 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -324,6 +324,8 @@ static int ssl_socket_connect(struct imap_socket *sock,
- 		cert = SSL_get_peer_certificate(sock->ssl);
- 		if (!cert)
- 			return error("unable to get peer certificate.");
-+		if (SSL_get_verify_result(sock->ssl) != X509_V_OK)
-+			return error("unable to verify peer certificate");
- 		if (verify_hostname(cert, cfg->host) < 0)
- 			return -1;
- 	}
-
-base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
--- 
-gitgitgadget
+Patrick
