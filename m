@@ -1,55 +1,55 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5A92586CE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE9625F78D
 	for <git@vger.kernel.org>; Tue, 25 Mar 2025 13:14:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742908470; cv=none; b=ScIxg8WJx3B+OmW2rpG0cPwI+8OCVG0k7vdmZu+B16sPHZs+wAWzlqov1xasFXX38HSsUbbBDiHBhIdU3C2A03oeR9W09UBPQZfr8Kyfb3j3JSp6UGaeefRgCjiQBprWfZekTwaR3lGXttW75aGbud5gBQw5xXvdEvLNjhDjBps=
+	t=1742908470; cv=none; b=unxWjYTVUcye1xGymFqZejmhVe0vodDOyVNBk9/Mxm5dVGr6WnnaQOWzpdxc25CwOC27CzpOEX4hfgSzjt48pRv0gkkXuKp0EBFHgA9rKI/ebtr7l6o5aDjf96+xwvzQlGUofKZmbqtYid8Urzd4w/R5HvadIw9RkiSeM+6YGOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742908470; c=relaxed/simple;
-	bh=kKgvJiD5iH1IYiP1JXsWCfXPuHkS/ptohqpHvpbx2tI=;
+	bh=0QvGEqC1CcXw7qB+3oNkUJawQaEJu+9o4Wx89q7QTk4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ag4pdKd6602wTI6tFlnrG9RCG+wJ321BNIDuDpRJVI5b17RcxJLC3xIxet01U/GlFjnmY5dFjgGTo0Aj90sykDxptwNPHQJBqMuTj6CEHdGXbhC4m/pc7gZgi3AdiSwi0xuApvpGvSK4TZ61hNqYB3iWZZTpRCc+kOaq762mKXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GKqjELyQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Doik7E+v; arc=none smtp.client-ip=103.168.172.144
+	 In-Reply-To:To:Cc; b=rJCaZMF/iOYIJI8W1SFXtyTzdTsLxW0v9+KI6ZIn7T2Np+6Y+0T1wtjR+B9P+BulQZ+QwUc/tvQRaMDAlVfnGFBP4EAEdaSrlbLq4smRP3SkJ1qLFFBgtrQytqQvfDaj8hdYo63zYSouAY60bIWGbXO9ehvNh1zUuA/CWCNWU2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MgaOvUyn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K3xhjNh9; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GKqjELyQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Doik7E+v"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id C40F113838C3;
-	Tue, 25 Mar 2025 09:14:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MgaOvUyn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K3xhjNh9"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2E7EB1140297;
+	Tue, 25 Mar 2025 09:14:28 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 25 Mar 2025 09:14:26 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 25 Mar 2025 09:14:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1742908466;
-	 x=1742994866; bh=REpbEfss2O2yYYKccRFcgbK1nvTKhdXojvppgXjTFuc=; b=
-	GKqjELyQmpVlJgMEe4ClS8vChOibLyyG/EakMrIetb44Cvb/dZfb7ssbluz86obb
-	LsgdbLYaTT9YDsgn9qhjJxn7MzrGJmGpq+AdTecyBxpESV1a63pTqwecK4uOHzBs
-	ViRW6MArOFudGJjJOKKj4oIz0GN5my2uvkf/hEVs5ihUrn4M9h89bfZ6Qab61PlF
-	aF6kMTdXys/UM1M//9Qp9wDtYUxZYiYJbKSu1OzYrWKqRXFRU0DyY6HIdmLgxtTE
-	Vna2NFEqN6KQCtvciW8rjKuzmuirS8G5lSLvwC48d7zcZf0JVp5E5uyuyCJ82ngC
-	jMNu7fbRFQ0F0gGXN+srdw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1742908468;
+	 x=1742994868; bh=TxAb3XKVEc3uafQcc1aYp4YdbmPnHpNoCoLGnfZwU+s=; b=
+	MgaOvUynqyj6M/MnDrls72IEdAFRNZLKBY7lOyZ/rkQnTFl/EsUxpTKcVvAm3hbN
+	OZkYlvnCofYVIs3HnP2PdBrH0hfEWqR3Gs5YvwXuJq2tzijiUotyF1ZZaKQOU7ni
+	IWvV6g2qfQNOwL2QU9ACAdx/HFMDmg+wMqpvw19bZqAFhDdk7+IycvT8mXmgc2SS
+	si+OKej4h5FBq+Z90iVxYk9kxZumqz65G2dp69Otri1/wsYI0c0LbJWTMoozLFJ/
+	RgsQ1pIyW8jQoxbCUP8hlmrktsKz8iORBOBCTP41VljPtsgtOPPbpPq7AGyIsvjV
+	I6ZyYFGo1L529ETehF/L9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742908466; x=
-	1742994866; bh=REpbEfss2O2yYYKccRFcgbK1nvTKhdXojvppgXjTFuc=; b=D
-	oik7E+vDidLUFJbiBCdrN0Uhy97S4kLhBBdZyq9TWRK+BXiVJ9RWSQYGjWlMtdhh
-	/4j5dUmy51fLGQly/2P6hsWDPP4EbkCwvrl0zrRHYvTMn6/S8y8TvfFpeuuAM+xs
-	Em1W2dIta/RMS20XrsqXVJrVDNUnmaOpJf1xY3fqs+UlEpUPycQdDQgUqHM97sjO
-	CJQEkOBNKoWQvwbRYLE5EmIPAz59agsNn24xgZUEJdbh9t6lrLzLPiYx+kkZqocQ
-	Xl4XiNiw6DZbOSNHupm3L/7olBKctuoQ3S79z8pJP02UxmcS3rIpCMf//vP3ZKdU
-	Kz5hKym7q0INeR0DG6xvQ==
-X-ME-Sender: <xms:MqziZ5JQGutycn39wD8v0oNGgKBPconEQOQSoGRhXMVhL1MUJSUa7A>
-    <xme:MqziZ1KWJenAeCFUQivdQ7hjcI0cwSwXWbuqYOBU37Mmqy3ZKTcUaNLik0DhhRjxq
-    ecwXynSKdZw6P2XXw>
-X-ME-Received: <xmr:MqziZxsFB7HrlEM560CN0AHGaFH0uAhdkkjCZUoGwH_ArIVNx0gQvDncwMi86jbWdqhIz8seAS3S29LSqkVOef62m9i3YKhnPRYDue3mQ3gOiw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742908468; x=
+	1742994868; bh=TxAb3XKVEc3uafQcc1aYp4YdbmPnHpNoCoLGnfZwU+s=; b=K
+	3xhjNh97yzt4WcHiR5HUW02m0m51ahijw2x6j/JZKH+gcjEziA5hwulJxRs5QzU3
+	Z/rDiPnV57NPQJ8C1r7fB8MrVflmOpyuWwn7JamY/mY/kV/fqEbOioUhsYxO44kq
+	tlp+NLgB2otWGgVm13Ra8cdWEmDhfaoIhmwkKHCY/VpqysEB4okUbFOD54TbtxOU
+	wIi2STJ9Ab+GhTc1LWsBPQhNwF2cw6hbjadJA/JQiEZKxPDn9Eh0cLjTLN3M/6E8
+	S3vn3ztOGcnD6UP+K7R2p+1gvFs4f4h1S6tkqekWYbHxtflRXQCXMZFFiCM1Zd0R
+	zXvZBibDfPTGUAvGT4ZtQ==
+X-ME-Sender: <xms:NKziZ75zL0Aixl5VgalfNZkVC7Toh4HU2uH57oNpMrHB7jBojhyycg>
+    <xme:NKziZw4YT7UHJqclcylwSD6D1g3zneu2Zho5MeSlY9a8xsPPC0-WkcJuLjAdHzhmT
+    UssCERWWoN3ulHOtw>
+X-ME-Received: <xmr:NKziZycqkorj_OxPbx6v9eEC0NKJ-2P0ZlHJgIly7IjQzQhRHOh0H6PEfhADNMnCTHytPdnF_eNCM9DStgh22jj1n0wMehfge2czqVDynNGQyA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedvjeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -58,26 +58,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedvjeegucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtg
-    hordgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepph
-    hhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehjohhh
-    rghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:MqziZ6baWhLe9Yobouh0xJidnxkx6zrf2kD6RF9e29yp0W7XF_FaEQ>
-    <xmx:MqziZwYBbDJdSPyzZ_NnzPX9eVxtbIujtjb918ipa3A2hh1M5FdSUg>
-    <xmx:MqziZ-BvVifvczwJ1QGn9HiGlUWTbE-CY9l8-iOXteVKTNEdvbMsXw>
-    <xmx:MqziZ-Zzbj1jrWU06VKNpCCX6gJund8Bddwm8NtnjMajLeAO1q966Q>
-    <xmx:MqziZ_wq8nIKWBf1JIRyDsm_wl93J6LhykyrM_nCEmtKp-eCyRKpXdB0>
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgt
+    phhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthht
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:NKziZ8Jo8kQJqncO0dyd21Yc23YjxWs5pQsezgl0OmiScPkREmCnXA>
+    <xmx:NKziZ_KqcDCyDMTvMy08q61_WRkO5OvqbScsaj2dIPF9R8USwE3ZTQ>
+    <xmx:NKziZ1zRjM22yjlh8iXJOE-JiWVFj0Ws4DsyJ1ZyQUnYoNm0WkI9KA>
+    <xmx:NKziZ7Jde0Q-JqhxB7kGux8SV51bERkTHPT3gg0huqJB3B2iM2BIVA>
+    <xmx:NKziZ1gei3s9Ty2ZOHiiZiWElVhdNn9Rq8zF3PxiWXWpQe89PpozyLNZ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Mar 2025 09:14:25 -0400 (EDT)
+ 25 Mar 2025 09:14:26 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7d6ff17d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 25 Mar 2025 13:14:24 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 198b8111 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Mar 2025 13:14:26 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 25 Mar 2025 14:14:21 +0100
-Subject: [PATCH v2 03/20] t: adapt character translation helpers to not use
- Perl
+Date: Tue, 25 Mar 2025 14:14:23 +0100
+Subject: [PATCH v2 05/20] t: adapt `test_readlink()` to not use Perl
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250325-b4-pks-t-perlless-v2-3-4b87b8072670@pks.im>
+Message-Id: <20250325-b4-pks-t-perlless-v2-5-4b87b8072670@pks.im>
 References: <20250325-b4-pks-t-perlless-v2-0-4b87b8072670@pks.im>
 In-Reply-To: <20250325-b4-pks-t-perlless-v2-0-4b87b8072670@pks.im>
 To: git@vger.kernel.org
@@ -96,53 +95,59 @@ Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
  Phillip Wood <phillip.wood123@gmail.com>
 X-Mailer: b4 0.14.2
 
-We have a couple of helper functions that translate characters, e.g.
-from LF to NUL or NUL to 'Q' and vice versa. These helpers use Perl
-scripts, but they can be trivially adapted to instead use tr(1).
+The `test_readlink()` helper function reads a symbolic link and returns
+the path it is pointing to. It is thus equivalent to the readlink(1)
+utility, which isn't available on all supported platforms. As such, it
+is implemented using Perl so that we can use it even on platforms where
+the shell utility isn't available.
 
-Note that one specialty here is the handling of NUL characters in tr(1),
-which historically wasn't implemented correctly on all platforms. But
-quoting tr(1p):
-
-    It was considered that automatically stripping NUL characters from
-    the input was not correct functionality.  However, the removal of -n
-    in a later proposal does not remove the requirement that tr
-    correctly process NUL characters in its input stream.
-
-So when tr(1) is implemented following the POSIX standard then it is
-expected to handle the transliteration of NUL just fine.
-
-Refactor the helpers accordingly, which allows a bunch of tests to pass
-when Perl is not available.
+While using readlink(1) is not an option, what we can do is to implement
+the logic ourselves in our test-tool. Do so, which allows a bunch of
+tests to pass when Perl is not available.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/test-lib-functions.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/helper/test-path-utils.c | 13 +++++++++++++
+ t/test-lib-functions.sh    |  2 +-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index 72ac8d1b1b0..54d9ba98c0e 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
+@@ -323,6 +323,19 @@ int cmd__path_utils(int argc, const char **argv)
+ 		return 0;
+ 	}
+ 
++	if (argc >= 2 && !strcmp(argv[1], "readlink")) {
++		struct strbuf target = STRBUF_INIT;
++		while (argc > 2) {
++			if (strbuf_readlink(&target, argv[2], 0) < 0)
++				die_errno("cannot read link at '%s'", argv[2]);
++			puts(target.buf);
++			argc--;
++			argv++;
++		}
++		strbuf_release(&target);
++		return 0;
++	}
++
+ 	if (argc >= 2 && !strcmp(argv[1], "absolute_path")) {
+ 		while (argc > 2) {
+ 			puts(absolute_path(argv[2]));
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 79377bc0fc2..377f08a1428 100644
+index c4b4d3a4c7f..bff8c4d1b41 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -88,15 +88,15 @@ test_decode_color () {
+@@ -1979,7 +1979,7 @@ test_remote_https_urls() {
+ # Print the destination of symlink(s) provided as arguments. Basically
+ # the same as the readlink command, but it's not available everywhere.
+ test_readlink () {
+-	perl -le 'print readlink($_) for @ARGV' "$@"
++	test-tool path-utils readlink "$@"
  }
  
- lf_to_nul () {
--	perl -pe 'y/\012/\000/'
-+	tr '\012' '\000'
- }
- 
- nul_to_q () {
--	perl -pe 'y/\000/Q/'
-+	tr '\000' 'Q'
- }
- 
- q_to_nul () {
--	perl -pe 'y/Q/\000/'
-+	tr 'Q' '\000'
- }
- 
- q_to_cr () {
+ # Set mtime to a fixed "magic" timestamp in mid February 2009, before we
 
 -- 
 2.49.0.472.ge94155a9ec.dirty
