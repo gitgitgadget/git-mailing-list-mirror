@@ -1,68 +1,68 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6566A269D17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC4026A1A1
 	for <git@vger.kernel.org>; Tue, 25 Mar 2025 23:32:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742945543; cv=none; b=dF8E7yt/gYHZaOwBQENMdsvw5aS4sncbhEAqc1yUxAeE/bgbKt/ENfbSjryg37sL/y+YawIHw3PvUCsprh+SQmYXhg5UoyHryaP+l1JETxVYULuScn2Xy5ZYZgUnDcz27/KQltuesFtddk/EwFaYMWR8HapFhC7R1GbVi1gvuNs=
+	t=1742945543; cv=none; b=toUYD03wemXYNWx54Pk00bTd4M1CS6XEj24SiosjMaaRB/c1BW+x8OIqKVvd4LFZcv1usPFzfjyz2FR2d8DG/IAggjows+mQ90SSgW9JYr9zG5vRtYV4Xdz/9+i6jgV5L+dbK9ivl4BLeUuXOxfEXl9gcspgv0BdEkPblcOJymQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1742945543; c=relaxed/simple;
-	bh=Rx+IWFiOi9U+zBq+NO8Yynl5AN1JAJZERx/mjKSB+Dw=;
+	bh=Pv9V94JOWDm/C5Hfi8rcT7S7ttM3/YIay+Hx1jlbqkA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=a6fJXsvClvBuMWFaADcKprz1bII0r79w8omRZr/xDRSnxxzSC8QMMPugCc2Ex73WDLVc205XuEQxr/fqD4CuhVG1OFvirjDr5zf4Oj+pQzD9i1d0X6CCLFENmUcsQIwntKrpnwYbxsDkmc09WHi+etVypW/1SD0XCwKVLQ4yh40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DsPKPlIy; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version:To:Cc; b=P5Kh6Eqy/SvnKZQVvr1Kq3v1YlM/dJAjnKIdPRsQnHau0UaIl8qlNOPebNHPkPcpTsfNhuyQWAC5cA8rLVzsysz2Ap7auq05St5Ne160SJiwYOKVOzpWOTjhntHM1lh2aOwrXw0h94P1URfAQsCQI1hiDBDIWka4mkzia3xP78k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gewfesvS; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DsPKPlIy"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43cfa7e7f54so1941135e9.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gewfesvS"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4393dc02b78so44673875e9.3
         for <git@vger.kernel.org>; Tue, 25 Mar 2025 16:32:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742945539; x=1743550339; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742945540; x=1743550340; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NX862AUOw2XXDICLlVHZCE9L8Px+F8OVvarM9gB1oFU=;
-        b=DsPKPlIyzLxAr5N2r8jvXA2M1y81pJV2Oar6wzmDD7RLsPN3kbNs6PJgDkbHrMWKpr
-         7CUK+RazPADxWUY08sou595anpPhL+RdOg3291A14sqFyCMUFi8GNX+n5PYqdp0WVIpV
-         aBxAtMswyhLMod0gm85U7E9HFnc0XHpjV/aXDPoDAJ9Kn6rqz26WaMPp3GgKT+MumQ+/
-         Oh7oq/Z+Yo3gEoFpzcqlgFGPtDpx4aINvenAXSHAwsYoQUUHrDgOnyv9mQ3H3h4Ws1/O
-         Wj1U44FSK0y2EWebuV7RcfETKW//CPdCDVf+Z617KEcoFnQkYL7sZc4ZuPPSznTLfYwo
-         bNmA==
+        bh=+4IkiO6Glu7VZfepMK9AHTcNaz7euwVLDLmIH1KpWls=;
+        b=gewfesvSZz/b2u7uFJo1Ng1KXsCxjb0Qcf/MBnHDeaDIgvrPl3875xS/uy/dhw5P3R
+         zm0itfk0KC/KdjZPaNw5ywjg2lNO5oTtHEiPzM805wsD6IZwiKMh70PzQK/y1nzUUF0f
+         GYvgFNrCUG0+ies7kXc+ZUk9SlqO0SGGuscR84wtytNULdUGyRG9VJs7og1sgo07xqaD
+         7EsqFYNwzPIj+xZRX3UaVIH5mzR1/rzGUbDsGv2ukFFZNNCCR8LveH3tZbdDZbakMC2x
+         RvxyaZLx6HEcX24xzOcym7OklKLeV3Flj6TcAC3bhaV6d+53avQp5VpXpkjd1uHlzQa4
+         evdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742945539; x=1743550339;
+        d=1e100.net; s=20230601; t=1742945540; x=1743550340;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NX862AUOw2XXDICLlVHZCE9L8Px+F8OVvarM9gB1oFU=;
-        b=dOA2kYUO1GcA5Mia6RM+F+7jRGp3DgGPU1NMjBz5jkCAlj4+TEHMToGaND8UZX+UhX
-         P9JBqeVvv2vqH8KJDhml3DZpf4HBI/y6yJC9NQRICozI42+PAgyd+qtyaJAqzpQDgaXL
-         hDnDxZr6A1KcYBXcjQB9SCmsJZbGcIjfqXUtAaAM91NJII6BIGSb/P1DiyCkY331j9yS
-         GeKUY68505qmCJoYPOH4QrWKpaG/yHCvZDSvT2Cez5zyLjw6W+AWTkFVbA0zRrNBKB6N
-         bRBP/gd0vHAZqSJLw4XEGjb8VD/vwL3bNskO3mTWZnBQ9sy9gpKp0hBAHF1Vzyxm2kAY
-         DPVQ==
-X-Gm-Message-State: AOJu0YwNjTZm5bdXVgtuZkYUOS7UpIp2j6FjipiBT0pZn3gnEo0SkR2K
-	h0+fb56VUfURYTYDLmwNhqBgDydbgNR3QBE0lTSlLUKoTC2TYSiY82/aaQ==
-X-Gm-Gg: ASbGncuviRdB3wZzIFekdMlLUzeoQ+Oc251JOJAJS+L4Z9bzIZgzppMH9yD8vZ1I6ho
-	8CyZSkCraqUdiKRRYRN8aix823Eysr2f7qeAXvG9sSJ1zmK8c4Xg+O+XfBiKusjEgA/dzW3zYyK
-	mnWoKSDQ+vbM/QUs8NOixI5f1pe1GLD8AJ1TC1GS5oEsB/EoXMy3RF8Q5inEUiH2tAXFrbqfGrR
-	WdpznASdAfgigds4j3pVZ/BDdxOEzH4MC0sVIt7a130TMBCECZNgfgDDQOBrQ2nPw8Gr9XsDe9L
-	A5bPEc5Ee3J99UjABxapGHWL+4IYPSHPMUr8qGNpbQYTJw==
-X-Google-Smtp-Source: AGHT+IGbTXf4mEUZ/F3loGpZr5RlXQPiGLDawEbaU4BtULlqpjPN+uWwNmBF2VtQrjAtamHRud1xPA==
-X-Received: by 2002:a05:600c:b91:b0:439:9434:4f3b with SMTP id 5b1f17b1804b1-43d775fac8bmr17019145e9.8.1742945539033;
+        bh=+4IkiO6Glu7VZfepMK9AHTcNaz7euwVLDLmIH1KpWls=;
+        b=C8v18yRefLUxBwDFZPxrXBgwdUPkFaaRmYAzfJhYL6Fy5HNCJRo52GIawcZkFG8Gqz
+         MAAguU/PfcS5yq+GKINyhygJVTfyRw8zkOPi/vnuV5+2F1+ITb7vQoy1sf55hcLlpiHw
+         eb2kffKKZZzcRBUek8NikHoNMXUvS5CCUIcUjWJEclGxj3KnTEmHI/mtbYorZ7WXoJw4
+         NjbHHpUIngsdUtZPBX8jPWM9runs2zv2vwLMdDtkj3xxI5iSGQzaWMybQM5KT6FHOzMb
+         9IALsbc2ePmzpkabA2VZ7d+0m0o5TyX0hPjmmOcADD310+zG36Y88RYzLNqF9Pyh2wML
+         w9Bw==
+X-Gm-Message-State: AOJu0YzK0u//qf0OsJWOtkCkANwEaKYRAtwapaPVRLch5Yyp6hIFKQV0
+	1nrw69fL40RIGiaJMxJeUv8rqNYQEw77d47uVQrRI9QbjqbN7WCzI602ww==
+X-Gm-Gg: ASbGncvidbR8ImEXQGPMYp0t48GexS2BQp7C07fBOQDv2l0/DH9Jn1/Ix5qNhWj6i04
+	QbvYWS4Kw7+9Vr06FAeMTDhrZb2gmJA0YzfuTVmN/XR3PhGR2mF4WFKUFCy9HioBf3CGnAnxn9h
+	z4tWtH3yJA+K0CZVMDS5fcoHvhA7Zy0IVJWzbnruJUu4/vXJCTBSpJbNayJ1ZHIWbB0BQwBJWPS
+	7lkZOMT/zyxR4smGK5Y9bg/ocfCHf0I+uICESHxkYx07LvxSHfE/HOxOtNmTBMuUQvELGOIvP9A
+	64D09gR7s0ll1C+pj8E4ogQTaViwVK0Md7DUqPjLehgZOQ==
+X-Google-Smtp-Source: AGHT+IGdyCODlzKNGX8wlRBjT6FdMp4yxhu/hFpSjErEZTjNpXGerT0Crs3QY5bc2e4SGDaoFI9OkQ==
+X-Received: by 2002:a05:600c:1989:b0:43c:fe90:1279 with SMTP id 5b1f17b1804b1-43d50a21402mr121537445e9.21.1742945539797;
         Tue, 25 Mar 2025 16:32:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9a5b66sm14817620f8f.40.2025.03.25.16.32.18
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d4fcea400sm165719055e9.2.2025.03.25.16.32.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Mar 2025 16:32:18 -0700 (PDT)
-Message-Id: <f601f4e74a5e8146f2926a725f3d1522b928eb51.1742945534.git.gitgitgadget@gmail.com>
+        Tue, 25 Mar 2025 16:32:19 -0700 (PDT)
+Message-Id: <f60ebe376e10d7741f6bd657874a17f6c09d4477.1742945534.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
 References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
 	<pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 25 Mar 2025 23:32:07 +0000
-Subject: [PATCH v2 03/10] kwset: avoid using the comma operator unnecessarily
+Date: Tue, 25 Mar 2025 23:32:08 +0000
+Subject: [PATCH v2 04/10] clar: avoid using the comma operator unnecessarily
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,118 +84,46 @@ Cc: Philip Oakley <philipoakley@iee.email>,
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
 The comma operator is a somewhat obscure C feature that is often used by
-mistake and can even cause unintentional code flow. Better use a
+mistake and can even cause unintentional code flow. In this instance, it
+makes the code harder to read than necessary, too. Better use a
 semicolon instead.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- kwset.c | 54 +++++++++++++++++++++++++++++-------------------------
- 1 file changed, 29 insertions(+), 25 deletions(-)
+ t/unit-tests/clar/clar/fs.h | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/kwset.c b/kwset.c
-index 1714eada608..064329434e5 100644
---- a/kwset.c
-+++ b/kwset.c
-@@ -197,10 +197,13 @@ kwsincr (kwset_t kws, char const *text, size_t len)
-       while (link && label != link->label)
- 	{
- 	  links[depth] = link;
--	  if (label < link->label)
--	    dirs[depth++] = L, link = link->llink;
--	  else
--	    dirs[depth++] = R, link = link->rlink;
-+	  if (label < link->label) {
-+	    dirs[depth++] = L;
-+	    link = link->llink;
-+	  } else {
-+	    dirs[depth++] = R;
-+	    link = link->rlink;
-+	  }
- 	}
+diff --git a/t/unit-tests/clar/clar/fs.h b/t/unit-tests/clar/clar/fs.h
+index 8b206179fc4..2203743fb48 100644
+--- a/t/unit-tests/clar/clar/fs.h
++++ b/t/unit-tests/clar/clar/fs.h
+@@ -376,9 +376,12 @@ fs_copydir_helper(const char *source, const char *dest, int dest_mode)
+ 	mkdir(dest, dest_mode);
  
-       /* The current character doesn't have an outgoing link at
-@@ -257,14 +260,14 @@ kwsincr (kwset_t kws, char const *text, size_t len)
- 		  switch (dirs[depth + 1])
- 		    {
- 		    case L:
--		      r = links[depth], t = r->llink, rl = t->rlink;
--		      t->rlink = r, r->llink = rl;
-+		      r = links[depth]; t = r->llink; rl = t->rlink;
-+		      t->rlink = r; r->llink = rl;
- 		      t->balance = r->balance = 0;
- 		      break;
- 		    case R:
--		      r = links[depth], l = r->llink, t = l->rlink;
--		      rl = t->rlink, lr = t->llink;
--		      t->llink = l, l->rlink = lr, t->rlink = r, r->llink = rl;
-+		      r = links[depth]; l = r->llink; t = l->rlink;
-+		      rl = t->rlink; lr = t->llink;
-+		      t->llink = l; l->rlink = lr; t->rlink = r; r->llink = rl;
- 		      l->balance = t->balance != 1 ? 0 : -1;
- 		      r->balance = t->balance != (char) -1 ? 0 : 1;
- 		      t->balance = 0;
-@@ -277,14 +280,14 @@ kwsincr (kwset_t kws, char const *text, size_t len)
- 		  switch (dirs[depth + 1])
- 		    {
- 		    case R:
--		      l = links[depth], t = l->rlink, lr = t->llink;
--		      t->llink = l, l->rlink = lr;
-+		      l = links[depth]; t = l->rlink; lr = t->llink;
-+		      t->llink = l; l->rlink = lr;
- 		      t->balance = l->balance = 0;
- 		      break;
- 		    case L:
--		      l = links[depth], r = l->rlink, t = r->llink;
--		      lr = t->llink, rl = t->rlink;
--		      t->llink = l, l->rlink = lr, t->rlink = r, r->llink = rl;
-+		      l = links[depth]; r = l->rlink; t = r->llink;
-+		      lr = t->llink; rl = t->rlink;
-+		      t->llink = l; l->rlink = lr; t->rlink = r; r->llink = rl;
- 		      l->balance = t->balance != 1 ? 0 : -1;
- 		      r->balance = t->balance != (char) -1 ? 0 : 1;
- 		      t->balance = 0;
-@@ -567,22 +570,22 @@ bmexec (kwset_t kws, char const *text, size_t size)
-       {
- 	while (tp <= ep)
- 	  {
--	    d = d1[U(tp[-1])], tp += d;
--	    d = d1[U(tp[-1])], tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
- 	    if (d == 0)
- 	      goto found;
--	    d = d1[U(tp[-1])], tp += d;
--	    d = d1[U(tp[-1])], tp += d;
--	    d = d1[U(tp[-1])], tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
- 	    if (d == 0)
- 	      goto found;
--	    d = d1[U(tp[-1])], tp += d;
--	    d = d1[U(tp[-1])], tp += d;
--	    d = d1[U(tp[-1])], tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
- 	    if (d == 0)
- 	      goto found;
--	    d = d1[U(tp[-1])], tp += d;
--	    d = d1[U(tp[-1])], tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
- 	  }
- 	break;
-       found:
-@@ -649,7 +652,8 @@ cwexec (kwset_t kws, char const *text, size_t len, struct kwsmatch *kwsmatch)
-     mch = NULL;
-   else
-     {
--      mch = text, accept = kwset->trie;
-+      mch = text;
-+      accept = kwset->trie;
-       goto match;
-     }
+ 	cl_assert_(source_dir = opendir(source), "Could not open source dir");
+-	while ((d = (errno = 0, readdir(source_dir))) != NULL) {
++	for (;;) {
+ 		char *child;
+ 
++		errno = 0;
++		if ((d = readdir(source_dir)) == NULL)
++			break;
+ 		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
+ 			continue;
+ 
+@@ -479,9 +482,12 @@ fs_rmdir_helper(const char *path)
+ 	struct dirent *d;
+ 
+ 	cl_assert_(dir = opendir(path), "Could not open dir");
+-	while ((d = (errno = 0, readdir(dir))) != NULL) {
++	for (;;) {
+ 		char *child;
+ 
++		errno = 0;
++		if ((d = readdir(dir)) == NULL)
++			break;
+ 		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
+ 			continue;
  
 -- 
 gitgitgadget
