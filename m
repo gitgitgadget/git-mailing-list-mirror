@@ -1,103 +1,190 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D2B74E09
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 08:01:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5928634A
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 08:45:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742889719; cv=none; b=pXIyXx1j7AgIWxHsem5P2eM09ofVT+VybyZqvl2JHJGMAC2dk7UTbl9HIcICB7SXr2I4Q0W+rbp9QtLSz/8dfI4k54o7X6BDOIyd5MHwzaF7/SxcL9hefkrl6UK4jLbt/0wahAuiLt5lMeroSwykRisvJ2pWDPQQ8U3a0v9QYZg=
+	t=1742892339; cv=none; b=rakuTZkwGwAE7v3C7lABVQP4yiietBlt1gkUFgu2+8msNH8gfiIZSfhfVSjE3utH8AfDFRnjaNBXZTqPu+4Zv7vOH13oORO+xH1BqV5idK0yrXvogG+Uqoce26r1+gJSsQDa3DCEJJtKXhbNMdG6gi9VoGlKN4X8Il4w/1bUZ1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742889719; c=relaxed/simple;
-	bh=5eDboXlLY48klQSRh7ROAxKsGF5oZ0kBcpqQ2u9roxg=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=tCreiOrIzEMKllRIcqy5chESltlUF3evyv3eJSqmPgWYqmNRwOYyh0GhjcqGss8mBzBhsTlofuumqoGhsWPSnmixkcZR8aSQ3urXUceTrnNaTWn71zbdv7O0MUEj5kua+MKjbXnN51gfDMmvHGK6sERKpkS8uVNRsLr4RVIZcWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R7cj1TgE; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742892339; c=relaxed/simple;
+	bh=RyjaDYQLK4ink2oW+3qSvfdV/vmiEwuda9bDF+LTqF8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=q3yDqJ/8Mc8XeVyxxmuLe088u6Bc6k7DB5Vc1cpmMaA9rovMM6QyvZHyEJjqUHifZfUvroaRR0tfan9hqN7UNaqAZR7Yu8T995I5eYTNv553k0QmI+gG2C5fy3IeCnKD12CX3mokDeZB4WoIGhpAbVYanpmxmw2XDvAtoH2REVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=Met7r3cG; arc=none smtp.client-ip=91.218.175.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R7cj1TgE"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3913958ebf2so4224793f8f.3
-        for <git@vger.kernel.org>; Tue, 25 Mar 2025 01:01:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742889715; x=1743494515; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1nZguIGcg25DdMGIUwc0IS/mZSObQwqLnttu/HYceu4=;
-        b=R7cj1TgE8P7roiDzXXWZS6oFG87AenCNtDi2RqOVuC3pm3sWTZk6Jpsw/pDZGxtvZm
-         9upZlcZm9J7lYErUOBC3Rr3qFnPAfmucLCNs4RHgyXZZlawPbcjxdqbwwJAK1xM3/bYW
-         MafF5mUS/u1DFmH+coEvHKbsXiO2gl3Z2tgYX1qbuCtdPYTOEaeae4bgB/TmbBsWzlJt
-         jTzTKQ9OB5LF4uIlcwk2w9qzV9KjUU/fpaHutdL9NY/eMfUVQyinv4jEESKzPiNO2nKP
-         uizJ19nzndKeJ6mbr6BVIzheAoJ0AN+IPYPCkuih4NFDmy+L/E8O6W5uZI7JohdOfNKU
-         oFqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742889715; x=1743494515;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1nZguIGcg25DdMGIUwc0IS/mZSObQwqLnttu/HYceu4=;
-        b=nEWae1zmduK1TVKr/oorK0sLXn08/8cXJFKATYf26rcAiocUC8c7AWVluiaS9jc/nX
-         rMJ51Uwf+4ScFdpYm3+n67yDUD5rGrr8B9GtxSOQD2Ix4FkvYxKLIZsSwPeYDriReLFK
-         7qu6bBZtDWnPuDuvpz86k8SbGhdu7NHEme62wV8vXbp70G1dWxUZBvEtoWFgfFhdm7FO
-         Voqu6Jtwg6ANPYV+c1+XaTIaQmuUpHa5LvckiU7jRx0o8BF+YwD/W088nqx7XUvKpaHf
-         x18rOqPa24k8deyaZwNKcP6gfAor2wUP7U3EO9Dv20zHA++kL14yjWDfs31UrRpnwQtC
-         zWnA==
-X-Gm-Message-State: AOJu0YzLyrvVnKYL8IMUuwS8Qq04HQBb4jOTCAWOV/Ozs8EQZ8ZOjBI2
-	kwmlfGpmf+W3uRnlYYvHqP4Aol5/OR4Nq8WIw8dAqLNzTxqwRCxuYPrwqQ==
-X-Gm-Gg: ASbGnctoC/WLv6cBVL04l8CpdUg52UBM4WnkfZLcRWr9BUXUeHwziZni9hOVyYU51bu
-	RjPOGztZBxzLpUYX0FNhVnzwAbVEhCyAm5ijVFaCd3uL12MkREEAGRWs2cpD1FgcItzuKjzy5tK
-	laob1MrOJorZJFzktqMc9o0Dhx8qVRZoQgR89IOJlcvCBDjJCYPISIleDed1zpK9kvG6cb9r3cr
-	h7vTtcKPZtER2HY99D+LZ3ND8uWdUoXmi128UEWQqhfn/5n1C4e1p+FOxRzfXNA2on+rIb1l2HQ
-	JKrRjiLvD33eATN+94DQ8V20kTWZnJQbcj4WdXmi7qluFw==
-X-Google-Smtp-Source: AGHT+IGitkX6SrsXjRZDMQevMRlrV6q3/xvvMjzPSGvga5V05t15VxPXUicG4zSeiI2u+ulkKCU1PA==
-X-Received: by 2002:a05:6000:21c2:b0:399:6d53:68d9 with SMTP id ffacd0b85a97d-3997f939949mr9890245f8f.38.1742889714750;
-        Tue, 25 Mar 2025 01:01:54 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d4fd277d5sm144406435e9.19.2025.03.25.01.01.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Mar 2025 01:01:54 -0700 (PDT)
-Message-Id: <7dfbdc48954b55a435c8cb429b648d77a1a9d044.1742889711.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
-References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 25 Mar 2025 08:01:50 +0000
-Subject: [PATCH 2/2] rebase: avoid using the comma operator unnecessarily
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="Met7r3cG"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1742892332;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zZ07e3Ul0in3HXfUCLBHGPtt/mNtCZXjk6nhTNetlRs=;
+	b=Met7r3cGXwGUapmMBYQR5mJmjtMEyeCRW8EIvQbqbPUrSAtNPag95ySpA1fz4/3GyRpBDQ
+	fWTqxfrvZLlGa4MseHqJNbqzpuiz7AY5s/lFBLmVqCIEnciZ7J2PM9UQXHpKbUJWdPDE6a
+	r3NZTtAcpZwbRl5StULAw+c+85dvzGw=
+From: Toon Claes <toon@iotcl.com>
+To: Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, Christian Couder
+ <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] blame: fix unblamable and ignored lines in porcelain mode
+In-Reply-To: <CAOLa=ZTHb6ZFmpDpSwzUTiDs44gY-W3aqBooAMyORK8Xs3YQxQ@mail.gmail.com>
+References: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
+ <xmqqzfhbrb78.fsf@gitster.g> <Z-Ew_12NWX_5qATN@pks.im>
+ <87a59aww8j.fsf@iotcl.com>
+ <CAOLa=ZTHb6ZFmpDpSwzUTiDs44gY-W3aqBooAMyORK8Xs3YQxQ@mail.gmail.com>
+Date: Tue, 25 Mar 2025 09:45:17 +0100
+Message-ID: <875xjxwlb6.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-The comma operator is a somewhat obscure C feature that is often used by
-mistake and can even cause unintentional code flow. Better use a
-semicolon instead.
+> I'm curious, how would it be different, if they blame down to the same
+> commit? My understanding was "unblamable" and "ignored" are tied to
+> commits.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/rebase.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Let me include an example, let's blame `varint.h`.
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index d4715ed35d7..62bdf7276f7 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1843,7 +1843,7 @@ int cmd_rebase(int argc,
- 	strbuf_addf(&msg, "%s (start): checkout %s",
- 		    options.reflog_action, options.onto_name);
- 	ropts.oid = &options.onto->object.oid;
--	ropts.orig_head = &options.orig_head->object.oid,
-+	ropts.orig_head = &options.orig_head->object.oid;
- 	ropts.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
- 			RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
- 	ropts.head_msg = msg.buf;
+First have a look at the non-porcelain format:
+
+    $ git blame varint.h -l
+    d2c1898571a6a2324593e92163e8754880e0c1fb (Junio C Hamano 2012-04-03 15:53:08 -0700 1) #ifndef VARINT_H
+    d2c1898571a6a2324593e92163e8754880e0c1fb (Junio C Hamano 2012-04-03 15:53:08 -0700 2) #define VARINT_H
+    d2c1898571a6a2324593e92163e8754880e0c1fb (Junio C Hamano 2012-04-03 15:53:08 -0700 3)
+    554544276a604c144df45efcb060c80aa322088c (Denton Liu     2019-04-29 04:28:14 -0400 4) int encode_varint(uintmax_t, unsigned char *);
+    554544276a604c144df45efcb060c80aa322088c (Denton Liu     2019-04-29 04:28:14 -0400 5) uintmax_t decode_varint(const unsigned char **);
+    d2c1898571a6a2324593e92163e8754880e0c1fb (Junio C Hamano 2012-04-03 15:53:08 -0700 6)
+    d2c1898571a6a2324593e92163e8754880e0c1fb (Junio C Hamano 2012-04-03 15:53:08 -0700 7) #endif /* VARINT_H */
+
+Now if we put `554544276a604c144df45efcb060c80aa322088c` in `.git-blame-ignore-revs`:
+
+    $ git -c blame.markUnblamableLines=true -c blame.markIgnoredLines=true blame varint.h --ignore-revs-file .git-blame-ignore-revs -l
+    d2c1898571a6a2324593e92163e8754880e0c1fb (Junio C Hamano 2012-04-03 15:53:08 -0700 1) #ifndef VARINT_H
+    d2c1898571a6a2324593e92163e8754880e0c1fb (Junio C Hamano 2012-04-03 15:53:08 -0700 2) #define VARINT_H
+    d2c1898571a6a2324593e92163e8754880e0c1fb (Junio C Hamano 2012-04-03 15:53:08 -0700 3)
+    ?d2c1898571a6a2324593e92163e8754880e0c1f (Junio C Hamano 2012-04-03 15:53:08 -0700 4) int encode_varint(uintmax_t, unsigned char *);
+    ?d2c1898571a6a2324593e92163e8754880e0c1f (Junio C Hamano 2012-04-03 15:53:08 -0700 5) uintmax_t decode_varint(const unsigned char **);
+    d2c1898571a6a2324593e92163e8754880e0c1fb (Junio C Hamano 2012-04-03 15:53:08 -0700 6)
+    d2c1898571a6a2324593e92163e8754880e0c1fb (Junio C Hamano 2012-04-03 15:53:08 -0700 7) #endif /* VARINT_H */
+
+If we compare that to the porcelain format:
+
+    $ git blame varint.h -l --porcelain
+    d2c1898571a6a2324593e92163e8754880e0c1fb 1 1 3
+    author Junio C Hamano
+    author-mail <gitster@pobox.com>
+    author-time 1333493588
+    author-tz -0700
+    committer Junio C Hamano
+    committer-mail <gitster@pobox.com>
+    committer-time 1333495484
+    committer-tz -0700
+    summary varint: make it available outside the context of pack
+    filename varint.h
+            #ifndef VARINT_H
+    d2c1898571a6a2324593e92163e8754880e0c1fb 2 2
+            #define VARINT_H
+    d2c1898571a6a2324593e92163e8754880e0c1fb 3 3
+
+    554544276a604c144df45efcb060c80aa322088c 4 4 2
+    author Denton Liu
+    author-mail <liu.denton@gmail.com>
+    author-time 1556526494
+    author-tz -0400
+    committer Junio C Hamano
+    committer-mail <gitster@pobox.com>
+    committer-time 1557037206
+    committer-tz +0900
+    summary *.[ch]: remove extern from function declarations using spatch
+    previous ffac537e6cbbf934b08745a378932722df287a53 varint.h
+    filename varint.h
+            int encode_varint(uintmax_t, unsigned char *);
+    554544276a604c144df45efcb060c80aa322088c 5 5
+            uintmax_t decode_varint(const unsigned char **);
+    d2c1898571a6a2324593e92163e8754880e0c1fb 8 6 2
+
+    d2c1898571a6a2324593e92163e8754880e0c1fb 9 7
+            #endif /* VARINT_H */
+
+And now with the `.git-blame-ignore-revs` file:
+
+    $ git -c blame.markUnblamableLines=true -c blame.markIgnoredLines=true blame varint.h --ignore-revs-file .git-blame-ignore-revs -l --porcelain
+    d2c1898571a6a2324593e92163e8754880e0c1fb 1 1 3
+    author Junio C Hamano
+    author-mail <gitster@pobox.com>
+    author-time 1333493588
+    author-tz -0700
+    committer Junio C Hamano
+    committer-mail <gitster@pobox.com>
+    committer-time 1333495484
+    committer-tz -0700
+    summary varint: make it available outside the context of pack
+    filename varint.h
+            #ifndef VARINT_H
+    d2c1898571a6a2324593e92163e8754880e0c1fb 2 2
+            #define VARINT_H
+    d2c1898571a6a2324593e92163e8754880e0c1fb 3 3
+
+    d2c1898571a6a2324593e92163e8754880e0c1fb 6 4 2
+            int encode_varint(uintmax_t, unsigned char *);
+    d2c1898571a6a2324593e92163e8754880e0c1fb 7 5
+            uintmax_t decode_varint(const unsigned char **);
+    d2c1898571a6a2324593e92163e8754880e0c1fb 8 6 2
+
+    d2c1898571a6a2324593e92163e8754880e0c1fb 9 7
+            #endif /* VARINT_H */
+
+So every line now blames down to commit
+d2c1898571a6a2324593e92163e8754880e0c1fb. The lines which used to
+blame down to 554544276a604c144df45efcb060c80aa322088c should be marked
+as "ignored", but we only emit the details once for each commit. The
+commit details (author, committer) are only relevant once, but the
+"ignored" info can differ for each line (as you also can see in the
+non-porcelain format).
+
+We could make the output look something like:
+
+    $ git -c blame.markUnblamableLines=true -c blame.markIgnoredLines=true blame varint.h --ignore-revs-file .git-blame-ignore-revs -l --porcelain
+    d2c1898571a6a2324593e92163e8754880e0c1fb 1 1 3
+    author Junio C Hamano
+    author-mail <gitster@pobox.com>
+    author-time 1333493588
+    author-tz -0700
+    committer Junio C Hamano
+    committer-mail <gitster@pobox.com>
+    committer-time 1333495484
+    committer-tz -0700
+    summary varint: make it available outside the context of pack
+    filename varint.h
+            #ifndef VARINT_H
+    d2c1898571a6a2324593e92163e8754880e0c1fb 2 2
+            #define VARINT_H
+    d2c1898571a6a2324593e92163e8754880e0c1fb 3 3
+
+    d2c1898571a6a2324593e92163e8754880e0c1fb 6 4 2
+    ignored
+            int encode_varint(uintmax_t, unsigned char *);
+    d2c1898571a6a2324593e92163e8754880e0c1fb 7 5
+    ignored
+            uintmax_t decode_varint(const unsigned char **);
+    d2c1898571a6a2324593e92163e8754880e0c1fb 8 6 2
+
+    d2c1898571a6a2324593e92163e8754880e0c1fb 9 7
+            #endif /* VARINT_H */
+
+It feels odd to me only the "ignored" info is emitted and the rest
+of the details isn't. But that might be just me...
+
 -- 
-gitgitgadget
+Toon
