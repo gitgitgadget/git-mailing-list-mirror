@@ -1,125 +1,160 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4E61A5BB6
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 22:41:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC711DD0F6
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 22:44:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742942461; cv=none; b=tqYRlrJDFP352e+sObLIxi71P9WQtnRO3WccELXFoZ2zKrINuCWlvIE0BSKeQvsV3yhHKDmutWZczb82UXXx+H2iZlsGs4etcjm8bhdsO9gi5rdmmPr+tEPlTHl13YWnwU4Ojo2exd1JwvT+8zMy08CJMDrCuOaiE+n9Jyr7pXo=
+	t=1742942682; cv=none; b=WN87Mmhedw0lKPJLNac8Ail6Fwed62zVvhfjAvuxW9aQC6fFBE2vQ3r6SVxbEhs7Z+16q9aTMJStKQJxfNMMYm5/za71JeJvwaWYYw+1U0TJ/2sN7MGoPVAxo7veFk1hPBlhGCdEMtYHB7qZ8WmnTlPuUPDruf5ALpU4On8y3ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742942461; c=relaxed/simple;
-	bh=YSSWPWS7XZBjtsNU0b9sFnR4U5EW+Ic8hudMxj9EklA=;
-	h=From:Message-ID:Date:MIME-Version:Subject:To:References:Cc:
-	 In-Reply-To:Content-Type; b=bFgjLVnYOhuVsMjFOnxuEG9IpCK0WViBP3FC7hn/B184QqncwC5ZU7b46xIQjH0CRGTJcQ387W91WZVEYjjdMjKiUxGr5UinZMf/t5QNTEpfAYGs2ytv1RmcbBqLF7msSFptZ9KnbKPJ8LbfAza9xTac+ukBpCgHSu5aDG50ywo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V2Ujhl77; arc=none smtp.client-ip=209.85.222.172
+	s=arc-20240116; t=1742942682; c=relaxed/simple;
+	bh=AR5qObMP2v/emOIsY3vBXvKT/QU4JW3Y8aWHoecAr0Y=;
+	h=From:Content-Type:Mime-Version:Subject:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=pC68vFFwjqIM0GVCKRaB5uY70GmYB6iw4LYACaKZHNFGSJnRBAdjdupFuhmYJm4SLcig52OEu4p4sIhEiLghNKZnzo69isoAPOxm4jJ+L22uddpN5Qdvh2Je08CNSw5uysssBC+D0QEPR/n9Uk6ybGymssYtwa98LL5dtbd+nqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mLS5NkT4; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V2Ujhl77"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7c56321b22cso34030085a.1
-        for <git@vger.kernel.org>; Tue, 25 Mar 2025 15:41:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mLS5NkT4"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-ac29af3382dso1043395266b.2
+        for <git@vger.kernel.org>; Tue, 25 Mar 2025 15:44:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742942459; x=1743547259; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+bmIZztea64M3cifxwqlwki9RWtDOPvzsUak5Js7BLc=;
-        b=V2Ujhl77KcV7NNM8vbqJCIJHb3lIgwlt5aPnJ2hpCLAHXJ6eM7ADzA15xeVjSEGUIa
-         o5iMhMvM/T44iglxMbio8kyNNAX269GV6I4RWlYPUO23C3Md1j+tNiNQR5BqybOzTuhW
-         evm7xYIcAByadIyWhgy+cYibmQ5jI4KB+CG/jPGkyDiKHk9FOFOqTNv/FmQzc1u2wKsP
-         CGkljfb93t5crezbBoejv5AIVamAG6DYJC0LS7XiDNrLGid/tTClUdBvwmGGM6hPyiMT
-         KDWEefLAM7r5P2AVrsd/2iAAjVDUcIYPxbeaKn3U9hgV/qq+iAQH+8W69jjYZGtvF7SZ
-         I8KA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742942459; x=1743547259;
-        h=content-transfer-encoding:in-reply-to:cc:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1742942678; x=1743547478; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:subject:mime-version:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+bmIZztea64M3cifxwqlwki9RWtDOPvzsUak5Js7BLc=;
-        b=WukJor2BcIcV/SA+qaiP4OYZeVW1yUv1o3QwPTf+rkZVuCTP82jD3IBsxAK71dS7fk
-         zrOpeCDgQNUY3/Lg0f+kvOwOQ0Jto9r2mcZf1tvZCizy0nXFlc9Jffb5x+HqiYfJs2k0
-         6OOMOzLadmSWNz0zVVO/hdbkIE6mNxVW9I41x8pbhpMaBcRhY+9KgBc8Jn6qp5q0mxj0
-         NRthT656PKMH4cKx5lAm9Ikyx8nBvjm0Md9O8KBbNiaKE0Ekx83LZBBibyEEwEue1Bvz
-         xoKwO5NCJzPvKx9rcrpDXwORGKGZOylcbTu9sH6IGFvsC25Zc6jIeqS5xWJlfZeOv4Ou
-         TtiA==
-X-Forwarded-Encrypted: i=1; AJvYcCVl4aOd0kzTEpnWcWWpQ9prx5f8z2nNCgjA7KLAUHHzP/E02H2/jY/vCixXNSyMP93IYq4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZJH4HB+QI4ChrjX9OOTDYEXt8Tw4JJwUF3BnzdecTfYpvRa5m
-	7GNGwy1OmS7Y2ilQJQj5jaJza4GXioIvuppgxjIoBueORkwA7FJH5JgcZPJx
-X-Gm-Gg: ASbGnctHVzjcdxS5Qq8abgIwjys+FFjq98QB9yJJXbtT4dxxoTOm7o2q2MVigFL6cMu
-	uVo0ZPZQGNIRTEn3qv7zG/tLh4ymPh9uaTC++zQzBzWkUKUvKvLaBVa0/6oV/+SPHK7oHAkKFj6
-	VY3EPDvalfL3wL7OXsXXnTmqgNbZ1zCMS2d5UbaRxNCUOpaKNyBELgaYcZ2eg0aH2VRJTdbXU79
-	+lo+ZDSB89iXonxkXhbp/mXDWu0npfdvSDtKv0/gEZf1tlqflm30eu3fJObcbv0yI/1WHkxLY9j
-	B2fVmyKP1DhRUHbbx6caUf55/P/Gq1MvTq9IHjMcnYSvkgPkIb/oM9nbestHuowxvSnvdEZwTSD
-	WXcSBZ/mEEiL1yl8Jah+Fsw==
-X-Google-Smtp-Source: AGHT+IE+fYDa2pn9QsJeUMImxEXVd99lepabhbcnwy8VRh05vmBDGZ9K6vLslUsI/GjFRSHMNYvaGQ==
-X-Received: by 2002:a05:620a:6884:b0:7c5:d71c:6a47 with SMTP id af79cd13be357-7c5e48e6a55mr262715585a.8.1742942458838;
-        Tue, 25 Mar 2025 15:40:58 -0700 (PDT)
-Received: from [192.168.1.174] (c-73-143-206-114.hsd1.ma.comcast.net. [73.143.206.114])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c5b935820asm689889185a.94.2025.03.25.15.40.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Mar 2025 15:40:58 -0700 (PDT)
-From: Nikolay Shustov <nikolay.shustov@gmail.com>
-X-Google-Original-From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
-Message-ID: <66e39a95-09a3-44dc-ac71-a6c02b5949c9@gmail.com>
-Date: Tue, 25 Mar 2025 18:40:56 -0400
+        bh=AR5qObMP2v/emOIsY3vBXvKT/QU4JW3Y8aWHoecAr0Y=;
+        b=mLS5NkT4nf/6T0OBwrD9tyTYC/ruhOv9Yc5QlLPVZmBK6nDXx2/WFZlO+C/cI8z0u1
+         RrajI3Trpmct4uDvFARJHmTLfs7V4DDGinT2SP0Y4/oigbo9j/BN/NalBQV8M957d6cn
+         fMBTfI/IuWqV/5efF9f4tS/UrY4q566Aw7ZMk8OPlhqoRbAE5W9kbXZimGOyAwXV3s20
+         IvfDuQv9WWSsNo9nZlNtxGA9YVjwFFF5PtqbUsiYmXCxTPRa60BBN11Qz1PtRozA/E7B
+         zbNTzsz0yGO4LR1jQTnxczETjtQ1CjqxsMlLg/Uu7L7WOqlHd0m88zxNgepY67e+KT/W
+         A+nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742942678; x=1743547478;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:subject:mime-version:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AR5qObMP2v/emOIsY3vBXvKT/QU4JW3Y8aWHoecAr0Y=;
+        b=qg0/PWXDmOBPFJssk5bpLBKLBCQuvdqoKteOVwWYT986BKFSt8AGpShlifFKIG1tc2
+         Zex340Z3NEnA+24S9sr8heOEaX6X5z2ffd3TdlxeRYrFOAK4BZmgQgIk237uxAQd0BdQ
+         0XqVkUTq32h730wwbYINIZHOWJwidECngzWXzUvDVlzOPouwrX6H7tDmQYUul9TEG3Rl
+         jI2AU6Lc0NW46Kv0QzFbmbfZahwiymf+ThUHpYlnVFxbULmazZH9kGJ6aZxdbX1OW33D
+         5kXkU1t41sI38VZUj3xa6zdi+d/bDokw2/fmO4XX4R22jG7eUWUqR65Z8jJ1PFmYgO9u
+         4hbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVf8TqYjbI7yrGbGPtAUlOoin/xI59tW43qeVV7qUpq803Ef6L7foh1QCMNy+68pexDzUg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzGTfpvOOQ6gjsmm1oxxjFweQBGaLdV3mfizxOixXoZbdw2w63A
+	R0Y0IKhwvJucsCR1iXgdLOxFKBbK5NDe/tWMSHfIDRJZxf99JiE=
+X-Gm-Gg: ASbGncumADsqJq2ijzoBW5aW8jZHTWXG12lq0cWEujZ0DvcRHlAOG2tb3Jl8cfdIsXE
+	/c05iZyPyUuCQX8fSQXjYNveZxdfWwMhV8bv1N2BuT3afI6A7T4m2paWA6R30zKcdP3imqHbSpB
+	Q1fCJjP1plKpBFHqZdWdL72Y65ZCNhvaURTTvfXAiOGR6C/QSKz7bKXMO+TeQLIm/Jl+r2zNPyj
+	iDsiJMBqX1TPv4cOQE2InUO8NXYiSDB2lJ5plA/pw8glQr2vflFb+R8wMbOZbAOUXUcNI4UcEak
+	ct9Uj1NcQayfxPUbwTXhF9AtydUoPapI0IWbqUVCnEe2Sc2vP7eBODb53+yCgOfq2g==
+X-Google-Smtp-Source: AGHT+IHvu1uOZ5VMjTjLEbWnfUM85HDYpeVZTfz/mgodSlUXYRzXpYv1GiOWZchkGAsNmtaNBBIfuw==
+X-Received: by 2002:a17:907:6089:b0:ac2:aa51:5df2 with SMTP id a640c23a62f3a-ac3f251bd13mr1745507866b.47.1742942678198;
+        Tue, 25 Mar 2025 15:44:38 -0700 (PDT)
+Received: from smtpclient.apple ([176.224.78.140])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac3efbd4640sm907236166b.129.2025.03.25.15.44.35
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Mar 2025 15:44:37 -0700 (PDT)
+From: Ayman Bagabas <ayman.bagabas@gmail.com>
+X-Google-Original-From: Ayman Bagabas <Ayman.Bagabas@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: Nikolay.Shustov@gmail.com
-Subject: Re: [Question] Moving from Python2 to Python3
-To: rsbecker@nexbridge.com, git@vger.kernel.org
-References: <022b01db9d99$e68785c0$b3969140$@nexbridge.com>
- <Z-MgpuxFQ3xEgvsU@tapette.crustytoothpaste.net>
-Content-Language: en-US
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>
-In-Reply-To: <Z-MgpuxFQ3xEgvsU@tapette.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.400.131.1.6\))
+Subject: Re: [PATCH v3] shell: allow overriding built-in commands
+In-Reply-To: <20250324202838.GB777700@coredump.intra.peff.net>
+Date: Wed, 26 Mar 2025 01:44:24 +0300
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Ayman Bagabas via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org,
+ Elijah Newren <newren@gmail.com>,
+ Taylor Blau <me@ttaylorr.com>,
+ =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+ Chris Torek <chris.torek@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <FA9BF11C-4237-4A0A-9C06-37F0C4E8B712@gmail.com>
+References: <pull.1930.v2.git.git.1742688740650.gitgitgadget@gmail.com>
+ <pull.1930.v3.git.git.1742743771108.gitgitgadget@gmail.com>
+ <20250324032550.GA690093@coredump.intra.peff.net>
+ <xmqqy0wvov5n.fsf@gitster.g>
+ <20250324202838.GB777700@coredump.intra.peff.net>
+To: Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3826.400.131.1.6)
 
-git-p4 is designed to work both with Python 2 and Python 3.
 
-However, changing just PYTHONPATH may not to be good enough.
 
-In general, it is necessary to make having PYTHONPATH value and the 
-version of Python executable which application is run by, to be 
-coherent: Python executable has to be able to work correctly with the 
-libraries PYTHONPATH points to.
+> On Mar 24, 2025, at 11:28=E2=80=AFPM, Jeff King <peff@peff.net> wrote:
+>=20
+> On Sun, Mar 23, 2025 at 10:27:32PM -0700, Junio C Hamano wrote:
+>=20
+>> Jeff King <peff@peff.net> writes:
+>>=20
+>>> So it seems like a reasonable goal. A more restricted approach might =
+be
+>>> to provide a more formal hook/plugin interface. E.g., to run a hook
+>>> script with the command name and arguments, and have it return
+>>> success/failure to allow the to proceed.
+>>>=20
+>>> That's not quite as flexible (in your approach I could replace what
+>>> upload-pack is doing entirely, cache its output, and so on). But it
+>>> might be harder for admins to screw up. I dunno.
+>>=20
+>> Yeah, we usually try not to be overly flexible for that reason, but
+>> given that "git shell" is so limited that rewriting its services
+>> wholesale is not all that much of a deal, I think it is OK.
+>>=20
+>> I however wonder if it is worth admins' time and effort to add
+>> features to "git-shell" using this new facility, or if they are
+>> better off using something more established like gitolite once they
+>> want to go fancier beyond what the basic "git-shell" offers.
+>=20
+> Yeah, I left my general opinions on git-shell unspoken. ;)
+>=20
+> For features, I think you are probably better off with something like
+> gitolite (which I think does have some access control).
 
-How to achieve it - depends on the OS where git-p4 is run.
+Gitolite is a great software, but it also has its limitations. It =
+couples
+authentication and authorization in the same system. However, I'm =
+looking
+for something more flexible that I can plug whatever authentication
+or authorization system to the mix similar to git-http-backend paired =
+with
+apache/nginx/h2o/etc.
 
-If used from *nix like shells, git-p4 would be using Python executable 
-from the shebang in the beginning of the file: #!/usr/bin/python .
-On Windows, it is possible that the specific Python executable could be 
-associated with .py files so that shebang maybe not in play at all.
+>=20
+> For security, I'd be a little scared of git-shell, just because it's =
+not
+> run all that frequently and we've had issues with it before (e.g.,
+> integer overflows). If you're taking requests from untrusted clients,
+> you're probably better off configuring http service.
 
-Some OSes may require manual adjustments such as setting PYTHONPATH 
-shell profile (environment variables, for Windows) and ensuring proper 
-Python executable will be put in PATH. Some (Linux) may use 
-update-alternatives commands to switch between Python (and other 
-applications) versions easier. If it is desired to keep default Python 
-of one version and run git-p4 with another, more tweaks/hackery may be 
-needed.
+That's a fair point. Perhaps writing my own restricted shell might be
+the best solution for what I'm looking for :/
 
-I would recommend to refer to the documentation on the specific OS and 
-also look for hints in Python related online documentation/forums.
+>=20
+> I also imagine there may be restricted shell implementations that are
+> more general and more battle-hardened, that you could configure to =
+only
+> run a few commands. But I haven't looked at that space (because again,
+> I'd suggest just git-over-http).
 
-On 3/25/25 17:31, brian m. carlson wrote:
-> On 2025-03-25 at 15:23:40, rsbecker@nexbridge.com wrote:
->> Hi Git Team,
->>
->> I have Python2 and Python3 on my system. We are deprecating Python2 ASAP. Is
->> there an easy way to force git
->> to use Python3 only? Both are in /usr/bin. python has a symbolic link to
->> python2 right now, but we are probably
->> going to change that. I already have modified settings in config.mak.uname
->> PYTHON_PATH = /usr/bin/python3.
-> I think only git-p4 uses Python in our codebase, so changing `PYTHON_PATH`
-> should be sufficient to fix it.  As far as I know, git-p4 currently
-> supports both, so things should just work.
->
-> Of course, I might be mistaken, since I don't use git-p4.
+If you know any general restricted shell implementations please do tell. =
+I'm
+looking for an SSH solution something pluggable like git-http-backend =
+that
+I can build on top of.
+
+Honestly, git-shell's simplicity is what got my interest at first. The =
+fact that
+it's not secure and not run frequently can change and be improved.
+
+- Ayman
+
+
