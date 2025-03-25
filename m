@@ -1,121 +1,133 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D04725484F
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 10:38:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3FF190676
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 11:24:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742899116; cv=none; b=hTGO5R5YedQAJbAH8RtKtTH0hocUomqMa3jAxxteNzDA7wzXac/abxyUiypkfHV48NJWMfL9hCIcDIejf3D5nSFb9nKQ30Fy2bn9FXD/uRb3bvBDlRApVUQR/IFMSuI/L0eOn4XAC/17V/oT3NSzF1T9nvVtpZBhQ8QSfVqfjMA=
+	t=1742901846; cv=none; b=G1XizRPOZoc1y1rSnI1Rr8g0CuehvcKHLha2Iw1FNmYMBahjYq5TwL0EWKDzNZWvC7UYmhM2kerPqiemqfOwks1SQnQxdcqUAvLQtwZoqHZKJHabr4o+ilpW8bRvyxvXpJ6HzRnvSTrXKXVrHNrxlh6EWJwu88wCY3ePKdhRZAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742899116; c=relaxed/simple;
-	bh=w/MilV9s5Z2Tvz/1OoHagRtLOPJEUqyZJw2GB0pJjo4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Yji+aE8jp2nzqpS69eG/yPC4ohJ58p1igCsX92+q8+d4e6bdz5OyK1m5boMC0qwaI2WJcVJBClm5ApY4KZUnzbo3Fv1mJNWNqY/M4mZz06LwsdoJgE9ZnZVxptD6C6NVYDhxM+j8eRezjXwk+wN8BezfM7xTGobfgGmDt6OTHwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C9Mv6dbl; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742901846; c=relaxed/simple;
+	bh=e/VFDSg46AkyeB9O4XIJl83S2rT5FS0sWr+xdpk4HM0=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=DzumBnCXWzXup7BnU/fWLWkUcRZoKr8GC7yzlnow9UU2EjGlEEC1ajyzTPK+JKA5F+eEndTcVm28lkFXKtYA+3/G2kQobQabZvWGZ97qmJSS4beXoRYHOsUTenSIFh65oBFOZY/5fgxej5KAuDcALUSnQljd9+RWec/d7PT+8EE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ARlbLHaC; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C9Mv6dbl"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3912e96c8e8so3040595f8f.2
-        for <git@vger.kernel.org>; Tue, 25 Mar 2025 03:38:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742899113; x=1743503913; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Jtkl4Q+56P/fWgeUgh0D3Y5btSZwYFZPDqsL98n/CKI=;
-        b=C9Mv6dbl02Nxy6jc0GCB003Bq2KRS1YVtAtgaiox+/XPZwjZciJqH2BQ+L1LK24qCv
-         7+iumXUJHNycR2bT34QEKWLtoij7igInBbCLnezUNAKGf1n+M9z7Tdl4CSTkz+SYZNLD
-         X6UECFUOXEIfNz8o8WfaI9Oe312pxuoKSKMZe/jLiTtGxcObqw/lOAgDM2D/mmecFApJ
-         9i7TsVKro/xpRDGeyatKrsWCQGGMXZsqP2hrOwzK4/e7ErnU9LL7uFqtf8pd/HKqJ+5u
-         DcVrNsxMaQksS43kj3Vx0IZR/NexwMBg/F9qIbGwICUUbQP64LNUtGMf9X2cFvesZaAf
-         A1BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742899113; x=1743503913;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Jtkl4Q+56P/fWgeUgh0D3Y5btSZwYFZPDqsL98n/CKI=;
-        b=HirM8GheqfXnK2cp350HXXH1h3GyAoCcA/lfFt/kD613RTEffNLTIVHJmcywZbRuK+
-         0SFmCE1nzx50/MWKKkSQboSLhglrF1YiWESGLOk3C4LIRvEt/OwetqbUDAu8urO9uwAU
-         M3baRED1GQKpcze82LaRHcaxsT8EE9nw5y2pWfJoBp0JCRHlOdvYo5YvaigpeDbijjMR
-         7Gx67jqBP0ccPkG+vHuNAs+V80EmGOiSGO8uhYLp+AwLMczrhMWBphV/T/QE0jCpoqj8
-         C98pf0HbkSu82QKx/hOpB46mXx8QA/+sxOr1RtthA42LTDr/MP6Izbmvuin2c02w90/z
-         xQ+w==
-X-Gm-Message-State: AOJu0YzB2Sr36Ttv5dq+znpL97oHvDZGVfA0j32DxQKcGmApGMFa3YXd
-	7EBrsok/RcBoaqsVUWCj2y/QnZeLnUtuDbv38na1OOijU4WarVQ/IqBiMA==
-X-Gm-Gg: ASbGnct8sVmGZ5B/VeUeDXhq7d2f7nfFueYmGVy8JfhjnNjON+3cnqa4BAxZS1piGmv
-	qS5eI6LhH33C5s8tsDhpWYfxAk9GY5+lKTxBbdNLWy3TLhVudHg9h6IBW5S3c8JdZ5i4rBS3p4L
-	ENQ8vCMVDJbY9tuom+HeJMc6yaiEhEh5z5GT4pXjp4Dq2SJvdW8S6LUnrs5gUUXeqW/6YwM/Sv2
-	kFileUwjH82RjXRQDu1imbmGXx3g1XLLj4Ji/TMKw9+3QZB0QL/XO0T2ko/O2n9W9syenYdcqkS
-	TnowkboSYlc5m2BBz0v+Tat6mpcDFXzKhZdUNVOpV51o2ZvtA/v4744a
-X-Google-Smtp-Source: AGHT+IGFZZ26U2VOskW83IxsZVr3Iv8uRO6qLgQc4w4znBjX6Wzo+uZVzUdSdHnlm81s40eeg8gVsQ==
-X-Received: by 2002:a5d:6d88:0:b0:391:2e6a:30fe with SMTP id ffacd0b85a97d-3997f92d305mr17892179f8f.39.1742899112845;
-        Tue, 25 Mar 2025 03:38:32 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9e65casm13575672f8f.69.2025.03.25.03.38.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Mar 2025 03:38:32 -0700 (PDT)
-Message-Id: <1daac3f08fae41a967d52d510128052c6a1829a8.1742899110.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1893.git.1742899110.gitgitgadget@gmail.com>
-References: <pull.1893.git.1742899110.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 25 Mar 2025 10:38:30 +0000
-Subject: [PATCH 2/2] test-tool path-utils: support debugging "dubious
- ownership" issues
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ARlbLHaC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1742901839; x=1743506639;
+	i=johannes.schindelin@gmx.de;
+	bh=3BVjdmZMvKL3KGEKEd31ItvG6D6KRpTMzxujkoJMroQ=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=ARlbLHaC30ssfEujf2rQ9stX3teUes4AKMWZ1T7Vow++hr3riimOxVqU/6KVGmbs
+	 PNRvnXW1KWkxpI8qDblUp36cpR5kWSchLg0e6gQ0BAqr+tmWkJ9I31nnsTZoeLvnh
+	 TQe2PK/W3nBIlRchp8QbxG3J+ozRYXRp53rnWQuvprQvbsQue9GejvkfqeR/TYaSG
+	 IoBz0rpN3wnXF7QcvMpexCN7X7Kpfyw51dyxhcGH/WkcFD5hJEdM8ItpWalH0J8mg
+	 4pl6Kb0Mn5Aspb1/vIjrcn6Knu0mkl5LhKYnVw+/zsH4FWmpdd3sas6zMOhnYr0sH
+	 02N1bfRXZggja6iY5A==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N0Fxf-1tBNoe0TMF-010Fvh; Tue, 25
+ Mar 2025 12:23:59 +0100
+Date: Tue, 25 Mar 2025 12:23:58 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: git@vger.kernel.org
+Subject: Releasing versions on Fridays, was Re: Git Bug Report: git add
+ --patch > "e" makes keyboard unresponsive
+In-Reply-To: <xmqqsenb70u0.fsf@gitster.g>
+Message-ID: <2dd6e0fa-b997-f69c-874b-f424325123a8@gmx.de>
+References: <CADs5QabwDtUpehNY3hr6BzKyfpp-Ts54TANGkygWPcN3T=OSOg@mail.gmail.com> <84c3ccdb-2aaf-9b34-91c5-cf5c27f53dcb@gmx.de> <xmqqsenb70u0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:AL/kgRk3MsxGTgvedcEryJ3tdNBzS0GuBhzZTdaCPzcTjcGA5CU
+ ts31vnOVLqtBuxfigpP5WkvQ/PHvY6QdcFmn3CKGBuZKipMa6C1Fvn9/B17k049tJSFvil3
+ VwQqZExWJRVC17SHuG44myxx3m3OTOOXeSeLhTEPQ3wfdOUqkhJsfgq4wTOZpE0weu2FTST
+ u++cwliCeYLJA1Xspp/mw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:izHsVz2SKUg=;CW0Dn/gJuQEcMgv6iOXuRDC8hwZ
+ f6utc2wkmlPUgQENz9+0H3JPYH7wv+6MrJxvB0kkDLO4Wkxamt5bVDfASLzSUQc/gWew1kgkC
+ /CHHj8JulrT3ciMUAxq42p3fRuYYBfr6N2ScFzlN4vbhcUELPKu64H2bf15dZR9+N5QhHp5oJ
+ /cN/X2R6Ey2K2sQnUtRaVghmfwg1TT+xYbccSvujEcxoeWao3uJuy+IwxljlQPsk+xDRvjhpN
+ 2lozC96VWpC9/2ka/FXkCJ32fZmIaurVRR5yBznrAYym9/LLG3KHbcj9tcvplPuBo8Pt8GmFv
+ D8PdK039pIfdiPJKbs78uT7D0ptUQp+D29b4KP6Xl5ckzrWGY2ff8sT7Jl7wjdJywALxEKhBS
+ fKCpDjx17+njBMunBy1JF0Ai1CIaGDs1eJqJv+LRGvOJeI6DCrfgGKtqi5Zy5bMJ/3FGJWlMc
+ KoE0a6Q36EEbGAi9PKX/H8kBHB9U0TLkJBSBT0toFmYhg+YkL1JgC7hQ9DEP52aISkhwTMdzc
+ Py5Gcs8zEMLAIy7ClZsF6zVtm2zPDYAfsTK2aLvLhHYL/e6FnGeFWJnrCWuEseTHgK9sxAmiC
+ YzNmTq/7EIWGueefAGpkc72n89XtCxEMl7bK/L6sb9SNBwL6lWoSV1fG2dzGoG58/IhNPdyJy
+ LO4hp3sQwuhkGlQr3+S4Pz2rQZEopxtZeVw2UNemK7HqtttVSFfO7vmn7Gz7FL2+AJwnd/q6n
+ Ugw8p8KIJwxZSR/mQchKdYLnl0I5HFlqxej07RgELYFtXrjRdtQ8JAbcJZpdluJlM6wgkDUSP
+ hvBbBo04FcuO+MVRfnA6X9j6SM9r/NYgXcjq+Fp6cY6oEg9VMANSFU5nhOEZ46gkNC3X2fg72
+ fDqCn0q9CEWAhKFkCHIJtuk1mrgIwe1pydHhBwbrHX+mERzC6g0M//8yu5dc/qpdhMmwMgcVv
+ nVuakLaoIrViIe0Xxr+VQyiEm7sRyspYz/wcDU+cwuX/ko9Nks97LBxjAFD0cFdshPVqiUN2g
+ t5A2tuZV7r63xu8PIO7KlNV0bmNMA0e7+Qp+TVS0uFYcWI7CEhDU4TACsNRS3ZonsCdPPO5Kw
+ HGu67XWYwKeBVZyHUboeUjXAGKJppT3Y3NVD6whe90oSEKVQ6Ch4pF6e8iBHlL2KgA7TedzNz
+ 8gyswxqnM2MK994yYVj9M5/xAhoEJ1FpOdL3JOYfWbHGUXAivSg3XA28JCrRuMnXU+WhYj9Az
+ WgiM5/XnxfLlWNNgzBeEJv4fD6KTd12w1gmz4rsVIf7HcgSSIRDEmvFztvJ8P0gWIrQfUdp+f
+ FOkky1wkdO6WQzTnSq2wlAH0yqK1Fyw8cE1SxihNtBMM1FYOtoIj82jDnKNCSrPG/f7zrD+bI
+ Em6olF3ibrl99D24SwfncxBCyw9q455aNTtnr9SCQf+UVkKktpjAHzlmv0vL1SGBwSzal5h+l
+ NzbJIwk/Lxp7D4BvSXOki42NvNVVGaJnJKYaJrmnWtvLO8geE
+Content-Transfer-Encoding: quoted-printable
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Junio,
 
-This adds a new sub-sub-command for `test-tool`, simply passing through
-the command-line arguments to the `is_path_owned_by_current_user()`
-function.
+On Mon, 17 Mar 2025, Junio C Hamano wrote:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/helper/test-path-utils.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > I refused to release on a Friday (absent any good reason) which is why
+> > this version is scheduled to appear this coming Monday.
+>
+> Not on-topic for any particular bug, but do you want to probably
+> coordinate on what day of the week a release is made, perhaps?  I've
+> been trying to stick to the same time-of-the-day we established
+> earlier for embargoed coordinated releases, which is 1700 UTC - 2600
+> Asia/Tokyo.  But the choice of the day-of-the-week has been more or
+> less arbitrary picked by me to happen on Fridays for the past few
+> releases; it seems 2.47 was done on Monday.
+>
+> Any preferences?
 
-diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
-index 72ac8d1b1b0..f3c59e50285 100644
---- a/t/helper/test-path-utils.c
-+++ b/t/helper/test-path-utils.c
-@@ -504,6 +504,25 @@ int cmd__path_utils(int argc, const char **argv)
- 		return !!res;
- 	}
- 
-+	if (argc > 1 && !strcmp(argv[1], "is_path_owned_by_current_user")) {
-+		int res = 0;
-+
-+		for (int i = 2; i < argc; i++) {
-+			struct strbuf buf = STRBUF_INIT;
-+
-+			if (is_path_owned_by_current_user(argv[i], &buf))
-+				printf("'%s' is owned by current SID\n", argv[i]);
-+			else {
-+				printf("'%s' is not owned by current SID: %s\n", argv[i], buf.buf);
-+				res = 1;
-+			}
-+
-+			strbuf_release(&buf);
-+		}
-+
-+		return res;
-+	}
-+
- 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
- 		argv[1] ? argv[1] : "(there was none)");
- 	return 1;
--- 
-gitgitgadget
+I have stated my preferences previously, even attempted to coordinate
+between Git and Git for Windows, and I observe that the way I present
+arguments is ineffective. Therefore I will try something new: Refer you to
+a couple of resources that could elicit some introspection and
+(re-)thinking of existing practices:
+
+- https://daniel.haxx.se/blog/2022/08/16/the-curl-release-cycle/
+
+- https://www.researchgate.net/publication/268815678_Why_and_How_Should_Op=
+en_Source_Projects_Adopt_Time-Based_Releases
+  (old, still relevant)
+
+- Notice the weekday when Firefox releases new versions:
+  https://www.mozilla.org/en-US/firefox/releases/
+
+- https://msrc.microsoft.com/blog/2023/11/reflecting-on-20-years-of-patch-=
+tuesday/
+
+- https://www.linkedin.com/pulse/best-day-week-release-software-rajith-mud=
+itha-attapattu-wvpuc
+
+- https://corner.buka.sh/why-dont-deploy-on-friday-is-more-than-just-a-sup=
+erstition/
+  (yes, new Git releases can elicit support escalations on weekends)
+
+- https://www.wingravity.com/blog/deploying-on-a-friday-to-risk-or-not-to-=
+risk
+
+- https://www.sinergiapositiva.com/2024/11/19/friday-deployments-arent-the=
+-issue-your-quality-processes-are/
+
+Ciao,
+Johannes
