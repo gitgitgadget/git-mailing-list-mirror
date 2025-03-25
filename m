@@ -1,67 +1,69 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF3F1624DD
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 23:32:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD531EB5DD
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 23:32:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742945539; cv=none; b=DA8necN70fZVRBq2IZyV2amJQrKTjGTlAlbmTYkdB3MsUQTvx2tqAcoN/2YEiGf24oGj2yEE3vdRPDaVdGLeSnKumKh/C0EELxJotcnziF88MKMIihZahfr0pEXIhqVVVLD5ocetFU7O5u64XqQewzCHis19r6MqKznuKciqr/w=
+	t=1742945540; cv=none; b=TTUknouxVZ7WSq9qmuvwmIYszCGey2ejHJEoUUsnTmrTpJgW/bqGF+ubWG6omlIHIpkfe9D/whKWKv3PMxK8Bw9i/IJpg4wEcmkpF0PE4xc1LDwYg9XAzLl/3KROYtB1TAaISkbEvM43ocDRGcixSAHKEQhq6p4+k8cVKkf/yQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742945539; c=relaxed/simple;
-	bh=zmhtj8xdk7E8nqZx/ConpHcVUbHxD7ZUD6EO3RI2Sto=;
+	s=arc-20240116; t=1742945540; c=relaxed/simple;
+	bh=beia6WAgB33vVVZmnoTF98obrdZVu6Hz2GSVzDLnato=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=bIoFpk2XQt8PtQwWoxfK5NrWNhdSws27rWbslardnrjZUDBbhzbmmn7+EbyEp/4HjY/uSOa0CGMnjGdgK+z5x/VIFRYUvhNNWXUaUwU9Kpg4IxAVTXPpX08xaxhcF8hY5uN2TW27hsr8PfoKiIwKOnx+JTBUcCauclyYvfOJJC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OiMlz/1n; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version:To:Cc; b=uVv5RNUNCkBmrgsqhrceAD9IE+Dxe1H3Lb17d3YNpqvkL4cnraGGSJWJsb1UhRkQOqPOTilbPHsJSUc9ZpFYKOBzJBqLLS4H5+DqVrQPbh6TCDX8Y5YLRqEOCcnvGfi9Pydeyjw+/AKjuI0WYPVhTwWeTi0WaLSbgPvx6VZhRMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Odu42Dgy; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OiMlz/1n"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43cf0d787eeso64733385e9.3
-        for <git@vger.kernel.org>; Tue, 25 Mar 2025 16:32:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Odu42Dgy"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4393dc02b78so44673685e9.3
+        for <git@vger.kernel.org>; Tue, 25 Mar 2025 16:32:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742945536; x=1743550336; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742945537; x=1743550337; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JzIKdN2kDr2e0llXMXL0fcKCtEc6/zaLRTXhEVJa5Bw=;
-        b=OiMlz/1noaDVhuUkvPwxVMTTKgARPTJdRI91C2QsIg9JB/v4gP+Ad/v0BTuTNpKkPq
-         rIrNejwVegiSUkxgsE4wj5tTF+bkXfn/JJYDRvs3dJUZHeKzuAym1yFug6Umj/dgwGvR
-         43p2hSVxxOAdYu1DpAMssGvspSO4IuF0qOP24Bg7ejzSkDQ+FTVE0kJkaZB3vqGMn3Fp
-         uBFWO+t3T48jNp8IVT4FnQGbb0SRneM9aAo25TlRXyH1JwJIQgoux/S5yZlxP84c0bWi
-         eY0VuCarrB6DVTSv1kP3QWD2YNchqJhXe92MY76szOQS5BMFDuW1SkezNXGqqzmDY5xx
-         oS+g==
+        bh=0n8JRLlE/3sP02WOiOTD1GD/rQeYj+RlHtCWwaEejuw=;
+        b=Odu42Dgy7is+GqX5m487gx0+xc7OetvHh2ibZNcLQFRfZcA9xYBlypqKZUJp0mDrET
+         bcqTxkivxLpxnWgQ15/fxupfQ6OZV0AgV/XggU+FL3YuaSxFi+AJmxb9xgrCzJLwDTqh
+         VuVAVgG5ylPiNfopvVIQZGLg1uT5FxqVPWOOp28TNTSLnSNFZhNQxgCRzHZBI+3akvNy
+         OYcjgtClr9f5DeUPRAQZmC1csHTfVk20KnBHeez3fHZl6xSGYSLO67IOp/7c9xc4p0Kb
+         aUANOqSRFmlLKv/+InxryuggDXPo+epnxNClr/FL57J1Gq2mMl0hL8gQNZ2bsnYlgvVP
+         ciuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742945536; x=1743550336;
+        d=1e100.net; s=20230601; t=1742945537; x=1743550337;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JzIKdN2kDr2e0llXMXL0fcKCtEc6/zaLRTXhEVJa5Bw=;
-        b=oYBclUyx4V/q5qIVtSDKnvKu+e1C2fmUOLqhnI+iM2M91KznuepdJDnlS6RZXucPxF
-         2zwHhWoIDVCS38EgFx1JDrmCLGgBZu9FeJRU4TZq372LrZiCRtcdTpO8dsAa9bBBpr98
-         hOksAoiRsF5g76eaUXhlTFdtqdeKXJOzZQEhBqTCmOm85tJNJ/NlFWJ+Idz5aOLbbuBX
-         dDHOJWpJfC9QAszzFiyEiEo7gKX+NtnoXWu65EYTT0eUMmbz/g5MEHeyKDqMO/tc8uzN
-         lz9UpnYMfe08/Xu3kRUzygmHhXzLUEvjyK8YaBvUNLr+2A6zYbHD8AoxRLU4o1Xc+ynR
-         94tw==
-X-Gm-Message-State: AOJu0Yx03yRxI8Z+rg2as9YMaiFnDh0Zhb4V5RxHv69D96tnnD4LMSs7
-	yl+RW/+bXKjBbeKZ3q8ltAbTAA4FbbUmwm1BPBexzVVl6gbI8Kxmq4IVqg==
-X-Gm-Gg: ASbGnct9sHgpfxVptiv4K2sJXLttpTfZz70pnjG1ytX5XkHdsiY8+4BJqgtAX5c447E
-	d7cdsQghf8fc9KDzi4/CFn0mp27J1Ea8OOBMFOabp/KSlSW1g5iFlwLcqIODX7vBmgoHDThsuPO
-	pdfuTRhqitle8FFXW6YeceHyTUriv2K31e9aYV6Dz8whnSkYTcI249N13crG5TJwqMXk2K7FsfI
-	oltltJEQQVxwO3RuecsjfEeuXIpZYbCXzytk+TZvlw1J2HiKmAp3p4VbzvL8Fmy5esORJ4bzgKX
-	vXeZGvyovtTNZKON/s+5MCVGYFF4cIPNsKjqsyXTL7ghqA==
-X-Google-Smtp-Source: AGHT+IF+QOoJKkysp0sErm8wwAxIVEMv2hvdp1jfRbqyQGfqzxiS0YFF7tpO/eo/nSGcTSiQNr6lMA==
-X-Received: by 2002:a05:600c:138a:b0:43c:fa0e:471a with SMTP id 5b1f17b1804b1-43d509e339fmr172936885e9.5.1742945535744;
-        Tue, 25 Mar 2025 16:32:15 -0700 (PDT)
+        bh=0n8JRLlE/3sP02WOiOTD1GD/rQeYj+RlHtCWwaEejuw=;
+        b=R/M6KK0k5+b+KB9lPWV6OQOTRsiMYsAX7irjkIvrMTbLQ+JJ6Wc3q+suvzvwisIQLO
+         w/efIv854AntQrj7nA96wSxN6UhRPpAoz8d3ybeeg+JeZSc+/nmAKSgDlrhHYpwzzgCf
+         I83mtOkcbXhYxupjBs1B7GcYPJsf5fCfkp6QLl1TcrqjLD10GD+JHywy7CXAHbFseGRh
+         tqMIdHRQOFLJOgV9Q1qGx6yrN4Q5hq1YJxuNubiqdjAT2xbZTDrHmfbkL9voLsHHPO4g
+         5WSXbL70f6IDHqV5OxL48wF8huEfzN7JAS7lxqyIwmydjjn6edoAgXxKKbjRQpKzo95t
+         T0+g==
+X-Gm-Message-State: AOJu0Yz/S2WLE4jcuqAiTbDd1lIvaRBy1Ljd+0RAHjXdhaPporD+mSYb
+	G2oO4L/LFU+638ue02DORvYC8GNA+AvaemE6Se5FQHZpB659PIQeLFtpcA==
+X-Gm-Gg: ASbGncvAYIZgDa4KFU1fjfKNf8CwbyOeyJt5FMR+Fy+1rFvLxdDYI7mwFCHAFg3W7vU
+	BxZHF6jc0tUC6Il9XE9nbrOP4lsFWKoDUx+h1sJIYDWZV0VqkHw1JdfYC7VfWkP9OEX8coGoNOA
+	+hPNRPuGSVdLQrjZUkmNs/cslQIXkX4yiv1rHieeyOSqJOd9YZOOeQizuoNsJnCm5ucPxufM01v
+	7MX3UdM4xP+S71r/Pg7AzwORqlfzdgkUkg+jVfHf3y7yGvzviQ4s8SvCU6Inr8UgAzATCV9ZaS4
+	pihv7TwWD3BQzVqTlG6//SfRP0lytXdGREoX2sq8oI8v0w==
+X-Google-Smtp-Source: AGHT+IFpRXnBN+aTrGexeHWsgPIwhXCQv95hKxzHmNMtrAJCRQUMhLqNO9iZbOMqg0oZdlymAWN/Eg==
+X-Received: by 2002:a05:600c:1f8b:b0:43c:f1b8:16ad with SMTP id 5b1f17b1804b1-43d50a4a938mr200372445e9.30.1742945536560;
+        Tue, 25 Mar 2025 16:32:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d4fcea400sm165717155e9.2.2025.03.25.16.32.15
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d4fdbd348sm164835035e9.39.2025.03.25.16.32.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Mar 2025 16:32:15 -0700 (PDT)
-Message-Id: <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
+        Tue, 25 Mar 2025 16:32:16 -0700 (PDT)
+Message-Id: <913c7a0d29699c2bd80fefcdc00879c400f1e7db.1742945534.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
 References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
+	<pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 25 Mar 2025 23:32:04 +0000
-Subject: [PATCH v2 00/10] Avoid the comma operator
+Date: Tue, 25 Mar 2025 23:32:05 +0000
+Subject: [PATCH v2 01/10] remote-curl: avoid using the comma operator
+ unnecessarily
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,78 +79,42 @@ Cc: Philip Oakley <philipoakley@iee.email>,
     Phillip Wood <phillip.wood123@gmail.com>,
     Karthik Nayak <karthik.188@gmail.com>,
     Jeff King <peff@peff.net>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
     Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The comma operator
-[https://en.cppreference.com/w/c/language/operator_other#Comma_operator] is
-rarely used in C anymore, and typically indicates a typo. Just like in these
-instances, where a semicolon was meant to be used, as there is no need to
-discard the first statement's result here.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Changes since v1:
+The comma operator is a somewhat obscure C feature that is often used by
+mistake and can even cause unintentional code flow. Better use a
+semicolon instead.
 
- * Use -Wcomma when compiling with clang and with DEVELOPER=1.
- * Address the remaining instances pointed out by clang (and by Phillip).
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ remote-curl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Johannes Schindelin (10):
-  remote-curl: avoid using the comma operator unnecessarily
-  rebase: avoid using the comma operator unnecessarily
-  kwset: avoid using the comma operator unnecessarily
-  clar: avoid using the comma operator unnecessarily
-  xdiff: avoid using the comma operator unnecessarily
-  diff-delta: explicitly mark intentional use of the comma operator
-  wildmatch: explicitly mark intentional use of the comma operator
-  compat/regex: explicitly mark intentional use of the comma operator
-  clang: warn when the comma operator is used
-  detect-compiler: detect clang even if it found CUDA
-
- builtin/rebase.c              |  2 +-
- compat/regex/regex_internal.c |  7 +++--
- compat/regex/regexec.c        |  2 +-
- config.mak.dev                |  4 +++
- detect-compiler               |  2 +-
- diff-delta.c                  | 12 ++++----
- kwset.c                       | 54 +++++++++++++++++++----------------
- remote-curl.c                 |  4 +--
- t/unit-tests/clar/clar/fs.h   | 10 +++++--
- wildmatch.c                   |  2 +-
- xdiff/xdiffi.c                | 12 +++++---
- 11 files changed, 65 insertions(+), 46 deletions(-)
-
-
-base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1889%2Fdscho%2Fcomma-operator-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1889/dscho/comma-operator-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1889
-
-Range-diff vs v1:
-
-  1:  e3069fd4564 !  1:  913c7a0d296 remote-curl: avoid using the comma operator unnecessarily
-     @@ Commit message
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       ## remote-curl.c ##
-     +@@ remote-curl.c: static int fetch_git(struct discovery *heads,
-     + 	packet_buf_flush(&preamble);
-     + 
-     + 	memset(&rpc, 0, sizeof(rpc));
-     +-	rpc.service_name = "git-upload-pack",
-     ++	rpc.service_name = "git-upload-pack";
-     + 	rpc.gzip_request = 1;
-     + 
-     + 	err = rpc_service(&rpc, heads, args.v, &preamble, &rpc_result);
-      @@ remote-curl.c: static int push_git(struct discovery *heads, int nr_spec, const char **specs)
-       	packet_buf_flush(&preamble);
-       
-  2:  7dfbdc48954 =  2:  37ff88b8275 rebase: avoid using the comma operator unnecessarily
-  -:  ----------- >  3:  f601f4e74a5 kwset: avoid using the comma operator unnecessarily
-  -:  ----------- >  4:  f60ebe376e1 clar: avoid using the comma operator unnecessarily
-  -:  ----------- >  5:  7239078413f xdiff: avoid using the comma operator unnecessarily
-  -:  ----------- >  6:  5e0e8325620 diff-delta: explicitly mark intentional use of the comma operator
-  -:  ----------- >  7:  9a6de12b807 wildmatch: explicitly mark intentional use of the comma operator
-  -:  ----------- >  8:  dc626f36df3 compat/regex: explicitly mark intentional use of the comma operator
-  -:  ----------- >  9:  91f86c3aba9 clang: warn when the comma operator is used
-  -:  ----------- > 10:  2f6f31240fe detect-compiler: detect clang even if it found CUDA
-
+diff --git a/remote-curl.c b/remote-curl.c
+index 1273507a96c..590b228f67f 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -1239,7 +1239,7 @@ static int fetch_git(struct discovery *heads,
+ 	packet_buf_flush(&preamble);
+ 
+ 	memset(&rpc, 0, sizeof(rpc));
+-	rpc.service_name = "git-upload-pack",
++	rpc.service_name = "git-upload-pack";
+ 	rpc.gzip_request = 1;
+ 
+ 	err = rpc_service(&rpc, heads, args.v, &preamble, &rpc_result);
+@@ -1401,7 +1401,7 @@ static int push_git(struct discovery *heads, int nr_spec, const char **specs)
+ 	packet_buf_flush(&preamble);
+ 
+ 	memset(&rpc, 0, sizeof(rpc));
+-	rpc.service_name = "git-receive-pack",
++	rpc.service_name = "git-receive-pack";
+ 
+ 	err = rpc_service(&rpc, heads, args.v, &preamble, &rpc_result);
+ 	if (rpc_result.len)
 -- 
 gitgitgadget
+
