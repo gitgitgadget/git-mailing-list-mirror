@@ -1,104 +1,76 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB90A1E8346
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 11:44:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9C8254B1B
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 12:12:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.233.160.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742903054; cv=none; b=HMcQfbfoAS5Rk63bGrYq70ejpwwk2578fZO/N5lRyzLWhu+/JxVTuinGYe1rnUdvnAWJ9C2idoXAgP8k4RDUMCFfb1tOXU/aEz+NNSeYb/IiJ1Kf791D3y5oc19otQdqxo9QNr8g2uM/iNtpOOhfFA57Z2T0kfrnzFII2qGtV4A=
+	t=1742904752; cv=none; b=XS2F2ZWDKdMWjbQj6XoIWZlVjX2pLyYTZ49W6OsIAunux1AZ2UL3NBqtIT8w+MSJfBqhXd2ObAYEqb1LHUk0rL9pebfTWKpdjQfaHYwnkDtj7bXYza8P/YaerkPlABbphyWdSfAUMsamV38glSv4MvawZ2KpsU4GoxtbDbPvgCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742903054; c=relaxed/simple;
-	bh=7zGrmskIIPAcA2hOF3N54dZrm7QkxtVOv+x91ZXV0Fc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q7yQIoHHANUFr+THPgG7m7KPopjIxC0o5nyDAv5u5X5LTZrgp1HlE/na7qN9bQ71vPhv3sDiDdSPPMPUocMjlKyjwIpnYSONzBOZ6pdBsYK4eD7eH7EKzdYhLYtBgqu7HbXQIQoBhzFdIN6qVsUJ81hfyLIdRpv41x36HvjKnc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JAwvnmox; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fTE4DRXH; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742904752; c=relaxed/simple;
+	bh=8INNi3Jav/E5xRM2ieXnWHSR/HW+hUlEb/8yf1RUKbE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QwS3nlRJhemhHFxZ2uTZx1jAkCGbUJXHeq+xspNuoCM0stl8I/gepRCbPSv2sIEsDm5kl05l0VcfnwZGHycBJdFpOVsmmAxn58VkJMgeJu53L6L9/HrPFxfamtAokX9QLOoCpVARmggOSr470jCNETb1aF074Dw7f130kMcHf6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iee.email; spf=pass smtp.mailfrom=iee.email; dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b=TUyDfE89; arc=none smtp.client-ip=85.233.160.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iee.email
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iee.email
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JAwvnmox";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fTE4DRXH"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E47161140169;
-	Tue, 25 Mar 2025 07:44:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 25 Mar 2025 07:44:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1742903050; x=1742989450; bh=53KLn6VWv/
-	shxBIyqaz+Ym0dvupuMc7+amaU4L3jg80=; b=JAwvnmoxiibVd3t3he6xXXGSV9
-	SeKm/5peM6Yf+Zr6YdkbpZ6u2l0uPs8A6nQoRt0ffBk4dBDWljcpOG4etYByeR9s
-	jQM049PEv1wo2URatWJzVH68nF45EoDpk9hZboR0E+jT+OY02i+n/b4Iw2IOUFKg
-	+4oinOxn1RecLHUTRRePVN4rxM/J20ygT+gV4L/zSvSYkL3uDxxk6HAEiIU4K82M
-	+mHL408leAUlJ3yadPexqwb4oPBgVYOhtU6bKfOT/+q/BlhnJUlo+J9lcmZci2HA
-	NcPoynpu8crp8GEtGuAQhvtFImuxpc+5AcywQRGQi5BAeojbWEMIxK+QydMA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1742903050; x=1742989450; bh=53KLn6VWv/shxBIyqaz+Ym0dvupuMc7+ama
-	U4L3jg80=; b=fTE4DRXHgmAjL9L8oQQvE5nyGcyMtwe2OdSZFitdOS8k2H2ZP1u
-	8BKQYRPNlzA6ZXqhBw1eI3IWn8EBurmikN2u6WqF9TTYcC+P+z56Ilhs9i5FZHeD
-	P5AxG1vpnnDd4GljlJw1H4sOKr5k8FBqtPrPx/YVDySZd7mjkjo7EKsKxqEZDHd1
-	6LoJoonRxshIFQn8ITnvGaT4y0uGeugDJMMzMvTwPM7fU6eRRwBhxQUa4jqOOkSm
-	dTCfCnSgoe0PreNmfFSTSjQ4pkru0eyAGTrZbWX0RQuxx4USjGKASn4lAdrGzS30
-	gVI2D6kMjRqXsBv2fxQA2Ioe3fi5LtBI4Eg==
-X-ME-Sender: <xms:CpfiZ0dt_QWyO9C50UZEhQG5m6mrwrIQuf5z20rZThvCf8KGLTCdqg>
-    <xme:CpfiZ2Ntf9Q-tKlFodi4f-oc4tc_TWab6tm0iW37-PwgjaBcqYYi1Zgwt7QkK2ROi
-    ol9u8r6eJytEVHaLw>
-X-ME-Received: <xmr:CpfiZ1jdLJ9lHK22PZx7OCoMddzHq5ONxOBj6p0ert55nvAwJj__SgyOWinpEw55ye5_5OO8aB3Nif-B5DO1pSyN1kJhTnSmZ73yj2k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedvheeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvg
-    hsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:CpfiZ5-6-rbkZk7Gll0YQ3c7JdHOq74nDGqikPc26u0HjSEH_uluOQ>
-    <xmx:CpfiZwsURFWMvLnYsOc_Jd34SneI_dyGWlpSma4_0QCBbCznqqG_aw>
-    <xmx:CpfiZwEHCf2mDWRxp2GmWPrRnZbQ8EVT_xDMh2DCRsPG4hfkjPWgpw>
-    <xmx:CpfiZ_NyrJ4uQ_wNoQsjl0XNZOZT09I4SIzJPZqd_QiqJ89IX7UACA>
-    <xmx:CpfiZ8LrUMF3Xge-nK2EydUVlvW_-Sw2uRJKtNEr91fDjpZtkO77dGRy>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Mar 2025 07:44:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org
-Subject: Re: Releasing versions on Fridays, was Re: Git Bug Report: git add
- --patch > "e" makes keyboard unresponsive
-In-Reply-To: <2dd6e0fa-b997-f69c-874b-f424325123a8@gmx.de> (Johannes
-	Schindelin's message of "Tue, 25 Mar 2025 12:23:58 +0100 (CET)")
-References: <CADs5QabwDtUpehNY3hr6BzKyfpp-Ts54TANGkygWPcN3T=OSOg@mail.gmail.com>
-	<84c3ccdb-2aaf-9b34-91c5-cf5c27f53dcb@gmx.de>
-	<xmqqsenb70u0.fsf@gitster.g>
-	<2dd6e0fa-b997-f69c-874b-f424325123a8@gmx.de>
-Date: Tue, 25 Mar 2025 04:44:09 -0700
-Message-ID: <xmqqsen1mj1y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b="TUyDfE89"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iee.email;
+	s=2025022500; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:To:Subject:MIME-Version:Date:Message-ID:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID; bh=8jqmmwUIh+rMnhbl5MkpA5jDv2uIwV1jQ+xo2P5o3mA=; b=TUyDfE
+	89cUtAa6B4AxC3HmWI0i46bpp6VKJD49zAsTxP6cRLeiEPmGRGTnAFp2yahReowbgIUemR1ouDEBG
+	r39ROjP6TWDR8uV3h2mAYzVi59i1kAtV3qlO7GjUdUahpyc1EA80v7UinUdHSdfjKwmXuzhluoVSB
+	HrNWgWwnuLY=;
+Received: from [81.170.127.79] (helo=[192.168.1.112])
+	by smtp.hosts.co.uk with esmtpa (Exim)
+	(envelope-from <philipoakley@iee.email>)
+	id 1tx2f6-000000003rX-8JFN;
+	Tue, 25 Mar 2025 11:41:42 +0000
+Message-ID: <f30d8ac4-4748-4b73-b86d-6f85c9bac622@iee.email>
+Date: Tue, 25 Mar 2025 11:41:40 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Avoid the comma operator
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
+Content-Language: en-GB
+From: Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 25/03/2025 08:01, Johannes Schindelin via GitGitGadget wrote:
+> The comma operator
+> [https://en.cppreference.com/w/c/language/operator_other#Comma_operator] is
+> rarely used in C anymore, and typically indicates a typo. Just like in these
+> instances, where a semicolon was meant to be used, as there is no need to
+> discard the first statement's result here.
 
-> I have stated my preferences previously, even attempted to coordinate
-> between Git and Git for Windows, and I observe that the way I present
-> arguments is ineffective. Therefore I will try something new: Refer you to
-> a couple of resources that could elicit some introspection and
-> (re-)thinking of existing practices:
+Minor aside: How were these 'discovered'?
 
-It is even less effective.  Friday may be bad and many people may
-agree to avoid Friday releases.  So what is your preference?
+> 
+> Johannes Schindelin (2):
+>   remote-curl: avoid using the comma operator unnecessarily
+>   rebase: avoid using the comma operator unnecessarily
+> 
+>  builtin/rebase.c | 2 +-
+>  remote-curl.c    | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> 
+> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1889%2Fdscho%2Fcomma-operator-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1889/dscho/comma-operator-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1889
 
-In any case, I'll go back to my vacation ;-)
+Philip
