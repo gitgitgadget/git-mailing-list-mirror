@@ -1,133 +1,126 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153771C245C
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 12:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808A0258CE6
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 12:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742906576; cv=none; b=XI2ZIlLJbMdxhokTk+hwlS4nManFQEpdRoWXap0Dsy9hHU4emSNWhnBlBwYN6aRSpiBzPbBb7eIbY6nge26xYT85XmBmFPcy3IB2gSkPjLyOlD0aPz4u3fku3r9JulATlxAoDrt+LNi1VgYvIkTMp6NIK4RlB6tCT6SWsD+uvDA=
+	t=1742906615; cv=none; b=YsHPIgy9SqX9tsPCCaCkbaucDp33N+E79tMPDQfIvckVeBN3RkSkhsbZKujGUDOFTU7t20eFA+dhvr5H3pxPtMGGvDQMM/PCxw5/hrvMjq5CaV10sKDeBAiDSxdoKp2yfF3MKk6LT18ZhmrpC3aGf7gponLC4hwye3Dpb7fcd+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742906576; c=relaxed/simple;
-	bh=ydGwZhJ3FBt/OTEzxnOWHndMf4q8971ehTeku327b5k=;
+	s=arc-20240116; t=1742906615; c=relaxed/simple;
+	bh=nuaEIhoxo6V+ODG0SJu/S8bqcmWAv5I3gXCJH5A7nJ0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NbxfPk7AJejX830846P1BeqfOWNQGT98w7jpQh70dPebB3LsKHv0IsJMTdS6xP77f4ToASIdpzNSeoJd/IKO5V3ItZVC01UwaUKCS4zXzg6/ZTPa89oL7bpHRUec//jqtlj0dZ55qvorVJ9/SjauQ89rBPGax0V3wXBsp4wLUMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iFiqfCvm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sY8Gt2Cd; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bi5wKXGkkVZvvQ7uNVyODRQtGpSGBNj9eVeqPb8wqXYuiFCMhEGITZsEbaesrICoDye1W/zjcjPxTL7+PF9FfLullmQjbucIgns6Rnq+W76eyw4kmRnp4ctdkkYEM1+/kJoWyXOE8tL+WcMrUxp201u10FyXbesYvrxP9OOnrm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S97HE2er; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PhG4s85+; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iFiqfCvm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sY8Gt2Cd"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 34D39114006F;
-	Tue, 25 Mar 2025 08:42:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S97HE2er";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PhG4s85+"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9D5E0114006F;
+	Tue, 25 Mar 2025 08:43:32 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 25 Mar 2025 08:42:53 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 25 Mar 2025 08:43:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1742906573;
-	 x=1742992973; bh=UI200iKB+KtlnpHexWfG8KaB0gtpBqf+yiPYpFZVHvY=; b=
-	iFiqfCvmpMpLFXVarkLKmsHwcy7u31Egj7vqsHVjnyzaZ4bW1GBtw3L/Lp5n98d+
-	jWA/hCeIEj5UNURxvh0FSUTJbNuGwsdMqkTfeGT7W/D51hMaX6MxMRVazsY3yMso
-	xz9SZnqgI/TgXWZLdfRen4qPUzhMX2REMGhkGmGiTF9v+2Pbxk8lxmcQTEzO6YRS
-	usWbqBieaMekX6jBt/fjrg5iKB6+R0XtrT10oyVC2QIgvXk1SzqJo+qMUu/JrsGY
-	j3tWRsTrrEqnYgnqF8JSiSkymyYIrp5BoFZjMDER8D7N32USTOnRC3/yU4SLoFhZ
-	4L0tfUDQbkJy0Ttph7bF5A==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1742906612; x=1742993012; bh=fhcsPM2LrV
+	FP8fTdRJQ3RdwhdU/0JcVfSAwdMncEl6k=; b=S97HE2erW2ZWFyq4Qvm/1FTZEh
+	s9yOxsCawahFcEdxDCEH/PybVd0t/o1kaejcMXYBlNQhOF8dRFX/bWM/ZKat2fzz
+	7GXDJYYmp8EN5OEmXoj4yqv7P0vs86Beqh9zGkTOtWn5RDA1nSwE5wzGezWdHjH+
+	4rg2Hco5Z90LEolXSkR+xbj3o0qb4kyAqqGymmZfgyh+iKZdkZC2s4MyFkCS7qEp
+	H0pVjdrIu+iSfJ5kDALpjyQYvDPRGsV1yXaTjXIR8H1b40aVg2uRioOQ+OnZk5p8
+	+qlD5yFgt50C83HA+C190ZKx67y0hZRIPZC8I0NYajtdu/stPbIaZx0PbRKQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742906573; x=
-	1742992973; bh=UI200iKB+KtlnpHexWfG8KaB0gtpBqf+yiPYpFZVHvY=; b=s
-	Y8Gt2CdN1QPl/bx5XZ0FhSFCInFTvTofRMz0hRsEN/8ZbVy1b+pl1iB0Nyrb/MoI
-	hTj68qbjOL8rvrhRyyUmdn+NpIhhBb84z74S0jPUm9ptyuDkpUVnvaBBM/1uJJjV
-	aJHBe5LO/mJ9Njo0jJvr4Hk8OQfF/yrMYFOJ4+ir5RSj9JLJbtgu/Hmn+9J3COnO
-	KXT7yRPU2QCjV/3qg8YxDtG4cCTSaim5m7tNPiz6WTxndtgpl4zWcdCPodyOOdGw
-	yhn6F50U15MaPTEXJrP0YiwQMwcQxcqJw5XQQLnlJ0cDehxrLFyzVGILY8FdexUR
-	zBvOJg95BgGU+JTcZ/GGg==
-X-ME-Sender: <xms:zKTiZ67PvclXBW44SxrF9v9DSR0R1ci6Zn4fRwWmFhcblp6G8b_TXg>
-    <xme:zKTiZz7dxQ7poDU_llbIJ2yFKODc1krUqfCOX4ohfXzwe_Et8YcayXqd4iiGDh_5y
-    jbd9xFCxODmTYUgFA>
-X-ME-Received: <xmr:zKTiZ5c_jb9dI4WsSAbqXER3F3boEOeBreBTpZbXdkLnaDtYbs7Dh_5b8ikbKO1TB0UwxtSOLA6HXZB9shrBE_UujgJ5IzDfQqPhMh57s4ZoLQ>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1742906612; x=1742993012; bh=fhcsPM2LrVFP8fTdRJQ3RdwhdU/0JcVfSAw
+	dMncEl6k=; b=PhG4s85+hYGX1PRUwCtHxJ1+EbBUZJsNu06Wg60Zm/0+OnQwMGn
+	nlnXX+dnFCucuRATWWwKl9u/CyLjOFR+DOxWEzGUEWsscoYp3MTb42rn9+8g7yyA
+	ljiOK1VAgQLk3ZQRHjvEUtyfZxBK5ZW2wystT9DU0VEC77y0pOfj4el9H0XDVFpL
+	b9WFE8wuwlgN3B9bm+YNbpqqI7OO3wCRO+BBuma8CF+O78OJlUm1vQM2TiPyzuLz
+	vCg1vjVCrvxfAnhCWOZbhcSJJzr+VU07f9wAg2ac4eKE2CMRmANuOjCk+IBUQu2R
+	bwWOEL6s1s/Tv5fDLeqMXb4pzejNIjvwdUA==
+X-ME-Sender: <xms:9KTiZ5HRAPajw3ivCO1c7HL441O65atn_pUtkP89evFRjFGtTjxmRA>
+    <xme:9KTiZ-WcQ7I7My6HGJkuEy5OAXmefMtAuv9CoqFa0MR9wamS8zS1gqHNeQhzgNSq6
+    NhxoqwVXKadcNBzmQ>
+X-ME-Received: <xmr:9KTiZ7LjO9aPUcSyNAcqr4WYML_4YvN-RDBlPmzQw6coC_C48124D5f81aTbxJHKHifI2gNmYGUEZCY0MGO_qEPhcD0FYnT5uMeO1nM1wHxHNA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedvieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtg
-    hordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:zKTiZ3IpXUypGrmGz6c6VOu71YhSMdBx-j_FnRXC6DEoXqrDwgwANA>
-    <xmx:zKTiZ-LVQoTu8C3iGlfqleC410xAWLXcUPpK0D6pE3PYCccECHMHgg>
-    <xmx:zKTiZ4y53AVUdd2e4ON8NQxHyPFr2TYUMjiu40GTqZQG7ItLcax0xA>
-    <xmx:zKTiZyJaXLUPJwoAoWq-znFw471p75qM3gdsCbAIBtypigy8yBiN0Q>
-    <xmx:zaTiZ61EloMo6cjTDbWs-T3XSc5AGoIYFLha7PK553PJxWzBWIGsz9iJ>
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinh
+    esghhmgidruggvpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdr
+    ohhrghdruhhkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:9KTiZ_FKDY_kN-VYV-aQJBtiyHLIuK-bX8EbvbXtDS8mPnT1cq0n2A>
+    <xmx:9KTiZ_UybSrU6otKQWsVpHIrwX2oBmfEyx0QJoBD5tVknEh_cPHjJA>
+    <xmx:9KTiZ6NsCR39dvDsE7d_nHSMPfMiqy9MmBum7JngRzbwrbBRlj8GUA>
+    <xmx:9KTiZ-1Ef8dV6kqSDGuQl0yJ3gqFM9ChAakl7MJ-6XXGOrJ39NMO5w>
+    <xmx:9KTiZ6Sj525MhF5t9SYbpQZAIdZoKSJAFvv-9Zx-YTlUeSzD7lbJYIg9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Mar 2025 08:42:52 -0400 (EDT)
+ 25 Mar 2025 08:43:31 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9e1c23cc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 25 Mar 2025 12:42:50 +0000 (UTC)
-Date: Tue, 25 Mar 2025 13:42:45 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 064d3456 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Mar 2025 12:43:30 +0000 (UTC)
+Date: Tue, 25 Mar 2025 13:43:29 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Eric Sunshine <sunshine@sunshineco.com>
+To: phillip.wood@dunelm.org.uk
 Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 13/20] t: refactor tests depending on Perl for textconv
  scripts
-Message-ID: <Z-KkxRcgTtLRd2W-@pks.im>
+Message-ID: <Z-Kk8c4INZilK8jM@pks.im>
 References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
  <20250320-b4-pks-t-perlless-v1-13-b1eefe27ac55@pks.im>
- <CAPig+cQdoZwY3u-xr49Jb8aaQmE69p4i4RUdy=cRv-V7VoWENg@mail.gmail.com>
- <Z-FUEhraLaDODbmO@pks.im>
- <CAPig+cSN5hU=XP1Gd8z=5XyvSEqJcTBiWhgyJxYNBPJWAi3yLw@mail.gmail.com>
+ <80c2e84e-6603-4e96-8934-8219c55d4d36@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cSN5hU=XP1Gd8z=5XyvSEqJcTBiWhgyJxYNBPJWAi3yLw@mail.gmail.com>
+In-Reply-To: <80c2e84e-6603-4e96-8934-8219c55d4d36@gmail.com>
 
-On Mon, Mar 24, 2025 at 12:07:52PM -0400, Eric Sunshine wrote:
-> On Mon, Mar 24, 2025 at 8:46 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > On Thu, Mar 20, 2025 at 03:37:08PM -0400, Eric Sunshine wrote:
-> > > On Thu, Mar 20, 2025 at 5:37 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > > > -test_expect_success PERL_TEST_HELPERS 'rewrite diff respects textconv' '
-> > > > +test_expect_success 'rewrite diff respects textconv' '
-> > > >         git diff -B >diff &&
-> > > > -       grep "dissimilarity index" diff &&
-> > > > -       grep "^-61" diff &&
-> > > > -       grep "^-0" diff
-> > > > +       test_grep "dissimilarity index" diff &&
-> > > > +       test_grep "^-3d 0a 00" diff &&
-> > > > +       test_grep "^+3d 0a 01" diff
-> > > >  '
-> > >
-> > > This change seems unrelated to the stated purpose (`textconv`) of this patch(?).
-> >
-> > Not quite. The test previously didn't run because it depends on the
-> > Perl-based textconv script. Now that this textconv script was adapted
-> > to use shell scripting instead it can run, but as explained in the
-> > commit message the output of the textconv script changed. We don't
-> > really care for the exact output at all, we only care that textconv did
-> > its thing. But we do have to adapt the test accordingly.
+On Mon, Mar 24, 2025 at 04:16:22PM +0000, Phillip Wood wrote:
+> Hi Patrick
 > 
-> Okay, I see that now that I have read your response and examined the
-> change more closely. The unrelated `grep` to `test_grep` change
-> visually overwhelms the diff, so much so that I overlooked the other
-> smaller necessary changes. Perhaps it would make sense to mention the
-> unrelated change in the commit message but is not itself worth a
-> reroll.
+> On 20/03/2025 09:35, Patrick Steinhardt wrote:
+> > We have a couple of tests that depend on Perl for textconv scripts.
+> > Refactor these tests to instead be implemented via shell utilities so
+> > that we can drop a couple of PERL_TEST_HELPERS prerequisites.
+> > 
+> > Note that not all of the conversions are a one-to-one equivalent to the
+> > previous textconv scripts. But that's not really needed in the first
+> > place: we only care that the textconv script does something, and that
+> > can be verified trivially without having a full-blown invocation of
+> > hexdump. So at times, the implementation of the textconv scripts is
+> > reduced to their bare minimum.
+> > > -cat >hexdump <<'EOF'
+> > -#!/bin/sh
+> > -"$PERL_PATH" -e '$/ = undef; $_ = <>; s/./ord($&)/ge; print $_' < "$1"
+> > -EOF
+> > -chmod +x hexdump
+> > -
+> >   test_expect_success 'setup binary file with history' '
+> > +	write_script hexdump <<-\EOF &&
+> > +	tr "\000\001" "01" <"$1"
+> I guess it is fine just to handle the characters we expect at the moment (is
+> that what the second paragraph of the commit message is referring to?), but
+> the script it was more tolerant of future changes to the test data. We could
+> always just use 'test-tool hexdump' here like the tests below but it is
+> probably not worth a re-roll on its own.
 
-I already tried to describe this in the commit message, but obviously I
-seem to have failed :) I'll add another sentence to mention that tests
-have to be adapted accordingly.
+That was my first version, but it required a bunch of changes to tests
+all over the place. So I decided to simplify this test suite to do the
+bare minimum.
 
 Patrick
