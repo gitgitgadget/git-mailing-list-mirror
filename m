@@ -1,200 +1,103 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88296268FCF
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 13:14:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BDF259CA2
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 14:12:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742908487; cv=none; b=Kxk0YMeXlVxjsccS7opCyD2LI+L7fUBF1Y4ZfhfBaALYDjzd8nCfY3fPdsSMDrajBHimS3Sp2mAr/2NHliNmVGMza5wx15ceTihKRcN+bER2BDT4HL8v3BHbySFAv2GDdF+ALEeGfLNRjE6UGMHc8xhT3LEH5WlyKsaclSf9PQU=
+	t=1742911946; cv=none; b=R53sv2QAbK1TvtnR3BVtkbdnJc5UUM47rafoIs4+TbzzBg3wAtYJVgSG7yJgk/aH1PJn2w10vigPWJQUXL8akId4gZ1kcjhZnUsNGX4hvB9mErG6B6l7EVQdKZj/3v67rQUG1w+86pNcUKcKl1BY3edJQohoMzstQ/TDjuS1ppk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742908487; c=relaxed/simple;
-	bh=0vDLZtJoO0JWlSJGdB1334hkWHi1ZII88VJ3KTVuw4M=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Cys79bhbHM1/DDMHqc5jrZ8lr2hSOGEwjHFNMylH4W2OOBPhSXY8C09iqqON1bqpxUC+9tSmDNck9LzpLtBj6qH/LPx7jMTfDaXcfa09a4TXHuXUHaRW37xaEe3pWZt6lsgYr6VmtxOHhGtaBUGldSpyDTHbInlQhywmN9bEqhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VFvC7AIj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v6uJDqFk; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1742911946; c=relaxed/simple;
+	bh=9ToaADHUYWgAwaJSaLhFxA2rImZ3a1vnrgdgYvRRJPo=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=ZshIVXQsNBXANUrjMZYU0gj4ePmXikie80tIsQEvpPfzRZhoK5X/0QpY6KqMH4cuXOJiVncqobygqM/AhZmmrhTBsM5qBBRHaSuk1uXL2GYu/W1CBISzknPUR9uH8JRXqyG21JMcpFX18V4gPYBnCxiWFIFXmY1Nx0LjytQzP+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=X83+Rw7W; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VFvC7AIj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v6uJDqFk"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id AFF941383844;
-	Tue, 25 Mar 2025 09:14:44 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Tue, 25 Mar 2025 09:14:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1742908484;
-	 x=1742994884; bh=8mNJ6Dr3p2I6SWEWYBP3GmUzLBsShSYpobEZZTH9ZWE=; b=
-	VFvC7AIjXAB+4mZ1gaW8b4kazYPPSSlKKLjY3C5SeXiSasjICixIKC1MEzoPqYfq
-	JfT1wiZACUrF8FIEN+zcdCQCS3KWqzE3NY+x3U58XTc99nfWRkQRhVCFD79pxPEE
-	iT2HspE374HsQ7DLjOqEkILuMRr/WvoeeADAztZCoQ8W6HdTl/KVMAntSjtIbh2A
-	bVg5amR/s6edT5nOB6EZWFRXvqI/CMBZ02tKnUyD8RbDy/lCqMbaimMNkWwE51tW
-	KrDt5fIzdHzLY+Fi5AVokWBGaHzOJzfdQVQ+C3xJy17wtSxRA/ZrUi+2Im71IGEL
-	j8HGnzBtWNIitCKl+TgPOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742908484; x=
-	1742994884; bh=8mNJ6Dr3p2I6SWEWYBP3GmUzLBsShSYpobEZZTH9ZWE=; b=v
-	6uJDqFkVrOmYEF6+KdcdmrsachKwNbIK+6pUbHiMzesELy2My3rTO15EjDSuu/Uu
-	509IWEX67MEMq4GxVhIkRuqnBmf9XX9Da+t4dV+j9eHOW5BwZ980GUeLUZHcuYzn
-	KHIlsqlhgYvGU1+IGjqdknbimVjHv6e5h9dEvMWSUqWmH1QxcwUsmuUZZ3YEw/FH
-	caZ67+c5ZnfUAC3QP6TYxgwstKo++57J2YEfPPfn++2NOQ+MK+CC42/9DaOU6i0f
-	z0M1ZNgKYLFwNBvM+wcr5L3Ase0CtCWZInHpl1jNA1WiNlV6WWwL92eW+32hNbsn
-	n+dDVzVWga5UzCOZvCNNQ==
-X-ME-Sender: <xms:RKziZxWrlcsiNcMTucRdnIQnsdAVd50pMYwjDwZC-m19zPeH6ciy8w>
-    <xme:RKziZxnSwFtMWq9tVqKQ44oaGqjAZTBltIQR7A6cKFw6UknAbzqj7tEVP3DRc8BZj
-    r4FU5pKEPPDTOu9Nw>
-X-ME-Received: <xmr:RKziZ9ZCSKJnmex77UO46cb24xE07YudckAFMjCqUpfQrTu_arAcLATsTvT0Fl9rUcF9BNS2Ctf4NJczpsBq-uOCwXnRFZN_50RJ8Txw3pX6EA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedvjeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohep
-    shhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:RKziZ0Ul_HoAVPsYfV_uMviIe-2Hng5IRQWu_4_1qvLHRwrdj5EDqw>
-    <xmx:RKziZ7mgt1Qi5NMYkZ-e5SCebIKNMmRi2zJGc3I-Xp6LIGkQG9DgQw>
-    <xmx:RKziZxdBCCblH7EpitN0ODv4HJhza7lTkSqkdz34dMiBO8iUsxs3EQ>
-    <xmx:RKziZ1HyzwExCclzNzrjq8DlsxWRn6P1Jz10eG3189zyL__10vUVYQ>
-    <xmx:RKziZ2ujOqF6l7tEgON6aihoYHEF19svEp37Pk46XB1ZLVa2elhKMl7K>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Mar 2025 09:14:43 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 671ede3b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 25 Mar 2025 13:14:40 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 25 Mar 2025 14:14:38 +0100
-Subject: [PATCH v2 20/20] t5703: refactor test to not depend on Perl
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="X83+Rw7W"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1742911941; x=1743516741;
+	i=johannes.schindelin@gmx.de;
+	bh=9ToaADHUYWgAwaJSaLhFxA2rImZ3a1vnrgdgYvRRJPo=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=X83+Rw7WQcDsbCd/pR2OS4dILfqFOZZzA1ZxuBM+t6xdNgHbHRYB+NjwesEyM6Gj
+	 Q2I+TskrKhM5nyEd0+6KLLvKYacOPLAGoeR96EnDnZ81/XJ+k0wWzGbfOS4vuBds6
+	 QqUtmLa4lrRAHITXRWEZdnCy9MhgFzwbaCiJhJ+l7oS8sPuFiV5l9diDwQ4lkm+BQ
+	 mcjWYTZITcrTVSDjlYIKzDq4Ki9lNISXbPheVNFCqa5/v4JXG8+NShxEC/XNcC5U0
+	 IQApE3/URP0huv+KqKh5vP/xeG30oFZuAk6wUxSMC8geENY3Z9TAJejPLOUi8SzyC
+	 uNg8qyjDbT1Pbfcfkg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MVeMG-1tXou12qqC-00MV3S; Tue, 25
+ Mar 2025 15:12:21 +0100
+Date: Tue, 25 Mar 2025 15:12:21 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Philip Oakley <philipoakley@iee.email>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org
+Subject: Re: [PATCH 0/2] Avoid the comma operator
+In-Reply-To: <f30d8ac4-4748-4b73-b86d-6f85c9bac622@iee.email>
+Message-ID: <ea6bfd92-3d09-c611-abdc-dc7bc987446f@gmx.de>
+References: <pull.1889.git.1742889711.gitgitgadget@gmail.com> <f30d8ac4-4748-4b73-b86d-6f85c9bac622@iee.email>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250325-b4-pks-t-perlless-v2-20-4b87b8072670@pks.im>
-References: <20250325-b4-pks-t-perlless-v2-0-4b87b8072670@pks.im>
-In-Reply-To: <20250325-b4-pks-t-perlless-v2-0-4b87b8072670@pks.im>
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
- Eric Sunshine <sunshine@sunshineco.com>, 
- Karthik Nayak <karthik.188@gmail.com>, 
- Phillip Wood <phillip.wood123@gmail.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:60nMAmPtrcxSZxS1FAnOXDeds6g2sYMnTRW+F/rySVAqBtzCtCg
+ HhcDBUBiDgPgJod4hxOVBfZo8Lg73Ujf9Oi93CJgou4d6bxU/4t9Y7pmMrmrlkQR/tUIdyw
+ SdIPSKUj4NsqR8qPZBerOjg6Pgkyc0aE+G8Mi7XunkSHivhKEv40VJ4Y4bCtjoBEOEePcqZ
+ o3YlgruuYrQQdqHDVpcOA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:5q6xuukN0to=;UIcr9wC4nRfs0pLtk37GzWMUfDK
+ X+wLhSd+6uahBpKjbH5ndU/zdMoKo16vM0+Ed4O05rBautV0aEHVqZ3vfXKctjK+v0eeCOCEC
+ vVkwEnC/xGjueB+3HP8B8LOvyfiL9d/14hmZzCAGF8/HTiQV84GOWG8cBQsvSDn9vUevocS8/
+ VaxT8OrBgMrjATFh+WJCBGD3X+yXHXQCURbcd1MUOzBb3Chr4GVMlMbPnikPjIQ94ZDccap63
+ tQmTAyk7UduZ5SdygOV4oTng3hAafvNDZEtTAfJmLXBcMMDPyK5ZAK1/PpngPPy9+xyaaAlH0
+ +Jfe3tGYCWyPR06l3rsjq81Nb9/KjV/hcLdcUnT+nNikUigKrNS19C3xoAZwCjCKfGmtOqnp5
+ 1m2VcGG20NBBORQTCy2fYAzM3d2cyIF542iV8xm9mqA8TNnife4G6Hp1/1eVllUyD4evvVZnl
+ 0t/6gPlAED+OOx8YTYy7eWvk+k5UcJAb5BmfAWGs9Ll7NTPDeouFBwbmaStr2KtR5lXNQ96v1
+ 4VEPumum9lfiS57LcdZ75nLWjOlKlDNPWoTV8uheAZQnzuvr5F+TJEUSk40nDQVoDJ29tNh51
+ krLnfYNpFYB1/ic8cxady/OebteufvaeSsxnJ01QbFVtqWXBl4K+6RYUykHKRccI33BwCFNbA
+ UfeA7OQZjsSWLtazMzUgxwnEkSzL8N+R8McG/3JS2NSr7wQf+G8PEFC2zx98RthlXFq2Z76+f
+ nnIi64nQG0QsGFhXq+kZgbSN3TcqW/srGDM3MawDYpmiUOl6ScEPJUmadCTUXBdlJBldz8x6C
+ LESy16keUu8ow3NmZPtqp2kBMIEdlRTjE+CJHaHN7wzPjr5VFZPzeKGzHXbvT3l4oENGk6/cR
+ IKk2D9V9dFzdWceqVd/vIIQ6uGP0Trh7V0hNMz71hZM7iDuKkqpAZv93VvT9r9/F2ldvspfbI
+ 2FySJX/g1T5EFgCi27BTw9KVABGFKcecpitLMI11S7SZpfQSwKidgpGdN+ATY5YSIFoCnrZCJ
+ PpnXshTiDYlt5xJq7UboqE6oMdZC2Ckd9doZbpJUcidPlYMTITZB7bCH8B1kxX1s4hVP/CEVT
+ 8dOVITRr5eyl2wGFOACKSG3Iu0MYz98bHos3MpRYa1PzlE57nhOa8pDr0HRDKdnvf4n+FJ6cu
+ baTbHp5qdhYfEOUxvisTW6W4NI9wMD9GHQ/Mb9LXZuvUgtuSJBRFoPo6DNRMTSpNmp5WPdTZ5
+ g8QCI9CTTizMr+rx+aKT+wKPrRMnOKmp0WvlxBvmBM1ZsBxMohYmlQ/FMtOXXCfUXkt49pABz
+ JtRl5bb1Mcykzg3QDAufSCoUInGAGBW2knU/MDOhRewpShJ7GYVqnd31CyCEB9MOvcMoF1+zb
+ 0ikRgxpKChepmO+twAmzDEajQu+aYV96SBWBqVWZZtfapuxNPBeYdVlQO6+uHoqu9k4VWj9UA
+ sePdjVXLskDaAcMV4gguemJatO/JyxzWLWpvYCg6isd57Dp+T
+Content-Transfer-Encoding: quoted-printable
 
-We use Perl due to two different reasons in t5703:
+Hi Philip,
 
-  - To filter advertised capabilities.
+On Tue, 25 Mar 2025, Philip Oakley wrote:
 
-  - To set up a CGI script with HTTPD.
+> On 25/03/2025 08:01, Johannes Schindelin via GitGitGadget wrote:
+> > The comma operator
+> > [https://en.cppreference.com/w/c/language/operator_other#Comma_operato=
+r] is
+> > rarely used in C anymore, and typically indicates a typo. Just like in=
+ these
+> > instances, where a semicolon was meant to be used, as there is no need=
+ to
+> > discard the first statement's result here.
+>
+> Minor aside: How were these 'discovered'?
 
-Refactor the first category to use `test_grep` instead. Refactoring the
-second category would be a bit more involved, so instead we add the
-PERL_TEST_HELPERS prerequisite to those individual tests now.
+I am working on a GitHub workflow that uses CodeQL to find such issues,
+that's how I found them. (I also worked with the CodeQL team to get this
+query added, way back when I was still working at GitHub.)
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t5703-upload-pack-ref-in-want.sh | 25 ++++++++-----------------
- 1 file changed, 8 insertions(+), 17 deletions(-)
-
-diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
-index ac7266126a0..1ab3191d72d 100755
---- a/t/t5703-upload-pack-ref-in-want.sh
-+++ b/t/t5703-upload-pack-ref-in-want.sh
-@@ -4,12 +4,6 @@ test_description='upload-pack ref-in-want'
- 
- . ./test-lib.sh
- 
--if ! test_have_prereq PERL_TEST_HELPERS
--then
--	skip_all='skipping upload-pack ref-in-want tests; Perl not available'
--	test_done
--fi
--
- get_actual_refs () {
- 	sed -n -e '/wanted-refs/,/0001/{
- 		/wanted-refs/d
-@@ -89,18 +83,15 @@ test_expect_success 'setup repository' '
- 
- test_expect_success 'config controls ref-in-want advertisement' '
- 	test-tool serve-v2 --advertise-capabilities >out &&
--	perl -ne "/ref-in-want/ and print" out >out.filter &&
--	test_must_be_empty out.filter &&
-+	test_grep ! "ref-in-want" out &&
- 
- 	git config uploadpack.allowRefInWant false &&
- 	test-tool serve-v2 --advertise-capabilities >out &&
--	perl -ne "/ref-in-want/ and print" out >out.filter &&
--	test_must_be_empty out.filter &&
-+	test_grep ! "ref-in-want" out &&
- 
- 	git config uploadpack.allowRefInWant true &&
- 	test-tool serve-v2 --advertise-capabilities >out &&
--	perl -ne "/ref-in-want/ and print" out >out.filter &&
--	test_file_not_empty out.filter
-+	test_grep "ref-in-want" out
- '
- 
- test_expect_success 'invalid want-ref line' '
-@@ -486,7 +477,7 @@ inconsistency () {
- 	EOF
- }
- 
--test_expect_success 'server is initially ahead - no ref in want' '
-+test_expect_success PERL_TEST_HELPERS 'server is initially ahead - no ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant false &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
-@@ -495,7 +486,7 @@ test_expect_success 'server is initially ahead - no ref in want' '
- 	test_grep "fatal: remote error: upload-pack: not our ref" err
- '
- 
--test_expect_success 'server is initially ahead - ref in want' '
-+test_expect_success PERL_TEST_HELPERS 'server is initially ahead - ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant true &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
-@@ -507,7 +498,7 @@ test_expect_success 'server is initially ahead - ref in want' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'server is initially behind - no ref in want' '
-+test_expect_success PERL_TEST_HELPERS 'server is initially behind - no ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant false &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
-@@ -519,7 +510,7 @@ test_expect_success 'server is initially behind - no ref in want' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'server is initially behind - ref in want' '
-+test_expect_success PERL_TEST_HELPERS 'server is initially behind - ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant true &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
-@@ -531,7 +522,7 @@ test_expect_success 'server is initially behind - ref in want' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'server loses a ref - ref in want' '
-+test_expect_success PERL_TEST_HELPERS 'server loses a ref - ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant true &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
-
--- 
-2.49.0.472.ge94155a9ec.dirty
-
+Ciao,
+Johannes
