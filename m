@@ -1,82 +1,83 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7360125F7B7
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 13:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4AD25F978
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 13:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742908478; cv=none; b=fBvFsAFYjOsmYL2eXSH0VtXmeLnY/AXBWupvXtJjJf4L23f2JiH03hXSz6ADDx6x1V0UeJ2x70CXZ6ZoSTL50kbZrk28aiTZaIKLIQYPmEB9KR1YxWf9nU4yfqWZLbIVGouppACTVNgCYGM46ZNdX4/SVsxhYDWe+painNAAtKE=
+	t=1742908479; cv=none; b=mH0UcwvogwPivzdRA30chZN7rhgrYb5dN1FRDRSSlgySNgk4zG/5PAA595NlDA08MBqXceb9NoyVF08wiFm/WRuhsZl9UZXtVE3mAOQQKqjEdgzShqjAwQnmW21xErVmTxXSLTZduo/FwO8R+M9N++0NTy/AfugG2UzmCpFAXAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742908478; c=relaxed/simple;
-	bh=XGG8rZ5HbDCjk2zGhaX6TYCv5ZAffm6Wv/cj+QDoVfk=;
+	s=arc-20240116; t=1742908479; c=relaxed/simple;
+	bh=OzPEXYJJSkCRVgvE9r/ZR014p4QQC/SiVAp5FNaVjm0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pbvoBqnGw+xQgFylPv6zbW6YHxErAuVUII+v717VR51lUDYcx8lUKYVjqr73az41a2cfdY1jSDWOCCdvrCTAB9L3qtbHH8PwaawrcioDM3xKfhTZ1wP1327a+wt2rv5U+Y4LRlFvBP3F98nvw6RA5V3kBUzy6zdbwzyyMQ1LJDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RFpJV6Ba; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lFiCdZjR; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=IE6tKBvUkjs9cKVW9azyvOtl+fFswrbJC9B86v89Ak87merBSYVCKnqfUMNT1P72McC9MZwJxr9l4Uss0jN+8cx+Qs+x7qQh5NLO9GLErCCg5xlGMbqUYu6LUCyEA0Qy+3NXVRQIqMSGbNexIlSgMxZeIbuCOWCr2NQwvljAVGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WFd8CYGx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pkpSHwoE; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RFpJV6Ba";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lFiCdZjR"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 917F4114028B;
-	Tue, 25 Mar 2025 09:14:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WFd8CYGx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pkpSHwoE"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D68FB1140275;
+	Tue, 25 Mar 2025 09:14:36 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Tue, 25 Mar 2025 09:14:35 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 25 Mar 2025 09:14:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1742908475;
-	 x=1742994875; bh=Ponmc7v/lBVtweSTqp10UuCRjbtOfO1E7s3Hl1eippo=; b=
-	RFpJV6BaQpBzePaM3vpSNCfI68F+k6ZVM3yf4+iLlsG1VeiEVkBm81DNiyhUfifo
-	tNYzWKs4oD1qDVdiuRmh7UuTZ0dUwTWGnv1MFqaCb712zv0rfTKqvG6hf9Eghdrn
-	UZravDvthehXWBvLjyt1qqTPEbgCXuuRgOEHaQ/Wr7U7xJeR2c6de7zogE0Kbc2Y
-	6jAGSpPm7rSa9ngWEJVfzFm6jhGmxpOVhfTswYOyI5RoKp5+bfIZ6Nqsw9OEMNH3
-	WVnbb6Nw0/7An92oj1qfk+vbRs/7Czpz5g8SDdmw6ymha56QJVc03vKUuszZCJfP
-	8D6jbF5h07kzbbFwHnAzmA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1742908476;
+	 x=1742994876; bh=SK72nLGE48Io01PVlKAlFOEhxfBN6derLq8NspJR/K0=; b=
+	WFd8CYGxhH6++5uAQuEG9SNaAUfwg1bAUNhOubzcTdv1e096RcJzy/zhKmC2I1am
+	sSPW5pDrdHR0WnnziM041V2TSBrqQOFBP/IVRoZfyh2pQJq8GcTv7ZIX1YDj0fxo
+	ZVcBf9iv+RcZnR+ds5SUVzK/TABwv/8owTojFWEjCPlkPRAKORGMQFt7flXHZMyw
+	xcC+TpDYAr9aKu09TbZrLgIQ4tB4bcUOudK3XCQ9teKlnyxVT7k0v8KE7x6TA89K
+	yIuZDHAqkICS9t3mn6NH+W21Dz/IbOZPO6ZRqR1GtiyBFZosfFlezwF6dLMpNCHm
+	2dla+FkONyhsquU1vrW+bQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742908475; x=
-	1742994875; bh=Ponmc7v/lBVtweSTqp10UuCRjbtOfO1E7s3Hl1eippo=; b=l
-	FiCdZjRB++RHdFy6Qd4k7WCjTAMw3iC9GKOgoJ1S/GyOvmDS3WF2J5mnXNw90Wp1
-	0MC3Nk4XK7I4asZbuXVwrxaaAK+FnPa/FyHomx3ekzvtYqEJNMEN1cgQbGCZ+QYy
-	W3yeGvO1pHQtijGMybUPFtk+RxYtntV+9T/wYe6H8LeLjDblhu8RuAvHCL4R6UtV
-	7BLp53FfCQ4NerdLpAOaE+V7uJqzEJLbDl2Gsim4H1tHHIIvMvtrWo6VQ1+R8KYd
-	nMfDfgdLYfT7mhJGc8suPYrS5i1PTAl/6lk/xxX2/3itVlm4a6rDAtFpfS8r7joy
-	2vK2LaeKMyh5yUujTYg+g==
-X-ME-Sender: <xms:O6ziZwOF5phbZ9hbuZ-8C3Ics9p2_n5T1VVd1HqaCJfnOZT_aLuexw>
-    <xme:O6ziZ29wYbaveceK5HbxSv3F7bkLOwsRlB6NoBpcZI61La4ao7lOw7--LnPw7_z0y
-    K69L0WGz3ZPrE46Fw>
-X-ME-Received: <xmr:O6ziZ3TxNBKZHld8dzhwd-5_Szo2nFNNsVdHa8fIThIENbdLBqDZ86K3HABRFsE0GDIyjxbnen7MQrrG7WeqxdEMud8ZhOEqdqjia7jKjx_6eQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742908476; x=
+	1742994876; bh=SK72nLGE48Io01PVlKAlFOEhxfBN6derLq8NspJR/K0=; b=p
+	kpSHwoE9bTPWTDR7FFuX+jzqxsIivTo4v7U5lF/nj/DaqOIgVZz7drhLsgi8/2j9
+	4MX1QvXs5GhXGU/0gBDUE99gK0DpQvU4DUvrkM5KsWphIuTyDsdgvpo6a1QWZofg
+	YM2oVMvrW1wd+ufkTcCAqbn3QSgKcP/xQUANwFnO34oPgHxWeJy/kXKxComZZpp4
+	K3AlW/QfrC0JQrtl1uVG7Y95uY/M3bApDtNOg62wPaLWNdtXx7gl0ENU/dbEmzTo
+	0WSLRR4RZdC3OwS2zmVbgJZILUT6TJP1137pKTgvcTjlM8tLqo3vLyZj2OuJR3r/
+	QXkCZzufFFVpmRGIyJAvw==
+X-ME-Sender: <xms:PKziZ-5i8cY7bfVA3Jnp3HhMCzvaPDRzKKLLRDo1oKKPH2LxAsAPBA>
+    <xme:PKziZ34PB3PUxxRb-EWMDqCf7L9icGVY2Jy3ZFzgiMn9NjznnL3u-jVZ2Se-UMxSM
+    D_KnWhntSuQ5XV4tA>
+X-ME-Received: <xmr:PKziZ9ckddVjdg7XB599sOCh9qt-Znd2ANgcNaJK3-7zozIWx_td9MNodkf-I8kk9CqGr-SZfTObQqwD2l1e799Id_1NOcbFOnccUua-XOclQg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedvjeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
-    hnsehgmhigrdguvgdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    shhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:O6ziZ4tyTMWS58qUT6xTZlDm29zz9b5B-NP1WckMi6bWwcMiHyhDEQ>
-    <xmx:O6ziZ4dr3Q5oPfLMs9SmW_2gWFyxXxyg8RDf9oKVHVjrmrMlWcming>
-    <xmx:O6ziZ82uPPZcXhoviCu1VQVaNjs4jpAUEZupJVaANcYm0A8hEuI8Wg>
-    <xmx:O6ziZ88sfLqBb-etwBMxGntB7sZv745N186cWjPEfu9BQUHhFAaV7w>
-    <xmx:O6ziZ9FNslDUFdEV2p9nBQaIeJccT-59jig0_1XHc1cvb674ZHB61sdS>
+    vgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthht
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:PKziZ7JFEc_Sl--8wlZeeFuXnpttg2odmkt3X70fPz0sQhVnNCBSvA>
+    <xmx:PKziZyJdVIdIEJqU6plx9kqiyIZ8rg-KTPartMMXRYIbguUNJWamcQ>
+    <xmx:PKziZ8zP1kKLXQZeqAMgufGldxm0txWcTBrIwo_ec-injneDsqqOhA>
+    <xmx:PKziZ2JT1V5_QHkMMNqxknh4qdLIMTQPmL6Avm3_xlPUqiqqzcyH6A>
+    <xmx:PKziZ0hodtM3X1KQ9OTlQZzVTv4c1ReRG3Odi19-F095oSvk3t1s0-0f>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Mar 2025 09:14:34 -0400 (EDT)
+ 25 Mar 2025 09:14:35 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d92997e1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 25 Mar 2025 13:14:33 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2600f114 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Mar 2025 13:14:35 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 25 Mar 2025 14:14:30 +0100
-Subject: [PATCH v2 12/20] t: refactor tests depending on Perl to print data
+Date: Tue, 25 Mar 2025 14:14:32 +0100
+Subject: [PATCH v2 14/20] t/lib-gpg: refactor `sanitize_pgp()` to not
+ depend on Perl
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250325-b4-pks-t-perlless-v2-12-4b87b8072670@pks.im>
+Message-Id: <20250325-b4-pks-t-perlless-v2-14-4b87b8072670@pks.im>
 References: <20250325-b4-pks-t-perlless-v2-0-4b87b8072670@pks.im>
 In-Reply-To: <20250325-b4-pks-t-perlless-v2-0-4b87b8072670@pks.im>
 To: git@vger.kernel.org
@@ -95,411 +96,103 @@ Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
  Phillip Wood <phillip.wood123@gmail.com>
 X-Mailer: b4 0.14.2
 
-A bunch of tests rely on Perl to print data in various different ways.
-These usages fall into the following categories:
+The `sanitize_pgp()` test helper uses Perl to strip PGP signatures from
+stdin. Refactor it to instead use awk(1) so that we drop the
+PERL_TEST_HELPERS prerequisite in users of this library.
 
-  - Print data conditionally by matching patterns. These usecases can be
-    converted to use awk(1) rather easily.
+Note that we have to add PERL_TEST_HELPERS to a subset of tests in t6300
+now that the test suite doesn't bail out early anymore in case the
+prerequisite isn't set.
 
-  - Print data repeatedly. These usecases can typically be converted to
-    use a combination of `test-tool genzeros` and sed(1).
-
-  - Print data in reverse. These usecases can be converted to use
-    awk(1).
-
-Refactor the tests accordingly so that we can drop a couple of
-PERL_TEST_HELPERS prerequisites.
-
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t0610-reftable-basics.sh          |  7 +++----
- t/t0613-reftable-write-options.sh   |  4 ++--
- t/t1010-mktree.sh                   |  8 ++++----
- t/t4150-am.sh                       | 10 +++++-----
- t/t5300-pack-object.sh              | 16 +++++-----------
- t/t5326-multi-pack-bitmaps.sh       |  6 +++---
- t/t5333-pseudo-merge-bitmaps.sh     | 18 +++++-------------
- t/t5410-receive-pack-alternates.sh  |  6 +++---
- t/t5701-git-serve.sh                |  7 +++++--
- t/t6013-rev-list-reverse-parents.sh | 14 ++++++++------
- t/t6115-rev-list-du.sh              |  8 +-------
- t/t7006-pager.sh                    |  8 ++++----
- t/t8002-blame.sh                    |  2 +-
- t/t9850-shell.sh                    |  4 ++--
- 14 files changed, 51 insertions(+), 67 deletions(-)
+ t/lib-gpg.sh            |  6 +-----
+ t/t6300-for-each-ref.sh | 21 ++++++++++-----------
+ 2 files changed, 11 insertions(+), 16 deletions(-)
 
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 5e0a1fa176d..77ed11e7172 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -643,12 +643,11 @@ test_expect_success 'basic: commit and list refs' '
- 	test_cmp actual expect
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index 3845b6ac449..937b876bd05 100644
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -192,9 +192,5 @@ test_lazy_prereq GPGSSH_VERIFYTIME '
  '
  
--test_expect_success PERL_TEST_HELPERS 'basic: can write large commit message' '
-+test_expect_success 'basic: can write large commit message' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
--	perl -e "
--		print \"this is a long commit message\" x 50000
--	" >commit-msg &&
-+
-+	awk "BEGIN { for (i = 0; i < 50000; i++) printf \"%s\", \"this is a long commit message\" }" >commit-msg &&
- 	git -C repo commit --allow-empty --file=../commit-msg
- '
- 
-diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-options.sh
-index fa1e2f9eef8..42aa1592f87 100755
---- a/t/t0613-reftable-write-options.sh
-+++ b/t/t0613-reftable-write-options.sh
-@@ -139,13 +139,13 @@ test_expect_success 'small block size leads to multiple ref blocks' '
- 	)
- '
- 
--test_expect_success PERL_TEST_HELPERS 'small block size fails with large reflog message' '
-+test_expect_success 'small block size fails with large reflog message' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
- 	(
- 		cd repo &&
- 		test_commit A &&
--		perl -e "print \"a\" x 500" >logmsg &&
-+		test-tool genzeros 500 | tr "\000" "a" >logmsg &&
- 		cat >expect <<-EOF &&
- 		fatal: update_ref failed for ref ${SQ}refs/heads/logme${SQ}: reftable: transaction failure: entry too large
- 		EOF
-diff --git a/t/t1010-mktree.sh b/t/t1010-mktree.sh
-index 4977998e205..e9973f74949 100755
---- a/t/t1010-mktree.sh
-+++ b/t/t1010-mktree.sh
-@@ -41,14 +41,14 @@ test_expect_success 'ls-tree piped to mktree (2)' '
- 	test_cmp tree.withsub actual
- '
- 
--test_expect_success PERL_TEST_HELPERS 'ls-tree output in wrong order given to mktree (1)' '
--	perl -e "print reverse <>" <top |
-+test_expect_success 'ls-tree output in wrong order given to mktree (1)' '
-+	sort -r <top |
- 	git mktree >actual &&
- 	test_cmp tree actual
- '
- 
--test_expect_success PERL_TEST_HELPERS 'ls-tree output in wrong order given to mktree (2)' '
--	perl -e "print reverse <>" <top.withsub |
-+test_expect_success 'ls-tree output in wrong order given to mktree (2)' '
-+	sort -r <top.withsub |
- 	git mktree >actual &&
- 	test_cmp tree.withsub actual
- '
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 4794510d70d..2ae93d3c967 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -1073,7 +1073,7 @@ test_expect_success 'am --patch-format=mboxrd handles mboxrd' '
- 	test_cmp msg out
- '
- 
--test_expect_success PERL_TEST_HELPERS 'am works with multi-line in-body headers' '
-+test_expect_success 'am works with multi-line in-body headers' '
- 	FORTY="String that has a length of more than forty characters" &&
- 	LONG="$FORTY $FORTY" &&
- 	rm -fr .git/rebase-apply &&
-@@ -1084,13 +1084,13 @@ test_expect_success PERL_TEST_HELPERS 'am works with multi-line in-body headers'
-     Body test" --author="$LONG <long@example.com>" &&
- 	git format-patch --stdout -1 >patch &&
- 	# bump from, date, and subject down to in-body header
--	perl -lpe "
--		if (/^From:/) {
-+	awk "
-+		/^From:/{
- 			print \"From: x <x\@example.com>\";
- 			print \"Date: Sat, 1 Jan 2000 00:00:00 +0000\";
- 			print \"Subject: x\n\";
--		}
--	" patch >msg &&
-+		}; 1
-+	" <patch >msg &&
- 	git checkout HEAD^ &&
- 	git am msg &&
- 	# Ensure that the author and full message are present
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 143856c29f1..362b05441af 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -7,17 +7,11 @@ test_description='git pack-object'
- 
- . ./test-lib.sh
+ sanitize_pgp() {
+-	perl -ne '
+-		/^-----END PGP/ and $in_pgp = 0;
+-		print unless $in_pgp;
+-		/^-----BEGIN PGP/ and $in_pgp = 1;
+-	'
++	sed "/^-----BEGIN PGP/,/^-----END PGP/{/^-/p;d;}"
+ }
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 732a4d3171e..5db7038c417 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -10,12 +10,6 @@ GNUPGHOME_NOT_USED=$GNUPGHOME
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
  
 -if ! test_have_prereq PERL_TEST_HELPERS
 -then
--	skip_all='skipping pack-object tests; Perl not available'
+-	skip_all='skipping for-each-ref tests; Perl not available'
 -	test_done
 -fi
 -
- test_expect_success 'setup' '
- 	rm -f .git/index* &&
--	perl -e "print \"a\" x 4096;" >a &&
--	perl -e "print \"b\" x 4096;" >b &&
--	perl -e "print \"c\" x 4096;" >c &&
-+	test-tool genzeros 4096 | tr "\000" "a" >a &&
-+	test-tool genzeros 4096 | tr "\000" "b" >b &&
-+	test-tool genzeros 4096 | tr "\000" "c" >c &&
- 	test-tool genrandom "seed a" 2097152 >a_big &&
- 	test-tool genrandom "seed b" 2097152 >b_big &&
- 	git update-index --add a a_big b b_big c &&
-@@ -146,7 +140,7 @@ test_expect_success 'pack-object <stdin parsing: --stdin-packs handles garbage'
- # usage: check_deltas <stderr_from_pack_objects> <cmp_op> <nr_deltas>
- # e.g.: check_deltas stderr -gt 0
- check_deltas() {
--	deltas=$(perl -lne '/delta (\d+)/ and print $1' "$1") &&
-+	deltas=$(sed -n 's/Total [0-9][0-9]* (delta \([0-9][0-9]*\)).*/\1/p' <"$1") &&
- 	shift &&
- 	if ! test "$deltas" "$@"
- 	then
-@@ -221,7 +215,7 @@ test_expect_success 'unpack with OFS_DELTA (core.fsyncmethod=batch)' '
- 	check_unpack test-3-${packname_3} obj-list "$BATCH_CONFIGURATION"
+ # Mon Jul 3 23:18:43 2006 +0000
+ datestamp=1151968723
+ setdate_and_increment () {
+@@ -1215,7 +1209,7 @@ test_expect_success '%(raw) with --tcl must fail' '
+ 	test_must_fail git for-each-ref --format="%(raw)" --tcl
  '
  
--test_expect_success 'compare delta flavors' '
-+test_expect_success PERL_TEST_HELPERS 'compare delta flavors' '
- 	perl -e '\''
- 		defined($_ = -s $_) or die for @ARGV;
- 		exit 1 if $ARGV[0] <= $ARGV[1];
-diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
-index 627f8b4efdc..e5d52de4bd3 100755
---- a/t/t5326-multi-pack-bitmaps.sh
-+++ b/t/t5326-multi-pack-bitmaps.sh
-@@ -153,7 +153,7 @@ test_midx_bitmap_cases () {
- 		)
+-test_expect_success '%(raw) with --perl' '
++test_expect_success PERL_TEST_HELPERS '%(raw) with --perl' '
+ 	git for-each-ref --format="\$name= %(raw);
+ print \"\$name\"" refs/myblobs/blob1 --perl | perl >actual &&
+ 	cmp blob1 actual &&
+@@ -1442,9 +1436,14 @@ test_expect_success 'set up trailers for next test' '
+ '
+ 
+ test_trailer_option () {
++	if test "$#" -eq 3
++	then
++		prereq="$1"
++		shift
++	fi &&
+ 	title=$1 option=$2
+ 	cat >expect
+-	test_expect_success "$title" '
++	test_expect_success $prereq "$title" '
+ 		git for-each-ref --format="%($option)" refs/heads/main >actual &&
+ 		test_cmp expect actual &&
+ 		git for-each-ref --format="%(contents:$option)" refs/heads/main >actual &&
+@@ -1452,7 +1451,7 @@ test_trailer_option () {
  	'
- 
--	test_expect_success PERL_TEST_HELPERS 'pack.preferBitmapTips' '
-+	test_expect_success 'pack.preferBitmapTips' '
- 		git init repo &&
- 		test_when_finished "rm -fr repo" &&
- 		(
-@@ -176,8 +176,8 @@ test_midx_bitmap_cases () {
- 			comm -13 bitmaps commits >before &&
- 			test_line_count = 1 before &&
- 
--			perl -ne "printf(\"create refs/tags/include/%d \", $.); print" \
--				<before | git update-ref --stdin &&
-+			sed "s|\(.*\)|create refs/tags/include/\1 \1|" <before |
-+			git update-ref --stdin &&
- 
- 			rm -fr $midx-$(midx_checksum $objdir).bitmap &&
- 			rm -fr $midx &&
-diff --git a/t/t5333-pseudo-merge-bitmaps.sh b/t/t5333-pseudo-merge-bitmaps.sh
-index 1059ff45fe4..df13a18c5c7 100755
---- a/t/t5333-pseudo-merge-bitmaps.sh
-+++ b/t/t5333-pseudo-merge-bitmaps.sh
-@@ -6,12 +6,6 @@ GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
- 
- . ./test-lib.sh
- 
--if ! test_have_prereq PERL_TEST_HELPERS
--then
--	skip_all='skipping pseudo-merge bitmap tests; Perl not available'
--	test_done
--fi
--
- test_pseudo_merges () {
- 	test-tool bitmap dump-pseudo-merges
- }
-@@ -34,9 +28,8 @@ test_pseudo_merges_reused () {
- 
- tag_everything () {
- 	git rev-list --all --no-object-names >in &&
--	perl -lne '
--		print "create refs/tags/" . $. . " " . $1 if /([0-9a-f]+)/
--	' <in | git update-ref --stdin
-+	sed 's|\(.*\)|create refs/tags/\1 \1|' <in |
-+	git update-ref --stdin
  }
  
- test_expect_success 'setup' '
-@@ -108,7 +101,7 @@ test_expect_success 'stale bitmap traversal with pseudo-merges' '
- 	test_cmp expect actual
- '
+-test_trailer_option '%(trailers:unfold) unfolds trailers' \
++test_trailer_option PERL_TEST_HELPERS '%(trailers:unfold) unfolds trailers' \
+ 	'trailers:unfold' <<-EOF
+ 	$(unfold <trailers)
  
--test_expect_success 'bitmapPseudoMerge.sampleRate adjusts commit selection rate' '
-+test_expect_success PERL_TEST_HELPERS 'bitmapPseudoMerge.sampleRate adjusts commit selection rate' '
- 	test_config bitmapPseudoMerge.test.pattern "refs/tags/" &&
- 	test_config bitmapPseudoMerge.test.maxMerges 1 &&
- 	test_config bitmapPseudoMerge.test.stableThreshold never &&
-@@ -241,8 +234,7 @@ test_expect_success 'pseudo-merge pattern with capture groups' '
- 			test_commit_bulk 16 &&
+@@ -1482,13 +1481,13 @@ test_trailer_option '%(trailers:only=no) shows all trailers' \
  
- 			git rev-list HEAD~16.. >in &&
--
--			perl -lne "print \"create refs/remotes/$r/tags/\$. \$_\"" <in |
-+			sed "s|\(.*\)|create refs/remotes/$r/tags/\1 \1" <in |
- 			git update-ref --stdin || return 1
- 		done &&
+ 	EOF
  
-@@ -258,7 +250,7 @@ test_expect_success 'pseudo-merge pattern with capture groups' '
- 		do
- 			test_pseudo_merge_commits $m >oids &&
- 			grep -f oids refs |
--			perl -lne "print \$1 if /refs\/remotes\/([0-9]+)/" |
-+			sed -n "s|refs/remotes/\([0-9][0-9]*\)/|\1|p" &&
- 			sort -u || return 1
- 		done >remotes &&
+-test_trailer_option '%(trailers:only) and %(trailers:unfold) work together' \
++test_trailer_option PERL_TEST_HELPERS '%(trailers:only) and %(trailers:unfold) work together' \
+ 	'trailers:only,unfold' <<-EOF
+ 	$(grep -v patch.description <trailers | unfold)
  
-diff --git a/t/t5410-receive-pack-alternates.sh b/t/t5410-receive-pack-alternates.sh
-index 6a009fdcd71..4e82fd102e3 100755
---- a/t/t5410-receive-pack-alternates.sh
-+++ b/t/t5410-receive-pack-alternates.sh
-@@ -17,10 +17,10 @@ test_expect_success 'setup' '
- '
+ 	EOF
  
- extract_haves () {
--	depacketize | perl -lne '/^(\S+) \.have/ and print $1'
-+	depacketize | sed -n 's/^\([^ ][^ ]*\) \.have/\1/p'
- }
+-test_trailer_option '%(trailers:unfold) and %(trailers:only) work together' \
++test_trailer_option PERL_TEST_HELPERS '%(trailers:unfold) and %(trailers:only) work together' \
+ 	'trailers:unfold,only' <<-EOF
+ 	$(grep -v patch.description <trailers | unfold)
  
--test_expect_success PERL_TEST_HELPERS 'with core.alternateRefsCommand' '
-+test_expect_success 'with core.alternateRefsCommand' '
- 	write_script fork/alternate-refs <<-\EOF &&
- 		git --git-dir="$1" for-each-ref \
- 			--format="%(objectname)" \
-@@ -33,7 +33,7 @@ test_expect_success PERL_TEST_HELPERS 'with core.alternateRefsCommand' '
- 	test_cmp expect actual.haves
- '
- 
--test_expect_success PERL_TEST_HELPERS 'with core.alternateRefsPrefixes' '
-+test_expect_success 'with core.alternateRefsPrefixes' '
- 	test_config -C fork core.alternateRefsPrefixes "refs/heads/private" &&
- 	git rev-parse private/branch >expect &&
- 	printf "0000" | git receive-pack fork >actual &&
-diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-index 200bf06ecb3..d4c28bae39e 100755
---- a/t/t5701-git-serve.sh
-+++ b/t/t5701-git-serve.sh
-@@ -220,7 +220,7 @@ test_expect_success 'refs/heads prefix' '
- 	test_cmp expect actual
- '
- 
--test_expect_success PERL_TEST_HELPERS 'ignore very large set of prefixes' '
-+test_expect_success 'ignore very large set of prefixes' '
- 	# generate a large number of ref-prefixes that we expect
- 	# to match nothing; the value here exceeds TOO_MANY_PREFIXES
- 	# from ls-refs.c.
-@@ -228,7 +228,10 @@ test_expect_success PERL_TEST_HELPERS 'ignore very large set of prefixes' '
- 		echo command=ls-refs &&
- 		echo object-format=$(test_oid algo) &&
- 		echo 0001 &&
--		perl -le "print \"ref-prefix refs/heads/\$_\" for (1..65536)" &&
-+		awk "{
-+			for (i = 1; i <= 65536; i++)
-+				print \"ref-prefix refs/heads/\", \$i
-+		}" &&
- 		echo 0000
- 	} |
- 	test-tool pkt-line pack >in &&
-diff --git a/t/t6013-rev-list-reverse-parents.sh b/t/t6013-rev-list-reverse-parents.sh
-index 8074185742c..273196f52b5 100755
---- a/t/t6013-rev-list-reverse-parents.sh
-+++ b/t/t6013-rev-list-reverse-parents.sh
-@@ -26,17 +26,19 @@ test_expect_success 'set up --reverse example' '
- 	commit five
- 	'
- 
--test_expect_success PERL_TEST_HELPERS '--reverse --parents --full-history combines correctly' '
--	git rev-list --parents --full-history main -- foo |
--		perl -e "print reverse <>" > expected &&
-+reverse () {
-+	awk '{a[i++]=$0} END {for (j=i-1; j>=0;) print a[j--] }'
-+}
-+
-+test_expect_success '--reverse --parents --full-history combines correctly' '
-+	git rev-list --parents --full-history main -- foo | reverse >expected &&
- 	git rev-list --reverse --parents --full-history main -- foo \
- 		> actual &&
- 	test_cmp expected actual
- 	'
- 
--test_expect_success PERL_TEST_HELPERS '--boundary does too' '
--	git rev-list --boundary --parents --full-history main ^root -- foo |
--		perl -e "print reverse <>" > expected &&
-+test_expect_success '--boundary does too' '
-+	git rev-list --boundary --parents --full-history main ^root -- foo | reverse >expected &&
- 	git rev-list --boundary --reverse --parents --full-history \
- 		main ^root -- foo > actual &&
- 	test_cmp expected actual
-diff --git a/t/t6115-rev-list-du.sh b/t/t6115-rev-list-du.sh
-index 6a74be576a2..04c577dad69 100755
---- a/t/t6115-rev-list-du.sh
-+++ b/t/t6115-rev-list-du.sh
-@@ -4,12 +4,6 @@ test_description='basic tests of rev-list --disk-usage'
- 
- . ./test-lib.sh
- 
--if ! test_have_prereq PERL_TEST_HELPERS
--then
--	skip_all='skipping rev-list disk usage tests; Perl not available'
--	test_done
--fi
--
- # we want a mix of reachable and unreachable, as well as
- # objects in the bitmapped pack and some outside of it
- test_expect_success 'set up repository' '
-@@ -28,7 +22,7 @@ test_expect_success 'set up repository' '
- disk_usage_slow () {
- 	git rev-list --no-object-names "$@" |
- 	git cat-file --batch-check="%(objectsize:disk)" |
--	perl -lne '$total += $_; END { print $total}'
-+	awk '{ i += $1 } END { print i }'
- }
- 
- # check behavior with given rev-list options; note that
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index 49aae183829..9717e825f0d 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -661,10 +661,10 @@ test_expect_success 'setup trace2' '
- 	export GIT_TRACE2_BRIEF
- '
- 
--test_expect_success PERL_TEST_HELPERS 'setup large log output' '
--	perl -e "
--		print \"this is a long commit message\" x 50000
--	" >commit-msg &&
-+test_expect_success 'setup large log output' '
-+	test-tool genzeros 50000 |
-+	tr "\000" "a" |
-+	sed "s/a/this is a long commit message/g" >commit-msg &&
- 	git commit --allow-empty -F commit-msg
- '
- 
-diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
-index b40199df231..0b7548c8e75 100755
---- a/t/t8002-blame.sh
-+++ b/t/t8002-blame.sh
-@@ -107,7 +107,7 @@ test_expect_success 'set up abbrev tests' '
- 		expect=$1 && shift &&
- 		echo $sha1 | cut -c 1-$expect >expect &&
- 		git blame "$@" abbrev.t >actual &&
--		perl -lne "/[0-9a-f]+/ and print \$&" <actual >actual.sha &&
-+		sed -n "s/^[\^]\{0,1\}\([0-9a-f][0-9a-f]*\).*/\1/p" <actual >actual.sha &&
- 		test_cmp expect actual.sha
- 	}
- '
-diff --git a/t/t9850-shell.sh b/t/t9850-shell.sh
-index f619b60f226..21c3af48bd0 100755
---- a/t/t9850-shell.sh
-+++ b/t/t9850-shell.sh
-@@ -29,8 +29,8 @@ test_expect_success 'shell allows interactive command' '
- 	test_cmp expect actual
- '
- 
--test_expect_success PERL_TEST_HELPERS 'shell complains of overlong commands' '
--	perl -e "print \"a\" x 2**12 for (0..2**19)" |
-+test_expect_success 'shell complains of overlong commands' '
-+	test-tool genzeros | tr "\000" "a" |
- 	test_must_fail git shell 2>err &&
- 	grep "too long" err
- '
 
 -- 
 2.49.0.472.ge94155a9ec.dirty
