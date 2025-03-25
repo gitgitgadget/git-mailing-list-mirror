@@ -1,101 +1,110 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CACB1E1E05
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 23:21:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBACA25484F
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 23:29:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742944867; cv=none; b=PwatC8LyPT24VbQHix4YW/9xRfRmUThMGpbeCrrcC6hqsVl3MRLcItTe5F5QfJulUtJifxZ2K7p6pollKbEHiveby33mGy7/H0L74eNWXIttGQUrJTv8DdIqMxia+/2JvILhFV2k7PQfIvnE3e2TR4LmAJGswFSaXc46P1YGh70=
+	t=1742945362; cv=none; b=Sj2ukivX5I211k5h0RmY0WPxhp3l7zSKl/5lCVgwHhTryHbZi4OioA8Da8jUVunmcx5TlY1sQSQ7ojLl6sfHMnt8JLGfZnA3vVzAvwWc49YguFiKWyUvyzHfZ+TZp47A+4VYjoLsEtrglCCc2/WwVv+Uy3vHeHd6cq3t6KuTJuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742944867; c=relaxed/simple;
-	bh=qqoH7xrrM8rmyDNH/ZMYkRY/A/0KEXh3dNP9xID+mtk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fzLL0ajY9sVcwfAFwcs3SaFGxbTJttV5I/6yvrhc+IVjWidPaXl1f90oCxsNHrNIAUwg1v/VdAnQPkn44Sv6IfF5NNwgdaGx7ujZShPdqSE8G5A3FeDLip+cKIgljyLPlsYPZSwwMF/alaJOb7ULOqxWedHs3Kqtk93n2nkiR5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KwCRQQQ5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BdY5b9Ys; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KwCRQQQ5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BdY5b9Ys"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3740D114022D;
-	Tue, 25 Mar 2025 19:21:03 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 25 Mar 2025 19:21:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1742944863; x=1743031263; bh=EvU1gZA0Hi
-	/nM8hBj7tOTwe6M5+0C6Z89R2Pl05jPPI=; b=KwCRQQQ5UvwvIvud+8AvdgRyvk
-	I+2Kr9M4YqwIn+W6BZuj4JALJuTpi8Mnk/rtNeKKd0t5uQCYd4RyWicSJD70dNDR
-	XUv0kQ63tA6mGBEYNtKYPQLJfnO4zSRJ9rUVD9ugMV3lrF0slp6irvr/VeEQFpaj
-	Spfhf+qiEhiyilsh5oHXydZ79uwp5AG0gZSLmMJNSvkPmpLVqeledjf+S+bgKilH
-	gG+yhra4hWG02lhTlN5ZA+pqxEU6xSd1KSSrbccl6DJMEazoOMeLMLTXvDXCyMfh
-	5PC7ChgrdQ9yod4bYbJvL34fHxVKlivA9YiTiaJrDug4dwzgtxliHV5/veOQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1742944863; x=1743031263; bh=EvU1gZA0Hi/nM8hBj7tOTwe6M5+0C6Z89R2
-	Pl05jPPI=; b=BdY5b9YsU+JTRyCbdjFaIT1XrP/gMazjRUfxsj//fipz5JurokU
-	LI93U/4KPeWvkUERPRFu7uo1+9NQkhqon9BOqeF9W47tzhNIDptKtbJCl3RLW8OA
-	zPFxAv4ayC8rSaMs7x+91nS84aMWyrdTbHhwWRFMmfNLbYeajw6bl37VbnNKO8DA
-	nCCToZOOaaDO5lSy1p9ulEgi6cAf/tpzKNR32aRS2So9295gLnnG6jFlw9DchKcD
-	el5WappoAXJ/pyjdauMXC/dDE48oosZmtllV5MQXlgvAVG2MJ4P8Y9DBmijsRA1K
-	rtzIhSszlUzYaszK/ma8+FJIot+bLB8vjbg==
-X-ME-Sender: <xms:XjrjZxX0l_KewZXaUc-j9I4vJ5DfJlz8YMFL0GmEaeO5vJw-R9pREA>
-    <xme:XjrjZxnnT1Gxvo2yCHjHuP3PrNy8LqJvLe26PPtoTNktm2uPp5wXRfltPvLicseOr
-    tbkUPiwUXtwz-_8xA>
-X-ME-Received: <xmr:XjrjZ9YzEhk_cT8IPEZ_iNBhaj9J4ayvgoBn4iIGFWRRb1ncpNtL83CTAPWV7LpeFRuAcnAcvuLPEaO962RtT1d9Zu0JRiuZzbYru4M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieefleeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepvghstghhfigrrh
-    htiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshgrmhesgh
-    gvnhhtohhordhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:XjrjZ0XCfalNHb0-KRvczOltDkKUGRRyLBEvngo1PrXAXsfnxVo5fw>
-    <xmx:XjrjZ7l59VAkJXAZ10AIajBbXo3D81N97jcxh3kbVrhMRziC-ex03Q>
-    <xmx:XjrjZxemUyl84wUbwZXmBAkX--S9SXX96SNETgoW2MRc_9mgr975BA>
-    <xmx:XjrjZ1Hzp0FFW1sdVMGmZ2r25oUqn-NbKUuy963mHkyzFYcWIbHp3A>
-    <xmx:XzrjZ2uwmS_p8oXOkM9GW9YhPAkF6rwZu8dvWYa1IBBfirVXo_k_LuC0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Mar 2025 19:21:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Sam James
- <sam@gentoo.org>
-Subject: Re: [PATCH v2] meson: disable coccinelle configuration when
- building from a tarball
-In-Reply-To: <20250325200920.198057-1-eschwartz@gentoo.org> (Eli Schwartz's
-	message of "Tue, 25 Mar 2025 16:08:48 -0400")
-References: <20250325200542.197687-1-eschwartz@gentoo.org>
-	<20250325200920.198057-1-eschwartz@gentoo.org>
-Date: Tue, 25 Mar 2025 16:21:01 -0700
-Message-ID: <xmqqpli4lmsi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1742945362; c=relaxed/simple;
+	bh=1X2JzuctG5SgFPuAZxGgVPrM+uVXAmRXrwbiOBY9OrE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QWrWRwPjSV4H/hvcHum+sgSyVN4SUmqDwVnv151U/sVd6WEPCMOsuVKS4HrU5CzKNIlVcsiHfQ0c5B//3XVf4ojXKXmxx5EPGk+dW126/1JbdahgqSwuC9SR9zPHLa2BH32/1zylRGe7eDRbseYBGc2CmNSp0XxO1P8SDaaaqY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: eschwartz)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id C677934319A;
+	Tue, 25 Mar 2025 23:29:19 +0000 (UTC)
+Message-ID: <68d381cd-3803-47a7-b7b1-8ef09b73a48a@gentoo.org>
+Date: Tue, 25 Mar 2025 19:29:17 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] meson: disable coccinelle configuration when building
+ from a tarball
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+ Sam James <sam@gentoo.org>
+References: <20250325200542.197687-1-eschwartz@gentoo.org>
+ <20250325200920.198057-1-eschwartz@gentoo.org> <xmqqpli4lmsi.fsf@gitster.g>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <xmqqpli4lmsi.fsf@gitster.g>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------JPM09Pr4wWCogCwZxyIV74Gr"
 
-Eli Schwartz <eschwartz@gentoo.org> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------JPM09Pr4wWCogCwZxyIV74Gr
+Content-Type: multipart/mixed; boundary="------------E0f9V1xoQCxshDygRNK95wlh";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+ Sam James <sam@gentoo.org>
+Message-ID: <68d381cd-3803-47a7-b7b1-8ef09b73a48a@gentoo.org>
+Subject: Re: [PATCH v2] meson: disable coccinelle configuration when building
+ from a tarball
+References: <20250325200542.197687-1-eschwartz@gentoo.org>
+ <20250325200920.198057-1-eschwartz@gentoo.org> <xmqqpli4lmsi.fsf@gitster.g>
+In-Reply-To: <xmqqpli4lmsi.fsf@gitster.g>
 
-> presence indicated a desire to use it on this source tree. Instead, we
-> can expand the conditional to check for both `spatch` and the `.git`
-> file or directory.
+--------------E0f9V1xoQCxshDygRNK95wlh
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Good thinking.  I very much appreciate that you allowed .git to be a
-regular file, as well as a directory.
+On 3/25/25 7:21 PM, Junio C Hamano wrote:
+> Eli Schwartz <eschwartz@gentoo.org> writes:
+>=20
+>> presence indicated a desire to use it on this source tree. Instead, we=
 
-Will queue.  Thanks.
+>> can expand the conditional to check for both `spatch` and the `.git`
+>> file or directory.
+>=20
+> Good thinking.  I very much appreciate that you allowed .git to be a
+> regular file, as well as a directory.
+>=20
+> Will queue.  Thanks.
+
+
+As a heavy user of worktrees this topic is certainly on my mind. :D
+
+
+--=20
+Eli Schwartz
+
+--------------E0f9V1xoQCxshDygRNK95wlh--
+
+--------------JPM09Pr4wWCogCwZxyIV74Gr
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZ+M8TQUDAAAAAAAKCRCEp9ErcA0vV7YH
+AQD/u+Zo+u6LBnKztUfrqP9StHc353ikI9cbChXwJN1AeQEAzBpp26oMMUwPfS1AP6hdhHa2US5C
+bPCYd7RNmF6EPQs=
+=UW7I
+-----END PGP SIGNATURE-----
+
+--------------JPM09Pr4wWCogCwZxyIV74Gr--
