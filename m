@@ -1,118 +1,137 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB9D19AA56
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 18:34:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99E919AA56
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 18:35:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742927671; cv=none; b=VOqSRTQ78dnRCImkzQosuJ6gM/pB8AlBXUgjE7AvzT07q29WJYtNy1Nm55NjdQ4Ne5hoPSETnsMlL695H5rR/Oc7xIodC25r17yXOS3Cb6oFuf7PviDWSAhUI6SLjhvV5aNLQzTpY5JclQ/EG3LfwcTSymgRXGtgb12T4swjHho=
+	t=1742927713; cv=none; b=hDsQr4jc7pJ/Z6EoUP809xl3hHzx3/W3oqrQVYCltSNkW7TQHD9/n3HCCr8PLzAeculU6doPB+BgsZ71nRvGfldEHmWAhGMy4F3Mb10JUcELiZr4Jb+L84PB0I9+fHDRkK1IvI9LHJEfq0VilR7UIkRiv7vXNiEbuNlF9+pm1vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742927671; c=relaxed/simple;
-	bh=/ZbJNAKT8zqlMkb7IeIhvAHLRanV44umhxZbepnxAP8=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=nNxEnlb9aE7Jv78k99EXdu0kMNxbMN8NW7tYbzuP2la2FHsrwRvwSXO/v8oq0Je6M+T+CMpFab1jrQuPP3T9NsdJEwJglJzIdvrdD7podnogT2H/mVMITrapkc3b9q5tC73sqjm+MPuEIwBpIMal0om+PPNkb96BHHttHR79joQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=HPGNKrXV; arc=none smtp.client-ip=209.85.160.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1742927713; c=relaxed/simple;
+	bh=7Lk3fE4/CDuhAqEGyecgSVgQ8OscmyhAzOcfcuzuUrY=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=ll+ZZQjyrdltXJQZ0XRth1zKV7yMRFOzLruMcNWo+b6a696UASP3qlfCv255bp3x2k7yNq1sybKmX7nWAGKKo4dgR8KePGLsDnWdi0HgJOMJak/1ms4IvapyqFfJFHI1shw7uDZ9Q+Q0d+TDKkC+nihORlgwugbuGJ4ftH93mLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NzLnIc4I; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="HPGNKrXV"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-4766631a6a4so59743081cf.2
-        for <git@vger.kernel.org>; Tue, 25 Mar 2025 11:34:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NzLnIc4I"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-227aaa82fafso66973415ad.2
+        for <git@vger.kernel.org>; Tue, 25 Mar 2025 11:35:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1742927668; x=1743532468; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lY/8QKRgHlT+4ti3ifAQXPYfHMm87SIVfRJ7G12Tm4Q=;
-        b=HPGNKrXVBNRz/wK1Zgy8FhQpPy8sum7ihY/0mXfHBVzeLC9tNNyxaf4y8HJ/YnGjVk
-         dRUHRIIKxzb2BTnOig94ceJg3jTJ11Mxehd9T21gY19ZP9PSY8WZKqz9IV1CLWua0MXY
-         pNboXG/oL+dUVqzFizgskEq0luxpjBKDjlZyWDcVw/kdesJkxS2IzeuZKwHefI10jIJU
-         UaC50ong93XjBbJMX4dVV+a5EBZe+9/RpX7KURqBmZa0o5MxJOhyu/jWEHGpD5wbA/jo
-         rmriiLAXno0eJAviyCqOaB+Fh8jmpREUbWHnTv+lygP7uDvoTiEC5K6rF5ObrXwUMfZk
-         rPYQ==
+        d=gmail.com; s=20230601; t=1742927711; x=1743532511; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vmcl1oMLqk4fj5kjoQV4u2AFpfLXsfd80C4fFbAGQH4=;
+        b=NzLnIc4INwIMbuoZOEkw86h1oRQB4xMN+peYZ0MTMDZAT/o14r9y/WJDfPZZEDpI3a
+         EQb9yYXGcKeqNFKgrklvIbIYR54gQ9NzwKHrqk9xersPWFCgjTpRKXmhdbDncpGm/nmb
+         3RnD116Xz05nJpjGtkNY6UIvcn3qsZXWkudc9YWKhONBgva+e+ZNmNM36SWl2Q/KTaZF
+         YEdmZc5KHeZDWOo/EIGNTv8IDdd8hA3MNuqtX8E2ZDOYGe8IfvxxcePgufxyuNFtt1gd
+         /2+aNkz08Hk+43+4OAd9hV3VbuSsDtoid+A64ecdh0Voevg/arHOZOn8JAh8VH8c2Hwg
+         O6Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742927668; x=1743532468;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lY/8QKRgHlT+4ti3ifAQXPYfHMm87SIVfRJ7G12Tm4Q=;
-        b=o5WkgZDTl3J69hTeFDAT2tbwbqcojtWGOD3PCy2oHpX42ABNJb2c2DnV2Er1FKFHrN
-         E82tMYeqrmSt0AhSqCcfIUr/PRH9T2yG7nYQGfLbeSQ5cRrKz/DNxNqRT/wY+9bHtIvn
-         AA1aogxOO61b6kiSwtUsNsfHh3tI13kqwiXLnUdIRvRXeifp/UecDed2iSvTQ+t/gb5S
-         ZAGYjGqltd8ie+8WnOi4/g6q0Lxr71+C7BEzHyMMZ9TRwlTqU5ztLGKAsGKTtfWYhDdu
-         mjM5tpopxgIbEjWtiZcIajroivaCVAaA4eACjo1lY3+Kai8HQTsd5urqQBwIYE9j3SxC
-         JnyQ==
-X-Gm-Message-State: AOJu0YybSJFqRiCPWLqUyYPbiGaxfMWtKtp5mJrfOALKyY0iEsIbRYqP
-	CNLcWl028bmUdJwBoZ8jXzCoHDbV2DB8wVw7kiLmUa/7HfuTIhZ//P+UsxcRi3PTgA4+Z2G1HVk
-	xFQw=
-X-Gm-Gg: ASbGncvBrvLZETJ8w1fi3KycdETZPwqqdWKLhAkPEY0GRzSCRCkrI4sBuAvEntvNFti
-	O1bDE/Uk4xslnLnagfanZCSL1MC/97EcEXnWXelyloq3YzH3+ynurrzc75R4EFEN9WAsi2Azz80
-	We5NikEGPGcTCxb+z4f462VmV9NR/rk7de4cTR3GTn/oq+Kqez7qrXSae+O069RS28sjTx1tdJD
-	LWSBhrG3bYnA5vv44fNd9+7rNSbCu2tpfYww+r3i0yc7AI9cBSYEDUnJ9wtxKgLknB44OJ6MoiH
-	Ov6g97Uu3doNkfQ+YMSFbipzLfTq7biDosIQIUKTepF8GydGygpYEMtoTk7rQSBioVBOtcZ6XHr
-	+aur4SLjsaYs/mTQ5
-X-Google-Smtp-Source: AGHT+IFWsfN0Jclov5+2J7bw3c574KB8M47LKaliod+1+tcUC5CqnETq9pMZ79x2+k4YJvDiAQRZBA==
-X-Received: by 2002:a05:622a:5e17:b0:477:cb9:13b0 with SMTP id d75a77b69052e-4771dd5c6cemr244985571cf.7.1742927668465;
-        Tue, 25 Mar 2025 11:34:28 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4771d18f7d4sm62246551cf.37.2025.03.25.11.34.28
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Mar 2025 11:34:28 -0700 (PDT)
-Date: Tue, 25 Mar 2025 14:34:26 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Subject: [ANNOUNCE] Git Merge 2025, September 29-30, San Francisco, CA
-Message-ID: <Z+L3Mt58n18KUNzs@nand.local>
+        d=1e100.net; s=20230601; t=1742927711; x=1743532511;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vmcl1oMLqk4fj5kjoQV4u2AFpfLXsfd80C4fFbAGQH4=;
+        b=bs5OvMpcU4kMmMUJz2URsB7hvI//575WREZv0CYQXPYZ6r/zdUn0PFZkoE/SwrQne3
+         eCcZ5bh5VfP/VE8KygAsExuKqxAWHswGSNx3dMD4EYzM9Ies3qTpX9yKOZu4do5Utq/n
+         kz5DpkREyvxMUDlRMZuCZxWcsT9jqjmouOGzcn+u/4mle6Bzx/75EHW/cGszqFnkfzsm
+         1upjo2GOLQVbImgh+H/yyJ4OM28F2bFcZUULneOwQndjNZFhlLpPRTmQzNGwkLSevAIq
+         +fnrnuJ5a2Fn/PIqhxfFijupi2/WrAwHsFuCjoxT21piY/79PkDtWBBiVReKpj3iWpxs
+         9xUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVYUEMFd6aXzEsSCMXGZEFrIxrDNg3d2BjE5aPo/UrF6s9Ce5wYFOxwQrHOzeMoSl/rHnw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyYHUv90VULmvXdJH7QQkwW8m1hlGH6bq30Y1nKHU7mdRTGZK9v
+	Lj/qnJyawQeIWFjpkoXroELUl6AuAWZnehixvSZEb4rZKJrNSfFT
+X-Gm-Gg: ASbGncs/eFcTfxsq7l9nQ6EULqt6mbuK+1Mf1KqAS93rX8v/wQ5SZrPRJLZHgxdCzg2
+	1fLOmVvKMTd/u4WYT5RewQvsKtXTtVqG1JjiVTrwOumTIYBmtYF89gWdPB/PFsWzQ7ZVsvtIb7x
+	i5E5Pa8qs+7ExfY68fwBblSkI8sqSUSdu9hY2q3r9lZxR8ym9zAcYSdrTEQavbhijCzS8PPky91
+	GIQHHIqJ0mAOdc9AQTTqqD/3q7/QM7II64fvkxuVGD0mFoNcKOtXDcS/ZYS7mAqHJPKSrRVHv9M
+	YI4JsGg5DQ7Q/FTh+cN7nXo7W5OtfQ5MooiHFgXXuyQL0Cs3+DfP8lI3hU+ou8XnoV7D
+X-Google-Smtp-Source: AGHT+IEG/1m7oyGQybzKAxr0OAoA5yMTcvzqkEVgtY1GRFypSa9nDD3GcYk0GSJQUUaWwrsAc4xvIQ==
+X-Received: by 2002:a17:902:ce89:b0:224:6ee:ad with SMTP id d9443c01a7336-22780e1f4dbmr247860845ad.44.1742927710828;
+        Tue, 25 Mar 2025 11:35:10 -0700 (PDT)
+Received: from smtpclient.apple ([143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22780f45e1asm93637895ad.80.2025.03.25.11.35.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Mar 2025 11:35:10 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.400.131.1.6\))
+Subject: Re: [GSoC PATCH v2] userdiff: add builtin driver for gitconfig syntax
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <d4c0c9a4-0402-4456-9fa0-3102b5bcc3dc@kdbg.org>
+Date: Tue, 25 Mar 2025 15:34:57 -0300
+Cc: Patrick Steinhardt <ps@pks.im>,
+ "D . Ben Knoble" <ben.knoble@gmail.com>,
+ git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <FE085EEC-0BCC-43D9-9F17-1A7060DC4D6E@gmail.com>
+References: <20250324021101.7483-1-lucasseikioshiro@gmail.com>
+ <d4c0c9a4-0402-4456-9fa0-3102b5bcc3dc@kdbg.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-Mailer: Apple Mail (2.3826.400.131.1.6)
 
-Git Merge 2025 is happening on September 29-30th in San Francisco, CA!
-The Contributor's Summit will be on the 30th. Here are the details for
-the main conference:
 
-   When: September 29th and 30th
-  Where: GitHub HQ, 88 Colin P Kelly Jr. St., San Francisco, CA 94107
-   What: Main conference on the 29th, breakouts and Contributor's Summit
-         on the 30th.
+> Can we please have a more recent reference? The difference of config.txt
+> here and config.adoc above is very surprising.
 
-The conference will be structured similarly to Git Merge 2024 from
-Berlin. The main conference will be on the first day, and breakout
-sessions as well as the Contributor's Summit will take place on the
-second day. We'll have a cocktail hour at the conclusion of the first
-day.
+Hmmmm... My idea was to reference the last change in the paragraphs
+of the documentation, but I'll change to the last change of this file.
 
-For the Contributor's Summit, anybody who works on Git or related
-projects in the Git ecosystem are invited. If you aren't sure if that
-includes you or not, please ask!
+> The file format of .git/config files isn't specific to .git/config; it's
+> called "ini-file" and is already very old. Wouldn't it make sense to
+> generalize the format? It would be just a matter of choosing a different
+> name; the regular expressions would not have to change.
 
-Registration and the Call for Proposals (CFP) are both open, and the
-main webpage below has all of the details:
+Indeed. This is was written having the gitconfig in mind, but perhaps I
+could use a different approach and make a little more flexible for other
+INI flavors and perhaps even TOML
 
-  https://git-merge.com
+> This could test two sub-sections in a row and ensure that the later one
+> is chosen.
 
-There are links to the CFP submission page as well as ticket
-registration on the main website above, but direct links for each are
-below:
+Nice! I'll do that.
 
-  Tickets: https://git-merge-2025.eventbrite.com/
-      CFP: https://sessionize.com/git-merge-2025/
+> What happens if there is an *indented* header after the "RIGHT" one?
+> Should it be chosen or not? Can this happen in a valid file?
 
-For GSoC / Outreachy students that would like to come but may need
-financial assistance with travel costs, please reach out to the Git PLC
-at <git@sfconservancy.org>. We'll collect requests and try to make
-decisions and notify people by mid-July, which would hopefully still
-leave time for making travel arrangements.
+I just tested here, it is valid file. I'll take indentation into acoount
+in v3.
 
-Other than that, please be thinking about (and feel free to discuss in
-this thread) topics you'd like to discuss, or any general thoughts on
-the format, venue setup, etc.
+> The regular expression can assume that the syntax of the processed file
+> is correct. For example,
+> 
+>   [!not a section!]
+> cannot be a section header and will not occur in a valid file. Or can it?
 
-See you there!
+Following the gitconfig syntax specification it can't be in a valid file,
+and this regex won't match it.
 
-Thanks,
-Taylor
+> Therefore, it would be sufficient to just take everything after the '['
+> at the beginning of the line without further inspection.
+
+I can't see any harm in just dropping the section name matching and using
+a generic /\[.+\]/. It may be also useful for more generic INI files that
+you mentioned before.
+
+> Furthermore, a valid file can look like this:
+> 
+> [section] key = value
+>  another_key = more values
+
+To be honest, I didn't know that it could was a valid file. I'll include
+that in a v3.
+
+Thanks for your extensive review!
+
+
+
+
