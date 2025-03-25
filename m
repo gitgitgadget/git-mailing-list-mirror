@@ -1,43 +1,79 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092C525332E
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 16:55:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05F5261372
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 17:57:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742921727; cv=none; b=YsjJkiTQR+GVsnqzVwITo3SilaVI5hx/M2vQAG7v0iKgegh7htg0eCqyhaeRSAwTJqqlchCv1iLcSCsRy07y1idygwKw/ycc50cjGgGQPn+dWspdDWSvFC4QUuSNnmq5Nf/PeAIXRYNOozUq2k1qi9q/1yH0a0629MxwUd2gXxo=
+	t=1742925442; cv=none; b=GQiY0x/Fmq3uCiwVnTDajwM9X4Mp1OnP/mVYYon9ChtcACeSIr90LJkt/MoYp6bCo6fvymPpsvuK4MkD4lqLdiawXNNC5cgctC/5bS9zcT/6XU0x5WVg2K5yjUDaWalUMu6/EA0e5pnrunpPW4adtVvPova6lROu2c+yoy4C+HI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742921727; c=relaxed/simple;
-	bh=VBCaVk7WSQ8e966zBBKgoqc07NS0kNjdCqzq/SNfCIc=;
+	s=arc-20240116; t=1742925442; c=relaxed/simple;
+	bh=Vt/N6O9xv7epbzzSm8D8H59MhyA2Q7D2Od2n/0KNEXE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kks+eSh2pjzlzGqs7tqcExsenedxK1a54lTmZ/1h4pPHVZ4OuS4pZvyzhl2vOKPVz4/Ptl7wbrJy7l7LYvhmEXQFBMbnEwu9YoRtHTgz07Xq7zcARQcF+qJxUsNrQgtMvXRsJM7kX2OpVndGszekvv/ncpOjyWEVk3XUCo+NdWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=eQ51AATB; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=mdx3TqLPd93TFzP3De5DTlVkIoJ8wmFpsm8eJucTmrLyczuoUY9us5geKRvqSornaUnvi/j/jcwfSbvPhBa0/UlWRIE6WI+9fH+jKtPUftEF6YyVbsnYBjD5MKjYwLqxZoEzX6R8bXl90btohjJRgnxCGNnoKB8PxWvNAgL9xkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=h2CniUcm; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="eQ51AATB"
-Received: (qmail 30941 invoked by uid 109); 25 Mar 2025 16:55:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=VBCaVk7WSQ8e966zBBKgoqc07NS0kNjdCqzq/SNfCIc=; b=eQ51AATBw+uEPEEOYgDECHVYubxNA9OTDUPf/vXlC1/40B23ubph6aC8baWyiWeYqf6+DGh5aRWns4ONw1A++an77PBSofq1WU9PJt5SD+Bz0Hi2PugE8wGP/Yy/AuZToy94c6ZELGZFHNFOOAUGokx0gL9AsedbUZ72NuvTshE5uIP6v4yTMIYCKU3zaVC8qmAlxzIfxdcasNiM0C5W4RtsY5xpr5s+EkEywlXBLC89WI7KxBFAADkLlj5TuU9GnaYJzNOjAPXo/g5E4/ECaR7h6YvK1V/7GsQZZG3gm7VSAnSrKj8j88bkwEuR6J0gM8ZjecaBdqXN65QJzZxyhw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 25 Mar 2025 16:55:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31122 invoked by uid 111); 25 Mar 2025 16:55:15 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 25 Mar 2025 12:55:15 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 25 Mar 2025 12:55:14 -0400
-From: Jeff King <peff@peff.net>
-To: phillip.wood@dunelm.org.uk
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 1/2] remote-curl: avoid using the comma operator
- unnecessarily
-Message-ID: <20250325165514.GA1902258@coredump.intra.peff.net>
-References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
- <e3069fd4564bac68bdaf2079151b9b921867e277.1742889711.git.gitgitgadget@gmail.com>
- <930b4c9a-826f-4124-a70b-e0400a3fea5b@gmail.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="h2CniUcm"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2240aad70f2so22045ad.0
+        for <git@vger.kernel.org>; Tue, 25 Mar 2025 10:57:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1742925439; x=1743530239; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NAW65hfWIgQk3KDUjwIaWbL2DazUONWiVXbFSW0YnWA=;
+        b=h2CniUcmHlJdCSofeppV6y4Dg9H1dOraSxf/Jh4c2WbJOKZjWNJ658GPFotNeyCYaE
+         rmfbO9s6mEA9DlYQbH2JbwHOXwBG+dNJuip0+bhRPs1gGo7GDmn9lAoX8NEZ7ZbPY54R
+         Ms/ZKPAE5yYsMevvORDYvUovzdh8WEtAxfXVm8+hKrOhYwvkkLQXWDjNi7n/i8ozkFU0
+         X9Kk7jwXasQzUESIylPqoITusKVDOTFXLDiua8GAw6R64E+mIInAPwhUNPU9D5Upz6Cv
+         CVO60BhciT1UTANdrvC+E1+RHZG/It4QwgZZ5YsE5g5IWU4/+KiTSpLn9MD5M2Ofvht6
+         3kvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742925439; x=1743530239;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NAW65hfWIgQk3KDUjwIaWbL2DazUONWiVXbFSW0YnWA=;
+        b=ot8Xo2FRD8PXd5bLotZyx2Wiw0PqRC/livThgW1FOgIx+QXSTLxMpj80Wnr+rUFod9
+         dzNCotdcRcAmnHxs8tfXR3GTBKkLeTuBkqSh7pKueN9cpqJzB7yjcI/dqzVOVxzj54eh
+         /vukpWDj+ePx+vudTUrd0qPkdAcbS18+RCPpZSW1lqgZK8Q+aKYEANVyQERmOh7Vy9ld
+         d1tGNmupbFQXBUCZPYJOVIItnUjDi5p2ueb3Ni27BTnC0dIGPuO8AFgFHuvL9Iv60+qz
+         8A+4d3K2RwEuoG5aWwIXbrLKh3dqY/eGqgQSYgKmeo35VDj9N+GYg9foGJGJx5g7jhkc
+         l1gg==
+X-Forwarded-Encrypted: i=1; AJvYcCV/qndlL516brGYX1IYMMhDXV9HyklehqWuHqTp9yfgCvkGxdfbwi133ARTuyq6ZwUT/vw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz1XTqwuepPXzKqAtpmGrlHQF9yFzX+cfmjEs8OEAKFdsxr9zsW
+	v7XyYuzzFPUAlQLjN9JobLDLqRp+DAS4rVPAUQ+r7d2a2baRX6FacG8FJTcR1g==
+X-Gm-Gg: ASbGncteWURjRLX8/prCTHOAEixIZp2jpDK4sBgq6rvdik0/ZJBbMy5bsPEFR26Fwq6
+	fhnfmgzqfdDM5W3hvY+pSxBu0jhJ0K+BOlcwyOIDvR3yvFpX/DMq97UQAn3qz4MlWV/uXO3AzlS
+	i87gZ5yz61HRSHUsD1ox+wl54F0p1qak7DRa38NZYPbS/+3Olz3eds192CAsolovyLpOZjsSQpG
+	fCIDVvGuGUOGzkO3s1euAC9yuc5zC+GQ2g4J82UNcfe+bgQHXjN7Pv0+m2+LGaHlZRM3Q2axWDI
+	Bv2S2rFoxzrQzifULaooGZjdk1DU4YwWoi2up/d8pb4=
+X-Google-Smtp-Source: AGHT+IGRYV+UG60rJqBbSwqOKynLKXzwmD6z7hkhuYwc5aNlGGGdAvX/ZSdBbVhxuIYRaabOpJ6/cg==
+X-Received: by 2002:a17:903:2ad0:b0:223:f479:3860 with SMTP id d9443c01a7336-227f203223fmr157855ad.18.1742925438482;
+        Tue, 25 Mar 2025 10:57:18 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:30c7:dc6c:854a:8283])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af8a27d9a13sm9500536a12.6.2025.03.25.10.57.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Mar 2025 10:57:17 -0700 (PDT)
+Date: Tue, 25 Mar 2025 10:57:11 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 2/5] libgit-sys: add symlink to git repo root and
+ build out of tree
+Message-ID: <5qvxvuquk2yuyoyoctz2ji6sj4yld4ridig24elpoiytghlovw@a5hgdufrchwr>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Phillip Wood <phillip.wood123@gmail.com>
+References: <cover.1742339107.git.josh@steadmon.net>
+ <cover.1742594960.git.steadmon@google.com>
+ <6befc95a2d0893aa269142a18d60ad07e79c6e88.1742594960.git.steadmon@google.com>
+ <CAPig+cQ+05r0iJO3me2=yz1KWaU_S_WQmbeciOqZGxYWgbT8dw@mail.gmail.com>
+ <xmqqo6xqo2o1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,272 +82,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <930b4c9a-826f-4124-a70b-e0400a3fea5b@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqo6xqo2o1.fsf@gitster.g>
 
-On Tue, Mar 25, 2025 at 04:28:32PM +0000, Phillip Wood wrote:
-
-> On 25/03/2025 08:01, Johannes Schindelin via GitGitGadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > 
-> > The comma operator is a somewhat obscure C feature that is often used by
-> > mistake and can even cause unintentional code flow. Better use a
-> > semicolon instead.
+On 2025.03.24 08:42, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 > 
-> clang's -Wcomma finds another instance in this file
+> > On Fri, Mar 21, 2025 at 6:14 PM Josh Steadmon <steadmon@google.com> wrote:
+> >> Unlike `cargo build`, `cargo package` does not get access to the entire Git repo
+> >> containing a Rust crate. Instead, it prepares a directory starting from the
+> >> crate root (potentially excluding files, such as those not under version
+> >> control, or explicity excluded in the Cargo.toml file).
+> >
+> > s/explicity/explicitly/
+> >
+> >> diff --git a/contrib/libgit-sys/git-src b/contrib/libgit-sys/git-src
+> >> @@ -0,0 +1 @@
+> >> +../..
+> >> \ No newline at end of file
+> >
+> > Meh.
 > 
-> @@ -1239,7 +1239,7 @@ static int fetch_git(struct discovery *heads,
->  	packet_buf_flush(&preamble);
+> https://github.com/git/git/actions/runs/14030831429/job/39278185588#step:3:1
 > 
->  	memset(&rpc, 0, sizeof(rpc));
-> -	rpc.service_name = "git-upload-pack",
-> +	rpc.service_name = "git-upload-pack";
->  	rpc.gzip_request = 1;
+> All of the Windows test jobs (not build ones) are broken due to the
+> presence of ../.. symbolic link.
 > 
->  	err = rpc_service(&rpc, heads, args.v, &preamble, &rpc_result);
-> 
-> In fact it finds a surprising number in our code base. I was worried there
-> would be a lot of false positives but so far all of the ones I've looked at
-> would be better not using a ","
+> Is that ugly hack the only way we can make this work?
 
-It looks like there are a few tricky cases. Inside a loop condition,
-a comma can be used to smuggle in an extra line. E.g., in wildmatch:
+It's the only way I know of to accomplish both:
+1) creating a packaged crate with `cargo package` and
+2) keeping the top-level clean of any Rust code or configuration.
 
-  do {
-    ...
-  } while (prev_ch = p_ch, (p_ch = *++p) != ']');
+If we're willing to have a Cargo.toml file in the repo root, we could
+create a "Cargo workspace", but I'm not sure yet if that avoids the same
+problem with accessing sources outside of the crates themselves. I'll be
+able to test it out later this week.
 
-or there are a few spots in clar like:
+If the workspace approach doesn't work, the alternatives are:
 
-  while ((d = (errno = 0, readdir(source_dir))) != NULL) {
-    ...
-  }
-  cl_assert_(errno == 0, "Failed to iterate source dir");
+1) avoid the issue for now; anyone who wants to experiment with
+libgit-rs can do so by building from source (but it will prevent them
+from creating their own packaged crates IIUC).
 
-These could probably be re-written, but it's not a totally trivial
-change.
+2) move libgit-sys and libgit-rs to separate repos and depend on the Git
+source via submodules. This is what I've seen done in other -sys crates
+such as zlib-sys (https://github.com/rust-lang/libz-sys).
 
-The rest of them seem pretty straight-forward (though you do have to
-watch out for conditionals using it to stuff multiple lines into a
-single "statement"):
-
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index d4715ed35d..62bdf7276f 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1843,7 +1843,7 @@ int cmd_rebase(int argc,
- 	strbuf_addf(&msg, "%s (start): checkout %s",
- 		    options.reflog_action, options.onto_name);
- 	ropts.oid = &options.onto->object.oid;
--	ropts.orig_head = &options.orig_head->object.oid,
-+	ropts.orig_head = &options.orig_head->object.oid;
- 	ropts.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
- 			RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
- 	ropts.head_msg = msg.buf;
-diff --git a/diff-delta.c b/diff-delta.c
-index a4faf73829..71d37368d6 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -438,19 +438,31 @@ create_delta(const struct delta_index *index,
- 			op = out + outpos++;
- 			i = 0x80;
- 
--			if (moff & 0x000000ff)
--				out[outpos++] = moff >> 0,  i |= 0x01;
--			if (moff & 0x0000ff00)
--				out[outpos++] = moff >> 8,  i |= 0x02;
--			if (moff & 0x00ff0000)
--				out[outpos++] = moff >> 16, i |= 0x04;
--			if (moff & 0xff000000)
--				out[outpos++] = moff >> 24, i |= 0x08;
--
--			if (msize & 0x00ff)
--				out[outpos++] = msize >> 0, i |= 0x10;
--			if (msize & 0xff00)
--				out[outpos++] = msize >> 8, i |= 0x20;
-+			if (moff & 0x000000ff) {
-+				out[outpos++] = moff >> 0;
-+				i |= 0x01;
-+			}
-+			if (moff & 0x0000ff00) {
-+				out[outpos++] = moff >> 8;
-+				i |= 0x02;
-+			}
-+			if (moff & 0x00ff0000) {
-+				out[outpos++] = moff >> 16;
-+				i |= 0x04;
-+			}
-+			if (moff & 0xff000000) {
-+				out[outpos++] = moff >> 24;
-+				i |= 0x08;
-+			}
-+
-+			if (msize & 0x00ff) {
-+				out[outpos++] = msize >> 0;
-+				i |= 0x10;
-+			}
-+			if (msize & 0xff00) {
-+				out[outpos++] = msize >> 8;
-+				i |= 0x20;
-+			}
- 
- 			*op = i;
- 
-diff --git a/kwset.c b/kwset.c
-index 1714eada60..23ab015448 100644
---- a/kwset.c
-+++ b/kwset.c
-@@ -197,10 +197,14 @@ kwsincr (kwset_t kws, char const *text, size_t len)
-       while (link && label != link->label)
- 	{
- 	  links[depth] = link;
--	  if (label < link->label)
--	    dirs[depth++] = L, link = link->llink;
--	  else
--	    dirs[depth++] = R, link = link->rlink;
-+	  if (label < link->label) {
-+	    dirs[depth++] = L;
-+	    link = link->llink;
-+	  }
-+	  else {
-+	    dirs[depth++] = R;
-+	    link = link->rlink;
-+	  }
- 	}
- 
-       /* The current character doesn't have an outgoing link at
-@@ -257,14 +261,14 @@ kwsincr (kwset_t kws, char const *text, size_t len)
- 		  switch (dirs[depth + 1])
- 		    {
- 		    case L:
--		      r = links[depth], t = r->llink, rl = t->rlink;
--		      t->rlink = r, r->llink = rl;
-+		      r = links[depth]; t = r->llink; rl = t->rlink;
-+		      t->rlink = r; r->llink = rl;
- 		      t->balance = r->balance = 0;
- 		      break;
- 		    case R:
--		      r = links[depth], l = r->llink, t = l->rlink;
--		      rl = t->rlink, lr = t->llink;
--		      t->llink = l, l->rlink = lr, t->rlink = r, r->llink = rl;
-+		      r = links[depth]; l = r->llink; t = l->rlink;
-+		      rl = t->rlink; lr = t->llink;
-+		      t->llink = l; l->rlink = lr; t->rlink = r; r->llink = rl;
- 		      l->balance = t->balance != 1 ? 0 : -1;
- 		      r->balance = t->balance != (char) -1 ? 0 : 1;
- 		      t->balance = 0;
-@@ -277,14 +281,14 @@ kwsincr (kwset_t kws, char const *text, size_t len)
- 		  switch (dirs[depth + 1])
- 		    {
- 		    case R:
--		      l = links[depth], t = l->rlink, lr = t->llink;
--		      t->llink = l, l->rlink = lr;
-+		      l = links[depth]; t = l->rlink; lr = t->llink;
-+		      t->llink = l; l->rlink = lr;
- 		      t->balance = l->balance = 0;
- 		      break;
- 		    case L:
--		      l = links[depth], r = l->rlink, t = r->llink;
--		      lr = t->llink, rl = t->rlink;
--		      t->llink = l, l->rlink = lr, t->rlink = r, r->llink = rl;
-+		      l = links[depth]; r = l->rlink; t = r->llink;
-+		      lr = t->llink; rl = t->rlink;
-+		      t->llink = l; l->rlink = lr; t->rlink = r; r->llink = rl;
- 		      l->balance = t->balance != 1 ? 0 : -1;
- 		      r->balance = t->balance != (char) -1 ? 0 : 1;
- 		      t->balance = 0;
-@@ -567,22 +571,22 @@ bmexec (kwset_t kws, char const *text, size_t size)
-       {
- 	while (tp <= ep)
- 	  {
--	    d = d1[U(tp[-1])], tp += d;
--	    d = d1[U(tp[-1])], tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
- 	    if (d == 0)
- 	      goto found;
--	    d = d1[U(tp[-1])], tp += d;
--	    d = d1[U(tp[-1])], tp += d;
--	    d = d1[U(tp[-1])], tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
- 	    if (d == 0)
- 	      goto found;
--	    d = d1[U(tp[-1])], tp += d;
--	    d = d1[U(tp[-1])], tp += d;
--	    d = d1[U(tp[-1])], tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
- 	    if (d == 0)
- 	      goto found;
--	    d = d1[U(tp[-1])], tp += d;
--	    d = d1[U(tp[-1])], tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
-+	    d = d1[U(tp[-1])]; tp += d;
- 	  }
- 	break;
-       found:
-@@ -649,7 +653,7 @@ cwexec (kwset_t kws, char const *text, size_t len, struct kwsmatch *kwsmatch)
-     mch = NULL;
-   else
-     {
--      mch = text, accept = kwset->trie;
-+      mch = text; accept = kwset->trie;
-       goto match;
-     }
- 
-diff --git a/remote-curl.c b/remote-curl.c
-index 1273507a96..590b228f67 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -1239,7 +1239,7 @@ static int fetch_git(struct discovery *heads,
- 	packet_buf_flush(&preamble);
- 
- 	memset(&rpc, 0, sizeof(rpc));
--	rpc.service_name = "git-upload-pack",
-+	rpc.service_name = "git-upload-pack";
- 	rpc.gzip_request = 1;
- 
- 	err = rpc_service(&rpc, heads, args.v, &preamble, &rpc_result);
-@@ -1401,7 +1401,7 @@ static int push_git(struct discovery *heads, int nr_spec, const char **specs)
- 	packet_buf_flush(&preamble);
- 
- 	memset(&rpc, 0, sizeof(rpc));
--	rpc.service_name = "git-receive-pack",
-+	rpc.service_name = "git-receive-pack";
- 
- 	err = rpc_service(&rpc, heads, args.v, &preamble, &rpc_result);
- 	if (rpc_result.len)
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 8889b8b62a..5a96e36dfb 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -211,8 +211,10 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
- 			for (d = fmax; d >= fmin; d -= 2) {
- 				i1 = XDL_MIN(kvdf[d], lim1);
- 				i2 = i1 - d;
--				if (lim2 < i2)
--					i1 = lim2 + d, i2 = lim2;
-+				if (lim2 < i2) {
-+					i1 = lim2 + d;
-+					i2 = lim2;
-+				}
- 				if (fbest < i1 + i2) {
- 					fbest = i1 + i2;
- 					fbest1 = i1;
-@@ -223,8 +225,10 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
- 			for (d = bmax; d >= bmin; d -= 2) {
- 				i1 = XDL_MAX(off1, kvdb[d]);
- 				i2 = i1 - d;
--				if (i2 < off2)
--					i1 = off2 + d, i2 = off2;
-+				if (i2 < off2) {
-+					i1 = off2 + d;
-+					i2 = off2;
-+				}
- 				if (i1 + i2 < bbest) {
- 					bbest = i1 + i2;
- 					bbest1 = i1;
-
--Peff
+Of those alternatives, I prefer #1 for now. If we build enough momentum
+on libification and expanding the coverage of these crates, then we
+could think about switching to #2.
