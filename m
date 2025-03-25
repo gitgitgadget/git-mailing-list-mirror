@@ -1,151 +1,133 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE76197A67
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 15:34:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D9978F24
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 16:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742916871; cv=none; b=qUd2HXEXfkEutdKTDxtCmAGY5xrWshgmnQSJK7uVUFhTlJnUm1uK3rpGwTgGK6rAZd0ZLrNvUU7Agbjv5S9sBPjqmRnPP7tL1HwkIWKAEa+QsbMI4pBSGyVSXn22g8fBlxL4hHha2SkOFdB7FW7S2dIIhjOMMduDoPtfN+X581w=
+	t=1742920118; cv=none; b=gUIpSl5Cs2Ujtk1o0mQF2ubDXXdM4xx2j+6rHybDmMkWPu4SCnmHZmWnRnBFLMB11DAm69NCde7xjA9jpJjZG73Ys3GfxJ1SEYKIxLEMHrJ/AKHe1kINcWjWVLcwP+IGBfybRPSFw8RE8rX0ya+S1cqlH/WwK6kcDXqXWa530pI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742916871; c=relaxed/simple;
-	bh=RzZzUQ4ihDNllowHdZidRaNyJniCuhuG2AxWR+UuQGE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CFXVxy9Sp6p5NOa4laPwoQhr6UGGBUTsvuaRb0WrwO/Lr7LYsgtc7SkARpWUM8cujV8Cqzn9exzxHA5xQNgbJ+156CXadWuzPbzU/0pF3o1717uTxTCg7jU1Phr+MmRPG+NdAgviAt34/f7vPuZGJmbTz3jFaTqEQIIqzBLXPYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GxjR1iNx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oU0PDxSS; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742920118; c=relaxed/simple;
+	bh=DOJUufUSLK1ak6l1CEu9sarUKOIeq6ry6MkQDUO48rk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Htc4G/Fhef2MbB2T1n51MHxg3O0LqrdE24o+g09pLE1c7NPHVYQlSNxznzKd4vk9mhPiR65VsCuBGcvHa5Zz7J6wyrPScHABwy51dwaBDtUzS+BYrPTUuMa9/Q3SwkvC/6epValv02UjijafFYbuz81/+6b5LbLwue3ovgveMJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XeYeWweT; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GxjR1iNx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oU0PDxSS"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9F6FC1383A1F;
-	Tue, 25 Mar 2025 11:34:27 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 25 Mar 2025 11:34:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1742916867; x=1743003267; bh=T5YTY9oOjf
-	HX+vT3OcJhN7jfh0oHBBUvq8VCkqMusew=; b=GxjR1iNxf/EE9z35jfHYy9t04+
-	FAS2iqocXzYcA3zaBLKWI6S7kziHOnI+PrnHqc0rKffulBn/3wkdiaoTAZNhqbbv
-	23QvCtGRTaB+8ul619mOpr9/mbF/JLFJ/tj22JHG0EN1ztXYDKBHJo1Uwnjwqx+k
-	ZswypSrOMmOYp+fAOMWmiXLNJdaHV2fGEmCv5Cx7i3yaWmNHTpwKVENNKddYAaRt
-	qn2rHOwiEhI0Qkdk95mXO08YiPOhDKN8c9LYrR0Jj/ya2RHGa3zB0eD6Tq+E8Fch
-	kG8QyFIsye8xUK/RipjFXPNkaPxCFuNnTWdg5fnKeQIqIGtMaV5g3G24UByw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1742916867; x=1743003267; bh=T5YTY9oOjfHX+vT3OcJhN7jfh0oHBBUvq8V
-	CkqMusew=; b=oU0PDxSSpt02n8Kr/rCQezjqtSMHZtaiDHU+JwA8az5GAv5iROY
-	gnzn5z0F4JEkYTXTWeEfWoDBncJEfOTFoF/uzOgE9iV2XLFuXCyajUAR7fVw9Sw0
-	9RXYAtvc2Ffj3YXu6c/8nd2NByoQJS5pIEjH878/XclWf993LmQaYxDRy4msDuia
-	UERiPFgrmJsDZXeZX2bSjAl9wp+BaOWqlX+6MHTrGtfs08OgfgU7Q2iIhCp9X9yr
-	Somb3guC9AYns/f6jiJRh8YzkFZjKKqQQDbodxZDWpLRx7rv6DNKpZ3vqIqWVM7e
-	8REorYlCrAqG9JFSPg/avqpMsUSsTa83+Ow==
-X-ME-Sender: <xms:A83iZ-N_XeMweDPYPUp4WPklkO0YukKMPnm7mfE-dJB20RdFniHezA>
-    <xme:A83iZ8-B79a6J4YMyTLFAjip9gooX-CclWw_BzWoGUCScprFNBIRVtgBoyezELIIl
-    9mcC0lDxSlS4upy_A>
-X-ME-Received: <xmr:A83iZ1SXztZVRsVJIOyMLB5hYWI0WF9xbNMcw20_0w0Gvs_XW_avBDmlFtWHcDlTEp8w6xAhnny-DaOqLA0y2c1aZL0Zc-1OTKrN2l0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieeftddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    dviedvffelffehvdeghfeihfeggfegveeufeeufeeugfegvddtudefheehheetfeenucff
-    ohhmrghinheprhhftgdqvgguihhtohhrrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptdehii
-    ihtheftdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepmhgvvghtshhonhhifedtudejsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:A83iZ-tSP7Cp3NpfIOSgOjwdJ2fjqJAASzdh9BJUBHp8QLRBrghZPw>
-    <xmx:A83iZ2c0XWY4p-SVJ1hz8eCr2GzOaOl0ZDdQcn1-N5DDd_semeFeRQ>
-    <xmx:A83iZy12nnT6Fg_3gbdxagfkw9wyi2WeIYpwldQkMY_844gsAnU98A>
-    <xmx:A83iZ69Qvm-DeEA5Q6LM_cCaQYBLbtElQSA8y57bm9GBFJwwnpjjnA>
-    <xmx:A83iZ16m4UqLmTqlrgKpRRv3twWFdzC7J89mP4BfCVqn5p73yXVHdx44>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Mar 2025 11:34:27 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Zheng Yuting <05zyt30@gmail.com>
-Cc: git@vger.kernel.org,  meetsoni3017@gmail.com
-Subject: Re: [GSoC PATCH v8 2/2] send-email: finer-grained SMTP error handling
-In-Reply-To: <20250324145332.571813-3-05ZYT30@gmail.com> (Zheng Yuting's
-	message of "Mon, 24 Mar 2025 22:53:32 +0800")
-References: <20250321025128.68463-1-05ZYT30@gmail.com>
-	<20250324145332.571813-1-05ZYT30@gmail.com>
-	<20250324145332.571813-3-05ZYT30@gmail.com>
-Date: Tue, 25 Mar 2025 08:34:25 -0700
-Message-ID: <xmqqmsd9m8e6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XeYeWweT"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43948f77f1aso39730685e9.0
+        for <git@vger.kernel.org>; Tue, 25 Mar 2025 09:28:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742920115; x=1743524915; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4LVRuTdGFfrsFlLUWqwZaV1Lh6wnzwCyoAKv65gyazU=;
+        b=XeYeWweTAA5++KfA+nLyWfU8c0HK52FOGtPj1fu6GVkILlKQkBuZjuHTfvA46xgNMZ
+         7qx3nCvUwoLliirafQHwUAOszXvhE3Xx41azE1wwA/YLDRrmu0zW/6XJGnkSAuIA+XsH
+         u3rnmSWvKP2OeKDEc6Bh7+I4d84/Y2QrC4P/6GwkIRSz64iaO16FMzTzTQ9Irx3tqSAD
+         ErBthS3aunjgR52xa5GvHxeJBYt9seJa/mUjc169BUNWQ+XDedzW/WlGCRBhDF04pjLC
+         UQHilmi9lr23aoOiaBuiwJXmFEcY4sJ2lea24CJrIl6dBJpD/BKVBPnrdjh/nJEKBvdx
+         Xxhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742920115; x=1743524915;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4LVRuTdGFfrsFlLUWqwZaV1Lh6wnzwCyoAKv65gyazU=;
+        b=uYXZJPdmP2EnKruWZD3F6AKAXpT0ozjvsh5F6URVYRnzxSwOchjsgzTy54lQRvWsp2
+         MnnRlRp4BHbgBTp+3u7V96HdO2ATeTpxqJsDgYbkjsOnbfd/loEjmvNhiZNX25L3yl6G
+         iJ+1660cTkPJBuNZbv4Ua/qVb2qaAKFBZkhOtaZTak/GG9RVtjPaxJ2rcFKTT/PZbF24
+         JmZa/on7i1FfbDArc0Dl8RQEQN8mCbv1ICW1LGLD2RBNpb8VO8apcHaDWvRTZR7pKmBd
+         /OdR4m1mRfMt1BYTrw/+cJQ2drXRGt/2AjGK8jBdnm1P8uspI9BXPLYfj8NOt1gTPmHS
+         1hOg==
+X-Forwarded-Encrypted: i=1; AJvYcCWjwSCfg2t3OAgNk/V202fecjMNRKuiBMWNl6dI62vgsD29KweCSfQx6yCoVa/SDGYlmSE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVCDthrUYiBj2kx4yzbeSO9skCa2DNPc92SswXdqhUeNWEZ3gl
+	VqipaQ6oOGjSqoe/tysvuX08DmA7LzWoEysy4P9/uZtLaN8i6KYG
+X-Gm-Gg: ASbGncttQe1HH34EBmSL4tj9KcR1RUJZO/uLdcd9HCfxQidBUtcL3MRCwcVQ4J1IQW0
+	cp8c+y/S5y/ZTpd6t0FpeJpzL0f33bB+0E1Gm13PFhTwrwgnX8D4OfgQqLVUj/Uc+n1jIdMAw9h
+	pnr6zLYt2YzWKDJLVk5pdc66Oo24e9G0u8Tf/FaTMvfObVxfxPv+XPxkZKsMtlwEcSo6ey2Qvme
+	63Vzy3dr6HHI+ADInVuemBSKLZNdiwGxHQKwJv2tDAJDkBREilJRqALPWryNF9ZfRHhU2jAs7I+
+	E5y/DkbCuF2vyFftCd2qybBpr4VibZ/LEgdIsdpMFjlIojZjNz9uHCkzvJiY7lJRQVimlynY7gw
+	zGqeBq6Iii3u/amnUiHrg
+X-Google-Smtp-Source: AGHT+IHx2W0/nxzXkwJA/ONGibvHReprK024TTdLw6X/6MLwZAyCyo1u8h2eTzIBBcpNY4cTr2tfXA==
+X-Received: by 2002:a05:600c:511c:b0:43c:fae1:5151 with SMTP id 5b1f17b1804b1-43d78607482mr56355e9.25.1742920114831;
+        Tue, 25 Mar 2025 09:28:34 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d4fd187fasm157246315e9.14.2025.03.25.09.28.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Mar 2025 09:28:33 -0700 (PDT)
+Message-ID: <930b4c9a-826f-4124-a70b-e0400a3fea5b@gmail.com>
+Date: Tue, 25 Mar 2025 16:28:32 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] remote-curl: avoid using the comma operator
+ unnecessarily
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+ Karthik Nayak <karthik.188@gmail.com>
+References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
+ <e3069fd4564bac68bdaf2079151b9b921867e277.1742889711.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <e3069fd4564bac68bdaf2079151b9b921867e277.1742889711.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Zheng Yuting <05zyt30@gmail.com> writes:
+Hi Johannes
 
-> -		# NOTE: SMTP status code handling will be added in a subsequent commit,
-> -		# return 1 when failed due to non-credential reasons
-> -		return $error ? 1 : ($result ? 1 : 0);
-> +		return handle_smtp_error($error, $result);
+On 25/03/2025 08:01, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> The comma operator is a somewhat obscure C feature that is often used by
+> mistake and can even cause unintentional code flow. Better use a
+> semicolon instead.
 
-It was a bit surprising that the new handle-smtp-error sub handles
-the case without an error.  I would actually have expected for it to
-be something like:
+clang's -Wcomma finds another instance in this file
 
-		return ($error
-                        ? handle_smtp_error($error)
-			: ($result ? 1 : 0));
+@@ -1239,7 +1239,7 @@ static int fetch_git(struct discovery *heads,
+  	packet_buf_flush(&preamble);
 
-I.e., we used to unconditionally return 1 upon error, and the only
-change introduced by this step is to classify $error with the helper
-function better and behave differently depending on the error.
+  	memset(&rpc, 0, sizeof(rpc));
+-	rpc.service_name = "git-upload-pack",
++	rpc.service_name = "git-upload-pack";
+  	rpc.gzip_request = 1;
 
-Having said that ...
+  	err = rpc_service(&rpc, heads, args.v, &preamble, &rpc_result);
 
-> +sub handle_smtp_error {
-> +	my ($error, $result) = @_;
-> +
-> +	# If no error is present, return the result directly
-> +	return $result ? 1 : 0 unless $error;
+In fact it finds a surprising number in our code base. I was worried 
+there would be a lot of false positives but so far all of the ones I've 
+looked at would be better not using a ","
 
-... as the "no error" case is implemented as an early return, the
-mental burden on the readers is not so bad.  They can concentrate on
-the error case when reading the remainder of the function.
+Best Wishes
 
-Still, it would be with even less mental burden if the no-error case
-is handled by the caller to make this function only about error cases.
+Phillip
 
-> +	# Check if an error was captured
-> +	# Parse SMTP status code from error message in:
-> +	# https://www.rfc-editor.org/rfc/rfc5321.html
-> +	if ($error =~ /\b(\d{3})\b/) {
-> +		my $status_code = $1;
-> +		if ($status_code =~ /^4/) {
-> +			# 4yz: Transient Negative Completion reply
-> +			warn "SMTP transient error (status code $status_code): $error";
-> +			return 1;
-> +		} elsif ($status_code =~ /^5/) {
-> +			# 5yz: Permanent Negative Completion reply
-> +			warn "SMTP permanent error (status code $status_code): $error";
-> +			return 0;
-> +		}
-> +		# If no recognized status code is found, treat as transient error
-> +		warn "SMTP unknown error: $error. Treating as transient failure.";
-> +		return 1;
-> +	}
-> +
-> +	# If no status code is found, treat as transient error
-> +	warn "SMTP generic error: $error";
-> +	return 1;
-> +}
-> +
->  sub ssl_verify_params {
->  	eval {
->  		require IO::Socket::SSL;
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   remote-curl.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/remote-curl.c b/remote-curl.c
+> index 1273507a96c..57b515b37e7 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -1401,7 +1401,7 @@ static int push_git(struct discovery *heads, int nr_spec, const char **specs)
+>   	packet_buf_flush(&preamble);
+>   
+>   	memset(&rpc, 0, sizeof(rpc));
+> -	rpc.service_name = "git-receive-pack",
+> +	rpc.service_name = "git-receive-pack";
+>   
+>   	err = rpc_service(&rpc, heads, args.v, &preamble, &rpc_result);
+>   	if (rpc_result.len)
+
