@@ -1,55 +1,55 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736AD25EF92
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 13:14:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F1125EF90
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 13:14:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742908468; cv=none; b=XPsobKAJQOZF4dNa150AjfYZCRft9rtXjm9fl7U5e3Adu5/cZ3+Xr3P2HmSkmrWOGOEPM7FcDCxsepiOO7PnPzQJxFIyeqATep4q+0I6Bbms4SPai+DhoNe5G9Ng+g5EQnpgnHMl/hHBNu5j7MTupmgn0tqgVZzBlQ/S/K0HjNs=
+	t=1742908469; cv=none; b=dnuc+v0vGloBjVfXslWuNTd/0U3dcckC2QBTLYSbcswYcOnoBVXV9xR9ghvJfRlghjGDtFVIZ8XQhV8ixPLdgLp+lpW7V4Pn9/3hEgq41DyLT2gzXQu4mj7ihlUMtNeao74I//pxy9RG5uztN//ajKEWqfbVDRvG6HFaGL9exbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742908468; c=relaxed/simple;
-	bh=r+44rd782YT6x6dz2cANM6QpWXIcYEb9ttd/QWrrMRU=;
+	s=arc-20240116; t=1742908469; c=relaxed/simple;
+	bh=mnP/eIeyddsprQjbJ5j4kWT5R94K7zpMiz8gFfvNNhQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jrolIW7jOb3KlnFFldZTTy0U4NQk5rhfju5kXJ2Lw3xJkducmFOke8buD40L2CnPLGDeT6pjsy98rlZUX228bSFoNYu0QLFTyXqahmVIpJkz7EUlKcyG0PdEj6MfL6NONcDTWH97DKzvKG1eEEJF5nS1qZs5itAyWoKNKr4wjwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PxCn42XP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SQIj08kq; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=SVSdUqUpwqJ1uAw1sANugm+eDS1ZAjnB/k4tASr+fU7h3a710QcJF6+6s5CsyGYBzm2CufRtogZ4vrDAkqod5YFqFR9q1s/7vsLhMR4XJg/twcT4+SdW1YbyJRSqDReK85SVGyjhEOEiQupAatbeg4jjV1vzBP0MPH6O+IiPUes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YmL+182b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pGaNh9K3; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PxCn42XP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SQIj08kq"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7DFA11140272;
-	Tue, 25 Mar 2025 09:14:25 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 25 Mar 2025 09:14:25 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YmL+182b";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pGaNh9K3"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7CB551383842;
+	Tue, 25 Mar 2025 09:14:26 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 25 Mar 2025 09:14:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1742908465;
-	 x=1742994865; bh=bBnzsBxGrvlhpKUDGvjbdM63lE9bkJM7rbSwjIEVqBc=; b=
-	PxCn42XP0n/MyI6tacWLpZIPVEDGg/aJHyIGZLd00yfOi25OwbdWaACM60HS6xEF
-	AqJEfCgOIA2s7uWNTNVLG0eSFzPPnqJdKUyW4ST27qQbd7ccHFYdqzCcDeioLHfP
-	caTMDtYbG9gqszoSu1KISOp6IHxsxFPZVbREJjkvQKcDHW2uQ1JKtYOkfA7auxEO
-	9DOQuDurxWpCkrrNcmCc9sELJbjFuvBJt1bKw5HnzJTzkviWbGyUmkiOaMvRsLWZ
-	Lmss24x2FJ5AgE8utj023nx2aSCdZhmjiOOQdK95ZVj9UIOO0bXSrRbEfySt9c0+
-	AJ5hEn1EC/jk8wV7ZPwb3g==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1742908466;
+	 x=1742994866; bh=06AlNuR4CTpgnkt91LHbVtA+Vq9aPaC5SAotSYkUmBY=; b=
+	YmL+182beBCTEn5Fn/Eypn+XESjzobZNz/xJWiPZQgRyn0XuX8d1LtpJ6rfRXTmx
+	rM15sHTYjuzltIUEVDEXnm/UPCG0+cnVPgKAPFaeHpO9+urI7cr94WlkHd7GjkN5
+	pRIU3uQ90Vnj2Hme00es9uFc+untGAehAIJbYVV9+GI79PVAKXXxUlVw2Laqx8HD
+	EA4SjnqG3gdS37vcvwdLlrvmyLhSWFCH9CXRgw9c5Bd/AoVirT3FwusKwYEFtu1r
+	/GkZRGBTerq3HnpXVtKVXEIyql4gc5j41UyLfQX8hbFMsjXr36cle1Apl+Xq8FSj
+	ndnfEaqELPYufiIlEAPngg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742908465; x=
-	1742994865; bh=bBnzsBxGrvlhpKUDGvjbdM63lE9bkJM7rbSwjIEVqBc=; b=S
-	QIj08kqm64u0hr2NCuEm7f/pR0Scd5OG+oJgf75Mi/N7EPuL2J/t39CZCyR6uSN5
-	PW73AcHJSOkcWuW9rIsM0SBpa2reLApe9vyJTptI6S4Czn00S0QeMZKSVx/iyEtc
-	RedrAwPj7Cp7dTYL4kmp/cdSGeNW+EDU0cR1IF0xZ1b8hSkRgaHwP/TPAr1R1GvX
-	3KalvR79dTTWV58sFgaVTKgspfMxGACYudNEgqrwSpuZedYkah5z14E7dEzz8oXO
-	PrV2n4BO/AJZQSWYVMpc7CFthJTWEYa343vM2Ns7Qn2fHYA4PhN8M9X4ZHmrB2rC
-	Ruw5ZrwnJCQg/d+LJjiPg==
-X-ME-Sender: <xms:MaziZ8CWSX2iQ3s1WThVj5T5tZpprbWnJRmWcqquQ0EvMFn9wmtUbA>
-    <xme:MaziZ-jLuzbFeE_HlhiIc1SzrFWjufeciL2lYdkhY_0u50SI49YvCZHCUJOVh-chH
-    p8XKG3GiADHjP52hQ>
-X-ME-Received: <xmr:MaziZ_mZaChiE-OeZ_3nxtsA2-FYDUBqVyWWihIdbqw-mtPgV-NNNTw-7JQkNilSgfXKzIAb4Yo57TJydayQNl6WRJhHCSNc1c2zz_c25AskiA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742908466; x=
+	1742994866; bh=06AlNuR4CTpgnkt91LHbVtA+Vq9aPaC5SAotSYkUmBY=; b=p
+	GaNh9K3n46ZHq6X+aUAqTx5OY09HTaladVR40ATarHI5YuQbVkLFO2UsuuSAh+Q3
+	dr72TyzX8A/7AfkqJ7j76qfqsFmGzYbTakblDBHEDLgTbLYXOogslBwbaASDfpjl
+	ALF5Awb+xCfKwUE7WHOv4brS8vzFTwOKL07ALFAFl3X6qusGXW2746RFd4RE+uMW
+	Q6m82ttKtsMRp1ajH/r8KCW/gL9/nO7BDi+32HhQpls2c24EHOhorDkwEHr7YcyH
+	Ij9qAKi4R9ueyHbwp3LzsDNOIoOzs1ai1qiessvUg6UEBA9K017rkuHw5aJAbbfT
+	9JJkiZG4tjK05IEWt8CiA==
+X-ME-Sender: <xms:MqziZ28XDGvcWLX9r-39GKI6XBhcQDIh-Mlx1K4gOe0woVvmazYk3w>
+    <xme:MqziZ2vQfZUJNxrTBjETs8rRG6L7jgm6Qyko_bdUaVCqQeDpbzvtEFsxtL0CgT9Jh
+    30Jku3__jWjIlnSaw>
+X-ME-Received: <xmr:MqziZ8A31pPquEyOcGF7mqRCTpPmqNOYZrDqUr7KjO7qu5SSaTuHRkMVzDzPoDvTv74HPV39nxrMMRl2sEBlUYwh2lx4B_tji-keoEFLkmZD7g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedvjeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -58,25 +58,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedvjeegucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
-    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
-    hopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    shhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:MaziZyyxTlNUod6bX7Edtuy6dvJZ3eT9CHehEDmZJHi5QGZ1ISJlEg>
-    <xmx:MaziZxS8guTKAl3U_3uGAERk-FLH5Evi37NkftoQLPUwcSS-UCDC_g>
-    <xmx:MaziZ9ao-vufx4tfkR28fwYPszIex7af9boNL-Y3DSJTj_uHjoVwng>
-    <xmx:MaziZ6S4TylzlngiUZ4Jte15TkCFys4KcNoekNqnrMgI-5VIv0AenQ>
-    <xmx:MaziZ6IaOz1TWG16Xgh5Evj0OVf7FXxheUgMuphx6hwk_LcBlNLSJ86L>
+    vgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdr
+    tghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhh
+    rghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
+X-ME-Proxy: <xmx:MqziZ-eoL5IICqy3hnK51YnaE5F8BuQstr9ATEU2jVTnxFHXUJAPSg>
+    <xmx:MqziZ7M4QlMCzRGJ00zBM2pmBhW2HcY_eDsLHupplZrOsMFdIiPthg>
+    <xmx:MqziZ4mSDfK936LdHrD9Zqy7_HgwsQvbIx4xJQ-0ENCoGb3pA3B3ZA>
+    <xmx:MqziZ9sLWJjPzT9O-l_1nJQIx99EyuJMjR1Y9W8VT7dHH6Z8ofUZ4g>
+    <xmx:MqziZ211eiiYvrkljeYgLQDdZqtfiFgyDwcayHOQhXeXfJiO9gLcz7Fp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Mar 2025 09:14:24 -0400 (EDT)
+ 25 Mar 2025 09:14:25 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b8dadba2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 25 Mar 2025 13:14:22 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4a49ea95 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Mar 2025 13:14:23 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 25 Mar 2025 14:14:19 +0100
-Subject: [PATCH v2 01/20] t: skip chain lint when PERL_PATH is unset
+Date: Tue, 25 Mar 2025 14:14:20 +0100
+Subject: [PATCH v2 02/20] t: refactor environment sanitization to not use
+ Perl
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250325-b4-pks-t-perlless-v2-1-4b87b8072670@pks.im>
+Message-Id: <20250325-b4-pks-t-perlless-v2-2-4b87b8072670@pks.im>
 References: <20250325-b4-pks-t-perlless-v2-0-4b87b8072670@pks.im>
 In-Reply-To: <20250325-b4-pks-t-perlless-v2-0-4b87b8072670@pks.im>
 To: git@vger.kernel.org
@@ -95,52 +96,68 @@ Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
  Phillip Wood <phillip.wood123@gmail.com>
 X-Mailer: b4 0.14.2
 
-Our chainlint script verifies that test files have proper '&&' chains.
-This script is written in Perl and executed for every test file before
-executing the test logic itself.
+Before executing tests we first sanitize the environment. Part of the
+sanitization is to unset a couple of environment variables that we know
+will change the behaviour of Git. This is done with a small Perl script,
+which has the consequence that having a Perl interpreter available is a
+strict requirement for running our unit tests.
 
-In subsequent commits we're about to refactor our test suite so that
-Perl becomes an optional dependency, only. And while it is already
-possible to disable this linter, developers that don't have Perl
-available at all would always have to disable the linter manually, which
-is rather cumbersome.
+The logic itself isn't particularly involved: we simply unset every
+environment variable whose key starts with 'GIT_', but then explicitly
+allow a subset of these.
 
-Disable the chain linter automatically in case PERL_PATH isn't set to
-make this a bit less annoying. Bail out with an error in case the
-developer has asked explicitly for the chain linter.
+Refactor the logic to instead use sed(1) so that it becomes possible to
+execute our tests without Perl.
 
+Based-on-patch-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/test-lib.sh | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ t/test-lib.sh | 32 ++++++++++++++------------------
+ 1 file changed, 14 insertions(+), 18 deletions(-)
 
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 9001ed3a647..1ce3b32fcac 100644
+index 1ce3b32fcac..a62699d6c79 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -1523,6 +1523,22 @@ then
- 	export LSAN_OPTIONS
- fi
- 
-+if test -z "$PERL_PATH"
-+then
-+	case "${GIT_TEST_CHAIN_LINT:-unset}" in
-+	unset)
-+		GIT_TEST_CHAIN_LINT=0
-+		;;
-+	0)
-+		# The user has explicitly disabled the chain linter, so we
-+		# don't have anything to worry about.
-+		;;
-+	*)
-+		BAIL_OUT 'You need Perl for the chain linter'
-+		;;
-+	esac
-+fi
-+
- if test "${GIT_TEST_CHAIN_LINT:-1}" != 0 &&
-    test "${GIT_TEST_EXT_CHAIN_LINT:-1}" != 0
- then
+@@ -499,24 +499,20 @@ EDITOR=:
+ # /usr/xpg4/bin/sh and /bin/ksh to bail out.  So keep the unsets
+ # deriving from the command substitution clustered with the other
+ # ones.
+-unset VISUAL EMAIL LANGUAGE $("$PERL_PATH" -e '
+-	my @env = keys %ENV;
+-	my $ok = join("|", qw(
+-		TRACE
+-		DEBUG
+-		TEST
+-		.*_TEST
+-		PROVE
+-		VALGRIND
+-		UNZIP
+-		PERF_
+-		CURL_VERBOSE
+-		TRACE_CURL
+-		BUILD_DIR
+-	));
+-	my @vars = grep(/^GIT_/ && !/^GIT_($ok)/o, @env);
+-	print join("\n", @vars);
+-')
++unset VISUAL EMAIL LANGUAGE $(env | sed -n \
++	-e '/^GIT_TRACE/d' \
++	-e '/^GIT_DEBUG/d' \
++	-e '/^GIT_TEST/d' \
++	-e '/^GIT_.*_TEST/d' \
++	-e '/^GIT_PROVE/d' \
++	-e '/^GIT_VALGRIND/d' \
++	-e '/^GIT_UNZIP/d' \
++	-e '/^GIT_PERF_/d' \
++	-e '/^GIT_CURL_VERBOSE/d' \
++	-e '/^GIT_TRACE_CURL/d' \
++	-e '/^GIT_BUILD_DIR/d' \
++	-e 's/^\(GIT_[^=]*\)=.*/\1/p'
++)
+ unset XDG_CACHE_HOME
+ unset XDG_CONFIG_HOME
+ unset GITPERLLIB
 
 -- 
 2.49.0.472.ge94155a9ec.dirty
