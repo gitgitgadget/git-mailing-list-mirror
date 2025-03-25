@@ -1,67 +1,67 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67D517E4
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 08:01:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D2B74E09
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 08:01:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742889718; cv=none; b=EXtk2aZIgZIo2htHuL326NvZqAYZbWBDylzI/VXn7FDyvcRFMgyUVbyXtaQTz75LByhS25CA2pgEdUrIA+hXTNWvy6uy1HMd9IDTIvfO71UWqjzTCNB/TXQ27gF/VqdX/c6h20a/xIsb3VXptCKzHRvfwmzpud4D9B5HRqWDYVc=
+	t=1742889719; cv=none; b=pXIyXx1j7AgIWxHsem5P2eM09ofVT+VybyZqvl2JHJGMAC2dk7UTbl9HIcICB7SXr2I4Q0W+rbp9QtLSz/8dfI4k54o7X6BDOIyd5MHwzaF7/SxcL9hefkrl6UK4jLbt/0wahAuiLt5lMeroSwykRisvJ2pWDPQQ8U3a0v9QYZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742889718; c=relaxed/simple;
-	bh=H5ojGuyLbeysMTn5tMufaDTs2YCx1qLL3cbl0V4NLV4=;
+	s=arc-20240116; t=1742889719; c=relaxed/simple;
+	bh=5eDboXlLY48klQSRh7ROAxKsGF5oZ0kBcpqQ2u9roxg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=PWDIJNQCYWTVvFN8qdVk5O1hfa0pGJJ8jdVHFUnh4cTXBaLaCTK6qYSQ9JoKyGotOoDXy321N4nRrQOPvxyIy2AQXMRqS4iMurnEuJ35gjBwi4nNDvRHrQgX1sPqdm/Yxunt6ZsyHIKR7s1gZbsZ6Bqj8xQ/jX/bgZ/M/gzdSJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IA8vtkt7; arc=none smtp.client-ip=209.85.221.49
+	 MIME-Version:To:Cc; b=tCreiOrIzEMKllRIcqy5chESltlUF3evyv3eJSqmPgWYqmNRwOYyh0GhjcqGss8mBzBhsTlofuumqoGhsWPSnmixkcZR8aSQ3urXUceTrnNaTWn71zbdv7O0MUEj5kua+MKjbXnN51gfDMmvHGK6sERKpkS8uVNRsLr4RVIZcWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R7cj1TgE; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IA8vtkt7"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-391342fc148so3615272f8f.2
-        for <git@vger.kernel.org>; Tue, 25 Mar 2025 01:01:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R7cj1TgE"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3913958ebf2so4224793f8f.3
+        for <git@vger.kernel.org>; Tue, 25 Mar 2025 01:01:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742889714; x=1743494514; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1742889715; x=1743494515; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=M3LiDKkGvAuPUaK3qRtabUoEjnMEPh6hRImpdNOl86c=;
-        b=IA8vtkt7vutCS8//l4WVkF8Og84ZCfk3WQ+r57nR5XJQg7K/Ll9PFAv8BG/5w3bKDZ
-         4xRRY5xRfl7CiHfqzvATXD9CPRVC1rojtAdM0g4AxHy7KEtd+EkD17ypF7Caz0aWwweu
-         ZQXry36Gt/RNqDVPTdQ9uDEDxJTnSYL4fS72gFnkJ7GDmiKC5bqvB7h9SLiPJ5DGH5KP
-         uYScocKVpHWSdZDYAKgI+1kzErRH6JsrqWu0UHb7C//qvqXTvTMGBdqz/3CZsY7jCiGg
-         WyN3cFa+IitifyI1VyXfUPgjj73JMEgOsqzRD0Q0/APmN43pKJW0ozzIJd3Oi0dd4qIy
-         jLHw==
+        bh=1nZguIGcg25DdMGIUwc0IS/mZSObQwqLnttu/HYceu4=;
+        b=R7cj1TgE8P7roiDzXXWZS6oFG87AenCNtDi2RqOVuC3pm3sWTZk6Jpsw/pDZGxtvZm
+         9upZlcZm9J7lYErUOBC3Rr3qFnPAfmucLCNs4RHgyXZZlawPbcjxdqbwwJAK1xM3/bYW
+         MafF5mUS/u1DFmH+coEvHKbsXiO2gl3Z2tgYX1qbuCtdPYTOEaeae4bgB/TmbBsWzlJt
+         jTzTKQ9OB5LF4uIlcwk2w9qzV9KjUU/fpaHutdL9NY/eMfUVQyinv4jEESKzPiNO2nKP
+         uizJ19nzndKeJ6mbr6BVIzheAoJ0AN+IPYPCkuih4NFDmy+L/E8O6W5uZI7JohdOfNKU
+         oFqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742889714; x=1743494514;
+        d=1e100.net; s=20230601; t=1742889715; x=1743494515;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=M3LiDKkGvAuPUaK3qRtabUoEjnMEPh6hRImpdNOl86c=;
-        b=WVTFi3z7CWuJw8JL5+0U2Y1JPjEjysr+OHc5pFDPn4rc5y6M9RR8TspTCXCOB1bcsT
-         Tc62FA8D4G+tx1lWlL4RHXWJq8Or08nOSGEWUf/Ak8tpx9O405QEafiBi0j/7Byi1RPx
-         lJq2EZRGWwn4mXAhlKzmm1HgR3ECuAK3P1+Qy25SLRrX9gwYsig78YvU8BjMkbD/+uXu
-         1aXZ+u2O+wne+XXLZEFHVu0pMZusazZOb/WYlFpq3MjpiHk73XDUDlZC7GpiRzBieh1M
-         /UXVzpVMSqbBGHo32iq1KSULo3AuHQNRxfctBk59g4AxgvGMk+ixc6fxLs1e/GAXpJrv
-         gBJw==
-X-Gm-Message-State: AOJu0YyWii/v0dCCUbBcLONikcwO8Q+VEN69E4m8nj0lVeaflUqXZ1IH
-	hjIoMoTgM2pPvS2FzKUYdnsgP8IAmoicB0UPKLLCfjBemUAZ+3xcAsAffQ==
-X-Gm-Gg: ASbGncsJTCg3SglSQeo0SpwXcQLHrOEj/JUMUhLoE648T/iJ2DHrP9IeAttsqYKX1Hx
-	4yEDlggLR9vdEfVbQ8J0xJnI7fzbPWqYN2p1LSFc/tMD2vgBy+YsbS2ce6AP8V7k6xhbZIzqo4+
-	IRfikT9XEXYsy0kbrqgOzpvzjEMej9xF4j+9RKuyGR9VA6MjxO60GAm4GE/7GahgkGCsvkNT7T2
-	F3wLg7ysq7QRA2RvgWpkVW9p4XBtbxiFse5D1yGqt4EcZWbLjEQmKii/eNsolLqJwb16cuqiFvL
-	CC09WMbQ7bnOJN6fToghRUReJq8CVXtQ+gK3X5NdFXw3UQ==
-X-Google-Smtp-Source: AGHT+IGIuobW32L5CtGpWh61rc+IALrliOC3lTuGqnI12iZjTRH/NXTrc4RIpEL2G3825ylXacsxLA==
-X-Received: by 2002:a05:6000:4108:b0:397:3900:ef8c with SMTP id ffacd0b85a97d-3997f9330cemr14799964f8f.35.1742889713967;
-        Tue, 25 Mar 2025 01:01:53 -0700 (PDT)
+        bh=1nZguIGcg25DdMGIUwc0IS/mZSObQwqLnttu/HYceu4=;
+        b=nEWae1zmduK1TVKr/oorK0sLXn08/8cXJFKATYf26rcAiocUC8c7AWVluiaS9jc/nX
+         rMJ51Uwf+4ScFdpYm3+n67yDUD5rGrr8B9GtxSOQD2Ix4FkvYxKLIZsSwPeYDriReLFK
+         7qu6bBZtDWnPuDuvpz86k8SbGhdu7NHEme62wV8vXbp70G1dWxUZBvEtoWFgfFhdm7FO
+         Voqu6Jtwg6ANPYV+c1+XaTIaQmuUpHa5LvckiU7jRx0o8BF+YwD/W088nqx7XUvKpaHf
+         x18rOqPa24k8deyaZwNKcP6gfAor2wUP7U3EO9Dv20zHA++kL14yjWDfs31UrRpnwQtC
+         zWnA==
+X-Gm-Message-State: AOJu0YzLyrvVnKYL8IMUuwS8Qq04HQBb4jOTCAWOV/Ozs8EQZ8ZOjBI2
+	kwmlfGpmf+W3uRnlYYvHqP4Aol5/OR4Nq8WIw8dAqLNzTxqwRCxuYPrwqQ==
+X-Gm-Gg: ASbGnctoC/WLv6cBVL04l8CpdUg52UBM4WnkfZLcRWr9BUXUeHwziZni9hOVyYU51bu
+	RjPOGztZBxzLpUYX0FNhVnzwAbVEhCyAm5ijVFaCd3uL12MkREEAGRWs2cpD1FgcItzuKjzy5tK
+	laob1MrOJorZJFzktqMc9o0Dhx8qVRZoQgR89IOJlcvCBDjJCYPISIleDed1zpK9kvG6cb9r3cr
+	h7vTtcKPZtER2HY99D+LZ3ND8uWdUoXmi128UEWQqhfn/5n1C4e1p+FOxRzfXNA2on+rIb1l2HQ
+	JKrRjiLvD33eATN+94DQ8V20kTWZnJQbcj4WdXmi7qluFw==
+X-Google-Smtp-Source: AGHT+IGitkX6SrsXjRZDMQevMRlrV6q3/xvvMjzPSGvga5V05t15VxPXUicG4zSeiI2u+ulkKCU1PA==
+X-Received: by 2002:a05:6000:21c2:b0:399:6d53:68d9 with SMTP id ffacd0b85a97d-3997f939949mr9890245f8f.38.1742889714750;
+        Tue, 25 Mar 2025 01:01:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9a3c7fsm13206601f8f.34.2025.03.25.01.01.53
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d4fd277d5sm144406435e9.19.2025.03.25.01.01.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Mar 2025 01:01:53 -0700 (PDT)
-Message-Id: <e3069fd4564bac68bdaf2079151b9b921867e277.1742889711.git.gitgitgadget@gmail.com>
+        Tue, 25 Mar 2025 01:01:54 -0700 (PDT)
+Message-Id: <7dfbdc48954b55a435c8cb429b648d77a1a9d044.1742889711.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
 References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 25 Mar 2025 08:01:49 +0000
-Subject: [PATCH 1/2] remote-curl: avoid using the comma operator unnecessarily
+Date: Tue, 25 Mar 2025 08:01:50 +0000
+Subject: [PATCH 2/2] rebase: avoid using the comma operator unnecessarily
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,22 +83,21 @@ semicolon instead.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- remote-curl.c | 2 +-
+ builtin/rebase.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 1273507a96c..57b515b37e7 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -1401,7 +1401,7 @@ static int push_git(struct discovery *heads, int nr_spec, const char **specs)
- 	packet_buf_flush(&preamble);
- 
- 	memset(&rpc, 0, sizeof(rpc));
--	rpc.service_name = "git-receive-pack",
-+	rpc.service_name = "git-receive-pack";
- 
- 	err = rpc_service(&rpc, heads, args.v, &preamble, &rpc_result);
- 	if (rpc_result.len)
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index d4715ed35d7..62bdf7276f7 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1843,7 +1843,7 @@ int cmd_rebase(int argc,
+ 	strbuf_addf(&msg, "%s (start): checkout %s",
+ 		    options.reflog_action, options.onto_name);
+ 	ropts.oid = &options.onto->object.oid;
+-	ropts.orig_head = &options.orig_head->object.oid,
++	ropts.orig_head = &options.orig_head->object.oid;
+ 	ropts.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
+ 			RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
+ 	ropts.head_msg = msg.buf;
 -- 
 gitgitgadget
-
