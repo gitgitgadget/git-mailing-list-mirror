@@ -1,202 +1,98 @@
-Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A291DB127
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 10:31:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6000253B66
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 10:38:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742898693; cv=none; b=MMuVZDKCX2w3a0t7Y9qZZZKF/5Zq3Cs3skL2Yx2fGFw8MYohROEHwpWIaBglG9p5l+uJctap0bQFvZhQsdrwymQHkbdXoW7WtktQdirM0johbApMh/vcWE7hn2iEazhaAlLHH2COTyUSrGPen0jVT/DzpKC1utG+t2FiebQWnRc=
+	t=1742899115; cv=none; b=uYjlGw/5fWyDzx5w4a1v4eOtnLPvi+M0rqFhjL8zf5ab1O6Pmt1eSLFsiw42ia6Hfis2CmYkR+8XzMtVqX4rthkNIVr/lLqSgFnIbiAbXOfNvtsYAQPpDTa2gJgDbmpJ44EOCaCxoUe+UZ3txgC2g9x1OLHiRpx2+/+7GtOg0yU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742898693; c=relaxed/simple;
-	bh=nBFDbltGANp3lltbI+uSJ8Yb4cp/fobCJDbAqS43OWY=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=D21YuJcWJR/l75A1KLjcgwNH7QWXQ0PfkspNd2rSXbAUpIbM6jUyc2AnPQHcOIuvLRnTdqA+Ppp47vIqmjGP9gI8I5WAWyBYCvfFAexIazpYWqETkgyVlq6d1N7GqdX5YvMSvTpV0p6bCI0Kj5qCXqagSdIXPXp5g4i+fvT7wqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VJCwOGbp; arc=none smtp.client-ip=209.85.221.175
+	s=arc-20240116; t=1742899115; c=relaxed/simple;
+	bh=pfzEq0BrneX8YhoPvVOXUZqvoydPRYWUYD9HRJCM1sE=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=LBo70GxRooamdt+yWwi3H3q+5dC5XRcp8renqa+XjmORBtWFywn5l+/b3NEghlFgsBKmZM90/zZEn+qkRUTDSJE5INIlGxuM0cH6iYXy4Cy/Q5BITXJfpsp/ObpO2Qq1V2iolGhP71WtYZznSr17A/L/+EFQUTAU4CqdwToVXm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VxIl8wAS; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VJCwOGbp"
-Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-5242f137a1eso2380453e0c.1
-        for <git@vger.kernel.org>; Tue, 25 Mar 2025 03:31:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VxIl8wAS"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43cfb6e9031so49303275e9.0
+        for <git@vger.kernel.org>; Tue, 25 Mar 2025 03:38:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742898690; x=1743503490; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7F7zWY1hyb6mtfaQoE+dRttaIukPwKyBUfgLTHCTiLY=;
-        b=VJCwOGbphsRBpYChJEUq7Iq6ks1cl6ZJ6fNeOufxvONeCizlRuLILAZMGZyf6a3p7y
-         huVWR+izTTDW9BmIZeKeTnXlAbGCDKSDFajerhJeAEXkoD+rfibzFZ/FPptqWtaXdUuV
-         qG4vhaF2gYUxRSaWTB/xsLOUM6ZmYeAw0/gYopeaSkRCFdbmWw9SYDld8akjXE/N/i9s
-         C8XX4pQIWQecvnKvzN4LQyC0drAmSiqU1lm81icFVrKajrNIHhPWKOiAxQLAOeEfBOqP
-         nmymfrShRty8ZutZKbZ3nXBbswHuzIvohTN7LNjKLLD25/NgK1ZMds6+vcp9/Vr2fa8w
-         4oIg==
+        d=gmail.com; s=20230601; t=1742899112; x=1743503912; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=z1z6XmBryIdJaikX09l8WTJhfcUNiyQ2ANNn2F0JUyE=;
+        b=VxIl8wASk+ABPQtEPVBpvK/1dOVvFudJ3J2nvttVRkQHKfSN9z4SIcUzFAkmqaOoy8
+         WcZAd5UZTvBVzv9GE7R1Rl0Cy+wCactAPaUqQj4xZViTSc0O7dH+F5aqSChPhYoZrqMi
+         ejpndXxwqGqxeohx1aoqz0SNeF5c2+HZ98zt5fGtuR1xdTAZo8sp4lRToatLqczyc7ib
+         t44CGpVLGpOeVX8bHGdCAu/dy47P3owu9LyKLi6LzGF2waHR4SK/UY0lH8+hEaiN7axu
+         x7xKNyDlMzid0iZGM76Vb8FzVVl9FKYolpm5ROpeClL2B6IcK+Kvx77MZ8kJ/PUzDDNV
+         oNmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742898690; x=1743503490;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7F7zWY1hyb6mtfaQoE+dRttaIukPwKyBUfgLTHCTiLY=;
-        b=RB3CbwAUNHhNzBbDYQoYz81zTjatS0URsieWs4jHPEzcdy8PpSx6g4/CjmKtkbFi64
-         6k6fEAZjMD9MS/TFuncFhQktHdNhun65XWGDJYy/jgIp4WSoJYjzKgDFA6ABABNquwdy
-         Wowmagz6T2KL8v7IsDNtLhvJa/bvuZRfTGaJMOl8yLCZCP7Ge4+K8Yp+a9vvtQcltBle
-         OXYLZZrWP//0+zQsyE2b2eV4LP6eHFEjDrNF2T6IcNtvIRFKt90B+LcYVp4qmK8S5rL4
-         /9QY+spuZHo/YoxAC8+PBLCFWzB/8H5kT+Ab/bZ4Gvq18pI4JRJQ43xUa5CGhD9T9R/z
-         m5Fg==
-X-Gm-Message-State: AOJu0Ywe6lAOVkEd+qdzihTwyRGAJ3VKIP8EsPfrRR7v6jq4NhS60zSE
-	Hw99ipGfhDcg5iI+Q2JYBkieBUFh7If0hn4ShuGUR/aS+jVJnXv9K+EHtqAbt8GFpWfzLxTIjd8
-	215TeKv1H2ZP9AAn9bS8zkwGtJYc=
-X-Gm-Gg: ASbGncv7t7o0XfNn2JaQSAxe4Zkq2DumccwO3nJjW9Bng6yBhUHZ058W4GtBGjeieHx
-	3cR3uvgPd8K9BODm29UDsrcXPQUZOCp/Yv3sQrOLqL9/SGuoyZCL8C1xMb9c3U4cNU2MxMvLnKg
-	jVXK/i/YkFu+ak5CbceGPOotEzMBEu3hgFHyHwR8rg21jsSELwp4j33F19Wm09b5i3Zz4l/gg=
-X-Google-Smtp-Source: AGHT+IFe/0c/pKF6was7ohbobhqRGjBfUh4UHV9i6ERpGdMG26IRD5C/3ldkL7yEEP/AGMVOGDS7TWgANEJIQmSSUCQ=
-X-Received: by 2002:a05:6122:4312:b0:518:865e:d177 with SMTP id
- 71dfb90a1353d-525a8560bc1mr10742373e0c.9.1742898689864; Tue, 25 Mar 2025
- 03:31:29 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 25 Mar 2025 06:31:28 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <875xjxwlb6.fsf@iotcl.com>
-References: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
- <xmqqzfhbrb78.fsf@gitster.g> <Z-Ew_12NWX_5qATN@pks.im> <87a59aww8j.fsf@iotcl.com>
- <CAOLa=ZTHb6ZFmpDpSwzUTiDs44gY-W3aqBooAMyORK8Xs3YQxQ@mail.gmail.com> <875xjxwlb6.fsf@iotcl.com>
+        d=1e100.net; s=20230601; t=1742899112; x=1743503912;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z1z6XmBryIdJaikX09l8WTJhfcUNiyQ2ANNn2F0JUyE=;
+        b=GTXIm0Zl+f5aEidtggQ7OlPY1rzJB2M6yO2neHB80GSlo/9HVzRxYED2SMBYU7VtLX
+         fUdWpaP0mU/EbMIH2HvK8XPJ+KBL/f6r+zlcmVqwNYdKo0ALBNXiRsOOOGWbucLo9to1
+         6zetK5mlkQSDP9YtIt1zn5ZRuK3Tk5aHwJuKeK6O0sxHB48EAJsvfcpAD7PvZ4VCXvmJ
+         1F04B0i1R30Y6lGYcmYj/iAl3i0tjHa8yqkeUg+43odGJrcn4h42GOaQuSG52llvTfz3
+         iLoIM3zFeXGna9N1oqs1BeFZSaHGohHfUYeYCI2GzPLLZsePlsu3RQoVV2UYAihvtUHB
+         IeYA==
+X-Gm-Message-State: AOJu0YyYhXb1TfnaJPV+d1RnvCNCNMYkA9HnsKcUJizJn2jqx66hmBI6
+	MWMeiSOA71mVsq/LnZn/NQGJ4olPInaMxya7O1nS7j6zF1d/8+hCkaSoHQ==
+X-Gm-Gg: ASbGncsIZVlZvIOG+Qnq18SFqu802PSVySmSM3/aBezzOc95Mg70qSFx0sl90Sxp8VW
+	9r2EnBabKx/cyx9qxxBv6Pi/qrTTWzvwdr+VUylg+a8OlfpchKtu7M8kXAS++z1v4TbNTrR4mvU
+	BpNGjxdkhssx7r3jDd76LHSfiTH7qq1YPrcX25/6hsZdcDwvRNYcrAJZMPiVg7+JEcNX2EWk7Ci
+	pUYyZI0bsKX3Fq/4SsVDWSQHmLb3XSeUGBCoPtwso9Nr2ZVt0LQrzoif2AOyNmM9GBvZfpx8HfH
+	imB49i3pHsL6OEFeKOkYUaNOikNPvfrVexg6ofDOWWIqNw==
+X-Google-Smtp-Source: AGHT+IEYs6ZFh9vHpeCt5q2P9WkN59/L3+BT6/YkBihKy2c8N+HnE2ch/C0oOyGO6QZhX7x8izzIEA==
+X-Received: by 2002:a05:600c:4512:b0:43c:f87c:24ce with SMTP id 5b1f17b1804b1-43d50a3781amr110431335e9.21.1742899111285;
+        Tue, 25 Mar 2025 03:38:31 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9a345fsm13215940f8f.24.2025.03.25.03.38.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Mar 2025 03:38:30 -0700 (PDT)
+Message-Id: <pull.1893.git.1742899110.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 25 Mar 2025 10:38:28 +0000
+Subject: [PATCH 0/2] mingw: special-case administrators even more
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 25 Mar 2025 06:31:28 -0400
-X-Gm-Features: AQ5f1Jo89ir0BhiYNFWDm_qrbVzBJhTm9Mrm9IC-SdhatpCWd4l_Brtr7V61fi8
-Message-ID: <CAOLa=ZRZB0hidGGvepOQFaMaHbBqnGO_Qh38vqBZFvScbs4xzw@mail.gmail.com>
-Subject: Re: [PATCH] blame: fix unblamable and ignored lines in porcelain mode
-To: Toon Claes <toon@iotcl.com>, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="0000000000004a17460631283907"
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 
---0000000000004a17460631283907
-Content-Type: text/plain; charset="UTF-8"
+On Windows, a file created by a process running in elevated mode is owned by
+the Administrators group (not by the user's account who would otherwise be
+able to modify or delete the file in non-elevated mode). Let's adjust the
+"safe directory" feature accordingly.
 
-Toon Claes <toon@iotcl.com> writes:
+Naturally, this patch series does not add a regression test (because it
+can't, you cannot automate elevating processes).
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> I'm curious, how would it be different, if they blame down to the same
->> commit? My understanding was "unblamable" and "ignored" are tied to
->> commits.
+This patch series is a companion of
+https://github.com/microsoft/git/pull/712.
 
-[snip]
+Johannes Schindelin (2):
+  mingw: special-case administrators even more
+  test-tool path-utils: support debugging "dubious ownership" issues
 
-> And now with the `.git-blame-ignore-revs` file:
->
->     $ git -c blame.markUnblamableLines=true -c blame.markIgnoredLines=true blame varint.h --ignore-revs-file .git-blame-ignore-revs -l --porcelain
->     d2c1898571a6a2324593e92163e8754880e0c1fb 1 1 3
->     author Junio C Hamano
->     author-mail <gitster@pobox.com>
->     author-time 1333493588
->     author-tz -0700
->     committer Junio C Hamano
->     committer-mail <gitster@pobox.com>
->     committer-time 1333495484
->     committer-tz -0700
->     summary varint: make it available outside the context of pack
->     filename varint.h
->             #ifndef VARINT_H
->     d2c1898571a6a2324593e92163e8754880e0c1fb 2 2
->             #define VARINT_H
->     d2c1898571a6a2324593e92163e8754880e0c1fb 3 3
->
->     d2c1898571a6a2324593e92163e8754880e0c1fb 6 4 2
->             int encode_varint(uintmax_t, unsigned char *);
->     d2c1898571a6a2324593e92163e8754880e0c1fb 7 5
->             uintmax_t decode_varint(const unsigned char **);
->     d2c1898571a6a2324593e92163e8754880e0c1fb 8 6 2
->
->     d2c1898571a6a2324593e92163e8754880e0c1fb 9 7
->             #endif /* VARINT_H */
->
-> So every line now blames down to commit
-> d2c1898571a6a2324593e92163e8754880e0c1fb. The lines which used to
-> blame down to 554544276a604c144df45efcb060c80aa322088c should be marked
-> as "ignored", but we only emit the details once for each commit. The
-> commit details (author, committer) are only relevant once, but the
-> "ignored" info can differ for each line (as you also can see in the
-> non-porcelain format).
->
+ compat/mingw.c             | 39 +++++++++++++++++++++++++++-----------
+ t/helper/test-path-utils.c | 19 +++++++++++++++++++
+ 2 files changed, 47 insertions(+), 11 deletions(-)
 
-Ah! So if a rev is ignored via the `--ignore-rev[s-file]` flag, then the
-parent revision is shown in the blame. It could happen that in porcelain
-mode the parent revision is clubbed with previous lines if they share
-the same revision. This would skip the 'unblamable' or 'ignored'
-information.
 
-This would be solved in '--line-porcelain' since details aren't clubbed.
-
-I agree, it makes the most sense to only do this in 'line-porcelain'
-mode.
-
-> We could make the output look something like:
->
->     $ git -c blame.markUnblamableLines=true -c blame.markIgnoredLines=true blame varint.h --ignore-revs-file .git-blame-ignore-revs -l --porcelain
->     d2c1898571a6a2324593e92163e8754880e0c1fb 1 1 3
->     author Junio C Hamano
->     author-mail <gitster@pobox.com>
->     author-time 1333493588
->     author-tz -0700
->     committer Junio C Hamano
->     committer-mail <gitster@pobox.com>
->     committer-time 1333495484
->     committer-tz -0700
->     summary varint: make it available outside the context of pack
->     filename varint.h
->             #ifndef VARINT_H
->     d2c1898571a6a2324593e92163e8754880e0c1fb 2 2
->             #define VARINT_H
->     d2c1898571a6a2324593e92163e8754880e0c1fb 3 3
->
->     d2c1898571a6a2324593e92163e8754880e0c1fb 6 4 2
->     ignored
->             int encode_varint(uintmax_t, unsigned char *);
->     d2c1898571a6a2324593e92163e8754880e0c1fb 7 5
->     ignored
->             uintmax_t decode_varint(const unsigned char **);
->     d2c1898571a6a2324593e92163e8754880e0c1fb 8 6 2
->
->     d2c1898571a6a2324593e92163e8754880e0c1fb 9 7
->             #endif /* VARINT_H */
->
-> It feels odd to me only the "ignored" info is emitted and the rest
-> of the details isn't. But that might be just me...
->
-
-I'm with you on this, this would also require us to explain this odd
-exclusion where only for 'ignored' and 'unblamable' lines we output
-details on every commit. But the other way is also an exclusion, where
-we would say that 'ignored' and 'unblamable' lines are only shown in
-'--line-porcelain'.
-
-But the latter can be extended into the former in the future but not the
-other way around. So I would say it makes more sense to restrict it to
-'--line-porcelain' in that sense.
-
-> --
-> Toon
-
---0000000000004a17460631283907
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 99bc29e9748aa08a_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1maWhmOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM050Qy93TXNwTTJpZHJFbUdjcjAwaUhuTHAwUndQNgp2T3c1WGVoTyto
-N2o5Tzk5OTVtY1cwUG1GaHZUOHJiRGhjOExFZ0tWUXZURi9WRjRuL1NsQnhFcE1SZUFVcTBrClA5
-d3NSUnZESm1WSEhPbXRsUDVwY2RyNXhoTnlRWEpSMjNYRmdyd2djVXpkTHljdUx6YzhCYU5ZTHRi
-L01nZ08KdjB6VnM2UnNUdUMxUXhVWCtxdjg5UkpwU01rZ0c5cUdZMXlaYVliVzduQjZvSWlvV2U0
-SWl1NmNCOVFkNXpTZAo4c0t6cVp5Nmg0NTVxc3NZSHF6d3ljUk9CeDFtbzVPVDZuQVBpc2pRYnRP
-UUZRQUdpTWtqT0dMS0pHQkdCVFNECkdSWlBmK3E2Z1JQL3dtRVpQVk5hdXVqckZvYkVMUlJ5RzFN
-RDB3Y3NweGg5bkorUzBFY0ZDZlhvYngyTG1hTnYKTVV6dGFTQ3RzTjhrcDlReGV1VFp1bEFLYWh2
-YkNzZUxSSFFtc09NelVKZ0dMdmJlK1ZycGxnaVF0UE1NaUJTWgowMXhQWWtHL0NZODcwUGJyc3k3
-UyszalRIUExXVUw3OFJaVFk4amcxa1Ixd2xEbTVtbmMrUVRpN29xd3JWZnN1CnhXS2hYS3k1TExV
-MWNSdDlOMkNUamkwYVo4T2piR0NWNkpGYlE3MD0KPTc3STgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000004a17460631283907--
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1893%2Fdscho%2Fadmins-are-admins-on-windows-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1893/dscho/admins-are-admins-on-windows-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1893
+-- 
+gitgitgadget
