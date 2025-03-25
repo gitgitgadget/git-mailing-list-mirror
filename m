@@ -1,83 +1,83 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95521268691
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 13:14:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECC1267F7A
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 13:14:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742908477; cv=none; b=RSovkDoLWlC0tX+KDeERmF+b1NFonVGR3H7Po5rbun6WITI9LhK0gcDqTb1+vrB/y8XyqtQgE22yywe4kEgJfp69ZwmOdDFgfkaDFCGNL1A4AH45dCBctylSmRco7XZxZGNmKIiZitsxY9Px2dcid14qTGGt7rpV5xxpDAKXudo=
+	t=1742908478; cv=none; b=CJWiogDqqRPBnAxXpeiyH0MairkRM1PPhW5WJQAWxwjGED1fjKTcpmkh7PWsLiTN+5iM2EtpzPTFylZvPem5YCmkonCnN2YNIpZnPzPHBSVZgIR0ThHH4GOspzSSDbbNjaUJ/BPe4uHwkce2NjhFrDTrQE6BbJmnvMXkkVjBg5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742908477; c=relaxed/simple;
-	bh=NUjJwVrZKf36ai0L/yCz0tizIGQuhWN1bJiipXBpsMk=;
+	s=arc-20240116; t=1742908478; c=relaxed/simple;
+	bh=pWr3UcaWANc8naJen7QnchaDNFox7PBbI03NK6qmi2A=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iKICyhYF7AkHEzCsnRbfa5K0BTjfXmDZeJSjAqweFx/U3YzDf1UnDojFW/VyxecGswFEA25qXRuNHtu1fqs0xFMQrI73+1c3H6qOBCb/QQmZJLkBVM46dXT6QHyOkJL7t5bGBLgAsAiBLbtPSVR2ykWpHqDvfmOWniCoLRgzxGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MhphwbHG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LxTtaHrV; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=UunsBktGB4iQAAUjiGM9c4vNTxecHBsGz9FeCpG+kRwgLXCjzwvOIT15JPzW6GALgK8cXq82VZNTm+jygFJKJbHMEDm3qVeJNbsXsr4mhNS5a3novGTHyI2vy8dWj05oA17hUJyiZ6aBsMQ/bM5JzbZoLrvIIO+S11E+P/PMa2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=euAgY9tt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hpYYslAV; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MhphwbHG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LxTtaHrV"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 98A211140283;
-	Tue, 25 Mar 2025 09:14:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="euAgY9tt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hpYYslAV"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id EDD0213838C6;
+	Tue, 25 Mar 2025 09:14:35 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Tue, 25 Mar 2025 09:14:34 -0400
+  by phl-compute-10.internal (MEProxy); Tue, 25 Mar 2025 09:14:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1742908474;
-	 x=1742994874; bh=zw64TTBnVmiHYg8TXrMvQw9Xaz+FqLeHk409zSzzaPM=; b=
-	MhphwbHGRWmKTd0NhpZY8iTGPANW+fALwY50tPZ6JZAhhv1o6MCSAba0gCPzNzHO
-	X3XCkYXSi44K07Po6O47ia7eJXkrL92g0eB9gOnIXNADIgW+x6vqZI4EqKEmehgn
-	EfxCgk5oiP7HKRpNpQ6jVix7UpEzUncxvBFmOVahEfZGvTDUU00csNZ3hf782c1+
-	xf5S6z66wv6N9CXWPaQN2SlJINskLPRIl25BT3CK1fokWfGITugHGkg2TN/nutBw
-	oIBar40HVbp63DeyXXtVQFRSphd0NQLM+y81KAW1NozcOhAyZXje10nlTjJgKHp+
-	ZQ8GBOUgKiGOa/HKT6UyLg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1742908475;
+	 x=1742994875; bh=wAM+E/mH1X/v6GuqkS1/CQ4VcAw05+8QixkS7TW35Cw=; b=
+	euAgY9ttE0kyJuK46Fj0J/hdIDKd25wNGCSFif2+JB1D+raZQ0R+O1fUklezFJMX
+	XGu7fm95IOOrVdm7u0jR2ErunOSFQdLL2yL7l4X8rar3RnIEZvTVLUykZef7JGhI
+	Nq36L7wehIZdvnmPu+TJJaw2szAaLMVJaGdSmLR3qBSQXnzLy1y1wq9X5UzjCfV+
+	HlG9TQy/u6sB7ddLDOU7Clh9GE/qFsmnj+SD8PhN1OxlbvVFTimz43IiiuphP92s
+	8t2OOFVOTQ6Oyx5q2ofcJo7n2W1jmPUYBgYK6lxbAgNwVpCZf0iiwfHmbVYYQe/s
+	gq2Q8eWPcwQm1S8lcuysFA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742908474; x=
-	1742994874; bh=zw64TTBnVmiHYg8TXrMvQw9Xaz+FqLeHk409zSzzaPM=; b=L
-	xTtaHrVq8ok7ncfGJC29DFDwOzS/tMiXuvdbrE0YCaIZMGeR6m7KGpzVjjfXT9r7
-	ryY08zu8uAPGZhxmGXLZ6BxXhbiz1Xk8TmKBWr78osu/Yilgjm4BSYe3aOIKMwOP
-	wcz+mcbpqigOEO5ABrZ3eHIG42WYJN9nDlXI+eVoJ2lhGCOyAnVkb2H9yiQU2j+7
-	PhISlOC9vm7Vma1T/lWC5ob6D68yMgnm+LCwqFlM/Ua/5zOzz96b96qNt6fuEicI
-	QvtG/LkwsGfAhMwNX83cXpROGpfsoT0XF5GSpuJGuYHxMGkmp3sJ0jU9OFleTRTr
-	vxKXs+fgWJMf68fzlkM8w==
-X-ME-Sender: <xms:OqziZ1vOmD5yxC3ePVcmiIgoktyKN8s3KY_N9YeEdrV_6VcUoFhVMA>
-    <xme:OqziZ-e6T155gJu0wU48UIVEVdCif7bFmkdnJztAYZqKc4UWhQPJV6rrPEXVvJfUF
-    tfw2ltF44GVfiH9QQ>
-X-ME-Received: <xmr:OqziZ4x2MmCcH2JG2za6tI1GYAhHs4gAE8vy5ZIK3XbRvJfod7JS2PiNzMbldMqtbdx9VIWn4we1TCOAHqs-_yHBC-Av8agImv4eVOI1C3Zydw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742908475; x=
+	1742994875; bh=wAM+E/mH1X/v6GuqkS1/CQ4VcAw05+8QixkS7TW35Cw=; b=h
+	pYYslAVougikrEp/BIXKVQoo3lmGq0OxY5v+EVYtubWGhBgfloVonlmERmwlo6/S
+	oZUsQc8o4AgNaPDHUhZHXQhkUQDBqzz60YBlDvtrasKE99TWQDLMU+CkRaBki39m
+	UQxpfNcZOigLiyGQb7VcWxjSZYQg7uGeGaPleYGp3tEPAT4swqcMAkIxwuWD0EgG
+	Q+WDi9eZyzOhB7Nmj0Oo3tTenL8sebitEOtVUY96LdpnR4OTCtYPaiyhG/6O0T81
+	RAbXpcgwmPzu8J+MHItMVVHw+feQCFx59ea5ajp/TkCjUK/6QsyygSJPeyakTm5a
+	QN3Wa+vTOtJR8D0xCp8OA==
+X-ME-Sender: <xms:O6ziZ0bWShySRhI4o42EHQdcKrl09gcvmz-1zxURC1XgrCmbFY4tgw>
+    <xme:O6ziZ_Y73syCTPiwlxQpFjcQjFsJZ6AWlkruOiYu_28nvaxP7VryD3QF-4IBnq2AY
+    pxzaPeu0cwiaTpMlQ>
+X-ME-Received: <xmr:O6ziZ-_jpnYTmC52raJ04Wpvtk0mEp0hDnls6wqIgymnq5DkEhcVDvMzs9FYA3VFeCdsx3w2uuNeGFZVGsr9y-Vc611Lk34XIgxkIwP0CPDJ0w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedvjeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
+    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtkeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    drihhmqeenucggtffrrghtthgvrhhnpeefhfeugeelheefjeektdffhedvhfdvteefgfdt
+    udffudevveetgeeuuedtkefhgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtg
-    hordgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhm
-    gidruggvpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:OqziZ8Ot8UGCyKni8OcgMObHOJ_qfwsi837AZx8rrVCuN_HnfY59wg>
-    <xmx:OqziZ1_yC7yyLrDnvNeyMxZKgQFPzSKxZEIJQN7_A3S1tp9iAa4TXA>
-    <xmx:OqziZ8UoUh8yDTXAXs2h5xryzSvtU8CFJ-6_Mkxg9Eec4HwI1hk-JQ>
-    <xmx:OqziZ2fr1QSegsxcGBTYKWbIVCOiDM70OJh28MX1MoJEYIF-iCpvhA>
-    <xmx:OqziZ4kjsKAWqER9hGCFepbvaxIJO_R_s3b5x2KuCutYE0Zv-Y4HtFSa>
+    vgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehjohhh
+    rghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
+X-ME-Proxy: <xmx:O6ziZ-oyDx0M6eojNM42i8IoXObWSm3S8w_5qgjBcnR8dlvFVCo70A>
+    <xmx:O6ziZ_qtMh9WK6iGqfFBvcJTuGHoDiFNmWacMno53aOvnZfXy2LFOg>
+    <xmx:O6ziZ8RLQYC8BI9eK0F6-CzYmvnN7k_wWWnoXecta3FDCXccBAbAyQ>
+    <xmx:O6ziZ_rrLIkp9pDaw85IqfsnO321QToag7NMTz9IJUcEloBjSdXJ-Q>
+    <xmx:O6ziZwBQDjYHwNH23uLyKxt6fkmsGfu6iyergS_FzhFfg2y2ycDAWWJD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Mar 2025 09:14:33 -0400 (EDT)
+ 25 Mar 2025 09:14:34 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1963d319 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 25 Mar 2025 13:14:32 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id acb23c3b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Mar 2025 13:14:34 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 25 Mar 2025 14:14:29 +0100
-Subject: [PATCH v2 11/20] t: refactor tests depending on Perl substitution
- operator
+Date: Tue, 25 Mar 2025 14:14:31 +0100
+Subject: [PATCH v2 13/20] t: refactor tests depending on Perl for textconv
+ scripts
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,8 +85,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250325-b4-pks-t-perlless-v2-11-4b87b8072670@pks.im>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20250325-b4-pks-t-perlless-v2-13-4b87b8072670@pks.im>
 References: <20250325-b4-pks-t-perlless-v2-0-4b87b8072670@pks.im>
 In-Reply-To: <20250325-b4-pks-t-perlless-v2-0-4b87b8072670@pks.im>
 To: git@vger.kernel.org
@@ -96,348 +96,129 @@ Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
  Phillip Wood <phillip.wood123@gmail.com>
 X-Mailer: b4 0.14.2
 
-We have a bunch of tests that use Perl to perform substitution via the
-"s/" operator. These usecases can be trivially replaced with sed(1).
+We have a couple of tests that depend on Perl for textconv scripts.
+Refactor these tests to instead be implemented via shell utilities so
+that we can drop a couple of PERL_TEST_HELPERS prerequisites.
 
-Refactor the tests accordingly so that we can drop a couple of
-PERL_TEST_HELPERS prerequisites.
+Note that not all of the conversions are a one-to-one equivalent to the
+previous textconv scripts. But that's not really needed in the first
+place: we only care that the textconv script does something, and that
+can be verified trivially without having a full-blown invocation of
+hexdump. So at times, the implementation of the textconv scripts is
+reduced to their bare minimum and the expectations of those tests are
+adapted accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t0008-ignores.sh                        | 10 ++--------
- t/t4029-diff-trailing-space.sh            |  5 +++--
- t/t4200-rerere.sh                         | 12 +++---------
- t/t5303-pack-corruption-resilience.sh     | 10 ++++++----
- t/t5310-pack-bitmaps.sh                   |  4 ++--
- t/t5534-push-signed.sh                    |  4 ++--
- t/t6011-rev-list-with-bad-commit.sh       | 20 +++++++++-----------
- t/t7416-submodule-dash-url.sh             |  9 ++-------
- t/t7508-status.sh                         |  4 ++--
- t/t8006-blame-textconv.sh                 |  8 +-------
- t/t9137-git-svn-dcommit-clobber-series.sh | 14 ++++++++------
- 11 files changed, 40 insertions(+), 60 deletions(-)
+ t/t4030-diff-textconv.sh       | 15 +++------------
+ t/t4031-diff-rewrite-binary.sh | 19 +++++++------------
+ t/t7815-grep-binary.sh         | 15 +++------------
+ 3 files changed, 13 insertions(+), 36 deletions(-)
 
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index 1aaa6bf5ae8..273d71411fe 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -5,12 +5,6 @@ test_description=check-ignore
- TEST_CREATE_REPO_NO_TEMPLATE=1
+diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
+index c7d8eb12453..f904fc19f69 100755
+--- a/t/t4030-diff-textconv.sh
++++ b/t/t4030-diff-textconv.sh
+@@ -4,12 +4,6 @@ test_description='diff.*.textconv tests'
+ 
  . ./test-lib.sh
  
 -if ! test_have_prereq PERL_TEST_HELPERS
 -then
--	skip_all='skipping ignores tests; Perl not available'
+-	skip_all='skipping diff textconv tests; Perl not available'
 -	test_done
 -fi
 -
- init_vars () {
- 	global_excludes="global-excludes"
+ find_diff() {
+ 	sed '1,/^index /d' | sed '/^-- $/,$d'
  }
-@@ -45,11 +39,11 @@ test_stderr () {
- }
- 
- broken_c_unquote () {
--	"$PERL_PATH" -pe 's/^"//; s/\\//; s/"$//; tr/\n/\0/' "$@"
-+	sed -e 's/^"//' -e 's/\\//' -e 's/"$//' "$1" | tr '\n' '\0'
- }
- 
- broken_c_unquote_verbose () {
--	"$PERL_PATH" -pe 's/	"/	/; s/\\//; s/"$//; tr/:\t\n/\0/' "$@"
-+	sed -e 's/	"/	/' -e 's/\\//' -e 's/"$//' "$1" | tr ':\t\n' '\000'
- }
- 
- stderr_contains () {
-diff --git a/t/t4029-diff-trailing-space.sh b/t/t4029-diff-trailing-space.sh
-index a92a42990b1..db75998e35f 100755
---- a/t/t4029-diff-trailing-space.sh
-+++ b/t/t4029-diff-trailing-space.sh
-@@ -18,7 +18,7 @@ index 5f6a263..8cb8bae 100644
+@@ -26,13 +20,10 @@ cat >expect.text <<'EOF'
+ +1
  EOF
- exit 1
  
--test_expect_success PERL_TEST_HELPERS "$test_description" '
-+test_expect_success "$test_description" '
- 	printf "\nx\n" > f &&
- 	before=$(git hash-object f) &&
- 	before=$(git rev-parse --short $before) &&
-@@ -31,7 +31,8 @@ test_expect_success PERL_TEST_HELPERS "$test_description" '
- 	git config --bool diff.suppressBlankEmpty true &&
- 	git diff f > actual &&
- 	test_cmp exp actual &&
--	perl -i.bak -p -e "s/^\$/ /" exp &&
-+	sed "s/^\$/ /" <exp >exp.munged &&
-+	mv exp.munged exp &&
- 	git config --bool diff.suppressBlankEmpty false &&
- 	git diff f > actual &&
- 	test_cmp exp actual &&
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index 7fcca9ddad5..bacb93d014f 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -27,12 +27,6 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+-cat >hexdump <<'EOF'
+-#!/bin/sh
+-"$PERL_PATH" -e '$/ = undef; $_ = <>; s/./ord($&)/ge; print $_' < "$1"
+-EOF
+-chmod +x hexdump
+-
+ test_expect_success 'setup binary file with history' '
++	write_script hexdump <<-\EOF &&
++	tr "\000\001" "01" <"$1"
++	EOF
+ 	test_commit --printf one file "\\0\\n" &&
+ 	test_commit --printf --append two file "\\01\\n"
+ '
+diff --git a/t/t4031-diff-rewrite-binary.sh b/t/t4031-diff-rewrite-binary.sh
+index cbe50b15772..15e012ccc7c 100755
+--- a/t/t4031-diff-rewrite-binary.sh
++++ b/t/t4031-diff-rewrite-binary.sh
+@@ -57,24 +57,19 @@ test_expect_success 'diff --stat counts binary rewrite as 0 lines' '
+ 	grep " rewrite file" diff
+ '
+ 
+-{
+-	echo "#!$SHELL_PATH"
+-	cat <<'EOF'
+-"$PERL_PATH" -e '$/ = undef; $_ = <>; s/./ord($&)/ge; print $_' < "$1"
+-EOF
+-} >dump
+-chmod +x dump
+-
+ test_expect_success 'setup textconv' '
++	write_script dump <<-\EOF &&
++	test-tool hexdump <"$1"
++	EOF
+ 	echo file diff=foo >.gitattributes &&
+ 	git config diff.foo.textconv "\"$(pwd)\""/dump
+ '
+ 
+-test_expect_success PERL_TEST_HELPERS 'rewrite diff respects textconv' '
++test_expect_success 'rewrite diff respects textconv' '
+ 	git diff -B >diff &&
+-	grep "dissimilarity index" diff &&
+-	grep "^-61" diff &&
+-	grep "^-0" diff
++	test_grep "dissimilarity index" diff &&
++	test_grep "^-3d 0a 00" diff &&
++	test_grep "^+3d 0a 01" diff
+ '
+ 
+ test_done
+diff --git a/t/t7815-grep-binary.sh b/t/t7815-grep-binary.sh
+index b2730d200c8..3bd91da9707 100755
+--- a/t/t7815-grep-binary.sh
++++ b/t/t7815-grep-binary.sh
+@@ -4,12 +4,6 @@ test_description='git grep in binary files'
  
  . ./test-lib.sh
  
 -if ! test_have_prereq PERL_TEST_HELPERS
 -then
--	skip_all='skipping rerere tests; Perl not available'
+-	skip_all='skipping grep binary tests; Perl not available'
 -	test_done
 -fi
 -
- test_expect_success 'setup' '
- 	cat >a1 <<-\EOF &&
- 	Some title
-@@ -87,7 +81,7 @@ test_expect_success 'activate rerere, old style (conflicting merge)' '
- 	test_might_fail git config --unset rerere.enabled &&
- 	test_must_fail git merge first &&
- 
--	sha1=$(perl -pe "s/	.*//" .git/MERGE_RR) &&
-+	sha1=$(sed "s/	.*//" <.git/MERGE_RR) &&
- 	rr=.git/rr-cache/$sha1 &&
- 	grep "^=======\$" $rr/preimage &&
- 	! test -f $rr/postimage &&
-@@ -100,7 +94,7 @@ test_expect_success 'rerere.enabled works, too' '
- 	git reset --hard &&
- 	test_must_fail git merge first &&
- 
--	sha1=$(perl -pe "s/	.*//" .git/MERGE_RR) &&
-+	sha1=$(sed "s/	.*//" <.git/MERGE_RR) &&
- 	rr=.git/rr-cache/$sha1 &&
- 	grep ^=======$ $rr/preimage
- '
-@@ -110,7 +104,7 @@ test_expect_success 'set up rr-cache' '
- 	git config rerere.enabled true &&
- 	git reset --hard &&
- 	test_must_fail git merge first &&
--	sha1=$(perl -pe "s/	.*//" .git/MERGE_RR) &&
-+	sha1=$(sed "s/	.*//" <.git/MERGE_RR) &&
- 	rr=.git/rr-cache/$sha1
+ test_expect_success 'setup' "
+ 	echo 'binaryQfileQm[*]cQ*æQð' | q_to_nul >a &&
+ 	git add a &&
+@@ -120,13 +114,10 @@ test_expect_success 'grep respects not-binary diff attribute' '
+ 	test_cmp expect actual
  '
  
-diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corruption-resilience.sh
-index ac5e370e1e4..07382797bbb 100755
---- a/t/t5303-pack-corruption-resilience.sh
-+++ b/t/t5303-pack-corruption-resilience.sh
-@@ -99,11 +99,12 @@ test_expect_success '... and loose copy of first delta allows for partial recove
- 	git cat-file blob $blob_3 > /dev/null
- '
- 
--test_expect_success PERL_TEST_HELPERS 'create corruption in data of first object' '
-+test_expect_success 'create corruption in data of first object' '
- 	create_new_pack &&
- 	git prune-packed &&
- 	chmod +w ${pack}.pack &&
--	perl -i.bak -pe "s/ base /abcdef/" ${pack}.pack &&
-+	sed "s/ base /abcdef/" <${pack}.pack >${pack}.pack.munged &&
-+	mv ${pack}.pack.munged ${pack}.pack &&
- 	test_must_fail git cat-file blob $blob_1 > /dev/null &&
- 	test_must_fail git cat-file blob $blob_2 > /dev/null &&
- 	test_must_fail git cat-file blob $blob_3 > /dev/null
-@@ -156,11 +157,12 @@ test_expect_success '... and then a repack "clears" the corruption' '
- 	git cat-file blob $blob_3 > /dev/null
- '
- 
--test_expect_success PERL_TEST_HELPERS 'create corruption in data of first delta' '
-+test_expect_success 'create corruption in data of first delta' '
- 	create_new_pack &&
- 	git prune-packed &&
- 	chmod +w ${pack}.pack &&
--	perl -i.bak -pe "s/ delta1 /abcdefgh/" ${pack}.pack &&
-+	sed "s/ delta1 /abcdefgh/" <${pack}.pack >${pack}.pack.munged &&
-+	mv ${pack}.pack.munged ${pack}.pack &&
- 	git cat-file blob $blob_1 > /dev/null &&
- 	test_must_fail git cat-file blob $blob_2 > /dev/null &&
- 	test_must_fail git cat-file blob $blob_3 > /dev/null
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index 81987296235..9033d72b8c7 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -395,7 +395,7 @@ test_bitmap_cases () {
- 		)
- 	'
- 
--	test_expect_success PERL_TEST_HELPERS 'pack.preferBitmapTips' '
-+	test_expect_success 'pack.preferBitmapTips' '
- 		git init repo &&
- 		test_when_finished "rm -fr repo" &&
- 		(
-@@ -421,7 +421,7 @@ test_bitmap_cases () {
- 
- 			# mark the commits which did not receive bitmaps as preferred,
- 			# and generate the bitmap again
--			perl -pe "s{^}{create refs/tags/include/$. }" <before |
-+			sed "s|\(.*\)|create refs/tags/include/\1 \1|" <before |
- 				git update-ref --stdin &&
- 			git -c pack.preferBitmapTips=refs/tags/include repack -adb &&
- 
-diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-index 342d0423c92..d5c0d00114e 100755
---- a/t/t5534-push-signed.sh
-+++ b/t/t5534-push-signed.sh
-@@ -177,7 +177,7 @@ test_expect_success GPGSSH 'ssh signed push sends push certificate' '
- 	test_cmp expect dst/push-cert-status
- '
- 
--test_expect_success GPG,PERL_TEST_HELPERS 'inconsistent push options in signed push not allowed' '
-+test_expect_success GPG 'inconsistent push options in signed push not allowed' '
- 	# First, invoke receive-pack with dummy input to obtain its preamble.
- 	prepare_dst &&
- 	git -C dst config receive.certnonceseed sekrit &&
-@@ -205,7 +205,7 @@ test_expect_success GPG,PERL_TEST_HELPERS 'inconsistent push options in signed p
- 	# Tweak the push output to make the push option outside the cert
- 	# different, then replay it on a fresh dst, checking that ff is not
- 	# deleted.
--	perl -pe "s/([^ ])bar/\$1baz/" push >push.tweak &&
-+	sed "s/\([^ ]\)bar/\1baz/" <push >push.tweak &&
- 	prepare_dst &&
- 	git -C dst config receive.certnonceseed sekrit &&
- 	git -C dst config receive.advertisepushoptions 1 &&
-diff --git a/t/t6011-rev-list-with-bad-commit.sh b/t/t6011-rev-list-with-bad-commit.sh
-index 6131c361094..12329aab388 100755
---- a/t/t6011-rev-list-with-bad-commit.sh
-+++ b/t/t6011-rev-list-with-bad-commit.sh
-@@ -4,12 +4,6 @@ test_description='git rev-list should notice bad commits'
- 
- . ./test-lib.sh
- 
--if ! test_have_prereq PERL_TEST_HELPERS
--then
--	skip_all='skipping rev-list with bad commit tests; Perl not available'
--	test_done
--fi
+-cat >nul_to_q_textconv <<'EOF'
+-#!/bin/sh
+-"$PERL_PATH" -pe 'y/\000/Q/' < "$1"
+-EOF
+-chmod +x nul_to_q_textconv
 -
- # Note:
- # - compression level is set to zero to make "corruptions" easier to perform
- # - reflog is disabled to avoid extra references which would twart the test
-@@ -41,11 +35,15 @@ test_expect_success 'verify number of revisions' \
-    first_commit=$(git rev-parse HEAD~3)
-    '
- 
--test_expect_success 'corrupt second commit object' \
--   '
--   perl -i.bak -pe "s/second commit/socond commit/" .git/objects/pack/*.pack &&
--   test_must_fail git fsck --full
--   '
-+test_expect_success 'corrupt second commit object' '
-+	for p in .git/objects/pack/*.pack
-+	do
-+		sed "s/second commit/socond commit/" <"$p" >"$p.munged" &&
-+		mv "$p.munged" "$p" ||
-+		return 1
-+	done &&
-+	test_must_fail git fsck --full
-+'
- 
- test_expect_success 'rev-list should fail' '
- 	test_must_fail env GIT_TEST_COMMIT_GRAPH=0 git -c core.commitGraph=false rev-list --all > /dev/null
-diff --git a/t/t7416-submodule-dash-url.sh b/t/t7416-submodule-dash-url.sh
-index 14069600a2f..00b81d349b9 100755
---- a/t/t7416-submodule-dash-url.sh
-+++ b/t/t7416-submodule-dash-url.sh
-@@ -4,12 +4,6 @@ test_description='check handling of disallowed .gitmodule urls'
- 
- . ./test-lib.sh
- 
--if ! test_have_prereq PERL_TEST_HELPERS
--then
--	skip_all='skipping submodule dash URL tests; Perl not available'
--	test_done
--fi
--
- test_expect_success 'setup' '
- 	git config --global protocol.file.allow always
+ test_expect_success 'setup textconv filters' '
++	write_script nul_to_q_textconv <<-\EOF &&
++	tr "\000" "Q" <"$1"
++	EOF
+ 	echo a diff=foo >.gitattributes &&
+ 	git config diff.foo.textconv "\"$(pwd)\""/nul_to_q_textconv
  '
-@@ -39,7 +33,8 @@ test_expect_success 'fsck accepts protected dash' '
- '
- 
- test_expect_success 'remove ./ protection from .gitmodules url' '
--	perl -i -pe "s{\./}{}" .gitmodules &&
-+	sed "s|\./||" <.gitmodules >.gitmodules.munged &&
-+	mv .gitmodules.munged .gitmodules &&
- 	git commit -am "drop protection"
- '
- 
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index 14c41b2cb7c..cdc1d6fcc78 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1064,9 +1064,9 @@ test_expect_success 'status -s submodule summary (clean submodule)' '
- 	test_cmp expect output
- '
- 
--test_expect_success PERL_TEST_HELPERS 'status -z implies porcelain' '
-+test_expect_success 'status -z implies porcelain' '
- 	git status --porcelain |
--	perl -pe "s/\012/\000/g" >expect &&
-+	tr "\012" "\000" >expect &&
- 	git status -z >output &&
- 	test_cmp expect output
- '
-diff --git a/t/t8006-blame-textconv.sh b/t/t8006-blame-textconv.sh
-index 5cb16872081..810dac18f56 100755
---- a/t/t8006-blame-textconv.sh
-+++ b/t/t8006-blame-textconv.sh
-@@ -4,12 +4,6 @@ test_description='git blame textconv support'
- 
- . ./test-lib.sh
- 
--if ! test_have_prereq PERL_TEST_HELPERS
--then
--	skip_all='skipping blame textconv tests; Perl not available'
--	test_done
--fi
--
- find_blame() {
- 	sed -e 's/^[^(]*//'
- }
-@@ -17,7 +11,7 @@ find_blame() {
- cat >helper <<'EOF'
- #!/bin/sh
- grep -q '^bin: ' "$1" || { echo "E: $1 is not \"binary\" file" 1>&2; exit 1; }
--"$PERL_PATH" -p -e 's/^bin: /converted: /' "$1"
-+sed 's/^bin: /converted: /' <"$1"
- EOF
- chmod +x helper
- 
-diff --git a/t/t9137-git-svn-dcommit-clobber-series.sh b/t/t9137-git-svn-dcommit-clobber-series.sh
-index a9d38be997c..9afdb45b1cc 100755
---- a/t/t9137-git-svn-dcommit-clobber-series.sh
-+++ b/t/t9137-git-svn-dcommit-clobber-series.sh
-@@ -15,13 +15,13 @@ test_expect_success 'initialize repo' '
- 	test -e file
- 	'
- 
--test_expect_success PERL_TEST_HELPERS '(supposedly) non-conflicting change from SVN' '
-+test_expect_success '(supposedly) non-conflicting change from SVN' '
- 	test x"$(sed -n -e 58p < file)" = x58 &&
- 	test x"$(sed -n -e 61p < file)" = x61 &&
- 	svn_cmd co "$svnrepo" tmp &&
- 	(cd tmp &&
--		perl -i.bak -p -e "s/^58$/5588/" file &&
--		perl -i.bak -p -e "s/^61$/6611/" file &&
-+		sed -e "s/^58$/5588/" -e "s/^61$/6611/" <file >file.munged &&
-+		mv file.munged file &&
- 		poke file &&
- 		test x"$(sed -n -e 58p < file)" = x5588 &&
- 		test x"$(sed -n -e 61p < file)" = x6611 &&
-@@ -37,11 +37,13 @@ test_expect_success 'some unrelated changes to git' "
- 	git commit -m bye-life life
- 	"
- 
--test_expect_success PERL_TEST_HELPERS 'change file but in unrelated area' "
-+test_expect_success 'change file but in unrelated area' "
- 	test x\"\$(sed -n -e 4p < file)\" = x4 &&
- 	test x\"\$(sed -n -e 7p < file)\" = x7 &&
--	perl -i.bak -p -e 's/^4\$/4444/' file &&
--	perl -i.bak -p -e 's/^7\$/7777/' file &&
-+	sed -e 's/^4\$/4444/' \
-+	    -e 's/^7\$/7777/' \
-+		<file >file.munged &&
-+	mv file.munged file &&
- 	test x\"\$(sed -n -e 4p < file)\" = x4444 &&
- 	test x\"\$(sed -n -e 7p < file)\" = x7777 &&
- 	git commit -m '4 => 4444, 7 => 7777' file &&
 
 -- 
 2.49.0.472.ge94155a9ec.dirty
