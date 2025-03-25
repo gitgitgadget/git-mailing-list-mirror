@@ -1,89 +1,89 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0171267F7E
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 12:31:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153771C245C
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 12:42:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742905882; cv=none; b=maj9sQVmZZfUFrY8c74VA6HGLNudorOGpN9S8r/g0NO+RcX9wK7wRlrAl+jNQEFUo3jf7QnPd6mYQhZkmt37OWHD6WUyuHGwwGr+/jDMgZEpzQnvtKth/QOG7thOZjs/oM9pqng/BTr4kT8UDXHze6na9ajLxzKG52kqSXGGCKY=
+	t=1742906576; cv=none; b=XI2ZIlLJbMdxhokTk+hwlS4nManFQEpdRoWXap0Dsy9hHU4emSNWhnBlBwYN6aRSpiBzPbBb7eIbY6nge26xYT85XmBmFPcy3IB2gSkPjLyOlD0aPz4u3fku3r9JulATlxAoDrt+LNi1VgYvIkTMp6NIK4RlB6tCT6SWsD+uvDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742905882; c=relaxed/simple;
-	bh=chpKPrbFvQ7L90OMY4j32wFPnfYhrLcb6xPEl2Gtkho=;
+	s=arc-20240116; t=1742906576; c=relaxed/simple;
+	bh=ydGwZhJ3FBt/OTEzxnOWHndMf4q8971ehTeku327b5k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qKUIScgzLIn8ujAr4gloNEJE6MXiH1eR2m6UMR7KBUlgqfyr6SF9UI4rNCCxKJpC7FU3sWEPxWj4g/exLRmdm/4NNZE0/vbQBvZ+cDwJqq4GDqrKe+1rrYXKYEGvYwb7g/wrKH0vNKSpDULzPAIRLZ0zEsiNM41JoV6/spAbB0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MMdchBq/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LXOp/6U6; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=NbxfPk7AJejX830846P1BeqfOWNQGT98w7jpQh70dPebB3LsKHv0IsJMTdS6xP77f4ToASIdpzNSeoJd/IKO5V3ItZVC01UwaUKCS4zXzg6/ZTPa89oL7bpHRUec//jqtlj0dZ55qvorVJ9/SjauQ89rBPGax0V3wXBsp4wLUMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iFiqfCvm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sY8Gt2Cd; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MMdchBq/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LXOp/6U6"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0495B1383903;
-	Tue, 25 Mar 2025 08:31:20 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 25 Mar 2025 08:31:20 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iFiqfCvm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sY8Gt2Cd"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 34D39114006F;
+	Tue, 25 Mar 2025 08:42:53 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 25 Mar 2025 08:42:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1742905880;
-	 x=1742992280; bh=wEjVgaB8DsE3GCi+/tDZfogA0A7U5fWwdIyaZDCl30g=; b=
-	MMdchBq/hjJsE8z4DkGKlJBDUQ3L2N/u4l+WlVzktbKL81ZsHQMZuT21X4al/68C
-	y8jw7yQM0pddjD17FlrynOwKmR0Vx/5RNm5OCULck7I+8H1W+RyO+6t1cY0tx4NE
-	uyaYA52uP3x57mdS6UeyaQeU35jir7WW8AtHQd7jve9oYbuay8W9+SbtPx8spH/1
-	faInnpmrCKm9oZrrg5TjGzJ1VZdb8HdRgyootBRjNf9zDxqnO1UxBDHNT9M3wwBa
-	m0KMkC3W/vjMQgmtwUxpwOI+xODVc6YXIwSVsqJrxBAAgmD+J3e2+leKjYIyL+gA
-	UeUe7uV9br5ToFWiLjA2Tg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1742906573;
+	 x=1742992973; bh=UI200iKB+KtlnpHexWfG8KaB0gtpBqf+yiPYpFZVHvY=; b=
+	iFiqfCvmpMpLFXVarkLKmsHwcy7u31Egj7vqsHVjnyzaZ4bW1GBtw3L/Lp5n98d+
+	jWA/hCeIEj5UNURxvh0FSUTJbNuGwsdMqkTfeGT7W/D51hMaX6MxMRVazsY3yMso
+	xz9SZnqgI/TgXWZLdfRen4qPUzhMX2REMGhkGmGiTF9v+2Pbxk8lxmcQTEzO6YRS
+	usWbqBieaMekX6jBt/fjrg5iKB6+R0XtrT10oyVC2QIgvXk1SzqJo+qMUu/JrsGY
+	j3tWRsTrrEqnYgnqF8JSiSkymyYIrp5BoFZjMDER8D7N32USTOnRC3/yU4SLoFhZ
+	4L0tfUDQbkJy0Ttph7bF5A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742905880; x=
-	1742992280; bh=wEjVgaB8DsE3GCi+/tDZfogA0A7U5fWwdIyaZDCl30g=; b=L
-	XOp/6U6t/MWVb84kvYbdh+yOmX2UgzNFNEbaHkmpzVCvtgzxPBg4QlqIL1hTyo6e
-	CjUwiJezV1BSJaT5d0d8oXKlO3tD7CBcei4ASWrqBwnOAb9fsMJbn2b8j483fATi
-	SCysBbDhFZRTLgzH4FdTAlTgcdhJY3MYkfzwh7gb2hn/5LIG9KawyKVSQhcA1nAW
-	jQHvnVNFUWalrzIheYsEWLeQ1/2p/0cWNi09sVnerzM4D9ecFDhCWEdaYanvwpCN
-	EqgORiZxuVZOlbmQ3w+fSgUZP9rMGECzjjO7YWm+2jMj6MgTy9qYS2hCuf1rDH3J
-	za3wVy3ERfrreDBts+AeQ==
-X-ME-Sender: <xms:F6LiZ3MTFanTWStjeOgR0V2g5kYUgntlW6JFUdqNMcj5ZA66d82ATA>
-    <xme:F6LiZx-2bN06KW6Kv8raqoiyAyw7Ci5-fGkkjvEK5vc9qHw2gcmNKsi9lD8RskkA_
-    VcVBVXDbgSIYnHOGg>
-X-ME-Received: <xmr:F6LiZ2S93bDH9SU27MC62sUBJzkutfDmiQkHDxbWCoM-r1p0wiXR6zaeAoav7QTN9iDTrsd8GMbJKWtY6C4suW3PASSE6bfjiLF5tXzIUBJ_hw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedvieehucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742906573; x=
+	1742992973; bh=UI200iKB+KtlnpHexWfG8KaB0gtpBqf+yiPYpFZVHvY=; b=s
+	Y8Gt2CdN1QPl/bx5XZ0FhSFCInFTvTofRMz0hRsEN/8ZbVy1b+pl1iB0Nyrb/MoI
+	hTj68qbjOL8rvrhRyyUmdn+NpIhhBb84z74S0jPUm9ptyuDkpUVnvaBBM/1uJJjV
+	aJHBe5LO/mJ9Njo0jJvr4Hk8OQfF/yrMYFOJ4+ir5RSj9JLJbtgu/Hmn+9J3COnO
+	KXT7yRPU2QCjV/3qg8YxDtG4cCTSaim5m7tNPiz6WTxndtgpl4zWcdCPodyOOdGw
+	yhn6F50U15MaPTEXJrP0YiwQMwcQxcqJw5XQQLnlJ0cDehxrLFyzVGILY8FdexUR
+	zBvOJg95BgGU+JTcZ/GGg==
+X-ME-Sender: <xms:zKTiZ67PvclXBW44SxrF9v9DSR0R1ci6Zn4fRwWmFhcblp6G8b_TXg>
+    <xme:zKTiZz7dxQ7poDU_llbIJ2yFKODc1krUqfCOX4ohfXzwe_Et8YcayXqd4iiGDh_5y
+    jbd9xFCxODmTYUgFA>
+X-ME-Received: <xmr:zKTiZ5c_jb9dI4WsSAbqXER3F3boEOeBreBTpZbXdkLnaDtYbs7Dh_5b8ikbKO1TB0UwxtSOLA6HXZB9shrBE_UujgJ5IzDfQqPhMh57s4ZoLQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedvieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
     veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:F6LiZ7vnpBuDRBoFwve9UwmvKw-xtvb5nTmrL_a7iXquptjw7gyuNA>
-    <xmx:F6LiZ_dwEPRktilBxZ38wTpPgWk2DccLtwIYiEA4iumC7uIuGuWhAg>
-    <xmx:F6LiZ32fGIeDPqnuOo8-u7U81HXLJR1jv3mzqPmGJutfJb3wSPG5Kw>
-    <xmx:F6LiZ7_Hn4S7dVmwI8fPxGbYd_TXvA_EKP-gLpYIplZn-VyBWIPBNA>
-    <xmx:F6LiZ27vNCo0xLSNKcmxhcDEpdAd3rHeLnsHzrJyHhUINp6l-m-KWg7j>
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtg
+    hordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
+X-ME-Proxy: <xmx:zKTiZ3IpXUypGrmGz6c6VOu71YhSMdBx-j_FnRXC6DEoXqrDwgwANA>
+    <xmx:zKTiZ-LVQoTu8C3iGlfqleC410xAWLXcUPpK0D6pE3PYCccECHMHgg>
+    <xmx:zKTiZ4y53AVUdd2e4ON8NQxHyPFr2TYUMjiu40GTqZQG7ItLcax0xA>
+    <xmx:zKTiZyJaXLUPJwoAoWq-znFw471p75qM3gdsCbAIBtypigy8yBiN0Q>
+    <xmx:zaTiZ61EloMo6cjTDbWs-T3XSc5AGoIYFLha7PK553PJxWzBWIGsz9iJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Mar 2025 08:31:19 -0400 (EDT)
+ 25 Mar 2025 08:42:52 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3a127315 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 25 Mar 2025 12:31:18 +0000 (UTC)
-Date: Tue, 25 Mar 2025 13:31:17 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9e1c23cc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Mar 2025 12:42:50 +0000 (UTC)
+Date: Tue, 25 Mar 2025 13:42:45 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, phillip.wood123@gmail.com
-Subject: Re: [PATCH v4 7/8] refs: support rejection in batch updates during
- F/D checks
-Message-ID: <Z-KiFeN0LXTR36lM@pks.im>
-References: <20250320-245-partially-atomic-ref-updates-v4-0-3dcc1b311dc9@gmail.com>
- <20250320-245-partially-atomic-ref-updates-v4-7-3dcc1b311dc9@gmail.com>
- <Z-FZObjvIN-qzvlj@pks.im>
- <CAOLa=ZRx8gt=_J2cRFEsUEi31ia7qNL7SZ-WBWuWSyU=8SRt+g@mail.gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 13/20] t: refactor tests depending on Perl for textconv
+ scripts
+Message-ID: <Z-KkxRcgTtLRd2W-@pks.im>
+References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
+ <20250320-b4-pks-t-perlless-v1-13-b1eefe27ac55@pks.im>
+ <CAPig+cQdoZwY3u-xr49Jb8aaQmE69p4i4RUdy=cRv-V7VoWENg@mail.gmail.com>
+ <Z-FUEhraLaDODbmO@pks.im>
+ <CAPig+cSN5hU=XP1Gd8z=5XyvSEqJcTBiWhgyJxYNBPJWAi3yLw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,72 +93,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOLa=ZRx8gt=_J2cRFEsUEi31ia7qNL7SZ-WBWuWSyU=8SRt+g@mail.gmail.com>
+In-Reply-To: <CAPig+cSN5hU=XP1Gd8z=5XyvSEqJcTBiWhgyJxYNBPJWAi3yLw@mail.gmail.com>
 
-On Mon, Mar 24, 2025 at 05:48:32PM +0000, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > On Thu, Mar 20, 2025 at 12:44:02PM +0100, Karthik Nayak wrote:
-> >> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> >> index be758ffff5..1d50d4013c 100644
-> >> --- a/refs/files-backend.c
-> >> +++ b/refs/files-backend.c
-> >> @@ -864,7 +868,9 @@ static enum ref_transaction_error lock_raw_ref(struct files_ref_store *refs,
-> >>  		 * make sure there is no existing packed ref that conflicts
-> >>  		 * with refname. This check is deferred so that we can batch it.
-> >>  		 */
-> >> -		string_list_append(refnames_to_check, refname);
-> >> +		item = string_list_append(refnames_to_check, refname);
-> >> +		item->util = xmalloc(sizeof(update_idx));
-> >> +		memcpy(item->util, &update_idx, sizeof(update_idx));
-> >>  	}
-> >>
-> >>  	ret = 0;
+On Mon, Mar 24, 2025 at 12:07:52PM -0400, Eric Sunshine wrote:
+> On Mon, Mar 24, 2025 at 8:46 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > On Thu, Mar 20, 2025 at 03:37:08PM -0400, Eric Sunshine wrote:
+> > > On Thu, Mar 20, 2025 at 5:37 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > > > -test_expect_success PERL_TEST_HELPERS 'rewrite diff respects textconv' '
+> > > > +test_expect_success 'rewrite diff respects textconv' '
+> > > >         git diff -B >diff &&
+> > > > -       grep "dissimilarity index" diff &&
+> > > > -       grep "^-61" diff &&
+> > > > -       grep "^-0" diff
+> > > > +       test_grep "dissimilarity index" diff &&
+> > > > +       test_grep "^-3d 0a 00" diff &&
+> > > > +       test_grep "^+3d 0a 01" diff
+> > > >  '
+> > >
+> > > This change seems unrelated to the stated purpose (`textconv`) of this patch(?).
 > >
-> > Hm, so we have to allocate the `util` field now to store the update
-> > index, which is a bit unfortunate because all of this is part of the hot
-> > loop. We cannot store a direct pointer though because the array of
-> > updates may be reallocated, which would invalidate any pointers pointing
-> > into the array.
-> >
+> > Not quite. The test previously didn't run because it depends on the
+> > Perl-based textconv script. Now that this textconv script was adapted
+> > to use shell scripting instead it can run, but as explained in the
+> > commit message the output of the textconv script changed. We don't
+> > really care for the exact output at all, we only care that textconv did
+> > its thing. But we do have to adapt the test accordingly.
 > 
-> Yes, your inference is on point.
-> 
-> > I was wondering whether we could abuse an `uintptr_t` and use it to
-> > store the update index as a pointer. It does feel somewhat dirty though.
-> >
-> 
-> We can do something like this, it would be _clever_ but does feel very
-> hacky.
-> 
-> I did so some benchmarking here
-> 
-> Benchmark 1: update-ref: create many refs (refformat = files, refcount
-> = 100000, revision = master)
->   Time (mean ± σ):      7.396 s ±  0.175 s    [User: 0.962 s, System: 6.312 s]
->   Range (min … max):    7.145 s …  7.688 s    10 runs
-> 
-> Benchmark 2: update-ref: create many refs (refformat = files, refcount
-> = 100000, revision = b4/245-partially-atomic-ref-updates)
->   Time (mean ± σ):      7.514 s ±  0.144 s    [User: 0.919 s, System: 6.438 s]
->   Range (min … max):    7.297 s …  7.750 s    10 runs
-> 
-> Summary
->   update-ref: create many refs (refformat = files, refcount = 100000,
-> revision = master) ran
->     1.02 ± 0.03 times faster than update-ref: create many refs
-> (refformat = files, refcount = 100000, revision =
-> b4/245-partially-atomic-ref-updates)
-> 
-> Overall the perf degradation is very minimal. I also looked at the
-> flamegraph to see if there is something. But most of the time seems to
-> be spent in IO (reading refs and creating locks).
-> 
-> So I think we should be ok here, wdyt?
+> Okay, I see that now that I have read your response and examined the
+> change more closely. The unrelated `grep` to `test_grep` change
+> visually overwhelms the diff, so much so that I overlooked the other
+> smaller necessary changes. Perhaps it would make sense to mention the
+> unrelated change in the commit message but is not itself worth a
+> reroll.
 
-Okay. I'm not a huge fan of using the `->util` pointer like this, but I
-don't have a better idea either, and the performance regression seems
-acceptable. So let's roll with it until somebody has a better idea.
-
-Thanks for doing the benchmark!
+I already tried to describe this in the commit message, but obviously I
+seem to have failed :) I'll add another sentence to mention that tests
+have to be adapted accordingly.
 
 Patrick
