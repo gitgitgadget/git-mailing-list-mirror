@@ -1,123 +1,120 @@
-Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846A5197A7A
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 14:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A6A27706
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 15:20:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742913424; cv=none; b=TpLKf2vLqILQHKiVtpOLS1xlN+jjxdhUpBu4ds+I6AEG1AGEAy30PufAyxpygcaiC7elRv15WoY0Ac04bV9Hy67Mqu8PtubYyWiRBDfFWVGEEmfqT2MRp+2dYKso6i3JEpesRLuXxDbrTho4howehFO272rNg54yZw6dLRaUM+k=
+	t=1742916007; cv=none; b=ua1lRzgYYoh5UowOBBhQlby98YxSZcZj2OR4Pq3wHvPDMiVw/byIm9wFjC7UFgk4eHQPD9WGyMbs/WB06C4X28zWYmZOO3rBX7Ry00fOorg0WQdtJ8u8ZBtH+3rB+2K8/S8O1Lkxhi0w0BYyWJIQvcSFU6ARuzwjLvcheD9NrWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742913424; c=relaxed/simple;
-	bh=s7YjbFuyi4KMYAz3nODb3nRQCQeq120gAzdrIF2wXjs=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=t9YjKScuZd8SP0dRdvziRuRZ/9YCUI1sAo20xLa0eR7YlJ1V8n1uK34lmAFGJGmM2hdaTxHNpCJUty3FXgYprNP5fMMZk9R7fYMJ6fMgVxE1eFNtr0iOdp2gOENdfvsDB3BItJbBfcNioIqvpg6IHYwwpow+anLPqpas7PIy9II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YFkFohQC; arc=none smtp.client-ip=209.85.221.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YFkFohQC"
-Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-51eb18130f9so3037238e0c.3
-        for <git@vger.kernel.org>; Tue, 25 Mar 2025 07:37:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742913421; x=1743518221; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=s7YjbFuyi4KMYAz3nODb3nRQCQeq120gAzdrIF2wXjs=;
-        b=YFkFohQClNJhDZIb9VeNaE0//O7k0DIJ3AohJg0HgJvv5sZvAXiXYytd2dw4DAl2WI
-         sMNF+DLj/qyQwyPO5/kM5zTs0x/MWXW8e0mDS7luuSNOdFq5McPd5LImW2zxjaIahzVo
-         UHEuyuI3VzdBWKTDJ1PeT2I3LifjNCpAUspd1aqv8lkKCcGRCyvhXiHVR57UI4b//ppk
-         n9fbiIKWMsyKUPsG9btDAD+dvIRzbULwVxUmCRnGS3puCoIaFgeT3jWXpdlNrvAKt0gM
-         nOz0jzLo6QV3fuFOmaL5jgHgknXho+S+AUovviG6Aoi67P9yCd4xzLD8qD5i0Bv+ldNm
-         wXlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742913421; x=1743518221;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s7YjbFuyi4KMYAz3nODb3nRQCQeq120gAzdrIF2wXjs=;
-        b=FbpIN8C5nz+BFX39SwkFZcNABNtRDOT+v4AdzEi2COid4oUxofSTLObqcb6UX+bwIw
-         QDLT/NI4KBN6d95lEHuuxSwf2MVhT/eye8Zoy4hH1tB0XvAKepo40O/+OgH5m2eHhkeo
-         d8t2KAMcds3Bx4SQllPICwdeAhnU/cCxLYyTM1hQkimEIGWwvuJ2gM9Bc7aLrY99t+Hi
-         a5Cb41FcdXtJHApnhsG/fGNoweD/71pHvBuFPoUwGh6rk380U/f4sg2QKykCx3vI8zXj
-         XDI9uxlaz0N9zzCQUQeWoK028VmMiNF4sXZJ7AhJ2AHUpWv4EqzkQPaGsBcgi6VttFft
-         iMnA==
-X-Gm-Message-State: AOJu0YwZ8gVwdeq/IpkyZ1Sw6GEGHbTAxprVyPwph/lUSAsHlPt5kOwk
-	DkrMFR9F7eaFfTNVuInryXnaNYLRMpzpPfxxZVrE5uP994BcvGiq4ux7g2Q+OjqJ5ycjxlLvji9
-	ykk0kYxyrnMiZM1wqmGzCoOuT2vw=
-X-Gm-Gg: ASbGnctkhPrW78nhH4S4h5kpjEiUzBlt5iKbdUD0MKl5iqZvt3P36zGMMNpZcYRwkf6
-	btIDXqbqAJB9pxalG5WsCHvJVUSoM+LRfUn25cWatPJl0EEn4xjgSn8vOaJy3PGMq59SUkEmuFt
-	K/75fP5hQa6JTFZe95YBK6k9kZq8aqwVB7wKJ2J5fwQgmCNFgphiPqk1D/1rqw
-X-Google-Smtp-Source: AGHT+IF7xTIMLgD+aylazf/Sb1KIVD1Sq5wgDLhcBjnQJVdTgw/vYKn0LFKyIGggzoNhaRr5IQDs7CpXA2zYwWAp/2A=
-X-Received: by 2002:a05:6122:da1:b0:520:5185:1c77 with SMTP id
- 71dfb90a1353d-525a84de673mr12434092e0c.7.1742913421120; Tue, 25 Mar 2025
- 07:37:01 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 25 Mar 2025 14:37:00 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <Z-Kf9ovF8zAemgUP@pks.im>
-References: <pull.1889.git.1742889711.gitgitgadget@gmail.com> <Z-Kf9ovF8zAemgUP@pks.im>
+	s=arc-20240116; t=1742916007; c=relaxed/simple;
+	bh=YWLbFfc3/YZcDRrtZEOwhL3MnpM0rJ+Hwn2HOdT+xbc=;
+	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pjzTPjlKPSqjp9w9kA42fKbrZQF3Tm/viCm6iFLlgOYdd6VNi1BFAH8px/o07QhN4YWyvLxiRvR9igNmWo5l/VqjPqQ6jYKFkfgvhiXE+nMNs5N5IkFZTTHdMQRdRKfkDaIMSNBtaYIg2/u79ml5pDOvtn9qxVcNqipmykdbLyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 52PFJnhU690703
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 25 Mar 2025 15:19:50 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Patrick Steinhardt'" <ps@pks.im>,
+        "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        <git@vger.kernel.org>, "'Taylor Blau'" <me@ttaylorr.com>
+References: <Z9vuiCnKcMRRXHOR@pks.im> <Z9ySGbE4sq0JfgKs@tapette.crustytoothpaste.net> <Z-Knm2WGeMI9a7zt@pks.im>
+In-Reply-To: <Z-Knm2WGeMI9a7zt@pks.im>
+Subject: RE: Possible venues for Git Merge 2025
+Date: Tue, 25 Mar 2025 11:19:44 -0400
+Organization: Nexbridge Inc.
+Message-ID: <022801db9d99$5a56b2b0$0f041810$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 25 Mar 2025 14:37:00 +0000
-X-Gm-Features: AQ5f1Jqmm4PxpmRv__C_LBJf1sx9oWC0AhCjyHy1LotD6hVEQtqt5XKrNj2eRRw
-Message-ID: <CAOLa=ZQqknrcrkc=kGsybB5TJPgxH5HKAtL3HMu1uKYkX0NicQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Avoid the comma operator
-To: Patrick Steinhardt <ps@pks.im>, 
-	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: multipart/mixed; boundary="000000000000574ed006312ba707"
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQHLx1XFQGlW4lvMUsPU/M/mQ6bKUQHLITbwAnmlY2+zgXq+IA==
+X-Antivirus: Norton (VPS 250325-16, 3/25/2025), Outbound message
+X-Antivirus-Status: Clean
 
---000000000000574ed006312ba707
-Content-Type: text/plain; charset="UTF-8"
-
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Tue, Mar 25, 2025 at 08:01:48AM +0000, Johannes Schindelin via GitGitGadget wrote:
->> The comma operator
->> [https://en.cppreference.com/w/c/language/operator_other#Comma_operator] is
->> rarely used in C anymore, and typically indicates a typo. Just like in these
->> instances, where a semicolon was meant to be used, as there is no need to
->> discard the first statement's result here.
+On March 25, 2025 8:55 AM, Patrick Steinhardt wrote:
+>On Thu, Mar 20, 2025 at 10:09:29PM +0000, brian m. carlson wrote:
+>> On 2025-03-20 at 10:31:36, Patrick Steinhardt wrote:
+>> > given that this year is the 20th anniversary of the Git project it
+>> > would be great to host another Git Merge so that the wider community
+>> > can come together and celebrate. Taylor and I have been chatting
+>> > about this opportunity a bit to figure out what we're going to do this
+year.
+>> >
+>> > We have been discussing two different options:
+>> >
+>> >   - Hosting in the US in San Francisco at the GitHub HQ.
+>> >
+>> >   - Hosting in the EU in Amsterdam colocated with the Open Source
+>> >     Summit Europe.
+>> >
+>> > Typically, the location is alternating on a yearly basis between the
+>> > US and the EU. So given that last year it was hosted in Berlin it
+>> > would be the US' turn. But given the recent political climate in the
+>> > US I'm afraid that many people would not feel comfortable traveling
+>> > there right now. So in the spirit of being inclusive I think we
+>> > should at least consider whether we may want to break the typical
+>> > alternating cycle and host in the EU again.
+>>
+>> Yes, I do think that given current circumstances the U.S. is not a
+>> good place to host events.  Perhaps that will change in the future,
+>> but I don't think that would be a prudent choice right now.  I've
+>> talked to several people who are uncomfortable traveling there, so
+>> we'd probably get better attendance hosting elsewhere.
+>>
+>> I would be fine with Amsterdam, and I might also suggest a major
+>> Canadian city (such as Toronto, Montreal, or Vancouver) if we
+>> preferred to do this in North America (since we've traditionally
+>> alternated continents).  I can imagine other locations outside of the
+>> U.S. that might be fine as well, so I'm willing to keep an open mind
+>> if a good opportunity comes up.
 >
-> The changes look obviously good to me, thanks. The reftable library and
-> backend also had several instances where the operator was used by
-> accident, and I've gotten rid of those over time. They typically don't
-> do any harm as the result is essentially the same, but sometimes they
-> may cause issues. And at the very least they cause confusion.
+>The only reasons why I proposed Amsterdam are the Open Source Summit and
+that
+>I have some ways to help out with organizing the event over there.
+>I would be equally happy with alternatives like Canada, but didn't really
+want to
+>propose alternatives like this myself because I would have to push the
+entire burden
+>onto somebody else.
 >
-> It would be great if there was a compiler warning we could enable for
-> cases where the operator likely isn't intentional. But I couldn't find
-> any, unfortunately.
->
+>So if it would be a possibility and if people could help out getting things
+organized in
+>other countries/continents I'd be happy.
 
-Clang does have '-Wcomma' [1], which seems to be exactly what we want.
+There are multiple venues in the Toronto area that can support 1500+
+attendees. 
+Examples I have used:
+Metro Toronto Convention Centre (downtown, likely preferable but they need
+the longest advanced notice)
+Westin Harbour Castle (downtown, loads of conference space)
+Exhibition Place (downtown, no on-site hotels)
+Rogers Centre (downtown, decent hotel and conference rooms)
+Various airport hotels (including Marriot)
 
-[1]: https://clang.llvm.org/docs/DiagnosticsReference.html#wcomma
+There are convenient dedicated express trains from the airport to downtown
+that
+accept luggage. Most airport hotels (Marriot) have shuttles to/from the
+airport continuously
+from 0400h to 0200h.
 
-> Thanks!
->
-> Patrick
+I have been to all of the above - and organized conferences at each about 2
+decades ago, but
+info should still be valid. I can assist if requested.
 
---000000000000574ed006312ba707
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: bac38d2accef64aa_0.1
+--Randall
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1maXY0b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mKzZVQy85bVN5MEFTdUJGOWw2NWJGcCtubkhZQUFTVApjMHpVRjk0Uk1u
-dFBiRTRYRjVTYWZQWENLOWNHSWFuTWNQeDQwRWd6dnBCSVVMRXNWaGtOUHhqdkp6NmFrWHV2Ckph
-YXBPWllYSHcvZ0tmMXh2WnM2VDRreDJRMUdWRnp5RkplNUoyd0JjWi9nRDZ2YmppVzh2SkxoQ2lt
-dlFNZlQKL0lYR3U3SXppUzl5TmlyKzNYOWZuVW9OOGZFQVJDb2F4WEZuNE9kaGQ2Zy9yVklHSWdP
-TXhJSE5TaysxUjFiMgpYdUNiSm9XSXlPUEQ1T0wvZWtXUVRJcjluUnNoVmlFMjZla2VyZUtDdzFL
-N0JiTEMrcEVYWU9udnJ4VDI1bTNtCnQvS255OTFwRUJEa3hpbUNFQUs4NVBoSVBLQ2dMRkVnTzhC
-TjNGLzRqdXpHbTZONmZEbGRpejhVcmVieEptOWsKZXVuRG5NK3c2M2JKbi91QmlRRHNjRk5hcXcw
-Sk9kWTJmV1IyUGlSSGdqeXRmOHNsR1hJd0tVeHRzcG9BM3hzdApROTFobSt4S2VSMUFjbE9GRm9n
-dTlzVDVLSUROZ0RKVndNRlY1cmdJanVDL2tTQmlEMnllT09xSnc4VERJdDFHCjJMYkVjakJEa1Q1
-ZUcxVWNyZDBoVTlDM3pmMVIzSytuTkFUOGN6Yz0KPUh2MlUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000574ed006312ba707--
