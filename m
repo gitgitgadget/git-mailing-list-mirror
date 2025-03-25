@@ -1,137 +1,123 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99E919AA56
-	for <git@vger.kernel.org>; Tue, 25 Mar 2025 18:35:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F122CBA50
+	for <git@vger.kernel.org>; Tue, 25 Mar 2025 19:34:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742927713; cv=none; b=hDsQr4jc7pJ/Z6EoUP809xl3hHzx3/W3oqrQVYCltSNkW7TQHD9/n3HCCr8PLzAeculU6doPB+BgsZ71nRvGfldEHmWAhGMy4F3Mb10JUcELiZr4Jb+L84PB0I9+fHDRkK1IvI9LHJEfq0VilR7UIkRiv7vXNiEbuNlF9+pm1vc=
+	t=1742931271; cv=none; b=UVXbEWs/UcjG1XcNIDdZNegsvJafHht4sbdUgINPXTT7j0AD7NEXvMBhY1lM2V/DoL9MV/CIidsGY0y43bTp3lC5Uw7AyxTn/rMVCYorgzDM+R7XKrPgFPn2+Lsn/ZtqTls19oqGvZOCBnszSU80e6sgYOQWF9dZt2AukE4cN3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742927713; c=relaxed/simple;
-	bh=7Lk3fE4/CDuhAqEGyecgSVgQ8OscmyhAzOcfcuzuUrY=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=ll+ZZQjyrdltXJQZ0XRth1zKV7yMRFOzLruMcNWo+b6a696UASP3qlfCv255bp3x2k7yNq1sybKmX7nWAGKKo4dgR8KePGLsDnWdi0HgJOMJak/1ms4IvapyqFfJFHI1shw7uDZ9Q+Q0d+TDKkC+nihORlgwugbuGJ4ftH93mLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NzLnIc4I; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742931271; c=relaxed/simple;
+	bh=AEAJJaNXFk2AFpoZrMHxW7tjve2jQ1D8cWhmohCpxyc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=avvHNMxQcOv1D048SYC85XbQVL/TN2uwMHY0ubB8x47jSEKok7/bBz4IMfiDLYAUixp1oE4EoJtcmXf2rw85qQ8qj1zgJJcVqGL4UBuBvn4bmpRU3hP7/MdYTj2mzsQBUns77FUNaxgqA5MV1+IUciC+LqTRmF9ywu65KVIdB8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Oj+4xbrv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pug6gv4D; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NzLnIc4I"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-227aaa82fafso66973415ad.2
-        for <git@vger.kernel.org>; Tue, 25 Mar 2025 11:35:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742927711; x=1743532511; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vmcl1oMLqk4fj5kjoQV4u2AFpfLXsfd80C4fFbAGQH4=;
-        b=NzLnIc4INwIMbuoZOEkw86h1oRQB4xMN+peYZ0MTMDZAT/o14r9y/WJDfPZZEDpI3a
-         EQb9yYXGcKeqNFKgrklvIbIYR54gQ9NzwKHrqk9xersPWFCgjTpRKXmhdbDncpGm/nmb
-         3RnD116Xz05nJpjGtkNY6UIvcn3qsZXWkudc9YWKhONBgva+e+ZNmNM36SWl2Q/KTaZF
-         YEdmZc5KHeZDWOo/EIGNTv8IDdd8hA3MNuqtX8E2ZDOYGe8IfvxxcePgufxyuNFtt1gd
-         /2+aNkz08Hk+43+4OAd9hV3VbuSsDtoid+A64ecdh0Voevg/arHOZOn8JAh8VH8c2Hwg
-         O6Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742927711; x=1743532511;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vmcl1oMLqk4fj5kjoQV4u2AFpfLXsfd80C4fFbAGQH4=;
-        b=bs5OvMpcU4kMmMUJz2URsB7hvI//575WREZv0CYQXPYZ6r/zdUn0PFZkoE/SwrQne3
-         eCcZ5bh5VfP/VE8KygAsExuKqxAWHswGSNx3dMD4EYzM9Ies3qTpX9yKOZu4do5Utq/n
-         kz5DpkREyvxMUDlRMZuCZxWcsT9jqjmouOGzcn+u/4mle6Bzx/75EHW/cGszqFnkfzsm
-         1upjo2GOLQVbImgh+H/yyJ4OM28F2bFcZUULneOwQndjNZFhlLpPRTmQzNGwkLSevAIq
-         +fnrnuJ5a2Fn/PIqhxfFijupi2/WrAwHsFuCjoxT21piY/79PkDtWBBiVReKpj3iWpxs
-         9xUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVYUEMFd6aXzEsSCMXGZEFrIxrDNg3d2BjE5aPo/UrF6s9Ce5wYFOxwQrHOzeMoSl/rHnw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYHUv90VULmvXdJH7QQkwW8m1hlGH6bq30Y1nKHU7mdRTGZK9v
-	Lj/qnJyawQeIWFjpkoXroELUl6AuAWZnehixvSZEb4rZKJrNSfFT
-X-Gm-Gg: ASbGncs/eFcTfxsq7l9nQ6EULqt6mbuK+1Mf1KqAS93rX8v/wQ5SZrPRJLZHgxdCzg2
-	1fLOmVvKMTd/u4WYT5RewQvsKtXTtVqG1JjiVTrwOumTIYBmtYF89gWdPB/PFsWzQ7ZVsvtIb7x
-	i5E5Pa8qs+7ExfY68fwBblSkI8sqSUSdu9hY2q3r9lZxR8ym9zAcYSdrTEQavbhijCzS8PPky91
-	GIQHHIqJ0mAOdc9AQTTqqD/3q7/QM7II64fvkxuVGD0mFoNcKOtXDcS/ZYS7mAqHJPKSrRVHv9M
-	YI4JsGg5DQ7Q/FTh+cN7nXo7W5OtfQ5MooiHFgXXuyQL0Cs3+DfP8lI3hU+ou8XnoV7D
-X-Google-Smtp-Source: AGHT+IEG/1m7oyGQybzKAxr0OAoA5yMTcvzqkEVgtY1GRFypSa9nDD3GcYk0GSJQUUaWwrsAc4xvIQ==
-X-Received: by 2002:a17:902:ce89:b0:224:6ee:ad with SMTP id d9443c01a7336-22780e1f4dbmr247860845ad.44.1742927710828;
-        Tue, 25 Mar 2025 11:35:10 -0700 (PDT)
-Received: from smtpclient.apple ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22780f45e1asm93637895ad.80.2025.03.25.11.35.09
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Mar 2025 11:35:10 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Oj+4xbrv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pug6gv4D"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id E3E2B13833DF;
+	Tue, 25 Mar 2025 15:34:27 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Tue, 25 Mar 2025 15:34:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1742931267; x=1743017667; bh=TEUeMvfKWz
+	vla7VO8ydQswkitJ5SwwV+zzB7r5PIxo0=; b=Oj+4xbrveBwufRtACAuXba3WwT
+	1hzdlQoQxTbORmeQMsq5qMp75ZVBXIhualppTRHZY517rQiz98C/AbIQlJrxMY5g
+	tB64856DiOD2mY0shnuZUM3YyqRoANDVVkpbn2cxJpASCgD/k6+P+pMxCtJGvauR
+	8mZFzJUuilv/SM1dQt7Td0AYnTH/qlmsCSCemTT4AbqEBFN1qi3o2O8/T4WGK3pz
+	Y9vwiUCkT8Y9tVEoyKHjgPcFLOnKxxg6t16YlsXXk+emxbfDFG4dp0y4q+QG8ylj
+	KV3kodQpF3kShEXFW90iS3l/fk4kyb2AYgj3hZe77niseGC/6O+F+MBl/zdQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1742931267; x=1743017667; bh=TEUeMvfKWzvla7VO8ydQswkitJ5SwwV+zzB
+	7r5PIxo0=; b=Pug6gv4Dc1VAzS60qDpdNTAv9ehGQy7G6A028QR0fUNN+s41gP2
+	Vk6mEnxL7mtRWbDt/KO4z+c30Da+YfaSN2x51baqXj0+m+J6cYpnWESMDn0jFLYP
+	zVong3xzCKZ9TrIadh4Sa6NySOS6VeC8avbPOQ9oFQZdDLVtTx1iG0DNkbbVx+Ue
+	agd9EMJvOb7spZ9WdDJvc2mn5YF70wJrhrtMzR9stnyLs6e9nsbInKHk46WQipji
+	PMaHQ7WDGW5z9mFXsBoXP1fGkMJehM7gNUfQuyUuIXqfLx0+M7HMVicVpQRtHIvQ
+	y+PFVZUBXvOZouJ6kgck1cpkyrMoDkrPpHQ==
+X-ME-Sender: <xms:QwXjZ6gHVorrfRg59Z2YQroKLV-wSo8w3Q1oWjoGZP7BSWUr1TX4pA>
+    <xme:QwXjZ7BOWDiKAwc6XL-IajYYZlxabPa835Fb67hSo_8ia7XPLga_pm9yaBTwfqbLM
+    6BWxD67diYDeJWRIg>
+X-ME-Received: <xmr:QwXjZyH563XeeXdqkR09uGqQLahaUBQ0F-3lK2kKwMC2h9dWEbJBD4StKWMnASgGjzsoY79B_J86NaDqm2mQ29ytSu4pUZ-J8AA0RYk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieefhedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhephfeftefggedugeeltdejveefffetgffg
+    teevvdeugeffheettdegvdeigeehheegnecuffhomhgrihhnpegtphhprhgvfhgvrhgvnh
+    gtvgdrtghomhdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
+    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihht
+    ghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhn
+    sehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:QwXjZzQlnMSFh-ZP8ljnuDWCF3KMmzBvwqkr9t_F60_WLU78w-9hWg>
+    <xmx:QwXjZ3xTHKCwKpXyX0l8eAFcOpHhg2vkXIeerpIgQ65QsyqII3xPEQ>
+    <xmx:QwXjZx6QR54fg9A7K_hycpMtAWdasbNhx_XIjZXX7xOowscj9xuYwA>
+    <xmx:QwXjZ0ziOAKEeD5az0BpGrGpnLaUWGNoE4GgZ_C17TPHVWyY8awgng>
+    <xmx:QwXjZ5vuz9uDhByoCBg8pORneh_EYOLZmhvxM4OoUTCAt2KEzvVFpfLi>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 25 Mar 2025 15:34:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] Avoid the comma operator
+In-Reply-To: <pull.1889.git.1742889711.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Tue, 25 Mar 2025 08:01:48
+	+0000")
+References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
+Date: Tue, 25 Mar 2025 12:34:25 -0700
+Message-ID: <xmqqh63gnbum.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.400.131.1.6\))
-Subject: Re: [GSoC PATCH v2] userdiff: add builtin driver for gitconfig syntax
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <d4c0c9a4-0402-4456-9fa0-3102b5bcc3dc@kdbg.org>
-Date: Tue, 25 Mar 2025 15:34:57 -0300
-Cc: Patrick Steinhardt <ps@pks.im>,
- "D . Ben Knoble" <ben.knoble@gmail.com>,
- git@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <FE085EEC-0BCC-43D9-9F17-1A7060DC4D6E@gmail.com>
-References: <20250324021101.7483-1-lucasseikioshiro@gmail.com>
- <d4c0c9a4-0402-4456-9fa0-3102b5bcc3dc@kdbg.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-Mailer: Apple Mail (2.3826.400.131.1.6)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> Can we please have a more recent reference? The difference of config.txt
-> here and config.adoc above is very surprising.
+> The comma operator
+> [https://en.cppreference.com/w/c/language/operator_other#Comma_operator] is
+> rarely used in C anymore, and typically indicates a typo. Just like in these
+> instances, where a semicolon was meant to be used, as there is no need to
+> discard the first statement's result here.
+>
+> Johannes Schindelin (2):
+>   remote-curl: avoid using the comma operator unnecessarily
+>   rebase: avoid using the comma operator unnecessarily
 
-Hmmmm... My idea was to reference the last change in the paragraphs
-of the documentation, but I'll change to the last change of this file.
+Well spotted.
 
-> The file format of .git/config files isn't specific to .git/config; it's
-> called "ini-file" and is already very old. Wouldn't it make sense to
-> generalize the format? It would be just a matter of choosing a different
-> name; the regular expressions would not have to change.
+These two looked somehow surprisingly bad.
 
-Indeed. This is was written having the gitconfig in mind, but perhaps I
-could use a different approach and make a little more flexible for other
-INI flavors and perhaps even TOML
+If I hadn't known better, I may have spent quite some time wondering
+if these are some ways to hide an unexpected behaviour behind the
+differences between a comma and a semicolon for nefarious purposes.
 
-> This could test two sub-sections in a row and ensure that the later one
-> is chosen.
+Will queue.  Thanks.
 
-Nice! I'll do that.
-
-> What happens if there is an *indented* header after the "RIGHT" one?
-> Should it be chosen or not? Can this happen in a valid file?
-
-I just tested here, it is valid file. I'll take indentation into acoount
-in v3.
-
-> The regular expression can assume that the syntax of the processed file
-> is correct. For example,
-> 
->   [!not a section!]
-> cannot be a section header and will not occur in a valid file. Or can it?
-
-Following the gitconfig syntax specification it can't be in a valid file,
-and this regex won't match it.
-
-> Therefore, it would be sufficient to just take everything after the '['
-> at the beginning of the line without further inspection.
-
-I can't see any harm in just dropping the section name matching and using
-a generic /\[.+\]/. It may be also useful for more generic INI files that
-you mentioned before.
-
-> Furthermore, a valid file can look like this:
-> 
-> [section] key = value
->  another_key = more values
-
-To be honest, I didn't know that it could was a valid file. I'll include
-that in a v3.
-
-Thanks for your extensive review!
-
-
-
-
+>
+>  builtin/rebase.c | 2 +-
+>  remote-curl.c    | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+>
+> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1889%2Fdscho%2Fcomma-operator-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1889/dscho/comma-operator-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1889
