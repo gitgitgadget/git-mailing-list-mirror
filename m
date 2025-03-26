@@ -1,113 +1,140 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED8815E5AE
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 10:20:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F871531C5
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 10:34:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742984444; cv=none; b=toY/NNG3IXVxI43Nes2CzuBFh4t4qFpDa3ZQfpZ6kFiy3QWNCGSiXjTG8L+igA8/b19RlNTdP8VuIwbFXhgVwuj4NdJl8R7cfR/cTexD+Kp+40aIqYGqjWCJOWkLPe9BcbCMP+RDxE6iC3qNnl31VfBKzPavSn15QitLqNGONn0=
+	t=1742985253; cv=none; b=PyOd1tT7aGnqFg4lJ5tPWpHQ4qPdpmur5hLyRdgW2RfWpGS3DJlqeBiQvah4cQXY4BZ5Eabn9hmd8T+WnJnGZmjjJgnD8ZYocw91msGD5Ase644fbO9g6AXvwTLrI/L5/RKItRCSDIaI8I4NS9OnGwFfwkQRZibXbVBZWVcpkpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742984444; c=relaxed/simple;
-	bh=T5+Mq0mW3ISDLVt7Rp8lSQrRtFm5EHz8j4Cw4s/CKmM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=piDg+1ogD3ehxDnRRBc+rz0CP8iumN45krJd4x9vM9PwgFvFGlMLecZ1bbf3hC2kfx5RihYqsBBQpmIuc7ht8eE6bK1TzRjtzyGBkiFhr/7u6wtd0BAZLFoDlheMF8FzOVgX11xPjyTWv+d990et7BSK/ETk1M5KC47aW/ytKXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UdyG9nuG; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742985253; c=relaxed/simple;
+	bh=jltsxyQ4JV0DnRPrmIHyJ2WzfAp6KiN6qJjqq32fdZY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JPQbs+8X2R2qHHMZVaFtPOrTrI8+c0oF2r49m66ApSu2kW9QPc8FTA+NcNtzLSUyiIw8Py/h6gKxC74j+l2mYajJPc/vuF/EuUu1txQke/cA0aTHrSdJZDxPURxoWzKg8/OIee2Py1LROjugcMPDFgxnLwjWHbXy8KH/33lMu2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=s4dN2nSb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F8e5ZIuW; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UdyG9nuG"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-39ac56756f6so2468040f8f.2
-        for <git@vger.kernel.org>; Wed, 26 Mar 2025 03:20:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742984441; x=1743589241; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=aUezLDVxZsIP9Ylio12IDr44vNch8U9VUhgP0LSLXDo=;
-        b=UdyG9nuGBUkpml2v3WfyFoJg6p9DRunhv5tfaUbhxe9lTRhysrzoWPw2uYNniAQ2d4
-         mOKOCeYXAZ1/qfKcgaZwQ2YDnKkSCzJpr3ci+W95iarLOZnBzJYbl7yn+tt/CfGtM2Bk
-         Z/Z7v/1fQm7gypqG9bXaoTf/obF/7+YwT2RZIYrh+HnHFA5DJfzE2sok4prbJtmVt5oU
-         g/69szB+nSlmiVYAY16NKNxZJldOOnxxUpHwbwBYfUv9M9JprSrOMk4YKhdebiU911n5
-         IY8YenB/XQ5EfKmFzKrhNMf/68PbDQm/p7hiRIt971edY8p3eWzTxAAoOh2loKOMVSdr
-         pohA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742984441; x=1743589241;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aUezLDVxZsIP9Ylio12IDr44vNch8U9VUhgP0LSLXDo=;
-        b=J+ajjxO+LeTLcujSxwMFc2qM+Cz1tPOWWKFrfeLq7giLA+12xD1/urIeACyhmA/7sE
-         N8H6bj3wpKZyjR9BvO0ZHYidb4j83tUl63B8rnpbpc7q+YLVxyQ8TKYTuAo4rm8loolS
-         +QSBMWd4H3M3fcZISvoWOQ7BSWjfT735b+pXhiHg7kmRPKveOMSneESQDWAls3xBKHn2
-         +LiD733pKhXkPeqegzTutMQwQ4iOEMFG7mDqZghXkaDYhRnrRnM+H0x3eF3wWnP0/Inr
-         NxWFCVgceX8xoz4ky0cmUrD9x4oK5Fl1nG/3rdBhj/mjuwA7mEOuMH7U2OKh7TByTjin
-         gNJg==
-X-Forwarded-Encrypted: i=1; AJvYcCX85ZdHfjTuLevj6AE+eAzYCza1JjW3yZiexeQgb4y+ev/hp7g+f384EzfxLTPFyUxO/e4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzPq4ODtBBS7jznNVFH3tTDplWh/faWcNFXXMU1T87YqvkhXxsv
-	H1+vpGTqJ0q5qRnuWK14D44i/aCBMo0CCXGoJCCyLBCpY/PQ6fOq
-X-Gm-Gg: ASbGncuV0ynhzz3uRV7y2+siOxHqYd/xy6S2AVYS6dGG6FEX1xNHmNZj0nPrg2TvFwd
-	+oHeF5W+6vFjFu8ETdg2pBcwuA/Cm/xzKm/p8jR+Su9ME4eZpa5FNeeVJzrjCmHM3EjsO0R43os
-	xbg/Dj5MCkrrqpCT/JRYqvhlLVZ60qSCQrTtXthAVMLJDThDCHCEwTS140Jabdihpm7WznGFU09
-	Mrvuk7NF3TkNlS8i8dfMcSgFvpzNr3gIpiqFiFf+uvbBI0fXwr3THqg7CzOZFIbDwcB9YlWGkEg
-	UaJ5rDI78LWS7Mdlhz3rbYcme8304RDNL34Ua2a36emL7ti8OmGgPhVC/fsoasn5KLhQFPDVidU
-	bTGZaF2vkQnzJ8saM7HNH
-X-Google-Smtp-Source: AGHT+IGSVuVPNHK0N6eI4TuHRK5IA7fTb9Icg8Iph25Fy3v1yrUZSEB85plDtFMAMC365iWp0SCfXw==
-X-Received: by 2002:a05:6000:4108:b0:38c:3f12:64be with SMTP id ffacd0b85a97d-3997f9366c7mr18817835f8f.35.1742984441077;
-        Wed, 26 Mar 2025 03:20:41 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d4fdb0669sm176549005e9.34.2025.03.26.03.20.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Mar 2025 03:20:40 -0700 (PDT)
-Message-ID: <3b09226a-8281-4560-aa23-74aeaa3ff41a@gmail.com>
-Date: Wed, 26 Mar 2025 10:20:39 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="s4dN2nSb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F8e5ZIuW"
+Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
+	by mailfout.stl.internal (Postfix) with ESMTP id 708C01140120;
+	Wed, 26 Mar 2025 06:34:10 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-13.internal (MEProxy); Wed, 26 Mar 2025 06:34:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1742985250; x=1743071650; bh=nUxJqhWspg
+	TzYSfR2oS0k2TfZDi4t+m6NgdfPVSoiwQ=; b=s4dN2nSbn+ywb+kXJme1UUfWrL
+	VIj6ZE+MtyV0tYneFTlkKspE0DV8NSKJXYIh3hHmlPMJFJ0aGWCVcOpI8S5gWZCm
+	N7zqRMR9qpgRNkRK0vO7ZHNy92g2y7s1OzfnFsg5cdO3UrFS0tyNJOBqMwbte5yJ
+	xsrasCpiDYdwCMGiWhgcki3dmlSc5Q71Wr6S0Thw5J1jPHCFAPRbCTUlhIfWzDvh
+	H5G23vQ+FgUXsjzLvNnysu0qef7RFD938wGZRNrJTKXkvoJ+TO6E8ruITZ6rFqGR
+	TGmQ/TYUIrXqcl9rD15k5/mA04tZx1EAOfab8nNLv0yJ4zhh6I2ZTzenctUQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1742985250; x=1743071650; bh=nUxJqhWspgTzYSfR2oS0k2TfZDi4t+m6Ngd
+	fPVSoiwQ=; b=F8e5ZIuWgyU73xY69fa5Sj4dGS6FLvXEsjj5wsVIuJqQcf7S6qt
+	/Ifghn3dzSgkZhVJ5K56QVqZyhcCvn36OCZxKjXCczJxRGaBFb+3wXqaVIzIllqS
+	kVM9Kn4QgfJIkEHgI7gz9vtFV+N3CJtb5oO+smEdJdWq8SNWi7esVGLBwp8fcZ3J
+	Osuxwz1nhtyxNIFb1FM0hGzd9QT3sH8tNoNOxce8SAaXUBLkilzwuA7i4n7/IZOH
+	Hsi1aHuB5WmTqp47z9q75qhmK1CyCUrt8cRDqCm6fUpDX0JDLchdsH51pkNpcXsU
+	h6ANxhZPe62yleuzXghG1xfb0oYFyTFE41w==
+X-ME-Sender: <xms:IdjjZ_EtvZmYfB6yyWUXyi4Gj3iXgvilDCX7SiGJ661b4154iwZxnQ>
+    <xme:IdjjZ8Ux9QzjuNIUn4SPF4atgDu1nKx6IbrYyFgky_MdYtQEAfzF-pHksk9-3kv0B
+    UeJ0L-yOK6DBYOTRQ>
+X-ME-Received: <xmr:IdjjZxKHGX5SkQduRu0YbItx8E23Pnw8YVU-AL75gOroL_JhDrQ11jrVlaxJybPCg4gnYebsBrj5OQWK1wN7Mv7HGyksQM9YtYhGzpk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieehfedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggu
+    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepphhhihhlihhpohgrkhhlvgihsehivggvrdgvmhgrihhl
+    pdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrdduke
+    eksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgt
+    phhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:IdjjZ9EatAUcI8UsYEV1nponj1vY3VkTvPY8nvXl2nkBUZdzKx9Tqg>
+    <xmx:IdjjZ1X1tnC1QpEjRu7NOnJ_LMzLyWXf7gepMEiiEakoR0kuGcNnDQ>
+    <xmx:IdjjZ4Nvk7_9aJcIlzPaEpZJQl3-GcLBS0IHU-nnaWQowU1ptMkySg>
+    <xmx:IdjjZ02-V-EByBt2OK_O9OKxbyBZCaa9y7dLjDCLdWeM4wtFu6qbGg>
+    <xmx:ItjjZ9SRuX7G6wWijM9A-eOkoQn7vqFibc_pPmIUfuLMlyWzKTPd_pNx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 26 Mar 2025 06:34:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Philip Oakley <philipoakley@iee.email>,  Patrick
+ Steinhardt <ps@pks.im>,  Karthik Nayak <karthik.188@gmail.com>,  Jeff King
+ <peff@peff.net>,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 07/10] wildmatch: explicitly mark intentional use of
+ the comma operator
+In-Reply-To: <a7506e7b-f86f-426c-b816-540be282518b@gmail.com> (Phillip Wood's
+	message of "Wed, 26 Mar 2025 10:14:32 +0000")
+References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
+	<pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
+	<9a6de12b8076266fb0c88f6b658c20d37409ce13.1742945534.git.gitgitgadget@gmail.com>
+	<a7506e7b-f86f-426c-b816-540be282518b@gmail.com>
+Date: Wed, 26 Mar 2025 03:34:08 -0700
+Message-ID: <xmqqtt7ghyhr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: error: could not parse 'Drop' when rebasing
-To: Jarno Suni <jarno.ilari.suni@gmail.com>, git@vger.kernel.org
-References: <CAOqj8L0hknJ2aYGSmXdUvRgzHZRWBTMgSvywGpc=TUZL-Dqnmw@mail.gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAOqj8L0hknJ2aYGSmXdUvRgzHZRWBTMgSvywGpc=TUZL-Dqnmw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Jarno
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-On 26/03/2025 07:17, Jarno Suni wrote:
-> git version 2.43.0
-> 
-> $ git rebase --edit-todo
-> error: could not parse 'Drop'
-> error: invalid line 1: r Drop option --figure-soname-bumps
+> I think that would be clearer, something like the diff below
+>
+> Best Wishes
+>
+> Phillip
+>
+> ---- >8 ----
+>
+> diff --git a/wildmatch.c b/wildmatch.c
+> index 8ea29141bd7..7230544c356 100644
+> --- a/wildmatch.c
+> +++ b/wildmatch.c
+> @@ -223,7 +223,7 @@
+>  						p_ch = '[';
+>  						if (t_ch == p_ch)
+>  							matched = 1;
+> -						continue;
+> +						goto next;
+>  					}
+>  					if (CC_EQ(s,i, "alnum")) {
+>  						if (ISALNUM(t_ch))
+> @@ -268,7 +268,10 @@
+>  					p_ch = 0; /* This makes "prev_ch" get set to 0. */
+>  				} else if (t_ch == p_ch)
+>  					matched = 1;
+> -			} while (prev_ch = p_ch, (p_ch = *++p) != ']');
+> +			next:
+> +				prev_ch = p_ch;
+> +				p_ch = *++p;
+> +			} while (p_ch != ']');
+>  			if (matched == negated ||
+>  			    ((flags & WM_PATHNAME) && t_ch == '/'))
+>  				return WM_NOMATCH;
+>
 
-It appears that the object id for the commit got deleted when the 
-command was changed from "pick" to "reword" and so git does not know 
-which commit this line is referring to. The commit subject is there for 
-the benefit of the user not for git - after all many commits could share 
-the same subject.
+Ah, I missed that "continue"; with the "next:" label, it looks quite
+clear what is going on.
 
-Best Wishes
-
-Phillip
-  > error: could not parse 'Drop'
-> error: invalid line 1: p Drop option --figure-soname-bumps
-> You can fix this with 'git rebase --edit-todo' and then run 'git
-> rebase --continue'.
-> Or you can abort the rebase with 'git rebase --abort'.
-> 
-> "Drop option --figure-soname-bumps" is the commit message.
-> Git doesn't seem to accept any command for the commit. First I tried command d.
-> 
-> Workaround:
-> I did `git rebase --abort`. Started new rebase, used r command for the
-> commit to rename it to not have "Drop" as first word. After that I can
-> rebase again and use d command for the commit.
-> 
-
+I like it.  Thanks.
