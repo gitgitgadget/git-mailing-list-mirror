@@ -1,198 +1,145 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C5B174EF0
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 07:49:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661D8174EF0
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 07:50:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742975400; cv=none; b=i3UseoTo3kOAUOZtfVSrtQJF0TYF7Uz6sHy3tUKV89iKynnrCX4nxOJxSe886YJ5S89ELsZsbDIgwaB5NEPDKV6BIlj4FlJ+lsdVG6OoTKMZtEgPAKJ7Eukv2VkKAzgMDZZWHbKXZRswyK1nnmdmoPbD1KYJHgU6iwbG5sRQe7I=
+	t=1742975431; cv=none; b=k04zo7mkfiIxE0d+XVp12VaeVaRU812G6ktBrTgGMA/ZsbNUNELTThz/ptz6rY/sbEvwbvXM9+akW6KXoHbUR+GHuOjHO/wcQUw+9r99NFXc1g4hsNS3rreuhiyseh9uyG+P0AjcPpiHVWVTzujy5UQQwctQTRdsf/CEVdmJA8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742975400; c=relaxed/simple;
-	bh=hT/w2owPGqW/WlycrbUSyGNRIXk1XQp9Y0N7Q/watr0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=I5HE2xQrRCPGomJBmr31mdD9meGer5lRwtQaNkm6Yj02KiUFdTzkePSlgpsnCCRlrJOdo1robCGLFP+QSqnatr3zAHwcKC/bg6P+YzIvLLXv4J+CmjgLgY10qS3E2sYxDJXci5xiihzs7y0cv0/XqssJClyoVQgb3kuNnxkPtFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mK9yrMYE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IUeK6+Fx; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742975431; c=relaxed/simple;
+	bh=9fUXSlnivb8LTfn8bOcas0uZWhn+4j8wFiHySzSwrUw=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=XvA3btldnULt4+Gszm7Zkd9uKtn+IavnvfeUyIL6q//SIQ4eGA/tGGUBWjvon1YPc2uYzq/yoEwbZ0Y5v8SSNQRN9wPvRbvY8Kj5PIH5FG15iWF3iN/Cu0b3Wvf+eL9dDTu/ZK5d5NXoEnqIQ08KyovEZ7s0GZEZJ6g5H3VIkEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=bSqgIDB8; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mK9yrMYE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IUeK6+Fx"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9066F25401D8;
-	Wed, 26 Mar 2025 03:49:54 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 26 Mar 2025 03:49:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1742975394; x=1743061794; bh=fFotmK+TKX
-	Dwp4oQdATDiQpDpxovza4OhUxBhaD3ZTY=; b=mK9yrMYEqru6zT9rMThYM6Ql6g
-	tD0psxNY9GR0uSmHptmlAHgyDKQE+MbsOZbYiU8IXpTnmP1F/nzXxY01RhHM2/uO
-	yOFmqPeLPQ8R2qcnOwMGxVNnu30CRWAOCwukiWmuxtel9C/xE3HQc0EhYtB6BEvR
-	SwxhvTJkKZQnKi97Nh2SQ0QQPOxUQ5xby7Y4bEEAEC4eiLkhKCUoE1eI7YLTirnl
-	HpyUXeCeSDGtWFXde1h2eFQxtNME/OQU19wZ8mbTXI0FmgNzvvBoRH+hQpOLMt6O
-	KplWYly/WdNHpeJz2ME6u7Idsa2oZw3lNR4nz6/L+Hxs5nw/88l9VS8DpEng==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1742975394; x=1743061794; bh=fFotmK+TKXDwp4oQdATDiQpDpxovza4OhUx
-	BhaD3ZTY=; b=IUeK6+FxerDZqrGXO4YO2xUlZUdaxMND/Q6eChnfmde6bgHFplt
-	zchBDS+J6hOpGaXVDtIeFoKlHYKWId2qUETFqirbYkkVqjjhEZn5N3cE0P4E7Ewv
-	QbmFwGikJW5uSD33PE82BRXkbRpzI7tRN0N+gO9UPHpFdoapSBxKQ9OSMRuKE7Y0
-	seh4TF0OE2R3LPwiHxIfLLbHkPaTpDOHn53Pt4yKZ5WQ7tnOrTCclZIxQyUgeq4M
-	sxerpI0lmo+Ya7ww0pKxbIvgLuTXiZ+Bz6K0QwYnROjRJ4S6zhAMum5EY3EQrmLZ
-	4oEjlsiSJjKgA/a0PVb4PC0xMGr7fpNl0Aw==
-X-ME-Sender: <xms:orHjZxSC_7TftHW5urW8MtfvWcYlaHNLQnkxYnJJ3afD8OjKp5W8CA>
-    <xme:orHjZ6x2DioedLa3ED1hL794t9LDeDtf4r4efMdTMknaqTIIaGPNWfFgCgZ_T7elo
-    4WAqpAsfyEX2fzWvw>
-X-ME-Received: <xmr:orHjZ21nt2zt-JVHWWtx80egug754fJw05UCvF39xtqmwf4x-CBRvKfvpUdGChI6tzyhmAeSUO35HNyrYdmWucf6YrB-04ubPzJobrM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieegleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepkefhgedtfeetkeejleffudevjefgteet
-    ffetvefhvdeiveffjeehjeffhfehtefgnecuffhomhgrihhnpeguihhffhdquggvlhhtrg
-    drtgifpdifihhlughmrghttghhrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
-    gtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhg
-    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepphhhihhlihhpohgrkhhlvgihsehivggvrdgvmhgr
-    ihhlpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudek
-    keesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtg
-    hpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:orHjZ5BjYjR4Uu1VtWria4Q_1F6FbzDuW0RWpx--sPWJhTUOa0X0sw>
-    <xmx:orHjZ6iIW5ijE_7JkV008JObHfN2s3INT8yRlEAUrqJXLn5fKSmVjw>
-    <xmx:orHjZ9q7hkc0thk4q4nW5qFuPBkJx9cJlBsUkmyyOKOpQUJoDy3sCw>
-    <xmx:orHjZ1hpuSznuxmqtTOY-kf9ws8zo8PNVPtcHoqYkN1r7kDthIC5Dg>
-    <xmx:orHjZ1OIF0zJEO1BwuvH1ZeYq-WzL4gOmDo0-cMhBN9PW-7v9evWF0CB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Mar 2025 03:49:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Philip Oakley <philipoakley@iee.email>,  Patrick
- Steinhardt <ps@pks.im>,  Phillip Wood <phillip.wood123@gmail.com>,
-  Karthik Nayak <karthik.188@gmail.com>,  Jeff King <peff@peff.net>,
-  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 07/10] wildmatch: explicitly mark intentional use of
- the comma operator
-In-Reply-To: <9a6de12b8076266fb0c88f6b658c20d37409ce13.1742945534.git.gitgitgadget@gmail.com>
-	(Johannes Schindelin via GitGitGadget's message of "Tue, 25 Mar 2025
-	23:32:11 +0000")
-References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
-	<pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
-	<9a6de12b8076266fb0c88f6b658c20d37409ce13.1742945534.git.gitgitgadget@gmail.com>
-Date: Wed, 26 Mar 2025 00:49:52 -0700
-Message-ID: <xmqq4izgjknz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="bSqgIDB8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1742975425; x=1743580225;
+	i=johannes.schindelin@gmx.de;
+	bh=yd4aMaV7JbEnznUfo20Lsr3puirJ7qtdMHO5BfAvL5I=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=bSqgIDB8GO/wEasE7dx8EcUncJ4npTQtWCgF+vpI36Em69HNgCI6Fn9270JHoEBX
+	 cf9W+TJPvzo5Mq5RtkGeUVd4NHD5tktYwwZY/rW4BDhzQ5F8ddNrypQNpRE3i0YMy
+	 cLpyDs9/AnJZMgp1QSMEYZbK/4TelCS1JtrIQlrYnegKr8DbSWCIPQmc4VZxlFTQ8
+	 5QLKioxlEUV4VTGX4B78GOuc3/KKAY7fhornLS54JeTfg3s0qvkIN1IV89LBC9ncO
+	 WmFY0dXp51Q+J7YjYZeIN01wLMdePNy9ZtusYrigmtH/EKPWO2imM+wirVo6C4/8Q
+	 h3KtcKnJpZbecgjk5g==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mirna-1tTUtY3w7I-00bq0p; Wed, 26
+ Mar 2025 08:50:25 +0100
+Date: Wed, 26 Mar 2025 08:50:24 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>, 
+    Phillip Wood <phillip.wood123@gmail.com>, 
+    Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 09/10] clang: warn when the comma operator is used
+In-Reply-To: <Z-OWp0NkjrMVQieH@pks.im>
+Message-ID: <9cd9a690-1258-d96d-33c9-53a3b0f346a1@gmx.de>
+References: <pull.1889.git.1742889711.gitgitgadget@gmail.com> <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com> <91f86c3aba9d19d5df11661675fd6c2cc049e191.1742945534.git.gitgitgadget@gmail.com> <Z-OWp0NkjrMVQieH@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Xx1tzzZqRs4DxogcnJGfezJAn86BnYLgKcv8vJSoZgpee1dG89E
+ Icb8Hwgwo2ztWVkbBpvshyM4DmjT/3/GVcDgZBBiXSJSaVCex7g1Xrwhe9I59/yLsmW5t9C
+ MkqARdC2V7Ib0GRMQS73ZdEeuZQ6Hem4dgpVQrQM3zTEQ08jEDOpSx24dHP3a8VIv2FRbI3
+ 6rgqlfdHVa/miAmJbNwqQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:rZWTX9CpGII=;SoLBxC0nAm9NvV7wLnUxfsyhtd+
+ G3eBKPsgwcDbmW9Ma8GHjLmWawgBv/yqkZlhE+kAqE/IOuhyyi1MnFc4mtJB+oDj9AawHnF4E
+ 1Rs0L2lS0HDcWLoHtmxCWohHY5phjDrHwo4uDqva7ZnEahzC5ztEXBuvjoNC8EEUXTQ7uBROv
+ IavS2L9NcA5MsLuZD9eEF+HedH6l6tvnriKQ8m80wBXkOVCGsEfzROeowYy1EwD4nu8OrMIbR
+ Jnuy8cysH3+wKHHCUsRcp3d1E9cTx1cxAv0iWmgp5JAP997D+lOQLjKX/hietDotH1zut1sa9
+ m31EjHTAJrloCn0Mj8RscxkxZHA593YsFDcm3Gk4TbMqivGBRldbgmeASsu98LAHOrTi89/w7
+ NTfK50dZz4r3muyXgipWNHpL3IsLwysWZZSruY+sLs9/a05PvxGbOPKSGyvPTdDjdglDVLH4q
+ mju8uvHPXFNRtjPGojAlUyd6mDnOGnkm3a7zGXGKA4Y1FBgSLM6E5mO8IsSwQgZaKgZ8FsUom
+ ugav6T6TJX+05G/12fdEXT/PVGyoNbTcGYE641jybJVNJgbMiqGhJ+yxf3x3Ex1/wtjZCAxzG
+ PlQuLrNbXs7hOEnuovQgHCBFG9qXFDg378zjM+FrAgB804KYDhK+hMqUc3OQKvKf9NKP+43z+
+ O69lEHXaiWKPkQOxOpCBAn4y8p97oxOIB1kVUiHDCu5tmisy5gXSOdtqJWe1VkRoqypUnzYv2
+ YR8TS9iMxjnj/E76X215jcxQ5B0VKm56HO01aKC/nRSBv/9IZO1dLugiZ1yrLt0P4ueF2DsFF
+ Yr3mQOEiJIAVJWa2UYbzjEujT3mpuHGxUBfuMStO2rox4f5Uc5E6vnMhsbYC0RmKL+H2vjIHi
+ mvTYSsxXYchM2vRF+8bLma1w6XuUdXgmn54FkwsJTcb/9mmgtJHxDYcpimTFExJGG3K+XzOUN
+ K+ZYjbT+4a7htH3Jz72h31Eud9MxxQGyqQNVpGw1m79jxk6D+Tz88ZUkXj18cx5hiu1HSabav
+ fsSq/6JqdVv/RtKE9prCwKAY8jyZqv9bo4Mub8Bo9oE4+34cXpfZnkidUg2Nn7KZuMYLql0v3
+ Yiu3zQNVYqpcz4hrfv+7w6Z01U8bZyPwAGXngElzCyS5DtTv04ovw3qPr5No6met+G1QVnHT3
+ IozMyJl3yTZJMzHYowxnTVRH4zsFlIOMpeJpsnpDpksVvJ6sTx0LbIeRlas8ZJRQmJsbqtjpQ
+ 4tbxfGmDes5Hx5//E0BOgv/VP4VkTOKvKEwqJB6I4N/Vnq6mvPN+ZgoFczAHWlgly91BO2XJL
+ DmXcG0kAg63rhP0nnVyBv/3PcimEwP16+SrR8x/qVUNx1Igw2eKjIAGNwltIEy0HkR6qIomrs
+ CKnxuwJYaXh+8PEkD5j2cRzrTrQwMp2wlLyy+IsqWn788EJ+PpxDtdbItiC4DPynUgFnjUmtj
+ SeQ9UikFlCmkh/1/hbPeUVcguVPJAgvTTJKQm+AeQJdHNqO3T
+Content-Transfer-Encoding: quoted-printable
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Hi Patrick,
 
-> diff --git a/wildmatch.c b/wildmatch.c
-> index 8ea29141bd7..ce8108a6d57 100644
-> --- a/wildmatch.c
-> +++ b/wildmatch.c
-> @@ -268,7 +268,7 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
->  					p_ch = 0; /* This makes "prev_ch" get set to 0. */
->  				} else if (t_ch == p_ch)
->  					matched = 1;
-> -			} while (prev_ch = p_ch, (p_ch = *++p) != ']');
-> +			} while ((void)(prev_ch = p_ch), (p_ch = *++p) != ']');
->  			if (matched == negated ||
->  			    ((flags & WM_PATHNAME) && t_ch == '/'))
->  				return WM_NOMATCH;
+On Wed, 26 Mar 2025, Patrick Steinhardt wrote:
 
-Hmph, I personally do not find the (void) convention any easier to
-read and understand than the original, and more importantly, it does
-not look like a good signal to say that the author knows what they
-are doing.
+> On Tue, Mar 25, 2025 at 11:32:13PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > When compiling Git using `clang`, the `-Wcomma` option can be used to
+> > warn about code using the comma operator (because it is typically
+> > unintentional and wants to use the semicolon instead).
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  config.mak.dev | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/config.mak.dev b/config.mak.dev
+> > index 0fd8cc4d355..31423638169 100644
+> > --- a/config.mak.dev
+> > +++ b/config.mak.dev
+> > @@ -40,6 +40,10 @@ DEVELOPER_CFLAGS +=3D -Wvla
+> >  DEVELOPER_CFLAGS +=3D -Wwrite-strings
+> >  DEVELOPER_CFLAGS +=3D -fno-common
+> >
+> > +ifneq ($(filter clang9,$(COMPILER_FEATURES)),)
+> > +DEVELOPER_CFLAGS +=3D -Wcomma
+> > +endif
+> > +
+> >  ifneq ($(filter clang4,$(COMPILER_FEATURES)),)
+> >  DEVELOPER_CFLAGS +=3D -Wtautological-constant-out-of-range-compare
+> >  endif
+>
+> Let's squash the below diff into this commit. The loop already makes
+> sure that the compiler supports the flag, so there is no need to special
+> case Clang.
 
-For this particular loop, it probably makes a lot more sense to do a
-stupid and more obvious rewrite.  And the same thing can be said for
-the previous step.
+Okay, will do.
 
-Perhaps like so?
+For my curiosity...
 
+> diff --git a/meson.build b/meson.build
+> index dd231b669b6..a7658d62ea0 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -717,6 +717,7 @@ libgit_dependencies =3D [ ]
+>  # Makefile.
+>  if get_option('warning_level') in ['2','3', 'everything'] and compiler.=
+get_argument_syntax() =3D=3D 'gcc'
 
- diff-delta.c | 37 ++++++++++++++++++++++++-------------
- wildmatch.c  |  4 +++-
- 2 files changed, 27 insertions(+), 14 deletions(-)
+This `get_argument_syntax() =3D=3D 'gcc'` condition catches `clang`? What
+other compilers that aren't GCC does it catch?
 
-diff --git c/diff-delta.c w/diff-delta.c
-index a4faf73829..a999b875d4 100644
---- c/diff-delta.c
-+++ w/diff-delta.c
-@@ -438,19 +438,30 @@ create_delta(const struct delta_index *index,
- 			op = out + outpos++;
- 			i = 0x80;
- 
--			if (moff & 0x000000ff)
--				out[outpos++] = moff >> 0,  i |= 0x01;
--			if (moff & 0x0000ff00)
--				out[outpos++] = moff >> 8,  i |= 0x02;
--			if (moff & 0x00ff0000)
--				out[outpos++] = moff >> 16, i |= 0x04;
--			if (moff & 0xff000000)
--				out[outpos++] = moff >> 24, i |= 0x08;
--
--			if (msize & 0x00ff)
--				out[outpos++] = msize >> 0, i |= 0x10;
--			if (msize & 0xff00)
--				out[outpos++] = msize >> 8, i |= 0x20;
-+			if (moff & 0x000000ff) {
-+				out[outpos++] = moff >> 0;
-+				i |= 0x01;
-+			}
-+			if (moff & 0x0000ff00) {
-+				out[outpos++] = moff >> 8;
-+				i |= 0x02;
-+			}
-+			if (moff & 0x00ff0000) {
-+				out[outpos++] = moff >> 16;
-+				i |= 0x04;
-+			}
-+			if (moff & 0xff000000) {
-+				out[outpos++] = moff >> 24;
-+				i |= 0x08;
-+			}
-+			if (msize & 0x00ff) {
-+				out[outpos++] = msize >> 0;
-+				i |= 0x10;
-+			}
-+			if (msize & 0xff00) {
-+				out[outpos++] = msize >> 8;
-+				i |= 0x20;
-+			}
- 
- 			*op = i;
- 
-diff --git c/wildmatch.c w/wildmatch.c
-index 8ea29141bd..29f4b4df75 100644
---- c/wildmatch.c
-+++ w/wildmatch.c
-@@ -268,7 +268,9 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
- 					p_ch = 0; /* This makes "prev_ch" get set to 0. */
- 				} else if (t_ch == p_ch)
- 					matched = 1;
--			} while (prev_ch = p_ch, (p_ch = *++p) != ']');
-+
-+				prev_ch = p_ch;
-+			} while ((p_ch = *++p) != ']');
- 			if (matched == negated ||
- 			    ((flags & WM_PATHNAME) && t_ch == '/'))
- 				return WM_NOMATCH;
+Ciao,
+Johannes
 
-
+>    foreach cflag : [
+> +    '-Wcomma',
+>      '-Wdeclaration-after-statement',
+>      '-Wformat-security',
+>      '-Wold-style-definition',
+>
