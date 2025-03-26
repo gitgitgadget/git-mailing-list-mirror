@@ -1,63 +1,67 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572E421579F
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 17:26:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35142192F5
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 17:26:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743010017; cv=none; b=a83iN+zBi1V8EBBVnnJgPGtz5nwGzlrdFFquXd/42uLmG0qPlsrt9RhUyEt647l3vyA+jcHxa1+i0QfXGsvUNCH6ts9Hbahw/oQS1ocUiT7ZW9/FAFPOjK/hiULi4LexV6M1sunG/pa4vZz07we2OH94yvajIzn+Jk3ZKN4XFoM=
+	t=1743010018; cv=none; b=NuOGnVJlYHH68iZqhDrXuw64rKc381UcU2DJ2pklWkJkSsic9yj1biExvqD+No1Lb7/S/tEB/9Tj9adYmKjS/xOuS2X82Mmlj8U3NnlE7uDEHzVlw4WB1Gphoiu9rRmXfepHuPJEkW+QmjAmIWVtgbxnTuTrMCBNYlRNB86dbC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743010017; c=relaxed/simple;
-	bh=jNw0i1W/JC4q//EoVbtBXGRl6/IzthbX02ar+x8vJlA=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=KCVJfh7lQNNJwJ6hlassYPgNfIvyBAl9oTNIPm6AoZGYhLpH+NqejXqGs9NRVNb+Y7CbJpdNdLRgoGmFuiPWpn4K+GZLk9rTGrCiT/B7rGtK0wQeYW4tM0hPqudRdSvsC37srA0gXDRMvMN6Um2e0vG7P9rY4oR4LtrqmK71Ehg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FSlI+jJE; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1743010018; c=relaxed/simple;
+	bh=OvKKijfWzBE0MCZ0wCJ+0a5UjytAb+xr5480U1Jo4Z4=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=o3b9OeYuSuV7Ml5rhc3Pb0pPcplUk+yjWfZ6b030pFYzBoBxwX9ClwdHQtVlZqDjzoXecvDu9mwG00gNg0/jhZzdLVh5ecddbhDFJ/LpvZjOzXSn9SRCv8EJHLcxlLtcRgVaRHQdWkzLOyX82VsDGY2jG9OBfzgi806yyLmJ32U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D3Mr5Li5; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FSlI+jJE"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-39143200ddaso16806f8f.1
-        for <git@vger.kernel.org>; Wed, 26 Mar 2025 10:26:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D3Mr5Li5"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4393dc02b78so815155e9.3
+        for <git@vger.kernel.org>; Wed, 26 Mar 2025 10:26:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743010013; x=1743614813; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1743010014; x=1743614814; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=QU5YE+GtA8J8rfqHdA7A97AjilxQaf2sBehzoQSpwLk=;
-        b=FSlI+jJEDFbRjic3hU012ePYgesP+5FC3RgM78lCpXFrPoGEEnStG0oepXQy0olxiM
-         8vPQ2iOTUyfjFs2nFqQ434LH4gWfM5Z/52xRdFLBv0yFBtM/1L4JDgDQLAutUGGp6Pi2
-         gVaJCckfKfpKvzRXxcF4lxH+9Csem+FY1Bq47HnHPLEe0XGSURVtDOhQkVNYY4g3dsP6
-         3/6U+ZjQZv6o2KS5nBgg6KaF1Oj760LGX2KSPtKb1Rib0mq+/N5A88XlUqnSUiqxGw3t
-         Suh1jo4HFE5Ssqsd+Pni350oS1pbxvG9OR+nluCsP/ExK53Auw/jLQ7qG7P8J8i+gtwa
-         dV5g==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kU7b5SKJQ5hO9/SwmZW+UXVK3CuCp52iNpMoClwIP7Q=;
+        b=D3Mr5Li5NAfWP2ooJs8wWdZbfVa98E7yxk8jtcvsjOKkYwXoRVPJK+y+OW1CiENern
+         PkahbwuVyOEEm5cd+nzjgRrCc6EbSyumQ0saj0kQ2A3KPqfOmjAHH+E8U/Es3dNnRD5F
+         UJ4p+Z84o8+GAz73ozLrW21mjXJ5TD1hwiCG+3jN0su+kG7o/slF7dWvRrKkykZrKUvR
+         JNE9uIFgaP+JNIfVqCBLTSYpl6/omS5TVvnQHv1U7+dmRdvLwoybjiTfrtCwoxxTsCTN
+         zGUmxXSHCiLWr3BnrxXH6/dB+HpNGdKtBHBfIx9K7FxZlDTTKGG3VYio4OERWklKVwG0
+         LXCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743010013; x=1743614813;
+        d=1e100.net; s=20230601; t=1743010014; x=1743614814;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QU5YE+GtA8J8rfqHdA7A97AjilxQaf2sBehzoQSpwLk=;
-        b=tmbI5I/IIdTVwjBYBNZSAr0CpTqQMwWfYAAoySECVOeDSxT22Ir5P+QianoJrRNnr0
-         +9RHN8P34ot3Q+mLgo9MfDmrCfl3IgTCSy0lGdN7DNsUgrkmRGRPrPDbjviJYlx+9tTG
-         3RCH3OEKie82n0Fcue1fwoJBOgzxs/3vuSwY45Mj5hmpJ4n6zv16Me3O65yzjeaQKHZl
-         wX6+ABClCyLdfwJtjsnS1Lqyw81F0qS6aGBedf9MIWYrL0YLOLmh9IaxCN0JxxgEkHdz
-         H8shxeCQhAAT/vcZJakRu3tzjAa02uGM3yb+C0z5ODErRHeYYMnoOP69tUsIeAeaPD43
-         IosA==
-X-Gm-Message-State: AOJu0YxuYUiSjKHTGoU9pzgrtl9LiABcoMmOicdv+8IQb/tJY/4QO+w5
-	VTJRtBcIMjGTTwSov5kyLJz7SQUe7VD5v7YJPxiMxueFvIVFHp52myqzjQ==
-X-Gm-Gg: ASbGncsaheqrC5HCElrut52AD/DHK3JMd1LJhcKrAVo+j4AZoT9pArwEI4TC3kv4vSU
-	FBoNPF1+Ch43FAH2y/Z+qBeqPi7XWIYuhQ4r9ogINHWJpx2rPsSX29oUD0aJ956CNitFIuyiVEv
-	/NSuH0WKdQHgqudxi6VcjzgeDrM5AuVqDQFJqCDD1arV46P/bXdw+tnxjqz5RXWnZD/DOk+OkmO
-	psko0p/CbouiuaRN+EPdFaIYDi2IsKKu77F+NGF4h80DbSCMGVbVrNS0wwh1rotJLYZDxF7nGVC
-	az7gBP+mTt8dXAWvm80FrWkPo2liROWLURVXtiauZTn0rg==
-X-Google-Smtp-Source: AGHT+IGxMI89XtcAy89KEQMp1dzmHMCOe1jaraPwOs6VWm/melAdqMnOS+oenzHxHEZJ1QyzTS8dfA==
-X-Received: by 2002:a5d:5f84:0:b0:391:6fd:bb65 with SMTP id ffacd0b85a97d-39ad1742fddmr315927f8f.9.1743010012978;
-        Wed, 26 Mar 2025 10:26:52 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kU7b5SKJQ5hO9/SwmZW+UXVK3CuCp52iNpMoClwIP7Q=;
+        b=gv5B2HiPrz+fgHAQu0cS0PqSSMVm3VMbUbnSnLWQmr7cuxHneiQ9LPOXudo/jvNZrG
+         Vz+2PBYH8aQU2CF7NIZPTaq4J8CWg/+331oAA+8h1EbOCIvk21RoCCZOzNMYuJJe2te4
+         m5QD1v2veiI4zJGKCv/wP+371NOmeb3yRQrPMV/9H/Zc+o5/qEqqi/aH4wAXUBqsN3XM
+         Zu5S1C/pOaHUY5xD+HHvePjfVQQ+zI2YQ7Rm5L1s1p/F+/4rQlHfGCNMqbhPX8+GJNmK
+         aQXmi8CtOJeDiajHhMj8fn95P6ediYlqEm2Qc7g1dIcV4d+lmUqVZh+eWLOKy4WDLgA2
+         eD9Q==
+X-Gm-Message-State: AOJu0YyzOgHlDWmXnNbCyNh5iWD7UAIXTWApck8cqfXYUNvrFjetovr5
+	EPvkurYZ08SFXINqjwLkZsP+hG/Q72hFqsN5Kl0xA2uUcHyMIGCzsQR5oQ==
+X-Gm-Gg: ASbGnct5DVzjnUbrg2AmiV6eB04GSDoTJkFCTCgI3H3oOViuopL/2DCpPKbitIGYKYp
+	OiZP1M7wgeQNRwDAr7PZyuktfvOePGDNcFQF71igyyxy3ldZpf1WKr2ehGMGEfGyO7e40EgIcgR
+	gXKKBNzmpQA4b/cUc4+9zgN9EHvBjb4uIvVN905dnO4AtOUxAzEWbwh3P+PuDC4O69zT9/+ppOQ
+	LFpic9ZA5ZJJc5fMwvIMDb96RrOqm5uVClihoCztU4X1AZNc8Suoj7vdArVAY1n6+jip3EXfB8T
+	9jERbIYpVugjvuOp0ZHKqo2iCHGLUm0CRejk7n8Fd/RPMdEjb+MiEkKS
+X-Google-Smtp-Source: AGHT+IHP9ivKqtdXd3kpdwrcDmyEBkKs+Ea8pQ62HM6Okev66eXea411YDQU4U1K2NpbhiKnjSxK+A==
+X-Received: by 2002:a05:600c:c0f:b0:43c:f1b8:16ad with SMTP id 5b1f17b1804b1-43d850a2452mr3150485e9.30.1743010014219;
+        Wed, 26 Mar 2025 10:26:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d82e6a532sm8974685e9.9.2025.03.26.10.26.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d82dedd1dsm9043575e9.8.2025.03.26.10.26.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Mar 2025 10:26:52 -0700 (PDT)
-Message-Id: <pull.1887.git.1743010011.gitgitgadget@gmail.com>
+        Wed, 26 Mar 2025 10:26:53 -0700 (PDT)
+Message-Id: <ddfb44ed924615bdb61a30ae7627326942575567.1743010011.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1887.git.1743010011.gitgitgadget@gmail.com>
+References: <pull.1887.git.1743010011.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 26 Mar 2025 17:26:49 +0000
-Subject: [PATCH 0/2] Range-check array index before access
+Date: Wed, 26 Mar 2025 17:26:50 +0000
+Subject: [PATCH 1/2] diff: check range before dereferencing an array element
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,26 +72,36 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-If we want to check the range of an array index, it makes much more sense to
-do it before accessing the corresponding array element, not afterwards.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-There are two more instances of this in the clar code, fixes for which I
-offer in https://github.com/clar-test/clar/pull/115.
+Before accessing an array element at a given index, we should make sure
+that the index is within the desired bounds, not afterwards, otherwise
+it may not make sense to even access the array element in the first
+place.
 
-Johannes Schindelin (2):
-  diff: check range before dereferencing an array element
-  read-cache: check range before dereferencing an array element
+Pointed out by CodeQL's `cpp/offset-use-before-range-check` rule.
 
- diff.c       | 2 +-
- read-cache.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1887%2Fdscho%2Frange-check-array-index-before-access-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1887/dscho/range-check-array-index-before-access-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1887
+diff --git a/diff.c b/diff.c
+index c89c15d98e0..18ba3060460 100644
+--- a/diff.c
++++ b/diff.c
+@@ -892,7 +892,7 @@ static void fill_es_indent_data(struct emitted_diff_symbol *es)
+ 
+ 	/* skip any \v \f \r at start of indentation */
+ 	while (s[off] == '\f' || s[off] == '\v' ||
+-	       (s[off] == '\r' && off < len - 1))
++	       (off < len - 1 && s[off] == '\r'))
+ 		off++;
+ 
+ 	/* calculate the visual width of indentation */
 -- 
 gitgitgadget
+
