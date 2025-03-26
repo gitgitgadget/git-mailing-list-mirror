@@ -1,84 +1,93 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64078192D9D
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 08:29:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D638E19E97B
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 08:34:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742977745; cv=none; b=QoFhpBltnVzM6GEma+z9XsFTPT/Hyr1OYjX3wXRHNg54IdGMLW5ES3aUFxjG29JWB0fPP3s9BPNrrYM8StGQSf5xKYG/mrTvbeAtbOP2ADvmcSJig0inkhRjcF0OA5X8NTkG00TO4fPt1jsL24GuMFyQmthMT6wegwABVj6dfD0=
+	t=1742978044; cv=none; b=Di/pggH1AaAqpDVPc0vJKWEe81JX4xAcWWjvKn5bH3l+InjKq5gecV6hvYy11moibGwuI/7QdnY9zbuqwMxsY4ArvsfQgJ/0RwLx/tZChjjrp+BCM/Nkj3pL/tQidi5Q2YT+q9g6q7OWKfPx4i/ctw9L0jfo/ufd6FvbDz2B67Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742977745; c=relaxed/simple;
-	bh=4L7IWKFxEXTSps5p7lrUoLxHfBLQIgIgT6EkmUnelvI=;
+	s=arc-20240116; t=1742978044; c=relaxed/simple;
+	bh=moP6b2+ilRlPRiy25QRlujeOj4BxiJWbzWddNPBPUWo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NuIuJFLDkql+kRuOyEYVAjDFilKPUrquDUKebZq4puOdLagBTbCEQqztneLVFgW8KNx8WG2D66FBdungSViCKfSpgFaVCfwapTxl0b9XfpV947H6p/FGS5MRIK/eh906QtLl0dS4EcgQMtqAIAo1X7/VBJLnX2PCXD8M3cxU9XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pnVrpcmh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nxr70pJR; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=IQb/a51MDvIwd1DtLe7+KspEmui6uhd8kwyR0ECiIN14iBKwNceD/E9IvWvQ/GQv/cFnIY9CW+x/0lIsbbWhb5oMet1Bqu9kdFoBUjBDFps3LmNDODLwOPIAvnH3mZpzQzOSZtKoh/sSbEj1awjLXkaLxxdXTPeebDLC8+rlCVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fxfYczu5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=w8kVEQNS; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pnVrpcmh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nxr70pJR"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fxfYczu5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="w8kVEQNS"
 Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6318111401D2;
-	Wed, 26 Mar 2025 04:29:02 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id D6E1313838FE;
+	Wed, 26 Mar 2025 04:34:01 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Wed, 26 Mar 2025 04:29:02 -0400
+  by phl-compute-09.internal (MEProxy); Wed, 26 Mar 2025 04:34:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1742977742; x=1743064142; bh=31etg3+6Aa
-	1l+sYXGj2r2Ub20Zi8rdscL6sT59Xs34Q=; b=pnVrpcmhOK9Vd4IWEB3o9zJMUM
-	lne7jHULyiZRE/6ciaGI5jLFGj2lx3iOFU1Ri6Kmf6piYrukfxTWIvRfgSFhHc8w
-	GpoMr3Dxbn+HxTRc8kSGBnZFk7Q9uxciOBwn+taDJoHZmqFN83bpvzpblZ7njP5z
-	xqvmyMkWou+bXVu2YZnJPVu4GXoX7JDZNpkZdshLNSROjJrsfQJQVOMEyveWmuO2
-	CCMFtyWMDbJZh0QTF4/skGw1MGYo/AiRyQuzHCJp6EVWW88wxLnem6Dytw/bjT5P
-	SX5jy+j+scFKtBfFGwxOfehGRTLHWfh5c0CbWJMrwIIyiBprwLFecJlaNTmA==
+	:subject:to:to; s=fm2; t=1742978041; x=1743064441; bh=bwbpmNUX9h
+	7ehC1FhKzfKEnUbTrTn+IO8w4qCRe524A=; b=fxfYczu5tUSdg6D5l0/6zj8XtN
+	axmMVaL+Qv3sc/aBEusfpoNdUj9IthDpUfINoyyxYCWcVBVOziKTQjALSnn4uK1l
+	zMu6/M5Zo7vN13sda05dGTjUv1et7d1tQjNyP/9hQFIIvr82V/z/eULkXayvvjg7
+	SDsV+yReW2L7IgZAKgF0jE8jSSEBmTKRsf8+C9vAyAWB107QTeZ26oYpQ3dqtyiA
+	kstXVZhAR++zhW78IOj87w77Hw8fBXiHHvj2JpqvNaBrq6sBC3oQ6aF1gNAP7x1B
+	m8+W5OM7cQc2ERH7ODyi76TZky2T1/t2YH/osv7T7LFHBjKJT2IQWU/rHDzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1742977742; x=1743064142; bh=31etg3+6Aa1l+sYXGj2r2Ub20Zi8rdscL6s
-	T59Xs34Q=; b=Nxr70pJRW9vXYlks97YY9uM0Nb3G5sZO4vExP3Ncscv8KHRW3jC
-	sULX16eHgFHE+H+8WhYXhWCZpq3we6YMvYZBjonayFlEIgjXEQ9NLIvtezFHzEbM
-	yS+8x+XLCcFjskDZLhjJ6bQJRhhj1wR70/FJEfJq6mTXdDPYAoRA9AFaxlWTF1Ns
-	5RtI9NiRxtyWhhNXsPRZOWZVJn7UvDK9Ykv2vdeKS8nhAL0ufbUW4nHg3sxIMenC
-	b0KgCODe0sw2lnGh889JWAZoyBIWk3lI0vFeQptoPL/N/jWJCiluoTq6A+BAocLJ
-	utg9qy9i4LFL6D+GXFb/4cfze2pk6r5lm8g==
-X-ME-Sender: <xms:zrrjZwej5XAZGl4Ui403cMWXiqqUSs9ozsqYyuTWlSZdP9C1jCHdmA>
-    <xme:zrrjZyPQqAYCD_SJk1F7SoafPDWqmQN7nHD-9KfoA-GIOFP00LJXWF6Rwzy3RDtqf
-    _QOOMred3-LFxmmmA>
-X-ME-Received: <xmr:zrrjZxhphLI83nYx-Jy6N2I60NtDtnZp_o9TJu8qJybbL0gQirn3ieZX86rISQLl7bm3iIYFPTmZQn-siI-B0vdovatGSQWFt8SABvhJHIjv0w>
+	1742978041; x=1743064441; bh=bwbpmNUX9h7ehC1FhKzfKEnUbTrTn+IO8w4
+	qCRe524A=; b=w8kVEQNSRj2QaR4A8R1WZJ/4iwXpRTtOgESF5tuCUCKm+dNxEFX
+	iZ0P2RNWnQ3xV8CkOT/LHbADe3+EPIisFqG+csa4DUApMX7DctrwNrYl0HSplrzD
+	/cXfgxMODdulWkOWc4iLXo50VvfGBiUcwQzl4lkdTvmeig37dG4hdDDQ3gXdYX7o
+	C3Nv/HlSa8hx8qE6BldfsMFS9VruB7Xdsv5+SFTXiHZIc3XGG5puttDLg214o2HP
+	56YYUFaSwi1ZNOibsyn1jRPYgGQAwm/J39zAV5bF42F3+jZ4poCuaor1zR2rtWuP
+	3k8e5KK1jwUJ6/Il3s9bOHYJbOEl84fR9oA==
+X-ME-Sender: <xms:-bvjZw-AibsnjTW-6xhLrskmyOH6m2IbkPGvkv2skMkj852MeYiqHg>
+    <xme:-bvjZ4scY7rzZq8islfaSz-MEaqe_lgY48NtaRKyGEMC4Hrusk1UyfNU4RqzHtApe
+    hy48sDb3etBz7i42A>
+X-ME-Received: <xmr:-bvjZ2BhXDkU6MVxnPYqcYlqBwT2g5M3tUM5TQConKYx15LxPJeiLFY9Bp_d4yuO32xdsOZN0eNIiVKfYoTHZgGTOgEOXCzDQvcLLxuDlrFQ1g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieehtdeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepshgrmhesghgvnhhtohhordhorhhgpdhrtghpth
-    htohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:zrrjZ1-7z-97PGLOL_NUVkMHSAcdm01CDIQA0uojUn56G9O9dlScHA>
-    <xmx:zrrjZ8vloRd8yhZWRRS9c-NoHlgejCR82P5hC7Q9REDKaTHUzGMlQw>
-    <xmx:zrrjZ8HVbea0xV9BndA9lahPCyvsqSRs7SSJPmhQwH-8-TPQjHa0hQ>
-    <xmx:zrrjZ7P6WKkFTK-ExQ7wFGiI1emk7NLOZ_JP7kF1JaMaXBECXJ9LXw>
-    <xmx:zrrjZ4LSeJWaapay8D1Y-wmRTtMZoaJOTWgwI_bBvInmu1oCjIKmKR4Y>
+    himheqnecuggftrfgrthhtvghrnhepfffgffefudfhvdejudduieejtdffgfegvdekiefg
+    keetveekgefhfeduueetvdehnecuffhomhgrihhnpehmvghsohhnsghuihhlugdrtghomh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
+    phhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehphhhilhhiphhorghklhgvhiesihgvvgdrvghmrghilhdprhgtphhtthhopehg
+    ihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnh
+    gvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
+    phhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:-bvjZwciNbWXlgF7VjYgxG9QyehRWW62tKtLQEq8vgr5B-MZFAu9ZQ>
+    <xmx:-bvjZ1OL6ZAVxGS54lklEUjqWjKo_4GVdyMY78wfgf7SLyiMFt6H4w>
+    <xmx:-bvjZ6mAB3Ks6GaETXo21HCj_Pe1tiJ16E30FtPpvXetrLkYYklnTg>
+    <xmx:-bvjZ3svM-d3kBmkx5i5u4N-SWa1ptIG0OQDJBDGq_Io1FhNB3EWmw>
+    <xmx:-bvjZ4ffyBraWQa94TexHk7POSxa7amkAdtxj5Vvs9PHNIDRmpJIkZpv>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Mar 2025 04:29:01 -0400 (EDT)
+ 26 Mar 2025 04:34:00 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 08758931 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 26 Mar 2025 08:28:59 +0000 (UTC)
-Date: Wed, 26 Mar 2025 09:28:54 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id cf02af10 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 26 Mar 2025 08:33:59 +0000 (UTC)
+Date: Wed, 26 Mar 2025 09:33:58 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: git@vger.kernel.org, Sam James <sam@gentoo.org>
-Subject: Re: [PATCH v2] meson: disable coccinelle configuration when building
- from a tarball
-Message-ID: <Z-O6xqjGmASjTZ9U@pks.im>
-References: <20250325200542.197687-1-eschwartz@gentoo.org>
- <20250325200920.198057-1-eschwartz@gentoo.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 09/10] clang: warn when the comma operator is used
+Message-ID: <Z-O79qs_iL0lYany@pks.im>
+References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
+ <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
+ <91f86c3aba9d19d5df11661675fd6c2cc049e191.1742945534.git.gitgitgadget@gmail.com>
+ <Z-OWp0NkjrMVQieH@pks.im>
+ <9cd9a690-1258-d96d-33c9-53a3b0f346a1@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,61 +96,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250325200920.198057-1-eschwartz@gentoo.org>
+In-Reply-To: <9cd9a690-1258-d96d-33c9-53a3b0f346a1@gmx.de>
 
-On Tue, Mar 25, 2025 at 04:08:48PM -0400, Eli Schwartz wrote:
-> Wiring up coccinelle in the build, depends on running git commands to
-> get the list of files to operate on. Reasonable, for a feature mainly
-> used by people developing on git. If building git itself from a tarball
-> distribution of git's own source code, one likely does not need to run
-> coccinelle.
+On Wed, Mar 26, 2025 at 08:50:24AM +0100, Johannes Schindelin wrote:
+> On Wed, 26 Mar 2025, Patrick Steinhardt wrote:
+> > diff --git a/meson.build b/meson.build
+> > index dd231b669b6..a7658d62ea0 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -717,6 +717,7 @@ libgit_dependencies = [ ]
+> >  # Makefile.
+> >  if get_option('warning_level') in ['2','3', 'everything'] and compiler.get_argument_syntax() == 'gcc'
 > 
-> But running those git commands failed, and caused the build to error
-> out, if `spatch` was installed -- because the build assumed that its
-> presence indicated a desire to use it on this source tree. Instead, we
-> can expand the conditional to check for both `spatch` and the `.git`
-> file or directory.
-> 
-> Meson's `opt.require()` method allows us to add a prerequisite for the
-> feature option. If the prerequisite fails, then the option either:
-> 
-> - converts autodetection to disabled
-> 
-> - emits an informative error if the feature was set to enabled:
->   ```
->   ERROR: Feature coccinelle cannot be enabled: coccinelle can only be run from a git checkout
->   ```
+> This `get_argument_syntax() == 'gcc'` condition catches `clang`? What
+> other compilers that aren't GCC does it catch?
 
-Makes sense.
-
-> Signed-off-by: Eli Schwartz <eschwartz@gentoo.org>
-> ---
-> 
-> v2: accidentally chopped off part of the commit message, sorry...
-> 
->  contrib/coccinelle/meson.build | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/contrib/coccinelle/meson.build b/contrib/coccinelle/meson.build
-> index 5d76a7fee6..ea054c924f 100644
-> --- a/contrib/coccinelle/meson.build
-> +++ b/contrib/coccinelle/meson.build
-> @@ -1,4 +1,9 @@
-> -spatch = find_program('spatch', required: get_option('coccinelle'))
-> +coccinelle_opt = get_option('coccinelle').require(
-> +  fs.exists(meson.project_source_root() / '.git'),
-> +  error_message: 'coccinelle can only be run from a git checkout',
-> +)
-> +
-> +spatch = find_program('spatch', required: coccinelle_opt)
->  if not spatch.found()
->    subdir_done()
->  endif
-> 
-> base-commit: c1d6628c9433c09ff62f916f2b933ee12995e9d8
-
-Yup, makes sense, as well.
-
-Thank you for the patch, looks good!
+Yes, it does catch Clang as well as the Intel compiler. The list of
+compilers and their respective syntax can be found at [1]
 
 Patrick
+
+[1]: https://mesonbuild.com/Reference-tables.html#compiler-ids
