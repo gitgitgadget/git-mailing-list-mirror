@@ -1,73 +1,44 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592C8219A8B
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 17:29:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3665D2045A8
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 17:41:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743010166; cv=none; b=meqGDYukGEbyue+1VbY60WAWnzBcYfK+Qkuw1sY3aNlKlnMaJeRngx823Ka/JwRH/LJnFpI6UiMFQ8rL2mj5T8GHXRunSPyV8ODTAzW1IEdXWkm4fZshve6+9LBpC5TmESgj2lWrOoi6Wk9ZYCXe74zak50D+0x6Ubm7HaW+96U=
+	t=1743010899; cv=none; b=hXsf6Ob8KBrt9pVh3PZ0E2QXX1nuPnpynJngbHsv4YYMgr/SbXB7hpROrS0uYqEFXTy1efCfrNluZftgz/y3Do+lXgKpIv8oXzahf8CLEhyAqdf+jC27K9McNzV3Mccy0M6hC9TQcdIZ9QUou2omU8giUETjJoWvGjgVTqbBnIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743010166; c=relaxed/simple;
-	bh=+xAVtuGaom7mcD8rHPfWcamC3GIWcr86U7fhsSgpiyk=;
+	s=arc-20240116; t=1743010899; c=relaxed/simple;
+	bh=eS7SpYGlaDYuWXqKcK1N23v4hT5XgW8KgM0l2H+dFhM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rp+RsIwl9fiHrWnbR0ewvYgZgNvp14EANsqrwQFQtbL/uXTmP/j6FP1euUSEjIBlnHjbBBZiW2DSdRRp5F5cSwf1dBoTx4DdFvSZFoxnCbrUNQjsl6l9ynoGZRqQQWQe8is33BaxzvVWOVuvtqsKViVltTMLwGbydNqSwAOi2u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=f78LffzE; arc=none smtp.client-ip=209.85.219.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=U55PV8rH3dUJbJLbBYYSruPseLQbcZMUcLXSFEv+otdYc7OK+iYM9D+8O1e1Ew/yD0HVYR+fNW1c5uOQyOI9A9V186m2as1NoENUq7aMVIvR4QhD5IbIb8/269E4koyh4yvT96J7C50jG9J9nKmODNwAR7qZgvQq1uJDpIRBXRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NCLfZO2n; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="f78LffzE"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6e900a7ce55so307636d6.3
-        for <git@vger.kernel.org>; Wed, 26 Mar 2025 10:29:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1743010163; x=1743614963; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+xAVtuGaom7mcD8rHPfWcamC3GIWcr86U7fhsSgpiyk=;
-        b=f78LffzE3K49dVtBQ8JmhRk9cHsExg2PCCo1i2pIvCmDC++9mo/EjIICXg/tGagnkX
-         OPuOK5q9eTUoaD0ULgD2qmxQGUVxCp5szIYmw7/Oh78rMK0i0oJ0gi+42jVF/zlRI4z5
-         jBTUw0rkrwDjg9CYXQPVQ1feHbqT9HGNAbeSQuzl05Sfn2yuW2eIGSlXidP10JHg9x8F
-         UTiUVE9gADvAbteqoD2PVic8uIOSoZQTbM5bvETSYy/tYeyZbxjGGMrKACbO4WwELZqj
-         3ohUrLFcySaYuorWFFSm32GJ7R5F3Ftve4VkxctmHN/sUFLyeX+JxvgojGTvssDnsGP/
-         DhwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743010163; x=1743614963;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+xAVtuGaom7mcD8rHPfWcamC3GIWcr86U7fhsSgpiyk=;
-        b=WNSupS0u5qWmUN0/Ie9yNuuqLUWLhYPe31ewFzVtA3cWvB861PVVh+dj06cP800L+e
-         SJo6fnZQ0azZs+JP2WnYruzOgnhOD3w/LFkiCAX1u6o35QQZxvCp5t720vy0U3O6p/73
-         NS8uJGPGyUK5/LUji6+ji7wxS96sUNd4Agx2YcUQ5JnBXjNZ8cvFC5/Or5wO0lSIMLFK
-         SSMw1S4xfOxJ7jEu02v8FO1gd0WxxaSd8XHVqRO1LgKgLduIgMZnbKHDsS28QfA9VJAB
-         sdlsyEQP2DmAtMdOGXB+U3E6YXTfBy41Jv/dfOmwcHfKAZjzXbdSVCS5BSaBVmVNUO1+
-         Fm7g==
-X-Forwarded-Encrypted: i=1; AJvYcCVitAATs8uinR7Ry35RbGl6UYbCB2/1Y7NWB4F+fE+0ojYbaMEF03X8ewN2Narb4c1UxrQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDv2BXm5/mk0uQgaHHYqXNNpqHNl8xwBMPDk7RsTNcpzZjjOgr
-	TPgdMaTvoiNdlbS+Gy7Nd3jY9dVHoIYvOuN6s3x6UbO51ZFtPBPnSSEEx05xVso=
-X-Gm-Gg: ASbGncuWl8ZJBiFT8m+ti6JwITD74qN9b5tDEkQ+5pC82wfmYucbZTsNN1oq8UxUe9l
-	porPDJWRD20TiOhZr5RII+2VvOBzEp47Xf5b3Fsn31stbQDL/eq2fpdv4slp02yK4DuISan+hbY
-	JcNzXrums+JvopeoI8ETUmDmOxZ0B0TOhENmI+xAYA5rdlCuO+0WZ4BW3iuib96VWtdg0b6yrHm
-	XVpNlTmaLo5RHILP7JyEx0tgfJZ1Xi85ZoBzN7a1lnwRwK/hMPdaAdLv+YXkqsiJxoV+pWTDYEx
-	/tg+YjiGhzSRje2JjeReaVQDkz2md+b5Ai/x3u8us8cu5sdnd789qk7xENiTtH8Hu3BntXEIHkI
-	jCOL6adGIWrh+X/UC
-X-Google-Smtp-Source: AGHT+IFhb/FA9OuFgnYESldrKnoL7OIr/Tc/GN4tg+ITLA0eLmLyCsWS6Y2Q+Ea/JkC/kGqQRN8+cQ==
-X-Received: by 2002:ad4:5d4b:0:b0:6e8:ddf6:d137 with SMTP id 6a1803df08f44-6ed23897c57mr4070396d6.18.1743010163015;
-        Wed, 26 Mar 2025 10:29:23 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eb3efc557bsm69203346d6.90.2025.03.26.10.29.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Mar 2025 10:29:22 -0700 (PDT)
-Date: Wed, 26 Mar 2025 13:29:21 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Philip Oakley <philipoakley@iee.email>,
-	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Avoid the comma operator
-Message-ID: <Z+Q5cWAHxxNm8BhK@nand.local>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NCLfZO2n"
+Received: (qmail 13605 invoked by uid 109); 26 Mar 2025 17:41:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=eS7SpYGlaDYuWXqKcK1N23v4hT5XgW8KgM0l2H+dFhM=; b=NCLfZO2nKPqV5GMR2QQCHPyGTNuxdaVG2mP7bhixhRafcE19Koz467yec7B4tFcfhrHltYnH7u9R82Q7xCNnGV3RZ/uKw7Iw8LbupL3+hu5CdoM5AN98oCSuqQ3wd5MgJAHRcHdgYphBqWxcMX1ZZOdd9QNAtkc/lEzmNsFJNengwFyup17kOULN6yL6DcxE+yX78HQ/kOxNgO1a5uReHf40JvplCh2QnTK5za+rgHFBQ4Vc0OT8UHv5OlRNCYFVYoNR7thKzV6fXKfF+uf6wSkO5qP//VNrzT5X+qjpCD/x98RvWGsddK7Us0S3bhHFtaOnyweQvM3NXPhfD1X/WQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 26 Mar 2025 17:41:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17733 invoked by uid 111); 26 Mar 2025 17:41:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Mar 2025 13:41:28 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 26 Mar 2025 13:41:27 -0400
+From: Jeff King <peff@peff.net>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>,
+	Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 10/10] detect-compiler: detect clang even if it found
+ CUDA
+Message-ID: <20250326174127.GA2508080@coredump.intra.peff.net>
 References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
- <f30d8ac4-4748-4b73-b86d-6f85c9bac622@iee.email>
- <ea6bfd92-3d09-c611-abdc-dc7bc987446f@gmx.de>
+ <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
+ <2f6f31240fe6ce5f8efab662af477540a0f966ca.1742945534.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,28 +47,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ea6bfd92-3d09-c611-abdc-dc7bc987446f@gmx.de>
+In-Reply-To: <2f6f31240fe6ce5f8efab662af477540a0f966ca.1742945534.git.gitgitgadget@gmail.com>
 
-On Tue, Mar 25, 2025 at 03:12:21PM +0100, Johannes Schindelin wrote:
-> Hi Philip,
->
-> On Tue, 25 Mar 2025, Philip Oakley wrote:
->
-> > On 25/03/2025 08:01, Johannes Schindelin via GitGitGadget wrote:
-> > > The comma operator
-> > > [https://en.cppreference.com/w/c/language/operator_other#Comma_operator] is
-> > > rarely used in C anymore, and typically indicates a typo. Just like in these
-> > > instances, where a semicolon was meant to be used, as there is no need to
-> > > discard the first statement's result here.
-> >
-> > Minor aside: How were these 'discovered'?
->
-> I am working on a GitHub workflow that uses CodeQL to find such issues,
-> that's how I found them. (I also worked with the CodeQL team to get this
-> query added, way back when I was still working at GitHub.)
+On Tue, Mar 25, 2025 at 11:32:14PM +0000, Johannes Schindelin via GitGitGadget wrote:
 
-Neat. I will be curious to see how the results compare/contrast to what
-those of us who run Coverity get.
+> In my setup, clang finds `/usr/local/cuda` and hence the output of
+> `clang -v` ends with this line:
+> 
+> 	Found CUDA installation: /usr/local/cuda, version
+> 
+> This confuses the `detect-compiler` script because it matches _all_
+> lines that contain the needle "version" surrounded by spaces. As a
+> consequence, the `get_family` function returns two lines: "Ubuntu clang"
+> and above-mentioned line, which the `case` statement does not handle
+> well and hence reports "unknown compiler family" instead of the expected
+> set of "clang14", "clang13", ..., "clang1" output.
+> 
+> Let's unconfuse the script by letting it parse the first matching line
+> and ignore the rest.
 
-Thanks,
-Taylor
+Makes sense. I wondered if this:
+
+>  get_version_line() {
+> -	LANG=C LC_ALL=C $CC -v 2>&1 | grep ' version '
+> +	LANG=C LC_ALL=C $CC -v 2>&1 | sed -n '/ version /{p;q}'
+
+might be more readable with "grep -m1", but it looks like "-m" is not in
+POSIX. So what you wrote is probably safer.
+
+-Peff
