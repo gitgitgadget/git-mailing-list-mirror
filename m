@@ -1,145 +1,105 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661D8174EF0
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 07:50:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4E0142E67
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 07:53:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742975431; cv=none; b=k04zo7mkfiIxE0d+XVp12VaeVaRU812G6ktBrTgGMA/ZsbNUNELTThz/ptz6rY/sbEvwbvXM9+akW6KXoHbUR+GHuOjHO/wcQUw+9r99NFXc1g4hsNS3rreuhiyseh9uyG+P0AjcPpiHVWVTzujy5UQQwctQTRdsf/CEVdmJA8s=
+	t=1742975585; cv=none; b=Sfp8uBDMhbPOIHqWHTRwKfpqPYFgPxslQcc+LrXN5mHH+LAeQsfmSgz3brTI0EEp//9yl0uH6mxAlsI71orXjaWdW8uJj2WptfBScGwttxlU6xwUSAwM6IKCD51rQks+1X6dw/S50g1N/ZSIeV2nvADextifiZJv4IesX9dMwiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742975431; c=relaxed/simple;
-	bh=9fUXSlnivb8LTfn8bOcas0uZWhn+4j8wFiHySzSwrUw=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=XvA3btldnULt4+Gszm7Zkd9uKtn+IavnvfeUyIL6q//SIQ4eGA/tGGUBWjvon1YPc2uYzq/yoEwbZ0Y5v8SSNQRN9wPvRbvY8Kj5PIH5FG15iWF3iN/Cu0b3Wvf+eL9dDTu/ZK5d5NXoEnqIQ08KyovEZ7s0GZEZJ6g5H3VIkEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=bSqgIDB8; arc=none smtp.client-ip=212.227.15.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1742975585; c=relaxed/simple;
+	bh=pPuCoTh1maA66SqBcknIxvM8xSu7C8lQs4uM6+ls/I8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FfFQMZ77RzM+jQOPBlPlE4U9tUv1F7xFYfkrs8SdXESS1z5ugsQ7WmT3zZK1MdkAR1YRu5q0eHwpEnmLZyXj4tnF2B/74EBfZv0Q/Y8aneDDF1qtU3K5vPKp6AkQrz3+pOCDjc6aM+fxmQA7N4CS13zf+Hy5NXRVBp2wqwzrs8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=irqMnd0L; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="bSqgIDB8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1742975425; x=1743580225;
-	i=johannes.schindelin@gmx.de;
-	bh=yd4aMaV7JbEnznUfo20Lsr3puirJ7qtdMHO5BfAvL5I=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=bSqgIDB8GO/wEasE7dx8EcUncJ4npTQtWCgF+vpI36Em69HNgCI6Fn9270JHoEBX
-	 cf9W+TJPvzo5Mq5RtkGeUVd4NHD5tktYwwZY/rW4BDhzQ5F8ddNrypQNpRE3i0YMy
-	 cLpyDs9/AnJZMgp1QSMEYZbK/4TelCS1JtrIQlrYnegKr8DbSWCIPQmc4VZxlFTQ8
-	 5QLKioxlEUV4VTGX4B78GOuc3/KKAY7fhornLS54JeTfg3s0qvkIN1IV89LBC9ncO
-	 WmFY0dXp51Q+J7YjYZeIN01wLMdePNy9ZtusYrigmtH/EKPWO2imM+wirVo6C4/8Q
-	 h3KtcKnJpZbecgjk5g==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mirna-1tTUtY3w7I-00bq0p; Wed, 26
- Mar 2025 08:50:25 +0100
-Date: Wed, 26 Mar 2025 08:50:24 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>, 
-    Phillip Wood <phillip.wood123@gmail.com>, 
-    Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 09/10] clang: warn when the comma operator is used
-In-Reply-To: <Z-OWp0NkjrMVQieH@pks.im>
-Message-ID: <9cd9a690-1258-d96d-33c9-53a3b0f346a1@gmx.de>
-References: <pull.1889.git.1742889711.gitgitgadget@gmail.com> <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com> <91f86c3aba9d19d5df11661675fd6c2cc049e191.1742945534.git.gitgitgadget@gmail.com> <Z-OWp0NkjrMVQieH@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="irqMnd0L"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-22401f4d35aso136190715ad.2
+        for <git@vger.kernel.org>; Wed, 26 Mar 2025 00:53:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742975583; x=1743580383; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=L5ZzQOES3UJvR1aR/Z9WiJTUtP/Sd+SFLiPDFbiYmF0=;
+        b=irqMnd0L/D844npaGcuxVB3uBaJ2747vdaDq26g09TVZ6tERcQPv419aQ87S9lLexK
+         vwwRZnBXd00+cI1uXCww49J8HcL83Jn7bFzzB0+SdEtSpikYs8w/rMSVIYGWU/ttVBqQ
+         biDmjc8vqC9byj/Gm0cst1EAHFBFTk29hN8cMvAbx6f7rxR5PthocLpFXMyRGuSNaKWi
+         DKPMPOyppcaCgevAovRlfS5Dvt8Hces+OJgl2XjQ4OBDfIqCImg6AYGO51mB4mHKx/wi
+         Env73pefhg0O3+gLAylmVN4wUAN46g1U0nAncBYOfIZytS5IvPW7qBlPy3Nv9LK/qELt
+         MtTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742975583; x=1743580383;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=L5ZzQOES3UJvR1aR/Z9WiJTUtP/Sd+SFLiPDFbiYmF0=;
+        b=rxLO5Fi3gk9ZPdGnVlhJPrhaJkjXQxUN4frEZ1Ade2cb1XwunTnFLAbmcJMKbkgfHT
+         NQK086OeVeDqzeJolZ/cTkWf0fyEtzWmkW3jtXFea1eAXw7IGa1daDJedC/d5U0POl0C
+         fxx6HbL/xUwXO+UJLfL4khE+RRqXfJet5IiQG3mXgzAB3CqbXFi100lXCayVGRv10bSD
+         ovImBI43dwEV+fKaMtbMdZxxa80eqK0iMskd9n4ox9tNmYI23Jlh9j9KRhygFCWpQYlY
+         pB5+KlOwf5U4n8LPpQQxbY1FObCmOPrUSX7/p8cqajITTxhrnynYYl+7fb43dxPleP3A
+         JE+Q==
+X-Gm-Message-State: AOJu0YzaUOBmL9CcKDAa3vEY322hTR+dkB+PYdctUUSlz3+Y4G904pDT
+	QYwOGBDi8zFsBmgEKO9dqYKEgEuHcQRzTvWLDyNMFzaMnvmSbNzq
+X-Gm-Gg: ASbGncvP6xbVWLQp5dbXSfHIPY3aYfF5EWxlR9W5MnytF45O+GGWRVac9sCcQJGMGS6
+	u7TZzUkQ9XqyNbXUB2RmTSUUrri1BAcsFbcaAFcnCM9kus/bx1yPCthb+zSfEcgXtu9wD8W1AJG
+	qyHrUxPzLTZfYsGacIPgtIMrof0kT2lWh6JA5D2JUrabtMJWvshcjPXeh6Vue/iLRrVjHwKGdEX
+	h46dhpzLRdhIHS/wa2/bURGR/SdIbP/z5ol1Y3m6Yg/FtFb39oUsrC8/03E4WKU27zsg/eHLf1a
+	M/ZdpHCWad2Mf0c6Tbm+RW/mNRitPq7S9qY8V6tR1HfxMOEmBwY=
+X-Google-Smtp-Source: AGHT+IFFd8fJHi2YMcOd2s5rPkFV1/oGsasHUqhf8cDRJbreGcmL5xMicSKs5sENjT74jLRxUg0sqg==
+X-Received: by 2002:a05:6a20:2587:b0:1ee:e46d:58a2 with SMTP id adf61e73a8af0-1fe42f25e5bmr30322276637.3.1742975583297;
+        Wed, 26 Mar 2025 00:53:03 -0700 (PDT)
+Received: from localhost.localdomain ([39.184.61.9])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af8a2803d8csm10330068a12.26.2025.03.26.00.53.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Mar 2025 00:53:02 -0700 (PDT)
+From: Zheng Yuting <05zyt30@gmail.com>
+X-Google-Original-From: Zheng Yuting <05ZYT30@gmail.com>
+To: 05zyt30@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	meetsoni3017@gmail.com,
+	Zheng Yuting <05ZYT30@gmail.com>
+Subject: [GSoC PATCH v9 0/2] send-email: improve error capture and status code handling
+Date: Wed, 26 Mar 2025 15:52:44 +0800
+Message-ID: <20250326075246.2612627-1-05ZYT30@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250324145332.571813-1-05ZYT30@gmail.com>
+References: <20250324145332.571813-1-05ZYT30@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Xx1tzzZqRs4DxogcnJGfezJAn86BnYLgKcv8vJSoZgpee1dG89E
- Icb8Hwgwo2ztWVkbBpvshyM4DmjT/3/GVcDgZBBiXSJSaVCex7g1Xrwhe9I59/yLsmW5t9C
- MkqARdC2V7Ib0GRMQS73ZdEeuZQ6Hem4dgpVQrQM3zTEQ08jEDOpSx24dHP3a8VIv2FRbI3
- 6rgqlfdHVa/miAmJbNwqQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:rZWTX9CpGII=;SoLBxC0nAm9NvV7wLnUxfsyhtd+
- G3eBKPsgwcDbmW9Ma8GHjLmWawgBv/yqkZlhE+kAqE/IOuhyyi1MnFc4mtJB+oDj9AawHnF4E
- 1Rs0L2lS0HDcWLoHtmxCWohHY5phjDrHwo4uDqva7ZnEahzC5ztEXBuvjoNC8EEUXTQ7uBROv
- IavS2L9NcA5MsLuZD9eEF+HedH6l6tvnriKQ8m80wBXkOVCGsEfzROeowYy1EwD4nu8OrMIbR
- Jnuy8cysH3+wKHHCUsRcp3d1E9cTx1cxAv0iWmgp5JAP997D+lOQLjKX/hietDotH1zut1sa9
- m31EjHTAJrloCn0Mj8RscxkxZHA593YsFDcm3Gk4TbMqivGBRldbgmeASsu98LAHOrTi89/w7
- NTfK50dZz4r3muyXgipWNHpL3IsLwysWZZSruY+sLs9/a05PvxGbOPKSGyvPTdDjdglDVLH4q
- mju8uvHPXFNRtjPGojAlUyd6mDnOGnkm3a7zGXGKA4Y1FBgSLM6E5mO8IsSwQgZaKgZ8FsUom
- ugav6T6TJX+05G/12fdEXT/PVGyoNbTcGYE641jybJVNJgbMiqGhJ+yxf3x3Ex1/wtjZCAxzG
- PlQuLrNbXs7hOEnuovQgHCBFG9qXFDg378zjM+FrAgB804KYDhK+hMqUc3OQKvKf9NKP+43z+
- O69lEHXaiWKPkQOxOpCBAn4y8p97oxOIB1kVUiHDCu5tmisy5gXSOdtqJWe1VkRoqypUnzYv2
- YR8TS9iMxjnj/E76X215jcxQ5B0VKm56HO01aKC/nRSBv/9IZO1dLugiZ1yrLt0P4ueF2DsFF
- Yr3mQOEiJIAVJWa2UYbzjEujT3mpuHGxUBfuMStO2rox4f5Uc5E6vnMhsbYC0RmKL+H2vjIHi
- mvTYSsxXYchM2vRF+8bLma1w6XuUdXgmn54FkwsJTcb/9mmgtJHxDYcpimTFExJGG3K+XzOUN
- K+ZYjbT+4a7htH3Jz72h31Eud9MxxQGyqQNVpGw1m79jxk6D+Tz88ZUkXj18cx5hiu1HSabav
- fsSq/6JqdVv/RtKE9prCwKAY8jyZqv9bo4Mub8Bo9oE4+34cXpfZnkidUg2Nn7KZuMYLql0v3
- Yiu3zQNVYqpcz4hrfv+7w6Z01U8bZyPwAGXngElzCyS5DtTv04ovw3qPr5No6met+G1QVnHT3
- IozMyJl3yTZJMzHYowxnTVRH4zsFlIOMpeJpsnpDpksVvJ6sTx0LbIeRlas8ZJRQmJsbqtjpQ
- 4tbxfGmDes5Hx5//E0BOgv/VP4VkTOKvKEwqJB6I4N/Vnq6mvPN+ZgoFczAHWlgly91BO2XJL
- DmXcG0kAg63rhP0nnVyBv/3PcimEwP16+SrR8x/qVUNx1Igw2eKjIAGNwltIEy0HkR6qIomrs
- CKnxuwJYaXh+8PEkD5j2cRzrTrQwMp2wlLyy+IsqWn788EJ+PpxDtdbItiC4DPynUgFnjUmtj
- SeQ9UikFlCmkh/1/hbPeUVcguVPJAgvTTJKQm+AeQJdHNqO3T
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Patrick,
+This patch series improves SMTP authentication error handling.
 
-On Wed, 26 Mar 2025, Patrick Steinhardt wrote:
+Auth relied solely on return values without capturing exceptions,
+misjudging non-credential errors as authentication failures.
 
-> On Tue, Mar 25, 2025 at 11:32:13PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > When compiling Git using `clang`, the `-Wcomma` option can be used to
-> > warn about code using the comma operator (because it is typically
-> > unintentional and wants to use the semicolon instead).
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  config.mak.dev | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/config.mak.dev b/config.mak.dev
-> > index 0fd8cc4d355..31423638169 100644
-> > --- a/config.mak.dev
-> > +++ b/config.mak.dev
-> > @@ -40,6 +40,10 @@ DEVELOPER_CFLAGS +=3D -Wvla
-> >  DEVELOPER_CFLAGS +=3D -Wwrite-strings
-> >  DEVELOPER_CFLAGS +=3D -fno-common
-> >
-> > +ifneq ($(filter clang9,$(COMPILER_FEATURES)),)
-> > +DEVELOPER_CFLAGS +=3D -Wcomma
-> > +endif
-> > +
-> >  ifneq ($(filter clang4,$(COMPILER_FEATURES)),)
-> >  DEVELOPER_CFLAGS +=3D -Wtautological-constant-out-of-range-compare
-> >  endif
->
-> Let's squash the below diff into this commit. The loop already makes
-> sure that the compiler supports the flag, so there is no need to special
-> case Clang.
+Patch v9 1/2 wraps the auth process in an eval {} block to catch all
+exceptions, adds var error for future handling, and var result to return
+auth state.
 
-Okay, will do.
+Patch v9 2/2 introduces finer-grained SMTP error handling by extracting
+status codes per RFC 5321. For 4yz (transient) errors, return 1 and allow
+retries; for 5yz (permanent) errors, return 0. Unrecognized or uncaught
+status codes are treated as transient errors (return 1). If no error is
+present and no result is defined, return 1 as a transient error; otherwise,
+return the authentication result.
 
-For my curiosity...
 
-> diff --git a/meson.build b/meson.build
-> index dd231b669b6..a7658d62ea0 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -717,6 +717,7 @@ libgit_dependencies =3D [ ]
->  # Makefile.
->  if get_option('warning_level') in ['2','3', 'everything'] and compiler.=
-get_argument_syntax() =3D=3D 'gcc'
+ Zheng Yuting (2):
+  send-email: capture errors in an eval {} block
+  send-email: finer-grained SMTP error handling
 
-This `get_argument_syntax() =3D=3D 'gcc'` condition catches `clang`? What
-other compilers that aren't GCC does it catch?
+ git-send-email.perl | 69 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 54 insertions(+), 15 deletions(-)
 
-Ciao,
-Johannes
-
->    foreach cflag : [
-> +    '-Wcomma',
->      '-Wdeclaration-after-statement',
->      '-Wformat-security',
->      '-Wold-style-definition',
->
+--
+2.49.0
