@@ -1,35 +1,35 @@
-Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEA9255E55
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 20:19:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC10F214A8F
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 20:19:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743020399; cv=none; b=G/fsnEpharF8Z3OUD+jRQ/HDwb8GfTsolvkgp8HocV+nzAgcKK3Awl3rI1eoLAODXSyaXpObAV8m4Ipofae55zpVV+W4Y1kQqQf0/eqMluWpBHoszORjFPxSIPn7+HHguM6eI/sff7SUELP+F0lOVHTHhIqzx1D+BB3FM34Skuo=
+	t=1743020402; cv=none; b=JODtx1MQYxTEJSPEWm9Iu09j4IbKQAxVeHSb3nkpjp28+4jHBeG3JMEOUbMDZnrO86FmdA40yjoEGe3EMvtbjLx9W3iBdVX6eshjc79ZZV8dLnqoDVRmbB9feU7GNgSK+rBs674iEbJ/hKr6sAEmdknq2B5aRy1fs5yCe7yfc5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743020399; c=relaxed/simple;
-	bh=Qb8O1CLZbww2BvKRKk4p2z5pz2dFNkLVnqaU5euU7bA=;
+	s=arc-20240116; t=1743020402; c=relaxed/simple;
+	bh=DlIbwCVA4Z8fR6YFuZYrAxXpBtYZamNwX+6SHp00/sc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FOpHpo/Za0wfq9aSAMqB2vfRvymKIDJKHMpFWyX4CiOzy8zhzmiMmJ0qSdNttcffQ17YdTLVN2KF/IBea/csyWAHKSHnCl65DEhTZJr5CEYQvtr9JUwkPP85sDJormZfIBp5HW6/Rwt+fFhwK4laiMtMj+MfMRoTh5S94Q7nRvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=KM+kWJnC; arc=none smtp.client-ip=95.215.58.173
+	 In-Reply-To:To:Cc; b=cgA2fRe2ZoXesddZMEaoqpjTbAYYVdhocTSHbLKgLcDqUYlS4rMpjgUAl3N6uwVtXq0Zeb5p+o9Jzk7ixsogz2JlUlCaaO/1jA0OxbthbSUME5ZJ+5T9CvRjiqAIxIgNz3wtaM+J0h17UL8aM3kAVR0fz2p7cyxVQCKy2e48Jvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=1sPnY0Uz; arc=none smtp.client-ip=95.215.58.186
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="KM+kWJnC"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="1sPnY0Uz"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1743020395;
+	t=1743020398;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=ICR27UkxxjH7++DZkx80GSOaDA5KH2fxXg7+Kx5RtxA=;
-	b=KM+kWJnCryy86YhHUBJ7LNJVaWchB2wa7tBinsZfB2wJvph3C3i+NyVKTkZhVbdzx6HdlA
-	TyXwpK8hiyTUmwibku3IDga4L7Ar1jkZPRiZpp1gNo8cv9hVQnKrSAo3BCIYJr9ojFvvT3
-	uObccpLUYr7GaRlqGNHBwRhYkCt5/GM=
+	bh=RWymkKJjSTq1VhSrlAN4k2u3aqs/e4N/vBlfvHlBAL8=;
+	b=1sPnY0UzhwtU/s4aZ2bSjZPSSgSovZT64/358hD9yHc4azmZMPSWlanZWNAtfl0+kX+QlC
+	cxFqXv5VrO0/z8rUXwKvJ/Qc2EwHJgyF8rFnnS/YoT4m72G9rENOOUgayRfVnzdnrMKbSj
+	2Pa8OVNXD6AwrO5aZXK3hK2UA/OaqK4=
 From: Toon Claes <toon@iotcl.com>
-Date: Wed, 26 Mar 2025 21:18:31 +0100
-Subject: [PATCH 7/8] tree-diff: use pathspec tries
+Date: Wed, 26 Mar 2025 21:18:32 +0100
+Subject: [PATCH 8/8] blame-tree: narrow pathspec as we traverse
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,7 +38,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250326-toon-blame-tree-v1-7-4173133f3786@iotcl.com>
+Message-Id: <20250326-toon-blame-tree-v1-8-4173133f3786@iotcl.com>
 References: <20250326-toon-blame-tree-v1-0-4173133f3786@iotcl.com>
 In-Reply-To: <20250326-toon-blame-tree-v1-0-4173133f3786@iotcl.com>
 To: git@vger.kernel.org
@@ -47,262 +47,245 @@ X-Migadu-Flow: FLOW_OUT
 
 From: Jeff King <peff@peff.net>
 
-The tree-diff currently matches each pathspec against every
-entry of the tree. For the common case of a handful of
-pathspecs, this is not a big deal. However, if you have a
-large number of pathspecs, it gets noticeably slow.
+As we find out the "last touched" for each path, we cease to
+care about that path. However, we traditionally have not
+told the revision-walking machinery about this, for two
+reasons:
 
-Now that we have the pathspec_trie optimization, we can do
-much better (at least for simple cases without wildcards).
-Here are numbers for running "git rev-list" with limiting
-pathspecs of varying sizes, both before and after this
-patch:
+  1. Munging the pathspecs mid-traversal is not an
+     officially supported thing to be doing. It does seem to
+     work, though, and with Duy's recent pathspec
+     refactoring, it's fairly straightforward.
 
-Test                 origin              HEAD
----------------------------------------------------------------
-4003.2: size=1       0.12(0.11+0.00)     0.12(0.12+0.00) +0.0%
-4003.3: size=2       0.17(0.16+0.00)     0.16(0.15+0.01) -5.9%
-4003.4: size=4       0.17(0.17+0.00)     0.17(0.17+0.00) +0.0%
-4003.5: size=8       0.21(0.20+0.00)     0.20(0.20+0.00) -4.8%
-4003.6: size=16      0.25(0.24+0.00)     0.21(0.20+0.00) -16.0%
-4003.7: size=32      0.31(0.31+0.00)     0.21(0.20+0.00) -32.3%
-4003.8: size=64      0.43(0.41+0.01)     0.21(0.21+0.00) -51.2%
-4003.9: size=128     0.73(0.72+0.00)     0.22(0.21+0.00) -69.9%
-4003.10: size=256    2.02(2.02+0.00)     0.37(0.36+0.00) -81.7%
-4003.11: size=512    6.78(6.78+0.00)     0.64(0.64+0.00) -90.6%
-4003.12: size=1024   23.67(23.67+0.02)   1.22(1.20+0.01) -94.8%
+  2. The pathspec machinery is slow. We know have to look at
+     each pathspec to see if each tree entry is interesting.
+     And since our cost to handle a diff_filepair is so
+     cheap, it doesn't really help us much.
 
-For small pathspecs, we produce no real difference (which is
-good; we know we are asymptotically better, but we have not
-regressed our constant factor). Between 16 and 32 pathspecs we
-start to see some small improvement, and the benefit keeps
-growing with the number of pathspecs.
+It turns out that (2) is not quite right, though. For the
+diffs themselves, limiting the pathspec doesn't help at all.
+But it does mean that we can simplify history more
+aggressively, which may mean avoiding whole swaths of
+history that don't touch interesting paths. This happens
+especially near the end of the traversal, when we are only
+interested in a few paths, and there are many side branches
+that do not touch any of them.
 
-Obviously these large-pathspec cases are unusual. But you
-might use them, for example, if the pathspecs were generated
-programatically (e.g., if you want the history of all files
-that are in Documentation/ _now_, not what was historically
-ever there, you would expand the pathspec at the current
-tree, and feed the result to rev-list).
+And as of the last commit, the pathspec machinery is no
+longer quadratic, so the cost to use it is easily worth
+paying, even for large trees.
+
+Here are runs of `git blame-tree --max-depth=0` for
+torvalds/linux (a complex history with a small root tree)
+and git/git (a flat hierarchy with a large root tree):
+
+For git/git:
+
+    Benchmark 1: ./git.old blame-tree --max-depth=0
+      Time (mean ± σ):      2.223 s ±  0.360 s    [User: 1.808 s, System: 0.369 s]
+      Range (min … max):    1.866 s …  2.927 s    10 runs
+
+    Benchmark 2: ./git.new blame-tree --max-depth=0
+      Time (mean ± σ):     945.0 ms ±  93.4 ms    [User: 783.6 ms, System: 131.0 ms]
+      Range (min … max):   846.4 ms … 1071.5 ms    10 runs
+
+    Summary
+      ./git.new blame-tree --max-depth=0 ran
+        2.35 ± 0.45 times faster than git.old blame-tree --max-depth=0
+
+For torvalds/linux:
+
+    Benchmark 1: ./git.old blame-tree --max-depth=0
+      Time (mean ± σ):     13.504 s ±  0.545 s    [User: 12.605 s, System: 0.583 s]
+      Range (min … max):   12.947 s … 14.488 s    10 runs
+
+    Benchmark 2: ./git.new blame-tree --max-depth=0
+      Time (mean ± σ):     622.8 ms ±  39.2 ms    [User: 522.1 ms, System: 95.7 ms]
+      Range (min … max):   556.6 ms … 681.6 ms    10 runs
+
+    Summary
+      ./git.new blame-tree --max-depth=0 ran
+       21.68 ± 1.62 times faster than ./git.old blame-tree --max-depth=0
+
+Note that the output may change slightly in some cases due
+to the history pruning. This should be acceptable, as either
+output is correct in these cases (e.g., scenarios like a
+cherry-picked commit on two parallel branches).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/perf/p4003-diff-pathspec.sh | 26 ++++++++++++
- tree-diff.c                   | 98 +++++++++++++++++++++++++++++++++++++------
- 2 files changed, 112 insertions(+), 12 deletions(-)
+ blame-tree.c | 18 ++++++++++++++
+ pathspec.c   | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ pathspec.h   |  3 +++
+ 3 files changed, 99 insertions(+)
 
-diff --git a/t/perf/p4003-diff-pathspec.sh b/t/perf/p4003-diff-pathspec.sh
-new file mode 100755
-index 0000000000..02312d1b0c
---- /dev/null
-+++ b/t/perf/p4003-diff-pathspec.sh
-@@ -0,0 +1,26 @@
-+#!/bin/sh
-+
-+test_description='diff performance with many pathspecs'
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+
-+sizes='1 2 4 8 16 32 64 128 256 512 1024'
-+
-+test_expect_success 'create pathspec lists' '
-+	git ls-tree --name-only -r HEAD >all &&
-+	for i in $sizes; do
-+		{
-+			printf "%s\n" -- &&
-+			head -$i all
-+		} >ps-$i || return 1
-+	done
-+'
-+
-+for i in $sizes; do
-+	test_perf "size=$i" "
-+		git rev-list HEAD --stdin <ps-$i >/dev/null
-+	"
-+done
-+
-+test_done
-diff --git a/tree-diff.c b/tree-diff.c
-index 2a744dfaec..f3d916201b 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -120,7 +120,8 @@ static void ll_diff_tree_paths(
- 	struct combine_diff_path ***tail, const struct object_id *oid,
- 	const struct object_id **parents_oid, int nparent,
- 	struct strbuf *base, struct diff_options *opt,
--	int depth);
-+	int depth, struct pathspec_trie *pst);
-+
- static void ll_diff_tree_oid(const struct object_id *old_oid,
- 			     const struct object_id *new_oid,
- 			     struct strbuf *base, struct diff_options *opt);
-@@ -205,7 +206,7 @@ static int emit_diff_first_parent_only(struct diff_options *opt, struct combine_
- static void emit_path(struct combine_diff_path ***tail,
- 		      struct strbuf *base, struct diff_options *opt,
- 		      int nparent, struct tree_desc *t, struct tree_desc *tp,
--		      int imin, int depth)
-+		      int imin, int depth, struct pathspec_trie *pst)
- {
- 	unsigned short mode;
- 	const char *path;
-@@ -309,23 +310,95 @@ static void emit_path(struct combine_diff_path ***tail,
- 			parents_oid[i] = tpi_valid ? &tp[i].entry.oid : NULL;
- 		}
+diff --git a/blame-tree.c b/blame-tree.c
+index ed4ec1e694..7be67520f8 100644
+--- a/blame-tree.c
++++ b/blame-tree.c
+@@ -79,6 +79,18 @@ void blame_tree_init(struct repository *r, struct blame_tree *bt,
  
-+		/*
-+		 * As we recurse through the tree objects, move through
-+		 * our pathspec trie, as well. The one exception is if
-+		 * we already hit a terminal node. This means we have a strict
-+		 * prefix match (e.g., "foo/" matched, and we are in
-+		 * "foo/bar"). We don't have to bother with checking the
-+		 * pathspec at all anymore in that case.
-+		 *
-+		 * Note that the "pos < 0" case should not happen here,
-+		 * as we would have skipped the tree entry as uninteresting
-+		 * earlier. As a safety measure, we turn off the trie
-+		 * optimization and fall back to doing regular pathspec
-+		 * matching in this case.
-+		 */
-+		if (pst && !pst->terminal) {
-+			int pos = pathspec_trie_lookup(pst, path, pathlen);
-+			if (pos < 0)
-+				pst = NULL;
-+			else
-+				pst = pst->entries[pos];
-+		}
+ 	if (add_from_revs(bt) < 0)
+ 		die(_("unable to setup blame-tree"));
 +
- 		strbuf_add(base, path, pathlen);
- 		strbuf_addch(base, '/');
- 		ll_diff_tree_paths(tail, oid, parents_oid, nparent, base, opt,
--				   depth + 1);
-+				   depth + 1, pst);
- 		FAST_ARRAY_FREE(parents_oid, nparent);
- 	}
- 
- 	strbuf_setlen(base, old_baselen);
++	pathspec_setup(&bt->rev.prune_data, &bt->paths);
++	copy_pathspec(&bt->rev.pruning.pathspec, &bt->rev.prune_data);
++	copy_pathspec(&bt->rev.diffopt.pathspec, &bt->rev.prune_data);
++	bt->rev.prune = 1;
++
++	/*
++	 * Have the diff engine tell us about everything, including trees.
++	 * We may have used --max-depth to get our list of paths to blame,
++	 * in which case we would mention trees explicitly.
++	 */
++	bt->rev.diffopt.flags.tree_in_recursive = 1;
  }
  
-+static enum interesting match_pathspec_trie_entry(struct pathspec_trie *pst,
-+						  const struct name_entry *entry)
+ void blame_tree_release(struct blame_tree *bt)
+@@ -91,6 +103,7 @@ struct blame_tree_callback_data {
+ 	struct commit *commit;
+ 	struct string_list *paths;
+ 	size_t num_interesting;
++	struct rev_info *rev;
+ 
+ 	blame_tree_fn callback;
+ 	void *callback_data;
+@@ -122,6 +135,10 @@ static void mark_path(const char *path, const struct object_id *oid,
+ 	data->num_interesting--;
+ 	if (data->callback)
+ 		data->callback(path, data->commit, data->callback_data);
++
++	pathspec_drop(&data->rev->pruning.pathspec, path);
++	clear_pathspec(&data->rev->diffopt.pathspec);
++	copy_pathspec(&data->rev->diffopt.pathspec, &data->rev->pruning.pathspec);
+ }
+ 
+ static void blame_diff(struct diff_queue_struct *q,
+@@ -172,6 +189,7 @@ int blame_tree_run(struct blame_tree *bt, blame_tree_fn cb, void *cbdata)
+ 	data.num_interesting = bt->paths.nr;
+ 	data.callback = cb;
+ 	data.callback_data = cbdata;
++	data.rev = &bt->rev;
+ 
+ 	bt->rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+ 	bt->rev.diffopt.format_callback = blame_diff;
+diff --git a/pathspec.c b/pathspec.c
+index c174edef32..7ef2a55280 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -117,6 +117,50 @@ struct pathspec_trie *pathspec_trie_build(const struct pathspec *pathspec)
+ 	return ret;
+ }
+ 
++static void pathspec_drop_from_trie(struct pathspec *ps,
++				    const char *path)
 +{
-+	int pos;
++	struct pathspec_trie *prev = NULL, *cur = ps->trie;
++	int pos = -1;
 +
-+	/*
-+	 * If our base directory is matched, then everything below is
-+	 * interesting (i.e., a prefix match).
-+	 */
-+	if (pst->terminal)
-+		return entry_interesting;
++	if (!cur)
++		return;
 +
-+	/*
-+	 * Otherwise, look up the actual entry. If we don't mention it at all,
-+	 * it's definitely uninteresting. But furthermore, if we're at the
-+	 * end of our sorted list, we know that nothing after it is
-+	 * interesting, either.
-+	 *
-+	 * XXX It seems like we should have to make special consideration here
-+	 * for the sort order of trees. But tree_entry_interesting does not
-+	 * seem to. Is it OK, is tree_entry_interesting buggy too, or am I
-+	 * reading it wrong? This optimization gives substantial speedups, so
-+	 * we really need to keep it or something like it.
-+	 */
-+	pos = pathspec_trie_lookup(pst, entry->path, tree_entry_len(entry));
-+	if (pos < 0) {
-+		if (-pos - 1 == pst->nr)
-+			return all_entries_not_interesting;
-+		else
-+			return entry_not_interesting;
++	while (*path) {
++		const char *end = strchrnul(path, '/');
++		size_t len = end - path;
++		pos = pathspec_trie_lookup(cur, path, len);
++
++		if (pos < 0)
++			die("BUG: didn't find the pathspec trie we matched");
++
++		prev = cur;
++		cur = cur->entries[pos];
++		path = end;
++		while (*path == '/')
++			path++;
 +	}
 +
-+	/*
-+	 * We definitely have the entry. First we have to resolve any directory
-+	 * restrictions; if there aren't any, then it's definitely interesting.
-+	 *
-+	 * Note that we do not need to check the "terminal" flag of the
-+	 * resulting trie node. If it is not set, then this particular entry
-+	 * does not match our pathspec, but we do still need to traverse
-+	 * through it to get to the interesting things inside. It's interesting
-+	 * either way.
-+	 */
-+	if (pst->entries[pos]->must_be_dir)
-+		return !!S_ISDIR(entry->mode);
-+	return entry_interesting;
++	if (!cur->terminal)
++		die("BUG: pathspec trie we found isn't terminal?");
++
++	if (cur->nr) {
++		cur->terminal = 0;
++		cur->must_be_dir = 0;
++		return;
++	}
++
++	free(cur);
++	if (pos < 0)
++		ps->trie = NULL;
++	else if (prev) {
++		prev->nr--;
++		memmove(prev->entries + pos,
++			prev->entries + pos + 1,
++			sizeof(*prev->entries) * (prev->nr - pos));
++	}
 +}
 +
- static void skip_uninteresting(struct tree_desc *t, struct strbuf *base,
--			       struct diff_options *opt)
-+			       struct diff_options *opt,
-+			       struct pathspec_trie *pst)
+ static void pathspec_trie_clear(struct pathspec_trie *t)
  {
- 	enum interesting match;
- 
- 	while (t->size) {
--		match = tree_entry_interesting(opt->repo->index, &t->entry,
-+		match = pst ?
-+			match_pathspec_trie_entry(pst, &t->entry) :
-+			tree_entry_interesting(opt->repo->index, &t->entry,
- 					       base, &opt->pathspec);
- 		if (match) {
- 			if (match == all_entries_not_interesting)
-@@ -433,7 +506,7 @@ static void ll_diff_tree_paths(
- 	struct combine_diff_path ***tail, const struct object_id *oid,
- 	const struct object_id **parents_oid, int nparent,
- 	struct strbuf *base, struct diff_options *opt,
--	int depth)
-+	int depth, struct pathspec_trie *pst)
- {
- 	struct tree_desc t, *tp;
- 	void *ttree, **tptree;
-@@ -468,9 +541,9 @@ static void ll_diff_tree_paths(
- 			break;
- 
- 		if (opt->pathspec.nr) {
--			skip_uninteresting(&t, base, opt);
-+			skip_uninteresting(&t, base, opt, pst);
- 			for (i = 0; i < nparent; i++)
--				skip_uninteresting(&tp[i], base, opt);
-+				skip_uninteresting(&tp[i], base, opt, pst);
- 		}
- 
- 		/* comparing is finished when all trees are done */
-@@ -535,7 +608,7 @@ static void ll_diff_tree_paths(
- 
- 			/* D += {δ(t,pi) if pi=p[imin];  "+a" if pi > p[imin]} */
- 			emit_path(tail, base, opt, nparent,
--				  &t, tp, imin, depth);
-+				  &t, tp, imin, depth, pst);
- 
- 		skip_emit_t_tp:
- 			/* t↓,  ∀ pi=p[imin]  pi↓ */
-@@ -547,7 +620,7 @@ static void ll_diff_tree_paths(
- 		else if (cmp < 0) {
- 			/* D += "+t" */
- 			emit_path(tail, base, opt, nparent,
--				  &t, /*tp=*/NULL, -1, depth);
-+				  &t, /*tp=*/NULL, -1, depth, pst);
- 
- 			/* t↓ */
- 			update_tree_entry(&t);
-@@ -563,7 +636,7 @@ static void ll_diff_tree_paths(
- 			}
- 
- 			emit_path(tail, base, opt, nparent,
--				  /*t=*/NULL, tp, imin, depth);
-+				  /*t=*/NULL, tp, imin, depth, pst);
- 
- 		skip_emit_tp:
- 			/* ∀ pi=p[imin]  pi↓ */
-@@ -584,7 +657,8 @@ struct combine_diff_path *diff_tree_paths(
- 	struct strbuf *base, struct diff_options *opt)
- {
- 	struct combine_diff_path *head = NULL, **tail = &head;
--	ll_diff_tree_paths(&tail, oid, parents_oid, nparent, base, opt, 0);
-+	ll_diff_tree_paths(&tail, oid, parents_oid, nparent, base, opt,
-+			   0, opt->pathspec.trie);
- 	return head;
+ 	if (t) {
+@@ -878,6 +922,40 @@ void copy_pathspec(struct pathspec *dst, const struct pathspec *src)
+ 	dst->trie = pathspec_trie_build(dst);
  }
  
++void pathspec_setup(struct pathspec *ps, const struct string_list *paths)
++{
++	struct strvec argv = STRVEC_INIT;
++	size_t i;
++
++	for (i = 0; i < paths->nr; i++)
++		strvec_push(&argv, paths->items[i].string);
++
++	clear_pathspec(ps);
++	parse_pathspec(ps, PATHSPEC_ALL_MAGIC & ~PATHSPEC_LITERAL,
++		       PATHSPEC_PREFER_FULL | PATHSPEC_LITERAL_PATH, "",
++		       argv.v);
++	strvec_clear(&argv);
++}
++
++void pathspec_drop(struct pathspec *ps, const char *path)
++{
++	int i;
++
++	/* We know these are literals, so we can just strcmp */
++	for (i = 0; i < ps->nr; i++)
++		if (!strcmp(ps->items[i].match, path))
++			break;
++
++	if (i == ps->nr)
++		die("BUG: didn't find the pathspec we just matched");
++
++	memmove(ps->items + i, ps->items + i + 1,
++		sizeof(*ps->items) * (ps->nr - i - 1));
++	ps->nr--;
++
++	pathspec_drop_from_trie(ps, path);
++}
++
+ void clear_pathspec(struct pathspec *pathspec)
+ {
+ 	int i, j;
+diff --git a/pathspec.h b/pathspec.h
+index ff11599d25..a46b3177e3 100644
+--- a/pathspec.h
++++ b/pathspec.h
+@@ -3,6 +3,7 @@
+ 
+ struct index_state;
+ struct pathspec;
++struct string_list;
+ 
+ /* Pathspec magic */
+ #define PATHSPEC_FROMTOP	(1<<0)
+@@ -152,6 +153,8 @@ void parse_pathspec_file(struct pathspec *pathspec,
+ 			 int nul_term_line);
+ 
+ void copy_pathspec(struct pathspec *dst, const struct pathspec *src);
++void pathspec_setup(struct pathspec *ps, const struct string_list *paths);
++void pathspec_drop(struct pathspec *ps, const char *path);
+ void clear_pathspec(struct pathspec *);
+ 
+ /*
 
 -- 
 2.49.0.rc2
