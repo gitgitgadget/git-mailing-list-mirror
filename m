@@ -1,120 +1,118 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8974086A
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 01:56:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0D13D984
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 02:37:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742954187; cv=none; b=RV9yMJt37vXoqybt6VO+Vl2E+uIQ4jJGpxl5SifNXWfjtS6I3PelAz02u3sXqy3VdfnrgVVK3KLs2WS5NSWJfLgyb+/BWrf0HX21VBBy1g+xNIoAJGxVJGegRAeSZ+HhKD7LaKNNU2HS7z/+nqIQGJSL3kz+GwUTIU5VWhXr1EE=
+	t=1742956681; cv=none; b=ayCkgH/2M16SyjqFz5AJge8IvOVAQAQq+v7AC3kGJqgGUfZVIBHj1hQjdQZhNgQxxnqsEFIU5T2fd9NCsSM3ATT3ObUUVC8I/LQ74YC8cYZUzAVmh8k3SDX8YnZRcesIjNgWrLF7vG8CRHm+wjBB6ODi+RR43JO/a+XcDlbUtkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742954187; c=relaxed/simple;
-	bh=HZHbs5LfaGBT1gpr+/tsVKplCE5cdvucBzZw7J0svO4=;
-	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=BoTp1rtjUWIGOOBhpDMKmVhGc3xqZISqP0T3+C2uO+0NEJ8o6QTOQX9gN2HjHX54JXpgRgugMYKphRDglvqVTgmXkQ/gRdGFr6zb1vk43L4M4OFi2DQC7yf3JttfhyaxLq6QV+mjQyzFnoJSGmZkScNDErvoT0J1GiYq+Cv1bAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ETisLS2D; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1742956681; c=relaxed/simple;
+	bh=mkLxfmPblUiWfCEJR0Q2E/Diou9KE1F9D7FYwkDSkaw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qFkGdFCI4W85Y2N5ktXxqrqZ3G0K6l748mQT3Dz8G8IfFR6VFo5yOWse4OW9H+C/ggyoLo0gg1F8G/xXnvxK5ycZpWp1oV/IoiENjZhyowFRBFHra0xZxKDkwg0G3qaWNaqFyqpEVl5/vjWVl+FAiYRq4/8PGEU4kfuyoYDhGoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BiLrUp73; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MNc/QTRW; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ETisLS2D"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-47688ae873fso64138341cf.0
-        for <git@vger.kernel.org>; Tue, 25 Mar 2025 18:56:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742954185; x=1743558985; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=13rtF0rIyEAEJSqPh+vv1Y3rRGGpIyEu9lRABci7Lbs=;
-        b=ETisLS2DLQnXmja6UjlLYZlkEfTLEM7hcP5gLyfDeF+Jf03dlofb/SytEwoIV9AMcC
-         air3mna0mkE2fzKyXCbGBumNxVuhCod5AM2uD7geVClWYlGovMzn0nM84qwvJ+KyTbnP
-         MuV+wUjuleYaH64WsmWD9u9OCBYIZ5z/uHfz0VLpVn/Qty5zHCcrIiHIJRig/qKYWycE
-         Lvq282GjU52cJVvLmSKJ21F0+4tI2nUiAFx8KNj4tRwbZ6q8crNfSEflfbnRAxeV2HFr
-         f4H/scQkl9J2phjPkqqsrYAaO0vKYBUXudjkxx+KaPFDQrH66zmGbwcgqIj38Ix33nFE
-         w2hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742954185; x=1743558985;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=13rtF0rIyEAEJSqPh+vv1Y3rRGGpIyEu9lRABci7Lbs=;
-        b=XdgiGZGQkKRMdCEnaMTNKdnDhCdWhcLaBzconKG4WqJ2n3QrBsXJDXHI/JnrcaNQsh
-         M+plFZS8hnznT+IZehcfsOzLLUOZxrST3Ai2i8DsOnvmG90vwJuLAifTxBgR4XPaIulq
-         yQsztDKmEDDTn8PDb8Wm2GFbCNr6EVMRbwU+GrHvOFRg2It3339MHqv9rWq/VE5bKLkE
-         kCTgQvgQpM6SP3+5GhKKyJOXbPNgdzf/vkEtYHpvPAQvFtmOSDNxy9+y1mHFWeP6QTIo
-         OVJRGD3iZOXFfU+XQnjsd/MEHcdL7mRDjBjvkedONHxJNJVDZlpsBRlTs5puLAKmzLMU
-         TIiw==
-X-Forwarded-Encrypted: i=1; AJvYcCV8HRDHcbAoSPFrQ58MB1K4Q5WRtmPwz9fjQComZdsdyMaIBAgSpBaD/fApT7a3lSnwH1M=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxoLKkR+wYAh7aIqajWTbpVJ1nGlytumPV+91oHXuFcO31Rb8OV
-	RgdIAfKaLoTgy1ELaoQTjby2J5YlzCHkGgLQ9gD1mMST0eKcglcTKOCvqdik
-X-Gm-Gg: ASbGncurmK43o3hqrIE5grpHHdvT2pvQlCYx35weOFuVJ/G/7Q8/cNdyqGk8w5VpJ3S
-	N3bDOGAyYv9zTKioZx/RiAuaMV+xqJ2/O7j0XmfHn3b0fHxEtw6WOSm2239W/XoTZXE0lUJ7HBc
-	nOHsWC87/7+6bwyQ23dMOg1IcdlFLpEL0m1eGO7l5DU+a93Rw0FoBYFm+79RwBS7/IGHCPk9R5X
-	Gj2YREXBulQNsf5c39rXuAyagGReF6DKSbE3DyjLRBdhqemApE4fj9QM1hLpluc/JeVJzB8wU0X
-	iurY0jscTdh+KuqohtVg++sMmkEewT3tjzRVlUGc0SL52fiodFrOPJ9TjZq+Ji353yB+8qpXYkP
-	6v/+2iDuB11qbMj2yDKGYdw==
-X-Google-Smtp-Source: AGHT+IGIaRBjSoyqQ9luXqg2JdNxa1YXg37/iWTdH7ICv8z5s0T409Mt+OH16TfbtlHQAOmg+dVLUw==
-X-Received: by 2002:a05:622a:5a94:b0:477:cbb:a23e with SMTP id d75a77b69052e-4771dd5480fmr356690861cf.1.1742954184553;
-        Tue, 25 Mar 2025 18:56:24 -0700 (PDT)
-Received: from [192.168.1.174] (c-73-143-206-114.hsd1.ma.comcast.net. [73.143.206.114])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4771d64d5f6sm66505231cf.81.2025.03.25.18.56.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Mar 2025 18:56:24 -0700 (PDT)
-From: Nikolay Shustov <nikolay.shustov@gmail.com>
-X-Google-Original-From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
-Message-ID: <77b5fa59-a8a1-4859-8f3d-41f94fa8120d@gmail.com>
-Date: Tue, 25 Mar 2025 21:56:23 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BiLrUp73";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MNc/QTRW"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 32BC925400D6;
+	Tue, 25 Mar 2025 22:37:58 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Tue, 25 Mar 2025 22:37:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1742956678; x=1743043078; bh=N6r0Txe5RW
+	6Q5POwllzckOdDiQqoMR6TijJc3MGBm+w=; b=BiLrUp73qtPRi2MD+8bUUGxd5r
+	L43a2ThGWfBfIqTzrAfIz8Pj4aQoRIk2arDj3kWbYpQrobOR1K/aLF15le4PztT3
+	97Wu+GckRTj25DC4laistryzZP+emTlwr1RbYpVJJKmf+m4h8rjSO7TAK1iL1HGe
+	xKzFHwM8z+3h8uPbyACRNtvAoPEzR4S0K6/WGobF+1mmxRIv+sFHNhiyxAoIHkKE
+	6ZoH3CzKOxI7MsxY+zOmfIfmi1VTTG/GxCWSa0EuZNIIEq5IqOMwnrbet9GMUYLL
+	xAg7lHN6ktN5iv/8wtSu3ruVbAQvxiUN+DHKEgIiJR2C4dNVlnwkALhu2i3g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1742956678; x=1743043078; bh=N6r0Txe5RW6Q5POwllzckOdDiQqoMR6TijJ
+	c3MGBm+w=; b=MNc/QTRWWzFbqQTDSwoDnwmKL5hyL56oJg1uz9sUEUuOYtHDCI4
+	VyJxmciqVbLiulePHl0wveOJf8oje83Ytngu3LwTTvzexxkNet6Z8FiJ4yR5e6iY
+	CbFfUHKNfhAdlQT3k5leuilpwfNX7XlMBXZ4u1jTo99C6RscwXhq/6K//oUXQ2mZ
+	BAT0A9jzhQob/V1RXv5Tt59YZMmBxi3x5ah9g0sGHPI6tmSNjb5M5ZJbc6H+/hOe
+	sEW4yvMqXP079KiK0zYWlcaNdtPr6p0a6gAhrqSF+T0mKbSSdzZ8PTz0V9VezShA
+	mMYOO2xfrV/jVFhiKTIOialAVxeSwDBR2Ww==
+X-ME-Sender: <xms:hWjjZzhyKT0sCLpE_xFeQOsgkx8iHUfB7qmqYl0AioULu3gFiXGACQ>
+    <xme:hWjjZwAO2mqbvyfIMpFZYA6qkD4hi7XN1ky5OZBJMXueSH-dL5UbAnWT2OlIpKpfT
+    9k32QSgT67acxWheg>
+X-ME-Received: <xmr:hWjjZzFOzEYRTFfOEb-G2bzYI_3GZj4iFteoWENuZ4v2KS9ENfw2U-kXNyL4mjT21Wu1Z_5BRRAg4yBtOcD1NxGpQ1Bt1ZBsRJaMRw4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieegfeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    evufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    eikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileffudenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehjrgihrghthhgvvghrthhhkhhulhhkrghrnhhivddttdehsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:hWjjZwS9TIvW7qENT4yvhDYlBstJx6LNOcUTJR8Pm9ce-d33TijpUg>
+    <xmx:hWjjZwzXcTXtedyqn_9C6mlGBiwPMx3bf0IksXKJdvtnn7JPUtx9rg>
+    <xmx:hWjjZ270ozBHU3ihvWOkaPzOMFckkZCnmRZiGyyBUXwa3nM3-6brtA>
+    <xmx:hWjjZ1x4by891kUvQXY9D3lWPYJA1H9NKeQJ4aV9ME03a2rA9lOq5g>
+    <xmx:hmjjZ6s2XTelmHpSUbWpBdZnUqmkTBUtE06Zc65qM7wzp4iBouCQJhHE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 25 Mar 2025 22:37:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org,  ben.knoble@gmail.com
+Subject: Re: [[GSOC][PATCH v3] 3/3] docs: replace git_config with repo_config
+In-Reply-To: <CA+rGoLf7R5BmpN1E+AXYhEKz=Th2TcpfDr0NxNma54GR_X_K-Q@mail.gmail.com>
+	(JAYATHEERTH K.'s message of "Mon, 24 Mar 2025 18:40:12 +0530")
+References: <xmqqa59evffd.fsf@gitster.g>
+	<20250321143022.5406-1-jayatheerthkulkarni2005@gmail.com>
+	<20250321143022.5406-3-jayatheerthkulkarni2005@gmail.com>
+	<xmqqiknzqu2h.fsf@gitster.g>
+	<CA+rGoLfALoTvQuAzQPx7rqd-Zy+wMiyEbF5Y8_-2Yi-yE-2qpA@mail.gmail.com>
+	<xmqq34f3qbna.fsf@gitster.g>
+	<CA+rGoLf7R5BmpN1E+AXYhEKz=Th2TcpfDr0NxNma54GR_X_K-Q@mail.gmail.com>
+Date: Tue, 25 Mar 2025 19:37:56 -0700
+Message-ID: <xmqqiknwldob.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: Nikolay.Shustov@gmail.com
-Subject: Re: [Question] Moving from Python2 to Python3
-To: Todd Zullinger <tmz@pobox.com>
-Cc: Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com,
- git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <022b01db9d99$e68785c0$b3969140$@nexbridge.com>
- <Z-MgpuxFQ3xEgvsU@tapette.crustytoothpaste.net>
- <66e39a95-09a3-44dc-ac71-a6c02b5949c9@gmail.com> <xmqqtt7glmut.fsf@gitster.g>
- <6977f08e-3c49-4bcc-9ab7-e3cc61a78396@gmail.com>
- <Z-NSGtV06NPE_C9D@teonanacatl.net>
-Content-Language: en-US
-In-Reply-To: <Z-NSGtV06NPE_C9D@teonanacatl.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Doh! Of course I thought of PYTHONPATH not of PYTHON_PATH.
-My apologies for the noise.
+JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com> writes:
 
-On 3/25/25 21:02, Todd Zullinger wrote:
-> Nikolay Shustov wrote:
->> You are right, my answer was over-engineered.
+>> ... better to explain _why_ each change is made in the text that
+>> precedes the sample code.  E.g.
 >>
->> Instead of speculating about what else needs to be done if
->> one decides to set PYTHONPATH, I should have just advised
->> to use the OS specific method on setting up the "default"
->> Python as Python3 and be with it.
+>>     Add `#include "config.h"` because you want to use X and Y,
+>>     and `#include "repository.h"` because you want to use Z.
 >>
->> Well, unless the dual Python is needed (git-p4 running
->> with the Python different from system "default").
-> Perhaps you were conflating PYTHON_PATH, which brian
-> suggested, with PYTHONPATH?
->
-> PYTHON_PATH is used by the git build system to set the path
-> to the python executable, e.g.: /usr/bin/python2,
-> /usr/bin/python3, etc.
->
-> PYTHONPATH is used by python itself to point to the
-> location(s) of module files, similar to PATH, as you
-> mentioned.
->
-> The Fedora distribution packaging set PYTHON_PATH to python2
-> or python3 while both were available and things worked well.
-> Only python3 is supported now, and PYTHON_PATH is set
-> accordingly.
->
-> That ought to work just as well for NonStop.  If it doesn't,
-> that would most likely be something to take up with the OS
-> folks handling python3. :)
->
+>> ...
+> In the latest patch version I've removed the comments, since we
+> already added a line above saying the user has to include
+> `repository.h` I don't think we need to go in depth into that, do let
+> me know if that is not the case, looking forward to any more feedback.
+
+It's your patch, after all.
+
+But if the reason why you added the comment was "this is a tutorial"
+as you said, I would imagine that it would help readers to say why
+a particular header is needed, when the tutorial text tells them
+that they need to add it.  From a quick look at the patch, it seems
+that the updated text says what the change did (i.e. add a header),
+which is rather obvious in the sample code, without saying why the
+addition is necessary?
+
