@@ -1,175 +1,198 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB481531F0
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 07:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C5B174EF0
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 07:49:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742975200; cv=none; b=R0zqD5BxV1VgyYiUQgNKvH6D6BZKJeoj6zRY5UzPTDUdyn9FP5clWf7bKyu6rWMADo9it+am5MJqDu6G125i8rDAfgCF4C8BnuY2M6eer8IujXoPYqYbx86LXda+Y63hUJP96ywEtMyX3TyHS0u1A1Y+j3bse8aa6SgMpZNh+ds=
+	t=1742975400; cv=none; b=i3UseoTo3kOAUOZtfVSrtQJF0TYF7Uz6sHy3tUKV89iKynnrCX4nxOJxSe886YJ5S89ELsZsbDIgwaB5NEPDKV6BIlj4FlJ+lsdVG6OoTKMZtEgPAKJ7Eukv2VkKAzgMDZZWHbKXZRswyK1nnmdmoPbD1KYJHgU6iwbG5sRQe7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742975200; c=relaxed/simple;
-	bh=ntSuYLVv6t8ORQ6tQPgbJVYl0Lo1KdJlYnS1MxjZ4d8=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=OgR2NSdoBayUsNJqXA45QIE55bwvBWrajH2YuilhnJjKJcarp/7+texgGC/5H1I5j2EGTzP6KiO7xIXLS2PaANWOWhDyeQt5ep7GQOnrCy+7u8l9Am/KGzuzYcXRg7H86eXvIe2kwMjQRMhlRiumxa9AA6qY7dir14uDicXgbHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=O+ycWydM; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1742975400; c=relaxed/simple;
+	bh=hT/w2owPGqW/WlycrbUSyGNRIXk1XQp9Y0N7Q/watr0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=I5HE2xQrRCPGomJBmr31mdD9meGer5lRwtQaNkm6Yj02KiUFdTzkePSlgpsnCCRlrJOdo1robCGLFP+QSqnatr3zAHwcKC/bg6P+YzIvLLXv4J+CmjgLgY10qS3E2sYxDJXci5xiihzs7y0cv0/XqssJClyoVQgb3kuNnxkPtFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mK9yrMYE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IUeK6+Fx; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="O+ycWydM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1742975190; x=1743579990;
-	i=johannes.schindelin@gmx.de;
-	bh=ZJW9ivBgFUMTB94Ypjfln9bar/r97faFN4ZfYofE8No=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=O+ycWydMw0c4z/KQSka5emV2qEh0AVubuioKc+7+jJlP8hGbbYhJvsbzUHM7iX2W
-	 h5iwL+o+rdGGpAlL/SCOD3hk4BrH5VgXJBbPT+Kdv56qwAgi6D/tBVFaQxJLvpPlp
-	 dX0vIzzAE2UkGTjfnbW97TKQuzG6hB/jyDphqxMZdwTzaJ6kUVCEmUPNGpkzwNn6r
-	 m5ZEw1T30ks4+Z8EI7/cmDjgwiMjqGwuMlq6XpQkanrGjfKraUeM+FPkpFLdGLCMU
-	 yp9T1CUNid/GFmZSj740gfOjZinzgLne1yz+cH6/mPDtvnUZBCjEWshCeNYsAbf63
-	 HlhYVE7vn1YX9+cPqw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N0oBx-1tBgxM3VYr-00zhh9; Wed, 26
- Mar 2025 08:46:30 +0100
-Date: Wed, 26 Mar 2025 08:46:29 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>, 
-    Phillip Wood <phillip.wood123@gmail.com>, 
-    Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mK9yrMYE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IUeK6+Fx"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9066F25401D8;
+	Wed, 26 Mar 2025 03:49:54 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 26 Mar 2025 03:49:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1742975394; x=1743061794; bh=fFotmK+TKX
+	Dwp4oQdATDiQpDpxovza4OhUxBhaD3ZTY=; b=mK9yrMYEqru6zT9rMThYM6Ql6g
+	tD0psxNY9GR0uSmHptmlAHgyDKQE+MbsOZbYiU8IXpTnmP1F/nzXxY01RhHM2/uO
+	yOFmqPeLPQ8R2qcnOwMGxVNnu30CRWAOCwukiWmuxtel9C/xE3HQc0EhYtB6BEvR
+	SwxhvTJkKZQnKi97Nh2SQ0QQPOxUQ5xby7Y4bEEAEC4eiLkhKCUoE1eI7YLTirnl
+	HpyUXeCeSDGtWFXde1h2eFQxtNME/OQU19wZ8mbTXI0FmgNzvvBoRH+hQpOLMt6O
+	KplWYly/WdNHpeJz2ME6u7Idsa2oZw3lNR4nz6/L+Hxs5nw/88l9VS8DpEng==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1742975394; x=1743061794; bh=fFotmK+TKXDwp4oQdATDiQpDpxovza4OhUx
+	BhaD3ZTY=; b=IUeK6+FxerDZqrGXO4YO2xUlZUdaxMND/Q6eChnfmde6bgHFplt
+	zchBDS+J6hOpGaXVDtIeFoKlHYKWId2qUETFqirbYkkVqjjhEZn5N3cE0P4E7Ewv
+	QbmFwGikJW5uSD33PE82BRXkbRpzI7tRN0N+gO9UPHpFdoapSBxKQ9OSMRuKE7Y0
+	seh4TF0OE2R3LPwiHxIfLLbHkPaTpDOHn53Pt4yKZ5WQ7tnOrTCclZIxQyUgeq4M
+	sxerpI0lmo+Ya7ww0pKxbIvgLuTXiZ+Bz6K0QwYnROjRJ4S6zhAMum5EY3EQrmLZ
+	4oEjlsiSJjKgA/a0PVb4PC0xMGr7fpNl0Aw==
+X-ME-Sender: <xms:orHjZxSC_7TftHW5urW8MtfvWcYlaHNLQnkxYnJJ3afD8OjKp5W8CA>
+    <xme:orHjZ6x2DioedLa3ED1hL794t9LDeDtf4r4efMdTMknaqTIIaGPNWfFgCgZ_T7elo
+    4WAqpAsfyEX2fzWvw>
+X-ME-Received: <xmr:orHjZ21nt2zt-JVHWWtx80egug754fJw05UCvF39xtqmwf4x-CBRvKfvpUdGChI6tzyhmAeSUO35HNyrYdmWucf6YrB-04ubPzJobrM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieegleejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepkefhgedtfeetkeejleffudevjefgteet
+    ffetvefhvdeiveffjeehjeffhfehtefgnecuffhomhgrihhnpeguihhffhdquggvlhhtrg
+    drtgifpdifihhlughmrghttghhrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
+    gtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhg
+    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepphhhihhlihhpohgrkhhlvgihsehivggvrdgvmhgr
+    ihhlpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprd
+    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudek
+    keesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtg
+    hpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:orHjZ5BjYjR4Uu1VtWria4Q_1F6FbzDuW0RWpx--sPWJhTUOa0X0sw>
+    <xmx:orHjZ6iIW5ijE_7JkV008JObHfN2s3INT8yRlEAUrqJXLn5fKSmVjw>
+    <xmx:orHjZ9q7hkc0thk4q4nW5qFuPBkJx9cJlBsUkmyyOKOpQUJoDy3sCw>
+    <xmx:orHjZ1hpuSznuxmqtTOY-kf9ws8zo8PNVPtcHoqYkN1r7kDthIC5Dg>
+    <xmx:orHjZ1OIF0zJEO1BwuvH1ZeYq-WzL4gOmDo0-cMhBN9PW-7v9evWF0CB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 26 Mar 2025 03:49:53 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Philip Oakley <philipoakley@iee.email>,  Patrick
+ Steinhardt <ps@pks.im>,  Phillip Wood <phillip.wood123@gmail.com>,
+  Karthik Nayak <karthik.188@gmail.com>,  Jeff King <peff@peff.net>,
+  Johannes Schindelin <johannes.schindelin@gmx.de>
 Subject: Re: [PATCH v2 07/10] wildmatch: explicitly mark intentional use of
  the comma operator
-In-Reply-To: <Z-OWpEDwHtaq3r2J@pks.im>
-Message-ID: <721cfcca-b702-cb44-c847-f438b2495bda@gmx.de>
-References: <pull.1889.git.1742889711.gitgitgadget@gmail.com> <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com> <9a6de12b8076266fb0c88f6b658c20d37409ce13.1742945534.git.gitgitgadget@gmail.com> <Z-OWpEDwHtaq3r2J@pks.im>
+In-Reply-To: <9a6de12b8076266fb0c88f6b658c20d37409ce13.1742945534.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Tue, 25 Mar 2025
+	23:32:11 +0000")
+References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
+	<pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
+	<9a6de12b8076266fb0c88f6b658c20d37409ce13.1742945534.git.gitgitgadget@gmail.com>
+Date: Wed, 26 Mar 2025 00:49:52 -0700
+Message-ID: <xmqq4izgjknz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:xIn302m9McVc6gr4fI+PPjYhgjU0KLI0XzJeKazsnMHzcasKOJs
- Pbub1gOnuQA//bJfzvM6GzwHsKZMFkY/csmGA6xhDh4DEAcP+lUiSpe8D6PlIRfsGK788Kk
- j0x/gaRxhg8nsux3cw8P4RnuxZ8ZkLsL2PRYUnJBx0c3Hbu2KbKFfFpmQLqnvGmnbY8l6a6
- Jo12Y91V2qUhC4xv4RoAw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:fZAy9JHbCyw=;hL/qC0oOPDSsIoJpRrVwz8hV4W0
- Un5+TWSyfCHQ0m6ijcHK1bV74R6ADzVR9YOfBV+8BXHcu3/gqEiwp3tGWYcmfm18q059gH8G4
- osaiIJYZ+ngSe6z2YuRwNPL9I61uftWtqV5bFMby/5466Pkyma+DHWhAUT042p5xrBSpbQOkK
- Bgfx+8PUfZh7oeRSoeBb3iQ+8tAxv6vlTLJhtjwnkgfRpmy/sZL1ZM4hZJq0OUtD8pT5EaAsF
- K282pho88zIR+HS8OV0VR4wPYsFihe14px65EU9BIU4vMEq/jJL+JK5etGQmz7u52rbHqEV4i
- cLd89KAXyMb2hKv1V1/HilcRZTHm/T6b5AAEXvwOo+bVWF6tRbznSvlVBT14wxxcjqtgNI0Of
- FDlM0pk8COxThKFhY6K3R1v2YFiWcRN/Z0v6w4TM9zinErkNZAVJzabjj9mhistR9448C+zMr
- lvy1erwS0n8OtIrW1hMGQt1BcieXQhjLnGkYCz9opzeGIpXC3dV54B3WggYv1UCLAJ/NWneh8
- LhDrVZfvd3flANQ4NaOQeJzDqeTNbnu2G0WOGr+mmjjUZOYifaggn1EPXICCM2+faykmsDevV
- Y9nynh8oB+r5yF5f7Aar/dh3IBduO6Nm1xGk2MsVHcwGZPbeVOzqukAoQfQOe5Ys+IcorLXbZ
- JmuINf76mrkin7R0m2F0+oo4DtrHhKkQVm3DoQfqGJaTuCoarc6IuDk0KyFXifOjxwwMEnwRh
- fI8Z5tNJiWX1dbeDn+InVYZ4FFhpQ+wojoRFfzaZAgObggEfeM8d/j/x+jpNd40La0+w7cmjn
- gSZfYhFRj/NLP2wEC8/YkW6Hhclez87zljXtXYEQWoe3nHzE/JcjGzMrQ66qkKu0hY+n2d410
- 3E2RzbK3VP3Fh73t1nr8NzGk6xL/sEZectvuoofJiRaFj6iAPIz94XWCF9WDCF2CtAqmk2NBK
- mI3BpB1i8mVPS+aiBkqjaWSw7Ssx+my19niIq3JfCIqdZcUXbNNPi74z51G96bElZZKAk6PzF
- 5jDh1rtSgnhgz2nxNofFUnE3AELJgUi0mV3ZHvFnmU2qJRbfcK7+QWLxt6bY18vVBBfE7i0SM
- m6WBoDHEJk267bM8pe8stkpSVKIvcvqPU62wSBteb53UhhDyKNK/rKzMXJzz1TEc2KS/rCmfS
- JxkbyYdKPR5t12QBo5eCgF++TBzW2bsGZUDnlVeXZNDP9tfrGvfW9K8ZETd4KmF01TftQU0Tl
- YmBo2Ygom30JIqgHSKA1jf8o54kR3++DAEb6K710FQJiOqw8F3C7j0d1daZHExcnbONugppv8
- KLx6J0WzTA8eN6d7zsdPiixFH7CIaQ7XvRlSxYZ4LYfxixrW6Dhwq3/ybfOHSXyFaiMkfD8mI
- aNJOsqTFQPKluGakFz0qxauWcSQdfNoeU/x9KJyVbZ+vhtRzQGP/W1R6TC87sFweUASLZdgKi
- xN5uytPWXWXowzbDsLtCB6Hu55k0NJRV3KI/Bajrrr9rC/4Rx
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi Patrick,
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On Wed, 26 Mar 2025, Patrick Steinhardt wrote:
+> diff --git a/wildmatch.c b/wildmatch.c
+> index 8ea29141bd7..ce8108a6d57 100644
+> --- a/wildmatch.c
+> +++ b/wildmatch.c
+> @@ -268,7 +268,7 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
+>  					p_ch = 0; /* This makes "prev_ch" get set to 0. */
+>  				} else if (t_ch == p_ch)
+>  					matched = 1;
+> -			} while (prev_ch = p_ch, (p_ch = *++p) != ']');
+> +			} while ((void)(prev_ch = p_ch), (p_ch = *++p) != ']');
+>  			if (matched == negated ||
+>  			    ((flags & WM_PATHNAME) && t_ch == '/'))
+>  				return WM_NOMATCH;
 
-> On Tue, Mar 25, 2025 at 11:32:11PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > diff --git a/wildmatch.c b/wildmatch.c
-> > index 8ea29141bd7..ce8108a6d57 100644
-> > --- a/wildmatch.c
-> > +++ b/wildmatch.c
-> > @@ -268,7 +268,7 @@ static int dowild(const uchar *p, const uchar *tex=
-t, unsigned int flags)
-> >  					p_ch =3D 0; /* This makes "prev_ch" get set to 0. */
-> >  				} else if (t_ch =3D=3D p_ch)
-> >  					matched =3D 1;
-> > -			} while (prev_ch =3D p_ch, (p_ch =3D *++p) !=3D ']');
-> > +			} while ((void)(prev_ch =3D p_ch), (p_ch =3D *++p) !=3D ']');
-> >  			if (matched =3D=3D negated ||
-> >  			    ((flags & WM_PATHNAME) && t_ch =3D=3D '/'))
-> >  				return WM_NOMATCH;
->
-> In this case I agree that it makes sense to not introduce curly braces
-> for brevity.
+Hmph, I personally do not find the (void) convention any easier to
+read and understand than the original, and more importantly, it does
+not look like a good signal to say that the author knows what they
+are doing.
 
-I should probably have mentioned that this patch took the longest to write
-of the entire patch series, by far. Not because of the changed code, that
-was easy. No, when I wrote the commit message and spotted the `continue`,
-I did not want to leave it at that because the code around that `continue`
-looks... well, let's just say that it could be rewritten for clarity.
+For this particular loop, it probably makes a lot more sense to do a
+stupid and more obvious rewrite.  And the same thing can be said for
+the previous step.
 
-In fact, when I looked at the following part, I was immediately
-_convinced_ that it is incorrect, and had to work very hard to understand
-why it works correctly, even going so far as to single-step through a
-couple of examples, e.g. `test-tool wildmatch wildmatch 'b' '[[:a-z]'`:
+Perhaps like so?
 
-				} else if (p_ch =3D=3D '[' && p[1] =3D=3D ':') {
-					const uchar *s;
-					int i;
-					for (s =3D p +=3D 2; (p_ch =3D *p) && p_ch !=3D ']'; p++) {} /*SHARED=
- ITERATOR*/
-					if (!p_ch)
-						return WM_ABORT_ALL;
-					i =3D p - s - 1;
-					if (i < 0 || p[-1] !=3D ':') {
-						/* Didn't find ":]", so treat like a normal set. */
-						p =3D s - 2;
-						p_ch =3D '[';
-						if (t_ch =3D=3D p_ch)
-							matched =3D 1;
-						continue;
-					}
 
-For context, here is a link:
-https://gitlab.com/gitlab-org/git/-/blob/v2.49.0/wildmatch.c?ref_type=3Dta=
-gs#L213-227.
-At this point, `t_ch` is the current character in the text to match;
-`p_ch` (and `*p`) is the current character in the _pattern_, and it is
-_inside_ a `[...]` character range, and it wants to match a character
-class of the form `[:alnum:]` but also allow for a regular character range
-that starts by including the colon. And that latter scenario, where it is
-_not_ a special character class, is what this `continue` is all about.
+ diff-delta.c | 37 ++++++++++++++++++++++++-------------
+ wildmatch.c  |  4 +++-
+ 2 files changed, 27 insertions(+), 14 deletions(-)
 
-What threw me was that `t_ch =3D=3D p_ch` condition _directly_ after assig=
-ning
-`p_ch =3D '['`. It is still a pattern I would always immediately suspect t=
-o
-be a bug: Why not compare `t_ch =3D=3D '['` instead, which would be much m=
-ore
-obvious?
+diff --git c/diff-delta.c w/diff-delta.c
+index a4faf73829..a999b875d4 100644
+--- c/diff-delta.c
++++ w/diff-delta.c
+@@ -438,19 +438,30 @@ create_delta(const struct delta_index *index,
+ 			op = out + outpos++;
+ 			i = 0x80;
+ 
+-			if (moff & 0x000000ff)
+-				out[outpos++] = moff >> 0,  i |= 0x01;
+-			if (moff & 0x0000ff00)
+-				out[outpos++] = moff >> 8,  i |= 0x02;
+-			if (moff & 0x00ff0000)
+-				out[outpos++] = moff >> 16, i |= 0x04;
+-			if (moff & 0xff000000)
+-				out[outpos++] = moff >> 24, i |= 0x08;
+-
+-			if (msize & 0x00ff)
+-				out[outpos++] = msize >> 0, i |= 0x10;
+-			if (msize & 0xff00)
+-				out[outpos++] = msize >> 8, i |= 0x20;
++			if (moff & 0x000000ff) {
++				out[outpos++] = moff >> 0;
++				i |= 0x01;
++			}
++			if (moff & 0x0000ff00) {
++				out[outpos++] = moff >> 8;
++				i |= 0x02;
++			}
++			if (moff & 0x00ff0000) {
++				out[outpos++] = moff >> 16;
++				i |= 0x04;
++			}
++			if (moff & 0xff000000) {
++				out[outpos++] = moff >> 24;
++				i |= 0x08;
++			}
++			if (msize & 0x00ff) {
++				out[outpos++] = msize >> 0;
++				i |= 0x10;
++			}
++			if (msize & 0xff00) {
++				out[outpos++] = msize >> 8;
++				i |= 0x20;
++			}
+ 
+ 			*op = i;
+ 
+diff --git c/wildmatch.c w/wildmatch.c
+index 8ea29141bd..29f4b4df75 100644
+--- c/wildmatch.c
++++ w/wildmatch.c
+@@ -268,7 +268,9 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
+ 					p_ch = 0; /* This makes "prev_ch" get set to 0. */
+ 				} else if (t_ch == p_ch)
+ 					matched = 1;
+-			} while (prev_ch = p_ch, (p_ch = *++p) != ']');
++
++				prev_ch = p_ch;
++			} while ((p_ch = *++p) != ']');
+ 			if (matched == negated ||
+ 			    ((flags & WM_PATHNAME) && t_ch == '/'))
+ 				return WM_NOMATCH;
 
-You will also note that the value of `i` is only used in the condition,
-and it is basically used to determine whether the the colon was
-immediately followed by the closing bracket or not, which could be
-rewritten to be a lot more obvious.
 
-So what does the `continue` do here? It skips back to the outer loop,
-continuing with the `:` as next pattern character in the character range,
-and for that it is crucial that the `p_ch` be set to the opening bracket
-and `p` is rewound _just_ so that the assignments in the loop condition
-can set things up for the next loop iteration (still within that `case
-'['`) not to be thrown by that `[:`.
-
-I probably did a terrible job explaining why the code works as intended,
-but I'll just chalk it up to the contortions my brain had to exercise to
-understand that code.
-
-But all that's safely outside the scope of the question whether to use a
-comma operator or not ;-)
-
-Ciao,
-Johannes
