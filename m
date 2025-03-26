@@ -1,101 +1,159 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3907A13633F
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 20:17:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491B0185955
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 20:19:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743020279; cv=none; b=eXaxr5HYmjPKEtiwZ41QNt/KzlSZZXcjCW33Ju3GXCjx65Wx4FKl8hFcDIk0aFkVxOVFkaLLTsoKr6gMOLskTb8SHCLYamNr6RPCIE7COYJsSV4HZxSAUwxtZBXKGwHJQQxnkABJRZsZ9gBCf6yyTaOM6IjuMsBk0W14gmq04jU=
+	t=1743020367; cv=none; b=GGBfyNUIlZ0zm8Pgno/71SCq/lQSp1z+O03TrliKsxU/809NVDePiP7sPjnvgSrtyqCp75huLh26UmrAUNHgmedrXzhPSHG9A9ktSbZ4g1X/CRc+5hyPXXWp8s2a4FccCs1XU6GW9p7UusGNpKouDrYRg0XDrlosvU5qGfepJWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743020279; c=relaxed/simple;
-	bh=tiGgtVRlDn66GdhRTh2UwlDGtuJrrA0Iq1HXxpP8hX8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BY+lgJtlWIcEr1csyz1yfpQ7nH4gzN23TVDbK1yyy63i6JLidTDUR3Wgt+vOxKnHc8194xbz9su2FeOZgDNRffqhzb+AQzvsUaZmprrPmT35LLA5+x+oVquSz0NLboEINmHv9zwyeCBxiBGOna+jp6gzpHF/6/oW+F6RoZETzfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=i0xuOR4P; arc=none smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1743020367; c=relaxed/simple;
+	bh=1neEB5aiJGUpaQsER0k7TSAG47NSVlEPjkVFZu7Dkqk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=iCKg/63L1be4eBlxii6lGj45nWSsuib/FhlZ8l1i0pmSQ3EguBHdBWxvkWF1P+uuTH62C8Pj8LjC3v2I91dSdYZ9+c6qTuaDJbB2z4/313/aZ7ixfz8wtfcGaMLXD2EjO+bNmA43Ya+w2jFSFw3K+V/8BjVodLkFQTKvmMhm48Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=Wg3Qn5z1; arc=none smtp.client-ip=91.218.175.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="i0xuOR4P"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-476b89782c3so2766631cf.1
-        for <git@vger.kernel.org>; Wed, 26 Mar 2025 13:17:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1743020276; x=1743625076; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tiGgtVRlDn66GdhRTh2UwlDGtuJrrA0Iq1HXxpP8hX8=;
-        b=i0xuOR4P3lL4ZTGXSwRZuwgpjRa6FjWrK6vXcZ67oama5dB/PO89mYJ/ZO5mVmDHmn
-         XWeZyy9Mm+qHCgW44+32PxUo+yijDE6HZZqJSsREgOugM1r5F/5NZv2GHnpl8iydBpaq
-         nkYzRWVcL295cBzGx3/zzeDsGCpjr2EkERbqmqweMB5/YYVcFmA6ur3ygOnhdanHqIuk
-         pD8eOhiWYeiiEG+JFxsTxmmG4z+E2GAhMNBedc9fFlNMbHUGk5jNJgV2dtE88IGwccN8
-         WTwVr3Zsxq7ox49BABdqMLjC9CnCGyU+4S+cSpVA3saYJworCJQfGp0hDT1o7mWJQGHH
-         1XYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743020276; x=1743625076;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tiGgtVRlDn66GdhRTh2UwlDGtuJrrA0Iq1HXxpP8hX8=;
-        b=vuplQyav2S9cBo8VFBgC/74vmp2/gD6jyTEmoSpMiVrZcWjF25WLSnZvLKCi5F47gy
-         vz1Fln5wLLLZEVcJHrRUpLN6yytZ1xCv67BV4ZqcbCHWsjGPft2NFJ2xr2BZltjwMQzR
-         e09tyoxG+mz/9olxQGsfkxzPmk1L6BX8e1GzzLMRQePvR76ZaZkBSGV0pmiWdE3mOd52
-         mp9qJ3QsyF9flLAqIOJALkMEz7lx0LsvBCl9Bhy/y40qqAVxkC7gRPyOxmPR7QX3fRNO
-         +bXsdw/Zwbp+WSUyUIWrk3NiU6x6dHW98y82e5qzzCwiwbWJfxZrrCnddv8G3ziyUaVk
-         WSSw==
-X-Forwarded-Encrypted: i=1; AJvYcCWMoiFJN2yngxRlAx2Fiza6zgjgjFJBWhkTcdferLsrEtkJHE/LANyRXcctCIMpZbyVNv4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxbkrzoh+lnd/qH28k6ZTyW1EqvQLm8YigyBXsoyI6VA0I6qn+O
-	IQjHPokRSaFbHVCykirtB42LDaorp92qgUiYrHEUgrkUqUJ/+fasUJ8jVOPH6ts=
-X-Gm-Gg: ASbGncvV/AQgtXRiD8JV7r5gdyhx65L9RviCv8zgtcnfB45HJk3KagqVg72Lcw2k0sp
-	At2pPGJlTcMMAqA0S12/fZjTFMyh48wMpO3+Xo2EwByZ1+4oAqjSgZdSqn1h1hi8eAg5bDtp/Wr
-	RNqm+7gQ1jnHuK2+BuMMIFHRMwRnPm6lzL/DaEuUJ0m3v8RGJLJZ34ybd6mXYDdsnrZdiHHWsD9
-	ASMlXLYQ8/b0LhXCoZNTL8zkZCfGhTN+o7Zw34VPXOA8GW3nAtmhPodvlRvAwqaeBXQ4RQ9puMh
-	L/lIN5EApkQVwle0oxuC1+JV5Fda7VEezm+AVgKdIRaKi53P3aMI+DD0jFf8u2/M9IxTdH0v69A
-	bj+3zNFU27Eu0Y0CK
-X-Google-Smtp-Source: AGHT+IGEwKTp3jVRiB+yGPiSMRwSCNnMkX0QHsO61DKxK2TEaVBKzHMqRzvQM1gfF9Xb7No26sJehQ==
-X-Received: by 2002:a05:622a:250b:b0:476:7e6b:d2a2 with SMTP id d75a77b69052e-4776e18f5d3mr20099261cf.35.1743020275942;
-        Wed, 26 Mar 2025 13:17:55 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4771d15a16bsm75159021cf.7.2025.03.26.13.17.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Mar 2025 13:17:55 -0700 (PDT)
-Date: Wed, 26 Mar 2025 16:17:54 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Avoid the comma operator
-Message-ID: <Z+Rg8iz1cV/pSok+@nand.local>
-References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
- <Z-Kf9ovF8zAemgUP@pks.im>
- <22fe76ff-7940-86bd-af50-c161e3d04864@gmx.de>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="Wg3Qn5z1"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1743020359;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=70gOf1FMtKRmNac8cg+2uTPvr7WkbzRoj2NU0AzNKq4=;
+	b=Wg3Qn5z1mHjveE4gOpfKAcc94+ddEI3MDAzayVcSVL5dNnVjC6W6S8o+w3kNrebznSeTOs
+	PsyT23S5sPKlh+9ImP+/hegRswqCAdJs/lDxacV0CT72UI/R+ffKgW43/aRUzhkrIuz38M
+	10fk3w7CeiPfZka3ypM4OP1ZTPjLaQc=
+From: Toon Claes <toon@iotcl.com>
+Subject: [PATCH 0/8] Introduce git-blame-tree(1) command
+Date: Wed, 26 Mar 2025 21:18:24 +0100
+Message-Id: <20250326-toon-blame-tree-v1-0-4173133f3786@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <22fe76ff-7940-86bd-af50-c161e3d04864@gmx.de>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIABBh5GcC/x3MTQqAIBBA4avErBuw6UfoKtHCbKqB0tCIQLp70
+ vJbvJcgchCO0BcJAt8SxbuMqizAbsatjDJnAylqVU0dXt47nHZzMF6BGcka3cxaV2Qs5OoMvMj
+ zH4fxfT/g9kE/YQAAAA==
+X-Change-ID: 20250326-toon-blame-tree-2ca74d7712ac
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, 
+ =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>, 
+ Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Mar 25, 2025 at 03:13:47PM +0100, Johannes Schindelin wrote:
-> > It would be great if there was a compiler warning we could enable for
-> > cases where the operator likely isn't intentional. But I couldn't find
-> > any, unfortunately.
->
-> I was not actually planning on adding the CodeQL workflow to git/git,
-> seeing as its CI is already taking way too much CPU time for my liking.
-> But in `microsoft/git`, I am kind of required to, so we'll catch those
-> issues there.
+This is yet another attempt to upstream the builtin command
+`git-blame-tree(1)`. This command is similar to git-blame(1) and shows
+the most recent modification to paths in a tree..
 
-Heh. I should have read this email from you before replying to the last
-one ;-).
+The last attempt (I'm aware of) was made by Ævar in 2023[1]. That
+series was based of patches by Peff written in 2011[2].
 
-I would actually be interested in having CodeQL support "ship" for
-copies of git.git that are hosted on GitHub. I wonder if we could do a
-similar trick as in a56b6230d0 (ci: add a GitHub workflow to submit
-Coverity scans, 2023-09-25), where the ENABLE_COVERITY_SCAN_FOR_BRANCHES
-variable controls whether or not the job actually executes.
+In contrary to Ævar's attempt, my series implements the
+`git-blame-tree(1)` standalone command. Ævar suggested to only implement
+the blame-tree subsystem, and test it through test-tool. But since the
+command line options of that test-tool subcommand were very similar to
+the standalone command we want to land, I decided transfer the test-tool
+subcommand into a real Git builtin. Also, nowadays if we want to test
+the blame-tree subsystem independently, we should use clar unit tests
+instead of test-tool.
 
-Thanks,
-Taylor
+This series brings back the --max-depth changes. I know Ævar removed
+them because there was controversy, but I think they are relevant to
+include. And I want to open up the conversation again.
+
+Also extra patches from Peff are included to implement pathspec tries.
+I've taken them from Peff's fork on GitHub[3], but they also have been
+posted to this mailing list[4].
+
+Other improvements I've made:
+
+* Rebase onto current master.
+
+* Remove the use of USE_THE_REPOSITORY_VARIABLE.
+
+* Fix various memory leaks.
+
+* Moved code from blame-tree.c to pathspec.c, as suggested in Peff's
+  last patch on GitHub.
+
+* Updated the benchmark results in the last commit message, although the
+  numbers were roughly the same.
+
+I don't expect this code to be deemed ready to merge, but I mainly want
+to gather as much feedback as possible and use it to iterate toward
+actually getting it merged.
+
+There are some things I know that are missing, for example
+`--porcelain`, but those can be added in a follow-up. At the moment
+there's one test marked `test_expect_failure`, but I was not able yet
+identify that bug.
+
+So, let me know what you think?
+
+--
+Toon
+
+[1]: https://lore.kernel.org/git/patch-1.1-0ea849d900b-20230205T204104Z-avarab@gmail.com/
+[2]: https://lore.kernel.org/git/20110302164031.GA18233@sigill.intra.peff.net/
+[3]: https://github.com/peff/git/tree/jk/faster-blame-tree-wip
+[4]: https://lore.kernel.org/git/YN4zKVK7gvuIZ0vK@coredump.intra.peff.net/
+
+---
+Jeff King (7):
+      combine-diff: zero memory used for callback filepairs
+      within_depth: fix return for empty path
+      diff: teach tree-diff a max-depth parameter
+      pathspec: add optional trie index
+      pathspec: turn on tries when appropriate
+      tree-diff: use pathspec tries
+      blame-tree: narrow pathspec as we traverse
+
+Toon Claes (1):
+      blame-tree: introduce new subcommand to blame files
+
+ .gitignore                      |   1 +
+ Documentation/diff-options.adoc |  26 +++++
+ Makefile                        |   3 +
+ blame-tree.c                    | 216 ++++++++++++++++++++++++++++++++++++++++
+ blame-tree.h                    |  43 ++++++++
+ builtin.h                       |   1 +
+ builtin/blame-tree.c            |  67 +++++++++++++
+ combine-diff.c                  |   2 +-
+ diff-lib.c                      |   5 +
+ diff.c                          |  18 ++++
+ diff.h                          |   9 ++
+ dir.c                           |   2 +-
+ git.c                           |   1 +
+ meson.build                     |   2 +
+ pathspec.c                      | 216 ++++++++++++++++++++++++++++++++++++++++
+ pathspec.h                      |  27 +++++
+ t/helper/meson.build            |   1 +
+ t/helper/test-pathspec.c        |  96 ++++++++++++++++++
+ t/helper/test-tool.c            |   1 +
+ t/helper/test-tool.h            |   2 +
+ t/meson.build                   |   3 +
+ t/perf/p4003-diff-pathspec.sh   |  26 +++++
+ t/t4071-diff-max-depth.sh       | 109 ++++++++++++++++++++
+ t/t6137-pathspec-trie.sh        |  57 +++++++++++
+ t/t8020-blame-tree.sh           | 142 ++++++++++++++++++++++++++
+ tree-diff.c                     | 176 +++++++++++++++++++++++++++++---
+ 26 files changed, 1235 insertions(+), 17 deletions(-)
+---
+
+
+
+---
+
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+change-id: 20250326-toon-blame-tree-2ca74d7712ac
+
+Thanks
+--
+Toon
+
