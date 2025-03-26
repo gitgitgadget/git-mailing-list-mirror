@@ -1,127 +1,120 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3417B323D
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 01:02:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8974086A
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 01:56:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742950943; cv=none; b=BB1CUjtZJkYBRGMi9222eT56T55H/j5Y8dwXDoWfJ7BdgvIcg3napOoBEjPtUpOYxK8mhGx9QRhLpiGZRxqKF5x+6Q1AsjtWYiLGMtA1tCNnftIXCrPa5aEL3gnHH4vHI0HG70iYjxOAy4fySdACHN5ALvg+RyqjoNCZJJbYhpE=
+	t=1742954187; cv=none; b=RV9yMJt37vXoqybt6VO+Vl2E+uIQ4jJGpxl5SifNXWfjtS6I3PelAz02u3sXqy3VdfnrgVVK3KLs2WS5NSWJfLgyb+/BWrf0HX21VBBy1g+xNIoAJGxVJGegRAeSZ+HhKD7LaKNNU2HS7z/+nqIQGJSL3kz+GwUTIU5VWhXr1EE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742950943; c=relaxed/simple;
-	bh=bAc9MDvcjf/GtpPMImYCgg1EMd2exB63yZaoqtaRc3c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IMDZpzLwF77VjYyZXHZxYt8X51ZElEL4KHKzVzjXbwZuqwFVEdNjKRStRtvZbkJs2KxL5n9cjy3/mbN8aqNozQz0fSXQHD1Ta1VbSg2vDObcn1bf6e6ZBRLSTRk24jtgei9XXw8pz3Ys0WSKyp1XVoPKyZxAJLQfrf8reFKL5WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hvc3EEU1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UHl/FE33; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1742954187; c=relaxed/simple;
+	bh=HZHbs5LfaGBT1gpr+/tsVKplCE5cdvucBzZw7J0svO4=;
+	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=BoTp1rtjUWIGOOBhpDMKmVhGc3xqZISqP0T3+C2uO+0NEJ8o6QTOQX9gN2HjHX54JXpgRgugMYKphRDglvqVTgmXkQ/gRdGFr6zb1vk43L4M4OFi2DQC7yf3JttfhyaxLq6QV+mjQyzFnoJSGmZkScNDErvoT0J1GiYq+Cv1bAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ETisLS2D; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hvc3EEU1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UHl/FE33"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1C88925400AD;
-	Tue, 25 Mar 2025 21:02:20 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 25 Mar 2025 21:02:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1742950939; x=1743037339; bh=/On6COyuhS
-	Gt7ugW4tbChGV9erXuAiRTBKpaoXfCik4=; b=hvc3EEU1eY0vWAckjC158X7DxD
-	05UGpkXylJyD4gClfpL99SFFTqiImt1BMa30Rn9CyNktIqe900QJDmVdKX1xdjy5
-	0ZrzMekzYWWRqJf/z2xPdx2djkb+7lVMEbIXTPY4WE+83QWoQ7nf7a3AF9ehZmhD
-	q4vJd1utsp6e3FdVdNmi1Jzl3yzxDpMm9N/Z4fmyWz2/TbsF8aeUqy/dqGKsNl8o
-	SR596//91it4bcY0O9hrf7aiuJPJkrnyHQLjlGgINM8dGfIoc3iFat2vAmDS93Fe
-	37v0Vi0ulLC+Qr/0bIQF9sTglC5rFMfS0D8h95CFmn5PA4+oePX47pnPmlWA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1742950939; x=1743037339; bh=/On6COyuhSGt7ugW4tbChGV9erXuAiRTBKp
-	aoXfCik4=; b=UHl/FE33571j83HBI76ArM7r+ZIAlMy/43Av2levZ/7hK5rbVUO
-	O/sueLZC+ZsLYxPpB7BgaITEE89FcePGKG2BWSYFxJc7RPx6huRijB3qmGMPyBra
-	/G5jIE4AwM4wV/uOKa2yA7jd7t5yROyNprrPuDUUtGsHjDAiRa5adfgNU2tO9mys
-	Bn2h9At3Z3I7l+RYTbZ2KtFZ2gbbtjbh+ZejoxEv1m2iXBSoz+G4hQnlni+zpIUn
-	aQljVz0yvkiIfmzejMLg89CkRR2zHECi9P/lp1dmE4b9Qws01HwLTOob3CCBJkRS
-	d3lkvIuK78XY9zUNprcM/BgtjX9F9AcHhPw==
-X-ME-Sender: <xms:G1LjZ6beD2ocT8m6sjFVc69j_avzjxJORYjpvzXLzcg_npadhOHgtw>
-    <xme:G1LjZ9YMyedC9k3ALsu0VThLQ4U4GzzmY5Um0lZhjUCeECO0Tm-O8arDeaT0yIgrt
-    NIA9PGKyQo04dZKgw>
-X-ME-Received: <xmr:G1LjZ08Ty7JEcxC1sphaI5MIc_i_W7g99sDiaf84-oy5YHFnHRuRzQL-6yJ0VRmn1iziXYXduNe0P_VP_LzBnGZ7X2NisaqY-0pDhSiT8rQhGRmJoKV8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieegudehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomhepvfhougguucgkuhhllhhinhhgvghruceothhmiiesphhosghogidrtg
-    homheqnecuggftrfgrthhtvghrnhepgfevfeeviefhheehhfegtefhvdffheefheeuleeh
-    ieffuedvvdeuhfevffeigfeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdpnhgspghrtghpthhtohephedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhhikhholhgrhidrshhhuhhsthhovh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsrghnuggr
-    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:G1LjZ8qehydzh2-DRRnK_JevbmjduO2aF7nOEAYUXfKLRZ7zxyFPuQ>
-    <xmx:G1LjZ1rc43dwOh9Hn6Bww4TVHA3g4FEkxouaGRQlL6xtZa1g-foqyg>
-    <xmx:G1LjZ6RK3HMtWdK01XGIm0tU-XKrkq8HX3v4K3tDsjKnf9tYT0f2nw>
-    <xmx:G1LjZ1qxqLkXV3epJdIj1ntwc_L2dIZ1wwYzL1jzzCAcNNQ4QBKhdQ>
-    <xmx:G1LjZ-D1wKfuEYfZXXnqmMeOvrgWKwxQRauE7_Vq4XesNBZ_3zBQUha2>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Mar 2025 21:02:19 -0400 (EDT)
-Date: Tue, 25 Mar 2025 21:02:18 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Nikolay Shustov <nikolay.shustov@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com,
-	git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [Question] Moving from Python2 to Python3
-Message-ID: <Z-NSGtV06NPE_C9D@teonanacatl.net>
-References: <022b01db9d99$e68785c0$b3969140$@nexbridge.com>
- <Z-MgpuxFQ3xEgvsU@tapette.crustytoothpaste.net>
- <66e39a95-09a3-44dc-ac71-a6c02b5949c9@gmail.com>
- <xmqqtt7glmut.fsf@gitster.g>
- <6977f08e-3c49-4bcc-9ab7-e3cc61a78396@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ETisLS2D"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-47688ae873fso64138341cf.0
+        for <git@vger.kernel.org>; Tue, 25 Mar 2025 18:56:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742954185; x=1743558985; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=13rtF0rIyEAEJSqPh+vv1Y3rRGGpIyEu9lRABci7Lbs=;
+        b=ETisLS2DLQnXmja6UjlLYZlkEfTLEM7hcP5gLyfDeF+Jf03dlofb/SytEwoIV9AMcC
+         air3mna0mkE2fzKyXCbGBumNxVuhCod5AM2uD7geVClWYlGovMzn0nM84qwvJ+KyTbnP
+         MuV+wUjuleYaH64WsmWD9u9OCBYIZ5z/uHfz0VLpVn/Qty5zHCcrIiHIJRig/qKYWycE
+         Lvq282GjU52cJVvLmSKJ21F0+4tI2nUiAFx8KNj4tRwbZ6q8crNfSEflfbnRAxeV2HFr
+         f4H/scQkl9J2phjPkqqsrYAaO0vKYBUXudjkxx+KaPFDQrH66zmGbwcgqIj38Ix33nFE
+         w2hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742954185; x=1743558985;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=13rtF0rIyEAEJSqPh+vv1Y3rRGGpIyEu9lRABci7Lbs=;
+        b=XdgiGZGQkKRMdCEnaMTNKdnDhCdWhcLaBzconKG4WqJ2n3QrBsXJDXHI/JnrcaNQsh
+         M+plFZS8hnznT+IZehcfsOzLLUOZxrST3Ai2i8DsOnvmG90vwJuLAifTxBgR4XPaIulq
+         yQsztDKmEDDTn8PDb8Wm2GFbCNr6EVMRbwU+GrHvOFRg2It3339MHqv9rWq/VE5bKLkE
+         kCTgQvgQpM6SP3+5GhKKyJOXbPNgdzf/vkEtYHpvPAQvFtmOSDNxy9+y1mHFWeP6QTIo
+         OVJRGD3iZOXFfU+XQnjsd/MEHcdL7mRDjBjvkedONHxJNJVDZlpsBRlTs5puLAKmzLMU
+         TIiw==
+X-Forwarded-Encrypted: i=1; AJvYcCV8HRDHcbAoSPFrQ58MB1K4Q5WRtmPwz9fjQComZdsdyMaIBAgSpBaD/fApT7a3lSnwH1M=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxoLKkR+wYAh7aIqajWTbpVJ1nGlytumPV+91oHXuFcO31Rb8OV
+	RgdIAfKaLoTgy1ELaoQTjby2J5YlzCHkGgLQ9gD1mMST0eKcglcTKOCvqdik
+X-Gm-Gg: ASbGncurmK43o3hqrIE5grpHHdvT2pvQlCYx35weOFuVJ/G/7Q8/cNdyqGk8w5VpJ3S
+	N3bDOGAyYv9zTKioZx/RiAuaMV+xqJ2/O7j0XmfHn3b0fHxEtw6WOSm2239W/XoTZXE0lUJ7HBc
+	nOHsWC87/7+6bwyQ23dMOg1IcdlFLpEL0m1eGO7l5DU+a93Rw0FoBYFm+79RwBS7/IGHCPk9R5X
+	Gj2YREXBulQNsf5c39rXuAyagGReF6DKSbE3DyjLRBdhqemApE4fj9QM1hLpluc/JeVJzB8wU0X
+	iurY0jscTdh+KuqohtVg++sMmkEewT3tjzRVlUGc0SL52fiodFrOPJ9TjZq+Ji353yB+8qpXYkP
+	6v/+2iDuB11qbMj2yDKGYdw==
+X-Google-Smtp-Source: AGHT+IGIaRBjSoyqQ9luXqg2JdNxa1YXg37/iWTdH7ICv8z5s0T409Mt+OH16TfbtlHQAOmg+dVLUw==
+X-Received: by 2002:a05:622a:5a94:b0:477:cbb:a23e with SMTP id d75a77b69052e-4771dd5480fmr356690861cf.1.1742954184553;
+        Tue, 25 Mar 2025 18:56:24 -0700 (PDT)
+Received: from [192.168.1.174] (c-73-143-206-114.hsd1.ma.comcast.net. [73.143.206.114])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4771d64d5f6sm66505231cf.81.2025.03.25.18.56.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Mar 2025 18:56:24 -0700 (PDT)
+From: Nikolay Shustov <nikolay.shustov@gmail.com>
+X-Google-Original-From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
+Message-ID: <77b5fa59-a8a1-4859-8f3d-41f94fa8120d@gmail.com>
+Date: Tue, 25 Mar 2025 21:56:23 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6977f08e-3c49-4bcc-9ab7-e3cc61a78396@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: Nikolay.Shustov@gmail.com
+Subject: Re: [Question] Moving from Python2 to Python3
+To: Todd Zullinger <tmz@pobox.com>
+Cc: Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com,
+ git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <022b01db9d99$e68785c0$b3969140$@nexbridge.com>
+ <Z-MgpuxFQ3xEgvsU@tapette.crustytoothpaste.net>
+ <66e39a95-09a3-44dc-ac71-a6c02b5949c9@gmail.com> <xmqqtt7glmut.fsf@gitster.g>
+ <6977f08e-3c49-4bcc-9ab7-e3cc61a78396@gmail.com>
+ <Z-NSGtV06NPE_C9D@teonanacatl.net>
+Content-Language: en-US
+In-Reply-To: <Z-NSGtV06NPE_C9D@teonanacatl.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Nikolay Shustov wrote:
-> You are right, my answer was over-engineered.
+Doh! Of course I thought of PYTHONPATH not of PYTHON_PATH.
+My apologies for the noise.
+
+On 3/25/25 21:02, Todd Zullinger wrote:
+> Nikolay Shustov wrote:
+>> You are right, my answer was over-engineered.
+>>
+>> Instead of speculating about what else needs to be done if
+>> one decides to set PYTHONPATH, I should have just advised
+>> to use the OS specific method on setting up the "default"
+>> Python as Python3 and be with it.
+>>
+>> Well, unless the dual Python is needed (git-p4 running
+>> with the Python different from system "default").
+> Perhaps you were conflating PYTHON_PATH, which brian
+> suggested, with PYTHONPATH?
 >
-> Instead of speculating about what else needs to be done if
-> one decides to set PYTHONPATH, I should have just advised
-> to use the OS specific method on setting up the "default"
-> Python as Python3 and be with it.
+> PYTHON_PATH is used by the git build system to set the path
+> to the python executable, e.g.: /usr/bin/python2,
+> /usr/bin/python3, etc.
 >
-> Well, unless the dual Python is needed (git-p4 running
-> with the Python different from system "default").
-
-Perhaps you were conflating PYTHON_PATH, which brian
-suggested, with PYTHONPATH?
-
-PYTHON_PATH is used by the git build system to set the path
-to the python executable, e.g.: /usr/bin/python2,
-/usr/bin/python3, etc.
-
-PYTHONPATH is used by python itself to point to the
-location(s) of module files, similar to PATH, as you
-mentioned.
-
-The Fedora distribution packaging set PYTHON_PATH to python2
-or python3 while both were available and things worked well.
-Only python3 is supported now, and PYTHON_PATH is set
-accordingly.
-
-That ought to work just as well for NonStop.  If it doesn't,
-that would most likely be something to take up with the OS
-folks handling python3. :)
-
--- 
-Todd
+> PYTHONPATH is used by python itself to point to the
+> location(s) of module files, similar to PATH, as you
+> mentioned.
+>
+> The Fedora distribution packaging set PYTHON_PATH to python2
+> or python3 while both were available and things worked well.
+> Only python3 is supported now, and PYTHON_PATH is set
+> accordingly.
+>
+> That ought to work just as well for NonStop.  If it doesn't,
+> that would most likely be something to take up with the OS
+> folks handling python3. :)
+>
