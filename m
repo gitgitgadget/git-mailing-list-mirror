@@ -1,1062 +1,494 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2D81E502
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 12:46:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39291F3FF8
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 15:09:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742993168; cv=none; b=pz5CwdhOG1v5dnfFRu/6yKWf0xsMnzlsVKxgJzn6pIITLCPPvdhqZBG1StOrKbFmeDYuWTN8OlhFf2SgiHmu5hfyizOy6TeloeaSVCVLe/PWOCQRbI3sP5INOQmx2ukzCHY9Jx/pyn/Ipb0ZkdBGyznKsLUVo+5UhTSQ2/bfcWE=
+	t=1743001800; cv=none; b=f6Anm2QVuDSAWr78tXPlj+9l3oEGcvFChX+wndBJMX22o5eClgNnAWI/u3eTBfhDB6kyFpR475/eWIqqwPSEBQ51fSzjDQ1spjlZo5V3QYtEu7swBK29pcU/Tlq/D/JGiLg0TdpEa6ZCLwGLJElIPVoA5WxCnGC3WyamoVerXt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742993168; c=relaxed/simple;
-	bh=eFTtqOKewyj4rNNCUIn4Yq0xCiBfF+64tVAWSOCBwBg=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=QmnJMV3lf5S2oH83gcKNocpwAz6NYGLS1V4GUEUiBcnUDimzoP54Q8IvGE1+cR9I+5NsPMeXal70/eP7MHNZjEOGhqwQUzkeOMc1r0pWj60/KSwS04wCKIrzFfyJjL6C1Spvp2gLchXspWuADKc9f472tyQRMdgvspSGeHpfisg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NDEzhVTZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rvb2RmoH; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1743001800; c=relaxed/simple;
+	bh=3GfeaOjZUdTXrEc1Z1QknR/pfgtxXE0gbVa3J17tsTI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=LBWCu9X0somEl0cRtPzMXSHKB1UMqJ+PKzX7cpvJ+5pSZ7h6f2hX/kZgPZJukSpgwFlzLmeCcaS64njZktQUgjkkO4I2AC5x9YsZoPUw8UgJ5nx9T213HoTGPuhEq1V5sT7Pm5YTBKukIOnaQbbmZIDkgROVKGKpbokQF7U0e9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RCbmIJpQ; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NDEzhVTZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rvb2RmoH"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id E66B01383E06;
-	Wed, 26 Mar 2025 08:46:02 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 26 Mar 2025 08:46:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1742993162; x=1743079562; bh=f4VIl9BXYM3hz3iVv/dh0W3/fhk+ATvW
-	YVcSlCh1GK0=; b=NDEzhVTZaAaas6eXtquKhqLagQn8r52UmdEinhELfASs+u8n
-	P0j0f3orHTFz4I2aQQ23wkUASv6t1QV5YnrqDXnczRidZMAxRoXaHQ8cj/bJuUsf
-	xxUHX69yRMNFa9eP9hqECe5lcr4EJXXb74Hy8K1hn/ASxDfVicDlULrExMOTn7bL
-	0SvmPq8Eol8Nyif52yVbyzXFLxvSVrQxsE+98weH3tIfApwQecD8N6CaDGBarpoI
-	IiSpR+eqsiYmBRBaqw2zbav9DtKi0VxfVLHGEcZ/LEm6wviWjr4hOHchBM20TCRR
-	TzipIhcLuFM7KFGrH9ZaDbKPFmFPJAURy5u3Hw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1742993162; x=
-	1743079562; bh=f4VIl9BXYM3hz3iVv/dh0W3/fhk+ATvWYVcSlCh1GK0=; b=R
-	vb2RmoH0Zuk1jWHgXWYPbZwmvct72WibzhiS6/k91NT+6YMCP/HCHjcY1i0dKlxA
-	RdQb1AbjaMYgKRNW4az6MeLefoqKUKqSqTczWOyIHC39lwnHr7hoobOBsbxbCcbL
-	/tGDzeUX/wBw12mIFDSR7LfDNcxTpTX7SlI2X+EeehjsQlC9FNrFzvEhz1LCf3mZ
-	9NyuZaSATim4tWQkjqjPccq2sFwjsl6GefkWAwMqja/sc3BrmB4ns1WaDgz6b9Vc
-	qxxWQuwzBODSvnZK2/KALUKu56DckAd+fEegp8WUcFE3akhnXWylt+30u7zD6Dk/
-	YUbdR706RDP2S3xD5eagg==
-X-ME-Sender: <xms:CvfjZ0az6-CNbrFm1DG54ut4X9t8_aqDt3_NlR5Cvii_BthDx1_-pA>
-    <xme:CvfjZ_ZU6sdGAdLiXHvT3WHkiIbpv4UGtW9FzYdQ1BXV31F6iuvZxDDH8p6srAiN1
-    N5vXhQQ7VAH81rX8Q>
-X-ME-Received: <xmr:CvfjZ--IQ0XNdKfBlsnrYrQWgMQ2HknxWCMJ00i-MCh5msE0l3tITcd1Oa4N45iIPriE3W4QSs52kzX4rWMq2Ny9hOWAE2Q0g6GRTGY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieehheeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    fufffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepgfekff
-    ehkeekvdeiffehuefhhfffieeutdekgfelheetfefgveelieejleeufefhnecuffhomhgr
-    ihhnpehkvghrnhgvlhdrohhrghdpohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtoh
-    hmpdhgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmpdhmrghkrdguvghvpdguihhs
-    tggrrhguvggurdhknhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeef
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtoheplhifnheslhifnhdrnhgvthdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:CvfjZ-pz_-19mUH6dnDdyakZoShwAh2U3A3iLczhVSA37Mx2Vpak3Q>
-    <xmx:CvfjZ_pa5NvAMlEzqDr_bjWlkPdbEYnFuk_Fe5GhfOvp1AMMQeOyXg>
-    <xmx:CvfjZ8T0VfX4_rbJpupf4FwJrW-ATZnGsXZeuKQ23LDi6_PucfToaQ>
-    <xmx:CvfjZ_rgzr6GICiRFsTO1dmoZQrpg3MC8akDVxKQXQKOjqDfYT-SCA>
-    <xmx:CvfjZ-WuFgUoNS02MowzoPJWrab7NEm1wAvtHGmuziV04OrUhlnwAl3J>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Mar 2025 08:46:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Mar 2025, #07; Wed, 26)
-X-master-at: 66b90d9bad8476f6f3d71f5add5cf78809a998ed
-X-next-at: 12c9017322054d91838b18540dea310d9448fd6e
-Date: Wed, 26 Mar 2025 05:46:00 -0700
-Message-ID: <xmqqiknwhsdz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCbmIJpQ"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43cf628cb14so7512855e9.1
+        for <git@vger.kernel.org>; Wed, 26 Mar 2025 08:09:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743001796; x=1743606596; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=YS0uYL2uqbzlHpZ5kQl7NYcVbN7WgdNNlmRshJJIsTU=;
+        b=RCbmIJpQV7A7l8IOMH7rKLgasxuB6Jyw9iB09HSwKBSQeB8JLhWb19qGpv3qRghule
+         bDajJZJsq+w5S7g5g0hwPEtDO1wUscNF9OCl00QdtQuUDhi2NMj40oGe68ZXNOnDAlcZ
+         V/4y1w+g2lq8WU4CFLm+vCJqMA+68nuaotf43v9TcrlDDmwHp8TQ1Mz+EqK76oohK0+z
+         RfdD6jPPWfwEtmVnCajxS/PRZr7wNH9WArsfzZqVAmiJM2CRGsSFxeEca5e+jWd/BUeU
+         2wET/9yJj7E+QC2ML5bhMVUGIlgGT1EU+sXzgE0/CPpEIEKeHIoz5ZJZ3ea4bPs1naNH
+         tQsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743001796; x=1743606596;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YS0uYL2uqbzlHpZ5kQl7NYcVbN7WgdNNlmRshJJIsTU=;
+        b=oVnOOtiIcANd8Qw1cVd0Hc3BqqPNTsxzJ6eh6EjY+LOFl/k81cdMobCjezOJ/065nh
+         1Ro/XUimbaRLh3HMsI+yMSx0kRBQBPfMxysfjHUpSA9SSLmDUjX3l2+x2yxPMfjPhMm3
+         SYxnfsjY+cGqu+c15xsyj/6laSJ9ma4uQuObUbLAwprIiSVJGcAZXMV0d7EKTShDntO/
+         1sxXFAUl2IogyJ2pW4On+MWeh1nGtLhmlRtiFNI3xx/kojuvrLNEHaMW1upc/h4+Hkqq
+         V33gc1qshDjSkjWgbImzjK3TG29omtTZ4nkkSTGA1pGPp+/gED5EsUBX6GopTcKYtox8
+         SReA==
+X-Forwarded-Encrypted: i=1; AJvYcCVVh48vlvnScY0rhzZiTYq929uP7Z4bK75FKgR3Fb4uX9w+YMb7wsicljTyYul+wYRiIEM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyKAQ6IRmADL/uat8UK6kus4/9VrXDCzpzrHPUP+MgQFlQXJIkc
+	jYQq5Tegns2oIvlbL5wUzYVjR5PTc37HfxELsm7ANMM556pdsabDSMwH2w==
+X-Gm-Gg: ASbGncuM85xDbr9u8zM4ul+9PzzISa99vvPla1nsWGKHchDQjdvWstAY07hH76zI6TU
+	IqyAiDHyZLq5JJ/d9mDsM/SH/iBNYvzHLutHA8tWviyqDzgXxX4ypmSEbgTbOSXuZoCZEoWtb1R
+	K9oOVsCNzUGZetxovvFoDbdnx0WSdSbMaurKNC4mUJebLDMgE+t6oFspbTDmyRV5kN4etZXdsLv
+	AefjF1g0aM9ndX48Yusljd+PRVCVzdQZ/hTRCw3vmZrGvtBVtTNLQhr37wJdIXb3wU6jusDDQ0q
+	mZKNgxeT6O2gc2HauRh1+oeBvHZq9fFJkjDDV4VltCvLQwuIo6VvM6iG9DGUXnecBFCpIn1vH9y
+	D+vd+VChof0QAl1s6krc0
+X-Google-Smtp-Source: AGHT+IFUELI6Nr/6FMHquWYXH3QBeiGBbEUnFcjwRhRAFlXCfjISJ0iY3Vrdw7qXz9AlGKDqwarHXw==
+X-Received: by 2002:a05:600c:3c85:b0:43c:f509:2bbf with SMTP id 5b1f17b1804b1-43d776eb9a7mr40155795e9.15.1743001795771;
+        Wed, 26 Mar 2025 08:09:55 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d82f8080dsm4633975e9.38.2025.03.26.08.09.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Mar 2025 08:09:54 -0700 (PDT)
+Message-ID: <339b8557-d41a-4a40-912b-eb2cff63159f@gmail.com>
+Date: Wed, 26 Mar 2025 15:09:52 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] git p4 fix for failure to decode p4 errors
+To: Nikolay.Shustov@gmail.com, git@vger.kernel.org
+References: <pull.1926.git.git.1742440852765.gitgitgadget@gmail.com>
+ <32b401c3-de0e-427b-83b7-eb5a5b315db1@gmail.com>
+ <fdbb3f88-7321-4dc0-9ead-7ed9ef0fc995@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <fdbb3f88-7321-4dc0-9ead-7ed9ef0fc995@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Hi Nikolay
+
+On 25/03/2025 23:09, Nikolay Shustov wrote:
+> I think this fix is important.
+> git-p4 is used in the companies where there is an intent to migrate from 
+> Perforce to Git and having the issue that this change fixes is a real 
+> roadblock.
+> The better we can make git-p4, the more adoption Git would get in the 
+> commercial world.
+
+Unfortunately I don't think any of the regular git contributors use 
+git-p4 so to find someone to review this patch I would look at who has 
+contributed to git-p4 recently and cc them. Before you do that I have a 
+couple of suggestions below
+
+> On 3/22/25 07:48, Nikolay Shustov wrote:
+>> ping, pretty please? :-)
+>>
+>> On 3/19/25 23:20, Nikolay Shustov via GitGitGadget wrote:
+>>> From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
+>>>
+>>> Fixes the git p4 failure happening when Perforce command returns error
+>>> containing byte stream of characters with high bit set. In such 
+>>> situations
+>>> git p4 implementatino fails to decode this byte stream into utf-8 
+>>> string.
+>>>
+>>> Design:
+>>> Make use of existing decoding fallback strategy, described by
+>>> git-p4.metadataDecodingStrategy and git-p4.metadataFallbackEncoding
+>>> settings in the logic that decodes the Perforce command error bytes.
+
+Our usual style for commit messages is to explain what the problem is 
+and how it is fixed by the changes in the patch. Rather than saying 
+"fixes the git p4 failure" I would start by explaining what that failure 
+is and how it is caused. It would also be helpful to explain what the 
+settings that you refer to do so that someone who is familiar with 
+python but not with git-p4 can understand and potentially review the 
+changes.
+
+>>> Details:
+>>> - Moved p4 metadata transcoding logic from
+>>>    metadata_stream_to_writable_bytes(..) into a new 
+>>> MetadataTranscoder class.
+>>> - Enhcanced the implementation to use git-p4.metadataDecodingStrategy 
+>>> and
+>>>    git-p4.metadataFallbackEncoding settings for p4 errors decoding.
+>>> - Added test.
+
+Thanks for taking the time to add a new test, it is much appreciated. 
+When there is a bullet list in a commit message it is often a sign that 
+the commit is doing more than one thing at once. In this case it appears 
+there is a bug fix mixed in with some refactoring. I would split the 
+refactoring out into a preparatory patch so that reviews can clearly see 
+which changes are due to creating the MetadataTranscoder class and which 
+are the changes that fix the bug. The new test should be added in the 
+commit that fixes the bug.
+
+Best Wishes
+
+Phillip
+
+>>> Signed-off-by: Nikolay Shustov <Nikolay.Shustov@gmail.com>
+>>> ---
+>>>      git p4 fix for failure to decode p4 errors
+>>>
+>>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr- 
+>>> git-1926%2Fnshustov%2Fgit-p4-error-decoding-v1
+>>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr- 
+>>> git-1926/nshustov/git-p4-error-decoding-v1
+>>> Pull-Request: https://github.com/git/git/pull/1926
+>>>
+>>>   git-p4.py                        | 135 ++++++++++++++++++-------------
+>>>   t/meson.build                    |   1 +
+>>>   t/t9837-git-p4-error-encoding.sh |  53 ++++++++++++
+>>>   t/t9837/git-p4-error-python3.py  |  15 ++++
+>>>   4 files changed, 149 insertions(+), 55 deletions(-)
+>>>   create mode 100755 t/t9837-git-p4-error-encoding.sh
+>>>   create mode 100644 t/t9837/git-p4-error-python3.py
+>>>
+>>> diff --git a/git-p4.py b/git-p4.py
+>>> index c0ca7becaf4..72a4c55f99e 100755
+>>> --- a/git-p4.py
+>>> +++ b/git-p4.py
+>>> @@ -234,67 +234,91 @@ else:
+>>>       class MetadataDecodingException(Exception):
+>>> -    def __init__(self, input_string):
+>>> +    def __init__(self, input_string, error=None):
+>>>           self.input_string = input_string
+>>> +        self.error = error
+>>>         def __str__(self):
+>>> -        return """Decoding perforce metadata failed!
+>>> +        message = """Decoding perforce metadata failed!
+>>>   The failing string was:
+>>>   ---
+>>>   {}
+>>>   ---
+>>>   Consider setting the git-p4.metadataDecodingStrategy config option to
+>>>   'fallback', to allow metadata to be decoded using a fallback encoding,
+>>> -defaulting to cp1252.""".format(self.input_string)
+>>> +defaulting to cp1252."""
+>>> +        if verbose and self.error is not None:
+>>> +            message += """
+>>> +---
+>>> +Error:
+>>> +---
+>>> +{}"""
+>>> +        return message.format(self.input_string, self.error)
+>>>     -encoding_fallback_warning_issued = False
+>>> -encoding_escape_warning_issued = False
+>>> -def metadata_stream_to_writable_bytes(s):
+>>> -    encodingStrategy = gitConfig('git-p4.metadataDecodingStrategy') 
+>>> or defaultMetadataDecodingStrategy
+>>> -    fallbackEncoding = gitConfig('git-p4.metadataFallbackEncoding') 
+>>> or defaultFallbackMetadataEncoding
+>>> -    if not isinstance(s, bytes):
+>>> -        return s.encode('utf_8')
+>>> -    if encodingStrategy == 'passthrough':
+>>> -        return s
+>>> -    try:
+>>> -        s.decode('utf_8')
+>>> -        return s
+>>> -    except UnicodeDecodeError:
+>>> -        if encodingStrategy == 'fallback' and fallbackEncoding:
+>>> -            global encoding_fallback_warning_issued
+>>> -            global encoding_escape_warning_issued
+>>> -            try:
+>>> -                if not encoding_fallback_warning_issued:
+>>> -                    print("\nCould not decode value as utf-8; using 
+>>> configured fallback encoding %s: %s" % (fallbackEncoding, s))
+>>> -                    print("\n(this warning is only displayed once 
+>>> during an import)")
+>>> -                    encoding_fallback_warning_issued = True
+>>> -                return s.decode(fallbackEncoding).encode('utf_8')
+>>> -            except Exception as exc:
+>>> -                if not encoding_escape_warning_issued:
+>>> -                    print("\nCould not decode value with configured 
+>>> fallback encoding %s; escaping bytes over 127: %s" % 
+>>> (fallbackEncoding, s))
+>>> -                    print("\n(this warning is only displayed once 
+>>> during an import)")
+>>> -                    encoding_escape_warning_issued = True
+>>> -                escaped_bytes = b''
+>>> -                # bytes and strings work very differently in python2 
+>>> vs python3...
+>>> -                if str is bytes:
+>>> -                    for byte in s:
+>>> -                        byte_number = struct.unpack('>B', byte)[0]
+>>> -                        if byte_number > 127:
+>>> -                            escaped_bytes += b'%'
+>>> -                            escaped_bytes += hex(byte_number) 
+>>> [2:].upper()
+>>> -                        else:
+>>> -                            escaped_bytes += byte
+>>> -                else:
+>>> -                    for byte_number in s:
+>>> -                        if byte_number > 127:
+>>> -                            escaped_bytes += b'%'
+>>> -                            escaped_bytes += 
+>>> hex(byte_number).upper().encode()[2:]
+>>> -                        else:
+>>> -                            escaped_bytes += bytes([byte_number])
+>>> -                return escaped_bytes
+>>> +class MetadataTranscoder:
+>>> +    def __init__(self, default_metadata_decoding_strategy, 
+>>> default_fallback_metadata_encoding):
+>>> +        self.decoding_fallback_warning_issued = False
+>>> +        self.decoding_escape_warning_issued = False
+>>> +        self.decodingStrategy = gitConfig('git- 
+>>> p4.metadataDecodingStrategy') or default_metadata_decoding_strategy
+>>> +        self.fallbackEncoding = gitConfig('git- 
+>>> p4.metadataFallbackEncoding') or default_fallback_metadata_encoding
+>>> +
+>>> +    def decode_metadata(self, s, error_from_fallback=True):
+>>> +        try:
+>>> +            return [s.decode('utf_8'), 'utf_8']
+>>> +        except UnicodeDecodeError as decode_exception:
+>>> +            error = decode_exception
+>>> +            if self.decodingStrategy == 'fallback' and 
+>>> self.fallbackEncoding:
+>>> +                try:
+>>> +                    if not self.decoding_fallback_warning_issued:
+>>> +                        print("\nCould not decode value as utf-8; 
+>>> using configured fallback encoding %s: %s" % (self.fallbackEncoding, s))
+>>> +                        print("\n(this warning is only displayed 
+>>> once during an import)")
+>>> +                        self.decoding_fallback_warning_issued = True
+>>> +                    return [s.decode(self.fallbackEncoding), 
+>>> self.fallbackEncoding]
+>>> +                except Exception as decode_exception:
+>>> +                    if not error_from_fallback:
+>>> +                        return [s, None]
+>>> +                    error = decode_exception
+>>> +            raise MetadataDecodingException(s, error)
+>>> +
+>>> +    def metadata_stream_to_writable_bytes(self, s):
+>>> +        if not isinstance(s, bytes):
+>>> +            return s.encode('utf_8')
+>>> +        if self.decodingStrategy == 'passthrough':
+>>> +            return s
+>>> +
+>>> +        [text, encoding] = self.decode_metadata(s, False)
+>>> +        if encoding == 'utf_8':
+>>> +            # s is of utf-8 already
+>>> +            return s
+>>> +
+>>> +        if encoding is None:
+>>> +            # could not decode s, even with fallback encoding
+>>> +            if not self.decoding_escape_warning_issued:
+>>> +                print("\nCould not decode value with configured 
+>>> fallback encoding %s; escaping bytes over 127: %s" % 
+>>> (self.fallbackEncoding, s))
+>>> +                print("\n(this warning is only displayed once during 
+>>> an import)")
+>>> +                self.decoding_escape_warning_issued = True
+>>> +            escaped_bytes = b''
+>>> +            # bytes and strings work very differently in python2 vs 
+>>> python3...
+>>> +            if str is bytes:
+>>> +                for byte in s:
+>>> +                    byte_number = struct.unpack('>B', byte)[0]
+>>> +                    if byte_number > 127:
+>>> +                        escaped_bytes += b'%'
+>>> +                        escaped_bytes += hex(byte_number)[2:].upper()
+>>> +                    else:
+>>> +                        escaped_bytes += byte
+>>> +            else:
+>>> +                for byte_number in s:
+>>> +                    if byte_number > 127:
+>>> +                        escaped_bytes += b'%'
+>>> +                        escaped_bytes += 
+>>> hex(byte_number).upper().encode()[2:]
+>>> +                    else:
+>>> +                        escaped_bytes += bytes([byte_number])
+>>> +            return escaped_bytes
+>>>   -        raise MetadataDecodingException(s)
+>>> +        # were able to decode but not to utf-8
+>>> +        return text.encode('utf_8')
+>>>       def decode_path(path):
+>>> @@ -898,14 +922,14 @@ def p4CmdList(cmd, stdin=None, 
+>>> stdin_mode='w+b', cb=None, skip_info=False,
+>>>                       decoded_entry[key] = value
+>>>                   # Parse out data if it's an error response
+>>>                   if decoded_entry.get('code') == 'error' and 'data' 
+>>> in decoded_entry:
+>>> -                    decoded_entry['data'] = 
+>>> decoded_entry['data'].decode()
+>>> +                    decoded_entry['data'] = 
+>>> metadataTranscoder.decode_metadata(decoded_entry['data'])
+>>>                   entry = decoded_entry
+>>>               if skip_info:
+>>>                   if 'code' in entry and entry['code'] == 'info':
+>>>                       continue
+>>>               for key in p4KeysContainingNonUtf8Chars():
+>>>                   if key in entry:
+>>> -                    entry[key] = 
+>>> metadata_stream_to_writable_bytes(entry[key])
+>>> +                    entry[key] = 
+>>> metadataTranscoder.metadata_stream_to_writable_bytes(entry[key])
+>>>               if cb is not None:
+>>>                   cb(entry)
+>>>               else:
+>>> @@ -1718,7 +1742,7 @@ class P4UserMap:
+>>>               # python2 or python3. To support
+>>>               # git-p4.metadataDecodingStrategy=fallback, self.users 
+>>> dict values
+>>>               # are always bytes, ready to be written to git.
+>>> -            emailbytes = 
+>>> metadata_stream_to_writable_bytes(output["Email"])
+>>> +            emailbytes = 
+>>> metadataTranscoder.metadata_stream_to_writable_bytes(output["Email"])
+>>>               self.users[output["User"]] = output["FullName"] + b" <" 
+>>> + emailbytes + b">"
+>>>               self.emails[output["Email"]] = output["User"]
+>>>   @@ -1730,12 +1754,12 @@ class P4UserMap:
+>>>                   fullname = mapUser[0][1]
+>>>                   email = mapUser[0][2]
+>>>                   fulluser = fullname + " <" + email + ">"
+>>> -                self.users[user] = 
+>>> metadata_stream_to_writable_bytes(fulluser)
+>>> +                self.users[user] = 
+>>> metadataTranscoder.metadata_stream_to_writable_bytes(fulluser)
+>>>                   self.emails[email] = user
+>>>             s = b''
+>>>           for (key, val) in self.users.items():
+>>> -            keybytes = metadata_stream_to_writable_bytes(key)
+>>> +            keybytes = 
+>>> metadataTranscoder.metadata_stream_to_writable_bytes(key)
+>>>               s += b"%s\t%s\n" % (keybytes.expandtabs(1), 
+>>> val.expandtabs(1))
+>>>             open(self.getUserCacheFilename(), 'wb').write(s)
+>>> @@ -3349,7 +3373,7 @@ class P4Sync(Command, P4UserMap):
+>>>           if userid in self.users:
+>>>               return self.users[userid]
+>>>           else:
+>>> -            userid_bytes = metadata_stream_to_writable_bytes(userid)
+>>> +            userid_bytes = 
+>>> metadataTranscoder.metadata_stream_to_writable_bytes(userid)
+>>>               return b"%s <a@b>" % userid_bytes
+>>>         def streamTag(self, gitStream, labelName, labelDetails, 
+>>> commit, epoch):
+>>> @@ -4561,6 +4585,7 @@ commands = {
+>>>       "unshelve": P4Unshelve,
+>>>   }
+>>>   +metadataTranscoder = 
+>>> MetadataTranscoder(defaultMetadataDecodingStrategy, 
+>>> defaultFallbackMetadataEncoding)
+>>>     def main():
+>>>       if len(sys.argv[1:]) == 0:
+>>> diff --git a/t/meson.build b/t/meson.build
+>>> index a59da26be3f..656424fdff3 100644
+>>> --- a/t/meson.build
+>>> +++ b/t/meson.build
+>>> @@ -1090,6 +1090,7 @@ integration_tests = [
+>>>     't9834-git-p4-file-dir-bug.sh',
+>>>     't9835-git-p4-metadata-encoding-python2.sh',
+>>>     't9836-git-p4-metadata-encoding-python3.sh',
+>>> +  't9837-git-p4-error-encoding.sh',
+>>>     't9850-shell.sh',
+>>>     't9901-git-web--browse.sh',
+>>>     't9902-completion.sh',
+>>> diff --git a/t/t9837-git-p4-error-encoding.sh b/t/t9837-git-p4-error- 
+>>> encoding.sh
+>>> new file mode 100755
+>>> index 00000000000..1ea774afb1b
+>>> --- /dev/null
+>>> +++ b/t/t9837-git-p4-error-encoding.sh
+>>> @@ -0,0 +1,53 @@
+>>> +#!/bin/sh
+>>> +
+>>> +test_description='git p4 error encoding
+>>> +
+>>> +This test checks that the import process handles inconsistent text
+>>> +encoding in p4 error messages without failing'
+>>> +
+>>> +. ./lib-git-p4.sh
+>>> +
+>>> +###############################
+>>> +## SECTION REPEATED IN t9835 ##
+>>> +###############################
+>>> +
+>>> +# These tests require Perforce with non-unicode setup.
+>>> +out=$(2>&1 P4CHARSET=utf8 p4 client -o)
+>>> +if test $? -eq 0
+>>> +then
+>>> +    skip_all="skipping git p4 error encoding tests; Perforce is 
+>>> setup with unicode"
+>>> +    test_done
+>>> +fi
+>>> +
+>>> +# These tests are specific to Python 3. Write a custom script that 
+>>> executes
+>>> +# git-p4 directly with the Python 3 interpreter to ensure that we 
+>>> use that
+>>> +# version even if Git was compiled with Python 2.
+>>> +python_target_binary=$(which python3)
+>>> +if test -n "$python_target_binary"
+>>> +then
+>>> +    mkdir temp_python
+>>> +    PATH="$(pwd)/temp_python:$PATH"
+>>> +    export PATH
+>>> +
+>>> +    write_script temp_python/git-p4-python3 <<-EOF
+>>> +    exec "$python_target_binary" "$(git --exec-path)/git-p4" "\$@"
+>>> +    EOF
+>>> +fi
+>>> +
+>>> +git p4-python3 >err
+>>> +if ! grep 'valid commands' err
+>>> +then
+>>> +    skip_all="skipping python3 git p4 tests; python3 not available"
+>>> +    test_done
+>>> +fi
+>>> +
+>>> +test_expect_success 'start p4d' '
+>>> +    start_p4d
+>>> +'
+>>> +
+>>> +test_expect_success 'see if Perforce error with characters not 
+>>> convertable to utf-8 will be processed correctly' '
+>>> +    test_when_finished cleanup_git &&
+>>> +    $python_target_binary "$TEST_DIRECTORY"/t9837/git-p4-error- 
+>>> python3.py "$TEST_DIRECTORY"
+>>> +'
+>>> +
+>>> +test_done
+>>> diff --git a/t/t9837/git-p4-error-python3.py b/t/t9837/git-p4-error- 
+>>> python3.py
+>>> new file mode 100644
+>>> index 00000000000..fb65aee386e
+>>> --- /dev/null
+>>> +++ b/t/t9837/git-p4-error-python3.py
+>>> @@ -0,0 +1,15 @@
+>>> +import os
+>>> +import sys
+>>> +from  importlib.machinery import SourceFileLoader
+>>> +
+>>> +def main():
+>>> +    if len(sys.argv[1:]) != 1:
+>>> +        print("Expected test directory name")
+>>> +
+>>> +    gitp4_path = sys.argv[1] + "/../git-p4.py"
+>>> +    gitp4 = SourceFileLoader("gitp4", gitp4_path).load_module()
+>>> +    gitp4.p4CmdList(["edit", b'\xFEfile'])
+>>> +
+>>> +if __name__ == '__main__':
+>>> +    main()
+>>> +
+>>>
+>>> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+> 
 
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-I am still officially on vacation, but 2.50 cycle has been started
-and the first batch of topics are now in 'master'.
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* en/merge-process-renames-crash-fix (2025-03-06) 2 commits
-  (merged to 'next' on 2025-03-06 at 8f38331e32)
- + merge-ort: fix slightly overzealous assertion for rename-to-self
- + t6423: add a testcase causing a failed assertion in process_renames
-
- The merge-recursive and merge-ort machinery crashed in corner cases
- when certain renames are involved.
- 
- source: <pull.1873.git.1741275027.gitgitgadget@gmail.com>
-
-
-* ja/doc-block-delimiter-markup-fix (2025-03-10) 1 commit
-  (merged to 'next' on 2025-03-11 at 8d6641a77e)
- + doc: add a blank line around block delimiters
-
- Doc markup updates.
- 
- source: <pull.1878.git.1741549511665.gitgitgadget@gmail.com>
-
-
-* jt/diff-pairs (2025-03-03) 4 commits
-  (merged to 'next' on 2025-03-03 at 32346e0c3b)
- + builtin/diff-pairs: allow explicit diff queue flush
- + builtin: introduce diff-pairs command
- + diff: add option to skip resolving diff statuses
- + diff: return diff_filepair from diff queue helpers
-
- A post-processing filter for "diff --raw" output has been
- introduced.
- 
- source: <20250228213346.1335224-1-jltobler@gmail.com>
-
-
-* sj/ref-consistency-checks-more (2025-02-27) 9 commits
-  (merged to 'next' on 2025-03-05 at 6bea9376c4)
- + builtin/fsck: add `git refs verify` child process
- + packed-backend: check whether the "packed-refs" is sorted
- + packed-backend: add "packed-refs" entry consistency check
- + packed-backend: check whether the refname contains NUL characters
- + packed-backend: add "packed-refs" header consistency check
- + packed-backend: check if header starts with "# pack-refs with: "
- + packed-backend: check whether the "packed-refs" is regular file
- + builtin/refs: get worktrees without reading head information
- + t0602: use subshell to ensure working directory unchanged
-
- "git fsck" becomes more careful when checking the refs.
- 
- source: <Z8CMx7O19PMs9sVY@ArchLinux>
-
-
-* tb/refs-exclude-fixes (2025-03-06) 2 commits
-  (merged to 'next' on 2025-03-06 at 50707f29db)
- + refs.c: stop matching non-directory prefixes in exclude patterns
- + refs.c: remove empty '--exclude' patterns
-
- The refname exclusion logic in the packed-ref backend has been
- broken for some time, which confused upload-pack to advertise
- different set of refs.  This has been corrected.
- 
- source: <cover.1741275245.git.me@ttaylorr.com>
-
-
-* ua/some-builtins-wo-the-repository (2025-03-07) 8 commits
-  (merged to 'next' on 2025-03-07 at 01f2b84529)
- + builtin/checkout-index: stop using `the_repository`
- + builtin/for-each-ref: stop using `the_repository`
- + builtin/ls-files: stop using `the_repository`
- + builtin/pack-refs: stop using `the_repository`
- + builtin/send-pack: stop using `the_repository`
- + builtin/verify-commit: stop using `the_repository`
- + builtin/verify-tag: stop using `the_repository`
- + config: teach repo_config to allow `repo` to be NULL
-
- A handful of built-in command implementations have been rewritten
- to use the repository instance supplied by git.c:run_builtin(), its
- caller.
- 
- source: <20250307233543.1721552-1-usmanakinyemi202@gmail.com>
-
---------------------------------------------------
-[New Topics]
-
-* ds/maintenance-loose-objects-batchsize (2025-03-23) 2 commits
- - maintenance: add loose-objects.batchSize config
- - maintenance: force progress/no-quiet to children
-
- The job to coalesce loose objects into packfiles in "git
- maintenance" now has configurable batch size.
-
- Will merge to 'next'?
- source: <pull.1885.git.1742777512.gitgitgadget@gmail.com>
-
-
-* js/libgit-cargo-package (2025-03-22) 5 commits
- . libgit-{sys,rs}: add license and description fields
- . libgit-sys: exclude unnecessary directories in git-src
- . libgit-sys: parallelize build with Cargo's jobserver
- . libgit-sys: add symlink to git repo root and build out of tree
- . libgitpub: move to separate contrib/ directory
-
- Breaks Windows CI job with "../.." symbolic link in the source.
- source: <cover.1742594960.git.steadmon@google.com>
-
-
-* jt/clone-guess-remote-head-fix (2025-03-25) 3 commits
- - advice: allow disabling default branch name advice
- - builtin/clone: suppress unexpected default branch advice
- - remote: allow `guess_remote_head()` to suppress advice
-
- "git clone" still gave the message about the default branch name;
- this message has been turned into an advice message that can be
- turned off.
- source: <20250325005148.1771502-1-jltobler@gmail.com>
-
-
-* lo/userdiff-gitconfig (2025-03-23) 1 commit
- - userdiff: add builtin driver for gitconfig syntax
-
- Expecting a reroll?
- source: <20250324021101.7483-1-lucasseikioshiro@gmail.com>
-
-
-* rs/clear-commit-marks-simplify (2025-03-24) 1 commit
- - commit: move clear_commit_marks_many() loop body to clear_commit_marks()
-
- Code clean-up.
-
- Will merge to 'next'.
- source: <80bfd7a9-904c-49d8-a367-ca268c096a9f@web.de>
-
-
-* ta/bulk-checkin-signed-compare-false-warning-fix (2025-03-25) 1 commit
- - bulk-checkin: fix sign compare warnings
-
- Compiler warnings workaround.
-
- Will merge to 'next'.
- source: <20250324214703.7547-1-taahol@utu.fi>
-
-
-* dk/vimdiff-doc-fix (2025-03-25) 1 commit
- - vimdiff: clarify the sigil used for marking the buffer to save
-
- Doc update.
-
- Will merge to 'next'.
- source: <20250324205327.79627-1-ben.knoble+github@gmail.com>
-
-
-* es/meson-build-skip-coccinelle (2025-03-25) 1 commit
- - meson: disable coccinelle configuration when building from a tarball
-
- Build fix.
-
- Will merge to 'next'.
- source: <20250325200920.198057-1-eschwartz@gentoo.org>
-
-
-* fr/vimdiff-layout-fixes (2025-03-25) 2 commits
- - mergetools: vimdiff: add tests for layout with REMOTE as the target
- - mergetools: vimdiff: fix layout where REMOTE is the target
-
- Layout configuration in vimdiff backend didn't work as advertised,
- which has been corrected.
-
- Will merge to 'next'.
- source: <20250325222311.400748-1-greenfoo@u92.eu>
-
-
-* js/comma-semicolon-confusion (2025-03-25) 10 commits
- - detect-compiler: detect clang even if it found CUDA
- - clang: warn when the comma operator is used
- - compat/regex: explicitly mark intentional use of the comma operator
- - wildmatch: explicitly mark intentional use of the comma operator
- - diff-delta: explicitly mark intentional use of the comma operator
- - xdiff: avoid using the comma operator unnecessarily
- - clar: avoid using the comma operator unnecessarily
- - kwset: avoid using the comma operator unnecessarily
- - rebase: avoid using the comma operator unnecessarily
- - remote-curl: avoid using the comma operator unnecessarily
-
- Code clean-up.
-
- Will merge to 'next'?
- source: <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
-
-
-* js/imap-send-peer-cert-verify (2025-03-25) 1 commit
-  (merged to 'next' on 2025-03-26 at 69df4dd915)
- + imap-send: explicitly verify the peer certificate
-
- Will merge to 'master'.
- source: <pull.1886.git.1742819282360.gitgitgadget@gmail.com>
-
-
-* js/mingw-admins-are-special (2025-03-25) 2 commits
-  (merged to 'next' on 2025-03-26 at dfcb9661a6)
- + test-tool path-utils: support debugging "dubious ownership" issues
- + mingw: special-case administrators even more
-
- "Dubious ownership" checks on Windows has been tightened up.
-
- Will merge to 'master'.
- source: <pull.1893.git.1742899110.gitgitgadget@gmail.com>
-
---------------------------------------------------
-[Cooking]
-
-* en/assert-wo-side-effects (2025-03-21) 3 commits
- - treewide: replace assert() with ASSERT() in special cases
- - ci: add build checking for side-effects in assert() calls
- - git-compat-util: introduce ASSERT() macro
-
- Ensure what we write in assert() does not have side effects,
- and introduce ASSERT() macro to mark those that cannot be
- mechanically checked for lack of side effects.
-
- Will merge to 'next'.
- source: <pull.1881.v3.git.1742401378.gitgitgadget@gmail.com>
-
-
-* jt/ref-transaction-abort-fix (2025-03-21) 1 commit
- - builtin/fetch: avoid aborting closed reference transaction
-
- A ref transaction corner case fix.
-
- Will merge to 'next'?
- source: <20250321004437.505461-1-jltobler@gmail.com>
-
-
-* kn/ci-meson-check-build-docs-fix (2025-03-20) 1 commit
-  (merged to 'next' on 2025-03-24 at 135ce9ce61)
- + ci/github: add missing 'CI_JOB_IMAGE' env variable
-
- GitHub Actions CI switched on a CI/CD variable that does not exist
- when choosing what packages to install etc., which has been
- corrected.
-
- Will merge to 'master'.
- source: <20250319163328.525284-1-karthik.188@gmail.com>
-
-
-* ms/reftable-block-writer-errors (2025-03-21) 3 commits
- - reftable: adapt write_object_record() to propagate block_writer_add() errors
- - reftable: adapt writer_add_record() to propagate block_writer_add() errors
- - reftable: propagate specific error codes in block_writer_add()
-
- Give more meaningful error return values from block writer layer of
- the reftable ref-API backend.
-
- Will merge to 'next'.
- cf. <Z9rnZzbEasyRbHIY@pks.im>
- source: <20250319152927.1263033-1-meetsoni3017@gmail.com>
-
-
-* tb/bitamp-typofix (2025-03-21) 1 commit
-  (merged to 'next' on 2025-03-26 at f068ddb5bb)
- + pseudo-merge.h: fix a typo
-
- Typofix.
-
- Will merge to 'master'.
- source: <3b3cc5c0fa2d0696eb15c5d3c97a6c93a0d39252.1742338479.git.me@ttaylorr.com>
-
-
-* tb/http-curl-keepalive (2025-03-21) 4 commits
- - http.c: allow custom TCP keepalive behavior via config
- - http.c: inline `set_curl_keepalive()`
- - http.c: introduce `set_long_from_env()` for convenience
- - http.c: remove unnecessary casts to long
-
- TCP keepalive behaviour on http transports can now be configured by
- calling cURL library.
-
- Will merge to 'next'.
- cf. <CABPp-BEn+NfGu1c=ZWjwnFBJgmsxRVSq+Roin-KDQGqKPdDhCg@mail.gmail.com>
- source: <cover.1742423021.git.me@ttaylorr.com>
-
-
-* tb/refspec-fetch-cleanup (2025-03-21) 5 commits
- - refspec: replace `refspec_item_init()` with fetch/push variants
- - refspec: remove refspec_item_init_or_die()
- - refspec: replace `refspec_init()` with fetch/push variants
- - refspec: treat 'fetch' as a Boolean value
- - Merge branch 'jk/fetch-ref-prefix-cleanup' into tb/refspec-fetch-cleanup
- (this branch uses jk/fetch-ref-prefix-cleanup.)
-
- Code clean-up.
-
- Will merge to 'next'.
- cf. <CABPp-BE6JmiXB+pUL1Z4ewVDbG2RBxCdA2m5-WTYtoKMTtu_Xw@mail.gmail.com>
- source: <cover.1742338207.git.me@ttaylorr.com>
-
-
-* zy/send-email-error-handling (2025-03-25) 2 commits
- - send-email: finer-grained SMTP error handling
- - send-email: capture errors in an eval {} block
-
- Auth-related (and unrelated) error handling in send-email has been
- made more robust.
-
- Getting there.
- source: <20250324145332.571813-1-05ZYT30@gmail.com>
-
-
-* aj/doc-restore-p-update (2025-03-18) 1 commit
-  (merged to 'next' on 2025-03-24 at bdcfdc7f4e)
- + doc: restore: remove note on --patch w/ pathspecs
-
- Stale description in "git restore -p" documentation has been
- updated.
-
- Will merge to 'master'.
- source: <pull.1504.v2.git.git.1685654097812.gitgitgadget@gmail.com>
-
-
-* en/random-cleanups (2025-03-17) 5 commits
-  (merged to 'next' on 2025-03-18 at 87acd24a85)
- + merge-ort: remove extraneous word in comment
- + merge-ort: fix accidental strset<->strintmap
- + t7615: be more explicit about diff algorithm used
- + t6423: fix a comment that accidentally reversed two commits
- + stash: remove merge-recursive.h include
-
- Miscellaneous code clean-ups.
-
- Will merge to 'master'.
- source: <pull.1882.git.1742108339.gitgitgadget@gmail.com>
-
-
-* es/meson-building-docs-requires-perl (2025-03-17) 1 commit
-  (merged to 'next' on 2025-03-18 at 1c1d88dcb7)
- + meson: fix perl detection when docs are enabled, but perl bindings aren't
-
- Build update.
-
- Will merge to 'master'.
- source: <20250316060605.166364-1-eschwartz@gentoo.org>
-
-
-* hj/doc-rev-list-ancestry-fix (2025-03-18) 1 commit
-  (merged to 'next' on 2025-03-18 at e94155a9ec)
- + doc: add missing commit C to the graph for --ancestry-path=H D..M
-
- Doc update.
-
- Will merge to 'master'.
- source: <pull.1883.git.1742089659610.gitgitgadget@gmail.com>
-
-
-* ja/doc-branch-markup (2025-03-20) 2 commits
-  (merged to 'next' on 2025-03-24 at ba6e1c7d0b)
- + doc: apply new format to git-branch man page
- + completion: take into account the formatting backticks for options
-
- Doc mark-up updates.
-
- Will merge to 'master'.
- source: <pull.1880.v2.git.1742372183.gitgitgadget@gmail.com>
-
-
-* ps/mingw-creat-excl-fix (2025-03-21) 2 commits
- - compat/mingw: fix EACCESS when opening files with `O_CREAT | O_EXCL`
- - meson: fix compat sources when compiling with MSVC
-
- Fix lockfile contention in reftable code on Windows.
-
- Comments?
- source: <20250320-b4-pks-mingw-lockfile-flake-v2-0-a84c90cfc6c2@pks.im>
-
-
-* rs/xdiff-context-length-fix (2025-03-14) 1 commit
-  (merged to 'next' on 2025-03-18 at aca4b320d2)
- + xdiff: avoid arithmetic overflow in xdl_get_hunk()
-
- The xdiff code on 32-bit platform misbehaved when an insanely large
- context size is given, which has been corrected.
-
- Will merge to 'master'.
- source: <4e9b6b4c-aaa1-4c6f-93f4-7bb04607e843@web.de>
-
-
-* sj/meson-test-environ-fix (2025-03-14) 1 commit
- - meson: use test_environment conditionally.
-
- meson-based build procedure was overly aggressive in using test
- environment in two contrib/ directories, which was corrected.
-
- Needs review.
- source: <3d127f293818f935efdb9ca7bb556e6a8f233ef7.1741975557.git.sam@gentoo.org>
-
-
-* tb/combine-cruft-below-size (2025-03-21) 6 commits
-  (merged to 'next' on 2025-03-24 at 699b83a925)
- + repack: begin combining cruft packs with `--combine-cruft-below-size`
- + repack: avoid combining cruft packs with `--max-cruft-size`
- + t/t7704-repack-cruft.sh: consolidate `write_blob()`
- + t/t7704-repack-cruft.sh: clarify wording in --max-cruft-size tests
- + t/t5329-pack-objects-cruft.sh: evict 'repack'-related tests
- + Merge branch 'tb/multi-cruft-pack-refresh-fix' into tb/combine-cruft-below-size
- (this branch uses tb/multi-cruft-pack-refresh-fix.)
-
- "git repack" learned "--combine-cruft-below-size" option that
- controls how cruft-packs are combined.
-
- Will merge to 'master'.
- source: <cover.1742424671.git.me@ttaylorr.com>
-
-
-* jh/hash-init-fixes (2025-03-18) 1 commit
-  (merged to 'next' on 2025-03-24 at 85b8299403)
- + index-pack, unpack-objects: restore missing ->init_fn
-
- An earlier code refactoring of the hash machinery missed a few
- required calls to init_fn.
-
- Will merge to 'master'.
- cf. <Z9rC0VCbh8Noaq4e@pks.im>
- source: <20250318111616.113941-1-hmz007@gmail.com>
-
-
-* jk/fetch-follow-remote-head-fix (2025-03-18) 3 commits
- - fetch: don't ask for remote HEAD if followRemoteHEAD is "never"
- - fetch: only respect followRemoteHEAD with configured refspecs
- - Merge branch 'jk/fetch-ref-prefix-cleanup' into jk/fetch-follow-remote-head-fix
- (this branch uses jk/fetch-ref-prefix-cleanup.)
-
- "git fetch [<remote>]" with only the configured fetch refspec
- should be the only thing to update refs/remotes/<remote>/HEAD,
- but the code was overly eager to do so in other cases.
-
- Will merge to 'next'?
- source: <20250318053905.GA2051217@coredump.intra.peff.net>
-
-
-* pw/build-breaking-changes-doc (2025-03-18) 1 commit
-  (merged to 'next' on 2025-03-24 at 56efeea47e)
- + docs: add BreakingChanges to TECH_DOCS target
-
- A documentation page was left out from formatting and installation,
- which has been corrected.
-
- Will merge to 'master'.
- source: <pull.1921.git.git.1742308900290.gitgitgadget@gmail.com>
-
-
-* pw/doc-pack-refs-markup-fix (2025-03-18) 1 commit
-  (merged to 'next' on 2025-03-24 at 3bcea36a83)
- + pack-refs doc: fix indentation for --exclude
-
- Doc markup fix.
-
- Will merge to 'master'.
- source: <pull.1920.git.git.1742308828163.gitgitgadget@gmail.com>
-
-
-* sc/bundle-uri-use-all-refs-in-bundle (2025-03-18) 2 commits
- - bundle-uri: add test for bundle-uri clones with tags
- - bundle-uri: copy all bundle references ino the refs/bundle space
-
- Bundle-URI feature did not use refs recorded in the bundle other
- than normal branches as anchoring points to optimize the follow-up
- fetch during "git clone"; now it is told to utilize all.
-
- Comments?
- source: <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com>
-
-
-* en/diff-rename-follow-fix (2025-03-14) 1 commit
-  (merged to 'next' on 2025-03-18 at 56808a7eda)
- + diffcore-rename: fix BUG when break detection and --follow used together
-
- A corner-case bug in "git log --follow -B" has been fixed.
-
- Will merge to 'master'.
- source: <pull.1876.v2.git.1742000894041.gitgitgadget@gmail.com>
-
-
-* en/merge-ort-prepare-to-remove-recursive (2025-03-18) 6 commits
-  (merged to 'next' on 2025-03-18 at a911944a1c)
- + am: switch from merge_recursive_generic() to merge_ort_generic()
- + merge-ort: fix merge.directoryRenames=false
- + t3650: document bug when directory renames are turned off
- + merge-ort: support having merge verbosity be set to 0
- + merge-ort: allow rename detection to be disabled
- + merge-ort: add new merge_ort_generic() function
-
- First step of deprecating and removing merge-recursive.
-
- Will merge to 'master'.
- source: <pull.1875.v2.git.1741834001.gitgitgadget@gmail.com>
-
-
-* jk/use-wunreachable-code-for-devs (2025-03-17) 3 commits
-  (merged to 'next' on 2025-03-18 at fe32168eef)
- + config.mak.dev: enable -Wunreachable-code
- + git-compat-util: add NOT_CONSTANT macro and use it in atfork_prepare()
- + run-command: use errno to check for sigfillset() error
-
- Enable -Wunreachable-code for developer builds.
-
- Will merge to 'master'.
- source: <20250317235329.809302-1-gitster@pobox.com>
-
-
-* ab/decorate-code-cleanup (2025-03-10) 1 commit
-  (merged to 'next' on 2025-03-18 at 7ede1484eb)
- + decorate: fix sign comparison warnings
-
- Code clean-up.
-
- Will merge to 'master'.
- source: <7c219279-8151-49c0-8fc0-8abe2624aca9@gmail.com>
-
-
-* ds/path-walk-2 (2025-03-25) 13 commits
- - pack-objects: allow --shallow and --path-walk
- - path-walk: add new 'edge_aggressive' option
- - pack-objects: thread the path-based compression
- - pack-objects: refactor path-walk delta phase
- - scalar: enable path-walk during push via config
- - pack-objects: enable --path-walk via config
- - repack: add --path-walk option
- - t5538: add tests to confirm deltas in shallow pushes
- - pack-objects: introduce GIT_TEST_PACK_PATH_WALK
- - p5313: add performance tests for --path-walk
- - pack-objects: update usage to match docs
- - pack-objects: add --path-walk option
- - pack-objects: extract should_attempt_deltas()
-
- "git pack-objects" learns to find delta bases from blobs at the
- same path, using the --path-walk API.
-
- Comments?
- source: <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
-
-
-* jc/name-rev-stdin (2025-03-12) 6 commits
-  (merged to 'next' on 2025-03-24 at cfec2e409f)
- + name-rev: remove "--stdin" support
- + t6120: further modernize
- + t6120: avoid hiding "git" exit status
- + t: introduce WITH_BREAKING_CHANGES prerequisite
- + t: extend test_lazy_prereq
- + t: document test_lazy_prereq
-
- Using "git name-rev --stdin" as an example, improve the framework to
- prepare tests to pretend to be in the future where the breaking
- changes have already happened.
-
- Will merge to 'master'.
- source: <20250311212505.2920181-1-gitster@pobox.com>
-
-
-* jk/fetch-ref-prefix-cleanup (2025-03-10) 9 commits
-  (merged to 'next' on 2025-03-18 at ab3e5cf19f)
- + fetch: use ref prefix list to skip ls-refs
- + fetch: avoid ls-refs only to ask for HEAD symref update
- + fetch: stop protecting additions to ref-prefix list
- + fetch: ask server to advertise HEAD for config-less fetch
- + refspec_ref_prefixes(): clean up refspec_item logic
- + t5516: beef up exact-oid ref prefixes test
- + t5516: drop NEEDSWORK about v2 reachability behavior
- + t5516: prefer "oid" to "sha1" in some test titles
- + t5702: fix typo in test name
- (this branch is used by jk/fetch-follow-remote-head-fix and tb/refspec-fetch-cleanup.)
-
- In protocol v2 where the refs advertisement is constrained, we try
- to tell the server side not to limit the advertisement when there
- is no specific need to, which has been the source of confusion and
- recent bugs.  Revamp the logic to simplify.
-
- Will merge to 'master'.
- source: <20250309030101.GA2334064@coredump.intra.peff.net>
-
-
-* jt/rev-list-z (2025-03-21) 5 commits
- - rev-list: support NUL-delimited --missing option
- - rev-list: support NUL-delimited --boundary option
- - rev-list: support delimiting objects with NUL bytes
- - rev-list: refactor early option parsing
- - rev-list: inline `show_object_with_name()` in `show_object()`
-
- "git rev-list" learns machine-parsable output format that delimits
- each field with NUL.
-
- Will merge to 'next'?
- source: <20250319183410.1225428-1-jltobler@gmail.com>
-
-
-* kn/reflog-drop (2025-03-17) 2 commits
- - reflog: implement subcommand to drop reflogs
- - reflog: improve error for when reflog is not found
-
- "git reflog" learns "drop" subcommand, that discards the entire
- reflog data for a ref.
-
- Will merge to 'next'?
- source: <20250314-493-add-command-to-purge-reflog-entries-v3-0-c24e23a6146d@gmail.com>
-
-
-* am/dir-dedup-decl-of-repository (2025-03-11) 1 commit
-  (merged to 'next' on 2025-03-18 at 9075454132)
- + dir.h: remove duplicate forward declaration of struct repository
-
- Code cleanup.
-
- Will merge to 'master'.
- source: <pull.1879.git.1741705175922.gitgitgadget@gmail.com>
-
-
-* cc/lop-remote (2025-03-18) 4 commits
-  (merged to 'next' on 2025-03-24 at 3b685ceef0)
- + promisor-remote: compare remote names case sensitively
- + promisor-remote: fix possible issue when no URL is advertised
- + promisor-remote: fix segfault when remote URL is missing
- + t5710: arrange to delete the client before cloning
-
- Bugfix in newly introduced large-object-promisor remote support.
-
- Will merge to 'master'.
- source: <20250318110008.656695-1-christian.couder@gmail.com>
-
-
-* ps/ci-meson-check-build-docs (2025-03-12) 1 commit
- - ci: perform build and smoke tests for Meson docs
-
- CI update.
-
- Will merge to 'next'.
- source: <20250312-b4-pks-ci-meson-docs-v1-1-5e7cf7ac959a@pks.im>
-
-
-* ps/meson-with-breaking-changes (2025-03-12) 3 commits
-  (merged to 'next' on 2025-03-18 at 15b1c62eff)
- + meson: don't install git-pack-redundant(1) docs with breaking changes
- + meson: don't compile git-pack-redundant(1) with breaking changes
- + meson: define WITH_BREAKING_CHANGES when enabling breaking changes
-
- Update meson based build procedure for breaking changes support.
-
- Will merge to 'master'.
- source: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
-
-
-* md/t1403-path-is-file (2025-03-04) 1 commit
- - t1403: verify that path exists and is a file
-
- Test tweak.
- source: <20250304112728.41228-2-danimahendra0904@gmail.com>
-
-
-* sk/clar-trailer-urlmatch-norm-test (2025-03-04) 2 commits
- - t/unit-tests: convert urlmatch-normalization test to clar
- - t/unit-tests: convert trailer test to use clar
-
- A few traditional unit tests have been rewritten to use the clar
- framework.
-
- Comments?
- source: <20250304113323.10564-1-kuforiji98@gmail.com>
-
-
-* dm/completion-remote-names-fix (2025-03-23) 2 commits
-  (merged to 'next' on 2025-03-26 at b9460e20ae)
- + completion: fix bugs with slashes in remote names
- + completion: add helper to count path components
-
- The bash command line completion script (in contrib/) has been
- updated to cope with remote repository nicknames with slashes in
- them.
-
- Will merge to 'master'.
- source: <17274df2746d304db876ebd82ad8d932@mandelberg.org>
-
-
-* kn/non-transactional-batch-updates (2025-03-21) 9 commits
- - update-ref: add --batch-updates flag for stdin mode
- - refs: support rejection in batch updates during F/D checks
- - refs: implement batch reference update support
- - refs: introduce enum-based transaction error types
- - refs/reftable: extract code from the transaction preparation
- - refs/files: remove duplicate duplicates check
- - refs: move duplicate refname update check to generic layer
- - refs/files: remove redundant check in split_symref_update()
- - Merge branch 'ps/refname-avail-check-optim' into kn/non-transactional-batch-updates
- (this branch uses ps/refname-avail-check-optim.)
-
- Updating multiple references have only been possible in all-or-none
- fashion with transactions, but it can be more efficient to batch
- multiple updates even when some of them are allowed to fail in a
- best-effort manner.  A new "best effort batches of updates" mode
- has been introduced.
-
- Comments?
- source: <20250320-245-partially-atomic-ref-updates-v4-0-3dcc1b311dc9@gmail.com>
-
-
-* ps/object-wo-the-repository (2025-03-10) 12 commits
- - hash: stop depending on `the_repository` in `null_oid()`
- - hash: fix "-Wsign-compare" warnings
- - object-file: split out logic regarding hash algorithms
- - delta-islands: stop depending on `the_repository`
- - object-file-convert: stop depending on `the_repository`
- - pack-bitmap-write: stop depending on `the_repository`
- - pack-revindex: stop depending on `the_repository`
- - pack-check: stop depending on `the_repository`
- - environment: move access to "core.bigFileThreshold" into repo settings
- - pack-write: stop depending on `the_repository` and `the_hash_algo`
- - object: stop depending on `the_repository`
- - csum-file: stop depending on `the_repository`
-
- The object layer has been updated to take an explicit repository
- instance as a parameter in more code paths.
-
- Looking good.
- source: <20250310-b4-pks-objects-without-the-repository-v4-0-f201b8ec57ba@pks.im>
-
-
-* ps/maintenance-reflog-expire (2025-02-26) 6 commits
- - builtin/maintenance: introduce "reflog-expire" task
- - builtin/gc: split out function to expire reflog entries
- - builtin/reflog: make functions regarding `reflog_expire_options` public
- - builtin/reflog: stop storing per-reflog expiry dates globally
- - builtin/reflog: stop storing default reflog expiry dates globally
- - reflog: rename `cmd_reflog_expire_cb` to `reflog_expire_options`
-
- "git maintenance" learns a new task to expire reflog entries.
-
- Needs (real) review.
- source: <20250226-pks-maintenance-reflog-expire-v1-0-a1204a814952@pks.im>
-
-
-* ps/refname-avail-check-optim (2025-03-12) 16 commits
-  (merged to 'next' on 2025-03-18 at 726197f7e0)
- + refs: reuse iterators when determining refname availability
- + refs/iterator: implement seeking for files iterators
- + refs/iterator: implement seeking for packed-ref iterators
- + refs/iterator: implement seeking for ref-cache iterators
- + refs/iterator: implement seeking for reftable iterators
- + refs/iterator: implement seeking for merged iterators
- + refs/iterator: provide infrastructure to re-seek iterators
- + refs/iterator: separate lifecycle from iteration
- + refs: stop re-verifying common prefixes for availability
- + refs/files: batch refname availability checks for initial transactions
- + refs/files: batch refname availability checks for normal transactions
- + refs/reftable: batch refname availability checks
- + refs: introduce function to batch refname availability checks
- + builtin/update-ref: skip ambiguity checks when parsing object IDs
- + object-name: allow skipping ambiguity checks in `get_oid()` family
- + object-name: introduce `repo_get_oid_with_flags()`
- (this branch is used by kn/non-transactional-batch-updates.)
-
- The code paths to check whether a refname X is available (by seeing
- if another ref X/Y exists, etc.) have been optimized.
-
- Will merge to 'master'.
- source: <20250312-pks-update-ref-optimization-v6-0-f778e0414f55@pks.im>
-
-
-* tb/multi-cruft-pack-refresh-fix (2025-03-13) 1 commit
-  (merged to 'next' on 2025-03-18 at e3f090e427)
- + builtin/pack-objects.c: freshen objects from existing cruft packs
- (this branch is used by tb/combine-cruft-below-size.)
-
- Certain "cruft" objects would have never been refreshed when there
- are multiple cruft packs in the repository, which has been
- corrected.
-
- Will merge to 'master'.
- source: <1563552bbda0bc910c9f41b0fabc3225c4d778fc.1741889018.git.me@ttaylorr.com>
-
-
-* jk/zlib-inflate-fixes (2025-02-25) 10 commits
- - unpack_loose_rest(): rewrite return handling for clarity
- - unpack_loose_rest(): simplify error handling
- - unpack_loose_rest(): never clean up zstream
- - unpack_loose_rest(): avoid numeric comparison of zlib status
- - unpack_loose_header(): avoid numeric comparison of zlib status
- - git_inflate(): skip zlib_post_call() sanity check on Z_NEED_DICT
- - unpack_loose_header(): fix infinite loop on broken zlib input
- - unpack_loose_header(): report headers without NUL as "bad"
- - unpack_loose_header(): simplify next_out assignment
- - loose_object_info(): BUG() on inflating content with unknown type
-
- Fix our use of zlib corner cases.
-
- Still being discussed.
- cf. <20250304065501.GB1283901@coredump.intra.peff.net>
- source: <20250225062518.GA1293854@coredump.intra.peff.net>
-
-
-* cc/signed-fast-export-import (2025-03-10) 6 commits
-  (merged to 'next' on 2025-03-18 at d98973e2cb)
- + fast-export, fast-import: add support for signed-commits
- + fast-export: do not modify memory from get_commit_buffer
- + git-fast-export.adoc: clarify why 'verbatim' may not be a good idea
- + fast-export: rename --signed-tags='warn' to 'warn-verbatim'
- + fast-export: fix missing whitespace after switch
- + git-fast-import.adoc: add missing LF in the BNF
-
- "git fast-export | git fast-import" learns to deal with commit and
- tag objects with embedded signatures a bit better.
-
- Will merge to 'master'.
- cf. <CABPp-BGyA8iBA0BFO8FcpZAMca94aVu2vHHRi4Oz=nCWxJSDPg@mail.gmail.com>
- source: <20250310155746.879481-1-christian.couder@gmail.com>
-
-
-* ib/diff-S-G-with-longhand (2025-02-12) 10 commits
- - diff: docs: Use --patch-{grep,modifies} over -G/-S
- - diff: --pickaxe-{all,regex} help: Add --patch-{grep,modifies}
- - diff: test: Use --patch-{grep,modifies} over -G/-S
- - completion: Support --patch-{grep,modifies}
- - diff: --patch-{grep,modifies} arg names for -G and -S
- - docs: gitdiffcore: -G and -S: Use regex/string placeholders
- - diff: short help: Add -G and --pickaxe-grep
- - diff: short help: Correct -S description
- - diff: -G description: Correct copy/paste error
- - t/t4209-log-pickaxe: Naming typo: -G takes a regex
-
- The commands in the "diff" family learned longhands for "-S" and
- "-G" options.
-
- The core part looked mostly good.
- source: <20250212032657.1807939-1-illia.bobyr@gmail.com>
-
-
-* ps/reftable-windows-unlink-fix (2025-02-18) 2 commits
- - reftable: ignore file-in-use errors when unlink(3p) fails on Windows
- - Merge branch 'ps/reftable-sans-compat-util' into ps/reftable-windows-unlink-fix
- (this branch uses ps/reftable-sans-compat-util.)
-
- Portability fix.
-
- Waiting for the base topic to settle.
- source: <20250206-b4-pks-reftable-win32-in-use-errors-v2-1-56985a4f6186@pks.im>
-
-
-* ps/reftable-sans-compat-util (2025-02-18) 18 commits
- - Makefile: skip reftable library for Coccinelle
- - reftable: decouple from Git codebase by pulling in "compat/posix.h"
- - git-compat-util.h: split out POSIX-emulating bits
- - compat/mingw: split out POSIX-related bits
- - reftable/basics: introduce `REFTABLE_UNUSED` annotation
- - reftable/basics: stop using `SWAP()` macro
- - reftable/stack: stop using `sleep_millisec()`
- - reftable/system: introduce `reftable_rand()`
- - reftable/reader: stop using `ARRAY_SIZE()` macro
- - reftable/basics: provide wrappers for big endian conversion
- - reftable/basics: stop using `st_mult()` in array allocators
- - reftable: stop using `BUG()` in trivial cases
- - reftable/record: don't `BUG()` in `reftable_record_cmp()`
- - reftable/record: stop using `BUG()` in `reftable_record_init()`
- - reftable/record: stop using `COPY_ARRAY()`
- - reftable/blocksource: stop using `xmmap()`
- - reftable/stack: stop using `write_in_full()`
- - reftable/stack: stop using `read_in_full()`
- (this branch is used by ps/reftable-windows-unlink-fix.)
-
- Make the code in reftable library less reliant on the service
- routines it used to borrow from Git proper, to make it easier to
- use by external users of the library.
-
- Waiting for Acks, especially for Windows bits?
- source: <20250218-pks-reftable-drop-git-compat-util-v6-0-8c1f39fb4c02@pks.im>
-
-
-* jc/doc-attr-tree (2024-12-14) 1 commit
- - doc: give attr.tree a bit more visibility
-
- Make sure that "git --attr-source=X", GIT_ATTR_SOURCE, and
- attr.tree configuration variables appear at the same places in the
- documentation.
-
- On hold.
- cf. <20241216111112.GA2201417@coredump.intra.peff.net>
- source: <xmqq5xnladwi.fsf@gitster.g>
-
-
-* tb/incremental-midx-part-2 (2025-03-21) 14 commits
- - midx: implement writing incremental MIDX bitmaps
- - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
- - pack-bitmap.c: keep track of each layer's type bitmaps
- - ewah: implement `struct ewah_or_iterator`
- - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
- - pack-bitmap.c: compute disk-usage with incremental MIDXs
- - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
- - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
- - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
- - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
- - pack-bitmap.c: open and store incremental bitmap layers
- - pack-revindex: prepare for incremental MIDX bitmaps
- - Documentation: describe incremental MIDX bitmaps
- - Documentation: remove a "future work" item from the MIDX docs
-
- Incrementally updating multi-pack index files.
-
- Comments?
- source: <cover.1742493373.git.me@ttaylorr.com>
-
-
-* ej/cat-file-remote-object-info (2025-02-24) 8 commits
- - cat-file: add remote-object-info to batch-command
- - transport: add client support for object-info
- - serve: advertise object-info feature
- - fetch-pack: move fetch initialization
- - fetch-pack: refactor packet writing
- - t1006: split test utility functions into new "lib-cat-file.sh"
- - cat-file: add declaration of variable i inside its for loop
- - git-compat-util: add strtoul_ul() with error handling
-
- "git cat-file --batch" and friends can optionally ask a remote
- server about objects it does not have.
- source: <20250221190451.12536-1-eric.peijian@gmail.com>
-
---------------------------------------------------
-[Discarded]
-
-* jc/ci-meson-check-build-docs-fix (2025-03-14) 1 commit
- . install meson for Documentation job
- (this branch uses ps/ci-meson-check-build-docs.)
-
- The documentation CI job tries to build test documentation pages
- with both make- and meson-based build procedures, but somehow
- forgot to install meson in the Ci environment, which has been
- corrected.
-
- Discarded.  kn/ci-meson-check-build-docs-fix gives us the right fix.
- cf. <xmqqmsdi49h8.fsf_-_@gitster.g>
- cf. <CAOLa=ZRODjYfDXQ8m+hDosV7RBGDWeehzSvsR-+-HCmbS+tAcQ@mail.gmail.com>
- source: <20250314184130.GA578421@coredump.intra.peff.net>
