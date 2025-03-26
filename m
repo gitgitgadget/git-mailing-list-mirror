@@ -1,112 +1,128 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D29188735
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 05:54:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EBE155316
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 07:02:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742968496; cv=none; b=hpMLV7RDSUWtLOdU3eG14n5DkW9FZR1Oa8H59FYC3P2dXxbFnA/Ur4qKuOCcG2F8P9r6Pqw1mNWd3wAetG1wzmPypMk5zDFSCIt+77pG/7cHlqJnSVC+N0c2h5pVxQ42HUStglmfcd8NpuNkG0FgvVtJdSu2UGh/X87RAqEQ8Fk=
+	t=1742972549; cv=none; b=ZGilo4sUOFPu9We8zmyyrUDnWFLsOPcAVZV+F/1GtWJJhJEJuicgXBiEb5xWlKhxmmz2NT5sUus4Cd6cefC5jyUHr5kAYpH8z1JdWTDO/7tYy8pWgnv7ISTPf3x6grBduhRSvQFX7UQavgsuDkOPM/KycVY9GnadhPvREhO8OKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742968496; c=relaxed/simple;
-	bh=M1CXq7DYoWOVQKcApkifCns1RFwdYL2AsdxbXyy2xkk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X4hR+yv/5Ng219mU0j9Ma2H9N7gBW2aPT6j6tVILHiL7qypPRO42u6Wt0iL9B+Ez4x5UMixEciZfqoAWPGx17egPU1HYTli0O6I8QsG+yJgiCS3kQf9px9AnYU6rYIfwbQWA5S2ICKZA8zfqht18l8XTpg5NzYhgUexixnPml3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Tq7xxT1P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vFvwm12/; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1742972549; c=relaxed/simple;
+	bh=KPFyrO0dBtyO1E7MnrwnVbwnu1H1z4x6zwGMw4FlY9U=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=SHcjDWvx3EITUH+vsmQzGOpukzOnce1/D4usIqtMMcNDaKarfL+TdNgi0cnS0zXzE+ft6ZmERhov2mN3BsMVYxwhN8dViCPgk67FVvpJqHkOFYhy+CQNsC8TSwO8Cf79O17j1ubi+Nlul9YtBIMDaUoxWpJ6QZDNGFbacIjlU4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=pbY5Ir8f; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Tq7xxT1P";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vFvwm12/"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BCAD61140209;
-	Wed, 26 Mar 2025 01:54:53 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Wed, 26 Mar 2025 01:54:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1742968493; x=1743054893; bh=31qBR2b7zG
-	kmQHL+e2jlKMHJof3Pu7VwjiyuNsHE8Jo=; b=Tq7xxT1PifgctUvFkUPMviVQgD
-	DRR9Ef+iYrFeXNyOOUvcpvaeQXDHDeJMElI0JcvdfY3O39j95/BlN96YzuWPoiAE
-	dm6cF42sqSOd6chqwSI+7lvp1z2vMZPjFfxmD94UWRLpBJ6/+cWaN4OpBBO8IGXX
-	gOrIj+y/Ol5rzQjVLK89tMqY7X3JLKiiDrBA6MrJN6202q2lNyX9YhByUEg3FAe/
-	hJqvvmWpOXSJcFEkyx3+UvIRunCOt5hdgAJBTTZXqCGlf9xjiyCupn6ym/SRJfSb
-	tkddFQBH+gul+FxlJc59UCjyATpUR8rsJwbkfNfQZXYHvsCKiu2CjnoKUOTg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1742968493; x=1743054893; bh=31qBR2b7zGkmQHL+e2jlKMHJof3Pu7Vwjiy
-	uNsHE8Jo=; b=vFvwm12/H+xsh8NOIdU9fD4wpVRk2Ll+PUORZQOQ+CukfrI+dyu
-	rVB0E51Y9FOzf2WBQVlpBwSKR3HTJPtQOn3hiGPoqP4xlpKSYtEZE9TliHpe7AbM
-	OZqbV6Ct5zuY+y1EvCjA3TsZvMqJ6ESPpanPC27s00FNKsxekHatgCdshA9nv3aR
-	6z0uHvpI3Ud7HPHEXIXZ2S7e8ss568LgfJk0liF4TQivOg/eYHHzBn712YmofjNZ
-	dYkvBAtVKvvvpUNphaNIu6tUjbXc0WJFfoT8u5HumeANwNYYQEGWbKLHuViNo8qV
-	PKpM80dFjsX9xLlEw0/Vjh6pK3I7xMMuJpg==
-X-ME-Sender: <xms:rZbjZ8S_hfYl9MFznULH5eHEn4c0qozvK5X8O9clUpKi38pWS18TJA>
-    <xme:rZbjZ5za4ike8f4PqyYbiKsXvtWqfub5xSWhNiQ939hCSO62BuRYsBht-YW_IWX09
-    _VGExcyxZGHCBsG5w>
-X-ME-Received: <xmr:rZbjZ52UL21YjIm3yA6Z1D8owZJNAh1QEZr7Z_Qs1LSOWLdGRxk7LLNOf0ZWOY4-eK3bGtwf17RXXJNpmb2cQ-0N4KDnDkpSSgW5yPQJ22xFQw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieegjeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhephfeftdeitdfggfffffelgfegudehvedvkeeutdel
-    leegueevjefftdelgeehleejnecuffhomhgrihhnpegtphhprhgvfhgvrhgvnhgtvgdrtg
-    homhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
-    shesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfh
-    hfsehpvghffhdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgt
-    phhtthhopehphhhilhhiphhorghklhgvhiesihgvvgdrvghmrghilh
-X-ME-Proxy: <xmx:rZbjZwDBZqiO3GmMLk5BX9c0cWzNB3ONzQLZXNVXUAbmTyMHKU46QA>
-    <xmx:rZbjZ1jxaS1V7F-Eau-hwGPAcu2L6AQTxBOx3QQcgp1WRVteTMO5Fw>
-    <xmx:rZbjZ8pu99IxLcH1z3GOm3OQBmgmsjDLuFoWiOuOhr-0apzXHtm_cg>
-    <xmx:rZbjZ4g5ueGRTbPgTTCZ3pbGdh9JqWr_mVbyreNjCl3Uu_ZjfPYIaQ>
-    <xmx:rZbjZ9hDaOmkD91uMqvAOPvd7Z-j0ict4KUgCy9dRZUF4cPXspuaHtja>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Mar 2025 01:54:52 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d429c8c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 26 Mar 2025 05:54:51 +0000 (UTC)
-Date: Wed, 26 Mar 2025 06:54:50 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/10] Avoid the comma operator
-Message-ID: <Z-OWqs33rcgbYcR8@pks.im>
-References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
- <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="pbY5Ir8f"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1742972542; x=1743577342;
+	i=johannes.schindelin@gmx.de;
+	bh=37g5TkdoTAhH4LRB9Nsfiq9tV2swsIAAHNBRGnvAB30=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=pbY5Ir8flwFW9QXG3QFlAf/Klq1WetYJLy238zaAyS0XeskMcN1tphPnOkqBmXSC
+	 wyH3frIevPJG3Cci+j2dlJY479OmJ44YeYFSzmW1HNZxUiBMfQXq3xKMspevwKnrK
+	 dSw/QyT/k5of3qS8ZrLm7yk+Z6MPs/mK08Sezqvjevb/5/ZkyXV8xE2q/Uc4Oe616
+	 LagkqjIxidl9aTt932ZeMIF64AH9RVABOrrKrshvkbYrWFeK5IcKYRBBYBffdYepT
+	 EVGSZhcg7sWyWiiLAxDsacZPRlQEkbpQ0ZmUkWtnH6TdmF5L4Qv7ebNlEmWO7nLFd
+	 7A3VaWikPt/ltXll3g==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N9MpS-1t39D83B7k-00teCK; Wed, 26
+ Mar 2025 08:02:22 +0100
+Date: Wed, 26 Mar 2025 08:02:22 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: git@vger.kernel.org
+Subject: Re: Releasing versions on Fridays, was Re: Git Bug Report: git add
+ --patch > "e" makes keyboard unresponsive
+In-Reply-To: <xmqqsen1mj1y.fsf@gitster.g>
+Message-ID: <c4753c0d-d957-c4d0-a452-1e592cade34f@gmx.de>
+References: <CADs5QabwDtUpehNY3hr6BzKyfpp-Ts54TANGkygWPcN3T=OSOg@mail.gmail.com> <84c3ccdb-2aaf-9b34-91c5-cf5c27f53dcb@gmx.de> <xmqqsenb70u0.fsf@gitster.g> <2dd6e0fa-b997-f69c-874b-f424325123a8@gmx.de> <xmqqsen1mj1y.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:cU/PZoA2uCQmDhXeK3WoOlKlETQnQoxEczfYA0NNvFQlLkCiikI
+ 4a5Aq6RJeXjpR6z7EDxmQENu+tw1WUVEegmLbNa+swIZmcdJr0D/Quptpdhv9C1h7D+RJOq
+ 44U8He+zlZjFyFMWOZ8Qh2KQMGl1Gqd2vcX1ySYj1mzP90DxyvGqH2EJ/xNxCpYLdsc8P4n
+ o3cWgObLQSGNWM0RY2Rog==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:wBfMnjkTWgE=;difnQQrUk+DYx6Z0LB3FQg+UcFS
+ 7pIGAcUfU6KbiTUpCyxKPkJ+nj6DL4YvbIQgeQiWCvWmUdQ93rWvsfxiNTkAT4xcYWHwpaXpS
+ QA5aoB1cmQcVY0I8Gv0WzsTfdvzF4jdvJi/UIVBY2/Ikic2UtmAcZpIT1EJ234waaXcQlL+SV
+ 5KVwtata8WYNmxhhflNf7qSRm89zT9aB9l9rm3TYhr50W73WC/znTFj0ZA9Tm8z/8gXHh46YR
+ qmBaWF5dDmuyS4c3RDaIEQ0s00MbRPMU1mgydA0wkdKXb2P7J6dbazfT93zg+hJkpnhVfRrZ4
+ EgqFlGtWywG19Xjxgw3Wqk83IY4AY/81aJDw2mKjHn1/GdqZsitOiv9xCCZdpcQR6DvLckxZu
+ wFyfcxXywpMKhujnplCCZX4uQCy6A78e5m/NcoYEZdT0q0Z8GIJtQ6yfP70IHNgPkbIuzs4uQ
+ f7NCcBLLcJQTccTlJnf/zfQ4k2K83iY7/xuqAJ6ar02otGERUW3OJhT3SA9vkr7g978EI+HgH
+ KshMhLL2AsjcBptMo5wtRAGi7CHwl3cTRJi6fkZULKxVPABs+20PilUqu2Wjm2fS/cbvcrdVB
+ 3IwepXAeKzut9HpamXINRCX9VG5y9yjtKnMkK8p4t4+X31gZniH0CvPyy5Sgyjm1lynCioTJO
+ aQ5NUfRdjTIb6P8lF7awvXxRZeJQZQiTHSaItTV/QWqgoGzZRBhLPm50NocEMefJ9d+gAK9vf
+ Ir9sOCJmN6CgTcljL72JVSzathc+ywWTp/zBoLtHYue8c123ijK+1iQm0yI3sk6d7x+3cwr86
+ MH8AJVTWJlz7TqT67yf8jzKz8lyoF8LBcXFkC9QzYLeDiiuYT/T+Usai46nlR+2p5I7oeR1hN
+ 8gRtnoJRUcmRY4cj14q2vDMV4DbddQDNapowBWssKwbBtclqvxCRKb/TJLADzqfb9BMHhueRS
+ keRpFXPgCQ75/lSUiltvZpQ7R+UvRaKnJ8uk/0/npq94+hV5iEBm+mhW4Ibil+tGcXChvlF9l
+ SDFbXolBngN8wAOdHJ9/5sFkptYdruKxIXAy0b5I2iZ9vLqum7G7sXWbQCsVeen086bfp6I+J
+ xrFOLVdM4m59bpXKgNagxdIFXf7pAu0DUCxlr0n7lf5tiki4hFpLuZZkJiWSBS9GYeKRln1e/
+ dyNGjaekeHHf/3jQ6Y290XxLaXBuqcHt3t+w2J8vmIWr8H/JClq3s8EuZASz7kgw5Q9n4x+Fy
+ 56GUHvykLjKu3wqISEZavta9Le5qK1hX4avlmn4KDQE8ionDlU2Z5oLSjqmZYH1aYxWs+sVIu
+ /lqWSewuDc6wH5qXfE3kxrygbDTLOvmQCdFI60T6BlaOoe9XUtBanttiK4TNRWFYFpaZPBYqn
+ v57JwWVBKohak5giY/SiCSqst6xBSgJyzzBiWVBzyQBtHO8qBBCF9hUgWq987bMv7PP2dJlrt
+ RD7CyRANa9mQy4+EiJuCki/253ui/0ULzoKuurLo5jSChuJ+L
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 25, 2025 at 11:32:04PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> The comma operator
-> [https://en.cppreference.com/w/c/language/operator_other#Comma_operator] is
-> rarely used in C anymore, and typically indicates a typo. Just like in these
-> instances, where a semicolon was meant to be used, as there is no need to
-> discard the first statement's result here.
-> 
-> Changes since v1:
-> 
->  * Use -Wcomma when compiling with clang and with DEVELOPER=1.
->  * Address the remaining instances pointed out by clang (and by Phillip).
+Hi Junio,
 
-Thanks for all of these fixes!
+On Tue, 25 Mar 2025, Junio C Hamano wrote:
 
-Patrick
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > I have stated my preferences previously, even attempted to coordinate
+> > between Git and Git for Windows, and I observe that the way I present
+> > arguments is ineffective. Therefore I will try something new: Refer yo=
+u to
+> > a couple of resources that could elicit some introspection and
+> > (re-)thinking of existing practices:
+>
+> It is even less effective.  Friday may be bad and many people may
+> agree to avoid Friday releases.
+
+Thank you for your honesty. I want to share that I have spent considerable
+time reflecting on the release process because I genuinely care about
+improving it both for the sake of Git's users as well as its contributors.
+I've thoughtfully weighed the challenges -- like having clear and
+dependable timelines, like timing releases around holidays, weekends, and
+accommodating embargoed releases -- and observe significant room for
+improvement.
+
+I approached writing the email to which you replied with the intention of
+fostering a collaborative discussion. I put a lot of effort into crafting
+my thoughts constructively, writing and rewriting the email, even deleting
+several well-laid out arguments in the interest of a less confrontational
+and dismissive tone in favor of inspiring reflection, and I had hoped for
+a response that mirrored that level of consideration.
+
+That said, I am eager to hear your thoughts on how we can shift this
+dialogue into a more productive and collaborative direction, one where we
+focus on enhancing the project together.
+
+> So what is your preference?
+
+Apart from seeing the need to improve on the status quo, I have no fixed
+preference. How do _you_ envision a release process that could better
+serve the needs of everyone involved?
+
+Looking forward to hearing your insights,
+Johannes
+
+> In any case, I'll go back to my vacation ;-)
+
+I hope it was a good, relaxing one, that helped you un- and rewind.
