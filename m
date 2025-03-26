@@ -1,292 +1,148 @@
-Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC10F214A8F
-	for <git@vger.kernel.org>; Wed, 26 Mar 2025 20:19:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AA71F8738
+	for <git@vger.kernel.org>; Wed, 26 Mar 2025 20:33:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743020402; cv=none; b=JODtx1MQYxTEJSPEWm9Iu09j4IbKQAxVeHSb3nkpjp28+4jHBeG3JMEOUbMDZnrO86FmdA40yjoEGe3EMvtbjLx9W3iBdVX6eshjc79ZZV8dLnqoDVRmbB9feU7GNgSK+rBs674iEbJ/hKr6sAEmdknq2B5aRy1fs5yCe7yfc5c=
+	t=1743021214; cv=none; b=alOM+vth2gKJQoq4Fmz6+DG/3kB236InjqunDjrvrcBwbjIWqd9FSo4dOHCEmKgFTATnrgzQ+hQFiKvhAtESADwTiFIRnoPMP6MCLpdbCM56dL91LxuQGldwlDQ7npFDMTvUECmMkgIAUjzSEtcs/J7kp/GDRRpn5s9l4rCNbmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743020402; c=relaxed/simple;
-	bh=DlIbwCVA4Z8fR6YFuZYrAxXpBtYZamNwX+6SHp00/sc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cgA2fRe2ZoXesddZMEaoqpjTbAYYVdhocTSHbLKgLcDqUYlS4rMpjgUAl3N6uwVtXq0Zeb5p+o9Jzk7ixsogz2JlUlCaaO/1jA0OxbthbSUME5ZJ+5T9CvRjiqAIxIgNz3wtaM+J0h17UL8aM3kAVR0fz2p7cyxVQCKy2e48Jvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=1sPnY0Uz; arc=none smtp.client-ip=95.215.58.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1743021214; c=relaxed/simple;
+	bh=Ux5iBRuH3oOZGdpv7ZfsBAowmoc0R61PYORYPeAvoVk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kEfjfYGXrFjJPJS5f6apwM0IPRgagQmU8v7H9ZvZsn5bpPODdSq9oPEVB+ycfKzS5OsQTEpM5SxN2Mof/JOehqwIDVtnVM21e2D9O+JR833lO4vH1COma5rVs7QvDzJVVSX/F1ZQr87erBoDSNN3PtAKyxGpPa4Otz0IjkMEhvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=kPV1uHik; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="1sPnY0Uz"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1743020398;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=RWymkKJjSTq1VhSrlAN4k2u3aqs/e4N/vBlfvHlBAL8=;
-	b=1sPnY0UzhwtU/s4aZ2bSjZPSSgSovZT64/358hD9yHc4azmZMPSWlanZWNAtfl0+kX+QlC
-	cxFqXv5VrO0/z8rUXwKvJ/Qc2EwHJgyF8rFnnS/YoT4m72G9rENOOUgayRfVnzdnrMKbSj
-	2Pa8OVNXD6AwrO5aZXK3hK2UA/OaqK4=
-From: Toon Claes <toon@iotcl.com>
-Date: Wed, 26 Mar 2025 21:18:32 +0100
-Subject: [PATCH 8/8] blame-tree: narrow pathspec as we traverse
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="kPV1uHik"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6ecfc2cb1aaso1874046d6.3
+        for <git@vger.kernel.org>; Wed, 26 Mar 2025 13:33:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1743021210; x=1743626010; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JecVRmMwODrKK5w6/uSsAN7ywvL2i+OCzlFw1M91mmY=;
+        b=kPV1uHikKHh1K/pSu7LAdXFKV6BcrxB6+MrnYa1Kd57MuTjBsCGdI74qbQ34Vkk901
+         aY/qT6x5+CyaETWBELYx/B5RC46Q99Wl2blfRisd7/FJlx6q/mdHcHCxTH0oplrYjM/h
+         hiaymXgk1x0S2tL6/Kohx1172jQIXD/SAIeqLEx+KCzaU2W6wAWYQWwlE1do2SkGtFHb
+         eNPw7dl6C7/Rk18e196gp7Ktl6UdtJzg4oP0+eEXqloU7ri8N0DGVDe+np4owwb5SXZ1
+         e3E+L7lnBLcfIumBuS+Z8sK05RMXR8J1OcVlHLQFo8BtzjdKU3VlLT2Xcs5n9/AVc3lx
+         0nJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743021210; x=1743626010;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JecVRmMwODrKK5w6/uSsAN7ywvL2i+OCzlFw1M91mmY=;
+        b=Xi7WKDoeKwwxOAABL3YvHnmJn6nSnhe3212PdUFGLiKmTI5yi5LAneWN9RRhXZxfDB
+         XzM8+yFISqukdsWI2g58c1JCvtyGnlo048HU3YaTG0C/K4f76nRchQ0JQZTy+iHOKP59
+         gOCHAjta5qflsf6mWtm6HdXE748+U3eu0y65V+ZcvFYt5K1m9BuKyPPJDdOdpopCiWcw
+         MR/DQ3O+VilPhjOp4D4NmHK5jnk4F5H5V9Cx/v4b/YEK+O4W2jbh3Svw+J/ip8tU9DgB
+         GpImVHWpYnuhSXnqi5i7Nl0VBV4zlIkWK8dyaZOjvH+rHX9NKnPuAgmwwW4BZ9CftAE7
+         HrGg==
+X-Forwarded-Encrypted: i=1; AJvYcCU0OVvGHRmW0wc8cgDtCmfuotfvE2y6WM+hOjyD60G9uRn0/8XMGijOXZ/sFYHlILl713Y=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxF2/f70jejpS+swBa2xibP76I+TgwYkP1Yc3e7yHfsV70gb5F1
+	t3HCi0Nke+rrDwH8JqZHQn5LKkZFHO3mJGjyUgvewAOgKN/bXuX4SAzok7XbUbo=
+X-Gm-Gg: ASbGncuBoq2Eh/HNO40ATCZGylx0QB+JKSQD3wYSsuYqQxqOG/ys31aHZayIH4MWyAr
+	3Jln1PrAmOAazLJib4K7XUC1ujODUl6zEgjjipAgZEOC6SEVMIsgwt1xGV1cKmjAbLyK39PUCU2
+	5ssyJEygcofs1gtsCb744GJhWe5wCO0x9OUQqX6mI88oQ3aUCFjGX2CxS7DI/gtcsxFLtD/Ddca
+	cYpoLYqHEUXlwFtE59yp0zSrBHCOU1z6bbDAXJvk8GbscAwSUdA80AuAHxf4BxKLNB219NeunFM
+	LG3syr0citxV4egzE5InIkYZnaUMdn7Xx/qokVlV2s/fDSGXQBqIcCwl8x27gzlKjJ6TL9zTwsp
+	nSocddWTPbQBQBMPW
+X-Google-Smtp-Source: AGHT+IE0TXSb4MQMMcF8NQoomb5nzoy+Sz/Na72R855Ux7mxBHeeLzqJNo2H+G57pdejWz81a4Zv4Q==
+X-Received: by 2002:ad4:4eac:0:b0:6e8:fb7e:d33b with SMTP id 6a1803df08f44-6ed2390f5c5mr12862766d6.33.1743021209734;
+        Wed, 26 Mar 2025 13:33:29 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eb3ef1f5e3sm71178816d6.43.2025.03.26.13.33.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Mar 2025 13:33:29 -0700 (PDT)
+Date: Wed, 26 Mar 2025 16:33:28 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: phillip.wood@dunelm.org.uk
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Patrick Steinhardt <ps@pks.im>,
+	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>,
+	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 06/10] diff-delta: explicitly mark intentional use of
+ the comma operator
+Message-ID: <Z+RkmLzciwT6ubIE@nand.local>
+References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
+ <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
+ <5e0e8325620395196608a0851f1f6fc9408f6090.1742945534.git.gitgitgadget@gmail.com>
+ <Z-OWoK-DlvnxXPkO@pks.im>
+ <050f5d65-32eb-fd26-1461-579b06018dc6@gmx.de>
+ <ad57203b-8925-4f88-add6-763c2d80afac@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250326-toon-blame-tree-v1-8-4173133f3786@iotcl.com>
-References: <20250326-toon-blame-tree-v1-0-4173133f3786@iotcl.com>
-In-Reply-To: <20250326-toon-blame-tree-v1-0-4173133f3786@iotcl.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ad57203b-8925-4f88-add6-763c2d80afac@gmail.com>
 
-From: Jeff King <peff@peff.net>
+On Wed, Mar 26, 2025 at 10:17:50AM +0000, Phillip Wood wrote:
+> Hi Johannes
+>
+> On 26/03/2025 07:20, Johannes Schindelin wrote:
+> > Hi Patrick,
+> > On Wed, 26 Mar 2025, Patrick Steinhardt wrote:
+> > > Hm. I think the end result is even more confusing than before. Why don't
+> > > we introduce curly braces here, same as in preceding commits?
+> >
+> > The interleaved -/+ lines make it admittedly hard to see what I meant.
+> > I'll unwind it a bit (presenting only the `moff` part, the same
+> > consideration applies to `msize`):
+> >
+> > 		if (moff & 0x000000ff)
+> > 			(void)(out[outpos++] = moff >> 0),  i |= 0x01;
+> > 		if (moff & 0x0000ff00)
+> > 			(void)(out[outpos++] = moff >> 8),  i |= 0x02;
+> > 		if (moff & 0x00ff0000)
+> > 			(void)(out[outpos++] = moff >> 16), i |= 0x04;
+> > 		if (moff & 0xff000000)
+> > 			(void)(out[outpos++] = moff >> 24), i |= 0x08;
+> >
+> > In this form, it is very obvious (from comparing the right-side half of
+> > the lines) that a shifted version of `moff` is appended to `out` and `i`
+> > gets a bit set, and the correlation between shift width and the set bit
+> > is relatively easy to see and validate (at least my brain has an easy time
+> > here, thanks to the alignment and thanks to visual similarity between the
+> > non-blank parts).
+> >
+> > It is admittedly quite a bit harder not to be distracted by the repetitive
+> > `(void)(out[...` parts to understand and validate the `if` conditions on
+> > the left-hand side,
+>
+> That makes it pretty unreadable for me. If you're worried about the vertical
+> space we could perhaps keep both statements on a single line so that we're
+> only adding a single newline for the closing brace rather than two.
 
-As we find out the "last touched" for each path, we cease to
-care about that path. However, we traditionally have not
-told the revision-walking machinery about this, for two
-reasons:
+My $.02 here would be that the form:
 
-  1. Munging the pathspecs mid-traversal is not an
-     officially supported thing to be doing. It does seem to
-     work, though, and with Duy's recent pathspec
-     refactoring, it's fairly straightforward.
+    if (moff & 0x000000ff) {
+        out[outpos++] = moff >> 0;
+        i |= 0x01;
+    }
 
-  2. The pathspec machinery is slow. We know have to look at
-     each pathspec to see if each tree entry is interesting.
-     And since our cost to handle a diff_filepair is so
-     cheap, it doesn't really help us much.
+is the most readable, and fits within the conventions of our
+CodingGuidelines. I don't really love the idea of writing:
 
-It turns out that (2) is not quite right, though. For the
-diffs themselves, limiting the pathspec doesn't help at all.
-But it does mean that we can simplify history more
-aggressively, which may mean avoiding whole swaths of
-history that don't touch interesting paths. This happens
-especially near the end of the traversal, when we are only
-interested in a few paths, and there are many side branches
-that do not touch any of them.
+    if (moff & 0x000000ff) {
+        out[outpos++] = moff >> 0); i |= 0x01;
+    }
 
-And as of the last commit, the pathspec machinery is no
-longer quadratic, so the cost to use it is easily worth
-paying, even for large trees.
+, since it looks like a single-line if-statement and is thus tempting to
+drop the braces, which would make the code incorrect, as 'i |= 0x01'
+would be executed unconditionally. I suppose you could write
 
-Here are runs of `git blame-tree --max-depth=0` for
-torvalds/linux (a complex history with a small root tree)
-and git/git (a flat hierarchy with a large root tree):
+    if (moff & 0x000000ff) {
+        out[outpos++] = moff >> 0); i |= 0x01; }
 
-For git/git:
+, but that feels even uglier to me ;-).
 
-    Benchmark 1: ./git.old blame-tree --max-depth=0
-      Time (mean ± σ):      2.223 s ±  0.360 s    [User: 1.808 s, System: 0.369 s]
-      Range (min … max):    1.866 s …  2.927 s    10 runs
-
-    Benchmark 2: ./git.new blame-tree --max-depth=0
-      Time (mean ± σ):     945.0 ms ±  93.4 ms    [User: 783.6 ms, System: 131.0 ms]
-      Range (min … max):   846.4 ms … 1071.5 ms    10 runs
-
-    Summary
-      ./git.new blame-tree --max-depth=0 ran
-        2.35 ± 0.45 times faster than git.old blame-tree --max-depth=0
-
-For torvalds/linux:
-
-    Benchmark 1: ./git.old blame-tree --max-depth=0
-      Time (mean ± σ):     13.504 s ±  0.545 s    [User: 12.605 s, System: 0.583 s]
-      Range (min … max):   12.947 s … 14.488 s    10 runs
-
-    Benchmark 2: ./git.new blame-tree --max-depth=0
-      Time (mean ± σ):     622.8 ms ±  39.2 ms    [User: 522.1 ms, System: 95.7 ms]
-      Range (min … max):   556.6 ms … 681.6 ms    10 runs
-
-    Summary
-      ./git.new blame-tree --max-depth=0 ran
-       21.68 ± 1.62 times faster than ./git.old blame-tree --max-depth=0
-
-Note that the output may change slightly in some cases due
-to the history pruning. This should be acceptable, as either
-output is correct in these cases (e.g., scenarios like a
-cherry-picked commit on two parallel branches).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- blame-tree.c | 18 ++++++++++++++
- pathspec.c   | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- pathspec.h   |  3 +++
- 3 files changed, 99 insertions(+)
-
-diff --git a/blame-tree.c b/blame-tree.c
-index ed4ec1e694..7be67520f8 100644
---- a/blame-tree.c
-+++ b/blame-tree.c
-@@ -79,6 +79,18 @@ void blame_tree_init(struct repository *r, struct blame_tree *bt,
- 
- 	if (add_from_revs(bt) < 0)
- 		die(_("unable to setup blame-tree"));
-+
-+	pathspec_setup(&bt->rev.prune_data, &bt->paths);
-+	copy_pathspec(&bt->rev.pruning.pathspec, &bt->rev.prune_data);
-+	copy_pathspec(&bt->rev.diffopt.pathspec, &bt->rev.prune_data);
-+	bt->rev.prune = 1;
-+
-+	/*
-+	 * Have the diff engine tell us about everything, including trees.
-+	 * We may have used --max-depth to get our list of paths to blame,
-+	 * in which case we would mention trees explicitly.
-+	 */
-+	bt->rev.diffopt.flags.tree_in_recursive = 1;
- }
- 
- void blame_tree_release(struct blame_tree *bt)
-@@ -91,6 +103,7 @@ struct blame_tree_callback_data {
- 	struct commit *commit;
- 	struct string_list *paths;
- 	size_t num_interesting;
-+	struct rev_info *rev;
- 
- 	blame_tree_fn callback;
- 	void *callback_data;
-@@ -122,6 +135,10 @@ static void mark_path(const char *path, const struct object_id *oid,
- 	data->num_interesting--;
- 	if (data->callback)
- 		data->callback(path, data->commit, data->callback_data);
-+
-+	pathspec_drop(&data->rev->pruning.pathspec, path);
-+	clear_pathspec(&data->rev->diffopt.pathspec);
-+	copy_pathspec(&data->rev->diffopt.pathspec, &data->rev->pruning.pathspec);
- }
- 
- static void blame_diff(struct diff_queue_struct *q,
-@@ -172,6 +189,7 @@ int blame_tree_run(struct blame_tree *bt, blame_tree_fn cb, void *cbdata)
- 	data.num_interesting = bt->paths.nr;
- 	data.callback = cb;
- 	data.callback_data = cbdata;
-+	data.rev = &bt->rev;
- 
- 	bt->rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
- 	bt->rev.diffopt.format_callback = blame_diff;
-diff --git a/pathspec.c b/pathspec.c
-index c174edef32..7ef2a55280 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -117,6 +117,50 @@ struct pathspec_trie *pathspec_trie_build(const struct pathspec *pathspec)
- 	return ret;
- }
- 
-+static void pathspec_drop_from_trie(struct pathspec *ps,
-+				    const char *path)
-+{
-+	struct pathspec_trie *prev = NULL, *cur = ps->trie;
-+	int pos = -1;
-+
-+	if (!cur)
-+		return;
-+
-+	while (*path) {
-+		const char *end = strchrnul(path, '/');
-+		size_t len = end - path;
-+		pos = pathspec_trie_lookup(cur, path, len);
-+
-+		if (pos < 0)
-+			die("BUG: didn't find the pathspec trie we matched");
-+
-+		prev = cur;
-+		cur = cur->entries[pos];
-+		path = end;
-+		while (*path == '/')
-+			path++;
-+	}
-+
-+	if (!cur->terminal)
-+		die("BUG: pathspec trie we found isn't terminal?");
-+
-+	if (cur->nr) {
-+		cur->terminal = 0;
-+		cur->must_be_dir = 0;
-+		return;
-+	}
-+
-+	free(cur);
-+	if (pos < 0)
-+		ps->trie = NULL;
-+	else if (prev) {
-+		prev->nr--;
-+		memmove(prev->entries + pos,
-+			prev->entries + pos + 1,
-+			sizeof(*prev->entries) * (prev->nr - pos));
-+	}
-+}
-+
- static void pathspec_trie_clear(struct pathspec_trie *t)
- {
- 	if (t) {
-@@ -878,6 +922,40 @@ void copy_pathspec(struct pathspec *dst, const struct pathspec *src)
- 	dst->trie = pathspec_trie_build(dst);
- }
- 
-+void pathspec_setup(struct pathspec *ps, const struct string_list *paths)
-+{
-+	struct strvec argv = STRVEC_INIT;
-+	size_t i;
-+
-+	for (i = 0; i < paths->nr; i++)
-+		strvec_push(&argv, paths->items[i].string);
-+
-+	clear_pathspec(ps);
-+	parse_pathspec(ps, PATHSPEC_ALL_MAGIC & ~PATHSPEC_LITERAL,
-+		       PATHSPEC_PREFER_FULL | PATHSPEC_LITERAL_PATH, "",
-+		       argv.v);
-+	strvec_clear(&argv);
-+}
-+
-+void pathspec_drop(struct pathspec *ps, const char *path)
-+{
-+	int i;
-+
-+	/* We know these are literals, so we can just strcmp */
-+	for (i = 0; i < ps->nr; i++)
-+		if (!strcmp(ps->items[i].match, path))
-+			break;
-+
-+	if (i == ps->nr)
-+		die("BUG: didn't find the pathspec we just matched");
-+
-+	memmove(ps->items + i, ps->items + i + 1,
-+		sizeof(*ps->items) * (ps->nr - i - 1));
-+	ps->nr--;
-+
-+	pathspec_drop_from_trie(ps, path);
-+}
-+
- void clear_pathspec(struct pathspec *pathspec)
- {
- 	int i, j;
-diff --git a/pathspec.h b/pathspec.h
-index ff11599d25..a46b3177e3 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -3,6 +3,7 @@
- 
- struct index_state;
- struct pathspec;
-+struct string_list;
- 
- /* Pathspec magic */
- #define PATHSPEC_FROMTOP	(1<<0)
-@@ -152,6 +153,8 @@ void parse_pathspec_file(struct pathspec *pathspec,
- 			 int nul_term_line);
- 
- void copy_pathspec(struct pathspec *dst, const struct pathspec *src);
-+void pathspec_setup(struct pathspec *ps, const struct string_list *paths);
-+void pathspec_drop(struct pathspec *ps, const char *path);
- void clear_pathspec(struct pathspec *);
- 
- /*
-
--- 
-2.49.0.rc2
-
+Thanks,
+Taylor
