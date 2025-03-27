@@ -1,132 +1,96 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FF2219E0
-	for <git@vger.kernel.org>; Thu, 27 Mar 2025 02:27:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E83E1B87CE
+	for <git@vger.kernel.org>; Thu, 27 Mar 2025 05:14:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743042434; cv=none; b=I0+hrDntv90D7zry9D7E+EgP7Sgi1t5zWAqvyBscrT8uGYdLnNwY6wZZR5THExFox5FAuETy2NOOL/E9p72S5zRxJDXQoMI1XitPi4cFh2uCv0LhxPXO59OUCPPBdKRvcp1waaxdodFppcBo4F76Ea8LJKsP68akfbrUx9Y/jEI=
+	t=1743052464; cv=none; b=meSH1T7Gsqi4ERvOsapWpVjnLRxigSYD1XqbX2XrxOuXeEGDAyxdHgyY0gKk852EJo/BLKEK5iNqS6L7bqQyJdrP78TcyJU6TiD6H0o44OZV2tA33t2hJx7QjufBZxS0bdGbyCvsdeSgxt3Gp/KrzV4/mVm9BwJLwMdHiacRrSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743042434; c=relaxed/simple;
-	bh=4KGbtKw6dkKl2hO25mmm0qQUQJhNTsE5Insu1IVv2KY=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=LbhZzsPWZwk3oQfVDkgj22Eodpk4t7c56kx9AAeMLA8YAOVUwKbWXjgmSzZghIwUOrfPUW6th1YgSqUHvEJ+F012boQSbBycQ+ss/TGyCVuWwZqE/pG9xQYAS38y19DsyYHCalgRPMgej30Pp3kZDyzUwn/lmClRpkqGcHLy3SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aTvGJuWr; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743052464; c=relaxed/simple;
+	bh=htX/G/8UlwVcH3EiAWMbaPmv38iD7AYkAF5Hak2dK+c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MMbGDEDAzKhkv720bhQeQgejXStBjvWQ4v6NF9jYoLtvt5mNQ97ZjOjcOsvG2lF2A/JYEy5IFJtrbFeDtYkFQF5GziTmQmgjD8Zv4Bm7VmcU0U/DanULVL+EqsDn+tQWyye78qC+dTX/reP3iwlQO3FUVGyr5rsIg/5SKhK/4Rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Cs2XWkgV; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aTvGJuWr"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2260c915749so7756215ad.3
-        for <git@vger.kernel.org>; Wed, 26 Mar 2025 19:27:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743042432; x=1743647232; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4KGbtKw6dkKl2hO25mmm0qQUQJhNTsE5Insu1IVv2KY=;
-        b=aTvGJuWrFrJxZX604YflHeAblAR+avTY/zQvsgD4qeqKcV7AAeIl5Wwris1O10F2fp
-         3VzT04OyQJTHxt9MR0X/gvmW9NW7j53Ce8onRcT2kw/EQmIjKaLgSd0gFVAk+st+Zocv
-         /kXc3NA0RwCmLxgXJ/oP2g56k/Vcumg3AAzZLBBU/csXxLbtA6NtX4j6lvReoORRSM3c
-         aolQbRoXyuLBjNJ6CjpY6PSjL2UYrqLsSqUjwGJVzCE3RMH1+gobT3NVy0BdUc+DY1ay
-         k9aPtxku3lRZMtCi1OUtGNbRITKKe9XDpKG4IwKIdKhXPBQHNprmX6kbPmVDsgnJlrmi
-         pK+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743042432; x=1743647232;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=4KGbtKw6dkKl2hO25mmm0qQUQJhNTsE5Insu1IVv2KY=;
-        b=N8ZKd5TxQUGmGEUv1a/tHkjABv0oeRK6FYX4QuRwRURqBb8uqmD49/UXydnpQTPxhQ
-         rHK8VMFMDkg6tmhbqcXKJs5NllgE3/fEFG09cBs0dNrDVt4tLjj8DfdTqmhu/RCfIaDc
-         +3Ua+BubtAv6LagWbL4QSxfnoCbKnG7F/mb7aMQDr/zOE7Q/8l3LJGptemH9FYzUY9jN
-         p0yqOKWhcE3aHM+ryDzpqdnA6WqehU5v7SkcJqEE/63NM4JPkCD+2BNDJ0xK2G4URcrY
-         EHMLhIGbwVeaRS0exKopJ3LU11reLoxXuWR7nN6otHIcJgEM8jkrr5t27mSnuktZwP7o
-         9yjQ==
-X-Gm-Message-State: AOJu0YyNQAw+adYGa8K/NUT+1uDSXVPlEAG/9v8pvUh3XOmVAQ4JawSP
-	rA7IZGaCmXlIDxMeIrARnjuymNAAD/94Y21wMCax96de6OuPpxkGQ4TZwlKa
-X-Gm-Gg: ASbGncsP1H5wBJ2VLknYw3InEQlo7GJKlpArJFoiaQ8kgNFAODNWH4pztywSnspmUtJ
-	8VVXj+rMdA5taMm7N6crtcg03LLu4e/rss0lTWJQoO0ltbMZo/H28c9tv7iEJJ0gZZADz4VdO7e
-	Qejdo1ZTA37oA4bK2ArVUlZxbF4T0YPbZaYlFGh4AnkpJSe14N87uqNauHnXfrrBA8CDbegsiLK
-	ZVtmttI8vw4PsCR0gloIEAMj+FNXkeM2c9vODP9vDVHzDT3z8moA2iSEHwMTv37hRtC7VxLDkPD
-	wIwyXRZdu3+pGk8PKwJVB4bdY0esbEYQa6VLow==
-X-Google-Smtp-Source: AGHT+IFdg9ZgcLG2r/YlnQrBqitNB3F9ipNtn3rsvJDjvWDfmj02uElRV5k47i8EKdvnWQrtqvovYA==
-X-Received: by 2002:a05:6a21:9990:b0:1ee:8435:6b69 with SMTP id adf61e73a8af0-1fea2d32fddmr3941970637.1.1743042431987;
-        Wed, 26 Mar 2025 19:27:11 -0700 (PDT)
-Received: from localhost ([39.184.61.247])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af8a284825esm11810475a12.43.2025.03.26.19.27.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Mar 2025 19:27:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Cs2XWkgV"
+Received: (qmail 18747 invoked by uid 109); 27 Mar 2025 05:14:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=htX/G/8UlwVcH3EiAWMbaPmv38iD7AYkAF5Hak2dK+c=; b=Cs2XWkgVJjCnE/Ad5fsgCJc4wLAo0Yrnk/sv8Z0xAdLkkzsbZXRU8CubMEZDVB/h8q8fll57UMcL5er6d+1et4TU6P2yqZPvDC7g1mVkEKm3ChXRxvBqA71afKri9WqhRATq/Njb7tQmYxjSkyw35LWAn/hnEcORiEfqcfZ5ErADqvGs5kbX4TxgYvTxXwk3HV48bsQgEPjFPopeEfefoXNpNhThKbP5bzRhcAXMccmA5SM9HlMKRaPkrC+khKhri4Z32+ik5W63w/7oJ5pJlot3QT0eUZaB48TKbeGHulNo/NqaFmIhqm92DWV3baXlIlVFxlf/LGD1o5SXdBAuTA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 27 Mar 2025 05:14:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26940 invoked by uid 111); 27 Mar 2025 05:14:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 27 Mar 2025 01:14:19 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 27 Mar 2025 01:14:19 -0400
+From: Jeff King <peff@peff.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>,
+	Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 10/10] detect-compiler: detect clang even if it found
+ CUDA
+Message-ID: <20250327051419.GA3042475@coredump.intra.peff.net>
+References: <pull.1889.git.1742889711.gitgitgadget@gmail.com>
+ <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
+ <2f6f31240fe6ce5f8efab662af477540a0f966ca.1742945534.git.gitgitgadget@gmail.com>
+ <20250326174127.GA2508080@coredump.intra.peff.net>
+ <CAPig+cR+ESNg4tV1G6jbKKeRKABD053qZcG0BoFuQ7aC+1tGYw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 27 Mar 2025 10:26:49 +0800
-Message-Id: <D8QOYSD6NLCS.OVF4RKHUCX0A@gmail.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [GSoC] Proposal Discussion: git-refs Project
-From: "Yuting Zheng" <05zyt30@gmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-X-Mailer: aerc 0.20.1
-References: <CAMvj1+rbYKFNeWEvvN76MTpzfuWc4TN4ViXRE4nTfWy7ZMspWg@mail.gmail.com> <Z-FJ3EQdFIkQgtkR@pks.im>
-In-Reply-To: <Z-FJ3EQdFIkQgtkR@pks.im>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cR+ESNg4tV1G6jbKKeRKABD053qZcG0BoFuQ7aC+1tGYw@mail.gmail.com>
 
-Thanks for your reply!
+On Wed, Mar 26, 2025 at 02:07:10PM -0400, Eric Sunshine wrote:
 
-I have reviewed the changelog and noted that Git version 2.23
-introduced similar work through the addition of the git-switch and
-git-restore commands, which replace some legacy commands and incorporate
-various functional modifications.
+> On Wed, Mar 26, 2025 at 1:44 PM Jeff King <peff@peff.net> wrote:
+> > On Tue, Mar 25, 2025 at 11:32:14PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> > > Let's unconfuse the script by letting it parse the first matching line
+> > > and ignore the rest.
+> >
+> > Makes sense. I wondered if this:
+> >
+> > >  get_version_line() {
+> > > -     LANG=C LC_ALL=C $CC -v 2>&1 | grep ' version '
+> > > +     LANG=C LC_ALL=C $CC -v 2>&1 | sed -n '/ version /{p;q}'
+> >
+> > might be more readable with "grep -m1", but it looks like "-m" is not in
+> > POSIX. So what you wrote is probably safer.
+> 
+> It's probably an indication that I've done too much `sed` programming,
+> but I find Dscho's version more obvious. That aside, your response
+> made me take a closer look at what Dscho wrote and I noticed that it
+> is syntactically flawed, at least for BSD-lineage `sed`. Testing on
+> macOS reveals that this is indeed so:
+> 
+>     % LANG=C LC_ALL=C cc -v 2>&1 | sed -n '/ version /{p;q}'
+>     sed: 1: "/ version /{p;q}": extra characters at the end of q command
+> 
+> The problem is that the `q` function takes no arguments, but
+> BSD-lineage `sed` thinks that the closing `}` is an argument rather
+> than a terminator. Fixing this requires inserting a terminator after
+> `q`, which will be either a newline character or a semicolon. So, the
+> correct form is:
+> 
+>     sed -n '/ version /{p;q;}
 
-After examining the updates, I have summarized the proposed work as
-follows and would appreciate confirmation on whether these tasks are to be
-included in the current project:
+Heh, I think it was the braces and semicolons that made my spider-sense
+tingle, probably because I've been bitten by those subtleties in the
+past.
 
-1. Code Modifications for Command Implementation:
+I think just "/foo/p;q" works on GNU sed, but no idea if it does
+elsewhere. What you wrote seems the safest.
 
-- Implementation of new commands.
-- Necessary modifications to existing commands to support these changes.
-
-2. Test Modifications:
-
-- Addition of tests for the new features (including help tests, basic
-functionality tests, and extended feature tests).
-- Updating tests for old commands to execute tests on the new commands
-(for example, changing the command in git-checkout tests to git-restore).
-
-3. Documentation Updates:
-
-- Creating documentation for the new commands.
-Updating and unifying existing documentation (including git.txt,
-git-cli.txt, and git-commit.txt).
-
-Additionally, I have a few points that require further discussion:
-
-1. Command Migration:
-
-Upon reviewing the commands slated for replacement (e.g., git-update-ref(1)=
-,
-git-for-each-ref(1), git-show-ref(1), git-pack-refs(1), and
-git-symbolic-ref), it seems that migrating their functionality into a
-subcommand of git-refs could be sufficient. Could you please confirm if
-this approach meets our project requirements without introducing
-additional functionality?
-
-2. Function Call Integration:
-
-Regarding migration, is it acceptable to directly invoke the legacy command
-functions by passing parameters from the new command functions?
-
-3. Test Retention:
-
-Lastly, should we retain the original tests for the legacy commands, or
-should they be fully replaced with tests for the new implementations?
-
-I appreciate your guidance and look forward to your feedback on these point=
-s.
-
-Best regards,
-Zheng Yuting
+-Peff
