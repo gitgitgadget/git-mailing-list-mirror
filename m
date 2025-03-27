@@ -1,68 +1,68 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4971A214239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044F32139A6
 	for <git@vger.kernel.org>; Thu, 27 Mar 2025 11:53:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743076400; cv=none; b=D+TKaZGBCD9yQ3Wu/vvNjgJJbyX+GsqL0/RCwiqIwZk65BKiS2cQnVQ3D+ijTqosDtAH/dxBBbnWAlprwqlARhovze4G23924FhmYe+c5Idd1y7BElCfDR69oNdQbdBDjcLU6PUJGaxbtiGi4VboJBPf2Fddl56n6nfhlw4iiY8=
+	t=1743076400; cv=none; b=Ai9Ul73uK56ACwJdmQmvw7hCJuepU//UXH7G6MgIVMtCNxZeFallkafucXLGmWGX6rCpTVQSv2ZOljd/pgyhpLOGCxduFpk0LDNjcAUA7Razw8I2xSUoQOozqBtEPRZdLQuOxPZZcapRM0PbyHYrvoieVSkcwqj/4Mzo/tMq/Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1743076400; c=relaxed/simple;
-	bh=FS6N9nlTE0VdhE9V/sQbqCREVLzYq0swCqsouYl2La4=;
+	bh=jxONQ6s62+5sRT4ioUjENFFii3OSXI5UZe6sbKzOSfU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=MqUiXy7Lg0iPWLmXYZ02iN80dgYSHwf8E5DkD/yeAodC+DRKXN4EtFUgMrZf47FzXBYe5QT5kEg/C1Nh7W8AB/Wk1TYQyU/vQRNtg0YkdRTv8Okd7td3iIh9ZN5+HTQKf03pEAJRez8F4b/8AHpD5yedsPSEcscrAwre/vghXgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W+E6HH7Q; arc=none smtp.client-ip=209.85.128.42
+	 MIME-Version:To:Cc; b=K95JsWxA5OHvGy9u/ZUKCJ2ooK0vM0wCRSacWYuQpPBfQPBnnwmGgXD8q48kcs1v0mGb1h6b58BbYRrdiM6Qo8Wm22fL9iwkjjxBYA41T8UjyAo4tXKM22KYZ9xjynVyJB830jhdnucZijLDRgWVbIIQvMHRtEM7A1s+gpLSh3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OCtPszb1; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W+E6HH7Q"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43cf06eabdaso8258125e9.2
-        for <git@vger.kernel.org>; Thu, 27 Mar 2025 04:53:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OCtPszb1"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43cf034d4abso9240975e9.3
+        for <git@vger.kernel.org>; Thu, 27 Mar 2025 04:53:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743076396; x=1743681196; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1743076397; x=1743681197; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xDRTgWO2nKxrujT+CMP8TmQAlGo7QEjCGZZFteTbFGk=;
-        b=W+E6HH7Qm2ku2GOpn/B4BApaDbSJHjkayOhxir3cMdMRz6yZE7TL2MVnTi25IdndZr
-         gIUqxtKBZbGLRZ8gVGKZXwVR0+cx/j0kR0OjPK0JPC60pIVPo1koXW9kKt8y4d0F5CIS
-         o8sHH1GYaBsIAsafU2GUYTikrhseRemtSM1Wayu3ffYtftFCaDT9KU1C1pvHOQDmQz0X
-         BKGA1fo4QAuEdnm1DjZRFDQ3d67RcJllOhv773CguVWPBiiZMeCJWzeie3+Zpy/VZrpH
-         /9SXvW9J1wYqqQdsjnykoEgS7Sii2zPZevKrC0RwiKJZfb6QYtwOT39VxrWk9K5IlSIw
-         ZldQ==
+        bh=zYjefgmN4vorNNHFzM9z/rnT9aBHiu5F3geZIfynNug=;
+        b=OCtPszb1lqp8533eG11IzkTEzsS404XBvYs6bcEPbpDwhz7rW1UFZcE9OvSY4nJy2C
+         7Vjlum3ycKqpZk5DyCCvzB4FJoR7mGSbyD/TddwR/nKi+9M5uiwE5ZoJu3iLwKVOAEU6
+         vkffoGmKfZ8iz7QBHa4cacy7PEEbeIWbFkdMeVIo+PbFpxwllSW/8UKUDmpC5TY4Ar95
+         lP6UozID4sDWpqRjPbefsg1UOqDWIOVk7MjiAAN2NJLTEEc+LrTSwVk3sLAzsd8sV/+1
+         vfwVV4t8a4273hDGprAWfNErTsDuJIQRfNfVj9gVKKT5HRdZQwD1g/ku130LXQaPI92l
+         1YrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743076396; x=1743681196;
+        d=1e100.net; s=20230601; t=1743076397; x=1743681197;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xDRTgWO2nKxrujT+CMP8TmQAlGo7QEjCGZZFteTbFGk=;
-        b=htsLK9nXLPf/WOsjIt8SfgygnnI5sx8PzaJ+mCeFqcJ9M5LBzYSbRVNG7tEGMlMWtY
-         Az0RmgcqHe+H+lFVq1oulcw/a8ggneRI5daAu+55cxgRRDMa5KCVjkMF14uhVcjVHs2i
-         2pwM+tM/FBh0NdA3XR8JQ/z85g3VCOVOaNKkApDmt+TGfEoH5/luaV26NFRuhjsKBoiu
-         j54Brcl+x/viHLwCtdheX8yzGzUcdBAYXes2Q3epz+3Xn6M1PlPtmsaS3jxgRAzmNB/y
-         GpbFyY02lRBvqkvTU8s2HMOvLNOYRsEDvq6qnMQBib5nHJlc6NEhEXd/neTXqiJ9UgtS
-         FGEQ==
-X-Gm-Message-State: AOJu0YzBXstsWWoEC1wp3A96/ZVYlPqoQh2uKhhcnH26P0JqwQY9XD34
-	X7+/9mThr4+9zOaU3V+Nuh3tvLehwGbWS4xYD744jRTSLstzetQS0vw3aQ==
-X-Gm-Gg: ASbGnct5U9pdZXv3ygabc5XEknMh677sYs4V/2dUFk2Xr9ZD206MHnVvFi5Zd42gbfE
-	l2nqnqXBG0cXGEgqN5GpAvMfmUX6gYzRzfcQyANqNkH8DYtNKDfGCj4BJgvipaWgc7FFZ87PAMX
-	BnhdcxP0ja5H9zg2mA7KFTcOqcG6eF3v9LsuFnZzqiGxIh1RIfro7U93cqF0byt3YB9mET4WepH
-	fRi84H2kk7XdPNM4kvrXdk3ONdGpZCcioPMRm+2yLM+oEMuABhJstpcY4an0/Ua/6xYibIHeVoO
-	EI/iPuZjdfejOtaIY86aoZQK65sBCRn8gzr3QtspBX7P/Q==
-X-Google-Smtp-Source: AGHT+IHK0Da+RwLzUYLRe/zYMB30sYMo0ANoNBMxERUexMVoKCLyebHi6sFpETqZMOaaF7cNqRh1nw==
-X-Received: by 2002:a05:600c:1d9e:b0:43c:f75a:eb54 with SMTP id 5b1f17b1804b1-43d8582c4ddmr28581175e9.13.1743076395818;
-        Thu, 27 Mar 2025 04:53:15 -0700 (PDT)
+        bh=zYjefgmN4vorNNHFzM9z/rnT9aBHiu5F3geZIfynNug=;
+        b=xPVmNJum+rkUXHV4jHIqL7eDcRoVVA7gjT5XQMdgpnGfMXM5zJdXWHQKRjK8vKJA77
+         Tkknxcawwc5GD2NJcLGFA0lGHD7zxrgNGD+QvRqmcYkr43X0Bd0gSIJfPpTUNCeJ3RFv
+         JMIa9uwG/zousysMB388IGiw+JN65fV9TXrSiabFELJ7rsJXOVNhkF8ehaEw+752Ds1P
+         lui+0qJrycYbKSFcrP9nvSItezgUEMONfQv9ksoVzmicBM8pEyeOgXEeWXrjSxe7zHOr
+         Xk6Bo0ywwq2XwTtXrDShqjjbVSqZzM3PjPNA3IICBJlhJqzeMKPf9F43xUoBEmsN+ltU
+         90AQ==
+X-Gm-Message-State: AOJu0Yy8Es3SLp6JnB5NQtfPglXPfUTOMoInKoVi73rDx/K1k72avbbD
+	KIMjqe7oh4017K3ko5P/nitZEZ10liPLerPltrPq/mlqg+WEQw2HMy8UtA==
+X-Gm-Gg: ASbGncthqoXLwk3VTzij5HwFMWjIgIutwlPVqYCZHD0FJgaxiJPKWFQp5rHGcCk7C2E
+	Nz66lfoGeveLEE1EndBndYZDG1udGK1917+PWTfyTY5dqWKWR52ThlqqYmW3j95Wg00p+ItXY+J
+	xbWfPsBjoAIa+IFpS50f/y1X7UKZjuJDf9i+DmmY1L9hW9ksFRnZVPj5TN3WI4kSQnguCghdQP1
+	ezjOFdYvLBBpUPFEUvwox9tKj8onBI9SQIN0MmN8sxzVAFLID0pXMs9IK8ADoUFvTV3k5ErlIAf
+	eqwPTDkq60Nle2pdwAgK8ZMlPE1Oayd+QlXy2SahLRHPPQ==
+X-Google-Smtp-Source: AGHT+IEvrtVRWhveU5k8ll/zis7zUgbb6q+52BrS3kvt6nND0Foupl+uiV/axWPP9yBQ2i7PZ0XyNg==
+X-Received: by 2002:a05:600c:4e46:b0:43c:eec7:eab7 with SMTP id 5b1f17b1804b1-43d8801a634mr27685335e9.11.1743076396689;
+        Thu, 27 Mar 2025 04:53:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d830f59d0sm34813335e9.28.2025.03.27.04.53.15
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9b5536sm20264847f8f.54.2025.03.27.04.53.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Mar 2025 04:53:15 -0700 (PDT)
-Message-Id: <6b6cd556465f21e43536706c88c49f8790a2dc5f.1743076383.git.gitgitgadget@gmail.com>
+        Thu, 27 Mar 2025 04:53:16 -0700 (PDT)
+Message-Id: <77f1dcaca1c9df9e24880680311e5bb3eaeec1f8.1743076383.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1889.v3.git.1743076383.gitgitgadget@gmail.com>
 References: <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
 	<pull.1889.v3.git.1743076383.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 27 Mar 2025 11:53:02 +0000
-Subject: [PATCH v3 09/10] clang: warn when the comma operator is used
+Date: Thu, 27 Mar 2025 11:53:03 +0000
+Subject: [PATCH v3 10/10] detect-compiler: detect clang even if it found CUDA
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,44 +86,39 @@ Cc: Philip Oakley <philipoakley@iee.email>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When compiling Git using `clang`, the `-Wcomma` option can be used to
-warn about code using the comma operator (because it is typically
-unintentional and wants to use the semicolon instead).
+In my setup, clang finds `/usr/local/cuda` and hence the output of
+`clang -v` ends with this line:
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
+	Found CUDA installation: /usr/local/cuda, version
+
+This confuses the `detect-compiler` script because it matches _all_
+lines that contain the needle "version" surrounded by spaces. As a
+consequence, the `get_family` function returns two lines: "Ubuntu clang"
+and above-mentioned line, which the `case` statement does not handle
+well and hence reports "unknown compiler family" instead of the expected
+set of "clang14", "clang13", ..., "clang1" output.
+
+Let's unconfuse the script by letting it parse the first matching line
+and ignore the rest.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.dev | 4 ++++
- meson.build    | 1 +
- 2 files changed, 5 insertions(+)
+ detect-compiler | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/config.mak.dev b/config.mak.dev
-index 0fd8cc4d355..31423638169 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -40,6 +40,10 @@ DEVELOPER_CFLAGS += -Wvla
- DEVELOPER_CFLAGS += -Wwrite-strings
- DEVELOPER_CFLAGS += -fno-common
+diff --git a/detect-compiler b/detect-compiler
+index a87650b71bb..124ebdd4c9d 100755
+--- a/detect-compiler
++++ b/detect-compiler
+@@ -9,7 +9,7 @@ CC="$*"
+ #
+ # FreeBSD clang version 3.4.1 (tags/RELEASE...)
+ get_version_line() {
+-	LANG=C LC_ALL=C $CC -v 2>&1 | grep ' version '
++	LANG=C LC_ALL=C $CC -v 2>&1 | sed -n '/ version /{p;q;}'
+ }
  
-+ifneq ($(filter clang9,$(COMPILER_FEATURES)),)
-+DEVELOPER_CFLAGS += -Wcomma
-+endif
-+
- ifneq ($(filter clang4,$(COMPILER_FEATURES)),)
- DEVELOPER_CFLAGS += -Wtautological-constant-out-of-range-compare
- endif
-diff --git a/meson.build b/meson.build
-index efe2871c9db..fd8c05dec91 100644
---- a/meson.build
-+++ b/meson.build
-@@ -715,6 +715,7 @@ libgit_dependencies = [ ]
- # Makefile.
- if get_option('warning_level') in ['2','3', 'everything'] and compiler.get_argument_syntax() == 'gcc'
-   foreach cflag : [
-+    '-Wcomma',
-     '-Wdeclaration-after-statement',
-     '-Wformat-security',
-     '-Wold-style-definition',
+ get_family() {
 -- 
 gitgitgadget
-
