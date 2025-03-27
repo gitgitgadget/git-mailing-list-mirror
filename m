@@ -1,68 +1,67 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A18417BD6
-	for <git@vger.kernel.org>; Thu, 27 Mar 2025 12:43:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D45214237
+	for <git@vger.kernel.org>; Thu, 27 Mar 2025 12:43:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743079434; cv=none; b=mMyBjkLp1dEyw8vEgwhHTsS1gJUf7Lnt3NbCovu8aSRc0hjIw6UBcucqvhRE2YY38eBZb/l4oPrZ+NMywMyCmcJ5D8R+7w+GLJFsFWxp+X9W9YyM0Yjm+5W1aW5v/2IcnmnGHnuIbNxxY+L7Dzr8fltuC3X3C9yjPcarexG0qUk=
+	t=1743079435; cv=none; b=DMCD0x8stFfqP+C6QMfzj6CiZjgqT3Thj9xndZp7U4kyqoZ8iiFZ3yelCy6tz0m8YbTnobEISdDF1EwY72OFnmnsVib4PmYtEnxlU8E7ObaLBscMtU5shiw6ctGoDhR8zvbUm+i8KOpWckPcIPyB90W86a+syZg5b1VvHxCuwQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743079434; c=relaxed/simple;
-	bh=lbwDoXVESzKmAWUjMlEQAzfeO/snUPurCzfAozkDDCc=;
+	s=arc-20240116; t=1743079435; c=relaxed/simple;
+	bh=Kg5guTj7z3k0Sk8f/D7d8YF9DG+QJlE1rLnkUJVH0uQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=g98O0mpAHVRofwa5ZA1yGVE/fj/iO0a8CtlOwe2FADR8ZyEfvrxsYx3R+MaJPQZ8lMnI61SkOvADqMomwUqdyn15dj8k198X7H62VaQ8cK/DYFW95srNai3ENseJylhObHLF9hTwEP18UuxOcfjU6H0Myb0c0ELAziWtisIb1WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zxki9VRz; arc=none smtp.client-ip=209.85.128.41
+	 MIME-Version:To:Cc; b=GWpHBHsJQTlQ5CwdSxVW8lx+Z1XNAYHiA5vtLsn8JDZ0jz+NyOWgZx8YhEVIHBaeDSPu2cFmPAPxhvmspQCQ65p4xG3Lr1lAU+4bnieNTOhpN362dpIArvdC0XA8+QxVH+puakRqytq/RkNIK9QMpxuj0OgMm53IpKVxVub9ZdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DQt2U0OH; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zxki9VRz"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43bb6b0b898so9455785e9.1
-        for <git@vger.kernel.org>; Thu, 27 Mar 2025 05:43:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DQt2U0OH"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-39141ffa9fcso736517f8f.0
+        for <git@vger.kernel.org>; Thu, 27 Mar 2025 05:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743079431; x=1743684231; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1743079432; x=1743684232; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ssepNjpt1gIo/B6jXx2UNiYIu84QPKv2e8v+4zsiEcc=;
-        b=Zxki9VRzDqekHwP/As36mquobO8uT3RvDPFUN984dW7K5vA9qL6KpRWANLEdtyRQiA
-         zZ4LrdMLLatiNlhVypMarLWYqbloWi7l1+6WbAPF4Eeioz/ESTUzv/PFYNMurOTGf8Fg
-         6YntKNXd4M0OJz0j5eaAvwMTASbzrBWORCth5C6Luoq086u0VA3K4AskIaAucnbFdBjk
-         FulULRykciduwUmTlYDC4dv870a4CD9Jvxcd4DUJmdezmFAseM/AVUxk81AL25tPbMIh
-         YO1mQcDzRZc3X0PJlvi2NgpuxAs3Z5Tf/p2qE6azkkJwnYBxRWQ8HQlHfCNLK7hOUuYl
-         AAUw==
+        bh=kdOT8riMmqjRURfNW6rleSdr9eyCDsduvKrjayluV9A=;
+        b=DQt2U0OHOFQbbJkY127ghIZtMfLnh2RM7FtK+N0wFprR98MnD4s02UCmwczVZbWz8G
+         aCtJ+jeP434zne4ahlHj1z7xPBzHZ0l//UxAtQ6IcQGiWleiaFr2WOYm1DSrjTYl8fGC
+         +p7+49WYtYJFDDrBxqRt/KiDaTSvl0SrOMK5QROeYdm9fXcemdC6y9JwYcEvXn+nQnSH
+         HeXhNXAluFGw6B89KVkJ0cgJp/OcbtsoQNOheLHSk8sslrJJ2tdie/7jqFBby1pd+plx
+         E+K380h1NJmjS0N13MYA5z3cMHI80dm/zZiEEqFttHldrASwiN5KMRTDUapikfrtxHMP
+         6hbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743079431; x=1743684231;
+        d=1e100.net; s=20230601; t=1743079432; x=1743684232;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ssepNjpt1gIo/B6jXx2UNiYIu84QPKv2e8v+4zsiEcc=;
-        b=XlJo/rpfa1h/P4UYIzHfijWn+0JYOdhIklVMxAPq1HWkAATEG3k/PMU+7rdmG29/uM
-         bMWJsnkHHxqOQfEQH3t6hXm1/hVycdI1wtkGVYqAPDXy02TZWhbX+U2SA4ipaTjR47PY
-         vZzfBz43zUEYHOLDLIvl92QHxHQtnoACbJkG5xKhSSdOR5/LL+fRZw5ZG6GMh7zhK3xz
-         pjrxN4t14w8wPLp/GXiyYL6KYvGzMi+EVc5NVUAQqIJe9UbFMeU13dy6hzJDmZQAy5EK
-         YMIGTQH8zsxA9KAYelmwHuYalzaLQBb+C2/ZpxhhKficgVRlRl/mOp6rmIiCX7YrZyel
-         sTHQ==
-X-Gm-Message-State: AOJu0YwDKULC3Djm75Z0CsKXM6sW3fqqal/TQixSN69EwjqqddNSt9HI
-	btqYcJsuh02wuUl/xFfYtgUBIIkptM5HtCPJASIsW8AXDu6zWogSmweQhA==
-X-Gm-Gg: ASbGncsavf2qYrPoXum9s81s2qFxxblPVmuYPwtlYHMZvIj4IJ+pQyabvA2N4hKWwwp
-	FvJHNGDjYEocHee+DvXbDFPWtggcg++EXiDTVf/LLFktauoHk6qrWmCAzlt2ZiOI8/23qbMWNsj
-	1M8Y+F+CJuZmT3mc8bwbh9U4i9+CMzs/219Up05A4sHilatN93fQ22NtFLbJPo3B38eS5M29rE4
-	CQgQFOItIbbfI6v9L0mHU/j6SdtYsddDjgYl0Jl0KZq8/uVWc9JPj2TK+r8TD7j8TWrUvJKNIIO
-	qhN9xSwoG6Ac9vKkbyn8hoahRPinwsNWiiBMSk4EvKSPgA==
-X-Google-Smtp-Source: AGHT+IEeoK5GaEgRisIKKMYy00w5OvEnF7DyHWaQfKeRvS9yvbbDu40H4kQQ86PTzPEn1UTfPENU9g==
-X-Received: by 2002:a05:600c:3ac6:b0:43d:412e:8a81 with SMTP id 5b1f17b1804b1-43d85097855mr29075915e9.28.1743079431153;
-        Thu, 27 Mar 2025 05:43:51 -0700 (PDT)
+        bh=kdOT8riMmqjRURfNW6rleSdr9eyCDsduvKrjayluV9A=;
+        b=PF7tq1TtjcPgQVbflvfTMaqBMqxAoUPann7sahRigkgtBhiPMR15OcfYfA+iRemqrC
+         b+Ic420D7vw/RxNbRknRkRFCATt7v436/bOYUsS5vczZ1zEPkEIHxekSaBsu8xHpyPGj
+         uRKgdNBBbE+ae6WqrWqBpdMMV+gq5EPQTWY9rVLFmY4ZV6qaBAjQy6+eUOUZNoLCAGvA
+         PjH+hxF2S1cikAsyB9gBcSxgiv96U7oKusXBTK/+1ebBX5gRZ/I9eOKiGiPOX1BU2nsV
+         0ExsXqYD9jmWoQXSZ55rWcKBwZMIYekMrXEJRQdft/HRtIoqIxTDCwMPbhxUZvGB3vQS
+         6j4w==
+X-Gm-Message-State: AOJu0YxRMbko7UzoFk43lH1BKRk91l+C0LRzYEQksduNRYjBSS+ntAPc
+	++eZ3pxW3gcyQgE375DnKQNq+2HCMgwlriHy9TGRGWxCH5TRlxA6YJANMw==
+X-Gm-Gg: ASbGncu8aIV9wcwKqK6UWybg21nyF/69UYWl0TJEmIahTROloIL8eZveefVBZ/qhErF
+	HgNL/S/SILAi0TlG0JMLVKnY277bz//4mJd+jY4z3aZED8jUMHS1fVFN+wBpB4VNNnmQT/Tr4bc
+	Ze6sRJc/CqtTb+j370rdEq5BqDCSLU9PUVIzvu75fDGNMQL2SUtLN621Q19nhf08vigOQxuwVlQ
+	uvhOhRQ0sJNWzze/ysyulereFncxmD3WepxoOwjwTuVCXSyRRd5++oAucTSdytSmr/YwRcw/P76
+	Qi9mLu+sBs0/+A/tUiJGbZdU42IJ9jYt1Can5jIkGn89JA==
+X-Google-Smtp-Source: AGHT+IEiRMq7yHlUKBtuXUM3tGTkeuN6eYbnAbmtVrhAlqEiLeIQTUeNgiyMYkpWYp9y9kQba9oUlw==
+X-Received: by 2002:a5d:59a8:0:b0:391:268:64a1 with SMTP id ffacd0b85a97d-39ad1773ab0mr3408260f8f.48.1743079432131;
+        Thu, 27 Mar 2025 05:43:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d82f15585sm36131725e9.24.2025.03.27.05.43.50
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3997f9a3af8sm20085658f8f.31.2025.03.27.05.43.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Mar 2025 05:43:50 -0700 (PDT)
-Message-Id: <b5e98d5e144f4b3a2771a421690b4b729dc1b7ae.1743079429.git.gitgitgadget@gmail.com>
+        Thu, 27 Mar 2025 05:43:51 -0700 (PDT)
+Message-Id: <575b4b2c2b8a5e800bb65b99f1fcdd6aaae63f94.1743079429.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1888.git.1743079429.gitgitgadget@gmail.com>
 References: <pull.1888.git.1743079429.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 27 Mar 2025 12:43:46 +0000
-Subject: [PATCH 1/4] cat_one_file(): make it easy to see that the `size`
- variable is initialized
+Date: Thu, 27 Mar 2025 12:43:47 +0000
+Subject: [PATCH 2/4] fsck: avoid using an uninitialized variable
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,38 +77,34 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The large `switch` statement makes it a bit impractical to reason about
-the code.
+In `fsck_commit()`, after counting the authors of a commit, we set the
+`err` variable either when there was no author, or when there were more
+than two authors recorded. Then we access the `err` variable to figure
+out whether we should return early. But if there was exactly one author,
+that variable is still uninitialized.
 
-One of the code paths can technically lead to using `size` without being
-initialized: if the `t` case is taken and the type name is set to the
-empty string, we would actually leave `size` unintialized right until we
-use it.
+Let's just initialize the variable.
 
-Practically, this cannot happen because the
-`do_oid_object_info_extended()` function is expected to always populate
-the `type_name` if asked for. However, it is quite unnecessary to leave
-the code as unwieldy to reason about: Just initialize the variable to 0
-and be done with it.
+This issue was pointed out by CodeQL.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/cat-file.c | 2 +-
+ fsck.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index b13561cf73b..128c901fa8e 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -104,7 +104,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 	struct object_id oid;
- 	enum object_type type;
- 	char *buf;
--	unsigned long size;
-+	unsigned long size = 0;
- 	struct object_context obj_context = {0};
- 	struct object_info oi = OBJECT_INFO_INIT;
- 	struct strbuf sb = STRBUF_INIT;
+diff --git a/fsck.c b/fsck.c
+index 9fc4c25ffd5..ad04b24ff13 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -925,7 +925,7 @@ static int fsck_commit(const struct object_id *oid,
+ {
+ 	struct object_id tree_oid, parent_oid;
+ 	unsigned author_count;
+-	int err;
++	int err = 0;
+ 	const char *buffer_begin = buffer;
+ 	const char *buffer_end = buffer + size;
+ 	const char *p;
 -- 
 gitgitgadget
 
