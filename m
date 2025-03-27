@@ -1,82 +1,83 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C4A20FAA9
-	for <git@vger.kernel.org>; Thu, 27 Mar 2025 10:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97D1210F6A
+	for <git@vger.kernel.org>; Thu, 27 Mar 2025 10:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743071837; cv=none; b=SXuN2wGLNht0HdREqx2mOW+tFhm6Se0dbQamjCox2FKxMNvryHyaVtOd4femNNsArOFGr2TpWws7Ft0c1ooHlttFR5o4jg8Wn/OC7cR/HOHgKXgW8JK6/FzkFZ92Okj/qr7Lab+RG0Ct43vnA9tCcEPBMYNPC+Xc5EQML0gb3Qc=
+	t=1743071838; cv=none; b=LswMFqOvTHEX4d6Mk/4Vi40/Y6TbS4yONEUADUjqLpsZqckJcbnQD1gSdc45jbAt56Zm7eE8fqzmqME5TDYxggCygANnTd4Uc5FuYCFb3jcpq+35dNP/O5tHQCmO2b1//tkmCFahJPE3kNnLOg3J7J5VUclF/dSzq4Spg03nmKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743071837; c=relaxed/simple;
-	bh=W5vQfqGcP+FcynwRxGfXxDOW1LmfnQPXMZ7KkfpvjYg=;
+	s=arc-20240116; t=1743071838; c=relaxed/simple;
+	bh=l++6TOMGDvU+Ku1F+XjsGw22Ru2u7Sy3ITLF2o+P/oM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XumoGRo8vz6kLQNZ8zK918mx4RUka75IcRO8oYFuS88CvBdCgyn9aW1PDloytG7kYghKjENXUYEXjyOw3Ao7ZHXtwY89+4ZEwnPYKiDvoVhW32hFhCYvcITCfK/k/o8dEd3tbK55sZSkaBOaHVVF8BpHwohNmm6IyeINyKzypAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XAWZqbXs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e8AWLp4b; arc=none smtp.client-ip=103.168.172.148
+	 In-Reply-To:To:Cc; b=NafDSTBDrB0MmEIjRaGurXoBRM2SAeD8a3sBmXGHAnVkioIbHGffmTzlj4ed+frF8qhSPLKH2WQW7Mf2YdPCnw8W0/VrQqhWagNCPPH2ljiyncURRsLE9BWkTW5Lp8ASNQfjU45NigVMPhZz1mg/qirzAzm2ve73SJ/mS+TcV7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cAnhoxMd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N7w1AfIZ; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XAWZqbXs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e8AWLp4b"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id B898D138390D;
-	Thu, 27 Mar 2025 06:37:14 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cAnhoxMd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N7w1AfIZ"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1DBDC13839BD;
+	Thu, 27 Mar 2025 06:37:16 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Thu, 27 Mar 2025 06:37:14 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 27 Mar 2025 06:37:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743071834;
-	 x=1743158234; bh=+gu+FJNpyDG04XVbftmayiPJ01w5q1S8ohw5XjWfwLc=; b=
-	XAWZqbXsSd7VhEnyLU9+CzTROhLNvzUSgDqsMasB3rKV98YkfZorKstLaCM2nG6d
-	j9qH2TOdDFpk8/Bsjtz59R7SS29jLOYJHw3u4MLNVRLOcjGY5lemP0iJKObZSFlO
-	iQz5pOcAuyfaLFBpnLEHLaHYGseuq1deGwEfseivm5b9XJdivn41zbcG8nM6GFU9
-	DhZVDiq9BpCJvvPCfLNsojAgUGrbOZxtJWbhwaNiE2I1i27vWJvpmQfPpp6fjE6+
-	/uMBSMD5iJLEqJYDpMdyRe1RMrI/yyu0H/5cHlbmT2y6aVm+YYb0hHBqyq4aZQLX
-	Ey8aBcMeeBx+pKIsAl/evQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743071836;
+	 x=1743158236; bh=3ClEJeq0r9S2afkT2Gk3D1jB1qy87nJM7NWRNiLDVUI=; b=
+	cAnhoxMdMgueKjxBXgsbXI2zJHO8jf5UIn5VoKb0Vr1WYWOV/5MSjTPrS37K+sZj
+	KoLaHzHwddX+KQyupmUoEoe52V3NSD/4WTU151UdBtfGXaAT96DGzf+/+eolP9UX
+	1nFC5+WlztQMnN0NrAMqcf4mS5eBMd9bDzLVZlSUQ5swextlbgms2lX+HaVlT0mA
+	Uyl2g3fexHFpnluXQ+KZeWUVNpuzPxH+OtcJWrkJgwj4wZQTAykSVYn6VRfXRMMM
+	eCl8v9A1QYKsl+0WA/FMytyQvvSQBCfC8Vvfa6si8/RU+xtaZQXUjtKJfof5QmD1
+	DDsTJFl9gO4r2MXSA328sg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743071834; x=
-	1743158234; bh=+gu+FJNpyDG04XVbftmayiPJ01w5q1S8ohw5XjWfwLc=; b=e
-	8AWLp4bf5us9kVAOb9cKIfB/4CcdUx4Kn6A4BBfpJC4lBDqsJeBs0Eea2jl/U9by
-	mb3A0Fx4L+ztCiTEtKUUJx7FlII+FqXyXDxD0UX1/1d811dDzFqomJ3f6YcU/G7s
-	lwep3eNW3nsaaoh6ICwjNSfXLf3HBT9b7sh+angp1tUYQQk9KdGDvbCAIf+8lnoJ
-	N01hT+QGmW11+c05RUSZCpqe58ep6oEFoDrXtBInl9/RYO2tuQgP+4aRITMU8Pkz
-	H7e1ZLv3jpsJAjLcXIeivQB6oSMd17TxcUBpANRebCl5ucMTz54nd+hnx00dOJtS
-	/g+3cP9aKkYwg7LR5Sfrw==
-X-ME-Sender: <xms:WirlZ1TnDkWz1FkN7u7mUbkB_QJtzzvZbZelaX7H8hARLjL32v8B9g>
-    <xme:WirlZ-wSlCxv_sXR23KX7N85nIsMJfpA47_Ziz4SxckrHVUD4P73o0H7qQj1p9AUz
-    d_a0VeN9_-hl4EFIg>
-X-ME-Received: <xmr:WirlZ61u_BR9XKcWP59U389BCP44g2xbF1uzFIH9-cKrcKcB5Eclw7Wab3I8K3l1XmNKT2DsH2i7d2GkSbjLRjCWj80DN3Jjmu9GJS1vc5yNyg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieekudelucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743071836; x=
+	1743158236; bh=3ClEJeq0r9S2afkT2Gk3D1jB1qy87nJM7NWRNiLDVUI=; b=N
+	7w1AfIZiFuV5ovF93uOgg2eXRKi5NHsYvVol9HsQ67seNebOh9Jc7h9xCxWGatWg
+	LCVn6KxfIEegszajtlaKZbXQj35vbDCRZbB3KhKeIQxhtqMlvqT6yTc469yARKdw
+	gvWorD40wir9paiUSuy1dfPAN2A9ISI1BeilqBdFiYbgzKWOl3ZIMwWwrfEaFru9
+	UQoW/rjN+PmAGP2dqvX12K6Ta1t8KZKMrH8icsVvpcJ/Y20mYleDb4iyglJA84Vg
+	0XNJ3TSjyR5TD2HnCGl315Nh+U24vUsbZcCqbNFpfqwsnPJXp3nAO/Qvf4R/pp8Z
+	bZk93GAB6NYX6ORWeewQA==
+X-ME-Sender: <xms:WyrlZzEuNX20m1OZPaN6_3lG1ur0uXDRCeKJYwv31d3tmPQvVkw9ZQ>
+    <xme:WyrlZwXNRnKp0goMz6UTo21EV804Mrb4M3TeaL-qQ3U_s0iQnI1cpv5oOaFhjJn1g
+    2rDtMB2zi5BR3x8FQ>
+X-ME-Received: <xmr:WyrlZ1IhVJLumzdS8jU0ey4pk0J3gd57gUJx17Z5Ra6aENfc3zKHDzb8LZ4G7cLpT-4gAPCZMcLKWuwGG32bhxhCBVMN29OeWFr_b9ZNXi95Sw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieekudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
-    pdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprh
-    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    shhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:WirlZ9D5SQ3cxpOJU_fXqjeDAIWMLTo_ZXaZU9kGUXRrZxMAAnmfUg>
-    <xmx:WirlZ-gB9Ab2wXIHkdZhbp0lMs7sXdyOAYg0_hImDW9-_0fVKv8fRQ>
-    <xmx:WirlZxrcYaJ1TsU3nsJnQgYD0IGRkbemhUiLtOJ6MIQDSXyO93gmAA>
-    <xmx:WirlZ5ik__Xa-sOBgmEK6SnqfFr8Y1gwkx4vTVlbRY8vrllOx90wUA>
-    <xmx:WirlZwZCOcWPnlGgyFyZnC3t579ISLDodBqnVw6KZU8nHmVSshCg6gM->
+    drihhmqeenucggtffrrghtthgvrhhnpedtvefghfeuudethfdtfeejkeeugfehheduheel
+    vdehfeekveekuefgfeelvdegffenucffohhmrghinheptghouhhnthhsrdhshhenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
+    ihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhi
+    nhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifoh
+    hougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghh
+    ihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrgh
+X-ME-Proxy: <xmx:XCrlZxFIPfzyLEiPLPaSHFv5caK-_nIp-I5_zS41E0k4AMWcsA-CdQ>
+    <xmx:XCrlZ5W5xt7CuO2-st06zqBkYlCPaNgclhve-bZHlxp8Jqz7EL8kIg>
+    <xmx:XCrlZ8N-mzGML7jyEYkweTKmuEQoHQKlexZA6ehmEjRXozg2Ab5woQ>
+    <xmx:XCrlZ428eTv-pQ38rafxs7mpRtWuNI05oJLxyjwjBC98gqjdk7Cyrw>
+    <xmx:XCrlZ3cMmIePtfcluV3aW3rQAv18yv7AMibqokKolMiSn-T-Mz0o3y32>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Mar 2025 06:37:13 -0400 (EDT)
+ 27 Mar 2025 06:37:14 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ee9014e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 27 Mar 2025 10:37:12 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id fcc9fc90 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 27 Mar 2025 10:37:14 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 27 Mar 2025 11:37:05 +0100
-Subject: [PATCH v3 07/20] t: adapt existing PERL prerequisites
+Date: Thu, 27 Mar 2025 11:37:07 +0100
+Subject: [PATCH v3 09/20] Makefile: stop requiring Perl when running tests
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250327-b4-pks-t-perlless-v3-7-b436de9da1b8@pks.im>
+Message-Id: <20250327-b4-pks-t-perlless-v3-9-b436de9da1b8@pks.im>
 References: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im>
 In-Reply-To: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im>
 To: git@vger.kernel.org
@@ -95,156 +96,59 @@ Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
  Phillip Wood <phillip.wood123@gmail.com>
 X-Mailer: b4 0.14.2
 
-A couple of our tests depend on the PERL prerequisite even though it
-isn't needed. These tests fall into one of the following classes:
-
-  - The underlying logic used to be implemented in Perl but isn't
-    anymore. Here we can simply drop the dependency altogether.
-
-  - The test logic used to depend on Perl but doesn't anymore. Again, we
-    can simply drop the dependency.
-
-  - The test logic still relies on a Perl interpreter. These tests
-    should use the newly introduced PERL_TEST_HELPERS prerequisite.
-
-Adapt test cases accordingly.
-
-Note that in t1006 we have to introduce another new prerequisite
-depending on whether or not the IPC::Open2 module is available. Funny
-enough, when starting to use `test_lazy_prereq` to do so we also get a
-conflict of variables with the "script" variable that contains the Perl
-logic because `test_run_lazy_prereq_` also sets that variable. We thus
-rename the variable in t1006 to "perl_script".
+The Makefile for our tests has a couple of targets that depend on Perl.
+Adapt those targets to only run conditionally in case Perl is available
+on the system so that it becomes possible to run the test suite without
+Perl.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t0021-conversion.sh                 | 10 +++++-----
- t/t0090-cache-tree.sh                 |  4 ++--
- t/t1006-cat-file.sh                   | 14 +++++++++-----
- t/t7501-commit-basic-functionality.sh |  6 +++---
- 4 files changed, 19 insertions(+), 15 deletions(-)
+ t/Makefile | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 9c3738ebb3f..4a892a91780 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -841,7 +841,7 @@ test_expect_success 'process filter abort stops processing of all further files'
- 	)
- '
+diff --git a/t/Makefile b/t/Makefile
+index 2994eb5fa9a..791e0a09789 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -59,16 +59,21 @@ CHAINLINTSUPPRESS = GIT_TEST_EXT_CHAIN_LINT=0 && export GIT_TEST_EXT_CHAIN_LINT
  
--test_expect_success PERL 'invalid process filter must fail (and not hang!)' '
-+test_expect_success 'invalid process filter must fail (and not hang!)' '
- 	test_config_global filter.protocol.process cat &&
- 	test_config_global filter.protocol.required true &&
- 	rm -rf repo &&
-@@ -1111,19 +1111,19 @@ do
- 	branch) opt='-f HEAD' ;;
- 	esac
+ all:: $(DEFAULT_TEST_TARGET)
  
--	test_expect_success PERL,TTY "delayed checkout shows progress by default on tty ($mode checkout)" '
-+	test_expect_success TTY "delayed checkout shows progress by default on tty ($mode checkout)" '
- 		test_delayed_checkout_progress test_terminal git checkout $opt
- 	'
+-test: pre-clean check-chainlint check-meson $(TEST_LINT)
++test: pre-clean check-meson $(TEST_LINT)
+ 	$(CHAINLINTSUPPRESS) $(MAKE) aggregate-results-and-cleanup
  
--	test_expect_success PERL "delayed checkout omits progress on non-tty ($mode checkout)" '
-+	test_expect_success "delayed checkout omits progress on non-tty ($mode checkout)" '
- 		test_delayed_checkout_progress ! git checkout $opt
- 	'
- 
--	test_expect_success PERL,TTY "delayed checkout omits progress with --quiet ($mode checkout)" '
-+	test_expect_success TTY "delayed checkout omits progress with --quiet ($mode checkout)" '
- 		test_delayed_checkout_progress ! test_terminal git checkout --quiet $opt
- 	'
- 
--	test_expect_success PERL,TTY "delayed checkout honors --[no]-progress ($mode checkout)" '
-+	test_expect_success TTY "delayed checkout honors --[no]-progress ($mode checkout)" '
- 		test_delayed_checkout_progress ! test_terminal git checkout --no-progress $opt &&
- 		test_delayed_checkout_progress test_terminal git checkout --quiet --progress $opt
- 	'
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index ab80c9ef135..d9015882946 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -128,7 +128,7 @@ test_expect_success 'second commit has cache-tree' '
- 	test_cache_tree
- '
- 
--test_expect_success PERL 'commit --interactive gives cache-tree on partial commit' '
-+test_expect_success 'commit --interactive gives cache-tree on partial commit' '
- 	test_when_finished "git reset --hard" &&
- 	cat <<-\EOT >foo.c &&
- 	int foo()
-@@ -162,7 +162,7 @@ test_expect_success PERL 'commit --interactive gives cache-tree on partial commi
- 	test_cache_tree expected.status
- '
- 
--test_expect_success PERL 'commit -p with shrinking cache-tree' '
-+test_expect_success 'commit -p with shrinking cache-tree' '
- 	mkdir -p deep/very-long-subdir &&
- 	echo content >deep/very-long-subdir/file &&
- 	git add deep &&
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index a574da3df53..0a22b0a7b8e 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -1323,7 +1323,7 @@ test_expect_success 'batch-command flush without --buffer' '
- 	grep "^fatal:.*flush is only for --buffer mode.*" err
- '
- 
--script='
-+perl_script='
- use warnings;
- use strict;
- use IPC::Open2;
-@@ -1345,12 +1345,16 @@ $? == 0 or die "\$?=$?";
- 
- expect="$hello_oid blob $hello_size"
- 
--test_expect_success PERL '--batch-check is unbuffered by default' '
--	perl -e "$script" -- --batch-check $hello_oid "$expect"
-+test_lazy_prereq PERL_IPC_OPEN2 '
-+	perl -MIPC::Open2 -e "exit 0"
- '
- 
--test_expect_success PERL '--batch-command info is unbuffered by default' '
--	perl -e "$script" -- --batch-command $hello_oid "$expect" "info "
-+test_expect_success PERL_IPC_OPEN2 '--batch-check is unbuffered by default' '
-+	perl -e "$perl_script" -- --batch-check $hello_oid "$expect"
-+'
++ifneq ($(PERL_PATH),)
++test: check-chainlint
++prove: check-chainlint
++endif
 +
-+test_expect_success PERL_IPC_OPEN2 '--batch-command info is unbuffered by default' '
-+	perl -e "$perl_script" -- --batch-command $hello_oid "$expect" "info "
- '
+ failed:
+ 	@failed=$$(cd '$(TEST_RESULTS_DIRECTORY_SQ)' && \
+ 		grep -l '^failed [1-9]' *.counts | \
+ 		sed -n 's/\.counts$$/.sh/p') && \
+ 	test -z "$$failed" || $(MAKE) $$failed
  
- test_done
-diff --git a/t/t7501-commit-basic-functionality.sh b/t/t7501-commit-basic-functionality.sh
-index cc12f99f115..a37509f0043 100755
---- a/t/t7501-commit-basic-functionality.sh
-+++ b/t/t7501-commit-basic-functionality.sh
-@@ -46,7 +46,7 @@ test_expect_success 'paths and -a do not mix' '
- 	test_must_fail git commit -m foo -a file
- '
+-prove: pre-clean check-chainlint $(TEST_LINT)
++prove: pre-clean $(TEST_LINT)
+ 	@echo "*** prove (shell & unit tests) ***"
+ 	@$(CHAINLINTSUPPRESS) TEST_OPTIONS='$(GIT_TEST_OPTS)' TEST_SHELL_PATH='$(TEST_SHELL_PATH_SQ)' $(PROVE) --exec ./run-test.sh $(GIT_PROVE_OPTS) $(T) $(UNIT_TESTS)
+ 	$(MAKE) clean-except-prove-cache
+@@ -132,8 +137,13 @@ check-meson:
+ 		fi; \
+ 	done
  
--test_expect_success PERL 'can use paths with --interactive' '
-+test_expect_success 'can use paths with --interactive' '
- 	echo bong-o-bong >file &&
- 	# 2: update, 1:st path, that is all, 7: quit
- 	test_write_lines 2 1 "" 7 |
-@@ -345,12 +345,12 @@ test_expect_success 'overriding author from command line' '
- 	grep Rubber.Duck output
- '
- 
--test_expect_success PERL 'interactive add' '
-+test_expect_success 'interactive add' '
- 	echo 7 | test_must_fail git commit --interactive >out &&
- 	grep "What now" out
- '
- 
--test_expect_success PERL "commit --interactive doesn't change index if editor aborts" '
-+test_expect_success "commit --interactive doesn't change index if editor aborts" '
- 	echo zoo >file &&
- 	test_must_fail git diff --exit-code >diff1 &&
- 	test_write_lines u "*" q |
+-test-lint: test-lint-duplicates test-lint-executable test-lint-shell-syntax \
++test-lint: test-lint-duplicates test-lint-executable \
+ 	test-lint-filenames
++ifneq ($(PERL_PATH),)
++test-lint: test-lint-shell-syntax
++else
++GIT_TEST_CHAIN_LINT = 0
++endif
+ ifneq ($(GIT_TEST_CHAIN_LINT),0)
+ test-lint: test-chainlint
+ endif
 
 -- 
 2.49.0.472.ge94155a9ec.dirty
