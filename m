@@ -1,122 +1,161 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D9D20FAB2
-	for <git@vger.kernel.org>; Thu, 27 Mar 2025 11:06:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C0E210F6A
+	for <git@vger.kernel.org>; Thu, 27 Mar 2025 11:07:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743073565; cv=none; b=QisKqxtR/MiaTgv1Y017BNGUOS8KAr0t4M0itshcAotemWU039XGpjqSOctBWQQfD6oyUfqhUMYJMm8t15Qkq4N7qKYO+xQxS5IHUCN9TnAxAEFZFaTaZ4Z/YMVPcVxeJqZZXw5Z2qRT6qVy7T3Z3Nz5iS4BoSDIL1J9BTP4Vfo=
+	t=1743073625; cv=none; b=Pm4pwi/dfnSs4Iq3pzbGYpkr7bNF4djpatp4nNAT2y1BfpUW67WWzxD5wUkv+fGaEnOymV730yaHevQPF0vsOPn977lACJtlPQjKuvKIa8xrow6HghkEPgrCaV72WKDOIHOsPXzFcd/EWI5/QPHsRwP5CHsJOyHFbTn0OWpNqBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743073565; c=relaxed/simple;
-	bh=A6EDD6PrTYfLdWpLfGjMroimJKK2hjRJguAMK9wyoUw=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=iGH3XIB31nwSmDdxk4hI/krGLr9nVGYTCWwsiIQL6oFB0WHiL0j7KJSczDIOqisjdTbRkawycSyXSPavlGw58V6o4BoiH0NBf44SF58ekKxoJH1nZa1swWRN/ld5pzT9Y71yqIbOYmqvISNAiSfwLxQoum9IxoWRp31UK0mARVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L01RsJXj; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1743073625; c=relaxed/simple;
+	bh=ojSNkMwjMt9aD5vAU7CBDF69uILjVXmVLG2YcpgBSMA=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BFu1Y3+dNEi+4Zhz7TCO2qx19XTcWdJ2/nRVGSQONPjt/Wz1YUJqcdXT4C2aPRfDrT1zoxuYU7gYO9NWndiK6es1YQ0lyrpoOl/X9vSvfVLL/DGphJIxvOLJ51Prq9Jzs8T83Dw/GUE02BkazlPy54PlCpPWe9n3rTcbu1pO424=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l6Mwo7R4; arc=none smtp.client-ip=209.85.221.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L01RsJXj"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43d2d952eb1so5673495e9.1
-        for <git@vger.kernel.org>; Thu, 27 Mar 2025 04:06:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l6Mwo7R4"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-523f1b31cf8so391601e0c.0
+        for <git@vger.kernel.org>; Thu, 27 Mar 2025 04:07:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743073561; x=1743678361; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZMj9gIVSou/HO1jjw+eo8Yt7b8BGkqgVrcLrSAr6RvI=;
-        b=L01RsJXjbe+qR54BFz29H4Ff6OFk4VFrtLvK+kABm4MP3z5CbZ6q7Vm3gvQQPE5QzM
-         aboRNPAk2suTLmU+HOfVXVggA+5ptM4hbc3iNuR9qtlH5G/joeQpZernHgcTeYSL0fXn
-         3ftoILI2IOMbzQY0m0efng6wphcfCKZdgM5ghMcf8jWAwgPGRJRslVQtGtntBF9MGQVt
-         SobwHQhZb3GWSe6erFcTshu6DpsV3eipDnIK6AkgdRqsxLwI7k+PVvFLkEMBcUgVdxBs
-         klPjNgehI2bsZMaHzkIJqUEpwHHX6jThAK/w/Ys6DfBDLTUTu55F99+GyvtoHtvej9DC
-         ZaHA==
+        d=gmail.com; s=20230601; t=1743073623; x=1743678423; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pZJzyWcHjGiMgj33JeAuTS8IGLS8Z13wkq5DCIulMKQ=;
+        b=l6Mwo7R4nZ7AZVRKDAgtg+IFUd2PRKmROjlwrGyl5lQhjm5TFLu96U+aA/gl1mZK4A
+         VX/QE60d4kwIA/of886O46ZjSd5jps+pXrbNpMJH7k3NsExhqBTujNpRegcZgwh7BWhf
+         GjMu3U2hU7jzmfSwVjZOYt0ND1wuptRbruI59+iAiEejlq52hI92+TXF6do5I+qpeYJJ
+         1oChaZ70BxSXhNuS+fKyWYJvsv6kKDyQsjvH0isGaufPrGsdReFO3UpogmQLLfRBO/Tb
+         AExPS1T95WiTx0NDQQ8IPH963Y7skimMoTDmKv4qHfMdcgFw1EJhuNcV3pBvqWOTBrGY
+         yDLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743073561; x=1743678361;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZMj9gIVSou/HO1jjw+eo8Yt7b8BGkqgVrcLrSAr6RvI=;
-        b=YvkUCoiDaW+ADPy+Vh+Bep9WE4jeCrPrHFDxW1PeFWxZzSootXS7nfaYabQelpyF/m
-         eLpyBO9YethOUSaykuqueeiHo3atik2TkYWN1uM82ozDIZRaRtnRDR0WVynsvTfVKYgO
-         BSzOxpc/8WqZjqKSwhMDT/byZ4Q75B6GA0d/9TQG6zYP4BuVqmsFe5dedmC/duzAcxoR
-         liJBuX6EWdOEaVC+Y6w0Z8cTFb/AhrPPn60tGo3K8qJMK50jX6+TVxJ74xf3/ao6xJgG
-         cOamINikXSRvWc8y63onFkdjbs9ZGe4KYjdhXUw4sxymAPcZo0nIxi+C/jw/Z64T/9/p
-         e1gg==
-X-Gm-Message-State: AOJu0YzmD59IPCrAk/qMx78ZgNICHxegh5VGAsR5ofr4cyPyVtY1hyNX
-	mh2r655V8wxciNqVNJ549tdQXx8Gutf3Q3mJUEi9wa4NwpLKmW/VIYQxvA==
-X-Gm-Gg: ASbGnctB0gXYELCbh916QYwl/bivgdIOqxAA1bnRUqcAft/WYH7kiIiwT7hgqLSr8/q
-	ADOBinZ3wNYCFZr+TYDeQySeK70qyETFqfLy6y6D/aPsSsx0uUhDPIb88QjO+yt6NM/urzTwDbD
-	hkTX30KdlSRQKvVUNsY8/jwVkjVzrp9Dkc+132mITdQzfMs851ZeDJLZ4PEiPgJ4sgx6tA7KXhJ
-	hz6SS2JN5tLULlaIkCa/MazRkwdUXqlqIVikgIWPg+v/a/CWHC1E0JuEKth25KSbetl9HY6tbaR
-	KpgLKr4fZTYimP3U24dvGM7SBCMogHVu82yLFviTE5lXo7Rq2V7ioaVb
-X-Google-Smtp-Source: AGHT+IFbAmvhZ4YeoPD7Bm2+RUXkeude+g1rcRnVqNnf/9q6PapHomFXgFFh+Ml24tzvoWLS86A9Ew==
-X-Received: by 2002:a05:600c:1ca2:b0:43d:5ec:b2f4 with SMTP id 5b1f17b1804b1-43d8d641ccemr2937735e9.10.1743073561226;
-        Thu, 27 Mar 2025 04:06:01 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d82deddd9sm34171425e9.7.2025.03.27.04.06.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Mar 2025 04:06:00 -0700 (PDT)
-Message-Id: <73cae30129338cf219a810c3a2a78ef48d5637d0.1743073557.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1887.v2.git.1743073557.gitgitgadget@gmail.com>
-References: <pull.1887.git.1743010011.gitgitgadget@gmail.com>
-	<pull.1887.v2.git.1743073557.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 27 Mar 2025 11:05:57 +0000
-Subject: [PATCH v2 2/2] read-cache: check range before dereferencing an array
- element
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1743073623; x=1743678423;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pZJzyWcHjGiMgj33JeAuTS8IGLS8Z13wkq5DCIulMKQ=;
+        b=Q0hqn99EZcqfRmqAWnOtogCKcYEECF8PDXdxe64LKChMbPNl0Nkg6/R66rf+A7OoUh
+         Ok3KyRbcbit/0nfnPP9OtujjCJjefByPK3jB5o0smuPoGzPj+8kupwTrZWnlJAk+P5Rm
+         vSSnlEccDUbc3agPGC5QC5vtIinJY6/xyM8M3w1va+CdKKQHocnxT/1jWz8pu9SEk/34
+         dmmmVMqabLenRJ8u3J9xEMDTgXJpRFzS2vEfpNn32lum0ZkG/QHDFMGFgLvIWbKFzQgb
+         KeHNxTeTdpaZo7MPOgJh09k2suaIc6g6irDZz0HwTYL28hLjJ6/kP652dGRRpqHpMbvM
+         2LcA==
+X-Gm-Message-State: AOJu0Yy94yRbERvzYq6OMS+DPKrGbZYHSRZkNLDbk9RGVlUmtBMNWOhZ
+	WkUFkbigoGw2yxUW62WbXpCc0raaQ/HBuHOGhiNE8RqyMtHcrQkWbxDMzh5/sxb+sIPD0lfeVoh
+	n+M1YjANlz01Pxf8ro6L10CWGR/8=
+X-Gm-Gg: ASbGncuPmmkz6HssUr0crSDBzYCQESUkoqCMddknejUd9WauK5Q5y0JrmroLh2z2sGj
+	8SLcWIKSoBs2D9veUd22aBjvQeDdxkKy65bdLOnQS5utN0mwuETIKf7+zwGgHwaa/WImgWu7TX1
+	VOAQwgCDIv6CXWbK8pGeZ6BB2O
+X-Google-Smtp-Source: AGHT+IG13KhfvK2OEYOFmNk0aviu9tCmzDE9gW130defWlViJsaZMkhj3MyyEVp3Csl5vTbmbAXBT9GgtGWCkpttZEo=
+X-Received: by 2002:a05:6122:308e:b0:520:43e0:8ea0 with SMTP id
+ 71dfb90a1353d-52600ae326bmr2146410e0c.11.1743073622611; Thu, 27 Mar 2025
+ 04:07:02 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 27 Mar 2025 04:07:01 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <CAPig+cRLXDohGG0RLpC41hy=rTmbmNQ_qScFWMv2LP8pdM8_hg@mail.gmail.com>
+References: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
+ <20250326-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v2-1-79037e17a74b@gmail.com>
+ <CAPig+cRLXDohGG0RLpC41hy=rTmbmNQ_qScFWMv2LP8pdM8_hg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Thu, 27 Mar 2025 04:07:01 -0700
+X-Gm-Features: AQ5f1JpkwYn7UoHwoz9F8NrRB173SdGKM2ijhD3HRizgbvGWN9Ij0qnWPgu7S-U
+Message-ID: <CAOLa=ZT8VjTrJcVMYtCK3+8Rt1h79GPKdNr4OyKAJ+57a=EHDw@mail.gmail.com>
+Subject: Re: [PATCH v2] blame: print unblamable and ignored commits in
+ porcelain mode
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, ps@pks.im, toon@iotcl.com, 
+	gitster@pobox.com, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="00000000000017f764063150f4ae"
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+--00000000000017f764063150f4ae
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Before accessing an array element at a given index, we should make sure
-that the index is within the desired bounds, otherwise it makes little
-sense to access the array element in the first place.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-In this instance, testing whether `ce->name[common]` is the trailing NUL
-byte is technically different from testing whether `common` is within
-the bounds of `previous_name`. It is also redundant, as the range-check
-guarantees that `previous_name->buf[common]` cannot be NUL and therefore
-the condition `ce->name[common] == previous_name->buf[common]` would not
-be met if `ce->name[common]` evaluated to NUL.
+> On Wed, Mar 26, 2025 at 5:07=E2=80=AFPM Karthik Nayak <karthik.188@gmail.=
+com> wrote:
+>> The 'git-blame(1)' command allows users to ignore specific revisions via
+>> the '--ignore-rev <rev>' and '--ignore-revs-file <file>' flags. These
+>> flags are often combined with the 'blame.markIgnoredLines' and
+>> 'blame.markUnblamableLines' config options. These config options prefix
+>> ignored and unblamable lines with a '?' and '*', respectively.
+>>
+>> However, this option was never extended to the porcelain mode of
+>> 'git-blame(1)'. Since the documentation does not indicate this
+>> exclusion, it is a bug.
+>>
+>> Fix this by printing 'ignored' and 'unblamable' respectively for the
+>> options when using the porcelain modes.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
+>> @@ -158,6 +158,16 @@ test_expect_success mark_unblamable_lines '
+>> +for opt in --porcelain --line-porcelain
+>> +do
+>> +       test_expect_success 'mark_unblamable_lines with $opt' '
+>
+> This test title is going to display literal "$opt" rather than the
+> intended option. Fix this by replacing the single quotes with double
+> quotes:
+>
+>     test_expect_success "mark_unblamable_lines with $opt" '
+>
 
-However, in the interest of reducing the cognitive load to reason about
-the correctness of this loop (so that I can focus on interesting
-projects again), I'll simply move the range-check to the beginning of
-the loop condition and keep the redundant NUL check.
+What a silly miss. Thanks for pointing out.
 
-This acquiesces CodeQL's `cpp/offset-use-before-range-check` rule.
+>> +               sha=3D$(git rev-parse Y) &&
+>> +
+>> +               git -c blame.markUnblamableLines=3Dtrue blame $opt --ign=
+ore-rev Y file >actual &&
+>> +               test $(grep ^unblamable actual | wc -l) -eq 2
+>> +       '
+>> +done
+>> @@ -191,6 +201,16 @@ test_expect_success mark_ignored_lines '
+>> +for opt in --porcelain --line-porcelain
+>> +do
+>> +       test_expect_success 'mark_ignored_lines line_porcelain' '
+>
+> Similarly, this is going to display the same title for both cases,
+> which isn't as helpful as it could be. Presumably, you instead wanted
+> this (using double quotes):
+>
+>      test_expect_success "mark_ignored_lines with $opt" '
+>
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- read-cache.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Yup, this needs to be fixed too. Thanks again.
 
-diff --git a/read-cache.c b/read-cache.c
-index e678c13e8f1..08ae66ad609 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2686,8 +2686,8 @@ static int ce_write_entry(struct hashfile *f, struct cache_entry *ce,
- 		int common, to_remove, prefix_size;
- 		unsigned char to_remove_vi[16];
- 		for (common = 0;
--		     (ce->name[common] &&
--		      common < previous_name->len &&
-+		     (common < previous_name->len &&
-+		      ce->name[common] &&
- 		      ce->name[common] == previous_name->buf[common]);
- 		     common++)
- 			; /* still matching */
--- 
-gitgitgadget
+>> +               sha=3D$(git rev-parse Y) &&
+>> +
+>> +               git -c blame.markIgnoredLines=3Dtrue blame $opt --ignore=
+-rev Z file >actual &&
+>> +               test $(grep ^ignored actual | wc -l) -eq 2
+>> +       '
+
+--00000000000017f764063150f4ae
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 2fbe8517e9af8c2f_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mbE1WTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNTUwQy8wVVQ1K2txTXZXYzhlNlJxcVpIaU43b3dNVgo0N0hyS0RlanVy
+WVpIYld3bTZobWZ4c2UrTG5LOE03d3p0b1ZIZ2NqRUZTNDdabld5T3RUWkE4ZndFUENKVTVrCkdq
+US9yLzRvZ253RXYxUmJtQklCRyt2bGd0bnhnZVNpZVhJRXdyMjhiRFpwbUQ2aHRMcTlqbUh4WEZZ
+YWJNZ1QKdEtxbkZXSG0vSWdBRDZIdUxJY0h3NlFwUWU2NWNRN2RWM2ZWVVNWaW9rR0dRS3lVcC9p
+UUhNNW9naENaY3JQUgp1dk1xVzZWVitCOUVDZUZYM3Q2RzZJdE1iK1BNSDA2MWFkOWc3MjRibUkv
+My9rLzI5aHZnaGliS2FaaTF5V3c2ClZUOFRLUmtuL2gvUjJZUStzazBRa2IwWTRSanZCb0JYdHFu
+Rmg0UTR3eDEyTGZKRWxqVnFVVXI4NDJDR2VFVEUKQmZOdXI5MzdqMDhNTkx2akRMTVZxSDFzWDNZ
+azhkYllLLzkyd0dCZjRiTzFxTUhXSGxaYXRnbXRJWlNnZHFlTQpmam81S1R6c0wycjhmUFN2Q1M4
+SFNlRWF1RjZ6ajlSalQ5SUZqSzU2alcwWVluSXJaOSt5THFMU2hoRmNleFA1Cm8yVDBLN3dqSWdh
+OTJPaFdyUm5LcVZRWmQ2OFQ2Y3E4MHVDVXFldz0KPXFXRjMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000017f764063150f4ae--
