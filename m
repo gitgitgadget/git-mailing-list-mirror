@@ -1,103 +1,133 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71B52144DE
-	for <git@vger.kernel.org>; Thu, 27 Mar 2025 12:43:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFAC216E30
+	for <git@vger.kernel.org>; Thu, 27 Mar 2025 14:23:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743079440; cv=none; b=J0HFtOrJJIkJ0T2jFcqdc22835L8lDBDeJpi2HoGYYGJZUDn98YkKpzIwVyONRw/okN+FF46RrWnpfrSJpMXg3qLY2Eo44YvGv6Rf3euAstWpgwU++YzdKyGyrUwT7g/chK1xt45545NGHmCf3cfqVi8BKa3IoJIfw9xZYtcchY=
+	t=1743085395; cv=none; b=Q3lefEi9K2iFH9cA5QnqNqCUAuGnpPXhf2603GHQTuOPdVK7KWeoXb2kZ5u3//G9t+6IsxowP9t7pJFGxUrCLeDOlTt6znUnrY3bCylpg6+cY9qCc3FNMb1m9dKs34Q7NnomN8d2TOfE+DMjrwe8EujVBtJCFWrCHw8CMbWscb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743079440; c=relaxed/simple;
-	bh=rnJxDOswibqYNmHD1rwN9R7eB/NV0BSl4QMFAoOvM6I=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=e5/SpYH4XnXLMenu4DHS3N1FW/doirbiel4jSxwT2Y7ERYS0dCkSI4xvWX+C+ART9pWNJ1+ru9Kte7+V/4y2JxEfnO76SwYmVYCYAXTJi0c4MYpoI/JC+NPMGIm6QqkqM8lpAmqi307fs23rk/UDzLu0nezBzJKRha6k3hAhNqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W1KNjgjp; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743085395; c=relaxed/simple;
+	bh=HoU/CEQIwlS5QgO4T4uIpJginBk2Bpvk26lUszoUjHk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uQjDLNNxJx82zirvWxxGuuBc2PpDAm93gtZZg/YzyEQeP+F2msMefx8ArQailp4mapE1hAUFhOPEIjz10pZdeXAHPnQIqklL5G3tmhf6oTvQwHXUaY/7Wa6WJB1ExAi0KDwCGXXWUpSezSezo6L6eUYVCAXgA8UREmHj/KwlU28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=tN2FuaHE; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W1KNjgjp"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43cfa7e7f54so5830095e9.1
-        for <git@vger.kernel.org>; Thu, 27 Mar 2025 05:43:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="tN2FuaHE"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-477282401b3so11212621cf.1
+        for <git@vger.kernel.org>; Thu, 27 Mar 2025 07:23:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743079436; x=1743684236; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8Hs9LKklgxOmXUC5BldmoUhvvuQB2wTBAkM89AYKqWY=;
-        b=W1KNjgjpBCfzg2lyTjuVEQT/sQtmdXolsaqSs4nKtnZoYyKRtX0HExTfJr9lBxQngy
-         83w6xKptsAAcktwDONpM3kEYKB4ot+chSE4xXhPMxomG5I35xzbQz4Ewf2MXXGuzxFjl
-         iccnMHv5F+mLoqq1lULs1Kwh93E5SxsmPwm/WfAVvlwkwkhWLlCkuhgF7QR06Ahsj/Cf
-         ucWXEnxS++RFWHBUIsvMmCDzNz40YYtATzreR6XQ4FaYtzwdPxFUVP1R0VhLsZ8gQebX
-         NUUDKkEhQjR+sPS6qfGzwZYbTdJjeVu8RmXRNH6xRy/52k+wd+gSFhzkDjoBdSQHLF8M
-         XkIA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1743085391; x=1743690191; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=of/3txpYhIRycN5dzOjk5ugyZKqgmqOrVvyk3CKzhiE=;
+        b=tN2FuaHEIKUPz6bbKqaQR626V1cSAX2mmNrNyKgpKHeI3sHcQFnYDB7UyWrkA8ZSPg
+         Inho0KWu0FTbVzSnrvFxUBQtm51buDToGfjP46NpzVLw//RkZoE5IdRMMyx7xjVaDs52
+         ubv6wYozW9riARhRhRNB+MjFDuGd/FDyRVinf77w2j1YjATr05dtaeenqTfKB95z3qBX
+         cxMGq2SnxlkEnsjQR4ype46c7butGUiWMAVIgEt6HTBcTLFBD8ZhLcSH/mvS4F/5lgx+
+         r3MdsaCjXJv1RYf9t8AOR0knGbEorHJ9SIt/NCUGgDtsm6lgCWxG8rtIsNMTfiTYhbYa
+         kmsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743079436; x=1743684236;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8Hs9LKklgxOmXUC5BldmoUhvvuQB2wTBAkM89AYKqWY=;
-        b=NvY0fGjn8HUFZRk3857//MUPaJu+vcRmNCoMSOsOnk2DgLt68HAyFayX4mAVzbTlTh
-         jYQWmu5oQlHjyw9zQ7Zj6v0MfSvaPUZLi3oYdjdpWWf+/Xr4LgaQYSXRjh92mtGFMVPt
-         Xr9KfWgyBssdVLG7G15CQryZVlWOyS7TjjKTGHvy+eI5y//xUF8ykvzPJWw1EM+GmYo2
-         Wvj3cJdNgfUCRHC/s9SQbL5j/42BjxIoV6prmXGlHHXPrPowQsdo+hsjN8aj2g/qAQka
-         FnN8PDXm71p6qoNEZN1ZTVw8LGGMM4O4HFCWTpJfpTCrz3SvKVIa0H4pjPVY26VHduiA
-         PxNg==
-X-Gm-Message-State: AOJu0YwGprq6IWA/TTmqiWlHN2LVT+R6EE9Oax4eoFax54EqlsKN0TuZ
-	LXj3cJuefsP+7+l7XUMkXaNL0QllyOCyXLmFrlH8Ezx6jGZMmpxfYqIDhw==
-X-Gm-Gg: ASbGncv0tV1GOzQascCS5L1IX7D8vcbj4iDG/Fbrdp2gbJMU3VI8bA98dmD4F6rvCWr
-	Vc39jYKh9Jw4X71p6IfjftTz9QCSZDtaMxtDLT4Jtlto/P5iIm1DJFSQDE9wjPm2JY3KUrmhOhY
-	ZGBo+MnpK3cehq2TX6LNSjdZQeUBe8jTpVx5pZBMjB8qkrjcPRqay2e1gwn9NL28P5wUABJkMCq
-	Y3GjD0gDyf32RmWJCzgTpD4rQhwiWj3BF0amJhjVa4d9nLYpctMO9XlV6BZbEuJ3/FZjIQis27k
-	8cPU9L2br+oDl7P3WK3gs8gXI3q9lw+Uo12bWVEyVxxg+Q==
-X-Google-Smtp-Source: AGHT+IEhYbC0Ubw+v5g9LZIepcrzG3n0VmHhhy1+twOD1ydYuhCI1qakjxAHM76IDVK45dv3pqCpMw==
-X-Received: by 2002:a7b:cb98:0:b0:43c:f680:5c2e with SMTP id 5b1f17b1804b1-43d776e9f19mr62670865e9.13.1743079436523;
-        Thu, 27 Mar 2025 05:43:56 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d82e6a63esm36840145e9.11.2025.03.27.05.43.55
+        d=1e100.net; s=20230601; t=1743085391; x=1743690191;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=of/3txpYhIRycN5dzOjk5ugyZKqgmqOrVvyk3CKzhiE=;
+        b=CAPbdX/0T3WWAY4CbGOyDJ1ZVEfCv7V5l/AlcwMdIsKJhoOV5AhgGMLEKsjrr/z3n8
+         3FUqcAUf8D+GlXJ0Qnf2GmS+yEDDe5ULxetGDn3H5TP+aPy7qha7boLikRKRktEHvpl6
+         Pe6zbiq6x0qgP8pE5bjHeG2qGo2WZlU09I0g4mkSze5kt+J2xIygfdbD2mWfo3lJR3id
+         cpklJmSGKQ062ktvtuXQ7s4R40S9bz9L1nDQTM9ZvJjNGydwwe4sdfzvaOm+UTuuA5VV
+         pU6OB3AT+TTZT59CJOLxM535q8cuOeR64IimbFfMOFuSluKSjok8eOG5wVpJK/APLk7z
+         1llQ==
+X-Gm-Message-State: AOJu0YwUfW9+z6p0QXg1hUnEue8GrBFRu71pSki+fC1br5VKI0HMWDt+
+	tudLjgQwVaApGdeSUxjraSQAIyFzDNsruUDMo3UyHDl9UBwymEGv+LSUXmWxh1s=
+X-Gm-Gg: ASbGncsWIghJvibl34eMLqCuMROqv0O6qpaBFiPR36h2v+mHcSXsiHQ1Zc1sSKYkRtK
+	y2Jp1/7XGLM0LLHW2exrYn2s6IeKhV58XcJUKGjuEi09G2GIpoWcRWdDWiE9N3U4iruhc2I3esG
+	PPLBVa1kJ64+HZUpw4bQRxa2AofoDrFi2c/0VI/jL/Co+SQjDoPg62LaQc+PR+UpEMTfkxf1GUQ
+	NDVREAjnDL30YqkFB05F1zac5eUz6IH52GSr+APalM/sM+bvTthOtWPRUhl6k1ar+bwidLPpc4l
+	RF44R+smL4afqmn43DWaGa7+lGIuowfX2fbv50HkAQscIW+iQ8Dxy4xUMfgNngb68dJs0mxhJXG
+	vziGVD9mD9F/5Tf6R
+X-Google-Smtp-Source: AGHT+IEKrbmQa2B2mirjHBnrVvFySAHPWBzcLcQGhxernGUNGRoWQG/tWuZ5WylQMwrkVwfO0udULQ==
+X-Received: by 2002:a05:622a:4106:b0:476:77a5:3104 with SMTP id d75a77b69052e-4776e07ad57mr59639671cf.11.1743085390822;
+        Thu, 27 Mar 2025 07:23:10 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4771d1760e0sm85286181cf.23.2025.03.27.07.23.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Mar 2025 05:43:56 -0700 (PDT)
-Message-Id: <d630e95b9672e6b4b3114c077f2995c5170a6a8f.1743079429.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1888.git.1743079429.gitgitgadget@gmail.com>
+        Thu, 27 Mar 2025 07:23:10 -0700 (PDT)
+Date: Thu, 27 Mar 2025 10:23:09 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 3/4] load_revindex_from_disk(): avoid accessing
+ uninitialized data
+Message-ID: <Z+VfTUrQe1x8DO+h@nand.local>
 References: <pull.1888.git.1743079429.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 27 Mar 2025 12:43:49 +0000
-Subject: [PATCH 4/4] load_pack_mtimes_file(): avoid accessing uninitialized
- data
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ <b9901920de20ae29bd55bd68dab37a737867593b.1743079429.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b9901920de20ae29bd55bd68dab37a737867593b.1743079429.git.gitgitgadget@gmail.com>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Thu, Mar 27, 2025 at 12:43:48PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> The `revindex_size` value is uninitialized in case the function is
+> erroring out, but we want to assign its value. Let's just initialize it.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  pack-revindex.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/pack-revindex.c b/pack-revindex.c
+> index d3832478d99..3b007d771b3 100644
+> --- a/pack-revindex.c
+> +++ b/pack-revindex.c
+> @@ -208,7 +208,7 @@ static int load_revindex_from_disk(char *revindex_name,
+>  	int fd, ret = 0;
+>  	struct stat st;
+>  	void *data = NULL;
+> -	size_t revindex_size;
+> +	size_t revindex_size = 0;
 
-The `mtimes_size` variable is uninitialzed when the function errors out,
-yet its value is assigned to another variable. Let's just initialize it.
+I'm certainly not opposed to initializing variables proactively, but in
+this particular case I don't think it's necessary.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- pack-mtimes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+We assign 'revindex_size' out to 'len_p' when we enter the cleanup
+routine label if 'ret' is zero. We'll use 'revindex_size' in the same
+label to munmap() when 'ret' is non-zero, but only if 'data' is also
+initialized.
 
-diff --git a/pack-mtimes.c b/pack-mtimes.c
-index cdf30b8d2b0..c1f531d45a0 100644
---- a/pack-mtimes.c
-+++ b/pack-mtimes.c
-@@ -29,7 +29,7 @@ static int load_pack_mtimes_file(char *mtimes_file,
- 	int fd, ret = 0;
- 	struct stat st;
- 	uint32_t *data = NULL;
--	size_t mtimes_size, expected_size;
-+	size_t mtimes_size = 0, expected_size;
- 	struct mtimes_header header;
- 
- 	fd = git_open(mtimes_file);
--- 
-gitgitgadget
+So there are two conditions where we'll enter the cleanup label before
+assigning 'revindex_size', when git_open() returns a negative value, or
+fstat()ing the descriptor that git_open() gave us returns a non-zero
+value. In both of those cases, ret is non-zero (it is assigned to 1 and
+the return value of error_errno() in those cases, respectively). Since
+'data' is also NULL here, this function will terminate without using
+the uninitialized 'revindex_size'.
+
+If both of those work (i.e., we opened the file and fstat()ed it
+successfully), then we'll have revindex_size initialized to st.st_size
+(really the result of calling xsize_t() on it). There are two sanity
+checks on the size, both of which happen before we have mmap()ed the
+file, and both sanity checks set 'ret' to a non-zero value upon failure.
+
+So by the time we '*len_p = revindex_size' it is guaranteed to be
+initialized and just junk bytes on the stack.
+
+Did this trigger a warning from a static analyzer or something? If so,
+I'm happy to take this patch to appease it. Perhaps that it what's going
+on since I recall you mentioning that you were working on enabling
+CodeQL in Microsoft's fork of Git.
+
+But if not I might suggest dropping this patch for the reasons above.
+
+Thanks,
+Taylor
