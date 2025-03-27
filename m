@@ -1,136 +1,209 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4234613C8EA
-	for <git@vger.kernel.org>; Thu, 27 Mar 2025 09:18:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6F61A5B96
+	for <git@vger.kernel.org>; Thu, 27 Mar 2025 09:44:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743067107; cv=none; b=FbkISU9r34AEsgQ4tSGb+QjZJpftu6zYOypHuDq+JHd6tvIgrGz6frHMet6dK61GRXmvT2hJvZ65ZO71y/ialrxTFM6kofhN7wtfSu+r2r7wv9GfjYQFlF7bTw8T/Ol7XeMm94Ndmszayt8KtqoxQkWbLlskHtbjALWWNZ9Ccn4=
+	t=1743068651; cv=none; b=e8xejiXRmsNxsOamkqif8ELp0Ob2mQ2H+w668zLVpWB8SbZ0V4V+XwzUm8LhYMQAhUeRAtSxGwVAAeiJa7Pnvn+O2xmSAQj/xEbJYuPnJX/9X/+8j+wzemoJuPq/lqMIyl2QM7/K0dv/ehyfScHzcyH8pMmKbEFDmUJRGg5uwuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743067107; c=relaxed/simple;
-	bh=W23qI2bshC/NT8FYB2KGPGkTSd/p8efFeArAvwclVGk=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=JpTfi6gCYhfOr4+lOcOai0QUWDuhlAdAc+n1z1F5W84H2c6SNkFKSRDBL3icYMXxF/BRUS8JqOslplYNNgvmg3ecKG1iA6AgmIU4P365cD4o9wxP4B+RazlYk7Km05VLp4Ks4wgw0UMAI+JJKp2gA0AU654/dq6a3IYjTlVZzVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=NL2JvzNg; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1743068651; c=relaxed/simple;
+	bh=zdDhKcsBXKfNsEzyVdtuHOqhZJViNLrWkhA0v8FQ3yc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Qhhwnkx65okJeRlKFVprfzhdOWS9DqWp8q31nMPEIcriEl1ApoCyMB1PP2SknfMHbZpzJtnc3e3sJ7ZzPLZj5nd4wI5VbqKRMjPOVhuddVNKkyFswiDx2MvaOMWX+RzI8pk+FYI/CykANYgoSVSYUzqSLVKb89pZujFPtnlwGrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TkjQOFlz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SPSwtkEt; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="NL2JvzNg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1743067100; x=1743671900;
-	i=johannes.schindelin@gmx.de;
-	bh=PD07rZDjxJD7SF4lC6KYne9Vhnv/Lb0VNdrcJWm8Woo=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=NL2JvzNgWVNwglNxgUf/ForS5a2sZLzJ54t7EtUspc7qkEiZPDSZqY0XCKFdNDyj
-	 dyRyQedIsGviu1MTTCg9fx9apLwwYBgSzw7RwButTlKSxM+I7RZEUbD+ck8+8cOQR
-	 jRD6pr6RThiXm22FJR8r3pn5wZdlo2kgVkx3y5u4WjZCnlvzYLcdbjQm/xfzfDJ0H
-	 B0uR5tTVY4tksLv8jqKUqUuejAaqZY4RKRXkd8H3QEATJDcSkpSfIZLfrIt8iCXhi
-	 3iAl12kKFhyBc8ueTSP0PYzevuBEPBgDpAhna3YmGxIURst7pRjBp5gY+afe6jgn0
-	 FcMLFPlSF+gBUdT0ug==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MJmGP-1ti8If1Inh-00YMkQ; Thu, 27
- Mar 2025 10:18:20 +0100
-Date: Thu, 27 Mar 2025 10:18:19 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: git@vger.kernel.org
-Subject: Re: Possible venues for Git Merge 2025
-In-Reply-To: <Z-Knm2WGeMI9a7zt@pks.im>
-Message-ID: <82e04bc5-363d-9534-2d33-bd6cc1782e10@gmx.de>
-References: <Z9vuiCnKcMRRXHOR@pks.im> <Z9ySGbE4sq0JfgKs@tapette.crustytoothpaste.net> <Z-Knm2WGeMI9a7zt@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TkjQOFlz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SPSwtkEt"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id B811D13826A5;
+	Thu, 27 Mar 2025 05:44:08 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Thu, 27 Mar 2025 05:44:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743068648;
+	 x=1743155048; bh=9mbcyVkhrf7O/KFi2pA2hJU9oVCqjeBF0ndzISmRtFM=; b=
+	TkjQOFlzqWb7cd0ByqUDf4FPea9KOv3HbPVr2u7ggw/hybGRnM+SphKhwSoAtQ5N
+	hJlWJsJ2OUtAoJ3XyfN4NkjKWSOnSP80tn3OYEpTEG2GMJPgwzhg5iSZYbo1WWuF
+	5eqTC9PPY7ZWR0vzPqS+kyA9gbM4tSVFjy0bq5EoC3tOD8Q5ap3lN2WcD3lBTo8o
+	lS0B7kvxBngA4Lg00mzUjHMWCg6HXb3pRJuoaIFdwh5Gb/k0zLK7+ykOlPuRLKE1
+	H6HCqvPMl/3i7NhmxvSpTj/ZP3wrkDurDe8JpaMlSTXMaozCRs7LUvyjYbHdoiaf
+	POrugFYXMDoIFZQztBFtkA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743068648; x=
+	1743155048; bh=9mbcyVkhrf7O/KFi2pA2hJU9oVCqjeBF0ndzISmRtFM=; b=S
+	PSwtkEttLbGhLO2uZGl5oXloAPVTo5+PTZ6AMGZV+HO/f1OQHNhNHRPqBh5agBLd
+	NPUvTyQXbFKBvIenlkbLcOqLvnwrRy4vnuJPi2sZjd2MaMyGIERaQJWqvWBBfgin
+	OeLtEKhjnHYTM1t8naXGIZbnVidIwzuAVAwvcq6wCX8bZNwl02liQwOdGZBiePbS
+	Fiy5+jCQmq5P8eSO9WFfU/R3aQbDmLsWpfc8utQH+itooSt7iNfliA8kRbVYb3Bo
+	otsBguhESIjQZ5TZI4vMnNA6NS53wBKGhcEbjrbnZ0doPED02/H9IRc8kBqZzU//
+	cL1+MSn5jmNp8db64Zt7A==
+X-ME-Sender: <xms:6B3lZ1Vq_uKFvOV02uSQHo-VoIgAdktK-mvDCgJERqKjiee4hcsl_Q>
+    <xme:6B3lZ1nALT7AxohYCGB9MFoI5SueWqSTu46l1sSZtoVyL6QToUyaYKa9fd23Xec8U
+    xa-_xu3WOTaCIrJVA>
+X-ME-Received: <xmr:6B3lZxY0twuCJ2CZ133R1rzlya88DyQluW_1mSO7R2BLT0iHWHDlvkJRICSALMruJkUeYIGL3YDpZkcdnam5sYF-Sm0R8s6qgxvT4zuRcqOqpg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieektdekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtph
+    htthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:6B3lZ4Vd-PKWTzPFEPSZPEZUKeH0LINGWRhW2o5irUFzpY8uCUwMtg>
+    <xmx:6B3lZ_kTpWDSpHNDJiILGXMpu51OfZIr_0GVlWMOUvTPHZMPuMWrDg>
+    <xmx:6B3lZ1fTrU4HCmkokolX_g9uv6GgcSuv7IpO74j9GL2HYTdlY1v-6A>
+    <xmx:6B3lZ5G3tGR44kCScTsd0JzEizyaCVxRKI7kSg8LU7QcG_Z1MZw6sw>
+    <xmx:6B3lZ6tnNdQpKpg0EbcEhTvypnrT3fGXVx5PbfBjIN3AUFuGwtE1pRiV>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 27 Mar 2025 05:44:07 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 91829db1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 27 Mar 2025 09:44:03 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Thu, 27 Mar 2025 10:43:56 +0100
+Subject: [PATCH v2 01/10] builtin/cat-file: rename variable that tracks
+ usage
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:gDFdWNiMAQMHGqtECfwBRlLy99XORoFBOAo2MZWYk4dM3smpZPo
- /UR9OiueBcTbUVkWuR4tSiuKEuG5IT6/TWn/ttKDMmYY1FD7pNemXM26gVm9zpn1Wfi+c/z
- Klc4fG39Nj7a+qwZC/T8Eog7rUUC/9GaKnKY7yQ53ymtR97rbdH0G8iaoMV2mSA6oAhCml7
- cvFM2xp+uTZ17P8nMPQVQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:X41ZCMMZX0U=;jyYGg5Ayjupv1+xsZfW4nFq2oN2
- +YqtgpBZuP7YAyXgirSxJwq2ERb1VLK1UHAFYQ+p3rjaaAVZIfvuubBg6kagkl9BGBoOhW3Gq
- POPhqFq60rm7uk2t6xzzrW8GXKa4Lu324N1PTY/ph31q97/K0rExhvG96JnuGiPk0alBD3qTU
- 3xMUAH2jztvY14pByvxjHDD1S/IX9iT7/r0ay7QjMO+K7ylE1pqVCrE+E62K7olsq1eF7SS7Q
- WSvvnk9i5zJMnt3DDtgzTXHec5qG6Hugmtav6CgFgTgFaq9LFIYG4m/DautiysfXGEEjAoMfh
- LuIxJOjjAmHtIl9g7TbZkv4ma7ppd5Z2iBlMQGKw5QYgD+OwCrvDaX4tUDFWWj+QofVBIFpSP
- CYaqCAQNCctt4YzhDjKZwWw3puw+3RaruyeAk3WcuSHOSGrkS1Sp7DezKU7Zvkr9gYrMNK9eV
- 1hn5DZF6PtDD10e/XfJXNf5+NUNs4WGGJ2jg6lBcGh/ftHRl+FaLrGNF+nMB0t3Izwv69CAg9
- qzdKiWVYh3b92Y4mOdelhgP2VrpVhvBBjDQDe2KTwHGqyxx3kBi//B4OXJNn5ALNaUZpLG5SN
- VFa5jdagCEgFb0r71XUaRTp9z0ES74ZsF24TSmKx/WdBEIefDcAobvMbWCZIrynCUJfN+rcdo
- NQPx+1ffteskfZ/AWrivof6ySLM71EdJD94LHQR4KhaCQ9sC//HFqAysN0/EicSYrcxsiy1bP
- RKWZejlmIBG+ZiPomYLm8ms11ryGBDQ92JmEqWS0TxdU2W35fIq0nVKBwKguytQ6Kbk0HaLVb
- tJTO5/32hWSO/9V/WU5nwUB6qmd/d7l7HITdTIFpibZR2Z/zgByzmOG/+Yz+m0PbF7tWmHEQV
- Q8FqnapbM0oxtVs9M/6VRQYjBB0rKpfJ3C9MTMCnHo3pHbSPSsoTsBj9mrhz063FYs+uNzSfJ
- CMo0aSiH9I3vGenpczVHDvKSh/GFOUbZjJBcoe1fhwIapFsOhYnr1N/uKtS7eiXKqdEsT0Nzu
- k1GrgpP5R4EaE3jDwYoh8ZUCCn2YCqrzxovG9IF51JPwTvdxc1eJj3dmbdYP6ZOi9RWgKrr5t
- 2dMt2sCQqpc5Jc4IHw2Zj/w8tj7VCdKgDlubm/9TkwWT3oL9oD8rVsmWOy4D7gIYwjFSOD5Ej
- ilSmayXi4R6hyt1jNSwkjHulOIv/7XCi0exnp2LMkjUd7jLbEZmBLPIZK0NiwZdHUK87A45eL
- FM47usuQuh91qn68sniAD6sv/LspxapQHhrwXr8uCUIxE7YDqsltY3jt8rUH2znPKGAlPFoRE
- 0EPDpH3CKAqLWFD34IVIn9rUDpZda0IeLSWDrMft2WXoE62yhWIYwEMKoaPZFiv3uI394hgzd
- Js+Q5fhSurwgaOOakjh+iwteF+HOgjmRnsPrjkICbTEA5FGolaVmNBJLG0l80QkH6Zt4XAnfj
- 9SXq5CeCrzToPhBi6pNXeIjsTTn6zqTXjf1PMHhqbWp/UjEYo
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250327-pks-cat-file-object-type-filter-v2-1-4bbc7085d7c5@pks.im>
+References: <20250327-pks-cat-file-object-type-filter-v2-0-4bbc7085d7c5@pks.im>
+In-Reply-To: <20250327-pks-cat-file-object-type-filter-v2-0-4bbc7085d7c5@pks.im>
+To: git@vger.kernel.org
+Cc: Toon Claes <toon@iotcl.com>, Karthik Nayak <karthik.188@gmail.com>, 
+ Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.14.2
 
-Hi Patrick,
+The usage strings for git-cat-file(1) that we pass to `parse_options()`
+and `usage_msg_optf()` are stored in a variable called `usage`. This
+variable shadows the declaration of `usage()`, which we'll want to use
+in a subsequent commit.
 
-On Tue, 25 Mar 2025, Patrick Steinhardt wrote:
+Rename the variable to `builtin_catfile_usage`, which is in line with
+how the variable is typically called in other builtins.
 
-> On Thu, Mar 20, 2025 at 10:09:29PM +0000, brian m. carlson wrote:
-> > On 2025-03-20 at 10:31:36, Patrick Steinhardt wrote:
-> > > given that this year is the 20th anniversary of the Git project it w=
-ould
-> > > be great to host another Git Merge so that the wider community can c=
-ome
-> > > together and celebrate. Taylor and I have been chatting about this
-> > > opportunity a bit to figure out what we're going to do this year.
-> > >
-> > > We have been discussing two different options:
-> > >
-> > >   - Hosting in the US in San Francisco at the GitHub HQ.
-> > >
-> > >   - Hosting in the EU in Amsterdam colocated with the Open Source
-> > >     Summit Europe.
-> > >
-> > > Typically, the location is alternating on a yearly basis between the=
- US
-> > > and the EU. So given that last year it was hosted in Berlin it would=
- be
-> > > the US' turn. But given the recent political climate in the US I'm
-> > > afraid that many people would not feel comfortable traveling there r=
-ight
-> > > now. So in the spirit of being inclusive I think we should at least
-> > > consider whether we may want to break the typical alternating cycle =
-and
-> > > host in the EU again.
-> >
-> > Yes, I do think that given current circumstances the U.S. is not a goo=
-d
-> > place to host events.  Perhaps that will change in the future, but I
-> > don't think that would be a prudent choice right now.  I've talked to
-> > several people who are uncomfortable traveling there, so we'd probably
-> > get better attendance hosting elsewhere.
-> >
-> > I would be fine with Amsterdam, and I might also suggest a major
-> > Canadian city (such as Toronto, Montreal, or Vancouver) if we preferre=
-d
-> > to do this in North America (since we've traditionally alternated
-> > continents).  I can imagine other locations outside of the U.S. that
-> > might be fine as well, so I'm willing to keep an open mind if a good
-> > opportunity comes up.
->
-> The only reasons why I proposed Amsterdam are the Open Source Summit and
-> that I have some ways to help out with organizing the event over there.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ builtin/cat-file.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-Is there still a chance to have a Git thing alongside the Open Source
-Summit in Amsterdam? If so, I would be interested in going, as I -- like
-so many others already shared -- will not travel to the States this year.
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index b13561cf73b..8e40016dd24 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -941,7 +941,7 @@ int cmd_cat_file(int argc,
+ 	int input_nul_terminated = 0;
+ 	int nul_terminated = 0;
+ 
+-	const char * const usage[] = {
++	const char * const builtin_catfile_usage[] = {
+ 		N_("git cat-file <type> <object>"),
+ 		N_("git cat-file (-e | -p) <object>"),
+ 		N_("git cat-file (-t | -s) [--allow-unknown-type] <object>"),
+@@ -1007,7 +1007,7 @@ int cmd_cat_file(int argc,
+ 
+ 	batch.buffer_output = -1;
+ 
+-	argc = parse_options(argc, argv, prefix, options, usage, 0);
++	argc = parse_options(argc, argv, prefix, options, builtin_catfile_usage, 0);
+ 	opt_cw = (opt == 'c' || opt == 'w');
+ 	opt_epts = (opt == 'e' || opt == 'p' || opt == 't' || opt == 's');
+ 
+@@ -1021,7 +1021,7 @@ int cmd_cat_file(int argc,
+ 	/* Option compatibility */
+ 	if (force_path && !opt_cw)
+ 		usage_msg_optf(_("'%s=<%s>' needs '%s' or '%s'"),
+-			       usage, options,
++			       builtin_catfile_usage, options,
+ 			       "--path", _("path|tree-ish"), "--filters",
+ 			       "--textconv");
+ 
+@@ -1029,19 +1029,19 @@ int cmd_cat_file(int argc,
+ 	if (batch.enabled)
+ 		;
+ 	else if (batch.follow_symlinks)
+-		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
++		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_usage, options,
+ 			       "--follow-symlinks");
+ 	else if (batch.buffer_output >= 0)
+-		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
++		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_usage, options,
+ 			       "--buffer");
+ 	else if (batch.all_objects)
+-		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
++		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_usage, options,
+ 			       "--batch-all-objects");
+ 	else if (input_nul_terminated)
+-		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
++		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_usage, options,
+ 			       "-z");
+ 	else if (nul_terminated)
+-		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
++		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_usage, options,
+ 			       "-Z");
+ 
+ 	batch.input_delim = batch.output_delim = '\n';
+@@ -1063,9 +1063,9 @@ int cmd_cat_file(int argc,
+ 			batch.transform_mode = opt;
+ 		else if (opt && opt != 'b')
+ 			usage_msg_optf(_("'-%c' is incompatible with batch mode"),
+-				       usage, options, opt);
++				       builtin_catfile_usage, options, opt);
+ 		else if (argc)
+-			usage_msg_opt(_("batch modes take no arguments"), usage,
++			usage_msg_opt(_("batch modes take no arguments"), builtin_catfile_usage,
+ 				      options);
+ 
+ 		return batch_objects(&batch);
+@@ -1074,22 +1074,22 @@ int cmd_cat_file(int argc,
+ 	if (opt) {
+ 		if (!argc && opt == 'c')
+ 			usage_msg_optf(_("<rev> required with '%s'"),
+-				       usage, options, "--textconv");
++				       builtin_catfile_usage, options, "--textconv");
+ 		else if (!argc && opt == 'w')
+ 			usage_msg_optf(_("<rev> required with '%s'"),
+-				       usage, options, "--filters");
++				       builtin_catfile_usage, options, "--filters");
+ 		else if (!argc && opt_epts)
+ 			usage_msg_optf(_("<object> required with '-%c'"),
+-				       usage, options, opt);
++				       builtin_catfile_usage, options, opt);
+ 		else if (argc == 1)
+ 			obj_name = argv[0];
+ 		else
+-			usage_msg_opt(_("too many arguments"), usage, options);
++			usage_msg_opt(_("too many arguments"), builtin_catfile_usage, options);
+ 	} else if (!argc) {
+-		usage_with_options(usage, options);
++		usage_with_options(builtin_catfile_usage, options);
+ 	} else if (argc != 2) {
+ 		usage_msg_optf(_("only two arguments allowed in <type> <object> mode, not %d"),
+-			      usage, options, argc);
++			      builtin_catfile_usage, options, argc);
+ 	} else if (argc) {
+ 		exp_type = argv[0];
+ 		obj_name = argv[1];
 
-Ciao,
-Johannes
+-- 
+2.49.0.472.ge94155a9ec.dirty
+
