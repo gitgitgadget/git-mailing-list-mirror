@@ -1,171 +1,186 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52511AAA1E
-	for <git@vger.kernel.org>; Fri, 28 Mar 2025 13:45:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D6319259E
+	for <git@vger.kernel.org>; Fri, 28 Mar 2025 14:08:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743169535; cv=none; b=ND51ce/6VcY/TbaUCEwqj8wE01G9zrlA3PAKhFlwdc7Qm0HtJqIOpWAcKTyRy7+HSSCXccfR367TL8xxcEEktXLdmugFDMQhsQm+p3OdL7wl59Sa2dI++TTyoZ3uJAwx4aEqwLopGZyq1Wq6fZSU/TmF0khrVgaP77f6KrMQ3iU=
+	t=1743170890; cv=none; b=l43wl3LDIVU6dFbORHok1mHIrHJ8/0DE5YJPBmB2bqRz9MplXcPJidwGsUoRRM5Hmf3L4ivaYWbDOybUFi2xsDAigwzNzU9VvpUI0MMxM4B+pL31feztvP7Z5FcpPX5uA69o6IoaXPU6o7g7CQ5Kv+Dstsy3FgmJB5mnXnjOjYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743169535; c=relaxed/simple;
-	bh=Oyq8dS1L05UVBpBAXqV8hwiP2HBvevHRwEF2jc4v0eY=;
+	s=arc-20240116; t=1743170890; c=relaxed/simple;
+	bh=cxxCBPgRc+3P25FiGBXmy7x+1PebRCQh3X8uTfoF1C4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jQtDmO68bNGlsQdHuM7qhRuODnXI5qNJMYg5hlobbK5UYExblFuYG3bibOWGpo4HBwVHoo+uWSkmqEh6XqqA3w2G01qTgSmLQOoom8R7jgcziZV7Kpvg1PNaHrxN7wwDKhZrgw7ewgoTrEFZDc+bjo01VtxyF8HB5oZNC5VGQp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XDWTru+c; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=kEjZ0sYVmTquXN+/TWaRt3FT3zohUmmT0R89qeq4ldhfSOvlEoJ8Ix78Z3kHwgxy0p8JU/nzyAeUN2nERwBH68Xsp+P8bbcOZE1lxd4ij3KsTCRZizOTS1YImeab5thBqpWd8YfEsgwbnwmaLbSu43RHC4zL9RInP1y4/qFl898=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jqCBTFzw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lkWX5M6m; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XDWTru+c"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2255003f4c6so42189355ad.0
-        for <git@vger.kernel.org>; Fri, 28 Mar 2025 06:45:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743169533; x=1743774333; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NqpWH3iTs9lVm5Mhdwu9Gru8mkK8nr0OUhVKH7HP7gw=;
-        b=XDWTru+cSh1kWVuIFiQcZ2mByeQ2DAzUz4WDtOBPAMPVTW2zmJyIi4ZBC3TPle4v7U
-         zlSCVfB75CUv+lacsG7HFDgMOmufYbNgRInzlllwHVwlgOxxWABEubeIljQ4DsMK8gyA
-         GJL+e5TXpPhdscU88JlAFu9rWp4RI5DxYdV1Dsx0bOZx9sIJDTbGzWelVT9rxecVe5n4
-         StHj/eqJEphjdGyRVzKq33cwZa2Uc7+Lyc+BysIzFpLV8WnPK4ZIQurjeInsEt6YYNuV
-         FAM1Lo3zfOjXmbb57MI0qmX8blCBC+QzErrxZNX6On/9jwIH7A1sdqhVSKYjePRi4qUM
-         QSRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743169533; x=1743774333;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NqpWH3iTs9lVm5Mhdwu9Gru8mkK8nr0OUhVKH7HP7gw=;
-        b=cVJH6o3Ot+dVHIJUBvh2NHCgnlSQEl1qx/B0ZyFx4BMi5+6Q1rxuNUMnZJ2HHGHXNA
-         BDoy9UotnGVAVT7HkUMS8cZf7eI0ukgDLtcRPXLMn61obzcruwYJFOFsz9Q1oEKDT6wQ
-         h8wB6iZy895acwxuLzPwXuk8C/rLswhE2xBJcjO+EfbxFj165n38icsEm1kHst1u4Dsd
-         9oRGV/c9WLMOScEBMey+L/mSwj6JcRTsw25/HpgEkIm1WR7J96xHAhPHgD60CFtCNmtM
-         udE8GbayQ1U8n9onHhhTZVJLXbum2/oZCn7659tIucqsklC2tEnB90rAsHO0k2ocAo6/
-         xGLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVUkWoaxEUoZGbodQD8U+wPnDi+PjeEL9Gnq0asD+HTxm53nROBquYRFxT0yL0DyoFa0C0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyBAFPunDD/rPp5cMntCGNZ5/7zwxwBTYi6TI47QHgFL0OESo3L
-	3dGJohvRjy2/ndGI4GMF1FEGJke4rhxMi/AAJOTbqdDbFSrvx0g9
-X-Gm-Gg: ASbGncvUbd41riv2F21txYzzeLi4RHIVvaw1PdN+LnalAS2AJwwPU68xoj72xoEI/J4
-	v4ePrVAbRoKazAghGat6ItaFl/KApDKt0yBJmGhd/+A9ctpWXfwpbUTb+zxrDCNMhs/U/ZLisK1
-	D2Z9j/KXA0d9mQPqXCxRVxgRHU9OTUzT7aKxdHhb+GUZVsfY4ycysZcg4zgpdZKTMXHJptOe8pU
-	ODJ2FlhWQROPX8udz8u02IZV4YmQi5nEx3AajDUlKy3TADRVBiFrq98Six46gJiVHca0f5iMweI
-	BKwmK1CM18TDz9jjppmBDdKVFyGwGs1VNeruNsga
-X-Google-Smtp-Source: AGHT+IHumMRzN7niRopHsB/+ikN6tZA4Ia5ww1GmYkidfYncmrH7EHLt2L0yxUsls013oW4QlpzrEg==
-X-Received: by 2002:a17:902:f68e:b0:215:89a0:416f with SMTP id d9443c01a7336-22804897de1mr96376745ad.30.1743169532606;
-        Fri, 28 Mar 2025 06:45:32 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-2291f1dedb5sm17509455ad.176.2025.03.28.06.45.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Mar 2025 06:45:31 -0700 (PDT)
-Date: Fri, 28 Mar 2025 21:45:36 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Yuting Zheng <05zyt30@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [GSoC] Proposal Discussion: git-refs Project
-Message-ID: <Z-aoALIDd-U0bYnI@ArchLinux>
-References: <CAMvj1+rbYKFNeWEvvN76MTpzfuWc4TN4ViXRE4nTfWy7ZMspWg@mail.gmail.com>
- <Z-FJ3EQdFIkQgtkR@pks.im>
- <D8QOYSD6NLCS.OVF4RKHUCX0A@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jqCBTFzw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lkWX5M6m"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4AFB82540105;
+	Fri, 28 Mar 2025 10:08:07 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Fri, 28 Mar 2025 10:08:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1743170887;
+	 x=1743257287; bh=VuuzCSHzIF8EWOH+9iuuP0GfRG1fD7y3oj+4eB97/B8=; b=
+	jqCBTFzwusUAWzsMlJO7QJnlMCzmpY3vovoqMm++EgFU5xmKAmML0X1y+RqilXEr
+	XcJn9abZgxjzStkz8DEhdcSJJTsBRVH/KvjhwtYo/HKQr9SUv1SQJkgf5UK1ZZxL
+	frlTUX8bf02fcwq2XfUwTIPEYiHDU/qNMVS2vqrG0fmafyAz8uvFwPLWt7OMJ1cm
+	WcOkIxk5QW5sew994SXcAWz3INrtnD3cgfWSqVjUKvIsaISoHKf1skOgy662ozka
+	V5BfJQPQ5OvY2CvbSc/DD90B54UNIzho8AqkuCmWIv/PZgvgyEMuq4yWqxcBy235
+	CIVZSeddGz+uohlSJhI+iw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743170887; x=
+	1743257287; bh=VuuzCSHzIF8EWOH+9iuuP0GfRG1fD7y3oj+4eB97/B8=; b=l
+	kWX5M6mxSP2kEsvzGcTr3jh+ASYZduWqkENKFkR++K/W/nD3M+rZHw6NPqUwZWKz
+	Jqqe8c7ANPbVCFNWoYztlElUbuY+EgZl2iZ40PWB7ICUdrWP9SMUOKBYbhD38fPI
+	UYNNn9h6AjmLCMvf+0Jyahp557N9ARrm6kdBFMT0PIO0WDcXcCGaeA10omwnkGZU
+	jvm+LUr336gFV6SYQae8PmwnXVHY+UtnQ/s/2vLWS/ik0qi0iEHuyU1Y3wY7dSsc
+	jMg/kWvhAoFzz+Tr9geCDeJwrgH7142pkglnm6Wk+1elu1WxOf3GO/Eo22mQbMUa
+	FdhgGaYCkFwUTAlK0XGKQ==
+X-ME-Sender: <xms:Rq3mZ0eGVo4lsOaTqzRcinRVUksc8CoPMatZDUF--mTat01GfgVumg>
+    <xme:Rq3mZ2MS5foghospeohHIUyr_5UVgbiB62trlLLX10ztHrP6QISkU-v63VXa4JpT-
+    Z3I8cRpqLYgMVBmSA>
+X-ME-Received: <xmr:Rq3mZ1gesmala6nAaY3T57mXUe6eehUSJouhNDtzmuDLI4a0m8pFQf84w2RojE3J654rwkCn1jK3cECGZfDxdxmwE3cl0IqGs1toX6jff-gTMKKjo2yd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedugeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
+    tddunecuhfhrohhmpefvohguugcukghulhhlihhnghgvrhcuoehtmhiisehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeejheduleegkeehtedvheeiheehheeigeeivedu
+    veejiefhkeeukedujeetleektdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhfvg
+    guohhrrghprhhojhgvtghtrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdpnhgspghrtghpthhtoh
+    epgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhlrghusghithiisehphhih
+    shhikhdrfhhuqdgsvghrlhhinhdruggvpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepuggv
+    rhhrihgtkhhsthholhgvvgesghhithhhuhgsrdgtohhm
+X-ME-Proxy: <xmx:Rq3mZ59nHU--6w88a8PrZpKMRZXtOaRJM1eGUvj2oX1SvjYXAIbkeg>
+    <xmx:Rq3mZwu9db-t7UDz92YsfopbmViNwJzeeWJclaMfsgAV5kVwoRZ0hA>
+    <xmx:Rq3mZwH8A57-66VXoMzrt8ot1qnf8CYns_WIoc6-P_9B9MjMf4rubQ>
+    <xmx:Rq3mZ_PDpH1h-LiR1FExsk9hh1bIzb_4AEBSjiW0xtSIFAFQvFniFQ>
+    <xmx:R63mZyK-ARxW7ZGAt4UJJhv-HJvgV-2G4ZKCRPpnD_Jh2T0CUQjaPMWr>
+Feedback-ID: ia13843cf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 28 Mar 2025 10:08:06 -0400 (EDT)
+Date: Fri, 28 Mar 2025 10:08:04 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Patrick Steinhardt <ps@pks.im>, git <git@vger.kernel.org>,
+	Derrick Stolee <derrickstolee@github.com>
+Subject: Re: Testsuite failure on s390x and sparc64 after 6840fe9ee2
+Message-ID: <Z-atRMGXHilZRTEL@teonanacatl.net>
+References: <89257ab82cd60d135cce02d51eacee7ec35c1c37.camel@physik.fu-berlin.de>
+ <Z-R_Zmr6kxCPLm-O@teonanacatl.net>
+ <Z-Zr7BZL1UGqVxKu@pks.im>
+ <4276c8d0b72f11f325482756d3bc251327d0ac47.camel@physik.fu-berlin.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <D8QOYSD6NLCS.OVF4RKHUCX0A@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4276c8d0b72f11f325482756d3bc251327d0ac47.camel@physik.fu-berlin.de>
 
-On Thu, Mar 27, 2025 at 10:26:49AM +0800, Yuting Zheng wrote:
-> Thanks for your reply!
+John Paul Adrian Glaubitz wrote:
+> Hi Patrick,
 > 
-> I have reviewed the changelog and noted that Git version 2.23
-> introduced similar work through the addition of the git-switch and
-> git-restore commands, which replace some legacy commands and incorporate
-> various functional modifications.
+> On Fri, 2025-03-28 at 10:29 +0100, Patrick Steinhardt wrote:
+>>> I reported this during the rc period.  I didn't hear back on
+>>> it, but hopefully your message will arrive at a more
+>>> convenient time. :)
+>>> 
+>>> https://lore.kernel.org/git/Z8HW6petWuMRWSXf@teonanacatl.net/
+>> 
+>> Copy-pasting the test logs from that mail:
+>> 
+>>     expecting success of 5620.4 'do partial clone 2, backfill min batch size':
+>>             git clone --no-checkout --filter=blob:none      \
+>>                     --single-branch --branch=main           \
+>>                     "file://$(pwd)/srv.bare" backfill2 &&
+>>             GIT_TRACE2_EVENT="$(pwd)/batch-trace" git \
+>>                     -C backfill2 backfill --min-batch-size=20 &&
+>>             # Batches were used
+>>             test_trace2_data promisor fetch_count 20 <batch-trace >matches &&
+>>             test_line_count = 2 matches &&
+>>             test_trace2_data promisor fetch_count 8 <batch-trace &&
+>>             # No more missing objects!
+>>             git -C backfill2 rev-list --quiet --objects --missing=print HEAD >revs2 &&
+>>             test_line_count = 0 revs2
+>>     +++ pwd
+>>     ++ git clone --no-checkout --filter=blob:none --single-branch --branch=main 'file:///tmp/git-t.sYdo/trash directory.t5620-backfill/srv.bare' backfill2
+>>     Cloning into 'backfill2'...
+>>     +++ pwd
+>>     ++ GIT_TRACE2_EVENT='/tmp/git-t.sYdo/trash directory.t5620-backfill/batch-trace'
+>>     ++ git -C backfill2 backfill --min-batch-size=20
+>>     ++ test_trace2_data promisor fetch_count 20
+>>     ++ grep -e '"category":"promisor","key":"fetch_count","value":"20"'
+>>     error: last command exited with $?=1
+>>     not ok 4 - do partial clone 2, backfill min batch size
+>> 
+>> It would be nice to learn what the file contains instead of the expected
+>> string, which might give us a bit more of a hint what's wrong. You can
+>> for example apply the following patch:
+>> 
+>> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+>> index 79377bc0fc2..197494cd28c 100644
+>> --- a/t/test-lib-functions.sh
+>> +++ b/t/test-lib-functions.sh
+>> @@ -1975,7 +1975,7 @@ test_region () {
+>>  #	GIT_TRACE2_EVENT="$(pwd)/trace.txt" git pack-objects ... &&
+>>  #	test_trace2_data pack-objects reused N <trace2.txt
+>>  test_trace2_data () {
+>> -	grep -e '"category":"'"$1"'","key":"'"$2"'","value":"'"$3"'"'
+>> +	test_grep -e '"category":"'"$1"'","key":"'"$2"'","value":"'"$3"'"'
+>>  }
+>>  
+>>  # Given a GIT_TRACE2_EVENT log over stdin, writes to stdout a list of URLs
+>> 
+>> If you then re-run the test with `-ix` we should end up printing the
+>> contents of that non-matching file.
 > 
-> After examining the updates, I have summarized the proposed work as
-> follows and would appreciate confirmation on whether these tasks are to be
-> included in the current project:
+> Could you please post the complete command line? I have no clue where to pass "-ix".
 > 
-> 1. Code Modifications for Command Implementation:
-> 
-> - Implementation of new commands.
-> - Necessary modifications to existing commands to support these changes.
+> I was previously running the tests with "make test".
 
-I think "modifications to existing commands" may not be accurate. I
-think what we need to do is we should try to reuse the original logic as
-much as possible which requires:
+You'd do something like:
 
-1. Understand the behavior of the existing commands.
-2. Find good design to expose the common interfaces for the new commands
-and existing commands.
+    cd t && ./t5620-backfill.sh -ix
 
-> 
-> 2. Test Modifications:
-> 
-> - Addition of tests for the new features (including help tests, basic
-> functionality tests, and extended feature tests).
-> - Updating tests for old commands to execute tests on the new commands
-> (for example, changing the command in git-checkout tests to git-restore).
+Though the patch to change grep to test_grep is incomplete,
+I believe.  Using that, you get an error:
 
-I don't think that we should update tests for old commands. We want to
-keep the original command not broken, right? So, we should use the
-original test to exercise your changed code to make sure that everything
-is OK.
+    error: bug in the test script: test_grep requires a file
+    to read as the last parameter
 
-> 
-> 3. Documentation Updates:
-> 
-> - Creating documentation for the new commands.
-> Updating and unifying existing documentation (including git.txt,
-> git-cli.txt, and git-commit.txt).
-> 
-> Additionally, I have a few points that require further discussion:
-> 
-> 1. Command Migration:
-> 
-> Upon reviewing the commands slated for replacement (e.g., git-update-ref(1),
-> git-for-each-ref(1), git-show-ref(1), git-pack-refs(1), and
-> git-symbolic-ref), it seems that migrating their functionality into a
-> subcommand of git-refs could be sufficient. Could you please confirm if
-> this approach meets our project requirements without introducing
-> additional functionality?
-> 
+I don't have a lot of time to poke at this today, but I'll
+make another test run on an s390x build host without that
+patch, but where I can save the output and post it
+somewhere.
 
-From my own understanding, we just want to use "git-refs(1)" as an entry
-point about all operations for refs. So, we don't need to add new
-functionality in this project.
+For the Fedora packaging, it will be something like this:
 
-> 2. Function Call Integration:
-> 
-> Regarding migration, is it acceptable to directly invoke the legacy command
-> functions by passing parameters from the new command functions?
-> 
+    make -C t all || {
+        (cd t && ./t5620-backfill.sh -ix);
+        ./print-failed-test-output;
+    }
 
-So, you want to say that could we use a subprocess to just invoke the
-legacy command? I don't think we should use subprocess. If we could use
-subprocess, should this project be called as a project?
+Where print-failed-test-output is a script¹ which snarfs up
+the output files in t/test-results and the test directory,
+since there is not direct shell access to the build host(s).
 
-I somehow think that you may first look at "git-pack-refs(1)" or
-something like which is not so complicated to think about a solution.
-And when writing the proposal, you may need to talk about how many
-commands you want to migrate and how do you plan to migrate.
+¹ https://src.fedoraproject.org/rpms/git/raw/0af3adf/f/print-failed-test-output
 
-> 3. Test Retention:
-> 
-> Lastly, should we retain the original tests for the legacy commands, or
-> should they be fully replaced with tests for the new implementations?
-> 
-
-This is a good question. From my view, we should not change the original
-tests. And this would introduce another question, if we add the new test
-for the new command, we'd introduce repetition. I cannot give your
-answer here because I don't have experience about this.
-
-> I appreciate your guidance and look forward to your feedback on these points.
-> 
-> Best regards,
-> Zheng Yuting
-
-Thanks,
-Jialuo
+-- 
+Todd
