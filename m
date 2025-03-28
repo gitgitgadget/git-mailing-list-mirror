@@ -1,124 +1,124 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C761D8DF6
-	for <git@vger.kernel.org>; Fri, 28 Mar 2025 17:07:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38BA14F9E2
+	for <git@vger.kernel.org>; Fri, 28 Mar 2025 17:15:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743181676; cv=none; b=T9xAw+eLTEgsplZ13p7zAWznPDWH3kIxzMNd9PhU6rEJTaWVXBWfMPo4PXwso9sfqHYeqN5+M2scMgeYjk/t6ycpJofZMS7YcSK4SEkp37pQcpaLhOlvKP42B0M2tZx9+DQ8lmo7IOZU8mQdbZekEzepnbTCtTtolevDxnX9QYs=
+	t=1743182113; cv=none; b=YlCNpi4O360f5fuAvaIEr85Wzp3VZAUQ2pRhN9p6OJBfpRfvs4qIMIJY9vuE5PvQRvn6RSElSi+cH+R8sk4Uo+Ey/z7+Sv6sgLKaEVAwRzeL594PHIHuz4YSZGo4qy82NX+1Z4XH7Ci7G601wGoMZ6a+uM9jaCD/3a171gy+/Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743181676; c=relaxed/simple;
-	bh=Xhf/4Yd1Hr7rW4SJ0uHt7uCkUueGdgHvynERbZbv924=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=PkEiJVFrDFzacGgM114IYQ55S3tDCxcLV5bmT1TfQMyCXm58yszH19RtI4uVJGtSuKXejbvRUDAdh5Qj02ocKdbwqraXRo/u8koWqkKlIVSjMmMHYpHe4+3TcofcwK99KeLn+1ZShhySOCMHDG2LrFRMt5O5hhLaT5F+4b2ibC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dydzieEd; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1743182113; c=relaxed/simple;
+	bh=QAKfaYcQ+hQgEWJf+YX9SIT9k8Hp3T6ZgxFjgkg0IcU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=a1cGBrO3GAWNMNzuQpjscPPDoU0aW4cg4CUuNka1QZhlpLVBSQqycDRXeMOpxUIpmZZBj0YGW9Cr4vT+ajyle1fViZRv1nUl/2ra5xTD8feI12sEXj/L49Bzyf9tADnfJ8nJXaVjcyulj9DRGzOkCdbv7jaLWJuwbPylXCDdTwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dydzieEd"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3913d45a148so2015063f8f.3
-        for <git@vger.kernel.org>; Fri, 28 Mar 2025 10:07:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743181672; x=1743786472; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vpYYYu//7ksnbdIvkahK7A2Pv8s2++Rw4BnYXpKHzY0=;
-        b=dydzieEdUrs+ifwcx1YEsYEoEBSk1ojVV617UmlGFoZ3VNDbwiQECri7rdJ0yFpF/1
-         DQAvOt3DCl5oIuBROckps7UvqssZG4+e7vPOPqzmuLQxaiHd+zugTBLrJGXoVBbXvMY5
-         vw8tfG0lkSDTuE5NVszi9kTDG+nwmKerA8CPbO3q0RqcftJejEmo3w1XKcIco7pMAlBh
-         6db6Cto1C4BwJsuCO2/FLQ7+o/g6rw88IiP+6gN7T0PzN0uTg4PdBrZE9wwB5PtQhjay
-         Pdb4ktHOyk1Ik8G3WVKdLJGtwxPlGtr8AVaESJRWOQKGltQ2MjGZZO4EjtzFpwrBhP9G
-         Bd3A==
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6eaf348103cso3877216d6.0
+        for <git@vger.kernel.org>; Fri, 28 Mar 2025 10:15:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743181672; x=1743786472;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1743182108; x=1743786908;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vpYYYu//7ksnbdIvkahK7A2Pv8s2++Rw4BnYXpKHzY0=;
-        b=YQuSEeu4v0ZuFNq/rih0DMJgcEU1GD9AzfCSrTOGxh0ukEqhRuHNT0LCJB7WVWgQJV
-         pPOCdcLI1jVcBkB7TzXOHMe42zHIuaSM9WQtCLX+B9MOT4pioxPrVf7Yf7XHTeCU1dcP
-         uZ7CdoB/lEj+vXYIVpfDu5+yb+SBeXytAYnakVroHZT7vEM1hAFzY+a3phGmgmyLYopV
-         9pWt8UeZ9K/+6QX3Heb1zbPCZ60pj+o+hgpTcDD65JCy+InLoefQr7RKbVnEPB9CR8ep
-         yCJoXDwwekBWJnd0XxKgAXOYr3ocU69aiggk8sUTz4pn2ZA+TEx7z/4DGV3kcwrCV8bV
-         sXxg==
-X-Gm-Message-State: AOJu0YzlJDPk4tPguXanoqBvV5Zl5mYMDO2tj2H7aoOp4y207Yeu+Ysj
-	CbR8QhfV/M42dJ8mkuvIODlu85kdCkzIjAp1Y+3ytxer3RgdgNOX/3BvaQ==
-X-Gm-Gg: ASbGncuXPkOuFD8Kr/LXhENizEdPdYNIU8s1y2EX+DeTC2171zqoFRihrjsppBoyqV/
-	yt0ISmMLN4VLnxCS8Vfz232fv99H98j+SSa2b2hKdUfI9hK2PNspSaCt4nBlLbWG/6+GhqUSCAT
-	KJXDacSbIrrdZl97mJGQEY+gH6Rv8PdWbiEsS4l0sbDhQeOsFBXWh2+dabVnQUkwoEK7xF+WeQf
-	0YTBVyX5Z+urBh1WrM8dA6v9tLlGTpqv1WNN1DoTFhTK7grPZuH+8pGStMKiVw+M2yM3hfRL7uk
-	vRHuTapg2swVuyIAEJr2sbHv0sQPEzFbvy7JgaqdcjkfVA==
-X-Google-Smtp-Source: AGHT+IGcVE2SdYU2g0wx82CNrPQNiY/xJlmxZjcXv0s+UcHtN/wZWUQ3NFWyqOA/Ms5NOJlgBrMRyg==
-X-Received: by 2002:a5d:6d0c:0:b0:390:f9f9:3e9c with SMTP id ffacd0b85a97d-39ad1749098mr7419179f8f.25.1743181672325;
-        Fri, 28 Mar 2025 10:07:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b79e1b0sm3105891f8f.75.2025.03.28.10.07.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Mar 2025 10:07:51 -0700 (PDT)
-Message-Id: <1092c32609f249839453052ca802cb10256cb48f.1743181669.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1936.git.git.1743181669.gitgitgadget@gmail.com>
-References: <pull.1936.git.git.1743181669.gitgitgadget@gmail.com>
-From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 28 Mar 2025 17:07:49 +0000
-Subject: [PATCH 2/2] p9210: fix 'scalar clone' when running from a detached
- HEAD
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=vQtntyWb7rOxgum+2awYg7Hqwf38cMZPOWe2bhRrNTs=;
+        b=bLh5eX2sX6SiimTxB3CqQDJLtYwuOjCJOiN0m8KjsPFDGx4aa0dtXTsQ64AeyIe9PC
+         kiiom3YzLplKSRLMAYKN7IefBLwvFduJkINBQkXhjtl+jeC+67Zj3LLAzVMwVNU/OnDp
+         rVkqjQpRJf5vepFzaP6wfyl4f7Re26lPdPeH2XuiNTgbmzdMOxC/ajm0jpVdnIr7oW1x
+         uPXKH3i2NV4wn3OcPEeihy4i5NWGRFjXAHTaJ5lysJKwLFifL4p11/4pO1QZQFXzzO30
+         dfhO1oMB/2Ex5+X0yDVDA24JdxzCasNEEcTbZy847mI1g9TTY9VDW8+GK71gQCuuMrY4
+         Jlzg==
+X-Gm-Message-State: AOJu0YzLxysidkMHgb+oYnCB2ZvzmQvynTHEj1ZQ+3G1hf6B4DJJMq2k
+	eeSrtZGKi3K5o54kCU7e/NqFJKN86wshR+cR7wRL2mwKt7rAv7DpXmpu05aXbLCM+58XAuP/uy/
+	t+QZlkA2mWC0qZZp2zlfFRHSa/qM=
+X-Gm-Gg: ASbGncs1Zaga7VE8A6fA+PtSYzF+09JQhI9+OZim+sCYNinIfvYFfsqTT8OgeI4wisQ
+	16ht+zJXMkiFHXlAtqQNmK2dv3pL3ynZNe+mxBprs7irN8JrO6Bg76tV7vMiIi4xyRHGk2sqzjF
+	XOzJhpY5o1ye2TAxPs8zspWMX9CVIFeL/sIpsTN0cFScmE+rhOECM5etginEk=
+X-Google-Smtp-Source: AGHT+IGQaEXGsEWHo9c4EMXEKV19LWp0LP/FZDxXL4+GFhs3CxggWqI8PcNwXVZodM06Z01y0WojO1yRCapkiYTBeOY=
+X-Received: by 2002:a05:6214:e6c:b0:6e6:62fb:3504 with SMTP id
+ 6a1803df08f44-6eec9df9f5amr22591176d6.8.1743182108288; Fri, 28 Mar 2025
+ 10:15:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Victoria Dye <vdye@github.com>,
-    Neeraj Singh <neerajsi@microsoft.com>,
-    Philippe Blain <levraiphilippeblain@gmail.com>,
-    Philippe Blain <levraiphilippeblain@gmail.com>
+References: <pull.1897.git.1743181401.gitgitgadget@gmail.com> <6c8f77cb71c7e0c820704b1725331f4601d8876e.1743181401.git.gitgitgadget@gmail.com>
+In-Reply-To: <6c8f77cb71c7e0c820704b1725331f4601d8876e.1743181401.git.gitgitgadget@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 28 Mar 2025 13:14:57 -0400
+X-Gm-Features: AQ5f1Jqm_KA5QriKnIY_tHP0Ix9x_tEYobNL7aqdoRZL8snFo4xMcve6Dvb03jo
+Message-ID: <CAPig+cS92W_gYuNsaTvQxiP3xBK7Wpg0__uVkgAU1x0OFJUZgQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] rebase -r: do create merge commit after empty resolution
+To: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+On Fri, Mar 28, 2025 at 1:03=E2=80=AFPM Philippe Blain via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> When a user runs 'git rebase --continue' to conclude a conflicted merge
+> during a 'git rebase -r' invocation, we do not create a merge commit if
+> the resolution was empty (i.e. if the index and HEAD are identical). We
+> simply continue the rebase as if no 'merge' instruction had been given.
+> This is confusing since all commits from the side branch are absent from
+> the rebased history. What's more, if that 'merge' is the last
+> instruction in the todo list, we fail to remove the merge state, such
+> that running 'git status' shows we are still merging after the rebase
+> has concluded.
+> [...]
+> Make sure to also remove MERGE_HEAD when a merge command fails to start.
+> We already remove MERGE_MSG since e032abd5a0 (rebase: fix rewritten list
+> for failed pick, 2023-09-06). Removing MERGE_HEAD ensures that in this
+> situation, upon 'git rebase --continue' we still exit early in
+> 'commit_staged_changes', without calling 'run_git_commit'. This is
+> already covered by t5407.11, which fails without this change because we
+> enter 'run_git_commit' and then fail to find 'rebase_path_message'.
+>
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> ---
+> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+> +test_expect_success '--continue creates merge commit after empty resolut=
+ion' '
+> +       git reset --hard main &&
+> +       git checkout -b rebase_i_merge &&
+> +       test_commit unrelated &&
+> +       git checkout -b rebase_i_merge_side &&
+> +       test_commit side2 main.txt &&
+> +       git checkout rebase_i_merge &&
+> +       test_commit side1 main.txt &&
+> +       PICK=3D$(git rev-parse --short rebase_i_merge) &&
+> +       test_must_fail git merge rebase_i_merge_side &&
+> +       echo side1 >main.txt &&
+> +       git add main.txt &&
+> +       test_tick &&
+> +       git commit --no-edit &&
+> +       FAKE_LINES=3D"1 2 3 5 6 7 8 9 10 11" &&
+> +       export FAKE_LINES &&
+> +       test_must_fail git rebase -ir main &&
 
-In p9210-scalar-clone.sh, we test using 'scalar clone' to clone
-$GIT_PERF_LARGE_REPO (copied locally as 'to-clone'), which defaults to
-the git.git checkout we are running the test from.
+I don't think you want to be setting FAKE_LINES like this since doing
+so will pollute the environment for all tests following this one. You
+can find existing precedent in this script which demonstrates the
+correct way to handle this case. Specifically, you'd want:
 
-When --branch is not specified (as in this test), 'scalar clone' tries
-to get the default branch of the remote repository by parsing the output
-of 'git ls-remote --symref $URL HEAD', as implemented in
-scalar.c:remote_default_branch. When the git.git checkout we are running
-the test from is in detached HEAD, this fails and we fall back to using
-the name of the currently checked out branch in the newly initialized
-repository, which in this case is the value returned earlier in
-cmd_clone by repo_default_branch_name.
+    test_must_fail env FAKE_LINES=3D"1 2 3 5 6 7 8 9 10 11" \
+        git rebase -ir main &&
 
-We then invoke 'git checkout -t origin/$branch', with $branch being the
-name we got from remote_default_branch. This invocation fails if
-'$branch' does not exist as a branch in the current git.git checkout.
+> +       echo side1 >main.txt &&
+> +       git add main.txt &&
+> +       git rebase --continue &&
+> +       git log --merges >out &&
+> +       test_grep "Merge branch '\''rebase_i_merge_side'\''" out
 
-Fix this by creating a local branch in 'to-clone' in the setup test
-"enable server-side partial clone", making sure to use '-B' in case a
-branch named 'test-branch' already exists.
+You could take advantage of the SQ variable defined by t/test-lib.sh
+to make this a bit easier to digest:
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- t/perf/p9210-scalar.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+    test_grep "Merge branch ${SQ}rebase_i_merge_side${SQ}" out
 
-diff --git a/t/perf/p9210-scalar.sh b/t/perf/p9210-scalar.sh
-index 265f7cd1fe2..56b075e906e 100755
---- a/t/perf/p9210-scalar.sh
-+++ b/t/perf/p9210-scalar.sh
-@@ -7,7 +7,8 @@ test_perf_large_repo "$TRASH_DIRECTORY/to-clone"
- 
- test_expect_success 'enable server-side partial clone' '
- 	git -C to-clone config uploadpack.allowFilter true &&
--	git -C to-clone config uploadpack.allowAnySHA1InWant true
-+	git -C to-clone config uploadpack.allowAnySHA1InWant true &&
-+	git -C to-clone checkout -B test-branch
- '
- 
- test_perf 'scalar clone' '
--- 
-gitgitgadget
+Or, even simpler, you'll find that some test scripts just use regex
+wildcard "." to make the needle even more readable:
+
+    test_grep "Merge branch .rebase_i_merge_side." out
