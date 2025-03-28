@@ -1,123 +1,91 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69851DB13A
-	for <git@vger.kernel.org>; Fri, 28 Mar 2025 17:05:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC09B1D89EF
+	for <git@vger.kernel.org>; Fri, 28 Mar 2025 17:07:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743181528; cv=none; b=JdAAjvt6vkDwoHdkI202+ntci9OUtYaIJlR+Ksq1E7TR1gHsTZ/Tsoa22i6TKeWlHRHlSoF0YRN2/cFMqmKh7C27cT79WfdTvqQslqV6KnVYp+i7RgoDWoYvqLRenNRmqWvtggA/PKmz0TchnF6hmhuSp7fK/Y3UN+gNl9uNWgo=
+	t=1743181674; cv=none; b=CtbTWur74MQr3NzrwInyAF8oWFC0hn0r31y8YdnsAjIx4nL6CZex7F/8BE1xN8t3xesxMUjm4r4y4FJlnOHfKN3xnuLXYShW20leVX6QTGQSCGYv7rREnp5dPtfWmWjPxiOksxP1XFWQHr8XIGb1kY53m8NmF+bqifJ7Vl2/je8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743181528; c=relaxed/simple;
-	bh=poliQUiPmUYejsJjzk6xebI4OX28VQmIFQavl+TpbDM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VUIRElW90He2VYf1Orzk17VNb7cIhm8J1Ozhy914IY+CI6eoCqlqSASiNl70H+iN7ts9zY/I8XoroDjmVjd2Ot/hLrrfI/xvEvzMvVf6AFbyFWKPS7P1YW4QOKuIoWBHuQe8Ii7Q/cRRFL3RHzZtRcYE7IRDqyYTydRUhPOVLwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H98e4n2t; arc=none smtp.client-ip=209.85.167.173
+	s=arc-20240116; t=1743181674; c=relaxed/simple;
+	bh=RHB9W+OBm/a6Bc09NshRP2LpbkkQvO/PLCdeQ0c2nvg=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=JU3U84JbysHm9qMGL9cy2j/XJ7B4b5OrxkcIAP8tNP154WYnKECp74Zp4Cd9YHhmjmtNLPvWIp6vboJU0ekER6zmBhxBDQtDgsNg13L5WfB3MCnlGnnIRBhjCMbSYYz24v/m20yqjYghMf8GVG6w0xMhmnbiaoDgUc/e3zP9WlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tkl+cklR; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H98e4n2t"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3fe9fe62295so764259b6e.0
-        for <git@vger.kernel.org>; Fri, 28 Mar 2025 10:05:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tkl+cklR"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-39ac9aea656so1999835f8f.3
+        for <git@vger.kernel.org>; Fri, 28 Mar 2025 10:07:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743181525; x=1743786325; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RgtWzKM1JejgAbaQIKA1dhHnN40cJ56jUGXP/oBvI+c=;
-        b=H98e4n2t2v/zQxC8lHqipzvlpeNoqKTiC0Zk4lxs2FGU+vAw2UssXho6JBu/YXKuZK
-         YxqKoogAWbjUz2v/Jrd4lfAiabWWNpKKAOhfJ2SCl6OubKuDJobi9+uDJrSbqq41ylg2
-         GAy4kqwguCZ47zzQmYrrc851W0YwNBjq/Ql8KNUbER5S4NaUN+DQiOt7f9xNsRgLC8Dz
-         wvmBlhFV2jqR1ZWYX4IbfGO4QTCYqd/wxY0oIXF8BBe2KQMpwOQUZrilptyoN3s7WvmH
-         EB5XDgQOAvTLCV335XgpwdKVSmjSUBd/mC33c4vhj/76ID84yjXiR41IQ8Yr81E22q/C
-         dw9A==
+        d=gmail.com; s=20230601; t=1743181671; x=1743786471; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DXJlBHlbZu805VY22uoVzm9WqN5aOjrwOyuSCNCt570=;
+        b=Tkl+cklRbOiXrz2oMlS15T6V6JM/VUT1K6461hYr2ay7Sjd3/9b/f1REFl8VwxHV5w
+         gxwtFoegD8FV4RKKLQqG64QGjx34TtvNl9R5EOF9vCwmGbdMd/syQs8cxN/q+DzmtR5A
+         TDcKNrjthHnbeEJtOxxl4fKP+WZKA2rFJ5fMG2daFI1PtlPLmNZQCroFIXo6S2wY2a7z
+         3JM/qTPP4nxT5XCAg6pBi1lDNsDcipt85+bm9ZMZt1oVJJ03l881TbUA+t7Xz3wnadUS
+         6u4CsKM48Bg/2S09r0MShpIxCqCwPG4/ExkXVPckgsqhHfZp9DbBc3upwDAQghfib7zG
+         i1TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743181525; x=1743786325;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RgtWzKM1JejgAbaQIKA1dhHnN40cJ56jUGXP/oBvI+c=;
-        b=ajdU/amTZYvtFAtRPo9Ipnuv6zbxUU4+7lwWczbAs+00RNDx96W8CixSIWzMIdIw4M
-         l9gfcCW3RluZhEts0AK3qcmlSBTTtm5o4xLnCKLIhsZNE/0L2Kq44LgYOJKUMVqt+lwP
-         Z5YcFT5j8GZx43k7Uyr0eyL6VKYF4ePI4chlAS3gx9KTpaCUgphaVrfy9aeXRkuxQPRR
-         P//egt/RMe/9CW06LUCb4tYcuuIQcQKswU5CO8JzpDXqA1NuXkWb+YkZKjZWnx+Q0YbO
-         VpOvbY85hC/JAjabFjqvN/vE9HM8TWl4Gp2o/1yYR7GG4QXqS7vRAjp+M+lnvac6Z07Z
-         vPAA==
-X-Gm-Message-State: AOJu0YwXPMk3bAei6CefKviC9fCPvAeKr9bUPG2jg+i7o4fqQMS4iR2d
-	4H+yJJRdozIaC/DgAwE2oxHnSXUHoH+Ez2pJA+BvGzhEfMZioU9VIlcPEA==
-X-Gm-Gg: ASbGncspfyyfS/T3cliV27wibg0dsCkcpcqchyYaX+OtxtWM8ACiR1n1zL++aJtp2YJ
-	jpKkDyWtgBOsF7xkrYoejdGgeIrNFWo8aaneH91pG1z4W1bjBCOdWxn9X6xb6rlAHp/pZXupZ1Q
-	1aP235PXz/2XsnxJhruvLtjB/kxQWsWdtpr2sePFWtxN8OtIhc6Qx1awnh+v5j6XksvmYks1Y2y
-	MROl1uxt9LG/KVhCfdbx/iABEl9sVrh4HT84Mn5TjWjpXw8u+dFXQdWfQRopAWyYrDrzsSrQiva
-	Oaz8p6/7xEEAo7bSQzAsbXf0oNIUhEO7LiJyzGddAA2uwfXu2ZZ7
-X-Google-Smtp-Source: AGHT+IH+VsN5PuYZBOO9NoeTZS3j7qqcCICnt8U36wOzsDSF0r1YFlMcmDpzWZ7ZlsUvoAL2+w2CyQ==
-X-Received: by 2002:a05:6808:22a2:b0:3f9:9076:b659 with SMTP id 5614622812f47-3ff0f59bbbfmr11906b6e.28.1743181525277;
-        Fri, 28 Mar 2025 10:05:25 -0700 (PDT)
-Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3ff05166b27sm402136b6e.3.2025.03.28.10.05.24
+        d=1e100.net; s=20230601; t=1743181671; x=1743786471;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DXJlBHlbZu805VY22uoVzm9WqN5aOjrwOyuSCNCt570=;
+        b=gN6gsvaZ4S3ADzFDEd9Zio/qjKCrrnXvg4P5y+V4uzIbM629UzIx6yafgWNn9mhUTl
+         tzMpksq8c8tfRoutAxqk7D7MG9kmkdly2hP71bXYpZZxyARJ9oKlDLaE0N3xZ6Ns/C6z
+         MMekc5fXe0fnXJ4WG3uLezkJAJV3uD5juRAmPk5AZkwpD76Iv+QQxAy6o2F3tT2M9sgB
+         /FhL1zl2HAqoYMhKYDpoPYUyZy8QeYa9gmewtjAKQf2rsvzmYQHSL2ak/ftyEqj+bA/m
+         ppaPUyVyEyZpc94Cs92F/ivqQmJ8jytetTVPA0Q23u8FGBGg89bqF0xW06/U7vFgCw92
+         duRA==
+X-Gm-Message-State: AOJu0Yy+gdAg5yr7FyBLuf9PEYzPeONPBsCqs8lBiIXsPO9rqZuHJ+LH
+	bSVm5LsrWoMO40f6p3VF8wt1o+S2oZKSUeOrszZsMorSWILr4FQc8lmzrA==
+X-Gm-Gg: ASbGnctu3L550tticxk09cmHEi/sKvR/FUkgT2P5CnHjs/2OudL9umXTOZoymeqIf0p
+	vopnpTQm1T4inTZzeCdXbGM+CZMemsF7zMBIfZH7KB2YJ0/mrozJJ5MsvIoSTGgPYLwjcms2R1v
+	Q0s49rppucQCRO8/7Byf95cwuoTnKQtBuR9dujijUIY1foFicTK6Q1HQriCy5I0cGoZxBIklA/M
+	avCwy6cp/0w846HhKOxCujSkESEE4WzbjycbCZGjl5zuxb01MKQ9bhmUjDNjQYeg6bk0Q2gBisu
+	ndQME51VCqar23SJ0LzIsb8c7656ojMl+ZzPGG3dNPKlGg==
+X-Google-Smtp-Source: AGHT+IHJ9LEk3zxYzb+3nMwMQN7e7yWKfWbwsljdyxgY3bYT3mEZnwjcVI5qkOTBNFqkH33j5NHlvg==
+X-Received: by 2002:a5d:5f83:0:b0:390:f745:bbfb with SMTP id ffacd0b85a97d-39ad1760792mr7750868f8f.26.1743181670458;
+        Fri, 28 Mar 2025 10:07:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b6589e4sm3219502f8f.10.2025.03.28.10.07.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Mar 2025 10:05:24 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 2/2] help: include unsafe SHA-1 build info in version
-Date: Fri, 28 Mar 2025 12:01:21 -0500
-Message-ID: <20250328170121.157563-3-jltobler@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250328170121.157563-1-jltobler@gmail.com>
-References: <20250328170121.157563-1-jltobler@gmail.com>
+        Fri, 28 Mar 2025 10:07:50 -0700 (PDT)
+Message-Id: <pull.1936.git.git.1743181669.gitgitgadget@gmail.com>
+From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 28 Mar 2025 17:07:47 +0000
+Subject: [PATCH 0/2] Two perf test fixes
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Victoria Dye <vdye@github.com>,
+    Neeraj Singh <neerajsi@microsoft.com>,
+    Philippe Blain <levraiphilippeblain@gmail.com>
 
-In 06c92dafb8 (Makefile: allow specifying a SHA-1 for non-cryptographic
-uses, 2024-09-26), support for unsafe SHA-1 is added. Add the unsafe
-SHA-1 build info to `git version --build-info` and update corresponding
-documentation.
+Here a two fixes for failures I noticed while running the perf tests.
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- Documentation/git-version.adoc | 3 +++
- help.c                         | 8 ++++++++
- 2 files changed, 11 insertions(+)
+Philippe Blain (2):
+  p7821: fix test_perf invocation for prereqs
+  p9210: fix 'scalar clone' when running from a detached HEAD
 
-diff --git a/Documentation/git-version.adoc b/Documentation/git-version.adoc
-index 80fa7754a6..53c8ba74c1 100644
---- a/Documentation/git-version.adoc
-+++ b/Documentation/git-version.adoc
-@@ -22,6 +22,9 @@ OPTIONS
- --build-options::
- 	Include additional information about how git was built for diagnostic
- 	purposes.
-++
-+If built to use a faster SHA-1 implementation for non-cryptographic purposes,
-+the implmentation used is denoted as "unsafe-SHA-1".
- 
- GIT
- ---
-diff --git a/help.c b/help.c
-index 32b5d4e6f5..7670e0a64a 100644
---- a/help.c
-+++ b/help.c
-@@ -784,6 +784,14 @@ static void get_sha_impl(struct strbuf *buf)
- 	strbuf_addstr(buf, "SHA-1: Collision Detection\n");
- #endif
- 
-+#if defined(SHA1_OPENSSL_UNSAFE)
-+	strbuf_addstr(buf, "unsafe-SHA-1: OpenSSL\n");
-+#elif defined(SHA1_BLK_UNSAFE)
-+	strbuf_addstr(buf, "unsafe-SHA-1: blk\n");
-+#elif defined(SHA1_APPLE_UNSAFE)
-+	strbuf_addstr(buf, "unsafe-SHA-1: Apple CommonCrypto\n");
-+#endif
-+
- #if defined(SHA256_OPENSSL)
- 	strbuf_addstr(buf, "SHA-256: OpenSSL\n");
- #elif defined(SHA256_NETTLE)
+ t/perf/p7821-grep-engines-fixed.sh | 4 ++--
+ t/perf/p9210-scalar.sh             | 3 ++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1936%2Fphil-blain%2Fperf-test-fixes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1936/phil-blain/perf-test-fixes-v1
+Pull-Request: https://github.com/git/git/pull/1936
 -- 
-2.49.0
-
+gitgitgadget
