@@ -1,350 +1,393 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2066.outbound.protection.outlook.com [40.107.244.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7AC1A5BAE
-	for <git@vger.kernel.org>; Fri, 28 Mar 2025 10:30:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743157802; cv=none; b=fFraruPjqYTfZmlA//izJ7nNMc6p3RL0G7zg5JRZLcaRSgZ7B/q9gV4APyPCDjKZKeX3g7zNQXQYCCr9n4Pxnopsnci8HlvqfGjbpF2jKd22HzvFF4pzy6UJYkPk1MFH1Si9hnMUI3s7N7Xi6qMwE0mrWiff4CY0FAnZV40wGi4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743157802; c=relaxed/simple;
-	bh=MsZ7imwA11GOAWgY129M+zbc0aebOUn1eobJhbT2Dn4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fR88je0DQbKh6ch0ROZgaB1UAO6znrkNcqfVpkErJGAbqhQ9AkzjirjxJ+OP+PTN1daUTvKZw3fkNnILWGOvR04l18QNpfdVcBYqe4K4lX4n7e5cYnH3bRDjoottyxX7IjeX3yqbF6wlwNnFnspXn77Hg6TOJU82ahToLhusIhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jGyXOaD5; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D046C4A35
+	for <git@vger.kernel.org>; Fri, 28 Mar 2025 10:37:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.66
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1743158270; cv=fail; b=OdJkfjS9TRvEJ39GWIHBzBZWJm36YFCiGdE3cPouI31zD+Z3ZOPM3/kQqsmgi9z3NIYum3fdg3eUn2scSOgtizp0vBK+qzy17Jubs7XJRh2MyJyrYW6PZdIe/oQsXMA2xZXRdWt0V17c7DMrRj8jAnyQBgnnzOzqUmZ+dQ5kS+M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1743158270; c=relaxed/simple;
+	bh=/mIb04wGrWbgRd24yvi+UqrAIXXU7HAugxObkNDYQwA=;
+	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=ajVTK+kjuHRHdmyXxYu2kOdlWc5HXJrb2ywe7R2gdUBqOnNbwexhda/iow//xtThmrVLUp8HeVHaH2qMRl+hAZFJhHmm+DDGG9jgjWfvku88MSSSq384NQyutIG7bLMUsA4pYR7J1261ScLsyVJRxz/BUPGEDhgMv/i6WkVQiv0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=commvault.com; spf=pass smtp.mailfrom=commvault.com; dkim=pass (2048-bit key) header.d=commvault.com header.i=@commvault.com header.b=QyNpa7gE; arc=fail smtp.client-ip=40.107.244.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=commvault.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=commvault.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jGyXOaD5"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-39149bccb69so1684249f8f.2
-        for <git@vger.kernel.org>; Fri, 28 Mar 2025 03:29:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743157798; x=1743762598; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=LopKx/TyxESkTh3vDQx4QRumiutbqYp+1BcTInb5QyM=;
-        b=jGyXOaD5j1djmjR2NHlvXqJ1s4dre3EXhPC1Z0RVNGppcS1LM/oFcECjNt01QEkvYz
-         Ml+MFPteWdh+mku+iFgYSCeCm/UMF+Ax/8OD++2Fj7LzJp9JZ9WXcIULdEws/VUb0216
-         WSF9oNvNksvitdx9BfuUUDCCDQ7pZGFeNNcHlUKy/499XzaAb6tN+YZiaOq7h85wmgzZ
-         MLRpf6uoPSB7giiskxB0P9EWCXaEg8maoFvEIQMipoFrr0f60cQCaRjQmbtkV32jH/CO
-         +wLoIN7BEfR6VSXcaQGqT6weviCqOpzhT5jIecRxPTNxl2sjwfHLIN+5+YJiUdARNXeM
-         sc7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743157798; x=1743762598;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LopKx/TyxESkTh3vDQx4QRumiutbqYp+1BcTInb5QyM=;
-        b=vu2/lrfrs83vk/zDbNbsB60ICrbPwGk8K9I8crLPc0cPczPwpkJ8Up6/Rv4O8b/3PF
-         vmA5UOHWp9+PJJ/K32veHMHTVzUTPWKTS+LoO+quiDmue1ijEPeY4ms+QMupyJjYsTm/
-         YVHWmQ2dGMA6SzbOCcPVLbVZ6ha/3mqc4aLZa/VoDZw6CBvQwuswh/zwkBggcIEuuKM8
-         Uonn1gNmTD18kWhMqdOgrYXsBdQFBKfMlUWFvdBLyezia3ZhO4LsJF78E7ocxaOE0cd8
-         2vr2LMP8bnQtbPFraYmf++z/0pTVvz+q3mLPwdWkqv5obXjrBF0qHb9WfCG2+jZ0Zrdd
-         9nVg==
-X-Forwarded-Encrypted: i=1; AJvYcCX73bZqIMlpirYAmq3Omz3uQrhgCYwRMBD+/Wu8/BX/RwEqX2+5CA+t7FfuZJHhcN70SvQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwiDsNn5BMu7NCadpiCjvlxyZRw/PrrrhE6j9MrZQovjclhQK7e
-	XyHwxuTrrTIOhxmvrCpgJJ6Iqj8tzEV3FcbMHzBAE0FH+gRYYfcu
-X-Gm-Gg: ASbGnctakRBsIyScpNKBxLHoz6fna42p3LL3hoyRcqGoC3FBTw8DqcWpvc9ptnnSGpJ
-	YysVCrM4/KsGpW5oyBm3c1wJghWjZdUjPYtoIfEKykF2F53s07OkoWFjZEaAfrnc8vjKg8tG9Mv
-	LbRjmajbNLuslamN9IaVGb2/fDt+wd8b/k9siOoKDt8URx3TCSWOOcerIXzYAdIXGZUJG6LtLN2
-	pVjl607Bd4CwpCaAyGzdRGG3hRZz0JK+42ZrYz9MyvmjYg4YJDVqR3eevdVeQhyHHgranhO8HNG
-	M4MdldGlpF8liOfNo/AImh6NEhOfvUGrU7md6GxoGyWLIE3kObp3DYOUTOvWp8x6eqIXbCfoI20
-	97UFDV6Flud06MEfwmOSw
-X-Google-Smtp-Source: AGHT+IFnm7NlQGway5vxN08lLN1ZySWeRLQHd0uhv391q4/0nmQ6FZdEwpiA1pIP4eORDCNd1rQlTQ==
-X-Received: by 2002:a05:6000:2ae:b0:399:79a7:95ac with SMTP id ffacd0b85a97d-39ad17606e0mr6368094f8f.41.1743157798200;
-        Fri, 28 Mar 2025 03:29:58 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d8ff02f91sm22674765e9.29.2025.03.28.03.29.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Mar 2025 03:29:56 -0700 (PDT)
-Message-ID: <dfb0a47e-075d-4288-8d18-03a60bb04737@gmail.com>
-Date: Fri, 28 Mar 2025 10:29:52 +0000
+	dkim=pass (2048-bit key) header.d=commvault.com header.i=@commvault.com header.b="QyNpa7gE"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IMBT9UQJzhkpakD2UZ1yPhjdLrD5BjYlqfv74nTzC8PvR34LRQkYz6BVqZI+WgEpPpHXmnYqFk5ANjJHYgF//lNxkYPY0gw2xdJVjfMkZBf18C3weZ4M9S/+2gCjwizeJtfOUcDB9tySrYvvJvBPWVh1Q8QrtDEXFmLB62gxnKVhjUsbno4SwUCTkKeYMVP5JAb35Yu/8krOszrseAYyAlO8O8PcKngOfcdyCHy09nwiP1PealR+4SWS6g60ctIZT3xLKUNKTt4ACSY3tzQJ+Gp+a/kWe2xH7u8BdgJd+Y7fEtKr81wAZ2b8Xluzugy7hgY1CiO1QOAzMdMx7Q3ogg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/mIb04wGrWbgRd24yvi+UqrAIXXU7HAugxObkNDYQwA=;
+ b=VOvX/D89C40vCsROs7RYG5XzGTnjrkRuhktp8qicy09Oi9BF0eWvMRbYfcdPVtkn4SUTRG21qMD8B3q/i/lnwAPUktTziaasGQkNt2sVVI7kHsFen++39bkPybtp5QH2jf3SRV9NPqy3Upn5XeWJb+nVt9RaHXzLKnFjU1Ot0QfOHEmNO6YrPZcegb/OZloiXWWyAwIK056oQzwMNg7YUrWuFwxh4Sntia4dSk68TQ02QeSWHIRO39Fyww3xOeaCo9oud5vJXrcqG+ESJcfsfl7MzvbPpT/1RqTMfZVccTGbcU/TbiPPM732ByyMqRkrPX8jUO2eleVuEReZQEfqTA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=commvault.com; dmarc=pass action=none
+ header.from=commvault.com; dkim=pass header.d=commvault.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=commvault.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/mIb04wGrWbgRd24yvi+UqrAIXXU7HAugxObkNDYQwA=;
+ b=QyNpa7gEHFljf4no4nU+xqxwSSyrR/j29QiYZMO41MS8xC86xuXpk73ROnffCQkH6SuA2EKzoVp9k+CQ6v0wXk9PlR3aGbdoEn+XkQRLyQIR4M8B2xWpyHR8g54tu0KNCv12hY/MYSFug3VdMBXlFej0WsyPayzg4XWkmzGouL/1DdnT2N/3Vw2tSPWLdAhZXAgY8uHIvKkhtVrRp35n0Ham6Ar0MkDWj78jyXvHll/5y6vhke9dFFohamhkrIQXrT+G4+OWzALLGNp95TjcPMfxsLXbF3whDzgWQz0FG06Uy8xf8sb341uHMNE3Ool82I27IHBtVdac2uncNGYsEg==
+Received: from SA1PR19MB7013.namprd19.prod.outlook.com (2603:10b6:806:2bd::22)
+ by SJ1PR19MB6164.namprd19.prod.outlook.com (2603:10b6:a03:489::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.44; Fri, 28 Mar
+ 2025 10:37:43 +0000
+Received: from SA1PR19MB7013.namprd19.prod.outlook.com
+ ([fe80::24a8:69bb:604d:3b4c]) by SA1PR19MB7013.namprd19.prod.outlook.com
+ ([fe80::24a8:69bb:604d:3b4c%7]) with mapi id 15.20.8534.043; Fri, 28 Mar 2025
+ 10:37:43 +0000
+From: Akash S <akashs@commvault.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+CC: Adithya Urugudige <aurugudige@commvault.com>, Abhishek Dalmia
+	<adalmia@commvault.com>
+Subject: git push --mirror hung indefinitely
+Thread-Topic: git push --mirror hung indefinitely
+Thread-Index: AdufzW7TVmABLLOOQZ+8w7Ln2MUnlA==
+Date: Fri, 28 Mar 2025 10:37:43 +0000
+Message-ID:
+ <SA1PR19MB7013490588962D983094128DC0A02@SA1PR19MB7013.namprd19.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=commvault.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA1PR19MB7013:EE_|SJ1PR19MB6164:EE_
+x-ms-office365-filtering-correlation-id: 753c5adb-c267-437b-cd7c-08dd6de49277
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|1800799024|376014|13003099007|38070700018;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?s6uSBn8LbC6XRBcrjGeoksZwjoun3GGEguxsM3VoHXHYvqzzwyWSEzEDv4?=
+ =?iso-8859-1?Q?VTlrJkk3DmX4gSVc2C/XFtoWawyA7E0jqx9ZMVhfUIAcudm+hkAr1JZRL9?=
+ =?iso-8859-1?Q?4hC3pjJuv9n5S4OfY8RSSoXdov7N5SQxpAiKEnChB3QWE4PfkLegrkd1JO?=
+ =?iso-8859-1?Q?n/2N3zHp3m8LDxO0/DRSxG6CPiR28cD8bhCo7ydZrs7CBr7h19xe3Igzok?=
+ =?iso-8859-1?Q?Fr6xm9OoB0k0tSwqvWTclIhbdGSLn3NZ6JWtyKTV9ooXNZ4unV0dRJeV5j?=
+ =?iso-8859-1?Q?qYauLLYWDeNPjs3jMmWnAjSwkqQt5jQeOY5UDKC5lJV/u9Q0Ju3QFo5qx3?=
+ =?iso-8859-1?Q?W0oOCzwMRpCm7wkSewfw44Ei6gykBBQWxkEJLFSEEAyE6uCdHf/AK3zXJh?=
+ =?iso-8859-1?Q?0jExS2a7PkoJDjZ/JYmCD/HYv5+oA4SVf0ezW6U9LOKyn60tG+I3GC93Wy?=
+ =?iso-8859-1?Q?bMR/NQwVZ7l7uFBKhytrt9YG3DzU2n4EslSRT59rV3lVIHW8cD06TimXZr?=
+ =?iso-8859-1?Q?JrKnfUHGrJFWKP1rF79B0kQLXc2A1uG6zpHdYG089QXsHH6ouYPG/HLqOm?=
+ =?iso-8859-1?Q?btkgIH0JTluGt+1ZZLAO5J2Iqj1xUYhEP6DV/MgiHqfwqQKxEJWADlTxiV?=
+ =?iso-8859-1?Q?lqCSDTfR3LTqv4ozyAGoMp964NwzgTPxJg2Mgd0rBcYCuYESMndNtubPfh?=
+ =?iso-8859-1?Q?fos7wyQC8ihyM9oMS9jbgq89zBfv63MuUhdoaPIevEh8hsYb0GDGR7z0cO?=
+ =?iso-8859-1?Q?ZlF7JE8r73wHOOq2gW5qQgwSXUXWtKo0VULaKHQphArKPzEVMM3c9pFY8p?=
+ =?iso-8859-1?Q?6ni2rDBzBuG4+HVyGqZzStw8kjTc4I3Bl5uTpD1j7TI1RQUn78dUybOOJl?=
+ =?iso-8859-1?Q?FtaBeYtR9cSUaEj9KEKey6+yJjrui8nTL933nE6UL2aBXH0PyUkctRjAHm?=
+ =?iso-8859-1?Q?NEbecHw8jlXkPoF/pZ4e4N3LVsNZhoAyg6nt/ByTbOhfp6Q1v+u0xW/cWK?=
+ =?iso-8859-1?Q?4wiBJtH9zR/6LobYhygBEtOiut1XrlAd+mit4LhFowQYdyHeKKOY5Ky4rz?=
+ =?iso-8859-1?Q?4fSGD9p6RKtmU0qURJv2A6p7MwrY7FlF2dSuzDFTOn7rqpYeX71p+VbUQI?=
+ =?iso-8859-1?Q?NQQHBtDQwdybzyQ/7UuxhlZztT+Ws6cuj6Uc4ZWBzdYY3NizHe0Scom/py?=
+ =?iso-8859-1?Q?Izt75/RrCewwJqcvrbcQvOB1Y9GxaR70nKQzp3fLKdsNIx9QGXk4N+B8cf?=
+ =?iso-8859-1?Q?ZEPJeslZNQxDe+fFHWS6CRpdzv9YEBkJBWTmz6YoZWsTcHr4Mre8QLG50i?=
+ =?iso-8859-1?Q?gcN368oH1Tr0mo68AdCwkTKiGDNs5HGhTGtw5FgPsFu5MJmGo0h69T42QW?=
+ =?iso-8859-1?Q?QDSrsqWL++MmhSVKIfBEdCR16QWkaytPqfXgyXHp4qlhopztPmRQgijQ9x?=
+ =?iso-8859-1?Q?sg2f8YLhJwVUBQJegJ4xpQkixemaSPmMNPCIhQ=3D=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR19MB7013.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(13003099007)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?5EMplpd8dE3VAUh/8Nd00G9C59gtTwlFAUhfJmaz3TfKHow1BgCcEK72KR?=
+ =?iso-8859-1?Q?PRgmkFc1jxZQUtZdSjErfpk43oGgDNusSnx31HIBEHV/wgvxxURSfAQ4jX?=
+ =?iso-8859-1?Q?L3YtHInmM7ePYMMGTRspcZJs3D3+yYGUp8FC//LQQRSUKfZ7SlURhEZxe9?=
+ =?iso-8859-1?Q?uafZj/cFEQBdFMVb3dLMtRUXPbJwfvfDkdFMVylFHyAOar9TeQDC5iJzGG?=
+ =?iso-8859-1?Q?lqHwZSVyYcY/sgYiqwyhVSv0v/w+0NGf1mgImKCrAbRIdeb19r85bjabj4?=
+ =?iso-8859-1?Q?5GWsOluk/9PGaxkio2x8dHoK46s/cqlDujKuVIm9Pj8/9tenVkLAaRU3xi?=
+ =?iso-8859-1?Q?tk93L+D0JKrlGumGJzgHOiIf8xcVRMZ75uAPe8Sp3EkfOEw7XWOWk43vPT?=
+ =?iso-8859-1?Q?t5/iKARq/BEwRmM64K0O+KoXTcUpbNVgP+D0/s6eIRulH4n8i/rwQFbvno?=
+ =?iso-8859-1?Q?c3xL0HUjvT4JI6MLYGMEBrH2NAIb/vOvAS2N9vwDw4UqntDAaVSlszuMPW?=
+ =?iso-8859-1?Q?TBGjGORku62jh0WBdUQEm2G5YuooNi+Ij+BKCqIJHKcr0QvtaF44WI9T3O?=
+ =?iso-8859-1?Q?UamMwJFkH5Fp3wWZTN550+SQXfj3FqQcBGVQXbNKVIIT/KIbLG36O5AIc0?=
+ =?iso-8859-1?Q?z0fLj0kpDJ2OvPn0mQTJY4jvs1VhnaxNAKl+KRwe51DjMIBH5XDZZZ29QN?=
+ =?iso-8859-1?Q?/ZSYB/HSnXZzVugzBJSXzRSief+HESID+pg9PCwqZEG4CufVoENKYZmyIz?=
+ =?iso-8859-1?Q?pmKC2weDi/bdU/Ny67xtj7kFAeXt+3Xt8Lir53M5E7s8hZwA7XUVLAR4iF?=
+ =?iso-8859-1?Q?oIh0yUOdOLZPD5yqpp10FVB7WzViXJMfarU4bVal33bi23pqR/Ab/EWyuT?=
+ =?iso-8859-1?Q?Imh6wIXTx8Hq74P4LG7HTiEFt0/nNENy0mBAskHxg2T4b0etzBwbb+gLfT?=
+ =?iso-8859-1?Q?Kfrmu/wJ9KHiBr8dP9VKSzYm6xxzqu8Fz3IgTYgaquuQjNclxXKE/GxWkY?=
+ =?iso-8859-1?Q?D5gcbYkJYr7B2ygujfJav23q0JkYLK/KudKUD8d0HcBgg4RYX9tc0HZtGJ?=
+ =?iso-8859-1?Q?JCnGzYLhE2d5E6jVrniszcpMCn6oboT0UemhbDbZgr0avhReMV1sPLJfdm?=
+ =?iso-8859-1?Q?nMJyqlHtrrUdxXYB6loqMcdpIH3/bXsJGJ2daMc5DvU+NW45VC4ScKmHxD?=
+ =?iso-8859-1?Q?DzmIjmFw3RbGy9MroI6p8vr+8+P73oWSXRrdbBGrh3vF95sHDZtezPQZum?=
+ =?iso-8859-1?Q?Dpu0URzzIb4mrrc9Z8k67JbOu+oamZmghHSlyUB/+bpeI6p6OAYxjn3i/K?=
+ =?iso-8859-1?Q?eOksjxjZUGQeRSnAGACGywVvAVokVAYQBBhnpyRBiKy3HtdMmSEbw8zu0T?=
+ =?iso-8859-1?Q?UXNoPhP7o4m1ZH/58/7rAbPwiUXsrHvUxkY266Lo5zbeK1vgBXCDbbEITJ?=
+ =?iso-8859-1?Q?OaQtAvmkMZb3SOwBEcwsUvK2566hV/EooNwcUwU18XoXgCozoMxykyK6Tv?=
+ =?iso-8859-1?Q?p0alRzu7hUpBxms6bmz69q5xr1RY4+UROXNcYPiZ/92bxq0cJ3USG29sly?=
+ =?iso-8859-1?Q?ke3kudYK8v+tAP0C2mpN8nW6+NoqzGw7rTqnJe/A43Tb+tPZ27FykrGHLz?=
+ =?iso-8859-1?Q?2AYDLBYNtFTDPiUTiq5IOfOKckSVlMh7xj?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 00/20] t: drop Perl as a mandatory prerequisite
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Eric Sunshine <sunshine@sunshineco.com>,
- Karthik Nayak <karthik.188@gmail.com>
-References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im>
- <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: commvault.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR19MB7013.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 753c5adb-c267-437b-cd7c-08dd6de49277
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Mar 2025 10:37:43.3744
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 40ed1e38-a16e-4622-9d7c-45161b6969d5
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: v0smUeI2akgpVBoHIiz50sWz7qTiMlXkXWO81kC9pK41oQD/55Jglhs/vT8D56ZMBJ/KG6hWDdaO/Qq+a3hthA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR19MB6164
 
-Hi Patrick
+Hi,
 
-On 27/03/2025 10:36, Patrick Steinhardt wrote:
-> 
-> Changes in v3:
->    - Remove more useless indirections for sed(1).
+We are attempting to push a bare repository on our local disk to Azure DevO=
+ps using the command "git push -mirror <URL>".=20
 
-Thanks for removing these, the range-diff below looks good
+Git version being used: 2.48.1 and no global git configurations exist in th=
+e machine.
 
-Best Wishes
+Issue: command progresses for 5-10 mins and then the git processes get hung=
+ after we see the output "Storing index (done)" and remains hung indefinite=
+ly.=20
 
-Phillip
+Steps to reproduce:
+i) Bare clone open source repo (elasticsearch or node) to local disk.
+ii) Run "git lfs push -mirror" to any repository in an Azure DevOps organiz=
+ation using PAT authentication.
+iii) Issue happens intermittently, so alternating the push operation betwee=
+n the local elasticsearch and node repo to the same remote repository shoul=
+d help recreate the issue.
 
-> Range-diff versus v2:
-> 
->   1:  8c98b24fe4c =  1:  f2fe08ef0ff t: skip chain lint when PERL_PATH is unset
->   2:  f140153954c =  2:  9dd2edd0a1a t: refactor environment sanitization to not use Perl
->   3:  94b5591f666 =  3:  c77424e6907 t: adapt character translation helpers to not use Perl
->   4:  a5880fdb8ef =  4:  476d1b15932 t: adapt `test_copy_bytes()` to not use Perl
->   5:  3b64c99c061 =  5:  14badee2551 t: adapt `test_readlink()` to not use Perl
->   6:  a3536260e4c =  6:  9a88a46bd10 t: introduce PERL_TEST_HELPERS prerequisite
->   7:  98961b0e065 =  7:  e7413bf28ae t: adapt existing PERL prerequisites
->   8:  bbdd1fe6c7c =  8:  581a9bedd22 meson: stop requiring Perl when tests are enabled
->   9:  bda7e7922ce =  9:  cfe1797ae74 Makefile: stop requiring Perl when running tests
-> 10:  d95d50c4b73 = 10:  99e678b83a6 t: refactor tests depending on Perl transliteration operator
-> 11:  f5b30cc3f8f ! 11:  93a98d3e3cf t: refactor tests depending on Perl substitution operator
->      @@ t/t4029-diff-trailing-space.sh: test_expect_success PERL_TEST_HELPERS "$test_des
->        	git diff f > actual &&
->        	test_cmp exp actual &&
->       -	perl -i.bak -p -e "s/^\$/ /" exp &&
->      -+	sed "s/^\$/ /" <exp >exp.munged &&
->      ++	sed "s/^\$/ /" exp >exp.munged &&
->       +	mv exp.munged exp &&
->        	git config --bool diff.suppressBlankEmpty false &&
->        	git diff f > actual &&
->      @@ t/t4200-rerere.sh: test_expect_success 'activate rerere, old style (conflicting
->        	test_must_fail git merge first &&
->        
->       -	sha1=$(perl -pe "s/	.*//" .git/MERGE_RR) &&
->      -+	sha1=$(sed "s/	.*//" <.git/MERGE_RR) &&
->      ++	sha1=$(sed "s/	.*//" .git/MERGE_RR) &&
->        	rr=.git/rr-cache/$sha1 &&
->        	grep "^=======\$" $rr/preimage &&
->        	! test -f $rr/postimage &&
->      @@ t/t4200-rerere.sh: test_expect_success 'rerere.enabled works, too' '
->        	test_must_fail git merge first &&
->        
->       -	sha1=$(perl -pe "s/	.*//" .git/MERGE_RR) &&
->      -+	sha1=$(sed "s/	.*//" <.git/MERGE_RR) &&
->      ++	sha1=$(sed "s/	.*//" .git/MERGE_RR) &&
->        	rr=.git/rr-cache/$sha1 &&
->        	grep ^=======$ $rr/preimage
->        '
->      @@ t/t4200-rerere.sh: test_expect_success 'set up rr-cache' '
->        	git reset --hard &&
->        	test_must_fail git merge first &&
->       -	sha1=$(perl -pe "s/	.*//" .git/MERGE_RR) &&
->      -+	sha1=$(sed "s/	.*//" <.git/MERGE_RR) &&
->      ++	sha1=$(sed "s/	.*//" .git/MERGE_RR) &&
->        	rr=.git/rr-cache/$sha1
->        '
->        
->      @@ t/t5303-pack-corruption-resilience.sh: test_expect_success '... and loose copy o
->        	git prune-packed &&
->        	chmod +w ${pack}.pack &&
->       -	perl -i.bak -pe "s/ base /abcdef/" ${pack}.pack &&
->      -+	sed "s/ base /abcdef/" <${pack}.pack >${pack}.pack.munged &&
->      ++	sed "s/ base /abcdef/" ${pack}.pack >${pack}.pack.munged &&
->       +	mv ${pack}.pack.munged ${pack}.pack &&
->        	test_must_fail git cat-file blob $blob_1 > /dev/null &&
->        	test_must_fail git cat-file blob $blob_2 > /dev/null &&
->      @@ t/t5303-pack-corruption-resilience.sh: test_expect_success '... and then a repac
->        	git prune-packed &&
->        	chmod +w ${pack}.pack &&
->       -	perl -i.bak -pe "s/ delta1 /abcdefgh/" ${pack}.pack &&
->      -+	sed "s/ delta1 /abcdefgh/" <${pack}.pack >${pack}.pack.munged &&
->      ++	sed "s/ delta1 /abcdefgh/" ${pack}.pack >${pack}.pack.munged &&
->       +	mv ${pack}.pack.munged ${pack}.pack &&
->        	git cat-file blob $blob_1 > /dev/null &&
->        	test_must_fail git cat-file blob $blob_2 > /dev/null &&
->      @@ t/t5310-pack-bitmaps.sh: test_bitmap_cases () {
->        			# mark the commits which did not receive bitmaps as preferred,
->        			# and generate the bitmap again
->       -			perl -pe "s{^}{create refs/tags/include/$. }" <before |
->      -+			sed "s|\(.*\)|create refs/tags/include/\1 \1|" <before |
->      ++			sed "s|\(.*\)|create refs/tags/include/\1 \1|" before |
->        				git update-ref --stdin &&
->        			git -c pack.preferBitmapTips=refs/tags/include repack -adb &&
->        
->      @@ t/t5534-push-signed.sh: test_expect_success GPG,PERL_TEST_HELPERS 'inconsistent
->        	# different, then replay it on a fresh dst, checking that ff is not
->        	# deleted.
->       -	perl -pe "s/([^ ])bar/\$1baz/" push >push.tweak &&
->      -+	sed "s/\([^ ]\)bar/\1baz/" <push >push.tweak &&
->      ++	sed "s/\([^ ]\)bar/\1baz/" push >push.tweak &&
->        	prepare_dst &&
->        	git -C dst config receive.certnonceseed sekrit &&
->        	git -C dst config receive.advertisepushoptions 1 &&
->      @@ t/t6011-rev-list-with-bad-commit.sh: test_expect_success 'verify number of revis
->       +test_expect_success 'corrupt second commit object' '
->       +	for p in .git/objects/pack/*.pack
->       +	do
->      -+		sed "s/second commit/socond commit/" <"$p" >"$p.munged" &&
->      ++		sed "s/second commit/socond commit/" "$p" >"$p.munged" &&
->       +		mv "$p.munged" "$p" ||
->       +		return 1
->       +	done &&
->      @@ t/t7416-submodule-dash-url.sh: test_expect_success 'fsck accepts protected dash'
->        
->        test_expect_success 'remove ./ protection from .gitmodules url' '
->       -	perl -i -pe "s{\./}{}" .gitmodules &&
->      -+	sed "s|\./||" <.gitmodules >.gitmodules.munged &&
->      ++	sed "s|\./||" .gitmodules >.gitmodules.munged &&
->       +	mv .gitmodules.munged .gitmodules &&
->        	git commit -am "drop protection"
->        '
->      @@ t/t8006-blame-textconv.sh: find_blame() {
->        #!/bin/sh
->        grep -q '^bin: ' "$1" || { echo "E: $1 is not \"binary\" file" 1>&2; exit 1; }
->       -"$PERL_PATH" -p -e 's/^bin: /converted: /' "$1"
->      -+sed 's/^bin: /converted: /' <"$1"
->      ++sed 's/^bin: /converted: /' "$1"
->        EOF
->        chmod +x helper
->        
->      @@ t/t9137-git-svn-dcommit-clobber-series.sh: test_expect_success 'initialize repo'
->        	(cd tmp &&
->       -		perl -i.bak -p -e "s/^58$/5588/" file &&
->       -		perl -i.bak -p -e "s/^61$/6611/" file &&
->      -+		sed -e "s/^58$/5588/" -e "s/^61$/6611/" <file >file.munged &&
->      ++		sed -e "s/^58$/5588/" -e "s/^61$/6611/" file >file.munged &&
->       +		mv file.munged file &&
->        		poke file &&
->        		test x"$(sed -n -e 58p < file)" = x5588 &&
->      @@ t/t9137-git-svn-dcommit-clobber-series.sh: test_expect_success 'some unrelated c
->       -	perl -i.bak -p -e 's/^7\$/7777/' file &&
->       +	sed -e 's/^4\$/4444/' \
->       +	    -e 's/^7\$/7777/' \
->      -+		<file >file.munged &&
->      ++		file >file.munged &&
->       +	mv file.munged file &&
->        	test x\"\$(sed -n -e 4p < file)\" = x4444 &&
->        	test x\"\$(sed -n -e 7p < file)\" = x7777 &&
-> 12:  e978d8ecfde ! 12:  17f862eaba3 t: refactor tests depending on Perl to print data
->      @@ t/t5300-pack-object.sh: test_expect_success 'pack-object <stdin parsing: --stdin
->        # e.g.: check_deltas stderr -gt 0
->        check_deltas() {
->       -	deltas=$(perl -lne '/delta (\d+)/ and print $1' "$1") &&
->      -+	deltas=$(sed -n 's/Total [0-9][0-9]* (delta \([0-9][0-9]*\)).*/\1/p' <"$1") &&
->      ++	deltas=$(sed -n 's/Total [0-9][0-9]* (delta \([0-9][0-9]*\)).*/\1/p' "$1") &&
->        	shift &&
->        	if ! test "$deltas" "$@"
->        	then
->      @@ t/t5326-multi-pack-bitmaps.sh: test_midx_bitmap_cases () {
->        
->       -			perl -ne "printf(\"create refs/tags/include/%d \", $.); print" \
->       -				<before | git update-ref --stdin &&
->      -+			sed "s|\(.*\)|create refs/tags/include/\1 \1|" <before |
->      ++			sed "s|\(.*\)|create refs/tags/include/\1 \1|" before |
->       +			git update-ref --stdin &&
->        
->        			rm -fr $midx-$(midx_checksum $objdir).bitmap &&
->      @@ t/t5333-pseudo-merge-bitmaps.sh: test_pseudo_merges_reused () {
->       -	perl -lne '
->       -		print "create refs/tags/" . $. . " " . $1 if /([0-9a-f]+)/
->       -	' <in | git update-ref --stdin
->      -+	sed 's|\(.*\)|create refs/tags/\1 \1|' <in |
->      ++	sed 's|\(.*\)|create refs/tags/\1 \1|' in |
->       +	git update-ref --stdin
->        }
->        
->      @@ t/t5333-pseudo-merge-bitmaps.sh: test_expect_success 'pseudo-merge pattern with
->        			git rev-list HEAD~16.. >in &&
->       -
->       -			perl -lne "print \"create refs/remotes/$r/tags/\$. \$_\"" <in |
->      -+			sed "s|\(.*\)|create refs/remotes/$r/tags/\1 \1" <in |
->      ++			sed "s|\(.*\)|create refs/remotes/$r/tags/\1 \1" in |
->        			git update-ref --stdin || return 1
->        		done &&
->        
->      @@ t/t8002-blame.sh: test_expect_success 'set up abbrev tests' '
->        		echo $sha1 | cut -c 1-$expect >expect &&
->        		git blame "$@" abbrev.t >actual &&
->       -		perl -lne "/[0-9a-f]+/ and print \$&" <actual >actual.sha &&
->      -+		sed -n "s/^[\^]\{0,1\}\([0-9a-f][0-9a-f]*\).*/\1/p" <actual >actual.sha &&
->      ++		sed -n "s/^[\^]\{0,1\}\([0-9a-f][0-9a-f]*\).*/\1/p" actual >actual.sha &&
->        		test_cmp expect actual.sha
->        	}
->        '
-> 13:  905c25c9fb2 = 13:  7b03d096ccd t: refactor tests depending on Perl for textconv scripts
-> 14:  1fe67bba30f = 14:  195c0bf2445 t/lib-gpg: refactor `sanitize_pgp()` to not depend on Perl
-> 15:  9e572c3ba67 = 15:  e92d178b96b t/lib-t6000: refactor `name_from_description()` to not depend on Perl
-> 16:  24abcffe96e ! 16:  0f2c9ad276b t/lib-httpd: refactor "one-time-perl" CGI script to not depend on Perl
->      @@ t/t5537-fetch-shallow.sh: test_expect_success PERL_TEST_HELPERS 'shallow fetches
->       -	       "$(git -C "$REPO" rev-parse HEAD^)" \
->       -	       >"$HTTPD_ROOT_PATH/one-time-perl" &&
->       +	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-EOF &&
->      -+	sed "$(printf "$(test_oid perl)" "$(git -C "$REPO" rev-parse HEAD)" "$(git -C "$REPO" rev-parse HEAD^)")" <"\$1"
->      ++	sed "$(printf "$(test_oid perl)" "$(git -C "$REPO" rev-parse HEAD)" "$(git -C "$REPO" rev-parse HEAD^)")" "\$1"
->       +	EOF
->        	test_must_fail env GIT_TEST_SIDEBAND_ALL=0 git -C client \
->       -		fetch --depth=1 "$HTTPD_URL/one_time_perl/repo" \
->      @@ t/t5616-partial-clone.sh: intersperse () {
->       +	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-EOF
->       +	if grep packfile "\$1" >/dev/null
->       +	then
->      -+		sed '/packfile/q' <"\$1" &&
->      ++		sed '/packfile/q' "\$1" &&
->       +		# The protocol requires that the packfile be sent in sideband
->       +		# 1, hence the extra \001 byte at the beginning.
->       +		printf "%04x\001" \$((\$(wc -c <"$PWD/one-time-pack") + 5)) &&
->      @@ t/t5702-protocol-v2.sh: test_expect_success PERL_TEST_HELPERS 'when server sends
->       -	printf "\$ready = 1 if /ready/; \$ready && s/0001/0000/" \
->       -		>"$HTTPD_ROOT_PATH/one-time-perl" &&
->       +	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-\EOF &&
->      -+	sed "/ready/{n;s/0001/0000/;}" <"$1"
->      ++	sed "/ready/{n;s/0001/0000/;}" "$1"
->       +	EOF
->        
->        	test_must_fail git -C http_child -c protocol.version=2 \
->      @@ t/t5702-protocol-v2.sh: test_expect_success PERL_TEST_HELPERS 'when server does
->       -	printf "\$ack = 1 if /acknowledgments/; \$ack && s/0000/0001/" \
->       -		>"$HTTPD_ROOT_PATH/one-time-perl" &&
->       +	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-\EOF &&
->      -+	sed "/acknowledgments/,//{s/0000/0001/;}" <"$1"
->      ++	sed "/acknowledgments/,//{s/0000/0001/;}" "$1"
->       +	EOF
->        
->        	test_must_fail env GIT_TRACE_PACKET="$(pwd)/log" git -C http_child \
->      @@ t/t5702-protocol-v2.sh: test_expect_success 'http:// --negotiate-only' '
->       -	echo "s/ wait-for-done/ xxxx-xxx-xxxx/" \
->       -		>"$HTTPD_ROOT_PATH/one-time-perl" &&
->       +	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-\EOF &&
->      -+	sed "s/ wait-for-done/ xxxx-xxx-xxxx/" <"$1"
->      ++	sed "s/ wait-for-done/ xxxx-xxx-xxxx/" "$1"
->       +	EOF
->        
->        	test_must_fail git -c protocol.version=2 -C client fetch \
->      @@ t/t5703-upload-pack-ref-in-want.sh: inconsistency () {
->        	oid2=$(git -C "$REPO" rev-parse $2) &&
->       -	echo "s/$oid1/$oid2/" >"$HTTPD_ROOT_PATH/one-time-perl"
->       +	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-EOF
->      -+	sed "s/$oid1/$oid2/" <"\$1"
->      ++	sed "s/$oid1/$oid2/" "\$1"
->       +	EOF
->        }
->        
->      @@ t/t5703-upload-pack-ref-in-want.sh: test_expect_success 'server loses a ref - re
->        	cp -r "$LOCAL_PRISTINE" local &&
->       -	echo "s/main/rain/" >"$HTTPD_ROOT_PATH/one-time-perl" &&
->       +	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-\EOF &&
->      -+	sed "s/main/rain/" <"$1"
->      ++	sed "s/main/rain/" "$1"
->       +	EOF
->        	test_must_fail git -C local fetch 2>err &&
->        
-> 17:  ce5adbd4818 = 17:  9857b461ed6 t0021: refactor `generate_random_characters()` to not depend on Perl
-> 18:  e183c397da9 = 18:  7924b5bd9bf t0210: refactor trace2 scrubbing to not use Perl
-> 19:  156bdc4d62d = 19:  5d6996a1412 t5316: refactor `max_chain()` to not depend on Perl
-> 20:  3b181d0a203 = 20:  0c3afb70128 t5703: refactor test to not depend on Perl
-> 
-> ---
-> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
-> change-id: 20250317-b4-pks-t-perlless-138cf94696b8
-> 
-> 
+Workaround steps taken by us to not face this issue:
+
+i) Since our repository is quite large (1.5 GB), we set http.postBuffer to =
+50 MB, it did not help in resolving the issue.
+ii) We have set GIT_CURL_TIMEOUT=3D180 along with =A0http.lowSpeedLimit=3D1=
+ =A0http.lowSpeedTime=3D180. But nothing seems to make the process exit aft=
+er it gets hung.
+iii) We set the http.maxRequests=3D1 to avoid concurrent requests and that =
+did not help either.
+iv) We used the -no-thin option, did not work either, process still hung.
+v) We have tried with different values as well for the above git config opt=
+ions and nothing seemed to bring us out from the hung state.
+
+
+GIT_TRACE=3D2 GIT_CURL_VERBOSE=3D2 outputs:
+remote: Storing packfile... done (43758 ms)
+08:26:52.444122 http.c:878=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =3D=3D In=
+fo: TLSv1.3 (IN), TLS app data, [no content] (0):
+08:26:57.457679 http.c:878=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =3D=3D In=
+fo: TLSv1.3 (IN), TLS app data, [no content] (0):
+08:26:58.309172 http.c:878=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =3D=3D In=
+fo: TLSv1.3 (IN), TLS app data, [no content] (0):
+remote: Storing index... done (5865 ms)
+08:28:09.549750 http.c:878=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =3D=3D In=
+fo: TLSv1.3 (IN), TLS app data, [no content] (0):
+08:28:09.550215 http.c:878=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =3D=3D In=
+fo: TLSv1.3 (IN), TLS app data, [no content] (0):
+08:28:09.550751 http.c:878=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =3D=3D In=
+fo: TLSv1.3 (IN), TLS app data, [no content] (0):
+08:28:09.551245 http.c:878=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =3D=3D In=
+fo: TLSv1.3 (IN), TLS app data, [no content] (0):
+08:28:09.551768 http.c:878=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =3D=3D In=
+fo: TLSv1.3 (IN), TLS app data, [no content] (0):
+08:28:09.551850 http.c:878=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =3D=3D In=
+fo: Connection #0 to host dev.azure.com left intact
+
+Processes launched after running git push -mirror:
+[root@dop02108c1eu06 ~]# ps -aef | grep Token
+root=A0=A0=A0=A0 1043353 1043352=A0 0 08:17 pts/10=A0=A0 00:00:00 /usr/loca=
+l/bin/git -c http.maxRequests=3D1 -c http.postBuffer=3D50000000 -c http.low=
+SpeedLimit=3D1 -c http.lowSpeedTime=3D30 push --mirror --no-thin https://To=
+ken:%3cTOKEN%3e@dev.azure.com/TestADOPATPolicy/cv-restores/_git/cv-restores
+root=A0=A0=A0=A0 1043354 1043353=A0 0 08:17 pts/10=A0=A0 00:00:00 /usr/loca=
+l/libexec/git-core/git remote-https https://Token:%3cTOKEN%3e@dev.azure.com=
+/TestADOPATPolicy/cv-restores/_git/cv-restores https://Token:%3cTOKEN%3e@de=
+v.azure.com/TestADOPATPolicy/cv-restores/_git/cv-restores
+root=A0=A0=A0=A0 1043355 1043354=A0 0 08:17 pts/10=A0=A0 00:00:05 /usr/loca=
+l/libexec/git-core/git-remote-https https://Token:%3cTOKEN%3e@dev.azure.com=
+/TestADOPATPolicy/cv-restores/_git/cv-restores https://Token:%3cTOKEN%3e@de=
+v.azure.com/TestADOPATPolicy/cv-restores/_git/cv-restores
+root=A0=A0=A0=A0 1043377 1043355=A0 0 08:17 pts/10=A0=A0 00:00:03 /usr/loca=
+l/libexec/git-core/git send-pack --stateless-rpc --helper-status --thin --p=
+rogress https://Token:%3cTOKEN%3e@dev.azure.com/TestADOPATPolicy/cv-restore=
+s/_git/cv-restores/ --stdin
+root=A0=A0=A0=A0 1052699 1049394=A0 0 08:32 pts/14=A0=A0 00:00:00 grep --co=
+lor=3Dauto Token
+
+pstack of all above processes :
+[root@dop02108c1eu06 ~]# pstack 1043353
+#0=A0 0x00007f7face375a5 in read () from /lib64/libc.so.6
+#1=A0 0x00007f7facdc7418 in __GI__IO_file_underflow () from /lib64/libc.so.=
+6
+#2=A0 0x00007f7facdbbdc8 in getdelim () from /lib64/libc.so.6
+#3=A0 0x0000000000635eb8 in strbuf_getwholeline (sb=3Dsb@entry=3D0x7ffe7067=
+cbf0, fp=3D0x1cf02c0, term=3Dterm@entry=3D10) at strbuf.c:645
+#4=A0 0x00000000006360c0 in strbuf_getdelim_strip_crlf (sb=3D0x7ffe7067cbf0=
+, fp=3D<optimized out>, term=3D10) at strbuf.c:727
+#5=A0 0x000000000064dacc in recvline_fh (helper=3D0x1cf02c0, buffer=3D0x7ff=
+e7067cbf0) at transport-helper.c:76
+#6=A0 0x000000000064ec6e in recvline (helper=3D0x1cf8570, buffer=3D0x7ffe70=
+67cbf0) at transport-helper.c:923
+#7=A0 push_update_refs_status (data=3D0x1cf8570, remote_refs=3D0x1d2b3a0, f=
+lags=3D10) at transport-helper.c:923
+#8=A0 0x0000000000650c3f in push_refs_with_push (flags=3D10, remote_refs=3D=
+0x1d2b3a0, transport=3D0x1cf82c0) at transport-helper.c:1088
+#9=A0 push_refs (transport=3D0x1cf82c0, remote_refs=3D0x1d2b3a0, flags=3D10=
+) at transport-helper.c:1189
+#10 0x0000000000653faf in transport_push (r=3D0x993960 <the_repo>, transpor=
+t=3Dtransport@entry=3D0x1cf82c0, rs=3Drs@entry=3D0x98f1f0 <rs>, flags=3Dfla=
+gs@entry=3D10, reject_reasons=3Dreject_reasons@entry=3D0x7ffe7067cfa0) at t=
+ransport.c:1502
+#11 0x0000000000491cef in push_with_options (flags=3D10, rs=3D0x98f1f0 <rs>=
+, transport=3D0x1cf82c0) at builtin/push.c:387
+#12 do_push (remote=3D0x1cf7b50, push_options=3D0x97aba0 <push_options_conf=
+ig>, flags=3D10) at builtin/push.c:442
+#13 cmd_push (argc=3D<optimized out>, argv=3D<optimized out>, prefix=3D<opt=
+imized out>, repository=3D<optimized out>) at builtin/push.c:664
+#14 0x0000000000404eae in run_builtin (repo=3D0x993960 <the_repo>, argv=3D<=
+optimized out>, argc=3D<optimized out>, p=3D0x971fe8 <commands+2184>) at gi=
+t.c:480
+#15 handle_builtin (args=3Dargs@entry=3D0x7ffe7067dbe0) at git.c:740
+#16 0x0000000000405f1f in run_argv (args=3Dargs@entry=3D0x7ffe7067dbe0) at =
+git.c:807
+#17 0x00000000004068d6 in cmd_main (argc=3D<optimized out>, argc@entry=3D13=
+, argv=3D<optimized out>, argv@entry=3D0x7ffe7067ddb8) at git.c:947
+#18 0x0000000000404a67 in main (argc=3D13, argv=3D0x7ffe7067ddb8) at common=
+-main.c:64
+[root@dop02108c1eu06 ~]#
+
+[root@dop02108c1eu06 ~]# pstack 1043354
+#0=A0 0x00007f64b602b468 in waitpid () from /lib64/libpthread.so.0
+#1=A0 0x000000000060fc0b in wait_or_whine (pid=3D1043355, argv0=3D0x298f5f0=
+ "git-remote-https", in_signal=3Din_signal@entry=3D0) at run-command.c:559
+#2=A0 0x00000000006115c9 in finish_command (cmd=3Dcmd@entry=3D0x7ffe5685e60=
+0) at run-command.c:989
+#3=A0 0x0000000000611679 in run_command (cmd=3Dcmd@entry=3D0x7ffe5685e600) =
+at run-command.c:1015
+#4=A0 0x0000000000405fe7 in execv_dashed_external (argv=3D<optimized out>) =
+at git.c:777
+#5=A0 run_argv (args=3Dargs@entry=3D0x7ffe5685e6d0) at git.c:844
+#6=A0 0x00000000004068d6 in cmd_main (argc=3D<optimized out>, argc@entry=3D=
+4, argv=3D<optimized out>, argv@entry=3D0x7ffe5685e8a8) at git.c:947
+#7=A0 0x0000000000404a67 in main (argc=3D4, argv=3D0x7ffe5685e8a8) at commo=
+n-main.c:64
+[root@dop02108c1eu06 ~]#
+
+[root@dop02108c1eu06 ~]# pstack 1043355 #No Pstack strace
+[root@dop02108c1eu06 ~]# pstack 1043377
+Thread 2 (Thread 0x7fa246a18700 (LWP 1043384)):
+#0=A0 0x00007fa24ce568e4 in read () from /lib64/libpthread.so.0
+#1=A0 0x000000000066a07e in xread (fd=3Dfd@entry=3D0, buf=3Dbuf@entry=3D0x7=
+fa246a07d7c, len=3Dlen@entry=3D4) at wrapper.c:234
+#2=A0 0x000000000066a1eb in read_in_full (fd=3D0, buf=3Dbuf@entry=3D0x7fa24=
+6a07d7c, count=3Dcount@entry=3D4) at wrapper.c:292
+#3=A0 0x00000000005c4d32 in get_packet_data (fd=3Dfd@entry=3D0, src_buf=3Ds=
+rc_buf@entry=3D0x0, src_size=3Dsrc_size@entry=3D0x0, dst=3Ddst@entry=3D0x7f=
+a246a07d7c, size=3Dsize@entry=3D4, options=3Doptions@entry=3D1) at pkt-line=
+.c:354
+#4=A0 0x00000000005c5827 in packet_read_with_status (fd=3Dfd@entry=3D0, src=
+_buffer=3Dsrc_buffer@entry=3D0x0, src_len=3Dsrc_len@entry=3D0x0, buffer=3Db=
+uffer@entry=3D0x7fa246a07e20 "\001\060\060\061aok refs/tags/v0.10.45\n", si=
+ze=3Dsize@entry=3D65520, pktlen=3Dpktlen@entry=3D0x7fa246a07df8, options=3D=
+1) at pkt-line.c:422
+#5=A0 0x00000000005c5fa9 in recv_sideband (me=3Dme@entry=3D0x6e35ea "send-p=
+ack", in_stream=3D0, out=3Dout@entry=3D5) at pkt-line.c:586
+#6=A0 0x0000000000612bf3 in sideband_demux (in=3D<optimized out>, out=3D5, =
+data=3D0x7ffcfb7a3b08) at send-pack.c:283
+#7=A0 0x000000000060fd8e in run_thread (data=3D0x7ffcfb7a3930) at run-comma=
+nd.c:1040
+#8=A0 0x00007fa24ce4d14a in start_thread () from /lib64/libpthread.so.0
+#9=A0 0x00007fa24c974dc3 in clone () from /lib64/libc.so.6
+Thread 1 (Thread 0x7fa24d49cb80 (LWP 1043377)):
+#0=A0 0x00007fa24ce568e4 in read () from /lib64/libpthread.so.0
+#1=A0 0x000000000066a07e in xread (fd=3Dfd@entry=3D4, buf=3Dbuf@entry=3D0x7=
+ffcfb7a36cc, len=3Dlen@entry=3D4) at wrapper.c:234
+#2=A0 0x000000000066a1eb in read_in_full (fd=3D4, buf=3Dbuf@entry=3D0x7ffcf=
+b7a36cc, count=3Dcount@entry=3D4) at wrapper.c:292
+#3=A0 0x00000000005c4d32 in get_packet_data (fd=3Dfd@entry=3D4, src_buf=3Ds=
+rc_buf@entry=3D0x7ffcfb7a3968, src_size=3Dsrc_size@entry=3D0x7ffcfb7a3970, =
+dst=3Ddst@entry=3D0x7ffcfb7a36cc, size=3Dsize@entry=3D4, options=3Doptions@=
+entry=3D6) at pkt-line.c:354
+#4=A0 0x00000000005c5827 in packet_read_with_status (fd=3D4, src_buffer=3Ds=
+rc_buffer@entry=3D0x7ffcfb7a3968, src_len=3Dsrc_len@entry=3D0x7ffcfb7a3970,=
+ buffer=3D0x99af00 <packet_buffer> "ok", size=3D65520, pktlen=3Dpktlen@entr=
+y=3D0x7ffcfb7a398c, options=3D6) at pkt-line.c:422
+#5=A0 0x00000000005c5d10 in packet_reader_read (reader=3Dreader@entry=3D0x7=
+ffcfb7a3960) at pkt-line.c:640
+#6=A0 0x00000000005c60ac in packet_reader_read (reader=3Dreader@entry=3D0x7=
+ffcfb7a3960) at pkt-line.c:626
+#7=A0 0x0000000000612d98 in receive_status (reader=3Dreader@entry=3D0x7ffcf=
+b7a3960, refs=3Drefs@entry=3D0x1583c90) at send-pack.c:183
+#8=A0 0x0000000000613bbb in send_pack (args=3Dargs@entry=3D0x98f5c0 <args>,=
+ fd=3Dfd@entry=3D0x7ffcfb7a3b08, conn=3Dconn@entry=3D0x0, remote_refs=3D<op=
+timized out>, extra_have=3Dextra_have@entry=3D0x7ffcfb7a3b70) at send-pack.=
+c:746
+#9=A0 0x00000000004b64de in cmd_send_pack (argc=3D<optimized out>, argv=3D0=
+x153e660, prefix=3D<optimized out>, repo=3D<optimized out>) at builtin/send=
+-pack.c:320
+#10 0x0000000000404eae in run_builtin (repo=3D0x993960 <the_repo>, argv=3D<=
+optimized out>, argc=3D<optimized out>, p=3D0x9721c8 <commands+2664>) at gi=
+t.c:480
+#11 handle_builtin (args=3Dargs@entry=3D0x7ffcfb7a4580) at git.c:740
+#12 0x0000000000405f1f in run_argv (args=3Dargs@entry=3D0x7ffcfb7a4580) at =
+git.c:807
+#13 0x00000000004068d6 in cmd_main (argc=3D<optimized out>, argc@entry=3D8,=
+ argv=3D<optimized out>, argv@entry=3D0x7ffcfb7a4758) at git.c:947
+#14 0x0000000000404a67 in main (argc=3D8, argv=3D0x7ffcfb7a4758) at common-=
+main.c:64
+
+strace of all above processes:
+
+[root@dop02108c1eu06 ~]# strace -p 1043353
+strace: Process 1043353 attached
+read(3,
+
+
+[root@dop02108c1eu06 workingDir]# strace -p 1043354
+strace: Process 1043354 attached
+wait4(1043355,
+
+[root@dop02108c1eu06 workingDir]# strace -p 1043355
+rt_sigaction(SIGPIPE, {sa_handler=3DSIG_DFL, sa_mask=3D[PIPE], sa_flags=3DS=
+A_RESTORER|SA_RESTART, sa_restorer=3D0x7f337607eb20}, NULL, 8) =3D 0
+select(4, [3], [], [], {tv_sec=3D0, tv_usec=3D795000}) =3D 1 (in [3], left =
+{tv_sec=3D0, tv_usec=3D794998})
+rt_sigaction(SIGPIPE, NULL, {sa_handler=3DSIG_DFL, sa_mask=3D[PIPE], sa_fla=
+gs=3DSA_RESTORER|SA_RESTART, sa_restorer=3D0x7f337607eb20}, 8) =3D 0
+rt_sigaction(SIGPIPE, {sa_handler=3DSIG_IGN, sa_mask=3D[PIPE], sa_flags=3DS=
+A_RESTORER|SA_RESTART, sa_restorer=3D0x7f337607eb20}, NULL, 8) =3D 0
+poll([{fd=3D3, events=3DPOLLIN|POLLPRI|POLLRDNORM|POLLRDBAND}], 1, 0) =3D 1=
+ ([{fd=3D3, revents=3DPOLLIN|POLLRDNORM}])
+read(3, "\27\3\3\0006", 5)=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =3D 5
+read(3, "\216v\301[\367\322\25\326\25\266p6\322\211%\2237\305$W\21\r.oK\241=
+\207f\306\232~\23"..., 54) =3D 54
+write(2, "08:28:09.551245 http.c:878=A0=A0=A0=A0=A0 "..., 95) =3D 95
+write(5, "001f\001001aok refs/tags/v0.10.45\n", 31) =3D 31
+rt_sigaction(SIGPIPE, {sa_handler=3DSIG_DFL, sa_mask=3D[PIPE], sa_flags=3DS=
+A_RESTORER|SA_RESTART, sa_restorer=3D0x7f337607eb20}, NULL, 8) =3D 0
+select(4, [3], [], [], {tv_sec=3D0, tv_usec=3D795000}) =3D 1 (in [3], left =
+{tv_sec=3D0, tv_usec=3D794998})
+rt_sigaction(SIGPIPE, NULL, {sa_handler=3DSIG_DFL, sa_mask=3D[PIPE], sa_fla=
+gs=3DSA_RESTORER|SA_RESTART, sa_restorer=3D0x7f337607eb20}, 8) =3D 0
+rt_sigaction(SIGPIPE, {sa_handler=3DSIG_IGN, sa_mask=3D[PIPE], sa_flags=3DS=
+A_RESTORER|SA_RESTART, sa_restorer=3D0x7f337607eb20}, NULL, 8) =3D 0
+poll([{fd=3D3, events=3DPOLLIN|POLLPRI|POLLRDNORM|POLLRDBAND}], 1, 0) =3D 1=
+ ([{fd=3D3, revents=3DPOLLIN|POLLRDNORM}])
+read(3, "\27\3\3\0\26", 5)=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 =3D 5
+read(3, "\346\302h\301\6g\216s^:\301\352\274\341G\6\245\3AT+7", 22) =3D 22
+write(2, "08:28:09.551768 http.c:878=A0=A0=A0=A0=A0 "..., 95) =3D 95
+write(2, "08:28:09.551850 http.c:878=A0=A0=A0=A0=A0 "..., 97) =3D 97
+rt_sigaction(SIGPIPE, {sa_handler=3DSIG_DFL, sa_mask=3D[PIPE], sa_flags=3DS=
+A_RESTORER|SA_RESTART, sa_restorer=3D0x7f337607eb20}, NULL, 8) =3D 0
+read(6,
+
+[root@dop02108c1eu06 ~]# strace -p 1043377
+strace: Process 1043377 attached
+read(4,
+
+Thanks,
+Akash
+
