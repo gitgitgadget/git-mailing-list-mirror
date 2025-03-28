@@ -1,68 +1,68 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27081D5162
-	for <git@vger.kernel.org>; Fri, 28 Mar 2025 17:05:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69851DB13A
+	for <git@vger.kernel.org>; Fri, 28 Mar 2025 17:05:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743181527; cv=none; b=I9AqC6JgSx3G/UVIuOBMoSrnAQeXGq2PkIHlKd5MyOWEVSdmA5vf5ibWCHuGP91o01/Q8vrXzQAcMBk8LigMnbMgKQomSCUG9FQClsc9IuKKcqwXw2MqWQTcZ6kv4Jg0JaZRApHuIFLvXAuzJ0+pj9stTtwADKecZwm5OAMZUTE=
+	t=1743181528; cv=none; b=JdAAjvt6vkDwoHdkI202+ntci9OUtYaIJlR+Ksq1E7TR1gHsTZ/Tsoa22i6TKeWlHRHlSoF0YRN2/cFMqmKh7C27cT79WfdTvqQslqV6KnVYp+i7RgoDWoYvqLRenNRmqWvtggA/PKmz0TchnF6hmhuSp7fK/Y3UN+gNl9uNWgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743181527; c=relaxed/simple;
-	bh=T3dz2iiCplTFmUq2ruYc1xI7tUpAnkyfTkFgeA2tKHQ=;
+	s=arc-20240116; t=1743181528; c=relaxed/simple;
+	bh=poliQUiPmUYejsJjzk6xebI4OX28VQmIFQavl+TpbDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/rDBULt21h5/SRjrimZjQkGwxONuKt8msNQbLqCw+S3XQK0oy5YAXXZGxQRZUltPV3cmv+aycMB+f4QvNM6MIEx7QI/IVlDsXfFiNBHfF//3FLJ5cpoqAuvvi8hdkVdY1FtZvqsI8wTSVJcRH+QUnSlOG2Rjz5Osz0lND95frU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T4/0PVvc; arc=none smtp.client-ip=209.85.167.171
+	 MIME-Version; b=VUIRElW90He2VYf1Orzk17VNb7cIhm8J1Ozhy914IY+CI6eoCqlqSASiNl70H+iN7ts9zY/I8XoroDjmVjd2Ot/hLrrfI/xvEvzMvVf6AFbyFWKPS7P1YW4QOKuIoWBHuQe8Ii7Q/cRRFL3RHzZtRcYE7IRDqyYTydRUhPOVLwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H98e4n2t; arc=none smtp.client-ip=209.85.167.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T4/0PVvc"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3feaedb531dso472754b6e.3
-        for <git@vger.kernel.org>; Fri, 28 Mar 2025 10:05:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H98e4n2t"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3fe9fe62295so764259b6e.0
+        for <git@vger.kernel.org>; Fri, 28 Mar 2025 10:05:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743181524; x=1743786324; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1743181525; x=1743786325; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XihaqxHMQyV6GlZsVf3yXEg0B+quohTjwIEyISykt9o=;
-        b=T4/0PVvcur22d6e1YvrZZkWMJmYF4haBmmQ48i8jRI0dF/DhtoLo1+/V5MYTf1Gw2U
-         PPQAVVNn0z+ww4tO/QliIdnvIcIVQ8/qmyfkPHqGClAhJPWyOKArrRKyBz8SZo3CDCLd
-         Cla8sa/tvgOwDLUpO0e/riv24vqTFuCFKy+sPSBLT2Mf7xnYhK1mxwec6pW++T/GbYH5
-         Uy6ImMbkhA4TS6yHC39GBm2qzsXaEGhotqjxCFI1k4aQTZsz0SW0UgUiTVWaNlu8ivti
-         8xKLXEBwF0ulS48CN3z0ISRvnH8a3hhg7ZYb1FxtAf999VviXhgCeOmPSp5wK+AEmKBv
-         nSmQ==
+        bh=RgtWzKM1JejgAbaQIKA1dhHnN40cJ56jUGXP/oBvI+c=;
+        b=H98e4n2t2v/zQxC8lHqipzvlpeNoqKTiC0Zk4lxs2FGU+vAw2UssXho6JBu/YXKuZK
+         YxqKoogAWbjUz2v/Jrd4lfAiabWWNpKKAOhfJ2SCl6OubKuDJobi9+uDJrSbqq41ylg2
+         GAy4kqwguCZ47zzQmYrrc851W0YwNBjq/Ql8KNUbER5S4NaUN+DQiOt7f9xNsRgLC8Dz
+         wvmBlhFV2jqR1ZWYX4IbfGO4QTCYqd/wxY0oIXF8BBe2KQMpwOQUZrilptyoN3s7WvmH
+         EB5XDgQOAvTLCV335XgpwdKVSmjSUBd/mC33c4vhj/76ID84yjXiR41IQ8Yr81E22q/C
+         dw9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743181524; x=1743786324;
+        d=1e100.net; s=20230601; t=1743181525; x=1743786325;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XihaqxHMQyV6GlZsVf3yXEg0B+quohTjwIEyISykt9o=;
-        b=jwoABrZTVtKjVMDem8PRDGD6QNB51EmEbw5l+DXPUAdwEe+321ZJxy+RfSt7dLX/Iz
-         OqT3vjzELqEwfKjplnNBC+vsmOKRvrKIdRTHnBZrLmd/ZGZVyFw/YEq7P9KQOXlh76ye
-         MQ9nwVERvdwCxupYZ60WnXRexe5vy07VxmJhOdIMwIIZGjEKb0g8wSKcEreERxFkeYoO
-         BuQxhp2zSj/oIP03I0wVn0nFbEt0qGZY0XgDBR0JWKGEVLUFkmzqtqKM5UU9h0IGxAAt
-         3kiENXQQv1dDJtQCkIoMcZv2y3iB+eBLwPtF344ejuPVdJ82AYFfgGWgIzIOwg5bsUli
-         L7yQ==
-X-Gm-Message-State: AOJu0Yz4RDkLXyxR7nEGXg1LFNgK0G1LVg1jUo1g7uskKQmw2fQDQxox
-	XwbetmTcwlirZGQ3UY2nLO4XXxAokKOhA0jgjgSp5aFhQd5pcTc5gY8guQ==
-X-Gm-Gg: ASbGncsY4kFSEne4+CAdKWKqmbyqGEN1QoS+mGNgOdSUY5uDY9QVD+C6h3X3pZ8eh6O
-	Yi5b4Q7KjVaAZ+EF+ZYSiz6rdH9i+cxqboySYpfyXTb9+BQouh44N799qLGg1DHLi12ExxUWljC
-	pOVuL5jmtPkOl1jHGYgBBLO5Sb78p1XtI8nIEqTlUOjAQy93lxiWFyObiDYT8UhHKjCikOfBtW1
-	QCTx0bt09NEzP1xdCbcxC9WPsxDe8YZL8yn09pTNl3y1Yqnw7NoaCUjPghQw7m8QVXHSnW036PP
-	J8xrtWZ1PeZKTcp5Bw3q7xM7QsimQSsUn8mXwm+FLl8Pv1VGZiIK
-X-Google-Smtp-Source: AGHT+IFFSMlVhtXVyfgGFflrbZocptY/aw/nDGcNSSt4amDeEWipavtVdA/qEhEPJ9U/7GYSRPBHrA==
-X-Received: by 2002:a05:6808:1816:b0:3f8:debb:7683 with SMTP id 5614622812f47-3ff0f540100mr21761b6e.23.1743181524323;
-        Fri, 28 Mar 2025 10:05:24 -0700 (PDT)
+        bh=RgtWzKM1JejgAbaQIKA1dhHnN40cJ56jUGXP/oBvI+c=;
+        b=ajdU/amTZYvtFAtRPo9Ipnuv6zbxUU4+7lwWczbAs+00RNDx96W8CixSIWzMIdIw4M
+         l9gfcCW3RluZhEts0AK3qcmlSBTTtm5o4xLnCKLIhsZNE/0L2Kq44LgYOJKUMVqt+lwP
+         Z5YcFT5j8GZx43k7Uyr0eyL6VKYF4ePI4chlAS3gx9KTpaCUgphaVrfy9aeXRkuxQPRR
+         P//egt/RMe/9CW06LUCb4tYcuuIQcQKswU5CO8JzpDXqA1NuXkWb+YkZKjZWnx+Q0YbO
+         VpOvbY85hC/JAjabFjqvN/vE9HM8TWl4Gp2o/1yYR7GG4QXqS7vRAjp+M+lnvac6Z07Z
+         vPAA==
+X-Gm-Message-State: AOJu0YwXPMk3bAei6CefKviC9fCPvAeKr9bUPG2jg+i7o4fqQMS4iR2d
+	4H+yJJRdozIaC/DgAwE2oxHnSXUHoH+Ez2pJA+BvGzhEfMZioU9VIlcPEA==
+X-Gm-Gg: ASbGncspfyyfS/T3cliV27wibg0dsCkcpcqchyYaX+OtxtWM8ACiR1n1zL++aJtp2YJ
+	jpKkDyWtgBOsF7xkrYoejdGgeIrNFWo8aaneH91pG1z4W1bjBCOdWxn9X6xb6rlAHp/pZXupZ1Q
+	1aP235PXz/2XsnxJhruvLtjB/kxQWsWdtpr2sePFWtxN8OtIhc6Qx1awnh+v5j6XksvmYks1Y2y
+	MROl1uxt9LG/KVhCfdbx/iABEl9sVrh4HT84Mn5TjWjpXw8u+dFXQdWfQRopAWyYrDrzsSrQiva
+	Oaz8p6/7xEEAo7bSQzAsbXf0oNIUhEO7LiJyzGddAA2uwfXu2ZZ7
+X-Google-Smtp-Source: AGHT+IH+VsN5PuYZBOO9NoeTZS3j7qqcCICnt8U36wOzsDSF0r1YFlMcmDpzWZ7ZlsUvoAL2+w2CyQ==
+X-Received: by 2002:a05:6808:22a2:b0:3f9:9076:b659 with SMTP id 5614622812f47-3ff0f59bbbfmr11906b6e.28.1743181525277;
+        Fri, 28 Mar 2025 10:05:25 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3ff05166b27sm402136b6e.3.2025.03.28.10.05.23
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-3ff05166b27sm402136b6e.3.2025.03.28.10.05.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Mar 2025 10:05:23 -0700 (PDT)
+        Fri, 28 Mar 2025 10:05:24 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: christian.couder@gmail.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 1/2] help: include SHA implementation in version info
-Date: Fri, 28 Mar 2025 12:01:20 -0500
-Message-ID: <20250328170121.157563-2-jltobler@gmail.com>
+Subject: [PATCH 2/2] help: include unsafe SHA-1 build info in version
+Date: Fri, 28 Mar 2025 12:01:21 -0500
+Message-ID: <20250328170121.157563-3-jltobler@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250328170121.157563-1-jltobler@gmail.com>
 References: <20250328170121.157563-1-jltobler@gmail.com>
@@ -74,64 +74,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When the `--build-options` flag is used with git-version(1), additional
-information about the built version of Git is printed. During build
-time, different SHA implementations may be configured, but this
-information is not included in the version info.
-
-Add the SHA implementations Git is built with to the version info.
+In 06c92dafb8 (Makefile: allow specifying a SHA-1 for non-cryptographic
+uses, 2024-09-26), support for unsafe SHA-1 is added. Add the unsafe
+SHA-1 build info to `git version --build-info` and update corresponding
+documentation.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- help.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ Documentation/git-version.adoc | 3 +++
+ help.c                         | 8 ++++++++
+ 2 files changed, 11 insertions(+)
 
+diff --git a/Documentation/git-version.adoc b/Documentation/git-version.adoc
+index 80fa7754a6..53c8ba74c1 100644
+--- a/Documentation/git-version.adoc
++++ b/Documentation/git-version.adoc
+@@ -22,6 +22,9 @@ OPTIONS
+ --build-options::
+ 	Include additional information about how git was built for diagnostic
+ 	purposes.
+++
++If built to use a faster SHA-1 implementation for non-cryptographic purposes,
++the implmentation used is denoted as "unsafe-SHA-1".
+ 
+ GIT
+ ---
 diff --git a/help.c b/help.c
-index c54bd9918a..32b5d4e6f5 100644
+index 32b5d4e6f5..7670e0a64a 100644
 --- a/help.c
 +++ b/help.c
-@@ -768,6 +768,33 @@ char *help_unknown_cmd(const char *cmd)
- 	exit(1);
- }
- 
-+static void get_sha_impl(struct strbuf *buf)
-+{
-+#if defined(SHA1_OPENSSL)
-+	strbuf_addstr(buf, "SHA-1: OpenSSL\n");
-+#elif defined(SHA1_BLK)
-+	strbuf_addstr(buf, "SHA-1: blk\n");
-+#elif defined(SHA1_APPLE)
-+	strbuf_addstr(buf, "SHA-1: Apple CommonCrypto\n");
-+#elif defined(DC_SHA1_EXTERNAL)
-+	strbuf_addstr(buf, "SHA-1: Collision Detection (External)\n");
-+#elif defined(DC_SHA1_SUBMODULE)
-+	strbuf_addstr(buf, "SHA-1: Collision Detection (Submodule)\n");
-+#elif defined(SHA1_DC)
-+	strbuf_addstr(buf, "SHA-1: Collision Detection\n");
-+#endif
-+
-+#if defined(SHA256_OPENSSL)
-+	strbuf_addstr(buf, "SHA-256: OpenSSL\n");
-+#elif defined(SHA256_NETTLE)
-+	strbuf_addstr(buf, "SHA-256: Nettle\n");
-+#elif defined(SHA256_GCRYPT)
-+	strbuf_addstr(buf, "SHA-256: gcrypt\n");
-+#elif defined(SHA256_BLK)
-+	strbuf_addstr(buf, "SHA-256: blk\n");
-+#endif
-+}
-+
- void get_version_info(struct strbuf *buf, int show_build_options)
- {
- 	/*
-@@ -803,6 +830,7 @@ void get_version_info(struct strbuf *buf, int show_build_options)
- #elif defined ZLIB_VERSION
- 		strbuf_addf(buf, "zlib: %s\n", ZLIB_VERSION);
+@@ -784,6 +784,14 @@ static void get_sha_impl(struct strbuf *buf)
+ 	strbuf_addstr(buf, "SHA-1: Collision Detection\n");
  #endif
-+		get_sha_impl(buf);
- 	}
- }
  
++#if defined(SHA1_OPENSSL_UNSAFE)
++	strbuf_addstr(buf, "unsafe-SHA-1: OpenSSL\n");
++#elif defined(SHA1_BLK_UNSAFE)
++	strbuf_addstr(buf, "unsafe-SHA-1: blk\n");
++#elif defined(SHA1_APPLE_UNSAFE)
++	strbuf_addstr(buf, "unsafe-SHA-1: Apple CommonCrypto\n");
++#endif
++
+ #if defined(SHA256_OPENSSL)
+ 	strbuf_addstr(buf, "SHA-256: OpenSSL\n");
+ #elif defined(SHA256_NETTLE)
 -- 
 2.49.0
 
