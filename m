@@ -1,164 +1,72 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7F83010C
-	for <git@vger.kernel.org>; Fri, 28 Mar 2025 05:36:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E30E573
+	for <git@vger.kernel.org>; Fri, 28 Mar 2025 05:49:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743140203; cv=none; b=fJR9pLvFmQWXyD9fXJ1XUAT9BI9vo2YDKyyF7xedSXF+4iw/dSWkSxATmtw31btCJOa4ABIgJokekO494F6Ueb52oTP4I/EU3MRB2oZa0L+wzZR0ZPOp1gAbtd7bfc6U5fTXj5OfRO/zORzSJls91lHjmOnt7fguHogj4EXbS14=
+	t=1743140998; cv=none; b=QPyYsmAu6Ozy+8g2iAMruf8wsZMFgTwKGPcNe640qUOWeKP4tzLbXsPS205EwMVT4pz9sHH1GTzAT35+HhnoEg+q/uUULSucyJ4ILXmY9yiYh4GzDEAPKFj2nXBvHA6p9nscfsm9PJl/J8j/nMPYUTh8Ot3HiQju1Vv77Mxuhc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743140203; c=relaxed/simple;
-	bh=S/vkWURm+xtU2cd2S2K2F2EMugP9iGYXP+v5T6ox3Es=;
+	s=arc-20240116; t=1743140998; c=relaxed/simple;
+	bh=f8b8Kk9A7pP7vwXtO8/qhlG//MD+KJqYpD/Qd+DWghE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KtxTuRJoa2oUDs99iL7vO8l3duQ/239Y6VWWC2XxJZhaUROLRHVMt9mUKI6XWZ8xc0iiKJCWS1cp5pMSZO1U0IflK+8TIMTb2CFFiNmlp9DG2MEN8HicanJVUvbURQGaXVnPYnDTT3ISHqtjtTOAd5tMotqU8LhZL4RgYgl3yM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NTNEFSrD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WQxGHqFb; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=uv6Z5/NDx/NQ6jjl+DPIXPbuDF6GItYx2XMdU0zMZb0CnBGPwLDFDu3UbOcQBDzPa83J9paLF8zZHq6TY/qjC9sErrCNfN9IcgmSKeV1x5Pogb9T3diGemj30HO9Y3+dX0XcOTKuP9hOn+622JbnAE5YezBUcyAmPJ/pRaBpN8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=TSsKTFHB; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NTNEFSrD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WQxGHqFb"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1C0AB2540201;
-	Fri, 28 Mar 2025 01:36:39 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Fri, 28 Mar 2025 01:36:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1743140198; x=1743226598; bh=RQXFFl3Epg
-	5HC6gdho9WqpFXvCY5Ikp0cr3d12hUSTU=; b=NTNEFSrD/rNxKliNIzHwfcJ2s8
-	K1oeRsT84WGt2VNo56MArZ1buCyz6XB9+hFsv88a4gWFt4u+cFVr2zrJ/BdhmTtx
-	UxUVJT9IeX1BQCFYbNPOvi2vXQJgvKA0GdIuKHsWcvABfuLneAFI+yKb02I3nDwM
-	UMLdijYmCmgxhadH2neCmHWRl35QgqmRmGTqaIDJrioqEV6hxezsjO94nxoRNMHN
-	Fh8Nv6Tjf7K2wT8LCSd4/ocgZdDSFJcXGtd/PNZaQuc3byRxc55xiYn3qvSXIeGB
-	bj98NWG2enSrGvgyD/IMN9YwhksNHZ1/OzQOJBhR08yunplFTV3Dr014lK4A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743140198; x=1743226598; bh=RQXFFl3Epg5HC6gdho9WqpFXvCY5Ikp0cr3
-	d12hUSTU=; b=WQxGHqFbiALEDP0V2QTOr9jbVNtoxu4N5e4O88MEQ/y+cfUCkzI
-	Q+JQcMRGw8fhkPaEPOHIPocPDQ9/o/wR3gB0xdI8Fz0LV1cqSTmJH+gTytwO5DFT
-	R1bOXy4WIUeMLRkJyep7WY4sUqUp/6xEIZ6ZrSorLXXjlagVudO6D6776P7nYa1M
-	jzceRKuNMx7wv6H7xTp1Rp4whgadAG8wS6qJAU2os9+1Nfp+h/qQUZqw4B+O95WE
-	MDYBBf8UJmTAAO6V3hatsv53wa2RXJKLtc5nW1k1sZnTX7ppNQIMp18heQ0oZS51
-	fxsCykRAuDNnPE7ovS3Ku6u5EEIe0UMEF4w==
-X-ME-Sender: <xms:ZjXmZyvkeIfc2p0Kjv8LyYuqVoQIqq25FT9BJ2PvLk0dyOjzFeGbRg>
-    <xme:ZjXmZ3fkETXFCXEK2r8ke95WBo3AoIk1jJFV0Z-cc3iH8UearBj_PJyxX3kHomJPa
-    sy2uke9oooRJ3qKiQ>
-X-ME-Received: <xmr:ZjXmZ9yI9XIuknA6dLcPH-N4EZRFzAwtigy5jZ6la-YL3ouStGRRQdkbzd6hKNf7y6fKr71FkZkFHMoEPPo6pn-4fuHevB2IX7CZJe8hApn_VLs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedtgeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdu
-    gfehtefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
-    ihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
-    hnsehgmhigrdguvg
-X-ME-Proxy: <xmx:ZjXmZ9NZNMOwZ-cti_g33OoqyGJ7tuYYXy3K7JeFMGNZyh6WkkaxKg>
-    <xmx:ZjXmZy-VxSp3wlmqnCsV3nexyrW-gJ2Liy3rb-jcXhsC9mxfk6FDcQ>
-    <xmx:ZjXmZ1VbY4Q9vVqM92u3uQhglt5WB_gvm9JYe1SnSKR_WtmjGhMGSw>
-    <xmx:ZjXmZ7fSVf1wsV8SBeVbeVqjLYUgZ2H1K7HMmMxpwQ4hWSpj_QJQig>
-    <xmx:ZjXmZ5b2eaoeWQ-AJ-6LaFU950dZ87Jal0jUmkDO0RDd_fVA7uMItm2s>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Mar 2025 01:36:37 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3052a674 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 28 Mar 2025 05:36:34 +0000 (UTC)
-Date: Fri, 28 Mar 2025 06:36:33 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org
-Subject: Re: ps/reftable-sans-compat-util, was Re: What's cooking in git.git
- (Feb 2025, #09; Fri, 28)
-Message-ID: <Z-Y1YbE2EVqLZhGO@pks.im>
-References: <xmqq7c591sus.fsf@gitster.g>
- <Z8aeLc-xelujEjTE@pks.im>
- <0c808b85-d97c-ecd3-0b1d-fba546a1124b@gmx.de>
- <9cc294f6-03de-d88f-9734-510a23fc8991@gmx.de>
- <Z8bL0HUuQqj7LlTp@pks.im>
- <Z8bQsflIqzZd3AMs@pks.im>
- <9cd879ed-5366-a7bf-f440-e35222a733d2@gmx.de>
- <xmqq34eyijbx.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="TSsKTFHB"
+Received: (qmail 30692 invoked by uid 109); 28 Mar 2025 05:49:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=f8b8Kk9A7pP7vwXtO8/qhlG//MD+KJqYpD/Qd+DWghE=; b=TSsKTFHBj4+iZW+AEv37XYyVf4RGEl92ue+aFUP3EdZdbw2UVU5B5kU9qDXmv8NVwnrN9g5hlI2sEms8rhcFLvj+ZrQu8bLyRx1VPY/UGiB5FyjCqvBlxbuFU2v0nQMpCmSEuPYUvFU86q9Z+XXPtApVMLwB08/zF3pesplVeKf5CDfEdnr+u8/AiL2ouMetfjPXyf7XMQqqr4ggO9zNzrt+m1DdUYvWZBPXPmXYjIIV4ppxO9tQPhS6RTJAsthrCnUTZ/RTvQ1OreIcdfzdfmdjiYSy6X16txHs9JpHpJl80LSY1IEjaYDCJE7616XeQhWYSOjN+eqv+3RjO/g0Sw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 28 Mar 2025 05:49:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12439 invoked by uid 111); 28 Mar 2025 05:49:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 28 Mar 2025 01:49:54 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 28 Mar 2025 01:49:53 -0400
+From: Jeff King <peff@peff.net>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/2] read-cache: check range before dereferencing an
+ array element
+Message-ID: <20250328054953.GA3590654@coredump.intra.peff.net>
+References: <pull.1887.git.1743010011.gitgitgadget@gmail.com>
+ <pull.1887.v2.git.1743073557.gitgitgadget@gmail.com>
+ <73cae30129338cf219a810c3a2a78ef48d5637d0.1743073557.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq34eyijbx.fsf@gitster.g>
+In-Reply-To: <73cae30129338cf219a810c3a2a78ef48d5637d0.1743073557.git.gitgitgadget@gmail.com>
 
-On Thu, Mar 27, 2025 at 08:28:34AM -0700, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >> Below patch addresses the issue.
-> >>
-> >> Patrick
-> >>
-> >> diff --git a/compat/posix.h b/compat/posix.h
-> >> index b484029f751..5ad3539d55b 100644
-> >> --- a/compat/posix.h
-> >> +++ b/compat/posix.h
-> >> @@ -176,6 +176,16 @@ typedef unsigned long uintptr_t;
-> >>  #define _ALL_SOURCE 1
-> >>  #endif
-> >>
-> >> +#ifdef USE_MIMALLOC
-> >> +#include "mimalloc.h"
-> >> +#define malloc mi_malloc
-> >> +#define calloc mi_calloc
-> >> +#define realloc mi_realloc
-> >> +#define free mi_free
-> >> +#define strdup mi_strdup
-> >> +#define strndup mi_strndup
-> >> +#endif
-> >> +
-> >>  #ifdef MKDIR_WO_TRAILING_SLASH
-> >>  #define mkdir(a,b) compat_mkdir_wo_trailing_slash((a),(b))
-> >>  int compat_mkdir_wo_trailing_slash(const char*, mode_t);
-> >> diff --git a/git-compat-util.h b/git-compat-util.h
-> >> index 8d2acf86670..a102a365592 100644
-> >> --- a/git-compat-util.h
-> >> +++ b/git-compat-util.h
-> >> @@ -226,16 +226,6 @@ static inline const char *precompose_string_if_needed(const char *in)
-> >>  # include <sys/sysinfo.h>
-> >>  #endif
-> >>
-> >> -#ifdef USE_MIMALLOC
-> >> -#include "mimalloc.h"
-> >> -#define malloc mi_malloc
-> >> -#define calloc mi_calloc
-> >> -#define realloc mi_realloc
-> >> -#define free mi_free
-> >> -#define strdup mi_strdup
-> >> -#define strndup mi_strndup
-> >> -#endif
-> >> -
-> >>  #ifndef PATH_SEP
-> >>  #define PATH_SEP ':'
-> >>  #endif
-> >
-> > I integrated this into Git for Windows' `shears/seen` branch (i.e. the
-> > continuously-rebased Git for Windows patches on top of the `seen` branch),
-> > and for the first time in weeks, it passed the CI build:
-> > https://github.com/git-for-windows/git/actions/runs/14087673643
+On Thu, Mar 27, 2025 at 11:05:57AM +0000, Johannes Schindelin via GitGitGadget wrote:
+
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> Thanks.
+> Before accessing an array element at a given index, we should make sure
+> that the index is within the desired bounds, otherwise it makes little
+> sense to access the array element in the first place.
 > 
-> So we'll see a final reroll with the above changes and the topic
-> will finally be moving?  That's a great news.
+> In this instance, testing whether `ce->name[common]` is the trailing NUL
+> byte is technically different from testing whether `common` is within
+> the bounds of `previous_name`. It is also redundant, as the range-check
+> guarantees that `previous_name->buf[common]` cannot be NUL and therefore
+> the condition `ce->name[common] == previous_name->buf[common]` would not
+> be met if `ce->name[common]` evaluated to NUL.
+> 
+> However, in the interest of reducing the cognitive load to reason about
+> the correctness of this loop (so that I can focus on interesting
+> projects again), I'll simply move the range-check to the beginning of
+> the loop condition and keep the redundant NUL check.
 
-The topic can be merged as-is. The relevant MIMALLOC code only exists
-downstream in Git for Windows, so there is nothing that I can do about
-it in this series.
+Thanks, I think this explanation works, and the patch looks fine. (I
+didn't dig deeply into patch 1, but I agree with Junio's analysis that
+it is also a false positive).
 
-Thanks all!
-
-Patrick
+-Peff
