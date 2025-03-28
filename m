@@ -1,111 +1,73 @@
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A29B17BCE
-	for <git@vger.kernel.org>; Fri, 28 Mar 2025 13:09:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B3719DF6A
+	for <git@vger.kernel.org>; Fri, 28 Mar 2025 13:27:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743167393; cv=none; b=Kz3nPMcgS0cDLwE/VYQzlUWXuQzq4xwVTmrBVpsA1JE2f8pKjzy3rxCsexf1ZrnL4gTQ22fIVTnWbcZxKnqT5WFg1B1bKoYn+bM22e6aWrO71HyZzop8x8nTsUTWasbMiCRYYgm8YDnr6CC5sftQj012nKGmUUopbJFNHKGSmJQ=
+	t=1743168456; cv=none; b=dYM9RKOHwhwo6/37njS2RJw2r7XqIJIqNTn59oxJohPYkQhDlsCSb/T9RKoQRV4FOV0vSpTRnH4u4536yfK1dyLmqa78KTmxgLd1kfw6DZaD5waLY4i4eU61M7DqtoTdPNySz5CFRwwZkHpNAaPOWp65JLXKIHMUfghVR3RSBRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743167393; c=relaxed/simple;
-	bh=r4O02mBdzysCiIngeNva5g0/9QOJfdGJIz+NeFEr4R4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hx6Lel9h/+Tansg7eHt0076jtCTrCi2h7tYJsZ6y86xLcdUVTWu3J78QNIoxBoESA17FwBWpq6CF/UA44lMK0Ei6bYHVbq/w9/KuWvgcbsLZwbMhX+AdoNe9E5OvuKGBl8CoBw43f+hhOi3xlmDEjnk/HrYcAgJmT7Q4q5ikE1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=mu+bOsK9; arc=none smtp.client-ip=212.27.42.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1743168456; c=relaxed/simple;
+	bh=GJlViBMSHdsciY883XIY/I8SQfVEdLeytAG79cgUWFA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JFS2+eKCthmd07hvaX/H4HAs2Ehqf11kke8+U5h/vS7D3ccUDUyCRR0sHfejq59Ib89K1b3jngNFj272Y9o3gzw+iFjqM9jDRZE5ZyqhygxKSoeNwINf7jBl8njehh2O9BTNMGO1cfU0kwlhdIpYmOwGih9FQb2oQC2aWx8IlyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=5h3jmZYn; arc=none smtp.client-ip=95.215.58.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="mu+bOsK9"
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 75DFA4280C8
-	for <git@vger.kernel.org>; Fri, 28 Mar 2025 14:01:04 +0100 (CET)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:78a9:d95e:29cc:b1a9])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp5-g21.free.fr (Postfix) with ESMTPSA id DB66C5FFB4;
-	Fri, 28 Mar 2025 14:00:50 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1743166857;
-	bh=r4O02mBdzysCiIngeNva5g0/9QOJfdGJIz+NeFEr4R4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mu+bOsK9zSVTU4xaF64r+ob6U1lGTjiAPbqeXTtsWSXYpoXZhrqSlbExSWB4X4eDa
-	 snNmOj0QSBAu70VuE3RfoPb7GHUSVR4XSHVSR5+GyXqW/eNlHIaXBk2u3YRaVeDUIv
-	 qJNC9LjnflfLmagq0TeEmlHeDYzhK/fTNbsgMTm94wVeR5yUdgWm822i/3A3FRFy81
-	 q6axqIa+nDV5qvldOipTKp0Z+bJPy5iYj/t9o2jfVl+mRcmfENEhKdxTk2m6eosTW8
-	 ztJOue1DanLtoRp5BN9bRAyT9gGx3lIL3rVUdmGSvQhiw0u7TFpIWDjDPiH+iBrvrS
-	 q0TAXknYv8BQw==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Cc: jltobler@gmail.com, phillip.wood123@gmail.com, gitster@pobox.com,
- ps@pks.im, Karthik Nayak <karthik.188@gmail.com>
-Subject:
- Re: [PATCH v5 8/8] update-ref: add --batch-updates flag for stdin mode
-Date: Fri, 28 Mar 2025 14:00:49 +0100
-Message-ID: <6141866.lOV4Wx5bFT@cayenne>
-In-Reply-To:
- <20250327-245-partially-atomic-ref-updates-v5-8-4db2a3e34404@gmail.com>
-References:
- <20250327-245-partially-atomic-ref-updates-v5-0-4db2a3e34404@gmail.com>
- <20250327-245-partially-atomic-ref-updates-v5-8-4db2a3e34404@gmail.com>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="5h3jmZYn"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1743168450;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=EwRqH1krCtCnBaAjoHhFHw/DHnZ/mTJWwetXHO/1JQs=;
+	b=5h3jmZYnPX7vHAanIBgbG72XcooDoW1qDPj7SwhM5se9McewdrwEHJ+xkQn5NNZ62eJ+VA
+	PenggQqpSuX+w9DTsjKyC5XRmlGN2gs7AU1u+MH842rjk/Am7VEHA+PWEBXh5K+FRVPAKj
+	ptCDJIZFuIMVSw/BqY2N+k1TAChaE1A=
+From: Toon Claes <toon@iotcl.com>
+To: Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, =?utf-8?B?w4Z2?=
+ =?utf-8?B?YXIgQXJuZmrDtnLDsA==?=
+ Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 0/8] Introduce git-blame-tree(1) command
+In-Reply-To: <Z+XJ+1L3PnC9Dyba@nand.local>
+References: <20250326-toon-blame-tree-v1-0-4173133f3786@iotcl.com>
+ <Z+Rl43VR3ErE0Bu4@nand.local>
+ <20250327063243.GB3042475@coredump.intra.peff.net>
+ <Z+XJ+1L3PnC9Dyba@nand.local>
+Date: Fri, 28 Mar 2025 14:27:15 +0100
+Message-ID: <87wmc9ffpo.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Thursday, 27 March 2025 12:13:32 CET Karthik Nayak wrote:
-> When updating multiple references through stdin, Git's update-ref
-> command normally aborts the entire transaction if any single update
-> fails. This atomic behavior prevents partial updates. Introduce a new
-> batch update system, where the updates the performed together similar
-> but individual updates are allowed to fail.
-> 
-> Add a new `--batch-updates` flag that allows the transaction to continue
-> even when individual reference updates fail. This flag can only be used
-> in `--stdin` mode and builds upon the batch update support added to the
-> refs subsystem in the previous commits. When enabled, failed updates are
-> reported in the following format:
-> 
->   rejected SP (<old-oid> | <old-target>) SP (<new-oid> | <new-target>) SP
-> <rejection-reason> LF
-> 
-> Update the documentation to reflect this change and also tests to cover
-> different scenarios where an update could be rejected.
-> 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  Documentation/git-update-ref.adoc |  14 ++-
->  builtin/update-ref.c              |  66 ++++++++++-
->  t/t1400-update-ref.sh             | 233
-> ++++++++++++++++++++++++++++++++++++++ 3 files changed, 306 insertions(+), 7
-> deletions(-)
-> 
-> diff --git a/Documentation/git-update-ref.adoc
-> b/Documentation/git-update-ref.adoc index 9e6935d38d..5be2c16776 100644
-> --- a/Documentation/git-update-ref.adoc
-> +++ b/Documentation/git-update-ref.adoc
-> @@ -7,8 +7,10 @@ git-update-ref - Update the object name stored in a ref
-> safely
-> 
->  SYNOPSIS
->  --------
-> -[verse]
-> -'git update-ref' [-m <reason>] [--no-deref] (-d <ref> [<old-oid>] |
-> [--create-reflog] <ref> <new-oid> [<old-oid>] | --stdin [-z]) +[synopsis]
-> +git update-ref [-m <reason>] [--no-deref] -d <ref> [<old-oid>]
-> +	       [-m <reason>] [--no-deref] [--create-reflog] <ref> <new-oid>
-> [<old-oid>] +               [-m <reason>] [--no-deref] --stdin [-z]
-> [--batch-updates]
+Taylor Blau <me@ttaylorr.com> writes:
 
-In the case of expressing alternative command line invocations, you need to 
-repeat the "git update-ref" command on each line. Otherwise, it means that 
-this is the continuation of possible options of one command
+> Sure. You can fetch from the 'tb/blame-tree' branch from my tree (which
+> is located at 'git@github.com:ttaylorr/git.git'). I owe a huge "thank
+> you" to Victoria Dye, who split out the various topics from GitHub's
+> fork into individual rebased branches.
+>
+> There were many more patches on top that came after Victoria's split
+> above, and I applied those manually. The commit structure probably needs
+> significant clean-up and polishing before it's ready for serious review,
+> since this is more-or-less a raw dump of the work on GitHub's side over
+> more than a decade.
+>
+> It also doesn't pass the tests in t9932 (and the test number should
+> probably also be reworked, it's in the t99xx range so that inclusion in
+> GitHub's fork doesn't cause collisions with new tests when we merge
+> upstream). To that end, I removed everybody's Signed-off-by in case I
+> have mangled their work in some way unintentionally.
 
+Thanks for sharing. I will check it out.
 
-
-> 
->  DESCRIPTION
->  -----------
-
-
-
+-- 
+Toon
