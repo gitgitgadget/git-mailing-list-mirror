@@ -1,160 +1,332 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067841E5207
-	for <git@vger.kernel.org>; Fri, 28 Mar 2025 19:39:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA11E1D61B7
+	for <git@vger.kernel.org>; Fri, 28 Mar 2025 20:07:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743190773; cv=none; b=sIy6FfSrXdClc8uVcD99NVz2nKfC6AuCr7V4cmxCUKqr+yc3OqO3a51DjpZR4BXxYwRpjAHiQ+9LQpHu4szyAAwhkdLMwIZvRnJBH3zZ6XDFGD9Qjz93ESCPIMuO4LUZpUfjmD+ZPAjdllh4HzUaSklDqVBmgbNHC+Vjm+biOSA=
+	t=1743192451; cv=none; b=guEWA+pUJD81pyYM9OlURf1Y1TzhaSYwfjjhPXTgRyMmtOpQM3zCkvkHRVfARHVFKf1ZHppKz3Apum+YcgSxitMqGvlUyKIwV6c5I89/bVsFvrbySv0vM9bnRgBEY3y7r8Ugnguw0COIWGrUsp7PqxdBYt7c6i53XFEiZW78hko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743190773; c=relaxed/simple;
-	bh=y1N1YDN1minpuR9JxJB+ou+6YBeZKPDOPPXwx6iFpk4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QBjJRBtCW/z/s0NOHw34qJgb6SdR4uv/XB/eDsfaMQJFfzWnAOxPov11GXn5uGuEs90rb/EVTrIiUUiL9MQl8Xn2N80/i/pADTLndxXnkNiEEJI2L+bzrgmsBPnNyuBTW15gMwbQ2JeJvKglPsxoBmT5MdA1Tg5UgHIJqFMEKnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=j4xwi9H0; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1743192451; c=relaxed/simple;
+	bh=h4ZOqtdSJAbbZO9z5UbxfF23nw3f9T2smsQVUZG1Wc8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=m81oOY88SbooCfP4Qpds5shk/VyZSciRmWy41yr2eB+iHFGcVB4hFKdj3E8n7b5ThQlhseP7HIkjSS9UYj/wn/LcobvZz9VTTXVqNHZDQPO1Zu3bM0yf/lVvnowhirsbpRl9KSL7Eo8ltTiDzapJ9s2CCw8zDZYXL4WaoyiTRSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A/pE4QOH; arc=none smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="j4xwi9H0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1743190763;
-	bh=y1N1YDN1minpuR9JxJB+ou+6YBeZKPDOPPXwx6iFpk4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=j4xwi9H0En+v7KTdntIRb/2u/gMSBnecpHnbvYW8h3G85IKoNtkc/FlWpK0pDI/pJ
-	 yjUikmsnsfT3GLwQlu9IjmCIFiRbaOgu8DYuL3N3mfIJLNOnTwteB/yIjy3wKC2GfS
-	 eXni37w5cIa644SyQHaK3+T5oigOxy9X3AuLJPQvgJnioCuWHfE/n6dWtlft4c32M2
-	 9cAu0gWVyqu/Ln4QRKKw0ODUqXjt7O34kGyJuVOrW6H6YMwNHdahFgb53SXdgiecCy
-	 8ZbfUJ7qkrK5n/On7Uw6PxvrbCV9F0+FunYbOT7PQgQOORZrMvQ3XKwKad73xnTRie
-	 t1Ci3KjNFmS3dES+pie4AwV5c4pGuJFDJX5S5J3SpNZ84sOadeejj2MZ8iEgy8916s
-	 bkUjdf7YxtSbaUN83XXRtxqSdNXfuTEjvkqKxPau3K35Dik2J9JDPH5H48FMPZjdV6
-	 kGg+YtbIAp6gY7tc9TLl0izF3s3FdCwOOixEbsLkNPeNhpnnq78
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d5c6:e1bb:f3a5:7a20])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D8232200BE;
-	Fri, 28 Mar 2025 19:39:23 +0000 (UTC)
-Date: Fri, 28 Mar 2025 19:39:22 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Akash S <akashs@commvault.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Adithya Urugudige <aurugudige@commvault.com>,
-	Abhishek Dalmia <adalmia@commvault.com>
-Subject: Re: git push --mirror hung indefinitely
-Message-ID: <Z-b66vVzQRFFHFK_@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Akash S <akashs@commvault.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Adithya Urugudige <aurugudige@commvault.com>,
-	Abhishek Dalmia <adalmia@commvault.com>
-References: <SA1PR19MB7013490588962D983094128DC0A02@SA1PR19MB7013.namprd19.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A/pE4QOH"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2ff69365e1dso3435379a91.3
+        for <git@vger.kernel.org>; Fri, 28 Mar 2025 13:07:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743192449; x=1743797249; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=K3GZNywEdeJc/Q4LzT45gwl/0KDoqnVuJqCIvcgG05w=;
+        b=A/pE4QOHhQO/kuBz82XjyjhpVt9CvPcS53HnZQAJMMRrEF26AZNasTWCtCoZW+XvUM
+         tyLafyePOy1pHzzj6A7rpum4haSkQNaRcJ9QiXmG2WoPHJLYlxkF0SVdPvcPhjlz+Goj
+         8KALbye3g4aQyj4wonlJtWtpDlj8yvbqL0R43G1wdbww+7ObkMbjFbYxaif8SNInOSXf
+         XMC3HZvlr96oPpCadoWQR9AntSJ/06o8veT+54wEYeWsGPXNQR7R3NX3t4i3Z78w7W5+
+         ddXhiRN86apUcVbufqmutaA+wn9uom6Ifn2onvEffwXH4f9Poe5s8EeYdkxIfJW3hl1V
+         0feA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743192449; x=1743797249;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=K3GZNywEdeJc/Q4LzT45gwl/0KDoqnVuJqCIvcgG05w=;
+        b=aYALNWQWqh0skelPM2h/rybRct7EwR7R//HNXQ7+HnZQooelxKcDna4a0DKiwsXsbZ
+         188yiAn+tl1eReP3bDG70BnPqm3MDW3M3NuEgS3RSnWDSOSHCLUpVJxGPk3lf6R+CsJk
+         0qFMPkX8Be07mOH7XShEgIhy56ac/qYHKTYnrGg8bqMolhzH1gF+gXa2NSpTHhI099Nm
+         2YDvkbsGBH01WuHENE7SifRxitolu23PtC5HS3g7VrUUVgyTMNuyZdwtsYZ/zJfrjPjl
+         iPn9g91CauTq2VIcwYQdSLK1EbKo0DtZVqutZxovHFI/4Zq6pd6tJZLbkItBEsFToM3W
+         esXw==
+X-Gm-Message-State: AOJu0YwK9PH3XuC6fTRJT0TBKlAN75iANRdyMjpR4B21fx//b9byzOVw
+	KbqXhBwu3dg2vBbgTd4pmvM+p++6zSadNzLIRhyYVOvfIZogS9krI/67Og==
+X-Gm-Gg: ASbGnct5TgKb+L7wNFKy0sKYlVm3OYNnWm+ntfcQ4qSC4MBhNoJefrm6JGAZoLYSrOi
+	9NZ5dz7NANRPD/tgTPPzJTtVGpNIFoSxA+Q50TuaRRECwvPV+Lo1ARR4fw+dafNqnS/CFmFthcZ
+	No/qOtmIQ3zt7nHROc+SnFr7R9gQ/EoT2K/c2oT0T3kcivnMV5sBz5VIsRmdscSviTmOFnyFDgM
+	6iTitQFgdz7xjXcbeEYEw5n5Xju3RHEhL4rs1YzDfrN1jmfQ90+PPaNa7PoaDdJAJq2/i4NtbEK
+	dyn8ded0RmRE3UWFoxz9WH1t+lxE7I16cwGjmwD+c5uxR4ATLttD+bL8dvzamMcpAfk=
+X-Google-Smtp-Source: AGHT+IENRUF3a/HDIw5FiAgO03FtSQYNgBIsSdfAaMSMoCh9Al1BuZfhDdTzcT3neanf1zd3uwvbuQ==
+X-Received: by 2002:a17:90b:17c3:b0:2fa:e9b:33b3 with SMTP id 98e67ed59e1d1-30531f7e2eamr742998a91.6.1743192448584;
+        Fri, 28 Mar 2025 13:07:28 -0700 (PDT)
+Received: from localhost.localdomain ([171.60.232.58])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30516d3ea84sm2346421a91.8.2025.03.28.13.07.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Mar 2025 13:07:28 -0700 (PDT)
+From: Moumita <dhar61595@gmail.com>
+To: git@vger.kernel.org
+Cc: Moumita <dhar61595@gmail.com>,
+	"Johannes Sixt" <j6t@kdbg.org>,
+	"Eric Sunshine" <sunshine@sunshineco.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	"Atharva Raykar" <raykar.ath@gmail.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>
+Subject: [PATCH v3 0/1] userdiff: improve Bash function and word regex patterns
+Date: Sat, 29 Mar 2025 01:35:24 +0530
+Message-ID: <20250328200525.4437-1-dhar61595@gmail.com>
+X-Mailer: git-send-email 2.48.0
+In-Reply-To: <20250218153537.16320-1-dhar61595@gmail.com>
+References: <20250218153537.16320-1-dhar61595@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VgNBXYdifisVg6G/"
-Content-Disposition: inline
-In-Reply-To: <SA1PR19MB7013490588962D983094128DC0A02@SA1PR19MB7013.namprd19.prod.outlook.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
 
+This patch improves function detection in userdiff for Bash scripts.  
+The old regex tried to match function bodies explicitly, which caused  
+issues with line continuations (`\`) and simple command bodies. Instead,  
+I have replaced it with `.*$`, making it more consistent with other userdiff  
+drivers and ensuring we capture the full function definition line.  
 
---VgNBXYdifisVg6G/
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I also refined the word regex to better handle Bash syntax, including  
+parameter expansions, arithmetic expressions, and command-line options.  
 
-On 2025-03-28 at 10:37:43, Akash S wrote:
-> Hi,
->=20
-> We are attempting to push a bare repository on our local disk to Azure De=
-vOps using the command "git push -mirror <URL>".
->=20
-> Git version being used: 2.48.1 and no global git configurations exist in =
-the machine.
->=20
-> Issue: command progresses for 5-10 mins and then the git processes get hu=
-ng after we see the output "Storing index (done)" and remains hung indefini=
-tely.
->=20
-> Steps to reproduce:
-> i) Bare clone open source repo (elasticsearch or node) to local disk.
-> ii) Run "git lfs push -mirror" to any repository in an Azure DevOps organ=
-ization using PAT authentication.
-> iii) Issue happens intermittently, so alternating the push operation betw=
-een the local elasticsearch and node repo to the same remote repository sho=
-uld help recreate the issue.
+I have  added test cases to cover these changes, making sure everything  
+works as expected.
 
-Does this happen if you push it to a different server?  From what it
-looks like here, it might be the server not sending anything back in
-time.
+Moumita Dhar (1):
+  userdiff: extend Bash pattern to cover more shell function forms
 
-Also, do you have anything intercepting TLS, like a non-default
-antivirus or firewall or any sort of proxy?  Sometimes such tools buffer
-the output of the request, which can break things[0].  If you do, you
-should either uninstall the software completely and reboot (since
-disabling it is often not sufficient) or change networks if there's a
-proxy or TLS MITM device on the network and see if it's fixed.
+ t/t4018/bash-bashism-style-multiline-function |  4 +++
+ t/t4018/bash-posix-style-multiline-function   |  4 +++
+ .../bash-posix-style-single-command-function  |  3 ++
+ t/t4034-diff-words.sh                         |  1 +
+ t/t4034/bash/expect                           | 30 +++++++++++++++++++
+ t/t4034/bash/post                             | 25 ++++++++++++++++
+ t/t4034/bash/pre                              | 25 ++++++++++++++++
+ userdiff.c                                    | 24 +++++++++++----
+ 8 files changed, 110 insertions(+), 6 deletions(-)
+ create mode 100644 t/t4018/bash-bashism-style-multiline-function
+ create mode 100644 t/t4018/bash-posix-style-multiline-function
+ create mode 100644 t/t4018/bash-posix-style-single-command-function
+ create mode 100644 t/t4034/bash/expect
+ create mode 100644 t/t4034/bash/post
+ create mode 100644 t/t4034/bash/pre
 
-> Workaround steps taken by us to not face this issue:
->=20
-> i) Since our repository is quite large (1.5 GB), we set http.postBuffer t=
-o 50 MB, it did not help in resolving the issue.
+Range-diff against v2:
+1:  de2e8f9792 ! 1:  3d077fadc4 userdiff: extend Bash pattern to cover more shell function forms
+    @@ Metadata
+      ## Commit message ##
+         userdiff: extend Bash pattern to cover more shell function forms
+     
+    -    The existing Bash userdiff pattern misses some shell function forms, such as
+    -    `function foo()`, multi-line definitions, and extra whitespace.
+    +    The previous function regex required explicit matching of function
+    +    bodies using `{`, `(`, `((`, or `[[`, which caused several issues:
+     
+    -    Extend the pattern to:
+    -    - Support `function foo()` syntax.
+    -    - Allow spaces in `foo ( )` definitions.
+    -    - Recognize multi-line definitions with backslashes.
+    -    - Broaden function body detection.
+    +    - It failed to capture valid functions where `{` was on the next line
+    +      due to line continuation (`\`).
+    +    - It did not recognize functions with single  command body, such as
+    +      `x () echo hello`.
+    +
+    +    Replacing the function body matching logic with `.*$`, ensures
+    +    that everything on the function definition line is captured,
+    +    aligning with other userdiff drivers and improving hunk headers in
+    +    `git diff`.
+    +
+    +    Additionally, the word regex is refined to better recognize shell
+    +    syntax, including additional parameter expansion operators and
+    +    command-line options, improving syntax-aware diffs.
+     
+         Signed-off-by: Moumita Dhar <dhar61595@gmail.com>
+     
+    + ## t/t4018/bash-bashism-style-multiline-function (new) ##
+    +@@
+    ++function RIGHT \
+    ++{    
+    ++    echo 'ChangeMe'
+    ++}
+    + \ No newline at end of file
+    +
+    + ## t/t4018/bash-posix-style-multiline-function (new) ##
+    +@@
+    ++RIGHT() \
+    ++{
+    ++    ChangeMe
+    ++}
+    + \ No newline at end of file
+    +
+    + ## t/t4018/bash-posix-style-single-command-function (new) ##
+    +@@
+    ++RIGHT() echo "hello"
+    ++
+    ++    ChangeMe
+    +
+    + ## t/t4034-diff-words.sh ##
+    +@@ t/t4034-diff-words.sh: test_expect_success 'unset default driver' '
+    + 
+    + test_language_driver ada
+    + test_language_driver bibtex
+    ++test_language_driver bash
+    + test_language_driver cpp
+    + test_language_driver csharp
+    + test_language_driver css
+    +
+    + ## t/t4034/bash/expect (new) ##
+    +@@
+    ++<BOLD>diff --git a/pre b/post<RESET>
+    ++<BOLD>index 09ac008..60ba6a2 100644<RESET>
+    ++<BOLD>--- a/pre<RESET>
+    ++<BOLD>+++ b/post<RESET>
+    ++<CYAN>@@ -1,25 +1,25 @@<RESET>
+    ++<RED>my_var<RESET><GREEN>new_var<RESET>=10
+    ++x=<RED>123<RESET><GREEN>456<RESET>
+    ++y=<RED>3.14<RESET><GREEN>2.71<RESET>
+    ++z=<RED>.5<RESET><GREEN>.75<RESET>
+    ++echo <RED>$USER<RESET><GREEN>$USERNAME<RESET>
+    ++${<RED>HOME<RESET><GREEN>HOMEDIR<RESET>}
+    ++if [ "<RED>$a<RESET><GREEN>$x<RESET>" == "<RED>$b<RESET><GREEN>$y<RESET>" ] || [ "<RED>$c<RESET><GREEN>$x<RESET>" != "<RED>$d<RESET><GREEN>$y<RESET>" ]; then echo "OK"; fi
+    ++((<RED>a<RESET><GREEN>x<RESET>+=<RED>b<RESET><GREEN>y<RESET>))
+    ++((<RED>a<RESET><GREEN>x<RESET>-=<RED>b<RESET><GREEN>y<RESET>))
+    ++$((<RED>a<RESET><GREEN>x<RESET><<<RED>b<RESET><GREEN>y<RESET>))
+    ++$((<RED>a<RESET><GREEN>x<RESET>>><RED>b<RESET><GREEN>y<RESET>))
+    ++${<RED>a<RESET><GREEN>x<RESET>:-<RED>b<RESET><GREEN>y<RESET>}
+    ++${<RED>a<RESET><GREEN>x<RESET>:=<RED>b<RESET><GREEN>y<RESET>}
+    ++${<RED>a<RESET><GREEN>x<RESET>##*/}
+    ++${<RED>a<RESET><GREEN>x<RESET>%.*}
+    ++${<RED>a<RESET><GREEN>x<RESET>%%.*}
+    ++${<RED>a<RESET><GREEN>x<RESET>^^}
+    ++${<RED>a<RESET><GREEN>x<RESET>,}
+    ++${<RED>a<RESET><GREEN>x<RESET>,,}
+    ++${!<RED>a<RESET><GREEN>x<RESET>}
+    ++${<RED>a<RESET><GREEN>x<RESET>[@]}
+    ++${<RED>a<RESET><GREEN>x<RESET>:?error message}
+    ++${<RED>a<RESET><GREEN>x<RESET>:2:3}
+    ++ls <RED>-a<RESET><GREEN>-x<RESET>
+    ++ls <RED>--a<RESET><GREEN>--x<RESET>
+    +
+    + ## t/t4034/bash/post (new) ##
+    +@@
+    ++new_var=10
+    ++x=456
+    ++y=2.71
+    ++z=.75
+    ++echo $USERNAME
+    ++${HOMEDIR}
+    ++if [ "$x" == "$y" ] || [ "$x" != "$y" ]; then echo "OK"; fi
+    ++((x+=y))
+    ++((x-=y))
+    ++$((x<<y))
+    ++$((x>>y))
+    ++${x:-y}
+    ++${x:=y}
+    ++${x##*/}
+    ++${x%.*}
+    ++${x%%.*}
+    ++${x^^}
+    ++${x,}
+    ++${x,,}
+    ++${!x}
+    ++${x[@]}
+    ++${x:?error message}
+    ++${x:2:3}
+    ++ls -x
+    ++ls --x
+    +
+    + ## t/t4034/bash/pre (new) ##
+    +@@
+    ++my_var=10
+    ++x=123
+    ++y=3.14
+    ++z=.5
+    ++echo $USER
+    ++${HOME}
+    ++if [ "$a" == "$b" ] || [ "$c" != "$d" ]; then echo "OK"; fi
+    ++((a+=b))
+    ++((a-=b))
+    ++$((a << b))
+    ++$((a >> b))
+    ++${a:-b}
+    ++${a:=b}
+    ++${a##*/}
+    ++${a%.*}
+    ++${a%%.*}
+    ++${a^^}
+    ++${a,}
+    ++${a,,}
+    ++${!a}
+    ++${a[@]}
+    ++${a:?error message}
+    ++${a:2:3}
+    ++ls -a
+    ++ls --a
+    +
+      ## userdiff.c ##
+    -@@ userdiff.c: IPATTERN("ada",
+    - 	 "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
+    - 	 "|=>|\\.\\.|\\*\\*|:=|/=|>=|<=|<<|>>|<>"),
+    - PATTERNS("bash",
+    --	 /* Optional leading indentation */
+    -+     /* Optional leading indentation */
+    - 	 "^[ \t]*"
+    --	 /* Start of captured text */
+    -+	 /* Start of captured function name */
+    - 	 "("
+    - 	 "("
+    --	     /* POSIX identifier with mandatory parentheses */
+    --	     "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
+    -+		 /* POSIX identifier with mandatory parentheses (allow spaces inside) */
+    -+		 "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\)"
+    - 	 "|"
+    --	     /* Bashism identifier with optional parentheses */
+    --	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
+    -+		 /* Bash-style function definitions, allowing optional `function` keyword */
+    -+		 "(?:function[ \t]+(?=[a-zA-Z_]))?[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))?"
+    +@@ userdiff.c: PATTERNS("bash",
+    + 	     /* Bashism identifier with optional parentheses */
+    + 	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
+      	 ")"
+    - 	 /* Optional whitespace */
+    - 	 "[ \t]*"
+    +-	 /* Optional whitespace */
+    +-	 "[ \t]*"
+     -	 /* Compound command starting with `{`, `(`, `((` or `[[` */
+     -	 "(\\{|\\(\\(?|\\[\\[)"
+    --	 /* End of captured text */
+    -+	 /* Allow function body to start with `{`, `(` (subshell), `[[` */
+    -+	 "(\\{|\\(|\\[\\[)"
+    -+	 /* End of captured function name */
+    ++	 /* Everything after the function header is captured  */
+    ++	 ".*$"
+    + 	 /* End of captured text */
+      	 ")",
+      	 /* -- */
+     -	 /* Characters not in the default $IFS value */
+     -	 "[^ \t]+"),
+     +	 /* Identifiers: variable and function names */
+    -+	 "[a-zA-Z_][a-zA-Z0-9_]*"
+    ++	  "[a-zA-Z_][a-zA-Z0-9_]*"
+     +	 /* Numeric constants: integers and decimals */
+    -+	 "|[-+]?[0-9]+(\\.[0-9]*)?|[-+]?\\.[0-9]+"
+    -+	 /* Shell variables: `$VAR`, `${VAR}` */
+    -+	 "|\\$[a-zA-Z_][a-zA-Z0-9_]*|\\$\\{[^}]+\\}"
+    -+	 /* Logical and comparison operators */
+    ++	  "|[0-9]+(\\.[0-9]*)?|[-+]?\\.[0-9]+"
+    ++	 /* Shell variables: $VAR, ${VAR} */
+    ++	  "|\\$[a-zA-Z_][a-zA-Z0-9_]*|\\$\\{"
+    ++	  /* Logical and comparison operators */
+     +	 "|\\|\\||&&|<<|>>|==|!=|<=|>="
+     +	 /* Assignment and arithmetic operators */
+     +	 "|[-+*/%&|^!=<>]=?"
+    -+	 /* Command-line options (to avoid splitting `-option`) */
+    ++	 /* Additional parameter expansion operators */
+    ++	 "|:?=|:-|:\\+|:\\?|:|#|##|%|%%|/[a-zA-Z0-9_-]+|\\^\\^?|,|,,?|!|@|:[0-9]+(:[0-9]+)?"
+    ++	 /* Command-line options (to avoid splitting -option) */
+     +	 "|--?[a-zA-Z0-9_-]+"
+     +	 /* Brackets and grouping symbols */
+     +	 "|\\(|\\)|\\{|\\}|\\[|\\]"),
+-- 
+2.48.0
 
-`http.postBuffer` simply sets the value below which the entire body is
-sent with a content-length instead of using chunked transfer encoding.
-As outlined in the Git FAQ[1], this option doesn't need to be set unless
-you have a server or proxy which doesn't handle HTTP/1.1 properly, and
-in general those are rare (because a lot of stuff would be broken).  I'm
-sure Azure DevOps is not broken in that way.
-
-Since it almost certainly isn't needed, I'd remove it, since it just
-tends to waste a lot of memory if you don't need it.
-
-> Thread 2 (Thread 0x7fa246a18700 (LWP 1043384)):
-> #0=C2=A0 0x00007fa24ce568e4 in read () from /lib64/libpthread.so.0
-> #1=C2=A0 0x000000000066a07e in xread (fd=3Dfd@entry=3D0, buf=3Dbuf@entry=
-=3D0x7fa246a07d7c, len=3Dlen@entry=3D4) at wrapper.c:234
-> #2=C2=A0 0x000000000066a1eb in read_in_full (fd=3D0, buf=3Dbuf@entry=3D0x=
-7fa246a07d7c, count=3Dcount@entry=3D4) at wrapper.c:292
-> #3=C2=A0 0x00000000005c4d32 in get_packet_data (fd=3Dfd@entry=3D0, src_bu=
-f=3Dsrc_buf@entry=3D0x0, src_size=3Dsrc_size@entry=3D0x0, dst=3Ddst@entry=
-=3D0x7fa246a07d7c, size=3Dsize@entry=3D4, options=3Doptions@entry=3D1) at p=
-kt-line.c:354
-> #4=C2=A0 0x00000000005c5827 in packet_read_with_status (fd=3Dfd@entry=3D0=
-, src_buffer=3Dsrc_buffer@entry=3D0x0, src_len=3Dsrc_len@entry=3D0x0, buffe=
-r=3Dbuffer@entry=3D0x7fa246a07e20 "\001\060\060\061aok refs/tags/v0.10.45\n=
-", size=3Dsize@entry=3D65520, pktlen=3Dpktlen@entry=3D0x7fa246a07df8, optio=
-ns=3D1) at pkt-line.c:422
-> #5=C2=A0 0x00000000005c5fa9 in recv_sideband (me=3Dme@entry=3D0x6e35ea "s=
-end-pack", in_stream=3D0, out=3Dout@entry=3D5) at pkt-line.c:586
-
-This looks like it's waiting to read a pkt-line header, which should be
-sent periodically by the server, so my guess is that this is particular
-to the server that you're using, or, as I mentioned above, that you have
-something in the middle that's intercepting the data.
-
-[0] https://git-scm.com/docs/gitfaq#proxy
-[1] https://git-scm.com/docs/gitfaq#http-postbuffer
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---VgNBXYdifisVg6G/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ+b66gAKCRB8DEliiIei
-gdMyAQDzEIFF7+cmt1eM5smOGY+3c+Cz6uFo+97XT1fTjbHNdQEAvhmatqrjC7xf
-Wr5pwrjESbWw6MKRAPseGmssv1+tmgE=
-=AV2T
------END PGP SIGNATURE-----
-
---VgNBXYdifisVg6G/--
