@@ -1,133 +1,145 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3CD1C5F32
-	for <git@vger.kernel.org>; Thu, 27 Mar 2025 21:58:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA22A20DD64
+	for <git@vger.kernel.org>; Fri, 28 Mar 2025 02:54:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743112703; cv=none; b=ZR5k4jwNoNu9GebZr5e/6lvd5PX2YHaIGQGLeDDQAi1FRwxFtZv2r19LcrfuEK/mlZ3St/6GDVq1hncM3+z/0Yw3UHEz2rkULfvRWtT1Pioe+gP74ak8fVyTKhWscetGsMQYZk5FzonlxN72UQmBDNMw4UQvtsPDEw3yQfS2EIw=
+	t=1743130446; cv=none; b=TkL8znSWSiRKlCDbO8HbWfHcIq/Mb6fGPLdB3Ni1GxNIDaB55CVAwjXuLE38mXbh0ePP+klQSFJKzIiXIaBcu5HO41DFMbQfb453f++eFVWgxioy8jqTJi57j3sxeevsnlEGqhmHyL8DvsHloTJhuPOTG0qy0Sm28sUdfCVZCZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743112703; c=relaxed/simple;
-	bh=ZKXRv4dKtANy82nkptnSpoYK3pRCrvCcMw+c5zck86w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f8IS8jEpkJsEU4Lb5YJoqM13QdzyQUL6LfvvfOlByaLtfiTyW45zHp36WtONpnZQlWtYwnpLq4HdUyvmDVtfd9LBVdyipUWZNYakzXdKEV/OuqdNdoQwIzzeb1++pN65yrFhFsGcdik2JQ8+4mVB/AHT+w3nFT4z3APL0P5WMag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=pIXd/E2L; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1743130446; c=relaxed/simple;
+	bh=DweFoN4OVLbpJs43elJgUmmRF7MY68hNy7ZCtEaq2SU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=i9JPvMtBan1xQuoEB9D9cLLBr7FrGv3WPt241KLJwCCB00c74GON4CaUA6fKcmvgSKhe01AiZP2Xcsw3jHK4Zp0bpsPWQIe4kpx3Eu0q+pM+BaYvEIaGgRKt1A/eXbE+NeXdr7KQOp8USyKWv4Fc8ImcibL3J9zLCJcm5i09fHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vxauJUPq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O0q55vQ3; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="pIXd/E2L"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-47686580529so15181311cf.2
-        for <git@vger.kernel.org>; Thu, 27 Mar 2025 14:58:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1743112701; x=1743717501; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZKXRv4dKtANy82nkptnSpoYK3pRCrvCcMw+c5zck86w=;
-        b=pIXd/E2LCpRfDJkmzNGipRu/lT7jEKRtKcw5nDIxWyeifMfOy1jVA0wFPfzpFfcoYJ
-         yUQZgYYOx9gqJ4Ya88tAV9+Bh6qTexffE3dzrrBpmQwoMPXu6kVnzqExy5p+6HgPg+8D
-         Q/0FmdLqIumYj8pI68qqMxjkGY0R/HEBflQ1Tlyi++0jTOYJ0iGxnmtnHp14R/0yURYj
-         jALBVkYHwbuWfLxmKRs8wMhbeb/snJYuwiVeka6bvqMqVcKcHVKipNENJ2u+1TFJ15Pk
-         kGncOulXEVtBZ5ZYHurH01wrU/eO8VuVlfN9o7JYc6K54u0vCM7XGAuHmZKsCJY40yZX
-         8lgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743112701; x=1743717501;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZKXRv4dKtANy82nkptnSpoYK3pRCrvCcMw+c5zck86w=;
-        b=Q7BhGpehK8Pf0WhtnmCFohXwJ3IGugClbLbu7ETELy6t38jEpgKIYJ7nhCaPDiHAjy
-         vimyKCxRCLY+OL89VDJinQcfZEy2hUfiaI5XszBqQzlaM4M5vZm+keV2MYkBts2q5GDI
-         yWQtUYX13LjmrKyvkgrnvsoFxPK+cY0A9ibYTLQp2ySQUk2QI7s5l6mbFYUf/bmYkEUG
-         hXKJwpti5RuTFIahg8/BP44dBZK9Z6eagOTUZIKcEl0EBfdM9dkIqEVHtWQhh+2ZkgZO
-         UWJrHcSWmQFl/kDOdTQ6DudM8eluniUW4jj7GQ0zWdfMzdZnq+p0a2SXKGZ6RUV20y3/
-         rm2A==
-X-Forwarded-Encrypted: i=1; AJvYcCUsmJSnshnVWXmrVIp89eSB9W3YPa/KI8FN7lyUTuRMXxUiQCRyag0bwJ/uzcL9VXawLoM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywy5bgtqxHSj3aZB0C9H3zFeiW/KjcjXetMxU5oI0/BOm2icUKl
-	bTmV+TtdSv2gAHiCMN7MtA/v8lduKGSlC+CPZvIvEiuicKut9zBUwiqeBFTVyCU=
-X-Gm-Gg: ASbGncslnBlYSlIV21jVXK6TNoVH2ESBrL97cHFCjqo7HrK5ogOpPMISriU30X6h3im
-	Z9nkhR9MyViA0Uv+LlsV2iKROneryBEgS1UTqbH8qjllLcc3Tkx9EBPYdWIETYmbyzwHVwb8wc8
-	QK6CYWxvvGeVfP00uxGeh1xZaFs9feDaZkHhixuT7IEfI3mxEjjSX6y5goh5JOHzirGooxOpNEZ
-	PuIybBzHFtGufj98R+IcrGcycvrCPPmwSaXAOpSXMYQTa7Z7+M+o3hHVx80S0QFnL3ZNXlMtuD8
-	rIJ1H9XCu2ExByKgNuyuENeRQaNlYDYLKV4RXznB2A1L2i/4nfjnf2gMRUmW+naOda/2tf9VmSd
-	CsFA0krA8q5rpPdAv
-X-Google-Smtp-Source: AGHT+IGlyXjcoMeordYQniM41qJCvam7KVHh9JnnhVCgQ7ru3i8dAVtjSDUnKnM8tRlhMPUbBJ9O/Q==
-X-Received: by 2002:a05:622a:5a11:b0:474:f074:e85e with SMTP id d75a77b69052e-4776e2165d2mr94481941cf.41.1743112700711;
-        Thu, 27 Mar 2025 14:58:20 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-47782a7fac0sm2625841cf.38.2025.03.27.14.58.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Mar 2025 14:58:20 -0700 (PDT)
-Date: Thu, 27 Mar 2025 17:58:19 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 0/8] Introduce git-blame-tree(1) command
-Message-ID: <Z+XJ+1L3PnC9Dyba@nand.local>
-References: <20250326-toon-blame-tree-v1-0-4173133f3786@iotcl.com>
- <Z+Rl43VR3ErE0Bu4@nand.local>
- <20250327063243.GB3042475@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vxauJUPq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O0q55vQ3"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id E325A13833D2;
+	Thu, 27 Mar 2025 22:54:02 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Thu, 27 Mar 2025 22:54:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1743130442; x=1743216842; bh=1a7Oc2EgT+
+	CQfkqjRUS926i612AkbMxiERniJpxrGzE=; b=vxauJUPq8IUyyCTsrt1SM1bV8q
+	luiqK+Gh7ipQsnzl4jbMGwb7zoZp0b0GejUf1AZdDD5KA+UNsoMPX1uV2ucCMHMk
+	hdVqIYmPaB95mWjuwnoOC2J8g/Ia+BDqNzYziEOMt8IfvEm1O/WgvfpdTP2YST0V
+	LTn4fKUi9ipZlaaLEtIh+i9bvl+3j36TqsODb4A0rWy8D5GowDyxFlTqovu0c8jU
+	ip5onzvcoCTtc/dwiFSnT9HiG+xmdLaoUxuexer6SSrv55YJfliDPJq/FRXiAMdD
+	R7pV1d5uM96jqr/7T3LcJEbfIVcR8QqAjpFY4LD2rLG4Bjb6ot46m1pM1pjQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1743130442; x=1743216842; bh=1a7Oc2EgT+CQfkqjRUS926i612AkbMxiERn
+	iJpxrGzE=; b=O0q55vQ3e9oiKzCu0VHrNbvyc7AjOeXUiIjQD+kEC0JT5yXtUUT
+	3O/OY8sAa0HuouasfFUKcKxEvjQRjERm+6y1wzSBKbj7j94uqQ/pDvgSdRI6F8wn
+	xlrcWuVXdmN6Q+obBKttsscFkm05SMpAMmmRIkX0Zrc0N9FsWCd2af4CM5LtZGi6
+	mEn/ivsNJ8f7cvq7GF3NY8YwnBGlnIy/+QVC/svYW6up41TEZRidai6BOxEfETr6
+	T1nxpUgYp2+gDxTQR04ViIphkfmyyWJeMszkvrSv6mTf/r20OyNv+LGxglDbWoJq
+	BANuSYFYWfzJ5A8DRPnK37wtoUoyZBM4kNg==
+X-ME-Sender: <xms:Sg_mZ7kcLwqYqM85GysigOv89O5XDJbmotdZpdnUdDZqxzmYDv_8Mg>
+    <xme:Sg_mZ-2MX9ptRscYI7a_R39W1Ucl5atBLmwB1N1snnJP3R9RJsMhSQsIYI4otgFiM
+    zVXpBGcZcNfKy90yg>
+X-ME-Received: <xmr:Sg_mZxpHKDuG7Sc_NhBtzRvjIafj4tQPBbbaraVQXPZOVbAeRaGckDdV9m_Pg5z2x1lv6xbnDS_waAGEOsFYq6B05s_7u66sgY6xk9c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedtudegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Sg_mZzkO47x_RwCTzcUzyPRetD6byg-Ms5lsRr45pR1kvmYN97O5AQ>
+    <xmx:Sg_mZ50IRDKPXkzrTecYp_rtCVr3mDp0ZTYPWjgx0G84qvtSNP9xkQ>
+    <xmx:Sg_mZytVVx73MUUnFhIkt7Fbh6LBmewI6HQxRMna9shmRyJ6mvF-Rw>
+    <xmx:Sg_mZ9V29aFd8r3xjqpJ5knfUfg6l2CBCuknuHUEubAIKdvy7_-pyg>
+    <xmx:Sg_mZx96EzE7b3FPhWXd4u-YrJQUv9MS6ln1dAU3mzwp1fgxQPJNWdFy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 27 Mar 2025 22:54:02 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/2] diff: check range before dereferencing an array
+ element
+In-Reply-To: <ddfb44ed924615bdb61a30ae7627326942575567.1743073557.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Thu, 27 Mar 2025
+	11:05:56 +0000")
+References: <pull.1887.git.1743010011.gitgitgadget@gmail.com>
+	<pull.1887.v2.git.1743073557.gitgitgadget@gmail.com>
+	<ddfb44ed924615bdb61a30ae7627326942575567.1743073557.git.gitgitgadget@gmail.com>
+Date: Thu, 27 Mar 2025 19:54:00 -0700
+Message-ID: <xmqqy0wphnlj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250327063243.GB3042475@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On Thu, Mar 27, 2025 at 02:32:43AM -0400, Jeff King wrote:
-> The pathspec-trie stuff is, I think, still a reasonable idea for general
-> use. But IIRC, the rewritten blame-tree you guys worked on does not
-> benefit from it, because it ditches pathspecs entirely (both because
-> they're too slow without the tries, but also because it's important to
-> continually narrow the pathspec while traversing). That trie code was
-> never run in production, I think (and I see there is a patch to narrow
-> the pathspec while traversing; I suspect that likewise was never used).
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Yeah, the rewritten blame-tree code uses changed-path Bloom filters to
-narrow the set of revisions that we need to actually compute tree-diffs
-for.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Before accessing an array element at a given index, we should make sure
+> that the index is within the desired bounds, not afterwards, otherwise
+> it may not make sense to even access the array element in the first
+> place.
+>
+> Pointed out by CodeQL's `cpp/offset-use-before-range-check` rule.
 
-The general idea is that we have a set of paths that we have yet to
-blame, and those are the "interesting" ones. IOW, if a changed-path
-Bloom filter tells us that we are at some revision where there is maybe
-a change to one or more unblamed paths, we need to compute a tree-diff.
-But if the Bloom filter says "no", then we can skip the tree-diff at
-that layer entirely.
+At least this part should say this is a false positive, forcing us
+to make an unnecessary change to help future developers who are
+running "git blame" and "git log -p" to find out why only s[off]
+checked against CR needs this check _before_ it, while checking
+against other values needs _no_ check.
 
-> The max-depth diff code is also in theory a reasonable thing to have in
-> general. But it is awkward to use, and not really necessary for
-> blame-tree. There we really only care about recursing vs not recursing,
-> but the usual "recursive" flag for diffing isn't enough (we have to
-> recurse down to the tree of interest, but may not want to go further). I
-> don't remember how that is handled in your blame-tree rewrites.
+In other words, the first paragraph of the proposed log message is a
+total red herring.  We are accessing an array element at a given
+index 'off' in the original, we are still accessing the same element
+in the updated code, and we know the index is within the array
+bounds.  If the condition were "We want to skip CR only at odd
+places", we would have written 
 
-I think that's mostly true, but the blame-tree caching stuff that Stolee
-worked on many years ago and mentioned below does require it IIRC.
+	|| (s[off] == '\r' && (off & 01))
 
-> So yeah. I don't know if all of this is really a very good starting
-> point. Taylor, if you can share the current code that GitHub is running,
-> I think that would be beneficial for the community.
+or
 
-Sure. You can fetch from the 'tb/blame-tree' branch from my tree (which
-is located at 'git@github.com:ttaylorr/git.git'). I owe a huge "thank
-you" to Victoria Dye, who split out the various topics from GitHub's
-fork into individual rebased branches.
+	|| ((off & 01) || s[off] == '\r')
 
-There were many more patches on top that came after Victoria's split
-above, and I applied those manually. The commit structure probably needs
-significant clean-up and polishing before it's ready for serious review,
-since this is more-or-less a raw dump of the work on GitHub's side over
-more than a decade.
+and both are equally valid.  (off < len -1) should be no different.
 
-It also doesn't pass the tests in t9932 (and the test number should
-probably also be reworked, it's in the t99xx range so that inclusion in
-GitHub's fork doesn't cause collisions with new tests when we merge
-upstream). To that end, I removed everybody's Signed-off-by in case I
-have mangled their work in some way unintentionally.
-
-Thanks,
-Taylor
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  diff.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/diff.c b/diff.c
+> index c89c15d98e0..18ba3060460 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -892,7 +892,7 @@ static void fill_es_indent_data(struct emitted_diff_symbol *es)
+>  
+>  	/* skip any \v \f \r at start of indentation */
+>  	while (s[off] == '\f' || s[off] == '\v' ||
+> -	       (s[off] == '\r' && off < len - 1))
+> +	       (off < len - 1 && s[off] == '\r'))
+>  		off++;
+>  
+>  	/* calculate the visual width of indentation */
