@@ -1,145 +1,114 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA22A20DD64
-	for <git@vger.kernel.org>; Fri, 28 Mar 2025 02:54:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2704218035
+	for <git@vger.kernel.org>; Fri, 28 Mar 2025 03:46:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743130446; cv=none; b=TkL8znSWSiRKlCDbO8HbWfHcIq/Mb6fGPLdB3Ni1GxNIDaB55CVAwjXuLE38mXbh0ePP+klQSFJKzIiXIaBcu5HO41DFMbQfb453f++eFVWgxioy8jqTJi57j3sxeevsnlEGqhmHyL8DvsHloTJhuPOTG0qy0Sm28sUdfCVZCZ8=
+	t=1743133598; cv=none; b=LT+JGoSqV7IhvqprZ4pt5QIoEcFzSFJFLj0slKC4vim/ATDmFzZzVT+PEDq7gWVzDYbWH+nxmAK/NmUFlQDo/VWdy8oPY4OpQNecoIWtqzZtiofP8dtuGH24ipgFVUHogH3E/DGjlTQMyhtem5VES5bExP4H0tBXiAEY0SLh0x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743130446; c=relaxed/simple;
-	bh=DweFoN4OVLbpJs43elJgUmmRF7MY68hNy7ZCtEaq2SU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=i9JPvMtBan1xQuoEB9D9cLLBr7FrGv3WPt241KLJwCCB00c74GON4CaUA6fKcmvgSKhe01AiZP2Xcsw3jHK4Zp0bpsPWQIe4kpx3Eu0q+pM+BaYvEIaGgRKt1A/eXbE+NeXdr7KQOp8USyKWv4Fc8ImcibL3J9zLCJcm5i09fHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vxauJUPq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O0q55vQ3; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1743133598; c=relaxed/simple;
+	bh=dRA5L/BAxtcn9kzCgacbfmiAkZMh20n6QRhmSpRZwQw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RhooTNQS+qkyN5wjkqULgUxYdsNaTNK6UbQS6nmu75JnAEcPOerQ+IPrib1qiwl2JPc1WK+yzJHiuRGQz1XYI985629AbU1xl/LvJI8C73yRX1xwOUPYs/34jf4tNUVELrakbOEpQvF0oF7wMztXTvOSMPUCWf3Gd0nUcG7qwtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OG4tpOa1; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vxauJUPq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O0q55vQ3"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id E325A13833D2;
-	Thu, 27 Mar 2025 22:54:02 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Thu, 27 Mar 2025 22:54:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1743130442; x=1743216842; bh=1a7Oc2EgT+
-	CQfkqjRUS926i612AkbMxiERniJpxrGzE=; b=vxauJUPq8IUyyCTsrt1SM1bV8q
-	luiqK+Gh7ipQsnzl4jbMGwb7zoZp0b0GejUf1AZdDD5KA+UNsoMPX1uV2ucCMHMk
-	hdVqIYmPaB95mWjuwnoOC2J8g/Ia+BDqNzYziEOMt8IfvEm1O/WgvfpdTP2YST0V
-	LTn4fKUi9ipZlaaLEtIh+i9bvl+3j36TqsODb4A0rWy8D5GowDyxFlTqovu0c8jU
-	ip5onzvcoCTtc/dwiFSnT9HiG+xmdLaoUxuexer6SSrv55YJfliDPJq/FRXiAMdD
-	R7pV1d5uM96jqr/7T3LcJEbfIVcR8QqAjpFY4LD2rLG4Bjb6ot46m1pM1pjQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743130442; x=1743216842; bh=1a7Oc2EgT+CQfkqjRUS926i612AkbMxiERn
-	iJpxrGzE=; b=O0q55vQ3e9oiKzCu0VHrNbvyc7AjOeXUiIjQD+kEC0JT5yXtUUT
-	3O/OY8sAa0HuouasfFUKcKxEvjQRjERm+6y1wzSBKbj7j94uqQ/pDvgSdRI6F8wn
-	xlrcWuVXdmN6Q+obBKttsscFkm05SMpAMmmRIkX0Zrc0N9FsWCd2af4CM5LtZGi6
-	mEn/ivsNJ8f7cvq7GF3NY8YwnBGlnIy/+QVC/svYW6up41TEZRidai6BOxEfETr6
-	T1nxpUgYp2+gDxTQR04ViIphkfmyyWJeMszkvrSv6mTf/r20OyNv+LGxglDbWoJq
-	BANuSYFYWfzJ5A8DRPnK37wtoUoyZBM4kNg==
-X-ME-Sender: <xms:Sg_mZ7kcLwqYqM85GysigOv89O5XDJbmotdZpdnUdDZqxzmYDv_8Mg>
-    <xme:Sg_mZ-2MX9ptRscYI7a_R39W1Ucl5atBLmwB1N1snnJP3R9RJsMhSQsIYI4otgFiM
-    zVXpBGcZcNfKy90yg>
-X-ME-Received: <xmr:Sg_mZxpHKDuG7Sc_NhBtzRvjIafj4tQPBbbaraVQXPZOVbAeRaGckDdV9m_Pg5z2x1lv6xbnDS_waAGEOsFYq6B05s_7u66sgY6xk9c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedtudegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
-    epjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Sg_mZzkO47x_RwCTzcUzyPRetD6byg-Ms5lsRr45pR1kvmYN97O5AQ>
-    <xmx:Sg_mZ50IRDKPXkzrTecYp_rtCVr3mDp0ZTYPWjgx0G84qvtSNP9xkQ>
-    <xmx:Sg_mZytVVx73MUUnFhIkt7Fbh6LBmewI6HQxRMna9shmRyJ6mvF-Rw>
-    <xmx:Sg_mZ9V29aFd8r3xjqpJ5knfUfg6l2CBCuknuHUEubAIKdvy7_-pyg>
-    <xmx:Sg_mZx96EzE7b3FPhWXd4u-YrJQUv9MS6ln1dAU3mzwp1fgxQPJNWdFy>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Mar 2025 22:54:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Johannes Schindelin
- <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/2] diff: check range before dereferencing an array
- element
-In-Reply-To: <ddfb44ed924615bdb61a30ae7627326942575567.1743073557.git.gitgitgadget@gmail.com>
-	(Johannes Schindelin via GitGitGadget's message of "Thu, 27 Mar 2025
-	11:05:56 +0000")
-References: <pull.1887.git.1743010011.gitgitgadget@gmail.com>
-	<pull.1887.v2.git.1743073557.gitgitgadget@gmail.com>
-	<ddfb44ed924615bdb61a30ae7627326942575567.1743073557.git.gitgitgadget@gmail.com>
-Date: Thu, 27 Mar 2025 19:54:00 -0700
-Message-ID: <xmqqy0wphnlj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OG4tpOa1"
+Received: (qmail 30198 invoked by uid 109); 28 Mar 2025 03:46:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=dRA5L/BAxtcn9kzCgacbfmiAkZMh20n6QRhmSpRZwQw=; b=OG4tpOa14Z+v5Ms613CanTrHFso1q/RYctUYh92Kc/5c0Kba+QKqbdEYUYDCqEhoAHzj2Wth3OEjG+pgZ5Ba074WJTO+SsDMcT0BzdBJonUX+7DZrXUECu8ppz0EkhvDcM8nwliWhKSVrNn/pWgLDNOu/RB82VmhCKYU9QxPONjbeoipiigbrWDS8ocxHNTuMwzKZJXtZ8K8J80+ihQEfBTUVJUyqAtwapdPUgBehNnYg1lDsqLWaDPL0bLlpiGTopXehPhRxtfWg/xzF39g5+59L3r6qxEeS6EnL37KFeuHJUHuAUIB/yusjKXsFkCWF+dR+Lert+9br41yl+mFsg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 28 Mar 2025 03:46:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11118 invoked by uid 111); 28 Mar 2025 03:46:29 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 27 Mar 2025 23:46:29 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 27 Mar 2025 23:46:28 -0400
+From: Jeff King <peff@peff.net>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/4] cat_one_file(): make it easy to see that the `size`
+ variable is initialized
+Message-ID: <20250328034628.GA3067273@coredump.intra.peff.net>
+References: <pull.1888.git.1743079429.gitgitgadget@gmail.com>
+ <b5e98d5e144f4b3a2771a421690b4b729dc1b7ae.1743079429.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b5e98d5e144f4b3a2771a421690b4b729dc1b7ae.1743079429.git.gitgitgadget@gmail.com>
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Thu, Mar 27, 2025 at 12:43:46PM +0000, Johannes Schindelin via GitGitGadget wrote:
 
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Before accessing an array element at a given index, we should make sure
-> that the index is within the desired bounds, not afterwards, otherwise
-> it may not make sense to even access the array element in the first
-> place.
->
-> Pointed out by CodeQL's `cpp/offset-use-before-range-check` rule.
+> 
+> The large `switch` statement makes it a bit impractical to reason about
+> the code.
+> 
+> One of the code paths can technically lead to using `size` without being
+> initialized: if the `t` case is taken and the type name is set to the
+> empty string, we would actually leave `size` unintialized right until we
+> use it.
 
-At least this part should say this is a false positive, forcing us
-to make an unnecessary change to help future developers who are
-running "git blame" and "git log -p" to find out why only s[off]
-checked against CR needs this check _before_ it, while checking
-against other values needs _no_ check.
+I don't think that's quite true. If we have an empty type name we leave
+the switch and hit these lines:
 
-In other words, the first paragraph of the proposed log message is a
-total red herring.  We are accessing an array element at a given
-index 'off' in the original, we are still accessing the same element
-in the updated code, and we know the index is within the array
-bounds.  If the condition were "We want to skip CR only at odd
-places", we would have written 
+	if (!buf)
+		die("git cat-file %s: bad file", obj_name);
 
-	|| (s[off] == '\r' && (off & 01))
+	write_or_die(1, buf, size);
 
-or
+Since we set buf to NULL before the switch and never touch it in the 't'
+case, we'll always hit that die() call.
 
-	|| ((off & 01) || s[off] == '\r')
+So this really is a false positive, regardless of what happens to the
+type name buffer. I'm a little surprised that CodeQL would get this
+wrong, just because it is very easy to see that buf is not touched in
+the 't' case at all (and thus must be NULL). But maybe I'm missing
+something.
 
-and both are equally valid.  (off < len -1) should be no different.
+I do agree that the flow through the switch statement (where "break" is
+good for some cases and a failure mode for others) makes this code
+rather hard to reason about. I'm sure it could be rewritten, but I'm not
+sure if it's worth spending time on.
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  diff.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/diff.c b/diff.c
-> index c89c15d98e0..18ba3060460 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -892,7 +892,7 @@ static void fill_es_indent_data(struct emitted_diff_symbol *es)
->  
->  	/* skip any \v \f \r at start of indentation */
->  	while (s[off] == '\f' || s[off] == '\v' ||
-> -	       (s[off] == '\r' && off < len - 1))
-> +	       (off < len - 1 && s[off] == '\r'))
->  		off++;
->  
->  	/* calculate the visual width of indentation */
+> Practically, this cannot happen because the
+> `do_oid_object_info_extended()` function is expected to always populate
+> the `type_name` if asked for. However, it is quite unnecessary to leave
+> the code as unwieldy to reason about: Just initialize the variable to 0
+> and be done with it.
+
+You can trigger the path in question like this:
+
+  oid=$(echo foo | git hash-object --literally --stdin -w -t '')
+  git cat-file --allow-unknown -t $oid
+
+which hits the "bad file" message.
+
+(Obviously the above is horrible and arguably something we should
+consider forbidding; I have some patches moving towards ripping out
+support for non-standard types entirely).
+
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index b13561cf73b..128c901fa8e 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -104,7 +104,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+>  	struct object_id oid;
+>  	enum object_type type;
+>  	char *buf;
+> -	unsigned long size;
+> +	unsigned long size = 0;
+
+So even though I think your analysis above had a few wrong details, I do
+agree this is a false positive in CodeQL and is probably OK to fix as
+you do here. Though it might make more sense to do it alongside the
+assignment to "buf" (or to move the initialization of "buf" up here).
+
+-Peff
