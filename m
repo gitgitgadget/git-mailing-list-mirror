@@ -1,182 +1,107 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E4BC2C9
-	for <git@vger.kernel.org>; Sat, 29 Mar 2025 11:36:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE6A17A2E8
+	for <git@vger.kernel.org>; Sat, 29 Mar 2025 12:03:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743248210; cv=none; b=QC2JMEWJrUZRrmzePEtgamqt5e1hhTYTdjyIsDh8ipAoeY/rEaKgjfRWo+AvaaVPDJcp+ckE3haduE0zHcZ8Q+wEsGsUzImpxQ5onWUgY5EN9+UGBoFBdR09uYE6O57vinnQVykSvB7dLXL+dClJWi+EdGhHX4lOd/Fi5Td3a3Y=
+	t=1743249816; cv=none; b=UqcbQI7bGWwnKO046cUurFRBseuyo6jIkMo91lAnOrc3sTx6+3va57T1qX/FMWiTaeZD2wr2WBGZWm7ZNtAJvHntz+ySXC60vdjMgLQ82KQioZT+J/mjsCLMGjNnM8cIQfzp4HzbhveaFNEcu0vVRdTuejUHJlupiuorlHns3Sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743248210; c=relaxed/simple;
-	bh=k1TowNBuEvXPA+MOIuP2cgpZNkj8d6cztGuVRqrtni4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Vl1xmuW9stbnYTWPvsErK41Gzd/H7wY0A9hiQSXDR1OFD0AgBqHUV1lti0DnNs5shd1dh4HVRPXh48gQ4W8McqYx+sOBAVMOQiWfEn36v29kbKUyw+KdZ51fgURn1LLGfyLcJXS6FCMMrjpYSfENw7rapteXUV2eAIlJN/YzdqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=plYYTRL3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GZvw99mw; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1743249816; c=relaxed/simple;
+	bh=KHucLO52dZJ0e9vesGT9pw7XP8G9oerrkKtElAqbDs0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SH4bfYqOkew3oydHWb6iXHJr3bG0NH4ttJAL2H8mUSm4mVFxk6brtRT7SzDSK/VWFYQ2fXPiXwzGymlrXA4wBVS+e9CXCZYGreuamWdqcMZAL1r2qSUcKGG/Q7LGrR+4JsYj1JYalcWhPU63TOx6h+8IdUun0x6KbF9x/XeTSec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Boy2NxQo; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="plYYTRL3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GZvw99mw"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7D9222540105;
-	Sat, 29 Mar 2025 07:36:47 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Sat, 29 Mar 2025 07:36:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1743248207; x=1743334607; bh=8n2eL1Kr4Q
-	u8s8etZah6R4nABuhrdUK3fJlOqtY8yaM=; b=plYYTRL3Sulbk2URYcXT7AiMRw
-	SrSLpQNBpUUhNWbtI26eHWmSxdxlm57KRAZPmH5B5YSBLLdyPBG9mgK2juTvSuS7
-	m92sk5pwCn5YNaZ+g8Ub9MsP4EsILGlYq++Vr0foL27SxvKxZlGZomVPuU2St4DK
-	PaS9dDQdHCPj97I2tdA578kDbwnZzGp11RSJNFdJ/WPUIZ/BmE0hL6z0jhu75tqm
-	chyipcQ8PjnWQ2QeXDlO90qOkhCxkZTxNatdDAWRJFvkNmGRC873H2GFhHVanPJQ
-	31pJPO58D8xZ9kvTYSDXl9iVRIfAm8DcunYI4ZC/j/cp08Ssm59z4J64H+MQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743248207; x=1743334607; bh=8n2eL1Kr4Qu8s8etZah6R4nABuhrdUK3fJl
-	OqtY8yaM=; b=GZvw99mwhofLin3R1dK9k7/Hq8dTgofBQzWv8NGuvJwgkOWuAxx
-	/pkyQWW8Tan/VpGWctf0EUtvrlVp+SlO5+WhHIX3J3KIWdpclIFOMPWBCwytwSYr
-	78qT/kyu2TyUO0IVCBQ1bA/oKslJAqXz0K1pJlkn8AoPLmpiwP43ImsJZBvHqjuY
-	hagQ8cFLiqHzLiXXtI+/a/5AQ9919yk87nbQ4h3376HFiDTlcGXmGWbsUWOf2Fhy
-	+vkO32oLiDQgSVT2cvmkm5XqeLzYclIPUi7bN7R+YVgQ+4izDf6GGa2wLgOvFBKb
-	buKXmHKr8HrDeLS2njn5sCm13ttdBXxYSVw==
-X-ME-Sender: <xms:T9vnZzIR267TLBmxg9NOZ2xKrYPSZyGqAMStpdEGUzxlzNO-_MWY9w>
-    <xme:T9vnZ3Jax8Lx237CU00MYLzm_mhEiPpRyaqbTSjam-HqJhuVxvBWR_77wpHWuWdqp
-    GHYnH_XvNYM83Gv6Q>
-X-ME-Received: <xmr:T9vnZ7tGnD4dIVxauyqGs_6LLjWeXMf8eErxZg6He7n1LkqB3JIiHgcXJGrTZ3JdiolU_fjsF34FO1K66y7pt10i2jR6YKPTWryAqXs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeegtdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:T9vnZ8aLXbMTwRgt8uMjPqZUgmg24ty_HTN6Ekq6VYJDGufvnQDVmQ>
-    <xmx:T9vnZ6YrNDWTuhrSy5EJx0S-5Kx7YkWJSYoj9E2JXGL7DCPynwHd9A>
-    <xmx:T9vnZwBWXDjTi8a9XxazBOag3W8yR79Fr3DHIGs-1wucpLl1dZ5I0A>
-    <xmx:T9vnZ4YvMq9ER3h_hiPXb7dXbFYkyYbQj2wZbzx6_lNiVUiqc78O8g>
-    <xmx:T9vnZxXpSy6R9x38Ed3ZoZUYSdszhDB5m78j9hbkmyK-jhDFWv7qNYTu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 29 Mar 2025 07:36:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com
-Subject: Re: [PATCH 1/2] help: include SHA implementation in version info
-In-Reply-To: <20250328170121.157563-2-jltobler@gmail.com> (Justin Tobler's
-	message of "Fri, 28 Mar 2025 12:01:20 -0500")
-References: <20250328170121.157563-1-jltobler@gmail.com>
-	<20250328170121.157563-2-jltobler@gmail.com>
-Date: Sat, 29 Mar 2025 04:36:45 -0700
-Message-ID: <xmqq8qoodq5u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Boy2NxQo"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-22580c9ee0aso65065925ad.2
+        for <git@vger.kernel.org>; Sat, 29 Mar 2025 05:03:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743249814; x=1743854614; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gn+iCDxs7V7iRKNCYaUqanAOLokx78Ltb4yE3w03UA4=;
+        b=Boy2NxQoMRi/UZ5bpP5hOBriF40JyooZNYJ1Ap+gNfylAqVods2FsXVV74JOKem1s3
+         +qgKIyY0uGQpOjbNDJSN5fYFjTcXZ6QdyYIEhbcbA5WJZPO4PBPuECe50L+/XTvKeWAP
+         fXerlIxSStk3QJRfiBnN4Vgr2+EdFFSNB/5bvbtQ7YeeDrC6+AhXweZE2quvZ5X8rwEP
+         jUxNKeAeLuwZryyt/4J/A+1l71JydFYPN6dBYv3EGvTTyW773lF1HrHRM+5sftn8CjiJ
+         aYx51Dyqi6HY8RWvkV1IfjeIKANCtI7eNV3eNPDjzJICS/GBDvmeUIkdxjBnnx+O6W0A
+         Tkaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743249814; x=1743854614;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gn+iCDxs7V7iRKNCYaUqanAOLokx78Ltb4yE3w03UA4=;
+        b=wFBTrQNqKZJXigq35a1tEajr14XCbc9Hx83fjKyE/d8JeDaZljsEWCuYkVSkefIO2W
+         4N4B6UQYeoUh0r+h0J+eAUurribGhkSDvFjPiiVOFJFqEJG2q9FAL+peNzfxNHiVJWhR
+         YbmxqU1ikIgXvccUwH49pb8dj1uZVzNWFW5v1L4UPblW6qewm8KWnSPoUC41Aw9e1xfM
+         NnQMUm+AqwVJhUKjWZQ2udnENZ/Cuw73tqsO5JOMLElSTbgKCjogZh7lmGyEUWdAXxb5
+         srGJLg0QgsRO08yj5P+5Dhhe5v1F2uAHEioVn6+GfrymGOsO/VN1V3kYN14TBkbykYmi
+         Qn5A==
+X-Gm-Message-State: AOJu0YwUVb8rs3uglxvwxW+p3qy92/CwMTz1olCrtGCWLew1CS4NxXS1
+	qgBTcovTbBiEYFQWq6HNe8XzzEqPTNJ7JBn1A9hpuuRO/+U7XsbEDRHPfg==
+X-Gm-Gg: ASbGnctn8NiOQx/li+jcxpxpXpbTY8/hey48T+qu4crgU7UMns+71ydvT742jYEPEXf
+	noJo8hTTce5abTHYD+CmLJq43IEmPquy4ODCnf8DX4ynb99Nx4cgUAjyXvD4DmEEB/djHxicI3n
+	TR8NZ4qiQ7BjOUheL25ALbEoCYOC3Uk2cd6bQnLWgbkm61Pz4fHZM+5V1VgUhwgO1eQC+w12xvL
+	VtpUDv047YlPLMxpc8EE/eL9B3VTAfbvL+2oJsaUR4c7yDWWf6gzqOuymKUqcNFgMA08vUF/CFT
+	FSPSZy0621uuHnV4Z8pFIdZaVSIi8NgazonbRu5FhcCgZSBNlPXBUkW/TsnAki6pi0eY8A==
+X-Google-Smtp-Source: AGHT+IFFXgGzy+uY+I84wfR1eYdnubTyeQmY1sdtvIyWW8c9msvDC26JvKS8E+x5MXTFa6CPXjZXbg==
+X-Received: by 2002:a05:6a00:a93:b0:730:95a6:375f with SMTP id d2e1a72fcca58-7398033f039mr4224611b3a.3.1743249813592;
+        Sat, 29 Mar 2025 05:03:33 -0700 (PDT)
+Received: from archlinux.plaksha.edu.in ([202.164.41.66])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73970e290f8sm3560745b3a.59.2025.03.29.05.03.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 29 Mar 2025 05:03:33 -0700 (PDT)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: git@vger.kernel.org,
+	christian.couder@gmail.com
+Cc: gitster@pobox.com,
+	johncai86@gmail.com,
+	me@ttaylorr.com,
+	ps@pks.im,
+	shejialuo@gmail.com,
+	philip@example.com
+Subject: [PATCH 0/1] remove unnecessary if statement
+Date: Sat, 29 Mar 2025 17:29:24 +0530
+Message-ID: <20250329120327.105925-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Justin Tobler <jltobler@gmail.com> writes:
+In an earlier patch[1] which has been merged to the master,
+We checked `repo` is not NULL before making call to `repo_config()`.
+Later, in another patch series[2] which has been merged to master,
+`repo_config()` was taught to allow `repo` to be NULL.
 
-> When the `--build-options` flag is used with git-version(1), additional
-> information about the built version of Git is printed. During build
-> time, different SHA implementations may be configured, but this
-> information is not included in the version info.
->
-> Add the SHA implementations Git is built with to the version info.
-> ...
-> +static void get_sha_impl(struct strbuf *buf)
-> +{
-> +#if defined(SHA1_OPENSSL)
-> +	strbuf_addstr(buf, "SHA-1: OpenSSL\n");
-> +#elif defined(SHA1_BLK)
-> +	strbuf_addstr(buf, "SHA-1: blk\n");
-> +#elif defined(SHA1_APPLE)
-> +	strbuf_addstr(buf, "SHA-1: Apple CommonCrypto\n");
-> +#elif defined(DC_SHA1_EXTERNAL)
-> +	strbuf_addstr(buf, "SHA-1: Collision Detection (External)\n");
-> +#elif defined(DC_SHA1_SUBMODULE)
-> +	strbuf_addstr(buf, "SHA-1: Collision Detection (Submodule)\n");
-> +#elif defined(SHA1_DC)
-> +	strbuf_addstr(buf, "SHA-1: Collision Detection\n");
-> +#endif
-> +
-> +#if defined(SHA256_OPENSSL)
-> +	strbuf_addstr(buf, "SHA-256: OpenSSL\n");
-> +#elif defined(SHA256_NETTLE)
-> +	strbuf_addstr(buf, "SHA-256: Nettle\n");
-> +#elif defined(SHA256_GCRYPT)
-> +	strbuf_addstr(buf, "SHA-256: gcrypt\n");
-> +#elif defined(SHA256_BLK)
-> +	strbuf_addstr(buf, "SHA-256: blk\n");
-> +#endif
-> +}
+So there is not need for checking if the `repo` is NULL before calling
+repo_config() in the earlier patch.
 
-While I agree with the objective of the change, I am not sure how I
-feel about the implementation.  Given that
+Also, Patrick suggested having the test inside the
+"t1517-outside-repo.sh"[3] instead of having it in the individual test
+files like[2] and I also think it is a good approach as we will
+have all such tests in one place. So, for this patch, I added the
+test inside the "t1517-outside-repo.sh". If this is accepted, I will
+move the test for previous builtin cmd which has already been merged
+to master to "t1517-outside-repo.sh" file.
 
- - The code here, and probably the existing code paths that depend
-   on these SHA1_$WHOSE symbols, assume that only one of them is
-   defined;
+[1] https://public-inbox.org/git/20250210181103.3609495-1-usmanakinyemi202@gmail.com/
+[2] https://public-inbox.org/git/20250307233543.1721552-1-usmanakinyemi202@gmail.com/
+[3] https://public-inbox.org/git/Z9vCDFRUG7IzU_AG@pks.im/
+ 
+Usman Akinyemi (1):
+  builtin/update-server-info: remove unnecessary if statement
 
- - The "git help --build-options" is not an end-user thing but more
-   is a developer thing.
+ builtin/update-server-info.c | 4 ++--
+ t/t1517-outside-repo.sh      | 7 +++++++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-The thing I am most worried about is that it is unclear how the
-order in which the SHA1_$WHOSE symbols are inspected here and
-elsewhere in the code are kept in sync.  What happens when, for
-example, SHA1_OPENSSL and SHA1_APPLE_UNSAFE are both defined?  The
-above code will report that we are using SHA1_OPENSSL, but hash.h
-would probably use SHA1_APPLE as it has its own if/elif/endif
-cascade.
-
-Perhaps it does not matter, if the build infrastructure ensures that
-the build fails unless one and only one of SHA1_$WHOSE is defined.
-
-But with the way how this part is written with an if/elif/endif
-cascade, it makes readers spend time wondering how the precedence
-order here is kept in sync throughout the system.  If I am not
-mistaken, the top-level Makefile has its own ifdef/else/if/endif*
-cascade.
-
-I imagine that making all of the above not if/elif/endif chain, but
-make them pretend as if they are independent and orthogonal choices,
-would make it simpler to understand and also it will help us catch a
-misconfiguration where more than one is defined, i.e.
-
-        static void get_sha_impl(struct strbuf *buf)
-        {
-        #if defined(SHA1_OPENSSL)
-                strbuf_addstr(buf, "SHA-1: OpenSSL\n");
-        #endif
-        #if defined(SHA1_BLK)
-                strbuf_addstr(buf, "SHA-1: blk\n");
-        #endif
-        #if defined(SHA1_APPLE)
-        ...
-
-
-That way, we wouldn't force future devlopers who are plugging new
-implementations of SHA-256 wonder where is the right place in the
-existing if/elif/endif cascade their new one fits.  It also allows
-us to catch misconfigurations to define more then one of them at the
-same time, if such a thing becomes ever possible.
-
-Also, wouldn't it make more sense to just reuse the internal symbol
-for reporting, i.e.
-
-	strbuf_addstr(buf, "SHA-1: SHA1_OPENSSL\n");
-
-instead of having to come up with "human readable" name here
+-- 
+2.49.0
 
