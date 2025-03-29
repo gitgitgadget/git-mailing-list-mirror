@@ -1,250 +1,163 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0083BB676
-	for <git@vger.kernel.org>; Sat, 29 Mar 2025 15:03:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E94CB676
+	for <git@vger.kernel.org>; Sat, 29 Mar 2025 16:07:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743260584; cv=none; b=rPvno0cjmkNOUrFPbnbhbiZ7s9QIVeYpBQFhfLdfNJvttss60dhIdUx4499N5tnvEBOQnFP5a4gg2eS0cB/evb3dI2jMJ77HPUorWKRYRfE+1ft9p8V/wtxpgyeJJ6Wb6V1btKW3kdiJhltDIYcsGiOkRDK5EpTyZxljIFGYLeQ=
+	t=1743264461; cv=none; b=R1VAKBQI1NpI8zKOfhbDkJZY3wiWOY8gPhG4uj193TGRGhtwAYXDRRTQs3zhLU6tvaFdv5lSMzR8GJYDb5jEcc2F5cPQAMnq1n2SSy3H85mYrTrD3W70ERaWWbBHRE9TxtkGFRyTfiaW6SHkKGsMtEEU1KuHLnonDiGUr4Y4MBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743260584; c=relaxed/simple;
-	bh=/9jNpbDzcH/ejfefulS3AStROGMw73QNZqZnND0RFd0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eMGu1O/61OTuQwcfULiFqRhZMWyiVK8VMHWh8ExnEdgX6vsfsZwCCcCaPCh+251yCt4nkXS2pTR4eyVqlkmepR3mrwhpJemx/S/IFi782zUbX1I4h1vFCit77K7+D/y8kXKxVDTWBOVaq5pRiySqh8L6TsSNXxqIYAVIRJz7vgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hPYl5Jfd; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743264461; c=relaxed/simple;
+	bh=jW+7aPck/kSE1Z63ZlwwuOp2hgxrkcmFpowMQK0HMSM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PUop91P6KXkYc/9jgUMmer0QKBNUyxh9pYk5D0lvY4mh2J7Szx4kD9xYtFzIkFVgM3drEYCacfhsBIjQsMA3+hoaNnBtlo6+NvBgsaryU07WjM2NHAZ5Z+CmrhCJMipUIMqMSllK+6WaNsZMiA1jhPadn5DZwNmnAiuOfmPgGUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=xOsVf5Gg; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hPYl5Jfd"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2ff6cf448b8so7153906a91.3
-        for <git@vger.kernel.org>; Sat, 29 Mar 2025 08:03:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743260582; x=1743865382; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sBv/ibhe2yYzgw6lVPDbRzxWuJmshrZtn7MuFfF1M6Y=;
-        b=hPYl5JfdmCtku7Khw3OqeqJXVf34ErPwPYA0wmwQC7rLFBFAxalP7DwS4UKt8q1XtA
-         Y8/PxfBezRVrF3zlXHJY+UTBPkQbMtLgurQut0vnrEw5vn0HKOcsXHh+1UcOqpLIQ2ca
-         DERVswIlkhr1wu9J/3W89XdGc88dTBwl5lCK2IllORxE7AL6EzZo0WjkVq3nO0lI6qcd
-         Zu4/MdsxBEKIxxZoAQYZfP+SFyXkjdRmCbPWu1A02XVDScKbnuttBP97dyArnzhRkBcY
-         fPG/OhhbBFykCfbx4hOl++xM5QdMfnwTXKHXtlNW27yBNrjAvvSjC2O89NNh6mBo8xb1
-         Bq3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743260582; x=1743865382;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sBv/ibhe2yYzgw6lVPDbRzxWuJmshrZtn7MuFfF1M6Y=;
-        b=NfihsXPwNYHz5qTLlxeYesqGbCNJDxH74uxbhf+DFNeujQNN/CrgusAJzjxb202xxY
-         Kmmc0e+FtEkIMWYXDOucNCBMRPBiE8cpTzXfQBQsFGnH3GXhoAYjS+imuJUxkLL3JZ7d
-         ED92LDfxpCV/UgWIof7viTxXs7cttluIEI7cqQLEqAn72hpZP5MxWTxb3euxoBd5GZut
-         IwyzKyCs034aDmZc/MenBYeCTU1K0C/rWwzDzAKDkp/v1X8HRl+STn2F2Ii/zYaPQjd2
-         8lCrp9yFQ2BGIzXF+/Op+TprMTKKskcQZjo3viYwmubOanOXYy1FmrLvde9Wxc3LbYq1
-         7ozw==
-X-Gm-Message-State: AOJu0Yw4KGAQPXFIvWuTr6zmgkymDr5O/Ccd/Nv1Y7/z+kBywkCAiOSy
-	RR9WU5Rd5GNli6Kom9v0yl5JH3bdQjscLNgtE8i5qQlGxDF2TjZZVox4Xxqv
-X-Gm-Gg: ASbGnctPVpAYY8FrObq9X+5WFg+r18aoJ7NIIwuIJEa6q8QGt+HmEBgWaCZY/iax+U2
-	bQD31UmfR58ga3toNxocigzQ105IebQKG3gi8EDAozvHXJSvch4SABYfjRgp8/D8FQAa22SKn/m
-	+hKnlLK3ZACkGvTHLS/ydkfsUPSWRq2OeE2KUZZwudvoqVsZ/Btfh6w4IkVX1yKkLP2PHNKSIME
-	ZQDNomItVMpnCxwt/O8uZNOtKZwkpWD/Ic9Eli42VDpdo2wynJTLrRG4tXrbzYlEJr3m43GskJW
-	CmO/Ssn8dH8qsk2I15S2jBGUuZn1HBlJ4x0wOOB3kctfiahZCbIhHA==
-X-Google-Smtp-Source: AGHT+IF08k2zZSrEUEKLUQSUHHvjBLLqSCp1DiUZvoAuM+wOZwc161PJKvStg6Z7X4PqtBgkVBSJng==
-X-Received: by 2002:a17:90b:33cb:b0:2ee:d024:e4fc with SMTP id 98e67ed59e1d1-3053215c6ccmr5407856a91.33.1743260582044;
-        Sat, 29 Mar 2025 08:03:02 -0700 (PDT)
-Received: from localhost.localdomain ([39.184.61.181])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30516d3cdf9sm3839412a91.7.2025.03.29.08.02.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Mar 2025 08:03:01 -0700 (PDT)
-From: Zheng Yuting <05zyt30@gmail.com>
-X-Google-Original-From: Zheng Yuting <05ZYT30@gmail.com>
-To: 05zyt30@gmail.com
-Cc: git@vger.kernel.org
-Subject: [GSoC] git-refs proposal draft
-Date: Sat, 29 Mar 2025 23:02:46 +0800
-Message-ID: <20250329150248.2274482-1-05ZYT30@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <CAMvj1+rbYKFNeWEvvN76MTpzfuWc4TN4ViXRE4nTfWy7ZMspWg@mail.gmail.com>
-References: <CAMvj1+rbYKFNeWEvvN76MTpzfuWc4TN4ViXRE4nTfWy7ZMspWg@mail.gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xOsVf5Gg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1743264456;
+	bh=jW+7aPck/kSE1Z63ZlwwuOp2hgxrkcmFpowMQK0HMSM=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=xOsVf5GgiM6Hi2HbhTMlfCv2L17EznkheVgEOU6wZCVnRMlyMtD/eiVB0SQ7CUy4Z
+	 YBUh3buB4pHh+60TGpM/NskGzGWB3cAdHwPLe4j3VP2AcTuNMls3yUdBAY2e/FWh8R
+	 BHK7ht3Ulj1fhN3HfTB1TqelmVSsy3zCh6/4BFskBmQ2cS62vALdebjseu1KZ+O3bN
+	 TgjCq1exua6XTcmLf1SjnMUoIwq3fpqnKa7UNhD1nclHsllZ5kcZ+3MY1vNKsVs+d6
+	 niJQf4+UpJaBeNvXSN83UaLoWsR4zMjGGqw2O9I6TQTgx0Tz1wXUSHkZA2x5ORzRiC
+	 lkg7KkVN5X3enxDFgTGHtHns1dke+t4sAjxspAM0IxEbR2R4QqMXA1EUykiciIGdL1
+	 /pESCHECmG4p/qQj1uSMps2N+bUe7MKwW1i2JkEpaz55jQNvliKYm0mY+t4jomTLEH
+	 3SuSsDQqSGngRbM3fNXHkkWxIHGUwhEHnEh0WkVgRMZL0x7wveT
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d5c6:e1bb:f3a5:7a20])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9C86A200FF;
+	Sat, 29 Mar 2025 16:07:36 +0000 (UTC)
+Date: Sat, 29 Mar 2025 16:07:35 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Akash S <akashs@commvault.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Adithya Urugudige <aurugudige@commvault.com>,
+	Abhishek Dalmia <adalmia@commvault.com>
+Subject: Re: git push --mirror hung indefinitely
+Message-ID: <Z-gaxw8ctTcFUUoV@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Akash S <akashs@commvault.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Adithya Urugudige <aurugudige@commvault.com>,
+	Abhishek Dalmia <adalmia@commvault.com>
+References: <SA1PR19MB7013490588962D983094128DC0A02@SA1PR19MB7013.namprd19.prod.outlook.com>
+ <Z-b66vVzQRFFHFK_@tapette.crustytoothpaste.net>
+ <SA1PR19MB70136689E7823F2062D976B5C0A32@SA1PR19MB7013.namprd19.prod.outlook.com>
+ <SA1PR19MB70131FCBD314F579B15F8C69C0A32@SA1PR19MB7013.namprd19.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="SjxBW9+XU5pKrM0g"
+Content-Disposition: inline
+In-Reply-To: <SA1PR19MB70131FCBD314F579B15F8C69C0A32@SA1PR19MB7013.namprd19.prod.outlook.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-## Name and Contact Information
 
-- Full Name: Zheng Yuting
-- Email Address: 05ZYT30@gmail.com
-- Time Zone: UTC +8:00
+--SjxBW9+XU5pKrM0g
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On 2025-03-29 at 14:07:17, Akash S wrote:
+> We compared the GIT_TRACE_PACKET=3D1 output of successful and
+> unsuccessful pushes and noticed that the "git flush message 0000" is
+> not being received from the Azure DevOps Server during unsuccessful
+> push.=20
+>=20
+> -------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
 ---
-
-## Abstract
-
-The current Git reference management functionality is fragmented across
-multiple independent commands (git-show-ref, git-for-each-ref,
-git-update-ref, git-pack-refs, git-check-ref-format, and
-git-symbolic-ref), leading to code redundancy and increased maintenance
-costs. Based on Patrick Steinhardt’s integration vision[1], this project
-aims to introduce 8 new subcommands (list, exists, show, resolve, pack,
-update, delete, check-format) under the existing git-refs command to
-achieve the following objectives:
-
-- Feature Integration: Consolidate existing reference management
-  commands under git-refs, while maintaining backward compatibility.
-- Feature Enhancement: Introduce recursion depth control for git-refs
-  resolve.
-- Testing & Documentation: Add test cases ensuring consistency and
-  update relevant documentation.
-
+>=20
+> Successful git push:
+> 11:29:09.032050 pkt-line.c:85           packet:          git< ok refs/tag=
+s/v3.9.1
+> 11:29:09.034601 http.c:878              =3D=3D Info: TLSv1.3 (IN), TLS ap=
+p data, [no content] (0):
+> 11:29:09.034630 pkt-line.c:85           packet:     sideband< \10000
+> 11:29:09.034643 http.c:878              =3D=3D Info: TLSv1.3 (IN), TLS ap=
+p data, [no content] (0):
+> 11:29:09.034664 pkt-line.c:85           packet:     sideband< 0000
+> 11:29:09.034664 pkt-line.c:85           packet:          git< 0000
+> 11:29:09.034699 pkt-line.c:85           packet:          git> 0000
+> 11:29:09.035667 http.c:878              =3D=3D Info: TLSv1.3 (IN), TLS ap=
+p data, [no content] (0):
+> 11:29:09.035701 http.c:878              =3D=3D Info: Connection #0 to hos=
+t dev.azure.com left intact
+> To https://dev.azure.com/ORGNAME/PRJNAME/_git/REPONAME
+>=20
+> -------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
 ---
-
-## Implementation Plan
-
-### Command Integration Strategy
-
-#### Design Goals
-
-The project will unify scattered reference management functionalities
-under the git-refs subcommand framework, ensuring:
-
-1. Complete Feature Coverage: Each subcommand fully replaces its
-   corresponding legacy command.
-2. Parameter Compatibility: Preserve the semantics and output behavior
-   of legacy command options.
-3. Code Reusability: Minimize redundancy by sharing underlying modules
-   (e.g., refs/files-backend.c).
-
-#### Subcommand Mapping
-
-- git-refs list
-  Replaces git-show-ref and git-for-each-ref, merging reference listing
-  functionalities with support for formatting (--format), filtering
-  (--heads, --tags), and sorting (--sort).
-- git-refs exists
-  Replaces git-show-ref --exists, providing reference existence checks
-  with positive (<ref>) and exclusion-based (--exclude-existing)
-  verification.
-- git-refs show
-  Replaces git-show-ref --verify, validating reference correctness with
-  a strict mode (--strict).
-- git-refs resolve
-  Replaces git-symbolic-ref, resolving symbolic references with added
-  recursion depth control (--max-depth), while retaining deletion (-d)
-  and quiet mode (-q) options.
-- git-refs pack
-  Replaces git-pack-refs, packing loose references with support for
-  filtering (--include, --exclude) and automatic cleanup (--prune).
-- git-refs update
-  Replaces git-update-ref, providing transactional reference updates
-  with batch processing (--stdin) and atomic guarantees.
-- git-refs delete
-  Separates the delete functionality from git-update-ref, ensuring
-  explicit handling of reference removals with safety checks and batch
-  operations (--stdin).
-- git-refs check-format
-  Replaces git-check-ref-format, validating reference format with
-  support for normalized output (--normalize).
-
-#### Implementation Strategy
-
-1. Option Parsing: Each subcommand will reuse the argument parsing
-   logic from legacy commands (e.g., git-pack-refs --prune).
-2. Shared Backend Logic: Calls to common functions in refs/ (e.g.,
-   reference traversal, locking mechanisms).
-3. Error Consistency: Maintain the same error codes and message
-   formats as legacy commands.
-
+>=20
+> Unsuccessful git push:
+> 11:33:58.759005 pkt-line.c:85           packet:     sideband< \10018ok re=
+fs/tags/v3.1.7
+> 11:33:58.759035 pkt-line.c:85           packet:          git< ok refs/tag=
+s/v3.1.7
+> 11:33:58.760165 http.c:878              =3D=3D Info: TLSv1.3 (IN), TLS ap=
+p data, [no content] (0):
+> 11:33:58.760197 http.c:878              =3D=3D Info: Connection #0 to hos=
+t dev.azure.com left intact
+> (process hung here)
+>=20
+> -------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
 ---
+>=20
+> We noticed that "git push mirror" ultimately spawns "git send-pack"
+> with options "--stdin" and "--stateless-rpc" and from the git
+> send-pack documentation we confirmed that the line must end with a
+> flush packet which is ultimately not happening in the hung cases.
+> pstack of send-pack process also shows it is waiting on reading
+> packets as you mentioned earlier.
 
-### Example: Implementing git-refs pack
+`--stateless-rpc` is used for HTTPS, so that's expected.
 
-#### Functional Implementation
+> Can you please confirm if the hung issue is due to the missing message or=
+ packet from the Azure DevOps Server?
 
-1. Modify builtin/refs.c:
-   - Add cmd_refs_pack function implementing git-pack-refs logic.
-   - Update cmd_refs to include pack with
-     OPT_SUBCOMMAND("pack", &fn, cmd_refs_pack).
-   - Define REFS_PACK_USAGE:
-     git refs pack [--all] [--no-prune] [--auto] [--include <pattern>]
-     [--exclude <pattern>].
-2. Register New Subcommand in git.c:
-   - Add { "refs-pack", cmd_refs_pack }, to the command array.
-3. Reuse refs/files-backend.c Logic:
-   - Ensure cmd_refs_pack calls pack_refs correctly, adjusting as
-     necessary for new options.
+We don't have a full trace output here, so it's hard to say completely
+for certain, but from what I know of the protocol off the top of my
+head, a flush packet is always required at the end of the section of
+message.  So I would say that it's very likely that's the cause here.
 
-#### Testing Plan
+Note that it could be that you're _also_ missing one or more `ok`
+responses from the ref updates you're doing here, and that it's hanging
+_before_ it would normally send the flush packet.  That might point to a
+different cause on the server side, but the effect would be the same.
 
-- Test Cases:
-  Add t/txxx-refs-pack.sh, leveraging t/t0601-reffiles-pack-refs.sh
-  scenarios to verify:
-  - --prune removes obsolete references correctly.
-  - --include and --exclude apply filtering as expected.
-  - Packed references match legacy command outputs (diff .git/packed-refs).
-- Performance Benchmarking (if needed):
-  Add performance tests in t/perf to ensure no significant regression
-  in execution time or memory usage.
+If you're talking to the Azure DevOps people, I'd provide them a full
+trace output of both working and non-working pushes so that they can
+inspect it themselves, which will help them figure out where it might be
+going wrong.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-#### Documentation Updates
+--SjxBW9+XU5pKrM0g
+Content-Type: application/pgp-signature; name="signature.asc"
 
-- User Manual:
-  Add a pack section to Documentation/git-refs.txt, mapping options to
-  legacy command equivalents.
-- Developer Notes:
-  Comment code to highlight functional parity between git-refs pack
-  and git-pack-refs.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
 
----
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ+gaxwAKCRB8DEliiIei
+gYwcAQDtVInUd9eE/mRaTOgUTUDur98dW5Q7sGGf2RLCVhOWOAEA23ZmBAK2FJfw
+pJZm/BJmozJNc/pC8b+AsO2gK20LQAc=
+=enFf
+-----END PGP SIGNATURE-----
 
-### Timeline
-
-- May 8 - May 11 (4 days): Initial Testing & Subcommand Framework Setup
-- May 12 - May 28 (17 days): pack Subcommand Implementation
-- May 29 - June 14 (17 days): check-format Subcommand Development
-- June 15 - July 5 (21 days): update and delete Subcommands Development
-- July 6 - July 26 (21 days): show and exists Subcommands Development
-- July 27 - August 16 (21 days): resolve Subcommand Implementation
-- August 17 - September 6 (21 days): list Subcommand Implementation
-- September 7 - September 16 (10 days): Mid-term Review
-- September 17 - September 23 (7 days): Mentor Review & Final Adjustments
-
----
-
-## Background & Experience
-
-I graduated in June 2024 from Wenzhou University with a degree in
-Network Engineering. My experience includes C programming and
-command-line tool development, along with proficiency in Shell
-scripting. I am currently in a transitional phase and expect to finalize
-my schedule by late April, and then update my weekly schedule for GSoC,
-estimating 25-30 hours per week for this project currently.
-
-### Project Experience
-
-- One Student One Chip Project[2]
-  Extending the open-source NEMU simulator by implementing CPU cycle
-  functionalities in C.
-- Web Development
-  Developed a Django-based campus website, including user chat, news
-  publishing, and teacher management modules.
-- Custom Communication Protocols
-  Built a UDP-based chatroom with peer-to-peer and group messaging.
-- Stock Monitoring Tool
-  Implemented real-time monitoring and historical data analysis, with
-  email alerting and planned AI-driven strategy optimization.
-
-I have also obtained CCNA certification and gained hands-on experience
-as a network engineer. Additionally, I contributed a patch optimizing
-send-email functionality in Git[3], giving me insights into the Git
-codebase.
-
-## Appendix
-
-[1] https://gitlab.com/gitlab-org/git/-/issues/330
-[2] https://ysyx.oscc.cc/en/project/intro.html
-[3]https://lore.kernel.org/git/20250312064639.668875-1-05ZYT30@gmail.com/
+--SjxBW9+XU5pKrM0g--
