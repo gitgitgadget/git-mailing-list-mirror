@@ -1,110 +1,97 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615431CDFCE
-	for <git@vger.kernel.org>; Sat, 29 Mar 2025 20:46:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3414919F43A
+	for <git@vger.kernel.org>; Sat, 29 Mar 2025 21:50:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743281210; cv=none; b=dVskVJ2By54iGjneYPmVm+sSGWnbqT4L8GicPpgT2IyMFilpdKnrU39ttfYjourhPDGjEr0iQI//3unOtoMoPcdJYWqWV25Jww8pqRbl2Iy1QeoTrvVQlZZ0h/BrWmHMASSu0+gcwWv+fyL9LJNqDGvre6RK3XF7SmTcOvwpftk=
+	t=1743285003; cv=none; b=QlrdHlisfGCTdrUksZ+l2VIZyhvz/9QT/v9zH09u0ze5npFqAv6F/UeIM3+WLR32niBbRSbWPlJTrdpcXD1ETMn5tHIBNIDmA0H76nYCK9YxLrbxG3X1tT6aCd7fJWkg8bXUoXf27TtC2VRNLoBUr6dH0gHMf++OrklQF6rk9Gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743281210; c=relaxed/simple;
-	bh=KZLAZmhKrlq2yNT47hQm85ZuQPG99BXqcFEqOg0nGV8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O/z8Gl2mB9u0hti9XY69fLf0o5ITv4gZL8K8mCXJprL0n9CldWscc9qIMYdeP77Q7bXVgXbXmLsLn974wRZZNH5yWIZDoMbn8qGb2kIYvQbswMkwIcbjztfu7dP6uXqnIwqVU36o9X9+MgFblatpstItzrxFRAeXJ75Mwq6E+k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FI0UNf+w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MQMyI41i; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1743285003; c=relaxed/simple;
+	bh=2bweN6wYAVbBF/jfooDP+413ULqP9r5gd3nCTwPmWTQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SuzJ/kNSv99Fb+5Fl3f9tzAL5qGvnG/OltAreR2eACdUp0nxkZ38Y/giI8n2G4x647fpzH0h7VNEfrP7tT5r1u+tOnYswSDmDbpHPN+QdOpnYOvnoFb2z7qEnzULPLudiun235IXTQVsUbJ08bwfAxSDKSYIeZnMOqp7f3h1T5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZGK8ZKrr; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FI0UNf+w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MQMyI41i"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 25E45254012D;
-	Sat, 29 Mar 2025 16:46:47 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Sat, 29 Mar 2025 16:46:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1743281207; x=1743367607; bh=ndrQ6UN4aN
-	RdrIYhvEFecmuO/5je16XB6LxPGz/zB1s=; b=FI0UNf+wkN0ogmF6jzN08gN3IX
-	0W9DlwSrn4OYRr/Yp3xUFEwt4JXrfp5vbapcPP+Vkeim1QzvxXQHxnaB591iQ4zH
-	pK33/xTqFHJIXv8pH5m3moYlwOIhEjhytvwYcN4GRiifWrM6g1/19uXskXYAZoSj
-	4OG/oPV1WBGSaEgJkFjxK+ZDQIwgsLGkrOQPI8ARCboNoP/icoGW4bk27YS2TTap
-	tnnn0pTWPqMGVwSz4Nl0ItD3mFhs18cl4YNKqoMmv4dp0ME40sWO5fu+YmhslMZK
-	+UdHqPyKDsnqcvihhTXADnHcXJB4KELFRxj6hq30+aVZspL6+Z1dYedKBKjw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743281207; x=1743367607; bh=ndrQ6UN4aNRdrIYhvEFecmuO/5je16XB6Lx
-	PGz/zB1s=; b=MQMyI41iTohyHRrgNrzUdAHHE3BlVDrJOkTgJpb3GRSPm8kS0yg
-	ITNWsbxGhG8a/ZJFwd4vMvm9QkMvdl8ckJWOG5lDlOkPF/pf3ifEg8xxB646IYPa
-	DtR5Rrk700aZ/MmJzlwt8r/cRoeCuJaaiaS0H1YXTuOScRYdtvTN4Dsu93ldJ3kU
-	Wd2G41CNtTSO21vsQ+1JcTDfVqjoIFFF38IjQGuLP1QhXEVeWXB+gpdUok4Ah/Wj
-	/D+8SGDuSHkfSV4Bwjec8M3GAfQtmzUqM1MMd0vGySTR7stMbnmr0iJ6W9oN9+ob
-	3ZO15/ioIVNewsq/NaAh2wOciuAwLjvnn6Q==
-X-ME-Sender: <xms:NlzoZw-ax_Ku_J_32OZ84YahpQMBkAtliSR_uEiS766Wj87hjc07QA>
-    <xme:NlzoZ4suMAO1lW_332G7CXZBFD0SS1tCvGnYMm7oQEuzi4GHiU-Gg90d9yhp6w40J
-    Vo635a1XLAj-M8e1g>
-X-ME-Received: <xmr:NlzoZ2AL2Q5gfFV5HbNeWt8LluMK7JBvmMZvJ9jR9M7c0B0sLqHjXLtw4RZUaIMc8Vp_MMcqLgY8wSULCoBg6VqsU5_MxgIoRCsuGsI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeehudejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhhuhgssehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhrvggvnhhfohhosehuledvrdgvuhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrfigrrhhimhhiugholh
-    hlodhgihhtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:NlzoZweEBVTi-jiaBmHXm-oaA3VV2fKVHFi4lN54e81mF0Nk-QwICw>
-    <xmx:NlzoZ1NFr78-aCQNZdWAkXmKOAGAOIp3Y95sdR_uHjY7FAPRggKKAg>
-    <xmx:NlzoZ6myU3m0sbumc36OqcmYD-0yBeTGbjRo7wHWlhhTtmTy6neYWw>
-    <xmx:NlzoZ3t5kI9K8IG02vqv1yzvGqAXAcJKzvZUUH9_MLQdyiI1bich-g>
-    <xmx:NlzoZ41mc_PWj_y3U7Z2Z8fxnRD8zFvIzb8q12U093mk5wU_1_lwU4eZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 29 Mar 2025 16:46:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: Fernando Ramos <greenfoo@u92.eu>,  git@vger.kernel.org,  kawarimidoll
- <kawarimidoll+git@gmail.com>
-Subject: Re: [PATCH 1/2] mergetools: vimdiff: fix layout where REMOTE is the
- target
-In-Reply-To: <CALnO6CC9M3nBoA-D7rLW_68VkKm9eZ_K7CZn1Z-BiPJWxgNYHQ@mail.gmail.com>
-	(D. Ben Knoble's message of "Fri, 28 Mar 2025 20:23:37 -0400")
-References: <20250325222311.400748-1-greenfoo@u92.eu>
-	<20250325222311.400748-2-greenfoo@u92.eu>
-	<CALnO6CC9M3nBoA-D7rLW_68VkKm9eZ_K7CZn1Z-BiPJWxgNYHQ@mail.gmail.com>
-Date: Sat, 29 Mar 2025 13:46:45 -0700
-Message-ID: <xmqqa593d0p6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZGK8ZKrr"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6e904f53151so29633616d6.3
+        for <git@vger.kernel.org>; Sat, 29 Mar 2025 14:50:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743285001; x=1743889801; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uHuDOfGxHtiLhwxW1iJ9VqknPCigx0E6Km21Agk7uA4=;
+        b=ZGK8ZKrr94slhE5/zvv9CJcA+aB3ooiH59IKl17+L+LgawJLCRFMXP87pygTt8oOiT
+         tntFaa0JDreYRnc7QKkdwpdnMTrESCrbDScXCpjJgu812PwYGhCZp44VhYRawjwXzTOc
+         A7roP9fsuBrMeEUraE0mA16eIxyz0PZp5ljuvTDtnjg/rOeYnvrtupQtVIt5T1tqlvMx
+         dHWODMAcd47bp/awdLeAo+vA3HCR90yd/IR470g8T1XB4cpD7C6h0QDF8xCauLe+sFII
+         xPrqR7/iQvNEZAqclr7KuRHiG+z8CWxd1zwfK6M3agD2nc3auRBWrFY0KShGkLPvDJOZ
+         oduw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743285001; x=1743889801;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uHuDOfGxHtiLhwxW1iJ9VqknPCigx0E6Km21Agk7uA4=;
+        b=LQFX6osuUPijJUCu54lB+UWPDitDeo4cIOPu2NwLt/utL/OkwJWLcf0DPUyjRMlH0V
+         VgKfh93LeMmo+44/tKuDgohLtIjEiVoQRVgHRtu3k9TY7GziPYEM0g23ENeH4dkv7gq2
+         iqZrhcLKdd5P/uNyYXXW1DnD4KnVWCaO7lkAPPPuiU8/oNHz04b9XbcKN5wyZ/E6YhCk
+         rFNCfIz2UwLvPwoTkvOEabFPyrmOuUEo9CavUjKtQCREaiV4FlCwscAl7+Q1kRfTZTya
+         7J3a7qcj+TOqpTGE155fORi9GbA4WzB8+5PSz5TG/IuR9mvP1tstLLzmrXj+xjGMdh6j
+         lI7Q==
+X-Gm-Message-State: AOJu0YwEC+JHfgHSzf3CVr9nyHB92iKuhUOSmbebMP2yFTm66qCEvn49
+	Wedhk2Z8KrJk45aZxKt+BoFleHk/x7wNm9j7qOE+w6w1U/WZgaYI
+X-Gm-Gg: ASbGncuKsKrahtOyu/l8T9iJV7xpMbtIY2LOOTiTwHSvowcnwuoQ99Tn1Vs77SfIOrU
+	zqLc3L98+mUp2qnTHmXMozogpqhycs03iObHixLhVcIPJW9KLbPGA6LznKpLeu2sn414gUcXoh7
+	jHShdM+h7jwwZPvUBG1gEwM5SScpe2GMDihvsqyHeePT5IImcN3kxbOD2+GEL+o5WphYkMpbT2H
+	D5rxw7wd2H8FXuD8yLx2Uc5iLqp1QhWp65WCl9E1LCMYZ7/MuSpS6xxWBfoCtwS3HrTgQw2z6rg
+	lHPdwQwRDNlZcfnPSn830c1ZbY8nWDnZWFHHtBVdfaGznfokZdRLHMk=
+X-Google-Smtp-Source: AGHT+IH4d7r52c+zbAfSTm5b/J2bYXRrQ/CjXLDuJuQNq1UfjLObpPTACzHSODZ/VijEzNSAkZtFQw==
+X-Received: by 2002:a05:6214:1250:b0:6e8:9d00:3d71 with SMTP id 6a1803df08f44-6eed6042dcbmr64230816d6.21.1743285000931;
+        Sat, 29 Mar 2025 14:50:00 -0700 (PDT)
+Received: from ?IPV6:2600:4040:2644:5100::387? ([2600:4040:2644:5100::387])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6eec962829csm26768906d6.16.2025.03.29.14.50.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 29 Mar 2025 14:50:00 -0700 (PDT)
+Message-ID: <53c31331-97ed-48be-8399-2701581b09a9@gmail.com>
+Date: Sat, 29 Mar 2025 17:49:59 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: git v2.49.0 - gitk regression on Cygwin
+To: Johannes Sixt <j6t@kdbg.org>, johannes.schindelin@gmx.de
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+References: <23088b7d-ed98-4b78-bb9a-c3674da1117d@gmail.com>
+ <7b4149e1-44f8-44d4-89f8-647734f9e674@kdbg.org>
+Content-Language: en-US
+From: Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <7b4149e1-44f8-44d4-89f8-647734f9e674@kdbg.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 
->> ...
->>                 FINAL_TARGET="BASE"
->> +       elif echo "$LAYOUT" | grep @REMOTE >/dev/null
->> +       then
->> +               FINAL_TARGET="REMOTE"
->>         else
->>                 FINAL_TARGET="MERGED"
->>         fi
->> --
->> 2.49.0
->>
+On 3/28/25 1:30 PM, Johannes Sixt wrote:
+> Indeed, it seems that this override is only needed on Windows. Dscho, is
+> there a non-obvious reason that 'exec' and 'open' are overridden on all
+> platforms?
 >
-> This looks pretty obviously correct to me, thanks!
+> -- Hannes
+>
+(resending to avoid HTML ...)
 
-Yeah, thanks, all.  Will queue.
+Looking at git-gui's history, I see no deliberate decision to alter the 
+native path search on any platform except Windows, just no effort ever 
+to leave non-Windows platforms alone. The buggy Cygwin code is part of 
+what I excised from git-gui in 2023 (commit 7145c654 on the git-gui tree).
+
+  I'll plan to send a patch for gitk to revert non-windows platforms to 
+native functions in a couple of days. This idea applies also to git-gui.
+
+Mark
