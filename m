@@ -1,267 +1,167 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BFCD3597B
-	for <git@vger.kernel.org>; Sat, 29 Mar 2025 09:54:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4736D175D53
+	for <git@vger.kernel.org>; Sat, 29 Mar 2025 10:26:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743242058; cv=none; b=NYor/9Z7t/gkm92VW6j2Dz78lG6xcmrt+Y9gAjYuq+3/80nySt7YGqObS/+fHOe5Jzysc03sUny6cR/IfSVk1xjspJuEhfs0F46Fqtxi1TRl1llMZCByitWH/jdIzXwqtwaCd6aGf05l4ANyo+4dNPjoM2SZcnhOg0WiERTYyII=
+	t=1743243978; cv=none; b=Z4eBdPoYzLTAPg2NhLuXMO+ydCJDRCVQWkyTlwDJkXFwSMoNDiKXa6YwFK28yc7cjMNJ7+waWCuM6c7qdbinmcO9tAhPQw1Cvw6uROjIAzCXxmhUDR2mE+EMiQ8E7CLzcgd5L9haj5vA+w9w1cZWlywYxnmfnswBg8eLQj2w1uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743242058; c=relaxed/simple;
-	bh=Rbtl5iGkz3fGYZi3EnwZvatQ5Coe8Ost+x9/+WX80nw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OWbWlMoyj+p2AnY2f8RgP+qACryLKyO5HQ6DsD/kgUGByswwp8kI52K5D5Ge3cxeu8z/FSjsEix+27+7bfvMFKpZaI5HAP9jUgldq1fVxId4kMqAdS//Rz2gyGxpZN/TBxQnNmlSmUqJGCFhcJhXnLrOGKTXJgydxnj1cVvNr0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Siw2oUsA; arc=none smtp.client-ip=209.85.216.52
+	s=arc-20240116; t=1743243978; c=relaxed/simple;
+	bh=sm43H1iCHEvj96CEku59Qq4JyDRVJbxgyeyigyMZYJo=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DRgkkhF32cpYa4klmQ5eh/RdphkLFsPPPjeVea6aAB9cktV/+85qVHIa7nuI73SiJhGKA3tvWd8yU4Aa7C/1T8K6fvByw6H2f28cDJZtOLRY+2j2t0FK9rqRKxniga0UY4bgLoKJqbQ2/bm3wUg0h+r2fxu73v16MTC9YvhB7C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QQ6FFiCc; arc=none smtp.client-ip=209.85.222.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Siw2oUsA"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2ff69365e1dso3937964a91.3
-        for <git@vger.kernel.org>; Sat, 29 Mar 2025 02:54:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QQ6FFiCc"
+Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-86d3907524cso1293523241.0
+        for <git@vger.kernel.org>; Sat, 29 Mar 2025 03:26:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743242056; x=1743846856; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UIs4YEZfNtsCt9b6yqGK4nPOQQ3DZgw+GLh8EeZ/dqQ=;
-        b=Siw2oUsA7mAdst5TzMcPVUs4TShYkInf1EF74XdCs1ZkUCfOaRNIFXqZYnZ0eqIfSY
-         ZGjcLwLpiY5VPvPqrOGicyVE5HvnSF5BgiH+qtScJJMDrqZCnze2pOUmCBsbS68wKDAq
-         ggVC+rBxecy0bmUbn05n9j8/8OKOO9O2w8k5i0jDqlvG8CBM9bMmcJC5e74DepZy6yQy
-         ZuFVj65qYX0NGS7t7I/b/yJMJBAa9YliWKSJXQHSaMpaR4dV2mHRpPrzZVXXsVgHD9po
-         SbMil0SOz5bSIzsmPTJlGFCj8nLEqsXfD0j6VtrO5I1/7+1t/cacU9N94N29fZ/wIUDG
-         jbAQ==
+        d=gmail.com; s=20230601; t=1743243976; x=1743848776; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iEfxLqLRoHmMp1DDSjUS1Kf8KDjzDolpu8PuGDRlrsc=;
+        b=QQ6FFiCcaL2CATWI1t3RwhOzPKEyTp4ejANgEwmZiRcZF2olN6HHcHsAjMoUjyPZoS
+         T4Zi9XACbmyEQMjtg44rY+Vq5tYK9lPbdXpr7F05j4RUEQ3vMVgZg4bInbUCzfEvRTB3
+         Ru+uBrp3GnohIBwMbPCVRrk5IDMpDukz/CH26ZFz6LQObB7cVmNFaK+jZ8lRJJ98VOeY
+         /A4P/oXXDHAkvZBaDUAZLHysaDh5ebdKz13iuQsu/re1aOACnr4FIG4bOSv5hjA0R0p4
+         fQQ6b/U7IHnxR4X7jPsavWQgbTJhtqsOjVCRJN4r1v/xWIw9feraV0NZxXluI2ROoghG
+         93hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743242056; x=1743846856;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UIs4YEZfNtsCt9b6yqGK4nPOQQ3DZgw+GLh8EeZ/dqQ=;
-        b=SZdf3QO6ZSNXDdUUhd40fL+thkHK5t2AT/1subhtD0gbeSSFoTaLWDIdFYEBvJjHfA
-         OTj8lz5KulLEtYf90EJJK6g2vrFjKz3CGjX/ZxiD1NDMd2Cop3PpahyXqCO3ZhLAvd3J
-         /RP/3SirV5GGQ93ZxnNpo8dABcZVuRQRZluORgpBrroCP3Q4R3tzVt5DMvqFWhXKAUEI
-         FRa7de4yIQnTKOkpfcfeas8KT3OFKR2SRhfet5Jve05nOhnqoEawQoZ2Jbm3n96EYZtv
-         tZ85YR1Hw4BYFP+Vg6Lu7uUbBjqQ2f0e2iEuN+ROqQ4mr8GpKeVq8Fmsf8Y6zsnS6igV
-         eIBA==
-X-Gm-Message-State: AOJu0YyABA8kVBtARARwUKPpJG2A1ANC4eUrfNppmRfEt6rmWN5/bKVf
-	znsZ0kDv3A/0GWTZxO+9F7KJZ7XhmNFD16bRXHFx1+GfLbrn+CeQrDe+EHup4AM/jR7CXOSs82m
-	9xlYwWW6UWWsjbkIZWS+wLmuRMNu8Z3cdk/g=
-X-Gm-Gg: ASbGnctu34QLAABTHnYP8IUdTyb8yF0wB6xEl9Qn+xy9MyTlRxZm3pTCjCMgyZY8PW8
-	x4331QimUmW/QXOYoNfbvQi4DtlAmRZvbb42arNsq8YAj51LhThlGry7kuGpQAZxb272BJxesW9
-	+D3JeLyhQjq3ai5X0VYcGlnTqgCHo=
-X-Google-Smtp-Source: AGHT+IH8LINBCmm/y+Le636JBSkIHNawgGcu4yc97IwfUlMjB1S6EjWO4Xdg0l53KZsoFRgMOye99UU6GHrDDw3hXPw=
-X-Received: by 2002:a17:90b:1dd0:b0:2ff:7b28:a51a with SMTP id
- 98e67ed59e1d1-305320b171cmr4439200a91.17.1743242056458; Sat, 29 Mar 2025
- 02:54:16 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743243976; x=1743848776;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iEfxLqLRoHmMp1DDSjUS1Kf8KDjzDolpu8PuGDRlrsc=;
+        b=LX3UxN9BrxTStdZv5ElQvMccO90xaIBESWcOMIXvoB8lQExTfKvtfl4Oc4KKB+ECFg
+         jwUibUfW+yJ6WtY79DE00rFBx3DNxzxW4R//6+i5i0WqG/YAAhYE3Z3NS+ymRuj2h2TL
+         dGJm38ecr5rUAuTUsUCBzUF9tOvBjNAEaoXzM+jeCn9mDE4MZEQBPYqsB6EucTdPbNYN
+         AF/1GnaxKm9v/LJMkYT7JvHdI6weIeqr0LjUJgrJwTL/IMvrADj82MzwakaKgd7hgVGQ
+         wTs1oKBnLGdg449C1uUeZ6Do3FsaalZI5GaOuzxG3+NjomQCCy7uK/bBdlRbIvW6ssnW
+         tJtA==
+X-Gm-Message-State: AOJu0YwlWBeR5amWiCuMDAfr04R3DbnnYqoA6uwMIN3rp8LYfKDlDq1o
+	CPsaeDrdw62FAckw2Jkg9vY+r4HUKtPTbapXaEPJUYt5XkcAWUpDuNfBsmsdsDcmzquj/X6Pk1o
+	/5RaoE64FeSNLf1vZo6YK2GEQJBg=
+X-Gm-Gg: ASbGncu1XjZPxmqP28a/5mACqnbHSJmbeAzuYVkFMg6dXDV/UgC8bSoXvqsM24VV9VC
+	3p8+H1zSd7EZ9iXfpS6JhTA/nVrOxVrOG7FEbuErRQYFOemBXWbS4m3dADEUsJnSqyeZEMuajmN
+	MlV5Bzx3k0UEUslEO3B2oSICcazkgnoeTBzCSHXFAUhgjl10p9gzrIv3vQjoL4
+X-Google-Smtp-Source: AGHT+IFhprCmu4GrSD1xDg8XFAEcC8oNrXMgmwo0VlqaVvPQQsRQwGcXHdIK0VS8pGhZkgTb6yuLf3goR+Z+M/Vcon8=
+X-Received: by 2002:a05:6102:4b83:b0:4c1:7ece:88d9 with SMTP id
+ ada2fe7eead31-4c6d39a12ccmr1576600137.21.1743243975921; Sat, 29 Mar 2025
+ 03:26:15 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 29 Mar 2025 03:26:14 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <Z-ZI-M2jBf5pqMoA@pks.im>
+References: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
+ <20250326-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v2-1-79037e17a74b@gmail.com>
+ <Z-ZI-M2jBf5pqMoA@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250326052602.265989-1-ayu.chandekar@gmail.com> <Z-ae2l6fkurPNuPe@ArchLinux>
-In-Reply-To: <Z-ae2l6fkurPNuPe@ArchLinux>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Sat, 29 Mar 2025 15:24:05 +0530
-X-Gm-Features: AQ5f1JpDiEdxi2yRCHrl0ZD2iuielJ9xP9Jypkr5snPoe-URmL9YLgxTXWzNzd8
-Message-ID: <CAE7as+b8qZFEcaH9eJcQnuhZOSW+hfAMiPUBXNPj9x1L7rcXVg@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BGSOC=5D_=5BPROPOSAL_V1=5D=3A_Refactoring_in_order_to_re?=
-	=?UTF-8?Q?duce_Git=E2=80=99s_global_state?=
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com, 
-	christian.couder@gmail.com, shyamthakkar001@gmail.com
+Date: Sat, 29 Mar 2025 03:26:14 -0700
+X-Gm-Features: AQ5f1Jq4oDGVVpEpZzBnJjnsSNKcQczc5MiyDQrDRNB3rBYxKmKgFZJfE_Hip-0
+Message-ID: <CAOLa=ZRgAQ+FKznxOaOe0ou_6vRPOA7SorhxwvGeBZ07SasgqA@mail.gmail.com>
+Subject: Re: [PATCH v2] blame: print unblamable and ignored commits in
+ porcelain mode
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, jltobler@gmail.com, toon@iotcl.com, gitster@pobox.com, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="000000000000f130ad0631789d77"
+
+--000000000000f130ad0631789d77
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-> > This project aims to refactor Git=E2=80=99s environment handling by rel=
-ocating
-> > these global variables into appropriate local contexts primarily into
-> > `struct repository` and `struct repo_settings`. This change will not
->
-> I think we could just improve this statement better. Some global
-> variables may only apply to one subsystem or two subsystems. In such
-> situations, we may just put the global variable into their own context
-> but not the "struct repository" or "struct repo_settings".
+Patrick Steinhardt <ps@pks.im> writes:
 
-Right, I was generalizing in my statement, but I agree that some
-global variables
-may belong in subsystem-specific contexts rather than `struct repository` o=
-r
-`struct repo_settings`. I'll make sure to account for that distinction
-in my proposal
-and implementation.
-
-> >
-> > Proposed Plan:
-> > --------------
-> >
-> > I have been reviewing global variables across the codebase to understan=
-d their
-> > dependencies and impact. To do this, I examined `config.c` and cross-re=
-ferenced
-> > it with `environment.c` to see how these variables are currently manage=
-d. The
-> > goal of this project is to eliminate global variables by moving their
-> > configurations into repository-specific settings. This involves:
-> >
-> > -   Identifying all occurrences of these global variables.
-> >
-> > -   Removing dependencies on `the_repository`.
-> >
-> > -   Updating function signatures to pass `struct repository` explicitly=
-.
-> >
+> On Wed, Mar 26, 2025 at 10:06:10PM +0100, Karthik Nayak wrote:
+>> diff --git a/builtin/blame.c b/builtin/blame.c
+>> index c470654c7e..528bfef249 100644
+>> --- a/builtin/blame.c
+>> +++ b/builtin/blame.c
+>> @@ -351,6 +351,19 @@ static void emit_porcelain_details(struct blame_origin *suspect, int repeat)
+>>  		write_filename_info(suspect);
+>>  }
+>>
+>> +/*
+>> + * Information which needs to be printed per-line goes here. Any
+>> + * information which can be clubbed on a commit/file level, should
+>> + * be printed via 'emit_one_suspect_detail()'.
+>> + */
+>> +static void emit_per_line_details(struct blame_entry *ent)
 >
-> When reading this, I feel a little wired because I think in [1], you
-> have already realized that we should move some global variables to some
-> specific subsystems.
->
-> [1] https://public-inbox.org/git/20250310151048.69825-1-ayu.chandekar@gma=
-il.com/
+> Tiny nit, feel free to ignore: should this something like
+> `emit_porcelain_per_line_details()` to highlight that this is part of
+> the porcelain format?
 >
 
-I see your point. I was generalizing again, but I=E2=80=99ll make sure to
-clarify this distinction
-in my proposal. Thanks for pointing it out!
+That's a great point, will add that in.
 
-> > -   Replacing global variable references with repository-scoped configu=
-rations.
-> >
-> > Instead of adding all variables directly into `repo_settings`, we can g=
-roup
-> > related variables into specialized structs (e.g., `performance_config`,
-> > `behaviour_config`, `whitespace_config`) and embed these within `repo_s=
-ettings`.
-> > This approach ensures a more modular and maintainable design while keep=
-ing
-> > `repo_settings` manageable.
-> >
-> > I have also created a diagram explaining this structure in [10].
-> >
-> > With this approach, I can structure the patch series by grouping the re=
-factoring
-> > of related variables within specific structs. This will help maintain a=
- clean and
-> > organized codebase while also making the development and review process=
- more
-> > systematic and efficient.
-> >
+>> +{
+>> +	if (mark_unblamable_lines && ent->unblamable)
+>> +		printf("unblamable\n");
+>> +	if (mark_ignored_lines && ent->ignored)
+>> +		printf("ignored\n");
+>> +}
+>> +
 >
-> Yes, it's a good idea to use sub-structure to make the code be cleaner.
-> However, from my own experience when being a GSoC student, we should not
-> consider about this due to that we will over-engineer this.
->
-> You need a lot of time and effort to convince the community why the
-> design is good and why we should put this variable into this
-> sub-structure.
->
-> Instead, you'd better focus on which variables you want to remove
-> firstly. And how do you try to remove them with some simple steps. This
-> would make you more concentrate on the jobs you need to do and reduce
-> the risk.
+> Another tiny nit: you may use `puts()` instead of `printf()`. I don't
+> mind it much though, both versions work equally well.
 >
 
-That makes sense. My intent was to provide a structured approach, but
-I could see how it
-it may introduce unnecessary complexity at this stage. I'll focus on
-identifying and managing
-the global variables before considering additional structuring. I
-think this is something which
-can be done at the end of the project. That is, once all the variables
-are handled, they can
-then be set into specific structures, if needed.
+Yeah, I think some compilers also do this translation. But I'll change
+it as anyways I'm going to push a new version.
 
-> > One key challenge is determining which variables should be part of
-> > `repo_settings` and which should remain separate. While working on the =
-patch to
-> > refactor access to `core.attributesfile`, I received feedback from Juni=
-o that not
-> > all global variables should be blindly moved into the `repo_settings` s=
-truct.
-> > This reinforced the need to carefully assess which variables belong in =
-`repo_settings`
-> > and which should be handled differently.
-> >
+>> diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
+>> index 370b768149..306fc61057 100755
+>> --- a/t/t8013-blame-ignore-revs.sh
+>> +++ b/t/t8013-blame-ignore-revs.sh
+>> @@ -158,6 +158,16 @@ test_expect_success mark_unblamable_lines '
+>>  	test_cmp expect actual
+>>  '
+>>
+>> +for opt in --porcelain --line-porcelain
+>> +do
+>> +	test_expect_success 'mark_unblamable_lines with $opt' '
+>> +		sha=$(git rev-parse Y) &&
+>> +
+>> +		git -c blame.markUnblamableLines=true blame $opt --ignore-rev Y file >actual &&
+>> +		test $(grep ^unblamable actual | wc -l) -eq 2
+>> +	'
+>> +done
+>> +
 >
-> Yes, this is correct. I somehow think whether we should put this
-> paragraph into Pre-GSoC part? I think that you have found this when
-> adding a patch to remove one global variable. And thus by communicating
-> with the community, you have further understood that the requirement and
-> the detail of this project.
-
-Yep, since I encountered this while working on the patch, it fits well
-in the Pre-GSoC section.
-Moving it there would better show how I learned more about the
-project's scope through
-community feedback.
-
+> Okay, makes sense. We cannot batch the information on the first time
+> we've seen the commit here because both the "unblamable" and "ignored"
+> properties are properties of the line, not of the commit. So we'd expect
+> to see the information per line in both modes.
 >
-> And in your plan, you should just say that we need to do this. Would
-> this be better?
->
-So, I should remove all the categorization stuff and just say that I
-would focus on
-each variable, discuss in the community whether it should belong in the str=
-uct
-repo_settings/repo or not while sending patches?
-I felt that keeping it general might seem vague, but that's the nature
-of the project. Every variable
-is unique and would need a different approach and outlining the
-approach of each variable
-in the proposal is not very feasible, as these decisions need to
-happen collaboratively through
-discussions in the community.
+> Patrick
 
-Should I still mention that once the project is complete, we could
-consider structuring related
-stuff if the community sees value in it.
+Thanks for the review.
+Karthik
 
-> > This plan is flexible and may be refined through multiple iterations as=
- I receive
-> > feedback from the community and reviewers.
-> >
-> > Timeline:
-> > ---------
-> >
-> > Pre-GSOC:
-> > (Until 8 May)
-> > -     Explore the codebase more, focusing on environment-related code p=
-aths.
-> > -     Document how each global variable is used and how it can be moved=
- to
-> >       repository settings.
-> > -     Study Git=E2=80=99s Coding Guidelines and the Pro Git Book to ali=
-gn with best practices.
-> >
-> > ----------
-> >
-> > Community Bonding:
-> > (May 8 - June 1)
-> > -     Engage with mentors to discuss different environment variables, t=
-heir
-> >       dependencies, and the best approach for refactoring.
-> > -     Finalize an implementation plan based on discussions.
-> > -     Since I will be on summer vacation, I can start coding early and =
-make progress
-> >       on the project.
-> >
-> > ----------
-> >
-> > Coding Period:
-> > (June 2 - August 25)
-> > -     Refactor global variables, replacing them with repository-scoped
-> >       configurations.
-> > -     Modify function signatures to pass `struct repository` explicitly=
- instead
-> >       of relying on `the_repository`.
-> > -     Categorize variables into specialized structs to improve modulari=
-ty and
-> >       maintainability.
->
-> As I have said, this is a high-risk task. Categorization needs many
-> iterations. And we may do this after GSoC.
+--000000000000f130ad0631789d77
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 7b2d06fa551afd79_0.1
 
-Yep, will update that.
-
-Thanks for your review, again:)
-
-Ayush
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mbnlzVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMFU0Qy85OUtCSXdRTTkwbnZrdGVUK1BieGlTZmhyKwp3T0V3YityZTc0
+d1lpcUdNVEpGWDROTGhETlNleXFscWFBYXg0VTI4MjlWTDJ5M0RLR203cFRDY0hYUUY0YmQxCjh2
+blBwZUxZdmdzRnNxSzFDTUs3dGdaL0UvTFdBNHV4VkUzQ3V1MDlNSGE3QjlFT3RHamtneXpQQkc5
+VkZmWFAKN1VFZDdscWNEL0tEZ3FzazJXUmJYQmJMeWp0UnFrdmlyY1RWMUUxL29DUlo1YzdqQ1hV
+bWxiczVqL1lnMjV5UQpwNG1hcU5JK3lpTzRCQjdXV0RYVTNOS1JHMzZUY2Fha1hNeTZ0NlhpekdJ
+QkpzWWR3YTRyNTZaSEQ1V1R1UDJOCmZNeFJCc0thRFRzNi9sTTV2M2RhcVdEODJheVNBT3hsa0Ex
+OUNQM2o2bVVnek1WLzgxQkYrdG5zbGNIUjdiczAKRnZzUkZPVjFOUDlLcnpLOTVNNGFmWklMZGdv
+cFlNUnVBTTM4Sm03U0NPR3VuUEVJQ0Y3YThQREJPc3Bsd3RCZgovVnJLcnlRSzkxRERQdHpHTU9M
+MU1UdzRCdG52Ri8rSjhlSS9vODNEbDhmMHRvcjhkRU1vSmo3YVh3aWh2UUZKCi9qNlZiQVdSOE9P
+bDRWa0c1bVk4TGhwdHNLbzVjVjhqa0hKK0tkVT0KPXU3YzkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f130ad0631789d77--
