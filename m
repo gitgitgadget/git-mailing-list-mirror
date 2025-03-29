@@ -1,148 +1,144 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B034182D2
-	for <git@vger.kernel.org>; Sat, 29 Mar 2025 17:56:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292BC8F49
+	for <git@vger.kernel.org>; Sat, 29 Mar 2025 18:18:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743271011; cv=none; b=aofvoYXLwdM09GiuW/gjuVMlSE0ak5ZFYXJ28ggZsqI2A9e76vIHmyPlV6+1uq8HukyahCqotMjZ0BnNCPj6weSI+oSK7Sk6Rnb2r/RDINP4iD7VKDieTTyZDwIZgvZ1kKbfFbX75FEDufM2IPctWZlA0+cWCszl7Jgiq81wrIc=
+	t=1743272335; cv=none; b=UBGkRpskCCfofGUMGpUdLzvfy3jwQJsZGDczLBy2PR0mdgkzRZxTlsfucW9P0rrXDuSOpbpU2lQzVwMvJ2aDfEHbWc6maREWI5k3viHCCjqrtnw/6b62P7RuIl3JRfYr5Wh2dhNbneUvUiJApkqrkxoGHn9zKmoAjsjYlNPBetY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743271011; c=relaxed/simple;
-	bh=dnY+QerG0n+38i1Uo4QUg+HEDoiUkVQXbSqGGUqNigU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=C9SQFBIAUwdFlvx5Q0mohrD7fM+hYClFRzUI0JFpKyHcat1wK9WjdWbYYg/xE1kSMwZBmtAe89bZw/QHWUyyIuLnHkm469SgVT2FKJeRE7HY/riN3/Aduo4CgckfqL4tILYQ2GEgYwxdIRJGqmzgXQfmqlAebbmiNlkwYEGJMVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qjs+XzVL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H2iilTaL; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1743272335; c=relaxed/simple;
+	bh=U/0kh6ykNX/TDwrMry/QrDZQqluZENWvioh5Ir6L0U4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sKMZ6NUsLXL8vRgnQgmIl2ldVhd1isNmY3waTnVsGKYcvA1SKhEI/5Zuh5VsFx4dCCmXmq8prYeM8dKCuff7zsSRomrevFxoQ1C724/Hp5I5iH00l0n9q9UR1Ytxgap8nBQ2PYpMMUIqHM6t5IMJMCUna9SRNpwY0bFc6e7x5LA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NxU+Y452; arc=none smtp.client-ip=209.85.222.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qjs+XzVL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H2iilTaL"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7CA451140114;
-	Sat, 29 Mar 2025 13:56:47 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Sat, 29 Mar 2025 13:56:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1743271007; x=1743357407; bh=hWDSXmSJK/
-	tVx+NUQomzw1TjuQbILt6GAe1wyO6DQ/o=; b=qjs+XzVLMpz5pTo4u5AlDx0fdX
-	d8K+5xVD74Coj/+Y9QXhGIm1Uu3CcqymzMFVnABObWvYbawvFfbEyVHmsM8UjLM/
-	TW/dM/oPk1VAjmF5hapxDasr3fe5BqTYbGKQSYZosf2qD2wtpXK+7e3v/862Ir16
-	MGmBcgviaBURNm+AV5YyTiLZpOioLY4yRxs+NUGouTpdBI9TaHJM3OGsDfitHJzW
-	3el8Mv86pNMg26U07tcaiNyjqd/vHxckmx/pRJ8401iUf/mKm26RWVrV2+Y4hAEf
-	vZpr0FLCWN24XqO6Krt4JHXcJ+FknXTIHcumqLAZgNyRcRQ4O+lRjk2MzzOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743271007; x=1743357407; bh=hWDSXmSJK/tVx+NUQomzw1TjuQbILt6GAe1
-	wyO6DQ/o=; b=H2iilTaL79lmn/+NjQPMzFjaKuOi7kPaROEX27wTjhT8EEsXnh+
-	nAZs1+WNhzbtiVb3JfHBETR/XRhsHXyGb68jP9TiaqTwAb1rDnEa0Y9PAQqx6rnu
-	t9TNflIhAEiU2iagxIq9giygxkYUaEH7BGExFD7sXffw+gFqhTYkDuzMysVMiaPY
-	TgxFOZ6YlqFES7aVLd+zSrKzxNQdEAng5ImBtb/fBfjFjZTO6SV/ClxCKf2lOKrF
-	SSyTh6VZV0sj3hr6OXU6G7C/SjZHQLC+CiEDUbJf5RYXKWYtTKaaqPooprxLyfhY
-	PHyZbv9d4zUV0n90zlE4RzSOpKAoJUW5htg==
-X-ME-Sender: <xms:XzToZ0N71e3QJ9JV6Nh5icCdYzTUudaf1xa9zpmLvleZfW0PPKGjSw>
-    <xme:XzToZ6_JXRRgfaOz0qWxnsCqbL1TXbLlv7EY2j0wgP9vAAPc-pdmc1VGLr2HU3T3-
-    3NTtVhaZSYERiU5Ww>
-X-ME-Received: <xmr:XzToZ7Rx1pVdyR8YOam-cgg2crvmPik9azWdysGu_3AUYR9LKyaFI9PD4w5amt48cJ3CB2XqLF9GXjMqhaLFAv7O1i9lfWCbgPDw6y8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeegkedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepshgrmhesghgvnhhtohhordhorhhgpdhrtghpthhtohepvghstghhfigrrhhtiiesgh
-    gvnhhtohhordhorhhgpdhrtghpthhtohepthhgseguvggsihgrnhdrohhrghdprhgtphht
-    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:XzToZ8uNSaUFBwbGASpLnyesQsY-dpFEemZyfOkbs6gDJAm-0lBliw>
-    <xmx:XzToZ8eFHXOustLHO2z_De2n2avrSKGKmRbqaY3hsv1ra4CDzhWTaQ>
-    <xmx:XzToZw1cHfCtRZ5aar9m79caffKmmRX6gPq9N0iofJScyQcDZb-WJA>
-    <xmx:XzToZw9xzTGwqLHFqO2PGIvv3q2WfmoA46Xz2zO5VTOr91PTkYQDwQ>
-    <xmx:XzToZ6sdGd1-SMPg5ShAZ4Jz_9iHQBmY1KpJ_frSZp4Mpl7s9EVBSK5B>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 29 Mar 2025 13:56:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Sam James <sam@gentoo.org>,  Eli Schwartz
- <eschwartz@gentoo.org>,  Thorsten Glaser <tg@debian.org>,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/4] meson: require Perl when building docs
-In-Reply-To: <20250328-b4-pks-collect-build-fixes-v1-3-ead9deda3fbc@pks.im>
-	(Patrick Steinhardt's message of "Fri, 28 Mar 2025 09:38:37 +0100")
-References: <20250328-b4-pks-collect-build-fixes-v1-0-ead9deda3fbc@pks.im>
-	<20250328-b4-pks-collect-build-fixes-v1-3-ead9deda3fbc@pks.im>
-Date: Sat, 29 Mar 2025 10:56:45 -0700
-Message-ID: <xmqqwmc7d8ki.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NxU+Y452"
+Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-86d69774081so1463065241.0
+        for <git@vger.kernel.org>; Sat, 29 Mar 2025 11:18:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743272333; x=1743877133; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rYVOf1t+eIPc+Ia/YxqJ4bFGn71bkWxN3Aqvftvk0fA=;
+        b=NxU+Y452i4ZB5L5RSGU6nRWedwVe6MsJCXHA4b1ULubHhhW1ii0EGhuoVk3abLa3rw
+         EaHmP+fnA4XVEPvP1EQCNIfeeufeCyimiA6lA8uiR8fAJf0X1e+F540rTF3wdJoEjiWu
+         g8YTcc0udUSeSKJkjDYqpEPiFIIYPtvgWyI+XSgCf6XdhhevjYWh7biq9tUFJ239AJqp
+         5CcTJ2QXei2Cjuaf0wSIrMLr6JAOtqeIY6ogopL1rjg9hQMinjDtIX9BvvdJPeT+4xCI
+         COydCbpPVE+kwIqqLgjwC4Jzj0HaZI1Jwh5mgCpUtSNwl+8hF3Tqvj9uNw61C5Q2vWKx
+         8rQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743272333; x=1743877133;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rYVOf1t+eIPc+Ia/YxqJ4bFGn71bkWxN3Aqvftvk0fA=;
+        b=cjVfwCg6ih5cXMvCLWzyhWM7P8WTDGrT+dCbQR+H4iDOHPEci0HMWeg/+lHXXLMsI1
+         LF9J3U37UmhuJtKZ8Wo1mvcnpB4qrSi/6tiA0Jvs65BMSwHTCGIu75YlHprAhrpwzOHU
+         Bgu6X8UtH+EvwiKBy4XB1uxI404sZOeeshQFV4qB55Sq5maoHxD+59QKgi2GXIuEikT/
+         GtdwVmkCGjZu9JcqFiCr105Mdvmfn+IXK6sDL7kKn6vDbuOj0ZFAqCen4ndtFX4IU8Dl
+         fl2taogOUPOeHpw9Jl5WhEAV1Vhvy362nrlsDaxi6ffCX7ZEIuYXmRU86lGh+Dum3Dxi
+         WpWw==
+X-Gm-Message-State: AOJu0Yw5IksF3g/VpeAZ9ENSL8fEhJxjwAupaj/DBh4JpwLqAmqllwtu
+	Wb0tZfXuuxoRGzaoubkuUrJsWqEi9YeIha8jld+Bkkot+QZZKzZd7M+5Xp7bEw1Rgnpxv0eYUUR
+	PwsvL7u6S+t9NT8O+Wg1k8JFHFAQ=
+X-Gm-Gg: ASbGncuIwhQI+LRE2jEzWdTdvGPzJbUjU8k0F1eUw4tSPNmkPl3N8NRI4A2uRcKJIsn
+	tNDPlHFfBJH9fPPgA7XBmduzVJpVzo0bRzQwIEpibz86HswV8dTuHqR1ypQBBrK10yHPdz5wXej
+	Ip4EZN0x0ENnG+3IkvDzry/H1RaeNMakSj+GQ6tnAMwFpUhs+a7KbcgFXa7Ws=
+X-Google-Smtp-Source: AGHT+IGBuRPJHBqVHHD6xy2TIfOWG5PBqEcYn1aHiXtGWOkpYHq2xA8hDmLu43fclrWbRE259y1KO+kmCP/4fBM8p+E=
+X-Received: by 2002:a05:6102:1481:b0:4c4:fdb9:2ea with SMTP id
+ ada2fe7eead31-4c6d3820f32mr2910241137.7.1743272332869; Sat, 29 Mar 2025
+ 11:18:52 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 29 Mar 2025 11:18:52 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqq34evequa.fsf@gitster.g>
+References: <20250327-245-partially-atomic-ref-updates-v5-0-4db2a3e34404@gmail.com>
+ <20250327-245-partially-atomic-ref-updates-v5-8-4db2a3e34404@gmail.com>
+ <6141866.lOV4Wx5bFT@cayenne> <xmqq34evequa.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Sat, 29 Mar 2025 11:18:52 -0700
+X-Gm-Features: AQ5f1Jo8DkaqoYpqbDNPaKNK7NDidgi_tsnXGIXyPwS_deGKOkeuBKqt_4PO5fM
+Message-ID: <CAOLa=ZQDiCx_VJRbQB1K6EeuA2mDj4twEB98ByddUNLtB8rEKQ@mail.gmail.com>
+Subject: Re: [PATCH v5 8/8] update-ref: add --batch-updates flag for stdin mode
+To: Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>
+Cc: git@vger.kernel.org, jltobler@gmail.com, phillip.wood123@gmail.com, 
+	ps@pks.im
+Content-Type: multipart/mixed; boundary="00000000000025f00306317f3800"
 
-Patrick Steinhardt <ps@pks.im> writes:
+--00000000000025f00306317f3800
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> From: Eli Schwartz <eschwartz@gentoo.org>
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
 >
-> When building our documentation we require Perl to generate the list of
-> commands via "cmd-list.perl". Having a Perl interpreter available is
-> thus mandatory when building documentation, but Meson does not enforce
-> this prerequisite. Thus, when all optional features that depend on Perl
-> are disabled, we won't look up the Perl interpreter, which will in the
-> end lead to an error at setup time:
+>>>  SYNOPSIS
+>>>  --------
+>>> -[verse]
+>>> -'git update-ref' [-m <reason>] [--no-deref] (-d <ref> [<old-oid>] |
+>>> [--create-reflog] <ref> <new-oid> [<old-oid>] | --stdin [-z]) +[synopsi=
+s]
+>>> +git update-ref [-m <reason>] [--no-deref] -d <ref> [<old-oid>]
+>>> +	       [-m <reason>] [--no-deref] [--create-reflog] <ref> <new-oid>
+>>> [<old-oid>] +               [-m <reason>] [--no-deref] --stdin [-z]
+>>> [--batch-updates]
+>>
+>> In the case of expressing alternative command line invocations, you need=
+ to
+>> repeat the "git update-ref" command on each line. Otherwise, it means th=
+at
+>> this is the continuation of possible options of one command
 >
-> ```
-> $ meson setup builddir/ -Ddocs=man -Dperl=disabled -Dtests=false
-> [...]
-> Documentation/meson.build:308:22: ERROR: Tried to use not-found external program in "command"
-> ```
 >
-> There is already a list of other cases where we do need the Perl
-> interpreter. Building documentation should be one of those cases, but
-> is missing from the list. Add it to fix the issue.
+> Like this?
 >
-> Signed-off-by: Eli Schwartz <eschwartz@gentoo.org>
-> Commit-message-edited-by: Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  meson.build | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> diff --git a/Documentation/git-update-ref.adoc b/Documentation/git-update=
+-ref.adoc
+> index 5be2c16776..9310ce9768 100644
+> --- a/Documentation/git-update-ref.adoc
+> +++ b/Documentation/git-update-ref.adoc
+> @@ -9,8 +9,8 @@ SYNOPSIS
+>  --------
+>  [synopsis]
+>  git update-ref [-m <reason>] [--no-deref] -d <ref> [<old-oid>]
+> -	       [-m <reason>] [--no-deref] [--create-reflog] <ref> <new-oid> [<o=
+ld-oid>]
+> -               [-m <reason>] [--no-deref] --stdin [-z] [--batch-updates]
+> +git update-ref [-m <reason>] [--no-deref] [--create-reflog] <ref> <new-o=
+id> [<old-oid>]
+> +git update-ref [-m <reason>] [--no-deref] --stdin [-z] [--batch-updates]
+>
+>  DESCRIPTION
+>  -----------
 
-Two puzzling things.
+I think you also caught a whitespace issue here! I'll add this locally
+nevertheless, but will hold on re-rolling! Thanks both
 
- * How is this different from 7c8cd9c1 (meson: fix perl detection
-   when docs are enabled, but perl bindings aren't, 2025-03-16)?
+--00000000000025f00306317f3800
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f3350ac22f4c4400_0.1
 
- * This uses get_options('docs'); shouldn't it be
-   get_option('docs')?  With that changed, the patch becomes
-   identical to the patch from May 16th, but the proposed log
-   message seems to be vastly different.
-
-I'll drop this step from the series for now, as the other one
-already has been in 'next'.
-
-Thanks.
-
-> diff --git a/meson.build b/meson.build
-> index a8d1e63ccc6..51013c70de9 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -772,7 +772,7 @@ endif
->  # features. It is optional if you want to neither execute tests nor use any of
->  # these optional features.
->  perl_required = get_option('perl')
-> -if get_option('tests') or get_option('gitweb').enabled() or 'netrc' in get_option('credential_helpers')
-> +if get_option('tests') or get_option('gitweb').enabled() or 'netrc' in get_option('credential_helpers') or get_options('docs') != []
->    perl_required = true
->  endif
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mb09Za1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMCsyREFDY3lkcVRVMFBDOU13RVBicnArNWN4QmE1TgpsQWNGbENsL1Zp
+SStQWkxqM3NkcHZQK2xHVVE4T0VLMEN3d1ZlUXprR3dMVUhjOGhiRWFCWEpIQVhkSm82N2lVCmVy
+MXhYNHZ3ZVQrV1d4MStnQitlbW9BeFJUcHJ3aXdsQnJiNURFU09HemZlRXZPRStvQnZydmdwaXp2
+TEQ5U00KTDJiMjBaUFdWVFUwMjJoMXVVcWtVdE8xeTF6VmQzMkRieXhUaHpOcU9RNVJkUHd3NVVp
+K0Q5Uyttd0gwYWM2Ywo2anMvbVZ0L1ZLT0Z4QjlhUkVrYkx6Z2Evdi9qY3FFMG9icFkzQmpScmph
+ZG1DTllOSTRvd3p6clRuRlg5UGw1CjQ0Z3VGemMwWjNrQ3BnWnlrQ2lmai9RaXd1b1pIQW05bkcy
+Tmd3ZlNsdGtkSjUwQWx6cFZiWm5PMDRaZUE5UkoKOVYvejFKU1Q4QUk5ZlZjaTBHVy9PN0pkT1kz
+SUFBc25DWFpmT215ZUYwOHVmSkxxand5NDhjL2xYcDNuYU9IMApGeE1lRi9QejVqWGx1UEgzTmlW
+aklMQU11ZTZsT2s2bXUwa0lvVUNEanFPd0hYbFdxTDVIeUFXVEROeE40MC95CnRCSU43Q0RWcDJZ
+RnJPY3dvaVhWR252azl3VHAzd05VRzFXUHRNOD0KPTZKbDEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000025f00306317f3800--
