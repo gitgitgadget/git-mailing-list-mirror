@@ -1,119 +1,102 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2DDEEAA
-	for <git@vger.kernel.org>; Sat, 29 Mar 2025 07:16:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE35149C55
+	for <git@vger.kernel.org>; Sat, 29 Mar 2025 08:42:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743232590; cv=none; b=RBn4pYxqF9iEtOfBmh/iVMruXEQNwMUUC5VoDfG35ogIOK87En/N7Ow+F4GJ6/TgFZ6GBh3CS38fni7N04jHyd1QQdlxfPxw9mLhA4pkYb4+zYF5PlM0sQ9O0pGdxvMp/VJW/UtjdwMsfc7S5Dorfmmco3e6Kkh4NhrEfWom0ws=
+	t=1743237774; cv=none; b=LKprHAxZRAJOFxgNcxGQ3TOeN1wS7eCkCttkqsCKtIFDVRTUv+CriBynRTqwllSYQWyEW+2+vSX4EB93iNzjaIEY45sBxZxu6q0IchLVdVqAnWEiuJHjMjsCF4/BVc68bY/AHxUDU0Gx35df+fnTO2BvbfxsT1241XOtT8IVstc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743232590; c=relaxed/simple;
-	bh=hlk2nk9Ty3W2gTOyB2gmPZ3DZ8zt97epz7cKm8Ick7Q=;
+	s=arc-20240116; t=1743237774; c=relaxed/simple;
+	bh=2nPv+LjIkN1+aDY0/RIA8cbXGrEV/2w5Hbp8mYajoTY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QHM1bPd7J1Bu4YFecagXxIROg4+tRL3EfqzWOYBmy8LanGFGEN34gFq2jK/a/+sI0YsMc7WnX6O23NLSEOqs4B0pY1PXbL/kYSYXy+4uqsCfX/rcXoSwPMWGztC5ggIOVaQ/pYWpq7DcAF/K4U6wVYQ6y4MOcz0p7LgEEeRQKIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VnL14s/F; arc=none smtp.client-ip=209.85.208.46
+	 To:Cc:Content-Type; b=brJKRTcWTplmoasxnfjUMHCvegXUkD5nRpoA12cRk/ufEnBXgy+K2LBcBexZ15s6aagXtc7ngrDWaCNXnhrSrDE2a6KR/CEOtmn6O1cK+FKPPPVgfEXwzVssGh2c3IWIAbQR563U3VnW4Y8Nd96px7/A/X60AXgu0yCKH8pIVbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RK+jPwna; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VnL14s/F"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5e616736458so520148a12.3
-        for <git@vger.kernel.org>; Sat, 29 Mar 2025 00:16:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RK+jPwna"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e5deb6482cso7287580a12.1
+        for <git@vger.kernel.org>; Sat, 29 Mar 2025 01:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743232587; x=1743837387; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=XiYvGle8t6YWypC5kkxcBoZBcBbdxincT9S5r3ZB/V4=;
-        b=VnL14s/FOfxX5YU3Y0QtCWHtFpFKjHjyjdeWbHJbX8mR4IJQlTbuP3CbPa6ZOT4/0S
-         FTJsbQ3gjJjijjboMPm2fqn14aKnlBMqm8ejnwN1Pbi9fgZGxKKJjKgfVLcScsb5WCrQ
-         jqUkGJv6nylS37AqNwt4gOszBHHM5AEwPsVpzDl6mO2gv2DXElXPebhEGSHo+wFlSmDv
-         U85CLnYX+k7fFqhvxwOCNoETFTDyUIlbF0Ua9LWzqoYzf7JxxWsZBdLaW5chBP8OryQn
-         kIfUZWU0XBKDH1JQ1uEYqc+/W/H+H+hEk1vmBk9C2GG6piKjMvJtAbJQLBQnCPH1bhny
-         Favg==
+        d=gmail.com; s=20230601; t=1743237771; x=1743842571; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pnxeTZJaQj3eIEp8wv53UHTMUTAsXb2y8FB/dEbR1+I=;
+        b=RK+jPwnaFYH7ilxVbFR2UdKqtdBU9Iu9+7WgVVXhCODbKZQGvhiyLGzl30OrbXJy66
+         DTsf57c4IhkczLEwH+osh1jDMN2APwmtlKfRepKLPyoWQTjLuCV59ggWhnnBb159/0Ut
+         Bi9qaE8Jq6BmSc5HgpFmReitvGCe0vQD2OLDNGFvezllKoegL+VDExphOcm3Gg+7bB1/
+         jZtooHQcP6x/lHkq9zilbX1Xz6fK75DSCje/Y4C3KWULbKxOtdb8BJg5jb+0xK059cpT
+         NOgjIkC/GkxHYkCnCR9k0ZIciWrCU2l2m5MNGDorcNcESGbz6q9GfGA0aylrERlDCLJS
+         97aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743232587; x=1743837387;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XiYvGle8t6YWypC5kkxcBoZBcBbdxincT9S5r3ZB/V4=;
-        b=F7toBPz7ZYAtrYcN6yf+mZGN+aFZF5Pzv1gA/gdx3Pa5t5L31MoYZFSFM4J76XqIS5
-         mXrhDhhvQuBGWF/rcUM7wFAKjadAIh7CxWoJQ6+38a++BviZgg53Yt3fsO8tjTEHuMpS
-         b2MjU90DtCtNfVfAgnfjFTio06bKkgD1or41iqx08NwtgzF3SptTHvblNxtbbRqXhQvR
-         XXpxHi1d98r0Z0cz3/QG9Tejm3qOAFHwmMFp2tcLfuAb8GRT6HEXViNco6fMFwDSsbIo
-         IoQr3+zoB+EKAmp5GPStgmEmuJvy1wAb3w0ubnmDGYsUrHTak2/EEOk/zE6KfWk0iluP
-         XUfQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXbrynIeWgMrjBt+Jql/ritDibdLWplIqbuMfWPjI2B+p2SCr+1IAt9H8bOHJRjyqVgB+c=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5EtW9HqvQSfeDsgosSWa+XsFjwDwCWDySylhA7ZpxGfjTxcXK
-	ENGwyqz4HQxi1bt9dgGjP77ktdx/iI8xcq92czB14MgNGiN4OgG5jqCqwy0yAiG/GuFLVNB/+Be
-	LnTP+qiAdqFA79mxOLPA9suoWGqPeQ+4UnnI=
-X-Gm-Gg: ASbGncuNGq/yTkv7b9dgtFUq3GMCLppYOXOsu+KTO3yxI/lK3izcYP/Pf2ruJthwO8Q
-	95HV7+f48EjyFyXLujotm+jkGbGY/LWBsnCojMOBO7N+1EYjNw38ASc0/8Me61AXxQ0pR4AbayN
-	1oNNOcuj9UM8MuknfSw+PoVeEabsYuxkpmSzP9rUX5eDezIPDImn6cceg=
-X-Google-Smtp-Source: AGHT+IGChEhjY23gkphZw2CaJIuNedkhfZ12gX2T62/XXFjHCtlxQQvTpe+bNE+QsF0cgWciEh8+2/T4CWoY1OEzQGg=
-X-Received: by 2002:a05:6402:4403:b0:5ed:9f0f:352e with SMTP id
- 4fb4d7f45d1cf-5edfce94d26mr560209a12.4.1743232586431; Sat, 29 Mar 2025
- 00:16:26 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743237771; x=1743842571;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pnxeTZJaQj3eIEp8wv53UHTMUTAsXb2y8FB/dEbR1+I=;
+        b=s44OO3W3i7bn5aPtMyn1KfgH+jCmX0tFRsmISKKegpq509bX1xUDEXbDPNAXMRSJ6c
+         FC108z5ir3Y8FkjWNQOHbIJbllGARVWzIt6OETdAyYSRaJfI/EsmzejWB76zbug31PEg
+         oHjxGjos1S4SCzNVN6O6z64YkTuR2R0zlu/Wl60OdRTYqfG1fykWRmN2a/EkcG7TiijL
+         LTD1Jc0KMEuSIr2YxW91RisGKEytmUcHwjmIdCS2TWwlRH3Arla6KZhFCWFff6GOPw3m
+         VwRCuC/S70Wl5QeqGe4KAV4Eh/Ger5EiTx1Ty8rfrcPtTXwIaVOMcVWcpWuKG6vn9td2
+         Jj0A==
+X-Gm-Message-State: AOJu0YydfAOmSntlPdjmjmB0OZhzMmXmi05M2RN0f6B+PZTRY2+2x37a
+	7Aky0gfAxLxnp0OmpONXBWmx3aeHbe/vTRJaFpKhFNKLPGSBIC8s1dPP5+vq5aFM2ybPWTFj3jH
+	cio+d/aPpzB0wJ8WoslCIFRsw8nHjZHsb
+X-Gm-Gg: ASbGnctLd6qjSNN7eZ5zc8sOjGp6fvBHO+3PQaKw56Awr4o5nkVl/LxBZiAtK5yLa/c
+	rbZDg7JmkwriIk1vFHt9D22+bmM6QTjajioak69CHJ68+EhvxzihgbQ554nmpftVb0+ujDZrIY7
+	sm74jgJIvYQu3nORbiR+3koig69JVd
+X-Google-Smtp-Source: AGHT+IFguS0rff5fJjqrHFhvmOI2hLcieFsDQ1bYYq9Y7L5FVpt7PlclQhyraNqsNlB6oReTxSI9RuEXAuFTcV0gMoc=
+X-Received: by 2002:a05:6402:5cd:b0:5e5:9c04:777 with SMTP id
+ 4fb4d7f45d1cf-5edc44cbe91mr4964890a12.6.1743237771210; Sat, 29 Mar 2025
+ 01:42:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250218-b4-pks-meson-contrib-v1-0-c3edd292beb8@pks.im>
- <20250218-b4-pks-meson-contrib-v1-6-c3edd292beb8@pks.im> <CAGJzqs=+mL_GyXfR44iQ6o6L+gb=D7DWm2Bq4eW19XhuEFuHew@mail.gmail.com>
- <Z7RrbZqq9VrTg-Bz@pks.im>
-In-Reply-To: <Z7RrbZqq9VrTg-Bz@pks.im>
-From: M Hickford <mirth.hickford@gmail.com>
-Date: Sat, 29 Mar 2025 07:15:00 +0000
-X-Gm-Features: AQ5f1Jq0nELNFoICtQ_hUYU-jbfTOiTMpDsQRpul1l1kBHj3yvdmuzg9h_6ZW0c
-Message-ID: <CAGJzqsm4c7b+mO=Gya-zzaUsQ0c5CSrtG08Wgshu7-6epH6J3Q@mail.gmail.com>
-Subject: Re: [PATCH 06/12] meson: wire up credential helpers
-To: Patrick Steinhardt <ps@pks.im>
-Cc: M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org
+References: <20250328170121.157563-1-jltobler@gmail.com> <20250328170121.157563-3-jltobler@gmail.com>
+In-Reply-To: <20250328170121.157563-3-jltobler@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Sat, 29 Mar 2025 09:42:39 +0100
+X-Gm-Features: AQ5f1JrDO4eJjEf92OTJCyMbQsaUfim9JBbl7IZdiciv-WkUOppVi9f_qTYXSD4
+Message-ID: <CAP8UFD3tXtoCcCt0+=SVh76JNvRGL7DOH9Td3igKn6AS07bfiw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] help: include unsafe SHA-1 build info in version
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 18 Feb 2025 at 11:14, Patrick Steinhardt <ps@pks.im> wrote:
+On Fri, Mar 28, 2025 at 6:05=E2=80=AFPM Justin Tobler <jltobler@gmail.com> =
+wrote:
 >
-> On Tue, Feb 18, 2025 at 10:11:23AM +0000, M Hickford wrote:
-> > > Note that ideally, we'd also wire up t0303 to be executed with each of
-> > > the credential helpers to verify their functionality. Unfortunately
-> > > though, none of them pass the test suite right now, so this is left for
-> > > a future change.
-> >
-> > Out of curiosity, which tests failed?
+> In 06c92dafb8 (Makefile: allow specifying a SHA-1 for non-cryptographic
+> uses, 2024-09-26), support for unsafe SHA-1 is added. Add the unsafe
+> SHA-1 build info to `git version --build-info` and update corresponding
+> documentation.
 >
-> Basically all of them. I originally had the patch at the bottom of this
-> email. With that in place, we re-run t0303 for every configured
-> credential helper, where `GIT_TEST_CREDENTIAL_HELPER` is set to the
-> respective credential helper under test. We have to disable parallel
-> tests there because the test state directories would otherwise conflict
-> with one another.
+> Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> ---
+>  Documentation/git-version.adoc | 3 +++
+>  help.c                         | 8 ++++++++
+>  2 files changed, 11 insertions(+)
 >
-> Now you can for example:
->
->     $ meson setup build -Dcredential_helpers=libsecret,netrc
->     $ meson test -C build t0303-*
->
-> And that shows failures like:
->
->     --- expect-stderr   2025-02-18 11:09:33.323668205 +0000
->     +++ stderr  2025-02-18 11:09:33.347668278 +0000
->     @@ -1,2 +1,4 @@
->     +
->     +** (process:75536): CRITICAL **: 11:09:33.339: lookup failed: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.secrets was not provided by any .service files
->      askpass: Username for 'https://example.com':
->      askpass: Password for 'https://askpass-username@example.com':
->     error: last command exited with $?=1
->     not ok 1 - helper (/home/pks/Development/git/build/contrib/credential/libsecret/git-credential-libsecret) has no existing data
->
-> I might be missing how exactly to set all of this up so that things
-> actually work. Maybe I have to do something specific for each of the
-> helpers via `GIT_TEST_CREDENTIAL_HELPER_SETUP`. But t0303 isn't wired up
-> via our Makefiles for any of the helpers, as far as I can see, so I'm
-> unable to figure out what such a setup would look like.
->
-> Any hints would be welcome.
+> diff --git a/Documentation/git-version.adoc b/Documentation/git-version.a=
+doc
+> index 80fa7754a6..53c8ba74c1 100644
+> --- a/Documentation/git-version.adoc
+> +++ b/Documentation/git-version.adoc
+> @@ -22,6 +22,9 @@ OPTIONS
+>  --build-options::
+>         Include additional information about how git was built for diagno=
+stic
+>         purposes.
+> ++
+> +If built to use a faster SHA-1 implementation for non-cryptographic purp=
+oses,
+> +the implmentation used is denoted as "unsafe-SHA-1".
 
-Before you can use git-credential-libsecret, you'd need to install
-gnome-keyring, run gnome-keyring-daemon, and create a keyring
-(choosing a password, can be empty).
-https://unix.stackexchange.com/a/548005/7732
+s/the implmentation used/that implementation/
