@@ -1,128 +1,170 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5B84C6E
-	for <git@vger.kernel.org>; Sat, 29 Mar 2025 00:39:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F267FEEBA
+	for <git@vger.kernel.org>; Sat, 29 Mar 2025 06:03:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743208767; cv=none; b=K5++tYVGWMH2eA2MM2D5TRUjFLZMG9FKE9lrKdERT87mYSwvPnZbueSPDXGCEdSp+AlSnRjSgogArL1b36Y7JDK7QMyjYgiRHt7nP3ZbehgA39L9H/PTjvJM8En8MWMqjHGixNosVcN9xlMd4Ve/R1zY9tw5kBLA39ekfC07GJU=
+	t=1743228201; cv=none; b=lly3OJ12Rr0nXlwc9o1hqdqvm1npGF5eX8G+JiM2TOcVMzsFdrxSY9gjGo9eDCLKlWLsqGdr2niJGzDaPlpBYpzRXeaN0w1Zy6Zm30khHlK6yc141BU5UYgQxmoDfqhCJHVzc6msME7XC3t6nLJSmmREVvkVKZuxcTQOzZ9IJ0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743208767; c=relaxed/simple;
-	bh=4j7n0UE3fl9RsbjZT8OoITpg2kZ4Ywxf4rRszKskucI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WXAMGYtOHbbOFLF4NRbJGKTY2LFwF5ugQPMJjCGLMrxB53Ksua3A0Luyk9WwtBPkMyOWurNCRkjt7UT2bPfIvfIYwv2coEpCKajsZ6RoPC1MgtbVRg2JdVwuYRiJGm47XHp2PLkJ7RkjeHo4Lt3CTMARR0pZ9VP219FDlWEG24U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=twQ/TafZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WmZKTlV7; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1743228201; c=relaxed/simple;
+	bh=3VGaBQuzQN+FFskByATjfAJynbrQz3nD1DxoxIMtl88=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=fbYp3Gg1cLOQ3sFWJO5OIgtWEUSc0D7wMl54VctuH+DywFUNmqErOCvn9b6dWJJGnyyUMWeWAhJg+UjE0YFp68YWR+6jvyxxvacOULl1wcawsqyP9cz/cBt5f5ovaM+y0DKpaq4ocPvxSoU8JioVqp6sWqVV2ejUAyiOvgvZ4po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lcCNnUGg; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="twQ/TafZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WmZKTlV7"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 719FF1383820;
-	Fri, 28 Mar 2025 20:39:24 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Fri, 28 Mar 2025 20:39:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1743208764; x=1743295164; bh=9o2sWQnF7g
-	kJsAqHPLUI6tH8SSNuSoyWME/kNI0vVx0=; b=twQ/TafZxaWDo6gFFrFXWQSnKp
-	KYBV44KJ7mZ10dmOp3eGIjvhkP4TwhSlqYru9gFqNPZVLcUwO6wEHwCuKO29w6ea
-	Ko20hTxDEnir7XOfSqilgJEnh+537NAOpCL535KkAtzD73/OJucZl1icapq7DhPg
-	YB1dp1aYSgiXcCy61QvlsxMOwjbggEqdCm74xNET9ZjiTbKmdbfiOqWzAFdUkq3M
-	/pEl+OT4HUlbXAzO+rBoPRW45kLSfJjX64O8kCqEraMdMEWo8C+64ra4KH8pJhf1
-	03zIQFKwBZEXwWPlSr9UdR8sOPi8E58qP4phiGZTrctNs+mbjXE8IlbTozAg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743208764; x=1743295164; bh=9o2sWQnF7gkJsAqHPLUI6tH8SSNuSoyWME/
-	kNI0vVx0=; b=WmZKTlV7RSbsrJZmrjvwGaY0Yo6CMxoEmwz/NkeSG9Ctty9Flbe
-	BmLV8QjuGz0jipdYEZnpUd3osHvJrarrkqbyP8p/n9bTuGh6Y2RVycccDrxi50XP
-	y7cj1m+UPLSrRp/20KCfAjyS6bv4fDwup5gcAq3fnKj51pILvF+H6JYnKxk82LwE
-	42LykSo54IO7ia5KuB6sLOCyCVbcNCifKLodkS5vDcbBlzA0tCY/ZCsXVjOXT6yD
-	ww2a8066fN7M4kFvqp1cN4AGpy8kRCzJmQsE2ff7Z8VRNYgNhyculhc9hi27qavB
-	WiJJLv4O9ov1zsad7K2ic4GV9IqSbBn1qxA==
-X-ME-Sender: <xms:O0HnZ908s-i9_zNt0DBImgy8lWhDDA7hGbtclxqNpfGSCjXecTqBnA>
-    <xme:O0HnZ0GUsSZD5RCFhFyKZ5eD-90Mioj1YlB2ZKnS-7-DZ6CgRV4e_Nny9QaBlnxCb
-    BzyEI2CW9ilgnsUfQ>
-X-ME-Received: <xmr:O0HnZ97dGgbwwWISuRNQ8VEflqbEUd5VVS7Zi2XlbTWjZ8IA3S5U_yUTYL9bwTkXLAWWOyeCt2LXtvwPm-MZGNrkrINC-hH3xcM-6QQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedvjeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepuddvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlih
-    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgr
-    ughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehphhhilhhiphhorghklhgvhiesihgvvgdrvghmrghi
-    lhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikhdrud
-    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhr
-    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehsuhhnshhhih
-    hnvgesshhunhhshhhinhgvtghordgtohhm
-X-ME-Proxy: <xmx:O0HnZ61XUQ6PngqFuUlIjGq4wJAGaCDFg83yCHe2GttGiXAY5yz0Ww>
-    <xmx:O0HnZwGHJ0PLEDKao0-4qaGAakrgvKlpajkKs8s4BXec2hjWzrcHTg>
-    <xmx:O0HnZ7_98e6iIrn6gpBLcLli96M0DfCtcqZ5gyLh1EUQP-KnF9bVWw>
-    <xmx:O0HnZ9k1tCddoTl28a-WMs6AocpeP6Xt1lEPrgBueu9n8JZDTGsXHg>
-    <xmx:PEHnZ3deLeocb6KKZ1J6DEe-mivO14KK0RBvFGZ7oXK25bBQQLQAkf2H>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Mar 2025 20:39:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Philip Oakley <philipoakley@iee.email>,  Patrick
- Steinhardt <ps@pks.im>,  Karthik Nayak <karthik.188@gmail.com>,  Jeff King
- <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Chris Torek <chris.torek@gmail.com>,  Johannes
- Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 00/10] Avoid the comma operator
-In-Reply-To: <504e63df-77d2-4cd0-bdcc-bd9949d34ce5@gmail.com> (Phillip Wood's
-	message of "Thu, 27 Mar 2025 15:07:17 +0000")
-References: <pull.1889.v2.git.1742945534.gitgitgadget@gmail.com>
-	<pull.1889.v3.git.1743076383.gitgitgadget@gmail.com>
-	<504e63df-77d2-4cd0-bdcc-bd9949d34ce5@gmail.com>
-Date: Fri, 28 Mar 2025 17:39:22 -0700
-Message-ID: <xmqqtt7chdqd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lcCNnUGg"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-224019ad9edso22817025ad.1
+        for <git@vger.kernel.org>; Fri, 28 Mar 2025 23:03:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743228196; x=1743832996; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=401OpHDFmeNFu07d2Q6UKf0xJ8jjEwK1UNsLGImTfr0=;
+        b=lcCNnUGgnR/SEfuN5UPJYEWrxqAE0L6Hngxu8GKv1o32wkAaBZZXjdDw4cFPA5fjuR
+         nqc65zba5p0sm3LUbZM+HZn6ednci7r1dAjcrxLaEgfInxOGIpLkEkcQr4zi1IHdLxu0
+         DHeyxOHGCXI+5/wb3ETK6Y0esxy7yAwNHNnBbryM1NZu/GG4tmuZqMvCsRy01Xd3miIp
+         /Kr0jD4iL4TjnHVzMeAl9ICtXH5zbItjlFfXfWW4lrWveOPumo31BiapLL1/EhsWbnf8
+         UHrAiUxl6bBDQ9rgNRdlKB9NvQ/WMJMzBNtGKtztjDFO3bsgCY512YuZdBtcvKVvyt57
+         yU4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743228196; x=1743832996;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=401OpHDFmeNFu07d2Q6UKf0xJ8jjEwK1UNsLGImTfr0=;
+        b=Nkp5T8bDo83P71TzUwBSCYhFHtA3CUr2sZJsC17/ZTgWKXgj3asXIm7MvsV2JvEu98
+         F3/v2mrlZuFKxhA1uk91NB5cv3UpxU+JENpFRwGIjdLQgpRqSiuQelLYrQSsdJxINTJJ
+         d9jxuKtuffH6eEEHxMPJ5Eymu6P145hg8o6iuOymL+AFpLzbiJwbA1s3iU9Yzlt91XGt
+         IRoyfUDNb6WrLfCro8kYHXmBo/k2gJX7OEixirA4skwFWtukK7fiTmEyk3dTS2p1SU2+
+         GN+GkvVX3A/OSrKnc0P2v1JuF+XvhYkaSw0V0f0tq2tp5aIe/2JxZfs6trjwEt9YKj58
+         y9Pw==
+X-Gm-Message-State: AOJu0YxIzdrop+HAAJc7fcSeJ6FjEm4qo/GE9T3mp/VHhqRpn33EAuJD
+	93mAv98cLe6eb7xHZGFcC2NjUDPcSLVBvhd4AWXy7F00Wzb5dmaClkPyXg==
+X-Gm-Gg: ASbGncsXZ0jzENzUiu15AInUWqAn5Ov806GivC8i14fSgOJIUbC4CChzeU412EEyCXq
+	A3d5zu6M7w1r0Sd5Dc2QadKQB49DkgnM7nRl6YzLGCIyvc7U8fMF1sxdnXt7OlEt0xU7lUdZ40i
+	x85QgO1EjxZFFIUkO2pRslBDffutWyra8nY5zTkEVkemRDKy6Wy4qk7NeKpLSD9LhJO0+e3OtS3
+	rVEL2S9Sv0WalqvwJjtKLNjzEGrg0fak3DMvyXCPMKYB2/O7fu2S+9F45euK8d8sCuf+r/dUwrV
+	V0Idm7LDRmQPQC9ybusHBE5FCwW8o5ERd+1Y9Kajsr51h3jRoPHZq5YA1peGWQ==
+X-Google-Smtp-Source: AGHT+IEKBwZEl/ZbS1D+v7cyx75I6Qd6V0FE3WcRlEyzN8UdWz4fmbiO4IA01hforLdlFYRbWDHqoA==
+X-Received: by 2002:a17:902:ebc6:b0:224:c76:5e57 with SMTP id d9443c01a7336-2292f9e8652mr28647535ad.39.1743228195962;
+        Fri, 28 Mar 2025 23:03:15 -0700 (PDT)
+Received: from [10.61.238.175] ([103.21.124.55])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2291f1cf4ebsm28351335ad.155.2025.03.28.23.03.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Mar 2025 23:03:15 -0700 (PDT)
+Message-ID: <ecaaa968-f337-466b-b719-22ebb3587167@gmail.com>
+Date: Sat, 29 Mar 2025 11:33:14 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: [GSoC PATCH v4] rm: fix sign comparison warnings
+From: Arnav Bhate <bhatearnav@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>
+References: <38de63ce-6d4e-4f1f-95b1-049df78d9cfc@gmail.com>
+ <71098ea7-9136-4ab2-8e15-27017773e054@gmail.com>
+ <0286b10c-2f38-43de-b727-bbebc2f05108@gmail.com>
+Content-Language: en-US
+In-Reply-To: <0286b10c-2f38-43de-b727-bbebc2f05108@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+There are multiple places in loops, where a signed and an
+unsigned data type are compared. Git uses a mix of signed and unsigned
+types to store lengths of arrays. This sometimes leads to using a signed
+index for an array whose length is stored in an unsigned variable or
+vice versa.
 
-> Hi Johannes
->
-> On 27/03/2025 11:52, Johannes Schindelin via GitGitGadget wrote:
->> Changes since v2:
->>   * Made the sed construct in detect-compiler portable (thanks, Eric
->>     Sunshine!)
->>   * The majority of the feedback disagreed with the more compact format in
->>     diff-delta.c, so I changed it to the long format (thanks, Phillip Wood!)
->>   * The more succinct and safer, but less readable, cast in the loop
->>     condition of the dowild() function was replaced with the goto-based
->>     alternative I had mentioned as a possibility in the commit message
->>     (thanks, Phillip Wood!)
->>   * I adjusted the style of my compat/regex/ patch to the surrounding code's.
->>   * The -Wcomma option is now used in Meson-based clang builds, too (thanks,
->>     Patrick Steinhardt!)
->
-> The range-diff below looks good to me, thanks for making our code base
-> clearer.
->
-> Best Wishes
->
-> Phillip
+get_ours_cache_pos is a special case where i, though derived from a
+signed variable is never negative. Move this part to the caller side
+and make i an unsigned argument of the function. Rename i to
+pos to make it descriptive, now that it is a function argument.
 
-Yup, thanks Dscho, and all who gave valuable input to polish the
-series.
+Replace signed data types with unsigned data types and vice versa
+wherever necessary. Where both signed and unsigned data types have been
+used, define a new variable in the scope of the for loop for use as the
+iterator. Remove #define DISABLE_SIGN_COMPARE_WARNINGS.
 
-Will queue.
+Signed-off-by: Arnav Bhate <bhatearnav@gmail.com>
+---
+ builtin/rm.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
+
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 12ae086a55..a6565a69cf 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -5,7 +5,6 @@
+  */
+ 
+ #define USE_THE_REPOSITORY_VARIABLE
+-#define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "builtin.h"
+ #include "advice.h"
+@@ -40,14 +39,12 @@ static struct {
+ 	} *entry;
+ } list;
+ 
+-static int get_ours_cache_pos(const char *path, int pos)
++static int get_ours_cache_pos(const char *path, unsigned int pos)
+ {
+-	int i = -pos - 1;
+-
+-	while ((i < the_repository->index->cache_nr) && !strcmp(the_repository->index->cache[i]->name, path)) {
+-		if (ce_stage(the_repository->index->cache[i]) == 2)
+-			return i;
+-		i++;
++	while ((pos < the_repository->index->cache_nr) && !strcmp(the_repository->index->cache[pos]->name, path)) {
++		if (ce_stage(the_repository->index->cache[pos]) == 2)
++			return pos;
++		pos++;
+ 	}
+ 	return -1;
+ }
+@@ -58,7 +55,7 @@ static void print_error_files(struct string_list *files_list,
+ 			      int *errs)
+ {
+ 	if (files_list->nr) {
+-		int i;
++		unsigned int i;
+ 		struct strbuf err_msg = STRBUF_INIT;
+ 
+ 		strbuf_addstr(&err_msg, main_msg);
+@@ -83,7 +80,7 @@ static void submodules_absorb_gitdir_if_needed(void)
+ 
+ 		pos = index_name_pos(the_repository->index, name, strlen(name));
+ 		if (pos < 0) {
+-			pos = get_ours_cache_pos(name, pos);
++			pos = get_ours_cache_pos(name, -pos - 1);
+ 			if (pos < 0)
+ 				continue;
+ 		}
+@@ -131,7 +128,7 @@ static int check_local_mod(struct object_id *head, int index_only)
+ 			 * Skip unmerged entries except for populated submodules
+ 			 * that could lose history when removed.
+ 			 */
+-			pos = get_ours_cache_pos(name, pos);
++			pos = get_ours_cache_pos(name, -pos - 1);
+ 			if (pos < 0)
+ 				continue;
+ 
+@@ -314,7 +311,7 @@ int cmd_rm(int argc,
+ 	if (pathspec_needs_expanded_index(the_repository->index, &pathspec))
+ 		ensure_full_index(the_repository->index);
+ 
+-	for (i = 0; i < the_repository->index->cache_nr; i++) {
++	for (unsigned int i = 0; i < the_repository->index->cache_nr; i++) {
+ 		const struct cache_entry *ce = the_repository->index->cache[i];
+ 
+ 		if (!include_sparse &&
+-- 
+2.49.0
