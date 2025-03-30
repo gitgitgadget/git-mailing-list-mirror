@@ -1,67 +1,67 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6191F949
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F221214B08A
 	for <git@vger.kernel.org>; Sun, 30 Mar 2025 17:16:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743354971; cv=none; b=G9ZDnCofLy/gmSsvwTa4LzQGlqBnQTUIJl+k1DIbbogsvuqYFN0iBId0/7MwjuksqtL7laI66PW337lxjmETwaRvN5fDj0OZUTbTEDsfB4XApvy2CgD0nWPjq14/IvbNOXNUb8Ef0Gn3MgrSpytU1hgTJOCcYEbxJrQ6FqvOpAA=
+	t=1743354971; cv=none; b=FOGEk2Dpy42C4bcpSEyxr9aP70a564hP6kVZherMrinpFqStHN/a4ZpW/zeZtaaXDPpj4lVkHbyvYFfOAXiYKyogMLfC4FvJ418qFMZV+DduVmpMwx3ZG3a7VBhjqbY2ukSWgF/x3cGybwgYjzYGli66q7mjlhFQYFqWLwG/5tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1743354971; c=relaxed/simple;
-	bh=l9o8h1wCbqu2yFkNl+VTPaqyav/NmLt3ZVL02MS69MU=;
+	bh=Ov+bWOxARJlJFz+5CfnfTjPm7yGb/svi86pFG3YEniU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=R4NJjEvXJdcFxrfW+kuqXXJlYVIMSswFcT4ioEH+l6LwSej5mqdjO4r29sT7fCcjwkcfDn8ip6mXX7JCCAL23fk7RJFm7VB6ezVGuYgK2IPtJOYdBMuzrvV2zX/4aVkWdFykpGBtErFqtLp+uYNP+X9ohpgA04X/hX8fatWcGMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QIzmm0TP; arc=none smtp.client-ip=209.85.128.53
+	 Content-Type:To:Cc; b=O/0eU5QjH1WPw88PshPSu7dVJHW+FZ2cSzzuVtuo0r8isi88863OV9eYokuL720qQ+p5+ebyrRBhZsEv4iQML5EkR2V3KzuvfBsLSQ9f8sbH9LAmxmMRfk/+0J17XTk+aeJ875GVHlyl/Fqp5tEkgUfxdAKze30wGkNTmV3x8/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fW9Yp2Ku; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QIzmm0TP"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43cf257158fso26723735e9.2
-        for <git@vger.kernel.org>; Sun, 30 Mar 2025 10:16:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fW9Yp2Ku"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3914bc3e01aso2119564f8f.2
+        for <git@vger.kernel.org>; Sun, 30 Mar 2025 10:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743354967; x=1743959767; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1743354968; x=1743959768; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=V4dfVWDdoa/oas+4AdjJ4QV5gH8y7CUfBuIhB8fYOuo=;
-        b=QIzmm0TPMLGFjXZX4DBGd+G6+HTMZWH7LGj8yWF9M81CLVZwyq5C9ylRMqOFufh0aa
-         jOvVRZG6B6W+iS0ipoZs71mL8oPJEyhj6dew7Sk6lnzNk4+770rdIICyMkXyfqcHhSyz
-         RsToyZDi36vNyE10b8AMjLLnm00BRfjNdfyzqUKg//fIKv2NbLRKG4J/++X3DmY7QljX
-         IqDovhaYFhweneKjssARQmUEyFC1ZXWabPHy2f/qAXNSrP1j8H038np8Zmr7jANwJsAo
-         B4tqzeKOSVAupT9Hc4jlSS1dzMYbjjxo7FzXkAJU1EgS3/zdq29swabh2fPmnBR3jR8k
-         hgpw==
+        bh=NAAiuglveSzsCh52fS6Ti1UlCsNRXR76NCT6qXuOosQ=;
+        b=fW9Yp2KuEAAtmykkr6rIfQudpboxASOYOXGrFHwBwDBRkM5ttbGrx5GI0oOtqfa7iy
+         77WOn26OwPP4gnll5aEEDZ8PUFoRIAn3RIMLJ0jv/kOrjTBnRpV1AXZJcK/2aYkmjp6z
+         GsO76kOxNTmr+gqh0rFGWgBHl15sfZuBrVJu0h3Uc9MMP+7GLsOdB5otT/wIDx0x6MSI
+         sKTOAcBote8/a2dFU+/Fk36bqQHSrYfFVpNa200b1+l+10QywEQDtJ360m4NebH9TuZG
+         21yAdgAhKJH6RyQKHV4DXiepaqaEIZEd58ngZbi60fqcyayaVmgJTJ4WJwgz2V0uU3ds
+         jYtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743354967; x=1743959767;
+        d=1e100.net; s=20230601; t=1743354968; x=1743959768;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=V4dfVWDdoa/oas+4AdjJ4QV5gH8y7CUfBuIhB8fYOuo=;
-        b=c8VX0m5TqVPk1eSs0lehJ3hjip0IObVaDRyCpXGtgwLSW2KO8uqt4zPGm4d+zx7RTO
-         JT2jcjcXhI/naQxcxIuTZgcHMHJiG83kWvZEYxEZjG44A6N8OqTvEjdezwFqhAh8sowf
-         ibXaRKkThtK+fu6i1CrGf6L3NGqBjn12i+QTrF8nnUa+v++XnyVp5L65QPWP28ZhPNX+
-         xrTA6IvltoHYT+im+3F3dT2IlU18yEnvze3EoLUDuZypIi68hg2Cszo8dgL/3l7Csadp
-         k/vc8j3oE6CMjPQN0VO8gsfWyYc7Di0LNSWAwTxx7IW9Z0HUCzr1UXDEOOjoxuTnb0FR
-         PkWA==
-X-Gm-Message-State: AOJu0YzuuwwsqoZgyP2L6lKGvIUUEDonUMv20hT+OtYUjpkK6gsUnwvN
-	dxcFXgBpRDM6jrdgma851uZU83GQvaDBlABKONifni3/CdHCauhJdfX/HQ==
-X-Gm-Gg: ASbGncvdGseuFsq5vv1DTv8WGRtGS4LrcyXD/fGhc70JhCncLrhBy4XnBv+CuqBah+8
-	05cUeInaRKKMQipM/sMpaPZySnCGKQuLnizdiyGUuG9msY2JslrKMxm4dEMfdZ7H2Jl0kRxlvKy
-	FnN1DatZ4wGMNtCrSL6YWtLmaXf1d/kt56cXps/9C2PQJAQTfcL/i1ReA49PDihrChiGkDu7g/V
-	ginfzuClMbPmUuKy3o4YPGO51caUhmkrVXWdRDF9lsXV4r8pe19wsYiiXG240IncgCJGxKp191R
-	o06RiFC5tklLkxS1LiH6dhC3jl4heky/wybqjfP827cteA==
-X-Google-Smtp-Source: AGHT+IHdI/t3bZKKd1XsQfC9p/tGuf2GYt+uZzvNOBrNaEaQwjvJ5927PykQhMvds/1d6OwM841Ffw==
-X-Received: by 2002:a05:600c:8718:b0:43c:e8ca:5140 with SMTP id 5b1f17b1804b1-43db62bcfeemr51950835e9.23.1743354967010;
+        bh=NAAiuglveSzsCh52fS6Ti1UlCsNRXR76NCT6qXuOosQ=;
+        b=mnF5ZkMZnpEw+xPDctv1deAb36IOYPcdti/TH6xddW/kSiNT1UNOavafRm2NsmncQV
+         qFGfFaTiXQw7wNaw0wUitgAabiW4M4MLdsANERsUW3L0v3KXsBbPlOKAEDnU23ITsowL
+         rEmX7OhtgEKufZPdofFeWp3VuIYZcOzDP/sLMZkq7q24NQPzcNbqpHS5VEUet3IfcW27
+         dmGYHPFotb+TM8cs+dhu2A69A6USiiCyEWkLaaI5H9RL5Emi/PItX8LFvDINC2SUfPGR
+         CKNtWVmqJLT17paKwl7ST2nrpCtL9bjCgLwEWUAJoVfNdrcTWZGVx1rOrE1CCBc3ttJ8
+         5P6Q==
+X-Gm-Message-State: AOJu0YwgADRUhclMhLBKTLqB6ssxLvh31NAsiq7M8WFpoOkLEXYhvg64
+	kUS6lVmaLcWv8luf96/feOv44/T1aYldJXv83m6Hi+fgBTgDru73CAXo5w==
+X-Gm-Gg: ASbGncsbprv+zW762ASPiTZdQuQVobjLJMMwhvOQSB9YpQRwNg8A9TrTq6kMmo25QOt
+	pOnOfq0VbNA0UMjT7LiY0/aa+u3FznhdUH5qWHoiM8jvS254lGMg850iqFy6OfkwxFLZh/3ZIzP
+	eWLlecY4/O/acSIOEvaX735qZ5iVzvYg1ZZEPQqcqj7AZ9HMgLF2MA3kDz+ElXIUEdWPuBmkeYh
+	RagW/tU2cymVuLfvaDQ1httlm5j1a2iugyxd/tcoyi5XGwQyhjRgz+W96UYkY6KZdicsZt86LSz
+	F5duKTFoLIy0Ixd5QcSzxHAhjxc83biIoCQzvPxa5NcM4g==
+X-Google-Smtp-Source: AGHT+IH0Q+/7beITQVWQ3apz8zdS1ZKotbgF5H2divOBpI8zaGNsk66Y0pMnpsse3+ccg/CRxhcE9Q==
+X-Received: by 2002:a05:6000:18a6:b0:391:2db0:2961 with SMTP id ffacd0b85a97d-39c12115cf6mr5182727f8f.38.1743354967754;
         Sun, 30 Mar 2025 10:16:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d8fbbfef2sm97099885e9.11.2025.03.30.10.16.05
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b66363fsm9323617f8f.36.2025.03.30.10.16.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 Mar 2025 10:16:06 -0700 (PDT)
-Message-Id: <1676b5ac628fd2898c3dab1b25d6a852cedfa6ae.1743354964.git.gitgitgadget@gmail.com>
+        Sun, 30 Mar 2025 10:16:07 -0700 (PDT)
+Message-Id: <6206e65ac4d50e174ad7e3dbafaa590b632f214b.1743354964.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1896.git.1743354964.gitgitgadget@gmail.com>
 References: <pull.1896.git.1743354964.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 30 Mar 2025 17:16:00 +0000
-Subject: [PATCH 1/5] doc: convert git-reset to new documentation format
+Date: Sun, 30 Mar 2025 17:16:01 +0000
+Subject: [PATCH 2/5] doc: fix synopsis analysis logic
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,217 +77,82 @@ Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-- Switch the synopsis to a synopsis block which will automatically
-  format placeholders in italics and keywords in monospace
-- Use _<placeholder>_ instead of <placeholder> in the description
-- Use `backticks` for keywords and more complex option
-descriptions. The new rendering engine will apply synopsis rules to
-these spans.
+The synopsis analysis logic was not able to handle backslashes and stars
+which are used in the synopsis of the git-rm command. This patch fixes the
+issue by updating the regular expression used to match the keywords.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/git-reset.adoc | 100 +++++++++++++++++------------------
- 1 file changed, 50 insertions(+), 50 deletions(-)
+ Documentation/asciidoc.conf.in             | 8 ++++----
+ Documentation/asciidoctor-extensions.rb.in | 6 +++---
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-reset.adoc b/Documentation/git-reset.adoc
-index 79ad5643eed..5c73448e072 100644
---- a/Documentation/git-reset.adoc
-+++ b/Documentation/git-reset.adoc
-@@ -7,23 +7,23 @@ git-reset - Reset current HEAD to the specified state
+diff --git a/Documentation/asciidoc.conf.in b/Documentation/asciidoc.conf.in
+index f2aef6cb79f..50f0e81a831 100644
+--- a/Documentation/asciidoc.conf.in
++++ b/Documentation/asciidoc.conf.in
+@@ -43,7 +43,7 @@ ifdef::doctype-book[]
+ endif::doctype-book[]
  
- SYNOPSIS
- --------
--[verse]
--'git reset' [-q] [<tree-ish>] [--] <pathspec>...
--'git reset' [-q] [--pathspec-from-file=<file> [--pathspec-file-nul]] [<tree-ish>]
--'git reset' (--patch | -p) [<tree-ish>] [--] [<pathspec>...]
--'git reset' [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
-+[synopsis]
-+git reset [-q] [<tree-ish>] [--] <pathspec>...
-+git reset [-q] [--pathspec-from-file=<file> [--pathspec-file-nul]] [<tree-ish>]
-+git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]
-+git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
+ [literal-inlinemacro]
+-{eval:re.sub(r'(&lt;[-a-zA-Z0-9.]+&gt;)', r'<emphasis>\1</emphasis>', re.sub(r'([\[\s|()>]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,\/_^\$]+\.?)+)',r'\1<literal>\2</literal>', re.sub(r'(\.\.\.?)([^\]$.])', r'<literal>\1</literal>\2', macros.passthroughs[int(attrs['passtext'][1:-1])] if attrs['passtext'][1:-1].isnumeric() else attrs['passtext'][1:-1])))}
++{eval:re.sub(r'(&lt;[-a-zA-Z0-9.]+&gt;)', r'<emphasis>\1</emphasis>', re.sub(r'([\[\s|()>]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,\\\*\/_^\$]+\.?)+)',r'\1<literal>\2</literal>', re.sub(r'(\.\.\.?)([^\]$.])', r'<literal>\1</literal>\2', macros.passthroughs[int(attrs['passtext'][1:-1])] if attrs['passtext'][1:-1].isnumeric() else attrs['passtext'][1:-1])))}
  
- DESCRIPTION
- -----------
--In the first three forms, copy entries from `<tree-ish>` to the index.
--In the last form, set the current branch head (`HEAD`) to `<commit>`,
-+In the first three forms, copy entries from _<tree-ish>_ to the index.
-+In the last form, set the current branch head (`HEAD`) to _<commit>_,
- optionally modifying index and working tree to match.
--The `<tree-ish>`/`<commit>` defaults to `HEAD` in all forms.
-+The _<tree-ish>_/_<commit>_ defaults to `HEAD` in all forms.
+ endif::backend-docbook[]
  
--'git reset' [-q] [<tree-ish>] [--] <pathspec>...::
--'git reset' [-q] [--pathspec-from-file=<file> [--pathspec-file-nul]] [<tree-ish>]::
-+`git reset [-q] [<tree-ish>] [--] <pathspec>...`::
-+`git reset [-q] [--pathspec-from-file=<file> [--pathspec-file-nul]] [<tree-ish>]`::
- 	These forms reset the index entries for all paths that match the
--	`<pathspec>` to their state at `<tree-ish>`.  (It does not affect
-+	_<pathspec>_ to their state at _<tree-ish>_.  (It does not affect
- 	the working tree or the current branch.)
- +
- This means that `git reset <pathspec>` is the opposite of `git add
-@@ -37,30 +37,30 @@ and specifying a commit with `--source`, you
- can copy the contents of a path out of a commit to the index and to the
- working tree in one go.
+@@ -75,18 +75,18 @@ git-relative-html-prefix=
+ <a href="{git-relative-html-prefix}{target}.html">{target}{0?({0})}</a>
  
--'git reset' (--patch | -p) [<tree-ish>] [--] [<pathspec>...]::
-+`git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]`::
- 	Interactively select hunks in the difference between the index
--	and `<tree-ish>` (defaults to `HEAD`).  The chosen hunks are applied
-+	and _<tree-ish>_ (defaults to `HEAD`).  The chosen hunks are applied
- 	in reverse to the index.
- +
- This means that `git reset -p` is the opposite of `git add -p`, i.e.
--you can use it to selectively reset hunks. See the ``Interactive Mode''
-+you can use it to selectively reset hunks. See the "Interactive Mode"
- section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
+ [literal-inlinemacro]
+-{eval:re.sub(r'(&lt;[-a-zA-Z0-9.]+&gt;)', r'<em>\1</em>', re.sub(r'([\[\s|()>]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,\/_^\$]+\.?)+)',r'\1<code>\2</code>', re.sub(r'(\.\.\.?)([^\]$.])', r'<code>\1</code>\2', macros.passthroughs[int(attrs['passtext'][1:-1])] if attrs['passtext'][1:-1].isnumeric() else attrs['passtext'][1:-1])))}
++{eval:re.sub(r'(&lt;[-a-zA-Z0-9.]+&gt;)', r'<em>\1</em>', re.sub(r'([\[\s|()>]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,\\\*\/_^\$]+\.?)+)',r'\1<code>\2</code>', re.sub(r'(\.\.\.?)([^\]$.])', r'<code>\1</code>\2', macros.passthroughs[int(attrs['passtext'][1:-1])] if attrs['passtext'][1:-1].isnumeric() else attrs['passtext'][1:-1])))}
  
--'git reset' [<mode>] [<commit>]::
--	This form resets the current branch head to `<commit>` and
--	possibly updates the index (resetting it to the tree of `<commit>`) and
--	the working tree depending on `<mode>`. Before the operation, `ORIG_HEAD`
--	is set to the tip of the current branch. If `<mode>` is omitted,
--	defaults to `--mixed`. The `<mode>` must be one of the following:
-+`git reset [<mode>] [<commit>]`::
-+	This form resets the current branch head to _<commit>_ and
-+	possibly updates the index (resetting it to the tree of _<commit>_) and
-+	the working tree depending on _<mode>_. Before the operation, `ORIG_HEAD`
-+	is set to the tip of the current branch. If _<mode>_ is omitted,
-+	defaults to `--mixed`. The _<mode>_ must be one of the following:
- +
- --
----soft::
-+`--soft`::
- 	Does not touch the index file or the working tree at all (but
--	resets the head to `<commit>`, just like all modes do). This leaves
--	all your changed files "Changes to be committed", as `git status`
-+	resets the head to _<commit>_, just like all modes do). This leaves
-+	all your changed files "Changes to be committed", as `git status
- 	would put it.
+ endif::backend-xhtml11[]
  
----mixed::
-+`--mixed`::
- 	Resets the index but not the working tree (i.e., the changed files
- 	are preserved but not marked for commit) and reports what has not
- 	been updated. This is the default action.
-@@ -68,33 +68,33 @@ section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
- If `-N` is specified, removed paths are marked as intent-to-add (see
- linkgit:git-add[1]).
+ ifdef::backend-docbook[]
+ ifdef::doctype-manpage[]
+ [paradef-default]
+-synopsis-style=template="verseparagraph",filter="sed 's!&#8230;\\(\\]\\|$\\)!<phrase>\\0</phrase>!g;s!\\([\\[ |()]\\|^\\|\\]\\|&gt;\\)\\([-=a-zA-Z0-9:+@,\\/_^\\$.]\\+\\|&#8230;\\)!\\1<literal>\\2</literal>!g;s!&lt;[-a-zA-Z0-9.]\\+&gt;!<emphasis>\\0</emphasis>!g'"
++synopsis-style=template="verseparagraph",filter="sed 's!&#8230;\\(\\]\\|$\\)!<phrase>\\0</phrase>!g;s!\\([\\[ |()]\\|^\\|\\]\\|&gt;\\)\\([-=a-zA-Z0-9:+@,\\/_^\\$.\\\\\\*]\\+\\|&#8230;\\)!\\1<literal>\\2</literal>!g;s!&lt;[-a-zA-Z0-9.]\\+&gt;!<emphasis>\\0</emphasis>!g'"
+ endif::doctype-manpage[]
+ endif::backend-docbook[]
  
----hard::
-+`--hard`::
- 	Resets the index and working tree. Any changes to tracked files in the
--	working tree since `<commit>` are discarded.  Any untracked files or
-+	working tree since _<commit>_ are discarded.  Any untracked files or
- 	directories in the way of writing any tracked files are simply deleted.
+ ifdef::backend-xhtml11[]
+ [paradef-default]
+-synopsis-style=template="verseparagraph",filter="sed 's!&#8230;\\(\\]\\|$\\)!<span>\\0</span>!g;s!\\([\\[ |()]\\|^\\|\\]\\|&gt;\\)\\([-=a-zA-Z0-9:+@,\\/_^\\$.]\\+\\|&#8230;\\)!\\1<code>\\2</code>!g;s!&lt;[-a-zA-Z0-9.]\\+&gt;!<em>\\0</em>!g'"
++synopsis-style=template="verseparagraph",filter="sed 's!&#8230;\\(\\]\\|$\\)!<span>\\0</span>!g;s!\\([\\[ |()]\\|^\\|\\]\\|&gt;\\)\\([-=a-zA-Z0-9:+@,\\/_^\\$.\\\\\\*]\\+\\|&#8230;\\)!\\1<code>\\2</code>!g;s!&lt;[-a-zA-Z0-9.]\\+&gt;!<em>\\0</em>!g'"
+ endif::backend-xhtml11[]
+diff --git a/Documentation/asciidoctor-extensions.rb.in b/Documentation/asciidoctor-extensions.rb.in
+index 2494f17a514..09156b71a4f 100644
+--- a/Documentation/asciidoctor-extensions.rb.in
++++ b/Documentation/asciidoctor-extensions.rb.in
+@@ -50,7 +50,7 @@ module Git
+       def process parent, reader, attrs
+         outlines = reader.lines.map do |l|
+           l.gsub(/(\.\.\.?)([^\]$.])/, '`\1`\2')
+-           .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=~@,/_^\$]+)}, '\1{empty}`\2`{empty}')
++           .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=~@,/_^\$\\\*]+)}, '\1{empty}`\2`{empty}')
+            .gsub(/(<[-a-zA-Z0-9.]+>)/, '__\\1__')
+            .gsub(']', ']{empty}')
+         end
+@@ -72,7 +72,7 @@ module Git
+           %(<inlineequation><alt><![CDATA[#{equation = node.text}]]></alt><mathphrase><![CDATA[#{equation}]]></mathphrase></inlineequation>)
+         elsif type == :monospaced
+           node.text.gsub(/(\.\.\.?)([^\]$.])/, '<literal>\1</literal>\2')
+-              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<literal>\2</literal>')
++              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$\\\*]+\.{0,2})+)}, '\1<literal>\2</literal>')
+               .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<emphasis>\1</emphasis>')
+         else
+           open, close, supports_phrase = QUOTE_TAGS[type]
+@@ -100,7 +100,7 @@ module Git
+       def convert_inline_quoted node
+         if node.type == :monospaced
+           node.text.gsub(/(\.\.\.?)([^\]$.])/, '<code>\1</code>\2')
+-              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<code>\2</code>')
++              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$\\\*]+\.{0,2})+)}, '\1<code>\2</code>')
+               .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<em>\1</em>')
  
----merge::
-+`--merge`::
- 	Resets the index and updates the files in the working tree that are
--	different between `<commit>` and `HEAD`, but keeps those which are
-+	different between _<commit>_ and `HEAD`, but keeps those which are
- 	different between the index and working tree (i.e. which have changes
- 	which have not been added).
--	If a file that is different between `<commit>` and the index has
-+	If a file that is different between _<commit>_ and the index has
- 	unstaged changes, reset is aborted.
- +
- In other words, `--merge` does something like a `git read-tree -u -m <commit>`,
- but carries forward unmerged index entries.
- 
----keep::
-+`--keep`::
- 	Resets index entries and updates files in the working tree that are
--	different between `<commit>` and `HEAD`.
--	If a file that is different between `<commit>` and `HEAD` has local
-+	different between _<commit>_ and `HEAD`.
-+	If a file that is different between _<commit>_ and `HEAD` has local
- 	changes, reset is aborted.
- 
----[no-]recurse-submodules::
--	When the working tree is updated, using --recurse-submodules will
-+`--[no-]recurse-submodules`::
-+	When the working tree is updated, using `--recurse-submodules` will
- 	also recursively reset the working tree of all active submodules
- 	according to the commit recorded in the superproject, also setting
--	the submodules' HEAD to be detached at that commit.
-+	the submodules' `HEAD` to be detached at that commit.
- --
- 
- See "Reset, restore and revert" in linkgit:git[1] for the differences
-@@ -104,31 +104,31 @@ between the three commands.
- OPTIONS
- -------
- 
---q::
----quiet::
-+`-q`::
-+`--quiet`::
- 	Be quiet, only report errors.
- 
----refresh::
----no-refresh::
-+`--refresh`::
-+`--no-refresh`::
- 	Refresh the index after a mixed reset. Enabled by default.
- 
----pathspec-from-file=<file>::
--	Pathspec is passed in `<file>` instead of commandline args. If
--	`<file>` is exactly `-` then standard input is used. Pathspec
--	elements are separated by LF or CR/LF. Pathspec elements can be
-+`--pathspec-from-file=<file>`::
-+	Pathspec is passed in _<file>_ instead of commandline args. If
-+	_<file>_ is exactly `-` then standard input is used. Pathspec
-+	elements are separated by _LF_ or _CR_/_LF_. Pathspec elements can be
- 	quoted as explained for the configuration variable `core.quotePath`
- 	(see linkgit:git-config[1]). See also `--pathspec-file-nul` and
- 	global `--literal-pathspecs`.
- 
----pathspec-file-nul::
-+`--pathspec-file-nul`::
- 	Only meaningful with `--pathspec-from-file`. Pathspec elements are
--	separated with NUL character and all other characters are taken
-+	separated with _NUL_ character and all other characters are taken
- 	literally (including newlines and quotes).
- 
--\--::
-+`--`::
- 	Do not interpret any more arguments as options.
- 
--<pathspec>...::
-+`<pathspec>...`::
- 	Limits the paths affected by the operation.
- +
- For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
-@@ -348,7 +348,7 @@ $ git commit ...                            <8>
- ------------
- +
- <1> First, reset the history back one commit so that we remove the original
--    commit, but leave the working tree with all the changes. The -N ensures
-+    commit, but leave the working tree with all the changes. The `-N` ensures
-     that any new files added with `HEAD` are still marked so that `git add -p`
-     will find them.
- <2> Next, we interactively select diff hunks to add using the `git add -p`
-@@ -458,7 +458,7 @@ working index HEAD target         working index HEAD
- 			  --keep   B       C     C
- ....
- 
--`reset --merge` is meant to be used when resetting out of a conflicted
-+`git reset --merge` is meant to be used when resetting out of a conflicted
- merge. Any mergy operation guarantees that the working tree file that is
- involved in the merge does not have a local change with respect to the index
- before it starts, and that it writes the result out to the working tree. So if
-@@ -467,7 +467,7 @@ between the index and the working tree, then it means that we are not
- resetting out from a state that a mergy operation left after failing
- with a conflict. That is why we disallow `--merge` option in this case.
- 
--`reset --keep` is meant to be used when removing some of the last
-+`git reset --keep` is meant to be used when removing some of the last
- commits in the current branch while keeping changes in the working
- tree. If there could be conflicts between the changes in the commit we
- want to remove and the changes in the working tree we want to keep,
+         else
 -- 
 gitgitgadget
 
