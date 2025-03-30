@@ -1,114 +1,73 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F87417A2FA
-	for <git@vger.kernel.org>; Sun, 30 Mar 2025 10:11:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E8F524F
+	for <git@vger.kernel.org>; Sun, 30 Mar 2025 10:54:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.230.60.252
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743329520; cv=none; b=Mezn+RQyFHi2g7xGdBcM+hJUu67TaKzTGcyKF0UbxI1FqH1QbJw8kUntsrSSFv9OzY5CX2Qrq7q7jIhUYDPetLw8N6q4IsLOwhRKgDCe/44akV94q+SmHOoOX5HuoY7w6oe1ZyUCK02r3EM2V7MIqhAAJbMPda/iJBU+vLfucs8=
+	t=1743332051; cv=none; b=JmiN19MlfaYBeAvN4UV4jz3ALlOk/IIm40lpRgqa21Naq3/J51hwI4krVEqCOkGVu7J4sMqHykDRclCwx5WQjewxZhKcnurvqyjvVdwErdXmHoLhGduBnq9OWPd4ezjkFKZsznuJ73J+StJafxVJzdvM1aOMp0YwqF2pXK6SiTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743329520; c=relaxed/simple;
-	bh=yyMqt+qnkAs+J01ujPtldTgeFK5rCh89cZP2NMNYQws=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=QqxgNXLDUlL5wUKl/sBPgi0irapeaYyo6e9OuzJ3dDlN/mODlvFe+3ORkA1l6Ddpm6eFxyo2gO7+5Ft4RwCpoUEX3lpd+tNOUSOKrE/QP9d1/fuEpj3eciBQQWjr5pinK16Q/tFqtxH/Q9iMuOahJuDljZzd7TwRcUpHw9I6af8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dxDQSvoh; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743332051; c=relaxed/simple;
+	bh=J8rw/YWdmYYLgnoyBt2wa849rJtcYG6Bnn+prXBAE/Q=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=h4DKBrMKz/rse9Oscp0r0GW1y6S+xW4RJL83GHStgmEM40BEXv/s3XHsXRQ+AINbz6uRmbrnIkWu4u4a9MKEprEhGcav8JBf0ZdvHpsumbwSdUFjRNn1Y2bMEFL3idJE8LopPYuoY7K8KrWclGbicOWq/smxysErDfqKTTkaqJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us; spf=pass smtp.mailfrom=lfurio.us; dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b=UzDAllnk; arc=none smtp.client-ip=157.230.60.252
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dxDQSvoh"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43d07ca6a80so18780005e9.1
-        for <git@vger.kernel.org>; Sun, 30 Mar 2025 03:11:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743329517; x=1743934317; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=m49LXx7Oe037ZfV31oqLOywJYy1G3XQMytNdLtX8k+E=;
-        b=dxDQSvohQjTVc2omiFbkVAcq7qBLX+Xw+KL1ltAWPq63bWBKvOyCA0byJL2MDlFKyB
-         PoFxVuuuKjg8+kqSPtQ1WHpCIASOSNuffiy3lPAhc+XBP7pFLb5fdt36COU6kIn7Ny7R
-         Ewj/lwpkRiizdBTAyETEnwf8WEyYDWhk2n3vsqUzl51zA6pyS+EPH2EziWSifkEcoPlp
-         gDKN9dRzEAbGKkM8jTkHZTTRcB8nc8Ka1c7PXbG2b30hXihLkKeOs+YgJGDF76d0bFsF
-         FV1FQtn+/x5jmiNchzDYhw44syv+A0QYXeLm8ECj636hgwyLsSKjDWEuQmS9jsWuvSXF
-         kvrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743329517; x=1743934317;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m49LXx7Oe037ZfV31oqLOywJYy1G3XQMytNdLtX8k+E=;
-        b=JQhCNmMehuL83acV7FEzeDUtPSN1UZDoZ3aX7qJfK6EHCcbdYK+Jkn3HHFvpbQ0YTv
-         n5XJXYrc9z9CcqaVovGs+l1XLeemkjJtR/0jvq80NkjkGUGUQ2M+WTnO+pgS1bKplaV5
-         sqLVadHK4brct7QNPPKQiuVLSisB1JLBGD0uqUrEiqMRLh3klBPYAMoCquJZNp/LRlWJ
-         Ui0rpU8GxIFNmxruxuljMHYcjBU3m1Tuc/jryOKOXzQjeFjE+Wavh12GUqE1GXun/l37
-         hyOGmcTzLkBcCrbuv+MQdCDOjN/5OHifssHFnOrlkznVFclEOrxZ00ArLewDO26JVuTa
-         oaiw==
-X-Forwarded-Encrypted: i=1; AJvYcCV0QnoyzhGdWypJS8m9NUNCajaigdyTtVXqa47RS3Z5qwdwPt12DgA9MBGHERhsW++pBj4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxloj1SLTvkSNctEWQAdxmd/dbmHjTluIAJ0/8P9mh99H/nDuiE
-	C3szcvl1QBew73ACTRxwRUa5PekExBRGIKz/xzSzu2NVOXC7NJSWwV2Dhw==
-X-Gm-Gg: ASbGncu0+AWvJhbWaF9as78u5CtGUIiLSlpLnBYzuBQ1x3fLZI9MK8vub9SgtH+cPct
-	L3uzmNR7dsrQqGuTux7hXtSx+ILMrYbABksDd6d60nyyGCJQ6HVzOvcK0Diw/WgLjbdbaYcB9mH
-	H83PSo+YaA+Bu49j1VKEHbKLxegiykl+0L0o0q0Jrm/6hmxpPfFVWiaiG8bssMJKOnGzvSi82nP
-	ncAbJy41eKZIfCEkU6FfOmeI4IU3uAu2tp2Us1W0N00Jed607aLCuoUSZP7XpTOliAPsoOz+BdA
-	cnnV85bASKuAhBIBTgPTzaZMwq0taWS5VARTQKk+B6R7VPz+ykGNIeDIcOSnikIQrASe6LE3Tow
-	uJWjnPFh4sQVBGvZaakhC
-X-Google-Smtp-Source: AGHT+IHYHOfEXyk3LdwNMJxY255zq+Qjv9x9TUsVtHU1pxY0p3pIKgzvCmAWqxqRev8Vah6WLbTObA==
-X-Received: by 2002:a05:600c:4fce:b0:43c:f513:9591 with SMTP id 5b1f17b1804b1-43db6247a29mr51894645e9.14.1743329516766;
-        Sun, 30 Mar 2025 03:11:56 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d91429c36sm59724845e9.0.2025.03.30.03.11.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 30 Mar 2025 03:11:55 -0700 (PDT)
-Message-ID: <f8a7d089-3150-4212-8ad0-c9bbb3858776@gmail.com>
-Date: Sun, 30 Mar 2025 11:11:54 +0100
+	dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b="UzDAllnk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
+	t=1743332048; bh=J8rw/YWdmYYLgnoyBt2wa849rJtcYG6Bnn+prXBAE/Q=;
+	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+	b=UzDAllnkhVr4PTbD0NxzDMOueaChjoKPYBFmMRatomQF3LAH5Z1dqzFzDUjP98lVu
+	 w2oC8OVxeSycwZm/t9TtsIe8/y9Hz0gwcvjjMKFj2UmCiJ81pLhVifF+r+L/65zrzW
+	 BxFFkZaDbyDcTX7U/r3roi/PWfpgoLrlZ/8QzTT4=
+Received: by mail.normalmode.org (Postfix) with ESMTPSA id 4BB6B616F2;
+	Sun, 30 Mar 2025 10:54:08 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 30 Mar 2025 06:54:07 -0400
+Message-Id: <D8TJMUMOGLBC.3FR8DHTTUN4M9@lfurio.us>
+Cc: "Johannes Sixt" <j6t@kdbg.org>
 Subject: Re: [PATCH] revision: fix --left/right-only use with unrelated
  histories
-To: Matt Hunter <m@lfurio.us>, git@vger.kernel.org
+From: "Matt Hunter" <m@lfurio.us>
+To: <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
 References: <20250330055809.1019090-1-m@lfurio.us>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20250330055809.1019090-1-m@lfurio.us>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <f8a7d089-3150-4212-8ad0-c9bbb3858776@gmail.com>
+In-Reply-To: <f8a7d089-3150-4212-8ad0-c9bbb3858776@gmail.com>
 
-Hi Matt
+On Sun Mar 30, 2025 at 6:11 AM EDT, Phillip Wood wrote:
+> Thank you for adding a test. We have a helper function test_line_count=20
+> which provides a helpful debugging message if the comparison fails.=20
+> Using that and avoiding process substitutions we'd write
+>
+> 	sort head >sorted_head &&
+> 	sort cmp >sorted_cmp &&
+> 	comm -12 sorted_head sorted_cmp >actual &&
+> 	test_line_count =3D 0 actual
+Thanks for that helper tip.  I was just about to send a v2 when your
+message came in, so I'm getting that incorporated now.
 
-On 30/03/2025 06:49, Matt Hunter wrote:
-> +test_expect_success 'rev-list one-sided unrelated symmetric diff' '
-> +	test_tick &&
-> +	git commit --allow-empty -m xyz &&
-> +	git branch cmp &&
-> +	git rebase --force-rebase --root &&
-> +
-> +	git rev-list --left-only  HEAD...cmp >head &&
-> +	git rev-list --right-only HEAD...cmp >cmp  &&
-> +
-> +	test $(comm -12 <(sort head) <(sort cmp) | wc -l) = "0"
+By the way, I had originally wanted to write test assertions that
+checked the actual number of commit ids returned from each of the two
+calls to rev-list - something like:
 
-Thank you for adding a test. We have a helper function test_line_count 
-which provides a helpful debugging message if the comparison fails. 
-Using that and avoiding process substitutions we'd write
+    git rev-list --X-only HEAD...cmp >file &&
+    test_line_count =3D N file
 
-	sort head >sorted_head &&
-	sort cmp >sorted_cmp &&
-	comm -12 sorted_head sorted_cmp >actual &&
-	test_line_count = 0 actual
+But since I'm not very familiar with this test harness yet, I couldn't
+actually figure the correct value for N.  It's not 1 (the commit made in
+my test body), and it's not 2 (that commit, plus the one from the setup
+case at the top of the file).  Any appropriate higher value wasn't
+obvious.
 
-Thanks
-
-Phillip
-
-> +
->   test_done
-> 
-> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
-
+So I switched to what you saw in my v1.  Maybe this "no commit ids in
+common" test is actually the stronger assertion?
