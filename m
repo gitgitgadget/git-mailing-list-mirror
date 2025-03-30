@@ -1,549 +1,300 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61F317CA1B
-	for <git@vger.kernel.org>; Sun, 30 Mar 2025 20:06:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA51D1E4AB
+	for <git@vger.kernel.org>; Sun, 30 Mar 2025 20:43:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743365198; cv=none; b=RSK1caq6qJhICvfV38zqZEelWwubwL4PYJEinNCShXurhPVR1d4fastl+yM3ZsEV1pimkZPvhmoWyLAsTAobw9tHFezW4Szl9o/raVC2A+ZeD+bXUK2/sjZ17i9ywEINb27ikNuyDVoXOBPXqq5V+QxmpPkFYybiwoKilfm+VG4=
+	t=1743367428; cv=none; b=uxeEmn1zvGvbJG6c4xepM/AtNkyatnMJ6tmRtiH8cVu6s5negOKymWBxo3kIW40T000TWYuFQa8kJV9wGWuXKmND5D4v9anGlai1vmmYnrDTp02gwbCrOb3AO8EMd2vTZdrMZwtJawI+cXfz+RIEnnVWn6F42YhArqMA1Nfc73c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743365198; c=relaxed/simple;
-	bh=M07XlyOkpkGCwTJCAo7po2+8E7cMvpo8LPhFvPGiTaU=;
-	h=From:Message-ID:Date:MIME-Version:Subject:To:References:
-	 In-Reply-To:Content-Type; b=OzeGVia+WFlifBdOKfKWEUHiarNl2zy0YCxHCPreo0iPRET+o/dtUhNv4ASkxFh+1tuAnHuBYl5qAEU8HEMor0i27SfzBbf7Z8blbPFQ8wQS3gj2MLquomK36MalvvSWL/mR6317AETc3xsYFnldoqK4BaLS6Q6Teyo8iykW6/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kIpUALdN; arc=none smtp.client-ip=209.85.219.49
+	s=arc-20240116; t=1743367428; c=relaxed/simple;
+	bh=nKSaHQwwtp7ebVn81F8zGx4DSBejjys5krO64MyVqhg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HFLmbtufO/IClsCmrkA3LlVAD6+L3HcAqKNcMJhjNFNPtWfQi0sGSXpaWa8ADQj/DsFkR6Xh1gttVYclA44PN9nKWh7oWvrUs7N60ulOayimbS9WypmImEZyWXwA0hHVKooNIOGZ8fd0J1v3p7r6E7k+W/oUZM/GZ2/YiaXY5fE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JiQJ0qpg; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kIpUALdN"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6e8fb83e137so34422056d6.0
-        for <git@vger.kernel.org>; Sun, 30 Mar 2025 13:06:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JiQJ0qpg"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5e5dce099f4so5159618a12.1
+        for <git@vger.kernel.org>; Sun, 30 Mar 2025 13:43:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743365194; x=1743969994; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:subject:reply-to:user-agent:mime-version:date:message-id:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PsBsE4sGIUY93km1aPS2HKG2MdhdkEt5KC3l1kt7wx4=;
-        b=kIpUALdNtKdhDvk3zQc1b+PNLJTX5Bkfh19SDr5XQuRzu2iWTeU1V4do7gbiE+DPur
-         38hnuuWpMC5CSg8KBYAP7mS+bNGSOVaqt/74iVH1/52VO365EjBmkMRqWq4qgJ0NOCqM
-         JTz1HTQYQvF9s9aWIfY4MKKZphnEPkpEp4PNkhV9cavHkPAjCQ/hqnjMHysHHNBxxkGi
-         Xl2tUI4C9EGkvlUdDdZuAeXdPSf9kPXEg/EJv3Td5Z+ZGcprWcZfXPF4rP6dJ7OgewXB
-         qzcWWMK+ozPiAfJd3ZaloRNA3VMkozZA8RDoyRTmbpy7ZtKZB5K+YG3VmGAIj/VKrNJg
-         0bkA==
+        d=gmail.com; s=20230601; t=1743367425; x=1743972225; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WOWYX1B/frbpACGxJ16x0u27l2w5cvmW4QmkHTw9d28=;
+        b=JiQJ0qpgqRH/pISI+d3lduHnJu0WaP1CuXhI7M5bgOiHJCPfrhe4mmhFkidJLNd11E
+         6R5r5u5GgJcJhpTtTmNBIEgtdDy1MScKxukWUyaqyOI54v4oA58q05yL+i+cyw+mxpvN
+         3WlRVRCG1l/EVw04Z8pur1S5mgFoGlDJ4U1Jk+x1Pl3dThlFi+YuJ96WgJ7Q8ti3+62j
+         5yTvpOxTxOZp/yR6pWz5ldiTXEEaO+Fsr0lrBLr/9zH+2q0CZkDwDuU4uMSLYKmwn/Kt
+         TimriJrEPoRXh8fb7GmO7ce9TMYuL5sAKn5plvtuVniSAnONnKt/r3bbxuBOzQ/wAcGc
+         MamQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743365194; x=1743969994;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:subject:reply-to:user-agent:mime-version:date:message-id:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PsBsE4sGIUY93km1aPS2HKG2MdhdkEt5KC3l1kt7wx4=;
-        b=t4xIBEkup9jMtM5Dg0rILdZAImjT2TE/lvBcvwPbKjhxcFIYus5WPb9axTNXkrlLtO
-         1oQ5xhOKOdSMm6EdGRu7ZxDuQyd/Kd83gg4dXy2KDgklvbKLPeSYbbrK/oQqn+nFjEGB
-         RJx+/ZBIPCuvQ8RtbrftW30zQa4aaDJL54XhdevtGiSq+S/hRHpPF35zitmisN/CVX0l
-         WEHLbk2JKl07MF/LUH5/dyttaDh6F38uGW8bj7u2PdrtqGiJWlMwg9JuMSqG6tn4yLay
-         OcE6Tlt6BPrgoKQmGMjksCgVDd4XZekMrUXwIyIo9fAyBlIpL0DDmPtI8ucj/yDmG3Fd
-         8IbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW2YZ5SaBCtEFwgJ+OYN9a/YMikDlD/7PqjfV5CV9ex1+YpH1IXVStlOjkYvs/NfnllPXM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYHHbElpWFuYQZoKX0hhJo0pHNMj/Ogt6NJj68T/BTafuuCUtM
-	NymQrMsnlw+FjLv/JWKROkH6ixmrEGSXXe/c1Tmvy6gURM1QMi+q0RK9Inrd
-X-Gm-Gg: ASbGncuCs8gs7YgbCEWkypKOn8ovm+R8a1gb0QeUVGG2fPujYMsHKWBXTecdoVzyhDu
-	sbgKyREJm/rEr0VCGTpURaoynaJdWUT1qM2Lv0yQxoty+HqfjR7FocRpdTwcrsgLBUoH2a+bHRN
-	ye/j4xUhK3PbcZuD2wwho+NjfCa+Rk9AbfQDsurvkz9XB/d6wWbprw/3olW1zyiV+g/Uv1B4X/x
-	g0nZKMy4ENU/x2WNpAD9zwwjPXkD5FASNnkeeBhYireZtcvA6V79q2peykc3NS5eSRAMCvbddNr
-	AxCqqSI3jdtynrqxsqsc29CUOdE4fiSeLMGa2Ofred9gtw2CRAwxfB3l32JkuZkhdYQfwR7BUqW
-	+V70gxkYpeHCZhV6dYHMIzw==
-X-Google-Smtp-Source: AGHT+IGTN8Eb1G+vTLyU1R8Y8hrOjUVgYvgEPHbjz3wUFwve4POkvvDHCDXqvJcnNzVDCedRZMUrSw==
-X-Received: by 2002:a05:6214:c6d:b0:6ea:d033:284c with SMTP id 6a1803df08f44-6eed5e14c9amr80729466d6.0.1743365194397;
-        Sun, 30 Mar 2025 13:06:34 -0700 (PDT)
-Received: from [192.168.1.174] (c-73-143-206-114.hsd1.ma.comcast.net. [73.143.206.114])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6eec9643e16sm37138556d6.29.2025.03.30.13.06.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 30 Mar 2025 13:06:33 -0700 (PDT)
-From: Nikolay Shustov <nikolay.shustov@gmail.com>
-X-Google-Original-From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
-Message-ID: <7e5d0613-d116-4e60-8ccf-efb092776398@gmail.com>
-Date: Sun, 30 Mar 2025 16:06:32 -0400
+        d=1e100.net; s=20230601; t=1743367425; x=1743972225;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WOWYX1B/frbpACGxJ16x0u27l2w5cvmW4QmkHTw9d28=;
+        b=t8MjElPSHIuetYFq2mZLLF3IIFI3pazXzCzoQNGHYWzCRA7cK++PF8S4x5ZEQ0cO12
+         5VIaznXwGSIOmW+SooUG6Fb5by3A2zx0+Y95D6ppBsuRsBgL3ajSNadHY2Hj29WXkTKe
+         gRGGUe+RJFf6HFwVNjMIn2GUzVT11ZlxH23ijFHnUDDN7OLJgkoXXycqbEkBzoLadBD6
+         QqXlE2+gMvVROTDeb9vqQ8EimEIp6zZJpBOGSFSqZCuX8BfFR8pOLb6uJprGACa5ceL0
+         J1bZSh2X2wZduvU82pqEV73QnreBQZBveZ91QzjrydlrTjDZki/ZlTELP8XSTmRZ535P
+         FDEA==
+X-Forwarded-Encrypted: i=1; AJvYcCX91Tdy3v2r9GQJ+0ZO13PMjQ2iGkVYnusk6wen7KAsShu5ZBMlsxp/QXmopZmPswVoNYk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywvk6Y2klg4253erilS903nCpgQuskHnNflihKa4Z3z5KBlvZ05
+	PzvKpact5kFwEQ3I+riBghYk2u42aPQCiFEfJMQmcOk+mtpre1vX
+X-Gm-Gg: ASbGncsjslIWoXYfGDYe/R8rchRggieaa63WL4y3poegI6Ewi2BOsUhRs9TvQPHtYth
+	H4bBYOlS84Ivq1LhBkUJZRL6tEi0jU0iRNembdyLHKbL/MmXn8lR05eJl/Wng3juxlT4NYsHa4Q
+	6q3pwC+YAr/JMUwz4srIc0PIi8DBHCNXvRqwWWrjcy2ZpxOobSbG9VbCdkXjC1wBBnkE9K6tGBD
+	IpsTJyWI7w789WlBjNf8Xlb9rKyQuFq99xEDeQek/Kt+FH9ERRTeK5zx66GZg80yCPINsm4sPcu
+	RyLJEijNp2Y4CUBkza/FKUn8w4LXIgtJSjUaohDYp7kfG8xQCpBVT0ZfpY8giM/pug9Pe1zNFZY
+	AVg==
+X-Google-Smtp-Source: AGHT+IGTKCep/9cWxcSp8Le/PyOycCaHOInv/i1neIGwZPRiBxrXPHaYwO418Le7Vh7+XJKV+RxP3w==
+X-Received: by 2002:a05:6402:27cf:b0:5ec:c976:268a with SMTP id 4fb4d7f45d1cf-5edfd136213mr4959559a12.15.1743367424894;
+        Sun, 30 Mar 2025 13:43:44 -0700 (PDT)
+Received: from knayak--20220801-595b8.fritz.box ([2a02:2455:8268:bc00:23ce:1a9:c070:6741])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5edc16f02bdsm4698050a12.43.2025.03.30.13.43.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 30 Mar 2025 13:43:44 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: karthik.188@gmail.com
+Cc: chriscool@tuxfamily.org,
+	git@vger.kernel.org,
+	jltobler@gmail.com,
+	gitster@pobox.com,
+	phillip.wood123@gmail.com,
+	sunshine@sunshineco.com,
+	Patrick Steinhardt <ps@pks.im>,
+	Toon Claes <toon@iotcl.com>
+Subject: [PATCH v4] blame: print unblamable and ignored commits in porcelain mode
+Date: Sun, 30 Mar 2025 22:43:39 +0200
+Message-ID: <20250330204339.191382-1-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
+References: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: Nikolay.Shustov@gmail.com
-Subject: Re: [PATCH] git p4 fix for failure to decode p4 errors
-To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
-References: <pull.1926.git.git.1742440852765.gitgitgadget@gmail.com>
- <32b401c3-de0e-427b-83b7-eb5a5b315db1@gmail.com>
- <fdbb3f88-7321-4dc0-9ead-7ed9ef0fc995@gmail.com>
- <339b8557-d41a-4a40-912b-eb2cff63159f@gmail.com>
-Content-Language: en-US
-In-Reply-To: <339b8557-d41a-4a40-912b-eb2cff63159f@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi Phillip,
-Thank you for your time and your feedback.
-It is especially valuable to me as it is the very first PR of mine.
-I will try to contact the recent contributors of git-p4 changes for review.
+The 'git-blame(1)' command allows users to ignore specific revisions via
+the '--ignore-rev <rev>' and '--ignore-revs-file <file>' flags. These
+flags are often combined with the 'blame.markIgnoredLines' and
+'blame.markUnblamableLines' config options. These config options prefix
+ignored and unblamable lines with a '?' and '*', respectively.
 
-To clarify on the fix:
+However, this option was never extended to the porcelain mode of
+'git-blame(1)'. Since the documentation does not indicate this
+exclusion, it is a bug.
 
-The error I hit was while using "git p4 clone":
-It was throwing decoding exception at line 901 of git-p4, preventing 
-import from Perforce depot to complete successfully.
-The root cause is the logic for "git p4 clone" anticipates some p4 
-operations may return errors, it is a normal part of import process.
-But that logic uses just .decode() on the byte array of the returned 
-error message, which does not work well when it contains the characters 
-with high bit set (which may be the case when Perforce configured 
-without unicode support). git-p4 implementation has a decoding fallback 
-logic for such cases in other places, but this specific place did not 
-use any.
+Fix this by printing 'ignored' and 'unblamable' respectively for the
+options when using the porcelain modes.
 
-Using the bullet list in description was not intended to enumerate the 
-separate changes, but rather to highlight the details of the change.
-I will make sure I won't use it in the future to avoid the confusion.
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Helped-by: Toon Claes <toon@iotcl.com>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+Changes in v4:
+- Remove extra newline in 'puts'. Modify the test to compare the
+  entire output, the earlier test missed the extraneous newline.
+- Link to v3: https://lore.kernel.org/r/20250329-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v3-1-10f695ae519a@gmail.com
 
-That small refactoring I did was not a sidecar but a way I chose to 
-implement the changes:
-There was an existing function that was doing the job of decoding the 
-received p4 metadata, using the existing git-p4 configuration settings.
-There also were a few existing variables that kept the state between the 
-calls of that function (e.g. indicator not to show decoding fallback 
-warning twice, configuration settings).
-However, with the way the function was implemented, it could not be 
-reused as-is for the new case.
-I would had to add a new function that would have to use the same core 
-transcoding implementation but behave differently.
-Adding behavior variances into the existing function felt suboptimal: it 
-would complicate it quite a bit and I felt sorry about next one who will 
-have to reverse engineer its behavior again. Duplicating the part of 
-logic of the existing function also looked suboptimal: any further 
-changes would have to be done in two places.
-So, seeing the need in keeping state between calls and separating a part 
-of existing logic into separate functions, I went for moving the 
-implementation into a new class and organizing things there with the 
-class instance. In my opinion, the new code looks pretty self-descritpitve.
+Changes in v3:
+- Use double-qoutes in the test to ensure correct variable dereference.
+- Fix incorrect test name. 
+- Rename the function from 'emit_per_line_details()' to
+  'emit_porcelain_per_line_details()' to be more descriptive.
+- Ues 'puts()' instead of 'printf()'.
+- Link to v2:
+https://lore.kernel.org/r/20250326-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v2-1-79037e17a74b@gmail.com
 
-Thank you,
-- Nikolay
+Changes in v2:
+- Instead of printing the markers before the SHA in porcelain
+  mode and breaking scripts and backward compatability, let's 
+  instead add a newline printing 'unblamable' or 'ignored'.
+  This is printed per line in both the porcelain modes. 
+- Link to v1:
+https://lore.kernel.org/r/20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com
+---
+Range-diff versus v3:
 
-On 3/26/25 11:09, Phillip Wood wrote:
-> Hi Nikolay
->
-> On 25/03/2025 23:09, Nikolay Shustov wrote:
->> I think this fix is important.
->> git-p4 is used in the companies where there is an intent to migrate 
->> from Perforce to Git and having the issue that this change fixes is a 
->> real roadblock.
->> The better we can make git-p4, the more adoption Git would get in the 
->> commercial world.
->
-> Unfortunately I don't think any of the regular git contributors use 
-> git-p4 so to find someone to review this patch I would look at who has 
-> contributed to git-p4 recently and cc them. Before you do that I have 
-> a couple of suggestions below
->
->> On 3/22/25 07:48, Nikolay Shustov wrote:
->>> ping, pretty please? :-)
->>>
->>> On 3/19/25 23:20, Nikolay Shustov via GitGitGadget wrote:
->>>> From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
->>>>
->>>> Fixes the git p4 failure happening when Perforce command returns error
->>>> containing byte stream of characters with high bit set. In such 
->>>> situations
->>>> git p4 implementatino fails to decode this byte stream into utf-8 
->>>> string.
->>>>
->>>> Design:
->>>> Make use of existing decoding fallback strategy, described by
->>>> git-p4.metadataDecodingStrategy and git-p4.metadataFallbackEncoding
->>>> settings in the logic that decodes the Perforce command error bytes.
->
-> Our usual style for commit messages is to explain what the problem is 
-> and how it is fixed by the changes in the patch. Rather than saying 
-> "fixes the git p4 failure" I would start by explaining what that 
-> failure is and how it is caused. It would also be helpful to explain 
-> what the settings that you refer to do so that someone who is familiar 
-> with python but not with git-p4 can understand and potentially review 
-> the changes.
->
->>>> Details:
->>>> - Moved p4 metadata transcoding logic from
->>>>    metadata_stream_to_writable_bytes(..) into a new 
->>>> MetadataTranscoder class.
->>>> - Enhcanced the implementation to use 
->>>> git-p4.metadataDecodingStrategy and
->>>>    git-p4.metadataFallbackEncoding settings for p4 errors decoding.
->>>> - Added test.
->
-> Thanks for taking the time to add a new test, it is much appreciated. 
-> When there is a bullet list in a commit message it is often a sign 
-> that the commit is doing more than one thing at once. In this case it 
-> appears there is a bug fix mixed in with some refactoring. I would 
-> split the refactoring out into a preparatory patch so that reviews can 
-> clearly see which changes are due to creating the MetadataTranscoder 
-> class and which are the changes that fix the bug. The new test should 
-> be added in the commit that fixes the bug.
->
-> Best Wishes
->
-> Phillip
->
->>>> Signed-off-by: Nikolay Shustov <Nikolay.Shustov@gmail.com>
->>>> ---
->>>>      git p4 fix for failure to decode p4 errors
->>>>
->>>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr- 
->>>> git-1926%2Fnshustov%2Fgit-p4-error-decoding-v1
->>>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr- 
->>>> git-1926/nshustov/git-p4-error-decoding-v1
->>>> Pull-Request: https://github.com/git/git/pull/1926
->>>>
->>>>   git-p4.py                        | 135 
->>>> ++++++++++++++++++-------------
->>>>   t/meson.build                    |   1 +
->>>>   t/t9837-git-p4-error-encoding.sh |  53 ++++++++++++
->>>>   t/t9837/git-p4-error-python3.py  |  15 ++++
->>>>   4 files changed, 149 insertions(+), 55 deletions(-)
->>>>   create mode 100755 t/t9837-git-p4-error-encoding.sh
->>>>   create mode 100644 t/t9837/git-p4-error-python3.py
->>>>
->>>> diff --git a/git-p4.py b/git-p4.py
->>>> index c0ca7becaf4..72a4c55f99e 100755
->>>> --- a/git-p4.py
->>>> +++ b/git-p4.py
->>>> @@ -234,67 +234,91 @@ else:
->>>>       class MetadataDecodingException(Exception):
->>>> -    def __init__(self, input_string):
->>>> +    def __init__(self, input_string, error=None):
->>>>           self.input_string = input_string
->>>> +        self.error = error
->>>>         def __str__(self):
->>>> -        return """Decoding perforce metadata failed!
->>>> +        message = """Decoding perforce metadata failed!
->>>>   The failing string was:
->>>>   ---
->>>>   {}
->>>>   ---
->>>>   Consider setting the git-p4.metadataDecodingStrategy config 
->>>> option to
->>>>   'fallback', to allow metadata to be decoded using a fallback 
->>>> encoding,
->>>> -defaulting to cp1252.""".format(self.input_string)
->>>> +defaulting to cp1252."""
->>>> +        if verbose and self.error is not None:
->>>> +            message += """
->>>> +---
->>>> +Error:
->>>> +---
->>>> +{}"""
->>>> +        return message.format(self.input_string, self.error)
->>>>     -encoding_fallback_warning_issued = False
->>>> -encoding_escape_warning_issued = False
->>>> -def metadata_stream_to_writable_bytes(s):
->>>> -    encodingStrategy = 
->>>> gitConfig('git-p4.metadataDecodingStrategy') or 
->>>> defaultMetadataDecodingStrategy
->>>> -    fallbackEncoding = 
->>>> gitConfig('git-p4.metadataFallbackEncoding') or 
->>>> defaultFallbackMetadataEncoding
->>>> -    if not isinstance(s, bytes):
->>>> -        return s.encode('utf_8')
->>>> -    if encodingStrategy == 'passthrough':
->>>> -        return s
->>>> -    try:
->>>> -        s.decode('utf_8')
->>>> -        return s
->>>> -    except UnicodeDecodeError:
->>>> -        if encodingStrategy == 'fallback' and fallbackEncoding:
->>>> -            global encoding_fallback_warning_issued
->>>> -            global encoding_escape_warning_issued
->>>> -            try:
->>>> -                if not encoding_fallback_warning_issued:
->>>> -                    print("\nCould not decode value as utf-8; 
->>>> using configured fallback encoding %s: %s" % (fallbackEncoding, s))
->>>> -                    print("\n(this warning is only displayed once 
->>>> during an import)")
->>>> -                    encoding_fallback_warning_issued = True
->>>> -                return s.decode(fallbackEncoding).encode('utf_8')
->>>> -            except Exception as exc:
->>>> -                if not encoding_escape_warning_issued:
->>>> -                    print("\nCould not decode value with 
->>>> configured fallback encoding %s; escaping bytes over 127: %s" % 
->>>> (fallbackEncoding, s))
->>>> -                    print("\n(this warning is only displayed once 
->>>> during an import)")
->>>> -                    encoding_escape_warning_issued = True
->>>> -                escaped_bytes = b''
->>>> -                # bytes and strings work very differently in 
->>>> python2 vs python3...
->>>> -                if str is bytes:
->>>> -                    for byte in s:
->>>> -                        byte_number = struct.unpack('>B', byte)[0]
->>>> -                        if byte_number > 127:
->>>> -                            escaped_bytes += b'%'
->>>> -                            escaped_bytes += hex(byte_number) 
->>>> [2:].upper()
->>>> -                        else:
->>>> -                            escaped_bytes += byte
->>>> -                else:
->>>> -                    for byte_number in s:
->>>> -                        if byte_number > 127:
->>>> -                            escaped_bytes += b'%'
->>>> -                            escaped_bytes += 
->>>> hex(byte_number).upper().encode()[2:]
->>>> -                        else:
->>>> -                            escaped_bytes += bytes([byte_number])
->>>> -                return escaped_bytes
->>>> +class MetadataTranscoder:
->>>> +    def __init__(self, default_metadata_decoding_strategy, 
->>>> default_fallback_metadata_encoding):
->>>> +        self.decoding_fallback_warning_issued = False
->>>> +        self.decoding_escape_warning_issued = False
->>>> +        self.decodingStrategy = gitConfig('git- 
->>>> p4.metadataDecodingStrategy') or default_metadata_decoding_strategy
->>>> +        self.fallbackEncoding = gitConfig('git- 
->>>> p4.metadataFallbackEncoding') or default_fallback_metadata_encoding
->>>> +
->>>> +    def decode_metadata(self, s, error_from_fallback=True):
->>>> +        try:
->>>> +            return [s.decode('utf_8'), 'utf_8']
->>>> +        except UnicodeDecodeError as decode_exception:
->>>> +            error = decode_exception
->>>> +            if self.decodingStrategy == 'fallback' and 
->>>> self.fallbackEncoding:
->>>> +                try:
->>>> +                    if not self.decoding_fallback_warning_issued:
->>>> +                        print("\nCould not decode value as utf-8; 
->>>> using configured fallback encoding %s: %s" % 
->>>> (self.fallbackEncoding, s))
->>>> +                        print("\n(this warning is only displayed 
->>>> once during an import)")
->>>> + self.decoding_fallback_warning_issued = True
->>>> +                    return [s.decode(self.fallbackEncoding), 
->>>> self.fallbackEncoding]
->>>> +                except Exception as decode_exception:
->>>> +                    if not error_from_fallback:
->>>> +                        return [s, None]
->>>> +                    error = decode_exception
->>>> +            raise MetadataDecodingException(s, error)
->>>> +
->>>> +    def metadata_stream_to_writable_bytes(self, s):
->>>> +        if not isinstance(s, bytes):
->>>> +            return s.encode('utf_8')
->>>> +        if self.decodingStrategy == 'passthrough':
->>>> +            return s
->>>> +
->>>> +        [text, encoding] = self.decode_metadata(s, False)
->>>> +        if encoding == 'utf_8':
->>>> +            # s is of utf-8 already
->>>> +            return s
->>>> +
->>>> +        if encoding is None:
->>>> +            # could not decode s, even with fallback encoding
->>>> +            if not self.decoding_escape_warning_issued:
->>>> +                print("\nCould not decode value with configured 
->>>> fallback encoding %s; escaping bytes over 127: %s" % 
->>>> (self.fallbackEncoding, s))
->>>> +                print("\n(this warning is only displayed once 
->>>> during an import)")
->>>> +                self.decoding_escape_warning_issued = True
->>>> +            escaped_bytes = b''
->>>> +            # bytes and strings work very differently in python2 
->>>> vs python3...
->>>> +            if str is bytes:
->>>> +                for byte in s:
->>>> +                    byte_number = struct.unpack('>B', byte)[0]
->>>> +                    if byte_number > 127:
->>>> +                        escaped_bytes += b'%'
->>>> +                        escaped_bytes += hex(byte_number)[2:].upper()
->>>> +                    else:
->>>> +                        escaped_bytes += byte
->>>> +            else:
->>>> +                for byte_number in s:
->>>> +                    if byte_number > 127:
->>>> +                        escaped_bytes += b'%'
->>>> +                        escaped_bytes += 
->>>> hex(byte_number).upper().encode()[2:]
->>>> +                    else:
->>>> +                        escaped_bytes += bytes([byte_number])
->>>> +            return escaped_bytes
->>>>   -        raise MetadataDecodingException(s)
->>>> +        # were able to decode but not to utf-8
->>>> +        return text.encode('utf_8')
->>>>       def decode_path(path):
->>>> @@ -898,14 +922,14 @@ def p4CmdList(cmd, stdin=None, 
->>>> stdin_mode='w+b', cb=None, skip_info=False,
->>>>                       decoded_entry[key] = value
->>>>                   # Parse out data if it's an error response
->>>>                   if decoded_entry.get('code') == 'error' and 
->>>> 'data' in decoded_entry:
->>>> -                    decoded_entry['data'] = 
->>>> decoded_entry['data'].decode()
->>>> +                    decoded_entry['data'] = 
->>>> metadataTranscoder.decode_metadata(decoded_entry['data'])
->>>>                   entry = decoded_entry
->>>>               if skip_info:
->>>>                   if 'code' in entry and entry['code'] == 'info':
->>>>                       continue
->>>>               for key in p4KeysContainingNonUtf8Chars():
->>>>                   if key in entry:
->>>> -                    entry[key] = 
->>>> metadata_stream_to_writable_bytes(entry[key])
->>>> +                    entry[key] = 
->>>> metadataTranscoder.metadata_stream_to_writable_bytes(entry[key])
->>>>               if cb is not None:
->>>>                   cb(entry)
->>>>               else:
->>>> @@ -1718,7 +1742,7 @@ class P4UserMap:
->>>>               # python2 or python3. To support
->>>>               # git-p4.metadataDecodingStrategy=fallback, 
->>>> self.users dict values
->>>>               # are always bytes, ready to be written to git.
->>>> -            emailbytes = 
->>>> metadata_stream_to_writable_bytes(output["Email"])
->>>> +            emailbytes = 
->>>> metadataTranscoder.metadata_stream_to_writable_bytes(output["Email"])
->>>>               self.users[output["User"]] = output["FullName"] + b" 
->>>> <" + emailbytes + b">"
->>>>               self.emails[output["Email"]] = output["User"]
->>>>   @@ -1730,12 +1754,12 @@ class P4UserMap:
->>>>                   fullname = mapUser[0][1]
->>>>                   email = mapUser[0][2]
->>>>                   fulluser = fullname + " <" + email + ">"
->>>> -                self.users[user] = 
->>>> metadata_stream_to_writable_bytes(fulluser)
->>>> +                self.users[user] = 
->>>> metadataTranscoder.metadata_stream_to_writable_bytes(fulluser)
->>>>                   self.emails[email] = user
->>>>             s = b''
->>>>           for (key, val) in self.users.items():
->>>> -            keybytes = metadata_stream_to_writable_bytes(key)
->>>> +            keybytes = 
->>>> metadataTranscoder.metadata_stream_to_writable_bytes(key)
->>>>               s += b"%s\t%s\n" % (keybytes.expandtabs(1), 
->>>> val.expandtabs(1))
->>>>             open(self.getUserCacheFilename(), 'wb').write(s)
->>>> @@ -3349,7 +3373,7 @@ class P4Sync(Command, P4UserMap):
->>>>           if userid in self.users:
->>>>               return self.users[userid]
->>>>           else:
->>>> -            userid_bytes = metadata_stream_to_writable_bytes(userid)
->>>> +            userid_bytes = 
->>>> metadataTranscoder.metadata_stream_to_writable_bytes(userid)
->>>>               return b"%s <a@b>" % userid_bytes
->>>>         def streamTag(self, gitStream, labelName, labelDetails, 
->>>> commit, epoch):
->>>> @@ -4561,6 +4585,7 @@ commands = {
->>>>       "unshelve": P4Unshelve,
->>>>   }
->>>>   +metadataTranscoder = 
->>>> MetadataTranscoder(defaultMetadataDecodingStrategy, 
->>>> defaultFallbackMetadataEncoding)
->>>>     def main():
->>>>       if len(sys.argv[1:]) == 0:
->>>> diff --git a/t/meson.build b/t/meson.build
->>>> index a59da26be3f..656424fdff3 100644
->>>> --- a/t/meson.build
->>>> +++ b/t/meson.build
->>>> @@ -1090,6 +1090,7 @@ integration_tests = [
->>>>     't9834-git-p4-file-dir-bug.sh',
->>>>     't9835-git-p4-metadata-encoding-python2.sh',
->>>>     't9836-git-p4-metadata-encoding-python3.sh',
->>>> +  't9837-git-p4-error-encoding.sh',
->>>>     't9850-shell.sh',
->>>>     't9901-git-web--browse.sh',
->>>>     't9902-completion.sh',
->>>> diff --git a/t/t9837-git-p4-error-encoding.sh 
->>>> b/t/t9837-git-p4-error- encoding.sh
->>>> new file mode 100755
->>>> index 00000000000..1ea774afb1b
->>>> --- /dev/null
->>>> +++ b/t/t9837-git-p4-error-encoding.sh
->>>> @@ -0,0 +1,53 @@
->>>> +#!/bin/sh
->>>> +
->>>> +test_description='git p4 error encoding
->>>> +
->>>> +This test checks that the import process handles inconsistent text
->>>> +encoding in p4 error messages without failing'
->>>> +
->>>> +. ./lib-git-p4.sh
->>>> +
->>>> +###############################
->>>> +## SECTION REPEATED IN t9835 ##
->>>> +###############################
->>>> +
->>>> +# These tests require Perforce with non-unicode setup.
->>>> +out=$(2>&1 P4CHARSET=utf8 p4 client -o)
->>>> +if test $? -eq 0
->>>> +then
->>>> +    skip_all="skipping git p4 error encoding tests; Perforce is 
->>>> setup with unicode"
->>>> +    test_done
->>>> +fi
->>>> +
->>>> +# These tests are specific to Python 3. Write a custom script that 
->>>> executes
->>>> +# git-p4 directly with the Python 3 interpreter to ensure that we 
->>>> use that
->>>> +# version even if Git was compiled with Python 2.
->>>> +python_target_binary=$(which python3)
->>>> +if test -n "$python_target_binary"
->>>> +then
->>>> +    mkdir temp_python
->>>> +    PATH="$(pwd)/temp_python:$PATH"
->>>> +    export PATH
->>>> +
->>>> +    write_script temp_python/git-p4-python3 <<-EOF
->>>> +    exec "$python_target_binary" "$(git --exec-path)/git-p4" "\$@"
->>>> +    EOF
->>>> +fi
->>>> +
->>>> +git p4-python3 >err
->>>> +if ! grep 'valid commands' err
->>>> +then
->>>> +    skip_all="skipping python3 git p4 tests; python3 not available"
->>>> +    test_done
->>>> +fi
->>>> +
->>>> +test_expect_success 'start p4d' '
->>>> +    start_p4d
->>>> +'
->>>> +
->>>> +test_expect_success 'see if Perforce error with characters not 
->>>> convertable to utf-8 will be processed correctly' '
->>>> +    test_when_finished cleanup_git &&
->>>> +    $python_target_binary "$TEST_DIRECTORY"/t9837/git-p4-error- 
->>>> python3.py "$TEST_DIRECTORY"
->>>> +'
->>>> +
->>>> +test_done
->>>> diff --git a/t/t9837/git-p4-error-python3.py 
->>>> b/t/t9837/git-p4-error- python3.py
->>>> new file mode 100644
->>>> index 00000000000..fb65aee386e
->>>> --- /dev/null
->>>> +++ b/t/t9837/git-p4-error-python3.py
->>>> @@ -0,0 +1,15 @@
->>>> +import os
->>>> +import sys
->>>> +from  importlib.machinery import SourceFileLoader
->>>> +
->>>> +def main():
->>>> +    if len(sys.argv[1:]) != 1:
->>>> +        print("Expected test directory name")
->>>> +
->>>> +    gitp4_path = sys.argv[1] + "/../git-p4.py"
->>>> +    gitp4 = SourceFileLoader("gitp4", gitp4_path).load_module()
->>>> +    gitp4.p4CmdList(["edit", b'\xFEfile'])
->>>> +
->>>> +if __name__ == '__main__':
->>>> +    main()
->>>> +
->>>>
->>>> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
->>
->
+1:  bc359248f6 ! 1:  5250fb436e blame: print unblamable and ignored commits in porcelain mode
+    @@ builtin/blame.c: static void emit_porcelain_details(struct blame_origin *suspect
+     +static void emit_porcelain_per_line_details(struct blame_entry *ent)
+     +{
+     +	if (mark_unblamable_lines && ent->unblamable)
+    -+		puts("unblamable\n");
+    ++		puts("unblamable");
+     +	if (mark_ignored_lines && ent->ignored)
+    -+		puts("ignored\n");
+    ++		puts("ignored");
+     +}
+     +
+      static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
+    @@ t/t8013-blame-ignore-revs.sh: test_expect_success mark_unblamable_lines '
+     +	test_expect_success "mark_unblamable_lines with $opt" '
+     +		sha=$(git rev-parse Y) &&
+     +
+    ++		git -c blame.markUnblamableLines=false blame $opt --ignore-rev Y file >raw &&
+    ++		sed -e "s/^\ty3/unblamable\n&/" raw >expect &&
+    ++		cp expect raw &&
+    ++		sed -e "s/^\ty4/unblamable\n&/" raw >expect &&
+    ++
+     +		git -c blame.markUnblamableLines=true blame $opt --ignore-rev Y file >actual &&
+    -+		test $(grep ^unblamable actual | wc -l) -eq 2
+    ++		test_cmp expect actual
+     +	'
+     +done
+     +
+    @@ t/t8013-blame-ignore-revs.sh: test_expect_success mark_ignored_lines '
+     +	test_expect_success "mark_ignored_lines with $opt" '
+     +		sha=$(git rev-parse Y) &&
+     +
+    ++		git -c blame.markIgnoredLines=false blame $opt --ignore-rev Z file >raw &&
+    ++		sed -e "s/^\tline-one-Z/ignored\n&/" raw >expect &&
+    ++		cp expect raw &&
+    ++		sed -e "s/^\tline-two-Z/ignored\n&/" raw >expect &&
+    ++
+     +		git -c blame.markIgnoredLines=true blame $opt --ignore-rev Z file >actual &&
+    -+		test $(grep ^ignored actual | wc -l) -eq 2
+    ++		test_cmp expect actual
+     +	'
+     +done
+     +
+---
+ Documentation/blame-options.adoc |  3 ++-
+ Documentation/git-blame.adoc     |  9 +++++----
+ builtin/blame.c                  | 15 +++++++++++++++
+ t/t8013-blame-ignore-revs.sh     | 30 ++++++++++++++++++++++++++++++
+ 4 files changed, 52 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/blame-options.adoc b/Documentation/blame-options.adoc
+index aa77406d4e..19ea187238 100644
+--- a/Documentation/blame-options.adoc
++++ b/Documentation/blame-options.adoc
+@@ -125,7 +125,8 @@ take effect.
+ 	another commit will be marked with a `?` in the blame output.  If the
+ 	`blame.markUnblamableLines` config option is set, then those lines touched
+ 	by an ignored commit that we could not attribute to another revision are
+-	marked with a '*'.
++	marked with a '*'. In the porcelain modes, we print 'ignored' and
++	'unblamable' on a newline respectively.
+ 
+ --ignore-revs-file <file>::
+ 	Ignore revisions listed in `file`, which must be in the same format as an
+diff --git a/Documentation/git-blame.adoc b/Documentation/git-blame.adoc
+index f75ed44790..e438d28625 100644
+--- a/Documentation/git-blame.adoc
++++ b/Documentation/git-blame.adoc
+@@ -135,10 +135,11 @@ header elements later.
+ The porcelain format generally suppresses commit information that has
+ already been seen. For example, two lines that are blamed to the same
+ commit will both be shown, but the details for that commit will be shown
+-only once. This is more efficient, but may require more state be kept by
+-the reader. The `--line-porcelain` option can be used to output full
+-commit information for each line, allowing simpler (but less efficient)
+-usage like:
++only once. Information which is specific to individual lines will not be
++grouped together, like revs to be marked 'ignored' or 'unblamable'. This
++is more efficient, but may require more state be kept by the reader. The
++`--line-porcelain` option can be used to output full commit information
++for each line, allowing simpler (but less efficient) usage like:
+ 
+ 	# count the number of lines attributed to each author
+ 	git blame --line-porcelain file |
+diff --git a/builtin/blame.c b/builtin/blame.c
+index c470654c7e..9436f70aec 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -351,6 +351,19 @@ static void emit_porcelain_details(struct blame_origin *suspect, int repeat)
+ 		write_filename_info(suspect);
+ }
+ 
++/*
++ * Information which needs to be printed per-line goes here. Any
++ * information which can be clubbed on a commit/file level, should
++ * be printed via 'emit_one_suspect_detail()'.
++ */
++static void emit_porcelain_per_line_details(struct blame_entry *ent)
++{
++	if (mark_unblamable_lines && ent->unblamable)
++		puts("unblamable");
++	if (mark_ignored_lines && ent->ignored)
++		puts("ignored");
++}
++
+ static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
+ 			   int opt)
+ {
+@@ -367,6 +380,7 @@ static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
+ 	       ent->lno + 1,
+ 	       ent->num_lines);
+ 	emit_porcelain_details(suspect, repeat);
++	emit_porcelain_per_line_details(ent);
+ 
+ 	cp = blame_nth_line(sb, ent->lno);
+ 	for (cnt = 0; cnt < ent->num_lines; cnt++) {
+@@ -377,6 +391,7 @@ static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
+ 			       ent->lno + 1 + cnt);
+ 			if (repeat)
+ 				emit_porcelain_details(suspect, 1);
++			emit_porcelain_per_line_details(ent);
+ 		}
+ 		putchar('\t');
+ 		do {
+diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
+index 370b768149..50a0a7ca4a 100755
+--- a/t/t8013-blame-ignore-revs.sh
++++ b/t/t8013-blame-ignore-revs.sh
+@@ -158,6 +158,21 @@ test_expect_success mark_unblamable_lines '
+ 	test_cmp expect actual
+ '
+ 
++for opt in --porcelain --line-porcelain
++do
++	test_expect_success "mark_unblamable_lines with $opt" '
++		sha=$(git rev-parse Y) &&
++
++		git -c blame.markUnblamableLines=false blame $opt --ignore-rev Y file >raw &&
++		sed -e "s/^\ty3/unblamable\n&/" raw >expect &&
++		cp expect raw &&
++		sed -e "s/^\ty4/unblamable\n&/" raw >expect &&
++
++		git -c blame.markUnblamableLines=true blame $opt --ignore-rev Y file >actual &&
++		test_cmp expect actual
++	'
++done
++
+ # Commit Z will touch the first two lines.  Y touched all four.
+ # 	A--B--X--Y--Z
+ # The blame output when ignoring Z should be:
+@@ -191,6 +206,21 @@ test_expect_success mark_ignored_lines '
+ 	! test_cmp expect actual
+ '
+ 
++for opt in --porcelain --line-porcelain
++do
++	test_expect_success "mark_ignored_lines with $opt" '
++		sha=$(git rev-parse Y) &&
++
++		git -c blame.markIgnoredLines=false blame $opt --ignore-rev Z file >raw &&
++		sed -e "s/^\tline-one-Z/ignored\n&/" raw >expect &&
++		cp expect raw &&
++		sed -e "s/^\tline-two-Z/ignored\n&/" raw >expect &&
++
++		git -c blame.markIgnoredLines=true blame $opt --ignore-rev Z file >actual &&
++		test_cmp expect actual
++	'
++done
++
+ # For ignored revs that added 'unblamable' lines and more recent commits changed
+ # the blamable lines, mark the unblamable lines with a
+ # '*'
+-- 
+2.48.1
+
