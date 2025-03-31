@@ -1,66 +1,66 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EB61E1023
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 15:38:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FBE21D595
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 15:39:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743435488; cv=none; b=PG0PiGgWeojaqXFQLt9LBXXIxK0vz/u8OyrpRqFq0V3gFiaojaEqL7KiZF7xEn0bGNmvJUSrNlDtYGrYiAE5rTc6fIWaI97vuUsVNMwD5BqyBtVCl+uewc1IPIfH1Jbi/pwmujxEEIUk1R+rwu7W+fJPvEz/0nwgSsql6scujas=
+	t=1743435543; cv=none; b=kG5gZigbBs23zsP//hUAn298PiBGrwgxeYrCdP3gfNnz7pwcCJyPI6Ch1u0NPC8uzEWWpl1xYA/SNHTgvFlrc0xaK1aIk+8ciXtfZyP5jPVnHRfMliWGh4CjqzbCz9bDBbXzhyA6Qe78q50+t0Wo9qnACl26zTgWGaJQ2nx8t68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743435488; c=relaxed/simple;
-	bh=HjxNuJG9VM0Huag0ZPl4SosN1d2t+atVGN7B8F9lUdk=;
+	s=arc-20240116; t=1743435543; c=relaxed/simple;
+	bh=ClSF2shHmpXiXCA9XXaD3fSFbWY41NXP9hazq+Lsxho=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=T9yYoEFdRdKTTbtk/tXfgD309Rf/3XG4v5e2DYICC83xLU91WoY53j/HqlI5OmrbzwW7dabgHasv2sqkKHCJUMVM0GBsRjJksweAZLYARau15s2GMs1u2TJWNTRsO6dcZeeXuVRjQIDMe8wzodamMCZuunwBOm9vpTEUkQ/q3mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hFhhJwE0; arc=none smtp.client-ip=209.85.221.41
+	 In-Reply-To:Content-Type; b=sxr7K9h1DbTk/XZ0qPPpCQIudk8OlVe5/ffclQGr4cgxV9BE33+1jMqQALJVEh+YKTpmOcSw6/RUblJe2Pdkp5bizVXg6TfDTCKeasC7VoXNI2gsPbPTxevTI5L5kOUCL4UtquBENRic/i0tk5fr6yNJjzdgr3oVZE+z2HUeBV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=daWUcCRe; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hFhhJwE0"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-39141ffa9fcso4433243f8f.0
-        for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:38:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="daWUcCRe"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3913d129c1aso3390424f8f.0
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:39:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743435485; x=1744040285; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1743435540; x=1744040340; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=PLnXzrHYlovYo4ciVMrFnVNXKwhW8gJTnTd4flU3q3c=;
-        b=hFhhJwE0oWo7nIIRsUQbjYzV0R4dllGxKlR/QarR2bJTmcgJPZrIdZN/CCidXCkz4y
-         kspafn515rihD+0Qoh7VREfTn7lKtFqZ3ZReVB4eTmi3d+C/2FBo2/4MBB8Gkv2Mmq2r
-         kwNRQDbrAaOEQj4ArmkGdyyhqbc9skRlWSHKun5htraH9nnybxcXNxFJlGUra5tDrzgC
-         axAeIn/pO/bxYTpB7Mjtfh1oJvzF/Ml/s2DqZZZuA18SLqgKajHFx0CzX7pX7vn5/Et2
-         Pg8jIA5I0QiioX76UqjUGYlbl3JlCVgu/ykIJ0miLXkrgQct+Xp6vxOgvMNjsO8HWxYt
-         gkFw==
+        bh=yiacPRJbHstB1gdJ0Ia4xcUUzIjJ0flX4JrmJB2COtY=;
+        b=daWUcCReDovEexl7MSeid3zn7NFTMNM7DjRG9AUE3I8cbOa14WjQwBM5ZvAWsjCj21
+         6H/lRudY7GXmVH9w7o4xgc2T583tVktyOTzd340wUt6Y9LEOhkh4CtZrjPXAhAwvM1CD
+         iWhpKZR8x4PFRm0Dd5Bn3xEfHf9iiWripL9XlXurmRl4aM9amcpE6f3wU/7n3fAaWfC8
+         H8zBZ+IVsJ0aLpb6tOR2jBaPtb+4McvixFf+k9pifg9nI3NlRKgO3Jb8DoLHrkIiICCI
+         BMc6D16r+rhSPSOiTjwGJ2aFIfGue8qAAw5O+O5AhzwwxBtwhFxYceafRo13yZXAZdYE
+         xE2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743435485; x=1744040285;
+        d=1e100.net; s=20230601; t=1743435540; x=1744040340;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PLnXzrHYlovYo4ciVMrFnVNXKwhW8gJTnTd4flU3q3c=;
-        b=V58NleZLwRaBxwqAZ6e5/D/uNyOhr6RYppw/OFdI3PZ1sHpYBTfPnvJRtKxAQdNhv2
-         LVFmzJ/SdyXxuln4NOeSkc2PrpN+0qPsQ7FUeiR3GAfqDjlaKKkO2OyV4XPedRoqhFUq
-         OyfzGL6XS1DzqCTHclqSs91L+s1tfq7evj4vGTPlBOs+qH4DXoVAwRtEQPj+wKhwMGW1
-         t3gh4L3higGSApF+QgLEyziIJM4ZIEbOQclgUqzWaYYWRbGW0+o1E3X2OlM4iDZCjOrk
-         1oLlPQJeGRTQFXHSbEeG1wYBZpa7MssngIMcqbMmhy/6wfJyVytRuuU3UesFqeZW0TBy
-         hGEA==
-X-Forwarded-Encrypted: i=1; AJvYcCVDV0TxqAm41qxW9asSKV/980hma5jj4zbO2itIFtFL9WzQ3kTaw8bjbY0jVf4xQn3AvLo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDfVCfSpAsSM3AT/VTyJ7xyxC0bmlfZZpBF7gGqetpW3pqfFnr
-	LMUuHnm8jugKmawih1D9aJQj0RdYUkxPtjc5yhfpag4N/s3XR2+R
-X-Gm-Gg: ASbGncu9lph81HqHgYAPsIjud8/0iDt41mL3uc/uXXbnjbYHu14ucDRh2sAv4JeiA7n
-	CHCPgg5Kv/6pyFijNiOwZDEgvraj6BmnYWRV+xxSxYyGPaq3gmc3zKs/njT+zJZUaFrwZdXDfr8
-	WUMPlumIQ847QcjxylMGS5K/sLClZTo5blmsdz6tu3s0zOeZo/QFFnRxDWoOp/2NJ3ARUPKxMMi
-	AOFoSpQaVCdkesk11G1CTperqjUFX8uEgb7TxejXCn9q3PKRnZlQqi1JOw/FUIQ/u4XOnKH8INz
-	fAmuSyucdmHuE8GsXLBbNkg9fsN3uQiqImARO7ya1/17JK1j0W+ZeDXvBsnVe78oZSvM+XbXXZT
-	dsvcIb0AbMY3VR17LcYt55LAVBJxeoUE=
-X-Google-Smtp-Source: AGHT+IGrZLbJbHLtCLQSmuxufJ783jVMvmn/nHUyyFYSym5+QHvPtI0OkCgOWHyT59773kADLwmO4g==
-X-Received: by 2002:a05:6000:2805:b0:391:4c0c:c807 with SMTP id ffacd0b85a97d-39c1211d8f8mr6259357f8f.53.1743435484781;
-        Mon, 31 Mar 2025 08:38:04 -0700 (PDT)
+        bh=yiacPRJbHstB1gdJ0Ia4xcUUzIjJ0flX4JrmJB2COtY=;
+        b=EXY3hV68kdBhK6nv++Du6vumMEyJFzF2TQL5SO47EXqfUFTxt2dz/+hCJQMzabHHy5
+         CRwNfY6mzBe47uswPmj2OfRD78O1v/a4FofvgTs4bNtJDQNUfgV96OAN/ooj3qL+ybkl
+         0buuxX1uhRJrgFxT90d+Eh7R0BrSTQjl10mpUkFW75MZHsKsHT0eCEHwipZz27uefrIC
+         7hsSR8mjP7SPeuD9D8CEbO1tocJJ4xQxMrNhoeO0WZ+SuzzhQHmdC6XE5pNIhrZwPU5I
+         cP3IY37MubHh2GRwlinr0myWY8gUH0UzwS7tMpQfqEdF9boBCrnUHgm8VnVvZ+FNwqso
+         4kHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWblaAvms39SYbJmsk4L3GED4IMSrW8iKzjg1W+iecptCC6OAUHPfsSUyxf1PIeRxnexEw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywwl2qesBfURgWuApNLJ1GrpxtKo8V5kOoxgxG3hdZu0R97URwa
+	AuXNmotT8Ay9hdfAXX2Wxh7mXj2ipWEWbA6YJ0LXajFT6BgYw5lp
+X-Gm-Gg: ASbGncu+KbEFGixaRzk5CP/EmmbvD0E0qIKPZAS0xvgK7HMyqPu3a/RlfpuLjP7NGXc
+	yMNK2tQ+5GyPo97tLCe1kAi+YiWjHrJn7y67e2pbpQvvulrprVBUKoEtthhGx14LtLiqC2mAI2x
+	b9I4jdxiKII6ZYo066ElT4lRYnletNTDwSrvcyJg6L9GGx4WzMKM5qXRYaaT1dzmGzacVMCWj3k
+	mPOVc3WtIWXfozHQX8hikjoOjLBxDVSAovJ7C18AOJHRpODU8WLGl6fuqAtOYHwwdpHzCXUBl58
+	E3bEYbMj+PxutmoPpENl5VXNVPyqCmBfdw9XLqWTMcKyb2sXbBlKFCAWIpe0ujf7nrhTyoIIHRu
+	PCM7IpeLRwtsMNMeVXz+o
+X-Google-Smtp-Source: AGHT+IGoBzcvid4NRkzLdQaHvlXTK9bYEGvN6AQABNrOaSgOIWiJz6X0JFLcO0Vfeg27Nb1w0t6pQQ==
+X-Received: by 2002:a05:6000:1acd:b0:391:1218:d5f4 with SMTP id ffacd0b85a97d-39c11b9d025mr7767019f8f.23.1743435540215;
+        Mon, 31 Mar 2025 08:39:00 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b658ac5sm11349634f8f.1.2025.03.31.08.38.04
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b79e136sm11623730f8f.67.2025.03.31.08.38.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Mar 2025 08:38:04 -0700 (PDT)
-Message-ID: <f0d1f0ba-84ab-4914-9dd1-81a5d2e0dbc3@gmail.com>
-Date: Mon, 31 Mar 2025 16:38:03 +0100
+        Mon, 31 Mar 2025 08:38:59 -0700 (PDT)
+Message-ID: <31f658d2-1665-4cda-9625-2c9503d549b5@gmail.com>
+Date: Mon, 31 Mar 2025 16:38:58 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,144 +69,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/3] wt-status: suggest 'git rebase --continue' to
- conclude 'merge' instruction
+Subject: Re: [PATCH 0/3] rebase -r: a bugfix and two status-related
+ improvements
 To: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
  Philippe Blain <levraiphilippeblain@gmail.com>
 References: <pull.1897.git.1743181401.gitgitgadget@gmail.com>
- <db01acdd062a17b1cca62428eba8c3ed62ca7c6a.1743181401.git.gitgitgadget@gmail.com>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <db01acdd062a17b1cca62428eba8c3ed62ca7c6a.1743181401.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1897.git.1743181401.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Philippe
 
 On 28/03/2025 17:03, Philippe Blain via GitGitGadget wrote:
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
+> Hi,
 > 
-> Since 982288e9bd (status: rebase and merge can be in progress at the
-> same time, 2018-11-12), when a merge is in progress as part of a 'git
-> rebase -r' operation, 'wt_longstatus_print_state' shows information
-> about the in-progress rebase (via show_rebase_information), and then
-> calls 'show_merge_in_progress' to help the user conclude the merge. This
-> function suggests using 'git commit' to do so, but this throws away the
-> authorship information from the original merge, which is not ideal.
-> Using 'git rebase --continue' instead preserves the authorship
-> information, since we enter 'sequencer.c:run_git_commit' which calls
-> read_env_script to read the author-script file.
-
-Good catch
-
-> Note however that this only works when a merge was scheduled using a
-> 'merge' instruction in the rebase todo list. Indeed, when using 'exec
-> git merge', the state files necessary for 'git rebase --continue' are
-> not present, and one must use 'git commit' (or 'git merge --continue')
-> in that case.
+> this series started as only 3/3, which I wrote when I noticed that 'git
+> status' suggested 'git commit' instead of 'git rebase --continue' to
+> conclude a merge, and doing that I lost the original authorship of the merge
+> commit.
 > 
-> Be more helpful to the user by suggesting either 'git rebase
-> --continue', when the merge was scheduled using a 'merge' instruction,
-> and 'git commit' otherwise. As such, add a
-> 'merge_during_rebase_in_progress' field to 'struct wt_status_state', and
-> detect this situation in wt_status_check_rebase by looking at the last
-> command done. Adjust wt_longstatus_print_state to check this field and
-> suggest 'git rebase --continue' if a merge came from a 'merge'
-> instruction, by calling show_rebase_in_progress directly.
-> 
-> Add two tests for the new behaviour, using 'merge' and 'exec git merge'
-> instructions.
+> 2/3 is a small improvement I noticed along the way, and while testing these
+> I discovered the bug which I fix in 1/3. I guess 1/3 could go in a different
+> series, if we prefer, but for simplicity I'm submitting them together.
 
-Nice, thanks for adding the tests
+Thanks for working on this. I've left some comments but the fundamentals 
+of this series look sound.
 
->   
-> +test_expect_success 'status during rebase -ir after conflicted merge (exec git merge)' '
-> +	git reset --hard main &&
-> +	git checkout -b rebase_i_merge &&
-> +	test_commit unrelated &&
-> +	git checkout -b rebase_i_merge_side &&
-> +	test_commit side2 main.txt &&
-> +	git checkout rebase_i_merge &&
-> +	test_commit side1 main.txt &&
-> +	PICK=$(git rev-parse --short rebase_i_merge) &&
-> +	test_must_fail git merge rebase_i_merge_side &&
-> +	echo side1 >main.txt &&
-> +	git add main.txt &&
-> +	test_tick &&
-> +	git commit --no-edit &&
-> +	MERGE=$(git rev-parse --short rebase_i_merge) &&
-> +	ONTO=$(git rev-parse --short main) &&
-> +	test_when_finished "git rebase --abort" &&
-> +	FAKE_LINES="1 2 3 5 6 7 8 9 10 exec_git_merge_refs/rewritten/rebase-i-merge-side" &&
-> +	export FAKE_LINES &&
-> +	test_must_fail git rebase -ir main &&
-
-As with the other patch this should be
-
-	test_must_fail env FAKE_LINES=... git rebase ...
-
-and the same for the test below. These tests show just how opaque the 
-FAKE_LINES mechanism is - I've got no idea what it's doing. If it is not 
-too much work it might be worth writing out the desired todo list to a 
-file and using set_replace_editor. If you do that note that you can use 
-tag names in the todo list you don't need to get the oid for each commit 
-and you probably don't need to rebase the side branch, just the merge.
-> @@ -1760,8 +1761,12 @@ int wt_status_check_rebase(const struct worktree *wt,
->   			state->rebase_interactive_in_progress = 1;
->   		else
->   			state->rebase_in_progress = 1;
-> +		read_rebase_todolist("rebase-merge/done", &have_done);
-> +		if (have_done.nr > 0 && starts_with(have_done.items[have_done.nr - 1].string, "merge"))
-> +				state->merge_during_rebase_in_progress = 1;
-We already read and parse the done list in show_rebase_information() - 
-is it possible to avoid doing that twice by setting this flag there?
-
->   		state->branch = get_branch(wt, "rebase-merge/head-name");
->   		state->onto = get_branch(wt, "rebase-merge/onto");
-> +		string_list_clear(&have_done, 0);
->   	} else
->   		return 0;
->   	return 1;
-> @@ -1855,10 +1860,15 @@ static void wt_longstatus_print_state(struct wt_status *s)
->   
->   	if (state->merge_in_progress) {
->   		if (state->rebase_interactive_in_progress) {
-> -			show_rebase_information(s, state_color);
-> -			fputs("\n", s->fp);
-> -		}
-> -		show_merge_in_progress(s, state_color);
-> +			if (state->merge_during_rebase_in_progress)
-> +				show_rebase_in_progress(s, state_color);
-> +			else {
-> +				show_rebase_information(s, state_color);
-> +				fputs("\n", s->fp);
-> +				show_merge_in_progress(s, state_color);
-> +			}
-
-The indentation here looks strange
-
-Thanks
+Best Wishes
 
 Phillip
 
-> +		} else
-> +			show_merge_in_progress(s, state_color);
->   	} else if (state->am_in_progress)
->   		show_am_in_progress(s, state_color);
->   	else if (state->rebase_in_progress || state->rebase_interactive_in_progress)
-> diff --git a/wt-status.h b/wt-status.h
-> index 4e377ce62b8..84bedfcd48f 100644
-> --- a/wt-status.h
-> +++ b/wt-status.h
-> @@ -87,6 +87,7 @@ struct wt_status_state {
->   	int am_empty_patch;
->   	int rebase_in_progress;
->   	int rebase_interactive_in_progress;
-> +	int merge_during_rebase_in_progress;
->   	int cherry_pick_in_progress;
->   	int bisect_in_progress;
->   	int revert_in_progress;
+> Philippe Blain (3):
+>    rebase -r: do create merge commit after empty resolution
+>    wt-status: also abbreviate 'merge' and 'fixup -C' lines during rebase
+>    wt-status: suggest 'git rebase --continue' to conclude 'merge'
+>      instruction
+> 
+>   sequencer.c                |  3 +-
+>   t/t3418-rebase-continue.sh | 24 ++++++++++++
+>   t/t7512-status-help.sh     | 75 ++++++++++++++++++++++++++++++++++++++
+>   wt-status.c                | 49 ++++++++++++++++++-------
+>   wt-status.h                |  1 +
+>   5 files changed, 138 insertions(+), 14 deletions(-)
+> 
+> 
+> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1897%2Fphil-blain%2Fstatus-abbreviate-merge-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1897/phil-blain/status-abbreviate-merge-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1897
 
