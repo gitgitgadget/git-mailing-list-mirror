@@ -1,1057 +1,597 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F10F1DE8A2
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:41:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE34238F80
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 09:02:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743410499; cv=none; b=ESJt30JKYrZl9OuGAndlvBI9mlqD7D5GqJxkcl+O3EOtLaj/jge76fDt4/obSR9nW9OpKO5CvZjtE8R2aYSvhuvnqXOd1F8xay2zzNY+ExmCzJkcC2CECENZY+KSB34NkbwWxjWsRYi/n36jDal/LZFv0hiFRb8SXFiYZW7/D/Y=
+	t=1743411728; cv=none; b=tScNXLise5xSCmrNiO5vZLOy0ruuOAxD26g0ZVcNVQkAyQyExCFqS9iz06HQ/GeEieWoC8Ifod480sQDAh6Cq/HNg488kiPY8SMaNOifbg82h6s4iS8pZaVwLibkVfUsgk4Xrt92dxyFVBmwvMXbnMQj1Q8geun6Pz9kE2R211U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743410499; c=relaxed/simple;
-	bh=RIuhFR+MaUV19mneq6H7XrVIWNqTCxkvRsVG3dPARww=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QWhkIkKazPbc3pE4IYxRsDnSIEuWma7YupCuMbZ7jdHLWS1+9tIJ27XaTzlZ4ARdu8IT+z8NVmOXIp2UZgdL990DtZshAlQ8Wr8BKfmoGssvUPWwrAfDH9zyXmlxTqbWgL8y1ioj1+8uKqOq5GBtNnpd22C7fuAGwr4RFDhWFrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gkc462WP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ilOW2VXT; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1743411728; c=relaxed/simple;
+	bh=LPuoaQBvcVoTwbON7rztzTyOQ4ijRbrS3XJJlxMcPHk=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=DHPl8hR53UfU2/gey0BOGxcdgn2Uyn5R3gSqHpl9MyWLtKD6QlTqvCWG+XotuAFt27LjNwfhVZYZqkg5rkf5bprZa2LQ1INosa2E8X2W+wglSoxtAvjJY9NUKBZuRoEgzNhqsAhxZA3qVW7Hp9xkFp68oFQ3smzkgkG9LEnRvY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=keylock.net; spf=none smtp.mailfrom=keylock.net; dkim=pass (2048-bit key) header.d=keylock-net.20230601.gappssmtp.com header.i=@keylock-net.20230601.gappssmtp.com header.b=1VG46Bkv; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=keylock.net
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=keylock.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gkc462WP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ilOW2VXT"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 222FC1140141
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:36 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 31 Mar 2025 04:41:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743410496;
-	 x=1743496896; bh=1Jg48O1DLqqzFmezx5NosRPGpimpAqcgyBPdjQpoGcw=; b=
-	gkc462WP1OwvgXPmEc41wWx6SrRDTfualU84QAtrEOC88LE9dMv8Tsr9Cuz4D0Z5
-	7RL2aG0v+bTXDBkhotNXaOUa85VWvHOurbBD/BNdDCECBW8NTBrQOo0WGYpqJZCZ
-	GGRz+8WtB9x4IHriEguNA+xtWkRdzjMVb0jFYjb44dzVmgaOJWiIfnDFf41hh/Of
-	KR4fSrwU24HJVdeDcAFdeX+xRJbxZZlkp+T6eBPVHUtZtJNUme4Xcy4waBokKW5n
-	OzjfZPcp0fwkK+YPo1v76antKWp2VwFvtrsBZAwowsENuROsFFYtnaFKhEA9MiLG
-	z2hZQ06na8HtmAedT/tjDQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743410496; x=
-	1743496896; bh=1Jg48O1DLqqzFmezx5NosRPGpimpAqcgyBPdjQpoGcw=; b=i
-	lOW2VXT+s34tfHXlCiz9cpKklmnuH7Mlu1BvOq07I4HZrlll/iSsKbGul/uv64yK
-	pKW7Fb3KtMqi7bzlPpijU97KdmFbjsq82wGKmWhmeSs7SgwsJk4zylKj1Ogr9WGD
-	xsBuBTL/T+0ZirxU511HTTrUhGOrAnUJApaKkZh4VDAH/TqUz8QYZ/gtkvz1pR9q
-	y4dDmmFPwsogIWQBAxza1dIhUOuxgT9NwUahxabOAGsIxIK8ejjiX0QnIDlLeoIx
-	UoO6cY8FYzu3mo37LwyLgsw+qojNimiIHZQWbNx1R+qBkkatDTbshWezyDCXLXNi
-	ifbRAHcXIE4615BP/gCfw==
-X-ME-Sender: <xms:QFXqZxp5qXdd1B4KyMSpL5zb6KpqWvz6yjyQJDI6x4eAMLPuS6Fp0A>
-    <xme:QFXqZzoI5K39r6zeMgZIOwcLRlkO5QwkDf2iyejr6F8_hBxU1AtBe4L7Shu4jxV94
-    l6iVJWlyzGVp1E0bQ>
-X-ME-Received: <xmr:QFXqZ-P0U8LtS7yAXqwvSLJ3uU7Z2HqSuRB_p1InlhxMnDEu8AXJSWBtzyww0D8AL72pE9USdWenJ5lGGf-7brRmD-_OBPDCxCsz31P_Y3PTc9nd>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeelgeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucgovfgvgihtqfhnlh
-    ihqddqteefjeefqddtgeculdehtddmnecujfgurhephfffufggtgfgkfhfjgfvvefoseht
-    jeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpsh
-    esphhkshdrihhmqeenucggtffrrghtthgvrhhnpedthfegfeejuefgieffvefhvedvfedt
-    ffdtgffhheevgfdtjedukefgkefgfeevtdenucffohhmrghinhepghhoohhglhgvrdgtoh
-    hmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhs
-    sehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:QFXqZ86i6gvWqkgiwQt7VH2VBjmTnMGW5ALf0SwYgt72KLA3nvuyMg>
-    <xmx:QFXqZw4qWNcQu5l7F0rT3_AnruU6qQHUGVWIo4fpjh71h9mNWNQ_Fg>
-    <xmx:QFXqZ0gYIVDTfCig5Gbegw0VbTr6bIHVq8ZTGPD5eGSaYki5HQsN3Q>
-    <xmx:QFXqZy6Y5R4yhy5ij-SlbmNuk6GliwNB26Aj6qJykFKzf_igjCWQMw>
-    <xmx:QFXqZ-T5edlAa6L-kelK-ZRWF1zGzH9fRAOEbp1-v3Xhz9uW7i3aojOO>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:35 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6068a3bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Mon, 31 Mar 2025 08:41:34 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 31 Mar 2025 10:41:33 +0200
-Subject: [PATCH 15/16] reftable/constants: make block types part of the
- public interface
+	dkim=pass (2048-bit key) header.d=keylock-net.20230601.gappssmtp.com header.i=@keylock-net.20230601.gappssmtp.com header.b="1VG46Bkv"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3914aba1ce4so3618829f8f.2
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 02:02:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=keylock-net.20230601.gappssmtp.com; s=20230601; t=1743411724; x=1744016524; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k5zxj0LF0Uuy2c8yTUOV8cB8ftDFmJvIKgHmjqBlaFo=;
+        b=1VG46BkvngudTvRHL/ynRafe+6wshy6+USe+nE97DmWCoVsU+efYKAhWd3ASanktJA
+         vPZsmxRMwPr2vKX0+w9jL2ufs/KfR0w6GP+EAMhoMabTTmPUiD+IhBbUQFyRVL+ZArZD
+         OYAApvM7ZkJjpoNrpbvorOz1eVb1AGxtD2gdbQRBa/BBuBE9uq9oswoEEpmSOHeAaKHh
+         ewa5MmDVibTHBIw8lDrdbyWP7I1FQhdMDtL6L7tiWreh7erWQ1Ax6KyTkFWJBNXUjWDd
+         NrIe1aMUmQOGAY0MsXoWAB+YKCV7Bjnag1QZFLAZ1jyC9IWpoXKh/RaEYIqMX05zIxaJ
+         EoTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743411724; x=1744016524;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=k5zxj0LF0Uuy2c8yTUOV8cB8ftDFmJvIKgHmjqBlaFo=;
+        b=IEYHsVvnC/Q5c5nnBgIaAJXiXbwuh8fgyxqT69drNype11Lk2WhizYV1NTD7pQLtEt
+         Dlb5QL8q3QKZQlG/csta2xWpSN9J2ThpvJtk58hkrgmCUbY+dPSqQWfhQXnz1Hs0s8Wm
+         lcREqeV+YETJGFmgNJBTxNUfUYgFnTg+WhwOyMTuHl6m/JcV6EEQAs1gH/ylH7lP/F7H
+         QeP1tVXB11jpkSW9xxbxU+nnRdDV+bMLslwLM9I85Z3j36LTnEqqs6nRtamYAKHuGBLg
+         OwnRn1fNG2Xe4i/hdEwd20jLdv2+uNy/QPV+azncp5tQGVut1Y3oHm3/vohfTOE+2Igf
+         AyNg==
+X-Gm-Message-State: AOJu0Yxo82T+Tbr/RVa+yRwNjgfDziPr1sEoZiqToBEL4zBvVm7NELhH
+	3yEx29wpRi9P49Iv3Zb20TQUou+CDakwAIL1mPLXRM0ghvp45oOC0reF6nsiPQ==
+X-Gm-Gg: ASbGncubxCS7m4Y55ivG1heeAlmmfr4x29RxJdxVJel4pFR8UHwATZJ4Xno2tYy5Nox
+	ycoYQPzYD76F9iMqLGLFjLwh657HNSi72LGopTNqmAKFwGxCOP4G+RvFdAeWw1+wMTBGuBgqZBI
+	/NkX0t1xp973atlVuET73xGpev2wLWOxGp/q3uvqlQdpOyluBRU8k/e1jxSp10JY7W/GZoQRk5y
+	ncpPpBRmtGv+p6lTYnPDwpd1OiJOJhFVWCKntUxxKuaykRrXais7MWJCNOYBYwLvC2u1RDQAnHK
+	9vtFVaXiETxAtyMGwzYX/g+uxvGqfuWI2W35Q+hoeZ/W6CaWYjNwg3zkwZV2
+X-Google-Smtp-Source: AGHT+IHu/qDjcnoNuPs4N/I0x7MAcH7Xqp/35xmAU+L5oDvpfAbd4lapRLCi+/cftYr3q/CQx8v88g==
+X-Received: by 2002:a05:6000:2511:b0:39c:13fd:e50e with SMTP id ffacd0b85a97d-39c13fde631mr6006367f8f.10.1743411723433;
+        Mon, 31 Mar 2025 02:02:03 -0700 (PDT)
+Received: from smtpclient.apple ([130.164.141.168])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b663617sm10793908f8f.34.2025.03.31.02.02.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 31 Mar 2025 02:02:02 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250331-pks-reftable-polishing-v1-15-ebed5247434c@pks.im>
-References: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
-In-Reply-To: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.2
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.400.131.1.6\))
+Subject: Re: [PATCH] git p4 fix for failure to decode p4 errors
+From: Fahad Al-Rashed <fahad@keylock.net>
+In-Reply-To: <652def28-2e97-4177-9197-bd93caa57886@gmail.com>
+Date: Mon, 31 Mar 2025 12:01:50 +0300
+Cc: git@vger.kernel.org,
+ bekenn@gmai.com,
+ ps@pks.im,
+ phillip.wood@dunelm.org.uk
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <A1896FA9-F09C-4099-8A7E-4AFFD2DBCF7F@keylock.net>
+References: <pull.1926.git.git.1742440852765.gitgitgadget@gmail.com>
+ <32b401c3-de0e-427b-83b7-eb5a5b315db1@gmail.com>
+ <fdbb3f88-7321-4dc0-9ead-7ed9ef0fc995@gmail.com>
+ <339b8557-d41a-4a40-912b-eb2cff63159f@gmail.com>
+ <7e5d0613-d116-4e60-8ccf-efb092776398@gmail.com>
+ <652def28-2e97-4177-9197-bd93caa57886@gmail.com>
+To: Nikolay.Shustov@gmail.com
+X-Mailer: Apple Mail (2.3826.400.131.1.6)
 
-Now that reftable blocks can be read individually via the public
-interface it becomes necessary for callers to be able to distinguish the
-different types of blocks. Expose the relevant constants.
+Hi Nikolay,
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/block.c                 |  4 ++--
- reftable/constants.h             |  6 +-----
- reftable/iter.c                  | 10 +++++-----
- reftable/merged.c                |  4 ++--
- reftable/record.c                | 40 ++++++++++++++++++++--------------------
- reftable/reftable-constants.h    | 18 ++++++++++++++++++
- reftable/stack.c                 |  8 ++++----
- reftable/table.c                 | 40 ++++++++++++++++++++--------------------
- reftable/writer.c                | 22 +++++++++++-----------
- t/unit-tests/t-reftable-block.c  | 22 +++++++++++-----------
- t/unit-tests/t-reftable-merged.c | 12 ++++++------
- t/unit-tests/t-reftable-pq.c     | 10 +++++-----
- t/unit-tests/t-reftable-record.c | 40 ++++++++++++++++++++--------------------
- t/unit-tests/t-reftable-table.c  | 12 ++++++------
- 14 files changed, 131 insertions(+), 117 deletions(-)
+The patch looks reasonable.=20
 
-diff --git a/reftable/block.c b/reftable/block.c
-index fb91090079b..393da2026ce 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -160,7 +160,7 @@ int block_writer_finish(struct block_writer *w)
- 	 * Log records are stored zlib-compressed. Note that the compression
- 	 * also spans over the restart points we have just written.
- 	 */
--	if (block_writer_type(w) == BLOCK_TYPE_LOG) {
-+	if (block_writer_type(w) == REFTABLE_BLOCK_TYPE_LOG) {
- 		int block_header_skip = 4 + w->header_off;
- 		uLongf src_len = w->next - block_header_skip, compressed_len;
- 		int ret;
-@@ -254,7 +254,7 @@ int reftable_block_init(struct reftable_block *block,
- 			goto done;
- 	}
- 
--	if (block_type == BLOCK_TYPE_LOG) {
-+	if (block_type == REFTABLE_BLOCK_TYPE_LOG) {
- 		uint32_t block_header_skip = 4 + header_size;
- 		uLong dst_len = block_size - block_header_skip;
- 		uLong src_len = block->block.len - block_header_skip;
-diff --git a/reftable/constants.h b/reftable/constants.h
-index 091728cf033..e3b1aaa5164 100644
---- a/reftable/constants.h
-+++ b/reftable/constants.h
-@@ -9,11 +9,7 @@
- #ifndef CONSTANTS_H
- #define CONSTANTS_H
- 
--#define BLOCK_TYPE_LOG 'g'
--#define BLOCK_TYPE_INDEX 'i'
--#define BLOCK_TYPE_REF 'r'
--#define BLOCK_TYPE_OBJ 'o'
--#define BLOCK_TYPE_ANY 0
-+#include "reftable-constants.h"
- 
- #define MAX_RESTARTS ((1 << 16) - 1)
- #define DEFAULT_BLOCK_SIZE 4096
-diff --git a/reftable/iter.c b/reftable/iter.c
-index 7a7e8aa4d7e..7765494d068 100644
---- a/reftable/iter.c
-+++ b/reftable/iter.c
-@@ -131,7 +131,7 @@ static int indexed_table_ref_iter_next_block(struct indexed_table_ref_iter *it)
- 	block_source_release_data(&it->block.block);
- 
- 	off = it->offsets[it->offset_idx++];
--	err = table_init_block(it->table, &it->block, off, BLOCK_TYPE_REF);
-+	err = table_init_block(it->table, &it->block, off, REFTABLE_BLOCK_TYPE_REF);
- 	if (err < 0) {
- 		return err;
- 	}
-@@ -246,7 +246,7 @@ int reftable_iterator_seek_ref(struct reftable_iterator *it,
- 			       const char *name)
- {
- 	struct reftable_record want = {
--		.type = BLOCK_TYPE_REF,
-+		.type = REFTABLE_BLOCK_TYPE_REF,
- 		.u.ref = {
- 			.refname = (char *)name,
- 		},
-@@ -258,7 +258,7 @@ int reftable_iterator_next_ref(struct reftable_iterator *it,
- 			       struct reftable_ref_record *ref)
- {
- 	struct reftable_record rec = {
--		.type = BLOCK_TYPE_REF,
-+		.type = REFTABLE_BLOCK_TYPE_REF,
- 		.u = {
- 			.ref = *ref
- 		},
-@@ -272,7 +272,7 @@ int reftable_iterator_seek_log_at(struct reftable_iterator *it,
- 				  const char *name, uint64_t update_index)
- {
- 	struct reftable_record want = {
--		.type = BLOCK_TYPE_LOG,
-+		.type = REFTABLE_BLOCK_TYPE_LOG,
- 		.u.log = {
- 			.refname = (char *)name,
- 			.update_index = update_index,
-@@ -291,7 +291,7 @@ int reftable_iterator_next_log(struct reftable_iterator *it,
- 			       struct reftable_log_record *log)
- {
- 	struct reftable_record rec = {
--		.type = BLOCK_TYPE_LOG,
-+		.type = REFTABLE_BLOCK_TYPE_LOG,
- 		.u = {
- 			.log = *log,
- 		},
-diff --git a/reftable/merged.c b/reftable/merged.c
-index d5b974d660e..733de07454d 100644
---- a/reftable/merged.c
-+++ b/reftable/merged.c
-@@ -301,13 +301,13 @@ int merged_table_init_iter(struct reftable_merged_table *mt,
- int reftable_merged_table_init_ref_iterator(struct reftable_merged_table *mt,
- 					    struct reftable_iterator *it)
- {
--	return merged_table_init_iter(mt, it, BLOCK_TYPE_REF);
-+	return merged_table_init_iter(mt, it, REFTABLE_BLOCK_TYPE_REF);
- }
- 
- int reftable_merged_table_init_log_iterator(struct reftable_merged_table *mt,
- 					    struct reftable_iterator *it)
- {
--	return merged_table_init_iter(mt, it, BLOCK_TYPE_LOG);
-+	return merged_table_init_iter(mt, it, REFTABLE_BLOCK_TYPE_LOG);
- }
- 
- enum reftable_hash reftable_merged_table_hash_id(struct reftable_merged_table *mt)
-diff --git a/reftable/record.c b/reftable/record.c
-index 26cd834d405..ed00a724417 100644
---- a/reftable/record.c
-+++ b/reftable/record.c
-@@ -69,10 +69,10 @@ int put_var_int(struct string_view *dest, uint64_t value)
- int reftable_is_block_type(uint8_t typ)
- {
- 	switch (typ) {
--	case BLOCK_TYPE_REF:
--	case BLOCK_TYPE_LOG:
--	case BLOCK_TYPE_OBJ:
--	case BLOCK_TYPE_INDEX:
-+	case REFTABLE_BLOCK_TYPE_REF:
-+	case REFTABLE_BLOCK_TYPE_LOG:
-+	case REFTABLE_BLOCK_TYPE_OBJ:
-+	case REFTABLE_BLOCK_TYPE_INDEX:
- 		return 1;
- 	}
- 	return 0;
-@@ -462,7 +462,7 @@ static int reftable_ref_record_cmp_void(const void *_a, const void *_b)
- 
- static struct reftable_record_vtable reftable_ref_record_vtable = {
- 	.key = &reftable_ref_record_key,
--	.type = BLOCK_TYPE_REF,
-+	.type = REFTABLE_BLOCK_TYPE_REF,
- 	.copy_from = &reftable_ref_record_copy_from,
- 	.val_type = &reftable_ref_record_val_type,
- 	.encode = &reftable_ref_record_encode,
-@@ -664,7 +664,7 @@ static int reftable_obj_record_cmp_void(const void *_a, const void *_b)
- 
- static struct reftable_record_vtable reftable_obj_record_vtable = {
- 	.key = &reftable_obj_record_key,
--	.type = BLOCK_TYPE_OBJ,
-+	.type = REFTABLE_BLOCK_TYPE_OBJ,
- 	.copy_from = &reftable_obj_record_copy_from,
- 	.val_type = &reftable_obj_record_val_type,
- 	.encode = &reftable_obj_record_encode,
-@@ -1035,7 +1035,7 @@ static int reftable_log_record_is_deletion_void(const void *p)
- 
- static struct reftable_record_vtable reftable_log_record_vtable = {
- 	.key = &reftable_log_record_key,
--	.type = BLOCK_TYPE_LOG,
-+	.type = REFTABLE_BLOCK_TYPE_LOG,
- 	.copy_from = &reftable_log_record_copy_from,
- 	.val_type = &reftable_log_record_val_type,
- 	.encode = &reftable_log_record_encode,
-@@ -1137,7 +1137,7 @@ static int reftable_index_record_cmp(const void *_a, const void *_b)
- 
- static struct reftable_record_vtable reftable_index_record_vtable = {
- 	.key = &reftable_index_record_key,
--	.type = BLOCK_TYPE_INDEX,
-+	.type = REFTABLE_BLOCK_TYPE_INDEX,
- 	.copy_from = &reftable_index_record_copy_from,
- 	.val_type = &reftable_index_record_val_type,
- 	.encode = &reftable_index_record_encode,
-@@ -1280,13 +1280,13 @@ int reftable_log_record_is_deletion(const struct reftable_log_record *log)
- static void *reftable_record_data(struct reftable_record *rec)
- {
- 	switch (rec->type) {
--	case BLOCK_TYPE_REF:
-+	case REFTABLE_BLOCK_TYPE_REF:
- 		return &rec->u.ref;
--	case BLOCK_TYPE_LOG:
-+	case REFTABLE_BLOCK_TYPE_LOG:
- 		return &rec->u.log;
--	case BLOCK_TYPE_INDEX:
-+	case REFTABLE_BLOCK_TYPE_INDEX:
- 		return &rec->u.idx;
--	case BLOCK_TYPE_OBJ:
-+	case REFTABLE_BLOCK_TYPE_OBJ:
- 		return &rec->u.obj;
- 	}
- 	abort();
-@@ -1296,13 +1296,13 @@ static struct reftable_record_vtable *
- reftable_record_vtable(struct reftable_record *rec)
- {
- 	switch (rec->type) {
--	case BLOCK_TYPE_REF:
-+	case REFTABLE_BLOCK_TYPE_REF:
- 		return &reftable_ref_record_vtable;
--	case BLOCK_TYPE_LOG:
-+	case REFTABLE_BLOCK_TYPE_LOG:
- 		return &reftable_log_record_vtable;
--	case BLOCK_TYPE_INDEX:
-+	case REFTABLE_BLOCK_TYPE_INDEX:
- 		return &reftable_index_record_vtable;
--	case BLOCK_TYPE_OBJ:
-+	case REFTABLE_BLOCK_TYPE_OBJ:
- 		return &reftable_obj_record_vtable;
- 	}
- 	abort();
-@@ -1314,11 +1314,11 @@ int reftable_record_init(struct reftable_record *rec, uint8_t typ)
- 	rec->type = typ;
- 
- 	switch (typ) {
--	case BLOCK_TYPE_REF:
--	case BLOCK_TYPE_LOG:
--	case BLOCK_TYPE_OBJ:
-+	case REFTABLE_BLOCK_TYPE_REF:
-+	case REFTABLE_BLOCK_TYPE_LOG:
-+	case REFTABLE_BLOCK_TYPE_OBJ:
- 		return 0;
--	case BLOCK_TYPE_INDEX:
-+	case REFTABLE_BLOCK_TYPE_INDEX:
- 		reftable_buf_init(&rec->u.idx.last_key);
- 		return 0;
- 	default:
-diff --git a/reftable/reftable-constants.h b/reftable/reftable-constants.h
-new file mode 100644
-index 00000000000..4ae9ba4bacc
---- /dev/null
-+++ b/reftable/reftable-constants.h
-@@ -0,0 +1,18 @@
-+/*
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
-+
-+#ifndef REFTABLE_CONSTANTS_H
-+#define REFTABLE_CONSTANTS_H
-+
-+#define REFTABLE_BLOCK_TYPE_LOG 'g'
-+#define REFTABLE_BLOCK_TYPE_INDEX 'i'
-+#define REFTABLE_BLOCK_TYPE_REF 'r'
-+#define REFTABLE_BLOCK_TYPE_OBJ 'o'
-+#define REFTABLE_BLOCK_TYPE_ANY 0
-+
-+#endif /* REFTABLE_CONSTANTS_H */
-diff --git a/reftable/stack.c b/reftable/stack.c
-index cc48e725b14..4caf96aa1d6 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -203,14 +203,14 @@ int reftable_stack_init_ref_iterator(struct reftable_stack *st,
- 				      struct reftable_iterator *it)
- {
- 	return merged_table_init_iter(reftable_stack_merged_table(st),
--				      it, BLOCK_TYPE_REF);
-+				      it, REFTABLE_BLOCK_TYPE_REF);
- }
- 
- int reftable_stack_init_log_iterator(struct reftable_stack *st,
- 				     struct reftable_iterator *it)
- {
- 	return merged_table_init_iter(reftable_stack_merged_table(st),
--				      it, BLOCK_TYPE_LOG);
-+				      it, REFTABLE_BLOCK_TYPE_LOG);
- }
- 
- struct reftable_merged_table *
-@@ -1098,7 +1098,7 @@ static int stack_write_compact(struct reftable_stack *st,
- 	if (err < 0)
- 		goto done;
- 
--	err = merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-+	err = merged_table_init_iter(mt, &it, REFTABLE_BLOCK_TYPE_REF);
- 	if (err < 0)
- 		goto done;
- 
-@@ -1126,7 +1126,7 @@ static int stack_write_compact(struct reftable_stack *st,
- 	}
- 	reftable_iterator_destroy(&it);
- 
--	err = merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
-+	err = merged_table_init_iter(mt, &it, REFTABLE_BLOCK_TYPE_LOG);
- 	if (err < 0)
- 		goto done;
- 
-diff --git a/reftable/table.c b/reftable/table.c
-index d84a87e7ad0..48f0cdfd42b 100644
---- a/reftable/table.c
-+++ b/reftable/table.c
-@@ -20,11 +20,11 @@ static struct reftable_table_offsets *
- table_offsets_for(struct reftable_table *t, uint8_t typ)
- {
- 	switch (typ) {
--	case BLOCK_TYPE_REF:
-+	case REFTABLE_BLOCK_TYPE_REF:
- 		return &t->ref_offsets;
--	case BLOCK_TYPE_LOG:
-+	case REFTABLE_BLOCK_TYPE_LOG:
- 		return &t->log_offsets;
--	case BLOCK_TYPE_OBJ:
-+	case REFTABLE_BLOCK_TYPE_OBJ:
- 		return &t->obj_offsets;
- 	}
- 	abort();
-@@ -112,9 +112,9 @@ static int parse_footer(struct reftable_table *t, uint8_t *footer,
- 	}
- 
- 	first_block_typ = header[header_size(t->version)];
--	t->ref_offsets.is_present = (first_block_typ == BLOCK_TYPE_REF);
-+	t->ref_offsets.is_present = (first_block_typ == REFTABLE_BLOCK_TYPE_REF);
- 	t->ref_offsets.offset = 0;
--	t->log_offsets.is_present = (first_block_typ == BLOCK_TYPE_LOG ||
-+	t->log_offsets.is_present = (first_block_typ == REFTABLE_BLOCK_TYPE_LOG ||
- 				     t->log_offsets.offset > 0);
- 	t->obj_offsets.is_present = t->obj_offsets.offset > 0;
- 	if (t->obj_offsets.is_present && !t->object_id_len) {
-@@ -150,7 +150,7 @@ static int table_iter_next_in_block(struct table_iter *ti,
- 				    struct reftable_record *rec)
- {
- 	int res = block_iter_next(&ti->bi, rec);
--	if (res == 0 && reftable_record_type(rec) == BLOCK_TYPE_REF) {
-+	if (res == 0 && reftable_record_type(rec) == REFTABLE_BLOCK_TYPE_REF) {
- 		rec->u.ref.update_index += ti->table->min_update_index;
- 	}
- 
-@@ -177,7 +177,7 @@ int table_init_block(struct reftable_table *t, struct reftable_block *block,
- 	if (err < 0)
- 		goto done;
- 
--	if (want_typ != BLOCK_TYPE_ANY && block->block_type != want_typ) {
-+	if (want_typ != REFTABLE_BLOCK_TYPE_ANY && block->block_type != want_typ) {
- 		err = 1;
- 		goto done;
- 	}
-@@ -270,7 +270,7 @@ static int table_iter_seek_start(struct table_iter *ti, uint8_t typ, int index)
- 		if (off == 0) {
- 			return 1;
- 		}
--		typ = BLOCK_TYPE_INDEX;
-+		typ = REFTABLE_BLOCK_TYPE_INDEX;
- 	}
- 
- 	return table_iter_seek_to(ti, off, typ);
-@@ -366,10 +366,10 @@ static int table_iter_seek_indexed(struct table_iter *ti,
- 				   struct reftable_record *rec)
- {
- 	struct reftable_record want_index = {
--		.type = BLOCK_TYPE_INDEX, .u.idx = { .last_key = REFTABLE_BUF_INIT }
-+		.type = REFTABLE_BLOCK_TYPE_INDEX, .u.idx = { .last_key = REFTABLE_BUF_INIT }
- 	};
- 	struct reftable_record index_result = {
--		.type = BLOCK_TYPE_INDEX,
-+		.type = REFTABLE_BLOCK_TYPE_INDEX,
- 		.u.idx = { .last_key = REFTABLE_BUF_INIT },
- 	};
- 	int err;
-@@ -429,7 +429,7 @@ static int table_iter_seek_indexed(struct table_iter *ti,
- 			break;
- 		}
- 
--		if (ti->typ != BLOCK_TYPE_INDEX) {
-+		if (ti->typ != REFTABLE_BLOCK_TYPE_INDEX) {
- 			err = REFTABLE_FORMAT_ERROR;
- 			goto done;
- 		}
-@@ -517,13 +517,13 @@ int table_init_iter(struct reftable_table *t,
- int reftable_table_init_ref_iterator(struct reftable_table *t,
- 				     struct reftable_iterator *it)
- {
--	return table_init_iter(t, it, BLOCK_TYPE_REF);
-+	return table_init_iter(t, it, REFTABLE_BLOCK_TYPE_REF);
- }
- 
- int reftable_table_init_log_iterator(struct reftable_table *t,
- 				     struct reftable_iterator *it)
- {
--	return table_init_iter(t, it, BLOCK_TYPE_LOG);
-+	return table_init_iter(t, it, REFTABLE_BLOCK_TYPE_LOG);
- }
- 
- int reftable_table_new(struct reftable_table **out,
-@@ -625,7 +625,7 @@ static int reftable_table_refs_for_indexed(struct reftable_table *t,
- 					   uint8_t *oid)
- {
- 	struct reftable_record want = {
--		.type = BLOCK_TYPE_OBJ,
-+		.type = REFTABLE_BLOCK_TYPE_OBJ,
- 		.u.obj = {
- 			.hash_prefix = oid,
- 			.hash_prefix_len = t->object_id_len,
-@@ -633,14 +633,14 @@ static int reftable_table_refs_for_indexed(struct reftable_table *t,
- 	};
- 	struct reftable_iterator oit = { NULL };
- 	struct reftable_record got = {
--		.type = BLOCK_TYPE_OBJ,
-+		.type = REFTABLE_BLOCK_TYPE_OBJ,
- 		.u.obj = { 0 },
- 	};
- 	int err = 0;
- 	struct indexed_table_ref_iter *itr = NULL;
- 
- 	/* Look through the reverse index. */
--	err = table_init_iter(t, &oit, BLOCK_TYPE_OBJ);
-+	err = table_init_iter(t, &oit, REFTABLE_BLOCK_TYPE_OBJ);
- 	if (err < 0)
- 		goto done;
- 
-@@ -692,7 +692,7 @@ static int reftable_table_refs_for_unindexed(struct reftable_table *t,
- 	}
- 
- 	table_iter_init(ti, t);
--	err = table_iter_seek_start(ti, BLOCK_TYPE_REF, 0);
-+	err = table_iter_seek_start(ti, REFTABLE_BLOCK_TYPE_REF, 0);
- 	if (err < 0)
- 		goto out;
- 
-@@ -748,15 +748,15 @@ int reftable_table_print_blocks(const char *tablename)
- 	} sections[] = {
- 		{
- 			.name = "ref",
--			.type = BLOCK_TYPE_REF,
-+			.type = REFTABLE_BLOCK_TYPE_REF,
- 		},
- 		{
- 			.name = "obj",
--			.type = BLOCK_TYPE_OBJ,
-+			.type = REFTABLE_BLOCK_TYPE_OBJ,
- 		},
- 		{
- 			.name = "log",
--			.type = BLOCK_TYPE_LOG,
-+			.type = REFTABLE_BLOCK_TYPE_LOG,
- 		},
- 	};
- 	struct reftable_block_source src = { 0 };
-diff --git a/reftable/writer.c b/reftable/writer.c
-index f0accfd0c32..0954c29bcf2 100644
---- a/reftable/writer.c
-+++ b/reftable/writer.c
-@@ -172,7 +172,7 @@ int reftable_writer_new(struct reftable_writer **out,
- 	wp->write_arg = writer_arg;
- 	wp->opts = opts;
- 	wp->flush = flush_func;
--	writer_reinit_block_writer(wp, BLOCK_TYPE_REF);
-+	writer_reinit_block_writer(wp, REFTABLE_BLOCK_TYPE_REF);
- 
- 	*out = wp;
- 
-@@ -347,7 +347,7 @@ int reftable_writer_add_ref(struct reftable_writer *w,
- 			    struct reftable_ref_record *ref)
- {
- 	struct reftable_record rec = {
--		.type = BLOCK_TYPE_REF,
-+		.type = REFTABLE_BLOCK_TYPE_REF,
- 		.u = {
- 			.ref = *ref
- 		},
-@@ -411,13 +411,13 @@ static int reftable_writer_add_log_verbatim(struct reftable_writer *w,
- 					    struct reftable_log_record *log)
- {
- 	struct reftable_record rec = {
--		.type = BLOCK_TYPE_LOG,
-+		.type = REFTABLE_BLOCK_TYPE_LOG,
- 		.u = {
- 			.log = *log,
- 		},
- 	};
- 	if (w->block_writer &&
--	    block_writer_type(w->block_writer) == BLOCK_TYPE_REF) {
-+	    block_writer_type(w->block_writer) == REFTABLE_BLOCK_TYPE_REF) {
- 		int err = writer_finish_public_section(w);
- 		if (err < 0)
- 			return err;
-@@ -537,7 +537,7 @@ static int writer_finish_section(struct reftable_writer *w)
- 
- 		max_level++;
- 		index_start = w->next;
--		err = writer_reinit_block_writer(w, BLOCK_TYPE_INDEX);
-+		err = writer_reinit_block_writer(w, REFTABLE_BLOCK_TYPE_INDEX);
- 		if (err < 0)
- 			return err;
- 
-@@ -549,7 +549,7 @@ static int writer_finish_section(struct reftable_writer *w)
- 		w->index_cap = 0;
- 		for (i = 0; i < idx_len; i++) {
- 			struct reftable_record rec = {
--				.type = BLOCK_TYPE_INDEX,
-+				.type = REFTABLE_BLOCK_TYPE_INDEX,
- 				.u = {
- 					.idx = idx[i],
- 				},
-@@ -614,7 +614,7 @@ static void write_object_record(void *void_arg, void *key)
- 	struct write_record_arg *arg = void_arg;
- 	struct obj_index_tree_node *entry = key;
- 	struct reftable_record
--		rec = { .type = BLOCK_TYPE_OBJ,
-+		rec = { .type = REFTABLE_BLOCK_TYPE_OBJ,
- 			.u.obj = {
- 				.hash_prefix = (uint8_t *)entry->hash.buf,
- 				.hash_prefix_len = arg->w->stats.object_id_len,
-@@ -632,7 +632,7 @@ static void write_object_record(void *void_arg, void *key)
- 	if (arg->err < 0)
- 		goto done;
- 
--	arg->err = writer_reinit_block_writer(arg->w, BLOCK_TYPE_OBJ);
-+	arg->err = writer_reinit_block_writer(arg->w, REFTABLE_BLOCK_TYPE_OBJ);
- 	if (arg->err < 0)
- 		goto done;
- 
-@@ -670,7 +670,7 @@ static int writer_dump_object_index(struct reftable_writer *w)
- 		infix_walk(w->obj_index_tree, &update_common, &common);
- 	w->stats.object_id_len = common.max + 1;
- 
--	err = writer_reinit_block_writer(w, BLOCK_TYPE_OBJ);
-+	err = writer_reinit_block_writer(w, REFTABLE_BLOCK_TYPE_OBJ);
- 	if (err < 0)
- 		return err;
- 
-@@ -694,7 +694,7 @@ static int writer_finish_public_section(struct reftable_writer *w)
- 	err = writer_finish_section(w);
- 	if (err < 0)
- 		return err;
--	if (typ == BLOCK_TYPE_REF && !w->opts.skip_index_objects &&
-+	if (typ == REFTABLE_BLOCK_TYPE_REF && !w->opts.skip_index_objects &&
- 	    w->stats.ref_stats.index_blocks > 0) {
- 		err = writer_dump_object_index(w);
- 		if (err < 0)
-@@ -799,7 +799,7 @@ static int writer_flush_nonempty_block(struct reftable_writer *w)
- 	 * By default, all records except for log records are padded to the
- 	 * block size.
- 	 */
--	if (!w->opts.unpadded && typ != BLOCK_TYPE_LOG)
-+	if (!w->opts.unpadded && typ != REFTABLE_BLOCK_TYPE_LOG)
- 		padding = w->opts.block_size - raw_bytes;
- 
- 	bstats = writer_reftable_block_stats(w, typ);
-diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
-index e092d0bb8f8..72164df7cbc 100644
---- a/t/unit-tests/t-reftable-block.c
-+++ b/t/unit-tests/t-reftable-block.c
-@@ -24,7 +24,7 @@ static void t_ref_block_read_write(void)
- 		.last_key = REFTABLE_BUF_INIT,
- 	};
- 	struct reftable_record rec = {
--		.type = BLOCK_TYPE_REF,
-+		.type = REFTABLE_BLOCK_TYPE_REF,
- 	};
- 	size_t i = 0;
- 	int ret;
-@@ -37,7 +37,7 @@ static void t_ref_block_read_write(void)
- 	check(block_data.buf != NULL);
- 	block_data.len = block_size;
- 
--	ret = block_writer_init(&bw, BLOCK_TYPE_REF, (uint8_t *) block_data.buf, block_size,
-+	ret = block_writer_init(&bw, REFTABLE_BLOCK_TYPE_REF, (uint8_t *) block_data.buf, block_size,
- 				header_off, hash_size(REFTABLE_HASH_SHA1));
- 	check(!ret);
- 
-@@ -119,7 +119,7 @@ static void t_log_block_read_write(void)
- 		.last_key = REFTABLE_BUF_INIT,
- 	};
- 	struct reftable_record rec = {
--		.type = BLOCK_TYPE_LOG,
-+		.type = REFTABLE_BLOCK_TYPE_LOG,
- 	};
- 	size_t i = 0;
- 	int ret;
-@@ -132,7 +132,7 @@ static void t_log_block_read_write(void)
- 	check(block_data.buf != NULL);
- 	block_data.len = block_size;
- 
--	ret = block_writer_init(&bw, BLOCK_TYPE_LOG, (uint8_t *) block_data.buf, block_size,
-+	ret = block_writer_init(&bw, REFTABLE_BLOCK_TYPE_LOG, (uint8_t *) block_data.buf, block_size,
- 				header_off, hash_size(REFTABLE_HASH_SHA1));
- 	check(!ret);
- 
-@@ -210,7 +210,7 @@ static void t_obj_block_read_write(void)
- 		.last_key = REFTABLE_BUF_INIT,
- 	};
- 	struct reftable_record rec = {
--		.type = BLOCK_TYPE_OBJ,
-+		.type = REFTABLE_BLOCK_TYPE_OBJ,
- 	};
- 	size_t i = 0;
- 	int ret;
-@@ -223,7 +223,7 @@ static void t_obj_block_read_write(void)
- 	check(block_data.buf != NULL);
- 	block_data.len = block_size;
- 
--	ret = block_writer_init(&bw, BLOCK_TYPE_OBJ, (uint8_t *) block_data.buf, block_size,
-+	ret = block_writer_init(&bw, REFTABLE_BLOCK_TYPE_OBJ, (uint8_t *) block_data.buf, block_size,
- 				header_off, hash_size(REFTABLE_HASH_SHA1));
- 	check(!ret);
- 
-@@ -294,7 +294,7 @@ static void t_index_block_read_write(void)
- 		.last_key = REFTABLE_BUF_INIT,
- 	};
- 	struct reftable_record rec = {
--		.type = BLOCK_TYPE_INDEX,
-+		.type = REFTABLE_BLOCK_TYPE_INDEX,
- 		.u.idx.last_key = REFTABLE_BUF_INIT,
- 	};
- 	size_t i = 0;
-@@ -308,7 +308,7 @@ static void t_index_block_read_write(void)
- 	check(block_data.buf != NULL);
- 	block_data.len = block_size;
- 
--	ret = block_writer_init(&bw, BLOCK_TYPE_INDEX, (uint8_t *) block_data.buf, block_size,
-+	ret = block_writer_init(&bw, REFTABLE_BLOCK_TYPE_INDEX, (uint8_t *) block_data.buf, block_size,
- 				header_off, hash_size(REFTABLE_HASH_SHA1));
- 	check(!ret);
- 
-@@ -318,7 +318,7 @@ static void t_index_block_read_write(void)
- 		snprintf(buf, sizeof(buf), "branch%02"PRIuMAX, (uintmax_t)i);
- 
- 		reftable_buf_init(&recs[i].u.idx.last_key);
--		recs[i].type = BLOCK_TYPE_INDEX;
-+		recs[i].type = REFTABLE_BLOCK_TYPE_INDEX;
- 		check(!reftable_buf_addstr(&recs[i].u.idx.last_key, buf));
- 		recs[i].u.idx.offset = i;
- 
-@@ -393,13 +393,13 @@ static void t_block_iterator(void)
- 	REFTABLE_CALLOC_ARRAY(data.buf, data.len);
- 	check(data.buf != NULL);
- 
--	err = block_writer_init(&writer, BLOCK_TYPE_REF, (uint8_t *) data.buf, data.len,
-+	err = block_writer_init(&writer, REFTABLE_BLOCK_TYPE_REF, (uint8_t *) data.buf, data.len,
- 				0, hash_size(REFTABLE_HASH_SHA1));
- 	check(!err);
- 
- 	for (size_t i = 0; i < ARRAY_SIZE(expected_refs); i++) {
- 		expected_refs[i] = (struct reftable_record) {
--			.type = BLOCK_TYPE_REF,
-+			.type = REFTABLE_BLOCK_TYPE_REF,
- 			.u.ref = {
- 				.value_type = REFTABLE_REF_VAL1,
- 				.refname = xstrfmt("refs/heads/branch-%02"PRIuMAX, (uintmax_t)i),
-diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
-index fed6beb85c0..18c3251a56a 100644
---- a/t/unit-tests/t-reftable-merged.c
-+++ b/t/unit-tests/t-reftable-merged.c
-@@ -84,7 +84,7 @@ static void t_merged_single_record(void)
- 	struct reftable_iterator it = { 0 };
- 	int err;
- 
--	err = merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-+	err = merged_table_init_iter(mt, &it, REFTABLE_BLOCK_TYPE_REF);
- 	check(!err);
- 	err = reftable_iterator_seek_ref(&it, "a");
- 	check(!err);
-@@ -164,7 +164,7 @@ static void t_merged_refs(void)
- 	size_t cap = 0;
- 	size_t i;
- 
--	err = merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-+	err = merged_table_init_iter(mt, &it, REFTABLE_BLOCK_TYPE_REF);
- 	check(!err);
- 	err = reftable_iterator_seek_ref(&it, "a");
- 	check(!err);
-@@ -244,7 +244,7 @@ static void t_merged_seek_multiple_times(void)
- 	struct reftable_merged_table *mt;
- 
- 	mt = merged_table_from_records(refs, &sources, &tables, sizes, bufs, 2);
--	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-+	merged_table_init_iter(mt, &it, REFTABLE_BLOCK_TYPE_REF);
- 
- 	for (size_t i = 0; i < 5; i++) {
- 		int err = reftable_iterator_seek_ref(&it, "c");
-@@ -320,7 +320,7 @@ static void t_merged_seek_multiple_times_without_draining(void)
- 	int err;
- 
- 	mt = merged_table_from_records(refs, &sources, &tables, sizes, bufs, 2);
--	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-+	merged_table_init_iter(mt, &it, REFTABLE_BLOCK_TYPE_REF);
- 
- 	err = reftable_iterator_seek_ref(&it, "b");
- 	check(!err);
-@@ -445,7 +445,7 @@ static void t_merged_logs(void)
- 	size_t cap = 0;
- 	size_t i;
- 
--	err = merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
-+	err = merged_table_init_iter(mt, &it, REFTABLE_BLOCK_TYPE_LOG);
- 	check(!err);
- 	err = reftable_iterator_seek_log(&it, "a");
- 	check(!err);
-@@ -469,7 +469,7 @@ static void t_merged_logs(void)
- 		check(reftable_log_record_equal(want[i], &out[i],
- 						 REFTABLE_HASH_SIZE_SHA1));
- 
--	err = merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
-+	err = merged_table_init_iter(mt, &it, REFTABLE_BLOCK_TYPE_LOG);
- 	check(!err);
- 	err = reftable_iterator_seek_log_at(&it, "a", 2);
- 	check(!err);
-diff --git a/t/unit-tests/t-reftable-pq.c b/t/unit-tests/t-reftable-pq.c
-index c128fe8616a..fb5a4eb1877 100644
---- a/t/unit-tests/t-reftable-pq.c
-+++ b/t/unit-tests/t-reftable-pq.c
-@@ -34,7 +34,7 @@ static void t_pq_record(void)
- 	char *last = NULL;
- 
- 	for (i = 0; i < N; i++) {
--		check(!reftable_record_init(&recs[i], BLOCK_TYPE_REF));
-+		check(!reftable_record_init(&recs[i], REFTABLE_BLOCK_TYPE_REF));
- 		recs[i].u.ref.refname = xstrfmt("%02"PRIuMAX, (uintmax_t)i);
- 	}
- 
-@@ -57,7 +57,7 @@ static void t_pq_record(void)
- 		merged_iter_pqueue_check(&pq);
- 
- 		check(pq_entry_equal(&top, &e));
--		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
-+		check(reftable_record_type(e.rec) == REFTABLE_BLOCK_TYPE_REF);
- 		if (last)
- 			check_int(strcmp(last, e.rec->u.ref.refname), <, 0);
- 		last = e.rec->u.ref.refname;
-@@ -76,7 +76,7 @@ static void t_pq_index(void)
- 	size_t N = ARRAY_SIZE(recs), i;
- 
- 	for (i = 0; i < N; i++) {
--		check(!reftable_record_init(&recs[i], BLOCK_TYPE_REF));
-+		check(!reftable_record_init(&recs[i], REFTABLE_BLOCK_TYPE_REF));
- 		recs[i].u.ref.refname = (char *) "refs/heads/master";
- 	}
- 
-@@ -100,7 +100,7 @@ static void t_pq_index(void)
- 		merged_iter_pqueue_check(&pq);
- 
- 		check(pq_entry_equal(&top, &e));
--		check(reftable_record_type(e.rec) == BLOCK_TYPE_REF);
-+		check(reftable_record_type(e.rec) == REFTABLE_BLOCK_TYPE_REF);
- 		check_int(e.index, ==, i);
- 		if (last)
- 			check_str(last, e.rec->u.ref.refname);
-@@ -117,7 +117,7 @@ static void t_merged_iter_pqueue_top(void)
- 	size_t N = ARRAY_SIZE(recs), i;
- 
- 	for (i = 0; i < N; i++) {
--		check(!reftable_record_init(&recs[i], BLOCK_TYPE_REF));
-+		check(!reftable_record_init(&recs[i], REFTABLE_BLOCK_TYPE_REF));
- 		recs[i].u.ref.refname = (char *) "refs/heads/master";
- 	}
- 
-diff --git a/t/unit-tests/t-reftable-record.c b/t/unit-tests/t-reftable-record.c
-index 59549663736..553a0076647 100644
---- a/t/unit-tests/t-reftable-record.c
-+++ b/t/unit-tests/t-reftable-record.c
-@@ -84,17 +84,17 @@ static void t_reftable_ref_record_comparison(void)
- {
- 	struct reftable_record in[3] = {
- 		{
--			.type = BLOCK_TYPE_REF,
-+			.type = REFTABLE_BLOCK_TYPE_REF,
- 			.u.ref.refname = (char *) "refs/heads/master",
- 			.u.ref.value_type = REFTABLE_REF_VAL1,
- 		},
- 		{
--			.type = BLOCK_TYPE_REF,
-+			.type = REFTABLE_BLOCK_TYPE_REF,
- 			.u.ref.refname = (char *) "refs/heads/master",
- 			.u.ref.value_type = REFTABLE_REF_DELETION,
- 		},
- 		{
--			.type = BLOCK_TYPE_REF,
-+			.type = REFTABLE_BLOCK_TYPE_REF,
- 			.u.ref.refname = (char *) "HEAD",
- 			.u.ref.value_type = REFTABLE_REF_SYMREF,
- 			.u.ref.value.symref = (char *) "refs/heads/master",
-@@ -141,10 +141,10 @@ static void t_reftable_ref_record_roundtrip(void)
- 
- 	for (int i = REFTABLE_REF_DELETION; i < REFTABLE_NR_REF_VALUETYPES; i++) {
- 		struct reftable_record in = {
--			.type = BLOCK_TYPE_REF,
-+			.type = REFTABLE_BLOCK_TYPE_REF,
- 			.u.ref.value_type = i,
- 		};
--		struct reftable_record out = { .type = BLOCK_TYPE_REF };
-+		struct reftable_record out = { .type = REFTABLE_BLOCK_TYPE_REF };
- 		struct reftable_buf key = REFTABLE_BUF_INIT;
- 		uint8_t buffer[1024] = { 0 };
- 		struct string_view dest = {
-@@ -198,17 +198,17 @@ static void t_reftable_log_record_comparison(void)
- {
- 	struct reftable_record in[3] = {
- 		{
--			.type = BLOCK_TYPE_LOG,
-+			.type = REFTABLE_BLOCK_TYPE_LOG,
- 			.u.log.refname = (char *) "refs/heads/master",
- 			.u.log.update_index = 42,
- 		},
- 		{
--			.type = BLOCK_TYPE_LOG,
-+			.type = REFTABLE_BLOCK_TYPE_LOG,
- 			.u.log.refname = (char *) "refs/heads/master",
- 			.u.log.update_index = 22,
- 		},
- 		{
--			.type = BLOCK_TYPE_LOG,
-+			.type = REFTABLE_BLOCK_TYPE_LOG,
- 			.u.log.refname = (char *) "refs/heads/main",
- 			.u.log.update_index = 22,
- 		},
-@@ -297,7 +297,7 @@ static void t_reftable_log_record_roundtrip(void)
- 	check(!reftable_log_record_is_deletion(&in[2]));
- 
- 	for (size_t i = 0; i < ARRAY_SIZE(in); i++) {
--		struct reftable_record rec = { .type = BLOCK_TYPE_LOG };
-+		struct reftable_record rec = { .type = REFTABLE_BLOCK_TYPE_LOG };
- 		struct reftable_buf key = REFTABLE_BUF_INIT;
- 		uint8_t buffer[1024] = { 0 };
- 		struct string_view dest = {
-@@ -306,7 +306,7 @@ static void t_reftable_log_record_roundtrip(void)
- 		};
- 		/* populate out, to check for leaks. */
- 		struct reftable_record out = {
--			.type = BLOCK_TYPE_LOG,
-+			.type = REFTABLE_BLOCK_TYPE_LOG,
- 			.u.log = {
- 				.refname = xstrdup("old name"),
- 				.value_type = REFTABLE_LOG_UPDATE,
-@@ -384,21 +384,21 @@ static void t_reftable_obj_record_comparison(void)
- 	uint64_t offsets[] = { 0, 16, 32, 48, 64, 80, 96, 112};
- 	struct reftable_record in[3] = {
- 		{
--			.type = BLOCK_TYPE_OBJ,
-+			.type = REFTABLE_BLOCK_TYPE_OBJ,
- 			.u.obj.hash_prefix = id_bytes,
- 			.u.obj.hash_prefix_len = 7,
- 			.u.obj.offsets = offsets,
- 			.u.obj.offset_len = 8,
- 		},
- 		{
--			.type = BLOCK_TYPE_OBJ,
-+			.type = REFTABLE_BLOCK_TYPE_OBJ,
- 			.u.obj.hash_prefix = id_bytes,
- 			.u.obj.hash_prefix_len = 7,
- 			.u.obj.offsets = offsets,
- 			.u.obj.offset_len = 5,
- 		},
- 		{
--			.type = BLOCK_TYPE_OBJ,
-+			.type = REFTABLE_BLOCK_TYPE_OBJ,
- 			.u.obj.hash_prefix = id_bytes,
- 			.u.obj.hash_prefix_len = 5,
- 		},
-@@ -450,13 +450,13 @@ static void t_reftable_obj_record_roundtrip(void)
- 			.len = sizeof(buffer),
- 		};
- 		struct reftable_record in = {
--			.type = BLOCK_TYPE_OBJ,
-+			.type = REFTABLE_BLOCK_TYPE_OBJ,
- 			.u = {
- 				.obj = recs[i],
- 			},
- 		};
- 		struct reftable_buf key = REFTABLE_BUF_INIT;
--		struct reftable_record out = { .type = BLOCK_TYPE_OBJ };
-+		struct reftable_record out = { .type = REFTABLE_BLOCK_TYPE_OBJ };
- 		int n, m;
- 		uint8_t extra;
- 
-@@ -482,17 +482,17 @@ static void t_reftable_index_record_comparison(void)
- {
- 	struct reftable_record in[3] = {
- 		{
--			.type = BLOCK_TYPE_INDEX,
-+			.type = REFTABLE_BLOCK_TYPE_INDEX,
- 			.u.idx.offset = 22,
- 			.u.idx.last_key = REFTABLE_BUF_INIT,
- 		},
- 		{
--			.type = BLOCK_TYPE_INDEX,
-+			.type = REFTABLE_BLOCK_TYPE_INDEX,
- 			.u.idx.offset = 32,
- 			.u.idx.last_key = REFTABLE_BUF_INIT,
- 		},
- 		{
--			.type = BLOCK_TYPE_INDEX,
-+			.type = REFTABLE_BLOCK_TYPE_INDEX,
- 			.u.idx.offset = 32,
- 			.u.idx.last_key = REFTABLE_BUF_INIT,
- 		},
-@@ -523,7 +523,7 @@ static void t_reftable_index_record_comparison(void)
- static void t_reftable_index_record_roundtrip(void)
- {
- 	struct reftable_record in = {
--		.type = BLOCK_TYPE_INDEX,
-+		.type = REFTABLE_BLOCK_TYPE_INDEX,
- 		.u.idx = {
- 			.offset = 42,
- 			.last_key = REFTABLE_BUF_INIT,
-@@ -537,7 +537,7 @@ static void t_reftable_index_record_roundtrip(void)
- 	struct reftable_buf scratch = REFTABLE_BUF_INIT;
- 	struct reftable_buf key = REFTABLE_BUF_INIT;
- 	struct reftable_record out = {
--		.type = BLOCK_TYPE_INDEX,
-+		.type = REFTABLE_BLOCK_TYPE_INDEX,
- 		.u.idx = { .last_key = REFTABLE_BUF_INIT },
- 	};
- 	int n, m;
-diff --git a/t/unit-tests/t-reftable-table.c b/t/unit-tests/t-reftable-table.c
-index 58b13ad496f..8dcd1da90e2 100644
---- a/t/unit-tests/t-reftable-table.c
-+++ b/t/unit-tests/t-reftable-table.c
-@@ -106,33 +106,33 @@ static int t_table_block_iterator(void)
- 		uint16_t record_count;
- 	} expected_blocks[] = {
- 		{
--			.block_type = BLOCK_TYPE_REF,
-+			.block_type = REFTABLE_BLOCK_TYPE_REF,
- 			.header_off = 24,
- 			.restart_count = 10,
- 			.record_count = 158,
- 		},
- 		{
--			.block_type = BLOCK_TYPE_REF,
-+			.block_type = REFTABLE_BLOCK_TYPE_REF,
- 			.restart_count = 10,
- 			.record_count = 159,
- 		},
- 		{
--			.block_type = BLOCK_TYPE_REF,
-+			.block_type = REFTABLE_BLOCK_TYPE_REF,
- 			.restart_count = 10,
- 			.record_count = 159,
- 		},
- 		{
--			.block_type = BLOCK_TYPE_REF,
-+			.block_type = REFTABLE_BLOCK_TYPE_REF,
- 			.restart_count = 2,
- 			.record_count = 24,
- 		},
- 		{
--			.block_type = BLOCK_TYPE_INDEX,
-+			.block_type = REFTABLE_BLOCK_TYPE_INDEX,
- 			.restart_count = 1,
- 			.record_count = 4,
- 		},
- 		{
--			.block_type = BLOCK_TYPE_OBJ,
-+			.block_type = REFTABLE_BLOCK_TYPE_OBJ,
- 			.restart_count = 1,
- 			.record_count = 1,
- 		},
+What I can help with is test it on our Perforce installation when I go =
+back to work next week.
 
--- 
-2.49.0.604.gff1f9ca942.dirty
+For the purpose of testing, is running t/t9837-git-p4-error-encoding.sh =
+locally on my computer enough to test your patch?
+
+Best,
+Fahad
+
+> On 31 Mar 2025, at 4:21=E2=80=AFAM, Nikolay Shustov =
+<nikolay.shustov@gmail.com> wrote:
+>=20
+> <adding Fahad Alrashed, James Touton and Patrick Steinhardt, whom Git =
+points to as the contributors to the latest p4-git logic changes>
+>=20
+> Hello,
+> May I ask you to review the below change to p4-git?
+>=20
+> Thank you in advance,
+> - Nikolay
+>=20
+> On 3/30/25 16:06, Nikolay Shustov wrote:
+>> Hi Phillip,
+>> Thank you for your time and your feedback.
+>> It is especially valuable to me as it is the very first PR of mine.
+>> I will try to contact the recent contributors of git-p4 changes for =
+review.
+>>=20
+>> To clarify on the fix:
+>>=20
+>> The error I hit was while using "git p4 clone":
+>> It was throwing decoding exception at line 901 of git-p4, preventing =
+import from Perforce depot to complete successfully.
+>> The root cause is the logic for "git p4 clone" anticipates some p4 =
+operations may return errors, it is a normal part of import process.
+>> But that logic uses just .decode() on the byte array of the returned =
+error message, which does not work well when it contains the characters =
+with high bit set (which may be the case when Perforce configured =
+without unicode support). git-p4 implementation has a decoding fallback =
+logic for such cases in other places, but this specific place did not =
+use any.
+>>=20
+>> Using the bullet list in description was not intended to enumerate =
+the separate changes, but rather to highlight the details of the change.
+>> I will make sure I won't use it in the future to avoid the confusion.
+>>=20
+>> That small refactoring I did was not a sidecar but a way I chose to =
+implement the changes:
+>> There was an existing function that was doing the job of decoding the =
+received p4 metadata, using the existing git-p4 configuration settings.
+>> There also were a few existing variables that kept the state between =
+the calls of that function (e.g. indicator not to show decoding fallback =
+warning twice, configuration settings).
+>> However, with the way the function was implemented, it could not be =
+reused as-is for the new case.
+>> I would had to add a new function that would have to use the same =
+core transcoding implementation but behave differently.
+>> Adding behavior variances into the existing function felt suboptimal: =
+it would complicate it quite a bit and I felt sorry about next one who =
+will have to reverse engineer its behavior again. Duplicating the part =
+of logic of the existing function also looked suboptimal: any further =
+changes would have to be done in two places.
+>> So, seeing the need in keeping state between calls and separating a =
+part of existing logic into separate functions, I went for moving the =
+implementation into a new class and organizing things there with the =
+class instance. In my opinion, the new code looks pretty =
+self-descritpitve.
+>>=20
+>> Thank you,
+>> - Nikolay
+>>=20
+>> On 3/26/25 11:09, Phillip Wood wrote:
+>>> Hi Nikolay
+>>>=20
+>>> On 25/03/2025 23:09, Nikolay Shustov wrote:
+>>>> I think this fix is important.
+>>>> git-p4 is used in the companies where there is an intent to migrate =
+from Perforce to Git and having the issue that this change fixes is a =
+real roadblock.
+>>>> The better we can make git-p4, the more adoption Git would get in =
+the commercial world.
+>>>=20
+>>> Unfortunately I don't think any of the regular git contributors use =
+git-p4 so to find someone to review this patch I would look at who has =
+contributed to git-p4 recently and cc them. Before you do that I have a =
+couple of suggestions below
+>>>=20
+>>>> On 3/22/25 07:48, Nikolay Shustov wrote:
+>>>>> ping, pretty please? :-)
+>>>>>=20
+>>>>> On 3/19/25 23:20, Nikolay Shustov via GitGitGadget wrote:
+>>>>>> From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
+>>>>>>=20
+>>>>>> Fixes the git p4 failure happening when Perforce command returns =
+error
+>>>>>> containing byte stream of characters with high bit set. In such =
+situations
+>>>>>> git p4 implementatino fails to decode this byte stream into utf-8 =
+string.
+>>>>>>=20
+>>>>>> Design:
+>>>>>> Make use of existing decoding fallback strategy, described by
+>>>>>> git-p4.metadataDecodingStrategy and =
+git-p4.metadataFallbackEncoding
+>>>>>> settings in the logic that decodes the Perforce command error =
+bytes.
+>>>=20
+>>> Our usual style for commit messages is to explain what the problem =
+is and how it is fixed by the changes in the patch. Rather than saying =
+"fixes the git p4 failure" I would start by explaining what that failure =
+is and how it is caused. It would also be helpful to explain what the =
+settings that you refer to do so that someone who is familiar with =
+python but not with git-p4 can understand and potentially review the =
+changes.
+>>>=20
+>>>>>> Details:
+>>>>>> - Moved p4 metadata transcoding logic from
+>>>>>>    metadata_stream_to_writable_bytes(..) into a new =
+MetadataTranscoder class.
+>>>>>> - Enhcanced the implementation to use =
+git-p4.metadataDecodingStrategy and
+>>>>>>    git-p4.metadataFallbackEncoding settings for p4 errors =
+decoding.
+>>>>>> - Added test.
+>>>=20
+>>> Thanks for taking the time to add a new test, it is much =
+appreciated. When there is a bullet list in a commit message it is often =
+a sign that the commit is doing more than one thing at once. In this =
+case it appears there is a bug fix mixed in with some refactoring. I =
+would split the refactoring out into a preparatory patch so that reviews =
+can clearly see which changes are due to creating the MetadataTranscoder =
+class and which are the changes that fix the bug. The new test should be =
+added in the commit that fixes the bug.
+>>>=20
+>>> Best Wishes
+>>>=20
+>>> Phillip
+>>>=20
+>>>>>> Signed-off-by: Nikolay Shustov <Nikolay.Shustov@gmail.com>
+>>>>>> ---
+>>>>>>      git p4 fix for failure to decode p4 errors
+>>>>>>=20
+>>>>>> Published-As: =
+https://github.com/gitgitgadget/git/releases/tag/pr- =
+git-1926%2Fnshustov%2Fgit-p4-error-decoding-v1
+>>>>>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr- =
+git-1926/nshustov/git-p4-error-decoding-v1
+>>>>>> Pull-Request: https://github.com/git/git/pull/1926
+>>>>>>=20
+>>>>>>   git-p4.py                        | 135 =
+++++++++++++++++++-------------
+>>>>>>   t/meson.build                    |   1 +
+>>>>>>   t/t9837-git-p4-error-encoding.sh |  53 ++++++++++++
+>>>>>>   t/t9837/git-p4-error-python3.py  |  15 ++++
+>>>>>>   4 files changed, 149 insertions(+), 55 deletions(-)
+>>>>>>   create mode 100755 t/t9837-git-p4-error-encoding.sh
+>>>>>>   create mode 100644 t/t9837/git-p4-error-python3.py
+>>>>>>=20
+>>>>>> diff --git a/git-p4.py b/git-p4.py
+>>>>>> index c0ca7becaf4..72a4c55f99e 100755
+>>>>>> --- a/git-p4.py
+>>>>>> +++ b/git-p4.py
+>>>>>> @@ -234,67 +234,91 @@ else:
+>>>>>>       class MetadataDecodingException(Exception):
+>>>>>> -    def __init__(self, input_string):
+>>>>>> +    def __init__(self, input_string, error=3DNone):
+>>>>>>           self.input_string =3D input_string
+>>>>>> +        self.error =3D error
+>>>>>>         def __str__(self):
+>>>>>> -        return """Decoding perforce metadata failed!
+>>>>>> +        message =3D """Decoding perforce metadata failed!
+>>>>>>   The failing string was:
+>>>>>>   ---
+>>>>>>   {}
+>>>>>>   ---
+>>>>>>   Consider setting the git-p4.metadataDecodingStrategy config =
+option to
+>>>>>>   'fallback', to allow metadata to be decoded using a fallback =
+encoding,
+>>>>>> -defaulting to cp1252.""".format(self.input_string)
+>>>>>> +defaulting to cp1252."""
+>>>>>> +        if verbose and self.error is not None:
+>>>>>> +            message +=3D """
+>>>>>> +---
+>>>>>> +Error:
+>>>>>> +---
+>>>>>> +{}"""
+>>>>>> +        return message.format(self.input_string, self.error)
+>>>>>>     -encoding_fallback_warning_issued =3D False
+>>>>>> -encoding_escape_warning_issued =3D False
+>>>>>> -def metadata_stream_to_writable_bytes(s):
+>>>>>> -    encodingStrategy =3D =
+gitConfig('git-p4.metadataDecodingStrategy') or =
+defaultMetadataDecodingStrategy
+>>>>>> -    fallbackEncoding =3D =
+gitConfig('git-p4.metadataFallbackEncoding') or =
+defaultFallbackMetadataEncoding
+>>>>>> -    if not isinstance(s, bytes):
+>>>>>> -        return s.encode('utf_8')
+>>>>>> -    if encodingStrategy =3D=3D 'passthrough':
+>>>>>> -        return s
+>>>>>> -    try:
+>>>>>> -        s.decode('utf_8')
+>>>>>> -        return s
+>>>>>> -    except UnicodeDecodeError:
+>>>>>> -        if encodingStrategy =3D=3D 'fallback' and =
+fallbackEncoding:
+>>>>>> -            global encoding_fallback_warning_issued
+>>>>>> -            global encoding_escape_warning_issued
+>>>>>> -            try:
+>>>>>> -                if not encoding_fallback_warning_issued:
+>>>>>> -                    print("\nCould not decode value as utf-8; =
+using configured fallback encoding %s: %s" % (fallbackEncoding, s))
+>>>>>> -                    print("\n(this warning is only displayed =
+once during an import)")
+>>>>>> -                    encoding_fallback_warning_issued =3D True
+>>>>>> -                return =
+s.decode(fallbackEncoding).encode('utf_8')
+>>>>>> -            except Exception as exc:
+>>>>>> -                if not encoding_escape_warning_issued:
+>>>>>> -                    print("\nCould not decode value with =
+configured fallback encoding %s; escaping bytes over 127: %s" % =
+(fallbackEncoding, s))
+>>>>>> -                    print("\n(this warning is only displayed =
+once during an import)")
+>>>>>> -                    encoding_escape_warning_issued =3D True
+>>>>>> -                escaped_bytes =3D b''
+>>>>>> -                # bytes and strings work very differently in =
+python2 vs python3...
+>>>>>> -                if str is bytes:
+>>>>>> -                    for byte in s:
+>>>>>> -                        byte_number =3D struct.unpack('>B', =
+byte)[0]
+>>>>>> -                        if byte_number > 127:
+>>>>>> -                            escaped_bytes +=3D b'%'
+>>>>>> -                            escaped_bytes +=3D hex(byte_number) =
+[2:].upper()
+>>>>>> -                        else:
+>>>>>> -                            escaped_bytes +=3D byte
+>>>>>> -                else:
+>>>>>> -                    for byte_number in s:
+>>>>>> -                        if byte_number > 127:
+>>>>>> -                            escaped_bytes +=3D b'%'
+>>>>>> -                            escaped_bytes +=3D =
+hex(byte_number).upper().encode()[2:]
+>>>>>> -                        else:
+>>>>>> -                            escaped_bytes +=3D =
+bytes([byte_number])
+>>>>>> -                return escaped_bytes
+>>>>>> +class MetadataTranscoder:
+>>>>>> +    def __init__(self, default_metadata_decoding_strategy, =
+default_fallback_metadata_encoding):
+>>>>>> +        self.decoding_fallback_warning_issued =3D False
+>>>>>> +        self.decoding_escape_warning_issued =3D False
+>>>>>> +        self.decodingStrategy =3D gitConfig('git- =
+p4.metadataDecodingStrategy') or default_metadata_decoding_strategy
+>>>>>> +        self.fallbackEncoding =3D gitConfig('git- =
+p4.metadataFallbackEncoding') or default_fallback_metadata_encoding
+>>>>>> +
+>>>>>> +    def decode_metadata(self, s, error_from_fallback=3DTrue):
+>>>>>> +        try:
+>>>>>> +            return [s.decode('utf_8'), 'utf_8']
+>>>>>> +        except UnicodeDecodeError as decode_exception:
+>>>>>> +            error =3D decode_exception
+>>>>>> +            if self.decodingStrategy =3D=3D 'fallback' and =
+self.fallbackEncoding:
+>>>>>> +                try:
+>>>>>> +                    if not =
+self.decoding_fallback_warning_issued:
+>>>>>> +                        print("\nCould not decode value as =
+utf-8; using configured fallback encoding %s: %s" % =
+(self.fallbackEncoding, s))
+>>>>>> +                        print("\n(this warning is only displayed =
+once during an import)")
+>>>>>> + self.decoding_fallback_warning_issued =3D True
+>>>>>> +                    return [s.decode(self.fallbackEncoding), =
+self.fallbackEncoding]
+>>>>>> +                except Exception as decode_exception:
+>>>>>> +                    if not error_from_fallback:
+>>>>>> +                        return [s, None]
+>>>>>> +                    error =3D decode_exception
+>>>>>> +            raise MetadataDecodingException(s, error)
+>>>>>> +
+>>>>>> +    def metadata_stream_to_writable_bytes(self, s):
+>>>>>> +        if not isinstance(s, bytes):
+>>>>>> +            return s.encode('utf_8')
+>>>>>> +        if self.decodingStrategy =3D=3D 'passthrough':
+>>>>>> +            return s
+>>>>>> +
+>>>>>> +        [text, encoding] =3D self.decode_metadata(s, False)
+>>>>>> +        if encoding =3D=3D 'utf_8':
+>>>>>> +            # s is of utf-8 already
+>>>>>> +            return s
+>>>>>> +
+>>>>>> +        if encoding is None:
+>>>>>> +            # could not decode s, even with fallback encoding
+>>>>>> +            if not self.decoding_escape_warning_issued:
+>>>>>> +                print("\nCould not decode value with configured =
+fallback encoding %s; escaping bytes over 127: %s" % =
+(self.fallbackEncoding, s))
+>>>>>> +                print("\n(this warning is only displayed once =
+during an import)")
+>>>>>> +                self.decoding_escape_warning_issued =3D True
+>>>>>> +            escaped_bytes =3D b''
+>>>>>> +            # bytes and strings work very differently in python2 =
+vs python3...
+>>>>>> +            if str is bytes:
+>>>>>> +                for byte in s:
+>>>>>> +                    byte_number =3D struct.unpack('>B', byte)[0]
+>>>>>> +                    if byte_number > 127:
+>>>>>> +                        escaped_bytes +=3D b'%'
+>>>>>> +                        escaped_bytes +=3D =
+hex(byte_number)[2:].upper()
+>>>>>> +                    else:
+>>>>>> +                        escaped_bytes +=3D byte
+>>>>>> +            else:
+>>>>>> +                for byte_number in s:
+>>>>>> +                    if byte_number > 127:
+>>>>>> +                        escaped_bytes +=3D b'%'
+>>>>>> +                        escaped_bytes +=3D =
+hex(byte_number).upper().encode()[2:]
+>>>>>> +                    else:
+>>>>>> +                        escaped_bytes +=3D bytes([byte_number])
+>>>>>> +            return escaped_bytes
+>>>>>>   -        raise MetadataDecodingException(s)
+>>>>>> +        # were able to decode but not to utf-8
+>>>>>> +        return text.encode('utf_8')
+>>>>>>       def decode_path(path):
+>>>>>> @@ -898,14 +922,14 @@ def p4CmdList(cmd, stdin=3DNone, =
+stdin_mode=3D'w+b', cb=3DNone, skip_info=3DFalse,
+>>>>>>                       decoded_entry[key] =3D value
+>>>>>>                   # Parse out data if it's an error response
+>>>>>>                   if decoded_entry.get('code') =3D=3D 'error' and =
+'data' in decoded_entry:
+>>>>>> -                    decoded_entry['data'] =3D =
+decoded_entry['data'].decode()
+>>>>>> +                    decoded_entry['data'] =3D =
+metadataTranscoder.decode_metadata(decoded_entry['data'])
+>>>>>>                   entry =3D decoded_entry
+>>>>>>               if skip_info:
+>>>>>>                   if 'code' in entry and entry['code'] =3D=3D =
+'info':
+>>>>>>                       continue
+>>>>>>               for key in p4KeysContainingNonUtf8Chars():
+>>>>>>                   if key in entry:
+>>>>>> -                    entry[key] =3D =
+metadata_stream_to_writable_bytes(entry[key])
+>>>>>> +                    entry[key] =3D =
+metadataTranscoder.metadata_stream_to_writable_bytes(entry[key])
+>>>>>>               if cb is not None:
+>>>>>>                   cb(entry)
+>>>>>>               else:
+>>>>>> @@ -1718,7 +1742,7 @@ class P4UserMap:
+>>>>>>               # python2 or python3. To support
+>>>>>>               # git-p4.metadataDecodingStrategy=3Dfallback, =
+self.users dict values
+>>>>>>               # are always bytes, ready to be written to git.
+>>>>>> -            emailbytes =3D =
+metadata_stream_to_writable_bytes(output["Email"])
+>>>>>> +            emailbytes =3D =
+metadataTranscoder.metadata_stream_to_writable_bytes(output["Email"])
+>>>>>>               self.users[output["User"]] =3D output["FullName"] + =
+b" <" + emailbytes + b">"
+>>>>>>               self.emails[output["Email"]] =3D output["User"]
+>>>>>>   @@ -1730,12 +1754,12 @@ class P4UserMap:
+>>>>>>                   fullname =3D mapUser[0][1]
+>>>>>>                   email =3D mapUser[0][2]
+>>>>>>                   fulluser =3D fullname + " <" + email + ">"
+>>>>>> -                self.users[user] =3D =
+metadata_stream_to_writable_bytes(fulluser)
+>>>>>> +                self.users[user] =3D =
+metadataTranscoder.metadata_stream_to_writable_bytes(fulluser)
+>>>>>>                   self.emails[email] =3D user
+>>>>>>             s =3D b''
+>>>>>>           for (key, val) in self.users.items():
+>>>>>> -            keybytes =3D metadata_stream_to_writable_bytes(key)
+>>>>>> +            keybytes =3D =
+metadataTranscoder.metadata_stream_to_writable_bytes(key)
+>>>>>>               s +=3D b"%s\t%s\n" % (keybytes.expandtabs(1), =
+val.expandtabs(1))
+>>>>>>             open(self.getUserCacheFilename(), 'wb').write(s)
+>>>>>> @@ -3349,7 +3373,7 @@ class P4Sync(Command, P4UserMap):
+>>>>>>           if userid in self.users:
+>>>>>>               return self.users[userid]
+>>>>>>           else:
+>>>>>> -            userid_bytes =3D =
+metadata_stream_to_writable_bytes(userid)
+>>>>>> +            userid_bytes =3D =
+metadataTranscoder.metadata_stream_to_writable_bytes(userid)
+>>>>>>               return b"%s <a@b>" % userid_bytes
+>>>>>>         def streamTag(self, gitStream, labelName, labelDetails, =
+commit, epoch):
+>>>>>> @@ -4561,6 +4585,7 @@ commands =3D {
+>>>>>>       "unshelve": P4Unshelve,
+>>>>>>   }
+>>>>>>   +metadataTranscoder =3D =
+MetadataTranscoder(defaultMetadataDecodingStrategy, =
+defaultFallbackMetadataEncoding)
+>>>>>>     def main():
+>>>>>>       if len(sys.argv[1:]) =3D=3D 0:
+>>>>>> diff --git a/t/meson.build b/t/meson.build
+>>>>>> index a59da26be3f..656424fdff3 100644
+>>>>>> --- a/t/meson.build
+>>>>>> +++ b/t/meson.build
+>>>>>> @@ -1090,6 +1090,7 @@ integration_tests =3D [
+>>>>>>     't9834-git-p4-file-dir-bug.sh',
+>>>>>>     't9835-git-p4-metadata-encoding-python2.sh',
+>>>>>>     't9836-git-p4-metadata-encoding-python3.sh',
+>>>>>> +  't9837-git-p4-error-encoding.sh',
+>>>>>>     't9850-shell.sh',
+>>>>>>     't9901-git-web--browse.sh',
+>>>>>>     't9902-completion.sh',
+>>>>>> diff --git a/t/t9837-git-p4-error-encoding.sh =
+b/t/t9837-git-p4-error- encoding.sh
+>>>>>> new file mode 100755
+>>>>>> index 00000000000..1ea774afb1b
+>>>>>> --- /dev/null
+>>>>>> +++ b/t/t9837-git-p4-error-encoding.sh
+>>>>>> @@ -0,0 +1,53 @@
+>>>>>> +#!/bin/sh
+>>>>>> +
+>>>>>> +test_description=3D'git p4 error encoding
+>>>>>> +
+>>>>>> +This test checks that the import process handles inconsistent =
+text
+>>>>>> +encoding in p4 error messages without failing'
+>>>>>> +
+>>>>>> +. ./lib-git-p4.sh
+>>>>>> +
+>>>>>> +###############################
+>>>>>> +## SECTION REPEATED IN t9835 ##
+>>>>>> +###############################
+>>>>>> +
+>>>>>> +# These tests require Perforce with non-unicode setup.
+>>>>>> +out=3D$(2>&1 P4CHARSET=3Dutf8 p4 client -o)
+>>>>>> +if test $? -eq 0
+>>>>>> +then
+>>>>>> +    skip_all=3D"skipping git p4 error encoding tests; Perforce =
+is setup with unicode"
+>>>>>> +    test_done
+>>>>>> +fi
+>>>>>> +
+>>>>>> +# These tests are specific to Python 3. Write a custom script =
+that executes
+>>>>>> +# git-p4 directly with the Python 3 interpreter to ensure that =
+we use that
+>>>>>> +# version even if Git was compiled with Python 2.
+>>>>>> +python_target_binary=3D$(which python3)
+>>>>>> +if test -n "$python_target_binary"
+>>>>>> +then
+>>>>>> +    mkdir temp_python
+>>>>>> +    PATH=3D"$(pwd)/temp_python:$PATH"
+>>>>>> +    export PATH
+>>>>>> +
+>>>>>> +    write_script temp_python/git-p4-python3 <<-EOF
+>>>>>> +    exec "$python_target_binary" "$(git --exec-path)/git-p4" =
+"\$@"
+>>>>>> +    EOF
+>>>>>> +fi
+>>>>>> +
+>>>>>> +git p4-python3 >err
+>>>>>> +if ! grep 'valid commands' err
+>>>>>> +then
+>>>>>> +    skip_all=3D"skipping python3 git p4 tests; python3 not =
+available"
+>>>>>> +    test_done
+>>>>>> +fi
+>>>>>> +
+>>>>>> +test_expect_success 'start p4d' '
+>>>>>> +    start_p4d
+>>>>>> +'
+>>>>>> +
+>>>>>> +test_expect_success 'see if Perforce error with characters not =
+convertable to utf-8 will be processed correctly' '
+>>>>>> +    test_when_finished cleanup_git &&
+>>>>>> +    $python_target_binary "$TEST_DIRECTORY"/t9837/git-p4-error- =
+python3.py "$TEST_DIRECTORY"
+>>>>>> +'
+>>>>>> +
+>>>>>> +test_done
+>>>>>> diff --git a/t/t9837/git-p4-error-python3.py =
+b/t/t9837/git-p4-error- python3.py
+>>>>>> new file mode 100644
+>>>>>> index 00000000000..fb65aee386e
+>>>>>> --- /dev/null
+>>>>>> +++ b/t/t9837/git-p4-error-python3.py
+>>>>>> @@ -0,0 +1,15 @@
+>>>>>> +import os
+>>>>>> +import sys
+>>>>>> +from  importlib.machinery import SourceFileLoader
+>>>>>> +
+>>>>>> +def main():
+>>>>>> +    if len(sys.argv[1:]) !=3D 1:
+>>>>>> +        print("Expected test directory name")
+>>>>>> +
+>>>>>> +    gitp4_path =3D sys.argv[1] + "/../git-p4.py"
+>>>>>> +    gitp4 =3D SourceFileLoader("gitp4", =
+gitp4_path).load_module()
+>>>>>> +    gitp4.p4CmdList(["edit", b'\xFEfile'])
+>>>>>> +
+>>>>>> +if __name__ =3D=3D '__main__':
+>>>>>> +    main()
+>>>>>> +
+>>>>>>=20
+>>>>>> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+>>>>=20
+>>>=20
 
