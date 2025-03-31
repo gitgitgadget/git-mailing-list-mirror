@@ -1,70 +1,72 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B162AE8D
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 13:14:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF09D210F65
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 14:17:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743426859; cv=none; b=VMjCXjMgOugw2p3dTqcbk79b6mKuPpJoxjIwhe5V+HClsk2dWZN32dBuMarFGl11qkZjvZ38NOgF7F9stKQEtc5bpOFhOkAA1nY6qoAvwvBG0gf/8qBrRnMA3CLS5mKL5M4GFlnoKVqirhmLaIBrYcAOnlmQkoEK5ZX2h4/Hiuw=
+	t=1743430675; cv=none; b=Tw9E0atxX7nFDvPJmtI9T5tGWWuwvYgC0WF1eixKSMJtGF9HTStcSDR+hnh/Dr4TY8VmjxP0ZBfjNUINZyG8kX+Vbypf+1emEbplDUh1REW5matkX8g45Ww/zpJQj6ivx6y4B5gf5Mxoqeq1nqy3Tz3c7iAiAiVme/hmxGPt37s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743426859; c=relaxed/simple;
-	bh=iH9Rr8B+2JQ5OaW5o+9pKuCSgl58SoJ15/ILeypHsws=;
+	s=arc-20240116; t=1743430675; c=relaxed/simple;
+	bh=arpS8N4o35rh95HiMJXPNQRNjczbgCdnQ9xO4lgO50Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WRGbNxo9aD+veHYFl94O3KpJfeGZ9niVp9pC1yPAmjJbzxMm6wlSj7BSfRPM6mx+3fpFbsfyfSCBpUPFbwMUG48Jsu2/oXJRwwYOMbUZBe5WCYT9P5flF2N+jds4guY7XFVDm44fBhxktc//r2dETlILHZkRtdL09SV6FZPXD+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DU6C7wlz; arc=none smtp.client-ip=209.85.208.46
+	 Content-Type:Content-Disposition:In-Reply-To; b=DRE5Q/+gHvckpAdeXKZgwZR/B8wjkKz6U/TFLA20EYFaLeyXG2hpF2+IYlB7UZSnTy1dVqPfytcxifKAHRBDMrXiOAdtnIZ74fr3oaNXg+WQ5gb1G1Xj76OZiTyWOj7KgLuZBjApChjosp+eApFCxUmp6O03CV5HkZ1IU1dm3bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fmyp5AdQ; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DU6C7wlz"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5e5bc066283so7107243a12.0
-        for <git@vger.kernel.org>; Mon, 31 Mar 2025 06:14:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fmyp5AdQ"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-223fb0f619dso85391575ad.1
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 07:17:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743426855; x=1744031655; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=G69kMKdGF/+GOy/nRmm7b4worQOm4vmtsc9Q155zOEw=;
-        b=DU6C7wlzjDx77wxK2u9to+MYI9k2sAfEfBcen+euxx1SoqFbTERPO36QlJ37uvL52w
-         ewPWC3Hi+i7tYsFwgVbYCax+OkGaPSMrJi2Wc6Eq52gfA5xiqavvkwUTh3QWlFfLVZ5Z
-         ccpReP7I76joDiImypasG/S5wdQXOJvsvd+OJ5owH1WxzgOEl2hHIKRtVZ0EARaP1yug
-         CrxnGrPYSqJfK8T1Nly4NyoBIBf31krgfdq7rRYA0s5aDw33P6m8l5IMoNykY2D+sBy5
-         Hn1cuzqv6YedlZBH1/IPmje6kdN2QPLzoao7EWfpB6/3tXq3h8+kzsm5W36EAaasXZ6X
-         NH1A==
+        d=gmail.com; s=20230601; t=1743430673; x=1744035473; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=nskUr3+wpmajGVI7y+Xif1nCESUoYO0uhfjJ7QgRLLg=;
+        b=fmyp5AdQFSS2NC49U1icWhmkQ2+CvgXmXUpbQ3wBGIcRFZGGlJmPK73gBbJwph8kOz
+         SQHhhTq/cSJKoKnUMfDC0BUNucNc1vWCf9peSWpHfLVut+mPGBfdcF+OeXA2u4H4UR5x
+         asi29Fh40H0X+jDvJC5NeqzKW6Q5OHnriar55yLP0x01XPF+iwqwJt//PC9RqY0+uajG
+         cC6VLxGmTsvDHqBeV1AWqSkrw/YZw2dki09Q0YseWjmpVpR08xz/FLHhg2oTAriEvSz0
+         2N9TALwBTsk4lIF4SMae/OZo805gHl2najlwz5/NGq9DaWYKuzGHH4tROYR8dciQvC0C
+         KqDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743426855; x=1744031655;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G69kMKdGF/+GOy/nRmm7b4worQOm4vmtsc9Q155zOEw=;
-        b=vvFBDaB4Fri/UwUG0/IbKDo8etYR1OS/dnFy7JEjlkgEyJwvWS3tMUrvBIt8LIIjYF
-         4gquinrG/O5xhjeppg766FCcAI+SdVjy2QCYonKKkgOOu8aJ+0ryJVuczmzYb2HKzrCk
-         8GJD3Q69qZ91Z/Lu2+W90cnLKaZUKRd9slsMx9WkiAzduZqyrOd1Q81YkY/7/Oom5nai
-         mHwk5zV3WEUSZFPR2z4RRJcB7TS6q7s3uG8i56l7q9bU14NuMdUaQH4OwkhKs1Io9Wfo
-         mFIJc578J3REh3IS+TnbA2CKZEH747rQEEVg+okTtPjsj91hV+TTz3FwlnNuo/pm9VPZ
-         nh8A==
-X-Gm-Message-State: AOJu0Yx7zSIroZGAIbZ8QTyY4pNh303ob8dPmsUf33aqyr3HLqiwcsb9
-	rydK8g4xK23x+3tTUcdnzHczuA1HVpqtqnV6acRH7dJ8TZxdXk1U
-X-Gm-Gg: ASbGncs6gwR9nPlyLnZnnkqQhqGjGQ1JK6yKAsYNbeVd+i0YcC6MSUSE67osbuM76K+
-	yxyt345G5IeBCZAkq7yrrKf2fHAz5qzPDE0PECOJ9C5yUg8jZGoejJZyTFhbOlv4C3JddXhlEzU
-	NIrP1YUZcnwEMZiFjVJzj5hTsSBljZbqd387tO9k0RRGSlp22IzUS0de4b+ZKMwXLEGA9ht82we
-	CfWnRTgjbKz/zCASX6p0S52KFuetUMHcgUOxCSMMg4LtebGrjLUiJkPXLXPBWESGS+X6LVgC9U6
-	E4+lxmuEit7CXF0xSRErim1pUOKiywe1RodKR+jMG/M4k9mWdK4hzIqXOk1ClDWb77CskuXFcCA
-	=
-X-Google-Smtp-Source: AGHT+IEt5aIX5hgK7fGMy5n1h1wbFtFxkfXs68tFg8ZtnZPFa8D2b0E18ytl5EMeXXykVjUNSNHNSw==
-X-Received: by 2002:a05:6402:2753:b0:5ec:da2e:6f4d with SMTP id 4fb4d7f45d1cf-5edfd1572ebmr7098544a12.18.1743426854351;
-        Mon, 31 Mar 2025 06:14:14 -0700 (PDT)
-Received: from localhost (78-131-14-102.pool.digikabel.hu. [78.131.14.102])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5edc16ed61esm5611349a12.34.2025.03.31.06.14.13
+        d=1e100.net; s=20230601; t=1743430673; x=1744035473;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nskUr3+wpmajGVI7y+Xif1nCESUoYO0uhfjJ7QgRLLg=;
+        b=ClD4Djfa0/wvRH4n05/eCkSOw47eYDrXO2MdKq5lD8sIOEcL9XNzu/i5XeBA86r4bd
+         +vVOhmHWG6WL+vXZtlymacl/uahySe6siqPdtBbzUdM8mjrHO59jSI5Mh6tHiP+rgHO1
+         vH9866kqSgR7eqkTEjTH6YCWrAKMIHXuK8M/l+/PSSLVJLreTqW+n76ulWaIQ4o8Obga
+         8U6ndX14qIb3zAkQCAdQLX6aKnlvhaCbxZQuYiYbVMKeAhGvc08zWXXndrbLG++jI+ii
+         wJVl9UAdCAYulps4UB7bLxpbjkldKO8Fi2VigTWgTOvi9ujCTYg+D5Jw4B7xr1CpwcrS
+         ev3Q==
+X-Gm-Message-State: AOJu0YwjdtJ70CjeJL9EQP+AweGCPEYZDGXy5S8XctruroMretu05OTJ
+	PxSapxTMcq9tBLMQ6Hc8b5tDFXumocFYohVQjXKe7DeU7gxQ+rUM
+X-Gm-Gg: ASbGncvS0MQAtS86wAOA74KYr0v2Yt9KNahvhZD2d+qGWTehW6YnVoGzums4CvjhWAu
+	MIlLLFeIoaGq1WCCwcoYbsXL/7xgAzFmSrKVLTaF3IYUmHp6OETsrTpEVzpYQo5efA21fDDTEjg
+	GOE1Rcov3nhcjj3Dgs0F5mK6LpGiHZuEL8pSZmHDpk/Zov4vMgYth2ZzyNMtNg28aLV7r4OxhuH
+	1Mlq5Br8XqUgyZQAmmZ0/lC5ZNP/slzDFbBgBo84G0wPzvaYGe7K70UBfIG1Gtjk9vXqwLCn3Iv
+	Rh4efqQKAJhxi0Wyhnhhyp8/mXXQmxOOd+Mapn0J
+X-Google-Smtp-Source: AGHT+IHTqM55EGeYG8dlx1NIxQ4VlCO+OEe36wj7DaL0ZzbWWvQ+ZFnP4rtvUZzfv1gin/LtuaLW7A==
+X-Received: by 2002:a17:903:2f85:b0:223:501c:7576 with SMTP id d9443c01a7336-2292f95d080mr147242805ad.12.1743430672786;
+        Mon, 31 Mar 2025 07:17:52 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-2291eee20fesm69761105ad.82.2025.03.31.07.17.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Mar 2025 06:14:13 -0700 (PDT)
-Date: Mon, 31 Mar 2025 15:14:12 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/1] Allow cloning from repositories owned by another user
-Message-ID: <Z+qVJPQ17urm06QN@szeder.dev>
-References: <20241115005404.3747302-1-sandals@crustytoothpaste.net>
- <20241115005404.3747302-2-sandals@crustytoothpaste.net>
+        Mon, 31 Mar 2025 07:17:51 -0700 (PDT)
+Date: Mon, 31 Mar 2025 22:17:58 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Ayush Chandekar <ayu.chandekar@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com,
+	christian.couder@gmail.com, shyamthakkar001@gmail.com
+Subject: Re: [GSOC] [PROPOSAL V1]: =?utf-8?Q?Refact?=
+ =?utf-8?Q?oring_in_order_to_reduce_Git=E2=80=99s?= global state
+Message-ID: <Z-qkFmc9xJXXTzut@ArchLinux>
+References: <20250326052602.265989-1-ayu.chandekar@gmail.com>
+ <Z-ae2l6fkurPNuPe@ArchLinux>
+ <CAE7as+b8qZFEcaH9eJcQnuhZOSW+hfAMiPUBXNPj9x1L7rcXVg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,102 +75,118 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241115005404.3747302-2-sandals@crustytoothpaste.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAE7as+b8qZFEcaH9eJcQnuhZOSW+hfAMiPUBXNPj9x1L7rcXVg@mail.gmail.com>
 
-On Fri, Nov 15, 2024 at 12:54:04AM +0000, brian m. carlson wrote:
-> Historically, Git has allowed users to clone from an untrusted
-> repository, and we have documented that this is safe to do so:
+On Sat, Mar 29, 2025 at 03:24:05PM +0530, Ayush Chandekar wrote:
+
+[snip]
+
+> > > One key challenge is determining which variables should be part of
+> > > `repo_settings` and which should remain separate. While working on the patch to
+> > > refactor access to `core.attributesfile`, I received feedback from Junio that not
+> > > all global variables should be blindly moved into the `repo_settings` struct.
+> > > This reinforced the need to carefully assess which variables belong in `repo_settings`
+> > > and which should be handled differently.
+> > >
+> >
+> > Yes, this is correct. I somehow think whether we should put this
+> > paragraph into Pre-GSoC part? I think that you have found this when
+> > adding a patch to remove one global variable. And thus by communicating
+> > with the community, you have further understood that the requirement and
+> > the detail of this project.
 > 
->     `upload-pack` tries to avoid any dangerous configuration options or
->     hooks from the repository it's serving, making it safe to clone an
->     untrusted directory and run commands on the resulting clone.
+> Yep, since I encountered this while working on the patch, it fits well
+> in the Pre-GSoC section.
+> Moving it there would better show how I learned more about the
+> project's scope through
+> community feedback.
 > 
-> However, this was broken by f4aa8c8bb1 ("fetch/clone: detect dubious
-> ownership of local repositories", 2024-04-10) in an attempt to make
-> things more secure.  That change resulted in a variety of problems when
-> cloning locally and over SSH, but it did not change the stated security
-> boundary.  Because the security boundary has not changed, it is safe to
-> adjust part of the code that patch introduced.
+
+Yes, this is my intention. This represents your ability where you
+interact with the community and get feedback. And this is what we want
+to see.
+
+> >
+> > And in your plan, you should just say that we need to do this. Would
+> > this be better?
+> >
+> So, I should remove all the categorization stuff and just say that I
+> would focus on
+> each variable, discuss in the community whether it should belong in the struct
+> repo_settings/repo or not while sending patches?
+
+I think you should put the categorization stuff into after-GSoC part.
+Well, I don't think you could focus on _each_ variable. This is
+impossible for you to talk about the way for _each_ variable. I somehow
+think that you could just write the proposal about how to handle one or
+two global variables.
+
+You already touch one setting "core.attributesfile" right? You may just
+elaborate more in the proposal.
+
+> I felt that keeping it general might seem vague, but that's the nature
+> of the project. Every variable
+> is unique and would need a different approach and outlining the
+> approach of each variable
+> in the proposal is not very feasible, as these decisions need to
+> happen collaboratively through
+> discussions in the community.
 > 
-> To do that and restore the previous functionality, adjust enter_repo to
-> take two flags instead of one.
+
+Yes, so you could firstly give how you want to handle the global
+variables from top. And give some concrete examples to demonstrate your
+idea.
+
+> Should I still mention that once the project is complete, we could
+> consider structuring related
+> stuff if the community sees value in it.
 > 
-> The two bits are
+
+You could, mention this in after GSoC part.
+
+> > > This plan is flexible and may be refined through multiple iterations as I receive
+> > > feedback from the community and reviewers.
+> > >
+> > > Timeline:
+> > > ---------
+> > >
+> > > Pre-GSOC:
+> > > (Until 8 May)
+> > > -     Explore the codebase more, focusing on environment-related code paths.
+> > > -     Document how each global variable is used and how it can be moved to
+> > >       repository settings.
+> > > -     Study Git’s Coding Guidelines and the Pro Git Book to align with best practices.
+> > >
+> > > ----------
+> > >
+> > > Community Bonding:
+> > > (May 8 - June 1)
+> > > -     Engage with mentors to discuss different environment variables, their
+> > >       dependencies, and the best approach for refactoring.
+> > > -     Finalize an implementation plan based on discussions.
+> > > -     Since I will be on summer vacation, I can start coding early and make progress
+> > >       on the project.
+> > >
+> > > ----------
+> > >
+> > > Coding Period:
+> > > (June 2 - August 25)
+> > > -     Refactor global variables, replacing them with repository-scoped
+> > >       configurations.
+> > > -     Modify function signatures to pass `struct repository` explicitly instead
+> > >       of relying on `the_repository`.
+> > > -     Categorize variables into specialized structs to improve modularity and
+> > >       maintainability.
+> >
+> > As I have said, this is a high-risk task. Categorization needs many
+> > iterations. And we may do this after GSoC.
 > 
->  - ENTER_REPO_STRICT: callers that require exact paths (as opposed
->    to allowing known suffixes like ".git", ".git/.git" to be
->    omitted) can set this bit.  Corresponds to the "strict" parameter
->    that the flags word replaces.
+> Yep, will update that.
 > 
->  - ENTER_REPO_ANY_OWNER_OK: callers that are willing to run without
->    ownership check can set this bit.
+> Thanks for your review, again:)
 > 
-> The former is --strict-paths option of "git daemon".  The latter is
-> set only by upload-pack, which honors the claimed security boundary.
-> 
-> Note that local clones across ownership boundaries require --no-local so
-> that upload-pack is used.  Document this fact in the manual page and
-> provide an example.
-> 
-> This patch was based on one written by Junio C Hamano.
+> Ayush
 
-
-> diff --git a/t/t5605-clone-local.sh b/t/t5605-clone-local.sh
-> index d9a320abd2..286099390c 100755
-> --- a/t/t5605-clone-local.sh
-> +++ b/t/t5605-clone-local.sh
-> @@ -154,6 +154,16 @@ test_expect_success 'cloning a local path with --no-local does not hardlink' '
->  	! repo_is_hardlinked force-nonlocal
->  '
->  
-> +test_expect_success 'cloning a local path with --no-local from a different user succeeds' '
-> +	git clone --upload-pack="GIT_TEST_ASSUME_DIFFERENT_OWNER=true git-upload-pack" \
-> +		--no-local a nonlocal-otheruser 2>err &&
-> +	! repo_is_hardlinked nonlocal-otheruser &&
-> +	# Verify that this is a git repository.
-> +	git -C nonlocal-otheruser rev-parse --show-toplevel &&
-> +	! test_grep "detected dubious ownership" err
-> +
-> +'
-
-This test succeeds without checking everything it is supposed to:
-
-  + git clone --upload-pack=GIT_TEST_ASSUME_DIFFERENT_OWNER=true git-upload-pack --no-local a nonlocal-otheruser
-  + repo_is_hardlinked nonlocal-otheruser
-  + find nonlocal-otheruser/objects -type f -links 1
-  find: 'nonlocal-otheruser/objects': No such file or directory
-  + git -C nonlocal-otheruser rev-parse --show-toplevel
-  /home/szeder/src/git/t/trash directory.t5605-clone-local/nonlocal-otheruser
-  + test_grep detected dubious ownership err
-  error: 'grep detected dubious ownership err' didn't find a match in:
-  Cloning into 'nonlocal-otheruser'...
-  warning: remote HEAD refers to nonexistent ref, unable to checkout
-  ok 21 - cloning a local path with --no-local from a different user succeeds
-
-The 'repo_is_hardlinked' helper function expects the path to the .git
-directory as parameter, but in this case it gets the top-level path of
-the repository instead, which results in 'find' rightfully complaining
-about the non-existing 'objects' directory.  Thanks to the &&-chain in
-'repo_is_hardlinked' this error then causes the helper function to
-return with non-zero error code, just what this test case expected.
-
-All other tests using this helper function create bare clones, and
-they all pass the right path as parameter.
-
-The trivial fix would be to either use a bare clone in this test as
-well, or to pass the right path to 'repo_is_hardlinked', i.e. the path
-to the '.git' directory.
-
-The right fix, in my opinion, is to teach 'repo_is_hardlinked' a
-negation parameter, so tests expecting the repo to be not hardlinked
-could invoke it as 'repo_is_hardlinked ! <path>'.  An error from
-'find' within the helper function should then always result in an
-error of the helper function, i.e. both with and without that '!'
-parameter.
-
-Furthermore, this test should use 'test_grep ! ...' instead of '!
-test_grep ...', so we don't get that misleading error message in the
-test's output.
-
-And there is a stray empty line at the end of the test as well.
-
+Thanks,
+Jialuo
