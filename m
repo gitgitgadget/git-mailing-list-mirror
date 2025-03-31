@@ -1,140 +1,133 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F1D1C3F0C
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 07:27:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CA11C5D7D
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 07:34:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743406046; cv=none; b=VWC/P/bj33gzvVA8QkmMQnx6PlqIi1q9OaTL8ZOyQY1qgPN0XTM1HQTMliK4N7Lwoid2GX4LbGKoaAtbSkBuJJWjUcpdIz7lLIADMCGLIOZEcM2jqzAwJd0MK0ApmWpLkQBA3Xx+J71oLehC9XTE9/Ui0iI3+8mznJTUxgxZCHQ=
+	t=1743406498; cv=none; b=Ay+M3v+Rm/pJPc8hdnoyecxACPNn3W/EjKiSIcNZ9RlfrlQ0ZjFrv5Fo9+cUVBszJXWd2OMoK+9Y+9cF9RYSLZ/yaSDowpS2VlfVwF7hcFqQP+UpjQdMMQ+/pbqSSY6B0C+S9P8763p0I1dor4cuunmoOchbkWy528mSpkzDhIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743406046; c=relaxed/simple;
-	bh=9v9lVt2dHhKS0t2IoPLtfCQ4eZBXCESIEUAcTyZ8Sjw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mSvTbsE42jR+k4rTDi7Ntq5lI1fYEkt6Af0EkQyX6Fn/xEAbuvkB4ituYNHTqmq4iCcroJu7jeQJ8MGI7lQKR5kWepmCakbIU1JJ0r2LkuBq5ooUpIZGCoBwchyZm+25cv0mE97HLw+FiAherNjCKkyCg+/5Jj83RQ6I66ygoLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=X9bB4De/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NUJSOp/0; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1743406498; c=relaxed/simple;
+	bh=gzmyhE32V7ywoV2bpNWXhMHLy8VkAWAKgrpdWYMhAz8=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fC2QoT8w3L20Vmc6XBkigBHXW2XDJvdnbJcLhL+CWjU3Vhm0d8GNPhr960a+Ng8tvlzPEn542MdAYM6Yv5NaOymUKZJS8lTSX4HYUni5L95R7hGA+f9dp2YQA6LTrq0XUzZYZoguENQg8XExRsbpDKuglCYWX9CLmpeA6u9EEJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hhPLuaQF; arc=none smtp.client-ip=209.85.221.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="X9bB4De/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NUJSOp/0"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9508011401A4;
-	Mon, 31 Mar 2025 03:27:23 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 31 Mar 2025 03:27:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1743406043; x=1743492443; bh=7ZAfdeDqX7
-	i0sIvhnJcYhmSmF6poz4sP/BoZDu8Q3X4=; b=X9bB4De/7A9LmvpmfWv6mtlylZ
-	dN6DEtiSWDowDMAiWKJ/eYgejtpT381V3rVK6CMnoutBILn+a09rVc2HrpelS54s
-	mDYf4khdNdQQuT2Of2/RIZlp0pIP0RBLbiCIdMIKZYxCskk4IqrZepS+94oNVYEK
-	oPGC0hmJ0judpgB47ASoBZUj61LhM53jmAIkmn4da8p4A+u+p7YhxFoGZCsd/wiv
-	BNg6Gr9cm/O5JiqhO6mOCGHsZJYxAxH/r5AmZ8NNTpX7ThoP0LChV/k9V0SG6rr7
-	fLBG8cevrIryMNcuqO+iIP7zJwOvZfiyaTG7uH2nQqmrx65lQNmxSsmL3/HQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743406043; x=1743492443; bh=7ZAfdeDqX7i0sIvhnJcYhmSmF6poz4sP/Bo
-	ZDu8Q3X4=; b=NUJSOp/0aUrq2Z4eLmMq1qnLlhix8qpJU7iNcMviE3V+1ByQJ1S
-	Hz8JNDLODDkybAlwZBOL5odRh/qblGgZqs/bXrUBLTldfhigIqVkbRZ+UGgue9sv
-	zLz142IhijuAkR1+atgQE8EEVYG7uBMUWIPJ4HsGerZ5Q6HKIH7qlh5VaFYLJGht
-	pD6DY6M6qiAzRiQIhsPoTRKRxl+iJe8eBARj+STmEJ5yncvrt2UKGVp/UqUHRTY+
-	BpI8ga9ua+yaQubTgAD+HChaFZigtGwDVp+EP0hl3ueQSWD5FsfZABdOJlIPIpwu
-	Biqs9xxXT20OtFd04JLBnWFu/+xxrVTHsDA==
-X-ME-Sender: <xms:20PqZ2eCHWEqvokBr-HPsITHP8QxCmH_zDFbp46t6qBAVF3VUwWQUg>
-    <xme:20PqZwMso61HL_deplIUg8siwqpSgNBxsm8J2yY6PzBdIFT6adfZYpBTWbxTkkn68
-    kiTE6p5J7H04Ys78A>
-X-ME-Received: <xmr:20PqZ3jHKKzA8vdSOeByBdQY39fe6lotErmyFLkVXKgnVYKnRv5ukOa5OWDUzCE6EJ7PZeVEvn2E1gPqeVb7nnhbXb3hBUpwYTSFCDLpI1HvC6WC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeelfedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepvhguhigvsehgihhthhhusgdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhg
-    ihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtoheplhgvvhhrrghiphhhih
-    hlihhpphgvsghlrghinhesghhmrghilhdrtghomhdprhgtphhtthhopehnvggvrhgrjhhs
-    ihesmhhitghrohhsohhfthdrtghomh
-X-ME-Proxy: <xmx:20PqZz8qFiiYiTGUC978wmwq_ce8_jyHJFewJdgs5mLyszk51qWNcw>
-    <xmx:20PqZytbvMt9JGEJ-B0ht4W30P8eZKW_nOX8BqQwEjhlPltvf1Fz5A>
-    <xmx:20PqZ6EPps-kA8ZmsP5A6DzOb1sunMruuNXGe2nN94E7JCqJjCGp1w>
-    <xmx:20PqZxPfyBSv4OzVqn2vTvvB29ldrm52oW2_5-ll7j_Mynf32v8Q1g>
-    <xmx:20PqZ0W38K1fZKMrvU2lqNpTmJsV2SzN4f2necfRZp-w73TEq57BEUMk>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Mar 2025 03:27:22 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0df0557a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Mar 2025 07:27:22 +0000 (UTC)
-Date: Mon, 31 Mar 2025 09:27:21 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-	Neeraj Singh <neerajsi@microsoft.com>,
-	Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH 2/2] p9210: fix 'scalar clone' when running from a
- detached HEAD
-Message-ID: <Z-pD2aeCJ6yp9XBN@pks.im>
-References: <pull.1936.git.git.1743181669.gitgitgadget@gmail.com>
- <1092c32609f249839453052ca802cb10256cb48f.1743181669.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hhPLuaQF"
+Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-5240a432462so3938669e0c.1
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 00:34:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743406496; x=1744011296; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wukoIwuPK04vpk7kHGBk0r8vhW/lFtgPqX088tL+RnE=;
+        b=hhPLuaQFDxyif5L7mtLZKDC024fjtjrBDt1Axz5qjTzVy4O29QmqGcCLIQIsnemNtV
+         AZOheIoQGbDYhmiLDQasBFLs7vT4rKDyyTwb17rs3MuAJ1VELHpSZDHHgm6iBB2iFWYr
+         dlwx0KoxAOL0UzGfmV41Rh3RG74JzEV5ZonlcHTP+sApirTJmY7fXQJr4A1/78q8tN2N
+         aPj5ffyXuFIx6DkR6++l3IWM5HmJ/DTEz9q4EweYghVZquLioHz6++XbDJkSOAx3AZc4
+         pf/44FhH8DQjJk34uqAiAK3W27FSiIQ2xOzw43pWw6QgGmyU045ONwPLal+05vpjpSzh
+         ze6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743406496; x=1744011296;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wukoIwuPK04vpk7kHGBk0r8vhW/lFtgPqX088tL+RnE=;
+        b=CFHkRiwHlBg2JexNw7sQlkt72eOA88wYvbvnKQXmwhADjydTHvMZ4NlJA/dLkJMRLf
+         K3Ko4Bthh/6iGUNet3UgnnL5Wxj1sh2mpFvboxKXiJl5xMk52gp3QVwYiJeD7TfmVm9l
+         pRUJAZzFzeLZvfxk7uWjF3epPsj3RE5sAV9VgAlyLrZfVvqO1YNWUmDGhAUItB4MwTis
+         wLQZi7BLxiaK6Hg+aE4mGok/zh1paXchsXLsgVet39zryN49TLEGf7hCCEn9xeGjt3TG
+         WDJicidChcGs7o7GSot0F2xvsipW3wpP2kCH0BZ5HvgJCxHTUju+XYLYgLGTa+9kjE2D
+         397w==
+X-Forwarded-Encrypted: i=1; AJvYcCXWdV/r9/YaONG66opUSfUmcVj7XQaXPDr6u7waCU5R4bmC5sLShhhoqnaOYtx00K6S1XQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxs7F2FLI7O9XbE6A+wj6CnLuA5gzRqNtaZQOaiL76xBg7SKDBn
+	GMWeMy4sQugzOUk4seref6SLYAJrRqLRfJp+jGx5qtoRhzS8PksSAxQT5cpuRCjllihH0xRrlGa
+	p16cpLEX5j9ttEt1Cvrp5i5yL8z4=
+X-Gm-Gg: ASbGncsZclEYcWvbSVq7G5UoeyVVslMnGYNVsF2YEIphTeOEW1UNsX//jkKUKdmNtqS
+	3pAATfieDhou0TdhOetnyFJtT9pUuu611aP82nYwiDOgS3ssZK4TBxDLB7EYOAU90yxdJja0o+A
+	9dlDIqQkwW7NAM5IuJt5xnlvVD9pN3ORI0e+fOMEASrW/17czm27dj93SCq+I/P+p7KBNZ+w==
+X-Google-Smtp-Source: AGHT+IHLnZYFJcnlDIAp+CU32XH0+4IN7dz2sIu8RjuZNa173Qaq8Sv75gy4y3fFFHdD/2FQ0YhQQMKM4lVMIi5qrOY=
+X-Received: by 2002:a05:6122:2105:b0:523:6eef:af62 with SMTP id
+ 71dfb90a1353d-52610c95f95mr5964867e0c.4.1743406495706; Mon, 31 Mar 2025
+ 00:34:55 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 31 Mar 2025 00:34:54 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <Z-o-suJAfu5yc2AW@pks.im>
+References: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
+ <20250330204339.191382-1-karthik.188@gmail.com> <Z-o-suJAfu5yc2AW@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1092c32609f249839453052ca802cb10256cb48f.1743181669.git.gitgitgadget@gmail.com>
+Date: Mon, 31 Mar 2025 00:34:54 -0700
+X-Gm-Features: AQ5f1Jo40csqwjobzPg-rGseKLwNkshWotxd8geSVy4g6aLvTNCk_ORQMQ2gRtk
+Message-ID: <CAOLa=ZTxjgdndbFHOC9dwxbjo6hUyrmyddGH1uhS0WYOSpY=fA@mail.gmail.com>
+Subject: Re: [PATCH v4] blame: print unblamable and ignored commits in
+ porcelain mode
+To: Patrick Steinhardt <ps@pks.im>
+Cc: chriscool@tuxfamily.org, git@vger.kernel.org, jltobler@gmail.com, 
+	gitster@pobox.com, phillip.wood123@gmail.com, sunshine@sunshineco.com, 
+	Toon Claes <toon@iotcl.com>
+Content-Type: multipart/mixed; boundary="000000000000e05d1f06319e749d"
 
-On Fri, Mar 28, 2025 at 05:07:49PM +0000, Philippe Blain via GitGitGadget wrote:
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
-> 
-> In p9210-scalar-clone.sh, we test using 'scalar clone' to clone
-> $GIT_PERF_LARGE_REPO (copied locally as 'to-clone'), which defaults to
-> the git.git checkout we are running the test from.
-> 
-> When --branch is not specified (as in this test), 'scalar clone' tries
-> to get the default branch of the remote repository by parsing the output
-> of 'git ls-remote --symref $URL HEAD', as implemented in
-> scalar.c:remote_default_branch. When the git.git checkout we are running
-> the test from is in detached HEAD, this fails and we fall back to using
-> the name of the currently checked out branch in the newly initialized
-> repository, which in this case is the value returned earlier in
-> cmd_clone by repo_default_branch_name.
-> 
-> We then invoke 'git checkout -t origin/$branch', with $branch being the
-> name we got from remote_default_branch. This invocation fails if
-> '$branch' does not exist as a branch in the current git.git checkout.
-> 
-> Fix this by creating a local branch in 'to-clone' in the setup test
-> "enable server-side partial clone", making sure to use '-B' in case a
-> branch named 'test-branch' already exists.
-> 
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> ---
->  t/perf/p9210-scalar.sh | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/t/perf/p9210-scalar.sh b/t/perf/p9210-scalar.sh
-> index 265f7cd1fe2..56b075e906e 100755
-> --- a/t/perf/p9210-scalar.sh
-> +++ b/t/perf/p9210-scalar.sh
-> @@ -7,7 +7,8 @@ test_perf_large_repo "$TRASH_DIRECTORY/to-clone"
->  
->  test_expect_success 'enable server-side partial clone' '
->  	git -C to-clone config uploadpack.allowFilter true &&
-> -	git -C to-clone config uploadpack.allowAnySHA1InWant true
-> +	git -C to-clone config uploadpack.allowAnySHA1InWant true &&
-> +	git -C to-clone checkout -B test-branch
->  '
+--000000000000e05d1f06319e749d
+Content-Type: text/plain; charset="UTF-8"
 
-This feels like an easy and pragmatic fix. Thanks!
+Patrick Steinhardt <ps@pks.im> writes:
 
-Patrick
+> On Sun, Mar 30, 2025 at 10:43:39PM +0200, Karthik Nayak wrote:
+>> diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
+>> index 370b768149..50a0a7ca4a 100755
+>> --- a/t/t8013-blame-ignore-revs.sh
+>> +++ b/t/t8013-blame-ignore-revs.sh
+>> @@ -158,6 +158,21 @@ test_expect_success mark_unblamable_lines '
+>>  	test_cmp expect actual
+>>  '
+>>
+>> +for opt in --porcelain --line-porcelain
+>> +do
+>> +	test_expect_success "mark_unblamable_lines with $opt" '
+>> +		sha=$(git rev-parse Y) &&
+>> +
+>> +		git -c blame.markUnblamableLines=false blame $opt --ignore-rev Y file >raw &&
+>> +		sed -e "s/^\ty3/unblamable\n&/" raw >expect &&
+>> +		cp expect raw &&
+>> +		sed -e "s/^\ty4/unblamable\n&/" raw >expect &&
+>
+> The intent here is to do two replacements in "raw", right? You can do
+> this with a single call to sed(1) by chaining "-e":
+>
+> 	git -c blame.markUnblamableLines=false blame $opt --ignore-rev Y file >raw &&
+> 	sed -e "s/^\ty3/unblamable\n&/" \
+>         -e "s/^\ty4/unblamable\n&/" raw >expect &&
+>
+> Patrick
+
+Nice, I first tried to use `-i`, but seems like that doesn't work with
+the 'sed' shipped in OSX. Didn't know I could chain it. This makes it
+cleaner.
+
+--000000000000e05d1f06319e749d
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: fbed3844595d3cce_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mcVJad1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNEFlQy85NkJrMEQ0UzcxcUpLaWoyZEJiOU1WUnJKTwprNk8rRHBnRVRB
+dnlDWHJ6dEN2VDVSUDVNdUlBY3BCMGxvL1pmL3ZSWlZiRkZrUEpMUHNnTkhmY1cwRUtJSGhICmVP
+Wk9NbWZSMm56bmZNaTVJczR4Z0lwOXJETHFIMjh5aGhxTVcyTUxCY0hwSzF1aEFhMWdDcWFMSkE4
+TjMwSjMKcXA2S1ExcWoxdS85WXA3MEwvaVUvdFl6M2VYR0x5V3dYNWRTWXdGME9teFR2aVBXMWJS
+QTdObWQxb09lU2R6ZgpGa2t1bnN5YlMydlRJT2RUTlh4ajJ0RmpTb2doNXRnUUl3NFZhUU9kUWND
+S3dpcnNRK0p4VTNHK2lsZEorekswCml6SWt0T3ByL1FPMHFjOGM1NzNtZ0kwZ2h0SzlyMUx0TGU0
+NXVMMTFWZFJvQ0FvVklBL2NRSGFwdFFxNU5MSUgKUGxZV3hNc3AvVTFTNVRYdnF3SkQxQWEwZkRz
+YVM5NTRjZzFsMmdiS3JYajlFWERFTDNtQ1p3VjRvV2tTZGJJSwpBSk5EUEU2NEFwVnIwd1dmWVg3
+UkZtellUeFl1RFRwZ0ljK1BxOFkxaFN1cGRFSXJDM0tLTlJFL1ZnSFRLclNFCmlJRmxGRU84OUla
+SHFsS3BGaG1jNlV3QUlUVHQ4dmZ2T0owVU5lQT0KPXd4VVoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000e05d1f06319e749d--
