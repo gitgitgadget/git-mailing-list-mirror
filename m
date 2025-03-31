@@ -1,138 +1,164 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859E027468
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 15:48:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35ED211476
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 15:51:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743436142; cv=none; b=BE+6ixxap2jBTKeA/+421uJzuQTxwM/RWB1+dRqIzXd4deWemoHf0VohyZl5bhGvS7ogsh7MIDJBIast7H954kaw48zm+fwfrgh1qOgMz5zYoBbvsNcYVcqka1CE/bAbxq/R3B79LWEi2MLdYSFZF2BzO0A7E7BGByAfUrWFq/A=
+	t=1743436285; cv=none; b=jyUZ/kSC6mqGs8DjyQP6GMEq9fGSe6nAsuJsKOA7V7GVJ6/mxooJUj3Oes5dfSLUS9os+xzGWQRQH8VukN3/ZW6teQ1az4SDCDcoj42AXgnRiin5wT771up/qSWB7Ux/1II3UL97T164u40pHrbjAP7qbdNA5pQKKDtdtRhBBe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743436142; c=relaxed/simple;
-	bh=85AH0m0W4WN2IXSFcot1H5Fape6P8a1Vi3awj1mXads=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=noqrMmuvwnlxhPczdLvr2jfuE2BdtvIAF9ISg9H1QG8FCYGeNqxfvJNZ6o1gGI8N7gRnYSietX1cJvQmdCwDbwsUqryhfCKKB9Jg0sis6oHm6g2jNMhbEBDsbLjf5KXre7NMF9Ko3oZa3Js+GBcDV+UTGddxNWbRfq2B2qpqWp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fpAiKrCy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PENGewzF; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1743436285; c=relaxed/simple;
+	bh=SnVsrapYf3xhl6HR3ACZzAiHCFp4p5k4HKn4OYJu28k=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=cA3ffyhhvuNvmqnACQ1a/y8odoXAFTIsJIRcHUYGdGrYS+LuSr2h7UxVk0OmdZfUJvfPbobBkInmEIiBYO5IDdkNP7jOKeYjsjrk0dgsnw7M5hs+7NrSOQry3OyyJeJA9w7rbROVGuhpJAukcxWPvuNPaTN9VkWOUP8ltGAs9Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kfCgZDAL; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fpAiKrCy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PENGewzF"
-Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8C11325401DD;
-	Mon, 31 Mar 2025 11:48:58 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-13.internal (MEProxy); Mon, 31 Mar 2025 11:48:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1743436138; x=1743522538; bh=0ZXTqzJW6L
-	rlHbASRfaR4kTnlcxWPjBywyXULCZkYjQ=; b=fpAiKrCy/F9owxDpplvAUqGNkr
-	6hZSOYodZfA4DVToqFUw2qTjrCff89abcQ1zijWgUyYxmbOE+E+Wh/23vEJYC2t9
-	UHvyDdLQ0H1qhn2BmFlmaC+84V+StKJTi7WuqRfojUyg6luNFNVStVRVXmAeEL2E
-	qBSae/5OQEPIFP+RGGTvAOws549/UqSDWOK4B2foCrdMW/OuWnjcGt4IvjYT1FoQ
-	eEDmfuTcxv9lHYc5QHTstaKmSdttmJDeuD5eiEILCB0maxHjPxzUCnTBjqCVzv5U
-	XoWwa/dL2PY1tquFPO2OzGFdPzJqBDmzXZGy9Gl4lrqA2Nh+Ot52KrxoEwDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743436138; x=1743522538; bh=0ZXTqzJW6LrlHbASRfaR4kTnlcxWPjBywyX
-	ULCZkYjQ=; b=PENGewzFWipQtt9z0TDB74PEQo6JJTpaPqxEmygITFZ53G89/MQ
-	7pGQERQWnknjj+sudUXP23cd1kAFa164vIPc8iSbdmIAOexSq4/O2H0fTJQhbaeD
-	3MEtVxkLK+J4sQKsacemRFf8S/J+oCWqrRK51ueepWU1YBEtUFQv7XgKaOoeQ+7S
-	dxTmzAR+CzowP9rAelfgfbwhf50sRhr5Gakp7zJcvntlo0ZyD8grrDCff20wrMos
-	i1t0NjHTM87BKrSJT/NSh0g+6F6Zh/gzxU3Gsa4kkzGJxbIUz9eA/QJ+HzhgOMry
-	Hw/JTYtmqHW98vHDLdH5YIiqNjFEzu/JXkw==
-X-ME-Sender: <xms:arnqZ2utB1fNsY_LUiKbTMElvGPmplpMtg0IpWj2tCP4WPljhO1CmA>
-    <xme:arnqZ7cUreTaP-_Z7Bj0StjkEJZ8icFCPGmfkAamr5b0y9vF94MPG7J8tthbAlk-R
-    GJcCwW30DUxjOTlcQ>
-X-ME-Received: <xmr:arnqZxyUYqAT7ZqLXBS7YbEzt8DFvm8DFCQYEA-HSzorokdD1-xes8YVr2OFh6eGMoBROZMIwzJsPq9FBZ0z8S8bUbRzvX2WXhFSGqFPda4WHLe874BY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukedtfedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomhepvfhougguucgkuhhllhhinhhgvghruceothhmiiesphhosghogidrtg
-    homheqnecuggftrfgrthhtvghrnhepgeeuveeiffdufeffgeevtefgvdduteffveefffej
-    ieehtedvveffhedvfeekgeeknecuffhomhgrihhnpehfvgguohhrrghprhhojhgvtghtrd
-    horhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    thhmiiesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehglhgruhgsihht
-    iiesphhhhihsihhkrdhfuhdqsggvrhhlihhnrdguvgdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgt
-    ohhm
-X-ME-Proxy: <xmx:arnqZxOkvfHMNnMNop9LTnz3eOkVb7LIU4phRzniP2h8lh_fC98uXA>
-    <xmx:arnqZ2-y70YvT7B4eC3tpZMJYbNcQOA5hGF9JN1Ufuk3VNMqjkMTKA>
-    <xmx:arnqZ5VPmc8dzZ4NempC5C5oRWxCAJNsPQAPquSH28Rj_fYukKDSRw>
-    <xmx:arnqZ_dRwCdD5AJi9cUiKMMvkxSoJ2tt7u8tZUAGzTfuxZsls9ciUQ>
-    <xmx:arnqZ6aIVynhJaVvGrQIyy2GhAt9hmZo-B9epZBqXgHkIk1oUkoAyqDY>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Mar 2025 11:48:57 -0400 (EDT)
-Date: Mon, 31 Mar 2025 11:48:56 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>
-Subject: Re: Testsuite failure on s390x and sparc64 after 6840fe9ee2
-Message-ID: <Z-q5aOIahoUKSyBi@teonanacatl.net>
-References: <89257ab82cd60d135cce02d51eacee7ec35c1c37.camel@physik.fu-berlin.de>
- <Z-R_Zmr6kxCPLm-O@teonanacatl.net>
- <Z-Zr7BZL1UGqVxKu@pks.im>
- <4276c8d0b72f11f325482756d3bc251327d0ac47.camel@physik.fu-berlin.de>
- <Z-atRMGXHilZRTEL@teonanacatl.net>
- <Z-bCNdOOLrM2Chb8@teonanacatl.net>
- <Z-qKGqpbdaW9WCrP@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kfCgZDAL"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-39141ffa9fcso4446495f8f.0
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:51:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743436282; x=1744041082; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=xx9ros77PsXrq4rkgJUmAG5OVhoDykGXFMocpGM28QM=;
+        b=kfCgZDALFf5118l223/xFLa71i7W5fxFqRa90V2vcDTeu04IxJcs13ix04s6p0rA0R
+         Bht33Ah2bPk3embSuu4XtnvG1lJ0eGcav2W+tuGIjDMaIHFi5I3qBEAuo9aIURN0jmEG
+         x4rM8P70+U72chrRhWdWkejMRpGHzgQcG76L5eKSsUGTQujjjeZaq4FX9JKx/FDW+2MF
+         awP7dX8k0BQvuAVKNa5UmOM5Ho7GvsclXssVNFsyZ3BZFDUMoD5HrpKiZ84aR4Y0g3kF
+         6kLIShFAQ6DId7bmdOJKjOk8cIY9Ta87c4bXwPLCV2MeFTtd8sQpuKS6JcMKxAIi4YuY
+         yqZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743436282; x=1744041082;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xx9ros77PsXrq4rkgJUmAG5OVhoDykGXFMocpGM28QM=;
+        b=a/9b0ALwK8yWQnyI/Uxrmf8YqFm2Fpk0ko9s3vNGKFlx13ryFkkSvgPUvzL+2fxrpL
+         6thpZOhRKvhr3MsbOPY/P4bCuIiZLXp9jiCbBhSQcCuCZGRB9OPGj676+DvGLiWek1AF
+         GQXck+KsxJoE2R3S1C/DpMffr1gwbTA8GWCabGWAF7SxeymEB5RxeYV+OcZjyuaNug9l
+         dpCicmfM4M794GLYf69L9wZAEwI/w3CKtf8Zs1YfNIGM1CVMaGryzUre6g3gAzZv6doR
+         AjF8cWSHtM6W3ZI/kDBD8uCVQJ4LW8njNvDL7OTDShjtLG9mTNYA8At7XEpkJYTq9pj3
+         2vug==
+X-Gm-Message-State: AOJu0YxqH7cTqAirUBlvRyBAZBAtJPiUm66CRkhUG0hA5YUt0mO//J4X
+	W+FZlj3vY3ias2tOoXlwGUB9gMlnvJYx/zwot6dgEWb7zFOB+UkAEUDiLQ==
+X-Gm-Gg: ASbGncvcqwtrzYUdHtmS19Z1w5lcb9z3pqThYtsunm8bNj6P9jCN9y3G0dvV/fiH1Wz
+	z77dPsHTWYjVKAsFTXehgSj3dEQ2Ym8xf6g9s1dAob9e8YrmEwqt9n5DtNZeiaqsrf5xQRyoUuF
+	mzKWbX6ObrBlJw9I/lnJQzp+c+VfeGBjhsNcnn68hIJV4/FZ6tb7R0CQBUuyXIgT3FNTNn7gwCu
+	upEv/ZUIW0sKXp0vlb0CczuXdbegBRJFt/jRZOzFw/tgzuntoB/5ag/cVuzwe6ypX8hQDSY7kAS
+	xnHpc6daoJBS6LAydifgZ8wExSuBAn7LvgTF2BHyWUnY6g==
+X-Google-Smtp-Source: AGHT+IGf82n5r5VXB4r4n6XNRk4Y+xOqEsLNKM4h17885I1X3m5qWk9ev2u56aVLsEPgYwRViJ6LgQ==
+X-Received: by 2002:a05:6000:1ace:b0:391:48d4:bd02 with SMTP id ffacd0b85a97d-39c120e3d56mr6658362f8f.29.1743436281679;
+        Mon, 31 Mar 2025 08:51:21 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b60a9ddsm11771862f8f.0.2025.03.31.08.51.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Mar 2025 08:51:21 -0700 (PDT)
+Message-Id: <pull.1898.git.1743436279.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 31 Mar 2025 15:51:11 +0000
+Subject: [PATCH 0/8] Debug merge-recursive.[ch]
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z-qKGqpbdaW9WCrP@pks.im>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>
 
-[cc: fixed Derrick's address]
+As a wise man once told me, "Deleted code is debugged code!"
 
-Hi Patrick,
+This series does some preparation, then moves the code shared between
+merge-recursive and merge-ort from the former to the latter, and then debugs
+the remainder of merge-recursive.[ch].
 
-Patrick Steinhardt wrote:
-> Thanks for the additional information!
+Series overview:
 
-Thank you for looking into it and providing a patch!
+ * Patches 1-5: Preparation; switch remaining callers of
+   merge-recursive.[ch] functions to merge-ort equivalents, and add sole
+   remaining missing feature (diff-algorithm selection)
+ * Patch 6: Nuke merge-recursive.[ch]
+ * Patch 7-8: Cleanup testsuite; we don't need GIT_TEST_MERGE_ALGORITHM
+   anymore
 
-> One thing I stumbled over: the `--min-batch-size` parameter is parsed
-> using `OPT_INTEGER()`, which expects the value pointer to point to an
-> integer. But we pass `struct backfill_context::min_batch_size`, which is
-> of type `size_t`. Maybe that's causing us to end up with an invalid
-> value?
-> 
-> Could you please check whether the below diff fixes the issue for you?
-> If so I can turn it into a proper patch.
+While the diffstat might look large, the non-test code changes are actually
+pretty small. The drivers of the big diffstat are:
 
-It does indeed lead to a successful test run:
+ * We move a significant chunk of shared code from merge-recursive.[ch] to
+   merge-ort.[ch], without modifying it
+ * We delete (the remainder of) merge-recursive.[ch]
+ * We rip out all the temporary GIT_TEST_MERGE_ALGORITHM stuff designed to
+   let us reuse tests between recursive and ort
 
-t5620-backfill.sh ..................................
-ok 1 - setup repo for object creation
-ok 2 - setup bare clone for server
-ok 3 - do partial clone 1, backfill gets all objects
-ok 4 - do partial clone 2, backfill min batch size
-ok 5 - backfill --sparse without sparse-checkout fails
-ok 6 - backfill --sparse
-ok 7 - backfill --sparse without cone mode (positive)
-ok 8 - backfill --sparse without cone mode (negative)
-ok 9 - create a partial clone over HTTP
-ok 10 - backfilling over HTTP succeeds
-# passed all 10 test(s)
-1..10
+Elijah Newren (8):
+  checkout: replace merge_trees() with merge_ort_nonrecursive()
+  builtin/merge-recursive: switch to using merge_ort_generic()
+  merge-ort: enable diff-algorithms other than histogram
+  sequencer: switch non-recursive merges over to ort
+  merge, sequencer: switch recursive merges over to ort
+  merge-recursive.[ch]: thoroughly debug these
+  tests: remove GIT_TEST_MERGE_ALGORITHM and test_expect_merge_algorithm
+  builtin/{merge,rebase,revert}: remove GIT_TEST_MERGE_ALGORITHM
 
-Source: https://kojipkgs.fedoraproject.org//work/tasks/3947/130943947/build.log
+ Documentation/merge-strategies.adoc           |   51 +-
+ Documentation/technical/sparse-checkout.adoc  |    2 -
+ Makefile                                      |    1 -
+ builtin/checkout.c                            |   10 +-
+ builtin/merge-recursive.c                     |    4 +-
+ builtin/merge.c                               |   23 +-
+ builtin/rebase.c                              |    5 -
+ builtin/revert.c                              |    2 -
+ ci/run-build-and-tests.sh                     |    1 -
+ merge-ort-wrappers.h                          |    2 +-
+ merge-ort.c                                   |  162 +-
+ merge-ort.h                                   |   60 +-
+ merge-recursive.c                             | 4079 -----------------
+ merge-recursive.h                             |  132 -
+ meson.build                                   |    1 -
+ sequencer.c                                   |   58 +-
+ t/lib-merge.sh                                |   13 -
+ t/t1092-sparse-checkout-compatibility.sh      |    2 -
+ t/t2501-cwd-empty.sh                          |    2 -
+ t/t3512-cherry-pick-submodule.sh              |    5 -
+ t/t3513-revert-submodule.sh                   |    4 -
+ t/t4069-remerge-diff.sh                       |    7 -
+ t/t4301-merge-tree-write-tree.sh              |    7 -
+ t/t5572-pull-submodule.sh                     |    5 -
+ t/t6400-merge-df.sh                           |   14 +-
+ t/t6402-merge-rename.sh                       |  125 +-
+ t/t6404-recursive-merge.sh                    |   21 +-
+ t/t6406-merge-attr.sh                         |    7 +-
+ t/t6416-recursive-corner-cases.sh             |  194 +-
+ t/t6421-merge-partial-clone.sh                |    7 +-
+ t/t6422-merge-rename-corner-cases.sh          |   31 +-
+ t/t6423-merge-rename-directories.sh           |  517 +--
+ t/t6424-merge-unrelated-index-changes.sh      |    8 +-
+ t/t6426-merge-skip-unneeded-updates.sh        |    4 +-
+ t/t6428-merge-conflicts-sparse.sh             |    2 -
+ t/t6430-merge-recursive.sh                    |   46 +-
+ t/t6434-merge-recursive-rename-options.sh     |   16 +-
+ t/t6436-merge-overwrite.sh                    |   17 +-
+ t/t6437-submodule-merge.sh                    |   65 +-
+ t/t6438-submodule-directory-file-conflicts.sh |    5 -
+ t/t6439-merge-co-error-msgs.sh                |    2 +-
+ t/t7402-submodule-rebase.sh                   |    7 +-
+ t/t7602-merge-octopus-many.sh                 |    9 +-
+ t/t7610-mergetool.sh                          |   40 +-
+ t/t7615-diff-algo-with-mergy-operations.sh    |    2 -
+ t/test-lib.sh                                 |    2 -
+ 46 files changed, 538 insertions(+), 5241 deletions(-)
+ delete mode 100644 merge-recursive.c
+ delete mode 100644 merge-recursive.h
+ delete mode 100644 t/lib-merge.sh
 
-I tested it against the other common architectures the
-Fedora build system provides as well, to be sure no others
-regressed, although there aren't as many as the Debian build
-system :).
 
+base-commit: 5b97a56fa0e7d580dc8865b73107407c9b3f0eff
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1898%2Fnewren%2Fendit-quote-debugging-unquote-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1898/newren/endit-quote-debugging-unquote-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1898
 -- 
-Todd
+gitgitgadget
