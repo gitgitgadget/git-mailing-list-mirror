@@ -1,67 +1,67 @@
 Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA5F2144A6
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 15:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE90211A3C
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 15:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743436288; cv=none; b=suPqNcskKS0zYVvGeGcl600j0f6e4gS3C9st5woFEGfP1KONlqdiyj25Ng56KRmi2aMVr22gWesIy3ygwCwGyTxzjkrK/LYmyMbkH9F/7XccGf1mGzfRvVwICddGi79CVdXjPqhllt0OeXcbA5+b7MPnpJ/FwjhVmMsxLnb7hs4=
+	t=1743436289; cv=none; b=HjqXwnQIUsDVdF7E8oUz/DHUBiP2wZLiSFhVy6jtdvvn5V1ddoN4mGTMn7sqhqu/I2FGp9zZMcUR2oSMBm9dsWAIPZqLnytv9VdlBzx5S78kmTNxk5c0hSHKU274MbLJ/NCS1D84MpbKhiYUos0FAde6QBC14bQzyyfs3hZBkcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743436288; c=relaxed/simple;
-	bh=9WE9DHCrkxclAtRxyd7r8TgKdnzJmkBcxj45LhpjGFI=;
+	s=arc-20240116; t=1743436289; c=relaxed/simple;
+	bh=L4lxolB2tYaHNy7VDTe/eONuYsbby63x2s2HxKaWjHM=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=myHF5SoR/yU3cmJS4vDAkvASUjIAp8nPhnqylgKlhc3xO5Ucn3fQHx3/RXBqU2DMsz05mQi5g115i58gu61p+kpPEgvrbFulA4zD1Hqlg4zgBl6ynH90bBK3K80fy/zh7PTq7ySfjiUN2KFjdKYyFFYi3Keew0c5MNOfLYdA03s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jMDZkJga; arc=none smtp.client-ip=209.85.221.46
+	 MIME-Version:To:Cc; b=Esm2SJPtKFASUkDATCluyjBHsBBldM54L1mLO5cgXZz44EeKSmsTYS1ANvr52CF9E2RgeQ8Dt/B5TT0tADMcUI6Iqi0piBkj5/3FVVZqWkN8q73i2/y1CG0tX/hEJmZzxOFERYXRJHpnxnUj7juIZWMOWSIWB9VZztJCMECKrUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X8EgIuX4; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jMDZkJga"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3914bc3e01aso2622535f8f.2
-        for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:51:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X8EgIuX4"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-39141ffa9fcso4446549f8f.0
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:51:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743436284; x=1744041084; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1743436285; x=1744041085; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lojPv5wdaz2eIF2J+eBFJD2HNxvZjKfzpRO9tMry/Mk=;
-        b=jMDZkJgaVZgFqcGQFuJ4zeZkc7OQWmn16xZf0CuYpKKRWi6D76phiYQYRnx84NEqix
-         T893YflBCCnOmgc0RZk4xxuRiWHRAhd0iN+XDqKwgvECyOatyX6s8B+cvkywb0CluU14
-         Z5WrAznh7O2RfWz4P8az2qRCE2ARispdbVehZniYqmADXIB2pOMfjcwBNvrzzDehhya4
-         7L4RTjRDqoL1o7VRLqEWgxI6+J1RH44lAJe+KoRYkjXiS9V2CYkMCb0Vjl4/VUoumRqN
-         Jq6p3Zor8PdEQnIt3yi6yX+IUclU1cboNQM+c59dhnqEs9wHfG/PFPSyMuA3j/T7sjRB
-         e4lA==
+        bh=jHNLSWzKsgEAT54mfo5BmzjuzXYWxeumxxUZzgW97BA=;
+        b=X8EgIuX4kiekp6JfvpfkCPLaQdYFryvO/c/mvmfCTEqfHqFlUAxjMhxR1U0VvrDOqt
+         3b3//ffTmDB66hkA5d2FW8AWPYsAMVYx6ROR9HMC7/akNa4e36e/GZfPL/Y7bg9baj4j
+         Rj0dkEkyKPi8/563CrSlvvCeNzwAsPdcKs/Y5jf0Ga8i7yNMNKSv7zYkUl4dgicgJa09
+         5JHpsmQMAs9MmEJ5+Ib4Hql+NXW1ozDbhlycquX3guun6WXqiU3MnETv0GgtEcipwYxw
+         MED0Ws3o7l+txZH/8AxTD/jeEkFWt9U3upxZwJkqwQTmXErEBWwAS8ZZnZlZfpGaEpLr
+         /VcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743436284; x=1744041084;
+        d=1e100.net; s=20230601; t=1743436285; x=1744041085;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lojPv5wdaz2eIF2J+eBFJD2HNxvZjKfzpRO9tMry/Mk=;
-        b=WRP86UJEOPmrtGMR3npOCgN4vOFvgxXuLZ9ePiqRdbbxVbCqbxjtWDlbpDkHCDboLL
-         uOkcnkKBjUnoyqo+mPRykodH+SzftyZxMVm3bcREOhN8CvpyrSdjit/MlBTngLKV1w0U
-         hwkd7tcSvNVIMGqNmushOPxO2pQke4VRGEtLUi/9gkBFmDWEwOTxMl2sl9GhM8ZWnPQk
-         XUwgSmZhtv7qWuDTIvVGjl+Dlm5RrknFx23CyfoO3iBHgOD/ODPho6jrsiUQIlLOXmXj
-         Y99OdA9LCwDBL+Eg9zIIHcUTgakSQgXmsWjuKko2ciOL3WqYn263NEqhdTtou5ic5lR/
-         xA8w==
-X-Gm-Message-State: AOJu0YzNp2cYD5RjDz4DAAAOp03abpfu+gXkn4gkPvXYbg8YsoLuYO0J
-	LFvBbYv8oKcy9mYKdgO/SxfEG/RHSM8RoS9KLMbTReqIoiqKoOVzy+G5lg==
-X-Gm-Gg: ASbGncvapRcUQHjGHSQtfRZKikq8Q5Yvt3Mc2oYrledOwCWymmeCdFQ5UR07z4lCxGH
-	Mi4b5KCJXqkqmqsHFQ2P6mgJPYv33hFQhKoPbKPW+IAINMlU+UyB+dB2FN92ZdoBs/KZiDSEqC0
-	Jy0lk1h4LEhSudrdHtXlxe/1fFFflP8ESHVMJAqL4GH2MDPlzRK5gBX7i19vw9cDrcIwyWe+Uun
-	VjRo8SLoZGZJONaSzRJCKv0R+SS2i2OoBsoIpSyjVR0Nij0rZUhDQmNJ6VvYZ2/wFlR3y4G+DbV
-	r1HYcCme2vqEE8u3CKPOxcGpKKZ8+ntqDVGno01CmWxZ1Q==
-X-Google-Smtp-Source: AGHT+IFuP/6mVQI37PenfeRx4P3V8iQFhmXgd7uWgtIAVlvyoImOwdLc9cdn4BY2F7VfFDOUauuG0g==
-X-Received: by 2002:a5d:47c5:0:b0:391:2d8f:dd59 with SMTP id ffacd0b85a97d-39c120e1665mr9130661f8f.24.1743436284398;
-        Mon, 31 Mar 2025 08:51:24 -0700 (PDT)
+        bh=jHNLSWzKsgEAT54mfo5BmzjuzXYWxeumxxUZzgW97BA=;
+        b=WWSAShiSMPECwWfxqNA0/OyIvoGMcrHrDW0o651M1GZikoMCxooMwaEwHgslQSZgWr
+         f7wElBseK9fj52UDyN83O7maSoffOUZS8NkcZf/8m/+pcKAmuKLWhSJbnOapQs6OvLe9
+         x4IMbesRx1/w2ic0R4/SjgrrRDdNRo6IY+sukd+drVXdVbE6bnYy0GwtbX9+stJLGDRF
+         mOYYvs1Tb0IhS+h1co9wgoDkDTm3dgp+Qi0k+t5XCLhX+55H0eq4/Yaegq4m6DqwJmwO
+         P9dP3rYFN7JjDkyuMVZhHzx+TrmS5iG8qGXv0H3UjXzmZf0SAdCzjEKYQpuEe5Xni7e4
+         bCzw==
+X-Gm-Message-State: AOJu0YyZXJ+L19zPl0Zlf4pmpeK5iabzW4AUryWi6P0Y4QI3BWXWOUfH
+	Y8uMkvEUejRHMJVmLXchqWJH5HzWeE1TqCgNPBFU5wA279kDTOOWv38uTg==
+X-Gm-Gg: ASbGncsjy/ScEgdVRNWcjo4bHQkouyd9v6oTLya6r01EZTNFzoWjepoIX9zAjw9cdgQ
+	vja/titHPkViUy0THYjGfbz7ns1LMqxua6pCFSMRp27iErfHY9bzdSJINIkYXTE8Z4t8/skpv/c
+	fkVa1p7eRNlNNVtMOkzbLE/6pcgjWZXkjolZOIezFb6GZCKEwplJ3YYZ7t1SHGk2ucIpeAwNYKO
+	5krtTLsglpK/rBgzHzkUkwDkpCCfsvFOLUHuFYENkw3fILpO2JgkqGD8K5qcP5iESHfR8ykPcLq
+	8GzDiCziO18lpHI28AXxIXKxvXq4hLdOzcpinaT5W0WiUQ==
+X-Google-Smtp-Source: AGHT+IHQ/BTYiQxZcD/Ch6gtluabzChUkUvj+sjqJA5XlkS3ly07zblP9ELZkhccwAuJ6M+ofDV/kA==
+X-Received: by 2002:a05:6000:178b:b0:39c:1258:7e17 with SMTP id ffacd0b85a97d-39c12587e3amr7569335f8f.56.1743436285155;
+        Mon, 31 Mar 2025 08:51:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b7a4482sm11364473f8f.86.2025.03.31.08.51.23
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b66a8c9sm11479933f8f.47.2025.03.31.08.51.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Mar 2025 08:51:23 -0700 (PDT)
-Message-Id: <3945c471b0c40b49e9a48feaba6dae2afc96fa6a.1743436280.git.gitgitgadget@gmail.com>
+        Mon, 31 Mar 2025 08:51:24 -0700 (PDT)
+Message-Id: <39ff4860fcdfd5c80181971fa2b3fdd90428a163.1743436280.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1898.git.1743436279.gitgitgadget@gmail.com>
 References: <pull.1898.git.1743436279.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 31 Mar 2025 15:51:14 +0000
-Subject: [PATCH 3/8] merge-ort: enable diff-algorithms other than histogram
+Date: Mon, 31 Mar 2025 15:51:15 +0000
+Subject: [PATCH 4/8] sequencer: switch non-recursive merges over to ort
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,97 +77,63 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-The ort merge strategy has always used the histogram diff algorithm.
-The recursive merge strategy, in contrast, defaults to the myers
-diff algorithm, while allowing it to be changed.
-
-Change the ort merge strategy to allow different diff algorithms, by
-removing the hard coded value in merge_start() and instead just making
-it a default in init_merge_options().  Technically, this also changes
-the default diff algorithm for the recursive backend too, but we're
-going to remove the final callers of the recursive backend in the next
-two commits.
+The do_recursive_merge() function, which is somewhat misleadingly named
+since its purpose in life is to do a *non*-recursive merge, had code to
+allow either using the recursive or ort backends.  The default has been
+ort for a very long time, let's just remove the code path for allowing
+the recursive backend to be selected.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/merge-strategies.adoc | 29 +++++++++++++++--------------
- merge-ort.c                         |  3 ---
- merge-recursive.c                   |  1 +
- 3 files changed, 16 insertions(+), 17 deletions(-)
+ sequencer.c | 35 +++++++++++++----------------------
+ 1 file changed, 13 insertions(+), 22 deletions(-)
 
-diff --git a/Documentation/merge-strategies.adoc b/Documentation/merge-strategies.adoc
-index 59f5ae36ccb..8c87dd70210 100644
---- a/Documentation/merge-strategies.adoc
-+++ b/Documentation/merge-strategies.adoc
-@@ -87,6 +87,20 @@ no-renames;;
- 	configuration variable.
- 	See also linkgit:git-diff[1] `--no-renames`.
+diff --git a/sequencer.c b/sequencer.c
+index ad0ab75c8d4..b5d91fd3515 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -781,28 +781,19 @@ static int do_recursive_merge(struct repository *r,
+ 	for (i = 0; i < opts->xopts.nr; i++)
+ 		parse_merge_opt(&o, opts->xopts.v[i]);
  
-+histogram;;
-+	Deprecated synonym for `diff-algorithm=histogram`.
-+
-+patience;;
-+	Deprecated synonym for `diff-algorithm=patience`.
-+
-+diff-algorithm=[histogram|minimal|myers|patience];;
-+	Use a different diff algorithm while merging, which can help
-+	avoid mismerges that occur due to unimportant matching lines
-+	(such as braces from distinct functions).  See also
-+	linkgit:git-diff[1] `--diff-algorithm`.  Note that `ort`
-+	defaults to `diff-algorithm=histogram`, while regular diffs
-+	currently default to the `diff.algorithm` config setting.
-+
- subtree[=<path>];;
- 	This option is a more advanced form of 'subtree' strategy, where
- 	the strategy makes a guess on how two trees must be shifted to
-@@ -111,20 +125,7 @@ recursive::
- For a path that is a submodule, the same caution as 'ort' applies to this
- strategy.
- +
--The 'recursive' strategy takes the same options as 'ort'.  However,
--there are two additional options that 'ort' ignores (not documented
--above) that are potentially useful with the 'recursive' strategy:
--
--patience;;
--	Deprecated synonym for `diff-algorithm=patience`.
--
--diff-algorithm=[patience|minimal|histogram|myers];;
--	Use a different diff algorithm while merging, which can help
--	avoid mismerges that occur due to unimportant matching lines
--	(such as braces from distinct functions).  See also
--	linkgit:git-diff[1] `--diff-algorithm`.  Note that `ort`
--	specifically uses `diff-algorithm=histogram`, while `recursive`
--	defaults to the `diff.algorithm` config setting.
-+The 'recursive' strategy takes the same options as 'ort'.
- 
- resolve::
- 	This can only resolve two heads (i.e. the current branch
-diff --git a/merge-ort.c b/merge-ort.c
-index 2b7d86aa4ec..14a7ae4a6bf 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -4957,9 +4957,6 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
- 	}
- 	trace2_region_leave("merge", "sanity checks", opt->repo);
- 
--	/* Default to histogram diff.  Actually, just hardcode it...for now. */
--	opt->xdl_opts = DIFF_WITH_ALG(opt, HISTOGRAM_DIFF);
--
- 	/* Handle attr direction stuff for renormalization */
- 	if (opt->renormalize)
- 		git_attr_set_direction(GIT_ATTR_CHECKOUT);
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 884ccf99a58..f3df127ad9b 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -3981,6 +3981,7 @@ static void init_merge_options(struct merge_options *opt,
- 	opt->renormalize = 0;
- 
- 	opt->conflict_style = -1;
-+	opt->xdl_opts = DIFF_WITH_ALG(opt, HISTOGRAM_DIFF);
- 
- 	merge_recursive_config(opt, ui);
- 	merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
+-	if (!opts->strategy || !strcmp(opts->strategy, "ort")) {
+-		memset(&result, 0, sizeof(result));
+-		merge_incore_nonrecursive(&o, base_tree, head_tree, next_tree,
+-					    &result);
+-		show_output = !is_rebase_i(opts) || !result.clean;
+-		/*
+-		 * TODO: merge_switch_to_result will update index/working tree;
+-		 * we only really want to do that if !result.clean || this is
+-		 * the final patch to be picked.  But determining this is the
+-		 * final patch would take some work, and "head_tree" would need
+-		 * to be replace with the tree the index matched before we
+-		 * started doing any picks.
+-		 */
+-		merge_switch_to_result(&o, head_tree, &result, 1, show_output);
+-		clean = result.clean;
+-	} else {
+-		ensure_full_index(r->index);
+-		clean = merge_trees(&o, head_tree, next_tree, base_tree);
+-		if (is_rebase_i(opts) && clean <= 0)
+-			fputs(o.obuf.buf, stdout);
+-		strbuf_release(&o.obuf);
+-	}
++	memset(&result, 0, sizeof(result));
++	merge_incore_nonrecursive(&o, base_tree, head_tree, next_tree, &result);
++	show_output = !is_rebase_i(opts) || !result.clean;
++	/*
++	 * TODO: merge_switch_to_result will update index/working tree;
++	 * we only really want to do that if !result.clean || this is
++	 * the final patch to be picked.  But determining this is the
++	 * final patch would take some work, and "head_tree" would need
++	 * to be replace with the tree the index matched before we
++	 * started doing any picks.
++	 */
++	merge_switch_to_result(&o, head_tree, &result, 1, show_output);
++	clean = result.clean;
+ 	if (clean < 0) {
+ 		rollback_lock_file(&index_lock);
+ 		return clean;
 -- 
 gitgitgadget
 
