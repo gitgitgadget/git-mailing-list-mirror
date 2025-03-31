@@ -1,55 +1,55 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210F819259E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439311D54E2
 	for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:33:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743410003; cv=none; b=TtilJOFnD0A6fRTKLQIAGmCnkqtSMjWA/pr4CkilJf0Iwrmj6WeK7O9fq4OOvRDyXNxktHOKqEtDwggabpRkUOTTQfPbxyXT9X/RkBDcVn1k+ro1BC6TPs8vbFGeOj7vzsY5AW3xc32oFJcc0h/nmni8/jSFHLeFwmdam6EP00U=
+	t=1743410003; cv=none; b=hDi2/tF0gWLsra3/5htMb7ioe4a9ekm06gFu1K/3fyPV+qiISmZHwh3dw3Oe5D+ZbspI0ei/oDVX5jUTQ46r/Qgq/3r6hhHGQIhKjfGTLJP2jMzqQSYO7zlSM9kRHGa/bw72ltkBxCLErstF66OLZIED/rw0HfJuk5VzdkVg/uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1743410003; c=relaxed/simple;
-	bh=+85wQgxZapibTJyxHYYL1BellZADssfldDeTNYezOvs=;
+	bh=L/oXw5fkxxAALV+jPuSzhvNpqrmwQu2Xl46dqm/JvMc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mAGRRDEIAvsBbfFylBkKS29in9+8DHfy2u3/ZLRM2G/fHExdgdlbkmXATf8V5fs5zTNvsm3EGZxGCOvmoeR647OI0kwnDiHGzhKS+kRHIpvsRsidNUDfjFagK423qVvPxd52DhNKsuVxrQ02M7TADOdPjfK5BUPtyNrJKgerGtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jHBUmRki; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Il6OCOMz; arc=none smtp.client-ip=103.168.172.153
+	 In-Reply-To:To:Cc; b=rkR8t3bniKzHuIkyB72LwG3OZG7GfxImjUToWoMMWOa3srYv4cJQ+7qqFFwWCtSj6EIanpWyclMru4k1olLRC2JsboUqCcYNzzIdQ0wNWt8mv4dAxf8m9hmoSzHptNivpBpPC8bhr95f1m7QL8ABFUoeOqSgLJ67+w0injfjlHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lCsw4l/p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WfZOnjVe; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jHBUmRki";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Il6OCOMz"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1D6241140126;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lCsw4l/p";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WfZOnjVe"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4EF1F1383C42;
 	Mon, 31 Mar 2025 04:33:21 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 31 Mar 2025 04:33:21 -0400
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Mon, 31 Mar 2025 04:33:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm2; t=1743410001;
-	 x=1743496401; bh=UvuRhQHY+QzPbQ5ifleLoseh5LLoW6Kd+EkMakkVxj4=; b=
-	jHBUmRkiap1aOtUsTVJXLVk9kTLOwDWq7zzIDGYzjcAdiw9GJcRCsvUMP7HZCSh8
-	+6f/YaJ9W7DD2qgPwurL/55/8fPC4IWrEa8T1Tp7Gsv8cg4u7UeKvH59K5keGCNu
-	CET8UnbYTN06MqHAl55fUqG7oYlIcUQXGhFU0Xkru2LgPku4xhwIghmhGqU5SlyX
-	VVQCu5Fc2G+syui1tBhjDpLS0Rpo1kla6BFdSxx6k+je6W9LgqLS/0+YHsm8fb4c
-	0YiLeJmc5Lh7GLrHJQ8DPVIf/cXTOcbtQcaJBCaRCGs6YbWKrOy7dFniviT/0RxD
-	F0YXGB6bucf737YkDfi5SQ==
+	 x=1743496401; bh=YnFIXo8/GnTlyNAp6sWU5pl2bll/1dH35dzFahsEJD8=; b=
+	lCsw4l/pCK5xKsK0Net9TkcaesdHD8xJi2ouq+EE1mCN9FaFQEgKbBueFNo1+Fmd
+	/zFi+PxfpFZt54TA/AMRCOiOOxjAxJlRLO1IU67IbXolR34CNnEcUteFz8NSs+/a
+	/3XkjEM/sYxgNNnmbwaF8c1cp+0e+g+PBguRfH6sDOhx7HB7v/JkwBScSjIT0/oz
+	UIhZ9wRBs3PvVNbgldN8uE8Ky/WrdXNXgCiBnzfc+o20l2KLeYwYsBdrbMD3JGL/
+	YQO7LBYtDIzox76L+SEer4imFSWcdjTDPAOnkU8cFgMB6B6caahSj1MfWiYupj4w
+	jYY5KoLrF5pJ7iAdE+Dfgw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743410001; x=
-	1743496401; bh=UvuRhQHY+QzPbQ5ifleLoseh5LLoW6Kd+EkMakkVxj4=; b=I
-	l6OCOMzyyIp6tFgXRYrK/eGx/KZuG/JpCk7YP8n9Hj+59BPi2e5RSuh/hBHPzeVF
-	GzCc07crjyzHQwfqghFr5xFSyYBlEeZ5VD++pQJznTE0/mWZKP33a+/3znxa2lMJ
-	3ijVSCVuhR/rYjQuctgm12MN/J7O50RLU7qgcOSSdg0wRM8x0+agviURRUYY6md4
-	AuFiNKGsi0dHluoSBX1GG6lXViqvt6lozAC6NLl1Z538QHFEYQ3rjFbalAVUlv73
-	tcPSIq/YuycgoWbOkbv8L1HzXFCtQBA7tDROJUmUwVkbFzfqRCJ79YOlvBXl7LkW
-	kE/qRAgCwCCY/uhqsIVuQ==
-X-ME-Sender: <xms:UFPqZ60HLG-jHdvi4j7-d6KHqjGMuSveTYzLjBjdEgbvnHSMDSSbsQ>
-    <xme:UFPqZ9HOFkZNl6tjuA97wiYoxKos_q2z-vO7XCPqjli29ZJmXuGxPGdhizV65zNlk
-    aLrw25nKsWh7kGacA>
-X-ME-Received: <xmr:UFPqZy4tkjPJ6Bt4cy-5SgwqiNOVN4VZvQ_Kqig9HkYMGLVSrmJIs20N7GUmRNHu8q53BkO-IZm4EZ0BifZ76dOywOFSipu44sVy9jefnLP4iEwk>
+	1743496401; bh=YnFIXo8/GnTlyNAp6sWU5pl2bll/1dH35dzFahsEJD8=; b=W
+	fZOnjVeuDDHjALxiJJLTDNw8q05IcTXzCK5EFrM6U2pd21FxGvyWi0PU1dARxU97
+	lPPJrsb/W5M7txIMqVOi8lrSC3h5mScENWJxK5dC3mlkP4P40mrUu3lAFKLbXot9
+	6z8Sg6jrd1jE7UmgjYnWYksrGzGa6x1y0m3TmySoTyOUjbIlC60OSY/QxhZM7rZU
+	uNcj/lqXwVJALu0Dpoy/lPCEOwfJDZouXZuEeIMyR+WpCf92/usRvGzXfFKdMrP0
+	uxcGK4rJjL4XTUAXpbrrOQGukPE+uK8VX/8tj/gOYWUbPxiwLdOXGDl9WzqaFSLp
+	fjQWTjkawF2dEWgA4C4ow==
+X-ME-Sender: <xms:UVPqZ2dJtLJAxsBaarKOVkr0gBzF55XMpp40WtBnRhhacKQAxxhpNQ>
+    <xme:UVPqZwPnn1W4pT_P8pzNVKtEyC31pe4B-VJNjrFTor2aBgnpry4P2kN3eMsv_bDmO
+    cI6c9mV9Mtekq738A>
+X-ME-Received: <xmr:UVPqZ3hmxqaAMi4pft8s_uwVD09lrhzXpFDQDE0LTxF3NXJA7bRtAdfL2o1pCpm8O7sqm73FaQ41B-QGq3I8smf4tPPmTPvrW5rnXv4eZzoaRgvM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeelgeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -58,26 +58,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeelgeehucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
-    hnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsrg
-    hmsehgvghnthhoohdrohhrghdprhgtphhtthhopehtghesuggvsghirghnrdhorhhgpdhr
-    tghpthhtohepphhsrdhrvghpohhrthesghhmgidrnhgvthdprhgtphhtthhopegvshgthh
-    ifrghrthiisehgvghnthhoohdrohhrgh
-X-ME-Proxy: <xmx:UFPqZ738Hxn2weH9e9zRGRWzDA-wGTkzMsNepA1pu95UI6JYb86nHg>
-    <xmx:UFPqZ9EuMJCTrCsh__t6BAGxu4a2M5q7o5NBxpGEmLo4C9UVIv03Lw>
-    <xmx:UFPqZ09RJpYQnYrGiczZvK6DyQbA_uFTRGt2KTpgidghbq5Rs-jVwQ>
-    <xmx:UFPqZykqz0Txqbyl3XjPgQuRemdjgnPNBhbDVkvCOPHwogxTfSIggg>
-    <xmx:UVPqZ02vhQKcJbSQaLDUbqvSL5FccrZHRGDLbrNYwKJQKfxnt7q3jVMb>
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehtghesuggvsghirg
+    hnrdhorhhgpdhrtghpthhtohepphhsrdhrvghpohhrthesghhmgidrnhgvthdprhgtphht
+    thhopehsrghmsehgvghnthhoohdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrsh
+    gthhhinhguvghlihhnsehgmhigrdguvg
+X-ME-Proxy: <xmx:UVPqZz_dDA6ZmaX_O1ZKLShhchlvTkNvXOR4PMyz6HHhr7ReV9Q1AA>
+    <xmx:UVPqZyuSmF6CzYyA9niYIwxoAAvvosogwh6H8nOpz1FsIF3_h3Q3XQ>
+    <xmx:UVPqZ6F60-SsPMXwGo18S78tyPA9tFdBtQCogv_eEprXOQY2h0Ex4Q>
+    <xmx:UVPqZxNuQYvN9BWG8WSn87DBaaBWUlENBhOEHaJP4XShLvjQV8Z83A>
+    <xmx:UVPqZ_83Lb3g1soJpy-n8AxeZemYtetTcEfjV2BFFBasl1oUt9iyl1XD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
  31 Mar 2025 04:33:19 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bed2693a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Mar 2025 08:33:16 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2b242e15 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 31 Mar 2025 08:33:17 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 31 Mar 2025 10:33:07 +0200
-Subject: [PATCH v2 1/5] meson: fix handling of '-Dcurl=auto'
+Date: Mon, 31 Mar 2025 10:33:08 +0200
+Subject: [PATCH v2 2/5] gitweb: fix generation of "gitweb.js"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250331-b4-pks-collect-build-fixes-v2-1-6b06136808f3@pks.im>
+Message-Id: <20250331-b4-pks-collect-build-fixes-v2-2-6b06136808f3@pks.im>
 References: <20250331-b4-pks-collect-build-fixes-v2-0-6b06136808f3@pks.im>
 In-Reply-To: <20250331-b4-pks-collect-build-fixes-v2-0-6b06136808f3@pks.im>
 To: git@vger.kernel.org
@@ -96,51 +96,38 @@ Cc: Junio C Hamano <gitster@pobox.com>, Sam James <sam@gentoo.org>,
  Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.2
 
-The "curl" option controls whether or not a couple of features that
-depend on curl shall be included. Most importantly, these features
-include the HTTP remote helpers, which are rather quintessential for a
-well-functioning Git installation. So while the dependency can in theory
-be dropped, most users wouldn't consider the resulting installation to
-be fully functional.
+In 19d8fe7da65 (Makefile: extract script to generate gitweb.js,
+2024-12-06) we have extracted the logic to build "gitweb.js" into a
+separate script. As part of that the rules that builds the script
+has gained a new dependency on that script.
 
-The "curl" option is defined as a feature, which means that it can be
-"enabled", "disabled" or "auto", which has the effect that the feature
-will be enabled if the dependency itself has been found. While most of
-the other features have "auto" as default value, the "curl" option is
-set to "enabled" by default due to it being so important. Consequently,
-autoconfiguration of Git will fail by default if the library cannot be
-found.
+This refactoring is broken though because we use "$^" to determine
+the set of JavaScript files that need to be concatenated, and this
+implicit variable now also contains the build script itself. As a
+result, the build script ends up ni the generated "gitweb.js" file,
+which is wrong.
 
-There is a bug though with how we handle the option in case the user
-overrides the feature with `meson setup -Dcurl=auto`: while we will try
-to find the library in that case, we won't ever use it because we later
-on check for `get_option('curl').enabled()` when deciding whether or not
-we want to build dependent sources. But `enabled()` only returns true if
-the option has the value "enabled", for "auto" it will return false.
+Fix the issue by filtering out non-JavaScript files.
 
-Fix the issue by instead checking for `curl.found()`, which is only true
-if the library has been found. And as we only try to find the library
-when `get_option('curl')` returns "true" or "auto" this is exactly what
-we want.
-
+Based-on-patch-by: Thorsten Glaser <tg@debian.org>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- meson.build | 2 +-
+ gitweb/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index efe2871c9db..a8d1e63ccc6 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1686,7 +1686,7 @@ bin_wrappers += executable('scalar',
-   install_dir: get_option('libexecdir') / 'git-core',
- )
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index d5748e93594..26a683d4421 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -118,7 +118,7 @@ $(MAK_DIR_GITWEB)gitweb.cgi: $(MAK_DIR_GITWEB)gitweb.perl
+ $(MAK_DIR_GITWEB)static/gitweb.js: $(MAK_DIR_GITWEB)generate-gitweb-js.sh
+ $(MAK_DIR_GITWEB)static/gitweb.js: $(addprefix $(MAK_DIR_GITWEB),$(GITWEB_JSLIB_FILES))
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+-	$(MAK_DIR_GITWEB)generate-gitweb-js.sh $@+ $^ && \
++	$(MAK_DIR_GITWEB)generate-gitweb-js.sh $@+ $(filter %.js,$^) && \
+ 	mv $@+ $@
  
--if get_option('curl').enabled()
-+if curl.found()
-   libgit_curl = declare_dependency(
-     sources: [
-       'http.c',
+ ### Installation rules
 
 -- 
 2.49.0.604.gff1f9ca942.dirty
