@@ -1,79 +1,79 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1D01D63E1
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4871DF269
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743410497; cv=none; b=FKA6pZ1OPA7m8NZOgzWIMRSxy6z1qeN7svMn3FiFm2m8K+Zk3XQ6lCAk/Fnc/IelMyLV4XJCCWNfSdMDtNOxdqLlEUnt+IW6179Zaptovk+N4p79rSk0D67dOKTpp/UJAHoJxohtTSVspBWE64/RZfdQkrPHzMhwZy2nhepsMfw=
+	t=1743410499; cv=none; b=mLTN292KcAXo00SXnZymeM40zKeOZqbjX93liPH8J2AOA3l7MpKFVAZ59inUUyz3ImrRqwKvQGY6O8mvS0Z6bbbYUlafmhSIR5F0n5guUFUJh6oKqG1501X7O+HFCBeGvNWA3L0LCkzXgn5LwcZ33gziy2QuFk+bJlCy4e46JHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743410497; c=relaxed/simple;
-	bh=Xf2c0usNbbdqHIQ5jI0XgbdYAduuAJKWHK16y03uO4U=;
+	s=arc-20240116; t=1743410499; c=relaxed/simple;
+	bh=dJoFtTphK01ZORRXzYWS73OOp7yckFDkiFv9ds4C+wY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=F+F+S4frTQ19YdETjLsQql6TfW4vVcD733Mnic0LO5bvZsnYTArBMZbKBP1GllfIE+GTpQUsld61pivYSt465NCPMSNJfp6XuX9h7F3KGF+eB9G2JjzUoQqell7geY/lwh1B2YtFWJMguF28xaWmFnLWGV8JV+HTaHpAAMkydM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V+aRdLjm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jWaKWx4x; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=ESibSmATNkK5OAcXN1tuTvvQs1caB9BOYRx5WA3/8zhbcF+vWpRPbTnRAtidiobXLn8GkPXygF4pbj5YuiSh0EkXp8UMdKC8QjhipP8l140UT+yj9nifKiz+PgR9zDuXdatlWoxckhnv2VIVGX/8SpnCSnYFkJsJ3w9qYkCAx1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BpIwYU0p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HU0P3FO0; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V+aRdLjm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jWaKWx4x"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 658F01382D37
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BpIwYU0p";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HU0P3FO0"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id DFFB41382D80
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:36 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 31 Mar 2025 04:41:35 -0400
+  by phl-compute-12.internal (MEProxy); Mon, 31 Mar 2025 04:41:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743410495;
-	 x=1743496895; bh=7EqkI8g+LtMedBS/FW2hTZMggaiE7vPO2nUWCNmzPMc=; b=
-	V+aRdLjmHT3MAn2//2nt2+nnrI2qHxjzHeONEbN9shhtQkJ1L0BSQHn+ryoIpbl3
-	ySm9S984vN4UA5Qirxa1VkEwGYLvFxdhic7AXOjCD6c0DcmV2M9SjKJ4CQnmZjR0
-	tczh6j/y1wiGvzsIRtFjIMo/iyX/m1DLjrXBx+tSCJvqqNLQQC7EduYhF1LeCMjM
-	DJxV6Qokj26HlPC7SSLJNEE91mYZ86Rar3XFtMaKOAorZRBLqN1WYegibaxGTn48
-	v1dRzKxOlbwXXFk7q688g/UySi7L5phNsm0CWweaKhXjORPjmxLrVspBuIhSDBVz
-	EiCZzakukURzH3xojhMPQw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743410496;
+	 x=1743496896; bh=rH6su4Nb6KFM29xpOoeYk+/rUYH+vvTAdXEIkczyeBs=; b=
+	BpIwYU0pKEDPr65mJvc9tbjBVlJQg4ku1Xk0AcCfHdZ9Tgxl4PioR4gYwi9nLM58
+	4QrvLmu7l6+R4EZsEfTfoLdINz8euIRfRjkSME/Ed9tRIgtO67V5topNCmk3PK6D
+	7fARVjPqlz41Ix78PwtskkOFhvQY4IDT68tStV3yaSkYYxXgURIFaPMUx4INAbCX
+	fuOskwBIR+usfQ37QYCAv0a2Y6VL+pfPTnGE7Kxvk7y80pdQJIHgzvpgi2sJUxjg
+	COYTghUFHCGVrYUWWOFIsW7T1Fdmbfrsp6Ck2gLIJF929PeH5wsH36+eBUoaFOBD
+	KcB7c+jIo1fgUn0yfP1SfA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743410495; x=
-	1743496895; bh=7EqkI8g+LtMedBS/FW2hTZMggaiE7vPO2nUWCNmzPMc=; b=j
-	WaKWx4xHkhVkMInyX3v6f32h1bUQTvZdjWJdjg8xJ36oGs54NWeV63BE3I2S6RyE
-	b/oU0qd6ogywOd/CtWgVZx22mbk4/onNRBFhsnALmMhsAgxxyxKQ80zluZCA7toL
-	YUDPx/gYKnqRkOBWCx1dANHbQ42INzg6fnVM4ocjiM753EEayiDlGl+1/N+/pBG+
-	W32Vff9jEpSh7Wb8MXB0au1qdNdEco99ON66HcQw4n8GljFNzzGu9uqtBfENuyuG
-	BgI2V1wWcWqh7grkxuQ8Dvcgo5tJI/qNjAgUhlZ2Bg8CC0Lb6cDBRTQSEQMmbgSx
-	wWK8hzQPBlQzBFQj0OZTw==
-X-ME-Sender: <xms:P1XqZ1TApvs2wCHWAPgLuxHtIOgjDkHjnCijDINpaI29y634Q57hFw>
-    <xme:P1XqZ-x3MWSi1qv98KbDDjmmaSUfuadxDPeAz1-U9R8QOBFrwI4tYKxgzpB1bmBRZ
-    zav4uDd9d2Xigh9Xg>
-X-ME-Received: <xmr:P1XqZ61vvkeV-BdYmT7MFFoehLw_4LrDoIt-rrR5Eoqte4U57e6ZkgGYXm2Q6QC-ePdXS0vyyLtxp812Hhn2UmuNWtZzkLkdDyPhY6aacLVgd_FM>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743410496; x=
+	1743496896; bh=rH6su4Nb6KFM29xpOoeYk+/rUYH+vvTAdXEIkczyeBs=; b=H
+	U0P3FO0KIv2HQunusxF3iiMrHpnRCt73pSJftC5pESfd7G6qQx5pH8MnHnzzS9jq
+	9MxJMS/Gr+6HDsF2XCjHTxoKEaZhTcGPdqiAf7OJsbM4QpTEQ05oYylfLIZMpamg
+	46zQm3Iiiqn17yKAdDiLevwheDqZsiMXJyeX7mXPeB2Z8DNHphCH1jd+XbHfqdfH
+	9hiOTmzz3OVxENm6rPHbn3/tm0YWTl/WBgA4ZnibyAWP1JwIW8ATM/2rFJv497lW
+	bgkxAOlmLfR7ZzS/HSbCUwR6DOgZbjLg+py5C0NvsMQhBfOLlN7XK+UZdJRB94Cr
+	SJezNzrPZGN5lip6zysbQ==
+X-ME-Sender: <xms:QFXqZ_ak3nJh2KoYHBGSm9KlUAIJMlwqgj_XxLhuIaR5B3haMeFSXQ>
+    <xme:QFXqZ-Zcv5_3-Kw6gzk6mHqZgy5kTD58xVc2D7qkt_48T43oRJRADrPQUByfQA1f1
+    bC3AOFtvZFvc6kQLQ>
+X-ME-Received: <xmr:QFXqZx-KWQGrNJxBtgoa2nFlUp1VOb54pJXr_bACt8cy7I2FV4vCjlNFDSYgMNjr2wE7lPRd73DBberuml0F8ukr_E3lyt29Yd7JNnL5DgPU4gXO>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeelgeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
     fugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufht
     vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuie
     dujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+    thgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
     dpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
     thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:P1XqZ9BmyuLlVZFX3cg5X-Z_jHgsaPUx-MHusCxj3hkNHx1FsMOO4Q>
-    <xmx:P1XqZ-hqkMypKePHa5QCE0ylfdbps1ewfrQM1P2dVO1Fa7ZlK6PmIw>
-    <xmx:P1XqZxqRUBg7jPRtcpcJWpGrYyxGCYnAQWHzfOBNnYbhpJ0LrzSHpg>
-    <xmx:P1XqZ5i1QH--Pd-brhhHP-pOEzY3047R4ElRu3dt73QYUd23SaZ74A>
-    <xmx:P1XqZyZ8WRkXNFK3eqxEW1cMLplFJ4eaLLDugsTR5dt0-1fwYJz1ywS4>
+X-ME-Proxy: <xmx:QFXqZ1oVr4DF-v3eDNAa5ACGSH8dPN55iUpg3PkxXNK9GwslJnAiTg>
+    <xmx:QFXqZ6q39g7ztJSfDP8qLgyxf9P6OeOVkSr2Ly9zljIjgcnZuQukbA>
+    <xmx:QFXqZ7SLrUWhU7OgWy2ENDPw0N9h5liChRxVW24SgJyzDgQ_iuvg-Q>
+    <xmx:QFXqZyrF9epeYoDUnTKrV7B5T6vThkNHwWXnq2p0dQ_p9mnQr3IIGg>
+    <xmx:QFXqZ_CxLWxxemzh0J0vezlK53lBEssiEa_lzbvFkSkA-vAUOJqF7hDZ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:34 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:36 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7b390e54 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 08bd77fb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 31 Mar 2025 08:41:34 +0000 (UTC)
+	Mon, 31 Mar 2025 08:41:35 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 31 Mar 2025 10:41:32 +0200
-Subject: [PATCH 14/16] reftable/table: introduce iterator for table blocks
+Date: Mon, 31 Mar 2025 10:41:34 +0200
+Subject: [PATCH 16/16] reftable/table: move printing logic into test helper
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,248 +82,255 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250331-pks-reftable-polishing-v1-14-ebed5247434c@pks.im>
+Message-Id: <20250331-pks-reftable-polishing-v1-16-ebed5247434c@pks.im>
 References: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
 In-Reply-To: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-Introduce a new iterator that allows the caller to iterate through all
-blocks contained in a table. This gives users more fine-grained control
-over how exactly those blocks are being read and exposes information to
-callers that was previously inaccessible.
+The logic to print individual blocks in a table is hosted in the
+reftable library. This is only the case due to historical reasons though
+because users of the library had no interfaces to read blocks one by
+one. Otherwise, printing individual blocks has no place in the reftable
+library given that the format will not be generic in the first place.
 
-This iterator will be required by a future patch series that adds
-consistency checks for the reftable backend. In addition to that though
-we will also reimplement `reftable_table_print_blocks()` on top of this
-new iterator in a subsequent commit.
+We have now grown a public interface to iterate through blocks contained
+in a table, and thus we can finally move the logic to print them into
+the test helper.
+
+Move over the logic and refactor it accordingly. Note that the iterator
+also trivially allows us to access index sections, which we previously
+didn't print at all. This omission wasn't intentional though, so start
+dumping those sections as well so that we can assert that indices are
+written as expected.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/reftable-table.h       |  16 ++++++
- reftable/table.c                |  47 +++++++++++++++++
- t/unit-tests/t-reftable-table.c | 109 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 172 insertions(+)
+ reftable/reftable-table.h         |  3 --
+ reftable/table.c                  | 65 ------------------------------------
+ t/helper/test-reftable.c          | 69 ++++++++++++++++++++++++++++++++++++++-
+ t/t0613-reftable-write-options.sh |  9 +++++
+ 4 files changed, 77 insertions(+), 69 deletions(-)
 
 diff --git a/reftable/reftable-table.h b/reftable/reftable-table.h
-index a78db9eea7e..f0f1784c664 100644
+index f0f1784c664..293fffbddc6 100644
 --- a/reftable/reftable-table.h
 +++ b/reftable/reftable-table.h
-@@ -10,6 +10,7 @@
- #define REFTABLE_TABLE_H
+@@ -97,9 +97,6 @@ uint64_t reftable_table_max_update_index(struct reftable_table *t);
+ /* return the min_update_index for a table */
+ uint64_t reftable_table_min_update_index(struct reftable_table *t);
  
- #include "reftable-iterator.h"
-+#include "reftable-block.h"
- #include "reftable-blocksource.h"
- 
+-/* print blocks onto stdout for debugging. */
+-int reftable_table_print_blocks(const char *tablename);
+-
  /*
-@@ -99,4 +100,19 @@ uint64_t reftable_table_min_update_index(struct reftable_table *t);
- /* print blocks onto stdout for debugging. */
- int reftable_table_print_blocks(const char *tablename);
- 
-+/*
-+ * An iterator that iterates through the blocks contained in a given table.
-+ */
-+struct reftable_table_iterator {
-+	void *iter_arg;
-+};
-+
-+int reftable_table_init_table_iterator(struct reftable_table *t,
-+				       struct reftable_table_iterator *it);
-+
-+void reftable_table_iterator_release(struct reftable_table_iterator *it);
-+
-+int reftable_table_iterator_next(struct reftable_table_iterator *it,
-+				 const struct reftable_block **out);
-+
- #endif
+  * An iterator that iterates through the blocks contained in a given table.
+  */
 diff --git a/reftable/table.c b/reftable/table.c
-index 5422ed6769c..d84a87e7ad0 100644
+index 48f0cdfd42b..8a7581b9800 100644
 --- a/reftable/table.c
 +++ b/reftable/table.c
-@@ -804,3 +804,50 @@ int reftable_table_print_blocks(const char *tablename)
- 	table_iter_close(&ti);
- 	return err;
+@@ -740,71 +740,6 @@ uint64_t reftable_table_min_update_index(struct reftable_table *t)
+ 	return t->min_update_index;
  }
-+
-+int reftable_table_init_table_iterator(struct reftable_table *t,
-+				       struct reftable_table_iterator *it)
+ 
+-int reftable_table_print_blocks(const char *tablename)
+-{
+-	struct {
+-		const char *name;
+-		int type;
+-	} sections[] = {
+-		{
+-			.name = "ref",
+-			.type = REFTABLE_BLOCK_TYPE_REF,
+-		},
+-		{
+-			.name = "obj",
+-			.type = REFTABLE_BLOCK_TYPE_OBJ,
+-		},
+-		{
+-			.name = "log",
+-			.type = REFTABLE_BLOCK_TYPE_LOG,
+-		},
+-	};
+-	struct reftable_block_source src = { 0 };
+-	struct reftable_table *table = NULL;
+-	struct table_iter ti = { 0 };
+-	size_t i;
+-	int err;
+-
+-	err = reftable_block_source_from_file(&src, tablename);
+-	if (err < 0)
+-		goto done;
+-
+-	err = reftable_table_new(&table, &src, tablename);
+-	if (err < 0)
+-		goto done;
+-
+-	table_iter_init(&ti, table);
+-
+-	printf("header:\n");
+-	printf("  block_size: %d\n", table->block_size);
+-
+-	for (i = 0; i < sizeof(sections) / sizeof(*sections); i++) {
+-		err = table_iter_seek_start(&ti, sections[i].type, 0);
+-		if (err < 0)
+-			goto done;
+-		if (err > 0)
+-			continue;
+-
+-		printf("%s:\n", sections[i].name);
+-
+-		while (1) {
+-			printf("  - length: %u\n", ti.block.restart_off);
+-			printf("    restarts: %u\n", ti.block.restart_count);
+-
+-			err = table_iter_next_block(&ti);
+-			if (err < 0)
+-				goto done;
+-			if (err > 0)
+-				break;
+-		}
+-	}
+-
+-done:
+-	reftable_table_decref(table);
+-	table_iter_close(&ti);
+-	return err;
+-}
+-
+ int reftable_table_init_table_iterator(struct reftable_table *t,
+ 				       struct reftable_table_iterator *it)
+ {
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index f8f1956f4f3..c465137826c 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -2,6 +2,7 @@
+ #include "hash.h"
+ #include "hex.h"
+ #include "reftable/system.h"
++#include "reftable/reftable-constants.h"
+ #include "reftable/reftable-error.h"
+ #include "reftable/reftable-merged.h"
+ #include "reftable/reftable-stack.h"
+@@ -20,6 +21,72 @@ static void print_help(void)
+ 	       "\n");
+ }
+ 
++static int dump_blocks(const char *tablename)
 +{
-+	struct table_iter *ti;
++	struct reftable_table_iterator ti = { 0 };
++	struct reftable_block_source src = { 0 };
++	struct reftable_table *table = NULL;
++	uint8_t section_type = 0;
 +	int err;
 +
-+	REFTABLE_ALLOC_ARRAY(ti, 1);
-+	if (!ti)
-+		return REFTABLE_OUT_OF_MEMORY_ERROR;
-+
-+	err = table_iter_init(ti, t);
++	err = reftable_block_source_from_file(&src, tablename);
 +	if (err < 0)
-+		goto out;
++		goto done;
 +
-+	it->iter_arg = ti;
-+	err = 0;
-+
-+out:
++	err = reftable_table_new(&table, &src, tablename);
 +	if (err < 0)
-+		reftable_free(ti);
++		goto done;
++
++	err = reftable_table_init_table_iterator(table, &ti);
++	if (err < 0)
++		goto done;
++
++	printf("header:\n");
++	printf("  block_size: %d\n", table->block_size);
++
++	while (1) {
++		const struct reftable_block *block;
++
++		err = reftable_table_iterator_next(&ti, &block);
++		if (err < 0)
++			goto done;
++		if (err > 0)
++			break;
++
++		if (block->block_type != section_type) {
++			const char *section;
++			switch (block->block_type) {
++			case REFTABLE_BLOCK_TYPE_LOG:
++				section = "log";
++				break;
++			case REFTABLE_BLOCK_TYPE_REF:
++				section = "ref";
++				break;
++			case REFTABLE_BLOCK_TYPE_OBJ:
++				section = "obj";
++				break;
++			case REFTABLE_BLOCK_TYPE_INDEX:
++				section = "idx";
++				break;
++			default:
++				err = -1;
++				goto done;
++			}
++
++			section_type = block->block_type;
++			printf("%s:\n", section);
++		}
++
++		printf("  - length: %u\n", block->restart_off);
++		printf("    restarts: %u\n", block->restart_count);
++	}
++
++done:
++	reftable_table_iterator_release(&ti);
++	reftable_table_decref(table);
 +	return err;
 +}
 +
-+void reftable_table_iterator_release(struct reftable_table_iterator *it)
-+{
-+	if (!it->iter_arg)
-+		return;
-+	table_iter_close(it->iter_arg);
-+	reftable_free(it->iter_arg);
-+	it->iter_arg = NULL;
-+}
-+
-+int reftable_table_iterator_next(struct reftable_table_iterator *it,
-+				 const struct reftable_block **out)
-+{
-+	struct table_iter *ti = it->iter_arg;
-+	int err;
-+
-+	err = table_iter_next_block(ti);
-+	if (err)
-+		return err;
-+
-+	*out = &ti->block;
-+
-+	return 0;
-+}
-diff --git a/t/unit-tests/t-reftable-table.c b/t/unit-tests/t-reftable-table.c
-index 77c59dbf46d..58b13ad496f 100644
---- a/t/unit-tests/t-reftable-table.c
-+++ b/t/unit-tests/t-reftable-table.c
-@@ -1,7 +1,10 @@
- #include "test-lib.h"
- #include "lib-reftable.h"
- #include "reftable/blocksource.h"
-+#include "reftable/constants.h"
-+#include "reftable/iter.h"
- #include "reftable/table.h"
-+#include "strbuf.h"
- 
- static int t_table_seek_once(void)
+ static int dump_table(struct reftable_merged_table *mt)
  {
-@@ -88,9 +91,115 @@ static int t_table_reseek(void)
- 	return 0;
- }
+ 	struct reftable_iterator it = { NULL };
+@@ -184,7 +251,7 @@ int cmd__dump_reftable(int argc, const char **argv)
+ 	arg = argv[1];
  
-+static int t_table_block_iterator(void)
-+{
-+	struct reftable_block_source source = { 0 };
-+	struct reftable_table_iterator it = { 0 };
-+	struct reftable_ref_record *records;
-+	const struct reftable_block *block;
-+	struct reftable_table *table;
-+	struct reftable_buf buf = REFTABLE_BUF_INIT;
-+	struct {
-+		uint8_t block_type;
-+		uint16_t header_off;
-+		uint16_t restart_count;
-+		uint16_t record_count;
-+	} expected_blocks[] = {
-+		{
-+			.block_type = BLOCK_TYPE_REF,
-+			.header_off = 24,
-+			.restart_count = 10,
-+			.record_count = 158,
-+		},
-+		{
-+			.block_type = BLOCK_TYPE_REF,
-+			.restart_count = 10,
-+			.record_count = 159,
-+		},
-+		{
-+			.block_type = BLOCK_TYPE_REF,
-+			.restart_count = 10,
-+			.record_count = 159,
-+		},
-+		{
-+			.block_type = BLOCK_TYPE_REF,
-+			.restart_count = 2,
-+			.record_count = 24,
-+		},
-+		{
-+			.block_type = BLOCK_TYPE_INDEX,
-+			.restart_count = 1,
-+			.record_count = 4,
-+		},
-+		{
-+			.block_type = BLOCK_TYPE_OBJ,
-+			.restart_count = 1,
-+			.record_count = 1,
-+		},
-+	};
-+	const size_t nrecords = 500;
-+	int ret;
-+
-+	REFTABLE_CALLOC_ARRAY(records, nrecords);
-+	for (size_t i = 0; i < nrecords; i++) {
-+		records[i].value_type = REFTABLE_REF_VAL1,
-+		records[i].refname = xstrfmt("refs/heads/branch-%03"PRIuMAX, (uintmax_t) i);
-+	}
-+
-+	t_reftable_write_to_buf(&buf, records, nrecords, NULL, 0, NULL);
-+	block_source_from_buf(&source, &buf);
-+
-+	ret = reftable_table_new(&table, &source, "name");
-+	check(!ret);
-+
-+	ret = reftable_table_init_table_iterator(table, &it);
-+	check(!ret);
-+
-+	for (size_t i = 0; i < ARRAY_SIZE(expected_blocks); i++) {
-+		struct reftable_iterator record_it = { 0 };
-+		struct reftable_record record = {
-+			.type = expected_blocks[i].block_type,
-+		};
-+
-+		ret = reftable_table_iterator_next(&it, &block);
-+		check(!ret);
-+
-+		check_int(block->block_type, ==, expected_blocks[i].block_type);
-+		check_int(block->header_off, ==, expected_blocks[i].header_off);
-+		check_int(block->restart_count, ==, expected_blocks[i].restart_count);
-+
-+		ret = reftable_block_init_iterator(block, &record_it);
-+		check(!ret);
-+
-+		for (size_t j = 0; ; j++) {
-+			ret = iterator_next(&record_it, &record);
-+			if (ret > 0) {
-+				check_int(j, ==, expected_blocks[i].record_count);
-+				break;
-+			}
-+			check(!ret);
-+		}
-+
-+		reftable_iterator_destroy(&record_it);
-+		reftable_record_release(&record);
-+	}
-+
-+	ret = reftable_table_iterator_next(&it, &block);
-+	check_int(ret, ==, 1);
-+
-+	for (size_t i = 0; i < nrecords; i++)
-+		reftable_free(records[i].refname);
-+	reftable_table_iterator_release(&it);
-+	reftable_table_decref(table);
-+	reftable_buf_release(&buf);
-+	reftable_free(records);
-+	return 0;
-+}
-+
- int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
- {
- 	TEST(t_table_seek_once(), "table can seek once");
- 	TEST(t_table_reseek(), "table can reseek multiple times");
-+	TEST(t_table_block_iterator(), "table can iterate through blocks");
- 	return test_done();
- }
+ 	if (opt_dump_blocks) {
+-		err = reftable_table_print_blocks(arg);
++		err = dump_blocks(arg);
+ 	} else if (opt_dump_table) {
+ 		err = dump_reftable(arg);
+ 	} else if (opt_dump_stack) {
+diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-options.sh
+index e2708e11d5b..e4c7461ce9e 100755
+--- a/t/t0613-reftable-write-options.sh
++++ b/t/t0613-reftable-write-options.sh
+@@ -93,6 +93,9 @@ test_expect_success 'many refs results in multiple blocks' '
+ 		    restarts: 3
+ 		  - length: 3289
+ 		    restarts: 3
++		idx:
++		  - length: 103
++		    restarts: 1
+ 		EOF
+ 		test-tool dump-reftable -b .git/reftable/*.ref >actual &&
+ 		test_cmp expect actual
+@@ -241,6 +244,9 @@ test_expect_success 'object index gets written by default with ref index' '
+ 		    restarts: 1
+ 		  - length: 80
+ 		    restarts: 1
++		idx:
++		  - length: 55
++		    restarts: 2
+ 		obj:
+ 		  - length: 11
+ 		    restarts: 1
+@@ -277,6 +283,9 @@ test_expect_success 'object index can be disabled' '
+ 		    restarts: 1
+ 		  - length: 80
+ 		    restarts: 1
++		idx:
++		  - length: 55
++		    restarts: 2
+ 		EOF
+ 		test-tool dump-reftable -b .git/reftable/*.ref >actual &&
+ 		test_cmp expect actual
 
 -- 
 2.49.0.604.gff1f9ca942.dirty
