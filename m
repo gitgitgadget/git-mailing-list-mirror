@@ -1,112 +1,109 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3842279C0
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 19:29:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D771581E0
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 20:16:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743449376; cv=none; b=pJIsb7MMeheCyLBatcq3T9Iob8FgF5I2xO2nTf2Ppk9k4vTrVmf4ThQegkYGcEZo5OW7EEEooyNUWZic29rcjSEx7DyRpFG5iNzT5+4YPei7iai+mOYAoKh4ydbQxQfwGgsbmF+gnvX/VtSLJuj0RoUbd3xqyvmaEl4SJ/JCmCY=
+	t=1743452220; cv=none; b=hX6OsNE3y9fX6mjht/k+56y4d8IorrjR/peUsXcNlC2e0S58sP6ZRPAlupBqq1K/39V+DYKJKDZqCsdUYhVcgpzSJiuPB2Xb6Dc6lzSkE9a10adxT7fkBfl8taFUXoxBmHBeASPIBv4kFxsjtDou12nhe6TexoMXpCi0vk70NUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743449376; c=relaxed/simple;
-	bh=FP0m26YYaffO/VHoh+lM8HIuqtTzmsN/GFnQwJVQsJU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Rj3iCFKh0yDzT0VkOkKK1ilRDIrB1rlxe/g/N1/VkeT1yJFLGZpEzYWlMIDtrwFtgoOBA39Xt90cja6xu7X2BZAUW8Yx2SO+PjUyDX0hCCF+Ah3jmr/Z5Tt/hvOcy8c1bCYdCR7pp9eThrg1S9uOubFfhxppupWLZQ8Pg2e65FI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N8Dsake/; arc=none smtp.client-ip=209.85.219.43
+	s=arc-20240116; t=1743452220; c=relaxed/simple;
+	bh=WZg6N/1MRNDVi34YTyLXNMQBWh7h5d4kmSmxDYK+gAU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jnfie9PPszLvvt9/sK5Oq80OgT/Z/D2MybBb6YquoPUDEJIMIyy3XthuaO9/fnFg0cIBIpWIRVqiOx8uosADOD/GsdEhB2/xxtHbevcGL1BCjkkt57ji8BLOxy6apMJBm7n44VwiY4Mp6y1DGr5p3LvWySmhJRwHnRJmbTz/y4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gQ+M7bMi; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N8Dsake/"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6e8f254b875so44406376d6.1
-        for <git@vger.kernel.org>; Mon, 31 Mar 2025 12:29:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gQ+M7bMi"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c58974ed57so513568285a.2
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 13:16:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743449373; x=1744054173; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pS7zwybNEtx9b6rt5s/1bNsZ53vFnSAX7KJ+3p1mo6A=;
-        b=N8Dsake/huwej/iJb0cNz2AEVtMcOuB34Nxu+89i5YFtE4daADUgJCbTYll4tYMUyd
-         EV1Za/lrkfrD3+4r6SlH/ntPLK8q1D28xJzz7DgTmg+01IuoBDeyOUQCet81U+bIzHKq
-         EW2wuKJ+ZaSQyG+9jNaECtLgplcLnnB2dmb1dUzIT/4/Dv6rVCdP3TKPd/Gz2S8SqRUf
-         /MS+s6I6eDfUU5wwl7qa+4UZpzGpmtATyaIM0g2A8KXwjJSeFzmsIveBYjc5J1x9Lgn9
-         tW8FXBgGpGfjyEyNMv/FyISbuTv7UuEgnoJD+Y3MPIeRj1XzKBSgr6qflLEQKoOW36rv
-         ED2g==
+        d=gmail.com; s=20230601; t=1743452217; x=1744057017; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eLtbfSolcOO9uWAerrQUg461nhBKBYqqyd5NATM61No=;
+        b=gQ+M7bMiiIGCk9KvDgVAutuCJuqhEE3b+VndOzL6D6Bf0Y7jAp74GsLiA2RxqHh5E0
+         MPt0s6JvLrdsItKPEjpl1i3d0pH+8XSlWpc381DJMQlANovPQk5x6riaalBCkS3rJbw/
+         Mn2O+jyLwA88b47dsjrsn/QPGlXmuIrRv3WMZTWXUt1xDmiQsnmsGz/Q+jYFnmOFf3Uu
+         hogoYp6rH/H5S10xBKKI1DbvtLoJ7GRVaa3p+BFPJu/HZVCcB60XOtKaei0V0b6oBMmk
+         5YyVygpd4/1Y7rhk44RayC1IaHLIZKfNv9NeVHo7ePi1qCm/X6hv9dsSWKNFrJaZc35O
+         AfEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743449373; x=1744054173;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pS7zwybNEtx9b6rt5s/1bNsZ53vFnSAX7KJ+3p1mo6A=;
-        b=u7Sr1JT83KmcWhbGVae6mmMUpyCOABNJeWnnm7FWGczrdOAyM3X9cTkfp0CrV26QDB
-         tzBS5ocUZECMVuS1cs7cK4iIRXYCfgMek1K3j6UpXAbSvPOKGnEq5zxaDV/qVur/lEms
-         sb6HK0uzJc6dUaP0eE/ZzX+PzOTrHzx8/Pxhvld1pmAdnKGlI6ixPoN7+F81F9sxasfh
-         Kmk4CMzfE+nX6Mg/GOxO6tlN/bYsO3pvW0q16OON7lfEJSRx1B0BTLOi1pWDduR84zGB
-         6EL3ySg+k6Wd2iGXU21U51hIFFVpbDqFBub/3u9nEVJJ/QJaXMLoX48rCu55hiVaAr9F
-         WBvg==
-X-Gm-Message-State: AOJu0YyPSY3tySXypuiitpwCY8Sk5ccEIh4hfApEP7Rp9rr1MwyntPXm
-	FyAkkOQzrQVg0mO1dDqG8PWPyswmr7/Y5Rc0OqifgN0RKxVYPMbT5ardHg==
-X-Gm-Gg: ASbGncvBC1CjQOwqh33UWVco3/F/TaVSfkCB4Sc22aoWPJcQm815N9q0bmowCIfX/Hb
-	xLeQszepxB+b3OY4irVTLksPoWFJHIcORkEGkPSx2ugulVKBlOIGxMa+uodfK3dljpQolyAwSMk
-	iQywakjRR+vV9IzA/bjdfcSaK/7QmvWHHiWOZEThUHraC+fyyay6x6vcQCZ9RTUBcOF43b7l9BN
-	puCUCV5oJhla/vdMWfGDyEaj2Jox5wBQ8szMii8P9V8zCE7jort7uiVaHOrX8Y3IvgGJyVYphh7
-	2vL1Vi+ngNHo2BuAOpFV74WADfyUY7hLHzWs7pZm9oK7oMs4SN2AC0jswbf9VJ/3mA==
-X-Google-Smtp-Source: AGHT+IGTUlUQrBO6REAVqaN3OEHesNqv7Weg3u3HJSRK6kEU9Jhegv+3AGdE8puODAlQmWm6YHcB5g==
-X-Received: by 2002:a05:6214:f0f:b0:6e8:f65a:67bd with SMTP id 6a1803df08f44-6eed5fb9b02mr157944006d6.11.1743449372957;
-        Mon, 31 Mar 2025 12:29:32 -0700 (PDT)
-Received: from ?IPV6:2600:4040:2644:5100::387? ([2600:4040:2644:5100::387])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c5f765ada7sm540594485a.9.2025.03.31.12.29.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Mar 2025 12:29:32 -0700 (PDT)
-Message-ID: <5b09f1c2-be58-43a2-9908-7243b5207251@gmail.com>
-Date: Mon, 31 Mar 2025 15:29:31 -0400
+        d=1e100.net; s=20230601; t=1743452217; x=1744057017;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eLtbfSolcOO9uWAerrQUg461nhBKBYqqyd5NATM61No=;
+        b=uQ+49VRtCR8p5XtcevxdV587LW+hAOex4N6kuJnlUbQmHqPYWNgCfItgd4/JRpeK5t
+         cG8SWGwvaLbTBmZScwAK1FLgEJ6gf9wEqZoUAN0ELw+eSYPHlAum94NU7RxlVbmZaJm2
+         Fjfkprui5uwwpArUcmqKOAa3TRLH4C/H/+KicoIGR24VKzBkfLTuIpV5YjQ+qNxCy8uK
+         Nuzn+e0pUPW/CF05D1NgyCtNrf9BHgdAlJz3TRuAv3ZQFJ/AwQuhNW3ztKrTm99NnTXD
+         gGFolony7My0l3O+tzoq0AxVBFsQsV+th6QS12Vp0GM2EVT9UOfFcKVfE5Ieh4OZ88Tm
+         qXGQ==
+X-Gm-Message-State: AOJu0YwlzLQkev7bah4PtwaApgFDKyLd3b7Yk80u/USdUR6r8h/EXlNA
+	Jlbtv2j8LbpJPnL3Qq2lWIrtJzlcjb4Av9+snplcpeikwh//S0sE0bCKpjHa5bI5XhTe2n3zzyW
+	dhgNih00dJsgySj1hfiIkY2ueKdI=
+X-Gm-Gg: ASbGncvag4S+DqZ/PCFTgRDOpG1tvJ7xCk7dAbbUFWkUSfrF/ddYhCoBzl1MA3TlO/K
+	R+UePSeQ1JRTWFREWfbs4UBaIEaUPbsHL9UZ8stqZMjt0iY1PrW4qbKyHAjp3ZyJmF164A1/WpW
+	mhznKBfPlexD20h7Fpewz/NUtp7ZxuQQrXbbF1qjJVIt2cPSn6GD+VHnZUMpxIF2rj1EuxIJY=
+X-Google-Smtp-Source: AGHT+IFr7FXIqsESA8ifll2xo7Sn1/wn3/5sBRswuOef/gRPyb8S7hzb6ExtrqHtFlYRcztREnvs6UJTGl1TJHQSLes=
+X-Received: by 2002:a05:622a:1350:b0:476:980c:10a4 with SMTP id
+ d75a77b69052e-478f6c9fd0bmr5144241cf.23.1743452216887; Mon, 31 Mar 2025
+ 13:16:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitk - override $PATH search only on Windows
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de
-References: <53c31331-97ed-48be-8399-2701581b09a9@gmail.com>
- <20250331151213.274691-1-mlevedahl@gmail.com>
- <58556f57-698d-4f58-bbcf-c752cba00ff7@kdbg.org>
-Content-Language: en-US
-From: Mark Levedahl <mlevedahl@gmail.com>
-In-Reply-To: <58556f57-698d-4f58-bbcf-c752cba00ff7@kdbg.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CAE8gLhmKtV-Kz4jYT6r1NanmGdAyzd0CumVGsVnVpePQPAtnzQ@mail.gmail.com>
+ <20250331-devious-woodpecker-of-temperance-b18608@lemur>
+In-Reply-To: <20250331-devious-woodpecker-of-temperance-b18608@lemur>
+From: MegaBrutal <megabrutal@gmail.com>
+Date: Mon, 31 Mar 2025 22:15:00 +0200
+X-Gm-Features: AQ5f1JojBDJlQGwqJDvA3S3QFHCaexE4evcMLfHIm8Q6hzYBXsdHlAPm47Wr0tw
+Message-ID: <CAE8gLh=1bqA6UTR4wAX1u1naic2cSGiekz0jLKxWeaxBKa=xiQ@mail.gmail.com>
+Subject: Re: How to get git-daemon to work in a post-CVE world?
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 3/31/25 1:12 PM, Johannes Sixt wrote:
-> Am 31.03.25 um 17:12 schrieb Mark Levedahl:
->> Commit 4cbe9e0e2 was written to address problems that result from Tcl's
->> documented behavior on Windows where the current working directory and a
->> number of Windows system directories are automatically prepended to
->> $PATH when searching for executables [1].  This basic Windows behavior
->> has resulted in more than one CVE against git for Windows:
->> CVE-2023-23618, CVE-2022-41953 are listed on the git for Windows github
->> website for the Tcl components of git (gitk, git-gui).
->>
->> 4cbe9e0e2 is intended to restrict the search to looking only in
->> directories given in $PATH and in the given order, which is exactly the
->> Tcl behavior documented to exist on non-Windows platforms [1]. Thus,
->> this change could have been written to affect only Windows, leaving
->> other platforms alone.
->>
->> However, 4cbe9e0e2 implements the override for all platforms.  and
->> includes specialized code for Cygwin, copied copied from git-gui prior
->> to commit 6d2f9d90 on https://github.com/j6t/git-gui.git), so targets a
-> I can't find 6d2f9d90 anywhere. Do you have a URL?
-
-Sorry about that (bad copy / paste). Should be 7145c654
-
-https://github.com/j6t/git-gui/commit/7145c654fffecd1f3d4a2b8bf05755ce262903e8
-
-> Now that this code is only about Windows, _search_exe is always ".exe".
-> It would be great if we could remove it as well.
+Konstantin Ryabitsev <konstantin@linuxfoundation.org> ezt =C3=ADrta
+(id=C5=91pont: 2025. m=C3=A1rc. 31., H, 16:53):
 >
-Will do for v2.
+> On Sun, Mar 30, 2025 at 10:30:00AM +0200, MegaBrutal wrote:
+> > Hi Everyone,
+> >
+> > I'm new to the list, just thought it's the best place to talk about
+> > Git. I'm running a public read-only git server with git-daemon. I've
+> > recently noticed that my repos can't be cloned and found that
+> > particular CVE which made git to verify the owners of the git repos.
+> >
+> > fatal: detected dubious ownership in repository at '/srv/git/mgsautils.=
+git'
+> >
+> > The feasible solution is to declare the directory safe in .gitconfig.
+>
+> You can set global values in /etc/gitconfig, e.g.:
+>
+>     [safe]
+>       directory =3D /srv/git/*
 
-Mark
+Thanks! While it is much more convenient to set it in one global
+/etc/gitconfig than individual home directories, I encountered the
+following problems:
 
+1. It doesn't do anything with the other error I get, when the
+problematic directory is '.'. I still keep getting that error message.
+2. Git daemon doesn't seem to resolve the '*' wildcard, i.e. with the
+wildcard I get the original message back which complains about
+'/srv/git/mgsautils.git', despite it should be covered by
+'/srv/git/*'. When I supply the full path, however, the error message
+is still about '.'.
+
+I even performed a whole Ubuntu release upgrade to get a new version
+of Git, but 2.43.0 acts the same. Seems like git-daemon is more
+stricts than plain git =E2=80=93 what might be the problem?
