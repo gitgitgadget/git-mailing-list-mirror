@@ -1,79 +1,80 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3C21DE8A2
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:41:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06981DF247
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:41:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743410494; cv=none; b=ofVrf7F+VMo2o/JjcRFSjxdeC0dAFVN+KMVBC+BJSkl2cZRCH4Tj1foooagAqaz8fbf7tHgr9tw+wvK2z/6kyFDBa+qpYAvv74+4f86oXjzekpuL+94auN0trunsYYn32N7XheGtSNAH0bIUWha9GYFZWi7BR02SIyFYA36uX/I=
+	t=1743410496; cv=none; b=KfKtUwDCxHaLu8LgOkvEhMW12AnzlGohTBDELF4GL6DK8KzkrtPefQoMh4zMndOKAWex6mPY8ygxKWS49xO03BTJmpMnze6T36DQbx/dOw0ZSnXY8va20HXt4cBmxqR0EmQG8r2CAnJ7C3zxywwBvZ9GWl9bvFrMZk//mzWlbMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743410494; c=relaxed/simple;
-	bh=sE+aO7M4s6dwLf0rmqLkyoBeKUYppgmNHatMZLJqtMo=;
+	s=arc-20240116; t=1743410496; c=relaxed/simple;
+	bh=v8g9rW49YfpswlkdXbSNxQB0HqyzvwWp58E/HVHNDzo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=t6TFSmiCooRF78HFIYI39cPd1P/17n1icVbivcPFShYe31gunASGQTtG/i72tnPpTBhdP4Q0sYL3ttZwJcG8/D6yzajtgiZr2JUdOsIA887cad40SbW3hkj/EzyEfYjMwkaMTpDPztW2Of1U60S6FrcEV4d9r8X0wC/bkSeS6o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MoZmlnK1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o8mAzOmB; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=M4YnTVn5jOmNMRbk7vtI5hB5+3QAWJ2iMwaY2ABGNqK5QWwhIPbytPcIiRD7/ek51gXSQgDIVOoO+QRxIpB8CgAkvp02SXWI/bitcHbtHc/jpRvwP2hY84ubesKc1zfJWphD3ardKt2Hngy2sBnVzRukQCKFoXZg+AyS5v0pz3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dMRA0ur3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FMA3i2Lg; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MoZmlnK1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o8mAzOmB"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 187821382D85
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dMRA0ur3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FMA3i2Lg"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D255B11400D4
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:33 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Mon, 31 Mar 2025 04:41:32 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 31 Mar 2025 04:41:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743410492;
-	 x=1743496892; bh=Wd7GpukHog3NYfECwtiZ1DfkBhWLjHYbHlfB2BqIf50=; b=
-	MoZmlnK1//JdWBJHTYkQOVPmWpmKH3FxYptSGLwlfxBST3/yA7hgexleoQWKcxNC
-	O0zDLMmTFn8IO5E/O2iVxu2+U8avvJl2k0rcX2F1sUvLhK/dmd2hZzFh6jv6gB1E
-	KwLOgaJIi8+oDjzMvifUC9Z6XcUSKVyqm26h+qovzvD00xWZjIPJ8Xd4st/0Jsdx
-	DeRJ8/9Tk6BkzEYm7R+UgGeLyxSMnkge4UjLGwXKWFixrfjjHYEW8dl82JDQ6A8K
-	VYY2B/51gj0K7o6Uoc0Vw5Yp1MDWWJGDpIBN9Eign9Yj6LydP4jxkLxQngdvy1qc
-	sExuI5zBj3A3cP17ROHyAg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743410493;
+	 x=1743496893; bh=NsTWpRmeqRQ2r7bNt07bFQv2sErTEnKzM6CdlrUkZoU=; b=
+	dMRA0ur3jm0IaV153KiNcGQnZun+bt09xgsVnEfg/zLVxBxK1nrNkIVD/XpTizzW
+	3wVcbr3XZOP3uhbq9btaSxqfLT+pRGZo5JF0GxsN5wJboVkc6l+RD1MBiJS61NKY
+	DcpJXBqcIn1bKdaF7mt926wA4upbMF4AbBDlE87KA0BgTrlN99nAVxmuq46UVViU
+	YxCr8I3ctSF17yAXvhQXwi8l+f1FvbdMxHCjcHjtwqWeEFuqeCjxLKxUySBzvgFM
+	xVa0gS7oUkt3fDYIl5U/nEcqMdSx2H2J/9rwhxXN15rWC4+dgbk1HoN4SoRGmEcB
+	d6JvQOA0BYDCAD1JtI0xWA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743410492; x=
-	1743496892; bh=Wd7GpukHog3NYfECwtiZ1DfkBhWLjHYbHlfB2BqIf50=; b=o
-	8mAzOmByGblstuQh0sAHQZRY8ycyMFH9/ZMR22uXxG+jIP9RAxpyVxJJ34LJ95gO
-	+UHo9fOiQouZOu1DFk0pINRdMQJA24PwLzbWfKrjtzlnlpeuJW2y/BwwMRLJPqAe
-	lQz4JimPRGI+15wyiK8QALvbC56J6lGqbxZarK8jxswOJHW72GciQuNmgf6/eeXP
-	zySjyM4peZB5vKR2Ylyo5IVeGNUftfVJLCNhQ/TvC9moDZWKp140dI75CYZYgC6R
-	MZk98cihok2tv2XG+ky02J5yUB66L64pVDURhtLSvJVxJvrP4sAlC49n8LGedFIR
-	knkjbK4d8u6gt2ENmEm+w==
-X-ME-Sender: <xms:O1XqZ3kzjFiIkCD8i9zWI--UbjQxHRpIjng9a2IllLK9Spe2BOaVXA>
-    <xme:O1XqZ628clMCv_hPtCty7TNtqiHgsDfBZXx9wzl9LZrF6mkV65N8mblGDn5PA_lQo
-    mAoA0hFKkd-nzD6IQ>
-X-ME-Received: <xmr:O1XqZ9obOoq367znbD6EJn7YwT-L754uH6ruben62vgJ-rJss89FEYACC9YOxP_HZifZn443qfCYsRpyBPjlNq0S4efsU2MHlDEkkRi6_H-qVPih>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743410493; x=
+	1743496893; bh=NsTWpRmeqRQ2r7bNt07bFQv2sErTEnKzM6CdlrUkZoU=; b=F
+	MA3i2LgNjDEPi9gvtzIMCcEq8EDnxw4GKPJLwqMUO/DlbXP/m1hjKrQnrJ8NeEPU
+	cMdZ4LZ8VZJwwWe1Q0StKoiUFiw7vRzoKAgzqceb4F3tC0u2iiRIeI+zTslha+GI
+	tY3gVIlZy+OfIuyxdXklyIfdtKJzGuR315GDTx+mJ6UaSfGyRcr3a/kSqTWMuiYe
+	N0JdSDamePeffJWslKtr1p9SIHAVN18kI1gwAHD1gxOW0lIVHqI/fr3Spnuz5LqS
+	I9oVNZVFK2J51ghJdM053OGieXSwBuiVBABqCI7eAbqEjWpV5Hq6gVMjiVgGctLJ
+	3yJPnSteICNN9LagrF1hw==
+X-ME-Sender: <xms:PVXqZ3vEsbZ5izPcruJUIsJXdBmsigjkTl3A2-pJWQU4F0-vaUDpHg>
+    <xme:PVXqZ4dGkZMPKc1ezjKeF_qAfnXU9zwF5j6DPR1SrY5FxfyCCPWJgOr2qxiVv6aH5
+    F1roHIKJmqJx7xnKg>
+X-ME-Received: <xmr:PVXqZ6ypDGjvP9bhzLNJOIQjYynJ628SRu9vkRG9ID6EDYa9QBNQ2fVQjxWsn-XV7291c4MgSv-w11KdSYwMcExNdW2qkGB6VHHpDT5a9OCFjDhM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeelgeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
     fugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufht
     vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuie
     dujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+    thgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
     dpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
     thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:O1XqZ_kjnw3AFI64OEY7_9GpPSVZDyv3db_a70CWAHX8a2ERT_hN9w>
-    <xmx:O1XqZ13L4xrT1O9v-G5yRKpov7PoDa0CipPelCxguvq3h5n9QhmFKw>
-    <xmx:O1XqZ-vAVbwc3bahvuqbQssi_EElqhWBmFm32f4fuk_ARPi19AYaYQ>
-    <xmx:O1XqZ5XXF1EpaL8PMyMeitEp_jIvS_B6r9LcILxhUFhx6D_TbHG-fQ>
-    <xmx:PFXqZ29VL471at9NgjkI13_lcT2k3QIk1bmwc1TlvJtcbZIvNPo4R8kK>
+X-ME-Proxy: <xmx:PVXqZ2MySIVuzt0vK6vmaKEdP-SOc1RBbWo7BY88LaYW_kvyVuraIg>
+    <xmx:PVXqZ38qiia_zoRQg6Imhdgum9R69v75n1C-xO-yCNB-PPWOMQ-q5w>
+    <xmx:PVXqZ2XO_FqSFKF0Kvza-dMgBhT02DmzfV3q6RJO9465x2d0rmCDTw>
+    <xmx:PVXqZ4cwzCyuAQ-nzhxLsivw9MUJ1Mh7QVZSt1m4S6HkkfY6XeaYcg>
+    <xmx:PVXqZxkHQOYeROLMODgSXM5KLF9SENrdaHYnOMtqh82ZgJF-L2vh920z>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:31 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:33 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c91e9f2e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id c128e83f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 31 Mar 2025 08:41:31 +0000 (UTC)
+	Mon, 31 Mar 2025 08:41:32 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 31 Mar 2025 10:41:29 +0200
-Subject: [PATCH 11/16] reftable/block: make block iterators reseekable
+Date: Mon, 31 Mar 2025 10:41:30 +0200
+Subject: [PATCH 12/16] reftable/block: expose a generic iterator over
+ reftable records
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,303 +83,235 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250331-pks-reftable-polishing-v1-11-ebed5247434c@pks.im>
+Message-Id: <20250331-pks-reftable-polishing-v1-12-ebed5247434c@pks.im>
 References: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
 In-Reply-To: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-Refactor the block iterators so that initialization and seeking are
-different from one another. This makes the iterator trivially reseekable
-by storing the pointer to the block at initialization time, which we can
-then reuse on ever seek.
+Expose a generic iterator over reftable records and expose it via the
+public interface. Together with an upcoming iterator for reftable blocks
+contained in a table this will allow users to trivially iterate through
+blocks and their respective records individually.
 
-This refactoring prepares the code for exposing a `reftable_iterator`
-interface for blocks in a subsequent commit. Callsites are adjusted
-accordingly.
+This functionality will be used to implement consistency checks for the
+reftable backend, which requires more fine-grained control over how we
+read data.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/block.c                | 23 +++++++++++++----------
- reftable/block.h                | 21 ++++++++++++++++-----
- reftable/iter.c                 |  2 +-
- reftable/table.c                | 11 +++++++----
- t/unit-tests/t-reftable-block.c | 30 +++++++++++++++---------------
- 5 files changed, 52 insertions(+), 35 deletions(-)
+ reftable/block.c                | 56 +++++++++++++++++++++++++++++
+ reftable/block.h                |  2 +-
+ reftable/reftable-block.h       |  5 +++
+ t/unit-tests/t-reftable-block.c | 78 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 140 insertions(+), 1 deletion(-)
 
 diff --git a/reftable/block.c b/reftable/block.c
-index 576c6caf59b..6e5c1191f5f 100644
+index 6e5c1191f5f..fb91090079b 100644
 --- a/reftable/block.c
 +++ b/reftable/block.c
-@@ -381,11 +381,16 @@ static uint32_t block_restart_offset(const struct reftable_block *b, size_t idx)
- 	return reftable_get_be24(b->block.data + b->restart_off + 3 * idx);
+@@ -10,6 +10,7 @@
+ 
+ #include "blocksource.h"
+ #include "constants.h"
++#include "iter.h"
+ #include "record.h"
+ #include "reftable-error.h"
+ #include "system.h"
+@@ -581,6 +582,61 @@ int block_iter_seek_key(struct block_iter *it, struct reftable_buf *want)
+ 	return err;
  }
  
--void block_iter_seek_start(struct block_iter *it, const struct reftable_block *block)
-+void block_iter_init(struct block_iter *it, const struct reftable_block *block)
- {
- 	it->block = block;
-+	block_iter_seek_start(it);
++static int block_iter_seek_void(void *it, struct reftable_record *want)
++{
++	struct reftable_buf buf = REFTABLE_BUF_INIT;
++	struct block_iter *bi = it;
++	int err;
++
++	if (bi->block->block_type != want->type)
++		return REFTABLE_API_ERROR;
++
++	err = reftable_record_key(want, &buf);
++	if (err < 0)
++		goto out;
++
++	err = block_iter_seek_key(it, &buf);
++	if (err < 0)
++		goto out;
++
++	err = 0;
++
++out:
++	reftable_buf_release(&buf);
++	return err;
 +}
 +
-+void block_iter_seek_start(struct block_iter *it)
++static int block_iter_next_void(void *it, struct reftable_record *rec)
 +{
- 	reftable_buf_reset(&it->last_key);
--	it->next_off = block->header_off + 4;
-+	it->next_off = it->block->header_off + 4;
- }
- 
- struct restart_needle_less_args {
-@@ -473,12 +478,11 @@ void block_iter_close(struct block_iter *it)
- 	reftable_buf_release(&it->scratch);
- }
- 
--int block_iter_seek_key(struct block_iter *it, const struct reftable_block *block,
--			struct reftable_buf *want)
-+int block_iter_seek_key(struct block_iter *it, struct reftable_buf *want)
++	return block_iter_next(it, rec);
++}
++
++static void block_iter_close_void(void *it)
++{
++	block_iter_close(it);
++}
++
++static struct reftable_iterator_vtable block_iter_vtable = {
++	.seek = &block_iter_seek_void,
++	.next = &block_iter_next_void,
++	.close = &block_iter_close_void,
++};
++
++int reftable_block_init_iterator(const struct reftable_block *b,
++				 struct reftable_iterator *it)
++{
++	struct block_iter *bi;
++
++	REFTABLE_CALLOC_ARRAY(bi, 1);
++	block_iter_init(bi, b);
++
++	assert(!it->ops);
++	it->iter_arg = bi;
++	it->ops = &block_iter_vtable;
++
++	return 0;
++}
++
+ void block_writer_release(struct block_writer *bw)
  {
- 	struct restart_needle_less_args args = {
- 		.needle = *want,
--		.block = block,
-+		.block = it->block,
- 	};
- 	struct reftable_record rec;
- 	int err = 0;
-@@ -496,7 +500,7 @@ int block_iter_seek_key(struct block_iter *it, const struct reftable_block *bloc
- 	 * restart point. While that works alright, we would end up scanning
- 	 * too many record.
- 	 */
--	i = binsearch(block->restart_count, &restart_needle_less, &args);
-+	i = binsearch(it->block->restart_count, &restart_needle_less, &args);
- 	if (args.error) {
- 		err = REFTABLE_FORMAT_ERROR;
- 		goto done;
-@@ -521,12 +525,11 @@ int block_iter_seek_key(struct block_iter *it, const struct reftable_block *bloc
- 	 *     starting from the preceding restart point.
- 	 */
- 	if (i > 0)
--		it->next_off = block_restart_offset(block, i - 1);
-+		it->next_off = block_restart_offset(it->block, i - 1);
- 	else
--		it->next_off = block->header_off + 4;
--	it->block = block;
-+		it->next_off = it->block->header_off + 4;
- 
--	err = reftable_record_init(&rec, reftable_block_type(block));
-+	err = reftable_record_init(&rec, reftable_block_type(it->block));
- 	if (err < 0)
- 		goto done;
- 
+ 	deflateEnd(bw->zstream);
 diff --git a/reftable/block.h b/reftable/block.h
-index 268d5a1e005..1bfd44f56aa 100644
+index 1bfd44f56aa..3d069393922 100644
 --- a/reftable/block.h
 +++ b/reftable/block.h
-@@ -79,12 +79,23 @@ struct block_iter {
- 	.scratch = REFTABLE_BUF_INIT, \
- }
+@@ -63,7 +63,7 @@ int block_writer_finish(struct block_writer *w);
+ /* clears out internally allocated block_writer members. */
+ void block_writer_release(struct block_writer *bw);
  
--/* Position `it` at start of the block */
--void block_iter_seek_start(struct block_iter *it, const struct reftable_block *block);
-+/*
-+ * Initialize the block iterator with the given block. The iterator will be
-+ * positioned at the first record contained in the block. The block must remain
-+ * valid until the end of the iterator's lifetime. It is valid to re-initialize
-+ * iterators multiple times.
-+ */
-+void block_iter_init(struct block_iter *it, const struct reftable_block *block);
+-/* Iterate over entries in a block */
++/* Iterator for records contained in a single block. */
+ struct block_iter {
+ 	/* offset within the block of the next entry to read. */
+ 	uint32_t next_off;
+diff --git a/reftable/reftable-block.h b/reftable/reftable-block.h
+index ce1d9d3ce79..ca13e5dd9c3 100644
+--- a/reftable/reftable-block.h
++++ b/reftable/reftable-block.h
+@@ -13,6 +13,7 @@
+ 
+ #include "reftable-basics.h"
+ #include "reftable-blocksource.h"
++#include "reftable-iterator.h"
+ 
+ struct z_stream_s;
+ 
+@@ -60,6 +61,10 @@ int reftable_block_init(struct reftable_block *b,
+ /* Release resources allocated by the block. */
+ void reftable_block_release(struct reftable_block *b);
+ 
++/* Initialize a generic record iterator from the given block. */
++int reftable_block_init_iterator(const struct reftable_block *b,
++				 struct reftable_iterator *it);
 +
-+/* Position the initialized iterator at the first record of its block. */
-+void block_iter_seek_start(struct block_iter *it);
- 
--/* Position `it` to the `want` key in the block */
--int block_iter_seek_key(struct block_iter *it, const struct reftable_block *block,
--			struct reftable_buf *want);
-+/*
-+ * Position the initialized iterator at the desired record key. It is not an
-+ * error in case the record cannot be found. If so, a subsequent call to
-+ * `block_iter_next()` will indicate that the iterator is exhausted.
-+ */
-+int block_iter_seek_key(struct block_iter *it, struct reftable_buf *want);
- 
- /* return < 0 for error, 0 for OK, > 0 for EOF. */
- int block_iter_next(struct block_iter *it, struct reftable_record *rec);
-diff --git a/reftable/iter.c b/reftable/iter.c
-index 74684de8f6a..7a7e8aa4d7e 100644
---- a/reftable/iter.c
-+++ b/reftable/iter.c
-@@ -139,7 +139,7 @@ static int indexed_table_ref_iter_next_block(struct indexed_table_ref_iter *it)
- 		/* indexed block does not exist. */
- 		return REFTABLE_FORMAT_ERROR;
- 	}
--	block_iter_seek_start(&it->cur, &it->block);
-+	block_iter_init(&it->cur, &it->block);
- 	return 0;
- }
- 
-diff --git a/reftable/table.c b/reftable/table.c
-index 3f2e70caac4..5422ed6769c 100644
---- a/reftable/table.c
-+++ b/reftable/table.c
-@@ -208,7 +208,7 @@ static int table_iter_next_block(struct table_iter *ti)
- 
- 	ti->block_off = next_block_off;
- 	ti->is_finished = 0;
--	block_iter_seek_start(&ti->bi, &ti->block);
-+	block_iter_init(&ti->bi, &ti->block);
- 
- 	return 0;
- }
-@@ -256,7 +256,7 @@ static int table_iter_seek_to(struct table_iter *ti, uint64_t off, uint8_t typ)
- 
- 	ti->typ = reftable_block_type(&ti->block);
- 	ti->block_off = off;
--	block_iter_seek_start(&ti->bi, &ti->block);
-+	block_iter_init(&ti->bi, &ti->block);
- 	ti->is_finished = 0;
- 	return 0;
- }
-@@ -349,7 +349,8 @@ static int table_iter_seek_linear(struct table_iter *ti,
- 	 * the wanted key inside of it. If the block does not contain our key
- 	 * we know that the corresponding record does not exist.
- 	 */
--	err = block_iter_seek_key(&ti->bi, &ti->block, &want_key);
-+	block_iter_init(&ti->bi, &ti->block);
-+	err = block_iter_seek_key(&ti->bi, &want_key);
- 	if (err < 0)
- 		goto done;
- 	err = 0;
-@@ -417,7 +418,9 @@ static int table_iter_seek_indexed(struct table_iter *ti,
- 		if (err != 0)
- 			goto done;
- 
--		err = block_iter_seek_key(&ti->bi, &ti->block, &want_index.u.idx.last_key);
-+		block_iter_init(&ti->bi, &ti->block);
-+
-+		err = block_iter_seek_key(&ti->bi, &want_index.u.idx.last_key);
- 		if (err < 0)
- 			goto done;
+ /* Returns the block type (eg. 'r' for refs). */
+ uint8_t reftable_block_type(const struct reftable_block *b);
  
 diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
-index e36ed7ac576..c4ced39a73b 100644
+index c4ced39a73b..e092d0bb8f8 100644
 --- a/t/unit-tests/t-reftable-block.c
 +++ b/t/unit-tests/t-reftable-block.c
-@@ -66,7 +66,8 @@ static void t_ref_block_read_write(void)
- 	block_source_from_buf(&source ,&block_data);
- 	reftable_block_init(&block, &source, 0, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
+@@ -376,12 +376,90 @@ static void t_index_block_read_write(void)
+ 		reftable_record_release(&recs[i]);
+ }
  
--	block_iter_seek_start(&it, &block);
-+	block_iter_init(&it, &block);
-+	block_iter_seek_start(&it);
++static void t_block_iterator(void)
++{
++	struct reftable_block_source source = { 0 };
++	struct block_writer writer = {
++		.last_key = REFTABLE_BUF_INIT,
++	};
++	struct reftable_record expected_refs[20];
++	struct reftable_ref_record ref = { 0 };
++	struct reftable_iterator it = { 0 };
++	struct reftable_block block = { 0 };
++	struct reftable_buf data;
++	int err;
++
++	data.len = 1024;
++	REFTABLE_CALLOC_ARRAY(data.buf, data.len);
++	check(data.buf != NULL);
++
++	err = block_writer_init(&writer, BLOCK_TYPE_REF, (uint8_t *) data.buf, data.len,
++				0, hash_size(REFTABLE_HASH_SHA1));
++	check(!err);
++
++	for (size_t i = 0; i < ARRAY_SIZE(expected_refs); i++) {
++		expected_refs[i] = (struct reftable_record) {
++			.type = BLOCK_TYPE_REF,
++			.u.ref = {
++				.value_type = REFTABLE_REF_VAL1,
++				.refname = xstrfmt("refs/heads/branch-%02"PRIuMAX, (uintmax_t)i),
++			},
++		};
++		memset(expected_refs[i].u.ref.value.val1, i, REFTABLE_HASH_SIZE_SHA1);
++
++		err = block_writer_add(&writer, &expected_refs[i]);
++		check_int(err, ==, 0);
++	}
++
++	err = block_writer_finish(&writer);
++	check_int(err, >, 0);
++
++	block_source_from_buf(&source, &data);
++	reftable_block_init(&block, &source, 0, 0, data.len, REFTABLE_HASH_SIZE_SHA1);
++
++	err = reftable_block_init_iterator(&block, &it);
++	check_int(err, ==, 0);
++
++	for (size_t i = 0; ; i++) {
++		err = reftable_iterator_next_ref(&it, &ref);
++		if (err > 0) {
++			check_int(i, ==, ARRAY_SIZE(expected_refs));
++			break;
++		}
++		check_int(err, ==, 0);
++
++		check(reftable_ref_record_equal(&ref, &expected_refs[i].u.ref,
++						REFTABLE_HASH_SIZE_SHA1));
++	}
++
++	err = reftable_iterator_seek_ref(&it, "refs/heads/does-not-exist");
++	check_int(err, ==, 0);
++	err = reftable_iterator_next_ref(&it, &ref);
++	check_int(err, ==, 1);
++
++	err = reftable_iterator_seek_ref(&it, "refs/heads/branch-13");
++	check_int(err, ==, 0);
++	err = reftable_iterator_next_ref(&it, &ref);
++	check_int(err, ==, 0);
++	check(reftable_ref_record_equal(&ref, &expected_refs[13].u.ref,
++					REFTABLE_HASH_SIZE_SHA1));
++
++	for (size_t i = 0; i < ARRAY_SIZE(expected_refs); i++)
++		reftable_free(expected_refs[i].u.ref.refname);
++	reftable_ref_record_release(&ref);
++	reftable_iterator_destroy(&it);
++	reftable_block_release(&block);
++	block_writer_release(&writer);
++	reftable_buf_release(&data);
++}
++
+ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
+ {
+ 	TEST(t_index_block_read_write(), "read-write operations on index blocks work");
+ 	TEST(t_log_block_read_write(), "read-write operations on log blocks work");
+ 	TEST(t_obj_block_read_write(), "read-write operations on obj blocks work");
+ 	TEST(t_ref_block_read_write(), "read-write operations on ref blocks work");
++	TEST(t_block_iterator(), "block iterator works");
  
- 	for (i = 0; ; i++) {
- 		ret = block_iter_next(&it, &rec);
-@@ -79,10 +80,9 @@ static void t_ref_block_read_write(void)
- 	}
- 
- 	for (i = 0; i < N; i++) {
--		block_iter_reset(&it);
- 		reftable_record_key(&recs[i], &want);
- 
--		ret = block_iter_seek_key(&it, &block, &want);
-+		ret = block_iter_seek_key(&it, &want);
- 		check_int(ret, ==, 0);
- 
- 		ret = block_iter_next(&it, &rec);
-@@ -91,7 +91,7 @@ static void t_ref_block_read_write(void)
- 		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
- 
- 		want.len--;
--		ret = block_iter_seek_key(&it, &block, &want);
-+		ret = block_iter_seek_key(&it, &want);
- 		check_int(ret, ==, 0);
- 
- 		ret = block_iter_next(&it, &rec);
-@@ -156,7 +156,8 @@ static void t_log_block_read_write(void)
- 	block_source_from_buf(&source, &block_data);
- 	reftable_block_init(&block, &source, 0, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
- 
--	block_iter_seek_start(&it, &block);
-+	block_iter_init(&it, &block);
-+	block_iter_seek_start(&it);
- 
- 	for (i = 0; ; i++) {
- 		ret = block_iter_next(&it, &rec);
-@@ -169,11 +170,10 @@ static void t_log_block_read_write(void)
- 	}
- 
- 	for (i = 0; i < N; i++) {
--		block_iter_reset(&it);
- 		reftable_buf_reset(&want);
- 		check(!reftable_buf_addstr(&want, recs[i].u.log.refname));
- 
--		ret = block_iter_seek_key(&it, &block, &want);
-+		ret = block_iter_seek_key(&it, &want);
- 		check_int(ret, ==, 0);
- 
- 		ret = block_iter_next(&it, &rec);
-@@ -182,7 +182,7 @@ static void t_log_block_read_write(void)
- 		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
- 
- 		want.len--;
--		ret = block_iter_seek_key(&it, &block, &want);
-+		ret = block_iter_seek_key(&it, &want);
- 		check_int(ret, ==, 0);
- 
- 		ret = block_iter_next(&it, &rec);
-@@ -249,7 +249,8 @@ static void t_obj_block_read_write(void)
- 	block_source_from_buf(&source, &block_data);
- 	reftable_block_init(&block, &source, 0, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
- 
--	block_iter_seek_start(&it, &block);
-+	block_iter_init(&it, &block);
-+	block_iter_seek_start(&it);
- 
- 	for (i = 0; ; i++) {
- 		ret = block_iter_next(&it, &rec);
-@@ -262,10 +263,9 @@ static void t_obj_block_read_write(void)
- 	}
- 
- 	for (i = 0; i < N; i++) {
--		block_iter_reset(&it);
- 		reftable_record_key(&recs[i], &want);
- 
--		ret = block_iter_seek_key(&it, &block, &want);
-+		ret = block_iter_seek_key(&it, &want);
- 		check_int(ret, ==, 0);
- 
- 		ret = block_iter_next(&it, &rec);
-@@ -334,7 +334,8 @@ static void t_index_block_read_write(void)
- 	block_source_from_buf(&source, &block_data);
- 	reftable_block_init(&block, &source, 0, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
- 
--	block_iter_seek_start(&it, &block);
-+	block_iter_init(&it, &block);
-+	block_iter_seek_start(&it);
- 
- 	for (i = 0; ; i++) {
- 		ret = block_iter_next(&it, &rec);
-@@ -347,10 +348,9 @@ static void t_index_block_read_write(void)
- 	}
- 
- 	for (i = 0; i < N; i++) {
--		block_iter_reset(&it);
- 		reftable_record_key(&recs[i], &want);
- 
--		ret = block_iter_seek_key(&it, &block, &want);
-+		ret = block_iter_seek_key(&it, &want);
- 		check_int(ret, ==, 0);
- 
- 		ret = block_iter_next(&it, &rec);
-@@ -359,7 +359,7 @@ static void t_index_block_read_write(void)
- 		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
- 
- 		want.len--;
--		ret = block_iter_seek_key(&it, &block, &want);
-+		ret = block_iter_seek_key(&it, &want);
- 		check_int(ret, ==, 0);
- 
- 		ret = block_iter_next(&it, &rec);
+ 	return test_done();
+ }
 
 -- 
 2.49.0.604.gff1f9ca942.dirty
