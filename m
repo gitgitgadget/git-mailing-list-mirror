@@ -1,182 +1,96 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from 7.mo560.mail-out.ovh.net (7.mo560.mail-out.ovh.net [188.165.48.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758E77E107
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 12:27:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678AD18A93C
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 12:56:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.48.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743424038; cv=none; b=GVoUtXl6kLJRcNn/zuQktrIfT2zdSTiHXZogmN5UALc5Sad9SE0EqZ7jpLWOhK29pY6PTZUGjc9aeEAbghZkRjqE9ByZTEI3UH4htQN7+ZGsmURWVqvc7lwcYh1JSL9r9lLukFGf3HeJMYyD9hWBR1kvhCYELuHCi2xnmpPPNCA=
+	t=1743425789; cv=none; b=bTAsQzOwcmF320tBIrOQ+7ro0jJQcQwl10+rPqMYmFuKoHPTRvYSwT1CfVSnJEC+mSizPRIXK+JVPBTxeTnw7KzcLFwFJp8JM3pdUGxtNRATzUcOafl2coursE0mwXiY1jHhaTMpQZTKe70H4cCoHcr/+HW6/N++FFPUOx4qXf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743424038; c=relaxed/simple;
-	bh=iMINfhZB2O1f6Fgidu0594iBVNc54GvV4p5RvzF61pw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tIinNzGmeM+Fd+IGcclU70Cz20ouxb65JNf86uq+3cqo3cGy2T+FobnK5LHb3HL+gxwqgUa184nVr+ouCVHVoc449n62ge96LPnqBzs0zFsG3ounqEe/z2QLtBmxhvJGO1948atjtyP2/AC1KX9PD49YSslClqSaKFGvwcUg/zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hGUzABzZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vK0MlcRb; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hGUzABzZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vK0MlcRb"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 65CDF13843A2;
-	Mon, 31 Mar 2025 08:27:14 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 31 Mar 2025 08:27:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1743424034; x=1743510434; bh=wlb6a/AVYR
-	F1xaFOan20rgBldTkMxl1d4otCTCmVhpg=; b=hGUzABzZORz20SUrFr5Rqhwn2/
-	/wX6xpzRql9YjPJzJIs0VsPJVY2bKl0icw8jyQnJHSisOPE6XPa8jfQ0sGXzH7fT
-	TDV5AG5opwJS2WCKzU+HQgxX+DU9J/T2NVvpcw42Xfz4zJxQlWWcZ6LWLwLpO6TQ
-	7JqgZq5MDuoYBf4egwAgZtTaHVMzCA/oBwQ/z1ZVnNm6rzGzMrMmzhEjKJ5PzhFL
-	B/KSucspwfQA4lGEvXiXeHtdnR7qatQWyAmKF2rAM8dSbAYr8AP/GyqsZ9TAc6Wz
-	hrS/V4+cC2/fDmB0h0Wm+v2z4dYST9RmwxM3CdKSxKBF4pnHtpB2MLgC5AKQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743424034; x=1743510434; bh=wlb6a/AVYRF1xaFOan20rgBldTkMxl1d4ot
-	CTCmVhpg=; b=vK0MlcRboMGni4w4Eavm5Vk4F1dJ8RFxoVt00yWk2TE6YmQfuHh
-	skDS4odOa62tT+PHdFzi2Gt29lqcCTiByp5zt52fw4LGjOfaIad0g4z81Evhsk2R
-	CIQCu7KpJg94YscWaBr4ZmbEIviCaE3Pq8Eu5Zp7/CO/yoSNIFR55AmrBQIDRp4J
-	t/xYHQQKMcXPSkdhmEN9eEWB9Ors3trwsOUvI8aPiq4qPXEfOi8k6CHKO3NutZUs
-	jLV5KPFU4j3fnty42+K3uW37yaiHY48jftG05nfEsaptHXbquR6RCJaeIRuFZ6t3
-	G4AgwxAkcM2k6O4EwUVdpql0Cd3L5S5O+PQ==
-X-ME-Sender: <xms:IorqZxHzl9-T60XpPkFwnSNj-3aO9Pnsp1Cdc9NOr5EmVgTXPhdBJA>
-    <xme:IorqZ2XgtdFo5SmrSnZuH4vsPverL5RYY7I6rgZ7lsKMcT42Szhva8Cd44N0yyqFz
-    WIhVQyqGmT-4TW5Sg>
-X-ME-Received: <xmr:IorqZzKhhxylqTOLw_fmIifnGY4ALCAd2d9m8Swgoa8h1wZffrgt5MaU0NOkj3REczhkN818WgL_fE6Ej0XYHaEasrsEfFbQw9Kcwnl1FWhnURhk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeelleduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepjeehfeduhfefuddvhedvueeuveevheffueevudfg
-    vddtvedtieelheekvdefleeknecuffhomhgrihhnpehfvgguohhrrghpvghophhlvgdroh
-    hrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
-    shesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpthhtohepuggvrhhrihgtkhhs
-    thholhgvvgesghhithhhuhgsrdgtohhmpdhrtghpthhtohepghhlrghusghithiisehphh
-    ihshhikhdrfhhuqdgsvghrlhhinhdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:IorqZ3H6jTvD6op9mp2vZ58CDHqlHJW6uaLd9sKiKPGkWp9vNaNC8A>
-    <xmx:IorqZ3Xs5ARHEPu6I1SvkP6k3fKdoed2IP-0g5ophdzCOV-xdqlR_g>
-    <xmx:IorqZyNorLTFpIdw_Esix84Dp7hWeAbrgb-HYNX6FQv-JQ2xeO84iQ>
-    <xmx:IorqZ21a2Z_q6cERJjJwNvRr0qMYiyf33P7QkUBi4hPZ7IDSIBOERQ>
-    <xmx:IorqZ9zp4LMf0gx3MkXwMxS_RC7tyzgsvPxw9CYOE4hvzI2KHuPRDMYu>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Mar 2025 08:27:13 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c7d0ba47 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Mar 2025 12:27:11 +0000 (UTC)
-Date: Mon, 31 Mar 2025 14:27:06 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Todd Zullinger <tmz@pobox.com>
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	git <git@vger.kernel.org>,
-	Derrick Stolee <derrickstolee@github.com>
-Subject: Re: Testsuite failure on s390x and sparc64 after 6840fe9ee2
-Message-ID: <Z-qKGqpbdaW9WCrP@pks.im>
-References: <89257ab82cd60d135cce02d51eacee7ec35c1c37.camel@physik.fu-berlin.de>
- <Z-R_Zmr6kxCPLm-O@teonanacatl.net>
- <Z-Zr7BZL1UGqVxKu@pks.im>
- <4276c8d0b72f11f325482756d3bc251327d0ac47.camel@physik.fu-berlin.de>
- <Z-atRMGXHilZRTEL@teonanacatl.net>
- <Z-bCNdOOLrM2Chb8@teonanacatl.net>
+	s=arc-20240116; t=1743425789; c=relaxed/simple;
+	bh=shuRSNp5D/yMerwNi4E/V/lRu/Hu9V153v7EQyNea64=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=eEpetKUpGXbwxvgHnsJt77ugvA5VCQCT3xlc95XmEPrOgLzPoQb3yCvX4nwdwEwCBIBKQdC28pWvzJxnCjl8UJTI8uV6fJd9U07ax5CI3BvnqhdndKvj/oErLNS6uT+F3yKzJ1KTkUNowMZauM3U+8YtThdD0phnSr0RZzQYjBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=free.fr; spf=fail smtp.mailfrom=free.fr; arc=none smtp.client-ip=188.165.48.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=free.fr
+Received: from director6.ghost.mail-out.ovh.net (unknown [10.109.140.140])
+	by mo560.mail-out.ovh.net (Postfix) with ESMTP id 4ZRB2p0xHRz1Ztd
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 12:56:18 +0000 (UTC)
+Received: from ghost-submission-5b5ff79f4f-47c44 (unknown [10.110.178.103])
+	by director6.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 9B1C71FED7;
+	Mon, 31 Mar 2025 12:56:17 +0000 (UTC)
+Received: from scantech.com ([37.59.142.110])
+	by ghost-submission-5b5ff79f4f-47c44 with ESMTPSA
+	id w6wgHvGQ6mdkLwgARPA38Q
+	(envelope-from <jn.avila@free.fr>); Mon, 31 Mar 2025 12:56:17 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-110S004e89b407b-a69f-4fe9-a0e5-50b5ddc606b0,
+                    E7FADD8399107D4A4003697F78FE55E312EC12BD) smtp.auth=jean-noel.avila@scantech.com
+X-OVh-ClientIp:141.255.129.53
+From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+To: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Johannes Sixt <j6t@kdbg.org>,
+	git@vger.kernel.org
+Cc: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: [PATCH] doc: fix asciidoctor synopsis processing of triple-dots
+Date: Mon, 31 Mar 2025 14:55:51 +0200
+Message-ID: <20250331125608.92419-1-jn.avila@free.fr>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <Z+piTsfJdx4BG2oI@szeder.dev>
+References: <Z+piTsfJdx4BG2oI@szeder.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z-bCNdOOLrM2Chb8@teonanacatl.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 10444410486354814759
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeelleejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpeflvggrnhdqpfhotohlucetvhhilhgruceojhhnrdgrvhhilhgrsehfrhgvvgdrfhhrqeenucggtffrrghtthgvrhhnpeelieeujeelgffhlefgleelleffudeggfefgfdtteeuffekvdehkefhvefggffhieenucffohhmrghinheprhgsrdhinhdplhhinhgvshdrmhgrphenucfkphepuddvjedrtddrtddruddpudeguddrvdehhedruddvledrheefpdefjedrheelrddugedvrdduuddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehjnhdrrghvihhlrgesfhhrvggvrdhfrhdpnhgspghrtghpthhtohepuddprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdfovfetjfhoshhtpehmohehiedtmgdpmhhouggvpehsmhhtphhouhht
 
-On Fri, Mar 28, 2025 at 11:37:25AM -0400, Todd Zullinger wrote:
-> I wrote:
-> > I don't have a lot of time to poke at this today, but I'll
-> > make another test run on an s390x build host without that
-> > patch, but where I can save the output and post it
-> > somewhere.
-> > 
-> > For the Fedora packaging, it will be something like this:
-> > 
-> >     make -C t all || {
-> >         (cd t && ./t5620-backfill.sh -ix);
-> >         ./print-failed-test-output;
-> >     }
-> 
-> The matches file is empty.
-> 
->     $ ls -lhn batch-trace matches 
->     -rw-r--r--. 1 1000 1000 31K Mar 28 11:09 batch-trace
->     -rw-r--r--. 1 1000 1000   0 Mar 28 11:09 matches
-> 
-> The only match in batch-trace for promisor fetch_count is
-> from the previous test:
-> 
->     $ grep -e '"category":"promisor","key":"fetch_count","value":' batch-trace
->     {"event":"data","sid":"20250328T150939.623820Z-H9aa15b67-P0008f613","thread":"main","time":"2025-03-28T15:09:39.625484Z","file":"promisor-remote.c","line":55,"repo":1,"t_abs":0.001777,"t_rel":0.001777,"nesting":1,"category":"promisor","key":"fetch_count","value":"48"}
-> 
-> The trash directory for the test run is here, in case anyone
-> wants to poke at it:
-> 
->     https://tmz.fedorapeople.org/t5620-backfill-trash-dir.tar.gz
-> 
-> The full build log is available as well:
-> 
->     https://tmz.fedorapeople.org/git-2.49.0-s390x-build.log
-> 
-> If you search for 'BEGIN BASE64 MESSAGE' in that, it
-> provides a command which can be used to extract the full
-> test-results directory.  That's used to get the output from
-> the build hosts where shell access isn't available.  I don't
-> know that it's got anything which isn't in the trash
-> directory tarball which I already extracted, but it's there
-> just in case.
+The processing of triple dot notation is tricky because it can be
+mis-interpreted as an ellipsis. The special processing of the ellipsis
+is now complete and takes into account the case of
+`git-mv <source>... <dest>`
 
-Thanks for the additional information!
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+---
+ Documentation/asciidoctor-extensions.rb.in | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-One thing I stumbled over: the `--min-batch-size` parameter is parsed
-using `OPT_INTEGER()`, which expects the value pointer to point to an
-integer. But we pass `struct backfill_context::min_batch_size`, which is
-of type `size_t`. Maybe that's causing us to end up with an invalid
-value?
-
-Could you please check whether the below diff fixes the issue for you?
-If so I can turn it into a proper patch.
-
-Patrick
-
--- >8 --
-
-diff --git a/builtin/backfill.c b/builtin/backfill.c
-index 33e1ea2f84f..1dd0d746538 100644
---- a/builtin/backfill.c
-+++ b/builtin/backfill.c
-@@ -119,11 +119,11 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
- 	struct backfill_context ctx = {
- 		.repo = repo,
- 		.current_batch = OID_ARRAY_INIT,
--		.min_batch_size = 50000,
- 		.sparse = 0,
- 	};
-+	unsigned long min_batch_size = 50000;
- 	struct option options[] = {
--		OPT_INTEGER(0, "min-batch-size", &ctx.min_batch_size,
-+		OPT_MAGNITUDE(0, "min-batch-size", &min_batch_size,
- 			    N_("Minimum number of objects to request at a time")),
- 		OPT_BOOL(0, "sparse", &ctx.sparse,
- 			 N_("Restrict the missing objects to the current sparse-checkout")),
-@@ -140,6 +140,7 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
+diff --git a/Documentation/asciidoctor-extensions.rb.in b/Documentation/asciidoctor-extensions.rb.in
+index 2494f17a51..f2be66c4ad 100644
+--- a/Documentation/asciidoctor-extensions.rb.in
++++ b/Documentation/asciidoctor-extensions.rb.in
+@@ -49,7 +49,7 @@ module Git
  
- 	if (ctx.sparse < 0)
- 		ctx.sparse = core_apply_sparse_checkout;
-+	ctx.min_batch_size = min_batch_size;
+       def process parent, reader, attrs
+         outlines = reader.lines.map do |l|
+-          l.gsub(/(\.\.\.?)([^\]$.])/, '`\1`\2')
++          l.gsub(/(\.\.\.?)([^\]$\. ])/, '{empty}`\1`{empty}\2')
+            .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=~@,/_^\$]+)}, '\1{empty}`\2`{empty}')
+            .gsub(/(<[-a-zA-Z0-9.]+>)/, '__\\1__')
+            .gsub(']', ']{empty}')
+@@ -72,6 +72,7 @@ module Git
+           %(<inlineequation><alt><![CDATA[#{equation = node.text}]]></alt><mathphrase><![CDATA[#{equation}]]></mathphrase></inlineequation>)
+         elsif type == :monospaced
+           node.text.gsub(/(\.\.\.?)([^\]$.])/, '<literal>\1</literal>\2')
++                        .gsub(/^\.\.\.?$/, '<literal>\0</literal>\2')
+               .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<literal>\2</literal>')
+               .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<emphasis>\1</emphasis>')
+         else
+@@ -100,6 +101,7 @@ module Git
+       def convert_inline_quoted node
+         if node.type == :monospaced
+           node.text.gsub(/(\.\.\.?)([^\]$.])/, '<code>\1</code>\2')
++            .gsub(/^\.\.\.?$/, '<code>\0</code>')
+               .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<code>\2</code>')
+               .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<em>\1</em>')
  
- 	result = do_backfill(&ctx);
- 	backfill_context_clear(&ctx);
+-- 
+2.49.0
+
