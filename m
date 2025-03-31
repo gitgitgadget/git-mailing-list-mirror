@@ -1,145 +1,91 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12525214A90
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 17:50:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFE4213E60
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 18:14:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743443415; cv=none; b=JF4bejjmKndKwVkiqBJ+4YgmW9SjohJVkbmrazKHhpY8SFJMCNmK0vbYNkhatKKCwgj7pSPaHFhvZm+b72befIa8c0inOyWV5bbSAZxialHhl03IeJx/6Kea4ADZKeyXezGTC4PbmyuMKdqV6L97Dl+YhG9fEimlJzgD5Swz1Bc=
+	t=1743444897; cv=none; b=UF+sTqvf/QVaooIPg5rdoNN/yuuWgaqmsxGHLnxjb60GxcP+NhFDmnOAHYdADs2LnONbvlXcyPIYS8QJMe4VRUMXnbRkYac0Dh8foWfRDRjqgCmfVRSFmWVogFrHCm3YzV0IHtRobL3ptgv8nmEZrat9k0OKu+/DBSfWarm+Fkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743443415; c=relaxed/simple;
-	bh=OfJ6+FOnYrRE5iSPtpuW2upohGxCYEhl3xP9IG/RBic=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BgOYGhGAaoyTxWu03VlrLOggYtsYuR9Pn9YdErerTCwJe0h0FpJPm4eNty3eKl+cI5nFwonsRX/RF6mO6bU2QpDPDSWj80aC7/WA0R3V2tl/2Qfx5MZS5d+48axTB8gnul/DAZ8PjNVdLQaDjbhheM/EClOWNOxGK/dsTpODC8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mY4Zz7pz; arc=none smtp.client-ip=209.85.160.54
+	s=arc-20240116; t=1743444897; c=relaxed/simple;
+	bh=hHuBd023t7plc+4DTOuoz/Kj70pebtWPlGboBqbZwKM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HRfFmKxY576rI+jKA4rccekgJsDH3MM/dVcyFl7p3bpV3q/EozmuvS+w7bCIemDyUtVriQjHBkTBzMVizL1NHnzNEvUAUCNQ/uwgiLhbfnPkeBW8k8kENKcgae2PBJZC/vB3wydX1exseI1XmngzCaac0Yd+UodhkFoZPq/JySo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g6taErG6; arc=none smtp.client-ip=209.85.166.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mY4Zz7pz"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-2c7e5f7f0e3so1299215fac.3
-        for <git@vger.kernel.org>; Mon, 31 Mar 2025 10:50:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g6taErG6"
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-85ea482e3adso52727339f.0
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 11:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743443413; x=1744048213; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pb4wCPaQEE2wV3gGSN5UNgTUStueEOTDtfimPhTTe3U=;
-        b=mY4Zz7pzLh4sHVasTmUC1gnlR1lr8+NJNgA3Yt0upKfMPIki9b7bAr7wsiJitiLvc+
-         /1O81oD32XRtWC7mb3V8vO9csSE8edsAZQD+p0yKX3C0FYpLpJjcZOs+pA0eZaBHVeXf
-         O2aGHgOvWQ+ts19xHxxjbkPZJOML6smEcapR1g2nMbOiUyHt3yMFJD1GaKeqBMqn0dIV
-         tnsSY0NornzY3vFUKDiCcg13M1AHpbI4LaBzWYV0zdCeNZrAyDorS+vNp3xMuw6Z6WQn
-         SN18UbaMz+kGlTWmByRs0kqFTRefT37nlZb8m7EWKuJjKqQ5FKBx1GA8JQ/ej+QkcRfE
-         tEAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743443413; x=1744048213;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1743444895; x=1744049695; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Pb4wCPaQEE2wV3gGSN5UNgTUStueEOTDtfimPhTTe3U=;
-        b=bDTvaqgq+uzkHZY3X3noGG5cq8hw7s8VpXOOlBFRn8G/9aAoNEaQ19gZpyNRBzjIrH
-         TSarLVAR3HDWtZ5j6L0GmHW4D4DzzZTPFnViykAo17tVQX2BsxVhFTl7cv6+TTgIo13a
-         oD0NUD2eBBoM//9PTpi9tR4HzwJTQFq9AahnMpp9R8j6BuxZY5g5+rmOgPoLLtKa6ILE
-         nQML6FbtjHi1S/u/p9TY4ARzagxQuTNbOjFFNm89Acc5AOpL374b/hLetiCHn0RTh3wi
-         fYhx5NTP7mXlAFBthr9CUquW82rU+w9AZ7e+g+e8CgNukcCTZHY2c42Vr4LyyGtGfqaI
-         YLQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUnZEqgBAPnr0S1H7HdTTDXLFMylwrtpMMiAi2ZIYFXQBXUpqLv9jipM99/vwC5rLH2HGg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2LTa14BOOOTmDajAXK6fHLo+vHqHsrVu7TiQfCHdkG3jiQR84
-	Y4R7/s9pvGF5Eiy7zqqccYLqRKH2sZCu32YXWpASkZT5LrgTQu2O
-X-Gm-Gg: ASbGncse9pFLjqZMKjq24L+8zbV24kX+3L4KOm4CBZTvgk7QkG4kmT7kuP3xnpj4hLC
-	wQ/IcCgewgwbuVp7DK/hj/GJIxuxdvaFD9LEk/5EBRhN/UYWs8vRw0am9jscLIvAnuxiaBsaROw
-	m1OXs70PJBTMURddlqM4F2GtRPNShO+ObI2ygzGseU90nrYltHxnm4IDG1+xhg+QxYGB0EkjeZh
-	+J8QXgCtp7grduw5Q27fgWcCGrHYLAU+AmAAzqQjEYKG1RC6Lrdv3hbAJ57A0A/FZMZwKcW2pDa
-	DddwTpUWzaXUTKPtFQZ9GOUS1GWi1VfCYd1R8g==
-X-Google-Smtp-Source: AGHT+IG7XLa77I6kUN6gNm6rSIrH1ENmIgfV5igHOsPKYhnPCgsVNHSvM5xOYKjU8o9TMxyNLay0iw==
-X-Received: by 2002:a05:6871:8913:b0:2c2:4c92:77f with SMTP id 586e51a60fabf-2cbcf825a94mr5427441fac.38.1743443412861;
-        Mon, 31 Mar 2025 10:50:12 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2c86a856e16sm1930946fac.37.2025.03.31.10.50.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Mar 2025 10:50:12 -0700 (PDT)
-Date: Mon, 31 Mar 2025 12:46:26 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	christian.couder@gmail.com
-Subject: Re: [PATCH 1/2] help: include SHA implementation in version info
-Message-ID: <sqoplw2bek4xngjaq2ss54jqcn6k5hvltric2en2niiqebjfth@txxq2ga3weud>
-References: <20250328170121.157563-1-jltobler@gmail.com>
- <20250328170121.157563-2-jltobler@gmail.com>
- <xmqq8qoodq5u.fsf@gitster.g>
- <Z-pCG9d7Rf9SMuXJ@pks.im>
+        bh=d3owHpYPHckykTnmtv29CAyz+luvL8Gy9sQ76VfQsRI=;
+        b=g6taErG6nzvdHt9Y+lwBhnoyxHJLi22WhfFj3tfrUZdInojgnTye+DKxDFTVvh+Kel
+         KAGgMDhdkwhS6E2c8AJSfmHG6aRGHsiGBlx86iIV9KlJXKVD+yPGXyeRAtZElvARUzes
+         qCkPAMgPSaSINX2++vfIqKkjvKLUkiypNbh6dKtGpYI5O5byIbmHfWSYJFffgkDAW74Q
+         4Qp/uNmH4F2LogQEc6bcWRlnIIfMWw/Ijk4bxwx8DgMCJIpYVrx6MgXHTlY1Ucd0Ey5Z
+         KuNRFcJm54SJ4I4FGuJIOjbYXdfda+lJ/p4jUkEcWfyA45+9k20AQqVWJwN/N1rzBYti
+         VUHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743444895; x=1744049695;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=d3owHpYPHckykTnmtv29CAyz+luvL8Gy9sQ76VfQsRI=;
+        b=SAt1JG8MDJjOMTQdwMXvrMXwnLgYgHMFV6rwlqwAJaTCfDXTVPChfUSX1ztNLZjLZi
+         BMcdYLlVRZcWl51XC1n///bkI5j5Ihfgk0JDWBAdA5hf+YD0JUHB3mQzmsZOQOsnVFyr
+         zVrcfq3LrrRHXWUlxpDRQRbE13ds91Sx4y9TofSew/iaSI877hUlPePYE9j/hIvb/iFH
+         KnN+ri7fDXKJuHXjGCjx4Qsa+gaWVBwmxi26HRPhtTpFyj5Ml1brM6Wjdr9bD0PPTYs+
+         /JnO9PqFZB5lrUaRb+aZX5Ahb4Sw+0mwrVPsTlAacZNCT/8pybEo2DfHV4+6yriWBg2A
+         KY3A==
+X-Forwarded-Encrypted: i=1; AJvYcCVvYdxFG4RZieRM1uhp4ggkRXmn6YdeJvgwqXaEPPB98+gIs+p5PBU9I94Fz7xqnC5ohUI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzOpZHXzTSeHzqE2Pc2NgPoKBoPb4kW5wRUW6q9r+3dlB85mdAy
+	slqkNr7DKDcHtVYu1W91bDnayJi+DycF7DHHT6Cs69lKJy8u1/xvqxVgBELrs30DJs4vfqSTvPE
+	7h+KP4IHQ2Ky6u9uDPfS55H0qTaY=
+X-Gm-Gg: ASbGncvMjFkT4nZYi9qDVALfvodNZD5jMgmZfzLb3Mt/QmaKmxZt3f6VYX7U0hGglKv
+	qkiJP8o0zV8gs9eWa8ePNPtdEKLSonjDpYhG0iWMd+Zy0pTu+pkT/ojyhlClobxcC8w+Be/o88L
+	xvsZqbkHdTvVGmPCAlU1jeu1UH1V8=
+X-Google-Smtp-Source: AGHT+IEm9fhhWRZcwO0oZjvfp2VYcGSPKAR3CxeQ7PUfAG8vmnP6PPv88U19xxEN1BPZDqD/f1WedZDk/fIRV7BQ+40=
+X-Received: by 2002:a05:6602:a00f:b0:85e:22b3:812b with SMTP id
+ ca18e2360f4ac-85e91e74850mr1057477439f.8.1743444895272; Mon, 31 Mar 2025
+ 11:14:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z-pCG9d7Rf9SMuXJ@pks.im>
+References: <pull.1898.git.1743436279.gitgitgadget@gmail.com>
+ <0b6bcd225dc1444f4debe5fb8c499c6cad0a4ab2.1743436280.git.gitgitgadget@gmail.com>
+ <CAPig+cSJ-3CXLV3dEhN+B8k7COQNW1Zm2ynuZtmmspzXsjp_PA@mail.gmail.com>
+In-Reply-To: <CAPig+cSJ-3CXLV3dEhN+B8k7COQNW1Zm2ynuZtmmspzXsjp_PA@mail.gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 31 Mar 2025 11:14:43 -0700
+X-Gm-Features: AQ5f1Jpiak8zgGEhaqYksqPL2RT3TfbDalhhHAFjMaJ2Oz-qyr-ObpRvDBAsMhU
+Message-ID: <CABPp-BEm-RH0N0bxtfp0yvaqbuiqFPBEQEuzWYov2Qv7+8X7qA@mail.gmail.com>
+Subject: Re: [PATCH 7/8] tests: remove GIT_TEST_MERGE_ALGORITHM and test_expect_merge_algorithm
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 25/03/31 09:19AM, Patrick Steinhardt wrote:
-> On Sat, Mar 29, 2025 at 04:36:45AM -0700, Junio C Hamano wrote:
-> > While I agree with the objective of the change, I am not sure how I
-> > feel about the implementation.  Given that
-> > 
-> >  - The code here, and probably the existing code paths that depend
-> >    on these SHA1_$WHOSE symbols, assume that only one of them is
-> >    defined;
-> > 
-> >  - The "git help --build-options" is not an end-user thing but more
-> >    is a developer thing.
-> > 
-> > The thing I am most worried about is that it is unclear how the
-> > order in which the SHA1_$WHOSE symbols are inspected here and
-> > elsewhere in the code are kept in sync.  What happens when, for
-> > example, SHA1_OPENSSL and SHA1_APPLE_UNSAFE are both defined?  The
-> > above code will report that we are using SHA1_OPENSSL, but hash.h
-> > would probably use SHA1_APPLE as it has its own if/elif/endif
-> > cascade.
-> > 
-> > Perhaps it does not matter, if the build infrastructure ensures that
-> > the build fails unless one and only one of SHA1_$WHOSE is defined.
-> > 
-> > But with the way how this part is written with an if/elif/endif
-> > cascade, it makes readers spend time wondering how the precedence
-> > order here is kept in sync throughout the system.  If I am not
-> > mistaken, the top-level Makefile has its own ifdef/else/if/endif*
-> > cascade.
-> > 
-> > I imagine that making all of the above not if/elif/endif chain, but
-> > make them pretend as if they are independent and orthogonal choices,
-> > would make it simpler to understand and also it will help us catch a
-> > misconfiguration where more than one is defined, i.e.
-> > 
-> >         static void get_sha_impl(struct strbuf *buf)
-> >         {
-> >         #if defined(SHA1_OPENSSL)
-> >                 strbuf_addstr(buf, "SHA-1: OpenSSL\n");
-> >         #endif
-> >         #if defined(SHA1_BLK)
-> >                 strbuf_addstr(buf, "SHA-1: blk\n");
-> >         #endif
-> >         #if defined(SHA1_APPLE)
-> >         ...
-> > 
-> > 
-> > That way, we wouldn't force future devlopers who are plugging new
-> > implementations of SHA-256 wonder where is the right place in the
-> > existing if/elif/endif cascade their new one fits.  It also allows
-> > us to catch misconfigurations to define more then one of them at the
-> > same time, if such a thing becomes ever possible.
-> 
-> Another option: we could ask the implementations themselves to define a
-> symbol `SHA1_BACKEND` and use it here. This would automatically ensure
-> that any implementation must define the symbol as we'd otherwise get a
-> compile error. We could also conditionally define `SHA1_UNSAFE_BACKEND`
-> depending on whether or not we have it.
+On Mon, Mar 31, 2025 at 10:34=E2=80=AFAM Eric Sunshine <sunshine@sunshineco=
+.com> wrote:
+>
+> On Mon, Mar 31, 2025 at 11:55=E2=80=AFAM Elijah Newren via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> > Both of these existed to allow use to reuse all the merge-related tests
+>
+> s/use/us/
 
-The SHA backends get selected in hash.h, so we could conditionally
-define symbol values based on the backend that gets selected there. This
-has the benefit of centralizing backend selection in one place and the
-printed build options could just depend on that.
+Indeed, thanks!
 
-I'll implement this approach instead in the next version.
-
--Justin
+> > in the testsuite while easily flipping between the 'recursive' and the
+> > 'ort' backends.  Now that we have removed merge-recursive and remapped
+> > 'recursive' to mean 'ort', we don't need this scaffolding anymore.
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
