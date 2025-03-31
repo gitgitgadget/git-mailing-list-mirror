@@ -1,55 +1,55 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439311D54E2
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D601DDC15
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743410003; cv=none; b=hDi2/tF0gWLsra3/5htMb7ioe4a9ekm06gFu1K/3fyPV+qiISmZHwh3dw3Oe5D+ZbspI0ei/oDVX5jUTQ46r/Qgq/3r6hhHGQIhKjfGTLJP2jMzqQSYO7zlSM9kRHGa/bw72ltkBxCLErstF66OLZIED/rw0HfJuk5VzdkVg/uc=
+	t=1743410005; cv=none; b=DtV3RPY9Bqn1tMgs7q92M/GhWYfEVz3nUuyH/7aupZH94OMMpGPEA3tQpgksM4XRLEGldgRVRie4AbKW/cp8vYy1yJ3SSpRjx60oRO2zNgwZ6AHq6HXZ5M12OyYREfRHcGeknCgJx7o2oxX9E+6QgyI6s29VzAIw4OKSyNI9plU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743410003; c=relaxed/simple;
-	bh=L/oXw5fkxxAALV+jPuSzhvNpqrmwQu2Xl46dqm/JvMc=;
+	s=arc-20240116; t=1743410005; c=relaxed/simple;
+	bh=BhNZMenuh3xEvzm0xpw7VqyKTS0kGxQK/qqjmOyswtU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rkR8t3bniKzHuIkyB72LwG3OZG7GfxImjUToWoMMWOa3srYv4cJQ+7qqFFwWCtSj6EIanpWyclMru4k1olLRC2JsboUqCcYNzzIdQ0wNWt8mv4dAxf8m9hmoSzHptNivpBpPC8bhr95f1m7QL8ABFUoeOqSgLJ67+w0injfjlHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lCsw4l/p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WfZOnjVe; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=nC5Y03/RxoWEq2xZBSuJxrwgi/tLgfnEqvyyIBMi8F/9FHcuo4CijTPpF/JslvTW1pFPNLe4Zi3ciJve01wRtZHHyGRuCE3PDoAtbo5bThNsfPtduuVV6Me/IjDTnfp/IjjVtnfD1U5Wqv2XYvt4bTI6kRfCDe8UaQojqGw8R/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aSGqHBDU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JYs1Tfvl; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lCsw4l/p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WfZOnjVe"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4EF1F1383C42;
-	Mon, 31 Mar 2025 04:33:21 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 31 Mar 2025 04:33:21 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aSGqHBDU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JYs1Tfvl"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id AB57B138434A;
+	Mon, 31 Mar 2025 04:33:22 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Mon, 31 Mar 2025 04:33:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743410001;
-	 x=1743496401; bh=YnFIXo8/GnTlyNAp6sWU5pl2bll/1dH35dzFahsEJD8=; b=
-	lCsw4l/pCK5xKsK0Net9TkcaesdHD8xJi2ouq+EE1mCN9FaFQEgKbBueFNo1+Fmd
-	/zFi+PxfpFZt54TA/AMRCOiOOxjAxJlRLO1IU67IbXolR34CNnEcUteFz8NSs+/a
-	/3XkjEM/sYxgNNnmbwaF8c1cp+0e+g+PBguRfH6sDOhx7HB7v/JkwBScSjIT0/oz
-	UIhZ9wRBs3PvVNbgldN8uE8Ky/WrdXNXgCiBnzfc+o20l2KLeYwYsBdrbMD3JGL/
-	YQO7LBYtDIzox76L+SEer4imFSWcdjTDPAOnkU8cFgMB6B6caahSj1MfWiYupj4w
-	jYY5KoLrF5pJ7iAdE+Dfgw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743410002;
+	 x=1743496402; bh=PJiFlBzxLFGSQ1MlXrf2verHVIp3sNV7Uw3S6koMkLk=; b=
+	aSGqHBDUO8U5IQx6A/m67pmjNj/WmGGr+JgOXvDCUI3HvqwijHM1iFPa3A6pauV5
+	4NlnThPV1yW/SoxjIJbr9JclFOMuQZqHZRThqTypD/GM0SWExni37KZcPzZlRa8t
+	vSERP8yyAPtsYY/Zv+8mu8P+/c3A6z9zEaY+cepWwHL+tol6nJL1oYa4gmLJdhn1
+	ytgOZkqydPWp+hexcLYyHG4CLjQAJtk99QBuUzymFuJuqegWQ4nHZO/cCbKqgXFn
+	zMWkxgUrDaSxxhd7TdNg5AeNTVAKZ9rXiaRKW2hVBGhyDhOcjFvkF+J5VsiQ6LLy
+	dEKsc6ZUW11LPR+4/OQjGQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743410001; x=
-	1743496401; bh=YnFIXo8/GnTlyNAp6sWU5pl2bll/1dH35dzFahsEJD8=; b=W
-	fZOnjVeuDDHjALxiJJLTDNw8q05IcTXzCK5EFrM6U2pd21FxGvyWi0PU1dARxU97
-	lPPJrsb/W5M7txIMqVOi8lrSC3h5mScENWJxK5dC3mlkP4P40mrUu3lAFKLbXot9
-	6z8Sg6jrd1jE7UmgjYnWYksrGzGa6x1y0m3TmySoTyOUjbIlC60OSY/QxhZM7rZU
-	uNcj/lqXwVJALu0Dpoy/lPCEOwfJDZouXZuEeIMyR+WpCf92/usRvGzXfFKdMrP0
-	uxcGK4rJjL4XTUAXpbrrOQGukPE+uK8VX/8tj/gOYWUbPxiwLdOXGDl9WzqaFSLp
-	fjQWTjkawF2dEWgA4C4ow==
-X-ME-Sender: <xms:UVPqZ2dJtLJAxsBaarKOVkr0gBzF55XMpp40WtBnRhhacKQAxxhpNQ>
-    <xme:UVPqZwPnn1W4pT_P8pzNVKtEyC31pe4B-VJNjrFTor2aBgnpry4P2kN3eMsv_bDmO
-    cI6c9mV9Mtekq738A>
-X-ME-Received: <xmr:UVPqZ3hmxqaAMi4pft8s_uwVD09lrhzXpFDQDE0LTxF3NXJA7bRtAdfL2o1pCpm8O7sqm73FaQ41B-QGq3I8smf4tPPmTPvrW5rnXv4eZzoaRgvM>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743410002; x=
+	1743496402; bh=PJiFlBzxLFGSQ1MlXrf2verHVIp3sNV7Uw3S6koMkLk=; b=J
+	Ys1TfvldP6je7cZFA3eDt7okI0UWGTU8NnbuIdaerbE2EDtVDrGmEkERqjIF9bmJ
+	G2s1y/4Jes/C/usSCxw+gRtOmtUoaIbqX9xxl2achwUSdCBXy2XVxFrwmVvhiRqj
+	R8/Oh1LSkrKmagH32ksSlZrYeBt5TvxhQESOzm4b+jFI/Je8oQT4gylgFdRIoKNo
+	DDVSrmaNcFsvD3yY2rSgNcQ8wF6C5Ba5HzU+jGNAMFg5lMsloIJBna+btJUTKu+7
+	d95gFgJbVvaHnvFwoglcWOOoctIRc0dw6VvvQ1h62pAT5ANaxtztIeGadjqcf58p
+	jXwwamc6I6l6lLbvqXL1w==
+X-ME-Sender: <xms:UlPqZ-x3A16W2ahjYZueYwE__zWBL0GLSTxe_aQWtUdN7GCl29d70A>
+    <xme:UlPqZ6QzvqKNOaSy92Sn4el3b_VVvQYJYFGT466w8KCGs5qnbI9uwFM95niErgi3b
+    BMDIJxPKsre-eLGpg>
+X-ME-Received: <xmr:UlPqZwWt8feC6Nvcq90Db8y56S9BOxxs2rMr7maA3RqFdTWdbfiDgIjpVHioDgXLlL_nSjd846GcjfeqARVbiCVLdtjnTWlS0A-UBbeADPrPNl0P>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeelgeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -58,26 +58,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeelgeehucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehtghesuggvsghirg
-    hnrdhorhhgpdhrtghpthhtohepphhsrdhrvghpohhrthesghhmgidrnhgvthdprhgtphht
-    thhopehsrghmsehgvghnthhoohdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrsh
-    gthhhinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:UVPqZz_dDA6ZmaX_O1ZKLShhchlvTkNvXOR4PMyz6HHhr7ReV9Q1AA>
-    <xmx:UVPqZyuSmF6CzYyA9niYIwxoAAvvosogwh6H8nOpz1FsIF3_h3Q3XQ>
-    <xmx:UVPqZ6F60-SsPMXwGo18S78tyPA9tFdBtQCogv_eEprXOQY2h0Ex4Q>
-    <xmx:UVPqZxNuQYvN9BWG8WSn87DBaaBWUlENBhOEHaJP4XShLvjQV8Z83A>
-    <xmx:UVPqZ_83Lb3g1soJpy-n8AxeZemYtetTcEfjV2BFFBasl1oUt9iyl1XD>
+    vgepshhmthhpohhuthdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdroh
+    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
+    thhgseguvggsihgrnhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinh
+    guvghlihhnsehgmhigrdguvgdprhgtphhtthhopehpshdrrhgvphhorhhtsehgmhigrdhn
+    vghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehsrghmsehgvghnthhoohdrohhrgh
+X-ME-Proxy: <xmx:UlPqZ0iV2M4FBAUe1Q-q6DswvUlgaGFkZZboz42QKTXRvu7dJi7M-w>
+    <xmx:UlPqZwAE-vIptzx8mTpVCzjKprmtx-2pKnMkm6mn5rPQdtYPLo-s5w>
+    <xmx:UlPqZ1JQ8kRqXZ4PjTCH_wcBvQzFTFBedrMqLLJlIP02jUWdg1d23w>
+    <xmx:UlPqZ3Bwi6k7MgORwfry38-jhaUyUUbX3wzQOONx63eCAcpxStCHmQ>
+    <xmx:UlPqZ-Dua6fPXlEIYgKydiScKUIQk6DBFXaJVHkEu8Gy3oWoza1H3dSF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Mar 2025 04:33:19 -0400 (EDT)
+ 31 Mar 2025 04:33:21 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2b242e15 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 31 Mar 2025 08:33:17 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id bd040e36 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 31 Mar 2025 08:33:18 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 31 Mar 2025 10:33:08 +0200
-Subject: [PATCH v2 2/5] gitweb: fix generation of "gitweb.js"
+Date: Mon, 31 Mar 2025 10:33:09 +0200
+Subject: [PATCH v2 3/5] meson: respect 'tests' build option in contrib
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250331-b4-pks-collect-build-fixes-v2-2-6b06136808f3@pks.im>
+Message-Id: <20250331-b4-pks-collect-build-fixes-v2-3-6b06136808f3@pks.im>
 References: <20250331-b4-pks-collect-build-fixes-v2-0-6b06136808f3@pks.im>
 In-Reply-To: <20250331-b4-pks-collect-build-fixes-v2-0-6b06136808f3@pks.im>
 To: git@vger.kernel.org
@@ -96,38 +96,92 @@ Cc: Junio C Hamano <gitster@pobox.com>, Sam James <sam@gentoo.org>,
  Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.2
 
-In 19d8fe7da65 (Makefile: extract script to generate gitweb.js,
-2024-12-06) we have extracted the logic to build "gitweb.js" into a
-separate script. As part of that the rules that builds the script
-has gained a new dependency on that script.
+Both the "netrc" credential helper and git-subtree(1) from "contrib/"
+carry a couple of tests with them. These tests get wired up in Meson
+unconditionally even in the case where `-Dtests=false`. As those tests
+depend on the `test_enviroment` variable, which only gets defined in
+case `-Dtests=true`, the result is an error:
 
-This refactoring is broken though because we use "$^" to determine
-the set of JavaScript files that need to be concatenated, and this
-implicit variable now also contains the build script itself. As a
-result, the build script ends up ni the generated "gitweb.js" file,
-which is wrong.
+```
+$ meson setup -Dtests=false -Dcontrib=subtree build
+[...]
 
-Fix the issue by filtering out non-JavaScript files.
+contrib/subtree/meson.build:15:27: ERROR: Unknown variable "test_environment".
+```
 
-Based-on-patch-by: Thorsten Glaser <tg@debian.org>
+Fix the issue by not defining these tests at all in case the "tests"
+option is set to `false`.
+
+Reported-by: Sam James <sam@gentoo.org>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- gitweb/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/credential/netrc/meson.build | 22 ++++++++++++----------
+ contrib/subtree/meson.build          | 20 +++++++++++---------
+ 2 files changed, 23 insertions(+), 19 deletions(-)
 
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index d5748e93594..26a683d4421 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -118,7 +118,7 @@ $(MAK_DIR_GITWEB)gitweb.cgi: $(MAK_DIR_GITWEB)gitweb.perl
- $(MAK_DIR_GITWEB)static/gitweb.js: $(MAK_DIR_GITWEB)generate-gitweb-js.sh
- $(MAK_DIR_GITWEB)static/gitweb.js: $(addprefix $(MAK_DIR_GITWEB),$(GITWEB_JSLIB_FILES))
- 	$(QUIET_GEN)$(RM) $@ $@+ && \
--	$(MAK_DIR_GITWEB)generate-gitweb-js.sh $@+ $^ && \
-+	$(MAK_DIR_GITWEB)generate-gitweb-js.sh $@+ $(filter %.js,$^) && \
- 	mv $@+ $@
+diff --git a/contrib/credential/netrc/meson.build b/contrib/credential/netrc/meson.build
+index a990dbb86da..3d74547c8ae 100644
+--- a/contrib/credential/netrc/meson.build
++++ b/contrib/credential/netrc/meson.build
+@@ -7,14 +7,16 @@ credential_netrc = custom_target(
+   install_dir: get_option('libexecdir') / 'git-core',
+ )
  
- ### Installation rules
+-credential_netrc_testenv = test_environment
+-credential_netrc_testenv.set('CREDENTIAL_NETRC_PATH', credential_netrc.full_path())
++if get_option('tests')
++  credential_netrc_testenv = test_environment
++  credential_netrc_testenv.set('CREDENTIAL_NETRC_PATH', credential_netrc.full_path())
+ 
+-test('t-git-credential-netrc',
+-  shell,
+-  args: [ meson.current_source_dir() / 't-git-credential-netrc.sh' ],
+-  workdir: meson.current_source_dir(),
+-  env: credential_netrc_testenv,
+-  depends: test_dependencies + bin_wrappers + [credential_netrc],
+-  timeout: 0,
+-)
++  test('t-git-credential-netrc',
++    shell,
++    args: [ meson.current_source_dir() / 't-git-credential-netrc.sh' ],
++    workdir: meson.current_source_dir(),
++    env: credential_netrc_testenv,
++    depends: test_dependencies + bin_wrappers + [credential_netrc],
++    timeout: 0,
++  )
++endif
+diff --git a/contrib/subtree/meson.build b/contrib/subtree/meson.build
+index 9c72b236259..63714166a61 100644
+--- a/contrib/subtree/meson.build
++++ b/contrib/subtree/meson.build
+@@ -12,16 +12,18 @@ git_subtree = custom_target(
+   install_dir: get_option('libexecdir') / 'git-core',
+ )
+ 
+-subtree_test_environment = test_environment
+-subtree_test_environment.prepend('PATH', meson.current_build_dir())
++if get_option('tests')
++  subtree_test_environment = test_environment
++  subtree_test_environment.prepend('PATH', meson.current_build_dir())
+ 
+-test('t7900-subtree', shell,
+-  args: [ 't7900-subtree.sh' ],
+-  env: subtree_test_environment,
+-  workdir: meson.current_source_dir() / 't',
+-  depends: test_dependencies + bin_wrappers + [ git_subtree ],
+-  timeout: 0,
+-)
++  test('t7900-subtree', shell,
++    args: [ 't7900-subtree.sh' ],
++    env: subtree_test_environment,
++    workdir: meson.current_source_dir() / 't',
++    depends: test_dependencies + bin_wrappers + [ git_subtree ],
++    timeout: 0,
++  )
++endif
+ 
+ if get_option('docs').contains('man')
+   subtree_xml = custom_target(
 
 -- 
 2.49.0.604.gff1f9ca942.dirty
