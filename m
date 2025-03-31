@@ -1,128 +1,145 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D83415747D
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 17:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12525214A90
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 17:50:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743443125; cv=none; b=WwNVfmW3lZXN0WLVL8r0NB3PXKfs8H/FwGHf5hWQuUi5ni/k/Xj//TRSWXDdJ6VyU9lR2/udW7loEbkzIVMdO1Vxzxh1xXgl9LeZRTnQMFJyl5zpty0NF+1anJKn7TdVXXkPSXKQNljTO11dRMC8gzq/FugU1nZtQLUjj8ILu2g=
+	t=1743443415; cv=none; b=JF4bejjmKndKwVkiqBJ+4YgmW9SjohJVkbmrazKHhpY8SFJMCNmK0vbYNkhatKKCwgj7pSPaHFhvZm+b72befIa8c0inOyWV5bbSAZxialHhl03IeJx/6Kea4ADZKeyXezGTC4PbmyuMKdqV6L97Dl+YhG9fEimlJzgD5Swz1Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743443125; c=relaxed/simple;
-	bh=z3QPDf/ECRQFHBgpc+TXzL3fqrs4JLhSaaXi9/LDlJc=;
+	s=arc-20240116; t=1743443415; c=relaxed/simple;
+	bh=OfJ6+FOnYrRE5iSPtpuW2upohGxCYEhl3xP9IG/RBic=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qf+ByD147V4xkFYcp4pux64CiREouljDhc8C96NPckqgHWMwqP3mUFoIhRrDG55G1Be8+ohMcc1uKqUXjUdH+7n5bG5CJvx2ws5CDgsm4j+3Uvr5dN8liutkMD6vGdkGG81vxwebOaMzjd+bw9123s8IuOXEWAGwuSWDNFYf6gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AdgIG8iY; arc=none smtp.client-ip=209.85.128.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=BgOYGhGAaoyTxWu03VlrLOggYtsYuR9Pn9YdErerTCwJe0h0FpJPm4eNty3eKl+cI5nFwonsRX/RF6mO6bU2QpDPDSWj80aC7/WA0R3V2tl/2Qfx5MZS5d+48axTB8gnul/DAZ8PjNVdLQaDjbhheM/EClOWNOxGK/dsTpODC8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mY4Zz7pz; arc=none smtp.client-ip=209.85.160.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AdgIG8iY"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43cf628cb14so38823255e9.1
-        for <git@vger.kernel.org>; Mon, 31 Mar 2025 10:45:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mY4Zz7pz"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-2c7e5f7f0e3so1299215fac.3
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 10:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743443122; x=1744047922; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=bd1BcTNwVrs3eFgwrR9eb/XqKAr0dYuB0CeG6x+AMXY=;
-        b=AdgIG8iY8qA2+4QOn4dPuFp5Wu2urg8rWu/RdNF2M6SdvVSI8WRdsBEWd7Gg0kM8mg
-         AEkmPvsK+41R5qm6qL4KF3X763V6DL0O16uWH9rYNS4uR+EX2qfyJfi9x7NnIO65EGFN
-         aFL/riQ+/sVMvo0CLTzRBeCbF/KyLGypGu6rFu4Ai2h9rGVCSlaLAc3MJPJzWKKcdFzp
-         0ROh/Fu7zjFTFk7q73AXoxaoLeKDd7DdoHZZo62iU3d/pJoeGFGmDJAEmMdo3+Kn5o7V
-         I2q97n1I7FRAZt/Xz/EHDDlUN1GdSlc0gYFJ3PgsZKjPvhf6/WFypu2uaCZi7azh7cCh
-         81Dw==
+        d=gmail.com; s=20230601; t=1743443413; x=1744048213; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pb4wCPaQEE2wV3gGSN5UNgTUStueEOTDtfimPhTTe3U=;
+        b=mY4Zz7pzLh4sHVasTmUC1gnlR1lr8+NJNgA3Yt0upKfMPIki9b7bAr7wsiJitiLvc+
+         /1O81oD32XRtWC7mb3V8vO9csSE8edsAZQD+p0yKX3C0FYpLpJjcZOs+pA0eZaBHVeXf
+         O2aGHgOvWQ+ts19xHxxjbkPZJOML6smEcapR1g2nMbOiUyHt3yMFJD1GaKeqBMqn0dIV
+         tnsSY0NornzY3vFUKDiCcg13M1AHpbI4LaBzWYV0zdCeNZrAyDorS+vNp3xMuw6Z6WQn
+         SN18UbaMz+kGlTWmByRs0kqFTRefT37nlZb8m7EWKuJjKqQ5FKBx1GA8JQ/ej+QkcRfE
+         tEAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743443122; x=1744047922;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bd1BcTNwVrs3eFgwrR9eb/XqKAr0dYuB0CeG6x+AMXY=;
-        b=Vm4gSuvtEQfjjzigS97rcbULADf4HqHNmFnjWYIsxNaejRg3P0qbo1aHwq8FY4aL8r
-         NCK4XTPp6KY6bR/LffUMCCotUpgTjB0LeLmJpyogHvmilmWvLLXjdAz6pZtiwhSdAnen
-         lgS5HMCcYjrL/dTAAkP00dtF9ihHAACkwfdPkRSzlVj57/XMgaKB7YtkZhiZzE9jeQaB
-         CxNHCE1NxLEnVwF/CU74lfIMI8fzAe5gvLnvP9TPknV9ecTZQtw6WYXIBkNSPfYM9RK+
-         dlS48sQeu4ejra2A5T7IXN/jsWj5bB3tFlqtowGq0/kDfOtH1OodmIKna/FaBpA8/B8+
-         UR7w==
-X-Forwarded-Encrypted: i=1; AJvYcCV7vclqz3wPmxLUKh5XoYAijK19cmmOST07UjQlchdiB/2QTTBfGlZ3K/oLjqBQAYxGbj8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWnbz8brLqtb4JkligGwsFFyYSC8nSaySGNe2ZXwfUxIH7SWdv
-	h9FHeT663kVva0wrlyxX2mP6rpcCkU4KE9pxw+6Y8Jzh1b06oBEM
-X-Gm-Gg: ASbGncsi+3cIQC+/R6JywPMfgCsxdNjYFtAqfURHEQXl57w9Hj1jS8bFYf471Wy8IY4
-	63XJXgkfooE6SMPlvVlfmgx+EO20VIFQTeX8WAOOtSB5d9g9YB0rXeb6GggPtc3VGFk6n/veNrT
-	DGPZph8vpBU3p+Fk8J/OwCrt3vC9iUw2ZS76SouDYRlNVdjYsCJGpcdgLBobxLF6JJyfsib5SnU
-	rCO8dKJA4L6Z+acH8nTU3nCYsBeP1fVsWHLXICXAqiNkuKASeD7npt9JHGd2M+JycspjdWILI6t
-	rLvmdafK7H3IbAl6zcUq4bgaqrYPZ3+JiXvrjSNfjSHGDxd0b7tGRbRxzSIXRDznniEbOY1jLRo
-	=
-X-Google-Smtp-Source: AGHT+IE7a1I1mTqLQDvl4iq/CM0HKrO7KimPvfFqT8qQLnxCdH9M40jSDEub4oe/Ejf0+3OxNFObcQ==
-X-Received: by 2002:a05:600c:5129:b0:43d:fa5f:7d30 with SMTP id 5b1f17b1804b1-43dfa5f7d6fmr64359005e9.16.1743443121982;
-        Mon, 31 Mar 2025 10:45:21 -0700 (PDT)
-Received: from localhost (78-131-14-102.pool.digikabel.hu. [78.131.14.102])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d91439d11sm82948425e9.0.2025.03.31.10.45.21
+        d=1e100.net; s=20230601; t=1743443413; x=1744048213;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Pb4wCPaQEE2wV3gGSN5UNgTUStueEOTDtfimPhTTe3U=;
+        b=bDTvaqgq+uzkHZY3X3noGG5cq8hw7s8VpXOOlBFRn8G/9aAoNEaQ19gZpyNRBzjIrH
+         TSarLVAR3HDWtZ5j6L0GmHW4D4DzzZTPFnViykAo17tVQX2BsxVhFTl7cv6+TTgIo13a
+         oD0NUD2eBBoM//9PTpi9tR4HzwJTQFq9AahnMpp9R8j6BuxZY5g5+rmOgPoLLtKa6ILE
+         nQML6FbtjHi1S/u/p9TY4ARzagxQuTNbOjFFNm89Acc5AOpL374b/hLetiCHn0RTh3wi
+         fYhx5NTP7mXlAFBthr9CUquW82rU+w9AZ7e+g+e8CgNukcCTZHY2c42Vr4LyyGtGfqaI
+         YLQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUnZEqgBAPnr0S1H7HdTTDXLFMylwrtpMMiAi2ZIYFXQBXUpqLv9jipM99/vwC5rLH2HGg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2LTa14BOOOTmDajAXK6fHLo+vHqHsrVu7TiQfCHdkG3jiQR84
+	Y4R7/s9pvGF5Eiy7zqqccYLqRKH2sZCu32YXWpASkZT5LrgTQu2O
+X-Gm-Gg: ASbGncse9pFLjqZMKjq24L+8zbV24kX+3L4KOm4CBZTvgk7QkG4kmT7kuP3xnpj4hLC
+	wQ/IcCgewgwbuVp7DK/hj/GJIxuxdvaFD9LEk/5EBRhN/UYWs8vRw0am9jscLIvAnuxiaBsaROw
+	m1OXs70PJBTMURddlqM4F2GtRPNShO+ObI2ygzGseU90nrYltHxnm4IDG1+xhg+QxYGB0EkjeZh
+	+J8QXgCtp7grduw5Q27fgWcCGrHYLAU+AmAAzqQjEYKG1RC6Lrdv3hbAJ57A0A/FZMZwKcW2pDa
+	DddwTpUWzaXUTKPtFQZ9GOUS1GWi1VfCYd1R8g==
+X-Google-Smtp-Source: AGHT+IG7XLa77I6kUN6gNm6rSIrH1ENmIgfV5igHOsPKYhnPCgsVNHSvM5xOYKjU8o9TMxyNLay0iw==
+X-Received: by 2002:a05:6871:8913:b0:2c2:4c92:77f with SMTP id 586e51a60fabf-2cbcf825a94mr5427441fac.38.1743443412861;
+        Mon, 31 Mar 2025 10:50:12 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2c86a856e16sm1930946fac.37.2025.03.31.10.50.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Mar 2025 10:45:21 -0700 (PDT)
-Date: Mon, 31 Mar 2025 19:45:20 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc: Patrick Steinhardt <ps@pks.im>, Johannes Sixt <j6t@kdbg.org>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] doc: fix asciidoctor synopsis processing of triple-dots
-Message-ID: <Z+rUsCW0zEb8kAK8@szeder.dev>
-References: <Z+piTsfJdx4BG2oI@szeder.dev>
- <20250331125608.92419-1-jn.avila@free.fr>
+        Mon, 31 Mar 2025 10:50:12 -0700 (PDT)
+Date: Mon, 31 Mar 2025 12:46:26 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	christian.couder@gmail.com
+Subject: Re: [PATCH 1/2] help: include SHA implementation in version info
+Message-ID: <sqoplw2bek4xngjaq2ss54jqcn6k5hvltric2en2niiqebjfth@txxq2ga3weud>
+References: <20250328170121.157563-1-jltobler@gmail.com>
+ <20250328170121.157563-2-jltobler@gmail.com>
+ <xmqq8qoodq5u.fsf@gitster.g>
+ <Z-pCG9d7Rf9SMuXJ@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250331125608.92419-1-jn.avila@free.fr>
+In-Reply-To: <Z-pCG9d7Rf9SMuXJ@pks.im>
 
-On Mon, Mar 31, 2025 at 02:55:51PM +0200, Jean-Noël Avila wrote:
-> The processing of triple dot notation is tricky because it can be
-> mis-interpreted as an ellipsis. The special processing of the ellipsis
-> is now complete and takes into account the case of
-> `git-mv <source>... <dest>`
+On 25/03/31 09:19AM, Patrick Steinhardt wrote:
+> On Sat, Mar 29, 2025 at 04:36:45AM -0700, Junio C Hamano wrote:
+> > While I agree with the objective of the change, I am not sure how I
+> > feel about the implementation.  Given that
+> > 
+> >  - The code here, and probably the existing code paths that depend
+> >    on these SHA1_$WHOSE symbols, assume that only one of them is
+> >    defined;
+> > 
+> >  - The "git help --build-options" is not an end-user thing but more
+> >    is a developer thing.
+> > 
+> > The thing I am most worried about is that it is unclear how the
+> > order in which the SHA1_$WHOSE symbols are inspected here and
+> > elsewhere in the code are kept in sync.  What happens when, for
+> > example, SHA1_OPENSSL and SHA1_APPLE_UNSAFE are both defined?  The
+> > above code will report that we are using SHA1_OPENSSL, but hash.h
+> > would probably use SHA1_APPLE as it has its own if/elif/endif
+> > cascade.
+> > 
+> > Perhaps it does not matter, if the build infrastructure ensures that
+> > the build fails unless one and only one of SHA1_$WHOSE is defined.
+> > 
+> > But with the way how this part is written with an if/elif/endif
+> > cascade, it makes readers spend time wondering how the precedence
+> > order here is kept in sync throughout the system.  If I am not
+> > mistaken, the top-level Makefile has its own ifdef/else/if/endif*
+> > cascade.
+> > 
+> > I imagine that making all of the above not if/elif/endif chain, but
+> > make them pretend as if they are independent and orthogonal choices,
+> > would make it simpler to understand and also it will help us catch a
+> > misconfiguration where more than one is defined, i.e.
+> > 
+> >         static void get_sha_impl(struct strbuf *buf)
+> >         {
+> >         #if defined(SHA1_OPENSSL)
+> >                 strbuf_addstr(buf, "SHA-1: OpenSSL\n");
+> >         #endif
+> >         #if defined(SHA1_BLK)
+> >                 strbuf_addstr(buf, "SHA-1: blk\n");
+> >         #endif
+> >         #if defined(SHA1_APPLE)
+> >         ...
+> > 
+> > 
+> > That way, we wouldn't force future devlopers who are plugging new
+> > implementations of SHA-256 wonder where is the right place in the
+> > existing if/elif/endif cascade their new one fits.  It also allows
+> > us to catch misconfigurations to define more then one of them at the
+> > same time, if such a thing becomes ever possible.
 > 
-> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-> ---
->  Documentation/asciidoctor-extensions.rb.in | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/asciidoctor-extensions.rb.in b/Documentation/asciidoctor-extensions.rb.in
-> index 2494f17a51..f2be66c4ad 100644
-> --- a/Documentation/asciidoctor-extensions.rb.in
-> +++ b/Documentation/asciidoctor-extensions.rb.in
-> @@ -49,7 +49,7 @@ module Git
->  
->        def process parent, reader, attrs
->          outlines = reader.lines.map do |l|
-> -          l.gsub(/(\.\.\.?)([^\]$.])/, '`\1`\2')
-> +          l.gsub(/(\.\.\.?)([^\]$\. ])/, '{empty}`\1`{empty}\2')
->             .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=~@,/_^\$]+)}, '\1{empty}`\2`{empty}')
->             .gsub(/(<[-a-zA-Z0-9.]+>)/, '__\\1__')
->             .gsub(']', ']{empty}')
-> @@ -72,6 +72,7 @@ module Git
->            %(<inlineequation><alt><![CDATA[#{equation = node.text}]]></alt><mathphrase><![CDATA[#{equation}]]></mathphrase></inlineequation>)
->          elsif type == :monospaced
->            node.text.gsub(/(\.\.\.?)([^\]$.])/, '<literal>\1</literal>\2')
-> +                        .gsub(/^\.\.\.?$/, '<literal>\0</literal>\2')
->                .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<literal>\2</literal>')
->                .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<emphasis>\1</emphasis>')
->          else
-> @@ -100,6 +101,7 @@ module Git
->        def convert_inline_quoted node
->          if node.type == :monospaced
->            node.text.gsub(/(\.\.\.?)([^\]$.])/, '<code>\1</code>\2')
-> +            .gsub(/^\.\.\.?$/, '<code>\0</code>')
->                .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<code>\2</code>')
->                .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<em>\1</em>')
->  
+> Another option: we could ask the implementations themselves to define a
+> symbol `SHA1_BACKEND` and use it here. This would automatically ensure
+> that any implementation must define the symbol as we'd otherwise get a
+> compile error. We could also conditionally define `SHA1_UNSAFE_BACKEND`
+> depending on whether or not we have it.
 
-Thanks.  I can confirm that this patch addresses the issue I reported
-with the manpage of 'git diff' (though I think the commit message
-could go into a bit more detail as to what problem this patch attempts
-to solve and how).
+The SHA backends get selected in hash.h, so we could conditionally
+define symbol values based on the backend that gets selected there. This
+has the benefit of centralizing backend selection in one place and the
+printed build options could just depend on that.
 
-Alas, the issue caused by 'diff-generate-patch.adoc' in the manpages
-of diff-files, diff-index, log, etc. is still present.
+I'll implement this approach instead in the next version.
+
+-Justin
