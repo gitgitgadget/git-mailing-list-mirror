@@ -1,66 +1,66 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217D41DA62E
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 15:37:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183207082D
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 15:37:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743435466; cv=none; b=hKOZAlv79nPvEzK4OywAYXIKjDrfROMkNybqqi/K4qwJkmnPffTmQhgctQIaPhZ3xtZZR4GU8ImnIsCp0RJ+cl7/Iep7KqsiZXF7zgTmkTl1P4J0JFK+I1w8SHHjMcDhlGfbsWx5lL5bcvdgH/GZ2cIYXLk9rnuuB1P6aEeV6uU=
+	t=1743435481; cv=none; b=rF2FLfIsl6bZu0Z7LEGBmOqMx9Vf/GNlxB+24/WRMRkYtNnwme5htSuZ5w8KXMCHpy+lCXg0C/O5Sak+9+5yapHrqChZg6i7eAaSYbiLIQ+rkkAxi2bI2poDmoKGLfTBM0yqLUFcZhM7gVD+j/9WhMzclEcr4zVYW526Y5tBvT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743435466; c=relaxed/simple;
-	bh=cFDtxeli3Ebq8uNtuZUlfUKSx4v1zaniRXVfkaAiBGQ=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=oIAQV4TvVorFLljrzCeEjS/wjnaFi51Fis/916Q/GhXq1N/JHehJNTu2IdpKIc0G2tI/81dSOJC/fvjwdlLx+vDMdaqjOEjutt5d+p93GgBRS8wGYsxZnFCdwTB17Ar3yyGFKuhm6tMKHlH8JtVBahjeegd+NC7FDe95YWEEX1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VVhKc9N1; arc=none smtp.client-ip=209.85.128.49
+	s=arc-20240116; t=1743435481; c=relaxed/simple;
+	bh=pTLDmnI+afC3Nv3/HAfLh9/64GM/HHUowwTUwz0a30o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PH87BdCOGkPqKE3ioHR+D4+GSB1n9uVyfnzXG2ap9KqZkjrMAPN6XW1G9CIMLzWxz0BKFPv2c2zQqqNwak2kFiHPFe5nnWAbi0gXOQbTCUX1EJdlxn6BqdPdm/cDHXQMVl6SVpdCRDT0enUT7yYt7roYRKJwNv2DieZBLCxz4QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WSL9Tn5v; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VVhKc9N1"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4393dc02b78so29088155e9.3
-        for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:37:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WSL9Tn5v"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-399744f74e9so3035873f8f.1
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:37:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743435463; x=1744040263; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:reply-to:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1743435478; x=1744040278; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rn8Ew4NfHuvXIAfiQTerXOY5TmuLXSvGmYyyJ9J8aec=;
-        b=VVhKc9N1az6d038ajr9pNNQELbQb47q6cllOcKdu4sfsqGBRqQU/0N/eYbSH6ll7mB
-         k639cgz47GOgrgh6PEzlIVqA8X7EHgETh9KBWRBJykFLFsZnjODBTKYL7UQ11u+ppz/T
-         A6QW64IgGonm5V2BSXV4X2sio9bOAzh1lQBcD0QBI3jyA3WJ62oPg34TtwjqKyg8KAIM
-         mudCBPPQTEWIMzLsmMVtUXBMub/pLKyVSvsjJe68ZMAiovgnMqwjC27JGOTDpbZ9W/4t
-         5qeRDvrzvprIaqe3j5xfKfpJ/wdFaW9nTOHH//iZm3wWzy7TmFlLQw/1xe/EwTFICd1F
-         e+jw==
+        bh=86XV/qomHzRdZdRbCet2TdDrszHAZ3TvkYgp+Zq+8lA=;
+        b=WSL9Tn5vvJKsZrhmDOmKyblKD8y62R5aEjgdOUy9RnDUt1kcG0eSR56eXF8ZR3eObt
+         wVpl/sksvdKguRCJ6expGEECRqCHeowxsXE8C2gxrUMRtk5pjgcopaeN+DKq1HNh/lB2
+         SF1MvQED8IVD9FxBHWlLQhk7iYjpVeywcWCKHTq5BvwpEC8O5e3bHEBrB7OouYTlMyZe
+         BZQciRen+c8DuED3gzdq15j7HJ5RKjmAzJI0L5QoPvjsWB0RJfZil12gWyHkgFGoWdA1
+         FNK/Zgs9Ud9mQf3UGKBBQ38u1SdErZ/fu2OsbamRcQZniK45CIqU1GYaeD4VYv/5uHUm
+         b4Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743435463; x=1744040263;
-        h=content-transfer-encoding:in-reply-to:reply-to:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1743435478; x=1744040278;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rn8Ew4NfHuvXIAfiQTerXOY5TmuLXSvGmYyyJ9J8aec=;
-        b=px6PSxtPdF5yBIONfuw1pT9rJe7NghSyn/8ZxPq8GJZRaK0QRWhRyCsvCuD2pnf7UQ
-         ZgqPAoJRzhw59GYmvX4vwc2O5dj+pFsKi1ZLlPVSrAKP8/uaKFLJxu0xrbNZdZiUxDiH
-         jpblRSpoWLEs+qDm4NC+aGHhrTam2SdeoZksrhMMgzR2u12jKWZaJZHbIQ4Kc3b3LJqI
-         6o5K6iyFPqOrWwZbWXHeSxIPJoljUZyC3VqEvXj/ZVgJZPHJsJfsEyt5yHybjiQ/MLCY
-         y5RSwbthfupmITerzSVrhyNCGaI3uSa+Om0q4hTwzZDhQfpKniItw08QoIhwTq3ZdcOz
-         JjxA==
-X-Forwarded-Encrypted: i=1; AJvYcCUrdi1C11NnnTwTlUb8hmuvem2CmFEUgMiqUnMawnSqBLFv62jMqeco7Xi74zZiVNApW/w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxrxWebtlXBl094cS7pdxPKLo9eRbnjbUKbb5c1/jvcDZh7czq5
-	d4M/zV+7jhyxMKegHgpADy5oUSTJXGH/QeG+jXtCAlgRiv6sOsjsxFeFow==
-X-Gm-Gg: ASbGncuNQnEZF477GGI9kPZqUWRxj2A2VdxZV+5h8U0stOtXQSDwJ8zITovwaaDMhwI
-	qhFhC2pxuN7YpDZGro+CT1bAwP2dRSWGSzkqlBWejNQYVmZz4LI1tKT3BWyNt9c7Ay0Mtho7FIe
-	O2wy5fyGMGUqe44FGAXFFvsReQEIVTBAROiBO2hXDWAmFt+w2PJXwu3Q7TFI8+lMrv4wN18i+zo
-	usvTDn9J6HG3q96WF41C6S0ADeNnzk27RjX+MOoTUEG2KTPjjshXTY+CcQpDtC5l0z8eFFuVQPL
-	SBQX52OKMqOjduOUvWYS35CGdBUafXTUlqDPGcZBKbRjYz+bDoD1o96/d9oCSC1hGne9BWdAaZ3
-	f0Qf0Sne6je+Ay5jexRBR
-X-Google-Smtp-Source: AGHT+IFQaj7JfALiwo0ACZiGKdYFXbLMyowmEHLdf2tPe3ABP3p9dgYn5yfWGEf7AtX6yponfs7xPA==
-X-Received: by 2002:a05:600c:198c:b0:43c:fe90:1279 with SMTP id 5b1f17b1804b1-43db6289b35mr67276355e9.21.1743435463065;
-        Mon, 31 Mar 2025 08:37:43 -0700 (PDT)
+        bh=86XV/qomHzRdZdRbCet2TdDrszHAZ3TvkYgp+Zq+8lA=;
+        b=RXAk/xlOmMEaAPP/6t6zgkGuhezDFygGXGSlh35QF7EZkuW/7YrhgzP/OP7wCkkHez
+         IVaZNP4LdSAq92uD/yESN00+LM34YnVkLZri0BY4jCydOZ8oXqDzSX0gIoa0VhNi5snq
+         Zm6UO4aIf1Jy7fBzU3jXmbhGtBk+ERdoilY8/RniS/7cSAP1ivJOKuER2d0q4fj2EDo2
+         8AsdzG3xL91M7EGNDM4LJUtrIv9b0W1Ze6LNP8O2wYhrrG+qDrt37LjyO1O+D3ur4uES
+         cfgd5t0Nf2Zh52XdrtcVPdrKAgMvtTJECAnAF5eVpujfdeatUV2vnTQoP9+Oodbd2+l4
+         9AQg==
+X-Forwarded-Encrypted: i=1; AJvYcCVz8PT9NOMkVQ26B45OfdmiXMQNjCz03WRotiasN/Waiz/UeiamjbKU4oUYEZAWorggayQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxU7gHcehxnTdasDAstPlIJ2KeeLyBZYHU9Qc4Zk2YYJbaXAER
+	1c7bH00ZvSl0/V+CTt/ALgoDcyOu5ZrKumvHTZhrJWXKufDsHuvn
+X-Gm-Gg: ASbGncstbTboc7ZdC6UaKcleimms32s/YCIxoctOU7R7a5cwM9XSbNhFLc2Lp1cWFo0
+	XJAAMDsit5damMc1aoWBRcNBRQBTrvTJJR2NO6X2+az8I+XBZzIFz9lOxtOxy0b48qgGfKCasmZ
+	untXtvCw09Ud+9W9RwiNptlDg++UuSRhbVtW98+mSuciDuPwfJIrdhQX0libd8ptRsQ8YfgtyDh
+	WlFCHuYIyPByGNAacUMG+17K3HtF/jAUx2RXwvIB6m++DtNsHWucoMdPQGn2z8vezojxXI1t8uu
+	kq7OYzSSbvlXDBBfWd0IXAvvM8Ohb84LdFV00woLq6zGg3alkfL7GsUdrUagWWuBHt40rd5/AQO
+	po15vfdJfctfgHJQbgSYg
+X-Google-Smtp-Source: AGHT+IGotJbQzk9uo0qJEKK4NPShBLI9Nkm6IrgKiHafURR4pbPR4+jnKekFaBj0mzs5dF0789SFSQ==
+X-Received: by 2002:a05:6000:2a3:b0:391:4389:f363 with SMTP id ffacd0b85a97d-39c120db48cmr8195047f8f.21.1743435478237;
+        Mon, 31 Mar 2025 08:37:58 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b65b985sm11644143f8f.12.2025.03.31.08.37.42
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b7a433bsm11726601f8f.97.2025.03.31.08.37.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Mar 2025 08:37:42 -0700 (PDT)
-Message-ID: <b0263bdb-002a-4a88-b277-fd2afe59cfe6@gmail.com>
-Date: Mon, 31 Mar 2025 16:37:41 +0100
+        Mon, 31 Mar 2025 08:37:57 -0700 (PDT)
+Message-ID: <69b0ab3f-2d6c-49da-866e-71c0eb907f7f@gmail.com>
+Date: Mon, 31 Mar 2025 16:37:56 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,19 +68,19 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 1/3] rebase -r: do create merge commit after empty
- resolution
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/3] wt-status: also abbreviate 'merge' and 'fixup -C'
+ lines during rebase
 To: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
  Philippe Blain <levraiphilippeblain@gmail.com>
 References: <pull.1897.git.1743181401.gitgitgadget@gmail.com>
- <6c8f77cb71c7e0c820704b1725331f4601d8876e.1743181401.git.gitgitgadget@gmail.com>
+ <e297b71ba123b642c2e724d7dda475fa52dfdeaa.1743181401.git.gitgitgadget@gmail.com>
 Content-Language: en-US
-Reply-To: phillip.wood@dunelm.org.uk
-In-Reply-To: <6c8f77cb71c7e0c820704b1725331f4601d8876e.1743181401.git.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <e297b71ba123b642c2e724d7dda475fa52dfdeaa.1743181401.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -89,89 +89,92 @@ Hi Philippe
 On 28/03/2025 17:03, Philippe Blain via GitGitGadget wrote:
 > From: Philippe Blain <levraiphilippeblain@gmail.com>
 > 
-> When a user runs 'git rebase --continue' to conclude a conflicted merge
-> during a 'git rebase -r' invocation, we do not create a merge commit if
-> the resolution was empty (i.e. if the index and HEAD are identical). We
-> simply continue the rebase as if no 'merge' instruction had been given.
-> This is confusing since all commits from the side branch are absent from
-> the rebased history. What's more, if that 'merge' is the last
-> instruction in the todo list, we fail to remove the merge state, such
-> that running 'git status' shows we are still merging after the rebase
-> has concluded.
+> When "git status" is invoked during a rebase, we print the last commands
+> done and the next commands to do, and abbreviate commit hashes found in
+> those lines. However, we only abbreviate hashes in 'pick', 'squash' and
+> plain 'fixup' lines, not those in 'merge -C' and 'fixup -C' lines, as
+> the parsing done in wt-status.c::abbrev_oid_in_line is not prepared for
+> such lines.
 > 
-> This happens because in 'sequencer.c::commit_staged_changes', we exit
-> early before calling 'run_git_commit' if 'is_clean' is true, i.e. if
-> nothing is staged. Fix this by also checking for the presence of
-> MERGE_HEAD before exiting early, such that we do call 'run_git_commit'
-> when MERGE_HEAD is present. This also ensures that we unlink
-> git_path_merge_head later in 'commit_staged_changes' to clear the merge
-> state.
-> 
-> Make sure to also remove MERGE_HEAD when a merge command fails to start.
-> We already remove MERGE_MSG since e032abd5a0 (rebase: fix rewritten list
-> for failed pick, 2023-09-06). Removing MERGE_HEAD ensures that in this
-> situation, upon 'git rebase --continue' we still exit early in
-> 'commit_staged_changes', without calling 'run_git_commit'. This is
-> already covered by t5407.11, which fails without this change because we
-> enter 'run_git_commit' and then fail to find 'rebase_path_message'.
+> Improve the parsing done by this function by special casing 'fixup' and
+> 'merge' such that the hash to abbreviate is the string found in the
+> third field of 'split', instead of the second one for other commands.
+> Introduce a 'hash' strbuf pointer to point to the correct field in all
+> cases.
 
-Thanks for fixing this.
+Sounds good. It is a shame that the parsing here is not better 
+integrated with the sequencer. I think that would be a much bigger task 
+though. The patch looks good and is definitely an improvement on the 
+status quo for the user.
 
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> ---
->   sequencer.c                |  3 ++-
->   t/t3418-rebase-continue.sh | 24 ++++++++++++++++++++++++
->   2 files changed, 26 insertions(+), 1 deletion(-)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index ad0ab75c8d4..2baaf716a3c 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -4349,6 +4349,7 @@ static int do_merge(struct repository *r,
->   		error(_("could not even attempt to merge '%.*s'"),
->   		      merge_arg_len, arg);
->   		unlink(git_path_merge_msg(r));
-> +		unlink(git_path_merge_head(r));
-
-
-I think we want to clean up git_path_merge_mode() as well. Perhaps we 
-should call remove_merge_branch_state() instead of deleting the 
-individual files ourselves here.
-
-> +test_expect_success '--continue creates merge commit after empty resolution' '
-> +	git reset --hard main &&
-> +	git checkout -b rebase_i_merge &&
-> +	test_commit unrelated &&
-> +	git checkout -b rebase_i_merge_side &&
-> +	test_commit side2 main.txt &&
-> +	git checkout rebase_i_merge &&
-> +	test_commit side1 main.txt &&
-> +	PICK=$(git rev-parse --short rebase_i_merge) &&
-> +	test_must_fail git merge rebase_i_merge_side &&
-> +	echo side1 >main.txt &&
-> +	git add main.txt &&
-> +	test_tick &&
-> +	git commit --no-edit &&
-> +	FAKE_LINES="1 2 3 5 6 7 8 9 10 11" &&
-> +	export FAKE_LINES &&
-> +	test_must_fail git rebase -ir main &&
-> +	echo side1 >main.txt &&
-> +	git add main.txt &&
-> +	git rebase --continue &&
-> +	git log --merges >out &&
-> +	test_grep "Merge branch '\''rebase_i_merge_side'\''" out
-> +'
-
-I wonder if t3430 would be a better home for this as it already has the 
-setup necessary to create a failing merge. It would be good to add a 
-test to check that "git rebase --skip" does not create an empty merge as 
-well.
+I was going to ask about a test but it looks like one of the tests added 
+in the next patch checks that we abbreviate "merge -C <oid>". It would 
+be worth mentioning that in the commit message.
 
 Thanks
 
 Phillip
 
->   test_expect_success '--skip after failed fixup cleans commit message' '
->   	test_when_finished "test_might_fail git rebase --abort" &&
->   	git checkout -b with-conflicting-fixup &&
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> ---
+>   wt-status.c | 31 ++++++++++++++++++++++---------
+>   1 file changed, 22 insertions(+), 9 deletions(-)
+> 
+> diff --git a/wt-status.c b/wt-status.c
+> index 1da5732f57b..d11d9f9f142 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1342,9 +1342,11 @@ static int split_commit_in_progress(struct wt_status *s)
+>   
+>   /*
+>    * Turn
+> - * "pick d6a2f0303e897ec257dd0e0a39a5ccb709bc2047 some message"
+> + * "pick d6a2f0303e897ec257dd0e0a39a5ccb709bc2047 some message" and
+> + * "merge -C d6a2f0303e897ec257dd0e0a39a5ccb709bc2047 some-branch"
+>    * into
+> - * "pick d6a2f03 some message"
+> + * "pick d6a2f03 some message" and
+> + * "merge -C d6a2f03 some-branch"
+>    *
+>    * The function assumes that the line does not contain useless spaces
+>    * before or after the command.
+> @@ -1360,20 +1362,31 @@ static void abbrev_oid_in_line(struct strbuf *line)
+>   	    starts_with(line->buf, "l "))
+>   		return;
+>   
+> -	split = strbuf_split_max(line, ' ', 3);
+> +	split = strbuf_split_max(line, ' ', 4);
+>   	if (split[0] && split[1]) {
+>   		struct object_id oid;
+> -
+> +		struct strbuf *hash;
+> +
+> +		if ((!strcmp(split[0]->buf, "merge ") ||
+> +		     !strcmp(split[0]->buf, "m "    ) ||
+> +		     !strcmp(split[0]->buf, "fixup ") ||
+> +		     !strcmp(split[0]->buf, "f "    )) &&
+> +		    (!strcmp(split[1]->buf, "-C ") ||
+> +		     !strcmp(split[1]->buf, "-c "))) {
+> +			hash = split[2];
+> +		} else {
+> +			hash = split[1];
+> +		}
+>   		/*
+>   		 * strbuf_split_max left a space. Trim it and re-add
+>   		 * it after abbreviation.
+>   		 */
+> -		strbuf_trim(split[1]);
+> -		if (!repo_get_oid(the_repository, split[1]->buf, &oid)) {
+> -			strbuf_reset(split[1]);
+> -			strbuf_add_unique_abbrev(split[1], &oid,
+> +		strbuf_trim(hash);
+> +		if (!repo_get_oid(the_repository, hash->buf, &oid)) {
+> +			strbuf_reset(hash);
+> +			strbuf_add_unique_abbrev(hash, &oid,
+>   						 DEFAULT_ABBREV);
+> -			strbuf_addch(split[1], ' ');
+> +			strbuf_addch(hash, ' ');
+>   			strbuf_reset(line);
+>   			for (i = 0; split[i]; i++)
+>   				strbuf_addbuf(line, split[i]);
 
