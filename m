@@ -1,93 +1,160 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1222340BF5
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 20:19:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81854218585
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 20:31:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743452386; cv=none; b=Ewg1LlW84rdruMi+oYZRwCEYbm2jWpekpMxJVYhbYt0Do0oT0CMa/xxJpSmTNN/Ig7KhX7d/QAmApcPgrsnpyOnOMTVrHinPJeMIf06u2QuXRYhD3W/W/qL1VoasxaHGmYwc5SYnm3NCDtRp35tcB+WvX9UAgdk7gzg4UP7J1+g=
+	t=1743453083; cv=none; b=p22yW8e+1enfGs5rQKtMmRxwERNW5/6REe1rs0Gn1c4Gsvgn4sgvZD3gkeblxle6DPUUTrRrv4dDkKXQm/rydbEs8KRB1fmwIhew9Go8AKAHarOvJKQKSRNSbEnVrgU1Xfhm293ur177GWRnFkklBA7EFzJ+rHsiKCvGGy1Jfrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743452386; c=relaxed/simple;
-	bh=ODSsnfGcPD51885D03YyzFSLDFd/DnIVGrJtGvZqAM8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=d84ryyXEO1nTF4McoxTVM6tg4t/kQUhu9YS5N342ILhfJ5079khHKRJx6xar743TFFJkzD6tc/O/2PF6e8HqYlmZYcmSr3mS5beSfU+YTkjQyDF6auhq3ZJ+FrfSD22GmpaM4UG+KoI1JcvC9rGXLlnERaaI9drZUxlNB8NwNQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e39IFpoL; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743453083; c=relaxed/simple;
+	bh=9JhoJwm3Pi42Bi+k7W0iSjwEvZZlGYtPmEji2R1nhQU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=jI1VTZJ5YZdOZNLIWr75rL/BTthVCumLab0lQbzdESxby4xaeedLvtgP1fXYpFWf1A3Lhu71p7SMaYVy/TCAFJjzYH9D9SD1AMDabJU9uUoLtI8nrpmJQsdDwcSfzlI3faPcFeS0hkVc4LiVf0DnewnDOauU4O6bp+sj0pfqPiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=h80NYXYX; arc=none smtp.client-ip=212.27.42.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e39IFpoL"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-30bf7d0c15eso50172401fa.0
-        for <git@vger.kernel.org>; Mon, 31 Mar 2025 13:19:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743452383; x=1744057183; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=TIeff4HvsRdhfL8oGMg8ZfclWPBC33JMSu5pGllq4Ow=;
-        b=e39IFpoLBOvANIuzPE7vtUMplsMwSFFqeHs5+TIx7qkt4ggYebpL7gYxdDcNfiCYTN
-         o/Q9UE3XMqlbW6Xs/T5urzc3Sss+jlLFgjoGOh69gGnnkuCdM0h7q1NyXwL9F/Vpf6Yo
-         7XwBu/yh/5pv2k5WI7kG1+g6h7nTPgvYk33CHpxJ1iY+t8vwuk/iu3xutYlKqKveBF/U
-         nnJiA9aEXNqCFFxEhHPLEUnCtsAuxIRDkbhHPvyZl59zr6AK7XsrMlwknuaihWMd5/jI
-         XTklthu5UOskcnoyuc0YAeZlY9FJKxUnKjNtY8XrrGge+2lSBsrU/IbjITapVBSy/7YC
-         m9jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743452383; x=1744057183;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TIeff4HvsRdhfL8oGMg8ZfclWPBC33JMSu5pGllq4Ow=;
-        b=vNKgyvOMDU/xLYn+fdcwQpqbhhpiK8BW11VglwC7hUOcyg2ZBDFBL/+dbVh44O/xub
-         frsKIbHPky/wyZj7cFIr//2F6YLPzQaeWz+i/+m225e4k+gN8kRVTfuZIZULNyyTXwAG
-         mOGq5YO7gF/UfB4nV32V3+QEq1SW4g7r336z/QyQgq2i8OW51LsTydgE9/5B0w2C3xvJ
-         yNadNkjHdkuJZwQtT2yTO8VmepAoue2crQhnS7mVykHNyOKKSc7Wars3AVTI+KH9dtiE
-         1nj1FM6flBirFqYzPZ/iH3RPNwNWHnROb81rllQPAcLwUoGAemY8h4BBtub1DWn7JlpM
-         I3XA==
-X-Gm-Message-State: AOJu0Yx7HnvbmCDChErttHTd01d8FIidjanlZZMYqmVYQLDwjFIWIf7S
-	r0p7ehh8QWZKyGB3LB1aXe2EQh9vwO9rIrsNXpgVxXnY831c7OU/cqw2CmGk26MWuo1dznEpobJ
-	kSdchiUnzTxLYZEuVDT6SEPa5CEmVRUVz0Da0GA==
-X-Gm-Gg: ASbGncsdbDQiW7ovs9Hm6pMaU4ycOtwz6ytRq3xhR1Ba/+hxgZL8LTAD74/lYbQFbVn
-	a2hAd1+OKxSjoYaCi6U/CPzBblwjensn6cMdCkGeF+xC9jtEe/QZNLKUm2pkYTTIeUbX2vhdIJD
-	2NtcB94TOpH1kN7aMh+dIYjZM=
-X-Google-Smtp-Source: AGHT+IEr5CIQgn44ceiKai2j35UQ7SkNMG0283aNLifCFY7lxyLdMOIYAWzBjBive8K04G/ImADQd69CxRa3EoEimX4=
-X-Received: by 2002:a05:651c:199e:b0:308:f787:5c48 with SMTP id
- 38308e7fff4ca-30de034a7c3mr38924871fa.33.1743452382739; Mon, 31 Mar 2025
- 13:19:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="h80NYXYX"
+Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 54AE8428EF7
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 22:31:08 +0200 (CEST)
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:881e:8ce9:fd06:b1f4])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp4-g21.free.fr (Postfix) with ESMTPSA id 4908A19F5C6;
+	Mon, 31 Mar 2025 22:30:58 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1743453061;
+	bh=9JhoJwm3Pi42Bi+k7W0iSjwEvZZlGYtPmEji2R1nhQU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=h80NYXYXbAKQzUqi1laFHhFr8t4ICWOgMDITO435+rgXdhfCygSeo8IEjmpUyKbL6
+	 HHigPWkbGF4wbqWGeq/xSZL3Ax4FwUFEei9yNwDrPrssCnIerOor5DlN7Tjy0rWtDX
+	 Vv+Hu7/hmH9P/ZQjRjaZvgNtD0yRjGJjUfgtatmXBUijHza8p0byT4XrcoHE0sbDzR
+	 PP2JUQswtr9SRt7QSYY/9eQA0D9eVJ4BkylNQKL7eknbZmbbSbXH5iUB/YQr0WS1tf
+	 H/RH9OHKHhva4mjeqdIq0dmKCjp0vdPqQs5UwzbxnqEYOrI3lGn1+CAtVRGZ/LMqS8
+	 YGXnpWGJAI1wQ==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: SZEDER =?UTF-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Johannes Sixt <j6t@kdbg.org>,
+ git@vger.kernel.org
+Subject: Re: [PATCH] doc: fix asciidoctor synopsis processing of triple-dots
+Date: Mon, 31 Mar 2025 22:30:57 +0200
+Message-ID: <5873733.DvuYhMxLoT@cayenne>
+In-Reply-To: <Z+rUsCW0zEb8kAK8@szeder.dev>
+References:
+ <Z+piTsfJdx4BG2oI@szeder.dev> <20250331125608.92419-1-jn.avila@free.fr>
+ <Z+rUsCW0zEb8kAK8@szeder.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Devste Devste <devstemail@gmail.com>
-Date: Mon, 31 Mar 2025 22:19:30 +0200
-X-Gm-Features: AQ5f1Jrz0GwUAOij1C0J2subDSF2eDBiMbX-ZpuYvUwcVU9RnzkSAoHa9Iea3_w
-Message-ID: <CANM0SV2huiGtWMcP+eEkNBHoieeoXmy_fM7vAOwyoW4=FXw1pg@mail.gmail.com>
-Subject: --reset-author does not reset author date when used in post-commit hook
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-device time zone is not UTC0
+Le lundi 31 mars 2025, 19:45:20 heure d=E2=80=99=C3=A9t=C3=A9 d=E2=80=99Eur=
+ope centrale SZEDER G=C3=A1bor a=20
+=C3=A9crit :
+> On Mon, Mar 31, 2025 at 02:55:51PM +0200, Jean-No=C3=ABl Avila wrote:
+> > The processing of triple dot notation is tricky because it can be
+> > mis-interpreted as an ellipsis. The special processing of the ellipsis
+> > is now complete and takes into account the case of
+> > `git-mv <source>... <dest>`
+> >=20
+> > Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
+> > ---
+> >=20
+> >  Documentation/asciidoctor-extensions.rb.in | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> >=20
+> > diff --git a/Documentation/asciidoctor-extensions.rb.in
+> > b/Documentation/asciidoctor-extensions.rb.in index 2494f17a51..f2be66c4=
+ad
+> > 100644
+> > --- a/Documentation/asciidoctor-extensions.rb.in
+> > +++ b/Documentation/asciidoctor-extensions.rb.in
+> > @@ -49,7 +49,7 @@ module Git
+> >=20
+> >        def process parent, reader, attrs
+> >       =20
+> >          outlines =3D reader.lines.map do |l|
+> >=20
+> > -          l.gsub(/(\.\.\.?)([^\]$.])/, '`\1`\2')
+> > +          l.gsub(/(\.\.\.?)([^\]$\. ])/, '{empty}`\1`{empty}\2')
+> >=20
+> >             .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=3D~@,/_^\$]+)},
+> >             '\1{empty}`\2`{empty}')
+> >             .gsub(/(<[-a-zA-Z0-9.]+>)/, '__\\1__')
+> >             .gsub(']', ']{empty}')
+> >=20
+> > @@ -72,6 +72,7 @@ module Git
+> >=20
+> >            %(<inlineequation><alt><![CDATA[#{equation =3D
+> >            node.text}]]></alt><mathphrase><![CDATA[#{equation}]]></
+mathphra
+> >            se></inlineequation>)>         =20
+> >          elsif type =3D=3D :monospaced
+> >         =20
+> >            node.text.gsub(/(\.\.\.?)([^\]$.])/, '<literal>\1</literal>\=
+2')
+> >=20
+> > +                        .gsub(/^\.\.\.?$/, '<literal>\0</literal>\2')
+> >=20
+> >                .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=3D~@,=
+/_^\
+$]+
+> >                \.{0,2})+)}, '\1<literal>\2</literal>')
+> >                .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<emphasis>\1</
+emphasis>')
+> >         =20
+> >          else
+> >=20
+> > @@ -100,6 +101,7 @@ module Git
+> >=20
+> >        def convert_inline_quoted node
+> >       =20
+> >          if node.type =3D=3D :monospaced
+> >         =20
+> >            node.text.gsub(/(\.\.\.?)([^\]$.])/, '<code>\1</code>\2')
+> >=20
+> > +            .gsub(/^\.\.\.?$/, '<code>\0</code>')
+> >=20
+> >                .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=3D~@,=
+/_^\
+$]+
+> >                \.{0,2})+)}, '\1<code>\2</code>')
+> >                .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<em>\1</em>')
+>=20
+> Thanks.  I can confirm that this patch addresses the issue I reported
+> with the manpage of 'git diff' (though I think the commit message
+> could go into a bit more detail as to what problem this patch attempts
+> to solve and how).
 
-post-commit hook:
-if [[ -n "${SKIP_POST_COMMIT+x}" ]] && [[ "$SKIP_POST_COMMIT" -eq 1 ]]
-then
-exit
-fi
+These regex are getting a bit too hairy now. I'm working on using a parser=
+=20
+generator to clarify how it works (at least for asciidoctor).
 
-TZ=UTC0 SKIP_POST_COMMIT=1 git commit --amend --reset-author --no-edit
---no-verify --no-post-rewrite --allow-empty --quiet
+>=20
+> Alas, the issue caused by 'diff-generate-patch.adoc' in the manpages
+> of diff-files, diff-index, log, etc. is still present.
 
----
+Sorry to ready that, but I cannot reproduce on my setup (using asciidoctor=
+=20
+2.0.23):
 
-Run:
-git commit -m "foo"
-git show -s --format="Commit: %h%nAuthor: %an%nAuthor Date:
-%ad%nCommitter: %cn%nCommitter Date: %cd%nMessage: %s%n" HEAD
+        2. It is followed by one or more extended header lines (this exampl=
+e=20
+shows a merge with two parents):
 
-Expected that both Author Date: and Committer Date: show +0000 as
-timezone. Only committer date shows +0000, while author date shows
-time zone of device.
+               index <hash>,<hash>..<hash>
+               mode <mode>,<mode>..<mode>
+               new file mode <mode>
+               deleted file mode <mode>,<mode>
 
-When manually running the post-commit code (TZ=UTC0 SKIP_POST_COMMIT=1
-...) it correctly resets the author date to +0000 too
+Has the format failure changed with this patch?
 
-When manually setting the date using --date="$(date +%s) +0000"
-instead of  --reset-author it also works correctly in post-commit
-hook.
+Thanks
+
+JN
+
+
+
