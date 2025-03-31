@@ -1,80 +1,80 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725FD192D96
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5808B1D7999
 	for <git@vger.kernel.org>; Mon, 31 Mar 2025 08:41:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743410487; cv=none; b=Eg7v6vbT/exEq/1eT0qJ3J2hjK1z1lmLVSPUvzlJf3saCU44mWUCzJPbUwqZ9YRnK5y6eHW+wIxIO3tOZ1dA2KxbBtijaXw7bNUnA8OtayTkboEYyrbcBgg3T7+GowxpFxlsfandUgHWUqYVeURSrIZI9UbL5PwdfZ9xkR5C+hg=
+	t=1743410488; cv=none; b=WkYPeqFkL9mzZM6Nwo3PXMHoZUURIsMJBSQno5U6WjMJ7q/1h2oj1KwWdmwW9ue1Q2D2jhyJ1iB3ODkS+v0VwrtNMW9bqn0G71dE56ctSaxLHlcubhMtL/iyLyK7Ewb87KAoxRgsDEBvzaoUAy5DyTfPTu01HPui8ZRrp+MUP3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743410487; c=relaxed/simple;
-	bh=GLyRQ4e+dTHSNrhNHOIVlTILH9u3BSUx03TMNOsITcg=;
+	s=arc-20240116; t=1743410488; c=relaxed/simple;
+	bh=6x5mYVMLEya5JSz4KAAqsz3ECJpxFnF9BVSkCiGCEKk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=GP+mr47C6mIR44RmN7M1rT9Vk5TW2G1dib+WG+wo6Gr4JWgY007sZJLTpZK52EoBWlVPQHnT1HMiN6k98k9kZlMkptST73DDNnPHVnVJYZstf74FvM+3njsNfi7SxLM/d5yp4ZOcwALH8aAlVv8uE59z5SKE/UxKQWi/czyVVdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hK9kdKUT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P3PNsFpm; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=HMgwKYfPEZxkIjGxRSXZxDzx7sInBu6zollrlrVUaLrsROJfQfq8rH1jwe1EFUS0QW/j6q6itmlPftkIaIJObHhzfLPsWfZ/2LpVO1GiNMvbh2OPI5GfdWOPEcybGqKFB/LbjNXQSI4YjU9FCKhz4kjCpW9HPaY62MCH+HPh/JI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oMV5nnaC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a3V054ob; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hK9kdKUT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P3PNsFpm"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9311C1382D80
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oMV5nnaC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a3V054ob"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 54C041140122
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:25 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Mon, 31 Mar 2025 04:41:24 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 31 Mar 2025 04:41:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743410484;
-	 x=1743496884; bh=mNfctF1n7F9ALuXmHRaEGIW+LNfS6gGc78rc2CAT3S4=; b=
-	hK9kdKUT8tYs0vwGMoH54MJzYKHcnD8McLPrk4kRtCo5TCgL7oTPQ7pPgZWcxDIz
-	ivqrhFQZHNaAxHp9iU3joewwCveXy1nn17VxghNAq9K0HHIOQ7M4TwneBQ2TJHBv
-	UocXTAMuR0NU/KwHqzW5C0hX1O4k1ns5t40SeUDHU/6hTxE4a/hd1fPRklGT40Kc
-	fbVyS0f31voHZO8yJMRu9lGF75rQ7bG/hCRi8fNGFi5+wms3i04OdGz7CM5V6Dzc
-	9AmcusEJdmSOnHkF4Y3fb/47aARA19iVyVqgrhxDy6UnMU8JkCzZajVpAldDCxZr
-	MAeiGwmUtzcL8v2LTtxOYQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743410485;
+	 x=1743496885; bh=ZI6FiSZfZ0zhnKBmcBnkcxUkwBZ5KltkGcmKB53J7EM=; b=
+	oMV5nnaCx04ES0X+TuZ+c1OP6A3YnntQ/kySBACVRN1wQy1pucKJvHWe09NSXXkc
+	uFY31UbTautVhsMGChev3ak4qBhYs66ZHuZNomk35SVHkIp0/CwIj4ECg7ji87CF
+	r/pKr6tKM0Zmb49Tb9RCqcDkUQXy/Vmp2H9Aj7+hUzcJLRv0KRHrYy60KrBksVJu
+	wC1DsXsVfO0ucW+H+iXT2o9kwJaul9FWlT3bB0LoS9rS8auaAPUN8IIDiTgQvpCS
+	Aa+g/9NPibPn+4kyJyGcjO9sW349vhOSpdz+xINWofAOBJfhvIJj1EWSuaMR5Zfs
+	rJEjHYsvp52TGlrPB9PHqg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743410484; x=
-	1743496884; bh=mNfctF1n7F9ALuXmHRaEGIW+LNfS6gGc78rc2CAT3S4=; b=P
-	3PNsFpmJCD+WwLW1i9BKxUhw+kzmQ0tCaHNbPzXwT2JUMdAenxykDxUoBjj22sFf
-	M5L7RBrO+3qU/Tgijo0GmJWQ/MAika1MuWDqxO1sP8ucEmUlxO0oR2j7Xl2DDYRy
-	ladUyLxRdG1JUBKv+U7gN98BplfHJwVt/0Mmmpl6g18Xb5jV7heZ7SNc5vEdk5F/
-	QxiMlk03F3DowH2dHzJv22Dj5e7uThr9xkbG4sIqcpbMcFRnvc8Sm0CAEHcnoRHw
-	U5V0srfYPvK9bj4riYHDM5lxiIjB0zgNHyLtk+gBEDO6/O192844k2q5pb7FDGDn
-	1CIzglpts6dP5HhflQutw==
-X-ME-Sender: <xms:NFXqZ6X6e1-pAcoEvCG2uTt0UyiK67WWEnd_niW6tmu006Wax14zHg>
-    <xme:NFXqZ2kSDHnRePLOp9eNjXCTk12SG5Q2HD_mvmJAGX-WwUDdpE9ongaxrJqmWO_r_
-    Mi39m-rdJWBj7RNOQ>
-X-ME-Received: <xmr:NFXqZ-aE2mBvI1j3fEXn6W78QJ6bez3Xr6iC-ZKhf0K3tfeTBWPYGOVJRmppMvNWDnRzcqbVIGF_hExzyTU6HIbO50-5vCYnQ_SY9KZ4x1Gg6YjH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeelgeejucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743410485; x=
+	1743496885; bh=ZI6FiSZfZ0zhnKBmcBnkcxUkwBZ5KltkGcmKB53J7EM=; b=a
+	3V054obsfRC7eGj6/Yj+oB6rFVjXPvyochVYCW/74u5cQoT2oWuAX64z+d6lp/9+
+	/jrcetQbAugja1bHWw3OkG5R8oBYkYdJQ3QbQVw/e4XrsMq2mNv/T1pgBdDkxrkZ
+	ZXe59+vSTmhSEXj2worHTi2qyVx7GDgUK5GJC3bCz04CRqc7bZcswYDffw+D9d8N
+	OYmkRkm3kfggmZq/cVoAZncRQ/yrxNc0SGQm4zLUrNESVdh+luHclIdVtW9kxfXb
+	Oo3T7a684jCpGPFnfNbKIb6u8ddNpVHphFpLm8OVOChg1sHyIZVS1E8zW1eFDt6k
+	8KuoOkAxViV4/vprIB+Vw==
+X-ME-Sender: <xms:NVXqZy1micaOElYBSh7BYSrbyOT0iNh9IgtYt6c7nvnao9ZMaLuQVg>
+    <xme:NVXqZ1ELv3kUIGRjcvdgqvXs3_X547u2oNT0gNoMkCMJr0syATp6UJWnc4a25ct0M
+    wspx5OuaYGDDPpeHw>
+X-ME-Received: <xmr:NVXqZ67vjh5JB-y6ThN_qBOg81nr96ek8DtAxKn05r76n38AjquZmemAVDNJD7L_e6J9WdVq12VJJemtd4hn_cKL7igeEXgIdHEowe7-2n6aZclp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeelgeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucgovfgvgihtqfhnlh
-    ihqddqteefjeefqddtgeculdehtddmnecujfgurhephfffufggtgfgkfhfjgfvvefoseht
-    jeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpsh
-    esphhkshdrihhmqeenucggtffrrghtthgvrhhnpedthfegfeejuefgieffvefhvedvfedt
-    ffdtgffhheevgfdtjedukefgkefgfeevtdenucffohhmrghinhepghhoohhglhgvrdgtoh
-    hmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhs
-    sehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:NFXqZxWmXM2L2DM_JB95VZIp2r6uKZ0A2JLZOxmr9VigmjSQCZzcOg>
-    <xmx:NFXqZ0lZSTsQse6EpJ2EELf8TTGli_lJ_Hbtlt4ay0WMQdK-Uem98A>
-    <xmx:NFXqZ2c2pUL0uGAQONoPZYGUd13F_sY1XaZECU3UXCA6OfffVao5Iw>
-    <xmx:NFXqZ2FFyrqg5OTDo-Uip52tqn40ksT3YZSp-fA7ufQlukJ12RFyZQ>
-    <xmx:NFXqZwt_eCshllpFaOEzW4LI97bbXgXx3INERR4NuEkTpGZdAJUHoZag>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
+    fugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufht
+    vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuie
+    dujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+    dpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:NVXqZz3NfYsCsoNrUgENOhoS3JlaWNTUPwZbA5oDCr480IPDW4wrcw>
+    <xmx:NVXqZ1H1dME-98h8QJeaEdiNXF6eGE-U3wU_-foEb0g8fbNBHorcEQ>
+    <xmx:NVXqZ8_VxViZ4kwmhK1t_EM5VB8IEnrqv7hYa3LBTSrP-oMX5uzJqA>
+    <xmx:NVXqZ6mUxZlZPTrithYv37Dy1O5x5M90Q_f7TG9Woc1Onv-PDUVkxQ>
+    <xmx:NVXqZzNj2MX0Na6qzNMQeh-UnBSEjIZIXyNmSV9sb4xtC7m2_3I2qU1P>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:23 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 31 Mar 2025 04:41:24 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a5d3934f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4eeb76f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 31 Mar 2025 08:41:21 +0000 (UTC)
+	Mon, 31 Mar 2025 08:41:23 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 31 Mar 2025 10:41:19 +0200
-Subject: [PATCH 01/16] reftable: fix formatting of the license header
+Date: Mon, 31 Mar 2025 10:41:21 +0200
+Subject: [PATCH 03/16] reftable/blocksource: consolidate code into a single
+ file
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,760 +83,368 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250331-pks-reftable-polishing-v1-1-ebed5247434c@pks.im>
+Message-Id: <20250331-pks-reftable-polishing-v1-3-ebed5247434c@pks.im>
 References: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
 In-Reply-To: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-The license headers used across the reftable library doesn't follow our
-typical coding style for multi-line comments. Fix it.
+The code that implements block sources is distributed across a couple of
+files even though. Consolidate all of it into "reftable/blocksource.c"
+and its accompanying header so that it is easier to locate and more self
+contained.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/basics.c               | 12 ++++++------
- reftable/basics.h               | 12 ++++++------
- reftable/block.c                | 12 ++++++------
- reftable/block.h                | 12 ++++++------
- reftable/blocksource.c          | 12 ++++++------
- reftable/blocksource.h          | 12 ++++++------
- reftable/constants.h            | 12 ++++++------
- reftable/error.c                | 12 ++++++------
- reftable/iter.c                 | 12 ++++++------
- reftable/iter.h                 | 12 ++++++------
- reftable/merged.c               | 12 ++++++------
- reftable/merged.h               | 12 ++++++------
- reftable/pq.c                   | 12 ++++++------
- reftable/pq.h                   | 12 ++++++------
- reftable/reader.c               | 12 ++++++------
- reftable/reader.h               | 12 ++++++------
- reftable/record.c               | 12 ++++++------
- reftable/record.h               | 12 ++++++------
- reftable/reftable-basics.h      |  2 +-
- reftable/reftable-blocksource.h | 12 ++++++------
- reftable/reftable-error.h       | 12 ++++++------
- reftable/reftable-iterator.h    | 12 ++++++------
- reftable/reftable-merged.h      | 12 ++++++------
- reftable/reftable-reader.h      | 12 ++++++------
- reftable/reftable-record.h      | 12 ++++++------
- reftable/reftable-stack.h       | 12 ++++++------
- reftable/reftable-writer.h      | 12 ++++++------
- reftable/stack.c                | 12 ++++++------
- reftable/stack.h                | 12 ++++++------
- reftable/system.h               | 12 ++++++------
- reftable/tree.c                 | 12 ++++++------
- reftable/tree.h                 | 12 ++++++------
- reftable/writer.c               | 12 ++++++------
- reftable/writer.h               | 12 ++++++------
- 34 files changed, 199 insertions(+), 199 deletions(-)
+ reftable/block.c                    | 17 +++--------------
+ reftable/block.h                    |  3 ---
+ reftable/blocksource.c              | 35 +++++++++++++++++++++++++++++++++++
+ reftable/blocksource.h              | 27 ++++++++++++++++++++++++++-
+ reftable/iter.c                     |  5 +++--
+ reftable/reftable-blocksource.h     |  3 ++-
+ reftable/table.c                    | 33 +++++----------------------------
+ reftable/table.h                    |  7 -------
+ t/unit-tests/t-reftable-block.c     |  8 ++++----
+ t/unit-tests/t-reftable-readwrite.c |  4 ++--
+ 10 files changed, 80 insertions(+), 62 deletions(-)
 
-diff --git a/reftable/basics.c b/reftable/basics.c
-index 8c4a4433e41..9988ebd635e 100644
---- a/reftable/basics.c
-+++ b/reftable/basics.c
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #define REFTABLE_ALLOW_BANNED_ALLOCATORS
- #include "basics.h"
-diff --git a/reftable/basics.h b/reftable/basics.h
-index fd59cbb7720..96a2f0d3829 100644
---- a/reftable/basics.h
-+++ b/reftable/basics.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef BASICS_H
- #define BASICS_H
 diff --git a/reftable/block.c b/reftable/block.c
-index 53b5e044690..a5734d44415 100644
+index a5734d44415..97740187259 100644
 --- a/reftable/block.c
 +++ b/reftable/block.c
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
+@@ -221,7 +221,7 @@ int block_reader_init(struct block_reader *br, struct reftable_block *block,
+ 	uint32_t restart_start = 0;
+ 	uint8_t *restart_bytes = NULL;
+ 
+-	reftable_block_done(&br->block);
++	block_source_return_block(&br->block);
+ 
+ 	if (!reftable_is_block_type(typ)) {
+ 		err =  REFTABLE_FORMAT_ERROR;
+@@ -285,7 +285,7 @@ int block_reader_init(struct block_reader *br, struct reftable_block *block,
+ 		}
+ 
+ 		/* We're done with the input data. */
+-		reftable_block_done(block);
++		block_source_return_block(block);
+ 		block->data = br->uncompressed_data;
+ 		block->len = sz;
+ 		full_block_size = src_len + block_header_skip - br->zstream->avail_in;
+@@ -324,7 +324,7 @@ void block_reader_release(struct block_reader *br)
+ 	inflateEnd(br->zstream);
+ 	reftable_free(br->zstream);
+ 	reftable_free(br->uncompressed_data);
+-	reftable_block_done(&br->block);
++	block_source_return_block(&br->block);
+ }
+ 
+ uint8_t block_reader_type(const struct block_reader *r)
+@@ -570,14 +570,3 @@ void block_writer_release(struct block_writer *bw)
+ 	reftable_buf_release(&bw->last_key);
+ 	/* the block is not owned. */
+ }
 -
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #include "block.h"
- 
+-void reftable_block_done(struct reftable_block *blockp)
+-{
+-	struct reftable_block_source source = blockp->source;
+-	if (blockp && source.ops)
+-		source.ops->return_block(source.arg, blockp);
+-	blockp->data = NULL;
+-	blockp->len = 0;
+-	blockp->source.ops = NULL;
+-	blockp->source.arg = NULL;
+-}
 diff --git a/reftable/block.h b/reftable/block.h
-index bef2b8a4c5c..eaeffdffc90 100644
+index eaeffdffc90..203b07d9a44 100644
 --- a/reftable/block.h
 +++ b/reftable/block.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
+@@ -142,7 +142,4 @@ size_t header_size(int version);
+ /* size of file footer, depending on format version */
+ size_t footer_size(int version);
  
- #ifndef BLOCK_H
- #define BLOCK_H
+-/* returns a block to its source. */
+-void reftable_block_done(struct reftable_block *ret);
+-
+ #endif
 diff --git a/reftable/blocksource.c b/reftable/blocksource.c
-index 78c1be23373..1397cbe7800 100644
+index 1397cbe7800..bc785506fb1 100644
 --- a/reftable/blocksource.c
 +++ b/reftable/blocksource.c
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
+@@ -13,6 +13,41 @@
+ #include "reftable-blocksource.h"
+ #include "reftable-error.h"
  
- #include "system.h"
- 
++void block_source_return_block(struct reftable_block *block)
++{
++	struct reftable_block_source source = block->source;
++	if (block && source.ops)
++		source.ops->return_block(source.arg, block);
++	block->data = NULL;
++	block->len = 0;
++	block->source.ops = NULL;
++	block->source.arg = NULL;
++}
++
++void block_source_close(struct reftable_block_source *source)
++{
++	if (!source->ops) {
++		return;
++	}
++
++	source->ops->close(source->arg);
++	source->ops = NULL;
++}
++
++ssize_t block_source_read_block(struct reftable_block_source *source,
++				struct reftable_block *dest, uint64_t off,
++				uint32_t size)
++{
++	ssize_t result = source->ops->read_block(source->arg, dest, off, size);
++	dest->source = *source;
++	return result;
++}
++
++uint64_t block_source_size(struct reftable_block_source *source)
++{
++	return source->ops->size(source->arg);
++}
++
+ static void reftable_buf_return_block(void *b REFTABLE_UNUSED, struct reftable_block *dest)
+ {
+ 	if (dest->len)
 diff --git a/reftable/blocksource.h b/reftable/blocksource.h
-index a84a3ccd891..7b67898ae22 100644
+index 7b67898ae22..639b9a1a3c5 100644
 --- a/reftable/blocksource.h
 +++ b/reftable/blocksource.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef BLOCKSOURCE_H
- #define BLOCKSOURCE_H
-diff --git a/reftable/constants.h b/reftable/constants.h
-index f6beb843ebf..091728cf033 100644
---- a/reftable/constants.h
-+++ b/reftable/constants.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef CONSTANTS_H
- #define CONSTANTS_H
-diff --git a/reftable/error.c b/reftable/error.c
-index 660d0296170..c7cab2dbc42 100644
---- a/reftable/error.c
-+++ b/reftable/error.c
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
+@@ -12,9 +12,34 @@
  #include "system.h"
- #include "reftable-error.h"
+ 
+ struct reftable_block_source;
++struct reftable_block;
+ struct reftable_buf;
+ 
+-/* Create an in-memory block source for reading reftables */
++/*
++ * Close the block source and the underlying resource. This is a no-op in case
++ * the block source is zero-initialized.
++ */
++void block_source_close(struct reftable_block_source *source);
++
++/*
++ * Read a block of length `size` from the source at the given `off`.
++ */
++ssize_t block_source_read_block(struct reftable_block_source *source,
++				struct reftable_block *dest, uint64_t off,
++				uint32_t size);
++
++/*
++ * Return the total length of the underlying resource.
++ */
++uint64_t block_source_size(struct reftable_block_source *source);
++
++/*
++ * Return a block to its original source, releasing any resources associated
++ * with it.
++ */
++void block_source_return_block(struct reftable_block *block);
++
++/* Create an in-memory block source for reading reftables. */
+ void block_source_from_buf(struct reftable_block_source *bs,
+ 			   struct reftable_buf *buf);
+ 
 diff --git a/reftable/iter.c b/reftable/iter.c
-index f520382e700..44a155e756e 100644
+index 7376f263c99..6af6eb49396 100644
 --- a/reftable/iter.c
 +++ b/reftable/iter.c
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
+@@ -11,6 +11,7 @@
+ #include "system.h"
  
- #include "iter.h"
+ #include "block.h"
++#include "blocksource.h"
+ #include "constants.h"
+ #include "reftable-error.h"
+ #include "table.h"
+@@ -113,7 +114,7 @@ static void indexed_table_ref_iter_close(void *p)
+ {
+ 	struct indexed_table_ref_iter *it = p;
+ 	block_iter_close(&it->cur);
+-	reftable_block_done(&it->block_reader.block);
++	block_source_return_block(&it->block_reader.block);
+ 	reftable_free(it->offsets);
+ 	reftable_buf_release(&it->oid);
+ }
+@@ -127,7 +128,7 @@ static int indexed_table_ref_iter_next_block(struct indexed_table_ref_iter *it)
+ 		return 1;
+ 	}
  
-diff --git a/reftable/iter.h b/reftable/iter.h
-index 40f98893b85..bd217405f55 100644
---- a/reftable/iter.h
-+++ b/reftable/iter.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
+-	reftable_block_done(&it->block_reader.block);
++	block_source_return_block(&it->block_reader.block);
  
- #ifndef ITER_H
- #define ITER_H
-diff --git a/reftable/merged.c b/reftable/merged.c
-index 4ff1553772a..1829a081756 100644
---- a/reftable/merged.c
-+++ b/reftable/merged.c
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #include "merged.h"
- 
-diff --git a/reftable/merged.h b/reftable/merged.h
-index 0b7d939e92b..ae92409d342 100644
---- a/reftable/merged.h
-+++ b/reftable/merged.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef MERGED_H
- #define MERGED_H
-diff --git a/reftable/pq.c b/reftable/pq.c
-index 82394a972db..9a79f5c5eec 100644
---- a/reftable/pq.c
-+++ b/reftable/pq.c
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #include "pq.h"
- 
-diff --git a/reftable/pq.h b/reftable/pq.h
-index ff39016445b..42310670b09 100644
---- a/reftable/pq.h
-+++ b/reftable/pq.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef PQ_H
- #define PQ_H
-diff --git a/reftable/reader.c b/reftable/reader.c
-index 172aff2c10b..155a26c30ff 100644
---- a/reftable/reader.c
-+++ b/reftable/reader.c
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #include "reader.h"
- 
-diff --git a/reftable/reader.h b/reftable/reader.h
-index bb72108a6f1..c9dccbd6c97 100644
---- a/reftable/reader.h
-+++ b/reftable/reader.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef READER_H
- #define READER_H
-diff --git a/reftable/record.c b/reftable/record.c
-index 142853d5070..26cd834d405 100644
---- a/reftable/record.c
-+++ b/reftable/record.c
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- /* record.c - methods for different types of records. */
- 
-diff --git a/reftable/record.h b/reftable/record.h
-index 867810a9328..7953f352a3c 100644
---- a/reftable/record.h
-+++ b/reftable/record.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef RECORD_H
- #define RECORD_H
-diff --git a/reftable/reftable-basics.h b/reftable/reftable-basics.h
-index e0397ed5836..ed7c7c9ac2c 100644
---- a/reftable/reftable-basics.h
-+++ b/reftable/reftable-basics.h
-@@ -4,7 +4,7 @@
-  * Use of this source code is governed by a BSD-style
-  * license that can be found in the LICENSE file or at
-  * https://developers.google.com/open-source/licenses/bsd
--*/
-+ */
- 
- #ifndef REFTABLE_BASICS_H
- #define REFTABLE_BASICS_H
+ 	off = it->offsets[it->offset_idx++];
+ 	err = table_init_block_reader(it->table, &it->block_reader, off,
 diff --git a/reftable/reftable-blocksource.h b/reftable/reftable-blocksource.h
-index 6b326aa5ea5..8692cd017e9 100644
+index 8692cd017e9..96430b629e4 100644
 --- a/reftable/reftable-blocksource.h
 +++ b/reftable/reftable-blocksource.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
+@@ -11,7 +11,8 @@
  
- #ifndef REFTABLE_BLOCKSOURCE_H
- #define REFTABLE_BLOCKSOURCE_H
-diff --git a/reftable/reftable-error.h b/reftable/reftable-error.h
-index a7e33d964d0..d100e0df927 100644
---- a/reftable/reftable-error.h
-+++ b/reftable/reftable-error.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
+ #include <stdint.h>
  
- #ifndef REFTABLE_ERROR_H
- #define REFTABLE_ERROR_H
-diff --git a/reftable/reftable-iterator.h b/reftable/reftable-iterator.h
-index e3bf688d53d..af582028c27 100644
---- a/reftable/reftable-iterator.h
-+++ b/reftable/reftable-iterator.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef REFTABLE_ITERATOR_H
- #define REFTABLE_ITERATOR_H
-diff --git a/reftable/reftable-merged.h b/reftable/reftable-merged.h
-index f2d01c3ef82..445756e475a 100644
---- a/reftable/reftable-merged.h
-+++ b/reftable/reftable-merged.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef REFTABLE_MERGED_H
- #define REFTABLE_MERGED_H
-diff --git a/reftable/reftable-reader.h b/reftable/reftable-reader.h
-index 0085fbb9032..9b6a8ac0716 100644
---- a/reftable/reftable-reader.h
-+++ b/reftable/reftable-reader.h
-@@ -1,10 +1,10 @@
- /*
--  Copyright 2020 Google LLC
--
--  Use of this source code is governed by a BSD-style
--  license that can be found in the LICENSE file or at
--  https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef REFTABLE_READER_H
- #define REFTABLE_READER_H
-diff --git a/reftable/reftable-record.h b/reftable/reftable-record.h
-index 931e5947441..385a74cc864 100644
---- a/reftable/reftable-record.h
-+++ b/reftable/reftable-record.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef REFTABLE_RECORD_H
- #define REFTABLE_RECORD_H
-diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
-index ae14270ea74..910ec6ef3a2 100644
---- a/reftable/reftable-stack.h
-+++ b/reftable/reftable-stack.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef REFTABLE_STACK_H
- #define REFTABLE_STACK_H
-diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
-index 1befe3b07cf..0fbeff17f46 100644
---- a/reftable/reftable-writer.h
-+++ b/reftable/reftable-writer.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef REFTABLE_WRITER_H
- #define REFTABLE_WRITER_H
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 6dac015b473..bc3cfa91170 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #include "stack.h"
- 
-diff --git a/reftable/stack.h b/reftable/stack.h
-index 5b45cff4f75..d91f5ce6072 100644
---- a/reftable/stack.h
-+++ b/reftable/stack.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef STACK_H
- #define STACK_H
-diff --git a/reftable/system.h b/reftable/system.h
-index 10055fbff2d..cf207aa0c53 100644
---- a/reftable/system.h
-+++ b/reftable/system.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef SYSTEM_H
- #define SYSTEM_H
-diff --git a/reftable/tree.c b/reftable/tree.c
-index f4dbe720901..a52f7c0c7d4 100644
---- a/reftable/tree.c
-+++ b/reftable/tree.c
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
--
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
+-/* block_source is a generic wrapper for a seekable readable file.
++/*
++ * Generic wrapper for a seekable readable file.
+  */
+ struct reftable_block_source {
+ 	struct reftable_block_source_vtable *ops;
+diff --git a/reftable/table.c b/reftable/table.c
+index 440fb559ad1..d18e17b0d44 100644
+--- a/reftable/table.c
++++ b/reftable/table.c
+@@ -10,35 +10,12 @@
  
  #include "system.h"
- #include "tree.h"
-diff --git a/reftable/tree.h b/reftable/tree.h
-index 9604453b6d5..2c9c4652994 100644
---- a/reftable/tree.h
-+++ b/reftable/tree.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
+ #include "block.h"
++#include "blocksource.h"
+ #include "constants.h"
+ #include "iter.h"
+ #include "record.h"
+ #include "reftable-error.h"
+ 
+-uint64_t block_source_size(struct reftable_block_source *source)
+-{
+-	return source->ops->size(source->arg);
+-}
 -
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #ifndef TREE_H
- #define TREE_H
-diff --git a/reftable/writer.c b/reftable/writer.c
-index ce55a1deb06..f0accfd0c32 100644
---- a/reftable/writer.c
-+++ b/reftable/writer.c
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
+-ssize_t block_source_read_block(struct reftable_block_source *source,
+-				struct reftable_block *dest, uint64_t off,
+-				uint32_t size)
+-{
+-	ssize_t result = source->ops->read_block(source->arg, dest, off, size);
+-	dest->source = *source;
+-	return result;
+-}
 -
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
- 
- #include "writer.h"
- 
-diff --git a/reftable/writer.h b/reftable/writer.h
-index 1f4788a430c..9f53610b27a 100644
---- a/reftable/writer.h
-+++ b/reftable/writer.h
-@@ -1,10 +1,10 @@
- /*
--Copyright 2020 Google LLC
+-void block_source_close(struct reftable_block_source *source)
+-{
+-	if (!source->ops) {
+-		return;
+-	}
 -
--Use of this source code is governed by a BSD-style
--license that can be found in the LICENSE file or at
--https://developers.google.com/open-source/licenses/bsd
--*/
-+ * Copyright 2020 Google LLC
-+ *
-+ * Use of this source code is governed by a BSD-style
-+ * license that can be found in the LICENSE file or at
-+ * https://developers.google.com/open-source/licenses/bsd
-+ */
+-	source->ops->close(source->arg);
+-	source->ops = NULL;
+-}
+-
+ static struct reftable_table_offsets *
+ table_offsets_for(struct reftable_table *t, uint8_t typ)
+ {
+@@ -249,7 +226,7 @@ int table_init_block_reader(struct reftable_table *t, struct block_reader *br,
+ 	}
  
- #ifndef WRITER_H
- #define WRITER_H
+ 	if (block_size > guess_block_size) {
+-		reftable_block_done(&block);
++		block_source_return_block(&block);
+ 		err = table_get_block(t, &block, next_off, block_size);
+ 		if (err < 0) {
+ 			goto done;
+@@ -259,7 +236,7 @@ int table_init_block_reader(struct reftable_table *t, struct block_reader *br,
+ 	err = block_reader_init(br, &block, header_off, t->block_size,
+ 				hash_size(t->hash_id));
+ done:
+-	reftable_block_done(&block);
++	block_source_return_block(&block);
+ 
+ 	return err;
+ }
+@@ -666,8 +643,8 @@ int reftable_table_new(struct reftable_table **out,
+ 	*out = t;
+ 
+ done:
+-	reftable_block_done(&footer);
+-	reftable_block_done(&header);
++	block_source_return_block(&footer);
++	block_source_return_block(&header);
+ 	if (err) {
+ 		if (t)
+ 			reftable_free(t->name);
+diff --git a/reftable/table.h b/reftable/table.h
+index 9cd8f80a207..8d8dd2b413d 100644
+--- a/reftable/table.h
++++ b/reftable/table.h
+@@ -14,13 +14,6 @@
+ #include "reftable-iterator.h"
+ #include "reftable-table.h"
+ 
+-uint64_t block_source_size(struct reftable_block_source *source);
+-
+-ssize_t block_source_read_block(struct reftable_block_source *source,
+-				struct reftable_block *dest, uint64_t off,
+-				uint32_t size);
+-void block_source_close(struct reftable_block_source *source);
+-
+ /* metadata for a block type */
+ struct reftable_table_offsets {
+ 	int is_present;
+diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
+index 22040aeefa5..8bb40482347 100644
+--- a/t/unit-tests/t-reftable-block.c
++++ b/t/unit-tests/t-reftable-block.c
+@@ -100,7 +100,7 @@ static void t_ref_block_read_write(void)
+ 	block_reader_release(&br);
+ 	block_iter_close(&it);
+ 	reftable_record_release(&rec);
+-	reftable_block_done(&br.block);
++	block_source_return_block(&br.block);
+ 	reftable_buf_release(&want);
+ 	reftable_buf_release(&buf);
+ 	for (i = 0; i < N; i++)
+@@ -190,7 +190,7 @@ static void t_log_block_read_write(void)
+ 	block_reader_release(&br);
+ 	block_iter_close(&it);
+ 	reftable_record_release(&rec);
+-	reftable_block_done(&br.block);
++	block_source_return_block(&br.block);
+ 	reftable_buf_release(&want);
+ 	reftable_buf_release(&buf);
+ 	for (i = 0; i < N; i++)
+@@ -273,7 +273,7 @@ static void t_obj_block_read_write(void)
+ 	block_reader_release(&br);
+ 	block_iter_close(&it);
+ 	reftable_record_release(&rec);
+-	reftable_block_done(&br.block);
++	block_source_return_block(&br.block);
+ 	reftable_buf_release(&want);
+ 	reftable_buf_release(&buf);
+ 	for (i = 0; i < N; i++)
+@@ -365,7 +365,7 @@ static void t_index_block_read_write(void)
+ 	block_reader_release(&br);
+ 	block_iter_close(&it);
+ 	reftable_record_release(&rec);
+-	reftable_block_done(&br.block);
++	block_source_return_block(&br.block);
+ 	reftable_buf_release(&want);
+ 	reftable_buf_release(&buf);
+ 	for (i = 0; i < N; i++)
+diff --git a/t/unit-tests/t-reftable-readwrite.c b/t/unit-tests/t-reftable-readwrite.c
+index c4c27242ba9..3fba888cdaa 100644
+--- a/t/unit-tests/t-reftable-readwrite.c
++++ b/t/unit-tests/t-reftable-readwrite.c
+@@ -32,13 +32,13 @@ static void t_buffer(void)
+ 	n = block_source_read_block(&source, &out, 0, sizeof(in));
+ 	check_int(n, ==, sizeof(in));
+ 	check(!memcmp(in, out.data, n));
+-	reftable_block_done(&out);
++	block_source_return_block(&out);
+ 
+ 	n = block_source_read_block(&source, &out, 1, 2);
+ 	check_int(n, ==, 2);
+ 	check(!memcmp(out.data, "el", 2));
+ 
+-	reftable_block_done(&out);
++	block_source_return_block(&out);
+ 	block_source_close(&source);
+ 	reftable_buf_release(&buf);
+ }
 
 -- 
 2.49.0.604.gff1f9ca942.dirty
