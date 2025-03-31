@@ -1,109 +1,565 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F14EEAA
-	for <git@vger.kernel.org>; Sun, 30 Mar 2025 21:03:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A99BE49
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 01:21:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743368616; cv=none; b=gGpJ+/neAayb+Jj+nA21vphpG3ad7dQSlfIDuvtjL98oql50Bj4iH67vcyyDFhID8Xl4ZEr4K7HMrBOwJY0Csx+eKVoFu9FduBIZA6TdE44T5ANYFwjSccCAbjCKW1cBr9xbI3/zJBMvtVnVHe1ppD2MxriQRlmkQINdRx+Lrxo=
+	t=1743384080; cv=none; b=Qo4kj6h/zxJ7x4kRM4MWqktVUW9oNcc2UTZ3Bh865tBT833EYaBonRZ/n/x+Y1R9yJZ4GpZMYednEb7jF+86ZszKklMtx2VUzYmGBWwKa7TBkzYeaMnpML0Qw3Dhv86JGlTKSZNgJ4+n9FmnbHMV3Cka+TPetTUXG/K4wtBC5/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743368616; c=relaxed/simple;
-	bh=2uJ0OK3x1+alJOML64FJxYsujJr2RSlQI1fPX5I55pA=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=RXQqb8Xw9BTbA7avbcOpgUuQEq23dVMw+02Cpq9IHpv6jkkU0jdJWpA2XfKSyd78AcwQE0YOb7WKRB4gcQhMHzwtNX9bkenLcCZ5jV/FqS5VjcpdEwVwUdCGrl6/qoCEpV2zy1cZ2koRVvry5rw1RUpt+QDtouQE6XH4DxiHog0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gOusmwTX; arc=none smtp.client-ip=209.85.208.54
+	s=arc-20240116; t=1743384080; c=relaxed/simple;
+	bh=1ZyYSTac3pDWIEn3WoQzkMXTM4glX95/IKMj/L1BEzk=;
+	h=From:Message-ID:Date:MIME-Version:Subject:To:References:Cc:
+	 In-Reply-To:Content-Type; b=ZnCkqiVOF1PFISR00rDaE7zMpcB25ECg3IED0hUc4xw2ZgWVscyBifAX5zwHw/xkby4Ib+txFteYLr7GQHwqILklifT3XuLeccCfJg1SRpsoa4K7Z5rhin/ANcddyLNtv/jkQsoprjYBi5JviUoBxaCfseCKX8DIcy/gDboU3zU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XNJL9IdB; arc=none smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gOusmwTX"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5e614da8615so2938098a12.1
-        for <git@vger.kernel.org>; Sun, 30 Mar 2025 14:03:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XNJL9IdB"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6e8f05acc13so46445116d6.2
+        for <git@vger.kernel.org>; Sun, 30 Mar 2025 18:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743368611; x=1743973411; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=/bhUxS3jvkC9oGjJoHGWSq/9C3BCL4M2SxvxUM96uIs=;
-        b=gOusmwTXoaiGjJPmhyU0hLyDCX3DN7Z/LAiA+/lu0D+y/I4JqmGiVF3ic92hF+GKAP
-         T8Gf9yfdjYPTXr3ueccPheZ5yRuFm3DnhMJRWXUKyPbEWa1EzB87bT6tjP0gkJYM+uqW
-         RSHqBy64IW3Ah36ojFisblwGMdAEYzie3xger9JlZmdqMJ4ytwIV+gaT8PzKEhhs5kyo
-         qoaBDiD1vSXRDU6G4PDOiFg8cuz8DQ7a7iNnaVGUIjvtKxTDIUduT4raFl8YDs/lojc/
-         5y4DRAzRH+hlhlhGo74G3npcxZ9QAb1E5oEij41jACFRQINDFbNPv37Sh+d/jDuDyPlc
-         BkUQ==
+        d=gmail.com; s=20230601; t=1743384076; x=1743988876; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Mi8G/9Y3reyemfrr4ocH7Ts7k0B6Umza3SsEye7qD/g=;
+        b=XNJL9IdBQ7h6o6zn0ChHLdZ07Icyf8ElA1z5cmL7/NPFeGiTnXSjuWHbZ7f2CCRYkO
+         7ZKmSFJ87QTQRrtKhrcg4LYQCDF2RwoXUdAN31048zDUuxTHiEbJUaWeUYTwtRfUXkhK
+         QKJ++2FDjxLWG2HEb+6x6sXe+28Hcpv3H363+xMONXdO8K1f4W44ibVTTTCnp+XqiTwy
+         X7FAWHKlvKoQtrBpOt+4bxKaLJ4Afi17Vx40I+E1kwpp2cOnKeVAmlWiwibnXb9YahSH
+         6ycaPK2bMMcUcw/IJKSzzQFT3oKYOeYIrBw/kHywhNF3svhgFqIaQ85MKu7N/du+QD8x
+         va5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743368611; x=1743973411;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/bhUxS3jvkC9oGjJoHGWSq/9C3BCL4M2SxvxUM96uIs=;
-        b=bX82aV2BmFRMARQZzKim3z6wBBP2Snl7I7K9b34U47Fbb+pRb6JlX1dtY1IXVFHb03
-         IGHFl7dmYoZANMWr4xYrxZbdGBQtNUMazxPeJKXl1GbN3sJ5lpY8SfQS0mzQcO3+EVVz
-         xOKZtyCwq3LFwmVpxpO8tuMptUeMEu9qSiD77ocmCQe8PaCbB2eb2nn5cAsWsg2pospt
-         pPxxHD4/MNRCeMjsnJtsMb4UD+siXrtggy/m9Gx9KObCzl56pM0CurltOl/YbAukglkF
-         YS9locnNRmwDHwg2RP7ZT45u2PG/tPypDzrloZ801TPydPmXjt8dwV3aKmLdggITa8zr
-         jaWA==
-X-Gm-Message-State: AOJu0YxU2P+KtCzdhyyx2dVEZz5IwuKbUqOth2J+9Sx0VmmJ5LtLByFi
-	nFbIkGMjgfWstJmUtDpmOblMN/jVGGNFVRRbUFVfSelFkg44svTJcZZoxilY3OQzsWZmiiTdYmo
-	bNX58qj1no7WuH/DwDTeKQaQTuexGwOn2
-X-Gm-Gg: ASbGncuhxI2x7vzg37V/S9kNra5W3Bnx4l3Lylgq3CzcpPd8YDklHANgUb1JYK13hCX
-	kSEH5OYp6BPklp23am6HAdOrvfD7rXRG/bCoPC3HttuMHX24AQlB5oIjSDNAQ4ZKoplIW/Cjn0e
-	etw6Vuo+Eavgq4wtISDBWs2Ne6ZK3k
-X-Google-Smtp-Source: AGHT+IHU/JwaJ/Z/W1V/yxl+yQu/5ZSwcXLcEi2HjLFvlFtyrESWSXwz8U3v1O80ju9o3QAsLkUB66z7z3Si3c4Ra6A=
-X-Received: by 2002:a05:6402:254a:b0:5ed:17d9:91d4 with SMTP id
- 4fb4d7f45d1cf-5edc44e7895mr9468849a12.8.1743368611162; Sun, 30 Mar 2025
- 14:03:31 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743384076; x=1743988876;
+        h=content-transfer-encoding:in-reply-to:cc:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Mi8G/9Y3reyemfrr4ocH7Ts7k0B6Umza3SsEye7qD/g=;
+        b=xACaywQl2HhFwRZEK2BeU0VlZPHcAB54/as0iDKKLVg1eyJ5vjKwSXf7TJJFwGxpNh
+         Pc+WvZUIYj8D8ts/yh/lASBH2Qyz+a610moBpTzRkz9rtcKLWji7lRWbffYzAIX2VmsA
+         aVvfUDIveYTs2vw5PoPrIwHUzKzpk4k8yv0h1p09avtFEWSfO6jSa/legoIegvtLHvYE
+         QCTZ7VRuD+MOlUtyBeu2HEPXYJcdbr5JSyWS9NNunpI4O5K25KILXz6RiVXC9fEeGc0G
+         fXx588uMvxXa5BHXfVcuy6D8bG2RFXBEVItNzL9VFcR93xLe5cL9l2Ghleg8js05o2b+
+         +G5A==
+X-Gm-Message-State: AOJu0YyzXQtkT6Y4LXxlZQmEMYoc5ry2QQAdxWOWfqy39WcgMbBZVFLX
+	9Nu/gMDkJtE+G6usSkeKGCU49urs7jj9aG8I2OmA81b5q9WduP5NJaqPV0k3
+X-Gm-Gg: ASbGncs8XK0L8sn9+paRw7NNT8DmYdwx8jWU0xbyOMYf0UnNY7viysGooe7OcEdsWbM
+	ZZ5Njdkqw43v4TvZw+ePgXF2NiQqDRjoIeKR8mmjtDEaLMXnX7bVW1MXUgJE4zzcoJpPB0bAz0N
+	ef6rdSOhD/WZY7dguH3JK7yBBaPVagSs+n2EKjvvQD1Snn0h5FRKaFkwyViOR3gqUokUi2GWMRC
+	0/MxPreEjLqfpDdqIaOM6VwrAFSWUuuswQKXNblOUbwoCqvJuDKOswUX6lqvOG4otoObpqrW/Ou
+	e6o75D8Uu40tZUgHfGEk0uafNqOemKYdkWTg5YRTDqUf3CHJLVCmVfPSt0pMzri9T/HLmS3SW2p
+	IPGHO8c6QLjBuGQQbe5beOlY4qV2h6tgh
+X-Google-Smtp-Source: AGHT+IFhLiIm5dx3I41CaOVMHhKhOboqD0vcG50+DTJijYTYgOcCyuuDMHHfh1tGf6xEbumGMGPWzQ==
+X-Received: by 2002:a05:6214:258f:b0:6e8:f770:5045 with SMTP id 6a1803df08f44-6eed6271744mr116097536d6.28.1743384075730;
+        Sun, 30 Mar 2025 18:21:15 -0700 (PDT)
+Received: from [192.168.1.174] (c-73-143-206-114.hsd1.ma.comcast.net. [73.143.206.114])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c5f779a999sm424063785a.115.2025.03.30.18.21.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 30 Mar 2025 18:21:15 -0700 (PDT)
+From: Nikolay Shustov <nikolay.shustov@gmail.com>
+X-Google-Original-From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
+Message-ID: <652def28-2e97-4177-9197-bd93caa57886@gmail.com>
+Date: Sun, 30 Mar 2025 21:21:14 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sun, 30 Mar 2025 23:03:19 +0200
-X-Gm-Features: AQ5f1JozeW7qrpnk5rBCeKnDvD2fFmBzAr_tlddXJb7VrmeoRzpwkUz6j9UicwE
-Message-ID: <CAP8UFD2KXVB3w+YSK04oPZ3rkoCgzW_V1suTO=ipxx9w6HDn1g@mail.gmail.com>
-Subject: Draft of Git Rev News edition 121
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Elijah Newren <newren@gmail.com>, 
-	Bruno Brito <bruno@git-tower.com>, Luca Milanesio <luca.milanesio@gmail.com>, 
-	Philip Oakley <philipoakley@iee.org>, Andrew Ardill <andrew.ardill@gmail.com>, 
-	David Pursehouse <dpursehouse@collab.net>, Jeff King <peff@peff.net>, 
-	Matthieu Moy <git@matthieu-moy.fr>, Lars Schneider <larsxschneider@gmail.com>, 
-	Thomas Ferris Nicolaisen <tfnico@gmail.com>, Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>, 
-	Nicola Paolucci <durden@gmail.com>, David Aguilar <davvid@gmail.com>, 
-	Mirth Hickford <mirth.hickford@gmail.com>, Seyi Chamber <kuforiji98@gmail.com>, 
-	Usman Akinyemi <usmanakinyemi202@gmail.com>, Peter Krefting <peter@softwolves.pp.se>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: Nikolay.Shustov@gmail.com
+Subject: Re: [PATCH] git p4 fix for failure to decode p4 errors
+To: git@vger.kernel.org, fahad@keylock.net, bekenn@gmai.com, ps@pks.im
+References: <pull.1926.git.git.1742440852765.gitgitgadget@gmail.com>
+ <32b401c3-de0e-427b-83b7-eb5a5b315db1@gmail.com>
+ <fdbb3f88-7321-4dc0-9ead-7ed9ef0fc995@gmail.com>
+ <339b8557-d41a-4a40-912b-eb2cff63159f@gmail.com>
+ <7e5d0613-d116-4e60-8ccf-efb092776398@gmail.com>
+Content-Language: en-US
+Cc: phillip.wood@dunelm.org.uk
+In-Reply-To: <7e5d0613-d116-4e60-8ccf-efb092776398@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi everyone,
+<adding Fahad Alrashed, James Touton and Patrick Steinhardt, whom Git 
+points to as the contributors to the latest p4-git logic changes>
 
-A draft of a new Git Rev News edition is available here:
+Hello,
+May I ask you to review the below change to p4-git?
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-121.md
+Thank you in advance,
+- Nikolay
 
-We are still working on some stats that we will add to the first
-article about the 10 years of Git Rev News!
-
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
-
-  https://github.com/git/git.github.io/issues/753
-
-You can also reply to this email.
-
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
-
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Kaartic and I plan to publish this edition on Tuesday
-April 1st, 2025.
-
-Thanks,
-Christian.
+On 3/30/25 16:06, Nikolay Shustov wrote:
+> Hi Phillip,
+> Thank you for your time and your feedback.
+> It is especially valuable to me as it is the very first PR of mine.
+> I will try to contact the recent contributors of git-p4 changes for 
+> review.
+>
+> To clarify on the fix:
+>
+> The error I hit was while using "git p4 clone":
+> It was throwing decoding exception at line 901 of git-p4, preventing 
+> import from Perforce depot to complete successfully.
+> The root cause is the logic for "git p4 clone" anticipates some p4 
+> operations may return errors, it is a normal part of import process.
+> But that logic uses just .decode() on the byte array of the returned 
+> error message, which does not work well when it contains the 
+> characters with high bit set (which may be the case when Perforce 
+> configured without unicode support). git-p4 implementation has a 
+> decoding fallback logic for such cases in other places, but this 
+> specific place did not use any.
+>
+> Using the bullet list in description was not intended to enumerate the 
+> separate changes, but rather to highlight the details of the change.
+> I will make sure I won't use it in the future to avoid the confusion.
+>
+> That small refactoring I did was not a sidecar but a way I chose to 
+> implement the changes:
+> There was an existing function that was doing the job of decoding the 
+> received p4 metadata, using the existing git-p4 configuration settings.
+> There also were a few existing variables that kept the state between 
+> the calls of that function (e.g. indicator not to show decoding 
+> fallback warning twice, configuration settings).
+> However, with the way the function was implemented, it could not be 
+> reused as-is for the new case.
+> I would had to add a new function that would have to use the same core 
+> transcoding implementation but behave differently.
+> Adding behavior variances into the existing function felt suboptimal: 
+> it would complicate it quite a bit and I felt sorry about next one who 
+> will have to reverse engineer its behavior again. Duplicating the part 
+> of logic of the existing function also looked suboptimal: any further 
+> changes would have to be done in two places.
+> So, seeing the need in keeping state between calls and separating a 
+> part of existing logic into separate functions, I went for moving the 
+> implementation into a new class and organizing things there with the 
+> class instance. In my opinion, the new code looks pretty 
+> self-descritpitve.
+>
+> Thank you,
+> - Nikolay
+>
+> On 3/26/25 11:09, Phillip Wood wrote:
+>> Hi Nikolay
+>>
+>> On 25/03/2025 23:09, Nikolay Shustov wrote:
+>>> I think this fix is important.
+>>> git-p4 is used in the companies where there is an intent to migrate 
+>>> from Perforce to Git and having the issue that this change fixes is 
+>>> a real roadblock.
+>>> The better we can make git-p4, the more adoption Git would get in 
+>>> the commercial world.
+>>
+>> Unfortunately I don't think any of the regular git contributors use 
+>> git-p4 so to find someone to review this patch I would look at who 
+>> has contributed to git-p4 recently and cc them. Before you do that I 
+>> have a couple of suggestions below
+>>
+>>> On 3/22/25 07:48, Nikolay Shustov wrote:
+>>>> ping, pretty please? :-)
+>>>>
+>>>> On 3/19/25 23:20, Nikolay Shustov via GitGitGadget wrote:
+>>>>> From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
+>>>>>
+>>>>> Fixes the git p4 failure happening when Perforce command returns 
+>>>>> error
+>>>>> containing byte stream of characters with high bit set. In such 
+>>>>> situations
+>>>>> git p4 implementatino fails to decode this byte stream into utf-8 
+>>>>> string.
+>>>>>
+>>>>> Design:
+>>>>> Make use of existing decoding fallback strategy, described by
+>>>>> git-p4.metadataDecodingStrategy and git-p4.metadataFallbackEncoding
+>>>>> settings in the logic that decodes the Perforce command error bytes.
+>>
+>> Our usual style for commit messages is to explain what the problem is 
+>> and how it is fixed by the changes in the patch. Rather than saying 
+>> "fixes the git p4 failure" I would start by explaining what that 
+>> failure is and how it is caused. It would also be helpful to explain 
+>> what the settings that you refer to do so that someone who is 
+>> familiar with python but not with git-p4 can understand and 
+>> potentially review the changes.
+>>
+>>>>> Details:
+>>>>> - Moved p4 metadata transcoding logic from
+>>>>>    metadata_stream_to_writable_bytes(..) into a new 
+>>>>> MetadataTranscoder class.
+>>>>> - Enhcanced the implementation to use 
+>>>>> git-p4.metadataDecodingStrategy and
+>>>>>    git-p4.metadataFallbackEncoding settings for p4 errors decoding.
+>>>>> - Added test.
+>>
+>> Thanks for taking the time to add a new test, it is much appreciated. 
+>> When there is a bullet list in a commit message it is often a sign 
+>> that the commit is doing more than one thing at once. In this case it 
+>> appears there is a bug fix mixed in with some refactoring. I would 
+>> split the refactoring out into a preparatory patch so that reviews 
+>> can clearly see which changes are due to creating the 
+>> MetadataTranscoder class and which are the changes that fix the bug. 
+>> The new test should be added in the commit that fixes the bug.
+>>
+>> Best Wishes
+>>
+>> Phillip
+>>
+>>>>> Signed-off-by: Nikolay Shustov <Nikolay.Shustov@gmail.com>
+>>>>> ---
+>>>>>      git p4 fix for failure to decode p4 errors
+>>>>>
+>>>>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr- 
+>>>>> git-1926%2Fnshustov%2Fgit-p4-error-decoding-v1
+>>>>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr- 
+>>>>> git-1926/nshustov/git-p4-error-decoding-v1
+>>>>> Pull-Request: https://github.com/git/git/pull/1926
+>>>>>
+>>>>>   git-p4.py                        | 135 
+>>>>> ++++++++++++++++++-------------
+>>>>>   t/meson.build                    |   1 +
+>>>>>   t/t9837-git-p4-error-encoding.sh |  53 ++++++++++++
+>>>>>   t/t9837/git-p4-error-python3.py  |  15 ++++
+>>>>>   4 files changed, 149 insertions(+), 55 deletions(-)
+>>>>>   create mode 100755 t/t9837-git-p4-error-encoding.sh
+>>>>>   create mode 100644 t/t9837/git-p4-error-python3.py
+>>>>>
+>>>>> diff --git a/git-p4.py b/git-p4.py
+>>>>> index c0ca7becaf4..72a4c55f99e 100755
+>>>>> --- a/git-p4.py
+>>>>> +++ b/git-p4.py
+>>>>> @@ -234,67 +234,91 @@ else:
+>>>>>       class MetadataDecodingException(Exception):
+>>>>> -    def __init__(self, input_string):
+>>>>> +    def __init__(self, input_string, error=None):
+>>>>>           self.input_string = input_string
+>>>>> +        self.error = error
+>>>>>         def __str__(self):
+>>>>> -        return """Decoding perforce metadata failed!
+>>>>> +        message = """Decoding perforce metadata failed!
+>>>>>   The failing string was:
+>>>>>   ---
+>>>>>   {}
+>>>>>   ---
+>>>>>   Consider setting the git-p4.metadataDecodingStrategy config 
+>>>>> option to
+>>>>>   'fallback', to allow metadata to be decoded using a fallback 
+>>>>> encoding,
+>>>>> -defaulting to cp1252.""".format(self.input_string)
+>>>>> +defaulting to cp1252."""
+>>>>> +        if verbose and self.error is not None:
+>>>>> +            message += """
+>>>>> +---
+>>>>> +Error:
+>>>>> +---
+>>>>> +{}"""
+>>>>> +        return message.format(self.input_string, self.error)
+>>>>>     -encoding_fallback_warning_issued = False
+>>>>> -encoding_escape_warning_issued = False
+>>>>> -def metadata_stream_to_writable_bytes(s):
+>>>>> -    encodingStrategy = 
+>>>>> gitConfig('git-p4.metadataDecodingStrategy') or 
+>>>>> defaultMetadataDecodingStrategy
+>>>>> -    fallbackEncoding = 
+>>>>> gitConfig('git-p4.metadataFallbackEncoding') or 
+>>>>> defaultFallbackMetadataEncoding
+>>>>> -    if not isinstance(s, bytes):
+>>>>> -        return s.encode('utf_8')
+>>>>> -    if encodingStrategy == 'passthrough':
+>>>>> -        return s
+>>>>> -    try:
+>>>>> -        s.decode('utf_8')
+>>>>> -        return s
+>>>>> -    except UnicodeDecodeError:
+>>>>> -        if encodingStrategy == 'fallback' and fallbackEncoding:
+>>>>> -            global encoding_fallback_warning_issued
+>>>>> -            global encoding_escape_warning_issued
+>>>>> -            try:
+>>>>> -                if not encoding_fallback_warning_issued:
+>>>>> -                    print("\nCould not decode value as utf-8; 
+>>>>> using configured fallback encoding %s: %s" % (fallbackEncoding, s))
+>>>>> -                    print("\n(this warning is only displayed once 
+>>>>> during an import)")
+>>>>> -                    encoding_fallback_warning_issued = True
+>>>>> -                return s.decode(fallbackEncoding).encode('utf_8')
+>>>>> -            except Exception as exc:
+>>>>> -                if not encoding_escape_warning_issued:
+>>>>> -                    print("\nCould not decode value with 
+>>>>> configured fallback encoding %s; escaping bytes over 127: %s" % 
+>>>>> (fallbackEncoding, s))
+>>>>> -                    print("\n(this warning is only displayed once 
+>>>>> during an import)")
+>>>>> -                    encoding_escape_warning_issued = True
+>>>>> -                escaped_bytes = b''
+>>>>> -                # bytes and strings work very differently in 
+>>>>> python2 vs python3...
+>>>>> -                if str is bytes:
+>>>>> -                    for byte in s:
+>>>>> -                        byte_number = struct.unpack('>B', byte)[0]
+>>>>> -                        if byte_number > 127:
+>>>>> -                            escaped_bytes += b'%'
+>>>>> -                            escaped_bytes += hex(byte_number) 
+>>>>> [2:].upper()
+>>>>> -                        else:
+>>>>> -                            escaped_bytes += byte
+>>>>> -                else:
+>>>>> -                    for byte_number in s:
+>>>>> -                        if byte_number > 127:
+>>>>> -                            escaped_bytes += b'%'
+>>>>> -                            escaped_bytes += 
+>>>>> hex(byte_number).upper().encode()[2:]
+>>>>> -                        else:
+>>>>> -                            escaped_bytes += bytes([byte_number])
+>>>>> -                return escaped_bytes
+>>>>> +class MetadataTranscoder:
+>>>>> +    def __init__(self, default_metadata_decoding_strategy, 
+>>>>> default_fallback_metadata_encoding):
+>>>>> +        self.decoding_fallback_warning_issued = False
+>>>>> +        self.decoding_escape_warning_issued = False
+>>>>> +        self.decodingStrategy = gitConfig('git- 
+>>>>> p4.metadataDecodingStrategy') or default_metadata_decoding_strategy
+>>>>> +        self.fallbackEncoding = gitConfig('git- 
+>>>>> p4.metadataFallbackEncoding') or default_fallback_metadata_encoding
+>>>>> +
+>>>>> +    def decode_metadata(self, s, error_from_fallback=True):
+>>>>> +        try:
+>>>>> +            return [s.decode('utf_8'), 'utf_8']
+>>>>> +        except UnicodeDecodeError as decode_exception:
+>>>>> +            error = decode_exception
+>>>>> +            if self.decodingStrategy == 'fallback' and 
+>>>>> self.fallbackEncoding:
+>>>>> +                try:
+>>>>> +                    if not self.decoding_fallback_warning_issued:
+>>>>> +                        print("\nCould not decode value as utf-8; 
+>>>>> using configured fallback encoding %s: %s" % 
+>>>>> (self.fallbackEncoding, s))
+>>>>> +                        print("\n(this warning is only displayed 
+>>>>> once during an import)")
+>>>>> + self.decoding_fallback_warning_issued = True
+>>>>> +                    return [s.decode(self.fallbackEncoding), 
+>>>>> self.fallbackEncoding]
+>>>>> +                except Exception as decode_exception:
+>>>>> +                    if not error_from_fallback:
+>>>>> +                        return [s, None]
+>>>>> +                    error = decode_exception
+>>>>> +            raise MetadataDecodingException(s, error)
+>>>>> +
+>>>>> +    def metadata_stream_to_writable_bytes(self, s):
+>>>>> +        if not isinstance(s, bytes):
+>>>>> +            return s.encode('utf_8')
+>>>>> +        if self.decodingStrategy == 'passthrough':
+>>>>> +            return s
+>>>>> +
+>>>>> +        [text, encoding] = self.decode_metadata(s, False)
+>>>>> +        if encoding == 'utf_8':
+>>>>> +            # s is of utf-8 already
+>>>>> +            return s
+>>>>> +
+>>>>> +        if encoding is None:
+>>>>> +            # could not decode s, even with fallback encoding
+>>>>> +            if not self.decoding_escape_warning_issued:
+>>>>> +                print("\nCould not decode value with configured 
+>>>>> fallback encoding %s; escaping bytes over 127: %s" % 
+>>>>> (self.fallbackEncoding, s))
+>>>>> +                print("\n(this warning is only displayed once 
+>>>>> during an import)")
+>>>>> +                self.decoding_escape_warning_issued = True
+>>>>> +            escaped_bytes = b''
+>>>>> +            # bytes and strings work very differently in python2 
+>>>>> vs python3...
+>>>>> +            if str is bytes:
+>>>>> +                for byte in s:
+>>>>> +                    byte_number = struct.unpack('>B', byte)[0]
+>>>>> +                    if byte_number > 127:
+>>>>> +                        escaped_bytes += b'%'
+>>>>> +                        escaped_bytes += 
+>>>>> hex(byte_number)[2:].upper()
+>>>>> +                    else:
+>>>>> +                        escaped_bytes += byte
+>>>>> +            else:
+>>>>> +                for byte_number in s:
+>>>>> +                    if byte_number > 127:
+>>>>> +                        escaped_bytes += b'%'
+>>>>> +                        escaped_bytes += 
+>>>>> hex(byte_number).upper().encode()[2:]
+>>>>> +                    else:
+>>>>> +                        escaped_bytes += bytes([byte_number])
+>>>>> +            return escaped_bytes
+>>>>>   -        raise MetadataDecodingException(s)
+>>>>> +        # were able to decode but not to utf-8
+>>>>> +        return text.encode('utf_8')
+>>>>>       def decode_path(path):
+>>>>> @@ -898,14 +922,14 @@ def p4CmdList(cmd, stdin=None, 
+>>>>> stdin_mode='w+b', cb=None, skip_info=False,
+>>>>>                       decoded_entry[key] = value
+>>>>>                   # Parse out data if it's an error response
+>>>>>                   if decoded_entry.get('code') == 'error' and 
+>>>>> 'data' in decoded_entry:
+>>>>> -                    decoded_entry['data'] = 
+>>>>> decoded_entry['data'].decode()
+>>>>> +                    decoded_entry['data'] = 
+>>>>> metadataTranscoder.decode_metadata(decoded_entry['data'])
+>>>>>                   entry = decoded_entry
+>>>>>               if skip_info:
+>>>>>                   if 'code' in entry and entry['code'] == 'info':
+>>>>>                       continue
+>>>>>               for key in p4KeysContainingNonUtf8Chars():
+>>>>>                   if key in entry:
+>>>>> -                    entry[key] = 
+>>>>> metadata_stream_to_writable_bytes(entry[key])
+>>>>> +                    entry[key] = 
+>>>>> metadataTranscoder.metadata_stream_to_writable_bytes(entry[key])
+>>>>>               if cb is not None:
+>>>>>                   cb(entry)
+>>>>>               else:
+>>>>> @@ -1718,7 +1742,7 @@ class P4UserMap:
+>>>>>               # python2 or python3. To support
+>>>>>               # git-p4.metadataDecodingStrategy=fallback, 
+>>>>> self.users dict values
+>>>>>               # are always bytes, ready to be written to git.
+>>>>> -            emailbytes = 
+>>>>> metadata_stream_to_writable_bytes(output["Email"])
+>>>>> +            emailbytes = 
+>>>>> metadataTranscoder.metadata_stream_to_writable_bytes(output["Email"])
+>>>>>               self.users[output["User"]] = output["FullName"] + b" 
+>>>>> <" + emailbytes + b">"
+>>>>>               self.emails[output["Email"]] = output["User"]
+>>>>>   @@ -1730,12 +1754,12 @@ class P4UserMap:
+>>>>>                   fullname = mapUser[0][1]
+>>>>>                   email = mapUser[0][2]
+>>>>>                   fulluser = fullname + " <" + email + ">"
+>>>>> -                self.users[user] = 
+>>>>> metadata_stream_to_writable_bytes(fulluser)
+>>>>> +                self.users[user] = 
+>>>>> metadataTranscoder.metadata_stream_to_writable_bytes(fulluser)
+>>>>>                   self.emails[email] = user
+>>>>>             s = b''
+>>>>>           for (key, val) in self.users.items():
+>>>>> -            keybytes = metadata_stream_to_writable_bytes(key)
+>>>>> +            keybytes = 
+>>>>> metadataTranscoder.metadata_stream_to_writable_bytes(key)
+>>>>>               s += b"%s\t%s\n" % (keybytes.expandtabs(1), 
+>>>>> val.expandtabs(1))
+>>>>>             open(self.getUserCacheFilename(), 'wb').write(s)
+>>>>> @@ -3349,7 +3373,7 @@ class P4Sync(Command, P4UserMap):
+>>>>>           if userid in self.users:
+>>>>>               return self.users[userid]
+>>>>>           else:
+>>>>> -            userid_bytes = metadata_stream_to_writable_bytes(userid)
+>>>>> +            userid_bytes = 
+>>>>> metadataTranscoder.metadata_stream_to_writable_bytes(userid)
+>>>>>               return b"%s <a@b>" % userid_bytes
+>>>>>         def streamTag(self, gitStream, labelName, labelDetails, 
+>>>>> commit, epoch):
+>>>>> @@ -4561,6 +4585,7 @@ commands = {
+>>>>>       "unshelve": P4Unshelve,
+>>>>>   }
+>>>>>   +metadataTranscoder = 
+>>>>> MetadataTranscoder(defaultMetadataDecodingStrategy, 
+>>>>> defaultFallbackMetadataEncoding)
+>>>>>     def main():
+>>>>>       if len(sys.argv[1:]) == 0:
+>>>>> diff --git a/t/meson.build b/t/meson.build
+>>>>> index a59da26be3f..656424fdff3 100644
+>>>>> --- a/t/meson.build
+>>>>> +++ b/t/meson.build
+>>>>> @@ -1090,6 +1090,7 @@ integration_tests = [
+>>>>>     't9834-git-p4-file-dir-bug.sh',
+>>>>>     't9835-git-p4-metadata-encoding-python2.sh',
+>>>>>     't9836-git-p4-metadata-encoding-python3.sh',
+>>>>> +  't9837-git-p4-error-encoding.sh',
+>>>>>     't9850-shell.sh',
+>>>>>     't9901-git-web--browse.sh',
+>>>>>     't9902-completion.sh',
+>>>>> diff --git a/t/t9837-git-p4-error-encoding.sh 
+>>>>> b/t/t9837-git-p4-error- encoding.sh
+>>>>> new file mode 100755
+>>>>> index 00000000000..1ea774afb1b
+>>>>> --- /dev/null
+>>>>> +++ b/t/t9837-git-p4-error-encoding.sh
+>>>>> @@ -0,0 +1,53 @@
+>>>>> +#!/bin/sh
+>>>>> +
+>>>>> +test_description='git p4 error encoding
+>>>>> +
+>>>>> +This test checks that the import process handles inconsistent text
+>>>>> +encoding in p4 error messages without failing'
+>>>>> +
+>>>>> +. ./lib-git-p4.sh
+>>>>> +
+>>>>> +###############################
+>>>>> +## SECTION REPEATED IN t9835 ##
+>>>>> +###############################
+>>>>> +
+>>>>> +# These tests require Perforce with non-unicode setup.
+>>>>> +out=$(2>&1 P4CHARSET=utf8 p4 client -o)
+>>>>> +if test $? -eq 0
+>>>>> +then
+>>>>> +    skip_all="skipping git p4 error encoding tests; Perforce is 
+>>>>> setup with unicode"
+>>>>> +    test_done
+>>>>> +fi
+>>>>> +
+>>>>> +# These tests are specific to Python 3. Write a custom script 
+>>>>> that executes
+>>>>> +# git-p4 directly with the Python 3 interpreter to ensure that we 
+>>>>> use that
+>>>>> +# version even if Git was compiled with Python 2.
+>>>>> +python_target_binary=$(which python3)
+>>>>> +if test -n "$python_target_binary"
+>>>>> +then
+>>>>> +    mkdir temp_python
+>>>>> +    PATH="$(pwd)/temp_python:$PATH"
+>>>>> +    export PATH
+>>>>> +
+>>>>> +    write_script temp_python/git-p4-python3 <<-EOF
+>>>>> +    exec "$python_target_binary" "$(git --exec-path)/git-p4" "\$@"
+>>>>> +    EOF
+>>>>> +fi
+>>>>> +
+>>>>> +git p4-python3 >err
+>>>>> +if ! grep 'valid commands' err
+>>>>> +then
+>>>>> +    skip_all="skipping python3 git p4 tests; python3 not available"
+>>>>> +    test_done
+>>>>> +fi
+>>>>> +
+>>>>> +test_expect_success 'start p4d' '
+>>>>> +    start_p4d
+>>>>> +'
+>>>>> +
+>>>>> +test_expect_success 'see if Perforce error with characters not 
+>>>>> convertable to utf-8 will be processed correctly' '
+>>>>> +    test_when_finished cleanup_git &&
+>>>>> +    $python_target_binary "$TEST_DIRECTORY"/t9837/git-p4-error- 
+>>>>> python3.py "$TEST_DIRECTORY"
+>>>>> +'
+>>>>> +
+>>>>> +test_done
+>>>>> diff --git a/t/t9837/git-p4-error-python3.py 
+>>>>> b/t/t9837/git-p4-error- python3.py
+>>>>> new file mode 100644
+>>>>> index 00000000000..fb65aee386e
+>>>>> --- /dev/null
+>>>>> +++ b/t/t9837/git-p4-error-python3.py
+>>>>> @@ -0,0 +1,15 @@
+>>>>> +import os
+>>>>> +import sys
+>>>>> +from  importlib.machinery import SourceFileLoader
+>>>>> +
+>>>>> +def main():
+>>>>> +    if len(sys.argv[1:]) != 1:
+>>>>> +        print("Expected test directory name")
+>>>>> +
+>>>>> +    gitp4_path = sys.argv[1] + "/../git-p4.py"
+>>>>> +    gitp4 = SourceFileLoader("gitp4", gitp4_path).load_module()
+>>>>> +    gitp4.p4CmdList(["edit", b'\xFEfile'])
+>>>>> +
+>>>>> +if __name__ == '__main__':
+>>>>> +    main()
+>>>>> +
+>>>>>
+>>>>> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+>>>
+>>
