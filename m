@@ -1,106 +1,112 @@
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022A7145A03
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 18:20:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3842279C0
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 19:29:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743445250; cv=none; b=cuEc8WBETFCeh+2XeJpZqGOjiuZxBA8bw6FB7bxQQEqRSzi2q5RkibLynCPlteT0X2co0loeOhwXFzewXopbz09LZgkuy1L/lHOg3+bvrmOiF4zciqzph0vXYSanBwwqxPliCAUk4iOw95OX8DM3dEvsvhthoZR25vTtjwHz6gE=
+	t=1743449376; cv=none; b=pJIsb7MMeheCyLBatcq3T9Iob8FgF5I2xO2nTf2Ppk9k4vTrVmf4ThQegkYGcEZo5OW7EEEooyNUWZic29rcjSEx7DyRpFG5iNzT5+4YPei7iai+mOYAoKh4ydbQxQfwGgsbmF+gnvX/VtSLJuj0RoUbd3xqyvmaEl4SJ/JCmCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743445250; c=relaxed/simple;
-	bh=sTc8mOtcsB/gn1yNcRWcyqITtsfF3v+HaGoz2jylMmQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IcG8M1Y6e9QfefMHq6w01RU8wB6ybFDT/rwPIxqK3OIvTLBclgtiejKTX8Az3tUytv0PL8wxz7pzDtF/b68We947+MU9EuDQUS8oVyFi9PePaUBBnA7bRLsAjnV/RXJS4NwHHhlllpWH+bMqoJ6zP4jQrblMXeA4G2R0D/qI3pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I+3Q46wB; arc=none smtp.client-ip=209.85.210.54
+	s=arc-20240116; t=1743449376; c=relaxed/simple;
+	bh=FP0m26YYaffO/VHoh+lM8HIuqtTzmsN/GFnQwJVQsJU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Rj3iCFKh0yDzT0VkOkKK1ilRDIrB1rlxe/g/N1/VkeT1yJFLGZpEzYWlMIDtrwFtgoOBA39Xt90cja6xu7X2BZAUW8Yx2SO+PjUyDX0hCCF+Ah3jmr/Z5Tt/hvOcy8c1bCYdCR7pp9eThrg1S9uOubFfhxppupWLZQ8Pg2e65FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N8Dsake/; arc=none smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I+3Q46wB"
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-72c09f8369cso963885a34.3
-        for <git@vger.kernel.org>; Mon, 31 Mar 2025 11:20:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N8Dsake/"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6e8f254b875so44406376d6.1
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 12:29:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743445248; x=1744050048; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=OMDGWr0E6E9sI6j5i4fxRQuLFE/Jyq9DFeEBS6mvZnA=;
-        b=I+3Q46wBLIHTzSAQGvyJcrcYDCTxgoy67PwcJ9dUCEQ9VCgL1Mrktvmp/Dwb7gCHv4
-         05RJ3VRlHE/jJbtI59Ow2UForbXaJebcvHUl2nmDJGlMEiFpibjdH6pco90vLRPhXRew
-         2VqXd7dv0dE+qUGMXHGldBF1SkaVZSqqNQdw0Q/llpJewmoKdRAs7yv4YcNNODgsSBXt
-         7thPtaLbwIselZf+lxpCtS8Skq+AIUP8nn6Vt+sOI8Lfb1ApKjavZA/6Qq3pS4wuItaj
-         gEUwxZ9zFYllqRe1oDZeIoYK+Yru6JFdV3UlJL0086vfgUBhAsipAF2PJqKp/l6F1JhJ
-         0CXg==
+        d=gmail.com; s=20230601; t=1743449373; x=1744054173; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pS7zwybNEtx9b6rt5s/1bNsZ53vFnSAX7KJ+3p1mo6A=;
+        b=N8Dsake/huwej/iJb0cNz2AEVtMcOuB34Nxu+89i5YFtE4daADUgJCbTYll4tYMUyd
+         EV1Za/lrkfrD3+4r6SlH/ntPLK8q1D28xJzz7DgTmg+01IuoBDeyOUQCet81U+bIzHKq
+         EW2wuKJ+ZaSQyG+9jNaECtLgplcLnnB2dmb1dUzIT/4/Dv6rVCdP3TKPd/Gz2S8SqRUf
+         /MS+s6I6eDfUU5wwl7qa+4UZpzGpmtATyaIM0g2A8KXwjJSeFzmsIveBYjc5J1x9Lgn9
+         tW8FXBgGpGfjyEyNMv/FyISbuTv7UuEgnoJD+Y3MPIeRj1XzKBSgr6qflLEQKoOW36rv
+         ED2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743445248; x=1744050048;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1743449373; x=1744054173;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OMDGWr0E6E9sI6j5i4fxRQuLFE/Jyq9DFeEBS6mvZnA=;
-        b=wyE15HxenGGIK/DJPyXEwcvu6DprOI1sfKQhd0rI2B3hZmqLendC5f1uZypd8BOgBt
-         lQKpV94kKwz+3So9QMA0ciFwV4Juhm+zXWWNNjmdcAHUWGoNqpk6s82FwTU3xE1I8ogb
-         e75MsiduFT5gC+NnC+2ePK6zGfyj4Cp9Pb5mi2eKMWhok9N1AfPJlE4YvaZtQSTYLN3i
-         RCk7nZ6K/h38nuJtffAihqOHmGrUs/kMlZi+1oTFJrHgWdoL7vp0Ogiv8BzncI/LMPl6
-         c/4fXEb97Dqz0Z4AM1/N3Dv/h8O0LtWFvTllVi/zkDJTk8kt6mhGAa1TZhbsOKgwcD0W
-         tWhw==
-X-Gm-Message-State: AOJu0YwtrsbGbiOueGoP651alOj2ws1qL+x7lNuvrSq/V5pt6Crr5I57
-	ckf84uo/k87/yGTyuikvoF5soQjnJy+pnML1aPfyqUAQtOmJj+VdtC6iLQ==
-X-Gm-Gg: ASbGncuZhRIMPr3xoNu/zRQyLO4y0tI3jO0Js9xg2c1wz89xlh+V6Dc+hOBAkIpvSO3
-	VUeKhMr3EEhcpfzt4/q+W/zMYF/El1N2lVSn8UlXeGYqTDabqnNGnWnNJG50gZmIomdK27Cmz11
-	CHXMOb3tydRSP81shhZXWmWPQ2mpuTbfERYdD6IlbMlg/+HdDhN2AXeM1PSr9cSRjPDDx28oo6f
-	z1u4C8nxBxI9c5p8dEj9RDjjxosw0uhkSsFrDTnAfhVSCYhkqKhJj6IHh9EeXqgH1f2rBjApCaE
-	PNjIbYz4R91CbLCTYB6CdBBBC3S3htGUXXjBkg==
-X-Google-Smtp-Source: AGHT+IFsdYP1vGbP3F8+BsPqvMAxA3kfu+ElhMwDUlFb2eFX+ugWn+/Q6sKN0nTqs1ejSOCxRImxYg==
-X-Received: by 2002:a05:6830:2813:b0:72b:9993:118e with SMTP id 46e09a7af769-72c638169cbmr6364941a34.22.1743445247860;
-        Mon, 31 Mar 2025 11:20:47 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-602845f3c52sm1566220eaf.30.2025.03.31.11.20.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Mar 2025 11:20:47 -0700 (PDT)
-Date: Mon, 31 Mar 2025 13:17:01 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/2] help: include SHA build options in version info
-Message-ID: <4mivlvpsppq62qrotv7dnrib3izxmhf6zlqga33dm6olvge4tz@z725ju4cshv5>
-References: <20250328170121.157563-1-jltobler@gmail.com>
- <CAP8UFD1oYmr=2ZCOVVjk6NbSCtA1Zv+3jy26jSSwHuOfdS6BQA@mail.gmail.com>
+        bh=pS7zwybNEtx9b6rt5s/1bNsZ53vFnSAX7KJ+3p1mo6A=;
+        b=u7Sr1JT83KmcWhbGVae6mmMUpyCOABNJeWnnm7FWGczrdOAyM3X9cTkfp0CrV26QDB
+         tzBS5ocUZECMVuS1cs7cK4iIRXYCfgMek1K3j6UpXAbSvPOKGnEq5zxaDV/qVur/lEms
+         sb6HK0uzJc6dUaP0eE/ZzX+PzOTrHzx8/Pxhvld1pmAdnKGlI6ixPoN7+F81F9sxasfh
+         Kmk4CMzfE+nX6Mg/GOxO6tlN/bYsO3pvW0q16OON7lfEJSRx1B0BTLOi1pWDduR84zGB
+         6EL3ySg+k6Wd2iGXU21U51hIFFVpbDqFBub/3u9nEVJJ/QJaXMLoX48rCu55hiVaAr9F
+         WBvg==
+X-Gm-Message-State: AOJu0YyPSY3tySXypuiitpwCY8Sk5ccEIh4hfApEP7Rp9rr1MwyntPXm
+	FyAkkOQzrQVg0mO1dDqG8PWPyswmr7/Y5Rc0OqifgN0RKxVYPMbT5ardHg==
+X-Gm-Gg: ASbGncvBC1CjQOwqh33UWVco3/F/TaVSfkCB4Sc22aoWPJcQm815N9q0bmowCIfX/Hb
+	xLeQszepxB+b3OY4irVTLksPoWFJHIcORkEGkPSx2ugulVKBlOIGxMa+uodfK3dljpQolyAwSMk
+	iQywakjRR+vV9IzA/bjdfcSaK/7QmvWHHiWOZEThUHraC+fyyay6x6vcQCZ9RTUBcOF43b7l9BN
+	puCUCV5oJhla/vdMWfGDyEaj2Jox5wBQ8szMii8P9V8zCE7jort7uiVaHOrX8Y3IvgGJyVYphh7
+	2vL1Vi+ngNHo2BuAOpFV74WADfyUY7hLHzWs7pZm9oK7oMs4SN2AC0jswbf9VJ/3mA==
+X-Google-Smtp-Source: AGHT+IGTUlUQrBO6REAVqaN3OEHesNqv7Weg3u3HJSRK6kEU9Jhegv+3AGdE8puODAlQmWm6YHcB5g==
+X-Received: by 2002:a05:6214:f0f:b0:6e8:f65a:67bd with SMTP id 6a1803df08f44-6eed5fb9b02mr157944006d6.11.1743449372957;
+        Mon, 31 Mar 2025 12:29:32 -0700 (PDT)
+Received: from ?IPV6:2600:4040:2644:5100::387? ([2600:4040:2644:5100::387])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c5f765ada7sm540594485a.9.2025.03.31.12.29.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 31 Mar 2025 12:29:32 -0700 (PDT)
+Message-ID: <5b09f1c2-be58-43a2-9908-7243b5207251@gmail.com>
+Date: Mon, 31 Mar 2025 15:29:31 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD1oYmr=2ZCOVVjk6NbSCtA1Zv+3jy26jSSwHuOfdS6BQA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitk - override $PATH search only on Windows
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de
+References: <53c31331-97ed-48be-8399-2701581b09a9@gmail.com>
+ <20250331151213.274691-1-mlevedahl@gmail.com>
+ <58556f57-698d-4f58-bbcf-c752cba00ff7@kdbg.org>
+Content-Language: en-US
+From: Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <58556f57-698d-4f58-bbcf-c752cba00ff7@kdbg.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 25/03/29 09:58AM, Christian Couder wrote:
-> On Fri, Mar 28, 2025 at 6:05 PM Justin Tobler <jltobler@gmail.com> wrote:
-> > Regarding "unsafe-SHA-1", I wonder if we should use a different name in
-> > the printed build options that sounds a little less scary. I was
-> > thinking maybe "fast-SHA-1" and document its meaning appropriately. I'm
-> > interested to know if anyone has thoughts on this.
-> 
-> Maybe we could use just "SHA-1" if a single algorithm is used for
-> everything, and both "SHA-1 for crypto" and "SHA-1 for non-crypto"
-> otherwise.
 
-Maybe we could leave "SHA-1:" alone and when unsafe is set use
-"non-crypto-SHA-1" instead of "unsafe-SHA-1"? It's a little wordy, but
-probably not too bad.
+On 3/31/25 1:12 PM, Johannes Sixt wrote:
+> Am 31.03.25 um 17:12 schrieb Mark Levedahl:
+>> Commit 4cbe9e0e2 was written to address problems that result from Tcl's
+>> documented behavior on Windows where the current working directory and a
+>> number of Windows system directories are automatically prepended to
+>> $PATH when searching for executables [1].  This basic Windows behavior
+>> has resulted in more than one CVE against git for Windows:
+>> CVE-2023-23618, CVE-2022-41953 are listed on the git for Windows github
+>> website for the Tcl components of git (gitk, git-gui).
+>>
+>> 4cbe9e0e2 is intended to restrict the search to looking only in
+>> directories given in $PATH and in the given order, which is exactly the
+>> Tcl behavior documented to exist on non-Windows platforms [1]. Thus,
+>> this change could have been written to affect only Windows, leaving
+>> other platforms alone.
+>>
+>> However, 4cbe9e0e2 implements the override for all platforms.  and
+>> includes specialized code for Cygwin, copied copied from git-gui prior
+>> to commit 6d2f9d90 on https://github.com/j6t/git-gui.git), so targets a
+> I can't find 6d2f9d90 anywhere. Do you have a URL?
 
-> Related to this I wonder if we should warn in some ways if a non
-> collision detection algorithm is used for crypto. For example we could
-> print "SHA-1: OpenSSL (No collision detection!!!)" instead of just
-> "SHA-1: OpenSSL". And yeah that should be documented.
+Sorry about that (bad copy / paste). Should be 7145c654
 
-Elsewhere in this thread it was suggested that we use the internal
-symbol names instead of coming up with new human readable names [1].
-I'll append this warning to the appropriate options as well though and
-document it.
+https://github.com/j6t/git-gui/commit/7145c654fffecd1f3d4a2b8bf05755ce262903e8
 
-Thanks,
--Justin
+> Now that this code is only about Windows, _search_exe is always ".exe".
+> It would be great if we could remove it as well.
+>
+Will do for v2.
 
-[1]: <xmqq8qoodq5u.fsf@gitster.g>
+Mark
+
