@@ -1,109 +1,93 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D771581E0
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 20:16:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1222340BF5
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 20:19:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743452220; cv=none; b=hX6OsNE3y9fX6mjht/k+56y4d8IorrjR/peUsXcNlC2e0S58sP6ZRPAlupBqq1K/39V+DYKJKDZqCsdUYhVcgpzSJiuPB2Xb6Dc6lzSkE9a10adxT7fkBfl8taFUXoxBmHBeASPIBv4kFxsjtDou12nhe6TexoMXpCi0vk70NUU=
+	t=1743452386; cv=none; b=Ewg1LlW84rdruMi+oYZRwCEYbm2jWpekpMxJVYhbYt0Do0oT0CMa/xxJpSmTNN/Ig7KhX7d/QAmApcPgrsnpyOnOMTVrHinPJeMIf06u2QuXRYhD3W/W/qL1VoasxaHGmYwc5SYnm3NCDtRp35tcB+WvX9UAgdk7gzg4UP7J1+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743452220; c=relaxed/simple;
-	bh=WZg6N/1MRNDVi34YTyLXNMQBWh7h5d4kmSmxDYK+gAU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jnfie9PPszLvvt9/sK5Oq80OgT/Z/D2MybBb6YquoPUDEJIMIyy3XthuaO9/fnFg0cIBIpWIRVqiOx8uosADOD/GsdEhB2/xxtHbevcGL1BCjkkt57ji8BLOxy6apMJBm7n44VwiY4Mp6y1DGr5p3LvWySmhJRwHnRJmbTz/y4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gQ+M7bMi; arc=none smtp.client-ip=209.85.222.170
+	s=arc-20240116; t=1743452386; c=relaxed/simple;
+	bh=ODSsnfGcPD51885D03YyzFSLDFd/DnIVGrJtGvZqAM8=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=d84ryyXEO1nTF4McoxTVM6tg4t/kQUhu9YS5N342ILhfJ5079khHKRJx6xar743TFFJkzD6tc/O/2PF6e8HqYlmZYcmSr3mS5beSfU+YTkjQyDF6auhq3ZJ+FrfSD22GmpaM4UG+KoI1JcvC9rGXLlnERaaI9drZUxlNB8NwNQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e39IFpoL; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gQ+M7bMi"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c58974ed57so513568285a.2
-        for <git@vger.kernel.org>; Mon, 31 Mar 2025 13:16:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e39IFpoL"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-30bf7d0c15eso50172401fa.0
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 13:19:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743452217; x=1744057017; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eLtbfSolcOO9uWAerrQUg461nhBKBYqqyd5NATM61No=;
-        b=gQ+M7bMiiIGCk9KvDgVAutuCJuqhEE3b+VndOzL6D6Bf0Y7jAp74GsLiA2RxqHh5E0
-         MPt0s6JvLrdsItKPEjpl1i3d0pH+8XSlWpc381DJMQlANovPQk5x6riaalBCkS3rJbw/
-         Mn2O+jyLwA88b47dsjrsn/QPGlXmuIrRv3WMZTWXUt1xDmiQsnmsGz/Q+jYFnmOFf3Uu
-         hogoYp6rH/H5S10xBKKI1DbvtLoJ7GRVaa3p+BFPJu/HZVCcB60XOtKaei0V0b6oBMmk
-         5YyVygpd4/1Y7rhk44RayC1IaHLIZKfNv9NeVHo7ePi1qCm/X6hv9dsSWKNFrJaZc35O
-         AfEg==
+        d=gmail.com; s=20230601; t=1743452383; x=1744057183; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=TIeff4HvsRdhfL8oGMg8ZfclWPBC33JMSu5pGllq4Ow=;
+        b=e39IFpoLBOvANIuzPE7vtUMplsMwSFFqeHs5+TIx7qkt4ggYebpL7gYxdDcNfiCYTN
+         o/Q9UE3XMqlbW6Xs/T5urzc3Sss+jlLFgjoGOh69gGnnkuCdM0h7q1NyXwL9F/Vpf6Yo
+         7XwBu/yh/5pv2k5WI7kG1+g6h7nTPgvYk33CHpxJ1iY+t8vwuk/iu3xutYlKqKveBF/U
+         nnJiA9aEXNqCFFxEhHPLEUnCtsAuxIRDkbhHPvyZl59zr6AK7XsrMlwknuaihWMd5/jI
+         XTklthu5UOskcnoyuc0YAeZlY9FJKxUnKjNtY8XrrGge+2lSBsrU/IbjITapVBSy/7YC
+         m9jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743452217; x=1744057017;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eLtbfSolcOO9uWAerrQUg461nhBKBYqqyd5NATM61No=;
-        b=uQ+49VRtCR8p5XtcevxdV587LW+hAOex4N6kuJnlUbQmHqPYWNgCfItgd4/JRpeK5t
-         cG8SWGwvaLbTBmZScwAK1FLgEJ6gf9wEqZoUAN0ELw+eSYPHlAum94NU7RxlVbmZaJm2
-         Fjfkprui5uwwpArUcmqKOAa3TRLH4C/H/+KicoIGR24VKzBkfLTuIpV5YjQ+qNxCy8uK
-         Nuzn+e0pUPW/CF05D1NgyCtNrf9BHgdAlJz3TRuAv3ZQFJ/AwQuhNW3ztKrTm99NnTXD
-         gGFolony7My0l3O+tzoq0AxVBFsQsV+th6QS12Vp0GM2EVT9UOfFcKVfE5Ieh4OZ88Tm
-         qXGQ==
-X-Gm-Message-State: AOJu0YwlzLQkev7bah4PtwaApgFDKyLd3b7Yk80u/USdUR6r8h/EXlNA
-	Jlbtv2j8LbpJPnL3Qq2lWIrtJzlcjb4Av9+snplcpeikwh//S0sE0bCKpjHa5bI5XhTe2n3zzyW
-	dhgNih00dJsgySj1hfiIkY2ueKdI=
-X-Gm-Gg: ASbGncvag4S+DqZ/PCFTgRDOpG1tvJ7xCk7dAbbUFWkUSfrF/ddYhCoBzl1MA3TlO/K
-	R+UePSeQ1JRTWFREWfbs4UBaIEaUPbsHL9UZ8stqZMjt0iY1PrW4qbKyHAjp3ZyJmF164A1/WpW
-	mhznKBfPlexD20h7Fpewz/NUtp7ZxuQQrXbbF1qjJVIt2cPSn6GD+VHnZUMpxIF2rj1EuxIJY=
-X-Google-Smtp-Source: AGHT+IFr7FXIqsESA8ifll2xo7Sn1/wn3/5sBRswuOef/gRPyb8S7hzb6ExtrqHtFlYRcztREnvs6UJTGl1TJHQSLes=
-X-Received: by 2002:a05:622a:1350:b0:476:980c:10a4 with SMTP id
- d75a77b69052e-478f6c9fd0bmr5144241cf.23.1743452216887; Mon, 31 Mar 2025
- 13:16:56 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743452383; x=1744057183;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TIeff4HvsRdhfL8oGMg8ZfclWPBC33JMSu5pGllq4Ow=;
+        b=vNKgyvOMDU/xLYn+fdcwQpqbhhpiK8BW11VglwC7hUOcyg2ZBDFBL/+dbVh44O/xub
+         frsKIbHPky/wyZj7cFIr//2F6YLPzQaeWz+i/+m225e4k+gN8kRVTfuZIZULNyyTXwAG
+         mOGq5YO7gF/UfB4nV32V3+QEq1SW4g7r336z/QyQgq2i8OW51LsTydgE9/5B0w2C3xvJ
+         yNadNkjHdkuJZwQtT2yTO8VmepAoue2crQhnS7mVykHNyOKKSc7Wars3AVTI+KH9dtiE
+         1nj1FM6flBirFqYzPZ/iH3RPNwNWHnROb81rllQPAcLwUoGAemY8h4BBtub1DWn7JlpM
+         I3XA==
+X-Gm-Message-State: AOJu0Yx7HnvbmCDChErttHTd01d8FIidjanlZZMYqmVYQLDwjFIWIf7S
+	r0p7ehh8QWZKyGB3LB1aXe2EQh9vwO9rIrsNXpgVxXnY831c7OU/cqw2CmGk26MWuo1dznEpobJ
+	kSdchiUnzTxLYZEuVDT6SEPa5CEmVRUVz0Da0GA==
+X-Gm-Gg: ASbGncsdbDQiW7ovs9Hm6pMaU4ycOtwz6ytRq3xhR1Ba/+hxgZL8LTAD74/lYbQFbVn
+	a2hAd1+OKxSjoYaCi6U/CPzBblwjensn6cMdCkGeF+xC9jtEe/QZNLKUm2pkYTTIeUbX2vhdIJD
+	2NtcB94TOpH1kN7aMh+dIYjZM=
+X-Google-Smtp-Source: AGHT+IEr5CIQgn44ceiKai2j35UQ7SkNMG0283aNLifCFY7lxyLdMOIYAWzBjBive8K04G/ImADQd69CxRa3EoEimX4=
+X-Received: by 2002:a05:651c:199e:b0:308:f787:5c48 with SMTP id
+ 38308e7fff4ca-30de034a7c3mr38924871fa.33.1743452382739; Mon, 31 Mar 2025
+ 13:19:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAE8gLhmKtV-Kz4jYT6r1NanmGdAyzd0CumVGsVnVpePQPAtnzQ@mail.gmail.com>
- <20250331-devious-woodpecker-of-temperance-b18608@lemur>
-In-Reply-To: <20250331-devious-woodpecker-of-temperance-b18608@lemur>
-From: MegaBrutal <megabrutal@gmail.com>
-Date: Mon, 31 Mar 2025 22:15:00 +0200
-X-Gm-Features: AQ5f1JojBDJlQGwqJDvA3S3QFHCaexE4evcMLfHIm8Q6hzYBXsdHlAPm47Wr0tw
-Message-ID: <CAE8gLh=1bqA6UTR4wAX1u1naic2cSGiekz0jLKxWeaxBKa=xiQ@mail.gmail.com>
-Subject: Re: How to get git-daemon to work in a post-CVE world?
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: git@vger.kernel.org
+From: Devste Devste <devstemail@gmail.com>
+Date: Mon, 31 Mar 2025 22:19:30 +0200
+X-Gm-Features: AQ5f1Jrz0GwUAOij1C0J2subDSF2eDBiMbX-ZpuYvUwcVU9RnzkSAoHa9Iea3_w
+Message-ID: <CANM0SV2huiGtWMcP+eEkNBHoieeoXmy_fM7vAOwyoW4=FXw1pg@mail.gmail.com>
+Subject: --reset-author does not reset author date when used in post-commit hook
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org> ezt =C3=ADrta
-(id=C5=91pont: 2025. m=C3=A1rc. 31., H, 16:53):
->
-> On Sun, Mar 30, 2025 at 10:30:00AM +0200, MegaBrutal wrote:
-> > Hi Everyone,
-> >
-> > I'm new to the list, just thought it's the best place to talk about
-> > Git. I'm running a public read-only git server with git-daemon. I've
-> > recently noticed that my repos can't be cloned and found that
-> > particular CVE which made git to verify the owners of the git repos.
-> >
-> > fatal: detected dubious ownership in repository at '/srv/git/mgsautils.=
-git'
-> >
-> > The feasible solution is to declare the directory safe in .gitconfig.
->
-> You can set global values in /etc/gitconfig, e.g.:
->
->     [safe]
->       directory =3D /srv/git/*
+device time zone is not UTC0
 
-Thanks! While it is much more convenient to set it in one global
-/etc/gitconfig than individual home directories, I encountered the
-following problems:
+post-commit hook:
+if [[ -n "${SKIP_POST_COMMIT+x}" ]] && [[ "$SKIP_POST_COMMIT" -eq 1 ]]
+then
+exit
+fi
 
-1. It doesn't do anything with the other error I get, when the
-problematic directory is '.'. I still keep getting that error message.
-2. Git daemon doesn't seem to resolve the '*' wildcard, i.e. with the
-wildcard I get the original message back which complains about
-'/srv/git/mgsautils.git', despite it should be covered by
-'/srv/git/*'. When I supply the full path, however, the error message
-is still about '.'.
+TZ=UTC0 SKIP_POST_COMMIT=1 git commit --amend --reset-author --no-edit
+--no-verify --no-post-rewrite --allow-empty --quiet
 
-I even performed a whole Ubuntu release upgrade to get a new version
-of Git, but 2.43.0 acts the same. Seems like git-daemon is more
-stricts than plain git =E2=80=93 what might be the problem?
+---
+
+Run:
+git commit -m "foo"
+git show -s --format="Commit: %h%nAuthor: %an%nAuthor Date:
+%ad%nCommitter: %cn%nCommitter Date: %cd%nMessage: %s%n" HEAD
+
+Expected that both Author Date: and Committer Date: show +0000 as
+timezone. Only committer date shows +0000, while author date shows
+time zone of device.
+
+When manually running the post-commit code (TZ=UTC0 SKIP_POST_COMMIT=1
+...) it correctly resets the author date to +0000 too
+
+When manually setting the date using --date="$(date +%s) +0000"
+instead of  --reset-author it also works correctly in post-commit
+hook.
