@@ -1,79 +1,69 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EB715A856
-	for <git@vger.kernel.org>; Mon, 31 Mar 2025 18:18:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022A7145A03
+	for <git@vger.kernel.org>; Mon, 31 Mar 2025 18:20:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743445082; cv=none; b=RUMwr7K0qnIVij+jyMCiLIXC/t4quMC/Mzyxx8Xv1HqbLCLvTe93pxo8sdm8tiStDEKuk9JIA/i5TiJdPi0q9GhfyLWpFTTfguEc3Pxi6jr0P2uFWVsDL9x98WheD8t4fyTTubMFZRcHXsOU+NobXIxYdxiFDtFxKSB4NmrksDU=
+	t=1743445250; cv=none; b=cuEc8WBETFCeh+2XeJpZqGOjiuZxBA8bw6FB7bxQQEqRSzi2q5RkibLynCPlteT0X2co0loeOhwXFzewXopbz09LZgkuy1L/lHOg3+bvrmOiF4zciqzph0vXYSanBwwqxPliCAUk4iOw95OX8DM3dEvsvhthoZR25vTtjwHz6gE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743445082; c=relaxed/simple;
-	bh=IwM6j27AFjw8uX/QH/jdxPB3oKyRdp0PUTjHO02U07s=;
+	s=arc-20240116; t=1743445250; c=relaxed/simple;
+	bh=sTc8mOtcsB/gn1yNcRWcyqITtsfF3v+HaGoz2jylMmQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WlgCVIResluI7Ocm6bKPlgqYTrNf5uVJ5TI9rEH9zSpeB50m1ML4Kpsxb1Tlli8SrCfo+yQ74ptmHYI1pYQvtRsIHHi064Xt5EkaSogtcdNG4IlglWHfBXsWsJIjw22o3ylN5L5oiYWXV/yqZD2KtSFL4biJhHtwE9uq20u/kB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cOf82cFG; arc=none smtp.client-ip=209.85.208.46
+	 Content-Type:Content-Disposition:In-Reply-To; b=IcG8M1Y6e9QfefMHq6w01RU8wB6ybFDT/rwPIxqK3OIvTLBclgtiejKTX8Az3tUytv0PL8wxz7pzDtF/b68We947+MU9EuDQUS8oVyFi9PePaUBBnA7bRLsAjnV/RXJS4NwHHhlllpWH+bMqoJ6zP4jQrblMXeA4G2R0D/qI3pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I+3Q46wB; arc=none smtp.client-ip=209.85.210.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cOf82cFG"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5ec9d24acfbso10958545a12.0
-        for <git@vger.kernel.org>; Mon, 31 Mar 2025 11:18:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I+3Q46wB"
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-72c09f8369cso963885a34.3
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 11:20:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743445079; x=1744049879; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1743445248; x=1744050048; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=xc4iM90heChlycZE8hI91TMHF+tn9igmaNLHhMsVyZs=;
-        b=cOf82cFGX+yc5qRzW99TnirIissr3WMNRA9lZVlBFEx8NMAi2lPltKTFq4Ig7m3WeF
-         3redlgRlZmS3Vfl8su+yY5urIgR39QYx6xyvCc1+goPKlDkuYs/Mjnaqg2KD9nhJ3Bhx
-         Rjvm/Y4b96Bg7klupF7ZJS+oj94PAVxQZ5K3NFwP1+9BxxWKA3L++Vx1mhWaDlWMrLYd
-         g1cxBXIqnynCofHBKYwP6mUULqX5A94bfLcy7YaeaOsJ1DcaH40hO2s9qSCc0jQD6m5W
-         I7UUEZ5IlbbskujfJ/mzcijGb8c+DjE6V48fTsj35090s5vEGp3zh3nJu8FbtDBxeDpW
-         Skbg==
+        bh=OMDGWr0E6E9sI6j5i4fxRQuLFE/Jyq9DFeEBS6mvZnA=;
+        b=I+3Q46wBLIHTzSAQGvyJcrcYDCTxgoy67PwcJ9dUCEQ9VCgL1Mrktvmp/Dwb7gCHv4
+         05RJ3VRlHE/jJbtI59Ow2UForbXaJebcvHUl2nmDJGlMEiFpibjdH6pco90vLRPhXRew
+         2VqXd7dv0dE+qUGMXHGldBF1SkaVZSqqNQdw0Q/llpJewmoKdRAs7yv4YcNNODgsSBXt
+         7thPtaLbwIselZf+lxpCtS8Skq+AIUP8nn6Vt+sOI8Lfb1ApKjavZA/6Qq3pS4wuItaj
+         gEUwxZ9zFYllqRe1oDZeIoYK+Yru6JFdV3UlJL0086vfgUBhAsipAF2PJqKp/l6F1JhJ
+         0CXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743445079; x=1744049879;
+        d=1e100.net; s=20230601; t=1743445248; x=1744050048;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xc4iM90heChlycZE8hI91TMHF+tn9igmaNLHhMsVyZs=;
-        b=pkzV4LUjTZosRg6ylakBF8SO14CeDVuBz0/8kwDv7FBasI2kNb6H/LaXcGDMjA96Hx
-         SvNQ+2JvqiPDHJe+XgXlcYOtLedgUz3qKy6wJe6RlIkKx9L+7Tsn/18fsT64DYrwNC/K
-         u6DVQdlfDkC39P0x79bigEs4JkB67GABLgfFN8sIJuf5dhYLzMg05PGfmkFn9XtldBwj
-         NNI9z5uEZZVvt7QQMRqwimAVHnoGK8SKAN90il6JsLiAHvyqAW99BuvBfq6Wfjqfjwpv
-         Js0I33LBn1171lD5MzASllFi7hcwvJBLG9hJOFpuTPWSxLuwQ+00VL0TlXthSuf6Cbyu
-         LStg==
-X-Forwarded-Encrypted: i=1; AJvYcCUC4z9ar7wlPzcAQqqTuSKiNzNxJho3nS1kpHNME3cF0xmfDngj/yxzHbujM1qQvNvmfWw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwvckXKivsq5zHSpBY4ia65BU0UZPPpnow46DB8+TDOEvajWYg3
-	wfoxyr/mS80uEt1wjtYjStS90RpVZA4xJckLqkZbmEEQ7GnDHhqH
-X-Gm-Gg: ASbGncs5Twws88vhM1E/eqwEUYGQ/QFzp+FqyT/9notPxDpC/6N9nOaQCmUwcCtYa2q
-	65TIPHw/KVqvF+5FPJq/XV6JCrr4JNZ5BpRdbZkADt30DmodcrWmkjHjenvUce8WkMJRlbAzV6u
-	WijAut66ivpOlc+OdvrG+s51WOEKc6lJbUK98sr5+tkrJYFef+KHecpu2ghp3sRHfaRneguMUZa
-	NIU7HCHuJDwTHM7naRPWErUq5XSIrqSG7YmeQX5BaqIhCUqT+h1NMByX9emrXo57m+Wc98AmZC3
-	7T8HPpUeqchC7nFOVqORi4H5QZ5/6N1L3uavgdBIAq7td0UHmCDvoRAr3JcXBWF3XAK/eeEx/Qw
-	=
-X-Google-Smtp-Source: AGHT+IFIZZK2IV77MjbyU2IZm1N0hFn/dD1+xJ24tuNDAdTL0nC0hD9hUMF+5H8vAYZglsJG6eko6Q==
-X-Received: by 2002:a17:907:6e8e:b0:ac7:1611:d499 with SMTP id a640c23a62f3a-ac7367829c1mr1023246666b.10.1743445079230;
-        Mon, 31 Mar 2025 11:17:59 -0700 (PDT)
-Received: from localhost (78-131-14-102.pool.digikabel.hu. [78.131.14.102])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac71922bef7sm654931466b.31.2025.03.31.11.17.58
+        bh=OMDGWr0E6E9sI6j5i4fxRQuLFE/Jyq9DFeEBS6mvZnA=;
+        b=wyE15HxenGGIK/DJPyXEwcvu6DprOI1sfKQhd0rI2B3hZmqLendC5f1uZypd8BOgBt
+         lQKpV94kKwz+3So9QMA0ciFwV4Juhm+zXWWNNjmdcAHUWGoNqpk6s82FwTU3xE1I8ogb
+         e75MsiduFT5gC+NnC+2ePK6zGfyj4Cp9Pb5mi2eKMWhok9N1AfPJlE4YvaZtQSTYLN3i
+         RCk7nZ6K/h38nuJtffAihqOHmGrUs/kMlZi+1oTFJrHgWdoL7vp0Ogiv8BzncI/LMPl6
+         c/4fXEb97Dqz0Z4AM1/N3Dv/h8O0LtWFvTllVi/zkDJTk8kt6mhGAa1TZhbsOKgwcD0W
+         tWhw==
+X-Gm-Message-State: AOJu0YwtrsbGbiOueGoP651alOj2ws1qL+x7lNuvrSq/V5pt6Crr5I57
+	ckf84uo/k87/yGTyuikvoF5soQjnJy+pnML1aPfyqUAQtOmJj+VdtC6iLQ==
+X-Gm-Gg: ASbGncuZhRIMPr3xoNu/zRQyLO4y0tI3jO0Js9xg2c1wz89xlh+V6Dc+hOBAkIpvSO3
+	VUeKhMr3EEhcpfzt4/q+W/zMYF/El1N2lVSn8UlXeGYqTDabqnNGnWnNJG50gZmIomdK27Cmz11
+	CHXMOb3tydRSP81shhZXWmWPQ2mpuTbfERYdD6IlbMlg/+HdDhN2AXeM1PSr9cSRjPDDx28oo6f
+	z1u4C8nxBxI9c5p8dEj9RDjjxosw0uhkSsFrDTnAfhVSCYhkqKhJj6IHh9EeXqgH1f2rBjApCaE
+	PNjIbYz4R91CbLCTYB6CdBBBC3S3htGUXXjBkg==
+X-Google-Smtp-Source: AGHT+IFsdYP1vGbP3F8+BsPqvMAxA3kfu+ElhMwDUlFb2eFX+ugWn+/Q6sKN0nTqs1ejSOCxRImxYg==
+X-Received: by 2002:a05:6830:2813:b0:72b:9993:118e with SMTP id 46e09a7af769-72c638169cbmr6364941a34.22.1743445247860;
+        Mon, 31 Mar 2025 11:20:47 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-602845f3c52sm1566220eaf.30.2025.03.31.11.20.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Mar 2025 11:17:58 -0700 (PDT)
-Date: Mon, 31 Mar 2025 20:17:57 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Todd Zullinger <tmz@pobox.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	git <git@vger.kernel.org>,
-	Derrick Stolee <derrickstolee@github.com>
-Subject: Re: Testsuite failure on s390x and sparc64 after 6840fe9ee2
-Message-ID: <Z+rcVY7KqEuF1wFw@szeder.dev>
-References: <89257ab82cd60d135cce02d51eacee7ec35c1c37.camel@physik.fu-berlin.de>
- <Z-R_Zmr6kxCPLm-O@teonanacatl.net>
- <Z-Zr7BZL1UGqVxKu@pks.im>
- <4276c8d0b72f11f325482756d3bc251327d0ac47.camel@physik.fu-berlin.de>
- <Z-atRMGXHilZRTEL@teonanacatl.net>
- <Z-bCNdOOLrM2Chb8@teonanacatl.net>
- <Z-qKGqpbdaW9WCrP@pks.im>
+        Mon, 31 Mar 2025 11:20:47 -0700 (PDT)
+Date: Mon, 31 Mar 2025 13:17:01 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/2] help: include SHA build options in version info
+Message-ID: <4mivlvpsppq62qrotv7dnrib3izxmhf6zlqga33dm6olvge4tz@z725ju4cshv5>
+References: <20250328170121.157563-1-jltobler@gmail.com>
+ <CAP8UFD1oYmr=2ZCOVVjk6NbSCtA1Zv+3jy26jSSwHuOfdS6BQA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,52 +73,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z-qKGqpbdaW9WCrP@pks.im>
+In-Reply-To: <CAP8UFD1oYmr=2ZCOVVjk6NbSCtA1Zv+3jy26jSSwHuOfdS6BQA@mail.gmail.com>
 
-On Mon, Mar 31, 2025 at 02:27:06PM +0200, Patrick Steinhardt wrote:
-> One thing I stumbled over: the `--min-batch-size` parameter is parsed
-> using `OPT_INTEGER()`, which expects the value pointer to point to an
-> integer. But we pass `struct backfill_context::min_batch_size`, which is
-> of type `size_t`. Maybe that's causing us to end up with an invalid
-> value?
+On 25/03/29 09:58AM, Christian Couder wrote:
+> On Fri, Mar 28, 2025 at 6:05 PM Justin Tobler <jltobler@gmail.com> wrote:
+> > Regarding "unsafe-SHA-1", I wonder if we should use a different name in
+> > the printed build options that sounds a little less scary. I was
+> > thinking maybe "fast-SHA-1" and document its meaning appropriately. I'm
+> > interested to know if anyone has thoughts on this.
+> 
+> Maybe we could use just "SHA-1" if a single algorithm is used for
+> everything, and both "SHA-1 for crypto" and "SHA-1 for non-crypto"
+> otherwise.
 
-We could teach parse-options to verify at compile time that it got a
-'value' pointer to an appropriately sized variable with a simple
-trick:
+Maybe we could leave "SHA-1:" alone and when unsafe is set use
+"non-crypto-SHA-1" instead of "unsafe-SHA-1"? It's a little wordy, but
+probably not too bad.
 
-diff --git a/parse-options.h b/parse-options.h
-index 997ffbee80..ac63f9548a 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -213,7 +213,7 @@ struct option {
- 	.type = OPTION_INTEGER, \
- 	.short_name = (s), \
- 	.long_name = (l), \
--	.value = (v), \
-+	.value = (v) + 0/(sizeof(*(v)) == sizeof(int)), \
- 	.argh = N_("n"), \
- 	.help = (h), \
- 	.flags = (f), \
+> Related to this I wonder if we should warn in some ways if a non
+> collision detection algorithm is used for crypto. For example we could
+> print "SHA-1: OpenSSL (No collision detection!!!)" instead of just
+> "SHA-1: OpenSSL". And yeah that should be documented.
 
-This bug would then cause a compiler error like this:
+Elsewhere in this thread it was suggested that we use the internal
+symbol names instead of coming up with new human readable names [1].
+I'll append this warning to the appropriate options as well though and
+document it.
 
-      CC builtin/backfill.o
-  In file included from builtin/backfill.c:7:
-  builtin/backfill.c: In function ‘cmd_backfill’:
-  ./parse-options.h:216:25: error: division by zero [-Werror=div-by-zero]
-    216 |         .value = (v) + 0/(sizeof(*v) == sizeof(int)), \
-        |                         ^
-  ./parse-options.h:272:37: note: in expansion of macro ‘OPT_INTEGER_F’
-    272 | #define OPT_INTEGER(s, l, v, h)     OPT_INTEGER_F(s, l, v, h, 0)
-        |                                     ^~~~~~~~~~~~~
-  builtin/backfill.c:126:17: note: in expansion of macro ‘OPT_INTEGER’
-    126 |                 OPT_INTEGER(0, "min-batch-size", &ctx.min_batch_size,
-        |                 ^~~~~~~~~~~
-  cc1: all warnings being treated as errors
-  make: *** [Makefile:2811: builtin/backfill.o] Error 1
+Thanks,
+-Justin
 
-Alas, the change is ugly (and we should do the same for many other
-OPT_* macros as well) and the error message is far from
-to-the-point...  Turning this into something usable would require a
-more clever trick, and that's more than I can devote to this issue.
-
+[1]: <xmqq8qoodq5u.fsf@gitster.g>
