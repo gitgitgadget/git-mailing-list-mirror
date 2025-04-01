@@ -1,89 +1,121 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from 15.mo581.mail-out.ovh.net (15.mo581.mail-out.ovh.net [87.98.180.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AD886353
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 10:55:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73891F1902
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 11:26:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=87.98.180.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743504935; cv=none; b=lag2aHCzhOX7d4Y5WCEZ5/3P6IxaqnFE87Wf6wF7TkZgPsCCbd81lHvMU+V3ECiDzsHYm4YSa3HeGMOPWM5xj7tTxwocAoATsRme31sOVqCN2P+RIzEMVt6tlYiA6pPGonIA3zv1tTm5d+uAsLm5atdIaC/a06bzWkeridF1Gg8=
+	t=1743506819; cv=none; b=pEGyWolA5+i2+DBueRLRSLz67U8Ulc/bExKUgr0PdozcsMIqDnU4JHyx6vKUNozpyBBAq3pWBDGut8fYignKdg75c5txE+oHezo075Hq4561mVY4g6ySQaNNPjQDgGtkWGsBA0moL7wazcL/iJkhIkl9YklKwyWsgsPr27B9ARI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743504935; c=relaxed/simple;
-	bh=Etdgp9v+KM+6OJncbmklPC+jDfwLuNORTI2rHqCBQFA=;
-	h=MIME-Version:Date:From:To:Message-Id:Subject:Content-Type; b=aag50MgAYHnYlT7rekvkiEV0KpRRkPUbIO+G6ZZjBth7PrFFBGaCDXWD94Aa3M5p1LQ8N8ZSd4Sr3lvaA5ClOI3CL28eWnRPrECX6RKMGFUXJ/KDG25Gqm4gXAWEs3SDWzAbC7OeJgEks4WuK0J5YDu2BKfLbzvl6wiIin1AYqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=artagnon.com; spf=pass smtp.mailfrom=artagnon.com; dkim=pass (2048-bit key) header.d=artagnon.com header.i=@artagnon.com header.b=ntCztey9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fd6gXySa; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=artagnon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=artagnon.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=artagnon.com header.i=@artagnon.com header.b="ntCztey9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fd6gXySa"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id AE7FC13844C8
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 06:55:31 -0400 (EDT)
-Received: from phl-imap-13 ([10.202.2.103])
-  by phl-compute-05.internal (MEProxy); Tue, 01 Apr 2025 06:55:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=artagnon.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1743504931; x=1743591331; bh=Etdgp9v+KM
-	+6OJncbmklPC+jDfwLuNORTI2rHqCBQFA=; b=ntCztey9Q+WfKTCFcUGcRrwjPM
-	w7GfIjFHxOOK+tUG3OsPM9wKlQipuP0mxon8LYNgOV4zFfOXTu69OBRc+U/JJ4Ez
-	P2iZISfWCS0ZxUC5ubj+afEAKWu8nUAradFIg+htWhrqgsNKXkiOwmIpsfItpGp3
-	Xkb0ODNtNJVWgA4avKsGSLR8fR6Cjp0bh3IdDVZlRB5g9lYIFNobjtWbwhwlp3k2
-	ApuJoyB/H+8juvT1BWWockHMrUztr+ea+DyjCD4jhShwZCeDGacGsmGWuBhG7y6N
-	9sNA8tHuMwU+thQGsbFEPygX/hKdNP0hCcEU+dCMT+TwUmH3dw15605Xdqhg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743504931; x=1743591331; bh=Etdgp9v+KM+6OJncbmklPC+jDfwLuNORTI2
-	rHqCBQFA=; b=fd6gXySaHy9mIJn33bg/5WavZX6+oJ+NUI9/RV0mOn9B5jaX43S
-	Re3LePSr0+6qCc/371kpZd3nvWqlfa2rGLQD/F/77bwi1bljEMjmCve386GsECae
-	4K1pW+0xBW0izuZkA3CMnhxPu+mJcD7S0kPSO2yV0fsDqTuJwahqtWhoj34sqtyA
-	GyrPsTeWAdeF8xHTFsGWDB1Jx5qvf9v/g69AtBhYr5P+DQf4HRN19wylKlcUZ1BD
-	oOrCcDzGpyLrtvVIuDLA8/sxnZlSeaj+BGovz23ETTQloT2QovEkQ0R058e4qbgr
-	urPxgwPexO+ZnxxUMCBuBznE+WI8MqWTVRg==
-X-ME-Sender: <xms:I8brZxy7nW0-Op5gUVThpKMA70Qc1yp0AYl3pWZs357YLbOIW_-ShQ>
-    <xme:I8brZxTvCXC-NZjGzFu6SC6wbvgLolvSaSrGdCeV3vJwRq3hi1xdDxgz-ZTDtcx3W
-    yHgaCDzBnDppRMBKyE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukedviedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefogg
-    ffhffvkffutgfgsehtjeertdertddtnecuhfhrohhmpedftfgrmhhkuhhmrghrucftrghm
-    rggthhgrnhgurhgrfdcuoehrsegrrhhtrghgnhhonhdrtghomheqnecuggftrfgrthhtvg
-    hrnhepgeejleelveeftddvfeeuhfeghfdujeelfeeuudeujeeuieeiveeggeehgfdtvdek
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprhesrg
-    hrthgrghhnohhnrdgtohhmpdhnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:I8brZ7Ub11ZCeDfkiPGTY_3TMglcBcSZ-SKkN92pQXXoP0Pwk3UnLA>
-    <xmx:I8brZzjWOgIAHqMiICsXt9q2EfF_sMx2byQwXNWd_ktoUWfkAlFjWA>
-    <xmx:I8brZzBKZxfUElpkkx0pr5ap5SY0BpI5XhBiZcWm9GZBVPhyXQfCZw>
-    <xmx:I8brZ8JSyEiMMmkIpEUDwkkt_bC6fEka2-oqVv76NHIDS5S1lUBogg>
-    <xmx:I8brZ2oaZmA_p_wW2tFUQWJ0ok7c7xdXwCkokQJ30zUtEVnUr8Ci-eE7>
-Feedback-ID: ifc014702:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 658E21F00073; Tue,  1 Apr 2025 06:55:31 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1743506819; c=relaxed/simple;
+	bh=Tl/xrvFsl3tbQDPx2x4hA5KeqmpqAVECFaaI4ov0QkU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sknKyzOt2eMyOYCM1FMOpsIUb7dn2HYTGdzAmsLcp+WxlSjwrZDSVZlGVzfMkSRNwTBmTM1PngD5UZajd6TinOOy+tJKRujxnjracIkI3m1+aZLtlDLcNuGwMU2gytMkiawAjjXEqiPU7jMHrJi3a2JGwFykp7hDNVu5KBdTyOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=free.fr; spf=fail smtp.mailfrom=free.fr; arc=none smtp.client-ip=87.98.180.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=free.fr
+Received: from director10.ghost.mail-out.ovh.net (unknown [10.109.140.88])
+	by mo581.mail-out.ovh.net (Postfix) with ESMTP id 4ZRld218G0z1QTY
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 11:09:26 +0000 (UTC)
+Received: from ghost-submission-5b5ff79f4f-ln7vr (unknown [10.110.113.149])
+	by director10.ghost.mail-out.ovh.net (Postfix) with ESMTPS id A83921FECD;
+	Tue,  1 Apr 2025 11:09:25 +0000 (UTC)
+Received: from scantech.com ([37.59.142.104])
+	by ghost-submission-5b5ff79f4f-ln7vr with ESMTPSA
+	id deUOI2XJ62cq+gYAQfn7Mg
+	(envelope-from <jn.avila@free.fr>); Tue, 01 Apr 2025 11:09:25 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-104R005f46b71ef-d320-4cf6-845f-98c7d5fd312b,
+                    6DECD37ECDB00104AC403732D8C6E2B6AAE8D13B) smtp.auth=jean-noel.avila@scantech.com
+X-OVh-ClientIp:141.255.129.53
+From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+To: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Johannes Sixt <j6t@kdbg.org>,
+	git@vger.kernel.org
+Cc: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: [PATCH] doc: fix asciidoctor synopsis processing of triple-dots
+Date: Tue,  1 Apr 2025 13:08:11 +0200
+Message-ID: <20250401110811.117851-1-jn.avila@free.fr>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <Z+rUsCW0zEb8kAK8@szeder.dev>
+References: <Z+rUsCW0zEb8kAK8@szeder.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 01 Apr 2025 11:54:15 +0100
-From: "Ramkumar Ramachandra" <r@artagnon.com>
-To: "Git List" <git@vger.kernel.org>
-Message-Id: <4f142817-49a7-4079-b7b1-e54de36a6242@app.fastmail.com>
-Subject: [ITCH] Redundant rebuilds when rebasing outdated branch
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 14512286850094147367
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukedviedvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpeflvggrnhdqpfhotohlucetvhhilhgruceojhhnrdgrvhhilhgrsehfrhgvvgdrfhhrqeenucggtffrrghtthgvrhhnpeelieeujeelgffhlefgleelleffudeggfefgfdtteeuffekvdehkefhvefggffhieenucffohhmrghinheprhgsrdhinhdplhhinhgvshdrmhgrphenucfkphepuddvjedrtddrtddruddpudeguddrvdehhedruddvledrheefpdefjedrheelrddugedvrddutdegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehjnhdrrghvihhlrgesfhhrvggvrdhfrhdpnhgspghrtghpthhtohepuddprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdfovfetjfhoshhtpehmohehkedumgdpmhhouggvpehsmhhtphhouhht
 
-Hi,
+The processing of triple dot notation is tricky because it can be
+mis-interpreted as an ellipsis.
 
-I've noticed a common pattern in my everyday work, and thought I should ask if I'm doing something stupid. I work on upstream LLVM, and develop patches on different branches based off 'main'. Due to the nature of our collaboration, I often need to update 'main' and rebase patches, when some patches land. As a consequence, different patches are based on different points of 'main', and I find myself checking out an outdated branch, rebasing it on top of 'main' (which often doesn't result in conflicts), and this triggers a rebuild because the timestamps changed. Since LLVM is a huge project, I use ccache to speed up my builds, but this doesn't solve the problem of redundant rebuilds, since CMake often needs to be reconfigured, and several built artifacts are generated using home-grown tools.
+Another issue is that the formatting of synopsis paragraph in
+Asciidoctor spits out another asciidoc formatted text where verbatim
+text formatted with backquotes must have surrounding separators in
+order to be properly detected, even if they are sticking to another
+text.
 
-I think it would be preferable to have something like 'git rebase-checkout', which in principle, creates a new branch based off 'main', cherry-picks commits off the outdated branch, and renames the fresh branch into the outdated branch's name. It should be possible to script this using the existing plumbing, but I was wondering if something like this would be useful to have in core git?
+The special processing of the ellipsis is now complete and takes into
+account the case of `git-mv <source>... <dest>`
 
-Thanks.
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+---
+ Documentation/asciidoctor-extensions.rb.in | 8 +++++---
+ Documentation/diff-generate-patch.adoc     | 2 +-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-Ram
+diff --git a/Documentation/asciidoctor-extensions.rb.in b/Documentation/asciidoctor-extensions.rb.in
+index 2494f17a51..0ded90c28b 100644
+--- a/Documentation/asciidoctor-extensions.rb.in
++++ b/Documentation/asciidoctor-extensions.rb.in
+@@ -49,7 +49,7 @@ module Git
+ 
+       def process parent, reader, attrs
+         outlines = reader.lines.map do |l|
+-          l.gsub(/(\.\.\.?)([^\]$.])/, '`\1`\2')
++          l.gsub(/(\.\.\.?)([^\]$\. ])/, '{empty}`\1`{empty}\2')
+            .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=~@,/_^\$]+)}, '\1{empty}`\2`{empty}')
+            .gsub(/(<[-a-zA-Z0-9.]+>)/, '__\\1__')
+            .gsub(']', ']{empty}')
+@@ -72,6 +72,7 @@ module Git
+           %(<inlineequation><alt><![CDATA[#{equation = node.text}]]></alt><mathphrase><![CDATA[#{equation}]]></mathphrase></inlineequation>)
+         elsif type == :monospaced
+           node.text.gsub(/(\.\.\.?)([^\]$.])/, '<literal>\1</literal>\2')
++              .gsub(/^\.\.\.?$/, '<literal>\0</literal>\2')
+               .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<literal>\2</literal>')
+               .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<emphasis>\1</emphasis>')
+         else
+@@ -100,8 +101,9 @@ module Git
+       def convert_inline_quoted node
+         if node.type == :monospaced
+           node.text.gsub(/(\.\.\.?)([^\]$.])/, '<code>\1</code>\2')
+-              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<code>\2</code>')
+-              .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<em>\1</em>')
++            .gsub(/^\.\.\.?$/, '<code>\0</code>')
++            .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<code>\2</code>')
++            .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<em>\1</em>')
+ 
+         else
+           open, close, tag = QUOTE_TAGS[node.type]
+diff --git a/Documentation/diff-generate-patch.adoc b/Documentation/diff-generate-patch.adoc
+index e5c813c96f..7b6cdd1980 100644
+--- a/Documentation/diff-generate-patch.adoc
++++ b/Documentation/diff-generate-patch.adoc
+@@ -138,7 +138,7 @@ or like this (when the `--cc` option is used):
+ +
+ [synopsis]
+ index <hash>,<hash>..<hash>
+-mode <mode>,<mode>`..`<mode>
++mode <mode>,<mode>..<mode>
+ new file mode <mode>
+ deleted file mode <mode>,<mode>
+ +
+-- 
+2.49.0
+
