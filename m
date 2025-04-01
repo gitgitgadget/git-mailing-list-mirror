@@ -1,42 +1,42 @@
-Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
+Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0159C1F152B
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 12:14:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2924C202965
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 12:17:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743509654; cv=none; b=W8jOepKXdGZlbrpgvbH4zokxuKfC8PFhJr0dhdnuKkUDEjxc6TTpMWAh5+EHjrbiGHpp8ueCD44SCubUrOS8jwu4hnJ6bI/7sIB29GY6WjKEc6VThWg1MphC/pGe6Sio7XGTKyfkxwxbtDlypoLPTWEr6X9u3gMhTv/NqPY3CFc=
+	t=1743509837; cv=none; b=KCH40V59z41HP3/i3aj3Ae6AEIMi0f4nt5FQC/YgNJg+tsak62KKZcqJ8OTpK5PuO7S2Vk6yVecfWBo9Mt0o4PXryxbPW82Hy692VccU9xQ0Jote9bBI/XTUBsJ0vSUf70Y/5YXbVZAsXK9zd0BqbLauXqxrkyS5YSXBkNOMtJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743509654; c=relaxed/simple;
-	bh=3gXWIvhUtU4xh0QnSx0Zsa9XCiMDSgZe4f/gauxR0J4=;
+	s=arc-20240116; t=1743509837; c=relaxed/simple;
+	bh=72m2G+IPDYbNyZ5uTyzLinIleK5AS7FpT0upJvwGzas=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OVZJ9wjtcunVM+rn4Sd1VUz56sF4Q3K+W5ZH3GoZ36UmTRw8qWF99pP+fl1R96udc+lfupp27FxD0387TEozPIKHkp2m8caq9znz18IFzHcRD+bCPM+06pQc2Im1mgEIYSjGIqsZeP7U3FcBX8FsFnVzw6glXh/SDKwPL9T6o8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=JX7dhwli; arc=none smtp.client-ip=95.215.58.176
+	 MIME-Version:Content-Type; b=FXRXeaX9PHtYItNBK4fKfp7wfh6mkrSEqLv3iPx9sBDmNBpEDR8lxWn/66f+7ASNqse015F5Pfe2Os70OJ/twAHHCJURTPhWYQUIalozyGRTswqhNqnoSxNLbzWOL1RHnGMoTJwD8meW3OCN4DFc9LdcSOATSKvA5ZyLfMd1Rn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=v0nXTIcf; arc=none smtp.client-ip=91.218.175.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="JX7dhwli"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="v0nXTIcf"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1743509649;
+	t=1743509833;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=hMY15iWEyRlm11g70ERq5MK+P4MiOI9+2nSfNWVeq2w=;
-	b=JX7dhwliJqqC8dejXUkKkuEZVLtKhbrW/1Qp7Bvrh2L5C0BX+vf5b3dTgc7+97NaXGcNiX
-	jUm8yvRlQ2+U+rWOLrAbKvd9v2KD6PLOTM5I4CkUFdKa1Cv2PQD6XuqTPGB4AsL3AaKYWl
-	w2LmOjbItxulQ0jiLgepTHWarmZ68SM=
+	bh=VQyvZl5GPcVG/n1iuJBMvj0M3sI44m3KRatohjEghis=;
+	b=v0nXTIcfs7Lixb46gBWv+5TKotB6h7WrFQu6XghhtpUgOjfKHG+Qzx2rBPeKwBRQ0aodch
+	ThmKqNSArrqxklmolnQ/xK2xHpaZ+knE3YgdUpC3MxTRssRyqcXViAPATWEHaxmbY/BLjL
+	ccMvdU/NS/JzqD1/OfoiPEzFMFFmvss=
 From: Toon Claes <toon@iotcl.com>
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, Taylor Blau <me@ttaylorr.com>,
  Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 09/10] builtin/cat-file: deduplicate logic to iterate
- over all objects
-In-Reply-To: <20250327-pks-cat-file-object-type-filter-v2-9-4bbc7085d7c5@pks.im>
+Subject: Re: [PATCH v2 06/10] pack-bitmap: allow passing payloads to
+ `show_reachable_fn()`
+In-Reply-To: <20250327-pks-cat-file-object-type-filter-v2-6-4bbc7085d7c5@pks.im>
 References: <20250327-pks-cat-file-object-type-filter-v2-0-4bbc7085d7c5@pks.im>
- <20250327-pks-cat-file-object-type-filter-v2-9-4bbc7085d7c5@pks.im>
-Date: Tue, 01 Apr 2025 14:13:57 +0200
-Message-ID: <87jz84f5a2.fsf@iotcl.com>
+ <20250327-pks-cat-file-object-type-filter-v2-6-4bbc7085d7c5@pks.im>
+Date: Tue, 01 Apr 2025 14:17:03 +0200
+Message-ID: <87h638f54w.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,115 +48,74 @@ X-Migadu-Flow: FLOW_OUT
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Pull out a common function that allows us to iterate over all objects in
-> a repository. Right now the logic is trivial and would only require two
-> function calls, making this refactoring a bit pointless. But in the next
-> commit we will iterate on this logic to make use of bitmaps, so this is
-> about to become a bit more complex.
+> The `show_reachable_fn` callback is used by a couple of functions to
+> present reachable objects to the caller. The function does not provide a
+> way for the caller to pass a payload though, which is functionality that
+> we'll require in a subsequent commit.
+>
+> Change the callback type to accept a payload and adapt all callsites
+> accordingly.
 >
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  builtin/cat-file.c | 85 ++++++++++++++++++++++++++++++------------------------
->  1 file changed, 48 insertions(+), 37 deletions(-)
+>  builtin/pack-objects.c |  3 ++-
+>  builtin/rev-list.c     |  3 ++-
+>  pack-bitmap.c          | 15 ++++++++-------
+>  pack-bitmap.h          |  3 ++-
+>  reachable.c            |  3 ++-
+>  5 files changed, 16 insertions(+), 11 deletions(-)
 >
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 430320adfe9..6f5dbc821a2 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -622,25 +622,18 @@ static int batch_object_cb(const struct object_id *oid, void *vdata)
->  	return 0;
->  }
->  
-> -static int collect_loose_object(const struct object_id *oid,
-> -				const char *path UNUSED,
-> -				void *data)
-> -{
-> -	oid_array_append(data, oid);
-> -	return 0;
-> -}
-> -
-> -static int collect_packed_object(const struct object_id *oid,
-> -				 struct packed_git *pack UNUSED,
-> -				 uint32_t pos UNUSED,
-> -				 void *data)
-> +static int collect_object(const struct object_id *oid,
-> +			  struct packed_git *pack UNUSED,
-> +			  off_t offset UNUSED,
-> +			  void *data)
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index a7e4bb79049..38784613fc0 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1736,7 +1736,8 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
+>  static int add_object_entry_from_bitmap(const struct object_id *oid,
+>  					enum object_type type,
+>  					int flags UNUSED, uint32_t name_hash,
+> -					struct packed_git *pack, off_t offset)
+> +					struct packed_git *pack, off_t offset,
+> +					void *payload UNUSED)
 >  {
->  	oid_array_append(data, oid);
->  	return 0;
->  }
+>  	display_progress(progress_state, ++nr_seen);
 >  
->  static int batch_unordered_object(const struct object_id *oid,
-> -				  struct packed_git *pack, off_t offset,
-> +				  struct packed_git *pack,
-> +				  off_t offset,
->  				  void *vdata)
+> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+> index bb26bee0d45..1100dd2abe7 100644
+> --- a/builtin/rev-list.c
+> +++ b/builtin/rev-list.c
+> @@ -429,7 +429,8 @@ static int show_object_fast(
+>  	int exclude UNUSED,
+>  	uint32_t name_hash UNUSED,
+>  	struct packed_git *found_pack UNUSED,
+> -	off_t found_offset UNUSED)
+> +	off_t found_offset UNUSED,
+> +	void *payload UNUSED)
 >  {
->  	struct object_cb_data *data = vdata;
-> @@ -654,23 +647,6 @@ static int batch_unordered_object(const struct object_id *oid,
->  	return 0;
+>  	fprintf(stdout, "%s\n", oid_to_hex(oid));
+>  	return 1;
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 6f7fd94c36f..d192fb87da9 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -1625,7 +1625,7 @@ static void show_extended_objects(struct bitmap_index *bitmap_git,
+>  		    (obj->type == OBJ_TAG && !revs->tag_objects))
+>  			continue;
+>  
+> -		show_reach(&obj->oid, obj->type, 0, eindex->hashes[i], NULL, 0);
+> +		show_reach(&obj->oid, obj->type, 0, eindex->hashes[i], NULL, 0, NULL);
+>  	}
 >  }
 >  
-> -static int batch_unordered_loose(const struct object_id *oid,
-> -				 const char *path UNUSED,
-> -				 void *data)
-> -{
-> -	return batch_unordered_object(oid, NULL, 0, data);
-> -}
-> -
-> -static int batch_unordered_packed(const struct object_id *oid,
-> -				  struct packed_git *pack,
-> -				  uint32_t pos,
-> -				  void *data)
-> -{
-> -	return batch_unordered_object(oid, pack,
-> -				      nth_packed_object_offset(pack, pos),
-> -				      data);
-> -}
-> -
->  typedef void (*parse_cmd_fn_t)(struct batch_options *, const char *,
->  			       struct strbuf *, struct expand_data *);
->  
-> @@ -803,6 +779,45 @@ static void batch_objects_command(struct batch_options *opt,
->  
->  #define DEFAULT_FORMAT "%(objectname) %(objecttype) %(objectsize)"
->  
-> +typedef int (*for_each_object_fn)(const struct object_id *oid, struct packed_git *pack,
-> +				  off_t offset, void *data);
-> +
-> +struct for_each_object_payload {
-> +	for_each_object_fn callback;
-> +	void *payload;
-> +};
-> +
-> +static int batch_one_object_loose(const struct object_id *oid,
-> +				  const char *path UNUSED,
-> +				  void *_payload)
-> +{
-> +	struct for_each_object_payload *payload = _payload;
-> +	return payload->callback(oid, NULL, 0, payload->payload);
-> +}
-> +
-> +static int batch_one_object_packed(const struct object_id *oid,
-> +				   struct packed_git *pack,
-> +				   uint32_t pos,
-> +				   void *_payload)
-> +{
-> +	struct for_each_object_payload *payload = _payload;
-> +	return payload->callback(oid, pack, nth_packed_object_offset(pack, pos),
-> +				 payload->payload);
-> +}
-> +
-> +static void batch_each_object(for_each_object_fn callback,
-> +			      unsigned flags,
-> +			      void *_payload)
+> @@ -1663,7 +1663,8 @@ static void init_type_iterator(struct ewah_or_iterator *it,
+>  static void show_objects_for_type(
+>  	struct bitmap_index *bitmap_git,
+>  	enum object_type object_type,
+> -	show_reachable_fn show_reach)
+> +	show_reachable_fn show_reach,
 
-Why is this `_payload` typeless? I see it only getting passed in
-`struct object_cb_data`, is there a reason to hide this type? With
-payload being wrapped in payload I think it's beneficial to keep type
-info where possible.
+What would you think about adding the `_fn` to `show_reach`? Because the
+function is passed on to `show_objects_for_type()`, I think it improves
+the readability if it's called `show_reach_fn` or somethin?g
 
 -- 
 Toon
