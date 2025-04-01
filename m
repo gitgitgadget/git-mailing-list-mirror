@@ -1,159 +1,97 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C6920E70C
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 19:04:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50421E1A32
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 20:39:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743534293; cv=none; b=WBVFQGc0J8H904wuHoo7Ndi8LH/PLkhndKzCD/5Zq2A/aEFPwzCxkPr8Sr4fIHMdkt+7OurXoyzoAHOaIZoGj0i27WLI734Ya0NYZlOBC5V7KiYN0mfU9J/LuxwlWPy9EF7UBHY8J364sgMV+xjn75oxJ+CPFu1Ejb0kJlcOFtk=
+	t=1743539949; cv=none; b=N84IrjeaeQIIsv5N6iykGzPJ05Pr7R8C1tPdx8HxQ2hJE37j6C2m0v9PECdLIC7kFh+6/wdH9dLR68Ij/Vy9wZtBN9E9SmMqFwh231L4KxF8pYjMNUWYWEcAkGjz7FsF69vvk8fNUCTRQN8UdqIoRJdIL13Uns8RnQapeyb0zdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743534293; c=relaxed/simple;
-	bh=FWrabmpkxlqnljI5gvSiBYxzomujeWUGCKz6xykWmg4=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=k9bOWNQlY4QDIVZN3WaF4SPrZO18E8wkDKvD/sgda0Ja/26aEtOWKLF9CcC3Q5mwG4ZRqMyk4zeTL2++Tw6riECco+V/wGufhLer3VjGOvANvVNXlCDdSAzdkuCwxL2rtkmf30aIP7ciwLqHBGGaX1nZnDGtXkYBGKxHtjzF45k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=otNmcyXZ; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1743539949; c=relaxed/simple;
+	bh=gEqfXzKZU9DGkAzqM6R+MkXiV6w3youQIl43NgteU5I=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=sXAd2ESU6yMIOp3uFPNE6kmI5HDxIaVZxJpUgb9WoJYbgEtJQ1Sdo4MLjX+zO+Abv+Ey5zAmP07VzEsMt9RwqquLHjEb1ESQ8NT/EHKWMWe6Ys0mk7A7wA0fxWQ8F4dwwhxOGc5FniGz26xG60pVE2vPXcrrzIwIoozeWL9QtFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KQ0BT3gf; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="otNmcyXZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1743534284; x=1744139084;
-	i=johannes.schindelin@gmx.de;
-	bh=ztcnDUrJ9pr+k3xjv3Su17Qqiba08ikRSftvgognhCw=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=otNmcyXZ3aC6cnn62jvCHk4yfWKAVBhU80CJQMM22Ab3R7XRLkjq1IdwYyTvLR92
-	 ceQFU7MZHzzaQmyA1PsBSK77QZHxFz5/hTCsXrgMOzCMrK2dzO+STT5uw61mj2tzk
-	 rBfM3qy28Wz1+bgObZ/7zuzPgN85FpVHLaw7wn3l6nSw0/Y5zh3yDseTqV5fLrQHB
-	 4i+D5yxEoUbkrAYgMTBqQyk5ahd6GReEkNPyhKc5eKHTWIAAari3bI7T/mshRav8M
-	 UCEZQsji/RlWuo43FAW0LZAeDrOrPJlGxzzZOxOJI28uZ9oTg1b4QJ2yElHZe+kHM
-	 ioxYbK2AqmO3WBnLMQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mi2Nv-1tVHyv2x73-00pI50; Tue, 01
- Apr 2025 21:04:44 +0200
-Date: Tue, 1 Apr 2025 21:04:44 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>, 
-    Karthik Nayak <karthik.188@gmail.com>, 
-    Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 17/20] t0021: refactor `generate_random_characters()`
- to not depend on Perl
-In-Reply-To: <20250327-b4-pks-t-perlless-v3-17-b436de9da1b8@pks.im>
-Message-ID: <92fd1e8b-4790-0c81-409a-be81aed9f290@gmx.de>
-References: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im> <20250327-b4-pks-t-perlless-v3-17-b436de9da1b8@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KQ0BT3gf"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ac2902f7c2aso1036309166b.1
+        for <git@vger.kernel.org>; Tue, 01 Apr 2025 13:39:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743539945; x=1744144745; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jc6r/Ph3x3xq3bTKyzfKKOODVgyzB+r7qj8zog9Ih+c=;
+        b=KQ0BT3gf59mstIAHZt9YbQ+7wT6lK79t8hzi2znop9gJpK0QEgfn47mQi3Whh4gFc+
+         rYyHDRychYyJhzPaG2zVjHvCKTgOWXATqkFdIoP0LBmZYb1UgbtDmlzJBab7azuCJpKI
+         CvfFKrcLDn2+qZMZr+tBmj24AZwiLPxCaVwWJmWRe8R4H7wqTSEcvPUhdDHkltWrZnUc
+         5/q82jnDVz4/dS6IZ8+PwPXmkelgw6cd64vpwTNJBwzKgAWZYwBOpe2sqh7ZZstVgCey
+         xm8hjE++i5hrwWzP+Bo69OX2fh0FqHgR9zd4IrVL7vf8Vqt4laTFx103nQoIlFIh/6Bz
+         kmNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743539945; x=1744144745;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jc6r/Ph3x3xq3bTKyzfKKOODVgyzB+r7qj8zog9Ih+c=;
+        b=ViZXKfrhMiWy2ZTFA/zt6qnRKueng8rQwZM3IImo867R31toKNaq5M+2GRhvnNKAIt
+         iqfxtmBjVgVuxIUVLtvVW9q3M5NSZ+ABIUvRCXVygCkmQQCgY7hK3bt0qiOqWnhESgab
+         VK+fxyrC77Fg6KCjl3dYkY8iwNjs0xD9P3L/Rea/s2KGggpPDyNeJI3gX0iX5tfvjrTb
+         VJnZovfL2UgfZlqmVpjWkbtip18Vq3ephlZPQrQinT6NjeH6HmINF6TraLt7lgHliN+/
+         lbiNR3mXUgMoDcfw4T33H2O/lihtICqAOnHZTims39YTltQTAgfCzg2sWlX+n9c5SObV
+         6rGw==
+X-Gm-Message-State: AOJu0Ywv+hQDNHDVLDF7gZIyQNqv0D8K5q8OyPX+wxE/9fwXJeqW6hhT
+	eKg7nQKMGJ+OZmh3r1ePI2J+jAsJkzCKHpAu9nOA/yHb0chgr7encvn3Zb4+ZwNJjcyxxPuczuU
+	ey1id+gku67KMAlwlzry3C1UxS5Uju70O
+X-Gm-Gg: ASbGnctAyC78bN1JPe80Ld1Gxko4IneWmUAAhFVDZHgdbW10eh37cW92ZSiNyh4x2Dz
+	In4x9SzyrJ04KWDKcS1x0Qzk/bLcBWNMRZrfWPzcoltDqavaXk/vtGc308g9pOoWPVZF7KwWWRg
+	NK3m9g9PjuVQPMF7N+Lnq3JgXbdwuU
+X-Google-Smtp-Source: AGHT+IGggkuLGvqP4J84yQlsUSgEZ2EZMlSggbF6467GDcGbl7yOs/7tNDTHHAxe2JU2D3ikj0mhX7saPv6O7qRemtQ=
+X-Received: by 2002:a17:907:608d:b0:ac3:3cff:268 with SMTP id
+ a640c23a62f3a-ac738a8c4camr1281187766b.30.1743539944840; Tue, 01 Apr 2025
+ 13:39:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:W5gZFHMvyRHJG4cHfOp9QTjsdiM2SltlcCkqxBpx9SJ+G5cZHOh
- +GlmzZZc6jGGQE1C0YYack+JaTPvfQVy4H1oFIOHXZrXbehTWLBLUasqIwLAjImEAb84TWQ
- R4AxSL1MPPT3fd23dVITaBBeprHj9Aq/wmgRs2e5cgYb2TvFKJ4z47JQd47lEt/DNU4ggwW
- fCbNOpGIe51BsXOhBOZ9A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:PZ8/v2M/OEs=;v3XDKDQyj4vjqF3hUzDHfnNdK36
- jYTZkxOgUrUvSU6Qt5u0BtR7eyDtwsTqKuyFoIwGcR/eoJyovIe9EdrGXTMB9VC5aTWdtgyoa
- ZY2frEcre3Z2uVq079LQiky7V8tk3DW0pP1S1cVylqgf8HAGlQD6yVKSsSPRapSCdS7XD3K5P
- +wmAHPVxpkMiPMwNA9k1Dx39tCjfI/kShto656HHmbNV7zHf7qtyJNbZjwGCDbDC9L4WTgQV8
- a9Li9PDbmLAuDg6mxidlD+A+KV9yvqHZeXvpP9uuzTfahpqs/fO+Z9dtcYs73Uoo/eyAjB9QL
- PrGoMSj4TNAdUw0ELU8MwJwj10kxh7tV3iJ5u32+UUcIRir5afBO5qXIDY1jS7hDgKS49cSCL
- wepUvfTN1lOmchP4Bd2ow/2pPONUPmGYsc+JUyEfawD9lba1gj/iInUFx5QpVLGcqgh2hA3xO
- K777nnsfgIgInsxX00tFxkzCmhtW0mOiHudbiQTQW7jZP0nN/eIPLT5PTGn7KoQ4U5cPrG9Em
- o2cbWXIGXXBhxb96D0PLkJDrJ12jm6YHQFy4hGuS/l2/7dCi5UToiGCOfKmXctTC0l4ZNHVzl
- 2F439frnn+PseDVUfcEBSdL395fI+o3NeL/LX/rXMNdvwjw411s+Ot8LCX8c6Z7EuL+LY2NXr
- +g69jmrYVVrPyEKRHP/Vcs7VU5p35X+6pG/ouWWJ4EOGSJPmR66ysx6MQk8ZynqF/cbA68uED
- 6eBcsRQo3sZICSBwgLQvEKWkmcsMEEPVJUgqE/VmubmgdlDb4Q979b6ETdogHSc7j7YZq2Fyh
- Ew7M9d1hVN5DWalBKcfHCX+3MSZu9J1tXwgEmQMGvhy/njfORrzDJA9F+EtUVSECVLlPfpD2C
- 4IZWeXme3QAAzo0V7WGOU8z2Dt+PnXtLkpNA4UZoeQSnBl8Fp8I5EA1rjxkFGrqgylMJYVNI7
- IRbSMO1EH8dkiKyvTOVNAfRNghRTjjUDbDmQQin+0bnwdWU00drDuhgowB0wTFMujdx0K396a
- G1zZnllb0H3NnOz5mz3K0txIRdlTXFDh9HPOwjsOMJVQToGaVTJ5CgoVvI8TZ89p5+RYf7KjD
- 48pdxQTCbEBfEANnNpUM4Z0XJ1PwDZS7f0h01NDUxwicSJgo5GkpWqnPtwucOocjtHjuOV1WI
- qsujhCGH7c3Ff6IcdrfE9K8T3ueisP2K11PmlqGwK4QHHvw6NgG1tHn0rw1hW3SaN429yXYbl
- DLotIKfaoNOHmPqmPciugjdsTJNF6S8i0Gh7LSP+MJdgMmE+on6azwDFcYOECB55/irAdhgl4
- c0mGw2juvc1WdY94BQ1U5FBlDCf+dI9L+Ukm6A0/ZDoV+rzN0+9+ve79TYzfspDswKCvG8DKn
- j/rV1GQF5dmJ/pv0UPBx0H3OlOI/dFdoJjQ2jdxCuQ3b1gkk6c9OGuS8626TssAA3FTk3NZdA
- kRCNcWw9enuLfdnd2kumqjQSRgXUItk2KeiLTJWivSh47+7nF
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 1 Apr 2025 22:38:52 +0200
+X-Gm-Features: AQ5f1JoPR9tM3LEIYlzQL48GrzQ67Qs2afkx672rIqMsJzsc0W89BbgdGCGxWkU
+Message-ID: <CAP8UFD0FcsTm70vDrvvOzDuQDEp-N3Sp1PFkP6kLrvxX2XJyXA@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 121
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Elijah Newren <newren@gmail.com>, 
+	Bruno Brito <bruno@git-tower.com>, Luca Milanesio <luca.milanesio@gmail.com>, 
+	Philip Oakley <philipoakley@iee.org>, Andrew Ardill <andrew.ardill@gmail.com>, 
+	David Pursehouse <dpursehouse@collab.net>, Jeff King <peff@peff.net>, 
+	Matthieu Moy <git@matthieu-moy.fr>, Lars Schneider <larsxschneider@gmail.com>, 
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>, Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>, 
+	Nicola Paolucci <durden@gmail.com>, David Aguilar <davvid@gmail.com>, 
+	Mirth Hickford <mirth.hickford@gmail.com>, Seyi Chamber <kuforiji98@gmail.com>, 
+	Usman Akinyemi <usmanakinyemi202@gmail.com>, Peter Krefting <peter@softwolves.pp.se>, lwn@lwn.net
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Patrick,
+Hi everyone,
 
-On Thu, 27 Mar 2025, Patrick Steinhardt wrote:
+The 121st edition of Git Rev News is now published:
 
-> The `generate_random_characters()` helper function generates N
-> random characters in the range 'a-z' and writes them into a file. The
-> logic currently uses Perl, but it can be adapted rather easily by:
->
->   - Making `test-tool genrandom` generate an infinite stream.
->
->   - Using `tr -dc` to strip all characters which aren't in the range of
->     'a-z'.
->
->   - Using `test_copy_bytes()` to copy the first N bytes.
+  https://git.github.io/rev_news/2025/03/31/edition-121/
 
-It would be conceptually more elegant to teach `genrandom` to optionally
-output only lower-case letters. But that would be admittedly result in a
-larger patch, therefore I am okay with keeping the patch as-is.
+Thanks a lot to Peter Krefting, Bruno Brito, Daniele Sassoli, Toon
+Claes and =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec who helped this month!
 
-Ciao,
-Johannes
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
 
->
-> This allows us to drop the PERL_TEST_HELPERS prerequisite.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  t/t0021-conversion.sh | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
->
-> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-> index 4a892a91780..bf10d253ec4 100755
-> --- a/t/t0021-conversion.sh
-> +++ b/t/t0021-conversion.sh
-> @@ -20,8 +20,7 @@ EOF
->  generate_random_characters () {
->  	LEN=3D$1
->  	NAME=3D$2
-> -	test-tool genrandom some-seed $LEN |
-> -		perl -pe "s/./chr((ord($&) % 26) + ord('a'))/sge" >"$TEST_ROOT/$NAME"
-> +	test-tool genrandom some-seed | tr -dc 'a-z' | test_copy_bytes "$LEN" =
->"$TEST_ROOT/$NAME"
->  }
->
->  filter_git () {
-> @@ -619,7 +618,7 @@ test_expect_success 'required process filter should =
-be used only for "clean" ope
->  	)
->  '
->
-> -test_expect_success PERL_TEST_HELPERS 'required process filter should p=
-rocess multiple packets' '
-> +test_expect_success 'required process filter should process multiple pa=
-ckets' '
->  	test_config_global filter.protocol.process "test-tool rot13-filter --l=
-og=3Ddebug.log clean smudge" &&
->  	test_config_global filter.protocol.required true &&
->
-> @@ -684,7 +683,7 @@ test_expect_success PERL_TEST_HELPERS 'required proc=
-ess filter should process mu
->  	)
->  '
->
-> -test_expect_success PERL_TEST_HELPERS 'required process filter with cle=
-an error should fail' '
-> +test_expect_success 'required process filter with clean error should fa=
-il' '
->  	test_config_global filter.protocol.process "test-tool rot13-filter --l=
-og=3Ddebug.log clean smudge" &&
->  	test_config_global filter.protocol.required true &&
->  	rm -rf repo &&
->
-> --
-> 2.49.0.472.ge94155a9ec.dirty
->
->
+PS: An issue for the next edition is already opened and contributions
+are welcome:
+
+  https://github.com/git/git.github.io/issues/767
