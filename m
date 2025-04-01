@@ -1,47 +1,47 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C687320C47B
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 15:55:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312CE1FC0F3
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 16:04:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743522932; cv=none; b=Uo8YIb9MtGsnSjoA+L/Uyjmcp3f4uOZXJrMei7vAMdcYT0UHo+l66E+ux+BIoYSwOF1HQ+E9FJ3mchE/P7212+fhWYYeEEZNgIvha2x3pBOPQtnfcMjtbS4yT7/gSYjbnhvCRKRSnc62c5v0GY2mo8Tl2BlSMEHRbKtjJCA76pU=
+	t=1743523492; cv=none; b=JbNiXqgU0C18KYBz/SpQvKVZTCuB7vX1bR4CnIAL7/A0447HK9X72ny2gkGHQbbKdGI39hIfv7rz33YOXIvPiRi8tTOIRxhIDcWjJpF7qj0QIhS+17EiMGHbTyEiLMDUk0JD7w6zgos6P/aYuCtQC9oC87Ho+E1iQOm5bCdIudw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743522932; c=relaxed/simple;
-	bh=/LuiMP3E70SHA/FZbpjtXvIinhR66n6f04fRLwCK7lw=;
+	s=arc-20240116; t=1743523492; c=relaxed/simple;
+	bh=nIEh4vl9doueGLrlmVf4feOmlb1TuvxZM63YbDDu9jo=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=jhYkgZrYKO+KHh3EwRb/KuI/Iv38lnKO4vNSMeWJZha116kAbTgjq4gFXNt/8ZI63E7jwDCgTcM8pjfkssb5Xy9s74SsRtUzfGXLRIM6elJnQI2vj0nLjlEnou2b3baYcgUenEzg/cfLBTucJITECMpKaKzJt/jo7nvkESa1gTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=TONP0PII; arc=none smtp.client-ip=212.227.15.15
+	 MIME-Version:Content-Type; b=jUPp6a7Q9ChRGGdH2Y29+shT9iKSFyT7WUUqT5TVdZO4sBNinSIS8se0WIDLwNaxDHkCLamZDK3YtPhFY9UwDUWDR+EjoVz2YsisyfR2/qZU+EhlDdv6jTXR3+uXZfX5c1LbERSv6sEH9SWcs1ptJgS+xLus5+/xp1eGtH8DY9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ToOJZsou; arc=none smtp.client-ip=212.227.17.22
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="TONP0PII"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ToOJZsou"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1743522927; x=1744127727;
+	s=s31663417; t=1743523487; x=1744128287;
 	i=johannes.schindelin@gmx.de;
-	bh=ebQfqIAH1iJqZr5oyvWUdjwZppfqr0E0xOic7lReIEs=;
+	bh=POf2sXly7W3fHkqoJl0WQJ2OFigRt5m4ZhSyPfA5mGc=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=TONP0PIIDafwfCRRBzedDYz0ouxTILXKdluA+PoIMcu+vISltzcMB6QdxcFhbYLs
-	 IU6/RHUoRRIDux5Ziw7XD9dJVqte5hDRG1hKwgCt8dAE+lzVRy7Vfkub/C9WmHbJz
-	 jd+TD7DAaoGJxMM+VBkBqXqeQPCzixMap6FVbinH9L6Xc/82aW7bhFa41/jRAbDAR
-	 rhCaEI0/2bKevtejGxsqbwZQTZq6YI/IrnSWwepNFLYW/ts7SdQPhMlBXBpMGmH28
-	 KYZm00tWWiRbOCF25uC0Y0N2pFoPlCDc+Axvp14AUjswMNfz50bG7xa2U06EE0HTn
-	 f0guUjboGNZe5KbE4Q==
+	b=ToOJZsouo34KWhq40qciRm3H5NW3epFQkkLBrAQ40ZWdFeHe2W+eQVRaYdT6itJB
+	 iDxHBcXQClng2OXcMZqqMIyOQO8p76WrzLvIzDKAxNy/T39YItykM5zCd4pI1oyM1
+	 eQhvHQArjOZthKA88ZbhFvnuJnKN9qrkGzQ5Dh5c8yqQbn/qv/sS9KXaG/GNg/uz4
+	 awWvFx8U2nYrbkQ08Gd1gvjCnpc1v9Gv/jv1gd6kftFEQmezxWShstKxKHapy/hIA
+	 b+TcrLBk71UEMo7Fi3Lt1EOKg3PBjjH8Q60iKdTYK5eEqqMk9cKL1YD2obg2kcKBH
+	 0djTtL/q+ZJVOuzfXQ==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MUXtS-1tZLdH2z20-00YUse; Tue, 01
- Apr 2025 17:55:27 +0200
-Date: Tue, 1 Apr 2025 17:55:27 +0200 (CEST)
+Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MrQEx-1tLxN21k8N-00ZkmT; Tue, 01
+ Apr 2025 18:04:47 +0200
+Date: Tue, 1 Apr 2025 18:04:46 +0200 (CEST)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Milan AJDINOVIC <milan.ajdinovic@se.com>
-cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Git client bug with branch containing "."
-In-Reply-To: <VI1PR04MB695864E125F3381932332BDC91AC2@VI1PR04MB6958.eurprd04.prod.outlook.com>
-Message-ID: <4dad78d0-efe2-e01f-cd5f-097259bf961f@gmx.de>
-References: <VI1PR04MB695864E125F3381932332BDC91AC2@VI1PR04MB6958.eurprd04.prod.outlook.com>
+To: Mark Levedahl <mlevedahl@gmail.com>
+cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org, me@yadavpratyush.com
+Subject: Re: [PATCH] git-gui - simplify _open_stdout_stderr
+In-Reply-To: <20230922164412.130504-1-mlevedahl@gmail.com>
+Message-ID: <0140dfd8-f65d-34a0-2e66-44e3f696b100@gmx.de>
+References: <20230922164412.130504-1-mlevedahl@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -49,114 +49,102 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:1o+asThwjbMC6YV0OjLY4qmTpAwmznEByi0cPTbBTf2q9yTZSiL
- YZfcZs1erf29GARj/k+eEo2NwUFTTBSrAS8j8et8MXv+myL/XHBFCpGz3WYQUbctmtSJYo8
- J1x9YdMUOkgw/IVZrSC60jN8yQzbYsCE3hVs20NLDVAGCUpuYnbYAYNqsUM1Wqi9a84kGcp
- rjzpei/OQgHOrqXvlvIVA==
+X-Provags-ID: V03:K1:fxWz9/Hcq+cNfOeVk/K5HYivQ5VhMnajERiGVMyhDVBO1OnvTZi
+ HbdOCy8DI6wr4HHFNDWqp5jEFzFFniyNDqJpaJE+3VY3jy+XQFfkhtC4azMIL5qkyb7/nvT
+ 3v6yhwSvO2kQ4TFWvaPd/qmAWyTOkJwzPIybomVhTgyNQM6xObXMM/njr6FzV8oRg7Vggmd
+ M/y2qtN5fkCPnHsZNeIWw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:m2IOm75odPQ=;8wR3lxWyJdQE/GacMdGa++IzptO
- y7WMXNFAVGn/rgdDa61qKYi1DYz1Mte6n61N2hQ0h/Wix2pvA7E2hmgVvTfCP0z9U2jU666W5
- UGOYBzqIdRCMuHif76YHVdr5QuWZYQnjGCJTNqYOGg7rnKkEi6RIIwAyENcDabCBLzZO/ykDC
- mYTqoHsN5lG9NaZPJ08ueRjiK2g+/RaUN8jbGz+ah7CtjhG+Qci3cemkbo3P21lRuhtdIR7+J
- 7CuknnK/482fg7h+0B22FuYh1QXBwUJbXtuECPryqDKNYC6P4yZk/fOGS2LW/BLWWyzDnaMUe
- 2dGfsQIy0na9CwGnWl93xjNEw9mFFpdJOmn8/l6DyOrn3hzQZUO4sXC+urg4RneH9VrX6/hw8
- nd+hhYmUoQkLP1fPdZCBM02pKgGCtq6e6cUXTTPBsQRGbUSuU4RSLMtRkcsqSmf32vKBpQT7g
- h8X4VN2mGdFhBsCYZSYCheORJqwkZoeIxqNnZVF88rXW8j5++wDsZgxqZQUQWPChB9DN+v5Ic
- YWZaq8x53+ef/rOoGE2D2KXDJJc/prdqRdfEes3ljU0bYF5FXKQKhNEsvrr1lGqUIvgUlVM2J
- pS2ly890QUpJ7vF4zuekEsylg/GR0De9qYXnocMf+Z7IqW3aaeFWFQOMMFBVAS6YYJlwiB817
- qjH8qcJ4eY33ewdC1aktIMPDZUUpRBwZlCAIbYkDI8cKZYXMrpfU5kQ1wCB6xJZX8lSDAIb5v
- PL5HF9f2szAW+6tMj+PJ5sRZhqaZssLXEkxPWnuElabfWPzPQQnw9VprxLTVXijF3j66grhvx
- Dj3NZgDKVGWsgyWG+GVIkqFPrF5NZukiIoSM8iiH6gPGYGiu2gc58b/IVg+BCNUwwbLSkjpGW
- 0XXTlqmUI+SrYNR0D3Z9vTtPiQ3ImSqtzOeNGlPa477unwQ1nFQsjq1EU8s41Qj5n3lBrl8IA
- ubQsH06GRlt1VgoN+UtU37J9KcFf+ff3TcXuf1A6zn+JNp+3HOZz/SRzEG2AAr0J2SsMp7Js5
- BsRob/TwZNCvxDUd/aQt6ASXv8r3rxkBiGUP0O9411sVWhEscFUpA2FYT6cv9wqIUfjiqr/sf
- Hj2BPF0SAoC1sfgcxTw4h/1hXLB7VYxH6OCwjntWYlyRFeCFwkN8u6djsqmet3t5QVLTca5ZE
- Dc+DKnQHsJKStz8jlhNRnXpOR8LeSeVAyqgd55JfK52Gh93vwmeUGpol98gtzZ6AMUXDKvUtl
- hZ7sIbSyb+POfDs6fXA83r+NrjyUiCnmPHHlOxRSTHKM6auBa1ForZvwqZdrw/SE1CBmYG6HE
- 5Eb5jy6eZUGKGDSop2HnLtWBKAQZ4HPGnCTozQzqjbJwmE//V30PFKWVFeuXafSCrSIzukEB7
- VXaEjIJCewskyoBhmEmHuegKrJ4fNdtswk1in6HUY0ytSfNg1R0reMxN3z/+ui6CibV72XD4c
- bF/swELRnuXUvrshEg+4xKg7purIwsUVtnnkRhyFo/SHK1StS
+UI-OutboundReport: notjunk:1;M01:P0:jRmLcLnH/sI=;5/ZceegUcG/GvI1lLR6NFD559YQ
+ Et4ZXz53c/gkM4p8xpD7CttPfVNIQPhXtjaoah5XLBph46eQdlY+9/8M2fzfj1NLJNvMf0liY
+ JcLACBaPFQpTpfBBOhvQIkQ9FqFd8AA6atMiOFn4ugbaTETeyuJB51czVDYeQlQF8v/T3vxI3
+ yHuShm6Yg6khwT39qFlhKagpSv0iyWF/cwG6EFeRJ51zu1VzpaMTKCxcuTC950trtDYPmeAOu
+ YST4xMCiFjon6tn64LyncyVFQWt0p+jkfr9xd8Tx7ml3KEPkO/vXY71+ppw8mLIV9JAh4Flfc
+ X6aykmi3KehXXb7dnQ8a2hedQ+jQM9Ovz9PKhcXk/gXs5DDUxvvX0Den8Owo//nvGV1+/3jlr
+ UpzrW/x0cwr5bZ43k0PwXjPbZhRw207xetYBb0+U5zd+oWu50vC0nXHuZCHcwHbEs/goaERzW
+ 0srptyGLT5CIG/WQg2MDlzAdtanQ3Qpjh5EjxRajQIN2BpfQYES3MLBqTMvW2qgoNSOsshgEn
+ uo9TRsndGbS0BslBYonNOC0t9VRabthjIXkFpw+0EUIS08cahBBvPl/ePXO6IfvZgNkpy/B+X
+ jCjgjvKPCbixhdbTE/sDIblPVV3roVTRpsHEsUqHkRzYGxKHrtqpVlnPjE5X+zn4PQ0usbkAl
+ 9/t/Cj/153bTISVKsKAICsFklWMx5tDw0rT+IYCb/jbKc4NlyCVwDCWuK149XJnEUo0qVxEg7
+ wh9YniFIXntHm2C6empaes3MFzRHrWSlFEXhDtqzlLJ7rrsUmNLiStmWJw9psFPDT82mGrHQ7
+ VseFBrCGNuWjp3xpdjMRvTqbs2CAdtLmHsUntySMZ5HkheWdag6r1LBJUvh5Z3RdKh11XArFv
+ JJlKcMj8tBv47AQd/q9/9HiLP+HRUfQr3Qo8cy3nyyRooypLUx7T2g/0xuFDAkeyMvAOkUcKi
+ oHHe1G0Hm/xrjznslh5+rmuh32Ga22v+386tPZijpqBZvhWGsa7V9+PHWViRYHkO5XmoTQ7Qv
+ fZBQWh8W6SlH6UjtGwtPP9MOGWGHRiPmBSs1KMszjO87aui59+PZyAJpOfYcLsrewsqB2Qe1n
+ 2sT8VmVLwj5KVUH98AItxr9yFgEYCZymqYvQ2hlBTOq7jtVoER67WKgBIGZswLX3uMxGFsv2v
+ vK3KBEMgdqB/h4j1EUWo8EUuLH9o9+FUO+BpgxOYHGw3+FjpHUtN6BX4E5ccDy1kErgSKBCMw
+ bmo3SG1OQp5GqrLmAcaVJoSvUx8/SwO+YiBTygHd8braeJNpQ39BiCkb1KrfoepQf1zZR6UFU
+ 25qt5A4F7ZoNzU/hLYbDvECLPVu67XRlQtiijN+CL1H0eiL/c4LR7r+n4kGHH0uyB6M/dr6iE
+ BJ1idgaA4nwW0BXRcbkLKtvpFK426XWJq8EP18OFB58YtWbVY5KKpihnGzmzy63BVPcuJlbpH
+ OonOiRrv7DEyv/Z1o+dAtdMfG6Y8tzjGhUmiBYbPTmastWwjv
 Content-Transfer-Encoding: quoted-printable
 
-Hi Milan,
+Hi Mark,
 
-On Tue, 1 Apr 2025, Milan AJDINOVIC wrote:
-
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> On GitHub Enterprise server I have created a branch named: features/team=
-1/feature./1.0/main in my repo.
-> I tried to fetch the branch and switch to it.
->
-> What did you expect to happen? (Expected behavior)
-> I expected for branch to be switched to:features/team1/feature./1.0/main
-> What happened instead? (Actual behavior)
-> I got an error: fatal: cannot lock ref 'refs/heads/features/team1/featur=
-e./1.0/main': unable to create directory for .git/refs/heads/features/team=
-1/feature./1.0/main
-> What's different between what you expected and what actually happened?
-> The branch did no switch.
-> Anything else you want to add:
-> From my analisys the problem is because my branch have "feature." in it =
-and Windows can not create directory with "." at the end.
-
-That analysis and conclusion is correct, as per
-https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file:
-
-	Do not end a file or directory name with a space or a period.
-	Although the underlying file system may support such names, the
-	Windows shell and user interface does not.
-
-The problem here is the directory name `feature.`. You cannot even track
-this locally, at least not with the way Git implemented its default refs
-backend because it wants to map the ref name to a path in the filesystem.
-
-Note: It _might_ pretend to work when you clone, but any subsequent fetch
-that updates that ref will fail.
-
-Your only chance to track the ref locally is to map it to a different name
-in your Git config, like so (`git config edit`):
-
-	[remote "origin"]
-		url =3D [...]
-		fetch =3D +refs/heads/*:refs/remotes/origin/*
-		fetch =3D ^refs/heads/features/team1/feature./1.0/main
-		fetch =3D refs/heads/features/team1/feature./1.0/main:refs/heads/feature=
-s/team1/feature/1.0/main
-
-After that, you should be able to fetch and then check out that branch
-under the name on the right-hand side, i.e. without that `.` after
-`feature`.
+this patch is still relevant, right? I am Cc:ing Johannes Sixt for
+awareness.
 
 Ciao,
 Johannes
 
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
+On Fri, 22 Sep 2023, Mark Levedahl wrote:
+
+> From: "Mark Levedahl Date: Tue, 19 Sep 2023" <mlevedahl@gmail.com>
 >
+> Since b792230 ("git-gui: Show a progress meter for checking out files",
+> 2007-07-08), git-gui includes a workaround for Tcl that does not support
+> using 2>@1 to redirect stderr to stdout. Tcl added such support in
+> 8.4.7, released in 2004, while the later 8.4.14 still predated git-gui.
+> But, Cygwin was stuck on an 8.4.1 Tcl variant until 2011, hence the need
+> for this workaround. Commit 7145c65 recently removed much other specific
+> code for that obsolete Cygwin Tcl/Tk, but missed this piece.
 >
-> [System Info]
-> git version:
-> git version 2.42.0.windows.2
-> cpu: x86_64
-> built from commit: 2f819d1670fff9a1818f63b6722e9959405378e3
-> sizeof-long: 4
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> feature: fsmonitor--daemon
-> uname: Windows 10.0 19045
-> compiler info: gnuc: 13.2
-> libc info: no libc information available
-> $SHELL (typically, interactive shell): <unset>
+> Also, Tcl since 8.5 explicitly supports 2>@1 across all platforms, and
+> git-gui requires Tcl >=3D 8.5, further evidence the workaround is
+> obsolete.  (I did test that 2>@1 works as-expected on current Linux,
+> Cygwin, and Git For Windows Tcl packages).
 >
+> Remove the workaround and exploit concat's documented capability to
+> handle both scalar and list arguments, leaving a much simpler function.
+> This eliminates any question that cmd might be executed twice.
 >
+> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+> ---
+>  git-gui.sh | 21 ++-------------------
+>  1 file changed, 2 insertions(+), 19 deletions(-)
 >
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 8bc8892..a5d008d 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -583,25 +583,8 @@ proc git {args} {
 >
->
->
->
->
->
-> General
->
+>  proc _open_stdout_stderr {cmd} {
+>  	_trace_exec $cmd
+> -	if {[catch {
+> -			set fd [open [concat [list | ] $cmd] r]
+> -		} err]} {
+> -		if {   [lindex $cmd end] eq {2>@1}
+> -		    && $err eq {can not find channel named "1"}
+> -			} {
+> -			# Older versions of Tcl 8.4 don't have this 2>@1 IO
+> -			# redirect operator.  Fallback to |& cat for those.
+> -			# The command was not actually started, so its safe
+> -			# to try to start it a second time.
+> -			#
+> -			set fd [open [concat \
+> -				[list | ] \
+> -				[lrange $cmd 0 end-1] \
+> -				[list |& cat] \
+> -				] r]
+> -		} else {
+> -			error $err
+> -		}
+> +	if {[catch {set fd [open [concat | $cmd] r]} err]} {
+> +		error $err
+>  	}
+>  	fconfigure $fd -eofchar {}
+>  	return $fd
+> --
+> 2.41.0.99.19
 >
 >
