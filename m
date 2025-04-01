@@ -1,210 +1,436 @@
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BE3202C26
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 13:38:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F82820371F
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 15:01:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743514685; cv=none; b=SpLdMwwBhmxYPSX3nhEyQ5JFWD4zWAaNscMAYBHpiutmdQw1VfAOT9JdLloIGI5lzMrkR9aTs7rkUTzmkkdwk+LqUKtplusbW4NCWgLAkyTjVu8jPnnuZ6XoqDa4e9A07eFS0r9aZT/VQFY10U1574BlCToJjWyqzk4roQ0Am5g=
+	t=1743519700; cv=none; b=qJCE7QBpnfyHPU10zKxfSf2f8g2yHmGh0SMgfamGXtsp+VGQK6eTTfIvlQJztVbFw0oW8GXNpmPmJniRusNfXn8IzUQj+5I9JAygGC7yz8IOLwmSy2ygrHBLRCqwPvooXD6+dmTeHu6uFRYVBjbtQGvPKfC9hTHQRIph5tvkZ5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743514685; c=relaxed/simple;
-	bh=o0fLVDnt5RHt5Iu/X80QqlgWRKwv535c6oD2n6477AY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=evsjv/9xM0iB5uSpzkGY6xoicIRYUgWxHTEhG3y7vbYlJes4iksxTXasOdo8c9FfeYs5lg6N4eWEMMFom0jQhagLZfCG3mm+TF3aaY80wD4vtaqIlleW0gLiOiYYeVYfVmLfld/DTCIVPM2m17sAlzA3CstHYeQEAmAClCNtuuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ky8zgLBw; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743519700; c=relaxed/simple;
+	bh=kEtEgroEHKGon8qFBeD4JVFuWn63P0HFfjZaYSlll3w=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Zr7wBqKCpgIVXTH0aieHgn8F14ilTU5GGmGQQxwnMg2EuB8WHcTmG3JbDizUc9SkBOLqO25XONtCIhOxWGLYJxEubhJQ1hn+tE0DUA6Nvx/AJWs3Tb3SwarzcTAXv2WJnmldct3xvFG8SnBc2V55EkfasFmBAoQ3K9+gujkZV1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j7+wZyhc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HoO5YTIG; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ky8zgLBw"
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5499c5d9691so5923016e87.2
-        for <git@vger.kernel.org>; Tue, 01 Apr 2025 06:38:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743514682; x=1744119482; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NB7KvrRwjS6pp2c5b8r2U/Y+D9ibSWQKABj+/Y+zy5A=;
-        b=ky8zgLBwOGgm6OBDj3votJ/6JP6wn9Ak9HkL3TP8JSOVBNYKsqQp6s9SqqsnouXPq3
-         DHd+QINEn4W1UAv0/M7aOuwjclGT7R87WO52SsaGVlTnZ02n0Qt63HfsM8EVKfLpsz8z
-         f+FM+e/pLmezu7pkcZq0rHSNd2haGZfUCPW9WW3SxTUOX+2gj65UEMe23aB3NIwz5RF+
-         4/Emn46TV7MOwhdRdjtQP/Tx2EwcrGMaraWkpd8tEc1Km+pBVpF+s3PXKxDy60vtcEv8
-         ZBbRd61B6YJrAs5Idyqp4qpKa0wh0TxtellkxLxqki57y9t6JufeQEc47zMNMB0nKgOQ
-         1tZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743514682; x=1744119482;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NB7KvrRwjS6pp2c5b8r2U/Y+D9ibSWQKABj+/Y+zy5A=;
-        b=OP/k3Zr7KmDeEUTFdw9CFDR6UJXdKkE7lQrhwQXgyb50EeJQ060i5orXq8wZKB9qA6
-         vCsmOgyuD6N366LaTHeuTSUtY8ycDqIjTPcSWIsLYHuV7xMladV63lm2+TJ7r0vvvj0/
-         UALLqkev63j7zD1jWo65w/P14VxQKzlXdNt0P2z1fEGdOIXV8kBV5uEkfivnyEWOuT4D
-         0Kay2yM5fZHkcO4zcP67L/FvXQVyMY/iTKFZ8VyTwVOHieXXPidUPCBCL+mSlSORbDUs
-         ZN+2x3Aa8fIQIFV/YNOn350zmHW2OqCXm2lu1m8wTmiibp46qZ7ii29F9bxAOV6i/GUb
-         Ao8Q==
-X-Gm-Message-State: AOJu0YzwCSWq8iK6Ij9Gu/D54FPZtwS3nkAACzWtZelWRyiFn+VSaLOx
-	KSXT768C7Z11WuFt3tPEVwiInNSlS1ht32rgeSvq+eU8m5BbeIZ/Qw1bQXxQ/yiLmRN5557DRDo
-	CxAIQb+gh3fSV06NoLg3M1uGGH/xJRVq2anWIGA==
-X-Gm-Gg: ASbGncvkOF0R7KsTzJnbr9H0UdscVo/FaA+KDJxnqvGySNQCQBDjUQNh9CtTwFzqy4m
-	4q3BZZaV9JVP3YTxrwP3+bn94f8Lg9Eh6DQzqOwFP4JjgdWb4uFNPxu8AtkoFqy95jcmjb2/g2/
-	1R6IX+GNbNifjoMT3yIgYdr0b8skIVSDN/NRMqVM1vf86Jqszn5IDmKktlwWA9
-X-Google-Smtp-Source: AGHT+IHuC819lppO2lBhFhfnHJ9HyPxRuInadFtqb3XlJqBNA8fnWas6OfX45Dadyi+7xm9ECVV4Hq/cpza15mabnZY=
-X-Received: by 2002:a05:6512:1389:b0:549:5850:f275 with SMTP id
- 2adb3069b0e04-54b111308abmr4257873e87.50.1743514681565; Tue, 01 Apr 2025
- 06:38:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j7+wZyhc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HoO5YTIG"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 21B911140254;
+	Tue,  1 Apr 2025 11:01:36 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Tue, 01 Apr 2025 11:01:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743519696;
+	 x=1743606096; bh=xNyzShKoWW9NrMXjogQVuu1QV7oavJwG14x+h/XOQW0=; b=
+	j7+wZyhco1fCvwnkx1L+IocwDw6tjklFW3d6y1uKWUpnFCOgloGztMtxe7A24NRr
+	7uqe9jD5tIxynBnSxUHmlGyPfN2LCswXhlmuvE0g0wRyU2DRwVZc4kmGcrvn1QWH
+	k6xrkSmBk8zijNNwiIYV9CXtglitY5wZ1wanYyVRxf5fzNoG9nJltwktZ4ecIsrZ
+	sADRNevvCAnF7vTb0OI5PYvFOnLwFs0Rg2vr7m4oFeapEHc5d8kOxg+nWNxJLJNb
+	tQb94x3l/84aluPX0DqtxENTducer1bWcW0lj/kOLLiN6rg1a9haFkFjRzlgqFoR
+	Iif2Dg7jkG0MjgOjNX1dWg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743519696; x=
+	1743606096; bh=xNyzShKoWW9NrMXjogQVuu1QV7oavJwG14x+h/XOQW0=; b=H
+	oO5YTIGL5fsDCzqwESJ2Xf3qMx+Z5lk7lnHPh4bvLoIE0G+Svkq+wweiCct905Iu
+	VNQKz9miQpwZp4tdrHyDe61g5PhaxERvMhOfV8DmClnlj7OlcQtG08yXRgZRt77T
+	2RQ88Lbq7CNu4JPE7TKW+wDyPcjesBBKfXqDe5UcMRbNa2HessDnAiUv+onajeaj
+	bXQByfn43M/HvjQrKOcxkYf2Lgei5YJuyWI/RfL8Djxo0zVrMAJW39kettCvVzBc
+	iT9TXvTpFDPvamxOW2kZVtNvCa/1JVeAfVHay9BhpMZ35rlvcQdahzr+wqzmQNSs
+	jxN8vaGmnqz5O2EnTw5Rw==
+X-ME-Sender: <xms:zv_rZyKBWyujSH8lfEN8lW5KS-kAL7q5mk5jPlgx9zwBTLbTJRAeKw>
+    <xme:zv_rZ6KjSHusIaPB3Bir_MNJIHXXZ_pqQ21F5LWUDKr2KQwI7z9Genk8-ZHn2M4W5
+    oNut2xF0Pubj33BdA>
+X-ME-Received: <xmr:zv_rZyuQqQ0Qm7XzyfuES_5WMuGd8ureEwVemXCsmFT0fdX-mdqn3pUgYcsLzjL9zekufUedQ8IyoQ9sJDuFsLMxK5wSMissxvHSeJmSwQGPShc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeeftdelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpth
+    htoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsii
+    gvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehglhgruhgsihhtiies
+    phhhhihsihhkrdhfuhdqsggvrhhlihhnrdguvgdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:z__rZ3ZwQJ-8wVsobRirOmHNaZovrhTVliWq1cxmPK_tfZkpZB0tnQ>
+    <xmx:z__rZ5aqhfBNWM01BuyErqVl4ur-Jw3hIhQzYH_PDLo2wA27a1JA6Q>
+    <xmx:z__rZzACW1edYZkY0StaOm334oyeejUjzmqc_bV_KlI79akUGWjIZg>
+    <xmx:z__rZ_aflAyxP9N7pte8KHrFKabMAsYtHN5ui3m-k9ExE7qyOQjn0w>
+    <xmx:z__rZ15airY-vwGP2cwAy2aO7mPbT1B1LQFlVEn-5cVQJxzfWUDPN-l6>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Apr 2025 11:01:33 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2a4cf710 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 1 Apr 2025 15:01:28 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Tue, 01 Apr 2025 17:01:17 +0200
+Subject: [PATCH 2/5] parse-options: introduce precision handling for
+ `OPTION_INTEGER`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAMvj1+rbYKFNeWEvvN76MTpzfuWc4TN4ViXRE4nTfWy7ZMspWg@mail.gmail.com>
- <20250329150248.2274482-1-05ZYT30@gmail.com> <Z-pjjQhtCjLvghGl@pks.im>
-In-Reply-To: <Z-pjjQhtCjLvghGl@pks.im>
-From: Yuting Zheng <05zyt30@gmail.com>
-Date: Tue, 1 Apr 2025 21:37:50 +0800
-X-Gm-Features: AQ5f1Jrd6lSQqU376Kqw_YzccinXswDXKs8WHqcTPH9aBPJiWfxnqr-4dRTbhhY
-Message-ID: <CAMvj1+qdBb-6nDVzw1y60-C5+wknJVr=JM+4ZiAftob3Ynbs5Q@mail.gmail.com>
-Subject: Re: [GSoC] git-refs proposal draft
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250401-b4-pks-parse-options-integers-v1-2-a628ad40c3b4@pks.im>
+References: <20250401-b4-pks-parse-options-integers-v1-0-a628ad40c3b4@pks.im>
+In-Reply-To: <20250401-b4-pks-parse-options-integers-v1-0-a628ad40c3b4@pks.im>
+To: git@vger.kernel.org
+Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>, 
+ Todd Zullinger <tmz@pobox.com>, 
+ =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+ =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+ Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
+X-Mailer: b4 0.14.2
 
-Hi Patrick,
+The `OPTION_INTEGER` option type accepts a signed integer. The type of
+the underlying integer is a simple `int`, which restricts the range of
+values accepted by such options. But there is a catch: because the
+caller provides a pointer to the value via the `.value` field, which is
+a simple void pointer. This has two consequences:
 
-Thanks for your feedback! Here are some adjustments based on your
-suggestions:
+  - There is no check whether the passed value is sufficiently long to
+    store the entire range of `int`. This can lead to integer wraparound
+    in the best case and out-of-bounds writes in the worst case.
 
-> In any case, I don't think the naming and how exactly each of these
-> commands should look and work like needs to be hashed out in this
-> document. It's nice to scope out _what_ we want to achieve and propose
-> how this could look like, but ultimately I think that most of the design
-> should happen during the project itself.
+  - Even when a caller knows that they want to store a value larger than
+    `INT_MAX` they don't have a way to do so.
 
-OK! I may have misunderstood it. I will remove it.
+Funny enough, even if the caller gets everything correct the parsing
+logic is still insufficient because we use `strtol()` to parse the
+argument, which returns a `long`. But as that value is implicitly cast
+when assigning it to the `int` field we may still get invalid results.
 
-> This one is something that is up for debate. While I do expect that most
-> of the commands should remain current semantics and options, we could
-> also use this as an opportunity to think whether there are any issues
-> with the current design and improve upon it.
+In practice this doesn't tend to be a huge issue because users typically
+don't end up passing huge values to most commands. But the parsing logic
+is demonstrably broken, and it is too easy to get the calling convention
+wrong.
 
-So, discussing the specific implementation of the command should also
-be included in the proposal, right?
+Improve the situation by introducing a new `precision` field into the
+structure. This field gets assigned automatically by `OPT_INTEGER_F()`
+and tracks the size of the passed value. Like this it becomes possible
+for the caller to pass arbitrarily-sized integers and the underlying
+logic knows to handle it correctly by doing range checks. Furthermore,
+convert the code to use `strtoimax()` intstead of `strtol()` so that we
+can also parse values larger than `LONG_MAX`.
 
->> - git-refs exists
->>   Replaces git-show-ref --exists, providing reference existence checks
->>   with positive (<ref>) and exclusion-based (--exclude-existing)
->>   verification.
->
-> I'm not quite clear what exclusion-based existence checks is. How do you
-> check whether something exists when you exclude it? I don't think that
-> this option is relevant in the context of `git refs exists`.
+Note that we do not yet assert signedness of the passed variable, which
+is another source of bugs. This will be handled in a subsequent commit.
 
-Sorry, I made a mistake. I meant to convey that the `--exclude-existing`
-option should be included in `git-refs list` (replacing
-`git-show-ref --exclude-existing`), which then lists refs within a certain
-scope.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ builtin/fmt-merge-msg.c       |  2 ++
+ builtin/merge.c               |  1 +
+ builtin/show-branch.c         |  1 +
+ builtin/tag.c                 |  1 +
+ parse-options.c               | 53 +++++++++++++++++++++++++++++++------------
+ parse-options.h               |  6 +++++
+ t/helper/test-parse-options.c |  3 +++
+ t/t0040-parse-options.sh      | 23 ++++++++++++++++++-
+ 8 files changed, 75 insertions(+), 15 deletions(-)
 
->> - git-refs resolve
->>   Replaces git-symbolic-ref, resolving symbolic references with added
->>   recursion depth control (--max-depth), while retaining deletion (-d)
->>   and quiet mode (-q) options.
->
-> Not quite. The difference to `git refs show` is that this command always
-> resolves the ref to an object. So it's rather more similar to `git
-> rev-parse --verify`, except that it only ever handles references.
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 240cdb474bc..3b6aac2cf7f 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -24,6 +24,7 @@ int cmd_fmt_merge_msg(int argc,
+ 			.type = OPTION_INTEGER,
+ 			.long_name = "log",
+ 			.value = &shortlog_len,
++			.precision = sizeof(shortlog_len),
+ 			.argh = N_("n"),
+ 			.help = N_("populate log with at most <n> entries from shortlog"),
+ 			.flags = PARSE_OPT_OPTARG,
+@@ -33,6 +34,7 @@ int cmd_fmt_merge_msg(int argc,
+ 			.type = OPTION_INTEGER,
+ 			.long_name = "summary",
+ 			.value = &shortlog_len,
++			.precision = sizeof(shortlog_len),
+ 			.argh = N_("n"),
+ 			.help = N_("alias for --log (deprecated)"),
+ 			.flags = PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN,
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 21787d45165..9ab10c7db0a 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -254,6 +254,7 @@ static struct option builtin_merge_options[] = {
+ 		.type = OPTION_INTEGER,
+ 		.long_name = "log",
+ 		.value = &shortlog_len,
++		.precision = sizeof(shortlog_len),
+ 		.argh = N_("n"),
+ 		.help = N_("add (at most <n>) entries from shortlog to merge commit message"),
+ 		.flags = PARSE_OPT_OPTARG,
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index dab37019d29..b549d8c3f5b 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -671,6 +671,7 @@ int cmd_show_branch(int ac,
+ 			.type = OPTION_INTEGER,
+ 			.long_name = "more",
+ 			.value = &extra,
++			.precision = sizeof(extra),
+ 			.argh = N_("n"),
+ 			.help = N_("show <n> more commits after the common ancestor"),
+ 			.flags = PARSE_OPT_OPTARG,
+diff --git a/builtin/tag.c b/builtin/tag.c
+index b266f12bb48..7597d93c71b 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -483,6 +483,7 @@ int cmd_tag(int argc,
+ 			.type = OPTION_INTEGER,
+ 			.short_name = 'n',
+ 			.value = &filter.lines,
++			.precision = sizeof(filter.lines),
+ 			.argh = N_("n"),
+ 			.help = N_("print <n> lines of each tag message"),
+ 			.flags = PARSE_OPT_OPTARG,
+diff --git a/parse-options.c b/parse-options.c
+index 35fbb3b0d63..dbda9b7cfe7 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -172,25 +172,50 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
+ 			return (*opt->ll_callback)(p, opt, p_arg, p_unset);
+ 	}
+ 	case OPTION_INTEGER:
++	{
++		intmax_t upper_bound = (((intmax_t) 1 << (opt->precision * 8 - 1)) - 1);
++		intmax_t lower_bound = -upper_bound - 1;
++		intmax_t value;
++
+ 		if (unset) {
+-			*(int *)opt->value = 0;
+-			return 0;
+-		}
+-		if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
+-			*(int *)opt->value = opt->defval;
+-			return 0;
+-		}
+-		if (get_arg(p, opt, flags, &arg))
++			value = 0;
++		} else if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
++			value = opt->defval;
++		} else if (get_arg(p, opt, flags, &arg)) {
+ 			return -1;
+-		if (!*arg)
++		} else if (!*arg) {
+ 			return error(_("%s expects a numerical value"),
+ 				     optname(opt, flags));
+-		*(int *)opt->value = strtol(arg, (char **)&s, 10);
+-		if (*s)
+-			return error(_("%s expects a numerical value"),
+-				     optname(opt, flags));
+-		return 0;
++		} else {
++			value = strtoimax(arg, (char **)&s, 10);
++			if (*s)
++				return error(_("%s expects a numerical value"),
++					     optname(opt, flags));
++
++		}
+ 
++		if (value < lower_bound || value > upper_bound)
++			return error(_("value %"PRIdMAX" for %s not in range [%"PRIdMAX",%"PRIdMAX"]"),
++				     value, optname(opt, flags), lower_bound, upper_bound);
++
++		switch (opt->precision) {
++		case 1:
++			*(int8_t *)opt->value = value;
++			return 0;
++		case 2:
++			*(int16_t *)opt->value = value;
++			return 0;
++		case 4:
++			*(int32_t *)opt->value = value;
++			return 0;
++		case 8:
++			*(int64_t *)opt->value = value;
++			return 0;
++		default:
++			BUG("invalid precision for option %s",
++			    optname(opt, flags));
++		}
++	}
+ 	case OPTION_MAGNITUDE:
+ 		if (unset) {
+ 			*(unsigned long *)opt->value = 0;
+diff --git a/parse-options.h b/parse-options.h
+index 997ffbee805..8d5f9c95f9c 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -92,6 +92,10 @@ typedef int parse_opt_subcommand_fn(int argc, const char **argv,
+  * `value`::
+  *   stores pointers to the values to be filled.
+  *
++ * `precision`::
++ *   precision of the integer pointed to by `value`. Should typically be its
++ *   `sizeof()`.
++ *
+  * `argh`::
+  *   token to explain the kind of argument this option wants. Does not
+  *   begin in capital letter, and does not end with a full stop.
+@@ -151,6 +155,7 @@ struct option {
+ 	int short_name;
+ 	const char *long_name;
+ 	void *value;
++	size_t precision;
+ 	const char *argh;
+ 	const char *help;
+ 
+@@ -214,6 +219,7 @@ struct option {
+ 	.short_name = (s), \
+ 	.long_name = (l), \
+ 	.value = (v), \
++	.precision = sizeof(*v), \
+ 	.argh = N_("n"), \
+ 	.help = (h), \
+ 	.flags = (f), \
+diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
+index 997f55fd45b..b1275dfade4 100644
+--- a/t/helper/test-parse-options.c
++++ b/t/helper/test-parse-options.c
+@@ -120,6 +120,7 @@ int cmd__parse_options(int argc, const char **argv)
+ 	};
+ 	struct string_list expect = STRING_LIST_INIT_NODUP;
+ 	struct string_list list = STRING_LIST_INIT_NODUP;
++	int16_t i16 = 0;
+ 
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "yes", &boolean, "get a boolean"),
+@@ -139,6 +140,7 @@ int cmd__parse_options(int argc, const char **argv)
+ 		OPT_NEGBIT(0, "neg-or4", &boolean, "same as --no-or4", 4),
+ 		OPT_GROUP(""),
+ 		OPT_INTEGER('i', "integer", &integer, "get a integer"),
++		OPT_INTEGER(0, "i16", &i16, "get a 16 bit integer"),
+ 		OPT_INTEGER('j', NULL, &integer, "get a integer, too"),
+ 		OPT_MAGNITUDE('m', "magnitude", &magnitude, "get a magnitude"),
+ 		OPT_SET_INT(0, "set23", &integer, "set integer to 23", 23),
+@@ -210,6 +212,7 @@ int cmd__parse_options(int argc, const char **argv)
+ 	}
+ 	show(&expect, &ret, "boolean: %d", boolean);
+ 	show(&expect, &ret, "integer: %d", integer);
++	show(&expect, &ret, "i16: %"PRIdMAX, (intmax_t) i16);
+ 	show(&expect, &ret, "magnitude: %lu", magnitude);
+ 	show(&expect, &ret, "timestamp: %"PRItime, timestamp);
+ 	show(&expect, &ret, "string: %s", string ? string : "(not set)");
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index 2fe3522305f..e3ca7a27738 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -22,6 +22,7 @@ usage: test-tool parse-options <options>
+ 
+     -i, --[no-]integer <n>
+                           get a integer
++    --[no-]i16 <n>        get a 16 bit integer
+     -j <n>                get a integer, too
+     -m, --magnitude <n>   get a magnitude
+     --[no-]set23          set integer to 23
+@@ -136,6 +137,7 @@ test_expect_success 'OPT_MAGNITUDE() 3giga' '
+ cat >expect <<\EOF
+ boolean: 2
+ integer: 1729
++i16: 0
+ magnitude: 16384
+ timestamp: 0
+ string: 123
+@@ -156,6 +158,7 @@ test_expect_success 'short options' '
+ cat >expect <<\EOF
+ boolean: 2
+ integer: 1729
++i16: 9000
+ magnitude: 16384
+ timestamp: 0
+ string: 321
+@@ -167,7 +170,7 @@ file: prefix/fi.le
+ EOF
+ 
+ test_expect_success 'long options' '
+-	test-tool parse-options --boolean --integer 1729 --magnitude 16k \
++	test-tool parse-options --boolean --integer 1729 --i16 9000 --magnitude 16k \
+ 		--boolean --string2=321 --verbose --verbose --no-dry-run \
+ 		--abbrev=10 --file fi.le --obsolete \
+ 		>output 2>output.err &&
+@@ -179,6 +182,7 @@ test_expect_success 'abbreviate to something longer than SHA1 length' '
+ 	cat >expect <<-EOF &&
+ 	boolean: 0
+ 	integer: 0
++	i16: 0
+ 	magnitude: 0
+ 	timestamp: 0
+ 	string: (not set)
+@@ -253,6 +257,7 @@ test_expect_success 'superfluous value provided: cmdmode' '
+ cat >expect <<\EOF
+ boolean: 1
+ integer: 13
++i16: 0
+ magnitude: 0
+ timestamp: 0
+ string: 123
+@@ -276,6 +281,7 @@ test_expect_success 'intermingled arguments' '
+ cat >expect <<\EOF
+ boolean: 0
+ integer: 2
++i16: 0
+ magnitude: 0
+ timestamp: 0
+ string: (not set)
+@@ -343,6 +349,7 @@ cat >expect <<\EOF
+ Callback: "four", 0
+ boolean: 5
+ integer: 4
++i16: 0
+ magnitude: 0
+ timestamp: 0
+ string: (not set)
+@@ -368,6 +375,7 @@ test_expect_success 'OPT_CALLBACK() and callback errors work' '
+ cat >expect <<\EOF
+ boolean: 1
+ integer: 23
++i16: 0
+ magnitude: 0
+ timestamp: 0
+ string: (not set)
+@@ -447,6 +455,7 @@ test_expect_success 'OPT_NUMBER_CALLBACK() works' '
+ cat >expect <<\EOF
+ boolean: 0
+ integer: 0
++i16: 0
+ magnitude: 0
+ timestamp: 0
+ string: (not set)
+@@ -783,4 +792,16 @@ test_expect_success 'magnitude with units but no numbers' '
+ 	test_must_be_empty out
+ '
+ 
++test_expect_success 'i16 limits range' '
++	test-tool parse-options --i16 32767 >out &&
++	test_grep "i16: 32767" out &&
++	test_must_fail test-tool parse-options --i16 32768 2>err &&
++	test_grep "value 32768 for option .i16. not in range \[-32768,32767\]" err &&
++
++	test-tool parse-options --i16 -32768 >out &&
++	test_grep "i16: -32768" out &&
++	test_must_fail test-tool parse-options --i16 -32769 2>err &&
++	test_grep "value -32769 for option .i16. not in range \[-32768,32767\]" err
++'
++
+ test_done
 
-Thanks for pointing that out. I will correct it afterward.
+-- 
+2.49.0.604.gff1f9ca942.dirty
 
->> - git-refs pack
->>   Replaces git-pack-refs, packing loose references with support for
->>   filtering (--include, --exclude) and automatic cleanup (--prune).
->
-> I would probably call this `git refs optimize` or something like that.
-> git-pack-refs(1) is mostly called this way because it was introduced to
-> pack refs into the "packed-refs" file. But nowadays with the reftable
-> backend I think that the command name is somewhat inaccurate.
-
-Agree with it.
-
->> - git-refs update
->>   Replaces git-update-ref, providing transactional reference updates
->>   with batch processing (--stdin) and atomic guarantees.
->> - git-refs delete
->>   Separates the delete functionality from git-update-ref, ensuring
->>   explicit handling of reference removals with safety checks and batch
->>   operations (--stdin).
->
-> It's up for debate whether we should even have something like `git refs
-> delete`. As you rightfully notice `git refs update` already handles the
-> usecase, so it feels like needless duplication.
->
-
-I think maybe separate `update` and `delete` can be more direct. Separating
-these commands can enhance clarity in their usage, although I'm open to
-further discussion if the community prefers a unified command.
-
->> 1. Option Parsing: Each subcommand will reuse the argument parsing
->>    logic from legacy commands (e.g., git-pack-refs --prune).
->
-> We cannot and do not want to do this for every case. As mentioned above,
-> we may want to iterate on some of the subcommands to address historic
-> warts. But overall I agree, we should of course aim to reduce
-> duplication as far as it is sensible to do.
-
->
->> 2. Shared Backend Logic: Calls to common functions in refs/ (e.g.,
->>    reference traversal, locking mechanisms).
->> 3. Error Consistency: Maintain the same error codes and message
->>    formats as legacy commands.
->
-> Same reasoning here, we may want to adapt some of them. The old commands
-> won't go away as they are used everywhere, and that makes it more
-> reasonable for us to change behaviour in their newer equivalents.
->
-
-Got it. I will list my thoughts below.
-
-> You don't actually have to change "git.c" to introduce new subcommands.
-> We don't want `git refs-pack`, but rather `git refs pack`, which is an
-> important distinction.
-
-Sorry for my oversight. I will be more careful from now on.
-
->> 3. Reuse refs/files-backend.c Logic:
->>    - Ensure cmd_refs_pack calls pack_refs correctly, adjusting as
->>      necessary for new options.
->
-> We shouldn't have to touch any of the backends at all. You should rather
-> make sure to integrate with "refs.c", which wraps the backends and
-> provides a backend-agnostic interface to refs.
-
-Got it.
-
-> You probably underestimate the time to review and land a specific change
-> quite significantly. Landing new features in ~2 weeks is thus not quite
-> realistic and you should allocate a lot more time for each of the
-> specific subcommands.
->
-> That of course raises the question of how to squeeze all of the
-> subcommands into a single GSoC. And the answer is that you don't: it's
-> perfectly fine to implement only a subset of the new proposed
-> subcommands. I'd rather you spend more time thinking about how to
-> improve upon the status quo for each of the subcommands and thus spend
-> more time on it than trying to do everything in a hurry.
->
-
-Thanks for your reminder! I plan to focus on implementing `git-refs list` and
-`git-refs update` first. These will form the foundation of the new design, and
-once stable, I will consider addressing `git-refs resolve` and additional
-commands if time permits.
-
-So, I need to update my proposal to reduce the number of subcommands so
-that I can complete this project with high quality. I also need to
-further discuss
-the implications of these commands. By reducing the number of subcommands,
-I can dedicate more time to refining each one and ensuring they integrate well
-with the existing system. I will also detail the implications of each command in
-my updated proposal.
-
-Thanks!
-Zheng Yuting
