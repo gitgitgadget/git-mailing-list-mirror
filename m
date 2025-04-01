@@ -1,108 +1,167 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from mout.web.de (mout.web.de [212.227.15.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA8D224AFC
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 18:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9767720FA96
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 18:47:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743532531; cv=none; b=WYFG1wIZk5cDhkL/yur/Jb+Rw6cALnvuBP9EgEpY69YzjdIeqP7rGGVNS67Ic8+Wiz3PBdUKfYgLOfYMphAnoJH2yKnEJGZWadxipRjLiEyuQEyExImpjSJz2NOlPrQfdr4ggrnxMfr1gpA+q4jC041MBO02oLRTTrkzCbx7H/8=
+	t=1743533249; cv=none; b=depdfLeuljxNr6LW2vuYr91KrNsQk6dnvpCTO6i4j/OFUHOk69mevbht7L3ufCGqCnF5B7XhULQRCOiIez10ne2IeM6xOG9vz0RXSt0Ap0IYsN4vV9oGMsVH4ifGh3WZ89nvIuyQeyZ+rE+9YAf6nBzAqry/E4pzS0lngb3WQII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743532531; c=relaxed/simple;
-	bh=v1rweqTxEuM+BLuzFTPdmqznhJDKaxkK9MLUqxPtQc8=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Z/SqQFMxaT04epwMlHflMN38zGiShwohgOBNj2nuno5Pwg4qb8AX1ehpCYXidRJRBTTTsv1opDYVER2/2W6N7LG00l9Kiw3S/cQY8htJZeoZcnDKUVB2LIjyUeby3QNXFfXTwsOCCTTJCxJvH1Vv8dmOwcr2tpusvkQOmGL85As=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=hLGze/f4; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1743533249; c=relaxed/simple;
+	bh=mBCYXSQzPCHEy+adHOWNkk1O6Gusju7AdcW8znQ4V8s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=G2PpNsQym52RfBlMJYTqjSbgobn3bofkk+tAcnXA2isvS0ndG3kbGORXO2yG0oHSPOT6IqDzJg5fppiN66oBXxQXxqmfqtxk7yaxuGaUMl1xdBWPydMGww83FGjLD2zLN9IfSnlXLD4cYXYqxu3prwQYqNiu6xJRUu1QP3kEM1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=EeOWB5FT; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="hLGze/f4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1743532525; x=1744137325;
-	i=johannes.schindelin@gmx.de;
-	bh=INcQ3ZPsVE0tHLGHFfVtN89/RCw59dSZaMBVRIDfhBw=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=hLGze/f41mxc3nDIOxG2wC9pvLFdJMjXcWeWIcXzALYdrPHLjXpCFcVYjLQ26N63
-	 mX1iIsOxZdsyQdtylk5ZOUJBGiyGMPl5neHxXN+WOyJEPUoDK4hLfDX+FcAU4cF3x
-	 saaMtVI2oRtdtjbSSJa6sPWabj9CvOiod/JVEgNwquXzo41esKk8/RvpMo1AUOTX4
-	 i3DDl0vm6CkOo381MzHByuQvDZ7ah3BFB/st06NRAy7qrNna8yHFY6Riu829kymOx
-	 dg2GKvhmILuDRBQ22RZlZIQa+o8HmyomX8QGUlSCbApxdixv6PLH2VcHnacoGZzhh
-	 N3ecf0YwNB9EHPrOoQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mi2Nv-1tVHOG2vuj-00pI7A; Tue, 01
- Apr 2025 20:35:25 +0200
-Date: Tue, 1 Apr 2025 20:35:25 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>, 
-    Karthik Nayak <karthik.188@gmail.com>, 
-    Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 12/20] t: refactor tests depending on Perl to print
- data
-In-Reply-To: <20250327-b4-pks-t-perlless-v3-12-b436de9da1b8@pks.im>
-Message-ID: <4d461a62-9cf5-c64d-cd97-c70ef53afbac@gmx.de>
-References: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im> <20250327-b4-pks-t-perlless-v3-12-b436de9da1b8@pks.im>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="EeOWB5FT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1743533233; x=1744138033; i=l.s.r@web.de;
+	bh=58nV6bs8Vck35RZ20rqL5MPCsvkugiushBdp4srdVh4=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=EeOWB5FT+MfxlJurC7E/ML/JKpT645SsVZZue5xeXaksy8trBFaWlsQD2+9amsFH
+	 PNfuxe8T7XMp7ITKaWOu799R1000GLB2y9HNn+jZtpJV3PTyBF1aD+/Qxj0mX0F8R
+	 tGNskFGyzatmB9GBYigxIx4FfzXwnvFTi1VnrKCzeU2rca18i7Ia0lGCmpAVWkWPS
+	 GjT3T1bTDyAeoRyHbuJckbcIwZ2fZAtIQNp1AS9yXOLgnVm9qBEt2Ta5Mgb7VfzJq
+	 BUbPBMdvsLJBwsGh+xuvNfuN2INxMKrCCnnFU478jLh3CKnaQb+N5rBorQynNXfpF
+	 +OoXFyUkL00iF81oxA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.31.75]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N7xeZ-1t5TNK1ist-00sjr1; Tue, 01
+ Apr 2025 20:47:13 +0200
+Message-ID: <f6c7c92b-931c-4be4-8d76-9d4ed147e983@web.de>
+Date: Tue, 1 Apr 2025 20:47:12 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:GLFCsnYMDiK6hu8IJQ+dpToB13oLGa3LQRbfAXd9PLXLcrJEAR2
- AK8ubmmdrOlgHVkQT0oAuQtCKQ/4RMwqJxPKrXuPQOyyfogZrEOSnmBou+KEwEcIHa78e4h
- QVlm8YdVTtf2UNXjixhokS9yWuv0SSYKeXLOOoXvUqdwgY1XR2hmJ6BD8hHm1xDENYRE/6E
- +2jePZvmC+X3Bp7o9I1lg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:M6nTMYSlqjE=;MTzrPEQTNVInYrFpzDGQjcK4MYx
- QqP+/0Ze9+ZGbgBv9kLFypzIqnN7cCfzHGuogmI3j0EWrUvRJEAZK8n1nol3hyW3D4+4BgPUG
- /TrnBgTVhl/c1C2d+rFYEV7k/lorROmUW4qsrmV32L50s1kQkRZIRkKmACNPf4X5a1zep9VA4
- REb0V3aBj9IHFjbbRaQLJHqNbby1g+C3oW6z0AX/wWI9EwJz21BF9KXse9j98Nvu8seW1FDyV
- bcDWuWl1wcFPW47fpF/64GEYx2qLu3qWJ9yJQANFBSh5kBwhR8Rf0ybi3iwJYc8vY26Zc+9ZY
- /71STPd5n9Y9C7l5PsnKywRAyvtcZAS+NqtzHyz5rGzfpEhb6iSvKs32nYpwKtQnwcK0PAp+s
- jxRyYeqlv/OLHTAbbnZ7op131cnGgS0eu5rga8ylmxyc4AmFBpVLMjeShvld/wNtbnspvVTBv
- FIaGRMGpv4sw4VfivAp85FaGP3eUgaE1zQMZVjSP4tlxY+zN10K3Y2gwn2aVLZvVufyV1+xte
- RdbgQhhXB6Yvbn904XKih24phOOIjhuYPuuNxEuJHBvO72JqLmWP5lBpMmvCgjLKTzYcegelL
- zBKdT2cu6aieHmnHmoGFbNOgBawD4VR981VsjX/fhZ0TDHRApSw5CUWXvwefrjNs4fu2zcweE
- msZNvmIkoGBjxqWzyuj4tpXwBSFUhZ1Tyiw1kMKbWeO3/HWxQh5po0bfAWALH2rd0kKp9qXND
- Op4APHZPYyUXpfozgnhK+ZRWmg8uJMSf90oatFTlw56Und8UCOO9IcM420wwzDbWDCTs4q888
- ybo7j1TKCQz7GgO4oMyqeqUlfZ3T8dyzmNAr35o0ANFlHyOdse1UUKZCt4HhjvEPmlf+aQRkq
- sa4l7CG2eVEzcAHDPv8UGKKVI5DcJ9wHCFGF6cziqF41HrKQvsF6a1nJc0UW4nZOXSJctQk93
- AdkDvLiW0lsq4zm4v4GDSm/MTeCzepEooIxQc4utXNJwjlHOCr92v0VEjSMpAQ6cIbd408T+X
- 2wfG4/4UsPZ8kUSzZoZLoAm/R/9DVDQcxm/OaxJ9cce7eFsXVCCsKRClmo++XXf9k3SeFmiSE
- lyx8/KPLTS15EiX50njbCIzw+gO8cRBxpo7LxhhUTA/QmCBkao1hRHvL9g62dZHE7NFPURIyv
- GsVJb0xAbvWAZxg6Tp/4c0TU8gXilScHP2WhEkSbfmaPqIDn8Cvc8FjWdsjWMUr43948kC1B/
- IyZrvTLCJgxIYIbiw7eQIk7otY4ZTnI/YRYcjr2PRf5GgXilVqeEWsnHXQAQ6Ney4eWBjVmQw
- Y88V8rCjg4C/Fh8lSeopKXia/JxpPehOHZ9w5PHwLIkZvaXk+kJziCfnYjKnGc4W8k9HppsNc
- oodz6u1H43FPuggIAfDiXhYsyJxAbxboK3bnfvqd0jXpz4v/3sFPk/vVXUjijZhogHoLd37mc
- bJRWB1I5oTY5hYeesPjEYNZaCnUbavLw0+cC20wndwsynwTNh
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] parse-options: introduce precision handling for
+ `OPTION_INTEGER`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+ Todd Zullinger <tmz@pobox.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?=
+ <szeder.dev@gmail.com>, Derrick Stolee <stolee@gmail.com>,
+ Jeff King <peff@peff.net>
+References: <20250401-b4-pks-parse-options-integers-v1-0-a628ad40c3b4@pks.im>
+ <20250401-b4-pks-parse-options-integers-v1-2-a628ad40c3b4@pks.im>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20250401-b4-pks-parse-options-integers-v1-2-a628ad40c3b4@pks.im>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:VdF8gT5byeZZ5bck8yLUkpSdjEaT6gn1ibu3VMI2XpVF83icx8r
+ F7EuZb4FUK94WTd0ykbwIRghAYW/1lzJuPWxd4BjVR/s8dNeYnbJ8HFiqRbtxiSFN1U6RNh
+ fdr+UzgGRuw1RGi1KLTW376u72UXZfrgojL5soTnx9HvdT8UV0cQvGdpKLlRY6EQsrj2/8B
+ 8Ghy9f31xvLyympMzbmPg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:0xdepISKICg=;eDI5wNpFSNzZKAOfEw+/0NMLybK
+ hWeQhrD4pYRUfV6HQ3MiziUIQ4qfcH3/Y3zMMTb5+3uvYcYdyrWKXYAQijA69CyMpUGsYOLhe
+ TrUGxbpNWT2FLacywJRLMUnJfCI29+fmtDMmZHabVKIf/ZZv64z0poiANggELmLFuDANduFib
+ sZERMt/cLHfW5XRTebiDjzdfWYuxxCAqhH+T1335I7UDnaJ6IRlDCloGK+HDMeQCedDJpo1rT
+ kJlY3tbBIEDuZ2v2GTbVfCx6AMnC7YKG5tBQqiO5EVznavK2bTzK3e6t9YTSBGNcn6kACDShB
+ YNv32JI7YXA/P8JicaBPtvlTU1RyBQStCdVSYfmy/gBaK7E9JbsbwVYsGe9VCTz6E+hpHMoR1
+ ul/uu/ZKbAHHGKQgtyzCVWfkv7dl2fG/7kwEhqtyUknGrwVWohaRH49f80qM1Plti9uZyFrNu
+ DMX0juIBJu1xGidRu/SGRqe6x8fzOLYLJw8vuOCRTse3y9svL9QQ92GhvLtoT/6vEYOtzxTgD
+ mkFXI8rnxdDi3Reaqutq8AT4kR0iD31n1n7SdBKJTXDruw5TEzq2vq6GvDS1ODp+kXjfvcbFy
+ iO721H2BDHLbUYtLljnl99LGKw9rURy4UbaeBcWQduHhj5+GKRQ1hwIKdwCCnIf9l9T4w2nQ9
+ 2F654dI2JMiV+HefF5BjvX0grMACslbThrluY8nbNTMXDutjDM2Ae33jmoxxHvF3pmPnVCall
+ nGVLbzfhoAQGLr+O85bEQA/zFhY187dGi+F2FhjxUY/xW/L15BeqWy3USDbcJg9friTB2/7Of
+ amRzgmw/ivhBSQDXEWHfvqGgJ9m9Ks58STeobTnbUt7O7h2Yd3d72Q5Ih1TheyKDIIKdPlks5
+ EuriDrk691bubETX8WEvml4IwXcvqf54pOWen/GLPAgiXKJk7/T/9ncO0mqD+4weQNethpAup
+ pvYpQtjI/lTEkHvmxHAn9NDyRXwH21bdUj2q922WkPDDW2y2dJ1LI2p99tmE/UXH6GlZWjMGc
+ FMdOq8Sbjp65HwttqG5fpISF2UGBV9KlbAalTSgU1sO+vaJr0pklSAZXKdcLtLeG4vs4FLPzc
+ p6zybj/MKwCMTm4rzN3f2w4qDBoOTyuh+CHeWBCuUYemGSRt91jPwvDABQdFjGMVb1Pwf9SWn
+ 5MckQme+0i2AN8XiP+NS7cf+RMflfJxr45xLMz7RiEPuX5eEKKvOIcHF61BK6SwJjtzJ7uan9
+ qPiMHOo7JHo90Ng/2y9i8MRZHzWIcL8fkStRQF6umEAgZs8oPYw8kpVuG2y1zaVnsHtu2SBy/
+ Ay2v0ozxaHwd3htdV5VAEiE8cUBz3/+o/ANfwrLYVo1sC0cIuMQUQCLxuaeYZR0SRdVvPlE/n
+ lbCAw0U6Nvz/Fs8rPEi9m5U1EuCplJLxW9juMVKcfaM6vDUHrKAYN34cBdXDV+0MMKrSbjAxs
+ KEa69ASqvXVLWEYbh2gJsYK9XUgY=
 
-Hi Patrick,
+Am 01.04.25 um 17:01 schrieb Patrick Steinhardt:
+> diff --git a/parse-options.c b/parse-options.c
+> index 35fbb3b0d63..dbda9b7cfe7 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -172,25 +172,50 @@ static enum parse_opt_result do_get_value(struct p=
+arse_opt_ctx_t *p,
+>  			return (*opt->ll_callback)(p, opt, p_arg, p_unset);
+>  	}
+>  	case OPTION_INTEGER:
+> +	{
+> +		intmax_t upper_bound =3D (((intmax_t) 1 << (opt->precision * 8 - 1)) =
+- 1);
 
-On Thu, 27 Mar 2025, Patrick Steinhardt wrote:
+Ugh, how does this not overflow?  The macro maximum_signed_value_of_type
+does a similar calculation better.
 
-> A bunch of tests rely on Perl to print data in various different ways.
-> These usages fall into the following categories:
+> +		intmax_t lower_bound =3D -upper_bound - 1;
+
+This depends on two's complement being used, which is bad for purity and
+portability to obsolete machines, but probably OK in practice.
+
+> +		intmax_t value;
+> +
+>  		if (unset) {
+> -			*(int *)opt->value =3D 0;
+> -			return 0;
+> -		}
+> -		if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
+> -			*(int *)opt->value =3D opt->defval;
+> -			return 0;
+> -		}
+> -		if (get_arg(p, opt, flags, &arg))
+> +			value =3D 0;
+> +		} else if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
+> +			value =3D opt->defval;
+> +		} else if (get_arg(p, opt, flags, &arg)) {
+>  			return -1;
+> -		if (!*arg)
+> +		} else if (!*arg) {
+>  			return error(_("%s expects a numerical value"),
+>  				     optname(opt, flags));
+> -		*(int *)opt->value =3D strtol(arg, (char **)&s, 10);
+> -		if (*s)
+> -			return error(_("%s expects a numerical value"),
+> -				     optname(opt, flags));
+> -		return 0;
+> +		} else {
+> +			value =3D strtoimax(arg, (char **)&s, 10);
+> +			if (*s)
+> +				return error(_("%s expects a numerical value"),
+> +					     optname(opt, flags));
+> +
+> +		}
 >
->   - Print data conditionally by matching patterns. These usecases can be
->     converted to use awk(1) rather easily.
->
->   - Print data repeatedly. These usecases can typically be converted to
->     use a combination of `test-tool genzeros` and sed(1).
+> +		if (value < lower_bound || value > upper_bound)
+> +			return error(_("value %"PRIdMAX" for %s not in range [%"PRIdMAX",%"P=
+RIdMAX"]"),
+> +				     value, optname(opt, flags), lower_bound, upper_bound);
+> +
+> +		switch (opt->precision) {
+> +		case 1:
+> +			*(int8_t *)opt->value =3D value;
+> +			return 0;
+> +		case 2:
+> +			*(int16_t *)opt->value =3D value;
+> +			return 0;
+> +		case 4:
+> +			*(int32_t *)opt->value =3D value;
+> +			return 0;
+> +		case 8:
+> +			*(int64_t *)opt->value =3D value;
+> +			return 0;
 
-It might be even more elegant to teach `genzeros` to generate streams of
-bytes other than NUL.
+Do we even need all these sizes?  Or can we whittle it down to ssize_t?
 
->   - Print data in reverse. These usecases can be converted to use
->     awk(1).
+And for which quantities do we need to accept negative values anyway?
 
-Or, in one case, `sort -r`.
+Ren=C3=A9
 
-These changes all look good to me.
-
-Ciao,
-Johannes
