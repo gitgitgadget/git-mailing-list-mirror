@@ -1,50 +1,50 @@
 Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DBA1DE2B4
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 18:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C6920E70C
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 19:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743533811; cv=none; b=Wdc0tPyNW64p5Q50fwZWSmik5BiextuU+/7CX7WBTitCyKL4XR6gtQGEDN5sTQgEr0brqe2cQ48/mXT1wdlIlZdoGjrzXiml+OHILbkNizRW3KcPx2XddCDlSvgwS5+EsnVbaU22BaGAIwlKOqpeAA7wb1U64qtNO0deA+Wh4SA=
+	t=1743534293; cv=none; b=WBVFQGc0J8H904wuHoo7Ndi8LH/PLkhndKzCD/5Zq2A/aEFPwzCxkPr8Sr4fIHMdkt+7OurXoyzoAHOaIZoGj0i27WLI734Ya0NYZlOBC5V7KiYN0mfU9J/LuxwlWPy9EF7UBHY8J364sgMV+xjn75oxJ+CPFu1Ejb0kJlcOFtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743533811; c=relaxed/simple;
-	bh=0yZcYe8pmVw/nnOwzJEDk3tdyBLzfyxQmiIrek5AYcs=;
+	s=arc-20240116; t=1743534293; c=relaxed/simple;
+	bh=FWrabmpkxlqnljI5gvSiBYxzomujeWUGCKz6xykWmg4=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=FO8W5OOKtz7YuQC3Og2uS4ruvHVMOeFg8sjkBIgcZVhUCjgBu+9m/T2FWb3hhF7Oky77p9fcz8IML9RUfNwOqCrpyMuNqij2CZRy/H4ZbWsl58BJYNQiGq67FU9ig5M6iSvK25Nu3M+9FqWV10lApXYIxITchcAc0Jwf2SM8hzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ASi7WO9A; arc=none smtp.client-ip=212.227.15.15
+	 MIME-Version:Content-Type; b=k9bOWNQlY4QDIVZN3WaF4SPrZO18E8wkDKvD/sgda0Ja/26aEtOWKLF9CcC3Q5mwG4ZRqMyk4zeTL2++Tw6riECco+V/wGufhLer3VjGOvANvVNXlCDdSAzdkuCwxL2rtkmf30aIP7ciwLqHBGGaX1nZnDGtXkYBGKxHtjzF45k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=otNmcyXZ; arc=none smtp.client-ip=212.227.15.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ASi7WO9A"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="otNmcyXZ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1743533802; x=1744138602;
+	s=s31663417; t=1743534284; x=1744139084;
 	i=johannes.schindelin@gmx.de;
-	bh=/MOjZPQLBHdND7bQ3c3p9KeiCP/GYOGKXjw/KAkJJkE=;
+	bh=ztcnDUrJ9pr+k3xjv3Su17Qqiba08ikRSftvgognhCw=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=ASi7WO9AomOd4qQUjzhqmWZEGG1votknk6BtuI9cgv8IpgR1OFLP8rXZxUK+res2
-	 nWpwW2oX7y09yRIig0F3CbjqW5hEi3rNsQKv1IqN5opSNqWHG8DAHIP11Y0dBGcsF
-	 wVYpZiyvQGYbn77nGi7rM9Olv4rsVmgBcq+EsUfLAs8hwDAuiRKp3qP6pHlGQ/tko
-	 c7OjA1kzXss5UBLwq/TI7YabvZ2Lda51bBYklKnaLTravkuRm5xXclB+jNlJt216L
-	 x+1SDvm9PnCuaJaZ1rdIcMihwuEUsVh7c2mNNozoV5F63aAngpz/4MNx+eS4xJhfJ
-	 CWO6fWV1Aotza39Kaw==
+	b=otNmcyXZ3aC6cnn62jvCHk4yfWKAVBhU80CJQMM22Ab3R7XRLkjq1IdwYyTvLR92
+	 ceQFU7MZHzzaQmyA1PsBSK77QZHxFz5/hTCsXrgMOzCMrK2dzO+STT5uw61mj2tzk
+	 rBfM3qy28Wz1+bgObZ/7zuzPgN85FpVHLaw7wn3l6nSw0/Y5zh3yDseTqV5fLrQHB
+	 4i+D5yxEoUbkrAYgMTBqQyk5ahd6GReEkNPyhKc5eKHTWIAAari3bI7T/mshRav8M
+	 UCEZQsji/RlWuo43FAW0LZAeDrOrPJlGxzzZOxOJI28uZ9oTg1b4QJ2yElHZe+kHM
+	 ioxYbK2AqmO3WBnLMQ==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M8ykW-1u3W0t44k2-00321h; Tue, 01
- Apr 2025 20:56:42 +0200
-Date: Tue, 1 Apr 2025 20:56:41 +0200 (CEST)
+Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mi2Nv-1tVHyv2x73-00pI50; Tue, 01
+ Apr 2025 21:04:44 +0200
+Date: Tue, 1 Apr 2025 21:04:44 +0200 (CEST)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Patrick Steinhardt <ps@pks.im>
 cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>, 
     Karthik Nayak <karthik.188@gmail.com>, 
     Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 14/20] t/lib-gpg: refactor `sanitize_pgp()` to not
- depend on Perl
-In-Reply-To: <20250327-b4-pks-t-perlless-v3-14-b436de9da1b8@pks.im>
-Message-ID: <c909b89f-7432-2d35-cfdb-0de9f94a7281@gmx.de>
-References: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im> <20250327-b4-pks-t-perlless-v3-14-b436de9da1b8@pks.im>
+Subject: Re: [PATCH v3 17/20] t0021: refactor `generate_random_characters()`
+ to not depend on Perl
+In-Reply-To: <20250327-b4-pks-t-perlless-v3-17-b436de9da1b8@pks.im>
+Message-ID: <92fd1e8b-4790-0c81-409a-be81aed9f290@gmx.de>
+References: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im> <20250327-b4-pks-t-perlless-v3-17-b436de9da1b8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -52,153 +52,106 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dhLFloEEiQSv4fz6WmpeCrCdTi5GdHfDwnTvrUjkLDfx7gQEfRJ
- nz0GzKdwd5JU0+OPJqyFD4lSGO/dle0fnISUpNHFT1tfsaPbvpA77BtZ7Lwh9qMgLNUQ+Fk
- kKunqRaS4REyOQFX9bbe+HIgI6w/gmSb/C//TZiYvWBh0BWfHJ+hEozKejdOvCCmeA/vViB
- Y9h8ikymzvpiLqzofovkQ==
+X-Provags-ID: V03:K1:W5gZFHMvyRHJG4cHfOp9QTjsdiM2SltlcCkqxBpx9SJ+G5cZHOh
+ +GlmzZZc6jGGQE1C0YYack+JaTPvfQVy4H1oFIOHXZrXbehTWLBLUasqIwLAjImEAb84TWQ
+ R4AxSL1MPPT3fd23dVITaBBeprHj9Aq/wmgRs2e5cgYb2TvFKJ4z47JQd47lEt/DNU4ggwW
+ fCbNOpGIe51BsXOhBOZ9A==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:dHfeZnAHnbY=;mKT4aHT2knovic1aKEZwM2WajqF
- SZmuHXoRaTfC7OL6ICi6GOGpZb6NMnXOtVg2chxVdSlFXmHebloUMc7FKe39NvlqKPQhrtuHL
- 2/CpWKNrd5q9Yu4ZGphs7IUah8wWQmHlWtg1nzjfwJEBDS28N3cAOm1sgPgEreOc95yvVnNla
- MPMviMV6ys7zEC/g57D6tAZ6MniX3ShyZHg5WbvBh/TJHWZkTsRAKYWF0hmYLdgj6+Aaer5PQ
- h+lG8rMJviVjOo1Lyh6Z74+IUWoqSQPGUkr29A8AWC80wosSqOZThezRzblkaj/ZXekVuNKvw
- 28UuB7JkwdYpVKxK1ciR9sj7/cZxR4ybzGs8IMqJCVvF8lEJKB22gufDmtJFsZp8eFF7+IJx1
- v9lpz8+vYmVPW22hyMVTpv7vytVfhLfdCER4C2I6HGibAE4hmJm6sIhMm/0ZST8iKWnJK0x4e
- UUv4INAqOVzBLOTJmNE/9/TE/FYJNE0AgNVKSgxQzy06arDcEZNS6JlPRz1+IhN6BjpdLleFE
- s2OOPnBbx6hOizptTQMxUxExtyWOsp2NXn4KiajhP2+z5OM0YXr1a+tiVBH8/M0WsrrJJ7En/
- 2B4b7ot5Yq3ae/CefBjyqnWc+JAnz8fUXRybKYgmFPYzalWxJk7e/Uf/EMDD22Sbmo65Zy4IB
- ZmK9LzQG9nHkaHzd5RrWQEeTDHJ64P74T2BFdgfH6mTTBXessUV1y047/IHYPZYQVJ8xt6tVv
- zJO17EyXshNOcQh1rH4ZbKGq1rwiH/jwD+Mhht+zU2kW7eTIZ8x1JqSqe6+zoY8OoOsqwasGf
- jJgoG6SwwDJ5WZFVTFw0DCfnRXSB/c4HiGPwS7c0iNyEnOzfKYLEaKY8tbBbsOCt/qmCp5/YJ
- ny4Uf3bkpvMw+b/4utHmeT2xTOpdzggL9dUlrZvmgALy/NUso05hvaOK20OFhvtQzAXgaZ5DI
- ZKkK/weB8JBgDVqjC+L8NEypxfRaswhAFT6iN6C34gJn1ei1Qnfq4gHUVdJxsRcEouRyj4bn7
- nO1GY93GNXGCvvsFQgefmwdW+noeCHtGpaRfTtLtfHJ5BW8dkogIFtoaClA07z3fSSLo6KMpM
- CjQQBdcGSXfsaHmZgbEgiqJDQqjKqii2KHdjCOI+WkomX2UFk6LWuk1p+iVbRlkBSAe/9e8sB
- C36Forn++YsbcaJQVGl6YZKfV2wyh4CpA7uiJeqzmTnlml8MHV/gpYMznKOyKVPjWdQNgx0UX
- cmRQIb2fk8BCvDhtYZPEHfRsbE8+BO7unvZCPuQz+pT311C+YgYU7VfgwNUUOG+S8siQQAPJO
- QnOjVaw4pz+dzkfIZBg+FJRNLGLvnGZnHWjwi9VPAa0ixY1vRKqiNoEQVPwPFcAIAXbphXr+3
- I9iMw85yB42VFIL/ZTYbBWOVvbb1wZ+x46r+WezZU7VwykxhCExNfRXiF377fhq780ewh6NB7
- 7q9/glIjUKbN8hQjuQk0971Zfa16gdPCUHylG9hUjl9vz9x26
+UI-OutboundReport: notjunk:1;M01:P0:PZ8/v2M/OEs=;v3XDKDQyj4vjqF3hUzDHfnNdK36
+ jYTZkxOgUrUvSU6Qt5u0BtR7eyDtwsTqKuyFoIwGcR/eoJyovIe9EdrGXTMB9VC5aTWdtgyoa
+ ZY2frEcre3Z2uVq079LQiky7V8tk3DW0pP1S1cVylqgf8HAGlQD6yVKSsSPRapSCdS7XD3K5P
+ +wmAHPVxpkMiPMwNA9k1Dx39tCjfI/kShto656HHmbNV7zHf7qtyJNbZjwGCDbDC9L4WTgQV8
+ a9Li9PDbmLAuDg6mxidlD+A+KV9yvqHZeXvpP9uuzTfahpqs/fO+Z9dtcYs73Uoo/eyAjB9QL
+ PrGoMSj4TNAdUw0ELU8MwJwj10kxh7tV3iJ5u32+UUcIRir5afBO5qXIDY1jS7hDgKS49cSCL
+ wepUvfTN1lOmchP4Bd2ow/2pPONUPmGYsc+JUyEfawD9lba1gj/iInUFx5QpVLGcqgh2hA3xO
+ K777nnsfgIgInsxX00tFxkzCmhtW0mOiHudbiQTQW7jZP0nN/eIPLT5PTGn7KoQ4U5cPrG9Em
+ o2cbWXIGXXBhxb96D0PLkJDrJ12jm6YHQFy4hGuS/l2/7dCi5UToiGCOfKmXctTC0l4ZNHVzl
+ 2F439frnn+PseDVUfcEBSdL395fI+o3NeL/LX/rXMNdvwjw411s+Ot8LCX8c6Z7EuL+LY2NXr
+ +g69jmrYVVrPyEKRHP/Vcs7VU5p35X+6pG/ouWWJ4EOGSJPmR66ysx6MQk8ZynqF/cbA68uED
+ 6eBcsRQo3sZICSBwgLQvEKWkmcsMEEPVJUgqE/VmubmgdlDb4Q979b6ETdogHSc7j7YZq2Fyh
+ Ew7M9d1hVN5DWalBKcfHCX+3MSZu9J1tXwgEmQMGvhy/njfORrzDJA9F+EtUVSECVLlPfpD2C
+ 4IZWeXme3QAAzo0V7WGOU8z2Dt+PnXtLkpNA4UZoeQSnBl8Fp8I5EA1rjxkFGrqgylMJYVNI7
+ IRbSMO1EH8dkiKyvTOVNAfRNghRTjjUDbDmQQin+0bnwdWU00drDuhgowB0wTFMujdx0K396a
+ G1zZnllb0H3NnOz5mz3K0txIRdlTXFDh9HPOwjsOMJVQToGaVTJ5CgoVvI8TZ89p5+RYf7KjD
+ 48pdxQTCbEBfEANnNpUM4Z0XJ1PwDZS7f0h01NDUxwicSJgo5GkpWqnPtwucOocjtHjuOV1WI
+ qsujhCGH7c3Ff6IcdrfE9K8T3ueisP2K11PmlqGwK4QHHvw6NgG1tHn0rw1hW3SaN429yXYbl
+ DLotIKfaoNOHmPqmPciugjdsTJNF6S8i0Gh7LSP+MJdgMmE+on6azwDFcYOECB55/irAdhgl4
+ c0mGw2juvc1WdY94BQ1U5FBlDCf+dI9L+Ukm6A0/ZDoV+rzN0+9+ve79TYzfspDswKCvG8DKn
+ j/rV1GQF5dmJ/pv0UPBx0H3OlOI/dFdoJjQ2jdxCuQ3b1gkk6c9OGuS8626TssAA3FTk3NZdA
+ kRCNcWw9enuLfdnd2kumqjQSRgXUItk2KeiLTJWivSh47+7nF
 Content-Transfer-Encoding: quoted-printable
-
 
 Hi Patrick,
 
 On Thu, 27 Mar 2025, Patrick Steinhardt wrote:
 
-> The `sanitize_pgp()` test helper uses Perl to strip PGP signatures from
-> stdin. Refactor it to instead use awk(1) so that we drop the
-> PERL_TEST_HELPERS prerequisite in users of this library.
+> The `generate_random_characters()` helper function generates N
+> random characters in the range 'a-z' and writes them into a file. The
+> logic currently uses Perl, but it can be adapted rather easily by:
+>
+>   - Making `test-tool genrandom` generate an infinite stream.
+>
+>   - Using `tr -dc` to strip all characters which aren't in the range of
+>     'a-z'.
+>
+>   - Using `test_copy_bytes()` to copy the first N bytes.
 
-It's my fault that this commit message is no longer correct because I
-talked you into using `sed` instead...
+It would be conceptually more elegant to teach `genrandom` to optionally
+output only lower-case letters. But that would be admittedly result in a
+larger patch, therefore I am okay with keeping the patch as-is.
 
-Sorry,
+Ciao,
 Johannes
 
 >
-> Note that we have to add PERL_TEST_HELPERS to a subset of tests in t6300
-> now that the test suite doesn't bail out early anymore in case the
-> prerequisite isn't set.
+> This allows us to drop the PERL_TEST_HELPERS prerequisite.
 >
-> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  t/lib-gpg.sh            |  6 +-----
->  t/t6300-for-each-ref.sh | 21 ++++++++++-----------
->  2 files changed, 11 insertions(+), 16 deletions(-)
+>  t/t0021-conversion.sh | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
 >
-> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-> index 3845b6ac449..937b876bd05 100644
-> --- a/t/lib-gpg.sh
-> +++ b/t/lib-gpg.sh
-> @@ -192,9 +192,5 @@ test_lazy_prereq GPGSSH_VERIFYTIME '
->  '
->
->  sanitize_pgp() {
-> -	perl -ne '
-> -		/^-----END PGP/ and $in_pgp =3D 0;
-> -		print unless $in_pgp;
-> -		/^-----BEGIN PGP/ and $in_pgp =3D 1;
-> -	'
-> +	sed "/^-----BEGIN PGP/,/^-----END PGP/{/^-/p;d;}"
->  }
-> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index 732a4d3171e..5db7038c417 100755
-> --- a/t/t6300-for-each-ref.sh
-> +++ b/t/t6300-for-each-ref.sh
-> @@ -10,12 +10,6 @@ GNUPGHOME_NOT_USED=3D$GNUPGHOME
->  . "$TEST_DIRECTORY"/lib-gpg.sh
->  . "$TEST_DIRECTORY"/lib-terminal.sh
->
-> -if ! test_have_prereq PERL_TEST_HELPERS
-> -then
-> -	skip_all=3D'skipping for-each-ref tests; Perl not available'
-> -	test_done
-> -fi
-> -
->  # Mon Jul 3 23:18:43 2006 +0000
->  datestamp=3D1151968723
->  setdate_and_increment () {
-> @@ -1215,7 +1209,7 @@ test_expect_success '%(raw) with --tcl must fail' =
-'
->  	test_must_fail git for-each-ref --format=3D"%(raw)" --tcl
->  '
->
-> -test_expect_success '%(raw) with --perl' '
-> +test_expect_success PERL_TEST_HELPERS '%(raw) with --perl' '
->  	git for-each-ref --format=3D"\$name=3D %(raw);
->  print \"\$name\"" refs/myblobs/blob1 --perl | perl >actual &&
->  	cmp blob1 actual &&
-> @@ -1442,9 +1436,14 @@ test_expect_success 'set up trailers for next tes=
-t' '
->  '
->
->  test_trailer_option () {
-> +	if test "$#" -eq 3
-> +	then
-> +		prereq=3D"$1"
-> +		shift
-> +	fi &&
->  	title=3D$1 option=3D$2
->  	cat >expect
-> -	test_expect_success "$title" '
-> +	test_expect_success $prereq "$title" '
->  		git for-each-ref --format=3D"%($option)" refs/heads/main >actual &&
->  		test_cmp expect actual &&
->  		git for-each-ref --format=3D"%(contents:$option)" refs/heads/main >ac=
-tual &&
-> @@ -1452,7 +1451,7 @@ test_trailer_option () {
->  	'
+> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+> index 4a892a91780..bf10d253ec4 100755
+> --- a/t/t0021-conversion.sh
+> +++ b/t/t0021-conversion.sh
+> @@ -20,8 +20,7 @@ EOF
+>  generate_random_characters () {
+>  	LEN=3D$1
+>  	NAME=3D$2
+> -	test-tool genrandom some-seed $LEN |
+> -		perl -pe "s/./chr((ord($&) % 26) + ord('a'))/sge" >"$TEST_ROOT/$NAME"
+> +	test-tool genrandom some-seed | tr -dc 'a-z' | test_copy_bytes "$LEN" =
+>"$TEST_ROOT/$NAME"
 >  }
 >
-> -test_trailer_option '%(trailers:unfold) unfolds trailers' \
-> +test_trailer_option PERL_TEST_HELPERS '%(trailers:unfold) unfolds trail=
-ers' \
->  	'trailers:unfold' <<-EOF
->  	$(unfold <trailers)
+>  filter_git () {
+> @@ -619,7 +618,7 @@ test_expect_success 'required process filter should =
+be used only for "clean" ope
+>  	)
+>  '
 >
-> @@ -1482,13 +1481,13 @@ test_trailer_option '%(trailers:only=3Dno) shows=
- all trailers' \
+> -test_expect_success PERL_TEST_HELPERS 'required process filter should p=
+rocess multiple packets' '
+> +test_expect_success 'required process filter should process multiple pa=
+ckets' '
+>  	test_config_global filter.protocol.process "test-tool rot13-filter --l=
+og=3Ddebug.log clean smudge" &&
+>  	test_config_global filter.protocol.required true &&
 >
->  	EOF
+> @@ -684,7 +683,7 @@ test_expect_success PERL_TEST_HELPERS 'required proc=
+ess filter should process mu
+>  	)
+>  '
 >
-> -test_trailer_option '%(trailers:only) and %(trailers:unfold) work toget=
-her' \
-> +test_trailer_option PERL_TEST_HELPERS '%(trailers:only) and %(trailers:=
-unfold) work together' \
->  	'trailers:only,unfold' <<-EOF
->  	$(grep -v patch.description <trailers | unfold)
->
->  	EOF
->
-> -test_trailer_option '%(trailers:unfold) and %(trailers:only) work toget=
-her' \
-> +test_trailer_option PERL_TEST_HELPERS '%(trailers:unfold) and %(trailer=
-s:only) work together' \
->  	'trailers:unfold,only' <<-EOF
->  	$(grep -v patch.description <trailers | unfold)
->
+> -test_expect_success PERL_TEST_HELPERS 'required process filter with cle=
+an error should fail' '
+> +test_expect_success 'required process filter with clean error should fa=
+il' '
+>  	test_config_global filter.protocol.process "test-tool rot13-filter --l=
+og=3Ddebug.log clean smudge" &&
+>  	test_config_global filter.protocol.required true &&
+>  	rm -rf repo &&
 >
 > --
 > 2.49.0.472.ge94155a9ec.dirty
