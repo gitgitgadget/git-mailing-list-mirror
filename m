@@ -1,63 +1,64 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C5E2045A3
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 17:01:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CE220DD4B
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 17:01:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743526867; cv=none; b=jnJ7rQxrovbk4j21tQHj0hvSx/A05OgaXWvRQLeaBfJLhvnAOGhTC1hZg3Nif4hpYrrfS6At9OODgW5zZhvu4FwC4ANG2AqbppQpOHRGI3bSBYHQDrqmlukTbXOX8t+/T7kzC2jF+j6dtLxn2rz9iId63r18UMeJcRLQmpK5q58=
+	t=1743526868; cv=none; b=p7rAIXzv0AMd95L0vjRJ5PlMnP9y9AQ0T9IInZVSA4YC6DCUXCh+NNhKOetj1brc/rGxKRGn9diDynFNEYZgi29x+3PscJN/iIcrX+qBVuhHfHFWRQ4AP69rWssLnreRw3LVnDB4nAGZ5cXmj/QDuYiZxAxQz1jV8TudpOyaEZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743526867; c=relaxed/simple;
-	bh=3FwfntlLxHqrY9K7KsMuxfPvnXaY7FstBQ1+/hAcUmA=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NS5rsPP7BdARKzZFHKnDscqaAKZ6KkCOggo1ZefePC6quJOUrnemCozd1leRx7e+/OlfTDLd/NdR1EM4DluWBaMzqhR7ndqPpqxfLqRDSpU9FOL8PfCtGKC6J5L/wlSwUPnXDi1KW4aWj/cw4KRJtQjwBjUVnmu4D3No2vNNZOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cEwcEC8k; arc=none smtp.client-ip=209.85.208.47
+	s=arc-20240116; t=1743526868; c=relaxed/simple;
+	bh=luKAgjPY1D9UCJAjiEQ7IQOM4N/O7PpZsdrd7JyrVrg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=fkceMzTBRiGTzEnbiY5OD2ahJ3qdpQbUl9bldu3DUOV3k98iIrujMaJHnripZR0FP6sMZ+bp3TjGfB/hnOiLCOYPp9XYv7BG5b/l+5e5ElHh1a1zdPpuL8vPJdCH+ruBATEN0HJSi6A1IcLLqYw8hiEX0Fdwk+abTpREQh4Dcy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EO3Sdf2e; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cEwcEC8k"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5e60cfef9cfso9394703a12.2
-        for <git@vger.kernel.org>; Tue, 01 Apr 2025 10:01:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EO3Sdf2e"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-aaf0f1adef8so804956666b.3
+        for <git@vger.kernel.org>; Tue, 01 Apr 2025 10:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743526864; x=1744131664; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WNUTWK4nsyFiY0UvV48lxGo+Ul2lvtndJvE3uvF+6RM=;
-        b=cEwcEC8keba5oIo6aTQNcuQgNXEtunfWWiW9JLI6TScLwS7QxJNu6qKTZQyCFAOWot
-         IhxWKQ/+jFznSM+5cvJKjCWq8gI3JlZ8g4NUoMJbe1GhPmpY7SwsUJ1Gflpv+/e+IPUz
-         7bseHVCJwU/4Cdf2xCwBz+6nNYfdkPk+DkeInmn9JxozqjCfHTNm4FVOXNSIz9jhmYF7
-         geXUcUskrG4xL93RWDqRME2ELLfIjx2PDYg+lw6cqD6+C/hf0D72aQBgnLeSPZzQ3XVZ
-         5HLXlmGlkvqw2XmACR4enCbrg0NtY0B35L7lDIFQEQQdFebU7UiUg9/rO3I/HauECwh2
-         FGkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743526864; x=1744131664;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1743526865; x=1744131665; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WNUTWK4nsyFiY0UvV48lxGo+Ul2lvtndJvE3uvF+6RM=;
-        b=AezmgR6FMCaJj4Y2dTfhbUEztkINq71giClM0fGTmth5ilzM7IxxcBnWsWU2V50Ofr
-         JoEN9JWzugujGpdQmTl0N7JepL6P1ZCUFWL/i7HYCb3HUauPvPNKP8nrIyDU7K/+NMR7
-         AIBblCzS99OkgWz5pUyo7BGypoIDrBaM/Fglheon5ESZnpSZ9ZhXKwVispGomfCmszJp
-         2URONzCBNUghRbY04Egqqggyc4HLNK/zjFuv6DmNM8UE1JsfLUISpm/nFa2NLLA0r5C9
-         6vEiW4quHV9wSn5du8pbjwtloMOXaQYRNHyBZ8vJRixRuVekZHpdKtVnh2ff594TIaPH
-         aiCw==
-X-Gm-Message-State: AOJu0YzoltloZ7ZI/aHZ8l0rL/3E7ruLGCjcWjuqxpmYarK/4JTXigMz
-	0FOk8XL493JnzugRB0Mh9yHNcPfrGq3zx1j60B4lJ3xlf6mkJSZ9
-X-Gm-Gg: ASbGncvCN1eUiUXknTCfcZ65i7+MUcyktG8b2hen4HudCP9i4+PKzp7E5RiN2VubsPa
-	t3TCHEmLg0rqaWxkIyjhvc36NYPTIVsrCTOE0JrIKHhleHWODg5MOk3k23IDUvZ3GwleL9CNzff
-	OM5mlOMM7oYJP1sdCOYCPqF6uaCHh5j/ToEWMRA+kHLSF/SqCcA8tkbjhchx1ir7uYHnpVioI6q
-	iGMNhGnhw8kq0JyFeP2PmnILANcCofhReIhelP+eV0Patp3gr6bLeLNUIr8vMElRh4bxuE8mnoL
-	unqV1haeZowB3sGj1tZN8weHXJS408TrHdbCbLRtdxdauXXz
-X-Google-Smtp-Source: AGHT+IGJHRb2PsU6Y5NCzAAXcykNsL59ITAP7+3GzVCeA3rpWnlACINc9s8UWom7+LSuVF15jIgvwQ==
-X-Received: by 2002:a17:907:97c9:b0:abf:fb78:673a with SMTP id a640c23a62f3a-ac738a3fb13mr1591838066b.29.1743526863543;
-        Tue, 01 Apr 2025 10:01:03 -0700 (PDT)
+        bh=ZamY49KYIIQpna0pFjo1j5XN2zgcNiRu6ZUU8y1AfB8=;
+        b=EO3Sdf2embxXz5GOTpEACYGnTxigq3xQ2fxEd4Fni8T9v6kEiH7aghUGwMgBxNF/xq
+         3UuYq1v6kDpASrGJQOPHLPkjwMIaacBG6eZc8Zb7k0/mulyYxYT9U54DxRUiqYZJa52V
+         wU9RbyEJ+pg8ZSTarcq9P6AZXnc69x30+P2guQKu6lij2SRwp8Qcs7y3RU0FcKOIUfgd
+         UUQxa3rZlD/qw0uJDnskbWWjx6qu0DKnuZ3wZsJ3F39tQR3tnbw6MImPaJUmVkfHA/Xq
+         n3gz5wLIUlJcVrsnSw5dXzaY6qyKSmsLdGzr0qkhdpfu4a1rm/d7Jc/dEisvzGTcsPkr
+         ASnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743526865; x=1744131665;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZamY49KYIIQpna0pFjo1j5XN2zgcNiRu6ZUU8y1AfB8=;
+        b=jWNhGhgyMMfdUXfbHLcBfS1JXqAmwj6T2fFC+WIGiNzlZBRTGOkzSbbBisFKKcrdDK
+         KnhzIq1c8COsZzupG3RE7FlpWRem/jlW2BcGs3rZHNWbBbB/xoxmnCmlgvQYvwKVEia9
+         obAv/0ZgBa476P4BgxA0b883Rr1i23GM9ANhfu4Bei0duyjQw7K2e35waw/ySDWx472H
+         o/2x4/YCIvIJZtH/n5wCpOhTQ8F+/ZqIbC+N/eKNRp/TfRtV5Qk11cxqAHyJSC1wyXPI
+         honep4gGuSlQg+D+WwL1OybeFbhALp/3u3wGe4i4kMHKEemoLgVFazm0JxdFlv1aF37K
+         z+bQ==
+X-Gm-Message-State: AOJu0YxefxGDFfYUACeIkMdEWZ9e642KSKWG4MdmOnWefcjyRv+Qa7It
+	lIEQ2SpbgX6I1jVYN9sVEziJbhzZVtglIxjklYtmc2RRod4CfBPGOZ0tBTHY
+X-Gm-Gg: ASbGncuMBnbvSZqD3ydimvTNuWoSwDgqTkuzYZXP4zNylzJOAcoPGtqWPyuJOZtWKze
+	HkCrRncQ2hNrcAqoV6H7i0vWM9a1WpAUMdNScpKzmzflkW8Ej2kE5qaiTH1EEx54I1gBWIOy7X1
+	mlDG24pj4wLa6Vn0S8tjUGYbMBYI1CGuGVrUVAPlLpBg0ZtcLY6k1oUO1cRkV3UQ1IjajM9ymGX
+	lDiGF86U28syZnd/v+4QR0lXTqqpI4gCYGGMTJI9aFe1cxnnVycnlgLsnD2Zcq9RnzgU9ku6Dbl
+	q23hunZ+RX4cgik2P/VXWMa/IQj+eIgXs3ZjURIBWnoa9qEb
+X-Google-Smtp-Source: AGHT+IHGaxId/Rnmgv338VIK4QquQcgBViPaJErw0hK6Ilkc5l5KGSaR0FEVeZ6wh5QqzG+M4uujZw==
+X-Received: by 2002:a17:907:9491:b0:ac6:b639:5a1c with SMTP id a640c23a62f3a-ac738a4bcedmr1247849666b.22.1743526864478;
+        Tue, 01 Apr 2025 10:01:04 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:2455:8268:bc00:90eb:ce:1988:2fde])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7196dd46asm780219666b.160.2025.04.01.10.01.02
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7196dd46asm780219666b.160.2025.04.01.10.01.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Apr 2025 10:01:03 -0700 (PDT)
+        Tue, 01 Apr 2025 10:01:04 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 0/2] bundle: fix non-linear performance scaling with refs
-Date: Tue, 01 Apr 2025 19:00:55 +0200
-Message-Id: <20250401-488-generating-bundles-with-many-references-has-non-linear-performance-v1-0-6d23b2d96557@gmail.com>
+Date: Tue, 01 Apr 2025 19:00:56 +0200
+Subject: [PATCH 1/2] t6020: test for duplicate refnames in bundle creation
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,89 +66,124 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAMcb7GcC/x2O2wqDMBBEf0Xy3AVNbQn9ldKHbZzogt3Ixt4Q/
- 72hj2eYw8zmCkxQ3KXZnOElRbJW6A6NixPrCJKhsvOtP7VH76kPgUYojFfRke5PHWYUess60YP
- 1S4YEg8YaTlxIs9IsCjZaYClbLUXQuWfEgDambnB1bKmafP5Hrrd9/wHm9SVgmAAAAA==
-X-Change-ID: 20250322-488-generating-bundles-with-many-references-has-non-linear-performance-64aec8e0cf1d
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250401-488-generating-bundles-with-many-references-has-non-linear-performance-v1-1-6d23b2d96557@gmail.com>
+References: <20250401-488-generating-bundles-with-many-references-has-non-linear-performance-v1-0-6d23b2d96557@gmail.com>
+In-Reply-To: <20250401-488-generating-bundles-with-many-references-has-non-linear-performance-v1-0-6d23b2d96557@gmail.com>
 To: git@vger.kernel.org
 Cc: jltobler@gmail.com, ps@pks.im, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2510; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=3FwfntlLxHqrY9K7KsMuxfPvnXaY7FstBQ1+/hAcUmA=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGfsG82MiYlHkr6U7bMAOCgwO7iO/hS9zUYPc
- 0jQp/8VlpaeDokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJn7BvNAAoJED7VnySO
- Rox/MjMMAJSLgqCzYRz9Z636pTxMBtudxFrxbqJjg6dv6P8jWTIXLaw6ib2DtuotGy3YlicP/hV
- LVCIhLAs+R2mdvJKGzVitcDaUfpLko730dWFEUiFnYbz9OqNKLaYt71Mk8Y9NGU76lORVUyF033
- yG3tCaupQmEeGSpS4EZEGASD8SmexMmBoPnZaB+19+enDEp2wBma3MaW9Uj/4/66zHd9KfA6+3K
- uYp0lD5p3XPCREWoAxetqw82AyTcOlsTKBufUYRJoekpwGKfIHQwKY92hFkHlZl69ObgKP7jQJv
- Vo0Qt3wl6BVlJWttGHRSBOHPrv4oFm/ZPXNLho91Wsgfo+zXEQCorblHLzWG4bmc2NmBU9VWqcE
- asRG3C8UWrhnEtOiC4mZQ97PgWAu3vmsabEtuMPCzxrn/WnvdI6lxqqMXzYeUHdEAIyG0LpFYZ7
- Lk6UbbH+QgEJK3leEdrDHTJ9odf0s6VPI+EQZNvlyPFVvmjrana0zhKTbNi97VMPr8+cWl08HU5
- oI=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3284; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=luKAgjPY1D9UCJAjiEQ7IQOM4N/O7PpZsdrd7JyrVrg=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGfsG83rwfbT33sm44CythHFiCK9MSuG5sC/E
+ xGoM6ydn8o4eYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJn7BvNAAoJED7VnySO
+ Rox/zs4L/35FbBCkdrdZ5VyW2sxwuZLpW4DChGaBTUTFelxhOE+RtsN7hmZJXWL+xKPWUKJErIv
+ vwzgc85Kd6aUrSaNEAuRTcunwcW0PJ4HZt+J+Xm0KHNDgA3tgAqjcJbjMdD7IR9aJ4+0LOFkF6s
+ N5A8K3iLDL0ScrVBCo345gZUV6dVYU8cTaw/O0+YS+f0xQ2Nk18DOp3GGquiYRqyLcwhuRJXuOa
+ DugLNryJJfCvtuAYbkCpQF4jeGoh7rwRH/kh990KrYwi7yXQsiZrbqEMNnh7IE3MvAFShWpEeIx
+ lTKtoKwABRwJCYa8i+7fGIlght7jOgSfZPaDWwTuF2ImJ7piQkO/4BYMgWLFt6quT7e/oi9U2PA
+ NP83CVQGT/t4ecomoE35toSi1IrRg41D+laUslAa4N5aywQ7Ub9DVeDgmLMeaevXBsQshOyckz6
+ wJAJxUJuX3PUrCWlQuRwzfT88OlJMjEWI3sM0fMDeS0tgBePgY//IONQv1EA0GZ7epHNYcuh/L6
+ zU=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Hello, 
+The commit b2a6d1c686 (bundle: allow the same ref to be given more than
+once, 2009-01-17) added functionality to detect and remove duplicate
+refnames from being added during bundle creation. This ensured that
+clones created from such bundles wouldn't barf about duplicate refnames.
 
-At GitLab, we noticed that bundle creation doesn't seem to scale linearly 
-the number of references in a repository. The following benchmark demostrates
-the issue:
+The following commit will add some optimizations to make this check
+faster, but before doing that, it would be optimal to add tests to
+capture the current behavior.
 
-Benchmark 1: bundle (refcount = 100)
-  Time (mean ± σ):       4.4 ms ±   0.5 ms    [User: 1.8 ms, System: 2.4 ms]
-  Range (min … max):     3.4 ms …   7.7 ms    434 runs
+Add tests to capture duplicate refnames provided by the user during
+bundle creation. This can be a combination of:
 
-Benchmark 2: bundle (refcount = 1000)
-  Time (mean ± σ):      16.5 ms ±   1.7 ms    [User: 9.6 ms, System: 7.2 ms]
-  Range (min … max):    14.1 ms …  21.7 ms    176 runs
+  - refnames directly provided by the user.
+  - refname duplicate by using the '--all' flag alongside manual
+    references being provided.
+  - exclusion criteria provided via a refname "main^!".
+  - short forms of refnames provided, "main" vs "refs/heads/main".
 
-Benchmark 3: bundle (refcount = 10000)
-  Time (mean ± σ):     220.6 ms ±   3.2 ms    [User: 171.6 ms, System: 55.7 ms]
-  Range (min … max):   215.8 ms … 224.9 ms    13 runs
+Note that currently duplicates due to usage of short and long forms goes
+undetected. This should be fixed with the optimizations made in the next
+commit.
 
-Benchmark 4: bundle (refcount = 100000)
-  Time (mean ± σ):      9.622 s ±  0.063 s    [User: 9.143 s, System: 0.546 s]
-  Range (min … max):    9.563 s …  9.738 s    10 runs
-
-Summary
-  bundle (refcount = 100) ran
-    3.79 ± 0.61 times faster than bundle (refcount = 1000)
-   50.63 ± 6.39 times faster than bundle (refcount = 10000)
- 2207.95 ± 277.35 times faster than bundle (refcount = 100000)
-
-Digging into this, the reason for this is because we check for duplicate refnames
-added by the user. But this check uses an O(N^2) algorithm, which would not 
-scale linearly with the number of refs.
-
-The first commit in this small series adds a bunch of tests for this behavior,
-while also discovering a missed edge case. The second commit introduces an 
-alternative approach which uses an 'strset' to check for duplicates. The new
-approach fixes the performance problems noticed while also fixing the earlier
-missed edge case. Overall we see a 6x performance improvement with this series.
-
-I found that there is a conflict with 'ps/object-wo-the-repository' in seen,
-the resolution seems simple enough. Happy to support as needed.
-
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- bundle.c               | 10 +++++++++-
- object.c               | 33 -------------------------------
- object.h               |  6 ------
- t/t6020-bundle-misc.sh | 53 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 62 insertions(+), 40 deletions(-)
+ t/t6020-bundle-misc.sh | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
 
-Karthik Nayak (2):
-      t6020: test for duplicate refnames in bundle creation
-      bundle: fix non-linear performance scaling with refs
----
+diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+index b3807e8f35..dd09df1287 100755
+--- a/t/t6020-bundle-misc.sh
++++ b/t/t6020-bundle-misc.sh
+@@ -673,6 +673,63 @@ test_expect_success 'bundle progress with --no-quiet' '
+ 	grep "%" err
+ '
+ 
++test_expect_success 'create bundle with duplicate refnames' '
++	git bundle create out.bdl "main" "main" &&
++
++	git bundle list-heads out.bdl |
++		make_user_friendly_and_stable_output >actual &&
++	cat >expect <<-\EOF &&
++	<COMMIT-P> refs/heads/main
++	EOF
++	test_cmp expect actual
++'
++
++# This exhibits a bug, since the same refname is now added to the bundle twice.
++test_expect_success 'create bundle with duplicate refnames and --all' '
++	git bundle create out.bdl --all "main" "main" &&
++
++	git bundle list-heads out.bdl |
++		make_user_friendly_and_stable_output >actual &&
++	cat >expect <<-\EOF &&
++	<COMMIT-P> refs/heads/main
++	<COMMIT-N> refs/heads/release
++	<COMMIT-D> refs/heads/topic/1
++	<COMMIT-H> refs/heads/topic/2
++	<COMMIT-D> refs/pull/1/head
++	<COMMIT-G> refs/pull/2/head
++	<TAG-1> refs/tags/v1
++	<TAG-2> refs/tags/v2
++	<TAG-3> refs/tags/v3
++	<COMMIT-P> HEAD
++	<COMMIT-P> refs/heads/main
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'create bundle with duplicate exlusion refnames' '
++	git bundle create out.bdl "main" "main^!" &&
++
++	git bundle list-heads out.bdl |
++		make_user_friendly_and_stable_output >actual &&
++	cat >expect <<-\EOF &&
++	<COMMIT-P> refs/heads/main
++	EOF
++	test_cmp expect actual
++'
++
++# This exhibits a bug, since the same refname is now added to the bundle twice.
++test_expect_success 'create bundle with duplicate refname short-form' '
++	git bundle create out.bdl "main" "main" "refs/heads/main" "refs/heads/main" &&
++
++	git bundle list-heads out.bdl |
++		make_user_friendly_and_stable_output >actual &&
++	cat >expect <<-\EOF &&
++	<COMMIT-P> refs/heads/main
++	<COMMIT-P> refs/heads/main
++	EOF
++	test_cmp expect actual
++'
++
+ test_expect_success 'read bundle over stdin' '
+ 	git bundle create some.bundle HEAD &&
+ 
 
-
-
----
-
-base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
-change-id: 20250322-488-generating-bundles-with-many-references-has-non-linear-performance-64aec8e0cf1d
-
-Thanks
-- Karthik
+-- 
+2.48.1
 
