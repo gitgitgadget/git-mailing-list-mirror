@@ -1,118 +1,169 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FC61E5B93
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 21:16:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978321E571A
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 21:48:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743542198; cv=none; b=r69N5a6qGmRUNnWVzJ9houW0Tr16xVGvATaRL+JKFer5wlsQ10M7QbHbacA5zQHdkgOd1vxkZxrF/2cZ4sQknJ064rqM8uq+B7vdJXHODlTPKVbj8i8uzoBLFl/ErcUOheJMgouS8CrlFZ6ll0JynnSdfQt7NZNg1nsFHLBN0ek=
+	t=1743544086; cv=none; b=Rv0hqCHedNW6ovDN/kWPGt5IylSSjWSRWSEODoBzrQ21++S1YREsN5yQzYdxWDyjIXfDFcBJ1lwEL0Su8IafP04YeU16BIZzfGrjk9rLfxTG91foophSKZLIuM74v6DEfGr9WefBwuJK0cHY9yU8vlWSaQordEMXfzSTqFxsSeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743542198; c=relaxed/simple;
-	bh=WxmVbBs4xc+T7HEfZKcHIDu9OAJs+jEF1bxvek3U4rE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D3ExgvRDdsVtpJuh4lqw1tinsLbdcFzETzWHcxiGTTK2MUx3P0qNOaB6EOTLBcxV7wTdCEM6UjGFmHKzoBXsOciJY/5mW4iW7yaDXGJGsK/R/DNsNDOWs1UJ9Q0YKSE/YPbRJwJrOYhlAc4EKqUhIIegx83OmkZQjx+s4udTD94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=d9FiqQFa; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1743544086; c=relaxed/simple;
+	bh=u66dIZjH2o1vZepU1By+RfYHI97Jf49ghu8hv7Cae4E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=unJDPooF2a5CdgX2iGn2150rLYW76oaDb7+FzEHe0HfwWcFohhx8DKAvlpb5ii8Yu+aLTpOtLk/l7niegwl8RH9OhHSZnBqF1UYhwY4BKu4xXV/QusqFq2z1+Kg+XFuB4+x/fko3m5mH42AdcyeYIHO9lONzP3YrcyUfjxwCAYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=o+WORyaL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=saGMGnNm; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="d9FiqQFa"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1743542193;
-	bh=WxmVbBs4xc+T7HEfZKcHIDu9OAJs+jEF1bxvek3U4rE=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=d9FiqQFa53BL6J6/piIx9CBmvir+XXSDKvdR6RFWq3rB5uy7mzni3Mpm4Ouvv87uf
-	 /J+P4P/IRrxHX9Lu4flAxih5xZ1PVeHs25Prslc1Ot22bkRBcBo3tgG2e4trxUHPdL
-	 DQK+oRWw/FRPADf97YR/m9J3Qo8uNsuiQ1TbSEkCKCNcnNHARtFiZk0iYofoLnMAZ/
-	 dhI5rfqDAFoIDtSrsp/u9Jrn9YbXnTEHoTr3U1mtxogUA9dYFEHpNATzRRX28e47md
-	 LED1M84cVcZAfjKfbFWrdZRMPxRmK6T9UnCPEh3BNjrYygitVufl+K5o2UDDrPkUug
-	 U0KnbqsMRZdHrnLActHiYBhZv2UK4X2L/Rb8QMyAADwUYCY6BZQdPh+EW2kmasEdjZ
-	 p/AokZeSijgr3dEi06xIlJ0K2PuEG3kMGeAlMTGpMjGCZqL1nuOmFIPoKHLgAeiWUk
-	 t6+WqI7PGFF7c2WmuJb4Fcsr7/vdLd2YxWSqpDHHWrhtL931RaC
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d5c6:e1bb:f3a5:7a20])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id ADD7F200BE;
-	Tue,  1 Apr 2025 21:16:33 +0000 (UTC)
-Date: Tue, 1 Apr 2025 21:16:32 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Milan AJDINOVIC <milan.ajdinovic@se.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Git client bug with branch containing "."
-Message-ID: <Z-xXsCs3Wr6NwYx1@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Milan AJDINOVIC <milan.ajdinovic@se.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <VI1PR04MB695864E125F3381932332BDC91AC2@VI1PR04MB6958.eurprd04.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="o+WORyaL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="saGMGnNm"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id A2E111383DD0;
+	Tue,  1 Apr 2025 17:48:02 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Tue, 01 Apr 2025 17:48:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1743544082;
+	 x=1743630482; bh=3+aZIp0EezwOtwtNkSYCm1evQalrlEK+sUTP5pdELYk=; b=
+	o+WORyaLXYYF0sZrZUPA2e9o2kjJ3vYDjurJd/VdztEaD0nlQJiQujS0SXZU0Cln
+	p1L1Ur2e+6/sCnQ3B7X40TsgHx9VkVC+nm8mnwcFS2vQ2qR1nu4s36tEpfkargI0
+	PUF2PSw8gR4WvEJwnLdkT0y/9x0XeL0iyGCgC2079WROWM54E3li6njWlcYidI7W
+	Apc50DiYsaOY2C2Oi8KgJSiCmv72ikvBa/1Fm9K6IQVOMlnFLMoOczuNUtBSL/Wr
+	ebFYiCU0z76LtyS6V1HRxHhrhLYFvu4cV42m/slqz8PEF0OHzGNDAD7dt+WDZa++
+	kUx8Jfzq7ehtBjkrdTmQww==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743544082; x=
+	1743630482; bh=3+aZIp0EezwOtwtNkSYCm1evQalrlEK+sUTP5pdELYk=; b=s
+	aGMGnNmKkTxhYg4OwqYvbqHMAk4ffhCXwfs7lE7tP8PEqlGUkl3nKBVmksL+SfO9
+	kRMOn2VHQ/uiVtfPCQsxSRtJiNOfGT5RZH3ok1SPemkgns2rHaF8rsIdjmD792dL
+	o6i97kKiHHRoLjIcHT1B5Ym9aq1k+88ySFIfKSzXJGkYhcqFMh+zCDMtRLbdmhK8
+	OGf55V8usqIuQPPOacAZsFyZUoeUSlmN/ifn9NwvvHIJ3NnMFw0IxT77B1OLTbvN
+	7sms9UV79IMcmW9EIrOw0OHFvnAqXJHdrVOY6/fjcD67JHzDgSOOmjd+y62k5JJb
+	vc9HOufrjN5N7jxWtrT3Q==
+X-ME-Sender: <xms:El_sZwsJEOjnmGona4Z-FdjaZokNuJzh4403O0aTqbM4wAh07rzpEg>
+    <xme:El_sZ9fXDV9Oj92-Wqkfz63VyopAEvJldCrT7Rt6BIvrmk2bGNsRMdeZt10IdQfxv
+    U536lRvmO06NYu9VQ>
+X-ME-Received: <xmr:El_sZ7xoZEzQWHNDuINdYI7E2psicNFO-o0lte4xkqKjAJUtvme_MTyvczTpcLAg3atBTxNvN8mq80khgEk_Y3qfOCC6VwpaVwnAzRs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeefleduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeetleejuefghedvheejjeefvdektdfg
+    tedtffeiueetudeuheehffetgfehudffheenucffohhmrghinheprhgsrdhinhdplhhinh
+    gvshdrmhgrphenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
+    ohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdp
+    rhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hpshesphhkshdrihhmpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:El_sZzPsDJfIzM5WXvnF7NHOyEx2lNcNN7DOkMEulFCgrB-NEiPtSA>
+    <xmx:El_sZw8o_iGfwmctF3KOT1bmHmflHHm7CzqWcXakGI-odHb9ovpwuw>
+    <xmx:El_sZ7Uk70HYFkZxv2hd3YOMXjedG5AizCgMylHfEsCADCvTwMVCQQ>
+    <xmx:El_sZ5fQRi2MOmVQfF77gLslnKLIUJT5j_WXjm2MCmVdXl06FIs9eQ>
+    <xmx:El_sZwzHjfBV2Cbb343aKzAxO5ZuuDz3wDAnIoX5-qXm3Zh4bKccSck4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Apr 2025 17:48:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,
+  Johannes Sixt <j6t@kdbg.org>,  git@vger.kernel.org
+Subject: Re: [PATCH] doc: fix asciidoctor synopsis processing of triple-dots
+In-Reply-To: <20250401110811.117851-1-jn.avila@free.fr> (=?utf-8?Q?=22Jean?=
+ =?utf-8?Q?-No=C3=ABl?= Avila"'s
+	message of "Tue, 1 Apr 2025 13:08:11 +0200")
+References: <Z+rUsCW0zEb8kAK8@szeder.dev>
+	<20250401110811.117851-1-jn.avila@free.fr>
+Date: Tue, 01 Apr 2025 14:48:00 -0700
+Message-ID: <xmqqecyba6zz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="X2rClL/xi4Ynk2kh"
-Content-Disposition: inline
-In-Reply-To: <VI1PR04MB695864E125F3381932332BDC91AC2@VI1PR04MB6958.eurprd04.prod.outlook.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---X2rClL/xi4Ynk2kh
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On 2025-04-01 at 12:19:47, Milan AJDINOVIC wrote:
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> On GitHub Enterprise server I have created a branch named: features/team1=
-/feature./1.0/main in my repo.
-> I tried to fetch the branch and switch to it.
->=20
-> What did you expect to happen? (Expected behavior)
-> I expected for branch to be switched to:features/team1/feature./1.0/main
-> What happened instead? (Actual behavior)
-> I got an error: fatal: cannot lock ref 'refs/heads/features/team1/feature=
-=2E/1.0/main': unable to create directory for .git/refs/heads/features/team=
-1/feature./1.0/main
-> What's different between what you expected and what actually happened?
-> The branch did no switch.
-> Anything else you want to add:
-> From my analisys the problem is because my branch have "feature." in it a=
-nd Windows can not create directory with "." at the end.
+Jean-Noël Avila <jn.avila@free.fr> writes:
 
-I think that's correct as to why it's not working.  Git by default uses
-the files ref backend, which stores the data in files in the repository,
-and in your case, Windows is unable to create that directory.  That's
-unfortunately a limitation of Windows and we can't do anything about it.
+> The processing of triple dot notation is tricky because it can be
+> mis-interpreted as an ellipsis.
+>
+> Another issue is that the formatting of synopsis paragraph in
+> Asciidoctor spits out another asciidoc formatted text where verbatim
+> text formatted with backquotes must have surrounding separators in
+> order to be properly detected, even if they are sticking to another
+> text.
+>
+> The special processing of the ellipsis is now complete and takes into
+> account the case of `git-mv <source>... <dest>`
+>
+> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+> ---
+>  Documentation/asciidoctor-extensions.rb.in | 8 +++++---
+>  Documentation/diff-generate-patch.adoc     | 2 +-
+>  2 files changed, 6 insertions(+), 4 deletions(-)
 
-We allow those branches because Unix systems don't have this problem and
-users working with Unix-only repositories might want to use them.
+The .gsub() changes seem to interact with your "doc: fix synopsis
+analysis logic" in the series that updates reset/mv/rm documentation
+mark-up.
 
-> git version 2.42.0.windows.2
 
-If you use the latest release (2.49.0), you can probably switch to the
-experimental reftable backend using `git refs migrate
---ref-format=3Dreftable`, which will not have this problem.  However,
-please make a backup of your repository first, since we've seen some
-bugs during the conversion that have caused problems, including with
-stashes.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
 
---X2rClL/xi4Ynk2kh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ+xXsAAKCRB8DEliiIei
-gSbDAQD9hPVPLAXjxWWBnJjbNjobXEqsEM3qEM8W8R1YwXX3uQEAtfWWnVgV9Ykg
-pUg4CV30mqTeQYbU6iHuCazUH1M9NgE=
-=lcxk
------END PGP SIGNATURE-----
-
---X2rClL/xi4Ynk2kh--
+> diff --git a/Documentation/asciidoctor-extensions.rb.in b/Documentation/asciidoctor-extensions.rb.in
+> index 2494f17a51..0ded90c28b 100644
+> --- a/Documentation/asciidoctor-extensions.rb.in
+> +++ b/Documentation/asciidoctor-extensions.rb.in
+> @@ -49,7 +49,7 @@ module Git
+>  
+>        def process parent, reader, attrs
+>          outlines = reader.lines.map do |l|
+> -          l.gsub(/(\.\.\.?)([^\]$.])/, '`\1`\2')
+> +          l.gsub(/(\.\.\.?)([^\]$\. ])/, '{empty}`\1`{empty}\2')
+>             .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=~@,/_^\$]+)}, '\1{empty}`\2`{empty}')
+>             .gsub(/(<[-a-zA-Z0-9.]+>)/, '__\\1__')
+>             .gsub(']', ']{empty}')
+> @@ -72,6 +72,7 @@ module Git
+>            %(<inlineequation><alt><![CDATA[#{equation = node.text}]]></alt><mathphrase><![CDATA[#{equation}]]></mathphrase></inlineequation>)
+>          elsif type == :monospaced
+>            node.text.gsub(/(\.\.\.?)([^\]$.])/, '<literal>\1</literal>\2')
+> +              .gsub(/^\.\.\.?$/, '<literal>\0</literal>\2')
+>                .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<literal>\2</literal>')
+>                .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<emphasis>\1</emphasis>')
+>          else
+> @@ -100,8 +101,9 @@ module Git
+>        def convert_inline_quoted node
+>          if node.type == :monospaced
+>            node.text.gsub(/(\.\.\.?)([^\]$.])/, '<code>\1</code>\2')
+> -              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<code>\2</code>')
+> -              .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<em>\1</em>')
+> +            .gsub(/^\.\.\.?$/, '<code>\0</code>')
+> +            .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<code>\2</code>')
+> +            .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<em>\1</em>')
+>  
+>          else
+>            open, close, tag = QUOTE_TAGS[node.type]
+> diff --git a/Documentation/diff-generate-patch.adoc b/Documentation/diff-generate-patch.adoc
+> index e5c813c96f..7b6cdd1980 100644
+> --- a/Documentation/diff-generate-patch.adoc
+> +++ b/Documentation/diff-generate-patch.adoc
+> @@ -138,7 +138,7 @@ or like this (when the `--cc` option is used):
+>  +
+>  [synopsis]
+>  index <hash>,<hash>..<hash>
+> -mode <mode>,<mode>`..`<mode>
+> +mode <mode>,<mode>..<mode>
+>  new file mode <mode>
+>  deleted file mode <mode>,<mode>
+>  +
