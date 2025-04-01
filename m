@@ -1,110 +1,119 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD841C8610
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 03:01:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69549C13B
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 03:10:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743476497; cv=none; b=PlVMSBuyrNy3jfnx0vAGM5m1Ykfhs7Br5ihjGXZ4EX4bQLgSVeszZZRJp1vhgJgmb7VHpulOY/DmgarI6xnHxsM7HplweHvT/jHp02/hLQBXD61GvzNNPVE4hze+CdKIb2WUDQu+eRuLv1W/QUmrzWOJBYIOysRcDLFgJnhboC4=
+	t=1743477034; cv=none; b=fWDVdjHZ1r6jV+vt1svu/qOG6AHgjC9IMdH5v108tCaFKhrYURHkN3Q3pgwdiiW/ZF8WF2uPcOZycHUfaV8n3tSvU9c1ORUdO2241gxh9go1T6Tr4/bjcjFaxtLim7QK1wWB1aWJ4AjKHCBlnhATGlmWVxW7WCWMeuTCwbHiIkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743476497; c=relaxed/simple;
-	bh=MOTiBElZ2MCvH1otKx2fCwxdiIJa/Vts+MgArbwOask=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qXk9LnbxrqWGXphF9MSPVt+WWvEdc+NMulvD7lDi13ATailf3iNSvfzZTa2Oi8cWmylChjIUhZ+S+UW2UaAN6AN3yi0T66ezAzf4B+KD7O+XkSccAmq+WbhtOcMZ+uswY6TqEJ2p0qc/BHRhrzzDAVPOfcZV1uZd2bBMlwlSgAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lhyBuXSn; arc=none smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743477034; c=relaxed/simple;
+	bh=E9rAt67lnbTQ5sFUlHBzEEprw21bDtOJ5ERXaRTbrv0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NoLGWHggX4xAXKklzJbZbDDhyXX7z6HU+AqIwpYtjpFq0SiGAsM5WNxRZrThrmccf70+ilSkydqcLcoRaLSmFtntMFTI+2HhvSJObKScsjv3Ed8lDPaU8WU6AxAmZHe5qbKBNFcmfK1Jw6AXBsEmvbYhmW6Quo5G1Xh0PtvBLCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=euwpbU42; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lhyBuXSn"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6e904f53151so44235716d6.3
-        for <git@vger.kernel.org>; Mon, 31 Mar 2025 20:01:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743476495; x=1744081295; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=09niCTOK3OfvtYf3f9+RQQ5lWTdYJfS/Il25lNrsT+s=;
-        b=lhyBuXSnn/DsRYM78R5YPYmjJEn2J2nU6s3QxNe21LDLJffk+vka++OSD4pZLcFqKQ
-         VKl03ZvWSVAMpKGp2i4U/OAMkYMIIMfc7HhcEWEYy76BfK1JzF8hgfwRYxtIw3o/kRE8
-         m2BUtpeMj+ilXKIpU1uetwuyuYxEzvs2a4RMI82rRDOxEaj9Roch9ZSiCElBzw7bGWM4
-         z+9oFLr7nhtYlq+ZHoa6sWgAHXtRw7YC2zgncZobZyrbq1ABy1+kc/a0kZ/j3PomwCOG
-         ojGb2uH57qE+q9Kptny5w9x+81waL9/tIPp/Qk1zJzLP29Itzj5e+CzsyAxakmiBTrnn
-         4eew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743476495; x=1744081295;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=09niCTOK3OfvtYf3f9+RQQ5lWTdYJfS/Il25lNrsT+s=;
-        b=kLXwAC8oXwFYz6tZs2AjhlNJppmF+KuwiI9HnesKpU175ca+J3+Rs4KUkYcwkjPmcG
-         JpyWQyix9wmpTIepv8cfMR+rwnnaDSyMF3Xoa+NkyAhy5FPJKkV9jDVepnwDqZ+QnqKK
-         zrQRu+yZ41h7LRjt0//M7Vi5DD/5xGNtdyfcb4gL6T6HrJFR04Oc16ffhKm4gYbmhu5H
-         KxJa4yskSf2xyCrYPNFZlgH/1lWroX/iflG08dtHqFXozZQmj8f30v6gHdQiaaOi6QOR
-         pWkZVK+ivTkkKYFEkABosqiyjEc3blCJ4c6Xg+mV6CwvI5WuUyuEunqhyl8XUnd1EMD5
-         Jy2w==
-X-Gm-Message-State: AOJu0YzteXYMpawyHkoa2+E3KKpBD5WJsGnuhN74vv0mmCwr+9l5OPVu
-	WJD+1cRAN16GRCxTJytSyKaNAzLea4PKkao2PNciIBysum1Amd8g
-X-Gm-Gg: ASbGncsQty3YMz2+Bh0VJNDNMlLlzY5at6CLtmgU5KT+t2+nGrYPD0vgtA/3o13cefA
-	tsLbLLqaizQiwTyyBwv/roD0H2aRpyzU+GNFXj+Kt7Dizm6LTD7UuS5v6RnNkDsW8mUF7yK+tAC
-	lZ818NWDJuxvffgYoPjHdxClQ6/wQeyIiaQNF0YZUL8WSqNzqRCpA+fBVkT5j9/GXElpoP9CPVz
-	LVeNfng+ADaQH40zhZSjZ4MGCznpihNkk4q1KI77MQKIeugcjvekWKnKWp9cRiRszPrpdAp2fKE
-	F5NvR//+HtZjwtHd4m9089PHhCYc
-X-Google-Smtp-Source: AGHT+IGpF5bjvWAWJ0wOtZOuXJr6MQEF2YIYJyHjsAVzH9uFlgK4kovBgPUTpB7iHHaW+8W1mwexZw==
-X-Received: by 2002:a05:6214:1256:b0:6e6:68e3:8d84 with SMTP id 6a1803df08f44-6eed5fe38ddmr225939726d6.18.1743476494080;
-        Mon, 31 Mar 2025 20:01:34 -0700 (PDT)
-Received: from markl5i.lan ([2600:4040:2644:5100::387])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6eec96284d7sm55209556d6.1.2025.03.31.20.01.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Mar 2025 20:01:33 -0700 (PDT)
-From: Mark Levedahl <mlevedahl@gmail.com>
-To: j6t@kdbg.org,
-	johannes.schindelin@gmx.de
-Cc: git@vger.kernel.org,
-	Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH v2 3/3] gitk: limit PATH search to bare executable names
-Date: Mon, 31 Mar 2025 23:01:02 -0400
-Message-ID: <20250401030102.297272-4-mlevedahl@gmail.com>
-X-Mailer: git-send-email 2.49.0.99.31
-In-Reply-To: <20250401030102.297272-1-mlevedahl@gmail.com>
-References: <5b09f1c2-be58-43a2-9908-7243b5207251@gmail.com>
- <20250401030102.297272-1-mlevedahl@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="euwpbU42"
+Received: (qmail 18002 invoked by uid 109); 1 Apr 2025 03:10:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=E9rAt67lnbTQ5sFUlHBzEEprw21bDtOJ5ERXaRTbrv0=; b=euwpbU429VOHMBfhNEMf79z4E0FcAGMOVdeRyFUab/CM9AQQmAQ7raDWkkGCKCMQ/tryCKTTehFrkL78btDiIpfQXtRNVvzbOuufiYKqiwCwyNIRj+BOwa6Ulm2ejXUjePKUDanRebWUIjsflGn31UemEZKY2OCJKzaZZOsAPJ48+xniLw33DE+jxDxg8TCfmQup0lJivJRZUIZttjiUwXKq5A3YFVe268CUg9j4hAqKCXP/fYRtRL9qyODshOs6GPL+oBtoCODaDxrUVvNkInNWTPllGagUoI2mcvNo2Mx4xx3BY5aWOsHS+MHfo1k64FEK1bcen/yadCnPufigJA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 01 Apr 2025 03:10:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11383 invoked by uid 111); 1 Apr 2025 03:10:30 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 31 Mar 2025 23:10:30 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 31 Mar 2025 23:10:30 -0400
+From: Jeff King <peff@peff.net>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Patrick Steinhardt <ps@pks.im>, Todd Zullinger <tmz@pobox.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	git <git@vger.kernel.org>,
+	Derrick Stolee <derrickstolee@github.com>
+Subject: Re: Testsuite failure on s390x and sparc64 after 6840fe9ee2
+Message-ID: <20250401031030.GB1087913@coredump.intra.peff.net>
+References: <89257ab82cd60d135cce02d51eacee7ec35c1c37.camel@physik.fu-berlin.de>
+ <Z-R_Zmr6kxCPLm-O@teonanacatl.net>
+ <Z-Zr7BZL1UGqVxKu@pks.im>
+ <4276c8d0b72f11f325482756d3bc251327d0ac47.camel@physik.fu-berlin.de>
+ <Z-atRMGXHilZRTEL@teonanacatl.net>
+ <Z-bCNdOOLrM2Chb8@teonanacatl.net>
+ <Z-qKGqpbdaW9WCrP@pks.im>
+ <Z+rcVY7KqEuF1wFw@szeder.dev>
+ <20250401023358.GA1087913@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250401023358.GA1087913@coredump.intra.peff.net>
 
-The path search overrides used by gitk on Windows are applied to any
-executable whose name is not 'absolute', meaning that
-	[exec foo/bar ...]
-will search each element of $PATH to find one with subdirectory foo
-containing bar. But, per POSIX, and Tcl implementation on all platforms,
-foo/bar is taken as $(pwd)/foo/bar, and is not searched on $PATH.
+On Mon, Mar 31, 2025 at 10:33:58PM -0400, Jeff King wrote:
 
-Fix this descrepency using the same approach applied to git-gui in
-commit 3f71c97e. The key is that the executable name must have no path
-component, indicated by [file split $exename] having array length 1.
+> That would be nice. I think we've discussed type safety for
+> parse-options before, but IIRC none of the solutions were very
+> satisfying. But this sounds like a relatively low-effort approach that
+> buys us something, at least. I wonder if it could even be extended to
+> use __builtin_types_compatible() on platforms that support it.
 
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
- gitk | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+So here's a slightly fancier version that uses the gcc builtin when it's
+available:
 
-diff --git a/gitk b/gitk
-index e4d0500..e38e071 100755
---- a/gitk
-+++ b/gitk
-@@ -58,7 +58,7 @@ if {[is_Windows]} {
- 		set i $from_index
- 		while {$i < [llength $command_line]} {
- 			set cmd [lindex $command_line $i]
--			if {[file pathtype $cmd] ne "absolute"} {
-+			if {[llength [file split $cmd]] < 2} {
- 				set fullpath [_which $cmd]
- 				if {$fullpath eq ""} {
- 					throw {NOT-FOUND} "$cmd not found in PATH"
--- 
-2.49.0.99.31
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8560c89374..7bcbe0b4ac 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -110,11 +110,17 @@ DISABLE_WARNING(-Wsign-compare)
+ # define BARF_UNLESS_COPYABLE(dst, src) \
+ 	BUILD_ASSERT_OR_ZERO(__builtin_types_compatible_p(__typeof__(*(dst)), \
+ 							  __typeof__(*(src))))
++
++# define BARF_UNLESS_TYPE_MATCH(var, type) \
++	BUILD_ASSERT_OR_ZERO(__builtin_types_compatible_p(__typeof__(*(var)), type))
++
+ #else
+ # define BARF_UNLESS_AN_ARRAY(arr) 0
+ # define BARF_UNLESS_COPYABLE(dst, src) \
+ 	BUILD_ASSERT_OR_ZERO(0 ? ((*(dst) = *(src)), 0) : \
+ 				 sizeof(*(dst)) == sizeof(*(src)))
++# define BARF_UNLESS_TYPE_MATCH(var, type) \
++	BUILD_ASSERT_OR_ZERO(sizeof(*(var)) == sizeof(type))
+ #endif
+ /*
+  * ARRAY_SIZE - get the number of elements in a visible array
+diff --git a/parse-options.h b/parse-options.h
+index 997ffbee80..b38a852a8b 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -213,7 +213,7 @@ struct option {
+ 	.type = OPTION_INTEGER, \
+ 	.short_name = (s), \
+ 	.long_name = (l), \
+-	.value = (v), \
++	.value = (v) + BARF_UNLESS_TYPE_MATCH((v), int), \
+ 	.argh = N_("n"), \
+ 	.help = (h), \
+ 	.flags = (f), \
 
+That turns up several more hits, which all seem to be related to
+signed-ness (mostly passing a pointer to unsigned). E.g.:
+
+  git grep --after-context=-1 foo -- builtin/checkout.c
+
+ends up assigning "-1" to an "unsigned" via pointer casting. I think
+that's probably technically undefined behavior, but works OK in practice
+to give you UINT_MAX.  I'd have thought that would give you infinite
+context, so it might even be doing something useful (or at least
+something that users might rely upon), but strangely it doesn't seem to
+(I'd guess very large context values aren't handled in the grep code
+somehow).
+
+So it might be possible to clean these up without hurting anything else.
+
+-Peff
