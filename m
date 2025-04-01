@@ -1,55 +1,55 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F82820371F
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 15:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C73E339A1
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 15:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743519700; cv=none; b=qJCE7QBpnfyHPU10zKxfSf2f8g2yHmGh0SMgfamGXtsp+VGQK6eTTfIvlQJztVbFw0oW8GXNpmPmJniRusNfXn8IzUQj+5I9JAygGC7yz8IOLwmSy2ygrHBLRCqwPvooXD6+dmTeHu6uFRYVBjbtQGvPKfC9hTHQRIph5tvkZ5Q=
+	t=1743519700; cv=none; b=OubY5GHfB63hME9P+6vJTG+Ld+NfFlwLtmvBmlV4WSzIa30a81MmDLfc8Kki2CvDoDiAXg/wfQtPvGKttpJokyX4dtOpav9aJc3VaNkC70sHrKx/2bPTXCzjiiMQ8o824xjizzz+8WhjHK2+6ZBPPURkbAYIv0tg2ik3lzOCGvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1743519700; c=relaxed/simple;
-	bh=kEtEgroEHKGon8qFBeD4JVFuWn63P0HFfjZaYSlll3w=;
+	bh=ZGeTSjroKGU18mROQJXClWNfgsRk/KJxkioMGPedMX4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Zr7wBqKCpgIVXTH0aieHgn8F14ilTU5GGmGQQxwnMg2EuB8WHcTmG3JbDizUc9SkBOLqO25XONtCIhOxWGLYJxEubhJQ1hn+tE0DUA6Nvx/AJWs3Tb3SwarzcTAXv2WJnmldct3xvFG8SnBc2V55EkfasFmBAoQ3K9+gujkZV1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j7+wZyhc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HoO5YTIG; arc=none smtp.client-ip=103.168.172.155
+	 In-Reply-To:To:Cc; b=SWlV5EFiGvKZuBuTqb3lUW3gDeiyOjsX8SXuDEFJ8uxbpX9N0ueH2J2QpuuuTwjpVg0Vvp2qDIeZG+9+wU/1StC1ZruaFtEMw8FBZR9P08e61+1fqLPkcUHNlqQztylhaWgeKYU1WrmpM3RHiq3+FadzD8GpjP/uMLfVFHRM04k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aNxn1WNQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XDeKQPBK; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j7+wZyhc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HoO5YTIG"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 21B911140254;
-	Tue,  1 Apr 2025 11:01:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aNxn1WNQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XDeKQPBK"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B2C00114022C;
+	Tue,  1 Apr 2025 11:01:37 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Tue, 01 Apr 2025 11:01:36 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 01 Apr 2025 11:01:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743519696;
-	 x=1743606096; bh=xNyzShKoWW9NrMXjogQVuu1QV7oavJwG14x+h/XOQW0=; b=
-	j7+wZyhco1fCvwnkx1L+IocwDw6tjklFW3d6y1uKWUpnFCOgloGztMtxe7A24NRr
-	7uqe9jD5tIxynBnSxUHmlGyPfN2LCswXhlmuvE0g0wRyU2DRwVZc4kmGcrvn1QWH
-	k6xrkSmBk8zijNNwiIYV9CXtglitY5wZ1wanYyVRxf5fzNoG9nJltwktZ4ecIsrZ
-	sADRNevvCAnF7vTb0OI5PYvFOnLwFs0Rg2vr7m4oFeapEHc5d8kOxg+nWNxJLJNb
-	tQb94x3l/84aluPX0DqtxENTducer1bWcW0lj/kOLLiN6rg1a9haFkFjRzlgqFoR
-	Iif2Dg7jkG0MjgOjNX1dWg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743519697;
+	 x=1743606097; bh=kAex0Dy5mrlPJfBjFYXvyc1Hxci0zpb9UnlB9VpNgI8=; b=
+	aNxn1WNQz6slGfdq5PvZrabXx9LXYNo/8//Ri2VmPMmTlswa90PfAiKdyCe+R1tx
+	ClJpHivG311dJ1tATB9/JdhvNqBG8/TwHlhmfe3q/vozQT+rdLppyNKZxv6XLDCU
+	3Xjm6Jh3l4ebvWgPBfRdyFLz4soP2If04LLggP3HloFCnjrmS2C05F/1gKLdxHS7
+	e6xlODQUoaFYPLt3LAGQF1HSiiypPHOECIffVcGRCbIw/BkgxS4NgUSR80iXkEQo
+	dFvFVNoHTVBBymhiCNqc/B8iwemEDi8kgbVaBIVlZ55bx+RWGOtwTJprIrxPekAg
+	FkY2UGn7se+7bxUMc7psyQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743519696; x=
-	1743606096; bh=xNyzShKoWW9NrMXjogQVuu1QV7oavJwG14x+h/XOQW0=; b=H
-	oO5YTIGL5fsDCzqwESJ2Xf3qMx+Z5lk7lnHPh4bvLoIE0G+Svkq+wweiCct905Iu
-	VNQKz9miQpwZp4tdrHyDe61g5PhaxERvMhOfV8DmClnlj7OlcQtG08yXRgZRt77T
-	2RQ88Lbq7CNu4JPE7TKW+wDyPcjesBBKfXqDe5UcMRbNa2HessDnAiUv+onajeaj
-	bXQByfn43M/HvjQrKOcxkYf2Lgei5YJuyWI/RfL8Djxo0zVrMAJW39kettCvVzBc
-	iT9TXvTpFDPvamxOW2kZVtNvCa/1JVeAfVHay9BhpMZ35rlvcQdahzr+wqzmQNSs
-	jxN8vaGmnqz5O2EnTw5Rw==
-X-ME-Sender: <xms:zv_rZyKBWyujSH8lfEN8lW5KS-kAL7q5mk5jPlgx9zwBTLbTJRAeKw>
-    <xme:zv_rZ6KjSHusIaPB3Bir_MNJIHXXZ_pqQ21F5LWUDKr2KQwI7z9Genk8-ZHn2M4W5
-    oNut2xF0Pubj33BdA>
-X-ME-Received: <xmr:zv_rZyuQqQ0Qm7XzyfuES_5WMuGd8ureEwVemXCsmFT0fdX-mdqn3pUgYcsLzjL9zekufUedQ8IyoQ9sJDuFsLMxK5wSMissxvHSeJmSwQGPShc>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743519697; x=
+	1743606097; bh=kAex0Dy5mrlPJfBjFYXvyc1Hxci0zpb9UnlB9VpNgI8=; b=X
+	DeKQPBKAlhk6lXtv9Iss5FfK/JTe4dzbRYa0Gb+ngwPbAIGDrMkH9bQEbPCBFOSd
+	HIsN0ZvM2YPlodyANKT7HAcMiUqn3GnKmy0lC2ii6h5SiCpJW712ON7/nnp05dZx
+	fI1tID0NvdkYQQKXVuG0ohLkSzQX+9McfGjrqfOvGbRbcPum5GyAUPhpwd7UK2vT
+	IyZUVXeNlM6K7ThshEDbZc6lci0fMmvhSEgYkRYf1W7PXdj50I2P+OhuDuxabXQ3
+	auZgo/0iYoLgjdbPaCtsGqUoe5dUlL0IDWKxRKWmyXhZH4P0k+Wq6Z7LsPwDAPD3
+	rhCU/ziN39tfr6R9fTWdQ==
+X-ME-Sender: <xms:0f_rZ5XsPB0QbPb08k_5-F1c2YRFa6Ei7lfmL8d_6GlMJ0rD0bFKzQ>
+    <xme:0f_rZ5m10MZbLI3h7BG1uf_cROmGnWAsGUy0VpLI5YDVRhGRDTCBgERtBL5ZfneUs
+    0Ev5NqWZgy6_5IUHg>
+X-ME-Received: <xmr:0f_rZ1YgcTgxR9kV-hue7eZPqCOWSCF-WLCQLDVHKFVkEdmhDqjeQ0h-XPTF421Zqd7KMAOoid89ZHFCfgoIxN8DMkBSit0xXwCcsYolDkFQmjc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeeftdelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -58,27 +58,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeeftdelucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpth
-    htoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsii
-    gvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehglhgruhgsihhtiies
-    phhhhihsihhkrdhfuhdqsggvrhhlihhnrdguvgdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:z__rZ3ZwQJ-8wVsobRirOmHNaZovrhTVliWq1cxmPK_tfZkpZB0tnQ>
-    <xmx:z__rZ5aqhfBNWM01BuyErqVl4ur-Jw3hIhQzYH_PDLo2wA27a1JA6Q>
-    <xmx:z__rZzACW1edYZkY0StaOm334oyeejUjzmqc_bV_KlI79akUGWjIZg>
-    <xmx:z__rZ_aflAyxP9N7pte8KHrFKabMAsYtHN5ui3m-k9ExE7qyOQjn0w>
-    <xmx:z__rZ15airY-vwGP2cwAy2aO7mPbT1B1LQFlVEn-5cVQJxzfWUDPN-l6>
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehtmhiisehpohgsohigrdgtoh
+    hmpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepshhtohhlvggv
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhlrghusghithiisehphhihshhikhdrfh
+    huqdgsvghrlhhinhdruggv
+X-ME-Proxy: <xmx:0f_rZ8V0Y1OPTtBz7tPa9ur_d7vXuUqFx95RKr-Yl6d7_cYmT2O5LA>
+    <xmx:0f_rZzl6IZTo83GmXCXYepTChl8ETbz3MZnMRbZkF1jsvyPBR6o7Jw>
+    <xmx:0f_rZ5fcgsEZ6d8R1fkwl-9wMZFf_Y2IXnjM-4k23dSitficDuTueQ>
+    <xmx:0f_rZ9EnubYjR1hKFpqYcVJHxP2tikfuR5ICgfpQzzgrWQfwTt-jnA>
+    <xmx:0f_rZxXYJricuITsidjYK62xghsgU68Je6FWQzSfYH4OpuisSnJTDqTl>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Apr 2025 11:01:33 -0400 (EDT)
+ 1 Apr 2025 11:01:36 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2a4cf710 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 1 Apr 2025 15:01:28 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id f01c08f6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 1 Apr 2025 15:01:29 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 01 Apr 2025 17:01:17 +0200
-Subject: [PATCH 2/5] parse-options: introduce precision handling for
- `OPTION_INTEGER`
+Date: Tue, 01 Apr 2025 17:01:18 +0200
+Subject: [PATCH 3/5] parse-options: introduce precision handling for
+ `OPTION_MAGNITUDE`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250401-b4-pks-parse-options-integers-v1-2-a628ad40c3b4@pks.im>
+Message-Id: <20250401-b4-pks-parse-options-integers-v1-3-a628ad40c3b4@pks.im>
 References: <20250401-b4-pks-parse-options-integers-v1-0-a628ad40c3b4@pks.im>
 In-Reply-To: <20250401-b4-pks-parse-options-integers-v1-0-a628ad40c3b4@pks.im>
 To: git@vger.kernel.org
@@ -98,127 +98,43 @@ Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
  Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.2
 
-The `OPTION_INTEGER` option type accepts a signed integer. The type of
-the underlying integer is a simple `int`, which restricts the range of
-values accepted by such options. But there is a catch: because the
-caller provides a pointer to the value via the `.value` field, which is
-a simple void pointer. This has two consequences:
-
-  - There is no check whether the passed value is sufficiently long to
-    store the entire range of `int`. This can lead to integer wraparound
-    in the best case and out-of-bounds writes in the worst case.
-
-  - Even when a caller knows that they want to store a value larger than
-    `INT_MAX` they don't have a way to do so.
-
-Funny enough, even if the caller gets everything correct the parsing
-logic is still insufficient because we use `strtol()` to parse the
-argument, which returns a `long`. But as that value is implicitly cast
-when assigning it to the `int` field we may still get invalid results.
-
-In practice this doesn't tend to be a huge issue because users typically
-don't end up passing huge values to most commands. But the parsing logic
-is demonstrably broken, and it is too easy to get the calling convention
-wrong.
-
-Improve the situation by introducing a new `precision` field into the
-structure. This field gets assigned automatically by `OPT_INTEGER_F()`
-and tracks the size of the passed value. Like this it becomes possible
-for the caller to pass arbitrarily-sized integers and the underlying
-logic knows to handle it correctly by doing range checks. Furthermore,
-convert the code to use `strtoimax()` intstead of `strtol()` so that we
-can also parse values larger than `LONG_MAX`.
-
-Note that we do not yet assert signedness of the passed variable, which
-is another source of bugs. This will be handled in a subsequent commit.
+This commit is the equivalent to the preceding commit, but instead of
+introducing precision handling for `OPTION_INTEGER` we introduce it for
+`OPTION_MAGNITUDE`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fmt-merge-msg.c       |  2 ++
- builtin/merge.c               |  1 +
- builtin/show-branch.c         |  1 +
- builtin/tag.c                 |  1 +
- parse-options.c               | 53 +++++++++++++++++++++++++++++++------------
- parse-options.h               |  6 +++++
+ parse-options.c               | 50 ++++++++++++++++++++++++++++++++++---------
+ parse-options.h               |  1 +
  t/helper/test-parse-options.c |  3 +++
- t/t0040-parse-options.sh      | 23 ++++++++++++++++++-
- 8 files changed, 75 insertions(+), 15 deletions(-)
+ t/t0040-parse-options.sh      | 18 +++++++++++++++-
+ 4 files changed, 61 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 240cdb474bc..3b6aac2cf7f 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -24,6 +24,7 @@ int cmd_fmt_merge_msg(int argc,
- 			.type = OPTION_INTEGER,
- 			.long_name = "log",
- 			.value = &shortlog_len,
-+			.precision = sizeof(shortlog_len),
- 			.argh = N_("n"),
- 			.help = N_("populate log with at most <n> entries from shortlog"),
- 			.flags = PARSE_OPT_OPTARG,
-@@ -33,6 +34,7 @@ int cmd_fmt_merge_msg(int argc,
- 			.type = OPTION_INTEGER,
- 			.long_name = "summary",
- 			.value = &shortlog_len,
-+			.precision = sizeof(shortlog_len),
- 			.argh = N_("n"),
- 			.help = N_("alias for --log (deprecated)"),
- 			.flags = PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN,
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 21787d45165..9ab10c7db0a 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -254,6 +254,7 @@ static struct option builtin_merge_options[] = {
- 		.type = OPTION_INTEGER,
- 		.long_name = "log",
- 		.value = &shortlog_len,
-+		.precision = sizeof(shortlog_len),
- 		.argh = N_("n"),
- 		.help = N_("add (at most <n>) entries from shortlog to merge commit message"),
- 		.flags = PARSE_OPT_OPTARG,
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index dab37019d29..b549d8c3f5b 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -671,6 +671,7 @@ int cmd_show_branch(int ac,
- 			.type = OPTION_INTEGER,
- 			.long_name = "more",
- 			.value = &extra,
-+			.precision = sizeof(extra),
- 			.argh = N_("n"),
- 			.help = N_("show <n> more commits after the common ancestor"),
- 			.flags = PARSE_OPT_OPTARG,
-diff --git a/builtin/tag.c b/builtin/tag.c
-index b266f12bb48..7597d93c71b 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -483,6 +483,7 @@ int cmd_tag(int argc,
- 			.type = OPTION_INTEGER,
- 			.short_name = 'n',
- 			.value = &filter.lines,
-+			.precision = sizeof(filter.lines),
- 			.argh = N_("n"),
- 			.help = N_("print <n> lines of each tag message"),
- 			.flags = PARSE_OPT_OPTARG,
 diff --git a/parse-options.c b/parse-options.c
-index 35fbb3b0d63..dbda9b7cfe7 100644
+index dbda9b7cfe7..3954ee0e570 100644
 --- a/parse-options.c
 +++ b/parse-options.c
-@@ -172,25 +172,50 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
- 			return (*opt->ll_callback)(p, opt, p_arg, p_unset);
+@@ -217,21 +217,51 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
+ 		}
  	}
- 	case OPTION_INTEGER:
+ 	case OPTION_MAGNITUDE:
 +	{
-+		intmax_t upper_bound = (((intmax_t) 1 << (opt->precision * 8 - 1)) - 1);
-+		intmax_t lower_bound = -upper_bound - 1;
-+		intmax_t value;
++		uintmax_t upper_bound = 0;
++		unsigned long value;
++
++		/*
++		 * It's stupid, but the obvious way of calculating the upper
++		 * bound via `2 ^ n - 1` overflows.
++		 */
++		for (size_t i = 0; i < opt->precision * 8; i++)
++			upper_bound |= ((uintmax_t) 1 << i);
 +
  		if (unset) {
--			*(int *)opt->value = 0;
+-			*(unsigned long *)opt->value = 0;
 -			return 0;
 -		}
 -		if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
--			*(int *)opt->value = opt->defval;
+-			*(unsigned long *)opt->value = opt->defval;
 -			return 0;
 -		}
 -		if (get_arg(p, opt, flags, &arg))
@@ -227,206 +143,173 @@ index 35fbb3b0d63..dbda9b7cfe7 100644
 +			value = opt->defval;
 +		} else if (get_arg(p, opt, flags, &arg)) {
  			return -1;
--		if (!*arg)
-+		} else if (!*arg) {
- 			return error(_("%s expects a numerical value"),
+-		if (!git_parse_ulong(arg, opt->value))
++		} else if (!git_parse_ulong(arg, &value)) {
+ 			return error(_("%s expects a non-negative integer value"
+ 				       " with an optional k/m/g suffix"),
  				     optname(opt, flags));
--		*(int *)opt->value = strtol(arg, (char **)&s, 10);
--		if (*s)
--			return error(_("%s expects a numerical value"),
--				     optname(opt, flags));
 -		return 0;
-+		} else {
-+			value = strtoimax(arg, (char **)&s, 10);
-+			if (*s)
-+				return error(_("%s expects a numerical value"),
-+					     optname(opt, flags));
-+
 +		}
- 
-+		if (value < lower_bound || value > upper_bound)
-+			return error(_("value %"PRIdMAX" for %s not in range [%"PRIdMAX",%"PRIdMAX"]"),
-+				     value, optname(opt, flags), lower_bound, upper_bound);
++
++		if (value > upper_bound)
++			return error(_("value %"PRIuMAX" for %s exceeds %"PRIuMAX),
++				     (uintmax_t) value, optname(opt, flags), upper_bound);
 +
 +		switch (opt->precision) {
 +		case 1:
-+			*(int8_t *)opt->value = value;
++			*(uint8_t *)opt->value = value;
 +			return 0;
 +		case 2:
-+			*(int16_t *)opt->value = value;
++			*(uint16_t *)opt->value = value;
 +			return 0;
 +		case 4:
-+			*(int32_t *)opt->value = value;
++			*(uint32_t *)opt->value = value;
 +			return 0;
 +		case 8:
-+			*(int64_t *)opt->value = value;
++			*(uint64_t *)opt->value = value;
 +			return 0;
 +		default:
 +			BUG("invalid precision for option %s",
 +			    optname(opt, flags));
 +		}
 +	}
- 	case OPTION_MAGNITUDE:
- 		if (unset) {
- 			*(unsigned long *)opt->value = 0;
+ 
+ 	default:
+ 		BUG("opt->type %d should not happen", opt->type);
 diff --git a/parse-options.h b/parse-options.h
-index 997ffbee805..8d5f9c95f9c 100644
+index 8d5f9c95f9c..4b561679581 100644
 --- a/parse-options.h
 +++ b/parse-options.h
-@@ -92,6 +92,10 @@ typedef int parse_opt_subcommand_fn(int argc, const char **argv,
-  * `value`::
-  *   stores pointers to the values to be filled.
-  *
-+ * `precision`::
-+ *   precision of the integer pointed to by `value`. Should typically be its
-+ *   `sizeof()`.
-+ *
-  * `argh`::
-  *   token to explain the kind of argument this option wants. Does not
-  *   begin in capital letter, and does not end with a full stop.
-@@ -151,6 +155,7 @@ struct option {
- 	int short_name;
- 	const char *long_name;
- 	void *value;
-+	size_t precision;
- 	const char *argh;
- 	const char *help;
- 
-@@ -214,6 +219,7 @@ struct option {
+@@ -281,6 +281,7 @@ struct option {
  	.short_name = (s), \
  	.long_name = (l), \
  	.value = (v), \
 +	.precision = sizeof(*v), \
  	.argh = N_("n"), \
  	.help = (h), \
- 	.flags = (f), \
+ 	.flags = PARSE_OPT_NONEG, \
 diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
-index 997f55fd45b..b1275dfade4 100644
+index b1275dfade4..46deb4317ef 100644
 --- a/t/helper/test-parse-options.c
 +++ b/t/helper/test-parse-options.c
 @@ -120,6 +120,7 @@ int cmd__parse_options(int argc, const char **argv)
  	};
  	struct string_list expect = STRING_LIST_INIT_NODUP;
  	struct string_list list = STRING_LIST_INIT_NODUP;
-+	int16_t i16 = 0;
++	uint16_t m16 = 0;
+ 	int16_t i16 = 0;
  
  	struct option options[] = {
- 		OPT_BOOL(0, "yes", &boolean, "get a boolean"),
-@@ -139,6 +140,7 @@ int cmd__parse_options(int argc, const char **argv)
- 		OPT_NEGBIT(0, "neg-or4", &boolean, "same as --no-or4", 4),
- 		OPT_GROUP(""),
- 		OPT_INTEGER('i', "integer", &integer, "get a integer"),
-+		OPT_INTEGER(0, "i16", &i16, "get a 16 bit integer"),
+@@ -143,6 +144,7 @@ int cmd__parse_options(int argc, const char **argv)
+ 		OPT_INTEGER(0, "i16", &i16, "get a 16 bit integer"),
  		OPT_INTEGER('j', NULL, &integer, "get a integer, too"),
  		OPT_MAGNITUDE('m', "magnitude", &magnitude, "get a magnitude"),
++		OPT_MAGNITUDE(0, "m16", &m16, "get a 16 bit magnitude"),
  		OPT_SET_INT(0, "set23", &integer, "set integer to 23", 23),
-@@ -210,6 +212,7 @@ int cmd__parse_options(int argc, const char **argv)
- 	}
- 	show(&expect, &ret, "boolean: %d", boolean);
+ 		OPT_CMDMODE(0, "mode1", &integer, "set integer to 1 (cmdmode option)", 1),
+ 		OPT_CMDMODE(0, "mode2", &integer, "set integer to 2 (cmdmode option)", 2),
+@@ -214,6 +216,7 @@ int cmd__parse_options(int argc, const char **argv)
  	show(&expect, &ret, "integer: %d", integer);
-+	show(&expect, &ret, "i16: %"PRIdMAX, (intmax_t) i16);
+ 	show(&expect, &ret, "i16: %"PRIdMAX, (intmax_t) i16);
  	show(&expect, &ret, "magnitude: %lu", magnitude);
++	show(&expect, &ret, "m16: %"PRIuMAX, (uintmax_t) m16);
  	show(&expect, &ret, "timestamp: %"PRItime, timestamp);
  	show(&expect, &ret, "string: %s", string ? string : "(not set)");
+ 	show(&expect, &ret, "abbrev: %d", abbrev);
 diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 2fe3522305f..e3ca7a27738 100755
+index e3ca7a27738..5f503b26cc8 100755
 --- a/t/t0040-parse-options.sh
 +++ b/t/t0040-parse-options.sh
-@@ -22,6 +22,7 @@ usage: test-tool parse-options <options>
- 
-     -i, --[no-]integer <n>
-                           get a integer
-+    --[no-]i16 <n>        get a 16 bit integer
+@@ -25,6 +25,7 @@ usage: test-tool parse-options <options>
+     --[no-]i16 <n>        get a 16 bit integer
      -j <n>                get a integer, too
      -m, --magnitude <n>   get a magnitude
++    --m16 <n>             get a 16 bit magnitude
      --[no-]set23          set integer to 23
-@@ -136,6 +137,7 @@ test_expect_success 'OPT_MAGNITUDE() 3giga' '
- cat >expect <<\EOF
- boolean: 2
+     --mode1               set integer to 1 (cmdmode option)
+     --mode2               set integer to 2 (cmdmode option)
+@@ -139,6 +140,7 @@ boolean: 2
  integer: 1729
-+i16: 0
+ i16: 0
  magnitude: 16384
++m16: 0
  timestamp: 0
  string: 123
-@@ -156,6 +158,7 @@ test_expect_success 'short options' '
- cat >expect <<\EOF
- boolean: 2
+ abbrev: 7
+@@ -160,6 +162,7 @@ boolean: 2
  integer: 1729
-+i16: 9000
+ i16: 9000
  magnitude: 16384
++m16: 32768
  timestamp: 0
  string: 321
-@@ -167,7 +170,7 @@ file: prefix/fi.le
- EOF
+ abbrev: 10
+@@ -171,7 +174,7 @@ EOF
  
  test_expect_success 'long options' '
--	test-tool parse-options --boolean --integer 1729 --magnitude 16k \
-+	test-tool parse-options --boolean --integer 1729 --i16 9000 --magnitude 16k \
- 		--boolean --string2=321 --verbose --verbose --no-dry-run \
+ 	test-tool parse-options --boolean --integer 1729 --i16 9000 --magnitude 16k \
+-		--boolean --string2=321 --verbose --verbose --no-dry-run \
++		--m16 32k --boolean --string2=321 --verbose --verbose --no-dry-run \
  		--abbrev=10 --file fi.le --obsolete \
  		>output 2>output.err &&
-@@ -179,6 +182,7 @@ test_expect_success 'abbreviate to something longer than SHA1 length' '
- 	cat >expect <<-EOF &&
- 	boolean: 0
+ 	test_must_be_empty output.err &&
+@@ -184,6 +187,7 @@ test_expect_success 'abbreviate to something longer than SHA1 length' '
  	integer: 0
-+	i16: 0
+ 	i16: 0
  	magnitude: 0
++	m16: 0
  	timestamp: 0
  	string: (not set)
-@@ -253,6 +257,7 @@ test_expect_success 'superfluous value provided: cmdmode' '
- cat >expect <<\EOF
- boolean: 1
+ 	abbrev: 100
+@@ -259,6 +263,7 @@ boolean: 1
  integer: 13
-+i16: 0
+ i16: 0
  magnitude: 0
++m16: 0
  timestamp: 0
  string: 123
-@@ -276,6 +281,7 @@ test_expect_success 'intermingled arguments' '
- cat >expect <<\EOF
- boolean: 0
+ abbrev: 7
+@@ -283,6 +288,7 @@ boolean: 0
  integer: 2
-+i16: 0
+ i16: 0
  magnitude: 0
++m16: 0
  timestamp: 0
  string: (not set)
-@@ -343,6 +349,7 @@ cat >expect <<\EOF
- Callback: "four", 0
- boolean: 5
+ abbrev: 7
+@@ -351,6 +357,7 @@ boolean: 5
  integer: 4
-+i16: 0
+ i16: 0
  magnitude: 0
++m16: 0
  timestamp: 0
  string: (not set)
-@@ -368,6 +375,7 @@ test_expect_success 'OPT_CALLBACK() and callback errors work' '
- cat >expect <<\EOF
- boolean: 1
+ abbrev: 7
+@@ -377,6 +384,7 @@ boolean: 1
  integer: 23
-+i16: 0
+ i16: 0
  magnitude: 0
++m16: 0
  timestamp: 0
  string: (not set)
-@@ -447,6 +455,7 @@ test_expect_success 'OPT_NUMBER_CALLBACK() works' '
- cat >expect <<\EOF
- boolean: 0
+ abbrev: 7
+@@ -457,6 +465,7 @@ boolean: 0
  integer: 0
-+i16: 0
+ i16: 0
  magnitude: 0
++m16: 0
  timestamp: 0
  string: (not set)
-@@ -783,4 +792,16 @@ test_expect_success 'magnitude with units but no numbers' '
- 	test_must_be_empty out
+ abbrev: 7
+@@ -804,4 +813,11 @@ test_expect_success 'i16 limits range' '
+ 	test_grep "value -32769 for option .i16. not in range \[-32768,32767\]" err
  '
  
-+test_expect_success 'i16 limits range' '
-+	test-tool parse-options --i16 32767 >out &&
-+	test_grep "i16: 32767" out &&
-+	test_must_fail test-tool parse-options --i16 32768 2>err &&
-+	test_grep "value 32768 for option .i16. not in range \[-32768,32767\]" err &&
-+
-+	test-tool parse-options --i16 -32768 >out &&
-+	test_grep "i16: -32768" out &&
-+	test_must_fail test-tool parse-options --i16 -32769 2>err &&
-+	test_grep "value -32769 for option .i16. not in range \[-32768,32767\]" err
++test_expect_success 'm16 limits range' '
++	test-tool parse-options --m16 65535 >out &&
++	test_grep "m16: 65535" out &&
++	test_must_fail test-tool parse-options --m16 65536 2>err &&
++	test_grep "value 65536 for option .m16. exceeds 65535" err
 +'
 +
  test_done
