@@ -1,50 +1,49 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B55202C43
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 16:22:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDEB1AF0BB
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 16:30:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743524548; cv=none; b=YGA3T+7uJKBkoXVhl3hYLoC6QcErfx4IdAbHIfKonvDBL3eiygGDZQpNSCrHXmeCQZHu7s/GRPA869+LX1Y/WsUt5PEzSPopZnMTLB77HilyFzWCgk57TnbH3RuJI/Hg+bvR7Qa/tLA5TxIQ2PIHEumIXYz1govFz/tjBoR/yN4=
+	t=1743525027; cv=none; b=YP8sIRbzJiXs3YggUc7vQddL1ie9bRgYu0v27Z+t8UxCoh6mOP4VKGst9LU7vp9crctB85N+sOssm4+iNnQhfQj5S2nwjhHr2rIwaVoQQPaaTk3MKcrhOtkQQfmNjtfCm+v9FQuBV03QqDnZJ55merCtqKdP4xzR7UF6NB7HM6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743524548; c=relaxed/simple;
-	bh=lr8af3UnEhnPj+iDcjRmbGnpOPB+04wKPGMGLwcbw2E=;
+	s=arc-20240116; t=1743525027; c=relaxed/simple;
+	bh=TfT+DPHGcI8E+ueXUab6Xcp+WXMcm+DxF9UZlEdjhz8=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=CKLZNWVX81dc3GQHNC7Pu/LeESeV60WUs7ZTzFCPMDXG2SvLni0stwzOrbnM2MbEjnG7IffFxPmmqDz/i2DCJUgt6Xipz3aTAnmRBZ4cGDLL0Nx4wMpRxUJx9mHb3M6mpC+2HUcBOaUtxYtLLUQq1AH5UZNnUXlyRT8E1ChxQZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=S49Ku6MS; arc=none smtp.client-ip=212.227.15.18
+	 MIME-Version:Content-Type; b=FtWwH8VTPd0RaCRml50szDHpMZcqXBhupEo9tj4NDxCrBfzdVWh9WZ+bE2Rd752aDui99tMI1LCKoBUliO1CY6k1T4l1BDCjl6WeY+Yzvu7Tso8UoitKSZA8pbAECeJ1xRe+OiX5Emt/LmWtE1jh8/KBJtuyqbX8I2ouCWqm65o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=BCxfK4L5; arc=none smtp.client-ip=212.227.15.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="S49Ku6MS"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="BCxfK4L5"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1743524544; x=1744129344;
+	s=s31663417; t=1743525002; x=1744129802;
 	i=johannes.schindelin@gmx.de;
-	bh=lr8af3UnEhnPj+iDcjRmbGnpOPB+04wKPGMGLwcbw2E=;
+	bh=0NVbUTg4s7jChTAsmrVqBxyU0PFARtL1IJRjK3m7Wao=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=S49Ku6MSJTBU0p2RJu/rz/5RKyzmbS5VL3ObqQ4wpljH5gRPZdSTniAjRLW6yyt1
-	 5b5rORE4elxw7cue/g8PIfCAG+tbDM8VZI6qhimlDRS0t57r3OSYfNItBYuawdY8Z
-	 p4Q3lJCnAJLDwz3eBGYZWHrl4Lymtk6AR7T+ygo/HxfQdsDqGPnw2Bj1XbYlTW9RZ
-	 N0w+l+NVPcAPkTNBxf5LcuQWDKbpXE26Xv5ij4MLKRxzLIUigx7+/r1IZnqvgykJ7
-	 53GUdwrxSOnz6Hfx+DVnBd0Ua/xR+yWnqoj0nm0TCKpVet4DGnLREyeXsWiZvlz6g
-	 MnsAZlf0yyjXpoQnJw==
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=BCxfK4L5IfBNUW7+F075hlE7OSpOZk7kfa+A/Wnwzk2D582Cu+o7xejmNvyIOGkn
+	 1XI9aoAH+/leT7g6VPEBlhVyWoVBnNP2vjTBa00RsaHtAdfdLk4gholJy+d3cm4eI
+	 hOCtPEjQwE8hXJt8IMqAr5MFOJ3IxEiYKv/NSlP6Q8nxOmpDVpfHkmHBeR9nQUZe8
+	 Qkew+p0wtw664vtjQwE1IpYDbK2hoEDvPqGKxD251T88ixSKjak1lsWL97UPO33Qh
+	 EEQwehYdd7GU69Ps7p0RZX9YfutjNd/oIque6nz0aDgWufRaTbvN3iGwHgVpTRVwo
+	 wSZjYJ8HdAz+hQdJZw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MEm6L-1ttttr29bn-004RYb; Tue, 01
- Apr 2025 18:22:24 +0200
-Date: Tue, 1 Apr 2025 18:22:24 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGz1V-1tw68n15Xf-006dLK; Tue, 01
+ Apr 2025 18:30:02 +0200
+Date: Tue, 1 Apr 2025 18:30:01 +0200 (CEST)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>, 
-    Philippe Blain <levraiphilippeblain@gmail.com>, 
-    Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH 3/3] wt-status: suggest 'git rebase --continue' to conclude
- 'merge' instruction
-In-Reply-To: <db01acdd062a17b1cca62428eba8c3ed62ca7c6a.1743181401.git.gitgitgadget@gmail.com>
-Message-ID: <0bd7e0c1-fe73-9e16-0737-d6b175a60dd3@gmx.de>
-References: <pull.1897.git.1743181401.gitgitgadget@gmail.com> <db01acdd062a17b1cca62428eba8c3ed62ca7c6a.1743181401.git.gitgitgadget@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+    Sam James <sam@gentoo.org>, Eli Schwartz <eschwartz@gentoo.org>, 
+    Thorsten Glaser <tg@debian.org>, Peter Seiderer <ps.report@gmx.net>
+Subject: Re: [PATCH v2 2/5] gitweb: fix generation of "gitweb.js"
+In-Reply-To: <20250331-b4-pks-collect-build-fixes-v2-2-6b06136808f3@pks.im>
+Message-ID: <e9ea3630-a831-dec5-e461-3f550ceb7ec3@gmx.de>
+References: <20250331-b4-pks-collect-build-fixes-v2-0-6b06136808f3@pks.im> <20250331-b4-pks-collect-build-fixes-v2-2-6b06136808f3@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -52,52 +51,54 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:vafoj6lgZzSd3q0O8lWu4rB0jxaq2Y3FLOzPe74GPbsVqgUzVAL
- wFe31nLehGe0bdJoq+PZZGIy2EPnTcnt9ooOZtl+hZZVGHSCliyRnnhuY1E0PlsNqeHwvrp
- edEyjR1+Ynlqj1YJG7gp8J60fctpTSsEfbkNDhX4aV/JNaKBAa2lUeTSNYxHhLtfUvtgtMS
- E+W773Ck8y5uF0+FffG+g==
+X-Provags-ID: V03:K1:VvX1clHgrx5AUeGDp67AP2ccZajmZZyO+8+ITd/mJJ5otg1fnI5
+ w1SCRnzJC63qdcUW/vtW7DnpKjCwUNdNj+fBK+mhTeOoRqAavf7ECe1G/lCWv2xYDrr9NUg
+ x1O4wdMKkKpwBMBx1hUoUXevsalY3SmkhdIupLnbFp5Zk9ciqwIyo8bvUagtLQD2NdTWAsB
+ 984bduG3iXy2Fwj/9hi7Q==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:v2CpJolqdZk=;JsbvGCqeudzRKcPzFl8Bo6CHNY4
- WMotfLM8NpVVcZEzrS6YJ3C+gRVrNlLjSvpczAU1S5RqhuHKPZrVz/IGx1VtAYw4qXaSyWZfG
- e/oUWRMUYyLzvJAVJFmua7mZjkqcBHRGAvRb756USJYbjJP1dFKytkmbKSuHg1jRKacwF+KTF
- t79OKFOfDyO0zSDHTB48Icz6R4xyag94xz/piMN5c/PzsDZV+vpNDvFsWuZH+SwYy6QIGbMxN
- CCBfwEp1FqFuDrqI4Mk0i6J1NIKhqI1hLQ/1yg0oqwcdijrmnKYTc6SG7IrELWCK0/+jSBq18
- zQ4zeBdqt5HHX9W3Zb26lpnOjcJZXY5q3LpovNqADbrTkm6soXBe3qlSuyFBSzbhAX/Ycwnfx
- tva+p2Rz9ORgXyPzcBohXwfZu7Esy1u9So6aFPHfJD4/uXo3in1eScyOc7ur0dfpsnC31HYfB
- aAgZdI4JYUcq7zHIuW4KIQdN5qETWVDiqA8lNjRA08Jqi0cSqH3yVP3jJDUrEN+8MToTqqvBa
- iRSWsES6FCFR1niRzTzEMIuTOT2p3oQJ3oQdjvLwCjM7scT53Bg2JGP8jFueD7jjmnUhnZ5RX
- vyaaQeQCAUS7JM+kr+xuPnij73eTGV9LNuDCbxp02jqlQP+xggV5b4xK8tUBWfiDedortJRMA
- DdYXtjqnNpPBO6NdJ7QhfEvKvbBc1+LnlkOLjVHUAFpRIbpEZGNHeXhCweqsdaIgfvt5WMPf5
- wZa/5N0oyHhUiecMfcyTEoWzmyduq8G6rdx+71mzJiCUlzNNRqVz7/MQYKkqPuLMoPmTjPgJT
- 5+6rCG9l5vx7vSotgVrq0orgBi/BNAM0Q9xSNX2XmL2oQyZNafz88lpukIb4zRRYbTtrgmAbM
- 5ZHxuXezTUUs1mYH91ZK1aIatU1XhLMoxZWnUyM50H9WeSBqEc6V6DMPGBQWXVxoY/D+iNV9t
- a2T3x4GDjEL5A63gImMjxsv32JoJl7d6Okfof3XJAytuedCpk8zsti+r8+Tcnx/2amekPbJjL
- 0HUS3SqdCScdiXoUurmDvyo3ty6TR39PaxTMIfg4CBmtkDS9kf8qp8VhOTz4Db/RyxCHNMBDo
- UAyWQ9Q39u8LXy7IE9YnEx9clNEUjpHVn7Tfpg5bWbYc0dsTdc0lF3hnOMVx8m9d+sKawORiR
- c9PuCEs6SzcVup59oU9VeCpErPY/tGSWyL7nZOeyr+hfscQXk9rrxWuw8RU2NZ4U6jiXfrQj3
- Anqlovp16oEgquLSz9aFrzM4worinV0yUF3Ka739Efwdum7kSF1l1RUcQ6dKJyQ+tIBjc9YOn
- tgj3DTZaogUdNbKhkX1wzoQfu7ruHQnaAaZjICBWtWckKr18qr20Bw5XONSLkVoB2TEVWZe+o
- qTt/obz3LKu/6QEdWC78AhIRHked1ROOTgMACHYac7DxcHlvap9TYDOFWOfjrgscB1kSiqly3
- T+Zd/yyc3GvwAUR9mDkT8q0xqtHvYc2QK3YWJ9GSyHsCBpUFE
-Content-Transfer-Encoding: quoted-printable
+UI-OutboundReport: notjunk:1;M01:P0:+9PrDIZwJXU=;3nkMzUShpp5pmsIfYsrmqMFS7+2
+ tD85MQ/kaZUf6FpxQ7ftJilH2o4MC05AfwYruD2Rlcpa/6+xML3SBssffd7vbKGBkrsMIxfyz
+ OoTNJpxMq2OtMct7QWfcbHmEMqfPwa/XQsLz7ASrUtDMmP6uAcVNbYbAbrDCT6+HpK/Ag2TiM
+ LtKMqKpCwzBEJuNJZ/ZjfpLJP1ILdwY6fc0s4UUdeg3lAXhTEFYGbqTXEG2L4894720ww1lfb
+ sJkpqOvd9g+ewCh8aLwAgNfnfwA9LgkJIwGJPkl0XaQvXIJwyHVlhc+YK8cWcHjEVpXwgtzn/
+ RfOoPkt9bltDPV3bv6YWe8tkCFnp9lO91esgKNkVGEnJO3M3IxkH4zk3Cy+uQ6swKBlzkwmGp
+ +VaSHzLhhT6pgchCU4FOPgL8ZyRsD0vDew8onoURnN2wXU6pYtDbS4//symem7LulTe7YBMzK
+ zmuR4Ayed23L4qLtc2OM8V1S4GteOwpzXkkMtPUIEDIWWDSY5LBwNxdk+dC4nklh7bzi5zAZx
+ /9Idxdz0AbnEUjCk8wAlaH5wFkaSHz/B00JiNZImmghDYtiLAHe6WX6wrYrlbM3TgGxbW9HW1
+ NjRYPy++YzkSM0Dffz0XSeHGAfh7ITJwP4qwyPlMybun1xgaU6Qna5Wi6hXAxMnRIGgesi9i5
+ yQEoiAAcSL/K7Mvk54ekZvr1ySBdoU/YX7SmKUXCipUR7c/KhAd4LWcYpfYZKvKQ7GhM+L2PA
+ uQg3mzKyTFUZMwLdcFb/IdT/B2h6qdyikt22UZdmkcs6EfPW/iYO1zJfEvDGHopujsD+NaNLA
+ muWlxpFnQkWQmOG0kvIRTP1v+4q211/SMzZeOOVe/2bX2RtPuEn0FNjvHIIlRCrPbx6lxfS+Z
+ mQjTFz1S+znQHYE94bgVzmPnPVbUp13ZlELZ6p4zWGCoCAs6Tu/R2yNY52QJi8YT1wwEwrHmq
+ GOi3uCaEd8Vqq1kSA7jc8n4QdvQzY0HbU6nY3Xhwc65vGY7RmKRfmkS1O6kn6xval4ZEP1euB
+ guOkd9AyR+QVMsyeATIFq12tUQEblbrMnUZWeuab11bA6vkqRH4ZHX3FAE6Ra9jQkaLAJ4rtT
+ mTSVMaNLqLRPBBVgYbqteMBuQ8RB4HmhOuaUo5aL5Ae5T+YxLvd93AmoS4NrFGhUE9DSSaZEU
+ q2cTC79ZMiogvoNpY3I/65JM0h2c/vY6M7+nfu4imj/GYiqFz+s1ztmLXVOm4U+CGaG6g7R2c
+ AtagZOtQvqXAATyM8cHmOOe/N8tiIsQEa+J+lO5hWTxiv+AGxuMEpNHQHmjQkG1fJyydzeHSU
+ nWcTAxMLaF0ob2Z5EQXwQd0AByf3KE2lLBQ1an4KssGKbqCQHcjDVheT/Cm97teNlonhKnoxm
+ qykfRAP3NzjZnb5iJn2mVLWL/Ymeh5NRl8KT/zZ0JBN4OSPuuZ6CLWKHHxhMj5sbOHkqmmnpQ
+ K7xL6tYBXNZAJy9w/3SEbJydHx4XxH785JwbQZCj5AgOFVty4
 
-Hi Philippe,
+Hi Patrick,
 
-On Fri, 28 Mar 2025, Philippe Blain via GitGitGadget wrote:
+On Mon, 31 Mar 2025, Patrick Steinhardt wrote:
 
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
->
-> Since 982288e9bd (status: rebase and merge can be in progress at the
-> same time, 2018-11-12), when a merge is in progress as part of a 'git
-> rebase -r' operation, 'wt_longstatus_print_state' shows information
-> about the in-progress rebase (via show_rebase_information), and then
-> calls 'show_merge_in_progress' to help the user conclude the merge. This
-> function suggests using 'git commit' to do so, but this throws away the
-> authorship information from the original merge, which is not ideal.
+> diff --git a/gitweb/Makefile b/gitweb/Makefile
+> index d5748e93594..26a683d4421 100644
+> --- a/gitweb/Makefile
+> +++ b/gitweb/Makefile
+> @@ -118,7 +118,7 @@ $(MAK_DIR_GITWEB)gitweb.cgi: $(MAK_DIR_GITWEB)gitweb.perl
+>  $(MAK_DIR_GITWEB)static/gitweb.js: $(MAK_DIR_GITWEB)generate-gitweb-js.sh
+>  $(MAK_DIR_GITWEB)static/gitweb.js: $(addprefix $(MAK_DIR_GITWEB),$(GITWEB_JSLIB_FILES))
+>  	$(QUIET_GEN)$(RM) $@ $@+ && \
+> -	$(MAK_DIR_GITWEB)generate-gitweb-js.sh $@+ $^ && \
+> +	$(MAK_DIR_GITWEB)generate-gitweb-js.sh $@+ $(filter %.js,$^) && \
+>  	mv $@+ $@
 
-It is unfortunate that we cannot fix this, as `git commit` with an
-interrupted `pick` _would_ retain authorship, right? (Why is that so? Can
-we really not use the same trick with `merge`s?)
+A safer way might be to use `$(filter-out %.sh,$^)` just in case the
+Javascript libraries might at some stage be renamed (I could imagine, for
+example, that someone aims for ideological purity and renames them to
+`*.cjs`).
 
 Ciao,
 Johannes
