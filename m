@@ -1,263 +1,206 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3191494DB
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 18:55:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DBA1DE2B4
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 18:56:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743533732; cv=none; b=o43Mb9aAzQjzgqpz9Hdc2wD1biJL4aN1+eAz/OSZ6/H3h78iA5yxNrzYy3n1C4vWPE5FVeCo56ffkQrg4KtRw0NoC7aa+k1y0DiUR3e6qPbEMYoblxyBSN5Qvj++wIpgZSfIAUrDdol05qnkFa5uZnKJVz7tDDgch77FGa86hos=
+	t=1743533811; cv=none; b=Wdc0tPyNW64p5Q50fwZWSmik5BiextuU+/7CX7WBTitCyKL4XR6gtQGEDN5sTQgEr0brqe2cQ48/mXT1wdlIlZdoGjrzXiml+OHILbkNizRW3KcPx2XddCDlSvgwS5+EsnVbaU22BaGAIwlKOqpeAA7wb1U64qtNO0deA+Wh4SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743533732; c=relaxed/simple;
-	bh=/DqQXbv8O/MLVJ2KMsdD/CTIpO4bOmfTXCOzZjiuJ44=;
+	s=arc-20240116; t=1743533811; c=relaxed/simple;
+	bh=0yZcYe8pmVw/nnOwzJEDk3tdyBLzfyxQmiIrek5AYcs=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=mc2FeaH+RmboyWxB2JzMlqQqUaX9jX4rV4Y36lvcR1NjwoJnEdEeG+S4jYN7Jrw6ZrMTgxPdaRD3/AgCjcUK48O7WKD6M2p4Ui6JB8hhUaHJpmMBVsK2t9b/sfw7Pu8Prkj3I56s/S6cb0A6a1FPQtkYRVjnyXoqdU+mt6mNsxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=Sil7oQdE; arc=none smtp.client-ip=212.227.15.18
+	 MIME-Version:Content-Type; b=FO8W5OOKtz7YuQC3Og2uS4ruvHVMOeFg8sjkBIgcZVhUCjgBu+9m/T2FWb3hhF7Oky77p9fcz8IML9RUfNwOqCrpyMuNqij2CZRy/H4ZbWsl58BJYNQiGq67FU9ig5M6iSvK25Nu3M+9FqWV10lApXYIxITchcAc0Jwf2SM8hzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ASi7WO9A; arc=none smtp.client-ip=212.227.15.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="Sil7oQdE"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ASi7WO9A"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1743533723; x=1744138523;
+	s=s31663417; t=1743533802; x=1744138602;
 	i=johannes.schindelin@gmx.de;
-	bh=RQ3dtu90cus3I47CpDLMtD23mtwjdnomVMT0+kQVC8A=;
+	bh=/MOjZPQLBHdND7bQ3c3p9KeiCP/GYOGKXjw/KAkJJkE=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=Sil7oQdErxvicR6geO4gRv4XIwLV6mewj6hJOr7HiaPoWtyMO4nlq4/EzBT/CYMU
-	 M393hprcnmL6bAKaIrwdZv9N+e5FwPU8LxxXdlcVsnLL3C/3habgvvzOJsnKHdDzd
-	 S5FdjqeuDjVcar3DgeLwOEWBfGspScoWLijcHQ6zxFW0V4NZDBzNoMQ5k0wQXCYYk
-	 xIYkF+qxhE/EmjBjvgJlXA91Hu2r5NI+aDEb6GptXZibl6zPwXAanb1SQCyhb1Lsn
-	 oFlsi3naarLcAHBI4ILUoRcGc8FgPeAxgGmp60ccSTmeqdiVZGg3iuvYJAwi92uqo
-	 eVB9TKJ40ynbGIqplQ==
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=ASi7WO9AomOd4qQUjzhqmWZEGG1votknk6BtuI9cgv8IpgR1OFLP8rXZxUK+res2
+	 nWpwW2oX7y09yRIig0F3CbjqW5hEi3rNsQKv1IqN5opSNqWHG8DAHIP11Y0dBGcsF
+	 wVYpZiyvQGYbn77nGi7rM9Olv4rsVmgBcq+EsUfLAs8hwDAuiRKp3qP6pHlGQ/tko
+	 c7OjA1kzXss5UBLwq/TI7YabvZ2Lda51bBYklKnaLTravkuRm5xXclB+jNlJt216L
+	 x+1SDvm9PnCuaJaZ1rdIcMihwuEUsVh7c2mNNozoV5F63aAngpz/4MNx+eS4xJhfJ
+	 CWO6fWV1Aotza39Kaw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M72oH-1u1bEr3rxP-000Z6G; Tue, 01
- Apr 2025 20:55:22 +0200
-Date: Tue, 1 Apr 2025 20:55:22 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M8ykW-1u3W0t44k2-00321h; Tue, 01
+ Apr 2025 20:56:42 +0200
+Date: Tue, 1 Apr 2025 20:56:41 +0200 (CEST)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Patrick Steinhardt <ps@pks.im>
 cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>, 
     Karthik Nayak <karthik.188@gmail.com>, 
     Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 13/20] t: refactor tests depending on Perl for textconv
- scripts
-In-Reply-To: <20250327-b4-pks-t-perlless-v3-13-b436de9da1b8@pks.im>
-Message-ID: <9f477166-5667-a051-13d3-43d56a7a8ec1@gmx.de>
-References: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im> <20250327-b4-pks-t-perlless-v3-13-b436de9da1b8@pks.im>
+Subject: Re: [PATCH v3 14/20] t/lib-gpg: refactor `sanitize_pgp()` to not
+ depend on Perl
+In-Reply-To: <20250327-b4-pks-t-perlless-v3-14-b436de9da1b8@pks.im>
+Message-ID: <c909b89f-7432-2d35-cfdb-0de9f94a7281@gmx.de>
+References: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im> <20250327-b4-pks-t-perlless-v3-14-b436de9da1b8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1264349400-1743533723=:31313"
-X-Provags-ID: V03:K1:lYYIesqHa+g7eeokmD9LLz0GWcKlPWfC1XKohWqGZuG8T/lAn5r
- Lf4Zq6Fcl7URYNSumSv99+WfD2Y6o2F5+n2TS4/LkWVPeU7lLkcV/4Lb8ODDiEVWsYLOEcq
- 2m/Jcq2snTMKF6MCuI4qmyhOcaYsOE7u9kDv6wpmVVi4PIM/MznAcB85YBCLHrHJSZkS7Ph
- VrsQ8qHZSZRU++TX65cEA==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:dhLFloEEiQSv4fz6WmpeCrCdTi5GdHfDwnTvrUjkLDfx7gQEfRJ
+ nz0GzKdwd5JU0+OPJqyFD4lSGO/dle0fnISUpNHFT1tfsaPbvpA77BtZ7Lwh9qMgLNUQ+Fk
+ kKunqRaS4REyOQFX9bbe+HIgI6w/gmSb/C//TZiYvWBh0BWfHJ+hEozKejdOvCCmeA/vViB
+ Y9h8ikymzvpiLqzofovkQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:KJlacfZO6BQ=;Ib3jy6U32WatCR3FrJNviIeHkm6
- okwPzkCA0lC0aFfGqXNE8nG5dLLo4Cb/dcYeTz6HsANf/7XdXHIh/2mtge2VsXyuPP8Ho75T3
- 3gdWU72Ts4UzVKwKVsnKEgS5w++g8tXOeo0RDRaJlOcm1/EbXSEeJyQu8AudzceabuLva3L/N
- /Rt9xzPfouI12BDP3mBqmzfdiAAx+6fwBNwp8BGA7fvwrJSkGhkhZLpcMdmVjYAAal/57Gt2w
- gbcsOrTzxgDRgARBxIjHd+lW+h8yKF4GwYRfeBD71l/Xczr3OUxDM9wqROvGZrpg+AUNHVCfY
- UM4b7cUn0OG7vEBtJbiZhoAdcVraY5wSNVyE9S8WTocDR9qPRQrr6qCX+ZAnLMiWzYuwIfkN/
- bxQiD4uFQ0eGbkfAvIbDgqkDT/c5AzeTcDEovzM8TT99RWeVcjkQGFQ9z8359cf0wN4qROin3
- JccyBZZYnmRr8apnXawdq/jNs+WFiGpX00opRK8Ln7AAYYax6XMZ2Qw/vQE8zJws0JICmzIiC
- BKRGWXnpLMnCh1xRPOqPN+hd+u/eb7O97ubDaZcj7tfWaXESwQDy03iKFDE17rcPdLPQizci8
- CPaVkArk8iuM43mF0Huk9qGlMYhQpZnWHxnIV3r9ceQhbiZypCX9Mp4XdyPVsMI9PU4wHFFjh
- LP/X60AGdoZ0Zdyp020zQY+S0DauEDtcDpXuokLOqDxQ6QBfo7EfvrWQz+aHiV9T3asDEiQB+
- aUPc2cIHJnpEzhf+B6zTVr3ZF+MbZFNTR0yRUCXQuprMPyCfCifbZYQFlkw6oHMjOFOIBjb1N
- pV6E8kmCuSinKkeEbNGz6+gTs3vNJo1ICbmHzsIgWytmMEa2XfE5XVlXlZsYIm/SaUFLRN838
- a/ItMeZUaS4oMw2tM2Gz2L0/knziPrLaWggYaBeWdMdzhzBTY0IIXYapQfHtLhguSjZiWorh+
- OJ2SAhCH3y0KmzzPRkChsl0WJRaVCisQOZa/CibAw0Mo3ByuH/m/q6D9JEDRbz+T1fot7wGpm
- iG2aOjTmP1xXWlDTlFo7NBWgwg2vvtPYxa5JXGgZSgMPtcuqtV1WIDcEp8qjo+v3Afu+LQl9n
- +Dqa9xpXAg4adzNL3PfyV4GBZVcrd5nUs/9c0o+unByg9VO2YaymHGGvvivr1m4Fmg0qzp8Q2
- dnXVZxG5cgJmAIFPu8zXNE8x9IxI9K40UnoQBfXGiY6eulNA/1uZ+936TuFMXTwUx72H6uNvw
- yj2Pa0jnc2bcVj89SSdZ+gwkywFdq6xFmOW03/qEQjp+6LcHAsm0QkqlT+MihP+SJJC/ghXlK
- uE6xoU2UYQhE4aUg9gAsWGLKEyKDU6+mVGsUC8BuKL7nxHGFZfMmSJgQZW6aCwfwYTDrQOf+9
- 1xGq/E/ZCF7kcWdlOsxAU1BS0ZPoJl6i+bQlHMbtQLUxssaU9XBYTQD+BJPTHWWa86FxIy8ZI
- LK4o2nl/dCyLW+iGXAeSMegHjAeTmbTK6qD6T9oc4oj1Y35hc
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1264349400-1743533723=:31313
-Content-Type: text/plain; charset=UTF-8
+UI-OutboundReport: notjunk:1;M01:P0:dHfeZnAHnbY=;mKT4aHT2knovic1aKEZwM2WajqF
+ SZmuHXoRaTfC7OL6ICi6GOGpZb6NMnXOtVg2chxVdSlFXmHebloUMc7FKe39NvlqKPQhrtuHL
+ 2/CpWKNrd5q9Yu4ZGphs7IUah8wWQmHlWtg1nzjfwJEBDS28N3cAOm1sgPgEreOc95yvVnNla
+ MPMviMV6ys7zEC/g57D6tAZ6MniX3ShyZHg5WbvBh/TJHWZkTsRAKYWF0hmYLdgj6+Aaer5PQ
+ h+lG8rMJviVjOo1Lyh6Z74+IUWoqSQPGUkr29A8AWC80wosSqOZThezRzblkaj/ZXekVuNKvw
+ 28UuB7JkwdYpVKxK1ciR9sj7/cZxR4ybzGs8IMqJCVvF8lEJKB22gufDmtJFsZp8eFF7+IJx1
+ v9lpz8+vYmVPW22hyMVTpv7vytVfhLfdCER4C2I6HGibAE4hmJm6sIhMm/0ZST8iKWnJK0x4e
+ UUv4INAqOVzBLOTJmNE/9/TE/FYJNE0AgNVKSgxQzy06arDcEZNS6JlPRz1+IhN6BjpdLleFE
+ s2OOPnBbx6hOizptTQMxUxExtyWOsp2NXn4KiajhP2+z5OM0YXr1a+tiVBH8/M0WsrrJJ7En/
+ 2B4b7ot5Yq3ae/CefBjyqnWc+JAnz8fUXRybKYgmFPYzalWxJk7e/Uf/EMDD22Sbmo65Zy4IB
+ ZmK9LzQG9nHkaHzd5RrWQEeTDHJ64P74T2BFdgfH6mTTBXessUV1y047/IHYPZYQVJ8xt6tVv
+ zJO17EyXshNOcQh1rH4ZbKGq1rwiH/jwD+Mhht+zU2kW7eTIZ8x1JqSqe6+zoY8OoOsqwasGf
+ jJgoG6SwwDJ5WZFVTFw0DCfnRXSB/c4HiGPwS7c0iNyEnOzfKYLEaKY8tbBbsOCt/qmCp5/YJ
+ ny4Uf3bkpvMw+b/4utHmeT2xTOpdzggL9dUlrZvmgALy/NUso05hvaOK20OFhvtQzAXgaZ5DI
+ ZKkK/weB8JBgDVqjC+L8NEypxfRaswhAFT6iN6C34gJn1ei1Qnfq4gHUVdJxsRcEouRyj4bn7
+ nO1GY93GNXGCvvsFQgefmwdW+noeCHtGpaRfTtLtfHJ5BW8dkogIFtoaClA07z3fSSLo6KMpM
+ CjQQBdcGSXfsaHmZgbEgiqJDQqjKqii2KHdjCOI+WkomX2UFk6LWuk1p+iVbRlkBSAe/9e8sB
+ C36Forn++YsbcaJQVGl6YZKfV2wyh4CpA7uiJeqzmTnlml8MHV/gpYMznKOyKVPjWdQNgx0UX
+ cmRQIb2fk8BCvDhtYZPEHfRsbE8+BO7unvZCPuQz+pT311C+YgYU7VfgwNUUOG+S8siQQAPJO
+ QnOjVaw4pz+dzkfIZBg+FJRNLGLvnGZnHWjwi9VPAa0ixY1vRKqiNoEQVPwPFcAIAXbphXr+3
+ I9iMw85yB42VFIL/ZTYbBWOVvbb1wZ+x46r+WezZU7VwykxhCExNfRXiF377fhq780ewh6NB7
+ 7q9/glIjUKbN8hQjuQk0971Zfa16gdPCUHylG9hUjl9vz9x26
 Content-Transfer-Encoding: quoted-printable
+
 
 Hi Patrick,
 
 On Thu, 27 Mar 2025, Patrick Steinhardt wrote:
 
-> We have a couple of tests that depend on Perl for textconv scripts.
-> Refactor these tests to instead be implemented via shell utilities so
-> that we can drop a couple of PERL_TEST_HELPERS prerequisites.
->
-> Note that not all of the conversions are a one-to-one equivalent to the
-> previous textconv scripts. But that's not really needed in the first
-> place: we only care that the textconv script does something, and that
-> can be verified trivially without having a full-blown invocation of
-> hexdump. So at times, the implementation of the textconv scripts is
-> reduced to their bare minimum and the expectations of those tests are
-> adapted accordingly.
+> The `sanitize_pgp()` test helper uses Perl to strip PGP signatures from
+> stdin. Refactor it to instead use awk(1) so that we drop the
+> PERL_TEST_HELPERS prerequisite in users of this library.
 
-Hmm. I am having a harder time with this patch than with the others. See
-below.
+It's my fault that this commit message is no longer correct because I
+talked you into using `sed` instead...
 
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  t/t4030-diff-textconv.sh       | 15 +++------------
->  t/t4031-diff-rewrite-binary.sh | 19 +++++++------------
->  t/t7815-grep-binary.sh         | 15 +++------------
->  3 files changed, 13 insertions(+), 36 deletions(-)
->
-> diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
-> index c7d8eb12453..f904fc19f69 100755
-> --- a/t/t4030-diff-textconv.sh
-> +++ b/t/t4030-diff-textconv.sh
-> @@ -4,12 +4,6 @@ test_description=3D'diff.*.textconv tests'
->
->  . ./test-lib.sh
->
-> -if ! test_have_prereq PERL_TEST_HELPERS
-> -then
-> -	skip_all=3D'skipping diff textconv tests; Perl not available'
-> -	test_done
-> -fi
-> -
->  find_diff() {
->  	sed '1,/^index /d' | sed '/^-- $/,$d'
->  }
-> @@ -26,13 +20,10 @@ cat >expect.text <<'EOF'
->  +1
->  EOF
->
-> -cat >hexdump <<'EOF'
-> -#!/bin/sh
-> -"$PERL_PATH" -e '$/ =3D undef; $_ =3D <>; s/./ord($&)/ge; print $_' < "=
-$1"
-> -EOF
-> -chmod +x hexdump
-> -
->  test_expect_success 'setup binary file with history' '
-> +	write_script hexdump <<-\EOF &&
-> +	tr "\000\001" "01" <"$1"
-> +	EOF
-
-So here the `hexdump` script is written, basically replacing NUL and SOH
-with the digits zero and one, respectively. I wonder why the script does
-not call `test-tool hexdump` instead? And I wonder even more why no test
-case has to be adapted below this change in the same file. I _guess_ that
-the reason is that the file named, creatively, "file" is initialized with
-a NUL and a newline, committed, then a line is appended that contains SOH
-and a newline, and then the test cases verify the hunk _headers_ only?
-
-If using `test-tool hexdump <"$1"` would work here, too, I'd actually have
-preferred that over the `tr` invocation, even if would still not be
-recapitulating the functionality of that Perl script (which, contrary to
-its name, seemed never to have output hexadecimal values...).
-
-To be clear: I do not suggest to change the patch, I am merely puzzled why
-the more obvious `test-tool hexdump <"$1"` was not used here?
-
->  	test_commit --printf one file "\\0\\n" &&
->  	test_commit --printf --append two file "\\01\\n"
->  '
-> diff --git a/t/t4031-diff-rewrite-binary.sh b/t/t4031-diff-rewrite-binar=
-y.sh
-> index cbe50b15772..15e012ccc7c 100755
-> --- a/t/t4031-diff-rewrite-binary.sh
-> +++ b/t/t4031-diff-rewrite-binary.sh
-> @@ -57,24 +57,19 @@ test_expect_success 'diff --stat counts binary rewri=
-te as 0 lines' '
->  	grep " rewrite file" diff
->  '
->
-> -{
-> -	echo "#!$SHELL_PATH"
-> -	cat <<'EOF'
-> -"$PERL_PATH" -e '$/ =3D undef; $_ =3D <>; s/./ord($&)/ge; print $_' < "=
-$1"
-> -EOF
-> -} >dump
-> -chmod +x dump
-> -
->  test_expect_success 'setup textconv' '
-> +	write_script dump <<-\EOF &&
-> +	test-tool hexdump <"$1"
-> +	EOF
-
-So this looks much more like what I would have expected also in t4030,
-and...
-
->  	echo file diff=3Dfoo >.gitattributes &&
->  	git config diff.foo.textconv "\"$(pwd)\""/dump
->  '
->
-> -test_expect_success PERL_TEST_HELPERS 'rewrite diff respects textconv' =
-'
-> +test_expect_success 'rewrite diff respects textconv' '
->  	git diff -B >diff &&
-> -	grep "dissimilarity index" diff &&
-> -	grep "^-61" diff &&
-> -	grep "^-0" diff
-> +	test_grep "dissimilarity index" diff &&
-> +	test_grep "^-3d 0a 00" diff &&
-> +	test_grep "^+3d 0a 01" diff
->  '
-
-... the adjustment of the expectations is actually going above and beyond,
-the original test was not half as stringent as the new test is.
-
-The rest of the patch looks good to me.
-
-Ciao,
+Sorry,
 Johannes
 
 >
->  test_done
-> diff --git a/t/t7815-grep-binary.sh b/t/t7815-grep-binary.sh
-> index b2730d200c8..3bd91da9707 100755
-> --- a/t/t7815-grep-binary.sh
-> +++ b/t/t7815-grep-binary.sh
-> @@ -4,12 +4,6 @@ test_description=3D'git grep in binary files'
+> Note that we have to add PERL_TEST_HELPERS to a subset of tests in t6300
+> now that the test suite doesn't bail out early anymore in case the
+> prerequisite isn't set.
 >
->  . ./test-lib.sh
+> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  t/lib-gpg.sh            |  6 +-----
+>  t/t6300-for-each-ref.sh | 21 ++++++++++-----------
+>  2 files changed, 11 insertions(+), 16 deletions(-)
+>
+> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+> index 3845b6ac449..937b876bd05 100644
+> --- a/t/lib-gpg.sh
+> +++ b/t/lib-gpg.sh
+> @@ -192,9 +192,5 @@ test_lazy_prereq GPGSSH_VERIFYTIME '
+>  '
+>
+>  sanitize_pgp() {
+> -	perl -ne '
+> -		/^-----END PGP/ and $in_pgp =3D 0;
+> -		print unless $in_pgp;
+> -		/^-----BEGIN PGP/ and $in_pgp =3D 1;
+> -	'
+> +	sed "/^-----BEGIN PGP/,/^-----END PGP/{/^-/p;d;}"
+>  }
+> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> index 732a4d3171e..5db7038c417 100755
+> --- a/t/t6300-for-each-ref.sh
+> +++ b/t/t6300-for-each-ref.sh
+> @@ -10,12 +10,6 @@ GNUPGHOME_NOT_USED=3D$GNUPGHOME
+>  . "$TEST_DIRECTORY"/lib-gpg.sh
+>  . "$TEST_DIRECTORY"/lib-terminal.sh
 >
 > -if ! test_have_prereq PERL_TEST_HELPERS
 > -then
-> -	skip_all=3D'skipping grep binary tests; Perl not available'
+> -	skip_all=3D'skipping for-each-ref tests; Perl not available'
 > -	test_done
 > -fi
 > -
->  test_expect_success 'setup' "
->  	echo 'binaryQfileQm[*]cQ*=C3=A6Q=C3=B0' | q_to_nul >a &&
->  	git add a &&
-> @@ -120,13 +114,10 @@ test_expect_success 'grep respects not-binary diff=
- attribute' '
->  	test_cmp expect actual
+>  # Mon Jul 3 23:18:43 2006 +0000
+>  datestamp=3D1151968723
+>  setdate_and_increment () {
+> @@ -1215,7 +1209,7 @@ test_expect_success '%(raw) with --tcl must fail' =
+'
+>  	test_must_fail git for-each-ref --format=3D"%(raw)" --tcl
 >  '
 >
-> -cat >nul_to_q_textconv <<'EOF'
-> -#!/bin/sh
-> -"$PERL_PATH" -pe 'y/\000/Q/' < "$1"
-> -EOF
-> -chmod +x nul_to_q_textconv
-> -
->  test_expect_success 'setup textconv filters' '
-> +	write_script nul_to_q_textconv <<-\EOF &&
-> +	tr "\000" "Q" <"$1"
-> +	EOF
->  	echo a diff=3Dfoo >.gitattributes &&
->  	git config diff.foo.textconv "\"$(pwd)\""/nul_to_q_textconv
+> -test_expect_success '%(raw) with --perl' '
+> +test_expect_success PERL_TEST_HELPERS '%(raw) with --perl' '
+>  	git for-each-ref --format=3D"\$name=3D %(raw);
+>  print \"\$name\"" refs/myblobs/blob1 --perl | perl >actual &&
+>  	cmp blob1 actual &&
+> @@ -1442,9 +1436,14 @@ test_expect_success 'set up trailers for next tes=
+t' '
 >  '
+>
+>  test_trailer_option () {
+> +	if test "$#" -eq 3
+> +	then
+> +		prereq=3D"$1"
+> +		shift
+> +	fi &&
+>  	title=3D$1 option=3D$2
+>  	cat >expect
+> -	test_expect_success "$title" '
+> +	test_expect_success $prereq "$title" '
+>  		git for-each-ref --format=3D"%($option)" refs/heads/main >actual &&
+>  		test_cmp expect actual &&
+>  		git for-each-ref --format=3D"%(contents:$option)" refs/heads/main >ac=
+tual &&
+> @@ -1452,7 +1451,7 @@ test_trailer_option () {
+>  	'
+>  }
+>
+> -test_trailer_option '%(trailers:unfold) unfolds trailers' \
+> +test_trailer_option PERL_TEST_HELPERS '%(trailers:unfold) unfolds trail=
+ers' \
+>  	'trailers:unfold' <<-EOF
+>  	$(unfold <trailers)
+>
+> @@ -1482,13 +1481,13 @@ test_trailer_option '%(trailers:only=3Dno) shows=
+ all trailers' \
+>
+>  	EOF
+>
+> -test_trailer_option '%(trailers:only) and %(trailers:unfold) work toget=
+her' \
+> +test_trailer_option PERL_TEST_HELPERS '%(trailers:only) and %(trailers:=
+unfold) work together' \
+>  	'trailers:only,unfold' <<-EOF
+>  	$(grep -v patch.description <trailers | unfold)
+>
+>  	EOF
+>
+> -test_trailer_option '%(trailers:unfold) and %(trailers:only) work toget=
+her' \
+> +test_trailer_option PERL_TEST_HELPERS '%(trailers:unfold) and %(trailer=
+s:only) work together' \
+>  	'trailers:unfold,only' <<-EOF
+>  	$(grep -v patch.description <trailers | unfold)
+>
 >
 > --
 > 2.49.0.472.ge94155a9ec.dirty
 >
 >
-
---8323328-1264349400-1743533723=:31313--
