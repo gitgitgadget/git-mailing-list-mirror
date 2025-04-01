@@ -1,138 +1,107 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DBA136E
-	for <git@vger.kernel.org>; Tue,  1 Apr 2025 02:34:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B618C13B
+	for <git@vger.kernel.org>; Tue,  1 Apr 2025 03:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743474848; cv=none; b=tBheHyhY+cYfW+A0isO12sb3gLhchoxl9pF4yoLCnG2xE0adq4qIxs1qX/IQ+QQUKkSrBGAIcsVEmNsgOOSydOYtDPDFgnUsDt2ErJbvZlVXnF4LL9g3fZnMI69jGGoElabpjsZruUgwV5uu9JtFbtfm0tHwUjAfYQVFbySRtI4=
+	t=1743476493; cv=none; b=bRBhcebffujJiJyTYH8s+ZMC5YklLlGPDgu4jLLjyXeyvutnK2hkueGSLOJM1C49UCABjuTQ+Xojin4hJyYlremYQo9/+N+kMAmc/XjUZpAODpG/vQQh4J569dq6TKP1XIHcyVs/vukJlGPRcgxFrHb+sukqJmQHiMSXqO8psqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743474848; c=relaxed/simple;
-	bh=NKptvepTIN1FUkyxVBHoGHZVJiLtkzFQBDwCROeczAg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O4ywBF22jjl9gStqGpFRRhNVfrZ8Ju8S0uFZXyv58ElyetvEkOREHqUcZOy+B3tRH5BUk8hrKLo79oQCOMoY7k9ueQyGQUJ5nQojQT1IBqdPYIiVsm0q97iGd6GtVWW/nYulk3EJTg7H0PdsMAP/PktAh4G68PdPwXI+WIRorKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DCqdrgAY; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1743476493; c=relaxed/simple;
+	bh=xPw38iO1zzm8zlX/X8HN/trmO6VbX6nHZb9tJJqN3v4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=pzokLHjP2XxFYjKnDnq/mEWpTU+0Kc5LRNsPfqQsTE/e+vC0XqidejLbTmeVANEC0N0zJwdzSHbQKJSRNq1HtP5n9wJ5xXzqUpQAo7x6tzh1WUOCAv7Qtb67CRlU+lyJCWEGv+ch0X76j8mbWGeqnHq+xDw3w19fdu5HuI9OKhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CG4tqEc5; arc=none smtp.client-ip=209.85.219.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DCqdrgAY"
-Received: (qmail 17639 invoked by uid 109); 1 Apr 2025 02:34:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=NKptvepTIN1FUkyxVBHoGHZVJiLtkzFQBDwCROeczAg=; b=DCqdrgAYsSMCyPesiRBjF53jaBKKiJU+2CeMWj2lWbFLSI8FZFr4Bv6XUM9BkW9QQNDxeoY4m0fbcXWKujSRcXCBYaWpL2ps0ULiZOsTn5FkJDUXFqhhxVq7oTU3+l3OhZXsT1sYHwlJgP1BRZHsTR5/KfL1O6gKvjo6Zu2lx23ZJBqsu+QnjaoO+3nOsL5EoZcPB60EY2QfGpWS+ciJQbDNyz4efu8VHJ5AdRev7txfxwWs3Wdsuyk6DmMZNJh44M+BfNNF3ulPXRIkJnPFzzix9G4ZJLaSbN5E6gUvqoPP8up+zvmKZN6mo1kgmoPRVGXv+J0mkGbj5+RVMcH1QA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 01 Apr 2025 02:34:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10917 invoked by uid 111); 1 Apr 2025 02:33:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 31 Mar 2025 22:33:59 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 31 Mar 2025 22:33:58 -0400
-From: Jeff King <peff@peff.net>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Patrick Steinhardt <ps@pks.im>, Todd Zullinger <tmz@pobox.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	git <git@vger.kernel.org>,
-	Derrick Stolee <derrickstolee@github.com>
-Subject: Re: Testsuite failure on s390x and sparc64 after 6840fe9ee2
-Message-ID: <20250401023358.GA1087913@coredump.intra.peff.net>
-References: <89257ab82cd60d135cce02d51eacee7ec35c1c37.camel@physik.fu-berlin.de>
- <Z-R_Zmr6kxCPLm-O@teonanacatl.net>
- <Z-Zr7BZL1UGqVxKu@pks.im>
- <4276c8d0b72f11f325482756d3bc251327d0ac47.camel@physik.fu-berlin.de>
- <Z-atRMGXHilZRTEL@teonanacatl.net>
- <Z-bCNdOOLrM2Chb8@teonanacatl.net>
- <Z-qKGqpbdaW9WCrP@pks.im>
- <Z+rcVY7KqEuF1wFw@szeder.dev>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CG4tqEc5"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6ecfbf1c7cbso21649306d6.2
+        for <git@vger.kernel.org>; Mon, 31 Mar 2025 20:01:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743476491; x=1744081291; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k5gy3N7/VPRS7kf0ESU2sNr6Kzwjzgj70g75lPICU+U=;
+        b=CG4tqEc5QytoidDAHYBfLdm/NcPgLjjC3EbtSjcUN6DgAfMCNRMn2ZL14Ku7ds6Vpj
+         laIk38WcmQ88tLLAvUO075L+q2HahqZO3DPra3vsBz5WLrx+24cL79RdSb7OyR1A7EIn
+         J9rukTktaTz3hYOZpT0v+1MmF6y8rwNhHAtg8+OoLorAgGUmOmxtCqDmm+wVxtE2J+Fd
+         Cl0ByJO6TSjOliofUrdPudA7edJ95q/oT+a/mT2ZisiIa8EIE7VWj/yfTgvy0jRGgZjd
+         TDxqDYcYqe4Fa+d5xB2j/D/LqxqiGhgCOH/9iHyk/TuOyB1OHQMEr+5xz4JHcNtI9BYY
+         Fopw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743476491; x=1744081291;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=k5gy3N7/VPRS7kf0ESU2sNr6Kzwjzgj70g75lPICU+U=;
+        b=MdBym7saWOdQfCdYH6UdWAHSZMpCcjihIk+Vod7WAnhlpTuO3YdIxFuBPv8cikPMbk
+         MMurp82pN+FqysbSQ1t9E8rfc2xokGP0So4SVFFh5STSfItaegXfNAyCbaaKq7BJ+gL/
+         ToFAQw9el8U1xEOp/soBg1M8m48UeE3sHa0sXNFfN2laQpEeau9THnTDqFGRWZTE2h1R
+         nAiBrvmi/5dtwlal9NZiHbUE4fkMMrZ+vIJPj8O9zOLXTTw4MMnR8x1GgQSbJWSVwBNd
+         oFBTbCDVKzpzWpDCRUjfG/rcxaphoHLWU0Q9U2JyOvD4PU9OSKNNQ9qADm4frsMvosEn
+         NHgw==
+X-Gm-Message-State: AOJu0YwRKyVaiEPjF6BV99+B6HAJIhadSDOe2pc7Ou6bwFwcY7I9fi5A
+	pkeX4ZpXEiV/9JvEDt/ZkypWd/+Wv046qzrh2vk1G4/J7Gu0U1Li
+X-Gm-Gg: ASbGnctpItFOi+nWfzT4QT30XK/9Wd5B8EzZFcxJ1HFDsSaeRYYKE8xWmnYlcytN8NL
+	2Ea23tbIPm8m4BiLwSqcqrxbvr4hgDxvrotnFVIG9eOiyO3z5zguvhumnwT/mKiw8oYWSPiCXBF
+	iuBNgjTWryN6y7UOl4eiC2SC7KaX5BW07DpFepxMieJxtYeUZNhi38aisU9GhVz8sYpCIkJwjTx
+	RD7faT2mQn/v0xajF5CKt/uLNkxbAoo8mU2J+BLEiWqeGjBJSw3YwLQuI77yEzT5yg3coz2blEA
+	qMrBqjdaGN/becsfNZVr+B0JcoIy
+X-Google-Smtp-Source: AGHT+IGEr4CEIimJLOLtnfr2r9FHiSc7a3//HKnWefxk1YGO+cf+3g5ebX5LfKEuQU0VhwV62/52hA==
+X-Received: by 2002:a05:6214:1253:b0:6e4:41b3:497e with SMTP id 6a1803df08f44-6eed62577e3mr166019226d6.40.1743476491263;
+        Mon, 31 Mar 2025 20:01:31 -0700 (PDT)
+Received: from markl5i.lan ([2600:4040:2644:5100::387])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6eec96284d7sm55209556d6.1.2025.03.31.20.01.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Mar 2025 20:01:30 -0700 (PDT)
+From: Mark Levedahl <mlevedahl@gmail.com>
+To: j6t@kdbg.org,
+	johannes.schindelin@gmx.de
+Cc: git@vger.kernel.org,
+	Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH v2 0/3] gitk: override PATH search only on Windows
+Date: Mon, 31 Mar 2025 23:00:59 -0400
+Message-ID: <20250401030102.297272-1-mlevedahl@gmail.com>
+X-Mailer: git-send-email 2.49.0.99.31
+In-Reply-To: <5b09f1c2-be58-43a2-9908-7243b5207251@gmail.com>
+References: <5b09f1c2-be58-43a2-9908-7243b5207251@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z+rcVY7KqEuF1wFw@szeder.dev>
 
-On Mon, Mar 31, 2025 at 08:17:57PM +0200, SZEDER Gábor wrote:
+Restrict overrides of exec/open to Windows only, as
+the need for this is Tcl adding the current working directory
+to $PATH on Windows. Recent modifications to this render
+gitk unusable on Cygwin, isolating these overrides to Windows only
+both fixes that breakage andk reduces the liklihood of similar
+issues in the future.
 
-> On Mon, Mar 31, 2025 at 02:27:06PM +0200, Patrick Steinhardt wrote:
-> > One thing I stumbled over: the `--min-batch-size` parameter is parsed
-> > using `OPT_INTEGER()`, which expects the value pointer to point to an
-> > integer. But we pass `struct backfill_context::min_batch_size`, which is
-> > of type `size_t`. Maybe that's causing us to end up with an invalid
-> > value?
-> 
-> We could teach parse-options to verify at compile time that it got a
-> 'value' pointer to an appropriately sized variable with a simple
-> trick:
+patch summary:
+	1 - modifies the existing code to restrict the overrides
+	   to Windows, restoring other platorms to native exec/open.
+	2 - remove now superflous variable _search_exe.
+	3 - fix the override code to avoid path search given a
+	    relative path like foo/bar.
 
-That would be nice. I think we've discussed type safety for
-parse-options before, but IIRC none of the solutions were very
-satisfying. But this sounds like a relatively low-effort approach that
-buys us something, at least. I wonder if it could even be extended to
-use __builtin_types_compatible() on platforms that support it.
+---
+Changes since v1 - fixed commit ID reference for git-gui, otherwise
+                   improved commit message in patch 1.
+		   Added patches 2 and 3.
 
-+cc René as our resident expert on gross C hacks. ;)
+Mark Levedahl (3):
+  gitk: override $PATH search only on Windows
+  gitk: _search_exe is no longer needed
+  gitk: limit PATH search to bare executable names
 
-> This bug would then cause a compiler error like this:
-> 
->       CC builtin/backfill.o
->   In file included from builtin/backfill.c:7:
->   builtin/backfill.c: In function ‘cmd_backfill’:
->   ./parse-options.h:216:25: error: division by zero [-Werror=div-by-zero]
->     216 |         .value = (v) + 0/(sizeof(*v) == sizeof(int)), \
->         |                         ^
->   ./parse-options.h:272:37: note: in expansion of macro ‘OPT_INTEGER_F’
->     272 | #define OPT_INTEGER(s, l, v, h)     OPT_INTEGER_F(s, l, v, h, 0)
->         |                                     ^~~~~~~~~~~~~
->   builtin/backfill.c:126:17: note: in expansion of macro ‘OPT_INTEGER’
->     126 |                 OPT_INTEGER(0, "min-batch-size", &ctx.min_batch_size,
->         |                 ^~~~~~~~~~~
->   cc1: all warnings being treated as errors
->   make: *** [Makefile:2811: builtin/backfill.o] Error 1
-> 
-> Alas, the change is ugly (and we should do the same for many other
-> OPT_* macros as well) and the error message is far from
-> to-the-point...  Turning this into something usable would require a
-> more clever trick, and that's more than I can devote to this issue.
+ gitk | 147 +++++++++++++++++++++++------------------------------------
+ 1 file changed, 58 insertions(+), 89 deletions(-)
 
-We do have BUILD_ASSERT_OR_ZERO(). It produces similarly arcane errors,
-but at least the presence of the macro name helps a bit. E.g., doing
-this:
+-- 
+2.49.0.99.31
 
-diff --git a/parse-options.h b/parse-options.h
-index 997ffbee80..5303ad6bcf 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -213,7 +213,7 @@ struct option {
- 	.type = OPTION_INTEGER, \
- 	.short_name = (s), \
- 	.long_name = (l), \
--	.value = (v), \
-+	.value = (v) + BUILD_ASSERT_OR_ZERO(sizeof(*v) == sizeof(int)), \
- 	.argh = N_("n"), \
- 	.help = (h), \
- 	.flags = (f), \
-
-yields:
-
-      CC builtin/backfill.o
-  In file included from ./builtin.h:4,
-                   from builtin/backfill.c:4:
-  builtin/backfill.c: In function ‘cmd_backfill’:
-  ./git-compat-util.h:103:22: error: size of unnamed array is negative
-    103 |         (sizeof(char [1 - 2*!(cond)]) - 1)
-        |                      ^
-  ./parse-options.h:216:24: note: in expansion of macro ‘BUILD_ASSERT_OR_ZERO’
-    216 |         .value = (v) + BUILD_ASSERT_OR_ZERO(sizeof(*v) == sizeof(int)), \
-        |                        ^~~~~~~~~~~~~~~~~~~~
-  ./parse-options.h:272:37: note: in expansion of macro ‘OPT_INTEGER_F’
-    272 | #define OPT_INTEGER(s, l, v, h)     OPT_INTEGER_F(s, l, v, h, 0)
-        |                                     ^~~~~~~~~~~~~
-  builtin/backfill.c:126:17: note: in expansion of macro ‘OPT_INTEGER’
-    126 |                 OPT_INTEGER(0, "min-batch-size", &ctx.min_batch_size,
-        |                 ^~~~~~~~~~~
-  make: *** [Makefile:2810: builtin/backfill.o] Error 1
-
--Peff
