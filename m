@@ -1,149 +1,196 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515C52E3393
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 00:58:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CE011713
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 01:45:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743555523; cv=none; b=WqP5shTOGuEmGL6TFuDQM9Ixg+DL+Cv+GF7VWkl4o9r6uDaG27LoZ/XcC+kmlLyx6W04DbdUNI9EMe/k1IfVwIc1StoeXo2/fJvWfCrgwrq4F2uEwJ8e4La7IyKdCKpVnQKkOsteOJUHFqTwkctGrACkkGsTBNDVK2/60xf9dPI=
+	t=1743558322; cv=none; b=J6bhpGyCxIsK7lKATKsL6ghsr/6Q4ZNbnM9gaaABg26BSiJ7OcBwAFJyGfkg3jYz51Di9Y4h0KJ0lAg8DZBKekC0hoDLJ9wOBgSDJFomSwzJK3kKPFCsCOCqUK1VQYpbWqWg/8y3qr3HtFq+5aeXY87RW0W7GHXB/x0OS3BZGsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743555523; c=relaxed/simple;
-	bh=l8wHJui7iKhGZjK+YAz3mD+bBd/4L1zY1ImbVHV0FjQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CI476lqcHxEM7wHJ0K5HdlL5f/cGUxJMGKiqHJDR1aJ2bWxFeJgwx5/LUdKHlN/tocEI0hmZSChj38ZV5t4X78YkFw3azdCd5IgaXKQfD2O+Be8stQwmybaW5FgMMR5zJjba8JPXLa0DQVhZEROblKtH3TReY1BuyPwfyOQFOUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ayVk7+kE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W6gNO7A4; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1743558322; c=relaxed/simple;
+	bh=ryEMurHklBu/fS1Hiq0Ao8d97CWw2pxhj1EXW+6WI1I=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=DfD1mpFsX89p702HyYI1O5fB098GQ1NbyXrXRTToDbBbh4+YkhiAc1p8OFJui+x8hH6nwTdEjAPKFnteTgXFltmeC5vDATEjMktBTjpJ5lFao/MVIBMLc7TxFpWP6L1n2aE0USB+2st2V2+0kQPeQE9DOizKveOVSTvXvnUg+Ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eM5zxMoT; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ayVk7+kE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W6gNO7A4"
-Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5A4781140127;
-	Tue,  1 Apr 2025 20:58:40 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-13.internal (MEProxy); Tue, 01 Apr 2025 20:58:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1743555520; x=1743641920; bh=dHyFXRPx6E
-	XbP7K0CjTxfVh4Y8s/jQEf0erQP2K6rrA=; b=ayVk7+kEvpdByVJCeGxH6edvGx
-	lPhdPAGGpkZqDVA8zMX94cMZnPO39/T1dZ4jghg1NcrQ9V+sowQjknuDASaehMSh
-	qmr4QV6FON4dsIuMR1Lm37tYnFXjXfaCIsvwyrZbercmAOcHubuni9oD0XbbKSRG
-	xRnOGDuCvXhzQDgoscGVrS1a6dS7JEYgj8NNhJ/RhkMgMx5hSOTyxr0XisxGZyXG
-	aPmfL4YLxCZA25GSXN0qODBzUcCxwZToBWJnKcUbLRHdYORKaTQgS9+rW7FrN7iJ
-	IID5RNYw+CH/xSoYJ1CPbaxlCGutRPiTFgvWpINm4BkjAcEcAa1B+2yORFTg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743555520; x=1743641920; bh=dHyFXRPx6EXbP7K0CjTxfVh4Y8s/jQEf0er
-	QP2K6rrA=; b=W6gNO7A4/Oa3RFm6e1Ct1Rl3xeCyl2y3weEt7IaozUCdN5IncfL
-	DUQsOWuAFNQ6TLvhK3TqJNTRXT0c5h5BBLmEXUmj7Y6JbU5oXXM7SskThRqnvg1b
-	w0vcxWFgDQ+ymjxs0J/EXjrUcpIWEAa8Gp1MToz1Jdx+n9p4VqdWv8AfRGjLAWgo
-	5qmNv25qS3benFwe4ixpMDA3rl/M2IMxdRKX0UY486eaT4vBnbMB4U91O/uLDgz0
-	X11lPHVYjmn7pa0CiyddlxFV8nrZUztkTqWRk0EFZByjq6TO2f5wzAfNrAaNNrSL
-	puyZg9fbbxMtqa/HH3Gchohip1JECDybckQ==
-X-ME-Sender: <xms:wIvsZ-bNNumA6pvWXwb28SqbU-0Zjx2lUV99ccRZyp6DMJFyQp9fzQ>
-    <xme:wIvsZxZrUBXSqEFWkruA0OJFPXQ5B0VJHGr-Y9D1QvZzlGDIgK0ORxuSaQO4CTi7W
-    fCB0LGRjTlUlLibwQ>
-X-ME-Received: <xmr:wIvsZ4-0GxdwR-2zYgWsnNyIjmax0x52iqI6XOfh2YXjvjS7nq5JzvT_cQT7lx3ROMgkStq5Fbgy_CWLdQ692OEieNl6lqxmTZFYOH2xuPkK7TP3a87n>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeegvdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomhepvfhougguucgkuhhllhhinhhgvghruceothhmiiesphhosghogidrtg
-    homheqnecuggftrfgrthhtvghrnhepgfevfeeviefhheehhfegtefhvdffheefheeuleeh
-    ieffuedvvdeuhfevffeigfeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhhishhtshdoghhithesrghkshhhrg
-    ihrdhishdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:wIvsZwrHu3U6U46XgpY5xexq-GFCPzJSjiRg67zFuA9UomEW6kr5MQ>
-    <xmx:wIvsZ5p_Qjug474dJJIDEuO54ufUPLYPTEkwes3BIZEcvpfUmCS0Ww>
-    <xmx:wIvsZ-RM06g8xnO49rPjzwC_5qBqq6yzCBw9fxKPzDRqW-lykB8gDg>
-    <xmx:wIvsZ5om2sV9ljz7BllxMbV7kV7No5OwTnENj4hIvXcndsTQVSg3XQ>
-    <xmx:wIvsZ7vfYjIHvbHJ2v6cCM1vkLvdBybZ45AKIbedC0EtARsbJSwx5QDH>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Apr 2025 20:58:39 -0400 (EDT)
-Date: Tue, 1 Apr 2025 20:58:38 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Akshay Hegde <lists+git@akshay.is>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: meson: Installing completions
-Message-ID: <Z-yLvgkJnGm0CkG3@teonanacatl.net>
-References: <Z-uLqQd7QHZq-tB7@akshay.is>
- <Z-u42Sm613hMj1Ft@pks.im>
- <Z-wltqWraESmb-Lm@akshay.is>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eM5zxMoT"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3913d129c1aso253617f8f.0
+        for <git@vger.kernel.org>; Tue, 01 Apr 2025 18:45:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743558317; x=1744163117; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=eHF7dXS6YRnpTAKreFrHogPGm0mq/uCQeXxZr8u97rw=;
+        b=eM5zxMoTsXvpcB9k9YfMc2UhLYf/xFKRnF8iUch2n9kmmakvOw6hvwahXLniuDGSMI
+         PkCM4FEwBiMQSvv/Av4qi+b1CIBBmjprptpL8DQgl8F5Kp09qgkWKZBfvFfrMaj54dJ/
+         BmI5fAbf2b2hZzk0o0Qq+mtjO8B94X/gxUUflQSI96/CERTLHRMah41zr4cbaO59GcgR
+         B3wJnf6lTcoXv8FvQt/EutUEjNS7NammhBM/75WZLGCJYoxwvTUeUgILRt4IzncmLHcF
+         7cQdGfHNtiLt4G/S9LOpGUKExe1FLvkSJgowBvQHQg7gc7P8eKREFYpbxBQANRv5eHNA
+         uTtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743558317; x=1744163117;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eHF7dXS6YRnpTAKreFrHogPGm0mq/uCQeXxZr8u97rw=;
+        b=b/BfRsvyu9YgRfsN7Xj04GFbMOE9r77IRQYRsok8YCSMpSfmQ6tioadvMXy2MkYEG+
+         27XWtDzurDjhrzH0SjRZJxaZy4ehr46CH7nt0D4KhM6IR7xHsZSxlxNctrnm70OK/z7F
+         z+GuuVpc3KfIktM+soExSCNBvczB3uwhDXltKxR8vFGtdgBoATmPgMlvWZawucuqWD0D
+         QqsIYWQwRm5eA7gnI0gAL3t8TMiviA/XaorR5Xb27hhRvvC2VIbsFDL6TdPsmdLINh0G
+         ZvtwGNsUDAbCnthl55HiAS9hiaJUx7RHqog4CTaZ3BjV0w/MgFK7D3zUQOZ6xCYO7g9z
+         AeOA==
+X-Gm-Message-State: AOJu0YwYLRCyT6XFq7WkNQdifICeT2l+Gs5e/d5tLYPhevKO6TOigUT+
+	aykcjUxEoEf/XOcay9Wtac0Ok8pDf6rmt65NmLwa0fvrQhZqrVJwQjONxQ==
+X-Gm-Gg: ASbGncv9PEK/ABqhaG2sC0ruuU4lxF9Lk+w3iV0S3HwTbsQs8m9X6YJLEtgSE3Q/SO+
+	y3ixFrKJ739dCLBrbJOZcI1gQoKZTgs3ExCQuZU6nq6EvGlhhqLHys9SADFWWT7ElOdiO1lXTjS
+	8+r9fTtyIbgNXH4TjvTHOv4SAJUIIG+7+Oscx7/XrN5Hl1THwv038GasdAf6111lPsdEcMFhiEx
+	0RClE6vPUsViJMECBodWr4wuuukHAyCGP+N9FNWS6znLj5cfR0FH2nJY5if3aftCjvD2aq/CqAx
+	/rWulPcFlaubtAq6yq4mhOTrYVI6CKTIKqFqN4XTchdu4A==
+X-Google-Smtp-Source: AGHT+IELIA7PQLtcqrqKXW9Ec6ZjuLnJq2yJN4NtWr8CsAzGsC85waet13mzSYACmQ8mm0MKNMfCLg==
+X-Received: by 2002:a05:6000:2903:b0:391:952:c74a with SMTP id ffacd0b85a97d-39c2a34cbcemr186430f8f.8.1743558316897;
+        Tue, 01 Apr 2025 18:45:16 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b6656afsm15386550f8f.40.2025.04.01.18.45.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Apr 2025 18:45:16 -0700 (PDT)
+Message-Id: <pull.1937.git.git.1743558315633.gitgitgadget@gmail.com>
+From: "HJ C. via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 02 Apr 2025 01:45:15 +0000
+Subject: [PATCH] column: exit early when indent length is larger than width
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z-wltqWraESmb-Lm@akshay.is>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    gitster@pobox.com,
+    code@khaugsbakk.name,
+    "HJ C." <hyunjidev@gmail.com>,
+    lavendarlatte <hyunjidev@gmail.com>
 
-Akshay Hegde wrote:
-> On 2025-04-01 11:58 +0200, Patrick Steinhardt wrote:
->>The biggest question though is whether distros are aligned enough for us
->>to provide standard installation paths. That is, do all distros end up
->>installing bash completion into "/usr/share/bash-completion"? What are
->>the desired directories for tcsh and zsh completion?
->>
->>If there is enough standardization then yes, I totally think we should
->>start installing completion scripts automatically.
-> 
-> Well I can't speak from any sort of authoritativeness here, but for zsh,
-> they are usually installed underneath the datadir (usually /usr/share),
-> then under zsh/site-functions. Of course, I don't know if that's true
-> for all distros.
-> 
-> Could we extend meson_options to allow specification of bash/tcsh/zsh
-> completion directories? If they are not empty, I think it would be
-> reasonable to have meson install it automatically.
+From: lavendarlatte <hyunjidev@gmail.com>
 
-Having the ability to specify the install path seems like
-the way to go, even if the default is used by most systems.
-For Fedora, only the bash and tcsh completions are
-installed.  The latter is simply placed in:
+The code exits with "fatal size_t overflow" when indent length is
+larger than width. This is because when calculating cols of struct
+column_data, unsigned underflow happens and cols is set to negative
+value, then converted to size_t when calling REALLOC_ARRAY in
+shrink_columns() function. This can lead to allocating extremely
+large chunk of memory when succeeds, or crash when fails.
 
-    /usr/share/git-core/contrib/completion/git-completion.tcsh
+The change exits code early with failure reason to avoid underflow
+and clarify argument limitations. This change ensures that cols is
+always positive, making the code clearer. It also eliminates the need
+for warning suppression related to signed-unsigned comparisons, as
+cols can be safely converted to size_t.
 
-and users need to make some adjustments to their startup
-scripts to use it, as documented in the file.  This was
-added to the Fedora packages in:
+Signed-off-by: Hyunji Choi <hyunjidev@gmail.com>
+---
+    column: exit early when indent length is larger than width
+    
+    I have sent this to git-security first for potential security check.
+    Thank you Patrick for review and reply. Based on your comment I have
+    updated BUG() to die() and added two tests. Also confirmed all existing
+    column tests pass with new check.
+    
+    This is copy of his reply:
+    
+    Hi, thanks for your report!
+    
+    The use of both print_columns() and run_column_filter() is rather
+    limited across the Git codebase and only covers across a small set of
+    builtin commands:
+    
+     * git-branch(1), where the value can be changed via the --column
+       command line option.
+     * git-clean(1), where the values are hardcoded.
+     * git-column(1), obviously.
+     * git-help(1), but again the values are hardcoded.
+     * git-status(1) via wt_longstatus_print_other(), but the values are
+       hardcoded.
+     * git-tag(1) with the --column command line option.
+    
+    So only git-branch(1), git-tag(1) and git-column(1) are relevant in this
+    context, and I cannot think of any way to exploit these in a meaningful
+    way. I also think that --column options are unlikely to be used in any
+    scripts.
+    
+    So all in all I think it's fine to discuss this on our normal mailing
+    list and fix the issue in the open. But I'd maybe wait a day or two for
+    others to chime in before doing so. Given that these values are
+    user-controlled we probably shouldn't use BUG() because it isn't. die()
+    would likely be a better fit. We should also have one or two tests to
+    verify that things work as expected.
 
-    commit dae8588
-    Author: Todd Zullinger <tmz@pobox.com>
-    Date:   Thu Jan 3 14:59:27 2013 -0500
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1937%2Flavendarlatte%2Findent-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1937/lavendarlatte/indent-v1
+Pull-Request: https://github.com/git/git/pull/1937
 
-        For now, this just gets the file from contrib installed.  If there are
-        enough tcsh users that want it to be more automated, that can come
-        later.  For now, the directions in the file must be followed to enable
-        tcsh completion.
+ column.c          |  6 ++++++
+ t/t9002-column.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 28 insertions(+)
 
-In the years I maintained git in Fedora, no one asked for
-any changes for tcsh.  Apparently, either no one uses that
-or they don't mind the manual work to configure it. :)
+diff --git a/column.c b/column.c
+index 93fae316b45..692fefafabd 100644
+--- a/column.c
++++ b/column.c
+@@ -186,6 +186,9 @@ void print_columns(const struct string_list *list, unsigned int colopts,
+ 
+ 	if (opts && (0 > opts->padding))
+ 		BUG("padding must be non-negative");
++	if (opts && (opts->width > 0) && opts->indent &&
++		(opts->width < strlen(opts->indent)))
++		die("length of indent cannot exceed width");
+ 	if (!list->nr)
+ 		return;
+ 	assert((colopts & COL_ENABLE_MASK) != COL_AUTO);
+@@ -367,6 +370,9 @@ int run_column_filter(int colopts, const struct column_options *opts)
+ 
+ 	if (opts && (0 > opts->padding))
+ 		BUG("padding must be non-negative");
++	if (opts && (opts->width > 0) && opts->indent &&
++		(opts->width < strlen(opts->indent)))
++		die("length of indent cannot exceed width");
+ 	if (fd_out != -1)
+ 		return -1;
+ 
+diff --git a/t/t9002-column.sh b/t/t9002-column.sh
+index 7353815c11b..1b448be4567 100755
+--- a/t/t9002-column.sh
++++ b/t/t9002-column.sh
+@@ -206,4 +206,26 @@ EOF
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'length of indent cannot exceed width' '
++	cat >input <<\EOF &&
++1 2 3 4 5 6
++EOF
++	cat >expected <<\EOF &&
++fatal: length of indent cannot exceed width
++EOF
++	test_must_fail git column --mode=column --width=1 --indent="--" <input >actual 2>&1 &&
++	test_cmp expected actual
++'
++
++test_expect_success 'padding must be non-negative checked before indent length' '
++	cat >input <<\EOF &&
++1 2 3 4 5 6
++EOF
++	cat >expected <<\EOF &&
++fatal: --padding must be non-negative
++EOF
++	test_must_fail git column --mode=column --padding=-1 --width=1 --indent="--" <input >actual 2>&1 &&
++	test_cmp expected actual
++'
++
+ test_done
 
-IIRC, there are git completions installed by upstream zsh
-and installing git-completion.zsh site-wide is not generally
-agreed that everyone wants?  I'm not a zsh user, but I think
-that's why I never installed it in the Fedora git packaging.
-(It does seem like an oversight that they aren't at least
-installed similarly to the tcsh completion.)
-
-For reference, here are the locations for bash, fish, and
-zsh which Fedora uses.  This might be helpful in determining
-reasonable defaults (after comparing to other distributions,
-of course):
-
-    bash /usr/share/bash-completion/completions
-    fish /usr/share/fish/vendor_completions.d
-    zsh  /usr/share/zsh/site-functions
-
+base-commit: 5b97a56fa0e7d580dc8865b73107407c9b3f0eff
 -- 
-Todd
+gitgitgadget
