@@ -1,232 +1,415 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F2C1E4A4
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 18:14:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50B086353
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 18:22:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743617658; cv=none; b=CRUjuY8I1HZJAg6Zd6LJOTTIx/B+CL9fj6l+6An8+Um8XVYlk1CheJE8rlqXctELro/KSKUUjGvCvZVAwlD5nqYBSiuy5A5nwTrugSJyn/gNG/oAopjG5Elp0okVZMJ+VRd8IsQnZZbvwbRRpmUdsOHXATuvB9m0B5fILwGMbFw=
+	t=1743618150; cv=none; b=AJ0m/sy0kjO4Aj+EtXV8NbGWMyeVmpF13Fmm4tnM1zfyF7JQ6hrSXwuvQpSzu4SfSvk9zlT8zHQsk7L/mJpxOGggNlcQ1dDJSGUyH8+DvvnJ3c5fAsxgZS0ZKSl5zZoBmmye+nzEw4ypUmOvQ2sDNs5UQfKg3156iAkhJng1qyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743617658; c=relaxed/simple;
-	bh=zN9lj7Xuv/cEbI+cHO6d3ZMPxSMXiqvhwrfFw8JBcP8=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=dnNhkVSdRuPUbgi6k1h0CHdM3m+TbJYj/qpX5cgg7LE/FVmfGLk16YnOKN14ccf8Ljnn9uLdEoxBkEAwTwm6xHoC/IsKcYsMRuJZsmhwTK2A34Kh1zS19rEqfpuAZbCLdvsk5Y/QIFNW8/NOdSs8Z8myc7xd79gMgEt7Fdv0T0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HNcIzSzC; arc=none smtp.client-ip=209.85.210.175
+	s=arc-20240116; t=1743618150; c=relaxed/simple;
+	bh=Xd0d6Si56VsvbsV99PuNiCoZJja8JcrUTk5+hlDStDQ=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:Cc:To; b=VPex74XT9O+Zw1U5+lVvUDS3YxVV8jjq+Ibn5cf/CfyiIeuuiOnZZklQaQRYkcNUi/HtS6ZDesUdIQEhyE3+kCj8rSmaIw0gIr5vwHWgCznfMBP2Mqxzzaol8UKUjXM+ZqKbhLbeFz1arYk36fSs9mRR410NHNow59AL0lNPCck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HVaqQ5ZC; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HNcIzSzC"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-736dd9c4b40so406990b3a.0
-        for <git@vger.kernel.org>; Wed, 02 Apr 2025 11:14:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HVaqQ5ZC"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-22403cbb47fso1717175ad.0
+        for <git@vger.kernel.org>; Wed, 02 Apr 2025 11:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743617656; x=1744222456; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p+9mHqJ7/FwRNYoj+CA26bwO/ue/JuOvG8QoEt9TgVs=;
-        b=HNcIzSzCQFvrg1dxkl/ciNeGg3MsiuwZBvCLdxRJjaDVEmLJjSZCvYQtR2mVZ6hI1C
-         condcviIWCzt/6jVnNmIJd16GSP86W1PnfZ8IZlDZIWr6dbId4thsICzL+tcxHiMLmoM
-         GyJkRVG17cB9rYqe1PWtw1nxBNCi2jLBaUvmyfkphYicCONPEAdghH2uMrNoC+ujElXA
-         x7ypz3UiEJQFW30d3kHsruH2Qe9mC7/yss4qenEjmulMKGTN85mk++pjgYZX/Y+Z8+pR
-         cSgEFcVkT8xNEPmkkDSpQK9zab+FeX7/97j1Jj3fcPXDMBkBxexTB5F3x/2R7rLTwDNU
-         JALQ==
+        d=gmail.com; s=20230601; t=1743618146; x=1744222946; darn=vger.kernel.org;
+        h=to:cc:date:message-id:subject:mime-version
+         :content-transfer-encoding:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TQ8OK75sYMa6evpoAyTa8ldzzLZobKR8Eb2HbzDxnj8=;
+        b=HVaqQ5ZCjcpHvrYPb3krf8yr3X5P1bTgecVDtSWb7JlTIGEn4RQ62vEH7ZgNtVhbz/
+         JXKt1B4MithURkvN8MhblNI/RX1kLL1BaD69qGUmVWOy6P6RGhzZ8XrWmc3ZuYwv3ei1
+         OdxsflSM1u/iyGMnwC1UuEToC04AJP1lrt/705f9tk4XcyuRnUdWDOvC2+RND4jbXm2Y
+         L5R44ccYE2t2ujKgYeyy75um8CLoFsOeWaXTxEVjA+v6h9p8Lamx3dy0l29H9AtuilT9
+         bbCtSymKeGWR1nwruc92uwmh6W7oW7b8UpUt4RXNM7uIH4l5AImXNet5/xMPISYa0BRV
+         XnSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743617656; x=1744222456;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=p+9mHqJ7/FwRNYoj+CA26bwO/ue/JuOvG8QoEt9TgVs=;
-        b=rpEbp46IQadXEtAEwWjVSqncYT+D5F4rI78HbZs3ZvEUrXaez9bBzqKM9pWxNWD0ND
-         3AIvNiYhI6JlnGqVELkPGLoDsyWwHDSNhd4FbhZbWu2ETdZtj4yA0YQzpVCI/bCxUFz1
-         eRmQo8jVG+PKpGX+cPfR7Zy9XmiLfXOjr9w1BxpxXHlwCumtC7kUhhMLjlGkdH/h1rrL
-         1a8DXcOjz1n44lHJuQITQ1bSN0trn+qtxA9MlWh8dVEurGc7uNA/cUwr23AHqmyN8rwr
-         YL3LkK2K+4MZWLyjrm+X9l9CJUtrGyCu/tP9/HbygzEJHPFiPOTgh1L3n6oac+eoVzJg
-         b8OQ==
-X-Gm-Message-State: AOJu0YzQN5MuFqrqr1YOLLfISJuR6EjYL2JX32qYvlCWR9lEGsI2B4oT
-	ZwEZb0ITesO70R2nHd7hz9yrsQigZl0k5/353kHDmBhhpu+xAlinvDQwhw==
-X-Gm-Gg: ASbGncvTuNRmpyUeEjSxglcZvIm8c9wqjnBpmakIPBO++YyHOtvvrwUL1kpCcybhRyi
-	uWaO9NRhj8ho4TYtTy3zvM4eEwd2NQd7754Rcr+3IRpRQ/QGdSOjs0Q1it/h+IANHJIR5tBFUUm
-	e7XRzC24whdrvv2zaZmSyYo0a6nTzaJfrVPk3KLpdvfa6OmjYwxGJybPilvPTKVzWEHZVrz7T3p
-	1oPPKtr6Iasjq7cGhlXq98ckz4z4F9HKLSJOGosHUjhmbakZyClN3/0y5y3R/Kln6FRvYmVwXGp
-	QNnD6QNUa2ICwRwujl0nK7CPCX6hUlSoO0MBen2lniqGvKhOyQ==
-X-Google-Smtp-Source: AGHT+IFC+07GFnGQJ38TwN5ZzeI1ugKuZX3x8Ly2S+zxLI/09uPnEFTbXJHpW+E6MNR3QxnmvUWvxQ==
-X-Received: by 2002:a05:6300:4044:b0:1ee:450a:8259 with SMTP id adf61e73a8af0-200f570f848mr574234637.18.1743617655969;
-        Wed, 02 Apr 2025 11:14:15 -0700 (PDT)
-Received: from [10.61.75.249] ([103.21.124.55])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af93b8ad858sm10077711a12.60.2025.04.02.11.14.14
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Apr 2025 11:14:15 -0700 (PDT)
-Message-ID: <1077615a-1c31-416d-a754-58b36d404289@gmail.com>
-Date: Wed, 2 Apr 2025 23:44:12 +0530
+        d=1e100.net; s=20230601; t=1743618146; x=1744222946;
+        h=to:cc:date:message-id:subject:mime-version
+         :content-transfer-encoding:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TQ8OK75sYMa6evpoAyTa8ldzzLZobKR8Eb2HbzDxnj8=;
+        b=ZbIxBnqQf9j6iQGM/cSNb66H4F4ko1LH32lYyUBO38+GUkRP6mrMC7mSpxKWgd/v6/
+         Av8KT7Quglbc9zmiYwL6FqTevcAtUxxtSEVipcSbFmC9tTnAH0/cky0dk9WyLBCwK3am
+         yBQWXX3GcbAkWNibGkUqvg91GdXE737IcePAlwgxKRZ2A5RXACqYFWfGUqbr8rsIcqse
+         8x+6kMvqBmKRkB9TJq6X7f2FADpo+bGm8r+tTNVNKHbjQBWmBL8fCv6TF1i4OFFxqK9M
+         wwAziqh6Thri+erwHCzElo2JXjRIOD3yu4P5yX9rv0MQw2fco/sMQqJa6Vr+0sKUlD/H
+         3xVw==
+X-Gm-Message-State: AOJu0YytQ4lzYla/iM3E85Xnltbvz+LpmWJE0sK6cShQGBP79AdB216r
+	xc2Or3ozqf4h3vhVscJliLti4+6BfEbxk3bHF/BqPR+daLv/i0MQGzhBSw==
+X-Gm-Gg: ASbGnctlZ6hxmGUYd9CggbXAvw2MPrP52nMSxv6LzxC/QIBWItbA4P7ZY6SNJswWtKx
+	cQUiqBljibGs7ckWoRfOjEKdMmsAbJLBmKvI2+fnLNRLxHMvNeed/Hs83Zk3p0GSKtzAN6vvUH3
+	0eMKb0m2rqkKYDlYryjK0QVfzyY7cjODFD294IQ2Phzftjmdnbss6KMYkDbfxJ5ZoHO1iJm8L+D
+	x3REjYVqBY0B1VIXIixbp2eYfWNll6Ilzd6V0cqF5eenLIm+erwqlLxxpOZfMpZ54Ha+jc+mzRU
+	piceynkQz2yp3StRKATy1KbmMUq/NWF/aj+/0qd5kWJQfuSomO1j68aSLjYcxl+M9Cwsn5zyeGU
+	r8A==
+X-Google-Smtp-Source: AGHT+IEhaX/UMOAkQ1IKOnTcGY06vzthUq6Pkmu1stdCQMAVeinPJ0lSVwCHFwkHxvq+7SvlPq/16w==
+X-Received: by 2002:a17:902:e549:b0:223:fbc7:25f4 with SMTP id d9443c01a7336-2292f95d954mr245492565ad.14.1743618146043;
+        Wed, 02 Apr 2025 11:22:26 -0700 (PDT)
+Received: from smtpclient.apple ([2804:14c:32:980d:2982:18aa:46f3:4595])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2291f1cec3esm111213495ad.122.2025.04.02.11.22.23
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 02 Apr 2025 11:22:25 -0700 (PDT)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: [GSoC] Project Proposal: Machine-Readable Repository Information
+ Query Tool
+Message-Id: <7EB151DA-0BDB-4D54-BBB8-CEE69F51F13A@gmail.com>
+Date: Wed, 2 Apr 2025 15:22:11 -0300
+Cc: ps@pks.im,
+ karthik.188@gmail.com,
+ shyamthakkar001@gmail.com
 To: git@vger.kernel.org
-From: Arnav Bhate <bhatearnav@gmail.com>
-Subject: =?UTF-8?Q?=5BGSoC_PROPOSAL_v1=5D_Refactoring_in_order_to_reduce_Git?=
- =?UTF-8?Q?=E2=80=99s_global_state?=
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-Mailer: Apple Mail (2.3826.500.181.1.5)
 
-## Personal Information
+Hi!
 
-- Full name: Arnav Akshaya Bhate
-- Email address: bhatearnav@gmail.com
-- Mobile no.: +91 8291328838
-- Time zone: UTC+05:30
-- Education: IIT Bombay
-- Year: Second year
-- GitHub: https://github.com/arnavbhate
+As you may noticed by the my interactions here, I'm going to send a=20
+proposal for GSoC 2025!
 
-## About Me
+I'm interested in the project idea currently entitled "Project Proposal:
+Machine-Readable Repository Information Query Tool". My main motivations
+on why I have chosen this idea is because I think it will be useful for
+infrastructure teams and FLOSS researchers.
 
-I'm Arnav Bhate, a second-year UG student at Indian Institute of
-Technology Bombay. I love coding and so I am a member of IIT Bombay's
-Developers' Community (DevCom), which is a group of roughly 40 people
-developing software for use by students and staff of the institute. Most
-of the software developed is not open source, so I can not include
-examples of my work there in this proposal. Being a member of DevCom has
-exposed me to collaborative software development.
+I'm sending here first version of my proposal. I'll be grateful if you
+send me feedback on it! In this proposal I'm presenting myself again,
+the possible use cases of this feature, a first idea on how it would
+work and a activity schedule.
 
-A common link in all software I have worked on is that Git has been used
-for version control. I thus see this project as my way of giving back to
-the Git community in particular and open source in general. This will be
-my first significant contribution to the open source community, and I
-wish to stick around afterwards.
+Thanks!
 
-## Overview
+---
 
-Git currently uses many global variables, most significantly
-`the_repository`, which are included in roughly 290 files. Apart from
-`the_repository`, there are many global variables, some of which
-logically belong in struct repository, as they represent information
-specific to a repository. So even if all instances of the_repository
-were converted into a extra repository argument for the function, there
-would still be many global variables left.
 
-The use of such variables assumes that Git will only operate on one
-repository at a time, which renders multi-repository handling
-impossible without kludges.
+# Machine-Readable Repository Information Query Tool
 
-This project aims to move such variables from global scope into more
-appropriate local contexts, mainly `struct repository` and
-`struct repository_settings`. This will not only make the environment
-repository-specific, allowing easy multi-repository handling, but also
-make maintaining the code easier.
+## Contact info
 
-The project involves identifying suitable locations for environment
-variables in repository specific structs, moving them there and updating
-all the code affected by the move.
+- Name: Lucas Seiki Oshiro
+- Timezone: GMT-3
+- IRC:
+- GitHub: https://github.com/lucasoshiro
+- LinkedIn: https://www.linkedin.com/in/lucasseikioshiro/
 
-## Pre-GSoC
+## About me
 
-I first got into Git's codebase in February 2025, with my first
-contribution in March. My first patch was on my microproject and since
-then I have submitted two more patches on a similar topic.
+My name is Lucas Oshiro, I'm a developer and CS bachelor from S=C3=A3o =
+Paulo,
+Brazil. Currently I'm pursuing a master degree in CS at University of =
+S=C3=A3o
+Paulo. My interest in Git dates from years ago and I even submitted a
+patch to its codebase in the past, though I couldn't complete it due to
+scheduling conflicts with my capstone project.
 
-### Patches
+Having experience in the academia, industry and FLOSS, I highly value
+code quality, code legibility, well-maintained Git histories, unit tests
+and documentation.
 
-- (Microproject) decorate: fix sign comparison warnings  
-  Thread: https://lore.kernel.org/git/afa6b428-3190-42ae-9eac-540c95b576fd@gmail.com/  
-  Status: Merged into master  
-  Commit hash: 2bfd3b368572cbf1ce287de09db08b7e7e429ecd  
-  Description: Refactoring of decorate.c to replace signed variables
-  with unsigned ones when they are used to iterate over arrays whose
-  sizes are represented by unsigned variables, and remove 2 unnecessary
-  variables which just hold the value of another variable without being
-  modified, replacing them with the variable whose value they were
-  holding.
+### Previous experience with Git
 
-- rm: fix sign comparison warnings  
-  Thread: https://lore.kernel.org/git/38de63ce-6d4e-4f1f-95b1-049df78d9cfc@gmail.com/  
-  Status: Under discussion  
-  Description: Refactoring of rm.c to make iterators over arrays whose
-  sizes are represented by unsigned variables unsigned. Specifically in
-  `get_ours_cache_pos`, where before a signed variable was being passed
-  and then inverted in the function, now the already inverted variable
-  is passed as an unsigned variable, with the inversion moved to the
-  function call.
+Before this year, I haven't been involved directly with Git community,
+however, I kept my interest in Git alive by:
 
-- pathspec: fix sign comparison warnings  
-  Thread: https://lore.kernel.org/git/a3aa5f99-63ce-4be5-8d64-fb6e226b3bf9@gmail.com/  
-  Status: under discussion  
-  Description: Refactoring of pathspec.c to make array iterator
-  variables match the type of the variable storing the array's size.
-  Where replacing the variable's type is not possible, because of the
-  large-scale cascade replacements it would cause, an appropriate cast
-  has been added.
+- Translating the "Git Internals" chapter of Pro Git to Brazilian
+  Portuguese: https://github.com/progit/progit2-pt-br/pull/81;
 
-## Proposed Plan
+- Writing some blog posts about Git, for example:
+  - one explaining how Git can be used as a debugging tool:
+    https://lucasoshiro.github.io/posts-en/2023-02-13-git-debug/;
 
-- Identifying all occurences of `the_repository` and updating them to
-  use a `struct repository` passed to the function.
+  - other explaining how Git merge submodules:
+  https://lucasoshiro.github.io/posts-en/2022-03-12-merge-submodule/;
 
-- Identifying global variables that should be moved and identifying
-  suitable locations, some could be moved directly into
-  `struct repository`, some in its sub-structs that already exist and
-  some in newly created sub-structs.
+- Writing a compatible subset of Git in Haskell from scratch:
+ https://github.com/lucasoshiro/oshit;
 
-- Identifying and updating occurences of these variables to reference
-  their new locations.
+- Helping organizing a Git Introductory Workshop at my University:
+  https://flusp.ime.usp.br/events/git-introductory-workshop/;
 
-It makes sense that all the variables need not be in the same struct, as
-separation would keep the codebase organised, and thus easier to
-maintain. It would also make it easier to introduce these changes
-systematically, as a group of related variables, combined together in a
-struct, could be introduced in a single patch series.
+- Presenting some lectures about Git in a company that I worked some
+  years ago, covering the Git internals (objects, references, packfile)
+  and debugging and archaeology related Git tools (blame, bisect,
+  pickaxe, ls-files, etc).
 
-### Timeline
+### Previous experience with C and open-source
 
-#### Pre-GSoC (Until May 8)
+I also have experience with C and some C++. During my CS
+course, C was one of the primary languages that I used. I also
+worked with C/C++, for example, in:
 
-- Explore the codebase, identifying global variables and how they are
-  used.
+- Writing an AMQP message broker from scratch:=20
+  https://github.com/lucasoshiro/amqp_broker;
 
-- Start to identify suitable locations for global variables.
+- Contributing with simple patches to the IIO subsystem of the Linux
+  kernel: =
+https://lucasoshiro.github.io/floss-en/2020-06-06-kernel_linux/;
 
-#### Community Bonding Period (May 8 - June 1)
+- Contributing to the Marlin firmware for 3D printers:
+  https://lucasoshiro.github.io/floss-en/2020-06-30-Marlin/;
 
-- Interact with mentor, discussing best ways to refactor various
-  variables and make a plan based on that.
+- Writing a module for the ns-3 network simulator, dealing with both C
+  and C++ codebases (currently under development, I plan to write a
+  paper and make the code available soon);
 
-- If time is left, start coding early, as my summer break will have
-  started.
+During my CS course I also was member of FLUSP
+(https://flusp.ime.usp.br), a group in my university focused on FLOSS
+contributions and from Hardware Livre USP
+(https://hardwarelivreusp.org), another group that was focused on
+working with open-source hardware.
 
-#### Coding Period (June 2 - August 25)
+As a master's student, I'm one of the Open Science Ambassadors of my
+University (https://cienciaaberta.usp.br/sobre-o-projeto/, in
+Portuguese), promoting the Open Science principles, which include
+open-source software, in the unit where I study.
 
-- Modify functions to add an `struct repository` argument where they
-  depend on `the_repository` and replace all occurences of it.
+I also contributed to some other free/open-source software, which I list
+here: https://lucasoshiro.github.io/floss-en/
 
-- Move global variables to their new locations in various structs,
-  and refactor functions that depend on them to use their new locations.
+### Activity in the Git community in 2025
 
-#### Final Week (August 25 - September 1)
+Since when I decided to submit a proposal for GSoC, I sent some patches
+to the Git codebase and git.github.io:
 
-- Fix any bugs that may be left.
+- My microproject, replacing some `test -f` by `test_path_is_file`:
+  =
+https://lore.kernel.org/git/20250208165731.78804-1-lucasseikioshiro@gmail.=
+com/;
 
-- Write final report.
+- Adding a paragraph to the merge-strategies documentation describing =
+how
+  Git merges submodules (based on the blog post that I mentioned
+  before):
+  =
+https://lore.kernel.org/git/20250227014406.20527-1-lucasseikioshiro@gmail.=
+com/;
+ =20
+- A patchset adding a new `--subject-extra-prefix` flag for `git
+  format-patch`, allowing the user to quickly prepend tags like [GSoC],
+  [Newbie] or [Outreachy] to the beginning of the subject. This patchset
+  was rejected in favor of just using `--subject-prefix=3D'GSoC PATCH'` =
+or
+  similar. It can be seen here:
+  =
+https://lore.kernel.org/git/20250303220029.10716-1-lucasseikioshiro@gmail.=
+com/;
+
+- Given the feedback on the previous rejected patchset, I opened a Pull
+  Request on git.github.io replacing the occurrences of `[GSoC][PATCH]`
+  by `[GSoC PATCH]`;
+ =20
+- Adding a new userdiff driver for INI files, initially target for
+  gitconfig files. Currently it is still under revision:
+  =
+https://lore.kernel.org/git/20250331031309.94682-1-lucasseikioshiro@gmail.=
+com/.
+
+Beyond contributions, I also helped people on the mailing list that
+needed assistance on Git documentation.
+
+## Project Proposal
+
+Based on the information provided in
+https://git.github.io/SoC-2025-Ideas/, the goal of this project is to
+create a new Git command for querying information from a repository and
+returning it as a semi-structured data format as a JSON output.
+
+In the scope of this project, the JSON output will only include data
+that can currently be retrieved through existing Git commands, for
+example:
+
+- `git branch`: information about branches, such as the commit that each
+  branch currently references and their upstreams;
+
+- `git tag`: information about the tags, such as the author or commit
+  date and the messages they hold (in the case of annotated tags);
+
+- `git remote`: the URL of each remote;
+
+- `git log`: statistics about the commit history, such of the
+  distribution of commits over time and by author, the distribution of
+  lines changed by each author;
+
+- `git submodule`: information about the submodules, mainly the commits
+  that they are referencing and their remote URLs;
+
+- `git rev-parse`: the current branch name, the current commit, the path
+  of the repository top level directory, if the repository is a bare
+  repository or if the repository is under bisection.
+
+Given that the information that we want to compile are currently
+accessible only through different commands with different sets of flags,
+the user that wants to read them needs to have an advanced knowledge on
+Git. Once having the repository details consolidated in a single
+command, the user will be able to quickly retrieve what it desires
+without navigating a complex combination of commands and flags.
+
+### Use cases
+
+Some use cases that will be benefited of this feature will be:
+
+- CLI tools that display formatted information about a Git repository,
+  for example, OneFetch (https://github.com/o2sh/onefetch);
+
+- Text editors, IDEs and plugins that have front-ends for Git, such as
+  Magit (https://magit.vc) or GitLens =
+(https://www.gitkraken.com/gitlens);
+
+- FLOSS repository tracking software, for example,
+  kworkflow (https://github.com/kworkflow),
+  ctracker (https://github.com/quic/contribution-tracker);
+
+- Academic researchers on FLOSS projects that need statistics on the
+  repositories that they are querying;
+
+- Continuous integration workflows that perform checks on the
+  repository before allowing a branch to be merged into another or
+  before a deploy;
+
+- Code quality tools that will be able to inspect the health of the
+  commit history.
+
+### Planned features
+
+Since the features haven't been defined yet, this will need to be
+planned after surveying people and projects that potentially will use
+that:
+
+- Searching on code hosting tools (e.g. GitHub, GitLab) for open-source
+  software that retrieve data from Git and what they do with them;
+ =20
+- Contacting people in academia that use Git repositories as data
+  sources for their researches and find out what valuable information
+  this command can provide them;
+ =20
+- Contacting people from the industry, specially in infrastructure teams
+  to understand the challenges they face when retrieving data from Git.
+ =20
+Given that I have worked in a infrastructure team and that I have
+colleagues and professors at the university that currently research
+FLOSS software and communities, I have contacts that can provide input
+on what should be considered when developing this new command.
+
+By now, it's not possible to decide how exactly this command would work,
+but a first draft is this (supposing that `metadata` is the name of the
+command and `--submodule` is a flag that enable the submodule metadata):
+
+~~~
+$ git metadata --submodule
+
+{
+  "symbolic_refs": {
+    "HEAD": "main"
+  },
+  "branches": [
+    {
+      "name": "main",
+      "commit_id": "ac72c22f3c8a9280c81171ccc6cedff3171344cf",
+      "remote": "origin/main"
+    },
+    {
+      "name": "feature",
+      "commit_id": "1e373e02767337bd6b996da6598eed822a805878",
+      "remote": "fork/feature"
+    }
+  ],
+  "tags": [
+    {
+      "name": "v1.0",
+      "message": "First version",
+      "author_timestamp": "1743554265",
+      "commiter_timestamp": "1743554265"
+    }
+  ],
+  "remotes": [
+    {
+      "name": "origin",
+      "url": "https://example.com/foo"
+    },
+    {
+      "name": "fork",
+      "url": "user@example.com/foo"
+    }
+  ],
+  "submodules": [
+    {
+      "path": "my_dir/my_submodule_dir",
+      "url": "https://example.com/bar",
+      "commit_id": "94436069f106c0014897b1c93e8fc3e49c8fc156"
+    }
+  ]
+}
+~~~
+
+### Development plan
+
+Since this is a new command that is not directly related to any specific
+existent command, it will probably be placed in a new file inside the
+`builtin` directory.
+
+The functionality of this command can be divided into two categories:
+
+1. **Data gathering**: retrieving data from different sources, calling
+   existent functions and reading data structures declared in other
+   files;
+
+2. **Data serialization**: formatting the gathered data in a JSON
+   format. This represents two challenges: generating the JSON itself
+   and designing the schema for how the desired data will be presented.
+  =20
+Since the exported data is already provided by other Git commands, it
+probably won't be difficult to implement this side of the
+functionality. The main task would be inspecting the existing codebase
+and find the functions and data structures that will feed our output.
+
+Designing the schema, however, requires special planning, as the
+flexibility of semi-structured data like JSON may lead to early
+bad decisions. A solution may emerge by analysing other software that
+export JSON as metadata.
+
+### Schedule
+
+1. **Now -- May 5th**: Requirements gathering
+   - Inspect codebases that uses Git as data sources;=20
+   - Contacting academic researchers on FLOSS;
+   - Contacting industry infrastructure professionals;
+
+2. **May 6th -- June 1st**: Community bonding
+   - Getting in touch with the mentors;
+   - Present to the community a first proposal of the JSON schema;
+   - Receive feedback from the community about the schema;
+   - Present a first proposal on the command line interface;
+   - Receive feedback from the community about the command line
+     interface;
+
+3. **June 2nd -- July 14th**: First coding round
+   - Write data structures that correspond to the presented JSON schema;
+   - Fill the data structures with data obtained from routines of the
+     existing codebase;
+
+4. **July 15th -- August 25th**: Second coding round
+   - Implementing the command line interface option handlers;
+   - Write the JSON serializer.
 
 ### Availability
 
-My summer break from college lasts from May to July. I am currently
-planning on taking a vacation during this period of about 1 week,
-however, the dates have not been decided. Outside of this vacation, I
-am not occupied in the break and can devote up to 60 hours a week
-towards the project. In August, once classes recommence, I will be
-available for 20 hours a week.
-
-## Post-GSoC
-
-After completing my project, I plan on staying active and contributing
-patches, and start reviewing code.
-
--- 
-Regards,
-Arnav Bhate
-(He/Him)
+2025 is my last year in my master's degree. Currently, I'm not attending
+any classes and I am more focused on developing the software of my
+research, performing experiments and writing scientific articles and my
+thesis. Since my advisor is aware that I'm proposing a GSoC project, it
+will be possible to work on Git while working on my master's tasks.
 
