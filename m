@@ -1,131 +1,153 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459D25C96
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 18:48:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB11B6EB7C
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 19:10:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743619697; cv=none; b=Gnpym5rA/dfXJODSH0QSLKL7KwxWV97OxHPzYwPyhvybAHHnqQYaxxN6GqBTnwxfJ/FCI4hcOv+JguTepUf3oh98iI2WbuPkVuu9bcw+kljEZIe52+0u1CV1uh1Kw3NmNj+zJODxeRb/89zbZzo/tNlTW5cla6Xtac7ZsmzwnUY=
+	t=1743621024; cv=none; b=W+lq80X1rmXFkGw0zLFWGKFjA+GVGchvmRhNND9JwoOCgOsADc9hVk0/xaOxWrx04aJMHlh5zhDj4Xp5IG/s4Oqn9G9RtA0e0wlm6yuPFQNyIDtlrEhXCJMMoqFZYbGhu75+hzO1kNL3d4/XQk5RRFzL/t4JYi/xn4buUoq/5vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743619697; c=relaxed/simple;
-	bh=nAdaKBafFvihHQGxG2obFnSSC2hEOnE0toUUc7JSdVk=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=Q3TqElDaflOJ+JC0b58VezmnP6FkmsP3o68Eip00/ZmLzucjxRvM8F6Wufhb+G9QNeTl8zksYtjDaEG238mmSDBZQXh72rXop7QBdokDBNcjneXHgf+O43CHggato+I4IF8H7vBRR56Ng6lCV+LXUTMGRgaicQZ7AIxqKpx8vPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fieGHKIr; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1743621024; c=relaxed/simple;
+	bh=vyUU1cVWVJRSBNbRWSaruL6UHGnIMDrjZU7OKwbGQcE=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=Ch6Py45I3VTMan8IZo8DosgX/nwsHk4Kz4ZgRmMcwTBDB2RXi1mVw9aAFypuVTugziDIBi3+ooTXqFV0KSfzZwM5cWQTKK3i8bcr0pLa74f++R5Afxe3rmheg3UmUSdul+xHs4zkNg3pFJeGF/jG+SLcHbqAtR6E7kxZ+Yz/qTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ihqhiOPw; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fieGHKIr"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5e5cbd8b19bso14315a12.1
-        for <git@vger.kernel.org>; Wed, 02 Apr 2025 11:48:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1743619693; x=1744224493; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=DrvVtTmzEyAYrjKhXLTaSqJria0RFsfc+l9b9j1p39I=;
-        b=fieGHKIrL03P13zLMaULuSft63moetbGdmvheaq/uAFTrvfmd6qsAUCefuKN29jFLq
-         nlwe0ZwJ/jc/LWFS78Im3FFCwd7lPajCTYhlr28VAistuq8lPph9XI5N6h1JdpWg0Qa5
-         jZv9oBuZVT8rj4sGh9dR/TjjD1mMWa1diXFU5QZJeUpU6wWf10dDpd89LfghZHuhP554
-         RWay3fU0Xug/rgiNrhEBK1kUfagO8fkFTwCsxy9ky0GFb2Dlk3me1YmnvHj/KcafilVi
-         YbQb8ioFT24wa5gosZS23WimK8YKm/7pEdA3PVouik4IZBdAJgoKcOb7EG5RPvUhBnOM
-         Y4JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743619693; x=1744224493;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DrvVtTmzEyAYrjKhXLTaSqJria0RFsfc+l9b9j1p39I=;
-        b=IRkQXV3AD18zAcstbZcBq/RLSWejitcSDhsmia1DNjWPFl/+QrM5PXJFrjri8YZRIu
-         Ki/Dx/MyMCdSVw/C/+Biny5KXa7S3GMMkGM5Xrdo4oB5P2d0nKVvnV40+Xm3sMB0IU2m
-         03K9MXxPHMr5xgseixKjJjKHO29QVXRRZKriM6YC3hAvCutZKa5VbN3g3YM39WHF8Nn1
-         6crNhcex7B4cIheoowDZOPomASC3SqQOVTgzI8MkkKEqDOZYF8JK6nrJfKQzmqfiJPuN
-         NnQKWbf+zX8U/q4+owKCz0WFujjHAQ4E4j4iTl+BVx0gizxRNh4/oLunr5u3dmaKhEVG
-         QfBg==
-X-Gm-Message-State: AOJu0Yx3Y3x5h5U1n5FmW1/Ne30iIGbjrSPg8UxXgi8mBU+LK/J4cQqP
-	rGX1bnMrwy6wu2LwNlS3PiDM7W8np/iv0MZQ+azpguv2v7LAHVByIjV5FkDqp1W+PKEX8YDkWrz
-	L62MPaoeX2vW3WKtiehclz/QD3lWuy/CYX1z9MCRCUPFiZMsyzF1F
-X-Gm-Gg: ASbGnctTAmB0GGFV8g7aX2unXRM7LCv9z2G3pR6KRwfzngZEFDcDUB+n+ZmH7Ua8dgk
-	t/1USGwEtmt32zXYYtvWb+gWwRJ+mW4XBrhJ3sb5k7BmweRKs4FgCbHAvhJLgVymwWDdFJb4cEI
-	DCJajSHAHZouULIPwmQkmljjpdN9ONKsyZMUHMDNv9H+pJnETZCrTFDhzfKLGDMiSwreY=
-X-Google-Smtp-Source: AGHT+IF/eDzSR59Etzbhihvw8iK2ElStPjveMQ8mmlNN6aKLqc3nHsnuBvg/4qaqEOxGz3JvC+TUIrC61UQb1T2yPsc=
-X-Received: by 2002:a50:b412:0:b0:5e6:15d3:ffe7 with SMTP id
- 4fb4d7f45d1cf-5f0852e1cfamr3876a12.7.1743619692617; Wed, 02 Apr 2025 11:48:12
- -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ihqhiOPw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1743621017; x=1744225817;
+	i=johannes.schindelin@gmx.de;
+	bh=0DUV9NvE4fMD8qi4BuExK7VA5eQZ4bybaM1t0Jmk6nM=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=ihqhiOPw9wI+rre5wdbBo9a3xnHxIjmrZRW+fN/8OJE2hJb5+UxMjFvNXJHvirSS
+	 Uwr3Vr4Jp3ejgiV0d5Thhi4MiCcxbOlkqRAGQZtpwNjOhcTuvCx/wGg48UXQQWygg
+	 e5WVbObxgGmLAO5DVVrL6t2DLEX1S9ARHTnlICk0i3BH2oCr4NU/rOUZIYdp/NR9/
+	 iUUxokQVF9Nvp/xXaf3NFG802piLYABWxm7RVl4nJPV1296K7XhJ4fS6HGyY9Gr/e
+	 0RByUSjC9UsVPNdP6kovb0hauxg+nheZdD+usuuViwleZPLtrKVrZZ+Bq/vufaRMw
+	 WXmzWuIb2RaTpiKd8g==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MD9X9-1tr0w40XVR-002o4K; Wed, 02
+ Apr 2025 21:10:17 +0200
+Date: Wed, 2 Apr 2025 21:10:16 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>, 
+    Karthik Nayak <karthik.188@gmail.com>, 
+    Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 06/20] t: introduce PERL_TEST_HELPERS prerequisite
+In-Reply-To: <Z-zkQyRCM3BkovgY@pks.im>
+Message-ID: <5a344739-6556-858f-8769-c42e48f01a6f@gmx.de>
+References: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im> <20250327-b4-pks-t-perlless-v3-6-b436de9da1b8@pks.im> <ee5e082f-6ab5-b996-9a0d-f7e5192c01be@gmx.de> <Z-zkQyRCM3BkovgY@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Martin von Zweigbergk <martinvonz@google.com>
-Date: Wed, 2 Apr 2025 11:48:01 -0700
-X-Gm-Features: AQ5f1JpYX685QYI5SlV6kZmHpjUnrFG24QLBD6sG-XbxCCyFEQcO2UhlRZumEzQ
-Message-ID: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
-Subject: Gerrit, GitButler, and Jujutsu projects collaborating on change-id
- commit footer
-To: Git Mailing List <git@vger.kernel.org>
-Cc: Edwin Kempin <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev, 
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:QOh2y+dIcRKm7Z2dAVgGijFiFO8+nzOuZKymASKKz/Fgw9LUiu8
+ u7jJ4iAD+yGVblX7rSwQF08/EHGghYMeDBD5e38jsxfFjDF9G319gzqLN83GpAwJJBkf81t
+ 2FewGKTsl1iK/uTt0n4eugfrr3LOhBHfmhUZ+D4kfY7OzzDzsr08jlDW7wSN0zSEdY2m+Ad
+ B1CqQIkhWhh8CruHK0Z2w==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:6WtBecKXakE=;iQjS9JwzitV05LaFqF0sUuh3N0i
+ g4wsVoHUR+23v7LO7H6N1vdjWRTzIBLsvEomv80Vu0PN1VfZ/WJI+K/CLNN3Bjk1jUhPICdCi
+ TBebsoFjTq5Hqk622jvv3uRubpOGJ0kKq3Ae81EA/9IHf4/RiKBCrJW1SeOTqfupT8nTuhvsv
+ z3tDFDSfSSuJ6Y5xQgUKJVonGTI8r8cLXC17pupDmnsM8xwt3vwT1eoilCEzgwR3w8jmzp4rB
+ zBYHr7fGP53y0Sl9lQCxQ1EiMhWR+l2Mi8Yjvifn95M6y1xthncKnT2RJfAP7TU42ddi5h2m0
+ p1hJs8KIS9oF1Y4ilzCfHShshuG5AhsLQqyaUnN8cpodknaavIvDucENPYDCZOXDNLFWZbQr2
+ 7W8LaEnvQB7X53INSTF1li7rNKeJAxFya/e2ee4kQ0qiE5O9pC3mAAAkl3TA2Q2nlU0IKzxO4
+ i0ldxrxIUvUidbGUle5o6m9GNVeVRf7446ijxeT/YaIVA0ioYXNd3H4wVLlmwB0kyJHvPBEoX
+ i+ecwuBw3TRA419vPnQlnuEVeRRZ0umGuV+Eazx3o5QofxjwsxCajhfOrn044BT+YilP9U6HU
+ 0N3xuNnSd5ZWIHvpmsOh2t5P33CnMSAPMY70fivLIw0+tPS9Xl//BZZMWeSMY69ZNr40eZRwK
+ 5O5Bk++RIHhV1y/rOPR+T8kN0pA999Zh5tbQetnCmOXkxgr0YsJ3Vqo4UOiGMX9GKCUHR4OHH
+ Tik3MTVTqd7R5OGZ/slYatXx2SP2ug/LnvA+teDY5gLSnit2+Zj48p5R6jE4k/FYiQhzqZ2c3
+ srHuNcMAeT+B4OkideE5dH/g+lu7meJmgLXkl2XtW9i0O4jRFFRTv7IWTtjfXNh3jf+unXNmj
+ 8dV1oaY0w0g4JfI+yb56g2OjFs+ELQTZeWwx8zK2/lEUKE97nq0lApwwoU7br8eQlVzTiiMgm
+ B9zd4q4ouQsgTvTwdZuR5QKgWEY6kc6uoSi1wsjfAgnR1JLD9jwfA94P3xgWDtCetQ5t4qGux
+ oKFAPXEQU12knj009JTfEejEY/RJBNpMnkQ/waLAQoVPVaA9xWXdAeqOhtNtojvE4G6fiPbV5
+ Q2DBeEpf3wwDF2Jdws5Rs0WTFPeIgRh2JJDmq3g0aXxqInnyA9/cqdcqZgDTxilkpyik0HIXa
+ 5B9eEpR8Ej06vSerf9CwP/+k6NtKX3MNdIMPUGhlRCOFvpYcHGxN/Dx9snIFMIxDVCYho0xG0
+ QaOJ9KlTKJcakRsRLIpPOcioFVqRCbWpV1tXvwZfrSQ4BnywXfpkIj06c9WWkGC9Nq7UR2VKR
+ TPE43072/MjIE1gP5NWgb592Tl2LN8WOFiBHzzDO0j8aexyMLtkO/JKWx2eJJM2MjD47lihx7
+ AmZ7tzoNq2K/xMMuKzM4ufU7XdFUAGIuPpLQqJv2A8NoJRaEdBAcxkz0TDbweF3FhsdOf1oo+
+ 6xXb3XHJgYhOUnlVOFm8os2pQiBuKZN6Z4GS9yu6YLt7YA+lu
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hi Patrick,
 
-The Gerrit, GitButler, and Jujutsu projects all have a concept of
-a "change id", and it behaves in a similar way between the three
-tools. The change id is conceptually associated with a commit.
-It follows a commit as its rewritten (e.g. by amending and
-rebasing). The three projects currently store and format the
-change id differently. We would like to unify that so we can
-interoperate better. We hope the Git project is also interested
-in preserving and using this header.
+On Wed, 2 Apr 2025, Patrick Steinhardt wrote:
 
-There are many benefits to having a change id even if it's just
-local. I mentioned some in my email to this mailing list in [1].
-For example, it enables
-`git rebase main <change ID>; git switch <change ID>` without
-requiring the user to look up the hash of the rewritten commit.
-If the change id also transferred between repos and preserved by
-a forge (such as Gerrit), it enables the change id to be used to
-identify a code review.
+> On Tue, Apr 01, 2025 at 08:26:36PM +0200, Johannes Schindelin wrote:
+> > On Thu, 27 Mar 2025, Patrick Steinhardt wrote:
+> >
+> > > In the early days of Git, Perl was used quite prominently throughout
+> > > the project. This has changed significantly as almost all of the
+> > > executables we ship nowadays have eventually been rewritten in C.
+> > > Only a handful of subsystems remain that require Perl:
+> > >
+> > >   - gitweb, a read-only web interface.
+> > >
+> > >   - A couple of scripts that allow importing repositories from GNU A=
+rch,
+> > >     CVS and Subversion.
+> > >
+> > >   - git-send-email(1), which can be used to send mails.
+> >
+> > There is also `git request-pull` which is a _shell_ script that runs
+> > `perl` to parse the output of `ls-remote`, and there is `git
+> > filter-branch` (which was apparently not yet dropped?) that uses Perl =
+if
+> > the `--state-branch` option is in use.
+>
+> Ah, indeed, thanks!
+>
+> I should probably mark both of these to require Perl in our build
+> systems so that we have a source of truth what requires Perl and what
+> doesn't. git-filter-branch(1) also looks somewhat broken because it uses
+> Perl directly instead of using PERL_PATH.
 
-Here's how the change ids are currently stored and formatted:
+True.
 
- * Gerrit currently stores change ids in a commit trailer called
-   `Change-Id`. It always starts with the letter 'I' and is
-   followed by 40 hex digits. For example:
-   `Change-Id: Ib563e78c3fedcff262255fa025441daa3202311b`.
+> On the other hand, maybe the better fix would be to just convert tools
+> to not use Perl at all anymore so that we can eventually get rid of this
+> dependency altogether. It feels like we're quite close, and many of
+> these conversions are low-hanging fruit.
 
- * GitButler currently stores change ids in a commit footer
-   called `gitbutler-change-id` (older versions used
-   `change-id`). It's written as 32 hex digits separated by
-   dashes as in the UUID  format. For example:
-   `gitbutler-change-id  7d0fbc63-032d-413c-8ae8-610fbeb713c0`.
+As for `git filter-branch`, we could simply -- what were the wise words of
+Elijah's mentor? -- "debug" it. I.e. delete it and be happy about it.
 
- * Jujutsu currently stores change ids in a local storage outside
-   of the Git repo and is therefore not part of the Git commit
-   id. It is stored as 16 bytes. It is rendered to the user as
-  "reverse hex" using 'z' through 'k' as hex digits ('z' = 0,
-  'k' = 15). This allows even short prefixes to be distinguished
-   from commit  ids, which is a very useful property when used in
-   the CLI.
+> > The patch looks good, in particular when fetching the `b4/pks-t-perlle=
+ss`
+> > branch from https://gitlab.com/gitlab-org/git and inspecting 8fc639f99=
+d9f
+> > manually, as it is a rather large patch that is pretty much unreviewab=
+le
+> > on a mailing list.
+> >
+> > Using several write-only `sed` invocations, I identified that there ar=
+e
+> > only three hunks that are neither adding a stand-alone `PERL_TEST_HELP=
+ERS`
+> > prereq nor adding a test preamble of this form:
+> >
+> > 	if ! test_have_prereq PERL_TEST_HELPERS
+> > 	then
+> > 		skip_all=3D'skipping <something>; Perl not available'
+> > 		test_done
+> > 	fi
+>
+> Thanks for double checking!
 
-As mentioned, the three projects would like to use the same
-storage and format. I think we have a consensus to store it in a
-Git commit header called `change-id` as a 32 reverse-hex digis.
-For example: `change-id ywlktllmukprnxnmzzprukpuwyztylwt`.
+You're welcome. I am a bit embarrassed to admit that it took me quite a
+bit of time, I believe it was around an hour, to validate this patch
+alone.
 
-There is a design doc [2] about the impact on Gerrit and how to
-handle various cases where the client doesn't understand the
-`change-id` header. That also includes some discussion about
-whether cherry-picking should preserve the change id or create a
-new one. I think there is a lot of value in having a
-standardized header regardless of what we decide about
-cherry-picks.
-
-So, to be clear, this is mostly a heads up at this point; we don't
-depend on any immediate changes from the Git project.
-
-Thanks,
-Martin
-
-
-[1] https://lore.kernel.org/git/CANiSa6gwup5vXU235mG+Ybbc+P=SbwoNFEmuhg=iYu0yGvSXVA@mail.gmail.com/
-[2] https://gerrit-review.googlesource.com/c/homepage/+/464287
+Ciao,
+Johannes
