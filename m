@@ -1,143 +1,109 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D9D233714
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 07:18:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CA81853
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 07:21:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743578341; cv=none; b=CY6fG+oqb14hTuqRhBFIHFxj86mJMHaNcR+64Yn8AUZ/cXGLL/cLhj/52IJzbFcGKNGS+JmpSvcsDBbFKlQWg7mCsTIOSpJ8Ct95xeQD0yWSNwG9nXEA5OjhrLA/lr03yjR+aWUkFgX559FEy24AUkHDwfZiFDStOfXI4R/O0fI=
+	t=1743578499; cv=none; b=J6cMZ6pliMdDa6eRK5+zpZ39Q/yOzMA09BIXNXBPHAEA5Au4HlvC5N8lsNEQd2K5/mCuxSoJCfuNDhIQojkofuh0+sajJJjLdPTUp9gNPApZrYGQB5zWtXay+Uk0u6Ip+ixR0DcAsfEzMPmrXdxdUFlhxrL/dQmB0wY3rKPfFQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743578341; c=relaxed/simple;
-	bh=8YbPu/FKwdM7IgizCTpr812wLR1t6b0UbMz9fP5cHVw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=M2ZcyXbIOw30Ce0JzJJzYiSyigYonIiZnFqMWzbFDHKkDqoC+XEqmkQ4WkwYRQPZkL0e0Ybg/WFIx2ngng1XsLVRUBTbPzbYQPzCY4eyzBZOak0eufPmRhDp5FDK8hVmSe3pJcKfqdcbgEhyJ4hu22FTH1iX/Tgws2ytelPjVKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZtRxVLgv; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743578499; c=relaxed/simple;
+	bh=nEZvNh12DRw7c+maLikxzlkoYE4SyXKdohZ5xZTh2z0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gAle1J1DCCUfWMF7PSD5Tm74pPKNLr+lcpncIrHaM3a85cS7KD5lcL2iXHQ0Wpwxs34/eHweE1OnC2wEkfBF8V9l2HoWgv8mUCpe06mNnwo4LDxKnvOQfjkI27EtnbOvufhyqY3MlwpO6RP3CHLYjqP27PtNpSIgnfotYtI9LhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rn8MKJuX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tSQLxVMf; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZtRxVLgv"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-399737f4fa4so3187489f8f.0
-        for <git@vger.kernel.org>; Wed, 02 Apr 2025 00:18:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743578336; x=1744183136; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=4OxW7O7UumUkrTS+EgCI+kRh3PN6fGvmKpDb9hY9m10=;
-        b=ZtRxVLgvsHZR4l/axDiBnIZ6oJlb+fCb5YB1BneNY0HwvlNLdIkcSUASG3XVaqMn7a
-         oRO/p6cnHpuRecF60g42AIlxeDHvj7kha/W8Llrr11HBywZpxzc6e8ekq0NxmhKxpS0P
-         +vRSphovcU7LCcBrWmGU8ymp824/1Ie5ALk3rQEZwdFYOtQOM9uw3C1omD/iG6cS0Hob
-         1QClLq9VJcOsbRqaBcugCSrV8KwuTjUvrO2LBKKdmSGaaCqxh8dor0pC6m9zk7uyv8/r
-         WX8ODTunE4M1AJkVdZVuA55J+r2n1M3fARj7MDNLurYTrzxPDESzIjwfYi9eDHwleRV0
-         9dlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743578336; x=1744183136;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4OxW7O7UumUkrTS+EgCI+kRh3PN6fGvmKpDb9hY9m10=;
-        b=d7XD4vv5oPCKg2T1y5GZRAhZnCVlqb3sB843nPs2SRXTkNGeCo2ylRlFFeonEZduzx
-         vZTCYYYEprdwir7xfLvcepPSFf1m5qx6TABrDxqUYUPvKOI25/+eE0ECM/ina5XflhJf
-         tF3dKkxg5V+4WtddstITd/YH8JO9Xt2SwabxQuwBQHvB0Vs2+nbXzc7eBG/1VoItDctu
-         ad7rpF15BuoDU0BxwIJ5sOZLyCWK/l7vWJ0rkyzpb7cMummj5XoEWMp/y3VwvVwDBjKp
-         YI5zS5ziRmtBj9eKJpJ2MO9nHJruOXEfcmakCwqEUYR4qlCxva2f680+I0Or1hQaIDx0
-         DdPA==
-X-Gm-Message-State: AOJu0YxhSaqXgeHxnyfBzp6+yn/pjBo2RKsEj3NSAeQ46ijZhdztCN0b
-	5UQ0rxwmfQuydQ1LoyZ6sNXta37LRq2evqbi7l8SBMPfkuOaocm4Df/Xw1aDQ4PxJoxxLQx4qYU
-	/wTcBb9sf0gR8Q0Kg8cjhrcdpUeWCfuFHAZ7OL8LH
-X-Gm-Gg: ASbGncuXBhp7dAdHz2dqbhpAF6785eL37Y8MZEqrnCbC44OxOrYBcugsV03SHomuCOT
-	i4ksWIYB8EL03/kCENOYrdz6sDo/BaYcqWxZVVbX/uH7GdShoTxgdI3/Y5HGRdKOdvjqZX4564T
-	//pBNWN1m1xfNfka4AJTM4ZHEPaw==
-X-Google-Smtp-Source: AGHT+IFECTjZNq8Z/D40y95wbKFjbVKHKO5dP3y/Mvu+wy+jrfQRITkg/aeezOUATnKdXe/salr9KDJPrxXStcN+Lg4=
-X-Received: by 2002:a05:6000:400c:b0:39a:c8a8:4fdc with SMTP id
- ffacd0b85a97d-39c120de150mr13173978f8f.16.1743578336501; Wed, 02 Apr 2025
- 00:18:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rn8MKJuX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tSQLxVMf"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 763BA1140107;
+	Wed,  2 Apr 2025 03:21:36 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Wed, 02 Apr 2025 03:21:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1743578496; x=1743664896; bh=x14GPs4ggT
+	FndL1SBqyBBNdm6K6Y7fIb7TML+TZNPR4=; b=rn8MKJuXoRe1SG6izqAG/zq039
+	npB6NO00CXSzMdORNaKbGYbJASTj027VSSCZEwFlyCassyV3/ASJzWNciZPbXBNF
+	OalcXtHrdaXAP+As+U10C72MfgSXNrhssb2t6dgfmy1kJobmefkbZWmTr53oYP/j
+	l8URcRbwLMJR6l9WBPOODNYatYkGrFeaT/jEX1loHG1diBgPwP1YP/DUqbAi2Cky
+	BDDnC0QtaFGRHR80xOAkQpjHXm+WBkDTq9IolpUuNkJjhGygHu/hJM1OCMb2bJQV
+	1QtnjYJEoP62mRcofbsKACZaJuqDBPhLDWoVgyrrgrilKHrBCrNyDy7xoJtw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1743578496; x=1743664896; bh=x14GPs4ggTFndL1SBqyBBNdm6K6Y7fIb7TM
+	L+TZNPR4=; b=tSQLxVMfoLXqb6DE3yy4y7wmpnzTNkSmgcok+/DDTBHlV9KXq7v
+	BNsJGiwpYWubL/7Oc3qmq5yRlnyoAC5nxFnkLpXMPx4+TkSEo3pmcc4Wu5Zb9Mx9
+	VEuxqhCF1o+lTtB2ahquYUZoQyxeRS1G3MTMXyDu4rffH8MRbAxZaiNhDQya3FYu
+	N6JTjiJaTAurS7/YjcSK6IExh1ssGA3MpyADCYcGBqqsrGHrVDAoShvqds9QifUF
+	DWWl7tdNFwE/fxQ/gzEjcn2CsVX0yC44L+AYPp1eO7NCmdnjYRzKUrA65gph4v4i
+	jFaHYe8+hf2eciQyVmLPVoRFtTl3BUzGk0A==
+X-ME-Sender: <xms:gOXsZ9iA4d0nnG_7g-R5SMrP0Iw5QhR92ewl0BxJWmyd34JvxCuT7g>
+    <xme:gOXsZyAI3HEUIg3om2wNZFhEi8T_CofAoYuOXGmcBLcSyYK3EBmerhL5k7jXygUDF
+    8WswF1BeX-Sqpq0tg>
+X-ME-Received: <xmr:gOXsZ9GN3F4543SwCm_kQ4FBalXGt-NGq7rYOZ0xbOqcXh4dS6fo0QAw2YBnTB63_tT-jmta54I19ic7y4wm8UCcbEa90I_suMJc_uMIs3sPdw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehtdeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
+    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:gOXsZySU4cpgBmAm752WqxaylD5DcSShkq4RJcWTYHCC_HnqfFgcwA>
+    <xmx:gOXsZ6wvmBIqJ6N6r3AWYROce9z5oU2PVVcNXtbLOgK-6EXsoKIBIw>
+    <xmx:gOXsZ45wF0HspQYJBvNEhc8iG6-r7xOhp7SDFAlAkkQvXkY-b4-BjA>
+    <xmx:gOXsZ_wRoB-WXlf27EdLA1wJoqJfls30OW4RuNTWINQLdS6h7gMU4A>
+    <xmx:gOXsZxjnn7APy258xCh7x6RxtpDg3zbac8pxDoP1O0o3Ds-Oi_sbRvxl>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 2 Apr 2025 03:21:35 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id acb52d5a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Apr 2025 07:21:33 +0000 (UTC)
+Date: Wed, 2 Apr 2025 09:21:33 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 14/16] reftable/table: introduce iterator for table blocks
+Message-ID: <Z-zlfVIRRrMmHU-Y@pks.im>
+References: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
+ <20250331-pks-reftable-polishing-v1-14-ebed5247434c@pks.im>
+ <xmqq8qoja62n.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Andrej Zhilenkov <azhilenkov@gmail.com>
-Date: Wed, 2 Apr 2025 12:18:45 +0500
-X-Gm-Features: AQ5f1JrGTRGxZtzVXu02l5fIB2sXzesjrB714VBNRat6yzgcJytQAGfyC7WbCnU
-Message-ID: <CAArAzAoU9qDj+yLi3pA6wFYdTAk0UvQk4omSWM1RL4D9w5fw_w@mail.gmail.com>
-Subject: Update symlinks after changing core.symlinks
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8qoja62n.fsf@gitster.g>
 
-Hello! Is there a direct way to update symlinks in repo after changing
-core.symlinks?
-E.g. update plain files, if it was false, with symlinks or vice versa.
+On Tue, Apr 01, 2025 at 03:08:00PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > +	for (size_t i = 0; i < nrecords; i++) {
+> > +		records[i].value_type = REFTABLE_REF_VAL1,
+> 
+> -Wcomma,error
 
-I've tried `checkout` and `reset` but they have no effect in this case
-(see the snippet below). The only two things that are working:
-- checking out a commit before the symlink was introduced and then
-checking out any commit after (need to know that special commit to
-make it work for those specific symlinks, not practical)
-- removing symlinked files and checking them out specifically (need to
-either have a list or somehow search for those files to reset)
+Hah, good that we've now got the warning.
 
-Is this the way to do it or is there an alternative?
+> > +		records[i].refname = xstrfmt("refs/heads/branch-%03"PRIuMAX, (uintmax_t) i);
+> > +	}
+> 
+> An overlong line.
 
-Snippet output:
-```
-Using temporary directory: /tmp/tmp.gynGH2VcB1
-Checking symlink status after creation:
-lrwxrwxrwx 1 root root 12 Apr  2 07:12 symlink.txt -> original.txt
-Checking symlink status after checkout:
-lrwxrwxrwx 1 root root 12 Apr  2 07:12 symlink.txt -> original.txt
-Checking symlink status after reset:
-lrwxrwxrwx 1 root root 12 Apr  2 07:12 symlink.txt -> original.txt
-Checking symlink status after removal and checkout:
--rw-r--r-- 1 root root 12 Apr  2 07:12 symlink.txt
-```
+Thanks for these two, fixed both of them locally. Will wait a bit for
+more reviews though before sending out a new version.
 
-Snippet:
-```
-%%shell
-set -e
-
-# Create a temporary directory
-TMP_DIR=$(mktemp -d)
-cd "$TMP_DIR"
-echo "Using temporary directory: $TMP_DIR"
-
-# Initialize a new Git repository
-git init -q
-git config user.name "Test User"
-git config user.email "test@example.com"
-
-# Create and commit a regular file
-echo "Hello World" > original.txt
-git add original.txt
-git commit -qm "Add original file"
-
-# Add a symlink to the original file and commit
-ln -s original.txt symlink.txt
-git add symlink.txt
-git commit -qm "Add symlink to original file"
-
-echo "Checking symlink status after creation:"
-ls -l symlink.txt
-
-# Ensure core.symlinks is set to false
-git config core.symlinks false
-
-# Checkout just the symlink file from the master branch
-git checkout -- symlink.txt
-echo "Checking symlink status after checkout:"
-ls -l symlink.txt
-
-# Try resetting just the symlink file
-git reset -- symlink.txt
-echo "Checking symlink status after reset:"
-ls -l symlink.txt
-
-# Remove the symlink and re-checkout it
-rm symlink.txt
-echo "Checking symlink status after removal and checkout:"
-git checkout -- symlink.txt
-ls -l symlink.txt
-
-# Cleanup
-cd ..
-rm -rf "$TMP_DIR"
-```
+Patrick
