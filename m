@@ -1,141 +1,125 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2586F30F
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 14:05:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFBA23BD09
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 15:00:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743602731; cv=none; b=sW9NAsU+I0p+0eGkVTIMK+QuUU1844DN8Qv07y+GV8uOQIYdae6Ov/ce+bgB+0KewKb/tAsdpzlvamP/I5/yh3RgMFx3O1MNBlhH1WWEBkcxsgC9vqC4iLDnHuaXiJ3zuSS0JC0fVM/3wYevnAG5PcUOdHqusSc1hor8DnnudT0=
+	t=1743606015; cv=none; b=jV5k7JsvfDs15IOq6CtTcRx0mF84rUKKIz7tKP+cxawdN8uT4pO5YQWxMmIhInangDy4g5efPocEXwelr61n9TOLn76TQk2o+pZCcq5uwKQfzz7XzPLryIozGCyU4oos6+xU+FHNE5AdSpcJbl2Oyne5z5wU9WFUU9z1nio/oOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743602731; c=relaxed/simple;
-	bh=qrQTSZVQEMbf5XNre5v0hs3IAmW8Ii1SnRUJUU1/RoU=;
+	s=arc-20240116; t=1743606015; c=relaxed/simple;
+	bh=tTXGYvHFn8GmR8YgTKSbcn/NzfJOJafdNrkptDhptos=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tYe5tiWnf7i37uBI7B8VR5znneoGHchs6ccQjmTmbY3zmLe6JHAUc7q7mwP9euQPSNU7BUAFZpqKiO3QGOT2Er7MAEpCEp7cOK4mMohVyU15OycKbXYdtR4JdSyFAqzbEUq7RE6tEqYHm5ymZwNb91ESdCCy+knUrB5kXbLwfo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vdncQTUf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vVErJS5r; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=ab4QLN3MuQSFB/qFioNZPRZoGjpidyuJiIuq7dOPLZPzz8yVnaA35CpVFRkPI1FgQSUdc2P+VBQZJditvcypc1JMvPmN5jM0weZuYJ/m0n4HQ+HnDVEwKf5Z3npNQ3WtSB8f47xu3wFFHq87/qO/li49fl3UQJfu16KL9iKfJzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UFdEHnT9; arc=none smtp.client-ip=209.85.210.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vdncQTUf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vVErJS5r"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 224E41140146;
-	Wed,  2 Apr 2025 10:05:28 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Wed, 02 Apr 2025 10:05:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1743602728; x=1743689128; bh=5OPpkAAK3Y
-	Jd7tHcxR4nlioCH+qsRomMwliEpO9Ex2I=; b=vdncQTUfRnCSPBgBQShP72EjUM
-	+5AYEpSSs7olhHyrLQE9zXYmUoO32uRdmw97wLhcHNVOxgXOhcZ0vMOqmr7Qv/HH
-	uTvTXjn5UnVRL/DA7ZZIYOU09UblvuPW5gYql1usoNCZKTHQ+vtSkk1HvpQk4E1L
-	B9Su2pR8qpOVg4C7cox2Eei6cy/zhvsVqt8Wew6tMhISM0eCjBO63bukPHh/9YI1
-	dF864Bw9Jv9+x1kmakZHkyyRI/IDrOcQJcdtM+XK9ZGVewEFHTvXtlLa00aO4uim
-	u26EILLVhCDJ6srR09HGMR5WQbOO805iEwgrGU2bLcBCl7QKm9gHICTsuPxA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743602728; x=1743689128; bh=5OPpkAAK3YJd7tHcxR4nlioCH+qsRomMwli
-	EpO9Ex2I=; b=vVErJS5rKKOH5KJz7/CU4VTJH1phNRj5f+dglV++vtznCnSqApr
-	JzaNXdiHkdHPiDiYbyJpWZ2lyEtBUz5x0MARTzwkMxVfsvsMy2WgDcdkqf6woW36
-	7KubbVv9ZRYlXTbg3KFVJPJ7L16UXT13R5ywuB89lrL+PYIGgi1dI1CxdU9kN2QA
-	MRLyiIs16eFHZghzu5+DPumSuoT85OWANbHJjj7oMWkzZ45wWl7oq1mbjfJaaI+I
-	IzI8sxkvIN+mMA2rzDUP51vCUwZYPSMPaCpxS6Mgxpi8J4syR3r5njZjq5oMmEK0
-	tLv2I6h00dm9KtGaE7cfzblFB0nK56MZPJg==
-X-ME-Sender: <xms:J0TtZxaiKQJwf3pxfQMxLYT6u2O9mNPBNaEfV9imkN90f2dkaOaIQg>
-    <xme:J0TtZ4bjlxvy4IMTgaVBrS9le638Iif01pDn4laHkQnWirdsDvXmoE2GSbNxxY47u
-    ieRetgYs9Xd2zo7kw>
-X-ME-Received: <xmr:J0TtZz-c_iBAoSAGZBR7AnPFyeajMHVe1i9SZ-q3Y29gBbnh4mNL0dHefdkE9L_9sAOr_btASwho9NUFoh4sa-dUBgocASTF_5OxWha3TQIwmd2b9A6X>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehkeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomhepvfhougguucgkuhhllhhinhhgvghruceothhmiiesphhosghogidrtg
-    homheqnecuggftrfgrthhtvghrnhepgfevfeeviefhheehhfegtefhvdffheefheeuleeh
-    ieffuedvvdeuhfevffeigfeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
-    hopehlihhsthhsodhgihhtsegrkhhshhgrhidrihhspdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:J0TtZ_qMwL344zb19rPoZ7EQTiRXTATLriZ7bIjRHJPvmiJpKkWbMg>
-    <xmx:J0TtZ8pmYMgOPvlARPTqbN7MpsXTSdNY_jypkU4cfudwS2xyhD08Ag>
-    <xmx:J0TtZ1Tcg1wA61nJ6J1CM9GsAiZfg4_zYxy6TPUWRfsd9vqGiY4vYA>
-    <xmx:J0TtZ0rZJURvm3NmcfSKyR6BKkWO9DSu5RdzpAkSQSFlNgknRYcU_g>
-    <xmx:KETtZ4Ij5s31KeIPPCs1HnATPDdgHc8kXxR8POPdFSPZngu35POl9dOE>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Apr 2025 10:05:27 -0400 (EDT)
-Date: Wed, 2 Apr 2025 10:05:26 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Akshay Hegde <lists+git@akshay.is>, git@vger.kernel.org
-Subject: Re: meson: Installing completions
-Message-ID: <Z-1EJo8xHpA9qM0-@teonanacatl.net>
-References: <Z-uLqQd7QHZq-tB7@akshay.is>
- <Z-u42Sm613hMj1Ft@pks.im>
- <Z-wltqWraESmb-Lm@akshay.is>
- <Z-yLvgkJnGm0CkG3@teonanacatl.net>
- <Z-0gpxXBmt8G72Z9@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UFdEHnT9"
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-72b7a53ceb6so525643a34.0
+        for <git@vger.kernel.org>; Wed, 02 Apr 2025 08:00:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743606013; x=1744210813; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2J8joh1VpJXVXk10JwyK7VqgRVaiZvDDPRWTBkdJC/Q=;
+        b=UFdEHnT9SqPPyf3stqxF87ksITRSSy4t1Um39fhJqpkCe/HI16xVun4/QH0PNi/VHi
+         Ir9vje4XiFof1vz5WzzUQdfO8I0E7LWx3w0NWarJs5jocRv/E2b38AZVfsEq+z6UvDOX
+         0AvPab9C4wjgSCHVJOS1M3mdKSZKXEOoYB83jDMKmU/bh7nZMTq9dq0r9Ec+kYUtMj4C
+         lDtAEQhv0s9brMuT/6LeaEXaGUGqo1hiAv5L5TcPYEXm1z/3NAczE3ckyxpJVcLHAxRA
+         Kc0+U1kaXCeqQgdb/Su7C/2wQbhRY8haUMtC8suNfgnzx0qtsICZqNmWvXOaBasKk7C+
+         LAcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743606013; x=1744210813;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2J8joh1VpJXVXk10JwyK7VqgRVaiZvDDPRWTBkdJC/Q=;
+        b=nxgUGtzsfUKhUua8K4B/HwQIwymw1+t8W/Rxpkv9vdwS6kEmIokwO8TElsi7Blc0EN
+         0RfmSRHK4iqj6rhzbJyPAktjUpkhDrRgeBghZ2v5a4YoT4KFGSgruKGlL05Gf4u2eKfM
+         qX0STI+Ix9Mvk5ghLPpdgkNXJ8qVy/ixJRzkQpbBKfE+Dg/kjywvuepJ46s6Qw7ptyjV
+         HJYMReNp+pRCUDze01qtbKpnzl8EUW/+8duBpMxvudjWJ4tvgcC6W+frCm4j5uPyIWCK
+         Mu5koTGJMVfUmblGRhwOR0gwwBUXfjvSapDleGjcgc9YbMIp3vfg7AVjvPGE2oyUWjPF
+         y/nA==
+X-Forwarded-Encrypted: i=1; AJvYcCXNhgcZQxH5WUYhwytF1bn8I1WJHvWEcqNLa8qH8y/78UKAx7dBD/eDWhfKSL9luBW2SNc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzimWofl3pKu70vaLabUVdaJPMI9SD0M7wX9W1RiJP9E/82rwIb
+	yLfFSACLOJmmTEl3sG1i731EbHOdES3l1nDVBLT1RTkzZfzSpsh0
+X-Gm-Gg: ASbGncuzUZKAuhFk2yaDQAqQRtLfhtz8blXH3n9HYX9h6LgIxQIDyqtYpuooCdeSbFi
+	7VK9N5HGoaYQxFI4vi0UOduf80NtCnjn3q3DR+7BH3k24vE+ExkOIZ4oR2DGSFZ4JdDwvH5OfUY
+	FnsAwTy7gvzWXbZRQMC4AyyiWQFSckOxSrMG4dkGO5j+eAP8EhB9g9HmLbmZ/WYNkoqWdw1J9qZ
+	Dwvn6xKNL4wtWYn7G91sgrckM7y+IxqYYAPbW0puL9vIxoXl98z+Lq76bmfxHnJ9eok7T7LC5TG
+	7uT+lCIHgtWbz83TrtVy9E7r/iCOqAGLFWRR+w==
+X-Google-Smtp-Source: AGHT+IG6mqP23cWsV6AjVsgUtM2aPNkrW6jdMH711OY71T8DfxhQiwOdFs3+D5vFPytB6eZBZbH33A==
+X-Received: by 2002:a05:6830:61c2:b0:72a:b78:1c5a with SMTP id 46e09a7af769-72e281d72c3mr1178066a34.10.1743606013005;
+        Wed, 02 Apr 2025 08:00:13 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-72c5828b43csm2283937a34.59.2025.04.02.08.00.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Apr 2025 08:00:12 -0700 (PDT)
+Date: Wed, 2 Apr 2025 09:56:24 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] help: include SHA implementation in version info
+Message-ID: <rqytnnncju5pezkfidhd7u7vtaaop5fga7f5nyzwa74eiksezs@4t46ypevaiga>
+References: <20250328170121.157563-1-jltobler@gmail.com>
+ <20250401203630.285451-1-jltobler@gmail.com>
+ <20250401203630.285451-2-jltobler@gmail.com>
+ <Z-zpY3D01Fg4q0Je@pks.im>
+ <CAP8UFD2UpEpqBYxqeo=vkDHwWdoO9v2RPVtnUBSOUS5MOK6n0Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z-0gpxXBmt8G72Z9@pks.im>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD2UpEpqBYxqeo=vkDHwWdoO9v2RPVtnUBSOUS5MOK6n0Q@mail.gmail.com>
 
-Patrick Steinhardt wrote:
-> On Tue, Apr 01, 2025 at 08:58:38PM -0400, Todd Zullinger wrote:
-[...]
-> One of the questions is whether we gain a lot by making this an option.
-> If packagers have to manually adapt the location they could just as well
-> copy the file by hand as there is no build step involved in the first
-> place. I also think that for Bash and zsh the locations are somewhat
-> stable across distros these days, so ideally we could just build on that
-> and not even provide an option in the first place?
+On 25/04/02 01:26PM, Christian Couder wrote:
+> On Wed, Apr 2, 2025 at 9:38 AM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > On Tue, Apr 01, 2025 at 03:36:29PM -0500, Justin Tobler wrote:
+> > > diff --git a/Documentation/git-version.adoc b/Documentation/git-version.adoc
+> > > index 80fa7754a6..f06758a7cf 100644
+> > > --- a/Documentation/git-version.adoc
+> > > +++ b/Documentation/git-version.adoc
+> > > @@ -22,6 +22,9 @@ OPTIONS
+> > >  --build-options::
+> > >       Include additional information about how git was built for diagnostic
+> > >       purposes.
+> > > ++
+> > > +Note that the SHA1 options `SHA1_APPLE`, `SHA1_OPENSSL`, and `SHA1_BLK` do not
+> > > +have collision detection.
+> >
+> > I think this note is somewhat funny for an unsuspecting reader. On the
+> > one hand they're going to be puzzled why you're talking about SHA1 in
+> > the first place because it isn't mentioned at all beforehand. And on the
+> > other hand they will wonder what collision detection even is in the
+> > first place.
+> >
+> > So I would either drop this paragraph completely or expand it to give a
+> > bit more context.
 > 
-> I'm mostly trying to avoid to eventually end up with tons of build
-> options. Ideally, we should just do the right thing and install the
-> completion scripts into the correct location in the specified prefix.
+> Yeah, I think it's worth giving more information, like perhaps:
 > 
-> At least if we can get away with it. It seems like the default location
-> would work alright for you on Fedora, and I assume that it would work
-> alright for most of the other distros. So I'd refrain from introducing
-> an option now, but if we eventually figure out that this is problematic
-> on some distro then we can still introduce the option at a later point
-> in time.
+> "For the libraries used to implement the SHA-1 and SHA-2 algorithms
+> only symbolic information, like `SHA-1: SHA1_APPLE` or `SHA-256:
+> SHA256_NETTLE` is displayed. Note that the SHA1 options `SHA1_APPLE`,
+> `SHA1_OPENSSL`, and `SHA1_BLK` mean that no collision detection
+> algorithm is used, so known SHA-1 attacks might be possible, see
+> https://en.wikipedia.org/wiki/SHA-1."
 
-Yeah, if the locations are the same across all of the
-systems we aim to support are consistent, then I agree
-there's not a lot of point making it configurable.
+Ya the documentation here should be expanded to provide some more
+context. I'll adapt in my next version to something like this:
 
-Whether that turns out to be the case or not will be
-interesting.  It seems like there are almost always a few
-systems that do things differently for one reason or
-another.  With luck, this is an exception.
+"The libraries used to implement the SHA-1 and SHA-256 algorithms are
+displayed in the form `SHA-1: <option>` and `SHA-256: <option>`
+respectively. Note that the SHA-1 options `SHA1_APPLE`, `SHA1_OPENSSL`,
+and `SHA1_BLK` do not use a collision detection algorithm and thus may
+be vulnerable to known SHA-1 collision attacks."
 
->> For reference, here are the locations for bash, fish, and
->> zsh which Fedora uses.  This might be helpful in determining
->> reasonable defaults (after comparing to other distributions,
->> of course):
->> 
->>     bash /usr/share/bash-completion/completions
->>     fish /usr/share/fish/vendor_completions.d
->>     zsh  /usr/share/zsh/site-functions
-> 
-> We don't have completions for the Fish shell, right? Just making sure
-> that I don't miss the obvious.
-
-Heh, we don't -- as far as I know either. :)
-
-Those three just happen to be the shells which have a
-packaging macro for the path in Fedora.
-
-Cheers,
-
--- 
-Todd
+-Justin
