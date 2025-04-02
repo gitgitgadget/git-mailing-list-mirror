@@ -1,53 +1,53 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9751EF37D
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 11:13:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE281EF37D
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 11:13:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743592403; cv=none; b=TDt9O+ivO1qejk36XedAT7oL96VHi68jgvfozZtimFZorvAoFqy8MX3jO7yM2SRFwZHMOa9QUKcZ/bx/jXTJA1dy8m8pOCBwdh0Z3GM4KJ4yrIh7h3LNYDzoIR4pnK+siu4UKKWRyeLVRVJtu6qrIAeeeHZ4tR5vhfGb/GeE5jU=
+	t=1743592407; cv=none; b=HghyrWa2HGXo1C+e2GNd9m0QKabQHzZiXocmpEELPwMnUkFdPh5ZnctKkdaiYMZqIukEJeZBYix3UVggAkDI/oKDNlAhsJw68d4G1U6JN5GPq+eFE9EtCB28XPK9bJjaraZNXfLOG1FuQfGdli0xM7jaASPCr2OGqWMqCOD7TcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743592403; c=relaxed/simple;
-	bh=7f2hEQUo4oHwEsi99baiZpPVr2rbby57zGTIYP6k8bg=;
+	s=arc-20240116; t=1743592407; c=relaxed/simple;
+	bh=epWWk/UdFtJi0yv/X8ACKEg9xKZKNfttrmPzsrgu9Q4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RlG6+Qtfblcck6LFl/jY4SIZchMbnJu8DgVSXZMXdEDTZNRXdAQmcj/CfVISIke4fpXq7qfUvvXrFMhpbwUiYDzDTrERog6N6ANwAr7y2BJBpSJykX5cgM/vHuHhjjvIWodfc4eG39Y09cmVTFM2RIEnfUhMB7hDqPU5A1sOjiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MO3YrZ2h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lw3KLAp1; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=bkynzggdKrQvMJVHhIXYFXy0JDDCC5jTf0OFmT8GodUOrOzmOdVRXIoMvQfyR8KeXCyFV3L3nC+pC2j1K6e2ty4aLrzsEISqt760qwMJH2ULTBBvGM9J7gGJhqFJZ9Jp/uG20VKd59lxzXiPZP+EDrTcRV+lpU3gdqGqn0ABywM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eDvAasDb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OMI3gR5a; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MO3YrZ2h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lw3KLAp1"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 85A072540253;
-	Wed,  2 Apr 2025 07:13:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eDvAasDb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OMI3gR5a"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4D17211401F8;
+	Wed,  2 Apr 2025 07:13:24 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Wed, 02 Apr 2025 07:13:20 -0400
+  by phl-compute-09.internal (MEProxy); Wed, 02 Apr 2025 07:13:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1743592400; x=1743678800; bh=RI55WSvmjg
-	1DUPUb8DIT8m3jmzfintSy1Z6nRREoC4I=; b=MO3YrZ2hjKom7+JfvA6+4BU7yl
-	ikPqkQanRwejFIEoBQrmLkBDGYKNnnfcMLpC6JPhJn1+CyGYc6ibMsvrWGCNMRNb
-	ZJ7DW6wReVBmN6wXeEurW8oxJGMXoo3OEjTJ7Y8gETUoXMSfljsbeKDRvG/kzWt8
-	hFRp6YAO6KCjsETOcAPzqLj5Zv9aM4LK3sciLq3vOEw+IQnhQSEP+gmsh+I+sQ/h
-	no1zBBy0857Z5qAzg1DHKxsfAzSVZagFMap0X3dlaDvvL4bmLSUiIOVVcETQZRlu
-	JfbHoYHBbaRt9i0t2zoC/FQlKinosfu8LKFn8qLEkELQxwGmypLaH7m2D7jQ==
+	:subject:to:to; s=fm2; t=1743592404; x=1743678804; bh=hZzPWMRU1m
+	lNXmODPhnQpPIrkFFAgn/Uuw0KRMcEcVE=; b=eDvAasDbeKEmBsA4FECnF3qdfK
+	diVQ/oEyxHTlz9gw0cKiU5QF18SjuCUsQGZNkE7tkYYCnhlN4DO//74C7Uf4txkx
+	y27aSpWyCVjSyErN+KCaOOMuvocFcM2HaLk7hTGZx6sW+dNyQj7LELyuUca/1G8D
+	Qie0rL3jEsSJ65LzJ0Hr5HwdWuIYF76bUL/+iRLEh9hkyw0MMNQMEwXMpOH4NPUy
+	2lz1zefc8DNY3LZmX0RyzmccPmZnigKbohVronGLyvRsfFhw9XgiorQeQkqCI1b2
+	E8YlLAYjJqWrxArCgwLEnawdw5FsiCkQT3siGuj/kmkLLnT4eVzUoJEW3s2w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743592400; x=1743678800; bh=RI55WSvmjg1DUPUb8DIT8m3jmzfintSy1Z6
-	nRREoC4I=; b=Lw3KLAp1PTDUMfOE6I+AVT23IVGjcAQBzFHc7oIBq/4Mk9hwuH4
-	N+yXpPuqzg4HOAnWOnVQceTnca3FAckOL+WWoej4EkhxAQRTV2DeOQqZT4gPzf14
-	wCF5T0AC8UVybo0/gCUsPIPnfsmo/GfUVSgFu5YtS5ktF0B+W0R//l6mL365JmYp
-	8pBjf1V+xdgxFhmOZOjzgONBB/4RL2tULcYYYaa2rt3ty0oWmTjldiDUcl70Lc6n
-	B1Tf1lESk690yeLvcJ9a7AoT/Sssv28Hjop/qzh5ydzvaSIU2hHPW8X7tyvRnpJH
-	2KNZu8TjvMeTHQuIPPOXiLPNKERM0VGIs5Q==
-X-ME-Sender: <xms:0BvtZ-NLOn3R3sZX1BYrdi9zmomOh0EFX3ikn_Og7fFXVlJJvK1jvg>
-    <xme:0BvtZ89dOsmXBvzApIOXEsh7uy-QoxRL_RYFDTPbOHmY7N0Shbtt3krA1O2tIoS_U
-    zRMkhr8fzNyR6G-1w>
-X-ME-Received: <xmr:0BvtZ1RDVhKQ_VIY89MGgX_i4wFfKPCHG9nl--sTHlPukPwJjSUwOGhOrWRyBcK77bJWJSs27WqJkFIZ5B3GiaBd8n7n44aV9TJGGx1orKQLlg>
+	1743592404; x=1743678804; bh=hZzPWMRU1mlNXmODPhnQpPIrkFFAgn/Uuw0
+	KRMcEcVE=; b=OMI3gR5ambF4Dlw1vV6JuB6LLDqC0ttuyEmU38X1f5HjX8jxuxq
+	vYZGnxD+kcbcCuMBBIvYasdOPWitsudLWvVKxQXwSGqLdJaCfDL20a5i+BAwzt75
+	27WmCpKixTGCmF3TWllu++5TCfCoOZP0xP8fxEm3rizyVqsnVuOfClwFr3Ksx49K
+	PtEjmTbFSjbMN0HYkHpdZzzWmfBGM2PZGZf9YwFBz6OCuhlaNX9tursM3FXlOFsZ
+	8/oYX/Pu1BibackuiRMMB7AafDsQXzE0pIzrQNAJoRTQgf+x7VHeCB2o8JhQ1B2T
+	eS45ftJ3FPNkxgmKSZxXfwUlR2CWeFJt+iA==
+X-ME-Sender: <xms:0xvtZxcbnbO0_DuOE2h5jMgCKURE51-uaA6Mr_Emq-mB9uTeT1UwFQ>
+    <xme:0xvtZ_NOZdOiTPTRWMGsPU_mEztnuJUn52sHCPIYWkbGyff2vf72hQTLJKH2ehBgk
+    -C9Qc86LiR6n90zjA>
+X-ME-Received: <xmr:0xvtZ6hHdYAs-U_YuTv8qF3QzYGMbO3Em4M5JcJw0JjmYPBB0Pr0Ng4V5fiMMKBOt0_J1YTeSi8HfGLxr-BBx5ShYBDR4Zj3X8SqLo0cSv1qOQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehhedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -56,32 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehhedvucetufdote
     himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
     ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhonhesihhoth
-    gtlhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
-X-ME-Proxy: <xmx:0BvtZ-uOi33rAOvIizGFvyveJvgufqMa7wg9rCXRi7PTPd7cQgoGGA>
-    <xmx:0BvtZ2fAup1bB84SiWUGzjJi-P71MEtIig8yK4GA93E-ZMl_0P_q1A>
-    <xmx:0BvtZy0SOyNvtYN2qLzpRtXBef5KwT-O-tZg93jTjGZFCDSCRgrqQg>
-    <xmx:0BvtZ6-8lEzDCxnh7hL90Rs93YCNIma1DO95WzH2oZxEwLaGS4D3kw>
-    <xmx:0BvtZ4C26wW62skyjzlYA5NSn1oVdGO8A6NHLE69Ve4-9fVG-Tij8KGR>
+    pehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhgrrhhthhhi
+    khdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:0xvtZ6_eExTslvoNM40OKLWmPUYA4n3eKALQjaKV2CVax-mDetxqNw>
+    <xmx:0xvtZ9vOHq7zjBpvmEMy9Fz-AslMlwzGpRUvbR5_QVMpRKY-WSDSfg>
+    <xmx:0xvtZ5Fxwe1uEIzrmIpf5CrtqL0SpdTrPytIASfpfsMGAQl5cK7PuA>
+    <xmx:0xvtZ0Myr-kkf9oXr5SgS22Z3FTarMDSTixFrGy2Xv53H8sZpVn5iA>
+    <xmx:1BvtZ3Nc57AaktOT1Xl224YD2JyaL_LEykJheUn6Tc82wh_1FGo9xiIy>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Apr 2025 07:13:19 -0400 (EDT)
+ 2 Apr 2025 07:13:22 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 13b9d023 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Apr 2025 11:13:18 +0000 (UTC)
-Date: Wed, 2 Apr 2025 13:13:17 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id c20a613a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Apr 2025 11:13:22 +0000 (UTC)
+Date: Wed, 2 Apr 2025 13:13:21 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>,
 	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 08/10] pack-bitmap: introduce function to check
- whether a pack is bitmapped
-Message-ID: <Z-0bzW56m8IJ_ysa@pks.im>
+Subject: Re: [PATCH v2 03/10] builtin/cat-file: support "blob:none" objects
+ filter
+Message-ID: <Z-0b0VI2f-rJbxxb@pks.im>
 References: <20250327-pks-cat-file-object-type-filter-v2-0-4bbc7085d7c5@pks.im>
- <20250327-pks-cat-file-object-type-filter-v2-8-4bbc7085d7c5@pks.im>
- <87plhwf6ke.fsf@iotcl.com>
+ <20250327-pks-cat-file-object-type-filter-v2-3-4bbc7085d7c5@pks.im>
+ <CAOLa=ZR4YmfHvQGvs1mzdtRu5z+8XW-xY+t_wBAoTs1m+rrO9A@mail.gmail.com>
+ <CAOLa=ZRjhqsSxA7JCPPU4e1HFJBeK0PFgCZwPc07emp+2pawyA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,51 +91,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87plhwf6ke.fsf@iotcl.com>
+In-Reply-To: <CAOLa=ZRjhqsSxA7JCPPU4e1HFJBeK0PFgCZwPc07emp+2pawyA@mail.gmail.com>
 
-On Tue, Apr 01, 2025 at 01:46:09PM +0200, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Introduce a function that allows us to verify whether a pack is
-> > bitmapped or not. This functionality will be used in a subsequent
-> > commit.
+On Tue, Apr 01, 2025 at 05:31:24AM -0700, Karthik Nayak wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+> > Patrick Steinhardt <ps@pks.im> writes:
+> >> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> >> index 940900d92ad..e783dbbad58 100644
+> >> --- a/builtin/cat-file.c
+> >> +++ b/builtin/cat-file.c
+> >> @@ -472,7 +472,8 @@ static void batch_object_write(const char *obj_name,
+> >>  	if (!data->skip_object_info) {
+> >>  		int ret;
+> >>
+> >> -		if (use_mailmap)
+> >> +		if (use_mailmap ||
+> >> +		    opt->objects_filter.choice == LOFC_BLOB_NONE)
+> >>  			data->info.typep = &data->type;
+> >>
 > >
-> > Helped-by: Taylor Blau <me@ttaylorr.com>
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  pack-bitmap.c | 15 +++++++++++++++
-> >  pack-bitmap.h |  7 +++++++
-> >  2 files changed, 22 insertions(+)
+> > I didn't understand why we need to do this, below we only check for
+> > `data->type`. The only other place we use `data->info.typep` going
+> > forward seems to be `print_object_or_die()`, but that flow is only
+> > followed for `opt->batch_mode == BATCH_MODE_CONTENTS`. We already have
 > >
-> > diff --git a/pack-bitmap.c b/pack-bitmap.c
-> > index 6adb8aaa1c2..edc8f42122d 100644
-> > --- a/pack-bitmap.c
-> > +++ b/pack-bitmap.c
-> > @@ -745,6 +745,21 @@ struct bitmap_index *prepare_midx_bitmap_git(struct multi_pack_index *midx)
-> >  	return NULL;
-> >  }
-> >  
-> > +int bitmap_index_contains_pack(struct bitmap_index *bitmap, struct packed_git *pack)
-> > +{
-> > +	for (; bitmap; bitmap = bitmap->base) {
-> > +		if (bitmap_is_midx(bitmap)) {
-> > +			for (size_t i = 0; i < bitmap->midx->num_packs; i++)
-> > +				if (bitmap->midx->packs[i] == pack)
-> > +					return 1;
-> > +		} else if (bitmap->pack == pack) {
+> >     if (opt->batch_mode == BATCH_MODE_CONTENTS)
+> > 		data.info.typep = &data.type;
+> >
+> > in `batch_objects()` before this, shouldn't that cover this scenario
+> > too? Maybe we can add a comment with the reasoning
+> >
+> > [snip]
 > 
-> Here, and two lines above, we compare packs by their pointer address,
-> this doesn't seem to be common practice to me. Or is it in the Git
-> codebase? Do we expect any problems with this, for example when we stop
-> using `the_repository`?
+> After playing around more, I understand now, we set the pointer
+> `data->info.typep` to point to `data->type`, so when the data is parsed
+> in `packed_object_info()` or `oid_object_info_extended()`, that
+> information would be set into `data->type`. So we can skip as needed.
+> 
+> All good here!
 
-I don't expect any problems unless we have multiple `struct repository`
-instances pointing to the same underlying repository. We never do that
-to the best of my knowledge though, and it would feel somewhat broken if
-we ever started to do that.
-
-If we had structs pointing to different repositories though this will do
-the right thing as a packfile from repository A shouldn't be indexed by
-repository B.
+I've adapted the commit message to better explain this.
 
 Patrick
