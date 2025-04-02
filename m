@@ -1,216 +1,143 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FCB232368
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 07:16:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D9D233714
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 07:18:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743578202; cv=none; b=FGIlkjfe7IHB0crs9A1F0tH+Amx1NRUV96AekYcUwQHJGrCc3NZ9GXaKGOseVlukucmSwcj95QifZLIaF9c4200luUCP3YEDIWYu0k9VWqJsnYy5O0uGOQmAaOGmt3uN9NmvoEKKBxShMiQHHjnnT3V52K3QzdV7LXpBVbZ/TR8=
+	t=1743578341; cv=none; b=CY6fG+oqb14hTuqRhBFIHFxj86mJMHaNcR+64Yn8AUZ/cXGLL/cLhj/52IJzbFcGKNGS+JmpSvcsDBbFKlQWg7mCsTIOSpJ8Ct95xeQD0yWSNwG9nXEA5OjhrLA/lr03yjR+aWUkFgX559FEy24AUkHDwfZiFDStOfXI4R/O0fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743578202; c=relaxed/simple;
-	bh=8L5aqFjX1EQxV+3Tn0PmIqcs5ptke39hLuInlXxY3y4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DhoAQrOmQiEfoFjZRohIywSxIYArD8SWxISA0Bf0TaDtUsfXIg9wt55cqp06yK8Q2VhovwAh/iFvdSf7Gq1BBrSemjYwk0DOCjWbEqL6YZ9Pbv591RSRT+HPskkId04rPJwtkoppdtRn2iwmXtiK66bQJsih6M8UKI6ns1mmeI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iQtyuxNg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g0sxccMl; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1743578341; c=relaxed/simple;
+	bh=8YbPu/FKwdM7IgizCTpr812wLR1t6b0UbMz9fP5cHVw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=M2ZcyXbIOw30Ce0JzJJzYiSyigYonIiZnFqMWzbFDHKkDqoC+XEqmkQ4WkwYRQPZkL0e0Ybg/WFIx2ngng1XsLVRUBTbPzbYQPzCY4eyzBZOak0eufPmRhDp5FDK8hVmSe3pJcKfqdcbgEhyJ4hu22FTH1iX/Tgws2ytelPjVKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZtRxVLgv; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iQtyuxNg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g0sxccMl"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id B0CA21140152;
-	Wed,  2 Apr 2025 03:16:39 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 02 Apr 2025 03:16:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1743578199; x=1743664599; bh=ZY+bSJv602
-	HdQDC+bOwsdnoTh/nm9WfDu0pKHNqNf9A=; b=iQtyuxNgySpuhMMzUvXdbJNDsi
-	6hxSCnmZL65sAe11ISk6cYasplPDNm0RG0XICk1R/u5z9V9+64wQQOzZSmeqgJPx
-	T9A+A77FY5LdEaYBEGFCNdXSDI0UTdrE4jbXEBUjYhhk2QqemrVZCEYwN9IsrO66
-	3YKdJjACpRQ+yJbRhxhUcry8B3/ZRNmh0BSk7QYx1zmEgvqVkD26lTzxzobR2Lac
-	Serbjy+noDnHEKkX7aoaazV2wnMkP5TYgLl20FnLNZTpzf165i7q0VZ6T7Z3Ndc7
-	/H1g1WAVC0FU+QHcPvEndDlXB38/69BqMoo6EgAfpmEdAAYVcQDjPseb1pGw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743578199; x=1743664599; bh=ZY+bSJv602HdQDC+bOwsdnoTh/nm9WfDu0p
-	KHNqNf9A=; b=g0sxccMl3AuOeBIx0u55B2qxiV5xAchkXp0w/uD80DGUBtC0q5p
-	t71PxTBp5dRzZZ2nQgnbN02ln6XDbQMM+9oNWhrcKjpWLYe8sp1zXcsE/YbXebE7
-	S7qVBMUXG6wP+Tt51Ue9+LF7/6PHUr+4F/w+xRa51BlG5Y9EiylMaD8gMs0KTXzA
-	ALhF5++vzI7slR6szR+1fGHS8BOqGLhe/01RQVzp+Uvwk4tgY8NEDQ0nwjvVuDIj
-	BTsGs94jIVyZD8u7lLmeVi9XocvtLjfzL3XXkrC26xMb6UqCmEh/AS32N8Ep0B6v
-	YtO2kuKmdM9KuG4fzPG6T6D1AGal1lfcGpg==
-X-ME-Sender: <xms:V-TsZ13FY9JcLzjiiatzQtjQDJCuWbh6TzcrMDBM2dq7l302v87c4Q>
-    <xme:V-TsZ8GyfhedQG-hy9pnk49ZQOLMyl_OqNcJufbQa6fX82vknGEYK9PWZCZgbX87O
-    nLrk6173hvWPzdFfg>
-X-ME-Received: <xmr:V-TsZ17a1_SJ1cridxYvdn3qvfchbqZ_lSDxFicXjXdg8fI3NwLW2SaZYoSgi3MHNqZQDbDrTB9-3vwYmNJ6sadHY0bzraJ5aQvXe-SwNOGGjQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehtdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhope
-    hsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepjhhohhgr
-    nhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
-X-ME-Proxy: <xmx:V-TsZy3ao0WRzLT0PHwPjgIirXizYPsESgUgEBG59yZW888HX3Qq7g>
-    <xmx:V-TsZ4EXiEADJPbz6NNe3RCua1fmU9vpqqTFPgL8_JwX51XXtsA1Mg>
-    <xmx:V-TsZz-E4si1FTZk69rBqZagfybGOhrc2SvsGYd5gLaQNjmaCCfRvA>
-    <xmx:V-TsZ1l69AlpxDARxEFuGX8p-TTdjTbOx715SYfClCdJ60AdW_nN4w>
-    <xmx:V-TsZ2YgqX2pabwVSTVFdYpPfqp6tZcKNz8RcRdHWPJPxaFi07hrYacV>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Apr 2025 03:16:38 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3bb9aa29 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Apr 2025 07:16:37 +0000 (UTC)
-Date: Wed, 2 Apr 2025 09:16:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 13/20] t: refactor tests depending on Perl for
- textconv scripts
-Message-ID: <Z-zkVL8cSYEiR_T1@pks.im>
-References: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im>
- <20250327-b4-pks-t-perlless-v3-13-b436de9da1b8@pks.im>
- <9f477166-5667-a051-13d3-43d56a7a8ec1@gmx.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZtRxVLgv"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-399737f4fa4so3187489f8f.0
+        for <git@vger.kernel.org>; Wed, 02 Apr 2025 00:18:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743578336; x=1744183136; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4OxW7O7UumUkrTS+EgCI+kRh3PN6fGvmKpDb9hY9m10=;
+        b=ZtRxVLgvsHZR4l/axDiBnIZ6oJlb+fCb5YB1BneNY0HwvlNLdIkcSUASG3XVaqMn7a
+         oRO/p6cnHpuRecF60g42AIlxeDHvj7kha/W8Llrr11HBywZpxzc6e8ekq0NxmhKxpS0P
+         +vRSphovcU7LCcBrWmGU8ymp824/1Ie5ALk3rQEZwdFYOtQOM9uw3C1omD/iG6cS0Hob
+         1QClLq9VJcOsbRqaBcugCSrV8KwuTjUvrO2LBKKdmSGaaCqxh8dor0pC6m9zk7uyv8/r
+         WX8ODTunE4M1AJkVdZVuA55J+r2n1M3fARj7MDNLurYTrzxPDESzIjwfYi9eDHwleRV0
+         9dlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743578336; x=1744183136;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4OxW7O7UumUkrTS+EgCI+kRh3PN6fGvmKpDb9hY9m10=;
+        b=d7XD4vv5oPCKg2T1y5GZRAhZnCVlqb3sB843nPs2SRXTkNGeCo2ylRlFFeonEZduzx
+         vZTCYYYEprdwir7xfLvcepPSFf1m5qx6TABrDxqUYUPvKOI25/+eE0ECM/ina5XflhJf
+         tF3dKkxg5V+4WtddstITd/YH8JO9Xt2SwabxQuwBQHvB0Vs2+nbXzc7eBG/1VoItDctu
+         ad7rpF15BuoDU0BxwIJ5sOZLyCWK/l7vWJ0rkyzpb7cMummj5XoEWMp/y3VwvVwDBjKp
+         YI5zS5ziRmtBj9eKJpJ2MO9nHJruOXEfcmakCwqEUYR4qlCxva2f680+I0Or1hQaIDx0
+         DdPA==
+X-Gm-Message-State: AOJu0YxhSaqXgeHxnyfBzp6+yn/pjBo2RKsEj3NSAeQ46ijZhdztCN0b
+	5UQ0rxwmfQuydQ1LoyZ6sNXta37LRq2evqbi7l8SBMPfkuOaocm4Df/Xw1aDQ4PxJoxxLQx4qYU
+	/wTcBb9sf0gR8Q0Kg8cjhrcdpUeWCfuFHAZ7OL8LH
+X-Gm-Gg: ASbGncuXBhp7dAdHz2dqbhpAF6785eL37Y8MZEqrnCbC44OxOrYBcugsV03SHomuCOT
+	i4ksWIYB8EL03/kCENOYrdz6sDo/BaYcqWxZVVbX/uH7GdShoTxgdI3/Y5HGRdKOdvjqZX4564T
+	//pBNWN1m1xfNfka4AJTM4ZHEPaw==
+X-Google-Smtp-Source: AGHT+IFECTjZNq8Z/D40y95wbKFjbVKHKO5dP3y/Mvu+wy+jrfQRITkg/aeezOUATnKdXe/salr9KDJPrxXStcN+Lg4=
+X-Received: by 2002:a05:6000:400c:b0:39a:c8a8:4fdc with SMTP id
+ ffacd0b85a97d-39c120de150mr13173978f8f.16.1743578336501; Wed, 02 Apr 2025
+ 00:18:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9f477166-5667-a051-13d3-43d56a7a8ec1@gmx.de>
+From: Andrej Zhilenkov <azhilenkov@gmail.com>
+Date: Wed, 2 Apr 2025 12:18:45 +0500
+X-Gm-Features: AQ5f1JrGTRGxZtzVXu02l5fIB2sXzesjrB714VBNRat6yzgcJytQAGfyC7WbCnU
+Message-ID: <CAArAzAoU9qDj+yLi3pA6wFYdTAk0UvQk4omSWM1RL4D9w5fw_w@mail.gmail.com>
+Subject: Update symlinks after changing core.symlinks
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Apr 01, 2025 at 08:55:22PM +0200, Johannes Schindelin wrote:
-> On Thu, 27 Mar 2025, Patrick Steinhardt wrote:
-> > diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
-> > index c7d8eb12453..f904fc19f69 100755
-> > --- a/t/t4030-diff-textconv.sh
-> > +++ b/t/t4030-diff-textconv.sh
-> > @@ -26,13 +20,10 @@ cat >expect.text <<'EOF'
-> >  +1
-> >  EOF
-> >
-> > -cat >hexdump <<'EOF'
-> > -#!/bin/sh
-> > -"$PERL_PATH" -e '$/ = undef; $_ = <>; s/./ord($&)/ge; print $_' < "$1"
-> > -EOF
-> > -chmod +x hexdump
-> > -
-> >  test_expect_success 'setup binary file with history' '
-> > +	write_script hexdump <<-\EOF &&
-> > +	tr "\000\001" "01" <"$1"
-> > +	EOF
-> 
-> So here the `hexdump` script is written, basically replacing NUL and SOH
-> with the digits zero and one, respectively. I wonder why the script does
-> not call `test-tool hexdump` instead? And I wonder even more why no test
-> case has to be adapted below this change in the same file. I _guess_ that
-> the reason is that the file named, creatively, "file" is initialized with
-> a NUL and a newline, committed, then a line is appended that contains SOH
-> and a newline, and then the test cases verify the hunk _headers_ only?
-> 
-> If using `test-tool hexdump <"$1"` would work here, too, I'd actually have
-> preferred that over the `tr` invocation, even if would still not be
-> recapitulating the functionality of that Perl script (which, contrary to
-> its name, seemed never to have output hexadecimal values...).
-> 
-> To be clear: I do not suggest to change the patch, I am merely puzzled why
-> the more obvious `test-tool hexdump <"$1"` was not used here?
+Hello! Is there a direct way to update symlinks in repo after changing
+core.symlinks?
+E.g. update plain files, if it was false, with symlinks or vice versa.
 
-Phillip had the same comment, and I was trying to address that by
-improving the commit message a bit. But seems like it still isn't clear
-enough.
+I've tried `checkout` and `reset` but they have no effect in this case
+(see the snippet below). The only two things that are working:
+- checking out a commit before the symlink was introduced and then
+checking out any commit after (need to know that special commit to
+make it work for those specific symlinks, not practical)
+- removing symlinked files and checking them out specifically (need to
+either have a list or somehow search for those files to reset)
 
-The reason why I decided against using `test-tool hexdump` is that it
-would have a ripple effect. The output generated by that helper is not
-the same as the output generated by the Perl script, so if we started to
-use the hexdump helper I would have to adapt a bunch of tests in this
-test file to update their expectations.
+Is this the way to do it or is there an alternative?
 
-The result would look something like the appended patch, which I think
-is quite awkward. On the one hand we have trailing whitespace in the
-expectation, on the other hand we have weird seemingly-unrelated changes
-in other tests. So I shied away from that and instead decided to use a
-simpler variant of the textconv script.
+Snippet output:
+```
+Using temporary directory: /tmp/tmp.gynGH2VcB1
+Checking symlink status after creation:
+lrwxrwxrwx 1 root root 12 Apr  2 07:12 symlink.txt -> original.txt
+Checking symlink status after checkout:
+lrwxrwxrwx 1 root root 12 Apr  2 07:12 symlink.txt -> original.txt
+Checking symlink status after reset:
+lrwxrwxrwx 1 root root 12 Apr  2 07:12 symlink.txt -> original.txt
+Checking symlink status after removal and checkout:
+-rw-r--r-- 1 root root 12 Apr  2 07:12 symlink.txt
+```
 
-Let me adapt the commit message once again and make it a bit more
-concrete compared to the current fuzzy description.
+Snippet:
+```
+%%shell
+set -e
 
-Patrick
+# Create a temporary directory
+TMP_DIR=$(mktemp -d)
+cd "$TMP_DIR"
+echo "Using temporary directory: $TMP_DIR"
 
-diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
-index f904fc19f69..16d7fd4c5ca 100755
---- a/t/t4030-diff-textconv.sh
-+++ b/t/t4030-diff-textconv.sh
-@@ -15,14 +15,14 @@ EOF
- cat >expect.text <<'EOF'
- --- a/file
- +++ b/file
--@@ -1 +1,2 @@
-- 0
--+1
-+@@ -1 +1 @@
-+-00 0a 
-++00 0a 01 0a 
- EOF
- 
- test_expect_success 'setup binary file with history' '
- 	write_script hexdump <<-\EOF &&
--	tr "\000\001" "01" <"$1"
-+	test-tool hexdump <"$1"
- 	EOF
- 	test_commit --printf one file "\\0\\n" &&
- 	test_commit --printf --append two file "\\01\\n"
-@@ -92,7 +92,7 @@ test_expect_success 'show blob produces binary' '
- 
- test_expect_success 'show --textconv blob produces text' '
- 	git show --textconv HEAD:file >actual &&
--	printf "0\\n1\\n" >expect &&
-+	printf "00 0a 01 0a \n" >expect &&
- 	test_cmp expect actual
- '
- 
-@@ -103,7 +103,7 @@ test_expect_success 'show --no-textconv blob produces binary' '
- '
- 
- test_expect_success 'grep-diff (-G) operates on textconv data (add)' '
--	echo one >expect &&
-+	printf "two\none\n" >expect &&
- 	git log --root --format=%s -G0 >actual &&
- 	test_cmp expect actual
- '
-@@ -115,7 +115,7 @@ test_expect_success 'grep-diff (-G) operates on textconv data (modification)' '
- '
- 
- test_expect_success 'pickaxe (-S) operates on textconv data (add)' '
--	echo one >expect &&
-+	printf "two\none\n" >expect &&
- 	git log --root --format=%s -S0 >actual &&
- 	test_cmp expect actual
- '
-@@ -146,9 +146,8 @@ symlink=$(git rev-parse --short $(printf frotz | git hash-object --stdin))
- cat >expect.typechange <<EOF
- --- a/file
- +++ /dev/null
--@@ -1,2 +0,0 @@
---0
---1
-+@@ -1 +0,0 @@
-+-00 0a 01 0a 
- diff --git a/file b/file
- new file mode 120000
- index 0000000..$symlink
+# Initialize a new Git repository
+git init -q
+git config user.name "Test User"
+git config user.email "test@example.com"
+
+# Create and commit a regular file
+echo "Hello World" > original.txt
+git add original.txt
+git commit -qm "Add original file"
+
+# Add a symlink to the original file and commit
+ln -s original.txt symlink.txt
+git add symlink.txt
+git commit -qm "Add symlink to original file"
+
+echo "Checking symlink status after creation:"
+ls -l symlink.txt
+
+# Ensure core.symlinks is set to false
+git config core.symlinks false
+
+# Checkout just the symlink file from the master branch
+git checkout -- symlink.txt
+echo "Checking symlink status after checkout:"
+ls -l symlink.txt
+
+# Try resetting just the symlink file
+git reset -- symlink.txt
+echo "Checking symlink status after reset:"
+ls -l symlink.txt
+
+# Remove the symlink and re-checkout it
+rm symlink.txt
+echo "Checking symlink status after removal and checkout:"
+git checkout -- symlink.txt
+ls -l symlink.txt
+
+# Cleanup
+cd ..
+rm -rf "$TMP_DIR"
+```
