@@ -1,56 +1,56 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF70237701
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 11:13:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A6A237713
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 11:13:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743592425; cv=none; b=BVvRD/aVax7+fe4DMvDSC9WVtgv9cr0eQUHN5czasR30pOvF0Y8ykLdw4wX4wj9IAvO8PnZ3QINMEKzaoyYEEEfmckk01DSayS+Y2F0byl5K2f05QiXEf9dVHZiFiMeRn1vXaFzxV4qSgd9arUgY1ijNh8ek/5/pATvq2SkxUeY=
+	t=1743592426; cv=none; b=kUWcMHFJn/7nJw24xSLtxsYHPSS90HAXHFq3MKKlTyqka1rAoSzTJWhjdwRPwP4aysKC8lpEv6GjBTSykIJF3rsOgkjzK/PfnhJEXhWsm+45efBi9JYPiJVaABRXKZcYJ0zPf/+H4RMbRuFO9oTMK+Yq/9gRusVY4EImjFY7U6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743592425; c=relaxed/simple;
-	bh=1Mlmo3jrm2y5l/kMXkWAZUa7fQ+TPgUGXUJDgWAJOzk=;
+	s=arc-20240116; t=1743592426; c=relaxed/simple;
+	bh=0NLvHYAJHvJVExVhH7kFlhUkalY5gBu2H9SneaznwJM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=q5zjdz/z3jhvKILwWYsvhNa2ccndj/Vwq1ZKDrKwPolRZnuN4OBe414GuJVTjW2whwxBZVbCFGQVRIPD2TfHux8Ms3oeuPeqmmSfPnLbKSIxAccsm6BXuMyiVmdnSr+icskOs9sqnkOoZoV/Ykm7fnSeLgkexPH84yUmvUINfdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IfvGFcaa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RxxSW3za; arc=none smtp.client-ip=202.12.124.148
+	 In-Reply-To:To:Cc; b=XaTmV0/iblLrJkzTYYzBsd1BnyykcU4mOZMM0bcaa7BLPM/EKEZH/yh1TFNfTjnhvBb1w7ElcMxz0m3DOlnYp80VvmCi/dCwO0066WxsfoviWyAD18W+3QXE2PB2lQTrs+pBIL/lKZT6FrUmpZRwxSUQrS7H6twaB27GDeUT//M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XXgftPY0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FcFVmyJ1; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IfvGFcaa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RxxSW3za"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 99D4211401F8;
-	Wed,  2 Apr 2025 07:13:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XXgftPY0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FcFVmyJ1"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2914D2540170;
+	Wed,  2 Apr 2025 07:13:44 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 02 Apr 2025 07:13:42 -0400
+  by phl-compute-11.internal (MEProxy); Wed, 02 Apr 2025 07:13:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743592422;
-	 x=1743678822; bh=/hqSzC10p62ofevxlOe8trzDjyUrdSUH25Z2V4bOqRw=; b=
-	IfvGFcaaX/maKurAwJlGuoRXN/0o4M8uWIXseDJEdoXEI6ex4IBtO6ivJmVtGtEn
-	4TjwRm0FtNY6KGAQv/Bt65I7nBF1mtCojr2rl4qeFUreDetcUJF4crf88B74vOFK
-	RAh+N60Vac16xEaV8P08VmGgGJ1qwB0jSu7WrtSBFftYaCdqpsXqCifDS4G4FCT2
-	L5DCao4p4kW+4aQkZC6woVETzZBYsoogDuVkwO3SHz4rQ2uG7aG7URb4izy0Nrl0
-	VYuvlOCLs1U8kz3fpWR60ARdEYSSVmMy1OGxY686A+Sv7V6ibULdBj+f6tCyER7U
-	NdoPoGeIpvrPaWDIuFD8PQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743592424;
+	 x=1743678824; bh=UtXojlC87RDtra5EnEB/n/x6GYjDIcGnIfFKJ/KAyhg=; b=
+	XXgftPY0zM9dw4rbFfQoxhSAyPhJLUpVrJGITTK2TvUkMhtYT5KG3aZ4uSNk79Jw
+	dquM/PY3WqDDAgJp8HwK9OL/yyuGeKY7HxCEjJnHUXz5EY5RVV4NhtJQk/+vIJoW
+	oQtb+1mhmZLliC/I4S2bVknFaw/j6VV5G6ir1wB79TcnnCN0bkiuRnZiWwE/Jugg
+	Iq7wqrIsPXPFioUZBC4qhfRieLmd50hKSpiBsN49A1SH+qA6zZBXfBFk7w+h9sqi
+	5hKfIDugi84GIpkX3siJlUVxNrR9T1t0KgTrmyhL24v0UiDhmJWdwmpXUjfb+mwQ
+	n1+fawsMIDx097IBz7FiGg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743592422; x=
-	1743678822; bh=/hqSzC10p62ofevxlOe8trzDjyUrdSUH25Z2V4bOqRw=; b=R
-	xxSW3zangBOQK8iF0gdxLNdq2RfO+S/ybOxuKTuGPtLBTV9zhbtOROWEiRcy3AEn
-	q6iSfON78cCXTch7RlZpsZwNtR5Y+Ll2nPYsmch2oqqMLlHmdrxNFlRYVjzbSveU
-	Am/xeGUVmYKZB5mfyH9cSp+LhhS+iH3wiVeX1yGoIOUNy8AAFka9vJzpuZ6AfecD
-	3N7QmDQTxduAhnoVqd0vaTqBNv7feSDB7tZWemwKu32c+6qLdj0eznK1aSe4z0qU
-	1PR0CFRelHd2MrG++3aHUz+5p8Si2TB0JAGySx5YafYmYOUD/ZrReyP21EzkQzTE
-	yIa6BZ8b1yzL+EVLjRcVg==
-X-ME-Sender: <xms:5hvtZ73bTy8vbMrddy0EqJvdGvSP-zrDZnbB1mU4unJ-zf1DVxrnFQ>
-    <xme:5hvtZ6F5nqQi7I34UH3mgvRWXYlmb20gFIJKTfmbnhX3grD68LeNjLep91sRxPyGd
-    FLXhTaf1ox6wfV9HA>
-X-ME-Received: <xmr:5hvtZ77HjC79NONPNzWU7TuBamib4LFuEmSrSrjysGi45iOOUnpI0qF4G1jNqGKsDz4Fuh90vig3cQ6Zqj07591UTRbmkXP4V2AMIg_gP6ILxA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehheefucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743592424; x=
+	1743678824; bh=UtXojlC87RDtra5EnEB/n/x6GYjDIcGnIfFKJ/KAyhg=; b=F
+	cFVmyJ1Wj4ySSn3lI2Lz4n2grQHgFTXiAPEP76cAAy4BKb50YinmrIb60hrJpgGm
+	LVnJk4TT1afE5C1IC180IivPYrwCsk9f2NySRYeFLhC0j/FFgC4VS/ZuKryIzbTs
+	4qcaGW1QAbw6C67vZ+corsUFkfxAK4W8FOxYcEAiYUZ3b16R8Z7pQXK1AZWdLQ7y
+	54v1l0u3ECOwAJ3+nDLnzN9p1eqZVKKAVF1NYm1FU1ZUXZj0MxzS7mP5iDhg1y41
+	pk2pkpRI0/0FLZBMjQOSDM6Otu8WOTiw/L4/mLUH1/3nQ+jco3xiBzX0aVrJEICx
+	+gGJKFT9doQq3DjMheiTQ==
+X-ME-Sender: <xms:5xvtZzj_CTYT0Sb-AZanUyAgTPXpQQTYb_uyiDfXrkH17Oa9IV7pyg>
+    <xme:5xvtZwAXJB38VRyxThiBtmMJZyzlisdX6lH6_EC9O53wrZm7IykSTz8-eeOSHEzTf
+    UnSD-uMZZ0_hhVbkA>
+X-ME-Received: <xmr:5xvtZzEjaADxdMrCjSB69QHy0Ky0UTQQQU8s4-bKZVLp2h8s4c-GEqg90w-Pmxqvv6QKMupJGsbb7d45bWcsPY_WlR4Cfoo1AAjQGu2QrsNxvQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehhedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
@@ -58,25 +58,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehheefucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtoh
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
     hmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:5hvtZw0scXnmbQ1S7LHnk2jLfY2R-71TkG95b7ZqGVNTBuQ3S86q9g>
-    <xmx:5hvtZ-EzA4Fqm-PhS14KV1cppuhCxho_P6FrTklU_d2fvxwxVUC8VA>
-    <xmx:5hvtZx_ZS0GWSDeRCPxlYOloP07RnzR00UpKfJbcVm6meutNFA9Wng>
-    <xmx:5hvtZ7ndjm8dvL31L9TKwwRaWaKXBKkRjCQqJBCKb82g8Wj2TMJvvQ>
-    <xmx:5hvtZ7E9ajKEWU3YShChZvc3LiZ3tRCRbgQnZ8Ufc9dHxFmG9OKQTisV>
+X-ME-Proxy: <xmx:5xvtZwRuBPBlBzDiZ709NG393ppaydAlr8CPhPpv3rKbsvn_xJ3Mpg>
+    <xmx:5xvtZww0rkyDdAgeA3xZTXepfBwx7ybtp8ShMwDJWzJl6IIZ1pr4gg>
+    <xmx:5xvtZ26N5Qz6O5npnL8RF4VmgXNvgo8TNj0XiJ4uYaXMo8PUE7pD0Q>
+    <xmx:5xvtZ1yd0_JsreEDytkozTegLi2CcaFphkOVJD8wXdcXkSZn35a2rg>
+    <xmx:5xvtZxjG4xqmf-qUK646N2YlvX4dsw-TziEFCda52UZgQ6DKTSnPJW_q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Apr 2025 07:13:41 -0400 (EDT)
+ 2 Apr 2025 07:13:42 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id dc44df51 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Apr 2025 11:13:40 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d85eaa1c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Apr 2025 11:13:41 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 02 Apr 2025 13:13:36 +0200
-Subject: [PATCH v3 01/11] builtin/cat-file: rename variable that tracks
- usage
+Date: Wed, 02 Apr 2025 13:13:37 +0200
+Subject: [PATCH v3 02/11] builtin/cat-file: introduce function to report
+ object status
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250402-pks-cat-file-object-type-filter-v3-1-4da6bb21871c@pks.im>
+Message-Id: <20250402-pks-cat-file-object-type-filter-v3-2-4da6bb21871c@pks.im>
 References: <20250402-pks-cat-file-object-type-filter-v3-0-4da6bb21871c@pks.im>
 In-Reply-To: <20250402-pks-cat-file-object-type-filter-v3-0-4da6bb21871c@pks.im>
 To: git@vger.kernel.org
@@ -93,127 +93,79 @@ Cc: Toon Claes <toon@iotcl.com>, Karthik Nayak <karthik.188@gmail.com>,
  Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-The usage strings for git-cat-file(1) that we pass to `parse_options()`
-and `usage_msg_optf()` are stored in a variable called `usage`. This
-variable shadows the declaration of `usage()`, which we'll want to use
-in a subsequent commit.
+We have multiple callsites that report the status of an object, for
+example when the objec tis missing or its name is ambiguous. We're about
+to add a couple more such callsites to report on "excluded" objects.
 
-Rename the variable to `builtin_catfile_usage`, which is in line with
-how the variable is typically called in other builtins.
+Prepare for this by introducing a new function `report_object_status()`
+that encapsulates the functionality.
+
+Note that this function also flushes stdout, which is a requirement so
+that request-response style batched modes can learn about the status
+before proceeding to the next object. We already flush correctly at all
+existing callsites, even though the flush in `batch_one_object()` only
+comes after the switch statement. That flush is now redundant, and we
+could in theory deduplicate it by moving it into all branches that don't
+use `report_object_status()`. But that doesn't quite feel sensible:
+
+  - The duplicate flush should ultimately just be a no-op for us and
+    thus shouldn't impact performance significantly.
+
+  - By keeping the flush in `report_object_status()` we ensure that all
+    future callers get semantics correct.
+
+So let's just be pragmatic and live with the duplicated flush.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/cat-file.c | 47 +++++++++++++++++++++++++----------------------
- 1 file changed, 25 insertions(+), 22 deletions(-)
+ builtin/cat-file.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index b13561cf73b..b158b3acef9 100644
+index b158b3acef9..1261a3ce352 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -941,7 +941,7 @@ int cmd_cat_file(int argc,
- 	int input_nul_terminated = 0;
- 	int nul_terminated = 0;
+@@ -455,6 +455,16 @@ static void print_default_format(struct strbuf *scratch, struct expand_data *dat
+ 		    (uintmax_t)data->size, opt->output_delim);
+ }
  
--	const char * const usage[] = {
-+	const char * const builtin_catfile_usage[] = {
- 		N_("git cat-file <type> <object>"),
- 		N_("git cat-file (-e | -p) <object>"),
- 		N_("git cat-file (-t | -s) [--allow-unknown-type] <object>"),
-@@ -1007,7 +1007,7 @@ int cmd_cat_file(int argc,
++static void report_object_status(struct batch_options *opt,
++				 const char *obj_name,
++				 const struct object_id *oid,
++				 const char *status)
++{
++	printf("%s %s%c", obj_name ? obj_name : oid_to_hex(oid),
++	       status, opt->output_delim);
++	fflush(stdout);
++}
++
+ /*
+  * If "pack" is non-NULL, then "offset" is the byte offset within the pack from
+  * which the object may be accessed (though note that we may also rely on
+@@ -481,9 +491,7 @@ static void batch_object_write(const char *obj_name,
+ 						       &data->oid, &data->info,
+ 						       OBJECT_INFO_LOOKUP_REPLACE);
+ 		if (ret < 0) {
+-			printf("%s missing%c",
+-			       obj_name ? obj_name : oid_to_hex(&data->oid), opt->output_delim);
+-			fflush(stdout);
++			report_object_status(opt, obj_name, &data->oid, "missing");
+ 			return;
+ 		}
  
- 	batch.buffer_output = -1;
- 
--	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+	argc = parse_options(argc, argv, prefix, options, builtin_catfile_usage, 0);
- 	opt_cw = (opt == 'c' || opt == 'w');
- 	opt_epts = (opt == 'e' || opt == 'p' || opt == 't' || opt == 's');
- 
-@@ -1021,7 +1021,7 @@ int cmd_cat_file(int argc,
- 	/* Option compatibility */
- 	if (force_path && !opt_cw)
- 		usage_msg_optf(_("'%s=<%s>' needs '%s' or '%s'"),
--			       usage, options,
-+			       builtin_catfile_usage, options,
- 			       "--path", _("path|tree-ish"), "--filters",
- 			       "--textconv");
- 
-@@ -1029,20 +1029,20 @@ int cmd_cat_file(int argc,
- 	if (batch.enabled)
- 		;
- 	else if (batch.follow_symlinks)
--		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
--			       "--follow-symlinks");
-+		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_usage,
-+			       options, "--follow-symlinks");
- 	else if (batch.buffer_output >= 0)
--		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
--			       "--buffer");
-+		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_usage,
-+			       options, "--buffer");
- 	else if (batch.all_objects)
--		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
--			       "--batch-all-objects");
-+		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_usage,
-+			       options, "--batch-all-objects");
- 	else if (input_nul_terminated)
--		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
--			       "-z");
-+		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_usage,
-+			       options, "-z");
- 	else if (nul_terminated)
--		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
--			       "-Z");
-+		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_usage,
-+			       options, "-Z");
- 
- 	batch.input_delim = batch.output_delim = '\n';
- 	if (input_nul_terminated)
-@@ -1063,10 +1063,10 @@ int cmd_cat_file(int argc,
- 			batch.transform_mode = opt;
- 		else if (opt && opt != 'b')
- 			usage_msg_optf(_("'-%c' is incompatible with batch mode"),
--				       usage, options, opt);
-+				       builtin_catfile_usage, options, opt);
- 		else if (argc)
--			usage_msg_opt(_("batch modes take no arguments"), usage,
--				      options);
-+			usage_msg_opt(_("batch modes take no arguments"),
-+				      builtin_catfile_usage, options);
- 
- 		return batch_objects(&batch);
- 	}
-@@ -1074,22 +1074,25 @@ int cmd_cat_file(int argc,
- 	if (opt) {
- 		if (!argc && opt == 'c')
- 			usage_msg_optf(_("<rev> required with '%s'"),
--				       usage, options, "--textconv");
-+				       builtin_catfile_usage, options,
-+				       "--textconv");
- 		else if (!argc && opt == 'w')
- 			usage_msg_optf(_("<rev> required with '%s'"),
--				       usage, options, "--filters");
-+				       builtin_catfile_usage, options,
-+				       "--filters");
- 		else if (!argc && opt_epts)
- 			usage_msg_optf(_("<object> required with '-%c'"),
--				       usage, options, opt);
-+				       builtin_catfile_usage, options, opt);
- 		else if (argc == 1)
- 			obj_name = argv[0];
- 		else
--			usage_msg_opt(_("too many arguments"), usage, options);
-+			usage_msg_opt(_("too many arguments"), builtin_catfile_usage,
-+				      options);
- 	} else if (!argc) {
--		usage_with_options(usage, options);
-+		usage_with_options(builtin_catfile_usage, options);
- 	} else if (argc != 2) {
- 		usage_msg_optf(_("only two arguments allowed in <type> <object> mode, not %d"),
--			      usage, options, argc);
-+			      builtin_catfile_usage, options, argc);
- 	} else if (argc) {
- 		exp_type = argv[0];
- 		obj_name = argv[1];
+@@ -535,10 +543,10 @@ static void batch_one_object(const char *obj_name,
+ 	if (result != FOUND) {
+ 		switch (result) {
+ 		case MISSING_OBJECT:
+-			printf("%s missing%c", obj_name, opt->output_delim);
++			report_object_status(opt, obj_name, &data->oid, "missing");
+ 			break;
+ 		case SHORT_NAME_AMBIGUOUS:
+-			printf("%s ambiguous%c", obj_name, opt->output_delim);
++			report_object_status(opt, obj_name, &data->oid, "ambiguous");
+ 			break;
+ 		case DANGLING_SYMLINK:
+ 			printf("dangling %"PRIuMAX"%c%s%c",
 
 -- 
 2.49.0.604.gff1f9ca942.dirty
