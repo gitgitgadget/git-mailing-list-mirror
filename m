@@ -1,196 +1,138 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CE011713
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 01:45:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBDD4367
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 06:40:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743558322; cv=none; b=J6bhpGyCxIsK7lKATKsL6ghsr/6Q4ZNbnM9gaaABg26BSiJ7OcBwAFJyGfkg3jYz51Di9Y4h0KJ0lAg8DZBKekC0hoDLJ9wOBgSDJFomSwzJK3kKPFCsCOCqUK1VQYpbWqWg/8y3qr3HtFq+5aeXY87RW0W7GHXB/x0OS3BZGsQ=
+	t=1743576060; cv=none; b=DzG/K3lrun/pqaQp5Cs08eecgwZANt0UV1ZiSAd2aPlRB8zQy26PHP7g0ENeAJCSshzfFLHyZL6/6mc9Wq7z+mevuWq1EZSGM1GtvO6oLIS5LIesuJcSWEgPuYyvqpygtXsv4RPuz4heCFduS/fGN/10NEHNFMc6WyWZCJTfe0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743558322; c=relaxed/simple;
-	bh=ryEMurHklBu/fS1Hiq0Ao8d97CWw2pxhj1EXW+6WI1I=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=DfD1mpFsX89p702HyYI1O5fB098GQ1NbyXrXRTToDbBbh4+YkhiAc1p8OFJui+x8hH6nwTdEjAPKFnteTgXFltmeC5vDATEjMktBTjpJ5lFao/MVIBMLc7TxFpWP6L1n2aE0USB+2st2V2+0kQPeQE9DOizKveOVSTvXvnUg+Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eM5zxMoT; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743576060; c=relaxed/simple;
+	bh=E9wcilzzCB/S+LAj7sDKAFCoAahhzB4qEJUNhY3DvIo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MO7m4E4m7WUSsP/71Y1gL01dzILgH8ujsXIQo65INS8T7blcn4zqBW683Q5XMROAOCNe9F+gXn87o33EMWCksjMKB9ZsLR9GNSa0PVT8fHF/TrqrlwZ9G1XCLrkg+DN+hKwLN8iZJUSU0lwC7Q5h9jLTpIywgnwQmWJTdL+uKb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WOCdAzWU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MJdzoHox; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eM5zxMoT"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3913d129c1aso253617f8f.0
-        for <git@vger.kernel.org>; Tue, 01 Apr 2025 18:45:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743558317; x=1744163117; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=eHF7dXS6YRnpTAKreFrHogPGm0mq/uCQeXxZr8u97rw=;
-        b=eM5zxMoTsXvpcB9k9YfMc2UhLYf/xFKRnF8iUch2n9kmmakvOw6hvwahXLniuDGSMI
-         PkCM4FEwBiMQSvv/Av4qi+b1CIBBmjprptpL8DQgl8F5Kp09qgkWKZBfvFfrMaj54dJ/
-         BmI5fAbf2b2hZzk0o0Qq+mtjO8B94X/gxUUflQSI96/CERTLHRMah41zr4cbaO59GcgR
-         B3wJnf6lTcoXv8FvQt/EutUEjNS7NammhBM/75WZLGCJYoxwvTUeUgILRt4IzncmLHcF
-         7cQdGfHNtiLt4G/S9LOpGUKExe1FLvkSJgowBvQHQg7gc7P8eKREFYpbxBQANRv5eHNA
-         uTtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743558317; x=1744163117;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eHF7dXS6YRnpTAKreFrHogPGm0mq/uCQeXxZr8u97rw=;
-        b=b/BfRsvyu9YgRfsN7Xj04GFbMOE9r77IRQYRsok8YCSMpSfmQ6tioadvMXy2MkYEG+
-         27XWtDzurDjhrzH0SjRZJxaZy4ehr46CH7nt0D4KhM6IR7xHsZSxlxNctrnm70OK/z7F
-         z+GuuVpc3KfIktM+soExSCNBvczB3uwhDXltKxR8vFGtdgBoATmPgMlvWZawucuqWD0D
-         QqsIYWQwRm5eA7gnI0gAL3t8TMiviA/XaorR5Xb27hhRvvC2VIbsFDL6TdPsmdLINh0G
-         ZvtwGNsUDAbCnthl55HiAS9hiaJUx7RHqog4CTaZ3BjV0w/MgFK7D3zUQOZ6xCYO7g9z
-         AeOA==
-X-Gm-Message-State: AOJu0YwYLRCyT6XFq7WkNQdifICeT2l+Gs5e/d5tLYPhevKO6TOigUT+
-	aykcjUxEoEf/XOcay9Wtac0Ok8pDf6rmt65NmLwa0fvrQhZqrVJwQjONxQ==
-X-Gm-Gg: ASbGncv9PEK/ABqhaG2sC0ruuU4lxF9Lk+w3iV0S3HwTbsQs8m9X6YJLEtgSE3Q/SO+
-	y3ixFrKJ739dCLBrbJOZcI1gQoKZTgs3ExCQuZU6nq6EvGlhhqLHys9SADFWWT7ElOdiO1lXTjS
-	8+r9fTtyIbgNXH4TjvTHOv4SAJUIIG+7+Oscx7/XrN5Hl1THwv038GasdAf6111lPsdEcMFhiEx
-	0RClE6vPUsViJMECBodWr4wuuukHAyCGP+N9FNWS6znLj5cfR0FH2nJY5if3aftCjvD2aq/CqAx
-	/rWulPcFlaubtAq6yq4mhOTrYVI6CKTIKqFqN4XTchdu4A==
-X-Google-Smtp-Source: AGHT+IELIA7PQLtcqrqKXW9Ec6ZjuLnJq2yJN4NtWr8CsAzGsC85waet13mzSYACmQ8mm0MKNMfCLg==
-X-Received: by 2002:a05:6000:2903:b0:391:952:c74a with SMTP id ffacd0b85a97d-39c2a34cbcemr186430f8f.8.1743558316897;
-        Tue, 01 Apr 2025 18:45:16 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c0b6656afsm15386550f8f.40.2025.04.01.18.45.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Apr 2025 18:45:16 -0700 (PDT)
-Message-Id: <pull.1937.git.git.1743558315633.gitgitgadget@gmail.com>
-From: "HJ C. via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 02 Apr 2025 01:45:15 +0000
-Subject: [PATCH] column: exit early when indent length is larger than width
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WOCdAzWU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MJdzoHox"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C7D5C254022B;
+	Wed,  2 Apr 2025 02:40:55 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Wed, 02 Apr 2025 02:40:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1743576055; x=1743662455; bh=TXsNXfBqkD
+	0f3MNzd3gZSYCOf5TkqdyQsuL1ZtPpl+M=; b=WOCdAzWUWKEp/J0lJOUhcvhQbT
+	XnWMVmVGSfqI4CEreiiuow9E5v44NUimvzflZIzz52EGOHWXwZP0MgWWiJEyMV4w
+	mGsL7yF23rpGkQeUVSxdDnQv8HDta0pALPv8qb5InzBm/i5DxMAbIjSk1RRXZ3Dr
+	lO+0IpvQscawcYdPDoEweJ6SrkyxgsUn+BpHEDFw0/OhK8KmnleAxDuDNpJ5zz3w
+	MNmrfPZc5HImjzM0DWH/DiWxA2exUawiWQ3juNpjOzLlfGc/zRVi/+AhgkbPQ7Oi
+	yxlWvoeOytDqhZgNfkhu1X15jR2xhvzH1oM96PHjl5bawe+dWSF6igK5DHsg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1743576055; x=1743662455; bh=TXsNXfBqkD0f3MNzd3gZSYCOf5TkqdyQsuL
+	1ZtPpl+M=; b=MJdzoHox8WCiXLc2MilLu0wxHrS8BEiPl0wCnEtwnzd/okbnrTg
+	pYbq/Jq+Hh5zkI9VbCQRPT1Wr02Xydio9ANQnVtdlOhKgopF/pef5okRZ3Gj8bO9
+	1IWpoEZW9EjxjIIk5ySmScWcKcTDal+BqXXfQlq96AMR+HanrkljLkAw2pWntp+D
+	kfIZvxP8f5NvRZxje3DaSIWxeE5k1C79pyKUMe1B4HrSYhSNrhZhEq3pu2S/D5Ge
+	mXw27XIKuLhSYxibLgvrlQ+KT/rgLTSoq7vOfiggyWreo5q95p8F9PcjVEoPKIYy
+	2tj1LDX+S/hrJ+Ohp6W9Gn5MMdxhv7hC0Wg==
+X-ME-Sender: <xms:99vsZ70q5NEO7OQSELJs46cx2KyTc9XF5mFnI88SGr_Vuhc2Kj_YRA>
+    <xme:99vsZ6EcvvDSPyekkIontqeSMMLmuPcvtIMzSZpEPGnLmS5pJRjfMeGDNcaRAB5Fh
+    2_IAhQDdkEkZNlRVw>
+X-ME-Received: <xmr:99vsZ74ud0i8pLvqJ7b0SlnGn---Dm8jors14goj-yrIoVF31w06dAfRWHcifGJ6CfPixy2815RcARYLmdIRJfvPytSsAFqk9tdQLiTd20VTnA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeegleejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepthhgseguvggsihgrnhdrohhrghdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvg
+    hlihhnsehgmhigrdguvgdprhgtphhtthhopehpshdrrhgvphhorhhtsehgmhigrdhnvght
+    pdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtoh
+    epshgrmhesghgvnhhtohhordhorhhg
+X-ME-Proxy: <xmx:99vsZw0HyQ5YzhSTR-uGRInr4Oye9AAyz4FAByjnpAH_bBHqk3CI3A>
+    <xmx:99vsZ-FyLeqFRcHgh6gx9odZs6yDRj_aJ7AL6_zj2G15ZDBlRG-UBQ>
+    <xmx:99vsZx-s4hCHL4Pw5n9WpWC_mh0iG4yTKPtkBZ2u9_3HVn2AclEQ4w>
+    <xmx:99vsZ7m0WNhrGe2sxUFgld4jgR60x0vq0LV3hI7CNuUGqeVa-oVOOQ>
+    <xmx:99vsZyZCPZ1UmDmozLUgXUMAIMWYYDLIm9jmFieRqcOxJJaZdqrZJ0PU>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 2 Apr 2025 02:40:54 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id d830141a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Apr 2025 06:40:52 +0000 (UTC)
+Date: Wed, 2 Apr 2025 08:40:47 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sam James <sam@gentoo.org>, Eli Schwartz <eschwartz@gentoo.org>,
+	Thorsten Glaser <tg@debian.org>, Peter Seiderer <ps.report@gmx.net>
+Subject: Re: [PATCH v2 2/5] gitweb: fix generation of "gitweb.js"
+Message-ID: <Z-zb7yPcPgJRhhXR@pks.im>
+References: <20250331-b4-pks-collect-build-fixes-v2-0-6b06136808f3@pks.im>
+ <20250331-b4-pks-collect-build-fixes-v2-2-6b06136808f3@pks.im>
+ <e9ea3630-a831-dec5-e461-3f550ceb7ec3@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    gitster@pobox.com,
-    code@khaugsbakk.name,
-    "HJ C." <hyunjidev@gmail.com>,
-    lavendarlatte <hyunjidev@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e9ea3630-a831-dec5-e461-3f550ceb7ec3@gmx.de>
 
-From: lavendarlatte <hyunjidev@gmail.com>
+On Tue, Apr 01, 2025 at 06:30:01PM +0200, Johannes Schindelin wrote:
+> Hi Patrick,
+> 
+> On Mon, 31 Mar 2025, Patrick Steinhardt wrote:
+> 
+> > diff --git a/gitweb/Makefile b/gitweb/Makefile
+> > index d5748e93594..26a683d4421 100644
+> > --- a/gitweb/Makefile
+> > +++ b/gitweb/Makefile
+> > @@ -118,7 +118,7 @@ $(MAK_DIR_GITWEB)gitweb.cgi: $(MAK_DIR_GITWEB)gitweb.perl
+> >  $(MAK_DIR_GITWEB)static/gitweb.js: $(MAK_DIR_GITWEB)generate-gitweb-js.sh
+> >  $(MAK_DIR_GITWEB)static/gitweb.js: $(addprefix $(MAK_DIR_GITWEB),$(GITWEB_JSLIB_FILES))
+> >  	$(QUIET_GEN)$(RM) $@ $@+ && \
+> > -	$(MAK_DIR_GITWEB)generate-gitweb-js.sh $@+ $^ && \
+> > +	$(MAK_DIR_GITWEB)generate-gitweb-js.sh $@+ $(filter %.js,$^) && \
+> >  	mv $@+ $@
+> 
+> A safer way might be to use `$(filter-out %.sh,$^)` just in case the
+> Javascript libraries might at some stage be renamed (I could imagine, for
+> example, that someone aims for ideological purity and renames them to
+> `*.cjs`).
 
-The code exits with "fatal size_t overflow" when indent length is
-larger than width. This is because when calculating cols of struct
-column_data, unsigned underflow happens and cols is set to negative
-value, then converted to size_t when calling REALLOC_ARRAY in
-shrink_columns() function. This can lead to allocating extremely
-large chunk of memory when succeeds, or crash when fails.
+I could see arguments both ways:
 
-The change exits code early with failure reason to avoid underflow
-and clarify argument limitations. This change ensures that cols is
-always positive, making the code clearer. It also eliminates the need
-for warning suppression related to signed-unsigned comparisons, as
-cols can be safely converted to size_t.
+  - If we use "filter-out" the developer now has to remember to also
+    filter out files whenever a new dependency is added.
 
-Signed-off-by: Hyunji Choi <hyunjidev@gmail.com>
----
-    column: exit early when indent length is larger than width
-    
-    I have sent this to git-security first for potential security check.
-    Thank you Patrick for review and reply. Based on your comment I have
-    updated BUG() to die() and added two tests. Also confirmed all existing
-    column tests pass with new check.
-    
-    This is copy of his reply:
-    
-    Hi, thanks for your report!
-    
-    The use of both print_columns() and run_column_filter() is rather
-    limited across the Git codebase and only covers across a small set of
-    builtin commands:
-    
-     * git-branch(1), where the value can be changed via the --column
-       command line option.
-     * git-clean(1), where the values are hardcoded.
-     * git-column(1), obviously.
-     * git-help(1), but again the values are hardcoded.
-     * git-status(1) via wt_longstatus_print_other(), but the values are
-       hardcoded.
-     * git-tag(1) with the --column command line option.
-    
-    So only git-branch(1), git-tag(1) and git-column(1) are relevant in this
-    context, and I cannot think of any way to exploit these in a meaningful
-    way. I also think that --column options are unlikely to be used in any
-    scripts.
-    
-    So all in all I think it's fine to discuss this on our normal mailing
-    list and fix the issue in the open. But I'd maybe wait a day or two for
-    others to chime in before doing so. Given that these values are
-    user-controlled we probably shouldn't use BUG() because it isn't. die()
-    would likely be a better fit. We should also have one or two tests to
-    verify that things work as expected.
+  - If we use "filter" the developer has to remember to update the
+    pattern if any of the files are renamed.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1937%2Flavendarlatte%2Findent-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1937/lavendarlatte/indent-v1
-Pull-Request: https://github.com/git/git/pull/1937
+I think the developer is going to be more on the guard in the second
+case -- after all, renaming files always requires you to also update the
+build instructions. On the other hand it's quite easy to miss that you
+have to adapt the "filter-out" logic when adding a new dependency. In
+the end neither of these solutions is perfect, but the worst part is
+that we don't have any tests at all that would detect a broken build.
 
- column.c          |  6 ++++++
- t/t9002-column.sh | 22 ++++++++++++++++++++++
- 2 files changed, 28 insertions(+)
+So I lean towards keeping the current mechanism, but don't feel strongly
+about it. Let me know in case you still prefer "filter-out" and I'll
+adapt accordingly.
 
-diff --git a/column.c b/column.c
-index 93fae316b45..692fefafabd 100644
---- a/column.c
-+++ b/column.c
-@@ -186,6 +186,9 @@ void print_columns(const struct string_list *list, unsigned int colopts,
- 
- 	if (opts && (0 > opts->padding))
- 		BUG("padding must be non-negative");
-+	if (opts && (opts->width > 0) && opts->indent &&
-+		(opts->width < strlen(opts->indent)))
-+		die("length of indent cannot exceed width");
- 	if (!list->nr)
- 		return;
- 	assert((colopts & COL_ENABLE_MASK) != COL_AUTO);
-@@ -367,6 +370,9 @@ int run_column_filter(int colopts, const struct column_options *opts)
- 
- 	if (opts && (0 > opts->padding))
- 		BUG("padding must be non-negative");
-+	if (opts && (opts->width > 0) && opts->indent &&
-+		(opts->width < strlen(opts->indent)))
-+		die("length of indent cannot exceed width");
- 	if (fd_out != -1)
- 		return -1;
- 
-diff --git a/t/t9002-column.sh b/t/t9002-column.sh
-index 7353815c11b..1b448be4567 100755
---- a/t/t9002-column.sh
-+++ b/t/t9002-column.sh
-@@ -206,4 +206,26 @@ EOF
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'length of indent cannot exceed width' '
-+	cat >input <<\EOF &&
-+1 2 3 4 5 6
-+EOF
-+	cat >expected <<\EOF &&
-+fatal: length of indent cannot exceed width
-+EOF
-+	test_must_fail git column --mode=column --width=1 --indent="--" <input >actual 2>&1 &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'padding must be non-negative checked before indent length' '
-+	cat >input <<\EOF &&
-+1 2 3 4 5 6
-+EOF
-+	cat >expected <<\EOF &&
-+fatal: --padding must be non-negative
-+EOF
-+	test_must_fail git column --mode=column --padding=-1 --width=1 --indent="--" <input >actual 2>&1 &&
-+	test_cmp expected actual
-+'
-+
- test_done
-
-base-commit: 5b97a56fa0e7d580dc8865b73107407c9b3f0eff
--- 
-gitgitgadget
+Patrick
