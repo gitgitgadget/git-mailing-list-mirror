@@ -1,83 +1,84 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CA81853
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 07:21:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0211B7F4
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 07:38:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743578499; cv=none; b=J6cMZ6pliMdDa6eRK5+zpZ39Q/yOzMA09BIXNXBPHAEA5Au4HlvC5N8lsNEQd2K5/mCuxSoJCfuNDhIQojkofuh0+sajJJjLdPTUp9gNPApZrYGQB5zWtXay+Uk0u6Ip+ixR0DcAsfEzMPmrXdxdUFlhxrL/dQmB0wY3rKPfFQs=
+	t=1743579501; cv=none; b=qRMb8xCDbr7vTC6odo4n/8pQj+7swxt2Op/HbOO+nIbclu0nKNWheWPa4FnJBwKVWQRdg9cCaARoohmm918kS1FlPdJaL515TESLjK6wTrNwT/RVOR25SjknorWvl9lzKm/rWDyBSA5+weHdbb6iiEtH9JagepqGszBZ46GIhjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743578499; c=relaxed/simple;
-	bh=nEZvNh12DRw7c+maLikxzlkoYE4SyXKdohZ5xZTh2z0=;
+	s=arc-20240116; t=1743579501; c=relaxed/simple;
+	bh=Edm98PSDjATTIejieN8r/KU83CjJm+ZOhd/chYcddR0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gAle1J1DCCUfWMF7PSD5Tm74pPKNLr+lcpncIrHaM3a85cS7KD5lcL2iXHQ0Wpwxs34/eHweE1OnC2wEkfBF8V9l2HoWgv8mUCpe06mNnwo4LDxKnvOQfjkI27EtnbOvufhyqY3MlwpO6RP3CHLYjqP27PtNpSIgnfotYtI9LhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rn8MKJuX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tSQLxVMf; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=J6zn1ExkUe2NkXtVlqc4lyMkFc3vsi2x0zQTmuL5+3w+nzZUy5fSbd6ZDcPbluXShTBDLRP+KXeya2nXgyt2opjuKqAbAIqML47rDZU/a5w8feL/XocoqFbcnx4O+56O9L/ud+tbvTp80+X0GDBqtstx6F1O8NBwsNx/0vB+DV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AXHU9E4q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dZKt/+a3; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rn8MKJuX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tSQLxVMf"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 763BA1140107;
-	Wed,  2 Apr 2025 03:21:36 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Wed, 02 Apr 2025 03:21:36 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AXHU9E4q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dZKt/+a3"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9E1B92540127;
+	Wed,  2 Apr 2025 03:38:18 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Wed, 02 Apr 2025 03:38:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1743578496; x=1743664896; bh=x14GPs4ggT
-	FndL1SBqyBBNdm6K6Y7fIb7TML+TZNPR4=; b=rn8MKJuXoRe1SG6izqAG/zq039
-	npB6NO00CXSzMdORNaKbGYbJASTj027VSSCZEwFlyCassyV3/ASJzWNciZPbXBNF
-	OalcXtHrdaXAP+As+U10C72MfgSXNrhssb2t6dgfmy1kJobmefkbZWmTr53oYP/j
-	l8URcRbwLMJR6l9WBPOODNYatYkGrFeaT/jEX1loHG1diBgPwP1YP/DUqbAi2Cky
-	BDDnC0QtaFGRHR80xOAkQpjHXm+WBkDTq9IolpUuNkJjhGygHu/hJM1OCMb2bJQV
-	1QtnjYJEoP62mRcofbsKACZaJuqDBPhLDWoVgyrrgrilKHrBCrNyDy7xoJtw==
+	:subject:to:to; s=fm2; t=1743579498; x=1743665898; bh=Qq62e+cUeh
+	9rkEScYqmE7Si1RpA2roY1663kt5yRZxE=; b=AXHU9E4qGN20ajKvZD/xNW3W2C
+	jQTByVsybx/A1qOvlLfq3SuPNRDz0kvgfjpDS/KB3bLi2T2MTlfPcbpFb9KyKyfw
+	HNqS9sSbTsum3K5WGs5QJUOgyYrWXA6LYepIR0jA8aA3ar1H+/3XhiLkefOFbjNs
+	c1jop/+UYYT1DDs6BIKlBqzS5W/YiNIMyGlUNiqPPxoCD3vk2fO952Z6evtvryRr
+	/6EKD3v/0WaC3VFl70YibMyHU+Y5LRhOMPHmaBnIj/oMMdUJwYpgn6VIKeUHMcSd
+	zzh8ireYZAAa/XjbfCE6mN+TWk5urIsKtvZ3Rr8iM8hwPb1WOszyePBPGHwQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743578496; x=1743664896; bh=x14GPs4ggTFndL1SBqyBBNdm6K6Y7fIb7TM
-	L+TZNPR4=; b=tSQLxVMfoLXqb6DE3yy4y7wmpnzTNkSmgcok+/DDTBHlV9KXq7v
-	BNsJGiwpYWubL/7Oc3qmq5yRlnyoAC5nxFnkLpXMPx4+TkSEo3pmcc4Wu5Zb9Mx9
-	VEuxqhCF1o+lTtB2ahquYUZoQyxeRS1G3MTMXyDu4rffH8MRbAxZaiNhDQya3FYu
-	N6JTjiJaTAurS7/YjcSK6IExh1ssGA3MpyADCYcGBqqsrGHrVDAoShvqds9QifUF
-	DWWl7tdNFwE/fxQ/gzEjcn2CsVX0yC44L+AYPp1eO7NCmdnjYRzKUrA65gph4v4i
-	jFaHYe8+hf2eciQyVmLPVoRFtTl3BUzGk0A==
-X-ME-Sender: <xms:gOXsZ9iA4d0nnG_7g-R5SMrP0Iw5QhR92ewl0BxJWmyd34JvxCuT7g>
-    <xme:gOXsZyAI3HEUIg3om2wNZFhEi8T_CofAoYuOXGmcBLcSyYK3EBmerhL5k7jXygUDF
-    8WswF1BeX-Sqpq0tg>
-X-ME-Received: <xmr:gOXsZ9GN3F4543SwCm_kQ4FBalXGt-NGq7rYOZ0xbOqcXh4dS6fo0QAw2YBnTB63_tT-jmta54I19ic7y4wm8UCcbEa90I_suMJc_uMIs3sPdw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehtdeiucetufdoteggodetrf
+	1743579498; x=1743665898; bh=Qq62e+cUeh9rkEScYqmE7Si1RpA2roY1663
+	kt5yRZxE=; b=dZKt/+a3nRtjL+YcCOQyYxIrAoDRFETzCzIA2LZo0SwvKbl1yAa
+	3Uue6VAfF6wf6xkbttcsw/mNUqQbJja3rYLxSNKmDIGqVC5oz5YtgKBSnCLWAl3L
+	PpYZlK3A4/HwrHLKy/fej+iPaJjwayvFg/QHvCggzHPoXFidJUYEBGss6jpHilGY
+	sbqg73vcHDupdNKem2DkqPVCjoTFrDtRaGIZr/tJpAS+pIE9MaAFhX0QSmCUVcwQ
+	k6G38LlGBJESPIO2mkbHCPldp9i6HbSLOM7bzymx3cCqQ05oIoK/rkr9ZZIfbTZZ
+	oKRGq2Y8MX4Yw1xx1iid8E5lP4r8GrHEtnQ==
+X-ME-Sender: <xms:aunsZ3E0Ab9OESyfmDqg8NtNl1kSZknc_h_MooORGLhPMIbZtcSRkQ>
+    <xme:aunsZ0X2wgY57XbFJZODWpszrFXFCY3QOf-H6aQS9qSKeZteKk6yiVKEFRXLFg9jv
+    gwnDj2_QOtHTBPa4A>
+X-ME-Received: <xmr:aunsZ5IxQd_ej7blqpXEoRmLGJivnm7faoI9WMmmHYwO9y-iTYyJuirg7xyUl0BpKGN8uYtmRYCeTOX3Rk7Nap2cWCSVuRqNAnftmE2EsrsZnQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehtdelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
-    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
-    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
-    hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomh
-X-ME-Proxy: <xmx:gOXsZySU4cpgBmAm752WqxaylD5DcSShkq4RJcWTYHCC_HnqfFgcwA>
-    <xmx:gOXsZ6wvmBIqJ6N6r3AWYROce9z5oU2PVVcNXtbLOgK-6EXsoKIBIw>
-    <xmx:gOXsZ45wF0HspQYJBvNEhc8iG6-r7xOhp7SDFAlAkkQvXkY-b4-BjA>
-    <xmx:gOXsZ_wRoB-WXlf27EdLA1wJoqJfls30OW4RuNTWINQLdS6h7gMU4A>
-    <xmx:gOXsZxjnn7APy258xCh7x6RxtpDg3zbac8pxDoP1O0o3Ds-Oi_sbRvxl>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:aunsZ1GzxjSOc8I5gkKJiMeEo6j9InccJYg229DDGVTg-5dXyCjcWA>
+    <xmx:aunsZ9XjpMagy53cRfaDMvZfefz_dVCuQtJWYBk6vATnlPF1Cfcqcg>
+    <xmx:aunsZwP8KPhgskFXGlrgd8FaXPD2tsd7lOYqmtyz9eIF-yR0Zaz1nQ>
+    <xmx:aunsZ82QP9t7GtnqYKg7GCXSCpBvz3553MTU6Bo8iJd0UAJOwTn3SQ>
+    <xmx:aunsZ3-fFyiGdrEl6YAZ8MltiSQo1BqxMANGZ4Ws6rWsDtzQBh7QgLfE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Apr 2025 03:21:35 -0400 (EDT)
+ 2 Apr 2025 03:38:17 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id acb52d5a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Apr 2025 07:21:33 +0000 (UTC)
-Date: Wed, 2 Apr 2025 09:21:33 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id bd801cac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Apr 2025 07:38:15 +0000 (UTC)
+Date: Wed, 2 Apr 2025 09:38:11 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 14/16] reftable/table: introduce iterator for table blocks
-Message-ID: <Z-zlfVIRRrMmHU-Y@pks.im>
-References: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
- <20250331-pks-reftable-polishing-v1-14-ebed5247434c@pks.im>
- <xmqq8qoja62n.fsf@gitster.g>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+Subject: Re: [PATCH v2 1/2] help: include SHA implementation in version info
+Message-ID: <Z-zpY3D01Fg4q0Je@pks.im>
+References: <20250328170121.157563-1-jltobler@gmail.com>
+ <20250401203630.285451-1-jltobler@gmail.com>
+ <20250401203630.285451-2-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,24 +87,85 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq8qoja62n.fsf@gitster.g>
+In-Reply-To: <20250401203630.285451-2-jltobler@gmail.com>
 
-On Tue, Apr 01, 2025 at 03:08:00PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > +	for (size_t i = 0; i < nrecords; i++) {
-> > +		records[i].value_type = REFTABLE_REF_VAL1,
-> 
-> -Wcomma,error
+On Tue, Apr 01, 2025 at 03:36:29PM -0500, Justin Tobler wrote:
+> diff --git a/Documentation/git-version.adoc b/Documentation/git-version.adoc
+> index 80fa7754a6..f06758a7cf 100644
+> --- a/Documentation/git-version.adoc
+> +++ b/Documentation/git-version.adoc
+> @@ -22,6 +22,9 @@ OPTIONS
+>  --build-options::
+>  	Include additional information about how git was built for diagnostic
+>  	purposes.
+> ++
+> +Note that the SHA1 options `SHA1_APPLE`, `SHA1_OPENSSL`, and `SHA1_BLK` do not
+> +have collision detection.
+>  
+>  GIT
+>  ---
 
-Hah, good that we've now got the warning.
+I think this note is somewhat funny for an unsuspecting reader. On the
+one hand they're going to be puzzled why you're talking about SHA1 in
+the first place because it isn't mentioned at all beforehand. And on the
+other hand they will wonder what collision detection even is in the
+first place.
 
-> > +		records[i].refname = xstrfmt("refs/heads/branch-%03"PRIuMAX, (uintmax_t) i);
-> > +	}
-> 
-> An overlong line.
+So I would either drop this paragraph completely or expand it to give a
+bit more context.
 
-Thanks for these two, fixed both of them locally. Will wait a bit for
-more reviews though before sending out a new version.
+> diff --git a/hash.h b/hash.h
+> index 4367acfec5..51cd0ec7b6 100644
+> --- a/hash.h
+> +++ b/hash.h
+> @@ -2,16 +2,20 @@
+>  #define HASH_H
+>  
+>  #if defined(SHA1_APPLE)
+> +#define SHA1_BACKEND "SHA1_APPLE (No collision detection)"
+>  #include <CommonCrypto/CommonDigest.h>
+>  #elif defined(SHA1_OPENSSL)
+> +#  define SHA1_BACKEND "SHA1_OPENSSL (No collision detection)"
+>  #  include <openssl/sha.h>
+>  #  if defined(OPENSSL_API_LEVEL) && OPENSSL_API_LEVEL >= 3
+>  #    define SHA1_NEEDS_CLONE_HELPER
+>  #    include "sha1/openssl.h"
+>  #  endif
+>  #elif defined(SHA1_DC)
+> +#define SHA1_BACKEND "SHA1_DC"
+>  #include "sha1dc_git.h"
+>  #else /* SHA1_BLK */
+> +#define SHA1_BACKEND "SHA1_BLK (No collision detection)"
+>  #include "block-sha1/sha1.h"
+>  #endif
+>  
+
+This feels way less fragile indeed, thanks for adapting.
+
+> diff --git a/help.c b/help.c
+> index c54bd9918a..3aebfb3681 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -768,6 +769,12 @@ char *help_unknown_cmd(const char *cmd)
+>  	exit(1);
+>  }
+>  
+> +static void get_sha_impl(struct strbuf *buf)
+> +{
+> +	strbuf_addf(buf, "SHA-1: %s\n", SHA1_BACKEND);
+> +	strbuf_addf(buf, "SHA-256: %s\n", SHA256_BACKEND);
+> +}
+> +
+>  void get_version_info(struct strbuf *buf, int show_build_options)
+>  {
+>  	/*
+> @@ -803,6 +810,7 @@ void get_version_info(struct strbuf *buf, int show_build_options)
+>  #elif defined ZLIB_VERSION
+>  		strbuf_addf(buf, "zlib: %s\n", ZLIB_VERSION);
+>  #endif
+> +		get_sha_impl(buf);
+
+I don't quite see the need for a new function, but don't mind it too
+much, either.
 
 Patrick
