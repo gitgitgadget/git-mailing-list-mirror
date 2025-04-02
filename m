@@ -1,143 +1,133 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E49A92E
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 10:06:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F1453BE
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 10:23:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743588402; cv=none; b=omUscWJW1yszUagsSNvUdUbrkHi45ZY2KdT2A+e4oIKxhZGcIA1Tt/zaJIXyqyHEpTqf07uIp8Ofg4F/knWSucI35z5Xp7PRUx/8dmoyV+W+kyWxs2CWSfZOBEXuL9AiTV/BbEJEAgT4/mAzQcRtmoFtoxzziNiQCxRvAVAvE/A=
+	t=1743589409; cv=none; b=i+JGtrd2kLcx74mPQWiUq6ca3dobU77BH6n9W8t/3V4g2ut/hgPHLVEpbuoN56SPcyMEzcnVqhQDxDDaC31kQADZHLAK5Fm/wlgQmdtXDFnB+zV+eAJFtSqxKX9KYskpnIITx+SMeNncMXwkQgqwadUWuyVMgzKFEIgbJiqGCh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743588402; c=relaxed/simple;
-	bh=Vowe6EzB36JAi22jJnyW7CMg7fRGLUk6TrEk+RO1+QY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=szgakbSyxCs/sGo47JdPthcqG/iw7zq3y47UXPGytYWchOG+jvr9I7orLZPkSBtDwc2FVqI6N/ToIpDHqow6lqwU2RlPH/4/FHK8Sum6/bTKAMlZhLQiWe/q9xG8NAjwaguegdRDrC/nurTkFhqnjYAhKjhR+q8CYI7Z9ERYM3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P6dmuKCN; arc=none smtp.client-ip=209.85.208.170
+	s=arc-20240116; t=1743589409; c=relaxed/simple;
+	bh=7E3wFSvBZCfYvmivV3uIUSaURsMis5gxn2Z+5a82G+s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nqgNkF3179iCXvL4C8Hrih20vUcEvGEdfNUQ5BOQVMdz5C123j8ETpqU+Vcv8HmFqrhIhCStJWWrj/460Lw9BKX8TbPLZ84Osj2HuK/9hYA8dP/HWiwcBRSNLGV9Qe5VJZhE0733bEzccron/Z7KDl7pu6KeaFoLU4SoZCzHdzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aOwVbIsQ; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P6dmuKCN"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-30c416cdcc0so62063861fa.2
-        for <git@vger.kernel.org>; Wed, 02 Apr 2025 03:06:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aOwVbIsQ"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-225477548e1so116995575ad.0
+        for <git@vger.kernel.org>; Wed, 02 Apr 2025 03:23:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743588399; x=1744193199; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dQZ/pAW7jmqBViZw/z1xyTGYrnR9zSuEfKVG7xmxxAs=;
-        b=P6dmuKCNy0ptiVAwvDe/k30SyhvjZz9h44GzfeIhK81/sO3LcBH5scNFEKI/CSA6qs
-         wHLCbsoseTtmrusyTj18OZCde9gscmTX5h1du6n2J40GJz65+OMgCpq9XDIb76vLy/2D
-         PM+ih6Oo2pqnPkfatxMii88mG+FrsibpKME3FMhIL6Csm9KCDHhTxgn0HdVf0TFV/A/h
-         YFTxEXsSNgejPUjkz9Bw8GzAqWmlwiH6+IbAez6iGz3OvjnRQPmSwWOUAqJZRMMP1The
-         6Cc2jWVjjtkwIJwfwNhpxVE4hHc+7SdxesbmexeqgEBFAkURXOB2x3X1xrUp7co39m6T
-         1W8w==
+        d=gmail.com; s=20230601; t=1743589406; x=1744194206; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=a36nl8sHbLg0Suwi477jrhcL6a3tp2o/WIEgbhpMgUY=;
+        b=aOwVbIsQClvai5OoBJ1MWm2qZiKqqVa1gAgxsP6WDXQUrprEOtg0LGlU6D1o9BwYSu
+         tx9EFuLyh7QclfR85rDGegCVEBCDukLHP1n1swrXqMrvbifr8MVKVQPEDPxCZJatt32y
+         Mf6whB4CznFPdQg1YKReQoi6JX7KckVlmAw5oqCZ9GvMV15dVp6AtUZyLaU09lRDCCRu
+         U2I34Jy/85iK6MT1artcfKYVP3ODh4eixXr4SdEc02F+xm4Ay8tJ4JN6PZwUoQ2n56gb
+         ZNIlyUoSPbzZzJx5gk/I6bz+z7E3VJeh51psfA3bvv5UmdyZjE8WjGO5MoHYiMebeOjC
+         rnTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743588399; x=1744193199;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dQZ/pAW7jmqBViZw/z1xyTGYrnR9zSuEfKVG7xmxxAs=;
-        b=BN1MnX8d/7RszPkgBvBNcsu+4IjEGFjUZ48EYbMvMyxVPFGq3K04kPNaA4p1MEXrvG
-         0Y7XqETQLyEWbmD3xsOwXyUf14dC1MAmHytnug9nYqfxPB1jDFhpo2vn2uGWi6cVahzI
-         +KDy+EfF2EZeaXWeWN0DZHE4ulA6iEhSSZ9OqebbXO0tfI2cEbfkETOWpXzc0vE/gxvy
-         yI4xvotNcZ/5ubZN56RWQvDqLDcdFYCbWbSet3AwWL8S3dK/nSBkA9PQrMA+UGDmt70d
-         OJOrW9/7Gx+XzAw2ny0Kyf+/bFsHcSoNUG36z1PZRrPu69EEJQ1Jj3wIdBC8Ivc73W81
-         iNgw==
-X-Forwarded-Encrypted: i=1; AJvYcCVyUsupomhMXKTMYeRxVEhiPp5zpov8pIqVoURHHK+Ej/l0YKtVq43F+ec5fV+hg8Nf4nM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRzZrMHKu880JvprdgFzMKlXkMaQoECk8+5yeAfmg2uSf9OYC+
-	wfuNMa+DTv0AzRZEcULbZ5BVkY93XD/quBGCV2NDzBOkF64knYc60aRHoekOexD4kyCcnHlgPFd
-	z/XDw+PH+8rWQia2+a2ZHXSFiZdAnQyabJ10=
-X-Gm-Gg: ASbGncuTmnZzqcfo+QpY0tGqBFt7Zr0G0oesm5q2Ae0ocJ+Ktgg30TgtJMqHcr7ACkZ
-	OmHEQPDKnXcZ3f3Duukv6M7io3PU4Zi9F+9p6C1O+i+efmx5HZQEfHKRV6AaocBvpoYhJbdQDRs
-	1gFAzhzCYTj/EOF24nSpe1sz2qc0uOAYSWeg==
-X-Google-Smtp-Source: AGHT+IFKcdIvSwQWwhcTioOO1SWLuiVIIaRLOss78yuifKqHgsjcTqCFbFxc7yDzO9xz+F9Y32tT9eEWXL4Gy/JP4xI=
-X-Received: by 2002:a2e:9ad7:0:b0:30d:e104:b592 with SMTP id
- 38308e7fff4ca-30de104b653mr41196581fa.38.1743588398158; Wed, 02 Apr 2025
- 03:06:38 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743589406; x=1744194206;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=a36nl8sHbLg0Suwi477jrhcL6a3tp2o/WIEgbhpMgUY=;
+        b=SW0883un4gdB/JoCdl58uRYicPFt+MsRiYCPGYrrK28d32KBrJal9EXBO0NRI5qS0m
+         4ExHPzlVmGc/eBnwYFv6FlrPm78OSgNrQQIQPyPOAxahRzsdK5YT4eEdLzUAfxmfirUY
+         469vjGi6lMzLsOIfZ5B7RWfQ7RM9fFwKgvzUCHy53RIfmVParcTl1E6R6d7zM4aN4GtG
+         H8MqoqlVeO6Iif6hGMxwSdtVKRI5ssRj7qujJG1XkGrISdsK0DeNkJUwJCKrhD1Rsx85
+         ySK+MsoIN7/2tUnQnYdku269kfy8vOVslP+q9/oNKK3QzaWB6Qb+d6UEf1kaFdAGHjyL
+         ZiJw==
+X-Gm-Message-State: AOJu0YyFZL1taea2nEmTJrshuWQFbMDlSDM5kMqngMXEWHVvlngqQ23p
+	WYNSWk2N/Yz0KW3+yWH58JRD7N+jq+cSlOL6X4WsyHlA75lNt/aqiLhSbZTT
+X-Gm-Gg: ASbGncsBNTR0kPlOCEqT3vcZe/UTycIlOAPjPtq+UbNDiZG78IL12vasrRSxkIxu4fB
+	oYZlNBl4DNAwiZnrHDY4g222jS+DNO6wJhz/m/7cmL7orwTiSJB8QM2wUvFB55dkc+LVjV0gWIO
+	yjJemoevqenSnhkQtIw7eId/O5XK8YydnhbHTGOATxd73SuOyQT49MaPrtYxVMJnX9bK202WVLc
+	5bu+UxarfYaONBIxAqjR6ENVxIjWgqxhD5frJ94NgIOkGtzmnZK2wEWzmbTsFnSWU2mXAVo29FX
+	XAuz027awFTRhNAlis1zzVBkzyteifEKyLUxuoVav87iH3Ob7ULqzplydXVHTzxKoQ==
+X-Google-Smtp-Source: AGHT+IGqTWuK6Gx01u/ECk4Bvgw2KDSaukm9ZsycY5TP3jTS3ospt++K/0X5Ewql70NhVjfCBpHhUA==
+X-Received: by 2002:a05:6a00:1784:b0:736:a694:1a0c with SMTP id d2e1a72fcca58-739804526f9mr23955767b3a.21.1743589405974;
+        Wed, 02 Apr 2025 03:23:25 -0700 (PDT)
+Received: from localhost.localdomain ([117.198.141.197])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7397106c06asm10898983b3a.107.2025.04.02.03.23.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Apr 2025 03:23:25 -0700 (PDT)
+From: zanal <zanalsorathiya8405@gmail.com>
+X-Google-Original-From: zanal <zanalsorathiya@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] The second batch
+Date: Wed,  2 Apr 2025 10:22:57 +0000
+Message-ID: <20250402102257.21728-1-zanalsorathiya@gmail.com>
+X-Mailer: git-send-email 2.49.0.110.g30eadc9d59
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANM0SV2huiGtWMcP+eEkNBHoieeoXmy_fM7vAOwyoW4=FXw1pg@mail.gmail.com>
- <Z-s2p-ak-KpU6uaX@tapette.crustytoothpaste.net> <CANM0SV0Np+52vjoopvAJ88U3Ue0EF35iarwBpOozrBH9KbH2Uw@mail.gmail.com>
- <Z-xvfqCsQnDIGaXx@tapette.crustytoothpaste.net>
-In-Reply-To: <Z-xvfqCsQnDIGaXx@tapette.crustytoothpaste.net>
-From: Devste Devste <devstemail@gmail.com>
-Date: Wed, 2 Apr 2025 12:06:26 +0200
-X-Gm-Features: AQ5f1JqoEEfeeVufnuE2DxRuyshdVb_DAyPlkvvaFpyR6qs615K71k96UupYnBU
-Message-ID: <CANM0SV27g_37kLfgKu8GVg13mViQ78+DRwdjSf4mGrkNdndPLg@mail.gmail.com>
-Subject: Re: --reset-author does not reset author date when used in
- post-commit hook
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Devste Devste <devstemail@gmail.com>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
->My testing demonstrates that `commit-msg` is skipped with `--no-edit
---no-verify`, but not `prepare-commit-msg`.
+From: Junio C Hamano <gitster@pobox.com>
 
-Looks like a separate bug though?
-https://git-scm.com/docs/git-commit#Documentation/git-commit.txt-code--no-editcode
-says:
->Use the selected commit message without launching an editor. For example, git commit --amend --no-edit amends a commit without changing its commit message.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/RelNotes/2.50.0.adoc | 34 ++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-Why would the prepare-commit-msg hook be called then?
+diff --git a/Documentation/RelNotes/2.50.0.adoc b/Documentation/RelNotes/2.50.0.adoc
+index 50e3027984..1905c61e9e 100644
+--- a/Documentation/RelNotes/2.50.0.adoc
++++ b/Documentation/RelNotes/2.50.0.adoc
+@@ -17,6 +17,26 @@ Performance, Internal Implementation, Development Support etc.
+ 
+  * "git fsck" becomes more careful when checking the refs.
+ 
++ * "git fast-export | git fast-import" learns to deal with commit and
++   tag objects with embedded signatures a bit better.
++
++ * The code paths to check whether a refname X is available (by seeing
++   if another ref X/Y exists, etc.) have been optimized.
++
++ * First step of deprecating and removing merge-recursive.
++
++ * In protocol v2 where the refs advertisement is constrained, we try
++   to tell the server side not to limit the advertisement when there
++   is no specific need to, which has been the source of confusion and
++   recent bugs.  Revamp the logic to simplify.
++
++ * Update meson based build procedure for breaking changes support.
++
++ * Enable -Wunreachable-code for developer builds.
++
++ * Build update.
++   (merge 7c8cd9c158 es/meson-building-docs-requires-perl later to maint).
++
+ 
+ Fixes since v2.49
+ -----------------
+@@ -30,5 +50,19 @@ Fixes since v2.49
+    when certain renames are involved.
+    (merge 3adba40858 en/merge-process-renames-crash-fix later to maint).
+ 
++ * Certain "cruft" objects would have never been refreshed when there
++   are multiple cruft packs in the repository, which has been
++   corrected.
++   (merge 08f612ba70 tb/multi-cruft-pack-refresh-fix later to maint).
++
++ * The xdiff code on 32-bit platform misbehaved when an insanely large
++   context size is given, which has been corrected.
++   (merge d39e28e68c rs/xdiff-context-length-fix later to maint).
++
+  * Other code cleanup, docfix, build fix, etc.
+    (merge 227c4f33a0 ja/doc-block-delimiter-markup-fix later to maint).
++   (merge 2bfd3b3685 ab/decorate-code-cleanup later to maint).
++   (merge 5337daddc7 am/dir-dedup-decl-of-repository later to maint).
++   (merge 554051d691 en/diff-rename-follow-fix later to maint).
++   (merge a18c18b470 en/random-cleanups later to maint).
++   (merge 5af21c9acb hj/doc-rev-list-ancestry-fix later to maint).
+-- 
+2.49.0.110.g30eadc9d59
 
->What I could recommend instead is setting a shell script or PowerShell
-file or such as the default Git binary (instead of git.exe) and setting
-`TZ=UTC0` in that script (possibly only if the command is `commit` or
-`commit-tree`).
-
-The IDEs only work with git.exe. If it's not there, it won't run at
-all. The only thing possible is setting TZ= as a user environment
-variable however that will obviously be picked up by other
-applications and cause the weirdest side-effects (e.g. Slack/Electron
-suddenly start using that time zone for some things but the
-in-built/setting timezone for others and lots of other inconsistency
-issues in tons of applications)
-There's various tickets for various IDEs for this use case, not just
-for git, but also for npm and various other tools (e.g. people need to
-change the JAVA version for a tool or whatever)
-
-Some time ago I opened "Config timezone to prevent chaos when
-DST/changing timezone" in the git mailing list and I saw you also
-replied. But if git had a way to actually set the timezone, these
-workarounds wouldn't be necessary; alas that's another issue
-
-On Wed, 2 Apr 2025 at 00:58, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2025-04-01 at 03:44:17, Devste Devste wrote:
-> > >your call to `git commit` will still invoke the
-> > `prepare-commit-msg` (and possibly `commit-msg`) hook
-> >
-> > Since I used --no-edit --no-verify in the example/hook, that shouldn't
-> > be the case though?
->
-> My testing demonstrates that `commit-msg` is skipped with `--no-edit
-> --no-verify`, but not `prepare-commit-msg`.
->
-> > >such as by using an alias that sets `TZ=UTC0` to commit.
-> >
-> > Unfortunately, (at least on Windows) most tools and IDEs don't even
-> > load a bashrc file (e.g. intellij) for their git UI, so that's not an
-> > option (and setting the TZ as a global environment variable has
-> > unwanted side effects, since it will set the timezone in various
-> > applications randomly, e.g. Electron/Slack will use the TZ for some
-> > but not for other things,...)
->
-> What I could recommend instead is setting a shell script or PowerShell
-> file or such as the default Git binary (instead of git.exe) and setting
-> `TZ=UTC0` in that script (possibly only if the command is `commit` or
-> `commit-tree`).  I use Neovim with the fugitive extension, and
-> it provides functionality to override the Git executable, so I suspect
-> other editors will as well.  This is something that will likely be
-> robust and unlikely to break.
->
-> The reason I make that recommendation is that I suspect you're going to
-> find that there are other infelicities or weird edge cases in what
-> you're doing and this would be a use case that I could see getting
-> broken accidentally.  We've accidentally broken people doing `git add`
-> in `pre-commit` hooks (which we also don't recommend) in the past, for
-> instance.
-> --
-> brian m. carlson (they/them)
-> Toronto, Ontario, CA
