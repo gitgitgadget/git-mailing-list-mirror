@@ -1,81 +1,73 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829632AF14
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 19:49:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672711D5CCC
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 19:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743623374; cv=none; b=p4rIHFmLFSoES6ZthH9UgIaY7rhrnXYo/wsuvcTXNn+J1foK4/Cc4MULeDpSWNZ5qnYS2UsIST/gVkuZCG8EprjUQ49FYWaTVGkzYbwu6MwRLJjMsG+WKE0HB7jBqh3kYbBF1rqty9Wv+5niR6y8fQ5bZRnZjut5hMvkqc/2rYY=
+	t=1743623571; cv=none; b=Lt0tqhMqrraHaWE/+igr2AsLnAjPKhx1VXohWpbDB92qdClIBeu9z3HUUA8kTa5PUGL/IsJb5+13rEHK6c+XxR8kK2GWfCH3rpwDOSHYbm7QrvfEEBWQhqaGvs056FL1MGj/JEIA/AJ3QozepldFZM0edKOdpSfRmcLBn3px8K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743623374; c=relaxed/simple;
-	bh=oR+snq27XWsODs15y4xNG2MtXZLf11T5WNbYJ7XZusg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SuRmTlp/vEchJkDE3dC9nmASq6caqWTfJqeBDMgVuRRrrPMuyYcsHN35tLezZWmuJB+946nnDntUHvRrEcHJTa57UROuOWQEI/4/9ev34BrC1NmFm9jM7QSU5losobq/OD2o3nlhwIjsygPL/9EJ6UxQoOOi96Kv6x/fRl9yCR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkzpOk1r; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1743623571; c=relaxed/simple;
+	bh=Y5A3z9jH2Uak3kJz/za1ylx1ME1a3T4xAHHxYEooxAk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qWvq/Qx+8vGdP+cEtw+nFf1KPVt1x60g8pKsU6hmx9I4AaOqxGdNWDVXG7PQhoGFDMCRw0y82xZ32F1lJxS3A7U9/asMLf+r1X4UmO00pVJIvExv4Gujw8mwXpCaKMLivhJPYuozKZ+AnJDFtey5DH46I2LOXpRWqTAt6TDQey8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=FTlaD3z4; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkzpOk1r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC416C4CEDD;
-	Wed,  2 Apr 2025 19:49:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1743623373;
-	bh=oR+snq27XWsODs15y4xNG2MtXZLf11T5WNbYJ7XZusg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JkzpOk1rhLm5pKmqJfzlsXhy4ic8C/ePkGgX4YomiNphbA7Du58t3H1xj+H8NHiBF
-	 dAJOe7Sf6wEHVCWv/jLoGy5MencGVnccCZ/2WTXcK+yaMpCeiP0Jh6j6DkRDgAJJyu
-	 HBi9xa8NupC4OBAUk4CNXdiKYDat/HVzlKMS0aBc=
-Date: Wed, 2 Apr 2025 15:49:32 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Remo Senekowitsch <remo@buenzli.dev>
-Cc: Martin von Zweigbergk <martinvonz@google.com>, 
-	Git Mailing List <git@vger.kernel.org>, Edwin Kempin <ekempin@google.com>, 
-	Scott Chacon <scott@gitbutler.com>, "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-Message-ID: <20250402-classic-hilarious-barnacle-7d0d0f@meerkat>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <D8WEKR5QQD3W.23CD3CXEPONGB@buenzli.dev>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="FTlaD3z4"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5dbfc122b82so16994a12.0
+        for <git@vger.kernel.org>; Wed, 02 Apr 2025 12:52:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1743623567; x=1744228367; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y5A3z9jH2Uak3kJz/za1ylx1ME1a3T4xAHHxYEooxAk=;
+        b=FTlaD3z4ddLbxGCffCSrTCo/gHL4svsbXjxRFNY+h0U9t2dHMFf0SBk9yM6zZ8l20P
+         99vPjM6nctHyu9yI6619sHsQ96L8nI+h4V5rH54YrmEu3XiAzwloQEYhJWKFEGouBCJz
+         AYI+hrqay9TpDQmLn1TdoOitpLnyZ0O7m2rr5ytJ4uh2OgrwXDgrnNNbnkktoskW1wEc
+         XXSAKamnTguWm8K0no+KwnFKLTGsVmjZQYw0lVGSfyPmRrtyLUOp0x5IpTWu7MTqxpit
+         8tVnkaYmYyy0OICGqbTLKtnUdQ00qHCEPEBIH4j0wWf2fn2HIDvzY5MhvbiCNS1wPdH1
+         S3/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743623567; x=1744228367;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Y5A3z9jH2Uak3kJz/za1ylx1ME1a3T4xAHHxYEooxAk=;
+        b=sfDZOlc4buWncg2ZypUlSz/l3Wy80Z4x2VlVBqN9+Ie3c9WDcXJrgF2FT5HDYRW5A8
+         p8d0jOXPf7ojhZtVDnd/0xjKImgsVjoCV21ivGvTIwHorgDJhgBfeuvsnOdBw8BrzphW
+         e40KBE6tNNrAOTnGScYVblhRlwYGevWV6CEGYXjHjxU2lbn4iHkqW4fwngkMo/T/n+fI
+         SrdEOaOCqYBe4HKPVdxSsDnKdQe6KiaEfgpusurR687zfSpq7deSAkPb3oQ8yDlkKho0
+         SXbiTjCoxnCZ6s22sttghaxm+tq4u60XWKeEpBNtKkuLRNirFwEED3RzCgHLdNmlr6ke
+         83BA==
+X-Gm-Message-State: AOJu0Yx/r5E1mTIF99YJj8WNH3GeYG5uTaMEJO5jkJn1wz+orEM5+cPx
+	q6byclpQOXpdsn5GgZed07AacTUeI6QiCvi980vO2UZBtxk+naYVbJ2HQ30hhxTUu0RQlyCTgJn
+	R6PxE0G6jmth7pQRlbMHj1wvSsSJmFZVgYdB6sxcMHoRRElIUmg==
+X-Gm-Gg: ASbGncuyo0RSPUpyydaPsROMSbrKiAEf9FWMXVIVzizcDJ/ZqKxd23eA++d1QJlLXUV
+	8f4bp+S96Eln08HEExAfqZtFS1Mm5SbcwuaZwQq6yowf8QdVsaWFt+znwU0EUt3luvQoFM5b688
+	kYQYVspZcTddw/4Suq3yxD9vxt7Cwx5efdlo/0P/x7zc0+Hr2qZ9d+Dstl
+X-Google-Smtp-Source: AGHT+IGlw12NRHcEOWk07g1IMyvl7PjeeteS5YQEdYgCBCzb/gcByuDyIkKmwKlH7simiv/E01tiehs/qpi+wCgTifc=
+X-Received: by 2002:a50:d689:0:b0:5de:c832:89ad with SMTP id
+ 4fb4d7f45d1cf-5f085189ac4mr19395a12.6.1743623566928; Wed, 02 Apr 2025
+ 12:52:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <D8WEKR5QQD3W.23CD3CXEPONGB@buenzli.dev>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+In-Reply-To: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+From: Martin von Zweigbergk <martinvonz@google.com>
+Date: Wed, 2 Apr 2025 12:52:35 -0700
+X-Gm-Features: AQ5f1Jq6dLDYTNZ0OyjMuztoQrY8JvOjS7qmrBzmEEJIK__uxMdrY7xm6_-Kgnw
+Message-ID: <CAESOdVBBeQDtRmRSQeHomuxQubTP5ggKZWGG88n88qKYBHR=+w@mail.gmail.com>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+To: Git Mailing List <git@vger.kernel.org>
+Cc: Edwin Kempin <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev, 
+	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Apr 02, 2025 at 09:34:18PM +0200, Remo Senekowitsch wrote:
-> Mailing lists don't suffer from this as much, because mail clients don't go
-> out of their way to hide old patchset versions from users. However, they also
-> don't provide any tools to help code reviewers associate old and new versions
-> of patchsets. A change-id header could be essential in developing tooling
-> for mailing lists that track patchsets and even individual patches within
-> them across versions. Easily being able to view the interdiff between the
-> last-reviewed version of a patchset and its most recent version is tremendously
-> useful for any code review workflow.
-
-Yes, this already exists, using change-id footers.
-E.g. you can run this inside your git checkout:
-
-	$ b4 diff 20250331-b4-pks-collect-build-fixes-v2-0-6b06136808f3@pks.im
-	Grabbing thread from lore.kernel.org/all/20250331-b4-pks-collect-build-fixes-v2-0-6b06136808f3@pks.im/t.mbox.gz
-	Checking for older revisions
-	Grabbing search results from lore.kernel.org
-	---
-	Analyzing 19 messages in the thread
-	Preparing fake-am for v1: meson: fix handling of '-Dcurl=auto'
-	  range: 98f2b1fb3587..163b98dec916
-	Preparing fake-am for v2: meson: fix handling of '-Dcurl=auto'
-	  range: 1406ab7e183b..df3c15fbd1ce
-	---
-	Diffing v1 and v2
-		Running: git range-diff 98f2b1fb3587..163b98dec916 1406ab7e183b..df3c15fbd1ce
-	---
-	1:  6587b42aec = 1:  f41c06addd meson: fix handling of '-Dcurl=auto'
-	2:  d8d124b84d = 2:  8c2301bcd5 gitweb: fix generation of "gitweb.js"
-	3:  1f27a035f9 < -:  ---------- meson: require Perl when building docs
-	4:  163b98dec9 = 3:  e1962003a5 meson: respect 'tests' build option in contrib
-	-:  ---------- > 4:  6f07c417a8 meson: distinguish build and target host binaries
-	-:  ---------- > 5:  df3c15fbd1 ci: use Visual Studio for win+meson job on GitHub Workflows
-
--K
+Sorry about the typo in the subject line. I meant "commit *header*".
