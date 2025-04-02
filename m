@@ -1,50 +1,49 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C161442F4
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 19:17:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472D61DE2A5
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 19:32:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743621438; cv=none; b=F4bDb1/X9G0EUovWVsk2wQ3AX11tFLRkPNGQoGBh52bThh8T2QCk4x3mLy9zlNZ56QTh0c58bYxG5AtH34AWSWq4CVRT1wa9HOu0MJ6KmwsPI/8rxsUOXTldqVu5NPyz4dpDzQr/Zj4AJBxw8RFXqNVOwd5VjqdezkjJ8oCgqJg=
+	t=1743622335; cv=none; b=gQvJYoRrYFrfi+NMFNHa4XhR0tIqapf0/7wYgVhZNp1V617cptISlbSax1CyCF19f+0/iJUFKr9TRUgveoemIMVbpD0+sUNOLFRBoi70zjpIxu/Y11DkuqjyhZa9s4j/8I4xJgsKlRW8+oXX2xq/xYenozZnrNLLjJ+UQgWkSrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743621438; c=relaxed/simple;
-	bh=zJWPe59nDTqmz8WXhZyrmBoVjVcctLfLdhauaxghwBI=;
+	s=arc-20240116; t=1743622335; c=relaxed/simple;
+	bh=95/jfX5Bi2OApOLjpy8WydmnvNNJiUlvsfNmBr6X3jo=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=cT7dcmJvhaS/hMtIwfBjk0ODgJQ5eoqGetJhMHQNYfODsJmDhpT+OCionUM4ztsEvagANzQDa4qWetyQKJKT4ER4R7r4021r8PO+YLVjDEERzc/NNucibkS7yGVvWOZH29qOJSvEURXccnEi8vQfXmcqlJRWqfsEx6Tfu/VmA5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=Ib7O1ZAs; arc=none smtp.client-ip=212.227.17.22
+	 MIME-Version:Content-Type; b=HMZlxBi4bOvk/GyAeupm1xJnneQUQm8dJCccWIXxEDYGtBScwJ3mQqPRN0GguvJAN2l5cMPFpPRV4j665WeBRoc/jCahud5dSfU2eelERWfvoQRBECRZvW1FMzDmWxqgyxcNCWQhilZKFtZ6sADp8N0aBO4uksiHr98fi94wGfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=A9CuYtGE; arc=none smtp.client-ip=212.227.17.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="Ib7O1ZAs"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="A9CuYtGE"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1743621434; x=1744226234;
+	s=s31663417; t=1743622331; x=1744227131;
 	i=johannes.schindelin@gmx.de;
-	bh=4mb33NDHovw/TOiH3ve+szXUfk95M9nD33IAW7CT11c=;
+	bh=aQAbYRKOpRyGOe3jkAaC6bFFauCDJs6/BiUDaLH3NpU=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=Ib7O1ZAs+Wochoh3+N9y51bT8vaA4OjIRvzlkQ13NQqp0i/zsp1wP+vrK09sWBPy
-	 vSS6oLaCGG3qXqKdPz1GZDRy978g3np8hMiCIxbhqWvq+l5hpDDX89w8dYK0TntDZ
-	 +Ze28Xk9QySVZybAc4y7d/FwD8Hq3ipC40YPcRzN1CY9DvynRGM+lLLbxKRg84AJq
-	 JAQM3vU0Cb7WNCDF3JpJomrs1wIxTQ9HFp4i9SfCeHkWFeRJaG9DU3skKLYjdhO/B
-	 rtkSPAcO/Sbor37fhtTlBt3BpIrXvstQyLvhx5CXvsOlHmhoSM16U6yE5PFXBMDQI
-	 2j6Gp5tzWZVI7Q3Jgw==
+	b=A9CuYtGEdM5aIhwbbn47YUdxtUlTAcrvgiyZ49yUQ7FodZ47SJHSUOmBNV8Li0Qk
+	 DTRf3UUc4aZbPzJabell5fU8oJKfAhBxTQrHuEaKZSWXl0H+jjlP2XbtNITRV0w8W
+	 eJDPSQlxzwaO1IzLXtvMr5IKsihyUZsBrNcMJi9xpDWRlNK6vBzw5n+/ES5Hh6n2h
+	 V7i6vjpzdBuzgkN9FMLMDn9pqyU60rqFilutnOBOz/2knJZ5f75aPNd5LTvGN32iy
+	 ZnkNnNIKyonPIQgyGHkDKtrewRgmfkAjKj7M5sdAvp69XJbDQBhIAJuA7T4GIMYsH
+	 t92wyJEBd4kYImWe/A==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MFKGP-1ttDwh1v9l-00DTyi; Wed, 02
- Apr 2025 21:17:14 +0200
-Date: Wed, 2 Apr 2025 21:17:14 +0200 (CEST)
+Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MjS54-1tGJvd0jve-00klod; Wed, 02
+ Apr 2025 21:32:11 +0200
+Date: Wed, 2 Apr 2025 21:32:10 +0200 (CEST)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Patrick Steinhardt <ps@pks.im>
 cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>, 
     Karthik Nayak <karthik.188@gmail.com>, 
     Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 13/20] t: refactor tests depending on Perl for textconv
- scripts
-In-Reply-To: <Z-zkVL8cSYEiR_T1@pks.im>
-Message-ID: <62c3f77c-32f4-8c24-560d-24fac9b2e807@gmx.de>
-References: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im> <20250327-b4-pks-t-perlless-v3-13-b436de9da1b8@pks.im> <9f477166-5667-a051-13d3-43d56a7a8ec1@gmx.de> <Z-zkVL8cSYEiR_T1@pks.im>
+Subject: Re: [PATCH v3 00/20] t: drop Perl as a mandatory prerequisite
+In-Reply-To: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im>
+Message-ID: <4d87ad16-3995-1dca-7440-6aa6b26063d8@gmx.de>
+References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im> <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -52,118 +51,105 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:LC6JWNVbClf9Ye9taMNCfhyf9hz76VaDCVQtQJ7Y3/A6fVeoNVy
- DIV8nZFbnqtjUB2wS+V08ix9HUqQgJtLQ2EbTgfSGqnpPpmlgF6JS/5OYYHUM6mVJT+JZIV
- rfTZ9yPPKRNeHL2tDPxYzRsWMa+9cGAM4BFCZUAL9FhG3FiaSQZtaGNc5xyV+Nxk/GowBd4
- KbROuBYw0z9JcRCIrCeRQ==
+X-Provags-ID: V03:K1:9YWvwlp0DYYBPToGrdfLIizvgSe6JwQ7s6umSwJvU2Xx7+qImxa
+ 3gRD19IjXbF7yTlN2vmcZUfl+5Ujsg2laLUU0vUcnbqJYwX+4799LfMJvrzz5Sxqgc6JE1R
+ n//STEoFZxeNd0I9LS5PtxMxzyA3TJs5b4/nk6NuNTA9YVBfx7JEePTv2Py8NJNZitNLRev
+ sosjTY6HlnBS/HTFsNtyA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:zKnB92kK0BE=;lydjwqM0UhHRPQzM/t58QtE0+jX
- iQ7xdIwbBagneSm+QhQs98Z3R3T0tV8+MwjEoYILaFRspRXEOVd+Xm7IML7UYdEPAogVIqkEa
- 0RSg4HyIvVaayNOB4OxgoVE+Ji0Sn7x8j63JiPNj8QWpFJVvMtG/l5hNCNJRI1XwEGSvDhZaC
- p2kiuMqLjwtWwQqZ0SXFbLW5W25f/isFwwUkv9YMqJpNX2QMIomncvWaVt91X432Tv3zPZddA
- nhOoUu+4nCBg8Cz2ayMH8SOd+2oVQbaERih1gWDYl9Hr2M/AfIn6Ua5+0B4I2XSaHr2EmdCqF
- 5m0m83F+m1p5yRJg2gWtY0GoLDygUyn+OtGXd4cUdyh8L3WWUlk8P1nblRAx42mBJqL/eD/Kw
- t+Eqofulsqyv25Sj5wVboLIwZAofLfVoK/of/KHMmUmn517TyGbBKseDDFcyDdMNva5Z/kmAL
- Dx/SH11ewk/PgLmEwdHApnAvVtLRQo+Lv8SolUIanZdAuEhJaq+kdkZnmHsBKH3eYIddNFQLQ
- Owrvxvfs0AzRw//sOrfzqcmr7XEMRsVSV4IMv7HEIce9LlpVHpMVyk9l0NHm0vewERCzAJB1S
- 5Z1H03ts7wewktGkV16wwxWHyq25WupVkyMoCg5slgHLw0WlMGQ5gdHvj4YuxFuzqRv7mghoL
- t2dLPZMPdpLGmzC3K6y1U1igYaa/Jl/H96YLnuJNyvPAH7Xo/o1JLF06vWefH6Bf10M3oPFCk
- mUf8w9/Tmr3l+47QZZT76rRxnksFZENJ9wNR83Dn6XVTHjHBBX2K41QBm9K3foDoWLsOqTAIL
- XyoOs/kNRh9viiqR8ijUZQL+rq4Y3EvkgOnK9pfe4oPPc+oPiwgJ9DCqHaW8mDEBo6CUSV9by
- YvHOIYsWwnuZq9wpiIAnSI4PPXWS4dLinWIqui1MPpSQdHgvOv1f7z2Zls18jA3Yo63wtbd5h
- pAf6jc/1+EhaQ6xcC9Jr4XxR+xhH94HVGtnPWijS82FBdVBJYbWMyeiOeOS/IPZwnfQyPg815
- +V7iqchLtEOym8BOJLNWSNthOIBHB39lzOUBezuAPpJ5aqGq5pDDVQNdANkHIxnKKd3ggyxTA
- K9QQWILmY2GS/Y1qGXXr/mHkEqu2+96AX5vqLbGM+Lu38qbxNRnEPHQz2khwPf38ufG2jG3Qd
- JTg2dW2nWCsyKtKeqdWIClwhMP8gNhrfYIpbHfs2U4laIctb3/eiU9TTAZqi+0OVM8s4H10tu
- mg9+sO/U7mmjLQSB/HM7YH0cuPrJXl4uX5DipTzIEcbI9xzJkq+F9lHCBe1JpRYtVccQzDuKS
- lSswwLrIIIOYXtMVYhqOQUneF3r0NvDLOecVCOTjhem3vr1bgRmeLowgxv3kkakHZ7y0L2Zia
- QWL6XTLFwjZcaGo5wVw3ZzvwCfnTIVIHk8JeRCjxR3aThUzfKlmz0hRu/6TxtpTy7AiiWZOnt
- iTXw1W9l9+J6qYltsb2d+9/CpNnEb4AGNF8jfKgVVT7cHxNSr
+UI-OutboundReport: notjunk:1;M01:P0:t8k40jLK99E=;h8Y2bHAr0UB4xogpOrGmTkLtE7G
+ 6TrVAGQwcbL1gUmJhO84BtpTNiF9T9SE0DnDnTCtIOe+WXJVedq5hUqFPkVMYgvFXOeJbN0+X
+ ZWkndvVFmgZ1k5UHd5hcvM4ZdZuk0ivJvd79QaB5tvXAw4SQwjRJvA+BfC/uZCQ6amVMiSNjy
+ N8kFRrSjCijW1NBDuziPLEIu+EkZC/Z/NM1cpnJ0iyEN5BObXSKHq23QftK/CZV0bB1d3pIXh
+ G7YnxgzO1MCHxrEfSAhHowN8WcB7gVElm7LGuJtC84mT3ecFmpHKfqcW9z2jRWZG1HTH+Juhw
+ yln9KUj+c8agarppKQc4FBzPIJ8yQpTuknhMkdZZ+11aZ/3w5HqII5jhAj6AvX3DuDwxUVdHY
+ mnWGFM+t390CjqBZt8QMnzar7YceMk+05eboBbw5ziGQ1baT9o/nGtNiob7Jq2buvgztwKVDw
+ fwZuPec0VBy+VOW7mj2wxLNKeLF2M8qDDMyhgt079XB7x6f14gjmfI69mYLeWDDVd2s4SG9jm
+ m0003sUCqEPIJW6fg5wq9a2UQni7XMpxz5nKcQ2gy+CnO7UUwtb/7TNO1Lcs0X3WZm5Z3KTbr
+ LbRUBjnOu1J7DbrCJ9hMSMpq1pmhyAVqHvDXaFqvCTl8lOBfAV1YthylitByuOrPKvw/cnR6S
+ xDWCcdg83qTeYiEBszUJayUdMRUahGPnTCxbXpd9CJj/Y/EXogKG0QxGgqOh3gXhvHGpLBt9M
+ 6qrrVX0QYVK49Hexff1KZ+K8BImeWxH0zEBjyFQO9MIo122GSCQUdXaiRKwRYgrgAK/40hhta
+ w7njRpXdaXN19gJuHHUVEtwUJ6kBvQfMZKPgENp+n19XoeseqWELv7XhSa8FVdrXmrQke3Iwn
+ OuKwhL5rKcWZdy0oGww1vFEbYuMEwyBryNcmsU2jrW570lljKIb2J+c6KvBGd2pj1EZ5QVATe
+ 5uGGZ3oEWRQVqN90UzgRUBSkcFoZ6JjSS2WZEq0dVlSfG5oK4TJPmsB1cK8Ij8rDlPLsatmit
+ Z5syk9IVZHbKUaH3RzQueIZhf5Nft3Sl4bkD02PM8Q6OM5aO5pvttmOAq5BvvlTS+yjtUNkVg
+ hMv9ROGjg+eZTLA253LUiXnZwMtPDu46V3876/MHitPr2IqKv5rw4XQLyJFQ56QW/t5dyi5rM
+ MMYjA6Mw0hI2wzkHpkqrQpHCiDL3D7uZovjMvISFFKJezqZsGoUApFpaEJ8QuhAnVGjKsZPM7
+ zqlEVQNF11DuKpVuoAuTpVySFrmaJvqi45QWpRMrqgesK0Pu8uFzCeX8Jjf1Hz9I5nzv92llX
+ B3N2CuxczwXsIIjVnRw1muE+WScuWjwSZ3VVRs6Gp8fqGa0L7ZLu3Aeq//UIrwCT1BHezse33
+ Ip84Yxv7YDDrP7F0OZiIM2Lx9e/PB+qz4OmFaOTJjrx8NTlvfIzVurXF65XfwDlEXPALQYxLE
+ cVkk9GxfOzOFGptb/Many+9R6EIkN+NUVeFvKm0X+dWczfH83iqq6Ii2T37/+R/PckAyHcWjQ
+ 0NiniKiu32+5ixtfzZU=
 Content-Transfer-Encoding: quoted-printable
 
 Hi Patrick,
 
-On Wed, 2 Apr 2025, Patrick Steinhardt wrote:
+On Thu, 27 Mar 2025, Patrick Steinhardt wrote:
 
-> On Tue, Apr 01, 2025 at 08:55:22PM +0200, Johannes Schindelin wrote:
-> > On Thu, 27 Mar 2025, Patrick Steinhardt wrote:
-> > > diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
-> > > index c7d8eb12453..f904fc19f69 100755
-> > > --- a/t/t4030-diff-textconv.sh
-> > > +++ b/t/t4030-diff-textconv.sh
-> > > @@ -26,13 +20,10 @@ cat >expect.text <<'EOF'
-> > >  +1
-> > >  EOF
-> > >
-> > > -cat >hexdump <<'EOF'
-> > > -#!/bin/sh
-> > > -"$PERL_PATH" -e '$/ =3D undef; $_ =3D <>; s/./ord($&)/ge; print $_'=
- < "$1"
-> > > -EOF
-> > > -chmod +x hexdump
-> > > -
-> > >  test_expect_success 'setup binary file with history' '
-> > > +	write_script hexdump <<-\EOF &&
-> > > +	tr "\000\001" "01" <"$1"
-> > > +	EOF
-> >
-> > So here the `hexdump` script is written, basically replacing NUL and S=
-OH
-> > with the digits zero and one, respectively. I wonder why the script do=
-es
-> > not call `test-tool hexdump` instead? And I wonder even more why no te=
-st
-> > case has to be adapted below this change in the same file. I _guess_ t=
-hat
-> > the reason is that the file named, creatively, "file" is initialized w=
-ith
-> > a NUL and a newline, committed, then a line is appended that contains =
-SOH
-> > and a newline, and then the test cases verify the hunk _headers_ only?
-> >
-> > If using `test-tool hexdump <"$1"` would work here, too, I'd actually =
-have
-> > preferred that over the `tr` invocation, even if would still not be
-> > recapitulating the functionality of that Perl script (which, contrary =
-to
-> > its name, seemed never to have output hexadecimal values...).
-> >
-> > To be clear: I do not suggest to change the patch, I am merely puzzled=
- why
-> > the more obvious `test-tool hexdump <"$1"` was not used here?
+> while Git was initially building on Perl quite a lot, the significance
+> of Perl has been dwindling over the years as more and more functionality
+> was converted into C builtins. Nowadays, an installation with Perl-based
+> features disabled is almost fully functional, only a handful of features
+> remain that require Perl:
 >
-> Phillip had the same comment, and I was trying to address that by
-> improving the commit message a bit. But seems like it still isn't clear
-> enough.
-
-Or I am too slow, that's also a possibility.
-
-> The reason why I decided against using `test-tool hexdump` is that it
-> would have a ripple effect. The output generated by that helper is not
-> the same as the output generated by the Perl script, so if we started to
-> use the hexdump helper I would have to adapt a bunch of tests in this
-> test file to update their expectations.
+>   - gitweb, a read-only web interface.
 >
-> The result would look something like the appended patch, which I think
-> is quite awkward. On the one hand we have trailing whitespace in the
-> expectation, on the other hand we have weird seemingly-unrelated changes
-> in other tests. So I shied away from that and instead decided to use a
-> simpler variant of the textconv script.
+>   - A couple of scripts that allow importing repositories from GNU Arch,
+>     CVS and Subversion.
+>
+>   - git-send-email(1), which can be used to send mails.
+>
+>   - Our Perl bindings for Git.
+>
+>   - The netrc Git credential helper.
+>
+> None of these features really are critical for day-to-day usage of Git,
+> and most users probably wouldn't even notice if those features were not
+> installed. Perl is thus very much optional nowadays.
+>
+> There is one big exception though: it is impossible to run our test
+> suite without a Perl interpreter, so it is not easily possible to verify
+> that a Perl-less installation actually works as expected. For most of
+> the part though our test suite doesn't use all that much Perl, either.
+> It is present in a couple of critical paths, but those are easy to adapt
+> to not use Perl anymore.
+>
+> This is exactly what this patch series does: it refactors a couple of
+> central parts in our test suite to not use Perl anymore so that it
+> becomes possible to run most of our tests entirely without Perl. Tests
+> that still depend on Perl are marked with a new PERL_TEST_HELPERS prereq
+> so that they only execute when a Perl interpreter is available.
+>
+> With this patch series, 30342 out of 31358 tests pass, which is around
+> 97% of our tests.
 
-That makes sense. Not only would it be a chattier diff, it would be even
-harder to validate. I would probably have written an entire paragraph in t=
-he
-commit message just about this decision, if only to get frustration about
-the state of Git's tests off of my chest. Your decision to avoid spending
-more energy on this than you already did sounds like a smart one to me,
-and I am sorry that I forced you to explain this one more time.
+Thank you so much for working on this. I finally finished my review, I
+simply ran out of time yesterday. The patches look good to me, and the
+result even more so.
 
-> Let me adapt the commit message once again and make it a bit more
-> concrete compared to the current fuzzy description.
+=46rom my perspective, it also sure looks like good timing, even so much a=
+s
+two years ago it would probably not have been realistically achievable to
+drop Git's test suite's dependency on Perl.
 
-Your explanation is sufficient for me, therefore you do not need to send
-another iteration merely for my sake.
+On Git for Windows' side, I have opened a ticket [*1*] that even discusses
+the idea of dropping Perl from Git for Windows' installer altogether. The
+appeal of this is that Perl is quite a hefty dependency with all of those
+Perl modules that are part of the set that Perl users simply expect to be
+present. I did not investigate this fully yet, but would expect a
+reduction of at least 10MB, and Git for Windows carries this essentially
+for `git svn` and little else.
 
-Thank you,
+So yes, I am quite happy about this direction, and could also imagine that
+at least the Windows test jobs (which use `prove` like the rest of the
+tests in Git's CI builds) could potentially switch away from `prove` to
+`test-tool run-command testsuite` and then drop Perl from the
+`git-sdk-x86_64-minimal` artifact that needs to be downloaded and
+installed for every single Windows job of Git's CI. (The `test-tool` may
+need to learn a few more tricks, but I'd be surprised if any non-trivial
+patches were needed there to essentially replace `prove` as far as Git's
+needs are concerned.)
+
+Ciao,
 Johannes
 
+Footnote *1*: https://github.com/git-for-windows/git/issues/5393
