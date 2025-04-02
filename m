@@ -1,56 +1,56 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4735E239560
-	for <git@vger.kernel.org>; Wed,  2 Apr 2025 11:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12E123909C
+	for <git@vger.kernel.org>; Wed,  2 Apr 2025 11:13:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743592429; cv=none; b=aGPsHkhiqvWHpcYCF7MKd9Wnh0cbdHA+OgCRQ1a0zmP7ppIxrpZUA04uPiaNsV+UyrW5yFB3sdcLclrTnufYUFNf9s+yqTre7fOZaz8Aku4idB/UI6wKCEsld21GD96DPFgqYZmMkd5TSOnNWgydbZLsuliVm6NhoDtaG79tct4=
+	t=1743592431; cv=none; b=UxTlvCtm1zeYl2g6m5Ff0VKuB52izFXga8lQs/pCgPmksP0aXbrJ8wTYg7dDcx2h1ePmr2I8PgysHDMdUzs4SRXyrJJCQ5vYGdaCWB1UZG9PPvfonxUZZ2yJW4zxtxB5IOXokM+zkzBw/R3EIAGN422C/sIILip7nuTPqA9F7RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743592429; c=relaxed/simple;
-	bh=SfyazYC9ViilJPj1kMGWPrCS1quUlpXlS4/XhTSCVhk=;
+	s=arc-20240116; t=1743592431; c=relaxed/simple;
+	bh=rE9YxizXvHuJ1AkUp50tg9PqQguItZ8WI7lK5w2KNq8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AgCujETyj7NSzoSMLTNmlVe9nliY+EvB1q/+vjuNezwPlFE0v1My1bnlA5g2Tw9+2tRfUJcrc5eZkhk7dPpm2Ubv2OQYP2Sq6yK768hEr6o78jjX/lyxVAVYPi5tMiHIRvectTU7uZ39r7XUXtqLTyRe5uSc1Xl3YvF5tISiRU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TE8rR384; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oZvThmeC; arc=none smtp.client-ip=202.12.124.148
+	 In-Reply-To:To:Cc; b=g6vJDoqPu3R/EOvoTEnSLECmPDZhGaKvU7OqTkuiKh7vB5Kxgz9ytC/6LWH9CiH+ELBbqj+lJKAFe1f4/kRgSLAXen6b+zBxx9GTN3JheYPOlRKFS4tuYsPAJlIdzt7jCBJNv5Aw81KEXKjVDDke9MfxVgsAcCcJ8BxbvQnKBxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ij+/jTvJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AmVcMvKu; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TE8rR384";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oZvThmeC"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3DA1B1140205;
-	Wed,  2 Apr 2025 07:13:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ij+/jTvJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AmVcMvKu"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CD1752540170;
+	Wed,  2 Apr 2025 07:13:48 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 02 Apr 2025 07:13:47 -0400
+  by phl-compute-10.internal (MEProxy); Wed, 02 Apr 2025 07:13:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743592427;
-	 x=1743678827; bh=l+vhZtT5TBNChO3XXyTxcbqs2nTzePOeurtKT4lyIug=; b=
-	TE8rR3848jxF5lt182o7A7jT5xYp6BaD4PocF0jvmN3bo/mOx4lxjDOoZ7tmUlGA
-	/Hcycw6Lp7PdzQIWw1Wy3upmzJYZJNsE+rTfSRQK+0nQJsQq2yKtxxEAmSZYrHxh
-	GtKfH/5+DrXXV0qK8Kua9WLnid3m/HdNHzbMuoWNwdpG0+00c8KB+Qp0Z8yocsTJ
-	tzNsRuCBe3VN/fNWpKJElGDnI6/TNrzlenc+yCYZE/d+vG5tLNVQXfhNqE8wn+It
-	0Wb4qBrBtbxBENqXLNsLdGwMoqmoQshT3waqbhr5jLYmbEYZs14O+YaoeCI1jw2h
-	URFCI8zkdsejVeqe+tHhzQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743592428;
+	 x=1743678828; bh=0L4So13E3xUll4DP9krphxzS0plX/03/qcciZy3GmOs=; b=
+	ij+/jTvJvDxD4E3eqNOQz6Y+7MybEjsmb4RwDwZKzGWcFI/qI979znvzEBb0Q92W
+	VF/kBz4olGddiurswtbdfoXzNnGgoZm/pmlSEziacZo7kYBFQTwxa+iAEIgjBzco
+	kCTpRWAppzv+/vjScSh5/QhmGifkPiUWD8rT99BfJQL6hi2j2qm6jTsstJ4oecdn
+	596uwBwHO4R2q1Pu6OCfHJe7mwpWLnGqaWDLNUb8o1fdOSo5AKiWIT4LP1VIyZAp
+	DcSE6WWOjzqkF75qj0Y0gSa1DYYsCHJOal0+/B0mcGxuKEsFKkFJ0jjci+loiJon
+	yOtEHidFiXey/manYQToiw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743592427; x=
-	1743678827; bh=l+vhZtT5TBNChO3XXyTxcbqs2nTzePOeurtKT4lyIug=; b=o
-	ZvThmeCQeC0iw4ENbcya5goJTh7xwDowwvafEcIyWilDd1fitdYx7sGpY44x7RO5
-	At0rCkBvBWK9JE2Ws6gugTlbQ7Lbs93Jc7MpFbhcNFunJSNb8s0s207iEIjNu8nc
-	CYZWEi1mbkLsi+sV+JDK7ATE7vixLqxhd9YvCf0gCmW2p5jmfLIGcS8T41E4bYUd
-	hImyXFYr8wTk5gP1yXDdHJclq+MS2wsD0DAFXQ8zc1NRRhCurSCQQEIQivcDdlo4
-	rNiZdX4EynohdhWKx8OZhi3UHBZQ0n98q/K0/ZRl1cNVakhfgDLJLp940ygn0MaX
-	m7AZ0dzCoe9K5oYS55qrw==
-X-ME-Sender: <xms:6hvtZxpZOU8Z219bRSrfmqITO3b7Ll4LdmhWrL1tHV_178iGrK3jBw>
-    <xme:6hvtZzpoZjkSscQGng1vRA9MFo9pFlkGADh-IUPM2wchzblpTmqT6Cpd4_T2kyC5E
-    sjuRdluQOMbk4IfRA>
-X-ME-Received: <xmr:6hvtZ-PUFstAcdoirovQSfvvJGd2m_2GpbuOvV-AsYHeNYm9rS0igT5_wjvtTno4w_Nw3Fadf-CuRXihTDjAnfMiZn549S7DQB9vGZjbfuGuag>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehheefucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743592428; x=
+	1743678828; bh=0L4So13E3xUll4DP9krphxzS0plX/03/qcciZy3GmOs=; b=A
+	mVcMvKu4glCvZbvXMVrcRkpP6MKaz6rBihG9clIBbxt8f1ia/ASlyF6tR+dntibZ
+	N3xIlywGlqNoF0BUmiEcZhgYM2U4ZsxXJzQT9yiRu3ALbQ5yxdhdrreEK2cB+eVf
+	DMLPKTRgQ/VGSxCG/ELuuMWgvLQrKfTm+I0KEsh2a94aHgh0BIwjnew7HuVAZpZF
+	msijn/QLHkSn5tlf1OMyrYj1OPRDsvXC8PQxnMySzlYCuUQVtecm6uFSfVl6HLoj
+	JYNd+LUWExQ3Q2ISjHgN5EGPNDZ515lmqwsrfVWe150pgZUHIB7RwxWrzdTogub1
+	WFj1KITb3dDSHeT1bYJEQ==
+X-ME-Sender: <xms:7BvtZ6hdPCbmft_NNsisQ7Vwtqp5YwNILwaPi3h8jjN92bf-xnq0rg>
+    <xme:7BvtZ7DsrtLCfE71dYa4j8ptDFll3ll5B2YaA2OnDOSS4RcnsO6UIZkU35yAYdfIX
+    OMW2mpQEXgxETSa6w>
+X-ME-Received: <xmr:7BvtZyE_wabXMyUnGxm93BV_ZIFGaFsnsjkJm-h6ymihYSoMLFYDljnCyi3itCR3q33OeUoVDZT8V41Aw3QzFi5PA3bXwAuzE-EVU0YVDGySWA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehhedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehheefucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtg
-    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopeht
-    ohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:6xvtZ84CJFwl2KdNbkVItxqmApkuUEkzYs_gTleZ2cdFcePAqnbB6w>
-    <xmx:6xvtZw4KBgwjzS1RZbaUTGeXI7KmXaB_Xa8nKG_2k4oerZFK7zV_-Q>
-    <xmx:6xvtZ0h4aXWePXa1KxN8Opy9YpyHMxcPo7ZYyXxy0FMA9AAX99NVgg>
-    <xmx:6xvtZy549oSGxjPtUCVlhvIWLhvqt0-_ByaiZ8pFeUtORBkNyTwSBg>
-    <xmx:6xvtZ4KRAhl1BG2NHCmYTNzQcn_YyoXiTJ3p6PJnkusMd-M_hG25fHTk>
+    vgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:7BvtZzTzTrSehPsfplh5lyNkjja7u9fY-bGn51KHpMj-XGvZLBsV5g>
+    <xmx:7BvtZ3wJUjxJTDT24Jj6LIE27tPCpr8klxs8cNlNOxRKZnvyrChQ_w>
+    <xmx:7BvtZx4OqipDcbdELAYSdqj7yMrPCP9Rt4TlE747Jo4brK5pXlcbrw>
+    <xmx:7BvtZ0yIXG3FrDFFFGRsImI6th_tdC_BTkqYGqOwZnMcB6rpUO1yvw>
+    <xmx:7BvtZ0jO6oGCEfwhQWX4VSkac6ZzXxteGJPGKeUC4YP88dk275O3wJ8L>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Apr 2025 07:13:46 -0400 (EDT)
+ 2 Apr 2025 07:13:47 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 779888b7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Apr 2025 11:13:42 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4e650078 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Apr 2025 11:13:44 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 02 Apr 2025 13:13:39 +0200
-Subject: [PATCH v3 04/11] builtin/cat-file: support "blob:none" objects
+Date: Wed, 02 Apr 2025 13:13:40 +0200
+Subject: [PATCH v3 05/11] builtin/cat-file: support "blob:limit=" objects
  filter
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250402-pks-cat-file-object-type-filter-v3-4-4da6bb21871c@pks.im>
+Message-Id: <20250402-pks-cat-file-object-type-filter-v3-5-4da6bb21871c@pks.im>
 References: <20250402-pks-cat-file-object-type-filter-v3-0-4da6bb21871c@pks.im>
 In-Reply-To: <20250402-pks-cat-file-object-type-filter-v3-0-4da6bb21871c@pks.im>
 To: git@vger.kernel.org
@@ -93,57 +93,56 @@ Cc: Toon Claes <toon@iotcl.com>, Karthik Nayak <karthik.188@gmail.com>,
  Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Implement support for the "blob:none" filter in git-cat-file(1), which
-causes us to omit all blobs.
-
-Note that this new filter requires us to read the object type via
-`oid_object_info_extended()` in `batch_object_write()`. But as we try to
-optimize away reading objects from the database the `data->info.typep`
-pointer may not be set. We thus have to adapt the logic to conditionally
-set the pointer in cases where the filter is given.
+Implement support for the "blob:limit=" filter in git-cat-file(1), which
+causes us to omit all blobs that are bigger than a certain size.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-cat-file.adoc |  4 +++-
- builtin/cat-file.c              | 15 ++++++++++++-
- t/t1006-cat-file.sh             | 47 +++++++++++++++++++++++++++++++++++++++--
- 3 files changed, 62 insertions(+), 4 deletions(-)
+ Documentation/git-cat-file.adoc |  5 +++++
+ builtin/cat-file.c              | 15 ++++++++++++++-
+ t/t1006-cat-file.sh             | 18 +++++++++++++++---
+ 3 files changed, 34 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-file.adoc
-index da92eed1170..afcdb0a4738 100644
+index afcdb0a4738..48e05e1af52 100644
 --- a/Documentation/git-cat-file.adoc
 +++ b/Documentation/git-cat-file.adoc
-@@ -88,7 +88,9 @@ OPTIONS
- 	been explicitly requested via any of the batch modes that read objects
- 	via standard input (`--batch`, `--batch-check`) will be reported as
- 	"filtered". Excluded objects in `--batch-all-objects` mode will not be
--	printed at all. No filters are supported yet.
-+	printed at all. The '<filter-spec>' may be one of the following:
+@@ -91,6 +91,11 @@ OPTIONS
+ 	printed at all. The '<filter-spec>' may be one of the following:
+ +
+ The form '--filter=blob:none' omits all blobs.
 ++
-+The form '--filter=blob:none' omits all blobs.
++The form '--filter=blob:limit=<n>[kmg]' omits blobs of size at least n
++bytes or units.  n may be zero.  The suffixes k, m, and g can be used to name
++units in KiB, MiB, or GiB.  For example, 'blob:limit=1k' is the same as
++'blob:limit=1024'.
  
  --path=<path>::
  	For use with `--textconv` or `--filters`, to allow specifying an object
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 0e2176c4491..bcceb646f85 100644
+index bcceb646f85..629c6cddcb2 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -482,7 +482,8 @@ static void batch_object_write(const char *obj_name,
- 	if (!data->skip_object_info) {
+@@ -483,8 +483,11 @@ static void batch_object_write(const char *obj_name,
  		int ret;
  
--		if (use_mailmap)
-+		if (use_mailmap ||
-+		    opt->objects_filter.choice == LOFC_BLOB_NONE)
+ 		if (use_mailmap ||
+-		    opt->objects_filter.choice == LOFC_BLOB_NONE)
++		    opt->objects_filter.choice == LOFC_BLOB_NONE ||
++		    opt->objects_filter.choice == LOFC_BLOB_LIMIT)
  			data->info.typep = &data->type;
++		if (opt->objects_filter.choice == LOFC_BLOB_LIMIT)
++			data->info.sizep = &data->size;
  
  		if (pack)
-@@ -500,6 +501,14 @@ static void batch_object_write(const char *obj_name,
- 		switch (opt->objects_filter.choice) {
- 		case LOFC_DISABLED:
+ 			ret = packed_object_info(the_repository, pack, offset,
+@@ -509,6 +512,15 @@ static void batch_object_write(const char *obj_name,
+ 				return;
+ 			}
  			break;
-+		case LOFC_BLOB_NONE:
-+			if (data->type == OBJ_BLOB) {
++		case LOFC_BLOB_LIMIT:
++			if (data->type == OBJ_BLOB &&
++			    data->size >= opt->objects_filter.blob_limit_value) {
 +				if (!opt->all_objects)
 +					report_object_status(opt, obj_name,
 +							     &data->oid, "excluded");
@@ -153,86 +152,66 @@ index 0e2176c4491..bcceb646f85 100644
  		default:
  			BUG("unsupported objects filter");
  		}
-@@ -1039,6 +1048,10 @@ int cmd_cat_file(int argc,
- 	switch (batch.objects_filter.choice) {
+@@ -1049,6 +1061,7 @@ int cmd_cat_file(int argc,
  	case LOFC_DISABLED:
  		break;
-+	case LOFC_BLOB_NONE:
-+		if (!batch.enabled)
-+			usage(_("objects filter only supported in batch mode"));
-+		break;
- 	default:
- 		usagef(_("objects filter not supported: '%s'"),
- 		       list_object_filter_config_name(batch.objects_filter.choice));
+ 	case LOFC_BLOB_NONE:
++	case LOFC_BLOB_LIMIT:
+ 		if (!batch.enabled)
+ 			usage(_("objects filter only supported in batch mode"));
+ 		break;
 diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 9ce4eda6e68..7404c135b1e 100755
+index 7404c135b1e..4f14840b71a 100755
 --- a/t/t1006-cat-file.sh
 +++ b/t/t1006-cat-file.sh
-@@ -1354,7 +1354,22 @@ test_expect_success PERL '--batch-command info is unbuffered by default' '
- '
- 
+@@ -1356,11 +1356,12 @@ test_expect_success PERL '--batch-command info is unbuffered by default' '
  test_expect_success 'setup for objects filter' '
--	git init repo
-+	git init repo &&
-+	(
-+		# Seed the repository with three different sets of objects:
-+		#
-+		#   - The first set is fully packed and has a bitmap.
-+		#   - The second set is packed, but has no bitmap.
-+		#   - The third set is loose.
-+		#
-+		# This ensures that we cover all these types as expected.
-+		cd repo &&
-+		test_commit first &&
-+		git repack -Adb &&
-+		test_commit second &&
-+		git repack -d &&
-+		test_commit third
-+	)
+ 	git init repo &&
+ 	(
+-		# Seed the repository with three different sets of objects:
++		# Seed the repository with four different sets of objects:
+ 		#
+ 		#   - The first set is fully packed and has a bitmap.
+ 		#   - The second set is packed, but has no bitmap.
+ 		#   - The third set is loose.
++		#   - The fourth set is loose and contains big objects.
+ 		#
+ 		# This ensures that we cover all these types as expected.
+ 		cd repo &&
+@@ -1368,7 +1369,14 @@ test_expect_success 'setup for objects filter' '
+ 		git repack -Adb &&
+ 		test_commit second &&
+ 		git repack -d &&
+-		test_commit third
++		test_commit third &&
++
++		for n in 1000 10000
++		do
++			printf "%"$n"s" X >large.$n || return 1
++		done &&
++		git add large.* &&
++		git commit -m fourth
+ 	)
  '
  
- test_expect_success 'objects filter with unknown option' '
-@@ -1365,7 +1380,7 @@ test_expect_success 'objects filter with unknown option' '
+@@ -1380,7 +1388,7 @@ test_expect_success 'objects filter with unknown option' '
  	test_cmp expect err
  '
  
--for option in blob:none blob:limit=1 object:type=tag sparse:oid=1234 tree:1 sparse:path=x
-+for option in blob:limit=1 object:type=tag sparse:oid=1234 tree:1 sparse:path=x
+-for option in blob:limit=1 object:type=tag sparse:oid=1234 tree:1 sparse:path=x
++for option in object:type=tag sparse:oid=1234 tree:1 sparse:path=x
  do
  	test_expect_success "objects filter with unsupported option $option" '
  		case "$option" in
-@@ -1393,4 +1408,32 @@ test_expect_success 'objects filter: disabled' '
- 	test_cmp expect.sorted actual.sorted
- '
+@@ -1435,5 +1443,9 @@ test_objects_filter () {
+ }
  
-+test_objects_filter () {
-+	filter="$1"
-+
-+	test_expect_success "objects filter: $filter" '
-+		git -C repo cat-file --batch-check="%(objectname)" --batch-all-objects --filter="$filter" >actual &&
-+		sort actual >actual.sorted &&
-+		git -C repo rev-list --objects --no-object-names --all --filter="$filter" --filter-provided-objects >expect &&
-+		sort expect >expect.sorted &&
-+		test_cmp expect.sorted actual.sorted
-+	'
-+
-+	test_expect_success "objects filter prints excluded objects: $filter" '
-+		# Find all objects that would be excluded by the current filter.
-+		git -C repo rev-list --objects --no-object-names --all >all &&
-+		git -C repo rev-list --objects --no-object-names --all --filter="$filter" --filter-provided-objects >filtered &&
-+		sort all >all.sorted &&
-+		sort filtered >filtered.sorted &&
-+		comm -23 all.sorted filtered.sorted >expected.excluded &&
-+		test_line_count -gt 0 expected.excluded &&
-+
-+		git -C repo cat-file --batch-check="%(objectname)" --filter="$filter" <expected.excluded >actual &&
-+		awk "/excluded/{ print \$1 }" actual | sort >actual.excluded &&
-+		test_cmp expected.excluded actual.excluded
-+	'
-+}
-+
-+test_objects_filter "blob:none"
-+
+ test_objects_filter "blob:none"
++test_objects_filter "blob:limit=1"
++test_objects_filter "blob:limit=500"
++test_objects_filter "blob:limit=1000"
++test_objects_filter "blob:limit=1k"
+ 
  test_done
 
 -- 
