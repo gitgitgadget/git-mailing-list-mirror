@@ -1,117 +1,122 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81252E62CE
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 22:11:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB162E62C6
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 22:18:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743718273; cv=none; b=e5zietQfPvfB+EBoYukzQUZMVcr1MQCcUz8nvsxOrsWmEXqSh/HzF4PpMU96Ezjopvfd7htz989UpLp2+8AVMpxBGO/Z4ld3/qmEZ0aSGR+4BDYsBatvx7gyXCVeErtDkXSWq1mX1IUyGxZZhOITm/1T+f/EyEfrj6QVI7nETwI=
+	t=1743718716; cv=none; b=G/+iM/K00uJFIQ8URJmRJdloi80EVrwFqvH41i7vv0KAvibzwj/ARS8oNhNfBJ4eldpCtMd9YYzFebmfg/2/r1ox6H44FNndGSR5rywiiH6AV8BjBxpn2N2tMTTA4QGps/iBHNGSL54b2QO2VvFnGVBil+mxLD9t45eJa8tWCzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743718273; c=relaxed/simple;
-	bh=cq28vkISH6jNMUQIFw9SyvcOomQhbM45/UBdrXX7bP0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bRHP966XzWYHYZJKHK2jx+q9MVSvxKGSLvYKzm/yAggqy+vPnq66o/F8dqTnSiovpdS39FaI1y/kAeXbOhxL+jn2pcuMUhu3f2hGDWY1lZU2NXH7Z2u1P4yF0/4/te3eOJhEiR3E0+djjtotqQws5l7IgoHlVEXIB/g7/T13FQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Au0HGZgC; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743718716; c=relaxed/simple;
+	bh=3n2MNTeVE/QGnClaqQx07mP88OuxcBbDy2rbi0tjuuc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N7dAlBGP4unmoyM6RGBBD6Tp20sv3lHUL6kyE/FTdwa7ZD71JU0IOKjjPtlMgQF0geN1XyzZUzHYnJ7r545JZ/T/H3vxgRdLRe+nhAAcYI+6WsAWk8dIpfYXzV3bygD/Vc7vk/+7BGDbEft7D/vgdL97/Bl4DYKnbLfyu8s8JBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=iFqCVgWk; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Au0HGZgC"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-38f2f391864so776533f8f.3
-        for <git@vger.kernel.org>; Thu, 03 Apr 2025 15:11:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743718269; x=1744323069; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=R48i0NGAyHZwl7HaMJpL9EDtQTkFBWFeTIKU8upCKmk=;
-        b=Au0HGZgCi2ie/P27ghZrqCaGFZi77f6HrRWvFgWZoKXQwJwfmqWOxyPwhRDMPPZI2M
-         UF8g5j30O6/kMU0bIjk/Tqw8luNMa42US4pVT1efyx35H6p0IdTYDoOqg/geIwnIZZTd
-         ITpAY0FQsV38VMGXqsEZJNUyzUtHN5X+jEMlJE34S57vuIHfmwyG1pgXhCtOMa3qHSKo
-         ywMyqxAb3oWci7CnvIKlLh6yem0XgD8JPOtkHFCx9DbO9B2IjDAIorxwgHwOKfsQKDva
-         CGJkOKsRB3kGLzF5d6Yrd1NS9exBl4sujdeW0xk6k7IzWgcvHeN6S2zx6QSKAaYGl/IS
-         aomQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743718269; x=1744323069;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=R48i0NGAyHZwl7HaMJpL9EDtQTkFBWFeTIKU8upCKmk=;
-        b=chMPfOu/u+AStaMsLWSwGtwW8y2Mj4er4aecNhhSFiV029tzlfPlTjHBbNokmJpbN3
-         FcIGE88TqsRDPJ55IfOZomI+TxBn02L8XEMEdSZ4PwiuqCSxCVqRUnZxLZhlfsGN8rMK
-         ojVVoznU0TlHJcTjyAAuW8z1RtilcDH/+r8jRbcdIoFGmhNDR61hL6Hx3kti5JaPxv81
-         B7dQoSJO4ke8XepZT4gJn/955e/234tWGxRCccsVz6tBHrVIF2CoTm+MP/SWCKCMRxRi
-         ppY1SG4XiK9qUCsb/349r96OzubLf6j/gVFXMLhyj+Kz7NkcRDhRVIQ9mLaysuX5EgYn
-         LoHA==
-X-Forwarded-Encrypted: i=1; AJvYcCVD4Pv9baebPVw+B5H+ojMoEWYG2hK4jakTDlAbSurwN3NLoHmsr/VmdYOta/Ue8xUcF6M=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzwI2yyp7e91jeLkn9XpU3XdRmc38FwaWxaXzI+WTVhFrJEEkQe
-	HPMDi0CIKODhmC9UqSra/0isQxjTGxtp3n6jLvaVkub4EnO5QH+MSTNm9LUUUgQfjVSHMDc3Mai
-	8CIGBQ70rdfTpGn7AmWNnG/3eUMdyOwe6
-X-Gm-Gg: ASbGncu4MVLZ2GHzh++A3XfdCuM+hEuJabUGkkWYOGt205MGAaXKlPOOdSV2Rahjb9o
-	+8uTkv7gxGvLNGB/8pqRUBdf9VyUtxzpwe+EZdfsXcIjnTwLtlMofzdbTbZbVsgi6mXRkR4sgCc
-	Zq3MBc9HAGZwi7roKWYxudxdv9hBU=
-X-Google-Smtp-Source: AGHT+IGJd2YPZYRuNp4rarzKD5mnDz5c9viBERQXAUrW7Sie4FEw6kd99IXQ7xu3ZqiBS34b10Nff0Ao6zPLIVQD2Cg=
-X-Received: by 2002:a05:6000:2484:b0:39c:2264:43ea with SMTP id
- ffacd0b85a97d-39d07ad8a7amr358255f8f.3.1743718268829; Thu, 03 Apr 2025
- 15:11:08 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Apr 2025 17:11:08 -0500
-From: Kane York <kanepyork@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <D8X5I3W7K1DI.2JYHGNY9L7ZD3@buenzli.dev>
-References: <D8X5I3W7K1DI.2JYHGNY9L7ZD3@buenzli.dev>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="iFqCVgWk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1743718712;
+	bh=3n2MNTeVE/QGnClaqQx07mP88OuxcBbDy2rbi0tjuuc=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=iFqCVgWkYohGSRdBJsWxUI4w3DDnaS90HGRHE3PsLsCWPz45dqoxszNCmxA2pwexA
+	 yDgLTNjvwD531Mh1e1d9uaTPK1fHnjfUVtfPA+/VlAUbJrzkC92oh5bM93vs+KuKko
+	 JM9+7IBiz9/IEEtTIFHNPSx7Qvkp1dC1v2r1tK8XdhAhNOjfK/2mSYzVOe2KM2Ejkq
+	 iFqwHO0YB0glWcZuTWWRI0cWTQNDMRO73TpoVFxKOu7xmPVKE2XNgSkOIJNREaJrlI
+	 aT4sUlFwpmYza/GGP3qeR2TEpWSgUJSf7DPoiauqFA4sMNeT90gK1ezcuXgK13X4Yz
+	 YqPS25L3NG7TFGuIwmjbX9FVUFR5JR664+xp0chqFyoqyU/bAECIec1zbh7a3lw79M
+	 /ICramiO5Lfeu3AniYAhhRWGLaW7a3YGMSTR36CJkUgdeBJtO6L+AOlI+C6f0/jcnA
+	 EY2MsdBlVFe/veTVYBPs3OyW/Td5WC9+1fa/bNVxEHx3HVNOrgB
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9ec0:b846:49f:a41d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5DAEB200BE;
+	Thu,  3 Apr 2025 22:18:32 +0000 (UTC)
+Date: Thu, 3 Apr 2025 22:18:31 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Elijah Newren <newren@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>, shejialuo <shejialuo@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v6 14/16] refs/iterator: implement seeking for packed-ref
+ iterators
+Message-ID: <Z-8JN5ZXrgACgYvN@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	shejialuo <shejialuo@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+References: <20250312-pks-update-ref-optimization-v6-0-f778e0414f55@pks.im>
+ <20250312-pks-update-ref-optimization-v6-14-f778e0414f55@pks.im>
+ <CABPp-BFBqC_t5QSexRQpYsqXBa11WK+OqGt167E=K=xod=buQw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 3 Apr 2025 17:11:08 -0500
-X-Gm-Features: ATxdqUGPUhe_gJ_dJdgR943aq7_wQRD05VniL6P0FU7hynTIBFKeMT88nUdFsgs
-Message-ID: <CABeNrKX3fY8qmASgyKaSv99LkGsrcExKFwNtgaKqjfJdQn8vrQ@mail.gmail.com>
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-To: remo@buenzli.dev
-Cc: ekempin@google.com, git@vger.kernel.org, martinvonz@google.com, 
-	newren@gmail.com, philipmetzger@bluewin.ch, scott@gitbutler.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="sINYnUmyEuz/oJBN"
+Content-Disposition: inline
+In-Reply-To: <CABPp-BFBqC_t5QSexRQpYsqXBa11WK+OqGt167E=K=xod=buQw@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Thu, 03 Apr 2025 18:40:20 +0200, Remo Senekowitsch wrote:
-> On Thu Apr 3, 2025 at 5:39 PM CEST, Elijah Newren wrote:
->> cherry-pick & rebase preserve author name, email & time, while creating a
->> new committer name, email, & time.  To me, the change-id is about the
->> authorship, and since these commands already preserve authorship, it'd seem
->> weird to me to have cherry-pick not preserve the change-id by default.
 
-> I'd say Jujutsu, Gerrit and GitButler think of a change-id as associated with
-> a unit of review.
->
-> [...]
->
-> Cherry-picking on the other hand often represents a separate unit of review.
-> That review may revolve around whether it makes sense to backport a bugfix at
-> all or any additional changes that may have been necessary to make the bugfix
-> work in the different, older codebase.
->
-> As mentioned above, there's also the issue that preserving the change-id on
-> cherry-pick likely results in duplicates. For Jujutsu, it would be nice it
-> this was avoided. But it's not infeasible to deal with that either.
->
-> For Gerrit, it would be important to be able to track a change across
-> cherry-picks somehow, since that is a feature they already have. If Git
-> decides to preserve the change-id on cherry-pick, there's no problem for
-> Gerrit. Alternatives include storing a separate cherry-picked-from header or
-> enabling the -x flag on cherry-pick by default.
+--sINYnUmyEuz/oJBN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I agree, and propose this concrete behavior:
+On 2025-04-03 at 19:56:39, Elijah Newren wrote:
+> In this case, the utf-8 characters will have individual bytes whose
+> values are greater than 127, which for a signed character will be
+> represented by a negative number.  I tried tweaking the loop to:
+>=20
+>         while (prefix && *prefix) {
+>             if ((unsigned char)*refname < (unsigned char)*prefix) {
+>                 printf("Comparing %d to %d\n",
+>                        *refname, *prefix);
+>                 printf("Comparing %s to %s\n",
+>                        refname, prefix);
+>                 BUG("packed-refs backend yielded reference preceding
+> its prefix");
 
-- git cherry-pick generates a fresh `change-id`, and places the old change-id
-  in a `cherry-picked-change` header
-- git cherry-pick preserves the old `change-id` if passed the new
-  `--preserve-change-id` flag
-- git rebase passes the `--preserve-change-id` flag on 'pick' actions, unless
-  passed the new `--no-preserve-change-id` flag
-- git rebase uses the earlier commit's change-id on 'fixup' actions
-- git rebase prints the change-ids into the COMMIT_MSG on 'squash' actions, and
-  tries to read the user's choice of which to use, defaulting to the earlier
-  commit if both or none are present
-- git rebase creates a new change-id on 'merge' actions
-- git rebase needs no special behavior specified for 'edit', 'exec', 'break',
-  'drop', 'label', 'reset', 'update-ref'
+I was mentioning this to Elijah earlier, but I think we might want to
+use more emojis in testing things like refs and other text patterns in
+our testsuite.  Because most of them are in astral planes, that will
+help us exercise our UTF-8 and UTF-16 surrogate handling, which is also
+relevant to a variety of languages, like Chinese, which we obviously
+want to support but which contributors may be less familiar with.  Since
+emoji are more universal, it's easier for anyone to add a test for these
+kinds of cases and we might be able to catch some of these kinds of
+things earlier.
+
+That's in addition to the fact that many people use emojis in things
+like commit messages because they're fun and we want to make those work.
+
+Next time I'm sending patches, I'll endeavour to cover a wider variety
+of codepoints in my testing.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--sINYnUmyEuz/oJBN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ+8JNwAKCRB8DEliiIei
+gfzHAP9sBwZKpPsm3cWTA5P1DXMC8LVpA401U9mT52EPbEVwiAD/cN29gh0yVvMT
+YFLX8p6S2gUUQwb7yIS8I76p6/UFXA0=
+=KPAC
+-----END PGP SIGNATURE-----
+
+--sINYnUmyEuz/oJBN--
