@@ -1,246 +1,240 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D371F12EF
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 10:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9ADC18CC08
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 10:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743675253; cv=none; b=HxBOClJ9Mn5EOWvwDFbQ6W3T8g9aw8SJRD8HmZst5O1haEwVNkwljDtA1dp/fcxseP4887we/O7oDMjKXYQQAMc6oXZomP+Sag8wP7nANjmYQ2VTp6Bug7KR+7knFUzv0qTb+IFOAw77mSNAHqJ+c3ZzC76ep4Fw8ujeHn1Up9c=
+	t=1743675804; cv=none; b=VH1uDP9CX96SIzv5wdk66v2u3Oj4/JouVUaxbq4FeMgwLdgsx2CStXLUCbD8MzrB9DYEJkP5gRjK4COXwxq2GLsVpEdKFfQfkQBKr65gO+wjtn5fz3TqAWbG5FthyMHQQdXzghXZkeCl77HcprPxnVgTcxZ8L1XP46oJXn2Ghkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743675253; c=relaxed/simple;
-	bh=t0kKGaWNUGhIQ80TLRR8d+eA5sIJQowY2+Bjr2TKB0A=;
+	s=arc-20240116; t=1743675804; c=relaxed/simple;
+	bh=fEXc6wiTaVFz08F8m5MvD5LePkbLtY2PXfqFAZtvEbY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cxLmVBirGGmAmpC4Pt8N7JuZMsBr4ECZF1OJxI+SFJZovZM7FK3a3qhOvAmSTKoDMH9RqmbHVllIEtR1ZILa3aVt5J6WVcpCmwC5Fqom/MDMccdAfyhU2j2Ao+ehyiOahWz2Ooaz6X/gp52UUDpczv8SZEHmcv/v/vXUEoOpesw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FcWp8R0d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bUzXg2aR; arc=none smtp.client-ip=202.12.124.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=m2fD26uXlPIU0SCqChtsfpKyQDE+jmmZT0e+2SYbeTpYW3ClWPPRF3wAohh+V+adSv1/12iToEjIoUCVIIi7Vb14xW6+XK0qrcM4tN00Xc6QybmzE6TIqCcG9G+Ok2pChoBHk38tb6/Ft9bID5kRvPPsvhKrpYPGDgVAWAyqJbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rdEcaepm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f/xm2ujd; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FcWp8R0d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bUzXg2aR"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 917F911401AC;
-	Thu,  3 Apr 2025 06:14:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rdEcaepm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f/xm2ujd"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 664B1114014F;
+	Thu,  3 Apr 2025 06:23:20 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 03 Apr 2025 06:14:09 -0400
+  by phl-compute-11.internal (MEProxy); Thu, 03 Apr 2025 06:23:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1743675249; x=1743761649; bh=HiATU09TPr
-	0CY0V0ho/HTxIbpOGhCWPGZhprGrBCgDY=; b=FcWp8R0dFObsiTj41tpjv1CTlb
-	REvpei1s0DXnBvxJDj7FCqrAkZJPJDREDMZsETC2rUYdEdj/irRLIoCRt2CyeEEU
-	P08MFRd4DCiwLvUnee6jLQ6qIdiSJl25jfEvss1D/BR9zC+VYKKIYosY/wpE/uRB
-	FYgdmoLRlObAgq7oVy6emsPdcmsYLMgrnkkWpfk7xqKw2NKfCMwq+yVgJ6Ca0QVU
-	4Ef486Kw9DPFiC2KGKNn49sZBiXb2cVXSHVQJY7yzcXFlR1iVuMCUdzzxQKegXIt
-	JoeCWuTphTbhivYS1IklHR+V3zAMUcXVeJGfBRCdM1QYOQV/FK5InWkeh7Zw==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743675800;
+	 x=1743762200; bh=iEXdxfJx8os5CaCEMVxiXZpZ58c7M94kRoSuzYtS7f4=; b=
+	rdEcaepmbJbiyZc+gIpV77WWGR25rs8m7XBNw4h0NycVzjAxU1M4975+SV7JSCGr
+	SdeKlb2jFCMFNhackTDAUOU6vr53RKLXP4UACt3dekrt8IhsxUpLFEP9zWPGlzDa
+	Hz2MDPuLMeMow/XjFFOigiZ0bvF//IyFTJmAV4UgwvCUIii9jZ+AuLALgbZyrU1L
+	QjntgIkVFQ/NtA32lbcZK5CVD6LZgsM3dlxaE7yl+raC0hYr6Rs7HyGQ4pzLLTms
+	7St4BbsweT604VNcu+8FQ30+1ENLU5VIwfo9KImQHhGmQKHpASuXGhNO2Klrj0x+
+	HJKQ7PhL/GHMHxGe9PxZqA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743675249; x=1743761649; bh=HiATU09TPr0CY0V0ho/HTxIbpOGhCWPGZhp
-	rGrBCgDY=; b=bUzXg2aRXuVxRmW5BhPPkbdU3rwmnIhHa9Ej0GXyMeLJP3rqt7A
-	tlaZAzL5mLFkARRafdJuIYtIgwXOfqx1apB8V+l65puu0IQPrRxcA52Dus23s8Da
-	N4ZEFas3/NSqs01eE1B5VLI+gjHwHsGn2RyfhKa0ILueO/uPfAQ9qVy7LgL71mnu
-	OVAEMODbuddYgKzgWQM6tDkLdvk6UJAJYYa4vtm0gG1clVIGTs1vluDsikN4R7Dw
-	HVsT7weyDOg4ISaxzJ4CjfrFlsqC/9aYQ3ZKs4jMukVpN0NpLI+pcQMNaC2cuByW
-	Kw8gVqSQqJMDVFqnQAir6gqs7G0HJ7hrK8w==
-X-ME-Sender: <xms:cV_uZ889RN7KWfyFq1oDPsAL6aoaSs8LbP5_Oy2Z5njFl9LhUwk5CQ>
-    <xme:cV_uZ0tnYLd2V3SAlTCO6MJDKqiM2_loLN8mPmtLRUptxajAAxbewV5XZRQbFsPA4
-    vtlvkNhXIUVJHaUjg>
-X-ME-Received: <xmr:cV_uZyC1Xev4xX13H-bHV1qD058nTrLqzKSAh9GpCk6zeZ8OtIa2wpj4BBPiIDCL0uojVQbTSsg-H4flauwbkxisxF7b_5hXjJ2JxDmaoVVyXWU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeekfedtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743675800; x=
+	1743762200; bh=iEXdxfJx8os5CaCEMVxiXZpZ58c7M94kRoSuzYtS7f4=; b=f
+	/xm2ujdozVGHhpZf85wtIYRPVFMD2QxDFgiWwCewSpfJ41UZSHMWpnClXOxUMR86
+	YHLHZpRNfKAi1EyafhnNN9b8JIBfzZDT3e3a2Gk8nlbgInphm4ZHRQ/TJiPv3cW8
+	QKFEskdENaOcoPplyMoniEzLEEBlU7nh1eFKudGG+ierjqsSCz22n14E3wYzlIoK
+	UTmR6RkF0Qe+SdGBS/rIzpJflI6iHzVifwwXSYJI2Bpyw0Ke7P3ieY6XCCPSOt/H
+	KUIbfMsNLYHuVRFT9usocWPILAp6hD3sLI8THywczNDA0tex8UtYJIzJ8e+y1fqK
+	7UGfuEoubSVm6Sm0gB0fg==
+X-ME-Sender: <xms:mGHuZ0l3I3p_zDsXy7du88BJnwEPpad-E94wwRcqeQhPRo1zXoDjFw>
+    <xme:mGHuZz18h2vb2TOenVanojSAfRg_8PrzxVsC4h_VkaGbpw6eONHCQTAnGCFsivt4D
+    DHo7c7zEinhwuoKLg>
+X-ME-Received: <xmr:mGHuZyoM6-eGVATkp0VAmPPFqQ-rxcNRJyHhHeKKZhR-TcR8ZBRUMD23eGvilQVuEhWS0XmGHW9fpwB8q4GF2RNOPw53RuSx_9qfiJmYXw_2pMo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeekfeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnegoufhushhpvggtthffohhmrghinhculdegledmnecujfgu
-    rhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkh
-    cuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhep
-    jedviedvudfhfeefveejheduteetkeegtefhvdelueejtdehgeelkefhhfevueefnecuff
-    homhgrihhnpehgihhthhhusgdrihhopdhkvghrnhgvlhdrohhrghenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhihrghm
-    thhhrghkkhgrrhdttddusehgmhgrihhlrdgtohhmpdhrtghpthhtoheplhhutggrshhsvg
-    hikhhiohhshhhirhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrih
-    hlrdgtohhm
-X-ME-Proxy: <xmx:cV_uZ8dKBGZ-TjYhAKCUbGP_g5bFBlnVcQ3IIYv9k1WYsBKM0X959g>
-    <xmx:cV_uZxNlugjlJyHVXK9m8lGaxv2ol4K3LZrRKBFmUaCXrQ-hSFlJow>
-    <xmx:cV_uZ2m3llZ_4rP_PA_TAfxfMYDpwh6VvfsXuZNheJtfezNFS53q-g>
-    <xmx:cV_uZzv_Xdw1hdtfL1hz1pcXVcjpZ-foqWgcxHclUX9s3GcpxGbFVA>
-    <xmx:cV_uZ40VdddeyJv0R48YlxAGHFXo0e6KnSLqg7tCTxKjfVHMjTobwRGv>
+    rhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhitg
+    hkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhn
+    pefglefhvddvveelhfekvdeigfevgfeiteetvddviefhvddtvddvgeduleeugeffvdenuc
+    ffohhmrghinhepghhithhhuhgsrdhiohdpkhgvrhhnvghlrdhorhhgnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrhigr
+    thhhvggvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtth
+    hopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhihrghmthhhrghkkhgrrh
+    dttddusehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:mGHuZwlWndODSYJUVvtG1cfpwGm5WpAsMYplhMFa5CGhfWhWuAneyw>
+    <xmx:mGHuZy182c-7zAE-GeQ20JFCPpr3r93SAju-466syoEBE7nMfIm58A>
+    <xmx:mGHuZ3vpjOUicpRa1NQ6UxdAnjvJlJH6Cqdx0TBssfpUuP-bD-7_UA>
+    <xmx:mGHuZ-V8xbD3VsvjReFihUngf4_BN0QCackqmYvSFchSGs94EN9qgg>
+    <xmx:mGHuZzdNE_BnACPiTKPx8erau7hkwiRH3fKUzAV7Iv2kfxmdYeFaaszS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Apr 2025 06:14:08 -0400 (EDT)
+ 3 Apr 2025 06:23:19 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b51ed7c5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 3 Apr 2025 10:14:06 +0000 (UTC)
-Date: Thu, 3 Apr 2025 12:14:02 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9793e38c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 3 Apr 2025 10:23:17 +0000 (UTC)
+Date: Thu, 3 Apr 2025 12:23:16 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, shyamthakkar001@gmail.com
-Subject: Re: [GSoC] Project Proposal: Machine-Readable Repository Information
+To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>,
+	Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Subject: Re: [GSOC] [Proposal v1] Machine-Readable Repository Information
  Query Tool
-Message-ID: <Z-5famP3CgaSfDc2@pks.im>
-References: <7EB151DA-0BDB-4D54-BBB8-CEE69F51F13A@gmail.com>
+Message-ID: <Z-5hlL1Gk0oi4fX2@pks.im>
+References: <CA+rGoLfxZHdns=7FwQuYS=JANrR9zDP-dOpV2AxM1hC1Lc9wiw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7EB151DA-0BDB-4D54-BBB8-CEE69F51F13A@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+rGoLfxZHdns=7FwQuYS=JANrR9zDP-dOpV2AxM1hC1Lc9wiw@mail.gmail.com>
 
-On Wed, Apr 02, 2025 at 03:22:11PM -0300, Lucas Seiki Oshiro wrote:
-> ### Activity in the Git community in 2025
+On Mon, Mar 31, 2025 at 08:21:27PM +0530, JAYATHEERTH K wrote:
+> ## **Synopsis**
+> This project aims to develop a dedicated Git command that interfaces
+> with Git’s internal APIs to produce structured JSON output,
+> particularly for repository metadata. By offering a clean,
+> machine-readable format, this tool will improve automation, scripting,
+> and integration with other developer tools.
 > 
-> Since when I decided to submit a proposal for GSoC, I sent some patches
-> to the Git codebase and git.github.io:
+> ## **Benefits to the Community**
+> ### **1. Simplifies Automation and Scripting**
+> - Many Git commands output **human-readable text**, making automation
+> **error-prone** and **dependent on fragile parsing**.
+> - This project introduces **structured JSON output**, allowing scripts
+> and tools to consume repository metadata **directly and reliably**.
+> - No more **awkward text parsing**, `grep` hacks, or brittle `awk/sed`
+> pipelines—just **clean, structured data**.
 > 
-> - My microproject, replacing some `test -f` by `test_path_is_file`:
->   https://lore.kernel.org/git/20250208165731.78804-1-lucasseikioshiro@gmail.com/;
+> ### **2. Eliminates the Overuse of `git rev-parse`**
+> - `git rev-parse` is widely misused for extracting metadata, despite
+> being intended primarily for **parsing revisions**.
+> - Developers often **repurpose** it because there’s **no dedicated
+> alternative** for metadata queries.
+> - This project **corrects that gap** by introducing a **purpose-built
+> command** that is **cleaner, more intuitive, and extensible**.
 > 
-> - Adding a paragraph to the merge-strategies documentation describing how
->   Git merges submodules (based on the blog post that I mentioned
->   before):
->   https://lore.kernel.org/git/20250227014406.20527-1-lucasseikioshiro@gmail.com/;
->   
-> - A patchset adding a new `--subject-extra-prefix` flag for `git
->   format-patch`, allowing the user to quickly prepend tags like [GSoC],
->   [Newbie] or [Outreachy] to the beginning of the subject. This patchset
->   was rejected in favor of just using `--subject-prefix='GSoC PATCH'` or
->   similar. It can be seen here:
->   https://lore.kernel.org/git/20250303220029.10716-1-lucasseikioshiro@gmail.com/;
+> ### **3. Optimizes CI/CD Pipelines**
+> - CI/CD systems currently need **multiple Git commands** and
+> associated parsing logic to fetch basic metadata:
 > 
-> - Given the feedback on the previous rejected patchset, I opened a Pull
->   Request on git.github.io replacing the occurrences of `[GSoC][PATCH]`
->   by `[GSoC PATCH]`;
->   
-> - Adding a new userdiff driver for INI files, initially target for
->   gitconfig files. Currently it is still under revision:
->   https://lore.kernel.org/git/20250331031309.94682-1-lucasseikioshiro@gmail.com/.
-> 
-> Beyond contributions, I also helped people on the mailing list that
-> needed assistance on Git documentation.
+> ```bash
+> # Example: Gathering just a few common pieces of info
+> BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "DETACHED")
+> COMMIT=$(git rev-parse HEAD)
+> REMOTE_URL=$(git remote get-url origin 2>/dev/null || echo "no-origin")
+> # ... often requiring more commands and error handling logic.
+> ```
+> - The proposed command aims to **replace these multiple calls** with a
+> **single, efficient query** returning comprehensive, structured JSON
+> data.
+> - This **simplifies pipeline scripts**, reduces process overhead, and
+> makes CI/CD configurations **cleaner and more robust**.
 
-Could you please also amend the status (merged to master, merged to
-next, under discussion) for each of these items?
+I already saw this in another proposal, which indicates that the project
+idea might be a bit underspecced. In any case, the goal of the project
+isn't to write a single tool that is able to surface _all_ information
+for a Git repository. It's rather that we want to surface low-level
+information around the repository itself.
 
-> ## Project Proposal
-> 
-> Based on the information provided in
-> https://git.github.io/SoC-2025-Ideas/, the goal of this project is to
-> create a new Git command for querying information from a repository and
-> returning it as a semi-structured data format as a JSON output.
-> 
-> In the scope of this project, the JSON output will only include data
-> that can currently be retrieved through existing Git commands, for
-> example:
-> 
-> - `git branch`: information about branches, such as the commit that each
->   branch currently references and their upstreams;
-> 
-> - `git tag`: information about the tags, such as the author or commit
->   date and the messages they hold (in the case of annotated tags);
-> 
-> - `git remote`: the URL of each remote;
-> 
-> - `git log`: statistics about the commit history, such of the
->   distribution of commits over time and by author, the distribution of
->   lines changed by each author;
-> 
-> - `git submodule`: information about the submodules, mainly the commits
->   that they are referencing and their remote URLs;
-> 
-> - `git rev-parse`: the current branch name, the current commit, the path
->   of the repository top level directory, if the repository is a bare
->   repository or if the repository is under bisection.
-> 
-> Given that the information that we want to compile are currently
-> accessible only through different commands with different sets of flags,
-> the user that wants to read them needs to have an advanced knowledge on
-> Git. Once having the repository details consolidated in a single
-> command, the user will be able to quickly retrieve what it desires
-> without navigating a complex combination of commands and flags.
+The basic intent is to give the options listed in git-rev-list(1) under
+the section "Options for Files" a better home. We have a bunch of
+command line options there that allow us to parse environment variables,
+paths, repository formats and other low-level stuff. But these aren't
+really a good fit for git-rev-parse(1) itself because that tool was
+intended to be about parsing revisions. So this is one of those
+organically grown commands that has started to accumulate all kinds of
+unrelated options that didn't have a better home elswhere.
 
-I already noticed in another proposal, but it seems a bit like the idea
-is underspecced. The idea isn't to make _all_ information about the
-repository accessible. It's rather that we want to give a better home to
-information about the underlying repository itself. To clarify further,
-I'm talking about information like:
+So the scope of the project is somewhat more limited compared to what
+you propose here. As that impacts a lot of the implementation details as
+well as the project timeline I'm not going to comment on these now.
 
-  - Which object hash does the repository use?
-  - What is the ref database format?
-  - Where is the Git directory?
-  - Where is the common directory?
-  - What is the top-level directory?
+> ## Detailed Project Timeline
+> 
+> 
+> **Phase 0: Pre-Acceptance Preparation (April 9 - May 7, 2025)**
+> 
+> * **Focus:** Demonstrate continued interest and deepen understanding
+> while awaiting results.
+> * **Official GSoC Milestone:** April 8, 2025 - Proposal Deadline.
+> * **Activities:**
+> * **(April 9 - April 21):** Deep dive into Git's source code
+> structure, focusing specifically on areas identified in the proposal's
+> Technical Details:
+> * `builtin/` directory structure and command handling.
+> * `repository.h`, `refs.h`, `remote.h`, `config.c`, `strbuf.h`.
+> * How existing commands like `git status`, `git branch`, `git
+> rev-parse`, `git remote -v` access underlying data.
+> * **(April 22 - May 7):**
+> * Monitor the Git mailing list for discussions related to repository
+> information, command output formats, or JSON usage.
+> * Refine understanding of Git's testing framework as I've not done a
+> deep dive into tests(`t/test-lib.sh`). Try running and understanding
+> existing tests relevant to refs, remotes, or configuration.
+> * Review Git's contribution guidelines (`SubmittingPatches`, coding
+> style) again since most of my microproject time was related to
+> documentation.
+> * Try to start some more microprojects or actively converse in other patches.
 
-This kind of information is exposed via git-rev-parse(1) already, see
-the section "Options for Files". But git-rev-parse(1) is not really a
-good match at all given that its main intent is to parse revisions. Over
-time though it developed into a kind of grab-bag of different unrelated
-functionality that we didn't really have a nice home for elsewhere.
+Note that microprojects are supposed to be finished before submitting
+your proposal. They are used for us mentors to figure out whether
+candidates would be a good fit or not. So ideally, you would prominently
+link to one or more of your finished microprojects in the proposal
+itself already.
 
-> ### Development plan
+> **Phase 4: Documentation, Polish & Stretch Goals (Coding Weeks 9-12:
+> July 22 - Aug 18, 2025 Approx.)**
 > 
-> Since this is a new command that is not directly related to any specific
-> existent command, it will probably be placed in a new file inside the
-> `builtin` directory.
-> 
-> The functionality of this command can be divided into two categories:
-> 
-> 1. **Data gathering**: retrieving data from different sources, calling
->    existent functions and reading data structures declared in other
->    files;
-> 
-> 2. **Data serialization**: formatting the gathered data in a JSON
->    format. This represents two challenges: generating the JSON itself
->    and designing the schema for how the desired data will be presented.
->    
-> Since the exported data is already provided by other Git commands, it
-> probably won't be difficult to implement this side of the
-> functionality. The main task would be inspecting the existing codebase
-> and find the functions and data structures that will feed our output.
-> 
-> Designing the schema, however, requires special planning, as the
-> flexibility of semi-structured data like JSON may lead to early
-> bad decisions. A solution may emerge by analysing other software that
-> export JSON as metadata.
-> 
-> ### Schedule
-> 
-> 1. **Now -- May 5th**: Requirements gathering
->    - Inspect codebases that uses Git as data sources; 
->    - Contacting academic researchers on FLOSS;
->    - Contacting industry infrastructure professionals;
-> 
-> 2. **May 6th -- June 1st**: Community bonding
->    - Getting in touch with the mentors;
->    - Present to the community a first proposal of the JSON schema;
->    - Receive feedback from the community about the schema;
->    - Present a first proposal on the command line interface;
->    - Receive feedback from the community about the command line
->      interface;
-> 
-> 3. **June 2nd -- July 14th**: First coding round
->    - Write data structures that correspond to the presented JSON schema;
->    - Fill the data structures with data obtained from routines of the
->      existing codebase;
-> 
-> 4. **July 15th -- August 25th**: Second coding round
->    - Implementing the command line interface option handlers;
->    - Write the JSON serializer.
+> * **Focus:** Finalize documentation, implement error handling, address
+> feedback, attempt stretch goals if feasible.
+> * **Activities:**
+> * **(Week 9: July 22 - July 28):** Complete the first draft of the man
+> page, detailing usage, JSON schema, and options. Implement the
+> `--json-errors` functionality for structured error reporting. Add
+> tests for error cases.
+> * **(Week 10: July 29 - Aug 4):** *Begin Stretch Goals (Conditional):*
+> If core work is stable and time permits, start implementing
+> `--head-only` / `--remotes-only` flags or the basic `is_dirty` check.
+> Add tests for any implemented stretch goals.
+> * **(Week 11: Aug 5 - Aug 11):** Thorough code cleanup, address all
+> outstanding review comments on submitted patches. Ensure documentation
+> is comprehensive and accurate. Final pass on test suite coverage.
+> * **(Week 12: Aug 12 - Aug 18):** Prepare and submit final patches
+> incorporating documentation, error handling, and any completed stretch
+> goals. Final code freeze for GSoC evaluation purposes. Write blog post
+> update summarizing final phase.
 
-I generally recommend students to take on smaller batches of work that
-can be submitted individually. The way it is structured now means that
-you will end up with a single deliverable at the end of your project.
-But structuring the project like that introduces a high risk that you
-won't be able to land anything until the end of your project in case
-there is a bigger discussion around parts of these patches.
+One thing that I also mentioned to others: instead of planning for one
+big batch of load, I would strongly recommend to plan your work in
+smaller batches. You should ideally have multiple self-contained batches
+of work that you can submit as early as possible while still bringing
+some value to the project. This ensures that you can get feedback from
+the bigger community early on.
 
-Instead, it would make sense to identify smaller batches of work that
-are self-contained enough to be submitted upstream. This ensures that
-you get early feedback and that you can iterate on your design as early
-as possible in the project.
+> ## Past Communication and Microproject
+> * **Blog**: [Blog](https://jayatheerthkulkarni.github.io/gsoc_blog/index.html)
+> This blog contains a detailed communication description and blog of my
+> microproject experience.
+> * First Introduction to the Git Mailing list: [first
+> Mail](https://lore.kernel.org/git/CA+rGoLc69R8qgbkYQiKoc2uweDwD10mxZXYFSY8xFs5eKSRVkA@mail.gmail.com/t/#u)
+> * First patch to the git mailing list: [First
+> Patch](https://lore.kernel.org/git/20250312081534.75536-1-jayatheerthkulkarni2005@gmail.com/t/#u)
+> * Most recent series of patches and back and forth with feedbacks:
+> [Main mail thread](https://lore.kernel.org/git/xmqqa59evffd.fsf@gitster.g/T/#t)
+> 
+> I've been maintaing the blog and will maintain the blogs of all the
+> communication of mine to the git mailing list.
+
+ah, you do have a microproject. As this is part of the prerequisites I
+would like to propose to have this more prominently visible.
+
+Thanks!
 
 Patrick
