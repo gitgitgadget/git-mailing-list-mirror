@@ -1,147 +1,140 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C03241CA0
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 10:28:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4C22417D7
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 10:39:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743676092; cv=none; b=ilB/z/F997E6lQKCZxJ7pyMAMLQCqX2jhV/fjGiCCCAT53GK2AU8t5UHMrqQjlbMuAGM+2+3swDCs2CpFjb5EGKbqawLhAvEfIFbR3UnmCARCwjn7mp69Ys64Ygew/3JEQdzoUfwlMCSd0Bld9oos/TF9G+xR1di8bbES1whIpo=
+	t=1743676747; cv=none; b=NxuQYcyjFPZA7Mrx79aBNPzJ7gLzPX9oAZ1z/j2MpjALtR619/2ngZlvpvKqcKjytX/NRwecyy/9deh4Do4j+BYFPaEUsdbB7lC1OYRqr44oODGBLD3UqlL8rTjR5T89cw5Qp3ye8hFxjChmyL66PKZiT973k6kpuL3Vo0Kv4I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743676092; c=relaxed/simple;
-	bh=1HyRBPwB/t/33YXPunDOxFJcKqIllfTJieX4WXs9k2s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TXZu77GF/PKfq/L01+EQsxZwLR9n3GpuQmNM/np6gDECTVxC2iTxjU8t9W/bxWNNIdmIthOPkgAXx4GMlbWh+q2LDbD+pw0DfE1VccJU72JC0AVsCNMyBLnFU4f0IBGxaJvnGB3ZtlCQ1hpfa2SeNK7PaGEkXMFudtH2SRNFwN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LGUqbxkc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GTY4CAqq; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LGUqbxkc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GTY4CAqq"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id E4C8611401AD;
-	Thu,  3 Apr 2025 06:28:09 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 03 Apr 2025 06:28:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743676089;
-	 x=1743762489; bh=p2cnaWpn5U81VTg43JCcvoJr4WshSznYsfiy+Y3/BEE=; b=
-	LGUqbxkcWqolbznhxZi/u0YncaDSZ63iQmBv5lgMIpyTx4fb8/HGAlWDPOTNN96C
-	mf/euStWkMRN6nT7TKE6AKXwQXv1cSKiZtxZ0cnsVOf5w4jR9VL+ryY9tvAjWGKJ
-	v0/bJ6rsKnwN0bHVcSKxr42tEUp7xZ52lKdhFddMpGRo0E3njogcAlNFHtzTC7wd
-	HT4cXzk3iZIgvILmAHu9aMf5KmF5Vb/sEbDUVVyMwVUc5p0dkDXnIFKow3caKGjK
-	2OLbmfaoxrSV+x1bMoG103YRLlWO96AsNUiSBEGMzGXmBcST2ElWdXKl/A9+yg2H
-	q4V5c5r4uFIZPsT1iuY2Qw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743676089; x=
-	1743762489; bh=p2cnaWpn5U81VTg43JCcvoJr4WshSznYsfiy+Y3/BEE=; b=G
-	TY4CAqqkfMStXH6BzDfmKRy0RLE0ka1QsOHuj+gV4jI3Ctdu/9mxK8ycA4f1gapR
-	IPbVESPjYhQCrGp2Uo4p9WnpBvKPyqz+uyGBholX/6JsyuTRoKFFLL8jJTjqbh5g
-	qeSM8WeqGvshQZRVKmaGMZIkY9qJNYuoaNhwYePneC5WsZKdCfTIXiN0Gqtc+4rM
-	pGZM0zs7ER+GDiMc4ry+uY4+6IpNYJiQ+Qazvtf1p6c+LWzeSDg94zAAw3o7LlPY
-	iZQMAfKl/kSQ+guhCh81BcquvkgZo/gRCRNSi8XObYe1pjtpMh8hITbKWklvo26y
-	/ahg+zE7B+NdCuRL182Zg==
-X-ME-Sender: <xms:uWLuZ1tq_7-sdy0vc3hQ0DDnnuC4dGojX2iJghmybVRE_AD978UaXw>
-    <xme:uWLuZ-cmKHeKnvF6fKL81oYG7VrVdnCWc0W74jAfIgNt9v_vAV2-_gaNzzCNB5ZDC
-    cTR1zE5eWodQGSY2A>
-X-ME-Received: <xmr:uWLuZ4xyYPWFNbDt53CT6FshHoV4CPMmMsCnh87hR10BGFFfCYuuSReW1AxsljdcVLLW6IC4OIGTTjzRRBR1MQGhkU5ARo0lCQMSHWPm3bRpcjo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeekfedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphht
-    thhopehshhihrghmthhhrghkkhgrrhdttddusehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    eptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    mhgvvghtshhonhhifedtudejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:uWLuZ8P57WabTOtohZzODiw4gX8LXDOAexeo0ZY28yjEuWlIz_kzjw>
-    <xmx:uWLuZ19OwDevEMsZDfs0VGGZ7a4mzm_xC8ZrLrEh-yGI9q6x9qd48w>
-    <xmx:uWLuZ8VUxaXSpeaEJtza-mpGm6vopePNgG3IjgF1vAfLSqGY7p8R6g>
-    <xmx:uWLuZ2enZ01o8NONykPoGs8AYuvv7Io2_x6mZuYZBjmj_zzmj0rOKQ>
-    <xmx:uWLuZ5GI1Zp70D5G2WzJIZJfHIGURewnmMAqbWWXywyMCDnaJIh1LWvE>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Apr 2025 06:28:08 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4c7e2633 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 3 Apr 2025 10:28:07 +0000 (UTC)
-Date: Thu, 3 Apr 2025 12:28:06 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, shejialuo@gmail.com,
-	karthik nayak <karthik.188@gmail.com>,
-	Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Subject: Re: [GSoC][Proposal RFC] Consolidate ref-related functionality into
- git-refs
-Message-ID: <Z-5itjoHBV-dEPwU@pks.im>
-References: <CAPhwyn3McL-2rwjkexsDUWqxt0Kr4UsDVy_G=s1DmKhrw5BZ-A@mail.gmail.com>
- <Z-zzbOrZde8B1kA6@pks.im>
- <CAPhwyn2GugzXg5LgcdMGjrvP9kAvCFj31RXrUpp7ZJdoGfiyKA@mail.gmail.com>
+	s=arc-20240116; t=1743676747; c=relaxed/simple;
+	bh=cSXn0OEyX5FIrTkLTPeZ8vowX/hSmf6t+aKCNOLY/JY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=bPOoOY8M4ONTrGaGU1y1RKhsPJiGuyFkvW5voifOH15pa+a6xtdgCdb6KoWK2CI8Cs7c3t8vgBzGbvfzqACCZKGAYgmYAUHHBkEfPzXa6Tpv7nZ6+OHDBnZIldPw0DPTXEDUOx/2hzRzvESN6kQUaRuRHzrc+38/eyoANpPcEvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev; spf=pass smtp.mailfrom=buenzli.dev; arc=none smtp.client-ip=80.241.56.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=buenzli.dev
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4ZSyrv30khz9sv0;
+	Thu,  3 Apr 2025 12:38:55 +0200 (CEST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPhwyn2GugzXg5LgcdMGjrvP9kAvCFj31RXrUpp7ZJdoGfiyKA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 03 Apr 2025 12:38:52 +0200
+Message-Id: <D8WXTCOESY86.3RRJOR5GPUL47@buenzli.dev>
+Cc: "Git Mailing List" <git@vger.kernel.org>, "Edwin Kempin"
+ <ekempin@google.com>, "Scott Chacon" <scott@gitbutler.com>,
+ "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+From: "Remo Senekowitsch" <remo@buenzli.dev>
+To: "Patrick Steinhardt" <ps@pks.im>, "Martin von Zweigbergk"
+ <martinvonz@google.com>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com> <Z-5QR57zgSsm6jNP@pks.im>
+In-Reply-To: <Z-5QR57zgSsm6jNP@pks.im>
 
-On Thu, Apr 03, 2025 at 03:35:09PM +0530, Meet Soni wrote:
-> On Wed, 2 Apr 2025 at 13:51, Patrick Steinhardt <ps@pks.im> wrote:
-> > On Tue, Apr 01, 2025 at 07:07:21AM +0530, Meet Soni wrote:
-> > >     2. Tests:
-> > >       Develop comprehensive tests to verify that the new subcommands function as
-> > >       expected. This will involve creating a range of tests, including shell
-> > >       scripts and/or unit tests located in the t/ directory. For the existing
-> > >       tests covering the legacy commands targeted for consolidation, the plan is
-> > >       to retain them initially—even if this results in some duplication—with the
-> > >       intention of deprecating them gradually over time.
-> > >     3. Update old usage:
-> > >       Modify all call sites of the legacy commands to invoke the newly created
-> > >       subcommands, ensuring a smooth transition and seamless integration with
-> > >       the consolidated command.
-> >
-> > This would be nice indeed, but it's not necessary as part of the GSoC
-> > project from my point of view. The old commands won't go away anytime
-> > soon as they are extensively used in scripts outside of our control.
-> >
-> I wonder if this is a better candidate for "Post GSoC" section maybe?
+Hi Patrick,
 
-Potentially, yeah. It doesn't really have to be part of the proposal in
-the first place from my point of view, but having a section about future
-work after the GSoC wouldn't hurt, either.
+On Thu Apr 3, 2025 at 11:09 AM CEST, Patrick Steinhardt wrote:
+> On Wed, Apr 02, 2025 at 11:48:01AM -0700, Martin von Zweigbergk wrote:
+>>
+>> As mentioned, the three projects would like to use the same
+>> storage and format. I think we have a consensus to store it in a
+>> Git commit header called `change-id` as a 32 reverse-hex digis.
+>> For example: `change-id ywlktllmukprnxnmzzprukpuwyztylwt`.
+>
+> I don't mind the actual format too much at this point, so I won't
+> comment on this part.
 
-> > > I think if permitted to start early, I can consolidate one more command within
-> > > the GSoC period.
-> >
-> > We cannot keep you from doing this, but please keep in mind that if we
-> > end up picking a different candidate for this project we would favor
-> > their work so that they can successfully finish GSoC. So I would
-> > definitely wait until you've been selected before starting to work on
-> > anything.
-> >
-> I completely understand. Just to clarify, I meant that if I'm fortunate enough
-> to be selected, I’d be eager to start contributing during the community
-> bonding period--only if it's allowed--so that I can try to consolidate one more
-> command within the GSoC period.
+Gerrit and GitButler also did not mind the format, which is why they
+agreed to adopt the one of Jujutsu. There is also no technical reason
+why Jujutsu wouldn't be able to support a free-form id. However,
+discussing a standard for the ecosystem gives us the opportunity to
+pick something that everybody can rely on and benefit from.
 
-We won't give you a strict time schedule of "you first do that and then
-do that". Only thing that I'd like to avoid is that you're basically
-already done before the project starts ;)
+Some benefits of the proposed format include:
+- known memory requirement
+- change-id as part of a URL never has to be escaped
+- it being a hash means the smallest unambiguous prefix is minimized
 
-I'd just define these additinoal subcommands as stretch goals and then
-it's fine.
+So, these are mostly practical considerations. If there are notable
+benefits to free-form IDs, Jujutsu can hash that again to get an ID in
+its internal format if necessary. But it's always easier to go from a
+strict format to a loose one later, as opposed to the other way around.
 
-Patrick
+> While there may not be a need to do anything in Git itself I would think
+> that supporting change IDs natively in Git would still be sensible.
+> Sure, you can emulate them via commit trailers. But I don't consider
+> trailers to be particularly great as a storage format for this metadata.
+> After all, you will want to filter the commit graph by change ID for
+> some of the usecases, and doing that based on a loosely-defined format
+> probably isn't great.
+>
+> So what would it take to get change IDs into Git? I think the most
+> important items would be:
+>
+>   - Generating and writing change IDs in commands that support them.
+>     This includes e.g. git-commit(1), git-commit-tree(1), git-merge(1),
+>     git-merge-tree(1). This should of course be completely optional and
+>     probably be disabled by default.
+>
+>   - Making tools that rewrite commits aware of change IDs so that they
+>     know to retain change IDs. This involves e.g. git-cherry-pick(1),
+>     git-rebase(1), git-replay(1).
+>
+>   - Extending revisions to allow specifying commits by change ID.
+>
+>   - Allowing us to filter commit graphs by change ID.
+
+I agree with all of that. The first two points are the ones that would
+actually allow the ecosystem to start relying on this new header as a
+standard and develop related features while staying interoperable with
+the rest of the ecosystem. E.g. if the header is preserved by
+git-rebase, Git & Jujutsu users will enjoy stable change-ids when a
+branch is rebase-merged on a forge. And if git generated the header
+itself with git-commit, Gerrit could drop its requirement for clients
+to generate a change-id footer via their commit-msg hook.
+
+> The biggest question is of course backwards compatibility -- can we
+> introduce a change ID into the commit metadata without breaking existing
+> users? I guess you'll already have a lot of experience with this given
+> that you essentially already inject change IDs into metadata, and tools
+> generally handle this just fine?
+
+Jujutsu has been injecting a 'jj:trees' header into commits to track
+more metadata around merge conflicts. There weren't any problems with
+that, unless one uses git to rewrite these commits with e.g. git-rebase,
+in which case that header is simply lost. But commits with conflicts are
+usually not pushed to a remote anyway, so the risk there was minimal.
+Scott Chacon with GitButler has more experience in this regard, since
+they actually push commits with a change-id in its header to remotes.
+He told the Jujutsu community that they didn't encounter any problems,
+no misbehaving tools that are fussy about unknown headers. The only
+problem is unknown commit headers being dropped by Git itself, depending
+on how it is invoked by the remote. (GitHub seems to preserve the header
+during a rebase-merge, because they use git-replay. GitLab and Forgejo
+drop the header.) With these insights from Scott, Jujutsu is moving
+forward to put the change-id in the commit header.
+
+> NB: I'm also quite happy that Jujutsu brings a bit of a new contender
+>     to Git into the picture. It has a lot of nice ideas, and in the best
+>     case Git might be able to learn a few nice tricks from JJ. After
+>     all, I think we can all benefit from some friendly competition.
+
+One of the best features of Jujutsu is that it plays nice with Git.
+Most users work in "colocated" repos that have both a .git and a .jj
+directory. Git commands continue to work as usual (mostly). If Git
+adopted the change-id header, interleaving of Git and Jujutsu commands
+would work even better.
+
+So, +1 from me for friendly competition / collaboration. :-)
+
+Remo
