@@ -1,86 +1,82 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C081A76D4
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 05:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4441AB530
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 05:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743656776; cv=none; b=NjbmszUe9N/ksVvIQynV+NU0rG5LpgRTYyVPaEFj6pbyL05796GfzhE82RYac8w+uXf3E++CqOZr7MpzcqbEsNW6bDjEgJR7jjZwjyrIDTZtuD/r+PVThlNaIw2dLOxk+pPNZi1a7OBZKBLd3tX+tpga87qfWB1nUeVbPL56IeM=
+	t=1743656777; cv=none; b=f7VRXTVi3/125vaoIrntGZpcv6NtDOCL4bILpog874BxHLSbOvQS8HyXGlKS07oiWzYPo/y96kJ9Ss44v9gu9A5QqgMehdH9CuVvdGrmugzkqkYqqvtGLheU8GoLa/R701z15HjoBsgyRtX8R0k4I3G01VhdhdTJQPmkvKpdgFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743656776; c=relaxed/simple;
-	bh=d4KwZa38uW6lUaCoxPsnK2+piOm4AoRp9gRgdgfLjMM=;
+	s=arc-20240116; t=1743656777; c=relaxed/simple;
+	bh=nIFJ306TPKbrE7SJFsYWFN7Vy3LGf7ecR56WHere+0w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=F0KkYNOfmkAOKlJ3VvEC0519v5SC7BkFOya5qSqsMnCbTXMdZkReKXw6QrPg31An7NwE20/ZKpy22cZHKAa3BwIF+TQ2WZoa0/cc8DHn3VLbnrSI6BzomaPk5QfmaHCfp8FRtqhBZ1NmQaNGgAw247jaSTWADWvva14REH+20RY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N1C5SBQ6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qQDxE2QC; arc=none smtp.client-ip=202.12.124.151
+	 In-Reply-To:To:Cc; b=Ze2DAQkcNinOxmrPLuB9gDyBk2LurtQdD07lFEAwMKlU227+KacuS/J7wtInRtR6F8I7JBBBKvBeuDXvsGyV5aEWJ9Swifw11FBnhe+O0fcmEc2jNtzJPJKQ5SfGQ8phOqGHzKhBuvVUDhOayL+VWX7r54UCdAd82rouJRNVOY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MkAgIRN0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FeYYamZh; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N1C5SBQ6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qQDxE2QC"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7BECE114016F;
-	Thu,  3 Apr 2025 01:06:13 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 03 Apr 2025 01:06:13 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MkAgIRN0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FeYYamZh"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7784F1140193;
+	Thu,  3 Apr 2025 01:06:14 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Thu, 03 Apr 2025 01:06:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743656773;
-	 x=1743743173; bh=avH8qnHmg73TrKzdiMcIcWRKDQ+kaympX+xjx5IsZPs=; b=
-	N1C5SBQ65/EglD+aji0BZ0tsZH97IfO6tBg2MKr3s0gtKuxkx2nE6aZyGcE+vwK2
-	kwJI3OJd0TI/ypZwZ3Sfw5n/vGojxOQi75UJtw6U/7F04mAnssd0r0+X7nAs7FnF
-	wl/vVSl/6wQiQJetY8JrvYBBylXzXZo5hN8V+RdfD/qz33TXeJk/9bsDF7hxMwf4
-	Sak1/44RzCRsXJcX021d6HAw6lLpOWlLIauKoIS3V8TpIuoafv6du+/ar3lnb1Ki
-	EguvmO58DXbUqevu3aMQn4MpuvpQjJZsc+liMKYe72euBUk+BlLOYos+M6QTNW+W
-	UBKTQGLhknQ1KxgJn/DtBA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743656774;
+	 x=1743743174; bh=j3O5wJbPmAwQgnNj/89jQqfhUIRUFZvSwTYFAiwrCdQ=; b=
+	MkAgIRN0IPCOpUAYJCM7ulMgubTxko38w8woK8IU2121XxiSPTQRZU6JbUwoCtaA
+	BHtBousilJhK8TFvRKwAub3mgmlzzjka1JoV7GkFMuj81/zS38VKEtGOZIXoW0fA
+	EeF4WWUUN7As66Lf89NGOYTs+TyiYWh1nubGA2PlfunwlDF44VdFxYwUKQHAHxm7
+	W7Et7tUFsdxlvOrgiUeazCZHcRIjJAN9BRMcbqLPdtT1giiQJ719CoV3gPbdypZo
+	YBs9GNmyWADtZpEl76qWB8sJyvNNBbb4MDDN5Je7SQHUNYD40m0btjmOLuCkCTXY
+	t/SUpyhNjhY5jIGQO2yLwA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743656773; x=
-	1743743173; bh=avH8qnHmg73TrKzdiMcIcWRKDQ+kaympX+xjx5IsZPs=; b=q
-	QDxE2QCVpokyPDZFDX9XGY1Y1+lowriJ3JtQUYmQe1ytDJda7YsRgTLUu7aVmP8B
-	1s6DyqeD/1aCnF89w68YBS4pPn7unTRytjf/u7Ry6y2PE59JT+ikd3Xn9XLHTfbw
-	mxa0vnkjfWiwH2V5PqNgCxoQtkNZDvWhaVdxedqnyCCXmT8nsstGf/J4i3xS+nzP
-	TDaP0rn52CFr5Daf0ZFzBa7EvNzU2GFosV/yx0uSDqTySJM70vYYUCCkGihKLyKZ
-	voGEV8eAWmr6rkAt4Edu0O6caPuIZPC/5wgEl2g/s4te7OA2HJlz///0qYqlo3Yn
-	+ixzEq6MWuHFb4+EM02dw==
-X-ME-Sender: <xms:RRfuZxDXvbI92JETEfL5WrMMA7WPjKkfI8mp-jZbLcgphpyfwrA_lw>
-    <xme:RRfuZ_gNwxTWbpmLOg2v_8VErWcNmWW-M7QfqyzcYUZrIRXKLJpdv317TJ1LazKtv
-    JiENwlc933rsY9d6Q>
-X-ME-Received: <xmr:RRfuZ8kamv19XDvDWwSwhwIapOvJRGB1TY-C6nShbhcadI3fMyHlLoi6RLb-GXKyh08-VUoxOQ-Do4RiZ_jKy5qVRl9UNGAZCTdfC8dZph3JAgg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeejieejucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743656774; x=
+	1743743174; bh=j3O5wJbPmAwQgnNj/89jQqfhUIRUFZvSwTYFAiwrCdQ=; b=F
+	eYYamZh0JZZ+KdAuSjlljFsnVaGjCbjFFKwb4GZ+DF5rYKBD5p6Fpkt2BRqL7Kx+
+	InmFbm36JK1ErhifW0vXRn/4qq915CfaKM4897Kk6kSJvqX1UMa1XNTryPrWcnhM
+	NrnVVlPsr2LlJd+rmLnafaeSjGorUfcfzN8mLarGDpEJZGWXWgVVb0cbJFYMjEkI
+	2Z6WEtC/ywY4xqmJyCs6yE5rngLhvXPvU2Jt/5lA+OaqKR8bcdjDcg9OFzm7Zkzz
+	srHwnypEnFlxcL3ubpYf+2D1l5isN6a+2sN8+3eDuh/neQjlcYAPH6b2YkxgdzKA
+	67F8xG4g98sv28cn46EYg==
+X-ME-Sender: <xms:RhfuZwRIBnhwcBV5fZZKND9yBW3eazajaZ8LzHtc1PFKYrAPZEjKhg>
+    <xme:RhfuZ9xdBuNepwq0vHL3hOf2oGLSvP-tMjXGa3iFlXVyNfc5OCXDnLalcM8ZyB1t6
+    7OqP-JsCrq3LKsSoA>
+X-ME-Received: <xmr:RhfuZ932OahzsvsZDWoMVRgXICv7kd3gaXAsUKRWe4jldBpv8IaI7KuuboSyTVBrOsU3qQhDdUnslc0oCVzQ8zjg5BUVIJwn4ekQ--vNblsHYNw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeejieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeeigeeugfeuheefgefgteefiedvffehgfefheei
-    heetfefgleeuteeihfelgefhfeenucffohhmrghinhephhhtthhpugdrshhhpdhhthhtph
-    drshhhpdgrphhplhihqdhonhgvqdhtihhmvgdqphgvrhhlrdhshhdprghpphhlhidqohhn
-    vgdqthhimhgvqdhstghrihhpthdrshhhpdhnphhhqdgtuhhsthhomhdqrghuthhhrdhshh
-    dpuddvjedrtddrtddrudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepsh
-    hmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphht
-    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunh
-    hshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:RRfuZ7xp3bKLyKqTSGr67hla83v8iZQBUVXsJDS7Iv0CkaEeFJJ0Fg>
-    <xmx:RRfuZ2Sx2NK739DREl39PNp4wdDBnswcC1CncJ_n14ZcpfXv4XiGXg>
-    <xmx:RRfuZ-b7uTZaK8w2ctwHyDXEYJbASVmBjCr4ZZpvT9NsbWEj9CUWJQ>
-    <xmx:RRfuZ3R2JoTYb3EKK4zUxE5M5BI9Hu0oTOF6CPo5mPEzv8PLUBN5LA>
-    <xmx:RRfuZ3XKZ0L3sjWdiwv4YpmpAuc6EqXGNvzcG94DM9sY_2eZmQx38ToP>
+    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpth
+    htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthht
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:RhfuZ0AWGDNzxO2KZHNza2WEbvYVn0I2xJoIGSwf9V0tAiLawx26jw>
+    <xmx:RhfuZ5i9gqTSpxtHi16FPqCO3Gdce69Wlz59RSN5v7R5cccu5lN90Q>
+    <xmx:RhfuZwrmB5sG6_RUxP_M6Zvggh83QEorp_Az4OwI4sh1Q8__JVpqUA>
+    <xmx:RhfuZ8h_30pljziWddRRLt6m__33ZjW5VcdMn6AdnJsoJZcIiZMOVA>
+    <xmx:RhfuZ_ksQzkmlObwn6oysltrNFn77hHEAmoemqJiG0ZKayoxJly7ydr7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Apr 2025 01:06:12 -0400 (EDT)
+ 3 Apr 2025 01:06:13 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b924771e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 3 Apr 2025 05:06:10 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 443b09cc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 3 Apr 2025 05:06:12 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 03 Apr 2025 07:06:07 +0200
-Subject: [PATCH v4 16/20] t/lib-httpd: refactor "one-time-perl" CGI script
- to not depend on Perl
+Date: Thu, 03 Apr 2025 07:06:09 +0200
+Subject: [PATCH v4 18/20] t0210: refactor trace2 scrubbing to not use Perl
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250403-b4-pks-t-perlless-v4-16-be20ac3db39a@pks.im>
+Message-Id: <20250403-b4-pks-t-perlless-v4-18-be20ac3db39a@pks.im>
 References: <20250403-b4-pks-t-perlless-v4-0-be20ac3db39a@pks.im>
 In-Reply-To: <20250403-b4-pks-t-perlless-v4-0-be20ac3db39a@pks.im>
 To: git@vger.kernel.org
@@ -99,388 +95,240 @@ Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
  Phillip Wood <phillip.wood123@gmail.com>
 X-Mailer: b4 0.14.2
 
-Our Apache HTTPD setup exposes an "one_time_perl" endpoint to access
-repositories. If used, we execute the "apply-one-time-perl.sh" CGI
-script that checks whether we have a "one-time-perl" script. If so, that
-script gets executed so that it can munge what would be served. Once
-done, the script gets removed so that it doesn't execute a second time.
+The output generated by our trace2 mechanism contains several fields
+that are dependent on the environment they're being run in, which makes
+it somewhat harder to test it. As a countermeasure we scrub the output
+and strip out any fields that contain such information.
 
-As the name says, this functionality expects the user to pass a Perl
-script. This isn't really necessary though: we can just as easily
-implement the same thing with arbitrary scripts.
-
-Refactor the code so that we instead expect an arbitrary script to
-exist and rename the functionality to "one-time-script". Adapt callers
-to use shell utilities instead of Perl so that we can drop the
-PERL_TEST_HELPERS prerequisite.
+The logic to do so is implemented in Perl, but it can be trivially
+ported to instead use sed(1). Refactor the code accordingly so that we
+can drop the PERL_TEST_HELPERS prerequisite.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/lib-httpd.sh                       |  2 +-
- t/lib-httpd/apache.conf              |  6 ++---
- t/lib-httpd/apply-one-time-perl.sh   | 27 --------------------
- t/lib-httpd/apply-one-time-script.sh | 26 +++++++++++++++++++
- t/t5537-fetch-shallow.sh             | 17 ++++++-------
- t/t5616-partial-clone.sh             | 48 +++++++++++++++++++-----------------
- t/t5702-protocol-v2.sh               | 27 +++++++++++---------
- t/t5703-upload-pack-ref-in-want.sh   | 10 +++++---
- 8 files changed, 86 insertions(+), 77 deletions(-)
+ t/t0210-trace2-normal.sh  | 61 +++++++++++++++++++++++++++++++++--------------
+ t/t0210/scrub_normal.perl | 54 -----------------------------------------
+ 2 files changed, 43 insertions(+), 72 deletions(-)
 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index d83bafeab32..5091db949b7 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -165,7 +165,7 @@ prepare_httpd() {
- 	install_script broken-smart-http.sh
- 	install_script error-smart-http.sh
- 	install_script error.sh
--	install_script apply-one-time-perl.sh
-+	install_script apply-one-time-script.sh
- 	install_script nph-custom-auth.sh
+diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
+index ba4c0442b85..96c68f65df2 100755
+--- a/t/t0210-trace2-normal.sh
++++ b/t/t0210-trace2-normal.sh
+@@ -4,12 +4,6 @@ test_description='test trace2 facility (normal target)'
  
- 	ln -s "$LIB_HTTPD_MODULE_PATH" "$HTTPD_ROOT_PATH/modules"
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index 022276a6b9a..e631ab0eb5e 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -135,7 +135,7 @@ SetEnv PERL_PATH ${PERL_PATH}
- 	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
- 	SetEnv GIT_HTTP_EXPORT_ALL
- </LocationMatch>
--<LocationMatch /one_time_perl/>
-+<LocationMatch /one_time_script/>
- 	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
- 	SetEnv GIT_HTTP_EXPORT_ALL
- </LocationMatch>
-@@ -159,7 +159,7 @@ ScriptAliasMatch /smart_*[^/]*/(.*) ${GIT_EXEC_PATH}/git-http-backend/$1
- ScriptAlias /broken_smart/ broken-smart-http.sh/
- ScriptAlias /error_smart/ error-smart-http.sh/
- ScriptAlias /error/ error.sh/
--ScriptAliasMatch /one_time_perl/(.*) apply-one-time-perl.sh/$1
-+ScriptAliasMatch /one_time_script/(.*) apply-one-time-script.sh/$1
- ScriptAliasMatch /custom_auth/(.*) nph-custom-auth.sh/$1
- <Directory ${GIT_EXEC_PATH}>
- 	Options FollowSymlinks
-@@ -182,7 +182,7 @@ ScriptAliasMatch /custom_auth/(.*) nph-custom-auth.sh/$1
- <Files error.sh>
-   Options ExecCGI
- </Files>
--<Files apply-one-time-perl.sh>
-+<Files apply-one-time-script.sh>
- 	Options ExecCGI
- </Files>
- <Files ${GIT_EXEC_PATH}/git-http-backend>
-diff --git a/t/lib-httpd/apply-one-time-perl.sh b/t/lib-httpd/apply-one-time-perl.sh
-deleted file mode 100644
-index d7f9fed6aee..00000000000
---- a/t/lib-httpd/apply-one-time-perl.sh
-+++ /dev/null
-@@ -1,27 +0,0 @@
--#!/bin/sh
--
--# If "one-time-perl" exists in $HTTPD_ROOT_PATH, run perl on the HTTP response,
--# using the contents of "one-time-perl" as the perl command to be run. If the
--# response was modified as a result, delete "one-time-perl" so that subsequent
--# HTTP responses are no longer modified.
--#
--# This can be used to simulate the effects of the repository changing in
--# between HTTP request-response pairs.
--if test -f one-time-perl
+ . ./test-lib.sh
+ 
+-if ! test_have_prereq PERL_TEST_HELPERS
 -then
--	LC_ALL=C
--	export LC_ALL
--
--	"$GIT_EXEC_PATH/git-http-backend" >out
--	"$PERL_PATH" -pe "$(cat one-time-perl)" out >out_modified
--
--	if cmp -s out out_modified
--	then
--		cat out
--	else
--		cat out_modified
--		rm one-time-perl
--	fi
--else
--	"$GIT_EXEC_PATH/git-http-backend"
+-	skip_all='skipping trace2 tests; Perl not available'
+-	test_done
 -fi
-diff --git a/t/lib-httpd/apply-one-time-script.sh b/t/lib-httpd/apply-one-time-script.sh
-new file mode 100644
-index 00000000000..b1682944e28
---- /dev/null
-+++ b/t/lib-httpd/apply-one-time-script.sh
-@@ -0,0 +1,26 @@
-+#!/bin/sh
+-
+ # Turn off any inherited trace2 settings for this test.
+ sane_unset GIT_TRACE2 GIT_TRACE2_PERF GIT_TRACE2_EVENT
+ sane_unset GIT_TRACE2_BRIEF
+@@ -59,10 +53,41 @@ GIT_TRACE2_BRIEF=1 && export GIT_TRACE2_BRIEF
+ #
+ # Implicit return from cmd_<verb> function propagates <code>.
+ 
++scrub_normal () {
++	# Scrub the variable fields from the normal trace2 output to make
++	# testing easier:
++	#
++	#   1. Various messages include an elapsed time in the middle of the
++	#      message. Replace the time with a placeholder to simplify our
++	#      HEREDOC in the test script.
++	#
++	#   2. We expect:
++	#
++	#        start <argv0> [<argv1> [<argv2> [...]]]
++	#
++	#      where argv0 might be a relative or absolute path, with or
++	#      without quotes, and platform dependent. Replace argv0 with a
++	#      token for HEREDOC matching in the test script.
++	#
++	#   3. Likewise, the 'cmd_path' message breaks out argv[0].
++	#
++	#      This line is only emitted when RUNTIME_PREFIX is defined,
++	#      so just omit it for testing purposes.
++	#
++	#   4. 'cmd_ancestry' is not implemented everywhere, so for portability's
++	#      sake, skip it when parsing normal.
++	sed \
++		-e 's/elapsed:[0-9]*\.[0-9][0-9]*\([eE][-+]\{0,1\}[0-9][0-9]*\)\{0,1\}/elapsed:_TIME_/g' \
++		-e "s/^start '[^']*' \(.*\)/start _EXE_ \1/" \
++		-e 's/^start [^ ][^ ]* \(.*\)/start _EXE_ \1/' \
++		-e '/^cmd_path/d' \
++		-e '/^cmd_ancestry/d'
++}
 +
-+# If "one-time-script" exists in $HTTPD_ROOT_PATH, run the script on the HTTP
-+# response. If the response was modified as a result, delete "one-time-script"
-+# so that subsequent HTTP responses are no longer modified.
-+#
-+# This can be used to simulate the effects of the repository changing in
-+# between HTTP request-response pairs.
-+if test -f one-time-script
-+then
-+	LC_ALL=C
-+	export LC_ALL
-+
-+	"$GIT_EXEC_PATH/git-http-backend" >out
-+	./one-time-script out >out_modified
-+
-+	if cmp -s out out_modified
-+	then
-+		cat out
-+	else
-+		cat out_modified
-+		rm one-time-script
-+	fi
-+else
-+	"$GIT_EXEC_PATH/git-http-backend"
-+fi
-diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
-index 77d20d19110..6588ce62264 100755
---- a/t/t5537-fetch-shallow.sh
-+++ b/t/t5537-fetch-shallow.sh
-@@ -256,7 +256,7 @@ start_httpd
+ test_expect_success 'normal stream, return code 0' '
+ 	test_when_finished "rm trace.normal actual expect" &&
+ 	GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 001return 0 &&
+-	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	scrub_normal <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+ 		version $V
+ 		start _EXE_ trace2 001return 0
+@@ -76,7 +101,7 @@ test_expect_success 'normal stream, return code 0' '
+ test_expect_success 'normal stream, return code 1' '
+ 	test_when_finished "rm trace.normal actual expect" &&
+ 	test_must_fail env GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 001return 1 &&
+-	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	scrub_normal <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+ 		version $V
+ 		start _EXE_ trace2 001return 1
+@@ -91,7 +116,7 @@ test_expect_success 'automatic filename' '
+ 	test_when_finished "rm -r traces actual expect" &&
+ 	mkdir traces &&
+ 	GIT_TRACE2="$(pwd)/traces" test-tool trace2 001return 0 &&
+-	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <"$(ls traces/*)" >actual &&
++	scrub_normal <"$(ls traces/*)" >actual &&
+ 	cat >expect <<-EOF &&
+ 		version $V
+ 		start _EXE_ trace2 001return 0
+@@ -109,7 +134,7 @@ test_expect_success 'automatic filename' '
+ test_expect_success 'normal stream, exit code 0' '
+ 	test_when_finished "rm trace.normal actual expect" &&
+ 	GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 002exit 0 &&
+-	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	scrub_normal <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+ 		version $V
+ 		start _EXE_ trace2 002exit 0
+@@ -123,7 +148,7 @@ test_expect_success 'normal stream, exit code 0' '
+ test_expect_success 'normal stream, exit code 1' '
+ 	test_when_finished "rm trace.normal actual expect" &&
+ 	test_must_fail env GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 002exit 1 &&
+-	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	scrub_normal <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+ 		version $V
+ 		start _EXE_ trace2 002exit 1
+@@ -141,7 +166,7 @@ test_expect_success 'normal stream, exit code 1' '
+ test_expect_success 'normal stream, error event' '
+ 	test_when_finished "rm trace.normal actual expect" &&
+ 	GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 003error "hello world" "this is a test" &&
+-	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	scrub_normal <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+ 		version $V
+ 		start _EXE_ trace2 003error '\''hello world'\'' '\''this is a test'\''
+@@ -161,7 +186,7 @@ test_expect_success 'normal stream, error event' '
+ test_expect_success 'BUG messages are written to trace2' '
+ 	test_when_finished "rm trace.normal actual expect" &&
+ 	test_must_fail env GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 007bug &&
+-	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	scrub_normal <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+ 		version $V
+ 		start _EXE_ trace2 007bug
+@@ -185,7 +210,7 @@ test_expect_success 'bug messages with BUG_if_bug() are written to trace2' '
+ 	sed "s/^.*: //" <err >actual &&
+ 	test_cmp expect actual &&
  
- REPO="$HTTPD_DOCUMENT_ROOT_PATH/repo"
+-	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	scrub_normal <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+ 		version $V
+ 		start _EXE_ trace2 008bug
+@@ -211,7 +236,7 @@ test_expect_success 'bug messages without explicit BUG_if_bug() are written to t
+ 	sed "s/^.*: //" <err >actual &&
+ 	test_cmp expect actual &&
  
--test_expect_success PERL_TEST_HELPERS 'shallow fetches check connectivity before writing shallow file' '
-+test_expect_success 'shallow fetches check connectivity before writing shallow file' '
- 	rm -rf "$REPO" client &&
+-	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	scrub_normal <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+ 		version $V
+ 		start _EXE_ trace2 009bug_BUG
+@@ -236,7 +261,7 @@ test_expect_success 'bug messages followed by BUG() are written to trace2' '
+ 	sed "s/^.*: //" <err >actual &&
+ 	test_cmp expect actual &&
  
- 	git init "$REPO" &&
-@@ -271,22 +271,21 @@ test_expect_success PERL_TEST_HELPERS 'shallow fetches check connectivity before
- 	git -C "$REPO" config protocol.version 2 &&
- 	git -C client config protocol.version 2 &&
- 
--	git -C client fetch --depth=2 "$HTTPD_URL/one_time_perl/repo" main:a_branch &&
-+	git -C client fetch --depth=2 "$HTTPD_URL/one_time_script/repo" main:a_branch &&
- 
- 	# Craft a situation in which the server sends back an unshallow request
- 	# with an empty packfile. This is done by refetching with a shorter
- 	# depth (to ensure that the packfile is empty), and overwriting the
- 	# shallow line in the response with the unshallow line we want.
--	printf "$(test_oid perl)" \
--	       "$(git -C "$REPO" rev-parse HEAD)" \
--	       "$(git -C "$REPO" rev-parse HEAD^)" \
--	       >"$HTTPD_ROOT_PATH/one-time-perl" &&
-+	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-EOF &&
-+	sed "$(printf "$(test_oid perl)" "$(git -C "$REPO" rev-parse HEAD)" "$(git -C "$REPO" rev-parse HEAD^)")" "\$1"
-+	EOF
- 	test_must_fail env GIT_TEST_SIDEBAND_ALL=0 git -C client \
--		fetch --depth=1 "$HTTPD_URL/one_time_perl/repo" \
-+		fetch --depth=1 "$HTTPD_URL/one_time_script/repo" \
- 		main:a_branch &&
- 
--	# Ensure that the one-time-perl script was used.
--	! test -e "$HTTPD_ROOT_PATH/one-time-perl" &&
-+	# Ensure that the one-time-script script was used.
-+	! test -e "$HTTPD_ROOT_PATH/one-time-script" &&
- 
- 	# Ensure that the resulting repo is consistent, despite our failure to
- 	# fetch.
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index bc7e0fec8dc..1e354e057fa 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -737,21 +737,25 @@ intersperse () {
- 	sed 's/\(..\)/'$1'\1/g'
- }
- 
--# Create a one-time-perl command to replace the existing packfile with $1.
-+# Create a one-time-script command to replace the existing packfile with $1.
- replace_packfile () {
--	# The protocol requires that the packfile be sent in sideband 1, hence
--	# the extra \x01 byte at the beginning.
--	cp $1 "$HTTPD_ROOT_PATH/one-time-pack" &&
--	echo 'if (/packfile/) {
--		print;
--		my $length = -s "one-time-pack";
--		printf "%04x\x01", $length + 5;
--		print `cat one-time-pack` . "0000";
--		last
--	}' >"$HTTPD_ROOT_PATH/one-time-perl"
-+	cp "$1" one-time-pack &&
-+	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-EOF
-+	if grep packfile "\$1" >/dev/null
-+	then
-+		sed '/packfile/q' "\$1" &&
-+		# The protocol requires that the packfile be sent in sideband
-+		# 1, hence the extra \001 byte at the beginning.
-+		printf "%04x\001" \$((\$(wc -c <"$PWD/one-time-pack") + 5)) &&
-+		cat "$PWD/one-time-pack" &&
-+		printf "0000"
-+	else
-+		cat "\$1"
-+	fi
-+	EOF
- }
- 
--test_expect_success PERL_TEST_HELPERS 'upon cloning, check that all refs point to objects' '
-+test_expect_success 'upon cloning, check that all refs point to objects' '
- 	SERVER="$HTTPD_DOCUMENT_ROOT_PATH/server" &&
- 	rm -rf "$SERVER" repo &&
- 	test_create_repo "$SERVER" &&
-@@ -776,15 +780,15 @@ test_expect_success PERL_TEST_HELPERS 'upon cloning, check that all refs point t
- 	# section header.
- 	test_config -C "$SERVER" protocol.version 2 &&
- 	test_must_fail git -c protocol.version=2 clone \
--		--filter=blob:none $HTTPD_URL/one_time_perl/server repo 2>err &&
-+		--filter=blob:none $HTTPD_URL/one_time_script/server repo 2>err &&
- 
- 	test_grep "did not send all necessary objects" err &&
- 
--	# Ensure that the one-time-perl script was used.
--	! test -e "$HTTPD_ROOT_PATH/one-time-perl"
-+	# Ensure that the one-time-script script was used.
-+	! test -e "$HTTPD_ROOT_PATH/one-time-script"
- '
- 
--test_expect_success PERL_TEST_HELPERS 'when partial cloning, tolerate server not sending target of tag' '
-+test_expect_success 'when partial cloning, tolerate server not sending target of tag' '
- 	SERVER="$HTTPD_DOCUMENT_ROOT_PATH/server" &&
- 	rm -rf "$SERVER" repo &&
- 	test_create_repo "$SERVER" &&
-@@ -818,11 +822,11 @@ test_expect_success PERL_TEST_HELPERS 'when partial cloning, tolerate server not
- 
- 	# Exercise to make sure it works.
- 	git -c protocol.version=2 clone \
--		--filter=blob:none $HTTPD_URL/one_time_perl/server repo 2> err &&
-+		--filter=blob:none $HTTPD_URL/one_time_script/server repo 2> err &&
- 	! grep "missing object referenced by" err &&
- 
--	# Ensure that the one-time-perl script was used.
--	! test -e "$HTTPD_ROOT_PATH/one-time-perl"
-+	# Ensure that the one-time-script script was used.
-+	! test -e "$HTTPD_ROOT_PATH/one-time-script"
- '
- 
- test_expect_success PERL_TEST_HELPERS 'tolerate server sending REF_DELTA against missing promisor objects' '
-@@ -845,7 +849,7 @@ test_expect_success PERL_TEST_HELPERS 'tolerate server sending REF_DELTA against
- 
- 	# Clone. The client has deltabase_have but not deltabase_missing.
- 	git -c protocol.version=2 clone --no-checkout \
--		--filter=blob:none $HTTPD_URL/one_time_perl/server repo &&
-+		--filter=blob:none $HTTPD_URL/one_time_script/server repo &&
- 	git -C repo hash-object -w -- "$SERVER/have.txt" &&
- 
- 	# Sanity check to ensure that the client does not have
-@@ -899,8 +903,8 @@ test_expect_success PERL_TEST_HELPERS 'tolerate server sending REF_DELTA against
- 	grep "want $(cat deltabase_missing)" trace &&
- 	! grep "want $(cat deltabase_have)" trace &&
- 
--	# Ensure that the one-time-perl script was used.
--	! test -e "$HTTPD_ROOT_PATH/one-time-perl"
-+	# Ensure that the one-time-script script was used.
-+	! test -e "$HTTPD_ROOT_PATH/one-time-script"
- '
- 
- # DO NOT add non-httpd-specific tests here, because the last part of this
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index ad5e772cd72..8548854f32e 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -1120,7 +1120,7 @@ test_expect_success 'push with http:// and a config of v2 does not request v2' '
- 	! grep "git< version 2" log
- '
- 
--test_expect_success PERL_TEST_HELPERS 'when server sends "ready", expect DELIM' '
-+test_expect_success 'when server sends "ready", expect DELIM' '
- 	rm -rf "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" http_child &&
- 
- 	git init "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-@@ -1132,15 +1132,16 @@ test_expect_success PERL_TEST_HELPERS 'when server sends "ready", expect DELIM'
- 
- 	# After "ready" in the acknowledgments section, pretend that a FLUSH
- 	# (0000) was sent instead of a DELIM (0001).
--	printf "\$ready = 1 if /ready/; \$ready && s/0001/0000/" \
--		>"$HTTPD_ROOT_PATH/one-time-perl" &&
-+	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-\EOF &&
-+	sed "/ready/{n;s/0001/0000/;}" "$1"
-+	EOF
- 
- 	test_must_fail git -C http_child -c protocol.version=2 \
--		fetch "$HTTPD_URL/one_time_perl/http_parent" 2> err &&
-+		fetch "$HTTPD_URL/one_time_script/http_parent" 2> err &&
- 	test_grep "expected packfile to be sent after .ready." err
- '
- 
--test_expect_success PERL_TEST_HELPERS 'when server does not send "ready", expect FLUSH' '
-+test_expect_success 'when server does not send "ready", expect FLUSH' '
- 	rm -rf "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" http_child log &&
- 
- 	git init "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-@@ -1157,12 +1158,13 @@ test_expect_success PERL_TEST_HELPERS 'when server does not send "ready", expect
- 
- 	# After the acknowledgments section, pretend that a DELIM
- 	# (0001) was sent instead of a FLUSH (0000).
--	printf "\$ack = 1 if /acknowledgments/; \$ack && s/0000/0001/" \
--		>"$HTTPD_ROOT_PATH/one-time-perl" &&
-+	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-\EOF &&
-+	sed "/acknowledgments/,//{s/0000/0001/;}" "$1"
-+	EOF
- 
- 	test_must_fail env GIT_TRACE_PACKET="$(pwd)/log" git -C http_child \
- 		-c protocol.version=2 \
--		fetch "$HTTPD_URL/one_time_perl/http_parent" 2> err &&
-+		fetch "$HTTPD_URL/one_time_script/http_parent" 2> err &&
- 	grep "fetch< .*acknowledgments" log &&
- 	! grep "fetch< .*ready" log &&
- 	test_grep "expected no other sections to be sent after no .ready." err
-@@ -1446,14 +1448,15 @@ test_expect_success 'http:// --negotiate-only' '
- 	grep "$COMMON" out
- '
- 
--test_expect_success PERL_TEST_HELPERS 'http:// --negotiate-only without wait-for-done support' '
-+test_expect_success 'http:// --negotiate-only without wait-for-done support' '
- 	SERVER="server" &&
--	URI="$HTTPD_URL/one_time_perl/server" &&
-+	URI="$HTTPD_URL/one_time_script/server" &&
- 
- 	setup_negotiate_only "$SERVER" "$URI" &&
- 
--	echo "s/ wait-for-done/ xxxx-xxx-xxxx/" \
--		>"$HTTPD_ROOT_PATH/one-time-perl" &&
-+	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-\EOF &&
-+	sed "s/ wait-for-done/ xxxx-xxx-xxxx/" "$1"
-+	EOF
- 
- 	test_must_fail git -c protocol.version=2 -C client fetch \
- 		--no-tags \
-diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
-index f59d47aa6c6..fc915e7b823 100755
---- a/t/t5703-upload-pack-ref-in-want.sh
-+++ b/t/t5703-upload-pack-ref-in-want.sh
-@@ -468,7 +468,7 @@ test_expect_success 'setup repos for change-while-negotiating test' '
- 		test_commit m3 &&
- 		git tag -d m2 m3
- 	) &&
--	git -C "$LOCAL_PRISTINE" remote set-url origin "http://127.0.0.1:$LIB_HTTPD_PORT/one_time_perl/repo" &&
-+	git -C "$LOCAL_PRISTINE" remote set-url origin "http://127.0.0.1:$LIB_HTTPD_PORT/one_time_script/repo" &&
- 	git -C "$LOCAL_PRISTINE" config protocol.version 2
- '
- 
-@@ -481,7 +481,9 @@ inconsistency () {
- 	# RPCs during a single negotiation.
- 	oid1=$(git -C "$REPO" rev-parse $1) &&
- 	oid2=$(git -C "$REPO" rev-parse $2) &&
--	echo "s/$oid1/$oid2/" >"$HTTPD_ROOT_PATH/one-time-perl"
-+	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-EOF
-+	sed "s/$oid1/$oid2/" "\$1"
-+	EOF
- }
- 
- test_expect_success 'server is initially ahead - no ref in want' '
-@@ -533,7 +535,9 @@ test_expect_success 'server loses a ref - ref in want' '
- 	git -C "$REPO" config uploadpack.allowRefInWant true &&
- 	rm -rf local &&
- 	cp -r "$LOCAL_PRISTINE" local &&
--	echo "s/main/rain/" >"$HTTPD_ROOT_PATH/one-time-perl" &&
-+	write_script "$HTTPD_ROOT_PATH/one-time-script" <<-\EOF &&
-+	sed "s/main/rain/" "$1"
-+	EOF
- 	test_must_fail git -C local fetch 2>err &&
- 
- 	test_grep "fatal: remote error: unknown ref refs/heads/rain" err
+-	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	scrub_normal <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+ 		version $V
+ 		start _EXE_ trace2 010bug_BUG
+@@ -268,7 +293,7 @@ test_expect_success 'using global config, normal stream, return code 0' '
+ 	test_config_global trace2.normalBrief 1 &&
+ 	test_config_global trace2.normalTarget "$(pwd)/trace.normal" &&
+ 	test-tool trace2 001return 0 &&
+-	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	scrub_normal <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+ 		version $V
+ 		start _EXE_ trace2 001return 0
+@@ -286,7 +311,7 @@ test_expect_success 'using global config with include' '
+ 	mv "$(pwd)/.gitconfig" "$(pwd)/real.gitconfig" &&
+ 	test_config_global include.path "$(pwd)/real.gitconfig" &&
+ 	test-tool trace2 001return 0 &&
+-	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	scrub_normal <trace.normal >actual &&
+ 	cat >expect <<-EOF &&
+ 		version $V
+ 		start _EXE_ trace2 001return 0
+diff --git a/t/t0210/scrub_normal.perl b/t/t0210/scrub_normal.perl
+deleted file mode 100644
+index 7cc4de392a0..00000000000
+--- a/t/t0210/scrub_normal.perl
++++ /dev/null
+@@ -1,54 +0,0 @@
+-#!/usr/bin/perl
+-#
+-# Scrub the variable fields from the normal trace2 output to
+-# make testing easier.
+-
+-use strict;
+-use warnings;
+-
+-my $float = '[0-9]*\.[0-9]+([eE][-+]?[0-9]+)?';
+-
+-# This code assumes that the trace2 data was written with bare
+-# turned on (which omits the "<clock> <file>:<line>" prefix.
+-
+-while (<>) {
+-    # Various messages include an elapsed time in the middle
+-    # of the message.  Replace the time with a placeholder to
+-    # simplify our HEREDOC in the test script.
+-    s/elapsed:$float/elapsed:_TIME_/g;
+-
+-    my $line = $_;
+-
+-    # we expect:
+-    #    start <argv0> [<argv1> [<argv2> [...]]]
+-    #
+-    # where argv0 might be a relative or absolute path, with
+-    # or without quotes, and platform dependent.  Replace argv0
+-    # with a token for HEREDOC matching in the test script.
+-
+-    if ($line =~ m/^start/) {
+-	$line =~ /^start\s+(.*)/;
+-	my $argv = $1;
+-	$argv =~ m/(\'[^\']*\'|[^ ]+)\s+(.*)/;
+-	my $argv_0 = $1;
+-	my $argv_rest = $2;
+-
+-	print "start _EXE_ $argv_rest\n";
+-    }
+-    elsif ($line =~ m/^cmd_path/) {
+-	# Likewise, the 'cmd_path' message breaks out argv[0].
+-	#
+-	# This line is only emitted when RUNTIME_PREFIX is defined,
+-	# so just omit it for testing purposes.
+-	# print "cmd_path _EXE_\n";
+-    }
+-    elsif ($line =~ m/^cmd_ancestry/) {
+-	# 'cmd_ancestry' is not implemented everywhere, so for portability's
+-	# sake, skip it when parsing normal.
+-	#
+-	# print "$line";
+-    }
+-    else {
+-	print "$line";
+-    }
+-}
 
 -- 
 2.49.0.604.gff1f9ca942.dirty
