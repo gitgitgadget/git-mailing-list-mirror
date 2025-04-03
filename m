@@ -1,119 +1,182 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213151519A7
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 12:18:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B00223716
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 14:09:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743682685; cv=none; b=E//mZYATTWRPJ9E+/iW7RrSOEukNCUoowDwh4d+PTHx+vcEfnSdo7L2iAjMuK+CkxRcWx+OfbB8YT1zxo8ONX5rcQXgIu24SvyWeMGSiuynawvuJTzRyKFSFI1FIvvel56uRCkKO6qGhq6CG0HXqb3nhWUJsSXemj4RFQO3xnY4=
+	t=1743689368; cv=none; b=Jny7kTtkSIYAZM+410Kz5jq+lNtb04esL1+zLVP79oi2YdO9vAt+pl/zK/kWRGLF+Rh1HIChMJdKevPznm3168bishVaAvibqCPOi040WyLLZRCXNsLTKU3q8qYYuhFynvMcit3y4yuZFws3q/KBTktIVjv6IKalJ6u3AmcH76s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743682685; c=relaxed/simple;
-	bh=ZOAbJwJXphycC7Dxat9wj99q8AgCgngoM4TBP3FLoKo=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=gJhGQGUMNcbPaKJq1orWKcop6odSM692vGVcUxW+xgLIDdLpD2B/HM3PA42a0L9tlDvfl0dS9XotfaHzBmcJV5fzgmZgtVJ6v/9Ym7QGdSDJuX0x0/RdlUGAs7L/hwjFXYNy+QwXyNB8wJUOGvoZm/ivn6OLyRkiRW5tR4MbWVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ISxtitLW; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1743689368; c=relaxed/simple;
+	bh=M1uSDsHDlsVTTAyErH+FJF0qvggB29eNgDDAdC9vbJk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GJ7Aj7k967NAVkVKj09tA+zhI3O49SStyXoRKU1PIkBlts6ftDzAGJOWQ4VhDHR6zDn3QPcQqh+2+wHDYBhZVAGgT+PkvAApV7GOwjqAJKQw93avBPS1D7kFpTEtSA8j0r+0qJAQSzFhC9vnhbQFSqR3rsZyWuv+rSV0di9p/HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WnL1mo2B; arc=none smtp.client-ip=209.85.210.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ISxtitLW"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1743682677; x=1744287477;
-	i=johannes.schindelin@gmx.de;
-	bh=ZOAbJwJXphycC7Dxat9wj99q8AgCgngoM4TBP3FLoKo=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=ISxtitLWXZytdm38C8AejNoQ9jag5lv+T/CvCpXDDCFFerHiH4keJTa+aeo6LJJe
-	 Ri6cDf44qxHfxcd6tmG4FUviotfr6tZ62FJx0CpMH9+JzVFiAwS2ubVz5SlF44HgH
-	 H9LF6yiQpLz5hugJ7syzF+0iq7FUNExfCOUuQnDrOE5YAiaUpkPdtM9UyYIGYPWlM
-	 2K0olPglkkPAqEqgYDC9R0j6cTBjTfJVnV7EI3HGZMdJDLsLBMNQDc0+VNf8WSO7N
-	 sqGw9OBj/zHdvVYuXybTkVyBsBeX249a5VL5PfzEuw4aIgREoq3OZEyJX2tAB3sCp
-	 BH3HsVzWIm7UPkS5FQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MJmGP-1tgiIm2z9t-00I0Fe; Thu, 03
- Apr 2025 14:17:57 +0200
-Date: Thu, 3 Apr 2025 14:17:57 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-cc: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH 3/3] wt-status: suggest 'git rebase --continue' to conclude
- 'merge' instruction
-In-Reply-To: <a81dbb21-b50b-4358-b2d4-7f804b66bcbc@gmail.com>
-Message-ID: <15222e69-9452-fd61-6ffc-8c8de0c68d8a@gmx.de>
-References: <pull.1897.git.1743181401.gitgitgadget@gmail.com> <db01acdd062a17b1cca62428eba8c3ed62ca7c6a.1743181401.git.gitgitgadget@gmail.com> <0bd7e0c1-fe73-9e16-0737-d6b175a60dd3@gmx.de> <a81dbb21-b50b-4358-b2d4-7f804b66bcbc@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WnL1mo2B"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-72a4793d4e2so631072a34.2
+        for <git@vger.kernel.org>; Thu, 03 Apr 2025 07:09:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743689365; x=1744294165; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RLnKEbGhYDdoRcV3VKGjE9dwP2vi8Q956Ag/VL4r9F0=;
+        b=WnL1mo2BobnTQLK+JNtNzaUPycTMxIxXD0pAtwGaKt5IpFbScQeBrjfnYigLWVjldN
+         bhLaVBX9zn5x53eSo2QM/or1XXtSt56FUI4RFQx/dLBIgBNBZBm+Fetfi5j8H8B6VUHH
+         jsFrw/X84uDUlPcNnJOm0P0mfkI8ombB6aeR0JyIA4uzusztUHczbV+jyeLIUQIjOmsk
+         D1GIPPyq/WmlhRSs3RrDMztxBHzViQ3VH9F9o5nJtQm5SsnoJkyvn2v+zuVT1yItis2M
+         PZuOh5TG/KCGpu6orOH+m/GrJHT6H/5oPTh8cY23AGwX+PecoPMdRYZJXKj03Z3Qvrxf
+         tOaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743689365; x=1744294165;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RLnKEbGhYDdoRcV3VKGjE9dwP2vi8Q956Ag/VL4r9F0=;
+        b=Tgf6jBPGlZKVvGf10KGHp07+8EQOjuSl+V4MeskIJ4rjXXlV1+Z099YYcF5jdMa++8
+         JirUQAI7SihYq+OsyOfoDTYpB/yPoOwVJWHRJ0ChghamotDHUKSPLTFy+FSmi/XFiMT4
+         b6CZdQ8ySbfoZvlLbUvvbC+8du94sTQ9ds5ukdvMHA5ZfL/72mGQ45B5y3tMlY7z2yuv
+         M51RZH5d3BElpE/+CKv2TJqslBzjX1oo10thWBgUDfzApDkTnKQymi1noDINJVCm3vos
+         FyugaKAIcaJowJSjZyI7XrGQS0TF6DoVNQ9Be+hgWggREX9HVw0NBKe+n4nj8zl3PQ11
+         6jAQ==
+X-Gm-Message-State: AOJu0YypyEhsJWmFgk515sQLOtrFWXHjl3CAF4SJX+d/a4nVXR09DbMb
+	QH85/HUhAgQigq37pRmTL3YBNlwJ52gTWqpnYjWN00wSLolQtZqkNJQqcg==
+X-Gm-Gg: ASbGncvDQ0xrIBBrN9hDx3+/Tyz916jGsdNFzUrvtexPCURflX46y1ag7ISuL/MCvmW
+	J+UtIfi49qUDKU99WNqxqrI2UbLDEfDR0OxY3Ada24gXnaJY5pMA5qE348fSJA5i5oCUcGj03/2
+	3uxd4ndmBHcQFvy7rYKY4PeucCE4Y4GdxlSxonhL0p/63pS2nYbvYDIkrcGwOmmeYtgBP5VcPwX
+	eYLWtYuiJGD6PnvQ/7zhCyAEuRmqIZ6MFeCb9Kzr+1JZ+f1Wt40o4XH2y4uwt0AGQVJeSt4kgEd
+	U4HbWumCPKJEpy0ht//r23jKb3zuTt4K7D5FryJ8Hm7npKlsql12
+X-Google-Smtp-Source: AGHT+IEOpD+kl+Km1XlsTSBzwFa73EBIoRwtiqae0jwdXh5e9rlvHByBsSIb4CIwdc3/eNlq6L1lMg==
+X-Received: by 2002:a05:6830:2a8f:b0:72b:7d60:fda6 with SMTP id 46e09a7af769-72e305555f5mr1501135a34.0.1743689365249;
+        Thu, 03 Apr 2025 07:09:25 -0700 (PDT)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2cc845bb8fcsm261557fac.11.2025.04.03.07.09.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Apr 2025 07:09:24 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	ps@pks.im,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v3 1/2] help: include SHA implementation in version info
+Date: Thu,  3 Apr 2025 09:05:28 -0500
+Message-ID: <20250403140529.497876-2-jltobler@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250403140529.497876-1-jltobler@gmail.com>
+References: <20250401203630.285451-1-jltobler@gmail.com>
+ <20250403140529.497876-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:9F8mu57FgAi05JZm1sQIgrtr5iv+TirzBNRvQaJbNas5RjnRuq6
- b4g+eF0kvzrTSGpwCl5Og1qRdSqjZkBX/mmGQWri90fSGEo9CiWtbUPN2G+btDimwrHqqea
- OnoxWmASiYIHFzzXwmUDhi5gaJAIur6vxVENhh1efoz851tvvNR6CpJPjhnSNx+spXW4fop
- Cko8nI0YTB6Fat6faYg8w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:pZgBnCTqUBY=;iWzJlijs3gEWQAEYJ0K9EvgbcYG
- pI18BemVG1ALxMIqiPI2NFWVNeYe4Biig/4q+z7Zg5Ddnw0/rosN+K/RtJazKQFo9SDxdB6jN
- i2iVNEPUIgaZcOOhhVcY6aM/Or4juJucI1fmwblul2XLlrznoxIojlb8IrZOPjDGjD96md/vC
- Lx4u3O2gD3zzzkrRzT4cJLiTXA2/ZC1yEY7ms11V4T3LV/4D25FUhT2OsPbmoYXmZ8Lv//MIp
- HadF7XFihruTJ9un+Vn4Tg6pV1CvrFHatP8FJKwovLBZjbNDzuGuv9ishe0cPrdOskAwHI9hI
- Genj4K0wul1i8KYccYcLGLamtAb+1NwvQvkov37ltSkjOl8YNRzy3Onn9xsCurJgnuW78N4yQ
- mIDzENedzHAivd04vEZNp1Ro8HO/2LkTSJSs0Spz2IrV0rgM8KvjS+ffMUg6GrsKqHM102IRx
- +2mLBInGfFh9e7JJBrB4evd2SPWTvbPbshDEU7xf5OwuUfiiToHJ6/4sVmr0E97rlm6pBxY5G
- oHkbRe8zJLM8F9aBDvSFcjyOnmh6jQ5x8TTRHtNR2Yp5HrEDv9SKL0JM4lZOGw5stE4W1OJvd
- dxmGHnnpwMydn6hx0k0XufgWFyK6+i/8YQEKyYvSSZ36g195pYSLIQlZ//7Zqi1JoTaSgJe9A
- wMiTTzPmNe8f+cBQw7qHRM1lUYSGQUcsokXRj5667oOTaXJn9fu7+zHlh/CCDaSFkPapehPaB
- FiNTmvRYcMNEDOa1QfbIK++QmNEqi+USXWAUkfLB0LXTND4O045+fwcCfUGTOh51rXDt5R+Gi
- pyvtuf2NTINAwX4JOO3ZRhkAAnPLRoYDOr0Fuo67xnlnKuOfMpSdFfuqUZMcgrx4p2REcRSq+
- sg376+yfrojXrqkGnhsdVOP8LCZWVq+KKiGA2GLtAm8IMMPT/2L4XnVSxeM6dmRpX3do2ZAMj
- bFYfBdq0wdvZCp0z46JqE3Mh32U2l1Y18X1DIenCRdoqDlObHD3ch+KNhKLs4PHTVsdGEbToD
- oQnJpwxgYg42u7kgaOmpEOBypiYXkr3l2gwOZsEXWaZOfyGZcFKjumiHPI8Y1erNLvSLrHW3h
- BFjSg0ogEKYgclMXPxc5pnwOXm/UnuygyhaPmT2bO0kWkEh8lUW6zxrc6DY7cn7lo594ISs+l
- YsbnJC45Ad8PkVlliIUA73cp29b1Yi/rpPGBGCFyR9PYfzkfp6cNTodVhh88UErHDjyM6PK7t
- Tf2PVRXHqgNTYe6gDw+CPvFrZ7RWfL0m4OpEu0TwnRbrTUgYDbALAdUdlC2JkZTH31dBMi0Rc
- TYiS2xNJcgriuTIRl00jw8WmuPrSWflCvchTAaOZMJfF/x+pVZ0XWZbIPGF2uN8Rh80Shbcae
- 8WNNAEj3GY8VPt94rAl+pdpkmlzHSeqR0z6GdRtIDZccY2lgxgLid/bklSwYjmIM/ZUkryP6Q
- tr7wVm35joz/C8fZUWPxD+YEqSlur0LAYlPl2/IP81MdJMVrJ
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Phillip,
+When the `--build-options` flag is used with git-version(1), additional
+information about the built version of Git is printed. During build
+time, different SHA implementations may be configured, but this
+information is not included in the version info.
 
-On Wed, 2 Apr 2025, phillip.wood123@gmail.com wrote:
+Add the SHA implementations Git is built with to the version info by
+requiring each backend to define a SHA1_BACKEND or SHA256_BACKEND symbol
+as appropriate and use the value in the printed build options.
 
-> On 01/04/2025 17:22, Johannes Schindelin wrote:
->
-> > On Fri, 28 Mar 2025, Philippe Blain via GitGitGadget wrote:
-> >
-> > > From: Philippe Blain <levraiphilippeblain@gmail.com>
-> > >
-> > > Since 982288e9bd (status: rebase and merge can be in progress at the
-> > > same time, 2018-11-12), when a merge is in progress as part of a
-> > > 'git rebase -r' operation, 'wt_longstatus_print_state' shows
-> > > information about the in-progress rebase (via
-> > > show_rebase_information), and then calls 'show_merge_in_progress' to
-> > > help the user conclude the merge. This function suggests using 'git
-> > > commit' to do so, but this throws away the authorship information
-> > > from the original merge, which is not ideal.
-> >
-> > It is unfortunate that we cannot fix this, as `git commit` with an
-> > interrupted `pick` _would_ retain authorship, right?
->
-> Unfortunately not. Running "git commit" rather than "git rebase
-> --continue" to commit a conflict resolution when rebasing always loses
-> the authorship.
->
-> > (Why is that so? Can we really not use the same trick with `merge`s?)
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+ Documentation/git-version.adoc | 6 ++++++
+ hash.h                         | 8 ++++++++
+ help.c                         | 3 +++
+ 3 files changed, 17 insertions(+)
 
-Authorship is retained when a `git cherry-pick` (what an unwieldy command
-name for _such_ a common operation!) failed with merge conflicts and those
-conflicts were resolved and the user then calls `git commit`, though.
+diff --git a/Documentation/git-version.adoc b/Documentation/git-version.adoc
+index 80fa7754a6..913ebf147d 100644
+--- a/Documentation/git-version.adoc
++++ b/Documentation/git-version.adoc
+@@ -22,6 +22,12 @@ OPTIONS
+ --build-options::
+ 	Include additional information about how git was built for diagnostic
+ 	purposes.
+++
++The libraries used to implement the SHA-1 and SHA-256 algorithms are displayed
++in the form `SHA-1: <option>` and `SHA-256: <option>`. Note that the SHA-1
++options `SHA1_APPLE`, `SHA1_OPENSSL`, and `SHA1_BLK` do not use a collision
++detection algorithm and thus may be vulnerable to known SHA-1 collision
++attacks.
+ 
+ GIT
+ ---
+diff --git a/hash.h b/hash.h
+index 4367acfec5..51cd0ec7b6 100644
+--- a/hash.h
++++ b/hash.h
+@@ -2,16 +2,20 @@
+ #define HASH_H
+ 
+ #if defined(SHA1_APPLE)
++#define SHA1_BACKEND "SHA1_APPLE (No collision detection)"
+ #include <CommonCrypto/CommonDigest.h>
+ #elif defined(SHA1_OPENSSL)
++#  define SHA1_BACKEND "SHA1_OPENSSL (No collision detection)"
+ #  include <openssl/sha.h>
+ #  if defined(OPENSSL_API_LEVEL) && OPENSSL_API_LEVEL >= 3
+ #    define SHA1_NEEDS_CLONE_HELPER
+ #    include "sha1/openssl.h"
+ #  endif
+ #elif defined(SHA1_DC)
++#define SHA1_BACKEND "SHA1_DC"
+ #include "sha1dc_git.h"
+ #else /* SHA1_BLK */
++#define SHA1_BACKEND "SHA1_BLK (No collision detection)"
+ #include "block-sha1/sha1.h"
+ #endif
+ 
+@@ -46,17 +50,21 @@
+ #endif
+ 
+ #if defined(SHA256_NETTLE)
++#define SHA256_BACKEND "SHA256_NETTLE"
+ #include "sha256/nettle.h"
+ #elif defined(SHA256_GCRYPT)
++#define SHA256_BACKEND "SHA256_GCRYPT"
+ #define SHA256_NEEDS_CLONE_HELPER
+ #include "sha256/gcrypt.h"
+ #elif defined(SHA256_OPENSSL)
++#  define SHA256_BACKEND "SHA256_OPENSSL"
+ #  include <openssl/sha.h>
+ #  if defined(OPENSSL_API_LEVEL) && OPENSSL_API_LEVEL >= 3
+ #    define SHA256_NEEDS_CLONE_HELPER
+ #    include "sha256/openssl.h"
+ #  endif
+ #else
++#define SHA256_BACKEND "SHA256_BLK"
+ #include "sha256/block/sha256.h"
+ #endif
+ 
+diff --git a/help.c b/help.c
+index c54bd9918a..991a9525db 100644
+--- a/help.c
++++ b/help.c
+@@ -9,6 +9,7 @@
+ #include "run-command.h"
+ #include "levenshtein.h"
+ #include "gettext.h"
++#include "hash.h"
+ #include "help.h"
+ #include "command-list.h"
+ #include "string-list.h"
+@@ -803,6 +804,8 @@ void get_version_info(struct strbuf *buf, int show_build_options)
+ #elif defined ZLIB_VERSION
+ 		strbuf_addf(buf, "zlib: %s\n", ZLIB_VERSION);
+ #endif
++		strbuf_addf(buf, "SHA-1: %s\n", SHA1_BACKEND);
++		strbuf_addf(buf, "SHA-256: %s\n", SHA256_BACKEND);
+ 	}
+ }
+ 
+-- 
+2.49.0
 
-Why can this technique not be used in interrupted `pick`/`merge` commands
-of `git rebase`?
-
-Ciao,
-Johannes
