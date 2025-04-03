@@ -1,109 +1,93 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F8B1DF975
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 11:07:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242571F8720
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 12:12:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743678464; cv=none; b=IJs0ETILZOPHBoQtUqvSPa1QCRz1hKjeLG0MCwb8bzWkY7TZSwp/gvUEnRsP5ys5b0+sNrY8NtQc74Qd+QCBOHMv0S6ICdGQMPPUhfuOq7ZyNJRVTs8xv56SRPJLDEUBDqA6SsHkQLpwjnJkSZr8EPrD2MsR9J30zAxlkx495uY=
+	t=1743682373; cv=none; b=pGP6QcZOvr+SNpTxZSZEQg8dhogsMc1XhrNIiGEPvAXZgHV1Cni05ZiSL4JMZ7w1i5By98pRuQF8N9U1mx44aR11UPK1rUb8oJA9J+pZuc2J0R4RclUuemsZSzTr8i46UkU+qmHOAPpaPInSyKSkA0cG0nS9Lq+bFY7JRPWyhhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743678464; c=relaxed/simple;
-	bh=XCCTJiHt+oYVPwfW4sTtlYv2R4TgwPBmoh5dtuBt5x4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PTOAQEvCTqp8k2e3v7vLnDcOQ9vgZ1I9Wn1XaUsXorQ3W7d85+CLsgHWyTtnmNF39EYshz4Iv8v9i/yU6FI7j//Lb5pCADBUBSoS1jsQ6yizrHgXJWB35RcH4LxXbG0Bxn7e7odKIfELE/4oCuFXKXxYIVtpOK7m+mMpTaJOzp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a04iBB8j; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743682373; c=relaxed/simple;
+	bh=OjLXyBh+6DCwBs9UwvPjazTVbn6AuDEF08A8ddUyuoU=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=FpXa+fWLHvdnbIOq7wbs1zMqGjTUrhbGUMO+nK0rONQhJvvNJlbXYXSTxmKCdTn72e549wUXrT4maL+dITVmqkaxPlpi/VhQ7qW51wFHwNpls7xIjCnKK5sIsGieVpZb2sRK3gdmx8wZMWsP5l6zvFFzDxkFB6IhjfLgjsqHvrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ovF6bH0s; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a04iBB8j"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5eb92df4fcbso1470488a12.0
-        for <git@vger.kernel.org>; Thu, 03 Apr 2025 04:07:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743678459; x=1744283259; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XCCTJiHt+oYVPwfW4sTtlYv2R4TgwPBmoh5dtuBt5x4=;
-        b=a04iBB8jBloIOuE2RP16dPbWQLXqdwbDlTmKu3EL+O7rRbYgv1pydPJj20VMP/62ff
-         RELUJ6McEFPlBZ+6Wo1lPLW9NZbYuUUeUKiRPB4NMolbcx8spKB3OQ4SCiHvKzXg2Ba3
-         sKQ4QpoWrMWyGdY2H5ZuBpyzMxB8Us3buMTMxYFDYUlzPJJiYRlCVsN3zqVOovJ7EQCj
-         JgpFYOw7Ob4Wd3cOkCDY6enQ2Alfg8JmtnSCl5HGaOrwK8VgHcMFnNOqW/hnDcOEHNUS
-         xCBCMmmcPJTGO+g8eDoVoGzSYRe18Xb8o7As52hIupKVH96n5jdfjuCrKsO8Ryto4mS/
-         qckg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743678459; x=1744283259;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XCCTJiHt+oYVPwfW4sTtlYv2R4TgwPBmoh5dtuBt5x4=;
-        b=ORvIFXBNr2ExH30thxEkXeHhXfqiOXAVUj+KSDoMBwyuj1Ui2YAt9AyCyiZMl6h0GI
-         WQ+dr3U+3kiMxN8uXe4bUgzOnjM6hV3iozP1AJYeWA0nnENuMi6bmNoiG8COvtAzXFLc
-         TOb2TUGU9q7r+JUFmbie+rXoXyp+rfIAmWVbtBrHBO4iGGRZdS02PFP8bvbD3wGS45t5
-         qSzZroBRBL794jOVse1bI0pI1PVtz3xpHI679nPPZ32ZEdUlCIF+UjgdrOeL3VqQGhFk
-         vIQ2x7OB+onmb1ljQR6wree8UK1o0q4G5NiQ8NJklKb/0luAzqKHwrVc+lwfGkvKy063
-         RuyA==
-X-Gm-Message-State: AOJu0YwLjirCQ/dU35OfvDGA1TcxdXIUJh56XX9k0da6eFL9cyKS+gru
-	GT1UTigHGJ4wHLKjGxT8iOwkrdUa4MHn14HSScgS4en0yxc+VtchE65m5rISsCZ8peE1rDmGnFy
-	A/t3aPH0ex/K3HbEmMvGWrWyfpU4=
-X-Gm-Gg: ASbGnctotO1iv73Ka4qwyt7sNaGpQd2LUee/5KI/Y7UbB+RPd2vkhSq2PNkdQoPui2O
-	8hkoyy2LjxleOU1AWe52RRGdAe7HYepIljsILGJXChRtJp7P2qDaX07hjR7y7nqwxzN/ABBcuHZ
-	mudR+aRG1KcPdgmHw62zqdS92wKa3j
-X-Google-Smtp-Source: AGHT+IEGbtWQIBJc2FbBNphenBxVNmYHQAyuEc01yNqS1qkx3PjUkSbZLgDBEmmLYxFUHf8F2+q1+FywYfDXFU2yldo=
-X-Received: by 2002:a05:6402:13cb:b0:5dc:63d:b0c1 with SMTP id
- 4fb4d7f45d1cf-5f08726eb02mr1457539a12.29.1743678459131; Thu, 03 Apr 2025
- 04:07:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ovF6bH0s"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1743682369; x=1744287169;
+	i=johannes.schindelin@gmx.de;
+	bh=Wr+WBmfhFbaHiodyvn+8iYHFaN445q8VwA77oKlF7Zs=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=ovF6bH0sQf967Rwn2eP7m24Ns+y/wJ/ojdLNni0IjdrKGJfZLxM2CnvEU1A6uRQW
+	 6TOjn5E/cc+nyMx1FdkxsgS0t4eACzE/n9t7la5MzyGC1WRliEVlF1bXSqc/Xxc/+
+	 PlhuEje670IFMX92DjgqegdtcQ2yocAOLr5gV8+ANMzO6YGCSTb7oOnYDhkZmWmHA
+	 9UA0GG6Sd8nTliPxVyjTfVMyugXqpJUr/Tdhyoaohmr2KQ92pvfW0uv3W0ghaHII/
+	 DFdFdHFb8QBfzSBkkbEwLypcDa0M1mYIu4ZvH7kzpFnOxSU8+f47LKLHgDneYxzCa
+	 Vdo4SQ0WhdFf2/aTPQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.213.156]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MNt0C-1tkopN0M8G-00M7eK; Thu, 03
+ Apr 2025 14:12:49 +0200
+Date: Thu, 3 Apr 2025 14:12:48 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>, 
+    Karthik Nayak <karthik.188@gmail.com>, 
+    Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v4 00/20] t: drop Perl as a mandatory prerequisite
+In-Reply-To: <20250403-b4-pks-t-perlless-v4-0-be20ac3db39a@pks.im>
+Message-ID: <5e00e50f-e2c5-a633-28ee-684e5026e92e@gmx.de>
+References: <20250320-b4-pks-t-perlless-v1-0-b1eefe27ac55@pks.im> <20250403-b4-pks-t-perlless-v4-0-be20ac3db39a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+i-1C1DM0CHoFJ0A5CchQg=qDVLi_SSiZqcd0dxsay-Y94WTQ@mail.gmail.com>
-In-Reply-To: <CA+i-1C1DM0CHoFJ0A5CchQg=qDVLi_SSiZqcd0dxsay-Y94WTQ@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 3 Apr 2025 13:07:27 +0200
-X-Gm-Features: ATxdqUHKwDBqa_WdDBQ8KJ-ByO9lWyVUYMRtt-8zZWNrV2ra_doUg9GnjhW1OhM
-Message-ID: <CAP8UFD0SxKOYFegN=DnmyY5RW7dMqyohGzeCfoVLNOtwjY2APA@mail.gmail.com>
-Subject: Re: git-interpret-trailers and period characters in the key
-To: Brendan Jackman <jackmanb@google.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Bhmdy9GzzbYOArywmE5i19BS/4Wj2ZsSp/S3jLJowYPND+rI4R5
+ 74TXL/e8Hb1Ed03/vOcUBHTzBGQh+bBYMKVx6ooW16zAtDJyL9BkFGalHx9orHduCXT0Wyk
+ GYYas9oozbatE2t/GAGFVAx6kw0Rx6kSAO6+pdNIxo0aM217conony1YPp17/Kjusl9d0EN
+ HrqoUv3NqXB+EvDLeSKQA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:BqtadnRGfpA=;ysKq9mJHmYE8AM8/l4I44/rfqjk
+ sJ3/KdfS1WcG3kr95a5tKlvZXH3Z+6w7rQrqYW6IYcaCbvXCXoekh1hV6cg9JHtPcxprpYsf6
+ UVV3Gk+DcCoXVzgwjux7qXyJfhtJqcufThCozSuToR+Pk2u319IhOGHwP//jKPt++t4Nkog8w
+ XzFNM/G6q3/c2lReoRPXcmutl9dzI8dA1YQHHulGydA/w1whnKk9NuIfKE6LkDI/N/shw7vOJ
+ xVGcP1KzFEvBia6xNJDpJk1aeQvrFWsRAiqmO26QTBBWE5lifQQUd4nBRYa+BDmtO7lHYIdsm
+ TQ/vOuc2COC4BybXhh9NW9Bto/0/oi95CTBCVUTNpZIiHJgVyrYI2ed2K2CKiudS8upKP9/Xa
+ PRSJqe0yvVtinaebBIY+zh/wwlrpe3tVQ7NcKPR20/Xm9YGyCDTzO08onudEzHbJihgVcD+H/
+ kCb7ps7V2swIP/fdhN2Jbx9+f0mtJjjnh0BILsjx14R/0JaOBWH9RpvZdbLs5jouohph+BRvy
+ J6f7v6hDW1ab3+iXO+qKjn1QRqEGjZj9u99/GTMtuZtj4UHhQGCf1H5JstnUuKGqXh/B62Y06
+ BcSuvk1/1kUX1xcRzRU334TXk/ocXZfRiaF9VFSR2wToxZrJuDkQrSlagk86AOt1FPI0qk1td
+ UqlT5AAmF0CZtSc2n4vD/NtHWCV0F9Vd3tgIGwGSGEG2smaD8AdyvfvJkh1nmEDxCl9QlPJE0
+ am2r9fCtuUWVl8kLIJ+3itJPob/Jt9/pyOT00wjKyGIKhtnuiP9jm4+6/CbC8BIUUsw+tFRaE
+ BH573CrvHFlqdg7a7h0H3X/KAt++eNG19Qs/RdIu31ZROvTVP54vx/NVTipx2pjZo04K+STdq
+ V7qxXm/xyoa0cJCuHbcXCiZF2ZvA7UDEMwbrf/oYP6+zMEJvMvr1v1o0PbFWykjwqBLWo8kmg
+ AvgIn4u6t/9w8rYCcSxKqadEyWSD7FxzktsOgms2+EUXFcmVGUxUXKoRoT5Mp7NYHxjST0Aoa
+ xCtD1//t7qqRtTreDlQFPcdwxAa0SLP4xK81AVBrorGUWqbdN+P0uAnA4/fnpmePCA5gCVgCR
+ Y8WBZ6+Yccrh+rJhwIV5DILe0BGPrz1eTKPpgl/aFnebfj5mzQpfyfSiyDZHNfemee6edHYdT
+ JjtRZi1toYPE8+SEZIzLXPTuTDUMukPMO8Y8jIrKpPkjKYqKPN2bjIxuM7v4bgsLAjWmGI2XQ
+ NgzP7di6YfMmvNXuGcuh7k2XbXSoryCflXpN9YGmnFN9ygi5aC8LS9AQaXQs+ffefQA5YjuK3
+ c6RebE5DXCsnAwfyrblTniaavuOzDS5g0lnfDv/Dwk3XzL4SJIElI9jt2U5MDOYNQphK1/faJ
+ VIbSyiM+k1CQXrrNQ5EmN5kMoTQtIVylVDDYoBGtdvYdGvmntWDu2EIri3z2XdL193SGIa8j3
+ o7Nza/4rNia+Yrn88nA0nX7u4sjJ8UAslt2uvKXF2EzQ9BFNc
 
-Hi,
+Hi Patrick,
 
-On Tue, Apr 1, 2025 at 3:27=E2=80=AFPM Brendan Jackman <jackmanb@google.com=
-> wrote:
+On Thu, 3 Apr 2025, Patrick Steinhardt wrote:
 
-> Basically, as soon as any trailer key contains a period (which in my
-> case, it does because the trailer keys refer to versions of of
-> software, i.e. "this commit was backported from the following Linux
-> kernel commit which appeared in version 6.1"), it stops parsing the
-> trailer block.
->
-> My guess is that this is just that it doesn't allow periods in the
-> trailer key, and once there's one line in the block that isn't a
-> trailer, it no longer meets the requirements described in the man
-> page.
+> Changes in v4:
+>   - Improve a couple of commit messages to better explain the changes.
+>   - Link to v3: https://lore.kernel.org/r/20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im
 
-Yeah, it's also my guess that the trailer block is not considered a
-trailer block anymore as your trailer key is not considered a valid
-trailer key.
+Looks good to me, as well as the range-diff.
 
-> I can't find anything in the man page about why the period character
-> should break this. Am I missing anything there?
-
-We tried to be quite strict when implementing trailers to avoid
-regular text to be too easily considered trailers.
-
-Having a config option or something to be a bit more lenient and
-accept more characters in trailer keys could help some people, and it
-might not be very difficult to implement. On the other hand if people
-start to have a lot of weird trailers around, and abuse the config
-option to make it too lenient, then it could be a bad thing in general
-as more and more regular text might be interpreted as trailers.
-
-I also agree that our doc about this could be improved. Patches welcome.
-
-Best,
-Christian.
+Thank you,
+Johannes
