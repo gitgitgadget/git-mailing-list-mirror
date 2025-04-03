@@ -1,134 +1,109 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0EA24BC14
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 11:06:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F8B1DF975
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 11:07:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743678382; cv=none; b=WG6OTpcnK2xNfy2W48LM3MRufq6BhmvPKsSTA02Kr2yThugWHwiaQ56lGMR5g9xew0FNgLNNwqcvxIuLZXs5nknbEpDjTArJxHEyrvrX5AQ+NQ754HpYo9ma4GxTkGe0yMor2SzCq17ys18zVQ9Tc8eBeOKNt4relSNt+w6AiYg=
+	t=1743678464; cv=none; b=IJs0ETILZOPHBoQtUqvSPa1QCRz1hKjeLG0MCwb8bzWkY7TZSwp/gvUEnRsP5ys5b0+sNrY8NtQc74Qd+QCBOHMv0S6ICdGQMPPUhfuOq7ZyNJRVTs8xv56SRPJLDEUBDqA6SsHkQLpwjnJkSZr8EPrD2MsR9J30zAxlkx495uY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743678382; c=relaxed/simple;
-	bh=IwlxeT7dvr4VIOrYaM08XhCxYq7VjnE4H/mO9iVNyX0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EvYJ9ap1g/HXXLwXDJ/2TMTWOOLGN9Xa7rsnzf7yYiTmLkKlf1wjlVwYILDUUh+/IY0nE/2if593eL+MqSJx3T1Fq7GGb2jQpkevdEPq0Es6IW/749lUMEdMFlgcios02ouc7GqxaFxOZBkxP0Vvv5ieKIE5Zv3jlFqTMNmlmRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=K+35iCF0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jrf/G4q1; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1743678464; c=relaxed/simple;
+	bh=XCCTJiHt+oYVPwfW4sTtlYv2R4TgwPBmoh5dtuBt5x4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PTOAQEvCTqp8k2e3v7vLnDcOQ9vgZ1I9Wn1XaUsXorQ3W7d85+CLsgHWyTtnmNF39EYshz4Iv8v9i/yU6FI7j//Lb5pCADBUBSoS1jsQ6yizrHgXJWB35RcH4LxXbG0Bxn7e7odKIfELE/4oCuFXKXxYIVtpOK7m+mMpTaJOzp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a04iBB8j; arc=none smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K+35iCF0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jrf/G4q1"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8D0CA25401E0;
-	Thu,  3 Apr 2025 07:06:17 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Thu, 03 Apr 2025 07:06:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1743678377; x=1743764777; bh=6OBldW7ydT
-	Ab3nbU/oNJTNg+66nZINCHIac8PHKETUM=; b=K+35iCF0opWh+8W6gL1BMBWwAn
-	9ckik+yDTpju1wfaXpgoxwLTP156vSYLzZKM+kn7uKnSboEp0j+hP0+2IoJDuK4E
-	qcdtm4hLpQsFAnBI5XsOkeO4yAkNpa/OtRPAmiNjW2JB+jwFbWdgGl/HM28C+0TG
-	DqjD4Fbv0ZSgjnXxX51Hz0TdwMgrau93vkQSEQ5jX1NIjuNJpTv60J7XQLJXzrgH
-	m7RyIA8f2USGQhT1JE6GYALY3ZIPFPyeugOyC6pKAFrLXWfXn83vF2niRTMEmnQK
-	5rHi/InhSdsWEV64ASJJTb6crjxOd6t+KcmamgiD3VYn1WGBeT3uClU3/oag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743678377; x=1743764777; bh=6OBldW7ydTAb3nbU/oNJTNg+66nZINCHIac
-	8PHKETUM=; b=jrf/G4q1ShvR5LrEL2DvgzxeC7WFdufRAdCdGNldm9+NTSGw6AK
-	iA1MDhcKr7ZoXLtBQrfnsl4dBT2yjLv1Yl5OoGgK+n3/PJgWlPxldyItW9jfnVZN
-	A7eCPr87B6lFVw6LOiUCYhWXENXfqB7StMFxynBA/iEyF4VZu5eAAKse41bwvjC3
-	+hpbx9LbE3+O/HVcyDfXaBxO7r+CwtyHKg8CdGXEu7x2OQD+WI2ilgw0WvDL3Ymu
-	8t7iJaLIACREA9EbaN8bFcwGVoFlepAnQ3pduFs9x0rjYgYxhQIDLclgoCdWWIMI
-	hQ5a8yVm/UOAFKB7+QPnCURpKAQJJrniMJA==
-X-ME-Sender: <xms:qWvuZwe7aODmy0PN6UvzYgqP9zB_IbfnQvgcThU4Y6mbzVAuhmFrrA>
-    <xme:qWvuZyMICmmqcZIEb1DI7Mshf9bq-D4FaT3yNFYzfSifXLWPNQ-T3kNbg4Tnbs8fg
-    mb2xqI7rj6kI8mY4A>
-X-ME-Received: <xmr:qWvuZxhBOY5NaNIV3XMxZoqKIl0dHqpbJ-kM9TdrCBxK9hDPRYKRR2PUh5G-n_iHIa4gJHwmO0Uc2KD9yrium-lRL_oXtK64W8ewl4JuI6576es>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeekfeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehgohhoghhlvgdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    oheprhgvmhhosegsuhgvnhiilhhirdguvghvpdhrtghpthhtoheptghhrhhishhtihgrnh
-    drtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgtohhtthesghhithgs
-    uhhtlhgvrhdrtghomhdprhgtphhtthhopegvkhgvmhhpihhnsehgohhoghhlvgdrtghomh
-    dprhgtphhtthhopehphhhilhhiphhmvghtiihgvghrsegslhhuvgifihhnrdgthh
-X-ME-Proxy: <xmx:qWvuZ1-z3xWD__wyDOn_osqFntb68mga1z5JExZR4-xg8NwHiwxpvQ>
-    <xmx:qWvuZ8t9PkXjTe8Iv7LjIjAr3e_WjTNTsn4SIYQ3XlBWPlJFuFzijQ>
-    <xmx:qWvuZ8GNqiKI4zthQOT-MjUYQTes9ADViAHW737FtOxdXR2wkHfddw>
-    <xmx:qWvuZ7NSg3yURBiMuq8xvYDhFsxNvnlGQBCxqfaPHvEwnjsebqoWWQ>
-    <xmx:qWvuZw73ls-3yjlSp3ssDbxpymDw0itXuUkojToaYsJKw6VWyzmBV_3f>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Apr 2025 07:06:15 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c938ee97 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 3 Apr 2025 11:06:14 +0000 (UTC)
-Date: Thu, 3 Apr 2025 13:06:13 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Remo Senekowitsch <remo@buenzli.dev>
-Cc: Martin von Zweigbergk <martinvonz@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Edwin Kempin <ekempin@google.com>,
-	Scott Chacon <scott@gitbutler.com>,
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-Message-ID: <Z-5rpWKAVPmz32jC@pks.im>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <Z-5QR57zgSsm6jNP@pks.im>
- <D8WXTCOESY86.3RRJOR5GPUL47@buenzli.dev>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a04iBB8j"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5eb92df4fcbso1470488a12.0
+        for <git@vger.kernel.org>; Thu, 03 Apr 2025 04:07:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743678459; x=1744283259; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XCCTJiHt+oYVPwfW4sTtlYv2R4TgwPBmoh5dtuBt5x4=;
+        b=a04iBB8jBloIOuE2RP16dPbWQLXqdwbDlTmKu3EL+O7rRbYgv1pydPJj20VMP/62ff
+         RELUJ6McEFPlBZ+6Wo1lPLW9NZbYuUUeUKiRPB4NMolbcx8spKB3OQ4SCiHvKzXg2Ba3
+         sKQ4QpoWrMWyGdY2H5ZuBpyzMxB8Us3buMTMxYFDYUlzPJJiYRlCVsN3zqVOovJ7EQCj
+         JgpFYOw7Ob4Wd3cOkCDY6enQ2Alfg8JmtnSCl5HGaOrwK8VgHcMFnNOqW/hnDcOEHNUS
+         xCBCMmmcPJTGO+g8eDoVoGzSYRe18Xb8o7As52hIupKVH96n5jdfjuCrKsO8Ryto4mS/
+         qckg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743678459; x=1744283259;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XCCTJiHt+oYVPwfW4sTtlYv2R4TgwPBmoh5dtuBt5x4=;
+        b=ORvIFXBNr2ExH30thxEkXeHhXfqiOXAVUj+KSDoMBwyuj1Ui2YAt9AyCyiZMl6h0GI
+         WQ+dr3U+3kiMxN8uXe4bUgzOnjM6hV3iozP1AJYeWA0nnENuMi6bmNoiG8COvtAzXFLc
+         TOb2TUGU9q7r+JUFmbie+rXoXyp+rfIAmWVbtBrHBO4iGGRZdS02PFP8bvbD3wGS45t5
+         qSzZroBRBL794jOVse1bI0pI1PVtz3xpHI679nPPZ32ZEdUlCIF+UjgdrOeL3VqQGhFk
+         vIQ2x7OB+onmb1ljQR6wree8UK1o0q4G5NiQ8NJklKb/0luAzqKHwrVc+lwfGkvKy063
+         RuyA==
+X-Gm-Message-State: AOJu0YwLjirCQ/dU35OfvDGA1TcxdXIUJh56XX9k0da6eFL9cyKS+gru
+	GT1UTigHGJ4wHLKjGxT8iOwkrdUa4MHn14HSScgS4en0yxc+VtchE65m5rISsCZ8peE1rDmGnFy
+	A/t3aPH0ex/K3HbEmMvGWrWyfpU4=
+X-Gm-Gg: ASbGnctotO1iv73Ka4qwyt7sNaGpQd2LUee/5KI/Y7UbB+RPd2vkhSq2PNkdQoPui2O
+	8hkoyy2LjxleOU1AWe52RRGdAe7HYepIljsILGJXChRtJp7P2qDaX07hjR7y7nqwxzN/ABBcuHZ
+	mudR+aRG1KcPdgmHw62zqdS92wKa3j
+X-Google-Smtp-Source: AGHT+IEGbtWQIBJc2FbBNphenBxVNmYHQAyuEc01yNqS1qkx3PjUkSbZLgDBEmmLYxFUHf8F2+q1+FywYfDXFU2yldo=
+X-Received: by 2002:a05:6402:13cb:b0:5dc:63d:b0c1 with SMTP id
+ 4fb4d7f45d1cf-5f08726eb02mr1457539a12.29.1743678459131; Thu, 03 Apr 2025
+ 04:07:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <D8WXTCOESY86.3RRJOR5GPUL47@buenzli.dev>
+References: <CA+i-1C1DM0CHoFJ0A5CchQg=qDVLi_SSiZqcd0dxsay-Y94WTQ@mail.gmail.com>
+In-Reply-To: <CA+i-1C1DM0CHoFJ0A5CchQg=qDVLi_SSiZqcd0dxsay-Y94WTQ@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 3 Apr 2025 13:07:27 +0200
+X-Gm-Features: ATxdqUHKwDBqa_WdDBQ8KJ-ByO9lWyVUYMRtt-8zZWNrV2ra_doUg9GnjhW1OhM
+Message-ID: <CAP8UFD0SxKOYFegN=DnmyY5RW7dMqyohGzeCfoVLNOtwjY2APA@mail.gmail.com>
+Subject: Re: git-interpret-trailers and period characters in the key
+To: Brendan Jackman <jackmanb@google.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 03, 2025 at 12:38:52PM +0200, Remo Senekowitsch wrote:
-> On Thu Apr 3, 2025 at 11:09 AM CEST, Patrick Steinhardt wrote:
-> > On Wed, Apr 02, 2025 at 11:48:01AM -0700, Martin von Zweigbergk wrote:
-> > The biggest question is of course backwards compatibility -- can we
-> > introduce a change ID into the commit metadata without breaking existing
-> > users? I guess you'll already have a lot of experience with this given
-> > that you essentially already inject change IDs into metadata, and tools
-> > generally handle this just fine?
-> 
-> Jujutsu has been injecting a 'jj:trees' header into commits to track
-> more metadata around merge conflicts. There weren't any problems with
-> that, unless one uses git to rewrite these commits with e.g. git-rebase,
-> in which case that header is simply lost. But commits with conflicts are
-> usually not pushed to a remote anyway, so the risk there was minimal.
-> Scott Chacon with GitButler has more experience in this regard, since
-> they actually push commits with a change-id in its header to remotes.
-> He told the Jujutsu community that they didn't encounter any problems,
-> no misbehaving tools that are fussy about unknown headers. The only
-> problem is unknown commit headers being dropped by Git itself, depending
-> on how it is invoked by the remote. (GitHub seems to preserve the header
-> during a rebase-merge, because they use git-replay. GitLab and Forgejo
-> drop the header.) With these insights from Scott, Jujutsu is moving
-> forward to put the change-id in the commit header.
+Hi,
 
-Yeah, Scott made me aware of the limitations in GitLab already. We
-wanted to migrate to git-replay(1) for a long time already, but never
-got around to actually doing this. Coincidentally I have recently been
-talking with Chris, who proposed to finally go through with this change.
-I guess this here is another factor that will make us schedule this
-change sooner rather than later.
+On Tue, Apr 1, 2025 at 3:27=E2=80=AFPM Brendan Jackman <jackmanb@google.com=
+> wrote:
 
-So: we'll soon start working on it, but I won't promise any timeline.
+> Basically, as soon as any trailer key contains a period (which in my
+> case, it does because the trailer keys refer to versions of of
+> software, i.e. "this commit was backported from the following Linux
+> kernel commit which appeared in version 6.1"), it stops parsing the
+> trailer block.
+>
+> My guess is that this is just that it doesn't allow periods in the
+> trailer key, and once there's one line in the block that isn't a
+> trailer, it no longer meets the requirements described in the man
+> page.
 
-Patrick
+Yeah, it's also my guess that the trailer block is not considered a
+trailer block anymore as your trailer key is not considered a valid
+trailer key.
+
+> I can't find anything in the man page about why the period character
+> should break this. Am I missing anything there?
+
+We tried to be quite strict when implementing trailers to avoid
+regular text to be too easily considered trailers.
+
+Having a config option or something to be a bit more lenient and
+accept more characters in trailer keys could help some people, and it
+might not be very difficult to implement. On the other hand if people
+start to have a lot of weird trailers around, and abuse the config
+option to make it too lenient, then it could be a bad thing in general
+as more and more regular text might be interpreted as trailers.
+
+I also agree that our doc about this could be improved. Patches welcome.
+
+Best,
+Christian.
