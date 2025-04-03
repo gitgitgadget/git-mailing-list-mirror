@@ -1,125 +1,104 @@
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F232500C5
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 16:40:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711B62512ED
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 17:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743698433; cv=none; b=R3ndf+/fFqvNg2O3Mz21i8MrRxdXegL1V03ks4T+9hvK39muzgVOdpIHUeu9dx1a8WtJlFn1R5QmFG1oExiVJNWS0N5ri0obhV1Lw5W3kZEYF+8XosiyqiqyF6J54AN/BF2bvgY3BEDToWd+/M4+PJGJQqe11BDnpZ/V4cIAuyY=
+	t=1743699930; cv=none; b=G/rYK+VOW3fxixsgjJLofGn2NcY+Kkt8pcaMDV+YovWxuClwfxro07L9y8p9yUyKC4EYp8sF6sMdYuNc4vLoItt4da/AYBbymbRt9GEqRREeNwd0otXsexr5S+2HHzmvLRs9Ns/TrOE7MZA+/88qLE+zTqJt205fNs3uUMfG5Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743698433; c=relaxed/simple;
-	bh=dkSS0Suwl9vBvvl7MDmS+lFA9/7PPCDJCUn7oB5BP/E=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=CfevvF+G3TRyTVIHSEfrH2jz6r08OMZAz40Up3FexB66UQWgI0p4vL3sBU/hhaiRc2QqKuBdZhVBmXbtYQ/inZzM4dP2Lq8iUkn5/18w5whyMmKtTGbc3DSl0yIuzOtmsiaotTCMq2aXA5NYUxXCxwpG+2Lge0HiyRK6hINIAfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev; spf=pass smtp.mailfrom=buenzli.dev; arc=none smtp.client-ip=80.241.56.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=buenzli.dev
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4ZT6sy2DDSz9sl4;
-	Thu,  3 Apr 2025 18:40:22 +0200 (CEST)
+	s=arc-20240116; t=1743699930; c=relaxed/simple;
+	bh=EVx7oKYtsszoPfRjELLPHP+GUZKXY7DIbv5oaxd+MYU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BXZ8yKPh1Ln3FBDCQtvY/PsisLOixSBOaSWTvrZYhiB9RZkNzuRBEhqgb7+ZZKbIlEpOCXqygGxOjvb1FrGLpsKA1vg5RyboMw1XY/MlhaCz1mYs3JNpq0TdvLekZRq90SLPtS9ABnJGaOGi2C+J732Nr6yHC04rhGpZ4Mf0DcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6ed0d921c6aso1603526d6.1
+        for <git@vger.kernel.org>; Thu, 03 Apr 2025 10:05:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743699927; x=1744304727;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=X6Wx8F7SkpcIQz8APGUiDjshPzt01WFK0P5WY6q1BE4=;
+        b=m0CtotGS6fqGMI7LH8NlAtgb7CR905FwWHypK+Ey2MHuOwlPZjnIuOjMX9cXAa6F7X
+         QxTDWoxrZ/RZ9NjlE1qi5zytaLrE9m2BvTqJ7w3aTaU1pJsZWNRORrzUX56fPdKQCvK3
+         DffR0h8nGd8Ki3reAg2g3jCCkQfjGwOcp0kbbUcDNcDfXi9YxIYN4gxGFrL+Dn0H5DyP
+         xw7Z/M0ud6durEuH9wfzUGAxu7teNet0oPA59Q2xe0oBy1/QODGO/cXjUuh3otnDPtfQ
+         49kND0NzdnX5H4s0Enu/XUYyUxe9l8sycNoGMwC1SOheCwGK30/XcViQIxEI3ElIwn8k
+         S/gA==
+X-Gm-Message-State: AOJu0Yy7+eyQdcfhd2qytbj2TT/T7apowNwhLI9Z0uTs079pN4evw4AQ
+	etQOtMxR3hhLvYVfJ4Gs7j99dKM7pAw/bDBQMJMH03wtPYXLb87lePXOmiHKz5C1PZOjiSenCY0
+	87h1ePIZh6bf2jaJzKA4+orP5C9fbx6ur
+X-Gm-Gg: ASbGncuKJhziZ+UGinxKiPzdh8thezRmeSaOC6j/ovO1DyojhD5XOBDZR3EyY6tjeS5
+	KkDWjaGpoc2RDpLVylOMvSaHMTN3562gWRVjNozttH+zoxXYEnMKEZkH1iY0wBZn6LaHqgry71U
+	KLfI0rbmkRhGu502QK7Lr3zt3OTnSDJRA5gPvkuoqsk1X2+9B1zG6zAPPdTV4+ucJCHBSh
+X-Google-Smtp-Source: AGHT+IEOZWlZjuOj6MFNXRH6g+28yFk6F0ZfU0VBR18jCPfKacvkbJH0aUF2Yv7XqTlIP+Kyr3Bv0siHj2hOFavtlSM=
+X-Received: by 2002:a05:6214:c41:b0:6d8:e6be:50fc with SMTP id
+ 6a1803df08f44-6eef849c07bmr52490856d6.6.1743699927301; Thu, 03 Apr 2025
+ 10:05:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20250403144852.19153-1-sn03.general@gmail.com>
+In-Reply-To: <20250403144852.19153-1-sn03.general@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 3 Apr 2025 13:05:16 -0400
+X-Gm-Features: ATxdqUGtC0UH5_0S_N0D-L71Cl0cixtjeIK3c_2WCG6xxqFYvfTyP2WB4OuE9wQ
+Message-ID: <CAPig+cT1dQL+MfUctyw=9O5Wd2yUqA40pXSgsRHKfNf=6vxQ7w@mail.gmail.com>
+Subject: Re: [PATCH] t7422: remove extraneous argument to printf
+To: Subhaditya Nath <sn03.general@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 03 Apr 2025 18:40:20 +0200
-Message-Id: <D8X5I3W7K1DI.2JYHGNY9L7ZD3@buenzli.dev>
-To: "Elijah Newren" <newren@gmail.com>, "Martin von Zweigbergk"
- <martinvonz@google.com>
-Cc: "Git Mailing List" <git@vger.kernel.org>, "Edwin Kempin"
- <ekempin@google.com>, "Scott Chacon" <scott@gitbutler.com>,
- "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-From: "Remo Senekowitsch" <remo@buenzli.dev>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com> <CABPp-BFRz-yjnti4W17AEBozb0v52kmNsgTLUZW6-MF34R-xdw@mail.gmail.com>
-In-Reply-To: <CABPp-BFRz-yjnti4W17AEBozb0v52kmNsgTLUZW6-MF34R-xdw@mail.gmail.com>
-X-Rspamd-Queue-Id: 4ZT6sy2DDSz9sl4
 
-On Thu Apr 3, 2025 at 5:39 PM CEST, Elijah Newren wrote:
-> On Wed, Apr 2, 2025 at 11:48=E2=80=AFAM Martin von Zweigbergk
-> <martinvonz@google.com> wrote:
->>
->> There are many benefits to having a change id even if it's just
->> local. I mentioned some in my email to this mailing list in [1].
->> For example, it enables
->> `git rebase main <change ID>; git switch <change ID>` without
->> requiring the user to look up the hash of the rewritten commit.
+On Thu, Apr 3, 2025 at 10:52=E2=80=AFAM Subhaditya Nath <sn03.general@gmail=
+.com> wrote:
+> The POSIX man page of printf(1) mentions -
+> > If the format operand contains no conversion specifications and
+> > argument operands are present, the results are unspecified.
 >
-> But <change ID> isn't unique, right?  The whole point of having the
-> change ID is to preserve it despite edits (e.g. rebase, commit
-> --amend, cherry-pick), meaning that you end up with multiple commits
-> with the same <change ID>.
->
-> Why would this work?
->
-> And if it does work, isn't it expensive since you'd need to walk
-> history to find it?  Or do you keep an extra lookup table on the side
-> somewhere?
+> In practice, this means some printf implementations throw an error
+> when provided with extra operands, thereby causing the test to fail
+> erroneously. This commit fixes that issue.
 
-For rebase and commit --amend, the way Jujutsu deals with those is that
-all descendants are immediately rebased on top of the new commit, and
-refs to those descendants are updated as well. That means, the old
-version of the patch with the same change-id becomes unreachable. So,
-at least most of the time, the change-id is indeed unique.
+Thanks, this makes sense.
 
-This doesn't work for cherry-pick, more on that below.
+> Signed-off-by: Subhaditya Nath <sn03.general@gmail.com>
+> ---
+> diff --git a/t/t7422-submodule-output.sh b/t/t7422-submodule-output.sh
+> @@ -180,7 +180,7 @@ test_expect_success !MINGW 'git submodule status --re=
+cursive propagates SIGPIPE'
+>                 COMMIT=3D$(git rev-parse HEAD) &&
+>                 for i in $(test_seq 2000)
+>                 do
+> -                       printf "[submodule \"sm-$i\"]\npath =3D recursive=
+-submodule-path-$i\n" "$i" ||
+> +                       printf "[submodule \"sm-$i\"]\npath =3D recursive=
+-submodule-path-$i\n" ||
+>                         return 1
+>                 done >gitmodules &&
+>                 BLOB=3D$(git hash-object -w --stdin <gitmodules) &&
 
-Some of these features are not in Git yet, at least not to my knowledge.
-That means getting the full benefit of change-ids with Git itself
-would indeed require some more work. I know of rebase.updateRefs
-and rebase.rebaseMerges, which move the Git experience closer to
-Jujutsu, but don't go all the way. AFAIK it's not possible with Git to
-automatically rebase --update-refs all descendants of a commit that is
-amended or rebased.
+This change is obviously correct.
 
-Jujutsu does keep a separate index of change-ids, yes.
+This was added by 65f586132b (t7422: fix flaky test caused by buffered
+stdout, 2025-01-10) which also added a similar loop just below this
+one:
 
->> There is a design doc [2] about the impact on Gerrit and how to
->> handle various cases where the client doesn't understand the
->> `change-id` header. That also includes some discussion about
->> whether cherry-picking should preserve the change id or create a
->> new one. I think there is a lot of value in having a
->> standardized header regardless of what we decide about
->> cherry-picks.
->
-> cherry-pick & rebase preserve author name, email & time, while
-> creating a new committer name, email, & time.  To me, the change-id is
-> about the authorship, and since these commands already preserve
-> authorship, it'd seem weird to me to have cherry-pick not preserve the
-> change-id by default.
+    for i in $(test_seq 2000)
+    do
+        printf "160000 commit $COMMIT\trecursive-submodule-path-%d\n" "$i" =
+||
+        return 1
+    done >>tree &&
 
-I'd say Jujutsu, Gerrit and GitButler think of a change-id as associated
-with a unit of review. (Although it will naturally support reviewing
-sets of patches as well.) Usually only one person will push commits with
-the same change-id, just like people don't usually force-push over each
-others branches. But that's mostly about avoiding logistical problems.
-When an employee leaves a company or is on vacation, it can be perfectly
-reasonable for someone else to take over their work. In that case, it
-would be appropriate to preserve the change-id, even though authorship
-has changed, because the history of code review on that patch should
-stay associated with the new version.
-
-Cherry-picking on the other hand often represents a separate unit of
-review. That review may revolve around whether it makes sense to
-backport a bugfix at all or any additional changes that may have been
-necessary to make the bugfix work in the different, older codebase.
-
-As mentioned above, there's also the issue that preserving the change-id
-on cherry-pick likely results in duplicates. For Jujutsu, it would be
-nice it this was avoided. But it's not infeasible to deal with that
-either.
-
-For Gerrit, it would be important to be able to track a change across
-cherry-picks somehow, since that is a feature they already have. If Git
-decides to preserve the change-id on cherry-pick, there's no problem
-for Gerrit. Alternatives include storing a separate cherry-picked-from
-header or enabling the -x flag on cherry-pick by default.
-
-Remo
+in which the loop variable is interpolated indirectly via `%d` rather
+than directly via `$i`. I suspect that the author's intention was to
+use `%d` for both loops. Thus, for the sake of consistency and to
+match the author's original intent, it may make more sense to retain
+the argument to printf and instead employ `%d`.
