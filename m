@@ -1,82 +1,83 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4441AB530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45A91ACEDF
 	for <git@vger.kernel.org>; Thu,  3 Apr 2025 05:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743656777; cv=none; b=f7VRXTVi3/125vaoIrntGZpcv6NtDOCL4bILpog874BxHLSbOvQS8HyXGlKS07oiWzYPo/y96kJ9Ss44v9gu9A5QqgMehdH9CuVvdGrmugzkqkYqqvtGLheU8GoLa/R701z15HjoBsgyRtX8R0k4I3G01VhdhdTJQPmkvKpdgFo=
+	t=1743656777; cv=none; b=NZWbrzcwjr2ZrTew3BEzx0ljQtlu5GsitxX8YOtPABnCAWtnJJzYBR1brKz87qcXIe19sTRWBVrE7sFw/45XJR2EuuRYmSZut9uB84X2tJG40g8C+VzGewfKB7vk5ouPkhNyEQJuqgx+NZRs0xfZSVHc/DtNpelKlXXzV9cbMW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1743656777; c=relaxed/simple;
-	bh=nIFJ306TPKbrE7SJFsYWFN7Vy3LGf7ecR56WHere+0w=;
+	bh=QNHPbBmbRFsRjoq95fie1sGs224vW1vH1WBrNkbHW+U=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ze2DAQkcNinOxmrPLuB9gDyBk2LurtQdD07lFEAwMKlU227+KacuS/J7wtInRtR6F8I7JBBBKvBeuDXvsGyV5aEWJ9Swifw11FBnhe+O0fcmEc2jNtzJPJKQ5SfGQ8phOqGHzKhBuvVUDhOayL+VWX7r54UCdAd82rouJRNVOY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MkAgIRN0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FeYYamZh; arc=none smtp.client-ip=202.12.124.151
+	 In-Reply-To:To:Cc; b=rPpHf05Ydm11ylDN9nTbIlad5rhJoupVwTCDwpbsAicvU7MSyaoKO6U5hBhgxAQRrMwBVfDg5Wb2HXHna3ZHhpBZq8EJcRr4dlFCOxN3QAVDDGDD6/PdHZT3F4pL6RmTacld2lwiOkXRu7T5hWX292A5t8atZJNPclzBzkkwZp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ncJEeVsG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cUbWm/r8; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MkAgIRN0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FeYYamZh"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7784F1140193;
-	Thu,  3 Apr 2025 01:06:14 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 03 Apr 2025 01:06:14 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ncJEeVsG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cUbWm/r8"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2A11D114019D;
+	Thu,  3 Apr 2025 01:06:15 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Thu, 03 Apr 2025 01:06:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743656774;
-	 x=1743743174; bh=j3O5wJbPmAwQgnNj/89jQqfhUIRUFZvSwTYFAiwrCdQ=; b=
-	MkAgIRN0IPCOpUAYJCM7ulMgubTxko38w8woK8IU2121XxiSPTQRZU6JbUwoCtaA
-	BHtBousilJhK8TFvRKwAub3mgmlzzjka1JoV7GkFMuj81/zS38VKEtGOZIXoW0fA
-	EeF4WWUUN7As66Lf89NGOYTs+TyiYWh1nubGA2PlfunwlDF44VdFxYwUKQHAHxm7
-	W7Et7tUFsdxlvOrgiUeazCZHcRIjJAN9BRMcbqLPdtT1giiQJ719CoV3gPbdypZo
-	YBs9GNmyWADtZpEl76qWB8sJyvNNBbb4MDDN5Je7SQHUNYD40m0btjmOLuCkCTXY
-	t/SUpyhNjhY5jIGQO2yLwA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743656775;
+	 x=1743743175; bh=0zP3sRD6VmBqpdP+Y7HOCiDpxmxNt4mglcrsaGA1A7E=; b=
+	ncJEeVsGBUe8m8P8VVFeoCKNb59lKvkDW4fmae2SGQPNvNLzT+Gu9Sinnm766VGA
+	jGHBwVSs7PDiieaoCqmq2faRWki+6ddBB8Qruql+CBCxEEFrVB/hkLmoITuIlLxe
+	Cu7SvGc9Ddfvf0n1+L+Hy2AEoflRmXD2NicYwxzuJim3bfxMTRkE6IZJjFOVIDUB
+	Ga7V0RrcWQ7Ao3j5HXVMcuHe7yYz0nDSs8Mt4rvlfaA4hirQTe9seK+76sjq56po
+	GGgtrD64O9Yiqa5VwPDTZVqyMALVsiKIiV4FcKAgYe9LpyisITOdkTsPi5IvMhuy
+	s9w9M6184XtoYL14hV4tZA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743656774; x=
-	1743743174; bh=j3O5wJbPmAwQgnNj/89jQqfhUIRUFZvSwTYFAiwrCdQ=; b=F
-	eYYamZh0JZZ+KdAuSjlljFsnVaGjCbjFFKwb4GZ+DF5rYKBD5p6Fpkt2BRqL7Kx+
-	InmFbm36JK1ErhifW0vXRn/4qq915CfaKM4897Kk6kSJvqX1UMa1XNTryPrWcnhM
-	NrnVVlPsr2LlJd+rmLnafaeSjGorUfcfzN8mLarGDpEJZGWXWgVVb0cbJFYMjEkI
-	2Z6WEtC/ywY4xqmJyCs6yE5rngLhvXPvU2Jt/5lA+OaqKR8bcdjDcg9OFzm7Zkzz
-	srHwnypEnFlxcL3ubpYf+2D1l5isN6a+2sN8+3eDuh/neQjlcYAPH6b2YkxgdzKA
-	67F8xG4g98sv28cn46EYg==
-X-ME-Sender: <xms:RhfuZwRIBnhwcBV5fZZKND9yBW3eazajaZ8LzHtc1PFKYrAPZEjKhg>
-    <xme:RhfuZ9xdBuNepwq0vHL3hOf2oGLSvP-tMjXGa3iFlXVyNfc5OCXDnLalcM8ZyB1t6
-    7OqP-JsCrq3LKsSoA>
-X-ME-Received: <xmr:RhfuZ932OahzsvsZDWoMVRgXICv7kd3gaXAsUKRWe4jldBpv8IaI7KuuboSyTVBrOsU3qQhDdUnslc0oCVzQ8zjg5BUVIJwn4ekQ--vNblsHYNw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743656775; x=
+	1743743175; bh=0zP3sRD6VmBqpdP+Y7HOCiDpxmxNt4mglcrsaGA1A7E=; b=c
+	UbWm/r8Rqc2iXqIzi4KmcnaLqJJnglTii0KOLTqJb69Z1+1rLeio9Zmmo75PHnSU
+	ZIQsq8Kc5OkgjnJq+VQFdGV69u+vZtuzxzj4eRyBgxTMVPyvSXlCDtJd9D1uLQmo
+	QfH71LQBu9gs4Ox6iVpvFq7Oi39HS2EGNydTyx/PWTjD9tdFUs4BDF1R/qyYTwxb
+	tS/LcXBgCYxn80KlPqqUIqZWfmb0Uu7fA7srrZdLZVmJktct5Dy4rRXB1DIcAB9W
+	TPoswEqQP+TtusJMNPs/4Ys297OrWYK6TLfGgNWgm+FFw25gPKWOTtj7ygzfjXdl
+	5KgU191aF2yOiXWtVcang==
+X-ME-Sender: <xms:RhfuZ7pQTSd37KLMAvVOt4kxT_oz17-zrO-JeS7W8mAB8ge6GAEotQ>
+    <xme:RhfuZ1qX4DGoLGlMgof4wUt05N2sEpvYhwRyxJ2lF6wqM-a6YMaVUvFXOVIjBJNzO
+    XTVsqnavyQR4dKZUw>
+X-ME-Received: <xmr:RhfuZ4Ol847DSSwwuOp8ma-P13mVcqbFp6tckmej994OUV0u_asHYnl9mxLABcyxFJLJp8ccitWP_8QG4OUIT1_JgdpmKK9lWAktP7LS1B4vrc8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeejieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
     vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
     hgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdp
     rhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpth
-    htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:RhfuZ0AWGDNzxO2KZHNza2WEbvYVn0I2xJoIGSwf9V0tAiLawx26jw>
-    <xmx:RhfuZ5i9gqTSpxtHi16FPqCO3Gdce69Wlz59RSN5v7R5cccu5lN90Q>
-    <xmx:RhfuZwrmB5sG6_RUxP_M6Zvggh83QEorp_Az4OwI4sh1Q8__JVpqUA>
-    <xmx:RhfuZ8h_30pljziWddRRLt6m__33ZjW5VcdMn6AdnJsoJZcIiZMOVA>
-    <xmx:RhfuZ_ksQzkmlObwn6oysltrNFn77hHEAmoemqJiG0ZKayoxJly7ydr7>
+    htohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehjohhh
+    rghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
+X-ME-Proxy: <xmx:RhfuZ-6WGDg1JQdwrxfewvlcHGJnuny1IvMkn0w76mjjJpxRiO5ZKg>
+    <xmx:RhfuZ67bvb1awyrutSYWzW5sGs_AHbiuj-z4Ag19cHeNdBuiSeKiPw>
+    <xmx:RhfuZ2h5g0Z7NVx0hQB2SuSJaAftc-42OZN_fAuqt7Pbh9L0HdjC_w>
+    <xmx:RhfuZ86yi7PCUF96O6FxYZV_4JQ8xZ0q7EpVOJClgJM5n4MIgY5pGw>
+    <xmx:RxfuZ6f6GYeMXmKfx9NSozlFwIohq7RBZ1FSreq-aXipbPPggbTr2cBP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
  3 Apr 2025 01:06:13 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 443b09cc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 3 Apr 2025 05:06:12 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 493f4b26 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 3 Apr 2025 05:06:13 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 03 Apr 2025 07:06:09 +0200
-Subject: [PATCH v4 18/20] t0210: refactor trace2 scrubbing to not use Perl
+Date: Thu, 03 Apr 2025 07:06:10 +0200
+Subject: [PATCH v4 19/20] t5316: refactor `max_chain()` to not depend on
+ Perl
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250403-b4-pks-t-perlless-v4-18-be20ac3db39a@pks.im>
+Message-Id: <20250403-b4-pks-t-perlless-v4-19-be20ac3db39a@pks.im>
 References: <20250403-b4-pks-t-perlless-v4-0-be20ac3db39a@pks.im>
 In-Reply-To: <20250403-b4-pks-t-perlless-v4-0-be20ac3db39a@pks.im>
 To: git@vger.kernel.org
@@ -95,240 +96,73 @@ Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
  Phillip Wood <phillip.wood123@gmail.com>
 X-Mailer: b4 0.14.2
 
-The output generated by our trace2 mechanism contains several fields
-that are dependent on the environment they're being run in, which makes
-it somewhat harder to test it. As a countermeasure we scrub the output
-and strip out any fields that contain such information.
+The `max_chain()` helper function is used to extract the maximum delta
+chain of a packfile as printed by git-index-pack(1). The script uses
+Perl to extract that data, but it can be trivially refactored to use
+awk(1) instead.
 
-The logic to do so is implemented in Perl, but it can be trivially
-ported to instead use sed(1). Refactor the code accordingly so that we
-can drop the PERL_TEST_HELPERS prerequisite.
+Refactor the helper accordingly so that we can drop a couple of
+PERL_TEST_HELPERS prerequisites.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t0210-trace2-normal.sh  | 61 +++++++++++++++++++++++++++++++++--------------
- t/t0210/scrub_normal.perl | 54 -----------------------------------------
- 2 files changed, 43 insertions(+), 72 deletions(-)
+ t/t5316-pack-delta-depth.sh | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
-index ba4c0442b85..96c68f65df2 100755
---- a/t/t0210-trace2-normal.sh
-+++ b/t/t0210-trace2-normal.sh
-@@ -4,12 +4,6 @@ test_description='test trace2 facility (normal target)'
+diff --git a/t/t5316-pack-delta-depth.sh b/t/t5316-pack-delta-depth.sh
+index cd947b5a5ef..defaa06d650 100755
+--- a/t/t5316-pack-delta-depth.sh
++++ b/t/t5316-pack-delta-depth.sh
+@@ -76,18 +76,18 @@ test_expect_success 'create series of packs' '
  
- . ./test-lib.sh
+ max_chain() {
+ 	git index-pack --verify-stat-only "$1" >output &&
+-	perl -lne '
+-	  BEGIN { $len = 0 }
+-	  /chain length = (\d+)/ and $len = $1;
+-	  END { print $len }
+-	' output
++	awk '
++		BEGIN { len=0 }
++		/chain length = [0-9]+:/{ len=$4 }
++		END { print len }
++	' <output | tr -d ':'
+ }
  
--if ! test_have_prereq PERL_TEST_HELPERS
--then
--	skip_all='skipping trace2 tests; Perl not available'
--	test_done
--fi
--
- # Turn off any inherited trace2 settings for this test.
- sane_unset GIT_TRACE2 GIT_TRACE2_PERF GIT_TRACE2_EVENT
- sane_unset GIT_TRACE2_BRIEF
-@@ -59,10 +53,41 @@ GIT_TRACE2_BRIEF=1 && export GIT_TRACE2_BRIEF
- #
- # Implicit return from cmd_<verb> function propagates <code>.
+ # Note that this whole setup is pretty reliant on the current
+ # packing heuristics. We double-check that our test case
+ # actually produces a long chain. If it doesn't, it should be
+ # adjusted (or scrapped if the heuristics have become too unreliable)
+-test_expect_success PERL_TEST_HELPERS 'packing produces a long delta' '
++test_expect_success 'packing produces a long delta' '
+ 	# Use --window=0 to make sure we are seeing reused deltas,
+ 	# not computing a new long chain.
+ 	pack=$(git pack-objects --all --window=0 </dev/null pack) &&
+@@ -96,21 +96,21 @@ test_expect_success PERL_TEST_HELPERS 'packing produces a long delta' '
+ 	test_cmp expect actual
+ '
  
-+scrub_normal () {
-+	# Scrub the variable fields from the normal trace2 output to make
-+	# testing easier:
-+	#
-+	#   1. Various messages include an elapsed time in the middle of the
-+	#      message. Replace the time with a placeholder to simplify our
-+	#      HEREDOC in the test script.
-+	#
-+	#   2. We expect:
-+	#
-+	#        start <argv0> [<argv1> [<argv2> [...]]]
-+	#
-+	#      where argv0 might be a relative or absolute path, with or
-+	#      without quotes, and platform dependent. Replace argv0 with a
-+	#      token for HEREDOC matching in the test script.
-+	#
-+	#   3. Likewise, the 'cmd_path' message breaks out argv[0].
-+	#
-+	#      This line is only emitted when RUNTIME_PREFIX is defined,
-+	#      so just omit it for testing purposes.
-+	#
-+	#   4. 'cmd_ancestry' is not implemented everywhere, so for portability's
-+	#      sake, skip it when parsing normal.
-+	sed \
-+		-e 's/elapsed:[0-9]*\.[0-9][0-9]*\([eE][-+]\{0,1\}[0-9][0-9]*\)\{0,1\}/elapsed:_TIME_/g' \
-+		-e "s/^start '[^']*' \(.*\)/start _EXE_ \1/" \
-+		-e 's/^start [^ ][^ ]* \(.*\)/start _EXE_ \1/' \
-+		-e '/^cmd_path/d' \
-+		-e '/^cmd_ancestry/d'
-+}
-+
- test_expect_success 'normal stream, return code 0' '
- 	test_when_finished "rm trace.normal actual expect" &&
- 	GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 001return 0 &&
--	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	scrub_normal <trace.normal >actual &&
- 	cat >expect <<-EOF &&
- 		version $V
- 		start _EXE_ trace2 001return 0
-@@ -76,7 +101,7 @@ test_expect_success 'normal stream, return code 0' '
- test_expect_success 'normal stream, return code 1' '
- 	test_when_finished "rm trace.normal actual expect" &&
- 	test_must_fail env GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 001return 1 &&
--	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	scrub_normal <trace.normal >actual &&
- 	cat >expect <<-EOF &&
- 		version $V
- 		start _EXE_ trace2 001return 1
-@@ -91,7 +116,7 @@ test_expect_success 'automatic filename' '
- 	test_when_finished "rm -r traces actual expect" &&
- 	mkdir traces &&
- 	GIT_TRACE2="$(pwd)/traces" test-tool trace2 001return 0 &&
--	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <"$(ls traces/*)" >actual &&
-+	scrub_normal <"$(ls traces/*)" >actual &&
- 	cat >expect <<-EOF &&
- 		version $V
- 		start _EXE_ trace2 001return 0
-@@ -109,7 +134,7 @@ test_expect_success 'automatic filename' '
- test_expect_success 'normal stream, exit code 0' '
- 	test_when_finished "rm trace.normal actual expect" &&
- 	GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 002exit 0 &&
--	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	scrub_normal <trace.normal >actual &&
- 	cat >expect <<-EOF &&
- 		version $V
- 		start _EXE_ trace2 002exit 0
-@@ -123,7 +148,7 @@ test_expect_success 'normal stream, exit code 0' '
- test_expect_success 'normal stream, exit code 1' '
- 	test_when_finished "rm trace.normal actual expect" &&
- 	test_must_fail env GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 002exit 1 &&
--	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	scrub_normal <trace.normal >actual &&
- 	cat >expect <<-EOF &&
- 		version $V
- 		start _EXE_ trace2 002exit 1
-@@ -141,7 +166,7 @@ test_expect_success 'normal stream, exit code 1' '
- test_expect_success 'normal stream, error event' '
- 	test_when_finished "rm trace.normal actual expect" &&
- 	GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 003error "hello world" "this is a test" &&
--	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	scrub_normal <trace.normal >actual &&
- 	cat >expect <<-EOF &&
- 		version $V
- 		start _EXE_ trace2 003error '\''hello world'\'' '\''this is a test'\''
-@@ -161,7 +186,7 @@ test_expect_success 'normal stream, error event' '
- test_expect_success 'BUG messages are written to trace2' '
- 	test_when_finished "rm trace.normal actual expect" &&
- 	test_must_fail env GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 007bug &&
--	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	scrub_normal <trace.normal >actual &&
- 	cat >expect <<-EOF &&
- 		version $V
- 		start _EXE_ trace2 007bug
-@@ -185,7 +210,7 @@ test_expect_success 'bug messages with BUG_if_bug() are written to trace2' '
- 	sed "s/^.*: //" <err >actual &&
- 	test_cmp expect actual &&
+-test_expect_success PERL_TEST_HELPERS '--depth limits depth' '
++test_expect_success '--depth limits depth' '
+ 	pack=$(git pack-objects --all --depth=5 </dev/null pack) &&
+ 	echo 5 >expect &&
+ 	max_chain pack-$pack.pack >actual &&
+ 	test_cmp expect actual
+ '
  
--	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	scrub_normal <trace.normal >actual &&
- 	cat >expect <<-EOF &&
- 		version $V
- 		start _EXE_ trace2 008bug
-@@ -211,7 +236,7 @@ test_expect_success 'bug messages without explicit BUG_if_bug() are written to t
- 	sed "s/^.*: //" <err >actual &&
- 	test_cmp expect actual &&
+-test_expect_success PERL_TEST_HELPERS '--depth=0 disables deltas' '
++test_expect_success '--depth=0 disables deltas' '
+ 	pack=$(git pack-objects --all --depth=0 </dev/null pack) &&
+ 	echo 0 >expect &&
+ 	max_chain pack-$pack.pack >actual &&
+ 	test_cmp expect actual
+ '
  
--	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	scrub_normal <trace.normal >actual &&
- 	cat >expect <<-EOF &&
- 		version $V
- 		start _EXE_ trace2 009bug_BUG
-@@ -236,7 +261,7 @@ test_expect_success 'bug messages followed by BUG() are written to trace2' '
- 	sed "s/^.*: //" <err >actual &&
- 	test_cmp expect actual &&
- 
--	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	scrub_normal <trace.normal >actual &&
- 	cat >expect <<-EOF &&
- 		version $V
- 		start _EXE_ trace2 010bug_BUG
-@@ -268,7 +293,7 @@ test_expect_success 'using global config, normal stream, return code 0' '
- 	test_config_global trace2.normalBrief 1 &&
- 	test_config_global trace2.normalTarget "$(pwd)/trace.normal" &&
- 	test-tool trace2 001return 0 &&
--	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	scrub_normal <trace.normal >actual &&
- 	cat >expect <<-EOF &&
- 		version $V
- 		start _EXE_ trace2 001return 0
-@@ -286,7 +311,7 @@ test_expect_success 'using global config with include' '
- 	mv "$(pwd)/.gitconfig" "$(pwd)/real.gitconfig" &&
- 	test_config_global include.path "$(pwd)/real.gitconfig" &&
- 	test-tool trace2 001return 0 &&
--	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	scrub_normal <trace.normal >actual &&
- 	cat >expect <<-EOF &&
- 		version $V
- 		start _EXE_ trace2 001return 0
-diff --git a/t/t0210/scrub_normal.perl b/t/t0210/scrub_normal.perl
-deleted file mode 100644
-index 7cc4de392a0..00000000000
---- a/t/t0210/scrub_normal.perl
-+++ /dev/null
-@@ -1,54 +0,0 @@
--#!/usr/bin/perl
--#
--# Scrub the variable fields from the normal trace2 output to
--# make testing easier.
--
--use strict;
--use warnings;
--
--my $float = '[0-9]*\.[0-9]+([eE][-+]?[0-9]+)?';
--
--# This code assumes that the trace2 data was written with bare
--# turned on (which omits the "<clock> <file>:<line>" prefix.
--
--while (<>) {
--    # Various messages include an elapsed time in the middle
--    # of the message.  Replace the time with a placeholder to
--    # simplify our HEREDOC in the test script.
--    s/elapsed:$float/elapsed:_TIME_/g;
--
--    my $line = $_;
--
--    # we expect:
--    #    start <argv0> [<argv1> [<argv2> [...]]]
--    #
--    # where argv0 might be a relative or absolute path, with
--    # or without quotes, and platform dependent.  Replace argv0
--    # with a token for HEREDOC matching in the test script.
--
--    if ($line =~ m/^start/) {
--	$line =~ /^start\s+(.*)/;
--	my $argv = $1;
--	$argv =~ m/(\'[^\']*\'|[^ ]+)\s+(.*)/;
--	my $argv_0 = $1;
--	my $argv_rest = $2;
--
--	print "start _EXE_ $argv_rest\n";
--    }
--    elsif ($line =~ m/^cmd_path/) {
--	# Likewise, the 'cmd_path' message breaks out argv[0].
--	#
--	# This line is only emitted when RUNTIME_PREFIX is defined,
--	# so just omit it for testing purposes.
--	# print "cmd_path _EXE_\n";
--    }
--    elsif ($line =~ m/^cmd_ancestry/) {
--	# 'cmd_ancestry' is not implemented everywhere, so for portability's
--	# sake, skip it when parsing normal.
--	#
--	# print "$line";
--    }
--    else {
--	print "$line";
--    }
--}
+-test_expect_success PERL_TEST_HELPERS 'negative depth disables deltas' '
++test_expect_success 'negative depth disables deltas' '
+ 	pack=$(git pack-objects --all --depth=-1 </dev/null pack) &&
+ 	echo 0 >expect &&
+ 	max_chain pack-$pack.pack >actual &&
 
 -- 
 2.49.0.604.gff1f9ca942.dirty
