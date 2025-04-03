@@ -1,154 +1,79 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0E0254877
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 19:56:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C3A1A9B2B
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 20:31:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743710214; cv=none; b=HTGLVMNK9SG5IzJrpSEczp7MoPJRP3PJlePqB3292mA1b1B9ArwkHuzB8fpK3qNmnX49VRH0Ks7SbYZ6/JbKKMzpt7esbbZeIu1Q9BXiDqevGsqIehPvV1bS/lak3+dDsJQlqjzOlKLlec4x+m4xKKKGlsR4xGxfKHtPFQxDNPA=
+	t=1743712283; cv=none; b=lClOjKhuGsGo9BUPn32NR7RuFAqT/2KeodX9YCgSnSQN0pWiXDqZVFrvMU8C6KLIpmIpZoLSTQgNTMpLbsO0WULcVxXANVekouJTQ2vUp9w8h/QzRUPffPzirBlXP4zY3mKtOT3DhiSNur5+GVvlt13SHTKsJ6m9+4CNMMY1Wns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743710214; c=relaxed/simple;
-	bh=lvU/BC99/+hRPveqPwRRoyX50p2C597vGPSxEEpmS0w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KskYRnUFnHQ9+K++e6wkQ4dc8Zk9m4NZoipcK9JKlzKMuRsy4SuqYQ5R9M/DHPfXpl09On3VhfryUA/0GoNaM5CXmVArI11tusPlQXZQuB+ZIw0RBQFv42VWWS6sCYiqCjudtdrCKkaSY+/xZHKSUBSzrGid0M58pK2QbRQjfm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=avVNdr7N; arc=none smtp.client-ip=209.85.166.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="avVNdr7N"
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-85e1b1f08a5so32567339f.2
-        for <git@vger.kernel.org>; Thu, 03 Apr 2025 12:56:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743710211; x=1744315011; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V41c7VyXdPxnH7jGN5tcoGCmepKLGtFY5J2RV9jqzNE=;
-        b=avVNdr7NDvLN5IUMvTBy+P0KDJO9lLpev3P94Kf6r8tBpR5UvyPFH9tsJ2sNCSBfxZ
-         zQFmZgHm6JMszDrTSMDF+Y2a7vYbN3DknlFDX9JXUkpAB1tbqJXy3BekewBR3k/FmR5D
-         LViY/a7LfE8PMgp+sBjw0eT8cBTNt+HjP937iPXTOg+dU6+kDb/WMSyVTBVGhEd4AzGT
-         UwRiAhhH/vJhHQ0E0PbIwJzBwlNvQAd3IuVjxfxhLPeixsuPLrAIrh7BB80dGmJeN5KH
-         C2NH9zqPo78oWQ8fivb16sHWMhDeUr9H0bo/9kl/jZhHpZOFZFWFDMUlR4eLkCLhPoC4
-         +dDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743710211; x=1744315011;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=V41c7VyXdPxnH7jGN5tcoGCmepKLGtFY5J2RV9jqzNE=;
-        b=NhGfnGopox9GNHpCEQISFRKKV3HhdwdlMOjm0bNJEXuKuxxpUhWOLqn4fuoGOCPsZz
-         wjsAJBEgu1EsvuEYMrV5Gb7lD6cMfErYErN6jqcL06HlFNBIiJuhdCokKBqjHlgVKsxI
-         hbFr8Pzz3F9mZT4k/G1ZE9tKVQR91+hsYdEn+jfIIF+D29PlK+bXWf/fHB78N73lQpoS
-         UVWYF8AcesQ4z84Q0u0jXa3qsi1wRn1qFl580wtW5wlxx8iiAq+0sNutrjJOCd1eXwjL
-         8vdrWrhgR907Ttqo5sq7ejDBVmtdkg2WvdZ3GLVKz9SqlXxL5lTJtGDIBgZD4obQ0pF1
-         4PvQ==
-X-Gm-Message-State: AOJu0Yya5Z4r3yni7725FXgPuWcDGEKUFAWBoNfQ3rGkQZzrUNwOlSH7
-	lbLu/UBvhNVxHGAhiPKg1Fbtk3k/JfE5tX+vi3ksfH9pTYQ5K2dU3iB73FOk787OYkiZDS5+B79
-	8ZC7aBLOGgKrF3hJjKoQTwaWdKXY=
-X-Gm-Gg: ASbGncuZ6BEeB7d6qup4RfnfiO2wH2SXaggyggKnohfdy/zwnJgzlRm9O7Cekc/tf7x
-	PNBYtVNWm1ZCQMRN7j/wjyGukaTHw/f5IUcZ9lvMPY4XWDsXtXDPzxdjSXqArw+n8EKBX6R0G1B
-	xtpjG60cJrQC0YWDQGbWsIy3A92tUv5eBPYJ+pybf6ygXshkJwEEcV4lYK5yY=
-X-Google-Smtp-Source: AGHT+IHCbBfu83Tz95LEndiky9R1vAM3/U/sHyn47yxmoFmUEdYPrNTbfacMVEjLz9hnR1has+iM7xK2saOrL9TtO9A=
-X-Received: by 2002:a05:6602:4811:b0:85e:2e83:52a5 with SMTP id
- ca18e2360f4ac-8611b422ef9mr121690739f.4.1743710211528; Thu, 03 Apr 2025
- 12:56:51 -0700 (PDT)
+	s=arc-20240116; t=1743712283; c=relaxed/simple;
+	bh=gcJ6S21gn0hbmfCCTjHFYSa41jjIbTmatMYWcfSKqRo=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=E5J1PJRalsc2WmjWv48oeK4F+ovtlN6sSCwj3BI9YZ6UpeyTVYVVVw/mjPt5vyxhc8PoV+VFpJiZvULdVKDOxzUcdgZ1FgT0/maxKG4DJ68ellyVlrL6QVGfFux3U4OldkTTFFW4hQke/3/q54SjpyP3VkNvmMDoF12I81xY41U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev; spf=pass smtp.mailfrom=buenzli.dev; arc=none smtp.client-ip=80.241.56.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=buenzli.dev
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4ZTD0H5XdRz9t4t;
+	Thu,  3 Apr 2025 22:31:11 +0200 (CEST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20250312-pks-update-ref-optimization-v6-0-f778e0414f55@pks.im> <20250312-pks-update-ref-optimization-v6-14-f778e0414f55@pks.im>
-In-Reply-To: <20250312-pks-update-ref-optimization-v6-14-f778e0414f55@pks.im>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 3 Apr 2025 12:56:39 -0700
-X-Gm-Features: AQ5f1JoUx9-SqaaiFD3YXEDOyScmtgIuof7Dz2-q-PPkDekE4nSYXHF99cjMWbE
-Message-ID: <CABPp-BFBqC_t5QSexRQpYsqXBa11WK+OqGt167E=K=xod=buQw@mail.gmail.com>
-Subject: Re: [PATCH v6 14/16] refs/iterator: implement seeking for packed-ref iterators
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, Jeff King <peff@peff.net>, 
-	Junio C Hamano <gitster@pobox.com>, shejialuo <shejialuo@gmail.com>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 03 Apr 2025 22:31:08 +0200
+Message-Id: <D8XAETM3PJ4A.1RBPVHJWE9DFT@buenzli.dev>
+Cc: "Martin von Zweigbergk" <martinvonz@google.com>, "Git Mailing List"
+ <git@vger.kernel.org>, "Edwin Kempin" <ekempin@google.com>, "Scott Chacon"
+ <scott@gitbutler.com>, "philipmetzger@bluewin.ch"
+ <philipmetzger@bluewin.ch>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+From: "Remo Senekowitsch" <remo@buenzli.dev>
+To: "Theodore Ts'o" <tytso@mit.edu>, "Elijah Newren" <newren@gmail.com>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com> <CABPp-BFRz-yjnti4W17AEBozb0v52kmNsgTLUZW6-MF34R-xdw@mail.gmail.com> <20250403174847.GB3051250@mit.edu>
+In-Reply-To: <20250403174847.GB3051250@mit.edu>
+X-Rspamd-Queue-Id: 4ZTD0H5XdRz9t4t
 
-On Wed, Mar 12, 2025 at 11:42=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
-te:
+On Thu Apr 3, 2025 at 7:48 PM CEST, Theodore Ts'o wrote:
+> On Thu, Apr 03, 2025 at 08:39:31AM -0700, Elijah Newren wrote:
+>>=20
+>> But <change ID> isn't unique, right?  The whole point of having the
+>> change ID is to preserve it despite edits (e.g. rebase, commit
+>> --amend, cherry-pick), meaning that you end up with multiple commits
+>> with the same <change ID>.
 >
-
-> @@ -951,12 +954,41 @@ static int packed_ref_iterator_advance(struct ref_i=
-terator *ref_iterator)
->                                             &iter->oid, iter->flags))
->                         continue;
+> It's supposed to be unique, but it isn't always.  I've certainly seen
+> cases where it might not be, but that's arguably a bug.  I suspect in
+> some cases it's because users are cutting and pasting commit
+> descriptions, and sometimes when they rebase a patch series, patches
+> will get collapsed or split apart --- especially when backporting to
+> an older LTS release.
 >
-> +               while (prefix && *prefix) {
-> +                       if (*refname < *prefix)
-> +                               BUG("packed-refs backend yielded referenc=
-e preceding its prefix");
+> Perhaps because of this, in some communities, their tooling in front
+> of Gerrit will always regenerate the Commit-ID when doing a
+> cherry-pick (For example, when cherry-picking from the development
+> HEAD branch back to a release branch).
+>
+> So as a cauaionary note, as people use Change ID's in Gerrit today,
+> sometimes the Change ID changes between rebases, and I've certainly
+> seen cases where the sematic meaning of the commit has changed
+> significantly without changing the Change ID.  So it's great as a
+> hint, but in practice, at least today, it might not be completely safe
+> to assume the semantics are as advertised....
 
-I just triggered this bug upon a "git pull" in an internal repository:
+That is all true. I would just say that some change-ids not being unique
+doesn't systematically take away from the benefits. If a given change-id
+is unique, you get all the benefits for that patch, independent of
+the uniqueness of the other change-ids. If some patch changes a lot
+semantically while keeping its change-id, that will degrade its review
+history, but without affecting the review history of any other patch.
 
-$ git pull
-remote: Enumerating objects: 161255, done.
-remote: Counting objects: 100% (55884/55884), done.
-remote: Compressing objects: 100% (5518/5518), done.
-remote: Total 161255 (delta 54253), reused 50509 (delta 50364),
-pack-reused 105371 (from 4)
-Receiving objects: 100% (161255/161255), 309.90 MiB | 16.87 MiB/s, done.
-Resolving deltas: 100% (118048/118048), completed with 13416 local objects.
-From github.com:github/github
-   97ab7ae3f3745..8fb2f9fa180ed  master
-                    -> origin/master
-[...snip many screenfuls of updates to origin remotes...]
-BUG: refs/packed-backend.c:984: packed-refs backend yielded reference
-preceding its prefix
-error: fetch died of signal 6
-
-
-
-I made a backup of the repo with rsync.
-
-It leaves around a lock file, which after I clear out and run `git
-fetch --update-head-ok` again, it'll hit the same error.
-
-If I put a little debugging into the while loop:
-
-        while (prefix && *prefix) {
-            if (*refname < *prefix) {
-                printf("Comparing %s to %s\n",
-                       refname, prefix);
-                BUG("packed-refs backend yielded reference preceding
-its prefix");
-
-then my fetch produces:
-
-Comparing =F0=9F=8D=A7 to zuora-params-orders-sorbet/
-(in case that doesn't come through well, that's a shaved-ice-emoji,
-according to a google search, which someone decided to use within one
-of their branch names)
-
-In this case, the utf-8 characters will have individual bytes whose
-values are greater than 127, which for a signed character will be
-represented by a negative number.  I tried tweaking the loop to:
-
-        while (prefix && *prefix) {
-            if ((unsigned char)*refname < (unsigned char)*prefix) {
-                printf("Comparing %d to %d\n",
-                       *refname, *prefix);
-                printf("Comparing %s to %s\n",
-                       refname, prefix);
-                BUG("packed-refs backend yielded reference preceding
-its prefix");
-
-but that just lets it proceed through the loop four times before dying:
-
-Comparing 0 to 97
-Comparing  to a-params-orders-sorbet/
-BUG: refs/packed-backend.c:988: packed-refs backend yielded reference
-preceding its prefix
-Aborted (core dumped)
-
-meaning it eats up the four bytes from the shaved-ice-emoji and the
-first four bytes of prefix "zuor" and then hits the error, so I
-suspect it needs to handle comparisons a little more broadly.
+Remo
