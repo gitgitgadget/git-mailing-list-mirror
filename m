@@ -1,79 +1,77 @@
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C3A1A9B2B
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 20:31:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72B21FBCA0
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 20:41:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743712283; cv=none; b=lClOjKhuGsGo9BUPn32NR7RuFAqT/2KeodX9YCgSnSQN0pWiXDqZVFrvMU8C6KLIpmIpZoLSTQgNTMpLbsO0WULcVxXANVekouJTQ2vUp9w8h/QzRUPffPzirBlXP4zY3mKtOT3DhiSNur5+GVvlt13SHTKsJ6m9+4CNMMY1Wns=
+	t=1743712920; cv=none; b=To5fiUYniiIO1G1s60fOn5CBafJwSKTbZhHSgEk7HUkvfM50kcTa38bci0mBUQcEghPl7lMoVLQUmTQ8kDt1VRE70x5dHJA+8b9rI8v6Xok3d2bSllY5iqAh9y/u3zISx/oH7ZxQ3Lg9iV/Abl9gi8AOcsMZMI12Wn/i4V5zV+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743712283; c=relaxed/simple;
-	bh=gcJ6S21gn0hbmfCCTjHFYSa41jjIbTmatMYWcfSKqRo=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=E5J1PJRalsc2WmjWv48oeK4F+ovtlN6sSCwj3BI9YZ6UpeyTVYVVVw/mjPt5vyxhc8PoV+VFpJiZvULdVKDOxzUcdgZ1FgT0/maxKG4DJ68ellyVlrL6QVGfFux3U4OldkTTFFW4hQke/3/q54SjpyP3VkNvmMDoF12I81xY41U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev; spf=pass smtp.mailfrom=buenzli.dev; arc=none smtp.client-ip=80.241.56.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=buenzli.dev
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4ZTD0H5XdRz9t4t;
-	Thu,  3 Apr 2025 22:31:11 +0200 (CEST)
+	s=arc-20240116; t=1743712920; c=relaxed/simple;
+	bh=bCgIPSQXSVxOm/8bhzIqgmCHdmRo9t8+VV+SAEhetY4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=G+EUEngdUGJTRC7NSymTsgBrHPSCvNBcrCprQTJpswAgGAgyQ0eEVN2pBxhh4+qy1r4w7dTEdcH4uP+AgZlqECGjqiMYcUYmO2xSrD9/o5jkzdjakIdoKZhVHhLcvn4K7x/O9JBKWoY8otUFdc4Zzc49uymudgcTKaR0pisLz20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marrold.co.uk; spf=pass smtp.mailfrom=marrold.co.uk; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marrold.co.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marrold.co.uk
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-227b650504fso14164995ad.0
+        for <git@vger.kernel.org>; Thu, 03 Apr 2025 13:41:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743712918; x=1744317718;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mTyFPqAnPbJ0l/aPIuFZ8g0rEgcsc5WQ2d+g2P7InwA=;
+        b=fGuJTSDU+214E/lzW8azHaqVZ8kizqcN1zlcB75fP7FtoEOwxXpS1a2++b29mF7yV/
+         60MqNpVcIkgrqMUmcY0bZInK3OL5xkQ0AOLM5KzwCulU7MdCaJSGK1pk6DAq1igXS/Vp
+         1y4ubxyK4D6MRGzMIOG/0yqStGGoB+YL+yKVroimmMoaTa0FUSLGkpGaXLG23PhkHdq9
+         8q+wkDNkh04vJuDwsO8r6fXBQtSMB35FY26Ga9qAV+YAL/qGFOWbTibtezm9670CozVx
+         8G9Ww0l1D3nQesAdrNMndnGp8YAO+VYmpwLMd1g5Xngdhz2cO45u4lQ2/tlghf1GthTx
+         rRHA==
+X-Gm-Message-State: AOJu0YwXdwG1BGeczjP0Q6P1PJDmsCJlWyp5y5bBVH/PS4SIb4iQZ5Hw
+	yQjWe87yNmiGcO5uumP/hPdnbcQM/+nYyI/LqLjmqr0ZK0R+kP+6a7f6tOBMlzi6i1Py8xlkrX+
+	Bv1A6NCDkSZFv223GneFoUu0exANRcDum+ECMJLcSHNFxAgt4iX4=
+X-Gm-Gg: ASbGncs1PTPHmLByKkRYg5Pre3X27QJ+pSxRk8y7vYtKF6+iFDnCAKZ4p76LqZx6uh2
+	k6spPBdivpLQxuXYC3MoOYCzS1/Ig6Z/nUmZkIYK+rXoLNKn1e7Z0OpATXjjCMzfW+/vEMP1lhd
+	Ornkpf2jOWdib5X1dnVUybcrH1RE4=
+X-Google-Smtp-Source: AGHT+IHTIkOz4j0yA7AnXqN+nUc2BD9HyUz+cQE26MXwkZlSsW3dH9gFbUrh0ZGxOdMXy81LP31kyFovMfTzI3GYU/M=
+X-Received: by 2002:a17:903:41d2:b0:21f:61a9:be7d with SMTP id
+ d9443c01a7336-22a8a1d6c08mr5734375ad.49.1743712917731; Thu, 03 Apr 2025
+ 13:41:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 03 Apr 2025 22:31:08 +0200
-Message-Id: <D8XAETM3PJ4A.1RBPVHJWE9DFT@buenzli.dev>
-Cc: "Martin von Zweigbergk" <martinvonz@google.com>, "Git Mailing List"
- <git@vger.kernel.org>, "Edwin Kempin" <ekempin@google.com>, "Scott Chacon"
- <scott@gitbutler.com>, "philipmetzger@bluewin.ch"
- <philipmetzger@bluewin.ch>
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-From: "Remo Senekowitsch" <remo@buenzli.dev>
-To: "Theodore Ts'o" <tytso@mit.edu>, "Elijah Newren" <newren@gmail.com>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com> <CABPp-BFRz-yjnti4W17AEBozb0v52kmNsgTLUZW6-MF34R-xdw@mail.gmail.com> <20250403174847.GB3051250@mit.edu>
-In-Reply-To: <20250403174847.GB3051250@mit.edu>
-X-Rspamd-Queue-Id: 4ZTD0H5XdRz9t4t
+MIME-Version: 1.0
+From: Marrold <kamailio@marrold.co.uk>
+Date: Thu, 3 Apr 2025 21:41:47 +0100
+X-Gm-Features: ATxdqUErJFnFrDPNwWKV-UpUCPNyuNsXw9atQe6EwiJif8KxowaNr1y8-bzm8jk
+Message-ID: <CAC-Lcd-=_dVmyy0x9N+5ap4h7UQrfkVpJaCtZnoMrkxabVR1dg@mail.gmail.com>
+Subject: Git Commit Signing
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu Apr 3, 2025 at 7:48 PM CEST, Theodore Ts'o wrote:
-> On Thu, Apr 03, 2025 at 08:39:31AM -0700, Elijah Newren wrote:
->>=20
->> But <change ID> isn't unique, right?  The whole point of having the
->> change ID is to preserve it despite edits (e.g. rebase, commit
->> --amend, cherry-pick), meaning that you end up with multiple commits
->> with the same <change ID>.
->
-> It's supposed to be unique, but it isn't always.  I've certainly seen
-> cases where it might not be, but that's arguably a bug.  I suspect in
-> some cases it's because users are cutting and pasting commit
-> descriptions, and sometimes when they rebase a patch series, patches
-> will get collapsed or split apart --- especially when backporting to
-> an older LTS release.
->
-> Perhaps because of this, in some communities, their tooling in front
-> of Gerrit will always regenerate the Commit-ID when doing a
-> cherry-pick (For example, when cherry-picking from the development
-> HEAD branch back to a release branch).
->
-> So as a cauaionary note, as people use Change ID's in Gerrit today,
-> sometimes the Change ID changes between rebases, and I've certainly
-> seen cases where the sematic meaning of the commit has changed
-> significantly without changing the Change ID.  So it's great as a
-> hint, but in practice, at least today, it might not be completely safe
-> to assume the semantics are as advertised....
+Hi all,
 
-That is all true. I would just say that some change-ids not being unique
-doesn't systematically take away from the benefits. If a given change-id
-is unique, you get all the benefits for that patch, independent of
-the uniqueness of the other change-ids. If some patch changes a lot
-semantically while keeping its change-id, that will degrade its review
-history, but without affecting the review history of any other patch.
+I'm attempting to manually verify git commits signed with SSH keys
+using python, however verifying commits consistently fails, no matter
+what I try.
 
-Remo
+The python verification logic has been tested against signatures
+produced with ssh-keygen and confirmed to be working.
+
+I suspect I'm constructing the message incorrectly to check against
+the signature. As far as I know, the message should look like this,
+with the gpgsig section removed.
+
+    tree ff5ee8caaf2893a79711151b2937130469d83d39
+    parent 3e84a21590a5ad714d168878abc95218d0e42cac
+    author Matthew H <git@marrold.co.uk> 1743454803 +0100
+    committer Matthew H <git@marrold.co.uk> 1743454803 +0100
+
+    Commit message
+
+Could someone point me in the right direction? I'm wondering if its
+hashed or encoded prior to signing
+
+Thanks
+Matthew
