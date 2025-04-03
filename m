@@ -1,160 +1,168 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7260E24CEE5
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 15:26:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0E32505D1
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 15:39:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743694011; cv=none; b=IuXqSu1ePCXD41pYJpo3F8MShC4t4rby8gBTk9ki5qRIVEQtRD70+IxF4fa+582KiYCXocfVGYOlqdyDFjaPa8///RfmStqCvQFl+FLfINWxeHZTIYLE2j2ZPTxQEQLm8TwmWqDRwj8crEHA0WVagvG892OqUhcNwo1uNF4tjy4=
+	t=1743694785; cv=none; b=MFShnL9ALzI3NcfYTQ76Zgg6ESkxN1FZWdsjoZeVloJtndV8+eNvWZts9te/xz4MvblZT3phAAvmz6X0Gy47cTLPTg9TZL65eOLW0lwp82kxCxpU71Rpb8eRvdWt5mWn2S91NP6+I9SfINgzLKPaTrEFILwwUnEOlPa9IuWy3gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743694011; c=relaxed/simple;
-	bh=cgh0bGX3SZmU8g7JKFlDEgW/1SXNaXWJQcsLVqTOOsU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S06MaXh8PCQL6aZtS0htMA/aHz4GKdJ5dXlUMo7Mt4lR1dz/wlEy+T5Tr26xcLXmg70vYfPMfqrIr1Y6ZWxVLu6yrbvuD3JyI7eq5EaEc4dwZM6fSPbAqfZjij/JM/HkkByxV46XeeaO8U/wgxNMIF32oGNjV22wcANIMjKvp8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I9pFHWhD; arc=none smtp.client-ip=209.85.214.171
+	s=arc-20240116; t=1743694785; c=relaxed/simple;
+	bh=aS5IHiiF+8W1DOz5SFXFDT4N5Ehi0MPdoDcX1twHL6Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Lo+pXI33TZcCFEZTkLcNgy9VeX4uzC3Eauh30Fu2szCQ38tD4KZh+FJ0SqUqwOjgm+jeeyBChZkq9O7KBvQ7K1ufE8Vs3veT7VHRfdbvUG5fLj7tTMZE2DKHMv+ICqKk9B/5gTPU43BwR2EMAJKh8IUbL7XcKIHItjgO5VI87oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YtE9q98N; arc=none smtp.client-ip=209.85.166.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I9pFHWhD"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-227aaa82fafso11368965ad.2
-        for <git@vger.kernel.org>; Thu, 03 Apr 2025 08:26:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YtE9q98N"
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3d46aaf36a2so7589535ab.3
+        for <git@vger.kernel.org>; Thu, 03 Apr 2025 08:39:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743694009; x=1744298809; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6/IKpE+Is6r4WFqqxEjIAXBzsXSD1PWNwDmNhKWUe2c=;
-        b=I9pFHWhDOlbfTRP7K7ZSNoUkVyzTuoV6rqQn4CDPWqaiDQyZrpzZ7BITac/qbywFQX
-         P04E8ZLf4NQts5O888NLP2GlVcyflQwiIUp6H69cBuN4gBRKjLGpEzoKoUpYcbayEHaK
-         9QDoplGDCHDwa2hVzFlzUWODQ8CN/9axKXvYYNCQtBYhSGGr3nizB5m0JicEQN25OQUc
-         MCE6a64TWQfaMvkSX1QaoU4EzhX1FVW0lKeMw28jCVw4ARo2UhTHlytWPkCuia5QKZ15
-         TNgME+jm0Bk2oS/UoFRU9+UrpUOdZhQtJ4R95RtFqaWwMrJGPN+9Eg2oFnyEIzHjTt8q
-         KQ5A==
+        d=gmail.com; s=20230601; t=1743694783; x=1744299583; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZtULk19OC4s2PcLnAwsNrE6MJvxOygXtTn1k/HM/+U0=;
+        b=YtE9q98Nm8i/vXZHEdX5gIR1Ykvyq4Xd3hPBdNz44uJMTiQP3YDNi7KtXzhw2LfJzn
+         I3b6ZSzrGKhKDAihp9/YPxjtbQWao8Y601NbGx+yYrOVEnZj2B8JtaSlvgRsRYILGdFP
+         mMkhgT26trYpqFIKoCkL2ffVrxgWBE5lDY6L9BwkTFY/xFi95U2oJzu9BUnIEDdobvWk
+         H/RdBSauE5ERs97xfPPOEAt7pKHxkLDGL8cNkGxeWJHIJGfidbdySN+7cnuRYiRpiKJG
+         KbuJ2ApZUNAnPsqYe438MuYXgea5MsNaFrQAz+JQZP/1v5qe+AHicbvZIU4Xx4PlASvr
+         dSRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743694009; x=1744298809;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6/IKpE+Is6r4WFqqxEjIAXBzsXSD1PWNwDmNhKWUe2c=;
-        b=mPD0Mulfi62x3HT9k9xZ2kS6ImT9COCfasNQQa4+dvkZvbiL8rpmrS5fBsZt/baMIz
-         5NCbADKv7N6hJpZq6Z8+Wz7CZ+hE72GYyQFykMlbyoa2e32yHv+qK6w5/p8Dh8OeaZG/
-         idR99wtY6emJLEAIugqt71YWLFClpqjYOoKmOt3OyZ9W3NnO11ezKZzfWW46fPbvZzXx
-         g5GSV9lZeCive5UAzQTx+ZguzvWE1ni4Yk863TTRafHRIDvgkVkF8K2U3QPzeDPQXkvZ
-         ZuQL7N3YDmbj4dQeZn7CVD0UdqXL7CtLwGhOL/TcDfZJCqdSgOICaErFShaImFR7FQyp
-         5AqA==
-X-Gm-Message-State: AOJu0Yz0Zxzpkra5JUWDQdfJ+9XYvzN+tcc+L4zSe8WSCDlIb6D16uHM
-	z+SWsJlLM0EZSqtJKzqjr2bwGmzUNqo8V6bHva6Vx/WjlDkbNMj0HU2eXQ==
-X-Gm-Gg: ASbGncthhUXv0t3pZu1bb+bxIh+Rpih3ZDxISC6CEX5coEfiovTAdS3UzjsBTDT9YTT
-	ul05GH/S1lBNuPFWM4spDH6k50/1pWD4Y6y/dCylmrcg2chGoPmGa2qurZPVf5oNdwFSmsn6y39
-	egWIyhA2RQCPK1P8zMGHa8JKYv/p2GJfRHug9wkvkeTJaG+GFRYtdpmQUD6TBvjDQMJtsB718a9
-	c7UWx52yRdVcqj8uP+KwZ/MQb4zazkc1E06jqpTbZWDWvnnDKrxX8KVCpHE/xZR6xeYLOyB/Sw5
-	xnzGO+xQUhkzUSg0BNTnchgLy0olf5bIvlx1RtYDYY0wihdv
-X-Google-Smtp-Source: AGHT+IFJPIxEZBa7jLhOYs6jQ+WAjITf78j97as2OpwaJoYQDU9hqiRpk2a04hcabtEJ/jXOF0Wa/Q==
-X-Received: by 2002:a17:903:22c4:b0:224:1780:c1ec with SMTP id d9443c01a7336-22977df3ac2mr48263075ad.35.1743694008476;
-        Thu, 03 Apr 2025 08:26:48 -0700 (PDT)
-Received: from [10.61.99.47] ([103.21.124.55])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-229785ad820sm15883945ad.9.2025.04.03.08.26.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Apr 2025 08:26:47 -0700 (PDT)
-Message-ID: <bcdeb3cf-33a1-4553-897d-0bc09dc6a78d@gmail.com>
-Date: Thu, 3 Apr 2025 20:56:45 +0530
+        d=1e100.net; s=20230601; t=1743694783; x=1744299583;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZtULk19OC4s2PcLnAwsNrE6MJvxOygXtTn1k/HM/+U0=;
+        b=jjbKIsvaMeVB8FxgmTi9mE/DNQ4JJqTyS1tbRNTcitDQIZYIBkr+tqn6tP241Fh+wK
+         5ovq2ZeD887Ybm3HLqvVXtbsLX2VSFOAmr+2d/aq0xAKYSI8Wm3GXqHORnr8BfRBNRsP
+         gQSD7Vqm2RZ4zjWGvNvBseAFYPy9O/S1Ly5bWM39RKw6QMlDb0GIxt+vQSW/YyeMbNE0
+         jlpir402zuCo0GqqQVYBCtnjSul5ZE9HUUT7eCYgJf0YUY8wavStruV/R/kJRMsKj54/
+         2OxVEAxdv8pjvaRuM+iHxvWekAFm+upwxQp230D+MrUsrYB7X5+/cVWObfJk4Y0XL5q/
+         frwg==
+X-Gm-Message-State: AOJu0YxwcHS9OUtIzu285TR5sTYFF1LAnZ1pUQDWeh9zrE+cIiWOSOIA
+	ZT6W9g9Jo/U5a+ASKcwk2zb0C2TMKfw+sfPLtEDi0OksIxqUhmPjDAWcGGo12Oz+eP4Q4dDDfuk
+	kms1BaRTq1m29VECihYURxq9uXkL+nA==
+X-Gm-Gg: ASbGnctpqSF3PCSPK1DLSkM2ckUuJhQriwkn0mF5tqVp1GDi3DZv829qTgANIPyHUwU
+	XvnqFFCoVkpx4i+odRPCpZwM08RVEca0KYiWv82hmTHx5EksTyk4wwi5Fej2z7aTWF16G40kuM+
+	BcuaQ/NhByeJYsEkARxmAg+NIuZAIzbdtAABdjH5yMwXCtPZc7zIXd1Ebujw==
+X-Google-Smtp-Source: AGHT+IGwk0Ngo2f6dKN65m1iQ4AJmFPevslHXyE8qngWoCpiBdCWpDolhphHGuDmrfpKjmipCq+jMaOA3Uz5R377mdU=
+X-Received: by 2002:a05:6e02:2388:b0:3d3:dfa2:4642 with SMTP id
+ e9e14a558f8ab-3d5e0934066mr223989985ab.13.1743694783120; Thu, 03 Apr 2025
+ 08:39:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BGSoC_PROPOSAL_v1=5D_Refactoring_in_order_to_redu?=
- =?UTF-8?Q?ce_Git=E2=80=99s_global_state?=
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-References: <1077615a-1c31-416d-a754-58b36d404289@gmail.com>
- <Z-5b6INZXiXbEuU2@pks.im>
-Content-Language: en-US
-From: Arnav Bhate <bhatearnav@gmail.com>
-In-Reply-To: <Z-5b6INZXiXbEuU2@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+In-Reply-To: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 3 Apr 2025 08:39:31 -0700
+X-Gm-Features: AQ5f1JqfJTMYtL2lcM_TRTkxsPSdD1Oily3vjz-i6BdSTAkZRheUkRnWbru3PNk
+Message-ID: <CABPp-BFRz-yjnti4W17AEBozb0v52kmNsgTLUZW6-MF34R-xdw@mail.gmail.com>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+To: Martin von Zweigbergk <martinvonz@google.com>
+Cc: Git Mailing List <git@vger.kernel.org>, Edwin Kempin <ekempin@google.com>, 
+	Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev, 
+	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-> On Wed, Apr 02, 2025 at 11:44:12PM +0530, Arnav Bhate wrote:
-> [snip]
->> ## Proposed Plan
->>
->> - Identifying all occurences of `the_repository` and updating them to
->>   use a `struct repository` passed to the function.
-> 
-> I think that might be overly ambituous :) After all we're talking about
-> ~3500 occurrences, and it won't be feasible to replace them all in the
-> couple of months. This is rather a multi-year project, and one that has
-> already been going on for quite a while.
-> 
->> - Identifying global variables that should be moved and identifying
->>   suitable locations, some could be moved directly into
->>   `struct repository`, some in its sub-structs that already exist and
->>   some in newly created sub-structs.
-> 
-> Likewise, I would recommend to properly scope _which_ variables you want
-> to replace. There's a ton of global state, so you should try to limit
-> the project to a reasonable workload.
+On Wed, Apr 2, 2025 at 11:48=E2=80=AFAM Martin von Zweigbergk
+<martinvonz@google.com> wrote:
+>
+> Hi,
+>
+> The Gerrit, GitButler, and Jujutsu projects all have a concept of
+> a "change id", and it behaves in a similar way between the three
+> tools. The change id is conceptually associated with a commit.
+> It follows a commit as its rewritten (e.g. by amending and
+> rebasing). The three projects currently store and format the
+> change id differently. We would like to unify that so we can
+> interoperate better. We hope the Git project is also interested
+> in preserving and using this header.
+>
+> There are many benefits to having a change id even if it's just
+> local. I mentioned some in my email to this mailing list in [1].
+> For example, it enables
+> `git rebase main <change ID>; git switch <change ID>` without
+> requiring the user to look up the hash of the rewritten commit.
 
-I could do all the global variables in environment.c. I feel like that
-is doable. Once I am finished with that, I could start replacing
-the_repository.
+But <change ID> isn't unique, right?  The whole point of having the
+change ID is to preserve it despite edits (e.g. rebase, commit
+--amend, cherry-pick), meaning that you end up with multiple commits
+with the same <change ID>.
 
->> - Identifying and updating occurences of these variables to reference
->>   their new locations.
->>
->> It makes sense that all the variables need not be in the same struct, as
->> separation would keep the codebase organised, and thus easier to
->> maintain. It would also make it easier to introduce these changes
->> systematically, as a group of related variables, combined together in a
->> struct, could be introduced in a single patch series.
->>
->> ### Timeline
->>
->> #### Pre-GSoC (Until May 8)
->>
->> - Explore the codebase, identifying global variables and how they are
->>   used.
->>
->> - Start to identify suitable locations for global variables.
->>
->> #### Community Bonding Period (May 8 - June 1)
->>
->> - Interact with mentor, discussing best ways to refactor various
->>   variables and make a plan based on that.
->>
->> - If time is left, start coding early, as my summer break will have
->>   started.
->>
->> #### Coding Period (June 2 - August 25)
->>
->> - Modify functions to add an `struct repository` argument where they
->>   depend on `the_repository` and replace all occurences of it.
->>
->> - Move global variables to their new locations in various structs,
->>   and refactor functions that depend on them to use their new locations.
-> 
-> In large-scale projects like these it typically makes sense to work in
-> batches. Instead of having three separate phases to "define the
-> problem", "develop the solution" and "deploy the improvement" I would
-> strongly encourage you to define and tie together smaller batches of
-> work.
+Why would this work?
 
-What I meant is, before coding started, I want to finalise all the new
-locations for the global variables with my mentor, then I would actually
-modify the code in batches, struct-by-struct. Are you suggesting that
-the new locations not be finalised beforehand, or are we misinterpreting
-each other?
+And if it does work, isn't it expensive since you'd need to walk
+history to find it?  Or do you keep an extra lookup table on the side
+somewhere?
 
-> Thanks!
-> 
-> Patrick
+> If the change id also transferred between repos and preserved by
+> a forge (such as Gerrit), it enables the change id to be used to
+> identify a code review.
+>
+> Here's how the change ids are currently stored and formatted:
+>
+>  * Gerrit currently stores change ids in a commit trailer called
+>    `Change-Id`. It always starts with the letter 'I' and is
+>    followed by 40 hex digits. For example:
+>    `Change-Id: Ib563e78c3fedcff262255fa025441daa3202311b`.
+>
+>  * GitButler currently stores change ids in a commit footer
+>    called `gitbutler-change-id` (older versions used
+>    `change-id`). It's written as 32 hex digits separated by
+>    dashes as in the UUID  format. For example:
+>    `gitbutler-change-id  7d0fbc63-032d-413c-8ae8-610fbeb713c0`.
+>
+>  * Jujutsu currently stores change ids in a local storage outside
+>    of the Git repo and is therefore not part of the Git commit
+>    id. It is stored as 16 bytes. It is rendered to the user as
+>   "reverse hex" using 'z' through 'k' as hex digits ('z' =3D 0,
+>   'k' =3D 15). This allows even short prefixes to be distinguished
+>    from commit  ids, which is a very useful property when used in
+>    the CLI.
+>
+> As mentioned, the three projects would like to use the same
+> storage and format. I think we have a consensus to store it in a
+> Git commit header called `change-id` as a 32 reverse-hex digis.
+> For example: `change-id ywlktllmukprnxnmzzprukpuwyztylwt`.
 
--- 
-Regards,
-Arnav Bhate
-(He/Him)
+Yaay, I always hated it as a trailer.
 
+> There is a design doc [2] about the impact on Gerrit and how to
+> handle various cases where the client doesn't understand the
+> `change-id` header. That also includes some discussion about
+> whether cherry-picking should preserve the change id or create a
+> new one. I think there is a lot of value in having a
+> standardized header regardless of what we decide about
+> cherry-picks.
+
+cherry-pick & rebase preserve author name, email & time, while
+creating a new committer name, email, & time.  To me, the change-id is
+about the authorship, and since these commands already preserve
+authorship, it'd seem weird to me to have cherry-pick not preserve the
+change-id by default.
+
+> So, to be clear, this is mostly a heads up at this point; we don't
+> depend on any immediate changes from the Git project.
+
+I appreciate the heads up, and agree based on what I've seen so far
+that you can at least get started without Git changes.
+
+However, I think you'd want git to preserve the change-id headers upon
+git commit --amend, rebase, or cherry-pick, which would require some
+git changes.  And you may want git to preserve them when doing a
+fast-export, and be able to read them in with fast-import.
+
+Anyway, I was a voice in the past that was kind of against these,
+though that was mostly as a commit footer.  Plus, the number of
+projects using them, hearing about their experience at Git Merge, and
+realizing that part of my objection was due to misuse of Gerrit by
+some folks in the past have all lead me to change my opinion.
