@@ -1,129 +1,588 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D95619E96B
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 05:10:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72120224B15
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 08:17:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743657030; cv=none; b=Qf8ercx82MbWy4WEPwpa9oQgz/xhoxqACXAQ6fpskFlaNAT+llnMqRI1YRNTgptItHd3LQJBIdIT/pwja9OP47sIAECZ/Xah+hu7S9g1vD4lxDHQ6fUS2Oy+qrkYOtfZrQWTw78nNr+PU0zIH0Dy/TQnv9P+GwxDbg2EpdmO14Y=
+	t=1743668263; cv=none; b=uyzMq0DvrN5XrTF5gReVYKJ4DYNFkXJYXbbVzDl/PJjJtQlXMtnA8ow7D7qBFp74tjLzTkVvA32Yr5JbioAF/p5cVKKn0IFcHf47PheCCNibpXWzIwUo28P0uj57Ke6WzIQZ2n1xV7k3xb5XVDYy0Oiw+vT4ptccHzp9XmaGP/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743657030; c=relaxed/simple;
-	bh=w7qbKRJIFuxLRnI25YGHKfeCfGHUHEyJmEhwzm5NAZs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rwaJqgQXPeG6poJUrWzksdQTcndjHHypWjgtLtGSgRZ+oTnnd7ucuhCrrKFi44zfX/2BxFvdOZfs/c0UXflt6R03uTEJl2yGADm66z3SyfU8VuAgQdwTvvFCDex5Mg9NMpgS3eB71ai5VUwU+f1A39t4/YoIAHccRRRkYqUiQNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U6jv6cUf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iRabAvxe; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1743668263; c=relaxed/simple;
+	bh=vKV3r8fOojIhG0LN6dj1OudRRe4TIpxqUrwMY1WGmMY=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DP7KUsMm1E+lcmXpdwURBgIagD7Lg3RUMCGoPoYasHlRPKknV6P+I64GhVAImxo1ZUixBJUc/BFAIZcfznePMPizDk7Ue5NtG6BBDi9MweJUM7I8OSu4nEzl+SMv4+/92mL24uOlI5vIvYTwNGu6UGVCu9hwTk2KmCkLk+iQ8sA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XeFoAevV; arc=none smtp.client-ip=209.85.222.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U6jv6cUf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iRabAvxe"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7A57011401AC;
-	Thu,  3 Apr 2025 01:10:27 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 03 Apr 2025 01:10:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1743657027; x=1743743427; bh=9aa4JgjwBT
-	Eru/7MjZ+5qo3ytb8cgiXwUpJkPDJUSyo=; b=U6jv6cUfKcUKN3GLlkWC7WC9iy
-	9p7G3RYKc8AEhbSvyA5DzeHEC+NHBR0QVDszFJ4HE8rIMv/cnHxn213z5GvNh7Sy
-	UUDsjKRJ6hKxoTq63fnQrR6cVVvVVwnzvHjsqA1CTLVm+MDWNOGXra+1JgaD8oSw
-	ywMKD7cwYg6NUXlXuxw4TsQCwo87HYXXW473vQgHh+O2gVlCHpoiUiO+jOee+QZ+
-	Zg+OTDGwtXysu8KGytNIQXgaXbSBVEANwVoR87q6QYMQP2QrUQoJqHKYwJs3sHvs
-	3s/hYBzR6FtuZpxEqwAFXnZVDi6f02u6Rul9L2aUXMt0R9YfMN/eojJ78+Ng==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743657027; x=1743743427; bh=9aa4JgjwBTEru/7MjZ+5qo3ytb8cgiXwUpJ
-	kPDJUSyo=; b=iRabAvxeWE+/gveIKqR8c2SCwv/LMScYl18mHKZH7J3gISDc8Ba
-	DXmIuR1kPSdo37SszyvQlw574wk0Kkh+pcGeAoPJyJ/Sqx9xkLNDtkb0rxNmXV4J
-	eeWhas2ByI2hz+QnfrbybQwyMn/Qoudh9EkHwKrzgpVAkMdCj8L17oqVywjcaMoF
-	kpOdEm/HBGF5isl7NsGTL3LSN++P0mCuKTs02h311/mgbh1cOwPdCzxF2Luy17rH
-	8ToD/KWeKpLZHQX+9SrUzPG4ZHMRduqhwZLIhqSg6YE+BLHspHn/STjBPUTvVBl7
-	/bpyq3dXxtL7sY5rjB1506NMkGcJVGE4TIw==
-X-ME-Sender: <xms:QxjuZ-ChD9t4cD73m786pklRygNwvISvvYBXahDla4PstMl5ctG1NA>
-    <xme:QxjuZ4hIjRP1EGiwf5hXrh3af02_Q6775RQySYSLNrfd5_hD5p3-b3YionhWR5pOJ
-    1Xj9Y5Uon0eFt_d9g>
-X-ME-Received: <xmr:QxjuZxlqEgccyUl0wsnfCyuYrH8hVckvE55cu4rO-tTQ-r36ohmvKx0KY1tIuuSfhWkU6xdkuQ18DHty6wqY_1h5ifArOkLGF7JcQEicFKqplbg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeejieelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegt
-    hhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:QxjuZ8wOGVDjwo9kltk2bVsHIFZW3vLgIsR9LbEq4CrqIeKeQC2e0Q>
-    <xmx:QxjuZzRZSmYTSggX4uBmhLuhARVs8nAyxse2etwA63yzwcUHnEQ7WA>
-    <xmx:QxjuZ3ZPoy6H6OLNjGKK8-p7fz-_rD78jFfXUPXmW4CFZNiXYbPB7A>
-    <xmx:QxjuZ8RqUpydITPNPNi7D2C9MzEVGcw6icTZPcLHQsuGI9_b-uIxnQ>
-    <xmx:QxjuZxay8rCGjKCcZLTkb_NnsM0qshbjvtuuT_DfU1oTNqTs5LJUoEMG>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Apr 2025 01:10:26 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 03b7e4c6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 3 Apr 2025 05:10:24 +0000 (UTC)
-Date: Thu, 3 Apr 2025 07:10:23 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com
-Subject: Re: [PATCH v2 2/2] help: include unsafe SHA-1 build info in version
-Message-ID: <Z-4YP5ppG8Jnrt3z@pks.im>
-References: <20250328170121.157563-1-jltobler@gmail.com>
- <20250401203630.285451-1-jltobler@gmail.com>
- <20250401203630.285451-3-jltobler@gmail.com>
- <Z-zpau_DsOGVVtjj@pks.im>
- <46xnrbtafdg2iafownzujbpzjuygpns4g4r26wzxxv6xmi5mg7@m3dw6cfk6f7q>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XeFoAevV"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-86dde90e7a3so310087241.1
+        for <git@vger.kernel.org>; Thu, 03 Apr 2025 01:17:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743668260; x=1744273060; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=XUcyGXAPEfzlYDMhN8j1p2ixNbyC1AqbX562M0CSKU0=;
+        b=XeFoAevVXK7xSWZLEEK0s4XH7YX8O7KnB4f/qQTXdIiuNI5F6SRGk3TB8JrVx8hPYH
+         DBkFMkmBVOQ69jQxlHP2CbI1QR7j7Fqq+Tq7fzc1Kjn4JiTtEjYyCig20rj4eUcsBXY6
+         xWqcwuTcUoiuE8niKKCT6jfpnh7sj8RLGtdTr92k08hCQd9s6cT6d2Nvl3x/HDTPxOAZ
+         MtQXK55DU5dhz62yRrjSvY3xHYEUfLFb6ocOWatW1HzcE4/pxMk4fYyd/9xts81KBX07
+         Bx6AZhTzJEVysilR8ZPipfmf2kbunxGuMaQKgUHBgSkpdhy0wnW1PYPhBzStYE0SCAWK
+         bMZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743668260; x=1744273060;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XUcyGXAPEfzlYDMhN8j1p2ixNbyC1AqbX562M0CSKU0=;
+        b=cmVTfVnPJRy5li6D8rNUGHFS0pAtNUr+IdPvHct5i2oXc89z3yTBSEQBrTKXzHp+eg
+         AXJJDXV7w3vZGb7lCOo87UqWVX++aBxwyCPMXr9c4ccx0E4t5J3tdwlgAsYFgLvR8xaB
+         jMq+ZRktfYKglCEcK4Bpqni81+Kc4D0vS0tT/7RGJ+Q5NuTDjB41VeQg75JNrZGSdwh3
+         XE8eUghepEkURdEPjIUv8Qkt0aALp6MqrOcCsdEeNI8eXB/NNb81j2lhm9MHioZWw1W4
+         jW6yYRmzwlr+pAdCIh52TgOGstJehAQH/ZDnfTQk1uB4/OT/3ftZ37XFVIlFqim2mhs1
+         CtCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVJcidkKk21eDQvU/VaQZK32UFN/bFhRFLxaa3AQL8//B/Q6ekuqBipXEWB/EMhMUUae4g=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxnWGrm0HYymvjStu/eFcY5nbrYlzgw+x0WzlduU07Ffo+wVGXC
+	JJfvuU2DKMj5vJ9T742nYrHntEjTWyt69k86PF0BgoHtqcSvEYYOwce/g2j5/sgUTn5sxt8PIJ4
+	41R30T7+BXMLNQYKg2BN2l7YEsxM=
+X-Gm-Gg: ASbGncv78VsysztIcW1ldp2ZHvcqToWtu+jqV0MLTCLUBT3Y0B1fCBuwqyahkmETXBa
+	ykCI1hyuow7XDrvHH5wU5TE85XVu0+WjxqjU1PM/8rRWVI7lKpoX7RkqcAwgjLcCF4U5YkdZMpk
+	EKGtiZJpFMPZWEZC+yiymFYtI0dR718B3ciK14t/R8a3de/Lv0ur1mVnJlsg==
+X-Google-Smtp-Source: AGHT+IFqSTyind1dWcVUFE2o9TOVGWj9RP+x02QdbNklSJMIEmqwBiFzpsmq5S4WZFF0VCYTVg8iD2CeN+Pp6iVgdnU=
+X-Received: by 2002:a05:6102:3ec1:b0:4c1:801e:deb2 with SMTP id
+ ada2fe7eead31-4c839e15bf5mr5303877137.7.1743668260014; Thu, 03 Apr 2025
+ 01:17:40 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 3 Apr 2025 01:17:38 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250402-pks-cat-file-object-type-filter-v3-0-4da6bb21871c@pks.im>
+References: <20250221-pks-cat-file-object-type-filter-v1-0-0852530888e2@pks.im>
+ <20250402-pks-cat-file-object-type-filter-v3-0-4da6bb21871c@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <46xnrbtafdg2iafownzujbpzjuygpns4g4r26wzxxv6xmi5mg7@m3dw6cfk6f7q>
+Date: Thu, 3 Apr 2025 01:17:38 -0700
+X-Gm-Features: ATxdqUGeKOVr9ZRLjbCY1qgUWgSZdCtg1QDsVNdqp4x_woKEYJpwiAOXDdxLvdE
+Message-ID: <CAOLa=ZTY4AE4ONHoZX+VrHRC9461utdV6g7FFbWtnGuay55G9g@mail.gmail.com>
+Subject: Re: [PATCH v3 00/11] builtin/cat-file: allow filtering objects in
+ batch mode
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Toon Claes <toon@iotcl.com>, Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="0000000000003eaa1b0631db67c6"
 
-On Wed, Apr 02, 2025 at 10:59:16AM -0500, Justin Tobler wrote:
-> On 25/04/02 09:38AM, Patrick Steinhardt wrote:
-> > On Tue, Apr 01, 2025 at 03:36:30PM -0500, Justin Tobler wrote:
-> > > diff --git a/help.c b/help.c
-> > > index 3aebfb3681..1238a962b0 100644
-> > > --- a/help.c
-> > > +++ b/help.c
-> > > @@ -772,6 +772,11 @@ char *help_unknown_cmd(const char *cmd)
-> > >  static void get_sha_impl(struct strbuf *buf)
-> > >  {
-> > >  	strbuf_addf(buf, "SHA-1: %s\n", SHA1_BACKEND);
-> > > +
-> > > +#if defined(SHA1_UNSAFE_BACKEND)
-> > > +	strbuf_addf(buf, "non-crypto-SHA-1: %s\n", SHA1_UNSAFE_BACKEND);
-> > > +#endif
-> > > +
-> > 
-> > Should we maybe print the equivalent of "none" in case no unsafe backend
-> > was selected?
-> 
-> It is suggested later to rename "non-crypto-SHA-1" to "SHA-1 without
-> collision detection", which could lead to something like this:
-> 
->     SHA-1: SHA1_OPENSSL (No collision detection)
->     SHA-1 without collision detection: none
-> 
-> which could be a bit misleading IMO. It might be best to leave the
-> option omitted if it is not defined.
+--0000000000003eaa1b0631db67c6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The problem of leaving the info away entirely is that it also makes it
-undiscoverable. Anyway -- I think it would be nice to always print this
-line and improve the format a bit to make it less awkward, but I won't
-resist if you decide to leave it as-is. After all we're already showing
-strictly more information than before, so it's a net win regardless.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Patrick
+> Hi,
+>
+> at GitLab, we sometimes have the need to list all objects regardless of
+> their reachability. We use git-cat-file(1) with `--batch-all-objects` to
+> do this, and typically this is quite a good fit. In some cases though,
+> we only want to list objects of a specific type, where we then basically
+> have the following pipeline:
+>
+>     git cat-file --batch-all-objects --batch-check=3D'%(objecttype) %(obj=
+ectname)' |
+>     grep '^commit ' |
+>     cut -d' ' -f2 |
+>     git cat-file --batch
+>
+> This works okayish in medium-sized repositories, but once you reach a
+> certain size this isn't really an option anymore. In the Chromium
+> repository for example [1] simply listing all objects in the first
+> invocation of git-cat-file(1) takes around 80 to 100 seconds. The
+> workload is completely I/O-bottlenecked: my machine reads at ~500MB/s,
+> and the packfile is 50GB in size, which matches the 100 seconds that I
+> observe.
+>
+> This series addresses the issue by introducing object filters into
+> git-cat-file(1). These object filters use the exact same syntax as the
+> filters we have in git-rev-list(1), but only a subset of them is
+> supported because not all filters can be computed by git-cat-file(1).
+> Supported are "blob:none", "blob:limit=3D" as well as "object:type=3D".
+>
+> The filters alone don't really help though: we still have to scan
+> through the whole packfile in order to compute the packfiles. While we
+> are able to shed a bit of CPU time because we can stop emitting some of
+> the objects, we're still I/O-bottlenecked.
+>
+> The second part of the series thus expands the filters so that they can
+> make use of bitmap indices for some of the filters, if available. This
+> allows us to efficiently answer the question where to find all objects
+> of a specific type, and thus we can avoid scanning through the packfile
+> and instead directly look up relevant objects, leading to a significant
+> speedup:
+>
+>     Benchmark 1: cat-file with filter=3Dobject:type=3Dcommit (revision =
+=3D HEAD~)
+>       Time (mean =C2=B1 =CF=83):     86.444 s =C2=B1  4.081 s    [User: 3=
+6.830 s, System: 11.312 s]
+>       Range (min =E2=80=A6 max):   80.305 s =E2=80=A6 93.104 s    10 runs
+>
+>     Benchmark 2: cat-file with filter=3Dobject:type=3Dcommit (revision =
+=3D HEAD)
+>       Time (mean =C2=B1 =CF=83):      2.089 s =C2=B1  0.015 s    [User: 1=
+.872 s, System: 0.207 s]
+>       Range (min =E2=80=A6 max):    2.073 s =E2=80=A6  2.119 s    10 runs
+>
+>     Summary
+>       cat-file with filter=3Dobject:type=3Dcommit (revision =3D HEAD) ran
+>        41.38 =C2=B1 1.98 times faster than cat-file with filter=3Dobject:=
+type=3Dcommit (revision =3D HEAD~)
+>
+> We now directly scale with the number of objects of a specific type
+> contained in the packfile instead of scaling with the overall number of
+> objects. It's quite fun to see how the math plays out: if you sum up the
+> times for each of the types you arrive at the time for the unfiltered
+> case.
+>
+> Changes in v2:
+>   - The series is now built on top of "master" at 683c54c999c (Git 2.49,
+>     2025-03-14) with "tb/incremental-midx-part-2" at 27afc272c49 (midx:
+>     implement writing incremental MIDX bitmaps, 2025-03-20) merged into
+>     it.
+>   - Rename the filter options to "--filter=3D" to match
+>     git-pack-objects(1).
+>   - The bitmap-filtering is now reusing existing mechanisms that we
+>     already have in "pack-bitmap.c", as proposed by Taylor.
+>   - Link to v1: https://lore.kernel.org/r/20250221-pks-cat-file-object-ty=
+pe-filter-v1-0-0852530888e2@pks.im
+>
+> Changes in v3:
+>   - Wrap some overly long lines.
+>   - Better describe how filters interact with the different batch modes.
+>   - Adapt the format with `--batch` and `--batch-check` so that we tell
+>     the user that the object has been excluded.
+>   - Add a test for "--no-filter".
+>   - Use `OPT_PARSE_LIST_OBJECTS_FILTER()`.
+>   - Link to v2: https://lore.kernel.org/r/20250327-pks-cat-file-object-ty=
+pe-filter-v2-0-4bbc7085d7c5@pks.im
+>
+> Thanks!
+>
+> Patrick
+>
+> [1]: https://github.com/chromium/chromium.git
+>
+> ---
+> Patrick Steinhardt (11):
+>       builtin/cat-file: rename variable that tracks usage
+>       builtin/cat-file: introduce function to report object status
+>       builtin/cat-file: wire up an option to filter objects
+>       builtin/cat-file: support "blob:none" objects filter
+>       builtin/cat-file: support "blob:limit=3D" objects filter
+>       builtin/cat-file: support "object:type=3D" objects filter
+>       pack-bitmap: allow passing payloads to `show_reachable_fn()`
+>       pack-bitmap: add function to iterate over filtered bitmapped object=
+s
+>       pack-bitmap: introduce function to check whether a pack is bitmappe=
+d
+>       builtin/cat-file: deduplicate logic to iterate over all objects
+>       builtin/cat-file: use bitmaps to efficiently filter by object type
+>
+>  Documentation/git-cat-file.adoc |  26 ++++
+>  builtin/cat-file.c              | 256 +++++++++++++++++++++++++++++-----=
+------
+>  builtin/pack-objects.c          |   3 +-
+>  builtin/rev-list.c              |   3 +-
+>  pack-bitmap.c                   |  81 +++++++++++--
+>  pack-bitmap.h                   |  22 +++-
+>  reachable.c                     |   3 +-
+>  t/t1006-cat-file.sh             |  99 ++++++++++++++++
+>  8 files changed, 411 insertions(+), 82 deletions(-)
+>
+> Range-diff versus v2:
+>
+>  1:  a75888e0bf4 !  1:  b0642b6c495 builtin/cat-file: rename variable tha=
+t tracks usage
+>     @@ builtin/cat-file.c: int cmd_cat_file(int argc,
+>       		;
+>       	else if (batch.follow_symlinks)
+>      -		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
+>     -+		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_u=
+sage, options,
+>     - 			       "--follow-symlinks");
+>     +-			       "--follow-symlinks");
+>     ++		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_u=
+sage,
+>     ++			       options, "--follow-symlinks");
+>       	else if (batch.buffer_output >=3D 0)
+>      -		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
+>     -+		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_u=
+sage, options,
+>     - 			       "--buffer");
+>     +-			       "--buffer");
+>     ++		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_u=
+sage,
+>     ++			       options, "--buffer");
+>       	else if (batch.all_objects)
+>      -		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
+>     -+		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_u=
+sage, options,
+>     - 			       "--batch-all-objects");
+>     +-			       "--batch-all-objects");
+>     ++		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_u=
+sage,
+>     ++			       options, "--batch-all-objects");
+>       	else if (input_nul_terminated)
+>      -		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
+>     -+		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_u=
+sage, options,
+>     - 			       "-z");
+>     +-			       "-z");
+>     ++		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_u=
+sage,
+>     ++			       options, "-z");
+>       	else if (nul_terminated)
+>      -		usage_msg_optf(_("'%s' requires a batch mode"), usage, options,
+>     -+		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_u=
+sage, options,
+>     - 			       "-Z");
+>     +-			       "-Z");
+>     ++		usage_msg_optf(_("'%s' requires a batch mode"), builtin_catfile_u=
+sage,
+>     ++			       options, "-Z");
+>
+>       	batch.input_delim =3D batch.output_delim =3D '\n';
+>     + 	if (input_nul_terminated)
+>      @@ builtin/cat-file.c: int cmd_cat_file(int argc,
+>       			batch.transform_mode =3D opt;
+>       		else if (opt && opt !=3D 'b')
+>     @@ builtin/cat-file.c: int cmd_cat_file(int argc,
+>      +				       builtin_catfile_usage, options, opt);
+>       		else if (argc)
+>      -			usage_msg_opt(_("batch modes take no arguments"), usage,
+>     -+			usage_msg_opt(_("batch modes take no arguments"), builtin_catfil=
+e_usage,
+>     - 				      options);
+>     +-				      options);
+>     ++			usage_msg_opt(_("batch modes take no arguments"),
+>     ++				      builtin_catfile_usage, options);
+>
+>       		return batch_objects(&batch);
+>     + 	}
+>      @@ builtin/cat-file.c: int cmd_cat_file(int argc,
+>       	if (opt) {
+>       		if (!argc && opt =3D=3D 'c')
+>       			usage_msg_optf(_("<rev> required with '%s'"),
+>      -				       usage, options, "--textconv");
+>     -+				       builtin_catfile_usage, options, "--textconv");
+>     ++				       builtin_catfile_usage, options,
+>     ++				       "--textconv");
+>       		else if (!argc && opt =3D=3D 'w')
+>       			usage_msg_optf(_("<rev> required with '%s'"),
+>      -				       usage, options, "--filters");
+>     -+				       builtin_catfile_usage, options, "--filters");
+>     ++				       builtin_catfile_usage, options,
+>     ++				       "--filters");
+>       		else if (!argc && opt_epts)
+>       			usage_msg_optf(_("<object> required with '-%c'"),
+>      -				       usage, options, opt);
+>     @@ builtin/cat-file.c: int cmd_cat_file(int argc,
+>       			obj_name =3D argv[0];
+>       		else
+>      -			usage_msg_opt(_("too many arguments"), usage, options);
+>     -+			usage_msg_opt(_("too many arguments"), builtin_catfile_usage, op=
+tions);
+>     ++			usage_msg_opt(_("too many arguments"), builtin_catfile_usage,
+>     ++				      options);
+>       	} else if (!argc) {
+>      -		usage_with_options(usage, options);
+>      +		usage_with_options(builtin_catfile_usage, options);
+>  -:  ----------- >  2:  18353ba706d builtin/cat-file: introduce function =
+to report object status
+>  2:  bee9407c1a9 !  3:  1e46af5d07b builtin/cat-file: wire up an option t=
+o filter objects
+>     @@ Documentation/git-cat-file.adoc: OPTIONS
+>      +--filter=3D<filter-spec>::
+>      +--no-filter::
+>      +	Omit objects from the list of printed objects. This can only be us=
+ed in
+>     -+	combination with one of the batched modes. The '<filter-spec>' may=
+ be
+>     -+	one of the following:
+>     ++	combination with one of the batched modes. Excluded objects that h=
+ave
+>     ++	been explicitly requested via any of the batch modes that read obj=
+ects
+>     ++	via standard input (`--batch`, `--batch-check`) will be reported a=
+s
+>     ++	"filtered". Excluded objects in `--batch-all-objects` mode will no=
+t be
+>     ++	printed at all. No filters are supported yet.
+>      +
+>       --path=3D<path>::
+>       	For use with `--textconv` or `--filters`, to allow specifying an o=
+bject
+>       	name and a path separately, e.g. when it is difficult to figure ou=
+t
+>     +@@ Documentation/git-cat-file.adoc: the repository, then `cat-file` =
+will ignore any custom format and print:
+>     + <object> SP missing LF
+>     + ------------
+>     +
+>     ++If a name is specified on stdin that is filtered out via `--filter=
+=3D`,
+>     ++then `cat-file` will ignore any custom format and print:
+>     ++
+>     ++------------
+>     ++<object> SP excluded LF
+>     ++------------
+>     ++
+>     + If a name is specified that might refer to more than one object (an=
+ ambiguous short sha), then `cat-file` will ignore any custom format and pr=
+int:
+>     +
+>     + ------------
+>
+>       ## builtin/cat-file.c ##
+>      @@
+>     @@ builtin/cat-file.c: int cmd_cat_file(int argc,
+>       			    N_("run filters on object's content"), 'w'),
+>       		OPT_STRING(0, "path", &force_path, N_("blob|tree"),
+>       			   N_("use a <path> for (--textconv | --filters); Not with 'batc=
+h'")),
+>     -+		OPT_CALLBACK(0, "filter", &batch.objects_filter, N_("args"),
+>     -+			     N_("object filtering"), opt_parse_list_objects_filter),
+>     ++		OPT_PARSE_LIST_OBJECTS_FILTER(&batch.objects_filter),
+>       		OPT_END()
+>       	};
+>
+>     @@ builtin/cat-file.c: int cmd_cat_file(int argc,
+>       	if (opt =3D=3D 'b')
+>       		batch.all_objects =3D 1;
+>      @@ builtin/cat-file.c: int cmd_cat_file(int argc,
+>     - 			usage_msg_opt(_("batch modes take no arguments"), builtin_catfil=
+e_usage,
+>     - 				      options);
+>     + 			usage_msg_opt(_("batch modes take no arguments"),
+>     + 				      builtin_catfile_usage, options);
+>
+>      -		return batch_objects(&batch);
+>      +		ret =3D batch_objects(&batch);
+>     @@ t/t1006-cat-file.sh: test_expect_success PERL '--batch-command inf=
+o is unbuffere
+>      +		test_cmp expect err
+>      +	'
+>      +done
+>     ++
+>     ++test_expect_success 'objects filter: disabled' '
+>     ++	git -C repo cat-file --batch-check=3D"%(objectname)" --batch-all-o=
+bjects --no-filter >actual &&
+>     ++	sort actual >actual.sorted &&
+>     ++	git -C repo rev-list --objects --no-object-names --all >expect &&
+>     ++	sort expect >expect.sorted &&
+>     ++	test_cmp expect.sorted actual.sorted
+>     ++'
+>      +
+>       test_done
+>  3:  ec1d0c63de6 !  4:  878ae8e2a76 builtin/cat-file: support "blob:none"=
+ objects filter
+>     @@ Commit message
+>          Implement support for the "blob:none" filter in git-cat-file(1),=
+ which
+>          causes us to omit all blobs.
+>
+>     +    Note that this new filter requires us to read the object type vi=
+a
+>     +    `oid_object_info_extended()` in `batch_object_write()`. But as w=
+e try to
+>     +    optimize away reading objects from the database the `data->info.=
+typep`
+>     +    pointer may not be set. We thus have to adapt the logic to condi=
+tionally
+>     +    set the pointer in cases where the filter is given.
+>     +
+>          Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>
+>       ## Documentation/git-cat-file.adoc ##
+>      @@ Documentation/git-cat-file.adoc: OPTIONS
+>     - 	Omit objects from the list of printed objects. This can only be us=
+ed in
+>     - 	combination with one of the batched modes. The '<filter-spec>' may=
+ be
+>     - 	one of the following:
+>     + 	been explicitly requested via any of the batch modes that read obj=
+ects
+>     + 	via standard input (`--batch`, `--batch-check`) will be reported a=
+s
+>     + 	"filtered". Excluded objects in `--batch-all-objects` mode will no=
+t be
+>     +-	printed at all. No filters are supported yet.
+>     ++	printed at all. The '<filter-spec>' may be one of the following:
+>      ++
+>      +The form '--filter=3Dblob:none' omits all blobs.
+>
+>     @@ builtin/cat-file.c: static void batch_object_write(const char *obj=
+_name,
+>       		case LOFC_DISABLED:
+>       			break;
+>      +		case LOFC_BLOB_NONE:
+>     -+			if (data->type =3D=3D OBJ_BLOB)
+>     ++			if (data->type =3D=3D OBJ_BLOB) {
+>     ++				if (!opt->all_objects)
+>     ++					report_object_status(opt, obj_name,
+>     ++							     &data->oid, "excluded");
+>      +				return;
+>     ++			}
+>      +			break;
+>       		default:
+>       			BUG("unsupported objects filter");
+>     @@ t/t1006-cat-file.sh: test_expect_success 'objects filter with unkn=
+own option' '
+>       do
+>       	test_expect_success "objects filter with unsupported option $optio=
+n" '
+>       		case "$option" in
+>     -@@ t/t1006-cat-file.sh: do
+>     - 	'
+>     - done
+>     +@@ t/t1006-cat-file.sh: test_expect_success 'objects filter: disable=
+d' '
+>     + 	test_cmp expect.sorted actual.sorted
+>     + '
+>
+>      +test_objects_filter () {
+>      +	filter=3D"$1"
+>     @@ t/t1006-cat-file.sh: do
+>      +		sort expect >expect.sorted &&
+>      +		test_cmp expect.sorted actual.sorted
+>      +	'
+>     ++
+>     ++	test_expect_success "objects filter prints excluded objects: $filt=
+er" '
+>     ++		# Find all objects that would be excluded by the current filter.
+>     ++		git -C repo rev-list --objects --no-object-names --all >all &&
+>     ++		git -C repo rev-list --objects --no-object-names --all --filter=
+=3D"$filter" --filter-provided-objects >filtered &&
+>     ++		sort all >all.sorted &&
+>     ++		sort filtered >filtered.sorted &&
+>     ++		comm -23 all.sorted filtered.sorted >expected.excluded &&
+>     ++		test_line_count -gt 0 expected.excluded &&
+>     ++
+>     ++		git -C repo cat-file --batch-check=3D"%(objectname)" --filter=3D"=
+$filter" <expected.excluded >actual &&
+>     ++		awk "/excluded/{ print \$1 }" actual | sort >actual.excluded &&
+>     ++		test_cmp expected.excluded actual.excluded
+>     ++	'
+>      +}
+>      +
+>      +test_objects_filter "blob:none"
+>  4:  a3ed054994d !  5:  a88d5d4b60a builtin/cat-file: support "blob:limit=
+=3D" objects filter
+>     @@ Commit message
+>
+>       ## Documentation/git-cat-file.adoc ##
+>      @@ Documentation/git-cat-file.adoc: OPTIONS
+>     - 	one of the following:
+>     + 	printed at all. The '<filter-spec>' may be one of the following:
+>       +
+>       The form '--filter=3Dblob:none' omits all blobs.
+>      ++
+>     @@ builtin/cat-file.c: static void batch_object_write(const char *obj=
+_name,
+>       		if (pack)
+>       			ret =3D packed_object_info(the_repository, pack, offset,
+>      @@ builtin/cat-file.c: static void batch_object_write(const char *ob=
+j_name,
+>     - 			if (data->type =3D=3D OBJ_BLOB)
+>       				return;
+>     + 			}
+>       			break;
+>      +		case LOFC_BLOB_LIMIT:
+>      +			if (data->type =3D=3D OBJ_BLOB &&
+>     -+			    data->size >=3D opt->objects_filter.blob_limit_value)
+>     ++			    data->size >=3D opt->objects_filter.blob_limit_value) {
+>     ++				if (!opt->all_objects)
+>     ++					report_object_status(opt, obj_name,
+>     ++							     &data->oid, "excluded");
+>      +				return;
+>     ++			}
+>      +			break;
+>       		default:
+>       			BUG("unsupported objects filter");
+>     @@ t/t1006-cat-file.sh: test_objects_filter () {
+>      +test_objects_filter "blob:limit=3D1"
+>      +test_objects_filter "blob:limit=3D500"
+>      +test_objects_filter "blob:limit=3D1000"
+>     -+test_objects_filter "blob:limit=3D1g"
+>     ++test_objects_filter "blob:limit=3D1k"
+>
+>       test_done
+>  5:  8e39cd218c2 !  6:  13be54300c9 builtin/cat-file: support "object:typ=
+e=3D" objects filter
+>     @@ builtin/cat-file.c: static void batch_object_write(const char *obj=
+_name,
+>       		if (opt->objects_filter.choice =3D=3D LOFC_BLOB_LIMIT)
+>       			data->info.sizep =3D &data->size;
+>      @@ builtin/cat-file.c: static void batch_object_write(const char *ob=
+j_name,
+>     - 			    data->size >=3D opt->objects_filter.blob_limit_value)
+>       				return;
+>     + 			}
+>       			break;
+>      +		case LOFC_OBJECT_TYPE:
+>     -+			if (data->type !=3D opt->objects_filter.object_type)
+>     ++			if (data->type !=3D opt->objects_filter.object_type) {
+>     ++				if (!opt->all_objects)
+>     ++					report_object_status(opt, obj_name,
+>     ++							     &data->oid, "excluded");
+>      +				return;
+>     ++			}
+>      +			break;
+>       		default:
+>       			BUG("unsupported objects filter");
+>     @@ t/t1006-cat-file.sh: test_expect_success 'objects filter with unkn=
+own option' '
+>      @@ t/t1006-cat-file.sh: test_objects_filter "blob:limit=3D1"
+>       test_objects_filter "blob:limit=3D500"
+>       test_objects_filter "blob:limit=3D1000"
+>     - test_objects_filter "blob:limit=3D1g"
+>     + test_objects_filter "blob:limit=3D1k"
+>      +test_objects_filter "object:type=3Dblob"
+>      +test_objects_filter "object:type=3Dcommit"
+>      +test_objects_filter "object:type=3Dtag"
+>  6:  a0655de3ace =3D  7:  d525a5bc2ef pack-bitmap: allow passing payloads=
+ to `show_reachable_fn()`
+>  7:  e1e44303dac =3D  8:  e3cc1ae3a87 pack-bitmap: add function to iterat=
+e over filtered bitmapped objects
+>  8:  23bc040bb15 =3D  9:  c0fc0e4ce0c pack-bitmap: introduce function to =
+check whether a pack is bitmapped
+>  9:  4eba2a70619 =3D 10:  28ef93dceec builtin/cat-file: deduplicate logic=
+ to iterate over all objects
+> 10:  d40f1924ef5 =3D 11:  842a6002c50 builtin/cat-file: use bitmaps to ef=
+ficiently filter by object type
+>
+
+Thanks for the new version, the range-diff looks good. Good that you
+also added a test for "excluded" message too.
+
+> ---
+> base-commit: 003c5f45b8447877015b2a23ceab2297638fe1f1
+> change-id: 20250220-pks-cat-file-object-type-filter-9140c0ed5ee1
+
+--0000000000003eaa1b0631db67c6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e654e97534e30f85_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mdVJCMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOFFUQy8wWTd5NXRNM252bGlreXpaZ25GbE95aVZRQQpvYjh6UVB5dTFJ
+ZXd1MWpQSjBTbVA2NldzeUpWeVZEa3NmRGprMnZWcUdWOXVPRFRMQ0J3azdVRzl2YkVEL1pYCld4
+Lzk0dlMzRVNaSWkvdTVRcG1qK0MrNjY4S2czRitxcEJpRjJHZVdSSHU2U21CUmhUT2JUaUpseDNy
+T2IrVVcKQmw2ZEx6TkErWHFhQnNsVE1mdlpaazZTWjlTZGtVbmo1VFZqR0JmMnFnblZUcFV0cmE5
+Mll4aEI4a1BIMzRyRgpHSS9XMGJ3K2lmN2tNVHRKemlQMmVHcmRQN3pJaUxXTkFMWmhlcVNIdi9u
+US9nV1hjNE1tL3ZPY2NFUkVRL3VWCkp0Y3MvL1RlNHFUM3BsWnVFZ2ZQUlBLc2orZmFnQS9EUmt1
+dmcrZ3E4ZkZhNjFISXNncXdNY0U3bjMyRTFmY0UKdkFSdnp6WWQ2eDNtYWVvbXczYWljekVrSkhz
+R1k4elVwZTFBWHd1THcySlY2ZHFEeHA5bjRzTzFaQmZmRjRUaApoQ1dZWHgyQTcwZGtsNFRWY2ZZ
+d25CNTBMeGxGMndSNjRrWmpDL0l2ZDA0WTFxNWk2amJ2R3JYcEowdjk5VHptCmMyd3hRbC9kK0dp
+NnZSRHY0a0w0UzFWcHlLWXlkY3UvaGRZS0ttdz0KPXJteXYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000003eaa1b0631db67c6--
