@@ -1,275 +1,160 @@
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC2C24C080
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 15:17:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7260E24CEE5
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 15:26:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743693473; cv=none; b=lqEXrg0a4PJtbNGw2xSKBTdkPQTj0MRoEG6834coLxe4MDJdwGX+E52ESNLXq0XL9ld6NGR9G9btmUx0jiJTsIWHaqx2RVAOeSbWHEoOTcv/dw+Y8cW4GRmmARfm4KpP31a7pUiOObsBE/F1EXsxTrBsgHOt2vH9K5XYhlj+3FU=
+	t=1743694011; cv=none; b=IuXqSu1ePCXD41pYJpo3F8MShC4t4rby8gBTk9ki5qRIVEQtRD70+IxF4fa+582KiYCXocfVGYOlqdyDFjaPa8///RfmStqCvQFl+FLfINWxeHZTIYLE2j2ZPTxQEQLm8TwmWqDRwj8crEHA0WVagvG892OqUhcNwo1uNF4tjy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743693473; c=relaxed/simple;
-	bh=cTKWzhUYhrRY2qkkpGpqy9xJmOsdxVD4pJjs9rcOsKY=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=rrY9MDJrXXUY3q83diaek0GMWabmfGDMEXGddyNIjJnUsgCJPCO5UOiai7LH14hVfXaQpr/FEf8tOLbsmNcsKSZzp3d2cwXb45hDylkFVGXZLSz+YK1NQdEHaxNVIHO52vZuJaiKWjY0ksR0hyauq8W8Uibto5uwLicNqDqbv6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iVFKgvxR; arc=none smtp.client-ip=209.85.222.41
+	s=arc-20240116; t=1743694011; c=relaxed/simple;
+	bh=cgh0bGX3SZmU8g7JKFlDEgW/1SXNaXWJQcsLVqTOOsU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S06MaXh8PCQL6aZtS0htMA/aHz4GKdJ5dXlUMo7Mt4lR1dz/wlEy+T5Tr26xcLXmg70vYfPMfqrIr1Y6ZWxVLu6yrbvuD3JyI7eq5EaEc4dwZM6fSPbAqfZjij/JM/HkkByxV46XeeaO8U/wgxNMIF32oGNjV22wcANIMjKvp8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I9pFHWhD; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iVFKgvxR"
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-86fbc8717fcso492131241.2
-        for <git@vger.kernel.org>; Thu, 03 Apr 2025 08:17:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I9pFHWhD"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-227aaa82fafso11368965ad.2
+        for <git@vger.kernel.org>; Thu, 03 Apr 2025 08:26:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743693471; x=1744298271; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+        d=gmail.com; s=20230601; t=1743694009; x=1744298809; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ck7eRiXPtGTCbwgVeakz+QoKBzJn6R3oobFOzqxtrDU=;
-        b=iVFKgvxRhayRR4i8Zpmp/tXe5cecFeCCpwglicYQJ5f76SpwMPBq5XL29ay9qJHryy
-         O6KtIh3MEV2XwEyo4xea3jv1Abccj0mY2zBXETcwaYhtlgIujyhoh2liuxpZ0akYXcHj
-         bLX8R5me1moRSTh4PXDFptYR2uz8xyjYXKYd1HB1hWQB2QKMcSRCBnwK7yJTDvVK7sbL
-         enfpkBkivn8fRKUfdGUVYvxD7m8kp6dQZgDH48e+v8SjGvyg+aJiGdLSeOxYaxehi+/T
-         uSWtvmyE/H3sKBLrpVl6dXirXRTpQTbTtGK6ymMWNEd9opQq1InyeXytz9GNVhGUzxW0
-         yIIw==
+        bh=6/IKpE+Is6r4WFqqxEjIAXBzsXSD1PWNwDmNhKWUe2c=;
+        b=I9pFHWhDOlbfTRP7K7ZSNoUkVyzTuoV6rqQn4CDPWqaiDQyZrpzZ7BITac/qbywFQX
+         P04E8ZLf4NQts5O888NLP2GlVcyflQwiIUp6H69cBuN4gBRKjLGpEzoKoUpYcbayEHaK
+         9QDoplGDCHDwa2hVzFlzUWODQ8CN/9axKXvYYNCQtBYhSGGr3nizB5m0JicEQN25OQUc
+         MCE6a64TWQfaMvkSX1QaoU4EzhX1FVW0lKeMw28jCVw4ARo2UhTHlytWPkCuia5QKZ15
+         TNgME+jm0Bk2oS/UoFRU9+UrpUOdZhQtJ4R95RtFqaWwMrJGPN+9Eg2oFnyEIzHjTt8q
+         KQ5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743693471; x=1744298271;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+        d=1e100.net; s=20230601; t=1743694009; x=1744298809;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ck7eRiXPtGTCbwgVeakz+QoKBzJn6R3oobFOzqxtrDU=;
-        b=hoaVJzcHhCBSFtEGZsmB2yKd1ZmRr7Wo3O6hfaJJFTZA3ggweyb0a+WhWpgTqRf1Hj
-         iGbA7lWuScF8qulmXDlG9P4VA8eOjTCEHP6wrPKkuVHhIr1SHX4PxNrZTpFUULyhuYC4
-         af6/a1lkDomPE6ntzFaYfKSzLKnnteV/nqWchcO9WUZYIpIrtR3zYy2q7Y3Y6gTwF0ef
-         JaRZoW8f2DjBtK6Z9uXioUVlG33JqbSxmJDKxE4wd6ssDw3FZXr1N1K1L93d4QsTW23n
-         erU6DhMtFx4Z0YT4jy6qsuugRNJbh/sZ3fdna3LC0jAUAWL/9kZrII+4tVU2yuo78Mgr
-         xA0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXwGm3FIp0fGqz7+dbfdKKjdzy5LaSw0Id97pesQa0aznqkHp4DPkZ56kCSyKWYc7SHO1E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzL1uaYV7wicrHS380e5ObpV9bEVf8mVh0AlIQODvk5O8H3WAoS
-	H39o+Dh2/v09kaiVq/3uoNiyRvNAS7N1Cmi30bLuJBdOW+2H+km0RKZufsQpqReSTA9Tg5PJ9En
-	b8nTo1lXm6iYYeklv7TC3YsHDwpprwr4J
-X-Gm-Gg: ASbGncsUMIJeGMK/VGpoUo9+oOzqXJPVUrwMjcUzDh+mgdIxZf1xUIzc0DAcNfbW+AT
-	AFa8TOGgMDL+Pedvf0UldCDIPKULhFJI1qHZU4+ak8IScetxTq9xVPvxJNPROjzYcMg7RiEDnIF
-	xiV4Ry56uZr+SZ6GpSkF5zOVrpIz/tuWFIVMU16fhVcLn0NQI0N5wwYWLBvw==
-X-Google-Smtp-Source: AGHT+IGqFGTJXyMICrXQ5uNp6NRqM3PeJggeQh52DlmNLGL0lA/KJiUgL3D+NRVdwcdefVPEM20sSuD/KlML4AcLUaY=
-X-Received: by 2002:a05:6102:5108:b0:4c1:76a4:aee4 with SMTP id
- ada2fe7eead31-4c8478849damr2473143137.19.1743693470960; Thu, 03 Apr 2025
- 08:17:50 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Apr 2025 08:17:50 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250331-pks-reftable-polishing-v1-4-ebed5247434c@pks.im>
-References: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im> <20250331-pks-reftable-polishing-v1-4-ebed5247434c@pks.im>
+        bh=6/IKpE+Is6r4WFqqxEjIAXBzsXSD1PWNwDmNhKWUe2c=;
+        b=mPD0Mulfi62x3HT9k9xZ2kS6ImT9COCfasNQQa4+dvkZvbiL8rpmrS5fBsZt/baMIz
+         5NCbADKv7N6hJpZq6Z8+Wz7CZ+hE72GYyQFykMlbyoa2e32yHv+qK6w5/p8Dh8OeaZG/
+         idR99wtY6emJLEAIugqt71YWLFClpqjYOoKmOt3OyZ9W3NnO11ezKZzfWW46fPbvZzXx
+         g5GSV9lZeCive5UAzQTx+ZguzvWE1ni4Yk863TTRafHRIDvgkVkF8K2U3QPzeDPQXkvZ
+         ZuQL7N3YDmbj4dQeZn7CVD0UdqXL7CtLwGhOL/TcDfZJCqdSgOICaErFShaImFR7FQyp
+         5AqA==
+X-Gm-Message-State: AOJu0Yz0Zxzpkra5JUWDQdfJ+9XYvzN+tcc+L4zSe8WSCDlIb6D16uHM
+	z+SWsJlLM0EZSqtJKzqjr2bwGmzUNqo8V6bHva6Vx/WjlDkbNMj0HU2eXQ==
+X-Gm-Gg: ASbGncthhUXv0t3pZu1bb+bxIh+Rpih3ZDxISC6CEX5coEfiovTAdS3UzjsBTDT9YTT
+	ul05GH/S1lBNuPFWM4spDH6k50/1pWD4Y6y/dCylmrcg2chGoPmGa2qurZPVf5oNdwFSmsn6y39
+	egWIyhA2RQCPK1P8zMGHa8JKYv/p2GJfRHug9wkvkeTJaG+GFRYtdpmQUD6TBvjDQMJtsB718a9
+	c7UWx52yRdVcqj8uP+KwZ/MQb4zazkc1E06jqpTbZWDWvnnDKrxX8KVCpHE/xZR6xeYLOyB/Sw5
+	xnzGO+xQUhkzUSg0BNTnchgLy0olf5bIvlx1RtYDYY0wihdv
+X-Google-Smtp-Source: AGHT+IFJPIxEZBa7jLhOYs6jQ+WAjITf78j97as2OpwaJoYQDU9hqiRpk2a04hcabtEJ/jXOF0Wa/Q==
+X-Received: by 2002:a17:903:22c4:b0:224:1780:c1ec with SMTP id d9443c01a7336-22977df3ac2mr48263075ad.35.1743694008476;
+        Thu, 03 Apr 2025 08:26:48 -0700 (PDT)
+Received: from [10.61.99.47] ([103.21.124.55])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-229785ad820sm15883945ad.9.2025.04.03.08.26.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Apr 2025 08:26:47 -0700 (PDT)
+Message-ID: <bcdeb3cf-33a1-4553-897d-0bc09dc6a78d@gmail.com>
+Date: Thu, 3 Apr 2025 20:56:45 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 3 Apr 2025 08:17:50 -0700
-X-Gm-Features: ATxdqUEJmnXtDE6Y9bNm2m40kb6XzFddkb8jG-vlWyMuB9DN5dl-hIm7r2YselQ
-Message-ID: <CAOLa=ZRwRkV56HAxtfX3EM1Lr3D938bY7d-zv+xUF4G40f-O2A@mail.gmail.com>
-Subject: Re: [PATCH 04/16] reftable/block: simplify how we track restart points
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000ef2a7c0631e14540"
-
---000000000000ef2a7c0631e14540
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: =?UTF-8?Q?Re=3A_=5BGSoC_PROPOSAL_v1=5D_Refactoring_in_order_to_redu?=
+ =?UTF-8?Q?ce_Git=E2=80=99s_global_state?=
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+References: <1077615a-1c31-416d-a754-58b36d404289@gmail.com>
+ <Z-5b6INZXiXbEuU2@pks.im>
+Content-Language: en-US
+From: Arnav Bhate <bhatearnav@gmail.com>
+In-Reply-To: <Z-5b6INZXiXbEuU2@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 Patrick Steinhardt <ps@pks.im> writes:
+> On Wed, Apr 02, 2025 at 11:44:12PM +0530, Arnav Bhate wrote:
+> [snip]
+>> ## Proposed Plan
+>>
+>> - Identifying all occurences of `the_repository` and updating them to
+>>   use a `struct repository` passed to the function.
+> 
+> I think that might be overly ambituous :) After all we're talking about
+> ~3500 occurrences, and it won't be feasible to replace them all in the
+> couple of months. This is rather a multi-year project, and one that has
+> already been going on for quite a while.
+> 
+>> - Identifying global variables that should be moved and identifying
+>>   suitable locations, some could be moved directly into
+>>   `struct repository`, some in its sub-structs that already exist and
+>>   some in newly created sub-structs.
+> 
+> Likewise, I would recommend to properly scope _which_ variables you want
+> to replace. There's a ton of global state, so you should try to limit
+> the project to a reasonable workload.
 
-> Restart points record the location of reftable records that do not use
-> prefix compression and are used to perform a binary search inside of a
-> block. These restart points are encoded at the end of a block, between
-> the record data and the footer of a table.
->
-> The block structure contains three different variables related to these
-> restart points:
->
->   - The block length contains the length of the reftable block up to the
->     restart points.
->
->   - The restart count contains the number of restart points contained in
->     the block.
->
->   - The restart bytes variable tracks where the restart point data
->     begins.
->
-> Tracking all three of these variables is unnecessary though as the data
-> can be derived from one another: the block length without restart points
-> is the exact same as the offset of the restart count data, which we
-> already track via the `restart_bytes` data.
->
+I could do all the global variables in environment.c. I feel like that
+is doable. Once I am finished with that, I could start replacing
+the_repository.
 
-Nit: This para makes it seem as if we'd eliminate 'block length' in
-support of having/keeping `restart_bytes`, but we remove both.
+>> - Identifying and updating occurences of these variables to reference
+>>   their new locations.
+>>
+>> It makes sense that all the variables need not be in the same struct, as
+>> separation would keep the codebase organised, and thus easier to
+>> maintain. It would also make it easier to introduce these changes
+>> systematically, as a group of related variables, combined together in a
+>> struct, could be introduced in a single patch series.
+>>
+>> ### Timeline
+>>
+>> #### Pre-GSoC (Until May 8)
+>>
+>> - Explore the codebase, identifying global variables and how they are
+>>   used.
+>>
+>> - Start to identify suitable locations for global variables.
+>>
+>> #### Community Bonding Period (May 8 - June 1)
+>>
+>> - Interact with mentor, discussing best ways to refactor various
+>>   variables and make a plan based on that.
+>>
+>> - If time is left, start coding early, as my summer break will have
+>>   started.
+>>
+>> #### Coding Period (June 2 - August 25)
+>>
+>> - Modify functions to add an `struct repository` argument where they
+>>   depend on `the_repository` and replace all occurences of it.
+>>
+>> - Move global variables to their new locations in various structs,
+>>   and refactor functions that depend on them to use their new locations.
+> 
+> In large-scale projects like these it typically makes sense to work in
+> batches. Instead of having three separate phases to "define the
+> problem", "develop the solution" and "deploy the improvement" I would
+> strongly encourage you to define and tie together smaller batches of
+> work.
 
-> Refactor the code so that we track the location of restart bytes not as
-> a pointer, but instead as an offset. This allows us to trivially get rid
-> of the `block_len` variable as described above. This avoids having the
-> confusing `block_len` variable and allows us to do less bookkeeping
-> overall.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  reftable/block.c | 25 ++++++++++++-------------
->  reftable/block.h |  8 +++++---
->  reftable/table.c |  2 +-
->  3 files changed, 18 insertions(+), 17 deletions(-)
->
-> diff --git a/reftable/block.c b/reftable/block.c
-> index 97740187259..f2567a8f0fd 100644
-> --- a/reftable/block.c
-> +++ b/reftable/block.c
-> @@ -216,10 +216,9 @@ int block_reader_init(struct block_reader *br, struct reftable_block *block,
->  	uint32_t full_block_size = table_block_size;
->  	uint8_t typ = block->data[header_off];
->  	uint32_t sz = reftable_get_be24(block->data + header_off + 1);
-> -	int err = 0;
-> -	uint16_t restart_count = 0;
-> -	uint32_t restart_start = 0;
-> -	uint8_t *restart_bytes = NULL;
-> +	uint16_t restart_count;
-> +	uint32_t restart_off;
+What I meant is, before coding started, I want to finalise all the new
+locations for the global variables with my mentor, then I would actually
+modify the code in batches, struct-by-struct. Are you suggesting that
+the new locations not be finalised beforehand, or are we misinterpreting
+each other?
 
-Nit: I guess this is to be consistent with `header_off`, but I would
-think spelling it out as `header_offset` is much easier to understand.
+> Thanks!
+> 
+> Patrick
 
-> +	int err;
->
->  	block_source_return_block(&br->block);
->
-> @@ -300,8 +299,7 @@ int block_reader_init(struct block_reader *br, struct reftable_block *block,
->  	}
->
->  	restart_count = reftable_get_be16(block->data + sz - 2);
-> -	restart_start = sz - 2 - 3 * restart_count;
-> -	restart_bytes = block->data + restart_start;
-> +	restart_off = sz - 2 - 3 * restart_count;
->
+-- 
+Regards,
+Arnav Bhate
+(He/Him)
 
-So each block looks like:
-
-'r'
-uint24( block_len )
-ref_record+
-uint24( restart_offset )+
-uint16( restart_count )
-
-So this does make sense.
-
->  	/* transfer ownership. */
->  	br->block = *block;
-> @@ -309,11 +307,12 @@ int block_reader_init(struct block_reader *br, struct reftable_block *block,
->  	block->len = 0;
->
->  	br->hash_size = hash_size;
-> -	br->block_len = restart_start;
-> +	br->restart_off = restart_off;
->  	br->full_block_size = full_block_size;
->  	br->header_off = header_off;
->  	br->restart_count = restart_count;
-> -	br->restart_bytes = restart_bytes;
-> +
-> +	err = 0;
->
->  done:
->  	return err;
-> @@ -337,7 +336,7 @@ int block_reader_first_key(const struct block_reader *br, struct reftable_buf *k
->  	int off = br->header_off + 4, n;
->  	struct string_view in = {
->  		.buf = br->block.data + off,
-> -		.len = br->block_len - off,
-> +		.len = br->restart_off - off,
->  	};
->  	uint8_t extra = 0;
->
-> @@ -354,13 +353,13 @@ int block_reader_first_key(const struct block_reader *br, struct reftable_buf *k
->
->  static uint32_t block_reader_restart_offset(const struct block_reader *br, size_t idx)
->  {
-> -	return reftable_get_be24(br->restart_bytes + 3 * idx);
-> +	return reftable_get_be24(br->block.data + br->restart_off + 3 * idx);
->  }
->
->  void block_iter_seek_start(struct block_iter *it, const struct block_reader *br)
->  {
->  	it->block = br->block.data;
-> -	it->block_len = br->block_len;
-> +	it->block_len = br->restart_off;
->  	it->hash_size = br->hash_size;
->  	reftable_buf_reset(&it->last_key);
->  	it->next_off = br->header_off + 4;
-> @@ -378,7 +377,7 @@ static int restart_needle_less(size_t idx, void *_args)
->  	uint32_t off = block_reader_restart_offset(args->reader, idx);
->  	struct string_view in = {
->  		.buf = args->reader->block.data + off,
-> -		.len = args->reader->block_len - off,
-> +		.len = args->reader->restart_off - off,
->  	};
->  	uint64_t prefix_len, suffix_len;
->  	uint8_t extra;
-> @@ -505,7 +504,7 @@ int block_iter_seek_key(struct block_iter *it, const struct block_reader *br,
->  	else
->  		it->next_off = br->header_off + 4;
->  	it->block = br->block.data;
-> -	it->block_len = br->block_len;
-> +	it->block_len = br->restart_off;
->  	it->hash_size = br->hash_size;
->
->  	err = reftable_record_init(&rec, block_reader_type(br));
-> diff --git a/reftable/block.h b/reftable/block.h
-> index 203b07d9a44..b78f322e646 100644
-> --- a/reftable/block.h
-> +++ b/reftable/block.h
-> @@ -79,10 +79,12 @@ struct block_reader {
->  	unsigned char *uncompressed_data;
->  	size_t uncompressed_cap;
->
-> -	/* size of the data, excluding restart data. */
-> -	uint32_t block_len;
-> -	uint8_t *restart_bytes;
-> +	/*
-> +	 * Restart point data. Restart points are located after the block's
-> +	 * record data.
-> +	 */
->  	uint16_t restart_count;
-> +	uint32_t restart_off;
->
->  	/* size of the data in the file. For log blocks, this is the compressed
->  	 * size. */
-> diff --git a/reftable/table.c b/reftable/table.c
-> index d18e17b0d44..ec84545707c 100644
-> --- a/reftable/table.c
-> +++ b/reftable/table.c
-> @@ -838,7 +838,7 @@ int reftable_table_print_blocks(const char *tablename)
->  		printf("%s:\n", sections[i].name);
->
->  		while (1) {
-> -			printf("  - length: %u\n", ti.br.block_len);
-> +			printf("  - length: %u\n", ti.br.restart_off);
->  			printf("    restarts: %u\n", ti.br.restart_count);
->
->  			err = table_iter_next_block(&ti);
->
-> --
-> 2.49.0.604.gff1f9ca942.dirty
-
-The patch looks good.
-
---000000000000ef2a7c0631e14540
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 525b6b0d5ea6b01e_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mdXBwd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNDZ1Qy85OGlFb2RPaVhEanVpeDdjMTVtOERpM3QzbwptdUh1YmsvUFVT
-a00rMk5pdzY5RHZsY2NiMWU4OUxOK2tkTDl3b2wyR0krcWpnVG9ySThJbEJ3eWw4M3NDeEZPCi9W
-UEd3T2Z0RzE4a2lHS0ZSM1cxeGxxajlwRTg1ZldKYy9ENVI3NXBKTFNydURHQ2VVVEtvSDUyemlE
-Z1hsZEwKYmZHdnYyeFJNUVlyQzl2VnlJaXl5U2g0MFkvbEhXY0ZSVVJTL0NSSStNYk9LU1lySjZy
-VzdpbjJEdDdacHBYeQpoY3ZVQWcya3IrdG82NFJOKzUrb3VTQTMweEc3ZE1MQ3hRN2VieDk2eDZ6
-UkZmWjJFaURjSVArTTd6ZkdiNmsyCnR1ZVREcUg4M2l4UHJvV3kyT0hDNkwreUhzSkVTWXMvelJU
-TjhiTlpJQkVyaGIwT3JqSThBdytpRGpoak82clcKdlFyb3plSDJaU1lTRGtwN0N1M3RKeUlmaXVo
-V3hDd3k1N1c2YnpxR09Fam93MTNoVkc2YnJJR2luQlBlRUZhaApXZlYxREtLRUsxeE1MdlQvajh3
-eXVVZnFrK2hWUEcvUmNyRy9Xci9UWVJjZkJ1QW55QlAxcG1IUms1OFRsNmRPCkpPcy80dDlJWGtK
-d24wMXlSSS8vT3VtVUtWRVZ1cEEyc3pjL0hGYz0KPWFmYm8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000ef2a7c0631e14540--
