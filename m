@@ -1,131 +1,333 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BEF24E4A6
-	for <git@vger.kernel.org>; Thu,  3 Apr 2025 15:56:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD492475C8
+	for <git@vger.kernel.org>; Thu,  3 Apr 2025 16:03:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743695775; cv=none; b=btpKleikIxsKtYUSYOabyX5OJPLGXBXf9WT70JlbqW2hflJOqfYJxF/baAGQE/3DBTS8pkxHS7zWCtmJBrq9StII0yGZn3Rpq4jDHm5ABstlSdA+jQylyQTsY9b8RDkYe4EHL+weYJkCBtvBNDft7DNy4qaEz/IqfzTqgLF+Iqc=
+	t=1743696214; cv=none; b=dyfSNzHQ5UZGuKiQeO6MouEPaw/J4xnqOru5h/935F9Rv091zl1ND0/hax7z3xmyILpZb5O7j/pnkqcQILrwJbb4UCEh9/RJeSAqYauSasBifDQbrAxc4oxrjDp6Tiho4bSUVmWKGZMu2ZBSEHWTUylGKA/kTX80nkBXL3wCNQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743695775; c=relaxed/simple;
-	bh=pP1htqVu++BtSFn7piN56nqjmOxlzx6gOv204Xs3knU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fJHasS1+Vu7dGnnmYozV9eMQzZyDQM0cBOWjrLBWhnEj7ugOB7j066g8zO/VhOtQJMtsAqRTKWCUbow7DB7YXyqN3hgzQ5N9htsDPzIqESr9VrA5QSnkh+myMFz87jLUL7zcy/D5vG7AKKKAIV5cs44Obt1n1nrSTO0lDwe9VHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c2XU2QJq; arc=none smtp.client-ip=209.85.166.180
+	s=arc-20240116; t=1743696214; c=relaxed/simple;
+	bh=k80QDJA4Hm7BQDDrHA+JcC+kbMbR4mXRpXQ15Iv8mMQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=gDlL9i9nfHuevX1rpccziKoFbmU9wmRa6AkQr3HyraByGhM4tV1qdJoMpFFxDxjfT2ufKmMsXIW2bKbNYPFifH5mbNj9wOw8vRb/Wu1yc4lAhtrLEyewX+2GnNVAyeCydZHwDAvIFM4xaSQLI/ec0oOjn1bef8S4oR4Alex1668=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BhTuTWkU; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c2XU2QJq"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3d442a77a03so3541015ab.1
-        for <git@vger.kernel.org>; Thu, 03 Apr 2025 08:56:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BhTuTWkU"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ac2a089fbbdso192243166b.1
+        for <git@vger.kernel.org>; Thu, 03 Apr 2025 09:03:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743695773; x=1744300573; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1743696211; x=1744301011; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wHHou+SZXZgNZ7u7macH6eQiG5KNa/A1LoF1PfNKTz0=;
-        b=c2XU2QJq3LviADWBpWWciT5S/Gi1lv53XOspop4PGrFojrYiBlQK5rW/4ZmnJSoryG
-         ni0+3SxVGqRWrQee+HXAqhOLzLqAsCFjMVQ0Z/9/7ke1ArRtk7kmlQHIU1itjC//nl6Q
-         kTV41S5D5xTHxrZDs6kHk9lMtTdzikM7uq5bhiVKE++CGUoVJj518rGFQl3TVFgSUDsR
-         n3xT4Ozi1oSI3Mgl3t8BTwoMo5plwuJlDvn2GrEl4rCHnM8p3CgxCv/3upx5P97rLaiB
-         R/Rnl9CTGktCzd8ehK0N2fKgA0bpLayIi7s81o8zxzxUHpep+2zrXHxd/0XwQXTbaJO4
-         RgzA==
+        bh=wtjqCYCEU2z84ypK7+YCUrchKpko1/4HF0he7w9Yv7E=;
+        b=BhTuTWkU0NW8VlBUZJzlNmQY7iOuS3ARjfXh6CijBIs5zMpaBRUCi9lDmBLdZL/wI7
+         NgTDZ5Ifz6NLqaH7jTrf6HfnALWF4D1pTBshI6rLnrf6CSMfZUG78cx1q9THedjxH4c9
+         K1v/bWaHbb+8jk4OlYYHJVfZ/KQEsB+8VZEZ0m50+JgsPXb3fY2EmWlqDPw0y4YoJsaj
+         UOpkSFGqfH02A4HDizP1jYcLtrVd0bFv1B6z70ZHM+4qMa2M5O9gas3NK6aWCF/LVklp
+         YvOKXDJ58ajlb/861KRFbIbSInmVvQWqql+Zl158H2b9DjDi71Wej4ifKxiP1OfaHc/D
+         dSxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743695773; x=1744300573;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1743696211; x=1744301011;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wHHou+SZXZgNZ7u7macH6eQiG5KNa/A1LoF1PfNKTz0=;
-        b=Aq2yaHCsqi8wNyP+w/FzlOUskU8E8VCwIdS0zEiXK0AYxf3ZAyU+7CP0uHVqFqyYk8
-         3ysjCvNAeMAPYVhAxD3B4cCbfAaEJ4D/5rdN8F5WhHSTLj9W1I8VdhkyNhR+X2DjQh7n
-         kcoR4tjEflWqan86W3bahYtqSzIPEKci+cxcf0NoG1wcHutAjh44hZLHAumVMlUqUaCj
-         Wfefti16+0i9k9Zi1T0zGZusT1cxs52XaNMrEPFle1Ka3x/jZnVWsaZVx5WAGqyuzCcP
-         GNmn3QzOcjtipolWwuIRrWTTz+pSRmDb54P97q12qGvZXjZJW4gALuZPoyogjKTKWnLH
-         2a5g==
-X-Forwarded-Encrypted: i=1; AJvYcCXULvelCMv6Yrri/IE0yJzTsxNIiV0A4ZgM4pGqQ7T5PD/iuMpmfgatFFLiHZjMO8txpyM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRlvWtT0iLawxhBKAH8EF6oR5qYb+sADvm/Zf5f41qEqGBRfYi
-	STYPih1ux6hl+epBUnUd1tR1rNIWClv4Q2oloqSDejAmfoFVWHHWFm1j43BGNszhuXskb6c0eO6
-	6ktcmxdoiVvG7V7P++zh7XzBBm7Q=
-X-Gm-Gg: ASbGncvQk/xdsfXc0VuHzbkLhjI+saTQURbbUd4FqpA8R9WeKUS2p+tfnAuSkMl6Mwn
-	G93U1J8ueBpSiBScphiQ4CzaxinV4EoZpZndrXAzvfwHhkOiOppOvdpR+pxTq90krtMpK0EYTje
-	SQWGcqy9mo7VTp1tzkokRQytkhxjWXj/uxsLRoJmthUhjSr9ZJ41ZYt94vUQ==
-X-Google-Smtp-Source: AGHT+IHwNCUvfjd2+3GUwXppt56/TvuPiL8mc9DtyvvnpmCviIG6kL4LIW/UmDYaIIj5GzWldgMRraQuUyCBa9asAro=
-X-Received: by 2002:a05:6e02:184e:b0:3d3:dcb8:1bf1 with SMTP id
- e9e14a558f8ab-3d5e08eb179mr275796015ab.3.1743695773322; Thu, 03 Apr 2025
- 08:56:13 -0700 (PDT)
+        bh=wtjqCYCEU2z84ypK7+YCUrchKpko1/4HF0he7w9Yv7E=;
+        b=hC26FeW4Z+fcNYk5BfYz4EumO0aCeVVmwOWHZVssgPDT8QFIY4ERC3uvuqO4Mc6soU
+         HDqvvI/A1FuW8nUpaEkPp6+9EcmsRKaR3+i/UHpFKL4I4OVCTRlPVCe8VfzitF97guo6
+         y5ZjKu4uls4biz+tT2riTDA5yPDAZHDT0iRiQESRp/P9M4fZjSFDs7ryU9YTZKo2SnXs
+         6wnFPjhylMoBjg2CE8elVVbeZ1FDxTZ4ng0PY71pAp/6qGuh68VJA644Pgv8ge6eSHCl
+         +uiuX/mX2nDAsniOARDJySnSVIrzudajXLcoJMepDY1XkQQHLNIEZIEHdDZkSp/GepFU
+         icFg==
+X-Forwarded-Encrypted: i=1; AJvYcCWMokvsYzMAj0ULci65yqwuXGRpcpM1C43SNuU+qkqhgQw/dvrqNOIgUkZq1Za7GLTrAOI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwN7TYG5mQEy42+jfL04+ArUn9JA0ex6URcrvPBeqmL3gcPHv6K
+	FNOj/EUtrxxNneIlyn2iiHqp0WMMHEVx0B9r70uIJw9vlV/369qn
+X-Gm-Gg: ASbGncutFgELLuHpw5sfnjDjXK3MVE6Cy97tegTZbdxNl0NURGlJ8Phk4BinQIvQy1I
+	3pIvfs+/LhLtPjG6KzL8Bt1FwZqaw8ebm8/NWaKs/sFnQjkGsMEFTUdIyCB4wFh6v0MeHP8TGgg
+	tqEMTQ/auV7s5qvs1Lx0uNH0eYas58JfjaqF4K8EDsvusIesa+gdeAvwWVhE40bUx+s0+R+PpRv
+	aGGRiHnSmap+kxkFWI7D9YieM031Q2MsXYSN739brcWGZxFKv+FbjDaBwf12Lehnm8G9zq0g3gc
+	E7aMqwzfSuyvKQiOL09OsUHIz0efpBEdgQZ6WTOzQCDxdL9TdDd8w+YPyb2bOVeP7G68T+4wzJK
+	MQyk=
+X-Google-Smtp-Source: AGHT+IE5BCG/KuOFFcSVOgYpKp/ZfGTF8f9+bz+6n/b1osNNkk9JtS0/WCLKRu5jn8sneotSjWw72w==
+X-Received: by 2002:a17:907:2d94:b0:ac2:26a6:febf with SMTP id a640c23a62f3a-ac7b712907bmr368106266b.20.1743696210619;
+        Thu, 03 Apr 2025 09:03:30 -0700 (PDT)
+Received: from knayak--20220801-595b8.fritz.box ([2a02:2455:8268:bc00:62a7:64ce:53bf:d441])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7c013f80dsm112070466b.119.2025.04.03.09.03.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Apr 2025 09:03:30 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: karthik.188@gmail.com
+Cc: chriscool@tuxfamily.org,
+	git@vger.kernel.org,
+	jltobler@gmail.com,
+	phillip.wood123@gmail.com,
+	toon@iotcl.com,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v5] blame: print unblamable and ignored commits in porcelain mode
+Date: Thu,  3 Apr 2025 18:03:26 +0200
+Message-ID: <20250403160326.120124-1-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
+References: <20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <Z-5QR57zgSsm6jNP@pks.im>
-In-Reply-To: <Z-5QR57zgSsm6jNP@pks.im>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 3 Apr 2025 08:56:01 -0700
-X-Gm-Features: AQ5f1JryxgBXGG7jivjVbY2gc-Cmiw_PEbM4mz7FgO7xHfjfygEvTI5UDwiNy3s
-Message-ID: <CABPp-BGwXaiohvfSdr96hzKNPYXQqz+_okxLNj7P9KSjX2PW6g@mail.gmail.com>
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Martin von Zweigbergk <martinvonz@google.com>, Git Mailing List <git@vger.kernel.org>, 
-	Edwin Kempin <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev, 
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Apr 3, 2025 at 2:13=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
-[...]
-> Agreed, change IDs solve a couple of issues that many users face:
->
->   - You can reliably track how a patch evolves over time. This helps
->     various different tools to track identity of commits, like for
->     example forges, but also tools like git-range-diff(1).
->
->   - It becomes trivial to see whether a commit has been cherry-picked
->     into another branch. We do have git-cherry(1) to do that right now,
->     but that command is based on heuristics and fails as soon as the
->     patch itself needed to be adapted.
->
->   - Working with history rewrites becomes easier in the general case as
->     you don't have to adapt to constantly changing commit IDs.
+The 'git-blame(1)' command allows users to ignore specific revisions via
+the '--ignore-rev <rev>' and '--ignore-revs-file <file>' flags. These
+flags are often combined with the 'blame.markIgnoredLines' and
+'blame.markUnblamableLines' config options. These config options prefix
+ignored and unblamable lines with a '?' and '*', respectively.
 
-Could you elaborate?  I agree with the other points you raise, but I'm
-unsure how this helps with a history rewrite.  Do you mean the
-rewriting of history, or someone trying to consume the history
-rewrite?  If the former, I don't see it, and if the latter, didn't you
-already cover that in the two bullets above?  Or is there something
-else you are also getting at?
+However, this option was never extended to the porcelain mode of
+'git-blame(1)'. Since the documentation does not indicate this
+exclusion, it is a bug.
 
-> So what would it take to get change IDs into Git? I think the most
-> important items would be:
->
->   - Generating and writing change IDs in commands that support them.
->     This includes e.g. git-commit(1), git-commit-tree(1), git-merge(1),
->     git-merge-tree(1). This should of course be completely optional and
->     probably be disabled by default.
->
->   - Making tools that rewrite commits aware of change IDs so that they
->     know to retain change IDs. This involves e.g. git-cherry-pick(1),
->     git-rebase(1), git-replay(1).
+Fix this by printing 'ignored' and 'unblamable' respectively for the
+options when using the porcelain modes.
 
-And also git-commit(1) [when passing --amend], and git-fast-export(1)
-and git-fast-import(1) -- though possibly with options for the last
-two to expunge them instead of preserving them, but probably
-defaulting to preserving them.
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Helped-by: Toon Claes <toon@iotcl.com>
+Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+Changes in v5:
+- Fix the test to be more portable by not using '\n' in 'sed'. 
+- Link to v4: https://lore.kernel.org/all/20250330204339.191382-1-karthik.188@gmail.com/
 
-However, I think some of these might already handle this.  Commands
-which call read_commit_extra_headers() and pass those along to
-commit_tree_extended() may already preserve these.  It appears commit
---amend and replay both do this.  sequencer has some code that looks
-relevant, but it appears to only be reading the headers from HEAD (at
-the time the nth commit is being replayed), which seems like it'd be
-looking at the wrong commit.  That might actually be a bug...
+Changes in v4:
+- Remove extra newline in 'puts'. Modify the test to compare the
+  entire output, the earlier test missed the extraneous newline.
+- Link to v3:
+https://lore.kernel.org/r/20250329-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v3-1-10f695ae519a@gmail.com
 
->   - Extending revisions to allow specifying commits by change ID.
+Changes in v3:
+- Use double-qoutes in the test to ensure correct variable dereference.
+- Fix incorrect test name. 
+- Rename the function from 'emit_per_line_details()' to
+  'emit_porcelain_per_line_details()' to be more descriptive.
+- Ues 'puts()' instead of 'printf()'.
+- Link to v2:
+https://lore.kernel.org/r/20250326-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v2-1-79037e17a74b@gmail.com
 
-Would this essentially be similar to <rev>^{/<text>} except searching
-specifically change-id headers rather than commit message?
+Changes in v2:
+- Instead of printing the markers before the SHA in porcelain
+  mode and breaking scripts and backward compatability, let's 
+  instead add a newline printing 'unblamable' or 'ignored'.
+  This is printed per line in both the porcelain modes. 
+- Link to v1:
+https://lore.kernel.org/r/20250321-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v1-1-44b562d9beb8@gmail.com
+---
+Range-diff versus v4:
+
+1:  5250fb436e ! 1:  43bc55bffe blame: print unblamable and ignored commits in porcelain mode
+    @@ Commit message
+     
+         Helped-by: Patrick Steinhardt <ps@pks.im>
+         Helped-by: Toon Claes <toon@iotcl.com>
+    +    Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+     
+      ## Documentation/blame-options.adoc ##
+    @@ t/t8013-blame-ignore-revs.sh: test_expect_success mark_unblamable_lines '
+      
+     +for opt in --porcelain --line-porcelain
+     +do
+    -+	test_expect_success "mark_unblamable_lines with $opt" '
+    ++	test_expect_success "mark_unblamable_lines with $opt" "
+     +		sha=$(git rev-parse Y) &&
+     +
+     +		git -c blame.markUnblamableLines=false blame $opt --ignore-rev Y file >raw &&
+    -+		sed -e "s/^\ty3/unblamable\n&/" raw >expect &&
+    -+		cp expect raw &&
+    -+		sed -e "s/^\ty4/unblamable\n&/" raw >expect &&
+    ++		cat > sedscript <<- 'EOF' &&
+    ++		/^	y3/i\\
+    ++		unblamable
+    ++		/^	y4/i\\
+    ++		unblamable
+    ++		EOF
+    ++		sed -f sedscript raw >expect &&
+     +
+     +		git -c blame.markUnblamableLines=true blame $opt --ignore-rev Y file >actual &&
+     +		test_cmp expect actual
+    -+	'
+    ++	"
+     +done
+     +
+      # Commit Z will touch the first two lines.  Y touched all four.
+    @@ t/t8013-blame-ignore-revs.sh: test_expect_success mark_ignored_lines '
+      
+     +for opt in --porcelain --line-porcelain
+     +do
+    -+	test_expect_success "mark_ignored_lines with $opt" '
+    ++	test_expect_success "mark_ignored_lines with $opt" "
+     +		sha=$(git rev-parse Y) &&
+     +
+     +		git -c blame.markIgnoredLines=false blame $opt --ignore-rev Z file >raw &&
+    -+		sed -e "s/^\tline-one-Z/ignored\n&/" raw >expect &&
+    -+		cp expect raw &&
+    -+		sed -e "s/^\tline-two-Z/ignored\n&/" raw >expect &&
+    ++		cat > sedscript <<- 'EOF' &&
+    ++		/^	line-one-Z/i\\
+    ++		ignored
+    ++		/^	line-two-Z/i\\
+    ++		ignored
+    ++		EOF
+    ++		sed -f sedscript raw >expect &&
+     +
+     +		git -c blame.markIgnoredLines=true blame $opt --ignore-rev Z file >actual &&
+     +		test_cmp expect actual
+    -+	'
+    ++	"
+     +done
+     +
+      # For ignored revs that added 'unblamable' lines and more recent commits changed
+
+---
+ Documentation/blame-options.adoc |  3 ++-
+ Documentation/git-blame.adoc     |  9 ++++----
+ builtin/blame.c                  | 15 +++++++++++++
+ t/t8013-blame-ignore-revs.sh     | 38 ++++++++++++++++++++++++++++++++
+ 4 files changed, 60 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/blame-options.adoc b/Documentation/blame-options.adoc
+index aa77406d4e..19ea187238 100644
+--- a/Documentation/blame-options.adoc
++++ b/Documentation/blame-options.adoc
+@@ -125,7 +125,8 @@ take effect.
+ 	another commit will be marked with a `?` in the blame output.  If the
+ 	`blame.markUnblamableLines` config option is set, then those lines touched
+ 	by an ignored commit that we could not attribute to another revision are
+-	marked with a '*'.
++	marked with a '*'. In the porcelain modes, we print 'ignored' and
++	'unblamable' on a newline respectively.
+ 
+ --ignore-revs-file <file>::
+ 	Ignore revisions listed in `file`, which must be in the same format as an
+diff --git a/Documentation/git-blame.adoc b/Documentation/git-blame.adoc
+index f75ed44790..e438d28625 100644
+--- a/Documentation/git-blame.adoc
++++ b/Documentation/git-blame.adoc
+@@ -135,10 +135,11 @@ header elements later.
+ The porcelain format generally suppresses commit information that has
+ already been seen. For example, two lines that are blamed to the same
+ commit will both be shown, but the details for that commit will be shown
+-only once. This is more efficient, but may require more state be kept by
+-the reader. The `--line-porcelain` option can be used to output full
+-commit information for each line, allowing simpler (but less efficient)
+-usage like:
++only once. Information which is specific to individual lines will not be
++grouped together, like revs to be marked 'ignored' or 'unblamable'. This
++is more efficient, but may require more state be kept by the reader. The
++`--line-porcelain` option can be used to output full commit information
++for each line, allowing simpler (but less efficient) usage like:
+ 
+ 	# count the number of lines attributed to each author
+ 	git blame --line-porcelain file |
+diff --git a/builtin/blame.c b/builtin/blame.c
+index c470654c7e..9436f70aec 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -351,6 +351,19 @@ static void emit_porcelain_details(struct blame_origin *suspect, int repeat)
+ 		write_filename_info(suspect);
+ }
+ 
++/*
++ * Information which needs to be printed per-line goes here. Any
++ * information which can be clubbed on a commit/file level, should
++ * be printed via 'emit_one_suspect_detail()'.
++ */
++static void emit_porcelain_per_line_details(struct blame_entry *ent)
++{
++	if (mark_unblamable_lines && ent->unblamable)
++		puts("unblamable");
++	if (mark_ignored_lines && ent->ignored)
++		puts("ignored");
++}
++
+ static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
+ 			   int opt)
+ {
+@@ -367,6 +380,7 @@ static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
+ 	       ent->lno + 1,
+ 	       ent->num_lines);
+ 	emit_porcelain_details(suspect, repeat);
++	emit_porcelain_per_line_details(ent);
+ 
+ 	cp = blame_nth_line(sb, ent->lno);
+ 	for (cnt = 0; cnt < ent->num_lines; cnt++) {
+@@ -377,6 +391,7 @@ static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
+ 			       ent->lno + 1 + cnt);
+ 			if (repeat)
+ 				emit_porcelain_details(suspect, 1);
++			emit_porcelain_per_line_details(ent);
+ 		}
+ 		putchar('\t');
+ 		do {
+diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
+index 370b768149..cace00ae8d 100755
+--- a/t/t8013-blame-ignore-revs.sh
++++ b/t/t8013-blame-ignore-revs.sh
+@@ -158,6 +158,25 @@ test_expect_success mark_unblamable_lines '
+ 	test_cmp expect actual
+ '
+ 
++for opt in --porcelain --line-porcelain
++do
++	test_expect_success "mark_unblamable_lines with $opt" "
++		sha=$(git rev-parse Y) &&
++
++		git -c blame.markUnblamableLines=false blame $opt --ignore-rev Y file >raw &&
++		cat > sedscript <<- 'EOF' &&
++		/^	y3/i\\
++		unblamable
++		/^	y4/i\\
++		unblamable
++		EOF
++		sed -f sedscript raw >expect &&
++
++		git -c blame.markUnblamableLines=true blame $opt --ignore-rev Y file >actual &&
++		test_cmp expect actual
++	"
++done
++
+ # Commit Z will touch the first two lines.  Y touched all four.
+ # 	A--B--X--Y--Z
+ # The blame output when ignoring Z should be:
+@@ -191,6 +210,25 @@ test_expect_success mark_ignored_lines '
+ 	! test_cmp expect actual
+ '
+ 
++for opt in --porcelain --line-porcelain
++do
++	test_expect_success "mark_ignored_lines with $opt" "
++		sha=$(git rev-parse Y) &&
++
++		git -c blame.markIgnoredLines=false blame $opt --ignore-rev Z file >raw &&
++		cat > sedscript <<- 'EOF' &&
++		/^	line-one-Z/i\\
++		ignored
++		/^	line-two-Z/i\\
++		ignored
++		EOF
++		sed -f sedscript raw >expect &&
++
++		git -c blame.markIgnoredLines=true blame $opt --ignore-rev Z file >actual &&
++		test_cmp expect actual
++	"
++done
++
+ # For ignored revs that added 'unblamable' lines and more recent commits changed
+ # the blamable lines, mark the unblamable lines with a
+ # '*'
+-- 
+2.48.1
+
