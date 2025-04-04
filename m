@@ -1,129 +1,74 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E212E62B4
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 07:31:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9BB2E62B4
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 07:41:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743751893; cv=none; b=KYfRcxXNhXaWVPCuehZAafdtyZWWnAZiesyPWxEkGWWNvvoUzIXyKsDA8S5gZMz5AlEwwr/oV9J+us3WGDwrnEWPKmepqQLp7afICfiZu95SSgk7AsmsqNbl3NNNOubULjJ1ucBmdsTbKGx1CsCfYvjgwiXilTsWA8uv7wymXFE=
+	t=1743752494; cv=none; b=Uo+EU3rXIX1/OIZgjHvrK4yccC3dDw6xmq9YBZE2QjYpWySepF2R+11CTIw2xO1peonTrqcoKzWprF4t5mnzJV27YKsY4WiSwFecYXbazDxNuYfKP8z1Kb3wbb95VAPZw4+S7AV7PSqJUIkgn6V9/WRmdatDCvxpeI1Brs6dD/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743751893; c=relaxed/simple;
-	bh=/hgZQeg4rEwN0ja8wK/lMiwKm4MYtkmX0lugTPcE2Yk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P5S19aX8Ls0qv6yL507zpaWj4wuW5bDw64tZeRb1caPfs1W7LxncS4aDHNp4Ftnp9uI+dHyo39iU5h6TLkMrPPxvnIkp1oCQwPGfd3QXo/wtTYGLzEJa+TeOGIfnE4VTMe2AMfHCLKiYXE0JbhCC/tCixpUllhG9QLYmqK3LrqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=QrUDXiaS; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="QrUDXiaS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1743751888;
-	bh=/hgZQeg4rEwN0ja8wK/lMiwKm4MYtkmX0lugTPcE2Yk=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=QrUDXiaSGtkfBKRj/NGJvOoPrL2/yzgMX1y3p4UO6BA2IR6wnPPkJYdgVaFRHuHTS
-	 mqJLQcIHa62nh40C0FRQ/nxP9sUnQl8P7d8uSJAzbHZoZnFFq2Zx6nXWDGufD2XhVc
-	 xjj34Hh4K1FZZX27LcKql7cK/JF5Wg8ksWQM6oKYoUccxAA6SwfcpUGFCAwQMebVpG
-	 sMqvBH8JlXXLaHM2P/c9OZCisrSjHwa4kPMPWtLLtCV9GcYnT32Hcykb0adRkDB1+i
-	 IJbt0Mv8I7B4jXIiQ06AKUxAeaTN3YryTxN5zfaslMadm8tgDT1e3FlqJLhezgZzuF
-	 EK5v5Dn7HQfy/eVni5+ip1LXfDmfRmEmsZpF971s01h2oXwvddYtnQno6z1HvJosre
-	 p9YiwZWUd7n2PO5LQBpH5ou63IX+ZrNKqNFLZTg/LyZwhIPFIJu7FYLmr0McadKTHy
-	 nU191NPLsD5j9ZWXWBKkA8BYfzOUo+rgVddXBaqS9CmD4Du3wID
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d5c6:e1bb:f3a5:7a20])
+	s=arc-20240116; t=1743752494; c=relaxed/simple;
+	bh=cDIhfPNnpsTjGCeKg5DJ/RZ8FWYM1d1RjaAGskTdjN0=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=YC9eYA95cG6LU7srfpcbQ4/FcKQ0LfY2RK9NoiAsOPkxSx8qX6vvCEzKip8lq8uD3pgDGYMqK0WXVdOhrem2ORpmrbavUPEY5AcfAO7zRsgM6g96kBeA3yscYF0a4fIrcu6rIN/0p5YoPrE++RBqp95TIZysunGt7MisgZIZcmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev; spf=pass smtp.mailfrom=buenzli.dev; arc=none smtp.client-ip=80.241.56.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=buenzli.dev
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7DC2020102;
-	Fri,  4 Apr 2025 07:31:28 +0000 (UTC)
-Date: Fri, 4 Apr 2025 07:31:27 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Andrej Zhilenkov <azhilenkov@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Update symlinks after changing core.symlinks
-Message-ID: <Z--Kz4jsRzm4VSZd@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Andrej Zhilenkov <azhilenkov@gmail.com>, git@vger.kernel.org
-References: <CAArAzAoU9qDj+yLi3pA6wFYdTAk0UvQk4omSWM1RL4D9w5fw_w@mail.gmail.com>
- <Z-29LsgDvcS0qY5a@tapette.crustytoothpaste.net>
- <Z-8K9ZIt4j_UMNZm@tapette.crustytoothpaste.net>
- <CAArAzAr+YPwVXJo8mjkyQG8uWv=wt89tYyp6TL-rNzvwVYm9YA@mail.gmail.com>
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4ZTVsg2g4qz9sQ6;
+	Fri,  4 Apr 2025 09:41:27 +0200 (CEST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ED9sk9dUhVhIPGHi"
-Content-Disposition: inline
-In-Reply-To: <CAArAzAr+YPwVXJo8mjkyQG8uWv=wt89tYyp6TL-rNzvwVYm9YA@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---ED9sk9dUhVhIPGHi
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 04 Apr 2025 09:41:24 +0200
+Message-Id: <D8XOO0H2GSK0.JQSNCLB1QUQR@buenzli.dev>
+Cc: "Elijah Newren" <newren@gmail.com>, "Martin von Zweigbergk"
+ <martinvonz@google.com>, "Git Mailing List" <git@vger.kernel.org>, "Edwin
+ Kempin" <ekempin@google.com>, "Scott Chacon" <scott@gitbutler.com>,
+ "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+From: "Remo Senekowitsch" <remo@buenzli.dev>
+To: "Nico Williams" <nico@cryptonector.com>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com> <CABPp-BFRz-yjnti4W17AEBozb0v52kmNsgTLUZW6-MF34R-xdw@mail.gmail.com> <Z+7PDi5y4wXJBK4r@ubby> <D8XC02N85O7W.2LQY7B8Q2Z98G@buenzli.dev> <Z+8GoNrdaJlmNpGm@ubby> <D8XEYQ9TRB10.L5S89IAC2LZ9@buenzli.dev> <Z+9XfLtodUOvqnse@ubby>
+In-Reply-To: <Z+9XfLtodUOvqnse@ubby>
 
-On 2025-04-04 at 05:51:21, Andrej Zhilenkov wrote:
-> Just recently started working with symlinks in git and I've found that
-> in Git for Windows they are disabled by default
-> (https://gitforwindows.org/symbolic-links.html).
+I'll try to join some of our threads and summarize... please correct me
+if you disagree with that summary (or I've left something out you think
+is important).
 
-Yes, that's true.  On Windows, symlinks require elevated privileges to
-create by default unless you're in Developer Mode (which I highly
-recommend for Git users and developers).  That's the main reason they're
-disabled by default: because they simply can't be created in many cases.
+One of my points was that rebase usually doesn't lead to multiple
+visible commits with the same change-id, whereas cherry-pick usually
+does. You pointed out that rebase can in fact lead to multiple visible
+commits with the same change-id and cherry-pick sometimes doesn't (and
+some of these examples represent valid use cases). So making these two
+commands behave in a different way that only makes sense in the "common"
+case makes them more complicated - and less consistent - in the general
+case. I find this convincing and I now agree that both cherry-pick and
+rebase should preserve the change-id by default.
 
-> It's possible to just change the setting in system config or override
-> it in global config, but it's probably safe to assume that the average
-> Windows user will have them disabled.
+The Gerrit developers will be happy about this anyway, and it's worth
+repeating that Jujutsu can deal with it perfectly fine while preserving
+almost all benefits of change-ids.
 
-I think it depends.  If you're working in software development, you
-really should have them enabled and many users will, but I agree some
-users may not (say, because they're in a corporate environment and
-they're not permitted).
+When discussing the uniqueness of change-ids or lack thereof, I'd
+like to introduce one more factor: At which point in time during the
+development cycle a change-id is unique. Jujutsu users derive most
+of the benefits of change-ids during active development. The use case
+you find most important - tracking (forward- and) back-ports - happens
+at a different time during development, when a change has been merged
+to a public branch already. So I think there is no conflict at all.
+Change-ids will naturally tend to be unique during active development
+and once they are merged, whether the change-id stays unique or not
+doesn't matter anymore for those active development use cases. We can
+have our cake and eat it too.
 
-> And if your repo needs them, it's probably more reasonable to ask the
-> user to enable symlinks in a local config, not global.
-
-Ah, there I disagree.  I think if you have privileges to create
-symlinks, you probably want them to always be enabled, and if not, you
-don't really have a choice and they'll be disabled.  My experience with
-using repositories with symbolic links is that typically they don't
-function at all (or, if the maintainer has taken great care, only with
-greatly reduced functionality) if the symlinks are missing.  I think
-Git's repository is by far the exception here.
-
-> Maybe there are similar cases but on Unix when users would want
-> `core.symlinks` disabled globally and be enabled on a per-repo basis
-> but I can't imagine why.
-
-I have certainly seen cases on Unix systems where symlinks didn't work.
-For instance, they don't work on FAT-based file systems, and I have also
-seen a Linux distro that tried to restrict symlink creation to work only
-when the creating user owned the destination file, which breaks Git's
-symlink functionality (I quickly demonstrated this "security" feature
-could be trivially bypassed).
-
-However, I don't think there's generally a situation in which you'd
-_want_ it to be disabled globally.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---ED9sk9dUhVhIPGHi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ++KzwAKCRB8DEliiIei
-gcoKAP9kZl1ouozUCsu+fMHXak683Ik0ENnek/LWzD9n51yFmgEA3ReJoxQr4viF
-lXRQJ9hGjFpWsClqhERdcW445ky9mQQ=
-=ViIl
------END PGP SIGNATURE-----
-
---ED9sk9dUhVhIPGHi--
+Remo
