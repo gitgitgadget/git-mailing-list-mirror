@@ -1,184 +1,157 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF0B1ACEDA
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 10:05:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6431BEF87
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 10:56:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743761119; cv=none; b=fxFIhqz/Bl+fq6xc9o6NSWT/92xRoxIZMbn9C+l7fm59BG9MwrfXPOnUShuv1PhW1+zCKBTPKp/6ADQi1ztdn4Y120hRTyZ4VAtY83e89XXhZRIEP5+xNawEurRnwsSa0gRdllTbM76BTjOUA1b4tWyZi5xrEePRp0huDbHdeSA=
+	t=1743764173; cv=none; b=Rs+UA09W5eSc3W2QhqSaci0bNFoFxe0BS0FQihDcxkXGVTc477LbedgAyWtMxpNmc49z4X06NoVZpNIbYvLo7/8fIqk9t1jY2CY8+JGBaTGzScWRjGp8MqFCfQxwNhtM3PX7sFmxgBXjInFm/RNxAXePIHWeK4HhdpLEfjChNYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743761119; c=relaxed/simple;
-	bh=NxTtNk8y7UAz8ujKNAF2LZQMBZ0gGamYaU5Z7dZZn9M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P+FTpFy1Hm25nKb802WwJAAsij4slXEjDpFgiYg6d/1927hgCA7JiVv21y3d5HpfNE/SClm2EpPY5pqGZFWQtToOffng4DeBJgyprBrpReHu1gCLkB9XpNm+j5NWuptn2+1SZbAzW1jKffl5ZqnvBXc+7AnKGnf9TANWCj+2q38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UaRZMMTK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rkVgnIyL; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1743764173; c=relaxed/simple;
+	bh=IhrwcHzQlEXlbYyv5JBIgpS80AWgen1j4OOd1dgpDO0=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=pnkZNZuZ2Q8W5vkZdJPt1xRHIwm8SMAV3RGBl75e4xFsUH6eV+Y4zmkY0g3hwZe50fakXerzcknc9d0hGi7DhT3cASPPnB3R+a5XOaosMAbNHO+NkX+OJ12efl0T0TYlRBc5bB1gO/ghDcUcKFcxbZ3NzH2ug7nP0Svn3pyWSQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lynxw4Fl; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UaRZMMTK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rkVgnIyL"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 84160114013F;
-	Fri,  4 Apr 2025 06:05:16 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Fri, 04 Apr 2025 06:05:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743761116;
-	 x=1743847516; bh=wZ3mjyAsLLs0r/da4v6J3pP6VxIXf/xNmB1nGFi9fcg=; b=
-	UaRZMMTKQIVLKP4QFmyM8aeviGt9KcgZ8T9uRyGV0wcRU9KX04jo7NQQaimS8EhE
-	0A/X9MfuvR9pRcEJOTLZKK6QDdJWMyIZTKG/rBmKHfZxmARMquLm0UCP1QEwIkm9
-	z39RSf1Edd5mg+HTsVumnuOT22IPlNHsZZ3cSDh16VUXaprc6dPhWgrTpQSIYgxj
-	7CqJGZZn+vyY4Ayyh84WFzPFqtNuAW3nhhEvd9U0FwotPSO9fOCDcDVf9lPLr/ER
-	Nep8VP8nzduzF4NQQ4Z1tWFhjxgmUQ68Ijx7ZSwFf/RUNz+v53YXWrVAYnjZp4OK
-	vosc5fqCq4qHAgxGOqUuDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743761116; x=
-	1743847516; bh=wZ3mjyAsLLs0r/da4v6J3pP6VxIXf/xNmB1nGFi9fcg=; b=r
-	kVgnIyLh/7KQ8l9SwHelb0B2uCR0LvR5iXlsHnOGzWynU5prOR2BgVH7HSMGM0Ka
-	pbxM3VOu80MSJg0f+sWTvM40SGKQInBrg4bo922n6ZRdp5gS5eFBvor+KinynidC
-	syCmYkx4hMcYEwH56+b+LNb9aQx0P64EmhV772OtelX47pmEvF/QWDMJX/pB1gi4
-	JLNw47nM9QmVNZpQqkMsjLkQaL0/SvfSI6hNmdqzeCjvEsIcmJYHQlQSyRPJkiS0
-	c7BUhSzan1T/r3mkxOyDhgIwwX08xi60hfly7sFSWwQPJhakjONwjX6zal37N+N1
-	FfH9alre0bfiscaLA1tyw==
-X-ME-Sender: <xms:3K7vZxw0Jd8iy0khK1D7iYpuFN-E1oH7G94xwd6wGIyf2fuOR4sVEw>
-    <xme:3K7vZxR0bgmlCL1PxYkZf_587HEP04IQZ2Pa5HMvGueoRHmh0xedOIrIKVkeCfnIn
-    jtQbcgKtoJ-AXo4Zw>
-X-ME-Received: <xmr:3K7vZ7W8IZJOIRI9pZpcJNrlko9y_s2TI1A3UVL1fI1fjx6bfGyXR9kGdAd3sy5XCPUabzwZJnNicwOlUDliPn2oCyT2ZEjxsodwkKbpYMCJWB0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduleduudehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
-    rdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtth
-    hopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepnhgv
-    fihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:3K7vZzhjp7m15Pf_rsXSSwlEdrRud0PJ7PWqYU3qgZk-rl0pIHJsSA>
-    <xmx:3K7vZzBTTbNl-yEhCUsl5OSvTMQc0vQrT6MkZQCoQ_N9bv4Q2UTF4Q>
-    <xmx:3K7vZ8In0KHxzK6Y5qPF4xnh7cs-wJG6els76_BHpXczXstrpz6XFw>
-    <xmx:3K7vZyDLzj7ClQi1q9He13L8_wxu00P546efZ1rHQ1ZqtAtxHW-tug>
-    <xmx:3K7vZ5HmPu3ZwvB1DW9b52M-sKkqfNcYVwUkQunle99CWUhXF6URcZ6p>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Apr 2025 06:05:14 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ac6a0318 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Apr 2025 10:05:13 +0000 (UTC)
-Date: Fri, 4 Apr 2025 12:05:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	shejialuo <shejialuo@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v6 14/16] refs/iterator: implement seeking for packed-ref
- iterators
-Message-ID: <Z--u2DlaPij_j7zX@pks.im>
-References: <20250312-pks-update-ref-optimization-v6-0-f778e0414f55@pks.im>
- <20250312-pks-update-ref-optimization-v6-14-f778e0414f55@pks.im>
- <CABPp-BFBqC_t5QSexRQpYsqXBa11WK+OqGt167E=K=xod=buQw@mail.gmail.com>
- <Z--tomMthXftrdYA@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lynxw4Fl"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-39c266c2dd5so1642386f8f.3
+        for <git@vger.kernel.org>; Fri, 04 Apr 2025 03:56:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743764169; x=1744368969; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=qmahdcJ/4GRlHoZ4OkEZWYKAc9a4/zsiB9Xm4zc3XXI=;
+        b=lynxw4FlHqNihZdDDtAl+5IdNnII5r8B1ddnmmdm/IvBnzavstSveqeVqGl4sE5nXW
+         gEbTmkgiuAhfi53znGKmt9hSta659Uk5c3QmGohXIALG03jedbFccHHi/F01MTJR/DVp
+         mhIxSHzrFdw5qaYVWXsGmraZ9jZmkF3SjoAxB3zMyr/leolgL6WTEJqYKtgj7U8VNYD3
+         hH3JmFtvefMCVg/GW3OrQmq3eE/esmhWE6PmkYZQ5jSefOqWALaVPOaTOdguFADU9/oc
+         B8KXV33VKMB0TUe6QUyC3ZcpR9epWH+VNzPGWokTJVPPhQzfBG9X93DlrKWfLHLqO0q3
+         iPWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743764169; x=1744368969;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qmahdcJ/4GRlHoZ4OkEZWYKAc9a4/zsiB9Xm4zc3XXI=;
+        b=RMHr3/AY9u330CHQPvxAMIxnL0C4nU8FTsaI+Y9JV9KFDKveYK4l/YA227p0Gjn4nl
+         O3tYp5ktPRVRCj/HiJGzUcoa2mu5/r9x35qX7uMsH5+GLShz2DveN/3/qXtdj9IVwGuK
+         JDgPoPH1tgS1oh4LuFBjpxOBl6hebovNlOKLkxbJX9+kUHXTiSyD+a2w1B0TUaWOWahz
+         t2ruXl9m54PjHMcDfucMnmoyIkB3OySBJv1HhJuGn9t0mo1gc9VlGDfrEIQC315Zl4Yb
+         pl2deL6GF15maTB3v+gJAJJK+plyNP1aNNVyjJ67ezNTnYOfb94IWj9fw+q5RA7lVdcf
+         IBkQ==
+X-Gm-Message-State: AOJu0YzItwP97qW7+W0ONyhUQ5TOjYtbFssHPSRpolzj8GrJ0pfz40kZ
+	vkzWYgV3z9mKvlV+4ActNaPD7RP3YtVmwREBEQXNIZChfqB+Hk2ozmN7Pg==
+X-Gm-Gg: ASbGncsu4YFbSIhBqjll2g+I6fx9KIrmTVutYg71ZDRvv5n30Sx3WMnKax+9JamtzuH
+	nGoQKJK76czUiQKNjulAVG00pr1ETNCPFsp45kxRlC+cJiBVXemn/CZA78fTd7MZbt46CHdj+SZ
+	qezRgZaZTqGdxEvqoEKXGh6ga5eDDlQ4KdZSoBxKPNL20tW3kec8OoGIkljRaHI7xHsmuB2je7D
+	y14Fsa1nYm2gn05cIvI5iEnGphbMhve9MmF97rtJ8ZTIiPUA2vv7O+218yP37yJw2cT7R5ZIyHb
+	AReoecjj+EQ1iTg91YzNHQQVU2rkR8drQ/UX1kwyx6wHoA==
+X-Google-Smtp-Source: AGHT+IHFyQ1d5yvk2vf0aizscwmMPLuEff8UI10OkIJtV702g7VswfvqlYkLXANNwxWOGIzl84B0Ig==
+X-Received: by 2002:a05:6000:250a:b0:39c:141b:904a with SMTP id ffacd0b85a97d-39d08833facmr2035007f8f.11.1743764169002;
+        Fri, 04 Apr 2025 03:56:09 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ec364a0c7sm42464235e9.29.2025.04.04.03.56.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Apr 2025 03:56:08 -0700 (PDT)
+Message-Id: <pull.1900.git.1743764167548.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 04 Apr 2025 10:56:07 +0000
+Subject: [PATCH] perf: do allow `GIT_PERF_*` to be overridden again
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z--tomMthXftrdYA@pks.im>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Fri, Apr 04, 2025 at 12:00:07PM +0200, Patrick Steinhardt wrote:
-> On Thu, Apr 03, 2025 at 12:56:39PM -0700, Elijah Newren wrote:
-> > On Wed, Mar 12, 2025 at 11:42 PM Patrick Steinhardt <ps@pks.im> wrote:
-> > >
-> > 
-> > > @@ -951,12 +954,41 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
-> > >                                             &iter->oid, iter->flags))
-> > >                         continue;
-> > >
-> > > +               while (prefix && *prefix) {
-> > > +                       if (*refname < *prefix)
-> > > +                               BUG("packed-refs backend yielded reference preceding its prefix");
-> > 
-> > I just triggered this bug upon a "git pull" in an internal repository:
-> > 
-> > $ git pull
-> > remote: Enumerating objects: 161255, done.
-> > remote: Counting objects: 100% (55884/55884), done.
-> > remote: Compressing objects: 100% (5518/5518), done.
-> > remote: Total 161255 (delta 54253), reused 50509 (delta 50364),
-> > pack-reused 105371 (from 4)
-> > Receiving objects: 100% (161255/161255), 309.90 MiB | 16.87 MiB/s, done.
-> > Resolving deltas: 100% (118048/118048), completed with 13416 local objects.
-> > From github.com:github/github
-> >    97ab7ae3f3745..8fb2f9fa180ed  master
-> >                     -> origin/master
-> > [...snip many screenfuls of updates to origin remotes...]
-> > BUG: refs/packed-backend.c:984: packed-refs backend yielded reference
-> > preceding its prefix
-> > error: fetch died of signal 6
-> > 
-> > I made a backup of the repo with rsync.
-> 
-> Thanks, I can indeed reproduce the issue rather easily:
-> 
-> 	test_expect_success 'list refs with unicode characters' '
-> 		test_when_finished "rm -rf repo" &&
-> 		git init repo &&
-> 		(
-> 			cd repo &&
-> 			test_commit A &&
-> 			git update-ref refs/heads/ HEAD &&
-> 			git pack-refs --all &&
-> 			git for-each-ref refs/heads/z
-> 		)
-> 	'
-> 
-> I'll investigate.
-> 
-> Patrick
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Okay, below patch should fix the issue. The problem is that the sorting
-we use for refnames is done via `cmp_packed_refname()`, which does the
-same cast. And because the uppermost bit is set for the emoji character
-this causes us to compare diferently in `packed_ref_iterator_advance()`
-and thus causes the bug.
+A common way to run Git's performance benchmarks on repositories other
+than Git's own repository (which is not exactly large when compared to
+actually large repositories) is to run them like this:
 
-Could you please test whether this works for you? Once confirmed I'll
-send a proper patch.
+	GIT_PERF_LARGE_REPO=/path/to/my/large/repo \
+	./p1234-*.sh -ivx
 
-Thanks!
+Contrary to developers' common expectations, this failed to work when
+Git was built with a different `GIT_PERF_LARGE_REPO` value specified at
+build time: That build-time option would have been written to the
+`GIT-BUILD-OPTIONS` file, which in turn would have been sourced by
+`test-lib.sh`, which in turn would have been sourced by `perf-lib.sh`,
+which in turn would have been sourced by the perf test script,
+_overriding_ the environment variable specified in the way illustrated
+above.
 
-Patrick
+Since perf tests are not run as part of the build, this most likely
+unintended behavior was not caught and certainly not fixed, as the
+`GIT_PERF_*` values would have been empty at build-time.
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index b4289a7d9ce..7e31904bd41 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -980,9 +980,9 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 			continue;
+However, in 4638e8806e3a (Makefile: use common template for
+GIT-BUILD-OPTIONS, 2024-12-06), a subtle change of behavior was
+introduced: Whereas before, a couple of build-time options (the
+`GIT_PERF_*` ones included) were written to `GIT-BUILD-OPTIONS` only
+when their values were non-empty. With this commit, they are also
+written when they are empty.
+
+The consequence is that above-mentioned way to run the perf tests will
+not only fail to pick up the desired `GIT_PERF_*` settings when they
+were specified differently while building Git, instead the desired
+settings will be only respected when specified _while building_ Git.
+
+Let's work around the original issue, i.e. let `GIT_PERF_*` environment
+variables override what is recorded in `GIT-BUILD-OPTIONS`.
+
+Note that this is just the tip of the iceberg, there are a couple of
+`GIT_TEST_*` options that may want a similar fix in `test-lib.sh`. Due
+to time constraints on my side, this here patch focuses exclusively on
+the `GIT_PERF_*` settings.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    perf: do allow GIT_PERF_* to be overridden again
+    
+    This issue was noticed when working on large-scale issues.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1900%2Fdscho%2Fsupport-ad-hoc-git-perf-settings-again-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1900/dscho/support-ad-hoc-git-perf-settings-again-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1900
+
+ t/perf/perf-lib.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+index 8ab6d9c4694..39c37284452 100644
+--- a/t/perf/perf-lib.sh
++++ b/t/perf/perf-lib.sh
+@@ -25,7 +25,19 @@ TEST_OUTPUT_DIRECTORY=$(pwd)
+ TEST_NO_CREATE_REPO=t
+ TEST_NO_MALLOC_CHECK=t
  
- 		while (prefix && *prefix) {
--			if (*refname < *prefix)
-+			if ((unsigned char)*refname < (unsigned char)*prefix)
- 				BUG("packed-refs backend yielded reference preceding its prefix");
--			else if (*refname > *prefix)
-+			else if ((unsigned char)*refname > (unsigned char)*prefix)
- 				return ITER_DONE;
- 			prefix++;
- 			refname++;
++# GIT-BUILD-OPTIONS, sourced by test-lib.sh, overwrites the `GIT_PERF_*`
++# values that are set by the user (if any). Let's stash them away as
++# `eval`-able assignments.
++git_perf_settings="$(env |
++	sed -n "/^GIT_PERF_/{
++		# escape all single-quotes in the value
++		s/'/'\\\\''/g
++		# turn this into an eval-able assignment
++		s/^\\([^=]*=\\)\\(.*\\)/\\1'\\2'/p
++	}")"
++
+ . ../test-lib.sh
++eval "$git_perf_settings"
+ 
+ unset GIT_CONFIG_NOSYSTEM
+ GIT_CONFIG_SYSTEM="$TEST_DIRECTORY/perf/config"
+
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+-- 
+gitgitgadget
