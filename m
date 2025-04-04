@@ -1,117 +1,128 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9C91C84BB
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 13:23:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C088D1DF98F
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 14:00:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743772989; cv=none; b=Kg2x8sKtd7fo/IHnUTWd3SrL8V0sDE5pxPqeEdxDwahcD97AbxPcqz6HP03hBjscgppK0CM48pLsm0wKsfvRaS6R2EurTeifOTUE1B9uOdEU9QG93hpewmoUkYUFL6TwUVdh6mF70pwZmFTkVcH8Q09AbhiYlVrpA9ugBv5sfJc=
+	t=1743775255; cv=none; b=A6rDrEemXkHxN445zX/KmqrBoOmAQ+fA9QctDRd7GpT0d9o+eMle1mJVA5Hf8oQDBAGoZiSrOt8Oq5Oe4N/GEEU/dzLl2vi0UDRk4YvYsgr1Ms80sToQ3B85iSqT3QYXFvQrYFLZ3CdMZrPDtY98JcFmoV1dUR30IiLRb/Chczs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743772989; c=relaxed/simple;
-	bh=pDqekfvHyART2oXOcar8UBBw3uMdoWB1WJ7q6zP6zVo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eS3vI97BvscxcrpHTu9qzv4MpVBEHPGNRV2A0I0ABlhVTGVgkNkGxCCjDUOgLhVyi+z2de+kXYeY9yNE/48+C6oiHfGgMtNjz+a17S7IPb+lpOST67XAIVb69I299fWSfqSTUGp6008Soqn7+TJJ7lIGSF2KwOp+679v3LcveKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z+hvneFf; arc=none smtp.client-ip=209.85.160.174
+	s=arc-20240116; t=1743775255; c=relaxed/simple;
+	bh=abZteG/XkxlWEwosK0fdIF1rfdRKJ0yI4WfgxIWEGbE=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cX7p5oyrq+iO+mrg2CgQXsnj3a+ufORYvsXVVUEgmV5qeGJzAM0hjjxNoNrc3IMJ91s3qYOtYP0jslRPxEIXvgI7ghIFvtoiIVrsHcbAdqUqcCj1jyk2/fnMwHHQq3+4DAOSNSA3RkKYFKzfxqBhoH2quhZClhrBSKlZj2bi/EM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IOlQcIdI; arc=none smtp.client-ip=209.85.222.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z+hvneFf"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-4769bbc21b0so18723001cf.2
-        for <git@vger.kernel.org>; Fri, 04 Apr 2025 06:23:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IOlQcIdI"
+Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-86feb848764so946211241.0
+        for <git@vger.kernel.org>; Fri, 04 Apr 2025 07:00:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743772985; x=1744377785; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pDqekfvHyART2oXOcar8UBBw3uMdoWB1WJ7q6zP6zVo=;
-        b=Z+hvneFf4mB3X58cUOhn9hDxpVkK1c9cjeppXjrGYPayXQPzyfVeUwspUHqCp0UatJ
-         i/HX0dOWlbQX975MASvbNBFLR2bGT/0ngS1vDs/Bwv7FeI/BQHEnB0xon97e9G0Ju4DA
-         zdRJqo72RArqBSb+AhDSCxRROmauPqWSGYavRSHTF1JJZ84Ll5gFEefLR3vhII9X3otQ
-         LttLobWt/YaRb+ULmm7YogbpC9Rvh/blkdrKsPpz5GAuga05PD3+7vYww6w9wLN6yRLH
-         c/wcblKyeB6vUSNSn7szuzqfUBZik7Ysedy8IyZ3R5PlTeT+lCt1QPYS/EwbzWJ4CBUn
-         CVwA==
+        d=gmail.com; s=20230601; t=1743775252; x=1744380052; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=abZteG/XkxlWEwosK0fdIF1rfdRKJ0yI4WfgxIWEGbE=;
+        b=IOlQcIdIf/OJ/Th94rMAo2tCH87iKfsNJIR8CzCAkK9VMUu237YnKhsFKuxxSsdpKW
+         vMQzz25MBTewlhU7WhDGHQHkzlJRw3eK5RG2ow6Wsqum46UiIowxcVB09Qnz2JRlpIMy
+         /fHniaaXbSqzDxijjWsmhzHybg6OOzrCdIXhu5zqJYZGuSrT08EEFpgVvWQdkvWpzLTq
+         FSe/7dnd1Q9ZiONm2EUPBf+omtfEeTftWfb6Yxnqztx4rtpl65udOwv4/wbYIK/NOrMI
+         Zcz6G3CEvgyrql6TZzncPWVIUvhkBurbq6qvV5USLaL+pRMTRSSKC3Vv/btIzp+w5NAW
+         NmCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743772985; x=1744377785;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pDqekfvHyART2oXOcar8UBBw3uMdoWB1WJ7q6zP6zVo=;
-        b=W5LGOBj/+jMaEcnWw8LXci7hF6IsBylDbH89UpraVB1n1JLIsNvzb1Ri6AGAIm9hc8
-         wSJemaEhyowsdz7YCph2lXaPVfI0t6r1YYVXxW0USWtco+ZfH90IWe2vMxTEFuFAlT1v
-         sQdxmmhZRZm4XZNubogIn0atOpR0QVnL4ICo/oZzOOvz96J0mK8LfBxNBogkpgjGIi1Q
-         bQQ4PUg4B4V4enFKf56nfAPeMsu4wkAhaE41CTYuC5vorjSyxjGFteac96rHtUD7IR8Z
-         Lykd9XOIylVXNtO0NMIWXwIBfb+ieYnEhqa0eVUo7K7h/3sGuKslQFB4Bcw7Ce8IbrVj
-         HX5A==
-X-Gm-Message-State: AOJu0YzRcBLLptQrjuYvaguLgjWZ2hHfxpPHwsZK6VlfnH9ycjJT3d65
-	Qrv6I3J5w5QI57bW9+0/wgM15K8FL/UZ6+MtlfNbgjH1fTJQDzlJYaKo7oDQE5GgKtug1MOncg2
-	Viyg0to281+nbsLHTTqwO4rhdIXjOUQ==
-X-Gm-Gg: ASbGnctTwKtMSHVwhbbZPI6B9DhN/xGQFJWnV8mZTDjAgYyMWNssvxiEKPUO9IrCESP
-	61g7Qbj6KH1UEF2QxOyqe1BNPKMxYCME/vcKruI7e2951DePHIMc9qEK2XaNO6Ur04ovvfHl3yK
-	Y9WbnU4wxF1gNWEuxzGldcyf7dlDOVPVjKCsVkzVrk5hFxTI/mqMZOUBlaa/c=
-X-Google-Smtp-Source: AGHT+IFtK5F5VtpkDYiiVdxXDOHzPQzMhrf717stMhcK5vxYTLsFjIoKNjGxwOgO89yq212Rq9ykNHrq6CDjpyQb434=
-X-Received: by 2002:ac8:7f11:0:b0:476:fd69:ccb with SMTP id
- d75a77b69052e-4792493b326mr49517221cf.27.1743772985498; Fri, 04 Apr 2025
- 06:23:05 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743775252; x=1744380052;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=abZteG/XkxlWEwosK0fdIF1rfdRKJ0yI4WfgxIWEGbE=;
+        b=sQcjFjZTpWNhPtHsr125oOQ+8rpB1TRbtGD8UvOVFWFIAfe2qqqdWgZ53Eh4lK/tzT
+         ZmiG/jf6fH1EtcrsFmjxk24BGvicdDXi7JURPNz3M5PHFz0/xM2npZMPAmrhspaqw6XA
+         /2gB8eARqjps6so1sScckRRFru/ko8LWlANiEWf2j/6illrAeJ8ZoWlHogd1H2pjts1x
+         E0Sq/yXS6gc0YwFtQ5HgNzUu+sgx99MD1e6IQEWjo07i8ogmvMo+s3xEofqeNXug6mFe
+         I0JbDBQwTxKTY8NvU0uhWTGlw/Iz/oPt8XwEbSZ9lgaZadsehdO0GeXuJg/G3nwtOcPp
+         dNcQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWbMOqjBEyVJ5tJuuJvaYb1A6lAjux1k1uJR2WuGeWoakMtMoqrUwaFdRqKjPM4vQP4gJg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxjNoBT2YbJjTlDYo5QAhZ8GSrt/9xpqhgbf2YPhWonPZoxv4lf
+	6+4aLnuJomb4yplSjtwcAu89yYfes/DXCXhE9BiMm0O2Bs/+n52SotgUCTvJTEHMmW8Xyea/nhX
+	Jxu+MyFeStnk3rgPbL+C+BkTelhQ=
+X-Gm-Gg: ASbGncuol+t+MpcxhyfzsPAksJ0IQBO10FBcWcRDsQszB5pNX8OlY+6iQw58vGgO/Og
+	6kMTStwnrq3D3O2Uzoqjw0XodropyIT1CqNy0pKBgzcuwLlFVbMIegtc7SyU+1OLO5aw1h1YwFB
+	JqlwefUoylfA9l7eHyUTzpvlqDDTNSHx2MBiCi0a8s+a/V/P+9yAOoFzYrplBnOI9SaHF/iA4=
+X-Google-Smtp-Source: AGHT+IGQAFMxGdP8KY3sFLB2TI0K0iFovknxBfu+kneCefAUm89gcyxLvZrmVWFcB2iB6lmb+ve6ihQEiR6cuGfz5M0=
+X-Received: by 2002:a05:6102:15a5:b0:4c2:ffc8:93d9 with SMTP id
+ ada2fe7eead31-4c8568c12bdmr1989278137.9.1743775252429; Fri, 04 Apr 2025
+ 07:00:52 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 4 Apr 2025 07:00:51 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 4 Apr 2025 07:00:51 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <PH0PR07MB91768A0AE333B30ADB1D39E087A72@PH0PR07MB9176.namprd07.prod.outlook.com>
+References: <PH0PR07MB91768A0AE333B30ADB1D39E087A72@PH0PR07MB9176.namprd07.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+rGoLfxZHdns=7FwQuYS=JANrR9zDP-dOpV2AxM1hC1Lc9wiw@mail.gmail.com>
- <Z-5hlL1Gk0oi4fX2@pks.im> <CA+rGoLfCTzNTcGXG5py6oHQazeE8Vj0fLsR4KUTJ6rSRFnT_Vw@mail.gmail.com>
- <Z--ivMYyD63JkTyH@pks.im>
-In-Reply-To: <Z--ivMYyD63JkTyH@pks.im>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Fri, 4 Apr 2025 18:52:54 +0530
-X-Gm-Features: AQ5f1JoDXnX3O_2tciGhiWJEGz-sEPwS3vLXFkd-GYFA6xjXPdOfhogmBR3DDk0
-Message-ID: <CA+rGoLdH=zQy6A9draoZgoDO=Ok7OgaX+mRFarLTLEm2jwhE4w@mail.gmail.com>
-Subject: Re: [GSOC] [Proposal v1] Machine-Readable Repository Information
- Query Tool
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>, 
-	Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Date: Fri, 4 Apr 2025 07:00:51 -0700
+X-Gm-Features: ATxdqUEvU7p6p2Z9nJhSMSTsoLfxOVYolbFb-PGIkUuisgYNJV_Ke98St2h27_o
+Message-ID: <CAOLa=ZRmwSmFB1vTQ1+usMqbF0RHGF_QtboaLas6h-ZzKh34mA@mail.gmail.com>
+Subject: Re: GSoC 2025 Proposal
+To: "Tatarinov, Daniil" <dtatarinov3@gatech.edu>, "git@vger.kernel.org" <git@vger.kernel.org>
+Cc: "ps@pks.im" <ps@pks.im>, "shejialuo@gmail.com" <shejialuo@gmail.com>, 
+	"christian.couder@gmail.com" <christian.couder@gmail.com>, 
+	"shyamthakkar001@gmail.com" <shyamthakkar001@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000007d67990631f45021"
+
+--0000000000007d67990631f45021
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 4, 2025 at 2:43=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
-> On Thu, Apr 03, 2025 at 07:40:33PM +0530, JAYATHEERTH K wrote:
-> > On Thu, Apr 3, 2025 at 3:53=E2=80=AFPM Patrick Steinhardt <ps@pks.im> w=
-rote:
-> > > On Mon, Mar 31, 2025 at 08:21:27PM +0530, JAYATHEERTH K wrote:
-> > > I already saw this in another proposal, which indicates that the proj=
-ect
-> > > idea might be a bit underspecced. In any case, the goal of the projec=
-t
-> >
-> > Hey Patrick, thank you for letting me know
-> > I actually have been working on this proposal for a while now.
-> > I also sent an e-mail regarding this specific project right before
-> > GSOC proposals started. As far as I can see this project was not
-> > previously discussed therefore I picked this.
-> >
-> > https://lore.kernel.org/git/CA+rGoLdvY+JdgdzgE04EJoF9KGUpd39+2S_AgpFyuc=
-P38mdFgA@mail.gmail.com/
-> >
-> > I'm not sure how to proceed in this situation. I think I need some
-> > advice from your side on this.
->
-> I think I don't quite understand what "this situation" refers to. Do you
-> mean that there are multiple proposals for this project now? If so, that
-> is perfectly fine and expected. There's only a finite number of projects
-> and a larger number of students, so some of the projects will have
-> mutliple applicants.
->
-> In the end we will pick the student who seems to be the best match based
-> on both the proposal, the microproject and any other interactions with
-> the community.
->
-Understood, I will carry on as is.
-I've sent the updated proposal above in this thread with the revised
-scope of the project.
+"Tatarinov, Daniil" <dtatarinov3@gatech.edu> writes:
 
-> Patrick
+> Hello!
+>
+> My name is Daniil and I am a CS freshman at Georgia Tech. I prepared the =
+following proposal for the following project "Refactoring in order to reduc=
+e Git=E2=80=99s global state" that I'll attach to this email. I would like =
+you to give me a feedback and critique on my proposal and just express your=
+ opinion if I'll be able to complete it.
+>
 
-- Jayatheerth
+Hello Daniil,
+
+One of the expectations for prospective applications for the GSoC is
+that they take up one of the microprojects [1] listed.
+
+I couldn't find attached to your email, and since you've already sent in
+a proposal on the list, I would also recommend that you do complete a
+microproject.
+
+Thanks,
+Karthik
+
+[1]: https://git.github.io/General-Application-Information/
+
+> Best,
+> Daniil
+
+--0000000000007d67990631f45021
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: a2d9a9d5789f3134_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mdjVoRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mODliQy85T3dkc3Y0UnBBdm1uOG5KNmRJaXJwYkZiSQpqOWpnZW5MUXpy
+cmdQUk9kSkFWTWQ0M3RpQmxGZEx4NTZNYUZOa0pPTStGQk1lNkJCTmNxREFnTTJkZFVGY3dWClFz
+ZWJoRnpLdHpZQ3JMM2wxQ1F0SjZBQ1F3ek54MVJzaGQxbi9vTjVLVXFPTE4xQjdqYVd6eGpuSExw
+Tm54ZlQKNTUxc0NzNjcxVEh3cExXbGw2VUZRdkdtQ0dPajNYUzhKNS9xM3YzdUFkNDJjT3JyVXdt
+VmpZT3lPcEY2eklHTApBWXEvaVBTNWZ0c1FsaFFzcmI2di80TDI3ZnBRRUtPRmZ4dXQxenE2NWRB
+bU1JOGtGV2ppMmI3dlgwLzNzejYrClcwZFd0dndGZk1oVWJKMGl0alljZ1BnenpQdC95WDI2eDBH
+YmRLK0NiMUFXL1dRRmhEVEJlVE1tZ3Y2RXJDdFUKWVFzVkloMHo5YzJaV2tqM2ZPdU52UzYrRDQ0
+b1hrUzVQcE1KbEF4UVhDenhhdEhCQVc5UnYyazQ1c1U4Z0s4NwpWVWo4c2JjWUcrVXdZWFYwUGZu
+UEZ5Y0R3V3RxLzFRZjVuTjlBVEgvQnlsRTE0SnlPTXVuOCticjNXcFl1Z0hkCmN5YW83b1QwUVBK
+aGVpWVNqSHpEUkptM2gzV2tZUU0wbWlFK1ZnUT0KPTFjcTkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000007d67990631f45021--
