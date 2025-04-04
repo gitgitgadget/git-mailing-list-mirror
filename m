@@ -1,129 +1,129 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B45BA95E
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 07:18:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E212E62B4
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 07:31:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743751083; cv=none; b=R1qp3iB6W8i8FqQZvSPDplYVUzuW0u060gBa7UGhQXXj2h7qpm8Oag6mGQbf4AJiBBcLOpoT5RFvHTvFA7fWWdKN24mlVtWhBbPNRtHneaoROemkL95V9ehwVY9MkTqhgd/9CG5+ib8GT8elnY81tH8qB/JfzO457MfIomyas74=
+	t=1743751893; cv=none; b=KYfRcxXNhXaWVPCuehZAafdtyZWWnAZiesyPWxEkGWWNvvoUzIXyKsDA8S5gZMz5AlEwwr/oV9J+us3WGDwrnEWPKmepqQLp7afICfiZu95SSgk7AsmsqNbl3NNNOubULjJ1ucBmdsTbKGx1CsCfYvjgwiXilTsWA8uv7wymXFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743751083; c=relaxed/simple;
-	bh=P4w+FQ9wDgQ9PeonbGbolKfELOOBrVKCgd8PVIumF5c=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R/c8GPAKhsjGjFxnHN6KfDaNmLDuDK8Atkery44NO4FisFa5aoQfJ5/m6IT/Q5F8aVL/A1cyor4XfNxCFISq0dKd66k2lTC8JLnzYlinXFcpzCGbVG1ST+X+0PDozZt1JDudJV6xQyzSiq8x1LWPIRYIpe/OPmjaNrCSx1Jn/Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QLSnzwYB; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743751893; c=relaxed/simple;
+	bh=/hgZQeg4rEwN0ja8wK/lMiwKm4MYtkmX0lugTPcE2Yk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P5S19aX8Ls0qv6yL507zpaWj4wuW5bDw64tZeRb1caPfs1W7LxncS4aDHNp4Ftnp9uI+dHyo39iU5h6TLkMrPPxvnIkp1oCQwPGfd3QXo/wtTYGLzEJa+TeOGIfnE4VTMe2AMfHCLKiYXE0JbhCC/tCixpUllhG9QLYmqK3LrqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=QrUDXiaS; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QLSnzwYB"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-22435603572so16316435ad.1
-        for <git@vger.kernel.org>; Fri, 04 Apr 2025 00:18:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743751082; x=1744355882; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LWJnq0u/+k7zGgdRAgmAZgf/0ilATzlwD3iv08fgXZ4=;
-        b=QLSnzwYBy+O0gggbOrTNpUdUpbNnIjHRD1nCR27BtdvoyA90yVcjaW4uaoPXNJW0EM
-         f3geGWrThWexRzIqHBd9k/E7WLuZfgmApm7C3sKCIO7p2w4Gz4lm14FFoYqyQTSk/u9a
-         VQexfXEJ0scaWujvczHbC1CE8Uv5JjS9dYb9Mt19z0GITwsoTo4l7ap6XL+B14rlk9FL
-         F5RqWRGyZv16tRxp/G/OGv7iCxtXNDc0vfCrVpdrq+iogA+tYThpJlFDzswFugxJyr9g
-         mqaG8tHanxYLEdYgFb1dxQ9zeR+ihNBDCNqTF3xqSE22umwIccdaNZKbHg5QDwdPNCu1
-         +RIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743751082; x=1744355882;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LWJnq0u/+k7zGgdRAgmAZgf/0ilATzlwD3iv08fgXZ4=;
-        b=q+7ORw6stUBuzNPjvPz3cXIRC++5P5dgSMdSkBYS2psSIwX8NUdasuVp/me3luynZm
-         cwZFCOj0o7aluN30KorcAFve78QQ0G5EePYKs0CvMtgOkEfWVd48INJU/jn1dm06BxkF
-         ZnMajPu4SEOivNx7tZWFamS4GPl3r5lrlB/GAkoqzngRaWMUlPdsdFvQMIEOtVYRJDJO
-         sorDHbDiW7oeHC+aDJO4PUU31fQGDMX0B87vbvb2XvJD7H+NGammDIAMRuQxOlHkHgG0
-         dejtkFMhnWTbbecfMsGp6FHKskxfnzLapVF35Lx3jc1zBoI2M69cXwWTXUZutjE2/G/r
-         9+kA==
-X-Forwarded-Encrypted: i=1; AJvYcCU9WE/XkrpK8cD4cstOrpTFfucrj9fBHnRPTu0+3+0xrUSSPWxXLFK0kRZKBP+LvsB+Aco=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwlYFQpwgWCe0+EPIPIZ3fjVHQoBqRfylwCfcxbqTXbSwY8EUOU
-	qC0n4kq0csaoaHx32NKJfn6NiLZrMJekiYIEGxG7ouZT+q4fxVRC
-X-Gm-Gg: ASbGnctXf1qKPNKcZ2AmEK+3DoyqlIOrIdjVCmP0vclULlPIvxwb4vufSSNCdz6X077
-	CvGU2YOBQiwbeAfBVowm5r0NY083F2FlZotLTH1NkO81yp0IR1JRKGRwvvwAlmvH3Jxl3ssJJpU
-	L0QlJ3gy7wGa0ceG9rjhFp9czX09FfDiQ22DFGQ7k2DSO0/ZDX3ALjcERaEdFyhKf2APcDCMrfa
-	WzAfUxpHJj8HDoGDgoOtqQLPedNqwDyIlPkFM7hDQwN5UpVwj4q5db5ipW8RcIPm9jfMu0yNgir
-	oOxO6eSNUl3wTqhYNQ8RV5bVly+NiKaSxEOBIkQQ
-X-Google-Smtp-Source: AGHT+IH1yCvBJIIEz/4JXA4DFJCfBgcPF3xAWWxsroAr+Hw+CnPolqRH5j9DvGNTug49P32Io2q8Mg==
-X-Received: by 2002:a17:902:ce07:b0:221:7e36:b13e with SMTP id d9443c01a7336-22a8a864e2amr35483735ad.12.1743751081722;
-        Fri, 04 Apr 2025 00:18:01 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22978772ee4sm25555725ad.233.2025.04.04.00.18.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Apr 2025 00:18:00 -0700 (PDT)
-Date: Fri, 4 Apr 2025 15:18:12 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v6 14/16] refs/iterator: implement seeking for packed-ref
- iterators
-Message-ID: <Z--HtPsKissdMvuE@ArchLinux>
-References: <20250312-pks-update-ref-optimization-v6-0-f778e0414f55@pks.im>
- <20250312-pks-update-ref-optimization-v6-14-f778e0414f55@pks.im>
- <CABPp-BFBqC_t5QSexRQpYsqXBa11WK+OqGt167E=K=xod=buQw@mail.gmail.com>
- <Z-8JN5ZXrgACgYvN@tapette.crustytoothpaste.net>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="QrUDXiaS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1743751888;
+	bh=/hgZQeg4rEwN0ja8wK/lMiwKm4MYtkmX0lugTPcE2Yk=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=QrUDXiaSGtkfBKRj/NGJvOoPrL2/yzgMX1y3p4UO6BA2IR6wnPPkJYdgVaFRHuHTS
+	 mqJLQcIHa62nh40C0FRQ/nxP9sUnQl8P7d8uSJAzbHZoZnFFq2Zx6nXWDGufD2XhVc
+	 xjj34Hh4K1FZZX27LcKql7cK/JF5Wg8ksWQM6oKYoUccxAA6SwfcpUGFCAwQMebVpG
+	 sMqvBH8JlXXLaHM2P/c9OZCisrSjHwa4kPMPWtLLtCV9GcYnT32Hcykb0adRkDB1+i
+	 IJbt0Mv8I7B4jXIiQ06AKUxAeaTN3YryTxN5zfaslMadm8tgDT1e3FlqJLhezgZzuF
+	 EK5v5Dn7HQfy/eVni5+ip1LXfDmfRmEmsZpF971s01h2oXwvddYtnQno6z1HvJosre
+	 p9YiwZWUd7n2PO5LQBpH5ou63IX+ZrNKqNFLZTg/LyZwhIPFIJu7FYLmr0McadKTHy
+	 nU191NPLsD5j9ZWXWBKkA8BYfzOUo+rgVddXBaqS9CmD4Du3wID
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d5c6:e1bb:f3a5:7a20])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7DC2020102;
+	Fri,  4 Apr 2025 07:31:28 +0000 (UTC)
+Date: Fri, 4 Apr 2025 07:31:27 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Andrej Zhilenkov <azhilenkov@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Update symlinks after changing core.symlinks
+Message-ID: <Z--Kz4jsRzm4VSZd@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Andrej Zhilenkov <azhilenkov@gmail.com>, git@vger.kernel.org
+References: <CAArAzAoU9qDj+yLi3pA6wFYdTAk0UvQk4omSWM1RL4D9w5fw_w@mail.gmail.com>
+ <Z-29LsgDvcS0qY5a@tapette.crustytoothpaste.net>
+ <Z-8K9ZIt4j_UMNZm@tapette.crustytoothpaste.net>
+ <CAArAzAr+YPwVXJo8mjkyQG8uWv=wt89tYyp6TL-rNzvwVYm9YA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ED9sk9dUhVhIPGHi"
 Content-Disposition: inline
-In-Reply-To: <Z-8JN5ZXrgACgYvN@tapette.crustytoothpaste.net>
+In-Reply-To: <CAArAzAr+YPwVXJo8mjkyQG8uWv=wt89tYyp6TL-rNzvwVYm9YA@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Thu, Apr 03, 2025 at 10:18:31PM +0000, brian m. carlson wrote:
-> On 2025-04-03 at 19:56:39, Elijah Newren wrote:
-> > In this case, the utf-8 characters will have individual bytes whose
-> > values are greater than 127, which for a signed character will be
-> > represented by a negative number.  I tried tweaking the loop to:
-> > 
 
-That's good catch.
+--ED9sk9dUhVhIPGHi
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> >         while (prefix && *prefix) {
-> >             if ((unsigned char)*refname < (unsigned char)*prefix) {
-> >                 printf("Comparing %d to %d\n",
-> >                        *refname, *prefix);
-> >                 printf("Comparing %s to %s\n",
-> >                        refname, prefix);
-> >                 BUG("packed-refs backend yielded reference preceding
-> > its prefix");
-> 
-> I was mentioning this to Elijah earlier, but I think we might want to
-> use more emojis in testing things like refs and other text patterns in
-> our testsuite.  Because most of them are in astral planes, that will
-> help us exercise our UTF-8 and UTF-16 surrogate handling, which is also
-> relevant to a variety of languages, like Chinese, which we obviously
-> want to support but which contributors may be less familiar with.  Since
-> emoji are more universal, it's easier for anyone to add a test for these
-> kinds of cases and we might be able to catch some of these kinds of
-> things earlier.
-> 
+On 2025-04-04 at 05:51:21, Andrej Zhilenkov wrote:
+> Just recently started working with symlinks in git and I've found that
+> in Git for Windows they are disabled by default
+> (https://gitforwindows.org/symbolic-links.html).
 
-I somehow feel strange that people would like to use emoji(unicode) for
-ref name, because if the user doesn't install the corresponding iconic
-font, the user cannot see anything meaningful.
+Yes, that's true.  On Windows, symlinks require elevated privileges to
+create by default unless you're in Developer Mode (which I highly
+recommend for Git users and developers).  That's the main reason they're
+disabled by default: because they simply can't be created in many cases.
 
-Anyway, we may create unicode ref name or commit message to improve test
-coverage.
+> It's possible to just change the setting in system config or override
+> it in global config, but it's probably safe to assume that the average
+> Windows user will have them disabled.
 
-> That's in addition to the fact that many people use emojis in things
-> like commit messages because they're fun and we want to make those work.
-> 
-> Next time I'm sending patches, I'll endeavour to cover a wider variety
-> of codepoints in my testing.
-> -- 
-> brian m. carlson (they/them)
-> Toronto, Ontario, CA
+I think it depends.  If you're working in software development, you
+really should have them enabled and many users will, but I agree some
+users may not (say, because they're in a corporate environment and
+they're not permitted).
 
-Thanks,
-Jialuo
+> And if your repo needs them, it's probably more reasonable to ask the
+> user to enable symlinks in a local config, not global.
+
+Ah, there I disagree.  I think if you have privileges to create
+symlinks, you probably want them to always be enabled, and if not, you
+don't really have a choice and they'll be disabled.  My experience with
+using repositories with symbolic links is that typically they don't
+function at all (or, if the maintainer has taken great care, only with
+greatly reduced functionality) if the symlinks are missing.  I think
+Git's repository is by far the exception here.
+
+> Maybe there are similar cases but on Unix when users would want
+> `core.symlinks` disabled globally and be enabled on a per-repo basis
+> but I can't imagine why.
+
+I have certainly seen cases on Unix systems where symlinks didn't work.
+For instance, they don't work on FAT-based file systems, and I have also
+seen a Linux distro that tried to restrict symlink creation to work only
+when the creating user owned the destination file, which breaks Git's
+symlink functionality (I quickly demonstrated this "security" feature
+could be trivially bypassed).
+
+However, I don't think there's generally a situation in which you'd
+_want_ it to be disabled globally.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--ED9sk9dUhVhIPGHi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ++KzwAKCRB8DEliiIei
+gcoKAP9kZl1ouozUCsu+fMHXak683Ik0ENnek/LWzD9n51yFmgEA3ReJoxQr4viF
+lXRQJ9hGjFpWsClqhERdcW445ky9mQQ=
+=ViIl
+-----END PGP SIGNATURE-----
+
+--ED9sk9dUhVhIPGHi--
