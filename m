@@ -1,130 +1,132 @@
-Received: from toucan.tulip.relay.mailchannels.net (toucan.tulip.relay.mailchannels.net [23.83.218.254])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2633A2F42
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 04:39:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.254
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743741578; cv=pass; b=lu/fZgS7Sdij6bAcuAbjZih1N27gCb4f9xa00mrTtH4+C4HGZupLQdtRok5iDjLYxmzz5ru/fb0OnbPzdnK924xt+qBdb1NOPZJgOKY3fd0jQ3pnSWHRPiPgqEpJ936fl5weDL/Pf/TGzvh86dEoyRXEXrsU09et7THW6T94dis=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743741578; c=relaxed/simple;
-	bh=TRIGv4sjDXDkEpBcW2iUL27F9DhmxWR57dTsYUw71QE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jk70BNOX7A3tXfRTRJX6wqyUsd0fHusLszquoBeLAnVxSL6us7l8gD1sBUbfjWIm8L4pkaIBmEzVUEn0k4St6JI1TnMbt3aePJEVjEBUbPIltF5Xp4SJHOeIO1GzvKMLjj/zySt9PZcawm6NfHKQW4wA+ubzK/O1rQG3kN48Qr8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=GgXnLwTu; arc=pass smtp.client-ip=23.83.218.254
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698EA156678
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 05:00:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1743742808; cv=none; b=Zro8jDICYurPfslMyRS8/aVJO6/vmUgNLIZQSLeg2h2o0utTcSqD0DVKtXKC/P31y1tWK/W5BrkuUB9I+aFX4zrUnPa04cIAs9gt8hZQHjauHCCdr7JlpPF4cA1q9afRq0zXUZSKXWRa9xBR6fo2zl1BwQXa96SBrzw9p3mWUZE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1743742808; c=relaxed/simple;
+	bh=q+0lgR6jwwA3dIY7H+UJTkbbP8gwsS2eZH7FOiYafwk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KCN6GiBL2kx9bHNMzOx+6dLfoHLKffNSDOtvIVEh/jm+r3UKMnuqaOxX6G7DeGUuVm8zYtZ5YFgAaDxPjV87sTn5g5EyYLvYej236AX/4/USkqDSJHPDSAjZe4uFEBdw94Wqjdw/wfG8yMmI0me3QCTmlyU098Z9EESgwxcrnGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K3qNJ9oV; arc=none smtp.client-ip=209.85.166.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="GgXnLwTu"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 5C5648A51E8;
-	Fri,  4 Apr 2025 04:23:47 +0000 (UTC)
-Received: from pdx1-sub0-mail-a259.dreamhost.com (trex-1.trex.outbound.svc.cluster.local [100.98.185.235])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 010E28A5049;
-	Fri,  4 Apr 2025 04:23:46 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1743740627; a=rsa-sha256;
-	cv=none;
-	b=mBnfumJS0OktK6mefqGTyGFqA7MSmNCIvrJS1De/IJpEaZB5yoPRiRr+EvIKHyvpsiJA2S
-	Pm8EfiQM19xOW2f6dhFxq5Fm8JJx9qqjamhIsVPzEHWQtxXRJv5RZSusSL4sSGKAybrsZK
-	k1s4fulsuBPA8Htf8GWm16/73mVWxIHtU/sEUBoIdOyRHSpjigmw2NIwKNk5Q3Hy2/lFik
-	qTsPHC6AlLDHjfU2nm04nt92yfiyI1D54ySeRf88LFuopmZ+tvWNfForIuRX5QxbHTUopB
-	uCapw1A7RKaSAsLgWpAmyS2bKuUM5NwPstexmrXy34lxh7An6FWAnAuQDZZBNw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1743740627;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=k7pyxQCfOEJUaWljcWDAhBRpvQQD5zvjvPfyBDoeKRM=;
-	b=4qMlI53ME6g4vDMUztTvB1TdifNS1grFMfiTjMjA+9zey1KwwbOIq4HXYBsbVKVtKsl+S3
-	SbBu60nm5WTxW/cCYFueyNVpmxPpiIZWF6Tfu5o9K7Cwj1TC2qxJWTdEGJ061ajy/Pw6TF
-	BSnRxM6hXo7G/1HLWUFKpvwgzVMwR3HsPpzGH8diXIgOeFEAhWk/mX6SyMRX5eYGrJSvAf
-	MJsS7/sF6KvNPAFGgkPoMe47/OXbaWUEoriYRL5TN1TdLp5ON5z9chhriJBRTnHU9rjdF5
-	yf1/pGhQGcIdRbZVluUKpr0j4fZNohjNBnmDOCNYYjORpQxiCUk7IRWFGpn5zA==
-ARC-Authentication-Results: i=1;
-	rspamd-77c6b75dd6-q8ljg;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-White-Language: 3c9221db48bb6aaa_1743740627264_1876491612
-X-MC-Loop-Signature: 1743740627264:1650669191
-X-MC-Ingress-Time: 1743740627264
-Received: from pdx1-sub0-mail-a259.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.98.185.235 (trex/7.0.3);
-	Fri, 04 Apr 2025 04:23:47 +0000
-Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a259.dreamhost.com (Postfix) with ESMTPSA id 4ZTQTZ0MmKz2r;
-	Thu,  3 Apr 2025 21:23:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1743740626;
-	bh=k7pyxQCfOEJUaWljcWDAhBRpvQQD5zvjvPfyBDoeKRM=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=GgXnLwTuseyb+jHPBEr8/2NVuogbl51BsHNCxLUAgNZNYj6Xyw+W1/3yypWBiE5Ml
-	 VlZbWYqR53jHK/P8qkRvhPgny/r/g1XOA5/esKvb7gMT7EEH1lj9PM0BiluDfyHj9k
-	 xG0xwWZugNpvbPXKM5R51orRlHajA3yqLDuHe808MOzQGOwxEdmKV4hODCHaP6qb9S
-	 xtKRBAa3RCQeQnMILUzGRV3QDjdYP+b4IhL006CCBWuckIDwqk1tWYq6JFvUJZXFSI
-	 mp99mIzZRwhF62Hi40ElpGCAmVEnlTR7y6yhz3o6sv+1YQ7cNDD8sXKLgcM7JC2VId
-	 9OaQUOykNptyA==
-Date: Thu, 3 Apr 2025 23:23:43 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: Martin von Zweigbergk <martinvonz@google.com>
-Cc: Elijah Newren <newren@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Edwin Kempin <ekempin@google.com>,
-	Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev,
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-Message-ID: <Z+9ez7kbh/L0Iq4k@ubby>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <CABPp-BFRz-yjnti4W17AEBozb0v52kmNsgTLUZW6-MF34R-xdw@mail.gmail.com>
- <Z+7PDi5y4wXJBK4r@ubby>
- <CAESOdVAd+X=6nEULHtKKotH_W5yNaJAcUajRU79EuG+0SF3m1A@mail.gmail.com>
- <Z+8IF67AC8gSouYc@ubby>
- <CAESOdVAWWP=Rte4bx3zUZc6p0XiZaJS2OZr8ezRPkfq8K1TYfw@mail.gmail.com>
- <Z+9N2REkYZhrbkzb@ubby>
- <CAESOdVCekFDxOWTTF71dpH1id_H2t9SaNo6buJ1MbvTnaENY7g@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K3qNJ9oV"
+Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-85b5e49615aso142646939f.1
+        for <git@vger.kernel.org>; Thu, 03 Apr 2025 22:00:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743742804; x=1744347604; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+fIqyt7uMa3iZytclUl58ziqvZmoiCY/bSp/0aZWDFg=;
+        b=K3qNJ9oVNStoVUeM/XCvOtPRlmDLR18BPVoetTb6/LQ9soE/88usYQxxrkvqhNyoLi
+         iZKt9X0WmpGP0u4Dt5UZuUFlptnTBULsO/lb7DJlK22yQmjtJxsO9iF4Q+pIH3YGoMJy
+         x1mankqUguJ2Ggvdje3iytxJWj+htzk8RpVSWOkOzA9WzFC1oGexgyIR4JtZ6zzVPgU+
+         5qrTOb/uSfxf80p/3Dr+wGeS2I2P0hOEjbvl1WoyLWtCIvuyzVboyqWEv9qdB/l9Gxrt
+         58noBPRkpCNMTOqIxlwEy6ihLjeL4zCRwjnS18LhDfTV40DCY+C5CXbqianmiVbo8UUg
+         +v7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743742804; x=1744347604;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+fIqyt7uMa3iZytclUl58ziqvZmoiCY/bSp/0aZWDFg=;
+        b=mHNdAOXdwFZs0A9R0k4QqDv5eA0ehg7ogJQ7KL/tvvQWBmZAdV6QRpxXy/yp+/kqAa
+         RkFoRDHpzIcbJG1uEOz4u0fGZ+LlWj2Kd13R7+0X/b8u+aSXYZu4yKb523VJ3Pv2avU3
+         NGYePBtOAsVPCX6mmwGmeALFzqqHQ4cPdiGZEjF7LDQ5NefQULSJpv1Nd4iqnflqbgdK
+         EX/pEYox8k0O4y5hHFmIk9Ly/t3YaIBS0Y1bkg/O7RgUByPUbzae+EjKqLexw8ev1YSp
+         yLxpTFtwm9nmSWhYp5almr8mYPiUqwkprW7d5W5rzMvMQr2LY1t/2j87GV1qP2LXhkZj
+         p44g==
+X-Forwarded-Encrypted: i=1; AJvYcCV0QMvuGHgDLOcg25LJUg6O7L3wVsTWMOCcKaPJywIQk+Hwj1SPSGk2RPfaxw5oqeevcRw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw88q9WpRr44YQ4tOa991DWOMzkvV3dxjITYA5ocHKihvShw6kM
+	6X7Gju8WuJNObVuaInIa2JqivvKpfP3K9nMaOn+68171nIhlQKZ4MPrfW54JL4cnMLo7CYv70FN
+	/Or/5wGm9578qzTe1sVcd9mvF+C0=
+X-Gm-Gg: ASbGncv79egSGggfFB9OraQq5YOhKJ30ofJqKkHh/zHsaowkeXiMhzKSoR0gh9bgx52
+	GVs20/nB83NlKtdg5Lap42BouTDPsH5S4ypEGq4vpsiKijLpIHnw/+iJP+1eYnwFHLa7lJtGIqG
+	TgIL6019bdKfYLYvGAp2sN22JC4EPtXRoZBcANy7CilLCBaVe4NUgcOL2cgy8=
+X-Google-Smtp-Source: AGHT+IERPgMb88CYWkZ9UAeLYzy3ie22gtlV1gDs+0AXbsGpBzFu7MTCyP6++6h04LAnh77nJyouTCZyzeA0SqW8CJo=
+X-Received: by 2002:a05:6602:3791:b0:85b:40c7:ce54 with SMTP id
+ ca18e2360f4ac-8611b53f859mr232611639f.14.1743742804461; Thu, 03 Apr 2025
+ 22:00:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAESOdVCekFDxOWTTF71dpH1id_H2t9SaNo6buJ1MbvTnaENY7g@mail.gmail.com>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+ <CABPp-BFRz-yjnti4W17AEBozb0v52kmNsgTLUZW6-MF34R-xdw@mail.gmail.com>
+ <D8X5I3W7K1DI.2JYHGNY9L7ZD3@buenzli.dev> <CABPp-BECTrVp9X6bVmzU8LEeYsC3KbzeJvAaDPN+FgZz_uEhmA@mail.gmail.com>
+ <CABPp-BFYoZ1cuUMJPhWhtgntS0D-E=ZF+8_KS7gC+ShXjTrEDg@mail.gmail.com> <CAESOdVB4yrDQ1v1BZtPiHDJwbaRVN6tixWg9eWNmBitXyqAh6w@mail.gmail.com>
+In-Reply-To: <CAESOdVB4yrDQ1v1BZtPiHDJwbaRVN6tixWg9eWNmBitXyqAh6w@mail.gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 3 Apr 2025 21:59:53 -0700
+X-Gm-Features: AQ5f1JrkDm4osU5hqTIuv9MfeiyDZoutvPYmBR_ll6fgEW3JzbUQNFOzqgzuSF8
+Message-ID: <CABPp-BHWFaUHAXwuddNpD1w=Fe7BK=9-Bc=-b9yXbqqWsQ8_pw@mail.gmail.com>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+To: Martin von Zweigbergk <martinvonz@google.com>
+Cc: Remo Senekowitsch <remo@buenzli.dev>, Git Mailing List <git@vger.kernel.org>, 
+	Edwin Kempin <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>, 
+	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 03, 2025 at 09:08:59PM -0700, Martin von Zweigbergk wrote:
-> Jujutsu (and Mercurial) keep track of the set of visible heads. There
-> can be branches but they are not necessary. When you rewrite a commit,
-> Jutjutsu always rewrites all descendants. It also updates all branches
-> pointing to those commits automatically. For example, if you update
-> the description of some commit with `jj describe -m 'new description
-> --revision xyz', then commit xyz and all its descendants will be
-> updated, and any branches pointing to any of the rewritten commits
-> will be updated.
+On Thu, Apr 3, 2025 at 8:47=E2=80=AFPM Martin von Zweigbergk
+<martinvonz@google.com> wrote:
+>
+> On Thu, 3 Apr 2025 at 19:40, Elijah Newren <newren@gmail.com> wrote:
+> >
+> > One possible simple solution here is just to treat change-ids (or
+> > there abbreviations) kind of like abbreviated hashes -- they aren't
+> > guaranteed to be unique.  If the user specifies a change-id and there
+> > are multiple branches with such a change-id, we provide the user an
+> > error much like we do for abbreviated hashes.
+> >
+> > Is that what folks have in mind?  If so, I'll be happy to drop my
+> > reservations about this aspect.
+>
+> Yes, that's close to what we have in mind. I think I just didn't
+> explain clearly that it's mostly harmless in at least Jujutsu if there
+> are multiple commits with the same change id. If there are multiple
+> visible commits with the same change id, then you'll just have to
+> decide what should happen when the user tries to refer to commits by
+> change id. We currently let it resolve to all the visible commits with
+> the given change id.
 
-I think I would find that too patronising, probably unbearable.
+resolve to all visible commits?  So the Jujutsu equivalent of 'git
+switch <change-id>' would simultaneously check out N different
+branches?  Or do commands which cannot accept multiple commits just
+throw an error in such a case?
 
-> > and even then still not workable because Git might
-> > have to search _many_ branches to find commits matching the given change
-> > ID.  (Fossil could have an index on change ID and trivially make that
-> > search possible, but for Git adding an index is more complicated.)
-> 
-> Yes, I understand that it would be significant work to add support in
-> Git. I hope that Git can gain the feature eventually, but we have no
-> expectation that it will be implemented soon, especially not the UX
-> part (the preservation-on-rewrite part should be simpler, I think).
+Doing a "git log --no-walk <change-id>" and have it resolve to several
+commits would be kinda cool...
 
-Ah, well, Git does have an index: refs.  You could use
-refs/change-IDs/<change-ID> to index by change ID.
+> We may change that to be an error instead [1].
+> The user can always fall back to using the commit id in such cases. We
+> call change ids with multiple visible commits "divergent". They
+> currently show up in red in `jj log`, which I think we all agree makes
+> them seem unnecessarily scary. We'll probably change that soon [2]
+> [3].
+>
+> So when I said that I think it's quite uncommon to have multiple
+> commits with the same change id, I didn't mean that as an excuse to
+> not consider the other cases at all. I just mean that I think the vast
+> majority of commits are not cherry-picked, so we don't need to
+> optimize the user experience for that case - it's fine if it's a bit
+> more complicated to refer to such commits.
+>
+> I hope that clarifies. Let me know if there are still unanswered
+> questions that I have missed.
+
+Yep, thanks, that answered all my previous questions...though you
+raised one new one that I mentioned above.
+
+> [1] https://github.com/jj-vcs/jj/issues/5632
+> [2] https://github.com/jj-vcs/jj/pull/5800
+> [3] https://github.com/jj-vcs/jj/pull/5850
