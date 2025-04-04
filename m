@@ -1,84 +1,83 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003F51A2630
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 09:19:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB4E17A300
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 09:20:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743758354; cv=none; b=BAsaSB6zDuTwDLrf/EkwBGit7VNurNrcoDY/L8pqjaZTMXduVFdd6bAke++uq9Z22DG3K0uwAIxEedzAwKk+VJRC5DOdJEOnoagsXs+KVUVuqgagg1YILKNPBNkm/cmlRJGONPXVg/Ktt4jXzKq7/VOdLYTrd19ra6EGiny9xaY=
+	t=1743758421; cv=none; b=pP916QOqM6V1lAT9c8Gt/Xt7QuZeRghPaa/9DBaxa7+p6L++W1Nn8BXan4DA1fbR/UhMjp0wfjLWLhkETUe2vXwqFRCUMAL01XjzaqSRDBnguY+SxaGSDG/CX+cG/15YQU+c4K+iuVO8KfjUkhY0Lw3fwqkiq31sbtLw+iH6ePU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743758354; c=relaxed/simple;
-	bh=DuJ7Is+9w0vOqnNhioRjcqK4gIkiJQDo1YTEtZBgTTM=;
+	s=arc-20240116; t=1743758421; c=relaxed/simple;
+	bh=le2kCbVoGkzUwiuY4/jyiC7Qo8AeWAB9cYvb/bAFv8Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rUg2npsAHYEwko6VbloP3ogrHBIap/vwuN4lN/l/79G5zdlYQBw/8xyk0UWsewjAcLlQ1TRKAIvxMo1J6ZnGJz0zBZhtZ277C/HzOKf3wsU8YfR6G3fa2VP6yRDHl1M+j0WiUBxUSSR854Lw8dWu7CZ9HO3lnh0SnwLYhOLQ4ZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IYVat9ur; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iMwt/j/S; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=eJqumbVbOxvZlU5A7i0uKkRBY8Bijj5t7w3MvBs6ThNr/uINalcmAtPY++xfYdngOI3c1MhK3qWRL7n3b/NeGIR/RK0eWgnXDKTsrPqVpnmF5z3/pUIe78adBJv9MsmOEWyo6RK5pIWrMAMOsyVw7e76AZ0edYTeVgEv0aRlHBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OIPhZW7g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PRk+P3Mh; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IYVat9ur";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iMwt/j/S"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0D08B2540178;
-	Fri,  4 Apr 2025 05:19:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OIPhZW7g";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PRk+P3Mh"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 44CA811400D6;
+	Fri,  4 Apr 2025 05:20:18 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Fri, 04 Apr 2025 05:19:10 -0400
+  by phl-compute-09.internal (MEProxy); Fri, 04 Apr 2025 05:20:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1743758349; x=1743844749; bh=nKZUNbVK0+
-	hOvYaCECqnYNLlfpHKx+OFti+DLy/XYMA=; b=IYVat9urb5JZFM6jP75Rvqx7gT
-	TUV/aCA86dZsthdlsSsudaNz0kv3Chc8WHDkJgbue9wiaKXOz9hnVLhj0IeTTFgx
-	Z88SvB/2TAnL1PXh8FmqLxloBJZWnJ7ehEjHQQ0+P33l6Yj/+S4z3Fu2/0YjmOIK
-	S6KPtV2OPX7iL8yyfT8nP09ctzeVTjRF/2rYxZzxvTaGeM6KSJxH9n/G+ou3lNfw
-	Ehd5iRH9d/lGfsgQmyby6M6J7pXd2TQ6pQSk3iitbB5iIItPAKZKwpS8YlUbpUDj
-	i4R1VcUsig+2oHNEQ/J1McR9VExDv6VDhFAyoD7NLpzzrLye6rGqbK1cpK7w==
+	:subject:to:to; s=fm2; t=1743758418; x=1743844818; bh=FSBfpndub5
+	qNHDLCEQilyw7NxBAGH50jH816877QvDc=; b=OIPhZW7go1HgrMrJrl+5MBDjAC
+	rgxDk22sZod69mnlalQHfncgBPz7H/LHgUVmBwoDz/sI72g1MsLuXG4iYQya21SU
+	LeZC7N21od/U4jbjYp3rIt7SjhgXh+QsrWDZzijwPppe9V7hY96nFR0GAjEh2qqq
+	Cbvuj4U61ksKatzF+tQC2o6OTjQ1yvIvNREBMK21GSFsxpPP3ynkaWeofTAP/Btc
+	f3xqmsvtJwatuldO8WisB+C58ePcGPtaz7XDoelfoyQMa38zVhjRdNAVaQM38etc
+	7pltdzC/myCyULr5ekj8o5eBjmb7ac6TCwPJuZ0ik6N6w+LPGXzRmGXdgxHQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743758349; x=1743844749; bh=nKZUNbVK0+hOvYaCECqnYNLlfpHKx+OFti+
-	DLy/XYMA=; b=iMwt/j/SbdTs+8RHup6FUdCpyVc41ER/yo75vAOqC7VnIs6NNAv
-	LA/wTKEXfvRSf+/QLlsVXJuPx3lD+R9IW6ViBl7/q8XGcM7rgHebA9NamVGOo3Gg
-	yYaHGVH5ou2fNChei3/laiSH+KSWnBHvV5QNa0s/b3idJFPeOdZFhmYiUwQTOGNa
-	lDWm/XOI/LBi+kVQUWBOx4YqDQuxcTclvsSfGpdE3zuU6M6sjujyoR5Wkk4QjOlw
-	rKZAKe1rkuw6/LITker0vDgXx00DgtKEyCeS9lpLUz7Ew5OUndPHENvixQnYbELr
-	A2W8UC0H3A7XNPKx2A95EN0aixo5vKPe5uA==
-X-ME-Sender: <xms:DaTvZwOaMvBv-T8Is1i5g2D3yZcrueXF-AJ65p59pXBJ-5MIAds5Kw>
-    <xme:DaTvZ29hpJge5vz4KxKlGTiru3gRvL8Ic7bGKXpIUuDKHy5HrEfA7AbZkVo5kTlIE
-    bTmWdgQ-o0hxXtBxw>
-X-ME-Received: <xmr:DaTvZ3SOO7kXEuKO6CeUrO3JYZGIpvmAEWrO3gpkO1G0HuzrndBW53kkeeXOR8lHRntUneVv3UnpR8_K9jcck0jVepGCy14thM43Ojaz4MEl3Lw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduledutdeiucetufdoteggodetrf
+	1743758418; x=1743844818; bh=FSBfpndub5qNHDLCEQilyw7NxBAGH50jH81
+	6877QvDc=; b=PRk+P3MhrSvv6AY7GdF+dEcDyV1gV7a99yKsm3V1AGjQ99xNqli
+	TlDrhQeCh4slpA1s3QvofBy3vx+q6bbT+QRT8p5jWdi+fD3SDlii77hHnzDLlXR7
+	4Eg43LJhzUMxaGjtzaJ9BQxzeuXskiH82Rn6WrF5xJhyrtZTZ31mS/NrNUr1lJih
+	md9JuQPySpmr/0AfLebrIq039HpDFGoIOra5robawwDpOCAzhbtIPrAhkcAigsit
+	+btmYA2SHK1McDRjxYWWYq4ztYPRfxXUBP/rIfDFBZI27T71W7lnKoAm0/iYdTnQ
+	CIpbM8CX2cNKs+oxUs4KHPLjDoRegHqEOGQ==
+X-ME-Sender: <xms:UaTvZ2SEqHraZ70FMl7KG4QgauDZa4VKSVFDxqIS9aY80PZvTtFolg>
+    <xme:UaTvZ7xS2Kxu5rMcU-SClI2ms2UVJN61r0YupFoS7DpdDdrciwJWLyDD8io45_yaZ
+    dxRklRjeNfl8yM_CA>
+X-ME-Received: <xmr:UaTvZz16IDf3oyq4VYh-w7msKnhfNAWktK6Biego-GoIpmY7SyrXQJkjy_bUZB1XRucYtFZBess0JivrjkoGrcMb_SX4O-30Rk4QmnxODVDqsMc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduledutdejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
     himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
     ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggv
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
     pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopegshhgrthgvrghrnhgrvhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:DaTvZ4tLK5B5hDcWRYW6gMcSv5NTTKjHw13BVy8dNSpXXYWnDtecMQ>
-    <xmx:DaTvZ4fQtbJcBDC3YzrmrKMoxxcLuq0c8gr9uEAyLSjf4PNvNw0HEQ>
-    <xmx:DaTvZ82vHUAbw_u9kuplvr5RDq3T9uIV6gCfaINq9aHa3hWh2TBwlA>
-    <xmx:DaTvZ8-ZL0LGIvaRSl0syxyyEeu45rN5gQoqJl-E9w4yoIleDShLPQ>
-    <xmx:DaTvZ_4XByngBgATpKEA6LYkRVLA71Vwobf7NvJpnAmQvS-G9DSxiRiD>
+    dprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:UqTvZyBGxoEsIu0dWmfGXQM63u2A8W96I-50rXU5pgVYKjq6BmKUPQ>
+    <xmx:UqTvZ_hfMAYMuvdpRxdqN7mfRCzAEMY1NXAOnin5uttKHeoxP6hq8Q>
+    <xmx:UqTvZ-pIWCLTPldpjn4j8_-UarZNmaRunU3RgDqgUF8pmMxkVdNRnw>
+    <xmx:UqTvZyjZboeDnYSxZjd8rigO5rrWLxPuJDXF3gU_z1R1EYArzoJlYA>
+    <xmx:UqTvZ2arg-YBAJpRS4wF38Hc18FmWtJ_wJJK7KVWMCAx9LjDq4lTbTC6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Apr 2025 05:19:08 -0400 (EDT)
+ 4 Apr 2025 05:20:17 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bb640fbe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Apr 2025 09:19:07 +0000 (UTC)
-Date: Fri, 4 Apr 2025 11:19:06 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 50d0541b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 4 Apr 2025 09:20:16 +0000 (UTC)
+Date: Fri, 4 Apr 2025 11:20:15 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Arnav Bhate <bhatearnav@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [GSoC PROPOSAL v1] =?utf-8?Q?Refactori?=
- =?utf-8?Q?ng_in_order_to_reduce_Git=E2=80=99s?= global state
-Message-ID: <Z--kCrCnl3Zw4YG7@pks.im>
-References: <1077615a-1c31-416d-a754-58b36d404289@gmail.com>
- <Z-5b6INZXiXbEuU2@pks.im>
- <bcdeb3cf-33a1-4553-897d-0bc09dc6a78d@gmail.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+Subject: Re: [PATCH v3 0/2] help: include SHA build options in version info
+Message-ID: <Z--kT3fIvz8k7h96@pks.im>
+References: <20250401203630.285451-1-jltobler@gmail.com>
+ <20250403140529.497876-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,52 +86,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <bcdeb3cf-33a1-4553-897d-0bc09dc6a78d@gmail.com>
+In-Reply-To: <20250403140529.497876-1-jltobler@gmail.com>
 
-On Thu, Apr 03, 2025 at 08:56:45PM +0530, Arnav Bhate wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > On Wed, Apr 02, 2025 at 11:44:12PM +0530, Arnav Bhate wrote:
-> >> ### Timeline
-> >>
-> >> #### Pre-GSoC (Until May 8)
-> >>
-> >> - Explore the codebase, identifying global variables and how they are
-> >>   used.
-> >>
-> >> - Start to identify suitable locations for global variables.
-> >>
-> >> #### Community Bonding Period (May 8 - June 1)
-> >>
-> >> - Interact with mentor, discussing best ways to refactor various
-> >>   variables and make a plan based on that.
-> >>
-> >> - If time is left, start coding early, as my summer break will have
-> >>   started.
-> >>
-> >> #### Coding Period (June 2 - August 25)
-> >>
-> >> - Modify functions to add an `struct repository` argument where they
-> >>   depend on `the_repository` and replace all occurences of it.
-> >>
-> >> - Move global variables to their new locations in various structs,
-> >>   and refactor functions that depend on them to use their new locations.
-> > 
-> > In large-scale projects like these it typically makes sense to work in
-> > batches. Instead of having three separate phases to "define the
-> > problem", "develop the solution" and "deploy the improvement" I would
-> > strongly encourage you to define and tie together smaller batches of
-> > work.
+On Thu, Apr 03, 2025 at 09:05:27AM -0500, Justin Tobler wrote:
+> Greetings,
 > 
-> What I meant is, before coding started, I want to finalise all the new
-> locations for the global variables with my mentor, then I would actually
-> modify the code in batches, struct-by-struct. Are you suggesting that
-> the new locations not be finalised beforehand, or are we misinterpreting
-> each other?
+> Additional information regarding how Git was built can be found via the
+> `--build-options` flag for git-version(1). This currently does not
+> include information about the SHA-1 and SHA-256 implementations Git is
+> built with.
+> 
+> This short series adds build option info for the SHA-1, SHA-256, and
+> non-crypto-SHA-1 (if any) implementations which may be useful for
+> diagnostic purposes
+> 
+> Changes since V2:
+> 
+>   - Updates to documentation to provide additional context.
+> 
+>   - Inlined `get_sha_impl()` function.
 
-The problem I see is that you only have one large "Coding Period". What
-we would like to see though is that you define smaller, self-contained
-batches of work that you can try to land individually, as well as an
-estimation around how long each of these batches will take you to both
-developend and land in Git itself.
+Thanks, I'm happy with this version.
 
 Patrick
