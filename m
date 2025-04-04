@@ -1,135 +1,175 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADDA16132F
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 09:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EBE19D8BC
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 09:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743759267; cv=none; b=gA4ZQbiC5R+Xj3iYSjllgwVO6D//REK1jRtq21dYDfut+6HSi+hU+xlMWTPYxCiHdql3hWH1s4X8LzdhpAYbCV3M6dlzsYhWq7Qhwt8uxf03yMUv1qJ0EqRcCvYy6tdIH5gD3tNUu9fNz35hs4oKZ+8hEKgZDCv+DlDyq29Urv4=
+	t=1743759691; cv=none; b=n++mRERvlVVEGKoPiVDoW4Nlt8CIxA9a3cfezdDyCw5mMB9RsoJNKueU/0z1zzpuu4na4MrOaSq23/TIGTBdsExs7T+f6LUJuTrHzPMM5Og9/FbkK/2dbcPrUS60PqQkuTTg3UiYLbNKrH8Qz43n/+fnizCmJHzWSVqNxmUxHTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743759267; c=relaxed/simple;
-	bh=BGdGGmMhYVI437+Nayy1YHMGN6x65lVpeYBx1ubVnqc=;
+	s=arc-20240116; t=1743759691; c=relaxed/simple;
+	bh=Xepk8Z/Na4AVrXp3IWMRArIpNTiZzoOCDh7kaZnB5lw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BNGw8HRq12NFyF5oYzv45MTudXOMHCuh7MCLIxOdatodLVQe9Fw/GDLdseOChA+e4vfA50mOnSCRGbxIRfkCgM8NtAGuN1s94qI9FShqaf+w4NX+9Di42sN4ILRGzQ8JR76FdjQdyl1Djuh2xJWP4ik1OSZiIc3fst6YIl9wx14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Dilg4Zgp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jBmKG1KB; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cqs6CWZiaIADcJL09KxCrp2f5UusnMLDQuJNvamMvDZWqXxR4/RlEO2Mc233XomqDd0MFiIHSjG2vMdi6XHU1+BNGI9SeLinP1Mwn5GPCSt08ODlKrktTuMxqddRo2XTNr5nRyUhk0aMkpMuaCFfAROgE6HA5MJqQCFFx3+yPyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=K881meB/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KiMe7Nzw; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Dilg4Zgp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jBmKG1KB"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1C45425400D7;
-	Fri,  4 Apr 2025 05:34:25 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 04 Apr 2025 05:34:25 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K881meB/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KiMe7Nzw"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BFDB4254011B;
+	Fri,  4 Apr 2025 05:41:27 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Fri, 04 Apr 2025 05:41:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1743759264; x=1743845664; bh=EfvkY31+aR
-	QQX9fBnP5sNdRP3CDT9/teUGc9Cp1j7Qw=; b=Dilg4ZgpxJzJqIcauFB8C6fMEX
-	COM3608LqMTYRmxErKHrA3YsOIqSjLgf/7na5KOGA9u1e2kkqiz58nJ9aLaYocEv
-	W0H7sZAUni47HcAC6ZWwNc4TF7dkys2lYhUZfYt1CCKzil8CYYaOwrka8J7K35mh
-	zyktM5byqGIh/hLYGLZi7/DzQNvoy6SHIg7W9WiwXa3KzqfRgPm0eOqh3eQYtNTb
-	NPRdTgPJlLT06yVOT1EAlq3/fdyi0PYxcjhySxbcxTS2Oj/mEgBEFTXTOHqmrpfF
-	maAx39h9lFhgza7hTpxkPbd1RkiSpj92KiVU2UhJDbqyc4lQPRpGNkmK1zNg==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743759687;
+	 x=1743846087; bh=ydUohPUOzKmgcvuEPbaEndOurSi8BvqWkkHakefHwRA=; b=
+	K881meB/KKgTAfXWC6ofx43ne2DFfZv+VvuUwet3t10++K9EtGDYcH1PAtH3U23i
+	BPccb4hrC1Jsxrz/OkyXvUyCf9O9/ySTj0pTajeJIUziCGefugKdT/HFrji751G1
+	SIu6fCU3qWSSOxOcf3gAhZAlB4e0Yvy90zLOrA07wtb5yLGY+jRFpJROPX4i0ELO
+	xTYjGMx93eU0OkV/oJUWdvnAsV2b55CH5O/KmiiAq6hOYiWaworQ8MTsN3G5cZQW
+	Dp8OXfWNNlt/iKSuxRkVdhp7uNC2iDho0SYHLTqBbDqUXhzlvDVkWcy6MfyiGIxI
+	6gTvLM2HYVo/4R4hHkUt7w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743759264; x=1743845664; bh=EfvkY31+aRQQX9fBnP5sNdRP3CDT9/teUGc
-	9Cp1j7Qw=; b=jBmKG1KBhWWQWGIlsMMri2j8ReHVeuMfVpguY7qMyQwssZAvULE
-	voO8M24hK+p8dTeYc3sYI/k4xOu2RCR+SoZvupLdfVMIYX5p7PQdZQqnMuZTc+tw
-	Pkr7ZReJrsTkCmJ0CvxlOMMJE7j5jSuvrytq5J8xrjc6410O+OAbM8f1BhnrX535
-	c7LlTxI3sedesu56GoxQyYVY2OnEC7QvTrhQQgxEH80H5oYhN65PmhWUxH4fXjdi
-	sHJX2kFxQwWy6lSMz1ZqU+SqwATjdl1pMBQXtlivZwnVhFV0p0jGYHwc6U3B5xSC
-	YAQtEimrtqklZ4db98z3PDt8wghhIbOyPIg==
-X-ME-Sender: <xms:oKfvZ24DMVk5jhebfxYmFIVTstEAadlY3v7XRjL6zPs5ZaZ04ZBc6w>
-    <xme:oKfvZ_5lUdgzMfCnOIqsvMagMVTemM4iqWZDaNUK4-OYxhBubKqMhXE_JxTjDpT6E
-    RN5eeASw1eRsDibhA>
-X-ME-Received: <xmr:oKfvZ1f50n2tCzIl--rTfRrqp2dJmldxkW8hwTNkrq1zzmzlBmjgDLwSddvokNsTbniWzdENldX9vWJkhgFFWjTsaHsHI_4n3WNDpiHMapA6VNo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduledutdelucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743759687; x=
+	1743846087; bh=ydUohPUOzKmgcvuEPbaEndOurSi8BvqWkkHakefHwRA=; b=K
+	iMe7NzwYcTzgAwOtdj0wgKB26kp5Jzag7H0foOhIOS2M78qC9h9kklpslSofyGEO
+	Cg5dDhfTaQMJhVRq/Wrpv/Gn8G+myMlcojpu3cZ+MBW87KwDcDBnv18aAlWi6rha
+	xNJ2NLT+rpBUEL3CQ8nAKfWu6W2La3tnlAn5EvzhUr1NXoZn6DMyy7gK894HykIb
+	eaNgARMRqjG0vC4mP5vOJVH3djLvw02o2uPI4M5CptyxGp7bjeDK7G1jkM5bdAsY
+	6LSdpYUv4uBbKGhN8EEEDiFqcLJZJCgbbcs7itXK16ca+WIEJnhGoWfzgYW7MZg5
+	Np+JwMvfLOuA2YjR24kvg==
+X-ME-Sender: <xms:R6nvZ_6nm2tvRYIwrapTmexOj9wz1sUw00FRKS1pU0757yHsP0gMvg>
+    <xme:R6nvZ07XUhRAVQM8zL1h1fyH4yUZQRShrcXygdgFLrA5gGqvB3BaBtTZVuZX8HUjR
+    TJ3wZA3F3ON3sxLVw>
+X-ME-Received: <xmr:R6nvZ2cY_iu-4Fv3Jsw0abe4x4rMjMKxYt-v75reUUrfjJfrciDtyng6vhGishs8nI7UQ9bAO82rPvGT7a7XNVIdBcNrbM4TJjP8kiYoJQXhr7w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduleduuddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepnhhitghosegtrhihphhtohhnvggtthhorhdrtg
-    homhdprhgtphhtthhopehphhhilhhiphhmvghtiihgvghrsegslhhuvgifihhnrdgthhdp
-    rhgtphhtthhopehrvghmohessghuvghniihlihdruggvvhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehg
-    ohhoghhlvgdrtghomhdprhgtphhtthhopegvkhgvmhhpihhnsehgohhoghhlvgdrtghomh
-    dprhgtphhtthhopehstghothhtsehgihhtsghuthhlvghrrdgtohhmpdhrtghpthhtohep
-    nhgvfihrvghnsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:oKfvZzLA77H81D7LTF7T_sXxS3mE9VupVNjcIoXi1Ph-K3Brf35-jg>
-    <xmx:oKfvZ6KFHfBmKcum5wLl6xO0JS9ZxtQI6dkjEvkGMJtk921YjKJcXA>
-    <xmx:oKfvZ0wO4PCmDRS57O6JwcsrMnjfmXZ1eGs4hWdxfsFnu0S6KZHE-Q>
-    <xmx:oKfvZ-Lv62QOwjq50THf815INUkGCKAB1Dp-9TycXo-21QWRNtDKtQ>
-    <xmx:oKfvZ5dzCyhKHeMvRzt8hBl2xe396GV4PGI0KQ9ONF0Yj1EYhXJCFw4j>
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
+    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprh
+    gtphhtthhopegvkhgvmhhpihhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehphhhi
+    lhhiphhmvghtiihgvghrsegslhhuvgifihhnrdgthhdprhgtphhtthhopehrvghmohessg
+    huvghniihlihdruggvvhdprhgtphhtthhopehstghothhtsehgihhtsghuthhlvghrrdgt
+    ohhmpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehgohhoghhlvgdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:R6nvZwJa9BpHT5xAxDmg4GBDCPj0k10NQYX8dGSifu6XxOxpsOET8g>
+    <xmx:R6nvZzLjA_UwtIPVvACXjn0dYehJMY6I2ZVIE3JTMjUUgRA4qtcaeg>
+    <xmx:R6nvZ5xExR9utLLq4W8UhNIGgYwy81qGqjM-H8yY1EB8cASuna2UwA>
+    <xmx:R6nvZ_LvD709XweVd3PwpVlgRIuV4QrTDzyDY7UbHe6KNzbVRtiErQ>
+    <xmx:R6nvZ2ndfjy6sCXeTNTyhMHBHk7eb-fXcUR98CduTIIGv44zxfzzg2eh>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Apr 2025 05:34:23 -0400 (EDT)
+ 4 Apr 2025 05:41:25 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4d444065 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Apr 2025 09:34:21 +0000 (UTC)
-Date: Fri, 4 Apr 2025 11:34:20 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 602944eb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 4 Apr 2025 09:41:24 +0000 (UTC)
+Date: Fri, 4 Apr 2025 11:41:23 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Nico Williams <nico@cryptonector.com>
+To: Elijah Newren <newren@gmail.com>
 Cc: Martin von Zweigbergk <martinvonz@google.com>,
-	Elijah Newren <newren@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Edwin Kempin <ekempin@google.com>,
 	Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev,
 	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
 Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
  change-id commit footer
-Message-ID: <Z--nnOhsUCaqo45z@pks.im>
+Message-ID: <Z--pQ2ge47J_489a@pks.im>
 References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <CABPp-BFRz-yjnti4W17AEBozb0v52kmNsgTLUZW6-MF34R-xdw@mail.gmail.com>
- <Z+7PDi5y4wXJBK4r@ubby>
- <CAESOdVAd+X=6nEULHtKKotH_W5yNaJAcUajRU79EuG+0SF3m1A@mail.gmail.com>
- <Z+8IF67AC8gSouYc@ubby>
- <CAESOdVAWWP=Rte4bx3zUZc6p0XiZaJS2OZr8ezRPkfq8K1TYfw@mail.gmail.com>
- <Z+9N2REkYZhrbkzb@ubby>
- <CAESOdVCekFDxOWTTF71dpH1id_H2t9SaNo6buJ1MbvTnaENY7g@mail.gmail.com>
- <Z+9ez7kbh/L0Iq4k@ubby>
+ <Z-5QR57zgSsm6jNP@pks.im>
+ <CABPp-BGwXaiohvfSdr96hzKNPYXQqz+_okxLNj7P9KSjX2PW6g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z+9ez7kbh/L0Iq4k@ubby>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BGwXaiohvfSdr96hzKNPYXQqz+_okxLNj7P9KSjX2PW6g@mail.gmail.com>
 
-On Thu, Apr 03, 2025 at 11:23:43PM -0500, Nico Williams wrote:
-> On Thu, Apr 03, 2025 at 09:08:59PM -0700, Martin von Zweigbergk wrote:
-> > > and even then still not workable because Git might
-> > > have to search _many_ branches to find commits matching the given change
-> > > ID.  (Fossil could have an index on change ID and trivially make that
-> > > search possible, but for Git adding an index is more complicated.)
-> > 
-> > Yes, I understand that it would be significant work to add support in
-> > Git. I hope that Git can gain the feature eventually, but we have no
-> > expectation that it will be implemented soon, especially not the UX
-> > part (the preservation-on-rewrite part should be simpler, I think).
+On Thu, Apr 03, 2025 at 08:56:01AM -0700, Elijah Newren wrote:
+> On Thu, Apr 3, 2025 at 2:13 AM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> [...]
+> > Agreed, change IDs solve a couple of issues that many users face:
+> >
+> >   - You can reliably track how a patch evolves over time. This helps
+> >     various different tools to track identity of commits, like for
+> >     example forges, but also tools like git-range-diff(1).
+> >
+> >   - It becomes trivial to see whether a commit has been cherry-picked
+> >     into another branch. We do have git-cherry(1) to do that right now,
+> >     but that command is based on heuristics and fails as soon as the
+> >     patch itself needed to be adapted.
+> >
+> >   - Working with history rewrites becomes easier in the general case as
+> >     you don't have to adapt to constantly changing commit IDs.
 > 
-> Ah, well, Git does have an index: refs.  You could use
-> refs/change-IDs/<change-ID> to index by change ID.
+> Could you elaborate?  I agree with the other points you raise, but I'm
+> unsure how this helps with a history rewrite.  Do you mean the
+> rewriting of history, or someone trying to consume the history
+> rewrite?  If the former, I don't see it, and if the latter, didn't you
+> already cover that in the two bullets above?  Or is there something
+> else you are also getting at?
 
-I don't think references are a good mechanism to track change IDs. The
-expectation around refs is that users can change them basically at will,
-but it certainly does not make any sense to let them update change IDs.
-Furthermore, as we have already discussed, change IDs are not unique,
-but refs can only point to a single commit ID. So that's another
-mismatch that we cannot address.
+Yeah, this point wasn't quite clear. It's mostly based around my own
+findings that I always end up copying a lot of object IDs around while
+working on rebases. And the most annoying part to me is that those OIDs
+also change on every rewrite, and as a consequence I always have to look
+up the rewritten object IDs.
 
-I think caching the information in an auxiliary data structure would
-thus be a lot more reasonable. This could for example be part of commit
-graphs, but could also be a separate index specific to change IDs
-themselves.
+By using change IDs this issue would become easier as I only need to
+remember one set of constant IDs that don't change on ever rewrite.
 
-Patirck
+> > So what would it take to get change IDs into Git? I think the most
+> > important items would be:
+> >
+> >   - Generating and writing change IDs in commands that support them.
+> >     This includes e.g. git-commit(1), git-commit-tree(1), git-merge(1),
+> >     git-merge-tree(1). This should of course be completely optional and
+> >     probably be disabled by default.
+> >
+> >   - Making tools that rewrite commits aware of change IDs so that they
+> >     know to retain change IDs. This involves e.g. git-cherry-pick(1),
+> >     git-rebase(1), git-replay(1).
+> 
+> And also git-commit(1) [when passing --amend], and git-fast-export(1)
+> and git-fast-import(1) -- though possibly with options for the last
+> two to expunge them instead of preserving them, but probably
+> defaulting to preserving them.
+> 
+> However, I think some of these might already handle this.  Commands
+> which call read_commit_extra_headers() and pass those along to
+> commit_tree_extended() may already preserve these.  It appears commit
+> --amend and replay both do this.  sequencer has some code that looks
+> relevant, but it appears to only be reading the headers from HEAD (at
+> the time the nth commit is being replayed), which seems like it'd be
+> looking at the wrong commit.  That might actually be a bug...
+
+Yes, some tools already handle this correctly indeed.
+
+> >   - Extending revisions to allow specifying commits by change ID.
+> 
+> Would this essentially be similar to <rev>^{/<text>} except searching
+> specifically change-id headers rather than commit message?
+
+Yeah, something like that. The exact format for such a new revision
+would be up for debate, but I quite like the reverse hex format that JJ
+itself uses as it is unambiguous compared to object IDs. Only problem of
+course is that it's not unambiguous compared to refnames, so accepting
+reverse object IDS as-is without any kind of prefix is probably a no-go.
+
+Patrick
