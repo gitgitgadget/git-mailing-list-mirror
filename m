@@ -1,260 +1,183 @@
-Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA3B3D984
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 11:08:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BB416132F
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 11:15:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743764910; cv=none; b=LDaRmXJA12p6mfvRagnxt3887ChJ1aEf7Dt99n8ryLAHwIvIifE6Ib1Yt3SOOcpyKuyua8c6PVwjHlP+e4ztSbPx2jKFZ6fsbf2VlgZLrkaX8dSuP+RdN9w9J7ROl1QDVvFguKD8o/rRo0qWS08gJGU1lhfSBuLs4HqKICyhvyg=
+	t=1743765337; cv=none; b=DjAarxNhsCuyLGByYlZxWHlyqGAtIIJDSUz2kMiLTOYzlHRE0I9AAK73xbxZzM4iHK1ui2StyIvW196VcSpLjS6lznig3ZhGxc0Q8Qf8vTt18/2TiIroE321IhIyaH69qwo0GsRpahZqYtEKQlYwPojvlxOPWU3xiJ8hBGbDQnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743764910; c=relaxed/simple;
-	bh=wzif7DxQJXEWM/mIP285JxwHjjvMYqcc6y/7FW0L2OA=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nYzNpLCQkSt3Dr8TuwGrRZ3kZRBJ0aotB/gS02tZGPRZmbPvYKRXq4ZGKU3h7ZE+buAXI1xNeWlY+C4TnzaOA6VjK5RF1j2oIL8kPsUpY490ByhbosH4ryohla8MLa9E8/0hd88xxfgnWGIgwbcQ1L1OlzHJsaY5EyWZF1rTQOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J2etyvr8; arc=none smtp.client-ip=209.85.222.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743765337; c=relaxed/simple;
+	bh=KpXIO6HUPVTlCXgSbuazlH1h6LBmX/5Us4lnuooApn0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZBd76ABZ2ShCTPI8czImVK16o0QIM78Rb/pjfmTPYAYaUyEbtg2dmJTNyWfH5/4tKGH7Y7Jke6QUKS6qIKaJjwWIt2F7PGSxcbRGemB5I3WilL3SbRKNZ2HvuZvEh89pR/c5aakcvAZHfWrtyLbsvuHACAiwdWsHC3wfQjvp6Fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HOOyvscE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oi2t6e8P; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J2etyvr8"
-Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-86d6fd581f4so2592157241.1
-        for <git@vger.kernel.org>; Fri, 04 Apr 2025 04:08:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743764907; x=1744369707; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=O6xoAP0Mc+oKwVN/6lsz3Qipl/hqeM2buZQ6ehaAbh4=;
-        b=J2etyvr8OM3mAeskuNLppqn2LtYZOho0+OG7NQREKHqFpZ/0B+e33UoEoxr+iOEdfq
-         aUDuxgJDGmD8XIbPDnL9v/lFOpIEmX6Ig52Oep/5sSadPpixrOsb0dh3UxPS2MtkiIjy
-         kwu43X+DUk5ZfR9a78R277JeHC2TYGEECNbGwzZWFgcWsJBk93ftS9A1/L8iMt2ogdZE
-         B+3Ah4OLhL7G33jKN0ZRVf10V5KclAj7Tr70msjeczAY8ZWMRxh4TKh+9HldlK1dg4SY
-         4UkwiwhpRPo4OyPlqMUeRBqOIOjC7zUhou0/oEU5NbCYx0iBW7+HS+RELoiaTLpZ5Qjc
-         ZZ0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743764907; x=1744369707;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O6xoAP0Mc+oKwVN/6lsz3Qipl/hqeM2buZQ6ehaAbh4=;
-        b=ADLz5dOyFIgDDES3ZgWicn8+rbfCUM3w9BHvL74IwDA3xHLzu0MtnCd8StYg8YdD00
-         R7FJUqPpGgeTE4OH2yW84hGMofTHJoUustHHAu1L1jEgIU3g5rtL7BSRTQOgNeyiGnEl
-         PxogS3AJ6o2ewljBwspi+RreW2Xehdz8PQ4tSc9TTmPXTlpFyKIg6Li21ZpYhCs2chDe
-         8xQv+pXFjs6aCKI4qcs54+yl3RPZUHMnXsM+B8oiPbiSFC5x268vZVHJ4zC4wvuw8/Jl
-         /sGV5Dfzw8+4MZU3xuKRDGGtWr+6qNbbjLlwwXwsdyr12hmn6TXvuZBtbA9FlWKter5e
-         4TRg==
-X-Gm-Message-State: AOJu0YwvC+RQ6BkDTS8Dc5Tpa3wyUMRjio4bpIlO1sByocOt0UWmkC30
-	Bo+dq7NR0SAz6GgEfC8VdO3n7Wew1vMwSDPgOECSZCQaYmVsUvF/xwvONgqLIg3FMYoRakPV0Dr
-	1nck3hxbbqVxnkdDLHkMSOVwFE5KzWr3j
-X-Gm-Gg: ASbGncs+B1Z2cJUpHHmxI/gdz/oLOFrLZiYdMUDW5yEXdr8s155VKl9eRm1LjpLFdDK
-	5LAz9nerSaWP2K0KKiDJhj0E/ZSXfcs7NwiHH6OU2aalMVAlhazXLLMrqB4SKTVAp1wU0VD6g3i
-	9Myj92OsuM/hClFfEtJVizRYRTwn8ka6UzzXq0JlIfvsbW4V3rAx1OxwwIqnDs
-X-Google-Smtp-Source: AGHT+IEGGCGvYMLHpeeoytDHYAI2Tz5B91si6CfaRLouWNfZYI/PtVAS/+R4HjKL9qg6bWiYqXx61tk53EaveOKcFrg=
-X-Received: by 2002:a05:6122:181b:b0:524:2fe0:61bc with SMTP id
- 71dfb90a1353d-5276491b0d8mr1687317e0c.5.1743764907181; Fri, 04 Apr 2025
- 04:08:27 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 4 Apr 2025 04:08:26 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 4 Apr 2025 04:08:26 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250403154404.3459805-1-05ZYT30@gmail.com>
-References: <20250329150248.2274482-1-05ZYT30@gmail.com> <20250403154404.3459805-1-05ZYT30@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HOOyvscE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oi2t6e8P"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5602111400D6;
+	Fri,  4 Apr 2025 07:15:33 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 04 Apr 2025 07:15:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743765333;
+	 x=1743851733; bh=0RZfkVnufGdyPKtCCuplM00KXsyp3VqUOGEJIHxSqEs=; b=
+	HOOyvscE95GqEBYDUF6tpM8c3AzkncpHGtGCNk9/FbMeYzlIPHBgVixnRF/LK3qw
+	rnewhqWxrMSxWXlzdbOcxKvstq4wg2ZbzIlkkZGaFuG6aryDPaQuOBRGo9IxlBB5
+	0NxoV4cG8vgRISNkSRC/dHzvPAAd0q/Hch7Ydf6Vy8bRidpo6/UpOgR7d4jLt5MW
+	OTlXCKqabIw09v43wF9a5orYoLBbghn8LOljY/yoD7Mr14swSH2e6GPYZEh/Ogqm
+	NU9zCB+wQgiaQnC4IRqaG0LwjLMcHubqk8swFOLcneNGWMjm5Qpr4qyj7qmhvjen
+	BxIxAiHrXQ8Q++Ag89EBCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743765333; x=
+	1743851733; bh=0RZfkVnufGdyPKtCCuplM00KXsyp3VqUOGEJIHxSqEs=; b=O
+	i2t6e8PruEwH6J3raNTS62oDIPlFPrwxwtzOfmSqvQBZFe7C015fN3baCrs26Czc
+	wH2jZGuOcM9ZY8G0zrEsouVsrdUVcH9BkyW+1xDtX4tTRwuWou9kYUtYW8/845T8
+	mdFe8+usg4477qBi2mF55eRxI+ooe5rQM1BpbdrmEjPBFR1Sq7gn+8tZ+BvywDT9
+	M0pW/zaNUJMXkbjqNTfDX8AJu/MrSNQG6bs7PYU2BqaJGAwU1In7ZsLC1ptv80TO
+	/urb7+QA74BpMou9MKN3N/vhzX8kR6g8JijusU4yAtYkYKc0CjJ7qP6fg1WMF0/O
+	PqgwrfOQCxbEViWds0iIw==
+X-ME-Sender: <xms:Vb_vZ5jtTLUYx8JOBvX9TwjAGCeIIat3zPnbU71uz-Oc7SUJIReisQ>
+    <xme:Vb_vZ-DVTW8ftSEu2JYK-cMrGIUb4-ScJD4o3b6zloS0OKZNTMbL1KTAytTaPuyJO
+    hNYWylWWaGckjFpjw>
+X-ME-Received: <xmr:Vb_vZ5GoK7RDvwcrZeqROswisnhLxf388rm-n3vGffRuS5Kozlkt3MZzvLnUgKB0Ydt-VoEO3mY8AwpyLUJFRHxft4Byk-zTs8B1rxp-JUG1luk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduleduvdelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufht
+    vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefje
+    eitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+    dpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptdeh
+    iiihtheftdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhg
+X-ME-Proxy: <xmx:Vb_vZ-R3mFiRedkJ1M5oLFnB5DVAtxMmSJVEBwx2xsphjP2Uef9qbg>
+    <xmx:Vb_vZ2yoFS-Egxjwgd5mV1H8eSyrfQU_FU5DsIp_abS6lUsjknSmkQ>
+    <xmx:Vb_vZ05aAO5r1ucIgyaE9k_qrjpuqfDEbh9EDSXCbUm9N3Vl0dPCUg>
+    <xmx:Vb_vZ7wYzv1yVsUoJtU0WTDXjhlYE0PiMsGagT3ighyKsaHUJYUTpg>
+    <xmx:Vb_vZ-PcqXPacr7FYUef32kaI4zzyW8aas46EpU2rE4TERmZIsVGTn_j>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 4 Apr 2025 07:15:32 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8f199800 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 4 Apr 2025 11:15:30 +0000 (UTC)
+Date: Fri, 4 Apr 2025 13:15:26 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Zheng Yuting <05zyt30@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Discussion on git-refs list Implementation and Possible
+ Approaches
+Message-ID: <Z--_TvQ9MXgjxqOV@pks.im>
+References: <20250329150248.2274482-1-05ZYT30@gmail.com>
+ <20250403154404.3459805-1-05ZYT30@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 4 Apr 2025 04:08:26 -0700
-X-Gm-Features: ATxdqUFgIVSYQDmrhhwWCcGWLezbmAyIw8p3vDzxu5v4cyylJpybbtwt6ZM1aGE
-Message-ID: <CAOLa=ZTTPuNyaE5Z-bfkQougmKQSrRZZwLaxJUL7mdmj8uHoFw@mail.gmail.com>
-Subject: Re: Discussion on git-refs list Implementation and Possible Approaches
-To: Zheng Yuting <05zyt30@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000dd662f0631f1e774"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250403154404.3459805-1-05ZYT30@gmail.com>
 
---000000000000dd662f0631f1e774
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Zheng Yuting <05zyt30@gmail.com> writes:
-
+On Thu, Apr 03, 2025 at 11:44:04PM +0800, Zheng Yuting wrote:
 > After an initial review of the code and documentation for `git-show-ref`
-> and `git-for-each-ref`, I believe the functionality of the `git-refs list=
-`
+> and `git-for-each-ref`, I believe the functionality of the `git-refs list`
 > subcommand can be categorized into two major types:
->
+> 
 > 1. **Filtering options**
 >    - In `git-for-each-ref`:
 >      - `--count`
->      - `--sort=3D<key>`
-
-I would categorize '--sort' into a third subcategory. Filtering refers
-to possible change in the size of the sample set. While sorting is more
-of a presentation utility.
-
->      - `--points-at=3D<object>`
->      - `--merged[=3D<object>]`
->      - `--no-merged[=3D<object>]`
->      - `--contains[=3D<object>]`
->      - `--no-contains[=3D<object>]`
+>      - `--sort=<key>`
+>      - `--points-at=<object>`
+>      - `--merged[=<object>]`
+>      - `--no-merged[=<object>]`
+>      - `--contains[=<object>]`
+>      - `--no-contains[=<object>]`
 >      - `--omit-empty`
->      - `--exclude=3D<pattern>`
+>      - `--exclude=<pattern>`
 >      - `--include-root-refs`
 >    - In `git-show-ref`:
 >      - `--head`
 >      - `--branches`
 >      - `--tags`
->      - `--exclude-existing[=3D<pattern>]`
->
+>      - `--exclude-existing[=<pattern>]`
+> 
 > 2. **Formatting options**
 >    - In `git-for-each-ref`:
->      - `--format=3D<format>`
->      - `--color[=3D<when>]`
+>      - `--format=<format>`
+>      - `--color[=<when>]`
 >      - `--tcl`
 >      - `--shell`
 >      - `--perl`
 >    - In `git-show-ref`:
 >      - `--dereference`
 >      - `--hash`
->
+> 
 > Additionally, for filtering functionality, the `--ignore-case` option
 > from `git-for-each-ref` should be supported across the board.
->
-
-This is indeed a special case which applies to both sorting and
-filtering.
-
+> 
 > **Note**: The `--verify`, `--quiet` and `--exist` options in
 > `git-show-ref` are intended to be implemented as separate
 > `git-refs` subcommands and are not within the scope of this
 > discussion.
->
->
+
+Yup, makes sense.
+
+Another factor is the default format that these two commands use which
+differs. I would heavily lean towards using the format exposed by `git
+show-ref` because it doesn't require us to hit the ODB, and thus it is
+way more efficient. This has bitten me quite often already.
+
 > ## Implementation Considerations
->
+> 
 > At this point, I haven't come up with a perfect implementation
 > plan, as each approach has some issues:
->
+> 
 > ### Approach 1:
 > `git-refs list` would support both filtering and formatting options,
 > meaning it could provide:
 > - Filtered output
 > - Formatted output
 > - Combined filter + format output
->
+> 
 > However, I see two potential problems with this approach:
 > 1. Would it make the `list` subcommand too complex?
 
-You mean complex from the user perspective of having too many options or
-from the implementation perspective.
-
-I think from the UX perspective, it is a good time to rethink usage and
-need for the options you mentioned above. , for e.g. with '--format', do
-we need to have '--tcl', `--shell` and `--perl`?
+I don't think it would, both are orthogonal to one another. I don't
+think people _only_ want to format or _only_ want to filter. Quite
+often, they'll want to do both at the same time.
 
 > 2. The performance could be worse than `git-for-each-ref`.
->
 
-Why would it be worse? The performance difference between
-`git-for-each-ref(1)` and `git-show-ref(1)` stem from the formats they
-use by default.
-
-$ hyperfine --shell=3Dnone --warmup=3D3 "git for-each-ref" "git show-ref"
-Benchmark 1: git for-each-ref
-  Time (mean =C2=B1 =CF=83):       4.0 ms =C2=B1   0.6 ms    [User: 1.9 ms,=
- System: 1.9 ms]
-  Range (min =E2=80=A6 max):     3.0 ms =E2=80=A6   5.7 ms    680 runs
-
-Benchmark 2: git show-ref
-  Time (mean =C2=B1 =CF=83):       2.9 ms =C2=B1   0.4 ms    [User: 1.2 ms,=
- System: 1.5 ms]
-  Range (min =E2=80=A6 max):     2.0 ms =E2=80=A6   4.3 ms    909 runs
-
-Summary
-  git show-ref ran
-    1.38 =C2=B1 0.28 times faster than git for-each-ref
-
-What I found interesting was that changing the format for
-'git-for-each-ref(1)' gives it a boost:
-
-$ hyperfine --shell=3Dnone --warmup=3D3 'git for-each-ref
---format=3D"%(objectname) %(refname)"' "git show-ref"
-Benchmark 1: git for-each-ref --format=3D"%(objectname) %(refname)"
-  Time (mean =C2=B1 =CF=83):       2.4 ms =C2=B1   0.3 ms    [User: 1.1 ms,=
- System: 1.1 ms]
-  Range (min =E2=80=A6 max):     1.7 ms =E2=80=A6   3.6 ms    1070 runs
-
-Benchmark 2: git show-ref
-  Time (mean =C2=B1 =CF=83):       2.9 ms =C2=B1   0.4 ms    [User: 1.2 ms,=
- System: 1.5 ms]
-  Range (min =E2=80=A6 max):     2.0 ms =E2=80=A6   4.5 ms    833 runs
-
-Summary
-  git for-each-ref --format=3D"%(objectname) %(refname)" ran
-    1.20 =C2=B1 0.23 times faster than git show-ref
+Why is that? git-for-each-ref(1) already knows to filter and format, so
+I'd expect the performance to be roughly the same. In fact, I think we
+would be able to improve performance if we changed the default format as
+mentioned above.
 
 > ### Approach 2:
 > Split the functionality into two separate subcommands:
 > - `git-refs filter`: Handles filtering and filter + format output
 > - `git-refs show`: Supports formatting options
->
+> 
 > For implementation, my initial thought is that `git-refs filter` could
 > reuse the formatting options from `git-refs show`. Perhaps this could
 > work similarly to how `git-add --patch` and `git-restore --patch`
-> share logic, though I haven=E2=80=99t thoroughly reviewed that part of th=
-e
+> share logic, though I haven’t thoroughly reviewed that part of the
 > code yet. Would this be a reasonable approach?
->
 
-And what is the expectation that when you want to do both filtering and
-formatting, would the user be expected to do `git refs filter | git refs
-show`? Generally users want to combine both of these options.
+I don't think this plan would make sense as it would mean that current
+users of git-for-each-ref(1) wouldn't be able to migrate.
 
-Also wasn't the idea to already implement `git-refs show` as a
-standalone which simply shows what value a reference holds (without
-derefence)?
-
-> ## Overall Plan
->
-> If Approach 2 is preferable, I could start with `git-refs show` since it
-> only deals with basic ref listing and formatting. I would then make
-> the formatting code more reusable to support `git-refs filter`, which
-> would focus solely on filtering.
->
-> If Approach 1 is chosen, the implementation plan would remain the
-> same, but everything would be handled within a single `git-refs list`
-> command.
-
-While I would think Approach 1 is the better option here, I'm also
-seeing how it is complex, perhaps a good option to get started would be
-to implement a simpler subcommand as a first case? Perhaps the
-originally discussed `git refs show`?
-
->
-> I would appreciate any feedback or alternative suggestions on the
-> best way to structure this functionality.
->
-> Thanks!
-
-Thanks for the proposal!
-Karthik
-
---000000000000dd662f0631f1e774
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 3e401f387a0241a4_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mdnZhTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOTBtQy80OEpUUi9jcWU1b3UvdDVPbUJKQ1ROZldneAo5VnFHTEFCeDll
-UlE0NTNNSjFTbTdnL2hKdjR0QnVIU1o2eXZsQ1BaNlUzVUsrbEY3SkFSRmlUOXFlMVo4aHNBCndW
-S2tGclNBZ3VBNlBJcEFSYXJrYjdha2QwQ0tBVTFtVXZqeDVJRnlkMVppWXU2UWJCamhSa1JJS1ZZ
-UFJyQ1cKQk1Lb3Z1N2NOU0I4SEJlZGdBeUplVzBsVjd1dURnWGh0RFI3RFIzVXZPRCtEYnhBYlpz
-TWRvcFFzbU5YSXpURwpTUjZoaUFLK0c0b2FTWEJITVJDMk5xU0pRQjBkMEM2TDVxRlREVzl4NlVi
-NlBlY1U1UlhKV1NBSG45Si91RGI0CnJSYmVYYkowZXU4ajRxYmtUSzBDOXA4WmRVTVRZWGhUWmpO
-dTc0VEg1djdWeFo3SWdvNjlHd1A0bXRveStXV3cKOVlSd2JIUmpjYUpCNTlTSWxKWlBHVnlWQkcr
-KzAva1lvZFlQWjdDc25FTGtJd25xOTJZcWdIbW4weTFhK05ENApMS3Q1QzlHa1NkU2llT1BaL1hW
-WURrWVRhVUtQNHpReXRpSjIxQjBUWVJmNHk1aWZ2emFCMVcwR1gyOGtrZEkyCjJ3ZlJ0L0hFc012
-RURzT0t2ZGNPbTFLWVBmZzRoZzM1dElkYXJnbz0KPS9WeTEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000dd662f0631f1e774--
+Patrick
