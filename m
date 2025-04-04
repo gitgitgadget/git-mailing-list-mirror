@@ -1,119 +1,178 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50FD634
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 20:57:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26998190462
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 21:59:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743800267; cv=none; b=qGosRpjBY9jJWcHD/r0kH9TAmJZfXCEPwl6mKuPLXrfMBR0Y5l+m8wpGbSbq+xDL9hDMcbYZrgyGpIQn5+tHUQLm/YS+hmVOp9nXBUQzGSouu0R2jITUlKa72GajBNHZ8IaI0G+jUZlw4Gj2WpgR1OHlrjcAqZRF2sFxZ04cYho=
+	t=1743803953; cv=none; b=gfyiJ54kzCcoJ43VvrU4N5KpaJxgf2P8dhx7aSB+tQQXVKY8p0I/6PWdqMDWm1Rus6tbpKq7IAiphXxe2IKG6n2CmaiCjevY0VZNH2F8P/ykTNl0233Q3hPrOrMYWPw+uGREhDYuKbw1hFJsXagt1YMqofEYoEp/q2sxKBDQGv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743800267; c=relaxed/simple;
-	bh=/ramKFUUsy3a5EtywtGChKftMqSynyTnOZFnVvjQ8UQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q17BhTnd9V8mwMY13EgD4sT+y57MWaaTdvKUz668+UWVOLqSOPq1C7RsylP49HHNoUlAi66Kv2DL1NedNz4YVqpQSCa+GumOCksZeljUztBGanbKJoRLmoho8VD2R/ibbv4DLmDJXeWgvxH5nGas2knbmiBOjcWA5cOkEWgqNdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SLjl3FRx; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1743803953; c=relaxed/simple;
+	bh=yueH/Vhix5tXVHW7Oja6kFBoxHlIymD3Ahrfcecf5XU=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=nYNAVY8miasx2N4mrt2lO33OIcjEIBKzBUFpFOHy83B8+mypE5laK6Mw3Qj6Z4QuazutjWPuB9LMNidlK1GJK103tQEs5PaRe/P14ayQC1pJ1ZBHJGxsfW8cjH45DUv7x9CAndRU1l+GaAOr/Dtlek0FU1rsfk+uhc+wQmURb8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SDVA86wk; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SLjl3FRx"
-Received: (qmail 504 invoked by uid 109); 4 Apr 2025 20:57:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=/ramKFUUsy3a5EtywtGChKftMqSynyTnOZFnVvjQ8UQ=; b=SLjl3FRx+2XDpCLwUuThMpsGHW2FTYfLA/7ai57jT0+k4S60hvEoSC2TPyKhFRXn1fep4iG+HKAu6Dwhwp4K7qmLvg9K/D05+BJ1sZTcYb5HcTHiZCM4ONc2B2+GJwKXnKAUcdLVhmmc5MdMT6d7Prj0EZlWfBXsiYijQS/C95jcXgDN6/rKdoFI9+Ekstmo/GwfxRKnfRR+neM4vUW+oR3MirWsuT45keCqqpQbasSXsYEnIL9XF2E6wVQIGtOo5VBprInwxM2jQOEBfsVZyb4oA/ZqRmucqh2yAfD9mLY8fehUN/SWC7fl6QAhi4BBjv4rocFOnwq67Y6UKQSqHg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Apr 2025 20:57:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10254 invoked by uid 111); 4 Apr 2025 20:57:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Apr 2025 16:57:40 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 4 Apr 2025 16:57:40 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, shejialuo <shejialuo@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] refs/packed: fix BUG when seeking refs with UTF-8
- characters
-Message-ID: <20250404205740.GA780449@coredump.intra.peff.net>
-References: <20250404-b4-pks-packed-backend-seek-with-utf8-v1-1-6ceb694e3bd7@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SDVA86wk"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2243803b776so36476855ad.0
+        for <git@vger.kernel.org>; Fri, 04 Apr 2025 14:59:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743803951; x=1744408751; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9IM74kvN2pDf4F5rnrXT+X+CwSy+zcTXfQrlT3MhgH4=;
+        b=SDVA86wk4CAJBXSj7CeyyfQq+8GivaGji7wISkS+2F1w0ZeHAEf3bKUs0Zo2X7eqoQ
+         HzMLRG8dhd93oxuqqqIRX0jxEzExVtxbWwd/KAmHlkma64uhfn0cUJzd02Rq2PW6PFSQ
+         AgaJHW0+Epa6bfluXGzCy46Xvj2xTbZaxdbRZ/HMQuI9RqvM4Tmzp8gHLJMQYsnvEDvm
+         vPM20/orhPcOkoO6RQZ2l4QXIJXRpqpK/liXQkOKCLxIVj0JNeyvtWVi3pP4fe6mPXf+
+         dOSFj07UBrCIalKOIYLfZm1i4XdzcdlB4DiiG+DOkTkUqSmiITHNeTtDg26T6Jmm6zFI
+         GvuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743803951; x=1744408751;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9IM74kvN2pDf4F5rnrXT+X+CwSy+zcTXfQrlT3MhgH4=;
+        b=Jrhjx5fCQle9MU1macsPHb2a8EwF79aCNol1mEBxCXtYMD9dtLp50rfunlSIrYvlpB
+         z/D6CljHAu5jYf+JwMMcag/MJDVbVhq2m/GrBVoX7xbEbnUQL9gEmb90YTBj9+0x6SZW
+         pyIkKo/nFiQUj74XeIv73rEbQvZIaScz7hBcA4C3r5N/LLtkt6rE8spLWi/uDvG40Uyp
+         BVA+Fy+mNDn26xUIOPylhY4lDHuwBtsCNSu1e1AwwfWnOAVt4Z1BifasD9MRqmbtzfPE
+         MzF7p6IaWMwiURrb8NM0nc6BnpIP2RCoJP94cy70jv+nncL6+vhEgXA8GZqp3w0pHUUC
+         tTVw==
+X-Gm-Message-State: AOJu0YyflMCVZ8j+DsX56dXL4HUwcGHMq6vrwa/dZFZKRyYXdp9rk/Oo
+	oDbX5GmRWXAHluD9DOAH1ru8nDOLqixJ/xUX22elpY7+dMqWVuG40agN1A==
+X-Gm-Gg: ASbGncuuYfwHd1wd60Yo2iwGUUbGM+BgwRu9hKwWcPPZEL/oCbQNR9YtHNyR0O9nWYs
+	iHdJB6fjO8vsP9ev+nMAHtvBGI8dOlxzQN4z4gZS0s0Dz/1PM7IHnwO0T8dZ26kolkl/T88ah8N
+	NlI5NIJjy7EkwWux/NeNx1jBzvIs31sDxOCgkNjd725y/dW7slV0NkmDyskdy0JRHCu86HV+g+P
+	AZ4DVlL6xSIRKKA/mgjjmmQ7XCvY2kG4pWAT6vvptRl3EI6AUqwPtHq/5+s6dFQatquFhj92wZg
+	YnVUTy6kB6NnyF72hz7qqSvQudzf7EIuq8Xa5bYztrW5xZ2UR1bF+hqTd2bXiJImaBFg
+X-Google-Smtp-Source: AGHT+IETFee9UkgWC4tA69Sgp5K4cXXqCDyjd142AIbDXtEECCUBOCv0bIsu8DLibm3rk4JHrAxsKw==
+X-Received: by 2002:a17:902:ce84:b0:223:397f:46be with SMTP id d9443c01a7336-22a955881b8mr11552375ad.47.1743803951155;
+        Fri, 04 Apr 2025 14:59:11 -0700 (PDT)
+Received: from smtpclient.apple ([143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2297866e173sm37452565ad.192.2025.04.04.14.59.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 04 Apr 2025 14:59:10 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250404-b4-pks-packed-backend-seek-with-utf8-v1-1-6ceb694e3bd7@pks.im>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: Re: problem w/recursive, submodules?
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <PH0PR20MB6183CD9646B42F0DD552166792A92@PH0PR20MB6183.namprd20.prod.outlook.com>
+Date: Fri, 4 Apr 2025 18:58:57 -0300
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E5FA108F-0694-4614-8899-4913E40FDA4E@gmail.com>
+References: <PH0PR20MB6183E53678E814C2B473BE8B92AE2@PH0PR20MB6183.namprd20.prod.outlook.com>
+ <9274ED7A-0267-43E3-9AE1-DC0BBEC81E69@gmail.com>
+ <PH0PR20MB6183CD9646B42F0DD552166792A92@PH0PR20MB6183.namprd20.prod.outlook.com>
+To: "Torpey, Bill" <Bill.Torpey@broadridge.com>
+X-Mailer: Apple Mail (2.3826.500.181.1.5)
 
-On Fri, Apr 04, 2025 at 12:58:38PM +0200, Patrick Steinhardt wrote:
 
-> But in practice the check itself is misbehaving when handling unicode
-> characters. The particular issue triggered with a branch that got the
-> "shaved ice" unicode character in its name, which is composed of the
-> bytes "0xEE 0x90 0xBF". The bug triggers when we compare the refname
-> "refs/heads/<shaved-ice>" to something like "refs/heads/z", and it
-> specifically hits when comparing the first byte, "0xEE".
-> 
-> The root cause is that the most-significant bit of 0xEE is set. The
-> `refname` and `prefix` pointers that we use to compare bytes with one
-> another are both pointers to signed characters. As such, when we
-> dereference the 0xEE byte the result is a _negative_ value, and this
-> value will of course compare smaller than "z".
-> 
-> We can see that this issue is avoided in `cmp_packed_refname()`, where
-> we explicitly cast each byte to its unsigned form. Fix the bug by doing
-> the same in `packed_ref_iterator_advance()`.
+> Shouldn't the recursive clone pick up the HEAD of the submodule =
+branch?
 
-Ah, good catch. I think this signed-ness issue has come up before, long
-ago, but I don't remember the context. In theory any stable ordering is
-OK for sorting, but of course cmp_packed_refname() chose to use unsigned
-in order to match strcmp(), and the standard defines it as interpreting
-the bytes as unsigned. One of the enjoyable quirks of C.
+No, because a submodule is a specific reference to a commit of another
+repository.
 
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index b4289a7d9ce..7e31904bd41 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -980,9 +980,9 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
->  			continue;
->  
->  		while (prefix && *prefix) {
-> -			if (*refname < *prefix)
-> +			if ((unsigned char)*refname < (unsigned char)*prefix)
->  				BUG("packed-refs backend yielded reference preceding its prefix");
-> -			else if (*refname > *prefix)
-> +			else if ((unsigned char)*refname > (unsigned char)*prefix)
->  				return ITER_DONE;
->  			prefix++;
->  			refname++;
+> If it sounds like we don't quite understand what git is doing here, =
+that's a fair statement ;-)
 
-The patch itself looks good to me.
+No problem :-D, in fact, the idea of submodules is quite simple: there's
+this .gitmodules files where the submodule metadata is stored, and =
+there's
+an entry mapping the name of the submodule to its commit inside each
+commit of the parent repository.
 
-> +test_expect_success 'list packed refs with unicode characters' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit --no-tag A &&
-> +		git update-ref refs/heads/ HEAD &&
-> +		git update-ref refs/heads/z HEAD &&
+As a public example we have the Git source code, which has a submodule.
+You can clone it with:
 
-It's possible some filesystems might be unhappy with this character, but
-I guess we can see if anybody screams.
+git clone https://github.com/git/git.git
 
-> +		git pack-refs --all &&
-> +		printf "%s commit\trefs/heads/z\n" $(git rev-parse HEAD) >expect &&
-> +		git for-each-ref refs/heads/z >actual &&
-> +		test_cmp expect actual
+I'm working with the current master of that repository, which today is
+at the commit 5b97a56. As I said before, this repository has a
+submodule called sha1collisiondetection. Supposing that you're inside
+the Git repository, if you run:
 
-This loses the exit code of rev-parse, but IMHO that is not a big deal.
-We'd notice the broken output when we call test_cmp. I don't know if
-people who are eagerly hunting down missed exit codes might flag it,
-though.
+git rev-parse 5b97a56:sha1collisiondetection
 
-Thanks for the quick turnaround on this (and to Elijah for reporting).
+you'll get this hash: 855827c. This is the hash commit of the
+submodule at the commit 5b97a56 of the parent repository. Note that I
+checked this without touching the submodule itself, as this information
+is stored in the parent repository.
 
--Peff
+You can do that for any commit. For example, if you run for 23e37f8:
+
+git rev-parse 23e37f8:sha1collisiondetection
+
+you'll see that 23e37f8 references another submodule commit. You
+can even see the log of submodule reference changes:
+
+git log -- sha1collisiondetection
+
+> but it sounds like git internally stores the commit hash instead?
+
+Yes!
+
+> - We've found that the problem is avoided if we execute the following =
+command *after* doing the recursive > clone.  Not sure why this is =
+necessary -- shouldn't the recursive clone handle that on its own?
+>=20
+> git submodule update --remote --recursive
+
+Sorry for answering you this out of the order, but it makes
+more sense to answer here.
+
+This command will checkout the submodule to the latest commit of
+the branch that is in the branch field of the .gitmodules (in
+your case, `staging`, or in my case of the Git source code,
+`master`).
+
+Going back to my example, let's first initialize the submodule,
+which I didn't before:
+
+git submodule update --init --recursive
+
+Then, run your command:
+
+git submodule update --remote --recursive
+
+This will bring the latest commits of the branch `master` of
+the submodule. Now, if you run:
+
+git status
+
+you'll see that the submodule has changed. This is because it is
+in a commit that is not the one referenced by the HEAD of the
+parent repository. Just like a file that was changed and not
+committed. And again, just like a file, if you want the
+repository to point to that commit from now on you'll need to:
+
+git add sha1collisiondetection
+git commit -m "Update the submodule"
+
+> - It sounds like you're suggesting that we need to go into the =
+submodule and manually checkout a specific commit?
+
+Yes, or you can use git submodule update like you were doing,
+both work. But keep in mind that it will leave that in a
+unstaged state. If you want to keep it, you'll need to commit
+that submodule reference change.
+
+In conclusion, think of submodules as dependencies with fixed
+versions, where each version change needs to be commited in
+the parent repository.
+
+> Thanks again for your help!
+
+You're welcome! I hope that it helps you!
+
