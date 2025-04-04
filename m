@@ -1,201 +1,137 @@
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dog.elm.relay.mailchannels.net (dog.elm.relay.mailchannels.net [23.83.212.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7791494A6
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 18:21:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743790903; cv=none; b=efa4SNPD30eabYuHRYeFDvxNlcEYX+4Cp0nRYpj8RJr++1mYMHFeS0XnLNPaU925jKEaPZzN4X11kfP0nF8FepkTstCf2z2hSElNwHURf9KsxoZ0/fRISjjzxK5dTfCQUC1Ms9zB41RPlkGk4O///iLTHJIOOJ2r/lEYXFof4N8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743790903; c=relaxed/simple;
-	bh=+NnE+wKdW8EQ0VYLubeXI0gaKFkAYbpJxEX1EOAsDKA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=feCv2SpLQHrmBSuhX1rCz0N9m1bBZdYZu+1wWhbU95CZrcB1sYBVvK0NNZc5YPQ76rYG6vJyQXmLJECMpuDm2AaogYw/6Tl+gBSeAQG2dCvRXaFnw95N20h3h31VKYN+RMLfRiP8yFflaBjVRJTonUub1NN7Xtv5xaM2KzU0Z4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GkyrfaBg; arc=none smtp.client-ip=209.85.166.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E34920A5EE
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 18:28:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.212.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1743791291; cv=pass; b=XqAUyKAPcHZKO2rXbh1j0X54xvAP+AkqrJKOBOdqwyHI/5x+/6vCgfNi2bJoQc9RZIihXzzfL1LHST1lAtiZ7WqSKn8MyTXXZmONbsbS6F6e1CSP6r5h+/jhcQF8F4qK9vbw99EY5ZCAlBwTIkfKDMlE1mZ3POj84M/+QpZo4h0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1743791291; c=relaxed/simple;
+	bh=0dVLwRGO9iIpK4AAHOLiqjzY9d9KBPxdR5raIoUkXd4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ckKeJYeow9mEfWIHkPKX1nOVR+rg6Hb8iaZkXkfiKN5swTT++qjpH+EiY0g8SE/UKAP0nmi22PFZCpHkYFfhpAZqcPXM2VATZvnxApGdAQ5MhiTAki3o6/74GC2BDRSCyyg/DCh0612+CH3+j8t25LhZVfG7F+5sRKuZqzEqDHQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=mrjDZefW; arc=pass smtp.client-ip=23.83.212.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GkyrfaBg"
-Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-85da5a3667bso65402539f.1
-        for <git@vger.kernel.org>; Fri, 04 Apr 2025 11:21:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743790901; x=1744395701; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UI9oGiBYcYakuXMK41Eie2hff7YdfRdHkWTwnprGDpw=;
-        b=GkyrfaBgmImWMPq9xbsC3PwhjIZHf4DqytxyWZPnbZSmt1NrZD6eG5Iz46xMo+yc18
-         FwyEYnPbJb+B61DFHJkg8XjoCnUFd5xcWIZLaWQzWxJpprqcjUgOlQCnqUAShfEr4vcO
-         D4q8N4IlJrI2BuKz9aWs+7uaCzwnr9ERH9+kmmt5MBYgz7Pi5kaE4DwsmFB9sQQ9MvTo
-         O3dgz8GGRZvasRD6MxDe8p0Hq0HdFknceEM0WpEciKr1Gyzc/VILgITmWZslBPSvEBJ/
-         d31DcBm9Fb6qXe58xQ/T0dx8DOWcAikERny1zwajuivhapK9AHmhKfbEtCzJiUXcC7w8
-         C6dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743790901; x=1744395701;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UI9oGiBYcYakuXMK41Eie2hff7YdfRdHkWTwnprGDpw=;
-        b=pyRHIoAVKwBg1uA8nZVAprbRasQwR1OJq95RDtF2pLK7ZCDzGObhk0DwqkeTEN0daZ
-         TOVm8uPgeX3PkwO+l+HNlWozb5tsaOIEUQm4XQfSSmT/3V2BoiZpSvhJ5ax7LlNJo3UR
-         r5UBQwWchMrzxfVaoDZ8SrPOENAEexSamXXW/W55nifXw1TxFI2Cuv50YOKFWMiXMxpz
-         WpNz2BK6bXYTZcww0z2TVD4mKXsEU5nxWTQoQ06Pi7ro4EAmD+yTsUw6omAfp7fq9h82
-         8nmYbHdO7/FiiEGQK9ls3IEymBY71yPk6W3VrAOcF9dxTd1k9BwYZ8x3xYA8DD1suE3x
-         hAwg==
-X-Gm-Message-State: AOJu0Yz1UhSLxWVTMhiixIR4k910wXTvzSmtrKXPsBy5G8y/FQpypZNy
-	HxHM5K/7hfHG8l0Jx5Q0WPsSuMWZmCzHyYwHY8xvKc8+0E+7jBY2iMbvYvics7ikMQq35b0tmR9
-	1E5InjpdhUrO2oc9qhaxjb2Irfyk=
-X-Gm-Gg: ASbGncsA+zYnVhH1wSx4oqWUHqJWFs06Z/TV1LjXG0uc8ImlDJcpvMBKz3IPFWSKAV5
-	cotqzWsCGogqBWjf0CVrNg1V7FaeCNiEnqzCrPO1Oh0db0EdyrY0ADnEt38LsmFYDl5uYAcFjNO
-	nemrAexobuxgkvbuiHqte0El6DttFtNAoEkM5iLVJHgS1luL2XJHIa4/EhR2g=
-X-Google-Smtp-Source: AGHT+IFQO0s5PVnUJ9Yc5sQa0qTnupr4JO2+0i/Ss+qO4Gxwv3xhZrPGX0K1R+26CzgkfDD7O7fV/FuEb9otd6FcLAA=
-X-Received: by 2002:a05:6602:3e84:b0:85b:41cc:f709 with SMTP id
- ca18e2360f4ac-8611c3f5521mr538015339f.14.1743790900958; Fri, 04 Apr 2025
- 11:21:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="mrjDZefW"
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id E18E382BBF;
+	Fri,  4 Apr 2025 16:04:33 +0000 (UTC)
+Received: from pdx1-sub0-mail-a233.dreamhost.com (100-99-84-17.trex-nlb.outbound.svc.cluster.local [100.99.84.17])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 6BFE682CE0;
+	Fri,  4 Apr 2025 16:04:33 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1743782673; a=rsa-sha256;
+	cv=none;
+	b=iyeioRH6aspZHauVHABSPWKhEqCTLSrvdU3qBO/sc0aEHmTRT9OCj/b20+ppuylKWJOnzc
+	hZj0G73b0GGhRK/PFFwFpRefMJyox6N8nRDpAsV+lnRfJGXieGnK3ofpmoLjuJulRG7/IZ
+	sp1di632Ii0a6UYT72wG7i9xfROmPVEPNDFO1SJDDo8Uv2h2R1xXYfq5vwJuGwMOOdPlgX
+	BY1Jo+PIo0kQBSvchqMq5JhYJpSuvsWiR2fN1hxpghXIpct/c8iLW4oiNp/Yf4Uy2Rff4A
+	0sg0kjuGCHfF1TBjlXlTqG1NI81rQ9XkkowfBZm8bI3yuSZQuQ92Mw0UR5fP6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1743782673;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=BOa5wlH/VfJn1zL6H4Zl5mz+k7Lwx0UPzxY2VZOh2S0=;
+	b=XTRakF/vcretQHtSIvTtFXv8D6Fl+yiyooPfHSGUXaNIk3g/CMtd3yPtOjh+wGZ7YZr0a6
+	eeBHG46R/v+ZF/7karQ3GIDxNMjH1/DCGDCf+O9ts/S1/e8JsQ1tYeOE6Jw6Y0vNOpfuUd
+	DfRmjqfJN7mnPY4gDhbnrHY/eMjTQXZ97ZA3EFNQ+5r/tDTWZx8q/8aY7DPEJaDaEeO1S0
+	fr02i1Zi6bdvXRHVbbCq4Mf3PeoTszS/g+JJKP4i9NLIFtom5V7fAh5qq41WUIr9QIPFpX
+	iNk6zd1sD3qzqLiSXEVdtCpm5xDsnfHOwm0NA9A4flxyzSOMj9cxSWwZ3i+19A==
+ARC-Authentication-Results: i=1;
+	rspamd-6c88b8f79f-gltg7;
+	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
+X-MailChannels-Auth-Id: dreamhost
+X-Bottle-Well-Made: 4620023b74cf2ccd_1743782673732_1599714937
+X-MC-Loop-Signature: 1743782673732:2758946519
+X-MC-Ingress-Time: 1743782673732
+Received: from pdx1-sub0-mail-a233.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.99.84.17 (trex/7.0.3);
+	Fri, 04 Apr 2025 16:04:33 +0000
+Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nico@cryptonector.com)
+	by pdx1-sub0-mail-a233.dreamhost.com (Postfix) with ESMTPSA id 4ZTk282hkBzC3;
+	Fri,  4 Apr 2025 09:04:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
+	s=dreamhost; t=1743782673;
+	bh=BOa5wlH/VfJn1zL6H4Zl5mz+k7Lwx0UPzxY2VZOh2S0=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=mrjDZefWZBZFNEYRgx95DEhGLCLtt2PQkmw4NpAVq6Bt7lR4R4asqk/FU5H1bToG3
+	 GmVH854sQS/MTWFR0V1CoplXBcnwtYHUr7vRDrJrIwHE7uU109fxMV61Q8QwU+PnDk
+	 sR1mwP8KO3ID1Xqx+OPyGsggjh4vdsDaCsN41sUT91a3EY3htL5fexF5/jrUlLsxeu
+	 gq2pZ9BHdBndmhzObnIiUDHtjEeSPI49uqrlmDTH6f6HbWXWQlzshuEOA+n0AYw7bG
+	 74yLUdHgcJNAQGdJEUOXCtkDSYwPptxw83zAyPJDmIYlbVa9KWg12zeLAik7tsAN1h
+	 iadTsWYbo/XMg==
+Date: Fri, 4 Apr 2025 11:04:30 -0500
+From: Nico Williams <nico@cryptonector.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Martin von Zweigbergk <martinvonz@google.com>,
+	Elijah Newren <newren@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Edwin Kempin <ekempin@google.com>,
+	Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev,
+	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+Message-ID: <Z/ADDp/mIzuOofYl@ubby>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+ <CABPp-BFRz-yjnti4W17AEBozb0v52kmNsgTLUZW6-MF34R-xdw@mail.gmail.com>
+ <Z+7PDi5y4wXJBK4r@ubby>
+ <CAESOdVAd+X=6nEULHtKKotH_W5yNaJAcUajRU79EuG+0SF3m1A@mail.gmail.com>
+ <Z+8IF67AC8gSouYc@ubby>
+ <CAESOdVAWWP=Rte4bx3zUZc6p0XiZaJS2OZr8ezRPkfq8K1TYfw@mail.gmail.com>
+ <Z+9N2REkYZhrbkzb@ubby>
+ <CAESOdVCekFDxOWTTF71dpH1id_H2t9SaNo6buJ1MbvTnaENY7g@mail.gmail.com>
+ <Z+9ez7kbh/L0Iq4k@ubby>
+ <Z--nnOhsUCaqo45z@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250404-b4-pks-packed-backend-seek-with-utf8-v1-1-6ceb694e3bd7@pks.im>
-In-Reply-To: <20250404-b4-pks-packed-backend-seek-with-utf8-v1-1-6ceb694e3bd7@pks.im>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 4 Apr 2025 11:21:28 -0700
-X-Gm-Features: ATxdqUErDwDQNrQfhPDOGS_KbWb5e-EKjuaclu4h5DJDg5dA2t2LIZI5cbp4PLo
-Message-ID: <CABPp-BEgwBQFgV8-DzuxEA0p7VYjWqnOZ8Aj32gs-Eha9+41ZA@mail.gmail.com>
-Subject: Re: [PATCH] refs/packed: fix BUG when seeking refs with UTF-8 characters
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, Jeff King <peff@peff.net>, 
-	Junio C Hamano <gitster@pobox.com>, shejialuo <shejialuo@gmail.com>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z--nnOhsUCaqo45z@pks.im>
 
-On Fri, Apr 4, 2025 at 3:58=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
-> It was reported that using git-pull(1) in a repository whose remote
-> contains branches with emojis leads to the following bug:
->
->     $ git pull
->     remote: Enumerating objects: 161255, done.
->     remote: Counting objects: 100% (55884/55884), done.
->     remote: Compressing objects: 100% (5518/5518), done.
->     remote: Total 161255 (delta 54253), reused 50509 (delta 50364),
->     pack-reused 105371 (from 4)
->     Receiving objects: 100% (161255/161255), 309.90 MiB | 16.87 MiB/s, do=
-ne.
->     Resolving deltas: 100% (118048/118048), completed with 13416 local ob=
-jects.
->     From github.com:github/github
->        97ab7ae3f3745..8fb2f9fa180ed  master -> origin/master
->     [...snip many screenfuls of updates to origin remotes...]
->     BUG: refs/packed-backend.c:984: packed-refs backend yielded reference
->     preceding its prefix
->     error: fetch died of signal 6
->
-> This issue bisects to 22600c04529 (refs/iterator: implement seeking for
-> packed-ref iterators, 2025-03-12) where we have implemented seeking for
-> the packed-ref iterator. As part of that change we introduced a check
-> that verifies that the iterator only returns refnames bigger than the
-> prefix. In theory, this check should always hold: when a prefix is set
-> we know that we would've seeked that prefix first, so we should never
-> see a reference sorting before that prefix.
->
-> But in practice the check itself is misbehaving when handling unicode
-> characters. The particular issue triggered with a branch that got the
-> "shaved ice" unicode character in its name, which is composed of the
-> bytes "0xEE 0x90 0xBF". The bug triggers when we compare the refname
-> "refs/heads/<shaved-ice>" to something like "refs/heads/z", and it
-> specifically hits when comparing the first byte, "0xEE".
->
-> The root cause is that the most-significant bit of 0xEE is set. The
-> `refname` and `prefix` pointers that we use to compare bytes with one
-> another are both pointers to signed characters. As such, when we
-> dereference the 0xEE byte the result is a _negative_ value, and this
-> value will of course compare smaller than "z".
->
-> We can see that this issue is avoided in `cmp_packed_refname()`, where
-> we explicitly cast each byte to its unsigned form. Fix the bug by doing
-> the same in `packed_ref_iterator_advance()`.
->
-> Reported-by: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-> Hi,
->
-> this patch addresses the issue reported by Elijah at [1]. Thanks!
+On Fri, Apr 04, 2025 at 11:34:20AM +0200, Patrick Steinhardt wrote:
+> > Ah, well, Git does have an index: refs.  You could use
+> > refs/change-IDs/<change-ID> to index by change ID.
+> 
+> I don't think references are a good mechanism to track change IDs. The
+> expectation around refs is that users can change them basically at will,
+> but it certainly does not make any sense to let them update change IDs.
 
-Thanks for the fix!
+git meta (a separate project) uses refs named refs/commits/$full_hash.
+Users can always break their repos in a many many ways.  Using refs is
+fine.
 
-> Patrick
->
-> [1]: <CABPp-BFBqC_t5QSexRQpYsqXBa11WK+OqGt167E=3DK=3Dxod=3DbuQw@mail.gmai=
-l.com>
-> ---
->  refs/packed-backend.c  |  4 ++--
->  t/t1408-packed-refs.sh | 15 +++++++++++++++
->  2 files changed, 17 insertions(+), 2 deletions(-)
->
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index b4289a7d9ce..7e31904bd41 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -980,9 +980,9 @@ static int packed_ref_iterator_advance(struct ref_ite=
-rator *ref_iterator)
->                         continue;
->
->                 while (prefix && *prefix) {
-> -                       if (*refname < *prefix)
-> +                       if ((unsigned char)*refname < (unsigned char)*pre=
-fix)
->                                 BUG("packed-refs backend yielded referenc=
-e preceding its prefix");
-> -                       else if (*refname > *prefix)
-> +                       else if ((unsigned char)*refname > (unsigned char=
-)*prefix)
->                                 return ITER_DONE;
->                         prefix++;
->                         refname++;
+> Furthermore, as we have already discussed, change IDs are not unique,
+> but refs can only point to a single commit ID. So that's another
+> mismatch that we cannot address.
 
-Oh, right, I assumed there was going to be lots of other places that
-needed casting outside this function.  If I would have merely checked
-the one other line in this function and updated it, I would have had
-the fix...
+Oh I agree with that!  But I think I've made that pretty clear by now :]
 
-> diff --git a/t/t1408-packed-refs.sh b/t/t1408-packed-refs.sh
-> index 41ba1f1d7fc..833477f0fa3 100755
-> --- a/t/t1408-packed-refs.sh
-> +++ b/t/t1408-packed-refs.sh
-> @@ -42,4 +42,19 @@ test_expect_success 'no error from stale entry in pack=
-ed-refs' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success 'list packed refs with unicode characters' '
-> +       test_when_finished "rm -rf repo" &&
-> +       git init repo &&
-> +       (
-> +               cd repo &&
-> +               test_commit --no-tag A &&
-> +               git update-ref refs/heads/=EE=90=BF HEAD &&
-> +               git update-ref refs/heads/z HEAD &&
-> +               git pack-refs --all &&
-> +               printf "%s commit\trefs/heads/z\n" $(git rev-parse HEAD) =
->expect &&
-> +               git for-each-ref refs/heads/z >actual &&
-> +               test_cmp expect actual
-> +       )
-> +'
-> +
->  test_done
->
-> ---
-> base-commit: 5b97a56fa0e7d580dc8865b73107407c9b3f0eff
-> change-id: 20250404-b4-pks-packed-backend-seek-with-utf8-668c182ddcf7
+However one could have refs/change-IDs/<change-ID> ultimately point to
+an object that lists the commits with that change ID, and then that
+would function as an index for non-unique change IDs.
 
-I also tested this on my backup of the repo from when I triggered the
-error, first making sure that I could still trigger again without this
-fix, and then that this fix handled that case.  Works great, thanks!
+> I think caching the information in an auxiliary data structure would
+> thus be a lot more reasonable. This could for example be part of commit
+> graphs, but could also be a separate index specific to change IDs
+> themselves.
+
+Sure.
