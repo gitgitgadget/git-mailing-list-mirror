@@ -1,108 +1,126 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBAC1A23B5
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 09:09:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B601C68F
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 09:13:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743757798; cv=none; b=sCcjkW3xsmyDw4Hp3pQIW4DcOO4QdPfy3cCK0uw2F/B56h7Z2y1MI+Hdh6uWW1Pi015jAoHZegjQ7Xk+K80VqYI9a1aCWb8ALPE0PHjx1JUnL/EmVVYylyNRRhqPx9UPn74qZ45KkNGuwGuFORsytMPPzYknMdtJ9LjS+m8X3sI=
+	t=1743758018; cv=none; b=oFtMJEd3W9VLdQ2qLSV2enPjkCdUJiAPBHwYKf30G5WzN1vNFs0QmrL5gHbLLMj2s7/CWUXxWxZsWfNeqi8Dvz1SLPyX8ayCAxZrdKVdzpJq+rHZ1lim0lxQPTvEmhn6VHRK1C1aSymF+7ujOUtkDxnPVkdSECkoOu5G24egdpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743757798; c=relaxed/simple;
-	bh=9U+mRuZgLWTcL5SjtZMVclJCPkWhgShnhYo3tOGUL/0=;
+	s=arc-20240116; t=1743758018; c=relaxed/simple;
+	bh=ozyL4jHJ60TQLBsVxG8rX637VOh7gQyeX/DmxKAtPxA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IUzvmvgZ+LqWQpcfRI4pt5qif2m7BeejFZOjEIDv+xl+S/seVRjIPCpILGHkLB3MaVSq2NjbcM/C2kQiqszS9O3jQDa3tgF7d8IBQ/TmekItC1BmC6+SN1XBYdGB6trXmByPVy+x3BIm9HXUZoAxtwDRz4L4xKTivGE7HTUbEBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j3we/d7U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UbtvRUnU; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=GN+QMFKL3sS5o4OBevfKRiQrXgcAaj5IL/Uk1RgFsmxvRKU8ohdlqtz/7ERA1eEIAx0yhH0mQd05M7l78gkOuuWE/9KKtzNwA2uWJT6qJnz5aZjzqYF4DMpapr/rtPyQOrclWo2Fn4WcePk8WRWcLyI2r6mljF5/tOU5RVaoEAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ymhko5RN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GV0cEebA; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j3we/d7U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UbtvRUnU"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 99D6C114011B;
-	Fri,  4 Apr 2025 05:09:54 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 04 Apr 2025 05:09:54 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ymhko5RN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GV0cEebA"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A8D3F254021A;
+	Fri,  4 Apr 2025 05:13:35 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Fri, 04 Apr 2025 05:13:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1743757794; x=1743844194; bh=x08LdIhv4B
-	vz+MX1POn/ynCEW6bS1JKXYKSWBS5G7cY=; b=j3we/d7UmAEoEY6M2/EbbCmsGr
-	dmMyMT93gebqgt25GcEOcp8VDsUSGaWytFjGPSuxYwcIb9U02w0z8j5u0VClByA6
-	NGnoAw8ZnF1upJFIsQGvn7GMsne8mzuupio+7TDoN4i4RPF758M5LU6SEpaufbOV
-	v+bmZHKZ5gKxzqzYZUL+UQKcmEvSqe0fnuXhf1DBlOh3amWGkWgMOWnQ5/qt2/FA
-	Z8niRspwP2Paf+bg1m3ZJciiya/+NC6DLg9rQl9ynVQdQu+gBb3iHcfWi0NimioG
-	Xfx63z1GF5yBKjBcnS+ICl8SlBJZNWj6+kvpwA3zGA+9cPlUcQrBBUUk/Z1w==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1743758015;
+	 x=1743844415; bh=QjqrBkluDvKkAS35/sy+CCi7XBMGuRV3T+3cs3rj/yY=; b=
+	Ymhko5RNgRKLfNtu233hlFHe3F2nAD+PkFGrkgr/qqoBeLT5InRG3H2R6ixXYzSd
+	z2na9P4fDv32PGc/ACaDPDgl4ii1LqIFIGczgLOaAszxkkD+GiaWMzLIxaRJZZql
+	gamI0f4fTXuNlUmtxs+j6yPIINU9iFYmSVBxRYBFt3DDJu1P1ZRpK6JgdC8WxFKT
+	aUKdFIojLXsxEN6C3dP48F+o2N3iYpyCBjEwDUiDy2vaaNzN6pGu266JLbEhQHvc
+	jx0WvYOaYaUh3FuBwxD+hH1ckFmQYIJx7pNwmIHiqvuOBM04nhWdMyQavuuukK3g
+	5JzGjanJgpOKh2deGud66A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1743757794; x=1743844194; bh=x08LdIhv4Bvz+MX1POn/ynCEW6bS1JKXYKS
-	WBS5G7cY=; b=UbtvRUnUu9Gtkc+9nf6lUTtCbJh5EUa9EkhJzkQX7hFjutErqyl
-	CbY1RlqzNN+nM2P5ZIeiiLsFZ6jGzIzhMXKxS9U7z0SBnMpDJoH+pg5iLQOldJdB
-	YenUbFNVIUNlBcRusY1tzxu6mHamIMQpseX4UHu3ZlnpCOIx1B/d4af6Zni+krIv
-	9Z8d/GgWPk/l7Jq+g2TaiP4pVBDIWW/OMQjrPZe/zXWofPgySO9xnL0FA4m0ZQcr
-	hJm5ZhYRG2z9eOA6JOUNuBz7wfiA9EXj4n380tsicns7joZXlZLkInxIJ/ZdAuMo
-	uvo2qMoazXQzLlBIVitZH5jqt3XLvdI9IMg==
-X-ME-Sender: <xms:4qHvZ987xJ9GE-UzkjsMTxPz9hXG-9Vnzlwv3pjlLuqwyI7e5Vxv-w>
-    <xme:4qHvZxv04S9jqTL-Cyhrfp1C1b6oPKKUI5-nrUKDpvPkJKagQBSX2LikUyG62wnCN
-    g6Z8tiSNwGenyy_MA>
-X-ME-Received: <xmr:4qHvZ7CJyc6gYw-7g73_sLHIlbd8273YxuD9Aaz-8NiVxELeEPvfCKyvs6KJpcBqzlLhXS9BGhD5oFBnCWzPET8bQujqAYyeVlwziVe7qBiTGeM>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743758015; x=
+	1743844415; bh=QjqrBkluDvKkAS35/sy+CCi7XBMGuRV3T+3cs3rj/yY=; b=G
+	V0cEebAZEFjbDmvJ/C8FU2saXWZWSrRwjypFy/yBIYRnORstpm1wykvJRAoEup3x
+	MAS8J8njDMTPY/9buOZRJG7yUNCbhdDDLqI2OT4PamBgTrBW/3ncYMgUfO1A+DXK
+	0eOoryCP736ZifQXPwdrHnIbx6bcHxfc9T8Z8Hm97b3WKPe2ROHqI5X/B+yTYdla
+	53pHLmyI2S6wZvGzZUOZooNPp57jBsGo5prOAMc4+Xb3UzNOSNdUCl//Qx2At7h+
+	nC29QLa6iDZppDjWBKpk9vc/4YoUJEietm7pRJyi6xsbfCXOVBz0CKtMkeQ6cnEI
+	jCUDKr9dcakYcSDGL1hAw==
+X-ME-Sender: <xms:v6LvZ8RvbFWliLBesiKoOuLHBTALYmntKh7yQygNl2u1BozAlcIbcA>
+    <xme:v6LvZ5zKOxR2KhvSDE_u_90A1pfKeDwmNuV8bB2JZj6VhB2JqL3l9nWVthn8zVB3A
+    IolXQvV5YVnthwkwg>
+X-ME-Received: <xmr:v6LvZ53ErVzSKL1tTguP47gEvq7AZ6QogXY_TZvagpkBKJ7odpUA7on617wmMpv87kjtnqrlK972WO5nerdircEWGkiVHRoUmV6DIRrJGvulnmc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduledutdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehshhihrghmthhhrghkkhgrrhdttddusehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhope
-    hluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:4qHvZxcsp_BQmpdoOYfcQ2ropw9ZE-ebYilWYrIr7x8RgvQZUiZ-xQ>
-    <xmx:4qHvZyM0QnwQpx35p-A6psMgLnIO9zFvwDv31eCpOFfcK_KBKzeTvw>
-    <xmx:4qHvZzlBMk7jMx4-j8ybmmr0svDH2HfpCQagBVxAKjeqQW4Q-lAHpw>
-    <xmx:4qHvZ8uMKHP1uYpXGElWWemkWidiQLbh-RpuhY9d53Mduge2FPXcJg>
-    <xmx:4qHvZx2zL--RR0xxSgVMpTmwX7f_bGfQPO-jHecJzxaYBexUnmay2cwc>
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpeetheffvddtleettdetueeukedugeettedutdeg
+    ueeukeetheefueevvdeitddtveenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
+    rdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhihrghmthhh
+    rghkkhgrrhdttddusehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:v6LvZwAxQUBv_-FYKIvsYaYrKjZd9FV6O6BcKlw5-WqSNp44A13NKg>
+    <xmx:v6LvZ1ihC1Ya3Hd7SG0qtsmbegSI7pRUgVx6p6JJZT5ma8ssatJ9xw>
+    <xmx:v6LvZ8pe76PW_DTHB-FWcrdrm_HevzJgBigxFwE3u1CP3JftL1S-Pw>
+    <xmx:v6LvZ4hp6tyWGLaoO26gFvfLk0zTtfP6KavsDpoI7hcmg2KmI_6QXg>
+    <xmx:v6LvZ9oUgd07rOufBhqDyThV5Tcd-sMiyyF7U4cC3laWtxzDPClOxjKQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Apr 2025 05:09:53 -0400 (EDT)
+ 4 Apr 2025 05:13:34 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 668017c5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Apr 2025 09:09:51 +0000 (UTC)
-Date: Fri, 4 Apr 2025 11:09:50 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 169f3966 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 4 Apr 2025 09:13:33 +0000 (UTC)
+Date: Fri, 4 Apr 2025 11:13:32 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, shyamthakkar001@gmail.com
-Subject: Re: [GSoC] Project Proposal: Machine-Readable Repository Information
+To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>,
+	Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Subject: Re: [GSOC] [Proposal v1] Machine-Readable Repository Information
  Query Tool
-Message-ID: <Z--h3rhY5XAERVHm@pks.im>
-References: <7EB151DA-0BDB-4D54-BBB8-CEE69F51F13A@gmail.com>
- <Z-5famP3CgaSfDc2@pks.im>
- <BC393559-6A33-447D-9AE8-BB2D9D0BC0D6@gmail.com>
+Message-ID: <Z--ivMYyD63JkTyH@pks.im>
+References: <CA+rGoLfxZHdns=7FwQuYS=JANrR9zDP-dOpV2AxM1hC1Lc9wiw@mail.gmail.com>
+ <Z-5hlL1Gk0oi4fX2@pks.im>
+ <CA+rGoLfCTzNTcGXG5py6oHQazeE8Vj0fLsR4KUTJ6rSRFnT_Vw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <BC393559-6A33-447D-9AE8-BB2D9D0BC0D6@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+rGoLfCTzNTcGXG5py6oHQazeE8Vj0fLsR4KUTJ6rSRFnT_Vw@mail.gmail.com>
 
-On Thu, Apr 03, 2025 at 03:02:51PM -0300, Lucas Seiki Oshiro wrote:
-> > This kind of information is exposed via git-rev-parse(1) already, see
-> > the section "Options for Files".
+On Thu, Apr 03, 2025 at 07:40:33PM +0530, JAYATHEERTH K wrote:
+> On Thu, Apr 3, 2025 at 3:53 PM Patrick Steinhardt <ps@pks.im> wrote:
+> > On Mon, Mar 31, 2025 at 08:21:27PM +0530, JAYATHEERTH K wrote:
+> > I already saw this in another proposal, which indicates that the project
+> > idea might be a bit underspecced. In any case, the goal of the project
 > 
-> Thanks for your clarification! But still, I was discussing with people
-> here at my university who deals directly with research on FLOSS
-> repositories, is it worth to find other uses cases for this new command?
+> Hey Patrick, thank you for letting me know
+> I actually have been working on this proposal for a while now.
+> I also sent an e-mail regarding this specific project right before
+> GSOC proposals started. As far as I can see this project was not
+> previously discussed therefore I picked this.
+> 
+> https://lore.kernel.org/git/CA+rGoLdvY+JdgdzgE04EJoF9KGUpd39+2S_AgpFyucP38mdFgA@mail.gmail.com/
+> 
+> I'm not sure how to proceed in this situation. I think I need some
+> advice from your side on this.
 
-It doesn't hurt to think about additional usecases, sure. But one of the
-things that I want to caution against is that we now create the next
-"grab bag" of unrelated features under a common name. After all, we are
-trying to fix exactly this state in git-rev-parse(1). So the intent of
-the command should be clearly defined to avoid this.
+I think I don't quite understand what "this situation" refers to. Do you
+mean that there are multiple proposals for this project now? If so, that
+is perfectly fine and expected. There's only a finite number of projects
+and a larger number of students, so some of the projects will have
+mutliple applicants.
+
+In the end we will pick the student who seems to be the best match based
+on both the proposal, the microproject and any other interactions with
+the community.
 
 Patrick
