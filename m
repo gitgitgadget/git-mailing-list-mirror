@@ -1,132 +1,97 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7298376
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 05:22:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB0233FD
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 05:51:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743744133; cv=none; b=Py4sp5SdpmuUy5hZMn2jbyeyAA1NrbyVitmXHKLov/8pxurNGpq7lxk2oeJT7J/WCaQXuYYjH78ivVl69RweOxbVBfDs3MrQ5miMB172lEqWr9ZpzVQzBEWfv66oKtzeVsG8OgS2eU5Yxi56Qj4OqpsKVa73ta8rmtitbNwua1M=
+	t=1743745896; cv=none; b=NnWghUheo5nfLcOr93yZbo9JPkSVQNHyQnTysmGscaoC/vJ6/yZIL5AxFMyMisLl27Fo/BdgGjS0KZZHBaQnJUMMRNHjP3IvP6Osz4BPVKEZi+n9a3mogQLXTBL1gEH3JaBCi9bb62B7FvS+Zg3yJJQM3ljWMndvF12pb3Quxfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743744133; c=relaxed/simple;
-	bh=VOLks4WSIviWHJZ6dtHbtNXxpxcwIPq+jSLjgmlVFNk=;
+	s=arc-20240116; t=1743745896; c=relaxed/simple;
+	bh=aXlNcjx8LjY+6AKSiK/pHVD7tgOlACvrnadqt6SJz7I=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dW5Hwy9pQjajgkMV4aH0AXnb89Z/XHYpkd+3I4K/t4KITvbcCBcBsP+BleF/oYFG8OaUwUNzrzUfRGSpgvMJRDohOjMOqfWL5N1YgHDY8whj3OCfIoKcs9Al/6NgXPVbQ6iGHXgkEpR7s7YfCR0o+zKukLp5QuoMOUCZrBRmTl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=2eex/bJT; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Content-Type; b=bPvbJQsT7C0sLIPJY8XutP29/gW8aS8dVWhFBRq4G5ck6OhQGo8JMaPsmJrZ5ZELRRsAeMJBtnxl4RBguY7Jx2LIFrDvJkwDyseQHBrtGkj/AGFX5V40NuRnNw+KI55EBy98cTlP7bBV/os4+rns9ZRja1/8pRk7x55Z8xrGyeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IZGZqwoA; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="2eex/bJT"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e5cbd8b19bso3654a12.1
-        for <git@vger.kernel.org>; Thu, 03 Apr 2025 22:22:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IZGZqwoA"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-39c13fa05ebso986941f8f.0
+        for <git@vger.kernel.org>; Thu, 03 Apr 2025 22:51:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1743744130; x=1744348930; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CWn9fvf8bY0c4MGWf/sM42pj5aGXdn/e16ygPdch7cE=;
-        b=2eex/bJTwwhZAoiPkN1PFBx3PahBx+6typJmjWKsp4rDixFRyfFVG/F2FANUvyO36R
-         izopdiYc6xX3BSCyJYvmv15w0k37W3ne5giBkJNSe+yABV36lfWwiV0h4LP7mK9dzxKE
-         Q1JaG5iEo4xg3WCjdbkVOCGmCVQFqX4GWvCtJdjJ+/igUbgPJaF72J9rvT+zZSisaT+u
-         PB1yhnZIbgUSY36/3hdxqzyKZnPfMcL79vr0t/V6nyp/Ebq1T+Rm68ag10XUBCKjAzqT
-         bms/f1Ksmvs2PyWJJLS+6figtrtxxDs1U8JekI/4q1Wna1e3+CYw8GJUfHdA61MHqYts
-         LkkA==
+        d=gmail.com; s=20230601; t=1743745892; x=1744350692; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aXlNcjx8LjY+6AKSiK/pHVD7tgOlACvrnadqt6SJz7I=;
+        b=IZGZqwoAeL6GiXfjU4yz9nPUbKEw6DLOnc1ufPfTTmjgl/RgL4fPeP90xBIAciL2C1
+         QtZlRJhfNAffW2GwhBGmPbb5oM0oTGDFg5XIU66i0luCifxifJDbCEQAcRMPgHbZ4ct1
+         X8svxKwDSewy8poZuOpWqMmWesTwx0EWXcxy7oOugyvagjs+UX9M6fDJr4v5d8H46Z+D
+         FVv/RmEob/3EMdzD536RlkSnOZdEx9MCV85ryRTSEZw6vxVYKGTJXhJ2xbeXOt6FKdIq
+         ZejDBscdUNASoQmFDVoGOhm0np8lqELSNIviLu7tI+dzoCJZnEvfX1suFHOeAR4ccsnF
+         WlRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743744130; x=1744348930;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CWn9fvf8bY0c4MGWf/sM42pj5aGXdn/e16ygPdch7cE=;
-        b=WgkF4O4TPlrQKynuWPEMJPLbDg8ui9MUDNjknPlK4qvGeAVWvC6Xjm9okzKTY43uxY
-         FMVa1f9i2fPyX8zKf+7TK7ygDoBwQWwmJ8pj7ldauWDXVb26FyP2mY7VUgN0EHfS97//
-         Gnjua/AfC0+Q5nV6/dDDvZk2ZaoVdHjiCu2VACAUP0dLVMhQ1mdS/ev7AmTfiexRDLGs
-         wsROSm9tDEUCHk8JuPI16oqLnqa6ZNP4NeoJsVDYMvn6tVVupNhKJMMVaFYEfq9qBKCk
-         +rhlp5Pu8/TytQ5KPLtP80wjNdWGE17ObOzs39Nn43p4GrHOXy8edLMHLA6zNhmxlVDa
-         dkLg==
-X-Forwarded-Encrypted: i=1; AJvYcCX2AAe48RhiilRIHTwGJC1N+V7G2116tFc0U8gAzIb9UnhEqLLk1RgYS7LcMGAVnaGVJLE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwGxoV8w5oOUglyVoWz47yp+0wGN/QYmzTVVKVcFZOE+xRUUKbD
-	nPZddez7nvatyYDsRj72V47f8kMWnL2+uC1aITJVIZApGlBO87Eic2KN/WqMIfWbeWVhqITz3li
-	mI2sx/k4+n3H6AdltyYP4XTQVzmGcvVS23NfV
-X-Gm-Gg: ASbGnctdNeUpJrHVxmfCAdcOYdMMAbwrXPGWEpvoE7uAxniWm0cIIidZsrqsnmzSH/6
-	/KHaANIfaiSOn4PkLvch3aKk8uop5hmJJCHEi4TgVNGs9oZovJ6KMggeUgxYwG0gcpfxPYKjsUq
-	68cBe38zMnRcp7p86oZNja1S0DiS3fXzaDVWg0
-X-Google-Smtp-Source: AGHT+IH5v2RV8+yvNirBWiD3U/TmSCGsE4Zy7iYwyllLD+hUn9Pufj1GdBbjSIutzxCPKSmSXTkXC5SV8EBAtcoA9Z4=
-X-Received: by 2002:aa7:c450:0:b0:5dc:5ae8:7e1 with SMTP id
- 4fb4d7f45d1cf-5f0b4947ea6mr64590a12.6.1743744129444; Thu, 03 Apr 2025
- 22:22:09 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743745892; x=1744350692;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aXlNcjx8LjY+6AKSiK/pHVD7tgOlACvrnadqt6SJz7I=;
+        b=EpHvL2HaDTeGMRvBAPX8bd7RUpbFEyKwdetgCyggNic+LVj+z672cHg8RN8HCHjVs+
+         NNTKcv6rq5v4sxg19GYKJdCcMv+7Q7vM9cLMsbdZ7buREXZ1u8DBQ6WhPDsxp/jD+x+n
+         CMZN7jUSrMGK3RGlRWtnGWkI1sGJQ2sU0X64CzSfUFpwtv46w4G5dUvrsSGx+cb2MRNz
+         AXy5aICX0NKr7+TKhz45VdDyuqYrHqS9sPwmQt7L+N4CXhTEBzcFDYRSKUzlmI/i2MkW
+         dDevkPKrF575/NY5DRGVTJ/40agmpqKpstK6x+T5lpb5O8YdOYGCdJnm5cfj0t3IPcV+
+         C7Ag==
+X-Forwarded-Encrypted: i=1; AJvYcCVAA2rtF9OhjF3QnbDrUlIuuDgmeI3SvQztt8OTE1yOPqAhGGY42xO7wIBn1SkUzbIoxxk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyfADvoi0lHOygCnnXI5wnrJ0+n/ONrC+Eofq1s3jFkmnZiIrIB
+	QWNFvPSFxUmPVjloGUhUZcwKX6Na3FyB3PvAA/sEylMKIuYwV8FMRs4vFyAb1gpMa4qHcS+gFjn
+	KXgbtUU+PDmCK4UB0o+SvlBcvLao=
+X-Gm-Gg: ASbGncu/8GjUV+fim0My9eSHLui8He9WbGFGDhEaUNbBwofGKtjRQc/zJpRc05aF4ea
+	DHle/lUa08yERohf4kuqjH+47wPDshXQkUNQh8SDoyGTUTNsZp8SLR5Can8oab4/5imlv+m+YYy
+	argYqZESXZRLEgXKw2ahXmzMfpTQ==
+X-Google-Smtp-Source: AGHT+IGbfNsc0FNOt1z4KBmsFcYRZ55rhBvOCOEflLv4CQ8K1LA388eh4ygwGp9BDFQRRN6f8YAJfpgG8u4phBEugJ0=
+X-Received: by 2002:a05:6000:1a8d:b0:397:8f09:5f6 with SMTP id
+ ffacd0b85a97d-39cba93cd39mr1594789f8f.47.1743745892285; Thu, 03 Apr 2025
+ 22:51:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <CABPp-BFRz-yjnti4W17AEBozb0v52kmNsgTLUZW6-MF34R-xdw@mail.gmail.com>
- <D8X5I3W7K1DI.2JYHGNY9L7ZD3@buenzli.dev> <CABPp-BECTrVp9X6bVmzU8LEeYsC3KbzeJvAaDPN+FgZz_uEhmA@mail.gmail.com>
- <CABPp-BFYoZ1cuUMJPhWhtgntS0D-E=ZF+8_KS7gC+ShXjTrEDg@mail.gmail.com>
- <CAESOdVB4yrDQ1v1BZtPiHDJwbaRVN6tixWg9eWNmBitXyqAh6w@mail.gmail.com> <CABPp-BHWFaUHAXwuddNpD1w=Fe7BK=9-Bc=-b9yXbqqWsQ8_pw@mail.gmail.com>
-In-Reply-To: <CABPp-BHWFaUHAXwuddNpD1w=Fe7BK=9-Bc=-b9yXbqqWsQ8_pw@mail.gmail.com>
-From: Martin von Zweigbergk <martinvonz@google.com>
-Date: Thu, 3 Apr 2025 22:21:57 -0700
-X-Gm-Features: ATxdqUF73SSuNzCMfxOTE5Scf78W_4_zphTQ26w_Yte3OPiQ7pyYZl-Jw99qbCg
-Message-ID: <CAESOdVArh6Vksd9bktBz4DBqOzvoydfh6_DZcm2t9kJ5F-s1EQ@mail.gmail.com>
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-To: Elijah Newren <newren@gmail.com>
-Cc: Remo Senekowitsch <remo@buenzli.dev>, Git Mailing List <git@vger.kernel.org>, 
-	Edwin Kempin <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>, 
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+References: <CAArAzAoU9qDj+yLi3pA6wFYdTAk0UvQk4omSWM1RL4D9w5fw_w@mail.gmail.com>
+ <Z-29LsgDvcS0qY5a@tapette.crustytoothpaste.net> <Z-8K9ZIt4j_UMNZm@tapette.crustytoothpaste.net>
+In-Reply-To: <Z-8K9ZIt4j_UMNZm@tapette.crustytoothpaste.net>
+From: Andrej Zhilenkov <azhilenkov@gmail.com>
+Date: Fri, 4 Apr 2025 10:51:21 +0500
+X-Gm-Features: ATxdqUGY5kNjkWfgX3s_nQdMXDEsiT5l6FWlC-i723Jf3m6vXodDjiiBFM7H6y4
+Message-ID: <CAArAzAr+YPwVXJo8mjkyQG8uWv=wt89tYyp6TL-rNzvwVYm9YA@mail.gmail.com>
+Subject: Re: Update symlinks after changing core.symlinks
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Andrej Zhilenkov <azhilenkov@gmail.com>, 
+	git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, 3 Apr 2025 at 22:00, Elijah Newren <newren@gmail.com> wrote:
->
-> On Thu, Apr 3, 2025 at 8:47=E2=80=AFPM Martin von Zweigbergk
-> <martinvonz@google.com> wrote:
-> >
-> > On Thu, 3 Apr 2025 at 19:40, Elijah Newren <newren@gmail.com> wrote:
-> > >
-> > > One possible simple solution here is just to treat change-ids (or
-> > > there abbreviations) kind of like abbreviated hashes -- they aren't
-> > > guaranteed to be unique.  If the user specifies a change-id and there
-> > > are multiple branches with such a change-id, we provide the user an
-> > > error much like we do for abbreviated hashes.
-> > >
-> > > Is that what folks have in mind?  If so, I'll be happy to drop my
-> > > reservations about this aspect.
-> >
-> > Yes, that's close to what we have in mind. I think I just didn't
-> > explain clearly that it's mostly harmless in at least Jujutsu if there
-> > are multiple commits with the same change id. If there are multiple
-> > visible commits with the same change id, then you'll just have to
-> > decide what should happen when the user tries to refer to commits by
-> > change id. We currently let it resolve to all the visible commits with
-> > the given change id.
->
-> resolve to all visible commits?  So the Jujutsu equivalent of 'git
-> switch <change-id>' would simultaneously check out N different
-> branches?  Or do commands which cannot accept multiple commits just
-> throw an error in such a case?
+> On 2025-04-02 at 22:41:50, brian m. carlson wrote:
+> > What is your particular use case that requires changing this value?
 
-Yes, the latter.
+Hi, thank you for your reply.
 
-The closest equivalent of `git switch` is `jj new` and that command
-actually does support multiple commits - that's how you create a merge
-commit. But we also have a little safeguard in the form of requiring
-you to say `jj new all:xyz` if you really want that. For commands
-where it's more expected and harmless to take multiple commits as
-input, we don't require the `all:` prefix.
+Just recently started working with symlinks in git and I've found that
+in Git for Windows they are disabled by default
+(https://gitforwindows.org/symbolic-links.html).
+It's possible to just change the setting in system config or override
+it in global config, but it's probably safe to assume that the average
+Windows user will have them disabled.
+And if your repo needs them, it's probably more reasonable to ask the
+user to enable symlinks in a local config, not global.
+So, you can enable them during clone `git clone -c core.symlinks=true`
+but I guess as a user (and symlinks not being used very often) you
+typically learn about repo having symlinks and you needing them after
+repo was cloned.
+So this is the use case I've found for `git checkout` or some other
+command refreshing files based on current `core.symlinks` value.
+Without this feature you would need to have a script where you list
+all symlinks, remove them with `rm` / `del` and only then you can
+check them out.
 
-> Doing a "git log --no-walk <change-id>" and have it resolve to several
-> commits would be kinda cool...
-
-Yes, this is one of those commands where it's harmless so `jj log -r
-xyz` simply shows all (visible) commits with the given change id.
-Other examples include `jj abandon`, `jj describe`, `jj diff -r`, `jj
-rebase -r`, `jj squash --from`, while e.g. `jj rebase -d` (the
-destination) requires the `all:` prefix to allow multiple parents
-(making the roots of the rebased set into merge commits).
-
-> Yep, thanks, that answered all my previous questions...though you
-> raised one new one that I mentioned above.
-
-Yay!
+Maybe there are similar cases but on Unix when users would want
+`core.symlinks` disabled globally and be enabled on a per-repo basis
+but I can't imagine why.
