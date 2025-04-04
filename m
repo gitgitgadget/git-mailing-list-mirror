@@ -1,171 +1,98 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03C91D63E4
-	for <git@vger.kernel.org>; Fri,  4 Apr 2025 10:59:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E2B1CB9E2
+	for <git@vger.kernel.org>; Fri,  4 Apr 2025 11:06:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743764388; cv=none; b=njYzFyptC+fyv/dJ/vfmcrdO616CvQGktwsGUyUg7c4TRmNaDVyUM9QIjdfTztibrwldC3EuaklJG8paRf7Wsmsyfe4zCgmP8wvvwMy1xzZH63mhFeZF4dGhUDgV8ldL1dAC54CHB6+/xFYSipvRBfBQO2ihaBmJnkKRPxwaexY=
+	t=1743764811; cv=none; b=Cx3y9Vx41RYJij+QMzapbY7Q7jy9WRdRXNqIodDo7m/1UjeQNDMxyrXbpaI+fNkWB16IHIjYfhXxR5yK7LdWLNl3a1V9B1MdQfs4M7tAkdVuQR5MLqblgNYoybnZuyRrGbn2jUWgWOCn5JXtFtwQX/+UPR1qqRAIX7eDCf+XSP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743764388; c=relaxed/simple;
-	bh=BoUWIvPPrwwYLyyOWiyNm9zlorSbSERispM9fO4xVM4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CtSUAyvMTUjdSbgZFP5MpVz4hxIaDiO7koYQylnpqhgYIBr5Vk0jS1FjKJkLs8lZQYU0ABdsN69cstUNP0g2qab6plzALgyhdlfEZAfIn0CCImtAaEPeH2ITf2qUMqHiXZd8wzWKc3W4BR+TJ/1jN6CwKt0vnCzRpmOAykpuCJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DsND82LQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W0tMTHY3; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1743764811; c=relaxed/simple;
+	bh=SMI21ijUsky9u2RYqy254Owjn4MlCcD/QhMpRXPBp8s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qH06g8KeTtV9p5SlYME68zcwFZ7IAdciT/L7T0Dd/sBC+Tsa4JsFpFvpKQIs2Oq3gfncAR0It8nTEf6IU2RhLo0yOeez5ikuV91KZrGT9upg5NcyY/eyldLVZbnS1wG9qm8SpKfHX++syiAk4wKXzrxQRLbrXRRs5cUa4s2K7/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iYoP0/FT; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DsND82LQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W0tMTHY3"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8E1121140160;
-	Fri,  4 Apr 2025 06:59:45 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 04 Apr 2025 06:59:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1743764385;
-	 x=1743850785; bh=Ff8t51qMIvl3nU0EeV+dRb03MJLlBiQ1K+/wRSHQiW8=; b=
-	DsND82LQPVXWgQGaoEbhLMyVGq+Mwmnd5qToXQ6TpDLvlPk8bSh+safMZ7ksjjpo
-	uKb3PZhplKfym2DXQjh3JCz5TwALyqhkg3AsqcKek07nBwCAN9s62YdB2u3H2/i1
-	NyMJiVVv8EXPujIHB36NeIWVQJCCvBeu10H9SrD3F50vCGgeQl9wBnr74D6npIJX
-	3q2EcLG5qn4dtZvTQKmsx/i4e9hKCCla1cv3z1x6ygCUFrrgTZ4glhcXaOimB38p
-	+AzDHhH2tZd02C8TvO6pYWByMMTgFEHg5HsAlw1pv8QLoCyr22QfaMkiVtSTyngV
-	E2tfQElNIIR94/cmXZNrcg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743764385; x=
-	1743850785; bh=Ff8t51qMIvl3nU0EeV+dRb03MJLlBiQ1K+/wRSHQiW8=; b=W
-	0tMTHY3s4erdnRs652RQNeLzf57vl8krSrqax9LJR1hsTCEnXLmtAesKqKlulhcY
-	m6yaK2T6hPEoXgYKFBj6kXjeQsRvZNm/t6Lk615AfxMUCw70fb7F49Je23c1LAiO
-	m6bGo+PXYkOZaOb4MQtNnA3fVjjOV+Cp/dxbZHSXsSo/P3WOmvSnotrHVynVXhEQ
-	o3icefYT/9W3ntHF/1OklISa1oac2e2D8ANJjwhMyVCcVwQCUOedalPwI0ZRdTwH
-	f1TieFN5Tn/0q2q4KK3p6p4WfuyLVQIW2hCRgZeMpFNyXj5Pe16vCvpWzhvBaYsN
-	Rc+gNqErA4qAMj0Pl1PTQ==
-X-ME-Sender: <xms:obvvZzGIWiRIpFGUKfI46N8ETxuV8Ab0JFdY_h3ns73qEnXIv5MzfQ>
-    <xme:obvvZwUfCiR3oMMkMtEyPmecYmT5ukv0pA_p5KVbv4NFAaWfkshYJggU8ngX_n0MN
-    3p3LM1FfhYuQz4I0w>
-X-ME-Received: <xmr:obvvZ1ILKlZu9duzOsvYadWgk6xcvr9RhynNr9iMqymlqLqOE5cUzyfHVABzrLwCWlxHX4CtWqlAhARxD6WEqvPSCsbi-a9Qr_JQThFr6lzE3Zs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduleduvdeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtph
-    htthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhi
-    shgtohholhesthhugihfrghmihhlhidrohhrgh
-X-ME-Proxy: <xmx:obvvZxHqjUbeH4Ph71ZhWbR77lVzcO23q-n8wZlVv8A2YMtdAN393g>
-    <xmx:obvvZ5Wzp0wF4ttlKfkZJ3VftY_ruEMpYlcuse42w2-N6R21dP9R_A>
-    <xmx:obvvZ8PwAZPnsR0zsCldW05fFGN4dpJf5d4Ujh-H5sd7jQZnFixGjw>
-    <xmx:obvvZ41GhNYay1ZEZ3ZF6uKtnBD9rlQVLqFMzieFz_FJdLug8M1HiQ>
-    <xmx:obvvZ8qDXxT1WICDqb0Ih9x8V4cIOkKG2lQoIGrZ-xi8hkDm2JRg9Tix>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Apr 2025 06:59:43 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 199e0689 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Apr 2025 10:59:42 +0000 (UTC)
-Date: Fri, 4 Apr 2025 12:59:41 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	shejialuo <shejialuo@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v6 14/16] refs/iterator: implement seeking for packed-ref
- iterators
-Message-ID: <Z--7nfaKTpbBXbV9@pks.im>
-References: <20250312-pks-update-ref-optimization-v6-0-f778e0414f55@pks.im>
- <20250312-pks-update-ref-optimization-v6-14-f778e0414f55@pks.im>
- <CABPp-BFBqC_t5QSexRQpYsqXBa11WK+OqGt167E=K=xod=buQw@mail.gmail.com>
- <Z--tomMthXftrdYA@pks.im>
- <Z--u2DlaPij_j7zX@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iYoP0/FT"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ac73723b2d5so384231966b.3
+        for <git@vger.kernel.org>; Fri, 04 Apr 2025 04:06:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743764808; x=1744369608; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Spzjp8mnkaKyIGL/b6LV5RdzlKCg6HdGboet3Zknb78=;
+        b=iYoP0/FTSJkx8KJl0Ax7NDJW18vm+ra3KYZDbtURytehgItU/bBWRFc6l20+vh2ZsV
+         biU35QaMemT5YT0DqV2mvEl7Tpm2Et670n3y4EYe+MRx9PgO/BYcEdXwXRNs4xZHWgoh
+         rke6cWhdY86IYHWcu6RHEvryB4wsp99Q6x3/Tq35UeDax7z7L+ZIjuf8gVpEqIuIRNKs
+         2lmZqGS3oqwWtjT3Sw1swx/NjooVUtwElpNNuJnajRx5vpabE2aUNyZwU5ZROBMkp5rT
+         GBJsyBrmUISDlYpewPDFfdZrjVKS3IJU3yaJG2ZGFzCZyOz7gOGlSxGlArzPvd1Kdgoe
+         9qJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743764808; x=1744369608;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Spzjp8mnkaKyIGL/b6LV5RdzlKCg6HdGboet3Zknb78=;
+        b=wf5qubqigz12P6muctxBgZjYYnSK/Q8yvLRVvxBLhETPgZGujhOmxIMhRZs2TBqf2s
+         DJNmJH4BpnWwunZUDe9yJHEgQ5UBA0fAx4VRZn9/p65l4LOCoSiFigiXQNHgNLDKcAj4
+         u3uq8/fmFbzgxiO3dY5FAIoiv+O8A+q8Ql1QfSdov5c+4SmTSpclrg/Ar6vejvyA65Ei
+         AAfPXyKxB8r0vRGg2VMPeg+i1X5hTDzfDtjtKSF21cBCg6orglAkeccX+oLuopONiJAA
+         imPlREYTaK58W/ZqpzJmiK7s6tWIAwQX2B/U398CONwnOk7Zp1aIldEEhYMoUuIO/Vz7
+         MJtQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVx5ZbYOqRiAiioAskTnn6cofEo4wy2MCBRSBJiyqKLZfxPJz1FYrSD2z8Df5mr0sRZyrs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXQiTScGIR/wDCiTETVGFhCOS4geJGNjCVAKXbFycDDhS/o1Jb
+	dYeKy6LtsVvKNE1S/uWhPX79Jqr9mOPLODH7eCK6qfLkhVaZq3xpu7KCVTHYbzyOKM708lNTkpR
+	JVOlh3uEkuV9AmMoo1Clxu6U0rp0=
+X-Gm-Gg: ASbGnct20ye7jPnzFmSu6K2A3er23qW93SIUAN6V4s62AxOOBl9OB9dT394OUrFFGjE
+	MjOZsrBX/rtWCOoZeA+KgJwyfYIiZB0tE2L+L3Fsm3JbvrbWUssI/cbwPBgtiIILDL3hGddfO12
+	oLM8LD1DSxZp2OyoicoA7PsJ5mkMzV753inIXiRORwksdnxyW26XWGi4rTKtQ=
+X-Google-Smtp-Source: AGHT+IGQt2aCHI2JD8pkTTVb9u/7hUDQkI3/f+DBIgmvNT+szhghy0HeJb/5rFodCWnuOXzSQmIZlqwXTEfqERAZSxI=
+X-Received: by 2002:a17:907:2ce4:b0:ac7:66fb:6a07 with SMTP id
+ a640c23a62f3a-ac7d1858ef6mr241892966b.6.1743764807553; Fri, 04 Apr 2025
+ 04:06:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z--u2DlaPij_j7zX@pks.im>
+References: <20250401203630.285451-1-jltobler@gmail.com> <20250403140529.497876-1-jltobler@gmail.com>
+ <Z--kT3fIvz8k7h96@pks.im>
+In-Reply-To: <Z--kT3fIvz8k7h96@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 4 Apr 2025 13:06:33 +0200
+X-Gm-Features: ATxdqUENG4dhMlvq0aCAEmer6biM3DeEDzAnt8Zbif_gxX-annI5jIfDorBaFwQ
+Message-ID: <CAP8UFD2a2hA5CEYgr9i5jtw+k8U9gu=Jb01x=W1zekSRBy7B8A@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] help: include SHA build options in version info
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 04, 2025 at 12:05:12PM +0200, Patrick Steinhardt wrote:
-> On Fri, Apr 04, 2025 at 12:00:07PM +0200, Patrick Steinhardt wrote:
-> > On Thu, Apr 03, 2025 at 12:56:39PM -0700, Elijah Newren wrote:
-> > > On Wed, Mar 12, 2025 at 11:42 PM Patrick Steinhardt <ps@pks.im> wrote:
-> > > >
-> > > 
-> > > > @@ -951,12 +954,41 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
-> > > >                                             &iter->oid, iter->flags))
-> > > >                         continue;
-> > > >
-> > > > +               while (prefix && *prefix) {
-> > > > +                       if (*refname < *prefix)
-> > > > +                               BUG("packed-refs backend yielded reference preceding its prefix");
-> > > 
-> > > I just triggered this bug upon a "git pull" in an internal repository:
-> > > 
-> > > $ git pull
-> > > remote: Enumerating objects: 161255, done.
-> > > remote: Counting objects: 100% (55884/55884), done.
-> > > remote: Compressing objects: 100% (5518/5518), done.
-> > > remote: Total 161255 (delta 54253), reused 50509 (delta 50364),
-> > > pack-reused 105371 (from 4)
-> > > Receiving objects: 100% (161255/161255), 309.90 MiB | 16.87 MiB/s, done.
-> > > Resolving deltas: 100% (118048/118048), completed with 13416 local objects.
-> > > From github.com:github/github
-> > >    97ab7ae3f3745..8fb2f9fa180ed  master
-> > >                     -> origin/master
-> > > [...snip many screenfuls of updates to origin remotes...]
-> > > BUG: refs/packed-backend.c:984: packed-refs backend yielded reference
-> > > preceding its prefix
-> > > error: fetch died of signal 6
-> > > 
-> > > I made a backup of the repo with rsync.
-> > 
-> > Thanks, I can indeed reproduce the issue rather easily:
-> > 
-> > 	test_expect_success 'list refs with unicode characters' '
-> > 		test_when_finished "rm -rf repo" &&
-> > 		git init repo &&
-> > 		(
-> > 			cd repo &&
-> > 			test_commit A &&
-> > 			git update-ref refs/heads/ HEAD &&
-> > 			git pack-refs --all &&
-> > 			git for-each-ref refs/heads/z
-> > 		)
-> > 	'
-> > 
-> > I'll investigate.
-> > 
-> > Patrick
-> 
-> Okay, below patch should fix the issue. The problem is that the sorting
-> we use for refnames is done via `cmp_packed_refname()`, which does the
-> same cast. And because the uppermost bit is set for the emoji character
-> this causes us to compare diferently in `packed_ref_iterator_advance()`
-> and thus causes the bug.
-> 
-> Could you please test whether this works for you? Once confirmed I'll
-> send a proper patch.
+On Fri, Apr 4, 2025 at 11:20=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Thu, Apr 03, 2025 at 09:05:27AM -0500, Justin Tobler wrote:
+> > Greetings,
+> >
+> > Additional information regarding how Git was built can be found via the
+> > `--build-options` flag for git-version(1). This currently does not
+> > include information about the SHA-1 and SHA-256 implementations Git is
+> > built with.
+> >
+> > This short series adds build option info for the SHA-1, SHA-256, and
+> > non-crypto-SHA-1 (if any) implementations which may be useful for
+> > diagnostic purposes
+> >
+> > Changes since V2:
+> >
+> >   - Updates to documentation to provide additional context.
+> >
+> >   - Inlined `get_sha_impl()` function.
+>
+> Thanks, I'm happy with this version.
 
-Sent via [1]. Let's continue with the discussion over there.
-
-Patrick
-
-[1]: <20250404-b4-pks-packed-backend-seek-with-utf8-v1-1-6ceb694e3bd7@pks.im>
+I am fine with it as well. Thanks.
