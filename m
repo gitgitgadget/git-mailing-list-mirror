@@ -1,100 +1,121 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506B01CD1F
-	for <git@vger.kernel.org>; Sat,  5 Apr 2025 10:01:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D445695
+	for <git@vger.kernel.org>; Sat,  5 Apr 2025 10:37:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743847295; cv=none; b=KP48+ehaelrOQPq1TgCqlktTMC4WWgw6FCUzhT3gYbdkr5gEqxBr6YhUdXmGsOAg4i4a7XluzmsbpKgWUo5ixAGVNCFdW3yKAPp3xqEqqFSMzUJrn2z1oR2MK9/K+bMUr0ougelq6O29lEtLpT5Fx0v72h2qnvnYF4ZgJ2d7p50=
+	t=1743849446; cv=none; b=dysLzQS5O1cLzgGTY1xTVu4zN25F7cFKWDlZTKAjVmDqIYVTESGOz5LLRVEplymzI8KKf282x2FPEUrtH3J17YbAfb8+aUFbj5IHrg1LQmiiEtPub97+ob1V7Ee0LIkjzwHFpNlBa7ix/dbGS/ukDa87LUvSHMZ9ml7DlcFVtSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743847295; c=relaxed/simple;
-	bh=YBOeWeAByGQqUIc3xLEX30fls1A2ARnpJGoO4RJJ8tU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qYWdzi1/NPne+LPCHqpzUb5PTWcAc5sY45bnUxoBZbc3x1xsv+pwnE4M8ujsk5ozXOOqz8FvZiq+PktVMt99cg13z089gKRqBbaUFxudwjaDr1tGbxtDgXh8MNIdtUS6EG9B1Ei5cDXUScbZ+l6LvMmxugoKvmP8L3NUraEl15M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hh/wnBDQ; arc=none smtp.client-ip=209.85.221.54
+	s=arc-20240116; t=1743849446; c=relaxed/simple;
+	bh=5ynju4y8VYAAKXhHIpNRh80PyhmgKOICLu4rzNngMjw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=oFJmt4I9XulHsQEgtDkFdAXnIpR7RdbSpZcsTMcCZEn6/qMfFH67iiWh3Nm/SLn4mMkwpAWwdyo2QAGn+5ueSFiUsoflHupe3f5hdBMSM7FkM4Fl4hHmibIHGSoLQjk/Xd6RDlHeIzNcXtc0zFkVLOnMSD0xLTpItCyWe20VoBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gQgixGjs; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hh/wnBDQ"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-39c266c1389so1988101f8f.1
-        for <git@vger.kernel.org>; Sat, 05 Apr 2025 03:01:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gQgixGjs"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-ac73723b2d5so585451966b.3
+        for <git@vger.kernel.org>; Sat, 05 Apr 2025 03:37:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743847291; x=1744452091; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+BfUpTtbdLVCZND93nKgz6z8AC/4g3nRw9gREj8o9tY=;
-        b=Hh/wnBDQ0IcLsWVRoZ1aQXjk16pp+vD07581kN+6BAtFMS4fHcod9q7NBLBbiOTcMi
-         9H+J1oFSJYDUbWuADQ7jhdggrDix+JJx0l+eYzpSWK+hL8I/omf8Fxn39eV51lL20Lsp
-         q1GkuAQg5UasUjwlUazgRpXHzEV0LZZIftYm7v4tkDJh6uSOc0Y4holi0q4P9D3Uj8BF
-         l+SRii5DBvFZj6qxjaxiFeiTDGpEIu7xUooeNItAsakXV48pqm41TvFhfm0M6OnDmFDi
-         mbINuXW+VTsH88jseNjfHkfwsyZIwKsvf0GzIEDyVpwdqoj8JYQgKAsVlD9TsauLnsgW
-         aUIw==
+        d=gmail.com; s=20230601; t=1743849443; x=1744454243; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CIB7OFd1/rxld7vEF+9zWASzovS5lqu4I/p+IZ5AK5w=;
+        b=gQgixGjs60kAWA+eNgEqL5GUxBFPhiZzKOUUGSdVXwQVtDep1ndd2FX8FR6vBsy/uz
+         Aktu45tq64Zzut68WstQ/Mh6e4/ZMG5Rd6hdmiNnUXkTOOci03Vt2P2L1ZIBJZOtdpXz
+         KeeAq6Tb7rsKBSFJ9LMwNBSg7w4bAwucQSIv+0XqyYjCxphI68WYpXvzHirGIU5B76iv
+         bUuzFtZIzXrlaSTc6O9PvkTfy/EYyp+LMdjCW657Bt1cCmZsKYSnQGQ65vuNzwk4VDGn
+         MKfnG45D4jKgsr72/FQXxj4BmDyKFXKXuDVY92dyMn9E7uHB70qZtIKnM5Nmn91R+2nv
+         sOLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743847291; x=1744452091;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+BfUpTtbdLVCZND93nKgz6z8AC/4g3nRw9gREj8o9tY=;
-        b=Ym2enT9+Jfr5vBlX8/UeGy45WMzSOWYQJahH5cTBYjctw6u9bSf7cWsvw9xftxX5ar
-         R2WkfeUw7v6txBKRRjuA2C3P4pFYm3ukB1SyHLRWmMbkGorzDafimEuFSxbUqUHqHZYU
-         +iUpwBY/mPi/saiiX5iqN8p1xzZl/2IScur0pPqgdiLQinPuF1p40s4tLAQqz/si6d+P
-         pnC2heystUYX6ODzI0meC2Z2UGxaXNbqhpwK/Or7iOE7qgOjO9YnwvyWFqouLgAp+4/+
-         HSBAqSmrutwV96bgXefAL/FLW4bPYnZew7hEiBum65/HxOXokl/l59eUoMWprqunMnqj
-         DtMw==
-X-Gm-Message-State: AOJu0YwwXjQ3tk/g+TVMo17kMBxJ5aI92XRFhC5M0NXDQLy8oh6NNU/l
-	GnCYP+X/smY6Wpfg0wczekFU8pRaJwBdOuBvRsRlsTroSbcXSslmkp0q7cCj5Wj7ALNgQoZSZZG
-	jOOGq1evHt4QfC1l5rVfsk9fo/iqfK255
-X-Gm-Gg: ASbGnctNsw2Rruy/XoiSAIdt+Y9ydcBbb7xb3KCSySGFqDJGsnJ6Ed8kWvjOCsEwhRY
-	YUZVWx2Q/LS8VO/+RzI+PC5uV95k4Hu6HKP1vIEPeaYlBxRPHdahhbwd4MS4F2UFzHi0InOwGsX
-	No5nuWFf0uCO4rmtQJRybk+ohKRcY=
-X-Google-Smtp-Source: AGHT+IEc9JAp5gSetZUf/qPNJy5qQUIVYayWC/L9WaypXo7nSOpY4G3GvcaNyqoSPkw2Ps1m4WrjBqF7T/s3KfkItiw=
-X-Received: by 2002:a05:6000:1849:b0:391:ba6:c066 with SMTP id
- ffacd0b85a97d-39d0de3e88dmr5174883f8f.35.1743847291412; Sat, 05 Apr 2025
- 03:01:31 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743849443; x=1744454243;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CIB7OFd1/rxld7vEF+9zWASzovS5lqu4I/p+IZ5AK5w=;
+        b=Zh2gxnLj1sL4PgKsQ4h9+PdBtXJ1gE8TRqGtii1qWW6mcS7BQWJPirZPmvIJ1IBE31
+         plBtjujYpOAHdkwMkPxlwwsWLIDODot+K+8qjKAOetQd1FTNMhF1HqrGOkb/fhAVmApE
+         KzkAbOMcTrcf0gNdlqWjSlr8SlJIYXhybPuxIuMkSu8f8tZucfsp/BHhALKy4iOdKc8n
+         6HRe3hn9oqyd4wAbHZ1vczkR9x+vWL3GeeCwDn35+uVWE0nIzbVpvNkLuaOicRciWp4W
+         9h3EczjVvSrnvxUIlbqQOMEm8m3zEkc1VUNbRbwgwa0ICG90stVRUgGwxvHP3+8bDxDX
+         pJwQ==
+X-Gm-Message-State: AOJu0YyeSmshCFobH6EirMCGVmicSvDHf2jljcpIuTh6m0T6PAGlla4p
+	a8u2t+HHIxIb7L1aF1tov09W8OqmKqLl2inkDclCMO+VEdSxFbYjQjXCvB1Vlw==
+X-Gm-Gg: ASbGncta7hTXL0tzI3uzDepW2ePh1IJFw4L2LDdJye6LNimJhZy/im9Ht+bLzp95/HP
+	MNn1pICUSnN0HevEXirq5qXcsXY7u4SCauoEc2rRwMtPMRLu1vdhdBbNWjiwaAwjRAQ2kxo7nI1
+	xZQnIvxC9BN2UeiwOFH5UQCCkEdjiVLJX3/GLNpCl8Xe2XtDx27Djr3obLddF/2PODGj7kf/bYn
+	q/c9IW6xCdW1U5u6ygvbuii7R9yw6DX9JerxtRfiLH7GjvYRcTuGXxMOymhoJfZM//uy2zZOcV2
+	+csewQjnGZHq7sDcqfRLwW7yJJcH8EEC/SxPRrncIetLG251plzoPseJxdgGmzeVcl6rxWBWlCz
+	vl+FvVzy6ZPsw4KNteduM5M9fTL6oNUiYC2PLctppuW0YysyyIhadbx3dwloZjW5H5oQ1DWaCDq
+	0YeICpyfIvo5WovKDnH+z5gFU=
+X-Google-Smtp-Source: AGHT+IED0F0siZ115q/DusbAJ8lL4iAcbZqhZSlCF/tJlL/joQl76EAdveVb0BGqpG2yXezWBVTWvg==
+X-Received: by 2002:a17:907:1c09:b0:ac1:f003:be08 with SMTP id a640c23a62f3a-ac7e7116ae8mr216236766b.12.1743849442808;
+        Sat, 05 Apr 2025 03:37:22 -0700 (PDT)
+Received: from Anthonys-MBP.homenet.telecomitalia.it.homenet.telecomitalia.it (host-79-1-195-126.business.telecomitalia.it. [79.1.195.126])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7c01c219fsm393187866b.169.2025.04.05.03.37.21
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 05 Apr 2025 03:37:22 -0700 (PDT)
+From: Anthony Wang <anthonywang513@gmail.com>
+X-Google-Original-From: Anthony Wang <anthonywang03@icloud.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	karthik.188@gmail.com,
+	shejialuo@gmail.com,
+	christian.couder@gmail.com,
+	shyamthakkar001@gmail.com,
+	Anthony Wang <anthonywang03@icloud.com>,
+	Anthony Wang <anthonywang513@gmail.com>
+Subject: [GSoC] [PATCH 1/1] t9811: avoid using pipes
+Date: Sat,  5 Apr 2025 12:37:18 +0200
+Message-Id: <20250405103718.25160-1-anthonywang03@icloud.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1940.git.git.1743791986754.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1940.git.git.1743791986754.gitgitgadget@gmail.com>
-From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date: Sat, 5 Apr 2025 12:01:19 +0200
-X-Gm-Features: ATxdqUFHr89Rn6nW2-8beyeN3HcGdOcaYOXJVTJ1KDcQauYTRu3NZU1Lu_J5nI8
-Message-ID: <CAN0heSp9RhH=UMDqLs=Kd57RoseySrFT4sFeXrVV3h7f=daSaw@mail.gmail.com>
-Subject: Re: [PATCH] refs: fix duplicated word in comment
-To: Christian Fredrik Johnsen via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Fredrik Johnsen <christian@johnsen.no>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Christian Fredrik,
+The exit code of the upstream in a pipe is suppressed thus we lose any
+exit codes of git commands that are piped. In order to ensure we
+pick up the exit code, we can write the output of the git command to
+a file, testing the exit codes of both the commands.
 
-Thanks for posting a patch.
+Signed-off-by: Anthony Wang <anthonywang513@gmail.com>
+---
+ t/t9811-git-p4-label-import.sh | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-On Fri, 4 Apr 2025 at 20:39, Christian Fredrik Johnsen via
-GitGitGadget <gitgitgadget@gmail.com> wrote:
->
-> From: Christian Fredrik Johnsen <christian@johnsen.no>
->
-> Fix a typo in a comment in refs.c: "checking checking" =E2=86=92 "checkin=
-g".
-> Signed-off-by: Christian Fredrik Johnsen <christian@johnsen.no>
+diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
+index 5ac5383fb7..5abac938d0 100755
+--- a/t/t9811-git-p4-label-import.sh
++++ b/t/t9811-git-p4-label-import.sh
+@@ -95,9 +95,10 @@ test_expect_success 'two labels on the same changelist' '
+ 		cd "$git" &&
+ 		git p4 sync --import-labels &&
+ 
+-		git tag | grep TAG_F1 &&
+-		git tag | grep -q TAG_F1_1 &&
+-		git tag | grep -q TAG_F1_2 &&
++		git tag >output &&
++		grep TAG_F1 output &&
++		grep -q TAG_F1_1 output &&
++		grep -q TAG_F1_2 output &&
+ 
+ 		cd main &&
+ 
+@@ -208,7 +209,8 @@ test_expect_success 'use git config to enable import/export of tags' '
+ 		git p4 rebase --verbose &&
+ 		git p4 submit --verbose &&
+ 		git tag &&
+-		git tag | grep TAG_F1_1
++		git tag >output &&
++		grep TAG_F1_1 output
+ 	) &&
+ 	(
+ 		cd "$cli" &&
+-- 
+2.39.5 (Apple Git-154)
 
-There should be an empty line between the main part of the commit
-message and the Signed-off-by trailer.
-
->                         /*
->                          * If we've already seen the directory we don't n=
-eed to
-> -                        * process it again. Skip it to avoid checking ch=
-ecking
-> +                        * process it again. Skip it to avoid checking
->                          * common prefixes like "refs/heads/" repeatedly.
->                          */
-
-Well-spotted. No doubt that this is the correct fix.
-
-Martin
