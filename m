@@ -1,41 +1,42 @@
 Received: from avasout-ptp-001.plus.net (avasout-ptp-001.plus.net [84.93.230.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4220C41C71
-	for <git@vger.kernel.org>; Sun,  6 Apr 2025 19:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BCA2206A3
+	for <git@vger.kernel.org>; Sun,  6 Apr 2025 20:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743969000; cv=none; b=p8czrsaMxoIZlsb2fnir0hBRdcX1SA1vTisJG/zJXzZHw3iJR7nV9pgEue3BPGIoi2bIg2+3nqVlqBudz9s/JdgVPBtKPQyKuOr+E6MRDhYBBo9QMZsN8jaUuTqdkq5YA4pxjNCf5YCliEfAcgVNQFJfrZC6QxwGeWbrTAnCTvU=
+	t=1743970626; cv=none; b=aQLMQHiA4LJBeGIdbZbvdRlrJYIZV8AD6PpA8lzwMy3Thi/h+z+velslICqc2ZOI8pv/qQ+oRmZQp4e0RNJFyDOklZ3y8bsYXiRldwdQoBrYHG1DrEo5k2djBKME/kKOklUTtvPLpz+VdZm1XKEhH/oR+bALk49MfUmcVeQ0Rjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743969000; c=relaxed/simple;
-	bh=quOlD03/F2H0Q9cTwt0c9zihqcPtJZnE0cHVDDVgZ0o=;
+	s=arc-20240116; t=1743970626; c=relaxed/simple;
+	bh=UHyA4EGzMfuylmvwoiSCtbJdVWibolUOKvWgkgkPxcc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MiXhJHNBpqsyHpygFBG3JWj6p5KzMROed4/YKz8n6ql641SC7GEqsgljbUCioA6Vo5Q90ScwBZYrQnzWzpR2IGz94DYb3HP7Rys+FqAiYg31u+4Lb8d6a9ufvzdhjsRRywN8yA5CIqOAvUFr+wYlPYs9YAPCqrBVn6D2QMA4Sf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=ib7v6dfX; arc=none smtp.client-ip=84.93.230.227
+	 In-Reply-To:Content-Type; b=BO8Yf1f1o6cTReA1uQqqNmY0DyS3R9MtTIEXpukuhbBFSLLP55WxkBBGtDeIAZTdHAQY4G+CkO13IHk1gajqMJqZ1rtoqphoyeGG8UHICMfbLmoiZbaGbuaTrh86hi/MmBDEKUjHucy1RhRsvf9vVmgMCGRNAsMQ65Wex9EzHYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=PALOde2d; arc=none smtp.client-ip=84.93.230.227
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="ib7v6dfX"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="PALOde2d"
 Received: from [10.0.2.15] ([80.189.83.109])
 	by smtp with ESMTPA
-	id 1W0AuYrgmbpaN1W0BupkQI; Sun, 06 Apr 2025 20:49:56 +0100
+	id 1WQMuYtQrbpaN1WQOupkgU; Sun, 06 Apr 2025 21:17:00 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1743968996; bh=B4TaDlh+a1JXyhAghQ0jEg2K58yP+9+mc2S8zq2yk98=;
+	t=1743970620; bh=jsjtfHhur7FTimbg8EtRhj5rmSi7QGGGwkNSIL7fvh0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=ib7v6dfX3TSofPwdaw5dhdOVjyOsAdgw0PE+XzpMHCWmWIFhleXV6jgyuh5S/yRt6
-	 Bs0/NK9xZvQbf8DdHx2YKDcygN9U7yQ5oWDP1ozCIIiwwVxbpzQHzUK56x4utChqyO
-	 Z4dB4y9UTF0SHVm/xfzYkW8SoI84ePR18JypKwaasn1oGLWcgVXN2sln5XSYuN1vmi
-	 bth44yiR6AkYpltxdVAvx8y8+g/qpRWgobimZz6wCIyz2Cw5a71C51kDLI9cgKJEZQ
-	 wl2+P7Ko33RiMYnlqPYKU+kanHR2H38+BvQTHSXjPW6HcH2lpTiK/XZTjpavc5OD+C
-	 Pi31Ka6Ign6OQ==
+	b=PALOde2dK/XlOXhU3pQi9oYXROetiNF/A9FtOX74rpFg2Ld1rA9PZUrIhzNr4Akt3
+	 +9JKzv4P5fHrsyiFi2e1c+Tgqb72F4Lo5PkZMWWlZPzhz05D3ZB2iE4AiuUCT39BW7
+	 xbYQXCA2o3FW0pU07uzuOEs6Cb0dB+PmvKX7eYHvr4H+APXMa5x1XomW7dDzFfltd2
+	 I6QkPLwaepJ7ny7lzd07xltalw8pBnIArio2LlOuKgQ4NU5fHnL/hYCswrp+WJN/Ux
+	 LUDsQRfbWwUNQrtacuic6FYf6SyxI52V9/2/nk9T2mMGFdN8Cohyhy5LXqXQvVAYrl
+	 teSX0581FwioQ==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=frZ/Z04f c=1 sm=1 tr=0 ts=67f2dae4
+X-CNFS-Analysis: v=2.4 cv=frZ/Z04f c=1 sm=1 tr=0 ts=67f2e13c
  a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=r1G5dvt-5keOLTON_isA:9 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=L6d2GSYNYUtRv62hmvYA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
-Message-ID: <a5795bfa-cc02-4c9a-b7d2-4924a94cd0db@ramsayjones.plus.com>
-Date: Sun, 6 Apr 2025 20:49:54 +0100
+Message-ID: <94a3083c-fcc5-4489-8612-c15fa781c0f9@ramsayjones.plus.com>
+Date: Sun, 6 Apr 2025 21:16:58 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,119 +44,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/13] meson.build: only set build variables for
- non-default values
+Subject: Re: [PATCH v2 04/13] meson.build: set default help format to html on
+ windows
 To: GIT Mailing-list <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
  Adam Dinwoodie <git@dinwoodie.org>
 References: <1c04882b-e518-4272-bd18-ab918774e424@ramsayjones.plus.com>
  <cover.1743859985.git.ramsay@ramsayjones.plus.com>
- <280363cd569a8c6e870107eb219597b42911fed2.1743859985.git.ramsay@ramsayjones.plus.com>
+ <34349bf98c5b01dd1b73065448b616517bb784a3.1743859985.git.ramsay@ramsayjones.plus.com>
 Content-Language: en-US
 From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <280363cd569a8c6e870107eb219597b42911fed2.1743859985.git.ramsay@ramsayjones.plus.com>
+In-Reply-To: <34349bf98c5b01dd1b73065448b616517bb784a3.1743859985.git.ramsay@ramsayjones.plus.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfMJk5QllvKAc8/o2uKqXTmwCq9jiUftHkZ6XgBb8Ak1zGke25Uo7JhqlTZWFBuD9B2vGYtIPkUGLzVu1u3Fdo3YDUG4uIjBf+naImrKQyyb/eZiZzMmh
- wNj3fwIMrpd+1c9EMOLkoAqyRqMsKj9oQjXl9Wwe68xW9BRNPugx9FKImAmdqkDtJYbgMSrwapnicroHNsuOM0JzySrfcVVdgpY=
+X-CMAE-Envelope: MS4xfE/Qg9+BFbYIzNN6LdNB5qhxE/Ytb+PE9edK1Z7aLJITimCb0Ug+q/fwO8nxoNcm0c2aeDAPe0Pp79dL7aZGmb3wUhUzHhhXZA7+4oV+l+fz0qaIPrnH
+ Ayf8AUfqQ8ZS2CI9HbhVc8dgZ3Ac/ZdfD56TDFDTBg8O+98BwtdEnX14ZYv30dSlkR4BPm44VsP3iAAkI7eFmg0l+Lo2slEBfCk=
 
 
 
 On 06/04/2025 20:38, Ramsay Jones wrote:
-[snip]
+> The build variable DEFAULT_HELP_FORMAT has an appropriate default
+> ('man') set in the code, so there is no need to pass the -Define on
+> the compiler command-line, unless the build requires a non-standard
+> value.
+> 
+> In addition, on windows the make build overrides the default help
+> format to 'html', rather than 'man', in the 'config.mak.uname' file.
+> 
+> In order to suppress the -Define on the C compiler command-line, only
+> add the -Define to the 'libgit_c_args' variable when the requested
+> value is not the standard 'man'. In order to override the default value
+> on windows, add a 'platform' value to the 'default_help_format' combo
+> option and set it as the default choice. When this option is set to
+> 'platform', use the 'host_machine.system()' method call to determine the
+> appropriate default value for the host system.
+> 
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>  meson.build       | 13 ++++++++++++-
+>  meson_options.txt |  2 +-
+>  2 files changed, 13 insertions(+), 2 deletions(-)
+> 
 > diff --git a/meson.build b/meson.build
-> index 88a29fd043..efd0bd3319 100644
+> index efd0bd3319..8f8a258064 100644
 > --- a/meson.build
 > +++ b/meson.build
-> @@ -693,10 +693,8 @@ endif
->  # These variables are used for building libgit.a.
+> @@ -694,7 +694,6 @@ endif
 >  libgit_c_args = [
 >    '-DBINDIR="' + get_option('bindir') + '"',
-> -  '-DDEFAULT_EDITOR="' + get_option('default_editor') + '"',
 >    '-DDEFAULT_GIT_TEMPLATE_DIR="' + get_option('datadir') / 'git-core/templates' + '"',
->    '-DDEFAULT_HELP_FORMAT="' + get_option('default_help_format') + '"',
-> -  '-DDEFAULT_PAGER="' + get_option('default_pager') + '"',
+> -  '-DDEFAULT_HELP_FORMAT="' + get_option('default_help_format') + '"',
 >    '-DETC_GITATTRIBUTES="' + get_option('gitattributes') + '"',
 >    '-DETC_GITCONFIG="' + get_option('gitconfig') + '"',
 >    '-DFALLBACK_RUNTIME_PREFIX="' + get_option('prefix') + '"',
-> @@ -708,6 +706,17 @@ libgit_c_args = [
->    '-DPAGER_ENV="' + get_option('pager_environment') + '"',
->    '-DSHELL_PATH="' + fs.as_posix(shell.full_path()) + '"',
->  ]
-> +
-> +editor_opt = get_option('default_editor')
-> +if editor_opt != '' and editor_opt != 'vi'
-> +  libgit_c_args += '-DDEFAULT_EDITOR="' + editor_opt + '"'
-> +endif
-> +
-> +pager_opt = get_option('default_pager')
-> +if pager_opt != '' and pager_opt != 'less'
-> +  libgit_c_args += '-DDEFAULT_PAGER="' + pager_opt + '"'
-> +endif
-> +
->  libgit_include_directories = [ '.' ]
->  libgit_dependencies = [ ]
+> @@ -717,6 +716,18 @@ if pager_opt != '' and pager_opt != 'less'
+>    libgit_c_args += '-DDEFAULT_PAGER="' + pager_opt + '"'
+>  endif
 >  
+> +help_format_opt = get_option('default_help_format')
+> +if help_format_opt == 'platform'
+> +  if host_machine.system() == 'windows'
+> +    help_format_opt = 'html'
+> +  else
+> +    help_format_opt = 'man'
+> +  endif
+> +endif
+> +if help_format_opt != 'man'
+> +    libgit_c_args += '-DDEFAULT_HELP_FORMAT="' + help_format_opt + '"'
+> +endif
+> +
 
+Note that host_machine.system() classifies 'cygwin' to include cygwin and
+MSYS2 and 'windows' as windows but not cygwin or MSYS2! ;) The make build
+overrides the help format to 'html' for windows and MINGW{32,64}, so it is
+not clear to me if the test above includes MINGW.
 
-It would be somewhat remiss of me to not mention here that this does not
-work for any but the simplest of values! :( If you set a simple single
-'bareword' like 'vim' or 'more' (even '~/bin/vi') then every thing works
-just fine. However, if the value contains any of (at least) the following
-characters: single quote, double quote or backslash, then things
-stop working!
+Also, in general cygwin != MSYS2 != MINGW{32,6} != Gfw flavour MSYS2, but
+it appears meson does not allow you to obtain such specific system info
+(for example, by executing uname directly).
 
-[I spent one whole evening (and a bit - always something else to 'try')
-trying to 'fix' this problem, without success]
-
-If you try an example that is given in the Makefile:312, then the make build:
-
-  $ make V=1 DEFAULT_EDITOR='"C:\Program Files\Vim\gvim.exe" --nofork' all doc >m-out 2>&1
-
-passes the folowing arguments to (respectively) gcc and asciidoc:
-
-  -DDEFAULT_EDITOR='"\"C:\\Program Files\\Vim\\gvim.exe\" --nofork"'
-  -a 'git-default-editor="C:\Program Files\Vim\gvim.exe" --nofork'
-
-whereas, the meson build:
-
-  $ meson setup --optimization=2 -Ddocs=man,html -Ddefault_editor='"C:\Program Files\Vim\gvim.exe" --nofork' -Ddefault_pager=more -Dprefix=$HOME -Dpcre2=disabled build/
-  The Meson build system
-  ...
-   User defined options
-      optimization  : 2
-      prefix        : /home/ramsay
-      default_editor: "C:\Program Files\Vim\gvim.exe" --nofork
-      default_pager : more
-      docs          : man,html
-      pcre2         : disabled
-
-  Found ninja-1.11.1 at /usr/bin/ninja
-  $ 
-
-similarly, passes the folowing arguments to (respectively) gcc and asciidoc:
-
-  '-DDEFAULT_EDITOR=""C:\\Program Files\\Vim\\gvim.exe" --nofork"'
-  '-agit-default-editor="C:/Program Files/Vim/gvim.exe" --nofork'
-
-If you now attempt a 'meson compile' it will, of course, fail to compile
-editor.c because the DEFAULT_EDITOR is the empty string ("") followed by
-(C:\\Program Files\\Vim\\gvim.exe" --nofork").
-
-Also, note that the directory seperators have changed from \\ to / in the
-argument to asciidoc.
-
-[Again, spelunking the docs for meson, it said that "if you want quotes, you
-will have to do it yourself"! ;) ]
-
-OK, so I couldn't come up with any incantation which would fix this issue.
-I will have to admit defeat and ask someone who actually knows meson to
-fix it. :(
+[Just a note that the make build includes 'info' as a choice, but Patrick
+made the decision earlier to drop that for the meson build. Also, there is
+a 'pdf' make target (I think that made it once, years ago ...)]
 
 Thanks.
 
 ATB,
 Ramsay Jones
-
 
 
