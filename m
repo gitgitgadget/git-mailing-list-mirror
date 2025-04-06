@@ -1,114 +1,135 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277935695
-	for <git@vger.kernel.org>; Sun,  6 Apr 2025 10:44:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378E01D554
+	for <git@vger.kernel.org>; Sun,  6 Apr 2025 12:15:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743936287; cv=none; b=MyGl627PRRng8YuXU3Xvvg6zC8L/jlgoIVOkBWSUi/Ie9pSikhY0524kdz9ZRCrMtepUb9WoLpJvh45ZR4Kb4OXmM4WOYLIwzFt55+Z/wznzw5nD7iDsU1fFMiLkaj9uZh0pUiLMrkSIyn1EJ6HmX0IIR5nI/1CPO8h02FggADk=
+	t=1743941722; cv=none; b=ulaYy4eB4uH0wC6eHFlB0jfViN347/jBpDaEs9G2hxmyzixwBs9runxjLJwhhpOBAJj7Cyh3wItDEEOvW/Kqz5riR47w4nn1cm5vJIzR0CaRsbLY/HEV9N+44dStTAGSj8UWm2dby1/LyNZahZUFozuX7itrRHJde+EvzRIE/BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743936287; c=relaxed/simple;
-	bh=4wHczjUer/LEWh8JBp1NLOAGmrAIZT8pJskeR7YOmFA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TpYmKQKpFio76LuBtJFnL8a5+VryLOjw2vKgcsViWXwmp3I2j6cJltH8LyIsDlLyu5otboHcVEq7zYhVVNgDQve3k6CHlZF/PJeeMjtb2rcPRPoI8BA0MSzT4D3Nd5CwAnGQ2QyJ2Q+/ni3TP3DaaP2WR+aY1lKfncT3yEEPd7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XOpOcn8d; arc=none smtp.client-ip=209.85.216.53
+	s=arc-20240116; t=1743941722; c=relaxed/simple;
+	bh=w3brqMO0+Ua7ZxIairshSXBktptM5OVe5Dqe/Gyy/eM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sjfN7nH/xnUE/Vf/CM1XxS/DZoP79TUd3nsABVVjIGfNl0wyuf1WHCF8A4BuOI/BYQweaLKN26C5X/pJT27+5fTsidEAnRpNy0GIgd+XCSfDe1QAFnF7IyDoKwnvyItTS7RIeni3x5Mdtg71QZwxddT/6UHVu1hQO439Pwqlwi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SoQ0+9NA; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XOpOcn8d"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-3014cb646ecso2468286a91.1
-        for <git@vger.kernel.org>; Sun, 06 Apr 2025 03:44:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SoQ0+9NA"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-22548a28d0cso46724155ad.3
+        for <git@vger.kernel.org>; Sun, 06 Apr 2025 05:15:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743936285; x=1744541085; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=5ouCUrvgnfgwdH2iBKfxrxyf/JwSD5yxpBx9ZRQ/BiY=;
-        b=XOpOcn8d6VY/9yzP30nVeM8WS7lRlh+Sv8NO4+2+eG2GORslH8xDtOijOpCphI0q7N
-         kvPGgSXgRyIiTdI5CxLKb6wrXY0+NoXHFx9vrkY8hujTxQhSQgu6dfG6ZBqRy/NJdK2A
-         F38OIiqEg8gBcngcGQpJROl+j1MKogHMcULzbeyBP8EIQcnE1m+4xOThl/Ww3K3IDxjx
-         24qOHaUG4m8WMJzHl4s1agKh0RxAPuSlBjr5QAbUtj57V+6HcbdKj83DFzV5ig5QuYJF
-         XfKPgoN3y2UH3SbdHSLcxwmPG0tyiyGe8CGuS2h48EfELnerJxXm7MpCETOg/tjgbxBG
-         SV+g==
+        d=gmail.com; s=20230601; t=1743941720; x=1744546520; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9jsdQ2hwGvyD2KGLg8vKQGNw10B2MG5mtT2+d708/fI=;
+        b=SoQ0+9NAKqxYQl1tNBJJfCHm6dJv3z/0Q80cSGpmjZr+19aIqSm/HUp7a/SIue3Fof
+         Q6+SYg5U+LVuIJtIKmn5n6wPzYMCRi9b8yw2wogqWMtn7fXtAFZ9/A+M3BpoaAyktYN1
+         xjp8XVGxkwRDLPdxux3JbfHn4VnN6dU0rD6gXwxJodudJoxChmUf52lEdgVSAKwBI7KR
+         1zSIxRSYpUv0MWv6GpqbUxdTH18xZRbNppkBwMpgDT+wiytNAQCOFvw5UZ/wcdc2xBfx
+         0GY75wfvFpXPdTGqT68gU1a3+z5mCSFRzCktxoUNWPfsLF7zVFOI9WS1CbPk4qCLRHue
+         wGVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743936285; x=1744541085;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5ouCUrvgnfgwdH2iBKfxrxyf/JwSD5yxpBx9ZRQ/BiY=;
-        b=BNbynJ3dVQo309nTs+eeXgX+H8GHdPDNkyMbNBf2k8YBcZXbVvSR6zK6pT6lykiLtp
-         j5Aw1A/QQ8DCbuDzLD352WZBdopFC1Jhz8TKwYaZ50VzFD8R2JM4yZcO/TOvo/8RvM0R
-         krJLqbj35WLtTMToe3Dtzw2Qg/5TJgBwXm6MlUUnIjrxOvYM0nZi52kk3KA9bE98OlLj
-         kV2BiYQTI2FLeN3gCiOEc8ShgT0sJ15f2Vfw0fb7hB//gRpg6fjw9wkW/u9LpOFyCE8T
-         B+eVSQKdExJQUihqo+q0arYfNH20WI1q0S/iTpyaBSTmxCJJoolLFtIDvH8234tnMi6V
-         o7oQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWhVXR3oN9+hgNjzzSczzqDwLrAACRw49FbD9Oba2mGqZYrOfJM1GL5raaRpzZqNULZ8iw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxS7QezHaTkxBlFJ9EG3EgfJzD8GGrsFTqXxf6+iu4aATpqKG2c
-	YfglYaZHPXGvuiaxGaBF46b+JxfnJcJYWxH/x2Lnna9arMgk8EntnDWIT3jcPngrJXGutaSKoCY
-	QLZLd+gK0DpAp91kg9KQOzLDN1wM=
-X-Gm-Gg: ASbGncvL9bNkQlU6ixrbAezCDA/8QifprREeYFnlTXgO95bwEpbR/qCZJuI5YNXgbOu
-	AG6iGGEtUxPHb9tKJFHmqbY7jQXVXytFAokOSnBRmAaWNSnrbiZoPJWrHotH+kiOss3oljTvrSd
-	Vx7NTOXK8Vuab3Y33q52egH9PgOCE=
-X-Google-Smtp-Source: AGHT+IF/Pd2ENtGUiczvNavywjl/Vl5ZvgpSwXhoc7ZInDzUsUWhaOO8oILMMJrdEAruVokvZf3PNVB/5AvpPS7dfh0=
-X-Received: by 2002:a17:90a:f946:b0:301:c5cb:7b13 with SMTP id
- 98e67ed59e1d1-306a4836e38mr12113510a91.3.1743936285374; Sun, 06 Apr 2025
- 03:44:45 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743941720; x=1744546520;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9jsdQ2hwGvyD2KGLg8vKQGNw10B2MG5mtT2+d708/fI=;
+        b=mT+zdvqzKJuN5Nv5678TeaUzgno1cSD3Smt/YNB7To1j3UkVrMGCQ0boUwuwW4OyR1
+         JKnTH4o7Wg0OezUfT2kV29CFM307L2I2MlUkn4SxEuZxgOQqRi4H3GMdDADgPpUF/ZON
+         MwlTqXsd5IvNEVzPjm7JAOwvxudZTtXBjQqkLh8UL4Ig4+k6fg7qTPsVSdcFPREpR4Q0
+         NKfpK4/IefheldmTMsAiRrzU7CLu97bMzi7dbKNO+nrfqRP0DSOjws6URy/ik4BcXzat
+         x1CQErf+8sWHLMXNKsSTU+3ltLjtnjdsrMkfRvH5dkPljeBj5vSuoPZewx3Jk7yGEcZs
+         XKjQ==
+X-Gm-Message-State: AOJu0YzRvtR9L+vtT8Mecs8XRQb01KETU9ryav8/rWTejySpjc4pV8YT
+	PB0LdjodsG1Qkzl0FUc7Zg27YfqpkLgKqofIrP4e7/US+IrSP1zFjJGalaKS
+X-Gm-Gg: ASbGncvM7AGZMo+KINWD8ZT/PgOYKDMI/2Fkyxw8Wf5CxIpkL57l1b4Uz39Oksx/yAn
+	DxZmy5IlcAnL5Ts57K3TRWUTw5UcskzfHBWu3wX4RjIUop0mZl3wbrdv3kvc1OhGk+laM0XmVXf
+	rO3nfSO/qIgB0TVHi9GT9e8JtIbb0Z5IHS+Srt9qVQtZgyAIVDUJcBRtVRRzVOQmcyeI6O+oFPe
+	w485Y9w1OiX4bPGWeyhP0DWgzZqEMf8KsMX1RiNr8wpqW4ztVju/dMePp1thjnq3MHB16yhLUWb
+	VBZtP7FjDQ8X1GqohzuLtonvh/srQ1CwVkozLfGdKf0uop94adlqk8imaKAqXRLbiQR6mg==
+X-Google-Smtp-Source: AGHT+IFDapoRacEq0C0zXAy80m3EeX/Qibzyoxu+1u8QfBY1nX6w79MDhtTAqrx1NgaxbBX3fxLHCQ==
+X-Received: by 2002:a17:902:eb8a:b0:223:377f:9795 with SMTP id d9443c01a7336-22a8a7cb9d2mr126554155ad.0.1743941719914;
+        Sun, 06 Apr 2025 05:15:19 -0700 (PDT)
+Received: from archlinux.plaksha.edu.in ([182.75.25.162])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22978772ee4sm62410865ad.233.2025.04.06.05.15.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Apr 2025 05:15:19 -0700 (PDT)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: git@vger.kernel.org,
+	christian.couder@gmail.com
+Cc: gitster@pobox.com,
+	johncai86@gmail.com,
+	me@ttaylorr.com,
+	ps@pks.im,
+	shejialuo@gmail.com,
+	phillip.wood123@gmail.com
+Subject: [PATCH v2 0/1] remove unnecessary if statement
+Date: Sun,  6 Apr 2025 17:44:11 +0530
+Message-ID: <20250406121513.154084-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250329120327.105925-1-usmanakinyemi202@gmail.com>
+References: <20250329120327.105925-1-usmanakinyemi202@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250326052602.265989-1-ayu.chandekar@gmail.com>
- <20250404085133.1098274-1-ayu.chandekar@gmail.com> <CAOLa=ZQ8KvAZjsDWerF0E9VUzsbNOj+Vcxo_mFL5Y3Of9iCAHQ@mail.gmail.com>
-In-Reply-To: <CAOLa=ZQ8KvAZjsDWerF0E9VUzsbNOj+Vcxo_mFL5Y3Of9iCAHQ@mail.gmail.com>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Sun, 6 Apr 2025 16:14:34 +0530
-X-Gm-Features: ATxdqUHhJj4lF1xl0LxWDXZ8ZkOHRLSVAtTGlhCrRnwYgSRt-4w_m7SjK9sY8QY
-Message-ID: <CAE7as+atJcycd4Awav6RKkTDvwiocyv4j=0rZvEhDcVpREsmqA@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BGSOC=5D_=5BPROPOSAL_v2=5D=3A_Refactoring_in_order_to_re?=
-	=?UTF-8?Q?duce_Git=E2=80=99s_global_state?=
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: christian.couder@gmail.com, git@vger.kernel.org, ps@pks.im, 
-	shejialuo@gmail.com, shyamthakkar001@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
->
-> So the approach you suggest is to comb through the global variables and
-> config and find new locations for them to be stored. While this is
-> definitely a bunch chunk of the problem, shouldn't we also talk about
-> how we can reduce usage of some of these variables?
->
-> In particular, I'm wondering how you'd want to tackle 'the_repository'
-> usage. There is some previous work done here, where Patrick added the
-> '#define USE_THE_REPOSITORY_VARIABLE' definition which tracks usage of
-> global variable and usage of them in different files.
->
-> A possible approach which has been followed is to simply go from the
-> bottom layers of the code upwards, cleaning up usage of global variables
-> and ensuring we can remove '#define USE_THE_REPOSITORY_VARIABLE' from
-> files. This is also the approach taken in some of the patches that
-> you've linked.
->
+In an earlier patch[1] (1a764cdbdc (Merge branch 
+'ua/some-builtins-wo-the-repository', 2025-03-26))
+which has been merged to the master, we checked `repo` is not NULL
+before making call to `repo_config()`. Later, in another patch series[2]
+which has been merged to master, `repo_config()` was taught to allow
+`repo` to be NULL.
 
-Your approach makes a lot of sense to me, that is, picking a specific
-subsystem or file and aiming to remove the `#define USE_THE_REPOSITORY_VARIABLE`
-definition and thus 'the_repository' eventually. This was the method
-used by Patrick to tackle
-the object subsystem in [1]  and the path subsystem in [2] and you to
-tackle the packfile in [3].
-This approach also helps in removing some of the global variables used
-within that particular
-subsystem, which is a nice bonus.
+So there is not need for checking if the `repo` is NULL before calling
+repo_config() in the earlier patch.
 
-However, this approach might not be feasible for the global variables that
-arent tightly tied to a single subsystem. So what I can do is, for removing
-`the_repository`, I can follow the approach you mentioned, and for relocating
-the more general global variables, I can use the approach which I
-talked about in the
-proposal.
+Also, Patrick suggested having the test inside the
+"t1517-outside-repo.sh"[3] instead of having it in the individual test
+files like[2] and I also think it is a good approach as we will
+have all such tests in one place. So, for this patch, I added the
+test inside the "t1517-outside-repo.sh". If this is accepted, I will
+move the test for previous builtin cmd which has already been merged
+to master to "t1517-outside-repo.sh" file.
 
-What do you think?
+[1] https://public-inbox.org/git/20250210181103.3609495-1-usmanakinyemi202@gmail.com/
+[2] https://public-inbox.org/git/20250307233543.1721552-1-usmanakinyemi202@gmail.com/
+[3] https://public-inbox.org/git/Z9vCDFRUG7IzU_AG@pks.im/
 
-[1]: https://public-inbox.org/git/20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im/
-[2]: https://public-inbox.org/git/20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im/
-[3]: https://public-inbox.org/git/cover.1733236936.git.karthik.188@gmail.com/
+Changes since v1
+================
+- Make reference to the previous commit that this commit depends on
+via "git log" 
+
+Usman Akinyemi (1):
+  builtin/update-server-info: remove unnecessary if statement
+
+ builtin/update-server-info.c | 4 ++--
+ t/t1517-outside-repo.sh      | 7 +++++++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
+
+Range-diff versus v1:
+1:  d6054cbc0b ! 1:  020b228eb1 builtin/update-server-info: remove unnecessary if statement
+    @@ Metadata
+      ## Commit message ##
+         builtin/update-server-info: remove unnecessary if statement
+     
+    -    Since we already teach the `repo_config()` to allow `repo`
+    -    to be NULL, no need to check if `repo` is NULL before calling
+    -    `repo_config()`.
+    +    Since we already teach the `repo_config()` in "1a764cdbdc
+    +    (Merge branch 'ua/some-builtins-wo-the-repository', 2025-03-26)
+    +    to allow `repo` to be NULL, no need to check if `repo` is NULL
+    +    before calling `repo_config()`.
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+
+-- 
+2.49.0
+
