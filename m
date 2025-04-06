@@ -1,64 +1,64 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8707C8CE
-	for <git@vger.kernel.org>; Sun,  6 Apr 2025 18:08:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1B655E69
+	for <git@vger.kernel.org>; Sun,  6 Apr 2025 18:15:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743962934; cv=none; b=RSfwHx+EcLSBcOdfJ3vGxBjXTN2Xkmk4IZIPtq8tOwe5El7sBj5Fb9NFHVCeKglBliW5RoRhTwKLKgEkcDCluKBbuWpHp7Jn8wlwNwAe+SM1ivdrQZM0oUz2SCQ8Olrst5ECveZLXhYZAQ/nyeq+36NoLKUZ6/0anOO/VjO8mMI=
+	t=1743963351; cv=none; b=ga75mXEk1sKyd5JTXexUo6ML1fuFacJawXzRORSuMttS98bQXNHqNv4CV4KuT2qX/xF833VZrQkEgFyrv7ZeHjHFhUNocwNuTV7QXMLMaOz2AGMrjh5E1ar3uActMcpkintm1Y4D99OU/ORrsgSiUCFyf+8aBAT5xCISbRTOfTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743962934; c=relaxed/simple;
-	bh=EXmj/hlTPTHmZ+kUdVIx5C9Mws/H6B2RjtS7DWlCjD4=;
+	s=arc-20240116; t=1743963351; c=relaxed/simple;
+	bh=xqZ/m++d3HfPfQTwwHI+GOBCAbz7zOWoDihZaBT5a94=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BjlW9FqFRvQljdsDd9+l8wGbSqEepZ1xYY5I7uUBwOmdvgYtxuIP0GT7+TEhIRbOpiYETKf2Y44mFcxvD8PITLU3/T5RM8EmKWxWyeIj/rjDN3m4U3mpA/IWGPBEmz6+IywVXo2w8U7Xvn6KlNFETvHZpTjc4ZMVFYSpg46v1MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TrEyaK4U; arc=none smtp.client-ip=209.85.210.181
+	 In-Reply-To:Content-Type; b=ZG6PCNni0DZk5eUCCUDWPRkTvrz0TyC70lBdLuzEf+2Y27rcaNRGUGc08xoaP6nH9HlWqdpVn+iUosn2lBEfldv82xTSZSpw5j1Pb8vLSnT8Fv4Wz3HTTItVoJ+Ma//RmCeHXe6VereqjP4MYfAclTXja+4xFBjhdqcmtaKBNx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CEkP00Dt; arc=none smtp.client-ip=209.85.210.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TrEyaK4U"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-736c3e7b390so3104605b3a.2
-        for <git@vger.kernel.org>; Sun, 06 Apr 2025 11:08:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CEkP00Dt"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-7376dd56eccso3877077b3a.0
+        for <git@vger.kernel.org>; Sun, 06 Apr 2025 11:15:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743962932; x=1744567732; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1743963349; x=1744568149; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CVyiZMwsQlWiw7zcoIxF71eKntHJvFY7gaDC6FM6/+c=;
-        b=TrEyaK4U/tvz45TORjRWCkkpAaPvZdjmiIcSXiYIFNTGit57tR3eFDx/B02QS7Qro+
-         BFJAcqq7AfQnt2ZXn19r2DF8vs6tpaxSKa1FZMkx+uVKbkVy1GKD5bPyFEbzh6PT2UOl
-         A3GNL9axCOa+dMah7oC0Osa5f3pICaY0L0s0F/pcvzmdoSiJ9IV1+exxMh8J83fpA0Ub
-         GoFznxmuVn0aChULFShn3xCcnFKf/XsX0v8d2fWdhblNq0hBlj+/SYX/AuKDcHUcmvQY
-         eJJUrgDF2EdslEn0o0jbnlbG4I0IfsLWVJvzQfRDVgvPHVPyhtBIIIc8kIkMCLUHrlA3
-         /hdQ==
+        bh=lYTbcinWUZQwJ02K4eJuKkGrufUN1J8liOcq0igd2/s=;
+        b=CEkP00DtS2gbuaF4mZ8qbJv30RHIb291vq66b+hzlQVCk9gtq4NvRJQowscV8NreC8
+         majfF1puzD8OcS7xznrnz1ITflKcFvJEzc9ZOJSCVLlc5YxMryTa4gNB2iGbFLZsAB3S
+         0EFH0dUlUopep3JpqagTIVBGFk8HS3JeYnnmHQlF4LGnxm0z7UqzRfknp/jvEatKqyar
+         fcd0vljqFriA6IUIUbub2KdyFKMXwNwzqFc4vOsZKFdhLI32AbR+UBv6RkdelAiWQgN0
+         9FtcHtZIgkfHGUHTNPdLWXraWUJK/nRoHRmrJ4kBv33HJkZXB/AoG1RH2Se6gXftAUB8
+         qF+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743962932; x=1744567732;
+        d=1e100.net; s=20230601; t=1743963349; x=1744568149;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CVyiZMwsQlWiw7zcoIxF71eKntHJvFY7gaDC6FM6/+c=;
-        b=f0oIPbXnGOXWOdyPC0CqDio+C/JBiPo/4PN8PPd+4+wLBj7nkCu/gS7q4hdQtlCfyp
-         GK8olPl/8LXhdrS2d2tWVkbEz+yjQARWN9U7QEEcD2VI88iV3ZceJf38J2HnxdKbsTcC
-         4b5+xzrpT1RoejQtx+5jhTv7p7+3PEavB1w0+lrqiWwnEHtl+S5uhyFfWtQawSAxzRD4
-         l76fCorbuPY0OCdz0uaKs6AFVrl7wXqPY3Sw0TJIeoC6gm2hfNxQ2sQezM7luwx6G8UJ
-         tZYAxEsRuky+shE1TV4SxUFMadYLcuTVkPc2hSxItEzFoWj9G6QkCm1v5ILPvn+qd6XQ
-         gCpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUSANyy1V5wbNeN1TTwuAm6SNadU+v7z5VqeM4iIEAlwmrkibhBDD4eDYSWgH0F1khhebk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyaEUznfZqRdaGnuos/tiVxFVfTI2V90lK+dj0LPWnSbZCHFP7A
-	yrOWBmZipcQ1SSQeQ6yGFYljWS5G9hqYL70O+tMsFkIRLWAJFLso
-X-Gm-Gg: ASbGnctIGuyRuRO41QEq+H7EiW63QFN+2LlAXytdSQ0MY1Zqvy5eYh5iO1+qAw6LWBC
-	rFVYxHt2GmkMfYqbABqEC2/sqe0635ZSjGK77Dgu2MpwhDc+59OYVMGdfB032Duf37TnOB4jFus
-	Xi8ZFLx9rkdP0GAxEFyuWctn4GSaeDpNw5Ma5GDDMv7kr5xrYU5XS7Cmhok91p+jJsY00+fo8hC
-	v4fzYyDyoHcZaLP9QrABjSEe0iltJ2nfYkXvPnUsEuPIhL4LEPG/yNx9fafe/eAC0qvgKjV/ZlP
-	pl63iksfKuC123wkMcNRR6lI4KiqaXX1x1XX3aW5VZbr5YaUdiZceA==
-X-Google-Smtp-Source: AGHT+IGQJSJCBv/AUE2KWuzGCWd3cOeddySYW4vL8Yaaoka8wyqpZHrimC+20AlAQOlBf7WHWuki7g==
-X-Received: by 2002:a05:6a00:1411:b0:732:5164:3cc with SMTP id d2e1a72fcca58-739e711fcf5mr12613991b3a.19.1743962931768;
-        Sun, 06 Apr 2025 11:08:51 -0700 (PDT)
+        bh=lYTbcinWUZQwJ02K4eJuKkGrufUN1J8liOcq0igd2/s=;
+        b=h1+IYT9j/yBpz9tkVQtM9UOwXG71+0RTjA7gpHROP34sjqB+Ba8GkIvn1Cxx1/0AxC
+         GP99O7r6j3C8L/OOHB44z1Oa6W/wTicOVigjBEcGbLZ4VIJjnphMLAkO2Og0ILE4gwN0
+         7trgF0TNczR3KLhBgbG7cIG/0QVbchixXOnd+BEqZv4pGy7z52KJ9BLBnMK+R9LFaVLy
+         0c83spRDx3IQuublCFMp5cr4fiEZIoCcx0tlVolRPh422RUKqwXhPwtazCDEVtlSvpCS
+         xBG31yg8syRgKkAtlURyrGgH9cfGJLIcs3JpiOcU3WJj+R5eBm0FTtwBw33Ny+Cs3HTh
+         Lv5A==
+X-Forwarded-Encrypted: i=1; AJvYcCUEmd3RIbrh5oP3FbdJMIA0rdFv6OkfQ4r39JhGBTxLRQE3pEycEsBNX6EEI6XDOMdJg30=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxj/6pwS94mhM+A2PZupFbO9iIJa4BYkrNU4hypDlJKz9jU7kgA
+	t5kSuREn6jT1pbsVTsBzRoavxQtN7dmWR0gZcfm7XfLLPpRMYAdd
+X-Gm-Gg: ASbGncvrtV2nB6GJDsKhqMVoaUBpb32MN70djGJHjXTR9KNSTxmu1BoxJOb6cKHEm71
+	9xw+nFUb4CKPkmdjXywSBD39bzvAFrUusezRcHfrtd+vFhNNdc8k761M44bXRuJHa1GY8H6ojj5
+	ejrhopK2/j3VKilZ9119P8ZLVNIEJEQecAoR8JSeN1fvWavgE9SHvxI94KBP93PQqmfrYEC8sWr
+	KqxwCGaKzpVNhJCihc+sOahIuG9zrmck3AT36EgtqPFxh6eS+KxaHgTdQXSFse8VwHq6OxiXpaa
+	TmtG6kkKHfvuTwPSEcIlVAKuSrez8vrQQUsGPNQlJ37uK8cihfBEIw==
+X-Google-Smtp-Source: AGHT+IH4T/oFCVyUxSu2+MPWwM3xl4pwBp8V5q+5bsD71Y9x2ckYqBsVefbfFEO67mbSjNnu9jcxRg==
+X-Received: by 2002:a05:6a20:d498:b0:1f5:7e57:501c with SMTP id adf61e73a8af0-201081835c1mr13664920637.39.1743963349220;
+        Sun, 06 Apr 2025 11:15:49 -0700 (PDT)
 Received: from [192.168.0.7] ([106.51.24.41])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-739d97d17c6sm6930088b3a.22.2025.04.06.11.08.49
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af9bc2cfa92sm6030471a12.1.2025.04.06.11.15.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 06 Apr 2025 11:08:51 -0700 (PDT)
-Message-ID: <f5ba0329-5789-4c20-a2ea-b213365af5a5@gmail.com>
-Date: Sun, 6 Apr 2025 23:38:31 +0530
+        Sun, 06 Apr 2025 11:15:48 -0700 (PDT)
+Message-ID: <08ace3a3-1eec-499c-a1f8-350832ed7519@gmail.com>
+Date: Sun, 6 Apr 2025 23:45:27 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,38 +66,40 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [GSOC] [Proposal v1] Machine-Readable Repository Information
- Query Tool
-To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>,
- Karthik Nayak <karthik.188@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
- Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-References: <CA+rGoLfxZHdns=7FwQuYS=JANrR9zDP-dOpV2AxM1hC1Lc9wiw@mail.gmail.com>
- <Z-5hlL1Gk0oi4fX2@pks.im>
- <CA+rGoLfCTzNTcGXG5py6oHQazeE8Vj0fLsR4KUTJ6rSRFnT_Vw@mail.gmail.com>
- <CA+rGoLeRXUQu8ZbDtaLp2_YbVGA5D1DeA2vSEcLf74qXjB5U2A@mail.gmail.com>
- <CAOLa=ZQCTJLSWV-y-=nKf9J4xKr5miAo+35RktmbGmHPL4Sp-w@mail.gmail.com>
- <CA+rGoLcDt0r0mDBk44SY0NcnG3mNBy5vSNBLzeggsGwJ4d-Cwg@mail.gmail.com>
- <CA+rGoLc9g4werz-k4_ZzfNLLGHjzHoOcFYSmV5V-Krq04drgZA@mail.gmail.com>
+Subject: Re: [GSoC] [RFC] Project Proposal: Refactoring in order to reduce
+ Git's global state
+To: Anthony Wang <anthonywang513@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im, karthik.188@gmail.com, shejialuo@gmail.com,
+ christian.couder@gmail.com, shyamthakkar001@gmail.com
+References: <20250405104124.25272-1-anthonywang03@icloud.com>
 Content-Language: en-US
 From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <CA+rGoLc9g4werz-k4_ZzfNLLGHjzHoOcFYSmV5V-Krq04drgZA@mail.gmail.com>
+In-Reply-To: <20250405104124.25272-1-anthonywang03@icloud.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Jayatheerth,
+Hi Anthony,
 
-On 06/04/25 11:39, JAYATHEERTH K wrote:
-> # Proposal for GSOC 2025 to Git
-> **Machine-Readable Repository Information Query Tool**
+On 05/04/25 16:11, Anthony Wang wrote:
+> 
+> I'm interested in working with Git over the summer to "Refactor in Order
+> to Reduce Git's Global State." My main motivation for choosing this idea
+> is that improving Git's environment handling will enhance long-term
+> maintainability and scalability, and allow for multiple-repository
+> interactions.
 > 
 
-Thank you for your proposal! Just wanted to send in a gentle reminder 
-that the proposal submission deadline is April 8 18:00 UTC. So, there's 
-very less time until the same. You may want to consider submitted your 
-current proposal and use the option provided in the GSoC website to 
-update the proposal before the due date (if necessary). This would help 
-avoid a last minute rush.
+Thank you for your proposal! It seems you're starting a bit late in the 
+cycle. Anyways, just wanted to send in a gentle reminder that the 
+proposal submission deadline is April 8 18:00 UTC. So, there's very less 
+time until the same. You may want to consider submitted your current 
+proposal and use the option provided in the GSoC website to update the 
+proposal before the due date (if necessary). This would help avoid a 
+last minute rush.
+
+Also, a feedback about your proposal. You would need to include the 
+detail about the microproject you've worked on and the state of the same 
+in the proposal. This helps us while reviewing the proposals.
 
 Feel free to let me know in case you face any difficulty with submitting 
 your proposal.
