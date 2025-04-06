@@ -1,130 +1,106 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D941D554
-	for <git@vger.kernel.org>; Sun,  6 Apr 2025 12:15:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8707C8CE
+	for <git@vger.kernel.org>; Sun,  6 Apr 2025 18:08:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743941726; cv=none; b=HgjbDCllVhLzrwABGEfEMs0N/5p1XfC98DjpnprWe+R3HKoEgxYEoYivZsWmkkOTn7QSN7aIdO/QJEO+Chxh9fWAQfy0Vafru10qPRNMk3/FGmZMdIfbwp0bUF+2M/foL0zvCsbeLxZpazBsmR6dcx1fJxShquu9diTNLTGZJIc=
+	t=1743962934; cv=none; b=RSfwHx+EcLSBcOdfJ3vGxBjXTN2Xkmk4IZIPtq8tOwe5El7sBj5Fb9NFHVCeKglBliW5RoRhTwKLKgEkcDCluKBbuWpHp7Jn8wlwNwAe+SM1ivdrQZM0oUz2SCQ8Olrst5ECveZLXhYZAQ/nyeq+36NoLKUZ6/0anOO/VjO8mMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743941726; c=relaxed/simple;
-	bh=/1D6b6Zi/5giW8NyDbqRZBQC/LiMTB5UX2VMTBZZdyI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+J/LbS8lIx9r8nyPZmA25dvofP+vjG3QmiuWRKZARySYaJlgcKR18+RdAxqn315Zepe7eSUXRCRJSdweJm89rb4Yq8K7xf7s4cMUvV5QiCekXchpj5+g1JSwxdiUR7f1ygPi2nb7jMpEGpsKKleGrYj1nu3RlGAUakwgQeXeEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jOMPP4Le; arc=none smtp.client-ip=209.85.214.173
+	s=arc-20240116; t=1743962934; c=relaxed/simple;
+	bh=EXmj/hlTPTHmZ+kUdVIx5C9Mws/H6B2RjtS7DWlCjD4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BjlW9FqFRvQljdsDd9+l8wGbSqEepZ1xYY5I7uUBwOmdvgYtxuIP0GT7+TEhIRbOpiYETKf2Y44mFcxvD8PITLU3/T5RM8EmKWxWyeIj/rjDN3m4U3mpA/IWGPBEmz6+IywVXo2w8U7Xvn6KlNFETvHZpTjc4ZMVFYSpg46v1MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TrEyaK4U; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jOMPP4Le"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-22928d629faso33509725ad.3
-        for <git@vger.kernel.org>; Sun, 06 Apr 2025 05:15:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TrEyaK4U"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-736c3e7b390so3104605b3a.2
+        for <git@vger.kernel.org>; Sun, 06 Apr 2025 11:08:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743941723; x=1744546523; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=swu2TJ65hx7qmfn9aSDweEL8/RrH6GPS/CF64HUBn/4=;
-        b=jOMPP4LeTjuMUZFP/IZo/AFrz90fZqkM512UB3P2Kq8y5n9WrNf/cKTYGAJL6d28i+
-         pvHBmVToWMzjZtJqI4+MP8dKSqe8SVNC0UdEmn9BuLFrGayAYr29rzc8+G7zRCcWO/7A
-         w1Y8mjZRyvco+2zqDsn4UV4XNxUUZ6BixFtPdcvLVBHHRKmorkXWMOuGXwFvVxzih5bx
-         Tp9PilDLeDHcIcpzziVsxr9/kDqvu4Ywcvg+az/K5thEo/jC+tp7K7VCxVH8iRbZ5iM6
-         XSJovfSSqrIfKsaiw8RclsF2xmv5gIgbe4pq8SUilH4Ge0GHDOIdMHUvWYidkrtzUUgE
-         xP0g==
+        d=gmail.com; s=20230601; t=1743962932; x=1744567732; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CVyiZMwsQlWiw7zcoIxF71eKntHJvFY7gaDC6FM6/+c=;
+        b=TrEyaK4U/tvz45TORjRWCkkpAaPvZdjmiIcSXiYIFNTGit57tR3eFDx/B02QS7Qro+
+         BFJAcqq7AfQnt2ZXn19r2DF8vs6tpaxSKa1FZMkx+uVKbkVy1GKD5bPyFEbzh6PT2UOl
+         A3GNL9axCOa+dMah7oC0Osa5f3pICaY0L0s0F/pcvzmdoSiJ9IV1+exxMh8J83fpA0Ub
+         GoFznxmuVn0aChULFShn3xCcnFKf/XsX0v8d2fWdhblNq0hBlj+/SYX/AuKDcHUcmvQY
+         eJJUrgDF2EdslEn0o0jbnlbG4I0IfsLWVJvzQfRDVgvPHVPyhtBIIIc8kIkMCLUHrlA3
+         /hdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743941723; x=1744546523;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=swu2TJ65hx7qmfn9aSDweEL8/RrH6GPS/CF64HUBn/4=;
-        b=pXAJw1BPFWeDSLnB5YFci7IWITJuTkJkeKHFYz5eFUc7AZyu5NJ/0JpWsiX+Nv4EQT
-         ZCufeBRSwk29/Bdg3pP9Hi/O0DtJ0pWeGxpDop2uCykXnXdNpygyH5wLUAmktNVmG0ne
-         noe24FnwnKglru3NQJFt8rW1xGs0LhtiTWiSO7IMO64rysoP/599SOVilrlajA/fuDE9
-         FRcKXdK28JvRXQi0iPu3uIePEZoAx85b2VYHyJ7jktF1Xph34ImAQXO3D1z1OJPsJvog
-         u48xhARUAocVMHtPkFzhhmhTNTg++bxk+fRIoyeBbEwaYRm/uCLOjPJky3770xWZKuNm
-         on7Q==
-X-Gm-Message-State: AOJu0Yw5eDFTTLFsFIYHqpQopGljiXksOPKxE4wuD7AgUxDldjH7A8Uy
-	CCa+5gzQcv599vheLXmi+jaKKJYFM4q4QQNDjX2eiQLN0wvpi9LbNAJji3nl
-X-Gm-Gg: ASbGncvHy5AzVhNYK5+lOy1xftxYi3G8IeiXG2TQnWBNCkYG+pgbJRQaL9oPp5nOvsM
-	AIc6w3bQANwrvKgzi+ufgfWPrefb6XzAkJanUJsI8JpDH+iuNp0vYQxrxSlyginULtD5fSFtcPL
-	a9uwxyASrKgM84F7d5I7McT0EFtxO92GGXwVFANzPjRZVvxNw+GHw6fMDKNAy0p7+NDj/KJ8wnd
-	8oaQz22GaEHZMhZ4Gwxq8bXOa6bX58wGe//UMJcy6MI+YyKDBESe8186TNWD53bzu1QRyzYaLK9
-	tsqIeZoW9fHbccoNOHtOspqHpmiiVdsnlXEZ/vIMqgmvbJGTFKpYkl2u/cpB8uX4y70n4kCWs0e
-	+R/9J
-X-Google-Smtp-Source: AGHT+IGAsjZnkRstoq+DLeKcnVHLOsFTI+wGJuaotYic4+LGFESFHcOyohZt4O7GOPuEGmQvnFEC/A==
-X-Received: by 2002:a17:902:db07:b0:223:4d7e:e523 with SMTP id d9443c01a7336-22a8a8e45a0mr110736465ad.50.1743941723575;
-        Sun, 06 Apr 2025 05:15:23 -0700 (PDT)
-Received: from archlinux.plaksha.edu.in ([182.75.25.162])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22978772ee4sm62410865ad.233.2025.04.06.05.15.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Apr 2025 05:15:23 -0700 (PDT)
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-To: git@vger.kernel.org,
-	christian.couder@gmail.com
-Cc: gitster@pobox.com,
-	johncai86@gmail.com,
-	me@ttaylorr.com,
-	ps@pks.im,
-	shejialuo@gmail.com,
-	phillip.wood123@gmail.com,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 1/1] builtin/update-server-info: remove unnecessary if statement
-Date: Sun,  6 Apr 2025 17:44:12 +0530
-Message-ID: <20250406121513.154084-2-usmanakinyemi202@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250406121513.154084-1-usmanakinyemi202@gmail.com>
-References: <20250329120327.105925-1-usmanakinyemi202@gmail.com>
- <20250406121513.154084-1-usmanakinyemi202@gmail.com>
+        d=1e100.net; s=20230601; t=1743962932; x=1744567732;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CVyiZMwsQlWiw7zcoIxF71eKntHJvFY7gaDC6FM6/+c=;
+        b=f0oIPbXnGOXWOdyPC0CqDio+C/JBiPo/4PN8PPd+4+wLBj7nkCu/gS7q4hdQtlCfyp
+         GK8olPl/8LXhdrS2d2tWVkbEz+yjQARWN9U7QEEcD2VI88iV3ZceJf38J2HnxdKbsTcC
+         4b5+xzrpT1RoejQtx+5jhTv7p7+3PEavB1w0+lrqiWwnEHtl+S5uhyFfWtQawSAxzRD4
+         l76fCorbuPY0OCdz0uaKs6AFVrl7wXqPY3Sw0TJIeoC6gm2hfNxQ2sQezM7luwx6G8UJ
+         tZYAxEsRuky+shE1TV4SxUFMadYLcuTVkPc2hSxItEzFoWj9G6QkCm1v5ILPvn+qd6XQ
+         gCpQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUSANyy1V5wbNeN1TTwuAm6SNadU+v7z5VqeM4iIEAlwmrkibhBDD4eDYSWgH0F1khhebk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyaEUznfZqRdaGnuos/tiVxFVfTI2V90lK+dj0LPWnSbZCHFP7A
+	yrOWBmZipcQ1SSQeQ6yGFYljWS5G9hqYL70O+tMsFkIRLWAJFLso
+X-Gm-Gg: ASbGnctIGuyRuRO41QEq+H7EiW63QFN+2LlAXytdSQ0MY1Zqvy5eYh5iO1+qAw6LWBC
+	rFVYxHt2GmkMfYqbABqEC2/sqe0635ZSjGK77Dgu2MpwhDc+59OYVMGdfB032Duf37TnOB4jFus
+	Xi8ZFLx9rkdP0GAxEFyuWctn4GSaeDpNw5Ma5GDDMv7kr5xrYU5XS7Cmhok91p+jJsY00+fo8hC
+	v4fzYyDyoHcZaLP9QrABjSEe0iltJ2nfYkXvPnUsEuPIhL4LEPG/yNx9fafe/eAC0qvgKjV/ZlP
+	pl63iksfKuC123wkMcNRR6lI4KiqaXX1x1XX3aW5VZbr5YaUdiZceA==
+X-Google-Smtp-Source: AGHT+IGQJSJCBv/AUE2KWuzGCWd3cOeddySYW4vL8Yaaoka8wyqpZHrimC+20AlAQOlBf7WHWuki7g==
+X-Received: by 2002:a05:6a00:1411:b0:732:5164:3cc with SMTP id d2e1a72fcca58-739e711fcf5mr12613991b3a.19.1743962931768;
+        Sun, 06 Apr 2025 11:08:51 -0700 (PDT)
+Received: from [192.168.0.7] ([106.51.24.41])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-739d97d17c6sm6930088b3a.22.2025.04.06.11.08.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 06 Apr 2025 11:08:51 -0700 (PDT)
+Message-ID: <f5ba0329-5789-4c20-a2ea-b213365af5a5@gmail.com>
+Date: Sun, 6 Apr 2025 23:38:31 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSOC] [Proposal v1] Machine-Readable Repository Information
+ Query Tool
+To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>,
+ Karthik Nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+ Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+References: <CA+rGoLfxZHdns=7FwQuYS=JANrR9zDP-dOpV2AxM1hC1Lc9wiw@mail.gmail.com>
+ <Z-5hlL1Gk0oi4fX2@pks.im>
+ <CA+rGoLfCTzNTcGXG5py6oHQazeE8Vj0fLsR4KUTJ6rSRFnT_Vw@mail.gmail.com>
+ <CA+rGoLeRXUQu8ZbDtaLp2_YbVGA5D1DeA2vSEcLf74qXjB5U2A@mail.gmail.com>
+ <CAOLa=ZQCTJLSWV-y-=nKf9J4xKr5miAo+35RktmbGmHPL4Sp-w@mail.gmail.com>
+ <CA+rGoLcDt0r0mDBk44SY0NcnG3mNBy5vSNBLzeggsGwJ4d-Cwg@mail.gmail.com>
+ <CA+rGoLc9g4werz-k4_ZzfNLLGHjzHoOcFYSmV5V-Krq04drgZA@mail.gmail.com>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <CA+rGoLc9g4werz-k4_ZzfNLLGHjzHoOcFYSmV5V-Krq04drgZA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Since we already teach the `repo_config()` in "1a764cdbdc
-(Merge branch 'ua/some-builtins-wo-the-repository', 2025-03-26)"
-to allow `repo` to be NULL, no need to check if `repo` is NULL
-before calling `repo_config()`.
+Hi Jayatheerth,
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- builtin/update-server-info.c | 4 ++--
- t/t1517-outside-repo.sh      | 7 +++++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+On 06/04/25 11:39, JAYATHEERTH K wrote:
+> # Proposal for GSOC 2025 to Git
+> **Machine-Readable Repository Information Query Tool**
+> 
 
-diff --git a/builtin/update-server-info.c b/builtin/update-server-info.c
-index d7467290a8..ba702d30ef 100644
---- a/builtin/update-server-info.c
-+++ b/builtin/update-server-info.c
-@@ -20,8 +20,8 @@ int cmd_update_server_info(int argc,
- 		OPT_END()
- 	};
- 
--	if (repo)
--		repo_config(repo, git_default_config, NULL);
-+	repo_config(repo, git_default_config, NULL);
-+
- 	argc = parse_options(argc, argv, prefix, options,
- 			     update_server_info_usage, 0);
- 	if (argc > 0)
-diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-index dbd8cd6906..6824581317 100755
---- a/t/t1517-outside-repo.sh
-+++ b/t/t1517-outside-repo.sh
-@@ -107,4 +107,11 @@ test_expect_success LIBCURL 'remote-http outside repository' '
- 	test_grep "^error: remote-curl" actual
- '
- 
-+test_expect_success 'update-server-info does not crash with -h' '
-+	test_expect_code 129 git update-server-info -h >usage &&
-+	test_grep "[Uu]sage: git update-server-info " usage &&
-+	test_expect_code 129 nongit git update-server-info -h >usage &&
-+	test_grep "[Uu]sage: git update-server-info " usage
-+'
-+
- test_done
--- 
-2.49.0
+Thank you for your proposal! Just wanted to send in a gentle reminder 
+that the proposal submission deadline is April 8 18:00 UTC. So, there's 
+very less time until the same. You may want to consider submitted your 
+current proposal and use the option provided in the GSoC website to 
+update the proposal before the due date (if necessary). This would help 
+avoid a last minute rush.
 
+Feel free to let me know in case you face any difficulty with submitting 
+your proposal.
+
+--
+Sivaraam
