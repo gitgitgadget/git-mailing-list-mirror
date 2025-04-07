@@ -1,152 +1,186 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91441586C8
-	for <git@vger.kernel.org>; Mon,  7 Apr 2025 20:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278B91EF0A1
+	for <git@vger.kernel.org>; Mon,  7 Apr 2025 21:28:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744059601; cv=none; b=AqL+nSQ6bsrT5L21X9YsEaK7huP6XjSYIJvOaq7mmA/qMmMvUzPNk6SlSPl9ax8Bgu7t8Y91xGfy9xUtiZem7UTtje4kybbdBYOkLFyka6uzpMnsbREsooZ5CdvO0+7zb5sqQ05Y945EuF5lFGq6zDAXpMVCxEdzeCqCc6pTcGo=
+	t=1744061323; cv=none; b=gT/AmpTZ1iV/ios/JyRMpIalZ97TwtrK2L8R9LIAZDLFm79yIkkaTpJvhIQjOkOtpsOeDOj7aMHXLyKgRds2xcpqA8mI9ItctSpIyTweeMX33nJOVsYA8m9EocEubv6KITCr9hpPpLO2NWbYEr8uy2jkHoHy4rFFEBeR/DFKIPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744059601; c=relaxed/simple;
-	bh=wYSLOOp0TOjp4/zVQSw0Y5VO1XzTYLndMukG9tcJfdQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fh4OcEehX5ZtuE4Ppbgf4bEV09k8po63E8lh95pdideZvLrof93HMUCqktoLE2xXbiONVCwqe0W4atm6xVW89V669DAyowUXt7mIS+BTuWkZalvre/llYPsg1TDQcXB1fobW/kJ0N2NtfJVYuUd+l/1cKumdxyeMBoIQApJRAPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IXAljZvP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b5jCa3gY; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744061323; c=relaxed/simple;
+	bh=6MujbZVmJ79bLnQuqcaa1WALT5tTwlG7FCHZnxDdjTA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=jxkQ6e7INF7VLBsVr79NPW8qPE8W760mVkqVbbyKK1B1icVCHclAGrzD3CW3aPcweExZ6SR4EE8dDKXd847Mwclc3koEzDMXAM//3A1321KJoibd6Z2ra6Ce3g1OmChyag0LRfrIXIPQD5tKw7gFVTLswFsbha0MVq4036layVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lcr7a/KL; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IXAljZvP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b5jCa3gY"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id B24D7114013F;
-	Mon,  7 Apr 2025 16:59:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 07 Apr 2025 16:59:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744059598; x=1744145998; bh=jb57mCcCsB
-	bBR0NOoNrg10r2iP7lgV0Hkjun58Pk3k0=; b=IXAljZvPM1KQq1rRxyOcrmxXK1
-	TMt/cuBGV7qpeDYIll22CtFcuX610bTxiJTo0zNoTUE8tjxg/NbjXQeZsFh1VNjl
-	cEhFVOhCb2TAUccS0OBlzm/W8K+Q/rrtMPV7ws8RXHdf4NQufTHEVwj/HpJOYBZv
-	ZyEW3OAySB8P0vb1v/0LYKIe1Bk40ir72fuF+H/lau6bTbdAXV5oOJ5muTl1YDjT
-	uRpEkIkMvraMkOrPtn0YDKMdgi+Jc6gxVbCD9nWSoHRiWx5zXULHUrgwfnng+xJo
-	gVCCa2RbKIydE4PjXLgvf/PFuey2NKod0gc62JUhxTENj8t0o/n+UbihJx1w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744059598; x=1744145998; bh=jb57mCcCsBbBR0NOoNrg10r2iP7lgV0Hkju
-	n58Pk3k0=; b=b5jCa3gYKp/FldOsWUBVYwCsmvX24FzzXMNa4v6O1das9ABd95e
-	Ju+P/1r9CYiJV7Tcf15x5ScDbZnxHV2EOivwVbto9BEK6rbkXsudtuqU46Agqmil
-	ujz61ET+yRtXwtN2aywebYLGbDqEkC53kPlq7B0NzJETOuVXbGWuKyTE0aTf3/R0
-	N7tw3Z6V3N7iZIKilrPYjRP3ng7MVJyAkg6dsXBhryRxdlJcb3MAHcSLvy2rwCng
-	Z0ZvE290OYFIPvIEZ2WPvcTNWEV3fjcMSrWEFxsMUrgw6y5j/aYa7djPd90oLoJi
-	onKFmk/R5alo9uQGXJgRvnbVDb9VrTIA06g==
-X-ME-Sender: <xms:zjz0Z3QjNMhaGT8E00fRYOq25oH6ZjET2m90Dds9scyW0jM0K2LERA>
-    <xme:zjz0Z4xs86T5ksMRzNYn0LPmd4j0MUyhEr5CTD0mwiuRu_VjSlp1tdbYoGyAwO5HQ
-    oXEdRHEbdMJHwhpDA>
-X-ME-Received: <xmr:zjz0Z81Xm19TkYQw4QV2zcAqgs0BwhKvBAzfUjqudf9XX_DGJXrcWTRj_rPr2w9ZUq8y2FB2f1uTPNBEnxzP9ksU0hlTOvTWaAZw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdduvdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrrhhtihhnvh
-    honhiisehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepvghkvghmphhinhesghhoohhglhgvrdgtohhmpdhrtg
-    hpthhtohepshgtohhtthesghhithgsuhhtlhgvrhdrtghomhdprhgtphhtthhopehrvghm
-    ohessghuvghniihlihdruggvvhdprhgtphhtthhopehphhhilhhiphhmvghtiihgvghrse
-    gslhhuvgifihhnrdgthhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zjz0Z3D85UEn70eTwc5MeK6EU0A51uZLxuJ_4YZXVGVpOxIVrpn0GA>
-    <xmx:zjz0ZwjgPMOI_I2LuRyX1U2huPFFskWLHJwq94OZnGQcStuMSzgr8w>
-    <xmx:zjz0Z7ovecouQX1h3zGWwuZBmaNuOzcIjFqu5uiR_j5bGrXxmJ82dg>
-    <xmx:zjz0Z7j_j9RBejkFqEyvtw8PWR3ZGDwBNZm7TR7KSurBtSg4gCo91Q>
-    <xmx:zjz0Z3w-wzAWQ2LmjncsYtdsdKUOdj-k2w-YXbrRJ2jbDXjSxXIalZDe>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Apr 2025 16:59:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Martin von Zweigbergk <martinvonz@google.com>
-Cc: Git Mailing List <git@vger.kernel.org>,  Edwin Kempin
- <ekempin@google.com>,  Scott Chacon <scott@gitbutler.com>,
-  remo@buenzli.dev,  "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-In-Reply-To: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
-	(Martin von Zweigbergk's message of "Wed, 2 Apr 2025 11:48:01 -0700")
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
-Date: Mon, 07 Apr 2025 20:59:56 +0000
-Message-ID: <xmqq4iyzn0vn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lcr7a/KL"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5e5e22e6ed2so7119927a12.3
+        for <git@vger.kernel.org>; Mon, 07 Apr 2025 14:28:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744061318; x=1744666118; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uzgE+CBD39mNLQAGltCcYjNAfsvcAK6ayzG7aZrAVMM=;
+        b=Lcr7a/KLy82vr4RoAE2CX1TgQ7toIsZphOjhOh3I76q+29Trlgsluwpbdab5/R44Ri
+         wmwQ7xWV+FLOi/0y22vxGxNFAHTPYzqjpQ0N5skS5A6UffYbaFE02AQtp8YZ4wATa+ov
+         lwDxGB5lnimek0jOiylOHa3mbAhzzDzQnPaLpeO2Hu/NgvXool3k0bH4PMUHZQ08R9cZ
+         93n8zUEBSNmODVbTJxOTxg/OfKCtLjhQ7tHBSOd35WR7/zmLBYRiWprN8YqXpVHOyMFY
+         U3RvEUrWGjfEMTyiHvEIN1y/AGn9sQLvSUMxAnB31ramC/B0lrQSqG48dbHqVplFZ5FA
+         tJNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744061318; x=1744666118;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uzgE+CBD39mNLQAGltCcYjNAfsvcAK6ayzG7aZrAVMM=;
+        b=lRA2LRxprI7XiESNVQL/Z/KaLeYjPzZU3NBdWwZQAmULqXunA8n2rgQE0J84HCP4n+
+         0IpTv18J+gI6JpKrx+ab08661WptPzuO8wu72zv6qVnHIcFyj3MUNuMJ57ojOMP/bPzr
+         0sKyD/DkkUl18E5hbQG793LDSYBV0kcFEtsjGdDkrALbxnbbtHAN+7jFxw5IpXZbzCZ5
+         MlyV3P9c+zO2lnBaF516hPPPivQBjFnn9eE4D0kEWqNNBrNCucveZca4it+6FWtoq+3B
+         wncphcm4lew3jCYyQhL3ROOvNsNenLIJbLgTWBZSJvDHUHZliL0c2HIdGNpYn3deth26
+         8ZEg==
+X-Forwarded-Encrypted: i=1; AJvYcCViyueBi5wAWQS80Blco2PTCcx4hzdbX34Iybji8MgzBRt0ZmO+Zaf5bSBkmrlBvM/PZ1c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyUX5FZnXUoNwOPcOaCpP0sBxercLzNWHlqbYhxgDYOaossi4GE
+	HKZFELaPv/GyI+iqbPlfaMGyymSRSa6QM3GzcQHe+FrM5AtfK4I=
+X-Gm-Gg: ASbGncvBdhwjonAF7UAuXfkKFu5fWzxxAxTX+T09mHZSEzJ3RgeKB4lON/za0GpW5ut
+	4qU9e2m6cJMYlriwlAzQu3qrvj/QRyrPKnajjDpHr24OR3XrAeIjlTyy0I6faTachnuPwQ0DhJU
+	aTBe1eqdWwWWq1ojYCoBanFN5ZkBHhTQ70AU30VUOCev039ANfFHVaFGm9rFR9i0DFGOxo/7JpQ
+	mx/jmTOBlKmouBLmWGSP1NBV1eghNpmzbcarTQSUe5ZHlWL0R/gkJRMAQK0+1KtjtUy66YRdRgR
+	u4UQkbF9ljw0GYQ6lNbd9tZPV9HyDOwip4yysU0DZsMG8FUvSFT+QhrPbaqUCc8PAB0FGrYjabo
+	lUHPGPXp+zOdUIKZpuE2+ynprS059a19BBA+SbY9LI6/7sqFAWy4PDwFbF6X9VetDlCOT8AK7Tl
+	O1KP9lkYCTJJ1WDeDaMzm3T7I=
+X-Google-Smtp-Source: AGHT+IHjnqLFvt7aviad/+App6ckXzQWHnqNYusAe5L9zcrN+wsEZVRStyH/ia7elNvmyBHqRGSj8Q==
+X-Received: by 2002:a05:6402:2713:b0:5ed:d988:ae0c with SMTP id 4fb4d7f45d1cf-5f0b661a489mr11384756a12.24.1744061318140;
+        Mon, 07 Apr 2025 14:28:38 -0700 (PDT)
+Received: from Anthonys-MBP.homenet.telecomitalia.it.homenet.telecomitalia.it (host-79-1-195-126.business.telecomitalia.it. [79.1.195.126])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f0880a45bdsm6978080a12.71.2025.04.07.14.28.37
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 07 Apr 2025 14:28:37 -0700 (PDT)
+From: Anthony Wang <anthonywang513@gmail.com>
+X-Google-Original-From: Anthony Wang <anthonywang03@icloud.com>
+To: gitster@pobox.com
+Cc: anthonywang03@icloud.com,
+	anthonywang513@gmail.com,
+	christian.couder@gmail.com,
+	git@vger.kernel.org,
+	karthik.188@gmail.com,
+	ps@pks.im,
+	shejialuo@gmail.com,
+	shyamthakkar001@gmail.com
+Subject: Re: [GSoC] [PATCH v2 1/3] t9811: avoid using pipes to expose exit codes
+Date: Mon,  7 Apr 2025 23:28:34 +0200
+Message-Id: <20250407212834.53183-1-anthonywang03@icloud.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <xmqqo6x7nb2a.fsf@gitster.g>
+References: <xmqqo6x7nb2a.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Martin von Zweigbergk <martinvonz@google.com> writes:
+From: Anthony Wang <anthonywang513@gmail.com>
 
-> For example, it enables
-> `git rebase main <change ID>; git switch <change ID>` without
-> requiring the user to look up the hash of the rewritten commit.
 
-I do not quite see why this can be listed even as an advantage,
-unless you are going to allow end users to name the changes, instead
-of using auto-generated impossible-to-remember hexadecimal string
-(perhaps prefixed with a single "I" or something).
+On Mon, Apr 7, 2025 at 7:20 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Anthony Wang <anthonywang513@gmail.com> writes:
+> 
+> > The exit code of the upstream in a pipe is suppressed
+> > thus we lose any exit codes of git commands that are piped. In order to
+> > ensure we pick up the exit code, we can write the output of the git command
+> > to a file, testing the exit codes of both the commands.
+> 
+> Sort of correct, but ...
 
-> If the change id also transferred between repos and preserved by
-> a forge (such as Gerrit), it enables the change id to be used to
-> identify a code review.
+Would it be more correct to say that the shell only returns the exit code of the 
+last command in the pipeline? Then, by writing out the output of the git command 
+to a file, we can test the exit codes of both the commands? If not, I am not 
+quite sure what the additional nuance is in this case.
 
-People often talk about rebasing and rewriting in the context of
-discussing "change IDs", and for 80% of the use cases where a simple
-single-commit topic is involved, it would perfectly work fine.
-After making a new commit C0 on top of 'main', updating 'main' with
-others' changes, and then rebasing that C0 on top of updated 'main'
-to produce C1, you would expect that C0 and C1 are moral equivalents
-so it is natural that you wish there is a name to give to these
-moral equivalents.
+> 
+> > ---
+> >  t/t9811-git-p4-label-import.sh | 10 ++++++----
+> >  1 file changed, 6 insertions(+), 4 deletions(-)
+> 
+> Missing sign-off.
+> 
+> > diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
+> > index 5ac5383fb7..5abac938d0 100755
+> > --- a/t/t9811-git-p4-label-import.sh
+> > +++ b/t/t9811-git-p4-label-import.sh
+> > @@ -95,9 +95,10 @@ test_expect_success 'two labels on the same changelist' '
+> >               cd "$git" &&
+> >               git p4 sync --import-labels &&
+> > 
+> > -             git tag | grep TAG_F1 &&
+> > -             git tag | grep -q TAG_F1_1 &&
+> > -             git tag | grep -q TAG_F1_2 &&
+> > +             git tag >output &&
+> > +             grep TAG_F1 output &&
+> > +             grep -q TAG_F1_1 output &&
+> > +             grep -q TAG_F1_2 output &&
+> 
+> Think what these tests are trying to do.  After a "git p4 sync"
+> operation, they want to ensure that tags TAG_F1_1 and TAG_F1_2
+> exist?  Does the test want to see a tag "TAG_F1", or is it only that
+> the test is written in a so sloppy way that grepping for TAG_F1 will
+> be happy when any one of TAG_F1_1, TAG_F1_2 and TAG_F1_ONLY exists,
+> making its purpose of verifying that the tags are in the expected
+> state pretty much useless, and that is the reason why it needs to be
+> followed up with the two extra tests?
 
-But stepping back a bit, if they are not just moral equivalents but
-record identical changes that are so same that an earlier review of
-C0 makes it unnecessary to review C1, why are you even rebasing in
-the first place?  Just merging C0 to the updated 'main' would retain
-the earlier review made on C0 and things should merge just fine.
+I see, it seems I didn't fully consider the goals of the test. It does
+indeed seem like the test has some redundancies. If I am understanding
+correctly, the test grepping for TAG_F1 is not even necessary, and it
+seems like the tests for TAG_F1_1, TAG_F1_2 were added afterwards to
+ensure that grep TAG_F1 was not passing when TAG_F1_ONLY existed. If
+this is the case, would it be better to just remove the grep TAG_F1 test
+and just keep the two tests for TAG_F1_1 and TAG_F1_2? This would
+simplify the test and make it clearer that we are only interested in
+the existence of those two tags.
 
-I have more problems with the remaining 20% use case, where you need
-to deal with multiple commits.
+> 
+> What is the desired state you want to ensure after "git p4 sync"
+> operation above?  I do not do "git p4", but you may know better than
+> I do, as you are the one who is patching this test file ;-)  I am
+> guessing that you want TAG_F1_1 and TAG_F1_2 to exist and you do not
+> want TAG_F1_ONLY to exist?
+> 
+> If so, instead of grepping around, we should be testing that in a
+> more direct way, perhaps with something like
+> 
+>         git show-ref --verify refs/tags/TAG_F1_1 &&
+>         git show-ref --verify refs/tags/TAG_F1_2 &&
+>         test_must_fail  git show-ref --verify refs/tags/TAG_F1_ONLY &&
+> 
+> no?
+> 
 
-Perhaps your initial changeset is a single commit C0 that is so
-large and does too many things at once, and reviewers would
-naturally advise you to split things up.  You'll come up with a
-series of commits, C1_0 and C1_1.  The net effect of applying these
-two patches may be the same as applying the original C0, but each of
-them is more cleanly separated to address one issue at a time, and
-the explanation given in the proposed log message more clearly
-describes the issue each of them addresses.  Now you gave a change ID
-to C0, and want to somehow relate C1_0 and C1_1 to the original C0.
-Which one gets the same change ID?  Earlier one?  The last one?
-Both gets the same change ID?
+Possibly, but I believe adding the test_must_fail check would be modifying
+the original intent of the test, as it would pass even with the existence of
+TAG_F1_ONLY. However, if we are only performing actions to cause TAG_F1_1 
+and TAG_F1_2 to exist, then it would be an issue if TAG_F1_ONLY existed.
 
-Or your initial changeset is a two-commit series, C0_0 and C0_1, but
-reviewers find that each one of them alone is not complete, and
-because the issue addressed by these two is small and isolated
-enough, you are advised to make them into a single commit C1.  Did
-you start with two change IDs for these two original commits?  If
-so, whose change ID the updated commit C1 inherit?  Or does C1 have
-two change IDs now?  Or did you start with a single change ID
-assigned to both of these two original commits?
+My original plan was not to change any test coverage, and to only make small
+changes following the goals of the microproject, but if you think it would
+be beneficial to change the test to check for the absence of TAG_F1_ONLY,
+then I will proceed.
 
-Quite frankly, I think the concept of "change ID" is nice but it is
-not mechanically trustable.  Recording them in the trailers is fine,
-but I somehow feel that they have a clear-cut semantics everybody
-can agree on to deserve to be in the header part of commit objects.
-
+> >               cd main &&
+> > 
+> > @@ -208,7 +209,8 @@ test_expect_success 'use git config to enable import/export of tags' '
+> >               git p4 rebase --verbose &&
+> >               git p4 submit --verbose &&
+> >               git tag &&
+> > -             git tag | grep TAG_F1_1
+> > +             git tag >output &&
+> > +             grep TAG_F1_1 output
+> >       ) &&
+> >       (
+> >               cd "$cli" &&
