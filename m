@@ -1,126 +1,177 @@
-Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D351F4199
-	for <git@vger.kernel.org>; Mon,  7 Apr 2025 22:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2460B665
+	for <git@vger.kernel.org>; Mon,  7 Apr 2025 22:51:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744064634; cv=none; b=XGS2SPkRkjNp7zj5f3Mz46GqFG3rWTwFNk0nXc1GPFEtSfGfg3yXk2gsPLXZ8ML5Xz2x7YZlNZOYyrzVjpHGA6n0bjjMZQ6Uw7X4VZmhmMs+X2Wc7VK13zu6dgNDx8EMqg0URohbkvP7vmamw08oP3s3HDuGHe3Tj0jzJusTlUQ=
+	t=1744066308; cv=none; b=AVbnlM3G3GvdZBXGIEyyDI9M33aVUJTFcAWgd6MrXqvLqF0H1g7YtxBzXapFjXDE+p9yIpulW/PlkX2VdUvHjnaa4+dyaxMNAvgeCiv0hmOnNEa/e5sifedPsCDdVLXNYjfxa3b2WswV5PSu28SLNomsq/69z1KpXAhAly3r0GM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744064634; c=relaxed/simple;
-	bh=dbu9TYcgQj4Jvc0mWWKUnLxD06vSyUq+Z1K7UA3HDJc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZBBeLnqrX4KpTr2BZRVFx0x4ECivxoouuYSR4Yw5dvC/bhlnQkMA0o2ivq+TSR5I2AqPo2E8sHREAQEQwEfy8AX0FzgDolIhn1tlqaPalgSQ8X/n7BNzaeYU4aDIMo25lycABmjyeZrt9/bWW4ZNN3++N+w6SWAR2O8v9B4Qa9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eDw5GS6P; arc=none smtp.client-ip=209.85.166.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eDw5GS6P"
-Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-85b40c7d608so423961739f.3
-        for <git@vger.kernel.org>; Mon, 07 Apr 2025 15:23:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744064631; x=1744669431; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T5WCRjBPTnX/wC694W+zBsnBIOhT5zBA/M4Ab5qNU88=;
-        b=eDw5GS6PNbRCHgjAs72sqLTEvw7Ro0yBg0Lo3SjwdDwhC+xI8Ag6i4Ukt+qGED1NoN
-         euS+Wxq334LQbkEBnN9cFWc/MlurVUFaRNPfyZPGoU6GU3MskHHerooC6L3xj9U9yvHX
-         3CnC6vL7NPaoP1sWXluJCYkG7+jHBr2ZXC4y8+k5d82/IRnMfypI1NfmuTHRW/hFP/mm
-         S3x12wEh/Ip+iKgqqYZqnNE07M4nJMs3/OpfqIl1P31vgmmQRlpjLjsCpJkOHSCiTRrI
-         pd0P5PTpPXl8BkakhatVmIoXzEhuIXREn8OCQQxSTBhb3xojKBuQZOy8reTugoK9M23e
-         /7UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744064631; x=1744669431;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T5WCRjBPTnX/wC694W+zBsnBIOhT5zBA/M4Ab5qNU88=;
-        b=k+vc0EJh3G5fnignvZ8zYPrZocDfDKdT+qWZugDvRK4Xf9LmuiBg4bp4hJ4X0NfNTO
-         tG6k3ONgRdnUjP9tLcoTORDkfG/gbaQfDZmPuja+Awe66fjRZIFdHUabQoJHxfAFduuj
-         Fm+XyVsujijgTe0RkzxkN24vzhmhru0LJu+3/30CN7FHaX9R/jUbuqXEQ8iPLqEezTh+
-         X5jyn6iIgyKMqtANm5vEuAnXAmVQXzSlM8A3DHwz8t9fXJq3BJ3Lq+n+i0bKOF7qUNRE
-         lgbLiJYoqubzMBe9nW012p4MkOp9JDH/y8M5sC+Jw6VN1G2Tmv+MjBPRDJrBZInLi5LO
-         FgMA==
-X-Forwarded-Encrypted: i=1; AJvYcCVG0mc5qLZ8ybkCfqBV8dmC4l11OUZJrCkjxw3PLyXLtyyO2MS+fjk8CZlJsT6DHIFEh5c=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyfj1udSHFd2ygBJDShV2sDELg+zOKI6X+rSqCzt9Ik9utm04V8
-	vgwEsgNAqXYOGY0Bnftm091U1QYSSNyWLhkRM813gEc23UWBvOhMtnqt3Ut3MZiMwz1JT7yHo1k
-	LLs2WDy59TYK0FaNMn+Oz5/UOMP++yaU+
-X-Gm-Gg: ASbGncsqXu/x7ivfU90ylrP8g5htnonYbNa1bcGzT+sJVICcaI3UM7SmhaBMcU7U2Cj
-	ekPwhxFzZSOCjkMrjsHTy1mcZthWGTy6wu2l4r1ebQFJxeUCTplYpIwnruoy1OtN9P5KYEBCH2j
-	5KFpAp39NWeMUIzysecaGtJOChL8JWIE8xrHNW09qDICq7cQbH5JcO5Anq2AM=
-X-Google-Smtp-Source: AGHT+IFkON5BheoH22xtYWkqGa6RUL8xkDKChemH+oSQ0KypsxpA99FQ49rPn10JMubaqe0eyUgsH+04OXPu9JU0bQM=
-X-Received: by 2002:a05:6602:379b:b0:85b:3fbc:e55f with SMTP id
- ca18e2360f4ac-8612aa3080amr1415824039f.4.1744064631494; Mon, 07 Apr 2025
- 15:23:51 -0700 (PDT)
+	s=arc-20240116; t=1744066308; c=relaxed/simple;
+	bh=de9deFVKAbcEmmPj4InZYUH1N4+RvULEWw1hsDhUdIM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=JxPc9x/EKeUcgLmkhOjUf0ou81yWmFrUfy46lmQMcyFWwLAjAgMtIa7N219wa78eM/ewEsYGjMnID2L6gQtW+DI0RPSd8R9j5N+OAXzW92YWFcaR05zUp4qbxtTqKXXmimXLMcZx6Nq9rz2phw0XIaR7UfgJLa2Ol38TXSgV4vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev; spf=pass smtp.mailfrom=buenzli.dev; arc=none smtp.client-ip=80.241.56.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=buenzli.dev
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4ZWkwY6WKzz9sdW;
+	Tue,  8 Apr 2025 00:51:41 +0200 (CEST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <pull.1898.git.1743436279.gitgitgadget@gmail.com>
- <pull.1898.v2.git.1743891374.gitgitgadget@gmail.com> <xmqqiknfn36y.fsf@gitster.g>
-In-Reply-To: <xmqqiknfn36y.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 7 Apr 2025 15:23:40 -0700
-X-Gm-Features: ATxdqUErz9aJRretM6fiYMDBvicTRVpio1fCH5We41llrSTUposWut7hb7Kj3JY
-Message-ID: <CABPp-BGN2JCt9BJ0wQqtgNLhD6Qf19PMzYWpjgpJ6O2OcyRCXg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/8] Debug merge-recursive.[ch]
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 08 Apr 2025 00:51:39 +0200
+Message-Id: <D90RWL4FEBQA.1UNOR59T3U98R@buenzli.dev>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+From: "Remo Senekowitsch" <remo@buenzli.dev>
+To: "Junio C Hamano" <gitster@pobox.com>, "Martin von Zweigbergk"
+ <martinvonz@google.com>
+Cc: "Git Mailing List" <git@vger.kernel.org>, "Edwin Kempin"
+ <ekempin@google.com>, "Scott Chacon" <scott@gitbutler.com>,
+ "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com> <xmqq4iyzn0vn.fsf@gitster.g>
+In-Reply-To: <xmqq4iyzn0vn.fsf@gitster.g>
+X-Rspamd-Queue-Id: 4ZWkwY6WKzz9sdW
 
-On Mon, Apr 7, 2025 at 1:10=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+On Mon Apr 7, 2025 at 10:59 PM CEST, Junio C Hamano wrote:
+> Martin von Zweigbergk <martinvonz@google.com> writes:
 >
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> For example, it enables
+>> `git rebase main <change ID>; git switch <change ID>` without
+>> requiring the user to look up the hash of the rewritten commit.
 >
-> > This series does some preparation, then moves the code shared between
-> > merge-recursive and merge-ort from the former to the latter, and then d=
-ebugs
-> > the remainder of merge-recursive.[ch].
+> I do not quite see why this can be listed even as an advantage,
+> unless you are going to allow end users to name the changes, instead
+> of using auto-generated impossible-to-remember hexadecimal string
+> (perhaps prefixed with a single "I" or something).
+
+Since the change-id will use a "reverse-hex" alphabet (z-k instead of
+0-f), prefixing an "I" won't be necessary for disambiguation.
+
+In the case of Jujutsu, there is a configurable "immutable revset",
+which represents the idea that people usually don't want to force-push
+over the master branch. If the user specifies a change-id prefix that's
+ambiguous, but only one of the commits it could refer to is "mutable",
+that one takes precedence. So in practice, the commits one is currently
+working on can be identified with 1-3 characters, which fit comfortably
+into short-term memory.
+
+While that feature isn't implemented in Git (yet), it shows how such a
+usage pattern can be very ergonomic.
+
+>> If the change id also transferred between repos and preserved by
+>> a forge (such as Gerrit), it enables the change id to be used to
+>> identify a code review.
 >
-> Help unconfusing me.
-
-It was an attempt at humor, which importantly relied on the sentence
-you stripped out immediately before this part you quoted, namely:
-
-> > As a wise man once told me, "Deleted code is debugged code!"
-
-With this sentence as context, "debug the code" was a funny way of
-saying "delete the code".  Because if it's deleted, we are no longer
-affected by any bugs contained within it (and that'd be true for both
-known bugs and latent ones we hadn't triggered yet).
-
-> I've already named the topic with "debug" in its name while queuing
-> the original iteration of this series, as I was on vacation and did
-> not want to spend more than minimum braincycles on naming, but now I
-> am back, I sense that the use of the word, and the proposed log
-> message for 6/8, are overly suboptimal.  If you are referring to
-> fixing remaining bugs, "Debug the remainder of merge-recursive.[ch]"
-> is not how we usually describe our fixes.
+> People often talk about rebasing and rewriting in the context of
+> discussing "change IDs", and for 80% of the use cases where a simple
+> single-commit topic is involved, it would perfectly work fine.
+> After making a new commit C0 on top of 'main', updating 'main' with
+> others' changes, and then rebasing that C0 on top of updated 'main'
+> to produce C1, you would expect that C0 and C1 are moral equivalents
+> so it is natural that you wish there is a name to give to these
+> moral equivalents.
 >
-> I suspect that the overall sentiment behind this series is ...
+> But stepping back a bit, if they are not just moral equivalents but
+> record identical changes that are so same that an earlier review of
+> C0 makes it unnecessary to review C1, why are you even rebasing in
+> the first place?  Just merging C0 to the updated 'main' would retain
+> the earlier review made on C0 and things should merge just fine.
+
+Some people (including me) like to / are used to rebasing often and
+keeping a linear history on master as possible. I'm not aware that
+there's anything wrong with that.
+
+In practice, I don't think this will cause any problems. The change-id
+will help the code review tool to identify the commits as morally
+equivalent. After checking that the other review-relevant data (patch,
+message, author...) is identical, the review tool may choose to mark
+the commit C1 as "already reviewed" without any user intervention.
+
+And if the data has somehow changed, only the interdiff of that can be
+shown for review, which is precisely the kind of benefit we're aiming
+for with this header. It has been pointed out that git-range-diff can do
+this in a limited fashion already, which we can hopefully expand upon.
+
+> I have more problems with the remaining 20% use case, where you need
+> to deal with multiple commits.
 >
->         Such and such bugs existed in the older backend, but now the
->         newer backend is used when the older one is asked, and the
->         newer backend does not share these bugs, we can simply
->         remove the buggy code specific to the older backend.
+> Perhaps your initial changeset is a single commit C0 that is so
+> large and does too many things at once, and reviewers would
+> naturally advise you to split things up.  You'll come up with a
+> series of commits, C1_0 and C1_1.  The net effect of applying these
+> two patches may be the same as applying the original C0, but each of
+> them is more cleanly separated to address one issue at a time, and
+> the explanation given in the proposed log message more clearly
+> describes the issue each of them addresses.  Now you gave a change ID
+> to C0, and want to somehow relate C1_0 and C1_1 to the original C0.
+> Which one gets the same change ID?  Earlier one?  The last one?
+> Both gets the same change ID?
+>
+> Or your initial changeset is a two-commit series, C0_0 and C0_1, but
+> reviewers find that each one of them alone is not complete, and
+> because the issue addressed by these two is small and isolated
+> enough, you are advised to make them into a single commit C1.  Did
+> you start with two change IDs for these two original commits?  If
+> so, whose change ID the updated commit C1 inherit?  Or does C1 have
+> two change IDs now?  Or did you start with a single change ID
+> assigned to both of these two original commits?
 
-I'd say the sentiment is more:
+These are good descriptions of realistic scenarios. At a high level, I'd
+say change-ids don't help much with these problems. But that's OK, they
+don't need to solve all problems to be worthwhile.
 
-   merge-ort was always meant to be a replacement for merge-recursive
-   (and has various advantages -- worktree-less and index-less
-   operation, faster, fixes some bugs); let's convert the rest of the
-   callers over and then clean up by deleting merge-recursive (as
-   well as removing the extra test scaffolding added long ago to aid
-   in the conversion).
+A commit only ever has one change-id. (Other headers may be useful, but
+they should have another name and should be disussed separately IMO.)
 
-In other words the bug fixes, while real, were not the thrust of the
-story.  I showed a handful of people my existing commit message and
-cover letter, all of whom found it a humorous way of stating that
-we're finally replacing merge-recursive.  But, since this intent
-wasn't obvious to everyone, I can re-roll with some clarification.
+In both of the described scenarios, it doesn't matter which one
+inherits the previous one. When a commit is split into two, the one that
+inherits the change-id will show up in review tools with half of its
+patch deleted, the other commit will show up as new. When two commits
+are combined into one, any one of the change-ids is inherited. Review
+tools will show the patch from the commit the ID was inherited from as
+preserved (maybe even hidden) while the patches from the other commits
+will show up as added. If they were previously reviewed, those reviews
+will be "lost".
+
+So, while these scenarios are not ideal and somehow ambiguous, the
+ambiguity doesn't present any real problems in practice.
+
+More importantly, I disagree with the 80%-20% split between these
+scenarios. There is another one that comes up a lot, and that scenario
+is the one that benefits the most from change-ids. Namely, when multiple
+commits are carried together as a patchset. These commits can split
+out into little subtrees that are constantly rebased to keep up with
+upstream, while the commits are amended, reworded and so on. They can
+sometimes be reviewed as a whole, where people are generally looking at
+all commits at once. But they can also represent dependencies between
+entirely different features. For example, bugfixes will often be at the
+base of this tree / patchset, while features that depend on it fan out
+from there. Here is where the change-id shines: As commits are amended,
+reordered, rebased and reworded, their evolution can be trivially
+tracked. There are discussions around the topic of "stacked PRs", which
+is basically this exact scenario, just managed in a specific way.
+
+I find myself working this way a lot.
+
+> Quite frankly, I think the concept of "change ID" is nice but it is
+> not mechanically trustable.  Recording them in the trailers is fine,
+> but I somehow feel that they have a clear-cut semantics everybody
+> can agree on to deserve to be in the header part of commit objects.
+
+I think the concrete examples above show that while change-ids don't
+solve all version control problems, these remaining problems don't
+diminish the value of change-ids either. I also don't see any potential
+for different tools in the ecosystem to disagree about the semantics so
+profoundly that interoperability would be hampered.
+
+Remo
