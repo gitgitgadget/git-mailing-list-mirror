@@ -1,80 +1,112 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D636A50
-	for <git@vger.kernel.org>; Mon,  7 Apr 2025 00:24:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544941957FC
+	for <git@vger.kernel.org>; Mon,  7 Apr 2025 02:32:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743985472; cv=none; b=ZJTriHA+Wd8wRgU4WH8ZkR9ykgaw0+YGj2HaJ/C2NkgVY5y32U8SoJ8FX3KK6QyNOwUu+mSjFnmx0mn14Fs/V5mvbNA9nPjkf74jII2OPRJ+winoiR7rkx9JYmFq4EZOJzD1dJ0wXv1+XFWtMu8s68shco7JLgm8HXcwB2o9zS4=
+	t=1743993159; cv=none; b=MpYjHgo4D0XYkIAOwtx+/iGtSD23DVnx3Xf8rnduWxksvJC4JRMc/Qo4dnUfnceWKufCrs5WP4RrYOtXWb1Ya1t5GDIfPImcW5I5KqHd+OGzzUtFXRR0parHTC+awJ0BSje2oFDDSiWHyPVEOOCEbr32hjMHRp9YnfaGqm2OZLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743985472; c=relaxed/simple;
-	bh=7W+dEY4DOPTm+i5Gjvv8XTNSw8ugj/86V8CPBzpkkb8=;
+	s=arc-20240116; t=1743993159; c=relaxed/simple;
+	bh=Ee4qL0ixXaOCU0k4CCgjf6SAPqW1q3SXyqHpywdUcwU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qifsR8A4M5J8O2zxiYsv5XNkH2rG5m9BVW4W61+qxsflqDl/ZR9gXCGgcLMqyBQ6aoQAe6a7AxEtF/rVfhc/KIzCFYmNZ5h/mmi5i47CyGWW3J9/ap8SyZafkz73ekjIYy5MWvr9PQEDwpeGDVwmUxTHFbvkUECEtQZ9j/iFOGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	 To:Cc:Content-Type; b=E/HRprnkb9jt+nMbJZi4/xj1HhydWI+2IatXxvK+HaGWTX+b6Frp9sVQ7IoinoTcME6b63nFlWrh/6Bj1fjB6Uvdh1qq5EFLv1gCKR6JMj9z92P/PeOM5muHKmkpnuNN79oXSz2e6X20VHnyBUVEodtzui8CsOHpmE3wGkcSaL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bv/mj49R; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6e8fa2d467fso6024506d6.2
-        for <git@vger.kernel.org>; Sun, 06 Apr 2025 17:24:30 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bv/mj49R"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-477282401b3so40811501cf.1
+        for <git@vger.kernel.org>; Sun, 06 Apr 2025 19:32:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743993157; x=1744597957; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ee4qL0ixXaOCU0k4CCgjf6SAPqW1q3SXyqHpywdUcwU=;
+        b=bv/mj49R7SDCvYF9avlB+dN0wfpjaPpDosSuOh90T+AdU8vhV1x+iHqHzlN0RBnu4L
+         C7V/LlHwqN7l76K1NvM0uSmSi8t31DUrtLnmINRbi4fQUcDJNcGRUcEv1ZlTMCozkv2e
+         Y+SbVikAUYnntQU0GqPu7nl+4L5FORspWVhsesziGjQ7lsGjwPgXyOPbRlP8WrVDmENE
+         YjiDmmUdaim5F8OuEDHEUl4Q0BnLI7SRv++M0pR7K9OxMvqm+vNThNJgxV2odoZvxTIH
+         PHLvSuSVqUPbS69N4PaJcDCLyMfr5PFMcryZt5Re0KFITGM1027hQR4Dh/loY3ksnmDZ
+         xYDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743985469; x=1744590269;
+        d=1e100.net; s=20230601; t=1743993157; x=1744597957;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7W+dEY4DOPTm+i5Gjvv8XTNSw8ugj/86V8CPBzpkkb8=;
-        b=daokXc75JE0L4AMBHzX+qWOLKGglyTpkoirHLsYzYpRujoWg/4t9sqW4semNJmt4Ru
-         9vcHbacj9aOHPUifavfopU219uFrhLiHxh3fomoptSopMV7kkg2Fk0a5AtmeMBlztNpa
-         /Lwyw5eWoxIL7gX1YdHKJHVuH6cPIC9l7W7hDcomFbB9wM1s2i4G6w2ymUilb90kZuy9
-         MbVweF9/HIhm7LhNU4DbCnrsE//Q/gbcmFJhbMwDirp9ZH7wkkfz/zDWNyzhcXn7LXSg
-         PMavus7u9DTTJXaxpKlx2RLC2tKFFEHrKcF67vFnqwhr1eOKPqyjhWt58Hl6uhwN3kpd
-         +Q9w==
-X-Gm-Message-State: AOJu0YzJMTTyCXSFGJ4evw0Qz7C5Gp2+Wpprn58krQeH+9OEZQdnGQOZ
-	8DH/0gZCUQqvFw6rmu4vqnP1IaZjQPZJW339UpbuEjgLmcSPm5bb8KcSLCD6ntI9Wlcioq6PRQB
-	znlfqyoPmFpwiZmjG00YavofsR8c=
-X-Gm-Gg: ASbGncuLOXXtVj592z1WY9pRToO4+y5Z8VEW+yojzslzh1CDx1XC34zwBmVySzLaOqb
-	tB+vSaf54ZXVrFJp8tsztv+tFhe8T+VXSuweOIGZO0jQ2+xbIxaYvMk0pxFUX9dG1eppHoyqrzj
-	TC2EZMo3krE0kCE/2Fym26GQLkHeSWycEjS/peGt3d24C+33AXDZbdr/uFa3k=
-X-Google-Smtp-Source: AGHT+IHkxudGC9qjAlua9VFouAN+QYV3KU/X9oMezqR/nLzwvBklFolmYhd9C0KyYIraSw2PVnCOnEUScnphU2/1eCs=
-X-Received: by 2002:a05:6214:cac:b0:6e8:9f7e:8116 with SMTP id
- 6a1803df08f44-6f00df1d8d9mr52218946d6.5.1743985469233; Sun, 06 Apr 2025
- 17:24:29 -0700 (PDT)
+        bh=Ee4qL0ixXaOCU0k4CCgjf6SAPqW1q3SXyqHpywdUcwU=;
+        b=bZ8AMB86AXVDlMv3bQSE1/FfEk/C7rjFDzoJrjYnzmbUlR4/xBzNHzJRZHJOBcD9iY
+         UMsJXqAtJOcLlZvIv/Si5M9LneUDUCZvqAIFG/l1FC4v+d0xV22cnRSnqImNWRvLRf+q
+         GxQ7ZeePtwVvwvBPI2vfuIt0pt3MvA/DLGwSbGhtj5+Ri6H+c8tSrHTqnIOfN9GggVpj
+         WSXekk6gLajiOvg34Oup1Pytroq+Mwajfsao0PCBCFdz55u3cRzqFulmxOt116jIYSTq
+         bZQzZIshHdmN16wHoYCtRyeZhd/1FoQVSTxRhYm2cFgYltG+uWPXCDO0PZd0Z4/7WCwy
+         BuEw==
+X-Forwarded-Encrypted: i=1; AJvYcCViHzeqe4aROimZ0m7e7xeOX8TyMKAoGlfaLUkrfmSmlUeaPuxACVQ4VJducEae2zsOebk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxojorXlc9R2L0omoWLqWmVd5x9q+kCE356uAKZjbRtKV+Jx8Cj
+	+d8KwG/ZofxATvrlHWuOSUEu51JHmqfO6aY/iWhjF8Hln4Wq/xSkGy2MIgxIrhMYM1/4YjJ8aqG
+	oia9+DymzZEYx5jaeMjO00USVpK5avg==
+X-Gm-Gg: ASbGncvK7gKh3EBbscqD9e5gs869jCOZBOMmNEguH5zZifY71EkyjIe8CStqahwDqbG
+	JaJBENK56fL+57KzVJasQCwZ94YMdxf0SaTjv+rh7g835LAJIHb+DqUv54+a8EXbyKwwpIOY6FQ
+	xsTtUBx7FLBSqCe/DmGJMb1DOGx4ZKk5Pxn1tXNpRkNmbR3AQhzRCJlXNheLJT0TDPaTD4gQ==
+X-Google-Smtp-Source: AGHT+IH1viB3VlG6XmnjieuW9gQ2z9kWmnraPSdeuosyrqG7nlze+cRZH8rtE4B2QLSzHq1BZJrPh4L06E7XLteC3MU=
+X-Received: by 2002:ac8:5915:0:b0:476:870c:300c with SMTP id
+ d75a77b69052e-47931007ce0mr113556331cf.25.1743993157202; Sun, 06 Apr 2025
+ 19:32:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250329120327.105925-1-usmanakinyemi202@gmail.com>
- <20250406121513.154084-1-usmanakinyemi202@gmail.com> <20250406121513.154084-2-usmanakinyemi202@gmail.com>
-In-Reply-To: <20250406121513.154084-2-usmanakinyemi202@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 6 Apr 2025 20:24:18 -0400
-X-Gm-Features: ATxdqUEwUCWY1me_gpHvDifqZgmazqHjDwUr2u4g2rjaeCbNi7KhYrMVMEcJ1ak
-Message-ID: <CAPig+cShdouOzG_jKz_Z6+bSprZ5ZEsx9wZR-_LuD1P2kaOWwg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] builtin/update-server-info: remove unnecessary if statement
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com, 
-	johncai86@gmail.com, me@ttaylorr.com, ps@pks.im, shejialuo@gmail.com, 
-	phillip.wood123@gmail.com, Christian Couder <chriscool@tuxfamily.org>
+References: <CA+rGoLfxZHdns=7FwQuYS=JANrR9zDP-dOpV2AxM1hC1Lc9wiw@mail.gmail.com>
+ <Z-5hlL1Gk0oi4fX2@pks.im> <CA+rGoLfCTzNTcGXG5py6oHQazeE8Vj0fLsR4KUTJ6rSRFnT_Vw@mail.gmail.com>
+ <CA+rGoLeRXUQu8ZbDtaLp2_YbVGA5D1DeA2vSEcLf74qXjB5U2A@mail.gmail.com>
+ <CAOLa=ZQCTJLSWV-y-=nKf9J4xKr5miAo+35RktmbGmHPL4Sp-w@mail.gmail.com>
+ <CA+rGoLcDt0r0mDBk44SY0NcnG3mNBy5vSNBLzeggsGwJ4d-Cwg@mail.gmail.com>
+ <CA+rGoLc9g4werz-k4_ZzfNLLGHjzHoOcFYSmV5V-Krq04drgZA@mail.gmail.com> <f5ba0329-5789-4c20-a2ea-b213365af5a5@gmail.com>
+In-Reply-To: <f5ba0329-5789-4c20-a2ea-b213365af5a5@gmail.com>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Mon, 7 Apr 2025 08:02:26 +0530
+X-Gm-Features: ATxdqUFu-t8E0sZOfVAXkDrl9srKOXuBot64n92wbomcnUVVqIOGhV-YsJD-_kU
+Message-ID: <CA+rGoLfPDVmxN7QQjjNhiwL=c1PUiQRKe8JGqkbm=dEaqWJ=9A@mail.gmail.com>
+Subject: Re: [GSOC] [Proposal v1] Machine-Readable Repository Information
+ Query Tool
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Apr 6, 2025 at 8:15=E2=80=AFAM Usman Akinyemi
-<usmanakinyemi202@gmail.com> wrote:
-> Since we already teach the `repo_config()` in "1a764cdbdc
-> (Merge branch 'ua/some-builtins-wo-the-repository', 2025-03-26)"
-> to allow `repo` to be NULL, no need to check if `repo` is NULL
-> before calling `repo_config()`.
+Hey Sivaraam,
 
-Okay, makes sense. However...
+On Sun, Apr 6, 2025 at 11:38=E2=80=AFPM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+>
+> Hi Jayatheerth,
+>
+> On 06/04/25 11:39, JAYATHEERTH K wrote:
+> > # Proposal for GSOC 2025 to Git
+> > **Machine-Readable Repository Information Query Tool**
+> >
+>
+> Thank you for your proposal! Just wanted to send in a gentle reminder
+> that the proposal submission deadline is April 8 18:00 UTC. So, there's
+> very less time until the same. You may want to consider submitted your
+> current proposal and use the option provided in the GSoC website to
+> update the proposal before the due date (if necessary). This would help
+> avoid a last minute rush.
 
-By referencing only the merge commit in the above message, you force
-reviewers and future readers to chase down and locate the actual
-commit[*] which taught repo_config() to accept NULL for `repo`. To be
-more friendly to those people, you should help them by instead
-referencing the commit[*] itself.
+Got it, uploaded the current version, based on the feedback will change it.
 
-[*]: f29f1990b5 (config: teach repo_config to allow `repo` to be NULL,
-2025-03-08)
+>
+> Feel free to let me know in case you face any difficulty with submitting
+> your proposal.
+>
 
-> Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Sure, thank you!
+
+> --
+> Sivaraam
+
+-Jayatheerth
