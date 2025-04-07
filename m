@@ -1,283 +1,164 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7567B215059
-	for <git@vger.kernel.org>; Mon,  7 Apr 2025 17:10:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120CE20FA94
+	for <git@vger.kernel.org>; Mon,  7 Apr 2025 17:20:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744045833; cv=none; b=g6bmux8fUzr5DqVsC4DFfDaCjLP9TpGBqU5GpbTZ1iziRwMh9Kv2nZbv9kkfsqQfq8HwqjeGsUJGWITyPHqqVNz/idxthAEAMelF5Hp/wAXW7AOn1j4D1OrFUOtD8ML1MeI7qSXWUr9jiQkFTdt3ShBfZARFe9pm2Wt1thvIblU=
+	t=1744046403; cv=none; b=EsqKZwZETimpnKx6J4c6gYOOAQ3DTzYIytgJLESReax9YOPZJn8ZyWYcpnSaP4uref7lKbnJ7zsYkCR6n7+IXCj0UQxBXYhrP+jBJJ0EnFn2lxTe8bdFTkMGvQkjLQ6dE1AfmGveMDHih8CDaLCBu2ypcu0ZTolm5BD29q0IQLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744045833; c=relaxed/simple;
-	bh=TO9i087ju5BuOWfqgH3t7rm/RDYESMP/L7urgqu0UXA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hOr9KgkR+FpmnlOfDfZa9Q15cnvn1a2xlHCca757iPy5PRjwmam9Ru4KLNyy3+Nv2deqD3sWAC2xkmrhdUfSXE2Y6o38XTviMX05s4lUSqg8uQ7lHRaiNqbwOw6l+umEfdvtfZ6glIW1Mno6D3FOQsKyrTWPpklqIWha/VXoUZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j/qK0Y+J; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744046403; c=relaxed/simple;
+	bh=p00/jMpcRq8C6b7I4/uKX6YagCmMkU4U5lCGQc2DMeA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BPPLzPZrYdXnnJAxOCz+EGjRWfuX+Y32zdOc6oCccyEw6rfT7jmgSKXsTw23k5GbZuuS50InoxajCIOSAguQV4XssSdTbhsnK2fxr+GBowUbq6bf0mCiep4LdKz4+LflIIbQxgxdzM5ahqIgm/oDwzosF8/2lsl8wONQHdHjZ2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HYS4lgF2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pnhaVDdm; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j/qK0Y+J"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ac28e66c0e1so720766166b.0
-        for <git@vger.kernel.org>; Mon, 07 Apr 2025 10:10:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744045829; x=1744650629; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+G5lxL593EfcX0etHZA1Q0vuZJLrwVN+Qctvl6v+uvU=;
-        b=j/qK0Y+JsRqmsNMNDJXmSISwUPjBOmSOk/yP3F+yobVAHCcgLRrfjzGmjGPPHKmTMC
-         AoWhgwxrqWA65awzJ1PbngDxGwfMwyP3wpwPCxWkgUfmTk9UsXIhu85n6BqOu7h4UdJc
-         Tc5ygS1zZvQQU2m2kymqrRHV+2UuhZE+VpGm7FjCHyCvSNalTIhfmxQqdcKImrDtkO6N
-         js6I0b33JHAyOHxnz5F0oNINcuoxBwtHvzQ0MiqxgjzyU8tcJillwTrsJyXHU7zpNxGH
-         8megYai9bjGHN81Rahj4dtKz3cLcgA6i6Didy7zefZww+oaiT4Pi59sEnuECWOdMpHxO
-         +ZIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744045829; x=1744650629;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+G5lxL593EfcX0etHZA1Q0vuZJLrwVN+Qctvl6v+uvU=;
-        b=KYhXxEbP/g/SUdc69KJVuIq0FLuGYEjttFN8tqSOTTuCmuKT3CBhBfmgEmStlag8ui
-         cR0Bx6g8KbVotdtWeUUaf0W2Yc3mOKJMsk8MTuCp62nVmZgyPPSunv/pX6lpL5Wae8LL
-         FlNmEum4QYmaaaWXoki5f+qz3F7rIymJTLHykH+mv93NVSMJXa2MR2YGS60faOLPDAxA
-         5zWeadYuXuEvuu5WItfEj+H/ZUa7Lxb1q8wb9hM/S3IdWchA4+g44N821IFFOIHvX2ey
-         PPcHhGOE56CusrEjv4SiOdCoU5kVD/flwOR9ytyjvbjIafBesLhNlcB9749EnBD6z2WR
-         FwNw==
-X-Gm-Message-State: AOJu0YwcL2z6u2TX1NONy0dVO7V4dBYP61plv+acSytdzcwHvgk8Bulj
-	aPcWj3On33ec0C92UhegodWLs6B4c0lkd+h9xbOVXwzfPRcK0omF9Zo3N1Zvhg==
-X-Gm-Gg: ASbGnct8JupTAR4p+eEspG9YCuXs1e7t0Y32yFmj7XEinGnKaE48ICbQjYAknixXVCu
-	KReyfB9pz03clHXiJv1JMun8Q+WuYwV2SG7HPqZ+EhcWDhh36tOppMjf5nODYXGQSha625U1qAN
-	6zf333Hvfq87FS5VViDKWUheKRBwIuMkBiP4U6ScUrk6fhR4uOqFDWQJ4RYmeNK5jc/tPUf9x6c
-	v6hyeGLI7C1+Q1X4nQ8v9opV7GCK0BjeRLJ2N3MSiCirXAEQf9GTHo2EkVCRr+t4ivFiQxJmqzf
-	S1JfOn7dD2hp/mugA+yGjBYX/t21zvgV1KneWnNexOBHJDj8eeQtrkg4/DJj/Fv0ZELboU8zFHc
-	RflfABxA8AhNX
-X-Google-Smtp-Source: AGHT+IGWQvYy2ZBGs8FGnGIoFYQgGGyu7DC5fbo9fAKESZuuvBwvFsTxwEkqyX7APDF5dOI8CtJKTg==
-X-Received: by 2002:a17:907:7f9f:b0:ac6:ecd8:a235 with SMTP id a640c23a62f3a-ac7d6d62dffmr1269962666b.28.1744045829026;
-        Mon, 07 Apr 2025 10:10:29 -0700 (PDT)
-Received: from localhost.localdomain (generic-nat.unisi.it. [193.205.5.2])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7bfe67e17sm778591066b.34.2025.04.07.10.10.28
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 07 Apr 2025 10:10:28 -0700 (PDT)
-From: Anthony Wang <anthonywang513@gmail.com>
-X-Google-Original-From: Anthony Wang <anthonywang03@icloud.com>
-To: git@vger.kernel.org,
-	kaartic.sivaraam@gmail.com
-Cc: ps@pks.im,
-	shejialuo@gmail.com,
-	christian.couder@gmail.com,
-	shyamthakkar001@gmail.com,
-	Anthony Wang <anthonywang513@gmail.com>
-Subject: [GSoC] [RFC] Project Proposal v2: Refactoring in order to reduce Git's global state
-Date: Mon,  7 Apr 2025 19:10:25 +0200
-Message-Id: <20250407171026.49901-1-anthonywang03@icloud.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250405104124.25272-1-anthonywang03@icloud.com>
-References: <20250405104124.25272-1-anthonywang03@icloud.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HYS4lgF2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pnhaVDdm"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 070AF114019C;
+	Mon,  7 Apr 2025 13:20:00 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 07 Apr 2025 13:20:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744046400; x=1744132800; bh=43drij68cn
+	MvklEK0GU04pl8wrmtY9TucObpRDIKtU0=; b=HYS4lgF2zw/ugA/dIsaN7prP9t
+	Ap3Ym/V2LEAXd0jSHZFUpgJLazIXJE4drhs4fg5oNCTw6DM6XS2haZalk5dME/z7
+	ObtpnjN6oetl5fMiG2BT0t3JY7Fmy7CoDRIxSbtMewFbhCho7cLC7DLGGNS5+z6M
+	iIAuDkmGbIHiXpn/3XkWRi2fqUmHskfnBaPB6TaZdk29teS0GBESKi/u1pzGpKKD
+	Ajq58JtdXxjEG0Jtk73+WHH7zrYKaVbfyssxiaBTEamI6Knu0n7EkQENiNuMktZi
+	zs9wSUJ4/KxY9/JTxtCvMjVzLbIRazVlgHeYu6eg3GtV5PHJEoLc4M6VyqdA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744046400; x=1744132800; bh=43drij68cnMvklEK0GU04pl8wrmtY9TucOb
+	pRDIKtU0=; b=pnhaVDdmC4ZuVr4b/M1amwpre0SL8RbZouNZlmRGQna+yu+EHDL
+	Zk1H8UZ8deibh0vXI8/Pn3nJBmC3mOeMObZiVci5WlJr3R4CF2HGnzrpdREAUKQi
+	DQK4VRr6UtBNUPL22IwlGCDyF+If1pt69mHOsGnq9v4wbcQ+quukxsmPVDfJQxuR
+	+pRZ2y+knZvLQvOBD0ZxnqQDShEi+BGOUce+0iPzuyM1KpiDBcvr75q+Fn3fsv32
+	lFexR2S51wBnqZiqnKqSbXfbdxp1Evjm3wrXADizad7cFH3AlMgCDHrFju1lKT9H
+	qWNfxmtQIL0BWYjyXelfSOe7jmw0xZcJNSg==
+X-ME-Sender: <xms:Pwn0Z3A_3JYB0KuJnZyzQyyZWaiCeFuePkIinBDjsV7dWJ8Y_uOEJQ>
+    <xme:Pwn0Z9i--_8HACwFuHbqfab11w_KatUA8ElSXK395_hmEfT4TcIanX_fPRX471Boq
+    zPjTNhi7jk0VsVGbQ>
+X-ME-Received: <xmr:Pwn0ZymqJmJMjSQ1eKwwt1nM3Ypas3Sr7P2nxHL6x-rkx72yfnAvoDZ3Eal3Wm9NHpIMBf6J4mYRDjx5JFtvkbsyhx7MaDMd31oe>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddtjeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprghnthhhohhnhi
+    ifrghnghehudefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkh
+    grrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehshhgvjhhirghl
+    uhhosehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvg
+    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhhhigrmhhthhgrkhhkrghrtddtudes
+    ghhmrghilhdrtghomhdprhgtphhtthhopegrnhhthhhonhihfigrnhhgtdefsehitghloh
+    huugdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Pwn0Z5y1BjgudvobJ-Y-qbsTDlWe4lwv5ToZALcdtVShmHU4-xKI7g>
+    <xmx:Pwn0Z8Q_GdLyPAM9UQyfryDqgXpWDWd4ZMUmAtKX8IHI_oiuiBSb1g>
+    <xmx:Pwn0Z8baoGWJqYlaEwKq_07Qxz6dTxUYt_461qbZd4_ymkKNuF2wcw>
+    <xmx:Pwn0Z9SbMJ9Ol2ewQ1aykuGpaa5XZwflR71V9_9NGD_jEioV5zkDFQ>
+    <xmx:Pwn0Z2JZNQ46EWNRtTadA5yQ1rPfUvQF13-zE6WA5Me9027loc5wocxh>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Apr 2025 13:19:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Anthony Wang <anthonywang513@gmail.com>
+Cc: ps@pks.im,  git@vger.kernel.org,  karthik.188@gmail.com,
+  shejialuo@gmail.com,  christian.couder@gmail.com,
+  shyamthakkar001@gmail.com,  Anthony Wang <anthonywang03@icloud.com>
+Subject: Re: [GSoC] [PATCH v2 1/3] t9811: avoid using pipes to expose exit
+ codes
+In-Reply-To: <20250407111824.46518-2-anthonywang03@icloud.com> (Anthony Wang's
+	message of "Mon, 7 Apr 2025 13:18:22 +0200")
+References: <Z_OEAxJENE_mGkVa@pks.im>
+	<20250407111824.46518-1-anthonywang03@icloud.com>
+	<20250407111824.46518-2-anthonywang03@icloud.com>
+Date: Mon, 07 Apr 2025 17:19:57 +0000
+Message-ID: <xmqqo6x7nb2a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Anthony Wang <anthonywang513@gmail.com>
+Anthony Wang <anthonywang513@gmail.com> writes:
 
-Hi all,
+> The exit code of the upstream in a pipe is suppressed
+> thus we lose any exit codes of git commands that are piped. In order to
+> ensure we pick up the exit code, we can write the output of the git command
+> to a file, testing the exit codes of both the commands.
 
-I'm interested in working with Git over the summer to "Refactor in Order 
-to Reduce Git's Global State." My main motivation for choosing this idea 
-is that improving Git's environment handling will enhance long-term 
-maintainability and scalability, and allow for multiple-repository 
-interactions. 
+Sort of correct, but ...
 
-This is the second version of my proposal. I would love to 
-receive feedback on the content or structure, especially on the points 
-pertaining to the actual implementation of the project and planned work. 
-I will also discuss my past experience, and speak on why I believe I 
-will be able to effectively contribute in a sustainable way to this 
-large undertaking.
-Thanks!
+> ---
+>  t/t9811-git-p4-label-import.sh | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
 
--------------------------------------
+Missing sign-off.
 
-# Refactoring in Order to Reduce Git’s Global State
+> diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
+> index 5ac5383fb7..5abac938d0 100755
+> --- a/t/t9811-git-p4-label-import.sh
+> +++ b/t/t9811-git-p4-label-import.sh
+> @@ -95,9 +95,10 @@ test_expect_success 'two labels on the same changelist' '
+>  		cd "$git" &&
+>  		git p4 sync --import-labels &&
+>  
+> -		git tag | grep TAG_F1 &&
+> -		git tag | grep -q TAG_F1_1 &&
+> -		git tag | grep -q TAG_F1_2 &&
+> +		git tag >output &&
+> +		grep TAG_F1 output &&
+> +		grep -q TAG_F1_1 output &&
+> +		grep -q TAG_F1_2 output &&
 
-### Personal Info
-Name: Anthony Wang
-Timezone: Eastern Time (ET)/UTC -5
-GitHub: https://github.com/wang-anthony03
-LinkedIn: https://www.linkedin.com/in/anthonywang03/
+Think what these tests are trying to do.  After a "git p4 sync"
+operation, they want to ensure that tags TAG_F1_1 and TAG_F1_2
+exist?  Does the test want to see a tag "TAG_F1", or is it only that
+the test is written in a so sloppy way that grepping for TAG_F1 will
+be happy when any one of TAG_F1_1, TAG_F1_2 and TAG_F1_ONLY exists,
+making its purpose of verifying that the tags are in the expected
+state pretty much useless, and that is the reason why it needs to be
+followed up with the two extra tests?
 
-## About Me
+What is the desired state you want to ensure after "git p4 sync"
+operation above?  I do not do "git p4", but you may know better than
+I do, as you are the one who is patching this test file ;-)  I am
+guessing that you want TAG_F1_1 and TAG_F1_2 to exist and you do not
+want TAG_F1_ONLY to exist?
 
-My name is Anthony Wang, and I am a 3rd year Computer Science student 
-at the University of Virginia. I have experience in software engineering 
-and development, particularly in C, Python, and shell scripting. This is 
-my first time working with open source software, and I am incredibly 
-excited to contribute to Git, as I have always wanted to work on 
-developing the tools that I use everyday.
+If so, instead of grepping around, we should be testing that in a
+more direct way, perhaps with something like
 
-My background includes building scalable automation tools and 
-contributing to infrastructure projects at Verizon. I was able to work 
-with large codebases, and I learned the importance of clean, 
-well-documented code, as well as the challenges of tech-debt leading to 
-difficulties in maintaining code.
+	git show-ref --verify refs/tags/TAG_F1_1 &&
+	git show-ref --verify refs/tags/TAG_F1_2 &&
+	test_must_fail 	git show-ref --verify refs/tags/TAG_F1_ONLY &&
 
-## Previous Experience
+no?
 
-- Experience using Git extensively in academic and personal projects.
-- Experience working with C as the main language for multiple Computer 
-Systems courses.
-- Developed a text editor in C. [1]
-
-## Microproject
-- t8911: avoid using pipes and improve code clarity
-Thread: https://public-inbox.org/git/20250405103718.25160-1-anthonywang03@icloud.com/
-Status: undergoing discussion  
-Description: In order to expose more testing outputs, we remove the 
-piping of `git tag` outputs in order to expose the exit codes. In 
-addition, we remove `-q` tags on instances of `grep` to ensure clarity. 
-We also replace `grep` with `test_grep` to provide helpful debug output 
-in case of test failure.
-
-
-## Project Proposal
-
-### Objective
-This project aims to modernize Git's environment handling by refactoring 
-the environment.c code to reduce the reliance on global state. The goal 
-is to move environment variables and configuration settings from the 
-global scope into appropriate local contexts, primarily within struct 
-repository and struct repository_settings. This architectural 
-improvement will:
-
-- Enhance code maintainability by making dependencies explicit.
-- Reduce the risk of unintended side effects from global state 
-modifications.
-- Improve Git's ability to handle multiple repositories within the same 
-process.
-
-### Expected Project Size: 90 or 175 Hours
-
-## Key Tasks
-
-1. Identifying Global State Variables
-- Analyze environment.c and related files to locate global variables.
-- Identify the functions and modules that rely on these global 
-variables, and list all files using each variable.
-- Categorize these variables based on their use cases and potential 
-migration targets.
-- Write Documentation listing all desired variable migration, allowing 
-for community contribution.
-- Discuss prioritization with the community and designate priority of 
-tasks.
-
-2. Refactoring Process
-- Move identified global variables into struct repository or struct 
-repository_settings.
-- Ensure proper initialization and access mechanisms to maintain 
-current behavior.
-- Updating Affected Code Paths
-- Modify functions and modules that rely on the old global state.
-- Ensure all relevant operations correctly pass repository-specific 
-context.
-
-3. Testing and Validation
-- Run Git's extensive test suite to verify functionality remains intact.
-- Update or create new tests as needed to cover refactored components.
-
-4. Documentation
-— Document changes in Git's developer notes.
-— Provide clear explanations for new structures and access patterns.
-
-5. Challenges and Considerations
-- Ensuring backward compatibility and avoiding regressions.
-- Handling dependencies between different parts of the codebase that 
-rely on global state.
-- Keeping performance overhead minimal while introducing structured 
-state management.
-
-## Planned Implementation
-I have been examining the codebase to search for global variables 
-and have found two major groups:
-
-The first group is just one variable - `the_repository`. In order 
-to refactor the code to remove dependencies on `the_repository`, 
-we would need to adapt the code in various manners. The first would 
-be to start at the lowest level, and modify the code so that it would 
-take in the needed parameters from `the_repository`, removing the 
-internal dependency on `the_repository`. Alternatively, if the 
-dependency can simply be resolved by using information from a 
-different source, such as a `struct repository`, or other context 
-dependent information, such as in [2] or [3],adapt the code to take 
-in the information from the alternate source and remove the 
-dependency entirely. Following that, move up another level and repeat 
-the process.
-
-The second group is config variables. Because these are global 
-variables used by multiple subsystems, refactoring is a bit more 
-complicated. For areas with access to the repository, relocate the 
-config variable to the according struct that stores that information. 
-For areas without guaranteed access, move the variable into local 
-context appropriate structure and its constructor, guaranteeing 
-access to the variable. This workflow heavily draws from [4].
-
-
-## Schedule
-1. **Now -- May 5th**: Exploration of codebase
-- Research and familiarize with environment.c and related code. 
-- Identify global variables to refactor.
-- Engage with the Git community for feedback.
-
-2. **May 6th -- June 1st**: Community bonding
-- Get in touch with the mentors;
-- Present to the community a first list of variable migrations;
-- Receive feedback from the community and modify project plans;
-- Present potential changes to ensure they align with community goals;
-
-3. **June 2nd -- July 7th**: First coding period
-- Eliminate dependencies on “the_repository” following priority;
-- Identify possible patterns in refactoring and document for future 
-contributors;
-
-4. **July 8th -- August 10th**: Second coding period
-- Move other global variables into local repository contexts;
-- Identify possible patterns in refactoring and document for future 
-contributors;
-
-5. **August 11 -- August 25th**: Documentation period
-- Finalize and refine changes;
-- Document changes, the process, and outline future work regarding 
-reducing the global namespace;
-
-## Availability
-I will be working over the summer, but regularly code and study outside 
-of work/school hours. I will be dedicating all of this extra time 
-towards this project, but I acknowledge that I will not be able to spend 
-an incredibly large amount of time,  thus I have chosen my expected 
-project size to be up to 175 hours if given an extended timeline, and 
-90 hours if not. I will be fully available outside of working hours to 
-this task, and will set up a compatible schedule with my mentor(s) in
-order to ensure that an effective line of communication is established.
-
-I appreciate your time in reviewing this proposal and look forward to 
-your feedback!
-Thank you, 
-
-Anthony Wang
-(He/him/his)
-
-References:
------------
-
-[1] https://github.com/wang-anthony03/Quill
-
-[2] https://lore.kernel.org/git/20250310-b4-pks-objects-without-the-repository-v4-6-f201b8ec57ba@pks.im/
-
-[3] https://lore.kernel.org/git/20250310-b4-pks-objects-without-the-repository-v4-1-f201b8ec57ba@pks.im/
-
-[4] https://public-inbox.org/git/342a26572d6372d40ba563d73242e0d18a481d2a.1733236936.git.karthik.188@gmail.com/
-
-
-
+>  		cd main &&
+>  
+> @@ -208,7 +209,8 @@ test_expect_success 'use git config to enable import/export of tags' '
+>  		git p4 rebase --verbose &&
+>  		git p4 submit --verbose &&
+>  		git tag &&
+> -		git tag | grep TAG_F1_1
+> +		git tag >output &&
+> +		grep TAG_F1_1 output
+>  	) &&
+>  	(
+>  		cd "$cli" &&
