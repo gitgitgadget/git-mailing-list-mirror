@@ -1,1241 +1,283 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A7113C8E8
-	for <git@vger.kernel.org>; Mon,  7 Apr 2025 16:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7567B215059
+	for <git@vger.kernel.org>; Mon,  7 Apr 2025 17:10:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744044575; cv=none; b=W2y5dLRyueut/UG42+1UyowljXL94PENgO1PQ2DzpVEJTmEsEfx2VP5l77qpzLAP3UXbLbzjwYDM6RfKfGh79Qs5PAwy0y7B8xAgtJEdbfznAVbLFdPYgVYG/AbCTT2330zWLpq1IahFvMULEKQCNF8jcTcN+f48nkx2u1s1sfY=
+	t=1744045833; cv=none; b=g6bmux8fUzr5DqVsC4DFfDaCjLP9TpGBqU5GpbTZ1iziRwMh9Kv2nZbv9kkfsqQfq8HwqjeGsUJGWITyPHqqVNz/idxthAEAMelF5Hp/wAXW7AOn1j4D1OrFUOtD8ML1MeI7qSXWUr9jiQkFTdt3ShBfZARFe9pm2Wt1thvIblU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744044575; c=relaxed/simple;
-	bh=FGRX2jeMrORbf2KHaURSCWcrvn5Rp3LJRtnaAfH/FtY=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qU+kENPu1hNi8SfgYD4Kd7JXbU1JjEZgUNuJ9tQywuDm/bnJ+YL38MfBYO0SyGga7/0Rm1gG+djX3ITq5VB0XVfjV5rKt9VKIF5hc8qg0uX1ln+CSoAp+BPjHj51qY/1VirPG/0Qx26O3QRhv0fRZ5M+RqOQSBKXL/Jrkko+2YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=twtD8JE8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BDBFjDmP; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744045833; c=relaxed/simple;
+	bh=TO9i087ju5BuOWfqgH3t7rm/RDYESMP/L7urgqu0UXA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=hOr9KgkR+FpmnlOfDfZa9Q15cnvn1a2xlHCca757iPy5PRjwmam9Ru4KLNyy3+Nv2deqD3sWAC2xkmrhdUfSXE2Y6o38XTviMX05s4lUSqg8uQ7lHRaiNqbwOw6l+umEfdvtfZ6glIW1Mno6D3FOQsKyrTWPpklqIWha/VXoUZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j/qK0Y+J; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="twtD8JE8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BDBFjDmP"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C71D11140205;
-	Mon,  7 Apr 2025 12:49:30 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 07 Apr 2025 12:49:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1744044570; x=1744130970; bh=oH8bv3Bq75VD+/Eq+dMQwRVQxbzfdQHf
-	Qj3DqZuIFxY=; b=twtD8JE8VZGgIkaG9DLm2LroNTpAoP9Nme5FjzUrlhVt8MmF
-	2SeUsMZF8Gxr7sazfMKQsrDAN0pisbpp82D8AVYyfID3mUXvncZWAmzkMcJDRDjF
-	Vxqf9dHqacX6FVvEG2hF2LoDo4yICIAlm/Zw1W9eqpiAwaeqoJX+TaxE9ZZ4TwVQ
-	/PjOQ+4sAmhhteplxUolnws+eWaihzbjEzoNp7vUBa3Yhnwd4ggrfJ7Vtn06i2C2
-	G4EAuA6E5U31ouSllHFd4IcX2y2u6HlWUbUxqwjFeZY39lO9jiuYg6Kee3JWZA4c
-	lzMGgelHoYSPNvFJllgnxGxvawVaVxrsDUjQnQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744044570; x=
-	1744130970; bh=oH8bv3Bq75VD+/Eq+dMQwRVQxbzfdQHfQj3DqZuIFxY=; b=B
-	DBFjDmPS/Lp4z8dsNInQUu10hCiGe80cdTeVMwyZgRWM59dfNAUtzeWfWCJiw8WE
-	SMkq4CCFIKbcS3pXQGFq/y6e1HryqDdHVX529/RZPTV/64U31AAO1D41e6ubPMWu
-	KQ56JzdNN31ynXTisWtUduvTbm8hggek8yqb4NEmBaqceaoet0tw4BUurQtOMm+3
-	b6QiN9oon3NG65oWQN/6lIJRokfccHgzH/EAvv476P8/Xi5D7qbtQ4Lynk7pnioy
-	HSG6LZhrzpC6NJB1Wihza6LK3Lty09heMO0ZF+WIRKtrO2dOEn9hgCaJTU1ZyXFn
-	o8SUquwEOLn7Lk1V0hTRA==
-X-ME-Sender: <xms:GgL0Z-Co0ABNvPq8RaIc6wP3NACD1cHxHhhhkq_7u_UEYs583O-tvw>
-    <xme:GgL0Z4hDBwfOJKwGmTLrCIpkSH87o4ljD77Ngw-VnBQVOaexhvSFVGUgoftWajk-5
-    lLhIaqN6CjJzcHuVQ>
-X-ME-Received: <xmr:GgL0ZxlJhK28eUHHij8kQ5qSQtcVDdeE1sgajYN59GicDsIZTV2UP9Qh86EozohzZlowxvkVmA-Sh919RPWT6vKtudnndHFoTcEj>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddtjedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    fufffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepheefje
-    dvvddtjeeuhfettdfghedvudfgffffjeehueelkefhfeduhedvfeeljeehnecuffhomhgr
-    ihhnpehkvghrnhgvlhdrohhrghdpohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtoh
-    hmpdhgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmpdhmrghkrdguvghvpdguihhs
-    tggrrhguvggurdhknhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeef
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtoheplhifnheslhifnhdrnhgvthdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:GgL0Z8wB7xDjxGCMWBLcAW_TSyEocumSr8G-zJI2J-35ZlT5gd1dYw>
-    <xmx:GgL0ZzTQtL2oxImwuwqKwYhMfQIImWd2NuLR2D2mASMnlHYjO-Yz6g>
-    <xmx:GgL0Z3b64cFFLFpRT72rV2-T1i94vTWS4k7RNjcuBRUnPMahxEP0hA>
-    <xmx:GgL0Z8Q5oz9eC-u70aRv-xczwDGhuOQUy394q9lQsNfRFjJ9Ls6pYw>
-    <xmx:GgL0Z3K-tIi7SIFu3Ik0vCb4Yo09VrnuHcnGP3U9-9TB1Iu68lEzHHP2>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Apr 2025 12:49:30 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Apr 2025, #01; Mon, 7)
-X-master-at: 5b97a56fa0e7d580dc8865b73107407c9b3f0eff
-X-next-at: ff1f9ca942cece7b528239c099ac8bd8fcf768ce
-Date: Mon, 07 Apr 2025 16:49:28 +0000
-Message-ID: <xmqqtt6znch3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j/qK0Y+J"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ac28e66c0e1so720766166b.0
+        for <git@vger.kernel.org>; Mon, 07 Apr 2025 10:10:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744045829; x=1744650629; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+G5lxL593EfcX0etHZA1Q0vuZJLrwVN+Qctvl6v+uvU=;
+        b=j/qK0Y+JsRqmsNMNDJXmSISwUPjBOmSOk/yP3F+yobVAHCcgLRrfjzGmjGPPHKmTMC
+         AoWhgwxrqWA65awzJ1PbngDxGwfMwyP3wpwPCxWkgUfmTk9UsXIhu85n6BqOu7h4UdJc
+         Tc5ygS1zZvQQU2m2kymqrRHV+2UuhZE+VpGm7FjCHyCvSNalTIhfmxQqdcKImrDtkO6N
+         js6I0b33JHAyOHxnz5F0oNINcuoxBwtHvzQ0MiqxgjzyU8tcJillwTrsJyXHU7zpNxGH
+         8megYai9bjGHN81Rahj4dtKz3cLcgA6i6Didy7zefZww+oaiT4Pi59sEnuECWOdMpHxO
+         +ZIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744045829; x=1744650629;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+G5lxL593EfcX0etHZA1Q0vuZJLrwVN+Qctvl6v+uvU=;
+        b=KYhXxEbP/g/SUdc69KJVuIq0FLuGYEjttFN8tqSOTTuCmuKT3CBhBfmgEmStlag8ui
+         cR0Bx6g8KbVotdtWeUUaf0W2Yc3mOKJMsk8MTuCp62nVmZgyPPSunv/pX6lpL5Wae8LL
+         FlNmEum4QYmaaaWXoki5f+qz3F7rIymJTLHykH+mv93NVSMJXa2MR2YGS60faOLPDAxA
+         5zWeadYuXuEvuu5WItfEj+H/ZUa7Lxb1q8wb9hM/S3IdWchA4+g44N821IFFOIHvX2ey
+         PPcHhGOE56CusrEjv4SiOdCoU5kVD/flwOR9ytyjvbjIafBesLhNlcB9749EnBD6z2WR
+         FwNw==
+X-Gm-Message-State: AOJu0YwcL2z6u2TX1NONy0dVO7V4dBYP61plv+acSytdzcwHvgk8Bulj
+	aPcWj3On33ec0C92UhegodWLs6B4c0lkd+h9xbOVXwzfPRcK0omF9Zo3N1Zvhg==
+X-Gm-Gg: ASbGnct8JupTAR4p+eEspG9YCuXs1e7t0Y32yFmj7XEinGnKaE48ICbQjYAknixXVCu
+	KReyfB9pz03clHXiJv1JMun8Q+WuYwV2SG7HPqZ+EhcWDhh36tOppMjf5nODYXGQSha625U1qAN
+	6zf333Hvfq87FS5VViDKWUheKRBwIuMkBiP4U6ScUrk6fhR4uOqFDWQJ4RYmeNK5jc/tPUf9x6c
+	v6hyeGLI7C1+Q1X4nQ8v9opV7GCK0BjeRLJ2N3MSiCirXAEQf9GTHo2EkVCRr+t4ivFiQxJmqzf
+	S1JfOn7dD2hp/mugA+yGjBYX/t21zvgV1KneWnNexOBHJDj8eeQtrkg4/DJj/Fv0ZELboU8zFHc
+	RflfABxA8AhNX
+X-Google-Smtp-Source: AGHT+IGWQvYy2ZBGs8FGnGIoFYQgGGyu7DC5fbo9fAKESZuuvBwvFsTxwEkqyX7APDF5dOI8CtJKTg==
+X-Received: by 2002:a17:907:7f9f:b0:ac6:ecd8:a235 with SMTP id a640c23a62f3a-ac7d6d62dffmr1269962666b.28.1744045829026;
+        Mon, 07 Apr 2025 10:10:29 -0700 (PDT)
+Received: from localhost.localdomain (generic-nat.unisi.it. [193.205.5.2])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7bfe67e17sm778591066b.34.2025.04.07.10.10.28
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 07 Apr 2025 10:10:28 -0700 (PDT)
+From: Anthony Wang <anthonywang513@gmail.com>
+X-Google-Original-From: Anthony Wang <anthonywang03@icloud.com>
+To: git@vger.kernel.org,
+	kaartic.sivaraam@gmail.com
+Cc: ps@pks.im,
+	shejialuo@gmail.com,
+	christian.couder@gmail.com,
+	shyamthakkar001@gmail.com,
+	Anthony Wang <anthonywang513@gmail.com>
+Subject: [GSoC] [RFC] Project Proposal v2: Refactoring in order to reduce Git's global state
+Date: Mon,  7 Apr 2025 19:10:25 +0200
+Message-Id: <20250407171026.49901-1-anthonywang03@icloud.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250405104124.25272-1-anthonywang03@icloud.com>
+References: <20250405104124.25272-1-anthonywang03@icloud.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+From: Anthony Wang <anthonywang513@gmail.com>
+
+Hi all,
+
+I'm interested in working with Git over the summer to "Refactor in Order 
+to Reduce Git's Global State." My main motivation for choosing this idea 
+is that improving Git's environment handling will enhance long-term 
+maintainability and scalability, and allow for multiple-repository 
+interactions. 
+
+This is the second version of my proposal. I would love to 
+receive feedback on the content or structure, especially on the points 
+pertaining to the actual implementation of the project and planned work. 
+I will also discuss my past experience, and speak on why I believe I 
+will be able to effectively contribute in a sustainable way to this 
+large undertaking.
+Thanks!
+
+-------------------------------------
+
+# Refactoring in Order to Reduce Git’s Global State
+
+### Personal Info
+Name: Anthony Wang
+Timezone: Eastern Time (ET)/UTC -5
+GitHub: https://github.com/wang-anthony03
+LinkedIn: https://www.linkedin.com/in/anthonywang03/
+
+## About Me
+
+My name is Anthony Wang, and I am a 3rd year Computer Science student 
+at the University of Virginia. I have experience in software engineering 
+and development, particularly in C, Python, and shell scripting. This is 
+my first time working with open source software, and I am incredibly 
+excited to contribute to Git, as I have always wanted to work on 
+developing the tools that I use everyday.
+
+My background includes building scalable automation tools and 
+contributing to infrastructure projects at Verizon. I was able to work 
+with large codebases, and I learned the importance of clean, 
+well-documented code, as well as the challenges of tech-debt leading to 
+difficulties in maintaining code.
+
+## Previous Experience
+
+- Experience using Git extensively in academic and personal projects.
+- Experience working with C as the main language for multiple Computer 
+Systems courses.
+- Developed a text editor in C. [1]
+
+## Microproject
+- t8911: avoid using pipes and improve code clarity
+Thread: https://public-inbox.org/git/20250405103718.25160-1-anthonywang03@icloud.com/
+Status: undergoing discussion  
+Description: In order to expose more testing outputs, we remove the 
+piping of `git tag` outputs in order to expose the exit codes. In 
+addition, we remove `-q` tags on instances of `grep` to ensure clarity. 
+We also replace `grep` with `test_grep` to provide helpful debug output 
+in case of test failure.
+
+
+## Project Proposal
+
+### Objective
+This project aims to modernize Git's environment handling by refactoring 
+the environment.c code to reduce the reliance on global state. The goal 
+is to move environment variables and configuration settings from the 
+global scope into appropriate local contexts, primarily within struct 
+repository and struct repository_settings. This architectural 
+improvement will:
+
+- Enhance code maintainability by making dependencies explicit.
+- Reduce the risk of unintended side effects from global state 
+modifications.
+- Improve Git's ability to handle multiple repositories within the same 
+process.
+
+### Expected Project Size: 90 or 175 Hours
+
+## Key Tasks
+
+1. Identifying Global State Variables
+- Analyze environment.c and related files to locate global variables.
+- Identify the functions and modules that rely on these global 
+variables, and list all files using each variable.
+- Categorize these variables based on their use cases and potential 
+migration targets.
+- Write Documentation listing all desired variable migration, allowing 
+for community contribution.
+- Discuss prioritization with the community and designate priority of 
+tasks.
+
+2. Refactoring Process
+- Move identified global variables into struct repository or struct 
+repository_settings.
+- Ensure proper initialization and access mechanisms to maintain 
+current behavior.
+- Updating Affected Code Paths
+- Modify functions and modules that rely on the old global state.
+- Ensure all relevant operations correctly pass repository-specific 
+context.
+
+3. Testing and Validation
+- Run Git's extensive test suite to verify functionality remains intact.
+- Update or create new tests as needed to cover refactored components.
+
+4. Documentation
+— Document changes in Git's developer notes.
+— Provide clear explanations for new structures and access patterns.
+
+5. Challenges and Considerations
+- Ensuring backward compatibility and avoiding regressions.
+- Handling dependencies between different parts of the codebase that 
+rely on global state.
+- Keeping performance overhead minimal while introducing structured 
+state management.
+
+## Planned Implementation
+I have been examining the codebase to search for global variables 
+and have found two major groups:
+
+The first group is just one variable - `the_repository`. In order 
+to refactor the code to remove dependencies on `the_repository`, 
+we would need to adapt the code in various manners. The first would 
+be to start at the lowest level, and modify the code so that it would 
+take in the needed parameters from `the_repository`, removing the 
+internal dependency on `the_repository`. Alternatively, if the 
+dependency can simply be resolved by using information from a 
+different source, such as a `struct repository`, or other context 
+dependent information, such as in [2] or [3],adapt the code to take 
+in the information from the alternate source and remove the 
+dependency entirely. Following that, move up another level and repeat 
+the process.
+
+The second group is config variables. Because these are global 
+variables used by multiple subsystems, refactoring is a bit more 
+complicated. For areas with access to the repository, relocate the 
+config variable to the according struct that stores that information. 
+For areas without guaranteed access, move the variable into local 
+context appropriate structure and its constructor, guaranteeing 
+access to the variable. This workflow heavily draws from [4].
+
+
+## Schedule
+1. **Now -- May 5th**: Exploration of codebase
+- Research and familiarize with environment.c and related code. 
+- Identify global variables to refactor.
+- Engage with the Git community for feedback.
+
+2. **May 6th -- June 1st**: Community bonding
+- Get in touch with the mentors;
+- Present to the community a first list of variable migrations;
+- Receive feedback from the community and modify project plans;
+- Present potential changes to ensure they align with community goals;
+
+3. **June 2nd -- July 7th**: First coding period
+- Eliminate dependencies on “the_repository” following priority;
+- Identify possible patterns in refactoring and document for future 
+contributors;
+
+4. **July 8th -- August 10th**: Second coding period
+- Move other global variables into local repository contexts;
+- Identify possible patterns in refactoring and document for future 
+contributors;
+
+5. **August 11 -- August 25th**: Documentation period
+- Finalize and refine changes;
+- Document changes, the process, and outline future work regarding 
+reducing the global namespace;
+
+## Availability
+I will be working over the summer, but regularly code and study outside 
+of work/school hours. I will be dedicating all of this extra time 
+towards this project, but I acknowledge that I will not be able to spend 
+an incredibly large amount of time,  thus I have chosen my expected 
+project size to be up to 175 hours if given an extended timeline, and 
+90 hours if not. I will be fully available outside of working hours to 
+this task, and will set up a compatible schedule with my mentor(s) in
+order to ensure that an effective line of communication is established.
+
+I appreciate your time in reviewing this proposal and look forward to 
+your feedback!
+Thank you, 
+
+Anthony Wang
+(He/him/his)
+
+References:
+-----------
+
+[1] https://github.com/wang-anthony03/Quill
+
+[2] https://lore.kernel.org/git/20250310-b4-pks-objects-without-the-repository-v4-6-f201b8ec57ba@pks.im/
+
+[3] https://lore.kernel.org/git/20250310-b4-pks-objects-without-the-repository-v4-1-f201b8ec57ba@pks.im/
+
+[4] https://public-inbox.org/git/342a26572d6372d40ba563d73242e0d18a481d2a.1733236936.git.karthik.188@gmail.com/
 
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
 
-As you can see, a handful of topics are marked as "Need to pick up a
-newer iteration"; I am aware of these newer threads but haven't
-caught up with them.  I'll probably spend time on flushing what has
-been cooking already in my tree down to 'master', and then replace
-these topics with newer iteration before merging them to 'next',
-before starting to pick up new topics that haven't hit my tree yet.
-Hopefully that would happen in a few days.
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* ab/decorate-code-cleanup (2025-03-10) 1 commit
-  (merged to 'next' on 2025-03-18 at 7ede1484eb)
- + decorate: fix sign comparison warnings
-
- Code clean-up.
- source: <7c219279-8151-49c0-8fc0-8abe2624aca9@gmail.com>
-
-
-* am/dir-dedup-decl-of-repository (2025-03-11) 1 commit
-  (merged to 'next' on 2025-03-18 at 9075454132)
- + dir.h: remove duplicate forward declaration of struct repository
-
- Code cleanup.
- source: <pull.1879.git.1741705175922.gitgitgadget@gmail.com>
-
-
-* cc/signed-fast-export-import (2025-03-10) 6 commits
-  (merged to 'next' on 2025-03-18 at d98973e2cb)
- + fast-export, fast-import: add support for signed-commits
- + fast-export: do not modify memory from get_commit_buffer
- + git-fast-export.adoc: clarify why 'verbatim' may not be a good idea
- + fast-export: rename --signed-tags='warn' to 'warn-verbatim'
- + fast-export: fix missing whitespace after switch
- + git-fast-import.adoc: add missing LF in the BNF
-
- "git fast-export | git fast-import" learns to deal with commit and
- tag objects with embedded signatures a bit better.
- cf. <CABPp-BGyA8iBA0BFO8FcpZAMca94aVu2vHHRi4Oz=nCWxJSDPg@mail.gmail.com>
- source: <20250310155746.879481-1-christian.couder@gmail.com>
-
-
-* en/diff-rename-follow-fix (2025-03-14) 1 commit
-  (merged to 'next' on 2025-03-18 at 56808a7eda)
- + diffcore-rename: fix BUG when break detection and --follow used together
-
- A corner-case bug in "git log --follow -B" has been fixed.
- source: <pull.1876.v2.git.1742000894041.gitgitgadget@gmail.com>
-
-
-* en/merge-ort-prepare-to-remove-recursive (2025-03-18) 6 commits
-  (merged to 'next' on 2025-03-18 at a911944a1c)
- + am: switch from merge_recursive_generic() to merge_ort_generic()
- + merge-ort: fix merge.directoryRenames=false
- + t3650: document bug when directory renames are turned off
- + merge-ort: support having merge verbosity be set to 0
- + merge-ort: allow rename detection to be disabled
- + merge-ort: add new merge_ort_generic() function
-
- First step of deprecating and removing merge-recursive.
- source: <pull.1875.v2.git.1741834001.gitgitgadget@gmail.com>
-
-
-* en/random-cleanups (2025-03-17) 5 commits
-  (merged to 'next' on 2025-03-18 at 87acd24a85)
- + merge-ort: remove extraneous word in comment
- + merge-ort: fix accidental strset<->strintmap
- + t7615: be more explicit about diff algorithm used
- + t6423: fix a comment that accidentally reversed two commits
- + stash: remove merge-recursive.h include
-
- Miscellaneous code clean-ups.
- source: <pull.1882.git.1742108339.gitgitgadget@gmail.com>
-
-
-* es/meson-building-docs-requires-perl (2025-03-17) 1 commit
-  (merged to 'next' on 2025-03-18 at 1c1d88dcb7)
- + meson: fix perl detection when docs are enabled, but perl bindings aren't
-
- Build update.
- source: <20250316060605.166364-1-eschwartz@gentoo.org>
-
-
-* hj/doc-rev-list-ancestry-fix (2025-03-18) 1 commit
-  (merged to 'next' on 2025-03-18 at e94155a9ec)
- + doc: add missing commit C to the graph for --ancestry-path=H D..M
-
- Doc update.
- source: <pull.1883.git.1742089659610.gitgitgadget@gmail.com>
-
-
-* jk/fetch-ref-prefix-cleanup (2025-03-10) 9 commits
-  (merged to 'next' on 2025-03-18 at ab3e5cf19f)
- + fetch: use ref prefix list to skip ls-refs
- + fetch: avoid ls-refs only to ask for HEAD symref update
- + fetch: stop protecting additions to ref-prefix list
- + fetch: ask server to advertise HEAD for config-less fetch
- + refspec_ref_prefixes(): clean up refspec_item logic
- + t5516: beef up exact-oid ref prefixes test
- + t5516: drop NEEDSWORK about v2 reachability behavior
- + t5516: prefer "oid" to "sha1" in some test titles
- + t5702: fix typo in test name
- (this branch is used by jk/fetch-follow-remote-head-fix and tb/refspec-fetch-cleanup.)
-
- In protocol v2 where the refs advertisement is constrained, we try
- to tell the server side not to limit the advertisement when there
- is no specific need to, which has been the source of confusion and
- recent bugs.  Revamp the logic to simplify.
- source: <20250309030101.GA2334064@coredump.intra.peff.net>
-
-
-* jk/use-wunreachable-code-for-devs (2025-03-17) 3 commits
-  (merged to 'next' on 2025-03-18 at fe32168eef)
- + config.mak.dev: enable -Wunreachable-code
- + git-compat-util: add NOT_CONSTANT macro and use it in atfork_prepare()
- + run-command: use errno to check for sigfillset() error
-
- Enable -Wunreachable-code for developer builds.
- source: <20250317235329.809302-1-gitster@pobox.com>
-
-
-* ps/meson-with-breaking-changes (2025-03-12) 3 commits
-  (merged to 'next' on 2025-03-18 at 15b1c62eff)
- + meson: don't install git-pack-redundant(1) docs with breaking changes
- + meson: don't compile git-pack-redundant(1) with breaking changes
- + meson: define WITH_BREAKING_CHANGES when enabling breaking changes
-
- Update meson based build procedure for breaking changes support.
- source: <20250312-b4-pks-meson-breaking-changes-v1-0-b89e9a59d228@pks.im>
-
-
-* ps/refname-avail-check-optim (2025-03-12) 16 commits
-  (merged to 'next' on 2025-03-18 at 726197f7e0)
- + refs: reuse iterators when determining refname availability
- + refs/iterator: implement seeking for files iterators
- + refs/iterator: implement seeking for packed-ref iterators
- + refs/iterator: implement seeking for ref-cache iterators
- + refs/iterator: implement seeking for reftable iterators
- + refs/iterator: implement seeking for merged iterators
- + refs/iterator: provide infrastructure to re-seek iterators
- + refs/iterator: separate lifecycle from iteration
- + refs: stop re-verifying common prefixes for availability
- + refs/files: batch refname availability checks for initial transactions
- + refs/files: batch refname availability checks for normal transactions
- + refs/reftable: batch refname availability checks
- + refs: introduce function to batch refname availability checks
- + builtin/update-ref: skip ambiguity checks when parsing object IDs
- + object-name: allow skipping ambiguity checks in `get_oid()` family
- + object-name: introduce `repo_get_oid_with_flags()`
- (this branch is used by kn/non-transactional-batch-updates.)
-
- The code paths to check whether a refname X is available (by seeing
- if another ref X/Y exists, etc.) have been optimized.
- source: <20250312-pks-update-ref-optimization-v6-0-f778e0414f55@pks.im>
-
-
-* rs/xdiff-context-length-fix (2025-03-14) 1 commit
-  (merged to 'next' on 2025-03-18 at aca4b320d2)
- + xdiff: avoid arithmetic overflow in xdl_get_hunk()
-
- The xdiff code on 32-bit platform misbehaved when an insanely large
- context size is given, which has been corrected.
- source: <4e9b6b4c-aaa1-4c6f-93f4-7bb04607e843@web.de>
-
-
-* tb/multi-cruft-pack-refresh-fix (2025-03-13) 1 commit
-  (merged to 'next' on 2025-03-18 at e3f090e427)
- + builtin/pack-objects.c: freshen objects from existing cruft packs
- (this branch is used by tb/combine-cruft-below-size.)
-
- Certain "cruft" objects would have never been refreshed when there
- are multiple cruft packs in the repository, which has been
- corrected.
- source: <1563552bbda0bc910c9f41b0fabc3225c4d778fc.1741889018.git.me@ttaylorr.com>
-
---------------------------------------------------
-[New Topics]
-
-* js/range-check-codeql-workaround (2025-03-28) 1 commit
- - read-cache: check range before dereferencing an array element
-
- Work around false positive from CodeQL checker.
-
- Will merge to 'next'?
- source: <73cae30129338cf219a810c3a2a78ef48d5637d0.1743073557.git.gitgitgadget@gmail.com>
-
-
-* jt/help-sha-backend-info-in-build-options (2025-03-28) 2 commits
- - help: include unsafe SHA-1 build info in version
- - help: include SHA implementation in version info
-
- "git help --build-options" reports SHA-1 and SHA-256 backends used
- in the build.
-
- Need to pick up a newer iteration.
- cf. <20250403140529.497876-1-jltobler@gmail.com>
- source: <20250328170121.157563-1-jltobler@gmail.com>
-
-
-* pb/perf-test-fixes (2025-03-28) 2 commits
- - p9210: fix 'scalar clone' when running from a detached HEAD
- - p7821: fix test_perf invocation for prereqs
-
- "make perf" fixes.
-
- Will merge to 'next'?
- cf. <Z-pD1puYT87YKAd4@pks.im>
- source: <pull.1936.git.git.1743181669.gitgitgadget@gmail.com>
-
-
-* pb/status-rebase-fixes (2025-03-28) 4 commits
- - wt-status: suggest 'git rebase --continue' to conclude 'merge' instruction
- - wt-status: also abbreviate 'merge' and 'fixup -C' lines during rebase
- - SQUASH??? - <CAPig+cS92W_gYuNsaTvQxiP3xBK7Wpg0__uVkgAU1x0OFJUZgQ@mail.gmail.com>
- - rebase -r: do create merge commit after empty resolution
-
- A few fixes around "git status" while "git rebase" is running.
-
- Comments?  It probably deserves a clarifying reroll.
- cf. <c2f93d99-2f4d-ee6d-7087-42320c6df0f2@gmx.de>
- source: <pull.1897.git.1743181401.gitgitgadget@gmail.com>
-
-
-* ps/cat-file-filter-batch (2025-03-28) 11 commits
- - builtin/cat-file: use bitmaps to efficiently filter by object type
- - builtin/cat-file: deduplicate logic to iterate over all objects
- - pack-bitmap: introduce function to check whether a pack is bitmapped
- - pack-bitmap: add function to iterate over filtered bitmapped objects
- - pack-bitmap: allow passing payloads to `show_reachable_fn()`
- - builtin/cat-file: support "object:type=" objects filter
- - builtin/cat-file: support "blob:limit=" objects filter
- - builtin/cat-file: support "blob:none" objects filter
- - builtin/cat-file: wire up an option to filter objects
- - builtin/cat-file: rename variable that tracks usage
- - Merge branch 'tb/incremental-midx-part-2' into ps/cat-file-filter-batch
- (this branch uses tb/incremental-midx-part-2.)
-
- "git cat-file --batch" and friends learned to allow "--filter=" to
- omit certain objects, just like the transport layer does.
-
- Need to pick up a newer iteration.
- cf. <20250402-pks-cat-file-object-type-filter-v3-0-4da6bb21871c@pks.im>
- source: <20250327-pks-cat-file-object-type-filter-v2-0-4bbc7085d7c5@pks.im>
-
-
-* ps/misc-build-fixes (2025-04-01) 5 commits
- - ci: use Visual Studio for win+meson job on GitHub Workflows
- - meson: distinguish build and target host binaries
- - meson: respect 'tests' build option in contrib
- - gitweb: fix generation of "gitweb.js"
- - meson: fix handling of '-Dcurl=auto'
-
- Random build fixes.
-
- Will merge to 'next'?
- cf. <CAOLa=ZQ8bTn-prAs2ycLdLLjVaLQL4GtLw_gFsvAcx_6j=MBjA@mail.gmail.com>
- source: <20250331-b4-pks-collect-build-fixes-v2-0-6b06136808f3@pks.im>
-
-
-* ps/test-wo-perl-prereq (2025-03-28) 20 commits
- - t5703: refactor test to not depend on Perl
- - t5316: refactor `max_chain()` to not depend on Perl
- - t0210: refactor trace2 scrubbing to not use Perl
- - t0021: refactor `generate_random_characters()` to not depend on Perl
- - t/lib-httpd: refactor "one-time-perl" CGI script to not depend on Perl
- - t/lib-t6000: refactor `name_from_description()` to not depend on Perl
- - t/lib-gpg: refactor `sanitize_pgp()` to not depend on Perl
- - t: refactor tests depending on Perl for textconv scripts
- - t: refactor tests depending on Perl to print data
- - t: refactor tests depending on Perl substitution operator
- - t: refactor tests depending on Perl transliteration operator
- - Makefile: stop requiring Perl when running tests
- - meson: stop requiring Perl when tests are enabled
- - t: adapt existing PERL prerequisites
- - t: introduce PERL_TEST_HELPERS prerequisite
- - t: adapt `test_readlink()` to not use Perl
- - t: adapt `test_copy_bytes()` to not use Perl
- - t: adapt character translation helpers to not use Perl
- - t: refactor environment sanitization to not use Perl
- - t: skip chain lint when PERL_PATH is unset
-
- "make test" used to have a hard dependency on (basic) Perl; tests
- have been rewritten help environment with NO_PERL test the build as
- much as possible.
-
- Need to pick up a newer iteration.
- cf. <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im>
- source: <20250327-b4-pks-t-perlless-v3-0-b436de9da1b8@pks.im>
-
-
-* pw/custom-conflict-marker-size-for-merge-related-docs (2025-03-29) 1 commit
- - merge-file doc: set conflict-marker-size attribute
-
- "git-merge-file" documentation source, which has lines that look
- like conflict markers, lacked custom conflict marker size defined,
- which has been corrected..
-
- Will merge to 'next'.
- source: <pull.1895.git.1743173140253.gitgitgadget@gmail.com>
-
-
-* ab/rm-sign-compare (2025-03-29) 1 commit
- - rm: fix sign comparison warnings
-
- Some warnings from "-Wsign-compare" for builtin/rm.c have been
- squelched.
-
- Will merge to 'next'.
- source: <ecaaa968-f337-466b-b719-22ebb3587167@gmail.com>
-
-
-* kn/blame-porcelain-unblamable (2025-03-29) 1 commit
- - blame: print unblamable and ignored commits in porcelain mode
-
- "git blame --porcelain" mode now talks about unblamable lines and
- lines that are blamed to an ignored commit.
-
- Need to pick up a newer iteration.
- cf. <20250403160326.120124-1-karthik.188@gmail.com>
- source: <20250329-514-git-blame-1-s-porcelain-output-does-not-emit-unblamable-and-ignored-markers-v3-1-10f695ae519a@gmail.com>
-
-
-* ua/update-update-server-info (2025-03-29) 1 commit
- - builtin/update-server-info: remove unnecessary if statement
-
- Expecting a (hopefully minor and final) reroll.
- cf. <xmqqa58snf9c.fsf@gitster.g>
- source: <20250329120327.105925-2-usmanakinyemi202@gmail.com>
-
-
-* ab/pathspec-sign-compare-workaround (2025-04-01) 1 commit
- - pathspec: fix sign comparison warnings
-
- Some warnings from "-Wsign-compare" for pathspec.c have been
- squelched.
- 
- Will merge to 'next'?
- source: <127c3010-4b23-436e-a07d-e6031e746113@gmail.com>
-
-
-* bc/allow-upload-pack-from-other-people (2025-04-01) 1 commit
- - t5605: fix test for cloning from a different user
-
- Test fix for an already graduated topic.
-
- Will merge to 'next'.
- source: <Z-sO9gcWAi_xh0tI@tapette.crustytoothpaste.net>
-
-
-* en/merge-recursive-debug (2025-04-01) 8 commits
- - builtin/{merge,rebase,revert}: remove GIT_TEST_MERGE_ALGORITHM
- - tests: remove GIT_TEST_MERGE_ALGORITHM and test_expect_merge_algorithm
- - merge-recursive.[ch]: thoroughly debug these
- - merge, sequencer: switch recursive merges over to ort
- - sequencer: switch non-recursive merges over to ort
- - merge-ort: enable diff-algorithms other than histogram
- - builtin/merge-recursive: switch to using merge_ort_generic()
- - checkout: replace merge_trees() with merge_ort_nonrecursive()
-
- Need to pick up a newer iteration.
- cf. <pull.1898.v2.git.1743891374.gitgitgadget@gmail.com>
- source: <pull.1898.git.1743436279.gitgitgadget@gmail.com>
-
-
-* ja/doc-reset-mv-rm-markup-updates (2025-04-01) 5 commits
- - doc: convert git-mv to new documentation format
- - doc: move synopsis git-mv commands in the synopsis section
- - doc: convert git-rm to new documentation format
- - doc: fix synopsis analysis logic
- - doc: convert git-reset to new documentation format
-
-
- Expecting a reroll.
- cf. <CAN0heSodC8_Uwg_Lw31rtkdLfOEDyGg=iE0gb1TRrUWQEynT+w@mail.gmail.com>
- cf. <dfe21538-e70c-4d19-a90f-2c3cf8d3d377@free.fr>
- source: <pull.1896.git.1743354964.gitgitgadget@gmail.com>
-
-
-* md/userdiff-bash-shell-function (2025-04-01) 1 commit
- - userdiff: extend Bash pattern to cover more shell function forms
-
- The userdiff pattern for shell scripts has been updated to cope
- with more bash-isms.
-
- Comments?
- source: <20250330134018.9662-2-dhar61595@gmail.com>
-
-
-* mh/left-right-limited (2025-04-01) 1 commit
- - revision: fix --left/right-only use with unrelated histories
-
- "git log --{left,right}-only A...B", when A and B does not share
- any common ancestor, now behaves as expected.
-
- Will merge to 'next'?
- source: <20250330112850.2477673-1-m@lfurio.us>
-
-
-* ps/reftable-api-revamp (2025-04-01) 18 commits
- - reftable/table: move printing logic into test helper
- - reftable/constants: make block types part of the public interface
- - SQUASH???
- - reftable/table: introduce iterator for table blocks
- - reftable/table: add `reftable_table` to the public interface
- - reftable/block: expose a generic iterator over reftable records
- - reftable/block: make block iterators reseekable
- - reftable/block: store block pointer in the block iterator
- - reftable/block: create public interface for reading blocks
- - git-zlib: use `struct z_stream_s` instead of typedef
- - reftable/block: rename `block_reader` to `reftable_block`
- - reftable/block: rename `block` to `block_data`
- - reftable/table: move reading block into block reader
- - reftable/block: simplify how we track restart points
- - reftable/blocksource: consolidate code into a single file
- - reftable/reader: rename data structure to "table"
- - reftable: fix formatting of the license header
- - Merge branch 'ps/reftable-sans-compat-util' into ps/reftable-api-revamp
- (this branch uses ps/reftable-sans-compat-util.)
-
- Need to pick up a newer iteration.
- cf. <20250407-pks-reftable-polishing-v2-0-316c4ff10571@pks.im>
- source: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
-
---------------------------------------------------
-[Cooking]
-
-* ds/maintenance-loose-objects-batchsize (2025-03-23) 2 commits
- - maintenance: add loose-objects.batchSize config
- - maintenance: force progress/no-quiet to children
-
- The job to coalesce loose objects into packfiles in "git
- maintenance" now has configurable batch size.
-
- Will merge to 'next'.
- source: <pull.1885.git.1742777512.gitgitgadget@gmail.com>
-
-
-* jt/clone-guess-remote-head-fix (2025-03-25) 3 commits
- - advice: allow disabling default branch name advice
- - builtin/clone: suppress unexpected default branch advice
- - remote: allow `guess_remote_head()` to suppress advice
-
- "git clone" still gave the message about the default branch name;
- this message has been turned into an advice message that can be
- turned off.
-
- Will merge to 'next'.
- cf. <69ccc682-3f81-440f-8e96-a5af5d49fa60@gmail.com>
- source: <20250325005148.1771502-1-jltobler@gmail.com>
-
-
-* lo/userdiff-gitconfig (2025-04-01) 1 commit
- - userdiff: add builtin driver for INI files
-
- Will merge to 'next'.
- cf. <Z-pGdyh0eG3xSe4W@pks.im>
- source: <20250331031309.94682-1-lucasseikioshiro@gmail.com>
-
-
-* rs/clear-commit-marks-simplify (2025-03-24) 1 commit
-  (merged to 'next' on 2025-03-29 at 222799fc4e)
- + commit: move clear_commit_marks_many() loop body to clear_commit_marks()
-
- Code clean-up.
-
- Will merge to 'master'.
- source: <80bfd7a9-904c-49d8-a367-ca268c096a9f@web.de>
-
-
-* ta/bulk-checkin-signed-compare-false-warning-fix (2025-03-25) 1 commit
-  (merged to 'next' on 2025-03-29 at 6f33c692ce)
- + bulk-checkin: fix sign compare warnings
-
- Compiler warnings workaround.
-
- Will merge to 'master'.
- source: <20250324214703.7547-1-taahol@utu.fi>
-
-
-* dk/vimdiff-doc-fix (2025-03-25) 1 commit
-  (merged to 'next' on 2025-03-29 at d0c7a36752)
- + vimdiff: clarify the sigil used for marking the buffer to save
-
- Doc update.
-
- Will merge to 'master'.
- source: <20250324205327.79627-1-ben.knoble+github@gmail.com>
-
-
-* es/meson-build-skip-coccinelle (2025-03-25) 1 commit
-  (merged to 'next' on 2025-03-29 at 748d830ce7)
- + meson: disable coccinelle configuration when building from a tarball
-
- Build fix.
-
- Will merge to 'master'.
- source: <20250325200920.198057-1-eschwartz@gentoo.org>
-
-
-* fr/vimdiff-layout-fixes (2025-03-25) 2 commits
-  (merged to 'next' on 2025-03-29 at 367b2105c0)
- + mergetools: vimdiff: add tests for layout with REMOTE as the target
- + mergetools: vimdiff: fix layout where REMOTE is the target
-
- Layout configuration in vimdiff backend didn't work as advertised,
- which has been corrected.
-
- Will merge to 'master'.
- source: <20250325222311.400748-1-greenfoo@u92.eu>
-
-
-* js/comma-semicolon-confusion (2025-03-28) 10 commits
- - detect-compiler: detect clang even if it found CUDA
- - clang: warn when the comma operator is used
- - compat/regex: explicitly mark intentional use of the comma operator
- - wildmatch: avoid using of the comma operator
- - diff-delta: avoid using the comma operator
- - xdiff: avoid using the comma operator unnecessarily
- - clar: avoid using the comma operator unnecessarily
- - kwset: avoid using the comma operator unnecessarily
- - rebase: avoid using the comma operator unnecessarily
- - remote-curl: avoid using the comma operator unnecessarily
-
- Code clean-up.
-
- Will merge to 'next'.
- source: <pull.1889.v3.git.1743076383.gitgitgadget@gmail.com>
-
-
-* js/imap-send-peer-cert-verify (2025-03-25) 1 commit
-  (merged to 'next' on 2025-03-26 at 69df4dd915)
- + imap-send: explicitly verify the peer certificate
-
- Will merge to 'master'.
- source: <pull.1886.git.1742819282360.gitgitgadget@gmail.com>
-
-
-* js/mingw-admins-are-special (2025-03-25) 2 commits
-  (merged to 'next' on 2025-03-26 at dfcb9661a6)
- + test-tool path-utils: support debugging "dubious ownership" issues
- + mingw: special-case administrators even more
-
- "Dubious ownership" checks on Windows has been tightened up.
-
- Will merge to 'master'.
- source: <pull.1893.git.1742899110.gitgitgadget@gmail.com>
-
-
-* en/assert-wo-side-effects (2025-03-21) 3 commits
-  (merged to 'next' on 2025-03-29 at de89bb3075)
- + treewide: replace assert() with ASSERT() in special cases
- + ci: add build checking for side-effects in assert() calls
- + git-compat-util: introduce ASSERT() macro
-
- Ensure what we write in assert() does not have side effects,
- and introduce ASSERT() macro to mark those that cannot be
- mechanically checked for lack of side effects.
-
- Will merge to 'master'.
- source: <pull.1881.v3.git.1742401378.gitgitgadget@gmail.com>
-
-
-* jt/ref-transaction-abort-fix (2025-03-21) 1 commit
- - builtin/fetch: avoid aborting closed reference transaction
-
- A ref transaction corner case fix.
-
- Will merge to 'next'.
- cf. <Z-E2ns9VziejSLB2@pks.im>
- source: <20250321004437.505461-1-jltobler@gmail.com>
-
-
-* kn/ci-meson-check-build-docs-fix (2025-03-20) 1 commit
-  (merged to 'next' on 2025-03-24 at 135ce9ce61)
- + ci/github: add missing 'CI_JOB_IMAGE' env variable
-
- GitHub Actions CI switched on a CI/CD variable that does not exist
- when choosing what packages to install etc., which has been
- corrected.
-
- Will merge to 'master'.
- source: <20250319163328.525284-1-karthik.188@gmail.com>
-
-
-* ms/reftable-block-writer-errors (2025-03-21) 3 commits
-  (merged to 'next' on 2025-03-29 at 67fdddb622)
- + reftable: adapt write_object_record() to propagate block_writer_add() errors
- + reftable: adapt writer_add_record() to propagate block_writer_add() errors
- + reftable: propagate specific error codes in block_writer_add()
-
- Give more meaningful error return values from block writer layer of
- the reftable ref-API backend.
-
- Will merge to 'master'.
- cf. <Z9rnZzbEasyRbHIY@pks.im>
- source: <20250319152927.1263033-1-meetsoni3017@gmail.com>
-
-
-* tb/bitamp-typofix (2025-03-21) 1 commit
-  (merged to 'next' on 2025-03-26 at f068ddb5bb)
- + pseudo-merge.h: fix a typo
-
- Typofix.
-
- Will merge to 'master'.
- source: <3b3cc5c0fa2d0696eb15c5d3c97a6c93a0d39252.1742338479.git.me@ttaylorr.com>
-
-
-* tb/http-curl-keepalive (2025-03-21) 4 commits
-  (merged to 'next' on 2025-03-29 at 4782cca658)
- + http.c: allow custom TCP keepalive behavior via config
- + http.c: inline `set_curl_keepalive()`
- + http.c: introduce `set_long_from_env()` for convenience
- + http.c: remove unnecessary casts to long
-
- TCP keepalive behaviour on http transports can now be configured by
- calling cURL library.
-
- Will merge to 'master'.
- cf. <CABPp-BEn+NfGu1c=ZWjwnFBJgmsxRVSq+Roin-KDQGqKPdDhCg@mail.gmail.com>
- source: <cover.1742423021.git.me@ttaylorr.com>
-
-
-* tb/refspec-fetch-cleanup (2025-03-21) 5 commits
-  (merged to 'next' on 2025-03-29 at 6cf1359bf4)
- + refspec: replace `refspec_item_init()` with fetch/push variants
- + refspec: remove refspec_item_init_or_die()
- + refspec: replace `refspec_init()` with fetch/push variants
- + refspec: treat 'fetch' as a Boolean value
- + Merge branch 'jk/fetch-ref-prefix-cleanup' into tb/refspec-fetch-cleanup
-
- Code clean-up.
-
- Will merge to 'master'.
- cf. <CABPp-BE6JmiXB+pUL1Z4ewVDbG2RBxCdA2m5-WTYtoKMTtu_Xw@mail.gmail.com>
- source: <cover.1742338207.git.me@ttaylorr.com>
-
-
-* zy/send-email-error-handling (2025-03-25) 2 commits
- - send-email: finer-grained SMTP error handling
- - send-email: capture errors in an eval {} block
-
- Auth-related (and unrelated) error handling in send-email has been
- made more robust.
-
- Need to pick up a newer iteration.
- cf. <20250326075246.2612627-1-05ZYT30@gmail.com>
- source: <20250324145332.571813-1-05ZYT30@gmail.com>
-
-
-* aj/doc-restore-p-update (2025-03-18) 1 commit
-  (merged to 'next' on 2025-03-24 at bdcfdc7f4e)
- + doc: restore: remove note on --patch w/ pathspecs
-
- Stale description in "git restore -p" documentation has been
- updated.
-
- Will merge to 'master'.
- source: <pull.1504.v2.git.git.1685654097812.gitgitgadget@gmail.com>
-
-
-* ja/doc-branch-markup (2025-03-20) 2 commits
-  (merged to 'next' on 2025-03-24 at ba6e1c7d0b)
- + doc: apply new format to git-branch man page
- + completion: take into account the formatting backticks for options
-
- Doc mark-up updates.
-
- Will merge to 'master'.
- source: <pull.1880.v2.git.1742372183.gitgitgadget@gmail.com>
-
-
-* ps/mingw-creat-excl-fix (2025-03-21) 2 commits
- - compat/mingw: fix EACCESS when opening files with `O_CREAT | O_EXCL`
- - meson: fix compat sources when compiling with MSVC
-
- Fix lockfile contention in reftable code on Windows.
-
- Will merge to 'next'.
- cf. <801fac5d-dd98-d157-6ff3-c3e8aa6a68ae@gmx.de>
- source: <20250320-b4-pks-mingw-lockfile-flake-v2-0-a84c90cfc6c2@pks.im>
-
-
-* tb/combine-cruft-below-size (2025-03-21) 6 commits
-  (merged to 'next' on 2025-03-24 at 699b83a925)
- + repack: begin combining cruft packs with `--combine-cruft-below-size`
- + repack: avoid combining cruft packs with `--max-cruft-size`
- + t/t7704-repack-cruft.sh: consolidate `write_blob()`
- + t/t7704-repack-cruft.sh: clarify wording in --max-cruft-size tests
- + t/t5329-pack-objects-cruft.sh: evict 'repack'-related tests
- + Merge branch 'tb/multi-cruft-pack-refresh-fix' into tb/combine-cruft-below-size
-
- "git repack" learned "--combine-cruft-below-size" option that
- controls how cruft-packs are combined.
-
- Will merge to 'master'.
- source: <cover.1742424671.git.me@ttaylorr.com>
-
-
-* jh/hash-init-fixes (2025-03-18) 1 commit
-  (merged to 'next' on 2025-03-24 at 85b8299403)
- + index-pack, unpack-objects: restore missing ->init_fn
-
- An earlier code refactoring of the hash machinery missed a few
- required calls to init_fn.
-
- Will merge to 'master'.
- cf. <Z9rC0VCbh8Noaq4e@pks.im>
- source: <20250318111616.113941-1-hmz007@gmail.com>
-
-
-* jk/fetch-follow-remote-head-fix (2025-03-18) 3 commits
- - fetch: don't ask for remote HEAD if followRemoteHEAD is "never"
- - fetch: only respect followRemoteHEAD with configured refspecs
- - Merge branch 'jk/fetch-ref-prefix-cleanup' into jk/fetch-follow-remote-head-fix
-
- "git fetch [<remote>]" with only the configured fetch refspec
- should be the only thing to update refs/remotes/<remote>/HEAD,
- but the code was overly eager to do so in other cases.
-
- Will merge to 'next'.
- cf. <Z9n7myvpnDOWFWqt@nand.local>
- source: <20250318053905.GA2051217@coredump.intra.peff.net>
-
-
-* pw/build-breaking-changes-doc (2025-03-18) 1 commit
-  (merged to 'next' on 2025-03-24 at 56efeea47e)
- + docs: add BreakingChanges to TECH_DOCS target
-
- A documentation page was left out from formatting and installation,
- which has been corrected.
-
- Will merge to 'master'.
- source: <pull.1921.git.git.1742308900290.gitgitgadget@gmail.com>
-
-
-* pw/doc-pack-refs-markup-fix (2025-03-18) 1 commit
-  (merged to 'next' on 2025-03-24 at 3bcea36a83)
- + pack-refs doc: fix indentation for --exclude
-
- Doc markup fix.
-
- Will merge to 'master'.
- source: <pull.1920.git.git.1742308828163.gitgitgadget@gmail.com>
-
-
-* sc/bundle-uri-use-all-refs-in-bundle (2025-03-18) 2 commits
- - bundle-uri: add test for bundle-uri clones with tags
- - bundle-uri: copy all bundle references ino the refs/bundle space
-
- Bundle-URI feature did not use refs recorded in the bundle other
- than normal branches as anchoring points to optimize the follow-up
- fetch during "git clone"; now it is told to utilize all.
-
- Needs more work on tests.
- cf. <e4244e04-d2f3-43ab-88cf-58d9804731b8@gmail.com>
- source: <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com>
-
-
-* ds/path-walk-2 (2025-03-25) 13 commits
- - pack-objects: allow --shallow and --path-walk
- - path-walk: add new 'edge_aggressive' option
- - pack-objects: thread the path-based compression
- - pack-objects: refactor path-walk delta phase
- - scalar: enable path-walk during push via config
- - pack-objects: enable --path-walk via config
- - repack: add --path-walk option
- - t5538: add tests to confirm deltas in shallow pushes
- - pack-objects: introduce GIT_TEST_PACK_PATH_WALK
- - p5313: add performance tests for --path-walk
- - pack-objects: update usage to match docs
- - pack-objects: add --path-walk option
- - pack-objects: extract should_attempt_deltas()
-
- "git pack-objects" learns to find delta bases from blobs at the
- same path, using the --path-walk API.
-
- Comments?
- source: <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
-
-
-* jc/name-rev-stdin (2025-03-12) 6 commits
-  (merged to 'next' on 2025-03-24 at cfec2e409f)
- + name-rev: remove "--stdin" support
- + t6120: further modernize
- + t6120: avoid hiding "git" exit status
- + t: introduce WITH_BREAKING_CHANGES prerequisite
- + t: extend test_lazy_prereq
- + t: document test_lazy_prereq
-
- Using "git name-rev --stdin" as an example, improve the framework to
- prepare tests to pretend to be in the future where the breaking
- changes have already happened.
-
- Will merge to 'master'.
- source: <20250311212505.2920181-1-gitster@pobox.com>
-
-
-* jt/rev-list-z (2025-03-21) 5 commits
- - rev-list: support NUL-delimited --missing option
- - rev-list: support NUL-delimited --boundary option
- - rev-list: support delimiting objects with NUL bytes
- - rev-list: refactor early option parsing
- - rev-list: inline `show_object_with_name()` in `show_object()`
-
- "git rev-list" learns machine-parsable output format that delimits
- each field with NUL.
-
- Will merge to 'next'?
- source: <20250319183410.1225428-1-jltobler@gmail.com>
-
-
-* kn/reflog-drop (2025-03-17) 2 commits
- - reflog: implement subcommand to drop reflogs
- - reflog: improve error for when reflog is not found
-
- "git reflog" learns "drop" subcommand, that discards the entire
- reflog data for a ref.
-
- Will merge to 'next'.
- cf. <CAP8UFD1vTkPH=5b++6+=koozC31=wD1gQszvdFmzb73B9HM4Aw@mail.gmail.com>
- source: <20250314-493-add-command-to-purge-reflog-entries-v3-0-c24e23a6146d@gmail.com>
-
-
-* cc/lop-remote (2025-03-18) 4 commits
-  (merged to 'next' on 2025-03-24 at 3b685ceef0)
- + promisor-remote: compare remote names case sensitively
- + promisor-remote: fix possible issue when no URL is advertised
- + promisor-remote: fix segfault when remote URL is missing
- + t5710: arrange to delete the client before cloning
-
- Bugfix in newly introduced large-object-promisor remote support.
-
- Will merge to 'master'.
- source: <20250318110008.656695-1-christian.couder@gmail.com>
-
-
-* ps/ci-meson-check-build-docs (2025-03-12) 1 commit
-  (merged to 'next' on 2025-03-29 at 5aed226a96)
- + ci: perform build and smoke tests for Meson docs
-
- CI update.
-
- Will merge to 'master'.
- source: <20250312-b4-pks-ci-meson-docs-v1-1-5e7cf7ac959a@pks.im>
-
-
-* md/t1403-path-is-file (2025-03-04) 1 commit
- - t1403: verify that path exists and is a file
-
- Test tweak.
-
- Will merge to 'next'.
- source: <20250304112728.41228-2-danimahendra0904@gmail.com>
-
-
-* sk/clar-trailer-urlmatch-norm-test (2025-03-04) 2 commits
- - t/unit-tests: convert urlmatch-normalization test to clar
- - t/unit-tests: convert trailer test to use clar
-
- A few traditional unit tests have been rewritten to use the clar
- framework.
-
- Will merge to 'next'?
- cf. <xmqqzfi0pthr.fsf@gitster.g>
- source: <20250304113323.10564-1-kuforiji98@gmail.com>
-
-
-* dm/completion-remote-names-fix (2025-03-23) 2 commits
-  (merged to 'next' on 2025-03-26 at b9460e20ae)
- + completion: fix bugs with slashes in remote names
- + completion: add helper to count path components
-
- The bash command line completion script (in contrib/) has been
- updated to cope with remote repository nicknames with slashes in
- them.
-
- Will merge to 'master'.
- source: <17274df2746d304db876ebd82ad8d932@mandelberg.org>
-
-
-* kn/non-transactional-batch-updates (2025-03-29) 10 commits
- - SQUASH??? - <6141866.lOV4Wx5bFT@cayenne>
- - update-ref: add --batch-updates flag for stdin mode
- - refs: support rejection in batch updates during F/D checks
- - refs: implement batch reference update support
- - refs: introduce enum-based transaction error types
- - refs/reftable: extract code from the transaction preparation
- - refs/files: remove duplicate duplicates check
- - refs: move duplicate refname update check to generic layer
- - refs/files: remove redundant check in split_symref_update()
- - Merge branch 'ps/refname-avail-check-optim' into kn/non-transactional-batch-updates
-
- Updating multiple references have only been possible in all-or-none
- fashion with transactions, but it can be more efficient to batch
- multiple updates even when some of them are allowed to fail in a
- best-effort manner.  A new "best effort batches of updates" mode
- has been introduced.
-
- Expecting a (small and hopefully final) reroll.
- cf. <CAOLa=ZQDiCx_VJRbQB1K6EeuA2mDj4twEB98ByddUNLtB8rEKQ@mail.gmail.com>
- source: <20250327-245-partially-atomic-ref-updates-v5-0-4db2a3e34404@gmail.com>
-
-
-* ps/object-wo-the-repository (2025-03-10) 12 commits
- - hash: stop depending on `the_repository` in `null_oid()`
- - hash: fix "-Wsign-compare" warnings
- - object-file: split out logic regarding hash algorithms
- - delta-islands: stop depending on `the_repository`
- - object-file-convert: stop depending on `the_repository`
- - pack-bitmap-write: stop depending on `the_repository`
- - pack-revindex: stop depending on `the_repository`
- - pack-check: stop depending on `the_repository`
- - environment: move access to "core.bigFileThreshold" into repo settings
- - pack-write: stop depending on `the_repository` and `the_hash_algo`
- - object: stop depending on `the_repository`
- - csum-file: stop depending on `the_repository`
-
- The object layer has been updated to take an explicit repository
- instance as a parameter in more code paths.
-
- Will merge to 'next'.
- cf. <CABPp-BFrjqf=dMNwxzyMj3EQrAXTYkH7rDTi7X7xoWnoW_A4eA@mail.gmail.com>
- source: <20250310-b4-pks-objects-without-the-repository-v4-0-f201b8ec57ba@pks.im>
-
-
-* ps/maintenance-reflog-expire (2025-02-26) 6 commits
- - builtin/maintenance: introduce "reflog-expire" task
- - builtin/gc: split out function to expire reflog entries
- - builtin/reflog: make functions regarding `reflog_expire_options` public
- - builtin/reflog: stop storing per-reflog expiry dates globally
- - builtin/reflog: stop storing default reflog expiry dates globally
- - reflog: rename `cmd_reflog_expire_cb` to `reflog_expire_options`
-
- "git maintenance" learns a new task to expire reflog entries.
-
- Expecting a (small and hopefully final) reroll.
- cf. <ammsrvhyzo6f7hfcizlh42e3e5cznfb2j37tcicliqqpqaaqgs@4mniagc5ejzz>
- cf. <usf4pzrp322xvfrvsasgy22rnw7d2a6krzuctwpp23ppdgh6ji@ram73wv5dn54>
- source: <20250226-pks-maintenance-reflog-expire-v1-0-a1204a814952@pks.im>
-
-
-* jk/zlib-inflate-fixes (2025-02-25) 10 commits
- - unpack_loose_rest(): rewrite return handling for clarity
- - unpack_loose_rest(): simplify error handling
- - unpack_loose_rest(): never clean up zstream
- - unpack_loose_rest(): avoid numeric comparison of zlib status
- - unpack_loose_header(): avoid numeric comparison of zlib status
- - git_inflate(): skip zlib_post_call() sanity check on Z_NEED_DICT
- - unpack_loose_header(): fix infinite loop on broken zlib input
- - unpack_loose_header(): report headers without NUL as "bad"
- - unpack_loose_header(): simplify next_out assignment
- - loose_object_info(): BUG() on inflating content with unknown type
-
- Fix our use of zlib corner cases.
-
- Will merge to 'next'.
- source: <20250225062518.GA1293854@coredump.intra.peff.net>
-
-
-* ib/diff-S-G-with-longhand (2025-02-12) 10 commits
- - diff: docs: Use --patch-{grep,modifies} over -G/-S
- - diff: --pickaxe-{all,regex} help: Add --patch-{grep,modifies}
- - diff: test: Use --patch-{grep,modifies} over -G/-S
- - completion: Support --patch-{grep,modifies}
- - diff: --patch-{grep,modifies} arg names for -G and -S
- - docs: gitdiffcore: -G and -S: Use regex/string placeholders
- - diff: short help: Add -G and --pickaxe-grep
- - diff: short help: Correct -S description
- - diff: -G description: Correct copy/paste error
- - t/t4209-log-pickaxe: Naming typo: -G takes a regex
-
- The commands in the "diff" family learned longhands for "-S" and
- "-G" options.
-
- Expecting a reroll.
- source: <20250212032657.1807939-1-illia.bobyr@gmail.com>
-
-
-* ps/reftable-windows-unlink-fix (2025-02-18) 2 commits
- - reftable: ignore file-in-use errors when unlink(3p) fails on Windows
- - Merge branch 'ps/reftable-sans-compat-util' into ps/reftable-windows-unlink-fix
- (this branch uses ps/reftable-sans-compat-util.)
-
- Portability fix.
-
- Will merge to 'next'.
- source: <20250206-b4-pks-reftable-win32-in-use-errors-v2-1-56985a4f6186@pks.im>
-
-
-* ps/reftable-sans-compat-util (2025-02-18) 18 commits
-  (merged to 'next' on 2025-03-29 at 4e9fbae111)
- + Makefile: skip reftable library for Coccinelle
- + reftable: decouple from Git codebase by pulling in "compat/posix.h"
- + git-compat-util.h: split out POSIX-emulating bits
- + compat/mingw: split out POSIX-related bits
- + reftable/basics: introduce `REFTABLE_UNUSED` annotation
- + reftable/basics: stop using `SWAP()` macro
- + reftable/stack: stop using `sleep_millisec()`
- + reftable/system: introduce `reftable_rand()`
- + reftable/reader: stop using `ARRAY_SIZE()` macro
- + reftable/basics: provide wrappers for big endian conversion
- + reftable/basics: stop using `st_mult()` in array allocators
- + reftable: stop using `BUG()` in trivial cases
- + reftable/record: don't `BUG()` in `reftable_record_cmp()`
- + reftable/record: stop using `BUG()` in `reftable_record_init()`
- + reftable/record: stop using `COPY_ARRAY()`
- + reftable/blocksource: stop using `xmmap()`
- + reftable/stack: stop using `write_in_full()`
- + reftable/stack: stop using `read_in_full()`
- (this branch is used by ps/reftable-api-revamp and ps/reftable-windows-unlink-fix.)
-
- Make the code in reftable library less reliant on the service
- routines it used to borrow from Git proper, to make it easier to
- use by external users of the library.
-
- Will merge to 'master'.
- cf. <Z-Y1YbE2EVqLZhGO@pks.im>
- source: <20250218-pks-reftable-drop-git-compat-util-v6-0-8c1f39fb4c02@pks.im>
-
-
-* tb/incremental-midx-part-2 (2025-03-21) 14 commits
-  (merged to 'next' on 2025-03-29 at 1db17d1a9b)
- + midx: implement writing incremental MIDX bitmaps
- + pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
- + pack-bitmap.c: keep track of each layer's type bitmaps
- + ewah: implement `struct ewah_or_iterator`
- + pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
- + pack-bitmap.c: compute disk-usage with incremental MIDXs
- + pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
- + pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
- + pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
- + pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
- + pack-bitmap.c: open and store incremental bitmap layers
- + pack-revindex: prepare for incremental MIDX bitmaps
- + Documentation: describe incremental MIDX bitmaps
- + Documentation: remove a "future work" item from the MIDX docs
- (this branch is used by ps/cat-file-filter-batch.)
-
- Incrementally updating multi-pack index files.
-
- Will merge to 'master'.
- source: <cover.1742493373.git.me@ttaylorr.com>
-
-
-* ej/cat-file-remote-object-info (2025-02-24) 8 commits
- - cat-file: add remote-object-info to batch-command
- - transport: add client support for object-info
- - serve: advertise object-info feature
- - fetch-pack: move fetch initialization
- - fetch-pack: refactor packet writing
- - t1006: split test utility functions into new "lib-cat-file.sh"
- - cat-file: add declaration of variable i inside its for loop
- - git-compat-util: add strtoul_ul() with error handling
-
- "git cat-file --batch" and friends can optionally ask a remote
- server about objects it does not have.
-
- Expecting a reroll.
- cf. <CAN2LT1Cc-UaUpabqcGascicR3nk6ZdFythamKje33Orhy5WoNA@mail.gmail.com>
- source: <20250221190451.12536-1-eric.peijian@gmail.com>
-
---------------------------------------------------
-[Discarded]
-
-* jc/ci-meson-check-build-docs-fix (2025-03-14) 1 commit
- . install meson for Documentation job
- (this branch uses ps/ci-meson-check-build-docs.)
-
- The documentation CI job tries to build test documentation pages
- with both make- and meson-based build procedures, but somehow
- forgot to install meson in the Ci environment, which has been
- corrected.
-
- Discarded.  kn/ci-meson-check-build-docs-fix gives us the right fix.
- cf. <xmqqmsdi49h8.fsf_-_@gitster.g>
- cf. <CAOLa=ZRODjYfDXQ8m+hDosV7RBGDWeehzSvsR-+-HCmbS+tAcQ@mail.gmail.com>
- source: <20250314184130.GA578421@coredump.intra.peff.net>
-
-
-* js/libgit-cargo-package (2025-03-22) 5 commits
- . libgit-{sys,rs}: add license and description fields
- . libgit-sys: exclude unnecessary directories in git-src
- . libgit-sys: parallelize build with Cargo's jobserver
- . libgit-sys: add symlink to git repo root and build out of tree
- . libgitpub: move to separate contrib/ directory
-
- Breaks Windows CI job with "../.." symbolic link in the source.
- Retracted for now.
- cf. <xnjgoym6makh7q64sp5efvkmcubslklkjeidja45rtl2wjm4jd@xfww2a52hj34>
- source: <cover.1742594960.git.steadmon@google.com>
-
-
-* sj/meson-test-environ-fix (2025-03-14) 1 commit
- . meson: use test_environment conditionally.
-
- meson-based build procedure was overly aggressive in using test
- environment in two contrib/ directories, which was corrected.
-
- Superseded by ps/misc-build-fixes.
- source: <3d127f293818f935efdb9ca7bb556e6a8f233ef7.1741975557.git.sam@gentoo.org>
-
-
---------------------------------------------------
-[Discarded]
-
-* jc/doc-attr-tree (2024-12-14) 1 commit
- - doc: give attr.tree a bit more visibility
-
- Make sure that "git --attr-source=X", GIT_ATTR_SOURCE, and
- attr.tree configuration variables appear at the same places in the
- documentation.
-
- Will discard.
- cf. <20241216111112.GA2201417@coredump.intra.peff.net>
- source: <xmqq5xnladwi.fsf@gitster.g>
 
