@@ -1,92 +1,96 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63021F8916
-	for <git@vger.kernel.org>; Mon,  7 Apr 2025 15:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689122046AA
+	for <git@vger.kernel.org>; Mon,  7 Apr 2025 15:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744038696; cv=none; b=P/d0H+HVNfT6F416XMWM3uAO62NmjxxRFUwHr13tEwCtoLY1FtOx4sMdRKMaTtcg5tisOriQHj0tugPCxVt7rNFxVFGQCP3Hlh6jjlqy6m9gxbvy8rmtHdvKe12C9z0aIgdTCKR6B3pm5sz3nhmpju+xechlxpOVzR5+nIgXYTQ=
+	t=1744040965; cv=none; b=Ik71OqLVrI21E6K6a1TEL/Vysp2DvCkBjVfrC9Bcp1ky9QsjJ2cEhlPmo86+1Ht02C9GPk1JFKck7DREKt+kZTqdX7pMOqDnJJQraA0krYtrEsHVBWyfPntcI7gbUL2ori08jyLvFa3aCEUnYT5of+gM80J+3P/ezH88ux1bkgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744038696; c=relaxed/simple;
-	bh=2VsRDnvA+ND6qmOnetTt2aAngOaG8b6wiIR8+gFtZ5Y=;
+	s=arc-20240116; t=1744040965; c=relaxed/simple;
+	bh=MdKftGrUitbMfO1nmQv898/3k7bb+0xxsjBnoeCKR4g=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=e79xUAgPPIykllVt4wpnuuWR09IsNtWI5jnCVCi2+wziBmuF0F24RnHsf/EhXzRuPnwK5KaYVkB8TFsnPL2QUiFWtyQHRw6qoj+hTe+Rr/XtpTyBHB8z6DvjU9nbZ1vg97yghVFT7i2Lx/siHqWG6xRX0cAMLsn6Zxs35iy0J94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WWlXnaBB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SEFVIO2A; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=sEOPAUeRu3wOq2UdDg/PMZ2e95BtVW5YbtqUMbGkqzkPtQchT6kS6t6Cx74S7xwNPDd0cBLrUrjB3N2b/IqKJP2So+eZoF+9ViylM0k/iONgDokBhSoBi31SHG4EHk4r2blv/8ByRJLW3xyFXYnlgjVRpb4bsNBSJfzOjqwfg3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=frqQST1G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=klTz+kw8; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WWlXnaBB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SEFVIO2A"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id A61BA13800B0;
-	Mon,  7 Apr 2025 11:11:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="frqQST1G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="klTz+kw8"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 57B7A1380141;
+	Mon,  7 Apr 2025 11:49:22 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 07 Apr 2025 11:11:32 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 07 Apr 2025 11:49:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1744038692;
-	 x=1744125092; bh=bM9uucouHNHINKoNi4eUZPUKe5JqifofZ6R196P16Nw=; b=
-	WWlXnaBBodmURLP03iadcwWKNE4c/mex9DX34pjgAfPF5rbmplOGT9xivo747v5V
-	OQZg1c7uUPHeqG+TSndBhPTOps3NrC/vqWgGd1M3QY9q7bdHrO8QvJBfAY8pokGd
-	CyMy2ahIfwlOCc343JgX7N9NxXX3lQlA3+lEun37jsXoD2B5RG4+R/O6NOb6IMQN
-	9xeuIj6bAxlwGymCsQqNc0xsHFaqiLA0vCohjeNe7GcNh5DteqVILcsJZnyAxMIu
-	gC88ZyNj69NsZND5pTFoGJFrr34+AH94nsTGI5RlftbDH/wdy+Hy1qyPsmPuvC0a
-	QETAARAR5Z4lx37suTHOoA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1744040962;
+	 x=1744127362; bh=mB20gH++S1phsWfOkYeXhvFU1lnbcKA5nzvFUXclhds=; b=
+	frqQST1GtuQidqd81TT/KK9UkveQkWDog1xCwIG/WORFPAKyLyl6dKm2rbTINh64
+	spizqjASqW89v2KoDcAn/kxoQSAsdxF3n9G00wmQomEBydIsOTIf4AgO3ShBTKoZ
+	rtJbe0dTtdklSoVDAr0TId0tMTEzvlpZ7RdURL4y97PEnFlmjer0mOi3tMLHCTBm
+	ldm4QReM1a79XSEO26srjoIMAc4PA/hV9i8hbaTr5OH8MMfqzCbzq+ayXOohZVYv
+	hXwoZy1b2x/BUK4ETgLfhTyIJ0FYtCYMVrbssRy7uaAGWg+49VURzmmU21RkteqZ
+	lGoVldz1kKRYUIbY3lgRYg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744038692; x=
-	1744125092; bh=bM9uucouHNHINKoNi4eUZPUKe5JqifofZ6R196P16Nw=; b=S
-	EFVIO2AJ8YCyM3nT9ITnXXawMi8S608VI5qR6DVqAM8yFYEvZXjm1HnpHEfCScjC
-	3dljHRzRuembMP4/+uaHossKgnfNJFbYFwhRJjUhUZaczFhvOl4Hcu3KXVxb54QQ
-	qWYgdQtg1wibm9WMUL+LbaWpOAoTbeimDVIECYDu+giYGToZFk7s8ccDfBjGYxgg
-	7WPmTP12/Di8BVGgvMfQ9+/0Mdwtnijifa7iTt/fP50xhGJS+4VVFXw9UclZyKiv
-	6L9sR/Bxcsr1kuRNQEpMnaIa4+tvNdQlqlidPKCGj4brQyN0Rtw6+Gw3Vrmfzf2a
-	fM/wkiodqgvcdvugRTGhA==
-X-ME-Sender: <xms:JOvzZ8cdCXLRMyxxcPH46QWQvxnDTIht7WBBJwnewYm8YQZjpdwsvA>
-    <xme:JOvzZ-OTDAz1UwtH_q7YhDAWRuuu8vGfUwV1g3bTJ9YG3G9GIsX055qA1bwDbN5Qc
-    oa8RgBIinHZsWgUaw>
-X-ME-Received: <xmr:JOvzZ9hB3ZSJyLWtHf5R7kF3VZIuRQaf6FkiEJ1e2Ro5hIKWcG_UvPdgfUuBBZlNDKjl-bk2uBtoBT_61S7bibUo5baavmpuxGje>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddtheduucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744040962; x=
+	1744127362; bh=mB20gH++S1phsWfOkYeXhvFU1lnbcKA5nzvFUXclhds=; b=k
+	lTz+kw8QEM/cdiEaqtc0aoCwZDZxKyVssLEEZCHCeOjGJo+EXJDE6eUeGKaZ6VTj
+	NXTcKdoAQY+Amvfp3Svgso2mI7K/hA1v13/rxPogdHt2Ugp1EoF6ilrg1eTPz1NI
+	SIgEfZ32koyWYluLUofsIHTkROB8t7DUBmk1S6P4r5GPBWZrJuCvhryfddTmXHyC
+	edsqqYg+N0xweO2Y7RLabKKxITTquDZr9RmkB4xgvQ1yQtD7iHI1WFcd/LnQ/8ed
+	G8xSGRKpqQoaiqaoWlsKfQWttnA4Oi0TqvwgN3oJHV2HH4wWevTmWFj+iYbl01lI
+	IuCG5wKlwbMt/489asEuw==
+X-ME-Sender: <xms:AfTzZ39XEam9yKFAzunq_MDqIXb1AgNmOWb3vxO1rQpXdUQvV_elPg>
+    <xme:AfTzZzt3CKRTpArXjM_QZT3YDX6nz-1ph4JtwalModY71m1feTx3GKHX2sCLFuIN2
+    SYO1xFt8_cobQY8GA>
+X-ME-Received: <xmr:AfTzZ1Aefn62Zsm-i_EmK1B7Qp6LT33P_pTm6mki4pFSRwlZBGJgrKsuTLlI8xYcjbgo69Hbd2Zr0QBtoszl-1VLICyvpZmHhh6V>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddtheelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffgffkfggtgfgsehtkeertddt
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
     reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeiheduheelveevtefgueeguedtuedu
-    ieeghfeguefhveeihfdvveekudefvdffjeenucevlhhushhtvghrufhiiigvpedtnecurf
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
+    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
     grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjnhdrrghvih
-    hlrgesfhhrvggvrdhfrhdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdr
-    tghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjheitheskhgusg
-    hgrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:JOvzZx-FYHN-SAvSJdnZ4F-kB5aHAKYrBQ7IF5t4h-dBGkxHUlO_1A>
-    <xmx:JOvzZ4tMiq4ae2o3MOVcAdpzxjftSXHPJyD3XgriL6xd5lWBn95cOg>
-    <xmx:JOvzZ4EVsizkEHpQFaQU-HgOYHRQwdCyuMMLXjBHWqE_3TfbfNj6SQ>
-    <xmx:JOvzZ3OfrirdRmlDNp4svPcg8F-_Vhh4QBL1cTy-ygU82eZQ2LU9dg>
-    <xmx:JOvzZ3DjrRHIBW5HOMoeknCNQMSCMis0kZzJvkGFYh8xe-ALMNllwEHn>
+    rhgtphhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhunhhshh
+    hinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehushhmrghnrghkihhn
+    higvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomh
+    dprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:AfTzZzc0ksFEzH_lZKYGQBmZ8cAZG2TiRKePlcuc6VONqob2YgQ3lA>
+    <xmx:AfTzZ8NpIdfuRq4Tvu6OliaYhdpDOuyajOh7VbqkcCrKkhpBubd8bA>
+    <xmx:AfTzZ1nW6bhMPwSHWmvCHpSCGOZrhbWjwy0OpXXNWTwdLZGB3x5kgw>
+    <xmx:AfTzZ2vLzQynoF8u77NhW3F_EV0cHH1asFw1kJjzRs1ntIsfczY07A>
+    <xmx:AvTzZ3m6cDDGd0a9NbZRpIehX-wjcuExopEdz8yOdCGD0ALqJ7yLoseq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Apr 2025 11:11:31 -0400 (EDT)
+ 7 Apr 2025 11:49:21 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>,
-  Johannes Sixt <j6t@kdbg.org>,  git@vger.kernel.org
-Subject: Re: [PATCH] doc: fix asciidoctor synopsis processing of triple-dots
-In-Reply-To: <dfe21538-e70c-4d19-a90f-2c3cf8d3d377@free.fr> (=?utf-8?Q?=22?=
- =?utf-8?Q?Jean-No=C3=ABl?=
-	Avila"'s message of "Wed, 2 Apr 2025 08:49:40 +0200")
-References: <Z+rUsCW0zEb8kAK8@szeder.dev>
-	<20250401110811.117851-1-jn.avila@free.fr>
-	<xmqqecyba6zz.fsf@gitster.g>
-	<dfe21538-e70c-4d19-a90f-2c3cf8d3d377@free.fr>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,  git@vger.kernel.org,
+  christian.couder@gmail.com,  johncai86@gmail.com,  me@ttaylorr.com,
+  ps@pks.im,  shejialuo@gmail.com,  phillip.wood123@gmail.com,  Christian
+ Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 1/1] builtin/update-server-info: remove unnecessary
+ if statement
+In-Reply-To: <CAPig+cShdouOzG_jKz_Z6+bSprZ5ZEsx9wZR-_LuD1P2kaOWwg@mail.gmail.com>
+	(Eric Sunshine's message of "Sun, 6 Apr 2025 20:24:18 -0400")
+References: <20250329120327.105925-1-usmanakinyemi202@gmail.com>
+	<20250406121513.154084-1-usmanakinyemi202@gmail.com>
+	<20250406121513.154084-2-usmanakinyemi202@gmail.com>
+	<CAPig+cShdouOzG_jKz_Z6+bSprZ5ZEsx9wZR-_LuD1P2kaOWwg@mail.gmail.com>
+Date: Mon, 07 Apr 2025 15:49:19 +0000
+Message-ID: <xmqqa58snf9c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Mon, 07 Apr 2025 15:11:30 +0000
-Message-ID: <xmqqfriknh0d.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -96,14 +100,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Jean-Noël Avila <jn.avila@free.fr> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
->> The .gsub() changes seem to interact with your "doc: fix synopsis
->> analysis logic" in the series that updates reset/mv/rm documentation
->> mark-up.
->> 
->> 
+> On Sun, Apr 6, 2025 at 8:15 AM Usman Akinyemi
+> <usmanakinyemi202@gmail.com> wrote:
+>> Since we already teach the `repo_config()` in "1a764cdbdc
+>> (Merge branch 'ua/some-builtins-wo-the-repository', 2025-03-26)"
+>> to allow `repo` to be NULL, no need to check if `repo` is NULL
+>> before calling `repo_config()`.
 >
-> I will incorporate this patch in the reset/mv/rm series.
+> Okay, makes sense. However...
+>
+> By referencing only the merge commit in the above message, you force
+> reviewers and future readers to chase down and locate the actual
+> commit[*] which taught repo_config() to accept NULL for `repo`.
 
-Thanks.
+Thanks for raising this.  
+
+When referring to an entire long series as a whole, a reference to
+the concluding merge might be more useful, as the topic name
+(hopefully) concisely summarizes what the topic was.  However,
+referring to a single patch series, or a single step in a longer
+topic, ...
+
+> To be
+> more friendly to those people, you should help them by instead
+> referencing the commit[*] itself.
+
+... this is a useful general advice.
+
+> [*]: f29f1990b5 (config: teach repo_config to allow `repo` to be NULL,
+> 2025-03-08)
+>
+>> Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
