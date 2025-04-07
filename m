@@ -1,58 +1,57 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4E7225761
-	for <git@vger.kernel.org>; Mon,  7 Apr 2025 09:06:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE6D2E62B0
+	for <git@vger.kernel.org>; Mon,  7 Apr 2025 10:07:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744016794; cv=none; b=HIjgeP8uo98vUKmtiipO1rNA41tsQu4eSqdWC9RzHheUm9dzFsitbTaWo+VXP8DIuh1kzyNsM37IilY2YaFizBp5Z3DMZ0Mhc2H+i0xlMC4NTHWpoOTe0pEGEzlIsDFKfUeJxSLL8lB+OwpcFeCo28vAkQeG3Q31O2EW5yFeV8k=
+	t=1744020472; cv=none; b=aZSkS2f0AVFi5Z8ZR7kdat6yuWV9SA+hVO6zrsQ0QIh1SsCuZm7gzPJepfJ9ljh3MugKLAdjcb6PHyHvtimZZTW4nd7pFYADDdY4cmcEFwzFiEQ4yJzAxz5xbckWqJyadDjZrg2oiUBlE5NEtj5NhOdAPE7LGkMEuvMvsMEKw80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744016794; c=relaxed/simple;
-	bh=tdlUs0PP58smbDcBtvzvNj7GVG6XzPFNQLt1VarqlSE=;
+	s=arc-20240116; t=1744020472; c=relaxed/simple;
+	bh=B0SyI1GEY8RidQKU18Lz/ncIEAx64mbQHYYBZ/9ZC5Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VM8N67wLa2EBtDFRwcR4nwRhoDpPjJw/T/zE5JHfJcGGDix+mP6NK3i5vewh+R5uoCpv2I/R+wWhnWm62xOL2nv/iW7Qgij00CVz7U9jDOHFl5QERAfFufgcUP20EJmS1TnhKu+QhdnyZ1Zp4pYg1StIurOjtpxgRZfY2T0dZJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BV/326WR; arc=none smtp.client-ip=209.85.218.50
+	 To:Cc:Content-Type; b=pN/FfhfiWCn+H0aErCv/+RuOUXlZwMFIWgQhtCzs2o9LysA76QIRdHgSNpvHMSQe7sPReduStYgPlvJPhrWKYTwopep4aYm9QH7L+3p1BCAGYnx3s6OGEP/AOn750MftqeT+lGKdj96x4Qq3n0lOiEaPDIibqcls5zDx3zs/66Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EsI4Je9q; arc=none smtp.client-ip=209.85.215.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BV/326WR"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ac34257295dso837810666b.2
-        for <git@vger.kernel.org>; Mon, 07 Apr 2025 02:06:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EsI4Je9q"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-af9925bbeb7so3033501a12.3
+        for <git@vger.kernel.org>; Mon, 07 Apr 2025 03:07:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744016791; x=1744621591; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L4dfe5TCYv3G+Rz06tGkgRqzYz/LiWqMcc4jjODeERU=;
-        b=BV/326WRbEGMrBkvDd44d/NDewIFpLUMgPSQ1SVvWwj+L9FmEOzRUKAF/R0mDtYZ/o
-         sI1cXuMskzZFi/I8e6MXRfSXFnIgfdsdK1Jj/pXGquMIJj09nv39oMUkMq1PmjlSDewJ
-         fbJjaEP7NjOU9CuNFKMDo90k6xVTjU0xunAi+4pl0JIfm2mzetGcCBl40EdiEjWJsaUM
-         G5HyOmkTzDuVBjaVBcgFivdMQOhtNCEOKpLqlbguih7B9/kO7ZqaOa7yJghphxMjGCiR
-         9Tru12kzXMp2GaYH+cby5CXTWZEfVX07A6vk0TdRhxrtjxr7uNCFaygnM9ZKAte9R8GT
-         UhnQ==
+        d=gmail.com; s=20230601; t=1744020470; x=1744625270; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=B0SyI1GEY8RidQKU18Lz/ncIEAx64mbQHYYBZ/9ZC5Q=;
+        b=EsI4Je9qA3N+d6f3PAItoVFCoCxjBKLssNktCe+5awQV1v9y+kpfAVQPakocGofrbo
+         3jwjQTUQknk4NH+c1bJEMDD3wO4KeUh2F7n2DrNux4VVvnfA9hRpMZSWsH4AqKUrS4oe
+         sgEjrj9SBNnq5wU49pzwfMzXw6+bV77ufNSD30px8lfPVM7TCJ6lj+3CURgJPXQe1uS8
+         dZnNtxifEefymgCcgZzUy1HIcGLHFZJu0WRAHueYS34XOJEtS/1lWvpc349vA8ZZay2G
+         ht2+7EmjQyeiMe7pd5/PC2cc/IyAtOSKeCiKhfIzBgD9eEuqPbZPPDBvohCqne4tBEBp
+         JTWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744016791; x=1744621591;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L4dfe5TCYv3G+Rz06tGkgRqzYz/LiWqMcc4jjODeERU=;
-        b=Zs+P6NI5/ctMsh372pUpBHiNKc+AFgcvfQHkgovbgPZ8vFRB2Aymw5CE1VV16X+MYI
-         k704ymhIS53mPliszN7oKGgRnaupNLc45+FzrXmeZ4O4oLlr342q+z6QQrMdJCba8fxe
-         FElszAB2qERof83ez85MNlptKhMfDlCiKtTFD+H6MEIwp4zu9x8pp8KWBu0MidcwC82L
-         MkY8yutK65ZfbacNwcmklsCCNcijpUTohGf6kAIvNjvP+0kGpR/bSb2k59EmUAoynI6t
-         haqb+Rt18qqmrTQQKP+ChPhHsjQeeEJJDgdjkENW5WvOIduX2dWyQoLpDxaR4OHSk8kn
-         KeeA==
-X-Forwarded-Encrypted: i=1; AJvYcCW6P5Mi0aLQtGnH06FlLI5HWaJyXm13g5pQDjvmlgPDZ8GC/33p5nnynC4pTVzR1SL2eRI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yygayrs6G7gKY0F3jljC3nyCrhiEG4lrWKzvpjkp0el/8u0KPQv
-	wxaimpmfK0j9DE01aW/Tfh/B/f6t0h5DANeuGKgU2/GO0gIM1Om7MvrR/o2Wxj+i/N23W33A9ue
-	7m1Ry0oplYWrOemvO4T0Hcqv24VoPLxCA
-X-Gm-Gg: ASbGnctTNGmQqwDn9//lqwracnfGvJbve1QbH/RBQHZZ+XzgfTUhH4i5DrfsV9wIbZ/
-	mM2UrBvouJowC5A7t5MuDRWs//ePAYwocaZ/7USm1rhHuCBFkYw2IDJnZPjqT9ovwMuBTCqiPb8
-	xaZak5ioqYayU68XS9qGc8tdDde0D5vO9m0KktYGSbH2yCrAyun8Ioh/toIg==
-X-Google-Smtp-Source: AGHT+IEyZyYuNZg+1gVHsJYIfnuE5KChwxXdXYquTwXfy+2YGwwuZCH40VFyWaDuM038AfT9+tWZ0tnuXgTv6VcRL6U=
-X-Received: by 2002:a17:907:3f9d:b0:ac7:3595:56df with SMTP id
- a640c23a62f3a-ac7d6e3d130mr888987166b.47.1744016790529; Mon, 07 Apr 2025
- 02:06:30 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744020470; x=1744625270;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B0SyI1GEY8RidQKU18Lz/ncIEAx64mbQHYYBZ/9ZC5Q=;
+        b=DO000bxUjoQTyh0xbxBkkBA6fFLohlyMCxw6VH03ctfNivzXLi4KsbKQPdqTGWuCMB
+         Bbu6QtjlWbDh1dCr3PTvZtzA02LoVW9lmKo+nmqh2mrbogIN9uz/fIAOQc6fITB9loOV
+         mwKDoR7hc/fuVvm7UpzmNa3DZStumk2s3u5rwOe0yAQdZyfcaF+B5E2HFcLbnQGjrQ3s
+         z/2w8W2ELhal0LWU/iiFjXVKTBg/iky3DEi3E7ugFsrHqLlLbVRUFlX4gUtSQy5uHOWj
+         Md4e74TKN95JhVPVmtFU/+nGG/pZZ/bLZoRkW5NOveweXsD5P2HHUj1R5oKE0+Xm4iDe
+         luKg==
+X-Forwarded-Encrypted: i=1; AJvYcCWBz33aom2k8RleXxId8Hx171Mf9xAma0a6QTwRwAEMemq/pEcUg5oGwJAF4lTQY17Mba0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJkqU9S8BY55ua4bNRWV6ET0yYjW9sWiv1bO/0jg/jXiCRLUeZ
+	pDiv0V2a5xCSIL7EPGiZxJDE5ZGebAJEeERmBLCeuEMLnRSlASqViiavzkf+OHPEZZoraLvUVAN
+	TBrLS8nmoc3vgdTIcU19WNl9pRbYcCqtHthY=
+X-Gm-Gg: ASbGncvT7axni5eJ334d8Ou1/Igg+Tw4jFqNz2fsCezozHmukcZUZI1kPRnQDYgEDiq
+	7H+qFryDIi2cSES2cxhDBWQrKijG9c+O6n8c9IhnQ1vE3g36ely6SlBzNFdb+/SoYWIXU6yrCpV
+	3UKDUtSvLhM2wdZ0GGMP6WVJaK/de+Z8ndkWH6yA==
+X-Google-Smtp-Source: AGHT+IHgIg11RMwXvTDqiN7ysbSKPUFfF9OWe1l2LZR83BCjt6s5v5iXU6E/HiuZpXplmif8eV8/knWQY/iKuM9EZAQ=
+X-Received: by 2002:a17:90a:c88d:b0:2f6:d266:f45e with SMTP id
+ 98e67ed59e1d1-306a4821d6emr17230153a91.2.1744020469869; Mon, 07 Apr 2025
+ 03:07:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,76 +60,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250326052602.265989-1-ayu.chandekar@gmail.com>
  <20250404085133.1098274-1-ayu.chandekar@gmail.com> <CAOLa=ZQ8KvAZjsDWerF0E9VUzsbNOj+Vcxo_mFL5Y3Of9iCAHQ@mail.gmail.com>
- <CAE7as+atJcycd4Awav6RKkTDvwiocyv4j=0rZvEhDcVpREsmqA@mail.gmail.com>
-In-Reply-To: <CAE7as+atJcycd4Awav6RKkTDvwiocyv4j=0rZvEhDcVpREsmqA@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 7 Apr 2025 11:06:18 +0200
-X-Gm-Features: ATxdqUGEbHKIiAeKCtIwRJZI_-K2yNZjiRoZy0nTSwcQTEKMIf7nSx0sp6p6f7Q
-Message-ID: <CAP8UFD0a9rvVEJj4nk0ONK7=HXYRS1td6nEw7nO6mhj4gTjY9g@mail.gmail.com>
+ <CAE7as+atJcycd4Awav6RKkTDvwiocyv4j=0rZvEhDcVpREsmqA@mail.gmail.com> <CAP8UFD0a9rvVEJj4nk0ONK7=HXYRS1td6nEw7nO6mhj4gTjY9g@mail.gmail.com>
+In-Reply-To: <CAP8UFD0a9rvVEJj4nk0ONK7=HXYRS1td6nEw7nO6mhj4gTjY9g@mail.gmail.com>
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Mon, 7 Apr 2025 15:37:38 +0530
+X-Gm-Features: ATxdqUGmMWFsvVmWUIaWw401NM_LJ1VLa-Ohf3IuskcSaHzGpqgBqQOyKpCBbw0
+Message-ID: <CAE7as+bnsBMW=UQtzQrNKTK3cMDSyYP=Q1EqEb2z8-ur3_my5w@mail.gmail.com>
 Subject: =?UTF-8?Q?Re=3A_=5BGSOC=5D_=5BPROPOSAL_v2=5D=3A_Refactoring_in_order_to_re?=
 	=?UTF-8?Q?duce_Git=E2=80=99s_global_state?=
-To: Ayush Chandekar <ayu.chandekar@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
 Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, ps@pks.im, 
 	shejialuo@gmail.com, shyamthakkar001@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, Apr 6, 2025 at 12:44=E2=80=AFPM Ayush Chandekar <ayu.chandekar@gmai=
-l.com> wrote:
 >
-> >
-> > So the approach you suggest is to comb through the global variables and
-> > config and find new locations for them to be stored. While this is
-> > definitely a bunch chunk of the problem, shouldn't we also talk about
-> > how we can reduce usage of some of these variables?
-> >
-> > In particular, I'm wondering how you'd want to tackle 'the_repository'
-> > usage. There is some previous work done here, where Patrick added the
-> > '#define USE_THE_REPOSITORY_VARIABLE' definition which tracks usage of
-> > global variable and usage of them in different files.
-> >
-> > A possible approach which has been followed is to simply go from the
-> > bottom layers of the code upwards, cleaning up usage of global variable=
-s
-> > and ensuring we can remove '#define USE_THE_REPOSITORY_VARIABLE' from
-> > files. This is also the approach taken in some of the patches that
-> > you've linked.
-> >
+> Well, initially 'the_repository' wasn't tightly tied to a single
+> subsystem and even now I am not sure we could say it's tightly tied to
+> a single subsystem. Or maybe I don't understand what you mean.
 >
-> Your approach makes a lot of sense to me, that is, picking a specific
-> subsystem or file and aiming to remove the `#define USE_THE_REPOSITORY_VA=
-RIABLE`
-> definition and thus 'the_repository' eventually. This was the method
-> used by Patrick to tackle
-> the object subsystem in [1]  and the path subsystem in [2] and you to
-> tackle the packfile in [3].
-> This approach also helps in removing some of the global variables used
-> within that particular
-> subsystem, which is a nice bonus.
+> Do you mean that it's tightly tied because it needs `#define
+> USE_THE_REPOSITORY_VARIABLE`?
 >
-> However, this approach might not be feasible for the global variables tha=
-t
-> arent tightly tied to a single subsystem.
+Sorry if I was not clear earlier. I wasn't referring to
+'the_repository' being tied, it was about other
+global variables being tied to a subsystem.
+What I meant is that the approach of picking a subsystem and removing the
+`#define USE_THE_REPOSITORY_VARIABLE` is really effective for removing
+'the_repository.'
+It also helps in localizing the global variables from environment.h
+that are specific to that subsystem,
+either into the subsystem itself or into struct repository / repo_settings.
 
-Well, initially 'the_repository' wasn't tightly tied to a single
-subsystem and even now I am not sure we could say it's tightly tied to
-a single subsystem. Or maybe I don't understand what you mean.
+But let's say if a global variable is common to 2-3 different subsystems, then
+this approach would not be feasible for that variable. For that, I
+would require to individually
+tackle that variable. This is an approach which I mentioned in my proposal.
 
-Do you mean that it's tightly tied because it needs `#define
-USE_THE_REPOSITORY_VARIABLE`?
+So using these two approaches according to different needs, I can move forward.
 
-But for other global variables it could be possible to define and use
-similar macros. This way it might be possible to remove those
-variables step by step only in some files.
-
-> So what I can do is, for removing
-> `the_repository`, I can follow the approach you mentioned, and for reloca=
-ting
-> the more general global variables, I can use the approach which I
-> talked about in the
-> proposal.
+> But for other global variables it could be possible to define and use
+> similar macros. This way it might be possible to remove those
+> variables step by step only in some files.
 >
-> What do you think?
+Yes, I still need to think through how that would align with the
+approach I mentioned.
+Defining a single macro like `#define USE_GLOBAL_VARIABLES` is
+something I can look into.
 
-If removing `the_repository` is part of your proposal, then yeah,
-describing the approach you will use to remove is a good idea.
+> > So what I can do is, for removing
+> > `the_repository`, I can follow the approach you mentioned, and for relocating
+> > the more general global variables, I can use the approach which I
+> > talked about in the
+> > proposal.
+> >
+> > What do you think?
+>
+> If removing `the_repository` is part of your proposal, then yeah,
+> describing the approach you will use to remove is a good idea.
+
+Yes, it is a part of the project but I haven't added this specific
+approach in the proposal yet and was hence asking if I can.
+Thanks:)
