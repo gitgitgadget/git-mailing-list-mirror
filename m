@@ -1,113 +1,132 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B7E23BF99
-	for <git@vger.kernel.org>; Mon,  7 Apr 2025 11:18:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D79E15382E
+	for <git@vger.kernel.org>; Mon,  7 Apr 2025 12:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744024718; cv=none; b=utBbn8YE1xbghBu3DA/FYH00WMbiUKju1wcIlLUNxLFKuCkyGtZcIFUmZeuDlOhe3lrFIonJhJzPYjwMoxBdUmXw7xvTVbudFHw7KCusyPfC37Dipr2VUVq1XbfItk50P9dsk4SNAGb/bWlPwQ3cbNShuNT+yHj+VWFbSUZy3W4=
+	t=1744029059; cv=none; b=CYxOf77quaKULMWh6OpNjkL8VVxfdkdFLx7mm7IX6yWIlbEWuJG6vU46Au899xCvah1Hp+PbAUad5T/mYJSTD/mn185zRSl+gpH7Zf+OvPjZ19fP/Rc4xFj9vk9TEyVlYidEqAt53apw25ngnOM6VD6YAypXqnX6tzSIegv4YYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744024718; c=relaxed/simple;
-	bh=ifMuZG9Iz71h4ItnLnz3UIGQy1c4doz7EYuPldJjPaU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=uWJABb4ZMDPKqgE4jnSk6i/JI9nExY4qD8Zysk8aQ2PW7zMO/3p0MOzlYwTBnY9dbk4QsA6pxI8WATDj+uu96PzW0QistxaWvGAChzLFfNUlpxW81+0kXmuEwrhlwd/2zdPXlSz4gSNCQe/0hRzLLQ+RcOdetOXerSabStHf0H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kG/jiOp/; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744029059; c=relaxed/simple;
+	bh=BArgUDan1nWrGxB7HCcdL4hQxhc8+03iA4m2SVmFOuQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DBjbFtevuHVE7fUhNkpJlPwXT0+zhA1A5/wRoGcoYBJS0QBeHCzqPzw65N5kULPabl7SOk/SLW6I87RnX1jIHR/DbDtrSOZSsc12IUu5rSumwQueqM98poBbfTNprGVYXKmni3rplmYSLn7BIey7s1z40/VB4R4eBt7QPj70cRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=W0XySyD6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nYFf3SHm; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kG/jiOp/"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5e614da8615so2760569a12.1
-        for <git@vger.kernel.org>; Mon, 07 Apr 2025 04:18:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744024715; x=1744629515; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f4fLZ22f7JoRp4VTn7PF6r/KMIOlDWHlEUpf6u8IrmU=;
-        b=kG/jiOp/ZFftUpcl3O2aejjZycoho0SmdITMpqcRtM3Y9Pr2bR4bWWRGjgTHzO51Hu
-         EZU0Jt+b9U3cRl4EoVbh+n7eTWTk1jpU9S2f+8J5964tKfaCky9abWBW8gD08P4zPhJP
-         H9zBsXjipIGTawm31nt68T3TIrjCet5Yib+Y+qGUpBlA0T5VBYzSdtv9f0Taj8SeUZIF
-         JqX8krT7Ov7Jp9xVGvy7JJQi89xkLxBERdjwFwXmZ64st9AchpWLyp5lpj7kX1etJig/
-         w5xS7Uldn0JIV2XprYnKH197ZyGDiKNiuX+xPHrq4G2E1qgWxR//GH9fSgt80btXqUMd
-         SthA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744024715; x=1744629515;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=f4fLZ22f7JoRp4VTn7PF6r/KMIOlDWHlEUpf6u8IrmU=;
-        b=u3DWBDhkVyq3MlNNut9x5G2ZPWhyDASvs2zZ26SoeaFHeXuc6yw0TfHUHhzs8RfbmW
-         jLnCxhU2Eg4aI94mgXwVcatdCgz4T+MrvwkXFsKcM6N0O0vtD7ebKUbAEITN42JjVG7j
-         2+0y7tlvNh6Pegjt2pLTnF58HPqzug8JsH1laVAbP5BqX8maTTwJvu/NpGuOD9Dt1LS8
-         bv6ueoRNCoIInZnYwBcAUv9BJkrK42neXHSiMxupK2IgwuNP1dMjXsWZHf9IIqS6Kf3x
-         qqwNJ3Xa0njGQ1KyDw5JSKsO1Qfrgnu5HYgnzL8dFGIdQ3ZPG/ZMW0XizbUxgCiCawUd
-         ir1A==
-X-Gm-Message-State: AOJu0YwUsg7batVleE5ebW9HWA2u5S9CuX6w6sKgsbD2yX8L0Hzb0h/C
-	FJaysg2WlPN0es3IOxuZdxIpNaJ379U1jjpSmTQZRNt4gmiiokI=
-X-Gm-Gg: ASbGncsETTKJsxQry9UCL28GGAwNJwON+REgpL+3ptKmlBcxpIAvFdNtYXy5K/WHs3h
-	WCStDg9DAc4QyyaarzICgJFQjlhnIt0HuslESAA02y6XwaXYTX7EiWArAtqXJNDlVuVqbny8VxI
-	/Ob8YhH4UXwaXJeJO7cbAIVMvbFYQAj8iggaYeyYg5W0gPcXmF4GoalPCzIlBWp08riLO6iCINa
-	xlxgT2sGonAWatk+JmL8tLgAxzQPmSHz/HQwxMZI8E6euvgvOrodpXejZKlEeKMT0cPtK3Jq0Es
-	188aGEBaHV1NN0kob3S1dCJ36uicAUKx5acjTsxcnS4OYG6UX7di1cdJdBghXZ62IF/wEzSbwsQ
-	F5OjjuCoPOcBcDrdbsMRtR92jPJSVpIUOdEnyYUU87cOd4dPpV7oF/VfKvdMoLJm8nGSBGP6/Kc
-	4b74z7gLOOhAGnmmklu1iO/W8=
-X-Google-Smtp-Source: AGHT+IGtj3n5kdIplWUid/4PZd4VdMjsN7RjTy3TpXNXHtlY2nAH9tAtT6vDPy1RszZcgTgufT6HUw==
-X-Received: by 2002:a05:6402:5204:b0:5e0:8840:5032 with SMTP id 4fb4d7f45d1cf-5f08412c8d4mr12703783a12.3.1744024714773;
-        Mon, 07 Apr 2025 04:18:34 -0700 (PDT)
-Received: from Anthonys-MBP.homenet.telecomitalia.it.homenet.telecomitalia.it (host-79-1-195-126.business.telecomitalia.it. [79.1.195.126])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f088084f17sm6613826a12.61.2025.04.07.04.18.33
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 07 Apr 2025 04:18:34 -0700 (PDT)
-From: Anthony Wang <anthonywang513@gmail.com>
-X-Google-Original-From: Anthony Wang <anthonywang03@icloud.com>
-To: ps@pks.im
-Cc: git@vger.kernel.org,
-	karthik.188@gmail.com,
-	shejialuo@gmail.com,
-	christian.couder@gmail.com,
-	shyamthakkar001@gmail.com,
-	Anthony Wang <anthonywang03@icloud.com>,
-	Anthony Wang <anthonywang513@gmail.com>
-Subject: [GSoC] [PATCH v2 3/3] t9811: Change `grep` to `test_grep` for debug output
-Date: Mon,  7 Apr 2025 13:18:24 +0200
-Message-Id: <20250407111824.46518-4-anthonywang03@icloud.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250407111824.46518-1-anthonywang03@icloud.com>
-References: <Z_OEAxJENE_mGkVa@pks.im>
- <20250407111824.46518-1-anthonywang03@icloud.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="W0XySyD6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nYFf3SHm"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6B2031380116;
+	Mon,  7 Apr 2025 08:30:56 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Mon, 07 Apr 2025 08:30:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1744029056; x=1744115456; bh=DlEoCeZ9/h
+	k4GxAr+frVJxqvGYgbATxjh5q09vBn2GM=; b=W0XySyD6zOLLBj/sA6oPR7Y824
+	dh+YrL8tzFvLW+oI/eb+QOuOrGgtK31QaOQTZzmsx/jXeaS0ADtnDBuGvd8UT8md
+	wVz6KTNv1Bx8qEVpVdgK2wz1/CjT+ZXj5sjiPO84xrM8Qz1DeDLt6k4fm7ra0Vhu
+	5DDwuYUgTwPGZ4iPWJ3yiOetYw6afoVIxF9KeP+r0OzmxgmON6zmlrrcECtC+NGc
+	xucNKsNRyIV/Ftsab5ASsBtS8P5EZJeCgZn7drBVi48WtZeNN72Ke7vglLXD8jbm
+	KUahvX9XNQJjU9+3qOQsPmZgeaQ6o736tDU221clpji9gS8LGmW5Z72npiPQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744029056; x=1744115456; bh=DlEoCeZ9/hk4GxAr+frVJxqvGYgbATxjh5q
+	09vBn2GM=; b=nYFf3SHmgfClqEfF5dX9Nthq0N1ukFnEVq+K5b/IhcsQCCCKUw0
+	YZITyw5lkQ35vQBRiVd8KY+8Jg+xa2cf9Nq5bBhp0xX5EEBEW29RJs81AjzdEEua
+	86kf2SXvLSnl5PZSCRYTzCtZQKAcQ6jzO4cRWOpjc0fF1hjebkCuuzobPSkSR3SG
+	kc47E4Qzit8w+WYG7k/ugTw9SIGGalPlEYHe7vqW3Ym0Gik42C2zLRcD+EfAO52/
+	+ZkU6mlXa3NWej3ikoecu1V5mY8HwB3FF4dA4Igf8QMOYlWV1JRZRhLOke3ZEZbW
+	HiN2zpWdfpnyjwvbdkN4uYId2NzJqIlbJzw==
+X-ME-Sender: <xms:gMXzZz2oMmKKCrwT2_Clp92AFxMq3-x82i4wqyVdbYnXeDkUJag7DA>
+    <xme:gMXzZyGM6pjQoOaKeEsFg5b8El-YO-EXO3nvI9JeT0EpF4UDltdPlX0_3F8uQN4RV
+    3zhcCowZ1IUcMiLIw>
+X-ME-Received: <xmr:gMXzZz6oj5kX5uXY9aRNpWKLQYSQJuhTx4qESE11KsDtGfDskrDlb1Qo9ehVu2plEPrYPblfKWYKJ4w5vCf8NWgtpZcU7w96mVskWK5b3DAG1g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddtudelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:gMXzZ43CXZUDyLyEQqYdZb24k5JbRyPqxK3JfCh-S-jb9ZTIWmV1eg>
+    <xmx:gMXzZ2FI9rH_qBG29d3yhWQXWlhvkMu3RZ4hVvyAEpClDf-JAoU_1Q>
+    <xmx:gMXzZ5-TNmN0SHj98EvDQ96JExdgwZt-jfPASZyVBpbUSrm_elazrg>
+    <xmx:gMXzZzlGD7Lx3jV2wGGobP5OTIo7LUPNf9ioeSk3oW-HybIIwOMymA>
+    <xmx:gMXzZ9j5u87L7QKSz5ZyifNOHzFVP_opWTMpZzecjC4noy4oW3dxMHut>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Apr 2025 08:30:55 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7768f313 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Apr 2025 12:30:52 +0000 (UTC)
+Date: Mon, 7 Apr 2025 14:30:52 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 07/16] reftable/block: rename `block_reader` to
+ `reftable_block`
+Message-ID: <Z_PFfNwJVfVIuTPO@pks.im>
+References: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
+ <20250331-pks-reftable-polishing-v1-7-ebed5247434c@pks.im>
+ <y47rmb3ahghwvhdukfj27fihddmg57rqpfcqmaylfejqjjxvrr@luc7xuu5qiza>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <y47rmb3ahghwvhdukfj27fihddmg57rqpfcqmaylfejqjjxvrr@luc7xuu5qiza>
 
-Change `grep` to `test_grep` to provide helpful debug
-output in case of test failure by printing contents of the non-matching file.
+On Wed, Apr 02, 2025 at 03:39:57PM -0500, Justin Tobler wrote:
+> On 25/03/31 10:41AM, Patrick Steinhardt wrote:
+> > diff --git a/reftable/block.c b/reftable/block.c
+> > index ad162ecdbf6..d188665388d 100644
+> > --- a/reftable/block.c
+> > +++ b/reftable/block.c
+> > @@ -222,10 +222,10 @@ static int read_block(struct reftable_block_source *source,
+> >  	return block_source_read_data(source, dest, off, sz);
+> >  }
+> >  
+> > -int block_reader_init(struct block_reader *br,
+> > -		      struct reftable_block_source *source,
+> > -		      uint32_t offset, uint32_t header_size,
+> > -		      uint32_t table_block_size, uint32_t hash_size)
+> > +int reftable_block_init(struct reftable_block *block,
+> > +			struct reftable_block_source *source,
+> > +			uint32_t offset, uint32_t header_size,
+> > +			uint32_t table_block_size, uint32_t hash_size)
+> >  {
+> >  	uint32_t guess_block_size = table_block_size ?
+> >  		table_block_size : DEFAULT_BLOCK_SIZE;
+> > @@ -236,19 +236,19 @@ int block_reader_init(struct block_reader *br,
+> >  	uint8_t block_type;
+> >  	int err;
+> >  
+> > -	err = read_block(source, &br->block, offset, guess_block_size);
+> > +	err = read_block(source, &block->block, offset, guess_block_size);
+> >  	if (err < 0)
+> >  		goto done;
+> >  
+> > -	block_type = br->block.data[header_size];
+> > +	block_type = block->block.data[header_size];
+> 
+> Ah, in the previous patch I suggested renaming the `block` field to
+> `data`, but I guess that would lead to `block->data.data` here and would
+> also be a bit funny. It's probably fine to just leave it as-is then.
 
-Signed-off-by: Anthony Wang <anthonywang513@gmail.com>
----
- t/t9811-git-p4-label-import.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Fair, but I think if we rename this to `block_data` then it's fine and
+helps to clarify things a bit. I've done that now.
 
-diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
-index e69dae55dc..e9c2aad2aa 100755
---- a/t/t9811-git-p4-label-import.sh
-+++ b/t/t9811-git-p4-label-import.sh
-@@ -96,9 +96,9 @@ test_expect_success 'two labels on the same changelist' '
- 		git p4 sync --import-labels &&
- 
- 		git tag >output &&
--		grep TAG_F1 output &&
--		grep TAG_F1_1 output &&
--		grep TAG_F1_2 output &&
-+		test_grep TAG_F1 output &&
-+		test_grep TAG_F1_1 output &&
-+		test_grep TAG_F1_2 output &&
- 
- 		cd main &&
- 
--- 
-2.39.5 (Apple Git-154)
-
+Patrick
