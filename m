@@ -1,130 +1,125 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD375223302
-	for <git@vger.kernel.org>; Mon,  7 Apr 2025 19:59:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0773D21B8F8
+	for <git@vger.kernel.org>; Mon,  7 Apr 2025 20:10:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744055944; cv=none; b=Esbcakm04JHBHkfWqTHsGM3Uq8IiWcApc5VrNuHRUxjD3MVYn2r0uUQJ4ppWy/ynEHnUGMqM7ZmPjuW/lwpuR4d/XHTAZLV/xNF7Hu9UC7k36BcGVBffxoXrbCGj7VIOXO/qKxe0+5BYwZlB84ruOZXu15lTR0ybaU770f8tS4s=
+	t=1744056604; cv=none; b=m461ZzcWd487jHBWEWS53YL83jzXubZHgWIhNUfoQRBzIAb4W6yj/koDS3FKwT6Uvm2mtp50WJLH6zqN0KhwEvfxwbHneyzAwLzMrtRh8QncHyKwqfwHCYR3xyHGZ8a+3zvZcOTutH+E426G7je8d8uNQnmm0eunj2sPUtEtkCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744055944; c=relaxed/simple;
-	bh=zBZCaKkWZd/NPjnuKnmRgFUvkEN+6JVHO9mqFuPHhfI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAk4dqbrdlwk/oMNI+Xa/qJAXBIIjE0FU438p4l2Ans6j59FbsNvBiUlXocoR+kBvgHWi+UdRUvaaoDCACPOgYQw0p/Zs5cOjyNjR7ztL9pQUYSIMvY+yNwjwsZGMvW+j3KHU38IV+Mna3L20URe2h8pkWAmZZzlt9X3n3d6LyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fADgzT/B; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744056604; c=relaxed/simple;
+	bh=VdcQ49ZFRhOd06rT4VWAK28GO4GAEiFPei92Csr+knY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dfWlALrkPjA0ahuJd0rVSjOLHSAfOM0U5IaxsJ46xa23H9z2PSe8tF/QwC/q2yJBnc49DeJj/YZk5+nbMcxNhl6B2HLRMYqm7tMj+xFWI5KjHwR8YbgZcODbviCDXE4ZIc3n8Eh4hSDSdkbJTyO5IojCpLfsJWs4wjUxnr0BQcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TAC6lGXc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KP+hdRi7; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fADgzT/B"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7359aca7ef2so6549663b3a.2
-        for <git@vger.kernel.org>; Mon, 07 Apr 2025 12:59:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744055942; x=1744660742; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PxFLTtP4Lx59zm2e/s5BLeECN05DESGpML6hd4P673o=;
-        b=fADgzT/B3+lzzJ+IYdmaHg0ja6dnlHWz6/6U4LABw4+ylNGb3zJLRmYpuXUXtVkn3p
-         hSXxiDOC6vyk1xFetzBVWRSZEdSxENy/L0LFNXTclctypkZVWDm+hzpuqtsNO2GFqBk6
-         48Q58YQk2ZkqqMaL7Y26ihgkEE34NFt48omxj2hHKSCAUu576Fm20VhH+ULcH82tPSRw
-         ukqnIgz+Nq+i64rRH10r6Ym6bC81rzWX9krbt65TTK9BHGiNEbnjCnfDXz2tIIR89fLG
-         6smx9Dmx63DKoVrCqpJJc1++TjCsGA46/Z5lgiR1/9/0lnmJon51X30M+O8lq5Xx+/vd
-         rJMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744055942; x=1744660742;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PxFLTtP4Lx59zm2e/s5BLeECN05DESGpML6hd4P673o=;
-        b=YkUO2yaRLtnDQCRR6QtofrzwI/5A/KCEUDhoNJ6WpRAfb1Uv67KM2C1e6oiDMP1BlX
-         lCwynl9y6FsmnP5mmOJnQ/Mz8iK3dmfWkX2rbywx9BGwNgo/Vnup6q0tn+bJkzAr/m05
-         sePuuXnBdJ69ysZHLb95DW3rn+RSh5b5m/w4YZ7B6r71xI30FT0v+faO2Hq5TaIdH+WL
-         xQqY6E3f59xNKEKohmWjNwA6QLHn1xvWMkjmpSPpjZtKf8RyPY5efqp0QIUF4BQtjhT3
-         RCiWtlXnsOT8WjA7KIWAKne1dLH7MnmCWAU7pSt7uYsWBWIgjBCMgJvwdepJ9/qQsYeF
-         3Fmw==
-X-Gm-Message-State: AOJu0YwULw097ZfjJRLUzF8UFhYgIvTOkdhdLID4qopoaA6iTl+H3OKD
-	4o7nWyrmNleTXlFWed5C+ElIkhCV5aHQbnAlTIiLPGeu2YwbREhy453tl2/wiEg=
-X-Gm-Gg: ASbGncsxmbpwlkt+ZopYWJEkFGpcLvs/R+ubRGn7AQ4S75Ycgg0lmfYpQI2Tjl1RT58
-	o65zv7Y5dT9EZ/xTNACbb4zP3Gl6JEZX+2m5XfL9+WIcK3oWERYm/2fjsaC20500jS4Cy7xcGEi
-	USu/m+suHGLTDY9F0o2y6sFhZ7kzx9xcrg8QSy7cZfL+Cx1eFbJAf3Pj5+IVJZIJpTUOQSmCp3I
-	nvUsFhra2Td4+nlYWFcxKeO+LlEOTiC1ausZkR3OR1ObcOfrEXvy1/brGZyzboEPfulXB+MwU7z
-	AY+d4bJe7Rs8PWZW/y8lLxL8TPZGzjmDxLbqh7Fu1EVhqalTe3Yuh3y0eULYZLzJPnemmw==
-X-Google-Smtp-Source: AGHT+IFBtFL2Qp0vXwGw8AfO8xF+uYyeZQcfqr4km2q4LUUy+0KkVaseoqVKgf4/nTGiO4fu+5g2Fw==
-X-Received: by 2002:a05:6a20:c6ca:b0:1f5:64fd:68ea with SMTP id adf61e73a8af0-20107ea675emr18974618637.4.1744055941732;
-        Mon, 07 Apr 2025 12:59:01 -0700 (PDT)
-Received: from archlinux.plaksha.edu.in ([182.75.25.162])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af9bc3fd411sm7644032a12.52.2025.04.07.12.58.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Apr 2025 12:59:01 -0700 (PDT)
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-To: git@vger.kernel.org,
-	christian.couder@gmail.com
-Cc: gitster@pobox.com,
-	johncai86@gmail.com,
-	me@ttaylorr.com,
-	ps@pks.im,
-	shejialuo@gmail.com,
-	phillip.wood123@gmail.com,
-	sunshine@sunshineco.com,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 1/1] builtin/update-server-info: remove unnecessary if statement
-Date: Tue,  8 Apr 2025 01:28:41 +0530
-Message-ID: <20250407195850.299348-2-usmanakinyemi202@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250407195850.299348-1-usmanakinyemi202@gmail.com>
-References: <20250406121513.154084-1-usmanakinyemi202@gmail.com>
- <20250407195850.299348-1-usmanakinyemi202@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TAC6lGXc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KP+hdRi7"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id E14FE11401A0;
+	Mon,  7 Apr 2025 16:09:59 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Mon, 07 Apr 2025 16:10:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744056599; x=1744142999; bh=LbdRuVUCqo
+	Uhrs1llqSQr/RR103IaQvT2BDbI/isk88=; b=TAC6lGXcTtSGmfneLcN+ikyj/1
+	b5GAj6fpKZPpxeu5yQolDds3u5BedzHbX9kMBFGlqnoQ43PKFapFSkik3aLSdZy3
+	OM5N244vAaxCLgbpdfj+VKbqj4vw+sb2STrzD3m6+GMCc31UAh9S6RMbFCqSjP6w
+	7PCcHHrKwJxbVKXinlZ/94Yy6GgskGaNUaax9rU/zMzgVNBLxreEzvh+OKSyTE35
+	FGfHSxzcOoq3r0NYuGLHdpxu/dv1WNhswqJ5c6K1/z3jVWp5AHGRcXRgfltFZa9E
+	SL55BWalvxPGuhy3V+Qe7vZO+sK6dzbzlfHoTcaLC/JfLB+HbUZnMuEBlxmg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744056599; x=1744142999; bh=LbdRuVUCqoUhrs1llqSQr/RR103IaQvT2BD
+	bI/isk88=; b=KP+hdRi7q5YFQfnbapt6YFshyE18F1TScJwIBPXJSxCDA2ApWFq
+	8Ib2e9/Gojtc/JRzqjxxu1/ZyfwT4vd/OIRqNeuVVh8/hxZCJuv2AysmwVL36Ji0
+	YDVq6o4IiqD+Vz8s3fqXikBrZ4z+h+6wm2Fub+DSbOkjA6WnAuZzMuxXrKqgK6HW
+	UfurwdSldzXB59QdBbJoZPxbKmafxAsZ36GMwJxqaBpYkmGl0RIEwJ4Gmqtn0mGO
+	ic55nvOw9SZOC7Bl70iEm5BW3w/Y/fwcMDz1Eon5pB+/oIs2wq7w4CZMNbWDgg3r
+	FKV72asXZJLsvNCcQMY3ERJDAuVZ+EItA3g==
+X-ME-Sender: <xms:FzH0Zx-PQ_zKpU-8vYhGMhdKVuejtFDyeYe-QCuCNW7F3pSOjnbxQQ>
+    <xme:FzH0Z1vm4zWSRAg60_qELsUjH03aVJ_ofkr5ENMnuGTmVaOoSfcXSl7GrpSzydqe9
+    CXWG5jXvTPm-HlcRg>
+X-ME-Received: <xmr:FzH0Z_AuQ_CfOe5sHiSbfk1mZKqbxfi3ts8ggEjLkbx9Qgr_13hg8bGgV9-6s58ZnJgXpzdWk8UJiDSngxs2HLqO_Fp8EqptY-Qi>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdduudduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
+    gtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:FzH0Z1cI6lKY8G_hZwVSy_tg2aAXkZ4jrFCspuony58ln0BMXKE9IQ>
+    <xmx:FzH0Z2N7m-_VQpZ-LaqcvrJ9FMhPPV7KHKyIa4zAnvejpVV_wWi6Kg>
+    <xmx:FzH0Z3kXOdBo1HFByt_wZqbeTAgqS8rttjoQFujjZg8-V_LTRtuwKQ>
+    <xmx:FzH0ZwtGj_fdXO5uSqEYetCzi2RU-W2UK4GtWoOEFDVZZiHnTklyNg>
+    <xmx:FzH0Z_F_DLok447KVUvyxnR0SAgSLbCOPDpRDk6856zvVwSAAD7h7mO1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Apr 2025 16:09:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Elijah
+ Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 0/8] Debug merge-recursive.[ch]
+In-Reply-To: <pull.1898.v2.git.1743891374.gitgitgadget@gmail.com> (Elijah
+	Newren via GitGitGadget's message of "Sat, 05 Apr 2025 22:16:06
+	+0000")
+References: <pull.1898.git.1743436279.gitgitgadget@gmail.com>
+	<pull.1898.v2.git.1743891374.gitgitgadget@gmail.com>
+Date: Mon, 07 Apr 2025 20:09:57 +0000
+Message-ID: <xmqqiknfn36y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Since we already teach the `repo_config()` in "f29f1990b5
-(config: teach repo_config to allow `repo` to be NULL, 2025-03-08)"
-to allow `repo` to be NULL, no need to check if `repo` is NULL
-before calling `repo_config()`.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- builtin/update-server-info.c | 4 ++--
- t/t1517-outside-repo.sh      | 7 +++++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+> This series does some preparation, then moves the code shared between
+> merge-recursive and merge-ort from the former to the latter, and then debugs
+> the remainder of merge-recursive.[ch].
 
-diff --git a/builtin/update-server-info.c b/builtin/update-server-info.c
-index d7467290a8..ba702d30ef 100644
---- a/builtin/update-server-info.c
-+++ b/builtin/update-server-info.c
-@@ -20,8 +20,8 @@ int cmd_update_server_info(int argc,
- 		OPT_END()
- 	};
- 
--	if (repo)
--		repo_config(repo, git_default_config, NULL);
-+	repo_config(repo, git_default_config, NULL);
-+
- 	argc = parse_options(argc, argv, prefix, options,
- 			     update_server_info_usage, 0);
- 	if (argc > 0)
-diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-index dbd8cd6906..6824581317 100755
---- a/t/t1517-outside-repo.sh
-+++ b/t/t1517-outside-repo.sh
-@@ -107,4 +107,11 @@ test_expect_success LIBCURL 'remote-http outside repository' '
- 	test_grep "^error: remote-curl" actual
- '
- 
-+test_expect_success 'update-server-info does not crash with -h' '
-+	test_expect_code 129 git update-server-info -h >usage &&
-+	test_grep "[Uu]sage: git update-server-info " usage &&
-+	test_expect_code 129 nongit git update-server-info -h >usage &&
-+	test_grep "[Uu]sage: git update-server-info " usage
-+'
-+
- test_done
--- 
-2.49.0
+Help unconfusing me.  When we have bugs in our code, the action we
+take consists of two parts, i.e. first we find them, and then we fix
+them.  To me, the verb "debug" refers only to the earlier half, and
+never the latter.
 
+But the code in the later part of this series is not only to find or
+expose existing bugs, but also fixing them, right?
+
+I've already named the topic with "debug" in its name while queuing
+the original iteration of this series, as I was on vacation and did
+not want to spend more than minimum braincycles on naming, but now I
+am back, I sense that the use of the word, and the proposed log
+message for 6/8, are overly suboptimal.  If you are referring to
+fixing remaining bugs, "Debug the remainder of merge-recursive.[ch]"
+is not how we usually describe our fixes.
+
+I suspect that the overall sentiment behind this series is ...
+
+        Such and such bugs existed in the older backend, but now the
+        newer backend is used when the older one is asked, and the
+        newer backend does not share these bugs, we can simply
+        remove the buggy code specific to the older backend.
+
+... but I find it somewhat disturbing to stay totally silent about
+"such and such bugs existed" part.
+
+Thanks.
