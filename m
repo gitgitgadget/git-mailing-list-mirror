@@ -1,54 +1,54 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0773D21B8F8
-	for <git@vger.kernel.org>; Mon,  7 Apr 2025 20:10:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A7421ABBC
+	for <git@vger.kernel.org>; Mon,  7 Apr 2025 20:25:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744056604; cv=none; b=m461ZzcWd487jHBWEWS53YL83jzXubZHgWIhNUfoQRBzIAb4W6yj/koDS3FKwT6Uvm2mtp50WJLH6zqN0KhwEvfxwbHneyzAwLzMrtRh8QncHyKwqfwHCYR3xyHGZ8a+3zvZcOTutH+E426G7je8d8uNQnmm0eunj2sPUtEtkCU=
+	t=1744057533; cv=none; b=FzByTXBVxRtSlR8a+r+zSa1PTXqCr0QkFguhDoXdtX29ALuX/yyFEuXFxu3zZlRYaX4emfp6QqLC64c47nNMCaAHhe6YZ5yyF+119Ct6Lxwsd98NHInoJloGOkuITlETaqTPRBGqy0r9bNnkMr0pq61T3ryOTBbY6OQMm+PrsYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744056604; c=relaxed/simple;
-	bh=VdcQ49ZFRhOd06rT4VWAK28GO4GAEiFPei92Csr+knY=;
+	s=arc-20240116; t=1744057533; c=relaxed/simple;
+	bh=x9A18UFrjxkz2gZ34ODPMmPKQLHe6hbizGv498fcogI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dfWlALrkPjA0ahuJd0rVSjOLHSAfOM0U5IaxsJ46xa23H9z2PSe8tF/QwC/q2yJBnc49DeJj/YZk5+nbMcxNhl6B2HLRMYqm7tMj+xFWI5KjHwR8YbgZcODbviCDXE4ZIc3n8Eh4hSDSdkbJTyO5IojCpLfsJWs4wjUxnr0BQcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TAC6lGXc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KP+hdRi7; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=ckuNmJ28/Bk1AKs/MEishCtzabb9TwFpUB7GBuShLuuiRS4RzC6A+yIxcYS/abq4tGmlVu47lMYGTXI2icMVwVuFOfh5AHyl2UrRnDvUpweSdBhDlLbb6c5va7f9IPYTh4Piv2Bio3nkgS33DFXNZt1zA4I19mkB8fP1wBC8HdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AE6EbJ3Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EZ1iDuRR; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TAC6lGXc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KP+hdRi7"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id E14FE11401A0;
-	Mon,  7 Apr 2025 16:09:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AE6EbJ3Z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EZ1iDuRR"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 258E41140172;
+	Mon,  7 Apr 2025 16:25:30 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Mon, 07 Apr 2025 16:10:00 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 07 Apr 2025 16:25:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744056599; x=1744142999; bh=LbdRuVUCqo
-	Uhrs1llqSQr/RR103IaQvT2BDbI/isk88=; b=TAC6lGXcTtSGmfneLcN+ikyj/1
-	b5GAj6fpKZPpxeu5yQolDds3u5BedzHbX9kMBFGlqnoQ43PKFapFSkik3aLSdZy3
-	OM5N244vAaxCLgbpdfj+VKbqj4vw+sb2STrzD3m6+GMCc31UAh9S6RMbFCqSjP6w
-	7PCcHHrKwJxbVKXinlZ/94Yy6GgskGaNUaax9rU/zMzgVNBLxreEzvh+OKSyTE35
-	FGfHSxzcOoq3r0NYuGLHdpxu/dv1WNhswqJ5c6K1/z3jVWp5AHGRcXRgfltFZa9E
-	SL55BWalvxPGuhy3V+Qe7vZO+sK6dzbzlfHoTcaLC/JfLB+HbUZnMuEBlxmg==
+	:subject:to:to; s=fm1; t=1744057529; x=1744143929; bh=0OjkjL0tPx
+	rRoQS1ELMYI3TZagKmuiTmWWXfQobqx3E=; b=AE6EbJ3ZtEVqw5cPt4cSTwLABn
+	4IQ9Zz6al8jXqDfZX7CgENbcgofGlDrGtqr0BwD+gLtmcSQESdWvIj+ZmpDqfXpg
+	eXoYRZ2uoXdkLtUGinlSjWjRd1eq1wIMQ/+b4f8rAyzSbmPmR3o36leph++izhgH
+	qf0PH6aWBkAxI/GnmoMRNLx1nCVrcl6krTetMSMMg6uU5iGfoJe6dLWcu1GQQbbQ
+	jZ6f8x6C6yo1TYoWPO/98PZkUaSQCavfX3cex7o7an1G1GemkvgmtAMvXJUDi/sP
+	pjDjR+YV196hBuWH1w5NqmqfOqyHCC4zLAlyJtMviqh7s+W3zDsJn7UMkUVw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744056599; x=1744142999; bh=LbdRuVUCqoUhrs1llqSQr/RR103IaQvT2BD
-	bI/isk88=; b=KP+hdRi7q5YFQfnbapt6YFshyE18F1TScJwIBPXJSxCDA2ApWFq
-	8Ib2e9/Gojtc/JRzqjxxu1/ZyfwT4vd/OIRqNeuVVh8/hxZCJuv2AysmwVL36Ji0
-	YDVq6o4IiqD+Vz8s3fqXikBrZ4z+h+6wm2Fub+DSbOkjA6WnAuZzMuxXrKqgK6HW
-	UfurwdSldzXB59QdBbJoZPxbKmafxAsZ36GMwJxqaBpYkmGl0RIEwJ4Gmqtn0mGO
-	ic55nvOw9SZOC7Bl70iEm5BW3w/Y/fwcMDz1Eon5pB+/oIs2wq7w4CZMNbWDgg3r
-	FKV72asXZJLsvNCcQMY3ERJDAuVZ+EItA3g==
-X-ME-Sender: <xms:FzH0Zx-PQ_zKpU-8vYhGMhdKVuejtFDyeYe-QCuCNW7F3pSOjnbxQQ>
-    <xme:FzH0Z1vm4zWSRAg60_qELsUjH03aVJ_ofkr5ENMnuGTmVaOoSfcXSl7GrpSzydqe9
-    CXWG5jXvTPm-HlcRg>
-X-ME-Received: <xmr:FzH0Z_AuQ_CfOe5sHiSbfk1mZKqbxfi3ts8ggEjLkbx9Qgr_13hg8bGgV9-6s58ZnJgXpzdWk8UJiDSngxs2HLqO_Fp8EqptY-Qi>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdduudduucetufdoteggodetrf
+	1744057529; x=1744143929; bh=0OjkjL0tPxrRoQS1ELMYI3TZagKmuiTmWWX
+	fQobqx3E=; b=EZ1iDuRRH8H/NNGQIq7gcUs/JNRerQgPgeY6mVLbJjPZdGhMfbC
+	l+zVTP68Rh76gKOi/3pI97I4/Vg8/MHk7zrDbLkE2a+xeiITgkKxxqbvrKM1j60W
+	YpnSFhUrymg2p2pxYxDtnTlWsD0+X/cTxXV1FXGY8f4RmM5Y4E9d1CV5DQZfQsRb
+	DBH9/SmGmWeRhThceMmSgSa7vIHiVF6o3gxArTQqmGxOTNIyM0zt9hvEq0n2pJuW
+	66j+tmetUcF3knjzyJd4Sp5Bpb1deB9kdRozHJtkCsKgpUTcopF20dW+GRChoYMG
+	X2g0DYT3BDqmJNcjrkikaVHLADEHjxKMCdw==
+X-ME-Sender: <xms:uTT0ZwbYOcLNbRPMHSZujFLmnRJDHOPRePiXVyul3Spy7MzNZKP47g>
+    <xme:uTT0Z7Z6NExtUOOMCaIIKW6X9Ex--RxVF5XX_z9XaWfz5hkra8MshiBnCO3Oxx-OL
+    zcZPhFGMhfMG162wg>
+X-ME-Received: <xmr:uTT0Z68bwINNSxrnbonIRJFiNsWISDG_EGC5QiuBLYaEBJxdlAS0J-z8RYVjjP4mJh4Gt6SlXa6HRiolJgckmbLQPuIOGhaTpVr3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdduudehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -56,31 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdduudduucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
-    gtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:FzH0Z1cI6lKY8G_hZwVSy_tg2aAXkZ4jrFCspuony58ln0BMXKE9IQ>
-    <xmx:FzH0Z2N7m-_VQpZ-LaqcvrJ9FMhPPV7KHKyIa4zAnvejpVV_wWi6Kg>
-    <xmx:FzH0Z3kXOdBo1HFByt_wZqbeTAgqS8rttjoQFujjZg8-V_LTRtuwKQ>
-    <xmx:FzH0ZwtGj_fdXO5uSqEYetCzi2RU-W2UK4GtWoOEFDVZZiHnTklyNg>
-    <xmx:FzH0Z_F_DLok447KVUvyxnR0SAgSLbCOPDpRDk6856zvVwSAAD7h7mO1>
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhonh
+    esihhothgtlhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:uTT0Z6pv4j0DBvtvVg9C_r32eEShPmOEMe6DrdR-SrpLyjspujr7oA>
+    <xmx:uTT0Z7oLuGICro-CC-jWcgUSqyL1Xq1Z5a3q2mT9_hjPlk2428QW5g>
+    <xmx:uTT0Z4S2RP_QJT8Uf57SLU4fODI8NRhPXTCO0S45kqaxLuQqMhWCEw>
+    <xmx:uTT0Z7rfiZjQo4wNrMXUwnWnjLACw1oMAvZZjfV6AvHhMvJJB9Z4Ew>
+    <xmx:uTT0ZwP6MftZVflYgTiB0vXXZcQZjai2LK8xHksQ5w8itxdKHRMy0tsP>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Apr 2025 16:09:59 -0400 (EDT)
+ 7 Apr 2025 16:25:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Elijah
- Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 0/8] Debug merge-recursive.[ch]
-In-Reply-To: <pull.1898.v2.git.1743891374.gitgitgadget@gmail.com> (Elijah
-	Newren via GitGitGadget's message of "Sat, 05 Apr 2025 22:16:06
-	+0000")
-References: <pull.1898.git.1743436279.gitgitgadget@gmail.com>
-	<pull.1898.v2.git.1743891374.gitgitgadget@gmail.com>
-Date: Mon, 07 Apr 2025 20:09:57 +0000
-Message-ID: <xmqqiknfn36y.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,  Toon Claes
+ <toon@iotcl.com>,  Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 01/10] builtin/cat-file: rename variable that tracks
+ usage
+In-Reply-To: <Z-0bwFewNxUM7HUe@pks.im> (Patrick Steinhardt's message of "Wed,
+	2 Apr 2025 13:13:04 +0200")
+References: <20250327-pks-cat-file-object-type-filter-v2-0-4bbc7085d7c5@pks.im>
+	<20250327-pks-cat-file-object-type-filter-v2-1-4bbc7085d7c5@pks.im>
+	<CAOLa=ZTukdPiciDSyH1oGwYN_bdCw+vYjsHaV9AwHEpxJ5hBgQ@mail.gmail.com>
+	<Z-0bwFewNxUM7HUe@pks.im>
+Date: Mon, 07 Apr 2025 20:25:27 +0000
+Message-ID: <xmqqecy3n2h4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,36 +92,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> This series does some preparation, then moves the code shared between
-> merge-recursive and merge-ort from the former to the latter, and then debugs
-> the remainder of merge-recursive.[ch].
+>> > -	const char * const usage[] = {
+>> > +	const char * const builtin_catfile_usage[] = {
+>> 
+>> Nit: Style: we use a right pointer alignment, while it is not part of
+>> your code change, would be nice to fix.
 
-Help unconfusing me.  When we have bugs in our code, the action we
-take consists of two parts, i.e. first we find them, and then we fix
-them.  To me, the verb "debug" refers only to the earlier half, and
-never the latter.
+Sorry, but I do not get the "right pointer alignment" here.  There
+is a rule to say that the asterisk sticks to variable (and member in
+a struct/union) rather than to type, and since <type> comes before
+the <variable> being declared in C, it would be <type> *<variable>,
+but that is different from "write asterisk stuck to the right
+identifier".
 
-But the code in the later part of this series is not only to find or
-expose existing bugs, but also fixing them, right?
+> Not in this case though:
+>
+>  $ git grep 'const char \*const' | wc -l
+>  85
+>  $ git grep 'const char \* const' | wc -l
+>  180
+>
+> It's mixed, but we do have more cases of the latter.
 
-I've already named the topic with "debug" in its name while queuing
-the original iteration of this series, as I was on vacation and did
-not want to spend more than minimum braincycles on naming, but now I
-am back, I sense that the use of the word, and the proposed log
-message for 6/8, are overly suboptimal.  If you are referring to
-fixing remaining bugs, "Debug the remainder of merge-recursive.[ch]"
-is not how we usually describe our fixes.
-
-I suspect that the overall sentiment behind this series is ...
-
-        Such and such bugs existed in the older backend, but now the
-        newer backend is used when the older one is asked, and the
-        newer backend does not share these bugs, we can simply
-        remove the buggy code specific to the older backend.
-
-... but I find it somewhat disturbing to stay totally silent about
-"such and such bugs existed" part.
-
-Thanks.
+I think what you wrote is fine.  Thanks.
