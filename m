@@ -1,53 +1,53 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E90D24C079
-	for <git@vger.kernel.org>; Mon,  7 Apr 2025 12:31:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F8A248896
+	for <git@vger.kernel.org>; Mon,  7 Apr 2025 12:31:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744029072; cv=none; b=JgrW6I0RsZM97E5T2LWPfEAjEpYbotS1aQDg+KMYnuWBBd794PFBT3cPsNt5qfBfdLa79YUT8PRyIaKvTCsLHd0WkvPQhqRVRInksLIPw7CwPhTFcuK0tSuENYHtZXo8pUczQ4P8O/sosXKzRKMsOUsLfXuqgohbtgnVdHQCe3U=
+	t=1744029076; cv=none; b=e6bSFcOBUyNFwo6p0xgJS8L0yxsIyaZAremNR2Nr1cm1cYtuRf5wOky3U5vDjD4yz5Ammst3XB+iSGvbNWDIaFLAn8dv+QPhnB0P7xhT3FJmDbCLZLqJBCnclQyNgis+KMfY9QoI5QhcO6GHNPIJvAx+7735TbQhA6r5TCbbY2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744029072; c=relaxed/simple;
-	bh=lBzcEIavAS9teodHRDXC1jIRMwJK29ExEb6nDb8QVw8=;
+	s=arc-20240116; t=1744029076; c=relaxed/simple;
+	bh=nry2jVYvRGPg5v+G7/LMAkICVDHuDndMKw0yp09ptPg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gxUGsSJFdnBtqNkNBk7p1rbhYKc7JwsMnp1vEYRFcCoaUHq1iggPlgsV14j1GWbNLmPU+WfxLaPgJABjyhE+RR5cRhYp8A64y244V+dN3s9Wz9IGt2HdQO+DRJNhGi3Rct+I0bK6PVJG8Lk6pFmI9LC1DxkPJNntycqlbsdEMlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CM6HSRGs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z5/FgWxK; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=pgvRQ1hLz+jt8eAcQRX4ED6XkFWAXFwZwvLatN6+at5xMU3qXK1DiTugKbRlnjtAnRpfSz/Qp24Ay6KgSl9a7Y0aeqmdV2FUY5PMUaiyBRsWJM6gzAL0QScAbzt/AZ+xyaFQp3ZMpuNsY2hGmElxXcC5egjWZgbLEG/pi+NCshE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CR7159eh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IQCuuOBo; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CM6HSRGs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z5/FgWxK"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 68CDA138022F;
-	Mon,  7 Apr 2025 08:31:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CR7159eh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IQCuuOBo"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7389E11400F7;
+	Mon,  7 Apr 2025 08:31:13 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 07 Apr 2025 08:31:09 -0400
+  by phl-compute-10.internal (MEProxy); Mon, 07 Apr 2025 08:31:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1744029069; x=1744115469; bh=J4w2a4E/T2
-	NK8iBSQcDbPQUbbGk3gBppgbd7F0tMKPs=; b=CM6HSRGs62WkU6cDUN7EAlQMeW
-	cbTLqJbORA98qNbvAN5cZSg8uhCKKrzzPomVGMduBFjloCtkHMviQeVziL+gI4kL
-	VvWJBW9I1V1PFu/EHTUf3eKWy5pOhx9+EzgqViNvDP+eK2nfjdZeQGjVj6pyF36R
-	d2vESN3ZiZRbJsH8OJa5Os0HWNW3xIMm2u4IFtgJ/o5/SzEGCyL+dv0CNvW9yr2w
-	0wgTZOBpyd1ZF2uhdG/FEp1nxmL2u1ou5IEG/fotO4FX1D5yZGjm5H5vuG4JuqSk
-	e+pS4OiKniFw+BIo8ym/ZdGjBUs9XBNHMaNcLAF3H1nueZx8j1jaB1ClmepA==
+	:subject:to:to; s=fm2; t=1744029073; x=1744115473; bh=jEwAsrOf0u
+	Nk4ZHgSTHYQ4eKgJWM/dgSF04lA+sbTdk=; b=CR7159eh53djHupnp3RND3LS1E
+	KSygQDcJh+5e75hQpTkJ911g38knagSYmgGSVtqdbR+S0F6eOvD/BD2mdaoqtfhR
+	Mc9wA/QUruupR8KSGGi23g0WoiQrNH4dFzD59owPDpKTkJlxIP5M6yzvewDm/NSQ
+	C7CSAn/R8I2hlQ+6Xaz4eZmDEzbb2sjsOBe4p58U4UWgxui00IQR1oZ7uEweqshT
+	mhZ+q1sOoF7HZefEIK6WwKuC2BUPQfa2Q7LCNhJ1OoHxQYpuL+xr02Zrt/p/Wex5
+	Lk51/xpZnJ4IdZvWmh09J2NRLtSatDlq/igCd9aucAxVVrYD0bQrDUKUi+Pw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744029069; x=1744115469; bh=J4w2a4E/T2NK8iBSQcDbPQUbbGk3gBppgbd
-	7F0tMKPs=; b=Z5/FgWxKn5oPR/D/Ub0BBweHwmpMUR0+nj64Vqy/O0k9pfDFdJv
-	vhZENXoWTOAaPm10APZ6CM4SKUeWpappgQhvoNftIBMCpPBTq0h7xNtwLYJb88d0
-	ClFKC2/CY6IYa1LQjB2gN7ij+X4Bx+25p+MeLF6WxNRQbd5HGexy0t9LS7lwtjzw
-	+oP/RP+7jcfFdjsjszJ3gnvC0RckQLUloATIZ8xVkLT2iGX6dDLLZoqcP1LwJW0u
-	Zbw5gASUu2kU8Z1TUh2ZiTG34V3bqZpVtv1QnubQdlmhw37KpRgoZbLvMke00Dej
-	A3WvT6Rl18ayk7suKc1RV2TXYIADqxJTe9A==
-X-ME-Sender: <xms:jcXzZ-5ZS891kh6c5ps0kSS1GysP3d4flcpqbhSvz-y-sxtJyLBhcg>
-    <xme:jcXzZ346P4m-BcSI2sO7pYdgcP3dvvv8mGg5Srh0OarBdMAMDweR6aAIomELt76EP
-    Vyet6h-Y_lni3UUJA>
-X-ME-Received: <xmr:jcXzZ9dzAWbSgXrPz_S2FeElU3uvfz-Ev28zO4-mHzMpkwcqqKvDjVwaUEgp4vUwlLLbASlP3CCwMvCSn1MV2PUqwdNrCaVIXNB003WI7Eaiwg>
+	1744029073; x=1744115473; bh=jEwAsrOf0uNk4ZHgSTHYQ4eKgJWM/dgSF04
+	lA+sbTdk=; b=IQCuuOBoBbTWnLZjjHlVDA6WRUG6yjCuFt55MW0YkI7SBwEfP31
+	LsEMl1v0uLwP2tYPTxCm6t3A77Fbfo8YnD4aUE9MMEcDYdwcH3tGDwjRn+0Kdysk
+	I+tRzlVn6PqQge3MztsmpcdPugeGw+Oc2WPrzX0TpDyeIEtwZNOYBjtXwMSEa890
+	fMktFR6RwqBX78WhZcmS0vG4N5+vcJtjXFmJ7MLO9CW4Q/fN3m5tZlIjEAjYaSYu
+	jrlMW04NYFJPWgbZpkgb1D5cbIQRR2IXJYh/agWA5fI+k5MbnZ2F4UPAwIgsxyB5
+	3BVO2rV12klI4M45Eq6CxVbtRU8E2kXXerg==
+X-ME-Sender: <xms:kcXzZ5EmK6nNqfCMvrvh86hPTTgET1RsAmeQy_qRI1aJsDU4eZLGrw>
+    <xme:kcXzZ-XNp181ZViXnVqNhkGMLoMxTPK_Nod_lgoXgDN1DUkBvf-LsrmSmJRVjGGTo
+    q-3ROJ5w8gCCYsz-g>
+X-ME-Received: <xmr:kcXzZ7LA6tl2rlP8XQyMr9FlrWg7AoDI_eTE6Iu-og_3-trtlJ8sBJZz1J2j1V6nWhGPZ5xGKkFvnMWeexhZIv6R3gQxLWOdUKIS8npaTxX1kQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddtvddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -56,29 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddtvddtucetufdote
     himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
     ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:jcXzZ7LoyD2ovBOm0A3W_-ksR5ZZO6u0k_PJ-cpVf2v4XiSisDDoGw>
-    <xmx:jcXzZyLE9ut_rBFT1xfCsvYvEQ-FEej7Sa0-XFJ-9T5wXE6PceTqZA>
-    <xmx:jcXzZ8yqhvipky7ePxmMGPyc4q-PaKYjMy1SRU5KJYj1fnqlwREToQ>
-    <xmx:jcXzZ2KSd53W3PNAYf1cWD6RTE3j_BYJGMlkbW7Sie0aUZIjbmSDYg>
-    <xmx:jcXzZ5mefLDG59gw6ukkUBYoDDSPx2btFQYdeRr5vTXvh7DpITwqOTI5>
+    pehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:kcXzZ_FjD_cvU952kWr-T8z-2pRAj1SxrqDr80b4w130-b2nW07O5A>
+    <xmx:kcXzZ_XXx2FJH9BM3F6YidT7CtkV3REpnGRyJ2g6VoNTzROtVKfvAQ>
+    <xmx:kcXzZ6Ot3zpMQHFFTzBFR35yfaODBlcbLYcBiARMf7gaBC4Xrb-FMg>
+    <xmx:kcXzZ-3xHuZqChyMYdZCg01xBdk7iyuH-omp2-0uGBrUAJEg7QMhHw>
+    <xmx:kcXzZ2w9SQ1SHK5nWECAe4noirTk9nr5oy4Ll5AK_BLoOkw_T0ziTH4W>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Apr 2025 08:31:08 -0400 (EDT)
+ 7 Apr 2025 08:31:12 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bae2bd81 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Apr 2025 12:31:08 +0000 (UTC)
-Date: Mon, 7 Apr 2025 14:31:07 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 90b39f13 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Apr 2025 12:31:11 +0000 (UTC)
+Date: Mon, 7 Apr 2025 14:31:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
+To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 04/16] reftable/block: simplify how we track restart
- points
-Message-ID: <Z_PFi4-B3ACD5hmq@pks.im>
+Subject: Re: [PATCH 05/16] reftable/table: move reading block into block
+ reader
+Message-ID: <Z_PFjr9p4u4MA4yD@pks.im>
 References: <20250331-pks-reftable-polishing-v1-0-ebed5247434c@pks.im>
- <20250331-pks-reftable-polishing-v1-4-ebed5247434c@pks.im>
- <CAOLa=ZRwRkV56HAxtfX3EM1Lr3D938bY7d-zv+xUF4G40f-O2A@mail.gmail.com>
+ <20250331-pks-reftable-polishing-v1-5-ebed5247434c@pks.im>
+ <umaolgemnks4g4cgwgnurl7alic2a3pzrfx2ws3s7uxypiedia@7mwqxvhw2zxg>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,73 +87,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZRwRkV56HAxtfX3EM1Lr3D938bY7d-zv+xUF4G40f-O2A@mail.gmail.com>
+In-Reply-To: <umaolgemnks4g4cgwgnurl7alic2a3pzrfx2ws3s7uxypiedia@7mwqxvhw2zxg>
 
-On Thu, Apr 03, 2025 at 08:17:50AM -0700, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Restart points record the location of reftable records that do not use
-> > prefix compression and are used to perform a binary search inside of a
-> > block. These restart points are encoded at the end of a block, between
-> > the record data and the footer of a table.
-> >
-> > The block structure contains three different variables related to these
-> > restart points:
-> >
-> >   - The block length contains the length of the reftable block up to the
-> >     restart points.
-> >
-> >   - The restart count contains the number of restart points contained in
-> >     the block.
-> >
-> >   - The restart bytes variable tracks where the restart point data
-> >     begins.
-> >
-> > Tracking all three of these variables is unnecessary though as the data
-> > can be derived from one another: the block length without restart points
-> > is the exact same as the offset of the restart count data, which we
-> > already track via the `restart_bytes` data.
-> >
-> 
-> Nit: This para makes it seem as if we'd eliminate 'block length' in
-> support of having/keeping `restart_bytes`, but we remove both.
-
-We don't, we only remove the block length. The restart bytes are
-retained, but they are renamed to `restart_off` to better reflect what
-it actually contains. The next paragraph tries to explain this:
-
-> > Refactor the code so that we track the location of restart bytes not as
-> > a pointer, but instead as an offset. This allows us to trivially get rid
-> > of the `block_len` variable as described above. This avoids having the
-> > confusing `block_len` variable and allows us to do less bookkeeping
-> > overall.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  reftable/block.c | 25 ++++++++++++-------------
-> >  reftable/block.h |  8 +++++---
-> >  reftable/table.c |  2 +-
-> >  3 files changed, 18 insertions(+), 17 deletions(-)
-> >
+On Wed, Apr 02, 2025 at 03:13:03PM -0500, Justin Tobler wrote:
+> On 25/03/31 10:41AM, Patrick Steinhardt wrote:
 > > diff --git a/reftable/block.c b/reftable/block.c
-> > index 97740187259..f2567a8f0fd 100644
+> > index f2567a8f0fd..2517108b8ef 100644
 > > --- a/reftable/block.c
 > > +++ b/reftable/block.c
-> > @@ -216,10 +216,9 @@ int block_reader_init(struct block_reader *br, struct reftable_block *block,
-> >  	uint32_t full_block_size = table_block_size;
-> >  	uint8_t typ = block->data[header_off];
-> >  	uint32_t sz = reftable_get_be24(block->data + header_off + 1);
-> > -	int err = 0;
-> > -	uint16_t restart_count = 0;
-> > -	uint32_t restart_start = 0;
-> > -	uint8_t *restart_bytes = NULL;
-> > +	uint16_t restart_count;
-> > +	uint32_t restart_off;
+> > @@ -209,31 +209,57 @@ int block_writer_finish(struct block_writer *w)
+> >  	return w->next;
+> >  }
+> >  
+> > -int block_reader_init(struct block_reader *br, struct reftable_block *block,
+> > -		      uint32_t header_off, uint32_t table_block_size,
+> > -		      uint32_t hash_size)
+> > +static int read_block(struct reftable_block_source *source,
+> > +		      struct reftable_block *dest, uint64_t off,
+> > +		      uint32_t sz)
+> >  {
+> > +	size_t size = block_source_size(source);
+> > +	block_source_return_block(dest);
+> > +	if (off >= size)
+> > +		return 0;
+> > +	if (off + sz > size)
+> > +		sz = size - off;
+> > +	return block_source_read_block(source, dest, off, sz);
+> > +}
+> > +
+> > +int block_reader_init(struct block_reader *br,
+> > +		      struct reftable_block_source *source,
+> > +		      uint32_t offset, uint32_t header_size,
+> > +		      uint32_t table_block_size, uint32_t hash_size)
+> > +{
+> > +	uint32_t guess_block_size = table_block_size ?
+> > +		table_block_size : DEFAULT_BLOCK_SIZE;
 > 
-> Nit: I guess this is to be consistent with `header_off`, but I would
-> think spelling it out as `header_offset` is much easier to understand.
+> Out of curiousity, in what scenarios would the table not know the block
+> size and we have to rely on the guess?
 
-Yeah, I'm not much of a fan of such abbreviations, either. But I'd like
-to retain this abbreviation for the sake of consistency.
+By default, reftable blocks are aligned with padding, and if so the
+block size is tracked as part of the footer and well-known. Ideally, the
+block size would be picked so that it is the same as your disk sector
+size. Git picks 4kB by default.
+
+There is another mode though: reftable blocks can be unaligned, so the
+padding is dropped. Consequently there is no fixed block siz, and this
+is indicated by having a block size of 0 in the header/trailer.
 
 Patrick
