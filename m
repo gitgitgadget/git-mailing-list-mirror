@@ -1,532 +1,180 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CEA26561E
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 08:51:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D507206F31
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 09:00:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744102296; cv=none; b=obkD4KEtqkrOyGwXnjKTzqqxsX2XqYpkxr6adfp8bgM9age/Alg1ILsBHA2BjNoCYi7kwctFeJcwl9b8bFquiQGjUbBEHok94aMkSF1fy+sOlAzh81txwsVBgHXazkK/dTPrYbrjKkgb/zjKyLEIWgTsIffM8YBUmYGwSZr4MAQ=
+	t=1744102859; cv=none; b=G8v4jmUJvvVS6wgYAIkar+scwbhjb4CrR7Agk4afpRpXJ+YA2N1t9VavLE/2NQBmSxmEyvWoqwCisf2HnWP+ott+eQM5oXR9KIOBryi5et7/ZZTIK0hV97GTaxiT2oG3/ovnbgmKGZmNRyhnK5ru6M64E1VxaktWsEwrEyCuVsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744102296; c=relaxed/simple;
-	bh=GOLDyL2UuWO5tr/Lh3G8n9hhZbTo/LaiHQrs+klWYgg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cG4UGwkbzknFH9ih9ErUs+l8I4hIC80+qMhskgxPtZyGf9CzlzP+H7Fi4w+gsTjnlpOgb7WzZBeqbmFAVdpMcJI6PA7KKohWwI61UVp3ebuwpP0uz4+ZV1OIIrScezCLjjlL2Re5FbgIlDlZ2jScg8JE3GdoiEQnFBQEPoU6/ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RRyeyC4q; arc=none smtp.client-ip=209.85.208.43
+	s=arc-20240116; t=1744102859; c=relaxed/simple;
+	bh=pgopEV+KWa8aZz1f5+wSptzMPhL/YDS+jCbY520BaRY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=ok32jVnKb5DN9d+DVNl+BusA6g6mGHU/5KYV5K0FLUwcyOOHJGe46zDGj9D3KNIpvCw+sthv6ao0mjoRaJI7beuG8wtkNV4YsHVR9koOMp/YtMEVwrd4fpf0gvh/yXoU6BsCUCkJKHvyEuOEQYcf4yWkL5ddEMqxVeGobpJfAD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JJpnmI6V; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RRyeyC4q"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5ec9d24acfbso11679598a12.0
-        for <git@vger.kernel.org>; Tue, 08 Apr 2025 01:51:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JJpnmI6V"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5e5e34f4e89so10634058a12.1
+        for <git@vger.kernel.org>; Tue, 08 Apr 2025 02:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744102292; x=1744707092; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Rgy/mFxXU3f2JfMEIA1qGcNl6sNQ6ACr5ekqjJ/4joA=;
-        b=RRyeyC4qNsx1W8DfbsAK5uZTpWGXyNc7LbdC7VtANVTFKrpPg17BW/jR3gqTvv1aL7
-         6vRNNArlLsW/Xj+SCYkL2YSjmjkJzxPCqikZhk4vdsPoW07JqyAURsBWRrs11cgGd8Ip
-         16iXd14lqkPy6Udc+rCU+KGI1SVYjhtMFIpo4H8WAZoP5t74uzpk41XqtZIwgGaLC1KZ
-         Z/33qJizwQUb0kfW5MOYCe0Nzq36DmmvdqKWPcERwsMYFCsb4s7LET4GZMX/62wElpCD
-         nDGV1UphB1p88hVzLsd2Z5wfvREJPAb/mqkiKD3te8ZhBvkDMCGb2NE0NByfl+kOHVMe
-         xHFw==
+        d=gmail.com; s=20230601; t=1744102856; x=1744707656; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OtYcQEr5aL6CSvttoO3nYYMfaWzS6BloCe4otTDbLCQ=;
+        b=JJpnmI6V0RPkyUdtKbCCS0VuEtlG54KjNIjKjmEdBvCLA0/6xp28o9Q3/q2wVabXY3
+         +O575wTWn2o5eZYa4/OFS0fRm1ZsIeqiFetWeAmdrkEZl31edIiivplrGlt+suhBzpmW
+         v/hruofvOgqR8X8Y0gnejVBHBc8UL6BdpzXan2sMovh2Kh5p8vPtJVKRZL6rRN9Kl5KV
+         aBg/CMxUzrBYCqUylzH4i01MvYMVbl5mxKWo8en6RAwmeyQ9BKw50tdUP40NZMu7UPIV
+         QpxXNq8T0HvvwjXUeJYlNlyNDoyFKOxqi/RVto5w7AjigPs+z1/A/OCo8MXtewAZU9GU
+         ztZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744102292; x=1744707092;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Rgy/mFxXU3f2JfMEIA1qGcNl6sNQ6ACr5ekqjJ/4joA=;
-        b=SdFFJZ7A4AnkcpUXAkcI46WIzHcEjqQ/cIK3ZKG6hi1lFWhflr50hfeQjSGrtBXuDh
-         +4OwUJRqCxmAvdYWMh9XDI1c0bAJeOvuBloaqgHfSRuJL1Gh5Z8XJ2T89B9TUKrdK9XG
-         rZmAhBSlAqLQgZGvB/hV9qBsw7Xq1+SGGf5Kyhj8gj/uLm18juR3a4YneEieX64HoL2I
-         7e7KwX3XzoiO51QbrDGva2kWU0VA48y2Z6vCZu2L9oRdn2pOej3csLWHY3qzsQjiSgoT
-         B7vDzqSGwtMMWiAsTnAGBMXuc7ehBq38h5jm52hMahIpziPvDkYVc7pbb59jxcr4VzEl
-         B1Yg==
-X-Gm-Message-State: AOJu0YxnXPFbElupUMgK0UQrlafUlZ/JwqzteeZHekknYuNS6R+jximB
-	FQxXgjqNV/arFtsN5CFcCd3cFidq2J4/GUchCnhSMzObr6TRKN/K
-X-Gm-Gg: ASbGncu+oVm2fsxbepYFX6BEJ1TtC5MMv3hTq+H1SPlQ1E7URHIWFbAO2a01Lzw9y5T
-	YnALxg9B/zDAGIf7lsrMd/JeM+0TYlkR7664v6GLBST8ErjijOiu+6SJXyvA/YRPzAMS+TxOrA0
-	1G03dPmCGRz0r9y9zMMLAn+4w0xaKNuvUOVxV8GEORP2GpdhKzX1+gFMu3oh8Nu/cVMTnKF3J27
-	69v8Fon+9BKAca3tIHl01aV2A7X91gRStquVsbw/HSdumrPb2SZXumfh3I9mVqsXNNwNAM68/p8
-	vyllQICyq7n732LjKoFm5FzhJvQyyhA10gwYj7+Ni8Uu4HzT1XXLCyaOig==
-X-Google-Smtp-Source: AGHT+IGQoIRLHlOK6+6WlN/4Plcrob/nctACvvCcCPc0zfZUDRS1zjTwkFQK32zXvt5pRftaIslX8w==
-X-Received: by 2002:a17:907:7f8b:b0:ac1:ecb0:ca98 with SMTP id a640c23a62f3a-ac81a8790cdmr190545066b.26.1744102291987;
-        Tue, 08 Apr 2025 01:51:31 -0700 (PDT)
-Received: from localhost.localdomain ([217.110.80.4])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7bfe5c804sm890801366b.15.2025.04.08.01.51.31
+        d=1e100.net; s=20230601; t=1744102856; x=1744707656;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
+         :message-id:date:subject:from:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OtYcQEr5aL6CSvttoO3nYYMfaWzS6BloCe4otTDbLCQ=;
+        b=cmsMD09r4skxAqghqn5nXBnYGlD60er/vowaHD2tQMvBeul9hiHNCLjjsL23/RK5Fz
+         VuHzELb2pRqfVNqMkyE5kR5ShiSI9I+J7FtuaiEEh7EOLZb5ILQpvkZEhrywf10Qh8LU
+         Q0DVo1U9FsvcNo4La/HAenZokGh83bWjvir0/oqI31PX0eDpFigp+03YOLA/qHW66uBZ
+         Ke2ySZ3daLGM4HKNtIEYDTY6Wc4Jjh9WQ6Ph09v/KTmyMA6RzTtBpvJ/FPzENmHtc1V5
+         mVnRe6sm+q1v9WZenur42VXE4icIR/M+oWVmX3VIBj0pgTrt0XSrUv2V3m7jVa4dHcRn
+         ugEg==
+X-Gm-Message-State: AOJu0Yyp8tKiVnSxiBqC4jgBfPTUPr/i89RsGGvyYT3v6hQgr2Ag6usF
+	d9yAT1K3rww6Ceq93VglzJO3pPpYlGTRcOQ4owlJPotf/6g+Pktx
+X-Gm-Gg: ASbGncsyMtu99T69gyiPVsXZCtkpn9/W9Vx6Qko/2w7liQKaHaN5h/ls6JeUWMCFYnM
+	rCtRHVpug8ybY0iDmQZwpL2Z6jp4V+Vn0kpMFa/2RUUCkEBuDBN6MKXjqs+bye6jp/lQtvEgPkz
+	mR6r+1ZOLq65NZaP7TXKlvLRFbt6RhmRZhM3DU3Zge/5VF+yb+iQwNgXN4OFra4YkM88Kezm6HD
+	LRV5QKzNjPTAnCPiACB1/vF3JRlwMvPEh/qI2gi1BzcokiCEe6RXzXp4rvplVl17NikuJPZAVUg
+	AmpxLjfQFhDbFnESCzLnxJ5VuOY6+cSweEfrdIpTXxnC0GsZHKx84oM=
+X-Google-Smtp-Source: AGHT+IEPExGkchrqIDdxXy170BifktaoW5umUKgXmrbD5cC0gJ+OiB7U/OUjF/Ib1ubCqn1gexEyhA==
+X-Received: by 2002:a17:907:7fa2:b0:ac3:8aa5:53f8 with SMTP id a640c23a62f3a-ac7e712047bmr869043066b.8.1744102856213;
+        Tue, 08 Apr 2025 02:00:56 -0700 (PDT)
+Received: from [127.0.0.2] ([217.110.80.4])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7bfe5d442sm875538666b.26.2025.04.08.02.00.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Apr 2025 01:51:31 -0700 (PDT)
+        Tue, 08 Apr 2025 02:00:55 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-To: karthik.188@gmail.com
-Cc: git@vger.kernel.org,
-	jltobler@gmail.com,
-	ps@pks.im,
-	jn.avila@free.fr,
-	gitster@pobox.com
-Subject: [PATCH v6 8/8] update-ref: add --batch-updates flag for stdin mode
-Date: Tue,  8 Apr 2025 10:51:12 +0200
-Message-ID: <20250408085120.614893-9-karthik.188@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250408085120.614893-1-karthik.188@gmail.com>
-References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
- <20250408085120.614893-1-karthik.188@gmail.com>
+Subject: [PATCH v2 0/2] bundle: fix non-linear performance scaling with
+ refs
+Date: Tue, 08 Apr 2025 11:00:51 +0200
+Message-Id: <20250408-488-generating-bundles-with-many-references-has-non-linear-performance-v2-0-0802fc36a23d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=y
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAMPl9GcC/62OQQ6CMBBFr2K6dkypgOjKexgWpR1gEpiSKaKGc
+ HerXsHl+/k//60qohBGddmtSnChSIETmP1Oud5yh0A+sTLaFPpoDORVBR0yip2JO2ju7AeM8KC
+ 5h9HyCwRbFGSXwt5G4MAwEKMVmFDaIKnkEMrcoqtQuzbzKp1NaUbPr8itTtxTnIO8vl5L9kl/C
+ rnO/qWwZKCh9ObYGH8ui+J07UZLw8GFUdXbtr0BlsYuMxwBAAA=
+X-Change-ID: 20250322-488-generating-bundles-with-many-references-has-non-linear-performance-64aec8e0cf1d
+In-Reply-To: <20250401-488-generating-bundles-with-many-references-has-non-linear-performance-v1-0-6d23b2d96557@gmail.com>
+References: <20250401-488-generating-bundles-with-many-references-has-non-linear-performance-v1-0-6d23b2d96557@gmail.com>
+To: git@vger.kernel.org
+Cc: jltobler@gmail.com, ps@pks.im, toon@iotcl.com, 
+ Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3305; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=pgopEV+KWa8aZz1f5+wSptzMPhL/YDS+jCbY520BaRY=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGf05cc5oPhGjhn3gAmjQ9V/3FZp7ER0Dz2Wy
+ 7X6VFKJL+j90IkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJn9OXHAAoJED7VnySO
+ Rox/DZQL/jy6j3cApi7OIFeas2CLpBwxWtI6Vu8Mg8xXRYJfJACCEEXIcdSRir7QhPR7JmTs3Eb
+ Tg9W5rf/8lPhUibexM/Ro8DJBGuvldaSWs4p+x2gJSCplTzmHQD7RlEpCH6slSvjb+7ue+xsoG/
+ 65c60zR6ALzyQ0MKxoTu7Gek4eDv2sYuQawIblI9N3uMftC7kMAUZ07BWxtO1U4rBmbWEVr2IMX
+ TzXUrweNLEEF7xGjLyACTnaR4rmMGwlFFOD0lBUi6eVnYBj0vmqQC21scXrWW6I69l41ymGQmSM
+ bef5cRXKBu6bQl1W7RVpjwj6RQseY9nWZIdqPfKH8lUjbPjSFxp3zuhTfXo7E6tNYXFmrcpSnu5
+ qtEi/V/sBkhTYfx/7cq7PjdU3i9mzBRT3WhRMXGrbJJzXfvonTffy7gp5Z8jt7hejC2JcLb+Zsb
+ HCopsI3ButJDk/bOi3ZfUfMgNNRNZ6mnFQELOAtzjiX9Y9W6nn5MkmwFtQOKLf/26gbZ94+iiH7
+ kE=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-When updating multiple references through stdin, Git's update-ref
-command normally aborts the entire transaction if any single update
-fails. This atomic behavior prevents partial updates. Introduce a new
-batch update system, where the updates the performed together similar
-but individual updates are allowed to fail.
+Hello, 
 
-Add a new `--batch-updates` flag that allows the transaction to continue
-even when individual reference updates fail. This flag can only be used
-in `--stdin` mode and builds upon the batch update support added to the
-refs subsystem in the previous commits. When enabled, failed updates are
-reported in the following format:
+At GitLab, we noticed that bundle creation doesn't seem to scale linearly 
+the number of references in a repository. The following benchmark demostrates
+the issue:
 
-  rejected SP (<old-oid> | <old-target>) SP (<new-oid> | <new-target>) SP <rejection-reason> LF
+Benchmark 1: bundle (refcount = 100)
+  Time (mean ± σ):       4.4 ms ±   0.5 ms    [User: 1.8 ms, System: 2.4 ms]
+  Range (min … max):     3.4 ms …   7.7 ms    434 runs
 
-Update the documentation to reflect this change and also tests to cover
-different scenarios where an update could be rejected.
+Benchmark 2: bundle (refcount = 1000)
+  Time (mean ± σ):      16.5 ms ±   1.7 ms    [User: 9.6 ms, System: 7.2 ms]
+  Range (min … max):    14.1 ms …  21.7 ms    176 runs
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+Benchmark 3: bundle (refcount = 10000)
+  Time (mean ± σ):     220.6 ms ±   3.2 ms    [User: 171.6 ms, System: 55.7 ms]
+  Range (min … max):   215.8 ms … 224.9 ms    13 runs
+
+Benchmark 4: bundle (refcount = 100000)
+  Time (mean ± σ):      9.622 s ±  0.063 s    [User: 9.143 s, System: 0.546 s]
+  Range (min … max):    9.563 s …  9.738 s    10 runs
+
+Summary
+  bundle (refcount = 100) ran
+    3.79 ± 0.61 times faster than bundle (refcount = 1000)
+   50.63 ± 6.39 times faster than bundle (refcount = 10000)
+ 2207.95 ± 277.35 times faster than bundle (refcount = 100000)
+
+Digging into this, the reason for this is because we check for duplicate refnames
+added by the user. But this check uses an O(N^2) algorithm, which would not 
+scale linearly with the number of refs.
+
+The first commit in this small series adds a bunch of tests for this behavior,
+while also discovering a missed edge case. The second commit introduces an 
+alternative approach which uses an 'strset' to check for duplicates. The new
+approach fixes the performance problems noticed while also fixing the earlier
+missed edge case. Overall we see a 6x performance improvement with this series.
+
+I found that there is a conflict with 'ps/object-wo-the-repository' in seen,
+the resolution seems simple enough. Happy to support as needed.
+
 ---
- Documentation/git-update-ref.adoc |  14 +-
- builtin/update-ref.c              |  66 ++++++++-
- t/t1400-update-ref.sh             | 233 ++++++++++++++++++++++++++++++
- 3 files changed, 306 insertions(+), 7 deletions(-)
+Changes in v2:
+- Use STRSET_INIT macro instead of strset_init(). 
+- Link to v1: https://lore.kernel.org/r/20250401-488-generating-bundles-with-many-references-has-non-linear-performance-v1-0-6d23b2d96557@gmail.com
 
-diff --git a/Documentation/git-update-ref.adoc b/Documentation/git-update-ref.adoc
-index 9e6935d38d..9310ce9768 100644
---- a/Documentation/git-update-ref.adoc
-+++ b/Documentation/git-update-ref.adoc
-@@ -7,8 +7,10 @@ git-update-ref - Update the object name stored in a ref safely
- 
- SYNOPSIS
- --------
--[verse]
--'git update-ref' [-m <reason>] [--no-deref] (-d <ref> [<old-oid>] | [--create-reflog] <ref> <new-oid> [<old-oid>] | --stdin [-z])
-+[synopsis]
-+git update-ref [-m <reason>] [--no-deref] -d <ref> [<old-oid>]
-+git update-ref [-m <reason>] [--no-deref] [--create-reflog] <ref> <new-oid> [<old-oid>]
-+git update-ref [-m <reason>] [--no-deref] --stdin [-z] [--batch-updates]
- 
- DESCRIPTION
- -----------
-@@ -57,6 +59,14 @@ performs all modifications together.  Specify commands of the form:
- With `--create-reflog`, update-ref will create a reflog for each ref
- even if one would not ordinarily be created.
- 
-+With `--batch-updates`, update-ref executes the updates in a batch but allows
-+individual updates to fail due to invalid or incorrect user input, applying only
-+the successful updates. However, system-related errors—such as I/O failures or
-+memory issues—will result in a full failure of all batched updates. Any failed
-+updates will be reported in the following format:
-+
-+	rejected SP (<old-oid> | <old-target>) SP (<new-oid> | <new-target>) SP <rejection-reason> LF
-+
- Quote fields containing whitespace as if they were strings in C source
- code; i.e., surrounded by double-quotes and with backslash escapes.
- Use 40 "0" characters or the empty string to specify a zero value.  To
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 1d541e13ad..111d6473ad 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -5,6 +5,7 @@
- #include "config.h"
- #include "gettext.h"
- #include "hash.h"
-+#include "hex.h"
- #include "refs.h"
- #include "object-name.h"
- #include "parse-options.h"
-@@ -13,7 +14,7 @@
- static const char * const git_update_ref_usage[] = {
- 	N_("git update-ref [<options>] -d <refname> [<old-oid>]"),
- 	N_("git update-ref [<options>]    <refname> <new-oid> [<old-oid>]"),
--	N_("git update-ref [<options>] --stdin [-z]"),
-+	N_("git update-ref [<options>] --stdin [-z] [--batch-updates]"),
- 	NULL
- };
- 
-@@ -565,6 +566,49 @@ static void parse_cmd_abort(struct ref_transaction *transaction,
- 	report_ok("abort");
- }
- 
-+static void print_rejected_refs(const char *refname,
-+				const struct object_id *old_oid,
-+				const struct object_id *new_oid,
-+				const char *old_target,
-+				const char *new_target,
-+				enum ref_transaction_error err,
-+				void *cb_data UNUSED)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	const char *reason = "";
-+
-+	switch (err) {
-+	case REF_TRANSACTION_ERROR_NAME_CONFLICT:
-+		reason = "refname conflict";
-+		break;
-+	case REF_TRANSACTION_ERROR_CREATE_EXISTS:
-+		reason = "reference already exists";
-+		break;
-+	case REF_TRANSACTION_ERROR_NONEXISTENT_REF:
-+		reason = "reference does not exist";
-+		break;
-+	case REF_TRANSACTION_ERROR_INCORRECT_OLD_VALUE:
-+		reason = "incorrect old value provided";
-+		break;
-+	case REF_TRANSACTION_ERROR_INVALID_NEW_VALUE:
-+		reason = "invalid new value provided";
-+		break;
-+	case REF_TRANSACTION_ERROR_EXPECTED_SYMREF:
-+		reason = "expected symref but found regular ref";
-+		break;
-+	default:
-+		reason = "unkown failure";
-+	}
-+
-+	strbuf_addf(&sb, "rejected %s %s %s %s\n", refname,
-+		    new_oid ? oid_to_hex(new_oid) : new_target,
-+		    old_oid ? oid_to_hex(old_oid) : old_target,
-+		    reason);
-+
-+	fwrite(sb.buf, sb.len, 1, stdout);
-+	strbuf_release(&sb);
-+}
-+
- static void parse_cmd_commit(struct ref_transaction *transaction,
- 			     const char *next, const char *end UNUSED)
- {
-@@ -573,6 +617,10 @@ static void parse_cmd_commit(struct ref_transaction *transaction,
- 		die("commit: extra input: %s", next);
- 	if (ref_transaction_commit(transaction, &error))
- 		die("commit: %s", error.buf);
-+
-+	ref_transaction_for_each_rejected_update(transaction,
-+						 print_rejected_refs, NULL);
-+
- 	report_ok("commit");
- 	ref_transaction_free(transaction);
- }
-@@ -609,7 +657,7 @@ static const struct parse_cmd {
- 	{ "commit",        parse_cmd_commit,        0, UPDATE_REFS_CLOSED },
- };
- 
--static void update_refs_stdin(void)
-+static void update_refs_stdin(unsigned int flags)
- {
- 	struct strbuf input = STRBUF_INIT, err = STRBUF_INIT;
- 	enum update_refs_state state = UPDATE_REFS_OPEN;
-@@ -617,7 +665,7 @@ static void update_refs_stdin(void)
- 	int i, j;
- 
- 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--						  0, &err);
-+						  flags, &err);
- 	if (!transaction)
- 		die("%s", err.buf);
- 
-@@ -685,7 +733,7 @@ static void update_refs_stdin(void)
- 			 */
- 			state = cmd->state;
- 			transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--								  0, &err);
-+								  flags, &err);
- 			if (!transaction)
- 				die("%s", err.buf);
- 
-@@ -701,6 +749,8 @@ static void update_refs_stdin(void)
- 		/* Commit by default if no transaction was requested. */
- 		if (ref_transaction_commit(transaction, &err))
- 			die("%s", err.buf);
-+		ref_transaction_for_each_rejected_update(transaction,
-+						 print_rejected_refs, NULL);
- 		ref_transaction_free(transaction);
- 		break;
- 	case UPDATE_REFS_STARTED:
-@@ -727,6 +777,8 @@ int cmd_update_ref(int argc,
- 	struct object_id oid, oldoid;
- 	int delete = 0, no_deref = 0, read_stdin = 0, end_null = 0;
- 	int create_reflog = 0;
-+	unsigned int flags = 0;
-+
- 	struct option options[] = {
- 		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
- 		OPT_BOOL('d', NULL, &delete, N_("delete the reference")),
-@@ -735,6 +787,8 @@ int cmd_update_ref(int argc,
- 		OPT_BOOL('z', NULL, &end_null, N_("stdin has NUL-terminated arguments")),
- 		OPT_BOOL( 0 , "stdin", &read_stdin, N_("read updates from stdin")),
- 		OPT_BOOL( 0 , "create-reflog", &create_reflog, N_("create a reflog")),
-+		OPT_BIT('0', "batch-updates", &flags, N_("batch reference updates"),
-+			REF_TRANSACTION_ALLOW_FAILURE),
- 		OPT_END(),
- 	};
- 
-@@ -756,8 +810,10 @@ int cmd_update_ref(int argc,
- 			usage_with_options(git_update_ref_usage, options);
- 		if (end_null)
- 			line_termination = '\0';
--		update_refs_stdin();
-+		update_refs_stdin(flags);
- 		return 0;
-+	} else if (flags & REF_TRANSACTION_ALLOW_FAILURE) {
-+		die("--batch-updates can only be used with --stdin");
- 	}
- 
- 	if (end_null)
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 29045aad43..d29d23cb89 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -2066,6 +2066,239 @@ do
- 		grep "$(git rev-parse $a) $(git rev-parse $a)" actual
- 	'
- 
-+	test_expect_success "stdin $type batch-updates" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit commit &&
-+			head=$(git rev-parse HEAD) &&
-+
-+			format_command $type "update refs/heads/ref1" "$head" "$Z" >stdin &&
-+			format_command $type "update refs/heads/ref2" "$head" "$Z" >>stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin &&
-+			echo $head >expect &&
-+			git rev-parse refs/heads/ref1 >actual &&
-+			test_cmp expect actual &&
-+			git rev-parse refs/heads/ref2 >actual &&
-+			test_cmp expect actual
-+		)
-+	'
-+
-+	test_expect_success "stdin $type batch-updates with invalid new_oid" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit one &&
-+			old_head=$(git rev-parse HEAD) &&
-+			test_commit two &&
-+			head=$(git rev-parse HEAD) &&
-+			git update-ref refs/heads/ref1 $head &&
-+			git update-ref refs/heads/ref2 $head &&
-+
-+			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
-+			format_command $type "update refs/heads/ref2" "$(test_oid 001)" "$head" >>stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			echo $old_head >expect &&
-+			git rev-parse refs/heads/ref1 >actual &&
-+			test_cmp expect actual &&
-+			echo $head >expect &&
-+			git rev-parse refs/heads/ref2 >actual &&
-+			test_cmp expect actual &&
-+			test_grep -q "invalid new value provided" stdout
-+		)
-+	'
-+
-+	test_expect_success "stdin $type batch-updates with non-commit new_oid" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit one &&
-+			old_head=$(git rev-parse HEAD) &&
-+			test_commit two &&
-+			head=$(git rev-parse HEAD) &&
-+			head_tree=$(git rev-parse HEAD^{tree}) &&
-+			git update-ref refs/heads/ref1 $head &&
-+			git update-ref refs/heads/ref2 $head &&
-+
-+			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
-+			format_command $type "update refs/heads/ref2" "$head_tree" "$head" >>stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			echo $old_head >expect &&
-+			git rev-parse refs/heads/ref1 >actual &&
-+			test_cmp expect actual &&
-+			echo $head >expect &&
-+			git rev-parse refs/heads/ref2 >actual &&
-+			test_cmp expect actual &&
-+			test_grep -q "invalid new value provided" stdout
-+		)
-+	'
-+
-+	test_expect_success "stdin $type batch-updates with non-existent ref" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit one &&
-+			old_head=$(git rev-parse HEAD) &&
-+			test_commit two &&
-+			head=$(git rev-parse HEAD) &&
-+			git update-ref refs/heads/ref1 $head &&
-+
-+			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
-+			format_command $type "update refs/heads/ref2" "$old_head" "$head" >>stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			echo $old_head >expect &&
-+			git rev-parse refs/heads/ref1 >actual &&
-+			test_cmp expect actual &&
-+			test_must_fail git rev-parse refs/heads/ref2 &&
-+			test_grep -q "reference does not exist" stdout
-+		)
-+	'
-+
-+	test_expect_success "stdin $type batch-updates with dangling symref" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit one &&
-+			old_head=$(git rev-parse HEAD) &&
-+			test_commit two &&
-+			head=$(git rev-parse HEAD) &&
-+			git update-ref refs/heads/ref1 $head &&
-+			git symbolic-ref refs/heads/ref2 refs/heads/nonexistent &&
-+
-+			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
-+			format_command $type "update refs/heads/ref2" "$old_head" "$head" >>stdin &&
-+			git update-ref $type --no-deref --stdin --batch-updates <stdin >stdout &&
-+			echo $old_head >expect &&
-+			git rev-parse refs/heads/ref1 >actual &&
-+			test_cmp expect actual &&
-+			echo $head >expect &&
-+			test_must_fail git rev-parse refs/heads/ref2 &&
-+			test_grep -q "reference does not exist" stdout
-+		)
-+	'
-+
-+	test_expect_success "stdin $type batch-updates with regular ref as symref" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit one &&
-+			old_head=$(git rev-parse HEAD) &&
-+			test_commit two &&
-+			head=$(git rev-parse HEAD) &&
-+			git update-ref refs/heads/ref1 $head &&
-+			git update-ref refs/heads/ref2 $head &&
-+
-+			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
-+			format_command $type "symref-update refs/heads/ref2" "$old_head" "ref" "refs/heads/nonexistent" >>stdin &&
-+			git update-ref $type --no-deref --stdin --batch-updates <stdin >stdout &&
-+			echo $old_head >expect &&
-+			git rev-parse refs/heads/ref1 >actual &&
-+			test_cmp expect actual &&
-+			echo $head >expect &&
-+			echo $head >expect &&
-+			git rev-parse refs/heads/ref2 >actual &&
-+			test_cmp expect actual &&
-+			test_grep -q "expected symref but found regular ref" stdout
-+		)
-+	'
-+
-+	test_expect_success "stdin $type batch-updates with invalid old_oid" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit one &&
-+			old_head=$(git rev-parse HEAD) &&
-+			test_commit two &&
-+			head=$(git rev-parse HEAD) &&
-+			git update-ref refs/heads/ref1 $head &&
-+			git update-ref refs/heads/ref2 $head &&
-+
-+			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
-+			format_command $type "update refs/heads/ref2" "$old_head" "$Z" >>stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			echo $old_head >expect &&
-+			git rev-parse refs/heads/ref1 >actual &&
-+			test_cmp expect actual &&
-+			echo $head >expect &&
-+			git rev-parse refs/heads/ref2 >actual &&
-+			test_cmp expect actual &&
-+			test_grep -q "reference already exists" stdout
-+		)
-+	'
-+
-+	test_expect_success "stdin $type batch-updates with incorrect old oid" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit one &&
-+			old_head=$(git rev-parse HEAD) &&
-+			test_commit two &&
-+			head=$(git rev-parse HEAD) &&
-+			git update-ref refs/heads/ref1 $head &&
-+			git update-ref refs/heads/ref2 $head &&
-+
-+			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
-+			format_command $type "update refs/heads/ref2" "$head" "$old_head" >>stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			echo $old_head >expect &&
-+			git rev-parse refs/heads/ref1 >actual &&
-+			test_cmp expect actual &&
-+			echo $head >expect &&
-+			git rev-parse refs/heads/ref2 >actual &&
-+			test_cmp expect actual &&
-+			test_grep -q "incorrect old value provided" stdout
-+		)
-+	'
-+
-+	test_expect_success "stdin $type batch-updates refname conflict" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit one &&
-+			old_head=$(git rev-parse HEAD) &&
-+			test_commit two &&
-+			head=$(git rev-parse HEAD) &&
-+			git update-ref refs/heads/ref/foo $head &&
-+
-+			format_command $type "update refs/heads/ref/foo" "$old_head" "$head" >stdin &&
-+			format_command $type "update refs/heads/ref" "$old_head" "" >>stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			echo $old_head >expect &&
-+			git rev-parse refs/heads/ref/foo >actual &&
-+			test_cmp expect actual &&
-+			test_grep -q "refname conflict" stdout
-+		)
-+	'
-+
-+	test_expect_success "stdin $type batch-updates refname conflict new ref" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit one &&
-+			old_head=$(git rev-parse HEAD) &&
-+			test_commit two &&
-+			head=$(git rev-parse HEAD) &&
-+			git update-ref refs/heads/ref/foo $head &&
-+
-+			format_command $type "update refs/heads/foo" "$old_head" "" >stdin &&
-+			format_command $type "update refs/heads/ref" "$old_head" "" >>stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			echo $old_head >expect &&
-+			git rev-parse refs/heads/foo >actual &&
-+			test_cmp expect actual &&
-+			test_grep -q "refname conflict" stdout
-+		)
-+	'
- done
- 
- test_expect_success 'update-ref should also create reflog for HEAD' '
--- 
-2.48.1
+---
+ bundle.c               |  8 +++++++-
+ object.c               | 33 -------------------------------
+ object.h               |  6 ------
+ t/t6020-bundle-misc.sh | 53 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 60 insertions(+), 40 deletions(-)
+
+Karthik Nayak (2):
+      t6020: test for duplicate refnames in bundle creation
+      bundle: fix non-linear performance scaling with refs
+---
+
+Range-diff versus v1:
+
+1:  1fd141cd34 = 1:  2b608cb908 t6020: test for duplicate refnames in bundle creation
+2:  25b86d1a6c ! 2:  054389419f bundle: fix non-linear performance scaling with refs
+    @@ bundle.c: static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+      {
+      	int i;
+      	int ref_count = 0;
+    -+	struct strset objects;
+    -+
+    -+	strset_init(&objects);
+    ++	struct strset objects = STRSET_INIT;
+      
+      	for (i = 0; i < revs->pending.nr; i++) {
+      		struct object_array_entry *e = revs->pending.objects + i;
+
+
+---
+
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+change-id: 20250322-488-generating-bundles-with-many-references-has-non-linear-performance-64aec8e0cf1d
+
+Thanks
+- Karthik
 
