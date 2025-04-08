@@ -1,77 +1,79 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781702690DB
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 10:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809BE2690F1
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 10:24:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744107859; cv=none; b=e+TJ1nlQoidyVNp6OYV2Sl37fWED09zLdMQvPe3oRvQ9uvDG8yzI5G1if2FpQgPcL/ZAL0E5t/SHp9+mynEJ8CCTfmFvVaIPj6z/CsDfGGlq+oGNfSpvIDHEVWXi8F6qaLItw68MRwE2pZwL2vKVKvtcxTj9igfvJWj2+dlMBF8=
+	t=1744107860; cv=none; b=mK8Gh33floFhskjjy6tk9RVe7TRE72NjkV3AgR4ExyUR4r1M4/N2s//Pj6H6sBVTa7ZvQyiI2jZ0bCJpvcAWNAnGcYZGcmiZS/NZkSyZmtftcFRMWGyBZ9rvsvwMWrJyhJ4MTwnBqqipZMQgk/qTNjpveuC+r28iV+SL7DKftBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744107859; c=relaxed/simple;
-	bh=N3+yQI9CGNhjJ/Ykl8D5JxQdmbn6AxvLH9beEwYC4TU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=U971xivgQqaYKMIiLtqLwiYQcfo2ulxs5+n1CSUfogkJDS1L4QV4DPO5GnL9hXRMVmYE7Ag22YU1UhS4iqWDnZXhCxwjNYTtF/tO6jKIuQzhqwGiqnfuw0BWnignDyXHfyTIqWJ/KUWiOcWEiuB/8H/XGviznGbfs00ZlPdNvZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eBTlpKSa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XS6Jwb79; arc=none smtp.client-ip=103.168.172.152
+	s=arc-20240116; t=1744107860; c=relaxed/simple;
+	bh=Gskf+OAr0VPgd6DysmZ5QVhDL63xRF/SGIWBMbm5czA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=FKLbF01pt9v/f56rerU31E/JItkSk9PTk+Zp1/UQFvjOp/FpdD3vROKINXHRQ6M6adeE0pOCKL4wKV4imMB4k2GW8DzD8BJ4sN5wnl+93TVkLc58xzi3eeRFZH+cVXxEopqIz+EtdC5Q0hEOkv3wYAUxO9MUtjV+A4c2RvHppm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FljR9W3+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xdjtLe0f; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eBTlpKSa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XS6Jwb79"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4D3EA1140209
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 06:24:15 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 08 Apr 2025 06:24:15 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FljR9W3+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xdjtLe0f"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 88384114011C
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 06:24:17 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Tue, 08 Apr 2025 06:24:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1744107855; x=1744194255; bh=eT1spWXZxT
-	AxhD1lfnaGo/8UcSg6ogwBeS8atrcmNlc=; b=eBTlpKSabjOkknGyiBrP0D8tY5
-	sJcHAQkzXYbLge/LiJJ02MKIPDUYXBEfB9wjmoYmjRMd54FjzLPGSz0qDE3PeqsD
-	sroT9fe91bazIBHrbvQnUSGCP1HpC8sd1G3cG1X+a5cuvpCta2HrX8ZjC3nph8AA
-	1mxAP0cY1Hw9kRMs+7AbCjnxjy7JMTOuytlzl0gqZhiD01lOTh5gMT+8gDxt/eO+
-	pzcX1RO9nBpUk6A6RYVFG09hW6CNax6n3M8HHpmQ6VmiDqK1xeY0RVrzZo+B31EB
-	ogPjFCxtjLuCivbIqy2zrd9of9MEcgmOEdamwBJHEJcQF6TKtWyb84irnMxw==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1744107857;
+	 x=1744194257; bh=6B7hrXwHVmBXGx54iYdPAxQGgwq8NB66MUMbUqAz67U=; b=
+	FljR9W3+cRu10/OHIuQpGv1U8zPpUMOxnj9+VjELAjBPZn3tCy1fpv5J/Pux0mQ3
+	bDEr0NTv96x6mS2+7MirbeDEecZNdcxdk9TTmQydjzrrvh/s28Dx+rg4YE6tFN+5
+	uHpuJHDyOIPzbXd6QLrfibrrIdMPJ9x3Gga0hrA+OqmsO5l8IOEletNsB2LxwwLq
+	4ZRSfXCZirgWf+Xgn6vOU5ovcJWFKLk5U+gNC3I9RLxdxsz4OvSkGskdxiJuFF6G
+	CGf4GpYOQjjYxM3Rg4frzxa7atP+xkyp4NRms1NRw5etc16H+2bWqUaUbYU8XXQ7
+	5M9wWuz9YT4GXfNX4QpoWg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1744107855; x=1744194255; bh=eT1spWXZxTAxhD1lfnaGo/8UcSg6
-	ogwBeS8atrcmNlc=; b=XS6Jwb79974v4RyXwoQjHa0NK9abuSnOxTi7Q5WiXMM2
-	44Kca57ktu6KUWpxp/+kHA0wdmosIcBj2G2Mn5H8i65/RgZbq1OOofEck3FWs+EP
-	omSQS8cXP5WosWc82xqiVu1KiXegiogQVGfUHH39XIS0Tfy+0mypq+FkJIH+G6K8
-	aGrivhNWTr7Io8w1i6/5c9APEQM9hkNhRx5x0A82d51HxdCRtPB86lvlEiWyYm0+
-	1N5na9hWYtHd1SLoOq6vqfu/vIkyHSNd/Mec6PsGZVHOajJE0dymNpjb4HJLiBd1
-	KUbBx3qDN/fu+Z7EF8U7u0byfUPjc3FpDepBMT703Q==
-X-ME-Sender: <xms:T_n0Z-Gjsqyu2sjKTdI5dI8rUgt5pTcxeX9a2biS-MhZXhWuhnZXUQ>
-    <xme:T_n0Z_UIroBC9deTf8p2wvWaYub7aHXQPrHpldu3g9_y0eP_VizxC-HlRAkBTuafn
-    AwXyoiwlCnaGn7Ouw>
-X-ME-Received: <xmr:T_n0Z4JGYtVlnMvUxE2rVG6XVZSZHuYCyu9uL7yUkzmBrYQjWwsL-Nb6Rdw0AH8BJCPx83iu-kwEoUJOhc6XRj9oONXfkUBU2j8t9WSvI52_1RSVdg>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744107857; x=
+	1744194257; bh=6B7hrXwHVmBXGx54iYdPAxQGgwq8NB66MUMbUqAz67U=; b=x
+	djtLe0ftmO9yg6mLSQ1ZOwuVHm8Uw53MklQ8bZrNjY/W1pizjbssP+szSuaIcf3Z
+	BWtaFDxjAdo+VE2Fh0VvuLhgqA1mB3XGMzivHcVtRRn/Fsu7JaYpElYgneuVbueM
+	fBG5jd1JiYAY+lWdlQxIyLUoC0jGeVCcNWP6w26lMeBdF83gwUHPqZUqSfeAS8NT
+	vp8CH6GFLZ7zRuH2RUwnNVisy6XT+O61Q2HCB33XLaNoR15iQPjCISTyoPqqZPhU
+	A+Sv+c/63U4Bc8lDfi2oWmxmjVLW2Z8FD4RZkpzQ6qZOq9OwDA+rIJ5ndmYfh1Ii
+	A1ycztmwqZE/XfZoCHYkQ==
+X-ME-Sender: <xms:Ufn0Z7Y7fLJeIq9VEpG2B2q04tORFUbj9DsAR1u3R5T5gQHRI3FFgw>
+    <xme:Ufn0Z6YMScSB8UF8WPFEYb0u9Gh9E0AtDTyyNx_tkwsLSEW0o1gUlQEbKrLKmH4L-
+    7DHpntfELHI1MeYAg>
+X-ME-Received: <xmr:Ufn0Z9_e38jIBmccwaR7l0coeEJLhziiWLMDM2qON09wKVpyBL4KaXlMfQvKxWMnuZG6BjSHZ5Z2czu0uduiNN7v_2mHdnEy5UBjq3oRowENuG1i1A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddvkeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhuf
-    ffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveeugeektd
-    etieegjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:T_n0Z4E97CZVIYtUIIdm9p3wdtwniorOzae1hMr1G_C049IFJc0TiQ>
-    <xmx:T_n0Z0XaB5_Vs_LzwXzwGwHaTbP797IeIubys3hizldT0qAEu9Fovg>
-    <xmx:T_n0Z7OJ9FKc5asvnoH8g-gWOOtxm-9luNbYKtmWowyBSov1UCZNjA>
-    <xmx:T_n0Z70Ed6Oo6_EGkzVMG0vGc5Rs2ysly30poqSZtwn-vZpeclJ2fA>
-    <xmx:T_n0Z4TA_xUvi9kKc-_rJMOMbXtKUikOPPpwIHND4s7SMRrpKGjtJZ4u>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
+    fugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufht
+    vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuie
+    dujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+    dpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:Ufn0ZxqrBcZnvvb5NDGKkFFpO1IJOBeH3V9W3E6pp_o4nomnMAnWug>
+    <xmx:Ufn0Z2r6Xuy26qRYVMxV4UFgpICgrUeot0oQftFDUx7gdkC2bwnA1Q>
+    <xmx:Ufn0Z3R3CkBUIDpvUwHERjeXTgS0M1KmufC_HTizRj3zSfnebznpow>
+    <xmx:Ufn0Z-qlVNWzkR3dKSxqfHUiSZwSJYXos4S-7qtvfTqP_uJerf4cJw>
+    <xmx:Ufn0Z13Go7cHNh8resOTn362STAR0mR65-cEbtslTBOgYLaCMeSamRs4>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 8 Apr 2025 06:24:14 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 8 Apr 2025 06:24:16 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 65dc4419 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 169010ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 8 Apr 2025 10:24:12 +0000 (UTC)
+	Tue, 8 Apr 2025 10:24:15 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/9] Split up "object-file.c"
-Date: Tue, 08 Apr 2025 12:24:08 +0200
-Message-Id: <20250408-pks-split-object-file-v1-0-f1fd50191143@pks.im>
+Date: Tue, 08 Apr 2025 12:24:11 +0200
+Subject: [PATCH 3/9] object-file: move `xmmap()` into "wrapper.c"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,206 +82,139 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEn59GcC/x3MSwqAMAwA0atI1gba4g+vIi60TTUqWhoRQby7x
- eVbzDwgFJkE2uyBSBcLH3uCzjOw87BPhOySwShTqkI1GFZBCRufeIwL2RM9b4S20q62zgxGe0h
- tiOT5/r9d/74fUiGBn2cAAAA=
-X-Change-ID: 20250408-pks-split-object-file-c61d7cd2a21f
+Message-Id: <20250408-pks-split-object-file-v1-3-f1fd50191143@pks.im>
+References: <20250408-pks-split-object-file-v1-0-f1fd50191143@pks.im>
+In-Reply-To: <20250408-pks-split-object-file-v1-0-f1fd50191143@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-Hi,
+The `xmmap()` function is provided by "object-file.c" even though its
+functionality got nothing to do with the object file subsystem. Move it
+into "wrapper.c", whose header already declares those functions.
 
-"object-file.c" is quite a grab-bag of all kinds of different functions.
-Many of these functions aren't really a good fit though and should be
-owned by a different subsystem. This patch series tries to split up
-concerns a bit better by splitting out this functionality into other
-files:
-
-  - `safe_create_leading_directories()` is moved into "dir.c".
-  - `xmmap()` is moved into "wrapper.c".
-  - `git_open_cloexec()` is moved into "compat/open.c".
-  - Several functions attached to `struct index_state` are moved into
-    "read-cache.c".
-  - Several functions related to `struct object_store` are moved into a
-    new file "object-store.c".
-
-"object-file.c" now mostly contains logic to read and write loose object
-files, whereas "object-store.c" contains the higher-level logic to
-manage different object directories for a repository. Eventually, these
-will become the loose object backend as well as the `struct ref_store`
-equivalent for objects, respectively.
-
-The series is built on top of 9d22ac51228 (The third batch, 2025-04-07)
-with ps/object-wo-the-repository at 9442b1c919a (Merge remote-tracking
-branch 'junio/ps/object-wo-the-repository' into HEAD, 2025-04-08) merged
-into it.
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (9):
-      object-file: move `safe_create_leading_directories()` into "dir.c"
-      object-file: move `git_open_cloexec()` to "compat/open.c"
-      object-file: move `xmmap()` into "wrapper.c"
-      object-file: split out functions relating to object store subsystem
-      object-file: split up concerns of `HASH_*` flags
-      object-file: split out functions relating to index subsystem
-      object: split out functions relating to object store subsystem
-      object-store: remove global array of cached objects
-      object-store: merge "object-store-ll.h" and "object-store.h"
+ object-file.c | 48 ------------------------------------------------
+ wrapper.c     | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 48 deletions(-)
 
- Makefile                           |    3 +-
- apply.c                            |    2 +-
- archive-tar.c                      |    2 +-
- archive-zip.c                      |    2 +-
- archive.c                          |    2 +-
- attr.c                             |    2 +-
- bisect.c                           |    2 +-
- blame.c                            |    4 +-
- builtin/backfill.c                 |    2 +-
- builtin/blame.c                    |    2 +-
- builtin/bugreport.c                |    2 +-
- builtin/cat-file.c                 |    2 +-
- builtin/checkout.c                 |    3 +-
- builtin/clone.c                    |    2 +-
- builtin/commit-graph.c             |    2 +-
- builtin/commit-tree.c              |    2 +-
- builtin/count-objects.c            |    2 +-
- builtin/credential-cache--daemon.c |    2 +-
- builtin/describe.c                 |    2 +-
- builtin/diagnose.c                 |    2 +-
- builtin/difftool.c                 |    4 +-
- builtin/fast-export.c              |    2 +-
- builtin/fast-import.c              |    2 +-
- builtin/fetch.c                    |    2 +-
- builtin/fsck.c                     |    3 +-
- builtin/gc.c                       |    4 +-
- builtin/grep.c                     |    2 +-
- builtin/hash-object.c              |   26 +-
- builtin/index-pack.c               |    2 +-
- builtin/init-db.c                  |    2 +-
- builtin/log.c                      |    4 +-
- builtin/ls-tree.c                  |    2 +-
- builtin/merge-file.c               |    1 +
- builtin/merge-tree.c               |    2 +-
- builtin/mktag.c                    |    2 +-
- builtin/mktree.c                   |    3 +-
- builtin/multi-pack-index.c         |    2 +-
- builtin/notes.c                    |    3 +-
- builtin/pack-objects.c             |    2 +-
- builtin/pack-redundant.c           |    2 +-
- builtin/prune.c                    |    2 +-
- builtin/receive-pack.c             |    3 +-
- builtin/remote.c                   |    2 +-
- builtin/repack.c                   |    2 +-
- builtin/replace.c                  |    5 +-
- builtin/rev-list.c                 |    2 +-
- builtin/show-ref.c                 |    2 +-
- builtin/submodule--helper.c        |    2 +-
- builtin/tag.c                      |    3 +-
- builtin/unpack-file.c              |    3 +-
- builtin/unpack-objects.c           |    3 +-
- builtin/update-index.c             |    2 +-
- bulk-checkin.c                     |    9 +-
- bundle-uri.c                       |    2 +-
- bundle.c                           |    2 +-
- cache-tree.c                       |    4 +-
- combine-diff.c                     |    2 +-
- commit-graph.c                     |    4 +-
- commit-graph.h                     |    2 +-
- commit.c                           |    3 +-
- compat/open.c                      |   29 +
- config.c                           |    2 +-
- connected.c                        |    2 +-
- convert.c                          |    2 +-
- diagnose.c                         |    2 +-
- diff.c                             |    4 +-
- diffcore-rename.c                  |    2 +-
- dir.c                              |  109 ++-
- dir.h                              |   35 +
- entry.c                            |    2 +-
- fetch-pack.c                       |    2 +-
- fmt-merge-msg.c                    |    2 +-
- fsck.c                             |    2 +-
- git-compat-util.h                  |    3 +
- grep.c                             |    2 +-
- http-backend.c                     |    2 +-
- http-push.c                        |    3 +-
- http-walker.c                      |    2 +-
- http.c                             |    2 +-
- list-objects-filter.c              |    2 +-
- list-objects.c                     |    2 +-
- log-tree.c                         |    2 +-
- mailmap.c                          |    2 +-
- match-trees.c                      |    3 +-
- merge-blobs.c                      |    2 +-
- merge-ort.c                        |    3 +-
- merge-recursive.c                  |    2 +-
- meson.build                        |    2 +
- midx-write.c                       |    1 +
- midx.c                             |    1 -
- notes-cache.c                      |    3 +-
- notes-merge.c                      |    5 +-
- notes.c                            |    3 +-
- object-file.c                      | 1420 +-----------------------------------
- object-file.h                      |  118 +--
- object-name.c                      |    2 +-
- object-store-ll.h                  |  556 --------------
- object-store.c                     | 1050 ++++++++++++++++++++++++++
- object-store.h                     |  516 ++++++++++++-
- object.c                           |   67 --
- oss-fuzz/fuzz-pack-idx.c           |    2 +-
- pack-bitmap-write.c                |    2 +-
- pack-bitmap.c                      |    3 +-
- pack-check.c                       |    2 +-
- pack-mtimes.c                      |    3 +-
- pack-objects.h                     |    2 +-
- pack-revindex.c                    |    3 +-
- packfile.c                         |    2 +-
- path.c                             |    2 +-
- promisor-remote.c                  |    2 +-
- protocol-caps.c                    |    2 +-
- prune-packed.c                     |    2 +-
- reachable.c                        |    2 +-
- read-cache.c                       |  230 +++++-
- read-cache.h                       |    9 +
- ref-filter.c                       |    2 +-
- reflog.c                           |    2 +-
- refs.c                             |    2 +-
- remote.c                           |    2 +-
- replace-object.c                   |    2 +-
- replace-object.h                   |    2 +-
- repository.c                       |    2 +-
- rerere.c                           |    2 +-
- revision.c                         |    2 +-
- send-pack.c                        |    2 +-
- sequencer.c                        |    2 +-
- server-info.c                      |    2 +-
- shallow.c                          |    2 +-
- streaming.c                        |    2 +-
- submodule-config.c                 |    2 +-
- submodule.c                        |    2 +-
- t/helper/test-pack-mtimes.c        |    2 +-
- t/helper/test-partial-clone.c      |    2 +-
- t/helper/test-read-graph.c         |    2 +-
- t/helper/test-read-midx.c          |    2 +-
- t/helper/test-ref-store.c          |    2 +-
- tag.c                              |    2 +-
- tmp-objdir.c                       |    2 +-
- tree-walk.c                        |    2 +-
- tree.c                             |    2 +-
- unpack-trees.c                     |    2 +-
- upload-pack.c                      |    2 +-
- walker.c                           |    2 +-
- wrapper.c                          |   48 ++
- xdiff-interface.c                  |    2 +-
- 145 files changed, 2296 insertions(+), 2224 deletions(-)
+diff --git a/object-file.c b/object-file.c
+index 1a20c7fa072..ea2ed7628e6 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -719,54 +719,6 @@ int has_loose_object(const struct object_id *oid)
+ 	return check_and_freshen(oid, 0);
+ }
+ 
+-static void mmap_limit_check(size_t length)
+-{
+-	static size_t limit = 0;
+-	if (!limit) {
+-		limit = git_env_ulong("GIT_MMAP_LIMIT", 0);
+-		if (!limit)
+-			limit = SIZE_MAX;
+-	}
+-	if (length > limit)
+-		die(_("attempting to mmap %"PRIuMAX" over limit %"PRIuMAX),
+-		    (uintmax_t)length, (uintmax_t)limit);
+-}
+-
+-void *xmmap_gently(void *start, size_t length,
+-		  int prot, int flags, int fd, off_t offset)
+-{
+-	void *ret;
+-
+-	mmap_limit_check(length);
+-	ret = mmap(start, length, prot, flags, fd, offset);
+-	if (ret == MAP_FAILED && !length)
+-		ret = NULL;
+-	return ret;
+-}
+-
+-const char *mmap_os_err(void)
+-{
+-	static const char blank[] = "";
+-#if defined(__linux__)
+-	if (errno == ENOMEM) {
+-		/* this continues an existing error message: */
+-		static const char enomem[] =
+-", check sys.vm.max_map_count and/or RLIMIT_DATA";
+-		return enomem;
+-	}
+-#endif /* OS-specific bits */
+-	return blank;
+-}
+-
+-void *xmmap(void *start, size_t length,
+-	int prot, int flags, int fd, off_t offset)
+-{
+-	void *ret = xmmap_gently(start, length, prot, flags, fd, offset);
+-	if (ret == MAP_FAILED)
+-		die_errno(_("mmap failed%s"), mmap_os_err());
+-	return ret;
+-}
+-
+ static int format_object_header_literally(char *str, size_t size,
+ 					  const char *type, size_t objsize)
+ {
+diff --git a/wrapper.c b/wrapper.c
+index 8b985931490..3c79778055e 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -829,3 +829,51 @@ uint32_t git_rand(unsigned flags)
+ 
+ 	return result;
+ }
++
++static void mmap_limit_check(size_t length)
++{
++	static size_t limit = 0;
++	if (!limit) {
++		limit = git_env_ulong("GIT_MMAP_LIMIT", 0);
++		if (!limit)
++			limit = SIZE_MAX;
++	}
++	if (length > limit)
++		die(_("attempting to mmap %"PRIuMAX" over limit %"PRIuMAX),
++		    (uintmax_t)length, (uintmax_t)limit);
++}
++
++void *xmmap_gently(void *start, size_t length,
++		  int prot, int flags, int fd, off_t offset)
++{
++	void *ret;
++
++	mmap_limit_check(length);
++	ret = mmap(start, length, prot, flags, fd, offset);
++	if (ret == MAP_FAILED && !length)
++		ret = NULL;
++	return ret;
++}
++
++const char *mmap_os_err(void)
++{
++	static const char blank[] = "";
++#if defined(__linux__)
++	if (errno == ENOMEM) {
++		/* this continues an existing error message: */
++		static const char enomem[] =
++", check sys.vm.max_map_count and/or RLIMIT_DATA";
++		return enomem;
++	}
++#endif /* OS-specific bits */
++	return blank;
++}
++
++void *xmmap(void *start, size_t length,
++	int prot, int flags, int fd, off_t offset)
++{
++	void *ret = xmmap_gently(start, length, prot, flags, fd, offset);
++	if (ret == MAP_FAILED)
++		die_errno(_("mmap failed%s"), mmap_os_err());
++	return ret;
++}
 
-
----
-base-commit: 9442b1c919af9aed513eb0a484fe96358a500cf5
-change-id: 20250408-pks-split-object-file-c61d7cd2a21f
+-- 
+2.49.0.682.gc9b6a7b2b0.dirty
 
