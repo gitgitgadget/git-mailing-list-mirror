@@ -1,177 +1,96 @@
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2460B665
-	for <git@vger.kernel.org>; Mon,  7 Apr 2025 22:51:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C0D63A9
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 00:00:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744066308; cv=none; b=AVbnlM3G3GvdZBXGIEyyDI9M33aVUJTFcAWgd6MrXqvLqF0H1g7YtxBzXapFjXDE+p9yIpulW/PlkX2VdUvHjnaa4+dyaxMNAvgeCiv0hmOnNEa/e5sifedPsCDdVLXNYjfxa3b2WswV5PSu28SLNomsq/69z1KpXAhAly3r0GM=
+	t=1744070460; cv=none; b=WMFuyZVpoyJNd0IwDWl1rEFHyYzm6BrBUG6lLwhCbLFkrzbLEA7BixFHPDtjMZi1z3KUzEPgHo6bPWIH53HAhvzLqfwWtTFhSmcesWXA3zTnO8Fp07zRhQaFIL7or1fUtLcy7D0JzCaHM6ZseKZBP+RkWKjXxqvkhUNBgBZHqrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744066308; c=relaxed/simple;
-	bh=de9deFVKAbcEmmPj4InZYUH1N4+RvULEWw1hsDhUdIM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=JxPc9x/EKeUcgLmkhOjUf0ou81yWmFrUfy46lmQMcyFWwLAjAgMtIa7N219wa78eM/ewEsYGjMnID2L6gQtW+DI0RPSd8R9j5N+OAXzW92YWFcaR05zUp4qbxtTqKXXmimXLMcZx6Nq9rz2phw0XIaR7UfgJLa2Ol38TXSgV4vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev; spf=pass smtp.mailfrom=buenzli.dev; arc=none smtp.client-ip=80.241.56.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=buenzli.dev
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4ZWkwY6WKzz9sdW;
-	Tue,  8 Apr 2025 00:51:41 +0200 (CEST)
+	s=arc-20240116; t=1744070460; c=relaxed/simple;
+	bh=APu+5LpA7XhSeTgJuleQ5pQCzNIiccMSgEdHvz0Ya5w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=km/j6IRagOJOrD3jOKrv8VH6WEUA/38Z41IiedfeQbeuK5hZU9tStmy65iopGbt9olchTy3c+NGXTsB04khZ1KQv4CgPp9DOtY0jeRBaR44OVAbamNdHOJMFWPKwbVCj3KQeZ5iKaRToLGNKb+al3Sp8VdN7MRb81fOGRnJI9+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=akshay.is; spf=pass smtp.mailfrom=akshay.is; dkim=pass (2048-bit key) header.d=akshay.is header.i=@akshay.is header.b=vyRcHKIa; arc=none smtp.client-ip=91.218.175.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=akshay.is
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=akshay.is
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=akshay.is header.i=@akshay.is header.b="vyRcHKIa"
+Date: Mon, 7 Apr 2025 17:00:36 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akshay.is; s=key1;
+	t=1744070453;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=m8Xtgtl4nkC3z7nzNPI85B4reU+pdW9cdvjSQZRq+Ko=;
+	b=vyRcHKIajkWJ9cQwWnO84Vc2eom354bAkOqOfvyg0uCEHAbXRnW0k57ueuxnvecY4Yvqsa
+	aRjL0lDnAbQg1zZTxs/JfQ2JtlLbQ/a74YCHuIlc8l9s2YkdAtDO4J+xhNhIAvyMfhoKEB
+	Rg02z6oEYtODta++t2HwIZGCVTUgF8uyZVVKb9mB7/jHgYQLMtbN37HmpaXMr3h8tQ+nfq
+	BxiuvUbchCG59CxENpYjOs7fBGt2ClHb7Th2kZN5g/awsqTl9r8G/7mzabt1aSeoRiVCaT
+	HgoUDW/HzeITeQ19Qewg/yJ6fCo/rd7uFd5qVrpDs4KIRX5sZDhz7cHAvSraww==
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Akshay Hegde <lists+git@akshay.is>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Todd Zullinger <tmz@pobox.com>
+Subject: Re: [PATCH] meson: install shell completion scripts
+Message-ID: <Z_RnJEyvtGh_0kFo@akshay.is>
+Mail-Followup-To: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Todd Zullinger <tmz@pobox.com>
+References: <20250407-b4-pks-meson-install-completions-v1-1-8a7eb8b9284b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 08 Apr 2025 00:51:39 +0200
-Message-Id: <D90RWL4FEBQA.1UNOR59T3U98R@buenzli.dev>
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-From: "Remo Senekowitsch" <remo@buenzli.dev>
-To: "Junio C Hamano" <gitster@pobox.com>, "Martin von Zweigbergk"
- <martinvonz@google.com>
-Cc: "Git Mailing List" <git@vger.kernel.org>, "Edwin Kempin"
- <ekempin@google.com>, "Scott Chacon" <scott@gitbutler.com>,
- "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com> <xmqq4iyzn0vn.fsf@gitster.g>
-In-Reply-To: <xmqq4iyzn0vn.fsf@gitster.g>
-X-Rspamd-Queue-Id: 4ZWkwY6WKzz9sdW
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250407-b4-pks-meson-install-completions-v1-1-8a7eb8b9284b@pks.im>
+X-Migadu-Flow: FLOW_OUT
 
-On Mon Apr 7, 2025 at 10:59 PM CEST, Junio C Hamano wrote:
-> Martin von Zweigbergk <martinvonz@google.com> writes:
+Hi Patrick,
+
+On 2025-04-07 09:42 +0200, Patrick Steinhardt wrote:
+> Hi,
 >
->> For example, it enables
->> `git rebase main <change ID>; git switch <change ID>` without
->> requiring the user to look up the hash of the rewritten commit.
+> this patch is a result from the discussion at [1]. Thanks!
 >
-> I do not quite see why this can be listed even as an advantage,
-> unless you are going to allow end users to name the changes, instead
-> of using auto-generated impossible-to-remember hexadecimal string
-> (perhaps prefixed with a single "I" or something).
-
-Since the change-id will use a "reverse-hex" alphabet (z-k instead of
-0-f), prefixing an "I" won't be necessary for disambiguation.
-
-In the case of Jujutsu, there is a configurable "immutable revset",
-which represents the idea that people usually don't want to force-push
-over the master branch. If the user specifies a change-id prefix that's
-ambiguous, but only one of the commits it could refer to is "mutable",
-that one takes precedence. So in practice, the commits one is currently
-working on can be identified with 1-3 characters, which fit comfortably
-into short-term memory.
-
-While that feature isn't implemented in Git (yet), it shows how such a
-usage pattern can be very ergonomic.
-
->> If the change id also transferred between repos and preserved by
->> a forge (such as Gerrit), it enables the change id to be used to
->> identify a code review.
+> Patrick
 >
-> People often talk about rebasing and rewriting in the context of
-> discussing "change IDs", and for 80% of the use cases where a simple
-> single-commit topic is involved, it would perfectly work fine.
-> After making a new commit C0 on top of 'main', updating 'main' with
-> others' changes, and then rebasing that C0 on top of updated 'main'
-> to produce C1, you would expect that C0 and C1 are moral equivalents
-> so it is natural that you wish there is a name to give to these
-> moral equivalents.
->
-> But stepping back a bit, if they are not just moral equivalents but
-> record identical changes that are so same that an earlier review of
-> C0 makes it unnecessary to review C1, why are you even rebasing in
-> the first place?  Just merging C0 to the updated 'main' would retain
-> the earlier review made on C0 and things should merge just fine.
+> [1]: <Z-uLqQd7QHZq-tB7@akshay.is>
 
-Some people (including me) like to / are used to rebasing often and
-keeping a linear history on master as possible. I'm not aware that
-there's anything wrong with that.
+Awesome, thanks for the patch! I applied it on top of git 2.49.0 and can
+confirm completion scripts get auto-installed at their appropriate
+locations under datadir. The datadir can also be customized by passing
+in '-Ddatadir' to `meson setup` so it's pretty flexible.
 
-In practice, I don't think this will cause any problems. The change-id
-will help the code review tool to identify the commits as morally
-equivalent. After checking that the other review-relevant data (patch,
-message, author...) is identical, the review tool may choose to mark
-the commit C1 as "already reviewed" without any user intervention.
+One thing of note is that the git completion script for zsh also depends
+on the bash completion script.
 
-And if the data has somehow changed, only the interdiff of that can be
-shown for review, which is precisely the kind of benefit we're aiming
-for with this header. It has been pointed out that git-range-diff can do
-this in a limited fashion already, which we can hopefully expand upon.
+So if you use a non-standard install location like I do (I'm pretty
+weird, I use macOS with a package manager I've written myself), you'll
+get an error with the git completion not being able to find the bash
+script. The fix is to tell zsh where the bash completion script is
+located. This is also helpfully communicated in the completion script
+for zsh:
 
-> I have more problems with the remaining 20% use case, where you need
-> to deal with multiple commits.
->
-> Perhaps your initial changeset is a single commit C0 that is so
-> large and does too many things at once, and reviewers would
-> naturally advise you to split things up.  You'll come up with a
-> series of commits, C1_0 and C1_1.  The net effect of applying these
-> two patches may be the same as applying the original C0, but each of
-> them is more cleanly separated to address one issue at a time, and
-> the explanation given in the proposed log message more clearly
-> describes the issue each of them addresses.  Now you gave a change ID
-> to C0, and want to somehow relate C1_0 and C1_1 to the original C0.
-> Which one gets the same change ID?  Earlier one?  The last one?
-> Both gets the same change ID?
->
-> Or your initial changeset is a two-commit series, C0_0 and C0_1, but
-> reviewers find that each one of them alone is not complete, and
-> because the issue addressed by these two is small and isolated
-> enough, you are advised to make them into a single commit C1.  Did
-> you start with two change IDs for these two original commits?  If
-> so, whose change ID the updated commit C1 inherit?  Or does C1 have
-> two change IDs now?  Or did you start with a single change ID
-> assigned to both of these two original commits?
+    # You need git's bash completion script installed. By default bash-completion's
+    # location will be used (e.g. pkg-config --variable=completionsdir bash-completion).
+    #
+    # If your bash completion script is somewhere else, you can specify the
+    # location in your ~/.zshrc:
+    #
+    #  zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
 
-These are good descriptions of realistic scenarios. At a high level, I'd
-say change-ids don't help much with these problems. But that's OK, they
-don't need to solve all problems to be worthwhile.
+Adding the zstyle line to my ~/.zshrc made the completion script work
+without issues.
 
-A commit only ever has one change-id. (Other headers may be useful, but
-they should have another name and should be disussed separately IMO.)
+Most people won't run into this since if you have this installed in the
+standard locations, it should just work, and the zsh script does have
+logic to look for additional paths it may be under. I just wanted to
+mention it for info.
 
-In both of the described scenarios, it doesn't matter which one
-inherits the previous one. When a commit is split into two, the one that
-inherits the change-id will show up in review tools with half of its
-patch deleted, the other commit will show up as new. When two commits
-are combined into one, any one of the change-ids is inherited. Review
-tools will show the patch from the commit the ID was inherited from as
-preserved (maybe even hidden) while the patches from the other commits
-will show up as added. If they were previously reviewed, those reviews
-will be "lost".
+Cheers,
+-- 
+	Akshay
 
-So, while these scenarios are not ideal and somehow ambiguous, the
-ambiguity doesn't present any real problems in practice.
-
-More importantly, I disagree with the 80%-20% split between these
-scenarios. There is another one that comes up a lot, and that scenario
-is the one that benefits the most from change-ids. Namely, when multiple
-commits are carried together as a patchset. These commits can split
-out into little subtrees that are constantly rebased to keep up with
-upstream, while the commits are amended, reworded and so on. They can
-sometimes be reviewed as a whole, where people are generally looking at
-all commits at once. But they can also represent dependencies between
-entirely different features. For example, bugfixes will often be at the
-base of this tree / patchset, while features that depend on it fan out
-from there. Here is where the change-id shines: As commits are amended,
-reordered, rebased and reworded, their evolution can be trivially
-tracked. There are discussions around the topic of "stacked PRs", which
-is basically this exact scenario, just managed in a specific way.
-
-I find myself working this way a lot.
-
-> Quite frankly, I think the concept of "change ID" is nice but it is
-> not mechanically trustable.  Recording them in the trailers is fine,
-> but I somehow feel that they have a clear-cut semantics everybody
-> can agree on to deserve to be in the header part of commit objects.
-
-I think the concrete examples above show that while change-ids don't
-solve all version control problems, these remaining problems don't
-diminish the value of change-ids either. I also don't see any potential
-for different tools in the ecosystem to disagree about the semantics so
-profoundly that interoperability would be hampered.
-
-Remo
