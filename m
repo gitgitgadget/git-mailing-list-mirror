@@ -1,68 +1,69 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5929A22E3E7
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 15:48:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B964B22C33A
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 15:48:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744127333; cv=none; b=dQp9bD7KYto+8o7fpuPKultElLXgMm3/TMl7g8Dxw+54Mr88f9JRXjI3406tnTgo5KDKsFO8/kWoUxdIjN8g43tXB3AHubaT6gAqQZKDUCjq6YqsRyjBn0ISkK10YGTq9jJs4Hc88wdhbC0g2fMJAO5m7fagX4kT1aQZdCB2bfg=
+	t=1744127336; cv=none; b=JCYrL1yjL7oz+QY+KmzBvGMRzoMAKOK82bxBrVBJ9MV6qFPRIy90RiUncMWXqO1IOjVVB4b0zxo4smH2WgLDZSF0xD4uEZI+Sx9c4jMa2wnKLdFCbNx4joEnqb9dACrs2INBTCqOJw/7doDJcMKpM+3cLuk28GtQ1i/qFLtOciY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744127333; c=relaxed/simple;
-	bh=g5N+/trWCnnZPkzxzjZXamw4Zft2/X4SOI1UNDsaizw=;
+	s=arc-20240116; t=1744127336; c=relaxed/simple;
+	bh=2e7Fmrgi9w888kvnkw1mQ7NK+Dqk5n1X0aBoJiIAnns=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=XhBo+kygRu1SCekbTlVKsAAGCF82XV6Dcg0hm0CFSTl4VBki0WejOuBDurlIOucv2l0zgdDIRI3xMmpXnCd1GFh0eplO7IPhk+ifqLCRjfjdZs7t8oVsHKdfMdS+1u46A2jJjkDDn8Fo2zopPVaicl9XB0J9e34MHLgkJQms2UU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FOs/7NuP; arc=none smtp.client-ip=209.85.221.47
+	 MIME-Version:To:Cc; b=c6jg29G8EPZVJmjVGfWLYGhg1G/9dcez3EdkYe1m1HglHdN2IqPfkp0O8iaRzOKuSWiQ1tMcGGZBCVFECFk6vK6XDASITjGG6lR31Es0Q+UogLTMDY1bn5ubSj1M5WuqDvzIuIjkVd6mWoYIGTx711rSlyXUxGX+GwjGO5tOmiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZepYhnh5; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FOs/7NuP"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-39727fe912cso2567066f8f.3
-        for <git@vger.kernel.org>; Tue, 08 Apr 2025 08:48:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZepYhnh5"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43cfb6e9031so52246525e9.0
+        for <git@vger.kernel.org>; Tue, 08 Apr 2025 08:48:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744127329; x=1744732129; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1744127333; x=1744732133; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kDUFwTWnyfdEZ603Aon99l31Fux2UGQLEUtoIF0xayQ=;
-        b=FOs/7NuPqb8oMchZrt1tWzUmLgh0osxr2oC+kRoIKpaAVeYZnMHzXm6J8qAwlXe+FE
-         Jto0jvz0rE1xQMWFIk2+Q17wBM/ph0EXrtFMkY3O0aumC172Ehsn/GZ79Cmo9q52cWaF
-         50XqvjCzjQLEAkY5FAEgYK1iC5hNp4EIeRsPY/Y23KxoXJJ4uap7QRtv1Cq5JplbPmqs
-         awgUJlibubjr+3d0U0FeBVpErrfi1o1q32uhSXVuOabVjzLK9oy0e0viZ6YctDAr5BvD
-         dmM0FNCCbTTNLlOIvstHOwfn8DQap14E3MmO+PFehu/ycEfUDwn5MyS0qJaXOoIcjear
-         mOpQ==
+        bh=NzmSmZ57MV4r6wpQeyXj8ka6HvD+XlngCNgdKlo5+s0=;
+        b=ZepYhnh5wlT/LugYP0HF15GaPcRxsgAFQV8PXQEust1RusvnfknjfiynQlHWWbC75F
+         X7lZYBxTRaB1CYcCD/GDKV0xAu50XMdxeYlmQ8V7b4BgLaEqkrlqtj0UlLlMfQ+g3kyM
+         K0Lonr8UwfeOSO+02X1/7Zjj4c/YR2bOmFWvGKCmt5KE5AJrzfAqdCRgXEWYT9jAWbKQ
+         7A1ULdo6qZXxR8NDyC+QcI5ZRceeCaThAJ2peJB7EAd9xdG3K6giJFm3M7HIFKZrtSgs
+         /+2fdp/lU8LS0KndhBVhIYUzY4NNYjw10UQbXfk+htPbh4fMktuhNcG+dK3kI+lQ2tLz
+         sWWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744127329; x=1744732129;
+        d=1e100.net; s=20230601; t=1744127333; x=1744732133;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kDUFwTWnyfdEZ603Aon99l31Fux2UGQLEUtoIF0xayQ=;
-        b=ZRdrRnOsYQAD70JYwRedm4IwQVkrZsrB3xcgbSJVbUS1I07mIvpg85PbguhvMMNQEy
-         fRiEZtU2cWBPOnPxi2mOT6phg8eHYTLRrqX6PytQGGoxjdDSo29kJRuI5tLI2vGTU+Uv
-         BbtEs9fCIUXfbopiOi2n/4dMI+uRn2TSChPkxWHmVk4KZHGG3pIBUsVh44psawN5HOc+
-         cP0eLizdg/YkW5/iwKkR35s+v6XZFrZio+NOVxRZ+glRVPgHtwGfVZkSRCpcDNTzlytt
-         iu7zyrRPS3a5Ho3JIZq2Pi2iXVnGqHfuL223Pagvj008RJciKOpx2XTenN0rX/+dOCwH
-         FMwQ==
-X-Gm-Message-State: AOJu0YwIaER7pCBtu3/LWdeXv6onEmD7f4H94rQ3lmOEyiN9k4cOegWF
-	oB29b+bftDT3hki243ox03BK1TksbCq72G+9TeFbL8bIexthD8GHN//mvA==
-X-Gm-Gg: ASbGncvmfFWGPIfWzUaoZRGswM6KWQds/M8L8JH+Ia6jl2WL9RDFBvlaGcTPSMRrtmT
-	QeDGzZm+RI5clhRvemmefkt3EhknLvnzmUDhCr74RB6E37K5qUpufRNmZEWK2VGzxA7S8LrbS2G
-	1EVeyIvenFp+5/X5NvNPiiFeK/lTb/xnBDyFrFY5hj75CTs5TY4zB7Y3z6yKV7zWq7IkOkqAn99
-	cIFWfOWRo5JqgmzACeK5n0qjywhBbrbARs4Orgk/ZNZNIlPG3jQ9TjSbt9PVLgHlayRXxkc1CZD
-	nr8Wq/hcynji753izf853vFS3sAfeyJNUQiLZl0ts4cy0WLJgV0k5SEc
-X-Google-Smtp-Source: AGHT+IGuSM+uUWlXT+qkJ8cAVo8Bv7e8UdIyVdm0KEyucmzAgOUnB3hEa1yeB2Hqs7wEwQwdJAFO5g==
-X-Received: by 2002:a5d:59ad:0:b0:391:1139:2653 with SMTP id ffacd0b85a97d-39d6fd06913mr9486372f8f.52.1744127329138;
-        Tue, 08 Apr 2025 08:48:49 -0700 (PDT)
+        bh=NzmSmZ57MV4r6wpQeyXj8ka6HvD+XlngCNgdKlo5+s0=;
+        b=lVk5MF2wsSSvSY5XbgGesQTU39b35LNNPYtZS+FNbE5YOix36xFh/w4BcSaI4YHUuU
+         PoQ467qbPMY5Pdl3mElx6zlY1y7PaYGb5Qa7S5lLSL9m+ucQ+eRHrCeUdW26EXJ83Lys
+         c8BDB4nb3URwGxhADlGJiruP2mPzAC9IAlm4y/X8ynbRIY9DrU6+jNWiDwb/hKAcS1gD
+         AVZMHKM5OxWVfCz6n2hacyDggs9U+tRwqNJfGY+h81DofPuP2HyhazMeoh7pMFPgw8cN
+         sM15CHsLsrtffw8UNAE/1oW+WlbbJiqEqhj0Odf8ml4WxCwpaR6Vju9yMMFkDvwoByyh
+         TCcw==
+X-Gm-Message-State: AOJu0YzyhObigJXmQnvXg+x42bH/EnSMsGJgYax+7lAO4s0hvZVqVI51
+	Dc3KY8u6SOx9KbFvB+C8VDeT0aRCX+YTuFO7BcZPgeUCd5tmNIoSBkdgxg==
+X-Gm-Gg: ASbGncuNqMFJB6ZVX+04cLaVJXVF9/JGCxzlji8DP9C0l1STTW1rEGN+vcTbAxGhV05
+	DjdqTsoZItf2gwmo7s+7DtOf+98NwXteHGaerhT0AvTTS2gq+5D3qGoJolM8f8/6lbCfxxcUfRp
+	h9rEikvZeAMmiVZBlGzBky8JfCgzVVFwkbUgd8mdMm0PwVqB5TlkKCFx/0IVSMelATdNvH3d+bE
+	UmO5pQWmkfqGK2x5uOaXrTU74pfAi2ifFie6Q/o4b4WW4KyYI630l2Wdf6t7xSmzOVeurTo3QvW
+	SUr4EPq1czERh1NbX4uGdJ6uwCSWWKMjd0cdQvQWrKpOeA==
+X-Google-Smtp-Source: AGHT+IEc2jubt/KJBaqmiq4svWFyFWwCp+KwCl1hBlCAlIigyeHUyH/VYg2pXo0G4kgMDU0L8c/vKg==
+X-Received: by 2002:a05:600c:1e03:b0:43d:683:8cb2 with SMTP id 5b1f17b1804b1-43ecf8ceb2dmr160386275e9.14.1744127332620;
+        Tue, 08 Apr 2025 08:48:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ec1795db7sm172729845e9.25.2025.04.08.08.48.48
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ec17b18easm167237995e9.38.2025.04.08.08.48.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Apr 2025 08:48:48 -0700 (PDT)
-Message-Id: <8821f22d5eac351cbf05505668b1bdff9705a982.1744127323.git.gitgitgadget@gmail.com>
+        Tue, 08 Apr 2025 08:48:52 -0700 (PDT)
+Message-Id: <bf2d462c4e5bbb1e44ebb1162d7204d205527208.1744127323.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1898.v3.git.1744127322.gitgitgadget@gmail.com>
 References: <pull.1898.v2.git.1743891374.gitgitgadget@gmail.com>
 	<pull.1898.v3.git.1744127322.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 08 Apr 2025 15:48:39 +0000
-Subject: [PATCH v3 5/8] merge, sequencer: switch recursive merges over to ort
+Date: Tue, 08 Apr 2025 15:48:42 +0000
+Subject: [PATCH v3 8/8] builtin/{merge,rebase,revert}: remove
+ GIT_TEST_MERGE_ALGORITHM
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,100 +81,86 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-More precisely, replace calls to merge_recursive() with
-merge_ort_recursive().
-
-Also change t7615 to quit calling out recursive; it is not needed
-anymore, and we are in fact using ort now.
+This environment variable existed to allow the testsuite to reuse all
+the merge-related tests in the testsuite while easily flipping between
+the 'recursive' and the 'ort' backends.  Now that we have removed
+merge-recursive and remapped 'recursive' to mean 'ort', we don't need
+this scaffolding anymore.  Remove it from these three builtins.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/merge.c                            |  9 ++-------
- sequencer.c                                | 23 ++++++++--------------
- t/t7615-diff-algo-with-mergy-operations.sh |  2 --
- 3 files changed, 10 insertions(+), 24 deletions(-)
+ builtin/merge.c  | 14 +-------------
+ builtin/rebase.c |  5 -----
+ builtin/revert.c |  2 --
+ 3 files changed, 1 insertion(+), 20 deletions(-)
 
 diff --git a/builtin/merge.c b/builtin/merge.c
-index ba9faf126aa..c0bbdab7104 100644
+index c0bbdab7104..9efd585842f 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -39,7 +39,6 @@
- #include "rerere.h"
- #include "help.h"
- #include "merge.h"
--#include "merge-recursive.h"
- #include "merge-ort-wrappers.h"
- #include "resolve-undo.h"
- #include "remote.h"
-@@ -750,12 +749,8 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+@@ -170,7 +170,7 @@ static struct strategy *get_strategy(const char *name)
+ 	struct strategy *ret;
+ 	static struct cmdnames main_cmds = {0}, other_cmds = {0};
+ 	static int loaded;
+-	char *default_strategy = getenv("GIT_TEST_MERGE_ALGORITHM");
++	char *default_strategy = NULL;
  
- 		repo_hold_locked_index(the_repository, &lock,
- 				       LOCK_DIE_ON_ERROR);
--		if (!strcmp(strategy, "ort"))
--			clean = merge_ort_recursive(&o, head, remoteheads->item,
--						    reversed, &result);
--		else
--			clean = merge_recursive(&o, head, remoteheads->item,
--						reversed, &result);
-+		clean = merge_ort_recursive(&o, head, remoteheads->item,
-+					    reversed, &result);
- 		free_commit_list(reversed);
- 		strbuf_release(&o.obuf);
+ 	if (!name)
+ 		return NULL;
+@@ -1311,12 +1311,6 @@ int cmd_merge(int argc,
+ 	if (branch)
+ 		skip_prefix(branch, "refs/heads/", &branch);
  
-diff --git a/sequencer.c b/sequencer.c
-index b5d91fd3515..8bb49735891 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4319,20 +4319,13 @@ static int do_merge(struct repository *r,
- 	o.branch2 = ref_name.buf;
- 	o.buffer_output = 2;
- 
--	if (!opts->strategy || !strcmp(opts->strategy, "ort")) {
--		/*
--		 * TODO: Should use merge_incore_recursive() and
--		 * merge_switch_to_result(), skipping the call to
--		 * merge_switch_to_result() when we don't actually need to
--		 * update the index and working copy immediately.
--		 */
--		ret = merge_ort_recursive(&o,
--					  head_commit, merge_commit, bases,
--					  &i);
--	} else {
--		ret = merge_recursive(&o, head_commit, merge_commit, bases,
--				      &i);
+-	if (!pull_twohead) {
+-		char *default_strategy = getenv("GIT_TEST_MERGE_ALGORITHM");
+-		if (default_strategy && !strcmp(default_strategy, "ort"))
+-			pull_twohead = xstrdup("ort");
 -	}
-+	/*
-+	 * TODO: Should use merge_incore_recursive() and
-+	 * merge_switch_to_result(), skipping the call to
-+	 * merge_switch_to_result() when we don't actually need to
-+	 * update the index and working copy immediately.
-+	 */
-+	ret = merge_ort_recursive(&o, head_commit, merge_commit, bases, &i);
- 	if (ret <= 0)
- 		fputs(o.obuf.buf, stdout);
- 	strbuf_release(&o.obuf);
-@@ -4343,7 +4336,7 @@ static int do_merge(struct repository *r,
- 		goto leave_merge;
- 	}
- 	/*
--	 * The return value of merge_recursive() is 1 on clean, and 0 on
-+	 * The return value of merge_ort_recursive() is 1 on clean, and 0 on
- 	 * unclean merge.
- 	 *
- 	 * Let's reverse that, so that do_merge() returns 0 upon success and
-diff --git a/t/t7615-diff-algo-with-mergy-operations.sh b/t/t7615-diff-algo-with-mergy-operations.sh
-index ac5863e788c..5822d02d517 100755
---- a/t/t7615-diff-algo-with-mergy-operations.sh
-+++ b/t/t7615-diff-algo-with-mergy-operations.sh
-@@ -22,8 +22,6 @@ test_expect_success 'setup' '
- 	git tag c2
- '
- 
--GIT_TEST_MERGE_ALGORITHM=recursive
 -
- test_expect_success 'merge c2 to c1 with recursive merge strategy fails with the current default myers diff algorithm' '
- 	git reset --hard c1 &&
- 	test_must_fail git merge -s recursive -Xdiff-algorithm=myers c2
+ 	init_diff_ui_defaults();
+ 	git_config(git_merge_config, NULL);
+ 
+@@ -1517,12 +1511,6 @@ int cmd_merge(int argc,
+ 			fast_forward = FF_NO;
+ 	}
+ 
+-	if (!use_strategies && !pull_twohead &&
+-	    remoteheads && !remoteheads->next) {
+-		char *default_strategy = getenv("GIT_TEST_MERGE_ALGORITHM");
+-		if (default_strategy)
+-			append_strategy(get_strategy(default_strategy));
+-	}
+ 	if (!use_strategies) {
+ 		if (!remoteheads)
+ 			; /* already up-to-date */
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index d4715ed35d7..e83193ac73e 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1575,11 +1575,6 @@ int cmd_rebase(int argc,
+ 			    options.default_backend);
+ 	}
+ 
+-	if (options.type == REBASE_MERGE &&
+-	    !options.strategy &&
+-	    getenv("GIT_TEST_MERGE_ALGORITHM"))
+-		options.strategy = xstrdup(getenv("GIT_TEST_MERGE_ALGORITHM"));
+-
+ 	switch (options.type) {
+ 	case REBASE_MERGE:
+ 		options.state_dir = merge_dir();
+diff --git a/builtin/revert.c b/builtin/revert.c
+index aca6c293cdf..2654f769a88 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -252,8 +252,6 @@ static int run_sequencer(int argc, const char **argv, const char *prefix,
+ 		free(opts->strategy);
+ 		opts->strategy = xstrdup_or_null(strategy);
+ 	}
+-	if (!opts->strategy && getenv("GIT_TEST_MERGE_ALGORITHM"))
+-		opts->strategy = xstrdup(getenv("GIT_TEST_MERGE_ALGORITHM"));
+ 	free(options);
+ 
+ 	if (cmd == 'q') {
 -- 
 gitgitgadget
-
