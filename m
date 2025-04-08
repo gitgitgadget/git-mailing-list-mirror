@@ -1,106 +1,169 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E350FB664
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 00:33:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0050C1B414A
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 01:22:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744072398; cv=none; b=XDQ17+tP0b5tEYM7HUuDnzLRVE3KPbF5WeUFNuhaqwHbTPDpbmq/avJwcNoIGddKnk0vO5e4BlnM8K8x2W+fj/Vb8q5li33YOdJ/EoeysXzkzKYTgXN9VkPacrtug5Xh7bOcnuuCc2Xrj3Ddq+q9SPwWvi+eVnrUINfLxY9xATE=
+	t=1744075368; cv=none; b=SUjmdwb1xLeS5ui6NCDPK1q/DESv0suUmQdYGWmZu0S98ahXy3to6o2vB9nkxacYJQ00VSZlqgRIu4pyaMiXlHPxYmyUZj8bZ3UtTyEHHSKmDtA7fsYmd13MIFYTxhbT7b1ywSAmKrfQqSHKn/Di17OSghk2V3Tzj9U9kp1vU2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744072398; c=relaxed/simple;
-	bh=J6CdVu67BF7OAl8BaVOVyBw6PwKpf6YI9dvx6sTuTcY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=t1mhEaibt5dhSbjsC1L9tKBMJSahNpQ0wzGBDwOs1qKFNYbhrEzbpxP2a33BMNZ8dTO3ZdtlX0dvOPUHjG0BzYGHxspOMpA47Eb2QrscZJA6CMfaU4O5iCV2IsWNRgTNQWa361/qCbdKI/HGCurEURD/uivP1A7IGvkR8ilGEzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ueSeAT7Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eXcIjq6Y; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744075368; c=relaxed/simple;
+	bh=bA4h4awsCC58mIcps+9s6QgkmF/L/9MEbB9ZilB44aw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hEqvHAFrKbGK+PnwOXRV6a/F8rJ/2m5T0ek9h2IGsPzWsdNFCtz9HCLTgjzyvzSvMKjfSI1ZvgGeB9hqIu8aHGIRQs+XX5fNFcrisdhDBFjOz0T0vADKZ3b/9/ahkB2KLh2J4d1imyIdaPE76GAeYpn74EwtI8nlEIchf82gzTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=YKTkRwX6; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ueSeAT7Z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eXcIjq6Y"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BD2F625401FD;
-	Mon,  7 Apr 2025 20:33:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 07 Apr 2025 20:33:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1744072395;
-	 x=1744158795; bh=/uMe1YvNjy6Lp7RcRw0f+Go6t3yJ9OVW5qWFHIWIVFY=; b=
-	ueSeAT7ZWNtI53VF+9k5GPo7FnaV4UVt2yLTs4Tq9X0xbcUpStq6O+HzFOFwubOU
-	+43mdtr3XCwwcvtzerq9GgCujshzY3sLCa3RBybUybXREzpASFHegqud6CatOi8M
-	FbnL73oH6IokqYRez33+9k/dhS2/U+ASOrXz5MYgonahyYQQqUKgsFkzbtY2Mpgw
-	PzrUlJEfHezCPxsM9leWjJSrtKcANih3yVX8U75ClS5azq10lEDyeUotElgmYo3B
-	kjpP8FFRcdEt/vB5SmJFbW71iLPup2CvKO4dUUMu2HRtd6lpVApXxxSGo4tQXdAq
-	qbwCguWlpEsqbsa5U3qF6g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744072395; x=
-	1744158795; bh=/uMe1YvNjy6Lp7RcRw0f+Go6t3yJ9OVW5qWFHIWIVFY=; b=e
-	XcIjq6Ye31/XElnEAcraoBBRa2JWunRbomOk4XX5nA8RWkUDMB9dOY7rtP9zvlzs
-	LBcZ1P5U3GWmVZnz4fRouUI55ILCRq22TlptNePTmazjY4adAuG9gPbqlxubCBxc
-	YkE8jshJN3yS03Sj2QRZu9iwQHMuffKE55VSaCjseQA0E5JIkpDTfOEQLxV6cxAf
-	HWDHbsFtH2aAQ0Lm4g+i9+uXIMOilNm0BR7P8HlzPvdJjW8zPvrbw9eYmnUkCozk
-	SM5L1DJncYiME+wUAVgDO3wJhN805taIV4WlycQq1BW/+FF/aoUHztzVcwDOP0Do
-	bTJaWR0lCsTmxmHS84DFg==
-X-ME-Sender: <xms:y270Z80qZGf1631ECwKnAOYpuQSR5t3vBkpN0CBesFWQFo_X6ic8Cw>
-    <xme:y270Z3GDDIeDmRn7PWOSnLG2c68ieNOVK2yfDcCZN_zWPbzWZ7nkF2bey1TJrAhJn
-    BeQQvpALA_L0uWJ0g>
-X-ME-Received: <xmr:y270Z07V999SZ9v08D3S4ABGC6imkd2vU2qg8l_8L5AHJeGhZ2x2xLRl_I6qwxkjw2r3jIfAEZA1ZkFRjU9D-XUdTSU2fD63zNDL>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdduieehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
-    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsth
-    hirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdr
-    ihhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:y270Z11S9ZI_LqjyMGCijUAXbdTfga3hhgz_5Z5ICh6LBU99g1m_HQ>
-    <xmx:y270Z_Fjc8pSRK1m8thEBMwVzBO1xqmnXJaSDdvoVgnjzWvymyBslw>
-    <xmx:y270Z--v_n-G0p9iXItRYb4_Y_Vj-J41JijXGEztUOPMJEqzcDjAPg>
-    <xmx:y270Z0k0czZb3zEePgMsWFyG7Y37naktxq-ghlbbAa0XWraDOkJfmA>
-    <xmx:y270Z2V1iie_BmTCfvU_d4a7_1I4AT804rqMxVleEV0qQ4a_3ZDcMBV4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Apr 2025 20:33:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Justin Tobler <jltobler@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] help: include SHA build options in version info
-In-Reply-To: <CAP8UFD2a2hA5CEYgr9i5jtw+k8U9gu=Jb01x=W1zekSRBy7B8A@mail.gmail.com>
-	(Christian Couder's message of "Fri, 4 Apr 2025 13:06:33 +0200")
-References: <20250401203630.285451-1-jltobler@gmail.com>
-	<20250403140529.497876-1-jltobler@gmail.com> <Z--kT3fIvz8k7h96@pks.im>
-	<CAP8UFD2a2hA5CEYgr9i5jtw+k8U9gu=Jb01x=W1zekSRBy7B8A@mail.gmail.com>
-Date: Mon, 07 Apr 2025 17:33:14 -0700
-Message-ID: <xmqqo6x7ze45.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="YKTkRwX6"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1744075356;
+	bh=bA4h4awsCC58mIcps+9s6QgkmF/L/9MEbB9ZilB44aw=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=YKTkRwX6ZxIq2ktNynx9fYtzE1XOluNtas5Mgu8/hT6Qiv4x/U3/Gf0EeXf7qtLY8
+	 Lo7cV+zOYEK9dL3iavteacbggQqeB5wG8zlcOG0KLTirE6UREeq8Fn1hZQpOX8j1np
+	 e/a5AoHB2bidxFOF0RRFCzOafpoqca+QEklrDvyNA3H2dSwbYr7hUPDXJ3URqsSr2l
+	 EdVLB8LFJ6yZOcwA6yBnPtA1Jx6+YrSUUv3KTsoiNaafWGl1tIe3Nd8lEyeUOIujak
+	 rmd6FlmayEyFMI0F0U1p3c0dAwBYBIP1aNojbeMM6pTvkBM3YFIgc6PVZy0zMeKiB9
+	 J6tKM6TeW+/7R+zzXlZ9BIkChmqwgYg786tOA7oHPnBRmk30E68CRh5Y6/8CsZAd0W
+	 GSGPe2/kujOBALBc6BdyVTAHRl3kAwT4cUCqnjdYrgHPDrBFyGQtL0Zta05E7JsSGT
+	 rfsAyfPtX5L7bA8LV98vo34aym3kZ85jEuNbdGRtZvcDRSJ9K4Y
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d5c6:e1bb:f3a5:7a20])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9584C200C9;
+	Tue,  8 Apr 2025 01:22:36 +0000 (UTC)
+Date: Tue, 8 Apr 2025 01:22:35 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren <newren@gmail.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] [RFC] rebase -m: partial support for copying extra
+ commit headers
+Message-ID: <Z_R6W_yjJEYuWo0A@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren <newren@gmail.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1902.git.1744041163929.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="NgPWiK2WYFIA4CPA"
+Content-Disposition: inline
+In-Reply-To: <pull.1902.git.1744041163929.gitgitgadget@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--NgPWiK2WYFIA4CPA
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
+On 2025-04-07 at 15:52:43, Phillip Wood via GitGitGadget wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>=20
+>     [RFC] rebase -m: partial support for copying extra commit headers
+>    =20
+>     This patch is largely a response to
+>     https://lore.kernel.org/git/Z-5rpWKAVPmz32jC@pks.im/ . I'm in two min=
+ds
+>     about whether we should consider merging such partial support but if =
+it
+>     helps forges preserve extra commit headers then it may well be worth =
+it.
 
-> On Fri, Apr 4, 2025 at 11:20 AM Patrick Steinhardt <ps@pks.im> wrote:
->>
->> On Thu, Apr 03, 2025 at 09:05:27AM -0500, Justin Tobler wrote:
->> >
->> Thanks, I'm happy with this version.
->
-> I am fine with it as well. Thanks.
+I'd like to see command-line options to control this and ideally a
+configuration option.  Right now, we know nothing about these extra
+headers, including an expected format.  If a future version of Git (say,
+3.0) adds a new header and the user includes invalid data in this extra
+header (which happens all the time with author and committer
+information), then 2.50 will propagate it on rebase and it won't be
+fixed until the user uses a version of Git that understands the header
+and can fsck it correctly.  That's not really great, since it means we
+can unknowingly spread corruption.
 
-Thanks, all.  Will replace.  Let me mark the topic for 'next'.
+I am pretty sure that at $DAYJOB we'll need to have a discussion about
+whether we want to propagate these headers during rebase and I'm
+personally leaning against it.
+
+Why, you ask?  I've seen at least the following types of corruption:
+
+* Missing timezones
+* Timezones with less than four digits
+* Valid timezones padded to more than four digits with zeros
+* Timezones which don't exist and never have (e.g., +1700)
+* Timezones which are so absurdly large that they push the date to a
+  year when nobody alive now will still be living
+* Date stamps that are larger than 2^64
+* Date stamps which are smaller than 2^64 but beyond the expected life
+  of the Sun
+* Extra angle brackets in the email field
+* Nothing in between the email brackets
+* Nothing before the email brackets (no name at all)
+* Names which are not UTF-8 but without an encoding header
+* Names which are not valid in the specified encoding
+* Emails which are not valid UTF-8[0]
+* Emails which don't meet the (ludicrously generous to the point of
+  being nearly unparseable) RFC production
+* Encodings which are not valid IANA charsets
+* Messages with no body and no blank line (just the newline at the end
+  of the final header)
+* gpgsig headers that include random non-ASCII bytes and control
+  characters[1]
+
+Note that all of these must be parsed in some meaningful way because
+users don't want their forge to serve them a 500 despite them having
+sent wildly invalid data.  I encountered these during part of our
+transition from Rugged to Git (reftable, SHA-256) and they definitely
+added a lot of interesting complications (plus the need for lots of
+tests).
+
+Considering that writing valid data should not be that hard[2] (and
+should definitely be a priority) but apparently is for many people, I'm
+very wary of us propagating headers we're not ready to fsck and I'd like
+to have an out for users and forges who would like to be a little more
+careful.
+
+With those constraints, I'm not totally opposed in principle to this
+feature.
+
+I see Patrick is CC'd here and I'm interested in his thoughts, as well
+as, of course, those of anyone else as well.
+
+[0] SMTPUTF8 (RFC 6531 et al.) specifies that mailbox names may now
+contain UTF-8.  For instance, you can email =F0=9F=94=B5 at this domain and=
+ it
+will be delivered to me.
+[1] It should be noted that all of our signing implementations produce
+only non-control printable ASCII characters plus newline.
+[2] Maybe I am being unfair or unduly harsh to implementers, but I do at
+least agree with the half of Postel's Law that says that one should be
+conservative with what one generates and I would hope others do as well.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--NgPWiK2WYFIA4CPA
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ/R6WwAKCRB8DEliiIei
+gQTxAQCZinMl/mKU6qv12FjgucS7g8yK4VxxGS8roNyyaSHCHwEA2gL5tvBTyLOu
+IuuCDkhohK3rkNPlGTnpLjRcscxlzg4=
+=6IjN
+-----END PGP SIGNATURE-----
+
+--NgPWiK2WYFIA4CPA--
