@@ -1,206 +1,170 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6552500DE
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 20:56:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC6A25291E
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 21:21:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744145798; cv=none; b=bGQLOkcT6S4E44ALvTb9+MtqV24JgmAfDdCAHC4oZ/AO+5CU8Abzojfr/WR9hQtSJt9NkXk/LD/2VHzoMDdJK46zaCC1EOVVvvZrIVRwcAbq/wIY4PiFUbkcRwhSDp8eOdDzGzHA67Hodyctoe0n12zJAAYIOp47+Wpl9NQP5dk=
+	t=1744147285; cv=none; b=rzAAXffA6gqZTWlB2rPDT0M5kC5gcqn8mNPfCq70TpsxXbLo5Na720jBI56z/2gcT9Rt5DKEe2qxxCMj8hmhT7kS1iMLalUfE3BLS55/Tt+xYj7iaJ155S+wr+zqWdN2sa0i1V8lBKzCfIRtwOTEXnFSfh6jULhF2i7g4cXHJLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744145798; c=relaxed/simple;
-	bh=zVT1hZanlATOB0LTTJ0JG/yXVOvxamOOJLimt4FXDdk=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=nZvyxyFnjiJXIAe63Mqry8CX8lCcGruYSWY0dZRNnORUsYu46U+FtYqSLBLNHXaiFHrVnBPWH4SoQf9WCJJ9jNDBbVnGY9mcbzmGzFnFrLwNaeZcjlOVFclOVTiiBwVemCdX17d3Q+vPUn+DXLUVpl4vp2ZBNzbOq23KKC9JYNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=bAstmBGq; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1744147285; c=relaxed/simple;
+	bh=yc/Al7n8YKgGubg7+g8fwZj1o9qLLY5v16qc5o7H4jU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=X2TUiAuwenOuv+xW6DebYwdxAR1JPPr6c8yQ5Ec1wK3uZtlvoyUeubISrQrYcWzcwWK61gaIDfvxMFR/FNLb0PXuBvuKRGENUGfy7wsHC4WU60peXhSY9bhsTfq+cdrlFUxdq3KWxO1siFKTN3VsrFwjWUTiQQFgiMbrjmoP8Zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=urXOq4LE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QE1jyiRn; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="bAstmBGq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1744145794; x=1744750594;
-	i=johannes.schindelin@gmx.de;
-	bh=OgTjcjSJdgCSwQXzGAAt0MEXGHkGzzOAmxIppyMQ5xw=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=bAstmBGqkh7vseh5zkFRaQyESAOKZhIYbhxiodhVG111VTICXyZNXkIz56vXPIUa
-	 9e33LSjVC+IkkeFKjaTKiR8TWFKAeN7gchXSiLWcdJthsZzl7NwhpacKTPcd9vgyt
-	 bcivAblTWx/82peck+6XrrewRIkSbgOEPk4+ET8sJZiLOlga0qFGa9Nw9tYXcgZeO
-	 176WtoYgTlyibUdkOFoCyY32yArqUTZgrANjiFkh8YzPg2v6Ty9fC2X0IxSQ2Ul73
-	 +QcB0m/RgS2c9jcbI23U15npFtmXRAxT/m4Ec3aYa2+9Qo18/wIpNqEyEx4xOJI+i
-	 2N7+C6q8Zgstqb714w==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.213.9]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N9dsV-1swrbw48rV-00xo5w; Tue, 08
- Apr 2025 22:56:34 +0200
-Date: Tue, 8 Apr 2025 22:56:33 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= <congdanhqx@gmail.com>
-cc: git@vger.kernel.org
-Subject: Re: [PATCH] sparse: ignore warning from new glibc headers
-In-Reply-To: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
-Message-ID: <77f82414-261c-d2bc-f911-ed3d4b06c86e@gmx.de>
-References: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="urXOq4LE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QE1jyiRn"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 006EE254013A;
+	Tue,  8 Apr 2025 17:21:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Tue, 08 Apr 2025 17:21:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744147281; x=1744233681; bh=84Tjg/X57v
+	koYuGrBu+twg3TieIUm9vnc2EiSI1rChA=; b=urXOq4LEvcu9C5s+HMU8oP9K/m
+	TaDhjaSAovFpUGlDdEDj+EmyquzATn/FPeenabFdonVYOQtHeJnk72GwPWztCm4I
+	HmrcdbPL/U6WDhDjzKuA438xPB5XaZF4qtsPL+wH7/roZiBs8tOQIZOV/B/WHWIu
+	GZ6zgactciFJNlczQFzWAo5khjflBiLzHWyLW7d4PzDtjfXSf1M+tIcYJHISeH3G
+	YnzO1PN2PZ63G5G2WgVa6cpWWL4EOWtjycEO2fvrRn0Mls6t8OQVXd5zX7xVLVVT
+	ynF6zyM0ozfIC5YaRzP1yS+PmSFjvnnHg4A1MvMztKv2K1xO3B1zAQ5ps+IQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744147281; x=1744233681; bh=84Tjg/X57vkoYuGrBu+twg3TieIUm9vnc2E
+	iSI1rChA=; b=QE1jyiRnsQdIrZoZU9o+w5P+BO1QpJIkyx27sWs07t5wHo31VqV
+	B7VB9OcNNIfpUEOhHKvzcVPN3+FI2XUwyuo0KzzcurqIDs3AAgjSSsKNmRX94zYA
+	esNAhhnjTj3Vq6R3+VhpeaZ0FpcilKcTCuEJCzi8Y5RVmDl19fo0A2PmZhonPrOU
+	1Jh8oSxDXcF0ASvbUoKDkuMgf7BoxFzsWFTzhupKguGiS1h7yFCKxlvm+bbhP0FC
+	F/SkqFpaQTyunRr1EBLR/KtHbZ0Mn9r2gkDbLxGBJZHnWVDwYUFZL0RdoYMkmyuM
+	oml2T2wtxbUB3RUPcVGdc2ATdiVDBwede6Q==
+X-ME-Sender: <xms:UZP1Zx1oBgIuOIyesSKEB9cDQRfdH-0COsnJWJvGIc6UdNoMPNFKHw>
+    <xme:UZP1Z4F-9ga6CS6Vuew5qIOZ2fPhz0Fm7SeP_fjjRjT8ue731_sXC4-m9gxwEMB4h
+    uRKYQUNpUlyKfCByQ>
+X-ME-Received: <xmr:UZP1Zx4b6OBhFNskXbl59B2GFG7zbUx8K9nKbGmk0YoCso2wgQU-ctvS3X_C4FgJTt4ujK5Bgkco22yC4XLRu6A3YSIHirXkpT0X>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdegudehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrnhhthhhonh
+    ihfigrnhhghedufeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhope
+    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhhvghjihgr
+    lhhuohesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuug
+    gvrhesghhmrghilhdrtghomhdprhgtphhtthhopehshhihrghmthhhrghkkhgrrhdttddu
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvg
+    gtohdrtghomhdprhgtphhtthhopegrnhhthhhonhihfigrnhhgtdefsehitghlohhuugdr
+    tghomh
+X-ME-Proxy: <xmx:UZP1Z-3ru5NnqBuoppIt0RwQ8fC2O2kEl1pYfasv6icVLj6OfEo09w>
+    <xmx:UZP1Z0Emuv12b2qC91P-Y2Fd8ZZ4q5YOO3IPbCsMNeUwp6L73Dt-WQ>
+    <xmx:UZP1Z_9Lc2ldOVMYj_weHS4HTBbW8HBMGyABNTUTzMVKVKfGHL4RSA>
+    <xmx:UZP1ZxkHECDNkFX5a8dCiUUXpx7ycS6hEC0m5e32Qxtq26NtI-olaQ>
+    <xmx:UZP1Z3GogzEvgVIR7F7Qaepy4Vk28bFl21AQgutyOXJRBaLAdMFVRtEb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Apr 2025 17:21:21 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Anthony Wang <anthonywang513@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  karthik.188@gmail.com,
+  shejialuo@gmail.com,  christian.couder@gmail.com,
+  shyamthakkar001@gmail.com,  sunshine@sunshineco.com,  Anthony Wang
+ <anthonywang03@icloud.com>
+Subject: Re: [GSoC] [PATCH v5 1/1] t9811: Improve test coverage and clarity
+In-Reply-To: <20250408114841.58592-2-anthonywang03@icloud.com> (Anthony Wang's
+	message of "Tue, 8 Apr 2025 13:48:41 +0200")
+References: <20250405103718.25160-1-anthonywang03@icloud.com>
+	<20250408114841.58592-1-anthonywang03@icloud.com>
+	<20250408114841.58592-2-anthonywang03@icloud.com>
+Date: Tue, 08 Apr 2025 14:21:19 -0700
+Message-ID: <xmqqbjt6wdrk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1294897309-1744145794=:9725"
-X-Provags-ID: V03:K1:vWi0Zlbv6mb5cxRW8waE4G76kykF190+oAXby/EO4c4zuCqmGtb
- aFQkfLe9Wrxqwz7CRGlQ43ibDGxqMlSc4fEbloPyjTdaHoG/Kt8Smj6dGoo71iBIs/77nxe
- AL4fMHQeWTAO2pSRdYiup4ngmeubWsxl+nIjsuU6FIiwCjq0Ny7p+q0JI9/2lM7kdFIcqUF
- nwPjldfMGRgQ9tBR/8Uqg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:6bEEkACdeMQ=;TTDAjtjzVaJz804OmXkAMkwDGB2
- 9V3CR3aE8a7aj+oX39YExOFsDIHMh5ZDGM1Jb+r8PBPQ92MsTi1/1MeHLMPi9Ee0BGtx9+kHl
- 59V6DQ1Lx+2F7EL8KpXX8UYggeXArRi276uayKo39WlLJi3nX05JceUboNTmqHtmc3VOn+2+n
- pqlVliRv/aX7zd/pECuafRsLX5yR5Lwn1uTMcSbUxMBhPs4cwPa2HpXrMKPALHkI5b+lr7zL7
- n8s7lw5DPJ1g9j+83ndxfFvCld9EzDHTfcA2U2kpgKPbp+9SHeneyKbjLoug6IOp03ZwioUkc
- tdIFps9N41CGXkyCXiBuEZUTwvudFiABcHNrT6I123kagS28oT871HMK1OqmJKiGfNrs4ulLe
- SkgFOpKAdpkDib1MduedICJoWqyH5ESq4uuVSjMehXhYCJLzsX/GW+AniborqW5CRCUBvUCIK
- 7wCIoL+kFLoVKnEPe8WU2dUkYqDWiQPa4s2xA2GB9Te/qveNsiONs4uCwDcr+MzcmiH5gRQFT
- PPEp/tmTmF6nsuPv1xX/BFNJ0OLZOgQVgX98BzW6tFhWbAvtRBl+vXS9muLWwtlxw/5VEs9Mt
- qqe6z/8DQX6reMNT8AZF41KAVRsrxd1lauqT9LORuPz4gNXfbFm8reQ+MzxIzwbEu1j95E5FA
- xCC04ZGXctd8EhNDdqoN6HgrkZa+juF7esE1UJnD3JTLukDydFQ++Ar/PHOBI+xj9hZYXR0zs
- S/+VKDApjDqlFfSvSBHa1Tx3YSKs5GoIHU7wZTliGuYKV33E6qBBarUcvWzTPIJxUpGbohGyv
- hyrrJWJqypyl/SS6gCDvFyniiFC4Z4kyr/4dWd5Ttk+pJpC1fWKM4jMc85q5lNhdCk4epq2Ac
- AYFhN1plp0NrbrvTxy/wH277ZP4jYS9yjuZGckMYjlnpb5qt+AW8+Z7pa7QK9V6gFSoqGob4R
- fAiFijlJhU+Ptx3naMpLecZN2QknvO9tzkBIBQWXdiAT2mtvGjokx5kmrWDdPNtg5UX7B5ic4
- Xo3kqNZoHz8xbb7yuHDIG7CefSPR9HHsiO+2uokFBawWA2v3vXJKiA2lSsvuc3WGwgJazdoQl
- s08ju6kAduE1g+4DIupvWYGGPW/IMSu0rmqOcPscOEtHnB6fshOTiNvg0vjg8zj3vmUix3iNf
- v+qqWN7IJ2hPr3XVzUQZ+HDas1Csmap9JBHpP2dTwvwlhOSviXf8cdmc9W8/kIrhLrffaOX4p
- KAEo2gg/cCrbt50hmIJPYTlLQMdM4BS7hksl1suAnnmldE3lBS67FPlGigu3ir7gGcisy4+Xq
- yIkQ5YTgfL5DZ5SKPsKFFTJhxglc9SYNLnkoovleli7KTnbKh5TGpZMhsrDtL20+/Xem7G3BL
- JDJ0JAuhEv48eSfxnd3aaQwR1nD0xavh3jfNP4MUp2jcr4QrzwUCQDi0Lnv4ZrRUWV/zrd8XV
- 2mwR8BEgbO+ClO+IxE504YEZozM+rxftsZDBYiFSxpzFllNeHduDuJmTQGhBnijLWLNlilxSk
- atLdwlLq1R5PmMHiSEk=
+Content-Type: text/plain
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Anthony Wang <anthonywang513@gmail.com> writes:
 
---8323328-1294897309-1744145794=:9725
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> Subject: Re: [GSoC] [PATCH v5 1/1] t9811: Improve test coverage and clarity
 
-Hi Danh,
+"Improve" -> "improve".
 
-On Wed, 17 Jul 2024, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+I am not sure about "clarity", but I agree that the main thrust of
+this change is no longer "avoid hiding exit status of git behind
+pipe", but more about "use 'show-ref --verify' to validate the right
+thing (meaning: grepping just for a string that could be a substring
+is an unreliable test)".  Perhaps that is giving more clarity?
+coverage to test negative outcome is "while at it", just like we
+(incidentally) lost pipes that used to hide exit status, so I am not
+sure if it deserves mention on the commit title.
 
-> With at least glibc 2.39, glibc provides a function declaration that
-> matches with this POSIX interface:
+    t9811: be more precise to check tag creation
+
+    The tests grep tagnames they expect to exist from "git tag"
+    output, which can be fooled by false positive if an unexpected
+    tag whose name has the expected tagname as its substring.  Fix
+    them by using "git show-ref --verify" instead.
+
+    While we are at it, add a negative test to verify that a tag
+    that is involved in earlier tests that is not supposed to appear
+    in the result does indeed not appear in the resulting
+    repository.
+
+    Incidentally, this would also correct the problem the original
+    had, which lost the exit status of "git tag" that was placed
+    upstream of a pipe.
+
+or something, perhaps?
+
+Also you'd need to sign-off your patch.
+
+Thanks.
+
+> Remove the pipe following the `git tag`, ensuring the exit code is not 
+> hidden. Add explicit verification to check for expected and unexpected 
+> tags, increasing specificity and future-proofing a portion of the test.
 >
->     int regexec(const regex_t *restrict preg, const char *restrict strin=
-g,
->            size_t nmatch, regmatch_t pmatch[restrict], int eflags);
->
-> such prototype requires variable-length-array for `pmatch'.
->
-> Thus, sparse reports this error:
->
-> > ../add-patch.c: note: in included file (through ../git-compat-util.h):
-> > /usr/include/regex.h:682:41: error: undefined identifier '__nmatch'
-> > /usr/include/regex.h:682:41: error: bad constant expression type
-> > /usr/include/regex.h:682:41: error: Variable length array is used.
->
-> Note: `__nmatch' is POSIX's nmatch.
->
-> The glibc's intention is informing their users to provides a large
-> enough buffer to hold `__nmatch' results and provides diagnosis if
-> necessary.  It's merely a glibc' implementation detail.
->
-> Hide that usage from sparse by using standard C11's macro:
-> __STDC_NO_VLA__
->
-> Signed-off-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gm=
-ail.com>
 > ---
->  Makefile | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  t/t9811-git-p4-label-import.sh | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
 >
-> diff --git a/Makefile b/Makefile
-> index bc81d3395032a..4b9daca1dcc58 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1381,7 +1381,7 @@ ARFLAGS =3D rcs
->  PTHREAD_CFLAGS =3D
->
->  # For the 'sparse' target
-> -SPARSE_FLAGS ?=3D -std=3Dgnu99
-> +SPARSE_FLAGS ?=3D -std=3Dgnu99 -D__STDC_NO_VLA__
->  SP_EXTRA_FLAGS =3D -Wno-universal-initializer
->
->  # For informing GIT-BUILD-OPTIONS of the SANITIZE=3Dleak,address target=
-s
-> --
-> 2.45.2.599.g51c0d632d3b6f
-
-Thank you for this patch!
-
-Due to the brownouts today (see
-https://github.com/actions/runner-images/issues/11101, surfaced e.g. in
-https://github.com/git/git/actions/runs/14342895944/job/40206357016), your
-patch came in handy, as it is required for the following fix:
-
-=2D- snipsnap --
-Subject: [PATCH] ci: upgrade `sparse` to supported build agents
-
-The `sparse` job still uses the `ubuntu-20.04` runner pool, but that
-pool is about to go away, so let's stop using it.
-
-There is no `sparse-22.04` artifact provided by the "Build sparse for
-Ubuntu" Azure Pipeline, but that is not necessary anyway because Ubuntu
-22.04 has the `sparse` package: https://packages.ubuntu.com/jammy/sparse
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- .github/workflows/main.yml | 11 +----------
- ci/install-dependencies.sh |  2 +-
- 2 files changed, 2 insertions(+), 11 deletions(-)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index ff44c0a8c067..c9455246269d 100644
-=2D-- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -449,20 +449,11 @@ jobs:
-     if: needs.ci-config.outputs.enabled =3D=3D 'yes'
-     env:
-       jobname: sparse
--    runs-on: ubuntu-20.04
-+    runs-on: ubuntu-22.04
-     concurrency:
-       group: sparse-${{ github.ref }}
-       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =3D=
-=3D 'yes' }}
-     steps:
--    - name: Download a current `sparse` package
--      # Ubuntu's `sparse` version is too old for us
--      uses: git-for-windows/get-azure-pipelines-artifact@v0
--      with:
--        repository: git/git
--        definitionId: 10
--        artifact: sparse-20.04
--    - name: Install the current `sparse` package
--      run: sudo dpkg -i sparse-20.04/sparse_*.deb
-     - uses: actions/checkout@v4
-     - name: Install other dependencies
-       run: ci/install-dependencies.sh
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 0df74610d063..8700c0f2924d 100755
-=2D-- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -119,7 +119,7 @@ StaticAnalysis)
- sparse)
- 	sudo apt-get -q update -q
- 	sudo apt-get -q -y install libssl-dev libcurl4-openssl-dev \
--		libexpat-dev gettext zlib1g-dev
-+		libexpat-dev gettext zlib1g-dev sparse
- 	;;
- Documentation)
- 	sudo apt-get -q update
-=2D-
-2.49.0.windows.1
-
---8323328-1294897309-1744145794=:9725--
+> diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
+> index 5ac5383fb7..593de09eb4 100755
+> --- a/t/t9811-git-p4-label-import.sh
+> +++ b/t/t9811-git-p4-label-import.sh
+> @@ -95,9 +95,10 @@ test_expect_success 'two labels on the same changelist' '
+>  		cd "$git" &&
+>  		git p4 sync --import-labels &&
+>  
+> -		git tag | grep TAG_F1 &&
+> -		git tag | grep -q TAG_F1_1 &&
+> -		git tag | grep -q TAG_F1_2 &&
+> +		git tag &&
+> +		git show-ref --verify refs/tags/TAG_F1_1 &&
+> +		git show-ref --verify refs/tags/TAG_F1_2 &&
+> +		test_must_fail git show-ref --verify refs/tags/TAG_F1_ONLY &&
+>  
+>  		cd main &&
+>  
+> @@ -208,7 +209,7 @@ test_expect_success 'use git config to enable import/export of tags' '
+>  		git p4 rebase --verbose &&
+>  		git p4 submit --verbose &&
+>  		git tag &&
+> -		git tag | grep TAG_F1_1
+> +		git show-ref --verify refs/tags/TAG_F1_1 &&
+>  	) &&
+>  	(
+>  		cd "$cli" &&
