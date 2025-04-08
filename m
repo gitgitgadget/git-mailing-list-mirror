@@ -1,127 +1,155 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA7B1A8F68
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 14:18:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430CE1E1A3F
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 14:27:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744121931; cv=none; b=cGffjuuNe1yWyeg8zOjmKqUZC14Of44ksFU6MMNppMg1GYp56D8hkSRGpMdwnYXoScKlhYJa06H36McJj4ElUJ7+peTDLxlsuHFan0GN8DsE4fTVgasvkARLJ4wQHVYokBkrfSRlw/Cl1GVSH7intxf4xgSh1BB5vWQ7ds19L50=
+	t=1744122466; cv=none; b=UiZTrm1jYxkd/FYAQ1gIoFenQmy175kBCOd8ZJBoqYdqu0EwNOVtoSG6BPwGdJEpFctPViad71Y8XLRA8T/3rAQ4wPFTHaUO8KdfCzWNlqX64sxm9AV++aIEBcEhWRqk6+EThzHtuxcEobGSlLBLe3HWn56KwWVcHmqU8ad7fiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744121931; c=relaxed/simple;
-	bh=KzH7LQZ+H5vuiYzeHlDYTQVz3JYpvamChUtpP0VuoHY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CHy7kjVRNCT1lLDvNc31i/9UaeMvkZ3YXa2J6/PIO3KYmz9CoQG3Um40O+oHvlCLzJzCXW87g6LijY13/senF6d2VWvZ2qCUDYE1HB7UMkvIU4DICnASvxx8ntvtBei1r5GMQ1x0Y1POQ8BNIYSXiw4rZm2IHbbqtxqFU8uUU8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=If3mfLQ/; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744122466; c=relaxed/simple;
+	bh=/0rwihkjInn8vqkYLgqMUwRZm8NM74dJI384eCrwLng=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jmY1i604MVBA+Ax0EEc2CPD/f/0Gx8W2DabYjKH+w0c9YVNSr5gHCv5fL4VXAlrCm5aUJG/QqKxoV0t9mFa+TTFpNYGz8Y4BzE1ijPgUOwPOwvk9Lj5IJqG/msGbEosqZNOqY2nsJVk2/efcSmB6KyBiIbdibJRWU5QtpARHX/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iXuPOHBq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TsiDAUcW; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="If3mfLQ/"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-39d83782ef6so515966f8f.0
-        for <git@vger.kernel.org>; Tue, 08 Apr 2025 07:18:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744121928; x=1744726728; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dUV5Sed6yVotk8IF0a4anzR/iKDtPsnrKXlIjQ8aRGA=;
-        b=If3mfLQ/GVStbXhlpVkwxzhElZVS81f5QdmLv+XLx/dE6ii97FvZZ13kbahDuYTOPB
-         qKhlSECEKZIopKaCzfqGOCPSnJKDOU7zsYydNpPRJrZAUz/8kdv/thKoH94LH1zmn643
-         QNiiFlcKCnuwvs9xlMn2EtkLFnUGSrpkt5o3LSzldeKoY9n8Eper+b8dzX6d3QEJ9eWK
-         FdIeMwKj60xS8QhcfPNR+WPOkwPsuadkrQ2O5ZpcwFRlbknY0TPqbHaayg4drIacRdxR
-         FjpwYS1dT24WMVXtzyqlE4TU1LKlRns47NPr9TgRUB5nhNLYPAOjBiFyD+nhNXOhtNUS
-         VjPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744121928; x=1744726728;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dUV5Sed6yVotk8IF0a4anzR/iKDtPsnrKXlIjQ8aRGA=;
-        b=kjWwoL2Vi23pYOrQjVTGYS2BVFwcVqCMB8o1EwS7Jz9h+hFn0NzXuThegFM8SJqUQo
-         yzKKcYqSgXjQGqTdhLHg7ics4DqcNyxoRqIKgfnu48noQJFwZYYWDY1IO3EeNFP1p0dI
-         3opKHDedM723f+6eVhcPDMajkjrdZQsrGGZJrkvkJPPtOX7sygMrtKIxlyxcl+cs2U9d
-         hyhzGxyDYhRJLHgG4toqRiNVc4TEalFPfikJ8IG71uAPFSD8pP/D/p4tycl55CNiEfrU
-         O1I9h/u1K94FaRf3wusazOiCS3lrNpdkB4liNTD+PuWlzMleMQTk9dMrNLF+Fqc9B6v2
-         NRRw==
-X-Gm-Message-State: AOJu0Ywn7FP74RWyIen8bSbNirWKSKfbRksN58e56LjmyZ3MJkihldGL
-	gZLQkTbWDccH3wqzwkj8XL7lxtZt1zlBMmTdf6aKZvRCBxS+AsKG
-X-Gm-Gg: ASbGncvda5tdyZft1zwCNPw0hJNuLk6K/B+gfiTfTpCwpVfAkPi2YwlYhR6sLvLd5Dm
-	AszUrgnoQDJExJs92r8UuLK1EaSgDcNNzs9TcMhOgtM1oCEIzrG0Et7vmr40bEZYSJSN/CRD9+/
-	AwaJ1UuL0xSLk4dtpBLdZcRzn89WxuOcczuO+JYdTu78hCp1Q1ePTcywLprm4Ig4f5S8GeZ68D8
-	ZdvOTn8oO2bL8ACe51Hri1zFtIweCWTHib8OLWft3gjU2PRBmeKLsXUfn7OANVzEql+anppW6ud
-	w5xM+dcyTFvOZ3nJLs0yQWL8KSD29jh5E01HbwUXEQ+n8/gKtZVXzjbzF67dd5ZMHa1Ejw19wYc
-	BQdzGin4RTQ8od+YONcskIkcvloMXz2U=
-X-Google-Smtp-Source: AGHT+IGimfo1g0aXyg/qmr9D5dlj+laf6Wdi1w7vrtO7LbvB9cIxWBA6FK4KdmlEC+afmcWvoWCbWw==
-X-Received: by 2002:a05:6000:1847:b0:390:e9ee:f27a with SMTP id ffacd0b85a97d-39d820ec43bmr3211335f8f.28.1744121927934;
-        Tue, 08 Apr 2025 07:18:47 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c301b8ad6sm15360267f8f.56.2025.04.08.07.18.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Apr 2025 07:18:47 -0700 (PDT)
-Message-ID: <5012fd2b-a68b-4267-aa4b-9dd04510986b@gmail.com>
-Date: Tue, 8 Apr 2025 15:18:38 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iXuPOHBq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TsiDAUcW"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 45CA313801A0;
+	Tue,  8 Apr 2025 10:27:41 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 08 Apr 2025 10:27:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744122461; x=1744208861; bh=+zbH57scl2
+	7RKOodVEvCNjUF9gaBY9j7h13/cquxAqE=; b=iXuPOHBqrsrBRvzFB7TrjBBbjA
+	FNWzmQBG4AUmaROm5RyUVFKl96K2eXxdTFVgZ7kNeMMc3NCrslGDwec3EL5B2wat
+	nkoiTLKJLM64xGvGY2DZ/Rhl1Bv91y+82023APiHisQXyXlMnX6GT8ODCqKP93du
+	joojQdhjeAREZ+yfsSePKCn/RXE3hHIHAaJ+TGTzz/1tw5490GE6h5DhoOTLTBCV
+	79MXrZXPwGdC9wxQvN+fMYypRGCQpqIaZO4ex8Ev0z2yzkLf4XKZQsq8000qEDxJ
+	ranDdTa6nxdJrTpbVkI/g4tyDn9I+gX5ItANT3aCi7qcsJhNkfwhFX827hGQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744122461; x=1744208861; bh=+zbH57scl27RKOodVEvCNjUF9gaBY9j7h13
+	/cquxAqE=; b=TsiDAUcWcbCv1X+/B9iY2wujT5b7bRNaL/0KYcTmV+/yZXMjeHg
+	EN6yZ7C8frzuw9r6bvOD5Tv+KjNlHB+4PBuO9KxFG8fuRkHzqIhiRfNb68ZashwU
+	mzcp2YRb890l2mz+DYrWmcrOfUbOgDzCMf5o5/mA1v4NO1LIKiSbG36UyPHdg/xq
+	Euw3491W/5kQZWHuw3Y77puh9H9qsU34S9P1Qh7Ho2dTTf2DpEfHyIaqko+6F133
+	R1KRfs1DRJF5vFwzb7cT35UI0Cvhebe3AY0ngXodHvy1g7ks7/36WIf4b9+KrPdr
+	1nvmLv0lmBhsVSgSv5DXVclFixabi6tIR4g==
+X-ME-Sender: <xms:XDL1Z2HNLA_UQ2v4TI4UOhcC5wYtNluoDf2IEQ3G_Q-IiSuuLigKWA>
+    <xme:XDL1Z3W0-nFMlB8vQVl5Zg3XCLe_XA3pFywkcBT4q7ZxFOTZWQEPrf038PoEkGaP9
+    cBEDW3mbIXwXAZxeA>
+X-ME-Received: <xmr:XDL1ZwJMHI8NZxP1PQeRo9h2mhFxoOow4cUvPLnd16gXb0NAF6534SEf1k12Ik9RIMYD8mm5Z1uSdW7qAqdEL-obFNcBSA6BZBMG>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdeffeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
+    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrrhhtihhnvh
+    honhiisehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepvghkvghmphhinhesghhoohhglhgvrdgtohhmpdhrtg
+    hpthhtohepshgtohhtthesghhithgsuhhtlhgvrhdrtghomhdprhgtphhtthhopehrvghm
+    ohessghuvghniihlihdruggvvhdprhgtphhtthhopehphhhilhhiphhmvghtiihgvghrse
+    gslhhuvgifihhnrdgthhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:XDL1ZwGVEW43UOTnFavwH_tJzdjeK4IceOaReBQWILAogPZTCQEu4Q>
+    <xmx:XDL1Z8UbiyBT6sGRi0XC76uztPB4XWS0VjUzuXRKtwoDTjLRq0ZTVg>
+    <xmx:XDL1ZzNtsMYpWc_NCzPcg1uRiKnNmU5yFsoumpLVzxUMLlq6HBx1VA>
+    <xmx:XDL1Zz3i23JMlgMCFs0grr_6zjiXzQPxp9UcCtt4ESOpR37yRqOY8A>
+    <xmx:XTL1Z2WonD02ilrtKGj8P6RxLWmggD5vuiNcTBy7zGKDB7jW8I6mjlCO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Apr 2025 10:27:40 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Martin von Zweigbergk <martinvonz@google.com>
+Cc: Git Mailing List <git@vger.kernel.org>,  Edwin Kempin
+ <ekempin@google.com>,  Scott Chacon <scott@gitbutler.com>,
+  remo@buenzli.dev,  "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+In-Reply-To: <CAESOdVC8m6VjQtyVi8O8bLWyJFaq7wnQ8U2kxW6SHnoXpCd14w@mail.gmail.com>
+	(Martin von Zweigbergk's message of "Mon, 7 Apr 2025 22:35:03 -0700")
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+	<xmqq4iyzn0vn.fsf@gitster.g> <xmqqzfgrjyws.fsf@gitster.g>
+	<CAESOdVC8m6VjQtyVi8O8bLWyJFaq7wnQ8U2kxW6SHnoXpCd14w@mail.gmail.com>
+X-Gnus-Delayed: Tue, 08 Apr 2025 09:27:34 -0700
+Date: Tue, 08 Apr 2025 07:27:39 -0700
+Message-ID: <xmqqwmbuybhg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 0/2] completion: fix bugs with slashes in remote names
-To: David Mandelberg <david@mandelberg.org>,
- David Mandelberg via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-References: <pull.1901.git.git.1740901525.gitgitgadget@gmail.com>
- <17274df2746d304db876ebd82ad8d932@mandelberg.org>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <17274df2746d304db876ebd82ad8d932@mandelberg.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi David
+Martin von Zweigbergk <martinvonz@google.com> writes:
 
-On 23/03/2025 21:04, David Mandelberg wrote:
-> Another minor change, as suggested by
-> https://lore.kernel.org/git/xmqqo6y3dzno.fsf@gitster.g/
-> 
-> I'm not sure what the expectations are around updating patches that are
-> scheduled to be merged to next but haven't been merged yet. If it's too
-> late, I'm happy with the previous v3, or I could send a separate patch.
+>> A set of individual commits that share the same "change ID" is,
+>> unlike reflog entries which is an ordered set of tip of topics, not
+>> inherently ordered.  This is inevitable in the distributed world
+>> where many people can simultaneously work on improving a single
+>> "change" in many different ways, but making it difficult if not
+>> impossible to see how things evolved, simply because you first need
+>> to figure out the order of these commits that share the same "change
+>> ID".  Some may be independently evolved from the same ancestor
+>> iteration.  Some may be repeatedly worked on on a single strand of
+>> pearls (much like how development recorded in reflog entries of a
+>> single branch in a single user set-up goes).  I guess you would need
+>> a way to record the predecessor vs successor relationship of various
+>> commits that share the same "change ID", much like commits form DAG
+>> to represent ancestor vs descendant relationship.
+>
+> That is correct. The change ID should be sufficient for handling
+> simple distributed cases involving a single remote but it's not a full
+> replacement for something like Mercurial's Changeset Evolution [1].
 
-Unless a patch series has already been merged to next which in not the 
-case here sending a new round of patches like this is the right thing to 
-do. The range-diff (which you can add to your cover letter by passing 
-"--range-diff" to "git format-patch") below looks good to me
+Just a random thought.  We could very easily replace "change ID"
+with a concept of predecessor-successor commits.
 
-Sorry for the slow response and thanks for working on this
+Just like we can represent parents-children NxM transitive relation
+only with 0 or more "parent" commit object headers, we can record
+zero or more "predecessor" trailer in the commit log.
 
-Phillip
+ (1) a commit with no "predecessor" is like "root commit" in the
+     commit history topology.  It is a brand new change that took
+     inspiration from nobody else and that is not a polished form of
+     any other existing commit.
 
-1:  5f4f1eb105 = 1:  58d036a048 completion: add helper to count path 
-components
-2:  28c0f80345 ! 2:  0383e1c608 completion: fix bugs with slashes in 
-remote names
-     @@ contrib/completion/git-completion.bash: __git_tags ()
-      +          }
-      +  }
-      +  '
-     -+  __git for-each-ref --format='%(refname)' 'refs/remotes/**' |
-     ++  __git for-each-ref --format='%(refname)' refs/remotes/ |
-      +          PFX="$pfx" SFX="$sfx" CUR_="$cur_" \
-      +                  IGNORE_CASE=${GIT_COMPLETION_IGNORE_CASE+1} \
-      +                  REMOTES="$(__git_remotes | sort -r)" awk 
-"$awk_script" |
+ (2) a commit created as a refinement for one or more existing
+     commits record each of them as "predecessor" to it.  Having
+     more than one of them is like a "merge commit" in the commit
+     history topology and represents that two patches were squashed
+     into one.
 
+ (3) Splitting an originally large change into multiple changes can
+     be represented the same way.  They share the same commit as
+     their "predecessor".  Perhaps you have originally two-commit
+     series, A and B, and split them differently in such a way that
+     C has half of a and D has the rest of A plus B.  In which case,
+     C has A as its predecessor while D has both A and B as its
+     predecessor.
 
-> David Mandelberg (2):
->    completion: add helper to count path components
->    completion: fix bugs with slashes in remote names
-> 
->   contrib/completion/git-completion.bash |  49 +++++-
->   t/t9902-completion.sh                  | 206 ++++++++++++++++++++++---
->   2 files changed, 226 insertions(+), 29 deletions(-)
-> 
+ (4) Just like we can use auxiliary data structures like bitmaps to
+     figure out reachability without following all the links in the
+     commit history topology, we should be able to learn how a new
+     change was born, and trace how it evolved into newer iteration
+     of the moral equivalent of the change, possibly as a series
+     with mutiple commits, using auxiliary data structure, which
+     would represent predecessor-successor NxM transitive relation
+     in a similar way in a form that is efficient to access.
 
+Something like this should allow us avoid relying on "change ID"s
+that can collide elsewhere in the world without having a central
+authority to assign them.
