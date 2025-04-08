@@ -1,138 +1,116 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EE5263F24
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 07:36:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A965225F78A
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 08:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744097762; cv=none; b=VIK6CeUR5a19YIa66vIULrEzJFEpdQTxnEg9gLaFTRu2KMm+awrVtftP+GUe4NA0gUzqnWZgK9lRIF+0qwrlKvoKTY4BcwzGTe1L6A677r6Vzx7rI9cAsweoNxvtjeQBce0gFUH1J8xUZD5Vw0t+80mF5sSSsdgFmBLIVh0wSa8=
+	t=1744099704; cv=none; b=LIvdLJGDSRqH/b1U1Gr4xtoJkeFMQ0Vh77JiNpM8RL2cW1iyZTkZTqNrMAiAQe5VFQLMFvZW4QjUCa3Hv1+E5dPyIsJZCnq81crQjnDWJSDG1bpCfgBR0FOhkkW/Pfyrn3aTU4qqbOi//6QiDwzI29ovTGEbojy+oa8kfTIWaPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744097762; c=relaxed/simple;
-	bh=Pv9vJ2JnVpTPzpPqRfEB1gf+me+pdaHK4LjmE7Au1oE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fpRiEgavmuNxcGfHBGix/M4vpNOv6l2RAVLuyiGbSBJsV1N9q+so6QTZ6T4lQ83zhbTSx2zeVpcjfirtVzGVCru6p/FQ5CbsIyoFr2IOF3DB0teweyZe6WFOG57ZCoRj2tD9zKmL/xubzjFFVQiEMmwqyycxozUzOeYv+cbKiXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VQBhFOFy; arc=none smtp.client-ip=209.85.160.178
+	s=arc-20240116; t=1744099704; c=relaxed/simple;
+	bh=EFGWMfz0tTfY6erNEtbvNKvvdDWFKTJlOQKUWoODlag=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=CGgrtvKfLpXXAJUl16PRWG8V+dbKAhvlDQF9vQG2uoZ2Jew7DThYp8KlwcLYg+QETRaI6hWoRwZ9tGH5Y3t/O//7f5wVzsB6DP+5IPBGSZGj0J8F/X+92OW4Ceklh+jh7JHkchwIsFzCDF+HMB2W6WXnfntYKAcwIX7BYpu9Tnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B8DlhCfD; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VQBhFOFy"
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4769bbc21b0so47080501cf.2
-        for <git@vger.kernel.org>; Tue, 08 Apr 2025 00:36:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B8DlhCfD"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5e6c18e2c7dso10396890a12.3
+        for <git@vger.kernel.org>; Tue, 08 Apr 2025 01:08:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744097759; x=1744702559; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1744099701; x=1744704501; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FeC/sauCoaPjxvW5Ojos82rtkPn3ZqUTz4smG4k1wdM=;
-        b=VQBhFOFydJ5qc6Ta9JMjZCUDMQgwatEmHBCvHVxV+tqXuawwQJpn0BHt7+1GjXL1YS
-         xeMPLPlEufpAZQcZQah2hpysWruU2qQsCyq9bdIdlBVJD2hq2t0mx/l4PsDBZsjqbxJp
-         rRWIMWzjTOfTu42o2/zxyKo77ADB8UdBAEPzNFMAnmoN4EHRWkT+rzoTI5yqELCmswcN
-         +q5Fpx6CIdwyaATptctdxG9Cx1fIRRb+3ERLkQPDtx/zL023roET1m88xEabtDv6zEis
-         uUgBTO6hLOZmRgtHu9Zs5QeJ+q878tKWldl9jR2jTwM/gVZRWQbr4cGsem4+F4M9gGqF
-         tsjQ==
+        bh=Pwz8QSmJ1cW80om7g8PjPCu0zZ2mzmNL/Rw91zBzfNA=;
+        b=B8DlhCfD7OAu0BVinXq/QkTBaA0aKHxA8SHBn7EqYHWI36m6kEqEGd+qIhQbUSQV6o
+         GPoaz1wJgAHMRYvEh5ejuDR6St6SW9YkObv9pf25o8fn2XIOUn5h3cNs7XpZyHjaOOBK
+         8oFEUckRMsZj1cJ+g5uFb5lGhbDcGSi/2kBO1MJrCuEJhTaW5O1HbXTAQvQ9A9EJg1c5
+         IXw1hWwLtdXCrC3cilo+XsZEqC680Y76nhStrHAqY4o9+/CA96jhd6qF/0My+E9rw8xy
+         LkQme37KnjMbCMcbgpmXrh/CjMJJa74YDJVxgS2tU/P+R+nxaiHzScmtpB49wfx1gTXn
+         bA3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744097759; x=1744702559;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1744099701; x=1744704501;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FeC/sauCoaPjxvW5Ojos82rtkPn3ZqUTz4smG4k1wdM=;
-        b=kjd/UuMoxyEWIT2AjlBS8ogFHd1Kzw34iWDPDIioF5utlDy/45NNxlSXDSZ29D4t/E
-         7Y775GhIFnKA65clXG9wGQ4S3/IUIOiuB/m8SlDO20Gmk8IQMd3GXXedc2N3hTT8h9Ok
-         clqXaJHvEgKOBJs6Ndg7jN8tmWEzPYSEPgsXH3fmg0Zq/PHGc/Jv5tLknZsk8iUaLSFr
-         0WerTTutmAiI9AQnVKTqZF1FH60bfQ5AhbHKz5Vtxz9NHNCqfR9A273NJr1y49Q1qPE+
-         v231yJD3MgBlsykp4pXcxDo/fg+1zb/av9iJQBzRdqm4x7zHWKqjyqbOTsRtcaAj3zPN
-         H4bQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUys7Ej8fPGSbURnQOCZDwtF94CJCrN4m5Lj5/pLs5t8M0tWHURy6Qjo0H/MtKz5DBuyw4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyDsU1BXLyNrPfFGJq6HuE+rFqFI5pMBXJeaAdYN9F5hz3MSSZM
-	vxF6hF6IzPhx+Qsl+fzHDvXTKjwxPPC5vOuGoWtZUEDwnhTKhM/nm2lP91MFDBTcqdX6nHKGmMm
-	sQny2byK3IsBC/INbK/pI65+qFA==
-X-Gm-Gg: ASbGncvQNUlvogWx8R6/DV+72CDvADWmJHblpcuZ3tRKM2hMzHNzJKNlZmPFm58Z6c6
-	dge/rH3f9lqqjRPVDdqzKBelwOK9F4YJoIoPbKxUwVhB9rHzf0/IsoY2iGD+UW48qZLD8wwowVv
-	Xxy27bFrpNDmRmmOHKbv9uSLeN0g==
-X-Google-Smtp-Source: AGHT+IH4vx9LFZcVDA0XpcXEKdPrLo1EHTYMJwPbzXDuy2HxgFcddp1f47We1QHIqGnh00r/DDcV5o6DS4HNo9W/I6I=
-X-Received: by 2002:ac8:5ad6:0:b0:476:9b40:c2cf with SMTP id
- d75a77b69052e-479311140ffmr212554601cf.50.1744097759252; Tue, 08 Apr 2025
- 00:35:59 -0700 (PDT)
+        bh=Pwz8QSmJ1cW80om7g8PjPCu0zZ2mzmNL/Rw91zBzfNA=;
+        b=XfQ4MqjnMyYrqMBCPia5nNHjx11AoMcFRSVrshIGSJhReQcelHgvSFpJZeILkt9XMQ
+         0g/p5ZWmxwRzBfHiuIj6Uqxpx17tIB0bFUEH5N7obXxq14w7NWsDSwWb55RsRWqTNshZ
+         PUcmia/pqCHyBTO6pK5+n/e0ShjEWJioMNFUhgs0RAEfBpMkH91Hp1u18s5Dy6cqEdjp
+         erJGlmIvMB+j5oRe9uVbjuxECUFWKv9a5EhAJ7e5sGSTEAGUdx6wj/VkE04kXKSelw3L
+         RswHRYqWhNErPOzKipmbofWb/PdFOXi5ypGCHRSK2i5xYM/XAFtjNzlsHpILYKMZO59S
+         XkSQ==
+X-Gm-Message-State: AOJu0YwZFf1IO4aFF8+NsVyKI+PGJrY/aU/mzmmHevXXViLq00tHQQNe
+	BHPX0eJMYDMCRjMRIEPRfOezCinWJ+kHSTO2M0thKoa1ZtiUx8IIrdVJqRqB5g==
+X-Gm-Gg: ASbGncvw4H9GKZ9JeVThoK862z36TByNVFsJYDPa9K5IngoYHrvS+lG3GxCE4IdUkVD
+	AjXbsaF4Yh2O3nedqded7XTT+ey+QjcQE8mq1DwhjpKKiBZ40yJJHLBm4FmKsKOlLaJRx41R7G5
+	0r5J90GDizgnkJOP2nqQaLRTfxDSpyVTlOHucBg1MYbjxLus5K0mK2KiTohEzXKYvTKNOtAmajX
+	xJ/xTa/8e4r90e3wP1qbSEjlrjWyGhfth0Cjksraw/s2vdrcGfSi+K0GKTRAiAhpJ09qZe51lHD
+	G53LCcDGdINB+FNPnDDWG9hJE86w6Ix1KdN6YhtLismFicdnTCWf3xVe+Rq77h8WWwd+yHP1HPy
+	JPohRByl8xfTRN6KSB72q94370LEJjvICCPfn2eE4bleLZmANBQ==
+X-Google-Smtp-Source: AGHT+IGzPd536ZE0aAVo6ppLxM8hDu4F0zyd4ODJKzoHF4LJwd6ZhvQexrz4rrk6J/dMqIAQxJ+1vQ==
+X-Received: by 2002:a17:907:9409:b0:ac3:b44b:de24 with SMTP id a640c23a62f3a-ac7e7120335mr1105343166b.2.1744099700374;
+        Tue, 08 Apr 2025 01:08:20 -0700 (PDT)
+Received: from localhost.localdomain (host-95-230-249-134.business.telecomitalia.it. [95.230.249.134])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac7c013fd1dsm880882366b.95.2025.04.08.01.08.19
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 08 Apr 2025 01:08:19 -0700 (PDT)
+From: Anthony Wang <anthonywang513@gmail.com>
+X-Google-Original-From: Anthony Wang <anthonywang03@icloud.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	karthik.188@gmail.com,
+	shejialuo@gmail.com,
+	christian.couder@gmail.com,
+	shyamthakkar001@gmail.com,
+	sunshine@sunshineco.com,
+	gitster@pobox.com,
+	Anthony Wang <anthonywang03@icloud.com>
+Subject: [GSoC] [PATCH v4 0/1] t9811: Improve test coverage and clarity
+Date: Tue,  8 Apr 2025 10:08:01 +0200
+Message-Id: <20250408080802.56341-1-anthonywang03@icloud.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250405103718.25160-1-anthonywang03@icloud.com>
+References: <20250405103718.25160-1-anthonywang03@icloud.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqo6x7nb2a.fsf@gitster.g> <20250407212834.53183-1-anthonywang03@icloud.com>
- <xmqqtt6zjyma.fsf@gitster.g>
-In-Reply-To: <xmqqtt6zjyma.fsf@gitster.g>
-From: Anthony Wang <anthonywang513@gmail.com>
-Date: Tue, 8 Apr 2025 09:35:48 +0200
-X-Gm-Features: ATxdqUHUMhJ8sDSQa8acCQXp76nj9d7i2owwXQ2uqraDJdlW8uEemUy4C0wnyFc
-Message-ID: <CAOSofofS311fMqnDpyFpUVC8vYcTcNy0EwKfvxfzEXWBGWvRkQ@mail.gmail.com>
-Subject: Re: [GSoC] [PATCH v2 1/3] t9811: avoid using pipes to expose exit codes
-To: Junio C Hamano <gitster@pobox.com>
-Cc: anthonywang03@icloud.com, christian.couder@gmail.com, git@vger.kernel.org, 
-	karthik.188@gmail.com, ps@pks.im, shejialuo@gmail.com, 
-	shyamthakkar001@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 8, 2025 at 2:17=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Anthony Wang <anthonywang513@gmail.com> writes:
->
-> >> If so, instead of grepping around, we should be testing that in a
-> >> more direct way, perhaps with something like
-> >>
-> >>         git show-ref --verify refs/tags/TAG_F1_1 &&
-> >>         git show-ref --verify refs/tags/TAG_F1_2 &&
-> >>         test_must_fail  git show-ref --verify refs/tags/TAG_F1_ONLY &&
-> >>
-> >> no?
-> >>
-> >
-> > Possibly, but I believe adding the test_must_fail check would be modify=
-ing
-> > the original intent of the test, as it would pass even with the existen=
-ce of
-> > TAG_F1_ONLY. However, if we are only performing actions to cause TAG_F1=
-_1
-> > and TAG_F1_2 to exist, then it would be an issue if TAG_F1_ONLY existed=
-.
->
-> I view it a bit differently.
->
-> Use of "grep" over the output of "git tag" is simply a sloppy
-> programming.  If the test wanted to verify "TAG_F1_1 exists", it
-> shouldn't have grepped for TAG_F1_1, because another tag T_TAG_F1_1
-> would produce a false positive hit if the earlier test gets updated.
->
-> Similarly, not verifying what should not exist is being sloppy.
-> People who come up with a new feature (in this case, "git p4 sync"
-> involving tags) tend to test positive effects to show how their
-> shiny new toy does things, and forgets to test lack of effects to
-> ensure that their shiny new toy does *not* do what they should not
-> do.
->
+In order to expose more testing outputs, we remove the piping of `git tag` 
+outputs in order to expose the exit codes. In addition, we change the 
+usage of `grep` to `git show-ref --verify` to check for the existence of
+expected tags in a cleaner manner, preventing false positives. We also
+check to make sure TAG_F1_ONLY does not exist, as it is not expected to be 
+created in this test.
 
-I see, I agree that the test is written just to check that the feature
-does the intended thing, and not properly written as a tests. I will
-make the changes and submit a new version.
+--------------
+changes in v4:
+- changed `grep` to `git show-ref --verify` to check for the existence of 
+  tags, and added a test_must_fail check for the unexpected tag.
+- consolidated the three commits into one, as the changes were not 
+  significant enough to warrant three separate commits.
+- added a new commit message to clarify the changes made.
 
-> If the original test were written solidly and use of pipe hiding
-> exit code were the only problem it had, I would agree that making
-> minimum change should be preferrable, but the original test seems to
-> be so sloppy in this case.
->
+changes in v3:
+- patch #1 and #2 were missing my sign-off, which has now been added.
+- patch #2 referenced a line number, which was not informative. A new 
+  discription has been added referencing the context of the code.
 
-To this point, I have a question about when to modify code when making
-patches. My understanding is that we should try to only modify the code
-neccesary to fix the bug, and not modify other parts of the code.
-However, because in this case the test itself does not correctly test
-for the intended behavior, we should modify because we are already
-touching this piece of code. Is this correct? Would it then be desired
-to check the rest of the tests in this file for further oversights and
-correct them as well, or would that be overstepping boundaries? Sorry
-for the questions, I just want to understand the best practices as well
-as I can.
+changes in v2:
+- patch #2 and #3 have been added to reduce confusion caused by the 
+  implications of `grep` followed by `grep -q`, and increase debug 
+  output.
 
-Thanks,
-Anthony
+
+ t/t9811-git-p4-label-import.sh | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+-- 
+2.39.5 (Apple Git-154)
+
