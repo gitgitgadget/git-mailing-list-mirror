@@ -1,175 +1,186 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sienna.cherry.relay.mailchannels.net (sienna.cherry.relay.mailchannels.net [23.83.223.165])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8D723A991
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 15:59:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744127951; cv=none; b=kJQYE2R46ESQqORxJgM11IbpndgGsTYao1dze3TItPfGJKi49hUMdhnDU2diLi40NXPMhGaLQpOnCTaM308ynETHnnwzH+Yl/2RCBxRkoKXkLHUl5oGAHVm5Ixuk1oqQxRCfMrkBgHiKetM/a+kMZKdu+xBiWBFpXIRiIWYv7+k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744127951; c=relaxed/simple;
-	bh=kbm7bosDON+ZR2TtpinP0H8Em+Ov86+r82mwnA4AMVU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TZYlooXu6Ur+JLR3RAfgzcevU0z0hWJXkUcM79qwgX7PzJ1p1OIZfFhF0b3EXhV2rtjUwH2LP12LPldnFa2gCzWBEAdurFRZElxubde1lHs1xePOl79iw3ry0PCDkWPAQJqEN4QdRBsjXD6nVepRIYPjtnvim3iPCnVDKpLTiYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FoPJJ3ev; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E29A70810
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 16:01:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.165
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744128068; cv=pass; b=LBX+jRgwsmYLF/bUjERIrYjb3LwejONTUUOojUWNUH9Ur8Rg2wdOiWT9kp9bNCGbAH3pv4y/VDGIwHstw414NX6HZIj3WzFHxC/AUI46bUI3So0ZdlfCyckQtVS3JUbYkYaV+6fWaQf6gsn/TVQGN0e8T+jY8zEDaoj6QsdnCVM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744128068; c=relaxed/simple;
+	bh=rPoBETHG8RWITTIlkFLBxxcPYvD7K9DSB7XkOMyU414=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D4c9NZ+N2Jii0fFKWMsNR27NOBiNdf0dTy+XIiYTbiNIHFZbUEi1afewSBBbXmOtzN558pBowkQ0nym2egvgOgIm52h6H+MWNlxM9YvUXtNMxkVsHX3bRTX6lGJwWIEGcd/Y3vw7HiMvgIeTGFnvuoEMRYdxjzwZUvKYGc6YBas=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=Y9PMqGeE; arc=pass smtp.client-ip=23.83.223.165
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FoPJJ3ev"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-39c1efc4577so3172298f8f.0
-        for <git@vger.kernel.org>; Tue, 08 Apr 2025 08:59:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744127948; x=1744732748; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=tKW3BLRakTXqfI+34wrtm8RTSVq2kBBon9acVRtVjDs=;
-        b=FoPJJ3evHO9ajMF1eibAyLTx2QIpLm+l+fl1GsgfiT7UNxeusR94ME6I3MjQPIsCcf
-         knAd77qXIFEhVBdpZiEhRXnzC+gggo5x5oxDgcdc6wRJfreGi6O9bqgkEa7Aob9JnVGU
-         xI3nplhyXB1/LJYVV2vMvD0c+AJbio3sakjiZNRCeOUBFAXDJ0TRFrX025KRKuCVWDRl
-         vAwray71miPNI71U1if+jvH59Yy3rYMniIOaYQeVU8mGci5NP9tT61qqeyRm7jxtaEIn
-         lvuRHXbUtF4foGOmut6p+4lippmChLPiQaWQb9w2d8i9hnehHnx64n/yaJ4dGNDhwUAj
-         uoWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744127948; x=1744732748;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tKW3BLRakTXqfI+34wrtm8RTSVq2kBBon9acVRtVjDs=;
-        b=rY4U7MA6GpfX/7/FzEEImhkhNOKvcgbJe1QyDaxqqbSOekVFuVxbFzccs4yXJC2xih
-         HIdQV8fwMkaBWznacu9k90ingyl6juUQRlaLkQh342xWSw9Hp8ngVHgXdVQEN4ZiXxlG
-         +HxSKIIiJtQKr6ncFHdlSy97kAVigWusm9E791y3IJwSpYbSzUW45ys44MV61G0cxS6n
-         m/B6CFaEOkrSVKlYzzDguN+FogK50tjA+OyF0xAbAk/m8SVJ5Y9Usb03ZCaMnnBfxZdV
-         cIT1Dn5WyKg76cS4C24u2U4NgRwxqndCJMr0h0+p10HZmVEMc5Xdn8jhs6vJ2vxgzZDB
-         dtqA==
-X-Gm-Message-State: AOJu0YwqEYKN1UaYqKrJv5KCjBwHiZo9Iz6eDVair6YuI5iqV26o8Jb4
-	ENO7xsjZ/DB/WhJ6+CVYchOJ0w2TxkfLlN8K8+g1OtIKBAVwKJwZ
-X-Gm-Gg: ASbGnctiptHWkohxY3afk5hbETfcGI7d/UHLEPysDA+fe9/oaq5yzHrfz5nolmNhz0L
-	tzPjubAalgbe9D94DbZG+u4mOTOgg94VwgoXekjy1fjy9XYtm8YhHK83VS5vJ9ouIBN/kZAFTmr
-	nTEzzOVh26BJFGPlmxnLbmM6Cmaivx2opP9VifnGKIazZ4r/x1KD3NsAZ+Ej/R5951vM8ZHimnz
-	CsrVuEiNQMChW2NgCup7sqfY+JHAS8vXOnRYibjRsmNwhqEjUGn9QDl/2m465a8o+GlbUP0NT7P
-	aRCIEfVXJXhkZTwVpie6S8Ex3/KtdJh1S7nABEpTUWwoEIot8kC3i1TYDAtmVF/RtsC3je7ONyN
-	E6vUicgwGhEqOa2NsfWvP
-X-Google-Smtp-Source: AGHT+IFmys+oVgm4VF7ZDZhnBWe8rRTWk+1XEtkKhpNX3F5gnHH/G6u4+5TOk9FtKZZqPxAtLxX3Eg==
-X-Received: by 2002:a5d:59ae:0:b0:39c:2661:4ce0 with SMTP id ffacd0b85a97d-39cb35bd5d7mr15607655f8f.13.1744127947936;
-        Tue, 08 Apr 2025 08:59:07 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ec16ba978sm168938495e9.23.2025.04.08.08.59.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Apr 2025 08:59:07 -0700 (PDT)
-Message-ID: <3a5eeaef-05a1-4e04-8bc5-0d023e63f27c@gmail.com>
-Date: Tue, 8 Apr 2025 16:58:58 +0100
+	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="Y9PMqGeE"
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 795891652EF;
+	Tue,  8 Apr 2025 15:53:10 +0000 (UTC)
+Received: from pdx1-sub0-mail-a252.dreamhost.com (trex-0.trex.outbound.svc.cluster.local [100.101.70.132])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 05BCD165227;
+	Tue,  8 Apr 2025 15:53:10 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1744127590; a=rsa-sha256;
+	cv=none;
+	b=Rhs8ML8UtLRBFrDDbDz6LOlovy+aKO0D7wHbrFtn3YV03IYHGQHw5YqmzFclXGJnQXbQsF
+	bDkQAiZG+uIT0djRnnV1FUeKFlkhr3HcZ7kCTdztOq6tqCA8Yj4tdE3lbxn0DeodS7u5NL
+	ASxuiwIAgcEv/al+zksfa12R4l3HVdpr2zWfi26TLeypHLx6+FNakv572yj5jhaX3d3E4g
+	V0pyF++4zXrrska6kaP3AqyglgvcMjiS9qgz3wvp2NKML5kFrJjHP+aYZ9AlRGnrBS6wxF
+	wMxfqne25jCr1suTAVpePqCjX27BWmeUxG/xr2KyfEGzNghHB3vP0cd2yCAezg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1744127590;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=dYCJ/N1NbJbLPdjWIqaa2mMin4bkRP87AHJ/igIle6M=;
+	b=do9PxFlH3dbNEUgldiOOmGLazqq7F8+VLigL8mRxulRODz7KzPFQtUl3ylTO3cequyKXtl
+	5CLHRTNGlgAIzFO5gM0dKleTrjcur7fhXfi5VPXHvzzmxFfosvNxrFDg2dZPxkBuwgUJkA
+	+RcT/TloHdJj9HD+vxLa1MuEN5/sEAvDxHa3yQ8CddGF3ycb9GNKNF/E8wS/OCjCvgkRR2
+	e5HouuSK291CugbP8lQlPki4dGfJGw0gY9G5c1AtpQ0S87GC8SkEqj5Pa8DopqZqC1R3ua
+	fSbIfXMJM5neHQ23G9Pai7N1Hc64VKxVR0gv5YoBRaCRDYTR4/2kvt+ommhCcg==
+ARC-Authentication-Results: i=1;
+	rspamd-7dd6dcd7db-rtdkw;
+	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
+X-MailChannels-Auth-Id: dreamhost
+X-Tangy-Continue: 7a3aca6644687866_1744127590348_566306652
+X-MC-Loop-Signature: 1744127590348:87000935
+X-MC-Ingress-Time: 1744127590348
+Received: from pdx1-sub0-mail-a252.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.101.70.132 (trex/7.0.3);
+	Tue, 08 Apr 2025 15:53:10 +0000
+Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nico@cryptonector.com)
+	by pdx1-sub0-mail-a252.dreamhost.com (Postfix) with ESMTPSA id 4ZX9b90Bw8zCb;
+	Tue,  8 Apr 2025 08:53:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
+	s=dreamhost; t=1744127589;
+	bh=dYCJ/N1NbJbLPdjWIqaa2mMin4bkRP87AHJ/igIle6M=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=Y9PMqGeEEzVyDZAsIZuQ93eGnfTaj1GeBeZJbFDFObPM0w6niJ2KpZ/xevI5FprOr
+	 FbB1BcS6Vf6uLlwkf5Y0MW58dcZzE2mBAuzsepSIZaIPyoYfYk1FyerCen9uRvQY72
+	 aBBrQv9OAuM8cnY2KGgBoDt+56Nw21IYPU/Uoa634Qh3fk1dwHtAFV1vuiIebpvm7e
+	 aE7Hq8aH6TtJq5riPD0FsFvP8RPBwBHNzb4Ri1wfxt4LXMbkIFhZnwiIJmVFRadvk4
+	 oPYOn+dcAuRD3tmfvnVLO2gWL9x5uOWycjz7vvrFdgEgXVi9qZIbl3Twe7a0JpRbva
+	 2yV4E9fm45u7w==
+Date: Tue, 8 Apr 2025 10:53:06 -0500
+From: Nico Williams <nico@cryptonector.com>
+To: Theodore Ts'o <tytso@mit.edu>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin von Zweigbergk <martinvonz@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Edwin Kempin <ekempin@google.com>,
+	Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev,
+	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+Message-ID: <Z/VGYrrVZYQ13TLj@ubby>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+ <xmqq4iyzn0vn.fsf@gitster.g>
+ <Z/RFQY433muaCW44@ubby>
+ <20250408125521.GA17892@mit.edu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-To: Junio C Hamano <gitster@pobox.com>,
- Martin von Zweigbergk <martinvonz@google.com>
-Cc: Git Mailing List <git@vger.kernel.org>, Edwin Kempin
- <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev,
- "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <xmqq4iyzn0vn.fsf@gitster.g> <xmqqzfgrjyws.fsf@gitster.g>
- <CAESOdVC8m6VjQtyVi8O8bLWyJFaq7wnQ8U2kxW6SHnoXpCd14w@mail.gmail.com>
- <xmqqwmbuybhg.fsf@gitster.g>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqwmbuybhg.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250408125521.GA17892@mit.edu>
 
-On 08/04/2025 15:27, Junio C Hamano wrote:
-> Martin von Zweigbergk <martinvonz@google.com> writes:
+On Tue, Apr 08, 2025 at 08:55:21AM -0400, Theodore Ts'o wrote:
+> On Mon, Apr 07, 2025 at 04:36:01PM -0500, Nico Williams wrote:
+> > This is why I suggested earlier that there need to be multiple change
+> > IDs, not just one.  Perhaps one is a "code review ID" and another is
+> > a "commit change ID".  [...]
 > 
->>> A set of individual commits that share the same "change ID" is,
->>> unlike reflog entries which is an ordered set of tip of topics, not
->>> inherently ordered.  This is inevitable in the distributed world
->>> where many people can simultaneously work on improving a single
->>> "change" in many different ways, but making it difficult if not
->>> impossible to see how things evolved, simply because you first need
->>> to figure out the order of these commits that share the same "change
->>> ID".  Some may be independently evolved from the same ancestor
->>> iteration.  Some may be repeatedly worked on on a single strand of
->>> pearls (much like how development recorded in reflog entries of a
->>> single branch in a single user set-up goes).  I guess you would need
->>> a way to record the predecessor vs successor relationship of various
->>> commits that share the same "change ID", much like commits form DAG
->>> to represent ancestor vs descendant relationship.
->>
->> That is correct. The change ID should be sufficient for handling
->> simple distributed cases involving a single remote but it's not a full
->> replacement for something like Mercurial's Changeset Evolution [1].
+> I think "code review ID" makes a lot of sense, although what I would
+> call it is "patch series ID".  This has very clear semantic: it ties
+> commits which should be grouped together as a single higher-level set
+> of changes.  It could be used by "git format-patch" / "git send-email"
+> to automatically send a group of patches as a logical unit.
 > 
-> Just a random thought.  We could very easily replace "change ID"
-> with a concept of predecessor-successor commits.
-> 
-> Just like we can represent parents-children NxM transitive relation
-> only with 0 or more "parent" commit object headers, we can record
-> zero or more "predecessor" trailer in the commit log.
-> 
->   (1) a commit with no "predecessor" is like "root commit" in the
->       commit history topology.  It is a brand new change that took
->       inspiration from nobody else and that is not a polished form of
->       any other existing commit.
-> 
->   (2) a commit created as a refinement for one or more existing
->       commits record each of them as "predecessor" to it.  Having
->       more than one of them is like a "merge commit" in the commit
->       history topology and represents that two patches were squashed
->       into one.
-> 
->   (3) Splitting an originally large change into multiple changes can
->       be represented the same way.  They share the same commit as
->       their "predecessor".  Perhaps you have originally two-commit
->       series, A and B, and split them differently in such a way that
->       C has half of a and D has the rest of A plus B.  In which case,
->       C has A as its predecessor while D has both A and B as its
->       predecessor.
-> 
->   (4) Just like we can use auxiliary data structures like bitmaps to
->       figure out reachability without following all the links in the
->       commit history topology, we should be able to learn how a new
->       change was born, and trace how it evolved into newer iteration
->       of the moral equivalent of the change, possibly as a series
->       with mutiple commits, using auxiliary data structure, which
->       would represent predecessor-successor NxM transitive relation
->       in a similar way in a form that is efficient to access.
-> 
-> Something like this should allow us avoid relying on "change ID"s
-> that can collide elsewhere in the world without having a central
-> authority to assign them.
+> [...]
 
-This is similar in spirit to the "git evolve" proposal [1]. One of the 
-objections to that was that it required all of the rewritten commits to 
-be pushed back to the remote, rather than just the current version. So 
-if I rewrite a branch three times and push the result for review all of 
-the intermediate state gets pushed as well. That is because the 
-intermediate commits were needed to track the chain of rewritten commits 
-  to avoid the problem Elijah described [2] when trying to follow 
-cherry-picked-from trailers. If the predecessor information was stored 
-separately to the commit it refers to (in a notes ref for example) then 
-we could in principle simplify the chain of rewrites when pushing so 
-that we only need to push the final version of the commit and a mapping 
-from the version that we fetched from the remote.
+Yes.
 
-Tracking predecessors as you describe is certainly a more complete 
-solution to tracking the evolution of commits and it addresses the 
-shortcomings of change-ids you outlined in your previous mail. It is a 
-lot more work to implement though.
+> I'll note that even without the "commit change ID", just simply
+> knowing that one patch series is a newer version of a pre-existing
+> patch series is enough to allow Gerrit to intuit which commit is a
+> newer version of another commit.  For singleton commits, nothing else
+> is necessary.  For multi-commit patch series, gerrit could use the
+> one-line commit description to associate commits; it could use
+> ordering of the patches; it could just see which commit contents are
+> similar to previous commits, much like how git detects renames.
 
-Best Wishes
+I'm not keen on CR tools "intuiting" from.. similarity checks.  I don't
+love Git's similarity checks for file renames.  I get that for a
+distributed VCS assigning something like "inode numbers" is tricky, but
+as long as devs don't race to create the same files it was always
+possible to have UUIDs as "inode numbers" and avoid the similarity
+checks.  Strictly speaking we don't even need any of these change IDs to
+make it possible for tools to use similarity checks to find all versions
+of a commit or patch series or whatever, but it's very nice to have
+something less heuristic and more exact.
 
-Phillip
+> In my experience looking at how kernel developers use gerrit versus
+> e-mail workflows, in general, gerrit patch series tend to involve a
+> smaller number of commits, because looking at how various files change
+> between commtis is awkward; and with e-mail workflows, the patch
+> series tend involve a larger number of commits, because reviewing
+> smaller commits is easier with e-mail.
 
-[1] 
-https://lore.kernel.org/git/pull.1356.git.1663959324.gitgitgadget@gmail.com/
-[2] 
-https://lore.kernel.org/git/CABPp-BECTrVp9X6bVmzU8LEeYsC3KbzeJvAaDPN+FgZz_uEhmA@mail.gmail.com/
+Yes.
 
+> So if this true for other communities using web-based review
+> workflows, using an hueristics instead of a [...]
+
+I'm not keen :)
+
+> > I don't think they need to have such extremely detailed semantics in
+> > order to be able to get a header.  The semantics will ultimately be
+> > somewhat project-defined, typically something like "during code review
+> > you can use these to related newer updates to an MR/PR/CR to older
+> > versions" and "once integrated you can use these to find the approved
+> > code review as follows [details]".  The [details] (probably a URI
+> > template) for finding concluded CRs might vary.  The CR tool might vary.
+> > The construction of the change IDs might vary.  The intent might not
+> > vary at all.
+> 
+> I disagree.  From long experience, allowing something into an
+> interface that doesn't have strongly defined semantics has lead to
+> *huge* problems.  This has certainly been the case for
+> Kernel<->Userspace interfaces; so my bias is that if we can't define
+> strong semantics, then we should probably avoid adding that interface
+> until we can.  Otherwise, this can lead to a huge number of headaches,
+> both for developers and users.
+
+So how much of the [details] do you want specified?  If you want to be
+able to go from "change ID" to CR generically for all CR tools then the
+the best -and perhaps only reasonable- way is to make the change ID a
+URI.  Or if you think the [details] can be elided and still have
+semantics that are well-defined enough then I think you agree with me
+more than you disagree :)
+
+If we want to leave some details to be site-/project-local then perhaps
+change IDs should have some type and domain/project identifier.  Users
+who cannot make use of that metadata (e.g., because the CR tool is not
+reachable) can still use the change IDs to link commits and patch
+series.  I think that linking is the only thing we absolutely must
+define semantics for, and the rest can be site-/project-local.  IMO.
+
+Nico
+-- 
