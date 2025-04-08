@@ -1,164 +1,122 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7031B6CE5
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 14:50:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3591DF267
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 14:55:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744123806; cv=none; b=mBo0YH0K6veR9SxtUSSRMfTtNvLXvDbRqo8v+6ugUO/FzO+JaJBk/U8qdYPs0Ohi69q6B1RQt9shajAJ6gFfG11dH+pASmdfcOJAKX3hjauGQkGUdKLUSqxUo41XCrbweikAK2iqi4od4pYIAE3BwETjs8XBrQFJ5u/7ZiYkBrk=
+	t=1744124135; cv=none; b=kJUIFZSvaBrDoXgoCnHKl4+63u54PwYu2j1zT3bMlJZ52RDOaTmhTp3PkLxTiiagTnhliRx8W5RlR2tUHfLQU2CHzYqcwpRiOWvgruyLfqlwTuHdC86j67oVbWxrRKDga3uj7ga16vz7XWjaiAGKnX8doD6nxdzchCm5mAj1bQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744123806; c=relaxed/simple;
-	bh=0RASz1pkQxm4AIccyzlbVsVsudTvjjuz589T6wM0bLA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AhZWl6d2SOqpkip3U+7j9hnUHL8VthMbmdl/WJ4fT4hjtbTfhXzgt9OG0nU7Rpy/8YVgduCMRnOxc2WX2tsmBWlSCdTq5cWEKN81mXzdDb0plVSVgYvRFxvGd8FCB+wd8Rz4jB1qosnceuHMcGuMz1JvdN7Be6p3/J0dVNROYUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W8q1Brk6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ek53KTT5; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744124135; c=relaxed/simple;
+	bh=h1S1UZXO5qPfkzkEMdmseX3Um78vGBQHgZYRwKtT7VQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GtT/oqPTDossJ3VYX9b0fwP5vgyBjlycCoRosRFwYlVBQxnRpOSIuvxCEWARBOFGk0iXwFmQ5Wls63GtHHJEVFBIA655txOKJkxaH5sNjNmrXjUd0rAhpfYhhrSn3ospy/FbwukmJ3VvQDL+6wAjmf/ADwcfLH1Knowhwf5yL5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gc59zgUu; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W8q1Brk6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ek53KTT5"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id C474013801CF;
-	Tue,  8 Apr 2025 10:50:02 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 08 Apr 2025 10:50:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744123802; x=1744210202; bh=Wqz9tyZmaZ
-	xwAPrjxl7vXKReFLTglz9XfKFZn0CG068=; b=W8q1Brk6utV2RtyeAsGSZrZ7lb
-	PWbCeEU4FLcqNUNvhl012y6xxnbU0ifnc43YKGGCd5Nk4Gf1gfe0F5p3bI9nTzsI
-	E/d8D5E6YPhyXZrxG07UIUZspTyLi9uMMzjAr7zI8dIabyvHmfPgBD0wNqNpfPno
-	ZtYxXSjE8KbqGDcaBKImX+18BVhzZZH3vx7TsT4qQVHqWFeDo1U90V25KBtTlQRS
-	/AthAtBsKITh5fVhgxD5yMqG3HBg/9s6dbCg2tpQLeU0QxNo9v89BimR3FLiwqyV
-	4PZGsbfpJlJhtXxjw0V+8+Emo/+hV+CJArp7Cu5NjZa2r4gPlWo+RjYkyZxw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744123802; x=1744210202; bh=Wqz9tyZmaZxwAPrjxl7vXKReFLTglz9XfKF
-	Zn0CG068=; b=Ek53KTT5YLnihKIKOGwjhVZq4riBqGY3CZtGTKFhRDTeDwlbccN
-	rgTuKGC1dKeTwq7vmmWIM9hYfUTgIufe8ZMddimkzljkNE84gURcTF0YcF0HTQQn
-	vc5+/ABnbX/H6rPpBCHdYfij67kVgYDkFiVrDe38YbKRjn4+2wUoO5nGPg0BY40V
-	HE1iuoRIjs0O4b93yo375CSZhPvFP14+56Fs11xlVPvGKdrzZvVctbLdd2lgUB62
-	Y9RguZiv+gQqfDV71PnhJ2ydwG7yw8CeX0idpEzONPVsN66KV5Gb/D3698zrGJKc
-	pGhK+fWM5JojtG5ZHTrtD0F5LPdPQAgAC+w==
-X-ME-Sender: <xms:mjf1Z6pEeO-BrC0RV9Q1AXmrqbdxC27oe9zcIlF0iQ-amAFt9rDWWw>
-    <xme:mjf1Z4oUlARwtc1-UykeXVpfB0z2gxg07WwMuD5yjYpO1hxJphsGqUQKcGB91xsWA
-    jDAhwmTjVSewG7e5Q>
-X-ME-Received: <xmr:mjf1Z_MSGZB4Pd_y1MS296UKoGF2f_b7o_7UVPHY_ivPJ1JSVM2OEdQBVhgOX_6Cri3PNURD3ZdNJvjbovFjFYxPMlhzharStCSc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdeffeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepleehfefhteeuvdekteeijeetuedtudej
-    heegtddtueefvdeijeduudfggfejveegnecuffhomhgrihhnpehosghjvggtthhiohhnrg
-    gslhgvrdhskhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
-    ohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:mjf1Z57PmliZrm8-FzusBPRXc4vq8tOO-rY8ZahAG7_xal3wWsOUhg>
-    <xmx:mjf1Z54eXnYosfsl-7EWdwvqfbabl-QNFt3hlC-_ktI44rom0kjbOw>
-    <xmx:mjf1Z5iZI7RQFYkAFcTVXQyAtEdlKc5QbAaGyYQD_BJcvWGgYEjl6A>
-    <xmx:mjf1Zz6H5ImwcVkgMbxUuM6Ik0qkYo2mkxg1tGJIU1_u7dS2VWav2A>
-    <xmx:mjf1Z4IRwMwB8B6B0l3dq3CEtNRlbBEDzXeUWD5PRarxYm_QUgSZt79g>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Apr 2025 10:50:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2025, #01; Mon, 7)
-In-Reply-To: <Z_TAtJ9LEeHo2AQN@pks.im> (Patrick Steinhardt's message of "Tue,
-	8 Apr 2025 08:22:44 +0200")
-References: <xmqqtt6znch3.fsf@gitster.g> <Z_TAtJ9LEeHo2AQN@pks.im>
-Date: Tue, 08 Apr 2025 07:50:00 -0700
-Message-ID: <xmqqmscqyag7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gc59zgUu"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5e5bc066283so9243652a12.0
+        for <git@vger.kernel.org>; Tue, 08 Apr 2025 07:55:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744124132; x=1744728932; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=K8B6WuqX2u+Oltp2rgoUWAOyVZzdIFfFC7JGENcIrtE=;
+        b=Gc59zgUuvIeFEeGhq5OyxIWc2FBKVx0RzrQT2NKRYtYQ6rEOcLTNOZRKwlY56EZjSx
+         k/ZxQNLG0my6bKB2Gclz/c9azgWfK7Rz/UGw4Zvb4dwqIMhxYQHVyFhQE2WIe+MRNmUX
+         kQIg7XS/5vvaoo4VmZTC5Jsb/Gb/xplQoHNVtsprhXaeo5SroNy0nndu5g6gGO33GEO/
+         IYKbpyQBttgfzIFC91Erxb+CAS017qlstTPF/Xj7DkM/5f+t77NReCNXuqwKjVp3stjU
+         zqi22p/gk0Pi14fkQPM3tuHfX3GYQZepCXUBPiGofkrpOpH7f8W2Il4yxPs/4nqVeRqI
+         TWkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744124132; x=1744728932;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=K8B6WuqX2u+Oltp2rgoUWAOyVZzdIFfFC7JGENcIrtE=;
+        b=OVYEM6qXh4EfRw7/D2QxXOJo/e8c+PcnaREsI2MVxd/AwKiAyVuu3wD/XvRWMQ+Lch
+         q84N6hC/UrsbFDYstTRZOlrH4dct37zr8R0/O8b94RzKmlDJGR2tbAwNNS1UaY1xrmo7
+         9TYz5lQA3dzJIXqaXONT751pv0Jymr3Gqhf+UvtIygtkv2BPcKD6WLLeLvKatkgTkmPG
+         DNE2gQYRMJsSGwXs1XI9m9tUkkGuIcrcUQCHdEuhhyjT9m+d1OVqpG/E7HpzMsM88C7X
+         0/jUcD8nEvA3Y6kfKvew9arG3h4cmpS8YBsV5kNnnHjpe+YzamKX8KFLLD61GVEkEbOu
+         7vGw==
+X-Gm-Message-State: AOJu0YzaN8bPO4bGl6zYeyItqf2gmdvPtNH96cmdFpzcPqqNRjMb6zxg
+	PWWvo3vevfYpBEApHtZL6x63OL1InKRK9/PW/rsvmZK9Uo0xTlhpYr4QK6Il
+X-Gm-Gg: ASbGncsIHlq+hLW256ukPeHO2Cit2/ZQjF3lIitKP0axF+veWNxk/f03aTft1zTwaNl
+	39kJ/WtvhRzsXkHVO11e2UWBTEq6CPHc++G1VSNBTNrK8BZIJGQL4vdzBDLV+7p/JJl5eXJgoEy
+	5YfOqSHr74T5QcnUyVw4jJcy/AHg2M5VFazgZAhV0070wlE0yTKPkSJM048YPuPNYFr9+u68iHv
+	nq++XhDJ55s5JqIsCt2sKtUmzPUy84hZ3uJA+v8gKli4oCuIxCbqWJRj440EASNNNJGr5/pqbe4
+	ruABr7xt/nBSPfdO+8M3rPBVBtpIBtx9B0dqMvNgBiQw
+X-Google-Smtp-Source: AGHT+IEDuZzYwaUyhpgp9NMK3H982sOvYL49JlP5zQ5vBT0JttttKZW9IDL2dvWG1Jr6QUXgO3v5KA==
+X-Received: by 2002:a05:6402:1d53:b0:5ec:9685:e686 with SMTP id 4fb4d7f45d1cf-5f0b5c2bba9mr11263129a12.0.1744124131647;
+        Tue, 08 Apr 2025 07:55:31 -0700 (PDT)
+Received: from [127.0.0.2] ([217.110.80.4])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f087ed1c68sm7905678a12.17.2025.04.08.07.55.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Apr 2025 07:55:31 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH 0/3] meson: add corresponding target for Makefile's
+ hdr-check
+Date: Tue, 08 Apr 2025 16:55:26 +0200
+Message-Id: <20250408-505-wire-up-sparse-via-meson-v1-0-17476e5cea3f@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAN449WcC/x3MQQoCMQwF0KsMWRvIpBTEq4iLar+ahZ2S4CgMc
+ 3eLy7d5GwXcEHSaNnKsFra0gfkw0e1Z2gNsdZhUNEtKwlkyf8zB787Riwd4tcIvxNJYkbTWNKs
+ crzSK7rjb99+fL/v+A7XzZvhuAAAA
+X-Change-ID: 20250330-505-wire-up-sparse-via-meson-2e32dd31208b
+To: git@vger.kernel.org
+Cc: jltobler@gmail.com, toon@iotcl.com, 
+ Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=976; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=h1S1UZXO5qPfkzkEMdmseX3Um78vGBQHgZYRwKtT7VQ=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGf1OOJKFCxOs+UPajPg7rWJK26kzNnz+pV8A
+ zeo5r8WeCTtY4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJn9TjiAAoJED7VnySO
+ Rox/61QMAIZ7fdBAw6EigRgA5IOPheVT3DDnjWaepatqYL/X+qhbjzlgPwEzSnki6ncT+y6lvUp
+ HDn4Uq7A/P80KSapX2XH8WW6bHQyhedaha+gg61alElg6pEv9nScVR4jBU+vgOs8/vz3RYWkKyW
+ v+nbxrgwwBGa/TJxPdak6i5FOzQE0dsT8y41fzengl/EmfbcdWtPyoIscR2CDQQibA3CcNMe8P5
+ 6cK8//9u5pwBUi8gWPD5W60CSTbn5LARa+kzBVvYGElQ57wd10izlqEmTl5AOFaFzQliemQ7r5U
+ Eut5z3oxBS9RGvv8t0RVNgnCTLOgugj1/y3apkDbPU9NR2+N/epNK7HtpjVe3i+NlwZk7qWW7KR
+ x0gktb8oPV2jHFAX1eMATI0ynst+CKqTNe7qweFyFINFLx850ZO73Zlji++W/xoQkGfoNd/0IS9
+ IsU2jU220mNG0jgtpdaBaQ+jHsDZVFQlNWJE6FG8uJtkZvGrtGAtkfOKBM9LAIvaVbwxLSCGuT5
+ o4=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Patrick Steinhardt <ps@pks.im> writes:
+To bridge the remaining gaps between Makefile and meson, this patch series adds
+a new check 'headers-check' which is similar to the Makefile's 'hdr-check'.
 
-> On Mon, Apr 07, 2025 at 04:49:28PM +0000, Junio C Hamano wrote:
->> * pb/perf-test-fixes (2025-03-28) 2 commits
->>  - p9210: fix 'scalar clone' when running from a detached HEAD
->>  - p7821: fix test_perf invocation for prereqs
->> 
->>  "make perf" fixes.
->> 
->>  Will merge to 'next'?
->>  cf. <Z-pD1puYT87YKAd4@pks.im>
->>  source: <pull.1936.git.git.1743181669.gitgitgadget@gmail.com>
->
-> I had one question around empty prereqs introduced by the patch that
-> wasn't yet answered. Based on my testing empty prereqs do work just fine
-> though and evaluate to true, so the patch series looks fine to me.
->
->> * ps/misc-build-fixes (2025-04-01) 5 commits
->>  - ci: use Visual Studio for win+meson job on GitHub Workflows
->>  - meson: distinguish build and target host binaries
->>  - meson: respect 'tests' build option in contrib
->>  - gitweb: fix generation of "gitweb.js"
->>  - meson: fix handling of '-Dcurl=auto'
->> 
->>  Random build fixes.
->> 
->>  Will merge to 'next'?
->>  cf. <CAOLa=ZQ8bTn-prAs2ycLdLLjVaLQL4GtLw_gFsvAcx_6j=MBjA@mail.gmail.com>
->>  source: <20250331-b4-pks-collect-build-fixes-v2-0-6b06136808f3@pks.im>
->
-> I think this one should be ready to be merged.
->
->> * ab/pathspec-sign-compare-workaround (2025-04-01) 1 commit
->>  - pathspec: fix sign comparison warnings
->> 
->>  Some warnings from "-Wsign-compare" for pathspec.c have been
->>  squelched.
->>  
->>  Will merge to 'next'?
->>  source: <127c3010-4b23-436e-a07d-e6031e746113@gmail.com>
->
-> I had another read just now, the patch looks good to me.
->
->> * jt/rev-list-z (2025-03-21) 5 commits
->>  - rev-list: support NUL-delimited --missing option
->>  - rev-list: support NUL-delimited --boundary option
->>  - rev-list: support delimiting objects with NUL bytes
->>  - rev-list: refactor early option parsing
->>  - rev-list: inline `show_object_with_name()` in `show_object()`
->> 
->>  "git rev-list" learns machine-parsable output format that delimits
->>  each field with NUL.
->> 
->>  Will merge to 'next'?
->>  source: <20250319183410.1225428-1-jltobler@gmail.com>
->
-> Same here, I did scan through the series again and didn't notice
-> anything objectionable.
->
->> * sk/clar-trailer-urlmatch-norm-test (2025-03-04) 2 commits
->>  - t/unit-tests: convert urlmatch-normalization test to clar
->>  - t/unit-tests: convert trailer test to use clar
->> 
->>  A few traditional unit tests have been rewritten to use the clar
->>  framework.
->> 
->>  Will merge to 'next'?
->>  cf. <xmqqzfi0pthr.fsf@gitster.g>
->>  source: <20250304113323.10564-1-kuforiji98@gmail.com>
->
-> Yup. I didn't review this on-list, but already reviewed it internally
-> before Seyi sent it to the mailing list.
->
-> Patrick
+The first two commits are small cleanups, where we re-organize existing
+variables to make it easier to add the target. The third commit adds the target.
 
-Thanks.
+This is based on master 9d22ac5122 (The third batch, 2025-04-07) with
+'es/meson-build-skip-coccinelle' merged in.
+
+---
+ contrib/coccinelle/meson.build |  29 +++------
+ meson.build                    | 129 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 136 insertions(+), 22 deletions(-)
+
+Karthik Nayak (3):
+      coccinelle: meson: rename variables to be more specific
+      meson: move headers definition from 'contrib/coccinelle'
+      meson: add support for 'headers-check'
+---
+
+
+
+---
+
+base-commit: 3a956c5f69873611ae5f8dcb9acd117f66b95ddc
+change-id: 20250330-505-wire-up-sparse-via-meson-2e32dd31208b
+
+Thanks
+- Karthik
+
