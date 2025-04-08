@@ -1,172 +1,285 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DEC266EEB
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 10:16:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781702690DB
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 10:24:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744107363; cv=none; b=VI9HtjP0wBKseuoMLkCzeALe0/EqBz1wnKugbcbrukSF/qVNsDzhvSw2HPuVdfImO3YLEmogRBAJSCR5QBzoYwcCzO+TQi288g8WyQPcyDAA/1kTd3bw3YUM9OLKQ7KSOKqr4XbbL3xVir5X4ylZe8VrxWVIXPXqUqCtOnS9NkU=
+	t=1744107859; cv=none; b=e+TJ1nlQoidyVNp6OYV2Sl37fWED09zLdMQvPe3oRvQ9uvDG8yzI5G1if2FpQgPcL/ZAL0E5t/SHp9+mynEJ8CCTfmFvVaIPj6z/CsDfGGlq+oGNfSpvIDHEVWXi8F6qaLItw68MRwE2pZwL2vKVKvtcxTj9igfvJWj2+dlMBF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744107363; c=relaxed/simple;
-	bh=j3yQgTU6jsanZ86LxqxgLqHFLGS+yIOO6e1GFrH8o6o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=T7ZM/6L3iGRjozZKWkKvDzWtiGoDTEiRb+7TjQMdvdS7+Fqy5Xo3GS1I9qZCNKkj5rWOIcsnqPBerc/LgDKyVK6vZF5dzE5hcJM5MNmjWCrnJYLuixJQ5xwiV7XxAQ49nBc1H9j2DaFAspTsxXOMoQg4Gcu3sYXncWfno9x8St0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aInmiLjb; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744107859; c=relaxed/simple;
+	bh=N3+yQI9CGNhjJ/Ykl8D5JxQdmbn6AxvLH9beEwYC4TU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=U971xivgQqaYKMIiLtqLwiYQcfo2ulxs5+n1CSUfogkJDS1L4QV4DPO5GnL9hXRMVmYE7Ag22YU1UhS4iqWDnZXhCxwjNYTtF/tO6jKIuQzhqwGiqnfuw0BWnignDyXHfyTIqWJ/KUWiOcWEiuB/8H/XGviznGbfs00ZlPdNvZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eBTlpKSa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XS6Jwb79; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aInmiLjb"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so36955265e9.1
-        for <git@vger.kernel.org>; Tue, 08 Apr 2025 03:16:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744107360; x=1744712160; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=xwZBv9z9paT+l3pf111Vj1AZ6tZGapLDRrPS6kxhJXk=;
-        b=aInmiLjbLwhyT5Ul+n0Vkwe1lX5zorDnnLhvEjWbr10o27/riCM6dYwLDOu6XVbciN
-         Znw3o0j+L8Dd9r4oIARx1Y31m8Zi0EbLYnbBfI2V5X0kW0K4f6qMrlkKp/6LYWvt9gEE
-         xhAFBQCA77KR9vnhmPXWnNVwvfw+NXtVn1t0xJ8Gf4ANelhIjxFV1ERg8PheT+xpdS2y
-         ZVwnKdUFeYOi8O3IohWjBu1DV3C6O8zcp8ga656gIQ1bBcqRUub5l29LnX6Zbp2KgEP2
-         bl5I4IrTAfMgZ0EXx9yBv3c3Lq+MZN5Hu7Doo9pTGsMS23V6eWCqTjZCKHWS/ci2Sb+l
-         cbeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744107360; x=1744712160;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xwZBv9z9paT+l3pf111Vj1AZ6tZGapLDRrPS6kxhJXk=;
-        b=ZIolfFzmw+6VNRq0glVCb1LXQvQ30dGuIg5uOCDw1u5djKT/00Y/4gEvonQX6goPYO
-         T+IJ5aXacAVkfP0w2UPSb3rb3tCfS53KJkItA7xxXJewJwJGqvbtpfZgUFqdaw1M4Y4c
-         L0T2fd5S5NNzhkEBWjGgPrUb9LTO9Pl2XT6CGGYiwOUyb5FXyrry406OF+QO2mUirjLC
-         6yn+aMypWeI/6G1yVLdDGZQhcK3V9shUEwj+yLKPsnEpcZF2kNur6GXO0RL/hSraEdHm
-         hs8JiReOAdlxFvHFpfn3ad+c8Ov0R8ac5rTCzf+PEWhHMpkvfVBqVbQkQ7SZaavAK9gK
-         uiMA==
-X-Forwarded-Encrypted: i=1; AJvYcCWsI5hfXwxy3YDk+c7UM194COQwqwTm/JrFN+p9MKeg4hhmaHN3WvCjx3ivNUHkJysOWxQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz6h9sA6zFXh6UO77Z1lCZItAQRpoN87I52wtfK5lw5Dkr82QeC
-	O1sNdMDdDiEc3qp0r5fHJnweb3qBYMjxS5p7PPss2Hmkmrb+tqv07gEahg==
-X-Gm-Gg: ASbGncso0ZsxPDnrHzABmsiXZ1QG8iRbaTHJDQkMNiuU2/mwans38/sa7qF+769/ikY
-	iTHkWbF2kf5E4zOP5rx8/a5szZbFnwl4Z9IgHAYRmy9f1JdJlA5XNOozzRpPDHDX5RWYYvd6HN5
-	z05H4B40pHXBVNBK0adoIFLaQCUqgy7aSHlpGRa3jiu1oBI888VN/sJ8K7PmdB/Bei1fW4YFyJF
-	xPD8dOLDlJcRy232PyhWHsNToO3QttXdcsUes8lyEMbiaaU/2zlCnw0Z7+Zlk6YdLVvXd9LyOHt
-	5b9ccUjq18z0I8YW5afyIQDWCSobsyaEPpTmSqDIvvsjnvqKuFCeHgkSVLTzZ/hEfoAdcEZ1nPi
-	62K72mLoXEsDHir2HhbcajYmq0nw=
-X-Google-Smtp-Source: AGHT+IF/TzqTVbZLdhtTepeC5IipUoMwnwNsmlIyvsXBbTLBUvlsKoK/Yzalt2ouIHzxzhJQEnOVhw==
-X-Received: by 2002:a05:600c:1e0a:b0:43c:f70a:2af0 with SMTP id 5b1f17b1804b1-43ed0c50ab7mr166870785e9.16.1744107359880;
-        Tue, 08 Apr 2025 03:15:59 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:efb:6e00:24f3:2d85? ([2a0a:ef40:700:a501:efb:6e00:24f3:2d85])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c300969e1sm14594746f8f.10.2025.04.08.03.15.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Apr 2025 03:15:59 -0700 (PDT)
-Message-ID: <240d1cab-b564-45ae-945e-cba621aa7562@gmail.com>
-Date: Tue, 8 Apr 2025 11:15:56 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eBTlpKSa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XS6Jwb79"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4D3EA1140209
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 06:24:15 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Tue, 08 Apr 2025 06:24:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1744107855; x=1744194255; bh=eT1spWXZxT
+	AxhD1lfnaGo/8UcSg6ogwBeS8atrcmNlc=; b=eBTlpKSabjOkknGyiBrP0D8tY5
+	sJcHAQkzXYbLge/LiJJ02MKIPDUYXBEfB9wjmoYmjRMd54FjzLPGSz0qDE3PeqsD
+	sroT9fe91bazIBHrbvQnUSGCP1HpC8sd1G3cG1X+a5cuvpCta2HrX8ZjC3nph8AA
+	1mxAP0cY1Hw9kRMs+7AbCjnxjy7JMTOuytlzl0gqZhiD01lOTh5gMT+8gDxt/eO+
+	pzcX1RO9nBpUk6A6RYVFG09hW6CNax6n3M8HHpmQ6VmiDqK1xeY0RVrzZo+B31EB
+	ogPjFCxtjLuCivbIqy2zrd9of9MEcgmOEdamwBJHEJcQF6TKtWyb84irnMxw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1744107855; x=1744194255; bh=eT1spWXZxTAxhD1lfnaGo/8UcSg6
+	ogwBeS8atrcmNlc=; b=XS6Jwb79974v4RyXwoQjHa0NK9abuSnOxTi7Q5WiXMM2
+	44Kca57ktu6KUWpxp/+kHA0wdmosIcBj2G2Mn5H8i65/RgZbq1OOofEck3FWs+EP
+	omSQS8cXP5WosWc82xqiVu1KiXegiogQVGfUHH39XIS0Tfy+0mypq+FkJIH+G6K8
+	aGrivhNWTr7Io8w1i6/5c9APEQM9hkNhRx5x0A82d51HxdCRtPB86lvlEiWyYm0+
+	1N5na9hWYtHd1SLoOq6vqfu/vIkyHSNd/Mec6PsGZVHOajJE0dymNpjb4HJLiBd1
+	KUbBx3qDN/fu+Z7EF8U7u0byfUPjc3FpDepBMT703Q==
+X-ME-Sender: <xms:T_n0Z-Gjsqyu2sjKTdI5dI8rUgt5pTcxeX9a2biS-MhZXhWuhnZXUQ>
+    <xme:T_n0Z_UIroBC9deTf8p2wvWaYub7aHXQPrHpldu3g9_y0eP_VizxC-HlRAkBTuafn
+    AwXyoiwlCnaGn7Ouw>
+X-ME-Received: <xmr:T_n0Z4JGYtVlnMvUxE2rVG6XVZSZHuYCyu9uL7yUkzmBrYQjWwsL-Nb6Rdw0AH8BJCPx83iu-kwEoUJOhc6XRj9oONXfkUBU2j8t9WSvI52_1RSVdg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddvkeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhuf
+    ffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveeugeektd
+    etieegjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:T_n0Z4E97CZVIYtUIIdm9p3wdtwniorOzae1hMr1G_C049IFJc0TiQ>
+    <xmx:T_n0Z0XaB5_Vs_LzwXzwGwHaTbP797IeIubys3hizldT0qAEu9Fovg>
+    <xmx:T_n0Z7OJ9FKc5asvnoH8g-gWOOtxm-9luNbYKtmWowyBSov1UCZNjA>
+    <xmx:T_n0Z70Ed6Oo6_EGkzVMG0vGc5Rs2ysly30poqSZtwn-vZpeclJ2fA>
+    <xmx:T_n0Z4TA_xUvi9kKc-_rJMOMbXtKUikOPPpwIHND4s7SMRrpKGjtJZ4u>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Tue, 8 Apr 2025 06:24:14 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 65dc4419 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Tue, 8 Apr 2025 10:24:12 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/9] Split up "object-file.c"
+Date: Tue, 08 Apr 2025 12:24:08 +0200
+Message-Id: <20250408-pks-split-object-file-v1-0-f1fd50191143@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] [RFC] rebase -m: partial support for copying extra commit
- headers
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1902.git.1744041163929.gitgitgadget@gmail.com>
- <Z_R6W_yjJEYuWo0A@tapette.crustytoothpaste.net>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <Z_R6W_yjJEYuWo0A@tapette.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEn59GcC/x3MSwqAMAwA0atI1gba4g+vIi60TTUqWhoRQby7x
+ eVbzDwgFJkE2uyBSBcLH3uCzjOw87BPhOySwShTqkI1GFZBCRufeIwL2RM9b4S20q62zgxGe0h
+ tiOT5/r9d/74fUiGBn2cAAAA=
+X-Change-ID: 20250408-pks-split-object-file-c61d7cd2a21f
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.14.2
 
-Hi brian
+Hi,
 
-On 08/04/2025 02:22, brian m. carlson wrote:
-> On 2025-04-07 at 15:52:43, Phillip Wood via GitGitGadget wrote:
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->>      [RFC] rebase -m: partial support for copying extra commit headers
->>      
->>      This patch is largely a response to
->>      https://lore.kernel.org/git/Z-5rpWKAVPmz32jC@pks.im/ . I'm in two minds
->>      about whether we should consider merging such partial support but if it
->>      helps forges preserve extra commit headers then it may well be worth it.
-> 
-> I'd like to see command-line options to control this and ideally a
-> configuration option.  Right now, we know nothing about these extra
-> headers, including an expected format.  If a future version of Git (say,
-> 3.0) adds a new header and the user includes invalid data in this extra
-> header (which happens all the time with author and committer
-> information), then 2.50 will propagate it on rebase and it won't be
-> fixed until the user uses a version of Git that understands the header
-> and can fsck it correctly.  That's not really great, since it means we
-> can unknowingly spread corruption.
+"object-file.c" is quite a grab-bag of all kinds of different functions.
+Many of these functions aren't really a good fit though and should be
+owned by a different subsystem. This patch series tries to split up
+concerns a bit better by splitting out this functionality into other
+files:
 
-We could certainly add some way to make this opt-in if there is a desire 
-for it and you make a good point about compatibility if we add a new 
-commit header. I'm not sure I'd describe preserving these headers when 
-rebasing as spreading corruption though as we're simply rewriting 
-existing commits. If the user chose to merge rather than rebase we'd 
-still have the same issues without creating any new commits.
+  - `safe_create_leading_directories()` is moved into "dir.c".
+  - `xmmap()` is moved into "wrapper.c".
+  - `git_open_cloexec()` is moved into "compat/open.c".
+  - Several functions attached to `struct index_state` are moved into
+    "read-cache.c".
+  - Several functions related to `struct object_store` are moved into a
+    new file "object-store.c".
 
-> I am pretty sure that at $DAYJOB we'll need to have a discussion about
-> whether we want to propagate these headers during rebase and I'm
-> personally leaning against it.
+"object-file.c" now mostly contains logic to read and write loose object
+files, whereas "object-store.c" contains the higher-level logic to
+manage different object directories for a repository. Eventually, these
+will become the loose object backend as well as the `struct ref_store`
+equivalent for objects, respectively.
 
-My understanding is that GitHub has been using "git replay" for rebases 
-and therefore copying extra commit headers since the middle of 2023 
-[1,2]. The message I linked to in my original mail suggests that the 
-"change-id" header is preserved when rebasing on GitHub.
+The series is built on top of 9d22ac51228 (The third batch, 2025-04-07)
+with ps/object-wo-the-repository at 9442b1c919a (Merge remote-tracking
+branch 'junio/ps/object-wo-the-repository' into HEAD, 2025-04-08) merged
+into it.
 
-> Why, you ask?  I've seen at least the following types of corruption:
-> 
-> * Missing timezones
-> * Timezones with less than four digits
-> * Valid timezones padded to more than four digits with zeros
-> * Timezones which don't exist and never have (e.g., +1700)
-> * Timezones which are so absurdly large that they push the date to a
->    year when nobody alive now will still be living
-> * Date stamps that are larger than 2^64
-> * Date stamps which are smaller than 2^64 but beyond the expected life
->    of the Sun
-> * Extra angle brackets in the email field
-> * Nothing in between the email brackets
-> * Nothing before the email brackets (no name at all)
-> * Names which are not UTF-8 but without an encoding header
-> * Names which are not valid in the specified encoding
-> * Emails which are not valid UTF-8[0]
-> * Emails which don't meet the (ludicrously generous to the point of
->    being nearly unparseable) RFC production
-> * Encodings which are not valid IANA charsets
-> * Messages with no body and no blank line (just the newline at the end
->    of the final header)
-> * gpgsig headers that include random non-ASCII bytes and control
->    characters[1]
+Thanks!
 
-Thanks for sharing that, it is an interesting list. On the subject of 
-encoding I do think our documentation could be clearer that the encoding 
-applies to all the headers as well as the commit message. As far as I 
-can see it only mentions the commit message, not the author or committer 
-identities but repo_logmsg_reencode() re-encodes the whole commit 
-buffer. Out of interest do you think we could be doing a better job with 
-fsck to pick up some of these problems earlier?
+Patrick
 
-I think "git rebase" only cares that the author identity can be parsed 
-by split_ident() which is fairly lenient.
+---
+Patrick Steinhardt (9):
+      object-file: move `safe_create_leading_directories()` into "dir.c"
+      object-file: move `git_open_cloexec()` to "compat/open.c"
+      object-file: move `xmmap()` into "wrapper.c"
+      object-file: split out functions relating to object store subsystem
+      object-file: split up concerns of `HASH_*` flags
+      object-file: split out functions relating to index subsystem
+      object: split out functions relating to object store subsystem
+      object-store: remove global array of cached objects
+      object-store: merge "object-store-ll.h" and "object-store.h"
 
-> I see Patrick is CC'd here and I'm interested in his thoughts, as well
-> as, of course, those of anyone else as well.
+ Makefile                           |    3 +-
+ apply.c                            |    2 +-
+ archive-tar.c                      |    2 +-
+ archive-zip.c                      |    2 +-
+ archive.c                          |    2 +-
+ attr.c                             |    2 +-
+ bisect.c                           |    2 +-
+ blame.c                            |    4 +-
+ builtin/backfill.c                 |    2 +-
+ builtin/blame.c                    |    2 +-
+ builtin/bugreport.c                |    2 +-
+ builtin/cat-file.c                 |    2 +-
+ builtin/checkout.c                 |    3 +-
+ builtin/clone.c                    |    2 +-
+ builtin/commit-graph.c             |    2 +-
+ builtin/commit-tree.c              |    2 +-
+ builtin/count-objects.c            |    2 +-
+ builtin/credential-cache--daemon.c |    2 +-
+ builtin/describe.c                 |    2 +-
+ builtin/diagnose.c                 |    2 +-
+ builtin/difftool.c                 |    4 +-
+ builtin/fast-export.c              |    2 +-
+ builtin/fast-import.c              |    2 +-
+ builtin/fetch.c                    |    2 +-
+ builtin/fsck.c                     |    3 +-
+ builtin/gc.c                       |    4 +-
+ builtin/grep.c                     |    2 +-
+ builtin/hash-object.c              |   26 +-
+ builtin/index-pack.c               |    2 +-
+ builtin/init-db.c                  |    2 +-
+ builtin/log.c                      |    4 +-
+ builtin/ls-tree.c                  |    2 +-
+ builtin/merge-file.c               |    1 +
+ builtin/merge-tree.c               |    2 +-
+ builtin/mktag.c                    |    2 +-
+ builtin/mktree.c                   |    3 +-
+ builtin/multi-pack-index.c         |    2 +-
+ builtin/notes.c                    |    3 +-
+ builtin/pack-objects.c             |    2 +-
+ builtin/pack-redundant.c           |    2 +-
+ builtin/prune.c                    |    2 +-
+ builtin/receive-pack.c             |    3 +-
+ builtin/remote.c                   |    2 +-
+ builtin/repack.c                   |    2 +-
+ builtin/replace.c                  |    5 +-
+ builtin/rev-list.c                 |    2 +-
+ builtin/show-ref.c                 |    2 +-
+ builtin/submodule--helper.c        |    2 +-
+ builtin/tag.c                      |    3 +-
+ builtin/unpack-file.c              |    3 +-
+ builtin/unpack-objects.c           |    3 +-
+ builtin/update-index.c             |    2 +-
+ bulk-checkin.c                     |    9 +-
+ bundle-uri.c                       |    2 +-
+ bundle.c                           |    2 +-
+ cache-tree.c                       |    4 +-
+ combine-diff.c                     |    2 +-
+ commit-graph.c                     |    4 +-
+ commit-graph.h                     |    2 +-
+ commit.c                           |    3 +-
+ compat/open.c                      |   29 +
+ config.c                           |    2 +-
+ connected.c                        |    2 +-
+ convert.c                          |    2 +-
+ diagnose.c                         |    2 +-
+ diff.c                             |    4 +-
+ diffcore-rename.c                  |    2 +-
+ dir.c                              |  109 ++-
+ dir.h                              |   35 +
+ entry.c                            |    2 +-
+ fetch-pack.c                       |    2 +-
+ fmt-merge-msg.c                    |    2 +-
+ fsck.c                             |    2 +-
+ git-compat-util.h                  |    3 +
+ grep.c                             |    2 +-
+ http-backend.c                     |    2 +-
+ http-push.c                        |    3 +-
+ http-walker.c                      |    2 +-
+ http.c                             |    2 +-
+ list-objects-filter.c              |    2 +-
+ list-objects.c                     |    2 +-
+ log-tree.c                         |    2 +-
+ mailmap.c                          |    2 +-
+ match-trees.c                      |    3 +-
+ merge-blobs.c                      |    2 +-
+ merge-ort.c                        |    3 +-
+ merge-recursive.c                  |    2 +-
+ meson.build                        |    2 +
+ midx-write.c                       |    1 +
+ midx.c                             |    1 -
+ notes-cache.c                      |    3 +-
+ notes-merge.c                      |    5 +-
+ notes.c                            |    3 +-
+ object-file.c                      | 1420 +-----------------------------------
+ object-file.h                      |  118 +--
+ object-name.c                      |    2 +-
+ object-store-ll.h                  |  556 --------------
+ object-store.c                     | 1050 ++++++++++++++++++++++++++
+ object-store.h                     |  516 ++++++++++++-
+ object.c                           |   67 --
+ oss-fuzz/fuzz-pack-idx.c           |    2 +-
+ pack-bitmap-write.c                |    2 +-
+ pack-bitmap.c                      |    3 +-
+ pack-check.c                       |    2 +-
+ pack-mtimes.c                      |    3 +-
+ pack-objects.h                     |    2 +-
+ pack-revindex.c                    |    3 +-
+ packfile.c                         |    2 +-
+ path.c                             |    2 +-
+ promisor-remote.c                  |    2 +-
+ protocol-caps.c                    |    2 +-
+ prune-packed.c                     |    2 +-
+ reachable.c                        |    2 +-
+ read-cache.c                       |  230 +++++-
+ read-cache.h                       |    9 +
+ ref-filter.c                       |    2 +-
+ reflog.c                           |    2 +-
+ refs.c                             |    2 +-
+ remote.c                           |    2 +-
+ replace-object.c                   |    2 +-
+ replace-object.h                   |    2 +-
+ repository.c                       |    2 +-
+ rerere.c                           |    2 +-
+ revision.c                         |    2 +-
+ send-pack.c                        |    2 +-
+ sequencer.c                        |    2 +-
+ server-info.c                      |    2 +-
+ shallow.c                          |    2 +-
+ streaming.c                        |    2 +-
+ submodule-config.c                 |    2 +-
+ submodule.c                        |    2 +-
+ t/helper/test-pack-mtimes.c        |    2 +-
+ t/helper/test-partial-clone.c      |    2 +-
+ t/helper/test-read-graph.c         |    2 +-
+ t/helper/test-read-midx.c          |    2 +-
+ t/helper/test-ref-store.c          |    2 +-
+ tag.c                              |    2 +-
+ tmp-objdir.c                       |    2 +-
+ tree-walk.c                        |    2 +-
+ tree.c                             |    2 +-
+ unpack-trees.c                     |    2 +-
+ upload-pack.c                      |    2 +-
+ walker.c                           |    2 +-
+ wrapper.c                          |   48 ++
+ xdiff-interface.c                  |    2 +-
+ 145 files changed, 2296 insertions(+), 2224 deletions(-)
 
-Yes me too
 
-Thanks for your thoughtful and intereting reply
-
-Phillip
-
-[1] 
-https://github.blog/changelog/2023-06-28-rebase-commits-now-created-using-the-merge-ort-strategy/
-[2] 
-https://github.blog/engineering/infrastructure/scaling-merge-ort-across-github/
+---
+base-commit: 9442b1c919af9aed513eb0a484fe96358a500cf5
+change-id: 20250408-pks-split-object-file-c61d7cd2a21f
 
