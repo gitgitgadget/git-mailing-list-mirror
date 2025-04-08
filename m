@@ -1,637 +1,451 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB231265CAF
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 12:13:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFD4269820
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 12:52:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744114426; cv=none; b=cBOFj6Nn/F4OYKiIqcAtnujwgk0cbneNO4hSjcpreqrYnGMEZQe2sOIXpimlwQwot66iN9KKMPbFPzl4+O5opCDSZzrEmslNwtCFf/oCnIYm8Cq0VHaO61ZhFAhKj9/LWSnzAq7cMIejh+rGUYVSKni9bfzIlffklDzZ3HiZw3U=
+	t=1744116761; cv=none; b=Dh1uw740un/+PdQFCNB4gKWYJgVYQv7tLwu13xjfLVqHWrSyKNa49wGWYXKJJTKJeaO7DEF+dMx8j62sIo055e+ezFU6CjLTCofb15bi3eqhpd2fO0w+ktz8SX93rvvT33kq5tf3RSoMpgLsm5BJeq7OMnHgUEf+9ZsOQl73E9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744114426; c=relaxed/simple;
-	bh=Aqo3fWe0ipGjjdoLPW085jprjFMRfPR3V/D6v7Fjxgw=;
-	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=CuuJK9ZKoVDaIX39bxTs80jenotWkk2CVTAcZRkX/fDRaJ9hKs6AGRBcAEMbJkkL/wh5w1PzOUlcR5/Lt+A44RNd/dXI6HmkgFyZQd6uj3wAQtU3pDrv2xdrqAQsl95dJfJWVLpFIYjYE5bTEWQO+8X7/tnTpdng9pxYhxi/D4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CyalsSo6; arc=none smtp.client-ip=209.85.222.172
+	s=arc-20240116; t=1744116761; c=relaxed/simple;
+	bh=OfhLNi2xibHqlMPEf7LGFf26UJcyXWEKhgsbhlK0WJ0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=A329qisYK1OKYDPfhOgAicOtrejyWR/jEQyToirtQwDPDE9liEjTiDctOkH1HsfJ5d6sx6+F4J8aliVyBVI+MPKRNlYXscwVievJBixQZGQLAloJL/zSPjZFl/1Napv4qsS7GRra2c4pWtF0zL/WuZxwh2jmznDY5QKCZdx6R88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h0Dil5LK; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CyalsSo6"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7c554d7dc2aso900894285a.3
-        for <git@vger.kernel.org>; Tue, 08 Apr 2025 05:13:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h0Dil5LK"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-226185948ffso55508125ad.0
+        for <git@vger.kernel.org>; Tue, 08 Apr 2025 05:52:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744114423; x=1744719223; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4sK0qz68j0SsMc4Nwm7a6bGRG584TdheWVfc1cN2XNg=;
-        b=CyalsSo6wnE1igOiYiiJ8cfXExCy8HlOlCX99DQy3AapOo6FEctxaauhuXvfOASR2G
-         JbT4qfbbkiZ5HzqjCDjNaJTPJGhBb/hk9YoIpaIElfLaeAK4PbkxKGKbhE8zRjAcL+cF
-         Ppz5F2g9A0S0VLjSTl83YkbmxhJj45N0GnCOnFuVUHxYuHDCKBN/q3amw+stX38ugkMS
-         oYrv4/nb4EN1O3VhC9ImdzSk6Xz4ddbSNu1dweKfisYeYIxOp5Yi9y9+Vz7arETPFBVR
-         WmJCA+0wz8sj/MI8mg4dBmnY1qhvmzya+cSe/swIKip71d/vhx4I6DNCtVJwRU52/7q2
-         gMrQ==
+        d=gmail.com; s=20230601; t=1744116759; x=1744721559; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yflzIsYCqnAl7PL17MUrG+YY75qHfkkQES38IEslfiQ=;
+        b=h0Dil5LKUMaKr55xqN0UBqrhDofRGtZx4x9UqXFM9RRQqPNtC6nEgF2J0kpdtehlwn
+         FG+AbZJgwojLJuHq1AM5MV+gVvlRz3+zg8JVJcVxSwEm4ZqxUQb7mmiVT0RnHojaY2BN
+         xxPm+xHyVMbD+9xs0LWUZyTcDBF1r5bgoTKO+/WQsmn3+LdRckwBuduFVgGkuv4+Oarh
+         UxAH5fW3obxPsO4WtelnoGDJ3DCK0YZfieZwPieyXP9IUA8etpO8RwpmymS3BbDB5p59
+         6gADJvRnIPgrRozFVhz63PaPlVWknJ3/zjdLg4wNOjxwmU7sziuvt0HyBg5jkLgcohoe
+         OtvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744114423; x=1744719223;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4sK0qz68j0SsMc4Nwm7a6bGRG584TdheWVfc1cN2XNg=;
-        b=K6ibN/NNZLIQfHCip/UFJUMHVLhf8UwcTOrFZtyk7NQeJSuZG3jkfRaukan0+CEmQC
-         qg5GK1OUBv6Nm9+XZPAGh9pixnY/xQfvp3hSvAzAkYguZu5hEqLIhFRhtwp3nZfbDVQt
-         FTAB+yxKWO0q3BCSttVINkMGxJ+RvhQDa00xbRYfOrUnU0HrQZ49p8FcSUcLyjQfE5DI
-         xuZlgxO9YfPM+hEk3eyCTIt9iH0lIIT50wPvgEwkG2/4MGnhaNxXLx2QnTyXfhaB4W2N
-         7A9JqmWLqqjyyDe+tTE9eQs7KwqkzSMvTMSvXablaAzK7BO8cpVg+g8qhrim5XXCc6zX
-         yGrA==
-X-Forwarded-Encrypted: i=1; AJvYcCVok1vPnQL27pZAlqG80FvKQF+7Dlp5cywGL8xJaYy0hFAsDSsQzCAAlY5AcK05CAnPVs0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzT0gOYDAv5UgAO9+5FDa+8IF3llZJ38CHtv/ImHOTGgQ44+3Hc
-	bIINz50RSppQTKmt+aaM0UgtnRHdrjzCkeeXHDENZp7iIaxJbLAW
-X-Gm-Gg: ASbGncvtqBuvUItvWFK3FUaK4zNMYV3LIIbCuGtx3SkWtrqEoWGtnTIE56zSt/CW6rx
-	cueIsDrgGC/8YA3u9QqZJGFhv0kqYLgPI9JL1DyxM3hpYxiQjWR3sa5fLq9kWkiYxGtK8CsUWFl
-	W+Fepvf0j1pMedDt7bxISuZgH9pGI+2rBkp5jr9/xZ8SgyaBuXlsMSAdsnCioRLkx2OSJPPeA6v
-	BRl2LW/ejbj3PvOjqqjZ3073VToQhhbfyp+kiVxulBP5Fa8iXqQqF7MBVnxUN2fF6YcrPWEutYu
-	HdzBjLysZPddBOxYkw2qBZNZHPvrjti06dJgvNlW4sbIwO+BnrTBisvj9Rh7Mb4TiiUB4+pyQNj
-	Vk2QxAij7v+j07Y91XtCxhA==
-X-Google-Smtp-Source: AGHT+IF2c3ZPo9cxpjrTugG5qCdF2zx9HKfESCc4ZhG089OS2NyfB/wvQyGotdsRR86Uzw+nlzoMHQ==
-X-Received: by 2002:a05:620a:d81:b0:7c5:48bc:8c89 with SMTP id af79cd13be357-7c774d5f0e4mr2713491085a.27.1744114422217;
-        Tue, 08 Apr 2025 05:13:42 -0700 (PDT)
-Received: from [192.168.1.174] (c-73-143-206-114.hsd1.ma.comcast.net. [73.143.206.114])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c76e75ec7bsm750367485a.43.2025.04.08.05.13.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Apr 2025 05:13:41 -0700 (PDT)
-From: Nikolay Shustov <nikolay.shustov@gmail.com>
-X-Google-Original-From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
-Message-ID: <e91c0859-da89-47a2-b0c7-ce1943318529@gmail.com>
-Date: Tue, 8 Apr 2025 08:13:41 -0400
+        d=1e100.net; s=20230601; t=1744116759; x=1744721559;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yflzIsYCqnAl7PL17MUrG+YY75qHfkkQES38IEslfiQ=;
+        b=eb+8bhJ0En/V7Te8rGzuBmlu1mDctA/mHmoRqhWeHCi14oNhG9Nf14/MfGDmmVO00e
+         VhAv5yFrvShe4CW7naXnxT6aTt4I1MNT/3tZPvT+mrFGFV7MiINd15CSZxYImTsL5ZuR
+         mLh36p5MUwS6EytLAvLDWNbLwHyrMACr7lJjgN8N35xWIyuqq4qY7D5V6AiMkSjBR9Ye
+         olfWyzUnU/LY8xHJPjlk2kAN3Yaj6llBra3vVNkvxS32DLFZxbxK8uHR6pfxgPWbyXMB
+         u3mWEBu5bxHTwttCGqQ9bBeOLZxFrXv512yh4m/hBk5YVpt4TivfLhJEMk2NGgRzSLNg
+         +uSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV0LZLnk8UT+IJZlSeQd/s+P76UnJ/e9v8SmoTrO5nBmzTQdGpVAHMiIx5oTZ9Atj/H/nU=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywh4AYBrBwCIfLxezxafZiip9F3KokxfoMnEn9Q/AChXQYEM4Nu
+	SF855NIfWhm3RmRgbJ71BcJgemop1hIXrLUHtSPVGGSppchI339N
+X-Gm-Gg: ASbGncsgMegF66ch5YCNE55VErRk94vpVdlKCLDMaZIVnaYyEA/lFMAFFLuPXFW8XWs
+	YFGuZVQj2hkufP7InkjUtmhpn1h/8eQggwFZHT9E04Xi/keAj4KGrM5LyCtWcEPnLbOBDNc1LfT
+	qBxZEHr3vvfvvD2K00aS6JCAJ7oeypmdQKNSTmTgiz7CHivGvWxrrSfRAXIbPR8YBkKERSDmmmm
+	y+chatiuR4RkE9/PITnSApXhbHF0FziMzVMLwwcce3vXk7oNHk9SmcmczIeWw/qURTHacRmE0Hr
+	CyMtSAWjMGnm7lMYz0lSzcIpzOr2IReTyH2TEOnxY3UTlzT9uca0ze8U5pnSFIrHntsA2Ks7
+X-Google-Smtp-Source: AGHT+IF160RYS2Vbesw0bokWxU8mOayZsMELyjBpftuflkx9mdRpnfrwRsXCLGoT+hchNUkWfgDktQ==
+X-Received: by 2002:a17:902:e54c:b0:220:c066:94eb with SMTP id d9443c01a7336-22a95539c55mr161480325ad.25.1744116758784;
+        Tue, 08 Apr 2025 05:52:38 -0700 (PDT)
+Received: from bl4ze-rig.iitr.ac.in ([103.37.201.221])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3057cb5a13asm11014105a91.33.2025.04.08.05.52.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Apr 2025 05:52:38 -0700 (PDT)
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+To: ayu.chandekar@gmail.com
+Cc: christian.couder@gmail.com,
+	git@vger.kernel.org,
+	karthik.188@gmail.com,
+	ps@pks.im,
+	shejialuo@gmail.com,
+	shyamthakkar001@gmail.com
+Subject: =?UTF-8?q?=5BGSOC=5D=20=5BPROPOSAL=20v3=5D=3A=20Refactoring=20in=20order=20to=20reduce=20Git=E2=80=99s=20global=20state?=
+Date: Tue,  8 Apr 2025 18:22:19 +0530
+Message-ID: <20250408125220.59963-1-ayu.chandekar@gmail.com>
+X-Mailer: git-send-email 2.48.GIT
+In-Reply-To: <20250326052602.265989-1-ayu.chandekar@gmail.com>
+References: <20250326052602.265989-1-ayu.chandekar@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: Nikolay.Shustov@gmail.com
-Subject: Re: [PATCH] git p4 fix for failure to decode p4 errors
-To: Fahad Al-Rashed <fahad@keylock.net>, git@vger.kernel.org
-Cc: bekenn@gmai.com, ps@pks.im, phillip.wood@dunelm.org.uk
-References: <pull.1926.git.git.1742440852765.gitgitgadget@gmail.com>
- <32b401c3-de0e-427b-83b7-eb5a5b315db1@gmail.com>
- <fdbb3f88-7321-4dc0-9ead-7ed9ef0fc995@gmail.com>
- <339b8557-d41a-4a40-912b-eb2cff63159f@gmail.com>
- <7e5d0613-d116-4e60-8ccf-efb092776398@gmail.com>
- <652def28-2e97-4177-9197-bd93caa57886@gmail.com>
- <A1896FA9-F09C-4099-8A7E-4AFFD2DBCF7F@keylock.net>
- <1948dfea-88c9-4e4e-937a-e162ad42d8aa@gmail.com>
- <501e308d-61b3-429a-bc4a-6f0c81455279@gmail.com>
-Content-Language: en-US
-In-Reply-To: <501e308d-61b3-429a-bc4a-6f0c81455279@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi Fahad,
-I hope you are doing well.
-If there are troubles with trying this on your Perforce system, maybe we 
-could think of other way verifying the patch?
+Hello,
+This is the third version of my GSoC 2025 proposal for the project 
+"Refactoring in order to reduce Git’s global state".
 
-Thank you,
-- Nikolay
+The key change from v2 to this v3 is that I’ve added how I plan to tackle 
+the 'the_repository' global object.
 
-On 4/5/25 14:46, Nikolay Shustov wrote:
-> Hello Fahad,
-> Did you have a chance to try it with your Perforce system yet?
->
-> Thanks,
-> - Nikolay
->
-> On 3/31/25 19:37, Nikolay Shustov wrote:
->> Hi Fahad,
->> Thank you for taking a look.
->> Yes, you can run this test locally, that should be enough.
->> The test is conditionalized on a) having p4 server installation with 
->> no Unicode support and b) running with Python 3 only.
->> If either of these do not match, it will skip the execution.
->>
->> I tested it on my computer with the freshly installed p4 helix server 
->> and client; but it was on Kubuntu only, did not try it on Windows.
->> Perforce company allows limited use of the server and client for 
->> non-commercial purposes, so it was all legit.
->>
->> Please let me know how it runs for you.
->>
->> Cheers,
->> - Nikolay
->>
->> On 3/31/25 05:01, Fahad Al-Rashed wrote:
->>> Hi Nikolay,
->>>
->>> The patch looks reasonable.
->>>
->>> What I can help with is test it on our Perforce installation when I 
->>> go back to work next week.
->>>
->>> For the purpose of testing, is running 
->>> t/t9837-git-p4-error-encoding.sh locally on my computer enough to 
->>> test your patch?
->>>
->>> Best,
->>> Fahad
->>>
->>>> On 31 Mar 2025, at 4:21 AM, Nikolay Shustov 
->>>> <nikolay.shustov@gmail.com> wrote:
->>>>
->>>> <adding Fahad Alrashed, James Touton and Patrick Steinhardt, whom 
->>>> Git points to as the contributors to the latest p4-git logic changes>
->>>>
->>>> Hello,
->>>> May I ask you to review the below change to p4-git?
->>>>
->>>> Thank you in advance,
->>>> - Nikolay
->>>>
->>>> On 3/30/25 16:06, Nikolay Shustov wrote:
->>>>> Hi Phillip,
->>>>> Thank you for your time and your feedback.
->>>>> It is especially valuable to me as it is the very first PR of mine.
->>>>> I will try to contact the recent contributors of git-p4 changes 
->>>>> for review.
->>>>>
->>>>> To clarify on the fix:
->>>>>
->>>>> The error I hit was while using "git p4 clone":
->>>>> It was throwing decoding exception at line 901 of git-p4, 
->>>>> preventing import from Perforce depot to complete successfully.
->>>>> The root cause is the logic for "git p4 clone" anticipates some p4 
->>>>> operations may return errors, it is a normal part of import process.
->>>>> But that logic uses just .decode() on the byte array of the 
->>>>> returned error message, which does not work well when it contains 
->>>>> the characters with high bit set (which may be the case when 
->>>>> Perforce configured without unicode support). git-p4 
->>>>> implementation has a decoding fallback logic for such cases in 
->>>>> other places, but this specific place did not use any.
->>>>>
->>>>> Using the bullet list in description was not intended to enumerate 
->>>>> the separate changes, but rather to highlight the details of the 
->>>>> change.
->>>>> I will make sure I won't use it in the future to avoid the confusion.
->>>>>
->>>>> That small refactoring I did was not a sidecar but a way I chose 
->>>>> to implement the changes:
->>>>> There was an existing function that was doing the job of decoding 
->>>>> the received p4 metadata, using the existing git-p4 configuration 
->>>>> settings.
->>>>> There also were a few existing variables that kept the state 
->>>>> between the calls of that function (e.g. indicator not to show 
->>>>> decoding fallback warning twice, configuration settings).
->>>>> However, with the way the function was implemented, it could not 
->>>>> be reused as-is for the new case.
->>>>> I would had to add a new function that would have to use the same 
->>>>> core transcoding implementation but behave differently.
->>>>> Adding behavior variances into the existing function felt 
->>>>> suboptimal: it would complicate it quite a bit and I felt sorry 
->>>>> about next one who will have to reverse engineer its behavior 
->>>>> again. Duplicating the part of logic of the existing function also 
->>>>> looked suboptimal: any further changes would have to be done in 
->>>>> two places.
->>>>> So, seeing the need in keeping state between calls and separating 
->>>>> a part of existing logic into separate functions, I went for 
->>>>> moving the implementation into a new class and organizing things 
->>>>> there with the class instance. In my opinion, the new code looks 
->>>>> pretty self-descritpitve.
->>>>>
->>>>> Thank you,
->>>>> - Nikolay
->>>>>
->>>>> On 3/26/25 11:09, Phillip Wood wrote:
->>>>>> Hi Nikolay
->>>>>>
->>>>>> On 25/03/2025 23:09, Nikolay Shustov wrote:
->>>>>>> I think this fix is important.
->>>>>>> git-p4 is used in the companies where there is an intent to 
->>>>>>> migrate from Perforce to Git and having the issue that this 
->>>>>>> change fixes is a real roadblock.
->>>>>>> The better we can make git-p4, the more adoption Git would get 
->>>>>>> in the commercial world.
->>>>>> Unfortunately I don't think any of the regular git contributors 
->>>>>> use git-p4 so to find someone to review this patch I would look 
->>>>>> at who has contributed to git-p4 recently and cc them. Before you 
->>>>>> do that I have a couple of suggestions below
->>>>>>
->>>>>>> On 3/22/25 07:48, Nikolay Shustov wrote:
->>>>>>>> ping, pretty please? :-)
->>>>>>>>
->>>>>>>> On 3/19/25 23:20, Nikolay Shustov via GitGitGadget wrote:
->>>>>>>>> From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
->>>>>>>>>
->>>>>>>>> Fixes the git p4 failure happening when Perforce command 
->>>>>>>>> returns error
->>>>>>>>> containing byte stream of characters with high bit set. In 
->>>>>>>>> such situations
->>>>>>>>> git p4 implementatino fails to decode this byte stream into 
->>>>>>>>> utf-8 string.
->>>>>>>>>
->>>>>>>>> Design:
->>>>>>>>> Make use of existing decoding fallback strategy, described by
->>>>>>>>> git-p4.metadataDecodingStrategy and 
->>>>>>>>> git-p4.metadataFallbackEncoding
->>>>>>>>> settings in the logic that decodes the Perforce command error 
->>>>>>>>> bytes.
->>>>>> Our usual style for commit messages is to explain what the 
->>>>>> problem is and how it is fixed by the changes in the patch. 
->>>>>> Rather than saying "fixes the git p4 failure" I would start by 
->>>>>> explaining what that failure is and how it is caused. It would 
->>>>>> also be helpful to explain what the settings that you refer to do 
->>>>>> so that someone who is familiar with python but not with git-p4 
->>>>>> can understand and potentially review the changes.
->>>>>>
->>>>>>>>> Details:
->>>>>>>>> - Moved p4 metadata transcoding logic from
->>>>>>>>>     metadata_stream_to_writable_bytes(..) into a new 
->>>>>>>>> MetadataTranscoder class.
->>>>>>>>> - Enhcanced the implementation to use 
->>>>>>>>> git-p4.metadataDecodingStrategy and
->>>>>>>>>     git-p4.metadataFallbackEncoding settings for p4 errors 
->>>>>>>>> decoding.
->>>>>>>>> - Added test.
->>>>>> Thanks for taking the time to add a new test, it is much 
->>>>>> appreciated. When there is a bullet list in a commit message it 
->>>>>> is often a sign that the commit is doing more than one thing at 
->>>>>> once. In this case it appears there is a bug fix mixed in with 
->>>>>> some refactoring. I would split the refactoring out into a 
->>>>>> preparatory patch so that reviews can clearly see which changes 
->>>>>> are due to creating the MetadataTranscoder class and which are 
->>>>>> the changes that fix the bug. The new test should be added in the 
->>>>>> commit that fixes the bug.
->>>>>>
->>>>>> Best Wishes
->>>>>>
->>>>>> Phillip
->>>>>>
->>>>>>>>> Signed-off-by: Nikolay Shustov <Nikolay.Shustov@gmail.com>
->>>>>>>>> ---
->>>>>>>>>       git p4 fix for failure to decode p4 errors
->>>>>>>>>
->>>>>>>>> Published-As: 
->>>>>>>>> https://github.com/gitgitgadget/git/releases/tag/pr- 
->>>>>>>>> git-1926%2Fnshustov%2Fgit-p4-error-decoding-v1
->>>>>>>>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git 
->>>>>>>>> pr- git-1926/nshustov/git-p4-error-decoding-v1
->>>>>>>>> Pull-Request: https://github.com/git/git/pull/1926
->>>>>>>>>
->>>>>>>>>    git-p4.py                        | 135 
->>>>>>>>> ++++++++++++++++++-------------
->>>>>>>>>    t/meson.build                    |   1 +
->>>>>>>>>    t/t9837-git-p4-error-encoding.sh |  53 ++++++++++++
->>>>>>>>>    t/t9837/git-p4-error-python3.py  |  15 ++++
->>>>>>>>>    4 files changed, 149 insertions(+), 55 deletions(-)
->>>>>>>>>    create mode 100755 t/t9837-git-p4-error-encoding.sh
->>>>>>>>>    create mode 100644 t/t9837/git-p4-error-python3.py
->>>>>>>>>
->>>>>>>>> diff --git a/git-p4.py b/git-p4.py
->>>>>>>>> index c0ca7becaf4..72a4c55f99e 100755
->>>>>>>>> --- a/git-p4.py
->>>>>>>>> +++ b/git-p4.py
->>>>>>>>> @@ -234,67 +234,91 @@ else:
->>>>>>>>>        class MetadataDecodingException(Exception):
->>>>>>>>> -    def __init__(self, input_string):
->>>>>>>>> +    def __init__(self, input_string, error=None):
->>>>>>>>>            self.input_string = input_string
->>>>>>>>> +        self.error = error
->>>>>>>>>          def __str__(self):
->>>>>>>>> -        return """Decoding perforce metadata failed!
->>>>>>>>> +        message = """Decoding perforce metadata failed!
->>>>>>>>>    The failing string was:
->>>>>>>>>    ---
->>>>>>>>>    {}
->>>>>>>>>    ---
->>>>>>>>>    Consider setting the git-p4.metadataDecodingStrategy config 
->>>>>>>>> option to
->>>>>>>>>    'fallback', to allow metadata to be decoded using a 
->>>>>>>>> fallback encoding,
->>>>>>>>> -defaulting to cp1252.""".format(self.input_string)
->>>>>>>>> +defaulting to cp1252."""
->>>>>>>>> +        if verbose and self.error is not None:
->>>>>>>>> +            message += """
->>>>>>>>> +---
->>>>>>>>> +Error:
->>>>>>>>> +---
->>>>>>>>> +{}"""
->>>>>>>>> +        return message.format(self.input_string, self.error)
->>>>>>>>>      -encoding_fallback_warning_issued = False
->>>>>>>>> -encoding_escape_warning_issued = False
->>>>>>>>> -def metadata_stream_to_writable_bytes(s):
->>>>>>>>> -    encodingStrategy = 
->>>>>>>>> gitConfig('git-p4.metadataDecodingStrategy') or 
->>>>>>>>> defaultMetadataDecodingStrategy
->>>>>>>>> -    fallbackEncoding = 
->>>>>>>>> gitConfig('git-p4.metadataFallbackEncoding') or 
->>>>>>>>> defaultFallbackMetadataEncoding
->>>>>>>>> -    if not isinstance(s, bytes):
->>>>>>>>> -        return s.encode('utf_8')
->>>>>>>>> -    if encodingStrategy == 'passthrough':
->>>>>>>>> -        return s
->>>>>>>>> -    try:
->>>>>>>>> -        s.decode('utf_8')
->>>>>>>>> -        return s
->>>>>>>>> -    except UnicodeDecodeError:
->>>>>>>>> -        if encodingStrategy == 'fallback' and fallbackEncoding:
->>>>>>>>> -            global encoding_fallback_warning_issued
->>>>>>>>> -            global encoding_escape_warning_issued
->>>>>>>>> -            try:
->>>>>>>>> -                if not encoding_fallback_warning_issued:
->>>>>>>>> -                    print("\nCould not decode value as utf-8; 
->>>>>>>>> using configured fallback encoding %s: %s" % 
->>>>>>>>> (fallbackEncoding, s))
->>>>>>>>> -                    print("\n(this warning is only displayed 
->>>>>>>>> once during an import)")
->>>>>>>>> - encoding_fallback_warning_issued = True
->>>>>>>>> -                return 
->>>>>>>>> s.decode(fallbackEncoding).encode('utf_8')
->>>>>>>>> -            except Exception as exc:
->>>>>>>>> -                if not encoding_escape_warning_issued:
->>>>>>>>> -                    print("\nCould not decode value with 
->>>>>>>>> configured fallback encoding %s; escaping bytes over 127: %s" 
->>>>>>>>> % (fallbackEncoding, s))
->>>>>>>>> -                    print("\n(this warning is only displayed 
->>>>>>>>> once during an import)")
->>>>>>>>> - encoding_escape_warning_issued = True
->>>>>>>>> -                escaped_bytes = b''
->>>>>>>>> -                # bytes and strings work very differently in 
->>>>>>>>> python2 vs python3...
->>>>>>>>> -                if str is bytes:
->>>>>>>>> -                    for byte in s:
->>>>>>>>> -                        byte_number = struct.unpack('>B', 
->>>>>>>>> byte)[0]
->>>>>>>>> -                        if byte_number > 127:
->>>>>>>>> -                            escaped_bytes += b'%'
->>>>>>>>> -                            escaped_bytes += hex(byte_number) 
->>>>>>>>> [2:].upper()
->>>>>>>>> -                        else:
->>>>>>>>> -                            escaped_bytes += byte
->>>>>>>>> -                else:
->>>>>>>>> -                    for byte_number in s:
->>>>>>>>> -                        if byte_number > 127:
->>>>>>>>> -                            escaped_bytes += b'%'
->>>>>>>>> -                            escaped_bytes += 
->>>>>>>>> hex(byte_number).upper().encode()[2:]
->>>>>>>>> -                        else:
->>>>>>>>> -                            escaped_bytes += 
->>>>>>>>> bytes([byte_number])
->>>>>>>>> -                return escaped_bytes
->>>>>>>>> +class MetadataTranscoder:
->>>>>>>>> +    def __init__(self, default_metadata_decoding_strategy, 
->>>>>>>>> default_fallback_metadata_encoding):
->>>>>>>>> +        self.decoding_fallback_warning_issued = False
->>>>>>>>> +        self.decoding_escape_warning_issued = False
->>>>>>>>> +        self.decodingStrategy = gitConfig('git- 
->>>>>>>>> p4.metadataDecodingStrategy') or 
->>>>>>>>> default_metadata_decoding_strategy
->>>>>>>>> +        self.fallbackEncoding = gitConfig('git- 
->>>>>>>>> p4.metadataFallbackEncoding') or 
->>>>>>>>> default_fallback_metadata_encoding
->>>>>>>>> +
->>>>>>>>> +    def decode_metadata(self, s, error_from_fallback=True):
->>>>>>>>> +        try:
->>>>>>>>> +            return [s.decode('utf_8'), 'utf_8']
->>>>>>>>> +        except UnicodeDecodeError as decode_exception:
->>>>>>>>> +            error = decode_exception
->>>>>>>>> +            if self.decodingStrategy == 'fallback' and 
->>>>>>>>> self.fallbackEncoding:
->>>>>>>>> +                try:
->>>>>>>>> +                    if not 
->>>>>>>>> self.decoding_fallback_warning_issued:
->>>>>>>>> +                        print("\nCould not decode value as 
->>>>>>>>> utf-8; using configured fallback encoding %s: %s" % 
->>>>>>>>> (self.fallbackEncoding, s))
->>>>>>>>> +                        print("\n(this warning is only 
->>>>>>>>> displayed once during an import)")
->>>>>>>>> + self.decoding_fallback_warning_issued = True
->>>>>>>>> +                    return [s.decode(self.fallbackEncoding), 
->>>>>>>>> self.fallbackEncoding]
->>>>>>>>> +                except Exception as decode_exception:
->>>>>>>>> +                    if not error_from_fallback:
->>>>>>>>> +                        return [s, None]
->>>>>>>>> +                    error = decode_exception
->>>>>>>>> +            raise MetadataDecodingException(s, error)
->>>>>>>>> +
->>>>>>>>> +    def metadata_stream_to_writable_bytes(self, s):
->>>>>>>>> +        if not isinstance(s, bytes):
->>>>>>>>> +            return s.encode('utf_8')
->>>>>>>>> +        if self.decodingStrategy == 'passthrough':
->>>>>>>>> +            return s
->>>>>>>>> +
->>>>>>>>> +        [text, encoding] = self.decode_metadata(s, False)
->>>>>>>>> +        if encoding == 'utf_8':
->>>>>>>>> +            # s is of utf-8 already
->>>>>>>>> +            return s
->>>>>>>>> +
->>>>>>>>> +        if encoding is None:
->>>>>>>>> +            # could not decode s, even with fallback encoding
->>>>>>>>> +            if not self.decoding_escape_warning_issued:
->>>>>>>>> +                print("\nCould not decode value with 
->>>>>>>>> configured fallback encoding %s; escaping bytes over 127: %s" 
->>>>>>>>> % (self.fallbackEncoding, s))
->>>>>>>>> +                print("\n(this warning is only displayed once 
->>>>>>>>> during an import)")
->>>>>>>>> + self.decoding_escape_warning_issued = True
->>>>>>>>> +            escaped_bytes = b''
->>>>>>>>> +            # bytes and strings work very differently in 
->>>>>>>>> python2 vs python3...
->>>>>>>>> +            if str is bytes:
->>>>>>>>> +                for byte in s:
->>>>>>>>> +                    byte_number = struct.unpack('>B', byte)[0]
->>>>>>>>> +                    if byte_number > 127:
->>>>>>>>> +                        escaped_bytes += b'%'
->>>>>>>>> +                        escaped_bytes += 
->>>>>>>>> hex(byte_number)[2:].upper()
->>>>>>>>> +                    else:
->>>>>>>>> +                        escaped_bytes += byte
->>>>>>>>> +            else:
->>>>>>>>> +                for byte_number in s:
->>>>>>>>> +                    if byte_number > 127:
->>>>>>>>> +                        escaped_bytes += b'%'
->>>>>>>>> +                        escaped_bytes += 
->>>>>>>>> hex(byte_number).upper().encode()[2:]
->>>>>>>>> +                    else:
->>>>>>>>> +                        escaped_bytes += bytes([byte_number])
->>>>>>>>> +            return escaped_bytes
->>>>>>>>>    -        raise MetadataDecodingException(s)
->>>>>>>>> +        # were able to decode but not to utf-8
->>>>>>>>> +        return text.encode('utf_8')
->>>>>>>>>        def decode_path(path):
->>>>>>>>> @@ -898,14 +922,14 @@ def p4CmdList(cmd, stdin=None, 
->>>>>>>>> stdin_mode='w+b', cb=None, skip_info=False,
->>>>>>>>>                        decoded_entry[key] = value
->>>>>>>>>                    # Parse out data if it's an error response
->>>>>>>>>                    if decoded_entry.get('code') == 'error' and 
->>>>>>>>> 'data' in decoded_entry:
->>>>>>>>> -                    decoded_entry['data'] = 
->>>>>>>>> decoded_entry['data'].decode()
->>>>>>>>> +                    decoded_entry['data'] = 
->>>>>>>>> metadataTranscoder.decode_metadata(decoded_entry['data'])
->>>>>>>>>                    entry = decoded_entry
->>>>>>>>>                if skip_info:
->>>>>>>>>                    if 'code' in entry and entry['code'] == 
->>>>>>>>> 'info':
->>>>>>>>>                        continue
->>>>>>>>>                for key in p4KeysContainingNonUtf8Chars():
->>>>>>>>>                    if key in entry:
->>>>>>>>> -                    entry[key] = 
->>>>>>>>> metadata_stream_to_writable_bytes(entry[key])
->>>>>>>>> +                    entry[key] = 
->>>>>>>>> metadataTranscoder.metadata_stream_to_writable_bytes(entry[key])
->>>>>>>>>                if cb is not None:
->>>>>>>>>                    cb(entry)
->>>>>>>>>                else:
->>>>>>>>> @@ -1718,7 +1742,7 @@ class P4UserMap:
->>>>>>>>>                # python2 or python3. To support
->>>>>>>>>                # git-p4.metadataDecodingStrategy=fallback, 
->>>>>>>>> self.users dict values
->>>>>>>>>                # are always bytes, ready to be written to git.
->>>>>>>>> -            emailbytes = 
->>>>>>>>> metadata_stream_to_writable_bytes(output["Email"])
->>>>>>>>> +            emailbytes = 
->>>>>>>>> metadataTranscoder.metadata_stream_to_writable_bytes(output["Email"]) 
->>>>>>>>>
->>>>>>>>>                self.users[output["User"]] = output["FullName"] 
->>>>>>>>> + b" <" + emailbytes + b">"
->>>>>>>>>                self.emails[output["Email"]] = output["User"]
->>>>>>>>>    @@ -1730,12 +1754,12 @@ class P4UserMap:
->>>>>>>>>                    fullname = mapUser[0][1]
->>>>>>>>>                    email = mapUser[0][2]
->>>>>>>>>                    fulluser = fullname + " <" + email + ">"
->>>>>>>>> -                self.users[user] = 
->>>>>>>>> metadata_stream_to_writable_bytes(fulluser)
->>>>>>>>> +                self.users[user] = 
->>>>>>>>> metadataTranscoder.metadata_stream_to_writable_bytes(fulluser)
->>>>>>>>>                    self.emails[email] = user
->>>>>>>>>              s = b''
->>>>>>>>>            for (key, val) in self.users.items():
->>>>>>>>> -            keybytes = metadata_stream_to_writable_bytes(key)
->>>>>>>>> +            keybytes = 
->>>>>>>>> metadataTranscoder.metadata_stream_to_writable_bytes(key)
->>>>>>>>>                s += b"%s\t%s\n" % (keybytes.expandtabs(1), 
->>>>>>>>> val.expandtabs(1))
->>>>>>>>>              open(self.getUserCacheFilename(), 'wb').write(s)
->>>>>>>>> @@ -3349,7 +3373,7 @@ class P4Sync(Command, P4UserMap):
->>>>>>>>>            if userid in self.users:
->>>>>>>>>                return self.users[userid]
->>>>>>>>>            else:
->>>>>>>>> -            userid_bytes = 
->>>>>>>>> metadata_stream_to_writable_bytes(userid)
->>>>>>>>> +            userid_bytes = 
->>>>>>>>> metadataTranscoder.metadata_stream_to_writable_bytes(userid)
->>>>>>>>>                return b"%s <a@b>" % userid_bytes
->>>>>>>>>          def streamTag(self, gitStream, labelName, 
->>>>>>>>> labelDetails, commit, epoch):
->>>>>>>>> @@ -4561,6 +4585,7 @@ commands = {
->>>>>>>>>        "unshelve": P4Unshelve,
->>>>>>>>>    }
->>>>>>>>>    +metadataTranscoder = 
->>>>>>>>> MetadataTranscoder(defaultMetadataDecodingStrategy, 
->>>>>>>>> defaultFallbackMetadataEncoding)
->>>>>>>>>      def main():
->>>>>>>>>        if len(sys.argv[1:]) == 0:
->>>>>>>>> diff --git a/t/meson.build b/t/meson.build
->>>>>>>>> index a59da26be3f..656424fdff3 100644
->>>>>>>>> --- a/t/meson.build
->>>>>>>>> +++ b/t/meson.build
->>>>>>>>> @@ -1090,6 +1090,7 @@ integration_tests = [
->>>>>>>>>      't9834-git-p4-file-dir-bug.sh',
->>>>>>>>>      't9835-git-p4-metadata-encoding-python2.sh',
->>>>>>>>>      't9836-git-p4-metadata-encoding-python3.sh',
->>>>>>>>> +  't9837-git-p4-error-encoding.sh',
->>>>>>>>>      't9850-shell.sh',
->>>>>>>>>      't9901-git-web--browse.sh',
->>>>>>>>>      't9902-completion.sh',
->>>>>>>>> diff --git a/t/t9837-git-p4-error-encoding.sh 
->>>>>>>>> b/t/t9837-git-p4-error- encoding.sh
->>>>>>>>> new file mode 100755
->>>>>>>>> index 00000000000..1ea774afb1b
->>>>>>>>> --- /dev/null
->>>>>>>>> +++ b/t/t9837-git-p4-error-encoding.sh
->>>>>>>>> @@ -0,0 +1,53 @@
->>>>>>>>> +#!/bin/sh
->>>>>>>>> +
->>>>>>>>> +test_description='git p4 error encoding
->>>>>>>>> +
->>>>>>>>> +This test checks that the import process handles inconsistent 
->>>>>>>>> text
->>>>>>>>> +encoding in p4 error messages without failing'
->>>>>>>>> +
->>>>>>>>> +. ./lib-git-p4.sh
->>>>>>>>> +
->>>>>>>>> +###############################
->>>>>>>>> +## SECTION REPEATED IN t9835 ##
->>>>>>>>> +###############################
->>>>>>>>> +
->>>>>>>>> +# These tests require Perforce with non-unicode setup.
->>>>>>>>> +out=$(2>&1 P4CHARSET=utf8 p4 client -o)
->>>>>>>>> +if test $? -eq 0
->>>>>>>>> +then
->>>>>>>>> +    skip_all="skipping git p4 error encoding tests; Perforce 
->>>>>>>>> is setup with unicode"
->>>>>>>>> +    test_done
->>>>>>>>> +fi
->>>>>>>>> +
->>>>>>>>> +# These tests are specific to Python 3. Write a custom script 
->>>>>>>>> that executes
->>>>>>>>> +# git-p4 directly with the Python 3 interpreter to ensure 
->>>>>>>>> that we use that
->>>>>>>>> +# version even if Git was compiled with Python 2.
->>>>>>>>> +python_target_binary=$(which python3)
->>>>>>>>> +if test -n "$python_target_binary"
->>>>>>>>> +then
->>>>>>>>> +    mkdir temp_python
->>>>>>>>> +    PATH="$(pwd)/temp_python:$PATH"
->>>>>>>>> +    export PATH
->>>>>>>>> +
->>>>>>>>> +    write_script temp_python/git-p4-python3 <<-EOF
->>>>>>>>> +    exec "$python_target_binary" "$(git --exec-path)/git-p4" 
->>>>>>>>> "\$@"
->>>>>>>>> +    EOF
->>>>>>>>> +fi
->>>>>>>>> +
->>>>>>>>> +git p4-python3 >err
->>>>>>>>> +if ! grep 'valid commands' err
->>>>>>>>> +then
->>>>>>>>> +    skip_all="skipping python3 git p4 tests; python3 not 
->>>>>>>>> available"
->>>>>>>>> +    test_done
->>>>>>>>> +fi
->>>>>>>>> +
->>>>>>>>> +test_expect_success 'start p4d' '
->>>>>>>>> +    start_p4d
->>>>>>>>> +'
->>>>>>>>> +
->>>>>>>>> +test_expect_success 'see if Perforce error with characters 
->>>>>>>>> not convertable to utf-8 will be processed correctly' '
->>>>>>>>> +    test_when_finished cleanup_git &&
->>>>>>>>> +    $python_target_binary 
->>>>>>>>> "$TEST_DIRECTORY"/t9837/git-p4-error- python3.py 
->>>>>>>>> "$TEST_DIRECTORY"
->>>>>>>>> +'
->>>>>>>>> +
->>>>>>>>> +test_done
->>>>>>>>> diff --git a/t/t9837/git-p4-error-python3.py 
->>>>>>>>> b/t/t9837/git-p4-error- python3.py
->>>>>>>>> new file mode 100644
->>>>>>>>> index 00000000000..fb65aee386e
->>>>>>>>> --- /dev/null
->>>>>>>>> +++ b/t/t9837/git-p4-error-python3.py
->>>>>>>>> @@ -0,0 +1,15 @@
->>>>>>>>> +import os
->>>>>>>>> +import sys
->>>>>>>>> +from  importlib.machinery import SourceFileLoader
->>>>>>>>> +
->>>>>>>>> +def main():
->>>>>>>>> +    if len(sys.argv[1:]) != 1:
->>>>>>>>> +        print("Expected test directory name")
->>>>>>>>> +
->>>>>>>>> +    gitp4_path = sys.argv[1] + "/../git-p4.py"
->>>>>>>>> +    gitp4 = SourceFileLoader("gitp4", gitp4_path).load_module()
->>>>>>>>> +    gitp4.p4CmdList(["edit", b'\xFEfile'])
->>>>>>>>> +
->>>>>>>>> +if __name__ == '__main__':
->>>>>>>>> +    main()
->>>>>>>>> +
->>>>>>>>>
->>>>>>>>> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+You can view docs version here: 
+https://docs.google.com/document/d/1tJrtWxo1UGKChB3hu5eZ-ljm0FtU_fsv0TnIRwu3EKY/edit?usp=sharing
+
+---------
+
+Refactoring in order to reduce git’s state
+
+My Information:
+---------------
+
+Name: Ayush Chandekar
+Email: ayu.chandekar@gmail.com
+Mobile No: (+91) 9372496874
+Education: UG Sophomore, IIT Roorkee
+Github: https://github.com/ayu-ch
+Blog: https://ayu-ch.github.io
+
+
+About me:
+---------
+
+I'm Ayush Chandekar, a UG Sophomore studying at Indian Institute of
+Technology, Roorkee. I like participating in various software development
+and tech-development endeavors, usually hackathons, CTFs, and projects at
+SDSLabs. SDSLabs is a student-run technical group that includes passionate
+developers and designers interested in various fields and involved in multiple
+software development projects that aim to foster a software development
+culture on campus. Being a part of this group has exposed me to different
+software development methodologies, tools and frameworks and helped me become
+comfortable contributing to an open-source project with multiple contributors.
+Some open-source contributions I made here are: [1], [2] & [3]
+
+I see this project as a meaningful opportunity to deepen my involvement in
+the Git community and to build a foundation for continued contributions to
+open source development in the future.
+
+
+Overview:
+---------
+
+Git currently uses a global object called `the_repository`, which refers to a
+single instance of `struct repository`. Many internal functions rely on this
+global object rather than accepting a `struct repository` as an explicit
+parameter. This design inherently assumes a single active repository,
+making it difficult to support multi-repository use cases and obstructing
+the long-term goal of libification of Git.
+
+A key architectural limitation is that while `struct repository` encapsulates
+some repository-specific information, many important environment variables
+and configuration settings that logically belong to a repository are still
+stored as global variables, primarily in `environment.c`, not within the
+`repository` struct. As a result, even if multiple repositories were to
+exist concurrently, they would still share this global state, leading to
+incorrect behavior, race conditions, or subtle bugs.
+
+This project aims to refactor Git’s environment handling by relocating global
+variables into more appropriate local contexts, primarily within 
+struct repository and struct repo_settings. However, some global variables may
+only apply to specific subsystems. In such cases, rather than placing them in
+struct repository or struct repo_settings, they should be moved into a
+context that better reflects their scope.
+
+This change will not only make the environment state repository-specific but
+also improve the modularity and maintainability of the codebase. The work
+involves identifying environment-related global variables, determining the
+most suitable structure to house them, and updating all affected code paths
+accordingly.
+
+The difficulty of this project is medium, and it is estimated to take 
+175 to 350 hours.
+
+
+Pre-GSOC:
+---------
+
+I started exploring Git’s codebase and documentation around the end of
+January, familiarizing myself with its structure and development practices. I
+submitted a microproject, which helped me navigate the code and contribution
+workflow.
+
+After selecting the project on refactoring Git’s state, I studied the
+surrounding code and reviewed past patches ([4], [5], [6], [7], [8] & [9])
+to understand the reasoning behind previous changes. 
+
+To better prepare for the GSoC timeline, I submitted a patch related to the
+project, to gain hands-on experience with both the implementation details
+and the submission process. The patch focused on refactoring access to
+`core.attributesfile`.
+
+Through discussions and feedback from the community, I gained a clearer 
+understanding of a key aspect of the project:
+determining whether certain variables should belong to repo_settings/
+repository or be part of a separate subsystem.
+
+Junio pointed out in a feedback that not all global variables should
+be blindly moved into `repo_settings`.
+Specifically, for `git_attributes_file`, adding it to the repository struct
+doesn’t make sense. He explained that it’s similar to how index_state is
+handled, while index_state knows which repository it belongs to, the
+repository struct only holds a pointer to a single index_state instance
+and isn’t aware of other instances.
+
+Following this approach, instead of placing `git_attributes_file` in the
+repository struct, we can house it within an attribute set and pass a
+pointer to that set wherever needed.
+
+This practice patch gave me a clearer understanding of the project.
+
+Patches:
+--------
+
+For git:
+
++ (Microproject) t6423: fix suppression of Git’s exit code in tests
+	Thread:
+	https://public-inbox.org/git/20250202120926.322417-1-ayu.chandekar@gmail.com/
+	Status: Merged into master 
+	Commit Hash: 7c1d34fe5d1229362f2c3ecf2d493167a1f555a2 
+	Description: Instead of executing a Git command as the upstream component of
+				 a pipe, which can result in the exit status being lost, redirect
+				 its output to a file and then process that file in two steps to
+				 ensure the exit status is properly preserved.
+
++ midx: implement progress reporting for QSORT operation
+	Thread:
+	https://public-inbox.org/git/20250210074623.136599-1-ayu.chandekar@gmail.com/
+	Status: Dropped 
+	Description: Add progress reporting during the QSORT operation in 
+				 multi-pack-index verification. While going through the code, 
+				 I found this TODO, which I thought was interesting however my 
+				 approach assumed that the qsort() operation processes elements
+				 in a structured order, which isn't guaranteed.
+
++ Stop depending on `the_repository` for core.attributesfile
+	Thread:
+	https://public-inbox.org/git/20250310151048.69825-1-ayu.chandekar@gmail.com/
+	Status: WIP, needs more discussion.  
+	Description: This patch refactors access to the `core.attributesfiles` 
+				 configuration by moving it into the `repo_settings` struct.
+				 It eliminates the global variable `git_attributes_file` and 
+				 updates relevant code paths to pass the `struct repository`
+				 as a parameter.
+
+For git.github.io:
+
++ GSoC-participants: add GSoC 2024 participants to the list #762
+	Status: Merged into master
+	Description: Adding GSoC 2024 participants will help new
+				 contributors understand their journey, making it easier for them 
+				 to navigate the program and the project.
+
++ Rename references from *.txt to *.adoc in documentation paths. #769
+	Status: Merged into master
+	Description: Since the documentation in git is changed from *.txt to *.adoc
+				 format. Update references to reflect that change.
+
++ Rename references from *.txt to *.adoc in Rev News editions. #770
+	Status: Merged into master
+	Description: Since the documentation in git is changed from *.txt to *.adoc
+				 format. Update references in previous editions to reflect that change.
+
+Proposed Plan:
+--------------
+
+I have been reviewing global variables across the codebase to understand their
+dependencies and impact. To do this, I examined `config.c` and cross-referenced
+it with `environment.c` to see how these variables are currently managed. The
+goal of this project is to eliminate global variables by moving their
+configurations into their local contexts. 
+
+The general approach for handling a global variable begins with understanding
+its purpose. This involves tracing its usage across the codebase and identifying
+the subsystem it should belong to. If the variable is closely tied to
+repository-related functionality, it may belong in struct repository or
+struct repo_settings. Otherwise, it should be placed in a more suitable
+context based on its scope.
+
+Additionally, it's important to review previous attempts or related patches
+to understand past design decisions and ensure consistency with ongoing efforts.
+Finally, the global instance is eliminated by relocating the variable into the
+appropriate context and passing it through the relevant code paths.
+
+Example: Handling `is_bare_repository_cfg`
+The variable `is_bare_repository_cfg` determines whether a repository is bare,
+meaning it lacks a working directory. Since this property is fundamental to
+how a repository functions, it should be placed in struct repository.
+
+I have also gone through the code paths and analyzed how this variable is
+initialized. We can initialize it similarly to how hash_algo is set through
+the repository format. The repository format already contains an `is_bare`
+field, which we can use to set this variable inside struct repository.
+
+However, I still have some questions regarding why the is_bare_repository()
+function checks for `repo->worktree` and why the `worktree struct` itself has
+an `is_bare` variable. If a repository is considered bare when !repo->worktree
+is true, the role of `worktree->is_bare` needs further clarification. I believe
+that by engaging with the community, my understanding will become clearer.
+I also went through [4] to see how John Cai's approach was. 
+
+This is how we can also approach for other global variables.
+Through multiple iterations, this approach will be refined based on feedback, 
+edge cases, and community input.
+
+Other than that, we have a global object 'the_repository'. As an attempt to  
+remove this globally, Patrick introduced a macro  
+`#define USE_THE_REPOSITORY_VARIABLE` in this patch: [10]. An approach I can  
+follow is picking a subsystem or file, and aiming to remove the macro and  
+hence eliminating the usage of 'the_repository' in that subsystem/file by 
+passing the `struct repository` explicitly through the call chain. 
+This approach also helps in removing some of the global variables in that  
+particular subsystem. 
+This is also followed in the patches by Patrick in  
+[5] and [6] to tackle the object and path subsystem respectively and Karthik  
+in [8] to tackle the packfile subsystem.
+
+
+Timeline:
+---------
+
+Pre-GSOC: 
+(Until 8 May) 
+-	Explore the codebase more, focusing on environment-related code paths.
+-	Document how each global variable is used and how it can be moved to 
+	repository settings.  
+-	Study Git’s Coding Guidelines and the Pro Git Book to align with best practices.
+
+----------
+
+Community Bonding: 
+(May 8 - June 1) 
+-	Engage with mentors to discuss different environment variables, their 
+	dependencies, and the best approach for refactoring.
+-	Finalize an implementation plan based on discussions.
+-	Since I will be on summer vacation, I can start coding early and make progress 
+	on the project.
+
+----------
+
+Coding Period: 
+(June 2 - August 25) 
+-	Identify the appropriate subsystem for each global variable and relocate it 
+	into struct repository, struct repo_settings, or other suitable contexts.
+-	Modify function signatures to pass the new contexts explicitly, replacing 
+	reliance on global variables.
+-	Pick subsystems and remove the macro 
+	#define USE_THE_REPOSITORY_VARIABLE and thereby eliminating usage
+	of the global variable ‘the_repository’.
+-	Continuously submit patches for review and incorporate feedback from mentors
+	and the community.  
+-	I plan to write weekly blogs which will document what I did in the whole 
+	week.
+
+----------
+
+Final Week: 
+(August 25 - September 1) 
+-	Write a detailed report on the entire project.  
+-	Fix bugs if any.  
+-	Reflect on the project, noting challenges faced and lessons learned.
+
+
+Blogging:
+---------
+
+I have also set up a blogging page at [11]. While reading blogs from previous
+GSoC contributors, I found them useful in understanding the challenges
+they faced and how they approached their projects. Their experiences gave
+me a better idea of what to expect and how to navigate the development
+process. Inspired by this, I decided to start my own blog to document my
+journey throughout GSoC. This will not only help me track my own progress but
+also serve as a resource for future contributors who might work on similar
+projects. I plan to share updates on my work, challenges encountered and
+insights gained from discussions with mentors and the community.
+
+Additionally, I hope my blog encourages more people to contribute to open
+source by providing a transparent look into the development process. Writing
+about my experience will also help me reflect on my work and improve my
+ability to communicate technical ideas effectively.
+
+I liked the format and structure of Chandra's blog, so I decided to use the
+same template for my own blogging page.
+
+
+Availability:
+-------------
+
+As a college student, I intend to utilise my summer breaks from May to July
+to work on the project. After completing my University exams in April, I can
+start working in May. I can dedicate 40 hours a week from May to July, while
+in August after the classes commence, I can dedicate about 25 hours a week.
+
+There are no exams or planned vacations throughout the coding period. Besides
+this project, I have no commitments/vacations planned for the summer. I shall
+keep my status posted to all the community members and maintain transparency
+in the project.
+
+
+Post-GSOC:
+----------
+
+Beyond contributing code, I strongly believe in giving back to the community
+and helping others grow. Open source thrives on mentorship, knowledge sharing,
+and long-term involvement, and I would love to continue contributing even
+after GSoC ends.
+
+I have always valued mentorship, both as a mentee and as someone who enjoys
+guiding others. If given the opportunity, I would be more than happy to
+mentor/co-mentor future GSoC contributors. By staying involved in the
+community, whether through contributing, reviewing patches, or mentoring,
+I hope to help sustain and expand the project’s reach. I look at GSoC as not 
+just as a one-time contribution but as a step toward a longer-term relationship
+with open source.
+
+I will continue to be involved with Git even after GSoC by contributing patches,
+reviewing code, and participating in discussions. My work on refactoring Git’s 
+state aligns with long-term improvements to the codebase, and I plan to keep 
+refining it beyond the program. I see GSoC as just the beginning of my journey
+with Git.
+
+Appreciation:
+-------------
+
+I appreciate the Git community for its excellent documentation, which made it 
+much easier for me to understand Git in depth. The well-structured resources 
+helped me navigate the codebase and gain a deeper understanding of how Git 
+works internally.
+
+Beyond the documentation, I am also grateful for how welcoming and supportive 
+the community has been. Whether through discussions on the mailing list or 
+feedback on my patches, the information and guidance I received made my 
+experience even better.
+
+Additionally, I read the blogs and proposals of Chandra, Jialuo, and Ghanashyam, 
+which provided valuable insights into their journeys and helped me shape my 
+own approach to contributing.
+
+Thanks for reviewing this proposal.
+
+References:
+-----------
+
+[1] https://github.com/sdslabs/beast/pull/374
+
+[2] https://github.com/sdslabs/beast/tree/add-teams-with-hint
+
+[3] https://github.com/sdslabs/playCTF/pull/177
+
+[4] https://public-inbox.org/git/pull.1826.git.git.1730926082.gitgitgadget@gmail.com/
+
+[5] https://public-inbox.org/git/20250303-b4-pks-objects-without-the-repository-v1-0-c5dd43f2476e@pks.im/
+
+[6] https://public-inbox.org/git/20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im/
+
+[7] https://public-inbox.org/git/pull.1829.git.1731653548549.gitgitgadget@gmail.com/#t
+
+[8] https://public-inbox.org/git/cover.1733236936.git.karthik.188@gmail.com/
+
+[9] https://public-inbox.org/git/cover.1724923648.git.ps@pks.im/
+
+[10] https://public-inbox.org/git/cover.1718347699.git.ps@pks.im/
+
+[11] https://ayu-ch.github.io
