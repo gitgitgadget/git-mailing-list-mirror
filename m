@@ -1,166 +1,119 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253152561A1
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 22:35:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092A419580B
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 22:39:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744151718; cv=none; b=bTQaiL7nx5v2aC5JEgRV3A903Sn+Uqa4W5gvcy/JmekdEQW4dDaqZ4RaByEG4Kw9rg9+DC++cD6wZWCP54VVF118NYwUidVVywWtEFxJBzKSIEEqujkgaFrIYw2UTbb02F4h+wmAGhWCoYLdAiYik+861O68TqGtgqQdssBSI08=
+	t=1744151967; cv=none; b=KDpAC6WGOtetOdaUmXkitgFU6A0XAxe9CoqIbIMDErY2bOkpsVyekl/Znhq8g9oOw/ODAg2qahyHToahT6U1FjslMJmX5OaItW3MB1M2d5NjIEYmStl0sGuyEYN+4D4G6K/TBdksF0RVUKIr72/3GNASkjsoSKXTtx0N4OmxpBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744151718; c=relaxed/simple;
-	bh=RMeYxR2GDh/VpYmRmrxCDqXwIXPS4f/flCTbnwfshK8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Yc39GfzhdftsMOwNET93Ph/+MGmbbcJEkqVXBInuLQ+3mwabDkwcNsP/9REpYMyo6tsGiEFfu4YROXF4M3aWFGTLKd7lS408MqsfzF25LSAYwfEBKVunQ+un7rZQG8tf1TcuV/kfKogstuieYCpoMv7RHJVfDIU8/G73T+c+sNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TkBgVb1o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nea1AvJ+; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744151967; c=relaxed/simple;
+	bh=rW1sMAgRHpw8JvZ9iP6uu0kljQejZGBucfpcqXBwYL0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CaLFfEqL2UJTPNd2mqV6Csd44arqAwkfR2M9WcjI7bSgdMOTIdzcMFloB86ky25w++RVy2JCVheLC2/7OHa6tfS6boIV7c9Y7uuG4AFws9S9pz2RvaKXNiYi7UaF+WyDVCiWcOKOEQYfolngT9+17ucah/d5v0wCIITwlViJnJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NrqFJsre; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TkBgVb1o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nea1AvJ+"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1748D2540195;
-	Tue,  8 Apr 2025 18:35:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 08 Apr 2025 18:35:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744151714; x=1744238114; bh=gHV7kpiGi4
-	gaw96RjfagcjIhw9J4hAQkn1Zg00EW6FQ=; b=TkBgVb1o8ttG16I2EkeU4YqYAn
-	WwkLIYvUOGoThXLq/hUFrb9AFe+H+jDncW9tWQYoe92lm7cO7KFRPgwxpjzg+xez
-	pP7j6/x1hI9ibpPCDDDXF2alYQEVI5J2zKHYCTp1o/pmNOJYN0URPpn9CimALDRn
-	oiBSaEEieft/YIEpJWAksKd1ENvGLBPvPkaY4wKiHmBoGVg+oBb2dvePALQTyKPm
-	84W8Z2KxzutIMmiwT/BSEEUgkyXrs65raYxdYyhDSKPcZYXPnFG3og9wKboYIQL8
-	hq7Nd5G5svuw9AOcIowFgaFXF3y4nazRMB/598FnPbzB/g366dzoEGqK70YQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744151714; x=1744238114; bh=gHV7kpiGi4gaw96RjfagcjIhw9J4hAQkn1Z
-	g00EW6FQ=; b=Nea1AvJ+ypFVTJwlWIbHJugyo6OA/oxgY/H7aOL6XGI7JNIKvPu
-	s1zgaBUuMHtWHUAyyjorGGZuF4DSXK+i1qNr1CTavlj3bwtNDkv3Azjs70W4BdDb
-	Q8kXHCYqj4h2d39JA1QJCJnO5M8dsy0IEiciuDT2AZYnXHIWWytDEaoGrGecUtQ5
-	gO/4dfTE/E6VbrwH1s4WfJ1wV9zYL3YMHQhLmJoW2UGcJy8cK2itmPpE3GEKsPO3
-	/HBttJRHU8XdfYN/P8JGsLGvlbjqBdHqrR4U07Sm8STWyDbhJ74KMr7S6aWosRrq
-	se8gcqynFgheP2kJKzRWxpFjmtnH/ulmgAA==
-X-ME-Sender: <xms:oqT1Z-z8M8ghYC3v_DBzEjjjJiHzDp8YTZ0ttiGeaoc54B6i0rYt6Q>
-    <xme:oqT1Z6TU5AzDtuppEyWrQcjmD4kAIAa0JpnPqivL81Dq0tZyOgjDxPQe6IqLbOzxU
-    rOWzSRaIMnTnpxJOg>
-X-ME-Received: <xmr:oqT1ZwU6Ckt0nTZNzpMOf94CPZrBWkmkdCFvwZ-e7cCuqpkf8Nox__VqBQ9lKorsgKIGiFcH0ruKB2DZQe45thULdNQX65vLub9a>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdegfedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhephffggeefheektdelhfeggeetfeeftdet
-    vdevvdelleelleegteffueeuveevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomh
-    dpkhgvrhhnvghlrdhorhhgpdhusghunhhtuhdrtghomhenucevlhhushhtvghrufhiiigv
-    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtoh
-    hmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehj
-    ohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopegtoh
-    hnghgurghnhhhqgiesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:oqT1Z0ie-jri5a9QE6p0KZqv0FxKEHZDQ3s3haQK0mismx0sOOkDjg>
-    <xmx:oqT1ZwDZjd3EhVjF460vyjN2bcn_Zxh8lJmvi5ftC9PJHzHs_3nmKg>
-    <xmx:oqT1Z1IBQlMyEoE9L01QjVtymW5ZaCqaCHxTSyZ8cO_D_HHXNfEKfg>
-    <xmx:oqT1Z3DNf4a8hE-y7GMUTqhn_0b0C1bsMYYHGcDbK6A_SNDClwWJpw>
-    <xmx:oqT1Z6ue3db0y3OpHST5e0F3VWGfaGo5nSjDFl_PQbbVWX5ooCRGNX8N>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Apr 2025 18:35:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] sparse: ignore warning from new glibc headers
-In-Reply-To: <77f82414-261c-d2bc-f911-ed3d4b06c86e@gmx.de> (Johannes
-	Schindelin's message of "Tue, 8 Apr 2025 22:56:33 +0200 (CEST)")
-References: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
-	<77f82414-261c-d2bc-f911-ed3d4b06c86e@gmx.de>
-Date: Tue, 08 Apr 2025 15:35:13 -0700
-Message-ID: <xmqq34eiuvry.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NrqFJsre"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5efe8d9ebdfso860788a12.3
+        for <git@vger.kernel.org>; Tue, 08 Apr 2025 15:39:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744151963; x=1744756763; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9o5o1hv9pB9DYwe6RD1CGw9hpNaf79CqZC7SllpiX8E=;
+        b=NrqFJsreSLt0eZnQ4OEoJVR99W/Yr8iiKXWrO+r8Ij7Re7YG31wclHxpScii0OEk/v
+         XMFUEMdfsCR4/0HyykUoe1VW6ykA2xcfv8fvvIz/qAnlxI7QZE+p4vMz4WDdP4p1B2Pu
+         onNRAOndc532RtYJf1ZOj0lMcVvLg8iGs5gDA6+UC69Ux3iUb684XIu06Ithto+eTWYn
+         oQNWrp846otcRxrxKcxuP9nc9qN2dz1lzayJmR8D6Gtne+vOdx075dKkeNCpg+IxCUjo
+         0Nm21dITW2N2SOLQPhviRzv5OBOZZtJV4y3XnmbZj/2M/rSS9LSACXTkmSxBPQ8Ofx2G
+         BtZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744151963; x=1744756763;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9o5o1hv9pB9DYwe6RD1CGw9hpNaf79CqZC7SllpiX8E=;
+        b=xRZSpBE80DcOMhchuEYEkopPEWK7i18umsbnPLZlwETJCJ5Kl2/f6iGz4sdePKoi2B
+         0pFSpJ/Bid52ycT+PzzlAAfEd4ZNxcM6Y/tErDscg24tvxEPL7e0xn5OEsIOR4NHifZP
+         iwuEtF/yOA6pmbrsT4wbzuEB1XH2YJEHLDVp+sLizAFh2HYcH0XFF7uvkH6T0M0dxbKB
+         7vZ0cY019axNxwHz1Tw7aTetuQmeCUwABoZ/r8iIFoqbDvhuilBvGLnwos6pKr+AKExH
+         q/N6Fp4qYvoi1YW2Neg5JlY4TRIOUCwgxVd1+RlAqolk54uW8jgAm1Ni7Wawl13RaTcg
+         NoxQ==
+X-Gm-Message-State: AOJu0YwEoogoYR3NQRIN11rHaBF6OyfjQRkBrOuILNrMgN71sqpiPjeQ
+	xI3IAboItwAVtkIhb8dbQYkEko4cyLanYKDBVWm5Ugns36UnxUXVPr4n4FnFClRHlXgdgs0vAKw
+	85YFwnWhlpwvJ9MZR+wIQo36rGOQsi22W
+X-Gm-Gg: ASbGncvL+jsTx/mcc1Y6vPnuOdJd35vKhU/Zaf1uHC9l8AbDnpGGCV+AmzPePhJeg9D
+	uu8bvbxbtpZTgrELLLufroQcKxxAlbYa3235pAodwRmbGDyfeeMOldnNU4z2ZCnmDRUyYiQO/cH
+	vFupldQ6OBnV882R63+hzQL52yfq1iVhMiQOLEf72yEQ6r5uf3FWTAXc8r6fBD/YZWuQ3ssMY=
+X-Google-Smtp-Source: AGHT+IGr2JLfJG/bIveAJY6kMDFsf8/EJjh2EZU9gGjLl4Q2GlwlSWM/OK54dUizpuOrAp3m6L6N/3hLe45qCX/zqyc=
+X-Received: by 2002:a05:6402:2756:b0:5ed:6535:b6d2 with SMTP id
+ 4fb4d7f45d1cf-5f2f8657f76mr263088a12.15.1744151963002; Tue, 08 Apr 2025
+ 15:39:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqqiknwhsdz.fsf@gitster.g> <CALnO6CCcE0zyqUtFOkBZetj9HCzg_mmnWq=+gOEaRn9Np32UKQ@mail.gmail.com>
+In-Reply-To: <CALnO6CCcE0zyqUtFOkBZetj9HCzg_mmnWq=+gOEaRn9Np32UKQ@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 8 Apr 2025 18:39:12 -0400
+X-Gm-Features: ATxdqUH9JBPVn7Ry5j-cYpHglj9HKRQyDXm7M0k9uCmwyoeO7tTzLa-THFC4Vts
+Message-ID: <CALnO6CAzCANvC_BGYNV7a704Tmar8XyqE+0L_HEyDr1WYKo1Xg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2025, #07; Wed, 26)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Due to the brownouts today (see
-> https://github.com/actions/runner-images/issues/11101, surfaced e.g. in
-> https://github.com/git/git/actions/runs/14342895944/job/40206357016), your
-> patch came in handy, as it is required for the following fix:
-
-Good timing ;-)
-cf. https://lore.kernel.org/git/xmqqo6x6wgs8.fsf@gitster.g/
-
+On Fri, Mar 28, 2025 at 8:34=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com=
+> wrote:
 >
-> -- snipsnap --
-
-Does mailinfo consider this as a scissors line?
-
-> Subject: [PATCH] ci: upgrade `sparse` to supported build agents
+> On Wed, Mar 26, 2025 at 8:46=E2=80=AFAM Junio C Hamano <gitster@pobox.com=
+> wrote:
+> > * ib/diff-S-G-with-longhand (2025-02-12) 10 commits
+> >  - diff: docs: Use --patch-{grep,modifies} over -G/-S
+> >  - diff: --pickaxe-{all,regex} help: Add --patch-{grep,modifies}
+> >  - diff: test: Use --patch-{grep,modifies} over -G/-S
+> >  - completion: Support --patch-{grep,modifies}
+> >  - diff: --patch-{grep,modifies} arg names for -G and -S
+> >  - docs: gitdiffcore: -G and -S: Use regex/string placeholders
+> >  - diff: short help: Add -G and --pickaxe-grep
+> >  - diff: short help: Correct -S description
+> >  - diff: -G description: Correct copy/paste error
+> >  - t/t4209-log-pickaxe: Naming typo: -G takes a regex
+> >
+> >  The commands in the "diff" family learned longhands for "-S" and
+> >  "-G" options.
+> >
+> >  The core part looked mostly good.
+> >  source: <20250212032657.1807939-1-illia.bobyr@gmail.com>
 >
-> The `sparse` job still uses the `ubuntu-20.04` runner pool, but that
-> pool is about to go away, so let's stop using it.
+> I'd be interested in seeing this land. I think I can read through
+> review comments
+> and split the cleanups from the addition of long-form options (both of wh=
+ich I
+> think are generally improvements), but without signoffs in the original c=
+ommits
+> I feel like I might be overstepping on the intellectual property---and I
+> certainly wouldn't want to cause licensing trouble for Git.
 >
-> There is no `sparse-22.04` artifact provided by the "Build sparse for
-> Ubuntu" Azure Pipeline, but that is not necessary anyway because Ubuntu
-> 22.04 has the `sparse` package: https://packages.ubuntu.com/jammy/sparse
-
-Perfect.  Will take a look.
-
-Thanks.
-
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  .github/workflows/main.yml | 11 +----------
->  ci/install-dependencies.sh |  2 +-
->  2 files changed, 2 insertions(+), 11 deletions(-)
+> What's the usual way to proceed in a case like this?
 >
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index ff44c0a8c067..c9455246269d 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -449,20 +449,11 @@ jobs:
->      if: needs.ci-config.outputs.enabled == 'yes'
->      env:
->        jobname: sparse
-> -    runs-on: ubuntu-20.04
-> +    runs-on: ubuntu-22.04
->      concurrency:
->        group: sparse-${{ github.ref }}
->        cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent == 'yes' }}
->      steps:
-> -    - name: Download a current `sparse` package
-> -      # Ubuntu's `sparse` version is too old for us
-> -      uses: git-for-windows/get-azure-pipelines-artifact@v0
-> -      with:
-> -        repository: git/git
-> -        definitionId: 10
-> -        artifact: sparse-20.04
-> -    - name: Install the current `sparse` package
-> -      run: sudo dpkg -i sparse-20.04/sparse_*.deb
->      - uses: actions/checkout@v4
->      - name: Install other dependencies
->        run: ci/install-dependencies.sh
-> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> index 0df74610d063..8700c0f2924d 100755
-> --- a/ci/install-dependencies.sh
-> +++ b/ci/install-dependencies.sh
-> @@ -119,7 +119,7 @@ StaticAnalysis)
->  sparse)
->  	sudo apt-get -q update -q
->  	sudo apt-get -q -y install libssl-dev libcurl4-openssl-dev \
-> -		libexpat-dev gettext zlib1g-dev
-> +		libexpat-dev gettext zlib1g-dev sparse
->  	;;
->  Documentation)
->  	sudo apt-get -q update
-> --
-> 2.49.0.windows.1
+> PS enjoy the vacation Junio---I'm hoping someone else will reply so that =
+you
+> don't need to :)
+>
+> Cheers,
+> Ben
+
+Looks like maybe my query got dropped during the vacation time: I saw
+the newest "What's cooking" said "Expecting a reroll"=E2=80=94did I miss an
+update in the original thread?
+
+--=20
+D. Ben Knoble
