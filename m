@@ -1,124 +1,151 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72761A83FB
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 02:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6A21474B8
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 02:26:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744077990; cv=none; b=aVg2XM/+cwPS1SfM/eHVs9Uo3KhQ3fM4ETXFMbf4Pp7QFzMgBM56fOpKKJGsXgNMJvkn9PKzZ5KXG0GnZQDjTeHXthyh676LSckhlDqwxW+/vLItCXj2e5jOHGGyMUCC9w1kiWLw3o+cieihagZ8ndSrxAIB+JEu8kahYmERYQU=
+	t=1744079182; cv=none; b=k5XagxmA+skxEeP1gjTBgD+jp08ddaftA5CUnBuV7vhhxZep/HIIgs36ILO8SNEqfBKEWQe/4y7ijS4l0sauVS9i95UUjUvAtACw7ji/w861hk2UvCKyE5B3VjvUogg157hCe/vYDnVZuFVmRuU7GRTPXLy8o8XVIzUcrE/t/ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744077990; c=relaxed/simple;
-	bh=yfjd6UKfjV6Rm9U9EJZpx9xyE4/x65NuUgRiLlpaDbg=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=BigfPLqiIZ4YUJ67iKxsvPm6pdWYIF88EFYI5iI2dN+nacvOXX7jFHJue+PUfyt0bNB1VnAcbmGEsb9bWdyYchD+gIpJaeUbfpamHzXejT5VOUWqBj+o8sKJ2pFfd11w6ZTCl8RMuCCqoYIjy4LAVpTvGN1+HzBRm7qQmKqr9e4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dkEM4t7Q; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744079182; c=relaxed/simple;
+	bh=kSMkU1gdPb68+R9nhyVjMIjUOOiJihpDyYQncynZuiE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jEpsb88aACFBkyq9zb0E+25cP3yTwsvR4q4nZBPSYD1j8zMcocIwSvCe/gvEmu0pyeRjctz4pWx0s7P0JIGbkW0+8X3Z8BUtfUhckXnHvV3lVu1cIm3tLHHJ3l0RiWN6tfhaOBEVvqhKv9ShkqDO32quOCKRwJ3qnWZER3yeTOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iv4g9QlY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qcesUie+; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dkEM4t7Q"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2240b4de12bso66830015ad.2
-        for <git@vger.kernel.org>; Mon, 07 Apr 2025 19:06:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744077988; x=1744682788; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yfjd6UKfjV6Rm9U9EJZpx9xyE4/x65NuUgRiLlpaDbg=;
-        b=dkEM4t7Qa0Qi0Yei4Ep1VlMxNOGGHudehfxzfIwztZ+/e5QoMzTw/GlBCJsBqNEjUc
-         DgRpLdtLD26Oe/WpvASgvyKZ6HyV6MBuJLJHDc+4bFh1VNG25/eCDyjLndM0u/00h5IW
-         XkEn+26J+IgtLIoUJEbt8VOWPSq//U+2uckIFRcLbA64S9Q6kSuXAOVW+ycT4hyoP0j2
-         wFlu6Hc8sKX0heq9oLyQA4qoSy6IdIHFPr8BV5yORbkD7Iheoesk6ZV9sQ6MO9z6GnIm
-         xThDcup26uwfBXUtxJHUnIlVjR2/7cAuPqMSiJNMQ+zlQMXWXIR0YetVSuSNgKuUDGJM
-         +dcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744077988; x=1744682788;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yfjd6UKfjV6Rm9U9EJZpx9xyE4/x65NuUgRiLlpaDbg=;
-        b=R0VOlp3FZvxtRAcvTYFp/RwTSLWdiA+ciNeMwxlPDqgrUtS18pSval2QdgPdHD5gRc
-         L3JxE3y9KK5BKKYZOhl6tbl0TgzL8EuzrD7sM8AyUywW+vfU8iUmJEae+4N47PmwmRZK
-         9UpxE9yp8rgsVKQD1Vf6ypo/wjbjeef1hLRBZny3nvyRJOTdzS6Z7NMMYz/nWIfeofmA
-         ub19MeVCHvF+1pPQtmLUYhK0+29DOWMb6HGTCpNurCkFHEIKKTPrboFVi4bb/fOlOIKy
-         8ed3dXyY59SSaFPw8LompVH6duLG88Jk54eWMepTAABKT7hQCRaJ8fxnBJNhVKY2TVZT
-         Jlbw==
-X-Forwarded-Encrypted: i=1; AJvYcCWF6Wn5Ss/QpOgMgErxamRm6CY5VMp5FfuM9PcDbqByS3/GY4BZ/iAaj53pxSTlwwZJx9k=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtLToNr0G1lRXuT5eNFclR4l2ZBvbqgcMGstOIBn9VDGQg8HSM
-	Tbiqqq4TT1AMq2eWfyHLSy89cdSxx5udep1FmoIGpnqoEUPTIF5z
-X-Gm-Gg: ASbGncs3kxXIuw4ZsoRXFuj4D0fnUqjSA1EfQOvRWeq3p4aWhLgPok/yUZUsZz1BL8C
-	jWLdp7/Op0Nibks4a+Um30FFPgaRJ9ETKnqX0FcoJRpfcwQUoyqUUEgpNj/W6CLF8HzAffTqLQf
-	QFCGMsbqpngkRmI+aK2YAnaKu+kibI8smKZQtpfHbX9Qv8kIOqyXjfk3mHMlwHEFIfNOuPtIpCP
-	enU59qtyph67WR7dg3gnlL1nFm04xmb0t/Osl6j8L9+Vwd6knW1P14cFrLvG82OhhS99tv3VfFg
-	4e5B6w0x5xHUahQB4I3h48VaJByXfg2RaIy7HM+LbyD0SWRm3mZmOpDA8omKmcf0TabtOyn54jg
-	kXktnrWr3wkwJMbp9Nw==
-X-Google-Smtp-Source: AGHT+IHXSWTV03CoMEtXkeLtS8EwbVX+5mwHmDVmbinT6PMGvOdT3uva9rGdgqCu8l3kcXBfG+vJIg==
-X-Received: by 2002:a17:902:e890:b0:224:1001:677c with SMTP id d9443c01a7336-22a8a0429c5mr204415515ad.9.1744077987933;
-        Mon, 07 Apr 2025 19:06:27 -0700 (PDT)
-Received: from smtpclient.apple ([2804:14c:32:8e7e:b169:70db:1e5b:dd10])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2297866cef9sm88849985ad.163.2025.04.07.19.06.26
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Apr 2025 19:06:27 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iv4g9QlY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qcesUie+"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 209411380391;
+	Mon,  7 Apr 2025 22:26:18 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Mon, 07 Apr 2025 22:26:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744079178; x=1744165578; bh=AJx2aK9WtG
+	sbpPajVOnMYzHQ3K63gS4DUWIlsFljpNE=; b=iv4g9QlYiwJ7mkoCOyZSNO7Ox8
+	MANj6Rjw0KSMSgstaVJmMKbdqPL+S1jL3mpN0wgxHJBpEac+uJNOlWE9RYraG9ua
+	+jjNyHoTsQPn/jRb32Vj38chu1tvHS0rkaMmaL7uqn0KpDQf/agv70mAxwp8mOIl
+	SlUEWO68p21/8LU7YC2CqUurC2HORFbqi1oVVtIEhvh/TKXtGCbeNKEe9Tyxim4L
+	+4x6CNgZUwOTmIJlKvJL6CVuOZKw0I58WkFx4Im/aXD6mzIgxsT+41J9t/qOecEg
+	eIS4ZSKa/ptHySaRemrY9kZh308Fi/WhY9n1qLNw7XosGFfMC1vqkc3FJJtA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744079178; x=1744165578; bh=AJx2aK9WtGsbpPajVOnMYzHQ3K63gS4DUWI
+	lsFljpNE=; b=qcesUie+GAzrqSTYJnhwn1qRYd8KtLkD1SWYl+5+T2sEKNgF10O
+	vwF5O7WiD7wR3wxCHL5b8Ejp1IERG29EYEmMglkmgh18v760Ujb4yr1R6z0LesmN
+	Qs9fy7B51hbDUV9lV5wRQ3Xv/n10+tL4cSMpyK83aJof90qMtcqq8pwd03tKG8Dy
+	39xjpCXjt+OSQNsFjg+c0IO85sJA32OOTSDGp+6NMOmSrH39OfHQJvnICtOBMjoX
+	LVNZ/D4eKQ1eH2NPT3bdj8bSPrZnAZw6hlRwkHd9zkyvdfrKCxPt4sHib6AbhM5x
+	juQ8nqSSGi7zbZ9VeaBi08ZO2/MDw4d+pLw==
+X-ME-Sender: <xms:SYn0ZwEHWf-vvcKGRx6T6kkhbNAm0ZaUECMUnrYcQlpM2BmQKyiaRA>
+    <xme:SYn0Z5X9FFCDgrVx-bSSD5dj9UldsCJq6Bb6vByfw-Z7EAkRLeRcz-MnJesaKb_HR
+    SM7p_VQuhJG3QB9Xg>
+X-ME-Received: <xmr:SYn0Z6IugOegrNrxG0YzaragrAeimAHrcCK8fz37VFyISQ8yINYLQLBcdP78Oo1lby6zoSXG_a-plQ_aqC67LHaqtySsqNTiUY4-fv3ErgTq3bguQY0e>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddukeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomhepvfhougguucgkuhhllhhinhhgvghruceothhmiiesphhosghogidrtg
+    homheqnecuggftrfgrthhtvghrnhepgfevfeeviefhheehhfegtefhvdffheefheeuleeh
+    ieffuedvvdeuhfevffeigfeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhhishhtshdoghhithesrghkshhhrg
+    ihrdhishdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:SYn0ZyHTtHlcX7bOVa7xh5vzIoErT1b60lJDHVTGh6lgX_RHBcQGGA>
+    <xmx:SYn0Z2VPXcS9JtRBc9I1NN4R9H0DpTyw0vPPOHoslAJLZ_xeqP4y5g>
+    <xmx:SYn0Z1MoErlXOGN6lgUhH52Er5dTXnKcU-qqcwiMK0Vp_jkRCA2ifA>
+    <xmx:SYn0Z91OF7Z0O_48grAMgSLlijlHjSlM8U509SJWx310Id75WepNaA>
+    <xmx:Son0Z4ptIDZgmJccloQ5F5l-6fGcVTcirRYPJA162hAY_7NSVvDzeTvF>
+Feedback-ID: ia13843cf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Apr 2025 22:26:17 -0400 (EDT)
+Date: Mon, 7 Apr 2025 22:26:16 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: Akshay Hegde <lists+git@akshay.is>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] meson: install shell completion scripts
+Message-ID: <Z_SJSKrUdiWzg4pw@teonanacatl.net>
+References: <20250407-b4-pks-meson-install-completions-v1-1-8a7eb8b9284b@pks.im>
+ <Z_RnJEyvtGh_0kFo@akshay.is>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
-Subject: Re: Make 'git stash list' more informative
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <xmqqiknflj8j.fsf@gitster.g>
-Date: Mon, 7 Apr 2025 23:06:13 -0300
-Cc: Yuri <yuri@rawbw.com>,
- Git Mailing List <git@vger.kernel.org>
-Content-Transfer-Encoding: 7bit
-Message-Id: <73A1707C-7B41-42C4-A530-E107FB8D5227@gmail.com>
-References: <edcd6174-e931-4ab9-b61d-8126a6cab740@rawbw.com>
- <29E4ED32-4909-48EF-86BB-67111B62AE1A@gmail.com> <xmqqiknflj8j.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.500.181.1.5)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z_RnJEyvtGh_0kFo@akshay.is>
 
+Akshay Hegde wrote:
+> Hi Patrick,
+> 
+> On 2025-04-07 09:42 +0200, Patrick Steinhardt wrote:
+>> Hi,
+>>
+>> this patch is a result from the discussion at [1]. Thanks!
+>>
+>> Patrick
+>>
+>> [1]: <Z-uLqQd7QHZq-tB7@akshay.is>
+> 
+> Awesome, thanks for the patch! I applied it on top of git 2.49.0 and can
+> confirm completion scripts get auto-installed at their appropriate
+> locations under datadir. The datadir can also be customized by passing
+> in '-Ddatadir' to `meson setup` so it's pretty flexible.
+> 
+> One thing of note is that the git completion script for zsh also depends
+> on the bash completion script.
+> 
+> So if you use a non-standard install location like I do (I'm pretty
+> weird, I use macOS with a package manager I've written myself), you'll
+> get an error with the git completion not being able to find the bash
+> script. The fix is to tell zsh where the bash completion script is
+> located. This is also helpfully communicated in the completion script
+> for zsh:
+> 
+>     # You need git's bash completion script installed. By default bash-completion's
+>     # location will be used (e.g. pkg-config --variable=completionsdir bash-completion).
+>     #
+>     # If your bash completion script is somewhere else, you can specify the
+>     # location in your ~/.zshrc:
+>     #
+>     #  zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
+> 
+> Adding the zstyle line to my ~/.zshrc made the completion script work
+> without issues.
+> 
+> Most people won't run into this since if you have this installed in the
+> standard locations, it should just work, and the zsh script does have
+> logic to look for additional paths it may be under. I just wanted to
+> mention it for info.
 
-> After all, if they are related,
-> you're more likely not keeping the work in the stash entries---you'd
-> rather be making completed commit on the branch.
+I wonder whether it is proper to install the completion
+scripts relative to git's $datadir by default.
 
-I don't if this the use case of Yuri, but in the past I kept a stash
-entry with some local development changes that shouldn't be committed
-and sent to the main repository. This is, I always applied that stash
-entry, did what I needed in my local environment, removed the code
-that was applied, then I committed the changes that should went to
-production.
+I think the default ought to use the pkg-config call to get
+the completionsdir variable, as the zsh completion script
+suggests.  I am presuming that's something meson can do
+rather trivially, just as it would do to find the compile
+options for git's various build dependencies?
 
-It soon became hard to manage as I needed to use stash for other
-things. But hey, stash entries are commits, so I could somehow mimic
-its behavior without using stash itself! So, what I did:
+I don't know if that becomes too messy to be worthwhile when
+determining whether git is being installed by a normal user
+in $HOME or by a privileged user in a system-wide prefix
+like /usr.
 
-1. Detached the HEAD:
+(Or, perhaps more confusingly, in /usr/local, while the
+bash-completion bits are in /usr.  /usr/local is one of the
+prefixes bash-completion uses by default, so that one would
+happen to work.)
 
-$ git checkout --detach
-
-2. Committed the local development changes. You can use the commit
-message body to write a description of what those changes are.
-
-$ git add my_changed_file
-$ git commit
-
-3. Created a local tag, just for me:
-
-$ git tag LOCAL_SETUP
-
-4. Whenever I wanted to use that code, I just applied it by using:
-
-$ git merge --squash LOCAL_SETUP
-$ git reset
-
-This left the Git stash stack free for other uses and I could use
-it without worrying about the stash positions. If the problem is
-to have control over the stash, maybe the solution is to use the
-good old commits.
-
-> ... this is an excellent suggestion.
-
-Thanks :-)
+-- 
+Todd
