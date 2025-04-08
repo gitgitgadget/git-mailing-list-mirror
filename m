@@ -1,112 +1,205 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887CC15855E
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 21:28:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7AB21ADC3
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 21:52:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744147733; cv=none; b=LvaZPfu12UVYaYpynfasnwG9wpx5pRWhCjMJI0cDbiz1fbV5RXcrmUUE5t5xuSvI+Bv3PkZHQ3AbWQ63lxwQGtFHdoqP3+F9xwl/jby1/ZBmGWWIl4X8ui38b12Ln/x9giN+uReN7vi66HFoGDWitoqCsjgHn69SVSjlR7mZHbs=
+	t=1744149128; cv=none; b=rDPtsOOaNxrXmYsO60u3DhcHtrEZOIHEFXyAqwwEfciovpyXKGHJoXDXuYq1zjrmX+j6PdAAImCtm5ppvtvgtK6IWs5weN2gIJFpEKFta0qn0nZ+Qhjlrwd2ypWTC5tTasBXy+7zO9hJ1QZkPRzNy87ur7L5x85WjfU4AlhqG4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744147733; c=relaxed/simple;
-	bh=VvnZ9PMZyBSlYnBlRYrjePpKDLJ1KtBL9WOzpjg23KI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=O5GT9H9jp8Lq6OCS/2AbUSConz7WYFCuWC1IM+m1YtcA1OP/BU2uhnYq80mn45guwGvdvSMUT3HmBE5I83glllkOSE3WyDdcdBroIUWs0B8crezN/RMHXFkw9qj4AonLlFcA+6CFkjJ6dbpJx5sO3g4gUbc/jDQB/9c+QTcorSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6e8fa2d467fso8913986d6.2
-        for <git@vger.kernel.org>; Tue, 08 Apr 2025 14:28:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744147730; x=1744752530;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1bkahJqCY4z840/dlix/bi2YE5uBpc9oPY3CCmjSiOM=;
-        b=YSWaMEDBQo/QbRUkUIOt0zUaDNpgZQJ1w2CbWPAnzMoqPJ0J09l3XhRo+DlPMB2EL8
-         wZ4L+CkkID92T3FedEjNClJkhtk7gVl6tE2z5h5Kwe5TwpUggUnDey7NdY4w3jFq1Avg
-         t2iMjb6Iz5WrKRr1lXcRvrQSSQbCpUSlArymxVLjyyqsGZFoOXtpUDjGWJn1oZ+afouy
-         ajLecglTXdApRuvmxT5k9vYv4HlT+npFsDsB8S5UDmj7AoKNYGs6Hzu7qPntDYHsNK7s
-         SyN8lHFzltF3i4M2yAzPcc1GYo9OEuz3HTqx+zJLbeqUK7nAc/T31s82P+vuVko7Lrm7
-         eDRw==
-X-Forwarded-Encrypted: i=1; AJvYcCXitlEhkxkNGW3C6pKcfbxmb449U4IEuoeKjqMdm+PpG73mllTUJZIsF2YUDonQCjGeUVU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfYzt7QB5GsD7wmRlfL1Z+2ooTtIqaUl2WY95D4KPT3BeSCbMB
-	6qdx7R7kfciY1KeRpk5MC/gSabUtI+a2Drs4nKgYb2czN5pUu/ad860SCZQn7RLU5i+CVmO4g1i
-	qkHM14oq5bCIG7FzjVLsn4FizvDc=
-X-Gm-Gg: ASbGncspzyiUYKQJiAiJhKm/l0d7/YwdDXblQItvZhbzkHNnU2z/FkU7kuSfqJrXMhL
-	CS/bzjN72//KlOG8q1vBbysJHBWbDcyv1gzUX6mbcAf4fZ749R/WCT65gbu8/3STCsf2NbRfzh/
-	s2MH8uOoFyFHnf7Y8YQ+Gmwyaq2RduL1FkLsVOO/TTzWN4pRN8NCcYJOUq+j7Pk0oEML7FPw==
-X-Google-Smtp-Source: AGHT+IGHAf5f4X8mTxy053SSjpHkyvxVnK19Ge97ts3qUfsauvUSt7ZOT2ZrHRJnbIJbIrYCUjpk77WwVb1mTjI9KoE=
-X-Received: by 2002:ad4:5767:0:b0:6e6:62fb:3504 with SMTP id
- 6a1803df08f44-6f0dd120778mr297996d6.8.1744147730122; Tue, 08 Apr 2025
- 14:28:50 -0700 (PDT)
+	s=arc-20240116; t=1744149128; c=relaxed/simple;
+	bh=FyhBr3v0XvZkQJ4YcBVnUAxZVm/3r4p/UOLUElCgjwg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OKek7y2Nf4JxHdqDO/kKQZagh+9NzrIWZ2KjEO6kmz5+71cV9hdbglLVM+yH3kyBFtW4gWf5JnigqJxiEQvdGT4CX5b25tfKqXmUdUNvtBLgoaKIYEsx8Z9GhdyJOaAafRWP97OVZlFbcmADk+IqK6x6+7AUvm8TGQ0iO4hX9Ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=w1sfDOk0; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="w1sfDOk0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1744149123;
+	bh=FyhBr3v0XvZkQJ4YcBVnUAxZVm/3r4p/UOLUElCgjwg=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=w1sfDOk0H1mNryRnZcgs0r0fHQD3W9oTq1GR/nyB/fF6Rb1PLjyqgjbGFK4A56Sxc
+	 XO418LVAz6ckUZUOPLqKZO0AP9BKbImBUvwUseSJliCD/cccRse0vv/cr6RkyPp/jI
+	 +iCXarTorg07p1CPF3jJ/Tsfe1LjGVtk9E6jGOYWysZARPMrsFMhIeUmr6PgX48u4a
+	 nyEjc714FbNOMs34MAlgf/wcw9zBl1j8SW89peYCThz9+M/6104UGuqdVfyWyW3hPa
+	 hylj+XyYeeCfjMGU6q2j8L71/FfOUc8VFgFHCW52TZ46Xp+4vLJpPEbzRvrUJurNx+
+	 WuRHganpqC8NabyW+9VsOZdgsXINHU7LfRb7iAHYRt6aGZZvwXldhkVbUn8fLocqH6
+	 wKUuPiiRb7s9C9p4xyJuiP4Vbe00Sh9l4x5Q7JE4Wv7e6lBlMg+11OgtHWeZJAQd6V
+	 0Yd64aZRx7F9SMHhlC1TjY4Y75Z92X6bqfaUGFDVoQW0+a08RuJ
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9ec0:b846:49f:a41d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 460BA200C9;
+	Tue,  8 Apr 2025 21:52:03 +0000 (UTC)
+Date: Tue, 8 Apr 2025 21:52:01 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFH] GitHub deprecates Ubuntu 20.04 Actions runner image
+Message-ID: <Z_WagT6zeeQGNa0k@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Taylor Blau <me@ttaylorr.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <xmqqo6x6wgs8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250405103718.25160-1-anthonywang03@icloud.com>
- <20250408114841.58592-1-anthonywang03@icloud.com> <20250408114841.58592-2-anthonywang03@icloud.com>
- <xmqqbjt6wdrk.fsf@gitster.g>
-In-Reply-To: <xmqqbjt6wdrk.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 8 Apr 2025 17:28:38 -0400
-X-Gm-Features: ATxdqUHol9wCq4Un_rf0JFk6Vd5vcMB-nuKBkcV2eu9ikHgvCtMDpLvAUh2jJw8
-Message-ID: <CAPig+cSo2hPpA0DOn7Tr3pcYfN6jxyyo+n0Y0QetvKvNVoLqbA@mail.gmail.com>
-Subject: Re: [GSoC] [PATCH v5 1/1] t9811: Improve test coverage and clarity
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Anthony Wang <anthonywang513@gmail.com>, git@vger.kernel.org, ps@pks.im, 
-	karthik.188@gmail.com, shejialuo@gmail.com, christian.couder@gmail.com, 
-	shyamthakkar001@gmail.com, Anthony Wang <anthonywang03@icloud.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="sWp9Ir6iM+/WB+ak"
+Content-Disposition: inline
+In-Reply-To: <xmqqo6x6wgs8.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--sWp9Ir6iM+/WB+ak
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 8, 2025 at 5:21=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->     t9811: be more precise to check tag creation
->
->     The tests grep tagnames they expect to exist from "git tag"
+On 2025-04-08 at 20:16:07, Junio C Hamano wrote:
+> It seems that we are hitting https://github.com/actions/runner-images/iss=
+ues/11101
+> which deliberately breaks CI jobs running on Ubuntu 20.04 images, in prep=
+aration
+> for its removal targetted for Apr 15th, 2025.
+>=20
+> The following is a random/blind attempt, but I need a lot of help ;-).
+>=20
+> [jc: brian and Taylor CC'ed for their ac112fd4 (Add additional CI
+> jobs to avoid accidental breakage, 2024-10-31)]
+>=20
+>  (1) I do not know if the deprecation schedule at GitHub is the same
+>      for native runner images and dockerized ones.  Do we want to
+>      leave the linux-TEST-vars that uses image ubuntu:20.04 alone
+>      for now?
 
-s/tagnames/tag names/ perhaps?
+Yeah, that's a Docker image and we can leave it.  As long as Docker Hub
+continues to host that image, there's no problem with us using it.  I
+would argue that it's a good idea to use a supported OS, but it's not
+urgent to fix.
 
->     output, which can be fooled by false positive if an unexpected
->     tag whose name has the expected tagname as its substring.  Fix
->     them by using "git show-ref --verify" instead.
->
->     While we are at it, add a negative test to verify that a tag
->     that is involved in earlier tests that is not supposed to appear
->     in the result does indeed not appear in the resulting
->     repository.
->
->     Incidentally, this would also correct the problem the original
->     had, which lost the exit status of "git tag" that was placed
->     upstream of a pipe.
->
-> or something, perhaps?
+>  (2) If we were to update it to ubuntu:22.04, would gcc-8 still be
+>      the right "ancient-ish" version of the compiler, or should we
+>      update it as well?
 
-Yes, better and much more illuminating.
+We should update that as well, since I doubt GCC 8 is still available.
+I'd normally look at https://packages.ubuntu.com/gcc to see what version
+is the default but it's down right now.
 
-> > -             git tag | grep TAG_F1 &&
-> > -             git tag | grep -q TAG_F1_1 &&
-> > -             git tag | grep -q TAG_F1_2 &&
-> > +             git tag &&
-> > +             git show-ref --verify refs/tags/TAG_F1_1 &&
-> > +             git show-ref --verify refs/tags/TAG_F1_2 &&
-> > +             test_must_fail git show-ref --verify refs/tags/TAG_F1_ONL=
-Y &&
+>  (3) Linux32 job running on image i386/ubuntu:focal has comments
+>      that says it is supported until 2025-04-02; should we simply
+>      drop that job, as 32-bit platforms are less and less relevant
+>      these days?  It is not so urgent but debian-11 job also should
+>      be replaced with something slightly newer next summer.
 
-Do we still need the standalone `git tag` invocation above?
+We could update it to a newer version of Ubuntu, such as
+i386/ubuntu:jammy.  That would probably work fine, although I know
+Ubuntu was making i386 a more limited distro with fewer packages.
+Perhaps Debian might be a better choice, then.
 
-> > @@ -208,7 +209,7 @@ test_expect_success 'use git config to enable impor=
-t/export of tags' '
-> >               git p4 submit --verbose &&
-> >               git tag &&
-> > -             git tag | grep TAG_F1_1
-> > +             git show-ref --verify refs/tags/TAG_F1_1 &&
+>  (4) I have no idea how the "sparse" job, which seems to download
+>      pre-built sparse using magic incantation
+>=20
+>       - name: Download a current `sparse` package
+>         uses: git-for-windows/get-azure-pipelines-artifact@v0
+>         with:
+>           repository: git/git
+>           definitionId: 10
+>           artifact: sparse-20.04
+>       - name: Install the current `sparse` package
+>         run: sudo dpkg -i sparse-20.04/sparse_*.deb
+>=20
+>      is supposed to be updated.  Should that be coordinated with the
+>      git-for-windows project, where its .github/workflows/test.yml
+>      has a similar insn to build sparse-20.04?
+>=20
+>      It appears that Dscho (CC'ed) is futzing with the generation of
+>      sparse package on Ubuntu 20.04 and 22.04 and getting affected
+>      by the same 20.04 brownout
+>=20
+>      https://dev.azure.com/git/git/_build/results?buildId=3D2396&view=3Dr=
+esults
+>=20
+>      so probably I do not have to worry about it and let Dscho take
+>      care of the whole thing?
 
-Similarly, it's not clear why there is a standalone `git tag`
-invocation here. Does it buy us anything or am I missing something
-obvious? The originating commit[*] doesn't explain its purpose.
+I think Dscho may find a good solution for this, so we can let him start
+to look at it.
 
-[*] e71f6a53e2 (git p4: add test for tag import/export enabled via
-config, 2012-05-11)
+I apologize that I don't have a lot of time today to look into this,
+since I have something to do this evening, but if we don't get it sorted
+out in the next couple of days, I can try to send a patch to fix things.
+
+> diff --git c/.github/workflows/main.yml w/.github/workflows/main.yml
+> index 9959b61ece..1d4422c898 100644
+> --- c/.github/workflows/main.yml
+> +++ w/.github/workflows/main.yml
+> @@ -372,7 +372,7 @@ jobs:
+>            image: ubuntu:rolling
+>            cc: clang
+>          - jobname: linux-TEST-vars
+> -          image: ubuntu:20.04
+> +          image: ubuntu:22.04
+
+This doesn't strictly have to change, but because Ubuntu 20.04 is going
+EOL, we probably should change it.  Nothing will break if we don't,
+though.
+
+>            cc: gcc
+>            cc_package: gcc-8
+>          - jobname: linux-breaking-changes
+> @@ -446,7 +446,7 @@ jobs:
+>      if: needs.ci-config.outputs.enabled =3D=3D 'yes'
+>      env:
+>        jobname: sparse
+> -    runs-on: ubuntu-20.04
+> +    runs-on: ubuntu-22.04
+
+This definitely needs to change.  Anything that does "runs-on" is a
+runner type and Ubuntu 20.04 is going away for runners.
+
+>      concurrency:
+>        group: sparse-${{ github.ref }}
+>        cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =
+=3D=3D 'yes' }}
+> @@ -457,9 +457,9 @@ jobs:
+>        with:
+>          repository: git/git
+>          definitionId: 10
+> -        artifact: sparse-20.04
+> +        artifact: sparse-22.04
+>      - name: Install the current `sparse` package
+> -      run: sudo dpkg -i sparse-20.04/sparse_*.deb
+> +      run: sudo dpkg -i sparse-22.04/sparse_*.deb
+
+I don't know how these are generated, but this seems like a good start
+to try and we can adjust it later on if there's more moving parts to
+fix.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--sWp9Ir6iM+/WB+ak
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ/WagQAKCRB8DEliiIei
+gROIAQCreeFVT8BEw6jkhWNiDrMCtGoIJkSrinMuxqlj/7O2EQEAh3e3Xs9ynqSM
+QO2/IXlLbs8NdQHUWCaSV03O+C5DpQU=
+=8MFG
+-----END PGP SIGNATURE-----
+
+--sWp9Ir6iM+/WB+ak--
