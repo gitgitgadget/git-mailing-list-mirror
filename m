@@ -1,140 +1,153 @@
-Received: from dog.elm.relay.mailchannels.net (dog.elm.relay.mailchannels.net [23.83.212.48])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7215155330
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 16:27:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.212.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744129670; cv=pass; b=mhhXyMVPfreuo5ST6LeM4GcCrFUjScioJEwZLUozvFEdAU5vALnR3FIS3+46yn06bze3I+R10sRNrD8rTJUHWq9LZSbkKLT6dxmgn1VXp8/+ZrOQ6gX6UfR82Zx0hgco/IdHb/6IGEKkSqZQ5LgBwsi/PhsQ46kCtNjj/DbaemI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744129670; c=relaxed/simple;
-	bh=BoWZF2tRsQdesOT8cBLRbZWafVCfotrSXH+H4paKDl4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t28TmrP1AXUGUdRDbNvayyPyVi6k/KfsDLFvf5E9d5eXyTKi6H+u4AlCjQGdu85OSrCvIEvZNNQ7q4dSyx1U1j5ptV4e0XPjrp9Irmj5FrHwobF1nJfxpe7RGZcbhef5AAljwDu92IcPQuGSf0hefxoBxpYEjBQPYgBgu32g8CQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=CkGLGIsG; arc=pass smtp.client-ip=23.83.212.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDB022DFA9
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 17:37:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744133829; cv=none; b=jiHVbCc7QtQVe0fY1DLBc98vzWRjOudjLo1x4gauGWGya1bzSRbaEK1FJz+0YqXSBGw6EMG3tomNltOiBZmpEqSYI3wi9s/FSEjo84IFtaOf1YROHHUwuEWQcwzpbi4Ym9hAKnAC1eMiOZPjFb2hf8gBeNc/z55I6S5w9pwvv70=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744133829; c=relaxed/simple;
+	bh=6tzxcHWPkQZ8miSg/q3XwAtEieNBUW9bvqTkcbEgDiU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qN3gpgTcpm/jnefsqQuQQMGtf1akI9TsKhPRp0LX2oZvBozmjvprqFMrjdo08ntIah3+7V1US0H6c1BLM/SflpHgYkXcnusLKKIkGztIWS3Iohw0hy7Be89yHHk1FUcK1d3wWUKBM2kEwwUn78TjMI7TijvrAVXXhKqS68qZ978=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mbZMHZkH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R5D3doF9; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="CkGLGIsG"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 90D7D1C1D60;
-	Tue,  8 Apr 2025 16:27:42 +0000 (UTC)
-Received: from pdx1-sub0-mail-a252.dreamhost.com (trex-8.trex.outbound.svc.cluster.local [100.99.49.173])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id EE84D1C3D34;
-	Tue,  8 Apr 2025 16:27:41 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1744129662; a=rsa-sha256;
-	cv=none;
-	b=pzbyC3LTxHs+hJHbi5/27GJtBhdif/e/7/V1Q/yCWc1vST+MgHTMq2sHWMw+4PyejbkMjO
-	LFAMU3iU718fN8pdIDyT3EhXGdvuml+6WaECcDpaN4+RSwBMicthlgiRRQaKirB7+dYm2t
-	IXz08L/kyWZHbusbQm9tJ5s1tFT8m+gusQzvPiFG+zxKLdTK0aNSTARtkSZfWdAl/8QaR5
-	3pKXWNYsH4Y33rKapf+3xqg0pR+I9zq2pi1KduMVgmO8JEnaXgMLaAlfVU7OAwKxGTzzGG
-	ou65V0SC6zfL0e/SZ0DSLC8OjWiDdaUBH0pPq6vPBfGY4iKWgzRpayLZJKg+zA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1744129662;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=p0QDoJAKRDtIQNKhsrK0LjpZW3ANTTGt0uJFMdzKTIo=;
-	b=qw/0IVsp/E0MztcoiNRrAHLARDUhqWmaGhjq4NYcC5hhgx/9FkjYNar7oOnO3vDJc+g1Ce
-	wIwAc3EI5a1upO9EJYL8E39Q+u9+nTdzuQnIJ/7pL3HInlkOdDnnclPi8VdD95j9SRT0ii
-	ULqber1zVrNQoyGiyX2tqhkLFdHnH8kUhQZFaqJaYnTB21U/EwVDS4qqH4yTgAu0/2R6+P
-	Ed6V6bzntITq6ed4f0G5p7xvRg+DnMLKkJo0QUw3eF9vN2fn07r3mC9gqF39Ozh01a8AKd
-	96TgCU937BLzrOSO3VBA8vUlqomT1lya0tNG0VSMMDnpVAN/oIgYfOah6RCt9A==
-ARC-Authentication-Results: i=1;
-	rspamd-6c88b8f79f-fqf6v;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-Wipe-Average: 550d123477647c68_1744129662253_2078630590
-X-MC-Loop-Signature: 1744129662253:1592748125
-X-MC-Ingress-Time: 1744129662252
-Received: from pdx1-sub0-mail-a252.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.99.49.173 (trex/7.0.3);
-	Tue, 08 Apr 2025 16:27:42 +0000
-Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a252.dreamhost.com (Postfix) with ESMTPSA id 4ZXBM06TpJzFT;
-	Tue,  8 Apr 2025 09:27:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1744129661;
-	bh=p0QDoJAKRDtIQNKhsrK0LjpZW3ANTTGt0uJFMdzKTIo=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=CkGLGIsG3hKgcKglYLx00YmAiIPlpe8JL0sILNODEAeB1A6NNFMYvEe6fdyTTPsfM
-	 Qi0g6vKwFWgDlcsQkXFnD/Nv9uK4BJHKBWWdTg3qEweQy8IK2PmMmgrQBpbxGgwTks
-	 O/ruEvv+m2MsI7wSY1YzD34P0nX8479JXxNEzXPKQpqkYxxuvga3SgNLeQthpjLuf7
-	 CjRjLYj59unKGg5fSj/RGtv4geoQaUK1teJToOHevxq/g4diJ0dSABLrutnvgDRVqn
-	 lUWSEvw86AsWUvS92R0OhyCklCLUpZZBErVkmCpcSYEvHkqCav9DRQgwzqcs/XjuEb
-	 WvTXn1YyVvSzg==
-Date: Tue, 8 Apr 2025 11:27:38 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Martin von Zweigbergk <martinvonz@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Edwin Kempin <ekempin@google.com>,
-	Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev,
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-Message-ID: <Z/VOekAaq+n45ex1@ubby>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <xmqq4iyzn0vn.fsf@gitster.g>
- <xmqqzfgrjyws.fsf@gitster.g>
- <CAESOdVC8m6VjQtyVi8O8bLWyJFaq7wnQ8U2kxW6SHnoXpCd14w@mail.gmail.com>
- <xmqqwmbuybhg.fsf@gitster.g>
- <3a5eeaef-05a1-4e04-8bc5-0d023e63f27c@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mbZMHZkH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R5D3doF9"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 074D511401C6;
+	Tue,  8 Apr 2025 13:37:06 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Tue, 08 Apr 2025 13:37:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744133826; x=1744220226; bh=YI9RXD4abI
+	lmk+CNsRR7sO7a9uQLbrtF3yoQRK+xmGA=; b=mbZMHZkHFQ+fz1ip5RpYMKLiM7
+	skYBXGuyt4Cwq6ivyRj1ZNyck5MWMgBQyA/I92VFEpj3AxX3YDBfb2Z0emF3kwxd
+	AD47IaUwZcy3fJUtZTp0S+3qsP+TPkYsqYoRmgI0d8FpdZtqG4orq8H/eAE5QzNk
+	YnfcCaHK3KgVtKR9FbM+jVJqlkykoLghn8Pmo08reyniCBX9cMPEZDmi/vpC7l6Q
+	m3W+JV/+/NT4uLt7OkIePCn9NdxJHxLj+1KmZOC8BwS25aphx5O9WUEFUY70jATo
+	iXNE5XUvnw+8BgmiVo2VGjBl6Wzrr/UIQPXM/SUA10AlxL20glGb2gDNNn8g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744133826; x=1744220226; bh=YI9RXD4abIlmk+CNsRR7sO7a9uQLbrtF3yo
+	QRK+xmGA=; b=R5D3doF9ldmQ/RR0QBEVA3HFg4Lw2d9oWHBJeWiG+/66OuRRpD/
+	uX7rrq3hmUqMMIIOxW8sJS5PNoijRmiRIXnWRSHeuhc8j55YzGEd/pl+PFMW1RSI
+	3jliS5drFvwAJaQjlV1BRa7Y4aX2+yJ4PPc2f4PntY98TcezAsAFlCeO8cA7iw7B
+	qnoDFdJRGYcqoXYTE/hAuPlr9I3qPHLu+MKF9+bm1526y7+aBPsPxdK2G8gLdsdr
+	x26K9ZKd7fqH4mQZV2vPPiaWhQh66ME1+28eYgF5g96543QlpZtl4jOZXuMSz7yv
+	Vg8xIiKk4iRvbZMtScCsh4sMSyMdmJKG8Lw==
+X-ME-Sender: <xms:wV71Z7V2KGDFWKS4ZYZUwbsvUL1HGmc35aQuzGDcM_EkgqZc58Jekg>
+    <xme:wV71ZzlFs_gplqtx4DAkF-0y9acT2DNatDLOvOmUtcRGJMZoMn-B912roUx_WoswD
+    pBFAHQ2kEjKyet2wQ>
+X-ME-Received: <xmr:wV71Z3YHcirVFE2DjsaeyflzVtvumwIgD5jj3k3iqXickOeJYf5eNX3e9GipXS-Q4On_8BoKPboVfSKAwhiiPi10hdfjimFTuShK>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdefjedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikh
+    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggv
+    rdhfrhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:wV71Z2Wd7P7S_PNTnGmJjr34hXoyRSINGGGHaP8DPcW6YKTccK3jrg>
+    <xmx:wV71Z1mGhwtNfAw39gSle7D1XxYkjleldOLO_9tt99iXPuM-vcDgTA>
+    <xmx:wV71ZzfGWjRFP_dI1QzCurK8Y5EQlbxf2sEty11cD0CZL9MyvrpngQ>
+    <xmx:wV71Z_FgDbhnz6zPVqSsChoGLBB29p2V8iz6vC7mIjkoX76yo-69EA>
+    <xmx:wV71Z1IUsh9xbDe0WlDRmiy_hNcJpI1_1TQb_QAdHVu-NhDvnbmx1gna>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Apr 2025 13:37:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  jltobler@gmail.com,  ps@pks.im,  jn.avila@free.fr
+Subject: Re: [PATCH v6 8/8] update-ref: add --batch-updates flag for stdin mode
+In-Reply-To: <CAOLa=ZT4fOz1sd31EhyLGeyQzS6GO0aSYN0L4fdPALRixkD6xQ@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 8 Apr 2025 15:26:28 +0000")
+References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
+	<20250408085120.614893-1-karthik.188@gmail.com>
+	<20250408085120.614893-9-karthik.188@gmail.com>
+	<xmqqfriiy9vh.fsf@gitster.g>
+	<CAOLa=ZT4fOz1sd31EhyLGeyQzS6GO0aSYN0L4fdPALRixkD6xQ@mail.gmail.com>
+Date: Tue, 08 Apr 2025 10:37:03 -0700
+Message-ID: <xmqq7c3uy2ps.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3a5eeaef-05a1-4e04-8bc5-0d023e63f27c@gmail.com>
+Content-Type: text/plain
 
-On Tue, Apr 08, 2025 at 04:58:58PM +0100, Phillip Wood wrote:
-> On 08/04/2025 15:27, Junio C Hamano wrote:
-> > Something like this should allow us avoid relying on "change ID"s
-> > that can collide elsewhere in the world without having a central
-> > authority to assign them.
-> 
-> This is similar in spirit to the "git evolve" proposal [1]. One of the
-> objections to that was that it required all of the rewritten commits to be
-> pushed back to the remote, rather than just the current version. So if I
-> rewrite a branch three times and push the result for review all of the
-> intermediate state gets pushed as well. That is because the intermediate
-> commits were needed to track the chain of rewritten commits  to avoid the
-> problem Elijah described [2] when trying to follow cherry-picked-from
-> trailers. If the predecessor information was stored separately to the commit
-> it refers to (in a notes ref for example) then we could in principle
-> simplify the chain of rewrites when pushing so that we only need to push the
-> final version of the commit and a mapping from the version that we fetched
-> from the remote.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-One might as well have a way to push reflogs.  But so much internal
-history is just distracting.  Half the point of linear history upstream
-is to drop all the internal history that no one should care about.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>
+>>> Content-Type: text/plain; charset=y
+>>
+>> Please don't ;-).
+>>
+>> More practically, is there something we can do to avoid this
+>> happening in send-email?  It may be a not-so-uncommon end user
+>> mistake that we would rather help our users avoid.
+>>
+>
+> This seems like this was in response to the following question:
+>      Which 8bit encoding should I declare [UTF-8]?
+>
+> Which I should have just clicked 'Enter' on, but typed 'y' as 'yes
+> please pick UTF-8'. Which again confirms the encoding, which I
+> presumably didn't read. So I guess the problem Exists Between Keyboard
+> and Chair.
 
-Even during code review this is too much and too distracting.  Some
-users commit very often, and for them this would make their work rather
-difficult to review.
+OK, we have seen enough people got burned by 'y', and made 852a15d7
+(send-email: ask confirmation if given encoding name is very short,
+2015-02-13) as a response exactly for that problem, but it is not
+effective as we wished X-<.
 
-> Tracking predecessors as you describe is certainly a more complete solution
-> to tracking the evolution of commits and it addresses the shortcomings of
-> change-ids you outlined in your previous mail. It is a lot more work to
-> implement though.
+If there were a better validation method than "4 bytes or longer" we
+currently use for valid values for "charset=$auto_8bit_encoding", we
+could lose confirm_only from the call to ask() that asks the
+question, but I do not know if that is feasible.
 
-There's also that.
+Another more obvious alternative is to do something ugly like this
+patch, I suppose?  Just like <ENTER> is taken as "I take the default
+value presented", this makes yes<ENTER> mean the same thing.
 
-IMO that's ETOOMUCH.  Just change IDs / series IDs should suffice.
+There is one question that asks yes/no question with default set to
+'n', which would be broken by the patch below, so it needs a bit
+more thought, though.
+
+ git-send-email.perl | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git c/git-send-email.perl w/git-send-email.perl
+index 798d59b84f..8b942e5bcf 100755
+--- c/git-send-email.perl
++++ w/git-send-email.perl
+@@ -986,7 +986,8 @@ sub ask {
+ 			print "\n";
+ 			return defined $default ? $default : undef;
+ 		}
+-		if ($resp eq '' and defined $default) {
++		if (defined $default &&
++		    ($resp eq '' || $resp =~ /^y(?:es)$/i)) {
+ 			return $default;
+ 		}
+ 		if (!defined $valid_re or $resp =~ /$valid_re/) {
+
+
