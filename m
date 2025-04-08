@@ -1,163 +1,172 @@
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C164C267B6A
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 09:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DEC266EEB
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 10:16:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744106161; cv=none; b=IsB7R9cwOGVHYdmkuW2nRSX2sSeGp0z+KzpMWmPMfyIhOfWc7orwQp8VofA08Gp5U2Wa//sh8Ab/+mi4w8gOuzWGzoTL7CA7ccZO+tigtecIpbzMGVcFOqZEy2J1MVg0ZCJ9zgcNdXvhsa0llVkjPQm3Ahxhlwf7UqwvNlpU9f0=
+	t=1744107363; cv=none; b=VI9HtjP0wBKseuoMLkCzeALe0/EqBz1wnKugbcbrukSF/qVNsDzhvSw2HPuVdfImO3YLEmogRBAJSCR5QBzoYwcCzO+TQi288g8WyQPcyDAA/1kTd3bw3YUM9OLKQ7KSOKqr4XbbL3xVir5X4ylZe8VrxWVIXPXqUqCtOnS9NkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744106161; c=relaxed/simple;
-	bh=VdnJuKp1vrOBdv12+0D9k9JKAm9betDcnBdRoMBzth8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B09aPW9S10MoUpBlF+36yvjF3ULdnkpjYubnSZi/CwSpDgRCzCkk8ktXY4f9RZplUCDfbob6aBeegdAVgrLCns+gZc/5Oxdt7s8aJgCX+WZXXelU39CnCd2tjb/i/7I/Wu1YFaMvuhGr1u6LgJzufTHCfjH+4vFVzKScy6H2Nz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZLpcY3iQ; arc=none smtp.client-ip=209.85.221.180
+	s=arc-20240116; t=1744107363; c=relaxed/simple;
+	bh=j3yQgTU6jsanZ86LxqxgLqHFLGS+yIOO6e1GFrH8o6o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=T7ZM/6L3iGRjozZKWkKvDzWtiGoDTEiRb+7TjQMdvdS7+Fqy5Xo3GS1I9qZCNKkj5rWOIcsnqPBerc/LgDKyVK6vZF5dzE5hcJM5MNmjWCrnJYLuixJQ5xwiV7XxAQ49nBc1H9j2DaFAspTsxXOMoQg4Gcu3sYXncWfno9x8St0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aInmiLjb; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZLpcY3iQ"
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-523eb86b31aso2495764e0c.0
-        for <git@vger.kernel.org>; Tue, 08 Apr 2025 02:55:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aInmiLjb"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so36955265e9.1
+        for <git@vger.kernel.org>; Tue, 08 Apr 2025 03:16:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744106158; x=1744710958; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=K9h0Bm5tO96ziwi87L1G4ZoDklkkvf4l9OOlBnhknJw=;
-        b=ZLpcY3iQ4I24/IhUMsfOJhV6EDxFpGwMl/R3EJZwwoidMlIotbns8jRNP3uoR613Up
-         IfQnZWuVbM5Ho79Wg8LUOL0U3vdcTKNcWzGefsgak/YTcdE3jzbX+QqUtRrmjSpdlwF9
-         d3SICNVLM4/FAoKK0FLamg3UMKInn0br6CmNWr5P377Y2nWw6hIxmrWt3yTQBgSIm9UK
-         tzU/L8HmphFR4yWaJHN0BSriqoAIeg98nifJQ1sNr7KKBJrie6Vi5TZx1e/xPNjeU6pR
-         DHTnO6v2uhfQzkA6O+k3V1accHOj04GNOloaLIG73M+bjLZ2Vc0c5vjjt9EiykFI8FpN
-         YJgw==
+        d=gmail.com; s=20230601; t=1744107360; x=1744712160; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=xwZBv9z9paT+l3pf111Vj1AZ6tZGapLDRrPS6kxhJXk=;
+        b=aInmiLjbLwhyT5Ul+n0Vkwe1lX5zorDnnLhvEjWbr10o27/riCM6dYwLDOu6XVbciN
+         Znw3o0j+L8Dd9r4oIARx1Y31m8Zi0EbLYnbBfI2V5X0kW0K4f6qMrlkKp/6LYWvt9gEE
+         xhAFBQCA77KR9vnhmPXWnNVwvfw+NXtVn1t0xJ8Gf4ANelhIjxFV1ERg8PheT+xpdS2y
+         ZVwnKdUFeYOi8O3IohWjBu1DV3C6O8zcp8ga656gIQ1bBcqRUub5l29LnX6Zbp2KgEP2
+         bl5I4IrTAfMgZ0EXx9yBv3c3Lq+MZN5Hu7Doo9pTGsMS23V6eWCqTjZCKHWS/ci2Sb+l
+         cbeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744106158; x=1744710958;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K9h0Bm5tO96ziwi87L1G4ZoDklkkvf4l9OOlBnhknJw=;
-        b=dgsnWs3tu5i9Mi4sh7LqdI27E+aWVAKWRd2DTaEm2fYUNCEvtNbD9D/xMo9uE2Nn75
-         ieP88Tuh8ovll5NhLuFCo5PVsCD4/165z0fdfYpSkZBSEV5xXhNd87ZAGwDBUB/uCq20
-         EVIrTMuS4HTGiGsUpOHuO3Blhv5sbTHVYHikeIjecwaAbefRX2JS80rkKUK+SYi3GpQw
-         2ScJ5uNXJaDGVHY7Nu7KxgKnPyNpQrSYi5fCMRyWvVOV5FA+FE/RJy3td3TpxUBQxlfq
-         WvXnccE15PWIHctOJM6Fofzci+L5/o9dcl/wed/7G1/021Jl9x+TVJ7kBJ3wcffrgdun
-         6shA==
-X-Forwarded-Encrypted: i=1; AJvYcCUUnRTB10kKQJGwLtJqHWkXmLdAsV2s+JXkoisZ/CuwLsCIXWP93c6wYCW0TiZXa5X5WvM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywwny8kezh04yA7fUqBG+ec/lZ6LdEu+qOZzmTPPHJXagQdU1qe
-	XCllDcTaXISUHkK6UgfhwEGGKGuRltsxql+dRecE5+IyW2Vx8HcoZXKXNwO1Ge97g6MNAX5Jq8V
-	dz0tGfustjJYbLyEWFOjaKpVVw5g=
-X-Gm-Gg: ASbGncuJfYlReTI8CqHIG5guJAQyEXPWnDZVRlar+Vd2ZTV64V9TY1WbuyMyESj/daC
-	33Nf0GGfl8sbmvHsj/f+Thbv+B0JmjGC0LIU5VXyFKb0JzxUJDFmxyuw99SBxyvpWysbymHVsiA
-	zU24nFIY1tkRzuFuFnjkLiSZDR
-X-Google-Smtp-Source: AGHT+IHt0TgGQ9scoVUktdVTvkXlxOloBKQPih+BIsLD1xBtBeDBPyh1jgUZCy3suS8evQpfPEbcd0Jd7i1pS2vHSt8=
-X-Received: by 2002:a05:6122:168c:b0:51f:405e:866e with SMTP id
- 71dfb90a1353d-5276444bd32mr10452972e0c.1.1744106158575; Tue, 08 Apr 2025
- 02:55:58 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 8 Apr 2025 11:55:57 +0200
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 8 Apr 2025 11:55:57 +0200
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250408080802.56341-2-anthonywang03@icloud.com>
-References: <20250405103718.25160-1-anthonywang03@icloud.com>
- <20250408080802.56341-1-anthonywang03@icloud.com> <20250408080802.56341-2-anthonywang03@icloud.com>
+        d=1e100.net; s=20230601; t=1744107360; x=1744712160;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xwZBv9z9paT+l3pf111Vj1AZ6tZGapLDRrPS6kxhJXk=;
+        b=ZIolfFzmw+6VNRq0glVCb1LXQvQ30dGuIg5uOCDw1u5djKT/00Y/4gEvonQX6goPYO
+         T+IJ5aXacAVkfP0w2UPSb3rb3tCfS53KJkItA7xxXJewJwJGqvbtpfZgUFqdaw1M4Y4c
+         L0T2fd5S5NNzhkEBWjGgPrUb9LTO9Pl2XT6CGGYiwOUyb5FXyrry406OF+QO2mUirjLC
+         6yn+aMypWeI/6G1yVLdDGZQhcK3V9shUEwj+yLKPsnEpcZF2kNur6GXO0RL/hSraEdHm
+         hs8JiReOAdlxFvHFpfn3ad+c8Ov0R8ac5rTCzf+PEWhHMpkvfVBqVbQkQ7SZaavAK9gK
+         uiMA==
+X-Forwarded-Encrypted: i=1; AJvYcCWsI5hfXwxy3YDk+c7UM194COQwqwTm/JrFN+p9MKeg4hhmaHN3WvCjx3ivNUHkJysOWxQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz6h9sA6zFXh6UO77Z1lCZItAQRpoN87I52wtfK5lw5Dkr82QeC
+	O1sNdMDdDiEc3qp0r5fHJnweb3qBYMjxS5p7PPss2Hmkmrb+tqv07gEahg==
+X-Gm-Gg: ASbGncso0ZsxPDnrHzABmsiXZ1QG8iRbaTHJDQkMNiuU2/mwans38/sa7qF+769/ikY
+	iTHkWbF2kf5E4zOP5rx8/a5szZbFnwl4Z9IgHAYRmy9f1JdJlA5XNOozzRpPDHDX5RWYYvd6HN5
+	z05H4B40pHXBVNBK0adoIFLaQCUqgy7aSHlpGRa3jiu1oBI888VN/sJ8K7PmdB/Bei1fW4YFyJF
+	xPD8dOLDlJcRy232PyhWHsNToO3QttXdcsUes8lyEMbiaaU/2zlCnw0Z7+Zlk6YdLVvXd9LyOHt
+	5b9ccUjq18z0I8YW5afyIQDWCSobsyaEPpTmSqDIvvsjnvqKuFCeHgkSVLTzZ/hEfoAdcEZ1nPi
+	62K72mLoXEsDHir2HhbcajYmq0nw=
+X-Google-Smtp-Source: AGHT+IF/TzqTVbZLdhtTepeC5IipUoMwnwNsmlIyvsXBbTLBUvlsKoK/Yzalt2ouIHzxzhJQEnOVhw==
+X-Received: by 2002:a05:600c:1e0a:b0:43c:f70a:2af0 with SMTP id 5b1f17b1804b1-43ed0c50ab7mr166870785e9.16.1744107359880;
+        Tue, 08 Apr 2025 03:15:59 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:efb:6e00:24f3:2d85? ([2a0a:ef40:700:a501:efb:6e00:24f3:2d85])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39c300969e1sm14594746f8f.10.2025.04.08.03.15.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Apr 2025 03:15:59 -0700 (PDT)
+Message-ID: <240d1cab-b564-45ae-945e-cba621aa7562@gmail.com>
+Date: Tue, 8 Apr 2025 11:15:56 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 8 Apr 2025 11:55:57 +0200
-X-Gm-Features: ATxdqUFEVqYFEG7tfgVGNZOb5VIEvMcHXwxOf2C81ypANZDQCa0mXoglkiFuWws
-Message-ID: <CAOLa=ZQPgSNOAnhc8AHwzkgphz3RCF1YkPdC9LKPi8Hnhz4ijg@mail.gmail.com>
-Subject: Re: [GSoC] [PATCH v4 1/1] Remove the pipe following the `git tag`,
- ensuring the exit code is not hidden. Add explicit verification to check for
- expected and unexpected tags, increasing specificity and future-proofing a
- portion of the test.
-To: Anthony Wang <anthonywang513@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im, shejialuo@gmail.com, christian.couder@gmail.com, 
-	shyamthakkar001@gmail.com, sunshine@sunshineco.com, gitster@pobox.com, 
-	Anthony Wang <anthonywang03@icloud.com>
-Content-Type: multipart/mixed; boundary="0000000000000872380632415c64"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] [RFC] rebase -m: partial support for copying extra commit
+ headers
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1902.git.1744041163929.gitgitgadget@gmail.com>
+ <Z_R6W_yjJEYuWo0A@tapette.crustytoothpaste.net>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <Z_R6W_yjJEYuWo0A@tapette.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---0000000000000872380632415c64
-Content-Type: text/plain; charset="UTF-8"
+Hi brian
 
-Anthony Wang <anthonywang513@gmail.com> writes:
+On 08/04/2025 02:22, brian m. carlson wrote:
+> On 2025-04-07 at 15:52:43, Phillip Wood via GitGitGadget wrote:
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>>      [RFC] rebase -m: partial support for copying extra commit headers
+>>      
+>>      This patch is largely a response to
+>>      https://lore.kernel.org/git/Z-5rpWKAVPmz32jC@pks.im/ . I'm in two minds
+>>      about whether we should consider merging such partial support but if it
+>>      helps forges preserve extra commit headers then it may well be worth it.
+> 
+> I'd like to see command-line options to control this and ideally a
+> configuration option.  Right now, we know nothing about these extra
+> headers, including an expected format.  If a future version of Git (say,
+> 3.0) adds a new header and the user includes invalid data in this extra
+> header (which happens all the time with author and committer
+> information), then 2.50 will propagate it on rebase and it won't be
+> fixed until the user uses a version of Git that understands the header
+> and can fsck it correctly.  That's not really great, since it means we
+> can unknowingly spread corruption.
 
-Seems like the subject and message is combined together?
+We could certainly add some way to make this opt-in if there is a desire 
+for it and you make a good point about compatibility if we add a new 
+commit header. I'm not sure I'd describe preserving these headers when 
+rebasing as spreading corruption though as we're simply rewriting 
+existing commits. If the user chose to merge rather than rebase we'd 
+still have the same issues without creating any new commits.
 
-> Signed-off-by: Anthony Wang <anthonywang513@gmail.com>
-> ---
->  t/t9811-git-p4-label-import.sh | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
+> I am pretty sure that at $DAYJOB we'll need to have a discussion about
+> whether we want to propagate these headers during rebase and I'm
+> personally leaning against it.
 
-A quick check shows that there is a whitespace issue in this patch when
-applied on top of master 9d22ac5122 (The third batch, 2025-04-07):
+My understanding is that GitHub has been using "git replay" for rebases 
+and therefore copying extra commit headers since the middle of 2023 
+[1,2]. The message I linked to in my original mail suggests that the 
+"change-id" header is preserved when rebasing on GitHub.
 
-9d22ac51228304102deb62f30c3ecba6377e1237
+> Why, you ask?  I've seen at least the following types of corruption:
+> 
+> * Missing timezones
+> * Timezones with less than four digits
+> * Valid timezones padded to more than four digits with zeros
+> * Timezones which don't exist and never have (e.g., +1700)
+> * Timezones which are so absurdly large that they push the date to a
+>    year when nobody alive now will still be living
+> * Date stamps that are larger than 2^64
+> * Date stamps which are smaller than 2^64 but beyond the expected life
+>    of the Sun
+> * Extra angle brackets in the email field
+> * Nothing in between the email brackets
+> * Nothing before the email brackets (no name at all)
+> * Names which are not UTF-8 but without an encoding header
+> * Names which are not valid in the specified encoding
+> * Emails which are not valid UTF-8[0]
+> * Emails which don't meet the (ludicrously generous to the point of
+>    being nearly unparseable) RFC production
+> * Encodings which are not valid IANA charsets
+> * Messages with no body and no blank line (just the newline at the end
+>    of the final header)
+> * gpgsig headers that include random non-ASCII bytes and control
+>    characters[1]
 
---- 92f98eb326 Remove the pipe following the `git tag`, ensuring the
-exit code is not hidden. Add explicit verification to check for
-expected and unexpected tags, increasing specificity and
-future-proofing a portion of the test.
-t/t9811-git-p4-label-import.sh:100: indent with spaces.
-+ git show-ref --verify refs/tags/TAG_F1_2 &&
-t/t9811-git-p4-label-import.sh:101: indent with spaces.
-+ test_must_fail git show-ref --verify refs/tags/TAG_F1_ONLY &&
-A whitespace issue was found in one or more of the commits.
-Run the following command to resolve whitespace issues:
-git rebase --whitespace=fix @~1
+Thanks for sharing that, it is an interesting list. On the subject of 
+encoding I do think our documentation could be clearer that the encoding 
+applies to all the headers as well as the commit message. As far as I 
+can see it only mentions the commit message, not the author or committer 
+identities but repo_logmsg_reencode() re-encodes the whole commit 
+buffer. Out of interest do you think we could be doing a better job with 
+fsck to pick up some of these problems earlier?
 
-> diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
-> index 5ac5383fb7..cd06f39519 100755
-> --- a/t/t9811-git-p4-label-import.sh
-> +++ b/t/t9811-git-p4-label-import.sh
-> @@ -95,9 +95,10 @@ test_expect_success 'two labels on the same changelist' '
->  		cd "$git" &&
->  		git p4 sync --import-labels &&
->
-> -		git tag | grep TAG_F1 &&
-> -		git tag | grep -q TAG_F1_1 &&
-> -		git tag | grep -q TAG_F1_2 &&
-> +		git tag &&
-> +		git show-ref --verify refs/tags/TAG_F1_1 &&
-> +        git show-ref --verify refs/tags/TAG_F1_2 &&
-> +        test_must_fail git show-ref --verify refs/tags/TAG_F1_ONLY &&
->
+I think "git rebase" only cares that the author identity can be parsed 
+by split_ident() which is fairly lenient.
 
-Looks like this is the whitespace issue.
+> I see Patrick is CC'd here and I'm interested in his thoughts, as well
+> as, of course, those of anyone else as well.
 
->  		cd main &&
->
-> @@ -208,7 +209,7 @@ test_expect_success 'use git config to enable import/export of tags' '
->  		git p4 rebase --verbose &&
->  		git p4 submit --verbose &&
->  		git tag &&
-> -		git tag | grep TAG_F1_1
-> +		git show-ref --verify refs/tags/TAG_F1_1 &&
->  	) &&
->  	(
->  		cd "$cli" &&
-> --
-> 2.39.5 (Apple Git-154)
+Yes me too
 
---0000000000000872380632415c64
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 73b211f743011a16_0.1
+Thanks for your thoughtful and intereting reply
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mMDhxd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meWFmQy80aVNLTnI0UnJWa3N1SDh1QWUxVk5LV25WMAo1V2JJdUd5SUU1
-NkovMmdpOHBaa0U1clozdWRCdFdWRlg1Vnl5VzFWMDlFaXhkdU5ZaTB5TkhKeTM2UnBucG9KCk1z
-L1VRVmlGSzVqNFVaY0s1enlFcnBQeEFKS0V2MlBSZmtodmJhYWRBTFRBQXFhTm1uMDZtMUxtWlpT
-Y1VubHAKWWJiOVc1V01iOVM3SU01dGk1b2kwWlpqQ1BlakFxY0ZONWNvMDhJeDNHcllsSk4wN2xh
-bE1uOTdUMDhSTFRtdAp5KzVoWmRTcFRWODNkYXRUY24vNEQvVmR5THVmcTYveGFtSFNZRlBYc1U2
-cERRLzlySnd5OWZqcldFekxtOWFyCng2aVM0Mi9mQnBaSXZTRGVHOFU3NVd0bC9DSU15cWhuN243
-V0ZUd1B5a0ZmT3VvdVh4aEc4SmRVOU1GV1E1U2kKY1hiTUZpcmpNRTFMcFoxQjZleXJGcHdLeVkr
-Y3Q3b3U2L082cW01M3pJUDZhVEEvOGxlMFZUTE5BbVdkLzdNNwp4ZHhwQmtrSnlkSk9EbGtZNXhW
-S0I3eE1URnUyYXRwNG9Cbzc3OGNEelRYREk3MlVqUjdMLzBFUGkxRXZxRVYwCnZNbjk3akwvT1Fx
-ZGUvdGNBM0VPdTFDVWgxNUZ2WWM5bXZZNVR5OD0KPVAvQVUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000000872380632415c64--
+Phillip
+
+[1] 
+https://github.blog/changelog/2023-06-28-rebase-commits-now-created-using-the-merge-ort-strategy/
+[2] 
+https://github.blog/engineering/infrastructure/scaling-merge-ort-across-github/
+
