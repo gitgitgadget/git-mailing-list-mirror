@@ -1,175 +1,206 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E8D22F145
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 20:16:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6552500DE
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 20:56:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744143373; cv=none; b=PJLRKUiQnHMG6f0Sp0yo/zpzvg/YeICrE+kIAaTONdWjk1YyVazTBRV8ppVPE1aKKoGP0AvpK1xJUa/ZAGfIOHkwQBchbF0//Nci3sj+x2MuUTjOF8f9RuUh1c/YzwrSVbZUjl5cPhAhrBsNg3Y52+6QvP03/L+sRJ17wtlW66Q=
+	t=1744145798; cv=none; b=bGQLOkcT6S4E44ALvTb9+MtqV24JgmAfDdCAHC4oZ/AO+5CU8Abzojfr/WR9hQtSJt9NkXk/LD/2VHzoMDdJK46zaCC1EOVVvvZrIVRwcAbq/wIY4PiFUbkcRwhSDp8eOdDzGzHA67Hodyctoe0n12zJAAYIOp47+Wpl9NQP5dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744143373; c=relaxed/simple;
-	bh=yb6mSUVcGO9VLShWNQty+9EDqfXiZBMSMSLSnOdhw00=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hFPdLseBkajysG/i70PAzJzfEG+35XnXE7kJ+s1r86kK5I5Yg3UE7r4c8wu49KPTZcFgUKj8qbrde4nSWTuriROh74YXbax7ahbbePA4lBF5Havq5nWsiUkpXquhnRezZhkyjdNvFN61mhyZgGqAY64KRNVrEzNoomIFcKAGA8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dQ/XkF44; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LIaNFlEq; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744145798; c=relaxed/simple;
+	bh=zVT1hZanlATOB0LTTJ0JG/yXVOvxamOOJLimt4FXDdk=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=nZvyxyFnjiJXIAe63Mqry8CX8lCcGruYSWY0dZRNnORUsYu46U+FtYqSLBLNHXaiFHrVnBPWH4SoQf9WCJJ9jNDBbVnGY9mcbzmGzFnFrLwNaeZcjlOVFclOVTiiBwVemCdX17d3Q+vPUn+DXLUVpl4vp2ZBNzbOq23KKC9JYNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=bAstmBGq; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dQ/XkF44";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LIaNFlEq"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E861325400D0;
-	Tue,  8 Apr 2025 16:16:09 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 08 Apr 2025 16:16:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1744143369; x=1744229769; bh=PhaJtn6da+70K90ideRqwX39aSruZRM9
-	lEJiOVujXzs=; b=dQ/XkF44oSicQQH0w+j517jX4ZihiP7KfrnirB3YFNmVjOli
-	kNAtaekxwis/mkLgftUl84crXh4TD0iFFht1dakhj6O3K/xL5cEXfnsOeVQg6Cz2
-	xvhZNipPXdvCW4s1BcgOSyk3eoWv3BNZb6CZmTE+WqKaU5tDYiCP1BB4Fho3t3sg
-	4pTsDM4Z7NHTBnHOgHMljKkms2uzJkggFpHiSfMzI6KzbCpZDbfVOvnNELtJRlCi
-	D2Q4OvTZxDk0VyhVx+5TsHChkfUKRT+mXzRQ24IhBjSojROs056hA905tdOCABUl
-	l1Ax4TCbk2xNSCia40hHq41I7BEURNrANH4XhQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744143369; x=
-	1744229769; bh=PhaJtn6da+70K90ideRqwX39aSruZRM9lEJiOVujXzs=; b=L
-	IaNFlEq2/eOl0IXiAWxTIJHWxhu0rXoaDfvbC66XKC2EBVgpwCcRWDG52cqyCvNr
-	Bb+AwLYolEs7Sg1dZo6wMdEAB7XguUYy1+zN/k9GGuy+3f/aoj6p/EJMXZ6NIoEi
-	RMZPNhgrYCGmO4iwtxpX4802t04DK2QHRqtN1j9Ipj7AvLzR6xRhyttUdc0OXmBx
-	DyrNkqPEm3clPmJY02TpQZwX+g1lzcR5X6H3UquW84eL/zBvde+RU5hdOupyTg1Y
-	8rtnGJR/VxsENkMZRsdJB6IeHc1xurvtN4gwgMdJfPlKsCH6ch+wD0y0lHt/cxPR
-	s0Y9g/IoHAhQMHUIHHNMA==
-X-ME-Sender: <xms:CYT1Z2Vcen5WzPBBnyd-JyCekFO7CGQ4uIol5-yQOGJ4i9qX1WP2MQ>
-    <xme:CYT1ZykxLtTnsVkZYR7gHFn3tGZxex1V0H6o-Bzvtvmvy82_rBclzuAFXgUB-M1ES
-    njm7IqSyjdn48zevQ>
-X-ME-Received: <xmr:CYT1Z6YcAq8QQW440uGzk6UGR7SQjTfnkfK-ZSmSIAyvH8meUeN-RWHhA-ptHkvkV4F2Ldn2mKMf-AjF5RTNvwv8QnLjpPfbee9Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdegtdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefufffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhephffhtdegffeiieekleeitdekvdffieffgfdv
-    vdffleetledtudehtddvtdeileefnecuffhomhgrihhnpehgihhthhhusgdrtghomhdprg
-    iiuhhrvgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
-    fhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpd
-    hmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsth
-    gvrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthho
-    pehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:CYT1Z9XCjgsLaVVA9a-2AfrB5LtbFYVmQTmB-7NDWcWoIg18pqSilQ>
-    <xmx:CYT1ZwkXdL1UVCHOeOvhkZ8JxQgAyyE69kEGHT3CEI2bf4EnFtr-aA>
-    <xmx:CYT1ZyeBUoIpDGfn0mAgFIEzENLrEieJVwY19wLtGzgHjc_B6W1SmQ>
-    <xmx:CYT1ZyGZu_EctJUDZQddGvabsGp103mS0IoxJoeWTL6C3ViOjqrCQg>
-    <xmx:CYT1Z_FrxMO2azd7Y4dPdExw07tAhTJ26AlwfyyZwHtGHQEl80GbRLf1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Apr 2025 16:16:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Taylor Blau
- <me@ttaylorr.com>,
-    Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [RFH] GitHub deprecates Ubuntu 20.04 Actions runner image
-Date: Tue, 08 Apr 2025 13:16:07 -0700
-Message-ID: <xmqqo6x6wgs8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="bAstmBGq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1744145794; x=1744750594;
+	i=johannes.schindelin@gmx.de;
+	bh=OgTjcjSJdgCSwQXzGAAt0MEXGHkGzzOAmxIppyMQ5xw=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=bAstmBGqkh7vseh5zkFRaQyESAOKZhIYbhxiodhVG111VTICXyZNXkIz56vXPIUa
+	 9e33LSjVC+IkkeFKjaTKiR8TWFKAeN7gchXSiLWcdJthsZzl7NwhpacKTPcd9vgyt
+	 bcivAblTWx/82peck+6XrrewRIkSbgOEPk4+ET8sJZiLOlga0qFGa9Nw9tYXcgZeO
+	 176WtoYgTlyibUdkOFoCyY32yArqUTZgrANjiFkh8YzPg2v6Ty9fC2X0IxSQ2Ul73
+	 +QcB0m/RgS2c9jcbI23U15npFtmXRAxT/m4Ec3aYa2+9Qo18/wIpNqEyEx4xOJI+i
+	 2N7+C6q8Zgstqb714w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.213.9]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N9dsV-1swrbw48rV-00xo5w; Tue, 08
+ Apr 2025 22:56:34 +0200
+Date: Tue, 8 Apr 2025 22:56:33 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= <congdanhqx@gmail.com>
+cc: git@vger.kernel.org
+Subject: Re: [PATCH] sparse: ignore warning from new glibc headers
+In-Reply-To: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
+Message-ID: <77f82414-261c-d2bc-f911-ed3d4b06c86e@gmx.de>
+References: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-1294897309-1744145794=:9725"
+X-Provags-ID: V03:K1:vWi0Zlbv6mb5cxRW8waE4G76kykF190+oAXby/EO4c4zuCqmGtb
+ aFQkfLe9Wrxqwz7CRGlQ43ibDGxqMlSc4fEbloPyjTdaHoG/Kt8Smj6dGoo71iBIs/77nxe
+ AL4fMHQeWTAO2pSRdYiup4ngmeubWsxl+nIjsuU6FIiwCjq0Ny7p+q0JI9/2lM7kdFIcqUF
+ nwPjldfMGRgQ9tBR/8Uqg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:6bEEkACdeMQ=;TTDAjtjzVaJz804OmXkAMkwDGB2
+ 9V3CR3aE8a7aj+oX39YExOFsDIHMh5ZDGM1Jb+r8PBPQ92MsTi1/1MeHLMPi9Ee0BGtx9+kHl
+ 59V6DQ1Lx+2F7EL8KpXX8UYggeXArRi276uayKo39WlLJi3nX05JceUboNTmqHtmc3VOn+2+n
+ pqlVliRv/aX7zd/pECuafRsLX5yR5Lwn1uTMcSbUxMBhPs4cwPa2HpXrMKPALHkI5b+lr7zL7
+ n8s7lw5DPJ1g9j+83ndxfFvCld9EzDHTfcA2U2kpgKPbp+9SHeneyKbjLoug6IOp03ZwioUkc
+ tdIFps9N41CGXkyCXiBuEZUTwvudFiABcHNrT6I123kagS28oT871HMK1OqmJKiGfNrs4ulLe
+ SkgFOpKAdpkDib1MduedICJoWqyH5ESq4uuVSjMehXhYCJLzsX/GW+AniborqW5CRCUBvUCIK
+ 7wCIoL+kFLoVKnEPe8WU2dUkYqDWiQPa4s2xA2GB9Te/qveNsiONs4uCwDcr+MzcmiH5gRQFT
+ PPEp/tmTmF6nsuPv1xX/BFNJ0OLZOgQVgX98BzW6tFhWbAvtRBl+vXS9muLWwtlxw/5VEs9Mt
+ qqe6z/8DQX6reMNT8AZF41KAVRsrxd1lauqT9LORuPz4gNXfbFm8reQ+MzxIzwbEu1j95E5FA
+ xCC04ZGXctd8EhNDdqoN6HgrkZa+juF7esE1UJnD3JTLukDydFQ++Ar/PHOBI+xj9hZYXR0zs
+ S/+VKDApjDqlFfSvSBHa1Tx3YSKs5GoIHU7wZTliGuYKV33E6qBBarUcvWzTPIJxUpGbohGyv
+ hyrrJWJqypyl/SS6gCDvFyniiFC4Z4kyr/4dWd5Ttk+pJpC1fWKM4jMc85q5lNhdCk4epq2Ac
+ AYFhN1plp0NrbrvTxy/wH277ZP4jYS9yjuZGckMYjlnpb5qt+AW8+Z7pa7QK9V6gFSoqGob4R
+ fAiFijlJhU+Ptx3naMpLecZN2QknvO9tzkBIBQWXdiAT2mtvGjokx5kmrWDdPNtg5UX7B5ic4
+ Xo3kqNZoHz8xbb7yuHDIG7CefSPR9HHsiO+2uokFBawWA2v3vXJKiA2lSsvuc3WGwgJazdoQl
+ s08ju6kAduE1g+4DIupvWYGGPW/IMSu0rmqOcPscOEtHnB6fshOTiNvg0vjg8zj3vmUix3iNf
+ v+qqWN7IJ2hPr3XVzUQZ+HDas1Csmap9JBHpP2dTwvwlhOSviXf8cdmc9W8/kIrhLrffaOX4p
+ KAEo2gg/cCrbt50hmIJPYTlLQMdM4BS7hksl1suAnnmldE3lBS67FPlGigu3ir7gGcisy4+Xq
+ yIkQ5YTgfL5DZ5SKPsKFFTJhxglc9SYNLnkoovleli7KTnbKh5TGpZMhsrDtL20+/Xem7G3BL
+ JDJ0JAuhEv48eSfxnd3aaQwR1nD0xavh3jfNP4MUp2jcr4QrzwUCQDi0Lnv4ZrRUWV/zrd8XV
+ 2mwR8BEgbO+ClO+IxE504YEZozM+rxftsZDBYiFSxpzFllNeHduDuJmTQGhBnijLWLNlilxSk
+ atLdwlLq1R5PmMHiSEk=
 
-It seems that we are hitting https://github.com/actions/runner-images/issues/11101
-which deliberately breaks CI jobs running on Ubuntu 20.04 images, in preparation
-for its removal targetted for Apr 15th, 2025.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The following is a random/blind attempt, but I need a lot of help ;-).
+--8323328-1294897309-1744145794=:9725
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-[jc: brian and Taylor CC'ed for their ac112fd4 (Add additional CI
-jobs to avoid accidental breakage, 2024-10-31)]
+Hi Danh,
 
- (1) I do not know if the deprecation schedule at GitHub is the same
-     for native runner images and dockerized ones.  Do we want to
-     leave the linux-TEST-vars that uses image ubuntu:20.04 alone
-     for now?
+On Wed, 17 Jul 2024, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
 
- (2) If we were to update it to ubuntu:22.04, would gcc-8 still be
-     the right "ancient-ish" version of the compiler, or should we
-     update it as well?
+> With at least glibc 2.39, glibc provides a function declaration that
+> matches with this POSIX interface:
+>
+>     int regexec(const regex_t *restrict preg, const char *restrict strin=
+g,
+>            size_t nmatch, regmatch_t pmatch[restrict], int eflags);
+>
+> such prototype requires variable-length-array for `pmatch'.
+>
+> Thus, sparse reports this error:
+>
+> > ../add-patch.c: note: in included file (through ../git-compat-util.h):
+> > /usr/include/regex.h:682:41: error: undefined identifier '__nmatch'
+> > /usr/include/regex.h:682:41: error: bad constant expression type
+> > /usr/include/regex.h:682:41: error: Variable length array is used.
+>
+> Note: `__nmatch' is POSIX's nmatch.
+>
+> The glibc's intention is informing their users to provides a large
+> enough buffer to hold `__nmatch' results and provides diagnosis if
+> necessary.  It's merely a glibc' implementation detail.
+>
+> Hide that usage from sparse by using standard C11's macro:
+> __STDC_NO_VLA__
+>
+> Signed-off-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gm=
+ail.com>
+> ---
+>  Makefile | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Makefile b/Makefile
+> index bc81d3395032a..4b9daca1dcc58 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1381,7 +1381,7 @@ ARFLAGS =3D rcs
+>  PTHREAD_CFLAGS =3D
+>
+>  # For the 'sparse' target
+> -SPARSE_FLAGS ?=3D -std=3Dgnu99
+> +SPARSE_FLAGS ?=3D -std=3Dgnu99 -D__STDC_NO_VLA__
+>  SP_EXTRA_FLAGS =3D -Wno-universal-initializer
+>
+>  # For informing GIT-BUILD-OPTIONS of the SANITIZE=3Dleak,address target=
+s
+> --
+> 2.45.2.599.g51c0d632d3b6f
 
- (3) Linux32 job running on image i386/ubuntu:focal has comments
-     that says it is supported until 2025-04-02; should we simply
-     drop that job, as 32-bit platforms are less and less relevant
-     these days?  It is not so urgent but debian-11 job also should
-     be replaced with something slightly newer next summer.
+Thank you for this patch!
 
- (4) I have no idea how the "sparse" job, which seems to download
-     pre-built sparse using magic incantation
+Due to the brownouts today (see
+https://github.com/actions/runner-images/issues/11101, surfaced e.g. in
+https://github.com/git/git/actions/runs/14342895944/job/40206357016), your
+patch came in handy, as it is required for the following fix:
 
-      - name: Download a current `sparse` package
-        uses: git-for-windows/get-azure-pipelines-artifact@v0
-        with:
-          repository: git/git
-          definitionId: 10
-          artifact: sparse-20.04
-      - name: Install the current `sparse` package
-        run: sudo dpkg -i sparse-20.04/sparse_*.deb
+=2D- snipsnap --
+Subject: [PATCH] ci: upgrade `sparse` to supported build agents
 
-     is supposed to be updated.  Should that be coordinated with the
-     git-for-windows project, where its .github/workflows/test.yml
-     has a similar insn to build sparse-20.04?
+The `sparse` job still uses the `ubuntu-20.04` runner pool, but that
+pool is about to go away, so let's stop using it.
 
-     It appears that Dscho (CC'ed) is futzing with the generation of
-     sparse package on Ubuntu 20.04 and 22.04 and getting affected
-     by the same 20.04 brownout
+There is no `sparse-22.04` artifact provided by the "Build sparse for
+Ubuntu" Azure Pipeline, but that is not necessary anyway because Ubuntu
+22.04 has the `sparse` package: https://packages.ubuntu.com/jammy/sparse
 
-     https://dev.azure.com/git/git/_build/results?buildId=2396&view=results
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+=2D--
+ .github/workflows/main.yml | 11 +----------
+ ci/install-dependencies.sh |  2 +-
+ 2 files changed, 2 insertions(+), 11 deletions(-)
 
-     so probably I do not have to worry about it and let Dscho take
-     care of the whole thing?
-
-
- .github/workflows/main.yml | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git c/.github/workflows/main.yml w/.github/workflows/main.yml
-index 9959b61ece..1d4422c898 100644
---- c/.github/workflows/main.yml
-+++ w/.github/workflows/main.yml
-@@ -372,7 +372,7 @@ jobs:
-           image: ubuntu:rolling
-           cc: clang
-         - jobname: linux-TEST-vars
--          image: ubuntu:20.04
-+          image: ubuntu:22.04
-           cc: gcc
-           cc_package: gcc-8
-         - jobname: linux-breaking-changes
-@@ -446,7 +446,7 @@ jobs:
-     if: needs.ci-config.outputs.enabled == 'yes'
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index ff44c0a8c067..c9455246269d 100644
+=2D-- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -449,20 +449,11 @@ jobs:
+     if: needs.ci-config.outputs.enabled =3D=3D 'yes'
      env:
        jobname: sparse
 -    runs-on: ubuntu-20.04
 +    runs-on: ubuntu-22.04
      concurrency:
        group: sparse-${{ github.ref }}
-       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent == 'yes' }}
-@@ -457,9 +457,9 @@ jobs:
-       with:
-         repository: git/git
-         definitionId: 10
+       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =3D=
+=3D 'yes' }}
+     steps:
+-    - name: Download a current `sparse` package
+-      # Ubuntu's `sparse` version is too old for us
+-      uses: git-for-windows/get-azure-pipelines-artifact@v0
+-      with:
+-        repository: git/git
+-        definitionId: 10
 -        artifact: sparse-20.04
-+        artifact: sparse-22.04
-     - name: Install the current `sparse` package
+-    - name: Install the current `sparse` package
 -      run: sudo dpkg -i sparse-20.04/sparse_*.deb
-+      run: sudo dpkg -i sparse-22.04/sparse_*.deb
      - uses: actions/checkout@v4
      - name: Install other dependencies
        run: ci/install-dependencies.sh
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 0df74610d063..8700c0f2924d 100755
+=2D-- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -119,7 +119,7 @@ StaticAnalysis)
+ sparse)
+ 	sudo apt-get -q update -q
+ 	sudo apt-get -q -y install libssl-dev libcurl4-openssl-dev \
+-		libexpat-dev gettext zlib1g-dev
++		libexpat-dev gettext zlib1g-dev sparse
+ 	;;
+ Documentation)
+ 	sudo apt-get -q update
+=2D-
+2.49.0.windows.1
+
+--8323328-1294897309-1744145794=:9725--
