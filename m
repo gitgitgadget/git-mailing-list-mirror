@@ -1,96 +1,150 @@
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C0D63A9
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 00:00:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF35A31
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 00:10:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744070460; cv=none; b=WMFuyZVpoyJNd0IwDWl1rEFHyYzm6BrBUG6lLwhCbLFkrzbLEA7BixFHPDtjMZi1z3KUzEPgHo6bPWIH53HAhvzLqfwWtTFhSmcesWXA3zTnO8Fp07zRhQaFIL7or1fUtLcy7D0JzCaHM6ZseKZBP+RkWKjXxqvkhUNBgBZHqrs=
+	t=1744071049; cv=none; b=bgPRch/hWJvr4Q1PKNFV0RKPU0+7TBcbRe+pU5B+kGf84rVw8VOCQ4HxxSUDiTLM0rS5qp5jMT5GsTvRvym1pqLLlJKrw2uULiX+PwydOPfTI4HmPBzo8Ki/+O9xwackru2AbgwbEyQycMLKUxuvSs03XlIZVr88mEM1ZRTFltc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744070460; c=relaxed/simple;
-	bh=APu+5LpA7XhSeTgJuleQ5pQCzNIiccMSgEdHvz0Ya5w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=km/j6IRagOJOrD3jOKrv8VH6WEUA/38Z41IiedfeQbeuK5hZU9tStmy65iopGbt9olchTy3c+NGXTsB04khZ1KQv4CgPp9DOtY0jeRBaR44OVAbamNdHOJMFWPKwbVCj3KQeZ5iKaRToLGNKb+al3Sp8VdN7MRb81fOGRnJI9+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=akshay.is; spf=pass smtp.mailfrom=akshay.is; dkim=pass (2048-bit key) header.d=akshay.is header.i=@akshay.is header.b=vyRcHKIa; arc=none smtp.client-ip=91.218.175.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=akshay.is
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=akshay.is
+	s=arc-20240116; t=1744071049; c=relaxed/simple;
+	bh=qxgXIf51D7dXHATW2pDKXOebm5F8mVzrZRntf0O14vo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fS1449OzElgD2u7bVxQ7Nge0a5UGMddtRV7dPqtA5gjxU1yiHK9SCuSH96NG4A07bVneG2hA352BJsHEimRtEH7yJXMs82GORBNTcl8bBBAw444fpPoqhyoFPWomCxoxVuANqomLZbpg3w5XbnU0kaL7m9xcELHNed90yDIg3wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XeoshcQ0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L1jZjsDz; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=akshay.is header.i=@akshay.is header.b="vyRcHKIa"
-Date: Mon, 7 Apr 2025 17:00:36 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akshay.is; s=key1;
-	t=1744070453;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=m8Xtgtl4nkC3z7nzNPI85B4reU+pdW9cdvjSQZRq+Ko=;
-	b=vyRcHKIajkWJ9cQwWnO84Vc2eom354bAkOqOfvyg0uCEHAbXRnW0k57ueuxnvecY4Yvqsa
-	aRjL0lDnAbQg1zZTxs/JfQ2JtlLbQ/a74YCHuIlc8l9s2YkdAtDO4J+xhNhIAvyMfhoKEB
-	Rg02z6oEYtODta++t2HwIZGCVTUgF8uyZVVKb9mB7/jHgYQLMtbN37HmpaXMr3h8tQ+nfq
-	BxiuvUbchCG59CxENpYjOs7fBGt2ClHb7Th2kZN5g/awsqTl9r8G/7mzabt1aSeoRiVCaT
-	HgoUDW/HzeITeQ19Qewg/yJ6fCo/rd7uFd5qVrpDs4KIRX5sZDhz7cHAvSraww==
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Akshay Hegde <lists+git@akshay.is>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH] meson: install shell completion scripts
-Message-ID: <Z_RnJEyvtGh_0kFo@akshay.is>
-Mail-Followup-To: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Todd Zullinger <tmz@pobox.com>
-References: <20250407-b4-pks-meson-install-completions-v1-1-8a7eb8b9284b@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XeoshcQ0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L1jZjsDz"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id F27AE11401BA;
+	Mon,  7 Apr 2025 20:10:45 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 07 Apr 2025 20:10:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744071045; x=1744157445; bh=p4SVIZ3hQd
+	vY4Xv2NbAVq5cCf/QGaDbnwZD16Kyb+Yk=; b=XeoshcQ0Tsg5U47YpavdQqJ4El
+	bBYe5qb9xedPi6Tb3H2uCltjw7WcpWJkpa1M1Qn5jKWMWjNsav6XxpxlR1koisfO
+	RyW+Bxs2xBbPpBOeWSXzaTeEyAB0PRYm9CeTI4ZfU2F6cgvajEjknpCU0XT/1ui/
+	NMv1wNPc8Ae1bJkwmi6NVSpRj8YWiQfQo4aQdXpKtcTUMYZo3o5n1cnMJnGtcQ3v
+	G2bRWtLfTf/YBfDLlo5JOotITg8bB/QoF3V3hd9DJqGZVYKGpx5KnFkxCrRvALIN
+	MaNLpiH5LzdnwLHLUQCr4vUNAtAESgwmKz4Vu6gP4hrOOP/MlHqGJRZkrTNA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744071045; x=1744157445; bh=p4SVIZ3hQdvY4Xv2NbAVq5cCf/QGaDbnwZD
+	16Kyb+Yk=; b=L1jZjsDz+XBKDWbCqt6ssdWW/0s6qjPk3COwczwC+hKU3Juhm6g
+	32DecLmZejFpea3socG/v76lQzA473RSCjA0rDsoRUpsM4DA5axdCKDL2knS4AqF
+	1Qrqdl4BXeBMLyYXChBJ1Fdx+/JHaD+qk3DCcMjjAh9/O2HfqnaJzdTASQENWGr2
+	fBRaK1JV1ll5N59qzk408wAfAUMWU6MBcJtMgf4qrFMKy+/eupiFV0AS+c74nOhR
+	rjjtF7KaJ2dqjGNo4QpLSkL8Q2UnRL2EJP7J2o8zSnO6Req0TADvKLsfz5RPXqIX
+	PNGxjySjiEocFvdJBWZOspXgINQA7HdrRjQ==
+X-ME-Sender: <xms:hWn0ZyjdoyS0DWHF-j7kwvHxgasFkNL8rszyoCu46HWjtCCTKElhQw>
+    <xme:hWn0ZzA2Tas5vPE2QH_ThF3OCaHBDvxTGElgsmyAhoKWKOABR6XtGN_mxLg2aFT6F
+    515CqZYpvZ7QMByFQ>
+X-ME-Received: <xmr:hWn0Z6GKL9rAi2LkbaQt6F-AyQx69rcM5PHLB2i6JjnS6OtFVb9M4AME9GIVJ5Dx22Hdudmh0eppFu3osGwjLY9VPdGx_tbKSYQv>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdduiedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
+    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrrhhtihhnvh
+    honhiisehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepvghkvghmphhinhesghhoohhglhgvrdgtohhmpdhrtg
+    hpthhtohepshgtohhtthesghhithgsuhhtlhgvrhdrtghomhdprhgtphhtthhopehrvghm
+    ohessghuvghniihlihdruggvvhdprhgtphhtthhopehphhhilhhiphhmvghtiihgvghrse
+    gslhhuvgifihhnrdgthhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:hWn0Z7QYGkz9CY_OlrpYnm-RgxmykDT3EtFRcfzgW3xa24lNpk8Z9A>
+    <xmx:hWn0Z_wAgvPUTz-saLMdFSIh3c3sv6QtP6wW5EF1N7eNhepCMUfYnA>
+    <xmx:hWn0Z55vc2yXm_4jbutDWmrnxrb8CToy98s_xFh9Ut5_ys3wxdpDDw>
+    <xmx:hWn0Z8wLtD8_V6pEA0OC_PAMJ-efdqTDz2FatIUUcNkCYXx9VvCZIw>
+    <xmx:hWn0ZyCQ2ZtQKUKNgy13zmhj1e3U5dBN1dbufVk2bZmlToPF9ScuceMK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Apr 2025 20:10:45 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Martin von Zweigbergk <martinvonz@google.com>
+Cc: Git Mailing List <git@vger.kernel.org>,  Edwin Kempin
+ <ekempin@google.com>,  Scott Chacon <scott@gitbutler.com>,
+  remo@buenzli.dev,  "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+In-Reply-To: <xmqq4iyzn0vn.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	07 Apr 2025 20:59:56 +0000")
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+	<xmqq4iyzn0vn.fsf@gitster.g>
+Date: Tue, 08 Apr 2025 00:10:43 +0000
+Message-ID: <xmqqzfgrjyws.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250407-b4-pks-meson-install-completions-v1-1-8a7eb8b9284b@pks.im>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain
 
-Hi Patrick,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On 2025-04-07 09:42 +0200, Patrick Steinhardt wrote:
-> Hi,
+> I have more problems with the remaining 20% use case, where you need
+> to deal with multiple commits.
 >
-> this patch is a result from the discussion at [1]. Thanks!
+> Perhaps your initial changeset is a single commit C0 that is so
+> large and does too many things at once, and reviewers would
+> naturally advise you to split things up.  You'll come up with a
+> series of commits, C1_0 and C1_1.  The net effect of applying these
+> two patches may be the same as applying the original C0, but each of
+> them is more cleanly separated to address one issue at a time, and
+> the explanation given in the proposed log message more clearly
+> describes the issue each of them addresses.  Now you gave a change ID
+> to C0, and want to somehow relate C1_0 and C1_1 to the original C0.
+> Which one gets the same change ID?  Earlier one?  The last one?
+> Both gets the same change ID?
 >
-> Patrick
->
-> [1]: <Z-uLqQd7QHZq-tB7@akshay.is>
+> Or your initial changeset is a two-commit series, C0_0 and C0_1, but
+> reviewers find that each one of them alone is not complete, and
+> because the issue addressed by these two is small and isolated
+> enough, you are advised to make them into a single commit C1.  Did
+> you start with two change IDs for these two original commits?  If
+> so, whose change ID the updated commit C1 inherit?  Or does C1 have
+> two change IDs now?  Or did you start with a single change ID
+> assigned to both of these two original commits?
 
-Awesome, thanks for the patch! I applied it on top of git 2.49.0 and can
-confirm completion scripts get auto-installed at their appropriate
-locations under datadir. The datadir can also be customized by passing
-in '-Ddatadir' to `meson setup` so it's pretty flexible.
+Another thing I forgot to mention.
 
-One thing of note is that the git completion script for zsh also depends
-on the bash completion script.
+A well-kept reflog on a topic branch can keep track of how the set
+of patches that makes the topic evolved.  E.g. with something like
+this:
 
-So if you use a non-standard install location like I do (I'm pretty
-weird, I use macOS with a package manager I've written myself), you'll
-get an error with the git completion not being able to find the bash
-script. The fix is to tell zsh where the bash completion script is
-located. This is also helpfully communicated in the completion script
-for zsh:
+    $ git switch topic
+    $ git range-diff @{1}...
+    $ git range-diff @{2}...@{1}
+    $ git range-diff @{3}...@{2}
 
-    # You need git's bash completion script installed. By default bash-completion's
-    # location will be used (e.g. pkg-config --variable=completionsdir bash-completion).
-    #
-    # If your bash completion script is somewhere else, you can specify the
-    # location in your ~/.zshrc:
-    #
-    #  zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
+you can view how the topic as a whole has evolved.  A downside of
+using reflog entries this way is that it is not well-suited for
+distributed workflow.
 
-Adding the zstyle line to my ~/.zshrc made the completion script work
-without issues.
-
-Most people won't run into this since if you have this installed in the
-standard locations, it should just work, and the zsh script does have
-logic to look for additional paths it may be under. I just wanted to
-mention it for info.
-
-Cheers,
--- 
-	Akshay
+A set of individual commits that share the same "change ID" is,
+unlike reflog entries which is an ordered set of tip of topics, not
+inherently ordered.  This is inevitable in the distributed world
+where many people can simultaneously work on improving a single
+"change" in many different ways, but making it difficult if not
+impossible to see how things evolved, simply because you first need
+to figure out the order of these commits that share the same "change
+ID".  Some may be independently evolved from the same ancestor
+iteration.  Some may be repeatedly worked on on a single strand of
+pearls (much like how development recorded in reflog entries of a
+single branch in a single user set-up goes).  I guess you would need
+a way to record the predecessor vs successor relationship of various
+commits that share the same "change ID", much like commits form DAG
+to represent ancestor vs descendant relationship.
 
