@@ -1,83 +1,83 @@
-Received: from sienna.cherry.relay.mailchannels.net (sienna.cherry.relay.mailchannels.net [23.83.223.165])
+Received: from dog.elm.relay.mailchannels.net (dog.elm.relay.mailchannels.net [23.83.212.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E29A70810
-	for <git@vger.kernel.org>; Tue,  8 Apr 2025 16:01:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.165
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7215155330
+	for <git@vger.kernel.org>; Tue,  8 Apr 2025 16:27:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.212.48
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744128068; cv=pass; b=LBX+jRgwsmYLF/bUjERIrYjb3LwejONTUUOojUWNUH9Ur8Rg2wdOiWT9kp9bNCGbAH3pv4y/VDGIwHstw414NX6HZIj3WzFHxC/AUI46bUI3So0ZdlfCyckQtVS3JUbYkYaV+6fWaQf6gsn/TVQGN0e8T+jY8zEDaoj6QsdnCVM=
+	t=1744129670; cv=pass; b=mhhXyMVPfreuo5ST6LeM4GcCrFUjScioJEwZLUozvFEdAU5vALnR3FIS3+46yn06bze3I+R10sRNrD8rTJUHWq9LZSbkKLT6dxmgn1VXp8/+ZrOQ6gX6UfR82Zx0hgco/IdHb/6IGEKkSqZQ5LgBwsi/PhsQ46kCtNjj/DbaemI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744128068; c=relaxed/simple;
-	bh=rPoBETHG8RWITTIlkFLBxxcPYvD7K9DSB7XkOMyU414=;
+	s=arc-20240116; t=1744129670; c=relaxed/simple;
+	bh=BoWZF2tRsQdesOT8cBLRbZWafVCfotrSXH+H4paKDl4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D4c9NZ+N2Jii0fFKWMsNR27NOBiNdf0dTy+XIiYTbiNIHFZbUEi1afewSBBbXmOtzN558pBowkQ0nym2egvgOgIm52h6H+MWNlxM9YvUXtNMxkVsHX3bRTX6lGJwWIEGcd/Y3vw7HiMvgIeTGFnvuoEMRYdxjzwZUvKYGc6YBas=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=Y9PMqGeE; arc=pass smtp.client-ip=23.83.223.165
+	 Content-Type:Content-Disposition:In-Reply-To; b=t28TmrP1AXUGUdRDbNvayyPyVi6k/KfsDLFvf5E9d5eXyTKi6H+u4AlCjQGdu85OSrCvIEvZNNQ7q4dSyx1U1j5ptV4e0XPjrp9Irmj5FrHwobF1nJfxpe7RGZcbhef5AAljwDu92IcPQuGSf0hefxoBxpYEjBQPYgBgu32g8CQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=CkGLGIsG; arc=pass smtp.client-ip=23.83.212.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="Y9PMqGeE"
+	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="CkGLGIsG"
 X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 795891652EF;
-	Tue,  8 Apr 2025 15:53:10 +0000 (UTC)
-Received: from pdx1-sub0-mail-a252.dreamhost.com (trex-0.trex.outbound.svc.cluster.local [100.101.70.132])
+	by relay.mailchannels.net (Postfix) with ESMTP id 90D7D1C1D60;
+	Tue,  8 Apr 2025 16:27:42 +0000 (UTC)
+Received: from pdx1-sub0-mail-a252.dreamhost.com (trex-8.trex.outbound.svc.cluster.local [100.99.49.173])
 	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 05BCD165227;
-	Tue,  8 Apr 2025 15:53:10 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1744127590; a=rsa-sha256;
+	by relay.mailchannels.net (Postfix) with ESMTPA id EE84D1C3D34;
+	Tue,  8 Apr 2025 16:27:41 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1744129662; a=rsa-sha256;
 	cv=none;
-	b=Rhs8ML8UtLRBFrDDbDz6LOlovy+aKO0D7wHbrFtn3YV03IYHGQHw5YqmzFclXGJnQXbQsF
-	bDkQAiZG+uIT0djRnnV1FUeKFlkhr3HcZ7kCTdztOq6tqCA8Yj4tdE3lbxn0DeodS7u5NL
-	ASxuiwIAgcEv/al+zksfa12R4l3HVdpr2zWfi26TLeypHLx6+FNakv572yj5jhaX3d3E4g
-	V0pyF++4zXrrska6kaP3AqyglgvcMjiS9qgz3wvp2NKML5kFrJjHP+aYZ9AlRGnrBS6wxF
-	wMxfqne25jCr1suTAVpePqCjX27BWmeUxG/xr2KyfEGzNghHB3vP0cd2yCAezg==
+	b=pzbyC3LTxHs+hJHbi5/27GJtBhdif/e/7/V1Q/yCWc1vST+MgHTMq2sHWMw+4PyejbkMjO
+	LFAMU3iU718fN8pdIDyT3EhXGdvuml+6WaECcDpaN4+RSwBMicthlgiRRQaKirB7+dYm2t
+	IXz08L/kyWZHbusbQm9tJ5s1tFT8m+gusQzvPiFG+zxKLdTK0aNSTARtkSZfWdAl/8QaR5
+	3pKXWNYsH4Y33rKapf+3xqg0pR+I9zq2pi1KduMVgmO8JEnaXgMLaAlfVU7OAwKxGTzzGG
+	ou65V0SC6zfL0e/SZ0DSLC8OjWiDdaUBH0pPq6vPBfGY4iKWgzRpayLZJKg+zA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
  d=mailchannels.net;
-	s=arc-2022; t=1744127590;
+	s=arc-2022; t=1744129662;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=dYCJ/N1NbJbLPdjWIqaa2mMin4bkRP87AHJ/igIle6M=;
-	b=do9PxFlH3dbNEUgldiOOmGLazqq7F8+VLigL8mRxulRODz7KzPFQtUl3ylTO3cequyKXtl
-	5CLHRTNGlgAIzFO5gM0dKleTrjcur7fhXfi5VPXHvzzmxFfosvNxrFDg2dZPxkBuwgUJkA
-	+RcT/TloHdJj9HD+vxLa1MuEN5/sEAvDxHa3yQ8CddGF3ycb9GNKNF/E8wS/OCjCvgkRR2
-	e5HouuSK291CugbP8lQlPki4dGfJGw0gY9G5c1AtpQ0S87GC8SkEqj5Pa8DopqZqC1R3ua
-	fSbIfXMJM5neHQ23G9Pai7N1Hc64VKxVR0gv5YoBRaCRDYTR4/2kvt+ommhCcg==
+	bh=p0QDoJAKRDtIQNKhsrK0LjpZW3ANTTGt0uJFMdzKTIo=;
+	b=qw/0IVsp/E0MztcoiNRrAHLARDUhqWmaGhjq4NYcC5hhgx/9FkjYNar7oOnO3vDJc+g1Ce
+	wIwAc3EI5a1upO9EJYL8E39Q+u9+nTdzuQnIJ/7pL3HInlkOdDnnclPi8VdD95j9SRT0ii
+	ULqber1zVrNQoyGiyX2tqhkLFdHnH8kUhQZFaqJaYnTB21U/EwVDS4qqH4yTgAu0/2R6+P
+	Ed6V6bzntITq6ed4f0G5p7xvRg+DnMLKkJo0QUw3eF9vN2fn07r3mC9gqF39Ozh01a8AKd
+	96TgCU937BLzrOSO3VBA8vUlqomT1lya0tNG0VSMMDnpVAN/oIgYfOah6RCt9A==
 ARC-Authentication-Results: i=1;
-	rspamd-7dd6dcd7db-rtdkw;
+	rspamd-6c88b8f79f-fqf6v;
 	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
 X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
 X-MC-Relay: Neutral
 X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
 X-MailChannels-Auth-Id: dreamhost
-X-Tangy-Continue: 7a3aca6644687866_1744127590348_566306652
-X-MC-Loop-Signature: 1744127590348:87000935
-X-MC-Ingress-Time: 1744127590348
+X-Wipe-Average: 550d123477647c68_1744129662253_2078630590
+X-MC-Loop-Signature: 1744129662253:1592748125
+X-MC-Ingress-Time: 1744129662252
 Received: from pdx1-sub0-mail-a252.dreamhost.com (pop.dreamhost.com
  [64.90.62.162])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.101.70.132 (trex/7.0.3);
-	Tue, 08 Apr 2025 15:53:10 +0000
+	by 100.99.49.173 (trex/7.0.3);
+	Tue, 08 Apr 2025 16:27:42 +0000
 Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a252.dreamhost.com (Postfix) with ESMTPSA id 4ZX9b90Bw8zCb;
-	Tue,  8 Apr 2025 08:53:08 -0700 (PDT)
+	by pdx1-sub0-mail-a252.dreamhost.com (Postfix) with ESMTPSA id 4ZXBM06TpJzFT;
+	Tue,  8 Apr 2025 09:27:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1744127589;
-	bh=dYCJ/N1NbJbLPdjWIqaa2mMin4bkRP87AHJ/igIle6M=;
+	s=dreamhost; t=1744129661;
+	bh=p0QDoJAKRDtIQNKhsrK0LjpZW3ANTTGt0uJFMdzKTIo=;
 	h=Date:From:To:Cc:Subject:Content-Type;
-	b=Y9PMqGeEEzVyDZAsIZuQ93eGnfTaj1GeBeZJbFDFObPM0w6niJ2KpZ/xevI5FprOr
-	 FbB1BcS6Vf6uLlwkf5Y0MW58dcZzE2mBAuzsepSIZaIPyoYfYk1FyerCen9uRvQY72
-	 aBBrQv9OAuM8cnY2KGgBoDt+56Nw21IYPU/Uoa634Qh3fk1dwHtAFV1vuiIebpvm7e
-	 aE7Hq8aH6TtJq5riPD0FsFvP8RPBwBHNzb4Ri1wfxt4LXMbkIFhZnwiIJmVFRadvk4
-	 oPYOn+dcAuRD3tmfvnVLO2gWL9x5uOWycjz7vvrFdgEgXVi9qZIbl3Twe7a0JpRbva
-	 2yV4E9fm45u7w==
-Date: Tue, 8 Apr 2025 10:53:06 -0500
+	b=CkGLGIsG3hKgcKglYLx00YmAiIPlpe8JL0sILNODEAeB1A6NNFMYvEe6fdyTTPsfM
+	 Qi0g6vKwFWgDlcsQkXFnD/Nv9uK4BJHKBWWdTg3qEweQy8IK2PmMmgrQBpbxGgwTks
+	 O/ruEvv+m2MsI7wSY1YzD34P0nX8479JXxNEzXPKQpqkYxxuvga3SgNLeQthpjLuf7
+	 CjRjLYj59unKGg5fSj/RGtv4geoQaUK1teJToOHevxq/g4diJ0dSABLrutnvgDRVqn
+	 lUWSEvw86AsWUvS92R0OhyCklCLUpZZBErVkmCpcSYEvHkqCav9DRQgwzqcs/XjuEb
+	 WvTXn1YyVvSzg==
+Date: Tue, 8 Apr 2025 11:27:38 -0500
 From: Nico Williams <nico@cryptonector.com>
-To: Theodore Ts'o <tytso@mit.edu>
+To: phillip.wood@dunelm.org.uk
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Martin von Zweigbergk <martinvonz@google.com>,
 	Git Mailing List <git@vger.kernel.org>,
@@ -86,11 +86,13 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
 Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
  change-id commit footer
-Message-ID: <Z/VGYrrVZYQ13TLj@ubby>
+Message-ID: <Z/VOekAaq+n45ex1@ubby>
 References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
  <xmqq4iyzn0vn.fsf@gitster.g>
- <Z/RFQY433muaCW44@ubby>
- <20250408125521.GA17892@mit.edu>
+ <xmqqzfgrjyws.fsf@gitster.g>
+ <CAESOdVC8m6VjQtyVi8O8bLWyJFaq7wnQ8U2kxW6SHnoXpCd14w@mail.gmail.com>
+ <xmqqwmbuybhg.fsf@gitster.g>
+ <3a5eeaef-05a1-4e04-8bc5-0d023e63f27c@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -99,88 +101,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250408125521.GA17892@mit.edu>
+In-Reply-To: <3a5eeaef-05a1-4e04-8bc5-0d023e63f27c@gmail.com>
 
-On Tue, Apr 08, 2025 at 08:55:21AM -0400, Theodore Ts'o wrote:
-> On Mon, Apr 07, 2025 at 04:36:01PM -0500, Nico Williams wrote:
-> > This is why I suggested earlier that there need to be multiple change
-> > IDs, not just one.  Perhaps one is a "code review ID" and another is
-> > a "commit change ID".  [...]
+On Tue, Apr 08, 2025 at 04:58:58PM +0100, Phillip Wood wrote:
+> On 08/04/2025 15:27, Junio C Hamano wrote:
+> > Something like this should allow us avoid relying on "change ID"s
+> > that can collide elsewhere in the world without having a central
+> > authority to assign them.
 > 
-> I think "code review ID" makes a lot of sense, although what I would
-> call it is "patch series ID".  This has very clear semantic: it ties
-> commits which should be grouped together as a single higher-level set
-> of changes.  It could be used by "git format-patch" / "git send-email"
-> to automatically send a group of patches as a logical unit.
-> 
-> [...]
+> This is similar in spirit to the "git evolve" proposal [1]. One of the
+> objections to that was that it required all of the rewritten commits to be
+> pushed back to the remote, rather than just the current version. So if I
+> rewrite a branch three times and push the result for review all of the
+> intermediate state gets pushed as well. That is because the intermediate
+> commits were needed to track the chain of rewritten commits  to avoid the
+> problem Elijah described [2] when trying to follow cherry-picked-from
+> trailers. If the predecessor information was stored separately to the commit
+> it refers to (in a notes ref for example) then we could in principle
+> simplify the chain of rewrites when pushing so that we only need to push the
+> final version of the commit and a mapping from the version that we fetched
+> from the remote.
 
-Yes.
+One might as well have a way to push reflogs.  But so much internal
+history is just distracting.  Half the point of linear history upstream
+is to drop all the internal history that no one should care about.
 
-> I'll note that even without the "commit change ID", just simply
-> knowing that one patch series is a newer version of a pre-existing
-> patch series is enough to allow Gerrit to intuit which commit is a
-> newer version of another commit.  For singleton commits, nothing else
-> is necessary.  For multi-commit patch series, gerrit could use the
-> one-line commit description to associate commits; it could use
-> ordering of the patches; it could just see which commit contents are
-> similar to previous commits, much like how git detects renames.
+Even during code review this is too much and too distracting.  Some
+users commit very often, and for them this would make their work rather
+difficult to review.
 
-I'm not keen on CR tools "intuiting" from.. similarity checks.  I don't
-love Git's similarity checks for file renames.  I get that for a
-distributed VCS assigning something like "inode numbers" is tricky, but
-as long as devs don't race to create the same files it was always
-possible to have UUIDs as "inode numbers" and avoid the similarity
-checks.  Strictly speaking we don't even need any of these change IDs to
-make it possible for tools to use similarity checks to find all versions
-of a commit or patch series or whatever, but it's very nice to have
-something less heuristic and more exact.
+> Tracking predecessors as you describe is certainly a more complete solution
+> to tracking the evolution of commits and it addresses the shortcomings of
+> change-ids you outlined in your previous mail. It is a lot more work to
+> implement though.
 
-> In my experience looking at how kernel developers use gerrit versus
-> e-mail workflows, in general, gerrit patch series tend to involve a
-> smaller number of commits, because looking at how various files change
-> between commtis is awkward; and with e-mail workflows, the patch
-> series tend involve a larger number of commits, because reviewing
-> smaller commits is easier with e-mail.
+There's also that.
 
-Yes.
-
-> So if this true for other communities using web-based review
-> workflows, using an hueristics instead of a [...]
-
-I'm not keen :)
-
-> > I don't think they need to have such extremely detailed semantics in
-> > order to be able to get a header.  The semantics will ultimately be
-> > somewhat project-defined, typically something like "during code review
-> > you can use these to related newer updates to an MR/PR/CR to older
-> > versions" and "once integrated you can use these to find the approved
-> > code review as follows [details]".  The [details] (probably a URI
-> > template) for finding concluded CRs might vary.  The CR tool might vary.
-> > The construction of the change IDs might vary.  The intent might not
-> > vary at all.
-> 
-> I disagree.  From long experience, allowing something into an
-> interface that doesn't have strongly defined semantics has lead to
-> *huge* problems.  This has certainly been the case for
-> Kernel<->Userspace interfaces; so my bias is that if we can't define
-> strong semantics, then we should probably avoid adding that interface
-> until we can.  Otherwise, this can lead to a huge number of headaches,
-> both for developers and users.
-
-So how much of the [details] do you want specified?  If you want to be
-able to go from "change ID" to CR generically for all CR tools then the
-the best -and perhaps only reasonable- way is to make the change ID a
-URI.  Or if you think the [details] can be elided and still have
-semantics that are well-defined enough then I think you agree with me
-more than you disagree :)
-
-If we want to leave some details to be site-/project-local then perhaps
-change IDs should have some type and domain/project identifier.  Users
-who cannot make use of that metadata (e.g., because the CR tool is not
-reachable) can still use the change IDs to link commits and patch
-series.  I think that linking is the only thing we absolutely must
-define semantics for, and the rest can be site-/project-local.  IMO.
-
-Nico
--- 
+IMO that's ETOOMUCH.  Just change IDs / series IDs should suffice.
