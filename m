@@ -1,131 +1,167 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from beige.elm.relay.mailchannels.net (beige.elm.relay.mailchannels.net [23.83.212.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDAA1CF8B
-	for <git@vger.kernel.org>; Wed,  9 Apr 2025 18:06:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744222011; cv=none; b=XiAZq/bqo/0ZJFTSwcZFjwrWmq4ud2YeXH+ZfeWlPuIM5HrN7rdJYOYsJs8hCqUsj00OL9YtgZxoTw9Y0zwmMlX3R/CSE6qs6PRmI8NuCRFNOSK2dwBbYqprp+A700vxSqJFg0LyEbkAnaXyz5Z7odNCHsWJE0cTPF4sfGZUceg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744222011; c=relaxed/simple;
-	bh=aXBlcO7xNfl16d58LBt0DIWsHDDjQYJrxkEiRGnmS5o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LCqp/c2PEhqnz2iVYPMiE+owE2O49mFlLzsu8OmX6o02MAm09REvGA0ObDZEPn44zTn4RIwPdLIFXM3KEDxAR1LWUFIv027QXVhaC55VEwbXYXecTLf2oK8q8gXQuQ+EC6kKSXDGmjoIbPyWZsktPo0dAIFvt0DnI5PLsaFOJWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G7u54KW0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cz6CQFRG; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA384267B00
+	for <git@vger.kernel.org>; Wed,  9 Apr 2025 18:51:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.212.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744224685; cv=pass; b=ePuZdl650hy/sF0LZR/P/zJRrblx2bAFZRH9GpZVh0Pe68vMREZxd2x2VI28EWQ0Ljtk0Kt4dk4Bc07JeipSuraKdQaVwOqW6vQ35acrZXgRtzZcIKcJ1omGAODKagcdEUoLwLp/+UTYJ/BtsUT3QxMGn3LOxXEPDgwpMSbZrEs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744224685; c=relaxed/simple;
+	bh=90ea44dyWEup8ZVokKQTK+QbprJV+5hClscpq8GC1Cw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tPuoMXE/0LDA7gcjNq1I3UupoawmW2w4KVXEvlbRLj5pgGcQL7rgC1ysgctbjznKBGzDWN+XBoz3hwbNw9ZXNbcAfrEwfoeo4sW2uIEXYojzGpRd05c+g6/a3zXV9kIgDi8Am6yQ8JzH8Qlp/P0hzwVurti2U9RB7SsRETlE7sE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=r2TkSLIT; arc=pass smtp.client-ip=23.83.212.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G7u54KW0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cz6CQFRG"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id C1B07114017D;
-	Wed,  9 Apr 2025 14:06:48 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 09 Apr 2025 14:06:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1744222008;
-	 x=1744308408; bh=orkPhRP51prZRJ0VQXzOVko451Y2nCPzTdyXm/oyj8I=; b=
-	G7u54KW0kz6SVkGEIzlYAwZxUcJul03Cy436QXSSFdxG36ggYvbC1VGlb5o0yoHz
-	Q6iHdtBWnk/T1uS39bGubEsuhfzRC8WBMj4rpMK5cbxujpXiB0cvW8pqrhAEocuq
-	NuPlcP1as9tWiiDyxd0ZAu3kj/YN45xsiSYozBrKyixzwEKVC+lFS9iNh14GI8mQ
-	Ephbl0//PCIhQnSfLfQwNr/edES+DPWmIev+ni3wjc2Kyo1Fv8bzIMEkJuOjsOj+
-	soi/Vp8ctDc8j2EZPxLSnIQ5mA0VfV7FAOZVuvkg37iCuK9eZkm9WsfNOmO/spEc
-	HfXcVvc+n+lojISTj87uGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744222008; x=
-	1744308408; bh=orkPhRP51prZRJ0VQXzOVko451Y2nCPzTdyXm/oyj8I=; b=c
-	z6CQFRGYWRpvHl1bfwnqoABmXHKsojw60y51/pev2EW38K+/goqo/4DemHAo0fdZ
-	3C9k7iRuKDSHGxZ088C0NkD9r2kT0VZdNyizpYhtPGtWlbj3GuikpBpHbmSIECxa
-	//ykOAvD3xaqRWBDV2r12nGPbvSUk97yc6P7XWvtDg8sgV4qsZQdke++d5pkxs4x
-	RcBjoswbwikPyfDFdCAW0mckP06oSgNPVRPn6KQop0eNzKztAVXwIupBHw4raNT3
-	b/O+mXqhxti8GWlZrEepfWb/8zuJBAIc69YKKWUoHuFDEhjFsD1/qSplXunRD9o4
-	eTzs/v/HvOF3oaFydmIPg==
-X-ME-Sender: <xms:OLf2Zxc6vCiUVf1oTGsrAd-fSUd0xq6v2zxxQLaiSBdXcEPlKU0HYw>
-    <xme:OLf2Z_OBfztjm8Ez5dxPaIImKC-H8aAsvuQeG3zM3v8hgR8UvgIqiGHlmW_9kRicf
-    kBFqwNhC8NGzHECUQ>
-X-ME-Received: <xmr:OLf2Z6j-bmElp3HGfs6s3x-Kic_OfJE7Owj24VcEbj48ubuq9gJ-4MH8N5zKWfTEiFbXSaUgZA_GXAdnWoadMHbTD3fWcN1oxFQI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdeiieekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
-    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhih
-    hnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepshhntdefrdhgvghnvghr
-    rghlsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:OLf2Z6_J0Oys0e-DCKS7cebLNM1gFlf3H5UZWEL_UF1FAjTuGFi0Ug>
-    <xmx:OLf2Z9vdsFW1ZpZ5TX804QeEu3IMLE_jEIz42wyS5KVB8wp3VxUXPA>
-    <xmx:OLf2Z5HUa1RXFLa-DxZpFAYkWlsiyavnYNk3YsUuZqYGDfLLQI3rlg>
-    <xmx:OLf2Z0NZLflDe2Qhs9QJSh11Q5ZeQHRQV4yW1GSzvtBU8xl8WGhknw>
-    <xmx:OLf2Z8m_OuqlDsvCqGBR2FwxNUMTGOV1ON3-nVg4zZpPvPMRO7Fu-1FS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Apr 2025 14:06:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Subhaditya Nath <sn03.general@gmail.com>,  git@vger.kernel.org,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] t7422: remove extraneous argument to printf
-In-Reply-To: <CAPig+cRe9BQw=U41uOprZ5JRNgNTC46zMpyGjNy9b=y-hA8-tA@mail.gmail.com>
-	(Eric Sunshine's message of "Wed, 9 Apr 2025 13:00:40 -0400")
-References: <20250403144852.19153-1-sn03.general@gmail.com>
-	<CAPig+cT1dQL+MfUctyw=9O5Wd2yUqA40pXSgsRHKfNf=6vxQ7w@mail.gmail.com>
-	<CAPHxB8un1w-NBnfLne9d=vv9Sqa69eGoLhjOM0GcmhgkYKt-PA@mail.gmail.com>
-	<CAPig+cRe9BQw=U41uOprZ5JRNgNTC46zMpyGjNy9b=y-hA8-tA@mail.gmail.com>
-Date: Wed, 09 Apr 2025 11:06:46 -0700
-Message-ID: <xmqqr021qkeh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="r2TkSLIT"
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id B43288C4BD8;
+	Wed,  9 Apr 2025 18:35:49 +0000 (UTC)
+Received: from pdx1-sub0-mail-a228.dreamhost.com (100-99-49-173.trex-nlb.outbound.svc.cluster.local [100.99.49.173])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 431A78C4C51;
+	Wed,  9 Apr 2025 18:35:49 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1744223749; a=rsa-sha256;
+	cv=none;
+	b=L+XjLNLyaOp5hfME2q6mtffFK6rHAGrm3F9swyc43InVT+kll6146LlezVxDQunGMUWzw5
+	FReFa0tiqyivV3C7vrhu+le2uyrNiC9DCvj4iK/j9KlY5n4ja3rCsjTxbQQ9DKdVaqYXsb
+	a6KIJ5hfJe8MD0u/BUYtcVjPHCMEve/8UQBSK9z5SnUNEvgxK35/6RadE8pHVg7BMck7pN
+	N+JlulsCim8yO4Phhla/7QOt0oqTiXaIZ41hWlw/cCbTxgTOI1qWM1SZI5ht6AdEJ7sHkg
+	rnqDKUwjneNMmjlUNUBHtiGncEJ6yVvDT4ERS0L8DuJVeIfbhGsn9uVNkgoqQw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1744223749;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=Vev8XAOv7p4/GbWfWcVgQWKJWuKppO41pO9TEi+b04g=;
+	b=KkUvbHpOQdE1rLC8HWIHeo6GxkxNbyWo5WhjoJbpyYICiyQ3hoKERr1aXPNbxDP/4mp4nx
+	wlg7b4NenymqQQQqDn1mi1GcxR4wr1SD1l6VVvBIIMl0GRes5ajPBYppPd7X9JGmQUR0kU
+	N6/wSou+s5wpdQKlyqdqfIje+dE6Mi7/CJGOU2rBvKD0qs9gYqDcNBC/BsnIwOt1oUCfZa
+	OV4VEKilZAbTJnqrPxz6QmEOMN0Gu2WnylgI1mG4box7gKRwpAJtRmvmK74TcHC+V/RsfX
+	2fO5mHTjcF1PtwIVOnTFYxxmpPS3DLFNz1dNKaTf8woEcEJuvF5uE/QldhsD9w==
+ARC-Authentication-Results: i=1;
+	rspamd-6c89d5bdcb-czzmn;
+	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
+X-MailChannels-Auth-Id: dreamhost
+X-Macabre-Cooperative: 21e793653bfbec31_1744223749550_4060508787
+X-MC-Loop-Signature: 1744223749550:1003506226
+X-MC-Ingress-Time: 1744223749549
+Received: from pdx1-sub0-mail-a228.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.99.49.173 (trex/7.0.3);
+	Wed, 09 Apr 2025 18:35:49 +0000
+Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nico@cryptonector.com)
+	by pdx1-sub0-mail-a228.dreamhost.com (Postfix) with ESMTPSA id 4ZXs8M4QGtzFZ;
+	Wed,  9 Apr 2025 11:35:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
+	s=dreamhost; t=1744223748;
+	bh=Vev8XAOv7p4/GbWfWcVgQWKJWuKppO41pO9TEi+b04g=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=r2TkSLITBGhcVZCRQJbIt+LgNUggnrCMcf8dImWSL+p1QphzXQWLg/l2oWBxeUFYU
+	 KE4NmPsKcbB8/phxe0uQJr1hmNfSMCy8ajFAJ/BLYw8Lg9q1XMIq4XjOt52GzQFFhp
+	 2j0dOcljbbc4B+PBe58NuGBIdSAXSbz5ITpM9Z6VYAk9+cIKqQpcTl3WiKueYH58zf
+	 2IGBenwvG442g4NtqMmefyqOVe2wS3vST59QJX37KYrWnVOs+DdByNA2KmdvElwfnp
+	 +UCO76HTkz3TOfApTHXH/Phxn4ev++kZAFgTpSoeG2LO1c+WpgXA+twft79onuX8Yd
+	 IfZnFXko2cizg==
+Date: Wed, 9 Apr 2025 13:35:45 -0500
+From: Nico Williams <nico@cryptonector.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Theodore Ts'o <tytso@mit.edu>,
+	Martin von Zweigbergk <martinvonz@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Edwin Kempin <ekempin@google.com>,
+	Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev,
+	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
+ projects collaborating on change-id commit footer)
+Message-ID: <Z/a+AVopz+HLa1eL@ubby>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+ <xmqq4iyzn0vn.fsf@gitster.g>
+ <Z/RFQY433muaCW44@ubby>
+ <20250408125521.GA17892@mit.edu>
+ <Z/VGYrrVZYQ13TLj@ubby>
+ <20250409121924.GA148735@mit.edu>
+ <Z/amMj/eg0RbXdkS@ubby>
+ <xmqqv7rdqkla.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqv7rdqkla.fsf@gitster.g>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Wed, Apr 09, 2025 at 11:02:41AM -0700, Junio C Hamano wrote:
+> Nico Williams <nico@cryptonector.com> writes:
+> 
+> > I don't find file rename heuristics to be "simple", and they're often
+> 
+> I think you need to re-read what Tytso wrote before reacting.  He
+> never said rename and copy heuristics is simple.  His statement was
+> that choosing *NOT* to record the "file A was renamed to B and C was
+> copied to D in this commit" in commit objects can be thought as a
+> choice to keep the system simple.
 
-> On Wed, Apr 9, 2025 at 12:29 PM Subhaditya Nath <sn03.general@gmail.com> wrote:
->> On Thu, Apr 3, 2025 at 10:35 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
->> > [...] for the sake of consistency and to match the author's original
->> > intent, it may make more sense to retain the argument to printf and
->> > instead employ `%d`.
->>
->> The problem is, there are multiple ways the printf statement could be
->> written -
->>
->> 1) printf "[submodule \"sm-$i\"]\npath = recursive-submodule-path-$i\n"
->> 2) printf "[submodule \"sm-$i\"]\npath = recursive-submodule-path-%d\n" "$i"
->> 3) printf "[submodule \"sm-%d\"]\npath = recursive-submodule-path-$i\n" "$i"
->> 4) printf "[submodule \"sm-%d\"]\npath = recursive-submodule-path-%d\n" "$i" "$i"
->>
->> Which one of these is to be used?
->
->  The final (#4) seems most natural.
+I was using file rename heuristics to explain that I wouldn't like more
+of the same for other things; I was not trying to litigate renames.
 
-It is unfortunate that this one needs two identical things
-interpolated so the overall structure with "for" loop needs to be
-retained, and within the constraints, (4) is the only sensible
-option, I would say.
+I'm trying to litigate the _addition_ of more similarity-based
+heuristics for _other_ things.
 
-The other one in the example in this thread could lose the for loop
-by doing
+If similarity heuristics were enough for CR tools then none would have
+introduced anything like change IDs.  Or perhaps CR tools authors have
+been flat out wrong to not try or use similarity heuristics exclusively
+over change IDs.  That's a topic worth discussing.  I've stated my
+preference for not relying solely on similarity heuristics.
 
-   printf "160000 commit $COMMIT\trecursive-submodule-path-%d\n" \
-	   $(test_seq 2000)
+> [...]
+> 
+> But recording that as a copy may be a *wrong* thing to do in the
+> first place.  The IDE cannot guess *why* you copied F to G in the
+> first place.  [...]
 
-but for uniformity with other parts that cannot lose "for" loop, I
-would not recommend going in that direction.
+Exactly, software can't read human minds, which is why recording
+user-expressed intent (rename, copy) would be a nice option to have.
 
-Thanks.
+> If you inspect the resulting change brought in by the commit, with
+> intelligence, a human may say "G is a completely new file, even
+> though it shares the leading boilerplate comment with F and every
+> other file in the project".  Your IDE wouldn't say that.
+
+Right, the IDE should let one rename/copy the file _and_ choose to ether
+record that as a rename/copy in the version control system _or not_.
+
+Only the user can truly know their own intent.
+
+Sometimes users may slip up and not record their intent correctly,
+perhaps because going back to fix an earlier choice is ETOOHARD to
+figure out how to do in their IDE's UI.  Fair enough.  So similarity
+checks can help one understand history, but where one can have intent
+recorded, that's a better indicator.  IMO.
+
+> We designed not to etch such wrong renames/copoies in stone by
+> recording them at the commit time.  Instead we compare the before
+> and after image to intuit the _intention_ of what the user wanted to
+> do _when_ you _ask_ (i.e. when you run "git diff" or "git log").
+
+Well, I suspect more likely that Linus didn't want to have some sort of
+inode number nor some sort of explicit rename/copy indication as a
+significant simplification that allowed Git to get shipped sooner.  I'm
+not questioning that nor trying to litigate rename/copy.
+
+Nico
+-- 
