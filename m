@@ -1,137 +1,124 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from silver.cherry.relay.mailchannels.net (silver.cherry.relay.mailchannels.net [23.83.223.166])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6894F27780B
-	for <git@vger.kernel.org>; Wed,  9 Apr 2025 19:12:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744225967; cv=none; b=kPMTVdUAVDA0n7TXHhZ3TNh1z0IvCcSW51v9NxKT4+V5xYMMDxt3Zbd7LX6bGcN7geef4KlJ4sn3R1sfVezK19CTTWJ2/SCRlX/yFMw6isO1lTN8zbaosGOyDR16H/Mtb7yudpuxbRKQ0zEPEU32nom41dsqg9W91V53zTLlDCo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744225967; c=relaxed/simple;
-	bh=jWi5QUBe35ZtkC0/AdK3L6ZzuR59Zu0X9jsA0m2+86o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/4SYeOkNpr5js8N90wb5HgYFQJNdHrWXGVYhUpPfGKmeg3kAQN3isBk15AgiWCKVyjyTD3gyHBVoHZcFuJTc8pz7HzepyQuMHg4VWrMR3ZnvJYQkzxHC3JJZspJJT1MzwqiRkITjxaFM177wI5MKXxRaoPG+cx1h05mdaw/O9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PtD+I1b7; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EFA1C5D63
+	for <git@vger.kernel.org>; Wed,  9 Apr 2025 19:13:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.166
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744226004; cv=pass; b=rw4NYjuSCf3DGnLRVrY4MojBIw8XQk8Xqjzy3qegwrVLwfUtFo1/EbTO/OPAgsKzLlM1Y4DVmL+5wDF9v1Qml/skWW6/tVCpUsfjG8N+y+VooLvIVgV+qbc/vyUuQZ8E+v+Qe+8N4cMNJxM1XKOXMcQDLqPEx4Ruumd14Wm7GC4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744226004; c=relaxed/simple;
+	bh=RmCUbxqLRhraTeiZ367iP+1HwPxx0HqabC0hqCN9shg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XztmqpEM2Ec0RXAUk27jCUK4tm7k/DxGu66Ra0pN8k62UEBG0TLoG56pROL/73F8FLCnNeso688AKFB9ppnavipjIjyX7gzGNicBsc5GE1SdYkOHui2axptMYaVu0zPuGcO/rMZD4qiNhV8MO0p7M8VYLq9dU344Rfws4rt1PJo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=loisl9om; arc=pass smtp.client-ip=23.83.223.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PtD+I1b7"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-736ad42dfd6so5922808b3a.3
-        for <git@vger.kernel.org>; Wed, 09 Apr 2025 12:12:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744225964; x=1744830764; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Pxdxi/3rwpgQVq1j60vYuMkU/AMmHtv2y9ycNnvzDgk=;
-        b=PtD+I1b72X4fikrtVnCyLvNTfBlWjiMzJ7sIyLS+oJQa6o1LjpqiRupRWMoBo8nDOv
-         RK4NpZTYTcPtwrZEkbIXMYIfErLi8xZ9ehDXanzDlN2AFCF3zKb5UGPuLwBiaO2T67sG
-         GpLHD8kWJEwFxW7Gz1nL7soT0FK6tnIxRgtjrZurQ4Fz/dIRTtr0hOYojM73XwxlRE2r
-         nnQsWiOJbl/FDWeL/aaeIiItFEhMjzn13YOG03OMrfHt3jQVlZyxALql0lW56cK8u7BP
-         zg7q1VNDoq0f1N7/Z3C8fX/GE4noWTCRgjZhAT8hjTB00qlEdTxkZFylVHC7lVWoRFNw
-         FRlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744225964; x=1744830764;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Pxdxi/3rwpgQVq1j60vYuMkU/AMmHtv2y9ycNnvzDgk=;
-        b=TymQZ81eYFOH6pkHZ2F/kPdM1Nq/3705/6DbkSvPiJcfnrwrs9iJM4K9FGNy+6dTkO
-         55PRaOvRakhgAOiu6OORYIKIzjjp377yghn1ITsqrytSdToocbLjERNTVJMG7R/EX5um
-         0nyFficYGEz0VCwtJOM2vhYgZt8aKBO9+osdJ/zkXB5NFCvf4vjDV/yAePXu5O14zeWc
-         CXxoMjUYNGL712lGwBb+PpIge2EkVgvHOHA1NfotioeAvlh5zE7ZUT1lcmqJ4HOg7WiB
-         IB475M4cZclp11dLTnwhtRDzhL+a6GfvIQiS77Ze0CyStnuu8RwoeqwkQHzzNxVBOnMD
-         fl1Q==
-X-Gm-Message-State: AOJu0YxURCi8z8NF6eyiUuG3pj81VlUz5ca/h8hxq0U7KC9XeXZ88wDD
-	wE/rkZoc0YZcg7tQfqUfn7wWTSXe4CXY3ovKmMzvW2J5LH/hMBn5
-X-Gm-Gg: ASbGncvZf5N/J3bPgULS4VWpS5V8irhECqtPoDiH6BBw8kUrlFajduSBCJvcYwwTmGs
-	lblaChSca9BPkOAI1D1zSwh0dB8sa35krOgQCPH2Z46aVFfvXykDuCI1mGkvW71bFim4Tyek1ar
-	xZLVclze/i0jdMSfrFjlrc2lrtcfKMhmIRMN+RJyNiz1VMl0vcFl4sYg2s01xM0iRVOtueY5LqJ
-	BNoNhWAGjkGh/zA3yyjz78EeQKfnEzqUvs2+UabaiKoVxlExW041h+QrkAsBIbiVv6WfMH+n3/z
-	Ka06N52buiScUMfoDRdkEEPgkOtTnD0sw6Kok7izjz9Qw+HX8TnCeBa1s8WD
-X-Google-Smtp-Source: AGHT+IFAUwmswp5NYmfaub//nZX8SHMceq0gLmRFVa6TeERm8YemtdrTLEUPIY8xxI7OkYYGQqbLyA==
-X-Received: by 2002:a05:6a00:22c2:b0:736:46b4:beef with SMTP id d2e1a72fcca58-73bbee10d34mr73848b3a.3.1744225964516;
-        Wed, 09 Apr 2025 12:12:44 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1c3b:674d:f69c:9806:a3f:9fca])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73bb1e4f768sm1772146b3a.142.2025.04.09.12.12.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Apr 2025 12:12:43 -0700 (PDT)
-From: Subhaditya Nath <sn03.general@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	ps@pks.im,
-	sn03.general@gmail.com,
-	sunshine@sunshineco.com
-Subject: [PATCH] t7422: fix extra printf argument, eliminate loops
-Date: Thu, 10 Apr 2025 00:41:11 +0530
-Message-ID: <20250409191139.29644-2-sn03.general@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250409191139.29644-1-sn03.general@gmail.com>
-References: <xmqqr021qkeh.fsf@gitster.g>
- <20250409191139.29644-1-sn03.general@gmail.com>
+	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="loisl9om"
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id D81447830CF;
+	Wed,  9 Apr 2025 19:13:21 +0000 (UTC)
+Received: from pdx1-sub0-mail-a228.dreamhost.com (100-99-49-173.trex-nlb.outbound.svc.cluster.local [100.99.49.173])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 78358783711;
+	Wed,  9 Apr 2025 19:13:21 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1744226001; a=rsa-sha256;
+	cv=none;
+	b=Bn+2irFzqDC7p1HQ33YH7ZF89LEh8OP0pWG4RhC3vMszvMsia+OcGV+1aOZXHo8MzZyFjB
+	UDlTOm+TB9axwjh8yf+/r0Pkw1n+GHXAXeN96ljT/82VANFElDr6X0F0RFTDC/De1P12Eo
+	BduKSCDqSa+Exa28iX+fSh5iQ9fmeiokN4BEIEDpxJOxu8x5MNp3U072xojL3AyR70x9uK
+	bqVxCBGv1TRQ+uVPkHgFQqYFkKGoEI5TmwQNkiH9JS57id9WezN0lNieIBufaVMDqjh2ps
+	OM4AnYpn+vttiGjyUqLxLZwkf8Rko9BrvmidMvK10DJV0YFUDbIepb+ZD5RqvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1744226001;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=XOz5WWzmAlZLAP4GrvGYNjV9yTTrVZ+lzKO/YPiz2Wk=;
+	b=gxqD6WNsNnbuINHSGy1wSsxd+9tMlGyTWdjuh1t546+7Xtf4fWr6giDJ9ovNmsi9pQmzL4
+	EAEXCC40traek1SOOleSPC3YWleWuuCSGqT4JS2bXW6EpeJ7vVBwEmm4pnNA7Wpn4Ry9Pr
+	c738RQ5RJFOTMDBf/9A+MZvmPJgva5jvHEVtnWGRi9RqWMJ0NuNT0ouZycNt3vc1ZZlXrW
+	FsiLXzxEtb8mxslmh4y26Hj+xJAHKglC9JrXvliYRPlNx0pCMPYDAv/mfBHkejBzfYhb4d
+	Zyd6FBOM4I3JBAwXy0f0NvaTQT0dFE4ZZibi98hTayDu0LzxYgC001CFuD1lNw==
+ARC-Authentication-Results: i=1;
+	rspamd-6c89d5bdcb-pffrk;
+	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
+X-MailChannels-Auth-Id: dreamhost
+X-Power-Descriptive: 49a2dead5558970b_1744226001763_3272045203
+X-MC-Loop-Signature: 1744226001763:3214762336
+X-MC-Ingress-Time: 1744226001763
+Received: from pdx1-sub0-mail-a228.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.99.49.173 (trex/7.0.3);
+	Wed, 09 Apr 2025 19:13:21 +0000
+Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nico@cryptonector.com)
+	by pdx1-sub0-mail-a228.dreamhost.com (Postfix) with ESMTPSA id 4ZXszh39kMz8v;
+	Wed,  9 Apr 2025 12:13:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
+	s=dreamhost; t=1744226001;
+	bh=XOz5WWzmAlZLAP4GrvGYNjV9yTTrVZ+lzKO/YPiz2Wk=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=loisl9omPSu1DrxODEast3biU4cccBrY32BFdQ19jQZSpVobVpUV9UfvcB/Hdjxwe
+	 +TZGBBDN57ClZCl71o2IChXa8NnBPsHYMw8+xhAqKtOe749+Ubh5wH/U02NmfOWklu
+	 za9pXQEtZqWQNJOSV7uGaSZyPJEBDs1hUjCmD1jZN4kGrTkdLjgfSACKla8FJy3itG
+	 30prALzNswzFiu8mT4hOuxAzf75+ffzV5FV80f50M3kRAo4VgT7llFY4T0hzogYRFv
+	 xd1+G62+qWoBl3cWuDW7HxEVjaXDNDqxPgISnpTs2jANrNvfu+BAPJXkEn8emE9Agn
+	 D5D7GljZ8z4Nw==
+Date: Wed, 9 Apr 2025 14:13:18 -0500
+From: Nico Williams <nico@cryptonector.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Theodore Ts'o <tytso@mit.edu>,
+	Martin von Zweigbergk <martinvonz@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Edwin Kempin <ekempin@google.com>,
+	Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev,
+	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+Message-ID: <Z/bGzvDfsIcclBW+@ubby>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+ <xmqq4iyzn0vn.fsf@gitster.g>
+ <Z/RFQY433muaCW44@ubby>
+ <20250408125521.GA17892@mit.edu>
+ <Z/VGYrrVZYQ13TLj@ubby>
+ <20250409121924.GA148735@mit.edu>
+ <xmqqlds9trwv.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqlds9trwv.fsf@gitster.g>
 
-The POSIX man page of printf(1) mentions -
-> If the format operand contains no conversion specifications and
-> argument operands are present, the results are unspecified.
+On Wed, Apr 09, 2025 at 05:56:16AM -0700, Junio C Hamano wrote:
+> It is not "simpler is more manageable".
+> 
+> The early days' design decision, which still lives to this day, was
+> a bit stronger than that.  As can be read from [*1*] (which by the
+> way I consider one of the most important message regarding the
+> design in early days of Git), the design started from "recording
+> renames is pointless".
+> 
+> *1* https://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org/
 
-In practice, this means some printf implementations throw an error
-when provided with extra operands, thereby causing the test to fail
-erroneously. This commit fixes that issue.
+Allow me to withdraw my use of similarity heuristics for renames as an
+argument against similarity heuristics over change IDs.  I still think
+that explicit change IDs would be better than using only commit
+similarity heuristics.
 
-This commit also eliminates the for-loops surrounding said printf
-statements in favour of the built-in functionality of printf to consume
-all arguments by reusing the format operand as-often-as-necessary.
-
-This behaviour is mentioned in the POSIX man page of printf(1) under the
-section titled "EXTENDED DESCRIPTION" like so -
-
-    8. For each conversion specification that consumes an argument, the
-       next argument operand shall be evaluated and converted to the
-       appropriate type for the conversion as specified below.
-
-    9. The format operand shall be reused as often as necessary to
-       satisfy the argument operands.  [...]
-
-Signed-off-by: Subhaditya Nath <sn03.general@gmail.com>
----
- t/t7422-submodule-output.sh | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
-
-diff --git a/t/t7422-submodule-output.sh b/t/t7422-submodule-output.sh
-index 023a5cbdc4..94a14f1c31 100755
---- a/t/t7422-submodule-output.sh
-+++ b/t/t7422-submodule-output.sh
-@@ -178,19 +178,13 @@ test_expect_success !MINGW 'git submodule status --recursive propagates SIGPIPE'
- 		test_commit initial &&
- 
- 		COMMIT=$(git rev-parse HEAD) &&
--		for i in $(test_seq 2000)
--		do
--			printf "[submodule \"sm-$i\"]\npath = recursive-submodule-path-$i\n" "$i" ||
--			return 1
--		done >gitmodules &&
-+		printf "[submodule \"sm-%d\"]\npath = recursive-submodule-path-%d\n" \
-+			$(test_seq 2000 | sed p) >gitmodules &&
- 		BLOB=$(git hash-object -w --stdin <gitmodules) &&
- 
- 		printf "100644 blob $BLOB\t.gitmodules\n" >tree &&
--		for i in $(test_seq 2000)
--		do
--			printf "160000 commit $COMMIT\trecursive-submodule-path-%d\n" "$i" ||
--			return 1
--		done >>tree &&
-+		printf "160000 commit $COMMIT\trecursive-submodule-path-%d\n" \
-+			$(test_seq 2000) >>tree &&
- 		TREE=$(git mktree <tree) &&
- 
- 		COMMIT=$(git commit-tree "$TREE") &&
+Nico
 -- 
-2.48.1
-
