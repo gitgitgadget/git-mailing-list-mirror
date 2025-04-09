@@ -1,119 +1,129 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0653525D537
-	for <git@vger.kernel.org>; Wed,  9 Apr 2025 11:30:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF362561AB
+	for <git@vger.kernel.org>; Wed,  9 Apr 2025 12:20:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744198244; cv=none; b=lbTO/qBZJC6GH2RE9zYmUe8XxFC43xm2LvNMBgATlrAN4BLOlcUVxT6epZW/9l2DTL+HL2Aoua/HKbaTLoaq2LdRk9I9/eh4d9svebk8slDKLHgujXp1k1YOwOQVnV1O6n5+Iv4QUofhes+0S1OCI0uuaAlytjjWmTIPEgX5mws=
+	t=1744201213; cv=none; b=RfYXzUm5d2xGg1P++X/212Iv5l2os0/GQ6h8z6YDkWJnVR1/L2bRzfQRrdl1yhMR6dIyw9/A128FjugU4iIDuk9iZ8zqkbc/zdSds7cGaARPzuG4IDm4+E69+DvXvhSKTvFi381cXSmeR3N/8E4iZzJg1gdODyOL3oEu3ODwAII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744198244; c=relaxed/simple;
-	bh=FahfxEq9C4f9nGOlt1sBOxLgvK9RqXUvAaHszH2NzWs=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=dZ9zSfWasgyYe0aA9HEA+5JMaz1o5DSSbWHzwWrSKQwwUd5G0+TKyw72lrx3ZB8L04Yq//egTKIw+6rH5RRdcDILV5gAIsC0NFUUV1c09JC06wTQthcesEH47b/EKJKEH63hycuf+uS3qANNptpwGdpReobDSr7j5QO58ExauBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gztE5rot; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gztE5rot"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6ecfc7ed0c1so56358896d6.3
-        for <git@vger.kernel.org>; Wed, 09 Apr 2025 04:30:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744198241; x=1744803041; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bj3p+BFp+iBb255XMNp3hXgUqqovPBVWLGYVGN5XDGI=;
-        b=gztE5rotE9G/R7GFiq2WhxKgzAqbxLr0SN8sgDulWeY4+mTpuS9WpXYIfswy9NKIh4
-         M43Yk70OQNpZ+7v92xokoj6XJ0PW0KFIp+sy7dtDfKc6slTolWEe0Nrk2d4mGmoneMWr
-         tLqehlQavpIxVwYKV0OozlIsCdl0MP+ypmI5vBKwSBEqc/i93p/YWRT0+AQLd4X+cvXY
-         qvNoyXrBCBAFpFrhT7mzXhjEqotj5xHrNWgrPNcL8MP6X7Y1VDSzx9+ZvAl1XRiTz7vH
-         H9Cq6g6rBHhsynl5ZJdARctxwRIIEKgvWRF4UuDeejj1fhpkkHSZ2oVrC2Zj/GDNZOZI
-         glyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744198241; x=1744803041;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bj3p+BFp+iBb255XMNp3hXgUqqovPBVWLGYVGN5XDGI=;
-        b=WMztudDN1zJwxfTbpyFB+3/VTff2Vy/S7si0sORwZ0j6rEnBNGvVI/Ugl4JM1mV1lF
-         tHmRvcBNs+jSrSOOuwXuTwxqZeoCmwc0ZV4nBOSrTylvrScRN3DCKgkMu+p6851Rq4ju
-         QCxhvv2o5ULgYb0239F1EwrfOFiFlIMn7gJUrcfkwTetepQVwV6prJkICcB9PCBo1/OG
-         l1nx9bKuG+lYKCn/M8VH93sram/EtU0tP005vsITjblU8TVFU08GiUIn1aVH/SQukDK3
-         YdpUFjSiJ8yidr6EtHnkoAXDhQWf17XOcSpadR+TR42RZc1xTzVrJGCDl/snD+kvUA68
-         7MNg==
-X-Gm-Message-State: AOJu0YxNm9NCBkp6cc0AwwVoMlOt8QQn/fU20LFO+8V9SAv4mIaHgCiB
-	pBpoL9DU6sGS/9aGX2+VF+Cf2HmKPPzac8Srgw+zhS70y07w35UsEYy1Qw==
-X-Gm-Gg: ASbGncv8X91oFmHYSHs1KWVRkjna7h0GnnesC7v2zliIr3KX5tNfC4brkCqAXsj/REx
-	nayrvkLYeMwN64lHVfhF137hKOajr/NqTH5jCNO8srTmeAkiJsyXvlqSJRu+GF8HMhVhllt1eDs
-	gziO3WosxjIBMUBjB0VQV212TnINS7WeQPjeUBhq6xsJ1KG65aetn1ulJn5KsBREznlgaBZoI6o
-	SZvm9qXED2Er+A6pxekRk+Kcg7ExhViR6HQaz+0AgyQ2RyKea99FXhOqXMhV0cA4zlmDpWxJtDJ
-	nLC/IWgdpgr6a0aF4MznwZxuwY0VEke+WCR5zHyoDoGNRkO2+oN9pVM+CAH3klAgrQtGSysf3hC
-	X9YOC+F7kkZ18rlo2wDJQuzg8l7TIeuwDwspwt5FF
-X-Google-Smtp-Source: AGHT+IFza49XhGqCiUFWaBFCcOPte7sEhLl9aUywCC9I7vE8LKkY4/brvQjvPECKKBAxq/NNW4RdPQ==
-X-Received: by 2002:a05:6214:628:b0:6e6:5bd5:f3a8 with SMTP id 6a1803df08f44-6f0dbc5d990mr33266496d6.29.1744198241508;
-        Wed, 09 Apr 2025 04:30:41 -0700 (PDT)
-Received: from ?IPv6:2606:6d00:11:958c:6d13:6245:a622:b272? ([2606:6d00:11:958c:6d13:6245:a622:b272])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6f0de97349dsm6158536d6.45.2025.04.09.04.30.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Apr 2025 04:30:41 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Apr 2025, #01; Mon, 7)
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-References: <xmqqtt6znch3.fsf@gitster.g> <Z_TAtJ9LEeHo2AQN@pks.im>
- <xmqqmscqyag7.fsf@gitster.g>
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <d5588a3d-db07-5c4e-3c22-ad4b751dd3fc@gmail.com>
-Date: Wed, 9 Apr 2025 07:31:03 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+	s=arc-20240116; t=1744201213; c=relaxed/simple;
+	bh=y2xUS6+oogY+u0lSLrqCmJs7/cj3mt/OPquieiYaImM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jGo3QhzDSIzUaLyXGFE3AE6aEO+siL5qzAD7rYzy2tKuJpIvvcnnIb7B4iBXxoUlKa2IB+to83znPA/Tmn2cO1p457sjoDC1DqlQcGsAWH883tPXV6dFHP1NvSW1XGCU4Xu30xe6wyU3ZPNz6+GuTiUd+v0vjSsl1kFO6paEtC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; arc=none smtp.client-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
+Received: from trampoline.thunk.org (pool-173-48-82-137.bstnma.fios.verizon.net [173.48.82.137])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 539CJPEY001034
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 9 Apr 2025 08:19:26 -0400
+Received: by trampoline.thunk.org (Postfix, from userid 15806)
+	id E7A7B2E00E9; Wed, 09 Apr 2025 08:19:24 -0400 (EDT)
+Date: Wed, 9 Apr 2025 08:19:24 -0400
+From: "Theodore Ts'o" <tytso@mit.edu>
+To: Nico Williams <nico@cryptonector.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+        Martin von Zweigbergk <martinvonz@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Edwin Kempin <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>,
+        remo@buenzli.dev,
+        "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
+ change-id commit footer
+Message-ID: <20250409121924.GA148735@mit.edu>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+ <xmqq4iyzn0vn.fsf@gitster.g>
+ <Z/RFQY433muaCW44@ubby>
+ <20250408125521.GA17892@mit.edu>
+ <Z/VGYrrVZYQ13TLj@ubby>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <xmqqmscqyag7.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z/VGYrrVZYQ13TLj@ubby>
 
-Hi Junio and Patrick,
+On Tue, Apr 08, 2025 at 10:53:06AM -0500, Nico Williams wrote:
+> I'm not keen on CR tools "intuiting" from.. similarity checks.  I don't
+> love Git's similarity checks for file renames.  I get that for a
+> distributed VCS assigning something like "inode numbers" is tricky, but
+> as long as devs don't race to create the same files it was always
+> possible to have UUIDs as "inode numbers" and avoid the similarity
+> checks.
 
-Le 2025-04-08 à 10:50, Junio C Hamano a écrit :
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
->> On Mon, Apr 07, 2025 at 04:49:28PM +0000, Junio C Hamano wrote:
->>> * pb/perf-test-fixes (2025-03-28) 2 commits
->>>  - p9210: fix 'scalar clone' when running from a detached HEAD
->>>  - p7821: fix test_perf invocation for prereqs
->>>
->>>  "make perf" fixes.
->>>
->>>  Will merge to 'next'?
->>>  cf. <Z-pD1puYT87YKAd4@pks.im>
->>>  source: <pull.1936.git.git.1743181669.gitgitgadget@gmail.com>
->>
->> I had one question around empty prereqs introduced by the patch that
->> wasn't yet answered. Based on my testing empty prereqs do work just fine
->> though and evaluate to true, so the patch series looks fine to me.
+I'm not keen on fields that can have essentially random semantics.
+Part of this is because today Change-ID is in the footer, and so
+humans can randomly set it to any value they like.  Sometimes they cut
+and paste footers, and so completely unrelated commits have the same
+Change-Id which show up when you do a Gerrit lookup by Chnage-Id.
+Admittedly, this aspect gets better if we shove it into the git commit
+header.
 
-Patrick, thank you for your review on this series, and for testing it.
-I do intend to answer you in that thread, and I also wanted to actually test
-what you mentioned about empty prereqs, I just have very limited time to
-contribute these days, so I don't know when I'll be able to.
+Part of it is because some tools will edit the Change-Id when doing a
+cherry-pick.  (For example, one tool that I'm familiar which is a CLI
+front-end to Gerrit, when you run the command "kdt cherry-pick", will
+unconditionally edit the Change-Id to a completely new value) --- and
+some will not, because they are just do a "git cherry-pick" without
+doing anything else.  And if you live in an ecosystem where some
+poeple use "git cherry-pick", and other people do "kdt cherry-pick",
+you basically have *no* guarantees about how Change-Id might behave
+for different commits.  This *might* get better if we shove it into a
+git commit header, although if you give people tools to edit the
+Change-Id as part of a "git commit --amend", some tools might end up
+changing the Change-Id in random ways again.
 
-Junio, I see this was merged to 'next' already yesterday (the 8th), and
-you sent this "What's cooking" on the 7th. Would it be possible to wait 
-more than one day before announcing an upcoming merge to 'next' of a series
-and the actual merge ? This would allow contributors with very little time
-to contribute a little more time to say so if they wish to wait 
-before merging to next because they want to send a new iteration. 
+But then we have the problem where if patches get merged or split,
+what Change-Id is really undefined today.  I could imagine that if a
+commit gets split, both descedent commits should retain the same
+Change-Id.  Or maybe if a patch stack gets collapsed, all of the
+predecessor Change-Id should be included in that collapsed commit,
+much like how an "Octopus Merge" might have a half-dozen or more
+parent commits.  Defining the semantics here is part of the battle;
+the other part of the battle would be how would the tools make sure
+these semantics get obeyed.
 
-P.S. I can't answer these mails on my phone because of the plain-text only
-requirement on the list (at least, I do not know of an iOS mobile client that
-can send plain-text only).
+Perhaps one approach might be that the hueristics that you hate being
+used as an automated way to sort it out, might get used to set the
+semantics at commit time, with perhaps a way for the user to override
+the hueristics, or where the user has to explicitly acknowledge that
+the hueristics correctly noticed that the patch has changed radically
+and maybe the Change-Id shouldn't be retained any more?
 
-Thank you,
+Finally, perhaps there should be some discussion about whether we
+think git should be maintaining indexes based on the Commit-Id.
+Personally, cutting and pasting a random 17 character ID is painful
+and annoying, and when I see it in my shell history, I have no idea
+what might have been going on.  So if I need to cut and paste a
+Commit-Id, I might as well cut and paste the one-line commit summary,
+and do a "git log --grep" search based on that.  But if the Commit-Id
+is indexed, then maybe it might be more useful?  I dunno....
 
-Philippe.
+> So how much of the [details] do you want specified?  If you want to be
+> able to go from "change ID" to CR generically for all CR tools then the
+> the best -and perhaps only reasonable- way is to make the change ID a
+> URI.  Or if you think the [details] can be elided and still have
+> semantics that are well-defined enough then I think you agree with me
+> more than you disagree :)
+
+Well, see above about some possible semantics.  I'm *still* not
+convinced even with the better-defined semantics it's worth storing
+the extra baggage in the commit header.  But that's more of a
+value/philosophical question, much like how we "could" store explicit
+file rename information in the git commit, but in the very early days
+of the git design history, although BitKeeper did track file names,
+Linus consciously decided to go down a much simpler path.  So that's
+really more of a SMTP vs X.400 preference of simplicity versus
+complexity in the protocol versus implementation, which is something
+where people of good will might disagree --- and there Junio's
+opinions matter far more then mine.  :-)
+
+Cheers,
+
+					- Ted
+					
