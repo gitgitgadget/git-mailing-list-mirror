@@ -1,212 +1,81 @@
-Received: from cyan.elm.relay.mailchannels.net (cyan.elm.relay.mailchannels.net [23.83.212.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03761A315A
-	for <git@vger.kernel.org>; Wed,  9 Apr 2025 16:54:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.212.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744217663; cv=pass; b=d1UPCxD0R9cNqr0wy13uMEPbY3FQb5pbu+H0BZ66jhf45Gz7955ko9O3s3T+Rs7lK5QwlPG/Rr0q1+o7z7BB48Lbu+YrqdWPHTIqUYP6Vf55XGQYRfyA1ceidHQKHjr0vDFA46BrL1A6czrVKgWv5MPBEy0qCw2EeTTKTmUTkiY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744217663; c=relaxed/simple;
-	bh=0E+YK+WVwLbEjopfP+032aIAmlnr9M/x7fUG9hCUN2U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RhUBBLmBK6RWTW5ZX7MR9EobBt+Fi70t0PhEKEp7ko9RKmkditOyozL6CV3/iYNBycvixMVCougiIDOW6t1+CTOL7JEHbl9d6A1XaViOtKDJeU+zyYeV1bGRcaUwuMIXZr+7XKm+KUYaOl7y5hIyGVSt2lNR+N6l41Y/Tcu+vFM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=c+ueWkGq; arc=pass smtp.client-ip=23.83.212.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="c+ueWkGq"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 7FFC620CF2;
-	Wed,  9 Apr 2025 16:54:15 +0000 (UTC)
-Received: from pdx1-sub0-mail-a315.dreamhost.com (trex-4.trex.outbound.svc.cluster.local [100.99.84.17])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 006DE21EBB;
-	Wed,  9 Apr 2025 16:54:14 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1744217655; a=rsa-sha256;
-	cv=none;
-	b=cLI2kdELKT1MkoNp2b6s70lkBLkEw8dYQWzHRXGwD96/GAuaZcqh2nhabhvvqVJhsdfGdc
-	jx0lq6pdiDSYD/1Uo/FQX1HEv5D4qxSuRBFSnZI2tISX3gspx9UwcjgHtma8GcVMnnIQ/L
-	JxfM81y3idG4VG0UEtYQV4vuzWjxk1E71aAYZifZ+CQa5s2AVPJGf0AtaYn3m3ItbDiBXt
-	jwIBSJ9xYa00UjFqS7jt2Vkfw/9ADaoE6AoFXg9HKFwb/OeAjVF+fLV6Ylu4L4GPmUEIye
-	N4OBE5aN7Jba1KfU0FHM9joIvcBCa5FRThVgX3v95oMJ2yqO4faFy778qgVgKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1744217655;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=KgOyGdAcW7lOj5DQgQhDHBIo5TlcNosb1BjUIdwjHL0=;
-	b=78XsqLivmQ5e2D1cz87uwjmxwe2ABFIZig9yKCbfgb93gJd2QV8cZiIMRYSP52xBNd9fRZ
-	PxRC8bze8N2b81s4UvLm9IkcdGGppTUlWj9R3+rS1/FH8LQ1W/CVdhOTQ+LRPmpy+o4yYR
-	XtnNDzsqgi/SFZIm3RtQ4bonX3Qvni8A/6MwYGs1EoZYCb+ud39PuK1qD1f2IZ+MT3XboT
-	7kCQ11clxaaiRH/b70xFI/MsdqzK4lmZcXF5alGpy+QYagIYJ1EmggGjK2RyVv6WM6j9sn
-	XV2cYJ+j1fdDYvpV3nKv0CtGsCsvZS9WYonU2aNSZaxjveNtx/ezX2pAkU3Bgg==
-ARC-Authentication-Results: i=1;
-	rspamd-6c88b8f79f-lfbln;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-Chemical-Stop: 0fca87d70e170a20_1744217655275_1561146953
-X-MC-Loop-Signature: 1744217655275:3256004824
-X-MC-Ingress-Time: 1744217655275
-Received: from pdx1-sub0-mail-a315.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.99.84.17 (trex/7.0.3);
-	Wed, 09 Apr 2025 16:54:15 +0000
-Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a315.dreamhost.com (Postfix) with ESMTPSA id 4ZXpv940tKzN3;
-	Wed,  9 Apr 2025 09:54:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1744217654;
-	bh=KgOyGdAcW7lOj5DQgQhDHBIo5TlcNosb1BjUIdwjHL0=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=c+ueWkGqHvu/LAA5TEX435FN2F2B5oIX/RsLQVSveXFYN/xnnJZJnGNXTyPx2/xP1
-	 Ss5EFpHRmHRLXQwl4VO7h3tkC09q2jWuDTJ2LU0MpFyQMGjdfkG+gkan7R/BreMVhR
-	 fpdo46X4eHnnERCpCy7Z7bNq4c2tRLbK05gGqfJZKWH5F4RxBQNgJrNMOUq9bdm58p
-	 xTUKHmgtkPCVd/2/oOG2rTfWuVB/yVp/xNL1F+ZQK8rFIJXjZNgN6chd5Jd0HJ0lBw
-	 bsNrjO7tYtOU5y0bbNxaybLqPerKrmkV3ABOY92XH7He/ys7g7jKWA80two/tPbQNu
-	 xs/8KfbNL0qsA==
-Date: Wed, 9 Apr 2025 11:54:10 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: Theodore Ts'o <tytso@mit.edu>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Martin von Zweigbergk <martinvonz@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Edwin Kempin <ekempin@google.com>,
-	Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev,
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu projects
- collaborating on change-id commit footer)
-Message-ID: <Z/amMj/eg0RbXdkS@ubby>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <xmqq4iyzn0vn.fsf@gitster.g>
- <Z/RFQY433muaCW44@ubby>
- <20250408125521.GA17892@mit.edu>
- <Z/VGYrrVZYQ13TLj@ubby>
- <20250409121924.GA148735@mit.edu>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A984F1C84A0
+	for <git@vger.kernel.org>; Wed,  9 Apr 2025 17:00:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744218054; cv=none; b=Y4r594GM/tTcHXDgrXVSYmJZ11ikI2ghd6j+ZNIswNNQ1nhZbR0VQUAk6fyy/CqK5W2n+FKHjFdZi136CeI56ZjAyNErlcLWajrfb4oBcJwAd+TfP1hLPEXHTtRVxZm0PnakZoVtiVegwaYKhCyYBC9PqM6878u5bITNB6+3crk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744218054; c=relaxed/simple;
+	bh=XB4cr6eTS+U52yIJbDOE/2nUfb4512XLfy88URIY9Rg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RkNxvAjavupfkVHyxKDNn+xnSBX66gTcTXMMPcr5Q0uqvkm0BAwNUqswohvbIxoqo6aRXen88qP07vHidRZGq0bSSGpbPJ3kfVfChGndBfOVoWS/YwtkwIbHDwOR8mpPbTue7emmARZDFJiXCYrUIjoq+S+HBX9mx0yPtSI+Wc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6e8fa1f99a6so6486786d6.3
+        for <git@vger.kernel.org>; Wed, 09 Apr 2025 10:00:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744218051; x=1744822851;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XB4cr6eTS+U52yIJbDOE/2nUfb4512XLfy88URIY9Rg=;
+        b=N4NWs5k/wl8OhGdLYbNIFMJgy6DjgAO0FHklfba/cL3pWzzJ4HR4TBVQDDz8zpz/gf
+         8+fQ+ydb9Acn+ayFF6ZojmgFffMgPPiz0YrqF+6AENR3qb2met6NyG0F6qiStDeufihd
+         emayULFZajyWTFwoiHrE1ctYgalZqm1g28EYklrhWCiWZZok5KB/QDr0PgkD13yCWowV
+         3s05fT8FQmV3gAke147gQjc2rBW9xF2G+NmmDT0x3FJ5o4EYqVFgjyqKny8uRhX88JIl
+         m5E12NXF9rQL4k+aE0pXXQr5MEB8JDC+UxAsWw4Q3fHxsKBZIkGVAT+V/BdGUeGt8Am3
+         FCmg==
+X-Gm-Message-State: AOJu0YwltJCLoaeKctQDsD3MutPOAre/4bl2JBgOvDIDNdNb8liY5n69
+	KSyod0SNJo4BRD8W+fmzmG0E8f7Jiu96g0kz+zV+nKGpOsjorfJB8RVSNqgEFRQf7Ja/a072h/v
+	rO2+sOiWw8mCsMzji5e4L7kSboQU=
+X-Gm-Gg: ASbGnctMmR7a2O06Acdagzx91N+pQfhcroLKfHmHLEBUvYN2TyvIqNHHBMj0b60kaTm
+	HGCOiUgiJC/gyqNXO2on1+lWd/qegewuF7SQbTXOPnZ5MTSUa7WUvMwwyfGLKjBHnZK5VvPuqh5
+	3HFX9QMytQSo69rXIO6q48
+X-Google-Smtp-Source: AGHT+IFJ3uo3Uto4JC/pT+dwk2kUS6N5GrrrLwXgM1gVI0P99MKjCvj9lXjpqPNj3idEJA04RLepT9YgNnzCfwneVRw=
+X-Received: by 2002:a05:6214:dac:b0:6c3:5dbd:449c with SMTP id
+ 6a1803df08f44-6f0dbb7851cmr25288026d6.1.1744218051158; Wed, 09 Apr 2025
+ 10:00:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250409121924.GA148735@mit.edu>
+References: <20250403144852.19153-1-sn03.general@gmail.com>
+ <CAPig+cT1dQL+MfUctyw=9O5Wd2yUqA40pXSgsRHKfNf=6vxQ7w@mail.gmail.com> <CAPHxB8un1w-NBnfLne9d=vv9Sqa69eGoLhjOM0GcmhgkYKt-PA@mail.gmail.com>
+In-Reply-To: <CAPHxB8un1w-NBnfLne9d=vv9Sqa69eGoLhjOM0GcmhgkYKt-PA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 9 Apr 2025 13:00:40 -0400
+X-Gm-Features: ATxdqUFIlDuZi2a-rz4fNS8o5k5gL7UJWn-EMXLwGxiFNtx9SO7_xaDqURxGPVc
+Message-ID: <CAPig+cRe9BQw=U41uOprZ5JRNgNTC46zMpyGjNy9b=y-hA8-tA@mail.gmail.com>
+Subject: Re: [PATCH] t7422: remove extraneous argument to printf
+To: Subhaditya Nath <sn03.general@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 09, 2025 at 08:19:24AM -0400, Theodore Ts'o wrote:
-> On Tue, Apr 08, 2025 at 10:53:06AM -0500, Nico Williams wrote:
-> > I'm not keen on CR tools "intuiting" from.. similarity checks.
-> > [...]
-> 
-> I'm not keen on fields that can have essentially random semantics.
-> Part of this is because today Change-ID is in the footer, and so
-> humans can randomly set it to any value they like.  Sometimes they cut
-> and paste footers, and so completely unrelated commits have the same
-> Change-Id which show up when you do a Gerrit lookup by Chnage-Id.
-> Admittedly, this aspect gets better if we shove it into the git commit
-> header.
+On Wed, Apr 9, 2025 at 12:29=E2=80=AFPM Subhaditya Nath <sn03.general@gmail=
+.com> wrote:
+> On Thu, Apr 3, 2025 at 10:35=E2=80=AFPM Eric Sunshine <sunshine@sunshinec=
+o.com> wrote:
+> > [...] for the sake of consistency and to match the author's original
+> > intent, it may make more sense to retain the argument to printf and
+> > instead employ `%d`.
 >
-> Part of it is because some tools will edit the Change-Id when doing a
-> cherry-pick.  [...]
+> The problem is, there are multiple ways the printf statement could be
+> written -
+>
+> 1) printf "[submodule \"sm-$i\"]\npath =3D recursive-submodule-path-$i\n"
+> 2) printf "[submodule \"sm-$i\"]\npath =3D recursive-submodule-path-%d\n"=
+ "$i"
+> 3) printf "[submodule \"sm-%d\"]\npath =3D recursive-submodule-path-$i\n"=
+ "$i"
+> 4) printf "[submodule \"sm-%d\"]\npath =3D recursive-submodule-path-%d\n"=
+ "$i" "$i"
+>
+> Which one of these is to be used?
 
-I was only proposing to leave some details out, not to have completely
-undefined semantics.  The particular details we might want to leave out
-are about resolving change IDs to URIs.  In particular this editing of
-change IDs on cherry-pick you mention has to not be permitted, or
-perhaps a new change ID could be added -- i.e., are these headers
-single-valued or multi-valued?
-
-Let's nail down the semantics of these change ID headers.  Here is a
-proposal to bang on:
-
- - change IDs get preserved on cherry-pick and on `pick`s in rebases
-
- - users can manually remove or change these change IDs, naturally,
-   though generall they would not
-
- - the actual change IDs are either free-form or they are URIs -- pick
-   one, but if they are URIs they should be URIs to CRs, and approved
-   CRs should perhaps have links to integration reports etc.
-
- - there should be one header for a change ID for the patch series (the
-   MR/PR/whateverR); patch series IDs can be shared by many commits in
-   one branch, so they are not in any way unique
-
- - there may be one header for a change ID for each commit, which should
-   be unique in any _branch_, but not unique in any repo (due to back-
-   and forward-ports for example)
-
- - there should be another header to list change IDs from which a commit
-   was derived that nonetheless has a different commit change ID
-
- - these headers should be multi-valued to handle squashes and merges
-
- - if a commit change ID is missing but a path series change ID is
-   present then similarity checks could be used to link multiple
-   versions of any one such commit
-
-Optional:
-
- - a commit change ID could be used as a ref to an object that lists the
-   commits that have that change ID
-
- - a patch series change ID could be used as a ref to an object that lists
-   the head commit of of that patch series in every branch that contains
-   it
-
-> Perhaps one approach might be that the hueristics that you hate being
-> used as an automated way to sort it out, might get used to set the
-> semantics at commit time, with perhaps a way for the user to override
-> the hueristics, or where the user has to explicitly acknowledge that
-> the hueristics correctly noticed that the patch has changed radically
-> and maybe the Change-Id shouldn't be retained any more?
-
-Yes, heuristics can be used to help the user make such decisions.  I've
-no issue with that.
-
-> Finally, perhaps there should be some discussion about whether we
-> think git should be maintaining indexes based on the Commit-Id.
-
-If they can be refs, then they should be.  Since they can't be unique
-the ref should be to an object listing the actual commits (see above).
-
-There could also be a non-ref index for these.
-
-> Personally, cutting and pasting a random 17 character ID is painful
-> and annoying, and when I see it in my shell history, I have no idea
-> what might have been going on.  So if I need to cut and paste a
-> Commit-Id, I might as well cut and paste the one-line commit summary,
-> and do a "git log --grep" search based on that.  But if the Commit-Id
-> is indexed, then maybe it might be more useful?  I dunno....
-
-+1
-
-> Well, see above about some possible semantics.  I'm *still* not
-> convinced even with the better-defined semantics it's worth storing
-> the extra baggage in the commit header.  But that's more of a
-> value/philosophical question, much like how we "could" store explicit
-> file rename information in the git commit, but in the very early days
-> of the git design history, although BitKeeper did track file names,
-> Linus consciously decided to go down a much simpler path.  So that's
-> really more of a SMTP vs X.400 preference of simplicity versus
-> complexity in the protocol versus implementation, which is something
-> where people of good will might disagree --- and there Junio's
-> opinions matter far more then mine.  :-)
-
-I don't find file rename heuristics to be "simple", and they're often
-wrong, though I've fully internalized that copies and renames have to be
-done alone in separate commits with no contents changes so as to make
-incorrect rename determinations much less likely.
-
-Nico
--- 
+ The final (#4) seems most natural.
