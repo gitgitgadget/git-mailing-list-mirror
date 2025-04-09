@@ -1,129 +1,175 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF362561AB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFB825E45D
 	for <git@vger.kernel.org>; Wed,  9 Apr 2025 12:20:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744201213; cv=none; b=RfYXzUm5d2xGg1P++X/212Iv5l2os0/GQ6h8z6YDkWJnVR1/L2bRzfQRrdl1yhMR6dIyw9/A128FjugU4iIDuk9iZ8zqkbc/zdSds7cGaARPzuG4IDm4+E69+DvXvhSKTvFi381cXSmeR3N/8E4iZzJg1gdODyOL3oEu3ODwAII=
+	t=1744201213; cv=none; b=STPzoRYonoSY2SXUXZwU1rIhUDEHIhGprIhdh9EjJeWglLmedEO2EJDC1dR/XMyhFY/zXb1k8j2RGoLwGp1fItk4g1Nyu7kwPzRQgYI3LnDPa6JlzlFhkie6I8PUWNLBQm/GkVzng1wHB2EQo686ct72sXRlPn3x3D0O9zTpMlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1744201213; c=relaxed/simple;
-	bh=y2xUS6+oogY+u0lSLrqCmJs7/cj3mt/OPquieiYaImM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jGo3QhzDSIzUaLyXGFE3AE6aEO+siL5qzAD7rYzy2tKuJpIvvcnnIb7B4iBXxoUlKa2IB+to83znPA/Tmn2cO1p457sjoDC1DqlQcGsAWH883tPXV6dFHP1NvSW1XGCU4Xu30xe6wyU3ZPNz6+GuTiUd+v0vjSsl1kFO6paEtC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; arc=none smtp.client-ip=18.9.28.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
-Received: from trampoline.thunk.org (pool-173-48-82-137.bstnma.fios.verizon.net [173.48.82.137])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 539CJPEY001034
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 9 Apr 2025 08:19:26 -0400
-Received: by trampoline.thunk.org (Postfix, from userid 15806)
-	id E7A7B2E00E9; Wed, 09 Apr 2025 08:19:24 -0400 (EDT)
-Date: Wed, 9 Apr 2025 08:19:24 -0400
-From: "Theodore Ts'o" <tytso@mit.edu>
-To: Nico Williams <nico@cryptonector.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-        Martin von Zweigbergk <martinvonz@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Edwin Kempin <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>,
-        remo@buenzli.dev,
-        "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: Gerrit, GitButler, and Jujutsu projects collaborating on
- change-id commit footer
-Message-ID: <20250409121924.GA148735@mit.edu>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <xmqq4iyzn0vn.fsf@gitster.g>
- <Z/RFQY433muaCW44@ubby>
- <20250408125521.GA17892@mit.edu>
- <Z/VGYrrVZYQ13TLj@ubby>
+	bh=mMZisPBNH4/WLwehCh82Xd/PPNwO65YBX9bQ+9i+3W4=;
+	h=From:Message-ID:Date:MIME-Version:Subject:To:References:Cc:
+	 In-Reply-To:Content-Type; b=u0gdL6mv6TdUJw0IO29+2zyzgHoPqYHmbrPreI113vYK1QhYXZfMXqUwckCaxe8oTJkgvBrtn3HsZixWefYiH6/VX1KPrKRj3bgcTij8P/R59hOrpe7F4nKZOtpiAey2ewB55a0aSc+zSqbhGZBp3ai/zY5IuqNKVIy7DkhPJX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h5RDiunO; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h5RDiunO"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6f0c30a1cf8so37549246d6.2
+        for <git@vger.kernel.org>; Wed, 09 Apr 2025 05:20:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744201211; x=1744806011; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xxjdLa8yepVkpxMwC7Vd94uWYSbh2Ocv1tCYdzncMek=;
+        b=h5RDiunOc/UuEJjjGHTQDPRuyDTqdkQrscjO+6pFnLeF7hVjbvs1tQ9glM/9HIYN4l
+         b7yGPX71SN8jz09BtcqHu9UfR9uOge2k+RAKohT/9DqhmjWBIuTiHsJGOzZMW8IGYW+z
+         h/NPF0wyRjVQJlDSErsyMjkaaVOKcvAyhW6qeIf9UVCplBzL/Nq4b4aWDyZSAuY1Ifjy
+         YBUg2V3SYwa/6nPIoDmrvOkvanXh5NRZF+xukhc8AqfsocT6r5GuZGvDJmbSrha7F+b/
+         iWLBdcnhb1AO/yrb4unyZt14lJBsP4H/Jhb5bSRKh15w9XnKsWtZA6LrEN1JGm5AE0Ht
+         L23A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744201211; x=1744806011;
+        h=content-transfer-encoding:in-reply-to:cc:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xxjdLa8yepVkpxMwC7Vd94uWYSbh2Ocv1tCYdzncMek=;
+        b=WhcxXakz/Qbed4bk2OvaQ14KdbOk1+EUaLsduaIlKqwY40nfcKJw9jljnpVK1k63r7
+         WQIHEYfbc69Lf2QSGubZT28uRA4ze5hD/VUqd7jZAxj1GQ+JdV2rUfX5zgPyQLcrU90T
+         yZ5tonPDzBF3fExmZq1pSPD3ZEt7bahbd5EICzHWMVlgB6LGF0M/iZ9/jnJRp5AsGohp
+         IRAeIXKV6fj7yeSKuEGPbVD/IDObaoVvSnByh7iX2FMWNl/8fOwFqoL+tH0AubBVjhfl
+         dlDMXs/zwU3WGsybiwpQ+wueMPO6qYj9jOUt5UIAoS8PDgfI7eA9UTSodr8VYwi8R7Sb
+         66Ig==
+X-Forwarded-Encrypted: i=1; AJvYcCXxRlOX5Di7EALEMC5Euzbh5RnvOBB1gLkGtrr5EBzAymidQNVLisIjmUug8vQVGhGgyFE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMb962VSajVttZ4vWQAA8xYMoTujY8te0D0VNxg6iou5+EU06O
+	PPahZQZbu9xgifWvIWT9HnMSDEwKsTIdh6IBxUOd+RyeIW3tMxju
+X-Gm-Gg: ASbGnctVeqK8FtOdS4LQyteK+KpGnkPOeXFKDOKdMhW+CdejNpN4Y06qJOgdR2QlQfM
+	VGo2p5a2+ZetFrlmJlFbjhVAGlZ/iMFIKi/S7P3A8S5814YbHTiZSdzOVyZGVCi2fM7DX2njlZ6
+	Xtn6QAjjV+Tryov+hCkT/pGIsbumBpGWVlDMA5z2oRFzfgODBbrUJQgWlFZU9Qaiwku5HFL8Ivu
+	WHhw5JYrM1fX6CP3e94kJ+aeNfITFbDRdx04GTCvfE5U+f7uprbzOCWZ+lVjlAmxtbjb1O9LSq0
+	dwXUjWJfTkU3cJ4VMSiZcGGFKVF2qfWy9jdPYxb1UuC6E9usJXLSLA95494uHi7GXl5LsVxx5uT
+	JmKMZdmzKzEIEiOnkXg==
+X-Google-Smtp-Source: AGHT+IEKJE9+8leL6E+p+3BxoJrLaQsSV/QTUW9GXtDKDUrSfBq3zzjFkPWXn8w7Go3528g4l7WyWA==
+X-Received: by 2002:a05:6214:1250:b0:6e6:5efa:4e01 with SMTP id 6a1803df08f44-6f0dbbbd667mr45968896d6.20.1744201210587;
+        Wed, 09 Apr 2025 05:20:10 -0700 (PDT)
+Received: from [192.168.1.174] (c-73-143-206-114.hsd1.ma.comcast.net. [73.143.206.114])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6f0dea10676sm6500686d6.106.2025.04.09.05.20.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Apr 2025 05:20:10 -0700 (PDT)
+From: Nikolay Shustov <nikolay.shustov@gmail.com>
+X-Google-Original-From: Nikolay Shustov <Nikolay.Shustov@gmail.com>
+Message-ID: <75b9457a-3da4-455d-9612-b83f25d3c854@gmail.com>
+Date: Wed, 9 Apr 2025 08:20:09 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z/VGYrrVZYQ13TLj@ubby>
+User-Agent: Mozilla Thunderbird
+Reply-To: Nikolay.Shustov@gmail.com
+Subject: Re: [PATCH] git p4 fix for failure to decode p4 errors
+To: Fahad Al-Rashed <fahad@keylock.net>, git@vger.kernel.org
+References: <pull.1926.git.git.1742440852765.gitgitgadget@gmail.com>
+ <32b401c3-de0e-427b-83b7-eb5a5b315db1@gmail.com>
+ <fdbb3f88-7321-4dc0-9ead-7ed9ef0fc995@gmail.com>
+ <339b8557-d41a-4a40-912b-eb2cff63159f@gmail.com>
+ <7e5d0613-d116-4e60-8ccf-efb092776398@gmail.com>
+ <652def28-2e97-4177-9197-bd93caa57886@gmail.com>
+ <A1896FA9-F09C-4099-8A7E-4AFFD2DBCF7F@keylock.net>
+ <1948dfea-88c9-4e4e-937a-e162ad42d8aa@gmail.com>
+ <501e308d-61b3-429a-bc4a-6f0c81455279@gmail.com>
+ <e91c0859-da89-47a2-b0c7-ce1943318529@gmail.com>
+ <CAFd+s4USsHPaepvfNtjm5VGieuH89zbW5Yj+OSXD8THxkj6tTw@mail.gmail.com>
+Content-Language: en-US
+Cc: phillip.wood@dunelm.org.uk, ps@pks.im, bekenn@gmai.com
+In-Reply-To: <CAFd+s4USsHPaepvfNtjm5VGieuH89zbW5Yj+OSXD8THxkj6tTw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 08, 2025 at 10:53:06AM -0500, Nico Williams wrote:
-> I'm not keen on CR tools "intuiting" from.. similarity checks.  I don't
-> love Git's similarity checks for file renames.  I get that for a
-> distributed VCS assigning something like "inode numbers" is tricky, but
-> as long as devs don't race to create the same files it was always
-> possible to have UUIDs as "inode numbers" and avoid the similarity
-> checks.
+Awesome, thanks!
+Could you please advise, what are my next steps to get this change accepted?
 
-I'm not keen on fields that can have essentially random semantics.
-Part of this is because today Change-ID is in the footer, and so
-humans can randomly set it to any value they like.  Sometimes they cut
-and paste footers, and so completely unrelated commits have the same
-Change-Id which show up when you do a Gerrit lookup by Chnage-Id.
-Admittedly, this aspect gets better if we shove it into the git commit
-header.
-
-Part of it is because some tools will edit the Change-Id when doing a
-cherry-pick.  (For example, one tool that I'm familiar which is a CLI
-front-end to Gerrit, when you run the command "kdt cherry-pick", will
-unconditionally edit the Change-Id to a completely new value) --- and
-some will not, because they are just do a "git cherry-pick" without
-doing anything else.  And if you live in an ecosystem where some
-poeple use "git cherry-pick", and other people do "kdt cherry-pick",
-you basically have *no* guarantees about how Change-Id might behave
-for different commits.  This *might* get better if we shove it into a
-git commit header, although if you give people tools to edit the
-Change-Id as part of a "git commit --amend", some tools might end up
-changing the Change-Id in random ways again.
-
-But then we have the problem where if patches get merged or split,
-what Change-Id is really undefined today.  I could imagine that if a
-commit gets split, both descedent commits should retain the same
-Change-Id.  Or maybe if a patch stack gets collapsed, all of the
-predecessor Change-Id should be included in that collapsed commit,
-much like how an "Octopus Merge" might have a half-dozen or more
-parent commits.  Defining the semantics here is part of the battle;
-the other part of the battle would be how would the tools make sure
-these semantics get obeyed.
-
-Perhaps one approach might be that the hueristics that you hate being
-used as an automated way to sort it out, might get used to set the
-semantics at commit time, with perhaps a way for the user to override
-the hueristics, or where the user has to explicitly acknowledge that
-the hueristics correctly noticed that the patch has changed radically
-and maybe the Change-Id shouldn't be retained any more?
-
-Finally, perhaps there should be some discussion about whether we
-think git should be maintaining indexes based on the Commit-Id.
-Personally, cutting and pasting a random 17 character ID is painful
-and annoying, and when I see it in my shell history, I have no idea
-what might have been going on.  So if I need to cut and paste a
-Commit-Id, I might as well cut and paste the one-line commit summary,
-and do a "git log --grep" search based on that.  But if the Commit-Id
-is indexed, then maybe it might be more useful?  I dunno....
-
-> So how much of the [details] do you want specified?  If you want to be
-> able to go from "change ID" to CR generically for all CR tools then the
-> the best -and perhaps only reasonable- way is to make the change ID a
-> URI.  Or if you think the [details] can be elided and still have
-> semantics that are well-defined enough then I think you agree with me
-> more than you disagree :)
-
-Well, see above about some possible semantics.  I'm *still* not
-convinced even with the better-defined semantics it's worth storing
-the extra baggage in the commit header.  But that's more of a
-value/philosophical question, much like how we "could" store explicit
-file rename information in the git commit, but in the very early days
-of the git design history, although BitKeeper did track file names,
-Linus consciously decided to go down a much simpler path.  So that's
-really more of a SMTP vs X.400 preference of simplicity versus
-complexity in the protocol versus implementation, which is something
-where people of good will might disagree --- and there Junio's
-opinions matter far more then mine.  :-)
-
-Cheers,
-
-					- Ted
-					
+On 4/9/25 08:06, Fahad Al-Rashed wrote:
+> Hi Nikolay,
+>
+> Yes, the test passed.
+>
+> > ./t9837-git-p4-error-encoding.sh -v
+>
+> valid commands: submit, commit, sync, rebase, clone, branches, unshelve
+>
+> expecting success of 9837.1 'start p4d':
+>
+>         start_p4d
+>
+> waiting for p4d to start
+>
+> Perforce db files in '.' will be created if missing...
+>
+> Perforce server warning:
+>
+>         Pid 277404
+>
+>         Operation: topologyRegistration
+>
+>         No entries made in db.topology for server address: '9837', 
+> dest address: '' and serverID: ''.
+>
+>         ServerID for the server should be set.
+>
+> User author saved.
+>
+> Client client saved.
+>
+> ok 1 - start p4d
+>
+> expecting success of 9837.2 'see if Perforce error with characters not 
+> convertable to utf-8 will be processed correctly':
+>
+>         test_when_finished cleanup_git &&
+>
+> $python_target_binary "$TEST_DIRECTORY"/t9837/git-p4-error-python3.py 
+> "$TEST_DIRECTORY"
+>
+> Could not decode value as utf-8; using configured fallback encoding 
+> cp1252: b"Path '/xxx/git-git-p4-error-decoding/t/trash 
+> directory.t9837-git-p4-error-encoding/\xfefile' is not under client's 
+> root '/xxx/git-git-p4-error-decoding/t/trash 
+> directory.t9837-git-p4-error-encoding/cli'.\n"
+>
+> (this warning is only displayed once during an import)
+>
+> ok 2 - see if Perforce error with characters not convertable to utf-8 
+> will be processed correctly
+>
+> ./test-lib.sh: line 1007: 277399 Killed                  while true; do
+>
+>     if test $nr_tries_left -eq 0; then
+>
+>         kill -9 $p4d_pid; exit 1;
+>
+>     fi; sleep 1; nr_tries_left=$(($nr_tries_left - 1));
+>
+> done 2> /dev/null 4>&2
+>
+> # passed all 2 test(s)
+>
+> 1..2
+>
+>
+> On Tue, Apr 8, 2025 at 3:13 PM Nikolay Shustov 
+> <nikolay.shustov@gmail.com> wrote:
+>
+>     Hi Fahad,
+>     I hope you are doing well.
+>     If there are troubles with trying this on your Perforce system,
+>     maybe we
+>     could think of other way verifying the patch?
+>
+>     Thank you,
+>     - Nikolay
+>
