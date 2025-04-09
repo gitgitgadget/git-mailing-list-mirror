@@ -1,115 +1,101 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E70626A085
-	for <git@vger.kernel.org>; Wed,  9 Apr 2025 16:22:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8E11CDFD4
+	for <git@vger.kernel.org>; Wed,  9 Apr 2025 16:29:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744215740; cv=none; b=FyjJg3n//B0ZM97u3ZKI2hZmjhl1noEwjJdpbUjzi1hJOnYaAY1nM1CyR3yPaG2rZuaXxRjlLlJOlycr4XrDRG/1mYIcxNqygsCfZBY9pyGfcTShY1muR/OAONYVdO0JiNoXb4qLVGCmDKUWbF/TFRqpivJBJ7DTrQRxbYLZw1U=
+	t=1744216161; cv=none; b=myy4/wTbAy34Z5jQ0avb/lqV1xbZyTADKGuClYUaD4yBAsYqzHrlOwsOXsJkfpfv9ghQvfFk5d9x2iDyA/nWYCBlYWABcT6r0pQWfe96nI2UO7CS3i7isPXF2GV5VABKn+Hp4Uo7oc9XLPXp7LwiDM8CasqTtJ4I7ZQKNKtqoic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744215740; c=relaxed/simple;
-	bh=I1Qqlv2mYFe46wYApHEvjnvoFRXL8juYM2n93MjOEuo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OTMSY9cBBswQ8RrdwgBJYiB2lnndrxPuV8HT62CWjTNZKjGlXV47srWA/5N5qwAxxHqWsNajMxZrAtuhai+F41t2Be/DjcraGf6qsAk4b6Zu4pw41d3jY3OflJlfoCjZDhqQhMBwY+CSQ08bNvxr/XXCChm6PA+TKP51uQyNNiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dET4i7bj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IWT7s4eP; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744216161; c=relaxed/simple;
+	bh=2X880G6cEN7YUmDowIZDMzrB27ac/1B1jKAG4dMTxoc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ETzTt3CfOzmy9p2YrkrWQJ2cjRH7Ia/kwBsUDnvUGi5PyYuco5HhKPcBtfJ899uJXj7FlsFDWj4FpXBJ4+TQ1hzno/DjEje2SkVvdev/FHnCJQ//732vCRy1hyfSw6oP+HQuQOOAFRYr7CTbMS9Yh+0yCMmXw4LZIqmTlfmBdq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=evQP47PN; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dET4i7bj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IWT7s4eP"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 59E552540175;
-	Wed,  9 Apr 2025 12:22:17 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Wed, 09 Apr 2025 12:22:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1744215737;
-	 x=1744302137; bh=I1Qqlv2mYFe46wYApHEvjnvoFRXL8juYM2n93MjOEuo=; b=
-	dET4i7bjPPkHelM9NxzSRqSPODWRZ7iJpRz1KijmjcY8G6VzkrONhbsTeaolBR2u
-	CjLOkP3yGkQfy2o4/CTRhATAu7qFbhbF/w1NoSFoh0uHjCG4iEKLCEuJ+73ncupr
-	5Y22++Lu/tRow0pdnG7BFwuAPJwbJju+VlCdw16gN7RtypBlEJJs47P7ITYNu3jS
-	II8RKeXoQwtXsWQsYEdn2dvg2H2LMTz0Jykd7foupK0xn1p4voqO2MSw6rKcamR7
-	H/bWs48pRiHkRE3trxigIdKnrNFsPKaaLBu3w1wSVFLKSS24KFCF/zauqwp2cK+3
-	yRqdsizf20rMqe/3v6ghEw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744215737; x=
-	1744302137; bh=I1Qqlv2mYFe46wYApHEvjnvoFRXL8juYM2n93MjOEuo=; b=I
-	WT7s4ePNOOB3SRYgFj1SnSFHiDeG1I3YDvpbAkS3qfI8ZcgnaR9g/p70Ok6NbjdQ
-	P28irLaPnOQV5FKXBkFltB77Dghc5WbRFK4GrglIWtAkAGFgdWRjwQya19R/UKKh
-	sOvBJAJ9JpdL1e4RWKNE/dUr1JwPjYaEqyPim5WM7DIBa6sMBYplPDSJkRmQBf4p
-	p6hpFGDHY44PN9GukGIFSRS1oiRPEwaeef4Tq5Gn2hS6XbBjFYjEB8KTvPExcXTD
-	LLzMiyYdF6IQNt7GQFLj3q29bm/mz1EZODJHKPW+1Lue0aYiPp1b35uAf/x8FVsL
-	UXZhnWbhyn9d26M4RTFxg==
-X-ME-Sender: <xms:uJ72Z_OKcQmtmzpT1xCBVi0n5zpi31uli1daJLYV5jVAzmsPP0d4ew>
-    <xme:uJ72Z5-XKCKKae5gFVJrtqDPPzG55o_6CanYYUJkJRlSLcqpzkSrRfh23FMfvPavE
-    tRj9L3Q_w_untMgiQ>
-X-ME-Received: <xmr:uJ72Z-TAdaMGcg6NZsuEkfJ3PvcpMgOaPdMYB3_BkKyO4I97_7juTOXDtbgj1UPR4YeDbmtNHw8qVebqGR5bTkOVv8oaAt5ellxS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdeigeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
-    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrghrthhinh
-    drrghgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgv
-    thesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtoheptghhrhhishhtihgrnhesjhhohhhnshgvnhdrnhhopdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:uJ72ZztlgzOCZXTtrQ_iopfsDYfywx8BPeXDOMyBQqQ7fvJYKgxwqw>
-    <xmx:uJ72Z3fgjLQmx0gEcC5Uk9mXhzmt4l72-503NrsBUp5ys8X-71u6Tg>
-    <xmx:uJ72Z_0YQRKmTFtsQT5Xal4obHDY0xUCkm2eKQfu_ixniFIKqWV8Qg>
-    <xmx:uJ72Zz-DBCQBMb-UL7-igSEi-DeXjd68Oo5GK0Ll8gpxtFLfRjw5fw>
-    <xmx:uZ72Z-qBG0YrQ-ggO7CCXEm0eB8QOGjxDzn-Rz9fNfnYXD5ri_izV8bu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Apr 2025 12:22:16 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc: Christian Fredrik Johnsen via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Christian Fredrik Johnsen <christian@johnsen.no>
-Subject: Re: [PATCH v2] refs: fix duplicated word in comment
-In-Reply-To: <CAN0heSoh4SuQcYHVVniO1BYH_C4O-BeF4kKxDg3uQPzpotLA1A@mail.gmail.com>
-	("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Mon, 7 Apr 2025 20:43:20
- +0200")
-References: <pull.1940.git.git.1743791986754.gitgitgadget@gmail.com>
-	<pull.1940.v2.git.git.1743857867327.gitgitgadget@gmail.com>
-	<CAN0heSoh4SuQcYHVVniO1BYH_C4O-BeF4kKxDg3uQPzpotLA1A@mail.gmail.com>
-Date: Wed, 09 Apr 2025 09:22:14 -0700
-Message-ID: <xmqqbjt5s3t5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="evQP47PN"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-54b0d638e86so8385872e87.1
+        for <git@vger.kernel.org>; Wed, 09 Apr 2025 09:29:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744216156; x=1744820956; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uS8OlPvrPP2VnwATfBKkyuKrP3OL0RjRq2fZxJgvk6w=;
+        b=evQP47PNfmuHLWHrTthqn2TdLcG4fPEFi5gHpBSRCjXUgvFJXg51i6JeXOI5f1y1a2
+         RPrK2hzPeRJ4mPA1iacps2kGo9NshfViC3oRyk3v80rUwqaEd0BxWmt4scre4oZOOJRm
+         zAHOC/N2GLk0wWFGaML9mxaSKPsr97MMLXfazVcrGLNwuArT9h+BAwC75mEiyEEtfpI5
+         T97gdoTiaN9iwxXXG5JMluk1ng0MjR3ZmQ0UPkOCZcMqU8jMMGTe7q4quW/d6ZFT8mKz
+         WpP0OGQQCjvGMp7LCQyI+tKDFCaN2xbntRMD38iSNzNjmJdqX9OnNkCeYuhxfFeRnFfZ
+         EnlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744216156; x=1744820956;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uS8OlPvrPP2VnwATfBKkyuKrP3OL0RjRq2fZxJgvk6w=;
+        b=K3R4cc6nUnCDPdqLV7eUWDqAuCFhcIYB9h6Aw5wLSBk/NxDxlvU+ik+VcFYQpHM/4j
+         OQ7/Rh4UZMrq96cvdRDuzb9927EvRyV6J5lDRJA/4c7Gth93POPjVn8MhRg8OwPIHGuG
+         L+e+SrQhXRHNNz24ldk2WLmOenq8G67uv2BcnJPNk1xzOrBz3UVeGVpJb3tx8hRBZth8
+         uOjGgXq+i3CjRiHrf+aXQ98hTYkDmyaXZnAPKwxgApQ6pqhaIa6Zzo/DmsJoutRyaIR0
+         jctQnTaiaSBHzXD5a+TD/bFhvT4qvjueWPBhaVMxSEIPc3O5BqIQfYb9F/03BVZzzNIi
+         OCeA==
+X-Gm-Message-State: AOJu0YxoJO8y3phfg5ewEvXtqylBmVS9afbp31yXctL21WWyJ0Y2LK3z
+	sa0khHNpfVgpR8Ya0kHWYLqGifTgzrmVeVaxJ4tx/5Ai7s+A6khWpOSTy3zHxQUH8TZexKSa/1l
+	DjsarGlvAILdJbVU9YNlGCpBB9Mhn52gvoUA=
+X-Gm-Gg: ASbGncvT/dn0y3IV7sdQKc7eS8WbqWwI+y5cs8h1XX+IvFktyWOzyhxZGB/75Z733eA
+	tUglFRCWV3MpPmziazUXUtVJc4HOTAp8/yE/pRMq/rUQimXWZKhzg4iEntwiHb1NoGmO36LlDfD
+	b7WC3Y2lRraMf8tgL+O7nTHJ8IMojhP6LL47fypjLqWDGQiOdUWOwZG3k=
+X-Google-Smtp-Source: AGHT+IHitViQhkZ4j1zELwaePn4YRuJUbknp/mOugxsPoX893wZiKYWJtILk3xnnV01t1P2XbhMG8M/pNjD+pap3hwI=
+X-Received: by 2002:a05:6512:3c90:b0:545:c33:4099 with SMTP id
+ 2adb3069b0e04-54c444ff18fmr1016579e87.27.1744216156070; Wed, 09 Apr 2025
+ 09:29:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20250403144852.19153-1-sn03.general@gmail.com> <CAPig+cT1dQL+MfUctyw=9O5Wd2yUqA40pXSgsRHKfNf=6vxQ7w@mail.gmail.com>
+In-Reply-To: <CAPig+cT1dQL+MfUctyw=9O5Wd2yUqA40pXSgsRHKfNf=6vxQ7w@mail.gmail.com>
+From: Subhaditya Nath <sn03.general@gmail.com>
+Date: Wed, 9 Apr 2025 21:59:04 +0530
+X-Gm-Features: ATxdqUHCDm_aqN_VWRiw2O_hb6JF3Wy4WQmQ7fJsM54cGra6dEs5E46JXQFoU5I
+Message-ID: <CAPHxB8un1w-NBnfLne9d=vv9Sqa69eGoLhjOM0GcmhgkYKt-PA@mail.gmail.com>
+Subject: Re: [PATCH] t7422: remove extraneous argument to printf
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Martin Ågren <martin.agren@gmail.com> writes:
+On Thu, Apr 3, 2025 at 10:35=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
+> [...] for the sake of consistency and to match the author's original
+> intent, it may make more sense to retain the argument to printf and
+> instead employ `%d`.
 
-> Ok. In general, there's some trade-off to be made between "make a small change
-> at the top of a twenty-line comment and rewrap the whole thing causing more
-> churn than necessary and create more room for conflicts with other topics" and
-> "make the change and live with slightly less beautiful wrapping".
+I see.
 
-Nice to see this choice spelled out.
+The problem is, there are multiple ways the printf statement could be
+written -
 
-> In this
-> particular case, the blast radius is small. `git show --word-diff` confirms
-> that you simply removed the duplicate word and moved "common" (or "*").
->
-> FWIW, this patch looks good to me.
->
-> Martin
+1)      printf "[submodule \"sm-$i\"]\npath =3D recursive-submodule-path-$i=
+\n"
+2)      printf "[submodule \"sm-$i\"]\npath =3D
+recursive-submodule-path-%d\n" "$i"
+3)      printf "[submodule \"sm-%d\"]\npath =3D
+recursive-submodule-path-$i\n" "$i"
+4)      printf "[submodule \"sm-%d\"]\npath =3D
+recursive-submodule-path-%d\n" "$i" "$i"
 
-Thanks, both.
-Will queue.
+Which one of these is to be used?
+I shall update the patch with the approach that is decided upon.
+
+
+Respectfully,
+S.
+
+
+P.S. Sorry for the delay in replying. I got caught up in something...
