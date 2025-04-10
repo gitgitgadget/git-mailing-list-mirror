@@ -1,148 +1,145 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07771D5143
-	for <git@vger.kernel.org>; Thu, 10 Apr 2025 09:04:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E7520FABC
+	for <git@vger.kernel.org>; Thu, 10 Apr 2025 09:10:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744275891; cv=none; b=ggJs5IcyB68Y0cXNqjjS9shQyIBupYdzGnErHUX1VYVFAzae8eE3RfNK90CIwZP9kGoVKPb2vo6bz7RxdND/0IL+WPwBSJSQQL5Kqyueyp4UMZpaJpQDgjMv/FR7NVH3NGCnIHPLNyu9MDyxerF5kOhr6CLox3NyHt84j1Sln0Q=
+	t=1744276231; cv=none; b=IHqMYfIWcKJm6i5JQQDxY+87kdFZWNez4wo4Q3y13unqDEO14YR4c8UOYf3OKtDtRb+NsMuuEKkzpTEldP+av1irE7EVLiei5FSnt0QwWz2GxFf9E/URKK/BhP1V4eFLEmqSJT8kCdEFZBytCbXZ9+O0rkHb6jKXCa5YRm4kavE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744275891; c=relaxed/simple;
-	bh=f9BG0ZX1J3uz8jya/foKJMNLaQ5F8laUmRmtLmreSuo=;
+	s=arc-20240116; t=1744276231; c=relaxed/simple;
+	bh=uSOuOFpN3GHpZc2Kr2wZ6mg34Q356K9ZaoWgbDH2MJc=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GmzEj3j610bVBAAYdmRcARVMxxaHAqmt6beniBl2LGA3XnjPQ52xYPxzCcwVlYXNkJIyVGJa6wTgqpD8mnHCnaMe28+XR40Tpz9BO7BnGJ141Wyo0TH+ZF1M/Q46Z1x9Ba8AmXIdxdg1IXjRVrNT82p/tR6BQcCDIcWMuP0LK18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RYg82tCx; arc=none smtp.client-ip=209.85.222.51
+	 To:Cc:Content-Type; b=auhXYyMRxy9bsf1GH7nJbVOn2crCyJCAipEWG1hEkz7xdIDgANW8Jc0yTEzyrOH4sKQpaMhh8U96rzEnWSxx9bt8Rj47/bYQfH1J9cja2AbrTA0WqVFeTBTjaxR0vKNVPIUpBisA15l8v9TmyBJDduXkLNEoWIJ7wVXlYPoVJNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DBjnyqnJ; arc=none smtp.client-ip=209.85.221.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RYg82tCx"
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-86c29c0acdfso224250241.3
-        for <git@vger.kernel.org>; Thu, 10 Apr 2025 02:04:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DBjnyqnJ"
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-51eb1a714bfso668003e0c.3
+        for <git@vger.kernel.org>; Thu, 10 Apr 2025 02:10:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744275889; x=1744880689; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1744276229; x=1744881029; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GOO+ZmI+KpICzZp0MqHRlXmeAmhFmrXylJz/wGyihIo=;
-        b=RYg82tCxr2A3JLejwiLotoadudZJCiQUmBOrmeNUQ/gQjImhtIB7s8LaSp+o7st2qr
-         qTcVdEoxRsoJnxVl4vii+NwmSh636vhDXkeAk8WYB89jHwZOOgS0qFZfviFSWQI8SteQ
-         h9FOxzMM9mejZkwHSe5hArfNXTbx9634GNtElbuRCLBvA6yjDd66e8tF9LLjQ6muFZ1r
-         3cne4pUA9UUY41bTh2BaE3mbr8oGK5NTbPIwOO/NWB8BvUhVC1DbnWigZMbZyfC66CUm
-         tnyL2nUBeBf6ukuWmWaMHYjC5hShjRpmBnTC5IV+P12K/84ojMQ/ic1GvbHFIvbWl7YI
-         JrQA==
+        bh=IaxWD5Zvio+ZwtUtW3/wSDxzajgA9V5gYdG7q0G2Wlg=;
+        b=DBjnyqnJ5SQpOsb+3RQOrIfQpy8vnPyVm/twx5an/9rZ9FccOjQMLEKBJx2FMP/s+b
+         isPOVv9XaPDkVBVEw83RCcv7VxCSJ4ox27+BZQ6EBCtVYBYExhiCt0uXBOCFRAflnOxa
+         0a2t4PDNqAQvVac4y3nnAEMCO7e7i85yoRC+zZk/uAPU8+7t5kMDpOXZAw/7rWGbc8xT
+         M7OX2/f6ctfCpWY873Zja5sx5Nc/ejeIMtRrP6z8ZrXgauuPtIROCQHmGAJLoVe6dyv6
+         WTzolwO1GEQzwcY8xm0zl1PsEJX4LPXzKb0MkyEHguOQC7yh9EsNxTVTjTPH7BoZqLOe
+         SDsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744275889; x=1744880689;
+        d=1e100.net; s=20230601; t=1744276229; x=1744881029;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GOO+ZmI+KpICzZp0MqHRlXmeAmhFmrXylJz/wGyihIo=;
-        b=cekDSA5D53UD7IUg6sjExynST5rttoKjTEu0jdZImL0Z2b8SBIjrmbUeC4e5NOT9Kc
-         HG03VZMjTsCPy5rEUUaHUP7wFPCSjYzpOkaTZ/OWXRpeHv336GNYtx+mkuNdQg/NmSki
-         6DYp1xVQN89titNSKiTYHygPPCq1JYvXnV5u4zkyrBUAxoyX+iW93Iz4d+Iaz1BI4rrA
-         0ru+u643+HB/nn9f/Z2uNzhgij7g/6uj6DZRJaqUlEPZL+16kLvgFIFjfr9voo3ecpba
-         V63TXTMa3HlVPyJDi93TeE9XWgxhh/lCRZx+uCI/if9CP399OURBGPnxKQfWx2NVFvvz
-         uksA==
-X-Forwarded-Encrypted: i=1; AJvYcCXGn0P7XVA6T/6A6mG+gcW8/uJ4wZ/tLXSPDyUbTtSr61WsrVbu2bSN5bFw/ab9oi937Tc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3wMtKpK8WLub8hDKSGEWN8duaYa1+JncjW/RLbXObrs2CRAtG
-	AjKFKctlDDilVGXO5Og7TQzVydd2quYUFiM/HQR8AMmYZoXrVCAQ4YlFvrSJWNQ6M2XqMUwQMMn
-	rAozZTjJwD6ALjDT4Pu6iXuX34vMW6XwD
-X-Gm-Gg: ASbGncuLj31oeSGzNRmZnE5vlLYInCA3qgRV2eBZkowmF4Qv/NbA26i4yankejJCwXS
-	1wBR9tJ294PAlgOxcxltKbJJ9wJWA2W+pncUCAAG+tUCNdO0useiO2jxwB+rLG5mYjeLWja7Z+H
-	oBIE/8vM4zkREmjFEQN+qqRoWmWiTnTWO4F4AvkA2UtoeA8CHNsgxKGkM=
-X-Google-Smtp-Source: AGHT+IEA1eAz8R1CG8uFZbzCzuVhXhaE29U5j3pHn1RfeE8TAfgGoQK6R2TZelabpm9d2qrMzN71rDYcM3KstS9eR1k=
-X-Received: by 2002:a05:6102:3c98:b0:4c1:94c1:1c34 with SMTP id
- ada2fe7eead31-4c9d35c6700mr1297238137.20.1744275888748; Thu, 10 Apr 2025
- 02:04:48 -0700 (PDT)
+        bh=IaxWD5Zvio+ZwtUtW3/wSDxzajgA9V5gYdG7q0G2Wlg=;
+        b=nCKzdJTh/yG5lwdh0U1lPd/0HClK64D1p9KyRZbtq9lxYAzE4U/8xKWYdypakDE4vM
+         F8zN+0fsHyM4tB0eeLxfTUDcKXECYX/LAmuIG17Mauk8Yks/84FvVeM9LvhcnkAeYAXN
+         v1xWQI0pNDvgcBB05sL0QLIO30OJ4tXUD+hHw9XK+X/SaVYeCD0JleA25MjRoRc87jy2
+         ECeyxhPmgsb+SxINd7cs15LbYPDtvCgjWRzu+ugSWhKonVQtbatlZ0B5KV1nytoTaUZG
+         MO9nVn8dKzc0fcNSWfBcA54tSOGM99Pvu7XYyGsFQKktVctKgaSrDPmzsodgFwj+9AXb
+         u96w==
+X-Forwarded-Encrypted: i=1; AJvYcCVYg8ON2hOciFdn1i9eV6/ueyNkQr33W+XUp8pHvi+WjqTIDVzqRWIAZypmxnlLK3B5UsE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YysCx6LQRbFzhhaZYcpA1ZDnzAFMWoFNKgWAstgrW+WshrK0HBF
+	AQagnndx094KWeujmpJUKXQSXAkjrLhG8eCivm4wi40enrCFD0BAzl+7eiH2/VFTQL3n8qmkEGE
+	6q/CvwtyJuncJIm0fuHD1iHr2fsg=
+X-Gm-Gg: ASbGnctcuf1FzWi6YnOegZkdbKIXfYFaw2ZG1Uvft7QiKwxod+KgKeUTcZiuzs3XWXG
+	J2HNKF5YAFm2sh6IbcoAaUeNkylrm8PfBOOGdwPuFxdQ6wYt8q4dwHqWc06xQ5xs/1a4H9A7VHJ
+	v8UO7zrNtZGln73czwyqi2LQDSDY/qnNfgGdPf0746riTMJxjAnlm6h8o=
+X-Google-Smtp-Source: AGHT+IFywfOI8DZs01QLSBjY/oXq87aUfSKGGfTrqBCNpMPeRuUdvpmM9pW6FjZFYeSz8syviRALjiDTGa0B5iQEH5M=
+X-Received: by 2002:a05:6102:38ca:b0:4c1:9bdb:6188 with SMTP id
+ ada2fe7eead31-4c9d34d40c7mr1352139137.13.1744276229105; Thu, 10 Apr 2025
+ 02:10:29 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 10 Apr 2025 02:04:48 -0700
+ HTTPREST; Thu, 10 Apr 2025 02:10:28 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 10 Apr 2025 02:04:48 -0700
+ HTTPREST; Thu, 10 Apr 2025 02:10:28 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <871pu0fl6u.fsf@iotcl.com>
-References: <20250408-488-generating-bundles-with-many-references-has-non-linear-performance-v2-0-0802fc36a23d@gmail.com>
- <20250408-488-generating-bundles-with-many-references-has-non-linear-performance-v2-2-0802fc36a23d@gmail.com>
- <871pu0fl6u.fsf@iotcl.com>
+In-Reply-To: <xmqqy0w9orsn.fsf@gitster.g>
+References: <xmqqy0w9orsn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 10 Apr 2025 02:04:48 -0700
-X-Gm-Features: ATxdqUESPCUYyCAjYk2ld1Z_tKEwVvqS-cyuOVqWyWJYBlilYq0-XLYBO5NhNi4
-Message-ID: <CAOLa=ZQUkv=QpzzOaxv8EUhaoTpQdTPO1fHT=-DY2vfVCK4NyA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] bundle: fix non-linear performance scaling with refs
-To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Cc: jltobler@gmail.com, ps@pks.im
-Content-Type: multipart/mixed; boundary="000000000000bd5f5e063268e0cb"
+Date: Thu, 10 Apr 2025 02:10:28 -0700
+X-Gm-Features: ATxdqUGic3PqgAC9PDNZhkm97vEQXYKNqaOdjxN0DcuhIobzrHpaiVRyEw3v7cI
+Message-ID: <CAOLa=ZRMmEjPoD9-M=XFU37_VoGebYDnH-=nfCyPx0nTvD1=oQ@mail.gmail.com>
+Subject: Re: "What's cooking" interim report
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Arnav Bhate <bhatearnav@gmail.com>, Christian Fredrik Johnsen <christian@johnsen.no>, 
+	=?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>, 
+	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Patrick Steinhardt <ps@pks.im>, 
+	Philippe Blain <levraiphilippeblain@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>, 
+	Usman Akinyemi <usmanakinyemi202@gmail.com>
+Content-Type: multipart/mixed; boundary="00000000000006e297063268f5d1"
 
---000000000000bd5f5e063268e0cb
+--00000000000006e297063268f5d1
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Toon Claes <toon@iotcl.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
+> Since the issue #02 of this month, a handful of topics have been
+> picked up, a few topics have been replaced by their newer
+> iterations, a topic that is already in 'next' gained an additional
+> commit on top, and a topic got its description extended.
 >
->> The 'git bundle create' command has non-linear performance with the
->> number of refs in the repository. Benchmarking the command shows that
->> a large portion of the time (~75%) is spent in the
->> `object_array_remove_duplicates()` function.
->>
->> The `object_array_remove_duplicates()` function was added in
->> b2a6d1c686 (bundle: allow the same ref to be given more than once,
->> 2009-01-17) to skip duplicate refs provided by the user from being
->> written to the bundle. Since this is an O(N^2) algorithm, in repos with
->> large number of references, this can take up a large amount of time.
->>
->> Let's instead use a 'strset' to skip duplicates inside
->> `write_bundle_refs()`. This improves the performance by around 6 times
->> when tested against in repository with 100000 refs:
->>
->> Benchmark 1: bundle (refcount =3D 100000, revision =3D master)
->>   Time (mean =C2=B1 =CF=83):     14.653 s =C2=B1  0.203 s    [User: 13.9=
-40 s, System: 0.762 s]
->>   Range (min =E2=80=A6 max):   14.237 s =E2=80=A6 14.920 s    10 runs
->>
->> Benchmark 2: bundle (refcount =3D 100000, revision =3D HEAD)
->>   Time (mean =C2=B1 =CF=83):      2.394 s =C2=B1  0.023 s    [User: 1.68=
-4 s, System: 0.798 s]
->>   Range (min =E2=80=A6 max):    2.364 s =E2=80=A6  2.425 s    10 runs
->>
->> Summary
->>   bundle (refcount =3D 100000, revision =3D HEAD) ran
->>     6.12 =C2=B1 0.10 times faster than bundle (refcount =3D 100000, revi=
-sion =3D master)
+> --------------------------------------------------
+> Born topics
 >
-> I've done some benchmarking with some "real life" repositories, which
-> only have a couple of thousand refs and there the difference
-> (expectedly) barely noticable. Which is good to know there also isn't
-> any regression.
+> [New Topics]
 >
-> This version looks good to me, I approve.
+>  * kn/bundle-dedup-optim (2025-04-08) 2 commits
+>   - bundle: fix non-linear performance scaling with refs
+>   - t6020: test for duplicate refnames in bundle creation
 >
-> --
-> Toon
+>   Optimize the code to dedup references recorded in a bundle file.
+>
+>   Will merge to 'next'?
+>   source: <20250408-488-generating-bundles-with-many-references-has-non-linear-performance-v2-0-0802fc36a23d@gmail.com>
+>
 
-Thanks Toon. That is good news. That is also what the earlier benchmarks
-showed. For smaller repositories the difference becomes inconsequential,
-but for large repos, this can take significant amount of time.
+Toon approved/tested the newer version. I'm still wary if some edge-case
+was missed. However the series has added more tests and everything seems
+to be good. So we could merge to next.
 
---000000000000bd5f5e063268e0cb
+>  * kn/meson-hdr-check (2025-04-08) 4 commits
+>   - meson: add support for 'headers-check'
+>   - meson: move headers definition from 'contrib/coccinelle'
+>   - coccinelle: meson: rename variables to be more specific
+>   - Merge branch 'es/meson-build-skip-coccinelle' into kn/meson-hdr-check
+>
+>   Add an equivalent to "make hdr-check" target to meson based builds.
+>
+>   Getting there.
+>   cf. <xmqqsemiuwhx.fsf@gitster.g>
+>   source: <20250408-505-wire-up-sparse-via-meson-v1-0-17476e5cea3f@gmail.com>
+>
+
+Yeah, I need to send in a new version here. Will do that soon!
+
+Thanks!
+
+--00000000000006e297063268f5d1
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 33694f3398ffcf3c_0.1
+X-Attachment-Id: 8b15d598eb619ac4_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mM2lhNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1memk5Qy80OVdaNXlRZTdPU05SZ0lhV0FtcHpBK2ptdwovVERaS21yWWJR
-OXhRMll2NllVTEx1Tzg4V1RSaGgrTitHdlJMWmk3eEVPeGZDMENUVzFqRU5idjhISFI3Tlp0CmpQ
-cEplWnV1YmJiM0hXKzJtZ0xHWW1EWXJBYWdpSXNTRzc3NFhmNmNraHpheExvMGxHd0x1UWFsbW5h
-bVVQYSsKNUVwTGY3c3JVODRkRnc3OW1rVFVnM1pHRWl3bm1TQm5HWUVSOE1wd04rRzV3Wi9UZGh3
-dGtoYXNOVVVlbUREcgpReWRIQzdWdk9objd1b1JJZ0R4VERJamU3VDZtK21mdzloTWRqMXNYeWdx
-WG9CRW5WSTV5ekpLWE1NMU93aHhnCkdORnhMYWk3RVN5bWc2MnAxRGdLNGJ0VDEzYjV4N290cS9a
-NHY5Y0JPMVgxeGRVT1hNREtUZEtJVXdJUk9iV2wKNmEybTNRQis2QnVTMTJjRWNvVlVjejJ5TmRh
-SFZycnNkWTc2c2k0Rm9oQU96dUlxdFdabEhuY2lKUGNyQ1o5dgpwbUJDNmlGRVBBYmpNZHVXa0Fa
-dTNtdVZaRUNrS2c2YUtJbmtNeUhnbmFkVVg2L3F3Z1ptQWV2RWtxUFRtK3d6ClpHYmZoQnFZaWdi
-R2xuN2tSWmVSdTRpZCtjVHlDUXVtd0xJTW00QT0KPXlDVlQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mM2l3SVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md1FGQy85c0NzRXpxVVFLZkk5WkE4MDQxbHpZb2E5RQpUTm5lWWlOZ0w2
+Zk01bDBEWU9EamhFMFphRWZHbHBBT3NoajlHZ1ZycXU2NkVoWEpYTjBTcHpQaitCNkJoYi9PCjRX
+SkpqdDQ1SGFoNXA0SFJqS005T2Z4RmxJVU1XaEhIUXdKNU54aGtWdFFNSUdjUDdYT1VPdFloOFFC
+aFBkQWIKNkNueklVSVBNSmFNSytlcGppVEs2RERNZmNIbmNycWRFRXJZUTJaVDcva1I2SWQ3cjlq
+RzNDWDNQL2tzckFldQpJS1poYXM4c1UxNnkvWU93d2RPa0lISFZWb1QxWG5SK3RIZldEWW5xYzUz
+VmdCYkh4UzdGRjFVdi9XcFNsOERPCmRwT0hxa2ZkbWdOOGsxQko3MWtKdXFWb25oTHRaSGZJbEtT
+SVVsR3ZMOEFJdHdRaFZHTjZvcWRnQUpzTHdKdWYKTUh1bVNTelpBT2xuQTZTS1N3V0NhU2V6d0cy
+ZVVsQnk1c2ZaLzVKRE1Yb2xRVUwvNW1ZM3QzN2w5L1ZqKzRDMgpLRWRndEd5MFZoSGZDai9TMlM1
+ZWsxaWZqWHY5elBDSjA3bTd3MUQwL3BLY2JmaHU4SG15ZTBJVlMxQit1TTk5CmppMzdiZ1kxZzRt
+eDdFYzVETEdWYndFZ3Fhc0dMNmR6aU5WeitnOD0KPXM5Z3EKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000bd5f5e063268e0cb--
+--00000000000006e297063268f5d1--
