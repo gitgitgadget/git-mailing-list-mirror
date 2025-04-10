@@ -1,39 +1,39 @@
-Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569EE2836A1
-	for <git@vger.kernel.org>; Thu, 10 Apr 2025 11:44:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4559A2836B0
+	for <git@vger.kernel.org>; Thu, 10 Apr 2025 11:45:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744285444; cv=none; b=MYFs+bz/l3huv8NAcCcSK5tsMSskDHoWtJgqZvs36hSYFwkXHEs2y+bZrnugPRBURy6ASMHib/TQotn7DnRSA3ShEYA8Ev5q2oH/xylczv5y2pcW7GuhPiknyrOU57RATOb16uh1uxipT/P8N97KEoNCU8He1s7XC+y0dV3taJg=
+	t=1744285518; cv=none; b=aD44J0k4caR+T7Z4C8Udn35aDketutc92Zday529XxzesW4KwDxO8aTP1CWRnN+tdVpak4f/JCBjfY2/rJ+EonV8RUy5RAR5/zHz6l305voAK4FUdJVLBMAzK6D0oPfFCUUlFaI+CUYEObQehcEINmWYuT+U8D66cWI4gQG9+4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744285444; c=relaxed/simple;
-	bh=w0+Y1zROokJoQneJaPgfsiBwyUNRmPWUJc/6siT5Tyw=;
+	s=arc-20240116; t=1744285518; c=relaxed/simple;
+	bh=9ME7s+R6liwaarCbliHf5elC5snmNHxLvgdcIkemdt0=;
 	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ShzECitpux5aiQo29oY+A3SoJCUQWivcrDoPK7vaw2V06foa9vGqqFLzbFf5w8i2nAJUewOgcEKQw2QR+TMaHTZLtDKqrzJ3WC70GYrZiG3fg/HU+nA6mrki4Jx+h3dZ6USvjPOyyUKiePKJV2iDkqZQnx7kAoPPMh6uNM4NHEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=aT7KZNaa; arc=none smtp.client-ip=95.215.58.170
+	 MIME-Version:Content-Type; b=NzgnT3rlf3VRzynXpeNtVpUSEwBB+wUNR6lOiwALn5wFxLy7pR4S0FPoKiMZtK9B2apL+ry2kT9hO6xSnaEWw3LYxOKyrUWdG2bAYYIo4gkQWvYU1vhw11VXxvOEbFKKU3QpDitJgV5Mq+ODUrXAHkWzLocaTulBZmnTHDcu8C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=HQ8iZ8MW; arc=none smtp.client-ip=91.218.175.186
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="aT7KZNaa"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="HQ8iZ8MW"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1744285438;
+	t=1744285511;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=00n4dp9MFuhj99WPS+yN+c/s7uFCVds6QsNq+/qwGq8=;
-	b=aT7KZNaaRdfyi2J5HJ7cOG93rhRpNJXOTwn3t0c4OkWhV0KokcQaebFKoN5cd0alVH00u3
-	DUuIIvElcX0TMg+SNeTW7yLJudCIy85kyKA7QsEYj6XlcXhWdFer3ArSBWnvc6FOC+te6+
-	8r8wHVJg0nQ76C+2CvwjnADDVQ8WYXk=
+	bh=ZbVKnkK/VLzDMRzJPUvepg3B/pKYnpzr08QnhS1ISKI=;
+	b=HQ8iZ8MW4MasiIsV6RCwAv1ejfcmK+mme2Dq28iIhytEqY1EhvQfrKdxlVc9Ds0Fc+Naan
+	GxTCT9BmULHgbqYcJXIZQ0oXNQgPwU0Z5yuQPa7/NSwNwMQbaVN4pz91BsfZJ6ggQNJU2t
+	/zHJLGzZVsMRU1xLduUS9XkgLs3vFB4=
 From: Toon Claes <toon@iotcl.com>
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 2/5] t/perf: use configured PERL_PATH
-In-Reply-To: <20250331-pks-meson-benchmarks-v1-2-b2ace85616a3@pks.im>
+Subject: Re: [PATCH 4/5] meson: wire up benchmarks
+In-Reply-To: <20250331-pks-meson-benchmarks-v1-4-b2ace85616a3@pks.im>
 References: <20250331-pks-meson-benchmarks-v1-0-b2ace85616a3@pks.im>
- <20250331-pks-meson-benchmarks-v1-2-b2ace85616a3@pks.im>
-Date: Thu, 10 Apr 2025 13:43:44 +0200
-Message-ID: <87semgdyxb.fsf@iotcl.com>
+ <20250331-pks-meson-benchmarks-v1-4-b2ace85616a3@pks.im>
+Date: Thu, 10 Apr 2025 13:44:55 +0200
+Message-ID: <87r020dyvc.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,29 +45,65 @@ X-Migadu-Flow: FLOW_OUT
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Our benchmarks use a couple of Perl scripts to compute results. These
-> Perl scripts get executed directly, and as the shebang is hardcoded to
-> "/usr/bin/perl" this will fail on any system where the Perl interpreter
-> is located in a different path.
+> Wire up benchmarks in Meson. The setup is mostly the same as how we wire
+> up our tests. The only difference is that benchmarks get wired up via
+> the `benchmark()` option instead of via `test()`, which gives them a bit
+> of special treatment:
 >
-> Our build infrastructure already lets users configure the location of
-> Perl, which ultimately gets written into the GIT-BUILD-OPTIONS file.
-> This file is being sourced by "test-lib.sh", and consequently we already
-> have the "PERL_PATH" variable available that contains its configured
-> location.
+>   - Benchmarks never run in parallel.
 >
-> Use "PERL_PATH" to execute Perl scripts, which makes them work on more
-> esoteric systems like NixOS.
+>   - Benchmarks aren't run by default when tests are executed.
+>
+>   - Meson does not inject the `MALLOC_PERTURB` environment variable.
+>
+> Using benchmarks is quite simple:
+>
+>     ```
+>     $ meson setup build
+>     # Run all benchmarks.
+>     $ meson test -C build --benchmark
+>     # Run a specific benchmark.
+>     $ meson test -C build --benchmark p0000-*
+>     ```
 
-I see in `t/perf/README` there's a mention of running `./aggregate.perl`
-directly? Shall we inform the user to run that through their Perl as
-well?
+I really appreciate the efforts, and I'd love to run the perf tests with
+Meson, but at the moment I don't know how these changes are useful
+because this doesn't print anything relevant:
 
--    $ ./aggregate.perl . /path/to/other/git ./p0001-rev-list.sh
-+    $ perl ./aggregate.perl . /path/to/other/git ./p0001-rev-list.sh
+    $ meson test -C build --benchmark 'p0005-*'
+    ninja: Entering directory `/home/toon/devel/git/build'
+    [1/28] Generating GIT-VERSION-FILE with a custom command (wrapped by meson to set env)
+    1/1 p0005-status        OK              7.39s
 
-Or do we expect users to know what they are doing when they don't have
-Perl installed at /usr/bin/perl?
+    Ok:                 1
+    Expected Fail:      0
+    Fail:               0
+    Unexpected Pass:    0
+    Skipped:            0
+    Timeout:            0
 
---
+    Full log written to /home/toon/devel/git/build/meson-logs/testlog.txt
+
+> Other than that the usual command line arguments accepted when running
+> tests are also accepted when running benchmarks.
+>
+> Note that the benchmarking target is somewhat limited because it will
+> only run benchmarks for the current build. Other usecases, like running
+> benchmarks against multiple different versions of Git, are not currently
+> supported. Users should continue to use "t/perf/run" for those usecases.
+> The script should get extended at one point in time to support Meson,
+> but this is outside of the scope of this series.
+
+Yeah, this is unfortunate, but totally understandable. I've been digging
+in `t/perf/run` and `f/perf/aggregate.perl` and it doesn't look easy to
+adapt to Meson.
+
+But I was wondering, instead of trying to fully integrate Meson into
+those scripts, could we modify the scripts so they work with binaries
+built by Meson? I mean, if we could run
+`cd t/perf && ./run ../../build1 ../../build2 p0005*` and it would
+simply run the benchmarks in those directories (without trying to check
+out code and build the sources). I think this would help a lot already.
+
+-- 
 Toon
