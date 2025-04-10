@@ -1,84 +1,84 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2982836A2
-	for <git@vger.kernel.org>; Thu, 10 Apr 2025 11:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D742853F8
+	for <git@vger.kernel.org>; Thu, 10 Apr 2025 12:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744286071; cv=none; b=pUu4PC63shI1Ob0i7Ahm1WJTkCDbdNqxmiu2y7f73eWJdjh7fi7jgnCZAKT7vbcQl4+WLY2kGDK+9cQsYYUUj4s6esEVtTNrG7yrUL0Ky774kt02FUD0AzdZ8gQP9Ak2xDAwcfksJvMj8QPmcJ5hau5PHnYecqx4khgADlkzYrU=
+	t=1744288784; cv=none; b=dD4b4VTGwCJnJz2v7fTb304sYU9IGO/0xt0jG4bUrzokLjudNZ+eQ8bZBWdOEVoTP37SJ3iMGqH8m0TvqwM558HbhGqYklncbHeG+Kc7R/J7MjaojiL8TdW9CWeQomZqlajXu+JtIIvKnGF/XOfseFzzN1tYAPd0p0c7Vr/3a1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744286071; c=relaxed/simple;
-	bh=A9CRQ02iBx//xlHlG5JmcP+EGKhdq43dq6P+DEza2jk=;
+	s=arc-20240116; t=1744288784; c=relaxed/simple;
+	bh=OnlBiKt3MRUmSOMtD5umCn0ESadJpOoPtHFTOz5IMgw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RXlsZxX/Ggq99QPSes7BFVgSu2ipVCe0mTqFl9cHzBNkGO2PeBSSLicAlL7XgCDWiSjVD8Lk516UKTo2X1d+OdlIKB2KWnyDxxb5caKMAi99qE/ptYAI7Gpr058DYA95n0paeehVusJ/yYSSUqkK8ZRJY9bIsga8TTVdXb79ov4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i6WxAFtR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wx8udTx9; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=QeDGbvIFVqY/Soc0cZG0GEOJ2mmg7KYucfMm8SQLwvbGsK6YF2EilLnDAQmb0idBVtatg6e11QvWEMgqb8rS4rap2ybSHCWtLZfyil9HjMp8ILceDOJRkuyo7RBMDkoPYUpx/KxFa/f4bjMjlkOm53mfI39Acz99yeaii+aCe34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gihc5rkc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TQ896dBh; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i6WxAFtR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wx8udTx9"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DB82A254023D;
-	Thu, 10 Apr 2025 07:54:27 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 10 Apr 2025 07:54:27 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gihc5rkc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TQ896dBh"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1627325401F4;
+	Thu, 10 Apr 2025 08:39:41 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 10 Apr 2025 08:39:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1744286067;
-	 x=1744372467; bh=KnFuYWbZ4gnF8l/oXtX79eWPCses8els+RPojGoeYw8=; b=
-	i6WxAFtRNekJ0JG0OicVHX9/8Fq/l13x7gxc7hTQhT013I4e/Tszbs9AJwz4dBvX
-	7ilM84WyHS8CtgqLuJ9DHB5yxddKa+e4j7KFali2HuEwLsNiINUk59t4m2Gq6CgI
-	Gr3oziXhHChGiAXjDNZfEvIMDVRzkj20TUdhzoR5fZiCvzVg2tw8dKdzAZ2tmMl6
-	ret46KKD2lswGgsp6rGQET1s+6E6zEfTbqRMc1JdEUYNlR5YAqoBf76XjMOt+PQH
-	kNl0p72TFKkj9/JaTbfgIPeahIjImOE24oOsSyjXGBIJ1SmYEMqGrfw1i7veMKcn
-	y/QrWqZjGCETmAl++oSE6g==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744288780; x=1744375180; bh=6+FleJOZx6
+	7Fit97QmTvkq+6Uyhu5BiPdNtcP1utmJA=; b=Gihc5rkc1WQxi18VvpbkgvS9o8
+	BOcOIjk3NJI52UFcyQkivHu9P2nTczga62OFCF98u852mlrxKisFXngGEX+6AScK
+	amoYipC6UCOTrZI//K1uyl5dwBeCPsPsCB99Vx3EvhX3u74Cj4Lj8JkLylzg76Qx
+	XOq6W+uPDRV/Wn5NI8dYQfpKiURc5hJHZvSoto5053w7aco44r/y7hQDlNVh2IKB
+	k1IthUqPL4YTbanfyMBnx2bq5q4gbjePuh/X3P0HqEe/Dem0Rh5q/0+kPukR3+Lv
+	a43gi55pf3k1ACIOaW2iBXQMfNIRoG+q5GUGi2Rh1TeqkalAJgGNPNOrBt8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744286067; x=
-	1744372467; bh=KnFuYWbZ4gnF8l/oXtX79eWPCses8els+RPojGoeYw8=; b=w
-	x8udTx9SpVwvevn9NS7L0V527tHgp2KDqDqT595lLtQ+A3zsps3mucpTk3NsHA+Q
-	XtiTj+/Evg95ko1C7xFikGRVhJzmGloIB52sdR7IlI+HLvScCCFLDiWY1TfKIeEt
-	8DKSyV94gGU3i6L2F9W20NesAkHxQ0pQYWJUv78lf1KLRm5QPDVah4kymp8i8v/A
-	nOKYKEfd8GGPvc1buNhyClEdWxK8QB+XYVq/3zIW2XljmwzgTT1+2Nr6PcQipYec
-	m3prXjsa06el5N5mrPlxRCfuOIUflmPrjAMUtRZJ7hoIRh0dEq2lKFQRsYSJFDT0
-	0QGZdwBwjfBSLAtjrozOQ==
-X-ME-Sender: <xms:c7H3Z8A-v8nGVvHbYY8kQClxVO8CiEW6mC45aKWiXeggwBVSdEkvMQ>
-    <xme:c7H3Z-hTxFl3tfKn44M3qxvts_QD9iNp_HZ8_5kcC_uEnmx8B_xH8Ct21vT-W1lzH
-    k6p07gCVOzZoXR3qg>
-X-ME-Received: <xmr:c7H3Z_mBOh1vaf89cOtm8ZlW4APCpCLlVvB8cf5QCwjHxoPLTzZrYD8OMpJlK_X-3O2ZiIKr0RgYnt3l3lP2B8SQp2tEbgih19VU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdekkeehucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744288780; x=1744375180; bh=6+FleJOZx67Fit97QmTvkq+6Uyhu5BiPdNt
+	cP1utmJA=; b=TQ896dBh15SrVTGlph0E+qEGmxmA71J8jHQ8RRJ9b1AHioclz92
+	QnyxkCX1s5vtlzC0qo62JLQllQvAO6dx4wVgDTQxbeuMlqG7McH2Ko9cSe/kv9G0
+	Gj/CA9EsCS0x+Rv3cOwMWtuY0Cu7SloaKqbL0w9n+FGVDseJe0ypysrYgZckamN1
+	1+N1Cg40vslLJu1XuC8WKDAM2atwoeQ2bWPBWRCo/4OF4zAdU5FrGT5OxoStZURt
+	pnWiaWgeyGvNeDd/tGIcY6jQxhjHcHUozPAXCUFGabD6h1hYLi0rVexj17zs8o67
+	Crfh32AvIk6dYwHqR0yPYbjFmTs+YkS6zow==
+X-ME-Sender: <xms:DLz3Z-bsb9oLj9oJvBrOKYtAQtEYDAOi-5H4shBsL1rQVeK6XvV3bQ>
+    <xme:DLz3ZxaefLBPUtYgScQwrOBbcK-ODG9zBGZBmmlCgSfpkfZDVeqFQx9dR7xe09ncF
+    _n7trDd1qKCwt2dsw>
+X-ME-Received: <xmr:DLz3Z49rv-IkbgFPLZ4t03FLGg2kGVn54JGBE_wIR4s73trY2lPsP-cGOZBGNpTJjANKgriuRBaY7ONwWsc6GtQ7w8COxNxmMSHJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdekleefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpefhtedvjeehudehgeelheefieevtdeg
-    leefvdfftdevtdduffeikeeiieejvdelhfenucffohhmrghinhepkhgvrhhnvghlrdhorh
-    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhi
-    thhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmh
-    htphhouhhtpdhrtghpthhtohepohhgohhnugiirgesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:c7H3Zyx5HgdsmCruSs454AM6VUvogtGW0Gug8CtgljhDlUvJhzxv_Q>
-    <xmx:c7H3ZxTkqoEC1hCqFApizFuUam4_l7uLC2u-81FQ3kajIN_r7nwwZQ>
-    <xmx:c7H3Z9awA9qIWgBRpc61vVQWEHi5oCfo7l_2-9kvAc2zZ7Lwms5-Kg>
-    <xmx:c7H3Z6QgWDDguRLIsDo15W9kpiXmYOA3utcYTkVuwIKAh3umU9-1eQ>
-    <xmx:c7H3Z6Ox4IOYNx9Ebx8bU80nlL8YFdcSlNl7naj-72AzfzZ-9clb05L->
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehsnhdtfedrghgvnhgvrhgrlhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:DLz3Zwqy2vSb3w3TyU4Bj2SAR0JYtD0LcRi1n4ie3ZynnnmC5k7tbA>
+    <xmx:DLz3Z5qOjsZ3FhUFxjbgpTFNbUhuM0SlO94Wgzvm9GywIA8IWChY3Q>
+    <xmx:DLz3Z-SvryHDw4tVd8o2E3xlXgqZ1I6foZh2a-sSq1-3UQJJVaof6g>
+    <xmx:DLz3Z5pNooCBmraa6oig_E1RhyD1KioOeB8qWVW-2rhYF0OcbYRklg>
+    <xmx:DLz3Z_T8YFratOFHu2319_ts-hQcuJlFhTBytGrJESYtIKyGroH6IBMl>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Apr 2025 07:54:27 -0400 (EDT)
+ 10 Apr 2025 08:39:40 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Oliver =?utf-8?Q?Gond=C5=BEa?= <ogondza@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFE] Add config option to always add --signoff to git commit
-In-Reply-To: <ac87b389-2bf8-4c2e-aecd-9e86f65ca8c1@gmail.com> ("Oliver
-	=?utf-8?Q?Gond=C5=BEa=22's?= message of "Thu, 10 Apr 2025 09:54:09 +0200")
-References: <ac87b389-2bf8-4c2e-aecd-9e86f65ca8c1@gmail.com>
-Date: Thu, 10 Apr 2025 04:54:25 -0700
-Message-ID: <xmqqo6x4p6z2.fsf@gitster.g>
+To: Subhaditya Nath <sn03.general@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  sunshine@sunshineco.com
+Subject: Re: [PATCH] t7422: fix extra printf argument, eliminate loops
+In-Reply-To: <20250409191139.29644-2-sn03.general@gmail.com> (Subhaditya
+	Nath's message of "Thu, 10 Apr 2025 00:41:11 +0530")
+References: <xmqqr021qkeh.fsf@gitster.g>
+	<20250409191139.29644-1-sn03.general@gmail.com>
+	<20250409191139.29644-2-sn03.general@gmail.com>
+Date: Thu, 10 Apr 2025 05:39:38 -0700
+Message-ID: <xmqqcydkp4vp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,15 +86,58 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Oliver Gondža <ogondza@gmail.com> writes:
+Subhaditya Nath <sn03.general@gmail.com> writes:
 
-> I appreciate any feedback. Thanks!
+> -		for i in $(test_seq 2000)
+> -		do
+> -			printf "[submodule \"sm-$i\"]\npath = recursive-submodule-path-$i\n" "$i" ||
+> -			return 1
+> -		done >gitmodules &&
+> +		printf "[submodule \"sm-%d\"]\npath = recursive-submodule-path-%d\n" \
+> +			$(test_seq 2000 | sed p) >gitmodules &&
+>  		BLOB=$(git hash-object -w --stdin <gitmodules) &&
+>  
+>  		printf "100644 blob $BLOB\t.gitmodules\n" >tree &&
+> -		for i in $(test_seq 2000)
+> -		do
+> -			printf "160000 commit $COMMIT\trecursive-submodule-path-%d\n" "$i" ||
+> -			return 1
+> -		done >>tree &&
+> +		printf "160000 commit $COMMIT\trecursive-submodule-path-%d\n" \
+> +			$(test_seq 2000) >>tree &&
+>  		TREE=$(git mktree <tree) &&
+>  
+>  		COMMIT=$(git commit-tree "$TREE") &&
 
-This is almost as old as Git itself.  Perhaps start from these places?
+Other than the cuteness value (in other words, "by rewriting this
+way, I can use this shiny fun feature `printf` has that I just
+learned about"), I do not see in what way(s) the updated code is
+better than what Eric picked as "most natural" among the four
+candidates you presented earlier.
 
-https://lore.kernel.org/git/Pine.LNX.4.63.0611281426311.30004@wbgn013.biozentrum.uni-wuerzburg.de/
-https://lore.kernel.org/git/7veiw69p26.fsf@gitster.siamese.dyndns.org/
-https://lore.kernel.org/git/cfa40ca5-98a1-fc9c-9ccc-f14b81119e60@gmail.com/
+If I am not mistaken, the `printf` utility tends to be implemented
+as a built-in in modern shells, so it is not like the above rewrite
+replaced 2000 fork+exec with a single fork+exec of /usr/bin/printf,
+so for those shells, there is no performance based argument to
+prefer it.  And with shells that do have to fork+exec
+/usr/bin/printf, the command line to invoke it once now uses about
+18k bytes with the current code that uses 2-thousand submodules.
+
+When somebody wants to extend the test to try with more submodules,
+at some point they need to start worring about hitting argv[] limit
+of the userspace-kernel interface, and at that point, it is likely
+that they have to go back to a for loop, doing something like
+
+	i=0
+	while test "$i" -le 200000
+	do
+		printf ... "$i" "$i"
+		i=$((i+1))
+	done
+
+Sorry for not spelling "I would not recommend going in that
+direction" in all caps in red letters in my earlier message.
+
+
