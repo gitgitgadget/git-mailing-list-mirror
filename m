@@ -1,115 +1,106 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A42172BD5
-	for <git@vger.kernel.org>; Thu, 10 Apr 2025 13:21:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30AAE2857F3
+	for <git@vger.kernel.org>; Thu, 10 Apr 2025 13:45:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744291301; cv=none; b=V98kzRVzefxTmuIqyyr+9RZ5Bcv5uwuUzLClW0TCVLDtrPeRGROKpCm8a7rF0BFQhlPjI6BPvzBgdWHH45DDurgDrltCIax5ernkzWRhakggVOQHJ9VLgBWwWw7c5rwpnrOoMssUC8BVM7hn8Du2OKEwLY63BqRENDXKI16bPE4=
+	t=1744292705; cv=none; b=p2xxXfh1Kh7EBZXnQcCjErUNgLlFBaB651JGhh8a8Ha51CXnO4WUD6PCB/yv6BVQCLxN6ClkldKfl+Y/Dk8KLSh9JX5I5MUdh7umS+kV9Z0PICujxfr6o7tInI9g+PtcFBRimsHEbBqABlqSpVlu7vSBj+nHGTKBla8RPFmBXPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744291301; c=relaxed/simple;
-	bh=eSZU5nR3sLYZzZSbKST/+kA48V9WAKcibca8IPSAWNI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=Bq+Njgx9NZlrVDKPl3TUOnoJCVMYz4AAraKYVdvESHabAihlEzilk2FRr/mr4gn8djXm0RLtZIW1uncN4l4MHkOPlOwKhzzr92E444yVkcM8EGFIdSOfub9RqpX60VXZJoGP0fO159wHuBQs1qQFynLkp/g2ygd+f0/Za4Nh5Rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quadrature.ai; spf=pass smtp.mailfrom=quadrature.ai; dkim=pass (2048-bit key) header.d=quadrature-ai.20230601.gappssmtp.com header.i=@quadrature-ai.20230601.gappssmtp.com header.b=BOLfzIZD; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quadrature.ai
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quadrature.ai
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quadrature-ai.20230601.gappssmtp.com header.i=@quadrature-ai.20230601.gappssmtp.com header.b="BOLfzIZD"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43edb40f357so7172505e9.0
-        for <git@vger.kernel.org>; Thu, 10 Apr 2025 06:21:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quadrature-ai.20230601.gappssmtp.com; s=20230601; t=1744291297; x=1744896097; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8Xm1A3JVtls8V9U94cT45fdVGLVTf/x1VhuW2m+S33U=;
-        b=BOLfzIZDnenOS2FdquHbH94PsKpEoJ8Fs4gCgDgX53e6dhY9/kF2coCcA4aaLKP/eT
-         WauOy2cqfvNBeOvVqsJx5kccV4XRfZAR/DGUO5r+AUziKhlLKRLsGsCKj/+cT4THHy8I
-         IRGWsjkXXKxcgdownBxeUlFWIMyxhWQZlA8p+Lb6Mkc1KvF7M+ac1tJVDjBnKkbh2oWi
-         IY4pQA/My377yNUy+UEDK7h3e9rgRamqwvy47jCXB27F6wdsbS1gI7WMEa/PjMnOTgx4
-         V348pRh7/U1ceWaf7Mj0HR5TqQv7llq/P/8J5KthqCC1CeY2Z1ez8FJoQ01x7UoQDO+y
-         jGYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744291297; x=1744896097;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8Xm1A3JVtls8V9U94cT45fdVGLVTf/x1VhuW2m+S33U=;
-        b=vVp7WQokkKnqTAUd+bjdaK0f+UUg9exKI5QlWCAU5hyqDPUGAaGRcUP+9I4cyBOIBE
-         zW5oYI9hXBtdwdXPoS18vRWg/XkFlvDVGK8xEbiJNBUSko5aYVUSS29PmrM25DlwdNa0
-         OIdOZd8ZSsJcJeS0r3nWL0i/B6h1SzntM5lL2nXbdQDbWL53VS64KcgY6VGokwpZl050
-         LoJE9J8pMwRRmsFkz6tg9Ob/8MW3oE1np3hveB8vyRK50/gSnUzNJEMiOedwlklFKifO
-         TT9y2pYx9kEvEclZVQRfEBd3tqjOjN5bdSn1lsoPu5Lz+wqxhRGB2wRgIvqf4PLWgDvY
-         Dqkw==
-X-Gm-Message-State: AOJu0Yx9YDie/uOtBq3yM4uxJrkViNWLQfMdqw43qwwt+tjceD/ay9eT
-	xLbr+cG9voF9fMBC8JVyljvSL2EpM9RjITF9XQ0bYWv7bg4CvH5B/8TqaXcB58UbEufu7Dz+d3G
-	DAVTsz4WPVxE3yphe8G+npY8mweQzLMdQgag+EjyGrE0txeFkagAx
-X-Gm-Gg: ASbGncv2KWiDT63sj5qjYYAD+/BH1aQW45+HAe/Es6+ihMpqN2NjHEsO+oRyzBegryx
-	fANrtYeB43pSYdkF9dKIUVZrjYY+CIbcdgmjSzTYa4AzoXS9xJIuOkY/IW9aX+a/2VgJwxZnA80
-	/nGzKh93t/bV2TtbGY5ZAue1nQzF31Lg==
-X-Google-Smtp-Source: AGHT+IE9cKrZurwbTEeHfmJRCWZ8hZgjOHpgLeKOM2Juxv1ngLkOWJNmQnxiQC/4TbABAx7WR+SkUHgYgY86ztU5NaE=
-X-Received: by 2002:a5d:64ae:0:b0:391:3bba:7f18 with SMTP id
- ffacd0b85a97d-39d8f27358cmr2232599f8f.12.1744291297286; Thu, 10 Apr 2025
- 06:21:37 -0700 (PDT)
+	s=arc-20240116; t=1744292705; c=relaxed/simple;
+	bh=KtFOVEDulxSUFzpRVJmuk+6Hg7wNWeXbF7JdjqcjHfk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lC16BdkR3D6VJggJGYzw/C9dHNQOqnS9pBwK3Dj6vQnxW0tr0N2NLHh9iNVgpuEysOyzg+R0sem0OUHnIZKIT3Rk9QYRIONPdUp7ZCiQFKxz4SjAfl0j1RdWUZd+/U7qDQCzCPDI6JBGqqumoYDC0eaIOx1Y5VKOgWh5vwCrBEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; arc=none smtp.client-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
+Received: from trampoline.thunk.org (pool-173-48-82-137.bstnma.fios.verizon.net [173.48.82.137])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 53ADiQTl031341
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 10 Apr 2025 09:44:27 -0400
+Received: by trampoline.thunk.org (Postfix, from userid 15806)
+	id 227552E00E9; Thu, 10 Apr 2025 09:44:26 -0400 (EDT)
+Date: Thu, 10 Apr 2025 09:44:26 -0400
+From: "Theodore Ts'o" <tytso@mit.edu>
+To: Nico Williams <nico@cryptonector.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+        Martin von Zweigbergk <martinvonz@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Edwin Kempin <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>,
+        remo@buenzli.dev,
+        "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
+ projects collaborating on change-id commit footer)
+Message-ID: <20250410134426.GB13132@mit.edu>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+ <xmqq4iyzn0vn.fsf@gitster.g>
+ <Z/RFQY433muaCW44@ubby>
+ <20250408125521.GA17892@mit.edu>
+ <Z/VGYrrVZYQ13TLj@ubby>
+ <20250409121924.GA148735@mit.edu>
+ <Z/amMj/eg0RbXdkS@ubby>
+ <xmqqv7rdqkla.fsf@gitster.g>
+ <Z/a+AVopz+HLa1eL@ubby>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPzgaL2Q4v0LMSek=osugTDCDww9D-Tg+tDsFhFvRSVXFR8g6Q@mail.gmail.com>
-In-Reply-To: <CAPzgaL2Q4v0LMSek=osugTDCDww9D-Tg+tDsFhFvRSVXFR8g6Q@mail.gmail.com>
-From: Nikolaus Rath <nikolaus@quadrature.ai>
-Date: Thu, 10 Apr 2025 14:21:01 +0100
-X-Gm-Features: ATxdqUEFYZxVi-BCanmKQ4cE9hAgv8yZdPcFOBzyD0gA0ypGycN2HrNJtzrmPDw
-Message-ID: <CAPzgaL1NH_GofMko6f2Auz4e1TjTJNH0w4-ph8np04QRfT_R7A@mail.gmail.com>
-Subject: 'safe.directory' setting ignored for some operations?
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z/a+AVopz+HLa1eL@ubby>
 
-Hello,
+On Wed, Apr 09, 2025 at 01:35:45PM -0500, Nico Williams wrote:
+> I was using file rename heuristics to explain that I wouldn't like more
+> of the same for other things; I was not trying to litigate renames.
+> 
+> I'm trying to litigate the _addition_ of more similarity-based
+> heuristics for _other_ things.
+> 
+> If similarity heuristics were enough for CR tools then none would have
+> introduced anything like change IDs.  Or perhaps CR tools authors have
+> been flat out wrong to not try or use similarity heuristics exclusively
+> over change IDs.  That's a topic worth discussing.  I've stated my
+> preference for not relying solely on similarity heuristics.
 
-It seems to me that the 'safe.directory = *' option is ignored for
-some operations:
+There is quite a lot of similarity between trying to record file names
+(and having the concept of "inode numbers" for files tracked by git),
+and the discussion we've had about how to track user intent when a
+commit gets split or merged, and having a "Change-ID" which exactly
+functions like an "inode number", except for an individual commit
+intead of a file.
 
----snip--
-$ git --version
-git version 2.43.0
+The arguments about why we don't have an "inode number" for files,
+because it *is* complicated and hard to getr right, are *precisely*
+the same argument for why I remmain unconvinced that having an "inode
+number" of the semantic idea of a commit (read: Change-Id).
 
-$ git config --get-all --show-scope safe.directory
-command *
+If you are someone who very much believes in the importance of doing
+per-commit Code Review using something like Gerrit, then you might
+think that a Change-ID is more *important* than an "inode number", and
+so it is therefore worth the greater amount of complexity and/or
+ambiguity when the Change-Id gets subject to the same levels of
+incorrectness that having the IDE track the user intent behind a file
+copy or rename might have.  That's a value judgement, and there's no
+real right answer here.
 
-$ git status -v --untracked=all --ignored
-HEAD detached at e116555
-[...]
-nothing to commit, working tree clean
+After all, there are still people, for example as seen on a thread on
+the The Unix Heritage Sociey mailing list, who have argued that git
+is a hot mess because we don't track file renames and copies the way
+"real" source code management systems like BitKeeper and Perforce does
+things.  I happen to disagree, but that's a value judgement about
+what's important in a SCM design.
 
-$ git clone -v --no-checkout --
-/builds/coreinfra/grafana_terraform/.git
-/builds/coreinfra/grafana_terraform/tmpus18hzbs
-Cloning into '/builds/coreinfra/grafana_terraform/tmpus18hzbs'...
-fatal: detected dubious ownership in repository at
-'/builds/coreinfra/grafana_terraform/.git'
-To add an exception for this directory, call:
+Regardless how we come out on whethe having an "inode number" for the
+high-level semantic value of a commit is worth it, I do think having a
+"patch set ID" which ties related commits together does make sense,
+though.  That would solve some interesting problems both for the
+web/forge review workflow as wel as the mailing list review workflow.
+I'd be curious what people might think about that.
 
-git config --global --add safe.directory
-/builds/coreinfra/grafana_terraform/.git
-fatal: Could not read from remote repository.
+Cheers,
 
-Please make sure you have the correct access rights
-and the repository exists.
----snip--
-
-
-Is this a known issue, or working as intended?
-
-(Without setting safe.directory, both `git status` and `git clone`
-fail as expected).
-
-Best,
--Nikolaus
-
--- 
-nikolaus@quadrature.ai
-https://quadrature.ai
-Dir: +44-20-8145-4726 Main: +44-20-3743-0400
-The Leadenhall Building, 122 Leadenhall Street, London, EC3V 4AB
+						- Ted
