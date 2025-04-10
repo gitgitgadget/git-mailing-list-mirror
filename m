@@ -1,205 +1,175 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479E628150C
-	for <git@vger.kernel.org>; Thu, 10 Apr 2025 11:23:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D371D89FD
+	for <git@vger.kernel.org>; Thu, 10 Apr 2025 11:30:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744284183; cv=none; b=Dmi+qPaw4nEQoMflW9q6/tS/bb4eLz4yiKLHoJm62KBNSG34jQPITmD/6wyxXolxYTIc1/mwQIn0+sZhotzX66QRmPxRDz/4ReBFSnz56WA/n6gmG2EgDulO3pr+rCcoMYOBOZsdovl0qqTDpqQmTHxwPDYCvgIz9HoQS58ARAw=
+	t=1744284647; cv=none; b=EQ2werd6Q597pbcBDiYonbUyPb4naLDmsbmrploPDs4jD4bs1yYyfQ1Mt9J9LQ5q61hZUqDSJOmO0StRRy6Q1hF6ka7uVWoUUpYB/1WTujGUMchMl/imjQQSI+/pVwmHmbgerX3IV25z8IrRMU2EKg69d3auJO5g6Mhj9EULG/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744284183; c=relaxed/simple;
-	bh=ADEUNep8kMEGj5VvYUMqdGu6RuCR684IR7+sx6Qb4ho=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sbOrMqW/TOY7WI5XwJQfJ+eGpas6+dfZ/k2Ve4w6uP371kXpKBjeHByOWMBQ9OGpv5SpAlT3fTMlocoUlqdJhEOd4FOKl/CKB2msmJ8BgZpPGnYf5Ki0RJEJ2/82FgxjoOb4QrsygUXCNi9obFvn2b1sFl9K8JAgBppC7+BC3fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dD/o9oCx; arc=none smtp.client-ip=209.85.222.51
+	s=arc-20240116; t=1744284647; c=relaxed/simple;
+	bh=sVfk6D6o4XeJSHAuLjCJ9kgCK8ZY3EC64ezupFFEJlk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=MRF3KSgC4md58kj04pas/CHT80zIqHrCpxI4w5xy5grnro/jFXRpsbioNGP/R+/A1UTh7WzTl8BgAKAdEkRXLDpv3N0yUclJMa2dDWWc83X/ftW77+R+4xptCMHSjdxPVPmQMHahRYw6fx9HFgSTx/coWwSkEmoqFlsmBe+z5PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XnLh4G1z; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dD/o9oCx"
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-86cce5dac90so286223241.0
-        for <git@vger.kernel.org>; Thu, 10 Apr 2025 04:23:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XnLh4G1z"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ac2bb7ca40bso140927566b.3
+        for <git@vger.kernel.org>; Thu, 10 Apr 2025 04:30:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744284181; x=1744888981; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vLVk0bgFPu5939A+0C7XnPomWj3zmaaTUYfQZREe2lo=;
-        b=dD/o9oCxyKan/6jyLloiKCDkf7Uzxg6+bm5UzxMbDlTd0jij3NpvlmXoeAzyr9LTTE
-         fwgKl+HUYs/Sz7q7ddMVgB8uG1NuyxG6LrkO6Hzq2AfamfJWDIf+sstK+ZZ6i476XH61
-         7E+d2iwv26WmkFPdYnn4PxUU0T+Ds1Ab3rUsC2yVTLmM5dTyhdu8m756n40JGsSCszhj
-         VehpjHZ+6UOSvhSM1792HkfntX8ymvsSMvnI93MN+mlT8fVUoDu8jTSSvBrSrYWRqwpd
-         +mNjcWTIOtX4ysu8n3wQ2fBQ1+GpWJV5KFkviMNKJAK5xtTG7T2txSDhEbwQPM3CuEST
-         sjGQ==
+        d=gmail.com; s=20230601; t=1744284644; x=1744889444; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OqOJTpKurNtF1nhSUXbtPK8cY7wAU2Y8/WbO0hzuuTo=;
+        b=XnLh4G1zUX2ncjV0zOrWU8xjMeMUeiN4eTXePB5IdsdhyseqpPxxQRNzlDWuH49msA
+         R6CUo3GCxbX0JiSIGQGYVBAxNnOO18wV7BxgWHFnLoKjaP2YW3LnrDMgym6OLuvwy0SQ
+         Ztyr6bSEJHeaVSpVx1eji9O4Bf/LQL/rPphNW7/hOwVBPYPMtYUssY9Y7JPM/yV/L/m7
+         2f7NW7FmUtS2/pB0x8WBwI57K7mEQotpgZvVgZz4jCIS8YMtt04H9s6pWk/LelfS9X1c
+         iQha4GVUfFOBcyvjeLG+ZC+tazdqtau22zfxHkEj+ErtxHMdl/XiQRCKetQ4zLw6/npk
+         va3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744284181; x=1744888981;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vLVk0bgFPu5939A+0C7XnPomWj3zmaaTUYfQZREe2lo=;
-        b=t11bAyyZPQoilB4T+2nuMEOfbUvtNGoRefxcvv2BPGr4+ARhBkh0c85AYvRFsyAerY
-         Yj+TSLfCPvDt9zbqyQe5MqAfXoNvF4jy3xJLHnz1HV2nUR34nf9uErnKvJeemZMlrZpa
-         ND9yb4pVAEefzuQXI0LVe3j37VSg4SpslMiff+YqOjAKphi+kr1CrwI4Ng409FQIvnu+
-         EnGTYm0AOvgE4XqFWIY4XkpmcsiqnO4Qbhg78flEvWqGXHrx09aeC4BRl2zr0kLZkZ5T
-         3cmffTBsqlGV0wAI8KEV2iJKeb6VC9nvaAhbZw1RP55k6uun3O+FUAlXTQT5E+wR2I5D
-         rUnw==
-X-Gm-Message-State: AOJu0YwjAKMUCy9vXc/gqdQEpmIwzGsGjSCeDmt4f65v0b+7NnexPsQm
-	DXRFanDqqa6pTBSudR2n0IyS9T14Okr+/oJ/VUvrEfsII5w5kIS7pSALCIMEAvzhPaJUDZ5j+nm
-	CwYzaoalvBb3jG2CjnDFWiS4Cfvw=
-X-Gm-Gg: ASbGncvOvhH7USHwB55or5vxM9MDUBriXN+qurnxb+xNWgYRFdZYnE2RMVCs8seLZRp
-	/1MAJl5r9bQem7Qh3F03reuH+bZt9mgiASUsHYAZoDmOJreN1FdR/LQi4H8WSjBBWjCNbc9tUG6
-	hkKv7tq7m00P8GfTxxFCj/h6ulSdK3e9t0dSLPbqqRcoymetHWEFCfQooRoaQaHDlaFQ==
-X-Google-Smtp-Source: AGHT+IHnFLdxWauRdqBxgmXmKpXPGiBGb5f/hXAefOZJWBgM7iKV+yzWb79K4z3rkq+jeRGY35NrurBp5zXyUuaM3U0=
-X-Received: by 2002:a05:6102:511f:b0:4bb:d062:447 with SMTP id
- ada2fe7eead31-4c9d34801b2mr1419276137.5.1744284180919; Thu, 10 Apr 2025
- 04:23:00 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 10 Apr 2025 04:23:00 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 10 Apr 2025 04:23:00 -0700
+        d=1e100.net; s=20230601; t=1744284644; x=1744889444;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
+         :message-id:date:subject:from:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OqOJTpKurNtF1nhSUXbtPK8cY7wAU2Y8/WbO0hzuuTo=;
+        b=lXnmUWvFycUusjMSczQMBDxSfQydgvUr+qTmX+REY242u85OrgYHIBCrc7KAPPgZC7
+         6ZxoEL7x8Zj1aaa7AmUCZvv9Fz4FjE4q8bvPJw85UEtkxtLnrJDv3m6GpcCO5x7N+3B5
+         6W8DgfEdph0AIaXDAD2KMvTcUGw8d9tc3jd1L6ulohdyfVPkmgaI0UKJ0xBDwl6kfWyp
+         WrvUVAO/Wio5taRO2YL7ISrtTzJ07BHY3WYnuBkPwK0QhLhG202IEcTqb1vwWDviMcPw
+         6vou7PGRaj4gFvZfxxLdBSdgErYMqZsTcMYmBDBU94pzUUzkSl7acD/ZDSRL5SZT+2ku
+         CNZQ==
+X-Gm-Message-State: AOJu0Yxz+3/qGNhrxFp7J2x+Qb26tN0nwMsntUKHSHeiVkNpkr5c/jif
+	ZgEP5cShCceMpnBWvgp0A/KTQSwG948uEnD3axFUBxgTgDR6PISHP0jQbXB7
+X-Gm-Gg: ASbGncvELgAJQSpn5W0J7fTlnFucbLflgQxgxRSiZmcewA2QaTSOgITGGUPZUJXi4nO
+	bVul7mfZalvSeV3qtp/q3UNgs9mNYtHGg/SkGuGmUUd81ASDlrqoIX+5fgOs/c8zQUxT9rMLbhO
+	QKTsJgKHOmHWXBkxCQbhi0rZwlF70CDQI+CRFeEUWKo1yQqjnwTqCIMLm23H4b0W0QWMvSCyYxb
+	67hH9jyM6ThzwcIlR45zQ+r3tfkImJxdHUKzxNqlKTZnjfqg2IqO3eyHDEKlo46BtcJmMTdp+j9
+	CP7Sby+BCjFreMWqgMQ+RRwPJVXo0CU4s3rSgiwDiku+Ug==
+X-Google-Smtp-Source: AGHT+IHW8WyYHXBsD1Wl9CidTuJxT2Y0pxJUTl7CufvwezdlEcwkprfZCaq8SGiTg6LkjaW6yMClLQ==
+X-Received: by 2002:a17:907:944e:b0:ac8:1bb3:35b0 with SMTP id a640c23a62f3a-acabd194ec9mr194490866b.20.1744284643735;
+        Thu, 10 Apr 2025 04:30:43 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:2455:8268:bc00:9936:e3af:b877:72d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acaa1bb3553sm260230666b.29.2025.04.10.04.30.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Apr 2025 04:30:43 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq7c3uy2ps.fsf@gitster.g>
-References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
- <20250408085120.614893-1-karthik.188@gmail.com> <20250408085120.614893-9-karthik.188@gmail.com>
- <xmqqfriiy9vh.fsf@gitster.g> <CAOLa=ZT4fOz1sd31EhyLGeyQzS6GO0aSYN0L4fdPALRixkD6xQ@mail.gmail.com>
- <xmqq7c3uy2ps.fsf@gitster.g>
+Subject: [PATCH v2 0/4] meson: add corresponding target for Makefile's
+ hdr-check
+Date: Thu, 10 Apr 2025 13:30:30 +0200
+Message-Id: <20250410-505-wire-up-sparse-via-meson-v2-0-acb45cc8a2e5@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 10 Apr 2025 04:23:00 -0700
-X-Gm-Features: ATxdqUF1HEMyt6CwdaroGTWv8HzPj79AqWMBTM2AufzRyWP5kvhk7qSMxAF3Q4g
-Message-ID: <CAOLa=ZQ2eTWbj18+QPp=pTAovPVAQVYwJC6_ZTuMvCU-oQOToA@mail.gmail.com>
-Subject: Re: [PATCH v6 8/8] update-ref: add --batch-updates flag for stdin mode
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, ps@pks.im, jn.avila@free.fr
-Content-Type: multipart/mixed; boundary="000000000000fe193606326acef8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANar92cC/33Nyw6CMBCF4Vcxs3ZML1SIK9/DsKgwwCRCSUerh
+ vDuVty7/M/iOwsIRSaB026BSImFw5TD7HfQDH7qCbnNDUYZp6xV6JTDJ0fCx4wy+yiEiT2OJGF
+ CQ9a0rdVGVVfIxByp49fGX+rcA8s9xPf2lvR3/cGFqv7DSaNCXRblkVxD3nbnfvR8OzRhhHpd1
+ w9h6s98yAAAAA==
+X-Change-ID: 20250330-505-wire-up-sparse-via-meson-2e32dd31208b
+In-Reply-To: <20250408-505-wire-up-sparse-via-meson-v1-0-17476e5cea3f@gmail.com>
+References: <20250408-505-wire-up-sparse-via-meson-v1-0-17476e5cea3f@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, jltobler@gmail.com, 
+ toon@iotcl.com
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3174; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=sVfk6D6o4XeJSHAuLjCJ9kgCK8ZY3EC64ezupFFEJlk=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGf3q+KXlFHjcjMT4DK2HY8p1eohTl8WKjtho
+ qRsHDOOnj2eN4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJn96viAAoJED7VnySO
+ Rox/tr4L/j6UojfmSGE5wMQT09mdRszbWJBxne2NbHOjnchEIxG+9guykiykX9gaVl4MuFAPjZe
+ UrVOzlx3CehlSlkShQmQyr4XwO86PDOUsjQRYYiRLgcIx8+kBDrjJh2BeuQbUOQz8lrN/k/amGY
+ xq2Ucs4W39tCvem9mpGyZeSqzQnQUVEwTcoGr9dRk+rHaO1DUtZJS/SfCbFUJI7yIU1nyGnAjVG
+ zy7+qwQlHlpARF0ooVzTqcrTUmEdFvKEgmGdl/6jTjv/AqhTVKMzN9Wm1aSOJqWQ3U7x1g0BdSS
+ itapnQxf6tfvl5nFVC1JM6eFm+Ct67HFKaRSMzkHGSJnjQjwZwiswJUq8zsLAcEvTB1VPJjDlY3
+ u372wPDkwtzWn+cpdkrAHacXLh1EwKXK/xO9QaUzp/j/CZDFa8NUHb+Clvy8Xnk15i0R2n95ZmX
+ iMEv4NCiF6iRkG9ycKz4TMLLsKJ2MYzYJwcacPKOfI5HYnyJxEbyM/1WpVgznakcWMPxd8lBiX4
+ KE=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
---000000000000fe193606326acef8
-Content-Type: text/plain; charset="UTF-8"
+To bridge the remaining gaps between Makefile and meson, this patch series adds
+'hdr-check' to meson to compliment the Makefile's 'hdr-check'.
 
-Junio C Hamano <gitster@pobox.com> writes:
+We also introduce 'headers-check' as an alias to 'hdr-check' as a better named 
+replacement in both meson and make and add a note to deprecate 'hdr-check' in
+the future.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Karthik Nayak <karthik.188@gmail.com> writes:
->>>
->>>> Content-Type: text/plain; charset=y
->>>
->>> Please don't ;-).
->>>
->>> More practically, is there something we can do to avoid this
->>> happening in send-email?  It may be a not-so-uncommon end user
->>> mistake that we would rather help our users avoid.
->>>
->>
->> This seems like this was in response to the following question:
->>      Which 8bit encoding should I declare [UTF-8]?
->>
->> Which I should have just clicked 'Enter' on, but typed 'y' as 'yes
->> please pick UTF-8'. Which again confirms the encoding, which I
->> presumably didn't read. So I guess the problem Exists Between Keyboard
->> and Chair.
->
-> OK, we have seen enough people got burned by 'y', and made 852a15d7
-> (send-email: ask confirmation if given encoding name is very short,
-> 2015-02-13) as a response exactly for that problem, but it is not
-> effective as we wished X-<.
->
+The first two commits are small cleanups, where we re-organize existing
+variables to make it easier to add the target. The third commit adds the
+'hdr-check' target to meson. The last commit introduces the 'headers-check'
+alias to both meson and the makefile and marks 'hdr-check' to be deprecated.
 
-I see.
+This is based on master 9d22ac5122 (The third batch, 2025-04-07) with
+'es/meson-build-skip-coccinelle' merged in.
 
-> If there were a better validation method than "4 bytes or longer" we
-> currently use for valid values for "charset=$auto_8bit_encoding", we
-> could lose confirm_only from the call to ask() that asks the
-> question, but I do not know if that is feasible.
->
-> Another more obvious alternative is to do something ugly like this
-> patch, I suppose?  Just like <ENTER> is taken as "I take the default
-> value presented", this makes yes<ENTER> mean the same thing.
->
-> There is one question that asks yes/no question with default set to
-> 'n', which would be broken by the patch below, so it needs a bit
-> more thought, though.
->
+---
+Changes in v2:
+- Add 'hdr-check' to meson, while introducing 'headers-check' as 
+  a replacement alias. Schedule 'hdr-check' to be deprecated in the future.
+- Link to v1: https://lore.kernel.org/r/20250408-505-wire-up-sparse-via-meson-v1-0-17476e5cea3f@gmail.com
 
-Yes, this would be an issue. I think what would be nice is perhaps an
-option like $yes_default.
+---
+ Makefile                       |   4 +-
+ ci/run-static-analysis.sh      |   2 +-
+ contrib/coccinelle/meson.build |  29 +++------
+ meson.build                    | 131 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 142 insertions(+), 24 deletions(-)
 
->  git-send-email.perl | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git c/git-send-email.perl w/git-send-email.perl
-> index 798d59b84f..8b942e5bcf 100755
-> --- c/git-send-email.perl
-> +++ w/git-send-email.perl
-> @@ -986,7 +986,8 @@ sub ask {
->  			print "\n";
->  			return defined $default ? $default : undef;
->  		}
-> -		if ($resp eq '' and defined $default) {
-> +		if (defined $default &&
-> +		    ($resp eq '' || $resp =~ /^y(?:es)$/i)) {
->  			return $default;
->  		}
->  		if (!defined $valid_re or $resp =~ /$valid_re/) {
+Karthik Nayak (4):
+      coccinelle: meson: rename variables to be more specific
+      meson: move headers definition from 'contrib/coccinelle'
+      meson: add support for 'hdr-check'
+      makefile/meson: add 'headers-check' as alias for 'hdr-check'
 
-Going on top of your patch, something like:
+Range-diff versus v1:
 
--->8--
+1:  aed80c7868 = 1:  c6493671b5 coccinelle: meson: rename variables to be more specific
+2:  cf2a8c50c2 = 2:  33e9b21bae meson: move headers definition from 'contrib/coccinelle'
+3:  938aac6573 ! 3:  b6be631165 meson: add support for 'headers-check'
+    @@ Metadata
+     Author: Karthik Nayak <karthik.188@gmail.com>
+     
+      ## Commit message ##
+    -    meson: add support for 'headers-check'
+    +    meson: add support for 'hdr-check'
+     
+         The Makefile supports a target called 'hdr-check', which checks if
+         individual header files can be independently compiled. Let's port this
+    -    functionality to meson, our new build system too.
+    -
+    -    Let's avoid the abbreviation and name the target 'headers-check', which
+    -    is easier to read.
+    -
+    -    The implementation resembles that of the Makefile and provides the same
+    -    check.
+    +    functionality to meson, our new build system too. The implementation
+    +    resembles that of the Makefile and provides the same check.
+     
+         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+     
+    @@ meson.build: endif
+     +    hco_targets += hco
+     +  endforeach
+     +
+    -+  alias_target('headers-check', hco_targets)
+    ++  alias_target('hdr-check', hco_targets)
+     +endif
+     +
+      foreach key, value : {
+-:  ---------- > 4:  d265cd97df makefile/meson: add 'headers-check' as alias for 'hdr-check'
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 798d59b84f..318699d26c 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -974,6 +974,7 @@ sub ask {
- 	my $valid_re = $arg{valid_re};
- 	my $default = $arg{default};
- 	my $confirm_only = $arg{confirm_only};
-+	my $yes_is_default = $arg{yes_is_default};
- 	my $resp;
- 	my $i = 0;
- 	my $term = term();
-@@ -989,6 +990,10 @@ sub ask {
- 		if ($resp eq '' and defined $default) {
- 			return $default;
- 		}
-+		if (defined $default and defined $yes_is_default
-+		    and $resp =~ /^y(?:es)$/i) {
-+			return $default;
-+		}
- 		if (!defined $valid_re or $resp =~ /$valid_re/) {
- 			return $resp;
- 		}
-@@ -1031,7 +1036,7 @@ sub file_declares_8bit_cte {
- 	}
- 	$auto_8bit_encoding = ask(__("Which 8bit encoding should I declare
-[UTF-8]? "),
- 				  valid_re => qr/.{4}/, confirm_only => 1,
--				  default => "UTF-8");
-+				  default => "UTF-8", yes_is_default => true);
- }
 
- if (!$force) {
+base-commit: 3a956c5f69873611ae5f8dcb9acd117f66b95ddc
+change-id: 20250330-505-wire-up-sparse-via-meson-2e32dd31208b
 
---000000000000fe193606326acef8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 967bd1746c93289f_0.1
+Thanks
+- Karthik
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mM3FoQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM1NoQy85ODlnbTRUdlRFN3VlYThEVlJ6T1orUGtJSwplSmNyb2xhV1M4
-OXlvZ2pHYWt3NE1GOXZVandIM3RWM1F4SWNFQzhVSWdlbzBCalY2RVo4ZHI1ZHpmRjF2ZHFECk43
-NDloZGgwQnQ5MDJoODA0OVQvZUJHRzA0dmtSNUh5RjlKYUZDTklxUnFtblNGVCtLZDQ1eHIvYjBM
-Z0Y5Sm0KcjhhY21xalo0TXpsQ1M4dGI3aGNQNWNlU3pUNmJ4dENobzZTaUs4a3ZQc3F3ZnpLUjBk
-NXd0T3FmZEJ5U1VZYQpkUnFHOXJvZGIyZXoyZnhXUFIyN0t3UDU0cTAxWHVTMzdMOXVvaWI5V1B0
-aFM0Q0Y0R1p3NmhScHRReUFyOWhiCkZxcWZ2bEV5YlB6Mkx1S1NFSkYwQ09CblNkR1ZNNzNyRlRJ
-Zjh0RlIxRWxZeExmSzBqZnJXcm1mS3BMREcyK1kKaWhyN0l6a0Jlc1VORVVsZFBqUU5TcEtvS0RW
-ajRTOTMyWHBJcWtNcmNKVlZQUlBncEU2aE8ybWkyZXN3Q09WMwpGM2MwR29rVFhwR2xoRGtnMXNC
-dkR4N3h2VGZJQUN0OU01WG11Q0M1OEk1R0NwQVEyTDhicFBlT2YyWEtKMGJ1CjZtMTN6YW9nVlNV
-NFNmRzRycUxTR3dPUlVQQmw0SEF3TW40bS9mZz0KPWw3RzEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000fe193606326acef8--
