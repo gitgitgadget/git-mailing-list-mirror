@@ -1,106 +1,127 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30AAE2857F3
-	for <git@vger.kernel.org>; Thu, 10 Apr 2025 13:45:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC93284B31
+	for <git@vger.kernel.org>; Thu, 10 Apr 2025 14:35:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744292705; cv=none; b=p2xxXfh1Kh7EBZXnQcCjErUNgLlFBaB651JGhh8a8Ha51CXnO4WUD6PCB/yv6BVQCLxN6ClkldKfl+Y/Dk8KLSh9JX5I5MUdh7umS+kV9Z0PICujxfr6o7tInI9g+PtcFBRimsHEbBqABlqSpVlu7vSBj+nHGTKBla8RPFmBXPU=
+	t=1744295721; cv=none; b=T4C6/CjHB4NY2Xpehg7g3cu65d9LG4iK+orBpoMZlMKs95iwtFjlo0x9DtHTiW0FCVcKkIRtxXA5PrXO1sIIdC9hdgEnhgtPufv+UUDjPOsH++bpI8A4Fn9aW+ZrdYM4IC9yQ50ZgQmEVj43ZlG5Xkh7E7c4i3trN8mLV9BB57Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744292705; c=relaxed/simple;
-	bh=KtFOVEDulxSUFzpRVJmuk+6Hg7wNWeXbF7JdjqcjHfk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lC16BdkR3D6VJggJGYzw/C9dHNQOqnS9pBwK3Dj6vQnxW0tr0N2NLHh9iNVgpuEysOyzg+R0sem0OUHnIZKIT3Rk9QYRIONPdUp7ZCiQFKxz4SjAfl0j1RdWUZd+/U7qDQCzCPDI6JBGqqumoYDC0eaIOx1Y5VKOgWh5vwCrBEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; arc=none smtp.client-ip=18.9.28.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
-Received: from trampoline.thunk.org (pool-173-48-82-137.bstnma.fios.verizon.net [173.48.82.137])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 53ADiQTl031341
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Apr 2025 09:44:27 -0400
-Received: by trampoline.thunk.org (Postfix, from userid 15806)
-	id 227552E00E9; Thu, 10 Apr 2025 09:44:26 -0400 (EDT)
-Date: Thu, 10 Apr 2025 09:44:26 -0400
-From: "Theodore Ts'o" <tytso@mit.edu>
-To: Nico Williams <nico@cryptonector.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-        Martin von Zweigbergk <martinvonz@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Edwin Kempin <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>,
-        remo@buenzli.dev,
-        "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
- projects collaborating on change-id commit footer)
-Message-ID: <20250410134426.GB13132@mit.edu>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <xmqq4iyzn0vn.fsf@gitster.g>
- <Z/RFQY433muaCW44@ubby>
- <20250408125521.GA17892@mit.edu>
- <Z/VGYrrVZYQ13TLj@ubby>
- <20250409121924.GA148735@mit.edu>
- <Z/amMj/eg0RbXdkS@ubby>
- <xmqqv7rdqkla.fsf@gitster.g>
- <Z/a+AVopz+HLa1eL@ubby>
+	s=arc-20240116; t=1744295721; c=relaxed/simple;
+	bh=vfj2Fx+09BSe5WB2VezzKcJ96e+419lV+yOqve/ZFrg=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=dnEIvt5bHRjYKTrlaAyZ0gtTuI9DYlZHUTwWjDXCabSXJNuEG881D5k/uD72f4Ic587cdek8IyR6Lz6Fez2uzEcjsVWf+z/SnmuP/+h2cWV5cEinbjIfIZORGainBksFDPcv6Wscil7zXbcEiaywOLfDEsiz+6gyCG1R/70fdvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BY6hy1rW; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BY6hy1rW"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5ed1ac116e3so1449992a12.3
+        for <git@vger.kernel.org>; Thu, 10 Apr 2025 07:35:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744295718; x=1744900518; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EbtMx/6n0g9/C878FnnEvN0vnD+xEJl0DWCZDGk+D2Y=;
+        b=BY6hy1rW4PT8ePCFCdHT0ywg1ISETgP1dZEOol3MMwiWR3KGjePxoZSz8iQWyszCuC
+         4KluzwzovB/WcdgD3fI+8YFQqwZ+a5gFrlbHM7cO0aLQdHkt19A5uKJK597dtFILputq
+         oXsS6hfZQ9/4dFDCYjzXmNsQQ5DYZzQ1M7u7FtEuSrunPa5FPH5Ti0VGpYlGB7GFR57b
+         EUczCo2GouwoM2H/BiDVdESQW567rXvmDGRADYUUenrC//CiYU9c6Y5VQRLNrBw8EGB+
+         1aJEaJJvtzS1I5xOvgaUAysNq7T7VLdyKf6+X1RssJd06j4QCNcpBWLFNVenhnCbM2WF
+         DCLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744295718; x=1744900518;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=EbtMx/6n0g9/C878FnnEvN0vnD+xEJl0DWCZDGk+D2Y=;
+        b=THWFI0DX18nb0/xTrAIYuXer2/X+41JCEMyO1GbM1oEDIpkry0TJjxCOMFFL7r13WM
+         r6G5pA5kber5F1K0WLG1m8EevK8DzXqPTDHsx30FSbM92+JfbA+y72KvIxfOC7k1ai3J
+         Y+D3gN8su9RRnpD2o2AHTgm3GjCYekOjYtvozCW2rJ+arQNCaWYmgVWfTW0XJHtlMIdU
+         U4Oxw7mgiTv1tjItt1bAbkK1Akts8jdeB1S0+OfUXMQZJE1Syt5Cm0pXWgqBGzawTfof
+         VvzPW37JE+dzHBs57xtdahElkLZnWj2+dgnPEn58jlB+p/yk8dDgIDfCrXPnuSOvp3Il
+         Z/og==
+X-Gm-Message-State: AOJu0YyyqEkKDs68o3opChHm6Coi1miMP0rAzEFnpD0fKgz2avIAgXyR
+	BQTZSd0ZopCdu8eykY00Svghwz0FELXtNX0KJtiKF3rkSckaaIABvRkxLQ==
+X-Gm-Gg: ASbGncvOoCMq8ZfOut7BZ9/0hzksLWw1Z5lWa1Ibc1sUrowCMUWhERdZphafv5c1Hop
+	a8iZgWtrrBggNrS1vPtIb1HKf3hDu2TcnzKWWWS0CgWozycvzDk5c1/tQfA/+LA+R3aHHI2+oQG
+	3aHB6WZLKqYXvbctfIBjoz3AN+v+pUiS2xoIyEpRdS3Pz0UaPpDNauGhwdRPct69BX2RShVyaT7
+	arSnd++kEY21e7xuOkLI8nDCKD76qOOdw92vYuEMph8LsuOFWr95DAtw3eNjfhOGSq5jUW9bn7d
+	zujNGFGjU7Dt6GNsiwMLMATJUuOjUwQiAVOHvZ4FaXPlAV1s0YKb702Eg8L618ZSv8say2HqyOc
+	gvlMtWiB12Nf/AtpIVsYifU6Lh55QqEBlcKc6O4KdcgHay0s6zvuC6tvz7w3cG3+aqKyOL3q6x5
+	AHeAyz
+X-Google-Smtp-Source: AGHT+IEbtFNcbdZwiMPha1J//oduc2c2P/eKw0zjA+DeYjEyGZdmPzSkonOL0RJj+yRUOoXtNBwthg==
+X-Received: by 2002:a05:6402:2385:b0:5f3:4197:9538 with SMTP id 4fb4d7f45d1cf-5f3419795bemr371309a12.13.1744295718013;
+        Thu, 10 Apr 2025 07:35:18 -0700 (PDT)
+Received: from ?IPV6:2a02:a466:6765:0:d250:99ff:fe32:d95d? (2a02-a466-6765-0-d250-99ff-fe32-d95d.fixed6.kpn.net. [2a02:a466:6765:0:d250:99ff:fe32:d95d])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f2fbc2d575sm2479932a12.46.2025.04.10.07.35.17
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Apr 2025 07:35:17 -0700 (PDT)
+Message-ID: <76edd34d-3fd1-437e-b8d3-7e64e99644a2@gmail.com>
+Date: Thu, 10 Apr 2025 16:35:17 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z/a+AVopz+HLa1eL@ubby>
+User-Agent: Mozilla Thunderbird
+Content-Language: nl, en-US
+To: git@vger.kernel.org
+From: Ludo Pulles <ludo.pulles@gmail.com>
+Subject: Bug: being stuck in rebase mode when accidently typing `git am`
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Apr 09, 2025 at 01:35:45PM -0500, Nico Williams wrote:
-> I was using file rename heuristics to explain that I wouldn't like more
-> of the same for other things; I was not trying to litigate renames.
-> 
-> I'm trying to litigate the _addition_ of more similarity-based
-> heuristics for _other_ things.
-> 
-> If similarity heuristics were enough for CR tools then none would have
-> introduced anything like change IDs.  Or perhaps CR tools authors have
-> been flat out wrong to not try or use similarity heuristics exclusively
-> over change IDs.  That's a topic worth discussing.  I've stated my
-> preference for not relying solely on similarity heuristics.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-There is quite a lot of similarity between trying to record file names
-(and having the concept of "inode numbers" for files tracked by git),
-and the discussion we've had about how to track user intent when a
-commit gets split or merged, and having a "Change-ID" which exactly
-functions like an "inode number", except for an individual commit
-intead of a file.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-The arguments about why we don't have an "inode number" for files,
-because it *is* complicated and hard to getr right, are *precisely*
-the same argument for why I remmain unconvinced that having an "inode
-number" of the semantic idea of a commit (read: Change-Id).
+1. Run `git init` in an empty directory, and commit once.
+2. Run `git am` and press Ctrl-C.
+3. Run `git status`. It will say: 'You are currently rebasing. (all 
+conflicts fixed: run "git rebase --continue")'.
+4. Run `git rebase --continue`
 
-If you are someone who very much believes in the importance of doing
-per-commit Code Review using something like Gerrit, then you might
-think that a Change-ID is more *important* than an "inode number", and
-so it is therefore worth the greater amount of complexity and/or
-ambiguity when the Change-Id gets subject to the same levels of
-incorrectness that having the IDE track the user intent behind a file
-copy or rename might have.  That's a value judgement, and there's no
-real right answer here.
+What did you expect to happen? (Expected behavior)
+I expected to go out of the rebase mode such that `git status` would 
+say: "nothing to commit, working tree clean"
 
-After all, there are still people, for example as seen on a thread on
-the The Unix Heritage Sociey mailing list, who have argued that git
-is a hot mess because we don't track file renames and copies the way
-"real" source code management systems like BitKeeper and Perforce does
-things.  I happen to disagree, but that's a value judgement about
-what's important in a SCM design.
+What happened instead? (Actual behavior)
+It outputs: "warning: could not read '.git/rebase-apply/head-name': File 
+does not exist."
+Moreover, you are in rebase mode forever, and you cannot escape from it!
 
-Regardless how we come out on whethe having an "inode number" for the
-high-level semantic value of a commit is worth it, I do think having a
-"patch set ID" which ties related commits together does make sense,
-though.  That would solve some interesting problems both for the
-web/forge review workflow as wel as the mailing list review workflow.
-I'd be curious what people might think about that.
+What's different between what you expected and what actually happened?
+Instead of going out of rebase mode (expected), you are still in rebase 
+mode and you cannot escape it (actual).
 
-Cheers,
+Anything else you want to add:
+`rmdir .git/rebase-apply` fixes the issue
 
-						- Ted
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.49.0
+cpu: x86_64
+built from commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.12.1
+OpenSSL: OpenSSL 3.4.1 11 Feb 2025
+zlib: 1.3.1
+uname: Linux 6.12.22-1-lts #1 SMP PREEMPT_DYNAMIC Tue, 08 Apr 2025 
+06:20:12 +0000 x86_64
+compiler info: gnuc: 14.2
+libc info: glibc: 2.41
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+
