@@ -1,143 +1,115 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D742853F8
-	for <git@vger.kernel.org>; Thu, 10 Apr 2025 12:39:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A42172BD5
+	for <git@vger.kernel.org>; Thu, 10 Apr 2025 13:21:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744288784; cv=none; b=dD4b4VTGwCJnJz2v7fTb304sYU9IGO/0xt0jG4bUrzokLjudNZ+eQ8bZBWdOEVoTP37SJ3iMGqH8m0TvqwM558HbhGqYklncbHeG+Kc7R/J7MjaojiL8TdW9CWeQomZqlajXu+JtIIvKnGF/XOfseFzzN1tYAPd0p0c7Vr/3a1o=
+	t=1744291301; cv=none; b=V98kzRVzefxTmuIqyyr+9RZ5Bcv5uwuUzLClW0TCVLDtrPeRGROKpCm8a7rF0BFQhlPjI6BPvzBgdWHH45DDurgDrltCIax5ernkzWRhakggVOQHJ9VLgBWwWw7c5rwpnrOoMssUC8BVM7hn8Du2OKEwLY63BqRENDXKI16bPE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744288784; c=relaxed/simple;
-	bh=OnlBiKt3MRUmSOMtD5umCn0ESadJpOoPtHFTOz5IMgw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QeDGbvIFVqY/Soc0cZG0GEOJ2mmg7KYucfMm8SQLwvbGsK6YF2EilLnDAQmb0idBVtatg6e11QvWEMgqb8rS4rap2ybSHCWtLZfyil9HjMp8ILceDOJRkuyo7RBMDkoPYUpx/KxFa/f4bjMjlkOm53mfI39Acz99yeaii+aCe34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gihc5rkc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TQ896dBh; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744291301; c=relaxed/simple;
+	bh=eSZU5nR3sLYZzZSbKST/+kA48V9WAKcibca8IPSAWNI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=Bq+Njgx9NZlrVDKPl3TUOnoJCVMYz4AAraKYVdvESHabAihlEzilk2FRr/mr4gn8djXm0RLtZIW1uncN4l4MHkOPlOwKhzzr92E444yVkcM8EGFIdSOfub9RqpX60VXZJoGP0fO159wHuBQs1qQFynLkp/g2ygd+f0/Za4Nh5Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quadrature.ai; spf=pass smtp.mailfrom=quadrature.ai; dkim=pass (2048-bit key) header.d=quadrature-ai.20230601.gappssmtp.com header.i=@quadrature-ai.20230601.gappssmtp.com header.b=BOLfzIZD; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quadrature.ai
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quadrature.ai
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gihc5rkc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TQ896dBh"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1627325401F4;
-	Thu, 10 Apr 2025 08:39:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 10 Apr 2025 08:39:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744288780; x=1744375180; bh=6+FleJOZx6
-	7Fit97QmTvkq+6Uyhu5BiPdNtcP1utmJA=; b=Gihc5rkc1WQxi18VvpbkgvS9o8
-	BOcOIjk3NJI52UFcyQkivHu9P2nTczga62OFCF98u852mlrxKisFXngGEX+6AScK
-	amoYipC6UCOTrZI//K1uyl5dwBeCPsPsCB99Vx3EvhX3u74Cj4Lj8JkLylzg76Qx
-	XOq6W+uPDRV/Wn5NI8dYQfpKiURc5hJHZvSoto5053w7aco44r/y7hQDlNVh2IKB
-	k1IthUqPL4YTbanfyMBnx2bq5q4gbjePuh/X3P0HqEe/Dem0Rh5q/0+kPukR3+Lv
-	a43gi55pf3k1ACIOaW2iBXQMfNIRoG+q5GUGi2Rh1TeqkalAJgGNPNOrBt8w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744288780; x=1744375180; bh=6+FleJOZx67Fit97QmTvkq+6Uyhu5BiPdNt
-	cP1utmJA=; b=TQ896dBh15SrVTGlph0E+qEGmxmA71J8jHQ8RRJ9b1AHioclz92
-	QnyxkCX1s5vtlzC0qo62JLQllQvAO6dx4wVgDTQxbeuMlqG7McH2Ko9cSe/kv9G0
-	Gj/CA9EsCS0x+Rv3cOwMWtuY0Cu7SloaKqbL0w9n+FGVDseJe0ypysrYgZckamN1
-	1+N1Cg40vslLJu1XuC8WKDAM2atwoeQ2bWPBWRCo/4OF4zAdU5FrGT5OxoStZURt
-	pnWiaWgeyGvNeDd/tGIcY6jQxhjHcHUozPAXCUFGabD6h1hYLi0rVexj17zs8o67
-	Crfh32AvIk6dYwHqR0yPYbjFmTs+YkS6zow==
-X-ME-Sender: <xms:DLz3Z-bsb9oLj9oJvBrOKYtAQtEYDAOi-5H4shBsL1rQVeK6XvV3bQ>
-    <xme:DLz3ZxaefLBPUtYgScQwrOBbcK-ODG9zBGZBmmlCgSfpkfZDVeqFQx9dR7xe09ncF
-    _n7trDd1qKCwt2dsw>
-X-ME-Received: <xmr:DLz3Z49rv-IkbgFPLZ4t03FLGg2kGVn54JGBE_wIR4s73trY2lPsP-cGOZBGNpTJjANKgriuRBaY7ONwWsc6GtQ7w8COxNxmMSHJ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdekleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopehsnhdtfedrghgvnhgvrhgrlhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
-    khhsrdhimhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:DLz3Zwqy2vSb3w3TyU4Bj2SAR0JYtD0LcRi1n4ie3ZynnnmC5k7tbA>
-    <xmx:DLz3Z5qOjsZ3FhUFxjbgpTFNbUhuM0SlO94Wgzvm9GywIA8IWChY3Q>
-    <xmx:DLz3Z-SvryHDw4tVd8o2E3xlXgqZ1I6foZh2a-sSq1-3UQJJVaof6g>
-    <xmx:DLz3Z5pNooCBmraa6oig_E1RhyD1KioOeB8qWVW-2rhYF0OcbYRklg>
-    <xmx:DLz3Z_T8YFratOFHu2319_ts-hQcuJlFhTBytGrJESYtIKyGroH6IBMl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Apr 2025 08:39:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Subhaditya Nath <sn03.general@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  sunshine@sunshineco.com
-Subject: Re: [PATCH] t7422: fix extra printf argument, eliminate loops
-In-Reply-To: <20250409191139.29644-2-sn03.general@gmail.com> (Subhaditya
-	Nath's message of "Thu, 10 Apr 2025 00:41:11 +0530")
-References: <xmqqr021qkeh.fsf@gitster.g>
-	<20250409191139.29644-1-sn03.general@gmail.com>
-	<20250409191139.29644-2-sn03.general@gmail.com>
-Date: Thu, 10 Apr 2025 05:39:38 -0700
-Message-ID: <xmqqcydkp4vp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=quadrature-ai.20230601.gappssmtp.com header.i=@quadrature-ai.20230601.gappssmtp.com header.b="BOLfzIZD"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43edb40f357so7172505e9.0
+        for <git@vger.kernel.org>; Thu, 10 Apr 2025 06:21:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=quadrature-ai.20230601.gappssmtp.com; s=20230601; t=1744291297; x=1744896097; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8Xm1A3JVtls8V9U94cT45fdVGLVTf/x1VhuW2m+S33U=;
+        b=BOLfzIZDnenOS2FdquHbH94PsKpEoJ8Fs4gCgDgX53e6dhY9/kF2coCcA4aaLKP/eT
+         WauOy2cqfvNBeOvVqsJx5kccV4XRfZAR/DGUO5r+AUziKhlLKRLsGsCKj/+cT4THHy8I
+         IRGWsjkXXKxcgdownBxeUlFWIMyxhWQZlA8p+Lb6Mkc1KvF7M+ac1tJVDjBnKkbh2oWi
+         IY4pQA/My377yNUy+UEDK7h3e9rgRamqwvy47jCXB27F6wdsbS1gI7WMEa/PjMnOTgx4
+         V348pRh7/U1ceWaf7Mj0HR5TqQv7llq/P/8J5KthqCC1CeY2Z1ez8FJoQ01x7UoQDO+y
+         jGYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744291297; x=1744896097;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8Xm1A3JVtls8V9U94cT45fdVGLVTf/x1VhuW2m+S33U=;
+        b=vVp7WQokkKnqTAUd+bjdaK0f+UUg9exKI5QlWCAU5hyqDPUGAaGRcUP+9I4cyBOIBE
+         zW5oYI9hXBtdwdXPoS18vRWg/XkFlvDVGK8xEbiJNBUSko5aYVUSS29PmrM25DlwdNa0
+         OIdOZd8ZSsJcJeS0r3nWL0i/B6h1SzntM5lL2nXbdQDbWL53VS64KcgY6VGokwpZl050
+         LoJE9J8pMwRRmsFkz6tg9Ob/8MW3oE1np3hveB8vyRK50/gSnUzNJEMiOedwlklFKifO
+         TT9y2pYx9kEvEclZVQRfEBd3tqjOjN5bdSn1lsoPu5Lz+wqxhRGB2wRgIvqf4PLWgDvY
+         Dqkw==
+X-Gm-Message-State: AOJu0Yx9YDie/uOtBq3yM4uxJrkViNWLQfMdqw43qwwt+tjceD/ay9eT
+	xLbr+cG9voF9fMBC8JVyljvSL2EpM9RjITF9XQ0bYWv7bg4CvH5B/8TqaXcB58UbEufu7Dz+d3G
+	DAVTsz4WPVxE3yphe8G+npY8mweQzLMdQgag+EjyGrE0txeFkagAx
+X-Gm-Gg: ASbGncv2KWiDT63sj5qjYYAD+/BH1aQW45+HAe/Es6+ihMpqN2NjHEsO+oRyzBegryx
+	fANrtYeB43pSYdkF9dKIUVZrjYY+CIbcdgmjSzTYa4AzoXS9xJIuOkY/IW9aX+a/2VgJwxZnA80
+	/nGzKh93t/bV2TtbGY5ZAue1nQzF31Lg==
+X-Google-Smtp-Source: AGHT+IE9cKrZurwbTEeHfmJRCWZ8hZgjOHpgLeKOM2Juxv1ngLkOWJNmQnxiQC/4TbABAx7WR+SkUHgYgY86ztU5NaE=
+X-Received: by 2002:a5d:64ae:0:b0:391:3bba:7f18 with SMTP id
+ ffacd0b85a97d-39d8f27358cmr2232599f8f.12.1744291297286; Thu, 10 Apr 2025
+ 06:21:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAPzgaL2Q4v0LMSek=osugTDCDww9D-Tg+tDsFhFvRSVXFR8g6Q@mail.gmail.com>
+In-Reply-To: <CAPzgaL2Q4v0LMSek=osugTDCDww9D-Tg+tDsFhFvRSVXFR8g6Q@mail.gmail.com>
+From: Nikolaus Rath <nikolaus@quadrature.ai>
+Date: Thu, 10 Apr 2025 14:21:01 +0100
+X-Gm-Features: ATxdqUEFYZxVi-BCanmKQ4cE9hAgv8yZdPcFOBzyD0gA0ypGycN2HrNJtzrmPDw
+Message-ID: <CAPzgaL1NH_GofMko6f2Auz4e1TjTJNH0w4-ph8np04QRfT_R7A@mail.gmail.com>
+Subject: 'safe.directory' setting ignored for some operations?
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Subhaditya Nath <sn03.general@gmail.com> writes:
+Hello,
 
-> -		for i in $(test_seq 2000)
-> -		do
-> -			printf "[submodule \"sm-$i\"]\npath = recursive-submodule-path-$i\n" "$i" ||
-> -			return 1
-> -		done >gitmodules &&
-> +		printf "[submodule \"sm-%d\"]\npath = recursive-submodule-path-%d\n" \
-> +			$(test_seq 2000 | sed p) >gitmodules &&
->  		BLOB=$(git hash-object -w --stdin <gitmodules) &&
->  
->  		printf "100644 blob $BLOB\t.gitmodules\n" >tree &&
-> -		for i in $(test_seq 2000)
-> -		do
-> -			printf "160000 commit $COMMIT\trecursive-submodule-path-%d\n" "$i" ||
-> -			return 1
-> -		done >>tree &&
-> +		printf "160000 commit $COMMIT\trecursive-submodule-path-%d\n" \
-> +			$(test_seq 2000) >>tree &&
->  		TREE=$(git mktree <tree) &&
->  
->  		COMMIT=$(git commit-tree "$TREE") &&
+It seems to me that the 'safe.directory = *' option is ignored for
+some operations:
 
-Other than the cuteness value (in other words, "by rewriting this
-way, I can use this shiny fun feature `printf` has that I just
-learned about"), I do not see in what way(s) the updated code is
-better than what Eric picked as "most natural" among the four
-candidates you presented earlier.
+---snip--
+$ git --version
+git version 2.43.0
 
-If I am not mistaken, the `printf` utility tends to be implemented
-as a built-in in modern shells, so it is not like the above rewrite
-replaced 2000 fork+exec with a single fork+exec of /usr/bin/printf,
-so for those shells, there is no performance based argument to
-prefer it.  And with shells that do have to fork+exec
-/usr/bin/printf, the command line to invoke it once now uses about
-18k bytes with the current code that uses 2-thousand submodules.
+$ git config --get-all --show-scope safe.directory
+command *
 
-When somebody wants to extend the test to try with more submodules,
-at some point they need to start worring about hitting argv[] limit
-of the userspace-kernel interface, and at that point, it is likely
-that they have to go back to a for loop, doing something like
+$ git status -v --untracked=all --ignored
+HEAD detached at e116555
+[...]
+nothing to commit, working tree clean
 
-	i=0
-	while test "$i" -le 200000
-	do
-		printf ... "$i" "$i"
-		i=$((i+1))
-	done
+$ git clone -v --no-checkout --
+/builds/coreinfra/grafana_terraform/.git
+/builds/coreinfra/grafana_terraform/tmpus18hzbs
+Cloning into '/builds/coreinfra/grafana_terraform/tmpus18hzbs'...
+fatal: detected dubious ownership in repository at
+'/builds/coreinfra/grafana_terraform/.git'
+To add an exception for this directory, call:
 
-Sorry for not spelling "I would not recommend going in that
-direction" in all caps in red letters in my earlier message.
+git config --global --add safe.directory
+/builds/coreinfra/grafana_terraform/.git
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+---snip--
 
 
+Is this a known issue, or working as intended?
+
+(Without setting safe.directory, both `git status` and `git clone`
+fail as expected).
+
+Best,
+-Nikolaus
+
+-- 
+nikolaus@quadrature.ai
+https://quadrature.ai
+Dir: +44-20-8145-4726 Main: +44-20-3743-0400
+The Leadenhall Building, 122 Leadenhall Street, London, EC3V 4AB
