@@ -1,89 +1,108 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9338C14D29B
-	for <git@vger.kernel.org>; Thu, 10 Apr 2025 19:29:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4722E62A7
+	for <git@vger.kernel.org>; Thu, 10 Apr 2025 21:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744313401; cv=none; b=WOMdA54ZYobR5LKdu8/ipDxPY/XmYRrGXPc9xLCErTblFVcmPOhIwwYEUhSqr0z9o+0xsIt+onQU+jv6G03+VEcnUJSX68B63IlRnIva54d3zVVzgEr5pcbeYThBT3O0BLCg1rlanftf/KZxmsq9jXqk35eYHJ1ZAXvC1fvO2qg=
+	t=1744320952; cv=none; b=iKC8fwhzyC5gj+xzbEGxkE3qyneH4MkzMIOErP3ybB/lUU3N9xIgB+nkJR8Pp29TqfXEcumJnT3zrZHdEG9xq+cK8z8a4/0eeHMvEmDUtG54zPslD0STmHIWhfQlLbfn4gnY0R22P2FZs/aK66I1r9uHtd0prPleRwW3SJMlWXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744313401; c=relaxed/simple;
-	bh=+R/FG2/lhdqDdvNPAP2I7cOYBM0buM99I2DVn+0moCM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=si8W7xwk/d6JsJ/k8FGQTLuXtP4Slw03NxKt3sKaJGVI87U/pIiqLJwMpAWNiLowaOfgYhqSYwfP1Ui0o0xlCGcDOssWWEuZdBQWcBa2vqEpURe/ZuoG8dTRl9AlMOlnLtj7L5xlOrNiLyonXZ2CbuhMo0O4vOB8P+n6vOaDb+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hsJv0udz; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744320952; c=relaxed/simple;
+	bh=SNxwfNGS6ViSqWDBFQMSoHddt9LH0Ic6g35oin+Au7Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cij65R/7TL5AmiCDLIQiTde/zyl7ne0DhJB2yp/oWHWCdtYY2zEq/R2aEsvQ6X7V7mIlRYL2H4dDhhx58xZ22BErzbwKU9RdpUKjWYQg2K0KeHXT0KwbGzeEReyb39L8iPkhEGJ5NaHN+6MO5k7pXkrJ48Mp7N1kOm9myKzl3tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ahiMMwDP; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hsJv0udz"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43cfecdd8b2so9627795e9.2
-        for <git@vger.kernel.org>; Thu, 10 Apr 2025 12:29:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744313398; x=1744918198; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TmRMo2v2Pq3g/5ezLLJPEkpc04cHrJVhnLjk/THhOOw=;
-        b=hsJv0udzkDm/a/VLQlg5PoLuQOI7dcrEcay7mIdBotrFPeUlhEtxgFV3ad7Y5cpFn3
-         y18e1RxOm/xH7fgZG+l7VP1nShCmudx9HuWeXf7W1m0vNd+shiZ75sCK9S5eILG21UFH
-         xRhNmDoMf3noVFrNZ5s7p/BBCY7ryh83s7VZnvXjP3IyUfhs0ceCnaQIgZdzsnRNQD4v
-         3CgUhn/jS0zqFwGqA1o4t6y3kEmumv104Lt2zMMEfnY+v7TZSxfZjZkIp1+dpKB3dR3a
-         Pyal9+9UzJucuK/WmRcPeev5QmD4y+XevyVtho3GduwZZ3HMkLW6OSPmtUOqav9/VFd8
-         T3uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744313398; x=1744918198;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TmRMo2v2Pq3g/5ezLLJPEkpc04cHrJVhnLjk/THhOOw=;
-        b=D+gjzvkRlLN5ZRua7+P7gFNnX/O23JJkI8QNZT9mXS6t6j2U7Kb+iQ5EcWdxXDDMN6
-         G4lkNRfU8eDlbXNcwfm+ujbEBQsOotlgSlCPF/ffhCBLyrbgmOsfGllLyXItBSPz0vB5
-         e/Fe0iRZEb2L/gE9wKNhmPb+03KGKCT7yOyM0eG+Dp+pIKs3N+ODsF4cQAwY0yPKFzj2
-         MM+SqhmBFQWll2zeNev6L6aTqXJaP6cnebjz4haP+7CVy1VGYbEMBDqm0VfULHQObTgt
-         CGbuAFLEckep+rw8yzkaHDknGSYTqOzoaP+bnQplJ7YC4cFIIrpLswaX82Cw88uZKA8i
-         fvfA==
-X-Forwarded-Encrypted: i=1; AJvYcCV1Ei0jnENX6YxBakMYFKal5lpeZOGfjnIfE3pCvhctXFex/hvMovBK+CpwEOmF1k9HarM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmY4P5DKcPbxZnkBWNskjnrIt3Kk2qqFY0AcJcYRkxpNuf5Kuc
-	H1nSukDmFIFnVCRe4fmYcHwrnc7LMNr5nByhpyjsUTD22B78yDQScLwyWJNptGTiqgpZgUA0Adw
-	xkoF9AayRB0y1HxhDjT+14m2x8EU=
-X-Gm-Gg: ASbGncs9iRQOMNl3BzHTVDACFg3c+BKyssPWJ3MuChYHz3Xh9oGUYS+QW410F8aNzbw
-	F0ObkIF4HxVu2GlfEPEnoTQzt8zovDcXzTDD5aCAUacxW42LS8smStIheaz+JQgJva/j9Uq5Jy2
-	11Rlv4CELEe72n3aQk51pISw==
-X-Google-Smtp-Source: AGHT+IGHjrv9TXGGoZJgmf+yZkQpMEnUASRfIinEpF2fq1L5DPVQQhPpn2tt0rjVhNo7aBFmivU7eFjf81sTdS93HH0=
-X-Received: by 2002:a05:600c:5024:b0:43d:98e7:38dc with SMTP id
- 5b1f17b1804b1-43f2fdcd11cmr36300045e9.5.1744313397637; Thu, 10 Apr 2025
- 12:29:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ahiMMwDP"
+Received: (qmail 30222 invoked by uid 109); 10 Apr 2025 21:35:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=SNxwfNGS6ViSqWDBFQMSoHddt9LH0Ic6g35oin+Au7Y=; b=ahiMMwDPlZ2YypHgxeHjMCYmLYh3TsyMU5MGtZTSLBOJLdKVzmE4JpH6RrE7FuEil5VjIikiTDqW74ZC+0royuRYQCS6FBnvJoEjDKybdbs+nbpbuSzVOHbbDe8uGynHqKyOdXT6EmEJnX28UKTeq9bGnENo6NuiA7GjXkcL0iTsATP+fbGvxxSiJ2m30EaSgSNmJw87bGxOzQEGKNEjqlyh+uC4FHVM8fFh4R2o3KXceIsaiBa5rNepBvOs9K/hzy+fqsQFkX3qQTihTOkFCSdRo4hxDal5uhPVFEbsqMylM99qAXjRSPuqprWwjNCA7+GrSWjMxeuKMpoHMjvSVA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Apr 2025 21:35:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17093 invoked by uid 111); 10 Apr 2025 21:35:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Apr 2025 17:35:42 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 10 Apr 2025 17:35:42 -0400
+From: Jeff King <peff@peff.net>
+To: Nikolaus Rath <nikolaus@quadrature.ai>
+Cc: git@vger.kernel.org
+Subject: Re: 'safe.directory' setting ignored for some operations?
+Message-ID: <20250410213542.GA3168175@coredump.intra.peff.net>
+References: <CAPzgaL2Q4v0LMSek=osugTDCDww9D-Tg+tDsFhFvRSVXFR8g6Q@mail.gmail.com>
+ <CAPzgaL1NH_GofMko6f2Auz4e1TjTJNH0w4-ph8np04QRfT_R7A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAArAzAoU9qDj+yLi3pA6wFYdTAk0UvQk4omSWM1RL4D9w5fw_w@mail.gmail.com>
- <Z-29LsgDvcS0qY5a@tapette.crustytoothpaste.net> <Z-8K9ZIt4j_UMNZm@tapette.crustytoothpaste.net>
- <CAArAzAr+YPwVXJo8mjkyQG8uWv=wt89tYyp6TL-rNzvwVYm9YA@mail.gmail.com> <Z--Kz4jsRzm4VSZd@tapette.crustytoothpaste.net>
-In-Reply-To: <Z--Kz4jsRzm4VSZd@tapette.crustytoothpaste.net>
-From: Andrej Zhilenkov <azhilenkov@gmail.com>
-Date: Fri, 11 Apr 2025 00:29:46 +0500
-X-Gm-Features: ATxdqUFYiDpdZ69CESTx4ZY9cudzyVWJ_x6Gc0HJisd8i_X3Qw4ByfG7Bcb8Qao
-Message-ID: <CAArAzArGWE8S2gjvueS+fQ9c56mbzrRV5=0V8SaSX1NUMSXDSg@mail.gmail.com>
-Subject: Re: Update symlinks after changing core.symlinks
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Andrej Zhilenkov <azhilenkov@gmail.com>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPzgaL1NH_GofMko6f2Auz4e1TjTJNH0w4-ph8np04QRfT_R7A@mail.gmail.com>
 
-> Ah, there I disagree.  I think if you have privileges to create
-> symlinks, you probably want them to always be enabled, and if not, you
-> don't really have a choice and they'll be disabled.  My experience with
-> using repositories with symbolic links is that typically they don't
-> function at all (or, if the maintainer has taken great care, only with
-> greatly reduced functionality) if the symlinks are missing.  I think
-> Git's repository is by far the exception here.
+On Thu, Apr 10, 2025 at 02:21:01PM +0100, Nikolaus Rath wrote:
 
-I personally agree that everyone should just enable them globally if
-they can. Still, maybe it's just me, but I don't like proposing global
-changes to users when they need it just for some repo.
+> It seems to me that the 'safe.directory = *' option is ignored for
+> some operations:
+> 
+> ---snip--
+> $ git --version
+> git version 2.43.0
+> 
+> $ git config --get-all --show-scope safe.directory
+> command *
 
-And also, I keep seeing Windows users having `git config --local
-core.symlinks` set to `false` (God knows why - in theory Git for
-Windows suppose to set `--system core.symlinks` to `false`, `--local`
-shouldn't be affected by this) and just setting `--local` helps
-covering those cases too.
+You're getting "command" here, but I don't see any "-c". Presumably
+you're setting GIT_CONFIG_* in the environment yourself?
+
+> $ git status -v --untracked=all --ignored
+> HEAD detached at e116555
+> [...]
+> nothing to commit, working tree clean
+
+You don't show us the repo here, but presumably this is one you don't
+own, and the config is working as expected to allow the operation to
+proceed.
+
+> $ git clone -v --no-checkout --
+> /builds/coreinfra/grafana_terraform/.git
+> /builds/coreinfra/grafana_terraform/tmpus18hzbs
+> Cloning into '/builds/coreinfra/grafana_terraform/tmpus18hzbs'...
+> fatal: detected dubious ownership in repository at
+> '/builds/coreinfra/grafana_terraform/.git'
+> To add an exception for this directory, call:
+> 
+> git config --global --add safe.directory
+> /builds/coreinfra/grafana_terraform/.git
+> fatal: Could not read from remote repository.
+> 
+> Please make sure you have the correct access rights
+> and the repository exists.
+
+Here you are running afoul of the environment-clearing that happens when
+Git internally "switches" to another repo. The "clone" command is run in
+your newly-made repo (which is "safe"), but it would then run
+"git-upload-pack" in the remote repo to act as the server side. We clear
+out many Git-related environment variables when switching between
+variables, including GIT_CONFIG_*.
+
+  Side note: clearing out the config has been a subject of debate over
+  the years, but one of the main reasons we do it is to be consistent
+  with non-local transports, which do not pass environment variables at
+  all. Which is good for some config, but can be annoying for others, as
+  seen here.
+
+So I think things are working as intended. You can get around it with
+either of these:
+
+  - set the config in your user ~/.gitconfig, which will be read by the
+    child upload-pack command
+
+  - tell clone to pass the config to upload-pack, like:
+
+     git clone -u 'git -c safe.directory="*" upload-pack' ...
+
+-Peff
