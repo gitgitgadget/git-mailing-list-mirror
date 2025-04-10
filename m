@@ -1,115 +1,89 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589CA19DF99
-	for <git@vger.kernel.org>; Thu, 10 Apr 2025 19:24:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9338C14D29B
+	for <git@vger.kernel.org>; Thu, 10 Apr 2025 19:29:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744313071; cv=none; b=Wzkxcm2RFjUsUW8QDv+0RLG0shSKgLrrsMDQRYT3jCZWz3dzXanQz+QETyAnUvldvyVtjWixFMF8eyQiKigRr/zg1gG5QP/xfhhurEg92YilGpAsN6sNaUK8tszi/zj6GbX97x2xfPzR/uNY2eixlMi9CyFwBzXYiId93cyWgM8=
+	t=1744313401; cv=none; b=WOMdA54ZYobR5LKdu8/ipDxPY/XmYRrGXPc9xLCErTblFVcmPOhIwwYEUhSqr0z9o+0xsIt+onQU+jv6G03+VEcnUJSX68B63IlRnIva54d3zVVzgEr5pcbeYThBT3O0BLCg1rlanftf/KZxmsq9jXqk35eYHJ1ZAXvC1fvO2qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744313071; c=relaxed/simple;
-	bh=+TKuoqX4znCLY4GodHD8L8cjri17ZT0QIsnNHkf34Ec=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fGgqrf8BxXWoT10JZjVOI1aH6H7S1vz86rLPfWhzCvivqYralIaPlDBT7j+OoF0SPC4StKyReRcM/ow3iQlsW648Re5N6LucP8mR3zUH/apZt8OP8f1sWyGbcSYWniKldbT2/UE0Dw+J1QRNcLpsx7o85juAqktKbNIxxPYswfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G5xceaJD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EJVS0DZU; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744313401; c=relaxed/simple;
+	bh=+R/FG2/lhdqDdvNPAP2I7cOYBM0buM99I2DVn+0moCM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=si8W7xwk/d6JsJ/k8FGQTLuXtP4Slw03NxKt3sKaJGVI87U/pIiqLJwMpAWNiLowaOfgYhqSYwfP1Ui0o0xlCGcDOssWWEuZdBQWcBa2vqEpURe/ZuoG8dTRl9AlMOlnLtj7L5xlOrNiLyonXZ2CbuhMo0O4vOB8P+n6vOaDb+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hsJv0udz; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G5xceaJD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EJVS0DZU"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4E01F1380147;
-	Thu, 10 Apr 2025 15:24:28 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 10 Apr 2025 15:24:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744313068; x=1744399468; bh=vnPScDGIdq
-	w4QOGvRm0nbjD8pYdqqQddwT/wk5aWu9M=; b=G5xceaJDA8E5DEspZVTvAXKHou
-	TW9CQVhSIWh1YvIag4Del7e0gWov1ScAzvXeuw1o2uj3F/OrOFvNs+TqxS6F6Fno
-	eLtmFueRj8sMq9zGb3wqegEqraNhTNRZo/F4a1YHjfe3nehleg2p80wQ+7lcBJZ4
-	Vr/F1faovR7BTUV0oorDxc5FJ4BfIabamfG0Hhfg4kk2diNC4PCxFjlqS5ux1Qc3
-	7JWBwVRqo59nHYFVLC10vT7halpRvHXzBjEtaCTj6zQvscz4VQRjQpeKRKUnmD2l
-	wboG+Gst0YMJEvlQEkTXyUNhRGKxAlBConpIjLqBrbW3twI5MpLt0epdWyug==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744313068; x=1744399468; bh=vnPScDGIdqw4QOGvRm0nbjD8pYdqqQddwT/
-	wk5aWu9M=; b=EJVS0DZU4OEY4THjUfAE6ZSNdCj81Vr6tWTz4dpIjUVIp6kT3mv
-	P7ehdlTaXoITV6usGS3c3B4cqW8tQPezt5OhIPQtvWs0bF7gRfouf7s3wza9jk88
-	kb+k9INK7knBfH3Z/vLJCuVLXsb4RPC7qb5J5VyMA4Sc7jMaukoLx5iTydiKz9SW
-	PwiiZ+Q/Ip9BKpaZYxQAibAXbBAZtZkC9bvODIkMsQjJK0hJCiW55YsxA45d6qIt
-	l2zJqVEhVlpNm5gr6ig7TeGTK+TgvrPKhoTnfj35LN2TWb0jsIl2zPsCXnuLpA9m
-	kPtcAslaamellhQmsfUkoLY16jrUt3Q9wfw==
-X-ME-Sender: <xms:7Br4Z_rtLqJeMEl6Hz_-cOeOuUBkj8FkhTK3dLUxTSbhyrkd-E9sIg>
-    <xme:7Br4Z5oLOK5ZYOOj2Z_vEsbEu_2mLCL4HgFpJaGZfZTLG6jLAbeOTh_bkJbqZUir2
-    iznHhBGd4DSK3u6HA>
-X-ME-Received: <xmr:7Br4Z8Okob0kWROrwPUGfJbynAYPkxbYcUWDNpkKeoUYGS_XLsqvO6mtbgWZTLQQS62QPrNkczKCAM8JugIFkLsRYZf6KTakNsFu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdeljeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhhoshhsrdhgoh
-    hluggsvghrghesphhrohhtohhnrdhmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:7Br4Zy7FgTopAdS8s_cx88N8KzeLeAGPJcwIc8Q11iMGq9krXD8Gsg>
-    <xmx:7Br4Z-4MFGd1AX2wDm8zmGXXa3stOdxA2Xb-hTv52UPTbeNjcILxhw>
-    <xmx:7Br4Z6jxdbdX6gZXeUEjTZqrpMshKRaw4Z0FgfmOS7HupCujwE2A3g>
-    <xmx:7Br4Zw5m0v358O2sMfZfd6AsL51Nsp45avH5383qxYa26_oJT8iQkg>
-    <xmx:7Br4Z__K7XXNli_dTvlgwhbLzdkIIZjbrTpGKWUzcPpbX1KlouTYuHhc>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Apr 2025 15:24:27 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ross Goldberg <ross.goldberg@proton.me>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Command whose exit code indicates clean or dirty working directory
-In-Reply-To: <jreR52go49E9pIfAmIdRaoqIgKnVV7uOhR4Mbl9_p2dLG_7mPgO8qsUk7CaWC0nGbJD-2F4nGdQ8X65UtIQ5XOBNQXXzrnHnKbOCLCfEil0=@proton.me>
-	(Ross Goldberg's message of "Thu, 10 Apr 2025 17:49:23 +0000")
-References: <jreR52go49E9pIfAmIdRaoqIgKnVV7uOhR4Mbl9_p2dLG_7mPgO8qsUk7CaWC0nGbJD-2F4nGdQ8X65UtIQ5XOBNQXXzrnHnKbOCLCfEil0=@proton.me>
-Date: Thu, 10 Apr 2025 12:24:26 -0700
-Message-ID: <xmqqlds7om51.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hsJv0udz"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43cfecdd8b2so9627795e9.2
+        for <git@vger.kernel.org>; Thu, 10 Apr 2025 12:29:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744313398; x=1744918198; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TmRMo2v2Pq3g/5ezLLJPEkpc04cHrJVhnLjk/THhOOw=;
+        b=hsJv0udzkDm/a/VLQlg5PoLuQOI7dcrEcay7mIdBotrFPeUlhEtxgFV3ad7Y5cpFn3
+         y18e1RxOm/xH7fgZG+l7VP1nShCmudx9HuWeXf7W1m0vNd+shiZ75sCK9S5eILG21UFH
+         xRhNmDoMf3noVFrNZ5s7p/BBCY7ryh83s7VZnvXjP3IyUfhs0ceCnaQIgZdzsnRNQD4v
+         3CgUhn/jS0zqFwGqA1o4t6y3kEmumv104Lt2zMMEfnY+v7TZSxfZjZkIp1+dpKB3dR3a
+         Pyal9+9UzJucuK/WmRcPeev5QmD4y+XevyVtho3GduwZZ3HMkLW6OSPmtUOqav9/VFd8
+         T3uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744313398; x=1744918198;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TmRMo2v2Pq3g/5ezLLJPEkpc04cHrJVhnLjk/THhOOw=;
+        b=D+gjzvkRlLN5ZRua7+P7gFNnX/O23JJkI8QNZT9mXS6t6j2U7Kb+iQ5EcWdxXDDMN6
+         G4lkNRfU8eDlbXNcwfm+ujbEBQsOotlgSlCPF/ffhCBLyrbgmOsfGllLyXItBSPz0vB5
+         e/Fe0iRZEb2L/gE9wKNhmPb+03KGKCT7yOyM0eG+Dp+pIKs3N+ODsF4cQAwY0yPKFzj2
+         MM+SqhmBFQWll2zeNev6L6aTqXJaP6cnebjz4haP+7CVy1VGYbEMBDqm0VfULHQObTgt
+         CGbuAFLEckep+rw8yzkaHDknGSYTqOzoaP+bnQplJ7YC4cFIIrpLswaX82Cw88uZKA8i
+         fvfA==
+X-Forwarded-Encrypted: i=1; AJvYcCV1Ei0jnENX6YxBakMYFKal5lpeZOGfjnIfE3pCvhctXFex/hvMovBK+CpwEOmF1k9HarM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwmY4P5DKcPbxZnkBWNskjnrIt3Kk2qqFY0AcJcYRkxpNuf5Kuc
+	H1nSukDmFIFnVCRe4fmYcHwrnc7LMNr5nByhpyjsUTD22B78yDQScLwyWJNptGTiqgpZgUA0Adw
+	xkoF9AayRB0y1HxhDjT+14m2x8EU=
+X-Gm-Gg: ASbGncs9iRQOMNl3BzHTVDACFg3c+BKyssPWJ3MuChYHz3Xh9oGUYS+QW410F8aNzbw
+	F0ObkIF4HxVu2GlfEPEnoTQzt8zovDcXzTDD5aCAUacxW42LS8smStIheaz+JQgJva/j9Uq5Jy2
+	11Rlv4CELEe72n3aQk51pISw==
+X-Google-Smtp-Source: AGHT+IGHjrv9TXGGoZJgmf+yZkQpMEnUASRfIinEpF2fq1L5DPVQQhPpn2tt0rjVhNo7aBFmivU7eFjf81sTdS93HH0=
+X-Received: by 2002:a05:600c:5024:b0:43d:98e7:38dc with SMTP id
+ 5b1f17b1804b1-43f2fdcd11cmr36300045e9.5.1744313397637; Thu, 10 Apr 2025
+ 12:29:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAArAzAoU9qDj+yLi3pA6wFYdTAk0UvQk4omSWM1RL4D9w5fw_w@mail.gmail.com>
+ <Z-29LsgDvcS0qY5a@tapette.crustytoothpaste.net> <Z-8K9ZIt4j_UMNZm@tapette.crustytoothpaste.net>
+ <CAArAzAr+YPwVXJo8mjkyQG8uWv=wt89tYyp6TL-rNzvwVYm9YA@mail.gmail.com> <Z--Kz4jsRzm4VSZd@tapette.crustytoothpaste.net>
+In-Reply-To: <Z--Kz4jsRzm4VSZd@tapette.crustytoothpaste.net>
+From: Andrej Zhilenkov <azhilenkov@gmail.com>
+Date: Fri, 11 Apr 2025 00:29:46 +0500
+X-Gm-Features: ATxdqUFYiDpdZ69CESTx4ZY9cudzyVWJ_x6Gc0HJisd8i_X3Qw4ByfG7Bcb8Qao
+Message-ID: <CAArAzArGWE8S2gjvueS+fQ9c56mbzrRV5=0V8SaSX1NUMSXDSg@mail.gmail.com>
+Subject: Re: Update symlinks after changing core.symlinks
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Andrej Zhilenkov <azhilenkov@gmail.com>, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Ross Goldberg <ross.goldberg@proton.me> writes:
+> Ah, there I disagree.  I think if you have privileges to create
+> symlinks, you probably want them to always be enabled, and if not, you
+> don't really have a choice and they'll be disabled.  My experience with
+> using repositories with symbolic links is that typically they don't
+> function at all (or, if the maintainer has taken great care, only with
+> greatly reduced functionality) if the symlinks are missing.  I think
+> Git's repository is by far the exception here.
 
-> If the simplest such command is complex, is there any feature request to create a simple
-> command, possibly with options that specify what is considered dirty (staged diffs,
-> unstaged diffs, untracked & not ignored, etc.)?
+I personally agree that everyone should just enable them globally if
+they can. Still, maybe it's just me, but I don't like proposing global
+changes to users when they need it just for some repo.
 
-With the "possibly with options" part, I doubt there is.  Once you
-start having to specify options, you admit that the problem space is
-no longer simple.  Depending on occasion, you would be caring
-different kind of cleanliness.
-
-If you want to know if there are changes added to the index, "git
-diff --cached --quiet" would be a way to ask about it.  If you want
-to know if there are changes in the working tree relative to the
-index, "git diff --quiet" would be a way to ask about it.  If you
-want to know if there are changes in the working tree relative to
-the HEAD commit, "git diff --quiet HEAD" would be.  You can use them
-to ask about various things you care about, and you can combine
-yourself, instead of using a single command with options to specify
-which questions to ask.
-
-Having said all that, if what you care the most is simplicity, you
-can probably use "git describe --always --dirty", and see if the
-output ends with "-dirty" suffix, perhaps?  I suspect that it does
-not care about untracked files, which you may have to independently
-ask command like "git clean -n".
-
-
+And also, I keep seeing Windows users having `git config --local
+core.symlinks` set to `false` (God knows why - in theory Git for
+Windows suppose to set `--system core.symlinks` to `false`, `--local`
+shouldn't be affected by this) and just setting `--local` helps
+covering those cases too.
