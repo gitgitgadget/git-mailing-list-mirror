@@ -1,100 +1,69 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F116520C48A
-	for <git@vger.kernel.org>; Thu, 10 Apr 2025 22:13:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CDFC1EBA03
+	for <git@vger.kernel.org>; Thu, 10 Apr 2025 22:42:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744323217; cv=none; b=dopeMExifpJRLMPD11ZbWMeQ6lDd+9rHdGbd+G3FY+VPJp3C1yYFmmNGuRWbRpJIggFFVX6vkUuU6ut/mkfNM8Flv7J5sBOiZ6Mmf9hoF3Kqx25FehflcKY/evEbAIgkvRAlcusYSxVutZ2reO8E2hsstf+1wzdJdikjRfCumBo=
+	t=1744324947; cv=none; b=A2yo8q+nxZHMKISWn8SiGC8ENVg2AceSxnXkG1I8SXV1ajWQ2Amse2q3B1MuGJtmJcvIDjJ+G+nfBuxIh2gXQGpL6k/iKBv+2CEnKY1nYH+AfK7/v6y28FkuYfFoBL/jgNOAuOL6Gjn8Jok0lxjdTuDj4hmiE6Vbypx2F3POxZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744323217; c=relaxed/simple;
-	bh=0fo0aJn6zw9qD+roIWXpDjyHbfsmfEgkOuAOS7S1UmQ=;
+	s=arc-20240116; t=1744324947; c=relaxed/simple;
+	bh=G8GAqYJMe5hbJntR75Wvoi6ABPExxytsDqcv8ALhXgs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PTBdXlKecY3Xh6g40O8JoFxgGKFBAvZpY3WIeE5RwCQ4S2oMbcnMFKg+PGv7QFtXKaTev3ZfUic64lXoKfJdc0syIBzvYHLE16DEptu01uSZcqCpqC0NiFFxTxFjiZEvtVX06M5HBq7+0gBM36ypp+NMKRJo0MX8hv95gGj85kU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=FwsrwETO; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lua4HWZDkZGO3xqJsYdRb2a9msA5q981KyJNVq6RcD5sJhnF5cRLAGl8USuu8NiHgm+qg+f3ZLGdKBn6gLh84qeOwk42Gws/7My/jTe/LdeqR0gNOHW6FYej1oUpjXe8iu2+cBFLaZgiejZ4U7/uhXcl/pY4WRAN/jSQGwnGiMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=eb9EZ1ZD; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="FwsrwETO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1744323214;
-	bh=0fo0aJn6zw9qD+roIWXpDjyHbfsmfEgkOuAOS7S1UmQ=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=FwsrwETOYO5IX7upk+hyHKtzup1ZsxudCvlU2u3RVqjU0QZRNXnSdv/3yj5+o3CzJ
-	 MXX6k26kaPL+8PtLngWIUiGfLO/hsbAKy6ucxlZ8Mrg+xSrrIr2l7PFSnaUPBhB6hP
-	 4Ly6quDPL6i0q+YEh89d3xFO9aW3Hmq3AA1X6WTtX13LAKI5iTiS1lsZ8NxGBMgaau
-	 LKcerg8iWcVX3Rmoijv8Wt06pavsUOOzz+UnrAzVvuEhDMSKAAJ+q8DZOLaT1/qDq4
-	 DQpJFvmxNHr7nQfdJPsWPksceI3YNI8/ZWVk8AxN++Ocf364YPxAjrNR3/gdPPNONq
-	 MF8ubG2IeuGiD/CEb4GwiOaLjLKxnb/hXHGub+Ax44nm6zkbzV7CuUOLBcwfzYFW5u
-	 KJG9RAd/93I8QCvKc4MdBc4l5NigmIBKL4F+YHavXUk/grldk+FDNwBpTJ2qBlhvlk
-	 1bdVW2FyIrKmt6nDctpRH9BHCe0TIim9abwQHlah81jko2B8nST
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9ec0:b846:49f:a41d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id ED4A720104;
-	Thu, 10 Apr 2025 22:13:34 +0000 (UTC)
-Date: Thu, 10 Apr 2025 22:13:33 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="eb9EZ1ZD"
+Received: (qmail 30488 invoked by uid 109); 10 Apr 2025 22:42:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=G8GAqYJMe5hbJntR75Wvoi6ABPExxytsDqcv8ALhXgs=; b=eb9EZ1ZD1d+rO8a13+qBhmL3hZHxLnsODPILPREPznWN0jnizF+mD9t2RGLmO9EMuA8wqm/VzxAa039wP16JVygFjLh3oN6+9U3p4m0W3MuzPBsV6TT7GkqjfQeW3w5A7NT6igFovevVumELyv9R331PCRZxHtugIDUPlXoi+PHUF4O12A0x5XLcxC/5BgMqSJtcaSlaqTeK+e1nIzuC3+pQMo6ofYNa7Qp26XAmvo0AA4cr3jV7duUITF0kcYMUp5WiZ2LAYwxmFInr76bvLQEa+kEAV5rEx1CjY9At6s/Ob/j+O8D5GAn4vnKNz0RWNFJ1l5ZqPOaWk4Wn81EVyA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Apr 2025 22:42:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18093 invoked by uid 111); 10 Apr 2025 22:42:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Apr 2025 18:42:23 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 10 Apr 2025 18:42:23 -0400
+From: Jeff King <peff@peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: Nikolaus Rath <nikolaus@quadrature.ai>, git@vger.kernel.org
 Subject: Re: 'safe.directory' setting ignored for some operations?
-Message-ID: <Z_hCjfoRUIDZoBfP@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Nikolaus Rath <nikolaus@quadrature.ai>,
-	git@vger.kernel.org
+Message-ID: <20250410224223.GA3191424@coredump.intra.peff.net>
 References: <CAPzgaL2Q4v0LMSek=osugTDCDww9D-Tg+tDsFhFvRSVXFR8g6Q@mail.gmail.com>
  <CAPzgaL1NH_GofMko6f2Auz4e1TjTJNH0w4-ph8np04QRfT_R7A@mail.gmail.com>
  <20250410213542.GA3168175@coredump.intra.peff.net>
+ <Z_hCjfoRUIDZoBfP@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="B3TPNxcg5lxLbPqT"
-Content-Disposition: inline
-In-Reply-To: <20250410213542.GA3168175@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---B3TPNxcg5lxLbPqT
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <Z_hCjfoRUIDZoBfP@tapette.crustytoothpaste.net>
 
-On 2025-04-10 at 21:35:42, Jeff King wrote:
-> So I think things are working as intended. You can get around it with
-> either of these:
->=20
->   - set the config in your user ~/.gitconfig, which will be read by the
->     child upload-pack command
->=20
->   - tell clone to pass the config to upload-pack, like:
->=20
->      git clone -u 'git -c safe.directory=3D"*" upload-pack' ...
+On Thu, Apr 10, 2025 at 10:13:33PM +0000, brian m. carlson wrote:
 
-I think you can also use `git clone --no-local` in a more recent version
-and the normal clone-from-untrusted-repository semantics will kick in
-and things will work.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+> On 2025-04-10 at 21:35:42, Jeff King wrote:
+> > So I think things are working as intended. You can get around it with
+> > either of these:
+> > 
+> >   - set the config in your user ~/.gitconfig, which will be read by the
+> >     child upload-pack command
+> > 
+> >   - tell clone to pass the config to upload-pack, like:
+> > 
+> >      git clone -u 'git -c safe.directory="*" upload-pack' ...
+> 
+> I think you can also use `git clone --no-local` in a more recent version
+> and the normal clone-from-untrusted-repository semantics will kick in
+> and things will work.
 
---B3TPNxcg5lxLbPqT
-Content-Type: application/pgp-signature; name="signature.asc"
+Yeah, that's true in v2.48.0 and later. (I tried it after writing the
+earlier email and was a little puzzled that it works with --no-local but
+not otherwise, but it sounds like that's known).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ/hCjQAKCRB8DEliiIei
-gXLMAQD8YKRPHbM1CqAofnyVqz/OfiF/E+IqR0muUDOwB0T2ewEAs5Ial904kiV3
-Kf/0DB4MsOSQuf5/NIjDByOA1ACljgQ=
-=egtk
------END PGP SIGNATURE-----
-
---B3TPNxcg5lxLbPqT--
+-Peff
