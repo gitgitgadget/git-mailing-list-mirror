@@ -1,156 +1,139 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F26328A40B
-	for <git@vger.kernel.org>; Thu, 10 Apr 2025 14:50:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04A81D5CE8
+	for <git@vger.kernel.org>; Thu, 10 Apr 2025 16:18:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744296660; cv=none; b=RkcYx7RWGfaIRoZ/afMT+6bkFuTbgdeKjzLxA3x2Qa1CQp3flXDQeWRCWXIRMmUwDR+Z4iDPzp/wHITi1HrmqzTFukFFdL1t6adwfh9a961YAOffWnPxSgb7zyMBNV6137crdfuXiJZ+8jd599AcRExKjyesz8aOxXspLyvQLI8=
+	t=1744301942; cv=none; b=Mi+AvJDRdlVMFz6KZXDKdnogO7sHztwvjJQM6bCLv6lPHyKtP/PRtqbQIagOQSRVA0m0qalSNXbntDMKB9N3KRumxWkUv4+/ZwCHi/jRprmceqea9cK6RJ7NKiDFvBRxbt29+E3xxtRdUPItUvu+a0yy7Lz2cgxx9zPBDcpTdSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744296660; c=relaxed/simple;
-	bh=T6PQGRpSUjjxNmCrRNGUgJkq9uL3/g8Jn7c2TjOtKgs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cHb2jdbU048J1qINIv8PdJ8XIFEr5mzpZOQIQxZS6+BbNohYpU2Ksos/z+I2Ebe8nL2xoA/Tt7CH7z4QF5rQMYjNHn0sNZUUuqq1vyqSAnw3XoFgJHIwXfHrSWbX27uoBeKoo2GlhVKF1HVElOmJxCf2PcA1qPfH3JHbnioIJ3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y913owt3; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744301942; c=relaxed/simple;
+	bh=h/GYqmlkTgKR9sTPxE6i7vKiBYpbNu+rqJ9oGEK8iPU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SR4klG6MQPjrkfTt9nVWC1HZhKFiOPKuey1ULtkk+7SNVKWSbFLjDh6rYa6C5pDGvYm+yMwlAaDxGzISErltQfsliGYpp8l6PsnIRj/PfS9hh6Xh78vsck68bYB9TUhuMiTmN0ZKd5lDTcc8HoQgDy5v8B/9Qd4mY94GiZ2cBdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K3WZ70I9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U/tCwcW1; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y913owt3"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43d04dc73b7so10204005e9.3
-        for <git@vger.kernel.org>; Thu, 10 Apr 2025 07:50:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744296657; x=1744901457; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=cMVv6tN3rxv7QMP1Rkcd2U4wnnGKQbhGG6WFQz5dPBI=;
-        b=Y913owt3RkeNgLgXxWHxnP82lIVajoZLjA65v7mx68jD21UNUiIVKyp146KVC+yDdo
-         X0d53VG+pxDhmbOfbbvHoENOhCPqYB1z6A0rFqjq11/qVOSV0QO8AyMSrtUVHP+KMZ6X
-         +sKboJTsLE7x3BRM8PJe3LamxPOo3hUS0UPg6h45GnKqly4fXlt35QQm13i6aGkxNAJL
-         Mxv3HIlFduIKtZKFhWXdD38jl5xFJfacxLhzRAKH1r4TKCvW2JJLwZgpKu8qEQX5u9CZ
-         yD95tfgixouycVo+0bg3UvvTzFMFJxakLer4nX4XNujPXKiloA22eJqBUTMt6FjppvZ1
-         UK9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744296657; x=1744901457;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cMVv6tN3rxv7QMP1Rkcd2U4wnnGKQbhGG6WFQz5dPBI=;
-        b=KjcOoApYGBFoJyrwbi21N8p9tXDSYhFZj70CAgm616KnVPEt+3+vPpkzLk5ML6KtvX
-         sfjQS8TYdB4WyUdahnQiwfYgpWUr8R1XmcbS2UcY6UdH9pUu4yVdDvVXYTLD+wZlWbbp
-         CrE4H12z2CN7NkRK0cOqUkQRJ894nYW5ecA2jCFli8pEnUi4RzLhhd0ahfQojM4m9wLA
-         rK1mZ91oi/yZKulIOGRG4Sd6B5GgfaDtE4Nfvw5bVlqwpu44AT/RfIUsu6zgYMrt/Gb6
-         skR7p2rUBuZpenQkw9YTUWJ2vZDuhQif3wYS4O4oTPr60o6dEZSCCo2zshEebWwayiVb
-         OhAw==
-X-Forwarded-Encrypted: i=1; AJvYcCUmDKd2xogmVrQO1TJdHplZxOgOqBXY1Xl4RkGkxkwMZlFZWfb1DkJxzs6jITSnce9kRaE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yws24HhZyYlYif9ULDHRnEnI61hg/UoFu0wOcUY+x0npOwVX9kB
-	jnKZR6bOI/5451mHRyWNQkptHDIC6Ctogt20tfPAEz0tPaA4hpkJFTi3Yw==
-X-Gm-Gg: ASbGnctWFQvju5D2suBN1O9HIvFV1PRnXZ9JiR9n25KA14/XWLVrAR8PkK4UQ13ez3H
-	josJ4MQUIzsW3GiQMm6gkg6weG7XgtPGecL6WMbAARixRCnlFEC8YnLraGcd/xhhJGFNNnx97eN
-	Bi5AyRdKci8jo2ANH8KqsONR3UA9eKXIvf9lg83gnTjyxUz69q4dVLM79NilYebV9+m5KonJz7W
-	C9pRwBdAM9dTnio7f2Q4uX2RMcPPUVTUgiBqDrKi7I1+O3bAeOIfdpA+2eXlCUN7cy9DwJB0aB2
-	GqMvPp1mxjRUPzVQQGBALyQc2bYjtKdYmvXrsy0+I0k4bOfuJuO5qcJNRHUd83kTWNJlGV+BHDB
-	IIUkTDeWcT4E5yW2w
-X-Google-Smtp-Source: AGHT+IEjOyBzJcJWcHLfJq/YOdl37Btn86znxMyd3lVbSinQnorUc3imh7l+Q0fRuXI2BK0dg3H7NA==
-X-Received: by 2002:a05:6000:1864:b0:39c:2688:612b with SMTP id ffacd0b85a97d-39d8fd3d4ebmr2659480f8f.7.1744296656650;
-        Thu, 10 Apr 2025 07:50:56 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39d893773c1sm4942936f8f.24.2025.04.10.07.50.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Apr 2025 07:50:56 -0700 (PDT)
-Message-ID: <7eaa33ca-0ccc-4789-94b5-de1a068e1599@gmail.com>
-Date: Thu, 10 Apr 2025 15:50:45 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K3WZ70I9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U/tCwcW1"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C6CBC25401F4;
+	Thu, 10 Apr 2025 12:18:58 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 10 Apr 2025 12:18:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744301938; x=1744388338; bh=E3vZLKkKDx
+	aJsJ9pL7i4UR5gaiS6C4WA9pNC9CTNt5Y=; b=K3WZ70I94cGMuB8kahRuf39XbG
+	xgVahsBspTiX3NrT2Wpkz/4iTvuh2FfKtEQkn9kHtZlituXK6BsNXbzYEMyXVUiK
+	Dz/h60U79I06jDRpVK8QeX07B/5mOFXkkLbvBS9pIsuC/Cv1kA292CdwoI2ATtFb
+	DTriR4pRlq/PVlWvaLcvw6dQmeu9QRLy8YvMwxVNMtN8I5Xus9r+S/JvbnTQ7prp
+	Eg6EkM41mVoL9BIbeiog0fDUgUwbuZJTYpjBoea19vR2IladFC2So6S/t//e4/+w
+	siU84JO5CY2FPQvDin+lRODBhNG3UeQkCFs0i3Mwk1NdCwk/0MzV/Bah+53A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744301938; x=1744388338; bh=E3vZLKkKDxaJsJ9pL7i4UR5gaiS6C4WA9pN
+	C9CTNt5Y=; b=U/tCwcW1m2SWizG13hi7GT4dHGBjBVYW+Na1bLCE+9dT/RlXh0p
+	IDjknMSpNMUtgG71nVX9tbc537C0+jrnKVTMJL06cxNSRnKrGjwFDuqnn+SDVjFr
+	H77sKOGjwtqXaQPaYNrBZBpL/ZnCNv7yF6gDq4EQgovrKgf2qKrIFwTfs6EbjGQ6
+	95qTDzN5Y62niBHZoNKl0piGXUlJdghXcKA0j4qSUNmkIGDCYSnd6lTP+S7uNp0V
+	jMUbseVQHmW6QhOlgLQI1UPMN41pek6rkt/Mi5N58HfeRkQc6DL7xIaKtrlXRmk5
+	sKvaCQHlriItQ0N6IIhLcPaAJbvOl8FKzFQ==
+X-ME-Sender: <xms:cu_3Z2lmtHjFrjAZwfBkxDm-PKlEdIXFvlaZWYPDjaOFI2wnwj0G5w>
+    <xme:cu_3Z90MlDfdIUJvUhQifMRb-aXrwjvkzk7ZITJQsMjumNLmqiEN4quXDsghXbgdv
+    6xV3f5EQZecQ0_-Mw>
+X-ME-Received: <xmr:cu_3Z0pgtCb3tMTiCW-xbBUT4EmqWEMGjR6Kt7wQPV0awc93E1Zok8rhrLsZlX3sjG56Wzh_vHEO-mubl-P6jhYiCj5A2qzmj7fJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdelfeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
+    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehthihtshhosehmihhtrdgvughupdhrtghpthhtohepnhhi
+    tghosegtrhihphhtohhnvggtthhorhdrtghomhdprhgtphhtthhopehmrghrthhinhhvoh
+    hniiesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopegvkhgvmhhpihhnsehgohhoghhlvgdrtghomhdprhgtph
+    htthhopehstghothhtsehgihhtsghuthhlvghrrdgtohhmpdhrtghpthhtoheprhgvmhho
+    segsuhgvnhiilhhirdguvghvpdhrtghpthhtohepphhhihhlihhpmhgvthiighgvrhessg
+    hluhgvfihinhdrtghhpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:cu_3Z6nnar7KQOaxo7iW3pHGZK9StE-sKBSdx951kg8MjDu2iguG1w>
+    <xmx:cu_3Z009tnkxqSQ0J39rhxPOFYLJZUTER4poz6TVE8n-8pll8NCoXg>
+    <xmx:cu_3ZxvkjVewJdblCONzGOQxSwycotMiv76U2uPhcuxK2YeB6ai3-A>
+    <xmx:cu_3ZwXz2-ez4jjZjNyynFlSl7s6IJhdia7ZRT12jqgE0b4IevesRA>
+    <xmx:cu_3Z9vCzH-3FKE1k-36cvQMZMOtkaF9j_mWWZqtxpvuX7tCD3XeiNYH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Apr 2025 12:18:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Theodore Ts'o" <tytso@mit.edu>
+Cc: Nico Williams <nico@cryptonector.com>,  Martin von Zweigbergk
+ <martinvonz@google.com>,  Git Mailing List <git@vger.kernel.org>,  Edwin
+ Kempin <ekempin@google.com>,  Scott Chacon <scott@gitbutler.com>,
+  remo@buenzli.dev,  "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
+ projects collaborating on change-id commit footer)
+In-Reply-To: <20250410134426.GB13132@mit.edu> (Theodore Ts'o's message of
+	"Thu, 10 Apr 2025 09:44:26 -0400")
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+	<xmqq4iyzn0vn.fsf@gitster.g> <Z/RFQY433muaCW44@ubby>
+	<20250408125521.GA17892@mit.edu> <Z/VGYrrVZYQ13TLj@ubby>
+	<20250409121924.GA148735@mit.edu> <Z/amMj/eg0RbXdkS@ubby>
+	<xmqqv7rdqkla.fsf@gitster.g> <Z/a+AVopz+HLa1eL@ubby>
+	<20250410134426.GB13132@mit.edu>
+Date: Thu, 10 Apr 2025 09:18:56 -0700
+Message-ID: <xmqqy0w8ng5r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 4/4] makefile/meson: add 'headers-check' as alias for
- 'hdr-check'
-To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Cc: jltobler@gmail.com, toon@iotcl.com
-References: <20250410-505-wire-up-sparse-via-meson-v2-0-acb45cc8a2e5@gmail.com>
- <20250410-505-wire-up-sparse-via-meson-v2-4-acb45cc8a2e5@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20250410-505-wire-up-sparse-via-meson-v2-4-acb45cc8a2e5@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Karthik
+"Theodore Ts'o" <tytso@mit.edu> writes:
 
-On 10/04/2025 12:30, Karthik Nayak wrote:
-> The 'hdr-check' target in meson and makefile is used to check if headers
-> can be compiled individually. The naming however isn't readable as 'hdr'
-> is not a common shortforme for 'header', neither is it an abbreviation.
-> 
-> Let's introduce 'headers-check' as an alternative target for 'hdr-check'
-> and add a `TODO` to deprecate the latter after 2 releases. Since this
-> is an internal tool, we can use a shorter deprecation cycle.
+> Regardless how we come out on whethe having an "inode number" for the
+> high-level semantic value of a commit is worth it, I do think having a
+> "patch set ID" which ties related commits together does make sense,
+> though.  That would solve some interesting problems both for the
+> web/forge review workflow as wel as the mailing list review workflow.
+> I'd be curious what people might think about that.
 
-Can we call this "check-headers" to match the other "check-" targets in 
-the Makefile please
+As a concept, I agree that a mechanism to identify these iterations
+of the same topic collectively is a very valuable thing to have.
 
-Thanks
+FWIW, I use the Message-ID of the cover letter e-mail as a rough
+approximation for "patch set ID", and it is quite usable once you
+train your contributors to always make the cover letter for
+iteration N a direct reply to the cover letter for iteration N-1,
+and also make the individual patches a direct reply to the cover
+letter for the same iteration.
 
-Phillip
+Then visiting lore.kernel.org/$mid/ will give me at a glance some
+essential information about the series, like
 
-> Change existing usage of 'hdr-check' in 'ci/run-static-analysis.sh' to
-> also use 'headers-check'.
-> 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->   Makefile                  | 4 +++-
->   ci/run-static-analysis.sh | 2 +-
->   meson.build               | 2 ++
->   3 files changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Makefile b/Makefile
-> index ac32d2d0bd..0ac91e0af1 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -3326,8 +3326,10 @@ HCC = $(HCO:hco=hcc)
->   $(HCO): %.hco: %.hcc $(GENERATED_H) FORCE
->   	$(QUIET_HDR)$(CC) $(ALL_CFLAGS) -o /dev/null -c -xc $<
->   
-> -.PHONY: hdr-check $(HCO)
-> +# TODO: deprecate 'hdr-check' in lieu of 'headers-check' in Git 2.51+
-> +.PHONY: hdr-check headers-check $(HCO)
->   hdr-check: $(HCO)
-> +headers-check: hdr-check
->   
->   .PHONY: style
->   style:
-> diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
-> index 0d51e5ce0e..2e51411d6e 100755
-> --- a/ci/run-static-analysis.sh
-> +++ b/ci/run-static-analysis.sh
-> @@ -26,7 +26,7 @@ then
->   	exit 1
->   fi
->   
-> -make hdr-check ||
-> +make headers-check ||
->   exit 1
->   
->   make check-pot
-> diff --git a/meson.build b/meson.build
-> index 6fce1aa618..74597283b9 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2099,7 +2099,9 @@ if headers.length() != 0 and compiler.get_argument_syntax() == 'gcc'
->       hco_targets += hco
->     endforeach
->   
-> +  # TODO: deprecate 'hdr-check' in lieu of 'headers-check' in Git 2.51+
->     alias_target('hdr-check', hco_targets)
-> +  alias_target('headers-check', hco_targets)
->   endif
->   
->   foreach key, value : {
-> 
+ - how hotly the topic is being discussed?
 
+ - does the iteration $mid I happened to have picked the latest, a
+   bit older, or irrelevantly older?
+
+ - has the topic been extending its scope?
+
+Thanks to the "cover for iteration N is a direct response for
+iteration N-1" and "cover is marked as [PATCH 0/$n]" conventions,
+"b4 am" grabs, by default, the patches from the latest iteration
+when given the message-id of the cover letter of any iteration of a
+patch set.  Because most of the time a consumer of an evolving
+patchset is interested in the latest iteration (unless the
+contributor screws up, in which case we may need to go back and
+explicitly grab an older iteration), I never felt a need for an
+official "patch set ID", though.
