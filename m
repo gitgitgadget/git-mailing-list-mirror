@@ -1,114 +1,112 @@
-Received: from mail-24426.protonmail.ch (mail-24426.protonmail.ch [109.224.244.26])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653B54503B
-	for <git@vger.kernel.org>; Thu, 10 Apr 2025 17:49:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38AC28C5D7
+	for <git@vger.kernel.org>; Thu, 10 Apr 2025 18:58:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744307386; cv=none; b=SXYqM2BgMDeBft/vXqB0IVP7yt3vJrK1kVDk947crVO9+a5UYJ8JF+aBxnaVaOaLVd5Ifx7mqZy4yNIP8W8oDb5wOi5wdShckXoSLQmOY7OYAdROlJN5fokyNXNw/41npVOnyAbN8iFE+s4swdYuvz4A8RwZ3AJsAEfelYCCDeQ=
+	t=1744311493; cv=none; b=C3THiE+8X9b5zDKcbSn+Nr8iQz/GUjkhflzPH4i34tMqTuNK7HoBALuIiWkkgBrJ7qVf5s9ra7pY/FwwQ8Mo1+3qEHDG1g50WQNLpKUX+4zC39z/k9weBPNHr5N/tuzuBnI/vf1iW3hdW629rjydopfu9Ak6zOw0yXnc8/Luu7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744307386; c=relaxed/simple;
-	bh=yjAYDuPIhRTVK+2Ozd8a85wJqI+Rx6DpbKtL1zclGbo=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=sd7AZap9n+KihlYa2wMnIN6iQInpP5zfkL9lCs2ZCblZmEOiFH/6394793Z63zBuhDxDx/lvW68A8Dn87PdpSJg52agSDNTVD2H9LSum9V99SLwUMTE4apoW5cDBoJlj9D8m/nO6mzUxiCf9foiVD2mOqW/84SoOr0yl6WnnR44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=How1y+Tj; arc=none smtp.client-ip=109.224.244.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	s=arc-20240116; t=1744311493; c=relaxed/simple;
+	bh=YuLm8uAaEpEiFyc6oLf/+Erky+l80311d1F6vLQDlqs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TuQKx5xZoRbmeL8067nihF2tK0wzcGK/IlZWS03luw0Cxn7fDujnAwGnqOkZYuVGDX00qMKQ2kfvk9SHMPAZgOcY8SM6WJKh4CNqebbd2oK8ozoxLe4IhhHRAbj9DeZFTTevB5WtwZE0IGXmDVP4labi29+BpiGH9A2wrwmZRz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LI5GdkUw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IoYlkXHD; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="How1y+Tj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1744307381; x=1744566581;
-	bh=AY5E1sBFCixcH7n8WGVWZX7stetKbciRIoaHhRCF08s=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
-	 List-Unsubscribe:List-Unsubscribe-Post;
-	b=How1y+TjGFbkpBizU3aotP2+i25pzZVFvYl0JMZVZA8QPTNeNCBYEVBiwwZS/9xzh
-	 U6bNO9I5GbHUihkLOpo59UU7OsL08jp6sg5oXHN7KY5AXiRVq/+4bxHCqeI0mz9vJs
-	 OW1HC3YhWMAdZBxVcRyg5jnaW2XiwHc7RbMeZWXXzLVApoqIudJCJlF1mHpfoBL/V7
-	 naCzQvUnjvhoBeekBz2tCR0Y3b7jxOKf2+BrAq/nN3sNMrDUWAMGqFyl+74rIj4gEq
-	 dFXFmQ+YIfpS+zgiqTx34LTUghFPmiXZWgDIHKH2SwiEjH1tneulCnZAmXDR3tmpDM
-	 XkjaVHelQbvkA==
-Date: Thu, 10 Apr 2025 17:49:23 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-From: Ross Goldberg <ross.goldberg@proton.me>
-Subject: Command whose exit code indicates clean or dirty working directory
-Message-ID: <jreR52go49E9pIfAmIdRaoqIgKnVV7uOhR4Mbl9_p2dLG_7mPgO8qsUk7CaWC0nGbJD-2F4nGdQ8X65UtIQ5XOBNQXXzrnHnKbOCLCfEil0=@proton.me>
-Feedback-ID: 46060443:user:proton
-X-Pm-Message-ID: e336bb4f031bc1649658ff8bdaa6ed3ab0b71472
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LI5GdkUw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IoYlkXHD"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9BFDE114013D;
+	Thu, 10 Apr 2025 14:58:09 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Thu, 10 Apr 2025 14:58:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744311489; x=1744397889; bh=es2cXArCDY
+	chMoTcGYIaJM2rAMLCQoC888u674dm/jw=; b=LI5GdkUwa4cAnIpaedic1ODvQX
+	j8cy/R89GAHnomG5dZlttaxknhFBJ8BUi2KiEgM1uzD/NTQgxEcrD4otavWh3kOl
+	tEZ3rYtxjwEcIEGmQZLPziWTPYsjwAQAOsWajVUTNqDIK3DpT7eOn6d+w0Zwn/y2
+	uze2dYgX4BRMOKMdCRctGLH3hSgoQRl2aId2/6Fzq6T2SnjM+GDdumr5dmqBCVr+
+	Bnd2eh6QO8A/WYXIoC7GdIWsVFeG4PmM21/rprlNdOZ+cNLsnhuSUUZ4gBDzy/0F
+	yHOCmvkMRoaw3GsbCUP0f2tlXNLQqzfXK7K+LrJo6lCZOQnYVgwTK0RTPc1g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744311489; x=1744397889; bh=es2cXArCDYchMoTcGYIaJM2rAMLCQoC888u
+	674dm/jw=; b=IoYlkXHDJ3J/4XcO3D28/6g6znGCHFWhMrJHpN9RoQ6VOUezNoV
+	h/LOzJ9RaCZKNJurHHoPJ5messUZGUGQy7kThQ/1dI116zSKhRULEIl6F9KN3uMK
+	pDRXCtyHIEV//J/Jqeb0m/2/fbZkf2GqC22JyUoTkJNzcpnAbEmuWSR7UD352J3x
+	vXsd6iliorjJj2O+QVrzwrNgSvn4h4Re29mxud3kxlnchYYflTnlAQIy0rmYXRQw
+	hzP6gHv2tAlg9dI8cSiHr4gP/DTleYOYKEehttzIhUJD0QlAS6vG4zaryce3HmEq
+	gfXlpIEO+9lhhRG8uldw6h749e2fyzQfLmw==
+X-ME-Sender: <xms:wRT4Zy-mcmzXksem2zBJp-A_dOQZD_2VZ9hR4MuJsVGrMLGAKcIskQ>
+    <xme:wRT4ZysYaWueod2Uxiwvd7PMv_wCIsjuUysquay7kTTabUsMW2oIfPRb243-Nljpa
+    NwWh5-NiP9o9WWKHg>
+X-ME-Received: <xmr:wRT4Z4BEerB4QkUQdnCFYETxQM3ObHVLZWGrsbHrHMJ6fBcTdoXku6UZL60i8QGq97c6XhfxSq5lMuFz3jINbwgzBRCizdd5yo5v>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdelieekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddu
+    keeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphht
+    thhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:wRT4Z6eWfWg-5BMcG10tRxYVT3DtOz-OqaWAADVfObyVjWp0-f06YQ>
+    <xmx:wRT4Z3PzCkOHG9pz5m64f1Zsq9qVN679Owr7cqZ0L8sW1CWcmyOibQ>
+    <xmx:wRT4Z0mWTQtguNxHnR_yi0kELkChszFz6nJn8ZoHjOyb9X77XB8fCQ>
+    <xmx:wRT4Z5sk-NATVIDMj3e09KCWtLn1z8njgqwed249w1-v7wPFyBliDw>
+    <xmx:wRT4Z8ySjUFtfGmbQ7ZctduvH5cNjD-tyJchvhq5lZCeIS7IQWm028eo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Apr 2025 14:58:08 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,
+  jltobler@gmail.com,  toon@iotcl.com
+Subject: Re: [PATCH v2 4/4] makefile/meson: add 'headers-check' as alias for
+ 'hdr-check'
+In-Reply-To: <7eaa33ca-0ccc-4789-94b5-de1a068e1599@gmail.com> (Phillip Wood's
+	message of "Thu, 10 Apr 2025 15:50:45 +0100")
+References: <20250410-505-wire-up-sparse-via-meson-v2-0-acb45cc8a2e5@gmail.com>
+	<20250410-505-wire-up-sparse-via-meson-v2-4-acb45cc8a2e5@gmail.com>
+	<7eaa33ca-0ccc-4789-94b5-de1a068e1599@gmail.com>
+Date: Thu, 10 Apr 2025 11:58:07 -0700
+Message-ID: <xmqqtt6voncw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------70a19e9da236e2f7b16a7cfd0014147fe46cd139091abacc828a52eb83ebf57e"; charset=utf-8
+Content-Type: text/plain
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------70a19e9da236e2f7b16a7cfd0014147fe46cd139091abacc828a52eb83ebf57e
-Content-Type: multipart/mixed;boundary=748ae88c2fa9bd93d0a3350fb71211818112585a
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
---748ae88c2fa9bd93d0a3350fb71211818112585a
-Content-Type: multipart/alternative;boundary=8cc31703eb81af327784ba43c2ef75008c170ffe
+> On 10/04/2025 12:30, Karthik Nayak wrote:
+>> The 'hdr-check' target in meson and makefile is used to check if headers
+>> can be compiled individually. The naming however isn't readable as 'hdr'
+>> is not a common shortforme for 'header', neither is it an abbreviation.
+>> Let's introduce 'headers-check' as an alternative target for
+>> 'hdr-check'
+>> and add a `TODO` to deprecate the latter after 2 releases. Since this
+>> is an internal tool, we can use a shorter deprecation cycle.
+>
+> Can we call this "check-headers" to match the other "check-" targets
+> in the Makefile please
 
---8cc31703eb81af327784ba43c2ef75008c170ffe
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+Excellent suggestion.  If we were to change things, we should get it
+right just once.
 
-What is the simplest git command that returns 0 if the working directory is=
- completely clean, or nonzero if it is dirty in any way (staged diff, unsta=
-ged diff, file that is both untracked &amp; not ignored, etc.), with nothin=
-g printed to stdout or to stderr?
-If the simplest such command is complex, is there any feature request to cr=
-eate a simple command, possibly with options that specify what is considere=
-d dirty (staged diffs, unstaged diffs, untracked &amp; not ignored, etc.)?
-
- =
-
- =
-
- =
-  Sent from =
-  Proton Mail for iOS
-
---8cc31703eb81af327784ba43c2ef75008c170ffe
-Content-Type: multipart/related;boundary=4c86be8c52caf1090fc0b0c450fc007ec666c456
-
---4c86be8c52caf1090fc0b0c450fc007ec666c456
-Content-Type: text/html;charset=utf-8
-Content-Transfer-Encoding: base64
-
-PGh0bWw+PGhlYWQ+PC9oZWFkPjxib2R5PjxkaXYgZGlyPSJhdXRvIj4KIFdoYXQg
-aXMgdGhlIHNpbXBsZXN0IGdpdCBjb21tYW5kIHRoYXQgcmV0dXJucyAwIGlmIHRo
-ZSB3b3JraW5nIGRpcmVjdG9yeSBpcyBjb21wbGV0ZWx5IGNsZWFuLCBvciBub256
-ZXJvIGlmIGl0IGlzIGRpcnR5IGluIGFueSB3YXkgKHN0YWdlZCBkaWZmLCB1bnN0
-YWdlZCBkaWZmLCBmaWxlIHRoYXQgaXMgYm90aCB1bnRyYWNrZWQgJmFtcDsgbm90
-IGlnbm9yZWQsIGV0Yy4pLCB3aXRoIG5vdGhpbmcgcHJpbnRlZCB0byBzdGRvdXQg
-b3IgdG8gc3RkZXJyPzwvZGl2PjxkaXYgZGlyPSJhdXRvIj48YnI+PC9kaXY+PGRp
-diBkaXI9ImF1dG8iPklmIHRoZSBzaW1wbGVzdCBzdWNoIGNvbW1hbmQgaXMgY29t
-cGxleCwgaXMgdGhlcmUgYW55IGZlYXR1cmUgcmVxdWVzdCB0byBjcmVhdGUgYSBz
-aW1wbGUgY29tbWFuZCwgcG9zc2libHkgd2l0aCBvcHRpb25zIHRoYXQgc3BlY2lm
-eSB3aGF0IGlzIGNvbnNpZGVyZWQgZGlydHkgKHN0YWdlZCBkaWZmcywgdW5zdGFn
-ZWQgZGlmZnMsIHVudHJhY2tlZCAmYW1wOyBub3QgaWdub3JlZCwgZXRjLik/PC9k
-aXY+CjxkaXY+CiA8YnI+CjwvZGl2PiAKPGRpdiBpZD0icHJvdG9ubWFpbF9tb2Jp
-bGVfc2lnbmF0dXJlX2Jsb2NrIj4KIDxkaXY+CiAgU2VudCBmcm9tIAogIDxhIGhy
-ZWY9Imh0dHBzOi8vcHJvdG9uLm1lL21haWwvaG9tZSI+UHJvdG9uIE1haWw8L2E+
-IGZvciBpT1MKIDwvZGl2Pgo8L2Rpdj48L2JvZHk+PC9odG1sPg==
---4c86be8c52caf1090fc0b0c450fc007ec666c456--
---8cc31703eb81af327784ba43c2ef75008c170ffe--
---748ae88c2fa9bd93d0a3350fb71211818112585a--
---------70a19e9da236e2f7b16a7cfd0014147fe46cd139091abacc828a52eb83ebf57e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wnUEARYIACcFAmf4BJMJEGIvlZ3ETyGVFiEED/oUaEUfJG64NHEfYi+VncRP
-IZUAAOnoAPwJHt9cLxwU6uGOFqpgWRsEaBe6dhbWDYcNT8i9BAz0LQD+KL7v
-VzHkmbIuVnM2Fb9DN1bHiPGhMaEcQJZtGoea5Ag=
-=RuHC
------END PGP SIGNATURE-----
-
-
---------70a19e9da236e2f7b16a7cfd0014147fe46cd139091abacc828a52eb83ebf57e--
-
+Thanks.
