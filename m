@@ -1,94 +1,73 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mx01.frank.fyi (mx01.frank.fyi [5.189.178.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89095182B7
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 18:56:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFC118C011
+	for <git@vger.kernel.org>; Fri, 11 Apr 2025 19:02:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.189.178.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744397768; cv=none; b=c2mMJI8JLm39uSM3hwSLOM05QUQUfpHiJktNhFoc52DTyP2mNJTfs4wFnblBOWfNOCA1hKLh31ME98oHC2O9Y9FfMVTbhehGH+uj9TClYxWGJucOWJVvjZ2/b0lEa6b4IKzoVDXaoQ/SVCbIpok9niLM0abDiPjpdttthq9ei2g=
+	t=1744398176; cv=none; b=vFuhXA4uP1uPg+xekkxN4WWi2c/FuDmaSxAbZQ7mFbDFstw95usEtKo1OP/4Jx7xtSib9YIqOoYDDIsKdN1+iiid7GZQg2cixYdZXge5/d8pbQNVZqYxObGc5LGEED8cxNbSuMsdGxM8vfTK0CtGODcyrTXoXEHUefwm1DSrsf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744397768; c=relaxed/simple;
-	bh=1VQGsUVya9f/qiTt9gC68n2QIQbemcSPpyCghmxxLkY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sPFNm3I1GQoCh9N3pPFGNt6kIc3/klQNvpWeunTwMgABqvLcA0cnQzYBH1TBvdEfDR61bbYvqnsRNSNILBzNstkPbhwq1w19YQN6GCUGqFyFcQsPY5KavKP0RT24symmoA+gUFfm3ynoUXutTANKjhwYccOsfnyyh+rW0ejTRwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fTCe6ojS; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744398176; c=relaxed/simple;
+	bh=xL657b5hnhpSEEbQyGaZYxcVqQ5eREZkNUN78ukvbX0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SavNo/yC39rRBXC7WnVq/3YXRmBHdKbzSYem0Mq9visGdjyr918Pg+LeIsNUlAubbQPsvRzd5vpwGTBwVByKeRh32KbJKZFrgEpfwOUub+KhC31W5oVH7bLTJ0pahdss7Q9nGq0IEbAddWARXC/FhM5oeU6+eaPJ9WQ/5Oqt9RU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=frank.fyi; spf=pass smtp.mailfrom=frank.fyi; dkim=pass (2048-bit key) header.d=frank.fyi header.i=@frank.fyi header.b=CYJGDM0U; arc=none smtp.client-ip=5.189.178.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=frank.fyi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=frank.fyi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fTCe6ojS"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5e6c18e2c7dso4295419a12.3
-        for <git@vger.kernel.org>; Fri, 11 Apr 2025 11:56:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744397764; x=1745002564; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1VQGsUVya9f/qiTt9gC68n2QIQbemcSPpyCghmxxLkY=;
-        b=fTCe6ojS7x4PL9mhHb6apYfA5kHF9b8UabBNGZVcuX1O2QCj/IjldepLXFOebiWQGZ
-         MIBPeBBAfWv3Y66o5t0Oi0cE91OrhjqV9I1l3pZyIfloRI68nVHuKgv0FPwmEKMJl5cl
-         gCfQw6j+WjRL9reYDIgIUQN2jruule30rTx1L1bZqkubC+lKlS86UT1cgHOChe+NgBCB
-         xMpA9UHnoB0inyMR0u9kO/zWbBp1G/fYiGMgSIDWc56xq9Ngd/tuxNEm5Q0UmBD4wy85
-         70tqhhAPYSgOWKrWFobFRFN9jfRvqm0LPCZLfSqJ8B5ZRwMvygFezHDC0T8w+QNDqbnj
-         KZlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744397764; x=1745002564;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1VQGsUVya9f/qiTt9gC68n2QIQbemcSPpyCghmxxLkY=;
-        b=ilkZK+u8v0LHMGwsZwe84LCX9/fkQOzKnrCOlPKi++N+DeO5Mw2ar2TShbRr/KVqUW
-         yWEHTT++05O92aLItw67tdAcKmY7Rol4sxFneK0tLLWWyumE4ApGhRg0GDnkXe/7IOfe
-         ZSDdeUGRKOKjuCHfGUpOIX01KQ3NtHYZEJjr1B/7VAbtojBfsbhu9079lsNItWgprk4o
-         6UUBMJJF8811rusvz2qghpoapI9mRLFwH2U2GpUJxtu33YWBDqUGMsGQkqDtzmw49PD9
-         ldbvNKBMuDrXfil74mvcMqsUyLtG0d2BzMnusQxtFG49M4WUT+16Q3FKx6YQIMFYqGBp
-         5amA==
-X-Gm-Message-State: AOJu0YxL/LoRROyFTEM/ww9UzGj5LeL0GHY8xJjraeBMnFzlhnXGUBdU
-	XL59zftz6syjh7MVwoXx5mM3F4o8gFpbOUiF+fpv7oChnVRUlPD38+7xaIf83qvtp3CoLx/GqFK
-	F7Osky08vLFIHDP7eQy18YzBbKNGMxFsVdWr37w==
-X-Gm-Gg: ASbGnctWwzcYaOO/jB9fcrBAtCx9ctUJP/0zwK0HnpJxWS8XXEtLxLY7cc4fGk42lD1
-	QYWw2rLM83uuozYdyQvyGrhy7jxEdz+Ro6oNhpYAoEh/V08ta6OWx5EwZW/jqsucPAq+d/D2Tss
-	3UdJaVLFRhc4VtOfM6zf+BYUtlvhWU46IaL36oWh+VruXkjeCVKAVSGeOp
-X-Google-Smtp-Source: AGHT+IHkDzzuYLU63A8Sc/2kYd2dp2lsbqawOqpuY7uJJJVR8PupZKqzZ/zSgASn0O6csqg87ZtzReYewWbBF2nlP18=
-X-Received: by 2002:a05:6402:3508:b0:5ee:497:d713 with SMTP id
- 4fb4d7f45d1cf-5f370116437mr2998725a12.33.1744397763623; Fri, 11 Apr 2025
- 11:56:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=frank.fyi header.i=@frank.fyi header.b="CYJGDM0U"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=frank.fyi; s=mail;
+	t=1744398167; bh=xL657b5hnhpSEEbQyGaZYxcVqQ5eREZkNUN78ukvbX0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=CYJGDM0UCT84meBSvAzMwxJz15XL0UCDutZnlfGTm/7hIK1oDTY6fv2ZiEpS3CmE9
+	 5R9YTWPKhSUJk4f+b7Ep2YtBkL2Lg3mBxINolRjb92SWNeg/IThlhsB/YrIhgcz2Y6
+	 5tVMYI73WvZ/tuyt5aZHNv1axv7L9qK41N0VW64vN72KRp+mXh7+rANPrDvD2gkNdz
+	 yiKZJm4k91lXK/7TdHbMfXIr3PyCaCth3d7/qg+Y0DUX5l7fn54nKzBbGMVpRaYfG2
+	 RF1WnEF0xk77MngxzUrINYi0HpXYzvXS8PbITyJ87cp0x0QIxw5QHjp56FEdtucUYT
+	 H3RY3FLoTLRnw==
+Received: by mx01.frank.fyi (Postfix, from userid 1001)
+	id 4E10D1120FB9; Fri, 11 Apr 2025 21:02:47 +0200 (CEST)
+Date: Fri, 11 Apr 2025 19:02:47 +0000
+From: Klaus Frank <vger.kernel.org@frank.fyi>
+To: ben.knoble@gmail.com
+Cc: git@vger.kernel.org
+Subject: Re: Way to "impersonate" remote or sync remotes without fetching
+ everything?
+Message-ID: <669a6a0f-bcfb-4596-a0c8-73c722a6ec10@frank.fyi>
+User-Agent: Mozilla Thunderbird
+References: <2afd91ca-13d8-4b40-aa8b-c1917f0882df@frank.fyi>
+ <CALnO6CCUHE6-RcZkTBYT-CeXHnYPBPe1eGSogWd7=5tK5NyuxA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <AE8657E8-D68A-4B86-9644-B57AEE743794@gmail.com>
-In-Reply-To: <AE8657E8-D68A-4B86-9644-B57AEE743794@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 11 Apr 2025 14:55:52 -0400
-X-Gm-Features: ATxdqUH6KBa3RHgdeGH8tiDkRVAtUnPW_LTpuVfXrGLYklSn330gOFMpzUJZ-V0
-Message-ID: <CALnO6CC9QiaE5xdSVr_PYm=TPHPR=7US2KEFeo5DzYs4KouzbQ@mail.gmail.com>
-Subject: Re: Bug in git-stash
-To: =?UTF-8?Q?Filip_Skogstj=C3=A4rna?= <f.skogstjarna@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Language: de-DE, en-US-large, en-US
+Content-Disposition: inline
+In-Reply-To: <CALnO6CCUHE6-RcZkTBYT-CeXHnYPBPe1eGSogWd7=5tK5NyuxA@mail.gmail.com>
 
-On Fri, Apr 11, 2025 at 8:29=E2=80=AFAM Filip Skogstj=C3=A4rna
-<f.skogstjarna@gmail.com> wrote:
->
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
->
-> edit a file
->
-> `git add <file>`
->
-> edit the same line again
->
-> `git stash -k`
+On 2025-04-11 20:43:24, D. Ben Knoble wrote:
+> Maybe I haven't totally understood your use-case, but what if the
+> authoritative source is your local repository, and then you push to
 
-I think you might find the following thread instructive:
-https://lore.kernel.org/git/ZikMqXeDnOqK_wlq@thechases.com/
+There is no local repository, that's kinda the source of all of this.
+The sync script runs in a CI/CD. I'm kinda abusing CI/CD here to run
+a kind of cron job, in a separate repository that does the sync, maybe it
+is easier to just call it scheduled pipeline/action or just stateless 
+cron job?
 
-Cheers,
---=20
-D. Ben Knoble
+Lets make a more quick example:
+
+gdm is being developed here: https://gitlab.gnome.org/GNOME/gdm
+so in order to make a PR I'll have to create a fork in that GitLab
+instance so now we're at 2 repositories. Then I want to have my own
+independent archive mirror in my own gitlab instance. Then I also
+want to mirror it onto gitlab.com and github.com just for the sake of
+this example. Now we're at 5 remotes.
+
+Now I'd like to have a script in CI/CD (that runs server side) to sync
+all of them. In example the gnome.org one could probably mostly be the
+autoritative source (except for the branches that contain my changes).
+
