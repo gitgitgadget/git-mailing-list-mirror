@@ -1,155 +1,143 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E992356CA
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 17:44:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E4A23236D
+	for <git@vger.kernel.org>; Fri, 11 Apr 2025 18:23:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744393488; cv=none; b=fchXrE11IAKMYXei7EwmwPRSV1kqPfFUXb80grkQuQSdH5FfIN+dXPXr7f7MVkIUS26GIZ8IC5aIi3cWTMCGNMoVbuwk0LJ2QrqCmu/Z5UGGVBVJ1s34h4bw1ceXlKHsidTQf95Ud2eo9VNi00fcQx78gCb8z8/FhhjC9r2LcfM=
+	t=1744395812; cv=none; b=AX1iL0STRqTlKnhasTOsdpTcrj9s4/tm95C8mGo72wOm/xRyC3aZH0R7D8HTUv+gFzpISzVAnssmARzFP3BvspBr78tTIq2PbLKU0lQh7x+dZjPJEQ/deQp/ZCr5WS7AZqT2N0y4SSQz9vqYznCDEo0vtPbn6EPuq36DpYE+cEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744393488; c=relaxed/simple;
-	bh=J5iiPGBT+6tYIuHwvBgzEus+ffKNsus/mg8Fmlc+vKA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RPBpKE2HIs6ord0hkVzevBJXnKu0FOp0Fu/ByOXc/87s8tdSvUGVc+Grsw3UW9isoEluzoaJPZL667cLpfhQGcNSzJ3J13td/bTA9HR07DJZfpRah1wmSqRgQMckst+FkjnjoK/RKirF2xP857+72+EKHU2Us7RTuC16Cw2r2gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=q7cKgyRF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rNRpmDqe; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744395812; c=relaxed/simple;
+	bh=bcoE4BqzMP6mn4GHfn+4XNqNrffVKZhDkMt7NbNwdXE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ri8n7bHLGUb1hmXZBWp3IJ1xO/ISoLzWMTQCC4Ui6i9C8Kal+fMBT4x5aGMwyhTiWgQBQS0Bq7RArGFMQ1seWSYuuPtpFH4x5PzOFGEpbuGe6y0CPMPVMFOsC4ypJ5aj0aA153sfWQ6yqX3ltbEzy51Zq95JmJ60eFnqjOBAQyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e1jJ8aid; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="q7cKgyRF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rNRpmDqe"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 82B7C11401A0;
-	Fri, 11 Apr 2025 13:44:45 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Fri, 11 Apr 2025 13:44:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744393485; x=1744479885; bh=LvEM066gUl
-	GrWH62uLGl7rNXXZ7UOi20rORo/3y0Zrg=; b=q7cKgyRFV16Yzu0/6Z3ZQ3CocF
-	HIcSXiqKTGjf5dh1DzH3Oh+QHf4J3t5K9k4ckWUntOt2PgUOqlwJWtx/ug90PoXn
-	fH7yZSvnR99ifP8VZOfoB+zRKwHnr2g98icmITRzqE4iBTz9b7aI+zd3NN7nYvQg
-	Zqw6szvTUt0Q3IcHUssP39CeKvLBfwV+jrghrUtQdlBU0hyJ30XtElq46iyJHvQa
-	T32q1MGcP1Y16oi3Q02DJPW2HLynVxeLjZtW3Lpr3IMTqfiXIXRYIeSoBYXXCY25
-	yhebJVFzKrYQa/opO8uTgBG/ksUOZU1Yq37LbTVGo5epvLinYgfbxNg0RzQw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744393485; x=1744479885; bh=LvEM066gUlGrWH62uLGl7rNXXZ7UOi20rOR
-	o/3y0Zrg=; b=rNRpmDqe/kbbFAkjzCfjQ7T7xFYPotLgeOxhsTrdwYfiiMrz+IK
-	0EC8aGNBZs5xbHUmb2WdMX+vPr+EVA9J+cDhxjlMhUDyAGMfW7Fekj/yLLgpYCRk
-	E273Dqk9hb/UfXxbg6vbql/1Z8GYGNuQGE0Is6iTjCgq8KlxI3NjZPJawOO9QNrK
-	9GXUPpwYJoD5oYIj1aXUDY9ukCVOZldsFQvVaQ09iNMRCqcy0kJIJo0M1DTBtiqJ
-	CmSjGIhHZrSy4MvVhwRQFRVOl8JFuAY+NJ8/qqtB3awJ1Nq4Uz+jD3MXYINFCIVb
-	OJzD9EPfJD2DxHEAL0eKE386bBnezY2zOjg==
-X-ME-Sender: <xms:DVX5ZwoQOHplJgYBuOvSIpKaWleXNpttdF1UrVUlrDQEwqry60ii4Q>
-    <xme:DVX5Z2rsdSUW47X3tVA9OOHi8-2vmWmid6QRKBZIHvd35BYmLs6eaDBVscKP3Vs-R
-    Oc93kt_jNgP9c9LXg>
-X-ME-Received: <xmr:DVX5Z1M9tbrfylkge0qFmbGcUMjCcPIxcEsd4u5L1r0UAqh5gswmnNXsARv_nbooPOnlAwvTSI80TLCgTPWAY_92RK7OqM3Cu9dY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvuddvgeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
-    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehthihtshhosehmihhtrdgvughupdhrtghpthhtohepnhhi
-    tghosegtrhihphhtohhnvggtthhorhdrtghomhdprhgtphhtthhopehmrghrthhinhhvoh
-    hniiesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopegvkhgvmhhpihhnsehgohhoghhlvgdrtghomhdprhgtph
-    htthhopehstghothhtsehgihhtsghuthhlvghrrdgtohhmpdhrtghpthhtoheprhgvmhho
-    segsuhgvnhiilhhirdguvghvpdhrtghpthhtohepphhhihhlihhpmhgvthiighgvrhessg
-    hluhgvfihinhdrtghhpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:DVX5Z34aqxtNTD-PE8r5gocL0CIVVuIMfKGEWaVkMc9LZF8ScGZK1w>
-    <xmx:DVX5Z_4_E267rhP8uQRXQlCEmGk69kkOl_690gZFcqVZZpJuziSPag>
-    <xmx:DVX5Z3gPv-wLrObSRm3gFoaJclWqj3kWin9469Wui7_4k8NGNpia0g>
-    <xmx:DVX5Z573fDodCWUH3mHog2kM5vWd9dp1YaEt0K3Q_zaKi1ZHKQnWJw>
-    <xmx:DVX5Z0j27VaF8xogOJ_mfwZTfofoN03MSgY7PKatYBNDMRuDblMkschq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Apr 2025 13:44:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Theodore Ts'o" <tytso@mit.edu>
-Cc: Nico Williams <nico@cryptonector.com>,  Martin von Zweigbergk
- <martinvonz@google.com>,  Git Mailing List <git@vger.kernel.org>,  Edwin
- Kempin <ekempin@google.com>,  Scott Chacon <scott@gitbutler.com>,
-  remo@buenzli.dev,  "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
- projects collaborating on change-id commit footer)
-In-Reply-To: <20250411154839.GC648081@mit.edu> (Theodore Ts'o's message of
-	"Fri, 11 Apr 2025 11:48:39 -0400")
-References: <xmqq4iyzn0vn.fsf@gitster.g> <Z/RFQY433muaCW44@ubby>
-	<20250408125521.GA17892@mit.edu> <Z/VGYrrVZYQ13TLj@ubby>
-	<20250409121924.GA148735@mit.edu> <Z/amMj/eg0RbXdkS@ubby>
-	<xmqqv7rdqkla.fsf@gitster.g> <Z/a+AVopz+HLa1eL@ubby>
-	<20250410134426.GB13132@mit.edu> <xmqqy0w8ng5r.fsf@gitster.g>
-	<20250411154839.GC648081@mit.edu>
-Date: Fri, 11 Apr 2025 10:44:43 -0700
-Message-ID: <xmqqfriemw38.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e1jJ8aid"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5e614da8615so4646338a12.1
+        for <git@vger.kernel.org>; Fri, 11 Apr 2025 11:23:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744395809; x=1745000609; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bcoE4BqzMP6mn4GHfn+4XNqNrffVKZhDkMt7NbNwdXE=;
+        b=e1jJ8aidkUFEMvGeWmdVU3y8/VH4wKsml9M1/eGPI4IJEMDMYWHwxkTqn9QAu/+ZPO
+         0MrcNUURkS6ZL6WhrE3dg8osWj+3C828wkmuFSv09CGaNv4/9kucmsp87sgwDq4u8AJs
+         hg109ZVJIdXV4eW5Zh4rMl4nM4tjNAkaq8IHBlfZf+v2cAcUgVDDz3v1FeQgjcRMeqHs
+         7dzwDmRHfMmYrXiAu4Dfij2q+2FGfG0GopeoxBi4nceUbxiAK2oLnl5yl4R34oTOewj2
+         XeB+i311shq4U84XWeayRCIzbGsLLLRcQ40YQus9+dss/IdZCWFeJLxIye4PQvuAxMuc
+         ke6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744395809; x=1745000609;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bcoE4BqzMP6mn4GHfn+4XNqNrffVKZhDkMt7NbNwdXE=;
+        b=NKjRgFWWzFmc1gtq64NrvVQpWVJ9wymUJvyVnITLituAHtVhCPeE4QI3odzxl3Tcis
+         k/DEkSPiIbCSvWgNF5Qfjmo7lkR7qnF4kK0TyT12m3OEk0Efp+bOH9Fh0/w1akpw2PWu
+         gKYY83Ahh5p/FmLZgDiSryxSvw5nLIBw0qi70d6+WxLym/PFi64ViZ/zzUw6nCFIkrJB
+         u9sxPMlYyWUjceZPkVqSO1vKOgVgNPGqpQBqVvAE7hODbTlBZndY1XgNikHsOp8wIFhG
+         eW10Lg8mxKxrU8fRihEZ+2efeRlWZEpl2wMgYMyyo/YebwqbnzE9/2EgOcYjm/7UZwgZ
+         0Prw==
+X-Gm-Message-State: AOJu0YzcC9TDytFJQekExmhYiGWNhDv79AcznbxncU9SrBYOAOvO70qf
+	G+sYPxso5m1KWDgz2CnipNV03QOTT2h9Z3MecxhlclVM6jnJt1RAqw0fWXNf+0dcF17XYn7IgB/
+	Xw2TMlLX7fF7jXH4YqPqjcGeMOKTHAVRR
+X-Gm-Gg: ASbGncvSvDEu3pPhNTcBA+YulwxA1VPAkf7kLxEN3/jPqugkYesJFewN39kyUKjBplg
+	OKr4hdnM22MpNjQWH+9gFEdHj4PglYzMy9D8P2y+Z340iGXVZz4X9mG5vpUuLLTeiGDMjYVE/VE
+	dOvTMFBTIMEH+NmHaKjoj5j2Ne5ktXeKOnUFzkS+0dQbXpJXqMNbv/GA3l
+X-Google-Smtp-Source: AGHT+IEcjlLIg45rld5eIMacXw1L/lmcZtZJl5QYVw5kyGIySKDc+UeOpNVI3pDtC3UR6SlTqj71iNBYBR/ZkmjQjac=
+X-Received: by 2002:a05:6402:909:b0:5ed:17d9:91d4 with SMTP id
+ 4fb4d7f45d1cf-5f329fc2346mr6496042a12.8.1744395809057; Fri, 11 Apr 2025
+ 11:23:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <76edd34d-3fd1-437e-b8d3-7e64e99644a2@gmail.com>
+In-Reply-To: <76edd34d-3fd1-437e-b8d3-7e64e99644a2@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Fri, 11 Apr 2025 14:23:18 -0400
+X-Gm-Features: ATxdqUHMXfg4Xl-dbsreT3bUjyyzHO7E6ct4_6qs6L6wxMKnKSlfDotLBFwyK1s
+Message-ID: <CALnO6CCbzqez9-BvbuV3NRRMvFLHSv57Tfwj3ibadUAMKznWrw@mail.gmail.com>
+Subject: Re: Bug: being stuck in rebase mode when accidently typing `git am`
+To: Ludo Pulles <ludo.pulles@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Theodore Ts'o" <tytso@mit.edu> writes:
-
-> On Thu, Apr 10, 2025 at 09:18:56AM -0700, Junio C Hamano wrote:
->> Thanks to the "cover for iteration N is a direct response for
->> iteration N-1" and "cover is marked as [PATCH 0/$n]" conventions,
+On Thu, Apr 10, 2025 at 10:35=E2=80=AFAM Ludo Pulles <ludo.pulles@gmail.com=
+> wrote:
 >
-> Even if the cover for iteration N isn't a reply-to the cover for
-> interation N-1, b4 will search based on the subject line for a cover
-> letter with higher version number, and this mostly works.
-
-That is nice.
-
-> My one (admittedly minor) pain point is where someone replies to a
-> patch series with something like "you should really also fix FOO", and
-> then someone replies with a single patch (without a cover letter,
-> possibly created with git; possibly not) that addresses issue FOO.
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
 >
-> This can confuse "b4 am -c" into thinking that the patch to address
-> FOO was in fact a newer version of the patch being reviewed.  It's not
-> a big deal; I can deal with this manually.  But having a patch set ID
-> would help with this.
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>
+> 1. Run `git init` in an empty directory, and commit once.
+> 2. Run `git am` and press Ctrl-C.
 
-Excellent.  I've seen this happen often; even though I usually pick
-these small things up directly from within my newsreader, it would
-be unpleasant when it happens when you are trying to grab a large
-series with "b4 am".
+Doesn't `git am` print a warning about how it's reading from stdin?
+Pressing C-d at this point to send EOF just exits "normally."
 
-The submitting contributor must make a conscious arrangement to give
-a "patch set ID" shared among the messages in a single iteration,
-and everybody who are responding must make sure they do not add the
-same ID to the messages they throw at the thread in response.  Those
-who use format-patch and send-email can do that with convention and
-automation and there is no reason to rely on In-Reply-To: header
-(which may confuse the automated recipient of manually created
-follow-up messages).
+> 3. Run `git status`. It will say: 'You are currently rebasing. (all
+> conflicts fixed: run "git rebase --continue")'.
 
-> The other things that would help with having an official patch set ID
-> would be to allow patchwork to automatically supercede an older
-> version of the patch series (possibly with a link to the older version
-> of the patch series in the Web UI).
+Yes, this is odd: my shell prompt (using the contrib script) says
+"AM/REBASE", so I know better: git am --abort does the trick.
 
-Lovely.
+This seems like a failure of git-status more than anything; I wonder
+if there's some difference in how the prompt script checks for
+in-progress am vs. how git-status does it?
 
-> I'd also love if lore.kernel.org and maybe b4 also had an automatic
-> way to get at the older versions of the patch series, and the patch
-> set ID would help with the automation.  Admittedly it's not strictly
-> speaking necessary, since b4 is already using the cover letter subject
-> line to search newer versions of the patch series.  The number of
-> messages it would need to search to find older versions would be
-> greater, though.
+> 4. Run `git rebase --continue`
+>
+> What did you expect to happen? (Expected behavior)
+> I expected to go out of the rebase mode such that `git status` would
+> say: "nothing to commit, working tree clean"
+>
+> What happened instead? (Actual behavior)
+> It outputs: "warning: could not read '.git/rebase-apply/head-name': File
+> does not exist."
+> Moreover, you are in rebase mode forever, and you cannot escape from it!
+>
+> What's different between what you expected and what actually happened?
+> Instead of going out of rebase mode (expected), you are still in rebase
+> mode and you cannot escape it (actual).
+>
+> Anything else you want to add:
+> `rmdir .git/rebase-apply` fixes the issue
+>
+> Please review the rest of the bug report below.
+> You can delete any lines you don't wish to share.
+>
+>
+> [System Info]
+> git version:
+> git version 2.49.0
+> cpu: x86_64
+> built from commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+> sizeof-long: 8
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> libcurl: 8.12.1
+> OpenSSL: OpenSSL 3.4.1 11 Feb 2025
+> zlib: 1.3.1
+> uname: Linux 6.12.22-1-lts #1 SMP PREEMPT_DYNAMIC Tue, 08 Apr 2025
+> 06:20:12 +0000 x86_64
+> compiler info: gnuc: 14.2
+> libc info: glibc: 2.41
+> $SHELL (typically, interactive shell): /bin/bash
+>
+>
+> [Enabled Hooks]
+>
+>
 
-True.
 
-Thanks.
+--=20
+D. Ben Knoble
