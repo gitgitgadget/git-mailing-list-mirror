@@ -1,239 +1,121 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC2B29AAFD
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 10:06:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B72E1EA7F1
+	for <git@vger.kernel.org>; Fri, 11 Apr 2025 10:41:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744366020; cv=none; b=KFvr7qSmJGZZEAWUjwrWtMR27PiRbqYw4If04Z3lUlHC5VuL+AEveqpdEAWoxrkt4Uu9UYWgrel6O45Kw7o32a2joX7wT186zk547TCFdWTG/005H/ZFWyRnBwCsB1QJ6MJEI3Hn4Q7ZrNKLIHOwM6nuzPxl11ybNjq5Cg4d58w=
+	t=1744368121; cv=none; b=IJMDp7u7V6tsu2HBd9qm4gjW3CdJQeEpQRDcf8Ew+ASJLo09ZF0ibq9qvs2PGnzl8ghW9yfApqwaU/Yt6tHT4ybtm1GM7O9n1sirnGBwUUjxEanpscmWrO8OvwrfByc7KwUggozo6SF+sbdZk8dh+q7kAoQ4PL6k2Bnemagsvo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744366020; c=relaxed/simple;
-	bh=LD9O0vRxWqgmJZfZfKNOf2PEBEPFs+kAUUJbR2fPvtA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MNKVCzX4PPV5tvKMWEcMgvAYc9HfcvS7Pg8RPDoRCx3vuEN/41EJJqAF2kTAFfTgtI5onTIYarwXK5PHBiBsPzNgz9lUcY7eOXRdbftpdIglfihpwqPCaRQnp6wVqNbctDRMUhSve7dsvr5D/N6FBEmKJtMOmh4FCNP74Xr08qA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bwDaMW4w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SQACwTSB; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1744368121; c=relaxed/simple;
+	bh=1CtL0gueMeOzfpIqMUysUMD/XEfMCdqKgi5X44/IEeU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LrUoZb4CB35kwZ8DafFa4ahS+IJcOQ/+rcuQt+edMx82Qb91hWAzdgdhyXLdx2RanGmGjv7yLvnxk6U5QBcQ9o7tHIgtEWLFHXOLub8oixZ+qWmXQJ5m1cipwWi4kSEMFjIdSiPaYGEUPpoEeFZ3al5k50rq9qIxkFAao9WBB2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qk+d4O2A; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bwDaMW4w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SQACwTSB"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5642411402D1;
-	Fri, 11 Apr 2025 06:06:57 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 11 Apr 2025 06:06:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1744366017; x=1744452417; bh=r1cFlZ4PxW
-	8UkBG/qsvFqaU7pLAt77Lkg/u/faz48l8=; b=bwDaMW4wTPfbVY/VPSWVLJGj75
-	JeYxkhS4iY37u76oiTn/bkS2U8S+lHj5KiDDgRDx/8oGqJehEn/XXKTmTTyXjH7i
-	7isGdvmz3ArpUSD3Ad/DXH3TXUAwsX1XmIIrQHoyxdiH6awV0rKhQOmBKqiMboXS
-	yilHs3n2qZOfe63ZvFBK0lqITvD0mr442rtfYuXZ8YobFI3egJtF98nceWXT1W2p
-	mFU6VGRmao/zFfyhWkV9Xb1F1ButGeBBp12/SYX02EBe5tHfL5mJl3QGh0q3ODoB
-	pBF13XWThs0uIhVcP9El49WFha1Z0aFsexKWNxFNKOgwgF3e/NNzRnE0DhvA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744366017; x=1744452417; bh=r1cFlZ4PxW8UkBG/qsvFqaU7pLAt77Lkg/u
-	/faz48l8=; b=SQACwTSBr7nv0fW7qwoKTkzLzcBE/9rPmtTvJbBjPRm6biu0eF2
-	lu0onD6IyKg4lgNKJE5Jp4pEL7Jy9MDxwcR6SmXueARZRlBgWoupg2akrueiujeL
-	Z99yruxEbyvOk5xyAfgzw7sD1RhwlH7dKHlgrsx6sn/omTiwHUS4SgTgd3DP8dnI
-	4MERhNBW4ILQ2HDOAwcQMzSH7UH3QSfoFTpxH7eQMJ+DGAL6BrrGFg1OaOUEq8In
-	uwGiVVlhOMOFEy04MmH7VpZojyu1ojdBSR5ZfUbykUaf3tZfLMCTFmJlx5OLyPCq
-	yDPTOpaNaZueidzP9TTbhV98DM9073qHw1g==
-X-ME-Sender: <xms:wen4Z1YuisXbE4lJKEgrxsaIMMTSoi7lOySZKQU9BYwaeIK-8OcVdA>
-    <xme:wen4Z8YatdRoLjJsnsOKblsFpp9Ew6eqBEcbLYHLk97xfJxYp3ieSAVOvQt6hbzPc
-    XmLq5XuChq499WTfg>
-X-ME-Received: <xmr:wen4Z3-iEqGumnoiRgvHd1PScP_MmVL-TCi6g5aMiszPunkq4gyeIc9dRj8RWdy7vt1MHgzv5hiFpOhTvoQTi3jU-9vFIrliFkdo2ym0zoc9evo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvudduheefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepleevgeegjeeukeeghffhhedvieehhedvvddtueff
-    iedvheegleehueeiffdthfdunecuffhomhgrihhnpeiilhhisgdqtghomhhprghtrdhhth
-    dpfhhigihtuhhrvghsrdhhthdpphhrihhnthdrhhhtpdhsuhhmmhgrrhihrdhhthenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:wen4Zzq25IYDg9LAecqD-kYRdcLzglKLcGque5aSbN6KlT1pM2FKGQ>
-    <xmx:wen4Zwp31XAwxhMeZTpEr4NGAGgEbc91K9ip9yrZVq6fL9CfpT0JfA>
-    <xmx:wen4Z5RH9b2KOKhQynSUBqMWF2xglWTi1Sc7OpKavVqoKi0EDoKUTQ>
-    <xmx:wen4Z4oDzAbp8wCSz4ytcWSr5QQvNKTTFPfIVJ0MfC8sbNtOgKkbzQ>
-    <xmx:wen4Z_13w360zL73ie4thb_oCDH-SCbisqq4j_caeNPmTwJTXgkqrITC>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Apr 2025 06:06:56 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id efb31a39 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 11 Apr 2025 10:06:56 +0000 (UTC)
-Date: Fri, 11 Apr 2025 12:06:54 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, toon@iotcl.com
-Subject: Re: [PATCH v2 3/4] meson: add support for 'hdr-check'
-Message-ID: <Z_jpvghOGHvw2Y4x@pks.im>
-References: <20250410-505-wire-up-sparse-via-meson-v2-0-acb45cc8a2e5@gmail.com>
- <20250410-505-wire-up-sparse-via-meson-v2-3-acb45cc8a2e5@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qk+d4O2A"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5ed1ac116e3so2818343a12.3
+        for <git@vger.kernel.org>; Fri, 11 Apr 2025 03:41:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744368118; x=1744972918; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=evXpafDvWk2J3w2KZdsgaR6nz7S9AEuOWV/R6j0eF60=;
+        b=Qk+d4O2AHF0AX2ibaX8lpytSpuUiNjWa/I5gi3VJmPhOt1t08S6Ow6wyXnXE/z4enK
+         StQAU4hTgHVN1X3uTWU6Aa0tbwHs4NrYk2rqCminx++tuncFGHXMzYy2fzVE5VnWFlK7
+         i2KQOZxaKcRDuwfaN4oTVcCdTPRJM4o+BlQ4T9gMqss7yfPJpGqJVgkHaTDKGunYjSy2
+         X5gHT1zAKGpchbVTxT2xLIWFFwn5lM4RmpC/NziCd9C7oQI7ZNUTcgdFYdWWGI1Y6fIx
+         TvubKuJCO/p48nyV+K7M8CRoUJSuYAsEyUPSvmJGRRe8Q8PkL0UCB2rWaXWE3MEKffC+
+         K0PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744368118; x=1744972918;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=evXpafDvWk2J3w2KZdsgaR6nz7S9AEuOWV/R6j0eF60=;
+        b=mbxUtetJ/bK/0oyYQcKMi2P4NXxQfAtxcq8gjgqg4sxnfIPO7ACldx9/Kx5/Cx9GkI
+         t3gINp0nyi68celcpLJk9BILEyVF6/CjXhQyjZia/MVofxUMezS6lAOS4iJeVSresh/z
+         Gr5oYumhXAqNjWGtRBdduIHvRIkqx+1jL92zHMhRzocCD1Xtg+ikVXuTScmbo5QdDfJh
+         Qi5l/2JqjzqcNOMC++nLAW9S4MknTw2jZ31aHPQMP50BHONdl4D1xhC6X11O5P/SSJSj
+         ZhT6lomH8uX6qDcoDBhdxqgea2LBRXUkEd5BtlWK/FyUOgjIER5E8xuOruMoB6Cy4nPa
+         f4eA==
+X-Gm-Message-State: AOJu0YxlbV+C8Mw/hmUbLxW0ZhC03w2Cl2txqd9/ZCElzzXHhUI+2qmp
+	0pykx1Bgp+60o4O/Pvj+fW6/1FlTY9B8El/rgpsTC4Y9HGlxf0jHU2Y7CtvPZ9CczuiJnfn7HD3
+	OUsyuxfQg19fSG3kOhgwI0yxSFQJr4XI2
+X-Gm-Gg: ASbGncukpiPcepNWrtmVTPhSxTdL/qzZuGh9phBY/vRAEBC6QzKJmUYVHW5WpsekuFS
+	aodBBBVRJTc/68MOHidXLHdCElNBU4mLfwdRduoIsZwgHc4gUzeSG05w+VabgOTzxqJAl7AWNg9
+	Qd62tf8QUrhYIgcpJ02PO2DA8mpXnA2X3AH8xVdx3GOzPljKzXon2S6rTdQX4VPDVSJg==
+X-Google-Smtp-Source: AGHT+IHA84ZF7Ak+hFA2KZpjeOkg5EkryQ7S63UQ0jR9FljS4zwTsRdgid/R8t5PKsLx5jrgJkIKqfVx5+wzvcd4Pxg=
+X-Received: by 2002:a05:6402:34d6:b0:5ec:cbf8:ab28 with SMTP id
+ 4fb4d7f45d1cf-5f370012552mr1516005a12.22.1744368117906; Fri, 11 Apr 2025
+ 03:41:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250410-505-wire-up-sparse-via-meson-v2-3-acb45cc8a2e5@gmail.com>
+References: <2020782.usQuhbGJ8B@nb0018864>
+In-Reply-To: <2020782.usQuhbGJ8B@nb0018864>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 11 Apr 2025 12:41:45 +0200
+X-Gm-Features: ATxdqUHFlidBCARakIefO-G5g76qFLCzA_1RXqf17i4Uy72srMPBxGuNvVgH2mE
+Message-ID: <CAP8UFD0aPOLgWHPM5eQRHFhegaM-O+wKFEB3cJ9kHy+ciShm6Q@mail.gmail.com>
+Subject: Re: sendemail.smtpPass is truncated
+To: =?UTF-8?B?SsOpcsO0bWUgUG91aWxsZXI=?= <jerome.pouiller@silabs.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 10, 2025 at 01:30:33PM +0200, Karthik Nayak wrote:
-> The Makefile supports a target called 'hdr-check', which checks if
-> individual header files can be independently compiled. Let's port this
-> functionality to meson, our new build system too. The implementation
+Hi,
 
-Nit: Meson is typically spelt with an upper-case 'M'.
+On Thu, Apr 10, 2025 at 11:48=E2=80=AFAM J=C3=A9r=C3=B4me Pouiller
+<jerome.pouiller@silabs.com> wrote:
+>
+> Hi everyone,
+>
+> "git send-email" started to complains my credentials were incorrect. If I=
+ run
+> git-send-email with --smtp-debug=3D1, I can see my smtp password is trunc=
+ated.
 
-> resembles that of the Makefile and provides the same check.
-> 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  meson.build | 107 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 107 insertions(+)
-> 
-> diff --git a/meson.build b/meson.build
-> index 790d178007..6fce1aa618 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -655,6 +655,12 @@ if git.found()
->    endforeach
->  endif
->  
-> +headers_generated = [
-> +  'command-list.h',
-> +  'config-list.h',
-> +  'hook-list.h'
-> +]
-> +
->  if not get_option('breaking_changes')
->    builtin_sources += 'builtin/pack-redundant.c'
->  endif
-> @@ -1995,6 +2001,107 @@ endif
->  
->  subdir('contrib')
->  
-> +headers_check_exclude = headers_generated
-> +headers_check_exclude += [
-> +  'compat/apple-common-crypto.h',
-> +  'compat/bswap.h',
-> +  'compat/compiler.h',
-> +  'compat/disk.h',
-> +  'compat/fsmonitor/fsm-darwin-gcc.h',
-> +  'compat/fsmonitor/fsm-health.h',
-> +  'compat/fsmonitor/fsm-listen.h',
-> +  'compat/mingw.h',
-> +  'compat/msvc.h',
-> +  'compat/nedmalloc/malloc.c.h',
-> +  'compat/nedmalloc/nedmalloc.h',
-> +  'compat/nonblock.h',
-> +  'compat/obstack.h',
-> +  'compat/poll/poll.h',
-> +  'compat/precompose_utf8.h',
-> +  'compat/regex/regex.h',
-> +  'compat/regex/regex_internal.h',
-> +  'compat/sha1-chunked.h',
-> +  'compat/terminal.h',
-> +  'compat/vcbuild/include/sys/param.h',
-> +  'compat/vcbuild/include/sys/time.h',
-> +  'compat/vcbuild/include/sys/utime.h',
-> +  'compat/vcbuild/include/unistd.h',
-> +  'compat/vcbuild/include/utime.h',
-> +  'compat/win32.h',
-> +  'compat/win32/alloca.h',
-> +  'compat/win32/dirent.h',
-> +  'compat/win32/lazyload.h',
-> +  'compat/win32/path-utils.h',
-> +  'compat/win32/pthread.h',
-> +  'compat/win32/syslog.h',
-> +  'compat/zlib-compat.h',
-> +  't/unit-tests/clar/clar.h',
-> +  't/unit-tests/clar/clar/fixtures.h',
-> +  't/unit-tests/clar/clar/fs.h',
-> +  't/unit-tests/clar/clar/print.h',
-> +  't/unit-tests/clar/clar/sandbox.h',
-> +  't/unit-tests/clar/clar/summary.h',
-> +  't/unit-tests/clar/test/clar_test.h',
-> +  'unicode-width.h',
-> +  'xdiff/xdiff.h',
-> +  'xdiff/xdiffi.h',
-> +  'xdiff/xemit.h',
-> +  'xdiff/xinclude.h',
-> +  'xdiff/xmacros.h',
-> +  'xdiff/xprepare.h',
-> +  'xdiff/xtypes.h',
-> +  'xdiff/xutils.h',
-> +]
+git-send-email is a Perl script, so it might not be too difficult to debug.
 
-Many of these feel as if they should've been part of
-`third_party_sources`.
+> "git config --list" show the correct value. I am also able to properly us=
+e my
+> password with "--smtp-pass"
+>
+> My password is not insane:
+>   - < 20 characters long
+>   - just a mix of ascii printable characters (no unicode)
+>
+> My password contains characters like '#', '$', ... So I need to quote it.
+> However, I use special characters for while without issues and "git confi=
+g
+> --list" returns the correct value.
+>
+> I have successfully used this command 5 weeks ago. Meanwhile:
+>   - I think I have not changed my password
+>   - I believe git-send-email has not been updated
+>   - I believe none of my Perl packages has been updated
+>
+> So, I have to admit I have no idea from where the issue come.
+>
+>
+> [System Info]
+> git version:
+> git version 2.39.5
 
-> +if sha1_backend != 'openssl'
-> +  headers_check_exclude += 'sha1/openssl.h'
-> +endif
-> +if sha256_backend != 'openssl'
-> +  headers_check_exclude += 'sha256/openssl.h'
-> +endif
-> +if sha256_backend != 'nettle'
-> +  headers_check_exclude += 'sha256/nettle.h'
-> +endif
-> +if sha256_backend != 'gcrpyt'
-> +  headers_check_exclude += 'sha256/gcrypt.h'
-> +endif
-> +
-> +if headers.length() != 0 and compiler.get_argument_syntax() == 'gcc'
-> +  hco_targets = []
-> +  foreach h : headers
-> +    if headers_check_exclude.contains(h)
-> +      continue
-> +    endif
-> +
-> +    hcc = custom_target(
-> +      input: h,
-> +      output: h.underscorify() + 'cc',
-> +      command: [
-> +        shell,
-> +        '-c',
-> +        'echo \'#include "git-compat-util.h"\' > @OUTPUT@ && echo -n \'#include "' + h + '"\' >> @OUTPUT@'
-> +      ]
-> +    )
-> +
-> +    hco = custom_target(
-> +      input: hcc,
-> +      output: h.underscorify().replace('.h', '.hco'),
+v2.39.5 is quite recent (May 2024) and it looks like there were
+send-email changes in it compared to v2.39.4, so it's possible that
+your machine was upgraded from v2.39.4 to v2.39.5 recently and that
+those changes broke send-email for you.
 
-You can use `fs.replace_suffix()` instead of `.replace()`.
+Maybe you could try to downgrade to v2.39.4 or v2.39.0 just to check
+if send-email works better.
 
-> +      command: [
-> +        compiler.cmd_array(),
-> +        libgit_c_args,
-> +        '-I', meson.project_source_root(),
-> +        '-I', meson.project_source_root() / 't/unit-tests',
-> +        '-o', '/dev/null',
-> +        '-c', '-xc',
-> +        '@INPUT@'
-> +      ]
-> +    )
-> +    hco_targets += hco
-> +  endforeach
-> +
-> +  alias_target('hdr-check', hco_targets)
-> +endif
-> +
->  foreach key, value : {
->    'DIFF': diff.full_path(),
->    'GIT_SOURCE_DIR': meson.project_source_root(),
-
-Patrick
+Best,
+Christian.
