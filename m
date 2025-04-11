@@ -1,102 +1,140 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA1A2D7BF
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 00:47:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696821DF974
+	for <git@vger.kernel.org>; Fri, 11 Apr 2025 08:18:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744332456; cv=none; b=eMmQyen3yFvhDx/9vkM12ZM4Yv+Dq/d4XY+V/ioiUN+LUhZ2qcZpFPNccSvuygFAjJuCDb5xcdJ14NqMUY85ruYiL3G9nxAUAC2PVkBq5HLf2LtfmFn3kJAsLp3BDLJdIWMmP7unS4hHKA7vKE3vbuA65VhHZp4BW22unoQJNTY=
+	t=1744359519; cv=none; b=qpL+5Cs0cVse4PjwHZK45iOLH6NDHHjmgoGAYJwF30Avs5DIv6reS5lY6gOACrP4+2jIsAYo2XzaJF+OMYz8WsQ6Q5iV6LkTwe6CBhS/mdGYl4OPX2uvoPIL70P/9Pr85Czgc8WWcUar/G7iZKb7f5Mc9ph7O97HCotEVRjRQYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744332456; c=relaxed/simple;
-	bh=Qk73f28cW4oOpgLjLn2t1vNB78A4fRS9RP/elCcCxyI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kzo5Ih7KzlAqsClWZvGXflAFVygsum7s4v4C2LSnDJNGl4INwuLWSsfT+BPpXjeijVqPjawfIrfUE+EkH3vyggDFHXfSifkzd6eMFJaRd79U/3AbnKwXYss2hTONkqlGvhvjm/xEdfHWsrQB6GAZcoiFUNxa1M+IjQSYxvwmqvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=jYtoo9vj; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1744359519; c=relaxed/simple;
+	bh=HtInqtoR6urXL11UuS40rVacniuewprxD7Mai5WxHGo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HKWu4O6hkN6RIgJgB7FEcrIJPoYwg4ym33+qbInao1xw2qFZbQkNgL0qNddQ3j3IiGwyx2ffCWx0NKYOUXC6aDLQvlqVcpf68LTQIadPcQKhbG6pFMbaGfMdLZAel3EICjKbTErBet9OJjgFDd6Wd1dP1IAgUfplRoGDSgVuqlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quadrature.ai; spf=pass smtp.mailfrom=quadrature.ai; dkim=pass (2048-bit key) header.d=quadrature-ai.20230601.gappssmtp.com header.i=@quadrature-ai.20230601.gappssmtp.com header.b=HWqzvBB4; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quadrature.ai
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quadrature.ai
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="jYtoo9vj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1744332445;
-	bh=Qk73f28cW4oOpgLjLn2t1vNB78A4fRS9RP/elCcCxyI=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=jYtoo9vjlAlQNrb89w1S0TTptR4xPu9oBWdHMxYYKZxnTg2LQReWODooWIf+tLQuF
-	 W1hA0Q3lDWdQtiRDGi0Svk/qKaFHsW3YTZqngjMGi+m1Unq3+ffWXdGNRoTLrkHr8U
-	 xLZTbBFxVBz0AVvK+ekUYNT7NTvV9Bs9whVxHQzyRXWHIlP+VghPSGlR0KndcKppSR
-	 zEIy9sIEI9a9Cj9jTN2P6spVJQVojx6Lk86Fjq3Nw2fgleV5Mvzt+RmoGherR8NVbG
-	 fGGIOXSz5bQqJYXeDj7OjHakZcj/WH3Nxi2kFs1rUorN+04c7vd048Litx7fKsV08i
-	 xGWY6PNc1bl154Yr1wZQNWg1+6q/ni00rketVEFNdNtqutFY0XeKz267EBPk3zuLzL
-	 fonx4m3RtOJGpNBYij3Ts8FnmE8EEc3WENvOVgLggBSdgKd5pXu9Ksbm/Zki8kXdJs
-	 96Xkjub9TP6CVwUfi5oy9Nc6hUtC1sNPaftsWPPRD62UDjwKzna
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9ec0:b846:49f:a41d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 863FF20104;
-	Fri, 11 Apr 2025 00:47:25 +0000 (UTC)
-Date: Fri, 11 Apr 2025 00:47:24 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: Nikolaus Rath <nikolaus@quadrature.ai>, git@vger.kernel.org
-Subject: Re: 'safe.directory' setting ignored for some operations?
-Message-ID: <Z_hmnPoPjXQm6lyP@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Nikolaus Rath <nikolaus@quadrature.ai>,
-	git@vger.kernel.org
-References: <CAPzgaL2Q4v0LMSek=osugTDCDww9D-Tg+tDsFhFvRSVXFR8g6Q@mail.gmail.com>
- <CAPzgaL1NH_GofMko6f2Auz4e1TjTJNH0w4-ph8np04QRfT_R7A@mail.gmail.com>
- <20250410213542.GA3168175@coredump.intra.peff.net>
- <Z_hCjfoRUIDZoBfP@tapette.crustytoothpaste.net>
- <20250410224223.GA3191424@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=quadrature-ai.20230601.gappssmtp.com header.i=@quadrature-ai.20230601.gappssmtp.com header.b="HWqzvBB4"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43cec5cd73bso12143345e9.3
+        for <git@vger.kernel.org>; Fri, 11 Apr 2025 01:18:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=quadrature-ai.20230601.gappssmtp.com; s=20230601; t=1744359515; x=1744964315; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=f75jL8322nFhQvTqZmXIIZz5b/ENxFlXYreERFCcYOk=;
+        b=HWqzvBB4TIjXVt+DfRWZRQJe6HaWxpPzG+zWhhSAAoZfYYPR/7290LY6dqjOzNj0+b
+         9mocEOnoGlwSLdxnHfS3YIQ3d48kiTOwWZpK1yhSRvtOg8fIycbOVi72loLJO9tOgMLY
+         4DHWS/WLH0kpkv83OmkWjh1pe9/wruws4ZRXA32zOvLJ0MWqD1DgihwXbSUUJmqozKXu
+         L59stG6dLyaS8a+BZg+cdxGLx0VGkiZ19sOcK+07grvFd0H/OIFPvkTvIUp5kJqAStcT
+         vJqjYgeqfyoE4CG+O1WyQuzCRTNI76KZ4c+H2KXeULWBJ6tBoB3ZTcOsdHiD5HJAlE3E
+         4lrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744359515; x=1744964315;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f75jL8322nFhQvTqZmXIIZz5b/ENxFlXYreERFCcYOk=;
+        b=AJSD9Y+QeIh30jaX72Ai7LLUbosqBuKG/oio1eEgSn3Mhly8ZEiPIbWitCcDSX6stt
+         2ZeVesvB2whbXwyJcp3R3Hx2ySDPgnWMiDw2OVNMFmXy22HHQ2n81yIocgJzCYIzS8Zj
+         XugqMdotsRYT0mKYlDhfzsmdUAEGPFIBodGegsEKN45PgtYvUzs/D3/+JJ6Ngqko1f7g
+         k+VSHSM6L1Wq7kJog+0jVqgL7kmNQCAq6hnaHz7YiWE132yzbSLHaITt99Cgf2o8rOkY
+         RWccgRHKGBxyyNo2+jR2sywPjmrGmR9nmeHiauwbrfhmPbvV++3bLPGA9IKQHK5Jqkyw
+         4n+A==
+X-Gm-Message-State: AOJu0Yz9WVC7HBv8GnkC5AYqH/MlACyQOvyXiHFosaET0kkCIrWXSAqD
+	OFK2Ei6OErB8MpzwWaVX90P42mRQq01k5jbKWzZczGKIxOP+vjuMA3ttk/WFg/CmG9SF52TDhHE
+	c+fOCE88ZG1p2W7xOa5PCSBA4E2x6k84mIKDIgpvmXfWIknez5w==
+X-Gm-Gg: ASbGncvpRNFVl2uCZ4xcvZmBZpJH5G60CKi8eONwKWVm7gE5iPPGU8znCBJIBJsUE03
+	aMB+IfmRIWQiqRF16arkkOuF9R2BuGIuCWt/8R6+aGxChjQqlv6DXY8RVvvk8hGab1uuPoLySFM
+	XWCVCL9RgYR8F4GvnIk6Y=
+X-Google-Smtp-Source: AGHT+IHdsfYVSwSYjBeYblz8BsdXWaLxhJTyt1N+Cz49SWJV+/cGAHGQcv+jurKkM0yJ/Mv+JthS134WPndAIcyAk4Q=
+X-Received: by 2002:a05:6000:381:b0:38d:d9bd:18a6 with SMTP id
+ ffacd0b85a97d-39eaaebc773mr1209314f8f.42.1744359515416; Fri, 11 Apr 2025
+ 01:18:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5izWINMdUl4Y8Bz8"
-Content-Disposition: inline
-In-Reply-To: <20250410224223.GA3191424@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+References: <CAPzgaL2Q4v0LMSek=osugTDCDww9D-Tg+tDsFhFvRSVXFR8g6Q@mail.gmail.com>
+ <CAPzgaL1NH_GofMko6f2Auz4e1TjTJNH0w4-ph8np04QRfT_R7A@mail.gmail.com> <20250410213542.GA3168175@coredump.intra.peff.net>
+In-Reply-To: <20250410213542.GA3168175@coredump.intra.peff.net>
+From: Nikolaus Rath <nikolaus@quadrature.ai>
+Date: Fri, 11 Apr 2025 09:17:59 +0100
+X-Gm-Features: ATxdqUEDqYoTvQRjQO2MtP96mfn7AL95VrwZ8Q7SlLDse358taAacSPj1yJ9VaU
+Message-ID: <CAPzgaL3tYJay9P_VvuqSKRuta8FFgn=xc7P=2t3MFukbobiFOw@mail.gmail.com>
+Subject: Re: 'safe.directory' setting ignored for some operations?
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Thu, 10 Apr 2025 at 22:35, Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Apr 10, 2025 at 02:21:01PM +0100, Nikolaus Rath wrote:
+>
+> > It seems to me that the 'safe.directory = *' option is ignored for
+> > some operations:
+> >
+> > ---snip--
+> > $ git --version
+> > git version 2.43.0
+> >
+> > $ git config --get-all --show-scope safe.directory
+> > command *
+>
+> You're getting "command" here, but I don't see any "-c". Presumably
+> you're setting GIT_CONFIG_* in the environment yourself?
 
 
---5izWINMdUl4Y8Bz8
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes.
 
-On 2025-04-10 at 22:42:23, Jeff King wrote:
-> Yeah, that's true in v2.48.0 and later. (I tried it after writing the
-> earlier email and was a little puzzled that it works with --no-local but
-> not otherwise, but it sounds like that's known).
+>
+> > $ git status -v --untracked=all --ignored
+> > HEAD detached at e116555
+> > [...]
+> > nothing to commit, working tree clean
+>
+> You don't show us the repo here, but presumably this is one you don't
+> own, and the config is working as expected to allow the operation to
+> proceed.
 
-It is.  The reason for that is that we try to hardlink if `--no-local`
-is not provided, which has all the normal security concerns across
-ownership boundaries.  However, `--no-local` uses the normal
-`git-upload-pack` mechanism, which we know is secure on untrusted
-repositories.
 
-One thing we could do to improve things is detect if the repository is
-owned by another user and just set `--no-local` automatically, but
-that's a #leftoverbits for someone.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Exactly.
 
---5izWINMdUl4Y8Bz8
-Content-Type: application/pgp-signature; name="signature.asc"
+>
+> > $ git clone -v --no-checkout --
+> > /builds/coreinfra/grafana_terraform/.git
+> > /builds/coreinfra/grafana_terraform/tmpus18hzbs
+> > Cloning into '/builds/coreinfra/grafana_terraform/tmpus18hzbs'...
+> > fatal: detected dubious ownership in repository at
+> > '/builds/coreinfra/grafana_terraform/.git'
+> > To add an exception for this directory, call:
+> >
+> > git config --global --add safe.directory
+> > /builds/coreinfra/grafana_terraform/.git
+> > fatal: Could not read from remote repository.
+> >
+> > Please make sure you have the correct access rights
+> > and the repository exists.
+>
+> Here you are running afoul of the environment-clearing that happens when
+> Git internally "switches" to another repo. The "clone" command is run in
+> your newly-made repo (which is "safe"), but it would then run
+> "git-upload-pack" in the remote repo to act as the server side. We clear
+> out many Git-related environment variables when switching between
+> variables, including GIT_CONFIG_*.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ/hmnAAKCRB8DEliiIei
-gV4hAP92ulnJeqb/hdSHikbcwT6o97J2G2tuSUKiVvPSxN1L1AEA7CZ9IgRQgmN5
-N8e0HqznKNsvN+pNQozxfvnthq7mYAo=
-=Dv5h
------END PGP SIGNATURE-----
+Ah, that explains it indeed. Thank you very much! And apologies for
+not being fully clear about the context.
 
---5izWINMdUl4Y8Bz8--
+Best,
+-Nikolaus
+
+-- 
+nikolaus@quadrature.ai
+
+https://quadrature.ai
+Dir: +44-20-8145-4726 Main: +44-20-3743-0400
+The Leadenhall Building, 122 Leadenhall Street, London, EC3V 4AB
