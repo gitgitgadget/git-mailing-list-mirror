@@ -1,55 +1,55 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5685D1C8639
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 09:29:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8792989B3
+	for <git@vger.kernel.org>; Fri, 11 Apr 2025 09:30:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744363800; cv=none; b=U9VLLRay8mKkJmb0Dd2HgcYjyDYnmilKThS2bh6KyvexFbnFvnnbGqfAaoKUui/N/A54zcCo1GyYSmzeb6RNlV3Uh4unXawAUOPsFbfBtc1mox7ln0h3lIOziOYpMHjdxJyXTFibh3peYNz8P5F5gYLliANUHE8efwSabMGGjt8=
+	t=1744363802; cv=none; b=XXRIzP8XKoMvZqHWu7EjNHtIepCeaAEWrKkIlobUfMUUxQxt1j95NQNl7660DGlh89AOy2aTEP4IPwHnRxK82RkNlShzr1MONUcsKIrYvMng/VW7zFycSmv0RFBU2VDSEyNKL6aJqFU8Gx1KpBg6GnjdwcTeLAoh5OPP2rB6yvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744363800; c=relaxed/simple;
-	bh=Gs8TstqWPXNfXWFefBfoqxI7qtLbej981TN0uvi/8p8=;
+	s=arc-20240116; t=1744363802; c=relaxed/simple;
+	bh=UxE8qaTOLSa4tKf2nQL+129sw1Tp0uzIXgHyI+/jY+A=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FcbWtuE6B/0u0Ua2v7B90jlMN0EpTCHQ84SUHzuCyr//OXPxI6XCifVyRzKrYZF4QbA4hkc+L1otF4jjybmpMikdW9utHiCsjiZOUFa+WOwpgwOGz93uwI5uHKxEUtpPkeC4Xj4RJdAXRgObBeyuxTM8CXjbH6CFkVB49hXCVbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F4YWFHLV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mveV0QNp; arc=none smtp.client-ip=103.168.172.144
+	 In-Reply-To:To:Cc; b=IEv53/MXGCuhgMSd5JZuQOQPX+QdJk4XPjJy0jVrWcS5myGJviar1DV9X1JY00KKEWwabhnvlCW4Yzzak3UPiWfnwbAv3+LrmCPTENKVICEPYi1HZhF8dMaWJKyyZrpGJeqXGsux/Fs3jQ5chTT//3PnNHZksYFAB9wRXMXvoto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oe6rP57p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iR1Xu2+R; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F4YWFHLV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mveV0QNp"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oe6rP57p";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iR1Xu2+R"
 Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 58A8F1380299;
-	Fri, 11 Apr 2025 05:29:57 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6916F1140292;
+	Fri, 11 Apr 2025 05:29:59 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 11 Apr 2025 05:29:57 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 11 Apr 2025 05:29:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1744363797;
-	 x=1744450197; bh=LXENE1jMdMRHYPqyCwIGvC8DKOhjmMiJOgTMN0z7HBA=; b=
-	F4YWFHLV9GWugl+BTDpNL75FQJA3O8UEf9SrT8Nqy10stnXwRhhzsqSxh3lJWMiI
-	+4AFUKsTr79daBrd4FXmrQmggurH0Y/U5Pk+dyxggck7Cg9pM/Ux073ADXKH2zWX
-	fvbNxpoadRH8MuqA8tpQLYDk3E3W07pBx6rMePFEVV9TJaKYzTAyWzxtrVewWFlB
-	Kx8xJ+fiJ3+lslCx6ZFy5u6HTomxNk70361Zq8vLluZDiXz9H0pnnqSAnptx9YWC
-	81avfQ9CdM+75OnMQV9P81RxTVWFBlhsIIxrKeFwLvjM5VPaFdWDOSHq+IBSHmaR
-	Nza2TMA5TXTno8OziDvebg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1744363799;
+	 x=1744450199; bh=mbK+E4y+E1Lu30glC3aXJ3TxCcrfk84u/FYA4U7f2K8=; b=
+	oe6rP57p0JzZlhgXX0JSJm7TzS9xl6HSJSVddvNXWq2WJ15ql6pfLhQk/ghNmyWL
+	3E6pgClXpmT8H7fnaUOUte1XCN0mVtwStf8EBsODpihVXATiq7s7YURVcnuQfUbA
+	N+VI7apUE2ReWYZScB1b7m7oBZyuAn7gWxChecfZuO7ds6nAbjhspAP8J29xNki5
+	0/NliNhmI33pNBfQC+JjLshb1wV8m80/yrmvbnIzLb/Wrn4ObvJlxT+OHLxVd4xv
+	j4UYurnYaMRYOrrONFyqlPCtBlMgnIYWgYkXoSQL5ViglU6v9CfpfDIWiyZjBYJF
+	U9WwpHkfTyJKkg0uo8xxjA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744363797; x=
-	1744450197; bh=LXENE1jMdMRHYPqyCwIGvC8DKOhjmMiJOgTMN0z7HBA=; b=m
-	veV0QNpMMgicEkPK4GhE4Q8+yM45Lh64c59lWJX79UiWPduvT/W4oaj8y9cPEI8z
-	0ZkPtVDaiAfOtpJ8vaUucQ7jcGU0ND01PDkAB7460tKkZm/IS3y4232+sWal4aH1
-	RPjoRyNm+oXJ+7k2phz6/fSmQPdkvWfeqRdkAD5SPKqHnBGXrWgWq4GZonUKt5QO
-	ezxwke3q4+DhqZwjYLH6Y9cHqoMtKF7bQDAYzo4FkKh5DUXjpt6IW7kpEXQwrEHA
-	2gWpPk/fdkVG/mQ/aV/eVQJD35Ufpd8Xg7xiTMBFK3jh7qLJ6s0uNqFecQCVaVEc
-	c1L2oy8N+pzNKn1YavEKA==
-X-ME-Sender: <xms:FeH4Z3X6BlK8lC4BXk5MbIUppiqHoS0tlNA2UVlVH1ud3945VMMfJQ>
-    <xme:FeH4Z_ndz9Nr33Va8NN_XHDNScVJdKgM_POF1nlif1EXSEj2XWW01DCZI_YZEU1Lh
-    vDHEkc6YveU3qn0tA>
-X-ME-Received: <xmr:FeH4ZzaR23e-tYdrN4-_Gv30YQgFeXr8oh9lDThE6K4zDTw-QQiNvHYlSd_g58OxPFaKBslcfA4YY6cQLwUJqvjNbGwZaOkSJ4Qc6-jG5TVuEpA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744363799; x=
+	1744450199; bh=mbK+E4y+E1Lu30glC3aXJ3TxCcrfk84u/FYA4U7f2K8=; b=i
+	R1Xu2+R23JLKzU6mAPNolgv79T0+FpGwnrAAWuXTF3Tj5eEgh33F1RxeV1smZ/s2
+	AlSTfA/u8MXbH1sg970Lwdf9C8FZN9GICCzzp22fAqxZ9JaXS7exaVscpCKdom/G
+	e/ysb2H0uRpHVO5Tu5uPyZEq45CSyfnvvYM1H7T5fhiU+WMJ3MNH+ZG8q8CDxVf+
+	+mAGuifzmraG75Wnhw3Wdby5QOFRGHRBrrduN8caa8SWZyGL7N6oRMIm2I5MoTn5
+	uNCN5mLNaKpYTq92KdSZotc1t4scoy02UjUHois01/YgQ4M12U68RcTDshwccZK0
+	Xqa4iVaS8M25mtm+qqQQg==
+X-ME-Sender: <xms:F-H4Z7XI5dzclajk3osqY9_wIZmzSvFiD7Nrf9Uneq3vRxOJMJrgSg>
+    <xme:F-H4Zzkv-8TwVfpGiNBIelRl0rcfA8wQIIuT1MApdlrfz7ff7n-sHvl7fsNyb9Vyq
+    VL7czrJweGbXxXGPA>
+X-ME-Received: <xmr:F-H4Z3apTHngNWma1m-81AZGlZ6z6xkp6r9_2KBJ7-j9mEqnkdkN-U1mWGI57hM4OFP5HbiBMM958Oa4hRR0SwReRtsPgRviQUThA1K9f8wyubQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvuddugeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -59,23 +59,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvuddugeehucetufdote
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
     vgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehn
-    vgifrhgvnhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:FeH4ZyXEnkPhXbC3qW1MniOOxogxg_7g1wJJPKoJaKnThSJOdkS52w>
-    <xmx:FeH4ZxmGMpPUIxFUyCYLtA_lZlJpevleT3YJHoB3HX3ENIzgHQXEIw>
-    <xmx:FeH4Z_cq8N6DI_m7tSND_YAN7ELbKBLPJla1M2s6bZvitryUyAaVxA>
-    <xmx:FeH4Z7HGLfNhCCnxFvtbbIvyi6g_p0j03bO2TX1ZHd8v24ZqR9lxFQ>
-    <xmx:FeH4Z_QaRlXyZ1uH1bzrYr69iPGFTpc70BGRYz9gbgcP9BZlJ5idiEHp>
+    hrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:F-H4Z2WXj1dO6G34VA6bSLwiY4EgCQvcoclNtw-ZG9s5b7NZLTz8hw>
+    <xmx:F-H4Z1n4h60txW1Iguaj_ylt0mA6g4ZgDNhH2WcbUg2wevEVgZI0_Q>
+    <xmx:F-H4ZzdQ96xflkz6VthYUMeO5moEyYxHVfUjX1EA8rMCgCWB318O5Q>
+    <xmx:F-H4Z_EisO5qn_x-Cx8chWdp5NZqadHlwzzOlInuLkoOgxyP2JypLA>
+    <xmx:F-H4ZzR8C5ZhlfDJNM8-rT0bgQfSi2nJe-FmI2CbqiyL5zMn63W0hQ43>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Apr 2025 05:29:56 -0400 (EDT)
+ 11 Apr 2025 05:29:58 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1fe4850e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 11 Apr 2025 09:29:56 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 60c01abb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 11 Apr 2025 09:29:57 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 11 Apr 2025 11:29:50 +0200
-Subject: [PATCH v2 1/9] object-file: move
- `safe_create_leading_directories()` into "dir.c"
+Date: Fri, 11 Apr 2025 11:29:51 +0200
+Subject: [PATCH v2 2/9] object-file: move `git_open_cloexec()` to
+ "compat/open.c"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,499 +84,239 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250411-pks-split-object-file-v2-1-2bea0c9033ae@pks.im>
+Message-Id: <20250411-pks-split-object-file-v2-2-2bea0c9033ae@pks.im>
 References: <20250411-pks-split-object-file-v2-0-2bea0c9033ae@pks.im>
 In-Reply-To: <20250411-pks-split-object-file-v2-0-2bea0c9033ae@pks.im>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-The `safe_create_leading_directories()` function and its relatives are
-located in "object-file.c", which is not a good fit as they provide
-generic functionality not related to objects at all. Move them into
-"dir.c".
+The `git_open_cloexec()` wrapper function provides the ability to open a
+file with `O_CLOEXEC` in a platform-agnostic way. This function is
+provided by "object-file.c" even though it is not specific to the object
+subsystem at all.
+
+Move the file into "compat/open.c". This file already exists before this
+commit, but has only been compiled conditionally depending on whether or
+not open(3p) may return EINTR. With this change we now unconditionally
+compile the object, but wrap `git_open_with_retry()` in an ifdef.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/bugreport.c                |   2 +-
- builtin/credential-cache--daemon.c |   2 +-
- builtin/diagnose.c                 |   2 +-
- builtin/fsck.c                     |   1 +
- builtin/gc.c                       |   2 +-
- builtin/init-db.c                  |   2 +-
- builtin/log.c                      |   2 +-
- commit-graph.c                     |   1 +
- dir.c                              | 107 ++++++++++++++++++++++++++++++++++++-
- dir.h                              |  35 ++++++++++++
- midx-write.c                       |   1 +
- object-file.c                      | 106 ------------------------------------
- object-file.h                      |  35 ------------
- 13 files changed, 150 insertions(+), 148 deletions(-)
+ Makefile          |  2 +-
+ commit-graph.c    |  1 -
+ compat/open.c     | 29 +++++++++++++++++++++++++++++
+ git-compat-util.h |  3 +++
+ meson.build       |  1 +
+ midx.c            |  1 -
+ object-file.c     | 27 ---------------------------
+ object-file.h     |  3 ---
+ pack-bitmap.c     |  1 -
+ pack-mtimes.c     |  1 -
+ pack-revindex.c   |  1 -
+ 11 files changed, 34 insertions(+), 36 deletions(-)
 
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index 66d64bfd5ae..d07fa91c247 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -1,6 +1,7 @@
- #define USE_THE_REPOSITORY_VARIABLE
- #include "builtin.h"
- #include "abspath.h"
-+#include "dir.h"
- #include "editor.h"
- #include "gettext.h"
- #include "parse-options.h"
-@@ -10,7 +11,6 @@
- #include "hook.h"
- #include "hook-list.h"
- #include "diagnose.h"
--#include "object-file.h"
- #include "setup.h"
- #include "version.h"
- 
-diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-index e707618e743..80d29b4f5c0 100644
---- a/builtin/credential-cache--daemon.c
-+++ b/builtin/credential-cache--daemon.c
-@@ -1,8 +1,8 @@
- #define USE_THE_REPOSITORY_VARIABLE
- #include "builtin.h"
- #include "abspath.h"
-+#include "dir.h"
- #include "gettext.h"
--#include "object-file.h"
- #include "parse-options.h"
- 
- #ifndef NO_UNIX_SOCKETS
-diff --git a/builtin/diagnose.c b/builtin/diagnose.c
-index 33c39bd5981..d5dadd6a48b 100644
---- a/builtin/diagnose.c
-+++ b/builtin/diagnose.c
-@@ -2,8 +2,8 @@
- 
- #include "builtin.h"
- #include "abspath.h"
-+#include "dir.h"
- #include "gettext.h"
--#include "object-file.h"
- #include "parse-options.h"
- #include "diagnose.h"
- 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 9c8a6d6a8df..32d40d8f9fc 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -1,5 +1,6 @@
- #define USE_THE_REPOSITORY_VARIABLE
- #include "builtin.h"
-+#include "dir.h"
- #include "gettext.h"
- #include "hex.h"
- #include "config.h"
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 99431fd4674..b069629676c 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -16,6 +16,7 @@
- #include "builtin.h"
- #include "abspath.h"
- #include "date.h"
-+#include "dir.h"
- #include "environment.h"
- #include "hex.h"
- #include "config.h"
-@@ -28,7 +29,6 @@
- #include "commit.h"
- #include "commit-graph.h"
- #include "packfile.h"
--#include "object-file.h"
- #include "object-store-ll.h"
- #include "pack.h"
- #include "pack-objects.h"
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 196dccdd77a..39730c1b0ce 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -6,9 +6,9 @@
- #define USE_THE_REPOSITORY_VARIABLE
- #include "builtin.h"
- #include "abspath.h"
-+#include "dir.h"
- #include "environment.h"
- #include "gettext.h"
--#include "object-file.h"
- #include "parse-options.h"
- #include "path.h"
- #include "refs.h"
-diff --git a/builtin/log.c b/builtin/log.c
-index 0d4c579dad7..06ffaa93e86 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -10,11 +10,11 @@
- #include "builtin.h"
- #include "abspath.h"
- #include "config.h"
-+#include "dir.h"
- #include "environment.h"
- #include "gettext.h"
- #include "hex.h"
- #include "refs.h"
--#include "object-file.h"
- #include "object-name.h"
- #include "object-store-ll.h"
- #include "pager.h"
+diff --git a/Makefile b/Makefile
+index c41fc41ef0e..bb5407b4703 100644
+--- a/Makefile
++++ b/Makefile
+@@ -994,6 +994,7 @@ LIB_OBJS += common-exit.o
+ LIB_OBJS += common-init.o
+ LIB_OBJS += compat/nonblock.o
+ LIB_OBJS += compat/obstack.o
++LIB_OBJS += compat/open.o
+ LIB_OBJS += compat/terminal.o
+ LIB_OBJS += compiler-tricks/not-constant.o
+ LIB_OBJS += config.o
+@@ -1812,7 +1813,6 @@ ifdef FREAD_READS_DIRECTORIES
+ endif
+ ifdef OPEN_RETURNS_EINTR
+ 	COMPAT_CFLAGS += -DOPEN_RETURNS_EINTR
+-	COMPAT_OBJS += compat/open.o
+ endif
+ ifdef NO_SYMLINK_HEAD
+ 	BASIC_CFLAGS += -DNO_SYMLINK_HEAD
 diff --git a/commit-graph.c b/commit-graph.c
-index 8286d5dda24..3fae20dc21b 100644
+index 3fae20dc21b..8060c358b84 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -4,6 +4,7 @@
- #include "git-compat-util.h"
- #include "config.h"
- #include "csum-file.h"
-+#include "dir.h"
- #include "gettext.h"
- #include "hex.h"
- #include "lockfile.h"
-diff --git a/dir.c b/dir.c
-index 28b0e03feb4..16ae3b5169d 100644
---- a/dir.c
-+++ b/dir.c
-@@ -17,7 +17,6 @@
- #include "environment.h"
- #include "gettext.h"
- #include "name-hash.h"
+@@ -14,7 +14,6 @@
+ #include "refs.h"
+ #include "hash-lookup.h"
+ #include "commit-graph.h"
 -#include "object-file.h"
  #include "object-store-ll.h"
+ #include "oid-array.h"
  #include "path.h"
- #include "refs.h"
-@@ -4132,3 +4131,109 @@ int path_match_flags(const char *const str, const enum path_match_flags flags)
- 		return is_xplatform_dir_sep(*p);
- 	BUG("unreachable");
- }
-+
-+int mkdir_in_gitdir(const char *path)
-+{
-+	if (mkdir(path, 0777)) {
-+		int saved_errno = errno;
-+		struct stat st;
-+		struct strbuf sb = STRBUF_INIT;
-+
-+		if (errno != EEXIST)
-+			return -1;
-+		/*
-+		 * Are we looking at a path in a symlinked worktree
-+		 * whose original repository does not yet have it?
-+		 * e.g. .git/rr-cache pointing at its original
-+		 * repository in which the user hasn't performed any
-+		 * conflict resolution yet?
-+		 */
-+		if (lstat(path, &st) || !S_ISLNK(st.st_mode) ||
-+		    strbuf_readlink(&sb, path, st.st_size) ||
-+		    !is_absolute_path(sb.buf) ||
-+		    mkdir(sb.buf, 0777)) {
-+			strbuf_release(&sb);
-+			errno = saved_errno;
-+			return -1;
-+		}
-+		strbuf_release(&sb);
-+	}
-+	return adjust_shared_perm(the_repository, path);
-+}
-+
-+static enum scld_error safe_create_leading_directories_1(char *path, int share)
-+{
-+	char *next_component = path + offset_1st_component(path);
-+	enum scld_error ret = SCLD_OK;
-+
-+	while (ret == SCLD_OK && next_component) {
-+		struct stat st;
-+		char *slash = next_component, slash_character;
-+
-+		while (*slash && !is_dir_sep(*slash))
-+			slash++;
-+
-+		if (!*slash)
-+			break;
-+
-+		next_component = slash + 1;
-+		while (is_dir_sep(*next_component))
-+			next_component++;
-+		if (!*next_component)
-+			break;
-+
-+		slash_character = *slash;
-+		*slash = '\0';
-+		if (!stat(path, &st)) {
-+			/* path exists */
-+			if (!S_ISDIR(st.st_mode)) {
-+				errno = ENOTDIR;
-+				ret = SCLD_EXISTS;
-+			}
-+		} else if (mkdir(path, 0777)) {
-+			if (errno == EEXIST &&
-+			    !stat(path, &st) && S_ISDIR(st.st_mode))
-+				; /* somebody created it since we checked */
-+			else if (errno == ENOENT)
-+				/*
-+				 * Either mkdir() failed because
-+				 * somebody just pruned the containing
-+				 * directory, or stat() failed because
-+				 * the file that was in our way was
-+				 * just removed.  Either way, inform
-+				 * the caller that it might be worth
-+				 * trying again:
-+				 */
-+				ret = SCLD_VANISHED;
-+			else
-+				ret = SCLD_FAILED;
-+		} else if (share && adjust_shared_perm(the_repository, path)) {
-+			ret = SCLD_PERMS;
-+		}
-+		*slash = slash_character;
-+	}
-+	return ret;
-+}
-+
-+enum scld_error safe_create_leading_directories(char *path)
-+{
-+	return safe_create_leading_directories_1(path, 1);
-+}
-+
-+enum scld_error safe_create_leading_directories_no_share(char *path)
-+{
-+	return safe_create_leading_directories_1(path, 0);
-+}
-+
-+enum scld_error safe_create_leading_directories_const(const char *path)
-+{
-+	int save_errno;
-+	/* path points to cache entries, so xstrdup before messing with it */
-+	char *buf = xstrdup(path);
-+	enum scld_error result = safe_create_leading_directories(buf);
-+
-+	save_errno = errno;
-+	free(buf);
-+	errno = save_errno;
-+	return result;
-+}
-diff --git a/dir.h b/dir.h
-index d7e71aa8daa..02c1f9420b0 100644
---- a/dir.h
-+++ b/dir.h
-@@ -676,4 +676,39 @@ static inline int starts_with_dot_dot_slash_native(const char *const path)
- 	return path_match_flags(path, what | PATH_MATCH_NATIVE);
- }
- 
-+/*
-+ * Create the directory containing the named path, using care to be
-+ * somewhat safe against races. Return one of the scld_error values to
-+ * indicate success/failure. On error, set errno to describe the
-+ * problem.
-+ *
-+ * SCLD_VANISHED indicates that one of the ancestor directories of the
-+ * path existed at one point during the function call and then
-+ * suddenly vanished, probably because another process pruned the
-+ * directory while we were working.  To be robust against this kind of
-+ * race, callers might want to try invoking the function again when it
-+ * returns SCLD_VANISHED.
-+ *
-+ * safe_create_leading_directories() temporarily changes path while it
-+ * is working but restores it before returning.
-+ * safe_create_leading_directories_const() doesn't modify path, even
-+ * temporarily. Both these variants adjust the permissions of the
-+ * created directories to honor core.sharedRepository, so they are best
-+ * suited for files inside the git dir. For working tree files, use
-+ * safe_create_leading_directories_no_share() instead, as it ignores
-+ * the core.sharedRepository setting.
-+ */
-+enum scld_error {
-+	SCLD_OK = 0,
-+	SCLD_FAILED = -1,
-+	SCLD_PERMS = -2,
-+	SCLD_EXISTS = -3,
-+	SCLD_VANISHED = -4
-+};
-+enum scld_error safe_create_leading_directories(char *path);
-+enum scld_error safe_create_leading_directories_const(const char *path);
-+enum scld_error safe_create_leading_directories_no_share(char *path);
-+
-+int mkdir_in_gitdir(const char *path);
-+
- #endif
-diff --git a/midx-write.c b/midx-write.c
-index a628ac24dcb..e01a867c583 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -3,6 +3,7 @@
+diff --git a/compat/open.c b/compat/open.c
+index eb3754a23b8..37ae2b1aeb9 100644
+--- a/compat/open.c
++++ b/compat/open.c
+@@ -1,5 +1,6 @@
  #include "git-compat-util.h"
- #include "abspath.h"
- #include "config.h"
-+#include "dir.h"
+ 
++#ifdef OPEN_RETURNS_EINTR
+ #undef open
+ int git_open_with_retry(const char *path, int flags, ...)
+ {
+@@ -23,3 +24,31 @@ int git_open_with_retry(const char *path, int flags, ...)
+ 
+ 	return ret;
+ }
++#endif
++
++int git_open_cloexec(const char *name, int flags)
++{
++	int fd;
++	static int o_cloexec = O_CLOEXEC;
++
++	fd = open(name, flags | o_cloexec);
++	if ((o_cloexec & O_CLOEXEC) && fd < 0 && errno == EINVAL) {
++		/* Try again w/o O_CLOEXEC: the kernel might not support it */
++		o_cloexec &= ~O_CLOEXEC;
++		fd = open(name, flags | o_cloexec);
++	}
++
++#if defined(F_GETFD) && defined(F_SETFD) && defined(FD_CLOEXEC)
++	{
++		static int fd_cloexec = FD_CLOEXEC;
++
++		if (!o_cloexec && 0 <= fd && fd_cloexec) {
++			/* Opened w/o O_CLOEXEC?  try with fcntl(2) to add it */
++			int flags = fcntl(fd, F_GETFD);
++			if (fcntl(fd, F_SETFD, flags | fd_cloexec))
++				fd_cloexec = 0;
++		}
++	}
++#endif
++	return fd;
++}
+diff --git a/git-compat-util.h b/git-compat-util.h
+index cf733b38acd..9273a8ee087 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1000,6 +1000,9 @@ int git_vsnprintf(char *str, size_t maxsize,
+ int git_open_with_retry(const char *path, int flag, ...);
+ #endif
+ 
++int git_open_cloexec(const char *name, int flags);
++#define git_open(name) git_open_cloexec(name, O_RDONLY)
++
+ #ifdef __GLIBC_PREREQ
+ #if __GLIBC_PREREQ(2, 1)
+ #define HAVE_STRCHRNUL
+diff --git a/meson.build b/meson.build
+index 145d2f7ff9e..a55e800b85b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -263,6 +263,7 @@ libgit_sources = [
+   'common-init.c',
+   'compat/nonblock.c',
+   'compat/obstack.c',
++  'compat/open.c',
+   'compat/terminal.c',
+   'compiler-tricks/not-constant.c',
+   'config.c',
+diff --git a/midx.c b/midx.c
+index 807fdf72f7b..3d0015f7828 100644
+--- a/midx.c
++++ b/midx.c
+@@ -5,7 +5,6 @@
+ #include "dir.h"
  #include "hex.h"
- #include "lockfile.h"
  #include "packfile.h"
+-#include "object-file.h"
+ #include "hash-lookup.h"
+ #include "midx.h"
+ #include "progress.h"
 diff --git a/object-file.c b/object-file.c
-index 772c311f188..23b2c8560be 100644
+index 23b2c8560be..1a20c7fa072 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -91,112 +91,6 @@ static int get_conv_flags(unsigned flags)
+@@ -834,33 +834,6 @@ int stream_object_signature(struct repository *r, const struct object_id *oid)
+ 	return !oideq(oid, &real_oid) ? -1 : 0;
  }
  
- 
--int mkdir_in_gitdir(const char *path)
+-int git_open_cloexec(const char *name, int flags)
 -{
--	if (mkdir(path, 0777)) {
--		int saved_errno = errno;
--		struct stat st;
--		struct strbuf sb = STRBUF_INIT;
+-	int fd;
+-	static int o_cloexec = O_CLOEXEC;
 -
--		if (errno != EEXIST)
--			return -1;
--		/*
--		 * Are we looking at a path in a symlinked worktree
--		 * whose original repository does not yet have it?
--		 * e.g. .git/rr-cache pointing at its original
--		 * repository in which the user hasn't performed any
--		 * conflict resolution yet?
--		 */
--		if (lstat(path, &st) || !S_ISLNK(st.st_mode) ||
--		    strbuf_readlink(&sb, path, st.st_size) ||
--		    !is_absolute_path(sb.buf) ||
--		    mkdir(sb.buf, 0777)) {
--			strbuf_release(&sb);
--			errno = saved_errno;
--			return -1;
--		}
--		strbuf_release(&sb);
+-	fd = open(name, flags | o_cloexec);
+-	if ((o_cloexec & O_CLOEXEC) && fd < 0 && errno == EINVAL) {
+-		/* Try again w/o O_CLOEXEC: the kernel might not support it */
+-		o_cloexec &= ~O_CLOEXEC;
+-		fd = open(name, flags | o_cloexec);
 -	}
--	return adjust_shared_perm(the_repository, path);
--}
 -
--static enum scld_error safe_create_leading_directories_1(char *path, int share)
--{
--	char *next_component = path + offset_1st_component(path);
--	enum scld_error ret = SCLD_OK;
+-#if defined(F_GETFD) && defined(F_SETFD) && defined(FD_CLOEXEC)
+-	{
+-		static int fd_cloexec = FD_CLOEXEC;
 -
--	while (ret == SCLD_OK && next_component) {
--		struct stat st;
--		char *slash = next_component, slash_character;
--
--		while (*slash && !is_dir_sep(*slash))
--			slash++;
--
--		if (!*slash)
--			break;
--
--		next_component = slash + 1;
--		while (is_dir_sep(*next_component))
--			next_component++;
--		if (!*next_component)
--			break;
--
--		slash_character = *slash;
--		*slash = '\0';
--		if (!stat(path, &st)) {
--			/* path exists */
--			if (!S_ISDIR(st.st_mode)) {
--				errno = ENOTDIR;
--				ret = SCLD_EXISTS;
--			}
--		} else if (mkdir(path, 0777)) {
--			if (errno == EEXIST &&
--			    !stat(path, &st) && S_ISDIR(st.st_mode))
--				; /* somebody created it since we checked */
--			else if (errno == ENOENT)
--				/*
--				 * Either mkdir() failed because
--				 * somebody just pruned the containing
--				 * directory, or stat() failed because
--				 * the file that was in our way was
--				 * just removed.  Either way, inform
--				 * the caller that it might be worth
--				 * trying again:
--				 */
--				ret = SCLD_VANISHED;
--			else
--				ret = SCLD_FAILED;
--		} else if (share && adjust_shared_perm(the_repository, path)) {
--			ret = SCLD_PERMS;
+-		if (!o_cloexec && 0 <= fd && fd_cloexec) {
+-			/* Opened w/o O_CLOEXEC?  try with fcntl(2) to add it */
+-			int flags = fcntl(fd, F_GETFD);
+-			if (fcntl(fd, F_SETFD, flags | fd_cloexec))
+-				fd_cloexec = 0;
 -		}
--		*slash = slash_character;
 -	}
--	return ret;
+-#endif
+-	return fd;
 -}
 -
--enum scld_error safe_create_leading_directories(char *path)
--{
--	return safe_create_leading_directories_1(path, 1);
--}
--
--enum scld_error safe_create_leading_directories_no_share(char *path)
--{
--	return safe_create_leading_directories_1(path, 0);
--}
--
--enum scld_error safe_create_leading_directories_const(const char *path)
--{
--	int save_errno;
--	/* path points to cache entries, so xstrdup before messing with it */
--	char *buf = xstrdup(path);
--	enum scld_error result = safe_create_leading_directories(buf);
--
--	save_errno = errno;
--	free(buf);
--	errno = save_errno;
--	return result;
--}
--
- int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
- {
- 	int fd;
+ /*
+  * Find "oid" as a loose object in the local repository or in an alternate.
+  * Returns 0 on success, negative on failure.
 diff --git a/object-file.h b/object-file.h
-index 81b30d269c8..922f2bba8c9 100644
+index 922f2bba8c9..353d8a85c33 100644
 --- a/object-file.h
 +++ b/object-file.h
-@@ -21,41 +21,6 @@ extern int fetch_if_missing;
+@@ -21,9 +21,6 @@ extern int fetch_if_missing;
  int index_fd(struct index_state *istate, struct object_id *oid, int fd, struct stat *st, enum object_type type, const char *path, unsigned flags);
  int index_path(struct index_state *istate, struct object_id *oid, const char *path, struct stat *st, unsigned flags);
  
--/*
-- * Create the directory containing the named path, using care to be
-- * somewhat safe against races. Return one of the scld_error values to
-- * indicate success/failure. On error, set errno to describe the
-- * problem.
-- *
-- * SCLD_VANISHED indicates that one of the ancestor directories of the
-- * path existed at one point during the function call and then
-- * suddenly vanished, probably because another process pruned the
-- * directory while we were working.  To be robust against this kind of
-- * race, callers might want to try invoking the function again when it
-- * returns SCLD_VANISHED.
-- *
-- * safe_create_leading_directories() temporarily changes path while it
-- * is working but restores it before returning.
-- * safe_create_leading_directories_const() doesn't modify path, even
-- * temporarily. Both these variants adjust the permissions of the
-- * created directories to honor core.sharedRepository, so they are best
-- * suited for files inside the git dir. For working tree files, use
-- * safe_create_leading_directories_no_share() instead, as it ignores
-- * the core.sharedRepository setting.
-- */
--enum scld_error {
--	SCLD_OK = 0,
--	SCLD_FAILED = -1,
--	SCLD_PERMS = -2,
--	SCLD_EXISTS = -3,
--	SCLD_VANISHED = -4
--};
--enum scld_error safe_create_leading_directories(char *path);
--enum scld_error safe_create_leading_directories_const(const char *path);
--enum scld_error safe_create_leading_directories_no_share(char *path);
+-int git_open_cloexec(const char *name, int flags);
+-#define git_open(name) git_open_cloexec(name, O_RDONLY)
 -
--int mkdir_in_gitdir(const char *path);
--
- int git_open_cloexec(const char *name, int flags);
- #define git_open(name) git_open_cloexec(name, O_RDONLY)
- 
+ /**
+  * unpack_loose_header() initializes the data stream needed to unpack
+  * a loose object header.
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 7fd78c634ef..0dbd7c4ffe1 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -17,7 +17,6 @@
+ #include "packfile.h"
+ #include "repository.h"
+ #include "trace2.h"
+-#include "object-file.h"
+ #include "object-store-ll.h"
+ #include "list-objects-filter-options.h"
+ #include "midx.h"
+diff --git a/pack-mtimes.c b/pack-mtimes.c
+index cdf30b8d2b0..bcea28e521d 100644
+--- a/pack-mtimes.c
++++ b/pack-mtimes.c
+@@ -1,7 +1,6 @@
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "pack-mtimes.h"
+-#include "object-file.h"
+ #include "object-store-ll.h"
+ #include "packfile.h"
+ #include "strbuf.h"
+diff --git a/pack-revindex.c b/pack-revindex.c
+index 038e0c96b1c..1ee7b49e206 100644
+--- a/pack-revindex.c
++++ b/pack-revindex.c
+@@ -1,7 +1,6 @@
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "pack-revindex.h"
+-#include "object-file.h"
+ #include "object-store-ll.h"
+ #include "packfile.h"
+ #include "strbuf.h"
 
 -- 
 2.49.0.777.g153de2bbd5.dirty
