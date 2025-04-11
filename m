@@ -1,56 +1,56 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFA720DD4E
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 09:27:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17782980CD
+	for <git@vger.kernel.org>; Fri, 11 Apr 2025 09:27:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744363643; cv=none; b=Ak9bd3Br04OuHUE3nmGl72vII3C36ToULbXk1cN2gGVsvQl1pdKqeWK2ASYyJ/CQpgvRZKDkxLRZjMCr5gxGetvwE178i0GgQTgBKsUF2j6rye86sFkC+D8I82luy7rxk7zqRDR91AtB2+E1GCmKfeAaAI0LFE8s+QFGnPzEftg=
+	t=1744363647; cv=none; b=edNxG1TcO/TLodYQrxWVGp3U2vA5jLIoSIalMlwDZIsHeGDI4NWYPcqRjYQkVoK3G8IbV1+srhCitMUMoFtieCbA/zVSK0FH0tHk+i09em8lQuKrS6vWHIdL6DwfHnakgTgB2QqMRgxq+GnB0tenpDbEmkEAbZbNmbo/JYkm0kU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744363643; c=relaxed/simple;
-	bh=qjsgGvrorGDq6M3eNsPCJ9rQVt3ATVc34NB23cfyjf4=;
+	s=arc-20240116; t=1744363647; c=relaxed/simple;
+	bh=/0aG8+YbYlOH60xIEKzuWhTLjmpb5vmOQgwVAMZGV/0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cwAdqXfbJbxjuDaO8TbZrdIMwqJRPAJmEyQLUnj170KhhXAToK9pBHmZr+WCNT3DPFE6d6KCIXQZ9ynBxKTn1NgQ60jvRdTZ7t3sPKzdjDmA+rEZTtdjs4T2xKSd2YsQJZq5iPkfjfcxAHnweoCzgdb38pBfXaxfiE6UC2OuJKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZhPPDWe7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MZYg19f+; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=HO1uYDgkBTdTZL4da+9o0j9b1r2B2S7Ha4XxEaMhcLFDAEBwoXslWvVAeeZ4ONnu0pZV05bWxAi4YfbCDxIzOfKeLYDmINmFj7fDjwxkZfxK/Z6+enmGToWxnWzKx4F3AywdRn3iYY6p0uLaCgIwHcUR3gAhGi+9hvPcn2vU7vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HrNcWvdE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EwEwmTTm; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZhPPDWe7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MZYg19f+"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9E59D114029E;
-	Fri, 11 Apr 2025 05:27:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HrNcWvdE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EwEwmTTm"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id A0D72138028E;
+	Fri, 11 Apr 2025 05:27:24 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 11 Apr 2025 05:27:20 -0400
+  by phl-compute-08.internal (MEProxy); Fri, 11 Apr 2025 05:27:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1744363640;
-	 x=1744450040; bh=/k0PnK4JwHv/Uj9djbk5w1CzxRNjm++dkouIWRBzTGc=; b=
-	ZhPPDWe7Xg6nRQhygoXaEmTEu5LCodDywpJt2sfPG/Q+Km8iSMhP2XFFe0RNFndV
-	XywpZsAwe0eMX1mMLVDxonqIiUvelGJ6YuaotEWqIsB/+lD9rNXbw/xsqO0sjbLX
-	7gL1650EWRWogp014fWH9UcQSCP5JSM5WyNBEoQcIFM380mjcugPCV+5mVuzejTf
-	9EDudTyH/Ofgmz5SuRhD+IKg1lCQ4l4+A1SFrh71kzou0L2JbtyxBTOsB0INHd9x
-	4Jab/CqQzMx/2hasVODbuJCYftaYByjBUVit2+iSZsr4p9XVghfO16XVkPWM+kco
-	loixXBa4Z1y+nKX8BGa0Mg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1744363644;
+	 x=1744450044; bh=F/7RN1BFX/CFMSYrmtED2tRI/rz30Rv20r6dQmY51JI=; b=
+	HrNcWvdEd6vWYJDGQyGhVWdMLH3zweImJrfscFTcxiMPp5onIn693BwhCUnqp6qG
+	YzfFwdJLp8IpmXrmdaerYUFC0AnlZrFv7FdYRXAde1UyKnXQqtIDE66f/T+Mk8Zj
+	r7YqssaZvhsxXPHjM3C0f9+3LQ5D5uNnu8QOpASWwu1zLEEFGUafe6luxWSqgJpg
+	/U+a0sZLgximClEbzuyZBRQoirN6PcJ2S6V9WepZcgsW40h8t7qYrd5l1dSR479M
+	LMIkQbe8aYJXRU+lDuvhkyPzI0YMLTfnvJ3OcBREXXNZF7glbzVkGg14kfZwkq2S
+	JvKHwU+y4riI4mNmGwg4lw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744363640; x=
-	1744450040; bh=/k0PnK4JwHv/Uj9djbk5w1CzxRNjm++dkouIWRBzTGc=; b=M
-	ZYg19f+zaUSTSzWR9+LK+U+wc9HtYGAuSIbvxYInuLTVmsYMK3gyf08yJWLAaJds
-	U3xucrYFdOpWrkFBxIs2JV39f1D2aJ/xPygUFRoi2T1ECNWmpx4nuQgGgPk/5mbo
-	Tnd1phjN/+5xTnh1YlmnRwg3bBiqW3VjZPgIYYug+WFj6rAVLOMnogK94xDAPlhE
-	zP6t7xNJyNYzEzf8dgJsePBcN3KFLvRCPDE0hJ7OG9yj+ySPx6A1yKITP7t3QjPt
-	zAZjxQMTL8uBADFwpBaqv97IUs8IOllaGXJDlkQMY5t2QggVCNZYJKLTdz+qFCrz
-	RvR2hpPCBwSjgqg5J8NNg==
-X-ME-Sender: <xms:eOD4Z5Bdb0QtxasS9q4JxPaEsAYOARVnoyVeWdZvUaejXZXBERHy8Q>
-    <xme:eOD4Z3hSMJpzmt1PPPWKqdM4QpwYJ0NSRPfmSZephiUNv6TVwW_ciCcwacQVmnuaH
-    4iEXUzs8UHL_UagWw>
-X-ME-Received: <xmr:eOD4Z0lFqx6RL36JEIYw4lT1Ym3gZHq3-sEAvvxl1HRU2dxD-q4GfSDJsX-WyLlOoTaoK_uxfL1tWZDNt-VXfLPwcaMMTF1855r1726IG_KfUAg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvuddugeegucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744363644; x=
+	1744450044; bh=F/7RN1BFX/CFMSYrmtED2tRI/rz30Rv20r6dQmY51JI=; b=E
+	wEwmTTmKt/kVrjBslIHrsPlYVyuD2eiXkBdgbSgwXjbQPTlWonBDXIU+glWclc7D
+	pRj7OJNguSvky6I3TGGD47f/IPgzANbsJXbmiZ1zbdjgOT2tOED1H61sKVO0Evau
+	bmC4IILVvr5t4xejbCJdLmZFoSAV188nELpkOOxx/1tFZPwwVgEjvUN7OKz4p0Lq
+	X7K8xm97TU76TO5iZWhQkgYy1FJYTtBcjj5cr2Ww6QVYvY0IoeGMjiH8SIVEyVTr
+	6vsJJSC8+FmfKIjaOFXltYrCGD9kdKKsSOg1Hivvjo2dr0OJz/vPs1QmKOYfTINv
+	MIvg71wIhqjO+Jfuj/KrQ==
+X-ME-Sender: <xms:fOD4ZwZZJtUQ-6mXLYPw8BRwjNSeCQCJJd7Ub96yvBSOZHhE8CuZkw>
+    <xme:fOD4Z7ZnzcKoLKrSkRUDt7nWrT70Fi7ztVm24uDwcSSNZMqq8jWGJ0XSLQrxhCOyW
+    LIPhCmFg-T39dkAqg>
+X-ME-Received: <xmr:fOD4Z68Ey-Pq6u2GZSiubgjwQBLsN2IsGfWiSYLGn-J4qyotapkGbDBH0ucDqcMPBULxyC8LJG6o5HdM7oJ8VTFluyuSphSvIMFiDYrwV8bjWDQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvuddugeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
@@ -58,29 +58,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvuddugeegucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
     veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:eOD4ZzyCW2HN22ZqM5t6Dd1fy0oAnWSe43PloNTf0nN-lo5zw72aNw>
-    <xmx:eOD4Z-QfjP7he--1_kl-gEBXjbRI2OoNaPnTfGICkFh5NCeq8OgXyQ>
-    <xmx:eOD4Z2YIZ-Ug4nkeAeHGJ5tt5PP9ptX9oUdX8bCcTzhDLHfd-y8nZg>
-    <xmx:eOD4Z_TID-M2PR_ekn908uTIqOSZ_PVznAsI0YXTJkospRsamSgo7A>
-    <xmx:eOD4Z1uMMEcojG2PAIunSKJ6hHY6l10e5G4fWLMo4bwRMZGMyW4lgXPl>
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:fOD4Z6qk3buGOJUatoheXmOdcwOZErfiIUu6i1WHP0HidzEvftTOBQ>
+    <xmx:fOD4Z7qcS5RkGOWzAfyeguEXmdlevGajInY20T7KEG7KG4f70TImxg>
+    <xmx:fOD4Z4RzX1v3XTtL6OpPMdvOe6FkVfvOr7qXc8w07eaAQF6Wqd9Wag>
+    <xmx:fOD4Z7pYuhE9JqKW_o1QDNdaSxySEQBjuhv2CTmGOJH1mx7mb8NQtQ>
+    <xmx:fOD4ZzHPd-Cw2gHjctfdiQ-AGdCBLqijq_7glDXlg_3ngXO7_aIFwhiP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Apr 2025 05:27:19 -0400 (EDT)
+ 11 Apr 2025 05:27:23 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 45d221ac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 11 Apr 2025 09:27:18 +0000 (UTC)
-Date: Fri, 11 Apr 2025 11:27:17 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4724ee12 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 11 Apr 2025 09:27:23 +0000 (UTC)
+Date: Fri, 11 Apr 2025 11:27:21 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Elijah Newren <newren@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/9] object-file: move
- `safe_create_leading_directories()` into "dir.c"
-Message-ID: <Z_jgdV7Tkw0hkvgj@pks.im>
+Subject: Re: [PATCH 0/9] Split up "object-file.c"
+Message-ID: <Z_jgeWbEAMjYUSBQ@pks.im>
 References: <20250408-pks-split-object-file-v1-0-f1fd50191143@pks.im>
- <20250408-pks-split-object-file-v1-1-f1fd50191143@pks.im>
- <CABPp-BFpU5iLUN6Fh_+UG2Y593TWp4E+C_QQxLg6b=Cb-30F6A@mail.gmail.com>
+ <CABPp-BFv_WGVUexyQBHkCcyO0N+UQCcJ3eM9Oh6bP_ZCUkaxLw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,21 +88,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BFpU5iLUN6Fh_+UG2Y593TWp4E+C_QQxLg6b=Cb-30F6A@mail.gmail.com>
+In-Reply-To: <CABPp-BFv_WGVUexyQBHkCcyO0N+UQCcJ3eM9Oh6bP_ZCUkaxLw@mail.gmail.com>
 
-On Wed, Apr 09, 2025 at 07:36:47AM -0700, Elijah Newren wrote:
-> On Tue, Apr 8, 2025 at 3:37 AM Patrick Steinhardt <ps@pks.im> wrote:
+On Wed, Apr 09, 2025 at 07:42:38AM -0700, Elijah Newren wrote:
+> On Tue, Apr 8, 2025 at 3:35 AM Patrick Steinhardt <ps@pks.im> wrote:
 > >
-> > The `safe_create_leading_directories()` function and its relatives
+> > Hi,
+> >
+> > "object-file.c" is quite a grab-bag of all kinds of different functions.
+> > Many of these functions aren't really a good fit though and should be
+> > owned by a different subsystem. This patch series tries to split up
+> > concerns a bit better by splitting out this functionality into other
+> > files:
+> >
+> >   - `safe_create_leading_directories()` is moved into "dir.c".
+> >   - `xmmap()` is moved into "wrapper.c".
+> >   - `git_open_cloexec()` is moved into "compat/open.c".
+> >   - Several functions attached to `struct index_state` are moved into
+> >     "read-cache.c".
+> >   - Several functions related to `struct object_store` are moved into a
+> >     new file "object-store.c".
+> >
+> > "object-file.c" now mostly contains logic to read and write loose object
+> > files, whereas "object-store.c" contains the higher-level logic to
+> > manage different object directories for a repository. Eventually, these
+> > will become the loose object backend as well as the `struct ref_store`
+> > equivalent for objects, respectively.
+> >
+> > The series is built on top of 9d22ac51228 (The third batch, 2025-04-07)
+> > with ps/object-wo-the-repository at 9442b1c919a (Merge remote-tracking
+> > branch 'junio/ps/object-wo-the-repository' into HEAD, 2025-04-08) merged
+> > into it.
 > 
-> How is mkdir_in_gitdir() a relative of safe_create_leading_directories()?
+> I was able to apply with these instructions, and looking over the
+> series locally with --color-moved was very helpful to verify that you
+> were moving functions without modifying them (or, to notice where you
+> did modify them and why, e.g. removing the static declaration).
 > 
-> I assumed the relation was "called by", but there is no such
-> relationship.  The rest of the patch looked fine, but I was puzzled
-> for a while trying to figure out what this relationship is.
+> I very much appreciate the grouping of functions by area that is done
+> here with read-cache.c, wrapper.c, compat/open.c, dir.c, and the new
+> object-store.c, as well as the new enums to make the purpose of the
+> HASH_* flags clearer, and the reduction in the number of globals.
+> 
+> I only had a few comments on a couple of the patch commit messages.
 
-It's more of a sibling than a child/parent in this case, true. I still
-think it makes sense to move it around as it is rather generic in the
-functionality it provides and doesn't have anything to do with objects.
+Thanks for your review!
 
 Patrick
