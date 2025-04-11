@@ -1,68 +1,71 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3278290BC0
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 23:26:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C86C2BD595
+	for <git@vger.kernel.org>; Fri, 11 Apr 2025 23:26:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744413982; cv=none; b=FG/vovQdiibQwEh3ApeONV+3g7Wp8YxWfJ5LvioIw8N+67oRpAYvgPTiik/rtX12yaE8PhNI5bgQDW8XsO2owl74X4Qm5D0Lza5/G9SyZ/JDLhiRmXWYEdk4If6YiZE9LxT+ih1mXLYUz4jUo9m9ZNIMvdGhYq/9SFUOGi0fOUw=
+	t=1744413984; cv=none; b=BO509BKJUwkgl8NgVt5glDPJy4SCY3SJv+Kb3ZVmwng0YSbA6NJAkUzewzZq0cg44DDEVZqKQE2GVVmJ8TXMdYqwHXxfn/6MBialE+VQ9Jg5UnElF/U54iSgzg2JZT+yb3U+pHgh9x2L0AcRhiPM+01vJNKbIZUJi+s07tTrNSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744413982; c=relaxed/simple;
-	bh=O4JPKmvTb43e3HUoPslAZ6O5wiHYdf41zNqqMSwFUtc=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=hnx2G5pJCjLXp93JATWXAt1pFPwY9IrFtpsTDxfOSOoDAaxuM5GPnCwMxjaDuo9YvIPIXuer0Ck8nkVBthwd73EKnnAipj6+9QEIB/rfYZ9iBd7cemp/3szooZmJUJDl1n3+rvVtEoIugudljHHZX0RWU0So2z6B4T3vibd66Mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=JhuZfv2R; arc=none smtp.client-ip=209.85.222.170
+	s=arc-20240116; t=1744413984; c=relaxed/simple;
+	bh=D5wqJTmEj8TusnWroA8mhFWRRGsOtCK4HO6waA8KeHQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uYzjGW6BLZs2Aj5ayjAtavd8KuJEMuhQJ7MIiwRaXtsBaz7PqmJbfCySSngGx0XkFl93ob19P5uZ1RZix97MKHrwlZVP51p9IgqDyYQ703DQVFO6Td8CPRkadfeiHo7ysujc+An+te/vEdEgx8CYAVim10LvycxYtOG5Qd8KM0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=rlcp39gX; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="JhuZfv2R"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c07cd527e4so242851985a.3
-        for <git@vger.kernel.org>; Fri, 11 Apr 2025 16:26:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="rlcp39gX"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7c5675dec99so240431485a.0
+        for <git@vger.kernel.org>; Fri, 11 Apr 2025 16:26:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744413978; x=1745018778; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=woqZ+P7Ow4pzrplRJn85n74dIpSn9wlFMgv30VYaxAE=;
-        b=JhuZfv2RuIYGM4GqniEx3oPCwqPiIOdlkHb+SzjAZKHA4lGBvZUIpHLUGnBijXJP0z
-         HJ5Ra2y7h9HuiMr29bKCTHsq6OnjzE4WFV7KW4eqB6MxQBaMf8ofCZ68jl5Z8fdn+ftq
-         2YmrlAm5rlzrTl7QXG+ezAtJFsYW7yzzplnm4mHFYU1wZmnohf4wf+kGfe5MOR0pHtO1
-         YoIDkBoun6GSjCqLQVnpasOyAJFb3qcrNwpRYMcJ7MnMTLCxs0nG+SUvX/rXZ7AZ4q8v
-         XEK56JOREhZQiBgv7Iw+LkSh4Zx4QK6zauByu0eGQroe4V//b3bnqdUBhZQfboaxjpWd
-         XMfw==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744413982; x=1745018782; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9cOiIlsxv55af/sHxUu/IEXqPKIiPF/rBNErHxeqicw=;
+        b=rlcp39gXYfNS5+kEYHRcU6AvbJkxEpWgbQUhi30vsvEoUYYrw4qwU1gS6oVDnZMjT9
+         MmtNmltQ7TeXw3ua9Fy22IW05yREf9XTICuPD7WYTwoKJn8hK+5o2nCQyR+zbB5WKCXc
+         hNqTNavIFcRG5RYoEApMO5GTuyC75x5T69GQP1/sSJb24TkrR4+LmIvgKWSludhD4454
+         pEdvOzBdFm95RFDgXS0HTCqim6oj5MVHDi+ns8m/t+JYnc4reFyJligBfxx6Ef0Hrui1
+         pzo8all1I+wpfGbJQe9CCog9SgK7KPTHUcsxg+KoA8tZeYnK3WuDJfgHr6U/C4g53NVw
+         Z7Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744413978; x=1745018778;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=woqZ+P7Ow4pzrplRJn85n74dIpSn9wlFMgv30VYaxAE=;
-        b=TArMrnH0o27zI3k84LzUFGF6pfmFxkt/TMsB0QGfM9yD5VvS9CxKV8jCPsLFyRg+KT
-         /GGAmo1+d2hjLphbDj+PGGqgNgk7XoSXfo1DNGwMYU2yTSipCMGxN7vWYBlPick90IiN
-         Eq5k3jREnHb5VfDAd36HfGVjQCmPsbEJQNMCbsatMlthNIDat4ICwafEN8N3LbUJwNFe
-         FgG+rzZbd9J5L2rsQJUNHFdwZpy5mbR4373J6Kl824NwRJAo6zx3PuYSXewhk/5rr7Ix
-         U55wE3Lnqi8meWBtJP8hvVhVBsOb04PqkOH7tsfXkv90/dSKjljvWB2iC2jUrvUVYXI8
-         yhYw==
-X-Gm-Message-State: AOJu0Yw3bMjFU+sLOw31QKWnv2F85kdy0fkQgZEYn5Q6q/3Ge72XTzAm
-	Wd07o57TM6GiFyPPp5IfsZIiUa9x+2PVuzKCLOj8yLy7v7EPPWzyqmcM1gVOCaFpP3RkZx8RfJL
-	kwVQ=
-X-Gm-Gg: ASbGncsaza/1YaG/WcrAQKIwjTxBA3vRl9X+78bBXV009hm03Ymns8xQ/9wAH+dmyd6
-	0w0FgXiWwu3ivF6x9GApIWlddWrZeYcYqEtqgoYp7AGXtDUOVU/dbneRJEIxIlTQI9AYJR5SV1U
-	OuzUMUsUhm6Ec/C4tp4v+iLo+rTmigoSy5leT5rChaO0+sXPNIQb3xYwTyCPclsgNC8dGYE4sSu
-	Wy6wy1azWzAfWjVd28HzrtmQP2ZOPg58PuswENKwncdLAQaOa8pMuWG3MDciuPKseWNrsx07lO/
-	kOalDNVaWFbSp7+WXXtJntZDKQzSq0N8nyozdpGnvtZPL1F0rVhHgYZ971ELJJ/BZFPomt0qFmE
-	cyIQ/PoSON/3a
-X-Google-Smtp-Source: AGHT+IH62423HxI3rqgxV+T/H14GaYIsBQWMBC/9BIp4WGr8ikP2ab2foj47ivJONVQDHIfgqScXLw==
-X-Received: by 2002:a05:620a:2911:b0:7c7:5a9f:7a90 with SMTP id af79cd13be357-7c7af0c1073mr672295285a.4.1744413978455;
-        Fri, 11 Apr 2025 16:26:18 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744413982; x=1745018782;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9cOiIlsxv55af/sHxUu/IEXqPKIiPF/rBNErHxeqicw=;
+        b=OrT6F2uBx9v7kUivHafPLQTnjcQE+cj5EL0TH7ZyfF24xuNloCwboj7dfTNUD6spZm
+         4sfJPMzDqOz2ojX2FLC09ZKDTfhQfSGF5P/V6eirhJusFgdjZ7TjS6eQBp4Fl3C0d9hE
+         hQaDIC/bNsNrgjtg5/R5i2T9hSgKuI7tzsuOzVYIbI0tKfKxLlwI6kNjfzYRz6oKgSOr
+         WTO8W5VF7CAjj+rDurzLljNnx+Y9LxrYjN9MhRyRgFOuOR3SPwqlMMpFUqbRqfoRTrtq
+         HvdT25oKAa9dCDJZNmBxeBnot9BlnJHVKntWjBUsEHkYyo8pdQYmKBhrmaR6DqJvPCiP
+         tGSw==
+X-Gm-Message-State: AOJu0YxdOsfmtMz+OALbJS07WIehMJuCwm9GjrE+AFAkTlwM8RbWKOnM
+	+JOU/2X47ZlTnL2I30JcFG6jXaEnRCJaVpTxBJG24inRo/UMyXIx+CwuI3J3+LJqnbVbL383d49
+	gxSw=
+X-Gm-Gg: ASbGncsieSaCG7YV3bmTLV7uAqHiEQDwjS5x88bhzbQHho7TtJhUmJVOFUXAgz9cxG2
+	nxf63DMF8rYI5yjKzjzMvlViczGM2cR+mtZeTuYInhbA+GZ3ys81yH3W2w76p7hKDPF7sbyJ2YV
+	HYtjhEGT33AO6aBroAy5LSE1RySMNk6GfxEb3dGZSMDX9WE1n5kO4r43CBnKXDs8+56/2w6kFqo
+	bkwZ8VmHGUewqcZgi+kW1U2e4TMQncCGEOOVvFogox1pSgzbRWhWVPGZM0A19/6841fpq5jXGW0
+	YzApdGP+UJp46+TGQk6js8irn1iPRNwJ+BNRZiKa9Zdcj0sOSpaevJprWXEjuXuYDkb54+/yMSV
+	z2S92nugeeC52
+X-Google-Smtp-Source: AGHT+IHHso+WqKwyTx5n/ORPE4zaGYpPXf5b18pclJ4xpIry1VIYN00a9eo4SGifG+A9J1w7KJ/psQ==
+X-Received: by 2002:a05:620a:28ca:b0:7c5:57e6:ee87 with SMTP id af79cd13be357-7c7af1caba5mr664230385a.41.1744413981620;
+        Fri, 11 Apr 2025 16:26:21 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4796ed9cc64sm32405801cf.62.2025.04.11.16.26.18
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c7a8969e66sm327831585a.52.2025.04.11.16.26.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Apr 2025 16:26:18 -0700 (PDT)
-Date: Fri, 11 Apr 2025 19:26:16 -0400
+        Fri, 11 Apr 2025 16:26:21 -0700 (PDT)
+Date: Fri, 11 Apr 2025 19:26:20 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [RFC PATCH 0/8] repack: avoid MIDX'ing cruft pack(s) where possible
-Message-ID: <cover.1744413969.git.me@ttaylorr.com>
+Subject: [RFC PATCH 1/8] pack-objects: use standard option incompatibility
+ functions
+Message-ID: <63fb4dab30a6bf1dee4318341078fe9eb4716537.1744413969.git.me@ttaylorr.com>
+References: <cover.1744413969.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,53 +74,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1744413969.git.me@ttaylorr.com>
 
-This is a short-ish series I wrote today while thinking through an idea
-that Peff and I were talking about yesterday that allows us to avoid
-MIDX'ing any cruft pack(s) in a repository when repacking.
+pack-objects has a handful of explicit checks for pairs of command-line
+options which are mutually incompatible. Many of these pre-date
+a699367bb8 (i18n: factorize more 'incompatible options' messages,
+2022-01-31).
 
-The core of the idea is to introduce a variant of the '--stdin-packs'
-option in 'pack-objects'. The existing behavior is to create a pack
-whose contents is the set difference between the specified included and
-exclude packs. The new mode (which I'm calling --stdin-packs=follow)
-tweaks the namehash traversal we do at the end of --stdin-packs to also
-pick up and pack objects which were reachable from commits in the above
-set difference, but don't appear in the included or excluded pack.
+Convert the explicit checks into die_for_incompatible_opt2() calls,
+which simplifies the implementation and standardizes pack-objects'
+output when given incompatible options (e.g., --stdin-packs with
+--filter gives different output than --keep-unreachable with
+--unpack-unreachable).
 
-If you repack consistently using this strategy, you can guarantee that
-the union of geometrically-repacked packs are closed under reachability
-without having to keep track of any cruft pack(s) in the MIDX.
+There is one minor piece of test fallout in t5331 that expects the old
+format, which has been corrected.
 
-I'm pretty sure that this is all sound, having played with it for the
-better part of the day and not being able to come up with any
-counter-examples. I'm sending this as an RFC because I'm not sure if
-there's an obvious case that I am missing that makes this whole idea
-bogus.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ builtin/pack-objects.c        | 19 ++++++++++---------
+ t/t5331-pack-objects-stdin.sh |  2 +-
+ 2 files changed, 11 insertions(+), 10 deletions(-)
 
-Code-review is welcome, but I think at this stage it may be more useful
-to center the discussion around whether or not the idea makes sense
-first.
-
-Thanks in advance :-).
-
-Taylor Blau (8):
-  pack-objects: use standard option incompatibility functions
-  pack-objects: limit scope in 'add_object_entry_from_pack()'
-  pack-objects: factor out handling '--stdin-packs'
-  pack-objects: declare 'rev_info' for '--stdin-packs' earlier
-  pack-objects: perform name-hash traversal for unpacked objects
-  pack-objects: introduce '--stdin-packs=follow'
-  repack: keep track of existing MIDX'd packs
-  repack: exclude cruft pack(s) from the MIDX where possible
-
- Documentation/git-pack-objects.adoc |   8 +-
- builtin/pack-objects.c              | 193 +++++++++++++++++-----------
- builtin/repack.c                    |  97 +++++++++++---
- t/t5331-pack-objects-stdin.sh       | 103 ++++++++++++++-
- t/t7704-repack-cruft.sh             |  70 ++++++++++
- 5 files changed, 376 insertions(+), 95 deletions(-)
-
-
-base-commit: 485f5f863615e670fd97ae40af744e14072cfe18
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 6b06d159d2..aaea968ed2 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4651,9 +4651,10 @@ int cmd_pack_objects(int argc,
+ 		strvec_push(&rp, "--unpacked");
+ 	}
+ 
+-	if (exclude_promisor_objects && exclude_promisor_objects_best_effort)
+-		die(_("options '%s' and '%s' cannot be used together"),
+-		    "--exclude-promisor-objects", "--exclude-promisor-objects-best-effort");
++	die_for_incompatible_opt2(exclude_promisor_objects,
++				  "--exclude-promisor-objects",
++				  exclude_promisor_objects_best_effort,
++				  "--exclude-promisor-objects-best-effort");
+ 	if (exclude_promisor_objects) {
+ 		use_internal_rev_list = 1;
+ 		fetch_if_missing = 0;
+@@ -4691,13 +4692,13 @@ int cmd_pack_objects(int argc,
+ 	if (!pack_to_stdout && thin)
+ 		die(_("--thin cannot be used to build an indexable pack"));
+ 
+-	if (keep_unreachable && unpack_unreachable)
+-		die(_("options '%s' and '%s' cannot be used together"), "--keep-unreachable", "--unpack-unreachable");
++	die_for_incompatible_opt2(keep_unreachable, "--keep-unreachable",
++				  unpack_unreachable, "--unpack-unreachable");
+ 	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
+ 		unpack_unreachable_expiration = 0;
+ 
+-	if (stdin_packs && filter_options.choice)
+-		die(_("cannot use --filter with --stdin-packs"));
++	die_for_incompatible_opt2(filter_options.choice, "--filter",
++				  stdin_packs, "--stdin-packs");
+ 
+ 	if (stdin_packs && use_internal_rev_list)
+ 		die(_("cannot use internal rev list with --stdin-packs"));
+@@ -4705,8 +4706,8 @@ int cmd_pack_objects(int argc,
+ 	if (cruft) {
+ 		if (use_internal_rev_list)
+ 			die(_("cannot use internal rev list with --cruft"));
+-		if (stdin_packs)
+-			die(_("cannot use --stdin-packs with --cruft"));
++		die_for_incompatible_opt2(stdin_packs, "--stdin-packs",
++					  cruft, "--cruft");
+ 	}
+ 
+ 	/*
+diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
+index b48c0cbe8f..4f5e2733a2 100755
+--- a/t/t5331-pack-objects-stdin.sh
++++ b/t/t5331-pack-objects-stdin.sh
+@@ -64,7 +64,7 @@ test_expect_success '--stdin-packs is incompatible with --filter' '
+ 		cd stdin-packs &&
+ 		test_must_fail git pack-objects --stdin-packs --stdout \
+ 			--filter=blob:none </dev/null 2>err &&
+-		test_grep "cannot use --filter with --stdin-packs" err
++		test_grep "options .--filter. and .--stdin-packs. cannot be used together" err
+ 	)
+ '
+ 
 -- 
 2.49.0.229.g19b69c1246
+
