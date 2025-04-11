@@ -1,140 +1,112 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696821DF974
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 08:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F6D1C8639
+	for <git@vger.kernel.org>; Fri, 11 Apr 2025 09:26:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744359519; cv=none; b=qpL+5Cs0cVse4PjwHZK45iOLH6NDHHjmgoGAYJwF30Avs5DIv6reS5lY6gOACrP4+2jIsAYo2XzaJF+OMYz8WsQ6Q5iV6LkTwe6CBhS/mdGYl4OPX2uvoPIL70P/9Pr85Czgc8WWcUar/G7iZKb7f5Mc9ph7O97HCotEVRjRQYY=
+	t=1744363616; cv=none; b=fi231S5Hsr3wW+J+Ki2FaKj7vlFL0YpIiCNyq//bztLFafiMXuj1lcBagU3EnmeqjIVgLyW/dnIlL+BF91uUCiWl8s7ABz5NsVNBHb1XrJN8wGQo9wK1z8Mv8RFjn6hXYFe4gj5PPViWbhZ6J759ZyJ+31P38lYmoVKekxP3NVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744359519; c=relaxed/simple;
-	bh=HtInqtoR6urXL11UuS40rVacniuewprxD7Mai5WxHGo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HKWu4O6hkN6RIgJgB7FEcrIJPoYwg4ym33+qbInao1xw2qFZbQkNgL0qNddQ3j3IiGwyx2ffCWx0NKYOUXC6aDLQvlqVcpf68LTQIadPcQKhbG6pFMbaGfMdLZAel3EICjKbTErBet9OJjgFDd6Wd1dP1IAgUfplRoGDSgVuqlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quadrature.ai; spf=pass smtp.mailfrom=quadrature.ai; dkim=pass (2048-bit key) header.d=quadrature-ai.20230601.gappssmtp.com header.i=@quadrature-ai.20230601.gappssmtp.com header.b=HWqzvBB4; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quadrature.ai
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quadrature.ai
+	s=arc-20240116; t=1744363616; c=relaxed/simple;
+	bh=Gwbr58W8G06y8zfFw5vuOIivzorOBkKn+kk00z3MAgw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IuYg+nzZw7tZMdOPBIv2f8Na/zj4OKWDdZoVGfxW+0Zq+4n+cfd3okFljNn0oL8MwjmmpkFyelhMPjZVe5wRGsFMtralb+S/bqTYstgyzzsa1fQQ7dB7IQp8sLFawhx0V3oT6w3FgUkab+zDeISTaKC7pqcaG6Wq7wzW+OkUWYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QK322cEw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BT1RFcJt; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quadrature-ai.20230601.gappssmtp.com header.i=@quadrature-ai.20230601.gappssmtp.com header.b="HWqzvBB4"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43cec5cd73bso12143345e9.3
-        for <git@vger.kernel.org>; Fri, 11 Apr 2025 01:18:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quadrature-ai.20230601.gappssmtp.com; s=20230601; t=1744359515; x=1744964315; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=f75jL8322nFhQvTqZmXIIZz5b/ENxFlXYreERFCcYOk=;
-        b=HWqzvBB4TIjXVt+DfRWZRQJe6HaWxpPzG+zWhhSAAoZfYYPR/7290LY6dqjOzNj0+b
-         9mocEOnoGlwSLdxnHfS3YIQ3d48kiTOwWZpK1yhSRvtOg8fIycbOVi72loLJO9tOgMLY
-         4DHWS/WLH0kpkv83OmkWjh1pe9/wruws4ZRXA32zOvLJ0MWqD1DgihwXbSUUJmqozKXu
-         L59stG6dLyaS8a+BZg+cdxGLx0VGkiZ19sOcK+07grvFd0H/OIFPvkTvIUp5kJqAStcT
-         vJqjYgeqfyoE4CG+O1WyQuzCRTNI76KZ4c+H2KXeULWBJ6tBoB3ZTcOsdHiD5HJAlE3E
-         4lrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744359515; x=1744964315;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f75jL8322nFhQvTqZmXIIZz5b/ENxFlXYreERFCcYOk=;
-        b=AJSD9Y+QeIh30jaX72Ai7LLUbosqBuKG/oio1eEgSn3Mhly8ZEiPIbWitCcDSX6stt
-         2ZeVesvB2whbXwyJcp3R3Hx2ySDPgnWMiDw2OVNMFmXy22HHQ2n81yIocgJzCYIzS8Zj
-         XugqMdotsRYT0mKYlDhfzsmdUAEGPFIBodGegsEKN45PgtYvUzs/D3/+JJ6Ngqko1f7g
-         k+VSHSM6L1Wq7kJog+0jVqgL7kmNQCAq6hnaHz7YiWE132yzbSLHaITt99Cgf2o8rOkY
-         RWccgRHKGBxyyNo2+jR2sywPjmrGmR9nmeHiauwbrfhmPbvV++3bLPGA9IKQHK5Jqkyw
-         4n+A==
-X-Gm-Message-State: AOJu0Yz9WVC7HBv8GnkC5AYqH/MlACyQOvyXiHFosaET0kkCIrWXSAqD
-	OFK2Ei6OErB8MpzwWaVX90P42mRQq01k5jbKWzZczGKIxOP+vjuMA3ttk/WFg/CmG9SF52TDhHE
-	c+fOCE88ZG1p2W7xOa5PCSBA4E2x6k84mIKDIgpvmXfWIknez5w==
-X-Gm-Gg: ASbGncvpRNFVl2uCZ4xcvZmBZpJH5G60CKi8eONwKWVm7gE5iPPGU8znCBJIBJsUE03
-	aMB+IfmRIWQiqRF16arkkOuF9R2BuGIuCWt/8R6+aGxChjQqlv6DXY8RVvvk8hGab1uuPoLySFM
-	XWCVCL9RgYR8F4GvnIk6Y=
-X-Google-Smtp-Source: AGHT+IHdsfYVSwSYjBeYblz8BsdXWaLxhJTyt1N+Cz49SWJV+/cGAHGQcv+jurKkM0yJ/Mv+JthS134WPndAIcyAk4Q=
-X-Received: by 2002:a05:6000:381:b0:38d:d9bd:18a6 with SMTP id
- ffacd0b85a97d-39eaaebc773mr1209314f8f.42.1744359515416; Fri, 11 Apr 2025
- 01:18:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QK322cEw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BT1RFcJt"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id A26A8138023F;
+	Fri, 11 Apr 2025 05:26:52 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Fri, 11 Apr 2025 05:26:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1744363612; x=1744450012; bh=p21Ch9oiZW
+	2JcGwaaHfWG/RuQJwAX83eenHmK11eImw=; b=QK322cEwRDiy80G/9lT0X6gvM7
+	WECERhCPjrB9L/+lorm4DGWhXks27gzWML+7CQdbY8wKwe59+oQ9C5ZYIstuVR2Z
+	wfKX8F7Y62/vMbWbiGJFXIXQSyTldHNq3IbSsIN8zHXYPktMJSm0qcrdHM2GbmmW
+	trQIe/qeg4Qs5OO2XM6H/VAz63Q3H/0rqYbG3x/pRPxpROBiGkO1EuwJKO6H6XqQ
+	0l/QSwe30aUqhIue2PeGgKNhh1o869R9PuVjLpv9q5LXffPnVJSK8ElUAZVzIz/5
+	Y8g+h+yDOuS3pLA+wOVj+id1niEqlCHvyhrzzaXOroFv/tYIIdu2xuQI62fg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744363612; x=1744450012; bh=p21Ch9oiZW2JcGwaaHfWG/RuQJwAX83eenH
+	mK11eImw=; b=BT1RFcJtZD7tu0lAeKvXbpjuN8wSVY44RrdAVSJBfPuZL43zyuP
+	F5GN3vXSJQkg1f2e+P0d117eqMQDh4FryX6wMNwvC8CwM0ITdXlcSJHLy/r/AzdU
+	tsSnZ5tZ28wC3eVpsgqWIvYO0jFwq7QRiJeApCgEOo0F7Qwr5yYcRzmU7NvtA4DE
+	GUTQPECQ+CxKy97RQQRhwB+N3Y5CL6Zxw5nUz/qdANQrwrMsQVYo+mHmd+QHvn0v
+	xCe1TcxW5Jqlzu7OPP5Rjv2j1LjrpvB3YSiMB//ZAk5U3+DJyBIiWVfs3V5rlZvD
+	yUlNkQZc/juJVVqBuiaInJOWGkB3J9iNGCQ==
+X-ME-Sender: <xms:XOD4Zw_x7hdQmoyJTiehwjkE8ycdkD42-WME1--K-a9tQaNe5zVaUQ>
+    <xme:XOD4Z4s5GmEex__L9XyMs2BMw7h_1hGsI5P-cjecs9mHPFWvgGlnPNM7Us89hufhZ
+    Iq3qZtLPUgbmZb_0A>
+X-ME-Received: <xmr:XOD4Z2C6YXWKHGfV8ahxsBnutJz7QIIw7ApuUq94ag2BduNBaO-j5h9x1GMmvfPfBq_Iz7zhKcj_M-POwVXLQMd9Z7gFMnY-p--pXeae1Sbhp9U>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvuddugeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpefgvedtie
+    eujeevgfdugffhhedtveehgfejueefvdetvddtveekuddufeeuueeileenucffohhmrghi
+    nheprhgvphhrohguuhgtvgdrphhsnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:XOD4ZwcHch2Hb45_qnv6cObBLt2WSJun-sTrQoEXdEOy0xuKTEtWDw>
+    <xmx:XOD4Z1MMlcTy2khGycAoRKdcLfMZ5ApYmohA0qHFfJDhv6yaML3x9Q>
+    <xmx:XOD4Z6lt83NqdxyeaE_vybNMDGZEoxPno3b1r_ebJb9y8X2apTDA2w>
+    <xmx:XOD4Z3sYlSvki6T2INYZIeMzZqKF6ssdONAgrnrK_2GQ_CaV3U5jUA>
+    <xmx:XOD4Z8--FEc7ud1EL6BJo9BvbaD3EI1ABut8mCz9KFaTKXEwj8NU__ew>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Apr 2025 05:26:51 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id ccecd1bc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 11 Apr 2025 09:26:48 +0000 (UTC)
+Date: Fri, 11 Apr 2025 11:26:43 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/9] Split up "object-file.c"
+Message-ID: <Z_jgUw1SLS9IlTHk@pks.im>
+References: <20250408-pks-split-object-file-v1-0-f1fd50191143@pks.im>
+ <xmqqsemiteot.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPzgaL2Q4v0LMSek=osugTDCDww9D-Tg+tDsFhFvRSVXFR8g6Q@mail.gmail.com>
- <CAPzgaL1NH_GofMko6f2Auz4e1TjTJNH0w4-ph8np04QRfT_R7A@mail.gmail.com> <20250410213542.GA3168175@coredump.intra.peff.net>
-In-Reply-To: <20250410213542.GA3168175@coredump.intra.peff.net>
-From: Nikolaus Rath <nikolaus@quadrature.ai>
-Date: Fri, 11 Apr 2025 09:17:59 +0100
-X-Gm-Features: ATxdqUEDqYoTvQRjQO2MtP96mfn7AL95VrwZ8Q7SlLDse358taAacSPj1yJ9VaU
-Message-ID: <CAPzgaL3tYJay9P_VvuqSKRuta8FFgn=xc7P=2t3MFukbobiFOw@mail.gmail.com>
-Subject: Re: 'safe.directory' setting ignored for some operations?
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqsemiteot.fsf@gitster.g>
 
-On Thu, 10 Apr 2025 at 22:35, Jeff King <peff@peff.net> wrote:
->
-> On Thu, Apr 10, 2025 at 02:21:01PM +0100, Nikolaus Rath wrote:
->
-> > It seems to me that the 'safe.directory = *' option is ignored for
-> > some operations:
-> >
-> > ---snip--
-> > $ git --version
-> > git version 2.43.0
-> >
-> > $ git config --get-all --show-scope safe.directory
-> > command *
->
-> You're getting "command" here, but I don't see any "-c". Presumably
-> you're setting GIT_CONFIG_* in the environment yourself?
+On Tue, Apr 08, 2025 at 04:29:38PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > The series is built on top of 9d22ac51228 (The third batch, 2025-04-07)
+> > with ps/object-wo-the-repository at 9442b1c919a (Merge remote-tracking
+> > branch 'junio/ps/object-wo-the-repository' into HEAD, 2025-04-08) merged
+> > into it.
+> 
+> As 9442b1c919a is not public, this description lacks a way to verify
+> the result I attempted to reproduce.  ps/object-wo-the-repository I
+> have ends with 7d70b29c (hash: stop depending on `the_repository` in
+> `null_oid()`, 2025-03-10) and it hasn't moved for a while, so
+> hopefully we are in agreement ;-)
 
+Ugh, yeah, I meant to refer to the tip of that branch indeed, which does
+point to the commit you mention.
 
-Yes.
+> There were a few unpleasant interactions with other topics in
+> flight; please check the conflict resolution I made.
 
->
-> > $ git status -v --untracked=all --ignored
-> > HEAD detached at e116555
-> > [...]
-> > nothing to commit, working tree clean
->
-> You don't show us the repo here, but presumably this is one you don't
-> own, and the config is working as expected to allow the operation to
-> proceed.
+I couldn't spot anything wrong. Thanks!
 
-
-Exactly.
-
->
-> > $ git clone -v --no-checkout --
-> > /builds/coreinfra/grafana_terraform/.git
-> > /builds/coreinfra/grafana_terraform/tmpus18hzbs
-> > Cloning into '/builds/coreinfra/grafana_terraform/tmpus18hzbs'...
-> > fatal: detected dubious ownership in repository at
-> > '/builds/coreinfra/grafana_terraform/.git'
-> > To add an exception for this directory, call:
-> >
-> > git config --global --add safe.directory
-> > /builds/coreinfra/grafana_terraform/.git
-> > fatal: Could not read from remote repository.
-> >
-> > Please make sure you have the correct access rights
-> > and the repository exists.
->
-> Here you are running afoul of the environment-clearing that happens when
-> Git internally "switches" to another repo. The "clone" command is run in
-> your newly-made repo (which is "safe"), but it would then run
-> "git-upload-pack" in the remote repo to act as the server side. We clear
-> out many Git-related environment variables when switching between
-> variables, including GIT_CONFIG_*.
-
-
-Ah, that explains it indeed. Thank you very much! And apologies for
-not being fully clear about the context.
-
-Best,
--Nikolaus
-
--- 
-nikolaus@quadrature.ai
-
-https://quadrature.ai
-Dir: +44-20-8145-4726 Main: +44-20-3743-0400
-The Leadenhall Building, 122 Leadenhall Street, London, EC3V 4AB
+Patrick
