@@ -1,78 +1,125 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20334280CE8
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 21:29:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484CF23C8A0
+	for <git@vger.kernel.org>; Fri, 11 Apr 2025 22:58:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744406967; cv=none; b=Oxe+eWp+RNa4m4L2gHUyTixW9siHcrXR0KYiSp5a+SENbOQboYqtY1alONA2kkVlrXxf09WeTFCAptyh5UMRr01/1/9WcVnHDMMsTdV4ZPbmfDaX/p+XYg+UR1r5/9OJn3uOdWIfz/w2qxpiXoVV448eAIyGioDscwikwjQEra0=
+	t=1744412288; cv=none; b=Naw7wTYY/54jeliQvrGrEkGHt1HAzuj/j7Ay7XUx6oXix/j/u04cP24zUfxz0quaXj0rkCIl6YGrXM9erw4s7FC7ltrRkGUGh2+qFRRa0XaJp9stmcaPnBwH9EzYlRRkXHNDR96CJFBn8rsSJy14MYPcvp0PWcBQs7UGD0YUcjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744406967; c=relaxed/simple;
-	bh=JUdaIGVvM387Z2xhDYYtzF+1dyqhlpOxyFwTiG9ZAKI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IitnhrhNilTO6RD6n+osCl0YG0A6GXsmyHORwox5y1Kqjb23nxSblEm16yznJFUEJ6jb7YU/vE0gwfPhBZcE4In7Df2p0VP5lWCYHQiV1VrpYz58jOlkK4RBe1h8Sgc5C+QdByT3OtbNY+l2HbpM9EWjnYagOp344eAYUAFOm0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7c5f20d512fso40414585a.2
-        for <git@vger.kernel.org>; Fri, 11 Apr 2025 14:29:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744406964; x=1745011764;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JUdaIGVvM387Z2xhDYYtzF+1dyqhlpOxyFwTiG9ZAKI=;
-        b=MUIbAOzZx9BnC9Zq67NB0AQeKCyJcO9rvI9q9EDm2KQLckWHk9OI7EsMZdK97SIM1l
-         BpuEuO1aiXjf8WP8y8VGjZ49csxTT3NNNv66kZNYuf8NCCRiHx4/ZX1JsdX1AOcaA+F1
-         YULKKYVhE+SiaVsVlG8WVZdAvkPEnlXbyX6mu7SZdT7jzaDI5Gu4nakkONEBR0E4Drxm
-         j+qIeaaxs4D5D8hPvRlr8veGkZezLmi38trY/p/ykpxinN6QuLlxzCtFbXI95aG20lNT
-         a6M6dCptUzfXeeCm48KxCA999Jh4gNFepF0zQlnSJpgiidjiumUEjulGKNHnoGg+I6Zv
-         8k3g==
-X-Forwarded-Encrypted: i=1; AJvYcCWx3Mxr6r0tC4C2trxCl1GevLYQGgEGL4/Cre/g91/wsPeCKhNp25wFHBFt2eHrisAc29Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0oNY35LXST7hUedhBsIJxchxyj+NAHSW1tFy/vOgyuMqdl9I5
-	EPPs1gzwYzatBciH/w/JeHQNTfwJFZ8MIrPw3sDKya5MZ7OAoSMKCEcKdNc9RR+dKdzUyveaE21
-	Sb5/4OlavBfIybNMK5cL2N9pKuLw=
-X-Gm-Gg: ASbGnctod6bbStXo+mtQHqKJWjG2h7GbAQl2ez25vgnp85qFrfV1U7uxenDlplMH9c0
-	TyQwf/7LIb6VUZ/KYlpkwGG4sLibdwK0tB0Jdr/PENiclyoyg54ufqAS1QEBynv39Dc34BZUIfL
-	PNzuQ1zzuMHFBGaT4AiDq7LwAhFZ+/1KjxdUQKEh1JJZyWDDxhJknqoDc=
-X-Google-Smtp-Source: AGHT+IHWaLK2j05EnAb8is/KTWzLW6bPVGW+ghtTHBo7qepjV7/34BO8C/NW/dE569hE2MQfzhkOBNSuVf802jwDts0=
-X-Received: by 2002:a05:620a:2456:b0:7c5:8f40:3316 with SMTP id
- af79cd13be357-7c7af0d848dmr240314785a.6.1744406964049; Fri, 11 Apr 2025
- 14:29:24 -0700 (PDT)
+	s=arc-20240116; t=1744412288; c=relaxed/simple;
+	bh=h/8yrP/6r3T/HZNOeKfK9a5YL14X/+bW6MktiUQmIkk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Mn1g25gLOtYqtYsVFktfzPkMMca92sUTu+h+XVN6zN9EiO90C2/jw05MdBqyS1FPDwRhcn0j7d9C/zkEU8wqI5NRQB9G+7jMe3n7LF6DkkcruPrzurtF0X4IyHHcfaQ061lBX585MNrNvYyxuVlhLvLFufQPVJjJu/TUEVdCUJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FRRSYt3z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yz+8xKxl; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FRRSYt3z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yz+8xKxl"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 549F313801A2;
+	Fri, 11 Apr 2025 18:58:05 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 11 Apr 2025 18:58:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744412285; x=1744498685; bh=XQmnYdV74J
+	eqB5PimplUylac+ePF5mQ/TRz6bap+sEg=; b=FRRSYt3zCSRyKwZ8iwkvEKj3JH
+	lCqgd6MZKWrMYmmgzUi9TkyDYNVb0oMxoNDDt9ruFovLMHv4pK/Orq0t4/cluyMH
+	Q0kHlC3RZh/e7pSV3SgJVMizJSendqBIVrvfY+79DHBbBcW7gBmsaC6vlU3OQwJl
+	qt8KRfx/K6YnBSwJyCDFvWGqoPbGKnNoLD6Z8tzPeqa5IgdPtsV42DD2H10LhXSy
+	QwBbXeYUKzPFlN+iFhNxgTJ1FUMuX6lgQ/QqcrvsTd5P23za1MsaZGvUdWSajzPJ
+	AWk+3algJClh1MR3uRcgsCEn3sf+EpaHB+N2RK4rci/8/MRhDJOTwP2drCzg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744412285; x=1744498685; bh=XQmnYdV74JeqB5PimplUylac+ePF5mQ/TRz
+	6bap+sEg=; b=Yz+8xKxl9fqaONll9UxbpkCv5Is95JeIi5ZN1uz4cuS0+TDlGM3
+	IzZGlUpy+ZDZpHqM31hailGQ5y8qEJGV7jk6rmltpi7w9NaIk3c06/RKnDwNWtAc
+	csC0jISGRUCvxoO6YzCZkzbj8hPJlCXRqCfMBQFVFLlsaO983C9TZ8PZbmUqgHQE
+	TUyeOVHAutiY/uqR+S3hfiLmjFndsU7wQxF0JUrKLdN0T3Oai/S0aszajHbpd6RA
+	9yfMJs+dgcGVTUxeajFC7bqnPuXUCsH9ez2PXjq0Vx5RwCTifxNf5UEwuU0WQR5A
+	ql4rFroLl2a4kWD4ZEsB6Sp0M2Lpu+L0YZg==
+X-ME-Sender: <xms:fZ75ZzJY680ROkMf0PQIwO-sDwjYLtCAqHlqNXUF7IN2FlW82Bv15g>
+    <xme:fZ75Z3KVfxA5VnPYLv4setSAmyOerN-A18cWp16Anq1VhCV1tgg45I2X7FxjGD5FE
+    XI_swKJnn_t_H6rgw>
+X-ME-Received: <xmr:fZ75Z7tlDz9SyrQNbr50bAdu_YbFkE3hXlkN3ptwlQBBu-SzZU-gy9XSKsikbLYvWxJmFKQHT_Vrho2ludF1UcAxJ6IEIQDi9M95>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvudeftdekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:fZ75Z8a-O-YZB-G9yaV5WnPugwApbR7pNcPFeTF8c63rve-6dbo9Wg>
+    <xmx:fZ75Z6bioYNqGJVNJ1ltSDeWylj8q5d4lmD6GmDKg2cvwtcz3cgykg>
+    <xmx:fZ75ZwBBfeNfHP6Ai_Iwuoy6pMXxnInN6kmzrLundbpu2m3ocjuHpQ>
+    <xmx:fZ75Z4Y-WMNhCGrrnN4v9mIWJP5SL_r1EqM9wKfI2rlL7OAg7OMpow>
+    <xmx:fZ75ZzkeYu4qdy6lxn0xV1uSZ3r5L4cMcwPxfDKHqfyGAsqh-5ao8KPP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Apr 2025 18:58:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 8/9] object-store: remove global array of cached objects
+In-Reply-To: <20250411-pks-split-object-file-v2-8-2bea0c9033ae@pks.im>
+	(Patrick Steinhardt's message of "Fri, 11 Apr 2025 11:29:57 +0200")
+References: <20250411-pks-split-object-file-v2-0-2bea0c9033ae@pks.im>
+	<20250411-pks-split-object-file-v2-8-2bea0c9033ae@pks.im>
+Date: Fri, 11 Apr 2025 15:58:03 -0700
+Message-ID: <xmqqtt6ul30k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250411-pks-split-object-file-v2-0-2bea0c9033ae@pks.im>
- <20250411-pks-split-object-file-v2-1-2bea0c9033ae@pks.im> <xmqq5xjampdc.fsf@gitster.g>
-In-Reply-To: <xmqq5xjampdc.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 11 Apr 2025 17:29:13 -0400
-X-Gm-Features: ATxdqUFk52Lp1UEVYbiuw5_HukULUKmtrE9fYpxsr0Uur0hzccCHHoX2uylbeWc
-Message-ID: <CAPig+cQ5AEwTaK2LYkV39yrZppnF_MMMnB2V0nTGWZ-PcptVYA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/9] object-file: move `safe_create_leading_directories()`
- into "dir.c"
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Apr 11, 2025 at 4:10=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > The `safe_create_leading_directories()` function and its relatives are
-> > located in "object-file.c", which is not a good fit as they provide
-> > generic functionality not related to objects at all. Move them into
-> > "dir.c".
+Patrick Steinhardt <ps@pks.im> writes:
+
+> Cached objects are virtual objects that can be set up without writing
+> anything into the object store directly. This mechanism for example
+> allows us to create fake commits in git-blame(1).
 >
-> It may be debatable that <dir.c>, which has traditionally been a
-> collection of read-only operations (mostly for exclude/ignore
-> processing), is a good place to host "mkdir -p", but it certainly is
-> better than having it in <object-file.c>
+> The cached objects are stored in a global variable. Refactor the code so
+> that we instead store the array as part of the raw object store. This is
+> another step into the direction of libifying our object database.
 
-I probably would have expected safe_create_leading_directories() to be
-moved to "path.[hc]" which already houses functions such as
-safe_create_dir(), normalize_path_copy(), ends_with_path_components(),
-longest_ancestor_length(), etc.
+While we do need some execution context object to hang these virtual
+objects, once we decide that it cannot be global, I am not sure if
+epository objects are good home for them.  If your application
+running in a repository needs to give one object name to a virtual
+object, and then that same application wants to access a submodule
+of that repository in the same process image, wouldn't you have one
+in-core repository object for the top-level superproject, and one
+for each submodule?  If a submodule commit bound to a path in the
+superproject's tree is a viertual "pretend" commit object or if it
+has a virtual "pretend" tree object, don't you need to expose these
+to both submodule and superproject repositories, if your application
+wants to seamlessly cross the module boundary (think "git grep
+--recurse-submodules" or something)?
+
+For now, as long as the_repository is being used as that "execution
+context object", and not a repository instance passed along the call
+chain, then the globalness of these virtual objects is maintained,
+so this change will not cause breakage (e.g., such an application
+may want to pick up the virtual object from the repository instance
+for the superproject and it may find it, but when traversing down to
+a submdoule, the same virtual object may not be found in the
+repository instance for the submodule it descended into and working
+in, if you make it per repository and pass repository instance
+around along the call chain).  But eventually somebody will start
+saying "let's remove USE_THE_REPOSITORY_VARIABLE", at which point I
+am not sure how subtle such a bug would become.
