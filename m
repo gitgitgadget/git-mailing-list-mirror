@@ -1,73 +1,80 @@
-Received: from mx01.frank.fyi (mx01.frank.fyi [5.189.178.148])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFC118C011
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 19:02:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.189.178.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B8F18C011
+	for <git@vger.kernel.org>; Fri, 11 Apr 2025 19:08:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744398176; cv=none; b=vFuhXA4uP1uPg+xekkxN4WWi2c/FuDmaSxAbZQ7mFbDFstw95usEtKo1OP/4Jx7xtSib9YIqOoYDDIsKdN1+iiid7GZQg2cixYdZXge5/d8pbQNVZqYxObGc5LGEED8cxNbSuMsdGxM8vfTK0CtGODcyrTXoXEHUefwm1DSrsf0=
+	t=1744398502; cv=none; b=E2iqjRFevs1nXFFMqYzlASso9HSJlWy8L20q6ZkSpzYMvrlwYjfj48OHPejaALK0VFAgbeWvtqozSZSGMK4tZLU6AR3Fch8Vf90txJVGSc9mLv5+jH3R6OqNO72ySH3G7LRJAHpRZa3W4a75Sq+HmU2oFBob8kyz4YMZVMzq+xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744398176; c=relaxed/simple;
-	bh=xL657b5hnhpSEEbQyGaZYxcVqQ5eREZkNUN78ukvbX0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SavNo/yC39rRBXC7WnVq/3YXRmBHdKbzSYem0Mq9visGdjyr918Pg+LeIsNUlAubbQPsvRzd5vpwGTBwVByKeRh32KbJKZFrgEpfwOUub+KhC31W5oVH7bLTJ0pahdss7Q9nGq0IEbAddWARXC/FhM5oeU6+eaPJ9WQ/5Oqt9RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=frank.fyi; spf=pass smtp.mailfrom=frank.fyi; dkim=pass (2048-bit key) header.d=frank.fyi header.i=@frank.fyi header.b=CYJGDM0U; arc=none smtp.client-ip=5.189.178.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=frank.fyi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=frank.fyi
+	s=arc-20240116; t=1744398502; c=relaxed/simple;
+	bh=P0YKwAxII2ay6CuD65/MsmTyEJpNzgCnarYwPuxJuGo=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=o4TDowRSi+bZDMsRz6nrPNWknhkMotDTAkaxOrc/jHLyWRq/caiRKFbcUFs2r+qObCB9Wk12tfABrwPCmQmglGZbcMbGjhmjfy2lfhZyrYhwUs5I5kGueldS7yzmPxYEKXx9P3EdMDJ2Mvk5802dwwskx8u/JqW/T1X0Womc9Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lzNx0K5O; arc=none smtp.client-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=frank.fyi header.i=@frank.fyi header.b="CYJGDM0U"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=frank.fyi; s=mail;
-	t=1744398167; bh=xL657b5hnhpSEEbQyGaZYxcVqQ5eREZkNUN78ukvbX0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CYJGDM0UCT84meBSvAzMwxJz15XL0UCDutZnlfGTm/7hIK1oDTY6fv2ZiEpS3CmE9
-	 5R9YTWPKhSUJk4f+b7Ep2YtBkL2Lg3mBxINolRjb92SWNeg/IThlhsB/YrIhgcz2Y6
-	 5tVMYI73WvZ/tuyt5aZHNv1axv7L9qK41N0VW64vN72KRp+mXh7+rANPrDvD2gkNdz
-	 yiKZJm4k91lXK/7TdHbMfXIr3PyCaCth3d7/qg+Y0DUX5l7fn54nKzBbGMVpRaYfG2
-	 RF1WnEF0xk77MngxzUrINYi0HpXYzvXS8PbITyJ87cp0x0QIxw5QHjp56FEdtucUYT
-	 H3RY3FLoTLRnw==
-Received: by mx01.frank.fyi (Postfix, from userid 1001)
-	id 4E10D1120FB9; Fri, 11 Apr 2025 21:02:47 +0200 (CEST)
-Date: Fri, 11 Apr 2025 19:02:47 +0000
-From: Klaus Frank <vger.kernel.org@frank.fyi>
-To: ben.knoble@gmail.com
-Cc: git@vger.kernel.org
-Subject: Re: Way to "impersonate" remote or sync remotes without fetching
- everything?
-Message-ID: <669a6a0f-bcfb-4596-a0c8-73c722a6ec10@frank.fyi>
-User-Agent: Mozilla Thunderbird
-References: <2afd91ca-13d8-4b40-aa8b-c1917f0882df@frank.fyi>
- <CALnO6CCUHE6-RcZkTBYT-CeXHnYPBPe1eGSogWd7=5tK5NyuxA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lzNx0K5O"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-af519c159a8so2230282a12.3
+        for <git@vger.kernel.org>; Fri, 11 Apr 2025 12:08:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744398500; x=1745003300; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=P0YKwAxII2ay6CuD65/MsmTyEJpNzgCnarYwPuxJuGo=;
+        b=lzNx0K5O/mul+REc0F0hD6CydJoH8UBi9z0/NxcmaXagNORekvEDwWalnVQpUU3of+
+         7UkTi3NNyoi/pctp3DQeBp+nCnrftXjbXQX08J1h27BAmIyKc8BNypQiYpLFd3RWyhrB
+         1y8Z5TF7zSL8sxPFIJ+9aQGUSSvSszZhi4H9NV4Hyno/g8wll9CFQ6Fnz9OrpilrpZIU
+         nO4M86oBjCZvNRiHZtgmk3hDaWqrx/WUDvdVVGHES8bvitU+2quDGzB9AMY23IISI/uF
+         /4BQm4RmihmhF2vDPBLfCGu9XlBySURhLF391Ax1YBqmsLm5JQa6ir/besmDVwQjHgKa
+         6mOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744398500; x=1745003300;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=P0YKwAxII2ay6CuD65/MsmTyEJpNzgCnarYwPuxJuGo=;
+        b=hExzDc5LCmyGSHYQGbmtLbaLT6sqih78hHE9TgcDnIzRd/CynkJZnIkgj5h3Wv6OcJ
+         7VzC+H3rj3s4RWHAFguZ+PoKgfkDuWnIkWlL/KINfwKKt9aFk80uPCtos8zCXuxHlAJz
+         Q18e7bYhlrMx013VPbtEF02rYfgF3B/8vVWmb/YJMiHXWCkxGF4kQIR6f4SBtgbaeNTz
+         aYdbZklCc9hzgJjiNA+IXmCe1bBMNtWgrIv+6iFYJ2jL2lu7fmY1d3tIE6wqrg50U//k
+         0aAvAPxmEuJdCKBy3Qw/ljU00nyxDP9kFCLEJhHKC2U1Lsc4u4VfMwu6ldXjgJMiJPMJ
+         1b+g==
+X-Gm-Message-State: AOJu0Yz/HT++yIHA6bBu8MKXhz4yij6kday8eNoI2yAVkzx8mhd9LOYx
+	Lx/mfHfa+y80/MwU4wlYImQ4m6nDshSdF3ebuQ6k6o8SZGo/owEotyCwcpZpI7KZQiW6UtVVrLE
+	lKujK92lrwE0mZc3+OoR63yZt1iUtHX93
+X-Gm-Gg: ASbGncvKMmVFOxcy9l2DxNQ2LZl1HMDseCaxCGMamIJs8eh5jKbxzuqgw2uQWbKc+8L
+	v2kiVE8VGOlUxefqp+a4TbBG1nboi6rLVlLGJ1YoqFLxF6gGeO+SaMl/52QBLMF5e6qOmEqMTYv
+	XoYEmIo4PlwNIKge/62rEjHEc=
+X-Google-Smtp-Source: AGHT+IFzcbl10sKI7XjfzLC4iY6kBjByD3an2k0x5b3V/NMlJ49bGNAGL8HFbHPUR+GYwD9mDfogp+x4sVzo2sJGGCg=
+X-Received: by 2002:a17:90b:4d0c:b0:2fe:6942:3710 with SMTP id
+ 98e67ed59e1d1-30823629179mr4822423a91.3.1744398500593; Fri, 11 Apr 2025
+ 12:08:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Language: de-DE, en-US-large, en-US
-Content-Disposition: inline
-In-Reply-To: <CALnO6CCUHE6-RcZkTBYT-CeXHnYPBPe1eGSogWd7=5tK5NyuxA@mail.gmail.com>
+From: Piotr Siupa <piotrsiupa@gmail.com>
+Date: Fri, 11 Apr 2025 21:08:03 +0200
+X-Gm-Features: ATxdqUECCOwvYP6yX7FKC1qcVyKQqODTpu1H7JcjZ4geL2N_t3L7bjoHLzfyC1E
+Message-ID: <CAPM0=yBnaXojeC9WkHg08deR-VpjaVQwyrqt8mk+54qLXqSaAQ@mail.gmail.com>
+Subject: Bug: Git sometimes disregards wildcards in pathspecs if a file name
+ matches exactly
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 2025-04-11 20:43:24, D. Ben Knoble wrote:
-> Maybe I haven't totally understood your use-case, but what if the
-> authoritative source is your local repository, and then you push to
+Hi! I think I've found a bug in the command "git add".
+It can be reproduced in a fresh repository by running:
 
-There is no local repository, that's kinda the source of all of this.
-The sync script runs in a CI/CD. I'm kinda abusing CI/CD here to run
-a kind of cron job, in a separate repository that does the sync, maybe it
-is easier to just call it scheduled pipeline/action or just stateless 
-cron job?
+git init
+touch 'foo' 'f*'
+git add 'f*'
 
-Lets make a more quick example:
+The last command should add both files "f*" and "foo" to the index but
+it adds only "f*".
+Running it the second time works as expected. (It adds "foo" on the
+second attempt.)
 
-gdm is being developed here: https://gitlab.gnome.org/GNOME/gdm
-so in order to make a PR I'll have to create a fork in that GitLab
-instance so now we're at 2 repositories. Then I want to have my own
-independent archive mirror in my own gitlab instance. Then I also
-want to mirror it onto gitlab.com and github.com just for the sake of
-this example. Now we're at 5 remotes.
-
-Now I'd like to have a script in CI/CD (that runs server side) to sync
-all of them. In example the gnome.org one could probably mostly be the
-autoritative source (except for the branches that contain my changes).
-
+I'm using Git 2.43.2. The current "next" (2.49.0.805.g082f7c87e0)
+seems to have the same behavior if I'm testing it correctly.
