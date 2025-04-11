@@ -1,94 +1,77 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FE3278E71
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 11:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD5E1DE3C7
+	for <git@vger.kernel.org>; Fri, 11 Apr 2025 11:09:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744369657; cv=none; b=iCiCVfbI1m7jG22KfgLgdFx8tujccgFZPoG380glPEbqkeBixi8WqLuq53B49fYt6l4TVpjuzPfZ6tvJnP7+gl6cP7frn5dDotPAw8Mzo29VV5Byq6DniQ50+4nz21cdu9PnFEy/FrBMoCfVrFzdIBHBlAROzX9o3nZyQLWb/9Y=
+	t=1744369789; cv=none; b=JUxCsZxuIvoODwvZqvzuny2vu5XiONRT0yeHX/qq2BQWbvF3/dlQVH5mptB7Rp61V/AqRVrFMzW74iHE3h3zhTrrCZjcHm5hqrNNIspmMYpPtu/E5fWwHMerPF+C7Bb6gNphR8xvIlq+HREd8ttb2fRV5FzDwCEQuJoZubOrKro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744369657; c=relaxed/simple;
-	bh=bLE9Xg2Ghm7hblq4SNdLa0/nYbYnSCibgto5F4UZ7X8=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=ie+LXW3d44eoCgQyDXFG7RAXuBdx/jjjen2JxM3yR+ByjfXTFY6uuYHCTBnUzEOZj4GmDoxN41bp7D5GdlltQHznmhMBoHR4CtnP+nSxFZ2q83xwNlgFuYFBxAEb7JvKPILn52fUMVDFcqqyROl/xCaPX7mECfMeWpsJvxiOf3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=odoo.com; spf=pass smtp.mailfrom=odoo.com; dkim=pass (2048-bit key) header.d=odoo.com header.i=@odoo.com header.b=YrDNzfeD; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=odoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=odoo.com
+	s=arc-20240116; t=1744369789; c=relaxed/simple;
+	bh=baPAcRBoA/X2loWOVR0TSRRAHLOv/7BrEW4DwaSG7NE=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=bMHhU/Lm4EpkF2lpqT/jORyfL4Bwp66/uO3xxP8frxNI2Bs7LjvfSuJPqnhW0uHgzE5Y4FW/RR5J7sc2JOHO19z1DTl+kF5Zq5ds9lPLWdlNjXpAhVdvN/PWZJ9opJt8K5C3unW+kAkVRl43EM6k+rEgSR89N6i7CDov2HzrNc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=laoH8XzI; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=odoo.com header.i=@odoo.com header.b="YrDNzfeD"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4394a823036so18615785e9.0
-        for <git@vger.kernel.org>; Fri, 11 Apr 2025 04:07:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="laoH8XzI"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ac73723b2d5so367125466b.3
+        for <git@vger.kernel.org>; Fri, 11 Apr 2025 04:09:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=odoo.com; s=google; t=1744369650; x=1744974450; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:content-language:to
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UuDiT4k50dCGFoEB2HqlaAZXJ1rN26LVZ74+ITHS95c=;
-        b=YrDNzfeDl1QcMSqS9GO2wlYzykmzrPeCnWnx5HQ0d/VE803lvrTVfBMh5Vq8TuEKgf
-         iz36RGXaoAL2G248tPmXO4fQCV0is8Vqneu/ruvV/C91lynNx5kr1W/Emei1pZBN9ygu
-         IqxIwvw6e6wTKBEMlwFcKN3tdLHiXB1ayF7EheX+Mmde0v8RaIFNSTDDjVr7tnlG1rkS
-         KpL4ZF6LgJrJqOxzmdmZb++lP0O6OOwykHVZgDsHk9U2XVO70X6D7q8zzDdobx7sRr+G
-         CbjBCl75YsNCS05O1A9pvO5N5P3zz9TsV7JUnNYoM548nfK7XDpv8CQMG+CLsSl7SSR1
-         t16A==
+        d=gmail.com; s=20230601; t=1744369786; x=1744974586; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=baPAcRBoA/X2loWOVR0TSRRAHLOv/7BrEW4DwaSG7NE=;
+        b=laoH8XzIiKee58X3OPKcnhRSaWbe1vfZ0n+Xit/9yu29Exs9co/W473LxsRaK9+Dk5
+         4DEs0rRUOv+RGeeBMIL8eOZMZEyorUog1BCVywlwp6xR9uhJLdeWunoyJtJEMzJXE3IJ
+         86cpD0hGEZ4qStO/XYiDNTnd7VhT4SqPx2LsQ94iNaKKYQQBkbIdOJkal8cd6ur/GvZA
+         wXehG3BnPM+LfYohymdM9TtD8x4x2SBInVZUktALRp3f1j6xV/owP+bQ3S8/l+LBnaD+
+         X6deU1afReJd4qXP+nr1E6gbdNNIyvwI6uioGvvy2MyMMJBgQJrIc5IEszkXC5UZ/zJ6
+         sX1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744369650; x=1744974450;
-        h=content-transfer-encoding:subject:from:content-language:to
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=UuDiT4k50dCGFoEB2HqlaAZXJ1rN26LVZ74+ITHS95c=;
-        b=k5E3bNf1OU61CbqnhtlXINOMioVZEZDubdSU+rCXbHI8r/5z2VnSHKvko3lVI9OH2j
-         VAZmhJVpFjwCMUr754TxvWT4cVqC1IzNynmHsls1t1scxNI0ys7epwwa13f8jUDoJ42P
-         DpxlTsJ09mlqMm+ff2siceaIIq12mkJSxNr3ZXus7I39P0DXKYWgJWsdVlYVO+tzoxTJ
-         sPUTnh16fnb9lpZnWRPZa2xDcJqL3x7o+Bgk6fXUqwqEu7+eqhXIV5J7Hxezzjhtdlx2
-         A4+FJttKYOb+309LRBXukGSBJST1LB8E3orqjlnxsLaIYV/y8TvEQaVIYwj1O9a4DthY
-         nejA==
-X-Gm-Message-State: AOJu0YzKPwTkR1PHA0bY/m0t6cD7Y0J9xZTMXQTPbSLS4nDPHSCVcu8I
-	wDipJJEC/YkmVvfUt53QeinCYPnJdxRrQ/+ogNwC/7M8fOGY+6dFFt7cIVK+uD/yM6aMQ5GYRtj
-	Y5BM=
-X-Gm-Gg: ASbGncv3Qw4IOTxWx9X+KpEm4l0mtra0ygmq9nw5thgrzagUn3T26myP+eKscNlz7LV
-	CuL/sZjpZ0Qu41Sz+kW671CO6WpFY6xkCAC4v09V0d2E4vmj0z7dy6AxEgspdRKzsPWAJaW8ldJ
-	mzTkIOgxq1B6sKKOYq1HfvS4+QIPWM4j6vTHy7yLSJZ+p2F/+jC/cuCHUpgc/6X8i6zBCAbxK+d
-	MhgAgT7MACkuUI0J5/hLbq/MS7h2q3o8A2Y9wnO7y40/0aHskgsvvDXaKAy6LJmrGwe+vdQSUlc
-	5+WNtmrc0Vn4y3afDL/bNKUk35C246coeHCH68wXjhCn1xztBaLuxyiC2qB1d58ij0Og
-X-Google-Smtp-Source: AGHT+IGyC96jwGcl54Ue4d/7+p7GNXgi/zZPY5ojswmDbKSskcmy4bP3fd46eSQMrxDi5KUnWHdUuA==
-X-Received: by 2002:a05:600c:1988:b0:43c:e305:6d50 with SMTP id 5b1f17b1804b1-43f3a9a68e1mr18923635e9.24.1744369650066;
-        Fri, 11 Apr 2025 04:07:30 -0700 (PDT)
-Received: from [192.168.0.2] (ptr-178-51-192-241.dyn.orange.be. [178.51.192.241])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43f2066d6e8sm86943445e9.23.2025.04.11.04.07.29
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Apr 2025 04:07:29 -0700 (PDT)
-Message-ID: <bdf4c917-f1b2-4c24-9b59-97d8a770d06d@odoo.com>
-Date: Fri, 11 Apr 2025 13:07:28 +0200
+        d=1e100.net; s=20230601; t=1744369786; x=1744974586;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=baPAcRBoA/X2loWOVR0TSRRAHLOv/7BrEW4DwaSG7NE=;
+        b=SFk4XacyWlL2Ug4Wp5e0HxbuorkUBSxjPS8Tq2VeZSCEN/NmK48SYTk8CZ39YXkKZq
+         dQE67TKfUdFkRlQwrDz4ZeJftyEZlR3IIYn5KubFeM/VERNlbsy44HWkgxEeOWUM6ray
+         HtsxqSX5YveL7ITk1mEWKIR7N4bWsqAs0iMuVWxQ85OwxQNH1D3W3ZukoopJTjruZoss
+         fFH843AzJXYxMzO9fHwDMmDX/8AClzvqfr3RlaW+HFLCi9EYf7WmhWn6YnFORgonYdXZ
+         Oqdh3hKJAbPLRxlavCntpxqnrPssBOyCjpBcdk+87/6t95NbbMzgdCm2vDtOMuS0RiwW
+         3OlQ==
+X-Gm-Message-State: AOJu0YzELslgZiQ7SOTttwKTXKOHHXdMbel3X/1ojntr+M/LZjrP+PeM
+	PHVWtkVSLclPrlyubkcxn9JEsLZuehTMxsMablGLl19O8OWit3mVr+IMOVocVgio3SJHjcCu+aW
+	s+0SSPZ23x+dDPlruxRWwxbb62e1kgQBUdk8=
+X-Gm-Gg: ASbGncsLhvf7j/Zd3mF4P86lA7z6QwcrThxSNf4i5vcrNF8moEo5l/hIS6PD1gmrLN0
+	DQsMZCQViS1yW2qbN9nViO71pYlCt3ujTFPXFkqRayPn7t50oVfH3qmt+y+3yhpv5LGmnvKtSF9
+	DiPDcb0grM9o3WTE7iKmbxpnhfIqjY8JcJ
+X-Google-Smtp-Source: AGHT+IH/YGS4+2/R+GD8hFU5Ys9lvUIq4GehfKioR/BwBLfL2PIAtlmkfCQPiPWVwjSOPN9/vvH96z9zlZqAYgbBxx8=
+X-Received: by 2002:a17:907:72ca:b0:abf:7453:1f1a with SMTP id
+ a640c23a62f3a-acad34fcb7fmr163005366b.36.1744369785723; Fri, 11 Apr 2025
+ 04:09:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+From: Lukas Michael <lukas.23022005@gmail.com>
+Date: Fri, 11 Apr 2025 13:09:19 +0200
+X-Gm-Features: ATxdqUG07tmtWfYsMdyiMy_S0DDwXX3F2iXJwRoGIUncXuq202nQXJzxcwv8wG0
+Message-ID: <CAEbzv6TfMai+vu76Jw157KyMNScwW6pUZaDXbN_u-XRKz_3wnQ@mail.gmail.com>
+Subject: git credential management Mac OS
 To: git@vger.kernel.org
-Content-Language: en-US
-From: Xavier Morel <xmo@odoo.com>
-Subject: git clone --bundle-uri: provide progress feedback?
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I've been looking at `--bundle-uri` for a repository of some size (~5 
-million objects, ~10GB fresh cloned though an aggressive gc get it down 
-to under 2), however from a UX perspective it seems to have a bit of an 
-issue: while normally `git clone` provides pretty extensive progress 
-feedback as far as I can see there is no feedback whatsoever while 
-`clone` is interacting with the bundle, even explicitly setting 
-`--verbose` and `--progress`, at least when the bundle is a local file.
+Dear git kernel team,
 
-I assume bundle-uri is mostly intended for large repositories, for which 
-even a clone with a bundle uri can take a while, and the lack of any 
-sort of feedback until git reaches out to the actual repository to find 
-what was not in the bundle is somewhat distressing.
+I want to know if there is a possibility to set my GitHub PAT as
+credential without the need to clone or push a repository at the
+moment. I want to setup my Mac and store the token for further git
+clone / push operations which then need the token.
 
-And side-note, it might make sense to emit a warning when trying to 
-combine `--bundle-uri` with `--filter`? I assume if any filtering 
-happens it happens only on the reconciliation fetch, which should be 
-extremely small compared to the bundle's size. Experimentally with a 
-sample size of (1) using `--filter=tree:0` with a bundle uri yields a 
-larger repository *and* is slower than leaving the filter out.
+I hope you can understand my issue =F0=9F=98=85
+
+Kind regards
