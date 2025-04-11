@@ -1,143 +1,140 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E4A23236D
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 18:23:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5823E259C85
+	for <git@vger.kernel.org>; Fri, 11 Apr 2025 18:32:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744395812; cv=none; b=AX1iL0STRqTlKnhasTOsdpTcrj9s4/tm95C8mGo72wOm/xRyC3aZH0R7D8HTUv+gFzpISzVAnssmARzFP3BvspBr78tTIq2PbLKU0lQh7x+dZjPJEQ/deQp/ZCr5WS7AZqT2N0y4SSQz9vqYznCDEo0vtPbn6EPuq36DpYE+cEg=
+	t=1744396355; cv=none; b=cNiWfBzlLgcmQhInoEBvWtKyv2E+1QR1EqK+7I9spy5LQ4Rd3mj9upffjZElqmD08FyU7C660FodDkzH6gxndfLAI/4o7cCYcxnY5GTvEc8X6Cq0zhWPKTXVEP2ggWABi8dnoBXpAT9Q/j84u7oe4mLOzYqw1MnO0FJNna0ZfSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744395812; c=relaxed/simple;
-	bh=bcoE4BqzMP6mn4GHfn+4XNqNrffVKZhDkMt7NbNwdXE=;
+	s=arc-20240116; t=1744396355; c=relaxed/simple;
+	bh=R2fYFSMqHTx5QNn8vwHGlvXK5TtekSedjJ5dQZ8J97k=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ri8n7bHLGUb1hmXZBWp3IJ1xO/ISoLzWMTQCC4Ui6i9C8Kal+fMBT4x5aGMwyhTiWgQBQS0Bq7RArGFMQ1seWSYuuPtpFH4x5PzOFGEpbuGe6y0CPMPVMFOsC4ypJ5aj0aA153sfWQ6yqX3ltbEzy51Zq95JmJ60eFnqjOBAQyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e1jJ8aid; arc=none smtp.client-ip=209.85.208.41
+	 To:Cc:Content-Type; b=TAco7qS6D2qJ3UM4g09Rz5h+PF9McEehgWWWoei+kacCWnfPjhD9pY57GDW2l3d6P7o8EcydPuCnHBQW0OGfemscTsmDYaSRSx7PCVH9O2XFWSmfdd140vw2JWYll9kOWkesLik1lVtyf0OFhxfKiCwFvdV6UJILXSKRaQZHZ70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Azxs+ZEI; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e1jJ8aid"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5e614da8615so4646338a12.1
-        for <git@vger.kernel.org>; Fri, 11 Apr 2025 11:23:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Azxs+ZEI"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5e61da95244so3999458a12.2
+        for <git@vger.kernel.org>; Fri, 11 Apr 2025 11:32:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744395809; x=1745000609; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1744396351; x=1745001151; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bcoE4BqzMP6mn4GHfn+4XNqNrffVKZhDkMt7NbNwdXE=;
-        b=e1jJ8aidkUFEMvGeWmdVU3y8/VH4wKsml9M1/eGPI4IJEMDMYWHwxkTqn9QAu/+ZPO
-         0MrcNUURkS6ZL6WhrE3dg8osWj+3C828wkmuFSv09CGaNv4/9kucmsp87sgwDq4u8AJs
-         hg109ZVJIdXV4eW5Zh4rMl4nM4tjNAkaq8IHBlfZf+v2cAcUgVDDz3v1FeQgjcRMeqHs
-         7dzwDmRHfMmYrXiAu4Dfij2q+2FGfG0GopeoxBi4nceUbxiAK2oLnl5yl4R34oTOewj2
-         XeB+i311shq4U84XWeayRCIzbGsLLLRcQ40YQus9+dss/IdZCWFeJLxIye4PQvuAxMuc
-         ke6w==
+        bh=R2fYFSMqHTx5QNn8vwHGlvXK5TtekSedjJ5dQZ8J97k=;
+        b=Azxs+ZEImavi5zjZO3vG8INF5ATA0uvnuW62tIiK44GsygNiQ4Gfx8/nz9u60XmkXc
+         t3E84QXBRnUhTdrDL+fZ4atxySk7c3M7LuP01cNIz3LX8KWqoOit+KyeD67jDJgzEgX/
+         xTabpeCTo1ciie14TOERHfX9C+l3HWrVZ4r5fm9pnmQGZM4VFICgJvdcRedpkW5O3Epa
+         B2sMdXwh5w6AfbLTUrOagZo2Pk/Qnn0y8dSSNTTXTtYTy4NG2PQcPTcXgTjOvbEG2niD
+         kLSlG0rypak0chwNaGSdZyT+GMDWDHXTpYiHILaOKdqHNH1jxZ7eXS1SvCszFAospJZc
+         InyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744395809; x=1745000609;
+        d=1e100.net; s=20230601; t=1744396351; x=1745001151;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bcoE4BqzMP6mn4GHfn+4XNqNrffVKZhDkMt7NbNwdXE=;
-        b=NKjRgFWWzFmc1gtq64NrvVQpWVJ9wymUJvyVnITLituAHtVhCPeE4QI3odzxl3Tcis
-         k/DEkSPiIbCSvWgNF5Qfjmo7lkR7qnF4kK0TyT12m3OEk0Efp+bOH9Fh0/w1akpw2PWu
-         gKYY83Ahh5p/FmLZgDiSryxSvw5nLIBw0qi70d6+WxLym/PFi64ViZ/zzUw6nCFIkrJB
-         u9sxPMlYyWUjceZPkVqSO1vKOgVgNPGqpQBqVvAE7hODbTlBZndY1XgNikHsOp8wIFhG
-         eW10Lg8mxKxrU8fRihEZ+2efeRlWZEpl2wMgYMyyo/YebwqbnzE9/2EgOcYjm/7UZwgZ
-         0Prw==
-X-Gm-Message-State: AOJu0YzcC9TDytFJQekExmhYiGWNhDv79AcznbxncU9SrBYOAOvO70qf
-	G+sYPxso5m1KWDgz2CnipNV03QOTT2h9Z3MecxhlclVM6jnJt1RAqw0fWXNf+0dcF17XYn7IgB/
-	Xw2TMlLX7fF7jXH4YqPqjcGeMOKTHAVRR
-X-Gm-Gg: ASbGncvSvDEu3pPhNTcBA+YulwxA1VPAkf7kLxEN3/jPqugkYesJFewN39kyUKjBplg
-	OKr4hdnM22MpNjQWH+9gFEdHj4PglYzMy9D8P2y+Z340iGXVZz4X9mG5vpUuLLTeiGDMjYVE/VE
-	dOvTMFBTIMEH+NmHaKjoj5j2Ne5ktXeKOnUFzkS+0dQbXpJXqMNbv/GA3l
-X-Google-Smtp-Source: AGHT+IEcjlLIg45rld5eIMacXw1L/lmcZtZJl5QYVw5kyGIySKDc+UeOpNVI3pDtC3UR6SlTqj71iNBYBR/ZkmjQjac=
-X-Received: by 2002:a05:6402:909:b0:5ed:17d9:91d4 with SMTP id
- 4fb4d7f45d1cf-5f329fc2346mr6496042a12.8.1744395809057; Fri, 11 Apr 2025
- 11:23:29 -0700 (PDT)
+        bh=R2fYFSMqHTx5QNn8vwHGlvXK5TtekSedjJ5dQZ8J97k=;
+        b=bHmTRKPj/NhkCYjTUlFwQKh8wZqCqykDhf/jSIr/rMYEnOsjeUJwUFsCzpDUQcqlP1
+         tRVcSwbwOy+MnpXZI9tdeJpaaAwVpHiuDLGad9cxnEoI1JrVpnpTykFaRTec976HWHDC
+         isrI5FCBMQ3yvTaJf3pshnxIAV182rm0XLc5ivHf6M9RmiKOsims8AXn0biO0WHRw8hS
+         gyeK68zjqTXLhvf2Nh4jX+r8cdLpQY7q6NieCUz9cs4kxenrkLi7vg8sdX2oF8QbixiE
+         EO7rb7p+Z//r7j+U6AhPg644kqZubqrIFwZcNevTyA7ZWKnTi0FbxlCNZavby2c4m/vJ
+         +vzg==
+X-Gm-Message-State: AOJu0YwbVu/wHabXG9NBrNWpeUptNXQvLTKdR/3k4gWEOupIFzwP+5o+
+	vQLDojYEQlVBcnM5UkqEYUv7oUzumy54fXkk++FCeGZiNILlINxwqrIWOnb2adAAXI0Z4exQk/b
+	iT7xEeHq2di8BBWt+Q3CCcHZnac4=
+X-Gm-Gg: ASbGnct3mz4wOSF0yNnFMtefWMCi3z7110d7DHPv3Pf5cUArG5Ve0mZoIm9QH/oix0L
+	9t0cK26mSLxxyYSB63zMS3B+RaKwAcGI3ijyDSQw+tHa+DTgUmRh30czsqjKhd7jBU1jSm27856
+	G784fqPluIxwq8LyUxn5okmTvLteQLQXGUVVHlE2DZi2C8+4PReeFIJvBO
+X-Google-Smtp-Source: AGHT+IEDGqFgCDI4CeQcr8G/ULVdFeAEvXI0Y51pCDzCWdIks8UM5YaGgLz43veJf5f7DAbl+dPrnfk7hwhvIuTa1ds=
+X-Received: by 2002:a05:6402:1d4f:b0:5f0:d852:dedd with SMTP id
+ 4fb4d7f45d1cf-5f36fb8a139mr3014338a12.20.1744396351427; Fri, 11 Apr 2025
+ 11:32:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <76edd34d-3fd1-437e-b8d3-7e64e99644a2@gmail.com>
-In-Reply-To: <76edd34d-3fd1-437e-b8d3-7e64e99644a2@gmail.com>
+References: <76edd34d-3fd1-437e-b8d3-7e64e99644a2@gmail.com> <CALnO6CCbzqez9-BvbuV3NRRMvFLHSv57Tfwj3ibadUAMKznWrw@mail.gmail.com>
+In-Reply-To: <CALnO6CCbzqez9-BvbuV3NRRMvFLHSv57Tfwj3ibadUAMKznWrw@mail.gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 11 Apr 2025 14:23:18 -0400
-X-Gm-Features: ATxdqUHMXfg4Xl-dbsreT3bUjyyzHO7E6ct4_6qs6L6wxMKnKSlfDotLBFwyK1s
-Message-ID: <CALnO6CCbzqez9-BvbuV3NRRMvFLHSv57Tfwj3ibadUAMKznWrw@mail.gmail.com>
+Date: Fri, 11 Apr 2025 14:32:19 -0400
+X-Gm-Features: ATxdqUHoQRYTRR03KivJ5arvXmQKsQXKsdlxA1zqRiwHj2Ipgunve66xEd1uKwE
+Message-ID: <CALnO6CCYqF1QHQzS6DH200cqi6VRmhWjvts87S99a+jqqgHHfw@mail.gmail.com>
 Subject: Re: Bug: being stuck in rebase mode when accidently typing `git am`
 To: Ludo Pulles <ludo.pulles@gmail.com>
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, robin.rosenberg@dewire.com, 
+	Lucien.Kong@ensimag.imag.fr
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 10, 2025 at 10:35=E2=80=AFAM Ludo Pulles <ludo.pulles@gmail.com=
+On Fri, Apr 11, 2025 at 2:23=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com=
 > wrote:
 >
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
+> On Thu, Apr 10, 2025 at 10:35=E2=80=AFAM Ludo Pulles <ludo.pulles@gmail.c=
+om> wrote:
+> > 3. Run `git status`. It will say: 'You are currently rebasing. (all
+> > conflicts fixed: run "git rebase --continue")'.
 >
-> What did you do before the bug happened? (Steps to reproduce your issue)
+> Yes, this is odd: my shell prompt (using the contrib script) says
+> "AM/REBASE", so I know better: git am --abort does the trick.
 >
-> 1. Run `git init` in an empty directory, and commit once.
-> 2. Run `git am` and press Ctrl-C.
+> This seems like a failure of git-status more than anything; I wonder
+> if there's some difference in how the prompt script checks for
+> in-progress am vs. how git-status does it?
 
-Doesn't `git am` print a warning about how it's reading from stdin?
-Pressing C-d at this point to send EOF just exits "normally."
+Ok, looks like the prompt script checks for rebase, apply, and then
+gives up (its ambiguous):
 
-> 3. Run `git status`. It will say: 'You are currently rebasing. (all
-> conflicts fixed: run "git rebase --continue")'.
+if [ -d "$g/rebase-apply" ]; then
+__git_eread "$g/rebase-apply/next" step
+__git_eread "$g/rebase-apply/last" total
+if [ -f "$g/rebase-apply/rebasing" ]; then
+__git_eread "$g/rebase-apply/head-name" b
+r=3D"|REBASE"
+elif [ -f "$g/rebase-apply/applying" ]; then
+r=3D"|AM"
+else
+r=3D"|AM/REBASE"
+fi
 
-Yes, this is odd: my shell prompt (using the contrib script) says
-"AM/REBASE", so I know better: git am --abort does the trick.
+(with apologies for GMail stripping leading tabs :eyeroll:=E2=80=94source c=
+ode link [1])
 
-This seems like a failure of git-status more than anything; I wonder
-if there's some difference in how the prompt script checks for
-in-progress am vs. how git-status does it?
+Meantime, wt-status just assumes it must be a rebase if it isn't an apply:
 
-> 4. Run `git rebase --continue`
->
-> What did you expect to happen? (Expected behavior)
-> I expected to go out of the rebase mode such that `git status` would
-> say: "nothing to commit, working tree clean"
->
-> What happened instead? (Actual behavior)
-> It outputs: "warning: could not read '.git/rebase-apply/head-name': File
-> does not exist."
-> Moreover, you are in rebase mode forever, and you cannot escape from it!
->
-> What's different between what you expected and what actually happened?
-> Instead of going out of rebase mode (expected), you are still in rebase
-> mode and you cannot escape it (actual).
->
-> Anything else you want to add:
-> `rmdir .git/rebase-apply` fixes the issue
->
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
->
->
-> [System Info]
-> git version:
-> git version 2.49.0
-> cpu: x86_64
-> built from commit: 683c54c999c301c2cd6f715c411407c413b1d84e
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> libcurl: 8.12.1
-> OpenSSL: OpenSSL 3.4.1 11 Feb 2025
-> zlib: 1.3.1
-> uname: Linux 6.12.22-1-lts #1 SMP PREEMPT_DYNAMIC Tue, 08 Apr 2025
-> 06:20:12 +0000 x86_64
-> compiler info: gnuc: 14.2
-> libc info: glibc: 2.41
-> $SHELL (typically, interactive shell): /bin/bash
->
->
-> [Enabled Hooks]
->
->
+if (!stat(worktree_git_path(the_repository, wt, "rebase-apply"), &st)) {
+if (!stat(worktree_git_path(the_repository, wt,
+"rebase-apply/applying"), &st)) {
+state->am_in_progress =3D 1;
+if (!stat(worktree_git_path(the_repository, wt, "rebase-apply/patch"),
+&st) && !st.st_size)
+state->am_empty_patch =3D 1;
+} else {
+state->rebase_in_progress =3D 1;
+state->branch =3D get_branch(wt, "rebase-apply/head-name");
+state->onto =3D get_branch(wt, "rebase-apply/onto");
+}
 
+(source: [2])
+
+The shell distinction was contributed in e75201963f (Improve bash
+prompt to detect various states like an unfinished merge, 2007-09-30),
+author CC'd.
+I think the logic in wt-status.c is largely unchanged from 83c750acde
+(wt-status.*: better advices for git status added, 2012-06-05), author
+CC'd as well.
+
+Maybe we can omit a "You might be rebasing or applying; we're not sure
+which?" type of message?
+
+[1]: https://github.com/git/git/blob/08bdfd453584e489d5a551aecbdcb77584e1b9=
+58/contrib/completion/git-prompt.sh#L517-L527
+[2]: https://github.com/git/git/blob/08bdfd453584e489d5a551aecbdcb77584e1b9=
+58/wt-status.c#L1725-L1734
 
 --=20
 D. Ben Knoble
