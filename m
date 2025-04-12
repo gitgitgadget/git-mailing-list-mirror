@@ -1,69 +1,68 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7441DC98B
-	for <git@vger.kernel.org>; Sat, 12 Apr 2025 12:21:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E9C1C84AF
+	for <git@vger.kernel.org>; Sat, 12 Apr 2025 12:21:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744460462; cv=none; b=U45v92muqSWn/cKgq1esYWcdMz3taNX1tAzKuw1s8frccDXCrHpB6u57mdzoF0/Ti9ACaqu6cO1FCYkLwTjV4TDj2WFCba7Gt2TObrBGL6Raapp+I4Nh/bZGQdLx5THgl5IhFXVhyojkdYIdaLUalO4AYQ8mHSknNdKx1TUMMXA=
+	t=1744460464; cv=none; b=pTvmlsfnGR+obYfSyV9sekuz9ThacGNKCMH08bykzOHwvtHba2e3rCgC2UHhljMVffW7cIOEZvb+m+NamBIbbiM4cePKoOIvebEIfiakoCZ5hK/MTMaZgJk7yXXUekVgx9tWAOjnomq9LKYVe3oNtDdP3gjZNXJHsY2jy0pgFrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744460462; c=relaxed/simple;
-	bh=6Ub4kXvAWwCrxXyk4nKRFj1z2itAn/vpTDXIIU6siEc=;
+	s=arc-20240116; t=1744460464; c=relaxed/simple;
+	bh=WhzscgVp6Aq1FwVtwbwF9T39ZvwFkhlS3ggdHJsi0hk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=Du5vEzB3G1JRP/EA/mdT66SqDPe00lsjVyS5F3Duf2Ie6SU94Bl+BwI8snjn5/LuRaVXaHRKC+tZnj2Z6V5CXDmFIeQoSMgQ/o1dsaqBfGmzrtQwAP+97DvDysjAPb5hPYaLs7aYpgdZ1FpieV4T0kWLfwfCt7H9hNI80TKvKTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I5efVveM; arc=none smtp.client-ip=209.85.221.47
+	 Content-Type:To:Cc; b=pPH/t/j4xuX80XSpPmO2vzntLVKWKFR0TV8ccb1RFJsahp8sm3vUwx74Y+PVloYrDUv5wlw9eBg6FMbsGTdY7PyJnfbhM+05pmVBhAGr2JI0mEugyGNZWvMy39WcFJEHckJONnrcZTABA2inJtjW+rhHEOEOMscaz4mSRrzB8es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=khS6P7mt; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I5efVveM"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-391342fc1f6so2240505f8f.1
-        for <git@vger.kernel.org>; Sat, 12 Apr 2025 05:21:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="khS6P7mt"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-39c266c1389so1913572f8f.1
+        for <git@vger.kernel.org>; Sat, 12 Apr 2025 05:21:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744460459; x=1745065259; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1744460460; x=1745065260; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AZu7Q3qc9/eZPZ19egOq9+HbkRe6d1I1lEpTMSR5k5Y=;
-        b=I5efVveMNZwZTMjKNSTkKTiZf2PFaAVc3XUFItnt2fnnTPy8tWkF5fFBmxWivelq/k
-         91LSzEub+LIrsYV4IoFRQhLqNnKtx9Sf17lWB/JDjM90/jX/sAvQ2YWTK9ir3BbcIcEs
-         efjTp1s9dLiZRGGLGYlHp5ONSj/Zr7SFplMx6FojBVBkL0Xf1gPcc24FnR58OmvaNlog
-         lrz48bern/QjrpO0j3G+mMl0n6D6bSgXff/vlz4EAZz1x3+EXhYOba0z/4wN2hG7M+/Q
-         Z/nXBIqbiZp0h7Lt5JTk/jdPz2qsFujRaVnWCfXJFxNuYCxsITihXlLJVo9PvJugXQoo
-         On/g==
+        bh=aCQd/kb7cQFcywtceL2RnMrKleGCVH+irnISO1EX1fo=;
+        b=khS6P7mt9dzIYAV2SOl0gI0/+fumYHbXpVuzKwDdzdUY9Ey/D6Kh0jLrikelI0WBnu
+         pAycYGzMLq0dKVVlxVQWtwFJcqVnH5122HvTu7O750plLj7ud3UtwC7RV4m0fCuzLc6z
+         cKhHK0rjQM8U9pRv9dlGf2D+sayzKrJVbHVqePsj1DKeXKqobW0Z5QNweWqmBRbcaKjm
+         lbJOrji3snOGLyXVto6iLTQcau5tfbgHkkEEERUx3nafdtmhdhtvyFbRL/8IQE9Pt/WH
+         76OEOd4M21vBGDGrh0J/IUht9OYu7GeS0JX63/yiXykJgI6CbrpYMNQcA8v9uAdblL5q
+         q4gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744460459; x=1745065259;
+        d=1e100.net; s=20230601; t=1744460460; x=1745065260;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AZu7Q3qc9/eZPZ19egOq9+HbkRe6d1I1lEpTMSR5k5Y=;
-        b=TWHSGTGCP5MdZNqYf11yqOewUczyaaQXXVQnOcy5w7VzRz6ipSjKFDf00xJTFlP6Ld
-         7mbCHndtcY4qunY+ZC5a/kLq0AozKa4JwaqmA222Tp0d7VZOYPXi8yIjea25HZHw0qum
-         uIT3sd2KwZpI7FIw1Zx/hFS4noBxlUV+vtfknoUx/w3sNZzSRzpMOgPHEKRUpngq/zVt
-         bwHTEBF3zysr7MjxGkmLBmfOLSlt6kGLH8rYliWBXhabdret0HBlLi5CDHJjAtdmYgcq
-         bxGubR9LBw7pi79mjI/+EZQE0oEDUxy3tNqoF+rpkgzeE8mKa/CtFqyVZYiw12btjAxJ
-         qleA==
-X-Gm-Message-State: AOJu0YwutGejSIH5LCJX3zRYwRP67qevvtGTCecJRjDeMhe0EMty03NL
-	Xh7q9tfzx2xHSNinB2fZrKBe/NsWyTGTSH9Jwkkt1MDJ9oNH65fKi1nGcQ==
-X-Gm-Gg: ASbGnctrk/mkjKjMOJTjxhhwOSnfyHE+vrufvupI8m/lXAVfweiDFOG8WUTUR27XP3k
-	HwpwIIWePOxqeZ0a5VaZKxe6uCmefA5YO0xq3yrFf4lARVBfP52vzLyzAXbrjK+jz0pThPWPb9f
-	W1KXd0iyziLfb9XC3YczZnmH/YNzLYMxE9Dq4ZlD1PK48ZoY1NetR2Mkj4M3OToZFS9hXB97AcD
-	H81zX2WfoVw+viaDlZEFEsDcdYJVPWxeCafF5GCh7R8GntffAKpJpSJb9fkIoKIWLdnoZ0QtOw4
-	WcmJ208GhAF7WqafkP82Lb2Y09LB96FKmKTO0lfZNg==
-X-Google-Smtp-Source: AGHT+IH2g2gHsGAg32WCnhozILc0fHyl7KBgs/+c/GTF6ozIk53LAlSJ/53Fq4G9f+7I3xm3hwbHSg==
-X-Received: by 2002:a5d:5982:0:b0:39a:c9ed:8657 with SMTP id ffacd0b85a97d-39ea5202284mr4819403f8f.17.1744460458944;
-        Sat, 12 Apr 2025 05:20:58 -0700 (PDT)
+        bh=aCQd/kb7cQFcywtceL2RnMrKleGCVH+irnISO1EX1fo=;
+        b=m3nbsWD34Wp7y3lMCWNEcjbw/SePlyUz6mZKIuayUUSRPs50ed4EMch//r+A99KjPq
+         XQqDbTY/9eVc1EDhY6WQLwhbLbPVIawJSqyRWvQ1qGnnma01Yji8q4D0VGfQ5S7dMmlh
+         65c3Bl0NFNBW8HAEeUDlWAjUmKVrXqobcVaKnZQIwKSYwc/cw/tRvACFuoTfbs9OFpVG
+         RBPJ5VANRwGWKzrkmDmd7jVFPlVdP5pELbBJEF3NWHCfuK4X7od/lbr+0NZ12HdvlOVu
+         DhsPApKsFoekVehPJv7b8j3tlTASn260r8mq5yw3tZsyTHE6vwo2KktHHf+YWmhD8KjK
+         uuSw==
+X-Gm-Message-State: AOJu0YzcwvtzuZYSOvhlA3nZz+CIN5RKydljeMLqF7QjDc9Fn4otelq7
+	bYCvm2D3s6vyfFZlHVATTBOta0fboCaDnt7IBlwy1adt8CvzO8WoyYJrgA==
+X-Gm-Gg: ASbGncvcukUtUBCrQhRGuiiO4NiMPfIPtf4j6kqeKMwxWaXHMaEHVPfe8Lv4ZcSCU9X
+	ORWS5X+XqySMLIeQaizYfkL9Cxt7kdxFP5W0QXEVjhrwB0WeJ5BmzdrNz3ndW6GpbSu2hjAleWN
+	+lvdgC4jUyPSw8KKBDSvyHs+yrkpb+srRVdRdXai87IT7Uya0XvL4Q9CSEibb/Qvz6ty/h2B8q7
+	z1Zw2DtBJ+dmutqwztOt5R4NCd5hIhbEzSJ896Ia7wUcGFDPK0Go2UqPn6bHtTcHqvIzzgDiTn3
+	CCIzXxiNdw6OuS/ns91cBFtXEuoC0FZE0mCdBRKLWA==
+X-Google-Smtp-Source: AGHT+IHru61YCWL5zzoObDUoaPrNMC924Gh7M/G8XyuhYWGeImpX6AfxpeGGGk9SSCcz7ZYxFKjCmg==
+X-Received: by 2002:a05:6000:4023:b0:397:8ef9:a143 with SMTP id ffacd0b85a97d-39ea5212322mr4845188f8f.23.1744460459728;
+        Sat, 12 Apr 2025 05:20:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eae96c05asm4856355f8f.26.2025.04.12.05.20.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eaf445270sm4850747f8f.81.2025.04.12.05.20.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Apr 2025 05:20:58 -0700 (PDT)
-Message-Id: <2ddce76f14d226d9f1b7b3efe5a27a4e812be60b.1744460450.git.gitgitgadget@gmail.com>
+        Sat, 12 Apr 2025 05:20:59 -0700 (PDT)
+Message-Id: <2690f84602b89f1b10652a6381aa96b2e126d6eb.1744460450.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1896.v2.git.1744460450.gitgitgadget@gmail.com>
 References: <pull.1896.git.1743354964.gitgitgadget@gmail.com>
 	<pull.1896.v2.git.1744460450.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 12 Apr 2025 12:20:49 +0000
-Subject: [PATCH v2 6/7] doc: fix asciidoctor synopsis processing of
- triple-dots
+Date: Sat, 12 Apr 2025 12:20:50 +0000
+Subject: [PATCH v2 7/7] doc: add markup for characters in Guidelines
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,63 +79,27 @@ Cc: Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-The processing of triple dot notation is tricky because it can be
-mis-interpreted as an ellipsis. The special processing of the ellipsis
-is now complete and takes into account the case of
-`git-mv <source>... <dest>`
+This rule was already implicitely applied in the converted man pages,
+so let's state it loudly.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/asciidoc.conf.in             | 2 +-
- Documentation/asciidoctor-extensions.rb.in | 8 +++++---
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ Documentation/CodingGuidelines | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/asciidoc.conf.in b/Documentation/asciidoc.conf.in
-index 50f0e81a831..9d9139306e6 100644
---- a/Documentation/asciidoc.conf.in
-+++ b/Documentation/asciidoc.conf.in
-@@ -43,7 +43,7 @@ ifdef::doctype-book[]
- endif::doctype-book[]
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index a0e7041c54b..c1046abfb7d 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -861,6 +861,9 @@ Markup:
+    _<git-dir>_
+    _<key-id>_
  
- [literal-inlinemacro]
--{eval:re.sub(r'(&lt;[-a-zA-Z0-9.]+&gt;)', r'<emphasis>\1</emphasis>', re.sub(r'([\[\s|()>]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,\\\*\/_^\$]+\.?)+)',r'\1<literal>\2</literal>', re.sub(r'(\.\.\.?)([^\]$.])', r'<literal>\1</literal>\2', macros.passthroughs[int(attrs['passtext'][1:-1])] if attrs['passtext'][1:-1].isnumeric() else attrs['passtext'][1:-1])))}
-+{eval:re.sub(r'(&lt;[-a-zA-Z0-9.]+&gt;)', r'<emphasis>\1</emphasis>', re.sub(r'([\[\s|()>]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@\\\*\/_^\$]+\.?)+|,)',r'\1<literal>\2</literal>', re.sub(r'(\.\.\.?)([^\]$.])', r'<literal>\1</literal>\2', macros.passthroughs[int(attrs['passtext'][1:-1])] if attrs['passtext'][1:-1].isnumeric() else attrs['passtext'][1:-1])))}
- 
- endif::backend-docbook[]
- 
-diff --git a/Documentation/asciidoctor-extensions.rb.in b/Documentation/asciidoctor-extensions.rb.in
-index 09156b71a4f..8b7b1613496 100644
---- a/Documentation/asciidoctor-extensions.rb.in
-+++ b/Documentation/asciidoctor-extensions.rb.in
-@@ -49,7 +49,7 @@ module Git
- 
-       def process parent, reader, attrs
-         outlines = reader.lines.map do |l|
--          l.gsub(/(\.\.\.?)([^\]$.])/, '`\1`\2')
-+          l.gsub(/(\.\.\.?)([^\]$\. ])/, '{empty}`\1`{empty}\2')
-            .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=~@,/_^\$\\\*]+)}, '\1{empty}`\2`{empty}')
-            .gsub(/(<[-a-zA-Z0-9.]+>)/, '__\\1__')
-            .gsub(']', ']{empty}')
-@@ -71,8 +71,9 @@ module Git
-           # unhandled math; pass source to alt and required mathphrase element; dblatex will process alt as LaTeX math
-           %(<inlineequation><alt><![CDATA[#{equation = node.text}]]></alt><mathphrase><![CDATA[#{equation}]]></mathphrase></inlineequation>)
-         elsif type == :monospaced
--          node.text.gsub(/(\.\.\.?)([^\]$.])/, '<literal>\1</literal>\2')
--              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$\\\*]+\.{0,2})+)}, '\1<literal>\2</literal>')
-+          node.text.gsub(/(\.\.\.?)([^\]$\.])/, '<literal>\1</literal>\2')
-+              .gsub(/^\.\.\.?$/, '<literal>\0</literal>')
-+              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@/_^\$\\\*]+\.{0,2})+|,)}, '\1<literal>\2</literal>')
-               .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<emphasis>\1</emphasis>')
-         else
-           open, close, supports_phrase = QUOTE_TAGS[type]
-@@ -100,6 +101,7 @@ module Git
-       def convert_inline_quoted node
-         if node.type == :monospaced
-           node.text.gsub(/(\.\.\.?)([^\]$.])/, '<code>\1</code>\2')
-+              .gsub(/^\.\.\.?$/, '<code>\0</code>')
-               .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$\\\*]+\.{0,2})+)}, '\1<code>\2</code>')
-               .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<em>\1</em>')
- 
++Characters are also surrounded by underscores:
++   _LF_, _CR_, _CR_/_LF_, _NUL_, _EOF_
++
+  Git's Asciidoc processor has been tailored to treat backticked text
+  as complex synopsis. When literal and placeholders are mixed, you can
+  use the backtick notation which will take care of correctly typesetting
 -- 
 gitgitgadget
-
