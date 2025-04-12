@@ -1,69 +1,68 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44A81E480
-	for <git@vger.kernel.org>; Sat, 12 Apr 2025 18:15:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F84D20E700
+	for <git@vger.kernel.org>; Sat, 12 Apr 2025 18:15:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744481741; cv=none; b=qkzMtGXpMWvQy4ft/XSMvYZ+ICPNZdsIK4jUu/EYb6sZUd8mejgpHw9x/ognkQTNUsr78azQ1fN4vsdHLo2mnJii93xBe1IYlOLEfXmfAgDVmUKoa5ujvCJTIHU4qydYPW3GXJeI0scw1lgz47szUdIqZmiDGO3dhPP3zMmrqBw=
+	t=1744481742; cv=none; b=NJVOotYPWGq6Oi9MjX9sFnksSykGPIUqwl91snutGt1fcZjAMTcygBi5BqBGKKgSs2Mo+RG7ZztREJXVyfP+KZC4SrcraW4mjntZCBdcDgB+kPvGkwH57mtKCHhDxf7kwOELNBo/lBpIZiprX6D6MgoJD2c3VL20ijBThg+xvbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744481741; c=relaxed/simple;
-	bh=Xhf/4Yd1Hr7rW4SJ0uHt7uCkUueGdgHvynERbZbv924=;
+	s=arc-20240116; t=1744481742; c=relaxed/simple;
+	bh=/1GGV1Qxw6FOdAnPdrOShuNArgDPMP1iH0zTs6PP/Vs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=m0ucECcBvn3yQPeE0ZjgnkAemmK1c0UJwxY8B8JOf7yiE5fy4HGHavdDazoLQBEMpAwUnD6HCept7A8grlbT2n78sqi0v+y5bd41trDVmO9G7mCFJ+wZISBMF6rLQlKAodiQA0m6vH0T/aoewd++ofefNJ/MvCBgFXTXmYTId3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q346l2v2; arc=none smtp.client-ip=209.85.221.41
+	 MIME-Version:To:Cc; b=QnecTPkf+U/inUuq/ZZmL7frAYLxmCncS4jbGivRszSgmPuAKhVKSkyQb4MYZd/QWEGXCabkU8RjS1OM0P2ryxLQlQBA2a8eO+noqs+dCwAQJHefZGITdvdCM5x7wnwcZds207E7DsJG+5cO6+3wO9ZFSyndt4G2u/fNkacbrAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UToUTZP7; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q346l2v2"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-391342fc0b5so2272922f8f.3
-        for <git@vger.kernel.org>; Sat, 12 Apr 2025 11:15:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UToUTZP7"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43cf05f0c3eso21094775e9.0
+        for <git@vger.kernel.org>; Sat, 12 Apr 2025 11:15:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744481737; x=1745086537; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1744481738; x=1745086538; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vpYYYu//7ksnbdIvkahK7A2Pv8s2++Rw4BnYXpKHzY0=;
-        b=Q346l2v2LvA1ptwcUbMSoG7VcJsx5rh5/ILQ5Y4LAbs5K4+tvvOpBQX4ALMKhcTcSX
-         gDbHQpmM39VsSzCIyi700jKAEMW3Y3jL5qwzH74dV7YqL4al9NrhxD8qsshepc6DxXVW
-         4uLIBnO2mvFbuyW0wKi40lPSBZX2/6Xv9Lf0l/lLKt8PEgEwVVexHQPQXZAFg1duqlDT
-         Cw2wQOWH8BKmEC7ycSBvJLQQRf9oTJxM1wYhQ5p6DoU7vFTcwplrP6XiV2D3KgHQ7PCj
-         mgPHwXS/bnbW2gSAevUYF3UK5Ol5C9L99YEdFc4FzThG6RuqzThi38bQOd+eroWyt7F8
-         V4Ig==
+        bh=2CNiB59QtV++rMyZzgKRtosaGc+XMgAfRuTQpu5WIQI=;
+        b=UToUTZP7cyM9pPk1uSrR+KH+kLqw3cowJDHqG1w29/yKYTuRvU4wKfvdjr7Zu2SEEW
+         B5CE8PECHNu8nJ5jNDy0nnwqo8j7lVbESVE1njqjtyW3ObfJe1BvhIIZHpBXnuHUPsrw
+         ZKk35RHz4j7ap1m59So7wetk94tpO6Pdz73tthvrNlHXj4oj3Pnoea/kfu5MTpBxB4gU
+         secWkX9t+ARGkytXQvCYAOBCJpOuFolRbVBjCWpdsgmGCiX/3nBK2ZMPlTXe9C3EkY+6
+         IznElLE3U/UrsmJDMjXSsr/xfWZgK7rLPu9H/ybdggxrQeqJZext9m5akkV2OhXHy5IC
+         wE0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744481737; x=1745086537;
+        d=1e100.net; s=20230601; t=1744481738; x=1745086538;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vpYYYu//7ksnbdIvkahK7A2Pv8s2++Rw4BnYXpKHzY0=;
-        b=wbpCnOps857iGmxHdonUVjcB82Ml1DvUAHxa0Ce2lajBgZEu9oBO+ieJ7tDy6Jo1L5
-         OT6BD41y+Jkl8d6rxMJa2wsTCsdH1dIs8Wd67kCle5AXbaP2uBQaevRTEncZ6uQfJmp1
-         6/rDmOSB4H17TgkM2AvBCOPR15D7TbfqPj7ZsCF0ewaM0NxjzYWYyPQXlozgKhjMKnzX
-         6YLdBaGRUxlw0eBdJZbaQpcoZX2PY11CrMGDfHDGAl5MUQ6xJD/OFmJwBZPEriZaPyNT
-         g/ctA+uqZNk0ErXQViUjuPPccuwyljQ3m8JP/00fypMF6E+VfWkLcoZTbHP3smfcDBfB
-         A9Gg==
-X-Gm-Message-State: AOJu0YwRBKB4vJBBQMY2aQpy3QbE5De7b88L5kMOB6iDFEmd9NYQZTrx
-	SzeLeEqbe25S6hkO6CVrO/2OggWlPODtaKHbQ6RD1TvwyZ7cygjz+JhEtw==
-X-Gm-Gg: ASbGnctkwcDu/qqGyhovNHAw1KZweY5tiu8v8N98BEEJlI6Hn8h+mERKAgwwkpuXbTh
-	FQsnJbu0sihfJ+f29ksPEKNDtuTWnXj/5qehxfiLMs/j/OSd9xpfWf97N02lU1594gXk4Xeq5PR
-	BPXDCGxaEfVqQx2zTh9WhyDB8iwXMIy4AQd1oXaL6uPKfD+GH1zushqTM7zNTITvOU5007Ci3FS
-	/ZDYw7rjqARWJ/DqLIb+xphcn9qAFetnsdP8+oihgdkRnPQt7RbWBtaoo0Sjf2n2pkLVOqIaTbC
-	ly5BDYZu3f20isW7cf6RU9CsKIKq73ZPR1vs1q0F1Q==
-X-Google-Smtp-Source: AGHT+IF5N1HkdazSC0sX0XNPG7ySZYIhXnmfc4R7J+rUtD7bctxSHCZvvU9yMkthK+l5bwPOlYl4+g==
-X-Received: by 2002:adf:b607:0:b0:39c:2678:302e with SMTP id ffacd0b85a97d-39eaaec7648mr4673763f8f.45.1744481737428;
-        Sat, 12 Apr 2025 11:15:37 -0700 (PDT)
+        bh=2CNiB59QtV++rMyZzgKRtosaGc+XMgAfRuTQpu5WIQI=;
+        b=NNnYSPqQXDMY5AjhOCKpsiqQAjvY5YfMkT1n9vUkX0ddOMnwWMbkMH6BgTj0F8npXj
+         xzMvY2mItxx7/bkOqL4G3I2StLapJz/Ms6tXEKCB+5uHs4X/VBvLHfsx/xkcMryyg4iM
+         vhrPdaaieSkARJlwbsszpk25tGT0040GJ9av7qCyNPSmihhubRQHVaPY8+6WJk29oBI+
+         AvltPXRvEQazkgy2IzpfCwzYUwqSdYsSB90gkxCU3pLcX+R7BFPmzp8NDDSTjnV/DDXe
+         r6Mi0PnSOIGX16BpAoHXuOquUpWYli8sSTcjApOHR35Zl42SZJvBZkIrRNuc5xf8X0zR
+         xKkQ==
+X-Gm-Message-State: AOJu0YwsSf0rAzWo0+dhq2klikTN+gSXLUddqyIJH0Ymq88llNhGH8pI
+	Smi7C7aYfInjB56IunWm3m2t/nvByxgkvdWF0ZUeELH2CZFiG0GvDakyAA==
+X-Gm-Gg: ASbGncsJoZwl4Kc7pwhAKpGQkoSTXf46Dlxe41bCPvh9fC+27aBnP8YU7GMEKuhbkS9
+	GYX4Z0iiKvBgPZJgNSSjI4X7WsnT4cIzXiKYqacsHU+8qe+97K/0K9RNRo4SlA5T3o9lxKfyCUQ
+	tcP2QPgzer5WuLDvczp1pWrOW/TrwRAu21AqedgycbkMl3dQy92h+Vshx+6ImloQu4wng/SlzDr
+	QHRaZiNMd2LgKIn1reGbVkEEREj071yMwhhGCOat960mbKTqjDdGUE94kx0fHAcHYTfUWJMathG
+	UdHuRCtOhHs1UauLrxg+S4L+B7M/00RTE1u0quI+TA==
+X-Google-Smtp-Source: AGHT+IGbbnDnFlKUMStCrGVLIeUKU0s/Ge3cW6lP+1BHv85PLNtbeTQZETPkfqIY93MQrK471THJ8w==
+X-Received: by 2002:a05:6000:2282:b0:399:7f2d:5d23 with SMTP id ffacd0b85a97d-39ea51f578emr6162999f8f.14.1744481738171;
+        Sat, 12 Apr 2025 11:15:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eae979684sm5757465f8f.55.2025.04.12.11.15.37
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eaf43cb43sm5742286f8f.65.2025.04.12.11.15.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 12 Apr 2025 11:15:37 -0700 (PDT)
-Message-Id: <1092c32609f249839453052ca802cb10256cb48f.1744481732.git.gitgitgadget@gmail.com>
+Message-Id: <abd146b7c2a62aaef5c22269cff155387f33fe32.1744481732.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1936.v2.git.git.1744481732.gitgitgadget@gmail.com>
 References: <pull.1936.git.git.1743181669.gitgitgadget@gmail.com>
 	<pull.1936.v2.git.git.1744481732.gitgitgadget@gmail.com>
 From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 12 Apr 2025 18:15:31 +0000
-Subject: [PATCH v2 2/3] p9210: fix 'scalar clone' when running from a detached
- HEAD
+Date: Sat, 12 Apr 2025 18:15:32 +0000
+Subject: [PATCH v2 3/3] p7821: fix instructions for testing with threads
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,46 +81,30 @@ Cc: Victoria Dye <vdye@github.com>,
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-In p9210-scalar-clone.sh, we test using 'scalar clone' to clone
-$GIT_PERF_LARGE_REPO (copied locally as 'to-clone'), which defaults to
-the git.git checkout we are running the test from.
-
-When --branch is not specified (as in this test), 'scalar clone' tries
-to get the default branch of the remote repository by parsing the output
-of 'git ls-remote --symref $URL HEAD', as implemented in
-scalar.c:remote_default_branch. When the git.git checkout we are running
-the test from is in detached HEAD, this fails and we fall back to using
-the name of the currently checked out branch in the newly initialized
-repository, which in this case is the value returned earlier in
-cmd_clone by repo_default_branch_name.
-
-We then invoke 'git checkout -t origin/$branch', with $branch being the
-name we got from remote_default_branch. This invocation fails if
-'$branch' does not exist as a branch in the current git.git checkout.
-
-Fix this by creating a local branch in 'to-clone' in the setup test
-"enable server-side partial clone", making sure to use '-B' in case a
-branch named 'test-branch' already exists.
+In 7b31b55db1 (perf: amend the grep tests to test grep.threads,
+2017-12-29), p7821 was tweaked to test the performance of 'git grep'
+under different number of threads. These tests are run if
+GIT_PERF_GREP_THREADS is set to a list of thread numbers, but the
+comment at the top of the file instead mentions GIT_PERF_7821_THREADS.
+Fix the comment.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- t/perf/p9210-scalar.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/perf/p7821-grep-engines-fixed.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/perf/p9210-scalar.sh b/t/perf/p9210-scalar.sh
-index 265f7cd1fe2..56b075e906e 100755
---- a/t/perf/p9210-scalar.sh
-+++ b/t/perf/p9210-scalar.sh
-@@ -7,7 +7,8 @@ test_perf_large_repo "$TRASH_DIRECTORY/to-clone"
+diff --git a/t/perf/p7821-grep-engines-fixed.sh b/t/perf/p7821-grep-engines-fixed.sh
+index 1d126c7b039..66bec284e3b 100755
+--- a/t/perf/p7821-grep-engines-fixed.sh
++++ b/t/perf/p7821-grep-engines-fixed.sh
+@@ -7,7 +7,7 @@ git-grep. Make sure to include a leading space,
+ e.g. GIT_PERF_7821_GREP_OPTS=' -w'. See p7820-grep-engines.sh for more
+ options to try.
  
- test_expect_success 'enable server-side partial clone' '
- 	git -C to-clone config uploadpack.allowFilter true &&
--	git -C to-clone config uploadpack.allowAnySHA1InWant true
-+	git -C to-clone config uploadpack.allowAnySHA1InWant true &&
-+	git -C to-clone checkout -B test-branch
- '
+-If GIT_PERF_7821_THREADS is set to a list of threads (e.g. '1 4 8'
++If GIT_PERF_GREP_THREADS is set to a list of threads (e.g. '1 4 8'
+ etc.) we will test the patterns under those numbers of threads.
+ "
  
- test_perf 'scalar clone' '
 -- 
 gitgitgadget
-
