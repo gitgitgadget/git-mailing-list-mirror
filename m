@@ -1,118 +1,138 @@
-Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0DB82367A0
-	for <git@vger.kernel.org>; Sat, 12 Apr 2025 09:05:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0948134BD
+	for <git@vger.kernel.org>; Sat, 12 Apr 2025 09:29:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744448754; cv=none; b=dj358Qxg+bbsSJqgIxfpP3pJhIvPU143m8E+VLDnf6cLlvLvpBCsZoQYKkF5HfENDSavn97Wwm9H7yTzyt1lYaSTYt+mPrtTiHyypP2i677QUloSJIRkSukcoUCqMLjYZVnmYfAJ5TV2sWJX+tPaHUzbTeCoK8+k9BYko8pmqVQ=
+	t=1744450165; cv=none; b=RtuiK2ZJtic74aVXnRcj+d/d3E/3gaU9+KeVBCjPfeii1hsLzZTZndvi4G6p4+3u1pNIeUmdMfzsTnf/nMP/v7xDoLgPFAD1ANceXuVArYe/GlimzLAdtigx6ov4WagOZz1jxA3F7M4gHzQRHKAnm/S8DOCFNn+lgZ7srb5SzRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744448754; c=relaxed/simple;
-	bh=qUeni7GdWJSXG4rJcNY96PW9mlnpYN0TpPiLiZI+aOU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IojXUQY4m12UyrORXtYkPc8F/wQyL1jQEF11UXW0d06cafj59SM1k3iiZ3ilwb5MwMR8M0uU99fZ3U181MYE+smi8hlZ8guOuXNyHyAu7ga9J7M811lQJeZS++POqkwlkHOKPKlq0nWc9LAxLcuTbAsYVLPQgH8rTgN5BMSwj5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=seHVgb7o; arc=none smtp.client-ip=212.27.42.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1744450165; c=relaxed/simple;
+	bh=hyuRTHbtFnJetgSpcjNl+ICXYS7TcVsVVbnoqnbKvbI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Z8IIS+Kkfs2jK2EPt+x3fJut8pnV/HV5rxmXhSQ1leNRPzPp5GcR7ZrRT7oeDfKRdGrdZtsbCR2dpFWHaUKXjnd27BcgCCuPKyibt4UICOrBP8TcGJKpuvQuT4WJKUrF4H/+s4On1KAEohty1IFdxkz17tz4zTOCX7ULOI8y3r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WVGuU7R6; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="seHVgb7o"
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 46D6CDF88CA
-	for <git@vger.kernel.org>; Sat, 12 Apr 2025 10:58:53 +0200 (CEST)
-Received: from [198.18.194.9] (unknown [172.96.141.172])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp3-g21.free.fr (Postfix) with ESMTPSA id CDA4013F8C0;
-	Sat, 12 Apr 2025 10:58:40 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1744448324;
-	bh=qUeni7GdWJSXG4rJcNY96PW9mlnpYN0TpPiLiZI+aOU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=seHVgb7oUpc4ZaIhHH3FMeE5f0F/nC21Vdd6ENdOLcYVXWFtUFdMHQg65JjRwkIci
-	 CKtD5e9x5+drnWLhikCoqEw4dBHSpBX3fZ3UzldWC5f5jgv7Cm3NP8TZpE12gPQqyB
-	 jVI447UcTN3s3+Mn2XupFwsNXkBvLtYQLF9bQ2YHkTHvF8SnD1lxLEX8oLNo5XyTMn
-	 +hEcE6zUjqMN7SAgn00NLlC2ct+8B7MQlsIrQPbD79CthUXTOoyvguuj2Tmq3htA7e
-	 dELTR6W93Y82NQOhAYDI11kcBPE/f0kOPTD0ZYA6LCmB6oX/o2Tl+9tosi0IexfmiL
-	 RQu9QcfhBlAww==
-Message-ID: <0846bdd8-f2a6-43d9-83d1-73d9a5b04005@free.fr>
-Date: Sat, 12 Apr 2025 16:58:37 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WVGuU7R6"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-476ab588f32so38871981cf.2
+        for <git@vger.kernel.org>; Sat, 12 Apr 2025 02:29:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744450162; x=1745054962; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HUpZAUNcdjfzyu7AzIA0LHL7ev/Nj48p1FOGmN6pwys=;
+        b=WVGuU7R6yMGx7ACImNtJxSGo91zFmFjUPZKJ9tM9laiJZOSi8KzVgzCvaUe0BiLAWj
+         W1F0ZsCfxBvgIxDr0P9CG6wD2EudPoo/dJFrtPj0rdJlkstl3vZ8MWooIoz+4w5UqFsJ
+         xxGwl2TnHjqD4Dk61mLZf01+Wl4nqSGhXuc+LLr4BcAgUsdE/+G2BJhN2RB1k2PQpwon
+         Na1Y4HYg41CL7k/UaXQVznhqtHlwPKXJAmXVgO4y03Oqm7sKlDt2hPaC4tBklSHRsVd5
+         FUGWvmTQqFzNoxRzOXnKIBoXYTlzz5Oj2CHJC3PGVOFc/8/Jre5JTAeYXOYfpii3D5si
+         iaJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744450162; x=1745054962;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HUpZAUNcdjfzyu7AzIA0LHL7ev/Nj48p1FOGmN6pwys=;
+        b=Zs34NP+oF2wfSGCOTWlI87WI2yHRGu7pih1TXSbACseN2xvHy2cnzDp1jZ6oVEse9P
+         IjxVLmAQaUM5oHJeEwXFn1gcjiiaq1rAEYHK9Dh9Py2rLuCpZMHzdK85g/y3EFw5dsbr
+         sMErHcpc2NMAA2/IfTQjmrvj4/VutsbPTj7QWmmpPKqewsZwjhT1XIE9lgDakfYMHgVX
+         r08q4V+Rrcit3l2pW3IWgho7jJYKQ2UsPaUJ4tcmy2ZDUAxjtAgGu7Ekqfdldpgyd70D
+         pUJMCVm9TnAOWa3SgCNEZ1YBWLj6fZF9c0fWoqpDtoThD+wQKkqFLwGx6+RldsgmFQNX
+         JFYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWuGnpTX3oyPZ2xL0Y16oWf49/DfVkGcrw8POxdLDPovzzNXU7S8pA6YY0Kg8jdg8wwFQQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzT74AAP4MMl1+8NYuyElQHcfXBJ/QXLs1IcJ4m7gy+79ITQ91P
+	D77sJ/fLJKm/rEB7FP4FJUV5neX84Y8cGgXGEWncOcf8Bsmwjcs0PfiLLRZmwZa3Wf6XUGt8NYk
+	RiYXm5WWsspag/gVoswEXnCKMWTs=
+X-Gm-Gg: ASbGncvwIqOxkL4mTL/TiLQl4gFrpLHzaeJiKsOXplJw1KgH1xzL0/qEkGBPyISWg+h
+	5s+CtYtRZ4XUZJTMmMLWJVpU8mRNE0sVdW8ZFD/W602JQTNm63bU1VJsmFieDm2Yt7uQLkuzJHc
+	RrlBY1FKXpCt1XmVHcdrYlaH3tZUmFaOVp+z4EuyU3PmYgX/bKUUpLSWQ=
+X-Google-Smtp-Source: AGHT+IH54qsSoBrm6B8uMgGI61wNF5csuU7Bv+tHNzmpIdRJfcm+b5UFAVcfrtFN3ep+L5o4mAQBwtxA1O8VJaFOAz8=
+X-Received: by 2002:ac8:5f51:0:b0:478:f00e:eed5 with SMTP id
+ d75a77b69052e-479775e928amr80326311cf.48.1744450162315; Sat, 12 Apr 2025
+ 02:29:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] doc: fix synopsis analysis logic
-To: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.1896.git.1743354964.gitgitgadget@gmail.com>
- <6206e65ac4d50e174ad7e3dbafaa590b632f214b.1743354964.git.gitgitgadget@gmail.com>
- <CAN0heSrfQMZ8=pFNuaqn_0bpLxhMtGiO8Vg2hXTo6aqq3rF4yQ@mail.gmail.com>
-From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Language: fr
-In-Reply-To: <CAN0heSrfQMZ8=pFNuaqn_0bpLxhMtGiO8Vg2hXTo6aqq3rF4yQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAPM0=yBnaXojeC9WkHg08deR-VpjaVQwyrqt8mk+54qLXqSaAQ@mail.gmail.com>
+ <20250412015748.7177-1-jayatheerthkulkarni2005@gmail.com> <CA+rGoLd-bSbaqfswD+qVrCv1fvG69QX+3BO1htbPJtinFkEQAA@mail.gmail.com>
+ <20250412062753.GA3763415@coredump.intra.peff.net>
+In-Reply-To: <20250412062753.GA3763415@coredump.intra.peff.net>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Sat, 12 Apr 2025 14:59:11 +0530
+X-Gm-Features: ATxdqUE1WIaOzdSME3BVkjd_PCVE0baz3FQWwHXUKwAQdZLJwSXG2uznFjR1bBY
+Message-ID: <CA+rGoLe=A61CRNUztHvDpPTUxW1TobS4vknyF3OGTEP0imnwjQ@mail.gmail.com>
+Subject: Re: Bug: Git sometimes disregards wildcards in pathspecs if a file
+ name matches exactly
+To: Jeff King <peff@peff.net>
+Cc: piotrsiupa@gmail.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Le 05/04/2025 à 00:39, Martin Ågren a écrit :
-> On Sun, 30 Mar 2025 at 19:16, Jean-Noël Avila via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> The synopsis analysis logic was not able to handle backslashes and stars
->> which are used in the synopsis of the git-rm command. This patch fixes the
->> issue by updating the regular expression used to match the keywords.
-> 
->> --- a/Documentation/asciidoctor-extensions.rb.in
->> +++ b/Documentation/asciidoctor-extensions.rb.in
->> @@ -50,7 +50,7 @@ module Git
->>        def process parent, reader, attrs
->>          outlines = reader.lines.map do |l|
->>            l.gsub(/(\.\.\.?)([^\]$.])/, '`\1`\2')
->> -           .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=~@,/_^\$]+)}, '\1{empty}`\2`{empty}')
->> +           .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=~@,/_^\$\\\*]+)}, '\1{empty}`\2`{empty}')
->>             .gsub(/(<[-a-zA-Z0-9.]+>)/, '__\\1__')
->>             .gsub(']', ']{empty}')
->>          end
->> @@ -72,7 +72,7 @@ module Git
->>            %(<inlineequation><alt><![CDATA[#{equation = node.text}]]></alt><mathphrase><![CDATA[#{equation}]]></mathphrase></inlineequation>)
->>          elsif type == :monospaced
->>            node.text.gsub(/(\.\.\.?)([^\]$.])/, '<literal>\1</literal>\2')
->> -              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<literal>\2</literal>')
->> +              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$\\\*]+\.{0,2})+)}, '\1<literal>\2</literal>')
->>                .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<emphasis>\1</emphasis>')
->>          else
->>            open, close, supports_phrase = QUOTE_TAGS[type]
->> @@ -100,7 +100,7 @@ module Git
->>        def convert_inline_quoted node
->>          if node.type == :monospaced
->>            node.text.gsub(/(\.\.\.?)([^\]$.])/, '<code>\1</code>\2')
->> -              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<code>\2</code>')
->> +              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$\\\*]+\.{0,2})+)}, '\1<code>\2</code>')
->>                .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<em>\1</em>')
-> 
-> This seems to introduce some extra spacing in the rendered man pages, e.g.,
-> "The bundle.*  keys" or "Fileglobs (e.g.  *.c)". (Asciidoctor 2.0.18.) I
-> haven't dug into the regexes so see what might be the cause.
-> 
+On Sat, Apr 12, 2025 at 11:57=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+>
+> On Sat, Apr 12, 2025 at 08:30:00AM +0530, JAYATHEERTH K wrote:
+>
+> > Upon a much closer look into the Git source code, specifically
+> > init_pathspec_item within pathspec.c, my previous hypothesis regarding
+> > the optimization check in do_match_pathspec appears to be incorrect,
+> > or at least not the root cause.
+>
+> I think you're still on the right track, but are just mis-interpreting
+> the item->magic field. It's about user-specified "magic" flags, one of
+> which is "treat this pathspec like a glob, even if the default (or an
+> earlier "literal" magic flag) would tell you not to do so".
+>
 
-The xml regex seems ok for this. The docbook output is as follows:
+Ok that makes a lot of sense I was actually tweaking around with
+has_wildcard but was confused with the chronology in cmd_add
 
-(...)
-pairs in this list are in the <literal>bundle.*</literal> namespace (see
-(...)
+> I don't think there is a bit flag in the pathspec item for "this item
+> has glob meta characters". But we compute and record the offset of the
+> first such character in the "nowildcard_len" field (which is for most
+> cases much better, since we can optimize prefix matches for stuff like
+> "foo/bar/*").
+>
+> And you can compare that to "len" to see if it does any globbing at all
+> (which should also naturally handle stuff like ":(literal)" because we
+> then mark the whole thing as "nowildcard").
+>
 
-The manpage output seems also correct:
+Understood!! makes sense again.
 
-(...)
-would accept (with the
-\fB\-\-file\fR
-option)\&. The key\-value pairs in this list are in the
-\fBbundle\&.*\fR
-namespace (see
-(...)
+> So something like this probably works:
+>
+> diff --git a/dir.c b/dir.c
+> index cbd82be6c9..85cc08f4fc 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -519,7 +519,8 @@ static int do_match_pathspec(struct index_state *ista=
+te,
+>                     ( exclude && !(ps->items[i].magic & PATHSPEC_EXCLUDE)=
+))
+>                         continue;
+>
+> -               if (seen && seen[i] =3D=3D MATCHED_EXACTLY)
+> +               if (seen && seen[i] =3D=3D MATCHED_EXACTLY &&
+> +                   ps->items[i].nowildcard_len =3D=3D ps->items[i].len)
+>                         continue;
+>                 /*
+>                  * Make exclude patterns optional and never report
+>
+> I think if you grep around for 'nowildcard_len =3D=3D' you'll find one or
+> two similar spots.
+>
 
-Strangely, the --file above is rendered correctly, but the bundle.*
-below not. I do not know TROFF to assess what is going on. Has '*' a
-special behavior in a bold span?
+I did and found this (nowildcard_len) in attr files after tracing it up!
+Will send a patch in a new thread as soon as possible.
 
-JN
 
+> -Peff
+
+Thank you,
+Jayatheerth
