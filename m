@@ -1,69 +1,68 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2B61E7C07
-	for <git@vger.kernel.org>; Sat, 12 Apr 2025 12:20:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818F01E98FB
+	for <git@vger.kernel.org>; Sat, 12 Apr 2025 12:21:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744460460; cv=none; b=a11vzJJrwRBXPOWL8oYwq674dDkFXdDRr1XGyslCz8Fv6p/1qQw53/26sPv0otZs9RMFhcoi+Tc74yBI/I80ZjfzOE1LZz3q10hSj4rSvfZ/PIjU//+cAHzLchOCeHi+JRPN5Ao/l3sVBSXPtFiV8VIqJ+VPVYDhwSNffXxztRQ=
+	t=1744460462; cv=none; b=E6IrTujoElgmdrDpMIoCaw1kNPde0WNvZLjrC2XqgcQTq7Bpi+HjGtmOxRgW7JC0FMRb1b7C2fUEKOQRlG3qhikEijGLuTy5s+0IVkoR9ViDbX2hDJsXflXxzlzENS3tBcQ/Wk1DwDHF+G7n0gaRsBPisVVSKHXeptReJEDdN/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744460460; c=relaxed/simple;
-	bh=M9XsA+OSmsH4RsuXbNaJhjb92BbkVZfM2vzE7llGugg=;
+	s=arc-20240116; t=1744460462; c=relaxed/simple;
+	bh=LXAE70IImfTUK5YaBYvBwBQ+S+xRE7elUo7kf6bf/Vo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=TeR9+413vdxLQ9dhGOPdaecB19AsTXXk3tB281GD8KcSgH/AloK+o3rXjC0RDrsba1DDfcjfK+hauTp6Ow2vYOXOgR+fiTq6PuMikLHkPOQOv1bTCQR0CxvwP/MrSpvU9jxfIRqt83MERvApLc4iakZVAPz0FsE1vLyt16wJ2sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A//8Z4hv; arc=none smtp.client-ip=209.85.128.42
+	 Content-Type:To:Cc; b=rz3WmRV/YadMPAvAtut3t7LVbX0R0h+hYUaDY7TUcbjvsK8k/69FDj1rFb2PfAH/zUjFxOs7Wj1DZ3zNbH+FNKZFEQCGtLFU/oRb3IH+H31ki7cwfDUnyImrAmTNZWwU6PAsXNziD9qBIDAqo1rEqY7SNSdBrm1IS8/H/1ogc+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QUZQ0sZQ; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A//8Z4hv"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43d0c18e84eso13947175e9.3
-        for <git@vger.kernel.org>; Sat, 12 Apr 2025 05:20:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QUZQ0sZQ"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-39c1efc457bso1817195f8f.2
+        for <git@vger.kernel.org>; Sat, 12 Apr 2025 05:21:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744460457; x=1745065257; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1744460458; x=1745065258; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9Sy4Ddd+FQkwANT/sTwpIZiUSSES38kAezkndsJMIcI=;
-        b=A//8Z4hvMZjzOPUzYEHBSlWCFlEi78ulAN/jOVhRzTC5ZS5Mnh+U1R+JbIA/NkOwkp
-         QlmQtPLXxo7Bn0MDIHGhF4N4PqtdQBMIWvdksHxZaUe/XnjrTFkp7S8yDiv0Thi9uuOo
-         bhizF1gNuhWjZl5CjrDC5BeVcFc+UOA6aqwOqcpeBC1Do9KsIsiuVX8IWcO2MW7jVUd0
-         tpMsIpAr9afkOn9N9ym6tK5MHarnCHJn6RuHi3lQtazz8KGw6cA8sZfTKBRjTV1I8KUm
-         93Se+vb9KUMYhNH5MbicZXeEjD0bfpF5GuJnALMJVybwohf13JExigd2CISTygTBB5MO
-         BAKw==
+        bh=AFeOG/FeXWczRRyvqTSuTljoyMmqPhblRAyeE850ubI=;
+        b=QUZQ0sZQ+AtGfmSLm8VS75060Cmbc8/zBQcyFrEppBEnI48rCP2g5h0hGGcat42t6I
+         D1ulyE8pUUVbBMUr2nGOGSf7/J1A6hszj7eKiFCz2Oo3fxTVk9JU4mZuDHPdirWr0bl7
+         T+bc0hh9rQ+mhJDWFcmaXSF15YBBnLOdLOhv918QFP0jhwyhj2r7z4AAkusBgc6kwjxT
+         mW32Dc6SYOhp21JnyX9aOd7aLlt4clJhQOIwHFHLTG7j6Nsuwd5hsP9Fx9zLAhkf5Zie
+         ctpQzuJUjqScOd31RtULsfuqxlBc3Af6JrBo0MnI+1XfSC3suoeuD2UMFPyN58CyYA1h
+         mbWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744460457; x=1745065257;
+        d=1e100.net; s=20230601; t=1744460458; x=1745065258;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9Sy4Ddd+FQkwANT/sTwpIZiUSSES38kAezkndsJMIcI=;
-        b=sp+OTWZVLLhkn4GMgx+awk6b+ZfngwexaY4eR8GPgUayyUe3zqkQcF8fwViQ9JMrJJ
-         VvKdC0CaOATaSjiBYbpwLxvI8L9V0njrL4IdiJ813odk2x3w+g2bXYakxyJfjkZegygp
-         gi7BfP9zzWixRvaNeUP2y7tRa+t1o3ulHkqD7kVdGPFGoBw0z9sQXcdov1mQucqlv/lg
-         pqe+fSxnsBis4UXwNecn9R6y8N4LQGSqJUlx3HUr353vDtCNYl0DneXeFCizn8K8OhOw
-         v8S+JkD9RoE9hW6ysSO2Fe9+VJHRZhx1Y9DUb/u8xbwtNRD4FtvEG7A9vbmh76yT+ejP
-         ApcQ==
-X-Gm-Message-State: AOJu0YxSxKeKpgFOM8mQINxFv5ezRiWL/JdDbt20qFY0yIKRluBzaRj6
-	Ch3HALyAHaoyCxpBCJ9+q9K1NSbrZ6rylKU2QmywD/+4twOGoSM5+cDO7A==
-X-Gm-Gg: ASbGncs+pUtOqRt3Q1I/WRkGYN7Zlcdd3ywO2Zazfza0AQAS+fzJeRUq3vl5Arq8KJt
-	YisaX3Gp+n0UMNOU43Lc3MGAio8xVZFU9Iy54JDyFntaoh92TI9x1c1/lnApKe2wWN9FvP0GIuI
-	shLVmhc07Mc4hGbWOsz6toLPnLIlxNMdZeWBNE/rOxTT2X8tdYutM/rwq0Qfjd3NgCA3b0ovY9e
-	hM++FL5puKtLxKcwd1ti3bZkmrglT/0N8301ztj3yqHjDTg4YksV1Vfp05fou4IZHtWzx7aH7wl
-	r4KEiFU0XJ1ZRbLR8WtzyYCk6lWe3AQAIbOfxnKC2w==
-X-Google-Smtp-Source: AGHT+IEjafNrFjrC+wYxmLciHyT9TWGLXc0Kbtijjdwl5WXMBVOZZz/NH5xc+JG+iUhNTctJ073jOA==
-X-Received: by 2002:a05:600c:3b15:b0:43d:300f:fa3d with SMTP id 5b1f17b1804b1-43f3a9266e0mr41102465e9.5.1744460456652;
-        Sat, 12 Apr 2025 05:20:56 -0700 (PDT)
+        bh=AFeOG/FeXWczRRyvqTSuTljoyMmqPhblRAyeE850ubI=;
+        b=BbY48LcQMAdi1eB0+9ngEPe1a5Dzeck2UchFk/4wyu9F58WoSoZjDbC2paezcph5rz
+         +idCRBiWofuyE80+iiwYqCYX0INep/Xi5CFjMxgEIK0FHsLgeSqco/mChM+DxjZssw1y
+         8QntcVqa2IpcE0kSe+uxtHhB4m8RjfTCLNUMs5nVBaTvV1BCeBnnyY4jpW9mbDLJMRLX
+         ctFGXOW1oi4GtcZjsa5nnb206Wo3IUtKuPw6v3EfFW6tnzmQJ0KE5gNJx+Js6H1HVf5U
+         Nb+4YQ6hWnAmmtMqNaKbhLQAVpsYq8gxIKlx8m1BRMxDptkx6cd+PpUc1zoI4pn+hA7u
+         jFNw==
+X-Gm-Message-State: AOJu0Yw+0WE1tStxTPwH4/g3eyFV0Wkhh0WcDmes557IKZbZxX4mnXZg
+	8vhjBo57Mk8Gzp6yelkeGXl5qX421Uk+t+Dd9KbIl4rW2hKtGM49WKltbQ==
+X-Gm-Gg: ASbGncudYh90ZPq+Cthde4r0bQg8k5bB0JdTx5YpEq6JWYrbdGy/OeXzQ0H0p4VjPPh
+	LwKy0e69OUmdvm43OoH37lr03F7Bdy0yTVhgTCVoc5bEnIBNXIqpfEJxtE0a0l/7KjwiT/d6XBY
+	4JokcJ31uhwHpiyzW6jeR+prRagA+OPcojrGvSSSn7TfbgdGibNSPvpNwfm82wx7VmY0LTddBAN
+	/zlDujNHJkLH4dnZva8QctHGw03vmPGvYC+c4K+zBu5aQ9isN5kmsQNVy0BX5IutRe6boQUdcc5
+	lauWhyVOf+Fwl/XTY0ep6NysgaIIP522Fcn6cEslcg==
+X-Google-Smtp-Source: AGHT+IEll42sSYm9e2bXCCuvzDvgn3tvna/asa0MgM74jGfFdi2VnEnsjS83E9YapOTv030MIfCdIQ==
+X-Received: by 2002:a5d:5f92:0:b0:39c:266c:d82 with SMTP id ffacd0b85a97d-39ea51ec9cbmr5467924f8f.10.1744460458080;
+        Sat, 12 Apr 2025 05:20:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eae96c70csm5000350f8f.38.2025.04.12.05.20.55
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eae9640fdsm4906353f8f.7.2025.04.12.05.20.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Apr 2025 05:20:55 -0700 (PDT)
-Message-Id: <2a129734e3d6c7714186f48f916a48dc7535f91b.1744460450.git.gitgitgadget@gmail.com>
+        Sat, 12 Apr 2025 05:20:57 -0700 (PDT)
+Message-Id: <1868dfc3282636ba20feacd5ebfc5107869b26e2.1744460450.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1896.v2.git.1744460450.gitgitgadget@gmail.com>
 References: <pull.1896.git.1743354964.gitgitgadget@gmail.com>
 	<pull.1896.v2.git.1744460450.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 12 Apr 2025 12:20:47 +0000
-Subject: [PATCH v2 4/7] doc: move synopsis git-mv commands in the synopsis
- section
+Date: Sat, 12 Apr 2025 12:20:48 +0000
+Subject: [PATCH v2 5/7] doc: convert git-mv to new documentation format
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,48 +79,103 @@ Cc: Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-This also entails changing the help output for the command to match the new
-synopsis.
+- Switch the synopsis to a synopsis block which will automatically
+  format placeholders in italics and keywords in monospace
+- Use _<placeholder>_ instead of <placeholder> in the description
+- Use `backticks` for keywords and more complex option
+descriptions. The new rendering engine will apply synopsis rules to
+these spans.
+
+Unfortunately, there's an inconsistency in the synopsis style, where
+the ellipsis is used to indicate that the option can be repeated, but
+it can also be used in Git's three-dot notation to indicate a range of
+commits. The rendering engine will not be able to distinguish
+between these two cases.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/git-mv.adoc | 6 ++----
- builtin/mv.c              | 3 ++-
- 2 files changed, 4 insertions(+), 5 deletions(-)
+ Documentation/git-mv.adoc | 31 ++++++++++++++++---------------
+ builtin/mv.c              |  2 +-
+ 2 files changed, 17 insertions(+), 16 deletions(-)
 
 diff --git a/Documentation/git-mv.adoc b/Documentation/git-mv.adoc
-index dc1bf615341..08d660643fc 100644
+index 08d660643fc..f707e998f77 100644
 --- a/Documentation/git-mv.adoc
 +++ b/Documentation/git-mv.adoc
-@@ -9,15 +9,13 @@ git-mv - Move or rename a file, a directory, or a symlink
+@@ -8,17 +8,18 @@ git-mv - Move or rename a file, a directory, or a symlink
+ 
  SYNOPSIS
  --------
- [verse]
--'git mv' [<options>] <source>... <destination>
-+'git mv' [-v] [-f] [-n] [-k] <source> <destination>
-+'git mv' [-v] [-f] [-n] [-k] <source> ... <destination-directory>
+-[verse]
+-'git mv' [-v] [-f] [-n] [-k] <source> <destination>
+-'git mv' [-v] [-f] [-n] [-k] <source> ... <destination-directory>
++
++[synopsis]
++git mv [-v] [-f] [-n] [-k] <source> <destination>
++git mv [-v] [-f] [-n] [-k] <source>... <destination-directory>
  
  DESCRIPTION
  -----------
  Move or rename a file, directory, or symlink.
  
-- git mv [-v] [-f] [-n] [-k] <source> <destination>
-- git mv [-v] [-f] [-n] [-k] <source> ... <destination-directory>
--
- In the first form, it renames <source>, which must exist and be either
- a file, symlink or directory, to <destination>.
- In the second form, the last argument has to be an existing
+-In the first form, it renames <source>, which must exist and be either
+-a file, symlink or directory, to <destination>.
+-In the second form, the last argument has to be an existing
++In the first form, it renames _<source>_, which must exist and be either
++a file, symlink or directory, to _<destination>_.
++In the second form, _<destination-directory>_ has to be an existing
+ directory; the given sources will be moved into this directory.
+ 
+ The index is updated after successful completion, but the change must still be
+@@ -26,20 +27,20 @@ committed.
+ 
+ OPTIONS
+ -------
+--f::
+---force::
++`-f`::
++`--force`::
+ 	Force renaming or moving of a file even if the <destination> exists.
+--k::
++`-k`::
+ 	Skip move or rename actions which would lead to an error
+ 	condition. An error happens when a source is neither existing nor
+ 	controlled by Git, or when it would overwrite an existing
+ 	file unless `-f` is given.
+--n::
+---dry-run::
++`-n`::
++`--dry-run`::
+ 	Do nothing; only show what would happen
+ 
+--v::
+---verbose::
++`-v`::
++`--verbose`::
+ 	Report the names of files as they are moved.
+ 
+ SUBMODULES
+@@ -47,8 +48,8 @@ SUBMODULES
+ Moving a submodule using a gitfile (which means they were cloned
+ with a Git version 1.7.8 or newer) will update the gitfile and
+ core.worktree setting to make the submodule work in the new location.
+-It also will attempt to update the submodule.<name>.path setting in
+-the linkgit:gitmodules[5] file and stage that file (unless -n is used).
++It also will attempt to update the `submodule.<name>.path` setting in
++the linkgit:gitmodules[5] file and stage that file (unless `-n` is used).
+ 
+ BUGS
+ ----
 diff --git a/builtin/mv.c b/builtin/mv.c
-index 55a7d471dca..9e36b616ab6 100644
+index 9e36b616ab6..d673a6c83ef 100644
 --- a/builtin/mv.c
 +++ b/builtin/mv.c
-@@ -28,7 +28,8 @@
- #include "entry.h"
+@@ -29,7 +29,7 @@
  
  static const char * const builtin_mv_usage[] = {
--	N_("git mv [<options>] <source>... <destination>"),
-+	N_("git mv [-v] [-f] [-n] [-k] <source> <destination>"),
-+	N_("git mv [-v] [-f] [-n] [-k] <source> ... <destination-directory>"),
+ 	N_("git mv [-v] [-f] [-n] [-k] <source> <destination>"),
+-	N_("git mv [-v] [-f] [-n] [-k] <source> ... <destination-directory>"),
++	N_("git mv [-v] [-f] [-n] [-k] <source>... <destination-directory>"),
  	NULL
  };
  
