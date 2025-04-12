@@ -1,118 +1,155 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7591946C3
-	for <git@vger.kernel.org>; Sat, 12 Apr 2025 09:46:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7D12B9BF
+	for <git@vger.kernel.org>; Sat, 12 Apr 2025 12:20:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744451185; cv=none; b=JiDJBXs/n5GGJ0/1dPIUfsUyq7P/kwLy+DFGvONT1XTgpiHKxNNwLh1peNXaaW7Fk/ppB/EBWkSjeIaT6L9x2ztLZR5ZQ0kGAMkBxn7Ok7GCwyN9xWTEE4CFipUrUWo3hXbtqdywwMcYVn8fiSu2O218tYDQr4cDsojzyncl/Q0=
+	t=1744460456; cv=none; b=FAR0xo+ktXX0Rcq2kLLpqItbYLAnMCSOYtZW5j4ZFWHSxKl76xMAMIPrnx1grHLGHXFjv+Z/XiIfadJBPRMGClENlAl6iVw+6PmF2IOXqzUb2FQVIlh8hbWpVjzejH8mlNPEQ2yXp2+iXQWiAyh2eNnVaBrht2UjAOmefo/PQqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744451185; c=relaxed/simple;
-	bh=SXUgK3dh5cOJiAVpUAPECS60Ksi72bZqpMGGaN7bsgk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qkyvnRLyDsKHPjvJA+rPlJqueYR+G2Z6Gxrkc8Ri5qVv88En1LKwVyfAsT/o+VKpQY131UCpua7HsgPRUV/rtsz8rf5JXS3lPwGHBQ51j3+8A9QEueWSRpVMljEF9TQUNW3a3pjpF2rZuJInDrVNy05TF7xL8tx10RyxTEPlfTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aLLMrhHS; arc=none smtp.client-ip=209.85.216.44
+	s=arc-20240116; t=1744460456; c=relaxed/simple;
+	bh=D5JHrmM1Yvg64z0DLFvALoNUXR0SWBZ+C0dAtyH+m70=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=ADl2lI3NYKaDNi3Y4Ygb2ysMUOZpslx/TU/ZbaY8mU+qbCNng4XLmz8hU4i52zm8+Fwq1UL2c1JSPvGwwMJYkvy7yBw2cCHYCmluwAD5DBMj7ugDqoA2Z6YRS0ndfVKMra+bmejTTdQdzr5YnoOEl9Nz5kfbS7RBFR4ccU6ueng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kojTmO7t; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aLLMrhHS"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3018e2d042bso1948343a91.2
-        for <git@vger.kernel.org>; Sat, 12 Apr 2025 02:46:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kojTmO7t"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-39bf44be22fso1723188f8f.0
+        for <git@vger.kernel.org>; Sat, 12 Apr 2025 05:20:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744451183; x=1745055983; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1744460453; x=1745065253; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FoXoln2vHJyk9xCbcgjLkuc5IxWNt1Tq38bkeSSAfXE=;
-        b=aLLMrhHSaXfal/vvAKaKGgMKQyiLEJPEDJZ3NgznPLd9Eb3PzmkfL1i5GPOOYlB7j1
-         oD5bmwEpCFxEWAnLrBARV3DSt/bj55xZvaow1waDVc0a/ep669iaerM4G1NYaaxq/RXZ
-         vCjC1gOzu9J1000rFEU6D8jmHoHASNZF0i1ij2k+HLqZfY7aEVBKlZMziR3Tw39C5mC2
-         7FfKTn2QtxmM7DPUsqFyqE9e+tLYSSxffjWP1XmKh5HkdWIVc+h77b7H++yQ8kzhJeGf
-         oTGsG0jZnDllLIxzUoNey7OCHYYE5Basm7d8aoXCyPCur5HgwGwEKZreUoMJV1VwSon8
-         8qpQ==
+        bh=8NN8HjxgugE0KtoarSywjS6fneFvd5PJIv74Mud/kp8=;
+        b=kojTmO7tBLx/kiiyRLgPEoowRszZ1qJMXEBHYNz8UXMF8z0EtgcGnfmwo1KIsmePor
+         bWCncCKTM2BEVHx/om8/VsaR7QXkobLnnj6Rjw0fkV7oyl67ro4IyrLefGPMtrgFd53X
+         UeCHvThht9Re4/cmeYA26Nh+cd/WoGVKUg7NeR+0CRQsEcEJxbZMqEwWjqOh8sMy154X
+         KcIW0xukT5ZJmKcrpebp+0h+0LCm6cGBCqx/zdZTIID8A5gr3/LYm+SyAqs4JD6K44Po
+         FG1Q8mRNEM0/2c906iMLE93E/iNoz/ydyUdy/mLbuG/HG+efoECT7F+qyKrQHYAXe+7v
+         QXJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744451183; x=1745055983;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1744460453; x=1745065253;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FoXoln2vHJyk9xCbcgjLkuc5IxWNt1Tq38bkeSSAfXE=;
-        b=eTYX4qox+Ah5PRddYRyF4pnR7KEoJstWjkQXccNfO+ejH2pHSKEYRjQ+NaL/wd7ZWB
-         cpcr1ciP1oJIZFAa7NsmGzTUn6V4clDGRIqGNsTrWDgrgBId525v9zdW+H/KXgYrzdkO
-         2yc+5ZArV3pdkgEEi/5fVM17dhp9+EUPaZQ252Sl/lE+h/W/2sXOLIaGN3tYoOUx2auE
-         JLEPcCtu+z5AfRX4iGlQDdghdisnJXTWILVFa7Cfqo5RncJr6dbB9gzaEyFOORMyfDHX
-         Bhf/hugFSa7GYXQ9yqa+2bJhv+QNpdWnFV0Tdy8Zxr7WHeWCgtfNN4x+NavruF8YUKz2
-         C2kA==
-X-Gm-Message-State: AOJu0Yx1Og59iOUHma2mdhbeI42V3yq6JbUzcwsmOW6YlaSSHJLXfszW
-	p2I2aWhbqQ6wShQPpV5IJCW7YsSRFFmN89+8qkTWWBR11kvkjmr/geKRfQ==
-X-Gm-Gg: ASbGnctiWWq2rxgHTDNV8xPZ7G+6aSlPqx1iGiDm8gXqh1z0jyZnNeDSUkG70Bx+Xi+
-	OjcRoDqVDkcBOV5tVhYbZ4Ks/aDvG7BrcFM1y4zSC1sJX0nW6GjCDWZI5GR31rG86wp76Kc1s+L
-	pgcpKhCVPl4d23qfhKf2aBvBti5Iu1wQLsCIHIZazko6IxS+F4D3QXwaq+AbM30t9pBMSu9h5oT
-	nqxuqltXRxpiqAKU81pU4ogrt2r8iPVCtXEzuaElSDdO5sKFk2zoHv5ekH+mUL7O8KHvglo0JJk
-	KSLHteRmVC5T3mUh2oCK0oT8B4510pNcgoDZ5eskWF9bearke/s6Fz1+vGxfXc+By00guACyxtM
-	=
-X-Google-Smtp-Source: AGHT+IGWvKH51LdIiSW92qp6ixdSHB365Zvctf439YJP2XkLyTyamy9/8GwqjlIThgp8FhK2E/4EcQ==
-X-Received: by 2002:a17:90b:1d52:b0:2ee:bc7b:9237 with SMTP id 98e67ed59e1d1-308237b51bbmr8208681a91.27.1744451182493;
-        Sat, 12 Apr 2025 02:46:22 -0700 (PDT)
-Received: from localhost.localdomain ([2405:201:c005:b018:5841:514c:af52:5598])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-306dd2ed48dsm6354395a91.0.2025.04.12.02.46.19
+        bh=8NN8HjxgugE0KtoarSywjS6fneFvd5PJIv74Mud/kp8=;
+        b=Frkvos6UiQ04j6TrOYB7G8G2MEEaoYADhsXe/54pJsttPsTfjJ3b+tV2QK3dj88dcN
+         NhNZhivT0tOwPmn+i8n9Puh1FzpTfoFX0ytnTguoTnSBfqCkjv3LBITVRYVI1mceM8eA
+         lrwDP+JxqLENpEgVh37HsGnr9sSwQb4MJO5iICDrLz3slhmTDQr9hS9rp3Zu/7g8o5+D
+         xWVkqQJ5QCF34p0K5E4qYbNT0LZX9cdScSjevMmDN/3MIhOgYWxvJg6VVeKOLJrPegNw
+         m9JnxXC0uOuOeUYY6hjhKDKJ+5Yatj+oxLaZDgYGgFTTNNdI/bJNQEhXO0iJr/3MFTK1
+         hecA==
+X-Gm-Message-State: AOJu0YxabF7xHKKd0uEFAGE0PyMaQwbUj/NWQxW0/3E1ijoThhCMyZxp
+	+hSzzTKmZeqTcK5fOvo/AqPOP74FvPx3qtSocsymRKY/Xjw08jW5BLLHfQ==
+X-Gm-Gg: ASbGncu9gYAROFnwnVnmL1tuhsrStbp3/8e6Y1Ji74u+OjCCunIQr0/Pr6E13wq5P8P
+	0782fxd5SG8Ib+qhDSqn0NVqGMKYuGXIkv85dvnvEwmtWIHBxRhS6Oki6gaYle/FuAcmY2iLoUP
+	xDOO1W+5G0hyhI7z+X4cClt/nIPyIMuc3heMstxwham67O8bXjqlCFLsURqB60nzfa57oxBxc71
+	SR9KfsmDe83+SG6h35fV2TRLBn0duPQWggov52Rvy/l9NtYHC+BnAaF222l51sUmx3T7qewfrIf
+	QOLuAboMK/Q2x8RdY0tYZBIiizi8AFj/5+uOy7sLwA==
+X-Google-Smtp-Source: AGHT+IEm6memSit57T5HvQdEXu4HtgszvtqlZHvEp/ww262yqPgXxsAiwZ8T58iRVbB5NpqZPul5oA==
+X-Received: by 2002:a05:6000:2207:b0:391:4389:f36a with SMTP id ffacd0b85a97d-39eaaec7d22mr5070256f8f.48.1744460452452;
+        Sat, 12 Apr 2025 05:20:52 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eaf445772sm4943195f8f.91.2025.04.12.05.20.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Apr 2025 02:46:22 -0700 (PDT)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: git@vger.kernel.org
-Cc: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>,
-	piotrsiupa <piotrsiupa@gmail.com>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH 1/1] add: fix handling literal filenames and wildcards
-Date: Sat, 12 Apr 2025 15:16:07 +0530
-Message-ID: <20250412094607.236382-2-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250412094607.236382-1-jayatheerthkulkarni2005@gmail.com>
-References: <20250412094607.236382-1-jayatheerthkulkarni2005@gmail.com>
+        Sat, 12 Apr 2025 05:20:51 -0700 (PDT)
+Message-Id: <pull.1896.v2.git.1744460450.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1896.git.1743354964.gitgitgadget@gmail.com>
+References: <pull.1896.git.1743354964.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 12 Apr 2025 12:20:43 +0000
+Subject: [PATCH v2 0/7] doc: convert git-reset, git-rm and git-mv to new documentation format
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+    =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
 
-When `git add` is given a wildcard pathspec (e.g., 'f*'), and a file
-with that *exact* name ('f*') also exists, Git incorrectly adds only
-the literal file on the first invocation, ignoring other wildcard
-matches like 'foo'. On subsequent invocations, the wildcard expands
-as expected.
+doc: convert git-reset, git-rm and git-mv to new documentation format
 
-This occurs because the pathspec matching logic short-circuits when
-an exact match is found, skipping wildcard evaluation.
+change since V1:
 
-With this fix, wildcard expansion is always performed, ensuring
-consistent behavior even when a literal filename matches the
-wildcard.
+ * fix remarks from reviewers
+ * stack the commit fixing the handling of three-dot notation
 
-To explicitly add the literal file named 'f*', users should use:
-    git add 'f\*'
+Jean-Noël Avila (7):
+  doc: convert git-reset to new documentation format
+  doc: fix synopsis analysis logic
+  doc: convert git-rm to new documentation format
+  doc: move synopsis git-mv commands in the synopsis section
+  doc: convert git-mv to new documentation format
+  doc: fix asciidoctor synopsis processing of triple-dots
+  doc: add markup for characters in Guidelines
 
-reported-by: piotrsiupa <piotrsiupa@gmail.com>
-Mentored-by: Jeff King <peff@peff.net>
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
----
- dir.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/CodingGuidelines             |  3 +
+ Documentation/asciidoc.conf.in             |  8 +-
+ Documentation/asciidoctor-extensions.rb.in | 12 +--
+ Documentation/git-mv.adoc                  | 33 ++++----
+ Documentation/git-reset.adoc               | 98 +++++++++++-----------
+ Documentation/git-rm.adoc                  | 56 ++++++-------
+ builtin/mv.c                               |  3 +-
+ 7 files changed, 109 insertions(+), 104 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index cbd82be6c9..0546c00952 100644
---- a/dir.c
-+++ b/dir.c
-@@ -519,7 +519,8 @@ static int do_match_pathspec(struct index_state *istate,
- 		    ( exclude && !(ps->items[i].magic & PATHSPEC_EXCLUDE)))
- 			continue;
- 
--		if (seen && seen[i] == MATCHED_EXACTLY)
-+		if (seen && seen[i] == MATCHED_EXACTLY &&
-+			ps->items[i].nowildcard_len == ps->items[i].len)
- 			continue;
- 		/*
- 		 * Make exclude patterns optional and never report
+
+base-commit: 485f5f863615e670fd97ae40af744e14072cfe18
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1896%2Fjnavila%2Fdoc_git_reset-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1896/jnavila/doc_git_reset-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1896
+
+Range-diff vs v1:
+
+ 1:  1676b5ac628 ! 1:  5a6c7def260 doc: convert git-reset to new documentation format
+     @@ Documentation/git-reset.adoc: and specifying a commit with `--source`, you
+      +`--soft`::
+       	Does not touch the index file or the working tree at all (but
+      -	resets the head to `<commit>`, just like all modes do). This leaves
+     --	all your changed files "Changes to be committed", as `git status`
+      +	resets the head to _<commit>_, just like all modes do). This leaves
+     -+	all your changed files "Changes to be committed", as `git status
+     + 	all your changed files "Changes to be committed", as `git status`
+       	would put it.
+       
+      ---mixed::
+ 2:  6206e65ac4d = 2:  440eac1f974 doc: fix synopsis analysis logic
+ 3:  41a01969d93 = 3:  6814e98f71d doc: convert git-rm to new documentation format
+ 4:  9f7cd02cc1e = 4:  2a129734e3d doc: move synopsis git-mv commands in the synopsis section
+ 5:  4887567c57c ! 5:  1868dfc3282 doc: convert git-mv to new documentation format
+     @@ Documentation/git-mv.adoc: git-mv - Move or rename a file, a directory, or a sym
+      +
+      +[synopsis]
+      +git mv [-v] [-f] [-n] [-k] <source> <destination>
+     -+git mv [-v] [-f] [-n] [-k] <source> ... <destination-directory>
+     ++git mv [-v] [-f] [-n] [-k] <source>... <destination-directory>
+       
+       DESCRIPTION
+       -----------
+     @@ Documentation/git-mv.adoc: SUBMODULES
+       
+       BUGS
+       ----
+     +
+     + ## builtin/mv.c ##
+     +@@
+     + 
+     + static const char * const builtin_mv_usage[] = {
+     + 	N_("git mv [-v] [-f] [-n] [-k] <source> <destination>"),
+     +-	N_("git mv [-v] [-f] [-n] [-k] <source> ... <destination-directory>"),
+     ++	N_("git mv [-v] [-f] [-n] [-k] <source>... <destination-directory>"),
+     + 	NULL
+     + };
+     + 
+ -:  ----------- > 6:  2ddce76f14d doc: fix asciidoctor synopsis processing of triple-dots
+ -:  ----------- > 7:  2690f84602b doc: add markup for characters in Guidelines
+
 -- 
-2.49.0
-
+gitgitgadget
