@@ -1,88 +1,118 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50A54503B
-	for <git@vger.kernel.org>; Sat, 12 Apr 2025 08:17:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0DB82367A0
+	for <git@vger.kernel.org>; Sat, 12 Apr 2025 09:05:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744445849; cv=none; b=e0RLmrGcRUfEbMg45z2NnepNb4T//xeDk8wBEeV5+SCXjJC+zy4jOUKZQTpiQlqDW5sZCJnd/wT2uPoMHerv2iIzDeBXPmy3LU7Z2BUWprHDK3zPCNWPGx7dEX+qQn17Et7ZK8A3F9FrnzQuOc5xHQ7pxd0GQYzemOF8H49vd/0=
+	t=1744448754; cv=none; b=dj358Qxg+bbsSJqgIxfpP3pJhIvPU143m8E+VLDnf6cLlvLvpBCsZoQYKkF5HfENDSavn97Wwm9H7yTzyt1lYaSTYt+mPrtTiHyypP2i677QUloSJIRkSukcoUCqMLjYZVnmYfAJ5TV2sWJX+tPaHUzbTeCoK8+k9BYko8pmqVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744445849; c=relaxed/simple;
-	bh=aIoasfJP2i9c0eFCan64NkANpzvLc5qssp5L+j6mLy4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qJbIJpsy0FoQu/wvVIh+kdy8PiS9w5fRt/jGn3Zti17EE73kIxnvaFtqACq8Bbrvn1Lfx+FCR+xH7tdjnbZpcoRLnsm48tjfqBMJ5brIBXzFAJKCWUrOGceP/8Sjnp70MJQg40ITFvrWu2RETkmnVrKLq7jePjk+T1CL4V6Bfbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XXgP0Cgn; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1744448754; c=relaxed/simple;
+	bh=qUeni7GdWJSXG4rJcNY96PW9mlnpYN0TpPiLiZI+aOU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IojXUQY4m12UyrORXtYkPc8F/wQyL1jQEF11UXW0d06cafj59SM1k3iiZ3ilwb5MwMR8M0uU99fZ3U181MYE+smi8hlZ8guOuXNyHyAu7ga9J7M811lQJeZS++POqkwlkHOKPKlq0nWc9LAxLcuTbAsYVLPQgH8rTgN5BMSwj5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=seHVgb7o; arc=none smtp.client-ip=212.27.42.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XXgP0Cgn"
-Received: (qmail 12435 invoked by uid 109); 12 Apr 2025 08:17:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=aIoasfJP2i9c0eFCan64NkANpzvLc5qssp5L+j6mLy4=; b=XXgP0Cgnns7RViFS8GSxabk7UPz63QbQiIsu3rj+87L84d9d8tW2qSG9uC014J1RntTsPNl6p3dn/mAkV1oX0+qmQSp21+2UTVz7SKcFYgPZdO/qONAJsE8/kdhOWUGwbQ/L8UpaQlJjaPJBRT8TJwzPCN9T2n9WqD/7jN+k3m54fGLU/mNyiN79IUkmDo0A0iBASKZaWbliacIYurTXYbLKmNHMgba4tET4dVY/W5EwDzhDTapf/IsZkTZNUQQ7AlivjT9qvv57wDIxhDU0Pr8R4qCC6YiXHxh9/OFHkoymjSL5BgiuY92VDWrNrtlwOsncL9ubBxIbmv3rEEBt7A==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 12 Apr 2025 08:17:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7943 invoked by uid 111); 12 Apr 2025 08:17:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 12 Apr 2025 04:17:24 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 12 Apr 2025 04:17:24 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 6/9] object-file: split out functions relating to
- index subsystem
-Message-ID: <20250412081724.GA109770@coredump.intra.peff.net>
-References: <20250411-pks-split-object-file-v2-0-2bea0c9033ae@pks.im>
- <20250411-pks-split-object-file-v2-6-2bea0c9033ae@pks.im>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="seHVgb7o"
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 46D6CDF88CA
+	for <git@vger.kernel.org>; Sat, 12 Apr 2025 10:58:53 +0200 (CEST)
+Received: from [198.18.194.9] (unknown [172.96.141.172])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp3-g21.free.fr (Postfix) with ESMTPSA id CDA4013F8C0;
+	Sat, 12 Apr 2025 10:58:40 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1744448324;
+	bh=qUeni7GdWJSXG4rJcNY96PW9mlnpYN0TpPiLiZI+aOU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=seHVgb7oUpc4ZaIhHH3FMeE5f0F/nC21Vdd6ENdOLcYVXWFtUFdMHQg65JjRwkIci
+	 CKtD5e9x5+drnWLhikCoqEw4dBHSpBX3fZ3UzldWC5f5jgv7Cm3NP8TZpE12gPQqyB
+	 jVI447UcTN3s3+Mn2XupFwsNXkBvLtYQLF9bQ2YHkTHvF8SnD1lxLEX8oLNo5XyTMn
+	 +hEcE6zUjqMN7SAgn00NLlC2ct+8B7MQlsIrQPbD79CthUXTOoyvguuj2Tmq3htA7e
+	 dELTR6W93Y82NQOhAYDI11kcBPE/f0kOPTD0ZYA6LCmB6oX/o2Tl+9tosi0IexfmiL
+	 RQu9QcfhBlAww==
+Message-ID: <0846bdd8-f2a6-43d9-83d1-73d9a5b04005@free.fr>
+Date: Sat, 12 Apr 2025 16:58:37 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250411-pks-split-object-file-v2-6-2bea0c9033ae@pks.im>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] doc: fix synopsis analysis logic
+To: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+ =?UTF-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.1896.git.1743354964.gitgitgadget@gmail.com>
+ <6206e65ac4d50e174ad7e3dbafaa590b632f214b.1743354964.git.gitgitgadget@gmail.com>
+ <CAN0heSrfQMZ8=pFNuaqn_0bpLxhMtGiO8Vg2hXTo6aqq3rF4yQ@mail.gmail.com>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Language: fr
+In-Reply-To: <CAN0heSrfQMZ8=pFNuaqn_0bpLxhMtGiO8Vg2hXTo6aqq3rF4yQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Apr 11, 2025 at 11:29:55AM +0200, Patrick Steinhardt wrote:
+Le 05/04/2025 à 00:39, Martin Ågren a écrit :
+> On Sun, 30 Mar 2025 at 19:16, Jean-Noël Avila via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> The synopsis analysis logic was not able to handle backslashes and stars
+>> which are used in the synopsis of the git-rm command. This patch fixes the
+>> issue by updating the regular expression used to match the keywords.
+> 
+>> --- a/Documentation/asciidoctor-extensions.rb.in
+>> +++ b/Documentation/asciidoctor-extensions.rb.in
+>> @@ -50,7 +50,7 @@ module Git
+>>        def process parent, reader, attrs
+>>          outlines = reader.lines.map do |l|
+>>            l.gsub(/(\.\.\.?)([^\]$.])/, '`\1`\2')
+>> -           .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=~@,/_^\$]+)}, '\1{empty}`\2`{empty}')
+>> +           .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=~@,/_^\$\\\*]+)}, '\1{empty}`\2`{empty}')
+>>             .gsub(/(<[-a-zA-Z0-9.]+>)/, '__\\1__')
+>>             .gsub(']', ']{empty}')
+>>          end
+>> @@ -72,7 +72,7 @@ module Git
+>>            %(<inlineequation><alt><![CDATA[#{equation = node.text}]]></alt><mathphrase><![CDATA[#{equation}]]></mathphrase></inlineequation>)
+>>          elsif type == :monospaced
+>>            node.text.gsub(/(\.\.\.?)([^\]$.])/, '<literal>\1</literal>\2')
+>> -              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<literal>\2</literal>')
+>> +              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$\\\*]+\.{0,2})+)}, '\1<literal>\2</literal>')
+>>                .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<emphasis>\1</emphasis>')
+>>          else
+>>            open, close, supports_phrase = QUOTE_TAGS[type]
+>> @@ -100,7 +100,7 @@ module Git
+>>        def convert_inline_quoted node
+>>          if node.type == :monospaced
+>>            node.text.gsub(/(\.\.\.?)([^\]$.])/, '<code>\1</code>\2')
+>> -              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$]+\.{0,2})+)}, '\1<code>\2</code>')
+>> +              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=~@,/_^\$\\\*]+\.{0,2})+)}, '\1<code>\2</code>')
+>>                .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<em>\1</em>')
+> 
+> This seems to introduce some extra spacing in the rendered man pages, e.g.,
+> "The bundle.*  keys" or "Fileglobs (e.g.  *.c)". (Asciidoctor 2.0.18.) I
+> haven't dug into the regexes so see what might be the cause.
+> 
 
-> Split out functions relating to the index subsystem from "object-file.c"
-> to help us separate concerns.
+The xml regex seems ok for this. The docbook output is as follows:
 
-I know these functions all start with "index_", and they do take an
-index_state variable, but I'm not sure they are really about Git's index
-subsystem at all.
+(...)
+pairs in this list are in the <literal>bundle.*</literal> namespace (see
+(...)
 
-The term "index" here is more about "compute the sha1 index of the
-content". E.g., the function index_path() goes all the way back to
-ec1fcc16af (Show original and resulting blob object info in diff
-output., 2005-10-07)!
+The manpage output seems also correct:
 
-Back then it did not take an index struct, or even care about having an
-index at all. Later, they learned to call convert_to_git() in 6c510bee20
-(Lazy man's auto-CRLF, 2007-02-13). And that function may check the
-index for .gitattributes files.
+(...)
+would accept (with the
+\fB\-\-file\fR
+option)\&. The key\-value pairs in this list are in the
+\fBbundle\&.*\fR
+namespace (see
+(...)
 
-It originally just used the global the_index variable for that, but
-later commits like 58bf2a4cc7 (sha1-file.c: remove implicit dependency
-on the_index, 2018-09-21) passed the istate around the call stack.
+Strangely, the --file above is rendered correctly, but the bundle.*
+below not. I do not know TROFF to assess what is going on. Has '*' a
+special behavior in a bold span?
 
-So having access to an index struct is mostly incidental to these
-functions. Which makes sense looking at the callers: there are many
-pure-object operations that would work without an index (or even a repo
-in some cases!) like hash-object, git-replace, diff.
+JN
 
-  Side note: I'm actually not even sure we would read attributes from
-  the index, since we don't set GIT_ATTR_INDEX. So I wondered if we
-  could simply pass NULL to convert_to_git() here. But I think these
-  days some of the "auto" CRLF modes also have heuristics based on
-  what's the content we find in the index for that path. See
-  has_crlf_in_index() and its callers.
-
-
-So it seems to me that these really are more about creating objects than
-they are about the index. I don't mind splitting them out, but it seems
-like they're equally weird in read-cache.[ch].
-
--Peff
