@@ -1,326 +1,173 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822772BE7B2
-	for <git@vger.kernel.org>; Fri, 11 Apr 2025 23:26:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E082367C9
+	for <git@vger.kernel.org>; Sat, 12 Apr 2025 01:58:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744414008; cv=none; b=PKEe7/BscStdl4XjBEhG8GfJ9ke36y6UxshPLqsuWY3VWHFg5Oyth31iGAI0aK4zB4tBdBj9H7bUQtoGHnIZ2oRnNzaOjA9rqI5LsfknioTwyhOfDMHMG7K36hMZUHyBuHvAT3J9Q1tfsU5aCcAVwKIOpVNXUzxOWtFPIo1Kx0U=
+	t=1744423092; cv=none; b=KLYaYb2+yzwVPDtqmolYF7dquQ6U/b9J+hrDJgt2u5m08LBpOYcxdMocMezoiFBJQoNxRRHHNhTRjyFUJ6a+H101UYzG/VDMREVx7JYB3ytv+hZXchRl/CfDMhwp1XCUJb+bMtGsThOOfb1MPPwb9K94txuDtcPAybKkxqit1iQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744414008; c=relaxed/simple;
-	bh=iYTq8z4Do9InaaWs07s3vzJ15SHr+9gOn8aU8/2HXfk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jpZyEO/X08sKeh9v5WBJCEjTAqq9a9pBPaKWN/+E3bH0HWermQAXu0q3+0pkF0PsaWJfc1qoGXMNchGSXQlD34cWjc0cbBzwFNiX4Lzyni3yK1Os3kr3UiiDx8AmQbfbz+EieFE2jgrut7Azn5XvR7qS1lxQkurljcFu34smaDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=hXLxEt2N; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1744423092; c=relaxed/simple;
+	bh=Qtvg8gAtt/uLoCpdS6g/+/FDjA0Rae6te4NHcLbvyhM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=OiIffP2DcfPC9G1TUL2oTSzciM6lrXXfyzpLE8wZYZEh7kVYCJilOQPFKFcRY71iOeFSk2S+76w76dYaOWmOd1k8BydarDCHkVreQhxDDGhXunAsYuRENGhunBEcX78BAkX0jyMkYO3Ah7YnncXEXVb3tKwyq+lU9ewWqpcPRGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V3+CdmUA; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="hXLxEt2N"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7c5e2fe5f17so246472685a.3
-        for <git@vger.kernel.org>; Fri, 11 Apr 2025 16:26:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V3+CdmUA"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-227b650504fso26218045ad.0
+        for <git@vger.kernel.org>; Fri, 11 Apr 2025 18:58:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744414003; x=1745018803; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bUXVQ12qLeJU0lDR9nMEcVH0cv/grsLe1vQQ3MHfHs8=;
-        b=hXLxEt2NylSUMuwGp8HmZOX9LzzrVOLJtU/g1X8P457OrMsub71w0WtMJvqBpYxxIa
-         DJU0xur6vSY1MY2+VKH5/fHoxsPr2QV7Dlqr50nGwR9oEGGgVVVxcUEfrl2D9/JLCvxM
-         a4dSYiNQrRRQ6vE+QA1O/6DMx3zdhGHm40QgForgHf5OO4A2lnZJFkWITh5NRFlfQaIE
-         5OVhn8qpB5B/ghOSGRErJs8ZdaQBZ9GlvnRr2IgR/z268dqIBeXgA3jhTMx4eH16LoGe
-         8kxCGpDGb+SyTqbbSt1j6YUo7K66TpylQ8XQK/2AvwQohwiI3OfnJQCFQn1hiwSJzE4d
-         W7PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744414003; x=1745018803;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1744423090; x=1745027890; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bUXVQ12qLeJU0lDR9nMEcVH0cv/grsLe1vQQ3MHfHs8=;
-        b=uqIWrDejeBaHKyttVdpF9C1UKt9LxsoWfHIM/HgSgH9Pvlz5rj0tKDyDemvULHgXX6
-         v5hR8M/Aa7fHE8vmOgcNcBrEKPlvQ1RPCkr7vsOjkLOcHO+N1J6eyUcf2lY5hLhDldfM
-         vjx4kfMggCbdF/9tW6FSpLwRV2k6DqLXuwKjv+mp6UZFjt6lUm9zL8hjbNZON2pjK3Du
-         sECKoYKjkv2jOnJEvHLIdeDcwNeSZ0sQW9t06L4Myhe2Yaek/NgkHOYNzgi6Z+R4gUHk
-         BI7dog7jiKtJNLh9w5J+gcc8QeeDwKo39tPjqEv2rfGlN/yCzpVNi1RrH7pQHJepEpv8
-         94Qw==
-X-Gm-Message-State: AOJu0YyNBm+a0QfE0AkoKlSIL4gnXivwSubLEceISDfgEUDO7KK9GWkk
-	4giebeuPK5J4M1FgOsyIbBuKyNFSIS0iX+96t4vR/X4VIX/4r9VNDPK9kOlRhM0E6c7pfuHncEN
-	zCF0=
-X-Gm-Gg: ASbGncvlwBf1UFmKaxOCLpHLO/RexrrXolfOnDSNNA3kfWV2Zj8MU/6N+dw1S5vb/Wb
-	2vyDsLi6ZzIYp6NXJkymhNuXW3zhx1ljPPH1MQIwV7hHtFxqiAALg1apdwRP8dDVg4PTGPmVlW4
-	YZsLdJHUjapjuoxRxoYvj6wh9XFrApxVQ1EJEHCTDK9Cfvw5pKqM1SSoPLnzB3gSOemPVP4AQ1z
-	QWPql0/4Ef1EcWdLM19yL4YSVxpd8SA4jZCnIXnyilnyWmIS160lfmrVxrhaOsQdnkT/ewfsurb
-	b1Pwl8C04QaRx5lhZPhaKEANrtmu7zARet/6+X3qdYqHScAHis6vJukAjDQBmcf/eu4pJpN9fzP
-	7fSHa/KsEYk9QG6rhmPyPSU8=
-X-Google-Smtp-Source: AGHT+IFlIA5QnoipZ9sGYi3KjbbcwGlYX8WPoi6NkIc+b452Cb1U+KgrAPVuzVoXlGvQQxfKFqmSog==
-X-Received: by 2002:a05:620a:444e:b0:7c7:a543:dcfe with SMTP id af79cd13be357-7c7af0e2360mr671924985a.32.1744414002714;
-        Fri, 11 Apr 2025 16:26:42 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c7a89f95b3sm327498685a.84.2025.04.11.16.26.42
+        bh=nPZQXzSbNZOZDHjQK/UQq7JTldP4rP8JD6B058dS6l4=;
+        b=V3+CdmUAjhLuEdRCMQKsdIVzsLpFKm/FkM+8QclmZO3TSuUYENJTsSSafNveIQgCyQ
+         5u5n6T3O2M8HK8VOZFzjmRla0gT0Wk0hY5h4lnbMydY3mZv4wXpABhp8EBThAAO5o4iu
+         HqIVGXYdBwdr5nqe58PwbsX6PFdvHENipMlZaue/NyhbqCLY5oLbt3CwKc33r6C0bFKo
+         5U75IaLI3qYaSIu8UnHHNZb560lh9/221nsD3gj+JhkCPE5LapSYwLQvyMTPHizvVIAi
+         uJTKNAdwYvZ2nIwj/wJVHtGkisvfP5J4s8h/YnCPaJ5QNqUITy+Etxni4F2n8pzcAmzV
+         bq8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744423090; x=1745027890;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nPZQXzSbNZOZDHjQK/UQq7JTldP4rP8JD6B058dS6l4=;
+        b=Wf/syzXn2QqaGtROI1VwStklshOprrdIY3XV0S8e8NFXXjjwBe91loJAatBpZhMOUN
+         QNxHpD6kz+T4HbrHc8YppYhJX2VE4HBpg3Q7VyApA5wGmtCLrAqFhhyOCnkFg8GZQXwd
+         jSuhCbVz/qY5PA/EjDaNtgEHvlolt9Q8nJzurQCedqpmRnfoYGT2VGtXODTgPAPn+iGc
+         S2893agz4lQa607AXZt/eytWbK5LJp3PxDwzELnXIizyegRZ5iXOao96HOdFXbxmKM8T
+         WnqJoZdtwv3m32AV3QqtECxNORRbM2+F7asWMi6G6yPtILyg6UsJEkoWTOmF97LEZXku
+         q1rA==
+X-Gm-Message-State: AOJu0YwhtbOkXadNQENWBhZNBYo2rmd9HubKXwLDZQpj5c7NoU8i4fjA
+	JBZscTOyafliqLbn8pIF9y1Tp/FMiLgYpTlu9HWfd1lqHh9T/ej8yphRvQ==
+X-Gm-Gg: ASbGnctYIEKV6r0KPrRCx50b0uhfLRv0ayv40ciFK4NnWrAKQS0WX/iyen+iBrC1qkf
+	ZVvmw66e2+67dyluXbUGeb2DoZzQl39fX7ZXj2UxMe1mMcwkfNL/WhcaaMMk9pG8U+uQJQi2Xg6
+	Iy5kcthuS8HXI/YLKlD4G97qCEfEIWNelTGShbWyga/zHFWFaU8dKdJAOzJOCmcEL06W4IZpAUv
+	9ZX4VrCFBFmqV7XVHUjq7GQTxPJh1C6QGxJLrvij1bRXQIq0jfTrNnBfTSQcR94SSDz1nECPEaj
+	TbusLbibcljfe584Rc18KEq+3BXMiEiFuVS9KkozBcEoX7+2wJXp6dHajbcwN3SgOdgzTERu9Wo
+	=
+X-Google-Smtp-Source: AGHT+IH9oNKgAMEf08PCZgmmVFfAbwQAIf5kL3FMo+LdXqN6g20KgZqnF8TM9Anf5we0wHG45FfddQ==
+X-Received: by 2002:a17:902:f650:b0:223:37ec:63d3 with SMTP id d9443c01a7336-22bea4adeecmr67992395ad.18.1744423089608;
+        Fri, 11 Apr 2025 18:58:09 -0700 (PDT)
+Received: from localhost.localdomain ([2405:201:c005:b018:5841:514c:af52:5598])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73bd219be37sm2474151b3a.19.2025.04.11.18.58.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Apr 2025 16:26:42 -0700 (PDT)
-Date: Fri, 11 Apr 2025 19:26:41 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [RFC PATCH 8/8] repack: exclude cruft pack(s) from the MIDX where
- possible
-Message-ID: <19b69c124696c31c04a09f56ef03bf8ca9c61c4f.1744413969.git.me@ttaylorr.com>
-References: <cover.1744413969.git.me@ttaylorr.com>
+        Fri, 11 Apr 2025 18:58:09 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: piotrsiupa@gmail.com
+Cc: git@vger.kernel.org
+Subject: Re: Bug: Git sometimes disregards wildcards in pathspecs if a file name matches exactly
+Date: Sat, 12 Apr 2025 07:27:48 +0530
+Message-ID: <20250412015748.7177-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <CAPM0=yBnaXojeC9WkHg08deR-VpjaVQwyrqt8mk+54qLXqSaAQ@mail.gmail.com>
+References: <CAPM0=yBnaXojeC9WkHg08deR-VpjaVQwyrqt8mk+54qLXqSaAQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1744413969.git.me@ttaylorr.com>
+Content-Transfer-Encoding: 8bit
 
-In ddee3703b3 (builtin/repack.c: add cruft packs to MIDX during
-geometric repack, 2022-05-20), repack began adding cruft pack(s) to the
-MIDX with '--write-midx' to ensure that the resulting MIDX was always
-closed under reachability in order to generate reachability bitmaps.
+Hi Piotr, Hello everyone,
 
-Suppose you have a once-unreachable object packed in a cruft pack, which
-later on becomes reachable from one or more objects in a geometrically
-repacked pack. That once-unreachable object *won't* appear in the new
-pack, since the cruft pack was specified as neither included nor
-excluded to 'pack-objects --stdin-packs'. If the bitmap selection
-process picks one or more commits which reach the once-unreachable
-objects, commit ddee3703b3 ensures that the MIDX will be closed under
-reachability. Without it, we would fail to generate a MIDX bitmap.
+Thanks for the clear bug report, Piotr. I can reproduce the behavior
+you described in 2.49:
 
-ddee3703b3 alludes to the fact that this is sub-optimal by saying
+On Fri, Apr 11, 2025 at 9:08 PM Piotr Siupa <piotrsiupa@gmail.com> wrote:
+>
+> Hi! I think I've found a bug in the command "git add".
+> It can be reproduced in a fresh repository by running:
+>
+> git init
+> touch 'foo' 'f*'
+> git add 'f*'
+>
+> The last command should add both files "f*" and "foo" to the index but
+> it adds only "f*".
+> Running it the second time works as expected. (It adds "foo" on the
+> second attempt.)
 
-    [...] it's desirable to avoid including cruft packs in the MIDX
-    because it causes the MIDX to store a bunch of objects which are
-    likely to get thrown away.
+Following the code path down from 'cmd_add' (in 'builtin/add.c'),
+the issue appears to stem from how pathspecs are matched against
+directory entries. This happens specifically within the 'prune_directory'
+function which uses 'do_match_pathspec' internally (likely called via
+'dir_path_match' -> 'match_pathspec' -> 'match_pathspec_with_flags').
 
-, which is true, but hides an even larger problem. If repositories
-rarely prune their unreachable objects and/or have many of them, the
-MIDX must keep track of a large number of objects which bloats the MIDX
-and slows down object lookup.
+Here's a breakdown of what seems to be happening during that first
+'git add ''f*''' call:
 
-This is doubly unfortunate because the vast majority of objects in cruft
-pack(s) are unlikely to be read, but object reads that go through the
-MIDX have to search through them anyway.
+First, 'cmd_add' sees it needs to add new files. Then, 'fill_directory'
+finds both untracked files: 'foo' and the literal 'f*'.
 
-This patch causes geometrically-repacked packs to contain a copy of any
-once-unreachable object(s) with 'git pack-objects --stdin-packs=follow',
-allowing us to avoid including any cruft packs in the MIDX. This is
-because a sequence of geometrically-repacked packs that were all
-generated with '--stdin-packs=follow' are guaranteed to have their union
-be closed under reachability.
+Next, 'prune_directory' is called to filter these using the pathspec ''f*''.
+Inside 'prune_directory', the 'do_match_pathspec' function is called for
+each file ('foo', then 'f*', or vice-versa) against the pathspec list
+(which just contains ''f*''). These calls share a common marker array
+(often called 'seen') to track which pathspecs have found a match so far.
 
-Note that you cannot guarantee that a collection of packs is closed
-under reachability if not all of them were generated with following as
-above. One tell-tale sign that not all geometrically-repacked packs in
-the MIDX were generated with following is to see if there is a cruft
-pack already in the MIDX.
+When 'do_match_pathspec' processes the literal file 'f*' against the
+pathspec item ''f*'', it calls 'match_pathspec_item'. This helper function
+likely returns a code like 'MATCHED_EXACTLY' because the pattern ''f*''
+happens to exactly match the filename '"f*"'. Consequently,
+'do_match_pathspec' updates the 'seen' array for the ''f*'' pathspec to
+mark it as exactly matched. Since a match was found, 'prune_directory'
+decides to keep the 'f*' entry.
 
-If there is, then starting to generate packs with following during
-geometric repacking won't work, since it's open to the same race as
-described above.
+The problem arises when 'do_match_pathspec' processes the other file, 'foo',
+against the same pathspec item ''f*''. Before doing the actual comparison,
+it checks the 'seen' array and finds that the ''f*'' pathspec was already
+marked 'MATCHED_EXACTLY' (from processing the literal 'f*' file).
+An optimization check like 'if (seen && seen[i] == MATCHED_EXACTLY)'
+then evaluates to true. This causes the loop to 'continue', skipping the
+call to 'match_pathspec_item' entirely for the 'foo' file against the ''f*''
+pattern. Because no match was found *in this specific call*, 'do_match_pathspec'
+returns 0, and 'prune_directory' discards the 'foo' entry.
 
-But if you're starting from scratch (e.g., building the first MIDX after
-an all-into-one '--cruft' repack), then you can guarantee that the union
-of subsequently generated packs from geometric repacking *is* closed
-under reachability.
+Finally, 'prune_directory' returns the filtered list, now containing only 'f*',
+and 'add_files' adds only that file to the index.
 
-Detect when this is the case and avoid including cruft packs in the MIDX
-where possible.
+On the *second* 'git add ''f*''' call, 'fill_directory' only finds the
+untracked 'foo'. 'do_match_pathspec' runs with a fresh 'seen' array,
+so the 'MATCHED_EXACTLY' check is initially false. 'match_pathspec_item'
+is called for 'foo', returns 'MATCHED_FNMATCH' (a glob match), and 'foo'
+is correctly added.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/repack.c        | 78 ++++++++++++++++++++++++++++++++---------
- t/t7704-repack-cruft.sh | 70 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 131 insertions(+), 17 deletions(-)
+> I'm using Git 2.43.2. The current "next" (2.49.0.805.g082f7c87e0)
+> seems to have the same behavior if I'm testing it correctly.
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index bc47bede7b..d0b88f12f6 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -167,6 +167,21 @@ static void pack_mark_in_midx(struct string_list_item *item)
- 	item->util = (void*)((uintptr_t)item->util | PACK_IN_MIDX);
- }
- 
-+static int pack_is_in_midx(struct string_list_item *item)
-+{
-+	return (uintptr_t)item->util & PACK_IN_MIDX;
-+}
-+
-+static int existing_has_cruft_in_midx(struct existing_packs *existing)
-+{
-+	struct string_list_item *item;
-+	for_each_string_list_item(item, &existing->cruft_packs) {
-+		if (pack_is_in_midx(item))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
- static void mark_packs_for_deletion_1(struct string_list *names,
- 				      struct string_list *list)
- {
-@@ -821,26 +836,52 @@ static void midx_included_packs(struct string_list *include,
- 		}
- 	}
- 
--	for_each_string_list_item(item, &existing->cruft_packs) {
-+	if (existing_has_cruft_in_midx(existing)) {
- 		/*
--		 * When doing a --geometric repack, there is no need to check
--		 * for deleted packs, since we're by definition not doing an
--		 * ALL_INTO_ONE repack (hence no packs will be deleted).
--		 * Otherwise we must check for and exclude any packs which are
--		 * enqueued for deletion.
-+		 * If we had one or more cruft pack(s) present in the
-+		 * MIDX before the repack, keep them as they may be
-+		 * required to form a reachability closure if the MIDX
-+		 * is bitmapped.
- 		 *
--		 * So we could omit the conditional below in the --geometric
--		 * case, but doing so is unnecessary since no packs are marked
--		 * as pending deletion (since we only call
--		 * `mark_packs_for_deletion()` when doing an all-into-one
--		 * repack).
-+		 * A cruft pack can be required to form a reachability
-+		 * closure if the MIDX is bitmapped and one or more of
-+		 * its selected commits reaches a once-cruft object that
-+		 * was later made reachable.
- 		 */
--		if (pack_is_marked_for_deletion(item))
--			continue;
-+		for_each_string_list_item(item, &existing->cruft_packs) {
-+			/*
-+			 * When doing a --geometric repack, there is no
-+			 * need to check for deleted packs, since we're
-+			 * by definition not doing an ALL_INTO_ONE
-+			 * repack (hence no packs will be deleted).
-+			 * Otherwise we must check for and exclude any
-+			 * packs which are enqueued for deletion.
-+			 *
-+			 * So we could omit the conditional below in the
-+			 * --geometric case, but doing so is unnecessary
-+			 *  since no packs are marked as pending
-+			 *  deletion (since we only call
-+			 *  `mark_packs_for_deletion()` when doing an
-+			 *  all-into-one repack).
-+			 */
-+			if (pack_is_marked_for_deletion(item))
-+				continue;
- 
--		strbuf_reset(&buf);
--		strbuf_addf(&buf, "%s.idx", item->string);
--		string_list_insert(include, buf.buf);
-+			strbuf_reset(&buf);
-+			strbuf_addf(&buf, "%s.idx", item->string);
-+			string_list_insert(include, buf.buf);
-+		}
-+	} else {
-+		/*
-+		 * Modern versions of Git will write new copies of
-+		 * once-cruft objects when doing a --geometric repack.
-+		 *
-+		 * If the MIDX has no cruft pack, new packs written
-+		 * during a --geometric repack will not rely on the
-+		 * cruft pack to form a reachability closure, so we can
-+		 * avoid including them in the MIDX in that case.
-+		 */
-+		;
- 	}
- 
- 	strbuf_release(&buf);
-@@ -1369,7 +1410,10 @@ int cmd_repack(int argc,
- 		    !(pack_everything & PACK_CRUFT))
- 			strvec_push(&cmd.args, "--pack-loose-unreachable");
- 	} else if (geometry.split_factor) {
--		strvec_push(&cmd.args, "--stdin-packs");
-+		if (existing_has_cruft_in_midx(&existing))
-+			strvec_push(&cmd.args, "--stdin-packs");
-+		else
-+			strvec_push(&cmd.args, "--stdin-packs=follow");
- 		strvec_push(&cmd.args, "--unpacked");
- 	} else {
- 		strvec_push(&cmd.args, "--unpacked");
-diff --git a/t/t7704-repack-cruft.sh b/t/t7704-repack-cruft.sh
-index 8aebfb45f5..33ac58a3a5 100755
---- a/t/t7704-repack-cruft.sh
-+++ b/t/t7704-repack-cruft.sh
-@@ -724,4 +724,74 @@ test_expect_success 'cruft repack respects --quiet' '
- 	)
- '
- 
-+test_expect_success 'repack --write-midx excludes cruft where possible' '
-+	git init exclude-cruft-when-possible &&
-+	(
-+		cd exclude-cruft-when-possible &&
-+
-+		test_commit one &&
-+
-+		test_commit --no-tag two &&
-+		two="$(git rev-parse HEAD)" &&
-+		test_commit --no-tag three &&
-+		three="$(git rev-parse HEAD)" &&
-+		git reset --hard one &&
-+
-+		git reflog expire --all --expire=all &&
-+
-+		git repack --cruft -d &&
-+		ls $packdir/pack-*.idx | sort >packs.before &&
-+
-+		git merge $two &&
-+		test_commit four &&
-+		git repack -d --geometric=2 --write-midx --write-bitmap-index &&
-+		ls $packdir/pack-*.idx | sort >packs.after &&
-+
-+		comm -13 packs.before packs.after >packs.new &&
-+		test_line_count = 1 packs.new &&
-+
-+		git rev-list --objects --no-object-names one..four >expect.raw &&
-+		sort expect.raw >expect &&
-+
-+		git show-index <$(cat packs.new) >actual.raw &&
-+		cut -d" " -f2 actual.raw | sort >actual &&
-+
-+		test_cmp expect actual &&
-+
-+		test-tool read-midx --show-objects $objdir >actual.raw &&
-+		grep "\.pack$" actual.raw | cut -d" " -f1 | sort >actual.objects &&
-+		git rev-list --objects --no-object-names HEAD >expect.raw &&
-+		sort expect.raw >expect.objects &&
-+
-+		test_cmp expect.objects actual.objects &&
-+
-+		cruft="$(basename $(ls $packdir/*.mtimes))" &&
-+		grep "^pack-" actual.raw >actual.packs &&
-+		! test_grep "${cruft%.mtimes}.idx" actual.packs
-+	)
-+'
-+
-+test_expect_success 'repack --write-midx includes cruft when necessary' '
-+	(
-+		cd exclude-cruft-when-possible &&
-+
-+		ls $packdir/pack-*.idx | sort >packs.all &&
-+		grep -o "pack-.*\.idx$" packs.all >in &&
-+
-+		git multi-pack-index write --stdin-packs --bitmap <in &&
-+
-+		test_commit five &&
-+		git repack -d --geometric=2 --write-midx --write-bitmap-index &&
-+
-+		test-tool read-midx --show-objects $objdir >actual.raw &&
-+		grep "\.pack$" actual.raw | cut -d" " -f1 | sort >actual.objects &&
-+		git cat-file --batch-all-objects --batch-check="%(objectname)" \
-+			>expect.objects &&
-+		test_cmp expect.objects actual.objects &&
-+
-+		grep "^pack-" actual.raw >actual.packs &&
-+		test_line_count = "$(($(wc -l <packs.all) + 1))" actual.packs
-+	)
-+'
-+
- test_done
--- 
-2.49.0.229.g19b69c1246
+Yes, the relevant code structures in 'do_match_pathspec' appear similar
+in recent versions, suggesting the behavior is likely consistent.
+
+Conclusion:
+
+The core issue seems to be that optimization check within 'do_match_pathspec':
+
+  // inside do_match_pathspec loop:
+  if (seen && seen[i] == MATCHED_EXACTLY)
+          continue;
+
+This optimization assumes that once a pathspec item has achieved an
+"exact" match against *some* file, it doesn't need to be checked
+against *any other* files during the same directory scan operation.
+
+However, when a pathspec contains glob characters (like ''f*'') but
+happens to *also* exactly match a literal filename ('f*'),
+'match_pathspec_item' appears to return 'MATCHED_EXACTLY'. This triggers
+the optimization, incorrectly preventing the *same* pathspec pattern ''f*''
+from matching *other* files (like 'foo') via its intended glob behavior
+during that initial scan.
+
+A potential fix might involve adjusting the logic in 'match_pathspec_item'
+to perhaps not return 'MATCHED_EXACTLY' if the match involved globbing,
+or modifying the 'seen' check in 'do_match_pathspec' to account for
+this ambiguity.
+
+Thanks again for spotting this subtle behavior!
+
+-Jayatheerth
