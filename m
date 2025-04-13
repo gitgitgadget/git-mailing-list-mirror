@@ -1,128 +1,144 @@
-Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D411A5BB3
-	for <git@vger.kernel.org>; Sun, 13 Apr 2025 14:07:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F19199EBB
+	for <git@vger.kernel.org>; Sun, 13 Apr 2025 15:11:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744553254; cv=none; b=qXxVd0wiW+EQ1seJ1ZGS0BF9zR0HblJxvCbctDREzSDQCX+lF+msm7GhbtmjPdgVNi338bYcbMWiIqIr9Ac9lpjK6lofAQ/FxSXk5kSsJo27fTju7oUibBiRRlqI3cBbvwgaForCwhyXzwrxCRmcy1TSswdZ+L/BnYeSv0VRwc4=
+	t=1744557089; cv=none; b=MdFz44FvDIN5Um+3l6JgqJ6OmdG9FGrehlf2e36/wFhDhLn4mbKM1SlaEPxigDRrRTofppNZjN5khTyqq1zsaAmhs0/ndeG8nrCkTJym8ocLstY34KoiiHLzy6jN/jD2Vz+13lLvPmqRdaO1xNXjS5MNgocMjJXl6fZZFrUjxzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744553254; c=relaxed/simple;
-	bh=1NyN6WA+Z61ScREL3DQCz3X1kprD5TIdocQJbPTkoWI=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=B30j6NrtvN+P3vaP1s0RR7x+lCGn+LDpD1GeclckcS67jUa9JR2y6HfeQX9pzFg2TQU89Q+eYQUt9TrEP/9YAf+JGhYSnwoSBA1th52m43MHP/zhJSm0RRlJ5nh5B3nryqM7D4oApw0SLvYeFWAljYN5l1gWcZ29MfJ2Gv4QGWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EMfQZLvM; arc=none smtp.client-ip=209.85.166.42
+	s=arc-20240116; t=1744557089; c=relaxed/simple;
+	bh=WBPtzVQQmuVVzb8PM5ZLr62BVOFq3jwWvt+HdUfUyhI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=VV1SAGko2bX0XTy0/mx4FCriO8cEpa4BSRC0ghoSJH7BdxmSxx1JvIk/lHeG/3wjKfTJ3FfND82VrlfMw0FnBFD9HQvccp/ptqcL9ZBqr+sauQ8QR8Nt8vElbEeMH0KU6Gi6N2x8MhFTfxjioDnqRh1fnibGbSWYnFxO6tlD9/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ELEh4TnT; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EMfQZLvM"
-Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-85e15dc8035so113947739f.0
-        for <git@vger.kernel.org>; Sun, 13 Apr 2025 07:07:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ELEh4TnT"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-7399838db7fso3312537b3a.0
+        for <git@vger.kernel.org>; Sun, 13 Apr 2025 08:11:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744553252; x=1745158052; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=1NyN6WA+Z61ScREL3DQCz3X1kprD5TIdocQJbPTkoWI=;
-        b=EMfQZLvMthVwOQCPZMl7CZxY+I5SkS5b/nNJT4q1BSr1Mh16VlxVobd64x2Z5UR3X5
-         DqlgLe3umnGuJPs/kfDpatjmXMBt6hyb87OIEV+bionXfF1h9T/c8gUFR/NWSu63DDQf
-         dJI4fHX7vUgxNbxB+P5ABv6lubINmlSEe0mAfoSUSc20N5HVQEpkN3uuJtt95bsLzCNa
-         U6QB8IAk82F2G7KYGDifRxacJYVgqBh7xp/fODbuvqHNsjVCYaJkerfMmkLrLwuZ7iBd
-         zxUJsxsGC4jqnxKOmtGJza5hAofayGv3ixEi5yeSMvtQ4R/bADSroIfE0F0xyU3+cEb2
-         z67A==
+        d=gmail.com; s=20230601; t=1744557087; x=1745161887; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WBPtzVQQmuVVzb8PM5ZLr62BVOFq3jwWvt+HdUfUyhI=;
+        b=ELEh4TnTsjLbEhwt1GZS3JkEsn9ygI+GJs9rM/JQygSqHw8ak2jLHlo3LfeC9A6vf9
+         UGlQxFOnmbuwLliSQPhfvgYU5NouzQs7EIaAVhEh9QXguDHwBRswXAwTd4di+69o5yQo
+         tBsCsfR0CyjHKVuA1RG10936rEQLQQfKMZXcSIg0QfYVYVskgzukGoaASaeNZuUWivEY
+         24oLPd2U46uR73Drk1v+DqhA6YKI8tkA+Th9X7oSLdMB8cCa/p66pCgzn9Qy9eZJI1vr
+         raKybvKa2O6GcAjZZvAO+R/84mR8xKVNddfuZSZ/RisE+3LeX/fC6xMOetgaQdVuCGsm
+         5FFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744553252; x=1745158052;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1NyN6WA+Z61ScREL3DQCz3X1kprD5TIdocQJbPTkoWI=;
-        b=eFRZe3iLa/EuVT0dDMoeEgH8zHr/RfSYTmvoTW7CRt4vzs/ZpMWGOgPuXo1ehQhnZq
-         7lHZp29zhaZc6m0iS3tgwMPFO/OVWzoySsYwXw2PDPX0b4zu3ZTqSHIwmuAScsn1OP/8
-         u/AVbVTA7wG3cWyDKxym4pgoqhF/+3Vinv74FdIt5WQA1jsIjD3DbnWuSqapdE5ESiur
-         FunQpwtPEHaeUTp+PUjJqHdHVwvOEEKMSGryIsDF86umQLAvM3WgtmJWkVnKCf5hlq0S
-         hGXgy/Uql3B8d1yNSTkN5imic3c8atbSwyuFKre+N8yTb+63ru8OJjnpuHmnz/ZUw34f
-         xoHg==
-X-Gm-Message-State: AOJu0YwHZesxwVzAiIPehF6yX2D6XC0VmU5tFcci4EUQqxHqYgcLN4Dz
-	85UJ3B827c0GdlRSRJW4XmfRnM/Ks23SgHy7lpmEYrQtJJFLLKXe+1yvq1uQ9f6O+cr+VC1Wt4d
-	c8rHy01Yb60ZkFu7RfTmuvIDSnLfcAyPu
-X-Gm-Gg: ASbGnctcwj9tHYXgYvsnS52HYIQuJKmUvduA2c9BReD0ZsvdijGDYlv8LmeSXPylC14
-	htmBAd+K2wGT3Mkcj3Q5hDl6BBsit0S7aKeDka8kLdEIkhIZO/fqSG7tPp/AUhH9a/gT9GPa6Lt
-	PbaeVHjjmMR5qS98f0qWHSqeo=
-X-Google-Smtp-Source: AGHT+IEWmDz2FYdBvXdMuCdBwUyLEEyf7TJl5stGbJMz+dLYOAy7pJOgo4R42UUgpALHOJ0vZIBUWxkLQkr6qDb63Tc=
-X-Received: by 2002:a05:6602:728f:b0:85b:4941:3fe2 with SMTP id
- ca18e2360f4ac-8617cbba939mr1019697839f.7.1744553251545; Sun, 13 Apr 2025
- 07:07:31 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744557087; x=1745161887;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WBPtzVQQmuVVzb8PM5ZLr62BVOFq3jwWvt+HdUfUyhI=;
+        b=dIMz7Z84vJJsf3yHG1dfxeM1yN7JUn3E/C+fWAYLrUtJQP8bfTMGg21dXTwi4uY7le
+         QiDflIg03SbDVJHBEuL5o/nD+/3redmZDSP1lrAhPUsWonVNiPrazLQRLc8DPInbsS8M
+         VCEgIhLCL05D+E9Fk+Tfqq6rOS17Dyj+JDUw3cRQ63V2kPo6QB/opxjqXHQorkUDWTQM
+         2phePLjar/Ib3oPU3A0Yzr9eWj1aq+ZrjWw5kjBDPuUgc8974utf1Q3BSYNLzEJi7hvO
+         +CqssuR0okPWf/U5xXuZisXvck3waxbDS5/tOXKNeoGC4sXRKXG0vu0d+ydKT21Um/Nj
+         YFPg==
+X-Gm-Message-State: AOJu0Yw95SFqR29WprZDPiHlZkG9phJw/htZve6cmWzQYvsWxi9ZSi6E
+	UnXV1FPCZcYwpPD6+6t27LsWAQhvqBEpbIiT47Hrt6/q5jsTsfoPLhjUVQ==
+X-Gm-Gg: ASbGnctReBKtdvQj60EMRc5KVCZFxCHbzLxfgfDchrcEPpqaw9qZiU8itKuNZOeqHzZ
+	1dBvNvg3w0n6mbA3iVg+yQ35Eok23zJR4QrbOq/4TwtfxL5HASTnEjvgE/cXaPuhwIfplqupycz
+	xah6JvgCOR0v9Szm78sKz6LezqeaCO4I8KLKzkM7g+kfEoR+Mkczi4uI0K3/lfTMJmGl70Dckp1
+	GQj2GiMaRM+BIzlluCSl3Ko+34JStsN2SXwoycv7Tw8kWzvVSJuVEsmp6vknvTF1tsFVF98pW89
+	rA//HQA03j3ZQR7VqBSue0GGlQwx+Id1MVZzgweOd6BZTFblBPHCA3M5BUyAOdZ/F3Jt8iiFPRY
+	=
+X-Google-Smtp-Source: AGHT+IGWOoN3sypK/HS8qV7ciHPFeEisxC1Hbcxdv/KWI+xyFHpt5hWYEAK2kvNpF9dAFKubMPnhqA==
+X-Received: by 2002:a05:6a00:11c7:b0:736:b3cb:5db with SMTP id d2e1a72fcca58-73bbf610990mr16389221b3a.11.1744557086937;
+        Sun, 13 Apr 2025 08:11:26 -0700 (PDT)
+Received: from localhost.localdomain ([2405:201:c005:b018:5841:514c:af52:5598])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73bd2198a89sm5065977b3a.5.2025.04.13.08.11.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 13 Apr 2025 08:11:26 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: jayatheerthkulkarni2005@gmail.com,
+	ks1322@gmail.com
+Cc: git@vger.kernel.org,
+	Jayatheerth // <jayatheerthkulkarni2005@gmail.com--FIXED>
+Subject: Re: Bug: git difftool --tool=meld -d HEAD^ lose copied file
+Date: Sun, 13 Apr 2025 20:41:11 +0530
+Message-ID: <20250413151111.76851-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <CAKFQ_Q93M=x_xNuCm_evjUSfi_cNGQ0LuZSHVua1vTZHc0e-7w@mail.gmail.com>
+References: <CAKFQ_Q93M=x_xNuCm_evjUSfi_cNGQ0LuZSHVua1vTZHc0e-7w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Kirill <ks1322@gmail.com>
-Date: Sun, 13 Apr 2025 17:07:20 +0300
-X-Gm-Features: ATxdqUFlH3WVdXKFckfkAzhSNkA-yBPRGYqWElxQlkluOpf8OzA4m2N5NmMD8bk
-Message-ID: <CAKFQ_Q93M=x_xNuCm_evjUSfi_cNGQ0LuZSHVua1vTZHc0e-7w@mail.gmail.com>
-Subject: Bug: git difftool --tool=meld -d HEAD^ lose copied file
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+From: Jayatheerth <jayatheerthkulkarni2005@gmail.com> // <-- FIXED
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+On 2025-04-13 14:07 UTC, Kirill wrote:
+> Hi Git developers,
+>
 
-mkdir git-copy-lost
-cd git-copy-lost
-git init
-touch file
-git add file
-git commit -am "message"
-git rm file
-git commit -am "message"
-git difftool --tool=meld -d HEAD^
+Hey, Kirill
+Thanks for the detailed report.
 
-In meld right click on `file` in left pane and press "Copy To Right" in menu
-Quit meld
+> I believe I've found unexpected behavior when using `git difftool -d`
+> with an external tool like Meld, where actions within the tool do not
+> affect the working directory as might be intuitively expected.
+>
+> [Steps to reproduce snipped]
+>
+> My understanding is that `git difftool -d` operates by checking out the
+> compared tree-ishes into temporary directories (e.g., `/tmp/git-difftool.XXXX/left`
+> representing `HEAD^` and `/tmp/git-difftool.XXXX/right` representing the
+> working directory state).
+>
+> Meld performs the copy operation successfully *between these temporary directories*.
+> The file exists in `/tmp/git-difftool.XXXX/right/file` before Meld exits.
+>
+> However, upon Meld's exit, Git cleans up by removing these temporary
+> directories entirely. The copied file within the temporary 'right' directory
+> is discarded, and the change is never propagated back to the actual
+> working directory.
 
-ls -l
+Yes, your understanding of the temporary directory creation, the successful
+copy *within* those directories by Meld, and the subsequent cleanup
+by Git discarding those changes is entirely correct. This is the
+designed mechanism.
 
-What did you expect to happen? (Expected behavior)
+> While this might be the intended design (operating safely on temporary copies),
+> it leads to counter-intuitive behavior and data loss (of the action performed
+> in the difftool) for users expecting interactive modification capabilities
+> similar to, perhaps, `git mergetool`.
+>
+> This behavior was also reported against Meld, but it seems unlikely Meld
+> can address it, as the temporary directories and the cleanup process are
+> managed by Git:
+> Meld bug: https://gitlab.gnome.org/GNOME/meld/-/issues/555
+>
 
-`file` is present in working directory
+However, you are absolutely right that this intended behavior is counter-intuitive for users interacting with graphical tools like Meld, where actions like "Copy to Right" or direct editing feel like they should have a persistent effect. It's a frequent point of confusion, as evidenced by the Meld issue you linked as well.
 
-What happened instead? (Actual behavior)
+While changing this core behavior of `difftool -d` would be a significant design shift with potential safety implications, perhaps the most practical improvement would be to enhance the documentation. The `git-difftool(1)` man page could more explicitly warn users that when using `--dir-diff`, modifications made within the external tool to the temporary directories are *not* propagated back to the working directory.
 
-`file` is absent in working directory
+For achieving the outcome you expected (restoring the file from the previous commit), the standard Git way remains using commands designed for working directory manipulation, such as:
 
-What's different between what you expected and what actually happened?
+`git restore --source=HEAD^ file`
 
-`file` is missing while it was copied in meld with "Copy To Right" button
+or the older:
 
-Anything else you want to add:
+`git checkout HEAD^ -- file`
 
-This bug was also reported for meld but I don't think meld can do
-anything with it
-because copied file is being lost in temporary directory like
-/tmp/git-difftool.7bOf2n/right/ created by git
-Meld bug: https://gitlab.gnome.org/GNOME/meld/-/issues/555
+Thanks again for bringing this usability issue to the list's attention. Clearer documentation might help prevent future confusion.
 
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
+>
+> [System Info snipped]
+>
+> Thanks,
+> Kirill
 
-
-[System Info]
-git version:
-git version 2.49.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 8.9.1
-OpenSSL: OpenSSL 3.2.4 11 Feb 2025
-zlib-ng: 2.2.3
-uname: Linux 6.13.9-200.fc41.x86_64 #1 SMP PREEMPT_DYNAMIC Sat Mar 29
-01:29:31 UTC 2025 x86_64
-compiler info: gnuc: 14.2
-libc info: glibc: 2.40
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
+--
+-Jayatheerth
