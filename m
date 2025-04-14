@@ -1,128 +1,189 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1730E1AF0AE
-	for <git@vger.kernel.org>; Mon, 14 Apr 2025 19:20:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281021AF0AE
+	for <git@vger.kernel.org>; Mon, 14 Apr 2025 19:22:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744658446; cv=none; b=uk1OZEC91/kz/wFk5WRXVbn0QrJ3vURjKQADQFy16E7dP1BuDhEzEbmpcyllzKLuYESPY1ew18yx4ey5B/8jjSDXspozkzadViwF+bZThOtCWveQveLG9Jo6SeMgceBBzdvMkzLB+2Pxjj8AlqRYr22huGTE0944FrDlY0qLviM=
+	t=1744658551; cv=none; b=m4xy6QtH+mUckYjJFmF4hPZYD8XSESkHCdvZV2PY+9IA7ni1oQIAeJcq1lkcqzQIM3M1ZSDGsEgPjHzxadFX+cBlml5z9G/eR4bA4uQz3yYoiqjgpiJEja8MCMKmwShV3z4yA9XT2kNilfh6Giuu1Rq+00ZepKrP1zDmbIXOcWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744658446; c=relaxed/simple;
-	bh=zUcMpt9XKf57VBL1Zgvv7L4VndK54ia4S053pmh2z/Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iK4PaWy1snfdIGNHKWfk2vJsPeMcS+eiRdqEsypq4ARoGmeJZrxgxPwH5D1hIaxrHh9s3uuhFvxU74Ge1VyqqxvekIatFkWicUkmW5FMQ4zUJmkS4ybMiH0TuD/on+2JzZ3s1VRGBwUCVg18kaCQKToss2Ry2vSdtgSLEE1yfLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XABi+kUC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PZMsN5ie; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744658551; c=relaxed/simple;
+	bh=3RgOoctK+/Wh7BwkqyxSNa5322j5mCM/ppxK2Xw1Yw4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JaHRis6wXA55FDa75YhmRKhNZvYgLaRFX9WjABxnuzOOHD8GMidJNehMtdkhB7YvEMIL/L1v2jimByFDyQ9Q50Z5VLkcTnsgtKZ2oH2dIkm7VQwsb4vBEpMHDStnXKfS/fB5aI4+a9WsaHFqeOWHR652Pu6kJCuOu/LQZ6nZiFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=XLgRoPpr; arc=none smtp.client-ip=84.93.230.244
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XABi+kUC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PZMsN5ie"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 035481380774;
-	Mon, 14 Apr 2025 15:20:43 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 14 Apr 2025 15:20:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744658442; x=1744744842; bh=ylDurspAzq
-	3D9GHUDmTlzdsvNCet/2TLlyUGfEIEkvs=; b=XABi+kUCp/irVhakceBHVe15Up
-	uwHYFvAQqFhZzelhsSWOwrJEM01YMMf6z2CLgw0XbUAefq8OUqcwsk0uArDqbUkL
-	rDmQ1QH989wa+1I4uZ84WUSRA/C7zPqHJjW4hIDs0WAUvzDU+UZYidtII+9lbcXr
-	X9wjN2M8Ed9ZenUy/j9LbMhHGxyfOAmGNvRMCA9z096gzgVzxbLG9Juq6bgDdEFo
-	ucHBji0ca5meczoGb6hitHGYTSSCc+Bfgjxj9wno6l4NJs86FtQeZBieQ+fhygOQ
-	Ftzx2GrnPcMdiadCFZEcynt5BFaI8qtgj1hrAO0r9ZULlgxR2kOHWwhMg10Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744658442; x=1744744842; bh=ylDurspAzq3D9GHUDmTlzdsvNCet/2TLlyU
-	GfEIEkvs=; b=PZMsN5ieSCwqd/xKU0mi9NCGEEjB87zHbZJYqYNVL8NgxjChuKk
-	3h1DNgqHglKjVrWh79TEk9Sa0ZDSg7lV9p9zSVQL39RRQ1BWW1Gdf8a4CrLUvJdH
-	0Hi8FT2TGx+sjR3BdQsvwoYezkW1ag2uWHW+FsoD8+9bqBB3I5hdXXruEUMpQCiP
-	VpK7aWR+/FcE6oZNIs8KGLMQuZlBZWuvjsGXI41KEOQAW5hYE5IuiL93TMiSos8X
-	VtN6QFw+JNu5LU44wU0xZRQf/4W72wVjw79KnC2TAiXZf0IdCndDnrImFxN/tV7Y
-	+5WNTm3xnG5eAAwy3EXmoaHX5ydONTmuA6w==
-X-ME-Sender: <xms:CmD9Z3WJtnuc-_DqNpUY6qvsPw_Nwm9D_wXr6s5nZzMT6ijP5ZwqGA>
-    <xme:CmD9Z_nACSLskA16ICn2gnPxBKtCre2JJaPg8TObv41KwXW0wBt_Bvjh6HD-Msi4q
-    em_GOatgXLyF7q0Ng>
-X-ME-Received: <xmr:CmD9ZzY4cwy93GNXHSUp_yzAbKapxBqvDcSczKMcnhNNO-qoagwuD7xmWRNSH9D0JwZJse_M512uhLRmMH2HZidFxdYc8HFsazn0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvddufeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomh
-X-ME-Proxy: <xmx:CmD9ZyXfOrz-Ns7BiWn7QoR3Pv97Lh5xXjth06Zhz5XOdbqqGAZElw>
-    <xmx:CmD9ZxkF7BGlTxAtIozbMkikWTMlIpdFjjXa9auzDaD6es6AilMDew>
-    <xmx:CmD9Z_c9BZC2OEY8IfvOoh2OaFTdm4hbXxdCsEKaIl2sDppcCyI0zg>
-    <xmx:CmD9Z7HdOMyCvfWoUjgihbQuWVaKuoRy8n37OhJYNZjNmoGS8_5RpQ>
-    <xmx:CmD9Z0ldxklsPHwm1wmtrvkiwFF0JV2dOvjScJ_N4owjoS6a8ghpdSMB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Apr 2025 15:20:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/5] t/perf: use configured PERL_PATH
-In-Reply-To: <Z_ywLLN5xj6cYFN9@pks.im> (Patrick Steinhardt's message of "Mon,
-	14 Apr 2025 08:50:20 +0200")
-References: <20250331-pks-meson-benchmarks-v1-0-b2ace85616a3@pks.im>
-	<20250331-pks-meson-benchmarks-v1-2-b2ace85616a3@pks.im>
-	<87semgdyxb.fsf@iotcl.com> <Z_ywLLN5xj6cYFN9@pks.im>
-Date: Mon, 14 Apr 2025 12:20:40 -0700
-Message-ID: <xmqq5xj6r1mf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="XLgRoPpr"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 4PKtuHs9ZjZe54PKvu7zEI; Mon, 14 Apr 2025 20:19:18 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1744658358; bh=hAFNubNQqPFOGBOEuWWSk6wYTT1Q7hj4M/N/joti5Io=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=XLgRoPprjhu1KpLgEyUVTJSC9cO0o8CuAB4/aH0y4QtmuzSD1QxYjtjcZ4KnKRjme
+	 TIgpDwJOLUU+rV39/RU4wAp0pKlGSr5xvSJ33UXL3LG0PXPAxOGOaRi28vd608X/JP
+	 XECXU9lUdj4VFP4iOZWGDZJTZ3+Cv+XYHFYh9Y7Poj7Xus3Opf3nGdEe+I17fVMPH0
+	 p8zcwtu9ThsAwZBBytp0vRvAPCX+HZLqEqYWPXCZxC/wLl0Mcpf1xltwF7k1osm/AG
+	 MIEY6S9I96uwgyce0sI/z8/gADgTuCe3dHiRpGezfUg2dlHaBmENbyMBoKajEm17eU
+	 riz4VjeOy8vXg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=UuDANPwB c=1 sm=1 tr=0 ts=67fd5fb6
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8 a=2BRyyrYAQCg8EjViiqUA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <7c5a2998-fe71-495f-8841-64e5b2ad03f2@ramsayjones.plus.com>
+Date: Mon, 14 Apr 2025 20:19:15 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [-SPAM-] Re: [PATCH v2 03/13] meson.build: only set build
+ variables for non-default values
+To: Patrick Steinhardt <ps@pks.im>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Junio C Hamano
+ <gitster@pobox.com>, Adam Dinwoodie <git@dinwoodie.org>
+References: <1c04882b-e518-4272-bd18-ab918774e424@ramsayjones.plus.com>
+ <cover.1743859985.git.ramsay@ramsayjones.plus.com>
+ <280363cd569a8c6e870107eb219597b42911fed2.1743859985.git.ramsay@ramsayjones.plus.com>
+ <a5795bfa-cc02-4c9a-b7d2-4924a94cd0db@ramsayjones.plus.com>
+ <Z_y_Tp5pfJ-gZLEF@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <Z_y_Tp5pfJ-gZLEF@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfGXmD6pkN7L49rPfumfqnf79iz43u864WKTWa2osne97YruY90a4XGxrlLP1ESr8DKXjqqF7+LiEwV5vszCTU/YIS6yJ1wLQWWLXCZ4+ki21nZxx0+iD
+ VOhR2umgivmVuYNHo/4ShcpGcDuRepUJfKpg8Sp34qM+gspBllQjGSbpBsSO6byPdocQkFloYa2n8ErEPhwc3DAXmPfMzQfVz9o=
 
-Patrick Steinhardt <ps@pks.im> writes:
 
->> > Use "PERL_PATH" to execute Perl scripts, which makes them work on more
->> > esoteric systems like NixOS.
->> 
->> I see in `t/perf/README` there's a mention of running `./aggregate.perl`
->> directly? Shall we inform the user to run that through their Perl as
->> well?
->> 
->> -    $ ./aggregate.perl . /path/to/other/git ./p0001-rev-list.sh
->> +    $ perl ./aggregate.perl . /path/to/other/git ./p0001-rev-list.sh
 
-Good.
+On 14/04/2025 08:54, Patrick Steinhardt wrote:
+> On Sun, Apr 06, 2025 at 08:49:54PM +0100, Ramsay Jones wrote:
+>>
+>>
+>> On 06/04/2025 20:38, Ramsay Jones wrote:
+>> [snip]
+>>> diff --git a/meson.build b/meson.build
+>>> index 88a29fd043..efd0bd3319 100644
+>>> --- a/meson.build
+>>> +++ b/meson.build
+>>> @@ -693,10 +693,8 @@ endif
+>>>  # These variables are used for building libgit.a.
+>>>  libgit_c_args = [
+>>>    '-DBINDIR="' + get_option('bindir') + '"',
+>>> -  '-DDEFAULT_EDITOR="' + get_option('default_editor') + '"',
+>>>    '-DDEFAULT_GIT_TEMPLATE_DIR="' + get_option('datadir') / 'git-core/templates' + '"',
+>>>    '-DDEFAULT_HELP_FORMAT="' + get_option('default_help_format') + '"',
+>>> -  '-DDEFAULT_PAGER="' + get_option('default_pager') + '"',
+>>>    '-DETC_GITATTRIBUTES="' + get_option('gitattributes') + '"',
+>>>    '-DETC_GITCONFIG="' + get_option('gitconfig') + '"',
+>>>    '-DFALLBACK_RUNTIME_PREFIX="' + get_option('prefix') + '"',
+>>> @@ -708,6 +706,17 @@ libgit_c_args = [
+>>>    '-DPAGER_ENV="' + get_option('pager_environment') + '"',
+>>>    '-DSHELL_PATH="' + fs.as_posix(shell.full_path()) + '"',
+>>>  ]
+>>> +
+>>> +editor_opt = get_option('default_editor')
+>>> +if editor_opt != '' and editor_opt != 'vi'
+>>> +  libgit_c_args += '-DDEFAULT_EDITOR="' + editor_opt + '"'
+>>> +endif
+>>> +
+>>> +pager_opt = get_option('default_pager')
+>>> +if pager_opt != '' and pager_opt != 'less'
+>>> +  libgit_c_args += '-DDEFAULT_PAGER="' + pager_opt + '"'
+>>> +endif
+>>> +
+>>>  libgit_include_directories = [ '.' ]
+>>>  libgit_dependencies = [ ]
+>>>  
+>>
+>>
+>> It would be somewhat remiss of me to not mention here that this does not
+>> work for any but the simplest of values! :( If you set a simple single
+>> 'bareword' like 'vim' or 'more' (even '~/bin/vi') then every thing works
+>> just fine. However, if the value contains any of (at least) the following
+>> characters: single quote, double quote or backslash, then things
+>> stop working!
+>>
+>> [I spent one whole evening (and a bit - always something else to 'try')
+>> trying to 'fix' this problem, without success]
+> 
+> Shouldn't it be possible to escape these values via `.replace()` [1]? I
+> suspect that you already tried, but wanted to ask anyway :)
 
->> 
->> Or do we expect users to know what they are doing when they don't have
->> Perl installed at /usr/bin/perl?
->
-> Another solution could be to switch the shebang to `#!/usr/bin/env
-> perl`. We also do this for "t/chainlint.pl".
+Yep. :)
 
-When you do not have perl installed anywhere, how does this fail?  I
-think you would get
+I still haven't studied the meson documentation, but when I searched
+for variations of 'quotes', the results showed that '... if you want
+quotes, you will have to do it yourself ...'. So, I eventually found
+'.replace()' in the 'string operations' section of the docs and tried
+to reproduce what the Makefile does (see #2382):
 
-    $ ./aggregate.perl ...
-    /usr/bin/env: 'perl': No such file or directory
 
-and compared to that, 
+  ifdef DEFAULT_EDITOR
+  DEFAULT_EDITOR_CQ = "$(subst ",\",$(subst \,\\,$(DEFAULT_EDITOR)))"
+  DEFAULT_EDITOR_CQ_SQ = $(subst ','\'',$(DEFAULT_EDITOR_CQ))
 
-    $ perl ./aggregate.perl ...
-    bash: perl: command not found
+  BASIC_CFLAGS += -DDEFAULT_EDITOR='$(DEFAULT_EDITOR_CQ_SQ)'
+  endif
 
-I think it makes it slightly more obvious to those who lack perl on
-their $PATH what is going wrong to explicitly tell them to run
-"perl" like Toon's suggestion above (primarily because use of
-/usr/bin/env is not obvious to those who are told to run
-./aggregate.perl script).
+which I translated into (on top of these patches):
+
+  diff --git a/meson.build b/meson.build
+  index 8f8a258064..608d665fd3 100644
+  --- a/meson.build
+  +++ b/meson.build
+  @@ -708,7 +708,11 @@ libgit_c_args = [
+ 
+   editor_opt = get_option('default_editor')
+   if editor_opt != '' and editor_opt != 'vi'
+  -  libgit_c_args += '-DDEFAULT_EDITOR="' + editor_opt + '"'
+  +  editor_opt = editor_opt.replace('\\', '\\\\')
+  +  editor_opt = editor_opt.replace('"', '\"')
+  +  editor_opt = '"' + editor_opt + '"'
+  +  editor_opt = editor_opt.replace('\'', '\\\'')
+  +  libgit_c_args += '-DDEFAULT_EDITOR=' + editor_opt
+   endif
+ 
+[Actually, I think the very first attempt had:
+
+  libgit_c_args += '-DDEFAULT_EDITOR=\'' + editor_opt + '\''
+
+but meson, for some reason, adds a set of ' around the whole
+-D argument to gcc, so I got rid of them - but it still didn't
+work!]
+
+Along with many, many, *many* such permutations! (trying to debug
+this is hard work, with no help from meson).
+
+So, just a little earlier this evening I read an email from Karthik
+([PATCH v2 3/4] meson: add support for 'hdr-check') in which he
+mentioned a problem with backslashes and referenced a github issue
+on the mesonbuild repo [0], which is worth a read. ;)
+
+Sorry I couldn't fix this issue, but it seems to be (in part) an issue
+with meson. (Of course the example I used, which is taken directly
+from the Makefile, happens to be particularly good at demonstrating
+the problem!)
+
+In any event, I think the current patch is a strict improvement, even
+if it may need to be updated at a later date. I hope you agree.
+
+Thank you for taking the time to review this series. I think this patch
+was the only review comment that required a response - please let me
+know, if that is not the case!
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+[0]: https://github.com/mesonbuild/meson/issues/1564
+
 
