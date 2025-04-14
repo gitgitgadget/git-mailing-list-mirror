@@ -1,166 +1,124 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C2927F730
-	for <git@vger.kernel.org>; Mon, 14 Apr 2025 14:25:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2CC2820A2
+	for <git@vger.kernel.org>; Mon, 14 Apr 2025 14:27:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744640750; cv=none; b=E8D8OIjFRXfyTf2MSiDMKEz+dC2s3RNWOtGHWz3iGKBuRSz8ZPSvWsvIOrutQv07V5GIyrR9c8f3/x8rj+Qbr7oFFzZINeiivDfabk4virDnqGNXk8/4OD4qB41AVuXenAfi4ujuYIsBwEwDoE9UPfHoQVeqYyMSm7xN1vuV+ks=
+	t=1744640844; cv=none; b=f3I5gfoJAt1Ur1mi/RQLmZw5Yxw5gPfEp8zokh+IDPlf0oSP99/3SBKM2Lj8u9F9eyjzpXGThsmqPrR0gXTZdSlH5z0SensTbk6sAUAtnUXeJxqL36OMhCoSrK2vS/LXZpMwHYWjMz1qruWym4Mnkg5xyjL5gTw21PcLetZ1l+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744640750; c=relaxed/simple;
-	bh=JhzVl2uRbg8y3/EtQ8S2tDEtgFqzuQxDpVGZqdjgux0=;
+	s=arc-20240116; t=1744640844; c=relaxed/simple;
+	bh=c2jkQVPKPkCwHBA5rIhcYVdLxE//3sYh5iy0CGabdiI=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EhndzPDzcvic9qyibeNJF4vqAiPOEhjJOkbzvnFCucDtncSdFHTeWKtZU7qQcV5J+TPwtCtfLdJZjSylhQdps37/0/AKfMIOz6gpubwOfOv9/CiRdRhyU1GK7HcAJlk60Ky168ujVCcf93NONGfDdLy7w4vQr908Dh6IokEbtWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J/sqFM2l; arc=none smtp.client-ip=209.85.222.171
+	 To:Cc:Content-Type; b=e53SYRqebeszAgx5xrGglrGLMRo5Wau8/nO18mBtbF6i9rAiPXCFfxwSc7vHpFEXkgIU9HwYAEqE8fRWci24yQLhUOQJz8gsWx2Lo9ESRs0ql16V0aXfMryyT228G+xsm5CZaFUrfvCdOIQXsTXxlhxSxFPZc+PfC/ZkA3/vmTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SZcs+W+V; arc=none smtp.client-ip=209.85.221.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J/sqFM2l"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7c560c55bc1so447921985a.1
-        for <git@vger.kernel.org>; Mon, 14 Apr 2025 07:25:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SZcs+W+V"
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-5240b014f47so1851160e0c.1
+        for <git@vger.kernel.org>; Mon, 14 Apr 2025 07:27:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744640747; x=1745245547; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1744640842; x=1745245642; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JM17u3kPjnvpJyGDdjurt8P2R1vN+zozpYV4trNQjrs=;
-        b=J/sqFM2l6jrmK1axGkOjDW6RvqdBaXpxRGrCrjBPD1sbA9NrIrRLWOEpYmRrzDZvwY
-         Bt/zjY4h6xRRJ9O+69KietNtfEjODXCjzs2hod7aNLn2Ep1RuuK3nZGlaSyYJSuXCXf9
-         Hv8owKFKN0NnIJFuB1+bmfLCesplwJN/d5LfSamulzogy2rHy5JuItHMdRSI6INk2pTH
-         ymvtierWvdhkY8CxeFkifLglASzYakT2xOo54IGu2cIUT3S3XI2TkEo//re1Hr2gMhGk
-         sUxtlTd9LL1ZrvwASqIIBCEuqyctDz4o/b8GnH+gNoSFjpr3C8B/OmLgyTQe920lSnr3
-         1xHQ==
+        bh=who1QSzB862/BlcS6+ISiSDE7MWmoyuKEC7NjpK291w=;
+        b=SZcs+W+VnEbUZxgjxZxAXH3uRBVnDQpIiGUR77E4amGwIli52k9vjN87iYjy+gVrgx
+         vaM9wWMS+t4zsxK95vqs2NSUHSsNV19qb0i1ZXPAORgdtYOHSgj03V4TQhvoCfIOVl1o
+         e/EbfHFZHcbufyVwNqgyq8xu50Phg2/sUH/UEWgH38MOd9UZnZcwGysFKzHRj+xUm8Mu
+         pBWlDEJitFQSFRMW1oWEgC1RnFqsrFKmT8QFsHPfLASVlrSUmlKuyXN6A1aBlPsdD+s+
+         nNVH04RG4ytT3BVkZLho6qibz2zLiST32Gi/I5cE59C0cq/zpXARKcvW7vGQVwM48K8/
+         /HkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744640747; x=1745245547;
+        d=1e100.net; s=20230601; t=1744640842; x=1745245642;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JM17u3kPjnvpJyGDdjurt8P2R1vN+zozpYV4trNQjrs=;
-        b=FVcSsuqgpt0Ef4zEllB4Ycjmwek45F5neaq0JPZaVZhJnIH3WfJHmuTDvQkuUKXlrk
-         bzrJnOVUhqG2go/3Ho6KvIkABImqegfDGwe0EY983NLj+npkjnv9ZiklOthmibis7SOm
-         X68zs/SyXxIwqJGKB6HZtqy/TG+XqrwplVKNp/Tv3lYajotNTDeDpNmBHOaUvdg7fKV+
-         LYQz7k1GwujT4iGFihQvwo4UDHuHD3A8rNnVipx40GgQE9+25MDvnnaXy99MnhzAOodV
-         tcum02fic27uytDZTOxqlpJd45mpa5H4Mk+dJpboC6OfeSTPa+wBNYpihuugvTFgHT4n
-         i8bQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWXGuK1akiMbyEi4EqQgEIJZlNsEUn34iaA4TnwLncjTMT7uycSkSHiB559D65ndsgzLiY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfofalZpqZerEccX+BBey5TAorMpsMmGEUPq/vy2PCyYRXIGcS
-	5DiuzuX7p6MOLAdWWk6MsxnwmaqGC9Ezm74q+PTlN5jZ2A2rGYBG8DnuAyWfFRiaX5SUOOpBXLn
-	c+O8IgN3Ty/SnBAva8uMwCy+6AfU=
-X-Gm-Gg: ASbGncuZph5edeFU3iFu0e0vDReSb2bkhR3rmQSVZpj9HO8RvytHMLuX60njWSacdD7
-	aReQGFAZMURqcZvHcQvMM8zGV4x4ML6jCEvkmB6g4j3lNXS9f4fyXfbq8dcxVUehoEYf1Gj2lJF
-	sXsd8T71eG1YUAOECx/fCODpSGFoFlPX8LJJKz8YtpYaVoQ0C1UXQT6MQ=
-X-Google-Smtp-Source: AGHT+IEdUui8oy/GnvA+N+6o/Jq2S48pnI2+AE1IhGNoqMx9aKWW4YXeECehzP8QhgHU1zd32sz+ehWRdImMURUiWrs=
-X-Received: by 2002:a05:620a:472c:b0:7c5:3d60:7f8d with SMTP id
- af79cd13be357-7c7af0d40f4mr1525991785a.19.1744640747022; Mon, 14 Apr 2025
- 07:25:47 -0700 (PDT)
+        bh=who1QSzB862/BlcS6+ISiSDE7MWmoyuKEC7NjpK291w=;
+        b=jmz04w6PhbD/ijL26euBM4ACfk0lPeNWNeWU7gTb5twryPZNwI5+32gdDQ3KBDio3Q
+         8UnmqpK5LJ3wAgiMrxu+vaanREobmc6x7OCU6ybGU2nH381JLVlRU60n+N5Me8MICIG/
+         3v4kak0aqer9FeCdDDiKWGNMaJwfFLbXchuk1WbrZNMUbRMNLb/IqBn0G2W9CUJN5z1W
+         xp4sPS9LTlhu1NdqMYOYp2h01vGCbpqcWEjg+KbBvciPePc7GtWmdhaxhB9Ya5boRsz9
+         yJLbusvvslcaRCmpWZ2PE9C7DY+vSxmnb69VddhCLQw2d4frbEnYIFREsl6wDsze/Hq8
+         Ki3w==
+X-Gm-Message-State: AOJu0YzNAgUkKyVDraPrcbybgZbY/DOFS4eNNHSJ6r72TiupWJ+2e7uH
+	24GiUBmtNWaiwIMqxdjdZCZqvQNvB9SXwCnz9zbkIzQMUSMKX2oSGFjWvSz70KLc8qapmjRCbtn
+	HVkZwBLwfFY3yCJMz5Eo20m/O8pU=
+X-Gm-Gg: ASbGncuQe+Re/PVmXYTxX/rs0DSEOVrzmWi9+lpFttCx+/i31TzYJO05+Jod4gfbBSt
+	DPlnBM+ao9cmRgVshoJDw2V3Y8gXJIF3c4J324MbEQiswVoLYWEvrNmElRvsRrfFfP/jiH0/6VN
+	2S9j3S2zkspgGYFLAWxXZxINNSd3GzVjavCS5MofTvkhqSFhDAzHXwKPk=
+X-Google-Smtp-Source: AGHT+IEwGFPOodvtZELTjYFXzKuaJaowm+PknQLlPOjgQjDlE8+4o8tFmjtmYKnwHavEHzEXg/36RWPep844nFibWYs=
+X-Received: by 2002:a05:6122:209f:b0:50b:e9a5:cd7b with SMTP id
+ 71dfb90a1353d-527c35ae10cmr7539887e0c.9.1744640841513; Mon, 14 Apr 2025
+ 07:27:21 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 14 Apr 2025 07:25:45 -0700
+ HTTPREST; Mon, 14 Apr 2025 09:27:20 -0500
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 14 Apr 2025 07:25:45 -0700
+ HTTPREST; Mon, 14 Apr 2025 09:27:20 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <87mscj5dxe.fsf@iotcl.com>
+In-Reply-To: <xmqqtt6voncw.fsf@gitster.g>
 References: <20250410-505-wire-up-sparse-via-meson-v2-0-acb45cc8a2e5@gmail.com>
- <20250410-505-wire-up-sparse-via-meson-v2-3-acb45cc8a2e5@gmail.com> <87mscj5dxe.fsf@iotcl.com>
+ <20250410-505-wire-up-sparse-via-meson-v2-4-acb45cc8a2e5@gmail.com>
+ <7eaa33ca-0ccc-4789-94b5-de1a068e1599@gmail.com> <xmqqtt6voncw.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 14 Apr 2025 07:25:45 -0700
-X-Gm-Features: ATxdqUFj7ETGFJSVBlj_WFIL2Qc8gPWa4vcdviGHiIfNvJjWcFlzpAmytMcD9XQ
-Message-ID: <CAOLa=ZQTwqyAU2cSFCQL4Ofc+dVyT5h6x5Ojyi=Bo6uYqze3Vg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] meson: add support for 'hdr-check'
-To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Cc: jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000fcf9340632bdd36f"
+Date: Mon, 14 Apr 2025 09:27:20 -0500
+X-Gm-Features: ATxdqUFhE4wd14WcLOnSxYXXV0WHf1xpBLEJU-7c49LSYEU87v3xw2s-wr2__Dw
+Message-ID: <CAOLa=ZQNrqf+cqatpbW7jeX6e7XAmk7NZZBH1inYMCjFj23C-Q@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] makefile/meson: add 'headers-check' as alias for 'hdr-check'
+To: Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, toon@iotcl.com
+Content-Type: multipart/mixed; boundary="0000000000009e9aca0632bdd9f3"
 
---000000000000fcf9340632bdd36f
+--0000000000009e9aca0632bdd9f3
 Content-Type: text/plain; charset="UTF-8"
 
-Toon Claes <toon@iotcl.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 >
->> The Makefile supports a target called 'hdr-check', which checks if
->> individual header files can be independently compiled. Let's port this
->> functionality to meson, our new build system too. The implementation
->> resembles that of the Makefile and provides the same check.
+>> On 10/04/2025 12:30, Karthik Nayak wrote:
+>>> The 'hdr-check' target in meson and makefile is used to check if headers
+>>> can be compiled individually. The naming however isn't readable as 'hdr'
+>>> is not a common shortforme for 'header', neither is it an abbreviation.
+>>> Let's introduce 'headers-check' as an alternative target for
+>>> 'hdr-check'
+>>> and add a `TODO` to deprecate the latter after 2 releases. Since this
+>>> is an internal tool, we can use a shorter deprecation cycle.
 >>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>  meson.build | 107 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 107 insertions(+)
->>
->> diff --git a/meson.build b/meson.build
->> index 790d178007..6fce1aa618 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -655,6 +655,12 @@ if git.found()
->>    endforeach
->>  endif
->>
->> +headers_generated = [
->> +  'command-list.h',
->> +  'config-list.h',
->> +  'hook-list.h'
->> +]
+>> Can we call this "check-headers" to match the other "check-" targets
+>> in the Makefile please
 >
-> Can we maybe compose this list by instead doing:
+> Excellent suggestion.  If we were to change things, we should get it
+> right just once.
 >
->     generated_headers = []
->     foreach f : builtin_sources + libgit_sources + third_party_sources
->       if f.endswith(".h")
->         generated_headers += f
->       endif
->     endforeach
->
-> (This would take `third_party_sources` into account as suggested by
-> Patrick[1]).
->
+> Thanks.
 
-This does make sense, but this also feels like an overkill to only get
-three headers.
+Yeah I agree too, I based it off 'coccicheck', but seems like 'check-*'
+is more consistent.
 
-> If we consider that too much magic, I would suggest:
->
->     generated_headers = []
->     builtin_sources += custom_target(
->       output: 'config-list.h',
->       command: [
->         shell,
->         meson.current_source_dir() + '/generate-configlist.sh',
->         meson.current_source_dir(),
->         '@OUTPUT@',
->       ],
->       env: script_environment,
->     )
->     generated_headers += 'config-list.h'
->
-> I hope this would reduce the chance to forget to add more headers to
-> this list (assuming people copy the code blurb from another location).
->
+Thanks
 
-This looks nice, Let me modify accordingly!
-
-> --
-> Toon
-
---000000000000fcf9340632bdd36f
+--0000000000009e9aca0632bdd9f3
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 5ba867df7d898a32_0.1
+X-Attachment-Id: 73d80c18a1586e41_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mOUd1Y1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1memVNQy85N05CbDVySVR5MmEwMjhFSTdOZVVIZGtFdQo1U1RWZThoMGhS
-bkcxVEJBTTJKOG43NTdCZTgyV01CY0lobnBNOGlFRW5GallvY0VUNkMzdEc5OWhHS1RtSGJxCjgv
-TXVZa0IwYXdKaDZSN2tBbWVSZWp3M2l5c3A5YW5ZazNLOHQ5Z09KTWdjNzE1bGVaby9jbGUzb2ZD
-VGZXbGUKb2lDQWxTMnNReEY0ZTVaTEV5MHVIbGNKQnRJWmQ3M2FMZzIyOExza0Nvcnh6VlNIdmwy
-RkZnV3FCcHdoWkltdAo3ellOc3ZvVVpsY3lvV04xQXR4Q0FYNGZXQWlTSENjalFFWjJEaWhLcWlM
-Z2lIeXh1SGpxeGJFNHBRc3I0VCtNCndTQXBBZkFCTE1XalJNbVcvbjFKYlgyV2FmVUNUR2tDTTdR
-aVNFQjNmK3BtVWVjRUEwbEFWRGROWEJFQXE2WXUKYlZ5dkJrSzkrdFdGV1NXSXVBdmNOK3hZa3JI
-Y0NOcGppL3g0SGVNTlFNL0tzd2JhQWpDUjN6SFQ2Mk0wN1pPVwo1M2lGQ3RlbUZSbnY5c1BDSGYx
-M1hXRTk1RTVJWDRkTHN6azZVUnVTeFpDUEdPRGZtai93OVBVTm84NjRvMW8wCk5pZVY1UlZYSHo4
-TTIyUUt2WmNpL0E2Y0dncVZoM0dTdnZxMTUzaz0KPVdKWG4KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mOUcwY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOVZNQy85Q2NrZGJwNVRZUndJYVhLNEVoa1RYNloxOQprLytSUmFpSWJP
+K1AxK1VPT3A0NVhJOVlQdWhIeUVQeUpGcWlrSDZqS200VGFta2loeURLa3RiUFpGTWZiWDR0CnEr
+RUorQlJ6SlNyTlcrYmx6TVJ4VHk5SWM1dzdxcDRCZnVUV3NrbkpROFV2ajV1WjhFbnFQZU5qYnBi
+OTErYlAKS3czTTZKV0pXTHpldmNDUTN6K2VkWmlkVyt6RDhWOHNVcVJJSVJxUWpnZ3hZZS93T0Z3
+L0lMTWNPbExGTnJScQpJUi9tWlo4VGVwYUxUY25kZUhNaEo2SjRwaGhkSnRobldPTXZQbUdVdk1z
+MkJPSmowYStNN3Z1MFQvRVh2S0ZMCjZaR2hTT3lHeEN3ZWVUaHlUUU1JUGtGM2NNMFMyeTNOS2N6
+ZlRqRThUeEVDNEhHWmd0OGpLNzJYbVFtcGdiaFIKTVlBUmkvSkE2Z1lSaVU3RWwyVUJ5Q2xWNVRs
+dmtRZDdhVWpKckQ4R3g2QTVLdFA5b0Vtc2p4SXBBalJxeWxTdQpueWhUbXhXbjdoOFdhMElGQ2Iv
+aXZXUE1ROTJ1Vlh5cEx5WmFjVGR4UGRmSXFXNC9XWGlsRzRFVzJOeEIybC9ICmoxckVGQXlza2hx
+TWJOZ1QzWjUyWFFLRU9BbHB2OUJLZGhHKzhyZz0KPXNBQksKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000fcf9340632bdd36f--
+--0000000000009e9aca0632bdd9f3--
