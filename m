@@ -1,152 +1,150 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7083A19D06A
-	for <git@vger.kernel.org>; Mon, 14 Apr 2025 21:07:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483562AF0A
+	for <git@vger.kernel.org>; Mon, 14 Apr 2025 21:16:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744664852; cv=none; b=cLcSvDibi41XlHu1j2tzdXuoeo0EyZsf3avTN69LAt6H2sZaXjE/+FwSQfItu+7Pci/3RM8GjwgvTVz0MMELo1Q7UMPvxifFJlNeELRtvgLHpDyOBOKmjNKFhgeWAqRoyzjpN5gSG5AFBTQsQ9mQE7KFHg6cp2bAmMR6zJ+HaFI=
+	t=1744665369; cv=none; b=ZOIakv7mi68icSi41uo5kTQSj/qf9KU0liA1y8YqPrlpmx+SZNiHrm2Z4bxrLDLfWIIY2/15IpnsBHyOEw0Nf+Oqu9DP3u16vF4NNWJeR4Tp5Z+9kZ1dEieEn1NjPPKOMkCNKm9Bf/nqEOb0NVCceogAt6E4S2ha0lJGDeMBDBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744664852; c=relaxed/simple;
-	bh=rJH4vYC5vAnjcqL+HCnKIbzIZjzKCQaJ3EPgI4hupX0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XIsUP5nMfO+OT8ioqfQNsyuuBZRMbL0ewocm3ubOcbQx6MX+5f9XmpmpdiWxtlJ8Hk3/UGpn3x9BUz0BhD8lmDblc4Xythq2Nv9x+PN2koXz3u3BnQxFwbiroHBwxr2hbrh/6Rmn3t7hVDXhfxVHFOssMdyNU+ZYwIgkpeDMXgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Zq26Jgu7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NXKBRn5W; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744665369; c=relaxed/simple;
+	bh=7kVcuWgIrWUvJa1xqjcaHfpmGd73vsFMXJTLt3emX0o=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=MaRJHxGwhRMxkInBuPbx11EZHgPvNDWG0Fb9qLgTffkBtYa2XV1RS2z2HxDWFKN+tok2J+7rmwlWDZqOVAbPzpPGtRxBY/pI+WBbqyBfG/0GaUROhtWjaI7ucM/3PQHaeTlXXxEXIU62XQ0FoXL8eYyGys0I3zRRh+Z8/iGjMC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EBOluhda; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zq26Jgu7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NXKBRn5W"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5C7DC1140317;
-	Mon, 14 Apr 2025 17:07:29 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 14 Apr 2025 17:07:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744664849; x=1744751249; bh=/kBot1nhRH
-	6yd1NU7KoLCbZyfVIooQJEMCM0pOtSsCI=; b=Zq26Jgu7paC99va5axw8aV7Caa
-	NgKwGKHeMuOdT8NgaXtapJryEFNTgayJlP6PQxgJ9mHupo1fzwUIMCTZlR/fVodj
-	vS/DnwPdaf3Cch0GvFf3bBga3INvk1YQQnyIFYeREwQNk18a9OP09NHYcruH6gNz
-	k6mPMZ2dJXGyY7/lFU84k8Bzoo9sUNBGv1/B2+c9jxPlrJCxN2oh9Vudn43hq4hh
-	8ssoqm6sECunP8YKMw/BSbocFaRzbA/QnceBtDQGd6BpiJcQjCVRCOABhtt16YS5
-	I9FHw8aMMKIOMefYwlaozs7XtDxc1sbJBROqNZHWyuNGeVwiiWQvjiEmpxFg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744664849; x=1744751249; bh=/kBot1nhRH6yd1NU7KoLCbZyfVIooQJEMCM
-	0pOtSsCI=; b=NXKBRn5WY6nuuYOGKuEI3o/DOqFiRqsnSOKkzg6Lvttq7DRUKA/
-	J4Xm54ScnxyyNh/o0NbqS5sY80QaKRtyE+V5JomrnKBMsO2RxfAlZwvxzPiw1zN9
-	Oq3XX2Mm20pmUfqKPABYtb7kGxlVIto/uSixNpPi9QcU4mRdfUmmhB5ldg29nO4c
-	bvi+Q4ERpYxIGabNXghPDrrAXIksjAS1m1WiOYAvEXfd0n/IB/Xp2ZwtAcarIe7m
-	uW4EDzxZKIZKb/BQ/G48upMT169iRCt/YdY4N/kvQ7q6+Qc53JgOJ5BQy1SR6EaV
-	hJi8pUhbIV06MjWzKbPOeVtLvJOIn0oN2Uw==
-X-ME-Sender: <xms:EXn9Z7ppAAfIWEw5bYYUhEqN9en_6yoDbSo7XiYtsudfVdEEuGXBEQ>
-    <xme:EXn9Z1o8mGVU0A69UHHThOPvAkRIdHyVWmkvbLjVGk_Fix4qb7U9Qe29HN15Kx1Wi
-    l5J7Yj7vqDvWV3zgw>
-X-ME-Received: <xmr:EXn9Z4PmYq7X3M4pmaLjxgaFPsij10yivK2yc_WECovnz016vcr3rC4BbTACdb-idlItUDSOjRtZ1bGgOvMp_Kam1jZRW4SoOP5T>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdduheelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
-    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfh
-    hfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:EXn9Z-5D3XrhwpLt99BEptvz1FQ3uTR29GVu-gzCnZLHJXrPuF_xpQ>
-    <xmx:EXn9Z66E6Vo1O0RK2lCVvxqitQrYmSlQvRPFLINzWlY3a2QWXpV_Sg>
-    <xmx:EXn9Z2hu8DcZEsyB6zMQ_mq2wgbBq5zeUosNRdcYQwJ_YVyZzOtglA>
-    <xmx:EXn9Z84DDj8x69wG3f6RCJRP4xrHoM6yiDs3bd4Z_hYO0CHgEnYgvw>
-    <xmx:EXn9Z1MRktwP8WvV3uCXeL2dPv2yYW1EQpjiHlgRKmPurupuTwNw8yw6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Apr 2025 17:07:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH v2 2/8] object-store-ll.h: add note about designated
- initializers
-In-Reply-To: <920c91eb1e5a1b6d5faa54240dd9c85f72968edc.1744661167.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Mon, 14 Apr 2025 16:06:14 -0400")
-References: <cover.1744413969.git.me@ttaylorr.com>
-	<cover.1744661167.git.me@ttaylorr.com>
-	<920c91eb1e5a1b6d5faa54240dd9c85f72968edc.1744661167.git.me@ttaylorr.com>
-Date: Mon, 14 Apr 2025 14:07:27 -0700
-Message-ID: <xmqqsemapi40.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EBOluhda"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e6f4b3ebe5so8330530a12.0
+        for <git@vger.kernel.org>; Mon, 14 Apr 2025 14:16:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744665365; x=1745270165; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A/QnRHzqMoxjHFd3mI0dWBFcPsSwBJpyZP6TtPN4hYc=;
+        b=EBOluhdasOoFTRGAbUdG7iIWKdCFs3vI/v2C0H5TXvDnD5/sfi4boMP8p47O8xZTjS
+         jU04+zke64uI7BD6zZySr1GmLSLqaty1HzGmWl1W0gyDsyd4IQscoWQroYkwzkMjge4o
+         7+ChbHyFS3FdZhSC2oL1AyUqe9NV6nkvZnl+0XyVQ+98dutkOKe5tWvriN0vfxgD8O9j
+         5+NwoSst0S10S2udVCL/opiBsjSBkWo565RkkvydCzPjFFZVuIezoJjOuGICYLuiTpTY
+         qAojUTDg3kylTCgs6P874wqjwiK2Ck7xGt6kgUKksR4SYscrVYtK0ItfAZJ7M2mZ9+CA
+         hQ5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744665365; x=1745270165;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=A/QnRHzqMoxjHFd3mI0dWBFcPsSwBJpyZP6TtPN4hYc=;
+        b=h+Rg559iYw5Ww8/jk/PGU1bcKSNLJ3JXoIVkQ59ReiTXL1PQBdFWyLCaHSOLPGaGUF
+         S2JNi5BY8MsMCyGe/W/pEJDTwXDyQjQWNQmbBiDEF0SvNDoDTKNH+ValdKmE1q73nhUx
+         os4VNVfVBl5BfiKjIwRLRruS1wsoTMO31iD6Hada95zjGpAwRNQDW6lruWfCoa2JYR6P
+         AucvrQQ0UqUQyt5N0Xy/18ty3lOTsbkcE+Jd393MYkPkiW8Kl8ZJb1tjeHLEeUKrkLg1
+         7jRCdusoZ4P4Qv8cbNjmUBOanqYxTIGXZKyGYm7n34W+maf1EFxD5XnLJbJxYK0urwdr
+         HiCA==
+X-Gm-Message-State: AOJu0YxZGrqErSK0L3OArPslN4AJBRLyRCrR9/QYKWDwm6i45fGL8MZB
+	Dz747vzRfeG65hb4PL6fIp0avKuTE5hJwQeROrFCcZAMFn5oa41swNYa/ga5
+X-Gm-Gg: ASbGncvBFzKyN6wXHRzR1ftpctCxvCvaWeP9Vdy7jIlfnJVagiW3Rl+/Wjg1AXPa8A4
+	ff0IBSRTK7eCAPDfUEWSgc6V6urof5Sv90tEdlFK14yJxFHCNx1dov61jdnESsYWl8WjS+nYpxF
+	oZ8ZtvJn44UEpb0LeQKW46IwDIFzeHaHfRYWCP/fKdv/yKre6OXH7vL21KiYViqME7HJCY2rkm5
+	O7JSgjSZN3DQ7csnmElrMymtszKMPw9jAhRwEdsErBZJmOvqi0Ay3MQNMM4SzzUyqsy8+OIH+tt
+	9OLlI5D/wnyVGKf98qT8hDwO9nE2jg8CIesq9J41MXEI1p0=
+X-Google-Smtp-Source: AGHT+IHeWx95J3yCpw+RUEf9cdvOlkzNY7YUub4Z9dSJ+Ta7/BB8J/87Mahjcp9s1wdVoauZPhdapw==
+X-Received: by 2002:a05:6402:4313:b0:5db:f26d:fff1 with SMTP id 4fb4d7f45d1cf-5f36ff0476dmr10866614a12.21.1744665365411;
+        Mon, 14 Apr 2025 14:16:05 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:2455:8268:bc00:f62e:e088:2c58:70de])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5f36ee54fb5sm5527518a12.13.2025.04.14.14.16.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Apr 2025 14:16:04 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Mon, 14 Apr 2025 23:15:59 +0200
+Subject: [PATCH v3 1/4] coccinelle: meson: rename variables to be more
+ specific
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250414-505-wire-up-sparse-via-meson-v3-1-edc6e7f26745@gmail.com>
+References: <20250414-505-wire-up-sparse-via-meson-v3-0-edc6e7f26745@gmail.com>
+In-Reply-To: <20250414-505-wire-up-sparse-via-meson-v3-0-edc6e7f26745@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, toon@iotcl.com, 
+ gitster@pobox.com, phillip.wood123@gmail.com, ps@pks.im
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1987; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=7kVcuWgIrWUvJa1xqjcaHfpmGd73vsFMXJTLt3emX0o=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGf9exKN8TxYyqVuirE9RpoqKNqrQdC89cafk
+ DPDZxgwStjan4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJn/XsSAAoJED7VnySO
+ Rox/nz8MAJV2dNF8iro0WsPX0ciRGJH8Zh6J8DpVslgAzDyJfEnKWgEhYwP6TL9GyALeXyWyHXX
+ e8fR7AXo+uV+RT0jhQS6/gcs40gtfylDvswUT2Dz7u8hojZ0qCqLhjrqtUtZq3HL79+86lj9REf
+ eRAv+K2NiHcVGvuAbZdMxuQ5b62QVW19y/eEJISQp6dckM0x+WwJ/QSuIb+CAlryan0yJkWyAVL
+ Rw6yW9tSxcbaKlrcPxMsfkFM4pU4mbFogQHPP55eoCXE/MU0227X0n8qs6HgUh1nUNM6/GRGvvi
+ 7+ekHbWB+sOZeSXYZym+efDUQ4ItY/EXDZ/gprPrADZMGh15mg4vZQ87uQKtSJ6ECoJtdiJVtKX
+ Bs+sYnIcIqXocTRtESDp01GxksHgPlK5OfvWp4MIrmDl2k52uDmEPD1jpbCU/l5cwpTLRv6tXZH
+ 8ZUeUtVI6sqJqajLPFw/5Lk87KFBChWYGhjqcYiVNdGY1ceCJpLUrBtOHu4u0d435Z7hXUUinJ5
+ 2s=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Taylor Blau <me@ttaylorr.com> writes:
+In Meson, included subdirs export their variables to top level Meson
+builds. In 'contrib/coccinelle/meson.build', we define two such
+variables `sources` and `headers`. While these variables are specific to
+the checks in the 'contrib/coccinelle/' directory, they also pollute the
+top level 'meson.build'.
 
-> @@ -337,6 +337,14 @@ struct object_info {
->  /*
->   * Initializer for a "struct object_info" that wants no items. You may
->   * also memset() the memory to all-zeroes.
-> + *
-> + * NOTE: callers expect the initial value of an object_info struct to
-> + * be zero'd out. Designated initializers like
-> + *
-> + *     struct object_info oi = { .sizep = &sz };
-> + *
-> + * depend on this behavior, so consider strongly before adding new
-> + * fields that have a non-zero default value.
->   */
->  #define OBJECT_INFO_INIT { 0 }
+Rename them to be more specific, this ensures that they aren't
+mistakenly used in the upper levels and avoid variable name collisions.
 
-Hmph, after thinking hard enough, if a developer cannot come up with
-a way to avoid non-zero default value, the callers could just work
-if they instead did
+While here, change the empty list denotation to be consistent with other
+places.
 
-	struct object_info oi = OBJECT_INFO_INIT;
-        oi.sizep = &sz;
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ contrib/coccinelle/meson.build | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-and the member of non-zero default value can be delat with by
-updating the default initializer, perhaps like
+diff --git a/contrib/coccinelle/meson.build b/contrib/coccinelle/meson.build
+index ea054c924f..03ce52d752 100644
+--- a/contrib/coccinelle/meson.build
++++ b/contrib/coccinelle/meson.build
+@@ -55,18 +55,18 @@ concatenated_rules = custom_target(
+   capture: true,
+ )
+ 
+-sources = [ ]
++coccinelle_sources = []
+ foreach source : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.c', third_party_sources, check: true).stdout().split()
+-  sources += source
++  coccinelle_sources += source
+ endforeach
+ 
+-headers = [ ]
++coccinelle_headers = []
+ foreach header : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_sources, check: true).stdout().split()
+-  headers += meson.project_source_root() / header
++  coccinelle_headers += meson.project_source_root() / header
+ endforeach
+ 
+ patches = [ ]
+-foreach source : sources
++foreach source : coccinelle_sources
+   patches += custom_target(
+     command: [
+       spatch,
+@@ -78,7 +78,7 @@ foreach source : sources
+     input: meson.project_source_root() / source,
+     output: source.underscorify() + '.patch',
+     capture: true,
+-    depend_files: headers,
++    depend_files: coccinelle_headers,
+   )
+ endforeach
+ 
 
-	#define OBJECT_INFO_INIT { .enabled = 1 }
-
-So I am not sure how the advice in the new comment really helps the
-intended audiences.  Shouldn't the advice be more like
-
-    NOTE: when a structure foo has FOO_INIT macro to initialize,
-    *never* use your own initialization like so:
-
-	struct foo foo_instance = { .member_i_care_about = 13 };
-
-    Instead, use the _INIT macro and then assign to the member you
-    care about, like so:
-
-	struct foo foo_instance = FOO_INIT;
-	foo_instance.member_i_care_about = 13;
-
-    This is because there may be members of "struct foo" whose
-    default value is not zero, or there will later be added such
-    members to the structure.
-
-perhaps?
-
-I can buy a counter-proposal that does not forbid a custom
-designated initializers that depends on "all zero" default IF it
-gives a piece of advice to the readers that is more usable than
-"consider strongly before adding", as "consider strongly before
-adding" there smells like just an euphemism for "never add", though.
-
-Thanks.
-
-
-
+-- 
+2.48.1
 
