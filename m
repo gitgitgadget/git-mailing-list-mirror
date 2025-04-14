@@ -1,136 +1,117 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C810F19D06A
-	for <git@vger.kernel.org>; Mon, 14 Apr 2025 18:03:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41A3EEC3
+	for <git@vger.kernel.org>; Mon, 14 Apr 2025 19:12:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744653829; cv=none; b=O4AQ5rwWDvhNY57aHGbV40Dm5x6bFOcZ43pOLROq9S16q6F4LrFSzKOfhujfIk4Zf66rrw502PTXjNUxaRNkezl2CY1GicllsLjvoKzB0kLThOkrymjah9ZaISBj87cQtyqWAj7dan8seMXmRrRVwfujtm4aYkLmJEkp7KtaYxE=
+	t=1744657943; cv=none; b=Ps1iGbRDRxVR1JgtOKgFE1zh1BcbIMw0PhbhoUODMs+8Yc/dX+k3JoegUUwMhljAnyhIQcLhY3d1JDV480mWhxq4jM2oWnj+tmLXiv30AloA5/FzBGLrAsV4Xym6rlJvGGZzjRUs119vSlJR17J2vPgw8GPRS3VqtfDqiUsm9ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744653829; c=relaxed/simple;
-	bh=eioYxrW3IYGdlIb0t7B7PwezIfFdDlhwVIHdaOwuqxE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CWZR0538M2+7GzkrZ4N12JK977EU7VUI/xtBVwLRj6p+Ol3sFuL89feWeXKW+VHT2XcOfuYstgDq6TuQlfhBcaTGdCxOjjPulE8/2KlJJwI5N7RfnBnLhM6yFXgX4/sREUDh6fhfh9w4oaSQQ6O4dVhARQ1uX3TnuPvDdFRYSuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=NZVakIFG; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1744657943; c=relaxed/simple;
+	bh=4mT5iY6s11P07EdoLHpZTOc/8QiAlYRzS/o0lVxpKFk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=spkViSWwzMt/hJEMq3TSvcx63VpkF8MQddus2K/2YYSwUjvFkULIf3RyZDYYJ24TlapvyKrGO3Xp3bSMXWNZGuJgbxyBJdiyI/cWggnc7RfJm+i1uIgCDkD+fEKJhudPkIIafvLuz4QA00AM3Q/PP8DiyqMdUquD+99YKpkdrnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EG/p0lY8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rz14lK7m; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="NZVakIFG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1744653819; x=1745258619; i=tboegi@web.de;
-	bh=HaMplDlW1faCopmIVUHihCZFqVJW2mFasPIXlDHMJuU=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=NZVakIFGQXL5kwvoajG7dNaU3VSENKzZAXkOYIYqt34p+acKyCCDbpOZSCOnMXyS
-	 QPaRecI7Rsg7oG6FoIrLYwW4lGGhhS/qCP2y+m1g9AFaw3x/37Lo1wnLz5GTyayvE
-	 zSFtCBAgw/A2wdMtHA/wC2V9c9MjRGtPJZzDNtyXmPv84Q/JIDHi7Zki+/4CkRGV+
-	 e0nemvOE4MjhdIb7dKshssgjhO3I+g6CqHpq89raUx1AM1G7UfrLm13/fetekWeqW
-	 zT1ZmnVz4sf1zIGreD30aSz4fxT72h4yj29hSFqgxNWPLBSbI9p/+KJmRUaD3Azir
-	 zoBnL32Zy9ijR4zohw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M28SL-1u1u780FJp-009sNH; Mon, 14
- Apr 2025 20:03:39 +0200
-Date: Mon, 14 Apr 2025 20:03:38 +0200
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: messester <cnotsomark@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Potential bug: Git instantly converts utf-8-bom to utf-8
-Message-ID: <20250414180338.GA2398@tb-raspi4>
-References: <DM6PR12MB386578E1F28B532600ADF575F7B32@DM6PR12MB3865.namprd12.prod.outlook.com>
- <A743D2B5-0397-4AF3-899B-FC3D3AD2B5CB@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EG/p0lY8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rz14lK7m"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CEFC1114018E;
+	Mon, 14 Apr 2025 15:12:19 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 14 Apr 2025 15:12:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744657939; x=1744744339; bh=WKkpg3ryha
+	bemB07O71Ibu2PzYAhKIzowT/rRkxZyoY=; b=EG/p0lY8xuMIpdnAqjx3O0ZnrA
+	XKOS+MP41Z/D5IhAcJ0TEu2Chy4oJ+m9u900EyvK+aU4OouHMJGwpG8LkZdmJ3U8
+	C24Zh0N086jvQ64Ladra1XLpaoONsRgFyF4meU56Tt9cLeVQyD4s7nr/4kFnEv+l
+	2LAVCUCUfoD2LLzzLNbC3lAZwcjuTxNiBr0xRUnVgryiu0edHib1bLQe4LRarRhJ
+	BbE5i4ps9i3Em4EUHmq9d5LXZWmvvJFuecWHT10Ilabt+5Iq+08C5V/2A8NyPeiA
+	sE9R+ZHxrvvUfyIwTun9bZjkZ19+heNGvog6pDC4CL5BxkNV/H6R2JB4Lnhw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744657939; x=1744744339; bh=WKkpg3ryhabemB07O71Ibu2PzYAhKIzowT/
+	rRkxZyoY=; b=Rz14lK7mprLjm4YmCp3PSnoYegSxp6wzYCxSLtJs84EwKcEpa+q
+	4XxeIYuQpN08xY1kT7oUfusGA6zQT2iea0HC2E8QNsQ/BjoADWc8VD99CtgyNN5S
+	3Kt5E4wJtTAMyE1iW6IATHzPVGhy5wsxa35JDjZoOVlqXlPdR6eIpUMmRmmTu5Vy
+	BCAP6KLimZ+Li3S/IjXKnjORuAk5odVt0Ok6GL5jEWY6ZCCSde+pLWNiX9lYOHe/
+	OHvPlGM9+IoFpe3hxZmLLkOFbNFJk1aHRJVROabT5ti82NEih8chEZZ9xFdpipHK
+	NmqIl9nvKGILKWhFmcTPTeyKVKm4Y5C4CbQ==
+X-ME-Sender: <xms:E179Z4yliLCrHTEy1dtgpKwiNGeIlWK8pbWPKlBAkIG3GEsS2PsRbA>
+    <xme:E179Z8Rg8Dsmb70oOMwd_w4CZ-7BYIEKOysp8xgjCbi7XMhf9u9rF-cUIc8SEYlPJ
+    HegHEL1XQJf1XtP2Q>
+X-ME-Received: <xmr:E179Z6WjWaBsPPUuuSwV63KlHWVSoLtNCfuv894yW3HJtUHKMQXJoLvS8p8VtwDDqxEl4lhCqm_puBpLQM6AfjFMQLRJ_SS1N-m8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvddufeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnh
+    gvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:E179Z2hXMAYLUnJSxBHg3kyQWo4r45pNDhbP_sgHf21FvvGkLy-VZg>
+    <xmx:E179Z6BrQBFpBswn2SJcup8RezovQyNJXfX7NA5wpJLlYRpx5uNU6Q>
+    <xmx:E179Z3IvhrGz94XBB-CAwFAaaP3fKKOlPpNvmNI4DzLG2UE-H-QFFw>
+    <xmx:E179ZxAxeDALR9tWLaAgsuyj4WMtWel_niGGp04yLodl77U6Gz85DA>
+    <xmx:E179Z84vGS2hPYizblHj8y3T6qhwsRDu5OJ3hRi43J9hNnKK2hkDGR5m>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 14 Apr 2025 15:12:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org
+Subject: Re: How to gpg signed email patches?
+In-Reply-To: <Z_xAOmQm0e_WE2Dd@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Sun, 13 Apr 2025 22:52:42 +0000")
+References: <fx2ofmmhkjmjqfqya5e3qvmovvmpnjepteqobcz4eia5sw64bg@yquuljpwok3f>
+	<Z_xAOmQm0e_WE2Dd@tapette.crustytoothpaste.net>
+Date: Mon, 14 Apr 2025 12:12:17 -0700
+Message-ID: <xmqqa58ir20e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <A743D2B5-0397-4AF3-899B-FC3D3AD2B5CB@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:/Cb3+Ec3fZW282ZZIvPni/q1LUdka6WMnd5iSpoQ4npoyIBBOI/
- erZjSEbEJWGEjxfmjanBr9CuujFdCu3lFN4dmfcudUmMEVUXObwWhMiAyoYDBTn2oervTz3
- LU3gOySl13U1K0v7daQV/616DK6RvAt12jdWh/FGXU0CqMu/lYA3gOP3ae4FcVEdTuL+wUM
- bxjXAk7aZLBMe838tP6hA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:GcmLbW4pGsQ=;FHvkRx7gWe7RJ9G0x2WGYb7N4qb
- 9KZ07nAslKB9Dy5i65KDIJ+hPletFJ05a5M4adH8aBAEZEYRhDoJc+MOGS2jd5NdaMDFZKWkK
- yLwbfoPhmgQjeUjJ9lyG+DbBoUK5iENSOW1SVk+dDWGl0RoBoxKpuht5qdcfvVxZhGCL6VcND
- 7i6iT+EvzXDWsZa4CioGl87j4LiEYBgf2Do9WHPHTwoRzFC4q6YDK0dpfWfTihhrMPUItlnSm
- qUQGfbUj2afbHHoJBX4yxJC0Luz5ZDG2omYRGP9oRKIyTUmj17ACnmcJwY8bEhq6iz3H+NoHa
- Cv+jXRG3hcP22/4ga1+fmGXsPkID2JC+TXu9ahyME0cdy67oW8qRtyPF2DjH6xXJnrIRl6/nl
- p9bVeHMnKiRzCrU+pcdwoIYLGA4T/ihSRZrlcJAXvTayppoIZz5V1ymVQOdKfHofb25lyIcYa
- 5to8svOB0lmW0bQBxYWsEciAY54Ud+eGUdnsuQSMYv6Yg4HRDv4gmm1myvebsT71zbxL7/80b
- nVj1tSnIQLPZ1zRvhgqSb//WeP68LAl+qNNoJ1LglsxgK95GNbQDvMzEMCuUD1LMnEsQO4dQe
- fjo4smsyFiYOOkq0NAEKs2HZWU5eMgyhNr7Wge1qUKyqfRCnwvoAmo6uawzACO32XpcIgy9BX
- B+1mFXBMzjL66TCT+xpnkf2tKAC2GltXyixGShFrIvDxpT21eE2TdHDhT8uXbbAZ5xQIsDdy1
- dUBwTcXqwICHKpPGi5jABFFeBkt9/JANtV2oX5XoxsQRstBgkq/2YIHfuDsnOlpZiHy6HC4OL
- MU4QvLqTqgjHQWwUoqzLTIoyShXzvG22zUKXRcg3DxblVcf7UrM7T9YLgxa3quBpL+6gJgzYA
- kDFSo7Q0z4tuyiDQ8zPjhGw1Gw1yyRqQE0kZu8Y0QKB7rJYjlTDIMYKeCfWkrUq3GrJqPv06B
- u5+el6MRsip1R46MM9WaB+UCsKqe6b2leC/OS2LhyDYClbaMubrlSzyZAxY1Xl6diEIBwg8U7
- j7nbciQz6IRaYku/VhCnVSR2XaeiK7h762oVWfUXfs2w4VcLMEaLjsahLs92SYT7eXJMDrg3i
- E623Z9ZWCORLULabpSE4E8SJh/rAS2531OeaGkzaHzC1CgEADRUne3fhAT410y0bljL3JgGn+
- 2P2ZXdDH7KfJrWesM4ddzG85XvviZspfwu5HN39VFfD/tceQxTUQbapymRov9st1+nOxyKcn8
- UAsBXDlW8yzsPFLi7EBeZGdHdd9hSJqCG7aImojRnCpdcoTNyOVJXUaX/irIpBBgz1fG1R8vv
- 0LiH7lKNgiIJo4B3Yg3wejYNPNWLj4uTpfeT4L++bB1gb7yrAqFkSsu2OsEfiZMZDZvDlo065
- JaeQV91RdO5LP5FU4qa8K6lCKMyGnc5SDKKBCyTzeEWrWrb1x4xEi/DBqFnfkl9Kangh7Z+yg
- GqRZQzDEsXdu//h7S9za8vThuPudTeOkuUHdnYWnmSEF5Xhti
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Apr 14, 2025 at 02:19:05PM -0300, Lucas Seiki Oshiro wrote:
->
-> > When I clone the git repository https://github.com/NinekoTheCat/infini=
-lore.cs.git into an empty directory and run git status it shows changes wh=
-ere all the files are deleted and then added again.
->
-> I tried here. I'm in a Mac, it shows that several file changes.
->
-> > The difference seems to be in the first line as opening it in a text e=
-ditor aware of encodings shows the change from utf-8-bom to utf-8.
->
-> Given the warning messages it looks like it is more related
-> to CRLF/LF than to UTF-8.
->
-> At least here, for example, the listed modified '*.cs' files
-> are the ones that ends their lines in CRLF. This is, running:
->
-> ```
-> file $(git ls-files '*.cs') | grep CRLF | cut -d ':' -f1 | sort
-> ```
->
-> shows me the same files as
->
-> ```
-> git status '*.cs'
-> ```
->
-> You can also see that are some '*.cs' files that are not
-> CRLF-terminated by running:
->
-> ```
-> file $(git ls-files '*.cs') | grep -v CRLF | sort
-> ```
->
-> > I'd be very very grateful if anyone could explain what's going on and =
-have a solution.<patch.cat>
->
-> Perhaps a solution is:
->
-> - Define a CRLF or LF as a standard
-> - Convert all the files that don't follow the standard that you
->   have chosen to the one that you have chosen
-> - Declare it in the .gitattributes file
->
-> Hope that it helps you!
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-I think that this is already done :-)
-However, the repo must be normalized:
+> I know that Git definitely does not know how to verify those signatures,
+> though, so many people would end up not verifying them.
 
-git add --renormalize .
 
-will do that.
+True that many people would end up not verifying them, but I do not
+think Git has much to do with that.
+
+Some contributors seem to send PGP signed patches to this list (and
+I once mildly asked them not to, but these days I simply do not
+care), and if I had their public keys marked as trusted, my
+mail-reading environment would do the verification for me totally
+outside Git (as this part of the workflow is not about Git, but
+about communicating over authenticated and cryptographically
+protected messages, whose contents happen to be patches), and I'll
+just "git am" knowing that the patch is from the contributor who has
+access to that trusted key.
+
+The "key" (no pun intended) in the above is "if I had" part.  The
+overhead of retrieving, validating, and keeping the key for a
+contributor becomes worth it only after the contributor turns out to
+be very prolific one.  The Web of trust, while was very attractive
+as a concept, is not so convenient to maintain well enough to be
+relied on as an infrastructure.
+
+
+
 
