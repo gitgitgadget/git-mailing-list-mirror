@@ -1,140 +1,163 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A5027B4F8
-	for <git@vger.kernel.org>; Mon, 14 Apr 2025 16:51:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0719854918
+	for <git@vger.kernel.org>; Mon, 14 Apr 2025 17:08:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744649499; cv=none; b=UCV4/s8QGBsY3q8At4OfbhIdQTlKQKKlEYMys/bCaOIouTmOyivMSAT4ZXqTWuV/rsxXdL7QL/wOYu4Ck5ETQkqKPX/1mArAAqAXJTT2eZZU/ZO0hWU4GkG2pLn2ATvz26g5UFGuSmX1fBAOmQvyJQ7rf6iUsJmVimWx0zN0h9Q=
+	t=1744650533; cv=none; b=lKlhxNhzyXkI8cYxG55Ly5z5aVECy28IlrL6i9suf2dnn40p5uSmK6Y0hXfh3J9SeTBRL0f4ZSImRt6LDTEhPRYqHkj18nIo9g43FxhRs9BdtdbBXvDWezpc0AcjQHJCpC7BgEO49dkPgNG713gOwHQmiQhuP0VvS30iJ3wEN7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744649499; c=relaxed/simple;
-	bh=F+kCSiLUM0EKGqGRPB0vE/KXMiniOpq/fgPZEXIcB2Y=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=WbLd48XG1l9JiYc70LqL/RwW/kjzKiCVgbpH9nBeBDafbnM9tOlsHRkOoTOcRfDxJWPdUU7agjVZG1H7X5rizJamiunCTQAsLZOeMzgD4tYxEaVWVhZQcI2owjrp0Rwai1nrJfqaEoR1vFfCNhux0I915oi7qiKzM9jQ5WERaaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=grgtNOBO; arc=none smtp.client-ip=209.85.210.172
+	s=arc-20240116; t=1744650533; c=relaxed/simple;
+	bh=qEdX2uj+5iIb0x0PX0iqXHXAVOqvDLThF/I5LQhk8vg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=i2bMT/Ma6ABkSfEkESqok79arP70DgK+6Ukn8tke/xBlGCIAQQrd6RK+JW1zYQB0ySMaty1H4UoAeuR0Jq040OgofladSCNQ65LsxUE7cMzqpDBu3mUEl/4bsA3rRxlLw1LEv8iZok/51mNrJsI8dEHuOLI+lwWxYSB7L0KP6yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fBy5rlfP; arc=none smtp.client-ip=209.85.160.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="grgtNOBO"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-736b0c68092so3905069b3a.0
-        for <git@vger.kernel.org>; Mon, 14 Apr 2025 09:51:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fBy5rlfP"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-477296dce76so39225421cf.3
+        for <git@vger.kernel.org>; Mon, 14 Apr 2025 10:08:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744649497; x=1745254297; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1744650531; x=1745255331; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PmwhHjuImd9eXGilk442VwiiYmZyFxUOVkGA2/kPjqg=;
-        b=grgtNOBONWVZ6JJm0HS2cn4/w/Fk4hmDhtT231xSKWt715uDfX3WwuYEw5E7c1jgQS
-         f4KY3xjql4wvgAgGMnmIVwReK8hvF1UUQ5+dU/ZmBJKKP6leCdPU4ZfRXStMZny3WolT
-         gtEFyXxVDTrBwRTQXP0VQW7tT07bpW9z7MI9tmlAERGJLI2OxByHrqfbEBEoNuBJtM/d
-         wAFV+7v2zcaHDFJ3yeUCDXmPYuGBpiAthvammptE0Rx//dq1k+tCjja8xEuf9jtVrXw9
-         VFb0ogT/kCWhKXJqdpF/NZLXqtYmOVYnpb8/JF/wMgVLe5Hw1gn1EurfgQZpy7a2x4Vq
-         QXrQ==
+        bh=SDKNSkdwhUKEDUJ9kCk3NoIQiY0NYzhIpdAm9w9ijIs=;
+        b=fBy5rlfPtZwrlr1Ar0y4R5aNT675eo2MPKHg/79aT24wk+NQDSGieSOob1DXP2/bGY
+         woPNVH/PaQu6SiP73cAeGBGq1z8Jzhi5YIy1FhXefq42zRfGRRxFWt1vJRhj389ODm5M
+         ieACmkN/2YksMcdWFVYg12tM/31KnwbXE6feJMSDdi9eUAIByDv7dvVJCLckm+mTiW8O
+         uW/ZJb1WCWMU8Ydivsh1tRmBWAoMD+kvoSNNdmYBVAggS39s8+yWCNBTBFl2AmtiIlQ2
+         0HeplwFUSlFjtKGfs5mDKLKf9Zu2xJzy2YL8WkaljgKc6DOZnQzyZ0sUtz/60iFZvwfx
+         hImA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744649497; x=1745254297;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1744650531; x=1745255331;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PmwhHjuImd9eXGilk442VwiiYmZyFxUOVkGA2/kPjqg=;
-        b=DhM3CUKrQhHQJhAPyqVl1NPMERuhQMRgbmg+PIfFQRyrslN5tZxTOjcl3OzrCktCrE
-         jZVgp7wJ9KyiOvi9tTVRGs7cPDu1Mf0GnhdQizs34+ftMD/n1Aa/3ZQlWmEBIPRgkePs
-         69gwoM0HgmEKSj5JoHz3B4n5jgD1U1gnDhN1NhGG4ckKj5u54P0CvDQY6RnVMARU6w7b
-         AuWQ5XOIuT9j400pkQ5F44w+s7b4Zwi8Z0IX1lYXWci3DSmOIjJIDXaFl5JtXC8i4SYS
-         KRgGV4vhYAwpi8LAnyELEBk5UJRj/UiSLLHrCCulZQJBVU5eCiGxsaBZF8qgQiKF9PlN
-         ULDg==
-X-Gm-Message-State: AOJu0YxmcCIKe3rmgkXCAn2asXQ+SmZznv098ty/3J+ZIZNFABuD8+02
-	2uckaxYaEL5pl20i/WtWlCzTuLcFJgLE3gAif/3T3IYj1gEzqDRwqwMZHaEV
-X-Gm-Gg: ASbGncsUJkj470mBCPTrAl/9+gAObLGWIMFofzC6a0QQF0wSOn9kp8SPkv3ftiHsYER
-	xYSm1ejGL5PYi5ZodkykiHip3868OnlHwdNWx8zsq/WdAVK9UP7LtjnEsX4yVZAejxgax8VERbe
-	7iYA5RKxZnfQGbNaAOavhnbCJDe4PNUJgzVNwNZc6+Gg+72y9wT+GEebxf6/rYcm9cA42rMxs0c
-	kUcct8p0N4o6in4ix09poIgOBNZeo7sm26VynoCE1bPEOaz0O5TSF8ruG78og9BDGiIQn/+wwa7
-	M3OjW6xiAwL/sxy5m5n6Nh71gXRFtRJRInMPXJiFy92CI8FwuCCOcDXwPKdn7hV4ihMiaucH
-X-Google-Smtp-Source: AGHT+IHwopIhjKJkbJQBqSafZwJdMU9GO0wwCEiRMb44uHdzt/LAmcJskYTmerysGLuNFYHCE7Tlzg==
-X-Received: by 2002:a05:6a00:13a1:b0:730:927c:d451 with SMTP id d2e1a72fcca58-73bd12a9926mr16791035b3a.20.1744649497038;
-        Mon, 14 Apr 2025 09:51:37 -0700 (PDT)
-Received: from smtpclient.apple ([2804:14c:32:8e7e:85b7:aff:5cfe:b6e5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73bd230e520sm7035757b3a.132.2025.04.14.09.51.35
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 14 Apr 2025 09:51:36 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+        bh=SDKNSkdwhUKEDUJ9kCk3NoIQiY0NYzhIpdAm9w9ijIs=;
+        b=hP6VQYHzttq2iUqAZ2pGW1MUJI1vXfNfjV0SL7E63nyuqTalxE06YkjXwfCZZ7ySjJ
+         gOD/xFjO/we6C9RyXXUXtWyz84XgLmbJRSRVCl121pXtvAvYHwLd1iIOSESWnHtyPuXL
+         nBleeWejbSfxnH5Qr/XFUpJY/+yXD+iu73hOrKUGpibkomVH2/GanXCxlkcuLYHQ62p1
+         WrZn61WpAEWKJWjuEL4UYSTHDuzT2+5zC+QxcCflcL4NX1uF7I5VXCT/5IF9fFKFLeJ3
+         r3GAUjhjdOnBH2MDeOB9kvDTitJi2ZW3iGh0RjVtQgsO0VT1LU8YOf4C8BnaQpjkdXtn
+         6FfA==
+X-Gm-Message-State: AOJu0Yw3+I00RzQDeEmuP8/7Axzc3Sl7qc35mKhEVk0C+MXjHuJk2Xyn
+	MZQzw7IM5eVuyBlDcOJdhK/9NjYEveKtCvY4Q5tRXshpBmvRxDm+7SfCGvSA73DAll8xF2Ve4aU
+	KIBMAXaBQ93If1RhqiHLp/845lwpF+9vP
+X-Gm-Gg: ASbGncvvEg9h+CAl+EG8lmjyrOIrlt28SCtfUHXyitNajMOpuHG243AwKfforX4uuhs
+	rtEc1Z4k+yAWKbKoy3niVYGjEJMmjCz9bVbc6HrBEl0Eaect/GGnNJn4kw+o7TxmC/WyAYBhRK/
+	FAGVH4LT8b3buDUv8DBR/jY5Ysac96oG+oJD/DMO0MaxgW0OAnEBhf6Gs=
+X-Google-Smtp-Source: AGHT+IEowZKqonIimEWFsNCkJ8onhQCKW8GLpDmfSDiV3PVc8l+Q/xG1FL0qOLTEH6yPy23lrJYuJwyiMnigsNGaHo8=
+X-Received: by 2002:ac8:7f4f:0:b0:476:7c7b:5dce with SMTP id
+ d75a77b69052e-47977527fccmr131127721cf.9.1744650530643; Mon, 14 Apr 2025
+ 10:08:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
-Subject: Re: [PATCH] t3706: Add test for wildcard vs literal pathspec
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <20250412174051.780148-1-jayatheerthkulkarni2005@gmail.com>
-Date: Mon, 14 Apr 2025 13:51:22 -0300
-Cc: git@vger.kernel.org,
- peff@peff.net,
- piotrsiupa@gmail.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <FFC5C6BE-9A4B-4EFD-AEC4-E69CE6610054@gmail.com>
+MIME-Version: 1.0
 References: <20250412094607.236382-2-jayatheerthkulkarni2005@gmail.com>
- <20250412174051.780148-1-jayatheerthkulkarni2005@gmail.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-X-Mailer: Apple Mail (2.3826.500.181.1.5)
+ <20250412174051.780148-1-jayatheerthkulkarni2005@gmail.com> <FFC5C6BE-9A4B-4EFD-AEC4-E69CE6610054@gmail.com>
+In-Reply-To: <FFC5C6BE-9A4B-4EFD-AEC4-E69CE6610054@gmail.com>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Mon, 14 Apr 2025 22:38:39 +0530
+X-Gm-Features: ATxdqUGto71qo1SeXKtuc4-e_VLPQq6ZaWxw4zn5DIdxmVEi9Jt6jYEMJ7UTtNk
+Message-ID: <CA+rGoLc=CYehMms0bxaLAu3xP-p62cMJ++RnBxSMOF2Ppt38QQ@mail.gmail.com>
+Subject: Re: [PATCH] t3706: Add test for wildcard vs literal pathspec
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, peff@peff.net, piotrsiupa@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi!
-
-> +test_expect_success 'setup: create files and initial commit' '
-> +    mkdir testdir &&
-> +    >testdir/f\* &&
-> +    >testdir/f\*\* &&
-> +    >testdir/foo &&
-> +    git add testdir &&
-> +    git commit -m "Initial setup with literal wildcard files"
-> +'
-> +
-> +test_expect_success 'clean slate before testing wildcard behavior' '
-> +    git rm -rf testdir &&
-> +    git commit -m "Clean state"
-> +'
+On Mon, Apr 14, 2025 at 10:21=E2=80=AFPM Lucas Seiki Oshiro
+<lucasseikioshiro@gmail.com> wrote:
 >
-> +test_expect_success 'recreate files to test add behavior' '
-> +    mkdir testdir &&
-> +    >testdir/f\* &&
-> +    >testdir/f\*\* &&
-> +    >testdir/foo
-> +'
+> Hi!
+>
+Hi Lucas,
 
+> > +test_expect_success 'setup: create files and initial commit' '
+> > +    mkdir testdir &&
+> > +    >testdir/f\* &&
+> > +    >testdir/f\*\* &&
+> > +    >testdir/foo &&
+> > +    git add testdir &&
+> > +    git commit -m "Initial setup with literal wildcard files"
+> > +'
+> > +
+> > +test_expect_success 'clean slate before testing wildcard behavior' '
+> > +    git rm -rf testdir &&
+> > +    git commit -m "Clean state"
+> > +'
+> >
+> > +test_expect_success 'recreate files to test add behavior' '
+> > +    mkdir testdir &&
+> > +    >testdir/f\* &&
+> > +    >testdir/f\*\* &&
+> > +    >testdir/foo
+> > +'
+>
+>
+> Two questions:
+>
+> 1. Does this need to be inside a test_expect_success? It seems to me
+>    that those two tests cases are actually setup code for the next
+>    two.
+>
+> 2. If so, does it need to have all that setup? I could reproduce the
+>    bug by only running:
+>
+>    ```
+>    git reset
+>    touch foo 'f*' 'f**'
+>    git add 'f*'
+>    git ls-files
+>    ```
+>
 
-Two questions:
+Umm, I think the setup should just be a single block. I will send a
+patch on this
+I'm parallely working on a second patch.
 
-1. Does this need to be inside a test_expect_success? It seems to me
-   that those two tests cases are actually setup code for the next
-   two.
+>    btw, this works with your code, congrats!
+>
 
-2. If so, does it need to have all that setup? I could reproduce the
-   bug by only running:
+Thank you, credit goes to Peff(Jeff King) I almost lost track.
 
-   ```
-   git reset
-   touch foo 'f*' 'f**'
-   git add 'f*'
-   git ls-files 
-   ```
+> Other idea: `?` is another wildcard for matching only one character.
+> Have you tested if the same bug happens with it?
+>
 
-   btw, this works with your code, congrats!
+Yup I think that's also a great suggestion, I think consolidating setup
+and adding at least a few different wildcards will be good.
 
-Other idea: `?` is another wildcard for matching only one character.
-Have you tested if the same bug happens with it?
+> PS: while I was writing this review I pushed this to my GitHub just
+> to make the CI run the entire test suite since pathspecs are a
+> sensible part of Git.
+>
+> Take look at this, it seems that your tests aren't passing on Windows:
+> https://github.com/lucasoshiro/git/actions/runs/14450183624/job/405210158=
+97.
 
-PS: while I was writing this review I pushed this to my GitHub just
-to make the CI run the entire test suite since pathspecs are a
-sensible part of Git.
+Oh damn!! That's a silly mistake. I almost forgot windows exist!!
+Thanks for letting me know
 
-Take look at this, it seems that your tests aren't passing on Windows:
-https://github.com/lucasoshiro/git/actions/runs/14450183624/job/40521015897.
-Perhaps you'll need to change something there. It seems to be
-related to how Windows handle paths (specially the \ character, which
-means the same as / in Unix). Personally, I'm not a Windows guy and
-can't help you further with this. A quick reference on how paths on
-Windows work is this (and yeah, they are far more complex than in
-Unix):
-https://www.fileside.app/blog/2023-03-17_windows-file-paths/
+> Perhaps you'll need to change something there. It seems to be
+> related to how Windows handle paths (specially the \ character, which
+> means the same as / in Unix). Personally, I'm not a Windows guy and
 
+Same not a windows guy, but I will have to read some things out.
+Will figure it out.
 
+> can't help you further with this. A quick reference on how paths on
+> Windows work is this (and yeah, they are far more complex than in
+> Unix):
+> https://www.fileside.app/blog/2023-03-17_windows-file-paths/
+>
+>
+
+Thanks again Lucas, these help.
+
+-Jayatheerth
