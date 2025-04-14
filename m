@@ -1,165 +1,125 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8611D5AB5
-	for <git@vger.kernel.org>; Mon, 14 Apr 2025 19:54:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049F11AB6C8
+	for <git@vger.kernel.org>; Mon, 14 Apr 2025 20:03:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744660478; cv=none; b=sJ7u7XX7yaBo8MdjL2+oZRP5dyLHXRBLLafQ0un4eoodHwRfabJUW7Ost9jVvARzXID8yImcyJXr6dQ6oTLqrclAOlPMCcI6X+deQ1YA+1UgWssX6eMVop5m2h8k63pdcukfMoBZM40BEARDzXQ+mFBxPHL76MT0zyMzJhBCb2Y=
+	t=1744661018; cv=none; b=R6iyWr3mEAyT8E0g58B+vCNULnDJe4tGQMVXlHsQdNIBAEPdy/F81oZOW8qlzapaAygoXOdnOMxNRSERtughlJFbNRXkNETAJ5KeOKZljVZfTVxzOoCkSfO2aRmzWKrEy+8eCK2/vnhcsB29DkS8y0aTQ4lGQH6hGkd6malk/Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744660478; c=relaxed/simple;
-	bh=vDSq2nxSrKsWkcyXxvlsCE2qJwagj3Ts6m8fW/UvK+A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EqaXsaOQYlihiEuTGwcXvjQIZxATSYiwzpaGATPa9f+D0GiMrF5OlNupKMs9JZ3qJB2xwFI/RCUEa6T/suwFKRlCm5QK2kdIR7JluDiMvfo7XqFBCpvRC6VNI73V2dpYZ9t6guvYVi08gcyxKSNm6VKNNiGch3k+hcQNmmj9r7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lBypElEa; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744661018; c=relaxed/simple;
+	bh=BohZApbN/oE6gZfpojK2PvTp4I4yIJtikKj050oHpq8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=K7dQPvthrs7PRYjL4Sk+tyJYK1OG60LGvCpIXgB6IWEhe92wrpgzRJmijnAyW0HUiDUYPldqhlqbHAotkzDA7Zi0//Nqw4k/0e2XFMSeNgHha6sZPiD9KAhFGuPLxSF3uYFVv7hmYKT4icU1EXkA224uS3ZomyXof9X2C/AojzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=gqVrjvwT; arc=none smtp.client-ip=84.93.230.244
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lBypElEa"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e5c9662131so7274175a12.3
-        for <git@vger.kernel.org>; Mon, 14 Apr 2025 12:54:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744660474; x=1745265274; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3SPuEH/FQnM+bVIc7CLP3gcCuxFQg0o+r4N1H7NfeEI=;
-        b=lBypElEavxa6us9wnBKttPMb7E/8zOU6ANer6/sHNdMA2xBed713vSGj/yR76vtkca
-         UJZkRNa985Dj12iF1PTburcpVjAHP/a+I4g10CzecXBlOVdJ063pdEgKzwe6pSmGMlFI
-         nLBPphSMFgrjM40BPoK9n15dQXjW/HyJzcE/UsYg3dChIHkeqhxys36cTVfVzBhvdbGg
-         +QoX/n4uFsqdHQoOdwNC/bJBWz8SRqEb9s+E4jYzYRLxo7ybQom0UvoU21i0s248b2P8
-         QDpW79smBKDZ/eTPLDva+rLa9wEbxIE/43f+xSKqzOpy60flOCTViBwmrL7tTHZAAOVM
-         o0TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744660474; x=1745265274;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3SPuEH/FQnM+bVIc7CLP3gcCuxFQg0o+r4N1H7NfeEI=;
-        b=mZHtCySeGtQarUqH2VctqxvPy7I26KgX3LuwUfNUc+odZoYT/34kLf0nOolg/dpBoj
-         45ryFLk/YGdn9iAn/8KKojtwcqDeFWsGq3xiJYJk6dVWA1iqaEhJFceHxxRKsX/zotZj
-         fj5h4CDSDmq0/BaVHQexgTRh8PodwRwG59lXbBAL7ThpSWB2c0Fn/tz/dz4dT3fxVCNy
-         /5lpgpLGwMK83TdAL5E0cvRKEWk+D72DjkzJarFhVchXrkowXXWrLQp/eutHSI/jpD+d
-         rHZO5m5PKlzjfS3lEBZcOAEDImgS1+9mVWiS1S63kV56AlBQQcrPtaOoiR4rdBL+dRTv
-         NHWw==
-X-Forwarded-Encrypted: i=1; AJvYcCVKTRz7RNa4MMdiZPhGSAmoL4Wi8/Uo/JNNUZ/vXEKuPxwgUpOQXD9GKJSpY6pP9vXSJJE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUN9uicqQjv5/5ZBmyJjnEaIFPv1f/BfiQ8Ya7IgTj1BHH0bJU
-	p7418fUDFXqKT5CpnZcpMb4Ayop8UjKR4DgBqJWx6xOEEM/JtuO+2hAEoWuE9GHcM7BJc+KzgnR
-	pk310ANQweu6l4jWludkFHCtY/10=
-X-Gm-Gg: ASbGncsY25N73xaYLURkdlHvqPSY4zpEPJYmEI+ocia7X4XQErEDukgj9QzxWvLj9Yg
-	PYJ0ghphX7tlQ4Sqq3EvYOPvBg5PlCMbAeVwdZjid2G+CMyZgFhscOnMGM1d27VpWLcY5FAFaGk
-	pTGEe5g6Nn9LESYiXrwMTTKCW4nPLndftqE9GkaRww++7T5X8GF8LyT78=
-X-Google-Smtp-Source: AGHT+IHfyjM9zSgg67yv31on2jn7Kxey4TIM6hm77jOQUjmCQoSlOPVo8L2yZDWJbdYcsTheCDab69GDLMHhtBMfTZg=
-X-Received: by 2002:a05:6402:274c:b0:5dc:7643:4f3d with SMTP id
- 4fb4d7f45d1cf-5f36f50b36fmr10652407a12.1.1744660474299; Mon, 14 Apr 2025
- 12:54:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="gqVrjvwT"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 4Q1iuHwcEjZe54Q1ju7zXn; Mon, 14 Apr 2025 21:03:32 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1744661012; bh=64d9AgbqDjVJaKV47W0TzO2iFc7hDvy/SncL+lJWFfQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=gqVrjvwTmjLrGyeqd6uMys9+78Wl0f+vEP35mbFmOQqs185fxjNm1Vp6kq1oMxJWG
+	 yakGeznfzyPvPRvmB/9MlYahFGafixs7YsvJJdp0RjLt9I06oU6muOfMzHeyBuD7OE
+	 MdGLtqCP04lXGhqb3ur31mPoxJhMZuxL/6i7l/no6w6rt7hU6SpXbEpmIoAKUFoO64
+	 kY3s7dfJk4/vrz/T+AOukV0ZaDUTOspp9vv/hHfyt/l1+eAxi4ad+vx33o8oHpIf17
+	 LeqgadYjKlxIA7HKwnZgNY3Z7CKBCsjwSPX10Spmsm+8dQukNO33qYNS3I2bjPH7/B
+	 tgECkwEHCtgFg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=UuDANPwB c=1 sm=1 tr=0 ts=67fd6a14
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=psKHxAMCaqIl7HxH_skA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <db92840f-ed4a-46b7-aba0-b556ed33af6f@ramsayjones.plus.com>
+Date: Mon, 14 Apr 2025 21:03:30 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <xmqq4iyzn0vn.fsf@gitster.g> <Z/RFQY433muaCW44@ubby> <20250408125521.GA17892@mit.edu>
- <Z/VGYrrVZYQ13TLj@ubby> <20250409121924.GA148735@mit.edu> <Z/amMj/eg0RbXdkS@ubby>
-In-Reply-To: <Z/amMj/eg0RbXdkS@ubby>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 14 Apr 2025 15:54:23 -0400
-X-Gm-Features: ATxdqUHa1TYG3weTwErKYVM9g6FSPsdEh1c3qhYQ9TO7xnpEWDXUXd26FbEjy-8
-Message-ID: <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
-Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
- projects collaborating on change-id commit footer)
-To: Nico Williams <nico@cryptonector.com>
-Cc: "Theodore Ts'o" <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>, 
-	Martin von Zweigbergk <martinvonz@google.com>, Git Mailing List <git@vger.kernel.org>, 
-	Edwin Kempin <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev, 
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [-SPAM-] Re: [PATCH v2 07/13] config.mak.uname: only set NO_REGEX
+ on cygwin for v1.7
+To: Patrick Steinhardt <ps@pks.im>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Junio C Hamano
+ <gitster@pobox.com>, Adam Dinwoodie <git@dinwoodie.org>
+References: <1c04882b-e518-4272-bd18-ab918774e424@ramsayjones.plus.com>
+ <cover.1743859985.git.ramsay@ramsayjones.plus.com>
+ <324bb213426ffc9c1f9cd155de309bd0b63cdbc4.1743859985.git.ramsay@ramsayjones.plus.com>
+ <Z_y_VeJzT82by8wg@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <Z_y_VeJzT82by8wg@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfH7e2tUFI0OHW7YiZbA0nG2FY/b7upM0+MplkwS167AqFmgHMxlwHiILctxmQa3B1hS0UzXcDmHquAe/iCRqNVeo5HTROjOvw6j9WwO/JFCcn61rmAdP
+ 6YnzdpQj6zbu9iaC8Cy+AzyTpQCf5UMc7ZZNJgM7mK2bcVQr9r3sLJcZAsV4Qf04H0Y8IMzWSsST8iBmhTFSwENTp0X1I3kCyUs=
 
-On Wed, Apr 9, 2025 at 12:56=E2=80=AFPM Nico Williams <nico@cryptonector.co=
-m> wrote:
->
-> On Wed, Apr 09, 2025 at 08:19:24AM -0400, Theodore Ts'o wrote:
-> > On Tue, Apr 08, 2025 at 10:53:06AM -0500, Nico Williams wrote:
-> > > I'm not keen on CR tools "intuiting" from.. similarity checks.
-> > > [...]
-> >
-> > I'm not keen on fields that can have essentially random semantics.
-> > Part of this is because today Change-ID is in the footer, and so
-> > humans can randomly set it to any value they like.  Sometimes they cut
-> > and paste footers, and so completely unrelated commits have the same
-> > Change-Id which show up when you do a Gerrit lookup by Chnage-Id.
-> > Admittedly, this aspect gets better if we shove it into the git commit
-> > header.
-> >
-> > Part of it is because some tools will edit the Change-Id when doing a
-> > cherry-pick.  [...]
->
-> I was only proposing to leave some details out, not to have completely
-> undefined semantics.  The particular details we might want to leave out
-> are about resolving change IDs to URIs.  In particular this editing of
-> change IDs on cherry-pick you mention has to not be permitted, or
-> perhaps a new change ID could be added -- i.e., are these headers
-> single-valued or multi-valued?
->
-> Let's nail down the semantics of these change ID headers.  Here is a
-> proposal to bang on:
->
->  - change IDs get preserved on cherry-pick and on `pick`s in rebases
->
->  - users can manually remove or change these change IDs, naturally,
->    though generall they would not
->
->  - the actual change IDs are either free-form or they are URIs -- pick
->    one, but if they are URIs they should be URIs to CRs, and approved
->    CRs should perhaps have links to integration reports etc.
 
-Using URIs [to code reviews] looks to me like it makes some
-assumptions about what creates or consumes these headers, right?
-Especially since the URI should point to a code review=E2=80=A6 Is there a =
-way
-to do that which is downstream-agnostic?
 
-Further, and maybe this is my ignorance of Gerrit showing: how would
-you attach a URI to a local commit when authoring it? You don't have
-the review URI when running `git commit`, do you? (Maybe I
-misunderstood; I'm seeing an odd chicken-egg problem here.)
+On 14/04/2025 08:55, Patrick Steinhardt wrote:
+> On Sun, Apr 06, 2025 at 08:38:33PM +0100, Ramsay Jones wrote:
+>> Commit 92f63d2b05 ("Cygwin 1.7 needs compat/regex", 2013-07-19) set
+>> the NO_REGEX build variable because the platform regex library failed
+>> some of the tests (t4018 and t4034), which passed just fine with the
+>> compat library.
+>>
+>> After some time (maybe a year or two), the platform library had been
+>> updated (with an import from FreeBSD, I believe) and now passed the full
+>> test-suite. This would be about the time of the v1.7 -> v2.0 transition
+>> in 2015. I had a patch ready to send, but just didn't get around to
+>> submitting it to the list. At some point in the interim, the official
+>> cygwin git package used the autoconf build system, which sets the
+>> NO_REGEX variable to use the platform regex library functions. The new
+>> meson build system does likewise.
+>>
+>> The cygwin platform regex library, in addition to now passing the tests
+>> which formerly failed, now passes an 'test_expect_failure' test in the
+>> t7815-grep-binary test file. In particular, test #12 'git grep .fi a'
+>> which determines that the regex pattern '.' matches a NUL character.
+>> The commit f96e56733a ("grep: use REG_STARTEND for all matching if
+>> available", 2010-05-22) added the test in question, but it does not
+>> give any indication as to why the test was framed as an expected fail,
+>> rather than a 'positive' test that the 'git grep' command fails to
+>> match a NUL. Note that the previous test #11 was also originally
+>> marked in that commit as a 'test_expect_failure', but was flipped to
+>> an 'success' test in commit 7e36de5859 ("t/t7008-grep-binary.sh: un-TODO
+>> a test that needs REG_STARTEND", 2010-08-17).
+>>
+>> In order to produce the same NO_REGEX configuration from autoconf, meson
+>> and make, modify config.mak.uname to only set NO_REGEX for cygwin v1.7.
+>> In addition, skip test t7815.12 on cygwin, by adding the !CYGWIN pre-
+>> requisite to the test header, which (among other things) removes an
+>> '...; please update test(s)' comment.
+> 
+> Out of curiosity, because I really don't know any better: why do we have
+> to even care about such oldish Cygwin installations from more than 10
+> years ago? Wouldn't people generally update Cygwin every once in a while
+> to have recent packages? Or is there a good reason why we should
+> continue to support it?
 
-Which begs another question: what/who applies the initial change ID to
-a commit and when?
+Heh, as I said in response to Junio, I have a patch that removes all
+of the config in the conditional, so that we would no longer support
+any 'pre-v2.x' versions of cygwin[*]. I think that would be an entirely
+reasonable thing to do, particularly as cygwin thinks of itself as
+a 'rolling release' type distribution. ;)
 
-[=E2=80=A6]
+However, I don't think it is my place to make that kind of decision
+and I was leaving that patch until last. Hopefully, Adam will make
+that call. :)
 
-I've skimmed most of the discussion, and I think a unique ID for an
-in-flight series could be useful for ergonomics and to support more
-tools that link between versions of the series.
+Thanks.
 
-Re-reading the original post [1] (which didn't mention this kind of
-ID?), I'm having a hard time seeing the problem statement. There's a
-lot said here about the specifics of the solution, and some other neat
-things it might unlock=E2=80=A6 meanwhile, I'm wondering if all the
-consternation about change IDs is because the problem being solved is
-underspecified for a core Git feature? (That might tie to Ted's
-initial concerns about semantic meaning, on which I think I concur:
-the parent and committer/author headers have unambiguous meaning to
-Git, independent of anything else.)
+ATB,
+Ramsay Jones
 
-It looks to me, an outsider, like the problem is some combination of
-"I want to track a commit's evolution" and "I want to see related
-commits in review, esp. when it's an identical and already-approved
-commit." But I might be misreading, and clarifying the problem
-statement might help bring us to a better core solution?
+[*] Note, even *with* that config in place, I have no idea if pre-v2.x
+versions would even compile!
 
-[1]: https://lore.kernel.org/git/xmqqh62tm5fo.fsf@gitster.g/T/#m038be849b9b=
-4020c16c562d810cf77bad91a2c87
 
-Cheers,
-D. Ben Knoble
 
-PS This discussion feels somewhat related to the classic GitHub
-problem of not presenting interdiffs/range-diffs: GitHub shows a
-too-flat source diff on force-pushes. Perhaps better web UI tooling
-about interdiff review (which I think is one of the things Gerrit
-does/wants to do?) makes change IDs less necessary, since interdiffs
-help connect evolutions of commits?
