@@ -1,54 +1,89 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEE39479
-	for <git@vger.kernel.org>; Mon, 14 Apr 2025 01:35:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F18470838
+	for <git@vger.kernel.org>; Mon, 14 Apr 2025 06:29:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744594500; cv=none; b=p4OBhK0H0910MXEU47XbZ4hQklDEWpJoBz/8EEEBO3whslkPxVy0RHsxewnY5tWUnMTblYUE5e3PKqLV1ZrZBETwj42NnHA//uGijEZbXI5Q/8dshpLg55nkLpxOybU35EWRPGUd2vwEqEEzGDfVAjgYbxFHblsictY7eyIiFpU=
+	t=1744612160; cv=none; b=Avc7Bgmiy94iSNNtuTSjeactAOJ+BQZO8h12QhHMwpBFTv5/mnto0WP1aaE7EfNTGonW3uDTCGZJuhMpmwk1dZJvEq7aFOJBWuw7QsrsP9RyGD94hgNGTMnD3dx6fJ2eHHWVlEcA9wx1ICzCvKQmlEJnu32fPNAI3PBIyM/LDiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744594500; c=relaxed/simple;
-	bh=60f9u3H0+wSsbapt02PwMqGGkvQnfLjmlwnPCcZTrTw=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gbikWNynI7UwqkQfyt4Uh2sZPedB1ep5tQfDopcjlcsIY/XrfxxOKijzKTDcdIIlVhL2CSc3ppsM/jTQLKsPORkK0smIeVkQJlnGqAHZh8PuWsEiBmZexzddMSGe1HZyfQiZ7lOQnZsiFZrFeyxioWZgkR6BceejUiEkrMX/khE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsdfrJJO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1744612160; c=relaxed/simple;
+	bh=nbdMz38uEcLIKv8FiHALQuM74zZ7JuPusmH6XL2hut8=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=s4WazDmplBCHrIveVuvf2y5cg/lMv89iDXDmMUZfdVCCI7TjGXy1LzbkSRmbw6g0QF1aDuYEo+e6UTJtp2MmV0NCh2FoDQ3S7yfuGTsJFw8cOQvBTsHh9KBCafcsLq5O2g/LZjCqn9tWDZYeJoridZ78+5nAzqaOdmhkISYqE44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=oTyNAQva; arc=none smtp.client-ip=91.218.175.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsdfrJJO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1F0C4CEDD;
-	Mon, 14 Apr 2025 01:34:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744594500;
-	bh=60f9u3H0+wSsbapt02PwMqGGkvQnfLjmlwnPCcZTrTw=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=VsdfrJJOIHuNKUjgMazSgs63tz9+OQT7OFwNDxh0qwN6AJd6+m3JdBAM/AzsQdlhD
-	 wztwS7YQn0i46K0pGImj5AhnH8oalIXpBOENF1BnGNTfIj2ONWyR2z4mLpYO2Cc8uN
-	 5J7YdC5iiKvMLWZOVeQG2onEfqactyG2zwypZWdc=
-Date: Sun, 13 Apr 2025 21:34:56 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: git@vger.kernel.org
-Subject: Re: How to gpg signed email patches?
-Message-ID: <20250413-dancing-acoustic-marten-cc7a7d@lemur>
-References: <fx2ofmmhkjmjqfqya5e3qvmovvmpnjepteqobcz4eia5sw64bg@yquuljpwok3f>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="oTyNAQva"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1744612148;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oqfHtrecljlvCBXPjCsCUEywueja3rlXyssmw/8Qb2Q=;
+	b=oTyNAQvaJrokH/Xg4DF88Q05reck1KRdNmCUSInBj17YD6OEJYCq60FgQNFH0MmtU8/D9G
+	zoVpRw7+Omo88Fs/ZnGNtnIXtxwP1DBTqw+SWq9O9pJWM3JBC4nGM73UsOk7CJGqxvMAeo
+	iZfhTTPXbot60ZsuHBqpfizbJueytDk=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 3/5] t/perf: fix benchmarks with out-of-tree builds
+In-Reply-To: <87v7rcdzck.fsf@iotcl.com>
+References: <20250331-pks-meson-benchmarks-v1-0-b2ace85616a3@pks.im>
+ <20250331-pks-meson-benchmarks-v1-3-b2ace85616a3@pks.im>
+ <87v7rcdzck.fsf@iotcl.com>
+Date: Mon, 14 Apr 2025 08:28:53 +0200
+Message-ID: <87r01v5k9m.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <fx2ofmmhkjmjqfqya5e3qvmovvmpnjepteqobcz4eia5sw64bg@yquuljpwok3f>
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Sun, Apr 13, 2025 at 07:17:26PM +0000, Klaus Frank wrote:
-> how do I get "git send-email" to send the patches gpg signed?
+Toon Claes <toon@iotcl.com> writes:
 
-You have to step back and ask what is the end-goal? Do you want
-repudiation/attestation for your own patches, or do you want to be able to
-verify that the patches sent to you by contributors are tamper-evident?
+> I'm not sure if it's related to this commit, but this patch series has
+> broken something:
+>
+>     $ make && cd t/perf && ./run . master p0005-status.sh
+>
+>     === Running 1 tests in this tree ===
+>     ok 1 - setup repo
+>     perf 2 - read-tree status br_ballast (4629): 1 ok
+>     # passed all 2 test(s)
+>     1..2
+>     === Unpacking 485f5f863615e670fd97ae40af744e14072cfe18 in build/485f5f863615e670fd97ae40af744e14072cfe18 ===
+>     === Building 485f5f863615e670fd97ae40af744e14072cfe18 (master) ===
+>     GIT_VERSION=2.49.GIT
+>         * new build flags
+>         CC daemon.o
+>         * new link flags
+>         CC common-main.o
+>         CC abspath.o
+>         CC add-interactive.o
+>         CC add-patch.o
+>         [snip]
+>         CC t/unit-tests/unit-test.o
+>         CC t/unit-tests/lib-oid.o
+>         LINK t/unit-tests/bin/unit-tests
+>         GEN gitweb/gitweb.cgi
+>         GEN gitweb/static/gitweb.js
+>     === Running 1 tests in /home/toon/devel/git/t/perf/build/485f5f863615e670fd97ae40af744e14072cfe18/bin-wrappers ===
+>     ok 1 - setup repo
+>     perf 2 - read-tree status br_ballast (4629): 1 ok
+>     # passed all 2 test(s)
+>     1..2
+>     cannot open test-results/p0005-status.subtests: No such file or directory at ./aggregate.perl line 159.
+>
+> --
+> Toon
 
-On the kernel side of things, we've been using patatt [1], which supports PGP,
-SSH, and ed25519-signing of patches via a dedicated custom header, a-la DKIM.
+Euhm, it seems I no longer can reproduce this issue. So you can ignore
+this message. Sorry for the noice.
 
-[1] https://github.com/mricon/patatt/blob/main/README.rst
-
--K
+--
+Toon
