@@ -1,111 +1,121 @@
-Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088741E505
-	for <git@vger.kernel.org>; Mon, 14 Apr 2025 12:19:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C76726ACC
+	for <git@vger.kernel.org>; Mon, 14 Apr 2025 12:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744633187; cv=none; b=Scuywv6u3GaIiYtVQ9ILOSXiHoXKNt4CtN2tPTGhQ4CX/Lfola+PE81TyVcFdj0F1ciV0mRJHBTl6LTwGJ3cZQs6CoEP/RW3I0k+qzYjk6uuqjUWQc5OdoTq2ZeApq0sh/5hubtNAY5QiIfWazmGogt4ZJWGVq0VeGYOgorhs6U=
+	t=1744633906; cv=none; b=M819BMhSJW51rYFJV8BT55/16E6MVbfrfD4y2GWM5H8DUzv3ZTkQ7uwsmZ+6tSvD1MB7osOAPmFLMqZ0xF5Ir/8/NI573OTNAPgripMrQpy2nh2B6ujqJpoA0iGlVhCpLv8u8EkGGyjs9TIJie47W8cLZf8RLgi4zBUDoeAuEng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744633187; c=relaxed/simple;
-	bh=7sxkrPCICVlXSGO4LgZEd38nPDRQu63gI/1Olc6XOmo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K+Q6uyG14jLNxoX8r4SlAQIULaTXPeOqPysSZSQxkntLH4EIdnzFpuqJCq0VVUhzLZ9hL5sh8gmLtSV5TJVU4gXLtSGwhRIA+9ZuuyhxcgQisf36CoFp3abJQ9t8Uc4TvXy/umj2mxmqLdt3UgZ27lIkuo7r1Z5/724eYQ1wXjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=M3S5Iqlx; arc=none smtp.client-ip=95.215.58.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1744633906; c=relaxed/simple;
+	bh=JQHAWsBF1SO1wzyRBXxFg1oO+Mq9AEXh39XcLyCgqKc=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=njAtqKyLk8z9MCSbKc43dy9bmemfrec5Pwjwbkj3T1I3J2bG8Xmltzz7aP35QssZU9UMdaeKGQw4wrdH2yYtEde1lsS0T2+drHfTZ3scs/Y04Lb58+/SQzEd9TGqQ3fHjrpKV1ymqxs7TcsZ6KZu8nn/qa5zcqPsWd1yrvLi7Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QKMhtACz; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="M3S5Iqlx"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1744633177;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=32CfdtFovNPwmjV03ZZVzZH7uOEklVF48Wbg//IFhiM=;
-	b=M3S5Iqlx7yp+6Y23SzB8SO/dJiUyBqYTOkOUWl6wHpSxap9PokdvgIqwFO0WA3r1HZFF8H
-	HOOmUrj9Z40aDdoE3EywAfWZ47uBxemoiAARxN770vi3rcDzwuSLSR8nZIfLXV9uy+fO19
-	Vzcwa+1RB++aqg1otKElmOzFy3ji+Tk=
-From: Toon Claes <toon@iotcl.com>
-To: Scott Chacon via GitGitGadget <gitgitgadget@gmail.com>
-Cc: Taylor Blau <me@ttaylorr.com>, phillip.wood@dunelm.org.uk,
- git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, Scott Chacon
- <schacon@gmail.com>
-Subject: Re: [PATCH v3 2/2] bundle-uri: add test for bundle-uri clones with
- tags
-In-Reply-To: <Z9sD63+d+EQKSMXM@nand.local>
-References: <pull.1897.v2.git.git.1740825238.gitgitgadget@gmail.com>
- <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com>
- <d148b14c390f74e86bfa14c05e9e186fdcecbeb8.1742312173.git.gitgitgadget@gmail.com>
- <e4244e04-d2f3-43ab-88cf-58d9804731b8@gmail.com>
- <Z9sD63+d+EQKSMXM@nand.local>
-Date: Mon, 14 Apr 2025 14:19:27 +0200
-Message-ID: <87cydf541c.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QKMhtACz"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-224191d92e4so39324015ad.3
+        for <git@vger.kernel.org>; Mon, 14 Apr 2025 05:31:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744633903; x=1745238703; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SVkgNGr4bpFz3NEMp48XL4XPAF5uBVTeQ05BqTj9QKo=;
+        b=QKMhtACza5GrKieN+gw6+GvQ2i6rgM1FMD+7to8H1xWM/J2+YSCmTsv0Vj3brAz3Id
+         EuNi8dr76zu7nIeVchy6oB7jKXwOcMs8j8fkpjyEUcB357FBEMLk2ppBdj5sq8NqV73N
+         XPDQScC+82KCi4eM0DMBpuRqj44Y0+eB5KOyq0hC8NIPd8mVfJpkbQMdiy3lK2DjrUZE
+         mVV7VkKwLnqODrS+SSkmZqR/ToK55on+FclNhBB5JhcMfW3rC0Z6pR8CfgwZK4D5z58q
+         ma0puz9YLwlGVDq/TPKITYk8Dmuc5SOPolAGknPtrdDoCsNnUN8guEN+u6TzY9B2zqhN
+         mGaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744633903; x=1745238703;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SVkgNGr4bpFz3NEMp48XL4XPAF5uBVTeQ05BqTj9QKo=;
+        b=XCQ5+bM+B4+0QR9Dz8O82XOi4Ysbxk83kjXWzSJ1UGuqWgu2eWi9iJL4fAMh2Yl/cI
+         u3x3N6omqk4RtxPpsXpPemQxCNNmur1mLB+4NACiWKX/kCXtwhJls7QBuo0wzX4a2d7J
+         H0fojYP5q0eQsrb/jucIWx7i/W098NhCKme5l3xiScYh5LZ7RFHl2Jdcl8z72QlxXk47
+         8X2HDIs2ZzHbackkSjkPxpwnwABv3ijIQYgRVTJSucocV1C15zEn6eqTRLutM7vQMwyC
+         GNb4zTAxTguqn5XZYngACxovC4Nn01Qd1M4lVSExewH8g3SBaAdCuGKSUEBejWh/7NMA
+         cg9w==
+X-Gm-Message-State: AOJu0YwCNnPj3vM0zOhJEwoITtL2V1W3t6kqlkUjDKm5U9nLJlkOD1Ty
+	1DY1uGclqqvOaBK9GKoB1mu0zkXbwRHc9cReNYrWmKqF/dgGSvV7UR61zw==
+X-Gm-Gg: ASbGncvCFx1j5y3OYx249u1/+9dvrbAlRo1PM4pv+9mMmuIVv8HbRa3uETwJAQ5KIVH
+	pppbcuzwVk9nIxTcNJSYs8qXRD2rEfxoP+GkNglWSrPjSsq2Uv6z2qLQTM6Of6PjoHRbJqaKrdn
+	2M6fu1kQSwu1AIkj+bMddi/ZOdTquw7oOV5A7VBwYr6EbAmNM8qKgjPTJqLK1izIK3H4IVY7EgI
+	deDFnymuyP39VqFHWqLS0O/9ong4pRlpaGmEjGW01wK797XrR+43C1cycIUzkPADr/YPGZcLW8t
+	xmCpaCiCeGJ6YLX1dicWdU+mX1p+KeAl8nWhk5dLFVJoplOhQVE=
+X-Google-Smtp-Source: AGHT+IElKFYB/dTM/+eX22Lpp9/1XkQvANU1oyZn1cdcCQBqjOCIZsyU9aEhqwnXnGJ0JkVwGJW62g==
+X-Received: by 2002:a17:902:d48d:b0:21f:6546:9af0 with SMTP id d9443c01a7336-22bea502685mr139210685ad.44.1744633903030;
+        Mon, 14 Apr 2025 05:31:43 -0700 (PDT)
+Received: from [192.168.0.7] ([106.51.24.143])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22ac7b8b73asm97000855ad.86.2025.04.14.05.31.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Apr 2025 05:31:42 -0700 (PDT)
+Message-ID: <85ea4aa0-c595-4f0b-a2ac-d0113aca464a@gmail.com>
+Date: Mon, 14 Apr 2025 18:01:14 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Git Mailing List <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Christian Couder <christian.couder@gmail.com>,
+ Markus Jansen <mja@jansen-preisler.de>, =?UTF-8?Q?Jakub_Nar=C4=99bski?=
+ <jnareb@gmail.com>
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Collaborative community interview for Git's 20th anniversary
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Taylor Blau <me@ttaylorr.com> writes:
+Hello all,
 
-> I think we should be testing that all of the refs we expect to have made
-> it over actually did so. This diff (applied on top of your series) does
-> that:
->
-> --- 8< ---
-> diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-> index b1276ba295..9b211a626b 100755
-> --- a/t/t5558-clone-bundle-uri.sh
-> +++ b/t/t5558-clone-bundle-uri.sh
-> @@ -128,13 +128,12 @@ test_expect_success 'create bundle with tags' '
->  test_expect_success 'clone with tags bundle' '
->  	git clone --bundle-uri="clone-from-tags/ALL.bundle" \
->  		clone-from-tags clone-tags-path &&
-> -	git -C clone-tags-path for-each-ref --format="%(refname)" >refs &&
-> -	grep "refs/bundles/tags/" refs >actual &&
-> -	cat >expect <<-\EOF &&
-> -	refs/bundles/tags/A
-> -	refs/bundles/tags/B
-> -	refs/bundles/tags/tag-A
-> -	EOF
-> +
-> +	git -C clone-from-tags for-each-ref --format="%(refname:lstrip=1)" \
-> +		>expect &&
-> +	git -C clone-tags-path for-each-ref --format="%(refname:lstrip=2)" \
-> +		refs/bundles >actual &&
-> +
->  	test_cmp expect actual
->  '
-> --- >8 ---
->
-> While writing the above, I wasn't quite sure how to follow the test
-> setup. It looks like it creates the following structure:
->
->     $ git log --oneline --graph
->     * d9df450 (HEAD -> base, tag: B) B
->     * 0ddfaf1 (tag: tag-A, tag: A) A
->
-> , which we could do with just:
->
->     test_commit A &&
->     test_commit B
->
-> But even then, I don't think we really need to have more than one tag
-> here to exercise this functionality. So I think it would be fine to
-> simplify the test to just create a single tag, which a simple
-> "test_commit A" should do.
+As part of the Git's 20th year anniversary, we from the Git Rev News 
+team are thinking of doing a community interview where we would share a 
+list of questions that we've prepared and we would like to welcome 
+answers from anyone in the community for them. We could gather the 
+answers for them upto a particular time (like 25/April or so) and begin 
+curating the answers into a special interview for this month's edition. 
+The questions are below. Feel free to respond with your answers to this 
+mail thread. Let me know if I've missed to include any particularly 
+compelling question.
 
-Hi Scott,
+   - What's your favorite Git trick or workflow that you wish more people
+     knew about?
 
-Are you planning to pick up this patch series again? I think it would be
-really valuable to get this merged. The patch by Taylor above might be
-worth integrating, other than that I think it should be good to go.
+   - What was your worst Git disaster, and how did you recover from it?
 
-Let me know if I can provide any help.
+   - If you could go back in time and change one design decision in Git,
+     what would it be?
 
--- 
-Toon
+   - Which Git feature or improvement over the past 20 years do you think
+     had the biggest impact on your workflow?
+
+   - What Git problem that existed 10 years ago has been most
+     successfully solved?
+
+   - Which Git commands or workflows do you think are still misunderstood
+     or underutilized today?
+
+   - What's one Git based project, tool, or extension you think deserves
+     more recognition from the community?
+
+   - What Git feature or capability surprised you most when you first
+     discovered it?
+
+   - What's your boldest prediction about how version control might look
+     in another 20 years?
+
+
+Looking forward to see interesting answers. :-)
+
+--
+Sivaraam for the Git Rev News team.
+
