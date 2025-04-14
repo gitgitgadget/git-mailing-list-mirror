@@ -1,121 +1,134 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C76726ACC
-	for <git@vger.kernel.org>; Mon, 14 Apr 2025 12:31:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F16265609
+	for <git@vger.kernel.org>; Mon, 14 Apr 2025 12:34:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744633906; cv=none; b=M819BMhSJW51rYFJV8BT55/16E6MVbfrfD4y2GWM5H8DUzv3ZTkQ7uwsmZ+6tSvD1MB7osOAPmFLMqZ0xF5Ir/8/NI573OTNAPgripMrQpy2nh2B6ujqJpoA0iGlVhCpLv8u8EkGGyjs9TIJie47W8cLZf8RLgi4zBUDoeAuEng=
+	t=1744634058; cv=none; b=PZXGciRUiNDdD1Qxk9FGx+O8FWr/Nk4lkXbaHaYFO57JlqiqGUuA+ZM0T0w6QGpA1WIxItW0Us7NajjrXacaMajyzvlltoEkVE88jP3sd/NyDIYwm4/5KaFl1tY6yVunOUyaADX/Hr4nFNG9FXKFK1DtcozvZ9k/VFiiX9v/z3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744633906; c=relaxed/simple;
-	bh=JQHAWsBF1SO1wzyRBXxFg1oO+Mq9AEXh39XcLyCgqKc=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=njAtqKyLk8z9MCSbKc43dy9bmemfrec5Pwjwbkj3T1I3J2bG8Xmltzz7aP35QssZU9UMdaeKGQw4wrdH2yYtEde1lsS0T2+drHfTZ3scs/Y04Lb58+/SQzEd9TGqQ3fHjrpKV1ymqxs7TcsZ6KZu8nn/qa5zcqPsWd1yrvLi7Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QKMhtACz; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744634058; c=relaxed/simple;
+	bh=II6IdYFyC+tbO4sgF3qmqisqMGIOxKUeXc9w++tioR0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pw78zvs8egO4pAZixCR2xAjsWm5UCkEktl0j0HIbpULroiVhzQWOPJ7QLMi4ys9mvA3QL3UmeoPqNuEfH50RwOcWKcRt+CiascRCZzR0ejNcuOGWmOr2xDWlVDHkhuDLe4YOhDIPxluG4JVNIvyyJw5LxZbPSbbeigc4mgRww08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LYNffV1T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hj1YNqlE; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QKMhtACz"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-224191d92e4so39324015ad.3
-        for <git@vger.kernel.org>; Mon, 14 Apr 2025 05:31:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744633903; x=1745238703; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SVkgNGr4bpFz3NEMp48XL4XPAF5uBVTeQ05BqTj9QKo=;
-        b=QKMhtACza5GrKieN+gw6+GvQ2i6rgM1FMD+7to8H1xWM/J2+YSCmTsv0Vj3brAz3Id
-         EuNi8dr76zu7nIeVchy6oB7jKXwOcMs8j8fkpjyEUcB357FBEMLk2ppBdj5sq8NqV73N
-         XPDQScC+82KCi4eM0DMBpuRqj44Y0+eB5KOyq0hC8NIPd8mVfJpkbQMdiy3lK2DjrUZE
-         mVV7VkKwLnqODrS+SSkmZqR/ToK55on+FclNhBB5JhcMfW3rC0Z6pR8CfgwZK4D5z58q
-         ma0puz9YLwlGVDq/TPKITYk8Dmuc5SOPolAGknPtrdDoCsNnUN8guEN+u6TzY9B2zqhN
-         mGaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744633903; x=1745238703;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=SVkgNGr4bpFz3NEMp48XL4XPAF5uBVTeQ05BqTj9QKo=;
-        b=XCQ5+bM+B4+0QR9Dz8O82XOi4Ysbxk83kjXWzSJ1UGuqWgu2eWi9iJL4fAMh2Yl/cI
-         u3x3N6omqk4RtxPpsXpPemQxCNNmur1mLB+4NACiWKX/kCXtwhJls7QBuo0wzX4a2d7J
-         H0fojYP5q0eQsrb/jucIWx7i/W098NhCKme5l3xiScYh5LZ7RFHl2Jdcl8z72QlxXk47
-         8X2HDIs2ZzHbackkSjkPxpwnwABv3ijIQYgRVTJSucocV1C15zEn6eqTRLutM7vQMwyC
-         GNb4zTAxTguqn5XZYngACxovC4Nn01Qd1M4lVSExewH8g3SBaAdCuGKSUEBejWh/7NMA
-         cg9w==
-X-Gm-Message-State: AOJu0YwCNnPj3vM0zOhJEwoITtL2V1W3t6kqlkUjDKm5U9nLJlkOD1Ty
-	1DY1uGclqqvOaBK9GKoB1mu0zkXbwRHc9cReNYrWmKqF/dgGSvV7UR61zw==
-X-Gm-Gg: ASbGncvCFx1j5y3OYx249u1/+9dvrbAlRo1PM4pv+9mMmuIVv8HbRa3uETwJAQ5KIVH
-	pppbcuzwVk9nIxTcNJSYs8qXRD2rEfxoP+GkNglWSrPjSsq2Uv6z2qLQTM6Of6PjoHRbJqaKrdn
-	2M6fu1kQSwu1AIkj+bMddi/ZOdTquw7oOV5A7VBwYr6EbAmNM8qKgjPTJqLK1izIK3H4IVY7EgI
-	deDFnymuyP39VqFHWqLS0O/9ong4pRlpaGmEjGW01wK797XrR+43C1cycIUzkPADr/YPGZcLW8t
-	xmCpaCiCeGJ6YLX1dicWdU+mX1p+KeAl8nWhk5dLFVJoplOhQVE=
-X-Google-Smtp-Source: AGHT+IElKFYB/dTM/+eX22Lpp9/1XkQvANU1oyZn1cdcCQBqjOCIZsyU9aEhqwnXnGJ0JkVwGJW62g==
-X-Received: by 2002:a17:902:d48d:b0:21f:6546:9af0 with SMTP id d9443c01a7336-22bea502685mr139210685ad.44.1744633903030;
-        Mon, 14 Apr 2025 05:31:43 -0700 (PDT)
-Received: from [192.168.0.7] ([106.51.24.143])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22ac7b8b73asm97000855ad.86.2025.04.14.05.31.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Apr 2025 05:31:42 -0700 (PDT)
-Message-ID: <85ea4aa0-c595-4f0b-a2ac-d0113aca464a@gmail.com>
-Date: Mon, 14 Apr 2025 18:01:14 +0530
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LYNffV1T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hj1YNqlE"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id C02851140128;
+	Mon, 14 Apr 2025 08:34:13 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Mon, 14 Apr 2025 08:34:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744634053; x=1744720453; bh=gM4gqTDvIf
+	q9dhpc8uV1ZhGujvpjyRt2sR+j8Vk2eIg=; b=LYNffV1TpCeM5z36VrgL8B/rot
+	/94hj4XPBkO+/5J6pwx7xR+pmvQU91R0qrebm/hp0eMXnb3ynb54fKNrb/p0B+OA
+	CXVJ5V+AhPDLoZ/mqq3+Fziv10bxweO3JVwAABobLTFXD3jr/+MSHnbw5FJJYuzb
+	OGsc/U5MtKcm0spDz+mvBvJlJ73FaDcW9tII9+fehrwCywefjmZPHOa424WGx0yy
+	sFkGcjZFBaUqfI6sVyH7mA+RzHFS9tPzJo+0SkkXp30ZTH6Kg5zDOIDhSs6jfiRO
+	kyuhwuOAS1DYi9Bd8N3KsycbtpF1pJ9OuIOIO7c+AOw/6v9lQ1/hbfM/CPIA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744634053; x=1744720453; bh=gM4gqTDvIfq9dhpc8uV1ZhGujvpjyRt2sR+
+	j8Vk2eIg=; b=Hj1YNqlEtwDWC9zEJe8Iz3EY/yjfLjkW9Y3Z9/YWWZIcXz5c899
+	r2gvg/xElLAgfbKBUYs9VCyX/gSGk8aeBBM1+Gef5jdERrfn/koC4IeDJKxHGAiH
+	6mfTNHjqK2GnahFn6r9jbOws+INigrYtgqqiaMSUR1CXN6Wexxa6Z1M46J4M9MG5
+	Zpe1N2CE3UKOgd1If68bXdfwcDb+BEQP7J50L9/nx0BbyVDq3+kiE4gJAgeJYI9o
+	CpSgBXri3hpB3jhDHGqHIpyWYzHASMJkvJERt3sRSZhzt3Ewe+Lnqtby68IvdqDH
+	z7h3bedpTA1Cxgu0amez03ov9oK+eU+xfGw==
+X-ME-Sender: <xms:xQD9Z8m1A3r5J8W0mQ9RosKAELNS4gMw4CEx_cWLBvIlVnOgqIj3zw>
+    <xme:xQD9Z70YKXQsrkPJ6OKrsTfR0jadAhPfCfWxaREezpFpFarYAFgR8DeOgIrWn9Rpc
+    FpzM6l3bSbZwmLrbg>
+X-ME-Received: <xmr:xQD9Z6quVQ2QI6DkwwyAfuIRdMO5e9izae56W0VgaSsxIGpstHK5dsyvvbmgqGcK_863aLwUZS0G1ndj5l3_x9Rk-yR3j3Cgic8I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvddtheeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhsse
+    hpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:xQD9Z4mGA14Xruud8gvP0EO_QCeVHWWetX2U03R1soy0loGsZ2UY5w>
+    <xmx:xQD9Z60i70KJFtrv1Eic3WyEaRWeiX8o6wSkQX2wXv4NrdR5AZfoZg>
+    <xmx:xQD9Z_vNW9ehIljz8f_cj8b2TqchzwkU1vZJnmlUnvGVv_IOjUkMwA>
+    <xmx:xQD9Z2XHJy1LhVt53bvCq3ggyipcST8xtefcAykkMwSKjfuIEcW2-Q>
+    <xmx:xQD9Z4Qo4ysQdKakm8MKfA9xeUEYMt3XOJeRw-JRm1WfZbqOkSOSRCS->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 14 Apr 2025 08:34:12 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: ds/path-walk-2 (was Re: What's cooking in git.git (Apr 2025,
+ #03; Fri, 11))
+In-Reply-To: <7c2b338f-f795-4957-aac3-20e6dd5b5f48@gmail.com> (Derrick
+	Stolee's message of "Mon, 14 Apr 2025 07:03:10 -0400")
+References: <xmqqmscml2zq.fsf@gitster.g>
+	<7c2b338f-f795-4957-aac3-20e6dd5b5f48@gmail.com>
+Date: Mon, 14 Apr 2025 05:34:11 -0700
+Message-ID: <xmqqo6wysz0c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git Mailing List <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
- Christian Couder <christian.couder@gmail.com>,
- Markus Jansen <mja@jansen-preisler.de>, =?UTF-8?Q?Jakub_Nar=C4=99bski?=
- <jnareb@gmail.com>
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Collaborative community interview for Git's 20th anniversary
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hello all,
+Derrick Stolee <stolee@gmail.com> writes:
 
-As part of the Git's 20th year anniversary, we from the Git Rev News 
-team are thinking of doing a community interview where we would share a 
-list of questions that we've prepared and we would like to welcome 
-answers from anyone in the community for them. We could gather the 
-answers for them upto a particular time (like 25/April or so) and begin 
-curating the answers into a special interview for this month's edition. 
-The questions are below. Feel free to respond with your answers to this 
-mail thread. Let me know if I've missed to include any particularly 
-compelling question.
+> On 4/11/2025 6:58 PM, Junio C Hamano wrote:
+>
+>> * ds/path-walk-2 (2025-03-25) 13 commits
+>>  - pack-objects: allow --shallow and --path-walk
+>>  - path-walk: add new 'edge_aggressive' option
+>>  - pack-objects: thread the path-based compression
+>>  - pack-objects: refactor path-walk delta phase
+>>  - scalar: enable path-walk during push via config
+>>  - pack-objects: enable --path-walk via config
+>>  - repack: add --path-walk option
+>>  - t5538: add tests to confirm deltas in shallow pushes
+>>  - pack-objects: introduce GIT_TEST_PACK_PATH_WALK
+>>  - p5313: add performance tests for --path-walk
+>>  - pack-objects: update usage to match docs
+>>  - pack-objects: add --path-walk option
+>>  - pack-objects: extract should_attempt_deltas()
+>> 
+>>  "git pack-objects" learns to find delta bases from blobs at the
+>>  same path, using the --path-walk API.
+>> 
+>>  Comments?
+>>  source: <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
+> The current version (v2) has not received any comments yet. v1 had
+> some, which I responded to, as well as some exploration of the use
+> of --window by Taylor. I haven't heard anything since then.
 
-   - What's your favorite Git trick or workflow that you wish more people
-     knew about?
+Right.  I do not recall seeing anybody doing a deep dive, which I
+would prefer to see done in the code paths involved.  At least I'd
+want to see somebody (could be me) verify that the changes would not
+break when the new option is not in effect before merging it.
 
-   - What was your worst Git disaster, and how did you recover from it?
+> I continue to get user reports of folks using this feature in Git
+> for Windows or microsoft/git, so I still think this would be a
+> valuable improvement for the core project.
 
-   - If you could go back in time and change one design decision in Git,
-     what would it be?
+Oh, no quiestion about that part.  Otherwise we wouldn't be listing
+the topic in this list ;-).  I just want to see support not just by
+the end-users who do not know or care how the thing looks internally,
+but also by the folks around here who do.
 
-   - Which Git feature or improvement over the past 20 years do you think
-     had the biggest impact on your workflow?
-
-   - What Git problem that existed 10 years ago has been most
-     successfully solved?
-
-   - Which Git commands or workflows do you think are still misunderstood
-     or underutilized today?
-
-   - What's one Git based project, tool, or extension you think deserves
-     more recognition from the community?
-
-   - What Git feature or capability surprised you most when you first
-     discovered it?
-
-   - What's your boldest prediction about how version control might look
-     in another 20 years?
-
-
-Looking forward to see interesting answers. :-)
-
---
-Sivaraam for the Git Rev News team.
-
+Thanks.
