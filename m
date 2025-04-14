@@ -1,100 +1,329 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921A02749EE
-	for <git@vger.kernel.org>; Mon, 14 Apr 2025 16:04:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B6B27B512
+	for <git@vger.kernel.org>; Mon, 14 Apr 2025 16:04:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744646656; cv=none; b=im99t4VH94cIxHDWINq7q1Z3JYOPxL+d7Ygc1vSyrNPiSo5eVpf0Mmo9tYaD8xhBVFaN56rvtzWutDVYMQCRPgk3kVikh2tgEgQ4t+036spOZ6aoyYvdoDkcXNY7UHrilbbCowy/6rNa8EB/W9qceZxQSPQyW/Uhs/SN6vNnN8Q=
+	t=1744646657; cv=none; b=QHCiOywBbBxfCe1IoawNR2G/ejwP/6B1DNH3M7rM8Ea71Hp8KN5KA0jNQhw3HhHh9zGpi4t386gQ4Y7ScFlf/YcsVC2/BxM3skcWWhwDO2qP8cHzm29pmQB4/FTJnJyP2kaa0qCABDgy7ZklcczCqLYVbvQEf+kaN3CZj5QPAUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744646656; c=relaxed/simple;
-	bh=dYffer9XuZUVCD8SdLXC0dn5gdtDdF+/tC9EHiC24KA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YhRYaRNfosJaq1nCl0n2EgGULX6LLhXUTkXMGBg/sO+i/nKSTAvydYH3tN1Cx5nw+h+se1p3ULy/SV/T2AgblkPFTpxbz8pFy763bHRzhp5Sn1SU7mTlt5mZyhdLtwUqmylAHThAKyr7KOgpEG28bXYTaOR8y2l95jc0o6360Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f444bjhi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UwJ4s/hx; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744646657; c=relaxed/simple;
+	bh=pbwm2Q8Xcta2B4AdmnaegU6rhLs9UiHgFsLz5a221NM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=nmfhL3SeAzBpPO7bLiPsLFcIEqqmp+LUZhw6AMvIw2i4Ko2ddD1Ty028MtgCmlBMhGli05T20/tAn1R6zHSUddSfQR3uTTtkjndel34LVt34CmtiWgPOQBj8RXmcBeJLQWlh+TmscfIcT4U4rywl3sdQyIOh8Nwvs5WczPv9DCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kqlQQfLV; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f444bjhi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UwJ4s/hx"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 808B72540374;
-	Mon, 14 Apr 2025 12:04:13 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 14 Apr 2025 12:04:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744646653; x=1744733053; bh=dYffer9XuZ
-	UVCD8SdLXC0dn5gdtDdF+/tC9EHiC24KA=; b=f444bjhiiZMHidqTCccxwRsYcm
-	4kyVRwTviyjQB6VUY3lS3DyAOkKS9b0mThQgcH21DCUrrbh8yPKUzWx6PXtaqhT6
-	NGkCVBGOxfNp2hpoEm2sRcOp1sKqRkpNhfaftYmGUXzltC+lU5D48wl1ivYLOuzA
-	toM7pUCyM75yDixitaRsKpC+QkVuoNjgtbMPbT5o/tzjb8FDIhI2vGjt0dyIYlcM
-	GZ4sE2p8Y03jwWbftcnT/kfMLlgUFU0FN4WbIAezWtHNByMMb1RiW5LlnY6N6f2x
-	dJHojaGIIcZxqCCzMZWcXGoDZFnP550W7EhCiAuS1BuEGREZACv8zas5SsLQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744646653; x=1744733053; bh=dYffer9XuZUVCD8SdLXC0dn5gdtDdF+/tC9
-	EHiC24KA=; b=UwJ4s/hx3IBlCC7cFHbRVK8NipZMs4/sV1q6UfgrQK+Di+35BcS
-	XPSBTtNmfGziKh5WuGYxr9Aqszgs6hB2oBu6lfGSKSfORs7HS0ptx4UoPPnh7huP
-	kErPqpx2I29LiJWEE/3gI1Q5uE/SxqrRadCuVRe36MHMnYwpmp5zKMU0HKi4LPOA
-	FiWyXhwDsNKHqXzFNJV6ZwA+jIAnqOLdOLTU8sMunHXqLrScijrCH+e85Ow1XNZL
-	aLe+T29K9weuLZ8yRRPJqFfwHHh/LtrS7HwEvw+NakicXYjh8y8zMlchtNeBsSVC
-	A3XcgEaFdNqZ5749xOKfnX2k5zkaSaf0maA==
-X-ME-Sender: <xms:_TH9Z1khb8t1OI5vu-jB8915DKkC_whAEkJkH0uClnBPkwQzdNgYzw>
-    <xme:_TH9Zw1FSaqEOandzVDOYGXrVGzTQUykuOVjYqxl_o52EU3MAybab5cAwwWV0mqOP
-    KPy08tO-gYb1MFfbw>
-X-ME-Received: <xmr:_TH9Z7psmDqe0RW-84sxu72V6iCqcP0osmzq293t0pHRvoUgLsYXF_xaOa6HeTypQTI-ru1tr-Vgj2K8hrpPqnQacKdE_fgE-K1i>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvddtleekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhgvvhhrrghiph
-    hhihhlihhpphgvsghlrghinhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhi
-    thhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepvhguhigvsehgihhthhhusgdrtghomhdprhgt
-    phhtthhopehnvggvrhgrjhhsihesmhhitghrohhsohhfthdrtghomhdprhgtphhtthhope
-    hpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:_TH9Z1nT8LBG6sRnTY8J_CeSBaCELVKduLqMeLh1SdkdUWLB3vMglQ>
-    <xmx:_TH9Zz23u_SVSUmfol6wZCjCP5rCfT6xAIK1UmIPwnA9pCCtbmgftg>
-    <xmx:_TH9Z0tvsC1LppQtVz6Uv6F7m9gjX1ONx8eHijEVmmXUW1GNj7Ma7Q>
-    <xmx:_TH9Z3VW3g0tY1ysVYoR2neb34FgWCOfdAyLjF6NkkKEbSuH913nbg>
-    <xmx:_TH9Z-F5QDti7dXAb45qmX39ZisffRaS5GvZkxQ05o_CdDFn-nguPzbZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Apr 2025 12:04:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Philippe Blain <levraiphilippeblain@gmail.com>
-Cc: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Victoria Dye <vdye@github.com>,  Neeraj Singh
- <neerajsi@microsoft.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 0/3] Two perf test fixes
-In-Reply-To: <54864a66-c399-ac2e-e223-affd6a493989@gmail.com> (Philippe
-	Blain's message of "Sat, 12 Apr 2025 22:50:33 -0400")
-References: <pull.1936.git.git.1743181669.gitgitgadget@gmail.com>
-	<pull.1936.v2.git.git.1744481732.gitgitgadget@gmail.com>
-	<54864a66-c399-ac2e-e223-affd6a493989@gmail.com>
-Date: Mon, 14 Apr 2025 09:04:11 -0700
-Message-ID: <xmqqlds2rapw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kqlQQfLV"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3913b539aabso2707253f8f.2
+        for <git@vger.kernel.org>; Mon, 14 Apr 2025 09:04:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744646653; x=1745251453; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pgajhPRf+bdlOs5P1RR2J7u1G+Sh8ym6z97HpQfX4Eo=;
+        b=kqlQQfLVVNBvlAyk4GGahB9nkc+Xdhykte83m32PHQpR8PSzlcybjH2HUmcy2JtJIo
+         rPQa+aFmK8Tytkz1LSISUSAA6SBKvUXGgBFYz23qJ0EPcy1sJbI/lr3JdHRHWICF4b8t
+         JwE0GvYIt7EGSIHkyMwBhQNe90kKg/V3cwcIDg7gq+ZCALfw/pqZvUEXK+wySb0ycwLb
+         flau9OSiN58Xz+jF1un3Ipe2mUcYQZtpoexrDH9pywQaw3KV7dXxw+m7ZAiOCqX1J8S1
+         xlpU9Y3/LaaOxI+1/2rzAOlHBGFk9hpx1mhhcgwxCC2KfRh6kY+CVWDV8ADjFv09riaZ
+         DYwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744646653; x=1745251453;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pgajhPRf+bdlOs5P1RR2J7u1G+Sh8ym6z97HpQfX4Eo=;
+        b=nh3zgeDv3bugbdYpXW7ibJL7/c9x5j/ZVcM2H2ojo1Bonu7H/xT6/s2gZNATHXRZRH
+         uVbLpdCamuOhUcwk6665wP4XbkD+wok4f8ujwnGaH6hgSdk1hhsO7iW475pUhgEX/xLT
+         dhEcSBHSXgdesyoS4kiWtu/r++a0KcfODZZx8TCpD7o1uoY7cgtcQAr2s33cxbfWBjbR
+         eUmaNPJnXbfpfucKSMoQU4V0aYm71VuFhUMsZfKdG02ltWTAMN+glcvNANOc3otszYT+
+         URti0DQko+zylvXwDAWQ2NdI7Wb69ovOqNjZ503DnNeiLaB/vnPLI5bairBO5Nmbz80T
+         ppaQ==
+X-Gm-Message-State: AOJu0YwVxkYQk+TR5LpaFKVCNY9jb+WWFBRJahacWD6O4VJuY/g5hhxo
+	p1t4qhjUBSH4RUuIiYQpSlQEvM/SNJo/tJv1+mieEHqXsgUs5kpTNUjQuQ==
+X-Gm-Gg: ASbGncs7p/untz1QFJG+vpfvtMJpIfnzInomRdDSPq2bSxbyY91i554zEyvYQZvRiT+
+	Gt+voRL3x1Fziq44PwTDhDict0ICyDKYQ58IfX+ItdrZFzMHOV+5Rfhi6SLlm2LzKn9ivQhfjST
+	GNRmkemPvQ1SVEfGd3Xttibt9vmg/27X3lPqolfL5CDROTIjkA4xFNHz22if2XN+CCF1geDT3T4
+	NT0qgMb/yZIC6vpFMSnYmtMw5qSAv1CHGd2Jh/aPdreAM8z2TUEOV9NVlA4VkkCeZ9diZ46Jryt
+	CVU/xh2iCeVKYJNuQT+8BOyBIxjULZ5IlOctwygXcJIHW13ZPR60CLLEyuCQjCvGk8MuFMRDN/4
+	=
+X-Google-Smtp-Source: AGHT+IHjMsPBWrad7kPPEzOBqhzUJhWKZZQ8aVcRcsLd8/VSkIjtJgEC5AEz5b7f0snrculUnmGbZg==
+X-Received: by 2002:a5d:64e7:0:b0:391:2ab1:d4b8 with SMTP id ffacd0b85a97d-39ea51d353dmr10527590f8f.1.1744646652296;
+        Mon, 14 Apr 2025 09:04:12 -0700 (PDT)
+Received: from christian-Precision-5550.lan ([2001:861:3f04:7ca0:a9d4:af7b:bb5c:77e4])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eae977513sm11258029f8f.42.2025.04.14.09.04.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Apr 2025 09:04:10 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Taylor Blau <me@ttaylorr.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 2/4] promisor-remote: refactor to get rid of 'struct strvec'
+Date: Mon, 14 Apr 2025 18:03:41 +0200
+Message-ID: <20250414160343.2216312-3-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.49.0.158.gd3b09c1afe
+In-Reply-To: <20250414160343.2216312-1-christian.couder@gmail.com>
+References: <20250414160343.2216312-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Philippe Blain <levraiphilippeblain@gmail.com> writes:
+In a following commit, we will use the new 'promisor-remote' protocol
+capability introduced by d460267613 (Add 'promisor-remote' capability
+to protocol v2, 2025-02-18) to pass and process more information
+about promisor remotes than just their name and url.
 
-> Sorry, I forgot to mention that this v2 only adds a third commit
-> with a small comment fix.
+For that purpose, we will need to store information about other
+fields, especially information that might or might not be available
+for different promisor remotes. Unfortunately using 'struct strvec',
+as we currently do, to store information about the promisor remotes
+with one 'struct strvec' for each field like "name" or "url" does not
+scale easily in that case.
 
-Thanks!
+Let's refactor this and introduce a new 'struct promisor_info' linked
+list that contains a 'struct string_list fields'. This string_list
+stores the field names, like "name" and "url", in the 'string' member
+of its items, and the field values in the 'util' member of its items.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ promisor-remote.c | 124 ++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 87 insertions(+), 37 deletions(-)
+
+diff --git a/promisor-remote.c b/promisor-remote.c
+index 5801ebfd9b..0fb07f25af 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -314,10 +314,38 @@ static int allow_unsanitized(char ch)
+ 	return ch > 32 && ch < 127;
+ }
+ 
+-static void promisor_info_vecs(struct repository *repo,
+-			       struct strvec *names,
+-			       struct strvec *urls)
++/*
++ * Linked list for promisor remotes.
++ *
++ * 'fields' should not be sorted, as we will rely on the order we put
++ * things into it. So, for example, 'string_list_append()' should be
++ * used instead of 'string_list_insert()'.
++ */
++struct promisor_info {
++	struct promisor_info *next;
++	struct string_list fields;
++};
++
++static void free_info_list(struct promisor_info *p)
++{
++	struct promisor_info *next;
++
++	for (; p; p = next) {
++		next = p->next;
++		string_list_clear(&p->fields, 0);
++		free(p);
++	}
++}
++
++/*
++ * Prepare a 'struct promisor_info' linked list of promisor
++ * remotes. For each promisor remote, some of its fields, starting
++ * with "name" and "url", are put in the 'fields' string_list.
++ */
++static struct promisor_info *promisor_info_list(struct repository *repo)
+ {
++	struct promisor_info *infos = NULL;
++	struct promisor_info **last_info = &infos;
+ 	struct promisor_remote *r;
+ 
+ 	promisor_remote_init(repo);
+@@ -328,57 +356,75 @@ static void promisor_info_vecs(struct repository *repo,
+ 
+ 		/* Only add remotes with a non empty URL */
+ 		if (!git_config_get_string_tmp(url_key, &url) && *url) {
+-			strvec_push(names, r->name);
+-			strvec_push(urls, url);
++			struct promisor_info *new_info = xcalloc(1, sizeof(*new_info));
++
++			string_list_init_dup(&new_info->fields);
++
++			string_list_append(&new_info->fields, "name")->util = (char *)r->name;
++			string_list_append(&new_info->fields, "url")->util = (char *)url;
++
++			*last_info = new_info;
++			last_info = &new_info->next;
+ 		}
+ 
+ 		free(url_key);
+ 	}
++
++	return infos;
+ }
+ 
+ char *promisor_remote_info(struct repository *repo)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int advertise_promisors = 0;
+-	struct strvec names = STRVEC_INIT;
+-	struct strvec urls = STRVEC_INIT;
++	struct promisor_info *info_list;
++	struct promisor_info *r, *p;
+ 
+ 	git_config_get_bool("promisor.advertise", &advertise_promisors);
+ 
+ 	if (!advertise_promisors)
+ 		return NULL;
+ 
+-	promisor_info_vecs(repo, &names, &urls);
++	info_list = promisor_info_list(repo);
+ 
+-	if (!names.nr)
++	if (!info_list)
+ 		return NULL;
+ 
+-	for (size_t i = 0; i < names.nr; i++) {
+-		if (i)
++	for (p = NULL, r = info_list; r; p = r, r = r->next) {
++		struct string_list_item *item;
++		int first = 1;
++
++		if (r != info_list)
+ 			strbuf_addch(&sb, ';');
+-		strbuf_addstr(&sb, "name=");
+-		strbuf_addstr_urlencode(&sb, names.v[i], allow_unsanitized);
+-		strbuf_addstr(&sb, ",url=");
+-		strbuf_addstr_urlencode(&sb, urls.v[i], allow_unsanitized);
++
++		for_each_string_list_item(item, &r->fields) {
++			if (first)
++				first = 0;
++			else
++				strbuf_addch(&sb, ',');
++			strbuf_addf(&sb, "%s=", item->string);
++			strbuf_addstr_urlencode(&sb, (char *)item->util, allow_unsanitized);
++		}
+ 	}
+ 
+-	strvec_clear(&names);
+-	strvec_clear(&urls);
++	free_info_list(p);
+ 
+ 	return strbuf_detach(&sb, NULL);
+ }
+ 
+ /*
+- * Find first index of 'nicks' where there is 'nick'. 'nick' is
+- * compared case sensitively to the strings in 'nicks'. If not found
+- * 'nicks->nr' is returned.
++ * Find first element of 'p' where the 'name' field is 'nick'. 'nick'
++ * is compared case sensitively to the strings in 'p'. If not found
++ * NULL is returned.
+  */
+-static size_t remote_nick_find(struct strvec *nicks, const char *nick)
++static struct promisor_info *remote_nick_find(struct promisor_info *p, const char *nick)
+ {
+-	for (size_t i = 0; i < nicks->nr; i++)
+-		if (!strcmp(nicks->v[i], nick))
+-			return i;
+-	return nicks->nr;
++	for (; p; p = p->next) {
++		assert(!strcmp(p->fields.items[0].string, "name"));
++		if (!strcmp(p->fields.items[0].util, nick))
++			return p;
++	}
++	return NULL;
+ }
+ 
+ enum accept_promisor {
+@@ -390,16 +436,17 @@ enum accept_promisor {
+ 
+ static int should_accept_remote(enum accept_promisor accept,
+ 				const char *remote_name, const char *remote_url,
+-				struct strvec *names, struct strvec *urls)
++				struct promisor_info *info_list)
+ {
+-	size_t i;
++	struct promisor_info *p;
++	const char *local_url;
+ 
+ 	if (accept == ACCEPT_ALL)
+ 		return 1;
+ 
+-	i = remote_nick_find(names, remote_name);
++	p = remote_nick_find(info_list, remote_name);
+ 
+-	if (i >= names->nr)
++	if (!p)
+ 		/* We don't know about that remote */
+ 		return 0;
+ 
+@@ -414,11 +461,16 @@ static int should_accept_remote(enum accept_promisor accept,
+ 		return 0;
+ 	}
+ 
+-	if (!strcmp(urls->v[i], remote_url))
++	if (strcmp(p->fields.items[1].string, "url"))
++		BUG("Bad info_list for remote '%s'", remote_name);
++
++	local_url = p->fields.items[1].util;
++
++	if (!strcmp(local_url, remote_url))
+ 		return 1;
+ 
+ 	warning(_("known remote named '%s' but with URL '%s' instead of '%s'"),
+-		remote_name, urls->v[i], remote_url);
++		remote_name, local_url, remote_url);
+ 
+ 	return 0;
+ }
+@@ -430,8 +482,7 @@ static void filter_promisor_remote(struct repository *repo,
+ 	struct strbuf **remotes;
+ 	const char *accept_str;
+ 	enum accept_promisor accept = ACCEPT_NONE;
+-	struct strvec names = STRVEC_INIT;
+-	struct strvec urls = STRVEC_INIT;
++	struct promisor_info *info_list = NULL;
+ 
+ 	if (!git_config_get_string_tmp("promisor.acceptfromserver", &accept_str)) {
+ 		if (!*accept_str || !strcasecmp("None", accept_str))
+@@ -451,7 +502,7 @@ static void filter_promisor_remote(struct repository *repo,
+ 		return;
+ 
+ 	if (accept != ACCEPT_ALL)
+-		promisor_info_vecs(repo, &names, &urls);
++		info_list = promisor_info_list(repo);
+ 
+ 	/* Parse remote info received */
+ 
+@@ -482,7 +533,7 @@ static void filter_promisor_remote(struct repository *repo,
+ 		if (remote_url)
+ 			decoded_url = url_percent_decode(remote_url);
+ 
+-		if (decoded_name && should_accept_remote(accept, decoded_name, decoded_url, &names, &urls))
++		if (decoded_name && should_accept_remote(accept, decoded_name, decoded_url, info_list))
+ 			strvec_push(accepted, decoded_name);
+ 
+ 		strbuf_list_free(elems);
+@@ -490,8 +541,7 @@ static void filter_promisor_remote(struct repository *repo,
+ 		free(decoded_url);
+ 	}
+ 
+-	strvec_clear(&names);
+-	strvec_clear(&urls);
++	free_info_list(info_list);
+ 	strbuf_list_free(remotes);
+ }
+ 
+-- 
+2.49.0.158.g6ac6832dc3.dirty
+
