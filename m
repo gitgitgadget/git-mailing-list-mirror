@@ -1,104 +1,95 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53AA02DFA3B
-	for <git@vger.kernel.org>; Mon, 14 Apr 2025 15:15:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EE2274661
+	for <git@vger.kernel.org>; Mon, 14 Apr 2025 15:25:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744643708; cv=none; b=s34Rb47bBuOrPnWYeSx9QJTVTcHSYzPu823etQqUdWpzo4FJfXMRRkiBFN2+7tuTVRKQDtVoQtoxGdetdG1QO6Cc2I3VhpPUcHmgS13/eNCHWQkQKi2udtoBQO0e2KpFSa9eNRDJBnF297bobkbSltjeGYeBaj8QIc6V5CEfCJw=
+	t=1744644359; cv=none; b=RoOioiZQ65wF5JZRUlNAVz/a/3ESXFvRphtQrlzd8khkHXy6k0Ndvr0piyZEcINaMSPxcET+QSC0bPX+b/EErTywHCkvgV3bE7yfE5Kv5uqo4p5IwNY3HP3uo5mRp0WSann22q1oZ+7nlXRJ6owprkEY1OlWdkN+eMlEJsiiVes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744643708; c=relaxed/simple;
-	bh=XJVaS1ujYL4eH1b05B+A+SYYSy1pYs8zxzicw79gJAk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=cgIg43lhy0l/3b1xcD48ab6vWaUs7cKbkZRMA4IPMYG24FeL3R9Jz4tEKcbGdaa95bspdK333/3iWY2Wfg0rx99hx8idZUyV1Dj65O3ODj8q78mpF4/Fms4QfBG+eDqAYF8V7PUU7Luz3cIeQOLU8KfxNzAwMoagvfuxivlAuis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I8IedeJC; arc=none smtp.client-ip=209.85.210.169
+	s=arc-20240116; t=1744644359; c=relaxed/simple;
+	bh=UNvNIyM7GOdCb1Lj9Gn+Esb4VF8YYgIQEE+Guk2oPXg=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=UUAhNbTc7sNl8tyrtz+EXt2G+kmGmzZDjKkOx/Zfc7lJhkJsFHElwRfPKiGVrC2Cpmn0x+dxMLjaJYOmVMO1NANl6Nr4ETbWuFgEFmkYkJSGruRvV+3cb5Ro2VxBG7UkN0Y9MnLAmri4cpYB3yfEfCd122AkzctC74Nm7bia/B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mReLHIQN; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I8IedeJC"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-7399a2dc13fso6030330b3a.2
-        for <git@vger.kernel.org>; Mon, 14 Apr 2025 08:15:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mReLHIQN"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-22401f4d35aso50758785ad.2
+        for <git@vger.kernel.org>; Mon, 14 Apr 2025 08:25:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744643706; x=1745248506; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=F/3o2X0/Y9ajz5hHkAhptCmYpQ9u9SNmIX6Kdw7VG90=;
-        b=I8IedeJCXETCj9OJ+4uuVJ5byM4kTn8WL1xSAOqQi88bOmP51Iyriz3WMV4+c3xIZH
-         7aunrHOlL3IEH2x5U6qseGckfs4oz5hE4Wx9R3VDNHpUyVNQIeDfev+7Oh51xw2E1Rl9
-         BYcbQWs1cgQVzUkY5tJoirsCMhPXwhEIvSVZ0yA0YfoBGvMKonE/mVTVrVSl9n65wykQ
-         iLhlXG0cjfmm8pNW9t2e4/W1HTkhiyKJLKtj7rGbnxnkSy9r9s19l3vzUzWfFxcaig4z
-         qbvGZrkkz4g3Bgo35H6tJXg91Li+ocaMvMa+6wIMOVdnobXPVLPScn9B154R38yt7OvC
-         fVmA==
+        d=gmail.com; s=20230601; t=1744644357; x=1745249157; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UNvNIyM7GOdCb1Lj9Gn+Esb4VF8YYgIQEE+Guk2oPXg=;
+        b=mReLHIQN12AbyK+gRPetpcpOoQxXQfFS+h1+NZrApezORTVGUnrSL0kuLlKElllQ1P
+         LV0VPiRm/OMT613TGPNja0Y2/F7qipqqN3Fu0JsInTFa3n4btnrNa0zqlVUTzPb3kCNt
+         2GgUl4T61N4JL9LaZNW68ztZq+fFhGlxQRFQhyseQoQLoeAGU+7bQA8ZIco9gzeQn75l
+         FwM3FK30u4tYOMC49GAjhygiTOUwW7wxT7Zc91/3EIpMat4BTTfeSGoz2ypi0BS+rzGo
+         jN6UVrZKfyzuknrI+bsXDkAPhPAfuVemVnZsBwgECITqyDWl8EO3icFEwj4RSH8WbGTf
+         4XMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744643706; x=1745248506;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=F/3o2X0/Y9ajz5hHkAhptCmYpQ9u9SNmIX6Kdw7VG90=;
-        b=QTOB3h5mfR7uLnYUls4W8N0ecRUk17Dk1EYSe9PNfP1d8U9niI+hnCZNI4xyE6v424
-         1ZWlmzS8xdG8Hi4JP1TWwODtcL8AkaGjnTszTlrBlceB/nsNnFfC8oAnlW/nTsqlNSWY
-         Kct6DH3O+MTNQ+22pYCyZyWWdW/VovylS8qs4d25RBjegWmFUSsX38fglXZ2/E3pIgrh
-         P19CwpfMQYtDk/XIyCmB4u16eV+8mm0BD0FKPEjBwYKSzYz1gvkfI3xYWinQPuxzJk3N
-         IiK0rMNYegU7WAq/IMiABalXiCAfVVVAyvg7EhC12V4Wn19fL45iHv293Mu39k+yDhsc
-         8TAw==
-X-Gm-Message-State: AOJu0YxKM/ny6xSQr3aAx8XXMiX2qwNdwvkGLgGJ1nAnFgYiZQNRAn2I
-	G4d35Wb6a764sRTO3obSPeVPscl0FBmgFcRUn8hhxsz7YYHM/opQ9d7dBA==
-X-Gm-Gg: ASbGncswJ+iJYrlkQuWsPiFrp1kR3Fpn57HS/P189YbnwfFrXY2yXDSsLTw0IyXCjLh
-	0qQQfGPLLE8ZOzv8AC5mpITZlyBlwqzCn/qAPRFxhwxE+iFe0t1oROUZYt119QGIXO4hUQbQXCv
-	5ekbXztXiquQKO1tNIS2NMKCKFqeWIX03xYxGN9eS1oSLyyRKNAKkpvPnPeCCP5ENuRID09SOcP
-	0oscGWP2ZS5w8yziX5GN/zxOzNIGceH1542HYcmHoFKH9rSHj0sZJTEMBH8II9GsIrEpNR4DFqb
-	6g8mO3JgIn8zByWvGbT1Nes558lQiwVt+iBe/N5H/sryhMPTpH1K+TF9rwpg5TnoHwTNoFbRrXV
-	3Rpw=
-X-Google-Smtp-Source: AGHT+IFCgXy2QSYkRNwa0jj59ngc/K3PA0/jbaequWjPmXlvNdKnJVSy7BlykdVuGRb87PTON+YydQ==
-X-Received: by 2002:a05:6a21:900f:b0:1f5:5b2a:f629 with SMTP id adf61e73a8af0-2017996f566mr20982116637.30.1744643705843;
-        Mon, 14 Apr 2025 08:15:05 -0700 (PDT)
-Received: from localhost.localdomain ([2804:14c:32:8e7e:85b7:aff:5cfe:b6e5])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b02a2d3a4d1sm9402439a12.57.2025.04.14.08.15.03
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 14 Apr 2025 08:15:05 -0700 (PDT)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-To: git@vger.kernel.org
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH] revision: remove log_reencode field from rev_info
-Date: Mon, 14 Apr 2025 12:14:38 -0300
-Message-Id: <20250414151438.22232-1-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+        d=1e100.net; s=20230601; t=1744644357; x=1745249157;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UNvNIyM7GOdCb1Lj9Gn+Esb4VF8YYgIQEE+Guk2oPXg=;
+        b=nUSgdyvapRcXJCVbB1Wic5GYWntxch+SDDMP97tzUNxIeHPpKvuz6aQk0Cq0DQqC9f
+         PpCOCnghZ8vwlIQa2wUFD+hXk0XhtLn8c2BLvzxuE1v5npf4MbgHMQ+lx7uzMti3PMMd
+         JCyGnKaJky1pCM928s40Mq3YECcpo4Kx16+OYrkZX0xONiVd73f8qDSUPUlR4ynmDox7
+         1n0LBHUeurJZrikrG1FgnY08tkeNAXuaBBB/LnAq+FmMmp6TbBgh2UCkborCRzTU5YfM
+         +39QIIXoTBMiXoUr/VLeMScN41QJ6UbAQzo1iMEmhfqng4h605jn7lo307eyq2m00m44
+         YB0w==
+X-Forwarded-Encrypted: i=1; AJvYcCWaqrkxmu1WyK6gKoH52Z3x0/A1T+Tl4hJO+pXJnwnN3zlA2GUXEIwhtoRV5p2NzZsbRkc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzxlkqmpg06F03mbB/uKyFEl8G5TE7FCiQZnsNUn0YcOEzDz14H
+	eDI1+Z832lIFYFMqQmk6mCcVuumOivaej/KXuf+2OskgVZAh9eSq
+X-Gm-Gg: ASbGncve1sccX8A78UUdwFh47ZCrSeM3WZvKdPuqjgdrjhAJCTlIdzCHR3P83WWnh50
+	k66tDXjO/gCM9uN288bN55lWqE55xJ3PiRZIm4IUFTVxKIg0F8cH6hnOGpgsbRc6TTkOlea02Dx
+	uHZaONpBpfhlI4rbctWB4RF7whoqSU9JFLz7OYTBjKwc4I8IviiCMS6p9h3YtY2dwZHj/jMh+zl
+	3karjXbm65CPlsnTYPntVVBznFk3jAOxxzGeynyDoR0I38vOZvKsCxw/h97zSxsnKLmeI0lPwRZ
+	VBaRab0OEDfiQ0vlqAGlQmf0qZ/mwar5Odshu/EMp3aWQm2WOmT8WHpkFUhPgzTmftdmzjrHdYV
+	kn7Fv7XM=
+X-Google-Smtp-Source: AGHT+IE1NZebxiSQ637a8OlszF1NrkjSrQGW0q+V1ESevXo9LgTKe8c0MPBrax5l474Js4B+TLfpMw==
+X-Received: by 2002:a17:903:144e:b0:21f:4c8b:c4de with SMTP id d9443c01a7336-22bea4f26dcmr149821655ad.42.1744644356788;
+        Mon, 14 Apr 2025 08:25:56 -0700 (PDT)
+Received: from smtpclient.apple ([2804:14c:32:8e7e:85b7:aff:5cfe:b6e5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22ac7b62b96sm101302045ad.13.2025.04.14.08.25.54
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 14 Apr 2025 08:25:56 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: Re: [PATCH] git: add --no-hooks global option
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <2c7994bc-2be0-43a5-9627-0d530746b3ab@gmail.com>
+Date: Mon, 14 Apr 2025 12:25:42 -0300
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org,
+ gitster@pobox.com,
+ james@jamesliu.io,
+ Derrick Stolee <stolee@gmail.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <1602379A-B5FB-410D-9622-F31333461E74@gmail.com>
+References: <pull.1899.git.1743719888430.gitgitgadget@gmail.com>
+ <2c7994bc-2be0-43a5-9627-0d530746b3ab@gmail.com>
+To: phillip.wood@dunelm.org.uk
+X-Mailer: Apple Mail (2.3826.500.181.1.5)
 
-Remove the log_reencode field from struct rev-info, as it is not used.
+Hi!
 
-Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
----
+> I thought "git -c core.hooksPath=3D/dev/null" was a fairly standard =
+way of disabling hooks
 
-Just a simple cleanup patch removing this unused field.
+Given that, wouldn't it be a case to turn this into a documentation =
+patch?
 
-When I was working in a previous patchset (this:
-https://lore.kernel.org/git/20250303220029.10716-1-lucasseikioshiro@gmail.com/)
-I noticed that this field wasn't used anywhere in the code.
-
-I also saw that it hasn't been used since it's introduction in 2006, in
-commit 52883fb.
-
- revision.h | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/revision.h b/revision.h
-index 71e984c452..87f8d798c2 100644
---- a/revision.h
-+++ b/revision.h
-@@ -292,7 +292,6 @@ struct rev_info {
- 	struct string_list *ref_message_ids;
- 	int		add_signoff;
- 	const char	*extra_headers;
--	const char	*log_reencode;
- 	const char	*subject_prefix;
- 	int		patch_name_max;
- 	int		no_inline;
--- 
-2.39.5 (Apple Git-154)
-
+I just searched here I found that we even have a test for it (introduced
+in c8f6478), but I couldn't find that as a recommendation in our docs.=
