@@ -1,163 +1,124 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0719854918
-	for <git@vger.kernel.org>; Mon, 14 Apr 2025 17:08:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D85F1F236B
+	for <git@vger.kernel.org>; Mon, 14 Apr 2025 17:19:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744650533; cv=none; b=lKlhxNhzyXkI8cYxG55Ly5z5aVECy28IlrL6i9suf2dnn40p5uSmK6Y0hXfh3J9SeTBRL0f4ZSImRt6LDTEhPRYqHkj18nIo9g43FxhRs9BdtdbBXvDWezpc0AcjQHJCpC7BgEO49dkPgNG713gOwHQmiQhuP0VvS30iJ3wEN7A=
+	t=1744651162; cv=none; b=VqqJNmZ0eRVqUHkwAoM58+oaaKUty1zhvo5p9Tm7CucpU7uTr8fX0O+0wA46S0rcfZbQED1q707JJBViL4kmopZjbEIEmjJvqCBbj8Gg0XnLpP3uH97UN9JK+zM8KLRg/MWYwAtIEp2IhiQ1xNNpsRvtW6gvUK1OrPHmgA3v+eU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744650533; c=relaxed/simple;
-	bh=qEdX2uj+5iIb0x0PX0iqXHXAVOqvDLThF/I5LQhk8vg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i2bMT/Ma6ABkSfEkESqok79arP70DgK+6Ukn8tke/xBlGCIAQQrd6RK+JW1zYQB0ySMaty1H4UoAeuR0Jq040OgofladSCNQ65LsxUE7cMzqpDBu3mUEl/4bsA3rRxlLw1LEv8iZok/51mNrJsI8dEHuOLI+lwWxYSB7L0KP6yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fBy5rlfP; arc=none smtp.client-ip=209.85.160.182
+	s=arc-20240116; t=1744651162; c=relaxed/simple;
+	bh=YAnwJ62hyyL9W8op7sPKgYEtpgieFmj3Oixz+o44HNM=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=jO+ENXHpvuxBeJdevbdenNsZQILMPwtwmkNt+Ge4525q4bnAWHA2uxCgZr9LEbRIZB+Ck8c24+c/WTHlqNWCE+VnEPuM1IWYjakRJ7wh9CjW+kCo088/OWOmUBRkBAS6wddPhNSNd+yZOOPBO3PNNGdljftWoWroZi5A/eq5z9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CrRX5Hjz; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fBy5rlfP"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-477296dce76so39225421cf.3
-        for <git@vger.kernel.org>; Mon, 14 Apr 2025 10:08:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CrRX5Hjz"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-7399838db7fso4443941b3a.0
+        for <git@vger.kernel.org>; Mon, 14 Apr 2025 10:19:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744650531; x=1745255331; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1744651159; x=1745255959; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SDKNSkdwhUKEDUJ9kCk3NoIQiY0NYzhIpdAm9w9ijIs=;
-        b=fBy5rlfPtZwrlr1Ar0y4R5aNT675eo2MPKHg/79aT24wk+NQDSGieSOob1DXP2/bGY
-         woPNVH/PaQu6SiP73cAeGBGq1z8Jzhi5YIy1FhXefq42zRfGRRxFWt1vJRhj389ODm5M
-         ieACmkN/2YksMcdWFVYg12tM/31KnwbXE6feJMSDdi9eUAIByDv7dvVJCLckm+mTiW8O
-         uW/ZJb1WCWMU8Ydivsh1tRmBWAoMD+kvoSNNdmYBVAggS39s8+yWCNBTBFl2AmtiIlQ2
-         0HeplwFUSlFjtKGfs5mDKLKf9Zu2xJzy2YL8WkaljgKc6DOZnQzyZ0sUtz/60iFZvwfx
-         hImA==
+        bh=v6r6qRCOTY0w4w1PKuD6PfiWo2n/t/0vtaxozPrJgpc=;
+        b=CrRX5HjzdWgKIW4KCjuI65VhjJRYpDuCstDekR1m8J7tEy3NFZ76NiwO4Iu4wGT+Ot
+         h5uqfgMzRjXVMTBDDTmeZw38qOabCdfNsQa/dW8sjeVmuU5OiWL5PealeEAvSwDLwSPx
+         RqrzKGmjZNco6W99AL0Gu/5yRaUkgahsUVM87/yw3CcL8SYSCksGomBIVycU9mNc9HJB
+         mZU+916yh1DRj9MaUW//03AvD+vKq5Jcmd2SaK2hVtI7kU+4nTjVvaid/2VH0PboLj32
+         Am+9r8xsf7DAMorNNYLWWr/dU3+aZuXTRc3N2GasBnkhTESqTm2qeT6bHkWE5bjbHTME
+         vQjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744650531; x=1745255331;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1744651159; x=1745255959;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SDKNSkdwhUKEDUJ9kCk3NoIQiY0NYzhIpdAm9w9ijIs=;
-        b=hP6VQYHzttq2iUqAZ2pGW1MUJI1vXfNfjV0SL7E63nyuqTalxE06YkjXwfCZZ7ySjJ
-         gOD/xFjO/we6C9RyXXUXtWyz84XgLmbJRSRVCl121pXtvAvYHwLd1iIOSESWnHtyPuXL
-         nBleeWejbSfxnH5Qr/XFUpJY/+yXD+iu73hOrKUGpibkomVH2/GanXCxlkcuLYHQ62p1
-         WrZn61WpAEWKJWjuEL4UYSTHDuzT2+5zC+QxcCflcL4NX1uF7I5VXCT/5IF9fFKFLeJ3
-         r3GAUjhjdOnBH2MDeOB9kvDTitJi2ZW3iGh0RjVtQgsO0VT1LU8YOf4C8BnaQpjkdXtn
-         6FfA==
-X-Gm-Message-State: AOJu0Yw3+I00RzQDeEmuP8/7Axzc3Sl7qc35mKhEVk0C+MXjHuJk2Xyn
-	MZQzw7IM5eVuyBlDcOJdhK/9NjYEveKtCvY4Q5tRXshpBmvRxDm+7SfCGvSA73DAll8xF2Ve4aU
-	KIBMAXaBQ93If1RhqiHLp/845lwpF+9vP
-X-Gm-Gg: ASbGncvvEg9h+CAl+EG8lmjyrOIrlt28SCtfUHXyitNajMOpuHG243AwKfforX4uuhs
-	rtEc1Z4k+yAWKbKoy3niVYGjEJMmjCz9bVbc6HrBEl0Eaect/GGnNJn4kw+o7TxmC/WyAYBhRK/
-	FAGVH4LT8b3buDUv8DBR/jY5Ysac96oG+oJD/DMO0MaxgW0OAnEBhf6Gs=
-X-Google-Smtp-Source: AGHT+IEowZKqonIimEWFsNCkJ8onhQCKW8GLpDmfSDiV3PVc8l+Q/xG1FL0qOLTEH6yPy23lrJYuJwyiMnigsNGaHo8=
-X-Received: by 2002:ac8:7f4f:0:b0:476:7c7b:5dce with SMTP id
- d75a77b69052e-47977527fccmr131127721cf.9.1744650530643; Mon, 14 Apr 2025
- 10:08:50 -0700 (PDT)
+        bh=v6r6qRCOTY0w4w1PKuD6PfiWo2n/t/0vtaxozPrJgpc=;
+        b=Lj6qRU8LIf4DjeyGTU5qrTXAckk7XiiN45X8+hIJOKehwEQ152FgGcGB/AQ9+ipk4L
+         6pSTOvCJqu7mY2PcNi0c2wBwjhrbt2OiL3Nhbw98xn6nQNmYQEzJlrEUxdrOPyTdsVtU
+         yUiLqtA1KXyVvnaJXocpNgvm9wC53/Y7ZiEDqrc9sqcakL4gYB1zO9rQBzK8FI7wTYrW
+         hEU2ZOXTGtLhUrJvd3Lf9epQ6mScNnHN6JsDA3sVL2EPxgJzh+5pIw4UP1r9O1qFKsT8
+         ZfL+Ds47l20Xu1pP0yfB4rmWXMuAmS/9/mlT3r4r0iZ5HzI4wxlb3JEpH47lua1wGzCZ
+         rA3A==
+X-Gm-Message-State: AOJu0YyADi9BALvbu7fKcWj4PVx1+ma6qeeLjB9Vx5YUozsGzjCUiZLh
+	fsrld1SCpgxCduxRzX2mYmTffR3DMXnrcqxOUmxQBzQYQao+SihSh1DPgPnU
+X-Gm-Gg: ASbGncvwssC6QNUZzsJbNOH9SZdivqOqNxn4powP8k7HV+YFO8/SImuK9OWzdKereGE
+	HEF169QngALK8fb2zbEjiwaSGYdXrRVI7A+QIT6guxu+k5VpQEzHmBj2pc3nUJlPLHyI7bA/nis
+	Gxk3geQGsOxEDOZ5+p5lSMSWy4+0Hh9AU36LmtIppeMsquBoQ0TaFkXVefuhvoBvCSKhQ4V4nR+
+	XeK+pOwEfoyxxqMsarZ9ed8JS53ZcDMpFhaAbQTZhF4lWVEB1uC7b4i74Qskm0J+nGLYZ+OgtKD
+	ACwqnkWBxonllu+DHKHvFGnQgwy4hWRRrtd3CCBgUPo8xPUDWi9MQIqS0S80nk3uO8ZXP+R3
+X-Google-Smtp-Source: AGHT+IEgfMuavTMuYzqD/hTvnaYf3fZ0ODvGmJzbLmA5XKelftH7VlGQHrmejorObvWH2YVW/Yi+HA==
+X-Received: by 2002:aa7:88ca:0:b0:736:5813:8c46 with SMTP id d2e1a72fcca58-73c0c9b4c05mr470614b3a.8.1744651158505;
+        Mon, 14 Apr 2025 10:19:18 -0700 (PDT)
+Received: from smtpclient.apple ([2804:14c:32:8e7e:85b7:aff:5cfe:b6e5])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73bd219894bsm6891207b3a.34.2025.04.14.10.19.17
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 14 Apr 2025 10:19:18 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20250412094607.236382-2-jayatheerthkulkarni2005@gmail.com>
- <20250412174051.780148-1-jayatheerthkulkarni2005@gmail.com> <FFC5C6BE-9A4B-4EFD-AEC4-E69CE6610054@gmail.com>
-In-Reply-To: <FFC5C6BE-9A4B-4EFD-AEC4-E69CE6610054@gmail.com>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Mon, 14 Apr 2025 22:38:39 +0530
-X-Gm-Features: ATxdqUGto71qo1SeXKtuc4-e_VLPQq6ZaWxw4zn5DIdxmVEi9Jt6jYEMJ7UTtNk
-Message-ID: <CA+rGoLc=CYehMms0bxaLAu3xP-p62cMJ++RnBxSMOF2Ppt38QQ@mail.gmail.com>
-Subject: Re: [PATCH] t3706: Add test for wildcard vs literal pathspec
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, peff@peff.net, piotrsiupa@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: Re: Potential bug: Git instantly converts utf-8-bom to utf-8
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <DM6PR12MB386578E1F28B532600ADF575F7B32@DM6PR12MB3865.namprd12.prod.outlook.com>
+Date: Mon, 14 Apr 2025 14:19:05 -0300
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <A743D2B5-0397-4AF3-899B-FC3D3AD2B5CB@gmail.com>
+References: <DM6PR12MB386578E1F28B532600ADF575F7B32@DM6PR12MB3865.namprd12.prod.outlook.com>
+To: messester <cnotsomark@gmail.com>
+X-Mailer: Apple Mail (2.3826.500.181.1.5)
 
-On Mon, Apr 14, 2025 at 10:21=E2=80=AFPM Lucas Seiki Oshiro
-<lucasseikioshiro@gmail.com> wrote:
->
-> Hi!
->
-Hi Lucas,
 
-> > +test_expect_success 'setup: create files and initial commit' '
-> > +    mkdir testdir &&
-> > +    >testdir/f\* &&
-> > +    >testdir/f\*\* &&
-> > +    >testdir/foo &&
-> > +    git add testdir &&
-> > +    git commit -m "Initial setup with literal wildcard files"
-> > +'
-> > +
-> > +test_expect_success 'clean slate before testing wildcard behavior' '
-> > +    git rm -rf testdir &&
-> > +    git commit -m "Clean state"
-> > +'
-> >
-> > +test_expect_success 'recreate files to test add behavior' '
-> > +    mkdir testdir &&
-> > +    >testdir/f\* &&
-> > +    >testdir/f\*\* &&
-> > +    >testdir/foo
-> > +'
->
->
-> Two questions:
->
-> 1. Does this need to be inside a test_expect_success? It seems to me
->    that those two tests cases are actually setup code for the next
->    two.
->
-> 2. If so, does it need to have all that setup? I could reproduce the
->    bug by only running:
->
->    ```
->    git reset
->    touch foo 'f*' 'f**'
->    git add 'f*'
->    git ls-files
->    ```
->
+> When I clone the git repository =
+https://github.com/NinekoTheCat/infinilore.cs.git into an empty =
+directory and run git status it shows changes where all the files are =
+deleted and then added again.
 
-Umm, I think the setup should just be a single block. I will send a
-patch on this
-I'm parallely working on a second patch.
+I tried here. I'm in a Mac, it shows that several file changes.
 
->    btw, this works with your code, congrats!
->
+> The difference seems to be in the first line as opening it in a text =
+editor aware of encodings shows the change from utf-8-bom to utf-8.
 
-Thank you, credit goes to Peff(Jeff King) I almost lost track.
+Given the warning messages it looks like it is more related
+to CRLF/LF than to UTF-8.
 
-> Other idea: `?` is another wildcard for matching only one character.
-> Have you tested if the same bug happens with it?
->
+At least here, for example, the listed modified '*.cs' files
+are the ones that ends their lines in CRLF. This is, running:
 
-Yup I think that's also a great suggestion, I think consolidating setup
-and adding at least a few different wildcards will be good.
+```
+file $(git ls-files '*.cs') | grep CRLF | cut -d ':' -f1 | sort
+```
 
-> PS: while I was writing this review I pushed this to my GitHub just
-> to make the CI run the entire test suite since pathspecs are a
-> sensible part of Git.
->
-> Take look at this, it seems that your tests aren't passing on Windows:
-> https://github.com/lucasoshiro/git/actions/runs/14450183624/job/405210158=
-97.
+shows me the same files as
 
-Oh damn!! That's a silly mistake. I almost forgot windows exist!!
-Thanks for letting me know
+```
+git status '*.cs'
+```
 
-> Perhaps you'll need to change something there. It seems to be
-> related to how Windows handle paths (specially the \ character, which
-> means the same as / in Unix). Personally, I'm not a Windows guy and
+You can also see that are some '*.cs' files that are not
+CRLF-terminated by running:
 
-Same not a windows guy, but I will have to read some things out.
-Will figure it out.
+```
+file $(git ls-files '*.cs') | grep -v CRLF | sort
+```
 
-> can't help you further with this. A quick reference on how paths on
-> Windows work is this (and yeah, they are far more complex than in
-> Unix):
-> https://www.fileside.app/blog/2023-03-17_windows-file-paths/
->
->
+> I'd be very very grateful if anyone could explain what's going on and =
+have a solution.<patch.cat>
 
-Thanks again Lucas, these help.
+Perhaps a solution is:
 
--Jayatheerth
+- Define a CRLF or LF as a standard
+- Convert all the files that don't follow the standard that you
+  have chosen to the one that you have chosen
+- Declare it in the .gitattributes file
+
+Hope that it helps you!
+
+
