@@ -1,114 +1,107 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B7D2505D8
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 19:47:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D1A247286
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 19:48:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744746481; cv=none; b=C/eEMWVMr4FM/ZepkjAtP0bR2ePI3Dfbe9dDJQm3HeOq8fLxxW6TcjvGCAkYGUjhubQakA9sMJBNJA895AFAK2HtsxDiWPEp/lNSathmMekzXwzG9Jt2u0dunw66ADSb2+EbK768tUR+aPqzG9ukz6WvVRuLFWSI6wZK+hrH5w0=
+	t=1744746538; cv=none; b=RVunSpPp4pYHUOBuEHN40LKHCyggyweKuNz2QFYBk4EfWFuUKzy9WGG82u88i+qvuMPn+ghGX33AzsOjyCfmt4N4pKoUOht2yxfMXegyz8gtXbxOW8/zYjs261RT6yA2odKXdaMaSVS01kyuvzAntJfLxbEnJkbVJ5OzrqDsktQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744746481; c=relaxed/simple;
-	bh=7bZgYX52vw8Ev7OZj3C7og19BsySjLKDqKjTAq+iLfA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nnFC2fQVmgyBZ5nD0K37p1flQ2Y2ujl1sTvdLrBX5TnEKFswbnEcNaf5pYLF2v5II5Nl0Os+hJ7JRBeSA23WXSExM3bzDPNPt8vyCCNkwHso8lslHmN2qnu0Gk206Lgm6nlw2hif0GRB/8bi5gKhvWtuVECei79FWZQNyq/b9ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=B+gAW1gh; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1744746538; c=relaxed/simple;
+	bh=mo/dzcJEpZm/Ia+XY9ANcApDPXGjQdCuBKcKNXZfxMc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=G3gYZIJGFDoWx2FeoP8gFGpSyr4Wpr1OsR6MpHUiFftIXIKcOes9oClv78EJwmIZ/6SERdrkBwmkehpQpsYBXLlmZP7oTDB9SgX5fOziAKsdbstcdqCZulQX+3QCAzrkPTgjHWN6h49UYYQz3ZvsvKNXuduy+yOYuIJgxqDKMvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VR4h8aVA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vewoe8D8; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="B+gAW1gh"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6e8f94c2698so30176496d6.0
-        for <git@vger.kernel.org>; Tue, 15 Apr 2025 12:47:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744746479; x=1745351279; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vlo7CnZ+ier4EBTfNagiPltTkXDWCbdct2NiH28Hh4U=;
-        b=B+gAW1ghSQfE0JvM/9p0cFkfzyLHEbSAoZF/qce3fbMTCKuwiCPmJJtQCoYQSH5R/b
-         6xojxvVJQf55VXMikij0Ll49pbvh8hqscUwFpKuMzsEhJfhWCXhe2t9is9geSg/gmfP3
-         gZati/qsfFQyoofyYITAJUfiAo6FfgNGb84s0IY6lnQQfAnVMWPKLS/VsrcNCGLwBRoo
-         8lkyH32ypdPgTGgd/EIQAHMqhN3Dwb3O+4DTZ7nekXjxHVne3K8ehlDoNhFb+3490yb8
-         pRyYtbQWeRYfunlFUKH3viGZ+xr7+kzCT6bSZKKEX/sA4qNQnfJb7JIITRV4Vnu7pr0u
-         uZ1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744746479; x=1745351279;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Vlo7CnZ+ier4EBTfNagiPltTkXDWCbdct2NiH28Hh4U=;
-        b=RmQoA6numkiqNE5UbOccaPyjLkrj/v61lf/yzy6Aq1CCcnlu4Brv2ZHU5Xr3dJ/QtU
-         eFbdHciDj5GyJATrVMXre+Oedb7EsHftIdDFImumN59E6rb3yF14SuaFeUN0K7Np8G+6
-         4Ck3ZEEd+w+4MYGaaCGrKY1UbxroROMEGtXvkWy3i1ueK2KCdCXHGpiCuop4KERBeHBq
-         oFszYDP6N8J3se+8AtCtm3MdSBjk36vWZqq2yk4WePEpxowSdb7ssdzdMMGhLADfZjku
-         VY+Jp7LgXzGPv/9HyyDcNO6Rwp4aviF1XFQkm6M13NJS/KXGRUa+xZYAqV3qkYQQhyTE
-         Q8wA==
-X-Gm-Message-State: AOJu0YzaqoUwzZUXHCwg0auxtHqZSUKze96PJ59z/zQhXEMlT+Xc+mYa
-	NRc5El0vG1x30+29UWgxhZejlF5x8Y4Twuype8aFg2tL1uqv3rMmx/3M+Hz9W6I=
-X-Gm-Gg: ASbGncvqJf5aQRQ3gxekOjQeCq/NtloEKQoczkzsZAI2BCu9XMLNiILaxRTKOiTeeZH
-	73BtFsXD3PNyOlZ+2LI1DEKeq1tvYy7NdtN/ZkLknmcXdGxeDZZeBbF/2J3LRBpW9Z+dPNRueiG
-	F8lNO7T+ZtxG/fpSE61QQX9VqsJU4apaIaGh/RblMwUlHCrI73HjbkHVTP310Jl0SV35Gs+WVFv
-	awlhn8J2pKnTPo7b4+AQUHiceMF6GhWwsGa28ZND5Wyvl4zgZEHEAinDakW621EPJu0H1PppH7F
-	SCOE1wBtuw2CksAxYlLzN7x62SfSLL6ui1MjoiV7dQut6PgpOwkhRJW1uftAI9j6RI7Xau3WqsM
-	hqAbW29FBJYck
-X-Google-Smtp-Source: AGHT+IGBy8PepgapIyS0rqvJno/e4nasvJ2+LMt4UqjakHMwQbUDp06YdfeqSwy9dRCMcXx04+YP2w==
-X-Received: by 2002:a05:6214:e4f:b0:6e8:98c0:e546 with SMTP id 6a1803df08f44-6f2ad9d2e08mr10384496d6.29.1744746478839;
-        Tue, 15 Apr 2025 12:47:58 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f0dea2179esm105540396d6.124.2025.04.15.12.47.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Apr 2025 12:47:58 -0700 (PDT)
-Date: Tue, 15 Apr 2025 15:47:57 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/8] object-store-ll.h: add note about designated
- initializers
-Message-ID: <Z/637cMz7AGVXokX@nand.local>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VR4h8aVA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vewoe8D8"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4C5721140100;
+	Tue, 15 Apr 2025 15:48:55 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 15 Apr 2025 15:48:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744746535; x=1744832935; bh=aiDZwn8Jkn
+	oc3OGGnMkn/EhfJBBvOWBXxJ5UnQkvicI=; b=VR4h8aVAaYtprXWLkzemNDpa7U
+	/ZmAFmUPUgbkw1ekAy/rywFoSPIQiPAo3EH9ug/KxAih8A5QEyKMJSr26niwJ2PZ
+	t9iLiT3Yfw0ivUTl5y6E2ahFYBxBKUilz82q+Bu312g+wh61ZZHLbLV3QrZPZNrm
+	q/Sxc37NDOIUUEVxTg7QQ6QIBSOOFh3pEVI9mKPNVfozJSm2lCGU6srZq9YElU3y
+	h8yRaV3muQG0m8yIvD5ili4lVpiG+p+asSNc32xwzlDMsNNNPaEf3UVYl14Ucff6
+	K+bipQSBaWS62JYtcB8h4yUGpguRBJ6eVTPYCiAHeN9ft/1f8oAs8na1/pmQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744746535; x=1744832935; bh=aiDZwn8Jknoc3OGGnMkn/EhfJBBvOWBXxJ5
+	UnQkvicI=; b=vewoe8D8ymjLjCfU+fMSmpzhA441n6J7zqrIt/2yrFp29mqtqUs
+	0+dQwfpiO6RFBVMo9tnQzr7TT2BNQX0Yb7tU9q03uqe+LWZw46K030r2WOzNXegD
+	Va+0w2QcCi9vhhv5jpiglDbQo0psJjzbngwuqVcLXuQC5tLS+/Hs9sI1UeDZnOoK
+	cV37WdnEFqJIEehrKzWbdRSc0T05ssLJmGJ9jqRa0I7hH9tGMBff5ISN8AIagypU
+	RQXg8dUEuM2kYzQQMhVWriEqTZfosPyxCjMRaWDyO58mW+M85uRqnBegltIDxBSI
+	N7ub2FYH3bzG9g0wtRjUh5YhcoP1Z+tfAsA==
+X-ME-Sender: <xms:J7j-Z-tl-goxGe4o919L6EoCGRLpgOXLC7qN4YXa3SmEiiHjkucWFQ>
+    <xme:J7j-ZzejyKobUyQk3ex3k42-lJJFOjCurmosG5f1qNWvDBY7r4bAnCPbDBeviEpbH
+    Zufy2oLSZauiJpF2w>
+X-ME-Received: <xmr:J7j-Z5xAJRqzYiEvuFuAJ84A7z-HLxQr-wcw6p-7d7vwGznmL62ZCi7WLHZPqXTKvjQ1UtaWPOescHoDujoBBSzeVBLLveC6Cl4x>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdegfeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
+    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfh
+    hfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:J7j-Z5MWnLZQZ3BMboqlY-hV4YalDBA3hJoeWe2sYx-jEol3pD-jCg>
+    <xmx:J7j-Z-9yhYL82GiM-UFXhdZ0adm5jJIazuAlblT8FfT22geL3p8Z9g>
+    <xmx:J7j-ZxVGTy8efmJHnAcN4v8ZsM5smm69iBtjTABEJ1JO2ZwPX4DUVg>
+    <xmx:J7j-Z3dGsaEHSCxtWrp5DcV2Qf38XqeViUCfZG9bCh86tmSxtu-Vew>
+    <xmx:J7j-ZzHJ-6Jf7sBnT1sg5AAEWnLzQE4A3AUeXadpDoLRkdFvOE3pMf7D>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Apr 2025 15:48:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH v2 1/8] pack-objects: use standard option
+ incompatibility functions
+In-Reply-To: <Z/60anmKVxke0AVX@nand.local> (Taylor Blau's message of "Tue, 15
+	Apr 2025 15:32:58 -0400")
 References: <cover.1744413969.git.me@ttaylorr.com>
- <cover.1744661167.git.me@ttaylorr.com>
- <920c91eb1e5a1b6d5faa54240dd9c85f72968edc.1744661167.git.me@ttaylorr.com>
- <CABPp-BGH=GRAo2Vy8sia75p=2Uoza0kwTzoy9FKKxE5jDFfGXg@mail.gmail.com>
+	<cover.1744661167.git.me@ttaylorr.com>
+	<65bc7e46309712e06a2d743172ea4ec518ee928f.1744661167.git.me@ttaylorr.com>
+	<xmqqwmbmpjbc.fsf@gitster.g> <Z/60anmKVxke0AVX@nand.local>
+Date: Tue, 15 Apr 2025 12:48:53 -0700
+Message-ID: <xmqqo6wxkxy2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BGH=GRAo2Vy8sia75p=2Uoza0kwTzoy9FKKxE5jDFfGXg@mail.gmail.com>
+Content-Type: text/plain
 
-On Mon, Apr 14, 2025 at 07:57:59PM -0700, Elijah Newren wrote:
-> There are 46 #define'd designated initializers in the code base, from
-> DIR_INIT to OIDMAP_INIT and everything in-between.  The logic used in
-> your comment to suggest not using an all-zeroes initializer doesn't
-> seem to depend in any way on something specific to object_info, yet
-> none of those other 46 cases in my quick scanning have such a warning.
-> And 29 of the 46 define some kind of initial value for some fields
-> instead of using all zeroes.  That would suggest that one of the
-> following is true: (a) those 29 cases are buggy and shouldn't be doing
-> that, (b) those 29 are all special cases someone has thought through
-> carefully but perhaps someone should add the same warning you have
-> here to those 29 other cases to avoid uncarefully thought cases from
-> being added, (c) there is something specific about object_info that
-> you didn't call out here, or (d) this warning you add is unnecessary.
+Taylor Blau <me@ttaylorr.com> writes:
 
-For (a), I wouldn't say that the _INIT macros are the potentially-buggy
-component, but rather the use of a designated initializer in the
-presence of an _INIT macro that initializes the struct to something
-other than all zeros.
+> Now I can't un-see it ;-). Even though it's not a correctness issue as
+> you note, the whole thing leaves a bad taste in my mouth. I'll swap the
+> ordering to match the original in the next round.
 
-I don't think there is anything specific to the object_info structure
-here, which suggests (d), but I don't think that the warning is
-unnecessary, it's just overly-specific. I think we should have a
-convention in CodingGuidelines that forbids designated initializers in
-structures with non-zero _INIT macros that don't otherwise have a
-comment about their correctness.
+I do not think we can be completely faithful to the original in this
+rewrite, simply because the original is not consistent with what
+die_for_incompat() thing produces and you'd need to adjust the test
+anyway.  So unless there are other things you need to reroll, I
+wouldn't worry about it too much.
 
-But I think there is some discussion to be had there, and I want to
-disentangle that from this series. I'm going to drop this and the
-following patch from this series and split them out so we can discuss
-them more thoroughly while letting this series move ahead.
+Thanks.
 
-Thanks,
-Taylor
