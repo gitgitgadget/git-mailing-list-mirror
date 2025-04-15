@@ -1,70 +1,70 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FEC2BD5AA
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 22:47:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867882BE100
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 22:47:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744757222; cv=none; b=J/HEZQ8pKhkBZc5EhzCsoECEBM7pG8a7YGazKX4BkY9ZuTYyj0L6n7GkWydX/iJntC5lioP5lSK+sNp4CWivrXd1+67w+5Ge0INa3DZ4jvQTGUFrd4zCXbHJ6CNYJYIFRpBq3j+cMmcUirsiPhlmu88E4/hjF1t9wpx34i3Am3A=
+	t=1744757225; cv=none; b=aMvHgqBlW+r76ju6ffSVWC748KpwEWWMdmt2lJYMYLFgB+tjiwYFc2e0ifzgkY1m+9vNV1n4uYmKqqzc+640/N0j8GaDz1Zrn8z+ZDeYs6FTQkClXTxDBCGMRKLFpVFot/QcqRtggGbNIzorqtHdh6CgvxBghxYg+ZMWRrk4PRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744757222; c=relaxed/simple;
-	bh=ELrf1JqNaTOTgDlEQ2EbTuV3AH6cksprrpznX1E14Q8=;
+	s=arc-20240116; t=1744757225; c=relaxed/simple;
+	bh=4ISpk/ejtkGsMPU2wfniBoAdH9D4V1/0yyjaWAx9Vk0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qhjQVrJ021n4M5UA8i9k6+3BKNZiKvqxusdApyOgNUdX05He9IyQwQ8HhdR0m7VMM02F+kZ8/5FuXmfXCajgSaTRdIg+9WDF0WfjkZ2bSx6CCh85OwoFLjJq6ZetTSnfs7KaBRT4W9PdJcZKMg4KfYCULgNXhZ3InF42XblI07c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=kzkgWzeT; arc=none smtp.client-ip=209.85.160.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=qUwXRspG4FPM124xsj4Thm6VlHl6qUO+vuJ2WdtLT40YEtARpfxYAY6VjqTwVeV+RWnjfkuLcXzoN/DcIYaLrlja9GD9LXyCBYSZJ4gEzKS5c6uQgU2lNZ+qPbyndzaU2I08xjX870Icpei5cqQqqCe0E3q1f2x1iNaVaPCUBtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=GRvlH2XG; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="kzkgWzeT"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-47686580529so64059581cf.2
-        for <git@vger.kernel.org>; Tue, 15 Apr 2025 15:47:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="GRvlH2XG"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-476af5479feso54156171cf.2
+        for <git@vger.kernel.org>; Tue, 15 Apr 2025 15:47:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744757219; x=1745362019; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744757222; x=1745362022; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4lqVsSO2M0rsqeART2rhJrSYaB5f+IKmzy4Q/yUCFlY=;
-        b=kzkgWzeT7LVdNEpHPgg+GpQm0Opb2J9aJOHPqJD3PmoBZewa/A3ZYXGhO2yTmqm/Q+
-         wzCy14p6IXpmYTHttqC68gPTCIvW16+eU1bKYzj6VKRBC8dkLMc2waLhteNE/JVpuHm8
-         o5bSQZCdS3Rz7jMN/L54qja3nKyDFLTzeWXY4ZQ5TdG+xTV6uG1ZplQtR/x7SxKYeLcE
-         dC+RFmePYcy84tw7YmiXye5GpAhn2a29tUM+fMwtMuurREKiHEeEOsAT5NONqwO7BkaS
-         QkLVnH/5WFDuZNbwV1rbkLuj97VEicXdzlaWeZU33CrC0yL5Ohlg7XjNjBSg3TLJEBnB
-         64Zw==
+        bh=N7nuh9dYwlBWEQNqm3Hh+kPeEYcXto7w0OIy6dlunYk=;
+        b=GRvlH2XGaO8xsPRUC+KIwjN6B4iy767ggBGZWic3/gHMfxoiLjK4QFwv+bLZfzIU6/
+         hT2BbSaJ9FdMQXziPhV2B9L+9SjKVQDyJDC3O/J8dSv16fhBa1cKzDVdiWtRP0E3qxU+
+         jy+Uoz2L3E5Wo0QszyKqTEUVUiXBDDmd12DlniABnwPjTUgac/vVDcRmSOAaioJcVZ1Y
+         uSoNza7fiQ2Q1CyAvamrO9Z3A/k9HdSEF7jprJNIYvVwww3HXuTzl48yUvUGdHBYa9PI
+         ztUNr+oaiFilviRUX+3tD9H7sl3bPOScC4zqx8jlTmXO09/n7fp1zoII/gdTG62F3jsc
+         t3KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744757219; x=1745362019;
+        d=1e100.net; s=20230601; t=1744757222; x=1745362022;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4lqVsSO2M0rsqeART2rhJrSYaB5f+IKmzy4Q/yUCFlY=;
-        b=pTombWlucN1I1Acz8gCDFIzDoCMvltzJ5m9xPiIFT/B9NdlmXGsjckQNPvHfSOdhMM
-         VWOdSVe07+HEU05DZTlqKygbCCF5YPbZhX2RiaFryaTe5+yVP+xkSmDvA9tMth3pu9N9
-         1G3Q2blEGm1WUUzyRgNeZpyutu84CdVg2Yiw6VyukH7YgzgQfeuM52A4aPiW6LLryue2
-         5qasoNxewmVcfVslKZrSLq7yAChT0AJYsZG4S1fvSa6PjX8kJXpKDpIkpOAO5I1LfTew
-         L+pufGeWRqBe7GkjPWNvEkyYfOjmo1pp7wR92sDYIhPZItUB5oveBJekU8nvlIuSvBww
-         6tQQ==
-X-Gm-Message-State: AOJu0YyBpwLZti7uEkhKrojNQ5G6aJXRZnb8Gwei763U9fVMeUwFd3kk
-	yF0PIhWnkJrPqRoVajmHDM6il74dCEFYuenBUhJ77BeUDO0qxbY+rHAcDMsvQzhjScxwKnFvk2b
-	zBRM=
-X-Gm-Gg: ASbGncuOSZiA1IGWtCdSM8n/N2WhpxN1PIgvMF9YMY8kw/E1ToBBr5Ws5dPtXAqE0+4
-	vGumkxsDRTEjzcOrd9RkCxYijDlfPWp1zIsdxV+JsXx1J31KdYU6gTUCMzrC+fRZrbw8Oh7mYDc
-	ML/VEw2544vtTb4fSwqjiTQsqW38q53EmF4q2vZiv97rzXDK1yvkP2E+TWx54HrPjX6NtERqcuc
-	ZQ4k2DF8G4B5Txg6RJIMMiMtjTCq2ic0LkvzjQEJ4M/28oUaSEiHjO14f0MIfaWJSXiKdt8Hvlh
-	Vc8BxSDrkRJv8IaJGVaHkyg24hh0JMu+0J+WlxR60116ctssq6zA7JiE7APneTRYdQ67/L+cSJx
-	x+Y+U6YelpdeY
-X-Google-Smtp-Source: AGHT+IFdbc3mohfT1mDPA7mYVDdFDxbIYXPfXIY/2vp3L+2eylwgy99S32jQ0P+7prL2kP4wrhu1Tw==
-X-Received: by 2002:a05:622a:2c3:b0:476:75d0:dbed with SMTP id d75a77b69052e-47ad3af0159mr16644021cf.44.1744757219257;
-        Tue, 15 Apr 2025 15:46:59 -0700 (PDT)
+        bh=N7nuh9dYwlBWEQNqm3Hh+kPeEYcXto7w0OIy6dlunYk=;
+        b=RP3TxuxQdVCO6qfpUdfCvV/DVCCWtb0zt/IuoEGV+GGYNf3E9XLy5+Vv2dmT3A0G4V
+         ZM9ZL7o8fVquPR7krmwWAyAwcIpeWv9+5OHmXuTYbVAObKx7sqqSDQyBEwqmDsrBwVfP
+         VuorzZEAhBFFxieLb8G7v30DUiHbLVm6xK+uXHvTgt3f3r4aalE+o7/UpAcBURnLa36T
+         3Y7ty0Tnudz7wxqXfotJGuL2YzuM6ZTUlFnCgPS56lUDh+xApyPovUC1bxxVQoDsaIYK
+         j5NQ7JBSUL0VgvS52mLj7oPfg6V4/gm8AGmq0CeSOaMNZXAXAswt4pd0pNzsOkW5WxGM
+         r74w==
+X-Gm-Message-State: AOJu0YzUqbfQpaLpY1FopcwLxrAIDMMH+UKReUXz5pwFx0eJYql+T1vK
+	FOsR19AE9BavG9Ta2Q8xUng/EKxWKQruOwh2VuFHGwiHkFtQzmgK2875PTJPuJSeNol0Cix3Qj6
+	QXUc=
+X-Gm-Gg: ASbGncvhPlRYO2m3+PxCH1s4SetgIxpLvsHNAjhbZpJsHvzxCCLUG/YJTb8moSLIUwJ
+	ufHPSMtYIPclATkc/kck2ebRkPXMJvafcfPXT1P102k3PqNz9ouFJXSGhAwgtOrRE0Em9Oam83r
+	Ph3s56hM66jUaal+PAPNT0Yy1PVM6gG5OtBmdSur8peCiSh+r3veETo1onKydZ5FVqeWX6U9Wnu
+	z/bddg2NgB2BCWRs/GzO32gFXGC+uxdM48lliuMWpU972N/a/Kh5e/cY5tdkOocatK6z69DfWz6
+	A5XxFJdg5vzEDnj+T661lv07nD0aQzhemRgKv2gJfc9yi0D9rJYBuqUy+bYEVyBZPgA0SwDdz2F
+	1NA9HfI+ELyOe
+X-Google-Smtp-Source: AGHT+IGJWHllwBXa1unv/kBZ7wUvys9rCbWJaACPdiG6gIUurmv7XOdMBACq2Wp1/VR+T6qnuQ2mVQ==
+X-Received: by 2002:a05:622a:c8:b0:476:a969:90c5 with SMTP id d75a77b69052e-47ad3a3dc46mr12901941cf.24.1744757222219;
+        Tue, 15 Apr 2025 15:47:02 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c917034940sm5593885a.53.2025.04.15.15.46.58
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4796ed9cc97sm99163011cf.61.2025.04.15.15.47.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Apr 2025 15:46:59 -0700 (PDT)
-Date: Tue, 15 Apr 2025 18:46:58 -0400
+        Tue, 15 Apr 2025 15:47:02 -0700 (PDT)
+Date: Tue, 15 Apr 2025 18:47:01 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 4/9] pack-objects: declare 'rev_info' for '--stdin-packs'
- earlier
-Message-ID: <2a235461a611d7abd90311c51174e2ed85eafa1b.1744757204.git.me@ttaylorr.com>
+Subject: [PATCH v3 5/9] pack-objects: perform name-hash traversal for
+ unpacked objects
+Message-ID: <240e90b68d18b3231826d2a68e4e251c893e645a.1744757204.git.me@ttaylorr.com>
 References: <cover.1744413969.git.me@ttaylorr.com>
  <cover.1744757204.git.me@ttaylorr.com>
 Precedence: bulk
@@ -77,131 +77,107 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1744757204.git.me@ttaylorr.com>
 
-Once 'read_packs_list_from_stdin()' has called for_each_object_in_pack()
-on each of the input packs, we do a reachability traversal to discover
-names for any objects we picked up so we can generate name hash values
-and hopefully get higher quality deltas as a result.
+With '--unpacked', pack-objects adds loose objects (which don't appear
+in any of the excluded packs from '--stdin-packs') to the output pack
+without considering them as reachability tips for the name-hash
+traversal.
 
-A future commit will change the purpose of this reachability traversal
-to find and pack objects which are reachable from commits in the input
-packs, but are packed in an unknown (not included nor excluded) pack.
+This was an oversight in the original implementation of '--stdin-packs',
+since the code which enumerates and adds loose objects to the output
+pack (`add_unreachable_loose_objects()`) did not have access to the
+'rev_info' struct found in `read_packs_list_from_stdin()`.
 
-Extract the code which initializes and performs the reachability
-traversal to take place in the caller, not the callee, which prepares us
-to share this code for the '--unpacked' case (see the function
-add_unreachable_loose_objects() for more details).
+Excluding unpacked objects from that traversal doesn't affect the
+correctness of the resulting pack, but it does make it harder to
+discover good deltas for loose objects.
+
+Now that the 'rev_info' struct is declared outside of
+`read_packs_list_from_stdin()`, we can pass it to
+`add_objects_in_unpacked_packs()` and add any loose objects as tips to
+the above-mentioned traversal, in theory producing slightly tighter
+packs as a result.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c | 71 +++++++++++++++++++++---------------------
- 1 file changed, 36 insertions(+), 35 deletions(-)
+ builtin/pack-objects.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index a293267074..d60cb042c9 100644
+index d60cb042c9..eb2a4099cc 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -3558,7 +3558,7 @@ static int pack_mtime_cmp(const void *_a, const void *_b)
- 		return 0;
+@@ -3644,7 +3644,7 @@ static void read_packs_list_from_stdin(struct rev_info *revs)
+ 	string_list_clear(&exclude_packs, 0);
  }
  
--static void read_packs_list_from_stdin(void)
-+static void read_packs_list_from_stdin(struct rev_info *revs)
+-static void add_unreachable_loose_objects(void);
++static void add_unreachable_loose_objects(struct rev_info *revs);
+ 
+ static void read_stdin_packs(int rev_list_unpacked)
  {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct string_list include_packs = STRING_LIST_INIT_DUP;
-@@ -3566,24 +3566,6 @@ static void read_packs_list_from_stdin(void)
- 	struct string_list_item *item = NULL;
+@@ -3671,7 +3671,7 @@ static void read_stdin_packs(int rev_list_unpacked)
+ 	ignore_packed_keep_in_core = 1;
+ 	read_packs_list_from_stdin(&revs);
+ 	if (rev_list_unpacked)
+-		add_unreachable_loose_objects();
++		add_unreachable_loose_objects(&revs);
  
- 	struct packed_git *p;
--	struct rev_info revs;
--
--	repo_init_revisions(the_repository, &revs, NULL);
--	/*
--	 * Use a revision walk to fill in the namehash of objects in the include
--	 * packs. To save time, we'll avoid traversing through objects that are
--	 * in excluded packs.
--	 *
--	 * That may cause us to avoid populating all of the namehash fields of
--	 * all included objects, but our goal is best-effort, since this is only
--	 * an optimization during delta selection.
--	 */
--	revs.no_kept_objects = 1;
--	revs.keep_pack_cache_flags |= IN_CORE_KEEP_PACKS;
--	revs.blob_objects = 1;
--	revs.tree_objects = 1;
--	revs.tag_objects = 1;
--	revs.ignore_missing_links = 1;
- 
- 	while (strbuf_getline(&buf, stdin) != EOF) {
- 		if (!buf.len)
-@@ -3653,10 +3635,44 @@ static void read_packs_list_from_stdin(void)
- 		struct packed_git *p = item->util;
- 		for_each_object_in_pack(p,
- 					add_object_entry_from_pack,
--					&revs,
-+					revs,
- 					FOR_EACH_OBJECT_PACK_ORDER);
- 	}
- 
-+	strbuf_release(&buf);
-+	string_list_clear(&include_packs, 0);
-+	string_list_clear(&exclude_packs, 0);
-+}
-+
-+static void add_unreachable_loose_objects(void);
-+
-+static void read_stdin_packs(int rev_list_unpacked)
-+{
-+	struct rev_info revs;
-+
-+	repo_init_revisions(the_repository, &revs, NULL);
-+	/*
-+	 * Use a revision walk to fill in the namehash of objects in the include
-+	 * packs. To save time, we'll avoid traversing through objects that are
-+	 * in excluded packs.
-+	 *
-+	 * That may cause us to avoid populating all of the namehash fields of
-+	 * all included objects, but our goal is best-effort, since this is only
-+	 * an optimization during delta selection.
-+	 */
-+	revs.no_kept_objects = 1;
-+	revs.keep_pack_cache_flags |= IN_CORE_KEEP_PACKS;
-+	revs.blob_objects = 1;
-+	revs.tree_objects = 1;
-+	revs.tag_objects = 1;
-+	revs.ignore_missing_links = 1;
-+
-+	/* avoids adding objects in excluded packs */
-+	ignore_packed_keep_in_core = 1;
-+	read_packs_list_from_stdin(&revs);
-+	if (rev_list_unpacked)
-+		add_unreachable_loose_objects();
-+
  	if (prepare_revision_walk(&revs))
  		die(_("revision walk setup failed"));
- 	traverse_commit_list(&revs,
-@@ -3668,21 +3684,6 @@ static void read_packs_list_from_stdin(void)
- 			   stdin_packs_found_nr);
- 	trace2_data_intmax("pack-objects", the_repository, "stdin_packs_hints",
- 			   stdin_packs_hints_nr);
--
--	strbuf_release(&buf);
--	string_list_clear(&include_packs, 0);
--	string_list_clear(&exclude_packs, 0);
--}
--
--static void add_unreachable_loose_objects(void);
--
--static void read_stdin_packs(int rev_list_unpacked)
--{
--	/* avoids adding objects in excluded packs */
--	ignore_packed_keep_in_core = 1;
--	read_packs_list_from_stdin();
--	if (rev_list_unpacked)
--		add_unreachable_loose_objects();
+@@ -3790,7 +3790,7 @@ static void enumerate_cruft_objects(void)
+ 						_("Enumerating cruft objects"), 0);
+ 
+ 	add_objects_in_unpacked_packs();
+-	add_unreachable_loose_objects();
++	add_unreachable_loose_objects(NULL);
+ 
+ 	stop_progress(&progress_state);
+ }
+@@ -4068,8 +4068,9 @@ static void add_objects_in_unpacked_packs(void)
  }
  
- static void add_cruft_object_entry(const struct object_id *oid, enum object_type type,
+ static int add_loose_object(const struct object_id *oid, const char *path,
+-			    void *data UNUSED)
++			    void *data)
+ {
++	struct rev_info *revs = data;
+ 	enum object_type type = oid_object_info(the_repository, oid, NULL);
+ 
+ 	if (type < 0) {
+@@ -4090,6 +4091,10 @@ static int add_loose_object(const struct object_id *oid, const char *path,
+ 	} else {
+ 		add_object_entry(oid, type, "", 0);
+ 	}
++
++	if (revs && type == OBJ_COMMIT)
++		add_pending_oid(revs, NULL, oid, 0);
++
+ 	return 0;
+ }
+ 
+@@ -4098,11 +4103,10 @@ static int add_loose_object(const struct object_id *oid, const char *path,
+  * add_object_entry will weed out duplicates, so we just add every
+  * loose object we find.
+  */
+-static void add_unreachable_loose_objects(void)
++static void add_unreachable_loose_objects(struct rev_info *revs)
+ {
+ 	for_each_loose_file_in_objdir(repo_get_object_directory(the_repository),
+-				      add_loose_object,
+-				      NULL, NULL, NULL);
++				      add_loose_object, NULL, NULL, revs);
+ }
+ 
+ static int has_sha1_pack_kept_or_nonlocal(const struct object_id *oid)
+@@ -4358,7 +4362,7 @@ static void get_object_list(struct rev_info *revs, int ac, const char **av)
+ 	if (keep_unreachable)
+ 		add_objects_in_unpacked_packs();
+ 	if (pack_loose_unreachable)
+-		add_unreachable_loose_objects();
++		add_unreachable_loose_objects(NULL);
+ 	if (unpack_unreachable)
+ 		loosen_unused_packed_objects();
+ 
 -- 
 2.49.0.230.ga662d77f78
 
