@@ -1,55 +1,55 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40DC288CA3
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 09:57:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DF228B50F
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 09:57:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744711040; cv=none; b=AGU+ElNnfmOOJZTW2J00T3QpgOsQ6RG5mWSmpTxvpdtAjVM6AUb7aqwIa5quRmu2m7LlvSuaO4AqBrPZTRGuAlKFknCRESkPSc5iXwU+/d8lbV8D1RIECyktYHYOO33izO4k1TB6sv7DSaLIo9mnmL+4ErbpWaR+0dopc4q10eA=
+	t=1744711041; cv=none; b=gosUhoKJrk1KP0b/4x58QGpzlq266WxWzmv0sKd14FHT9t5i+iWumc6PTymQ04i6dl/DYdhA/8N3pY9in6pFA4LtkMD6150I1PoOAdpBXlAoa3bvvWxqlruU0n35MElr3f80+FbmCkzjHKln5ron5YqoX5Qmc2Kqdr/xC3Q/o8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744711040; c=relaxed/simple;
-	bh=V9vrXurmkYJgWyoH7kbXoDrJfgsQYcJrgToGhRR5GRA=;
+	s=arc-20240116; t=1744711041; c=relaxed/simple;
+	bh=JLNRgfeKVg5LSZ36ef/q0qJT+doE6AdoGGpc4oglxds=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=l2d0PO4D+mChu607QPyGMRs63aOlGY7/r6TIxCHDCl9xdfJ18p6Kc3j/z6ESBezXfL/Jyj0tQoINIiTj1/m1CCQMQrTSQtt7RyRaP1FluPC9rN46rvlnPrKcHUDl4pkptXVET+n1o7rDhR3j78TMrPhLZzR9IKBhTPkKKmBo9NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m7Hp3ljm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h24KJsBI; arc=none smtp.client-ip=202.12.124.153
+	 In-Reply-To:To:Cc; b=lCnkFqPffrt+gc82glvnoNJ1fme0/qS83mpztgJ67HCWVzaEuYq8chFtShSfpVq0bJ3vfHIO0TM5iTPGNoZ7R3449Flg7BHm7bk84RXk6Dot2fJa9kEJ5b7ZI1BYa9tXDoYzLOHtpVrn3/0hL09fv+heSUhrdmOmsVA069CnRZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=p4PewwQB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m52QoiLb; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m7Hp3ljm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h24KJsBI"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="p4PewwQB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m52QoiLb"
 Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A419925402A0;
-	Tue, 15 Apr 2025 05:57:17 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 15 Apr 2025 05:57:17 -0400
+	by mailfout.stl.internal (Postfix) with ESMTP id 2450F11402D9;
+	Tue, 15 Apr 2025 05:57:18 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Tue, 15 Apr 2025 05:57:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1744711037;
-	 x=1744797437; bh=ab2Rr84K4wwwrfQSRN099LAqhrSMofyZLz66wj7KGu0=; b=
-	m7Hp3ljmXZi4FoP5Oe5LJ/qtE6lLjhDU3lP0fxHyiG2QlgP87pr1o4rR3Dj+5etO
-	KOfNdlkUlGashVmIqAyScSUE6wb6hcdPB3x7SsfgaETnGcjLd+ogSKCvpliBjRzx
-	XtkmDvGwpiXueSRMk+KgcaK1xy34TLtNFACSfOdT+XhuwfL5gjMAeAU+CFvR7IzI
-	oi+XqjAZ1IdBWQZULRrF5lkuSwLD7TF6z60Ydbo9bW1m1rnshlUlMrc/32hEgaDg
-	pHWtMlsaQLot3lA/ybK0G/IPAjlRX9RiQu5Z5EjlLGVfxcBvtyNPCB2RiR2ilob+
-	ZnFMI3fVgXaQteWKbwb6ZQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1744711038;
+	 x=1744797438; bh=TZBf0dw2NYkdq0RU6sGf28pG6gDj5KjVAnrDy1+B55E=; b=
+	p4PewwQBO6e72fBotShdMleB4vBJ7XNF6TlYSYgEZJmN+iFUzfXMECrWQmWBG47T
+	qvCgKl7DD99AuT7i4JG29BdB4FA/Tu0z+gt1rvEoCFSBmoVRRbeNgsGXhijttXqS
+	sT1lMq+fQDbnlXfnIfKJ5PrTqxJ0Pp6ivZkz3/IkYycCzM+LtARvzSlkthFtKNLF
+	y4qLOoMxKkqJhhUcD2G2CcyM5NjSS/FMbfOJiYe2LegSLhNS/kt/vlCYRYNps7w0
+	rva3ie+xcOREw3HsqCNDQsBe4DwP8hwExfuZXXGBJsZTItETyMtwXBvLlbbk6m61
+	bJhiqyo+jCenpMo60PZXvg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744711037; x=
-	1744797437; bh=ab2Rr84K4wwwrfQSRN099LAqhrSMofyZLz66wj7KGu0=; b=h
-	24KJsBIdAGf5wfla2bkVfATvVxhqEsxGzVII7hkzf9TOv/zqsdcmg2mVWdXGH2Uy
-	700MMp0HYuhglvDfmVTHKZ2eLb7Qth5s6NPC7LTweIxjG5SnxAaxWccKsvaZzBDj
-	Cmfld0p5aDLT7DRjfPgH0pAsGwIFus5OJ8FoxyPDxSyk/3JvDNx1w7cggzG4IUKk
-	uwe1vqnhSfKSXJ+9tpbYlyzbxUx68m4eR3bEXq2ePmq7Da/hO4vxQGPW9flS6foe
-	FFYV4LxXtntsSLJYZPo5h+qL8GX1dePGLr3cf+P6Bs1z44LE/1/9OYEzl6B9IrHl
-	DpL4ny9u/20Z52HW7l3GQ==
-X-ME-Sender: <xms:fS3-ZyFNM7g6xKpD7AxZrAqbCzMUUWe1idrfd9BBH0abp93tTMhxcA>
-    <xme:fS3-ZzWZhYWKo_bvk23RttCB-QVwlbxbHT5PSGKYjDHjuxXbolRFmm8oE1nNy-8tQ
-    SBoOM_Z5Jjhq9UMTw>
-X-ME-Received: <xmr:fS3-Z8IxxAty5gmsT_m5cmYLrNprEhKIVmv3mcdtLUHpS-UJZ1EAczKk1ygTcUZXpfT8fGZ6J3V6YHYGNcGsgkF0J9MFi2W8dZzg5sS3PpoLvg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744711038; x=
+	1744797438; bh=TZBf0dw2NYkdq0RU6sGf28pG6gDj5KjVAnrDy1+B55E=; b=m
+	52QoiLb23t5xIvS4yQNRYRNyHWae0thti6Lp4KAwU91vTJtOAdzLozfZKmgs1Vy2
+	B1tLx7EwPiSGBfBF78GH17MfRotRbvG82snW67Rt37Vjq+c1l4akFyUa7kfcfBK7
+	vO6GkkvatWgGFyVeTctPPZbQ4NH4d7cU/38vYja8fp39QDwIA4XOafrWkw8fJvoh
+	rbscNHqZvZJ6RbXXwf4Eiy/+/QEOUVLZQK59f+8KQ85XrJhGrrI3pfp2pR9jBZPQ
+	ixgtQ7JlDC7nK/xfXgngefbW4ny/kUisblf+Z0vUZEYpK6lgdq9MQcWjD9udXK3d
+	E7U3iJz/U+UuxuHEeSdkQ==
+X-ME-Sender: <xms:fS3-Z4SnW_d0sHo44bnb3Sw7MTtgT-YhQK8O7NjZmHZo5uDWPYw6tA>
+    <xme:fS3-Z1wHLdiXNwSIJM07fOVXgyUDUx91nVEcPFxhB_XMGOCZbGyG5LK6n9arSkUAi
+    wwAzZSa5VAfSWKBEA>
+X-ME-Received: <xmr:fS3-Z10i-Qcuiogx_nfkW01FyEabiDRJlW_SB1Sg2ee39EQJgDuokXXDgKkENe3fny_KEZWWbAllW08d69RBe-wOAjooxWtpWhyyOfBNeLTpyQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdefudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -58,22 +58,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdefudekucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
-    hnsehgmhigrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:fS3-Z8Hn-KaEVrwsmDsEKxB9pllXpB7GNT2vavQDvAPXBLPW9visSw>
-    <xmx:fS3-Z4XXYfhdfm5TWXy_FdDeHrhvS42OexetUCOHGdooEbUP8XWr2Q>
-    <xmx:fS3-Z_PdzC63YqW5DDvq-qSxSPpfZWQRtOxePv2WZ8vVaUlwpCuOFw>
-    <xmx:fS3-Z_1jRMU1YPsnS6vn50khioGkOSsTdHQ6ferGGDsdGDkpxXz8hQ>
-    <xmx:fS3-Z7phtNdFIQbhUhrS_PDbk5U9bqVsPpNFOA2iFIzF8SzeKbc-5tEl>
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:fS3-Z8CbktIU0YO3t4-7wxJSyvKGx4cTYKc9mpC86KyAaX68WiJgKA>
+    <xmx:fS3-ZxiVnrFNO15ibfN212sgtLhW5hJAYQL4KZlPWuzQB86qIeHK4Q>
+    <xmx:fS3-Z4qnf91oVVLJA1NpsT4G9i2fqO6v2bFrTr1DRCa_9i5OWS4-Pw>
+    <xmx:fS3-Z0jjtZElRkPVHxfmhSH801Z_8IwB7H8Do4cGH9VPrCt5CtBvJg>
+    <xmx:fS3-Z81kNm0iABetIAJ2LddzuigoWUUXpk9HuNL4Ib-94UIxjVyyW6zs>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Apr 2025 05:57:16 -0400 (EDT)
+ 15 Apr 2025 05:57:17 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2b507b59 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 15 Apr 2025 09:57:14 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6475c703 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 15 Apr 2025 09:57:15 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 15 Apr 2025 11:57:08 +0200
-Subject: [PATCH 1/4] filter-branch: stop depending on Perl
+Date: Tue, 15 Apr 2025 11:57:09 +0200
+Subject: [PATCH 2/4] request-pull: stop depending on Perl
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,88 +82,131 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250415-b4-pks-drop-perl-v1-1-c6addf175858@pks.im>
+Message-Id: <20250415-b4-pks-drop-perl-v1-2-c6addf175858@pks.im>
 References: <20250415-b4-pks-drop-perl-v1-0-c6addf175858@pks.im>
 In-Reply-To: <20250415-b4-pks-drop-perl-v1-0-c6addf175858@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.2
 
-While git-filter-branch(1) is written as a shell script, the
-`--state-branch` feature depends on Perl to save and extract the object
-ID mappings. This can lead to subtle breakage though:
+While git-request-pull(1) is written as a shell script, for it to
+function we depend on Perl being available. The script gets installed
+unconditionally though, regardless of whether or not Perl is even
+available on the system. When it's not available, the `@PERL_PATH@`
+variable may be substituted with a nonexistent executable path and thus
+cause the script to fail.
 
-  - We execute `perl` directly without respecting the `PERL_PATH`
-    configured by the distribution. As such, it may happen that we use
-    the wrong version of Perl.
-
-  - We install the script unchanged even if Perl isn't available at all
-    on the system, so using `--state-branch` would lead to failure
-    altogether in that case.
-
-Fix this by dropping Perl and instead implementing the feature with
-shell scripting exclusively.
+Refactor the script so that it does not depend on Perl at all anymore.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- git-filter-branch.sh | 37 +++++++++++++++++++------------------
- 1 file changed, 19 insertions(+), 18 deletions(-)
+ git-request-pull.sh     | 74 ++++++++++++++++++++++++++-----------------------
+ t/t5150-request-pull.sh |  6 ----
+ 2 files changed, 40 insertions(+), 40 deletions(-)
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 3a51d4507c7..24fa317aaaa 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -295,15 +295,18 @@ then
- 	if test -n "$state_commit"
- 	then
- 		echo "Populating map from $state_branch ($state_commit)" 1>&2
--		perl -e'open(MAP, "-|", "git show $ARGV[0]:filter.map") or die;
--			while (<MAP>) {
--				m/(.*):(.*)/ or die;
--				open F, ">../map/$1" or die;
--				print F "$2" or die;
--				close(F) or die;
--			}
--			close(MAP) or die;' "$state_commit" \
--				|| die "Unable to load state from $state_branch:filter.map"
+diff --git a/git-request-pull.sh b/git-request-pull.sh
+index 775ba8ea11a..59276fe265b 100755
+--- a/git-request-pull.sh
++++ b/git-request-pull.sh
+@@ -78,41 +78,47 @@ fi
+ merge_base=$(git merge-base $baserev $headrev) ||
+ die "fatal: No commits in common between $base and $head"
+ 
+-# $head is the refname from the command line.
+-# Find a ref with the same name as $head that exists at the remote
++find_matching_ref () {
++	while read sha1 ref
++	do
++		case "$ref" in
++		*"^{}")
++			ref="${ref%"^{}"}"
++			deref=true
++			;;
++		*)
++			deref=
++			;;
++		esac
 +
-+		git show "$state_commit:filter.map" >"$tempdir"/filter-map ||
-+			die "Unable to load state from $state_branch:filter.map"
-+		while read line
-+		do
-+			case "$line" in
-+			*:*)
-+				echo "${line%:*}" >../map/"${line#*:}";;
-+			*)
-+				die "Unable to load state from $state_branch:filter.map";;
-+			esac
-+		done <"$tempdir"/filter-map
- 	else
- 		echo "Branch $state_branch does not exist. Will create" 1>&2
- 	fi
-@@ -633,15 +636,13 @@ if test -n "$state_branch"
- then
- 	echo "Saving rewrite state to $state_branch" 1>&2
- 	state_blob=$(
--		perl -e'opendir D, "../map" or die;
--			open H, "|-", "git hash-object -w --stdin" or die;
--			foreach (sort readdir(D)) {
--				next if m/^\.\.?$/;
--				open F, "<../map/$_" or die;
--				chomp($f = <F>);
--				print H "$_:$f\n" or die;
++		if test "$sha1" = "${remote:-HEAD}"
++		then
++			echo "$sha1 $sha1"
++			break
++		fi
++
++		case "$ref" in
++		"${remote:-HEAD}"|*"/${remote:-HEAD}")
++			if test -z "$deref"
++			then
++				# Remember the matching unpeeled object on the
++				# remote side.
++				remote_sha1="$sha1"
++			fi
++
++			if test "$sha1" = "$headrev"
++			then
++				echo "${remote_sha1:-$headrev} $ref"
++				break
++			fi
++			;;
++		esac
++	done
++}
++
++# Find a ref with the same name as $remote that exists at the remote
+ # and points to the same commit as the local object.
+-find_matching_ref='
+-	my ($head,$headrev) = (@ARGV);
+-	my $pattern = qr{/\Q$head\E$};
+-	my ($remote_sha1, $found);
+-
+-	while (<STDIN>) {
+-		chomp;
+-		my ($sha1, $ref, $deref) = /^(\S+)\s+([^^]+)(\S*)$/;
+-
+-		if ($sha1 eq $head) {
+-			$found = $remote_sha1 = $sha1;
+-			break;
+-		}
+-
+-		if ($ref eq $head || $ref =~ $pattern) {
+-			if ($deref eq "") {
+-				# Remember the matching object on the remote side
+-				$remote_sha1 = $sha1;
 -			}
--			close(H) or die;' || die "Unable to save state")
-+		for file in ../map/*
-+		do
-+			from_commit=$(basename "$file")
-+			to_commit=$(cat "$file")
-+			echo "$from_commit:$to_commit"
-+		done | git hash-object -w --stdin || die "Unable to save state"
-+	)
- 	state_tree=$(printf '100644 blob %s\tfilter.map\n' "$state_blob" | git mktree)
- 	if test -n "$state_commit"
- 	then
+-			if ($sha1 eq $headrev) {
+-				$found = $ref;
+-				break;
+-			}
+-		}
+-	}
+-	if ($found) {
+-		$remote_sha1 = $headrev if ! defined $remote_sha1;
+-		print "$remote_sha1 $found\n";
+-	}
+-'
+-
+-set fnord $(git ls-remote "$url" | @PERL_PATH@ -e "$find_matching_ref" "${remote:-HEAD}" "$headrev")
++set fnord $(git ls-remote "$url" | find_matching_ref)
+ remote_sha1=$2
+ ref=$3
+ 
+diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
+index cb67bac1c47..270ce6ea487 100755
+--- a/t/t5150-request-pull.sh
++++ b/t/t5150-request-pull.sh
+@@ -7,12 +7,6 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+ 
+-if ! test_have_prereq PERL
+-then
+-	skip_all='skipping request-pull tests, perl not available'
+-	test_done
+-fi
+-
+ test_expect_success 'setup' '
+ 
+ 	git init --bare upstream.git &&
 
 -- 
 2.49.0.805.g082f7c87e0.dirty
