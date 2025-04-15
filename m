@@ -1,237 +1,150 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45EC25D52D
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 21:45:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.19
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744753535; cv=fail; b=YHZwj/PqaWzFL4tMEJkcE6xLTvFT5tQjdciuKb1rtamdPoIVvUcD+FYdiB3jboDtFVSVbfMt3wfTsunUKJGvY2ZZx5SWuB3sxlpNYQNFWWvQL+1/Lhyj/qKUX6VnPz8cz7l4hd1719ojeqmKJD9DylVp1DYAiBtPC+FETMbHswU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744753535; c=relaxed/simple;
-	bh=2WKk+bCHFeXjDvNvCTv58sVOPapdQNwYBISL7gkozs8=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=cAh4zO3Dybdu/5OKX9xiungF0kVCCXA+EbD4BnOce0NMprEn5R9gx3fTmGGiZkbmwJ4lm1R6nIfPntp2rlp7AUEMplkuWsEadtEWcWN+lf4jVS6ca/XSmhFXT37fLDtB91uzQTcoqB+M93DqJg7S4wDN9MXzY5Cts1ijxzgbdaY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=k1170WAf; arc=fail smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFA61C5F30
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 22:05:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744754752; cv=none; b=YdWjlSYOt2ldpc8dm2MeA1QM4ExtfCWQ+lKunJZJI0xU8phYHm5Wy//dAjvZujgxeF0I69vYtn1eT7IXxPdNoEvnod2hV0BxmvQTlVH1sLo9ek4/KSX5VOfM5EZeLhIpgmHasLZws0jAi+FOcMRm9EopREA2z45YglNVkR65hBs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744754752; c=relaxed/simple;
+	bh=oCcZKFuPU5GShELtTFbFzvp+UJOUuzw4Pe2JhhKgEQs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fX2PHtzQ+yHpx8DdFB204kdpEHeTu2p9WNCY63mEVqb17FLU8bO7gxoX1iWBAhCYcGNRrYco0sHPIikntED242ROtJVPxHiWhjnX0shRjaBImJ2M1OOcVrf/eNZqC78yP/vDDQaxtcxYoJSwCZ5nAB7ebJKlrmQxiyh8Z0q8rAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=x57FvWrN; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="k1170WAf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1744753533; x=1776289533;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=2WKk+bCHFeXjDvNvCTv58sVOPapdQNwYBISL7gkozs8=;
-  b=k1170WAfA190bJ6FBdyg9aNrOySST0tD0vo4uaRIs+xE0QOBFyFWaZZ6
-   od7Ho6x9y9Nvm6Yk0hVY9jYqp0olOGO4EQfmogj7JIjKyCYjCgdaCkj8j
-   E3k+6NuiLMF6TIQbPEGr7mlAMeg/N8scPLzIGw8yMu0PE0C8W1CAM9DxD
-   CXWV18iohI9V9ZG1j9ygFr25D3YJ9VcFdlRfGPRvMED/0zWNnId+acb7Z
-   7NOEvG6hIYCe9oI5qVjzaF1duY6q1DIvXEOy3VZ7Pmkhet3u5tP/twl2F
-   SaSk9H4bdmq6lHIFGVmYUMZGecL85LOCKw+EWpUj5AfCveML4MijZmBgZ
-   g==;
-X-CSE-ConnectionGUID: nWX05mnxT/uHtqWZG6utTA==
-X-CSE-MsgGUID: kjv1jMR/Tk+TvUfqnWTIvw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11404"; a="45418749"
-X-IronPort-AV: E=Sophos;i="6.15,214,1739865600"; 
-   d="scan'208";a="45418749"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Apr 2025 14:45:31 -0700
-X-CSE-ConnectionGUID: EL6i4jOiQ66Klxmw2vHFpA==
-X-CSE-MsgGUID: OHx/D79nR6CJO/Sr4FoGzQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,214,1739865600"; 
-   d="scan'208";a="130782900"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Apr 2025 14:45:32 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Tue, 15 Apr 2025 14:45:30 -0700
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14 via Frontend Transport; Tue, 15 Apr 2025 14:45:30 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.48) by
- edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Tue, 15 Apr 2025 14:45:29 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aoxhYxcw6DodNj0WFJ2RyFydYDXIS0kg6B+jC0ZlipQct1tmogbMlf6Ohhe5Be6xs34l1t5yi+sm17jOALg0yj68iZWu5fY3gPPpipimtlyFJw4gp67JoGADg5rRCQ0ZJCQNxFMAZfs7CwK9ES7UXf6GF1O3TbZGziT9N6b9ETW1KsaOlHmChr/x18F49rWZjATVrowPUHYQhJUuiAihu+yt14pzOSDB9eTL3YQtaJe1ZQ9uDM1E358SDG8kL7Q6SvDT3xd/cju1SIAg9d+gJpHNv3Mt+0fOulg0UV9rI/cZKAFn92dRbcmCvO8o8iTXGXLH48eNy7PW8tIUf+vr2Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jMarJw2Ddxlro5DxFVWeXsoHGopuYatIp4ptTCYoY6s=;
- b=En1ogCAh3Y4V23fiBI7sckJhDNF+zBWAT4PMLX9s1s+vYHtnBgeJWLeJ9cPz1dIVIcVPQS4bukADUCklPlPZmfnOA1hCTX8o2FdDWitCYEQzej3+xoZCCvheSTbPO9DdK787d8rlnI1aDunwKyMjWCqfDmleRReaxlAaLbg9QTAiEdwzZKaMwFHrEMOx19OB2oPdH0/M0zBiZZ0MzBU/bDVhK+fBk35lDjEY5PYKm1zUxWYGoPGSKKqSV2AwYIQ+okr/kDAq+G76Jkk0PSqZzUWNj3e1EUpDCC4I1YNOVoFxE8HHMRacY12+rgNsMuVZN1ru5cS5T7yI4nM5D1d8Jg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
- by BN9PR11MB5292.namprd11.prod.outlook.com (2603:10b6:408:119::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8655.21; Tue, 15 Apr
- 2025 21:44:54 +0000
-Received: from CO1PR11MB5089.namprd11.prod.outlook.com
- ([fe80::7de8:e1b1:a3b:b8a8]) by CO1PR11MB5089.namprd11.prod.outlook.com
- ([fe80::7de8:e1b1:a3b:b8a8%4]) with mapi id 15.20.8632.025; Tue, 15 Apr 2025
- 21:44:54 +0000
-Message-ID: <f5f58fef-16d4-4e98-8429-1e10fd9ce07a@intel.com>
-Date: Tue, 15 Apr 2025 14:44:53 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
- projects collaborating on change-id commit footer)
-To: "D. Ben Knoble" <ben.knoble@gmail.com>, Nico Williams
-	<nico@cryptonector.com>
-CC: Theodore Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>, "Martin
- von Zweigbergk" <martinvonz@google.com>, Git Mailing List
-	<git@vger.kernel.org>, Edwin Kempin <ekempin@google.com>, Scott Chacon
-	<scott@gitbutler.com>, <remo@buenzli.dev>, "philipmetzger@bluewin.ch"
-	<philipmetzger@bluewin.ch>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <xmqq4iyzn0vn.fsf@gitster.g> <Z/RFQY433muaCW44@ubby>
- <20250408125521.GA17892@mit.edu> <Z/VGYrrVZYQ13TLj@ubby>
- <20250409121924.GA148735@mit.edu> <Z/amMj/eg0RbXdkS@ubby>
- <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
-Content-Language: en-US
-From: Jacob Keller <jacob.e.keller@intel.com>
-In-Reply-To: <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0183.namprd03.prod.outlook.com
- (2603:10b6:303:b8::8) To CO1PR11MB5089.namprd11.prod.outlook.com
- (2603:10b6:303:9b::16)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="x57FvWrN"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6f2b05f87fdso507266d6.2
+        for <git@vger.kernel.org>; Tue, 15 Apr 2025 15:05:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744754748; x=1745359548; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=WwRRYWcpQXPBZo43V27EsRQgP7ftYzqofAZoTZw/6O4=;
+        b=x57FvWrN8inTU6+/zBI5dHUziFfx/JveWo9vNC0KztmzjCJYanoAVgfeSwIkBvsmsp
+         lAbaSs+rZ899o9E0FwRNCZa89CqogJ8BorVhyovazBXLAJvtfZypDUJa0qcNZtRjPbxK
+         s/uPtylwcIKhGGpUy2/klEBIPCJKysCbBgS7e6aLD8UfMRAI63ScheRV3cEosedxJ2zh
+         j9CZFTmuFIFnmGnwCdlHXsHYxSHZPl7Yz7Me/18lWcs7qeW9B1QUtY5NK4sPOi5lkrdf
+         J+Vw7z019GnJEgmdTVyrHHPP8lt125sq9oA9CBQLCfaQh+GYqN1vmKig39zkNd6nsKbV
+         TFYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744754748; x=1745359548;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WwRRYWcpQXPBZo43V27EsRQgP7ftYzqofAZoTZw/6O4=;
+        b=fBTE4OhSKRmFpjD7SHaffBEugTDt0Kj+i175s6SiI3mCR6IPMSp5XW18JFV/NLESvh
+         qWJGCXxlSeIfY7JOR2+OSoyV9o3z8TNlKzJa+xPKSEASZBCHrYkwKMc176BvJEFMI22a
+         nYok7Q379n5dxgbIaJArdEVCNeEC+q68MCTmlBYXanKplEGDDlUPLcYwarpIO1HU0O1S
+         qpukUeZgpZqxIoaDWDEFh1GUG1thxKks+9Pkh+1Sba6rU9l9veSmkH5VGLXfW/svzjbx
+         C3CsmHBMhy0zOkk1nJc9JxBOBqO+kA4NfgBcwK1mpxd2oZsbcVdqaOsHgRnNHwPxrE1s
+         TqZw==
+X-Gm-Message-State: AOJu0YyOkPPrqgATRWlrilh9vNaI0LF/ERkaOEf2l3TdftB6AtDliIfs
+	aKX++Gh/9HXvk4i8qYoSo8aWxRC/R6Gm9Ef1CeAwzkSUpMAZ/8526pEjySQWI5uvhL54BNpnOqg
+	2TkU=
+X-Gm-Gg: ASbGncvTYQZHJR0NR/l7oJ0lIBlK07yrbiSolSn5vLbqsj5gtJvaRzw2TIUQ3vEC8QU
+	3IHuZXBWoMflxNiHj4SBJQ3Vs1AQVQTCOx6jO7e4N+u9jV6ydh88/hMB2kne7I7JTPdVUgPrNkI
+	sF8XUu+6ju1nRrY1UF2WQTK5d7kWkQ0jruaTMQLi59FGAI74ns01yUTaxnEXeHSyH385pwuYMM5
+	t4RCz1kMWq0p5U+Gx07mPxCl3ONWh8SpSyl/ant2SsRbaih4T0i5Z5tocjFmvfTAjL7xDXgxyak
+	qDWxHgyQqvP66nh+Xo4r3QaP4UYtTRRWH5LbUvY2zD/xI2RIhNjXG+0C1dmchn7GNNjiRDHh70y
+	h4Jk5B/qZjsMMfNWP3+XXtyg=
+X-Google-Smtp-Source: AGHT+IGQxZTGnn71EWj6VrAn4Q95/BGnlDYkFlZUcz9+zoRytirFTC429DRp+04VuMr5+4agj7L1TA==
+X-Received: by 2002:a05:6214:d85:b0:6e1:a4ed:4b0c with SMTP id 6a1803df08f44-6f2ad91b7cdmr18980116d6.26.1744754748545;
+        Tue, 15 Apr 2025 15:05:48 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f0de95f6f5sm106155056d6.7.2025.04.15.15.05.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Apr 2025 15:05:48 -0700 (PDT)
+Date: Tue, 15 Apr 2025 18:05:46 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/8] repack: avoid MIDX'ing cruft pack(s) where
+ possible
+Message-ID: <Z/7YOh+bDN17jye+@nand.local>
+References: <cover.1744413969.git.me@ttaylorr.com>
+ <cover.1744661167.git.me@ttaylorr.com>
+ <CABPp-BH7U4Vh8b6L9_FNUsBqKB+4hNT_Twn4S7LTocLvbw1LjA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|BN9PR11MB5292:EE_
-X-MS-Office365-Filtering-Correlation-Id: 47349e65-7750-4224-b59e-08dd7c66c25c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?WW14VERjZnpiVG5IUzgvbWVNYzVmeEtiWHRmVStrcVVxRTJTRTdIaWZiQUZv?=
- =?utf-8?B?UnV6T0xxZXgrUUVBTUF5akNVRlhkUmlyVGRtZG1ISExHV2UyNVp0ZDBTMzMx?=
- =?utf-8?B?NEp3a2NVbEF3Z24zNUMxN2NjTlM0b3cvcFRmNUJnWE9HbXc0N25PQUpBbWhM?=
- =?utf-8?B?MzdvZDlIQkJHRDZYSkM1M3pwa284a2lyblR3SHZFbk5TdmJHSWNLck83d1M0?=
- =?utf-8?B?M1dFVWg5R280bFdkKzIxQlQvbGNYeHJWS2dCZnJsaU44VDAvazExa3JXRWt5?=
- =?utf-8?B?NWlEOWIyZVVxV0lnbHltdkxxT1o4M1B0V3NaOVlQcWdoa3ByNW15U3drUXlq?=
- =?utf-8?B?WjRnSUxYck9yVkNkemVjQ0o0a3FnNmo0amFUZW1lVjdCUEF3MHhETkFqbktr?=
- =?utf-8?B?dUY5YVUzbW1XU1lKeVRhekVvTlhRQUE3MGNkQWdUU0QyeDd2RWdOUllEVW9W?=
- =?utf-8?B?VjNBMlR5Qm9pb2dKeGswSVp6M3hGaHpScklJQjdUZXRSUmkxYVdwVFVCVk80?=
- =?utf-8?B?bjZ1WnRKOUpMeXY4b1lIcHV4cXl1MXU1SVVkOUhIRStMdHg4T2lyMnVUK0Nv?=
- =?utf-8?B?OHA1eDdwL0lJYnlMOWpNdUoxYkJkVGRVYk5XZzlFaDNsYkQyTVJ1N0V5dWNI?=
- =?utf-8?B?c2kzTklYRitlakp3TWtBSXVNZHZmRGE2M01jMEVBbFJ2RzhwUUNGdXlaQWhn?=
- =?utf-8?B?NmhkVjIySVRMa3EvWithQUowUHpHSUhwdUE1cUYzZVdsY0lHSG1HYkQ5S1Rw?=
- =?utf-8?B?TExUNmM5c2N2Q3ZQYjZ4dnlobE1CNzRydndkRklPbjh1WUVnd0tWYnV0WGQ4?=
- =?utf-8?B?VHlqRkdOb2tDTjd4d0wxcWFYNTNzQUo2TkJIbWhYUjByUzBuellodjBlK1Yz?=
- =?utf-8?B?NjRDTXlENnBWT0gzTDBmMmNwOHpTSmVDb2QrTkY3VVIrYTJnbklLclZUNWFk?=
- =?utf-8?B?SW5XNmhUVXNPOVpkNTA0MkxJOExiRmRtYWFHMFBRd3h1YTA1cjdNdVNEQkd0?=
- =?utf-8?B?YmxXTk5kOVBKZERVY2pUeGIzQWhmdkJpQnA4V01jSEVXQWxtbnBXTE5PanUx?=
- =?utf-8?B?NFNwWGRzY3R3bXNiejJubEpReHVKbC9qY3hoeWZMNTczbkpCVmZrT3VjMTk3?=
- =?utf-8?B?UUtGdFBYY0RGdDNnd002Q0R5aXYyS0p1RHc2V0tRUHRPQngvMGpjS21GdVA2?=
- =?utf-8?B?MTlsRzVkOUdwU0x3ZXUxeWZQbnd2dmdDaTRrVENUdzJoelpSTmkyM3UzbUhl?=
- =?utf-8?B?bUFSTTRobEpNVXJKdFhQTHpNMXlGdWlLRVFjQWNWMDV0WW84UWRBRW01dGIv?=
- =?utf-8?B?VHJiUG1rcnJGUHR5VmlVSDVtUHJabVdUVk1TaWUwek1VenZycTRtVzZJc09x?=
- =?utf-8?B?UVU5UG9XMGppdVIrbEpodXBQUlFsMy90aFBlM1hNWHdreDJnVGxzalJXbjN6?=
- =?utf-8?B?Y2NBcG5kMUlieTlaeEgzKzR2QVVYVGxVYU1EOFh4KzA3b0RCU21oZU9JWnhY?=
- =?utf-8?B?ZGx2b1JKODZqaWlMcVFhMGVzZWZTM01Uekc5N1RSRWJhTTVhWENLbkI2QlBO?=
- =?utf-8?B?dWdwaVRtUEoyR0NFcVIrRHlmVnFYMHFrckJTaU9JNmUyRTcvWndmMkpSRjR0?=
- =?utf-8?B?Z2FuaHg3aWJYY20rRzZVck91dUFhZlNjYnhTekJzd0VpSGdQWHh1ekhFZFRv?=
- =?utf-8?B?QUJ2a2ZqYTNDdzcrRWY2Qy9BVWIzWmxYZHY2aEZZcFVFN3FVYzZib3VsQXlu?=
- =?utf-8?B?dkp1blJRS0ZUMUFUc0lMaEQySXdvS2RNTXVRUjI2NkFCTEUxNTU5S1dvZ05Z?=
- =?utf-8?B?TnFzeDZvV0dEK3FuMWVJZ1RmbHRVbVdPWlJhcFhtUjVGM0Y4OFFSQ1c1T0N2?=
- =?utf-8?B?ZEtkZ3JaY2wxeFVCSWZFMU5PU20yUm5YT1FtL3pGRyt0UTMwZkRucGlLM08w?=
- =?utf-8?Q?VxfNLThHvOA=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5089.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q3pnVEMxR20vWi9Md1NUOFV5Sk96WmE1YnZHL1RwWnNTQzBRS2RPaVY0SFha?=
- =?utf-8?B?d1dKZ2V6RUYwM3k3RTFPSS9TcHBzZ0pKeTNFMW5JdEFTUlhVTjFSNzhsT2c5?=
- =?utf-8?B?R0RTWHViSzJXemRjb0V2Umg4S1dib0tVWGVNWkh4L1lFcnhMSE1nbGxZam5N?=
- =?utf-8?B?TUZwNmtlMFh5cFhGQUZnL0F5QkdXemFhS3piU3M4LzZWOTBnWndYMjBEeVJp?=
- =?utf-8?B?U1FCTkY5Q3NMZTZqYUZSUnlFVGU1N3oveXl3VjRoR0pwRVF6ellUdmJaUEp2?=
- =?utf-8?B?Tlp0RTM3eSs2NDkwRzFPMmVHN0ZjUEkzU3VpMHlLellIVG9OMExLOWp2Zm5E?=
- =?utf-8?B?RVNKMSswbUIvdjljb09aUmI0d21YSWo3UmhJTDlNYTg2Um1SVzZhNGlLc2lL?=
- =?utf-8?B?enpyOFlTNDVlZDR6Z3YzY0dHWUhMZk1TRHN2d1ZJejhLemNINkNjbzZhbUJ0?=
- =?utf-8?B?UXZMUHNxelFQbnJGZGx6blNwNzhxdTVSUjJPNzdXZTROemJ0Y0ZhdTc3Z3dU?=
- =?utf-8?B?czlSbTQrdmVjTnEzdnB1Z0VpKzlCSzNVUXR2WDNReHZ4YVlUZzErMVpwRVBp?=
- =?utf-8?B?c1BhSHFsOEtDUitMRWxkZFg3dUVrM1RNY2tKczdTVHhySzN1RjU2ZmFmNHdU?=
- =?utf-8?B?MnRSRE5BKzVJUUIvUCtTakpmSldaUk9oWVhJcDQ3NEZXYmMrY2pZYlg5enZE?=
- =?utf-8?B?L2VSVmVObGo0TXFYODVuNzR2eUVyOGNWamhxSFgyWEt3dnRCS2UwMXMwNnVN?=
- =?utf-8?B?K0dOVUl6SWRhQS94T1Y1VFp1azM3NGFxMkhMM1JIbmZCdzVFcGVRTW9tdVp5?=
- =?utf-8?B?ZURIZU8reEhucUlEUEFROTIrQkdNb0RKajZvS2ZlZnd3NHFUdVlHZzVWdzRT?=
- =?utf-8?B?UkdzSHNOaEltVFp2YWtwOE5keklnMTB5K1FXMUZBTUdjcVhybFZQM2U4eC8y?=
- =?utf-8?B?Q3MrOG40N2NsTU9OTGs4eHduYTNMQW8wNGt2L2tIbUZ1ZmJpRE1ybUxPSW1a?=
- =?utf-8?B?cmZ6NHl1cVpWNWhORXlCVHBrK0Z1SVVublNlMVV2TmdWNTVVT05FVHdWeFlD?=
- =?utf-8?B?dXlSUnlleHcwSXFQcU95MVhEaitLektqdFFQd3hTbHY5bUJBVEhNb1p1bVJP?=
- =?utf-8?B?OUVjQ1ZyS0NUSThQbEdOZmd6OHFzaE9hVVZUYUVMT3Qxb3JsSldibjVxb3VF?=
- =?utf-8?B?WHJLbmM0V0lGM0JLaXJIYXJkN1hNMXkveHFiT3BHMWNYcWFnUTdmM29GUjhC?=
- =?utf-8?B?TFFyb0E2TjFjS3NaVzFkSGl1TVNqQ2ZkOTFSMEZFNFNuNkZ5WXhpOTdhN0E3?=
- =?utf-8?B?T2NRYm5CS1pOWEJRK1FnMUxpMmRCV2VENmNvVEFEa083eVBlZVJNckFUaFc2?=
- =?utf-8?B?S0t3WWR4SVhocVpyN2VBd0YyZk5NYTdLQTFlTWJoZk9udjJYc01wNWk5clA4?=
- =?utf-8?B?Q1VoUG9MeE5WZ1pLN0x2dEJucy96VlhIeTQrenVYU0IzN0F3RXl1RXpzVWt3?=
- =?utf-8?B?Vks3cU5DdFJ6QzArTnJLcnkycWFWc25TWDlua0NKMVl4WHgyaXYwWDNRMUkv?=
- =?utf-8?B?MlZPQUNnc09hUVNmQTYxdVZKanRXRXRGWGh5dUZGaURFQnBHeGJzZGxtbjNI?=
- =?utf-8?B?Z2N0NENSY0ExaURTWk41YWhEcWlGaElYSzNoLzQ1MjdHbytiR2RBTmhzaHhw?=
- =?utf-8?B?VmFPSWlGMldjRzc1cmwyYVVLWmNrTGc4cmxBbEZ1VHYzekxKZ1lxRXo0M1NI?=
- =?utf-8?B?c21LcWlPbFJwTWpyOWI3T0hNSzhRdVNWNm1Nc1grSFJNdEZXYmYwUGpJM3Vz?=
- =?utf-8?B?dG4rUmgwV2tpUnNKSjlCQmxCNUlZUHR6VzBVaXJOeHBWUHQ5djZ1SWdZeHRy?=
- =?utf-8?B?VGZUS0dZczZ2TzBhRjBGa2QxNjlqdVhVQ2hUbXVINlNBc0IwRDBSQ21QVFRn?=
- =?utf-8?B?U1piRnRFR0FLYkpPS1dHeFhDREo3THNFRW9WZHRRUXZnNm1Ea3lCYUVMVjhD?=
- =?utf-8?B?K0YzYVNBVE1Kbm9JZ3U4SittQTVqQStvZlVaaTM1SW9hUmdMZnVkSFczSVhr?=
- =?utf-8?B?WVR1eWplcEk2NldzWGFiYjl0OTJRZlhzckFQeWZDdnFzTTVGdm44aVlPUkdl?=
- =?utf-8?B?S3p1eU5QVy84OW9Hck1vaXk2ZjBmOEhibEliWXFnOUJCMTN3Zi9tZmNpL0Z1?=
- =?utf-8?B?c0E9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47349e65-7750-4224-b59e-08dd7c66c25c
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5089.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2025 21:44:54.8314
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CJtHfiIvjUUOxw6k3IPyg7fUR/OA9FhVMuNlL6Ol9Ag/tStryss1zkD9fOKSpvAVAihXXWKtAVDTjxMzkOuJY+2QWm6BDcbpwZlB+REujrA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR11MB5292
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BH7U4Vh8b6L9_FNUsBqKB+4hNT_Twn4S7LTocLvbw1LjA@mail.gmail.com>
 
+On Mon, Apr 14, 2025 at 07:57:52PM -0700, Elijah Newren wrote:
+> On Mon, Apr 14, 2025 at 1:06 PM Taylor Blau <me@ttaylorr.com> wrote:
+> >
+> > Here is a non-RFC version of my series to explore creating MIDXs while
+> > repacking that don't include the cruft pack.
+> >
+> > The core idea behind this approach is to ensure that packs generated via
+> > geometric repacking traverse through objects that appear in packs which
+> > are neither included nor excluded.
+>
+> This phrasing feels confusing -- what does it mean for packs to be
+> neither included nor excluded?  Maybe:
+>
+> "The core idea behind this approach is to allow some (most) of the
+> objects in a pack to be excluded, while still including some subset of
+> objects from that pack as part of the repack.  In particular, we
+> include the objects in that pack which are reachable from the other
+> objects we repack.  This is different from our current handling which
+> either entirely includes or entirely excludes all objects from a given
+> pack."
 
+I am admittedly having a little bit of a hard time parsing your version
+of this, but I think this part:
 
-On 4/14/2025 12:54 PM, D. Ben Knoble wrote:
-> 
-> It looks to me, an outsider, like the problem is some combination of
-> "I want to track a commit's evolution" and "I want to see related
-> commits in review, esp. when it's an identical and already-approved
-> commit." But I might be misreading, and clarifying the problem
-> statement might help bring us to a better core solution?
-> 
-> [1]: https://lore.kernel.org/git/xmqqh62tm5fo.fsf@gitster.g/T/#m038be849b9b4020c16c562d810cf77bad91a2c87
-> 
+    [...] In particular, we include the objects in that pack which are
+    reachable from the other objects we repack.
 
-To me, it seems like multiple different and independent problems are
-being solved with something that is almost but not quite the same in
-each of the major projects shown as examples. All of these projects
-would benefit from having something built into git... but its a
-challenge when they don't have the same semantics and don't quite solve
-the same use cases.
+isn't quite right. It's not that the output pack contains objects
+reachable from the other objects we repack, but rather it contains the
+reachable objects from the other objects we repack *if* those objects
+don't appear in an excluded pack given as part of the input.
 
-It is hard to come up with something that is general enough to cover all
-of the uses cases.
+> > Then if some commit (for example) in
+> > a pack reaches some once-unreachable object stored in a cruft pack, the
+> > pack generated via geometric repacking will pick up and write a copy of
+> > that object during its traversal.
+> >
+> > If you repack consistently using this strategy, you can guarantee that
+> > the union of geometrically-repacked packs are closed under reachability
+> > without having to keep track of any cruft pack(s) in the MIDX.
+>
+> Also, if you do a single non-geometric repack with this strategy, you
+> are also closed under reachability, right?  Is that the suggested
+> transition plan for those that want to use this...first do a
+> non-geometric repack, and then ensure that subsequent geometric
+> repacks are done with this strategy?
 
-> Cheers,
-> D. Ben Knoble
-> 
-> PS This discussion feels somewhat related to the classic GitHub
-> problem of not presenting interdiffs/range-diffs: GitHub shows a
-> too-flat source diff on force-pushes. Perhaps better web UI tooling
-> about interdiff review (which I think is one of the things Gerrit
-> does/wants to do?) makes change IDs less necessary, since interdiffs
-> help connect evolutions of commits?
-> 
+Yeah, the last commit gets at this a bit. The property you have to
+maintain is that the union of geometrically-repacked packs (which form
+the MIDX) are and stay closed under reachability. I am pretty sure that
+the way this is constructed, adding new geometrically-repacked packs to
+the chain does not violate this property[^1].
 
-I think interdiffs and range-diffs are very helpful. More exposure of
-these in the various forges would be good. I suspect that creating an
-easy to use web UI for these is a hard problem, especially as there are
-a number of corner cases to get right.
+But you can't guarantee it part of the way through a sequence of
+geometric repacks, which is what midx_has_unknown_packs() is checking
+for.
+
+If you do an all-into-one cruft repack first, then there is no MIDX to
+begin with, so there aren't any unknown packs to worry about (since
+there are no packs in a MIDX to begin with). When that property is met,
+then we can use the new behavior.
+
+Thanks,
+Taylor
+
+[^1]: So long as you don't drop part of the geometric progression, e.g.,
+      if you have some pack that was in the existing MIDX, but wasn't
+      repacked or included in the new MIDX.
