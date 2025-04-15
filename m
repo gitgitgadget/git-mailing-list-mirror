@@ -1,210 +1,107 @@
-Received: from skyblue.cherry.relay.mailchannels.net (skyblue.cherry.relay.mailchannels.net [23.83.223.167])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6EB33DF
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 02:05:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.167
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744682750; cv=pass; b=tc5Bk00KzbGGZdLrLLTS+BzNYcfv4lspXmlm7HAUirZi31e10JaJE2b7op7ISjv3DhW62P4VkkAVBiSi2lPxT/t9cmmSfdgIKVz04JFveEdbbiWU7E4cZ5N40LaJF+2mIQj/oCNg3H3etofhOfi7afWZruaqjJbTIceosj/upL8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744682750; c=relaxed/simple;
-	bh=K3GeW1afEV9gfv0NZSiMuLJfaxfaHf4R9yeIgOJm77U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T+TCgFyYWpM6k1aWtJ+3eCrdUJxJZi6KjQ5rlnhqHfmEsxkVk7L/w7eQt2kPITJhB0end8hWQMbnsQVXd3unwz0UNMGLpSNEJ73i2K0VNcYs+K8cDCI5XHAWSgO/CEdSDihJ+89306APIqvjcVP1AKM/A2BC3JMr3AKYRaMNnDs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=kFHNf640; arc=pass smtp.client-ip=23.83.223.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DEB2DFA29
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 02:58:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744685886; cv=none; b=KwD926FHgggzj+uTvLT3QZ5UmFDTPoebRim7vdqnZBYpF7FdYfXwQshMJPMuAPiki9/x6juFkcOkGccHOV6bE8HOJqI4g3VCBVIP8Y2aK758juL0M0CX48c4AMypGXSEeNff5zNcMwTqPbTNdepM3D/buxcM3NB1l7Ona9Q1HNY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744685886; c=relaxed/simple;
+	bh=EVg1S8MlZSr8G8jZlbi8QIft8hNFhyCmAW6lGLZwxn8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cZSpjE5l3fwCGkLiaFmb1dyodX1k756NvHnppok5/oqy1i3/w6XSEjNx1UukurrOW9plsnqe+n/SftBstvuYW4ppGffE3BBDfVuSocpfvp2c/IXIzouxSjtuS36hUndKZtkrho7LaYH4YbIPcpnp6XSEuuh7ICkr2Q6XULuzVV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EoUha3AR; arc=none smtp.client-ip=209.85.166.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="kFHNf640"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 51AB82C4C04;
-	Mon, 14 Apr 2025 21:34:40 +0000 (UTC)
-Received: from pdx1-sub0-mail-a229.dreamhost.com (100-110-114-166.trex-nlb.outbound.svc.cluster.local [100.110.114.166])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id AD1102C5C11;
-	Mon, 14 Apr 2025 21:34:39 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1744666479; a=rsa-sha256;
-	cv=none;
-	b=H0AYrn1/5gbLXK6JSB5RRKarCXXi1vCGyP1GiepFI1XSnTmJri+LvRs+MyAbD3R2dxLYP1
-	dtZNQU9BkPv3x2cY0QAUHEyARfow1qDmLulT//p69XfRXqnubR/ZICwh8AL3QQUj04fDGi
-	WiPeNtR2cWUlKuMUZl3YdsrImetfbv4gnpuz6584c2zalrvgfjVwGPfyFq79WfUrC2+aKg
-	6L80Fw7YVp60KXtn7n2iq1LMY3wjn58GkDuXZVpFEuPfMiqzJoA84JQRmTgGRITqHqF/zu
-	ULwF+jkeEa7sYoaACAq/jbYSYqH3nlULRZisfDmuRTTpU63iuihyVVa6BVcTrg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1744666479;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=Jr1PuPoMu2S5zZPFf5wKb2eGhyzMY4LjTqtzAjHwwoE=;
-	b=o3GcIDF4W0nBtbTSqJJGcJyqhcnHMOMJYZh7KtdNtacdaokpAVqeN+o4HAkOOEOJW6X4lh
-	JEnYlkbjuIaZQweQ6GK7x7h1IKPiMlerdZ+qdgOEYQKWpcDVfTMWkZaonNYFgLLcn8yEPQ
-	DnqJKwNMgl8Bnm5OBHCHcnSyZQhu3i4OPGgMLn7hJsiW/l6x4mZMxxKf8AI+VfIaA59rV0
-	0Z+JNo42XRs3OjQDyqcUJCue69kkctEhlxIuH66I2YmG3VGgJhw3WLR6UMZsgDDcOJux7X
-	0FGydvqv9WlTSzwg2c72BocFc+09G1l6ZYrBtMKw3zaA4R9HZ7MtIwsDTXghyA==
-ARC-Authentication-Results: i=1;
-	rspamd-865c984fb5-86dhv;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-Tasty-Wide-Eyed: 3c47fb5721b9ceaa_1744666480007_1063638679
-X-MC-Loop-Signature: 1744666480007:197056578
-X-MC-Ingress-Time: 1744666480007
-Received: from pdx1-sub0-mail-a229.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.110.114.166 (trex/7.0.3);
-	Mon, 14 Apr 2025 21:34:40 +0000
-Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a229.dreamhost.com (Postfix) with ESMTPSA id 4Zc0tQ4TSRzFs;
-	Mon, 14 Apr 2025 14:34:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1744666479;
-	bh=Jr1PuPoMu2S5zZPFf5wKb2eGhyzMY4LjTqtzAjHwwoE=;
-	h=Date:From:To:Cc:Subject:Content-Type:Content-Transfer-Encoding;
-	b=kFHNf640YQT+KuUlgIk74oBsVdCKHDsZsCGa9MbBEechNqBgL4bW97ec7zq6DNC07
-	 gXbadMv+eRI7Pyto09lkG8lYpVe5IcpRBnVGEuji1ppCVwNiFMJt/p88fjIYPi2ie9
-	 kEYmU5B+lLLQnAF/cP0Q4VIWVTHk8+WU1bN2Z/1vupPllTh5NpFTXoaTaanbyp8BMM
-	 uxl9opACN0OBayM2bfGUZKB6PjrpWMtqrjoFesFUyeT4djzUP/egYv+Fb7VJNjYi/n
-	 X7Y/6TulrRzZmY5+0cP022CWX+RgAFg8jeLeZJEIBf1JhZdRW7OGd4BoPIYTdh0huD
-	 wTOpS528s5kQg==
-Date: Mon, 14 Apr 2025 16:34:36 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Theodore Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	Martin von Zweigbergk <martinvonz@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Edwin Kempin <ekempin@google.com>,
-	Scott Chacon <scott@gitbutler.com>, remo@buenzli.dev,
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
- projects collaborating on change-id commit footer)
-Message-ID: <Z/1/bDQnWc8Lj29S@ubby>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <xmqq4iyzn0vn.fsf@gitster.g>
- <Z/RFQY433muaCW44@ubby>
- <20250408125521.GA17892@mit.edu>
- <Z/VGYrrVZYQ13TLj@ubby>
- <20250409121924.GA148735@mit.edu>
- <Z/amMj/eg0RbXdkS@ubby>
- <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EoUha3AR"
+Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-3d45875d440so21943605ab.0
+        for <git@vger.kernel.org>; Mon, 14 Apr 2025 19:58:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744685883; x=1745290683; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hWkV97Ckdt3a4q0O7mTLZ8QEUo3VAZ8paAPUldtfSzA=;
+        b=EoUha3ARd5BGGLuQRPiSBeeF3i3vdDY8blDsUcB8Vy5OVFP1oc7aKLk2yNkG4dClVM
+         a5mI0ApbyxksAWyhYVkLQO4jXf1rc7eiov1WRHyPLziWG6HTaHXjGrB/yVXp7sUAoufT
+         suNi/jcfkY2KI70pDzRuk/3hM+x3agzPGo7F/fnN0gw8A00bKWQ5pv1NrlZHTRje0XDp
+         ULwg7uC0Bz6pd5x9Khs1rQDsjiY+3KW3tExKU85gy016bNRsghNjPumnbjKRTu7zWtxo
+         4DTOOUi2DtAdT9V8g9r56b+ql2Ej3op7/Exl2axwAN4mo0H7qdwKam5YovgkQG9CjRDr
+         P0xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744685883; x=1745290683;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hWkV97Ckdt3a4q0O7mTLZ8QEUo3VAZ8paAPUldtfSzA=;
+        b=GvGyFLVw4X9n6rD+9wfbOrcpLtMk5R9Qomo0AAPRoBacUSWaYptB2vekbNc6SHFrrx
+         xQ3gVbCTeLGw51wOe3rF91RTY5juCxCre4QcVzs5GymG+QHGyRvjxG3RYwnaw/X2u6mG
+         cIpA56aMlMEa+e+1R6axm3coMqUvuR7q7qqw8N4fEWiQJ5DkjIACRnykYuCJfKKTe34s
+         qkbO0ECv8Om/ozzVFyRkaNkDZX9KMgfiK7lsrp0o1+ziwm8hd4j8uMOmKSy/nXkSCk9S
+         hY8KHCYTvs0tzxcTU4M0Eng+TYdpr8+VRG3XbdFvOMV9n9LHbeWGV4tb1LtZg/GZlBHX
+         OCOA==
+X-Gm-Message-State: AOJu0YwqCnweF2Bhpz7Gyo0i1ur/3108ZzI9tlDX2ppAZpNcfTglUKjp
+	smGg6sRnDBprz2dHZbrRuCZOyAGW/lsXx2AwzaGHFSf3zzUuBJerkcesFCDH5nTiiI2R/EfE6rr
+	g9IHxfmMBtJsgMP5Pxbie2tWtmBk=
+X-Gm-Gg: ASbGncvVfjcVEikzIhS7120vPtPIODIZO7tytofbpcV0Qlk+27AtRIuCLL2av8nQgeB
+	koStpUNjhOiSLBWCvVv21Avlj+oewS2jPFvofPMkHwicOUw1lWb9YViyYt4RiN+eFALys2ksWOf
+	WcRpGKDkFywAG5yRGulMn09dxvczOMHkcX3WL2o2hok/A/bx3bY3lr7vQ=
+X-Google-Smtp-Source: AGHT+IHnA3uNSof8cBuA5M9CDqNsPsxUAnmEOEZRypz7scjKOs2hgAJ3ztzLlDjMHu5CQ/y30DI2HExo7LDwmuQzCQE=
+X-Received: by 2002:a05:6e02:1d9d:b0:3d3:e11a:3a8 with SMTP id
+ e9e14a558f8ab-3d7ec276573mr116759435ab.14.1744685883569; Mon, 14 Apr 2025
+ 19:58:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
+References: <cover.1744413969.git.me@ttaylorr.com> <cover.1744661167.git.me@ttaylorr.com>
+In-Reply-To: <cover.1744661167.git.me@ttaylorr.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 14 Apr 2025 19:57:52 -0700
+X-Gm-Features: ATxdqUEp273RWQPb_Cquv_MgxO0XTDXBMuP5sSNyme3ZXYJLzxrNC_-JgwPcnbg
+Message-ID: <CABPp-BH7U4Vh8b6L9_FNUsBqKB+4hNT_Twn4S7LTocLvbw1LjA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] repack: avoid MIDX'ing cruft pack(s) where possible
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 14, 2025 at 03:54:23PM -0400, D. Ben Knoble wrote:
-> Using URIs [to code reviews] looks to me like it makes some
-> assumptions about what creates or consumes these headers, right?
-> Especially since the URI should point to a code review… Is there a way
-> to do that which is downstream-agnostic?
+On Mon, Apr 14, 2025 at 1:06=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> Here is a non-RFC version of my series to explore creating MIDXs while
+> repacking that don't include the cruft pack.
+>
+> The core idea behind this approach is to ensure that packs generated via
+> geometric repacking traverse through objects that appear in packs which
+> are neither included nor excluded.
 
-You could tag the URI(s) with purposes, but URIs are already pretty
-agnostic as to what is being referenced by them as they are merely the
-reference.  That said, if you need to decompose the URI into specific
-subitems then you need to understand the underlying application's
-local-part (and q-param, if any) scheme.
+This phrasing feels confusing -- what does it mean for packs to be
+neither included nor excluded?  Maybe:
 
-> Further, and maybe this is my ignorance of Gerrit showing: how would
-> you attach a URI to a local commit when authoring it? You don't have
-> the review URI when running `git commit`, do you? (Maybe I
-> misunderstood; I'm seeing an odd chicken-egg problem here.)
+"The core idea behind this approach is to allow some (most) of the
+objects in a pack to be excluded, while still including some subset of
+objects from that pack as part of the repack.  In particular, we
+include the objects in that pack which are reachable from the other
+objects we repack.  This is different from our current handling which
+either entirely includes or entirely excludes all objects from a given
+pack."
 
-Excellent outlook-changing question.  Local tooling would be needed,
-which would be annoying if that tooling were not Git itself, but if it's
-Git then how would it interface with Gerrit or any other such tools?
-We'd have to define APIs for that, and that too would be annoying.  So
-it has to be `git commit` (or `git rebase -i` and then use a new verb to
-stop and set a commit's change ID metadata, like `reword`, but for
-metadata), which means the user has to acquire a CR before creating the
-CR, so the CR tools would have to support that.
+> Then if some commit (for example) in
+> a pack reaches some once-unreachable object stored in a cruft pack, the
+> pack generated via geometric repacking will pick up and write a copy of
+> that object during its traversal.
+>
+> If you repack consistently using this strategy, you can guarantee that
+> the union of geometrically-repacked packs are closed under reachability
+> without having to keep track of any cruft pack(s) in the MIDX.
 
-On the other hand if it's not CR URIs but more like ticket URIs (as in
-JIRA, bugzilla, etc.) then it's much easier.
-
-People already use ticket IDs all the time, typically in the commit
-subject, else in the commit commentary, typically using some specific
-form.  For example Illumos has devs put one ticket ID in the subject and
-if there are more ticket IDs then the body of the commit message must
-start with each additional ticket ID on a line by itself with the
-ticket's synopsis following the ID.  E.g.,
-https://src.illumos.org/source/history/illumos-gate/ (I think they
-don't allow any actual commentary in the commit message body, with all
-commentary having to be in the tickets).
-
-Typically tickets have to exist before the commits get created, and in
-cases like Illumos' tickets have to exist before the code review is
-created, and the commits have to reference the relevant ticket(s).
-
-OTOH in the Illumos case you see that in a CR one might have multiple
-commits for different tickets each, and still all be related.  A change
-ID/URI could be used to link those together without having to go
-spelunking in the ticket system.  Also ticket IDs (and URIs) could be
-handy as a header in the commits because otherwise one has to know the
-commit naming conventions of the project.  Illumos, for example, could
-link tickets by ID in the subject and commit message body and by URI in
-commit headers (or footers).
-
-> Which begs another question: what/who applies the initial change ID to
-> a commit and when?
-
-See above.
-
-> I've skimmed most of the discussion, and I think a unique ID for an
-> in-flight series could be useful for ergonomics and to support more
-> tools that link between versions of the series.
-
-Also to ease back- and forward-ports.  Though to be fair that's a mostly
-solved probalm as when users do those typically they start with a
-ticket, find a CR linked from the ticket, find the corresponding commits
-in the main branch, then go from there.  A change ID might not be more
-helpful than that.  Then again, if you're doing a second or third
-backport then one could find earlier backports that might be easier to
-port from than the main branch commits, and here then a change ID might
-help.
-
-> Re-reading the original post [1] (which didn't mention this kind of
-> ID?), I'm having a hard time seeing the problem statement. [...]
-
-It mentions a "change ID".  I'm supposing it could be a URI, but I don't
-care if it's not, and if it's easier then ignore the URI thing.
-
-> It looks to me, an outsider, like the problem is some combination of
-> "I want to track a commit's evolution" and "I want to see related
-> commits in review, esp. when it's an identical and already-approved
-> commit." But I might be misreading, and clarifying the problem
-> statement might help bring us to a better core solution?
-
-I'm the one introducing the second of those, and perhaps I should butt
-off.
-
-> [1]: https://lore.kernel.org/git/xmqqh62tm5fo.fsf@gitster.g/T/#m038be849b9b4020c16c562d810cf77bad91a2c87
-> 
-> Cheers,
-> D. Ben Knoble
-> 
-> PS This discussion feels somewhat related to the classic GitHub
-> problem of not presenting interdiffs/range-diffs: GitHub shows a
-> too-flat source diff on force-pushes. Perhaps better web UI tooling
-> about interdiff review (which I think is one of the things Gerrit
-> does/wants to do?) makes change IDs less necessary, since interdiffs
-> help connect evolutions of commits?
-
-Nothing here could force GH to make their UI nicer and more featureful.
-
-Nico
--- 
+Also, if you do a single non-geometric repack with this strategy, you
+are also closed under reachability, right?  Is that the suggested
+transition plan for those that want to use this...first do a
+non-geometric repack, and then ensure that subsequent geometric
+repacks are done with this strategy?
