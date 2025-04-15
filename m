@@ -1,155 +1,113 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F67A2750E5
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 05:59:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860E6433A8
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 06:43:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744696792; cv=none; b=F/Yf3pqod3+09QNXtx9BBhyqEdN9+WCgzD6IvasdgLWRf+yYHRhiLcoefAu4OqahPIxhUG9jtw6wGoJW4vnI9QgqME/ry7ITQwHQk3jfTxWbwbKyFfEtEB0npvIWorEcVZKre8tNmM7dyw0NFCbQloG4N0ziFE4RTFBw5yZ/F0o=
+	t=1744699388; cv=none; b=uIRZFyfhwA97Y6RmNZ1o1p/xpxyVVCExhusx1srB06ev6lHdFgeb7pk5P+DIhhgf2ZkX2/AvdqdCWX9N2/E9zGfloo8gEwy2iX3BRpr/8tPG8hy5PThTSWE+Wl5bEgAL6xcNL88lEq7ySJcw1Oz+mnPfGeAQbria/IEcU9jeySA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744696792; c=relaxed/simple;
-	bh=VZDoLFJWkPcNr3ulMF4EQSMBMjTmCkS4wG4ZDplb+HA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pzr17/RHywoQLK41t79s/CnaxNumGpOsF02G+/WKMbdVcpYT3RoOWswkDLA2Dt8Zsw8uGszbr/r7pFQVBvZirkFfHhP9oPYGAcVRP3eI19aKRs8cN+8oakf+PWr6LBE9bvbdPeLYmWbaU3HgsM2EVe7RbpvuuGO6tO5WFHzjlPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f4OqrH77; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=he1JUGVT; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1744699388; c=relaxed/simple;
+	bh=shwZWvBuc8Bps9GYD8e2eA3AFlT3vD9GUn+ciZI2fgk=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=l6k19ZI5X5CtVdHk68kJ3HTItgMyrp3f2DFL+AZPEZoXhetNf1RAQIgUosEWyZWsD16lipWxnpFZxOkonry/pNMKWgPRnTKnFqRc9MIrZFS95XIqRXBre2LmH/5KY5+g1SgKdH8e08KEVvcF4SYjCt8W44QWoYHLg94emsAX7Uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GMK1kEHd; arc=none smtp.client-ip=209.85.222.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f4OqrH77";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="he1JUGVT"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 73435138051E;
-	Tue, 15 Apr 2025 01:59:49 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Tue, 15 Apr 2025 01:59:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1744696789; x=1744783189; bh=/+J6nL99Vl
-	yeFh2RKkXwLxWWZHgLE2VtQB39W7gKLOc=; b=f4OqrH77a/cJrIKMZ3rh2xtJob
-	67S8HryjQZGiTruuERWjNqs5i8MNVu/+TuOrf7UwqaHjdhZz7EXAZt8Op+Txi4ez
-	BhIrN76mbqozO7aFyngBwPIugDEwhf+SynKQQLf3uy/h+EJjCrKTLtuTr6VfjS7+
-	ce0FuggyeDqoK5MWsUoXyIHafIU/X5j2aTORiKsyMiW/p4szKdn07dUyXSGON0gj
-	kbzb/1CVtiK4J7rMcsIaXyxfeyCLXaGF+P98y+4v/eedI6/oHMJTYJ45NRD9clch
-	n8iyBjXiIwLN48XG60kIlne2IKe2AHnLrydNfAqDvDZR7s+Dr8S7TePIGemA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744696789; x=1744783189; bh=/+J6nL99VlyeFh2RKkXwLxWWZHgLE2VtQB3
-	9W7gKLOc=; b=he1JUGVTq+nrgfhEIv1BMwsu92c2kKjq2gNifCWg6oOwBcZ4+Ux
-	jKpu5SL5nGq4CGyu7DJixa6+WVfQ66UqVfX2uVeNn+vPFAx5vz0GdMMRKVrVC8W8
-	CF7VBDnF1hW56PchwAeuZ5MJnhMRAq5nh6gFNkg2/n+SUeqHlddWBKzUNUlX5iz/
-	CvPBxhOV5YIeBp9DzZ1/uUhx6l9PdmsT4YR//usheI9X+Nm7BEKrH0nqQGnCi7hG
-	WckRNYdWF7rHsx9zUt9JewoSUZ4meZfF7wpraVgAdzZ9ZqcwCw9GTCBY0gr8sQNt
-	Bbi+QhSN0WKFkhtj+a365XFs/cdlq8JzmHA==
-X-ME-Sender: <xms:1fX9ZyXXZbPA6kGHeAVZP4Yt8-5PxRD0MznCU_ZT6kq63yQh4dmIcg>
-    <xme:1fX9Z-n0uZVivUX1EYi-M_WZtfj4-uAAWS19ZxOEA1X5BJ8MwyhZzAhv7T1ADX9jU
-    ys6YIGMD9KLjhN2MA>
-X-ME-Received: <xmr:1fX9Z2b1Yp5LWTLuDbBMorokEoY1fIcENfsMq6IJfG06sa9t6JAYNjbmASnfCJ5aJo4BiirUSQGv3NCUkrHzJn-kJABEXzEIMx11qo07u-TL0A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvddvieelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesughinhifohhoughivgdrohhrghdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheprhgrmhhs
-    rgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:1fX9Z5WMh0v0MN6K14b4n3LuDUBvIUNG0Aw6rIUIo-uOW_GcOFwwtw>
-    <xmx:1fX9Z8l9pPz3JQD8Vthroktjc887k8NUZ3PosJMvo5No8bT-NQsS1g>
-    <xmx:1fX9Z-fAPh-6tw6_h0ALc6Az-yRqcEVJjkMW7echwyyrpUBPr12fUQ>
-    <xmx:1fX9Z-E9mUiU86aanCjMydOCCCWIgHw4OANAOJEBNbdq0Eprl-uGqQ>
-    <xmx:1fX9Z6_JUFcg2CEn3rZCCmbcYQTe1ayGPeQ0QJ4I4pK_MFYU2sd0Irbe>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Apr 2025 01:59:48 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f7de5575 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 15 Apr 2025 05:59:47 +0000 (UTC)
-Date: Tue, 15 Apr 2025 07:59:46 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Adam Dinwoodie <git@dinwoodie.org>
-Subject: Re: [-SPAM-] Re: [PATCH v2 07/13] config.mak.uname: only set
- NO_REGEX on cygwin for v1.7
-Message-ID: <Z_310iVKmhrl0UGE@pks.im>
-References: <1c04882b-e518-4272-bd18-ab918774e424@ramsayjones.plus.com>
- <cover.1743859985.git.ramsay@ramsayjones.plus.com>
- <324bb213426ffc9c1f9cd155de309bd0b63cdbc4.1743859985.git.ramsay@ramsayjones.plus.com>
- <Z_y_VeJzT82by8wg@pks.im>
- <db92840f-ed4a-46b7-aba0-b556ed33af6f@ramsayjones.plus.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GMK1kEHd"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-86b9ea43955so1981650241.2
+        for <git@vger.kernel.org>; Mon, 14 Apr 2025 23:43:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744699384; x=1745304184; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=W8g4XACgRMfPrybfLHL9WgS1zvhTR29iSMXhoOb9gfE=;
+        b=GMK1kEHdttKrRjGs6l9au721BqBAxxoL2npbUQIgYs7H3Mykl1+2HN5Jx+cFTolXfR
+         zMYUsv/OOKMmSPFruhMPdxDwRjpAI+3zyYUtOwSHqG05Z6TYtLrfOrY3exGVU1qqwscE
+         9ME5duepHUVBW5lv2IXxP0m5iEkcXmsXqmDaLPfwD30zPz8PZoN/6W2eFmixZC0VTOjE
+         bAeB3GQYPYI9hPDv/Ep+Bj6BA5q1ABSNCJYcj20m38y1CeL3CykyZUiJjxDJTdQEYDCQ
+         TQuhkYMSWEVWBYR0qGuga2Q08Zceu6ofI/Vzl33XZZvHlK29/aCPNR8RqM6hSXuC3kP8
+         Yl8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744699384; x=1745304184;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W8g4XACgRMfPrybfLHL9WgS1zvhTR29iSMXhoOb9gfE=;
+        b=RvSSjjkZWDZEXq1sokM+NqSi1pQ0h+7zdIK6tdXVyBw8qpsLoex0HEKkSZWzliwZ9X
+         C2tvuF9nrLZsvxXmX+4Ssa8ohi3O1IH5J0QM5z26hpIf91LNwri/H86t4w108ZwQlTDL
+         QROoIfM9IFQiEeBMgO8gx3iLMDYrfCXoqOhfl+7PuqjFo0j5ShSvVja7cTL1DFMV4nkp
+         sVeLPIOAXbrNrNT3fU622G2v5ISdgpnAHcTuRNlUwNcZ/v8LxNjlryG+XEFaLnPestYA
+         A6IlVwGYyoP7MliigPyA19A6hePMKUuzng+kMeGxnKa0OeoFxqZfXj1Bu2oJMh4CyHCr
+         0IqA==
+X-Gm-Message-State: AOJu0YxqK3VOSkcgDX42PwEgc6NYyvsBvGn0/vHQQDkflwj68HGkBSJA
+	MKxJr83pWvg7R8ScsvkgjKv9x95Q22NwJLZsdB/UwzFbaos/yMfd75qAjX0+wesk4pPK+7Iihov
+	8vWrIavBEhjk63C7lPrp4DHRD3ik=
+X-Gm-Gg: ASbGncuspancX/SBSlDdzR8ujGWUP6CPjOJ1sFIAjIUfBAgnUwYO5P6+EmXDL6cEhwJ
+	GcIboOJ7SGyK6ZuzbNAcdUFHkh0XjfEKrW6sXCVmYkkpR1VPpGmrQmpazJGjDCiymrHrFZ3rnFX
+	xyKqHL6Ogjsx0tBHoaVic4X9kKxYJlt2nLE2MPnffDsEBB4vhdHSnbrbEb
+X-Google-Smtp-Source: AGHT+IFHorN7IK7Gx/SdKlgegFNRxDkkyigHfHG0z01s8v6IPE+8oNemWWQavgqaiDGviC3ZUeWYfHZrzhPgEvHAOmo=
+X-Received: by 2002:a05:6102:4b11:b0:4c2:4b08:12e3 with SMTP id
+ ada2fe7eead31-4c9e4f1458dmr10076960137.14.1744699384288; Mon, 14 Apr 2025
+ 23:43:04 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 15 Apr 2025 01:43:03 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 15 Apr 2025 01:43:03 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqy0w2o0l0.fsf@gitster.g>
+References: <20250414-505-wire-up-sparse-via-meson-v3-0-edc6e7f26745@gmail.com>
+ <20250414-505-wire-up-sparse-via-meson-v3-3-edc6e7f26745@gmail.com> <xmqqy0w2o0l0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <db92840f-ed4a-46b7-aba0-b556ed33af6f@ramsayjones.plus.com>
+Date: Tue, 15 Apr 2025 01:43:03 -0500
+X-Gm-Features: ATxdqUEHxgwFe1thrugQ0Qo8IrgqiywDZEEOwC8bGpyJpdLad-PgEu4MuCHyLzg
+Message-ID: <CAOLa=ZTjXetN3GNyvRSHb7mjxhnVd3VLSstnHxw8bAsO6S4wqA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/4] meson: add support for 'hdr-check'
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, toon@iotcl.com, phillip.wood123@gmail.com, ps@pks.im
+Content-Type: multipart/mixed; boundary="0000000000000a6f4d0632cb7b4b"
 
-On Mon, Apr 14, 2025 at 09:03:30PM +0100, Ramsay Jones wrote:
-> On 14/04/2025 08:55, Patrick Steinhardt wrote:
-> > On Sun, Apr 06, 2025 at 08:38:33PM +0100, Ramsay Jones wrote:
-> >> Commit 92f63d2b05 ("Cygwin 1.7 needs compat/regex", 2013-07-19) set
-> >> the NO_REGEX build variable because the platform regex library failed
-> >> some of the tests (t4018 and t4034), which passed just fine with the
-> >> compat library.
-> >>
-> >> After some time (maybe a year or two), the platform library had been
-> >> updated (with an import from FreeBSD, I believe) and now passed the full
-> >> test-suite. This would be about the time of the v1.7 -> v2.0 transition
-> >> in 2015. I had a patch ready to send, but just didn't get around to
-> >> submitting it to the list. At some point in the interim, the official
-> >> cygwin git package used the autoconf build system, which sets the
-> >> NO_REGEX variable to use the platform regex library functions. The new
-> >> meson build system does likewise.
-> >>
-> >> The cygwin platform regex library, in addition to now passing the tests
-> >> which formerly failed, now passes an 'test_expect_failure' test in the
-> >> t7815-grep-binary test file. In particular, test #12 'git grep .fi a'
-> >> which determines that the regex pattern '.' matches a NUL character.
-> >> The commit f96e56733a ("grep: use REG_STARTEND for all matching if
-> >> available", 2010-05-22) added the test in question, but it does not
-> >> give any indication as to why the test was framed as an expected fail,
-> >> rather than a 'positive' test that the 'git grep' command fails to
-> >> match a NUL. Note that the previous test #11 was also originally
-> >> marked in that commit as a 'test_expect_failure', but was flipped to
-> >> an 'success' test in commit 7e36de5859 ("t/t7008-grep-binary.sh: un-TODO
-> >> a test that needs REG_STARTEND", 2010-08-17).
-> >>
-> >> In order to produce the same NO_REGEX configuration from autoconf, meson
-> >> and make, modify config.mak.uname to only set NO_REGEX for cygwin v1.7.
-> >> In addition, skip test t7815.12 on cygwin, by adding the !CYGWIN pre-
-> >> requisite to the test header, which (among other things) removes an
-> >> '...; please update test(s)' comment.
-> > 
-> > Out of curiosity, because I really don't know any better: why do we have
-> > to even care about such oldish Cygwin installations from more than 10
-> > years ago? Wouldn't people generally update Cygwin every once in a while
-> > to have recent packages? Or is there a good reason why we should
-> > continue to support it?
-> 
-> Heh, as I said in response to Junio, I have a patch that removes all
-> of the config in the conditional, so that we would no longer support
-> any 'pre-v2.x' versions of cygwin[*]. I think that would be an entirely
-> reasonable thing to do, particularly as cygwin thinks of itself as
-> a 'rolling release' type distribution. ;)
-> 
-> However, I don't think it is my place to make that kind of decision
-> and I was leaving that patch until last. Hopefully, Adam will make
-> that call. :)
+--0000000000000a6f4d0632cb7b4b
+Content-Type: text/plain; charset="UTF-8"
 
-Makes sense, it's a bigger discussion indeed. I do think it would be
-reasonable to drop pre-2.0 Cygwin, and we have recently become a bit
-more aggressive in dropping support for ancient OS versions. But I'm
-totally fine with not doing it now.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Patrick
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> +if sha256_backend != 'gcrpyt'
+>
+> That's a bit unexpected name; relative to this one ...
+>
+>> +  exclude_from_check_headers += 'sha256/gcrypt.h'
+>> +endif
+>
+> ... I have to suspect that it is a typo?
+
+Indeed, I had to double check cause I couldn't spot it when you
+mentioned. Will fix. Thanks
+
+--0000000000000a6f4d0632cb7b4b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 996d5156fe1b13d9_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1mOS8vUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meTJLQy80NHBQTi9LdEtFdndsUkdRUkZibXBCcDlqaApoeTF3N1paNWE5
+b0E2dWQ2anR6YjRNaXQrckhmSlNEaDcwaGtVNFM3OGpWb0pSTzNDMmlENUU1bXM3UDFxb2NtCnFL
+WWpETzlyeWJDS0dkMWZoeWZYNE1hd3Y2VjFVNC92WGdFUFJwWE5KeHFBY3B1cEQ1WEplRnFMVzhr
+cTcyaGwKeTJGcUphNUNTejFBanhZaUZRQ2p4TmFZaVN4Q095Unhjdml4bVZSbnNEWWZXYmNzZ2pi
+Ty96OVNnRHhNYWhXbAptb0dPUCt2RHBYc2RCdjFpNDVSbCtpa0ZpekszT2V2Y042RU5xcnkrSmx5
+U0dBNTlaNmhQMEhNbUhEYldFU1FJCkhSeW5scUVVVnk1UVZBbTcvaFdsckQ2YmZjRTlaNkpLVHdq
+UDh4RVZwUngvVFZmc3dmMC9sMlRMS3NvZzZoRjEKRGtROTRTWTkxZFFmMDFPYU1wSjAwNkp3ZHZT
+RU0zL2YwZDNuUmJTTmtRN3JUNmplRWxNNUQ4cnlEOExwR1lpYwpHV0YrTnpVZVBYczc4UG5jdXVX
+WDhCQklBM0J1bWJqOHFxbXBybUx2MkpZS0o4eGR1T3MrZHFSNlprc2FaWVFrCkZGWlNhMkQxT25h
+UTNFTFhkQit3dDJ6cFlQUGJlQWtUYVFqRCsxMD0KPTBoUHEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000000a6f4d0632cb7b4b--
