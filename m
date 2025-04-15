@@ -1,261 +1,153 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06202951C3
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 12:14:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4301C6FF5
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 12:23:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744719262; cv=none; b=IdGR2r3e3aNbTtEYFLSIWl+z3I4FTg511+SckbiXXA5RqDnyCLsrW6nhqYJlxU1PeQ2KIhmM1Kim8YISX/x2cXAgdvQsEBdWZyYEAhxS9bjGZ7TZ47emh13dhZ0aoOCuxaHCtqypJTskQbWW/zTxEP12i/ZuA7gOE3QKaDp1NlI=
+	t=1744719826; cv=none; b=rUAIIkSB+ldtAaobcym+xyjJOS5DT5mZKLENHlFguF7fOhS93jqEy+XcuzE2ryHKb2BWoM+LH1Pejp4IyLPi/RdTBfzyGGjyrz4Usezl0rsCONwDHBQFWFyRBWMxBjulxaXV8zTwO4O0ePbeZPhaLYOFJMlUb5Vfc9qoyTkKhVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744719262; c=relaxed/simple;
-	bh=tFfDuAJQiFjsafwEVVY8iGRGog8UZHqcqQ/G09evIcc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=V++5xQFj8MC0S/PQrMZsf5xFvvpgXjbCycBFEnL46Xo/va4frEFRekl6dqeuLVku4PjXaMs4GB7F0igWLjkI6lrcU/vWWN4EfpUvhjjbhuQBji8zXdWykNZATTnUkReT/h4p99plsmcZUKH0OnzdErBWoo1IHh7PxfYamaxPusA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ols2Xrr6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pD1Ko++L; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1744719826; c=relaxed/simple;
+	bh=laDFMtY+zkG5QS1FrPxAvKNHAHoV2VyQ/2OaTy5LFkc=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=E20Lob5b4hu7HMI9Ey9GVUbnj7vTahJLaGLnLyfJM4oyvqRZNlkIYpbIepH0eeXsUFAtHUWIxNIG3KdrGGmHOKvejuj7/dp7WX3yXqvoIGZnC1cAeK8raygy8sGnXD6kGR3PzX8U5msv+S3FNuk1Gqb5RakzRHkphLxSkjqJUf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dwtCt2EJ; arc=none smtp.client-ip=209.85.210.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ols2Xrr6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pD1Ko++L"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A655F114036B;
-	Tue, 15 Apr 2025 08:14:19 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 15 Apr 2025 08:14:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1744719259;
-	 x=1744805659; bh=xqS3Pg5325h78jzBCnnpwA88ASjh1/fZbIOOCNPnsr8=; b=
-	Ols2Xrr6rThfoTmquQkYnNcRYk2guY3sQMMD9QZMQwFL+7Ra1qekwe93voAX6tL4
-	Sf524Taxp+pumXWA9iU8JTMoMfkRDq7FsLfJyHgkgRF/XeNPsVbp8WXqHrsRxSfP
-	864HzubgacD1lD8WPaiNGOlznXOoOVW4WHAa0wil7xzn2iZYiIJP+GkfFMgoBY7r
-	PpxhyxZSpgzAtMkmte8zuXbW/AsyrL1zIun6q/eHyuHVuWLEZUj3SHG115r3O5ga
-	gQcYiIlB6vg516vX+6b3Fjis54yJO+pbQE3K5TYniaGZsof8CDjWNBEEyM5ZHMq4
-	LQ0mY6HVSBpoKaA2qkTw0g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744719259; x=
-	1744805659; bh=xqS3Pg5325h78jzBCnnpwA88ASjh1/fZbIOOCNPnsr8=; b=p
-	D1Ko++LRg63Y+dVmmNSFvJpZ85h40qtD979NLSePZIZ+5fKdgs0RpPXtNLfEAnyO
-	T+e7k0tRuD646b8O4lUb6P2DxOqJy3qDaFLWuwXaRrXvc70uIngyN9k9r7g7ZpSI
-	D852r6XAhU5kFHBPlTb+RGLEL7GepIQGvinYMJb9IDSiEDFaJ+D2WsadxSjznvVa
-	XIY6wEINI3uERwkzbubPjN7s+Y1wdlSLucTZgBYrMcM+EVfTBXYi/1yI1Q/77EyA
-	DMfBzDKOKtkaDkFKkkqrmnn01kp7HdMdEIAhQ02VggLJCRk7EGZaYtFE74mpsKUV
-	QmE4fBqY0u1HaSBiBaGHQ==
-X-ME-Sender: <xms:m03-ZyGuPGvZhzO9nTSjJRuADVP_8syXL_PJPhIskcDVGB83Ar_WGA>
-    <xme:m03-ZzXmqZlsgqn-omZtzDWCaqqOgGaAEaIStaxBqj0l76oiORC9zWK-oemFLHzSv
-    2-wBVxEXB6SWRP8mQ>
-X-ME-Received: <xmr:m03-Z8L6ZjizaYYRimNUPh18ilW-Bz5bV7byAmFsFq25EUsHgtLuADeGRH7I-dUoo2sU6TVNbf0ka1CmDOJnr6BJs6pgnat7bnjSAFfd89GEsA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdefgeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtkeertder
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeefhfeugeelheefjeektdffhedvhfdvteefgfdt
-    udffudevveetgeeuuedtkefhgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprh
-    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehglhgruhgsihhtiiesphhhhihsihhkrd
-    hfuhdqsggvrhhlihhnrdguvgdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehtmh
-    iisehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:m03-Z8F83jRKmFcMsklu6jGfZ5JkSqeK-rCVcbe0wC_ZZNRhE0M6-g>
-    <xmx:m03-Z4VIAAOHXNDQk-UCRHCx0W9AmaPZ78YfqPbyKP_1pjfEwpv-Hg>
-    <xmx:m03-Z_P6yDlGg5O2bBitxOGrTGYEUF4IVVJCwvrLISxm4s2Ck3xs_g>
-    <xmx:m03-Z_28qrAkbOghgtgOURFGVIPvqInz6wjYM8c_zy5V0wSg0Uh7dA>
-    <xmx:m03-Zz9iV7QRuLbw6tuM8EfyjKEuaYl5Y1ffHnuX0Hf5zuunyTYaAD7Q>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Apr 2025 08:14:18 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 98a433eb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 15 Apr 2025 12:14:17 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 15 Apr 2025 14:14:09 +0200
-Subject: [PATCH v2 5/5] parse-options: detect mismatches in integer
- signedness
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dwtCt2EJ"
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-72b82c8230aso1521818a34.2
+        for <git@vger.kernel.org>; Tue, 15 Apr 2025 05:23:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744719823; x=1745324623; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Ips/MLfliSth7qGf06uat9T+WFEIv2ya94BHNalMv60=;
+        b=dwtCt2EJ0kY94cTvfDX527NCK314l/nT0HDPrq4ZbIgIpcWMT6Z2uaqrWqXm6pdnbx
+         KIHoW6rpKDDDu0Rw6i3YQblOBLaIIYs0AfAerDthXA+YlqpNM5Mf7oDVzmMBxcpfP/5/
+         Tuegc+brrjZcKI1AU4fAtlX5Vit63dgQ152jZwKimGOEv6UBwd35is2az2hYmY5WnvLw
+         9MP2Z4APipv5j6YUCdFH8BBysBWLNm2Z87USmIyUkqEqxXErgIhLxBF7tyyFVuQP1Yk3
+         SrLXjkafTyotmqxgvLnGYxb7NYgKH4fzdTpY96XC0Alq22qbw5i70A1p7kP9SIbPFhle
+         V/Qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744719823; x=1745324623;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ips/MLfliSth7qGf06uat9T+WFEIv2ya94BHNalMv60=;
+        b=qicNVduPNDEVPvEXHA2Xe7qHv7KCy4IbWZgJJN0ee4nAyntR4f4gmb3NpfykTqZXXr
+         KxnUFdCx9HqPwWUjCUggREqrDVKTQCZKfssvQuIBt6l80jLG+99ws8AKE9VHozQn1lxq
+         oRPmAA68evE6DuT/chz/lsxGytaDIvFE00tcSFnArBuHfckIFUMZ59I8h55k5oP932EA
+         r0AILN+AMCRvPeyuqVS/lEJEMTJjuA22flosG4zFQJa8OzS171GcLw5jCqPQhKezxo+D
+         80dY1gJ0avnSiRfuYVSrR8OEuZ7QzfqLoG/kf8yHXLRUhQHePqI3b+7enwlIO5axUvgE
+         9e0w==
+X-Gm-Message-State: AOJu0YyWZvXmX2L0u4vO4LxxAuc8y7RKN3UHkJbtxjbIRZ2UydRJ3N0Z
+	ac9ncvjsuNN/O0PcuEknDJBqXcAk/U52fdBACq9UwC+P/G4RyTbO20Ryho1XwFBfZ0znUYn0KEi
+	cwcCumFGLjGEqoIJLcSVvmX5r6NVViwL4APhwqg==
+X-Gm-Gg: ASbGncsHS3Rml4YDnLQMd+4eMIVitqa700O5GVrAf9xMp9avyvlHh+HtBJ+SAhAgZfr
+	ZDfxUiQ+Y7ZRR8+0YI6YJwJM9/DeQbTXM1vWWk7kmKLg8wDvXBZYPogUNSg0D76JOOu/h23O/SH
+	QteYMpkmfEyUNMrB70yx9tBQ==
+X-Google-Smtp-Source: AGHT+IHJjtLR3Vcwgy4+qm8+RgwOyKJ6ufkia6UtRcf4KaQoMU5t7pfCBeCBTPBpedvIExFdxpGJxMRWiEAZg0pD0Ds=
+X-Received: by 2002:a05:6830:6784:b0:72c:3289:827c with SMTP id
+ 46e09a7af769-72e864149demr10826959a34.16.1744719823423; Tue, 15 Apr 2025
+ 05:23:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250415-b4-pks-parse-options-integers-v2-5-ce07441a1f01@pks.im>
-References: <20250415-b4-pks-parse-options-integers-v2-0-ce07441a1f01@pks.im>
-In-Reply-To: <20250415-b4-pks-parse-options-integers-v2-0-ce07441a1f01@pks.im>
+From: mu gsh <yue937@gmail.com>
+Date: Tue, 15 Apr 2025 20:23:30 +0800
+X-Gm-Features: ATxdqUFBR_1QQJpPj0BxG2RJ1Nyo1YDGZKv7A-iw5AWM9VK19Zld0pUeaCN_uUE
+Message-ID: <CAE8aReXOwM8ByyObxrb8NhRMYfK1OB_6B9eOO07mYXMkp_E8EA@mail.gmail.com>
+Subject: git merge bug report
 To: git@vger.kernel.org
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>, 
- Todd Zullinger <tmz@pobox.com>, 
- =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
- =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
- Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset="UTF-8"
 
-It was reported that "t5620-backfill.sh" fails on s390x and sparc64 in a
-test that exercises the "--min-batch-size" command line option. The
-symptom was that the option didn't seem to have an effect: we didn't
-fetch objects with a batch size of 20, but instead fetched all objects
-at once.
+Dear Git Maintainers,
 
-As it turns out, the root cause is that `--min-batch-size` uses
-`OPT_INTEGER()` to parse the command line option. While this macro
-expects the caller to pass a pointer to an integer, we instead pass a
-pointer to a `size_t`. This coincidentally works on most platforms, but
-it breaks apart on the mentioned platforms because they are big endian.
+I would like to report a bug I encountered in Git during a merge
+operation. The method from one branch was merged into the wrong class,
+despite there being no reported conflict.
 
-This issue isn't specific to git-backfill(1): there are a couple of
-other places where we have the same type confusion going on. This
-indicates that the issue really is the interface that the parse-options
-subsystem provides -- it is simply too easy to get this wrong as there
-isn't any kind of compiler warning, and things just work on the most
-common systems.
+Git Version: git version 2.49.0
+Operating System: Arch Linux
 
-Address the systemic issue by introducing two new build asserts
-`BARF_UNLESS_SIGNED()` and `BARF_UNLESS_UNSIGNED()`. As the names
-already hint at, those macros will cause a compiler error when passed a
-value that is not signed or unsigned, respectively.
+Description:
+When merging two commits involving changes to the same file, Git does
+not report a conflict, but the resulting merged file places a method
+in an unexpected class. This seems like a mismerge.
 
-Adapt `OPT_INTEGER()`, `OPT_UNSIGNED()` as well as `OPT_MAGNITUDE()` to
-use those asserts. This uncovers a small set of sites where we indeed
-have the same bug as in git-backfill(1). Adapt all of them to use the
-correct option.
 
-Reported-by: Todd Zullinger <tmz@pobox.com>
-Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- apply.c            | 4 ++--
- builtin/backfill.c | 4 ++--
- builtin/column.c   | 2 +-
- builtin/grep.c     | 4 ++--
- git-compat-util.h  | 7 +++++++
- parse-options.h    | 6 +++---
- 6 files changed, 17 insertions(+), 10 deletions(-)
+Steps to Reproduce
+You can reproduce the issue using the following shell script:
+```
+#!/bin/bash
 
-diff --git a/apply.c b/apply.c
-index f274a379487..a850c7d75fe 100644
---- a/apply.c
-+++ b/apply.c
-@@ -5123,8 +5123,8 @@ int apply_parse_options(int argc, const char **argv,
- 		/* Think twice before adding "--nul" synonym to this */
- 		OPT_SET_INT('z', NULL, &state->line_termination,
- 			N_("paths are separated with NUL character"), '\0'),
--		OPT_INTEGER('C', NULL, &state->p_context,
--				N_("ensure at least <n> lines of context match")),
-+		OPT_UNSIGNED('C', NULL, &state->p_context,
-+			     N_("ensure at least <n> lines of context match")),
- 		OPT_CALLBACK(0, "whitespace", state, N_("action"),
- 			N_("detect new or modified lines that have whitespace errors"),
- 			apply_option_parse_whitespace),
-diff --git a/builtin/backfill.c b/builtin/backfill.c
-index 33e1ea2f84f..d95d7a2d4d6 100644
---- a/builtin/backfill.c
-+++ b/builtin/backfill.c
-@@ -123,8 +123,8 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
- 		.sparse = 0,
- 	};
- 	struct option options[] = {
--		OPT_INTEGER(0, "min-batch-size", &ctx.min_batch_size,
--			    N_("Minimum number of objects to request at a time")),
-+		OPT_UNSIGNED(0, "min-batch-size", &ctx.min_batch_size,
-+			     N_("Minimum number of objects to request at a time")),
- 		OPT_BOOL(0, "sparse", &ctx.sparse,
- 			 N_("Restrict the missing objects to the current sparse-checkout")),
- 		OPT_END(),
-diff --git a/builtin/column.c b/builtin/column.c
-index 50314cc2559..ce6443d5fac 100644
---- a/builtin/column.c
-+++ b/builtin/column.c
-@@ -31,7 +31,7 @@ int cmd_column(int argc,
- 	struct option options[] = {
- 		OPT_STRING(0, "command", &real_command, N_("name"), N_("lookup config vars")),
- 		OPT_COLUMN(0, "mode", &colopts, N_("layout to use")),
--		OPT_INTEGER(0, "raw-mode", &colopts, N_("layout to use")),
-+		OPT_UNSIGNED(0, "raw-mode", &colopts, N_("layout to use")),
- 		OPT_INTEGER(0, "width", &copts.width, N_("maximum width")),
- 		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("padding space on left border")),
- 		OPT_STRING(0, "nl", &copts.nl, N_("string"), N_("padding space on right border")),
-diff --git a/builtin/grep.c b/builtin/grep.c
-index c4869733e1b..f23a6f1dc86 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -983,9 +983,9 @@ int cmd_grep(int argc,
- 		OPT_CALLBACK('C', "context", &opt, N_("n"),
- 			N_("show <n> context lines before and after matches"),
- 			context_callback),
--		OPT_INTEGER('B', "before-context", &opt.pre_context,
-+		OPT_UNSIGNED('B', "before-context", &opt.pre_context,
- 			N_("show <n> context lines before matches")),
--		OPT_INTEGER('A', "after-context", &opt.post_context,
-+		OPT_UNSIGNED('A', "after-context", &opt.post_context,
- 			N_("show <n> context lines after matches")),
- 		OPT_INTEGER(0, "threads", &num_threads,
- 			N_("use <n> worker threads")),
-diff --git a/git-compat-util.h b/git-compat-util.h
-index cf733b38acd..1218fcf81a4 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -110,12 +110,19 @@ DISABLE_WARNING(-Wsign-compare)
- # define BARF_UNLESS_COPYABLE(dst, src) \
- 	BUILD_ASSERT_OR_ZERO(__builtin_types_compatible_p(__typeof__(*(dst)), \
- 							  __typeof__(*(src))))
-+
-+# define BARF_UNLESS_SIGNED(var)   BUILD_ASSERT_OR_ZERO(((__typeof__(var)) -1) < 0)
-+# define BARF_UNLESS_UNSIGNED(var) BUILD_ASSERT_OR_ZERO(((__typeof__(var)) -1) > 0)
- #else
- # define BARF_UNLESS_AN_ARRAY(arr) 0
- # define BARF_UNLESS_COPYABLE(dst, src) \
- 	BUILD_ASSERT_OR_ZERO(0 ? ((*(dst) = *(src)), 0) : \
- 				 sizeof(*(dst)) == sizeof(*(src)))
-+
-+# define BARF_UNLESS_SIGNED(var)   0
-+# define BARF_UNLESS_UNSIGNED(var) 0
- #endif
-+
- /*
-  * ARRAY_SIZE - get the number of elements in a visible array
-  * @x: the array whose size you want.
-diff --git a/parse-options.h b/parse-options.h
-index 20ea7d2ab13..7b7c9d901cb 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -219,7 +219,7 @@ struct option {
- 	.type = OPTION_INTEGER, \
- 	.short_name = (s), \
- 	.long_name = (l), \
--	.value = (v), \
-+	.value = (v) + BARF_UNLESS_SIGNED(*(v)), \
- 	.precision = sizeof(*v), \
- 	.argh = N_("n"), \
- 	.help = (h), \
-@@ -229,7 +229,7 @@ struct option {
- 	.type = OPTION_UNSIGNED, \
- 	.short_name = (s), \
- 	.long_name = (l), \
--	.value = (v), \
-+	.value = (v) + BARF_UNLESS_UNSIGNED(*(v)), \
- 	.precision = sizeof(*v), \
- 	.argh = N_("n"), \
- 	.help = (h), \
-@@ -292,7 +292,7 @@ struct option {
- 	.type = OPTION_MAGNITUDE, \
- 	.short_name = (s), \
- 	.long_name = (l), \
--	.value = (v), \
-+	.value = (v) + BARF_UNLESS_UNSIGNED(*(v)), \
- 	.precision = sizeof(*v), \
- 	.argh = N_("n"), \
- 	.help = (h), \
+set -e
 
--- 
-2.49.0.805.g082f7c87e0.dirty
+# init in /tmp dir
+rm -rf /tmp/git-merge-bug
+mkdir -p /tmp/git-merge-bug && cd /tmp/git-merge-bug
+git init
+cat > models.py <<EOF
+class User:
+    name = "str"
 
+
+class Product:
+    id = 0
+EOF
+git add models.py
+git commit -m "initial: User and Product class"
+
+# feature1
+git checkout -b feature
+cat > models.py <<EOF
+class User:
+    name = "str"
+
+    def user_method(self):
+        return
+
+
+class Product:
+    id = 0
+EOF
+git commit -am "feature: add method to User"
+
+# feature 2
+git checkout master
+cat > models.py <<EOF
+class User:
+    name = "str"
+    bugger = "fix me"
+
+
+class NoMethod:
+    pass
+
+
+class Product:
+    id = 0
+EOF
+git commit -am "master: add field to User and new class"
+
+git merge feature
+echo
+echo "==== merged, user_method into NoMethod class  ===="
+cat models.py
+```
+
+Actual Result
+
+After the merge, the user_method ends up inside the NoMethod class,
+which is incorrect and unexpected.
+
+
+Please let me know if any additional information is needed. Thank you
+for your time and help.
+
+
+Best regards,
+
+gshmu
