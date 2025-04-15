@@ -1,107 +1,122 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D1A247286
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 19:48:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C022512D3
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 19:51:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744746538; cv=none; b=RVunSpPp4pYHUOBuEHN40LKHCyggyweKuNz2QFYBk4EfWFuUKzy9WGG82u88i+qvuMPn+ghGX33AzsOjyCfmt4N4pKoUOht2yxfMXegyz8gtXbxOW8/zYjs261RT6yA2odKXdaMaSVS01kyuvzAntJfLxbEnJkbVJ5OzrqDsktQ=
+	t=1744746669; cv=none; b=pTmPbewpSQ6K4MQO2IKD6p+mQmNn5YT6uKzbjW/aZpqV+K5a61kNW6xvXBilBDvsQXl1Gpda2dsXp538E6WxnavheonT9S0yBXCX92DgSZnNuVucYP61K2r9JHnjtKD5wKie8qx9KKx3mp4QGsTVA8jk8hwzxPkyERegvkGr1S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744746538; c=relaxed/simple;
-	bh=mo/dzcJEpZm/Ia+XY9ANcApDPXGjQdCuBKcKNXZfxMc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=G3gYZIJGFDoWx2FeoP8gFGpSyr4Wpr1OsR6MpHUiFftIXIKcOes9oClv78EJwmIZ/6SERdrkBwmkehpQpsYBXLlmZP7oTDB9SgX5fOziAKsdbstcdqCZulQX+3QCAzrkPTgjHWN6h49UYYQz3ZvsvKNXuduy+yOYuIJgxqDKMvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VR4h8aVA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vewoe8D8; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744746669; c=relaxed/simple;
+	bh=SJ7VHQYdH/K0ezHxhIgDFIncoTS/V23z+bIT1+U4Ihs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tkkVZZHKHFmKhGb3BoXJO90riQLH2UZ+ltpmKX3RH5Dz6Glf7RA5PXmeTtGYqFQS+qjTECb74uGtDtU1PwEHTuHRyRlvjnwgilouDxRVu/omlmgAiRFZK1UJspOCkZDxMLJ+3wZebs7oP680i85Xk/yYsLzeXim5Rr8Cs/KzPE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=xeDym4Zc; arc=none smtp.client-ip=209.85.222.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VR4h8aVA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vewoe8D8"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4C5721140100;
-	Tue, 15 Apr 2025 15:48:55 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 15 Apr 2025 15:48:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744746535; x=1744832935; bh=aiDZwn8Jkn
-	oc3OGGnMkn/EhfJBBvOWBXxJ5UnQkvicI=; b=VR4h8aVAaYtprXWLkzemNDpa7U
-	/ZmAFmUPUgbkw1ekAy/rywFoSPIQiPAo3EH9ug/KxAih8A5QEyKMJSr26niwJ2PZ
-	t9iLiT3Yfw0ivUTl5y6E2ahFYBxBKUilz82q+Bu312g+wh61ZZHLbLV3QrZPZNrm
-	q/Sxc37NDOIUUEVxTg7QQ6QIBSOOFh3pEVI9mKPNVfozJSm2lCGU6srZq9YElU3y
-	h8yRaV3muQG0m8yIvD5ili4lVpiG+p+asSNc32xwzlDMsNNNPaEf3UVYl14Ucff6
-	K+bipQSBaWS62JYtcB8h4yUGpguRBJ6eVTPYCiAHeN9ft/1f8oAs8na1/pmQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744746535; x=1744832935; bh=aiDZwn8Jknoc3OGGnMkn/EhfJBBvOWBXxJ5
-	UnQkvicI=; b=vewoe8D8ymjLjCfU+fMSmpzhA441n6J7zqrIt/2yrFp29mqtqUs
-	0+dQwfpiO6RFBVMo9tnQzr7TT2BNQX0Yb7tU9q03uqe+LWZw46K030r2WOzNXegD
-	Va+0w2QcCi9vhhv5jpiglDbQo0psJjzbngwuqVcLXuQC5tLS+/Hs9sI1UeDZnOoK
-	cV37WdnEFqJIEehrKzWbdRSc0T05ssLJmGJ9jqRa0I7hH9tGMBff5ISN8AIagypU
-	RQXg8dUEuM2kYzQQMhVWriEqTZfosPyxCjMRaWDyO58mW+M85uRqnBegltIDxBSI
-	N7ub2FYH3bzG9g0wtRjUh5YhcoP1Z+tfAsA==
-X-ME-Sender: <xms:J7j-Z-tl-goxGe4o919L6EoCGRLpgOXLC7qN4YXa3SmEiiHjkucWFQ>
-    <xme:J7j-ZzejyKobUyQk3ex3k42-lJJFOjCurmosG5f1qNWvDBY7r4bAnCPbDBeviEpbH
-    Zufy2oLSZauiJpF2w>
-X-ME-Received: <xmr:J7j-Z5xAJRqzYiEvuFuAJ84A7z-HLxQr-wcw6p-7d7vwGznmL62ZCi7WLHZPqXTKvjQ1UtaWPOescHoDujoBBSzeVBLLveC6Cl4x>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdegfeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
-    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfh
-    hfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:J7j-Z5MWnLZQZ3BMboqlY-hV4YalDBA3hJoeWe2sYx-jEol3pD-jCg>
-    <xmx:J7j-Z-9yhYL82GiM-UFXhdZ0adm5jJIazuAlblT8FfT22geL3p8Z9g>
-    <xmx:J7j-ZxVGTy8efmJHnAcN4v8ZsM5smm69iBtjTABEJ1JO2ZwPX4DUVg>
-    <xmx:J7j-Z3dGsaEHSCxtWrp5DcV2Qf38XqeViUCfZG9bCh86tmSxtu-Vew>
-    <xmx:J7j-ZzHJ-6Jf7sBnT1sg5AAEWnLzQE4A3AUeXadpDoLRkdFvOE3pMf7D>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Apr 2025 15:48:54 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH v2 1/8] pack-objects: use standard option
- incompatibility functions
-In-Reply-To: <Z/60anmKVxke0AVX@nand.local> (Taylor Blau's message of "Tue, 15
-	Apr 2025 15:32:58 -0400")
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="xeDym4Zc"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-7c55500cf80so464219985a.1
+        for <git@vger.kernel.org>; Tue, 15 Apr 2025 12:51:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744746664; x=1745351464; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YVedS5hXlE0rFNVvYsikSbtJCQ9IYy6tK1ylSNZdsDI=;
+        b=xeDym4ZcxirOud4doGbg4r4qkT7qgIM+731tvRWoUixw/NAFQmri+t4p6PX83izcf5
+         m97JMX1EQqxFnqhaWE7p4R2WLmCuSa/Vwgs4bFLP7VykFIDKAHW2nXUpP/98EkhCMKgk
+         m07J5Gqjxe+FYL02ZdTVm7yBbGWvjsMVPtBi8QH1nVUjcswbOfwWIRASq3l1VmnafwoY
+         ux5T5nL5NvjYs2LVm/ZmMo9H/8zpMA7EZNOw5UnpNTTgwThhiUSIZs6iYD9fUb8FF3d/
+         efXSezGE5brlQIQifeUwTEZQdxZI/UsyJFWHqOSxFdhl6qzVVQyZim8C5fNecOKF7gX+
+         BMew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744746664; x=1745351464;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YVedS5hXlE0rFNVvYsikSbtJCQ9IYy6tK1ylSNZdsDI=;
+        b=vKwJKcb8foGrdw61N48lxM6XEUk4ZRhOo/4lFyadyeJ0Wu3vSlpRx1GgP2UuSW+hUY
+         tgF93XmobNlNrMY/A3yLn1dcqRgPUoQ3/15LU6kRUnlsx2PpKbxcOkSzrMyxhWKqJk4X
+         7+PP/gKGTQncPBX4q98PzwObKlhzyr8k9BIin3Fa9KJpAbsfjcxAdqXjBxp7dPbxtXIC
+         Pt0+L2tNo1eXmj2kaerXtVvE15dGuONCLzeJ9M6YLBnTtK7Ihqjga6+j/kptFJ9M8GUa
+         T/Hlsae1oGHY5zg6GxHGGHnzCwrvECBk/YOxg7/aY2U7MQDNQOJsOQXdCWgEZ5/T8JqR
+         AxNQ==
+X-Gm-Message-State: AOJu0Yy/SPNavd1ieVy5a4nTdt3qwR9qmYuiIfBWVDmjqmssiYy+bw7q
+	FjVvZ+RkdgBMfeMzy5wefiY9XgpSrxF74ri6IA0A5gCPvzSuifXVnhFyNWR9RXDRlmH9a3AuGIg
+	kK6Q=
+X-Gm-Gg: ASbGncslyl0pEZQsRB28az0QEn2J/sqmCGc5U15r7DgjESHr6roVINZPjdbBo8XiYIU
+	k2YUejpy+oG2kf5Y3iOWYp43z42ZDFzl0R55y9fQYpJzZ7psgnHWYvDt0HSlt2efTW8Wvlaw3Fd
+	/jy+WgUDyLXlpfzyNbcyCKHJi/3DTsN4/Gpyuz6XajCYvokgld+AiOyj0YMisw15n/tPfTFGoNW
+	o5zJdAGlVjGfZdigpRMNkMqZtTBFtae+iTi22EGvQzthnNKk0MZr5+9mmRl+d5f0rFpukAlM5V+
+	hnbKy0GugBO9X2bNUC+iWolKYh3UM9fTvS5JP2s1YFiDbeFrMT2wCj1FfKZI8QYuVUmGuam6yel
+	KzOZWmnYS6EVJ
+X-Google-Smtp-Source: AGHT+IGl5JkizBDBd3XoZ2hirXqfLiMN1UvnqRkQZpVuAk+QZvZU0WaTAK1VoSO+4hgvEJa//KejZg==
+X-Received: by 2002:a05:620a:294a:b0:7c7:f7ba:270a with SMTP id af79cd13be357-7c914274de4mr120604185a.47.1744746664317;
+        Tue, 15 Apr 2025 12:51:04 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c7a895180esm946456885a.46.2025.04.15.12.51.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Apr 2025 12:51:04 -0700 (PDT)
+Date: Tue, 15 Apr 2025 15:51:02 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/8] object-store-ll.h: add note about designated
+ initializers
+Message-ID: <Z/64prrBW77QSznZ@nand.local>
 References: <cover.1744413969.git.me@ttaylorr.com>
-	<cover.1744661167.git.me@ttaylorr.com>
-	<65bc7e46309712e06a2d743172ea4ec518ee928f.1744661167.git.me@ttaylorr.com>
-	<xmqqwmbmpjbc.fsf@gitster.g> <Z/60anmKVxke0AVX@nand.local>
-Date: Tue, 15 Apr 2025 12:48:53 -0700
-Message-ID: <xmqqo6wxkxy2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <cover.1744661167.git.me@ttaylorr.com>
+ <920c91eb1e5a1b6d5faa54240dd9c85f72968edc.1744661167.git.me@ttaylorr.com>
+ <xmqqsemapi40.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqsemapi40.fsf@gitster.g>
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Mon, Apr 14, 2025 at 02:07:27PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > @@ -337,6 +337,14 @@ struct object_info {
+> >  /*
+> >   * Initializer for a "struct object_info" that wants no items. You may
+> >   * also memset() the memory to all-zeroes.
+> > + *
+> > + * NOTE: callers expect the initial value of an object_info struct to
+> > + * be zero'd out. Designated initializers like
+> > + *
+> > + *     struct object_info oi = { .sizep = &sz };
+> > + *
+> > + * depend on this behavior, so consider strongly before adding new
+> > + * fields that have a non-zero default value.
+> >   */
+> >  #define OBJECT_INFO_INIT { 0 }
+>
+> Hmph, after thinking hard enough, if a developer cannot come up with
+> a way to avoid non-zero default value, the callers could just work
+> if they instead did
+>
+> 	struct object_info oi = OBJECT_INFO_INIT;
+>         oi.sizep = &sz;
+>
+> and the member of non-zero default value can be delat with by
+> updating the default initializer, perhaps like
+>
+> 	#define OBJECT_INFO_INIT { .enabled = 1 }
 
-> Now I can't un-see it ;-). Even though it's not a correctness issue as
-> you note, the whole thing leaves a bad taste in my mouth. I'll swap the
-> ordering to match the original in the next round.
+Yeah... that's what I was trying to get at with this patch. Basically,
+"if you have an _INIT macro with non-zero defaults, don't use a custom
+designated initializer and instead assign fields after using the _INIT
+macro (which itself is a designated initializer)".
 
-I do not think we can be completely faithful to the original in this
-rewrite, simply because the original is not consistent with what
-die_for_incompat() thing produces and you'd need to adjust the test
-anyway.  So unless there are other things you need to reroll, I
-wouldn't worry about it too much.
+But like I wrote to Elijah in the same sub-thread, I think that there is
+probably more to discuss here, so I ejected this patch from my copy of
+the series and will re-submit it as its own series later on.
 
-Thanks.
-
+Thanks,
+Taylor
