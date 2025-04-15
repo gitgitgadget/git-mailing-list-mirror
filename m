@@ -1,113 +1,99 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0260417BBF
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 17:02:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4799B78F2E
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 17:19:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744736533; cv=none; b=VS5fHiqYPFSJO2mtT4ytN0d3CqUsTa8gEYHCdkWa29LNmrHA8zcLg8tUSobN3O9kkggBcLENypa5YUK1t5bTk6BntsPb4dT9RS88AXqMaTPR0T4HpEV+aTd/p+TqdghT4UbRH560lLt5MSeUWStS/rodA4a/rfkcfEeB4U6yzoY=
+	t=1744737559; cv=none; b=kvsoEggR3nMaCg0JHHnWL5Za1qoaYSWrTAwW5Wky8nkwJkYX37WL0mNoORrpdQO5Cl0dN3XAOuE6taMUy3CDKLkl4haZykOPvM7cdZOlDSfXW20HFY7YSHpaD65SPZASKByI8qKVA9vsH4yDjwHGkBOIBpAUYFRb+3yGM8+0wtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744736533; c=relaxed/simple;
-	bh=KgS5AAXO8XkN4p63MyPvF56R6neQKBpWj6dkhrWEEOs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dhuSVRcxydiJeYo/DOcywVQsaC7t3Eb1C1Q1k5XhcI//pUOyAhmPqBeb9RaFLickuAIxQ7HPdBQU+Hc3CMnZa3/f0ysPEgLdu6OX8xqjdx+NMIwbOLFPCHphJ5s7FnLKACTQa/LE1hSsLV3WlSfBmxXwXv+a/g3vesBmyyTh8Q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WWXqBeQy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SssitIiv; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744737559; c=relaxed/simple;
+	bh=MaaYkqB/QeUbNtCTehDkYfg2qlALnpIMu+5vj97/a/A=;
+	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=KuRgN/rprkkYa50AfWfdEvmbuznGVfbm3yMJps7Hb+36dPBRj0TCDbwR9L5YInwGwOvib72gttpC6sAjc/vKQNzV+kwOuwoJl/QbLGZf2r7VeJZC3Jo1+VZIC2v/5s9qQtw01/IALNi2xqLc2pUIpqcKxcazNEtlYMmN8wiATWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=bAMdtVIm; arc=none smtp.client-ip=212.159.14.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WWXqBeQy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SssitIiv"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C9ADE2540192;
-	Tue, 15 Apr 2025 13:02:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Tue, 15 Apr 2025 13:02:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744736530; x=1744822930; bh=KgS5AAXO8X
-	kN4p63MyPvF56R6neQKBpWj6dkhrWEEOs=; b=WWXqBeQyVmC+OACAslCaWoYa6c
-	TbrKG4YxX6Azi9w041gonvgX8tRngEvR/yoEdxIfCsVYnrk9/KDrLvBcWuPjirU/
-	PRv4x6gd4cDjzGFFeGOfQwf4/CmQJkadBRNV9YNi8t3JRGexWUbgriAqI826j8jg
-	hRH+ADNi7MaJzfi4QDJlmJcFr3NaL185G4j+rt18VQ0Ss+hsyuYkPZI6wSvCa3wp
-	I5SCl5VlQ3MNvYl+JBe1rhJPK+MwYc6IBomBPzFvGz0eMMc4qh85op8ne+zfFFaT
-	kJ30DR0zf1AYh+qONM+A2BdKGHPeCDtJnAlRfpQBb6zk4ZwU66C3DyABVCow==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744736530; x=1744822930; bh=KgS5AAXO8XkN4p63MyPvF56R6neQKBpWj6d
-	khrWEEOs=; b=SssitIivcxq3LUVkeZV1+Zeu1CP+CVS8SlSqSY1flPv6xfLONUa
-	DtQ4q/EYmTNaR0iKRbNX5b8ODKXoTYKQkaOO+fPJa8VRamuoJT+bJTMJfbMNFrJG
-	yq9vwpu3cXn6r+Nms0t8kch2sB9sjHOuJ3PiUdZrbPsF57jzppM6HIhF1MnDIHvF
-	nOH55gA/wGW+rPZKrd7VcvCwyIp7YUl7YXNMQrU3jnwOHcLf4vkwv5j14ywzQkPW
-	j2a5SwIPTouIjn/NT/LSpLhIsuVGNfdQJyUB728jps7aYFkiHprWOK9RIiWhgIYD
-	IyEXqVgE4gKaYm10PbVjdPSeL8rayZgoB7A==
-X-ME-Sender: <xms:EpH-ZzvubC1T6dMEU8MD7L-jfevn-qO1v8Be4h_M083ttHKoJMIXMQ>
-    <xme:EpH-Z0eNxEUSjynd4AENTgkyTon6Ko4jJC16SjcW1LF11egjqd2x1xYWzBvPKMKtj
-    U7Pb3jjBcbJUgveqg>
-X-ME-Received: <xmr:EpH-Z2xJchLw3no1slsdCcRtFrxUN0yEAhySStu_3f6wbHGfY1_IvdKp1LRyBWv4uwXQ7YOuXl7S7mg49FS738Q109wEvRBnUOdP>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdegtdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhlrghusghithiisehphhihshhikhdrfhhuqdgsvghrlhhinhdruggvpdhrtghpth
-    htohepthhmiiesphhosghogidrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggsrdgu
-    vgdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtth
-    hopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhf
-    rdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:EpH-ZyO3EyW7NF6Dd3iz434_mDwGzVynFTf57TnJqXAxecE4p7HN5Q>
-    <xmx:EpH-Zz8wduoz6tzhuFbeyLloDyZG49ZfDBqxP1SunX0CQIFDqXrv3Q>
-    <xmx:EpH-ZyXBpaANSBk_lm1BCPkGcSm0LWUrkbP8n5Hqlbqva93-erlyqg>
-    <xmx:EpH-Z0cM1OhWQsWslA9tXUeAlRVikorhkVsnfwlmGRAdkCX4WZ27HQ>
-    <xmx:EpH-ZwTTp8GzVw2q3d-b-OiXewjMfoZPq6CUpztN3geUL2vGcHFlvDqP>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Apr 2025 13:02:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  John Paul Adrian Glaubitz
- <glaubitz@physik.fu-berlin.de>,  Todd Zullinger <tmz@pobox.com>,
-  =?utf-8?Q?Ren=C3=A9?=
- Scharfe <l.s.r@web.de>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,  Derrick
- Stolee <stolee@gmail.com>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 5/5] parse-options: detect mismatches in integer
- signedness
-In-Reply-To: <20250415-b4-pks-parse-options-integers-v2-5-ce07441a1f01@pks.im>
-	(Patrick Steinhardt's message of "Tue, 15 Apr 2025 14:14:09 +0200")
-References: <20250415-b4-pks-parse-options-integers-v2-0-ce07441a1f01@pks.im>
-	<20250415-b4-pks-parse-options-integers-v2-5-ce07441a1f01@pks.im>
-Date: Tue, 15 Apr 2025 10:02:08 -0700
-Message-ID: <xmqqa58hmk8f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="bAMdtVIm"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 4jtCu3oksSSpf4jtDu0cMN; Tue, 15 Apr 2025 18:16:04 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1744737364; bh=AVCn+USwSBa0G+hcNGtUQhLU0XqWI0DPbax45Z2XuSM=;
+	h=Date:From:To:Cc:Subject;
+	b=bAMdtVImQMPGjbm3ObfEApVc3mk1mbGrWmEHFeNtQcpAeWHcgXVzXXl4jezxZ9p9z
+	 ++uCuFzmOddIdRnyDI47iA82Qa4HMqLGvQmVZY9rSHdBTlG2sic5YoXbEV3jgc1y+A
+	 hauIJsWhj6uSIujg/u1Z/DYDMCcYXwog/sz30MhjxWONoIONqobUMniVO0KIh9Q1b1
+	 N63N6oJkYrNuoTAQWSUkibFGykRLdu2y6TQ8CMF/n4D4QR7WB+Whd5YUgm+cEczBse
+	 nLIoYTrNDuIjo5faNxUgoYW1L48TWbDVd5sZj31VRggvlgvDaB+6BEMH3PUSZWsCez
+	 WvNPnOXxVq9YA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=V9re0vni c=1 sm=1 tr=0 ts=67fe9454
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=Pg-3dBNDMyySqDWgPwwA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <c358c9b7-bd83-407f-8abc-17ce9363618e@ramsayjones.plus.com>
+Date: Tue, 15 Apr 2025 18:16:02 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>
+Subject: meson build failure on 'seen'
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfHX4If4llJqXIGzpJFSTtX1SLwFc3DqMRcAI9kmxIqMhCXdWSRX9656he66IEfNW7Z8QI/zbI2HAJjJCVrp+bht2Rriip7DkuwthPp0615WseDlnMgIf
+ x4l2Jbhi2C/axlxp4Z/2+A5/x7i5N57N5cRQQ2UC+FbQkFeBRX7K6Y95mbNBHO23LjjJudcfXBhx75ULzAkEWI5OH1qIe7ltUY4=
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi Junio,
 
-> Address the systemic issue by introducing two new build asserts
-> `BARF_UNLESS_SIGNED()` and `BARF_UNLESS_UNSIGNED()`. As the names
-> already hint at, those macros will cause a compiler error when passed a
-> value that is not signed or unsigned, respectively.
->
-> Adapt `OPT_INTEGER()`, `OPT_UNSIGNED()` as well as `OPT_MAGNITUDE()` to
-> use those asserts. This uncovers a small set of sites where we indeed
-> have the same bug as in git-backfill(1). Adapt all of them to use the
-> correct option.
+Attempting to configure a meson build of the current 'seen'@916e0fb7c0
+branch, I find:
 
-Nicely described and implemented.
+  $ meson setup --optimization=2 -Dprefix=$HOME -Dpcre2=disabled build/
+  The Meson build system
+  ...
 
-Thanks.
+  meson.build:769:46: ERROR: Unknown variable "target_shell".
+
+  A full log can be found at /home/ramsay/git/build/meson-logs/meson-log.txt
+  $ 
+
+It appears that the tip commit 916e0fb7c0 (Merge branch 'ps/meson-build-perf-bench'
+into seen, 2025-04-14) drops the call to 'find_program()' which sets/defines the
+'target_shell' variable.
+
+The following diff allows me to configure the build:
+
+  $ git diff
+  diff --git a/meson.build b/meson.build
+  index 015ead27e6..4d537b7a00 100644
+  --- a/meson.build
+  +++ b/meson.build
+  @@ -237,6 +237,8 @@ shell = find_program('sh', dirs: program_path, native: true)
+   tar = find_program('tar', dirs: program_path, native: true)
+   time = find_program('time', dirs: program_path, native: true, required: false)
+ 
+  +target_shell = find_program('sh', dirs: program_path, native: false)
+  +
+   # Sanity-check that programs required for the build exist.
+   foreach tool : ['cat', 'cut', 'grep', 'sort', 'tr', 'uname']
+     find_program(tool, dirs: program_path, native: true)
+  $ 
+
+This allows me to compile the project (I'm still waiting for the test run to
+finish).
+
+HTH
+
+ATB,
+Ramsay Jones
+
+
