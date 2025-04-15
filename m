@@ -1,70 +1,69 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568A429E074
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 22:46:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5882BCF49
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 22:46:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744757216; cv=none; b=VCwxL+EF/sIoFR4RnvqZoupo1zeQshvd5wbM1jVMi0/x9wONryfbuZeebQYAwY6nVlSkgCVxk2Sgc8672MwEB5bqYNboOn1qmjY3Zw2yOrvdr9XaobyZjPVpeJOngg/iTFP3YD9QNaO32B5uWXHYmfvSyjOVqVV97tyoZYfqCFY=
+	t=1744757219; cv=none; b=kwYyEKLlwKBKXA29NPJJiuvNTCUTX6gjevijEIwp+gXLe8ijdpwcTTflxaHFesQDhYdPI+vtS3HM1DC+8KQxShHfPGbQWZoWEV5qN1KkmgsOZaLMbmQrB8ujEJDnkXwh83PCqFO7oRY/0W1GO/JY4UoeV5vIZPOqjexDPTvSefU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744757216; c=relaxed/simple;
-	bh=T8mpXSgtS40tyZKYuB0imSgPNJtgLW/ctjIJ12/z2hI=;
+	s=arc-20240116; t=1744757219; c=relaxed/simple;
+	bh=SzTBiQQnrItaSH0QwLfam/jj5h4h59pmDi+277BRWJ0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=csM7U/Yi1TJeVg1UwLRYlv4YhxD9pFJEBJLTXbbaUwhZUIlzB8vhA3GoHhSEQ29MVRhKzh49hr0wtEnCtO5ysAYR8XPV6oG6b9g2s8+xp81cowc704iqWb0sQkBS9HKi7IG5aF3UO7bgt3QlY97gdwMD/dmQ3bz8qgASyxcT+Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=WP3JILCV; arc=none smtp.client-ip=209.85.160.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jd0H6G/G2mxOBcyznoHUsjjOyFUcVuLKACFgSvV/1Dw7zDrkAo7d1qsbCVOcOPwDrdlXlf9qCc0H/AfJeMsBBhlHyawn3g4CAEzkdPuYNjesRl9l4hgzExl3jbaaAR9VzEEmdvVyPXdjFubJJyogFykhwX5rqLTbb6Db913qb+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=l2pRg2nW; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="WP3JILCV"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-476f4e9cf92so45600231cf.3
-        for <git@vger.kernel.org>; Tue, 15 Apr 2025 15:46:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="l2pRg2nW"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7c5e39d1db2so341760285a.3
+        for <git@vger.kernel.org>; Tue, 15 Apr 2025 15:46:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744757213; x=1745362013; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744757216; x=1745362016; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=j7sdBfHc+Jxpj0a4C/yrCX1kvhBnvRFcGb8oMLDw5kw=;
-        b=WP3JILCVie8ekJtTlwhluWNxfU1b2veUXuWTft9+mRTsCu/uwQntGjK0CVc3pkdgPy
-         mqi4q/eKYaYnfYydnbQrfYfeeHk97z0wxUYwlEHVIFMTOTb/KnSlMkN/dJ46uWUUs+91
-         aNuT7MgaLucbOekE4+msYWDyZeTSAvB8HR6mdY41Fc7mBeVfdVwUeOftN5he+3L6HdXX
-         nH8w1z+0WieAenEBh0UK9UyRmgLUTRlX7wdKvPbBunFUqmLQo4umq017yLUplcKqabxo
-         FO6nGl+u5V+1nB++LA56bPr2OChQ1F1L9uFsDXuyRsY7Bw/d1Oi5IQUuTXoIiP9m9rIr
-         J8Gw==
+        bh=THUXxuoq3jBbce3nzc5a/iCchbKKxI2VBTZ22nN3Os0=;
+        b=l2pRg2nWwjiAf7zh4BovR7SunONTbRlVsbyUCE3RywsCfPwQtW1uP9g/gaNVyShvec
+         ZtfMVOiNb5AYughG6o0/z3jA44IBdPoMfYTv0CID8BFLFTNirK9Wzl+GAPcYm3lVJjCt
+         WUItVEAzI2RNKC76YvVaYjMNZVnf5Y84w0v5RjXE24VATT43u8zLX7ztO98ZTzHUsNyS
+         B2JfWHF7uRb0hsfALygxayN8IAbshcWzEgtBcMEBmRq6CC1IF0TAaLQGXrx7CiLArZLQ
+         5PmGtw3Jmuh96Te52rnPrjwOTPx0jpi86L2hzHRC6LuTA4aVVvPYS9PNSztHij8xJO3w
+         O1VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744757213; x=1745362013;
+        d=1e100.net; s=20230601; t=1744757216; x=1745362016;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=j7sdBfHc+Jxpj0a4C/yrCX1kvhBnvRFcGb8oMLDw5kw=;
-        b=MwnV9gpjRlOYghYAZpVhVxyvZhUr8it8Z2HXHjdALfSfPD3V/dMK67kwT7TXGjYu0d
-         j9q0dPwt1367VhBIyGcXwsnTml91xGERJBST3A1sR/t2mnYu9VHwyAkQ5hjqjEwL6CzL
-         wWvoY8LVfOH0x5w/3FqLUFujjSnflHNiW2+u4/8/sxWpbuVJwIt6qPCSO59qTafeeuHr
-         Vsi+R9hf/A/hAUdA2HSEpWGAjJNCtm1Jlt6KrFbVF2kCAuQOI+STFtdEEpIgfNpLcIu6
-         9EE3/OgBIUgrhlOXKn1DJgncPNBqDSnj5p65JKoHOgbScuQfBRyqwcfwV9xTZRtM2AQb
-         2COA==
-X-Gm-Message-State: AOJu0YwA98L3a9Gu8s3Wx8lHkRtCt7a/APqxinJnG9quGqMxlOtk8B3K
-	2d7RMQr3MXacgr9A+Suh5azPpjZIKWXNWDZIUxfQ18hNTvVRh9/+oQdfbGg1h06g139cpx9LZo2
-	EOpQ=
-X-Gm-Gg: ASbGncsd0V2+Uukjan2kQTaXUQh63A7Vzy8e4TaAo2zSZku8GiJiQixkSO/dWd6+QVe
-	alnZxAJn/Ef5Lg64pzlWQNvdtn42IpvgjJtZm92r6JPhrO8f1pvp6aGxv9Q0ul6OODbjFauu20f
-	hAmjJFuxN/2OtZaN0YqHbeS8n85xKOWvveeh4L4qIAjH/Qietof1DQMbJLlujttj4pqDsbDrMsy
-	VYoakp3OeiVxNnbdlB4FU6MdjLD6ej7ziDA6scuLaRkareWjQHo9vS6nn6DesPWPqDk5fUv+xNA
-	cieyRNlUTWqBQMqb1a0GuENtI6ExzuurM9X2ii+ljOnFz+FFN2SwSuFg4syzQxpr3iYkay6RNt6
-	aDDopacPRKDd9
-X-Google-Smtp-Source: AGHT+IFy8dUkhIBXrFLDWm9U4w3qZi4VmMWWRiMBsfb/yL1u69uCOWpD08TmEzcJnfTBVQ/EKK4qUw==
-X-Received: by 2002:a05:622a:1495:b0:477:64b0:6a26 with SMTP id d75a77b69052e-47ad3a1ae6fmr15976191cf.22.1744757212922;
-        Tue, 15 Apr 2025 15:46:52 -0700 (PDT)
+        bh=THUXxuoq3jBbce3nzc5a/iCchbKKxI2VBTZ22nN3Os0=;
+        b=jHEj1eR9eCoKFLYBVz4BETKO+UmIE28xKDGaOvm82yPOAlbniIsdiP6oZBIn+jsDcs
+         9IR3hOM8lBvlCsvvMIuQZWSZHoSDuL5MNxQygQCN2oWWOkBBJNo3z5oYUpRyhP/vtulC
+         BsvR9CDZgRvWG+7agKs0U6pgUYRlazYGxTWHrn0+o6jWdL0GUJsR4dc2j+lLd+93K/eL
+         DtYqp5WosskbWKfng94b12PfR9TETmzP9M9hLK5YxsldaWzFLF+SoJivBL5N3QqzJ+cI
+         H5b+QCNuSJn+eD3w2P8ev4CAokh6dmG6ufXltMBdwtecd9LOegPzGZcMd3b+WMwN+Cfu
+         GsSw==
+X-Gm-Message-State: AOJu0YzjAyPBTEDL5V89drIB7y+8U9SuTWSFOFTDlOO1YOgm2JcVJ0hm
+	mPVspNk6hKnkcaqXKoDCdI7AT0P1tK2YceMR4tAtlNj0/pCe8R6UmsGRAmDCzdefijqwlc+zA+T
+	Yltc=
+X-Gm-Gg: ASbGncuySpUKhnT2pYZwX505/UKgTBCAxDCxtQt41l/D7vuiSJOKIkk/5gfrWV0Tg2G
+	Htd3ye4N4sSPOhIcS0ZYkNFhminbIA+tL0s06PY/0NbBf4sJRy5uOWwNC8GyBHNrgd63xDFkoTj
+	0zkRQ9suD4dAgLaI3pu7Rm21U0bmFl6cu511XaZ1B6XKUir1AB3+kD/HzkSo8OCdXEG7Y2At3RT
+	0o03LVh21hEHEL49uxtFroXCk1E3kQRWkGJb6BhBBbT1Nnt0mw62BiQwRYiTk6nET5tAAUeK30K
+	0DFdEPg8xl14R0aSxzez9E4xviUzBITucxmfZ4XV9Lw8XsAfpQOzBXWmsf58tV1sHjmgiOZ5Z7x
+	7X7s96ZWeQyXP
+X-Google-Smtp-Source: AGHT+IE7guyjeBqI13RuSpV4b3MnI4wrb4nYkUepuSyP4To1cWe1BA+NHS0Oc5HrGo1rO7/K4ggxvQ==
+X-Received: by 2002:a05:620a:3188:b0:7c5:4be5:b0b1 with SMTP id af79cd13be357-7c914240fbemr190967185a.35.1744757216220;
+        Tue, 15 Apr 2025 15:46:56 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4796eb2cbf1sm98845721cf.38.2025.04.15.15.46.52
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4796eb15cffsm99288761cf.18.2025.04.15.15.46.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Apr 2025 15:46:52 -0700 (PDT)
-Date: Tue, 15 Apr 2025 18:46:51 -0400
+        Tue, 15 Apr 2025 15:46:55 -0700 (PDT)
+Date: Tue, 15 Apr 2025 18:46:54 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 2/9] pack-objects: limit scope in
- 'add_object_entry_from_pack()'
-Message-ID: <986bef29b5f33d32fd366aa9370d439175a9b605.1744757204.git.me@ttaylorr.com>
+Subject: [PATCH v3 3/9] pack-objects: factor out handling '--stdin-packs'
+Message-ID: <6f8fe8a4e10198b0339337376279cff4ac654879.1744757204.git.me@ttaylorr.com>
 References: <cover.1744413969.git.me@ttaylorr.com>
  <cover.1744757204.git.me@ttaylorr.com>
 Precedence: bulk
@@ -77,37 +76,64 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1744757204.git.me@ttaylorr.com>
 
-In add_object_entry_from_pack() we declare 'revs' (given to us through
-the miscellaneous context argument) earlier in the "if (p)" conditional
-than is necessary.  Move it down as far as it can go to reduce its
-scope.
+At the bottom of cmd_pack_objects() we check which mode the command is
+running in (e.g., generating a cruft pack, handling '--stdin-packs',
+using the internal rev-list, etc.) and handle the mode appropriately.
+
+The '--stdin-packs' case is handled inline (dating back to its
+introduction in 339bce27f4 (builtin/pack-objects.c: add '--stdin-packs'
+option, 2021-02-22)) since it is relatively short. Extract the body of
+"if (stdin_packs)" into its own function to prepare for the
+implementation to become lengthier in a following commit.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/pack-objects.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 20dd870bbf..4ab695a3aa 100644
+index 4ab695a3aa..a293267074 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -3490,14 +3490,14 @@ static int add_object_entry_from_pack(const struct object_id *oid,
- 		return 0;
+@@ -3674,6 +3674,17 @@ static void read_packs_list_from_stdin(void)
+ 	string_list_clear(&exclude_packs, 0);
+ }
  
- 	if (p) {
--		struct rev_info *revs = _data;
- 		struct object_info oi = OBJECT_INFO_INIT;
--
- 		oi.typep = &type;
++static void add_unreachable_loose_objects(void);
 +
- 		if (packed_object_info(the_repository, p, ofs, &oi) < 0) {
- 			die(_("could not get type of object %s in pack %s"),
- 			    oid_to_hex(oid), p->pack_name);
- 		} else if (type == OBJ_COMMIT) {
-+			struct rev_info *revs = _data;
- 			/*
- 			 * commits in included packs are used as starting points for the
- 			 * subsequent revision walk
++static void read_stdin_packs(int rev_list_unpacked)
++{
++	/* avoids adding objects in excluded packs */
++	ignore_packed_keep_in_core = 1;
++	read_packs_list_from_stdin();
++	if (rev_list_unpacked)
++		add_unreachable_loose_objects();
++}
++
+ static void add_cruft_object_entry(const struct object_id *oid, enum object_type type,
+ 				   struct packed_git *pack, off_t offset,
+ 				   const char *name, uint32_t mtime)
+@@ -3769,7 +3780,6 @@ static void mark_pack_kept_in_core(struct string_list *packs, unsigned keep)
+ 	}
+ }
+ 
+-static void add_unreachable_loose_objects(void);
+ static void add_objects_in_unpacked_packs(void);
+ 
+ static void enumerate_cruft_objects(void)
+@@ -4776,11 +4786,7 @@ int cmd_pack_objects(int argc,
+ 		progress_state = start_progress(the_repository,
+ 						_("Enumerating objects"), 0);
+ 	if (stdin_packs) {
+-		/* avoids adding objects in excluded packs */
+-		ignore_packed_keep_in_core = 1;
+-		read_packs_list_from_stdin();
+-		if (rev_list_unpacked)
+-			add_unreachable_loose_objects();
++		read_stdin_packs(rev_list_unpacked);
+ 	} else if (cruft) {
+ 		read_cruft_objects();
+ 	} else if (!use_internal_rev_list) {
 -- 
 2.49.0.230.ga662d77f78
 
