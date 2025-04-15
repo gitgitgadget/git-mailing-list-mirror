@@ -1,74 +1,72 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E216613D531
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 19:58:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04594256C7A
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 20:45:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744747084; cv=none; b=nYo9xV+Vwo+OWYRttVvGgTb6OtgnE295FOGwqVIj4rNVPKQE6TN+gghJHDMLZwbHjXke5CdkdWmXLr/xIMv8YITmX14Ri+VNfHXlZnfgP/BPSLLsgN+xrNOp6GWTq+sHm2LzcvBzNCI/IuDuSM0cDbUZdYiVWHaa43Kr2KTqqzE=
+	t=1744749953; cv=none; b=T20wvzIBXmWofYw7gyvCdp9ZpUFDIG7qd+/pYozMbFYgQO4WK5eNjC4Bwc2l1u3rEHEc+7qzDoAUA66KkrFfQO5iMR32+6F1vLjfzNSK3nidUU9CPPbYrM9q9o/ZeSVQFSXF8dJs8Pm1eFxl6mOsrxeWslb8766lbitIvSl6nmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744747084; c=relaxed/simple;
-	bh=qMREVVeVUtXJji27kigki3TTkqt7wnBJFxutgsntJK0=;
+	s=arc-20240116; t=1744749953; c=relaxed/simple;
+	bh=bCBSgAP+geZXWJidzZ76ZaAaNhuV4JEPpvU/BvYUbsY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FQF9f4b7yui7BYqlPx/zc32jbMNsR8LyRhWDQE4vEcrPmQXqQGPOerN8GrZmLbG1eVRdMfQgZzTVCmCIDslqK9HjUkReiPB/dhz0SS12gzDM+giSlGqS6L1EXzWq+92FiaJAOweil6MVPZMNUVo1igMTVyggNFK83YDxLbypqp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=IL0wFGU5; arc=none smtp.client-ip=209.85.222.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=MHAJ1hm4g2QynQFB3eGXsr1dbO/2FU2R3cNTJNeQSeFo/UFg5E0nM3xhFokz58JQs0JKpvdu5LN14Ht3VsBBpMa/pnJ4mA1Cwe3Hs9VlKtBsIcBuQwSeTdyP6UQasyHd84Qox8aWS1fEHNw4dKTch75f5SYtn5c0JUZ7L2qWzcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Fgo6pm95; arc=none smtp.client-ip=209.85.222.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="IL0wFGU5"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7c5aecec8f3so902297485a.1
-        for <git@vger.kernel.org>; Tue, 15 Apr 2025 12:58:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Fgo6pm95"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7c59e7039eeso830481085a.2
+        for <git@vger.kernel.org>; Tue, 15 Apr 2025 13:45:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744747080; x=1745351880; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=qMREVVeVUtXJji27kigki3TTkqt7wnBJFxutgsntJK0=;
-        b=IL0wFGU5TAAvQ80MDhoswS/LnL1UoLn069AV3W+GalgeTtLPq5glSerms0IUkvc74+
-         YRAghQ05QgHZqmt5lkdF9ze+sm6t4x/qTYoCFac8nhPcUXS72ayx83i+ewdsaTfwcP2c
-         WxLgryOApXQ63J+WZlpOd4xpvluUKX/BrFzwRtWowRgyKfAS43e+MoWurJXjQVOkSola
-         +ODaK3O4QWcYaIuDl/Z5M189EKyEjiSRlQDnaRt09nTJS8oxYGnvF3EI17aaG4evIEsB
-         9U3Aq0V4eQF1HobiJabMOPgeujotn8rkTDH+SCgWTPXuiT9xnXfshuYvtiLtW55YOZne
-         JlVA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744749949; x=1745354749; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dFMQ3DOnFQhSyXbNVbfVzwGcPwB84vUitf3B0acekz8=;
+        b=Fgo6pm95u8Un6Lxw1mUrRmlMONjtmWZyRC2EFFgk3mQmlwUoT3wY5srPdbWbnKUWbQ
+         WAWJtB/gcH36fPzvqJsWDrQRnc9CkPb7al7ajiIvRk4jb3hHbbJYLQi2vvHNCKoMhij3
+         D6/IXUsfrMvxMlvnyPmIJK6D466R3nezxxO6Cw/FNHVsxzpsUEy9QhQRDMiLMZ4mpOAN
+         OGgoqfsSWur1BN81+febHkNMO4mN787zsU3a/RznFQKqQkBw8TBNAdXY7Aw8AgDtLHQ5
+         VUZxQ1Go+UlnMCsPsXUUHa41/Mb8DmZJveGq6955HhcOa2GCQNKCvWGAKAxubruNptie
+         X5TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744747080; x=1745351880;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qMREVVeVUtXJji27kigki3TTkqt7wnBJFxutgsntJK0=;
-        b=VYXFjMrXfu11f5XxSuuCclg2mpfZIau3qtwPK6T2OLNU0mJvRoa+XFG7kM15PbGYoa
-         U1pcmEvxl1THBjoC6tdQG38W1/yjaaGYJaX/eVbM/kGllCCLVIA0I570bWau3AdTU6nQ
-         +UMPWKnnqbhPtG2EbVJdUcXESerksza0WrH6Q9Pn7p14+vMytdNeHaVoyHbf0Q9I/R+1
-         Z2T2lSFFgucbb7BTlsakUdNDLae/i1lsz4sf7o/qCdVGfmPj3+m9DHM52Q45oRGd5g9s
-         rzdcIhLRl/H6GcL9WTiUjLRnD2eqiHqUCKX3sJ0fE4txrh8Qg4VMVC5Y690Xsn6tCgjB
-         geWg==
-X-Gm-Message-State: AOJu0YwdoCm4boa2lqQl65mtxJprBbPNbvfIAmSmri2k25jKqK8ZweR9
-	OVeyULP2eSA1DrGpgNxfLteelgolePGTUWpMRIHVCnCt7RLHnFVZv5DhXRPJmuk=
-X-Gm-Gg: ASbGncuqvmpJNHanTwBOwhTbdrMCeI9Py5Dryjxu9Ivvjo1d8EhEcu5O0GnNXkJLHg2
-	/K8Vc+mRn7YJ8LRNFGPvtJ8TTv+r47m3Mf7uM+VmMtFuLycSD34/mGI5fGBnXDd8jETm4R4pibG
-	tYUfzdNDBT7SHZ5s6NwmqtdDYFyJelpoYJxuVA7Y/n69cfz17aibVzt67JeMTH4fpc6b8VkfXyE
-	cPgm1B2bTx+CJ64Ns0luS5XxLqcXPgo5liJbM8F6zlxEthQNhvSTxTzemM/eK/oz5S45hxuskTN
-	BBVR3ZJQqVigkKNiR3CUcScV8rStfgy60fHdl3YBitoXyd8sd96KwLzFPOjMCfmspBWHTqBNEGz
-	Mvzs3TGGIpXoQ
-X-Google-Smtp-Source: AGHT+IGDEXmrekA4wVlzDph6dssfcjIIHmEGzf3NNkZ9y565+9f1X+++U7Yt4kFYvzwzKIcchmzBCg==
-X-Received: by 2002:a05:620a:4403:b0:7c5:ad99:9e38 with SMTP id af79cd13be357-7c914262f87mr118103085a.43.1744747079750;
-        Tue, 15 Apr 2025 12:57:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744749949; x=1745354749;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dFMQ3DOnFQhSyXbNVbfVzwGcPwB84vUitf3B0acekz8=;
+        b=TUrm3gHbJMMS8zwm+8mwNtrmR+V/tyUgsoFHa9FsYw9jcLblbiWh7ig5ZW+3jP8rOv
+         M2keQH463yvveB/twIXMEN9Hx34ZHHIW49ccHdAFWyzOAwjOsSFgn+bt9G00FK+wqqVr
+         +5iNvRMvZYooIcZzTiNDeQFJ6jTLcmNxx0fSgMZdStVt10FSl8r1Zm0k1wSgIwOrXFYO
+         D6O+afEPfHNaXoNN9wxDIzlLRDdsgSeQskCaY3xAp8VSFmda9scTGWuFwScjAv6V673R
+         rlftvoRJ12iLiQKYx6Vgc9jXRVqI21OBpLw/k2AdzobQ0y1jN6eYnjMkLa49v7ENAU1J
+         ImEA==
+X-Gm-Message-State: AOJu0YxMaAJ3/7ZRtPlfmOf0xNe7w+NMUP2g5jhB2c6ByVRb+1tzfYKr
+	8tn9/nK6MmmJ9QYEyQ38UNk9/ycM5Y0zp+ssj/9qTUUhGRFSa2lbG4fMmMrZHqI=
+X-Gm-Gg: ASbGncvaNwHZlt7EKCzswPXWD3jBjPG1Gs1Cnqq+Vk9J5f2HyOStFCnz/Eiytv6pSDI
+	I+xvWrTQSMUjxiDoyFEzF7HEkb2EHDe6X4UoXOksgCK+cqrVoNO/aTSXf/2CmRmR2jBNUS+AU5W
+	BKG4v0rIGvyxHecsqHwZCppnYKYWp+kf85qG21LSxYxLQMWUQTzT/8Sm+odvsED6QP00y2/hl4r
+	JUE0s8RywFdrITjoJtWzT+vrDR6xP8WM9kNtgQ3Yu1qJemafm0Z/Ka9f0wRYsbchBK5eOKIKr5W
+	1VVRgn6Nze4yQN96ljGlgvZ/pCh+GAV96aiWRvD7/lP1OqU8uaZMSQWICrpMgB1RRprstIRJJ0g
+	nRh9nbkFDIxik
+X-Google-Smtp-Source: AGHT+IEJHNY5tuB78GmqqeCzFuu9XYb2YknyshPHJbVSUn8s7fsnBfu4Z79LSAcARvcqsn6kISLjpQ==
+X-Received: by 2002:a05:620a:4447:b0:7c5:5d13:f186 with SMTP id af79cd13be357-7c91419798bmr113231985a.10.1744749949443;
+        Tue, 15 Apr 2025 13:45:49 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c7a89f9890sm951762485a.66.2025.04.15.12.57.59
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c7a8a18eafsm956191985a.114.2025.04.15.13.45.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Apr 2025 12:57:59 -0700 (PDT)
-Date: Tue, 15 Apr 2025 15:57:58 -0400
+        Tue, 15 Apr 2025 13:45:49 -0700 (PDT)
+Date: Tue, 15 Apr 2025 16:45:42 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Elijah Newren <newren@gmail.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 6/8] pack-objects: perform name-hash traversal for
- unpacked objects
-Message-ID: <Z/66RtP7eRvxuVmD@nand.local>
+Subject: Re: [PATCH v2 7/8] pack-objects: introduce '--stdin-packs=follow'
+Message-ID: <Z/7FdgYID9I1qR7K@nand.local>
 References: <cover.1744413969.git.me@ttaylorr.com>
  <cover.1744661167.git.me@ttaylorr.com>
- <0bc2183dc39a949d7eef08d282994231543d4c26.1744661167.git.me@ttaylorr.com>
- <CABPp-BG-XeOCtKd-LvUNGsBGyk6rLecm=BYbUDn-6rGwi=ROzg@mail.gmail.com>
+ <697a337cb147ed638884cf9b8605fef8b572e1c6.1744661167.git.me@ttaylorr.com>
+ <CABPp-BFBJP15g=4M90161=KCDei-hEFdnGs7_oY8ERtqgn9s-g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,43 +75,163 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BG-XeOCtKd-LvUNGsBGyk6rLecm=BYbUDn-6rGwi=ROzg@mail.gmail.com>
+In-Reply-To: <CABPp-BFBJP15g=4M90161=KCDei-hEFdnGs7_oY8ERtqgn9s-g@mail.gmail.com>
 
-On Mon, Apr 14, 2025 at 08:10:51PM -0700, Elijah Newren wrote:
-> On Mon, Apr 14, 2025 at 1:06 PM Taylor Blau <me@ttaylorr.com> wrote:
+On Mon, Apr 14, 2025 at 08:11:08PM -0700, Elijah Newren wrote:
+> > diff --git a/Documentation/git-pack-objects.adoc b/Documentation/git-pack-objects.adoc
+> > index 7f69ae4855..c894582799 100644
+> > --- a/Documentation/git-pack-objects.adoc
+> > +++ b/Documentation/git-pack-objects.adoc
+> > @@ -87,13 +87,19 @@ base-name::
+> >         reference was included in the resulting packfile.  This
+> >         can be useful to send new tags to native Git clients.
 > >
-> > With '--unpacked', pack-objects adds loose objects (which don't appear
-> > in any of the excluded packs from '--stdin-packs') to the output pack
-> > without considering them as reachability tips for the name-hash
-> > traversal.
-> >
-> > This was an oversight in the original implementation of '--stdin-packs',
-> > since the code which enumerates and adds loose objects to the output
-> > pack (`add_unreachable_loose_objects()`) did not have access to the
-> > 'rev_info' struct found in `read_packs_list_from_stdin()`.
-> >
-> > Excluding unpacked objects from that traversal doesn't effect the
+> > ---stdin-packs::
+> > +--stdin-packs[=<mode>]::
+> >         Read the basenames of packfiles (e.g., `pack-1234abcd.pack`)
+> >         from the standard input, instead of object names or revision
+> >         arguments. The resulting pack contains all objects listed in the
+> >         included packs (those not beginning with `^`), excluding any
+> >         objects listed in the excluded packs (beginning with `^`).
+> >  +
+> > +When `mode` is "follow", pack objects which are reachable from objects
+> > +in the included packs, but appear in packs that are not listed.
+> > +Reachable objects which appear in excluded packs are not packed. Useful
+> > +for resurrecting once-cruft objects to generate packs which are closed
+> > +under reachability up to the excluded packs.
 >
-> s/effect/affect/ ?
+> Maybe:
+>
+> When `mode` is "follow", objects from packs not listed on stdin
+> receive special treatment.  Objects within unlisted packs will be
+> included if those objects (1) are reachable from the included packs,
+> and (2) are not also found in any of the excluded packs.  This mode is
+> useful for resurrecting once-cruft objects to generate packs which are
+> closed under reachability up to the boundary set by the excluded
+> packs.
 
-Oops, yes.
+I like it. I went with your version with some minor rewording and tweaks
+on top.
 
-> Should this patch have some tests demonstrating the difference in
-> which objects are included?
+> > +               /*
+> > +                * Our 'to_pack' list was constructed by iterating all
+> > +                * objects packed in included packs, and so doesn't
+> > +                * have a non-zero hash field that you would typically
+> > +                * pick up during a reachability traversal.
+> > +                *
+> > +                * Make a best-effort attempt to fill in the ->hash
+> > +                * and ->no_try_delta here using a now in order to
+> > +                * perhaps improve the delta selection process.
+> > +                */
+>
+> I know you just moved this paragraph from below...but it doesn't parse
+> for me.  "using a now in order to perhaps"?  What does that mean?
 
-No; this patch doesn't actually change the set of objects we include
-with '--stdin-packs' in conjunction with '--unpacked', it just alters
-their name-hash values in an attempt to produce better deltas.
+Yeah, this is just bogus, and was so before this patch. The rewording is
+minor enough (just dropping "using a now") that I think we can just
+squash it in with the movement in this patch.
 
-I don't think we have any tests that check this traversal in the packed
-or unpacked case, though we could probably add some. It's not obvious
-how we'd test that the traversal actually produced better/different
-deltas, but we could at least check that it happened with the trace2
-identifier "pack-objects/stdin_packs_hints".
+> > +               oe->hash = pack_name_hash_fn(name);
+> > +               oe->no_try_delta = name && no_try_delta(name);
+> > +
+> > +               stdin_packs_hints_nr++;
+> > +       }
+> > +}
+> > +
+> > +static void show_commit_pack_hint(struct commit *commit, void *data)
+> > +{
+> > +       enum stdin_packs_mode mode = *(enum stdin_packs_mode *)data;
+> > +       if (mode == STDIN_PACKS_MODE_FOLLOW) {
+> > +               show_object_pack_hint((struct object *)commit, "", data);
+> >                 return;
+> > +       }
+> > +       /* nothing to do; commits don't have a namehash */
+> >
+> > -       /*
+> > -        * Our 'to_pack' list was constructed by iterating all objects packed in
+> > -        * included packs, and so doesn't have a non-zero hash field that you
+> > -        * would typically pick up during a reachability traversal.
+> > -        *
+> > -        * Make a best-effort attempt to fill in the ->hash and ->no_try_delta
+> > -        * here using a now in order to perhaps improve the delta selection
+> > -        * process.
+> > -        */
+> > -       oe->hash = pack_name_hash_fn(name);
+> > -       oe->no_try_delta = name && no_try_delta(name);
+> > -
+> > -       stdin_packs_hints_nr++;
+> >  }
+>
+> It might be worth swapping the order of functions as a preparatory
+> patch (both here and when you've done it elsewhere in this series),
+> just because it'll make the diff so much easier to read when we can
+> see the changes to the function without have to also deal with the
+> order swapping (since order swapping looks like a large deletion and
+> large addition of one of the two functions).
 
-I think it's probably worth doing at some point, though I don't think I
-see it as especially urgent, unless you feel strongly otherwise.
+Fair enough.
+
+> > @@ -4467,6 +4484,23 @@ static int is_not_in_promisor_pack(struct commit *commit, void *data) {
+> >         return is_not_in_promisor_pack_obj((struct object *) commit, data);
+> >  }
+> >
+> > +static int parse_stdin_packs_mode(const struct option *opt, const char *arg,
+> > +                                 int unset)
+> > +{
+> > +       enum stdin_packs_mode *mode = opt->value;
+> > +
+> > +       if (unset)
+> > +               *mode = STDIN_PACKS_MODE_NONE;
+> > +       else if (!arg || !*arg)
+> > +               *mode = STDIN_PACKS_MODE_STANDARD;
+>
+> I don't understand why you have both a None mode and a Standard mode,
+> especially since the implementation seems to only care about whether
+> or not the Follow mode has been set.  Shouldn't these both be setting
+> mode to the same value?
+
+I'm not sure I follow your question... stdin_packs is a tri-state. It
+can be off, on in standard/legacy mode, or on in follow mode.
+
+> > +test_expect_success 'setup for --stdin-packs=follow' '
+> > +       git init stdin-packs--follow &&
+> > +       (
+> > +               cd stdin-packs--follow &&
+> > +
+> > +               for c in A B C D
+> > +               do
+> > +                       test_commit "$c" || return 1
+> > +               done &&
+> > +
+> > +               A="$(echo A | git pack-objects --revs $packdir/pack)" &&
+> > +               B="$(echo A..B | git pack-objects --revs $packdir/pack)" &&
+> > +               C="$(echo B..C | git pack-objects --revs $packdir/pack)" &&
+> > +               D="$(echo C..D | git pack-objects --revs $packdir/pack)" &&
+> > +
+> > +               git prune-packed
+> > +       )
+> > +'
+
+Huh, I have no idea how this snuck in. This "setup" test does nothing
+and creates a repository that isn't used later on in the script.
+Probably leftover from writing these tests in the first place, but I've
+removed it.
+
+> I like the tests -- normal --stdin-packs, then --stdin-packs=follow,
+> then --stdin-packs=follow + --unpacked.
+
+I think the normal tests are accidental since we use pack-objects to
+write packs A, B, C, and D. But the --stdin-packs vs.
+--stdin-packs=follow and --stdin-packs=follow + --unpacked was
+definitely intentional.
+
+> However, would it be worthwhile to create commit E immediately after
+> creating the packs?
+
+Yeah, I think that is a good suggestion. We already have tests that
+exercise --stdin-packs with --unpacked earlier in the same script, but
+obviously not with --stdin-packs=follow. Moving the creation of commit E
+earlier up makes a lot of sense to me, thanks!
 
 Thanks,
 Taylor
