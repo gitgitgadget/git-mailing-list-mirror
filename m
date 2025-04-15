@@ -1,54 +1,54 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17873274FFA
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 05:59:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F67A2750E5
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 05:59:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744696789; cv=none; b=qM8WlmdYwY96wta36O2w5wr60g5DVL81xvdnXrsQh4s1lPAiBJLJShVrbrt6zaEX/FtwE8/sxyGwgMW88lP4WFgRlu2sCt0lKjq96iORTNKYpprxXh+frTC2ny3XjcONFHuXc+wjXEx4YZTD1G6PwLo4JX8ZZ7elDKALyXn+RXw=
+	t=1744696792; cv=none; b=F/Yf3pqod3+09QNXtx9BBhyqEdN9+WCgzD6IvasdgLWRf+yYHRhiLcoefAu4OqahPIxhUG9jtw6wGoJW4vnI9QgqME/ry7ITQwHQk3jfTxWbwbKyFfEtEB0npvIWorEcVZKre8tNmM7dyw0NFCbQloG4N0ziFE4RTFBw5yZ/F0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744696789; c=relaxed/simple;
-	bh=zo4C+0MquJgvCn4mHmQi48G1qviEW8FbJSOwJdjob9A=;
+	s=arc-20240116; t=1744696792; c=relaxed/simple;
+	bh=VZDoLFJWkPcNr3ulMF4EQSMBMjTmCkS4wG4ZDplb+HA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aSRUhNm8kNxhsKIFRo9ZwZBEfqr2KUFHyr5+Fpjz+mJKG1/Zpm+O0Clu4N1ZHtuJiok6XbTuVhNaLRFQyjn0zpRwc5+BJHZ8X8ZZGx4JG422CDsCkyAiz3q1Wg5e82I5FA0fe2B0K3fT/ASnTLz5YLc/uxy3VahXzSTytV9SMcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kbKTESqF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EdHC7sb3; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pzr17/RHywoQLK41t79s/CnaxNumGpOsF02G+/WKMbdVcpYT3RoOWswkDLA2Dt8Zsw8uGszbr/r7pFQVBvZirkFfHhP9oPYGAcVRP3eI19aKRs8cN+8oakf+PWr6LBE9bvbdPeLYmWbaU3HgsM2EVe7RbpvuuGO6tO5WFHzjlPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f4OqrH77; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=he1JUGVT; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kbKTESqF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EdHC7sb3"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8D4B911402D2;
-	Tue, 15 Apr 2025 01:59:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f4OqrH77";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="he1JUGVT"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 73435138051E;
+	Tue, 15 Apr 2025 01:59:49 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Tue, 15 Apr 2025 01:59:44 -0400
+  by phl-compute-09.internal (MEProxy); Tue, 15 Apr 2025 01:59:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1744696784; x=1744783184; bh=stIoqoxci0
-	o9iIQQHjCyc70ZcBlZrHtLcHQwX+2mAnw=; b=kbKTESqFCoukYdU4KtIp1sKUT5
-	umBxDoCzziWK/nlxUA3uWBK4LDDlmWmD/gamOuVGpiSf4Am3LoyuLFCUanvbLIli
-	uWR39hPnTOA3mNJ3DQIZkx7Ma30Ko+uPf84/TFKBvo5MD4zp10yiqp8HE3yh9DlA
-	lPlpfXdQsID+8NZk0FiqCuY3MV+6zoxztCG0LabtXGBZ+Gdxmj2dg4JNDa5c9CU5
-	9aMjlWxF3V29D60Nwu3mpxr2W5URopTWgBUH8g1XLIzLSRa337OpUUS47xeb3v08
-	NKVigKSy9v94WlAJAglvsKuW+koUgCdtsWidA2giRyYvQI1F/FcHVeaDJSXQ==
+	:subject:to:to; s=fm2; t=1744696789; x=1744783189; bh=/+J6nL99Vl
+	yeFh2RKkXwLxWWZHgLE2VtQB39W7gKLOc=; b=f4OqrH77a/cJrIKMZ3rh2xtJob
+	67S8HryjQZGiTruuERWjNqs5i8MNVu/+TuOrf7UwqaHjdhZz7EXAZt8Op+Txi4ez
+	BhIrN76mbqozO7aFyngBwPIugDEwhf+SynKQQLf3uy/h+EJjCrKTLtuTr6VfjS7+
+	ce0FuggyeDqoK5MWsUoXyIHafIU/X5j2aTORiKsyMiW/p4szKdn07dUyXSGON0gj
+	kbzb/1CVtiK4J7rMcsIaXyxfeyCLXaGF+P98y+4v/eedI6/oHMJTYJ45NRD9clch
+	n8iyBjXiIwLN48XG60kIlne2IKe2AHnLrydNfAqDvDZR7s+Dr8S7TePIGemA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744696784; x=1744783184; bh=stIoqoxci0o9iIQQHjCyc70ZcBlZrHtLcHQ
-	wX+2mAnw=; b=EdHC7sb3F4MMb1bT+hFx2uHBXIwSxRALGOusbsJ0F2qZYd1kjes
-	Uod0zXH/PXFIyOphc1r8yFtrw73VJBWJZBWCyDREfX1BVmlFxN2ZGxUOEbxoHbMM
-	ybP0QdndpDIGStlPHJz9AsSXFrrW19Tam9Rsu5I1nDNCMDN4ujOmX+ixfLXYAhE0
-	/I9LH9rQjxAZ2gid9G+c3BkvIapKvzBP618syX3c+UmgtT2luLQGNwycp2wVRbIp
-	b1aFLOFzTAaNT/DDAs0Cv7R7s8Q3bJLZkHlluZcenvH25x42lC83wAe603yxxgnc
-	Phvjt/J0Hq+Mkyi0ClZ5T0+gUxguBVqe8TA==
-X-ME-Sender: <xms:z_X9Z_IO1CuAy0GxczUAgWG3mispkRd06ZpLXjQTaQWrZyAuxulV5w>
-    <xme:z_X9ZzLlxRmxYhErhXqYOJ2Y_1oRTIhalmY9aNuG0d2IbFiEix7EHPO-cwTqzTCLB
-    ZgHFmWWtuoODWM0ow>
-X-ME-Received: <xmr:z_X9Z3vapWI28aBQsRmxzKSNdWbGTfcy7rHDC4dbyCxbkA4qzr1LV5C0Mc6wN34Aw6Bv21gaEGgp6sHCJiLzcuCQwHYzFr3KS_PSE11NJPZrNg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvddvieekucetufdoteggodetrf
+	1744696789; x=1744783189; bh=/+J6nL99VlyeFh2RKkXwLxWWZHgLE2VtQB3
+	9W7gKLOc=; b=he1JUGVTq+nrgfhEIv1BMwsu92c2kKjq2gNifCWg6oOwBcZ4+Ux
+	jKpu5SL5nGq4CGyu7DJixa6+WVfQ66UqVfX2uVeNn+vPFAx5vz0GdMMRKVrVC8W8
+	CF7VBDnF1hW56PchwAeuZ5MJnhMRAq5nh6gFNkg2/n+SUeqHlddWBKzUNUlX5iz/
+	CvPBxhOV5YIeBp9DzZ1/uUhx6l9PdmsT4YR//usheI9X+Nm7BEKrH0nqQGnCi7hG
+	WckRNYdWF7rHsx9zUt9JewoSUZ4meZfF7wpraVgAdzZ9ZqcwCw9GTCBY0gr8sQNt
+	Bbi+QhSN0WKFkhtj+a365XFs/cdlq8JzmHA==
+X-ME-Sender: <xms:1fX9ZyXXZbPA6kGHeAVZP4Yt8-5PxRD0MznCU_ZT6kq63yQh4dmIcg>
+    <xme:1fX9Z-n0uZVivUX1EYi-M_WZtfj4-uAAWS19ZxOEA1X5BJ8MwyhZzAhv7T1ADX9jU
+    ys6YIGMD9KLjhN2MA>
+X-ME-Received: <xmr:1fX9Z2b1Yp5LWTLuDbBMorokEoY1fIcENfsMq6IJfG06sa9t6JAYNjbmASnfCJ5aJo4BiirUSQGv3NCUkrHzJn-kJABEXzEIMx11qo07u-TL0A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvddvieelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
@@ -56,36 +56,35 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvddvieekucetufdote
     himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
     ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhr
-    tghpthhtohepghhithesughinhifohhoughivgdrohhrghdprhgtphhtthhopehgihhtse
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesughinhifohhoughivgdrohhrghdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheprhgrmhhs
+    rgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehgihhtse
     hvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:z_X9Z4b0L1vRWKyevj5BLYAXREffd98svuQoS2XNts_mdj47q8UAbA>
-    <xmx:z_X9Z2ZF58Rzg2f7uWvy7bP0Zvaa94f07qqdzf3xUTUIbGAptL3Ycg>
-    <xmx:z_X9Z8DMwI3MYhRHazskxGtP3yDjlR4X38tabtOWmN1kA00MUuQ1HA>
-    <xmx:z_X9Z0Y_qUYNjq5ZIW3Xdp1egVGKvVyk6QncgMCylTHBEpHjk849Ng>
-    <xmx:0PX9Z6Tw2uTIJ0-7aepVtclfkSLixRxqIPwFbjpzJGcKICy-4iTYwHZ9>
+X-ME-Proxy: <xmx:1fX9Z5WMh0v0MN6K14b4n3LuDUBvIUNG0Aw6rIUIo-uOW_GcOFwwtw>
+    <xmx:1fX9Z8l9pPz3JQD8Vthroktjc887k8NUZ3PosJMvo5No8bT-NQsS1g>
+    <xmx:1fX9Z-fAPh-6tw6_h0ALc6Az-yRqcEVJjkMW7echwyyrpUBPr12fUQ>
+    <xmx:1fX9Z-E9mUiU86aanCjMydOCCCWIgHw4OANAOJEBNbdq0Eprl-uGqQ>
+    <xmx:1fX9Z6_JUFcg2CEn3rZCCmbcYQTe1ayGPeQ0QJ4I4pK_MFYU2sd0Irbe>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Apr 2025 01:59:42 -0400 (EDT)
+ 15 Apr 2025 01:59:48 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1bd08242 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 15 Apr 2025 05:59:40 +0000 (UTC)
-Date: Tue, 15 Apr 2025 07:59:38 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f7de5575 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 15 Apr 2025 05:59:47 +0000 (UTC)
+Date: Tue, 15 Apr 2025 07:59:46 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Ramsay Jones <ramsay@ramsayjones.plus.com>
 Cc: GIT Mailing-list <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Adam Dinwoodie <git@dinwoodie.org>
-Subject: Re: [-SPAM-] Re: [PATCH v2 03/13] meson.build: only set build
- variables for non-default values
-Message-ID: <Z_31noB-CAqtYOd2@pks.im>
+Subject: Re: [-SPAM-] Re: [PATCH v2 07/13] config.mak.uname: only set
+ NO_REGEX on cygwin for v1.7
+Message-ID: <Z_310iVKmhrl0UGE@pks.im>
 References: <1c04882b-e518-4272-bd18-ab918774e424@ramsayjones.plus.com>
  <cover.1743859985.git.ramsay@ramsayjones.plus.com>
- <280363cd569a8c6e870107eb219597b42911fed2.1743859985.git.ramsay@ramsayjones.plus.com>
- <a5795bfa-cc02-4c9a-b7d2-4924a94cd0db@ramsayjones.plus.com>
- <Z_y_Tp5pfJ-gZLEF@pks.im>
- <7c5a2998-fe71-495f-8841-64e5b2ad03f2@ramsayjones.plus.com>
+ <324bb213426ffc9c1f9cd155de309bd0b63cdbc4.1743859985.git.ramsay@ramsayjones.plus.com>
+ <Z_y_VeJzT82by8wg@pks.im>
+ <db92840f-ed4a-46b7-aba0-b556ed33af6f@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,136 +93,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7c5a2998-fe71-495f-8841-64e5b2ad03f2@ramsayjones.plus.com>
+In-Reply-To: <db92840f-ed4a-46b7-aba0-b556ed33af6f@ramsayjones.plus.com>
 
-On Mon, Apr 14, 2025 at 08:19:15PM +0100, Ramsay Jones wrote:
-> 
-> 
-> On 14/04/2025 08:54, Patrick Steinhardt wrote:
-> > On Sun, Apr 06, 2025 at 08:49:54PM +0100, Ramsay Jones wrote:
+On Mon, Apr 14, 2025 at 09:03:30PM +0100, Ramsay Jones wrote:
+> On 14/04/2025 08:55, Patrick Steinhardt wrote:
+> > On Sun, Apr 06, 2025 at 08:38:33PM +0100, Ramsay Jones wrote:
+> >> Commit 92f63d2b05 ("Cygwin 1.7 needs compat/regex", 2013-07-19) set
+> >> the NO_REGEX build variable because the platform regex library failed
+> >> some of the tests (t4018 and t4034), which passed just fine with the
+> >> compat library.
 > >>
+> >> After some time (maybe a year or two), the platform library had been
+> >> updated (with an import from FreeBSD, I believe) and now passed the full
+> >> test-suite. This would be about the time of the v1.7 -> v2.0 transition
+> >> in 2015. I had a patch ready to send, but just didn't get around to
+> >> submitting it to the list. At some point in the interim, the official
+> >> cygwin git package used the autoconf build system, which sets the
+> >> NO_REGEX variable to use the platform regex library functions. The new
+> >> meson build system does likewise.
 > >>
-> >> On 06/04/2025 20:38, Ramsay Jones wrote:
-> >> [snip]
-> >>> diff --git a/meson.build b/meson.build
-> >>> index 88a29fd043..efd0bd3319 100644
-> >>> --- a/meson.build
-> >>> +++ b/meson.build
-> >>> @@ -693,10 +693,8 @@ endif
-> >>>  # These variables are used for building libgit.a.
-> >>>  libgit_c_args = [
-> >>>    '-DBINDIR="' + get_option('bindir') + '"',
-> >>> -  '-DDEFAULT_EDITOR="' + get_option('default_editor') + '"',
-> >>>    '-DDEFAULT_GIT_TEMPLATE_DIR="' + get_option('datadir') / 'git-core/templates' + '"',
-> >>>    '-DDEFAULT_HELP_FORMAT="' + get_option('default_help_format') + '"',
-> >>> -  '-DDEFAULT_PAGER="' + get_option('default_pager') + '"',
-> >>>    '-DETC_GITATTRIBUTES="' + get_option('gitattributes') + '"',
-> >>>    '-DETC_GITCONFIG="' + get_option('gitconfig') + '"',
-> >>>    '-DFALLBACK_RUNTIME_PREFIX="' + get_option('prefix') + '"',
-> >>> @@ -708,6 +706,17 @@ libgit_c_args = [
-> >>>    '-DPAGER_ENV="' + get_option('pager_environment') + '"',
-> >>>    '-DSHELL_PATH="' + fs.as_posix(shell.full_path()) + '"',
-> >>>  ]
-> >>> +
-> >>> +editor_opt = get_option('default_editor')
-> >>> +if editor_opt != '' and editor_opt != 'vi'
-> >>> +  libgit_c_args += '-DDEFAULT_EDITOR="' + editor_opt + '"'
-> >>> +endif
-> >>> +
-> >>> +pager_opt = get_option('default_pager')
-> >>> +if pager_opt != '' and pager_opt != 'less'
-> >>> +  libgit_c_args += '-DDEFAULT_PAGER="' + pager_opt + '"'
-> >>> +endif
-> >>> +
-> >>>  libgit_include_directories = [ '.' ]
-> >>>  libgit_dependencies = [ ]
-> >>>  
+> >> The cygwin platform regex library, in addition to now passing the tests
+> >> which formerly failed, now passes an 'test_expect_failure' test in the
+> >> t7815-grep-binary test file. In particular, test #12 'git grep .fi a'
+> >> which determines that the regex pattern '.' matches a NUL character.
+> >> The commit f96e56733a ("grep: use REG_STARTEND for all matching if
+> >> available", 2010-05-22) added the test in question, but it does not
+> >> give any indication as to why the test was framed as an expected fail,
+> >> rather than a 'positive' test that the 'git grep' command fails to
+> >> match a NUL. Note that the previous test #11 was also originally
+> >> marked in that commit as a 'test_expect_failure', but was flipped to
+> >> an 'success' test in commit 7e36de5859 ("t/t7008-grep-binary.sh: un-TODO
+> >> a test that needs REG_STARTEND", 2010-08-17).
 > >>
-> >>
-> >> It would be somewhat remiss of me to not mention here that this does not
-> >> work for any but the simplest of values! :( If you set a simple single
-> >> 'bareword' like 'vim' or 'more' (even '~/bin/vi') then every thing works
-> >> just fine. However, if the value contains any of (at least) the following
-> >> characters: single quote, double quote or backslash, then things
-> >> stop working!
-> >>
-> >> [I spent one whole evening (and a bit - always something else to 'try')
-> >> trying to 'fix' this problem, without success]
+> >> In order to produce the same NO_REGEX configuration from autoconf, meson
+> >> and make, modify config.mak.uname to only set NO_REGEX for cygwin v1.7.
+> >> In addition, skip test t7815.12 on cygwin, by adding the !CYGWIN pre-
+> >> requisite to the test header, which (among other things) removes an
+> >> '...; please update test(s)' comment.
 > > 
-> > Shouldn't it be possible to escape these values via `.replace()` [1]? I
-> > suspect that you already tried, but wanted to ask anyway :)
+> > Out of curiosity, because I really don't know any better: why do we have
+> > to even care about such oldish Cygwin installations from more than 10
+> > years ago? Wouldn't people generally update Cygwin every once in a while
+> > to have recent packages? Or is there a good reason why we should
+> > continue to support it?
 > 
-> Yep. :)
+> Heh, as I said in response to Junio, I have a patch that removes all
+> of the config in the conditional, so that we would no longer support
+> any 'pre-v2.x' versions of cygwin[*]. I think that would be an entirely
+> reasonable thing to do, particularly as cygwin thinks of itself as
+> a 'rolling release' type distribution. ;)
 > 
-> I still haven't studied the meson documentation, but when I searched
-> for variations of 'quotes', the results showed that '... if you want
-> quotes, you will have to do it yourself ...'. So, I eventually found
-> '.replace()' in the 'string operations' section of the docs and tried
-> to reproduce what the Makefile does (see #2382):
-> 
-> 
->   ifdef DEFAULT_EDITOR
->   DEFAULT_EDITOR_CQ = "$(subst ",\",$(subst \,\\,$(DEFAULT_EDITOR)))"
->   DEFAULT_EDITOR_CQ_SQ = $(subst ','\'',$(DEFAULT_EDITOR_CQ))
-> 
->   BASIC_CFLAGS += -DDEFAULT_EDITOR='$(DEFAULT_EDITOR_CQ_SQ)'
->   endif
-> 
-> which I translated into (on top of these patches):
-> 
->   diff --git a/meson.build b/meson.build
->   index 8f8a258064..608d665fd3 100644
->   --- a/meson.build
->   +++ b/meson.build
->   @@ -708,7 +708,11 @@ libgit_c_args = [
->  
->    editor_opt = get_option('default_editor')
->    if editor_opt != '' and editor_opt != 'vi'
->   -  libgit_c_args += '-DDEFAULT_EDITOR="' + editor_opt + '"'
->   +  editor_opt = editor_opt.replace('\\', '\\\\')
->   +  editor_opt = editor_opt.replace('"', '\"')
->   +  editor_opt = '"' + editor_opt + '"'
->   +  editor_opt = editor_opt.replace('\'', '\\\'')
->   +  libgit_c_args += '-DDEFAULT_EDITOR=' + editor_opt
->    endif
->  
-> [Actually, I think the very first attempt had:
-> 
->   libgit_c_args += '-DDEFAULT_EDITOR=\'' + editor_opt + '\''
-> 
-> but meson, for some reason, adds a set of ' around the whole
-> -D argument to gcc, so I got rid of them - but it still didn't
-> work!]
-> 
-> Along with many, many, *many* such permutations! (trying to debug
-> this is hard work, with no help from meson).
-> 
-> So, just a little earlier this evening I read an email from Karthik
-> ([PATCH v2 3/4] meson: add support for 'hdr-check') in which he
-> mentioned a problem with backslashes and referenced a github issue
-> on the mesonbuild repo [0], which is worth a read. ;)
-> 
-> Sorry I couldn't fix this issue, but it seems to be (in part) an issue
-> with meson. (Of course the example I used, which is taken directly
-> from the Makefile, happens to be particularly good at demonstrating
-> the problem!)
+> However, I don't think it is my place to make that kind of decision
+> and I was leaving that patch until last. Hopefully, Adam will make
+> that call. :)
 
-Fair enough. Maybe I'll try to upstream a feature like this into Meson.
-It would be nice to have a `.quoted()` method on `str`, and it shouldn't
-be hard to do.
-
-> In any event, I think the current patch is a strict improvement, even
-> if it may need to be updated at a later date. I hope you agree.
-
-Agreed.
-
-> Thank you for taking the time to review this series. I think this patch
-> was the only review comment that required a response - please let me
-> know, if that is not the case!
-
-Yup. The only other thing was missing spaces around assignment
-operators, but that alone doesn't feel like it's worth a reroll.
-
-Thanks!
+Makes sense, it's a bigger discussion indeed. I do think it would be
+reasonable to drop pre-2.0 Cygwin, and we have recently become a bit
+more aggressive in dropping support for ancient OS versions. But I'm
+totally fine with not doing it now.
 
 Patrick
