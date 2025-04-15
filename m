@@ -1,83 +1,84 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076442951B7
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 12:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06202951C3
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 12:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744719262; cv=none; b=U363SEFfJ2MZt2rlov/4milZ7xDeuN+d/M2aJ49b1uJtKbjgtrwQMFZNExCL52c1FNtPEwddNHtOdkGE0oW7VnyWV2/satb3H3WwiSC+8VToEf/lQn6Xl6W+Jd7tNZH4k0PO++mglG0Prpyb/Q0DYgtmY25GD7fxNqlk8VyOTsM=
+	t=1744719262; cv=none; b=IdGR2r3e3aNbTtEYFLSIWl+z3I4FTg511+SckbiXXA5RqDnyCLsrW6nhqYJlxU1PeQ2KIhmM1Kim8YISX/x2cXAgdvQsEBdWZyYEAhxS9bjGZ7TZ47emh13dhZ0aoOCuxaHCtqypJTskQbWW/zTxEP12i/ZuA7gOE3QKaDp1NlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1744719262; c=relaxed/simple;
-	bh=xzF6f3TRMSPeJqJykBTHdbt6jh7M88tzg5ydBnkMv2A=;
+	bh=tFfDuAJQiFjsafwEVVY8iGRGog8UZHqcqQ/G09evIcc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=a0y2xi0oX7IYs+eS/NXEs0oKjJh05QU0tXQyUOKdxng3YNOTtniVRq3wGG4BPEprMQzLOWkSNGQlgSxLk+VPR/piCXVD9wDrHd1brIxBhBFBWbULRCQvqiEwfpAV4sVU0l/GIEqNV1t5BKMtVJHpT9ZNAi7DrfsA/y0T7ZiqUOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BxATnuZ2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i3Aiyg3g; arc=none smtp.client-ip=103.168.172.152
+	 In-Reply-To:To:Cc; b=V++5xQFj8MC0S/PQrMZsf5xFvvpgXjbCycBFEnL46Xo/va4frEFRekl6dqeuLVku4PjXaMs4GB7F0igWLjkI6lrcU/vWWN4EfpUvhjjbhuQBji8zXdWykNZATTnUkReT/h4p99plsmcZUKH0OnzdErBWoo1IHh7PxfYamaxPusA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ols2Xrr6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pD1Ko++L; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BxATnuZ2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i3Aiyg3g"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EE553114035F;
-	Tue, 15 Apr 2025 08:14:18 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 15 Apr 2025 08:14:18 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ols2Xrr6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pD1Ko++L"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A655F114036B;
+	Tue, 15 Apr 2025 08:14:19 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Tue, 15 Apr 2025 08:14:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1744719258;
-	 x=1744805658; bh=9xx7U+JB6JrWrykJ10GjVLPbm5/8OLKFFnQPzrwzItk=; b=
-	BxATnuZ2TewbYoJu06YpyxarqtIywILbxaxUXFStRw2VgaY45FIJB/QGKju2/+9+
-	seg7IeiTCejSUm8NItZ15mqADygamoBXAXze/bcjGR+J5chQ5zT3rPcvSeDdJy4G
-	JeiIEmVGhF8QuRixXQHQ+lID6iwTyplCs5bU8+Kar5wY5n5zS8gDIkTAYYmvr6vl
-	rAen2r3vUXAgDgXWhxqvzp5SxIM3+PW1Uv0y0J9RLknnF0PzED7EMbSOklOHfY3S
-	v8Kt9mNaPYDzvqkdbwR9SuzdBM95FXAgQ7VOZ050ClwLy6dgcW1sw+UkrPDXNs90
-	i6TMiOuELTLAwFG7zrJBTA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1744719259;
+	 x=1744805659; bh=xqS3Pg5325h78jzBCnnpwA88ASjh1/fZbIOOCNPnsr8=; b=
+	Ols2Xrr6rThfoTmquQkYnNcRYk2guY3sQMMD9QZMQwFL+7Ra1qekwe93voAX6tL4
+	Sf524Taxp+pumXWA9iU8JTMoMfkRDq7FsLfJyHgkgRF/XeNPsVbp8WXqHrsRxSfP
+	864HzubgacD1lD8WPaiNGOlznXOoOVW4WHAa0wil7xzn2iZYiIJP+GkfFMgoBY7r
+	PpxhyxZSpgzAtMkmte8zuXbW/AsyrL1zIun6q/eHyuHVuWLEZUj3SHG115r3O5ga
+	gQcYiIlB6vg516vX+6b3Fjis54yJO+pbQE3K5TYniaGZsof8CDjWNBEEyM5ZHMq4
+	LQ0mY6HVSBpoKaA2qkTw0g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744719258; x=
-	1744805658; bh=9xx7U+JB6JrWrykJ10GjVLPbm5/8OLKFFnQPzrwzItk=; b=i
-	3Aiyg3gENrxaM+KRm5CkETkulUSHETgUppcb6EWYvUHVJf5DSgUzIFDNA0DKjZBj
-	taajja6ha7IwJrGLSuE9SR0Q/V6vts7hKds4XeWsHl+1nhW2b0UNXYskINPy+HAj
-	fbyX3U9KP+jz7Wf3oK1u/qmWZJJvbTdCm1AiOckwbmMsR1m1dNtwAuf85Ff0lR+v
-	xMXvYQKIuMG2nkCIpGGUYliAVf7OTVM7/bhOixGb/WX5rhsErkAc/2PS1r2TVNMF
-	5KENtjdBH8fBDmBr8woVFIt0KbfwCzTDllw/STIhMjIeXyLHU+xrntaGqucTPpy+
-	nUf10fL6WoZCAoLRbNl6A==
-X-ME-Sender: <xms:mk3-Zx6DC3_didxz2B1kYRWVlaxDDSUfzI9CjYLQkkCNApGa79jH2g>
-    <xme:mk3-Z-7jUZvIe9p7adebUP4IHe2HO8s3aLvItcC-9pT4Mv5XwZpLxDa7QyEGQqMoM
-    L3QTA3UDDdBBXTg4w>
-X-ME-Received: <xmr:mk3-Z4c4bi9UW19ox6O2cGxj96Kz2-I4i4bAe66e3h_yRmv2vh2NM8_moB2YmIxOz3VaD2Rtn2snaZ7KmVZITavJsAX8KIZF6f_lhfwjM59drg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdefgeejucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744719259; x=
+	1744805659; bh=xqS3Pg5325h78jzBCnnpwA88ASjh1/fZbIOOCNPnsr8=; b=p
+	D1Ko++LRg63Y+dVmmNSFvJpZ85h40qtD979NLSePZIZ+5fKdgs0RpPXtNLfEAnyO
+	T+e7k0tRuD646b8O4lUb6P2DxOqJy3qDaFLWuwXaRrXvc70uIngyN9k9r7g7ZpSI
+	D852r6XAhU5kFHBPlTb+RGLEL7GepIQGvinYMJb9IDSiEDFaJ+D2WsadxSjznvVa
+	XIY6wEINI3uERwkzbubPjN7s+Y1wdlSLucTZgBYrMcM+EVfTBXYi/1yI1Q/77EyA
+	DMfBzDKOKtkaDkFKkkqrmnn01kp7HdMdEIAhQ02VggLJCRk7EGZaYtFE74mpsKUV
+	QmE4fBqY0u1HaSBiBaGHQ==
+X-ME-Sender: <xms:m03-ZyGuPGvZhzO9nTSjJRuADVP_8syXL_PJPhIskcDVGB83Ar_WGA>
+    <xme:m03-ZzXmqZlsgqn-omZtzDWCaqqOgGaAEaIStaxBqj0l76oiORC9zWK-oemFLHzSv
+    2-wBVxEXB6SWRP8mQ>
+X-ME-Received: <xmr:m03-Z8L6ZjizaYYRimNUPh18ilW-Bz5bV7byAmFsFq25EUsHgtLuADeGRH7I-dUoo2sU6TVNbf0ka1CmDOJnr6BJs6pgnat7bnjSAFfd89GEsA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdefgeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
+    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtkeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    drihhmqeenucggtffrrghtthgvrhhnpeefhfeugeelheefjeektdffhedvhfdvteefgfdt
+    udffudevveetgeeuuedtkefhgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpth
-    htohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehglhgruhgsihhtiiesphhhhi
-    hsihhkrdhfuhdqsggvrhhlihhnrdguvgdprhgtphhtthhopehsthholhgvvgesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheplh
-    drshdrrhesfigvsgdruggv
-X-ME-Proxy: <xmx:mk3-Z6LHDqypT9RufrTQjnXWzie_QQM_dyUa0tjjLxd9VlAtRZITtw>
-    <xmx:mk3-Z1JQQkt7PexBOg7hByhYcqis01LzZiPEB3h9_pr3PyPm_OBXeA>
-    <xmx:mk3-Zzx75EdJHoZpWC8tAXdEemqONW3QHnG5lanBlVnejkpkCV1vFg>
-    <xmx:mk3-ZxLy7fgCfsNPylq94RAhE4de24p5WsbZItXmZQSoTpOeg0Agow>
-    <xmx:mk3-Z9Dc26ZmZ79ygEdXi7HlEry8oBJdANcxK8IbeyUtLvA8g3XSkWIK>
+    vgepshhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprh
+    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehglhgruhgsihhtiiesphhhhihsihhkrd
+    hfuhdqsggvrhhlihhnrdguvgdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehtmh
+    iisehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:m03-Z8F83jRKmFcMsklu6jGfZ5JkSqeK-rCVcbe0wC_ZZNRhE0M6-g>
+    <xmx:m03-Z4VIAAOHXNDQk-UCRHCx0W9AmaPZ78YfqPbyKP_1pjfEwpv-Hg>
+    <xmx:m03-Z_P6yDlGg5O2bBitxOGrTGYEUF4IVVJCwvrLISxm4s2Ck3xs_g>
+    <xmx:m03-Z_28qrAkbOghgtgOURFGVIPvqInz6wjYM8c_zy5V0wSg0Uh7dA>
+    <xmx:m03-Zz9iV7QRuLbw6tuM8EfyjKEuaYl5Y1ffHnuX0Hf5zuunyTYaAD7Q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Apr 2025 08:14:17 -0400 (EDT)
+ 15 Apr 2025 08:14:18 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2f27861b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 15 Apr 2025 12:14:16 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 98a433eb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 15 Apr 2025 12:14:17 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 15 Apr 2025 14:14:08 +0200
-Subject: [PATCH v2 4/5] parse-options: introduce `OPTION_UNSIGNED`
+Date: Tue, 15 Apr 2025 14:14:09 +0200
+Subject: [PATCH v2 5/5] parse-options: detect mismatches in integer
+ signedness
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,8 +86,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250415-b4-pks-parse-options-integers-v2-4-ce07441a1f01@pks.im>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20250415-b4-pks-parse-options-integers-v2-5-ce07441a1f01@pks.im>
 References: <20250415-b4-pks-parse-options-integers-v2-0-ce07441a1f01@pks.im>
 In-Reply-To: <20250415-b4-pks-parse-options-integers-v2-0-ce07441a1f01@pks.im>
 To: git@vger.kernel.org
@@ -97,243 +98,163 @@ Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
  Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.2
 
-We have two generic ways to parse integers in the "parse-options"
-subsytem:
+It was reported that "t5620-backfill.sh" fails on s390x and sparc64 in a
+test that exercises the "--min-batch-size" command line option. The
+symptom was that the option didn't seem to have an effect: we didn't
+fetch objects with a batch size of 20, but instead fetched all objects
+at once.
 
-  - `OPTION_INTEGER` parses a signed integer.
+As it turns out, the root cause is that `--min-batch-size` uses
+`OPT_INTEGER()` to parse the command line option. While this macro
+expects the caller to pass a pointer to an integer, we instead pass a
+pointer to a `size_t`. This coincidentally works on most platforms, but
+it breaks apart on the mentioned platforms because they are big endian.
 
-  - `OPTION_MAGNITUDE` parses an unsigned integer, but it also
-    interprets suffixes like "k" or "g".
+This issue isn't specific to git-backfill(1): there are a couple of
+other places where we have the same type confusion going on. This
+indicates that the issue really is the interface that the parse-options
+subsystem provides -- it is simply too easy to get this wrong as there
+isn't any kind of compiler warning, and things just work on the most
+common systems.
 
-Notably missing is a middle ground that parses unsigned integers without
-interpreting suffixes. Introduce a new `OPTION_UNSIGNED` option type to
-plug this gap. This option type will be used in subsequent commits.
+Address the systemic issue by introducing two new build asserts
+`BARF_UNLESS_SIGNED()` and `BARF_UNLESS_UNSIGNED()`. As the names
+already hint at, those macros will cause a compiler error when passed a
+value that is not signed or unsigned, respectively.
 
+Adapt `OPT_INTEGER()`, `OPT_UNSIGNED()` as well as `OPT_MAGNITUDE()` to
+use those asserts. This uncovers a small set of sites where we indeed
+have the same bug as in git-backfill(1). Adapt all of them to use the
+correct option.
+
+Reported-by: Todd Zullinger <tmz@pobox.com>
+Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- parse-options.c               | 43 +++++++++++++++++++++++++++++++++++++++++++
- parse-options.h               | 12 ++++++++++++
- t/helper/test-parse-options.c |  4 +++-
- t/t0040-parse-options.sh      | 18 +++++++++++++++++-
- 4 files changed, 75 insertions(+), 2 deletions(-)
+ apply.c            | 4 ++--
+ builtin/backfill.c | 4 ++--
+ builtin/column.c   | 2 +-
+ builtin/grep.c     | 4 ++--
+ git-compat-util.h  | 7 +++++++
+ parse-options.h    | 6 +++---
+ 6 files changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/parse-options.c b/parse-options.c
-index ae836c384c7..9670e46a679 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -216,6 +216,49 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
- 			    optname(opt, flags));
- 		}
- 	}
-+	case OPTION_UNSIGNED:
-+	{
-+		uintmax_t upper_bound = UINTMAX_MAX >> (bitsizeof(uintmax_t) - CHAR_BIT * opt->precision);
-+		uintmax_t value;
+diff --git a/apply.c b/apply.c
+index f274a379487..a850c7d75fe 100644
+--- a/apply.c
++++ b/apply.c
+@@ -5123,8 +5123,8 @@ int apply_parse_options(int argc, const char **argv,
+ 		/* Think twice before adding "--nul" synonym to this */
+ 		OPT_SET_INT('z', NULL, &state->line_termination,
+ 			N_("paths are separated with NUL character"), '\0'),
+-		OPT_INTEGER('C', NULL, &state->p_context,
+-				N_("ensure at least <n> lines of context match")),
++		OPT_UNSIGNED('C', NULL, &state->p_context,
++			     N_("ensure at least <n> lines of context match")),
+ 		OPT_CALLBACK(0, "whitespace", state, N_("action"),
+ 			N_("detect new or modified lines that have whitespace errors"),
+ 			apply_option_parse_whitespace),
+diff --git a/builtin/backfill.c b/builtin/backfill.c
+index 33e1ea2f84f..d95d7a2d4d6 100644
+--- a/builtin/backfill.c
++++ b/builtin/backfill.c
+@@ -123,8 +123,8 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
+ 		.sparse = 0,
+ 	};
+ 	struct option options[] = {
+-		OPT_INTEGER(0, "min-batch-size", &ctx.min_batch_size,
+-			    N_("Minimum number of objects to request at a time")),
++		OPT_UNSIGNED(0, "min-batch-size", &ctx.min_batch_size,
++			     N_("Minimum number of objects to request at a time")),
+ 		OPT_BOOL(0, "sparse", &ctx.sparse,
+ 			 N_("Restrict the missing objects to the current sparse-checkout")),
+ 		OPT_END(),
+diff --git a/builtin/column.c b/builtin/column.c
+index 50314cc2559..ce6443d5fac 100644
+--- a/builtin/column.c
++++ b/builtin/column.c
+@@ -31,7 +31,7 @@ int cmd_column(int argc,
+ 	struct option options[] = {
+ 		OPT_STRING(0, "command", &real_command, N_("name"), N_("lookup config vars")),
+ 		OPT_COLUMN(0, "mode", &colopts, N_("layout to use")),
+-		OPT_INTEGER(0, "raw-mode", &colopts, N_("layout to use")),
++		OPT_UNSIGNED(0, "raw-mode", &colopts, N_("layout to use")),
+ 		OPT_INTEGER(0, "width", &copts.width, N_("maximum width")),
+ 		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("padding space on left border")),
+ 		OPT_STRING(0, "nl", &copts.nl, N_("string"), N_("padding space on right border")),
+diff --git a/builtin/grep.c b/builtin/grep.c
+index c4869733e1b..f23a6f1dc86 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -983,9 +983,9 @@ int cmd_grep(int argc,
+ 		OPT_CALLBACK('C', "context", &opt, N_("n"),
+ 			N_("show <n> context lines before and after matches"),
+ 			context_callback),
+-		OPT_INTEGER('B', "before-context", &opt.pre_context,
++		OPT_UNSIGNED('B', "before-context", &opt.pre_context,
+ 			N_("show <n> context lines before matches")),
+-		OPT_INTEGER('A', "after-context", &opt.post_context,
++		OPT_UNSIGNED('A', "after-context", &opt.post_context,
+ 			N_("show <n> context lines after matches")),
+ 		OPT_INTEGER(0, "threads", &num_threads,
+ 			N_("use <n> worker threads")),
+diff --git a/git-compat-util.h b/git-compat-util.h
+index cf733b38acd..1218fcf81a4 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -110,12 +110,19 @@ DISABLE_WARNING(-Wsign-compare)
+ # define BARF_UNLESS_COPYABLE(dst, src) \
+ 	BUILD_ASSERT_OR_ZERO(__builtin_types_compatible_p(__typeof__(*(dst)), \
+ 							  __typeof__(*(src))))
 +
-+		if (unset) {
-+			value = 0;
-+		} else if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
-+			value = opt->defval;
-+		} else if (get_arg(p, opt, flags, &arg)) {
-+			return -1;
-+		} else if (!*arg) {
-+			return error(_("%s expects a numerical value"),
-+				     optname(opt, flags));
-+		} else {
-+			value = strtoumax(arg, (char **)&s, 10);
-+			if (*s)
-+				return error(_("%s expects a numerical value"),
-+					     optname(opt, flags));
-+		}
++# define BARF_UNLESS_SIGNED(var)   BUILD_ASSERT_OR_ZERO(((__typeof__(var)) -1) < 0)
++# define BARF_UNLESS_UNSIGNED(var) BUILD_ASSERT_OR_ZERO(((__typeof__(var)) -1) > 0)
+ #else
+ # define BARF_UNLESS_AN_ARRAY(arr) 0
+ # define BARF_UNLESS_COPYABLE(dst, src) \
+ 	BUILD_ASSERT_OR_ZERO(0 ? ((*(dst) = *(src)), 0) : \
+ 				 sizeof(*(dst)) == sizeof(*(src)))
 +
-+		if (value > upper_bound)
-+			return error(_("value %"PRIuMAX" for %s exceeds %"PRIuMAX),
-+				     value, optname(opt, flags), upper_bound);
++# define BARF_UNLESS_SIGNED(var)   0
++# define BARF_UNLESS_UNSIGNED(var) 0
+ #endif
 +
-+		switch (opt->precision) {
-+		case 1:
-+			*(int8_t *)opt->value = value;
-+			return 0;
-+		case 2:
-+			*(int16_t *)opt->value = value;
-+			return 0;
-+		case 4:
-+			*(int32_t *)opt->value = value;
-+			return 0;
-+		case 8:
-+			*(int64_t *)opt->value = value;
-+			return 0;
-+		default:
-+			BUG("invalid precision for option %s",
-+			    optname(opt, flags));
-+		}
-+	}
- 	case OPTION_MAGNITUDE:
- 	{
- 		uintmax_t upper_bound = UINTMAX_MAX >> (bitsizeof(uintmax_t) - CHAR_BIT * opt->precision);
+ /*
+  * ARRAY_SIZE - get the number of elements in a visible array
+  * @x: the array whose size you want.
 diff --git a/parse-options.h b/parse-options.h
-index 4b561679581..20ea7d2ab13 100644
+index 20ea7d2ab13..7b7c9d901cb 100644
 --- a/parse-options.h
 +++ b/parse-options.h
-@@ -25,6 +25,7 @@ enum parse_opt_type {
- 	/* options with arguments (usually) */
- 	OPTION_STRING,
- 	OPTION_INTEGER,
-+	OPTION_UNSIGNED,
- 	OPTION_MAGNITUDE,
- 	OPTION_CALLBACK,
- 	OPTION_LOWLEVEL_CALLBACK,
-@@ -224,6 +225,16 @@ struct option {
+@@ -219,7 +219,7 @@ struct option {
+ 	.type = OPTION_INTEGER, \
+ 	.short_name = (s), \
+ 	.long_name = (l), \
+-	.value = (v), \
++	.value = (v) + BARF_UNLESS_SIGNED(*(v)), \
+ 	.precision = sizeof(*v), \
+ 	.argh = N_("n"), \
  	.help = (h), \
- 	.flags = (f), \
- }
-+#define OPT_UNSIGNED_F(s, l, v, h, f) { \
-+	.type = OPTION_UNSIGNED, \
-+	.short_name = (s), \
-+	.long_name = (l), \
-+	.value = (v), \
-+	.precision = sizeof(*v), \
-+	.argh = N_("n"), \
-+	.help = (h), \
-+	.flags = (f), \
-+}
- 
- #define OPT_END() { \
- 	.type = OPTION_END, \
-@@ -276,6 +287,7 @@ struct option {
- #define OPT_CMDMODE(s, l, v, h, i)  OPT_CMDMODE_F(s, l, v, h, i, 0)
- 
- #define OPT_INTEGER(s, l, v, h)     OPT_INTEGER_F(s, l, v, h, 0)
-+#define OPT_UNSIGNED(s, l, v, h)    OPT_UNSIGNED_F(s, l, v, h, 0)
- #define OPT_MAGNITUDE(s, l, v, h) { \
+@@ -229,7 +229,7 @@ struct option {
+ 	.type = OPTION_UNSIGNED, \
+ 	.short_name = (s), \
+ 	.long_name = (l), \
+-	.value = (v), \
++	.value = (v) + BARF_UNLESS_UNSIGNED(*(v)), \
+ 	.precision = sizeof(*v), \
+ 	.argh = N_("n"), \
+ 	.help = (h), \
+@@ -292,7 +292,7 @@ struct option {
  	.type = OPTION_MAGNITUDE, \
  	.short_name = (s), \
-diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
-index 46deb4317ef..0d559288d9c 100644
---- a/t/helper/test-parse-options.c
-+++ b/t/helper/test-parse-options.c
-@@ -120,7 +120,7 @@ int cmd__parse_options(int argc, const char **argv)
- 	};
- 	struct string_list expect = STRING_LIST_INIT_NODUP;
- 	struct string_list list = STRING_LIST_INIT_NODUP;
--	uint16_t m16 = 0;
-+	uint16_t m16 = 0, u16 = 0;
- 	int16_t i16 = 0;
- 
- 	struct option options[] = {
-@@ -142,6 +142,7 @@ int cmd__parse_options(int argc, const char **argv)
- 		OPT_GROUP(""),
- 		OPT_INTEGER('i', "integer", &integer, "get a integer"),
- 		OPT_INTEGER(0, "i16", &i16, "get a 16 bit integer"),
-+		OPT_UNSIGNED(0, "u16", &u16, "get a 16 bit unsigned integer"),
- 		OPT_INTEGER('j', NULL, &integer, "get a integer, too"),
- 		OPT_MAGNITUDE('m', "magnitude", &magnitude, "get a magnitude"),
- 		OPT_MAGNITUDE(0, "m16", &m16, "get a 16 bit magnitude"),
-@@ -215,6 +216,7 @@ int cmd__parse_options(int argc, const char **argv)
- 	show(&expect, &ret, "boolean: %d", boolean);
- 	show(&expect, &ret, "integer: %d", integer);
- 	show(&expect, &ret, "i16: %"PRIdMAX, (intmax_t) i16);
-+	show(&expect, &ret, "u16: %"PRIuMAX, (uintmax_t) u16);
- 	show(&expect, &ret, "magnitude: %lu", magnitude);
- 	show(&expect, &ret, "m16: %"PRIuMAX, (uintmax_t) m16);
- 	show(&expect, &ret, "timestamp: %"PRItime, timestamp);
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 5f503b26cc8..9946e69f586 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -23,6 +23,7 @@ usage: test-tool parse-options <options>
-     -i, --[no-]integer <n>
-                           get a integer
-     --[no-]i16 <n>        get a 16 bit integer
-+    --[no-]u16 <n>        get a 16 bit unsigned integer
-     -j <n>                get a integer, too
-     -m, --magnitude <n>   get a magnitude
-     --m16 <n>             get a 16 bit magnitude
-@@ -139,6 +140,7 @@ cat >expect <<\EOF
- boolean: 2
- integer: 1729
- i16: 0
-+u16: 0
- magnitude: 16384
- m16: 0
- timestamp: 0
-@@ -161,6 +163,7 @@ cat >expect <<\EOF
- boolean: 2
- integer: 1729
- i16: 9000
-+u16: 5432
- magnitude: 16384
- m16: 32768
- timestamp: 0
-@@ -173,7 +176,7 @@ file: prefix/fi.le
- EOF
- 
- test_expect_success 'long options' '
--	test-tool parse-options --boolean --integer 1729 --i16 9000 --magnitude 16k \
-+	test-tool parse-options --boolean --integer 1729 --i16 9000 --u16 5432 --magnitude 16k \
- 		--m16 32k --boolean --string2=321 --verbose --verbose --no-dry-run \
- 		--abbrev=10 --file fi.le --obsolete \
- 		>output 2>output.err &&
-@@ -186,6 +189,7 @@ test_expect_success 'abbreviate to something longer than SHA1 length' '
- 	boolean: 0
- 	integer: 0
- 	i16: 0
-+	u16: 0
- 	magnitude: 0
- 	m16: 0
- 	timestamp: 0
-@@ -262,6 +266,7 @@ cat >expect <<\EOF
- boolean: 1
- integer: 13
- i16: 0
-+u16: 0
- magnitude: 0
- m16: 0
- timestamp: 0
-@@ -287,6 +292,7 @@ cat >expect <<\EOF
- boolean: 0
- integer: 2
- i16: 0
-+u16: 0
- magnitude: 0
- m16: 0
- timestamp: 0
-@@ -356,6 +362,7 @@ Callback: "four", 0
- boolean: 5
- integer: 4
- i16: 0
-+u16: 0
- magnitude: 0
- m16: 0
- timestamp: 0
-@@ -383,6 +390,7 @@ cat >expect <<\EOF
- boolean: 1
- integer: 23
- i16: 0
-+u16: 0
- magnitude: 0
- m16: 0
- timestamp: 0
-@@ -464,6 +472,7 @@ cat >expect <<\EOF
- boolean: 0
- integer: 0
- i16: 0
-+u16: 0
- magnitude: 0
- m16: 0
- timestamp: 0
-@@ -820,4 +829,11 @@ test_expect_success 'm16 limits range' '
- 	test_grep "value 65536 for option .m16. exceeds 65535" err
- '
- 
-+test_expect_success 'u16 limits range' '
-+	test-tool parse-options --u16 65535 >out &&
-+	test_grep "u16: 65535" out &&
-+	test_must_fail test-tool parse-options --u16 65536 2>err &&
-+	test_grep "value 65536 for option .u16. exceeds 65535" err
-+'
-+
- test_done
+ 	.long_name = (l), \
+-	.value = (v), \
++	.value = (v) + BARF_UNLESS_UNSIGNED(*(v)), \
+ 	.precision = sizeof(*v), \
+ 	.argh = N_("n"), \
+ 	.help = (h), \
 
 -- 
 2.49.0.805.g082f7c87e0.dirty
