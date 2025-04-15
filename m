@@ -1,84 +1,82 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288842DFA58
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 18:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A4023F419
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 19:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744741129; cv=none; b=eh8tHgnpnZ887kIvztS1l/Dd26sfH6pFwXjft8A84755nNDMPhOHWuPtVEKcyT3TYSIrfn64d90H9bmG+b44NC7mrchz/SpDsxKPhPhG1+IRfYcb1j9mihEtzdYw6dww/UY6q2vg/5R/bkGgh4FrongY9MRJDMA7PxaYxK21UpQ=
+	t=1744744298; cv=none; b=ntURCIA6/G/hfxAqN/ztZNLpsqLQDQHM4q2kNXGAgYblW44VqX8XkhfyX1Ot7czKXe6x/MRjOJh2xaeb/kzOBGXtUMEragsTb5vFzL0Qi5jCZR0Tu2i8mQwDukXHQoU9/saxr3ZOGpgDfOHPU3v3T+FHglit24n+4sKmXrquEWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744741129; c=relaxed/simple;
-	bh=gWijlPznJYlKzhVh0duu7WV1FbjvFAhkuYlLqRUPTX8=;
+	s=arc-20240116; t=1744744298; c=relaxed/simple;
+	bh=xvnhEbLNaj/emw8ilyEJ/7u/yCGUK0D+BYrCLzk17dk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UipMZOuw+7liwmNw7OnQfTyAAyE2e7bwNWKfBT/ow53uIrQRHOD8KhVnISEcfvIvFFjgjSOK+Ga+6JOc93UpIQ6R3idIOyeple4swgEWqPuzVx6AMxdEZcvKqpfbPv+JiDft7IkcUGOcG8Vaqf/UvoL7IkHkHncV6LmWP62qgAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HKfqnUo0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bQMG6thh; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=stSf6DiIjUFBZyJUJ09pRYc4vFc6CHc61vQ2Uj2Or8JnBtawEa9PwvIiiYCrnyloG6qEgxy4XY7Kkue1k3U2FL9qbg5c1Cn3hqrKea353xsdeJDSgPRHGOG1BGnoIMGZZCcb2lO6DNz6BwSU6gKa+vwl5JUGgKJ0bO54ddHCdbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MeoIaowu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hx1HgkBG; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HKfqnUo0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bQMG6thh"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 337F025400E7;
-	Tue, 15 Apr 2025 14:18:45 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 15 Apr 2025 14:18:45 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MeoIaowu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hx1HgkBG"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 15D1E254011D;
+	Tue, 15 Apr 2025 15:11:35 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 15 Apr 2025 15:11:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744741125; x=1744827525; bh=RO4El6ImZ2
-	FSF/gxUozhCpRqYE1qjCousacc12Txn0E=; b=HKfqnUo0fapC56f8G2048la4eT
-	1q1VK2CnqcJIh6dSH1z6xC8K2UnVdD8VhkzcV9+pl4AIfxBwGRL5s5FF2w2NuMlL
-	OHB17bsgUXXxz0s87lxzsNl3EF3CBGYJdZXrhe9hRyUzAfILh/7NFOYlsVrtHQdo
-	hORtrvv6KRsT9FXoV1CI5748DSSKiqc5B2SQX1gvUOf7/QfAGLPg1FbDEsBvELBS
-	q3+kXqJM3rl3y4lN1+XYpZDXxOMceoBmUY4TMyxrT5w4MRo4QY9amrUF1opH5Pve
-	1oLMDu4FPq0ZNkKBLM7r7JdAR4ICDHb4r8xrcxcCRsbazU/m+mFwef53UGtQ==
+	:subject:to:to; s=fm1; t=1744744294; x=1744830694; bh=PDOL8LLqCe
+	FFoAsFwGeAtGGpDx0Pd0ThyC5lzA0H914=; b=MeoIaowui+rjwZhwjsnHPIqlq7
+	TCWx8mixLFWR5VQLNWlMBki5let0Wi93Vw0jQ8rX0+tUJ3ts+l/UQ4UhSX9Owx7H
+	4vQQdqvnj7Cz2Lc1cdNGmS0llip3atCxMTb6HpLx+gdgC1m1feWpASttqgpgSQum
+	jjFrl5Hbgx+ycgot+7UT50GRbf4wxrosSoDTBXWVPypkZJsRYrKThKkeXsY/f+X9
+	oEZYMoNDThy+aJKxHg6iXZzIyP5GqrDg+DFtnznLHDZquhfKV2cbuisqfiBQZ8oI
+	kVgFLH7L9YzwuiK8XBL/ExoRMj4EGnUXIn/7sKPKYM+Og1yebYKS/wPAJc6Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744741125; x=1744827525; bh=RO4El6ImZ2FSF/gxUozhCpRqYE1qjCousac
-	c12Txn0E=; b=bQMG6thhFrteNMMTMcOwARjSzPdxCXHLVu9UhE1LTf2AqsIoYZq
-	IVkSkXPuC/zKyU5VpmBSq8qx+TZmVH/mJoMvcMNf62flJLwQZmo6hItCLCRI9UOS
-	7t+O719UZGd5UQv81h3O4Ep4lByR1pGscMA5i3VY1emp0G3qXsnB1DAMn62k3Kik
-	Re3vrEg+kXoeXusCSatTszSMBgnyi07i59Bxsm0NqB/vc/Eeu7c2n8l3LJi3xgis
-	Lv6QgcYHbmVyf+64vE83gGgRPz0iZ9OVZH61uy5CmwXziHi+6jALiJo6rFHVTmWf
-	uRYE4mSFQU8ntNESwidonME2jjshMuy+hVw==
-X-ME-Sender: <xms:BKP-ZwZ7nIjsUEcQ9OjA5Ojpt6f2VhXbiwxAOtMH_H4HrRYBQtdksw>
-    <xme:BKP-Z7bhpaY0KmvQ2itNwaEE0OZAr1W_V9YzfaIEjPyTXhOyg56gNu2DSorLZqI-v
-    v7Jzk-ywA-mADDB7w>
-X-ME-Received: <xmr:BKP-Z6_2ktx27MKELZbNQmdXJsvB_ZORBxKd6cutB2TFkRxOpIGGKb52g-wml34yF2iS1UFZpcJu7L80It5uOWhfr-NXNb9OKmvr>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdegudelucetufdoteggodetrf
+	1744744294; x=1744830694; bh=PDOL8LLqCeFFoAsFwGeAtGGpDx0Pd0ThyC5
+	lzA0H914=; b=hx1HgkBGHtFmTHuO91xLjQ/Lfy1DSuP/6svAuAlhw+oV5WNrKlg
+	n9b8ceP7339UtDgwOz5g7inP/W8Q+xotLpGF7WE4fpDJfG2i7GRLKNu1PGyLtxp0
+	kSYXZrKmDK7Hlnhj7CYVrx8WlskhFOFXmdje16KcRhMVU7+M/jvVAXx5sh8NEEmM
+	buMikbc01HkdqEmhbPchGeLl0fnWeiou3ofh1eaKyM2B+28H8d6qElCWywXgnPHW
+	1BXwMs5A00fhTTD7wqBgwQDWgNRZLEGxkKerKuPTXmZX6oLg/HnxIIBlUJ1pdD+a
+	fQL12WsoFf2FRuN+JWZZWifauudOQX6br6Q==
+X-ME-Sender: <xms:Zq_-Z38lZtP7QeAuVVW3f8ByNbQnqaXZKUOvDL9tO2KiVjvxDXglBA>
+    <xme:Zq_-ZzstOMN5rtDL5_WGaPlj52hOdB6mnW0GutiCocPf17f7uC8ee_XQMZYeHMGkI
+    cZ-RooBHqoQX_gOzw>
+X-ME-Received: <xmr:Zq_-Z1CcUmshplMMv13FuVDr8EVtvyfss2hSksHFEuZ0sKeJ963mEt1Tnlb5xHoW2JKlU0ZCguKdtsigylAYLMVIQG2KpX2wlfRG>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdegfedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepveellefhgfdugfetgfeuteegvdffvefg
-    veetgfetheegkefhfeeuveeigffhgeeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
-    dpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehm
-    rghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtoh
-    epfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:BKP-Z6qua2SRU8Jce-a9fVlZOgszlwc_vGCYFm0Tj1XKo-cPde9Wmw>
-    <xmx:BKP-Z7rewS1D0qfprGt3dxf6b8lRb4y6OrUZwOhuEirPHdJxWne04Q>
-    <xmx:BKP-Z4SNBcqV6YBHM-tTxhUFSMJHP_PHjRy31UNH3gQTWtdoCkOm-w>
-    <xmx:BKP-Z7pqz2GK05VMqu9EtJycuKVx_EeYD4cbkvQGsn5TNpxE3Dvn1w>
-    <xmx:BaP-Z67ke4UDhu2GVbSzBEY4qJXpPY8yVvuR36WhrUo7IC2i0rqsBSD5>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihse
+    hrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:Zq_-ZzfaP6mLEm2Qx86wJukZfPc7GskLT7UE1AV_JrjJg8qpgY5Uew>
+    <xmx:Zq_-Z8MXNYeDg1X9qLszem5icSkrbuHw52vptBGF35s3qusXatGWYw>
+    <xmx:Zq_-Z1nsnseWuvkDdKdYMDkZ5TCZbEFjXrXhZovW46J251MOzsPEHA>
+    <xmx:Zq_-Z2sprEnRyBEKo0-9pIF_qZTuUHKJOU9u_7CT-UKYSFoLrg6UAg>
+    <xmx:Zq_-ZwIUF32-GfIje1JKLOYLCeXFpu1_7dqrv7PEjywuwKab5nIuzvBG>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Apr 2025 14:18:44 -0400 (EDT)
+ 15 Apr 2025 15:11:33 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 0/5] meson: wire up support for benchmarks
-In-Reply-To: <xmqqplhdo5ji.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	15 Apr 2025 07:36:33 -0700")
-References: <20250331-pks-meson-benchmarks-v1-0-b2ace85616a3@pks.im>
-	<20250414-pks-meson-benchmarks-v2-0-04377080a167@pks.im>
-	<xmqqplhdo5ji.fsf@gitster.g>
-Date: Tue, 15 Apr 2025 11:18:42 -0700
-Message-ID: <xmqq34e9mgot.fsf@gitster.g>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: meson build failure on 'seen'
+In-Reply-To: <c358c9b7-bd83-407f-8abc-17ce9363618e@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Tue, 15 Apr 2025 18:16:02 +0100")
+References: <c358c9b7-bd83-407f-8abc-17ce9363618e@ramsayjones.plus.com>
+Date: Tue, 15 Apr 2025 12:11:32 -0700
+Message-ID: <xmqqy0w1kzob.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,54 +86,12 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> Patrick Steinhardt <ps@pks.im> writes:
->
->> this small patch series implements support for running our benchmarks in
->> "t/perf" via Meson. The series does not aim to replace "t/perf/run",
->> which is more fully-featured and allows running benchmarks against
->> multiple different trees. Instead, this series only allows running the
->> benchmarks against the current tree. Users are thus expected to continue
->> using "t/perf/run" for more advanced usecases.
->>
->> Changes in v2:
->>   - Adapt "aggregate.perl" to use a "/usr/bin/env perl" shebang.
->>   - Link to v1: https://lore.kernel.org/r/20250331-pks-meson-benchmarks-v1-0-b2ace85616a3@pks.im
->>
->> Thanks!
->
->
-> The previous iteration of this series has been kept out of 'seen'
-> for some time and I didn't recall why I did so.  With this iteration
-> merged, all GitHub Actions CI tasks with "meson" in the name are
-> failing, so does "documentation" jobs (which recently acquired
-> "let's make sure meson-based build does the docs fine" substep).
->
-> Can you help seeing where the merge went wrong (yes, I am suspecting
-> that there is some stupid merge mistake there)?
+> It appears that the tip commit 916e0fb7c0 (Merge branch 'ps/meson-build-perf-bench'
+> into seen, 2025-04-14) drops the call to 'find_program()' which sets/defines the
+> 'target_shell' variable.
 
+Ahh, indeed.  This was the mismerge I was looking for.
 
-Just a few test CI runs.
-
-    https://github.com/git/git/actions/runs/14457387669
-
-is with this topic mergecd in (with alleged mismerge).
-
-This one
-
-    https://github.com/git/git/actions/runs/14406901394
-
-is from last week without the earlier iteration of this topic, which
-fails a few meson jobs.
-
-linux-meson job that fails with
-
-meson.build:689:19: ERROR: Command `/usr/bin/git -C /__w/git/git ls-files --deduplicate '*.h' ':!contrib' ':!compat/inet_ntop.c' ':!compat/inet_pton.c' ':!compat/nedmalloc' ':!compat/obstack.*' ':!compat/poll' ':!compat/regex' ':!sha1collisiondetection' ':!sha1dc' ':!t/unit-tests/clar' ':!t/unit-tests/clar' ':!t/t[0-9][0-9][0-9][0-9]*'` failed with status 128.
-
-and
-
-win+Meson test(3) that dies inside Python asyncio both look
-problematic.
-
-Thanks.
+Will adjust the broken merge.  Thanks!
