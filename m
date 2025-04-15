@@ -1,117 +1,234 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5B12DFA36
-	for <git@vger.kernel.org>; Tue, 15 Apr 2025 16:20:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6141187FFA
+	for <git@vger.kernel.org>; Tue, 15 Apr 2025 16:32:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744734060; cv=none; b=WCPV5DYTCgTWsfvPHS4LUivGx5b4ZZx+EOv0OwFMwUBR+y99rb4CaMglj0hpWIAwZ6jz30U4XCvG3oOu3iEvDhIEV1PIy4Uw0ZDt/Elzuum6LgcK3t/n7AHnAoO3vkU9cXNZnDCqQ7oH1YUGqW8BOPQ2pS83TZeXODKm4cTrpJQ=
+	t=1744734758; cv=none; b=BDMibWdEdat1zgz+5PfVlT7krtKKRuGP/OkaxXJulnWf7EXSjdrnCX4PgH4M2DhuiiBFKqTfg034R9PhGMyc9lGYsZ5AQoroYW6QAqVb7FgdyAKkk1FHB9Ij+UP1VyXNFIlnlAgcVgDfMK8Br1CXoPTiXkrYPOWzC4Gou/yIZ+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744734060; c=relaxed/simple;
-	bh=KAvLYVQzkYmsVpL4gpBjyiny9XVzhQDM5FLqM+K1nTA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MQTObjib/5PvtKXDBKBfDpWZrT5POvULyPXj0QZvdov3Fho2wPiVipWjBH/ppIBiUp3B1LX+yDzYbHXMjENvct8oJyJ8JyFVwL8oDQHWIY2l22LPF8zXD/qsDtbu0OJDCaGcdpGKO7v9/1kGaeusNUSTVB0NZqD5L6LVXCS5LKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LPiBnJme; arc=none smtp.client-ip=209.85.167.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744734758; c=relaxed/simple;
+	bh=e+rQRaOjaFg+fLduhEtSZAbj3JKCvpQ2MLgYAVIlVu0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sVBP+mT6vTdZ8KZqy8ST/P2p+lkEuomh4HUGguETKTfSjHMTFf+kfgRsyS3JvOhi5pfxbBL9FQKLSRidGztkI8meMx7yzOBWPsC6ScspUFoozL2gedHzcbSUiZAWNpoJ5Rx+bclT7GLsX+GUM3sWcydDGaWx8pmqhdG+/56USIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tTrIIJNV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H6rgNDDu; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LPiBnJme"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3f8ae3ed8adso3321166b6e.3
-        for <git@vger.kernel.org>; Tue, 15 Apr 2025 09:20:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744734057; x=1745338857; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=dS4IEXlm0TPUDZGtSn346BFymp9qQbAdM25QjaQwtPg=;
-        b=LPiBnJmexUYRZCCxJtRRhkAU+PIlA5mNlP2tx0++OKKsgado7FkiBAae+kSlnX4n+P
-         99hEjGVI/NJN0ElT2O6gR/S6OjgZqrgZ4LTO5YyNT/hgDkVshoyVuGn2zUqjSy3ivdEg
-         I7/K7Jm1jGNtZZqnQhe62cnvwGLpbictrRvGcu17ppIGo03nXv9USb2af6PxFqEnZc9U
-         cN3kVKxF5WcFdhIcV9fV1IfiLubD98AObVuUOJRbEzOxU+WF+kkWZlQBxaYu0CrbWB+k
-         yDGhN8/cD5r6RHB1BlCFfwod7898/EetV9rgmtHuIaBkS/0NnnUoT9dsa2UcGa6a4L+/
-         uvbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744734057; x=1745338857;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dS4IEXlm0TPUDZGtSn346BFymp9qQbAdM25QjaQwtPg=;
-        b=hjaB8o+uV36LZMXQAXf0rIO2UyeJQtMejA+2lS8rggWShpf1RpWEL7E9DqkPweHU4F
-         SwN6jXTbYY7nZvJU3W2Sd4OMMPrFyd61xwBF/BoPtFM7wdbB6uZduR1ZIlmzkaatzMaw
-         ZnRCmjS7gnAtjyHUyH/7eKUNAPkavI0xqA4RKwGKRw9Yj3D82piDAJO+fFZ3ceK5eb2l
-         aLXXdzrGtos2JBaF6U0yameUocxwwAsr2AGYImzMQiBHIVZ5c/iSvC1xft1PjyVkAno3
-         FZYZw7Seh57IeyOjNoCEAAWUB4CSn6i7bQSvnmY+3xL8KSx/krlr45uryCuy/w3J28DJ
-         6vkQ==
-X-Gm-Message-State: AOJu0YwmuhdGsEg4Nzyo6gKWfu3zbBzCQ0id9P3C9orN8rDBuuRHcXbz
-	jO3CGYTIUXcVwx5CWfFDAj0i2SLHLChuAeEcZqbLqKcaxLVllU8ArgjGLSZ6ghr2KfhsZnE/RUz
-	nEJ/n6XXZw9JdL17J/6hjwiqr3nA=
-X-Gm-Gg: ASbGnctGG0PvFFpZKN7mjIqKMW/vumsRI/5PSqfB9k7CXIMigc4zXCJeVdXE6QBlSgJ
-	y7yWC5M3n3CoZ3/Dpy863Je8vJCFe3h+T7LJkhmfe9agcubQGvoufyuhwA/JtLNgN1t0ye6uWd2
-	NHtAepAYIp1WloIe+Gui6ATLvDMx7QZuKSegLGZjRdUjtO09a2h8aUeKc=
-X-Google-Smtp-Source: AGHT+IGiizxEhBeJI+QX2P5y+WL8ReMvmUX4Uci7GRd7/V/SvakCU+0SFqesejVmz5GfShjWR6AJkd1a4JkosCGEWig=
-X-Received: by 2002:a05:6808:17a9:b0:3f9:4bab:da6 with SMTP id
- 5614622812f47-400acaad243mr92726b6e.15.1744734057577; Tue, 15 Apr 2025
- 09:20:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tTrIIJNV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H6rgNDDu"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E890B2540163;
+	Tue, 15 Apr 2025 12:32:35 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 15 Apr 2025 12:32:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1744734755;
+	 x=1744821155; bh=77sck+9ZXUVFjCpm1vJzWn9rKViGxEZohxcY6aohZK4=; b=
+	tTrIIJNVZnw6MPv4Usii0BT7NTriKS/yin6K6PZ5WyAyg2rmTLc3cjK4Sz6aTbmT
+	OdmCuaWYHO5wrgzUf09NresXEuvtlKfX+gcHQBg0sc+x3DdCUK3WWtVTIDw02mrA
+	gAgL0OL+boY1OKiNIeK52J5nManC7vI+/+rXzswZ3ryEbX5/eaFjThmtbWUJkXoJ
+	BTOyFnSM/wp757IPlv9huKVd6ewjhwreZFQ6oQmx5pYU+D1Fn/2wFRKDoWy/dk/S
+	6tbwnlDv7gduC3BXkfObF2m27IBqDDAaVePLIbhhTsbNy6ovuSwMvyDJrQDkAgxx
+	Nlhg0Pd5R4hMY1exiNZC7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744734755; x=
+	1744821155; bh=77sck+9ZXUVFjCpm1vJzWn9rKViGxEZohxcY6aohZK4=; b=H
+	6rgNDDu/gS+7FiQfinjquzkUw1xNEsmOhi58K5fDCmZnXGHNZfwl0HuIpBxuc+U8
+	NiBj2ciDMJwm/BV0p1oJhQm4CG3yZleGVSFRcw1vEGMoh7n15Dp3AzNNjlXe79oB
+	X2rl6iEGOLm6xECVu4Wa4DJCkvhXAnJv9tQFC+OKlIBYBzpSnh5lqxnpB+l9Yx/d
+	LkKF2mca0hJYI1ZEiHrhMwD41VIF56fmjp30mePJ4PugQQhBfZ2lQZ9ws/tsjY/q
+	sWNJXNb/u86xgqRZPwkK0mhvHycFsXEVhUvBbBaprDY5yCrRtm4FrbOe6mMr6uQM
+	0n+4rEunL2+CvGbEhKBPw==
+X-ME-Sender: <xms:I4r-Z2e9yK4kvJBvSqzwP_h0sgeR4dgghozuzWKz8mOHIzgst4nHSg>
+    <xme:I4r-ZwNLjfrEHml36rzTZuJijoHGW5TKqNorp5TjxcI1OYaYZgnndyUK_xjT00P20
+    cKdGJz0-LalRZHAWw>
+X-ME-Received: <xmr:I4r-Z3j6sVcIdpYItE9cbJC-J8DC9lHa4It_LVvw6Zz3myOST6bFgbIYskgaAovbs5hz_bsaMhRytlC9uF7erE1MVvhO7CUiyXjN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdefleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkefotddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekgfdtuedvjeffgfehueefueeghfdt
+    jefhgfekhffhteeiffetheelhedtgfehtdenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhksh
+    drihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:I4r-Zz_hUnltpcAGXp5zPSKkh4vs90cdofzDLXcQrm0LsTS4l-OLAQ>
+    <xmx:I4r-ZytGAKPN-aAOOAL9YozV384nH0sKaJaWMM1EajUMbjiqeoHiGA>
+    <xmx:I4r-Z6EesyCkKZ5O_WFSWvAvRUm_6oZSpHQarqLEK-w_P7cyCvMMyA>
+    <xmx:I4r-ZxNC0iaHkkJyH72g9h1f95NBZ9-Lvb2W9boMi-SRD84uuaVu6A>
+    <xmx:I4r-Z4jWTyhF9qNj_-D0Dyd78GOCMnG-Q7MSaCAwa_CoB6P512zVnim6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Apr 2025 12:32:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 4/4] Documentation: stop depending on Perl to generate
+ command list
+In-Reply-To: <20250415-b4-pks-drop-perl-v1-4-c6addf175858@pks.im> (Patrick
+	Steinhardt's message of "Tue, 15 Apr 2025 11:57:11 +0200")
+References: <20250415-b4-pks-drop-perl-v1-0-c6addf175858@pks.im>
+	<20250415-b4-pks-drop-perl-v1-4-c6addf175858@pks.im>
+Date: Tue, 15 Apr 2025 09:32:33 -0700
+Message-ID: <xmqqmschmllq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAE8aReXOwM8ByyObxrb8NhRMYfK1OB_6B9eOO07mYXMkp_E8EA@mail.gmail.com>
- <39551FA4-855C-4E55-BC2B-F77D9BBCCF6A@gmail.com>
-In-Reply-To: <39551FA4-855C-4E55-BC2B-F77D9BBCCF6A@gmail.com>
-From: mu gsh <yue937@gmail.com>
-Date: Wed, 16 Apr 2025 00:20:46 +0800
-X-Gm-Features: ATxdqUFoN_9P6cGZELbZ4pbGkfbrXJT2SO5nKQsn7-9Kdb0-8di3QXja_yZ55Gw
-Message-ID: <CAE8aReUm2rCR76L2T175Ng5Pir+-G_a4whxiOPhfvNzXSV_d2Q@mail.gmail.com>
-Subject: Re: git merge bug report
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hi!
+Patrick Steinhardt <ps@pks.im> writes:
 
-focus on the feature 2, the two double empty lines, which one is the new one?
-```
-    bugger = "fix: the empty lines blow not the new added lines"
+> The "cmd-list.perl" script is used to extract the list of commands part
+> of a specific category and extracts the description of each command from
+> its respective manpage. The generated output is then included in git(1)
+> to list all Git commands.
+>
+> The script is written in Perl. Refactor it to use shell scripting
+> exclusively so that we can get rid of the mandatory dependency on Perl
+> to build our documentation.
+>
+> The converted script is slower compared to its Perl implementation. But
+> by being careful and not spawning external commands in `format_one ()`
+> we can mitigate the performance hit to a reasonable level:
+>
+>     Benchmark 1: Perl
+>       Time (mean ± σ):      10.3 ms ±   0.2 ms    [User: 7.0 ms, System: 3.3 ms]
+>       Range (min … max):    10.0 ms …  11.1 ms    200 runs
+>
+>     Benchmark 2: Shell
+>       Time (mean ± σ):      74.4 ms ±   0.4 ms    [User: 48.6 ms, System: 24.7 ms]
+>       Range (min … max):    73.1 ms …  75.5 ms    200 runs
+>
+>     Summary
+>       Perl ran
+>         7.23 ± 0.13 times faster than Shell
+>
+> While a sevenfold slowdown is significant, the benefit of not requiring
+> Perl for a fully-functioning Git installation outweighs waiting a couple
+> of milliseconds longer during the build process.
 
+I personally do not feel Perl such a drag but whether it is 10ms vs
+75ms, as long as we won't run the script excessively (and either
+meson or make should be set-up to avoid unnecessary work already), I
+do not think a shell script being slightly slower than a Perl script
+is a big deal.  Thanks for working on this.
 
-class NoMethod:
-    pass
+> diff --git a/Documentation/cmd-list.sh b/Documentation/cmd-list.sh
+> new file mode 100755
+> index 00000000000..fa90781f3c7
+> --- /dev/null
+> +++ b/Documentation/cmd-list.sh
+> @@ -0,0 +1,104 @@
+> +#!/bin/sh
+> +
+> +set -e
+> +
+> +format_one () {
+> +	source_dir="$1"
+> +	command="$2"
+> +	attributes="$3"
+> +
+> +	path="$source_dir/Documentation/$command.adoc"
+> +	if ! test -f "$path"
+> +	then
+> +		echo >&2 "No such file $path"
+> +		exit 1
+> +	fi
+> +
+> +	state=0
+> +	while read line
+> +	do
+> +		case "$state" in
+> +			0)
 
+Style. label and "case" and "esac" align, just like ...
 
-class Product
-```
+> +				case "$line" in
+> +				git*\(*\)|scalar*\(*\))
+> +					mansection="${line##*\(}"
 
-Should the second one be newly added? instead of the first
+... this one.
 
-On Tue, 15 Apr 2025 at 22:13, Lucas Seiki Oshiro
-<lucasseikioshiro@gmail.com> wrote:
->
-> Hi!
->
-> > I would like to report a bug I encountered in Git during a merge
-> > operation. The method from one branch was merged into the wrong class,
-> > despite there being no reported conflict.
->
-> Thanks for your script! I could reproduce this here!
->
-> When two branches changes the same plaintext file, Git tries to merge
-> them based on their contents without taking into account the syntax.
-> It is done using diff algorithms, which you can change using
-> `-X diff-algorithm=<algorithm>`.
->
-> I tried the four algorithms available (minimal, histogram, myers and
-> patience) and all of them produced the same result.
->
-> Sadly, they are not infallible and those mistakes may happen. There
-> are other cases where it can happen. For example, imagine a Python
-> class with only two methods and each branch deletes one of them.
-> After merging, it will leave an empty class definition, which is not
-> allowed in Python (unless you use `pass`). These algorithms are not
-> aware of that, and they'll leave an invalid Python file.
->
-> Also note that they are not exactly wrong. They only do their work
-> naively based on the information they have.
->
-> This way, it's always a good idea to check if the merge went well.
+> +					mansection="${mansection%\)}"
+> +					;;
+> +				NAME)
+> +					state=1;;
+> +				esac
+> +				;;
+
+> +	case "$description" in
+> +		"$command - "*)
+
+Likewise.
+
+> +			text="${description#$command - }"
+> +
+> +			printf "linkgit:%s[%s]::\n\t" "$command" "$mansection"
+> +			case "$attributes" in
+> +				*" deprecated "*)
+
+Ditto.
+
+> +					printf "(deprecated) "
+> +					;;
+> +			esac
+> +			printf "$text.\n\n"
+> +			;;
+> +		*)
+> +			echo >&2 "Description does not match $command: $description"
+> +			exit 1
+> +			;;
+> +	esac
+> +}
+> +
+> +source_dir="$1"
+> +build_dir="$2"
+> +shift 2
+> +
+> +for out in "$@"
+
+Let's omit 'in "$@"' when iterationg over "$@".
+
+> +do
+> +	category="${out#cmds-}"
+> +	category="${category%.adoc}"
+> +	path="$build_dir/$out"
+> +
+> +	while read command command_category attributes
+> +	do
+> +		case "$command" in
+> +		"#"*)
+> +			continue;;
+> +		esac
+> +
+> +		case "$command_category" in
+> +		"$category")
+> +			format_one "$source_dir" "$command" " $attributes ";;
+> +		esac
+> +	done <"$source_dir/command-list.txt" >"$build_dir/$out+"
+> +
+> +	if cmp "$build_dir/$out+" "$build_dir/$out" >/dev/null 2>&1
+> +	then
+> +		rm "$build_dir/$out+"
+> +	else
+> +		mv "$build_dir/$out+" "$build_dir/$out"
+> +	fi
+> +done
+
+OK.
+
