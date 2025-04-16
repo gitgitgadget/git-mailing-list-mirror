@@ -1,215 +1,149 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sg2apc01olkn2044.outbound.protection.outlook.com [40.92.53.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED9323D293
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 12:16:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744805784; cv=none; b=hxIE+j/CLCu9Js4hSFOfh1UG6tkM4gFhyGLThtfkVcVPlKHFPhvxkFlPHRsrkuLnP/jaqKiJk8EveaCEVsTsn3E+04bPEnfC2UWkZp7YXg6/TJOmIVCN9gyrp34rAtNpK4qRwxW/xKe0sT6p4k5NT9sD5Xg6R4J3mcIyXytBs9g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744805784; c=relaxed/simple;
-	bh=5L5rYb4eIwH+w2nJp7AJ/GehpX5c2fyavarqpKE4Uxg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eSW1F4xDdAV9tlUHdp03yl3F78lMOIvYgEiXY5DcweX4z05yYBB/Ns8mNY2+i9scuQ/O7e9P4lnJ0pMp4W3PgsvVLZ3c1OAp2dnKVjxStQSRSBvxP055XVuyJFrftRY57rYRWUxyfEdRU+a5EJJkJCV6wRdC/kCtal+MD3bm7OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=i7htPBeI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J/6Oc2U2; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA8D156230
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 12:47:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.53.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744807625; cv=fail; b=T2kC1QLkhsMJbQ1hTrp8lDYMaISY85TQQRiBUTtDiOgoLvqaFeblmp4KYeBguqQn3fNmIcC2b0/YOxtpzWvcYxqffd1Syix0BJbRhZL7/qef0h9zevfqNvfHGQkyZsqTrv9J/o0x7/vYyqfCSl5jopN3dVTdrgTW6vYNwy5jpK8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744807625; c=relaxed/simple;
+	bh=iSUUbVZ5L6iYv9wLsjHQ9uRz7VWp1uixAw07EeBekS4=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=I6FYNEn27vnC2ZuB2/DixryOyM/56Dqmro55MCvzk8ds4UJ8mhOgvldh26qqg7SgfAQ94pWzJ3rrdytjpsMSzp+sjSp8pAd4mkghbw/L8jwqyMkHH4j/bSPS2KonK28E7JtNOPcfQBeBzrphY7py/oM4f/zlGgk2WQrjVsUUZYw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.jp; spf=pass smtp.mailfrom=outlook.jp; dkim=pass (2048-bit key) header.d=OUTLOOK.JP header.i=@OUTLOOK.JP header.b=G/zFDmdx; arc=fail smtp.client-ip=40.92.53.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i7htPBeI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J/6Oc2U2"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id ADCC41140308;
-	Wed, 16 Apr 2025 08:16:19 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Wed, 16 Apr 2025 08:16:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1744805779;
-	 x=1744892179; bh=Rf2xTNj43DhhWNRi088Bsl2dtKjt1sNWrA4Lr2BSV94=; b=
-	i7htPBeICu7kpqjsKuB46nP9njIKeu4bLl7C3F42tQRrZd/6Y+1IQvCB7kMKR5zI
-	i+vRYp1VbYwZuX3rD/ts6pqf+uH6u/CRd4YBuUOp5uz298lx/l9ms77PUUCQmey1
-	DKa7UZMkquLqTJiOX5S76YU3gDzLhkZivuewq+PWy1iLKK8w0KNtO4pclyLzgeum
-	YRjGEBr7/AZ8xDbdHBzYFvDXevtPSZdsw/ttkwVqvwuJtx7L95v9DUdRbtQgN6od
-	WcgV6oO06bdjBZkojGND5KpQT3hBnKgij6YpWh1EXJftgwRKm3bjnylQkW7DndB2
-	AstBNQd1YcHviU6llviIdw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744805779; x=
-	1744892179; bh=Rf2xTNj43DhhWNRi088Bsl2dtKjt1sNWrA4Lr2BSV94=; b=J
-	/6Oc2U2OEMXN+uwmdY4k8zWOVLS5DWU16BLPAK2fZtLx9fvF/TcjSw/c28S6MY1Y
-	qcVZRJMZwgE13gtgO16p5LECdSx2UWaHP/IuEYuGYqqblmojubuYmh1ev6N2F6qi
-	iQmwFM0P+9KUv4NrNqnhqSiedL2hmdFHzZIuyiYwAByThWHiLBzDz1JZ1oGLo4wX
-	KyIq2d7b5RgUqWMA3+VA9PeXrAydFlMA/a+BD+VrpS+jBeXY5gLbNY9zVL8t0d7V
-	md2SdkjelBNrCgtL6dOTKm0BbfmKpQRsJzgMDowlFTwWHzVttTn/HYSKAYWJ7wEL
-	GQg9q+h+o94mf1N6TZWVA==
-X-ME-Sender: <xms:k5__Z4d5L1Cw6f0bat4NQLIYAQvyUgqO1PYzsmiTkWzS_kzZrctCbg>
-    <xme:k5__Z6Mk0C1RYI-BLIdw0VYOLfTqlnxN7lj7BgXe6vzafDpk8fiuQdOkBRT3Hki-6
-    iXpqda9xn5HgW8a1w>
-X-ME-Received: <xmr:k5__Z5hjLpq5X9zGeOvXwXBbxMAg6Ej9cihlerUvQkUQa4zFW1Dqyk1DSsVUNfbPoZ08s2stTFwk4MolIzzOdfGO1z4aUIPhhv5cRitl2QVb3A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeifeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehj
-    ohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:k5__Z99jPjgDknCBO36cvbO1b5NsU368TFIJ6U8xHN46Hj8Vix65TA>
-    <xmx:k5__Z0ukIrCqQ6G1mVgBde4aaon9wz7NgoNdqGaWggJg2sXIgQ0M6A>
-    <xmx:k5__Z0HyZR7VgtLglLUam1WImFYEiKjbKc4Gf6Az-4RskNC6lqGPBw>
-    <xmx:k5__ZzMdmK3emWn6DcNOMAVuyxdRbsQ_M44teEvLb924vFrRfbGMWQ>
-    <xmx:k5__Z2uhEEiGcAGvGtWFZgGl6kT1jgz1voKwtzERDpHWAcdjqUmD9Qfb>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Apr 2025 08:16:18 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 66fe70dd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 16 Apr 2025 12:16:16 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 16 Apr 2025 14:16:08 +0200
-Subject: [PATCH v2 2/4] request-pull: stop depending on Perl
+	dkim=pass (2048-bit key) header.d=OUTLOOK.JP header.i=@OUTLOOK.JP header.b="G/zFDmdx"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rDgULPfBrkzE/Fi25YE0Tfjy6p3RI0ELX/hlYgt7v39lW2oBLdSiGj18LR2hcucstyKnNsHCZ/kdpFbQJlHWv+jNwW1JjH5TLuoY5D0bEvSvYA6P040ZDcVj40ImFxbqYfaEDP1vgchwRofMKZrm2y/9j2Y3zvWy0MiWVCEWbmz7YZGCNm/sTThMsXzbL7kIF37QS34G517T6caWpkot6R4Ngyu8qYUdKmY2lenz3O33f/8Wn5Tyif+osYGthbANF5OIlRvvMW1r/EtlD97/1MnSEnB/KJHcoZX4YciPwUXTGwlXdGukvaFnqcnJK+fU1XRGo/Bt4rBu3IMQtj/M/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iSUUbVZ5L6iYv9wLsjHQ9uRz7VWp1uixAw07EeBekS4=;
+ b=Oph69dhwkiesfr73XXHxVKYFHbU7j/afuZt9xBJVxgb1Xjs68DnmXM1vvkhYYgqOJgVhr+VWWL1vtLpIwQOn0pwOeBFSIMnSOJGik8JqaRGQX1wgiRnfHKM9TX4dY2bDOkPG4bds7gZkzxjAc+b9cl18e6t1y+mkydK+wo5ZXBoSCa1yWurfLtOenRiBk2HVZmwGWLCmYeMkmuiIvD0S3UShW8eaF5q1NfFKBnsW97a0DDvfOLqrNKQxRyMQnQjjDCXAGWE5muuuN+oFz6FeubzF82aBjGRu7mccl+hw7SUPQyM5pMUbmkuCE+quX1beKlNCptuvgxPrC1dMSxKFFQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=OUTLOOK.JP;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iSUUbVZ5L6iYv9wLsjHQ9uRz7VWp1uixAw07EeBekS4=;
+ b=G/zFDmdxkgPje/G7P46XanFRYTZ7xHODDyfyZyW6TyPTPBDiKE6n9Tu5IMUE8Eap2HEysbqb3P5Y3zI4wKByeQcayT0jajBliR9n15veBQG5LWde4UkXsnv4q2wHXMvb/DPQwOzEBks1tkT5KO7gQXIBteAbm2Qo5ovsyEQg+ygDVgbSlK9UtEk65xt1odh/MOAtdbIxF0yr0lPUH4xyjJexvp24R3k0J9kQ7AePxFLluqsfonqjhCnOI3vZrgbi5ES9YRuJFhzoznFH8cX6xeLrrev4qNJXX4MefeGn+4wbuL68r8g32jsXI5u3gn3AKjzqpvwQfv4jq0OF9k0khg==
+Received: from TYZPR01MB6508.apcprd01.prod.exchangelabs.com
+ (2603:1096:405:b0::6) by TYZPR01MB5056.apcprd01.prod.exchangelabs.com
+ (2603:1096:400:334::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.32; Wed, 16 Apr
+ 2025 12:47:00 +0000
+Received: from TYZPR01MB6508.apcprd01.prod.exchangelabs.com
+ ([fe80::d7f4:4468:be96:7444]) by TYZPR01MB6508.apcprd01.prod.exchangelabs.com
+ ([fe80::d7f4:4468:be96:7444%4]) with mapi id 15.20.8606.029; Wed, 16 Apr 2025
+ 12:46:59 +0000
+From: =?iso-2022-jp?B?GyRCJTIhPCVfJXMlMBsoQiAbJEIlRyU5JS8lSCVDJVcbKEI=?=
+	<iphone16promax@outlook.jp>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject:
+Thread-Index: AQHbrs2edzt6r3sYtEaA7P4knhL5yQ==
+Date: Wed, 16 Apr 2025 12:46:59 +0000
+Message-ID:
+ <TYZPR01MB65085B5965B497F4D19D55D2ACBD2@TYZPR01MB6508.apcprd01.prod.exchangelabs.com>
+Accept-Language: ja-JP, ko-KR, en-US
+Content-Language: ja-JP
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR01MB6508:EE_|TYZPR01MB5056:EE_
+x-ms-office365-filtering-correlation-id: 4b156192-6efe-4f26-c133-08dd7ce4c771
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|8062599003|461199028|8060799006|19110799003|15030799003|37102599003|15080799006|10035399004|3412199025|4302099013|440099028|3430499032|102099032|1602099012;
+x-microsoft-antispam-message-info:
+ =?iso-2022-jp?B?WVhVZ0kzR0xBdmxVKzF2SVp1bXM3b2hBMytVN1Q0N2ZWV3RySXhINTdj?=
+ =?iso-2022-jp?B?L01EMFduNVJkNDRid2dnNm5QcFI0R3N4ZWxCejV2cTh0WFEweXYzbDN0?=
+ =?iso-2022-jp?B?SE91QngxWm80MTB5ODFBQkVRMGNqaG15S0FNOWd3TzNWSkxjRW13d1lu?=
+ =?iso-2022-jp?B?dmhTL0hSc1ROR2RKblVLRnVOcTRMNlZoTmhyblBvdFNRZkJrb3Iwa2dK?=
+ =?iso-2022-jp?B?K3Bwb0dUUWRiYlpWUXFEM0NTKzNpOGk1Z1FpZHoyMW8xUnF6WlFUenhi?=
+ =?iso-2022-jp?B?RzduSTdPT2xtT2twOVFkMURBVDNva2duU0dha0Q3bFo5VUNyZmdKM2Vt?=
+ =?iso-2022-jp?B?bUFzTldQcUhncmhSK1ZxQ1Nlais1RUNGOTZqWGxxOHNBeTJTUDN3cU1w?=
+ =?iso-2022-jp?B?b2czS0laMzJjenFsVXhaajRIMEhBZ0dQSStrdDlsd3IreU1zSmFINHpz?=
+ =?iso-2022-jp?B?WW1zcmtpNis2aWZZTDB3MUY1ZUxWTFgvazVSYUc5M0QwTEtYcGdqUTdl?=
+ =?iso-2022-jp?B?NzZLbGk1cUdsZmkvZjJ5T2owOXhtZ053c1Z2VklEb0R5RXhOdjVRYThv?=
+ =?iso-2022-jp?B?eVcrME5vTlhwY1Z1TlhLa2doM2JNOXMwaEJITFowNVNycTFEbHF2TlR6?=
+ =?iso-2022-jp?B?UURIMXFRVmlDcjIvcUpaZnFabUhLM1Awd2RUOHRaUXRyMmJoUmZ4d2tx?=
+ =?iso-2022-jp?B?T285ckxZTXZ5WUEzMFpqSi9CNDZTSWlTcDgxMkJZK3EwWUs1emNUdWlu?=
+ =?iso-2022-jp?B?WDZNUU5WWGNQWHpnVlRvblMvQ0JlaVR6VjZ2RjdoTnN1SjBEWG5XalJz?=
+ =?iso-2022-jp?B?YWQ4OGt5cnlNbWNGZFJrOE1ZbHN2RHF5Ri9BejNNN0p6Mm16TEZnVGhR?=
+ =?iso-2022-jp?B?eFpJWXYxMGl0WG02c1B5MjY5anhETjJJdWtEZU1ZN1R5aHhCVkJDUXZh?=
+ =?iso-2022-jp?B?WjN0cnZuRlVvZ2ZsL2NQajhxQTMydkhRT3ZwMmlKSVBNZWcvak9pVTdH?=
+ =?iso-2022-jp?B?RDNacnZ0NitWNDNhMHN1dGpEREFCTC91NmoyZWsvUkRCY2o3YjZiQnpt?=
+ =?iso-2022-jp?B?eUo2ZTc0VnBxK2JobndDdXlkN05BYjZHSnBzYThQR3pZdkp5TlNaU0gw?=
+ =?iso-2022-jp?B?MHZDUVNXZmxXVTF2Ujk3UHYyd21FOFdvdkM5a2VseTA1V2J2ZnFobEY3?=
+ =?iso-2022-jp?B?MjdQaHFTaE93MDlTekdFV0s5cGpxQ1pSVDkvcG1CWFQzK2hEZno4d3pu?=
+ =?iso-2022-jp?B?TWx0UkFENE9FcW9aU2NYNEY4VTBHZGVucTYrU3NHdVhpbHEyQmdoS2ls?=
+ =?iso-2022-jp?B?MkVQTHgxaE5reHV6eEtJbEUxU3hoYVFISTc5MEI5UU85Vm1CRk9TOXhL?=
+ =?iso-2022-jp?B?K285UDMrcHVKWDh6ZkpDK3JMTmFsbmJDeHRIY0J2a2Y1YU9xZzNRVFFr?=
+ =?iso-2022-jp?B?ZFh2YjhIOVlRM25OSWJ5VWhtMHpzZXZNb1NvSGxCQWxnYitYdmsvTHoz?=
+ =?iso-2022-jp?B?aGhjQTFpVkFBNXA3Y2ltVG9YT1R5WUJuc3FESWo3WUtkMjU2bUJvaTB0?=
+ =?iso-2022-jp?B?UmJEb0F2WVMyVDRFa3ZHZDJCUVlzNU0zWDdIRWtwOTZLNSt3ODRMOXgw?=
+ =?iso-2022-jp?B?ZUZzZlhtT3RCSDRCa2N3SkFKZGthOFlNVWVhdTNxZGRlM0Z5MnVxL0FF?=
+ =?iso-2022-jp?B?aVdna2tqRGt1UlRCTEpVQkJxZFhqZWM5NWlFWlozcFMzQnVPMllqOU9x?=
+ =?iso-2022-jp?B?eEJra0RJWS9BRXBFRDliLzlQd2hSOVpHL2NmNm40S09JRHJEY0c5azY3?=
+ =?iso-2022-jp?B?bTk2T1dkVnBMZXVJUm1rS1BSMUg=?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-2022-jp?B?Z1I3d0E1elZLOFVaYWVzUFFhN3paRmVuaUFOcnYzdmNFeWNEYWEvSCti?=
+ =?iso-2022-jp?B?M0ZhVnZRcWVFa2ZIMTE0MDhoNVF0OHdqZTZwQW1uOVUyOTExYW5UWUQx?=
+ =?iso-2022-jp?B?a2dXNU5DZDZuUHlGTXVFYXJPNVFtSzA1SzJLQjNHbDFyWnI3ODVvQVpy?=
+ =?iso-2022-jp?B?ZWVRYUpreVZzdmg3RXJzSE4rUlF0bFI5b283NHFLZm03TjdpTlIrbTNx?=
+ =?iso-2022-jp?B?MFM0RTc2TGpGOGNuWStSRllheWJLNUgzRHYvcTNMQkNWN0ZVZ1paOUFu?=
+ =?iso-2022-jp?B?dWZVeG9zYXc0ZmtqaE9RRk82WXp3NnJ5NEdzTFJYckwvNnpkMUt3b21T?=
+ =?iso-2022-jp?B?dHhIU3g2WjJocVRmNnlFY1ZRWm81bEVSek96T3dXS0V3Z2dLS0Y4UjNo?=
+ =?iso-2022-jp?B?bkFwNFhuNkRRdTNjTzAva0NOMEdlbGk0SXZTSFZiV2ZUUmNRUEVYamNk?=
+ =?iso-2022-jp?B?dWtnR0UybW03UmVQVldhb3JTbDBsTzJYZy80M1NDcklHVnVHWnpuSjc1?=
+ =?iso-2022-jp?B?S3VxZ2paREpoc1BoMnd6d3I0SE02cVZDTVgvT3NKTHV4dDd2SEQ4cnFP?=
+ =?iso-2022-jp?B?ajY0cmRFWDFuclNiQUZmWC9SblI0VnNma2RQQXdKRGlzM1VCOG5uUGx1?=
+ =?iso-2022-jp?B?WWZGYUYrZHJrc3dVeDNnTkRKYThheDF3NkRNRm8zcmpHNzJJcmM5enk1?=
+ =?iso-2022-jp?B?WElET2dzazJKeksrU1I2b3BEYjliMUZUM2xnRjVEcEhlY3hNQ3M0ZmNh?=
+ =?iso-2022-jp?B?MzZNUG1VY3dJQk1jdmR1ZVVaZUpuVU45aUM1UEs2YlNPVGtkUVZuM0dv?=
+ =?iso-2022-jp?B?anRyY2djc2Vub3doQzZqN2ZkMFh3dnMrR3F4TkxqWTdqMmRXY05nTE9t?=
+ =?iso-2022-jp?B?K3RGZ2VBRndybW9EZW9Tbzh2YjZoQzZaWkRwaEk4RHR5TnJzN09ab3Rw?=
+ =?iso-2022-jp?B?ZHloUjhLTm5vLzFnZ2E4OFpiVjNrb1VNaytNdjQzVi9wMTRobGg0NUFF?=
+ =?iso-2022-jp?B?dkJUTXgxNWV5T2k2YWQ1dDNtbEVsRkdXMk1jeEU5MVJSN0FSQVdBT093?=
+ =?iso-2022-jp?B?dGVuK1FHRnZxZWdVc1B5Q3hrVmt2NG1MdURoTUZOVHhuZ3ZWNjdHSFRz?=
+ =?iso-2022-jp?B?a2t5YVJuYnluZXh0YVFXR1pZRlBEZkpyYUVHbVNFWFJ3MlpxZVk4OCsw?=
+ =?iso-2022-jp?B?TUZDQXRGZGN2RW1uQ1RpUDk2d3YwaE1TU3d1VE1hdHMwM2RLOW5pa0lv?=
+ =?iso-2022-jp?B?T3pXcVdURE1VQ1FTRkVNTllsVzBtZU4xZ2NvZUhhNVlRc0s2OTZqekg5?=
+ =?iso-2022-jp?B?OU0xd0t5YlVmZU16bHB0c1IrN2c4clA3ZzJNY0VCaVJzNElkSFhlZUsw?=
+ =?iso-2022-jp?B?Mmwra0hFOVJuUnduRFdBM0NWMkNLVmZyZFM5Y1dzM3FXM0YraGZRc2NZ?=
+ =?iso-2022-jp?B?NHV5OGlNZ0tGMkhvc0FxeDloOW9oa0wxRHA4aHNNTUlxYWc2SldqeStI?=
+ =?iso-2022-jp?B?elFIeitMdXRTNnh0aGs0d1VOUTVPbkc1QWlLWGcyT0NadGIxck9NUkJp?=
+ =?iso-2022-jp?B?QVFtL1h0MHFIYmZmc1dOam1aZHJEa2U4STFhcXZXMXlsTjlwMkpYWUN4?=
+ =?iso-2022-jp?B?TWVYM1pQWENmMkZDbUJwa2ZFZllZNklzUEh0d1lVMVYvbENjYk56cmhs?=
+ =?iso-2022-jp?B?b1pVS2pDUHE2VFBMZmgvYjV3TkNHcnRTMHQweXBxUFg0eFFuM1pnVUFj?=
+ =?iso-2022-jp?B?SUJVd21xOXcyaGgycUZURE52VnFXYkdwS3JSa2NEdXZ1MUkxVmdPaW5E?=
+ =?iso-2022-jp?B?OU0xWjdZS04wYnd1YWpFS3cvenBMbFg3bXNNWU90OUZtUXlKaGJ4MVRm?=
+ =?iso-2022-jp?B?Z1phdytCM2VkTFhKRWtJUndQNm5VPQ==?=
+Content-Type: text/plain; charset="iso-2022-jp"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250416-b4-pks-drop-perl-v2-2-bdd0492e9498@pks.im>
-References: <20250416-b4-pks-drop-perl-v2-0-bdd0492e9498@pks.im>
-In-Reply-To: <20250416-b4-pks-drop-perl-v2-0-bdd0492e9498@pks.im>
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
- Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.2
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-b4c57.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR01MB6508.apcprd01.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4b156192-6efe-4f26-c133-08dd7ce4c771
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Apr 2025 12:46:59.6938
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR01MB5056
 
-While git-request-pull(1) is written as a shell script, for it to
-function we depend on Perl being available. The script gets installed
-unconditionally though, regardless of whether or not Perl is even
-available on the system. When it's not available, the `@PERL_PATH@`
-variable may be substituted with a nonexistent executable path and thus
-cause the script to fail.
-
-Refactor the script so that it does not depend on Perl at all anymore.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- git-request-pull.sh     | 74 ++++++++++++++++++++++++++-----------------------
- t/t5150-request-pull.sh |  6 ----
- 2 files changed, 40 insertions(+), 40 deletions(-)
-
-diff --git a/git-request-pull.sh b/git-request-pull.sh
-index 775ba8ea11a..6a7b7936784 100755
---- a/git-request-pull.sh
-+++ b/git-request-pull.sh
-@@ -78,41 +78,47 @@ fi
- merge_base=$(git merge-base $baserev $headrev) ||
- die "fatal: No commits in common between $base and $head"
- 
--# $head is the refname from the command line.
--# Find a ref with the same name as $head that exists at the remote
-+find_matching_ref () {
-+	while read sha1 ref
-+	do
-+		case "$ref" in
-+		*"^"?*)
-+			ref="${ref%"^"*}"
-+			deref=true
-+			;;
-+		*)
-+			deref=
-+			;;
-+		esac
-+
-+		if test "$sha1" = "${remote:-HEAD}"
-+		then
-+			echo "$sha1 $sha1"
-+			break
-+		fi
-+
-+		case "$ref" in
-+		"${remote:-HEAD}"|*"/${remote:-HEAD}")
-+			if test -z "$deref"
-+			then
-+				# Remember the matching unpeeled object on the
-+				# remote side.
-+				remote_sha1="$sha1"
-+			fi
-+
-+			if test "$sha1" = "$headrev"
-+			then
-+				echo "${remote_sha1:-$headrev} $ref"
-+				break
-+			fi
-+			;;
-+		esac
-+	done
-+}
-+
-+# Find a ref with the same name as $remote that exists at the remote
- # and points to the same commit as the local object.
--find_matching_ref='
--	my ($head,$headrev) = (@ARGV);
--	my $pattern = qr{/\Q$head\E$};
--	my ($remote_sha1, $found);
--
--	while (<STDIN>) {
--		chomp;
--		my ($sha1, $ref, $deref) = /^(\S+)\s+([^^]+)(\S*)$/;
--
--		if ($sha1 eq $head) {
--			$found = $remote_sha1 = $sha1;
--			break;
--		}
--
--		if ($ref eq $head || $ref =~ $pattern) {
--			if ($deref eq "") {
--				# Remember the matching object on the remote side
--				$remote_sha1 = $sha1;
--			}
--			if ($sha1 eq $headrev) {
--				$found = $ref;
--				break;
--			}
--		}
--	}
--	if ($found) {
--		$remote_sha1 = $headrev if ! defined $remote_sha1;
--		print "$remote_sha1 $found\n";
--	}
--'
--
--set fnord $(git ls-remote "$url" | @PERL_PATH@ -e "$find_matching_ref" "${remote:-HEAD}" "$headrev")
-+set fnord $(git ls-remote "$url" | find_matching_ref)
- remote_sha1=$2
- ref=$3
- 
-diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
-index cb67bac1c47..270ce6ea487 100755
---- a/t/t5150-request-pull.sh
-+++ b/t/t5150-request-pull.sh
-@@ -7,12 +7,6 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
- 
--if ! test_have_prereq PERL
--then
--	skip_all='skipping request-pull tests, perl not available'
--	test_done
--fi
--
- test_expect_success 'setup' '
- 
- 	git init --bare upstream.git &&
-
--- 
-2.49.0.805.g082f7c87e0.dirty
-
+Microsoft To Do =1B$B$N6&M-%j%9%H=1B(B "=1B$BL5Bj$N%j%9%H=1B(B (2)" =1B$B$K=
+;22C$7$F$/$@$5$$!#=1B(B=0A=
+https://to-do.microsoft.com/sharing?InvitationToken=3D1oI_7iP9huTb6DL2JT_z5=
+gm8yi4UAYPtNvCYHZrVheMgLbtUkFuxo8UDq4DnBxkKo=0A=
