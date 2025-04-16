@@ -1,38 +1,38 @@
 Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAA924A067
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 23:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4F324BD00
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 23:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744845563; cv=none; b=GTunteb/4zLAsAy8nXaMJ3GPk2NtHY1N/ucjXVofO8krdD9HT2H0ROW5HNikyCD9V3qXv4l2A/YKDEapQhhTpMFYO/mAVZ05CdogUvvdZK/p71yVZfloP7NooFiGN8NCwMrqSqzI4MOZjVchZ2yEieKRasMWr3ImjP1d2sMLX14=
+	t=1744845569; cv=none; b=CYi5H2aLOOdG7DSwF0nH05g8kRtt9op2pR4eL7dOPfzQeNbgEWzRqrs6feB2bgsd1g7HS7DW3J91bilIcQYlDxP6RVxkyCKvAOnHWfqbbQS7q3aJ0+7hHLfxow8t6XbX1n8gyWBnLMxX6AQuUC3o0KCOmhvR3vHAewgdqLsZ51s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744845563; c=relaxed/simple;
-	bh=4oZtVPkKwwvl4/kG3Pcwo/gIn6elwSpnxPM52qbEXxg=;
+	s=arc-20240116; t=1744845569; c=relaxed/simple;
+	bh=bW/j7rKgYhirA3eLLuJkFjLSgCAypFp8g5mp1rmzIgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JPk7842m+jBOlnkaedhzCtwNN1lVRG8rsyX9gziweqt8WEE8bfih5axgkiBTVNiyjGgFOgtPpDKd8X2d9derEgJ++YDMvaNXXrRlFhWEGgVA9G3VMwweMGYRRBnm/g7LChWY38d85WeaVgOBY6eZAJVIartk8OYvlsIyV43Li4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=ExwAMtB8; arc=none smtp.client-ip=84.93.230.244
+	 MIME-Version; b=b454+MBvwdycoKz9jrSUZHZ6/fl54dbPXpyokzOMvCKKJr8l+bmLxcXAnJkmNsRviO+qajRvqL2qk6tFcLuMcLCeRO1uq5XgNdG1928R9Wpl70dGLLD2y7LNskSBkKELdEoXLKcYI8JOqR5GXQQf5iFVGJ3wLrYLcBUIOJbTgso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=CrnPyyTL; arc=none smtp.client-ip=84.93.230.244
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="ExwAMtB8"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="CrnPyyTL"
 Received: from localhost.localdomain ([80.189.83.109])
 	by smtp with ESMTPA
-	id 5C1quLy9hjZe55C2Ku8KPD; Thu, 17 Apr 2025 00:19:20 +0100
+	id 5C1quLy9hjZe55C2Qu8KPI; Thu, 17 Apr 2025 00:19:26 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1744845560; bh=mnSwRgfsuqwJWe3cxnQyOOlcRFjXhLi55yE0/tQoN7w=;
+	t=1744845566; bh=3n50cZYJlZz6WMT7x1eU8mzOm0zp4CHQZUs4o4EFlfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ExwAMtB8v2Wf0tShyXsVEaLOYN3KCVIDVQrVRsefn20Z8/rdoFa5cawzVygSV2mXt
-	 9ROdoRDXTcHOTm9/U/XS5LhQ2v4KyX3mvcoWEJpfY02yfvw8buN824RGe+RY9YcMH4
-	 iLvYoRGNuyfg5dVmqzOSm9N/IDRm+4f9yqnob9lPgnihvSOw45cjWXtRk4Pzohjs3w
-	 rni+uA25uRQvaRGOvAr7q3UCB9ornCgJQXG+2rbq0t9ONUUrzokwNCRMbrNRWPvHqS
-	 eIR0kAhzi9IenYCBuWglhJ33IVtG1FHGuv4T7rMgAEDgMOd4aDN2puJK1T5GtpJZq5
-	 5tTbgEXrBpjRw==
+	b=CrnPyyTLbvdMafIMMEh7zeQKiKAmcH6/Ohr9EZ7VFfaQP+toXUeInvWVh4boh27L5
+	 gi5p1oHnFhHZ8OsIwXIjddF08uStgnU9gRDIuUpClboLhzkG1LEHNIr5q9tgSEDRKw
+	 4Gbg3M1PpEZv3+4/jMnVNnx5J8pldCZLavUYJnaqXFLRzsDGhf/a6WDK+1IQVX2DMT
+	 sX6WpiGx3RSc6bU7nbAWmv7nxUgn+9+s+0CWMc5tJpdpRavY6my0tTTfCIHWa8xqOd
+	 y4z1Eut/LvQKrXMWqrXEmQ6vcLsFmp5GBUA5wX4CbbdL6YKE7EUIxLIezaS5u346Kl
+	 rokYhIe8E5Avg==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=UuDANPwB c=1 sm=1 tr=0 ts=68003af8
+X-CNFS-Analysis: v=2.4 cv=UuDANPwB c=1 sm=1 tr=0 ts=68003afe
  a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17 a=EBOSESyhAAAA:8
- a=UssqkuoP40Gt3Q7oBg4A:9 a=yJM6EZoI5SlJf8ks9Ge_:22
+ a=Vy2chUuRFShQgWdV_nEA:9 a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
 From: Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: GIT Mailing-list <git@vger.kernel.org>
@@ -40,9 +40,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Adam Dinwoodie <git@dinwoodie.org>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v3 02/13] Makefile: only set some BASIC_CFLAGS when RUNTIME_PREFIX is set
-Date: Thu, 17 Apr 2025 00:18:23 +0100
-Message-ID: <20250416231835.2492562-3-ramsay@ramsayjones.plus.com>
+Subject: [PATCH v3 03/13] meson.build: only set build variables for non-default values
+Date: Thu, 17 Apr 2025 00:18:24 +0100
+Message-ID: <20250416231835.2492562-4-ramsay@ramsayjones.plus.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250416231835.2492562-1-ramsay@ramsayjones.plus.com>
 References: <cover.1743859985.git.ramsay@ramsayjones.plus.com>
@@ -54,89 +54,102 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfBVAVUe9R6cm6rFnbT9u7nSxogkiJ40lTbm9o+kpyDckxMfCDC5vItASLRzL+OO0oCkocv1ipB3MIjvviV1J49LUC+m3XcJvJTDkyKD7JKg+sZ3JrFQG
- MeUXSjNCYq5mZX7usnmHuEBpvlARGSExajiPCsSlrFX1lR8GBA81p21dyviKrJoaKCRX/M1KsEm2UahSFIDv1IGnZfurqggczNw=
+X-CMAE-Envelope: MS4xfArNOIIO7kvRz8Upkmr4KdGpI3AELEIoaaG+9qPBlbiub28fQICX8Mo3mMlGtVe26wLQGQb6niPs/d0aXIi6BljStI+SD6zAUWVml+H5BhEDZ0g0pPV0
+ vFrYRkIhLCDU59Vz3ca7dqw6du83rLfr89IKgg1V0LAHpSH5krCFv59WNiMUX8q1FEqtincBiAo7KoplbR/dzNDOOLe3+McR3K0=
 
-Several build variables only have any meaning when the RUNTIME_PREFIX
-variable has been set. In particular, the following build variables are
-otherwise ignored:
+Some preprocessor -Defines have defaults set in the source code when
+they have not been provided to the C compiler. In this case, there is
+no need to pass them on the command-line, unless the build requires a
+non-standard value.
 
-    HAVE_BSD_KERN_PROC_SYSCTL
-    PROCFS_EXECUTABLE_PATH
-    HAVE_NS_GET_EXECUTABLE_PATH
-    HAVE_ZOS_GET_EXECUTABLE_PATH
-    HAVE_WPGMPTR
+The build variables for DEFAULT_EDITOR and DEFAULT_PAGER have appropriate
+defaults ('vi' and 'less') set in the code. Add the preprocessor -Defines
+to the 'libgit_c_args' only if the values set with the corresponding
+'options' are different to these standard values.
 
-Make setting BASIC_CFLAGS, for each of these variables, conditional on
-the RUNTIME_PREFIX being defined.
+Also, the 'git-var' documentation contains some conditional text which
+documents the chosen compiled in value, which would not read well for
+the standard values. Similar to the above, only add the corresponding
+'-a' attribute arguments to the 'asciidoc_common_options' variable, if
+the values set in the 'options' are different to these standard values.
 
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- Makefile | 38 +++++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+ Documentation/meson.build | 20 ++++++++++++++++++++
+ meson.build               | 13 +++++++++++--
+ 2 files changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 7315507381..818dde32a9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2179,10 +2179,6 @@ ifdef HAVE_BSD_SYSCTL
- 	BASIC_CFLAGS += -DHAVE_BSD_SYSCTL
- endif
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index 594546d68b..1642b6e2a3 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -242,6 +242,16 @@ if docs_backend == 'asciidoc'
+     '--attribute=build_dir=' + meson.current_build_dir(),
+   ]
  
--ifdef HAVE_BSD_KERN_PROC_SYSCTL
--	BASIC_CFLAGS += -DHAVE_BSD_KERN_PROC_SYSCTL
--endif
--
- ifdef HAVE_GETDELIM
- 	BASIC_CFLAGS += -DHAVE_GETDELIM
- endif
-@@ -2213,25 +2209,33 @@ ifneq ($(findstring openssl,$(CSPRNG_METHOD)),)
- 	EXTLIBS += -lcrypto -lssl
- endif
- 
--ifneq ($(PROCFS_EXECUTABLE_PATH),)
--	procfs_executable_path_SQ = $(subst ','\'',$(PROCFS_EXECUTABLE_PATH))
--	BASIC_CFLAGS += '-DPROCFS_EXECUTABLE_PATH="$(procfs_executable_path_SQ)"'
--endif
--
- ifndef HAVE_PLATFORM_PROCINFO
- 	COMPAT_OBJS += compat/stub/procinfo.o
- endif
- 
--ifdef HAVE_NS_GET_EXECUTABLE_PATH
--	BASIC_CFLAGS += -DHAVE_NS_GET_EXECUTABLE_PATH
--endif
-+ifdef RUNTIME_PREFIX
- 
--ifdef HAVE_ZOS_GET_EXECUTABLE_PATH
--        BASIC_CFLAGS += -DHAVE_ZOS_GET_EXECUTABLE_PATH
--endif
-+        ifdef HAVE_BSD_KERN_PROC_SYSCTL
-+		BASIC_CFLAGS += -DHAVE_BSD_KERN_PROC_SYSCTL
-+        endif
++  pager_opt = get_option('default_pager')
++  if pager_opt != '' and pager_opt != 'less'
++    asciidoc_common_options += '-agit-default-pager=' + pager_opt
++  endif
 +
-+        ifneq ($(PROCFS_EXECUTABLE_PATH),)
-+		pep_SQ = $(subst ','\'',$(PROCFS_EXECUTABLE_PATH))
-+		BASIC_CFLAGS += '-DPROCFS_EXECUTABLE_PATH="$(pep_SQ)"'
-+        endif
++  editor_opt = get_option('default_editor')
++  if editor_opt != '' and editor_opt != 'vi'
++    asciidoc_common_options += '-agit-default-editor=' + editor_opt
++  endif
 +
-+        ifdef HAVE_NS_GET_EXECUTABLE_PATH
-+		BASIC_CFLAGS += -DHAVE_NS_GET_EXECUTABLE_PATH
-+        endif
-+
-+        ifdef HAVE_ZOS_GET_EXECUTABLE_PATH
-+		BASIC_CFLAGS += -DHAVE_ZOS_GET_EXECUTABLE_PATH
-+        endif
-+
-+        ifdef HAVE_WPGMPTR
-+		BASIC_CFLAGS += -DHAVE_WPGMPTR
-+        endif
+   documentation_deps = [
+     asciidoc_conf,
+   ]
+@@ -279,6 +289,16 @@ elif docs_backend == 'asciidoctor'
+     '--require', 'asciidoctor-extensions',
+   ]
  
--ifdef HAVE_WPGMPTR
--	BASIC_CFLAGS += -DHAVE_WPGMPTR
- endif
++  pager_opt = get_option('default_pager')
++  if pager_opt != '' and pager_opt != 'less'
++    asciidoc_common_options += '-agit-default-pager=' + pager_opt
++  endif
++
++  editor_opt = get_option('default_editor')
++  if editor_opt != '' and editor_opt != 'vi'
++    asciidoc_common_options += '-agit-default-editor=' + editor_opt
++  endif
++
+   documentation_deps = [
+     asciidoctor_extensions,
+   ]
+diff --git a/meson.build b/meson.build
+index 88a29fd043..efd0bd3319 100644
+--- a/meson.build
++++ b/meson.build
+@@ -693,10 +693,8 @@ endif
+ # These variables are used for building libgit.a.
+ libgit_c_args = [
+   '-DBINDIR="' + get_option('bindir') + '"',
+-  '-DDEFAULT_EDITOR="' + get_option('default_editor') + '"',
+   '-DDEFAULT_GIT_TEMPLATE_DIR="' + get_option('datadir') / 'git-core/templates' + '"',
+   '-DDEFAULT_HELP_FORMAT="' + get_option('default_help_format') + '"',
+-  '-DDEFAULT_PAGER="' + get_option('default_pager') + '"',
+   '-DETC_GITATTRIBUTES="' + get_option('gitattributes') + '"',
+   '-DETC_GITCONFIG="' + get_option('gitconfig') + '"',
+   '-DFALLBACK_RUNTIME_PREFIX="' + get_option('prefix') + '"',
+@@ -708,6 +706,17 @@ libgit_c_args = [
+   '-DPAGER_ENV="' + get_option('pager_environment') + '"',
+   '-DSHELL_PATH="' + fs.as_posix(shell.full_path()) + '"',
+ ]
++
++editor_opt = get_option('default_editor')
++if editor_opt != '' and editor_opt != 'vi'
++  libgit_c_args += '-DDEFAULT_EDITOR="' + editor_opt + '"'
++endif
++
++pager_opt = get_option('default_pager')
++if pager_opt != '' and pager_opt != 'less'
++  libgit_c_args += '-DDEFAULT_PAGER="' + pager_opt + '"'
++endif
++
+ libgit_include_directories = [ '.' ]
+ libgit_dependencies = [ ]
  
- ifdef FILENO_IS_A_MACRO
 -- 
 2.49.0
 
