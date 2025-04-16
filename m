@@ -1,125 +1,137 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3706CC8FE
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 15:30:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EEB2080FF
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 15:42:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744817456; cv=none; b=CGi4ldvb2FsU1db6c14FqOp8xaSpBClQWXKnuUmaD7zzHWdeHQy6q9hlIjRr9YlAzypRRaAXg9rAFFP+051EcDWpmxK8WKWD8s23z9zExlFO/7/f/2EqzSf6904P/tVBg3hM+/4ZADln0F6nD5C+4WQ7OwQqJBvuJRbQaPH6Eac=
+	t=1744818140; cv=none; b=D5XrvZ5yz0xisYinndqo46klQIZpPPf16/cMkETPrizQBtLClhMytPDXIym3/cb62dSaCi9cRA4ZecWkqnnkBNO4nydKtAHl9Civ0+MT31nQD9uDIObmJ7GOotVwUkE3ekOXSjbAk0TFBRXT7QQX3TFb7E36lMlzn41oeGPKJxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744817456; c=relaxed/simple;
-	bh=VbotuLxvPLMhsZ74HaVhP9NPl+2g0ogIZ8465mPetns=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HP0suf3Eu1jpDQQrS+UJCWlsWP7n3pxz2bRqyQuehan0v+KksoYintvDf0Xz4rMQx1JcLY+o9diERVGQfmMCzFCf88jQqKN+WI2AdVzdol9BtySAdZZ3W4q0EWzNqsN7qAILteCfcTYc73cw+wzMdYQ7AnHcxXsFBrG/RyjIWpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k4MFvEzs; arc=none smtp.client-ip=209.85.128.172
+	s=arc-20240116; t=1744818140; c=relaxed/simple;
+	bh=bM7Yb3jrg44NktJQsxFut7ncAWwkZShasE88GpWV900=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=fsqnGLaT+29W0PltummVa1O8vnDg3Jn1uS0f9bOqqgzBRp36cjUJ0mhmpUGnm5vLwVWDF1HtLcE7Fnrig5Xw0zTXuOUUVB9Ux5sIHQ3EZN6aKRO9JtG/O8TwwHeCpk5fRw8FA9VzX/RPe6TDA1U63/SEsd3cisidJ2+qdP/1qIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bKVblws8; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k4MFvEzs"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-7040ac93c29so71592437b3.3
-        for <git@vger.kernel.org>; Wed, 16 Apr 2025 08:30:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bKVblws8"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-38f2f391864so4204150f8f.3
+        for <git@vger.kernel.org>; Wed, 16 Apr 2025 08:42:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744817453; x=1745422253; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=h1DgY1u7m5cHuRTRIJQF3rP8IowcGxcJ0xIt9RKMN6U=;
-        b=k4MFvEzsNqKUhWhqZHzRcXTcK3bVcPYlcfULA6C9IWa6I82DWIlRuYH8+Lc1CBRg3f
-         eQ39gSC6B7Gcd0QdKZkE9QazsUpX0SeLmfRbyHMZR7g/pgW3Rcy6YakNU5Q3LAkmoh2X
-         ZkjYD9EAtquLte37MpI3EXVAX9qbPNNcgNdg4O1rzyofRBl+TjV60/Gkkfby1OgD/3X7
-         vetc6w3skE524g1PsNb3tpafm0UvqHGkLonX0ZpQykme/bF+3epwRwaW18n8UmCg5/HN
-         Yc19rdUarcJ5dMeEDvDYus9jqAflxJyHgMvKfokuZvIovmA6GITrOCK2PoJvRmFnfLu2
-         6dEQ==
+        d=gmail.com; s=20230601; t=1744818137; x=1745422937; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6ETDol7ZTecKVzOib+zYe62HXO/MrPWpir2telI8JtQ=;
+        b=bKVblws8imMg3+T9lLGlR10CRqq6BihfdE0KAvmtR76z8hvfNGU3ObcNZy/T15Qp/Z
+         d+QcsXjvK1C1ASLyI08KnVvDiuSuskvRLL4wDBdIH3dNM+MvMSJGaKT03eF46urHJpw+
+         x8SaqwhB77dQVzHBJ/QmfYpigOEm/wby8A5BqW+xqOiPfcMZ4gy8bsKAHYz9F6+fyolS
+         +zyhSVmJOatToeblD1luaj6o/Py8vL3uyyX0/p90DdJ1+DAGVTbl1GS2ON4CxEpNNIBT
+         3X9UGkfJVEFGlSI9DC9sQIaXTWV+bfI9iju1P9anG+ZCYpLzg1LUnBy1FZ/za0SNviVe
+         sT7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744817453; x=1745422253;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h1DgY1u7m5cHuRTRIJQF3rP8IowcGxcJ0xIt9RKMN6U=;
-        b=pzF4/ykoq+0FtXgGpmu8VaO9bNBS7HeZ0XGyAT2bLl9lbDjUVU6TeUGz+z2OEB5b8w
-         7QDgytWf9q0WQyi2u4TNW53aNccODsdrr4CphFRUUaWHHfccG5m6rx01vYdRz7Y4R8M/
-         66phWMVOpxBNfLxh7/FqObPJmwN5mXFWM53k3l79vfNXtsTggZdnLH+UuT/vxdoID6ON
-         H4EosbMeG/ws2Ua0jE9nDKF1NX1dfy2nmdK+dwwNe3/kHV4OLgixsfXiofIBEtHsjjwr
-         w0W+S39KTk+udMVvJTTeItrKorH64uYf1s20VKIEHwFaH4xSQjDX5e54EEfd8pdB60j8
-         RXYw==
-X-Forwarded-Encrypted: i=1; AJvYcCX2ry8c+Boq4BO9kVoiSkpc7/i5bbyd+GuVs+3e54u2d+GjHhOYdV0nMqDf0fa62VOLPrA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7WiGPJRWF4Jd5+R6NNGTNO2ep+vFrqsC9TO86FZdNwb3VMXkc
-	twoFyK0gt2tKaIyfmV/mn2/t0haGyD90/HFoPckYUAHHNGywNMtz
-X-Gm-Gg: ASbGncs4A1EIgeuDaWKOu+tQJ9/KQm/6R5W0LDC9rPLV8FLarket2XQtGjB6hOheR3Z
-	xUcZo6B4/0bMWng2UaWsm1n38rZZ9+eqlBsLGVDh5J99VWVAiEutdEbp7Dof5fSSTws5qKLcQ7c
-	JsFgq4aYYyH+uTfFBeukfSw5hGyDq2aaxiECx0fPFEwzuRdT2sVPuAzg6bY/sJmK3l3TPw51Jyk
-	3mbXpWK9P6jbNWslX3WhXOlTAAS9xsyt6X0eaVsqSQ4X2rgrSSao4MOnn9xVa+G/w1T206zSFUz
-	MOm6FPf5WP4r0qk8TimgtZecgIZap0oxyBg1p1LW2zloiL25SDaE/HqpWz6jqkQwkoHUYn4PPwe
-	tmzJRNwIwXbVrU6A9
-X-Google-Smtp-Source: AGHT+IHf7gKv0u2pFGPPYqfc8XaviIwUF0PHd6+4FfDCs7dp6iO4Y6NXCSbPTNc2yCzSr1QAD/nWhg==
-X-Received: by 2002:a05:690c:6184:b0:6ff:1fac:c502 with SMTP id 00721157ae682-706b325e86cmr33047727b3.6.1744817452982;
-        Wed, 16 Apr 2025 08:30:52 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:d4aa:a26e:52c5:371a? ([2600:1700:60ba:9810:d4aa:a26e:52c5:371a])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-706abaa589esm5143107b3.95.2025.04.16.08.30.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Apr 2025 08:30:52 -0700 (PDT)
-Message-ID: <baa62f25-faa4-418f-8100-0a75cb803267@gmail.com>
-Date: Wed, 16 Apr 2025 11:30:51 -0400
+        d=1e100.net; s=20230601; t=1744818137; x=1745422937;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6ETDol7ZTecKVzOib+zYe62HXO/MrPWpir2telI8JtQ=;
+        b=m9nxwtSN0VrcnlUFe2gq5UpFS0GJdIKdYm3uFTWUFKJmpKLnL2ISgQ5movmUNPv0LC
+         hhe/rtRSM92EIpOupTA8bvbIXIHzjnastgrdJX1alxlCVo0PmNrQG5YW5YDw+ZWfyk0K
+         24YyB2xM7X4hT3TDp1YsFz6cpsiuSwX5qZvrL2epgA5n0KVCSm1YeSmhR2bKTsutrrPI
+         Wg9AI8l9UYSTbS0LKztvAyq5b2FiX3rJPbbTK0WmuSFcbLzo8NUj9QL508gVcUvNpAOQ
+         cM155huoMsQbW5d0M47giy+tXL3WAiZxA0bQaqW6uA1tP5JgTicAZIIKj/TvWxlLT2hn
+         Dlng==
+X-Gm-Message-State: AOJu0YxmK90FXWJa91HAOxp5rqMecu2GhiPl02WADctM+8HnTXWbnGfo
+	QuhVvqipuYSiiRLKsWQdFYAyjUnWaR/dwKxqZ4aBCLpuwR/TrheWPeZ2ow==
+X-Gm-Gg: ASbGnctWJ+spMcTi2sLQquhpevPpKptmhSQGcw2A4Lxocm+UuNQFON/u8oCgm/U/lEG
+	vnxxYlRb7xVaflcNaPWbnZLFSpipqXfAourFsUD6TWsn+3/r0GXuepIrVGxJwpRaN9XiLWDObht
+	MflFGE9UigttLqDsF2PEBff0XBJam8HA5bgHbE+E5XRUu+3f8RK05D5JvGS6JWwXTcfHz/labBr
+	XD4t/qXRPllXfTSfw8A16wBdPg9gdIGN00gQz7cm7KzSBVD+DIgE8acyk3BqCOgIsM+aqq0vHEG
+	BiDxExRIDuLRTwjKbhEAm3VfydJI1l7LU/lCfUcp6w==
+X-Google-Smtp-Source: AGHT+IFxZqkQlIF9Qy3z7yyly2yx0KX9I2KxBBOWEmEZGo34iPELGMiE3sxVDRaSc2mU/o6PCasoDg==
+X-Received: by 2002:a05:6000:2510:b0:39e:cbd2:9ad2 with SMTP id ffacd0b85a97d-39ee5b13b95mr1926517f8f.4.1744818136797;
+        Wed, 16 Apr 2025 08:42:16 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4405b4f2cfesm24553795e9.19.2025.04.16.08.42.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Apr 2025 08:42:16 -0700 (PDT)
+Message-Id: <pull.1899.v2.git.1744818135435.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1899.git.1743719888430.gitgitgadget@gmail.com>
+References: <pull.1899.git.1743719888430.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 16 Apr 2025 15:42:15 +0000
+Subject: [PATCH v2] docs: document core.hooksPath=/dev/null
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] git: add --no-hooks global option
-To: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood123@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, james@jamesliu.io,
- "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <pull.1899.git.1743719888430.gitgitgadget@gmail.com>
- <2c7994bc-2be0-43a5-9627-0d530746b3ab@gmail.com>
- <cb3d080b-51a3-4096-9650-34ec4ed68f1d@gmail.com>
- <a5632198-9e04-4302-a3c9-1cbf0f0cad65@gmail.com> <xmqqh62oi3k7.fsf@gitster.g>
-Content-Language: en-US
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    james@jamesliu.io,
+    "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+    Derrick Stolee <stolee@gmail.com>,
+    Derrick Stolee <stolee@gmail.com>
+
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqh62oi3k7.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-On 4/16/2025 10:28 AM, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->>> I don't read a strong reason in your message that this is a _bad_
->>> idea either. As in, there's nothing that hints that this will cause
->>> significant harm to users other than providing a new footgun (and we
->>> have plenty of those for folks willing to look, including the
->>> _existence_ of hooks).
->>
->> It is certainly not a terrible idea given that it is possible to
->> disable hooks already but I'm not clear what the motivation is. I
->> don't find the example of a skipping a pre-commit hook persuasive as
->> we already provide a convenient way for users to skip that
->> hook. Elsewhere in this thread you mention the "pre-command" and
->> "post-command" hooks but they are not part of git - if a fork is
->> running its own hooks and that is causing problems for users I'm not
->> sure we want to change the upstream project to address that. If there
->> was a clearer motivation it would be easier to understand the benefits
->> of this change.
-> 
-> Thanks for pushing back.  The default for any new changes is not to
-> apply unless there is a compelling reason why it is a good idea,
-> saying that this is not a bad thing does not serve as an effective
-> justification.
-> 
-> If we want to give scripters a more stable foundation to build on,
-> the answer should not be to pile more and more "no hooks, no
-> configurations, just a vanilla mode of operation" options to
-> end-user facing porcelain commands, but to clean up the internal
-> implementation of such porcelain commands to refactor into stable
-> plumbing commands that scripters can rely on.
+If a user wishes to disable hooks, then they can do so using the
+established pattern of setting 'core.hooksPath' to /dev/null. This is
+already tested in t1350-config-hooks-path.sh, but has not previously
+been visible in the documentation.
 
-Thank you for a decisive answer. I'll move forward with a v2 that
-is a doc-only change, documenting the /dev/null value as a supported
-mechanism for disabling hooks.
+Update the documentation to include this as an option.
 
-Thanks,
--Stolee
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+    docs: document core.hooksPath=/dev/null
+    
+    Based on the discussion of the proposed --no-hooks option in v1, that
+    code change is dropped in favor of this documentation of
+    core.hooksPath=/dev/null.
+    
+    Thanks,
+    
+     * Stolee
 
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1899%2Fderrickstolee%2Fno-hooks-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1899/derrickstolee/no-hooks-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1899
+
+Range-diff vs v1:
+
+ 1:  91e82850e7d < -:  ----------- git: add --no-hooks global option
+ -:  ----------- > 1:  a9cd4bd5100 docs: document core.hooksPath=/dev/null
+
+
+ Documentation/config/core.adoc | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
+index 8f6d8e77541..9fde1ab63a7 100644
+--- a/Documentation/config/core.adoc
++++ b/Documentation/config/core.adoc
+@@ -512,6 +512,11 @@ centrally configure your Git hooks instead of configuring them on a
+ per-repository basis, or as a more flexible and centralized
+ alternative to having an `init.templateDir` where you've changed
+ default hooks.
+++
++You can also disable all hooks entirely by setting `core.hooksPath`
++to `/dev/null`. This is usually only advisable for expert users and
++on a per-command basis using configuration parameters of the form
++`git -c core.hooksPath=/dev/null ...`.
+ 
+ core.editor::
+ 	Commands such as `commit` and `tag` that let you edit
+
+base-commit: 5b97a56fa0e7d580dc8865b73107407c9b3f0eff
+-- 
+gitgitgadget
