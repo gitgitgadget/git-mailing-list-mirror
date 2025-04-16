@@ -1,127 +1,91 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D97A227E89
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 05:57:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5433597A
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 06:14:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744783032; cv=none; b=Ha5LLrkGfrPaRAfE34njl0Lnz6BqDAlfwyZKE7DZDJLaQ2lECoa/iy66MM2+kIJo/Ig4L/Q7nSK41L/c4PIMYKhnPJtCpwLKS5ieOeijovsKUf1xWF5025SzqtHhPziEa1KbaQYBxb3B1y9tVDabwEPive5k3af/pNkS2x0tvto=
+	t=1744784098; cv=none; b=CUocKBR4Tu5ZxRHmJq9Pr0lsd6CBfMhnhuIp+99znHfAXAA/2b+uKdk5HENN17SCZecIYX+WVeVWwz74vleZXTSlILSAYI+nEVyLQRU8ugRaxEOzg6ihItynHVjZOdRjPysHsjvQgImQDmhKgjubOQLSFuAliiC/QTf1w9CVkQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744783032; c=relaxed/simple;
-	bh=MVXGt/ou9YLE0YDhg8LHPNMkN9XeEubn53zlp6bAvOU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Tlh9tamtaVzEqs7tfm0fkw9YbQwuTWVqPVVyCSfq0KL0Znu1NNfXAd5sODpOHMEie1J7aiPj5R79/1fxPjb6EhywOmUtK8DZZcGrfSqOwClsGMI7Z5GIPns2gjyemHqmbpdth/fNPXn7owyF7rs7J2Q5uTyJJhu8yXA2RmXnuXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lZaaWZwf; arc=none smtp.client-ip=209.85.166.43
+	s=arc-20240116; t=1744784098; c=relaxed/simple;
+	bh=L3DNf/aCGpMmBahQ99C6ynAyL9kWd09cZf9JvAISJcc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BWWCkeYzo4wXAFXrTVB/2hvvJ4pdETbCIviS5GtR14ybPjic/5TCKBhzyEX24hgxv5375WDEfHdwSwyMJX/bcK0OrnIlv7KrlGnFE4mQh+uGvLdcxtqfxsvN5GvejTaw8ljDsFiEcH0Kzrtq2V61a44InGBa8dC7dygi0GXMldg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i7/94kOB; arc=none smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lZaaWZwf"
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-8616b7ad03bso121615139f.0
-        for <git@vger.kernel.org>; Tue, 15 Apr 2025 22:57:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i7/94kOB"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2ff85fec403so350716a91.1
+        for <git@vger.kernel.org>; Tue, 15 Apr 2025 23:14:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744783030; x=1745387830; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Co7x7oUqTH9cPKI8o4pgzGvhvDxhJ58WYCP2nhp//+c=;
-        b=lZaaWZwf4J3nGDEwvKncKNUrLWuCndOBRIuZ9PjO683h2nRcHfMT1SmMHK/sVkxyew
-         5+V9ldiBeForPwK/+Pkgc8cxZEns/DAOi6bsOKMSLHwsj6iXrT8/efIq0Jdx9Z/iXBPj
-         s0X8GHwypwF4/+daw2fByJpN407gh7T9csHyRaVHBqOm7QpYqJkjFsR7SdXu4QCI3nFk
-         /RkRkfgbV2aeTeqzk9sh6jPSzwtXAawY2AeI9e/T/NFGS0iQGg2QrvPWfZ1ovkDb5bRn
-         vnvUCgzQ33vAGtEsLsWKqiZRY6CAnjakMbYY1lIjJr0oMZHhaiRMfR3InyvP/PQRF5yr
-         xwPA==
+        d=gmail.com; s=20230601; t=1744784096; x=1745388896; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+p3d+6hSKHmlJMu+tJJE80IhOvH/9q6GjOOfUFSdU6Y=;
+        b=i7/94kOBFHZ6XA3rnc3x6ATKRfNTZc2oXqQT2zyr86XNiAIEUNyDeiEn9PSapInIz3
+         SOND3YxC2wxslJT2MRAjQvatjpR/u6fDQsFLSS7UdJyQDaRvXJBYnyNLyKUfDRAhn7Ev
+         UhdscSVzjKO+zDhhy6UKnBb3KA/qcAzexW2/HPNFwr/HnHPtbPdMo+1bQ2Kcmemnws2b
+         h4xfHBUNiTCEuZrF6Z151L6Hqct0fmA5UKbOUnYYkwYjDpCq8zsRNX1KIRzz0J1yz782
+         OYZpOeXkEEnNaqute2PNagxI72j40xgTPoA7Ma7M6UjSjqe2WSEf9FUbMCJduSCU3Ex+
+         Di/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744783030; x=1745387830;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Co7x7oUqTH9cPKI8o4pgzGvhvDxhJ58WYCP2nhp//+c=;
-        b=uA1dehJIhyA4EzbQK3nxAZjC09yeEAxz4ju5VH8aWlQYupDvPT8WaoRBPcTe/8RVQZ
-         blLHi1Drmpn0vmtUY4RGivVFL//kOGKgoSJIXxMVP0VncpIRZwnsml6AIQ+l4vDB7kOK
-         72S1oNo3QtvpqGtsvKPjmCHCLTiE5GWrkHETS8btWLd8kCRBJiNfL65F7sgzcB2zrKrP
-         JpiSqVzdxeaOxWkopl2nL1jhHn1JTEEjZHDlwysJadErnbmUlaP2Q8gNInQhQ6iJWmvz
-         Bkyak9QahEeF4exG7FWNrGrDJCAnVKhJEPxlUac0jHd2+KyOZa3W/PhwEY9YjQ/nqObw
-         k++A==
-X-Gm-Message-State: AOJu0Yxtrtol1x+VQPV2v7aCZAvVxAOscuitr7VV4RH0oT8wX9//sYhT
-	YcYOkvVNY1s59s9MGTXu+AQAfg3vhKB9vse3sobHOyDFWB5a/8Lo+zGqK9t4P2/sBfEIsN6xtVk
-	78GMzhzAUuxGXPYdw/zl6pS6HjI0=
-X-Gm-Gg: ASbGncu2MPp/tpgsZ394u74JaMXP8zhpxijGj/91TzZ0tZ9NCY0l9c/XhdtTcHVRada
-	/6wxYA3a/tBew34imROzUGpMzrrXNZv5I15pnueRW19L4Au0M6LTzuPa6l+ADQQN/1fO2/YXZA2
-	PlVcGenEVStdczvDp/ei7BiIRmFskaBbXTZYXO/c329inW/k2KX/fFs2o=
-X-Google-Smtp-Source: AGHT+IF5fVx6j4iw3LtnSFc7t6z6YkvZtVFk9yeWE1AICkeZA0fx36NIps7KTbPfWFj4jf5g2IXUbvGvXS2PNwnQCeA=
-X-Received: by 2002:a05:6602:4c0c:b0:85b:505a:7e01 with SMTP id
- ca18e2360f4ac-861c5082d9amr45781139f.5.1744783030095; Tue, 15 Apr 2025
- 22:57:10 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744784096; x=1745388896;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+p3d+6hSKHmlJMu+tJJE80IhOvH/9q6GjOOfUFSdU6Y=;
+        b=bWsAgdiaub2OxQqoD/xAXrwdQUUFXy5LO5nRIIQmMV6fytl8CbRjxeXfgXWrt6I4Wg
+         LWzKatnvHyc4e232q0LjAbH/69MHTgaf28AvZKkaEZy5hg+/Z1RUBpgv8JGfMaX77RWu
+         sqyyYUF6PSZjInE5QiR8zFZoXIH2JekpUaYPH6/150dLtJ+WUz4ABcQmQKtBNKArtkNr
+         NAYVkOMc0tR6i5cDTGqP0mRCz47ImJkXLjLtYtqYZvPUAS+cpAlRHI8d0bLZBuAQkhHA
+         T7Qm2/XORZTpvffljgvHZA/WCxvS9H2tVfn181myIAhmCvkK0YpcnKYSDTyS5OfGsxik
+         hKhQ==
+X-Gm-Message-State: AOJu0YwnSn1A0QgTHtOVij7sBJsf0o3KvqGsR4L9EH9hCG4Gs97ZBnT+
+	m7XtsNB564M0BTDFAVmCF8/adVpiQDoiJndkNboWb+ib6FQ0bcs8dPrwPg==
+X-Gm-Gg: ASbGncstS46WkN6RMSG0OBUjCJxrjNnYQLEvIpeliEK76dZzp8t6UkoF0DVoW+q9esv
+	375suoRel1wR0/QARzzimo726gHxDCe+eg80cJUXYQBvwvXJ5dvGSKsAiWa4cbgJCqZ+m/cioSO
+	6Ta8j5sqX+NxzdfNFSNkJZG8y2P3p9/vdx/39eFo16KaEG/KSFF1nbe4JxjNzLRwbczBzWrQzts
+	mObz7V/iu2XGDmtV3cYeJzci5+N1rGc8CusVMHfqnsNVFTZ7/bZYOw/jqyBRlNoDMsO3FNQb7H4
+	7V+L7fdfGHm1nL4jPk6eb17VZKsRwbaXAKnaJpugexh9s6Omzyohb86H7A==
+X-Google-Smtp-Source: AGHT+IH+mQwSfiXPlHtnuWwKrdGGyPi9Me9xlmgUvtW4JBl6B5ao/ppafNbHbBddP9lNEbL45I/sJA==
+X-Received: by 2002:a17:90b:6cf:b0:2fa:1e56:5d82 with SMTP id 98e67ed59e1d1-308647291e9mr741792a91.17.1744784095996;
+        Tue, 15 Apr 2025 23:14:55 -0700 (PDT)
+Received: from fedora.. ([2405:201:c005:b018:5522:eab2:4cba:30d0])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-308537cdb13sm1688603a91.0.2025.04.15.23.14.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Apr 2025 23:14:55 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	jayatheerthkulkarni2005@gmail.com
+Subject: [PATCH 0/4] update MyFirstContribution with current code base
+Date: Wed, 16 Apr 2025 11:44:46 +0530
+Message-ID: <20250416061450.25695-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.49.GIT
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1744413969.git.me@ttaylorr.com> <cover.1744757204.git.me@ttaylorr.com>
- <58891101f377267df120dc4a9edea2997296dbec.1744757204.git.me@ttaylorr.com>
-In-Reply-To: <58891101f377267df120dc4a9edea2997296dbec.1744757204.git.me@ttaylorr.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 15 Apr 2025 22:56:59 -0700
-X-Gm-Features: ATxdqUF4OZo1XFwILzdWFzVn09MBKdptnS9IPGhnmkq_tXymOnil0rPihJy0pJ4
-Message-ID: <CABPp-BHOSiOSFeqTutAqznTCO6Fh-kM7d2B-jF+LU1iTQzOTOw@mail.gmail.com>
-Subject: Re: [PATCH v3 9/9] repack: exclude cruft pack(s) from the MIDX where possible
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 15, 2025 at 3:47=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
-:
->
-> In ddee3703b3 (builtin/repack.c: add cruft packs to MIDX during
-> geometric repack, 2022-05-20), repack began adding cruft pack(s) to the
-> MIDX with '--write-midx' to ensure that the resulting MIDX was always
-> closed under reachability in order to generate reachability bitmaps.
->
-> Suppose (prior to this patch) you have a once-unreachable object packed
-> in a cruft pack, which later on becomes reachable from one or more
-> objects in a geometrically repacked pack. That once-unreachable object
-> *won't* appear in the new pack, since the cruft pack was specified as
-> neither included nor excluded to 'pack-objects --stdin-packs'.
+A series of patches extending my GSOC microproject
+Fixing the documentation MyFirstContribution.adoc
 
-But immediately prior to this patch you implemented
---stdin-packs=3Dfollow, so the once-unreachable object would actually
-appear in the pack if that new option was used.  The "(prior to this
-patch)" addition was meant to help clarify here, but to me it doesn't
-succeed.  (If it had been "(prior to this series)" it would have
-clarified that we aren't yet using the new feature from the previous
-patch.)  Perhaps you meant that geometric repacking doesn't use
---stdin-packs=3Dfollow currently, and therefore the once-unreachable
-object won't be in the new pack, but if so I think it would be helpful
-to call that out explicitly so the reader can more easily follow which
-hypothetical state you are discussing.
+Updated various commits since the last patches sent.
 
-> If the
-> new pack is included in a MIDX without the cruft pack, then trying to
-> generate bitmaps for that MIDX may fail. This happens when the bitmap
-> selection process picks one or more commits which reach the
-> once-unreachable objects, commit ddee3703b3 ensures that the MIDX will
-> be closed under reachability. Without it, we would fail to generate a
-> MIDX bitmap.
+Feedbacks taken to write detailed commit messages
 
-The comma between objects and commit seems insufficient.  To me, that
-feels like a contrasting thought that should start a new sentence.
-Perhaps the last three lines could read something like:
+K Jayatheerth (4):
+  Remove unused git-mentoring mailing list
+  Docs: Correct cmd_psuh and Explain UNUSED macro
+  Docs: Add cmd_psuh with repo and UNUSED removal
+  cmd_psuh: Prefer repo_config for config lookup
 
-"""
-once-unreachable objects.  Commit ddee3703b3 ensures that the MIDX will
-be closed under reachability by including cruft pack(s); without them,
-we would fail to generate a
-MIDX bitmap.
-"""
+ Documentation/MyFirstContribution.adoc | 89 ++++++++++++++++++--------
+ 1 file changed, 62 insertions(+), 27 deletions(-)
 
-[...]
-> ---
->  Documentation/config/repack.adoc |   7 ++
->  builtin/repack.c                 | 163 +++++++++++++++++++++++++++----
->  t/t7704-repack-cruft.sh          |  90 +++++++++++++++++
->  3 files changed, 242 insertions(+), 18 deletions(-)
+-- 
+2.49.GIT
 
-You addressed the rest of my feedback with this patch, other than the
-two items I highlighted above.  I'm excited to see how this works out.
