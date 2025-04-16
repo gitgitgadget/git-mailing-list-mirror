@@ -1,285 +1,171 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35F71A2658
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 01:56:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308E31A3144
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 04:40:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744768601; cv=none; b=Z//iEfcQMS8VTcejRq2m9mHOLDkj6ermbkM9bBZscnoXa/lItUHc73xwj/GCqWUJPZuSwQRK28PjcGaL6aTpmmcxgzfyImaYfIS3S6DuCNyk8ZASckmRcVNTLVQ4iAPQ1GJ21VwX2/kPmEXuDhtlvpQvJwbS/cZZ815i65qgR8k=
+	t=1744778406; cv=none; b=GKMjFAgFj3g+nDlHV8rUtl9Rvhwa8I3VdU1NtCVnhHAayyxpXpXLvLdiUN6Fvd0uVH5/VhNsiX45cW2+qJUR1xUUHJmSSoTu6ZO8ZKkTVTyNs543p1cI8AyJSUhDiXec4nd3TjXkxQbbn4HL8zlyvspJ3Eeq7r5vY0fWl2IjgPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744768601; c=relaxed/simple;
-	bh=mJfiTT8WnaW65VIkYyHtXXQV4nzNFQFv/QJAdxc/uc8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=NPzOimCLjW5ftzu01X0KUVOWgyEHgxVM1I6p4ool68C1yjzmQaySO4iXr+LYgIaOrCz8JSTRZu34WmKTpwvYR3t76b3EWN5vxRAb9+arHcqfQbGS4ngyGmxsm1iByzLcH2aGufmi9kM6b+GWAo95KDnIYwsngjZE2gtFTmEl4B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bJ9gbXiw; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744778406; c=relaxed/simple;
+	bh=+4hmOoTNbo/gSuwWwHCtgLT2LdZm/uWcuLaEAxPZjNs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qe7olTTf23tO7Uw7Jyn5PoL2MhI1Fu8CHCHSodSWU9NE12Ws7Z9LqustbSyMtZWN94Oz+SPWLp6VIbwanEPZvUWCbV1OLyc3/9ngRtH3JeMJ6gdsPSm4CL+AyOTQeBBz5dsaCrvqxeuFVcf6zG2REg74QAgTM1iq7ZdApwrK4uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cz3M6X3j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IBq34QIM; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bJ9gbXiw"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-47664364628so2778571cf.1
-        for <git@vger.kernel.org>; Tue, 15 Apr 2025 18:56:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744768598; x=1745373398; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sOnDonezgtkCVOjAiWfTYabeQEWy4R4+T73+Z2aNAPQ=;
-        b=bJ9gbXiwvVxzpVJd3gbeIUdo3eQ4capyXOPiEjSWvzNGfXNjseij/tmqPAmmLvjPPk
-         NvdU8XL3Fr1nR4sZgE2Q29NPYq5Y6Cb7kau9scYZp/71W+9JRgy9sv5UvcT2Qtn1m8Tw
-         MZnawpg1MeZG0sfJL2kcQGHJtLx38Fn1XnL8+jPJx0UIwGqw01mexP7KvLAD9SbBeCf+
-         t+TXQxkYULNbQtspy6cJcltQZP/AZC+wFivcG5UB5jbDirASZSUHatYc2G2Iy8I3RaTt
-         DKONsDICWXdK9tmAMcfJAbkpqwyTUXZ524qmZqqHR0VzbtLjrwpMBVOgREwvjunAJl0J
-         /sLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744768598; x=1745373398;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sOnDonezgtkCVOjAiWfTYabeQEWy4R4+T73+Z2aNAPQ=;
-        b=CpnKEofGrEEhrXHKnydiXGaxzkdx7wHkgQqvbEhxg2Alw+o7HrPMU5UU0/tHj19JZ7
-         VXXXUtbNkEapvrJYq3i+aPSmShM+NtBgp/9KdPBCA/eE7EF73o14Oe7hJJSvTHQBnx1J
-         WibIY8m406dvsgyArl+PtDjhIFpGZqpW4q7NhWPHE0aLE9Op3DQY40BCGow3Hka63jYX
-         6wd0B/AIxCCNuFQuKRuhjylPI2STRobhFKHLNLU3o0WSCC4gbBvJ52MrnxELxcAhmyFg
-         e7X4shVO+Bd4TXKpadlANvilnGsko1GvuxDOSyXQZ5fuzX/ZJVE8FXrwOEpchUPALizj
-         q5qg==
-X-Forwarded-Encrypted: i=1; AJvYcCU5xWemYzFXpK4Yy0xf6Ll0UsqFc6RaipFEM16UOkQzwBRF5QWXhB9ya3B6iueGX/CXA5g=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzmA5rBtwisc/DxUOdYFwLM4tYVDHqjDCfG5VISkfTBhfQ5RRdw
-	xQrqWChCsx5Oe7PzSrOBNmWBfmOgWjePbDOGunbTqgKJ5RmAE7XbKEzOi8mvhH+85ZQFQ66oI3y
-	cIPCFncFymhQiNTpxVeHSmjvStqo=
-X-Gm-Gg: ASbGnctEBV/4Tq3vuLmgeY8FFedkoGOjorXKcrMUCgARbF52ezqcLM5bRZ5tj2ugEvD
-	K0/ftqF84lNaBHatoOLSQL4M4+zi4vZ6gbQFfBgSEXLdGwrUTKEzW3caaefokgyWWEq+JM3VVGG
-	K33fMBO4cdxcR+H+izep+MZoz634LWIUZ4773kpA7+VdzmTF3GTjhwCRs=
-X-Google-Smtp-Source: AGHT+IESkgxQrretgy0LHv2pc4H4sluEJSm6m2YU8RfV+NgJRRQXAaSd0PBJqbj8vuC4Ia828+6TyApZlKynh8lVCJI=
-X-Received: by 2002:a05:622a:11d5:b0:479:1a0:3448 with SMTP id
- d75a77b69052e-479ff1aa73amr81553761cf.10.1744768598618; Tue, 15 Apr 2025
- 18:56:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cz3M6X3j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IBq34QIM"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 195DA254038F;
+	Wed, 16 Apr 2025 00:40:03 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Wed, 16 Apr 2025 00:40:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744778402; x=1744864802; bh=tDgXiZzFPd
+	6oi32aT4TPRI3lVMpDhU/HLE0khLIky+w=; b=cz3M6X3jzKHgPkSbwFfIv3UoV8
+	QoA4rfMs82D+5h/2Lx8fFpw4OEWCXPkIatMHLDRvoUIIi7idC+XxHwycdmjr+mj5
+	ABDz5Hmzthu7FA8zpV0fKrN1lAr+RfUaWENfVBUm1pca/e9aFk1scx1G61z23ixg
+	LhzAAkZ9Oq0Pt8n3F2qcdIoL8vfxK5nJF6n2QImG03JVlelG8niQeqOLxrtAyeiV
+	pbyjg6N15M84WL+6dWV29Dy+DfkGrkflcLE8HIJqCOIsL4bVgWyAuzOmlORirEuX
+	i7DHRz7EuEFQ4xsyFYJswP4FpmGXaMfrWzhqmh72f1PFZhv6KINk8wfMXBJw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744778402; x=1744864802; bh=tDgXiZzFPd6oi32aT4TPRI3lVMpDhU/HLE0
+	khLIky+w=; b=IBq34QIMsjiASwCkHAmmCa5nU2WC7PLS0uJeNB72SQU26kDdKpE
+	a9lsKV+MiaofMD/vV01JENfVEydnWg4MceAtkDpao2NDaL80TgzaqKATu2GylpmE
+	L00Xd9Vf/zK10fL8otHDXi15OfTOlT/7cEBcRdLpEpJxVtPqetyKFmOomd5PNy4J
+	ojOYZI0ekWqJ2EASWF0Yp4lAAX15CvoWa5hwfnvKEsRPYSGZ+FH76arwukAeuwQv
+	SUWRztFaDd7Wmpl0uGNOwJgNx7UMZ1TTrEdiJNlz+CCuInqgy3MD90OXYJTG9qSv
+	To0q5rpG0RdDiCL7f4fbdADSugn8Ou24UCg==
+X-ME-Sender: <xms:ojT_ZzEEcofSQGP9zpBWS4v-GL9Ice5enWxQy8nV3YbaLFFeMDq-Iw>
+    <xme:ojT_ZwXrcb69wxhA3PTQT3TabRKYr9WNx2Pviprirm72RZXtGuQ5tPYfQnA_O5TyK
+    I2xdB2lju-MMKyGrw>
+X-ME-Received: <xmr:ojT_Z1Lno2VbknPg5j2Jyuinpd5T1ldS7HtLVcz78dwEBf8dTpl07RV85j6cG5fMzSP7mK9-m64EiC38wT3BqvY_UWDG3IPQMTfigG0qNp7oeiLPVTQG>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdehgeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefvohguugcukghulhhlihhn
+    ghgvrhcuoehtmhiisehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpefhvedvje
+    ekvefguefgueehudejhfelueejgefgudfhgfdtgfehudffveehgfelgeenucffohhmrghi
+    nhepshhusghjvggtthhivhgvrdgtihdpihhnshhtrghllhdquggvphgvnhguvghntghivg
+    hsrdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+    pehtmhiisehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ojT_ZxGWGCnMH-czW0vwY_FXH-ylBVAJ5Hjxur9JHe1oS6Qv76YLyQ>
+    <xmx:ojT_Z5XvOuhSdtAAeHyNnEqXxM3G-Cq3SGBDwc7-6mmUSfrBNH_qMg>
+    <xmx:ojT_Z8N8mmiSwLsoYbrHaMvNbRN8rF7VWtJUviCiJNlTqohUOmwLfw>
+    <xmx:ojT_Z43iP-aJKjMieW2sqH21Gcx0fqSQaigcK1_pNYzM1m8Qu5lRnw>
+    <xmx:ojT_Z_EKGkDsVP5BUDCTPdozKwzO7xQHgyDuITUR6teXW8nynqqhI6Gu>
+Feedback-ID: ia13843cf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 16 Apr 2025 00:40:02 -0400 (EDT)
+Date: Wed, 16 Apr 2025 00:40:00 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [RFH] fedora: pedantic fails complaining that awk is missing
+Message-ID: <Z_80oMscHcR4pyvf@teonanacatl.net>
+References: <xmqq34e9kmef.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250412094607.236382-2-jayatheerthkulkarni2005@gmail.com>
- <20250412174051.780148-1-jayatheerthkulkarni2005@gmail.com> <Z_7ekhsBzXK6LKuV@tapette.crustytoothpaste.net>
-In-Reply-To: <Z_7ekhsBzXK6LKuV@tapette.crustytoothpaste.net>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Wed, 16 Apr 2025 07:26:26 +0530
-X-Gm-Features: ATxdqUHAbMetnOs3MCWwGYEiiKqxvhIyzELOLXhNVWmg2C3XfYvyve1DsxxDIdY
-Message-ID: <CA+rGoLfAidyuomeNym5WX8Bo7-jPcfHx35wDeZ7W2aorAN-B7g@mail.gmail.com>
-Subject: Re: [PATCH] t3706: Add test for wildcard vs literal pathspec
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, git@vger.kernel.org, peff@peff.net, 
-	piotrsiupa@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq34e9kmef.fsf@gitster.g>
 
-On Wed, Apr 16, 2025 at 4:02=E2=80=AFAM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2025-04-12 at 17:40:51, K Jayatheerth wrote:
-> > +test_expect_success 'recreate files to test add behavior' '
-> > +    mkdir testdir &&
-> > +    >testdir/f\* &&
-> > +    >testdir/f\*\* &&
->
-> I just want to point out that creating files with asterisks may not be
-> possible on Windows due to limitations in the file system.  I'm not a
-> Windows expert, so unfortunately I can't provide more details than that,
-> but you may end up needing to add a prerequisite here to skip this on
-> our Windows platforms if necessary.  Hopefully CI and a suitable search
-> can help you figure it out.
->
+Hi,
 
-Ok I will look into it, thank you for letting me know
+Junio C Hamano wrote:
+> GitHub Actions CI started failing the pedantic (fedora) job at the
+> tip of 'master' few days ago, and the log claims the failure is due
+> to missing "awk".  Even though we have seen a few topics to rewrite
+> Perl scriptlet, and I think at least one of them uses awk, but they
+> haven't hit 'master' yet, so it is puzzling why this started failing
+> all of a sudden.
+> 
+> So here is a band-aid.  I wouldn't be surprised if the base image
+> was updated without telling us.  We have seen Ubuntu 20.04 base
+> image retired to cause CI failures as well.
+> 
+> Almalinux does not even seem to have awk available as a package
+> (or it may be called differently, but we are not suffering from
+> the lack of awk on that platform anyway), so make sure we ask for
+> awk only on fedora.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> 
+>  * As the scheduled retirement of U20.04 image broke CI jobs running
+>    for 'master', I started looking at making it pass again with the
+>    minimum change, i.e. by merging dd/sparse-glibc-workaround and
+>    js/ci-github-update-ubuntu topics.
+> 
+>    Then I somehow found that another job is broken.  And this patch
+>    seems to make it work.  Not knowing how it got broken is
+>    unsatisfactory, though.
 
-> > +test_done
-> > \ No newline at end of file
->
-> We do want to keep newlines at the end of a file.  POSIX mandates one on
-> text files and some systems are less tolerant of missing newlines than
-> others.  Usually Linux and the BSDs handle this just fine, but some
-> proprietary Unix systems, which unfortunately we don't have CI for, tend
-> to be the ones that are less happy about this.
->
+I can hazard a guess (or several)...
 
-Ok I will make sure of that
+It is likely that the image pointed to by the fedora:latest
+tag has moved from fedora 41 to 42, which was released
+today.  The fedora 41 container images have awk installed
+while the fedora 42 images do not.  That change is, I
+suspect, just part of reducing the size of the base
+container images.
 
-> I haven't given this a full review, since others have done that instead,
-> but just pointed out one or two things that got my attention.
-> --
-> brian m. carlson (they/them)
-> Toronto, Ontario, CA
+In both AlmaLinux and Fedora (as well as other RHEL
+derivatives/relatives), awk is provided by the gawk package.
 
+On Fedora, `dnf install awk` uses the package filelist data
+to determine that /usr/bin/awk is provided by gawk and
+installs gawk as a result.
 
-While I was looking into the reviews I was creating various test cases
-with these files
-'*'  '**'  '?'  '\*'  '[abc]'   commit_files  'f*'  'f**'  'file[1-3]'
- 'foo*bar'  'f?z'  'hello?world'
+On AlmaLinux (8 & 9, by my quick testing), that is not the
+case and you'd need to use `dnf install gawk` or `dnf
+install '*bin/awk'` to get it installed.  Though awk is
+included in the current AlmaLinux 8 and 9 images, so it
+isn't strictly needed.  But it's probably better to be
+explicit that we need it installed, as a defense against
+some future change to the AlmaLinux container removing awk.
 
-Everything went correct
-But when I checked \* and which is used for getting * as specific
-but there is also a literal \* in the above files
+Using gawk (or even '*bin/awk') would likely be clearer.
+That avoids relying on 1) a case statement to set an awk
+variable; and 2) the different behavior of older and newer
+releases of dnf with respect to the install argument
+matching on the names of binaries provided by the package.
 
-So it still adds both, I'm unsure if that is the intended behaviour.
+But that's certainly subjective. ;)
 
-but when I say git add "\*" it adds both the files * and \*
-But rest of the other wildcards and literals work as intended which is why
-I incorporated the \* literal
+>  ci/install-dependencies.sh | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> index 8700c0f292..a7c613ce4c 100755
+> --- a/ci/install-dependencies.sh
+> +++ b/ci/install-dependencies.sh
+> @@ -30,8 +30,10 @@ alpine-*)
+>  		bash cvs gnupg perl-cgi perl-dbd-sqlite perl-io-tty >/dev/null
+>  	;;
+>  fedora-*|almalinux-*)
+> +	awk=
+> +	case "$distro" in fedora-*) awk=awk ;; esac
+>  	dnf -yq update >/dev/null &&
+> -	dnf -yq install shadow-utils sudo make gcc findutils diffutils perl python3 gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
+> +	dnf -yq install shadow-utils sudo make gcc findutils diffutils perl python3 gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel $awk >/dev/null
+>  	;;
+>  ubuntu-*|i386/ubuntu-*|debian-*)
+>  	# Required so that apt doesn't wait for user input on certain packages.
 
-I also think I will still divide the test file because
-git add isn't the only one that looks into wildcards and pathspec
-
-I think something like git commit "*" -m "Test" also would be a great test
-
-or even git rm command.
-
-About the windows question, I think I will see if there is any common
-ground I could find
-But until then I think prereq is a great option.
-
-For reference my test file looks something like this,
-
---- /dev/null
-+++ b/t/t6137-pathspec-wildcard-literal.sh
-@@ -0,0 +1,139 @@
-+#!/bin/sh
-+
-+test_description=3D'test wildcards and literals with various git commands'
-+
-+. ./test-lib.sh
-+
-+reset_git_repo () {
-+ rm -rf .git &&
-+ git init
-+}
-+
-+test_expect_success 'setup' '
-+ mkdir testdir &&
-+ cd testdir &&
-+ touch "*" "?" "[abc]" "f*" "f?z" "a" &&
-+ touch "**" "foo*bar" "hello?world" "f**" "hello_world" &&
-+ git init
-+'
-+
-+test_expect_success 'check * wildcard in git add' '
-+ git init &&
-+ git add "*" &&
-+ cat >expected_files <<EOF &&
-+*
-+**
-+?
-+[abc]
-+a
-+f*
-+f**
-+f?z
-+foo*bar
-+hello?world
-+hello_world
-+EOF
-+ git ls-files >actual_files &&
-+ test_cmp expected_files actual_files
-+'
-+
-+test_expect_success 'check \* literal in git add' '
-+ reset_git_repo &&
-+ git add "\*" &&
-+ cat >expected_files <<EOF &&
-+*
-+EOF
-+ git ls-files >actual_files &&
-+ test_cmp expected_files actual_files
-+'
-+
-+test_expect_success 'check f* wildcard in git add' '
-+ reset_git_repo &&
-+ git add "f*" &&
-+ cat >expected_files <<EOF &&
-+f*
-+f**
-+f?z
-+foo*bar
-+EOF
-+ git ls-files >actual_files &&
-+ test_cmp expected_files actual_files
-+'
-+
-+test_expect_success 'check f\* literal in git add' '
-+ reset_git_repo &&
-+ git add "f\*" &&
-+ cat >expected_files <<EOF &&
-+f*
-+EOF
-+ git ls-files >actual_files &&
-+ test_cmp expected_files actual_files
-+'
-+
-+test_expect_success 'check f** wildcard in git add' '
-+ reset_git_repo &&
-+ git add "f**" &&
-+ cat >expected_files <<EOF &&
-+f*
-+f**
-+f?z
-+foo*bar
-+EOF
-+ git ls-files >actual_files &&
-+ test_cmp expected_files actual_files
-+'
-+
-+test_expect_success 'check f\*\* literal in git add' '
-+ reset_git_repo &&
-+ git add "f\*\*" &&
-+ cat >expected_files <<EOF &&
-+f**
-+EOF
-+ git ls-files >actual_files &&
-+ test_cmp expected_files actual_files
-+'
-+
-+test_expect_success 'check ? wildcard in git add' '
-+ reset_git_repo &&
-+ git add "?" &&
-+ cat >expected_files <<EOF &&
-+*
-+?
-+a
-+EOF
-+ git ls-files >actual_files &&
-+ test_cmp expected_files actual_files
-+'
-+
-+test_expect_success 'check \? literal in git add' '
-+ reset_git_repo &&
-+ git add "\?" &&
-+ cat >expected_files <<EOF &&
-+?
-+EOF
-+ git ls-files >actual_files &&
-+ test_cmp expected_files actual_files
-+'
-+
-+test_expect_success 'check hello?world wildcard in git add' '
-+ reset_git_repo &&
-+ git add "hello?world" &&
-+ cat >expected_files <<EOF &&
-+hello?world
-+hello_world
-+EOF
-+ git ls-files >actual_files &&
-+ test_cmp expected_files actual_files
-+'
-+
-+test_expect_success 'check hello\?world literal in git add' '
-+ reset_git_repo &&
-+ git add "hello\?world" &&
-+ cat >expected_files <<EOF &&
-+hello?world
-+EOF
-+ git ls-files >actual_files &&
-+ test_cmp expected_files actual_files
-+'
-+
-+test_done
---=20
-2.49.GIT
+-- 
+Todd
