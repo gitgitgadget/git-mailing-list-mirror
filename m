@@ -1,145 +1,124 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAA42459FD
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 10:28:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835321A08A0
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 10:29:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744799297; cv=none; b=GZFe9rjaLNz/sFBf4RdbSFmQ8gkOd7z9KS/PykolgHpjCheswmBQHvPGZ4WmmysVQYilsMnk+JUXa/42Xz/AELBeyAxXPfotBG6ALvceqwah0tqbscnKpKvuwgcT2DIPYj7q9eoCql61kQsD2VAl09HtuEqyUow8p4vSq39wXag=
+	t=1744799359; cv=none; b=lFG92uaTzKN1kK2WWPCOZ5E/UZGsRBDzXpo9zEnKSUkwWNrAsp5RUJmyKS8wq8p46n+5ufmlkhU+9sIgofYMyB4T0KM0QkfQ7qk7ccklMJRcCKQK3djaVcGGj3CNLtky3G0jP+UTvimlB0y3DUBY9uct5E54HTCTlCkj6A/4zTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744799297; c=relaxed/simple;
-	bh=l2wfIfM0OFEkaXkyOFSdgeOI5zsLTZHHoJ95sLUsJ4Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j23ZC94PG51nC2qxCJfKVcSSDsrzK79OLRpsdMB6xzd1ZK1MFrfv8IgUcqIBJBRk+k2lHGY43Krk0/xkrP83UbYZFAU8WLSbMoqIz+t08VW0SW0YJyKfSrhmqnRgdhJBBVwpXGj2/RxvH0VCFKZGOhN28+CQZSXTIPlfCrT9Ne8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ncff7tek; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qlTs7o6L; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1744799359; c=relaxed/simple;
+	bh=bVsUrD9a4AJwZ89bU+j3nTRIzvP9MLDtRIRxDJ3suG8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=adAmxwtry/LlkYjMHr1yjzQ0E+ENixx3sG5d6XYkWGTscVUwpB4F7wkGI+tDbB9XyRwG+H3goz0yQahoilZdekD3kP00r/N7Rn7auxD9WyppOIF0zj7DblpsqL+6iVijWOKjcNLb/XoRrc/uNuPdH7IzfmrlIdOyqUJM1gEB5qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fJnHR1Tk; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ncff7tek";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qlTs7o6L"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8BD7B1140225;
-	Wed, 16 Apr 2025 06:28:13 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 16 Apr 2025 06:28:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1744799293;
-	 x=1744885693; bh=Lte1msYUI+pd6DviFvOcOQgEZEGaQfDU4KQgY9gKX/E=; b=
-	ncff7tek+9l2fiwyQ1bQqHVkDfVRQr1E5ouh8YPWgzi3GC+DkWtZMjvyQqtUwGwB
-	d+MOZCM2femQ9+YOqWr01H4emzGyptgrORnm++U+tTx5+er+mzhGNb1flxCLfets
-	UkBU6oXftGQk8CyRZmEMHWZh29uS5QvzMyCTn5LfdRb3me7HpJ9pP10TFNnDyvil
-	E9OYZ4ixbrAS8SZFpb5e4wHoszN0kk78KnBwcpwh7Yy91XfYQ6zUKeOVMPleavGu
-	WCB30Fallt33SvO5cl5cczPIjdMrK7sB+gSLIJLNLK3xJ6lIVelnBRxBnhska8u3
-	o1xSTAWGOe0zHZCJRgg3eQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744799293; x=
-	1744885693; bh=Lte1msYUI+pd6DviFvOcOQgEZEGaQfDU4KQgY9gKX/E=; b=q
-	lTs7o6L8nol/aRajNzQRbN+xMfwnqs0KWg21XiVFmFl8xi4GU3hv7iLFyhzHMRSg
-	OX1+QvAmxAPVLehUxzDVkjiP67Z3UDU67L01L3ZnTYEUxIa73M1vm1yNgUq+6fx2
-	JJtcwIFpUNqYgjA30VM43wsG7oBs9TU6rXvlCth2NgSJr5+bNUbpa0jILCfeeHE8
-	eu/ykrzBNlYOsWmpL2yTLovHB8tagwjVjG7A9ftsj8QmcZlc5RE6bwpiM/lcA+DU
-	vrK2Vj/y8CJwCNFiuA3wTQdki+BjZaVshJD7yBu7EhBkekfr+xmPsTL8OxjSknpy
-	q6/2NY9CpnkrqIhMMVklQ==
-X-ME-Sender: <xms:PYb_Z92YsRYSBxUjooKKjM1ZXf4ywY0HkUHee1-P0dcpgwNJNtAEFg>
-    <xme:PYb_Z0HAphJTPFuXTuVUXqFzvy3Qy2zdyU1tg2MUUxnGDNpp9AfD_aQClErNMqIzO
-    WdQQAGpEmNqaWz92g>
-X-ME-Received: <xmr:PYb_Z96ZBlNRdR4KZO0Ler3wzyLqY9k6PLrOXSc316ie9HLdaEqs1vSc9OIfcGaEDtpbp3OVIqFyGT1XW4KcTq0bMcwyfYa5GH9ChqzSlyzDdw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeiudefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtth
-    hopehtmhiisehpohgsohigrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsii
-    gvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehglhgruhgsihhtiies
-    phhhhihsihhkrdhfuhdqsggvrhhlihhnrdguvgdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:PYb_Z61jmOma00Jgke3z2ZYsJAYZAEiLLqoEhsP4YOUdNfX3HhRncw>
-    <xmx:PYb_ZwGjL4Ua9eUOBwHZoJBVjiP2Rayjzpv8olLOxVnVS_wGsOgImQ>
-    <xmx:PYb_Z7_pjSUgUwKpO2HYepq8h1q8GQO5Ez3Rk37a99wYTte4PsRNaw>
-    <xmx:PYb_Z9mxHw6Y-LC4UKrOJxCDbaa0Z3fThNiWmJ0jLxWXWu3rRaOs5g>
-    <xmx:PYb_Z3bpihdPcMsK7HhyxV1rgs07hLxZZUAFwF5WAzXDvAQhbBrQ3e-q>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Apr 2025 06:28:12 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 610d6441 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 16 Apr 2025 10:28:11 +0000 (UTC)
-Date: Wed, 16 Apr 2025 12:28:10 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: git@vger.kernel.org,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Todd Zullinger <tmz@pobox.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/5] parse-options: introduce `OPTION_UNSIGNED`
-Message-ID: <Z_-GOuC79KxWVwJ5@pks.im>
-References: <20250415-b4-pks-parse-options-integers-v2-0-ce07441a1f01@pks.im>
- <20250415-b4-pks-parse-options-integers-v2-4-ce07441a1f01@pks.im>
- <94f4ba9a-81a9-4e3a-932b-faee5aa2d2f4@web.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fJnHR1Tk"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43cf3192f3bso64892135e9.1
+        for <git@vger.kernel.org>; Wed, 16 Apr 2025 03:29:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744799356; x=1745404156; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bzATq4XwQbryh5Oemtt8k1Af3M/nkHkeJG7dtS3qoDE=;
+        b=fJnHR1TkgPu52EnTS5VWFLBrSeQ4jQQU7UziKT5UPdAjjxylQwnWSwwiv1JzAWnGPk
+         PwQAYLmVL47IBkL9uICI2nnqgCMFHnc+VcWqVLwLtlhRTbA5D8pNMGXznUALkVwbw9DA
+         f43yV7UHaRUcxRTB2oiKg6fIdHhmfQ6xg7xXXT1Nbd7fuGiFjBmTFbNdFqj1SHhPMuX8
+         eWTBx1xLYbuJVCmfb1TOOSkVTa1jl/j72l/k+/+JPMlpv6By2/3Pdk7qpMS3QeOcGeea
+         YKX7fUADEi07lQRdSbKdgVNO8CcjbFP5NvTT7NSe1myRkPMH0fS+wQUmOw4Qf+o2Gg6F
+         gCVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744799356; x=1745404156;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bzATq4XwQbryh5Oemtt8k1Af3M/nkHkeJG7dtS3qoDE=;
+        b=uAFE+mnkbzvbbEqkWePzjP+14EiSW6jTbGYrjn4fJJL/itrrtr/LM+YDMXf3qVVdbg
+         pM/sbMw+nFTiefV7bk/2u+6tSFNRjImshLA2iY3P9HSCsNjEbPv6kK6X6FF48fFxKXhh
+         vhPTXEG4s+jWt4gJV6egBKPphgvZx5R4vbvv7qE89fI957Aio3ddVTYDWZg1cdPd3XXf
+         +Z5S6yr/VuLX7QwlmwofyiDc81m6MeQxejrtv75psD6DAa1GUsmIQjCp1rlxxQgnOxeB
+         GqY84ZtMw1ylQUlScYUJWbmCIG/H641PfoQeG4TmtSeBAENhEGb1t7BXn5UKn/tVpQaz
+         DhRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXR5inVabKMv6AsvMPhg9wZ5+vERX5T0NN7zXM5tMhcWgDcVBHT4XvCJvlcAcGNexMZtic=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyjYY6tNO9nBSo/R7IT14R3IMso6KaUER+XXnKJGogE7CILhEC1
+	PLQx68V2cJbuir4BgtTihXNBoH7PZbu6rUadm6uHLBoEDN2L9o0T
+X-Gm-Gg: ASbGnctQGCjiowNowMHPGCdUgRbgrB00U2wiEN4izyHfqmTP3wvqVjJhvg78QUkfj0U
+	sDUXyisMGNVAMHW14jnreyrsfHc4kjrudvXAKtxF1/Dsu4Xt3VMnpYlw8IaED8KvphdX32ZjAtq
+	Yt//fVZq7iIMvspRm6merBWHb7NRiCceEgpH/9UOqfi7aEI2xGGUiQv8h/05mVy1GNZYufvjDlo
+	jx1XQiOket+F+wzxGiacsLWYwa7LVt76SJ/nVFXVetGvZ+VjbaYooq+otkEAPq2afpSkHJyOVmD
+	WKBnCNuVr3KAw7PU46ZGQbQdIOkfrmOgPCiSU7DxngZhStIdg1VKFOv1DDp97shEACi0mQ0Txm2
+	E0hxH75cfkfOA/bL05ybDa5U=
+X-Google-Smtp-Source: AGHT+IGF4QJNx/aKRLZrUEqQNKWT/R8iELdI/oAzM6c0sM+/I2lDc4VyKSrvwDqv02M+LLNhFaO5TA==
+X-Received: by 2002:a05:600c:a087:b0:43c:f64c:447f with SMTP id 5b1f17b1804b1-4405d6cfabamr13168735e9.29.1744799355435;
+        Wed, 16 Apr 2025 03:29:15 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:9904:268c:c66:c7d3? ([2a0a:ef40:700:a501:9904:268c:c66:c7d3])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eaf44579bsm16513031f8f.87.2025.04.16.03.29.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Apr 2025 03:29:14 -0700 (PDT)
+Message-ID: <a5632198-9e04-4302-a3c9-1cbf0f0cad65@gmail.com>
+Date: Wed, 16 Apr 2025 11:29:13 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <94f4ba9a-81a9-4e3a-932b-faee5aa2d2f4@web.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] git: add --no-hooks global option
+To: Derrick Stolee <stolee@gmail.com>, phillip.wood@dunelm.org.uk,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, james@jamesliu.io,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <pull.1899.git.1743719888430.gitgitgadget@gmail.com>
+ <2c7994bc-2be0-43a5-9627-0d530746b3ab@gmail.com>
+ <cb3d080b-51a3-4096-9650-34ec4ed68f1d@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <cb3d080b-51a3-4096-9650-34ec4ed68f1d@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Apr 15, 2025 at 07:38:04PM +0200, René Scharfe wrote:
-> Am 15.04.25 um 14:14 schrieb Patrick Steinhardt:
-> > diff --git a/parse-options.c b/parse-options.c
-> > index ae836c384c7..9670e46a679 100644
-> > --- a/parse-options.c
-> > +++ b/parse-options.c
-> > @@ -216,6 +216,49 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
-> >  			    optname(opt, flags));
-> >  		}
-> >  	}
-> > +	case OPTION_UNSIGNED:
-> > +	{
-> > +		uintmax_t upper_bound = UINTMAX_MAX >> (bitsizeof(uintmax_t) - CHAR_BIT * opt->precision);
-> > +		uintmax_t value;
-> > +
-> > +		if (unset) {
-> > +			value = 0;
-> > +		} else if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
-> > +			value = opt->defval;
-> > +		} else if (get_arg(p, opt, flags, &arg)) {
-> > +			return -1;
-> > +		} else if (!*arg) {
-> > +			return error(_("%s expects a numerical value"),
-> > +				     optname(opt, flags));
-> > +		} else {
-> > +			value = strtoumax(arg, (char **)&s, 10);
-> > +			if (*s)
-> > +				return error(_("%s expects a numerical value"),
-> > +					     optname(opt, flags));
-> > +		}
-> > +
-> > +		if (value > upper_bound)
-> > +			return error(_("value %"PRIuMAX" for %s exceeds %"PRIuMAX),
-> > +				     value, optname(opt, flags), upper_bound);
-> > +
-> > +		switch (opt->precision) {
-> > +		case 1:
-> > +			*(int8_t *)opt->value = value;
+Hi Stolee
+
+On 14/04/2025 11:59, Derrick Stolee wrote:
+> On 4/4/2025 10:15 AM, Phillip Wood wrote:
+>> On 03/04/2025 23:38, Derrick Stolee via GitGitGadget wrote:
+>>> From: Derrick Stolee <stolee@gmail.com>
+>>>
+>>> To that end, add a new --no-hooks global option to allow users to
+>>> disable hooks quickly. This option is modeled similarly to the
+>>> --no-advice option in b79deeb554 (advice: add --no-advice global option,
+>>> 2024-05-03). This uses a GIT_HOOKS environment variable to communicate
+>>> to subprocesses as well as making this a backwards-compatible way for
+>>> tools to signal that they want to disable hooks.
+>>>
+>>> The critical piece is that all hooks pass through run_hooks_opt() where
+>>> a static int will evaluate the environment variable and store that the
+>>> variable is initialized for faster repeated runs.
+>>
+>> That certainly makes the implementation much more viable. However I'm
+>> not really convinced this is a good idea.
 > 
-> uint8_t, surely.  Similarly for the other casts below.
+> I don't read a strong reason in your message that this is a _bad_
+> idea either. As in, there's nothing that hints that this will cause
+> significant harm to users other than providing a new footgun (and we
+> have plenty of those for folks willing to look, including the
+> _existence_ of hooks).
 
-Oof, of course.
+It is certainly not a terrible idea given that it is possible to disable 
+hooks already but I'm not clear what the motivation is. I don't find the 
+example of a skipping a pre-commit hook persuasive as we already provide 
+a convenient way for users to skip that hook. Elsewhere in this thread 
+you mention the "pre-command" and "post-command" hooks but they are not 
+part of git - if a fork is running its own hooks and that is causing 
+problems for users I'm not sure we want to change the upstream project 
+to address that. If there was a clearer motivation it would be easier to 
+understand the benefits of this change.
 
-Patrick
+Best Wishes
+
+Phillip
+
