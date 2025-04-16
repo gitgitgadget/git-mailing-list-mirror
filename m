@@ -1,115 +1,156 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD01281E
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 13:31:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE74E1AA782
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 14:03:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744810316; cv=none; b=unUvbRssGYdNh2aJ2m3T5KNjjpsmHyYLkfuKe5Gm0PvP2FrbvU4qyP050CMEQzijIT8ZuBkGFAn+VRJSYO9yuzXkslnDUOLePWS612w89O+xM7GCGaqmIcxNDaynmAb78c1chRHW7ylvN0uZFTYSXI1Sdl0TeGVgVSvY12lgFtA=
+	t=1744812195; cv=none; b=K5UXfYxnohGhlcvlrGd4Xx/ztasDXC88ccOh+Lc8DuxAdG9hFNhVZ6+34lVrCL7qj9m6hX6HDVauVde9PgEmgOaIFrsEqrHfJfdWW2jYdgWVH7aioHAwozfIvRaanT9pOfR6U25zSanzvY5OOeVS5g0cX7ZKSWhhhoeOO5vVDks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744810316; c=relaxed/simple;
-	bh=XOSgGXa08p0XwUGmigMNvYZkTyEJjbg0/V15/qNiUCU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=dbhBTAi5fAxxz7oZ0Wrq795z1peYTHCzUWvZwNf+SRYkcDOwWVyXUjK4Qwa/Z6jlw+SyUqFiOHmN5x9PwqKjFEQL3C+19GtYP4HomA7p2QGDUOctfDA7uHJLfdF0sdzZ7BIx7bsK+iDuSkhG4667OG8cffLA3qhI+kcrU7DfdyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RFGK9zv0; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744812195; c=relaxed/simple;
+	bh=jdktNKdpYyBOplmlgh4zobrjT09Z6d82Vrj0qahlOrw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=u56PArXbhohUQAOAhJUyz6I96jAlH6U0bJ/FstzXpRlLwguCjIv8U65SBLAWM6YP0gF/MzpAESZmEP28K6jvrfk00zzoaUEgcSkGXOwW13whpBHnfDk3MQHxYS94VsgFGBUSBdhdNlcQWRafJk0fU6PjMzTvwbPwoBnFrbpWWbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bXvlaD2q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FbNIdVlx; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RFGK9zv0"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-39149bccb69so6650449f8f.2
-        for <git@vger.kernel.org>; Wed, 16 Apr 2025 06:31:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744810313; x=1745415113; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oTuFUk97niODm9RVi8yPKRAwXTtkm+jQOTQfYSUn4QY=;
-        b=RFGK9zv0U4bCwqTgmckyZOnkgA+nVXQ+skv8zTE7WAvLV+2r5XxnW2vYDeUTs2BOqv
-         mkhflWvb1cDtgcYHU9I11DJZuSswrq+beid4VCtrPCJmcXtxriT97I5TZ9Jb8Gd4iKVA
-         CyTWLvAtTBueaf+Ed8JiwCGe8qr4Zg/LoHxZmIt1hKPRnY7p3JSRHSAlH5mcr0vF8qIv
-         o3gktTM0FavHM2A4aT2TkRwbB/ruO+8AnIFHOCPOFK7Y6wVu7x9SSzXa604/p5+v7V2a
-         K9KqEUeDKZ0oCyu6kTmYoztDBik4OlmFqj7tl+A6JvGRkBkR+AesZVmDtxuf6UPd6LP/
-         4U5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744810313; x=1745415113;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oTuFUk97niODm9RVi8yPKRAwXTtkm+jQOTQfYSUn4QY=;
-        b=e3SXNyvyGNu0q/2Be8cwIcsGvAhCabaIJLS/saBUwHCx6+fohVdoQsqOVfgJpw3RtQ
-         SKRDprR+BGabQPsDjeV7H0HKDJ43CKomd9Y6WpwQbLvy/M8Gc56grYvdgyHZ7s0c6nJA
-         WqkkHqW+CpbTdoUt0P86772DCpiZrQKkKA2pBBmV+c0tjCK8ONpGb75FaJOZovap70xF
-         z6q65HHaFEDbQFQ37F6LUmsJ8k4gbKtOnMRpgLyxP6ill84XyqMDu2IygWidlAMPP0pg
-         o6A/m/AAXA6EBe5+6sab7PQK40xgJnOPBrctq9fX1erLKIpEzk+IdGUBbOXKjc0UNthU
-         WPzA==
-X-Gm-Message-State: AOJu0YzqSx/+YEfhRpQoAdq37VzjCqNrT/0+wA0mUmhwbo7D5Kt9gDl0
-	MYSF2Z7Pq3Cf99xjqTUByz7noWiyxwvSljVsUBSG5CWMaTqFopZ0
-X-Gm-Gg: ASbGncsbEwmfo2geM672MQj53yOog9QZON1skCEdgqSYuPzMBu1B60p5IWG0ZwIevIc
-	UDB+4QjfULOKwEROcAiS+U+FaUdksYhck0qChL0883/Ib4PxoYYQHhJ6UazevzGL3qTOWRe7pU7
-	j8T78+EsGj5v4hxHqpjRfzN9S+IENSkjbpLQd0oEP63Mr39LKPdS3u48NcSXbdlRdz69RzhVP1J
-	fFsK+WCwyvclR/5VpBrhEY05SBHxAxhpBQDwx5Mvvf9vAdg8knJhQtJmfpIu+/kMynzp+lqlTCa
-	a35TS0FxU4cADbUbsR66rXjfC3JoEpCMR2tX/8M7qLtl2X2kc5MMCjbuq8p2R79CbQLC2/O6LQc
-	px3JvibXBix5df9Ti
-X-Google-Smtp-Source: AGHT+IE+RSWnSY0uP+sR8xGNrfc+1f5bvma8lu0sNj2g8wQOYgFZOg8r/vOXYb5pxY3Xpx8B9HoDjQ==
-X-Received: by 2002:a5d:64ae:0:b0:39a:c9fe:9710 with SMTP id ffacd0b85a97d-39ee5b0fe70mr1928545f8f.11.1744810312846;
-        Wed, 16 Apr 2025 06:31:52 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39eaf43ce3bsm17497117f8f.66.2025.04.16.06.31.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Apr 2025 06:31:52 -0700 (PDT)
-Message-ID: <7c684f2b-ca56-4e8b-b141-0c2f6b64a44a@gmail.com>
-Date: Wed, 16 Apr 2025 14:31:44 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bXvlaD2q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FbNIdVlx"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id C3E491380201;
+	Wed, 16 Apr 2025 10:03:11 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 16 Apr 2025 10:03:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744812191; x=1744898591; bh=zs7SZPTHip
+	KfU82yVXQcoX+tCm60yVnUrVRwcBl4qQw=; b=bXvlaD2qMKnpmpz9pA9Nzn+m62
+	GJY0k8M748TC5rFWh/hcLcpNxgMOvYWMpVENYfGH67o4KhzZ/IRioydgk56EnRJj
+	Hza/oZjxFlI5y7cLxYnXjQFSUpWGxpY+4bunHJDTK9vZ0h5sPhcDcvluvMMk6jWW
+	o01+WGzzE4M7XqQ/ihOGQ+Nxocup3aav74w4vnfKoleEKxaOTJ4NlmMUM4WZIOSf
+	EZYZ2/gWYtr2qivPDD1D2Iim5UKXREhzPmlPtDcreJymlG4dzZr2yMuccvCMZACD
+	w8YkLbTVx8J1y1mU4mwKFGpj1HoQdl5RGaXxEnWz9BLyp0EICbdFtyrIAmmQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744812191; x=1744898591; bh=zs7SZPTHipKfU82yVXQcoX+tCm60yVnUrVR
+	wcBl4qQw=; b=FbNIdVlxX4Rnf5f2GygCO/3u+EPejD+xoHC/3aHuLZKXb4eq3By
+	TYheMWIowf5j2drEjBYabkKfzTRWs1N1jbuB7nc2op8AAsYLkKUV8pQW8uRxlOkS
+	aiTnN6ECR/BHAU1HdS19TF9YzySg6M9LPiSInKHAgFCmvsUfmp5m3nWEr8wi+kbJ
+	Jq1J5CLpY9Eeu32UMxDUKwPjgtXBS50AxOf/f8bNIUyJJRUbM3tm5tfLh3+mRT/B
+	sRMCiJvNZ8xafMEhB7em9HGb2nRmtZKg8jSyJePHU25lIqtLjliiV2SjIpsQKQ+y
+	jkC8HaKe5gB0RGHssEs+NpoQoEBfX1ZgqSQ==
+X-ME-Sender: <xms:n7j_Z0CTMsMV4AkVziBDbxU2glo0JFeXZgTFnGs88TD7bwbYEFDYDw>
+    <xme:n7j_Z2hOyhNhIAGfD4iJrjTV2TKlkjYUsTw-rYdL8nnO_cWiH5k6_EO7ZLS2spu9X
+    AwKGtFunmfhWXks0g>
+X-ME-Received: <xmr:n7j_Z3kq1Z5X6adY5w3yWzXUyAD0PcZ4QeKY0poNCrufohXu1hatqAJoJJlC-RQwJ9rGPQEk6lefOYKewxeLWMrmGUCEKjI84gCm>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeiheehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeeg
+    fefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhig
+    rdguvgdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:n7j_Z6w3W3-iz5FvWnLVEIKpultxRCt1d7g_F2RHTJrH9QJqzWGB1A>
+    <xmx:n7j_Z5QAr-Q0Ox9VACQ233xgxMOVV4Tjrta2LWxEoSDjFLnCedtk1g>
+    <xmx:n7j_Z1bTXvqdRyHHRbl5s4LIl-UJxGh0EXjXCWXUNlt4uiK7lM0dfA>
+    <xmx:n7j_ZyTRJKbIQw-VdKCNeB6CP-6GkJiPz-CYKBMrfu5fnTwBeUA51Q>
+    <xmx:n7j_Z0k9xhA_7yLrKFRLil6HJtVQmB4dlvcLCZRD3kj-FuQwFQ4SYdUo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 16 Apr 2025 10:03:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Todd Zullinger <tmz@pobox.com>,  git@vger.kernel.org
+Subject: Re: [RFH] fedora: pedantic fails complaining that awk is missing
+In-Reply-To: <81209cfd-049e-c853-9c4a-2cf9803e56a4@gmx.de> (Johannes
+	Schindelin's message of "Wed, 16 Apr 2025 07:31:01 +0200 (CEST)")
+References: <xmqq34e9kmef.fsf@gitster.g> <Z_80oMscHcR4pyvf@teonanacatl.net>
+	<81209cfd-049e-c853-9c4a-2cf9803e56a4@gmx.de>
+Date: Wed, 16 Apr 2025 07:03:09 -0700
+Message-ID: <xmqqzfggi4pu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 4/5] parse-options: introduce `OPTION_UNSIGNED`
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org,
- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
- Todd Zullinger <tmz@pobox.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?=
- <l.s.r@web.de>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
- Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
-References: <20250415-b4-pks-parse-options-integers-v2-0-ce07441a1f01@pks.im>
- <20250415-b4-pks-parse-options-integers-v2-4-ce07441a1f01@pks.im>
- <35300426-32cc-4c0e-b0c3-edb2b2ed312f@gmail.com> <Z_-GKX8uFSNib5rW@pks.im>
-Content-Language: en-US
-In-Reply-To: <Z_-GKX8uFSNib5rW@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 16/04/2025 11:27, Patrick Steinhardt wrote:
-> On Tue, Apr 15, 2025 at 04:52:02PM +0100, Phillip Wood wrote:
-> 
-> Wait, does it? Why would `strtoul()` or any of its variants ever accept
-> a string prefixed with a "-"?
-> 
->      If the minus sign was part of the input sequence, the numeric value
->      calculated from the sequence of digits is negated as if by unary
->      minus in the result type, which applies unsigned integer wraparound
->      rules.
-> 
-> Oh dear... all these integer conversion functions are really a gift that
-> keeps on giving. Gross.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Yes it's horrible behavior for a function that parses an unsigned 
-integer. We should perhaps think about adding 64 bit versions of 
-strtoui_i() and strtoul_ui() so we have a safer option for parsing large 
-integers but I don't think we need to do that as part of this series.
+> This reasoning is very convincing, so I allowed myself to turn that into
+> the following commit (which fixed the build:
+> https://github.com/git-for-windows/git/actions/runs/14485317015/job/40629741228):
+>
+> -- snipsnap --
+> From 4890df8bf1c1311ef0c3b5a92412ccc4f833f944 Mon Sep 17 00:00:00 2001
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Date: Wed, 16 Apr 2025 07:17:24 +0200
+> Subject: [PATCH] ci(pedantic): ensure that awk is installed
 
-I'll try and take a look at V3 tomorrow
+Superb.  Thanks for working well together.
 
-Phillip
+>
+> The image pointed to by the fedora:latest tag has moved from fedora 41
+> to 42. The fedora 41 container images have awk installed while the
+> fedora 42 images do not.  That change is most likely just part of
+> reducing the size of the base container images.
+>
+> In both AlmaLinux and Fedora (as well as other RHEL
+> derivatives/relatives), awk is provided by the gawk package.
+>
+> On Fedora, `dnf install awk` would work, but for unintended reasons! It
+> uses the package filelist data to determine that /usr/bin/awk is
+> provided by gawk and installs gawk as a result.
+>
+> On AlmaLinux (8 & 9, by my quick testing), that is not the case and
+> you'd need to use `dnf install gawk` or `dnf install '*bin/awk'` to get
+> it installed. Having said that, awk _is_ included in the current
+> AlmaLinux 8 and 9 images, so it isn't strictly needed.  But it's
+> probably better to be explicit that we need it installed, as a defense
+> against some future change to the AlmaLinux container removing awk.
+>
+> Using the package name "gawk" is the right thing to do.
 
->> This patch also needs the fix from patch 2 to detect overflows for
->> uintmax_t.
-> 
-> Yup, will add.
-> 
-> Patrick
+> Note that even '*bin/awk' would have worked, but it is less specific.
+> And who knows, maybe in the far future a BSD variant of awk is offered,
+> too, and would then cause ambiguities. Best to avoid that.
 
+The last two paragraphs may want to be rephrased.
+
+The using scripts are saying "awk", not "gawk", so there is no
+specific reason to avoid mawk or other implementations at least for
+now.  As long as installing one of them makes sure that end-user
+scripts that invoke "awk" ends up invoking the one that was
+installed, I have no objection to pick just one of them, but I do
+not think "we must be explicit to call for 'gawk' and not any other
+implementation" is what we want to say.
+
+Instead, we should say something like "Because we know that on both
+of these distros, our scripts that call for 'awk' had been using
+'gawk' that was installed as part of the base image, let's make sure
+that we explicitly install 'gawk'.  If the image already has it, it
+would be a no-op that does not cause breakage."
+
+Specifically, we should not say we want to avoid BSD awk, unless we
+know our awk scripts won't work with it and/or fixing a bug that was
+caused by the incompatibilities.
+
+> Suggested-by: Todd Zullinger <tmz@pobox.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+
+Thanks for not crediting my initial report ;-)
+The patch text is as expected.
