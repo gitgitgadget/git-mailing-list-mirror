@@ -1,147 +1,130 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801351898FB
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 15:04:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD76200B8A
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 15:08:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744815850; cv=none; b=IFe6ufs9aIhbsNo8a+nvPcRxPrm/f/3NGpEpbTC/N/Jh6WDy9nMTLMTN0DeAfk4AVk47YofOxAwwzmqHpT8IRPY9ZScrZ0fDmE4YtC5/rXYP0g7KQA8XS5R61mm5GM7WhFLu0ezAIZ9zu/lh/q8ji6ZBByHp/eO6GB1XJ5Tu1uI=
+	t=1744816091; cv=none; b=TYaVciQgbL0/tEiEDXh66j6F3NJouye66CWPuODvHGiE2Z4uwMWsK/4TVA3wpZUros7DpSdwp43miwW/YGZOh4fxDATts2lSerqvwGdft0CemiNSHvhFewGo870VmoABO66V4OHSwwWbSUXUjLXIIjhKcXyJgkfPF5k7yKhh0bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744815850; c=relaxed/simple;
-	bh=GYhhGIiJw5kW04MOIKOxdQTaCmSFknyFTZuk1IaqgbU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CmfAvGanPVWDMG68uE4rvjrxLpgVW0la7dJl55vduI67F/bYIrfvoTI9k4u1Ugmye7g6SO76/NyXZH3xev5w83r2At0r6ZtiO5nxmrH6O6h2g+NZ4EyDztnlmCaVmistGu4rkU+H1A8pxiLQg05HK3LVbu7jFTEjrzMqZfzqAr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iYLUS0Mo; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744816091; c=relaxed/simple;
+	bh=u2jsDw2vi+9+bjlTFQX/DqB9vPJGAgjA8oOTe5T9VAQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cUnp6HkR3HFzpqzc82bwFFN65vEfEICLZutlfDVel11WfkjoDaVjJqFKxEsir+ZdvvbeMW5KboxnA4JAw8E4+pvc7q3TBXqYuC1IKDbQOBsv7TIEAT6uJh0O2pPguIhLTYko90LvrsYfg/Sg7D34hFsVfWRKMUfL2Xe8adWx1uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HbzDg/Gu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RHSeXJDv; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iYLUS0Mo"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4769b16d4fbso38599461cf.2
-        for <git@vger.kernel.org>; Wed, 16 Apr 2025 08:04:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744815847; x=1745420647; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jR9wUhU7wfBr0H+SCVHAlHxHWB9/kG7uOcvZVNC+TAQ=;
-        b=iYLUS0MoGQo4afQ08z80ggpXf5tiVmxfrux73sR3INXXRlLr53/+tpa5GU6XPbA7NI
-         CJt16+lWTXHObBkrD+K9w1rFjg/kNnUyT5CGebaNPA2zxYdlkzm5Nbu1OOmDV5539/cY
-         T2CLWkhWDOpLE649EFit9vz0zgfOBmOZd9P8jGsEBZoERU1MIMSvX3Jk/IJzPvmaeZtV
-         kqIvLlFe7mFNgy+8N44psCDJBQTvlmym2/5mzCdgSPF5tkQwoC49VwTXx2aAnUjjAYW1
-         S6d9a1fdcTv04IQ8zD+1xaa0/dcNIAiqqenqut6i/ksBGeKW94CWMuCMz9veipwp4eDV
-         twsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744815847; x=1745420647;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jR9wUhU7wfBr0H+SCVHAlHxHWB9/kG7uOcvZVNC+TAQ=;
-        b=Dxeo8Tt/y1rE5BdJSF/CgsonovrmiaNorsh2ul2iCZ921zLfqoLcYxj1XNONR+YBTb
-         GthomTjeVfMCwjksE0AnncMPNpwJiVINiz5JMKNtDjtgAl+Y5VKImojEztiPOXGvuqhZ
-         qJabLVQ1n+62dUZvpUTu70g9ix1CkBXZxGOWikloUV/5F+cBx6CWMZJAHTNP7ujYDDCO
-         0x8y+NN6oT6K2mnuR5A/le5Dkh/PRSv3wujfh7cVQrflFqeG1dCwBc4H3D0TqTrQALSh
-         Sx9DqGCuh7eY4sV9phkWfJdYEwQeD+MU3DC/8Xf0pyv+CFLX4ssMtQbfL/DQfr9bbh5s
-         shcA==
-X-Gm-Message-State: AOJu0YzU3MBI+iaxyudSo0U+xK9f1zQSfRcEA15qWODsa78ciC4qhqYy
-	ln97Zp0zE4HZjyp0h54jrRY91x2GFNbz/6xsATijqiOpcWQ54hW3VT10PwSnFtv1Dhz3z1k8uKh
-	orWVkSRb+xUmMOj6DlsoBEA84+w==
-X-Gm-Gg: ASbGncvli1mIQjYgV/aWT/v5qTSpRILLnQ63v/+T4GoOPYXG4nY9jHesqWnu45gIwqa
-	AlUZzwFBeGJ7FLgBdZ8QAWhB6cSbEj0rBbHbmmS58NoAOEnq911Pavxyc9VbcUPRL3O89u6In/g
-	rCe1Yrfyswp/BvNy+apxPQxKN087lBwQ==
-X-Google-Smtp-Source: AGHT+IGldRgm3VFdRSlqXRKqAaykh/exabwARtPtyyCev1kzMB6Tso7sP90EBSm3JrxqKga5CZJqJ/aQ5xgBoHvGIao=
-X-Received: by 2002:ac8:5945:0:b0:476:b764:e315 with SMTP id
- d75a77b69052e-47ad8168d6amr26304241cf.52.1744815847174; Wed, 16 Apr 2025
- 08:04:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HbzDg/Gu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RHSeXJDv"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 14D5B1140248;
+	Wed, 16 Apr 2025 11:08:08 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Wed, 16 Apr 2025 11:08:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1744816087; x=1744902487; bh=eSOwpw4XWs
+	svLd2rrSXVq2KxqTvvMZ80QUfFhi5fo/s=; b=HbzDg/Gu/4YHt/xUo1QoNmbP8m
+	9aQtt82gW3BIwdhm0OWjqCtM8/iNVrCNRXdrEJEQo8maBl9xdAR9RZx1LCer17he
+	x/XfmnS6vWXiDO6yzDRit0LZ8cUR1l6E0vaowhmqRR14YZxZI0R941fYS0nwTG54
+	Am51/XvTEeZZcB5OzaMVs9dThydvI0CXtRVMgfvNtbYAclKi4ZN5zNtDB2jhnLL6
+	0B4Rg0GTgi6BoVaiPNfT/6VXXohHtxOTCb57sBAnZ0VV9tKNJ6v9bKGlup84J2Bb
+	S9T8biHmmPgDWVT0vSwIr3Z72TMFQKq7/QWo93nUY+CocgGmy+GissbzT8HQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744816087; x=1744902487; bh=eSOwpw4XWssvLd2rrSXVq2KxqTvvMZ80QUf
+	Fhi5fo/s=; b=RHSeXJDvNyZPQntZrTQpquX3gtFSuWfCrIuxjEBxo+YtWjNayXI
+	qnEfQgXPmPYTlI1s4K6/XgVYWBrNEKUv0dxZGAABzzHY4koXv6Hm5ciKy+hfcE1v
+	nGeqQUPx7isJib1c49ZhNL+iQ94gaPe+WIJqB7Ps8quqczkZ47SANzDgjLhLtmtn
+	5ugJ2+oY9juWnq+A4LZaITPeuxK9g4BwhK/KF2nSy0Hm3YIi/yMEVlB6/FHoCmYP
+	z09+PFxQT8G4jmyIIqxKTu9968jE/2YPjtq7UgnaR9El4VxyHeaVaMMaVrl8dzCI
+	cJ94uMs0Vhu7NKtZYd0VKu/AOCN8n97ScCw==
+X-ME-Sender: <xms:18f_Z769HWyq4BYlYX1LohelLeNXhAH93g_PLvqRHXnSBACLVzYtyw>
+    <xme:18f_Zw6aQLjuyqVzvti5hrO184y3bTU1G1IDtGmOfY8FeLvjx_hSkLm_Wrr4Rxg0S
+    FRyrjpr6ACCZZKVZw>
+X-ME-Received: <xmr:18f_ZyeEMp4BjFUnAlxyD4gPNQ1bsvrrM28udD2y6X0ourLKkD_V_D7kxx4f67o-WqRvED7yUmN0kGPK4TK9nKmVVy3eDQdfVkvDx6vZo61bSQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeiieelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinh
+    esghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:18f_Z8K6FKkIY1weYNy5znDtnl-HmS2tiTcI9ZMMHsxqjECiA3WKAA>
+    <xmx:18f_Z_KUuUAkgAuuZJYECDxyYu7wTdxNZ9xFbRSo__WW4OoSBlxYIw>
+    <xmx:18f_Z1xz1PYzpo-Rr41wAAtdn32ZrtDI-kZ0A7HdSfUETfooR9ZahA>
+    <xmx:18f_Z7JXh4v4iKwzbR1AcitiXyU-RYr8xOOKczijX4iGL5u1JiWe1Q>
+    <xmx:18f_Zxa5In-kG5FsPaeQsuTR3Hb6yrNVhFQ9gc0FIxl1rwF9-TFwoxqK>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 16 Apr 2025 11:08:06 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9cb04cc4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 16 Apr 2025 15:08:04 +0000 (UTC)
+Date: Wed, 16 Apr 2025 17:07:59 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/4] request-pull: stop depending on Perl
+Message-ID: <Z__Hz3D6d-4v_z7r@pks.im>
+References: <20250415-b4-pks-drop-perl-v1-0-c6addf175858@pks.im>
+ <20250415-b4-pks-drop-perl-v1-2-c6addf175858@pks.im>
+ <xmqqtt6pmmd6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250405103718.25160-1-anthonywang03@icloud.com>
- <20250412061957.81747-1-anthonywang03@icloud.com> <20250412061957.81747-2-anthonywang03@icloud.com>
- <xmqqjz7lo4o4.fsf@gitster.g>
-In-Reply-To: <xmqqjz7lo4o4.fsf@gitster.g>
-From: Anthony Wang <anthonywang513@gmail.com>
-Date: Wed, 16 Apr 2025 17:03:55 +0200
-X-Gm-Features: ATxdqUFI2Aq3ulgA8ZK-3QvsiPBHoTfIdmOOZIofkYGUqB_i5ascNVDGXnfbiv4
-Message-ID: <CAOSofod9m7wHafP5=_tcMYW_oN9_icSmVX7rQioUkc_RC6pVYw@mail.gmail.com>
-Subject: Re: [GSoC] [PATCH v6 1/1] t9811: be more precise to check importing
- of tags
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com, shejialuo@gmail.com, 
-	christian.couder@gmail.com, shyamthakkar001@gmail.com, 
-	sunshine@sunshineco.com, Anthony Wang <anthonywang03@icloud.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtt6pmmd6.fsf@gitster.g>
 
-On Tue, Apr 15, 2025 at 4:55=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Anthony Wang <anthonywang513@gmail.com> writes:
->
-> > The tests use grep to search the output of `git tag` for tagnames they
-> > expect to exist, which can incorrectly pass if an unxpected tag
-> > has the expected tag as its substring. We fix this by using `git
-> > show-ref --verify` instead.
-> >
-> > Additionally, we add a negative test to verify that a possible
-> > uninteded tag does not show up in the imported repository.
-> >
-> > This change also fixes the original problem, where piping the
-> > output of `git tag` caused the exit codes to be lost.
->
-> The word "original" is misleading; perhaps phase it as "additional"
-> instead?
->
-> That is because not allowing to notice potential breakage by hiding
-> the exit status behind pipes is just as bad as falsely taking a
-> partial tagname match as success, and there is no reason to call one
-> "original" problem, implying the other problem(s) are different.
->
-> Other than that, looks excellent.
->
-> Thanks.
->
+On Tue, Apr 15, 2025 at 09:16:05AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/git-request-pull.sh b/git-request-pull.sh
+> > index 775ba8ea11a..59276fe265b 100755
+> > --- a/git-request-pull.sh
+> > +++ b/git-request-pull.sh
+> > @@ -78,41 +78,47 @@ fi
+> >  merge_base=$(git merge-base $baserev $headrev) ||
+> >  die "fatal: No commits in common between $base and $head"
+> >  
+> > -# $head is the refname from the command line.
+> > -# Find a ref with the same name as $head that exists at the remote
+> > +find_matching_ref () {
+> > +	while read sha1 ref
+> > +	do
+> > +		case "$ref" in
+> > +		*"^{}")
+> > +			ref="${ref%"^{}"}"
+> > +			deref=true
+> 
+> This got a bit tighter (the original allowed ls-remote output to be
+> later extended to throw "^something-else" at the end of line), which
+> I do not know is something we need to worry about.  I think retaining
+> the original semantics is easy in this case, e.g.,
+> 
+> 		*"^"?*)
+> 			ref="${ref%"^*"}"
 
-Changed and resubmitted the patch. Thank you for the guidance on this
-microproject, I appreciate the help as I am still new to open-source, and
-I now understand the workflow and style of Git much better.
+This should probably read `ref="${ref%"^"*}"`, with the `*` outside of
+the quotes.
 
->
-> > Signed-off-by: Anthony Wang <anthonywang513@gmail.com>
-> > ---
-> >  t/t9811-git-p4-label-import.sh | 9 ++++-----
-> >  1 file changed, 4 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-impo=
-rt.sh
-> > index 5ac5383fb7..39856629c0 100755
-> > --- a/t/t9811-git-p4-label-import.sh
-> > +++ b/t/t9811-git-p4-label-import.sh
-> > @@ -95,9 +95,9 @@ test_expect_success 'two labels on the same changelis=
-t' '
-> >               cd "$git" &&
-> >               git p4 sync --import-labels &&
-> >
-> > -             git tag | grep TAG_F1 &&
-> > -             git tag | grep -q TAG_F1_1 &&
-> > -             git tag | grep -q TAG_F1_2 &&
-> > +             git show-ref --verify refs/tags/TAG_F1_1 &&
-> > +             git show-ref --verify refs/tags/TAG_F1_2 &&
-> > +             test_must_fail git show-ref --verify refs/tags/TAG_F1_ONL=
-Y &&
-> >
-> >               cd main &&
-> >
-> > @@ -207,8 +207,7 @@ test_expect_success 'use git config to enable impor=
-t/export of tags' '
-> >               git tag CFG_A_GIT_TAG &&
-> >               git p4 rebase --verbose &&
-> >               git p4 submit --verbose &&
-> > -             git tag &&
-> > -             git tag | grep TAG_F1_1
-> > +             git show-ref --verify refs/tags/TAG_F1_1 &&
-> >       ) &&
-> >       (
-> >               cd "$cli" &&
+> or something, if we wanted to.  As this is meant to be faithful
+> rewrite to lose Perl, not a bugfix to correct overly loose pattern
+> matching in the original, I think we want to in this case.
+
+Fair enough. It should've been at least mentioned in the commit message,
+but let's instead just retain the current behaviour as suggested.
+
+Patrick
