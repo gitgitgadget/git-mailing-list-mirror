@@ -1,86 +1,85 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194FC1C54B2
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 00:58:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C031FCFE2
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 00:59:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744765110; cv=none; b=j5oRDExwJzP840RvW8vG/tzMlhBpuRuD99QW4aG9dwzl34Pln+FFDvkr2VPnj/BEnAX8Wpk7c7xDUtzXAU/QkqQF9bj6dwlurzp4Rj7PYI1zqOTJQFddPPpnxw7wzNXlAlc9pDJA8H3Z26ZjaI39szw6pWNd5b/iOTRSG8WrHNQ=
+	t=1744765194; cv=none; b=r+w07i8qDwRssoBBBn+AUph2fhXlG9NGNQz3mYx4UuQdCpJ8r83+AU1hXmVgEt8VNZpc7JSd4lV4cS5MYMimf3pV9GXdd+DscirJT3z+z8EtKKX8jFBvqBm3X8ZW3joBmNSsSsrcpRarlxUCjtKXwxPXnZvbYSAi33U+/64ao9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744765110; c=relaxed/simple;
-	bh=d/qIYGf78Gr5P6E9Mb+e7sIxsywTc0Coes3aZIHTGc0=;
+	s=arc-20240116; t=1744765194; c=relaxed/simple;
+	bh=LsboKCfYYI92C6wUpFIO1Iy2v+XZ6k2VVQppnjEafYg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ptp3VHTIoC1Dh2hI+7JHY7nrBl63FNIgEiIQo3EQaFVFrIeq+yKhUm9krnkgE4LJsj5dH0GYRgdy3EkI0XkA28XJU3o0W5CscaY7fwJ4M+gog6R+CRUscNGEfuCtZ8964yG8vicFvz6cJGc46bpvV31aN1VFyvzSkEPQJs7KOHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WC8S2zOU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kLuXN8MX; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=eQ9j4jQEg2Ot+Pem12VsfJjp1g/Ece+yzuFK5rpz4gvXn3NI0w3eRgWRmy1LXTSbpB3YJ8NObEjTxobZsC75udQEU81otFpiI/5MVW3mqlktNWg9N4/DyMmp6V1JaeOQZ7fnTaZaabO6wVdoszqj282K+rQ3SDGRmriGpejh3t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VpAahHDL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v3tSkq4v; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WC8S2zOU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kLuXN8MX"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VpAahHDL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v3tSkq4v"
 Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id F320B13801DA;
-	Tue, 15 Apr 2025 20:58:25 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 76BE51140189;
+	Tue, 15 Apr 2025 20:59:51 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 15 Apr 2025 20:58:26 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 15 Apr 2025 20:59:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744765105; x=1744851505; bh=/9bBXUPOcX
-	/5iCICnHhbNYuoRqEb801jpWvVL91A5go=; b=WC8S2zOU3zPYWWi/LtjbZ8Ejeh
-	gsPf5xQfWs+7Hwp4uNghiFZI5vCPNZW64J/tw2J0F479p8Ablyr0YebuYvXU2T0k
-	LZyqmmHMW2xO4PgSwcrCC1j2fR+v2bDX51LG1pM+S963gSth5RFjCpCk/WcxqHIY
-	LgY/LV3Pf1pJPpxaE2QQl8925j7uMNCVDWqZhs9Op7slspUYpm67Yh/DGCaxYvCc
-	5ENuJf8Y9hG0d6Ih4TLX9RmRkwXog6ykCHRC31alxULgTtGNuOd+q2Ja2m4kzqmQ
-	y2Rc4Fk5Tm6SDHZ8gT/vuz+vkQ7cjmjkwPUq9fOUSTdjTFDJOXuNT40Vhhkg==
+	:subject:to:to; s=fm1; t=1744765191; x=1744851591; bh=pm6YTvxmEc
+	1JvKpoYW625GhiYjC/ujxZp6aP2p6CzBQ=; b=VpAahHDLHNtaLlBcispFeT+dU/
+	fBIjNNmtxkWJjVn1VrLjYPqFhmUaOVppDY4Cx69AyXwypWnWMaqP2/K7J/LD6+iB
+	i/MMNZiX9BS7f/ItHchf40XgPADjls3h7FpCiYKRMo4VSJmQ8obsGYOovFkBHOPp
+	bYZuKj/MxzfdV3Wtemx0mCS3U2FNoiRwdZrR+OYvOFM2p6JjpsqrAMGMEm9r4oxn
+	kRntLLb6nervsQ4G/GDg4Lw/hVxzNf0GFqvGZh9qU/oExDXZMK0s56uLtwC+mzNJ
+	m+WGknoWWNVjHstBtYrgH2ElaPDQngr/5TIuAGXopoqQ3ttXJNeY/31XaE8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744765105; x=1744851505; bh=/9bBXUPOcX/5iCICnHhbNYuoRqEb801jpWv
-	VL91A5go=; b=kLuXN8MXWXf84bm4hWOuCXYTiwT7/tuO4mPU/+eWUW2+uODX5ur
-	eiRwS5rvRZuWOmQLXYRXyhXTL9rb0gmdF5L53mnqw8R3pPnGS4TxQ3dUWe2Gh/Cu
-	2HPE9GJaa+u+6EQNQiTO+pPsTEtHufQpd6SCJD0UsRIs01MuKGQm35rQH37W1YrF
-	4MgupQHa9l8AOA+n/MYt5DeMy+E7YDEKDxSRpwEAhUwLEo4vgO+ONtwAX6urUDJZ
-	GTGH/D2iLQdObw1kDgADJMcBP5LRlYgBb4tuAYCo8B1GQ8ET4sJuubQK6wCZnVgu
-	KlThfcQUndqVTucFAd6FZZr9SVnX7fHvETQ==
-X-ME-Sender: <xms:sQD_ZwNquwbCQNwArzyG3Tiryse69SfT4HWqhx_hCsd8_X0Yjf9zhQ>
-    <xme:sQD_Z2_xxNve-x_RsJbj6JoSM50TXxJeuoXRewwi6Uv4bWMpf_6bWdojDdkJxNA8U
-    r5oH0ESXQoIOGDcxg>
-X-ME-Received: <xmr:sQD_Z3TeeE_vqpJd9F1R98dGRwYpypH5X98lzVccaJqtmDDIwRuv17w4GBA_DTqtfCUkt9FGUU2QgdFVHH_CSy-1dZBYNIFmZBrg>
+	1744765191; x=1744851591; bh=pm6YTvxmEc1JvKpoYW625GhiYjC/ujxZp6a
+	P2p6CzBQ=; b=v3tSkq4vGMmprcRj5BPq9gw5xot7qc5CjXnfmXPVqE/3POXeia4
+	CyOILBeFfkQDn/J0o003hULeqltIywsxXTdomkJe3jW3qSUsUhS1HLI/hIHPYFnz
+	lWd4FP/kuFb3jPDi3BFxKUPT3rEfQDOXK97hXenVDAkDeSCsVJwZ8RDiRziZjGx3
+	66rWbVgjiEU724Swq7ACsRrc5mgYb8SQjO7vGwaKq6Id+T/F1szuBvLOFVwFZ3zi
+	zukOuBCu54kIrUKh/oRpJW0OZ4MO7niUMPOsyn6/a10RIt8Pewv5noV/BZYPq9YP
+	NyJrP6ZxtWajL94vXn+GFg/Ew7UXjI8f6hQ==
+X-ME-Sender: <xms:BwH_Z7kqaYsion7xucIs33AimKKy2XVl7WttVvx3moPKqPBIKQ-M6g>
+    <xme:BwH_Z-2Cq_Aud7ZYWo8K0zYDyxYMTl4atrbfjYhUUWw5458d5ygDmqxlAw1Ih7z6Q
+    hNg-dWtgekD5RaLLQ>
+X-ME-Received: <xmr:BwH_ZxoFhMDIadW7BarkVC5CQ7wD8GelZvFUVgWKylmEuhI7_cx2HL5E2R9N69Uj_6Oou5dt7KuuVUm8rrwtJXac9gB_8S_8bW0o>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdehtddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
+    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
     tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
     hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
     pdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfh
     hfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:sQD_Z4tbJl4AlIvtGYgXCGNlGRrIhqr_UuEQTP_NPsVLSwYQWxuCmQ>
-    <xmx:sQD_Z4eg-7Z205ISJwEz2BINW1S7jaAjNgrNoDgWnHb214qIx0wqig>
-    <xmx:sQD_Z80_t4ogGoMwbmndmBict0DmD8KS1SfIQ8HgerMtYAPgNhIKBg>
-    <xmx:sQD_Z8_p8bx_Qnevy4uROsVMyBXs3w8yZNYbsKQK0nrT4m1ope1hxQ>
-    <xmx:sQD_Z_DyMghp3tGmEaOWiQ_OMgsiklqZS0FkI8mvVYFV2XsII6bVNvQK>
+X-ME-Proxy: <xmx:BwH_Zzn0phnmip3guSA_oPq6jBhFRB2R-wQnrbeiTmLy1LzfSmK-BA>
+    <xmx:BwH_Z532ULoLP9nNNniq-6nloO-ezNEjE11zoPeIUNvgylE1p0Qzqg>
+    <xmx:BwH_ZyurrBGiq0d5XhTJUwcvY3nzsy3G9vPt93bsYUDp_SRlk77pKg>
+    <xmx:BwH_Z9UUjzC9TnvB5L0W8sEXPvFNw-yFkkGyo9MBkpXTar_gxSvhDQ>
+    <xmx:BwH_Z55HyMHgVi98zmFLAjUq1YLGcBjm_cumeLahzX27mV0z-YP6V9s_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Apr 2025 20:58:25 -0400 (EDT)
+ 15 Apr 2025 20:59:50 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Jeff King
  <peff@peff.net>
-Subject: Re: [PATCH v3 2/9] pack-objects: limit scope in
- 'add_object_entry_from_pack()'
-In-Reply-To: <986bef29b5f33d32fd366aa9370d439175a9b605.1744757204.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Tue, 15 Apr 2025 18:46:51 -0400")
+Subject: Re: [PATCH v3 3/9] pack-objects: factor out handling '--stdin-packs'
+In-Reply-To: <6f8fe8a4e10198b0339337376279cff4ac654879.1744757204.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Tue, 15 Apr 2025 18:46:54 -0400")
 References: <cover.1744413969.git.me@ttaylorr.com>
 	<cover.1744757204.git.me@ttaylorr.com>
-	<986bef29b5f33d32fd366aa9370d439175a9b605.1744757204.git.me@ttaylorr.com>
-Date: Tue, 15 Apr 2025 17:58:23 -0700
-Message-ID: <xmqqtt6okjm8.fsf@gitster.g>
+	<6f8fe8a4e10198b0339337376279cff4ac654879.1744757204.git.me@ttaylorr.com>
+Date: Tue, 15 Apr 2025 17:59:49 -0700
+Message-ID: <xmqqplhckjju.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,41 +91,64 @@ Content-Type: text/plain
 
 Taylor Blau <me@ttaylorr.com> writes:
 
-> In add_object_entry_from_pack() we declare 'revs' (given to us through
-> the miscellaneous context argument) earlier in the "if (p)" conditional
-> than is necessary.  Move it down as far as it can go to reduce its
-> scope.
-
-That makes sense, but ...
-
+> At the bottom of cmd_pack_objects() we check which mode the command is
+> running in (e.g., generating a cruft pack, handling '--stdin-packs',
+> using the internal rev-list, etc.) and handle the mode appropriately.
+>
+> The '--stdin-packs' case is handled inline (dating back to its
+> introduction in 339bce27f4 (builtin/pack-objects.c: add '--stdin-packs'
+> option, 2021-02-22)) since it is relatively short. Extract the body of
+> "if (stdin_packs)" into its own function to prepare for the
+> implementation to become lengthier in a following commit.
+>
 > Signed-off-by: Taylor Blau <me@ttaylorr.com>
 > ---
->  builtin/pack-objects.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  builtin/pack-objects.c | 18 ++++++++++++------
+>  1 file changed, 12 insertions(+), 6 deletions(-)
+
+Makes sense.
+
 >
 > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 20dd870bbf..4ab695a3aa 100644
+> index 4ab695a3aa..a293267074 100644
 > --- a/builtin/pack-objects.c
 > +++ b/builtin/pack-objects.c
-> @@ -3490,14 +3490,14 @@ static int add_object_entry_from_pack(const struct object_id *oid,
->  		return 0;
+> @@ -3674,6 +3674,17 @@ static void read_packs_list_from_stdin(void)
+>  	string_list_clear(&exclude_packs, 0);
+>  }
 >  
->  	if (p) {
-> -		struct rev_info *revs = _data;
->  		struct object_info oi = OBJECT_INFO_INIT;
-> -
->  		oi.typep = &type;
+> +static void add_unreachable_loose_objects(void);
 > +
-
-Isn't this change about spacing around oi's decl and the first
-statement in the block strictly worsening the code?  At least it is
-an unrelated change.
-
->  		if (packed_object_info(the_repository, p, ofs, &oi) < 0) {
->  			die(_("could not get type of object %s in pack %s"),
->  			    oid_to_hex(oid), p->pack_name);
->  		} else if (type == OBJ_COMMIT) {
-> +			struct rev_info *revs = _data;
->  			/*
->  			 * commits in included packs are used as starting points for the
->  			 * subsequent revision walk
+> +static void read_stdin_packs(int rev_list_unpacked)
+> +{
+> +	/* avoids adding objects in excluded packs */
+> +	ignore_packed_keep_in_core = 1;
+> +	read_packs_list_from_stdin();
+> +	if (rev_list_unpacked)
+> +		add_unreachable_loose_objects();
+> +}
+> +
+>  static void add_cruft_object_entry(const struct object_id *oid, enum object_type type,
+>  				   struct packed_git *pack, off_t offset,
+>  				   const char *name, uint32_t mtime)
+> @@ -3769,7 +3780,6 @@ static void mark_pack_kept_in_core(struct string_list *packs, unsigned keep)
+>  	}
+>  }
+>  
+> -static void add_unreachable_loose_objects(void);
+>  static void add_objects_in_unpacked_packs(void);
+>  
+>  static void enumerate_cruft_objects(void)
+> @@ -4776,11 +4786,7 @@ int cmd_pack_objects(int argc,
+>  		progress_state = start_progress(the_repository,
+>  						_("Enumerating objects"), 0);
+>  	if (stdin_packs) {
+> -		/* avoids adding objects in excluded packs */
+> -		ignore_packed_keep_in_core = 1;
+> -		read_packs_list_from_stdin();
+> -		if (rev_list_unpacked)
+> -			add_unreachable_loose_objects();
+> +		read_stdin_packs(rev_list_unpacked);
+>  	} else if (cruft) {
+>  		read_cruft_objects();
+>  	} else if (!use_internal_rev_list) {
