@@ -1,126 +1,145 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E3D2459FD
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 10:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAA42459FD
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 10:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744799292; cv=none; b=mQUclP/OYhcuupX7SRerlCbPJMMqkq6GKtN3p/obLYmd3svhVV8rxjFyvQGtwYXz2Wi7u11IyfNZTD26CB3ORgqu8yuYtv0RFZkbvczrPahymU6HykOm3/vNwXOUKcLc4qf18jAeg+Ons9bU1ptsuIZ21gATS0ucnkFmtByDkxo=
+	t=1744799297; cv=none; b=GZFe9rjaLNz/sFBf4RdbSFmQ8gkOd7z9KS/PykolgHpjCheswmBQHvPGZ4WmmysVQYilsMnk+JUXa/42Xz/AELBeyAxXPfotBG6ALvceqwah0tqbscnKpKvuwgcT2DIPYj7q9eoCql61kQsD2VAl09HtuEqyUow8p4vSq39wXag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744799292; c=relaxed/simple;
-	bh=hR0O8lcJczxcSTZiLU1Wl0Ggm06dAO2ZRPMdAIaUJM8=;
+	s=arc-20240116; t=1744799297; c=relaxed/simple;
+	bh=l2wfIfM0OFEkaXkyOFSdgeOI5zsLTZHHoJ95sLUsJ4Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bhcy6pvppeQ5JFImU+NeVMB/0av3JoVAOYYm9+oPKhQ/3Tg5KNoyNMuqKhufVt0LLRxX9LhDPTs5T5YqUMjge6PFfdIh+wZNX08YYO8ATPwSKK7GBW04t5aYmrYlC8PF1rYrFwSaTi8TM8PaXC1r/eoOIQaJrKezjibYe+U51HQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FzONCqEt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZotBGx1e; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=j23ZC94PG51nC2qxCJfKVcSSDsrzK79OLRpsdMB6xzd1ZK1MFrfv8IgUcqIBJBRk+k2lHGY43Krk0/xkrP83UbYZFAU8WLSbMoqIz+t08VW0SW0YJyKfSrhmqnRgdhJBBVwpXGj2/RxvH0VCFKZGOhN28+CQZSXTIPlfCrT9Ne8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ncff7tek; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qlTs7o6L; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FzONCqEt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZotBGx1e"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D5BDD11401D9;
-	Wed, 16 Apr 2025 06:28:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ncff7tek";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qlTs7o6L"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8BD7B1140225;
+	Wed, 16 Apr 2025 06:28:13 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Wed, 16 Apr 2025 06:28:09 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 16 Apr 2025 06:28:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1744799289; x=1744885689; bh=YIGDgCVDmQ
-	LqphEcLld7i7nmZAHqpTCjN4Prwyxjm5I=; b=FzONCqEtxqDoUiruQV9RS5COJx
-	3b+PGv/MZiMEwHxb9RD1PSZcYMLa1dW6ycE4JzucvSQLRpbVr4Gbzr33B21W5J3n
-	tLuVhTXkREpD83FUStU+fcBUXv8khE6R64IYD9OjQ+YDK2SpXFaeuGw/wd+SsVZB
-	mg/2By/5Jddt4eXfZGav7MwRaDYRVYPdVYPPsFAzPnvBtAuwevTI19sdlaUOwV3B
-	632M7on9ghrPpPkfElUSDzOzrpIlch9QK71AUlFwPmzHSA1oPZHQj3eTV62shirl
-	WcbQkdOBK7FOqPQSeFpG6811t4Ls5y9O2narfKQsBkz8s79WZauG7dwHbYIg==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1744799293;
+	 x=1744885693; bh=Lte1msYUI+pd6DviFvOcOQgEZEGaQfDU4KQgY9gKX/E=; b=
+	ncff7tek+9l2fiwyQ1bQqHVkDfVRQr1E5ouh8YPWgzi3GC+DkWtZMjvyQqtUwGwB
+	d+MOZCM2femQ9+YOqWr01H4emzGyptgrORnm++U+tTx5+er+mzhGNb1flxCLfets
+	UkBU6oXftGQk8CyRZmEMHWZh29uS5QvzMyCTn5LfdRb3me7HpJ9pP10TFNnDyvil
+	E9OYZ4ixbrAS8SZFpb5e4wHoszN0kk78KnBwcpwh7Yy91XfYQ6zUKeOVMPleavGu
+	WCB30Fallt33SvO5cl5cczPIjdMrK7sB+gSLIJLNLK3xJ6lIVelnBRxBnhska8u3
+	o1xSTAWGOe0zHZCJRgg3eQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744799289; x=1744885689; bh=YIGDgCVDmQLqphEcLld7i7nmZAHqpTCjN4P
-	rwyxjm5I=; b=ZotBGx1eq/Xt4CK7ojt1MbZOddsWDEcbjnRVWNeXcCMB5t+Y1HQ
-	/mLWOne3L0bx3gqCN5zpfOCsCCyhVHLUNlroz8IIdjqSvOYFPFn06IGLOGn4stQC
-	KvInXFGSNuGxFuZh7/7u3JDAG1COaKV94kWsoi6rGGPNqA6LbN0ttTxCjliPdVmg
-	nMbuSry/g0s4bJkZV8Lhpdqm7S2yDEoJaAG/GyBFbMo2lSEDNblYv42TUSbzk94R
-	+55DG6YXkRPcdwr6N4YK+DIw+q0yuUuBPvgoT9h2mzebZuuf96YkSNaCZGIA0KEv
-	Uq6Hc8QOfAnUbbD5WGN0pfN28LK2jDe7kiw==
-X-ME-Sender: <xms:OYb_Z1up5rGACNoyjbI0oHM9Sc5wZhLTtmhEU9r80E2bLRNSknBFyA>
-    <xme:OYb_Z-f5N02nEQbEoGJlZjHHdFexIz6x5nO5zxoBGWMny7zZmOjJ2Ish8yWQZ-jTR
-    ZyAe_GJBNwpQ4nlZQ>
-X-ME-Received: <xmr:OYb_Z4xJr9V_GB7yUjsEg55TCpaaPSK18mbGVZiHvvW-iuXudXeYYi1PBnLoQCgLNxgEWsEWLtTglrL8JxUbM_3CglYZYerJIr21HFmJKE1ZdA>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744799293; x=
+	1744885693; bh=Lte1msYUI+pd6DviFvOcOQgEZEGaQfDU4KQgY9gKX/E=; b=q
+	lTs7o6L8nol/aRajNzQRbN+xMfwnqs0KWg21XiVFmFl8xi4GU3hv7iLFyhzHMRSg
+	OX1+QvAmxAPVLehUxzDVkjiP67Z3UDU67L01L3ZnTYEUxIa73M1vm1yNgUq+6fx2
+	JJtcwIFpUNqYgjA30VM43wsG7oBs9TU6rXvlCth2NgSJr5+bNUbpa0jILCfeeHE8
+	eu/ykrzBNlYOsWmpL2yTLovHB8tagwjVjG7A9ftsj8QmcZlc5RE6bwpiM/lcA+DU
+	vrK2Vj/y8CJwCNFiuA3wTQdki+BjZaVshJD7yBu7EhBkekfr+xmPsTL8OxjSknpy
+	q6/2NY9CpnkrqIhMMVklQ==
+X-ME-Sender: <xms:PYb_Z92YsRYSBxUjooKKjM1ZXf4ywY0HkUHee1-P0dcpgwNJNtAEFg>
+    <xme:PYb_Z0HAphJTPFuXTuVUXqFzvy3Qy2zdyU1tg2MUUxnGDNpp9AfD_aQClErNMqIzO
+    WdQQAGpEmNqaWz92g>
+X-ME-Received: <xmr:PYb_Z96ZBlNRdR4KZO0Ler3wzyLqY9k6PLrOXSc316ie9HLdaEqs1vSc9OIfcGaEDtpbp3OVIqFyGT1XW4KcTq0bMcwyfYa5GH9ChqzSlyzDdw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeiudefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepthhmiiesphhosghogidrtghomhdprhgtphhtthhopehglhgruhgsihhtiies
-    phhhhihsihhkrdhfuhdqsggvrhhlihhnrdguvgdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpth
-    htohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsiigvuggvrhdruggvvhes
-    ghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:OYb_Z8OEqfHsXHocTYjxFF1-fu7rcdR9UBJzyTEhqC6ewvWmmaa91g>
-    <xmx:OYb_Z199fOzSP8AodP_yPwkI4JZp22WhjeuaXs8KW1FeYcxR7RbRCA>
-    <xmx:OYb_Z8VXHwAd71uVZg27p_8YbyccVYPWoY1BVyiuT2WobayfefSsyg>
-    <xmx:OYb_Z2fubGjYHVEkQYuP0TeoIyekYi7gwSRH89Y32DCUfDjMnOgfGw>
-    <xmx:OYb_ZxxDLwLHAFuugnFh2pmoCT7FkdLpezLHh5BAIxVEJlpklfufG_Pk>
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
+    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtth
+    hopehtmhiisehpohgsohigrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsii
+    gvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehglhgruhgsihhtiies
+    phhhhihsihhkrdhfuhdqsggvrhhlihhnrdguvgdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:PYb_Z61jmOma00Jgke3z2ZYsJAYZAEiLLqoEhsP4YOUdNfX3HhRncw>
+    <xmx:PYb_ZwGjL4Ua9eUOBwHZoJBVjiP2Rayjzpv8olLOxVnVS_wGsOgImQ>
+    <xmx:PYb_Z7_pjSUgUwKpO2HYepq8h1q8GQO5Ez3Rk37a99wYTte4PsRNaw>
+    <xmx:PYb_Z9mxHw6Y-LC4UKrOJxCDbaa0Z3fThNiWmJ0jLxWXWu3rRaOs5g>
+    <xmx:PYb_Z3bpihdPcMsK7HhyxV1rgs07hLxZZUAFwF5WAzXDvAQhbBrQ3e-q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Apr 2025 06:28:07 -0400 (EDT)
+ 16 Apr 2025 06:28:12 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 84519b88 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 16 Apr 2025 10:28:07 +0000 (UTC)
-Date: Wed, 16 Apr 2025 12:28:06 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 610d6441 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 16 Apr 2025 10:28:11 +0000 (UTC)
+Date: Wed, 16 Apr 2025 12:28:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Cc: git@vger.kernel.org,
 	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Todd Zullinger <tmz@pobox.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
 	Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/5] parse-options: introduce precision handling for
- `OPTION_INTEGER`
-Message-ID: <Z_-GNqY9gZM6fEsg@pks.im>
+Subject: Re: [PATCH v2 4/5] parse-options: introduce `OPTION_UNSIGNED`
+Message-ID: <Z_-GOuC79KxWVwJ5@pks.im>
 References: <20250415-b4-pks-parse-options-integers-v2-0-ce07441a1f01@pks.im>
- <20250415-b4-pks-parse-options-integers-v2-2-ce07441a1f01@pks.im>
- <8e566ea1-5ff4-4854-a1dc-38626510c080@gmail.com>
+ <20250415-b4-pks-parse-options-integers-v2-4-ce07441a1f01@pks.im>
+ <94f4ba9a-81a9-4e3a-932b-faee5aa2d2f4@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <8e566ea1-5ff4-4854-a1dc-38626510c080@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <94f4ba9a-81a9-4e3a-932b-faee5aa2d2f4@web.de>
 
-On Tue, Apr 15, 2025 at 04:51:59PM +0100, Phillip Wood wrote:
-> On 15/04/2025 13:14, Patrick Steinhardt wrote:
-> > Note that we do not yet assert signedness of the passed variable, which
-> > is another source of bugs. This will be handled in a subsequent commit.
-> > 
+On Tue, Apr 15, 2025 at 07:38:04PM +0200, René Scharfe wrote:
+> Am 15.04.25 um 14:14 schrieb Patrick Steinhardt:
+> > diff --git a/parse-options.c b/parse-options.c
+> > index ae836c384c7..9670e46a679 100644
+> > --- a/parse-options.c
+> > +++ b/parse-options.c
+> > @@ -216,6 +216,49 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
+> >  			    optname(opt, flags));
+> >  		}
+> >  	}
+> > +	case OPTION_UNSIGNED:
+> > +	{
+> > +		uintmax_t upper_bound = UINTMAX_MAX >> (bitsizeof(uintmax_t) - CHAR_BIT * opt->precision);
+> > +		uintmax_t value;
+> > +
+> > +		if (unset) {
+> > +			value = 0;
+> > +		} else if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
+> > +			value = opt->defval;
+> > +		} else if (get_arg(p, opt, flags, &arg)) {
+> > +			return -1;
+> > +		} else if (!*arg) {
+> > +			return error(_("%s expects a numerical value"),
+> > +				     optname(opt, flags));
 > > +		} else {
-> > +			value = strtoimax(arg, (char **)&s, 10);
+> > +			value = strtoumax(arg, (char **)&s, 10);
 > > +			if (*s)
 > > +				return error(_("%s expects a numerical value"),
 > > +					     optname(opt, flags));
+> > +		}
+> > +
+> > +		if (value > upper_bound)
+> > +			return error(_("value %"PRIuMAX" for %s exceeds %"PRIuMAX),
+> > +				     value, optname(opt, flags), upper_bound);
+> > +
+> > +		switch (opt->precision) {
+> > +		case 1:
+> > +			*(int8_t *)opt->value = value;
 > 
-> To catch overflow errors for arguments of intimax_t we need to do
-> 
-> 	errno = 0
-> 	value = strtoimax(arg, (Char **)&s, 10);
-> 	if (errno || *s)
-> 		return error(...)
-> 
-> to catch the error when we parse the string as the checks below only work
-> for narrower types.
+> uint8_t, surely.  Similarly for the other casts below.
 
-Fair. This issue isn't new -- it already existed before my patch series.
-But that's not a good enough reason to not fix it while we're at it.
+Oof, of course.
 
 Patrick
