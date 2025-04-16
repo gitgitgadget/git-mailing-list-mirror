@@ -1,147 +1,156 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39672221266
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 21:17:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4818F946F
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 22:07:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744838260; cv=none; b=Z/VPvjOGptCLO2qmcGiOblGVl+AdVQuInGH0Hh45Q+URS4jD2UYgoLEmreEz+RVyBPCX2dEzc+Xn0LAwppkujOUeX8YjMlVGD8B075HbV0DFS4+LUx++5iLnlXD/ImzzJTXADLkzCQ2XZSa2144wOjc5qhln+4DGWzShpG0ayFs=
+	t=1744841242; cv=none; b=jQthVi18WzuPHElbXm7dhLqFZGt3G5pX+ONeR7Ee2fFZJpvlMl58iqtOnA11TPXS539EyQ7HU9Uc0tZHVG63X/QSG3uMLRUGUmedi4YrF+480UOffOYc+rGFzxbJF/Fs4TRaartCJEuOBeViPa7a1vCvAUMb/8ixzULU4MFi7kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744838260; c=relaxed/simple;
-	bh=ZRSCrnyczlbxsgO5IZqE/K/0oDIJ3WO5qzUYwuay86Y=;
+	s=arc-20240116; t=1744841242; c=relaxed/simple;
+	bh=6pLUsVjUjXxfOHV4V/tVSQJy6suAwbhh25MZOEo3N2Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SSUAevEA79hsNYoynUXnBg7W/aHn38+qESH2uEZlrv+OfP9kiCFzt1qkpyNgoAmkBdx7XBfeIh18wogBwKIXfHjT4WR0UNSvtEMiUPWEaqr5V4u0KnwKm0CMgcvfBk3LWoaSaR2sX9oicsEls4C5tFp9ADW1n7yoCPR/lb0pbJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=rY9pwQs8; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=jKwZYYi8Jrt0Lyo4MNTEap6KcYWHRsULfQAinyZkjs71uxEUy5kVADEwmTOGjTGbqW0OIJMVPHaJz2oa9ptTGWsf4u5iADAvixalUcYb9tCzUqaNnT5eOUEJcwAyDisKP0vHdHaeYHQLLTaKwafWFb4A2MqZG5BwaSYFGD2WvPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=0irxNdem; arc=none smtp.client-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="rY9pwQs8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1744838255;
-	bh=ZRSCrnyczlbxsgO5IZqE/K/0oDIJ3WO5qzUYwuay86Y=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=rY9pwQs8ptYOgVQuHKWp8JXZR2j3LFt2y/jty7z6KrduuN2J/vf1jVdHaWvDbOzPj
-	 vErBTK2Dz1aQCEoZ1+ABf5iIx0WVR+3Ypg4Tn9GJQDwr1j1AWe8HoqwLLzcXUj6pYM
-	 LvqIfbsSxVWOeFfLOvMnqMT5/lCqCdAhc8T0wbVyn025FU1CV+eI65VtPyt7/JhUdP
-	 4OZadx9XuhiEgnQjyv9q/G1Cip6o2CEO57U7Du9FhpuofmbMZbbPzULMNJE07DZtQJ
-	 XmYBId2MiKL0fNMyaG8ZKb0wxmdnOJGD6qKx+nCgq+eBKCLU17pjgEkg4B4/LCtyH9
-	 xRRRUMQBtmU2v4rKJVsiHOEIw5dXcqauLqrtODmMsTI92PrtGbLA+HmskB2/luhwD4
-	 sNOGFd8HjyvqYUw8np5hrz6s2H5//3X0CcZSgD59buDXV43CdPbCmQFXDAOWB+rGMq
-	 JD7lrR4wY5qd/EbpO55LPhFe0un72t28IrxHqwSiSpxM5MXspr4
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9ec0:b846:49f:a41d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id AB83120107;
-	Wed, 16 Apr 2025 21:17:35 +0000 (UTC)
-Date: Wed, 16 Apr 2025 21:17:34 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: =?utf-8?B?5by156eA56mO?= KITTY <kittychang@cathayholdings.com.tw>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	=?utf-8?B?6Zai6Kmp56mO?= VANESSA <VanessaKuang@cathayholdings.com.tw>
-Subject: Re: Get support
-Message-ID: <aAAebiStHoOnbmbX@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	=?utf-8?B?5by156eA56mO?= KITTY <kittychang@cathayholdings.com.tw>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	=?utf-8?B?6Zai6Kmp56mO?= VANESSA <VanessaKuang@cathayholdings.com.tw>
-References: <1744786449-14024-mlmmj-0f30ebef@vger.kernel.org>
- <202504160735.53G7ZjeU083840@365mse01.symphox.net>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="0irxNdem"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7c560c55bc1so9233585a.1
+        for <git@vger.kernel.org>; Wed, 16 Apr 2025 15:07:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744841237; x=1745446037; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vJTlx5Un3oqJhXs9oBIvbFiElkGQDQyWYukH3OTQ/g8=;
+        b=0irxNdemn0ZP1re82wEorGGDnjHI1665Vb33utXH4qww5M/JpK3HG6EtibZZEHiUWX
+         WkDiRGlPWAXMT7ezDq5lWK4FO3L6XJfdnzznAnWuTPZjASSX/s1LZfDDH8tBPjl532Yn
+         BRE7Arle5HJppvxPrZMuwSrW/UBZ0U0oCKZImsof692UsErVztDuv2vfIa3W/u33e9aW
+         izPbOoQ38eVQGx6tzm0K59i0M30Y+BZ1YdJIl7LgUXa08emwjP4sOriuWkGhbZWcGkcu
+         kz7ItqunnEgQwEe2wgqhAtwXvq+rMFx2dKPACKQrPPcm/ExlzcGKccLd3mwuI9AogBuT
+         3V0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744841237; x=1745446037;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vJTlx5Un3oqJhXs9oBIvbFiElkGQDQyWYukH3OTQ/g8=;
+        b=Mc40VsK9+TRl3zZUfaNPA9N/G7ysXUkILxuoa1kUSyTog9/K6W4TZ6AJrlM7jo55G/
+         2Q3bVDpDqR4jQFuGtoaNkzq2BmHwDZCyac6CvBM+cepJxE9GistZe9Onq7iv3QK5LxPM
+         iwGiQdyEdCBwEc5YknwqFSWI997zGgwUcV1zYAg2kR6pkEw4DvJJs/lj7Ied2NsMaxe0
+         73ow59Ip5WjdV/z5yn2aXGlst4mU+ApTz5uMo3YcQmBKUN75wYpBgP4Yi1QQuQBD3P1q
+         QUW/Xz8qPc6OFkej61ZJbPXqQosKGuL05twoHeyk+rYJyEg8zelJ0upftD578OtyrkhP
+         K65g==
+X-Gm-Message-State: AOJu0YwimygPi9wyU8ygztiEFUpopYd7b7VmJbEAYn1RmNRyMurxgA89
+	5XhPqcLLH3RqUersmW6pDs1DDcIGoEWsXYvvQQscYRhRUdylYSdeYwaqOkJW0O0=
+X-Gm-Gg: ASbGncvKVfga0o2HuoS7VSeVop0Px/0PZfpZeRROwprGOAyzwBvfBYICYh1RcuKrgOB
+	JrHc8hdZppsUGiojRlObrrWFfNym708W7Sy3avZc+KwSpdWejlv6nydnTXKGYURyAPeVjfuFaOv
+	gj2TIIYU07psVAzV2Dhx2Zl6Joi2MYOYZb2QawK5aOORo9XNcPwTOf+yc0zVuQb74Le0vo6jGFu
+	fnWwetKSunmYXZRmQceWtYwdHUCanSXhV09vhqZ6BTBy3LAn+DfhKFwggtSJgsyPydk9fEKfgYJ
+	dmfBxOHGbqWaJIEWBIzq4kG6EU1uhitrsZpLf7Z/4xY8vcyBSbZOILR2NLKSyB/T8lgf28OMEHY
+	JaWEAwHzlqVsrDwssOeD10Z8=
+X-Google-Smtp-Source: AGHT+IEISTrzAs1ge2MaGtxwb8R9hgJhSpYdHioNyffApr4oDhWpEC76mtw0A9n/yp5afNuf7D4zgw==
+X-Received: by 2002:a05:620a:4045:b0:7c8:c97:627f with SMTP id af79cd13be357-7c91906167fmr532461085a.46.1744841237091;
+        Wed, 16 Apr 2025 15:07:17 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c7a896a6fbsm1102856585a.55.2025.04.16.15.07.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Apr 2025 15:07:16 -0700 (PDT)
+Date: Wed, 16 Apr 2025 18:07:15 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 2/9] pack-objects: limit scope in
+ 'add_object_entry_from_pack()'
+Message-ID: <aAAqE2NK3eQ8c6r1@nand.local>
+References: <cover.1744413969.git.me@ttaylorr.com>
+ <cover.1744757204.git.me@ttaylorr.com>
+ <986bef29b5f33d32fd366aa9370d439175a9b605.1744757204.git.me@ttaylorr.com>
+ <xmqqtt6okjm8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mf3f+zYHf+xbl+1Z"
-Content-Disposition: inline
-In-Reply-To: <202504160735.53G7ZjeU083840@365mse01.symphox.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---mf3f+zYHf+xbl+1Z
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqtt6okjm8.fsf@gitster.g>
 
-On 2025-04-16 at 07:35:38, =E5=BC=B5=E7=A7=80=E7=A9=8E KITTY wrote:
-> Hi git support,
->=20
-> We have problem =E2=80=98cloning repos from AzureDevOps via SourceTree or=
- via command line.=E2=80=99
-> We guess this is a Microsoft issue before, but later we find that this is=
-sue comes with specific git version. (Microsoft case: 2412240040000772)
->=20
-> Different git version got different result.
->=20
-> Git for Windows v2.30.2-rc0.windows.1 ~ 2.43 ---> Clone success
->=20
-> Git for Windows v2.44.0-rc0.windows.1 or above ---> Clone failed
->=20
->=20
-> To prevent git version 2.30.2~2.43 from reaching EOL, we need to know how=
- to successfully clone repos after upgrading git version to 2.44 or above.
-> Any suggestion is appreciate.
->=20
-> The Error Message:
->=20
-> ----clone by Sourcetree----
-> git -c filter.lfs.smudge=3D -c filter.lfs.required=3Dfalse -c diff.mnemon=
-icprefix=3Dfalse -c core.quotepath=3Dfalse --no-optional-locks clone --bran=
-ch develop https://cfhdevops@dev.azure.com/cfhdevops/IT-CBooking/_git/catha=
-ymeetingroom "\\CFHVDIFSVIP\CFH_VDI_UserData$\00904813.CFHDOM\My Documents\=
-cathaymeetingroom"
-> Cloning into '\\CFHVDIFSVIP\CFH_VDI_UserData$\00904813.CFHDOM\My Document=
-s\cathaymeetingroom'...
-> error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 0 C=
-ompleted with errors, see above.
->=20
-> ----clone by command line ----
-> $ git clone https://cfhdevops@dev.azure.com/cfhdevops/IT-Contract/_git/IT=
--Contract
-> Cloning into 'IT-Contract'...
-> remote: Azure Repos
-> remote: Found 10 objects to send. (25 ms)
-> error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 0 U=
-npacking objects: 100% (10/10), 2.18 GiB | 6.12 MiB/s, done.
-=20
-I would recommend reporting this to the Git for Windows project at
-https://github.com/git-for-windows/git/issues.  Some searching shows
-that this might be https://github.com/git-for-windows/git/issues/4997.
+On Tue, Apr 15, 2025 at 05:58:23PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > In add_object_entry_from_pack() we declare 'revs' (given to us through
+> > the miscellaneous context argument) earlier in the "if (p)" conditional
+> > than is necessary.  Move it down as far as it can go to reduce its
+> > scope.
+>
+> That makes sense, but ...
+>
+> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> > ---
+> >  builtin/pack-objects.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> > index 20dd870bbf..4ab695a3aa 100644
+> > --- a/builtin/pack-objects.c
+> > +++ b/builtin/pack-objects.c
+> > @@ -3490,14 +3490,14 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+> >  		return 0;
+> >
+> >  	if (p) {
+> > -		struct rev_info *revs = _data;
+> >  		struct object_info oi = OBJECT_INFO_INIT;
+> > -
+> >  		oi.typep = &type;
+> > +
+>
+> Isn't this change about spacing around oi's decl and the first
+> statement in the block strictly worsening the code?  At least it is
+> an unrelated change.
 
-The reason I suggest reporting this there is that this looks like it
-might be Windows-specific or specific to a particular version of
-libcurl and on Windows the latter is shipped as part of Git for Windows.
+Yeah, this is cruft that I thought I had expunged while rebasing. Here's
+a better version of the patch, but I'm happy to send a new round of the
+series if it would be more convenient for you:
 
-I'd also recommend trying to track down with more specificity the exact
-versions that are affected, which can help the maintainer identify any
-relevant changes and get the problem fixed sooner.  I'm sure Dscho has
-introduced lots of changes between 2.30.2 and 2.44.0-rc0, not to mention
-the numerous Git changes, and having more details will help pinpoint the
-problem more easily.
+--- 8< ---
 
-Also, if you can reproduce the problem with other forges (say, GitHub or
-GitLab) or not, that is also helpful information to have.
+Subject: [PATCH] pack-objects: limit scope in 'add_object_entry_from_pack()'
 
-Best of luck in trying to get this fixed.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+In add_object_entry_from_pack() we declare 'revs' (given to us through
+the miscellaneous context argument) earlier in the "if (p)" conditional
+than is necessary.  Move it down as far as it can go to reduce its
+scope.
 
---mf3f+zYHf+xbl+1Z
-Content-Type: application/pgp-signature; name="signature.asc"
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ builtin/pack-objects.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
------BEGIN PGP SIGNATURE-----
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 20dd870bbf..682e80be40 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3490,7 +3490,6 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+ 		return 0;
 
-wr0EABYKAG8FgmgAHm4JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ15peoV5hwTopwGo2P2tX4suwG7aJlYcpi7iCXZDzsnF
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAJOYAQDkZ8D+df7CV1rFf+18Znv6mMte
-ne5A2ACZssCVIXmVyQD/e3aplB5noYTxLFMU+uYvNizw9WqUbzazmH7IjLiGkAY=
-=eyC6
------END PGP SIGNATURE-----
+ 	if (p) {
+-		struct rev_info *revs = _data;
+ 		struct object_info oi = OBJECT_INFO_INIT;
 
---mf3f+zYHf+xbl+1Z--
+ 		oi.typep = &type;
+@@ -3498,6 +3497,7 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+ 			die(_("could not get type of object %s in pack %s"),
+ 			    oid_to_hex(oid), p->pack_name);
+ 		} else if (type == OBJ_COMMIT) {
++			struct rev_info *revs = _data;
+ 			/*
+ 			 * commits in included packs are used as starting points for the
+ 			 * subsequent revision walk
+--
+2.49.0.230.ga662d77f78
+
+Thanks,
+Taylor
