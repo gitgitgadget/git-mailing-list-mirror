@@ -1,138 +1,147 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9964C28373
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 19:19:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39672221266
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 21:17:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744831177; cv=none; b=lfbCIdTdzgNRGHiKdO5UMXT5orR7W/vZjhAOesXH5bWOFdU4F/RMbdmIUMaKaOuOXfT82LLIa0ySbxmytk+JBlgIqin4Usy/lCwHdciwQgpUij2r41btm/jriGGrMseg5b8xWuZwu//5D1+c+yTUYM89NDj6HMwC6HgQcEGL8NQ=
+	t=1744838260; cv=none; b=Z/VPvjOGptCLO2qmcGiOblGVl+AdVQuInGH0Hh45Q+URS4jD2UYgoLEmreEz+RVyBPCX2dEzc+Xn0LAwppkujOUeX8YjMlVGD8B075HbV0DFS4+LUx++5iLnlXD/ImzzJTXADLkzCQ2XZSa2144wOjc5qhln+4DGWzShpG0ayFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744831177; c=relaxed/simple;
-	bh=pxC+SoTlOPkhPTrwm4vkgW7JUI29W4fdF9z2IPExdtc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tJH3OsHBl000/b+foqoAWx6Ddr2ZkffQzz17a9gQtdGIR3DWQcrIDQ1CSn+DtG/v4vhiI7zgaQtbgvOg13Rqw8O9iJMcPtL2b50hkPHSXPQ3zCLH0wqj8yWrGTcEBiaDdk9ecfIe+PM24qC5ITMbCyScfsm6ZHMrW2+7/dNq8Cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L4mxhfh4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iHNPqET1; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744838260; c=relaxed/simple;
+	bh=ZRSCrnyczlbxsgO5IZqE/K/0oDIJ3WO5qzUYwuay86Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SSUAevEA79hsNYoynUXnBg7W/aHn38+qESH2uEZlrv+OfP9kiCFzt1qkpyNgoAmkBdx7XBfeIh18wogBwKIXfHjT4WR0UNSvtEMiUPWEaqr5V4u0KnwKm0CMgcvfBk3LWoaSaR2sX9oicsEls4C5tFp9ADW1n7yoCPR/lb0pbJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=rY9pwQs8; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L4mxhfh4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iHNPqET1"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 70CA425401F9;
-	Wed, 16 Apr 2025 15:19:34 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 16 Apr 2025 15:19:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744831174; x=1744917574; bh=WGTZTi7EOg
-	IAlKL2JN6t8Pf80/3ghfFs1Qzmj+r0tJk=; b=L4mxhfh4dBy/ff/LnIBvx5vl2t
-	KEit5YZdWLXLpEZ+o+vzp0siR4C+SFbWVaFFlTkabc+DedruMp0EOyHuHInEaC1g
-	hjZD3bSSLJXs/U/fDFUCKSrDvAK1uKl5qZLnCXBPr86jtv9G9isrAmnswH5/Wo4j
-	IwUSNva1l/E/jfiNJrinzqDJAQh6NDQX93vYl5VtHT4MdBBawi7OR4xXJcNNKWs0
-	xbrJKBnnZUYxtSJpE679yEj+m1TNie9hnRZ1BzRnWBw2NNG8H+Ggkc/xR/effbra
-	YnDweSV+8R0zXfM8uhzIIwOaHyi2Gl/St7iax/h/CVMzX8IBh30iHLTVJZqg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744831174; x=1744917574; bh=WGTZTi7EOgIAlKL2JN6t8Pf80/3ghfFs1Qz
-	mj+r0tJk=; b=iHNPqET1jiR8/NpyDn2K/PqDx7wgEi+7VfPmN0xngIi7IPJArFK
-	Uz3gkLg+VPviXEZetcZfQtZSivR7dyrJTGRxhgzq+6Onpg2xU43SM3OQtj4Eif0e
-	8OC5f/h34qkE+vOZI9EKSvDTD0QDgAY10YgnkR0QBvl2SQ2cmksKoJ321/2VFoaU
-	63/D9Gs/sFU5C+kQNDDpKKEaa4bUrzMPE0kR1rqLcey+d3uElFKzwJrfVuFy5LsN
-	eyGBlLzXv9d0nwDCa8M829ltnu4BWwx8Dx3n8YavjpbGpxWKYKn/yi0zzVhHzTG1
-	0TJ7V0Z35paEGvBtbp9WxC3kDIcTdfDXpeg==
-X-ME-Sender: <xms:xQIAaL02ZwQf-dJ10Hoz21gJFfimWAMlVm4MBrt6ExkJ4wYYyG7D4w>
-    <xme:xQIAaKE4Uj-WdirY7SgTvbtbEcf_-dnIQCIoaUFpohrQyQGVaONk-874WDSIjrCDg
-    ASXdSs2t2faYSz_Sg>
-X-ME-Received: <xmr:xQIAaL4ar54wDqM2oRASHrYefRGf2Y0LieKWDawYQmD4cJYVbvHYa2XLrA5n2lgyr3EiPNXYfsRI9kHZpCmQWwNAAMHwZcbfiCKs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdejvddtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhksh
-    drihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehglhgruhgsihhtiiesphhhhihsihhkrdhfuhdqsggvrhhlihhnrdguvgdprhgtph
-    htthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpthhtoheplhdrshdrrhesfigvsgdr
-    uggvpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghf
-    fhdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhm
-X-ME-Proxy: <xmx:xQIAaA2DoJIPfEMrUq0vcqnINRpM3jAMaXQpD5OmvE_xtfy2drZrVw>
-    <xmx:xQIAaOE-Vfa_G1NyCtBg7kQU1AilHoVyfdJvhjBGHWx6Uc3gSmvI-A>
-    <xmx:xQIAaB-IHA8DzPdD8bUW6OUsWXRBW8iX2zrBRlAZ4sWEz7SJ4v6-fA>
-    <xmx:xQIAaLlgo-JPhhbfITgyp0uogx_mtbAydHGGosO3PplrwM5bYlDTQQ>
-    <xmx:xgIAaFmGC99w9CdYNq-RKooNURKOAvXAPI6dce1JZ0BXDWlZ9yX_KeN8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Apr 2025 15:19:33 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  John Paul Adrian Glaubitz
- <glaubitz@physik.fu-berlin.de>,  Todd Zullinger <tmz@pobox.com>,
-  =?utf-8?Q?Ren=C3=A9?=
- Scharfe <l.s.r@web.de>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,  Derrick
- Stolee <stolee@gmail.com>,  Jeff King <peff@peff.net>,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 7/7] parse-options: introduce bounded integer options
-In-Reply-To: <20250416-b4-pks-parse-options-integers-v3-7-d390746bea79@pks.im>
-	(Patrick Steinhardt's message of "Wed, 16 Apr 2025 12:02:16 +0200")
-References: <20250416-b4-pks-parse-options-integers-v3-0-d390746bea79@pks.im>
-	<20250416-b4-pks-parse-options-integers-v3-7-d390746bea79@pks.im>
-Date: Wed, 16 Apr 2025 12:19:31 -0700
-Message-ID: <xmqqsem7hq2k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="rY9pwQs8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1744838255;
+	bh=ZRSCrnyczlbxsgO5IZqE/K/0oDIJ3WO5qzUYwuay86Y=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=rY9pwQs8ptYOgVQuHKWp8JXZR2j3LFt2y/jty7z6KrduuN2J/vf1jVdHaWvDbOzPj
+	 vErBTK2Dz1aQCEoZ1+ABf5iIx0WVR+3Ypg4Tn9GJQDwr1j1AWe8HoqwLLzcXUj6pYM
+	 LvqIfbsSxVWOeFfLOvMnqMT5/lCqCdAhc8T0wbVyn025FU1CV+eI65VtPyt7/JhUdP
+	 4OZadx9XuhiEgnQjyv9q/G1Cip6o2CEO57U7Du9FhpuofmbMZbbPzULMNJE07DZtQJ
+	 XmYBId2MiKL0fNMyaG8ZKb0wxmdnOJGD6qKx+nCgq+eBKCLU17pjgEkg4B4/LCtyH9
+	 xRRRUMQBtmU2v4rKJVsiHOEIw5dXcqauLqrtODmMsTI92PrtGbLA+HmskB2/luhwD4
+	 sNOGFd8HjyvqYUw8np5hrz6s2H5//3X0CcZSgD59buDXV43CdPbCmQFXDAOWB+rGMq
+	 JD7lrR4wY5qd/EbpO55LPhFe0un72t28IrxHqwSiSpxM5MXspr4
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9ec0:b846:49f:a41d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id AB83120107;
+	Wed, 16 Apr 2025 21:17:35 +0000 (UTC)
+Date: Wed, 16 Apr 2025 21:17:34 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: =?utf-8?B?5by156eA56mO?= KITTY <kittychang@cathayholdings.com.tw>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	=?utf-8?B?6Zai6Kmp56mO?= VANESSA <VanessaKuang@cathayholdings.com.tw>
+Subject: Re: Get support
+Message-ID: <aAAebiStHoOnbmbX@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	=?utf-8?B?5by156eA56mO?= KITTY <kittychang@cathayholdings.com.tw>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	=?utf-8?B?6Zai6Kmp56mO?= VANESSA <VanessaKuang@cathayholdings.com.tw>
+References: <1744786449-14024-mlmmj-0f30ebef@vger.kernel.org>
+ <202504160735.53G7ZjeU083840@365mse01.symphox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="mf3f+zYHf+xbl+1Z"
+Content-Disposition: inline
+In-Reply-To: <202504160735.53G7ZjeU083840@365mse01.symphox.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> In the preceding commits we have introduced integer precisions. The
-> precision merely tracks bounds of the underlying data types so that we
-> don't try to for example write a `size_t` into an `unsigned`, which
-> could otherwise cause out-of-bounds writes.
->
-> Some options may have bounds that are stricter than the underlying data
-> type. Right now, users of any such options would have to manually verify
-> that the value passed to such an option is inside the expected bounds.
-> This is rather tedious, and it leads to code duplication across sites
-> that wish to perform such bounds checks.
->
-> Introduce `OPT_*_BOUNDED()` options that alleviate this issue. Users
-> can optionally specify both a lower and upper bound, and if set we will
-> verify that the value passed by the user is in that range.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  parse-options.c               | 40 ++++++++++++++++++++++++++++-----
->  parse-options.h               | 52 +++++++++++++++++++++++++++++++++++++++++++
->  t/helper/test-parse-options.c |  5 +++++
->  t/t0040-parse-options.sh      | 33 +++++++++++++++++++++++++++
->  4 files changed, 125 insertions(+), 5 deletions(-)
+--mf3f+zYHf+xbl+1Z
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It is certainly cute, but unless there are plenty of existing users
-that use OPT_INTEGER() and friends and perform bounds checks
-themselves, I am not sure if this can withstand YAGNI criticism.
-And this step being at the end of the series, plus the above
-diffstat, tells us that there aren't any existing users converted to
-use this new mechanism.
+On 2025-04-16 at 07:35:38, =E5=BC=B5=E7=A7=80=E7=A9=8E KITTY wrote:
+> Hi git support,
+>=20
+> We have problem =E2=80=98cloning repos from AzureDevOps via SourceTree or=
+ via command line.=E2=80=99
+> We guess this is a Microsoft issue before, but later we find that this is=
+sue comes with specific git version. (Microsoft case: 2412240040000772)
+>=20
+> Different git version got different result.
+>=20
+> Git for Windows v2.30.2-rc0.windows.1 ~ 2.43 ---> Clone success
+>=20
+> Git for Windows v2.44.0-rc0.windows.1 or above ---> Clone failed
+>=20
+>=20
+> To prevent git version 2.30.2~2.43 from reaching EOL, we need to know how=
+ to successfully clone repos after upgrading git version to 2.44 or above.
+> Any suggestion is appreciate.
+>=20
+> The Error Message:
+>=20
+> ----clone by Sourcetree----
+> git -c filter.lfs.smudge=3D -c filter.lfs.required=3Dfalse -c diff.mnemon=
+icprefix=3Dfalse -c core.quotepath=3Dfalse --no-optional-locks clone --bran=
+ch develop https://cfhdevops@dev.azure.com/cfhdevops/IT-CBooking/_git/catha=
+ymeetingroom "\\CFHVDIFSVIP\CFH_VDI_UserData$\00904813.CFHDOM\My Documents\=
+cathaymeetingroom"
+> Cloning into '\\CFHVDIFSVIP\CFH_VDI_UserData$\00904813.CFHDOM\My Document=
+s\cathaymeetingroom'...
+> error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 0 C=
+ompleted with errors, see above.
+>=20
+> ----clone by command line ----
+> $ git clone https://cfhdevops@dev.azure.com/cfhdevops/IT-Contract/_git/IT=
+-Contract
+> Cloning into 'IT-Contract'...
+> remote: Azure Repos
+> remote: Found 10 objects to send. (25 ms)
+> error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 0 U=
+npacking objects: 100% (10/10), 2.18 GiB | 6.12 MiB/s, done.
+=20
+I would recommend reporting this to the Git for Windows project at
+https://github.com/git-for-windows/git/issues.  Some searching shows
+that this might be https://github.com/git-for-windows/git/issues/4997.
 
-OPT_INTEGER that wants to track percentage may want to say the value
-is between 0 and 100 (inclusive), but instead we take it bounded not
-to exceed 100, without lower bound.  Without a real callsite, we
-cannot even tell if it is acceptable compromise for the sake of
-simplicity to forbid 0 as lower or upper bound, for example.
+The reason I suggest reporting this there is that this looks like it
+might be Windows-specific or specific to a particular version of
+libcurl and on Windows the latter is shipped as part of Git for Windows.
 
-Thanks.
+I'd also recommend trying to track down with more specificity the exact
+versions that are affected, which can help the maintainer identify any
+relevant changes and get the problem fixed sooner.  I'm sure Dscho has
+introduced lots of changes between 2.30.2 and 2.44.0-rc0, not to mention
+the numerous Git changes, and having more details will help pinpoint the
+problem more easily.
+
+Also, if you can reproduce the problem with other forges (say, GitHub or
+GitLab) or not, that is also helpful information to have.
+
+Best of luck in trying to get this fixed.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--mf3f+zYHf+xbl+1Z
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmgAHm4JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ15peoV5hwTopwGo2P2tX4suwG7aJlYcpi7iCXZDzsnF
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAJOYAQDkZ8D+df7CV1rFf+18Znv6mMte
+ne5A2ACZssCVIXmVyQD/e3aplB5noYTxLFMU+uYvNizw9WqUbzazmH7IjLiGkAY=
+=eyC6
+-----END PGP SIGNATURE-----
+
+--mf3f+zYHf+xbl+1Z--
