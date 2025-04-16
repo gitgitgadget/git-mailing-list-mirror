@@ -1,100 +1,177 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2171A23BE
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 16:21:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8DB211A24
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 16:40:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744820475; cv=none; b=iWjH+LaCvqk4do/kegeD4YZYLzfoFu1QLkJ69XQ1FtzbbTxd86FwfN0vQpM/9CDxGt6iaGAZI1Z2gglhPWt0FNvOP4yPLmihpI/Z38/rl00g6rat4QDosGYNZSm2mlGvzItYx330/kaahHxDpnD17OJBzpXkA/llTcHf/4x6sDM=
+	t=1744821641; cv=none; b=Hmyf6f9Mb3A2umSjl4uL7wf8z/J8YXYGz5w1tR2OKjVLaknlALNSQMTcPHy7P+slOlFufVjX+HXpZLV3ZBBo6iwa/ccpAGGrjU8oVsLtF25dtdNsqcmnUKdDBpaJqBDL4WduuUgsO3iQcLrRUxHokc5TUrr7B3aYQz6pdyPg92E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744820475; c=relaxed/simple;
-	bh=PZc2T5CeN1S+I6PVtZrdbDmgBWtnMOcvazhuYkA5wTU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GwDQ64PSy1phFVMo7FMypaaMtFyupX4uLatKxklE8CxGVXDio9wkgTCIObE2FWB6YPncktSoQ/16eAl04rct7YQ3D60qqwBfAv45AAy23JSOpunlYL/K8ATWtZ0/tu6TZzeFpWknZkIkgfCj1hkDOFnR+pgwFKvlHV11LLwuozg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ogrGV1DK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rg5f6BYW; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744821641; c=relaxed/simple;
+	bh=2+Il/dHTKHUyrupJuM/FK7DufXPJixIVDXb5wx9gS7o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tYBRAPQFtG8kCOyoV6qrj0oGJpY7LI2Si4cPHtW6rvGlnjSiKEO9Q9tXdT+sm3W6raUv/StWAXkj1k4QPEZnYoz3TBoORzWYgFtXPoWUlc4Y1SdT6m1CR38smJDme7IzTJL7IBGhF6SLukVl/BJyBNVOUjuM9jcKqhurnX4TeKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q1ah1eT6; arc=none smtp.client-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ogrGV1DK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rg5f6BYW"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B69661140274;
-	Wed, 16 Apr 2025 12:21:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 16 Apr 2025 12:21:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744820472; x=1744906872; bh=REx02S5t4w
-	2kXx/G1Sww5xKRtxzhJOgdxoAmXdeZhPA=; b=ogrGV1DKEYCg3PmMJlPZg4fElD
-	QGOU+CG0LtQjhaJ/qCR53pNgzz6+plmM5jDU3BHK2Ypi/oZ9cx7sD05Lh3QxyzsG
-	wYJRZCQGCc15Ao0TNzi52+9oXYf7NnbZ6Jwixq8nbVbFR09pu2Oh2LE8yS9GJIr4
-	ejwmShkx6P/TRk+k47NaUn1cWVPaHfzsMib6Oh8v5UGVtvuUQImjFbTVOKq1kLDS
-	m5t/q+dIOqFXiMun2hVR7wx1/yIHy2GRBFwk8hJPNwcf5TZEdQpLs2qItvXF1ZHI
-	ax1GnHBLQByEGUD5XR28pYdc/hparAmef56yxYCo/uyLCQKYN4rZ3tAjFTLQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744820472; x=1744906872; bh=REx02S5t4w2kXx/G1Sww5xKRtxzhJOgdxoA
-	mXdeZhPA=; b=Rg5f6BYWpCQ0KK7Gop0W0zIYmLapC3f9auu2CcFUDD7MfTvyZXw
-	hol98+oy0yyR7VlhBvAu+JJpzpSKDerSIjZAJlBSgYgcG0uycvxmNRcfV8CeC2Q8
-	RsBrPcxVV1nDaqHpiBI/CqFgm6XhmHmi+pWd6STuDkN+vGB52Rh2xMJiIgMg5g7b
-	b8s3nAMPAuJSmAgpmuOyPkDC/Zt++/i3K0nyvuav8Ec78JXD+tzUbrz4TFJr2BbL
-	4EiU1Vt4iwQEy9Xy2RjBLRA6OYSy60X14fSK2R7IDIpzj2ZuXtbzPngZiarZFBKI
-	AhgcOtgjKo18LwV0o3W+pae+nY4wyLO6XiQ==
-X-ME-Sender: <xms:-Nj_Zxyal56_6WDQkxb_431C6PZUGGzIyP67IbWbJQw_kBaOWrnvdw>
-    <xme:-Nj_ZxTix1wW-HBUXmRx8AJY5Kj7qHS3ZFZX0fLwJhFWyM9ZIzv85Fz6zl_BOIo21
-    E7rrPdRnFvk5UKnQA>
-X-ME-Received: <xmr:-Nj_Z7WSCdCOdE5DkpVRK-RdjbrLlZ6l0Z8TyBYk7G6TCkXEKmM3HhcKfslYd_XlYVAuw11FUXUtraIDj0Lv6D3urKhb0lSS215K>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeikeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvse
-    hsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-Nj_ZziBoacEzg3gbHG_fiT8DW0XNM6_WCjj2lyRPynW4YcDY5AbSQ>
-    <xmx:-Nj_ZzAZwGVfDNzwuXFWJspzkG16yN0dNeicafYGllFKOzJLvLpNsA>
-    <xmx:-Nj_Z8J1kkL03Y8f70lxZPk3syubov10sRKOsaglecMqWaaedR2ZFQ>
-    <xmx:-Nj_ZyABnisu-5IxDQSepX4PvToLN9dv0bIUUO0LkXFsXaUgBh-e0Q>
-    <xmx:-Nj_Z_Zu3A_qeJj3RUhzdI_YZVNimemCzOf5oyDKjbElm_ccFegNvsj7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Apr 2025 12:21:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Eric Sunshine
- <sunshine@sunshineco.com>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 00/10] Split up "object-file.c"
-In-Reply-To: <CABPp-BFGeJ6eANb_5m4KSWRY_r9KCWarzya_qMkQNchKD5Q=xg@mail.gmail.com>
-	(Elijah Newren's message of "Tue, 15 Apr 2025 23:41:34 -0700")
-References: <20250408-pks-split-object-file-v1-0-f1fd50191143@pks.im>
-	<20250415-pks-split-object-file-v3-0-6aa7db7ad7b0@pks.im>
-	<CABPp-BFGeJ6eANb_5m4KSWRY_r9KCWarzya_qMkQNchKD5Q=xg@mail.gmail.com>
-Date: Wed, 16 Apr 2025 09:21:10 -0700
-Message-ID: <xmqq7c3khybt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q1ah1eT6"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c0e135e953so723988285a.2
+        for <git@vger.kernel.org>; Wed, 16 Apr 2025 09:40:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744821639; x=1745426439; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Fuw0NCI68S65OVbWCDyAyPWZZeTzpDrwyqPUdCjn7uQ=;
+        b=Q1ah1eT61iTVcTnUuu28gIyf1lIzNJcEH1/fWejwlNOaWt8pjtXgkKkQruWh+/edIx
+         NddwRqChIETxVPbdQlueE6M6d+pKMTZL+d14Sdxi+y7wedgtw9qp2Cd1CEYpEoGLPGZV
+         oz7rUXD8HwG1icOJBqEyIogSCqufB7umapDXNzy2H78zDocImjIhr3DDgLDvBaokEgtT
+         dYJb2h8Uy0bxSWK+gWqybeFUisWAuxPgCn5taiTXYdDJ7MZcCB8t2kT0BJuiPz3dItLQ
+         td6OTLAulCHNcL14n7PSsU3zWqXBCXi7Y9HNZlMvX6U/+o3qfPWl+SEUmm61/7Y3l/32
+         0moQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744821639; x=1745426439;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Fuw0NCI68S65OVbWCDyAyPWZZeTzpDrwyqPUdCjn7uQ=;
+        b=uTeff5fmI1gZz8+idSelY1Ct2XG8qpCpKCtnqUy2wb1I+r10ARK4vHyU/PB1tG7yXH
+         uZ+psFuy8nqchiajHNCRi/p0voy+sBFhl9FdgudYLWSJDkdT2sW88pz7UWabrAxZeYFa
+         ReyLB7sOE1lnyy86rcBARrSWbVLXgcVZX/POzSKAG5NhoS1BiHh7M5N2OfW6PSTGjQUF
+         +ZOKBovD71Vw/829QmYGvhglCMANmeyKWKjoAIRYEQmFf5TKIrLVKnpCznXn70KMaiOe
+         vnjbYRH2xmh6UKOy6FTF7NO1wOjFbeeI47yBcSlGhFp1PE3UMw7GKIVL12jB8G+aVn0s
+         GAnA==
+X-Forwarded-Encrypted: i=1; AJvYcCWDBClB9BMlVwVATIbEbh68XEi+zcfNTpNk9aLS1qnTtTmgEfQZuURGoKZfzX4DhnMeYjM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwLqx+qNZDC91y3is6ihp+ogF8LFEhE5fMJ8nsQYckw+e8vxHe/
+	9+HoYUKVNcElj9Eb71fq+4rffKRF52fcR7VIQGJvP4v0oAvUw6e4c8gx42TKp2U0iCfTiHNE11Y
+	pUyPWXth46/BCy7R526avQs/KNa0=
+X-Gm-Gg: ASbGncuJkbOkXVx02zlj+Qk8Ob8x6+U5VigqeBGj9UxIUmQQ1C3FnsrS/Eb/DnZJ0Qw
+	/eegb11quHQT3uZ7A5lfBqAxPq3yNOLpaIFrD64PnkTilHZ7jkKms+59D/P6yXE71+hadtGFBpq
+	ZZdboPHYKUsJ43TIqRMkqECQkav4yB9xfAvMCu08oUF4FBd2Az9tgdvzk=
+X-Google-Smtp-Source: AGHT+IElXWGU6BwtHV07Jj/zZ2Q6vkxkEosBatN8UtTa5EhPsgVMe1N5y4/+dafSHt6ax48Vlgy0+36hSjC4t1T9Cd4=
+X-Received: by 2002:a05:620a:1926:b0:7c5:a29e:3477 with SMTP id
+ af79cd13be357-7c919084009mr387917985a.53.1744821638933; Wed, 16 Apr 2025
+ 09:40:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250412094607.236382-2-jayatheerthkulkarni2005@gmail.com>
+ <20250412174051.780148-1-jayatheerthkulkarni2005@gmail.com>
+ <Z_7ekhsBzXK6LKuV@tapette.crustytoothpaste.net> <CA+rGoLfAidyuomeNym5WX8Bo7-jPcfHx35wDeZ7W2aorAN-B7g@mail.gmail.com>
+ <xmqqa58gjlnk.fsf@gitster.g> <CA+rGoLesZ3nSjruJ8_XRWVsFpMu8mo_4cCOdB-GFHU_qXkXDCQ@mail.gmail.com>
+ <717161C8-497D-42C7-8C10-AC112238EEFD@gmail.com>
+In-Reply-To: <717161C8-497D-42C7-8C10-AC112238EEFD@gmail.com>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Wed, 16 Apr 2025 22:10:27 +0530
+X-Gm-Features: ATxdqUFcFFWH6n-z80LNJmSRH5HuDEmKdu3GQkj4KgfZWNcS1q5ZUrGZVl9vcmg
+Message-ID: <CA+rGoLeUojJ4BAUDy2kBsMjRCEFTP=so7sDgy1BX6d7RoBusEA@mail.gmail.com>
+Subject: Re: [PATCH] t3706: Add test for wildcard vs literal pathspec
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	peff@peff.net, piotrsiupa@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Elijah Newren <newren@gmail.com> writes:
+On Wed, Apr 16, 2025 at 9:20=E2=80=AFPM Lucas Seiki Oshiro
+<lucasseikioshiro@gmail.com> wrote:
+>
+>
+> > Yes ls-files is also a great example, I will add them in the test.
+>
+>
+> I was going to suggest you to use `git ls-files -o 'f**'` in your test,
+>  which would eliminate the need of `git add` and `git reset`. However, I
+> just found that the bug doesn't happen here:
+>
+> ```
+> git init
+> touch foo 'f*' 'f**' f bar
+> git ls-files -o 'f*'
+> ```
+>
+> Here (I'm using the current `next`, currently at `fd585f7`),
+> `git ls-files -o 'f*'` list the files correctly:
+>
+> ```
+> f
+> f*
+> f**
+> foo
+> ```
+>
+> I also tried with `git grep`:
+>
+> ```
+> git init
+> touch foo 'f*' 'f**' f bar
+> for f in *; do echo 123 > "$f"; done
+> git add -A
+> git grep 123 -- 'f*'
+>
+> and somehow it worked:
+>
+> ```
+> f:1:123
+> f*:1:123
+> f**:1:123
+> foo:1:123
+> ```
+>
+> So, if I'm not doing anything wrong, it looks that it is not solely
+> related to pathspecs, but related to pathspecs when used with some other
+> commands. hmmm...
+>
+> > I think for the pathspec and glob specific commands almost all the comm=
+ands
+> > share the same code, so it should work the same for all.
+>
+>
+> I also though the same, but somehow it behaves differently at least with
+> `ls-files` and `grep`. Perhaps it will need further investigation on how
+> some commands behave correctly and some don't. I would start by
+> inspecting other commands that uses pathspecs (some that I remember:
+> checkout, log, show, stash, status, ls-files, grep) and see if they work
+> correctly or not, then compare the two groups and see what differs
+> between them under the hook.
 
-> I read over the range-diff and the three new patches (1, 2, & 7); this
-> round looks good to me.  I particularly like the extended rationale in
-> the commit message for what is now patch 9.
 
-Thanks, both, this round looked good to me, too.
+That is interesting
+given that this part of code
+<prune function in add.c>
+while (--i >=3D 0) {
+struct dir_entry *entry =3D *src++;
+if (dir_path_match(repo->index, entry, pathspec, prefix, seen))
+*dst++ =3D entry;
+}
 
+takes part in dir_path_match
+Which traces to *Exact Match* problem that was found
+
+and from ls files
+
+if (!index_name_is_other(istate, ent->name, ent->len))
+continue;
+show_dir_entry(istate, tag_other, ent);
+
+Where show_dir_entry calls
+static void show_dir_entry(struct index_state *istate,
+const char *tag, struct dir_entry *ent)
+{
+    int len =3D max_prefix_len;
+
+    if (len > ent->len)
+        die("git ls-files: internal error - directory entry not
+superset of prefix");
+
+    /* If ps_matches is non-NULL, figure out which pathspec(s) match. */
+    if (ps_matched)
+        dir_path_match(istate, ent, &pathspec, len, ps_matched);
+
+
+Something like this
+So I think the argument values are making the difference but I'm still unsu=
+re.
