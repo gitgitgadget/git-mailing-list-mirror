@@ -1,117 +1,92 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB93D20FA9D
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 16:00:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C32D1A08A0
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 16:02:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744819256; cv=none; b=CATb3w2z7QPL8HjuboGZVvbPbrap7Uv1MTRUEGdx/Jq8ZcN7xSHSbSMBaTTYeqd6XBkSj9nvjpRcFzZFTTg3A3W+o9oABVtl7Ry4AKz1cEcWAJ4Bu/H6mMt5G4uGzZ4ZaN9n5Ukc+Uho0oZ0WTbB3Xe2mMIWA3ymtX1egMHZGq0=
+	t=1744819356; cv=none; b=JgvIESUvEnJy2eiBQn5VtHv4MqN8LPuxpRVVPY0glRY8IpmhjQh0S47YAplrztyVaGZgMkUSvj8cB7d/sDqoUvSC2RKeoNvxjhmdIEVk6/NI8IChyR9xtsNapbISUuQl8DkWWawTMubHek0qmwIr7Krxw5MpTxf52UAtUuUacoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744819256; c=relaxed/simple;
-	bh=QhpNiJaOilEJ88FlaRXUFnrCw92MzrOcS+gPhA1Yg8c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rkfhSU17ORfMy2O8nH6QhfxAWa5gVvmuSWEwSXBer0OxqiFyUuTnn3UkTVrbXEhCz5Pr5Fr0HjuaD9+5JfPpZhsckjxVX0eIYDUMvSKd47lGYgh8go7bTj6ZmGJz9Yifnz9dgFrywL+AxNA+nNrgwYq2iviNC8z01FCs/xI7u3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=R9BHWan6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i3UjvHIH; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744819356; c=relaxed/simple;
+	bh=pd2CEBQG6rJuKuKMJLYXliv+1XSR4JBjh8RUUK8Auuc=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=kJrLBSwnom33xc6N/8chSqMNVozebG7nv6gAKWjSdN17OpVu6pNgpuf0RlbNzhyyTj1Uqmr5W1t76t2VA8pMSBq2r9IV0Mznew/Ay4caj0cXdtmGEV5/FWlCxKa4x34l35o3K80pyThYP2bXzYLuxdt4MMiimLcBVALT1aO5WGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kdz4ZeIG; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="R9BHWan6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i3UjvHIH"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id CCB531380212;
-	Wed, 16 Apr 2025 12:00:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 16 Apr 2025 12:00:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744819253; x=1744905653; bh=Ads5Xr/tuB
-	Hv+lYw6puqnoYXYjLBhzg2TUy4uPsa0sQ=; b=R9BHWan68Qszy7E6uJ1cZKaJhH
-	ER8DuaV4LF5bfv6+nVBx7so8Ac3pK6yvvqMYwh29iG/88ztlCHUOMvmdgt1z6gde
-	FkQOxPdf8YSG/L6xh12mkfOtZA3BuapOWzUdxGTw/jLmktybsXpo8TacPv4f5dfY
-	gcQMvAoOE62eqSdUZXwvTFKR0sNn/hNvvcZOD8WwANMtL1ha2AxqaSLki8Qmv1KB
-	4LXDv6RFUpqrTPy3XDYf1YpC8o4SglbAOhPMIsPqDzpVv8iPP/qu0+7J7iSgnMlA
-	7K+HaSr+gVhtd7yzPmz6Ln5Ffrm4NPHGpCP7qs9yWXa/bHjWKhZNXqolx2MA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744819253; x=1744905653; bh=Ads5Xr/tuBHv+lYw6puqnoYXYjLBhzg2TUy
-	4uPsa0sQ=; b=i3UjvHIHkBbtYSrbLiFE+mItU+3oCRmhJQwF2Ao+Zd909HvsIVY
-	mpk+UjvR8uUS/LGPVhm+EGyYE1qXtmx5mjd1rJZ6XuP0SR2j9axBecuTX97+tB4F
-	9e1NgFwrfI+/jeAFsBNabKGcY006LK+uLlW95To3EVgdtXMjN4W9a1pSXno5behj
-	H8jduZ41y3Rz3kCCEfRypMSS0lyDIAeT7jJc6J5pVllWJ2hbp8nMphNp0z/jZYhC
-	zX4jXZl3ozxaiw6HHI2SaklTSkBIeNaM0HU2EpyPKP/P0kmhjsEoDLy50S5ULOp+
-	vPSPzFWoq5J2RSi9h0TMpbzPBq3j7DBurvA==
-X-ME-Sender: <xms:NdT_Z4Ly6vevzONBNoNb-EMpjssE3VUGKTEX2OYGfTHmT-g4hC0OOg>
-    <xme:NdT_Z4IpuDis4uq02Jf3Q6VqrWB2WVOTw6yQrHIntV4Hnt4uM_nClcRey0u33Q-BE
-    RPXPemK9cl0ydBY8w>
-X-ME-Received: <xmr:NdT_Z4vQ7JK6IdWhPW-HqkxqY8ZXKWUTGWF_9WLehU5SdLQXh31PiHjJRAX1mVLrPNfp6U982QYecCZH2JXjGV1UatSVPPO3H_Nl>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeijeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhhutggrshhsvg
-    hikhhiohhshhhirhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhgrhigrthhhvggv
-    rhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehsrg
-    hnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehpihhothhrshhiuhhprgesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:NdT_Z1YZOWG-kXjOXkefJz8VSE_asVQJNpPedBzyIcsEGisiKPLToA>
-    <xmx:NdT_Z_bRnt17GjTga9TUpLfg_NpLnYQpnsDjoKLWpg5EyYBrx7b1hw>
-    <xmx:NdT_ZxAG8XCInPRhztkV7Wwc1R-6lnN4bi2O834U1xCO7D-QYQzJuw>
-    <xmx:NdT_Z1aGb4uELFR8sVZYuWXrNqXh4Do9-7Uae9FH6UGGu_QAzeMpPw>
-    <xmx:NdT_Zw95FFUi6w-FVuODfWIFft5Ji1NRymj2_zXaTg4iLGUcy8ipKF1R>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Apr 2025 12:00:52 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  git@vger.kernel.org,  peff@peff.net,
-  piotrsiupa@gmail.com
-Subject: Re: [PATCH] t3706: Add test for wildcard vs literal pathspec
-In-Reply-To: <717161C8-497D-42C7-8C10-AC112238EEFD@gmail.com> (Lucas Seiki
-	Oshiro's message of "Wed, 16 Apr 2025 12:49:51 -0300")
-References: <20250412094607.236382-2-jayatheerthkulkarni2005@gmail.com>
-	<20250412174051.780148-1-jayatheerthkulkarni2005@gmail.com>
-	<Z_7ekhsBzXK6LKuV@tapette.crustytoothpaste.net>
-	<CA+rGoLfAidyuomeNym5WX8Bo7-jPcfHx35wDeZ7W2aorAN-B7g@mail.gmail.com>
-	<xmqqa58gjlnk.fsf@gitster.g>
-	<CA+rGoLesZ3nSjruJ8_XRWVsFpMu8mo_4cCOdB-GFHU_qXkXDCQ@mail.gmail.com>
-	<717161C8-497D-42C7-8C10-AC112238EEFD@gmail.com>
-Date: Wed, 16 Apr 2025 09:00:51 -0700
-Message-ID: <xmqqcydchz9o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kdz4ZeIG"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3012a0c8496so5389417a91.2
+        for <git@vger.kernel.org>; Wed, 16 Apr 2025 09:02:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744819353; x=1745424153; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pd2CEBQG6rJuKuKMJLYXliv+1XSR4JBjh8RUUK8Auuc=;
+        b=kdz4ZeIGHRcTvaTohTuFGhStqMdTWMpiDcTOBVRb/Bt4JWIE3xCMKifPOBXzFjLluc
+         zI56MUySvFJo3s6CP/ats3TlhIPEj2g5X3SBAA2UWt6DjUjzstYwD43JsZQ9oK1pwEby
+         cxxyzbkmM+C4f9G8uFsKaRAlagsrRLrnrQ9OLiKfmp+4vH4SHfE/lnGJPLEnMd0UbTfS
+         lsM4ydbSoT7DIvobmIb1OFRkwrVj+K7k6r+xNkdmoIs4Xpd8gKfv31KWig1YD6tkalgN
+         gKyQFJZgb08GB9fXq6aqm6Z88b42Nn9biabuPqK/P80N+Qu6vj9laeK5s2UCPZqgvhGt
+         nCSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744819353; x=1745424153;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pd2CEBQG6rJuKuKMJLYXliv+1XSR4JBjh8RUUK8Auuc=;
+        b=HxcnfJ3H88A9mQjZFNLB5uQJutajOBz/SwXMYneZ6L8WHXj3VtmmYrFsJ/uAdBqNFJ
+         Rxmrc9TpkkV6T7X+kExr3pbhHN4/JFeuLJ3VR3UEva+70lnVYHNa0HyucGncqK9ZGfGf
+         g4Yul5as9zT4srpY6k1G68rlnax7mJCMMXs8hFI9WmCzVDeEdbhd4n4Syesc3TIKXf/L
+         wZu617shvVfoi2GCp0jk55VCz+1+VkJElvwWy191V7jbFZ4tzoUomXnH/pGFPS64AwbX
+         Rm5PACPMKT1K6a8sSqiqTomjN0p405zQjn9seATVnDi+Iczor5DSJgY6ZvN8Z/LU+2+4
+         Hfkg==
+X-Gm-Message-State: AOJu0YzGLi/CSS8bewH8UwGuSPnH2usqJ5rNI0pqZbZ4Qijeqj8a/mwZ
+	j6JYmWMbY7bTqxWjSdx/jfYrgxbqplbvP/IM+kA8r01NTQ5ryLB5r+gt3Q==
+X-Gm-Gg: ASbGncv9aqfnbI+9Bu6gpw8HkTaUWIetwNDj7L9TuhL2nsyfaCtP0CoSbU3nESYg3S3
+	bcjfIFDkhDEVxyXUgNDSL09gPXSAVyPdRJkkKf0X2hj//dZotQbZ+4Dqw2C73cM/0uqIW5815DS
+	xrVwc6qegWmzVw34Pj1//TgnDpZj+MiDoqxSoWIjixV0/C/msU1YAIIDZd9AHq9UgC0rgWrAEfE
+	Lw/kcWcYRZ8++9SHa2hsprjHBtNcFy5n6Wb9R3IDg4L5xysbeOA8G0CnHO1L2f4a0kTuQMePoIk
+	0Gk60DYVWsAFZxPPovxJc266oxdgmBOxQ2hEtFQSWQbvm8nBiPX+qTeleD7f+Tts8NNm7PgPNPM
+	IqeI=
+X-Google-Smtp-Source: AGHT+IHn5YXiprvaA3AQON7qcKb+FzdIhsraw71vAdZrZthpaezEXo2RJBiS0GoFJjBwyTULMPp8xA==
+X-Received: by 2002:a17:90b:58cd:b0:2ff:5357:1c7e with SMTP id 98e67ed59e1d1-308640279fdmr3978925a91.20.1744819353540;
+        Wed, 16 Apr 2025 09:02:33 -0700 (PDT)
+Received: from smtpclient.apple ([2804:14c:32:8e7e:899b:9db3:7efc:4ac2])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-308611f3f31sm1791465a91.16.2025.04.16.09.02.31
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 16 Apr 2025 09:02:32 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: Re: [GSoC PATCH] revision: remove log_reencode field from rev_info
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <Z_9wQLTtj9t45Wjj@pks.im>
+Date: Wed, 16 Apr 2025 13:02:19 -0300
+Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <C8DDA8D1-A241-4DD0-876B-F2F859FD6073@gmail.com>
+References: <20250414151438.22232-1-lucasseikioshiro@gmail.com>
+ <Z_9wQLTtj9t45Wjj@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: Apple Mail (2.3826.500.181.1.5)
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-> So, if I'm not doing anything wrong, it looks that it is not solely
-> related to pathspecs, but related to pathspecs when used with some other
-> commands. hmmm...
+> Nit, not worth a reroll: historic information like this is always a nice
+> addition to the commit message so that other people don't have to dig
+> into history themselves to figure out why the field isn't used anymore.
 
-I haven't looked into the code, but if my recollection is correct,
-"add" is a bit curious in that it has to deal with paths that are
-not yet in the index, unlike "ls-files" and "grep".  It could be one
-half of the code paths use the "grab everything that matches the
-glob" while the other half uses "stop when there is an exact match",
-perhaps?  In the very early days of Git, I do recall making a very
-conscious decision to stop when there is an exact match to help
-those who add funny pathsnames with glob characters in it, but that
-is a long time ago, so I wouldn't be surprised if we gained multiple
-code paths to do the same thing, some of which have been corrected
-while the original ones haven't.
+Ooops, sorry
+
+> The patch looks obviously good to me, thanks!
+
+Thank you for reviewing another patch of mine!
+
+
 
