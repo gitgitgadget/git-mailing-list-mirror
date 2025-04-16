@@ -1,38 +1,38 @@
 Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457D320FAA4
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 23:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368E024BCE8
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 23:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744845600; cv=none; b=LLzAvsVUQYFtEtWoQOlwi+ot7O9wGw+A4WkzIRILWY8xJsdV5GJqShDWG+jKrhsYylHxW2K18n2nvLnkA3Pi0foOLQ8c+Uf85dYFxoB8CZ8oirlQhQ4IQiHY5rEGr9B03YIhGtN0O20xwubDbkAT0Bhn3bsMXlNvRYL9woEsUVY=
+	t=1744845604; cv=none; b=XlIuZ3FyKhC91g3CnxLmPpGDx0ymRUN9CmQTZjRSx29i1RBIbNgWQ7DxIRc+I0cuA+sscTfEejATmmj5406oEJ3GOrSI7xZwHI+XX0AbZetsPGqfOy6mjaFmuvDISz4TGBM/7N/gWUGMU3VZViKKxGU2WByl1jbvgNg0b4aEZtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744845600; c=relaxed/simple;
-	bh=Xy3vqXP37uN4SoDdmWpy0RBdXf7YpCciWfo6zABuqWk=;
+	s=arc-20240116; t=1744845604; c=relaxed/simple;
+	bh=zS7i86CmT3CrBtSa8OBiaADBDHOAqd7BzmJUnCWT9kI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kM3n4EKhYGlIhEno5RQR0CFEA1YIAV9g4+RwkvjNJs4p7ev8EaThh5zBNSKaWPx1103gpVKxZxrZ/uvUtymcUTMYZHZlYqHm7fZVDO0PeibJ2gHH/TuIJj/IUiJ8bDaSE+AZFuZlcQZhPxIp4csJOnSgItzo5R51LmP2odrSp2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=eMI6b7Nh; arc=none smtp.client-ip=84.93.230.244
+	 MIME-Version; b=L0U8KZuCTSPlLRtACxpTyoOsBWmI8yoAZdRE/oKddyGdmogdtRBGikV/e/dJuKyRWuL+xoyRf2HnP2AQsqNKvPzrl2eWEFuniCMwxKkG6xb1vERXTtLM1zfLrLmhLbGCxY+ja9GpCteJ+V+8aiA7ZbruNyZaMmCzEoPrcR6XOLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=SMkN2EsG; arc=none smtp.client-ip=84.93.230.244
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="eMI6b7Nh"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="SMkN2EsG"
 Received: from localhost.localdomain ([80.189.83.109])
 	by smtp with ESMTPA
-	id 5C1quLy9hjZe55C2vu8KPu; Thu, 17 Apr 2025 00:19:57 +0100
+	id 5C1quLy9hjZe55C2zu8KPz; Thu, 17 Apr 2025 00:20:01 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1744845597; bh=1FAl3cmC0P85NtdFo4zRYhpwyTCCCIfDtZ7HYzEpvls=;
+	t=1744845601; bh=YQnwBgfsuMWRYXEKjgIozYJq96VlRTiTV1hgXsoxbu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eMI6b7Nh9Til4x2nfVgekTC7DNz+W0A41Xu27MFSnNAZ1+w4PGK/pXH7wKa149zTJ
-	 MJXEsHqZ51vSWnn2V3v9xkfUgf3b4E+Glw/pRJpPYfHEakEwYIhyT88Wr8HzPpUryL
-	 kJ/ZVrna9kSWufWRrxim5hsypI5NPDcpJ4726xcC9FbOo2VDHyDJ68BCyzKSpjqvct
-	 VgrXB39jeL21kX4aCNwzUoab88ufpyPKAsXsasKoYRXcY1qbQw+e88UUrolilbtqae
-	 SaewPg9rX12FJACy1SFV0kBBgvMN9GcO8p/2PQf7jdC2dZqGJ0q4ztmNTdcvE2jdUB
-	 3QBzT7nSdnEyg==
+	b=SMkN2EsGzvLtNiMV7OpUOR8bUW+bRfEWjPn2b3eik07MtH3g3LJYEcCWK+Gs11v1L
+	 vOTzTVipYTrNScaJWTkE4MVacloHvElwIzTa0CWm/dlDmYmXYrmQily0S4JKwfMyco
+	 VzYEO2vEZLzHzSUPmeHPu+mch18XrneRuvOYt/pOfORxMMAFEXJ6IfP2Hb0DqY7Ti2
+	 VGh5xWEgnAlY5dLojjs06CWRMw+MfNH19EsXxbWKZ6H6o/i6IGLnnBXYhXWYIok68V
+	 PeoM+7TdFp2Z/JHNzUciKGoLlmzXaOOfR2fuodaV771s4V1u6sGwRF+pzQoOFSz+yj
+	 VDugUbNU80N+Q==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=UuDANPwB c=1 sm=1 tr=0 ts=68003b1d
+X-CNFS-Analysis: v=2.4 cv=UuDANPwB c=1 sm=1 tr=0 ts=68003b21
  a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17 a=EBOSESyhAAAA:8
- a=mCKABES6tY-doaLBvqoA:9 a=yJM6EZoI5SlJf8ks9Ge_:22
+ a=BBq10iSe0tsV5BCVkB8A:9 a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
 From: Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: GIT Mailing-list <git@vger.kernel.org>
@@ -40,9 +40,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Adam Dinwoodie <git@dinwoodie.org>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v3 10/13] builtin/gc.c: correct RAM calculation when using sysinfo
-Date: Thu, 17 Apr 2025 00:18:31 +0100
-Message-ID: <20250416231835.2492562-11-ramsay@ramsayjones.plus.com>
+Subject: [PATCH v3 11/13] config.mak.uname: add sysinfo() configuration for cygwin
+Date: Thu, 17 Apr 2025 00:18:32 +0100
+Message-ID: <20250416231835.2492562-12-ramsay@ramsayjones.plus.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250416231835.2492562-1-ramsay@ramsayjones.plus.com>
 References: <cover.1743859985.git.ramsay@ramsayjones.plus.com>
@@ -54,74 +54,82 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfM7sFFc965gPHMRwo1QRdBf1cV2LEpO5lTzSlORgOqa8MtELBJlNGP1exYar4NuhJEefZ6RSJgaKSl5PcjrtfaFQHRKdVlaijKSex6ODi9Qlf8QixGV/
- pKno+EVoCgoSOUnoClux/ZYn/Y//okBIl9iboLcCks40DxzOW9XMlja/0pKb0ukmB99mAwQJuAhAgY9WNe7NA6IDAlK5RD1PbiI=
+X-CMAE-Envelope: MS4xfKcQSoaBRpRU57rF/4tU/aB1wqIhe45Mrttr3jFYnwNBQiu1R6w5cW/094Jb7OqJKSk3fNyrNsdNUFJ//Inkx8lrY1EhAIjF1ifdO6z7S+6Il2jWuxsv
+ GBBp3UgG0cUgVr5WApek8Ltn8rC0ggVC479hrMOFz2C6353f0SWpuLQ9JptI4HQCKP0MUx3Arohh2y8P9eZBidX+157ibG2o0fI=
 
-The man page for sysinfo(2) on Linux states that (from v2.3.48) the
-sizes of the memory and swap fields, of the returned structure, are
-given as multiples of 'mem_unit' bytes. In earlier versions (prior to
-v2.3.23 on i386 in particular), the 'mem_unit' field was not part of
-the structure, and all sizes were measured in bytes. The man page does
-not discuss the motivation for this change, but it is possible that the
-change was intended for the, relatively rare, 32-bit platform with more
-than 4GB of memory.
+Although sysinfo() is a 'Linux only' function, cygwin provides an
+implementation which appears to be functional. The assumption that
+this function is Linux only is reflected in the way the HAVE_SYSINFO
+build variable is handled by the Makefile and config.mak.uname.
 
-The total_ram() function makes the assumption that the 'totalram' field
-of the 'struct sysinfo' is measured in bytes, or alternatively that the
-'mem_unit' field is always equal to one. Having writen a program to call
-the sysinfo() function and print the structure fields, it seems that, on
-Linux x84_64 and i686 anyway, the 'mem_unit' field is indeed set to one
-(note that the 32-bit system had only 2GB ram). However, cygwin also has
-an sysinfo() implementation, which gives the following values:
-
-  $ ./sysinfo
-  uptime:      21381
-  loads:       0, 0, 0
-  total ram:   2074637
-  free ram:    843237
-  shared ram:  0
-  buffer ram:  0
-  total swap:  327680
-  free swap:   306932
-  procs:       15
-  total high:  0
-  free high:   0
-  mem_unit:    4096
-
-  total ram: 8497713152
-  $
-
-[This laptop has 8GB ram, so a little bit seems to be missing. ;) ]
-
-Modify the total_ram() function to allow for the possibility that the
-memory size is not specified in bytes (ie 'mem_unit' is greater than
-one).
+Rework the setting of HAVE_SYSINFO in the Linux section of the system
+specific config file, along with the corresponding setting of the
+BASIC_CFLAGS in the Makefile. Add the setting of HAVE_SYSINFO to the
+cygwin section of 'config.mak.uname'. While here, add a test for the
+sysinfo() function to the autoconf build system.
 
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- builtin/gc.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ Makefile         | 4 ++++
+ config.mak.uname | 3 ++-
+ configure.ac     | 8 ++++++++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 99431fd467..cdcf1dc6e7 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -373,8 +373,13 @@ static uint64_t total_ram(void)
- #if defined(HAVE_SYSINFO)
- 	struct sysinfo si;
+diff --git a/Makefile b/Makefile
+index 8fa4d2664e..ff89f2b81f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2168,6 +2168,10 @@ ifdef HAVE_SYNC_FILE_RANGE
+ 	BASIC_CFLAGS += -DHAVE_SYNC_FILE_RANGE
+ endif
  
--	if (!sysinfo(&si))
--		return si.totalram;
-+	if (!sysinfo(&si)) {
-+		uint64_t total = si.totalram;
++ifdef HAVE_SYSINFO
++	BASIC_CFLAGS += -DHAVE_SYSINFO
++endif
 +
-+		if (si.mem_unit > 1)
-+			total *= (uint64_t)si.mem_unit;
-+		return total;
-+	}
- #elif defined(HAVE_BSD_SYSCTL) && (defined(HW_MEMSIZE) || defined(HW_PHYSMEM))
- 	int64_t physical_memory;
- 	int mib[2];
+ ifdef HAVE_BSD_SYSCTL
+ 	BASIC_CFLAGS += -DHAVE_BSD_SYSCTL
+ endif
+diff --git a/config.mak.uname b/config.mak.uname
+index d058b34292..e7bd07cf6e 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -58,7 +58,7 @@ ifeq ($(uname_S),Linux)
+ 	HAVE_SYNC_FILE_RANGE = YesPlease
+ 	HAVE_GETDELIM = YesPlease
+ 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+-	BASIC_CFLAGS += -DHAVE_SYSINFO
++	HAVE_SYSINFO = YesPlease
+ 	PROCFS_EXECUTABLE_PATH = /proc/self/exe
+ 	HAVE_PLATFORM_PROCINFO = YesPlease
+ 	COMPAT_OBJS += compat/linux/procinfo.o
+@@ -253,6 +253,7 @@ ifeq ($(uname_O),Cygwin)
+ 	HAVE_GETDELIM = YesPlease
+ 	HAVE_CLOCK_GETTIME = YesPlease
+ 	HAVE_CLOCK_MONOTONIC = YesPlease
++	HAVE_SYSINFO = YesPlease
+ 	HAVE_ALLOCA_H = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
+diff --git a/configure.ac b/configure.ac
+index 5923edc44a..d7e0503f1e 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1066,6 +1066,14 @@ AC_CHECK_LIB([iconv], [locale_charset],
+        [AC_CHECK_LIB([charset], [locale_charset],
+                      [CHARSET_LIB=-lcharset])])
+ GIT_CONF_SUBST([CHARSET_LIB])
++
++#
++# Define HAVE_SYSINFO=YesPlease if sysinfo is available.
++GIT_CHECK_FUNC(sysinfo,
++	[HAVE_SYSINFO=YesPlease],
++	[HAVE_SYSINFO=])
++GIT_CONF_SUBST([HAVE_SYSINFO])
++
+ #
+ # Define HAVE_CLOCK_GETTIME=YesPlease if clock_gettime is available.
+ GIT_CHECK_FUNC(clock_gettime,
 -- 
 2.49.0
 
