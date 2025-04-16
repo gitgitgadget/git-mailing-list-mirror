@@ -1,54 +1,54 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8406A1F561C
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 14:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BAC1AA782
+	for <git@vger.kernel.org>; Wed, 16 Apr 2025 14:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744812979; cv=none; b=CSGjijGM0AuBQWYvvYOSGtZRTRxV3sbqTIWap79WlCDgW7Le5NckSCWshfNSQAM0oKGaWpOAdULhNyLvxg2ZH+HfsgO+b8gSa5v0c0DjtB0CprCDekW53J7wpDQCS4+9XvR4HPdIHLpm4XW4ghnqEHiy9OaVDfb+Lgq+JjHrCWY=
+	t=1744813693; cv=none; b=Drdl+DuiAO7M7AxHSN6NcNJy3RdTp4KLIlNpiKCP1rdOxgbtAmp3JOMFFpSi4LgMLZoZc3I8PkPs5JQj5P2VoLdSPEpN/gNqX07r9eQjk/mZsGMmHhSpe1n4UfoAO1LHX+QJX+FQA77uuQ/NCY4ufuzK92uJPFQkFjOcm9zeZOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744812979; c=relaxed/simple;
-	bh=fsEiQ+utc/TeMIT4VsYH27gDlrQ5yyyF8V522PmDXPw=;
+	s=arc-20240116; t=1744813693; c=relaxed/simple;
+	bh=fb7ipgl21+APAuWiKsTgf06xnLwrCSFjzYCM7VaLG+A=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NL6Eo2T239878Dl/aIiLPsUCCmhLkZv81vqUGyoZ2Q904o+JZErmT39luaqb+w9+gX8xYknJVzZdFKDAlfoHuYoXu+aQkrzuvLLBM35hh1C6uyoPix32aq3r4Ls0/hZcsNNZpPPxxjcFVMn8/2z7yBdQK8QbByQg+1Bm0HubfUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vX2yHfb9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i6QJv/b1; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=cx8Ml/MwFluCuW9ZMjQ3Q+sJ+utnWsTOA35vn0SJzAcx/CBI1WQlZw8jvRJUOLj8fnUVtV+6PBj1k0UUFdd32A6d9hBnCJaVeAAHVb/cy/9FLxLVG4gcrTT0m+UzqryDHS0F8AgBtxrgsD0EU1ANmljm73Zti6h6/gPQl5fZSz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=a5cVbmZ0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ga8b+HuM; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vX2yHfb9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i6QJv/b1"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 883AA1140089;
-	Wed, 16 Apr 2025 10:16:16 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 16 Apr 2025 10:16:16 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="a5cVbmZ0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ga8b+HuM"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BDE63114022C;
+	Wed, 16 Apr 2025 10:28:10 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 16 Apr 2025 10:28:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744812976; x=1744899376; bh=K4E5LKtTVg
-	CHmLXPqX4FW2M52/VfRLWmR14fYh2YJq4=; b=vX2yHfb93pWaruA4gIK9DW6OhG
-	rSLfVMxN18o/t2RNX4l358NqAZPeUjiTn0Ly1eBQaD92/FYxkpIzPe58IuEM84hM
-	qN3cg4WFCiHVqt+8N1nUMVziVEpk2YTa8kApKKIyUPUmxyQWcshYSagTEsVW/kD1
-	cI6PNSpb6HT1UXyJPaSuJhUJshcO0hjgGASdw/o/lLYGDgWkG7c2TE+hyD3L6hlV
-	IjkEyfBQoWwnsUWkkOQlGDVJ1ubkWAKD3yGJONrokLEWekle65xTtmBgao3Mvds2
-	GogmZFzTzUHhLoBnNqy5uDZybJMlbbD7XGANXe8YmgNtkXT2xZ+iNOfk26JA==
+	:subject:to:to; s=fm1; t=1744813690; x=1744900090; bh=UREN2TciQ8
+	setV4fM7KNG22Jg9uw50ypRBckidK5/8s=; b=a5cVbmZ073D67xP849fkclLBY5
+	9nDmqD1VK6WkwtMzLVjOgG6PC1e2FBWxp8tB+eoFI/NW0GDYGKQmGkSEdNJA9mvq
+	gVA5sAtjq3oB5H3cMm/JLsrf+xMpQBdiiXn7MuRVAjQ0T20Mql0jEzXp9DhSW52q
+	ZanLPF/h3r8wECmpwAq7/Cfwomp/opDocNxSclRHzZxF+ZubhiYDQbXUVCXmxy1o
+	LxN2fuvuShiTP/D2P2PpeYwmF3k3Ivetgweo8Hlt0s7kRd48VQbQKRUudmkQ5x4c
+	aIYiIPWfnI8lk6G4TEijlunvj3qlrJRs4B8sjSMDF3hXMEA6jPG3xulpJQoQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744812976; x=1744899376; bh=K4E5LKtTVgCHmLXPqX4FW2M52/VfRLWmR14
-	fYh2YJq4=; b=i6QJv/b1YEO5vV1HtCF3jtjBDGEC1uaOirAeN0EwILnIJDvIovx
-	k0SJrdp8yX3ABHN1otTGaAs5QTWfdEFG5KugSJWAI2ItSjJldYg+7R7FvkzX8MDl
-	sfFZt11+PxUkyWOIUGVsZy3sJREyd/28v+VQpBFZzv+NHzs7uAnOUi7Fu/g2LRHL
-	xTyio7hDis24rlFJrLu+2ymjbVZHf61oCNWHRDPefVr2x7cZtPg7a1cxZYd59/aP
-	bkZog9IYjOx1A9juE5dd7QGEMPhWscfk8fVBPDYkiY0EfAn4Pd5Z3MMTcx4rc/Rd
-	iI8ExPA+RILysi33m0xEmsix1BVEfJagY2w==
-X-ME-Sender: <xms:sLv_Z_v5L9akQjkg3Zu2ho7iu4E9gcAZBEGtNl9U08jhBs1uIul-ag>
-    <xme:sLv_ZwcOX7LaKBmWndsBoM7kSuX9ZNYAu94nKB1f4izAyxQ_-F78_PewkyY4wQA1c
-    -qIVlurvbWCVIpq7Q>
-X-ME-Received: <xmr:sLv_Zyyb51ABrclQvSI4Z00SIodQ8sTgAwlPkypYJBACoq2yIEkO1iiXuQdBnZHKyeQPFLS9Y49mfJD_iN3_orXSoUVUKIsTV8Rj>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeiheekucetufdoteggodetrf
+	1744813690; x=1744900090; bh=UREN2TciQ8setV4fM7KNG22Jg9uw50ypRBc
+	kidK5/8s=; b=Ga8b+HuMfRmtnGPbpaLBhaRkU9WVT286/3neaVq16xcJOh1ATwA
+	hJJs4Ob+IHWOBmvyFFicrNGk8bUjekvzlzjVR5aiDaf/FMQlaYPhRmx6KWXcH7Jp
+	XG3Ebs5J82JCyUw2n+mY85zQOqI/N5roSj7UkAuygs168dR3UkW7A4uTk5wRV0gZ
+	fYW9Yw2Pr8ZfqU0YN1PMNBw0Hgbr9k0OhemxqlbuUGxgGryye9euWZGRfybXsufD
+	FLMF1YH8q39ubXp/yrIC2wLqSdvqkzOZH2WEEbtesBCcxEykv1ZiGMlcdc4/IIpR
+	6nvcN8wNDBlgPKw0d3n7WMzxtQVscVrX2uA==
+X-ME-Sender: <xms:er7_Z2hrhJe6lLYllZSgScaJzJOyfbt88pw7FiLp6ZVJQvV6rT7r7w>
+    <xme:er7_Z3BHt_dFNBA69Uj8lclnQZWa_EFH7tQHpBHeYt-OnDz3tMeOUFKwub6SLWBYZ
+    z7F-LjIWSaF5wauWA>
+X-ME-Received: <xmr:er7_Z-Fi2BWuKQTG6xAFPCEiIv_8lmSwNd-7v2QUxB_91_x9OBn2VE-4vVdLTocbbRZvCJlYOU-6klu_5W3LPx6npirx2UWWv05t>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeiieduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -56,27 +56,36 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeiheekucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrhigrthhhvg
-    gvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:sLv_Z-MFegEYD8HhC1Tq1dJU4oflRz14UrWWBjQqUzwsu9JdDhQN8A>
-    <xmx:sLv_Z_83xsVMmbEAtvDS77xx1Iw4E0W2mpriQgRz03ujeYXci9aieg>
-    <xmx:sLv_Z-WNr42B4-YixUAYwJ0CwpFlfu_IXWGRLTVaZo3SXIBXgtlgpA>
-    <xmx:sLv_Zwe69OQociDNzHpymtoOeRZiDzHpqzRobjIb8eLU8K3fzce1rw>
-    <xmx:sLv_Z4Ko3reNRc1t81TQa7SjtFooylvJcviCUqg5sSvQIVs60UOJK5Zt>
+    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhm
+    rghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrd
+    horhhgrdhukhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtphhtthhopehsrghnuggrlhhssegt
+    rhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:er7_Z_SrR0B9CkG8lX1648PSBthcKgCO-OM7jNxrWJsEgxjQB0ENZA>
+    <xmx:er7_ZzwzNRzJctR4IpV_rDifrslYd78DyFCjv-d_zDLqTGS-hgGSfg>
+    <xmx:er7_Z95U5ZJZwajyLt8PX5BsbFy_6FhMrCv4_NtBf8pX7ULyPljSAw>
+    <xmx:er7_ZwwoKsmTyPE85II1hikvRoG_nbG9E86K5uKLSBSLgOr1yp0W1A>
+    <xmx:er7_Z0E5cwdqEZROQ56ElHe4lFC-dtaGCX-5L7tq8QHqfoYg0osKyt75>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Apr 2025 10:16:16 -0400 (EDT)
+ 16 Apr 2025 10:28:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/4] update MyFirstContribution with current code base
-In-Reply-To: <20250416061450.25695-1-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Wed, 16 Apr 2025 11:44:46 +0530")
-References: <20250416061450.25695-1-jayatheerthkulkarni2005@gmail.com>
-Date: Wed, 16 Apr 2025 07:16:14 -0700
-Message-ID: <xmqqr01si441.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Derrick Stolee <stolee@gmail.com>,  phillip.wood@dunelm.org.uk,  Derrick
+ Stolee via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
+  james@jamesliu.io,  "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] git: add --no-hooks global option
+In-Reply-To: <a5632198-9e04-4302-a3c9-1cbf0f0cad65@gmail.com> (Phillip Wood's
+	message of "Wed, 16 Apr 2025 11:29:13 +0100")
+References: <pull.1899.git.1743719888430.gitgitgadget@gmail.com>
+	<2c7994bc-2be0-43a5-9627-0d530746b3ab@gmail.com>
+	<cb3d080b-51a3-4096-9650-34ec4ed68f1d@gmail.com>
+	<a5632198-9e04-4302-a3c9-1cbf0f0cad65@gmail.com>
+Date: Wed, 16 Apr 2025 07:28:08 -0700
+Message-ID: <xmqqh62oi3k7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,29 +95,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-    To: git@vger.kernel.org
-    Cc: Junio C Hamano <gitster@pobox.com>, jayatheerthkulkarni2005@gmail.com
+>> I don't read a strong reason in your message that this is a _bad_
+>> idea either. As in, there's nothing that hints that this will cause
+>> significant harm to users other than providing a new footgun (and we
+>> have plenty of those for folks willing to look, including the
+>> _existence_ of hooks).
+>
+> It is certainly not a terrible idea given that it is possible to
+> disable hooks already but I'm not clear what the motivation is. I
+> don't find the example of a skipping a pre-commit hook persuasive as
+> we already provide a convenient way for users to skip that
+> hook. Elsewhere in this thread you mention the "pre-command" and
+> "post-command" hooks but they are not part of git - if a fork is
+> running its own hooks and that is causing problems for users I'm not
+> sure we want to change the upstream project to address that. If there
+> was a clearer motivation it would be easier to understand the benefits
+> of this change.
 
-Pick a better reviewer than me if you want your patches reviewed
-more quickly, perhaps?  I had only 3 patches to the file in the past
-3 years, while there are others who had their hands to the file with
-more changes.  "git shortlog --no-merges --since=3.years" is your
-friend ;-)
+Thanks for pushing back.  The default for any new changes is not to
+apply unless there is a compelling reason why it is a good idea,
+saying that this is not a bad thing does not serve as an effective
+justification.
 
-> A series of patches extending my GSOC microproject
-> Fixing the documentation MyFirstContribution.adoc
->
-> Updated various commits since the last patches sent.
->
-> Feedbacks taken to write detailed commit messages
->
-> K Jayatheerth (4):
->   Remove unused git-mentoring mailing list
->   Docs: Correct cmd_psuh and Explain UNUSED macro
->   Docs: Add cmd_psuh with repo and UNUSED removal
->   cmd_psuh: Prefer repo_config for config lookup
->
->  Documentation/MyFirstContribution.adoc | 89 ++++++++++++++++++--------
->  1 file changed, 62 insertions(+), 27 deletions(-)
+If we want to give scripters a more stable foundation to build on,
+the answer should not be to pile more and more "no hooks, no
+configurations, just a vanilla mode of operation" options to
+end-user facing porcelain commands, but to clean up the internal
+implementation of such porcelain commands to refactor into stable
+plumbing commands that scripters can rely on.
