@@ -1,97 +1,108 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-003.plus.net (avasout-peh-003.plus.net [212.159.14.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02B4366
-	for <git@vger.kernel.org>; Thu, 17 Apr 2025 16:02:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0927E25FA00
+	for <git@vger.kernel.org>; Thu, 17 Apr 2025 18:30:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744905744; cv=none; b=nw5lFpluWyaHH0O6ctzFS3OuB7yl1eJjA7zpqinGrQsZ552/LIyrJ/4XZuclpH1kcALmtRSJWIJDzUSYqXor/9b8KGm71vPNj/yCCOwfxUgVU0ArrLEw7r2Cc7p5qHC/Qtrsqz0q/ShDPFDY+b22BTh1I+n0ABmeyrVQiMDW0Ug=
+	t=1744914660; cv=none; b=M3UUn0U9yWraPpKsvFk7XuCUIM8UnBKg42k7LKKsGee3P59S4YtopWQUF7Rg3QLVZ5+K2EhXLGvevgFYDQJMej81R1ALbd3l9rVIf9N9MnR7iHpO8WVxc/gxbMLx3007/xzjpL0lp1gI1lOcpMELovV/spBfYc3b/9fKCK8oqt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744905744; c=relaxed/simple;
-	bh=fMeFREKf28Z5hLuqJz/ZKmj5j28fZR5Pl0Fqsjr+riw=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=QEX7Lznl+DHAGmGpkuEfIP1eb9OXNgoTJVfYT7EzDViiqF5U8aBtjus46Jj1VpaHaQxmvepPzmrWWt+eJD6yijYHhhl94sdYspKW/0Q7XA/+C49irUFIPDVetfz10lyn7iyNnWv9VqS/HQ3o5ANMrkBDTE85/PZawciNkEBuNp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LWUueHnc; arc=none smtp.client-ip=209.85.215.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744914660; c=relaxed/simple;
+	bh=X4c/AsoVoRVxsmFQ1wDPLVIkdmQqZFqoIAKpiC9u494=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cf6cSpXev4sFKGh2Wwu7eH2G9+wteO8H1hMeKQZRD5pse6sj/IsK3v0UcWaNNXVR92+k7riBVbEMhhQaZc06kGhngEJfnZMg3X2hoxspcwdkQjKkBYBP2surQ4pJxscx2QcFve8eb9fRjJfo+JmUCjoM87uaAFlHdio2N5Tc4wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=RQs+adIV; arc=none smtp.client-ip=212.159.14.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LWUueHnc"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-af579e46b5dso688664a12.3
-        for <git@vger.kernel.org>; Thu, 17 Apr 2025 09:02:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744905742; x=1745510542; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fMeFREKf28Z5hLuqJz/ZKmj5j28fZR5Pl0Fqsjr+riw=;
-        b=LWUueHncRCbjxNUCJLiRhyJAVNSLDxOgSQQEY9f6pvbUGHcvtki0cXMnw6Ah3TFp/6
-         pXJpjoNn8dYHNAc1ycVQdrncCoKeC+3ES7LS58oeNc+xD9Q0yUq4AHUwLX+VJGBp2NO+
-         PnbnuLhAl+ObTuhhip/LNJmIGHwO/CdyTf0qf3fMGgM8vefxl7z2oXEl5JhOV1DRspfd
-         Z1pAUQyHtCtrCuPEaVhGSY9nkHwQh8av+AVSuU635VUHq5ixWFMd3O4uL8xgaEz1qv1O
-         +I6YLK8EI41DNXEEFLuRpd9CeYb0x7RcXiZcFL7OQojoGBURuoFumH2rSMOT9ng/kL1d
-         9skw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744905742; x=1745510542;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fMeFREKf28Z5hLuqJz/ZKmj5j28fZR5Pl0Fqsjr+riw=;
-        b=oyLPs29P7tkU8cOPzDzzjuhawlqIVN7MqS7f4XZjoJ5FdBSBXm9nkpFJ7qiG3BWEn4
-         eKRBX+0kOClpGtsiUsoRX7OCq0fO11n3bYA3dQ/ubSFYaPF+iA/kb/RFoWaQaSjWa4y3
-         uJREEV55VsYiQ1GvxaA8EbJln1k37znyVGxX6iFu/DUP4DVC5L+ksKDtR4mAgttwcWIz
-         XUaVZCF7Uc8MKu1BLMZkWVJhuIPgnnbcbAh4IHlm5+Woe9fRTsWVDFoC+n0OO8scdZJS
-         1JE/xCGjWJTAYHzZuExDqZ6zhhVeBT3zDR4LQxIUv2Gq7RtdSwKBcgxa0xtbBn8j5UHu
-         wcSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVab1iuAYKN3s9xxOjdE4bl05r5/r8x5yoGp7iM41qbTBtdeGnI9CsVszcg3zLooh2wg+w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMnusMPIvTNIwxbNMIC8B7hXCwMunX3tGyrHP5NDXJYVDUIafX
-	xi9Sfp17Ptj9W3fGq3Vqwg4fuJW6PTfQ9/CnTE9BaCnimXt2La/m
-X-Gm-Gg: ASbGncuXmjrukk0eT3J4NAsTgn6mlVvTZ9aJnbmulw+NScdSq9w9OdqQKOq2w3OXTmy
-	llSHOSByms+hDn61sWX1r4gkY3Lytlnxtz0j/TPK6TUkijtOdZgu+PatJ9V8LHN6eXfr5KOWEXu
-	aOH5ef50FTh7YHyNa5vnLuqAnEesG0fcP5r2boMxvKdQw2ExnGH4ZdJFatTmFpwidFbKQKkDBOB
-	LxIUygjNJZh2CTEtPRXYEj4MnTbmisXE1cJ23LeNLqBLrxA2K84BzKsjtN52RV60ef4Ga9chsvK
-	KCDL5LY6DyX4B6MvJYIXJTWIWkT/n+Qodldtxcwh1I3qp23ZRMPWFa2PIKBE8Q8xpY9+NAhw40B
-	aZfkVN/cp
-X-Google-Smtp-Source: AGHT+IFK9r0xQAkX+Lc0nqDuafqYCyW0SC/tt2g3PLFukZlYLho/SnMy7Br3/G/EnbUn9tebv5QGrw==
-X-Received: by 2002:a17:90b:53c5:b0:2fe:9783:afd3 with SMTP id 98e67ed59e1d1-30863d238ffmr9959082a91.2.1744905741782;
-        Thu, 17 Apr 2025 09:02:21 -0700 (PDT)
-Received: from smtpclient.apple ([2804:14c:32:8e7e:1436:5869:957a:a396])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3086121304csm3865397a91.27.2025.04.17.09.02.18
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Apr 2025 09:02:21 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="RQs+adIV"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 5TxfuQzFVvxWA5Txguo4FH; Thu, 17 Apr 2025 19:27:47 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1744914467; bh=dYyMkeYx+Kpld2CpGXrAsDmVxUVsp6pDNz9XaAaZrGc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=RQs+adIVGPDljfA4Bhsrh0vwT/veO2pvPIWzBBpDoO96ucYhKjCvGu0fn6arbSRo1
+	 q/IhMvpFQRpeYekob1fqShd9uRWlrgJHksq6BoLRC1m08O5DIah2wWUH+rMMVmQL32
+	 6WXk+klNWCxzaj5Vga+XGZ+8LCLVmVtbcm+iSqVbE0KBC1NQE1t/R0B+rIXIybs821
+	 umi4POWV0ZG9EqDelxD20GM91Ft2aOEDBhrx1N1jCx+2uCd5/PWVP9uV7GI96k5saQ
+	 9ZJM5e1QfcLmZlaJDYN6u3vVg0hJAqrE8JD6LLFk5YDgXtRUXsNanDHbAoVF69ayWm
+	 16Hb4pPHYAZLA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=QbDFvdbv c=1 sm=1 tr=0 ts=68014823
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=N1ANU4bw5fSPn-QF8t0A:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <aee15694-6a15-4409-9854-dad5f511dc48@ramsayjones.plus.com>
+Date: Thu, 17 Apr 2025 19:27:43 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
-Subject: Re: [PATCH v2] docs: document core.hooksPath=/dev/null
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <9e14443c-e549-46e1-9fbf-ee72800e6944@gmail.com>
-Date: Thu, 17 Apr 2025 13:02:05 -0300
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org,
- gitster@pobox.com,
- james@jamesliu.io,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Phillip Wood <phillip.wood123@gmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 13/13] config.mak.uname: set CSPRNG_METHOD to getrandom
+ on Linux
+To: Junio C Hamano <gitster@pobox.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
+ Adam Dinwoodie <git@dinwoodie.org>
+References: <cover.1743859985.git.ramsay@ramsayjones.plus.com>
+ <20250416231835.2492562-1-ramsay@ramsayjones.plus.com>
+ <20250416231835.2492562-14-ramsay@ramsayjones.plus.com>
+ <xmqq4iymgadz.fsf@gitster.g>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <xmqq4iymgadz.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <B60E6A23-05F6-4391-8CAC-1CAEB509E32A@gmail.com>
-References: <pull.1899.git.1743719888430.gitgitgadget@gmail.com>
- <pull.1899.v2.git.1744818135435.gitgitgadget@gmail.com>
- <BD8FCCB1-C97D-4057-982E-93A7F8B01AB9@gmail.com>
- <9e14443c-e549-46e1-9fbf-ee72800e6944@gmail.com>
-To: Derrick Stolee <stolee@gmail.com>
-X-Mailer: Apple Mail (2.3826.500.181.1.5)
+X-CMAE-Envelope: MS4xfMqTgG37uvRZoc1nAdK3sQczeodAMRNjATA1PcRb0fhvXn1dHIx8d+Smv30Fy+agAqAc+MJGGv3+N6hXTsQRQHK9YVea3igytr1C6Ap5mHGf++bxjnlp
+ MleLCwXxw5zZDdwByhPLZRRXLgLQmlGhJcSZjN3eu7JSc9a5NfUpJZXFBIJH+o+aqEKlEYLB5IhWT8T1OzzsrEdcLC+egA6qAKs=
 
 
-> This is a "there be dragons here" kind of warning, implying that you
-> better know what you're doing if you are messing with hook paths.
 
-Fair, I understand your point. The paragraph itself looks very
-clear to me!
+On 17/04/2025 14:55, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+[snip]
+>> The arc4random routines (ar4random_buf() is the one actually used) were
+> 
+> arc4random_buf(), if I am not mistaken?
+
+Oops, yes ... an unfortunate tyop! ;)
+
+Do you want a v4? (The cygwin v3 'make test' has been running for under
+two hours, I could Ctrl-C it ...)
+
+> 
+>> added to glibc in version 2.36, while both getrandom() and getentropy()
+>> were included in 2.25. So, some of the more up-to-date distributions of
+>> Linux (eg Debian 12, Ubuntu 24.04) would be able to use the 'arc4random'
+>> setting. All currently supported distributions have glibc 2.25 or later
+>> (RHEL 8 has v2.28) and, therefore, have support for the 'getrandom' and
+>> 'getentropy' settings.
+> 
+> OK.  This explains that getrandom/getentropy have better
+> availability than arc4random.
+> 
+>> The arc4random routines on the *BSDs (along with cygwin) implement the
+>> ChaCha20 stream cipher algorithm (see RFC8439) in userspace, rather than
+>> as a system call, and are thus somewhat faster (having avoided a context
+>> switch to the kernel). In contrast, on Linux all three functions are
+>> simple wrappers around the same kernel CSPRNG syscall.
+> 
+> OK.  With this and the previous paragraph, we establish that there
+> is no reason to use arc4random on Linux, while on BSDs and Cygwin,
+> it is a natural choice.
+> 
+> Very clearly explained.  Thanks.
+> 
 
 Thanks!
+
+ATB,
+Ramsay Jones
+
+
 
