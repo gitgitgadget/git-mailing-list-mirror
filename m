@@ -1,198 +1,155 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8824D185935
-	for <git@vger.kernel.org>; Thu, 17 Apr 2025 03:58:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996C022D7B1
+	for <git@vger.kernel.org>; Thu, 17 Apr 2025 08:14:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744862309; cv=none; b=fd+wGuBGQ/PQ2y0uGxfCuA4wX9kyQoY7QvsgAP3eDKs8UFWNw5hH879bxJArKKWf9NQELYi2X8TDFt9/HNG3hkK9SEInMsFIxucjUonS8WcwSPM/FfupvRRPVirEUJka41zr452vBOcqO5iKvdFPQimPmOKKwKqNDYiRkEpaklk=
+	t=1744877683; cv=none; b=pmdFa3cewy9cBkYm2Rfo5l0T/vdRrgxVTTfxnF6rXV0RDCvqSV2eDB9O5IV6/l5kMwcG7EXSv7kF8bTmf3xisreIt69Og1jaIMOeGz4wYvL1g3MNljAxht0evsvbhZIY4fs/NuuwoKwf57gS7DPRUSRqVAZBjn0CG0kvIpDTxE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744862309; c=relaxed/simple;
-	bh=xlrF8VuSLuiblNKgl81Thduhx5+OPqteNGPNgHMyoNI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=byZIoSYDas/VMbZkyONb72YY0/t8lhu9I4Riq4raKJiObVr88brRXDY7asUjKcZBVh5oc4CEjusNm94fXWWeLGnjbNq2Y7G+RksCj1em4Bn/F7RjguTGEOzrmaAj2YFmtUmfZNjWxtZpEVMMZ3LFgelssKX0exxbBFVzNLrsZiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: eschwartz)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 547F33430FF;
-	Thu, 17 Apr 2025 03:58:26 +0000 (UTC)
-Message-ID: <da10dd26-a7bb-474d-8c9a-cac32614d296@gentoo.org>
-Date: Wed, 16 Apr 2025 23:58:22 -0400
+	s=arc-20240116; t=1744877683; c=relaxed/simple;
+	bh=m6SEhUi6ypvnyq80/+75m+6cGf3ltuS/DvfP4WnepZ8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qYisX5k135N1KorOlrYdQ99AVd+jfPyEqb2qNEUiwTQ0LUZdT9Xx7LtPOkFVnG5jgFTOG126U8YOuXaOxesqcbgtLigm1txfnRkzUtxka0MgLJRqTVtnIKP+0DrofSQ2Zr4/dEppZ4GFukLQfAaSVGqHS91MWs3uj3xryK1hOtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EJ/1Bmd4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aPxdW9W3; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EJ/1Bmd4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aPxdW9W3"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 834C425401C9;
+	Thu, 17 Apr 2025 04:14:39 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Thu, 17 Apr 2025 04:14:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1744877679; x=1744964079; bh=xtUnf4BFQ8
+	FfR+ZRXvR7bnu0ZGnkzO8HRo83ATjeRHc=; b=EJ/1Bmd4qX+Hpt/MBtIQ6PRWHL
+	yePq2jc03f4ASgW8HyywbjFDPq+xVguB3Q60HVqA0cQUsQMgByTulCejv6b1WxiH
+	8hMU+HepadQ6ZJTLELUjELY78gwG7/nY+DqBmHY+YIIHFg5ttwnTh7l/SydGDVkD
+	Z4dbtHaGga6UwDOEJD4MBBj7wEi1xM+vBi+mFUzjJVA/GovZiJBA06Zjk6DHvmsh
+	ABEkGjU22B6WM2yDFK6rdiwxBRMZV9qw5WwoCJNFZ+TM2eAAxBR31wf3tb2EtKJx
+	TSgFQmsC8FMa+V7rcRlqfezaQOtNppwvbv+LZN++57evZ39Bo7QFKGR+sBkg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744877679; x=1744964079; bh=xtUnf4BFQ8FfR+ZRXvR7bnu0ZGnkzO8HRo8
+	3ATjeRHc=; b=aPxdW9W38G7nuEqbPKvTZPIWpOZwNWr6vf4oANad94qucD632Rn
+	1FwJMf2Xjh/bn1SMvFn39n16cdkw1f4IEmZavDO7FtPjhNG580fFcfgZWgkf1AK+
+	Mr5JMkBP4vxR6/7rsziMT6efyeoI0W/kLu5o7UYChvs4VTt2URHX3rQf/pX34BwA
+	L8rcua5XXiEyqua2rKtRygOZMna0UX/JB0Tf3bPq3CsuTqOxI4QEBPtE2s+ERKwE
+	FXRPANZDc9JUJUR7bydli0OZnqO1JniMayLpeTdcRE21sMjHcBIZc8vJ6IB0wtmo
+	+R5zV0UxjKNA/mJGn27+xr+5+n+CkKYOcuw==
+X-ME-Sender: <xms:brgAaOqe379_Spo7x0gl8QE4u7s6bv-hVY1EEqPUTOWrAuAdiRtGpw>
+    <xme:brgAaMoBq04g_kYxZ0ZgOGhBshDHR3f5QqXNv89ck-6D5adK65v8uGhliFxshrpQK
+    fdNoKnDbxU_ftKjOg>
+X-ME-Received: <xmr:brgAaDOXA-xX-tFRVB35Nyqv0Rl461v5xUslDa5Q15Wl2frCb86ZEn7Lu8GSht_badpu0HUyHlDppvYR5FbPzpKbpiqTPy4cyaIr5EoyaWBuocAF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdekjeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepledpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfh
+    hfsehpvghffhdrnhgvthdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghp
+    thhtohepghhlrghusghithiisehphhihshhikhdrfhhuqdgsvghrlhhinhdruggvpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthho
+    lhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvg
+X-ME-Proxy: <xmx:brgAaN6eRpnd3Gq5PM1TD6e6vFMHkTQwGjuxKTJhY84bRSVvfyWk9Q>
+    <xmx:brgAaN7cuOrhoMsXuqh5Rv-9HjPXUWQMrNeZtHbyW817n-gDop8uFw>
+    <xmx:brgAaNgatKgAeeqB066AmwafyhVIJIhr1MnotwARJFhiVmsSyJgKfg>
+    <xmx:brgAaH4PiyYb5mXwtXiMYg-LviKw7yXjrAQr_Tbx2b_AlV_KVKB-1Q>
+    <xmx:b7gAaMdGaBtLt1wD26rO6A0nh9qg9Psx58yD6V5u57UF58Ct5W_ds_dJ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 17 Apr 2025 04:14:37 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7ab69025 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 17 Apr 2025 08:14:31 +0000 (UTC)
+Date: Thu, 17 Apr 2025 10:14:33 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Todd Zullinger <tmz@pobox.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 7/7] parse-options: introduce bounded integer options
+Message-ID: <aAC4UwjLBllfeDLV@pks.im>
+References: <20250416-b4-pks-parse-options-integers-v3-0-d390746bea79@pks.im>
+ <20250416-b4-pks-parse-options-integers-v3-7-d390746bea79@pks.im>
+ <xmqqsem7hq2k.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: install shell completion scripts
-To: Junio C Hamano <gitster@pobox.com>, Todd Zullinger <tmz@pobox.com>
-Cc: Akshay Hegde <lists+git@akshay.is>, git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>
-References: <20250407-b4-pks-meson-install-completions-v1-1-8a7eb8b9284b@pks.im>
- <Z_RnJEyvtGh_0kFo@akshay.is> <Z_SJSKrUdiWzg4pw@teonanacatl.net>
- <xmqq4iyxs02r.fsf@gitster.g>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <xmqq4iyxs02r.fsf@gitster.g>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------W2RocyohfA5ExaiCpN4udxOU"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqsem7hq2k.fsf@gitster.g>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------W2RocyohfA5ExaiCpN4udxOU
-Content-Type: multipart/mixed; boundary="------------RglhwT3FEC54x5ksOLU0ln0t";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Junio C Hamano <gitster@pobox.com>, Todd Zullinger <tmz@pobox.com>
-Cc: Akshay Hegde <lists+git@akshay.is>, git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>
-Message-ID: <da10dd26-a7bb-474d-8c9a-cac32614d296@gentoo.org>
-Subject: Re: [PATCH] meson: install shell completion scripts
-References: <20250407-b4-pks-meson-install-completions-v1-1-8a7eb8b9284b@pks.im>
- <Z_RnJEyvtGh_0kFo@akshay.is> <Z_SJSKrUdiWzg4pw@teonanacatl.net>
- <xmqq4iyxs02r.fsf@gitster.g>
-In-Reply-To: <xmqq4iyxs02r.fsf@gitster.g>
+On Wed, Apr 16, 2025 at 12:19:31PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > In the preceding commits we have introduced integer precisions. The
+> > precision merely tracks bounds of the underlying data types so that we
+> > don't try to for example write a `size_t` into an `unsigned`, which
+> > could otherwise cause out-of-bounds writes.
+> >
+> > Some options may have bounds that are stricter than the underlying data
+> > type. Right now, users of any such options would have to manually verify
+> > that the value passed to such an option is inside the expected bounds.
+> > This is rather tedious, and it leads to code duplication across sites
+> > that wish to perform such bounds checks.
+> >
+> > Introduce `OPT_*_BOUNDED()` options that alleviate this issue. Users
+> > can optionally specify both a lower and upper bound, and if set we will
+> > verify that the value passed by the user is in that range.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  parse-options.c               | 40 ++++++++++++++++++++++++++++-----
+> >  parse-options.h               | 52 +++++++++++++++++++++++++++++++++++++++++++
+> >  t/helper/test-parse-options.c |  5 +++++
+> >  t/t0040-parse-options.sh      | 33 +++++++++++++++++++++++++++
+> >  4 files changed, 125 insertions(+), 5 deletions(-)
+> 
+> It is certainly cute, but unless there are plenty of existing users
+> that use OPT_INTEGER() and friends and perform bounds checks
+> themselves, I am not sure if this can withstand YAGNI criticism.
+> And this step being at the end of the series, plus the above
+> diffstat, tells us that there aren't any existing users converted to
+> use this new mechanism.
 
---------------RglhwT3FEC54x5ksOLU0ln0t
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Yeah, that was also a bit of my feeling. I was on the lookout for
+callsites, but I ultimately didn't find too many. Which is basically the
+reason why I said that this patch is more of a PoC, and that I'm happy
+to drop it again.
 
-On 4/9/25 1:42 PM, Junio C Hamano wrote:
-> Todd Zullinger <tmz@pobox.com> writes:
->=20
->>> Most people won't run into this since if you have this installed in t=
-he
->>> standard locations, it should just work, and the zsh script does have=
+> OPT_INTEGER that wants to track percentage may want to say the value
+> is between 0 and 100 (inclusive), but instead we take it bounded not
+> to exceed 100, without lower bound.  Without a real callsite, we
+> cannot even tell if it is acceptable compromise for the sake of
+> simplicity to forbid 0 as lower or upper bound, for example.
 
->>> logic to look for additional paths it may be under. I just wanted to
->>> mention it for info.
->>
->> I wonder whether it is proper to install the completion
->> scripts relative to git's $datadir by default.
->>
->> I think the default ought to use the pkg-config call to get
->> the completionsdir variable, as the zsh completion script
->> suggests.  I am presuming that's something meson can do
->> rather trivially, just as it would do to find the compile
->> options for git's various build dependencies?
->>
->> I don't know if that becomes too messy to be worthwhile when
->> determining whether git is being installed by a normal user
->> in $HOME or by a privileged user in a system-wide prefix
->> like /usr.
->=20
-> Yes, exactly.  We left it out of what Makefile does for that exact
-> reason.  Distros will do what is best for their environment, and I
-> do not think, unlike pkg-config used to figure out distro specific
-> locations when doing a system-wide install, there is a location that
-> will make everybody happy in the context of per-user installation.
->=20
-> If we were to install these completion script from make or meson, I
-> suspect that we'd eventually need a separate make variable or meson
-> configuration item (whose default value can come from $datadir
-> unless there is a better setting that already exists in our system)
-> that is only used to specify the location completion script.
+Yes, `0` meaning "default" is restricting us here. But my counter
+argument is that a value that can only be between `0` and `100` should
+use `OPT_UNSIGNED` in the first place, which allows us to achieve
+exactly that.
 
+Let's just drop this patch for now. It was only a PoC anyway, and we can
+use it as inpiration if we ever see that this feature is something we
+want.
 
-bash-completion looks for scripts in a few different places, with a
-common theme that there is a "datadir" followed by the literal path
-bash-completion/completions -- some values for the datadir:
-
-- $XDG_DATA_HOME defaulting to ~/.local/share
-- entries in $PATH / the dirname for the absolute path to the completed
-  program, if they match */bin/ or */sbin/ will calculate an additional
-  datadir value of */share/
-- $XDG_DATA_DIRS as a :-list defaulting to /usr/local/share:/usr/share
-
-
-This is very difficult to get wrong, you are virtually guaranteed to get
-essentially any conceivable layout handled. Entry #2 on my list is
-pretty much the ultimate recourse, since as long as you leave meson
-datadir and bindir alone you can install into absolutely any prefix, no
-matter how weird, and successfully invoking `git` itself will as a side
-effect add the correct bash completion file.
-
-And that also means that distros automatically do the right thing --
-just configure with prefix=3D/usr and we get
-/usr/share/bash-completion/completions as expected
-
-With zsh, things are a lot shakier. Canonically, there is a designated
-loader list for all zsh functions, including completions, and that is
-$fpath. It doesn't attempt to do anything fancy like indexing into $PATH.=
-
-
-The default zsh ./configure settings will add these two directories, and
-nothing else:
-
-/usr/local/share/zsh/site-functions
-/usr/share/zsh/site-functions
-
-
-So, it works if and only if you build software using a prefix of /usr or
-else /usr/local, and if you install software in $HOME then you are ummmm
-encouraged to have your ~/.zshrc manually add some directory of your
-arbitrary choosing.
-
-Oh, and it also doesn't work on Debian, because of
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D934926
-
-(I'm aware of this bug because when Joey Hess said "The simple fact is
-that as an upstream author who used the debian locations because they
-were the ones that worked on my system, I get bug reports from users of
-other systems that it's not right for wider uses of zsh." -- I was the
-user who caused him to file that bug in the first place.)
-
-tl;dr on Debian, the directories which you are allowed to use are
-
-/usr/local/share/zsh/site-functions
-/usr/share/zsh/vendor-functions
-/usr/share/zsh/vendor-completions
-
-
-with the intention that you use the third one. They seem adamant that
-"vendor-completions" is such a better name than "site-functions" that
-they will require all debian packages to manually move their completions
-from the latter to the former, probably after running "meson install"...
-
-
-
-So, my personal feelings on this patch are that we can and should
-unambiguously install the bash completion, but it would be reasonable to
-defer handling zsh until someone figures out how to do it correctly,
-which may be impossible.
-
-
---=20
-Eli Schwartz
-
---------------RglhwT3FEC54x5ksOLU0ln0t--
-
---------------W2RocyohfA5ExaiCpN4udxOU
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaAB8XgUDAAAAAAAKCRCEp9ErcA0vVzKI
-AQDCRyhEK3rxoel5rmXWqyour0gxZhVoeh3slrM5MDc+UAEAtMUVimrlIvtRPWFzz6UJOvfnDr/H
-/oOep8Uqajs8qQI=
-=Au8J
------END PGP SIGNATURE-----
-
---------------W2RocyohfA5ExaiCpN4udxOU--
+Patrick
