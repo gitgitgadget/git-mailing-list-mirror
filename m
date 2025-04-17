@@ -1,117 +1,132 @@
-Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA3724CED5
-	for <git@vger.kernel.org>; Wed, 16 Apr 2025 23:20:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078DA360
+	for <git@vger.kernel.org>; Thu, 17 Apr 2025 00:11:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744845610; cv=none; b=YlHCs2C7HBRFcYpiilYd+SJ6odHggRVe7gmWn7qVLpR5L+bLEp/f8KS5dbwBmJdtm6YfL57Y4D61iUsaMW0+97HFKqc+lJi7ty6jow/icnIcEC9Px9t9HwGw42JFlzrsSM1T76F1LbW3wkhHiyb3w+NgucPnMPithurTGo/sz3c=
+	t=1744848676; cv=none; b=bB/rR5Wk7A6VdxqonPkzSzPJ2WN895bYOUMieKoXnxgUuiPOq3rQIMPcm5tQLbJ9F/dd7sa09icdU//uqCnRXlhJmWko43maTsz/3PRiXHe7R8U/xqqcB2dRl1icX3Bzkb9pi3aY2jBmNk7zlY3knwNrmPS6LUhePllYd1tLZ84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744845610; c=relaxed/simple;
-	bh=WtfZUAj+05DvD5rmKPASKOSXyMDIyw7o2p/P4nBP/9w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WK5YB8bKA2L0sA3QL3IANokfEeE2QUIZZtq4+GeQ+uOP3GLAKJTRjlzOV8t3g7Ew1t++RPKwqs2RkHRWhFLHggtroQ8xu1iAhSsD6iF1la0GE0cX7ijDIEUcHFIBePrqjVTaX/ao/BMqFKaHvr2jVioEL5V40dM7NpezdUUuv7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=JP+ke39y; arc=none smtp.client-ip=84.93.230.244
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1744848676; c=relaxed/simple;
+	bh=JOLzoLRwC4YIX+/oRvmCIO64pWeeYPctdsc58Lha6Ew=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=lYJdeIuKQUZ8uWrpnsq5SZFtldsotcRgF+VHMjgVEEq4vQYpY/wFP8JeCZG79MKRQ5ps7ob8Dx+Wx8h5DBeTTnEZcP6slD+N/VEMI0210XJLJF3SOJ39VW5n8SBBHKbl14kzErjFbwL9f2HNNVtiKj1HAeuSsox+l9W46mvcWGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=odQc6bU6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sq+50CCS; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="JP+ke39y"
-Received: from localhost.localdomain ([80.189.83.109])
-	by smtp with ESMTPA
-	id 5C1quLy9hjZe55C36u8KQA; Thu, 17 Apr 2025 00:20:08 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1744845608; bh=+mCRD0/upb9ZPCU/tGKgYTAJjEOAhRNF7dsSOqIZYM4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JP+ke39ydRod/2FG9XXE3qVsoTre08CGCsAkN4Kr6Ri2eWwzH13+O3NSaSRuqvTw3
-	 aftVX7I+G27lMQzmxQ1wGr6FDRNUgMLsqCSW0T8AEV93GEy2jtOIrX0CY+IuNI7hV6
-	 BkDK1CiW+iS+ahahPgmj/oboda9JJuTADPvg1kNMDLLCHLVHKgU5s9sLyHHLW3ln29
-	 atPeDv3dvWPccHzybzm91jFm9mNuhZMT9R31gSfP2GSeOxmE2G7yH9AVB9N9bNHkVx
-	 qnbdr9Tnybsa8VlZ8NR9miSF4TBMXJND9DQ6Y5CXbR0np8zzwsZP1OopYqmnWrqCAs
-	 l2+XUJVp5zEGQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=UuDANPwB c=1 sm=1 tr=0 ts=68003b28
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17 a=EBOSESyhAAAA:8
- a=WBFf2OPKqg4umVxYW-kA:9 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: GIT Mailing-list <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Adam Dinwoodie <git@dinwoodie.org>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v3 13/13] config.mak.uname: set CSPRNG_METHOD to getrandom on Linux
-Date: Thu, 17 Apr 2025 00:18:34 +0100
-Message-ID: <20250416231835.2492562-14-ramsay@ramsayjones.plus.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250416231835.2492562-1-ramsay@ramsayjones.plus.com>
-References: <cover.1743859985.git.ramsay@ramsayjones.plus.com>
- <20250416231835.2492562-1-ramsay@ramsayjones.plus.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="odQc6bU6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sq+50CCS"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 01EEC11400AE;
+	Wed, 16 Apr 2025 20:11:13 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 16 Apr 2025 20:11:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1744848672; x=1744935072; bh=tM
+	TpZQpobzhmtqL9rg4GUdiuLOW+RqKGZMNECx4I36o=; b=odQc6bU6d5c+oFUrgq
+	7I8gNtEe8bVvUIsZI9J/1fxLEgK22xMsQyARR1GVthuDy23iJv82F8XR63T7bWXA
+	B7vZ9arEL/MPfCsuIV/j5+Jv9vZRJ19uwCDWq89zGyrIhrXiyf5DIXu5E4x4rWLa
+	sZXiIBvzAl/eGfius+31J+rKO4L7SS1igcHRy+jsKNZ6shdfytl1eviiIbXMfeXG
+	JkPBdXMgEp194IjV/fABPEKcJn6z6+AfTTqPF9asS9DEk+xoO1XcAG3cze/yuiux
+	+UxFpdPMzLSCADtEKff5SFJqcJXMpSsMvhdRc36cE8L28tE2VrLFEy3NAUEF+n5Y
+	RqCw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1744848672; x=1744935072; bh=tMTpZQpobzhmtqL9rg4GUdiuLOW+
+	RqKGZMNECx4I36o=; b=sq+50CCSLWFfqnV8uIsG1pFGivdqSVAzT9tRSox/2nWn
+	zu5XAeGgGn0/ky0M2dcmd+3Qtgn8NFKCWbrHySQym8FdE272ULIqX8e6SE5WVdDf
+	oTSF6tpGdR90u5ZSIbrNxvDxoxyUvw6nGaKt6pD89RIWxO2qMB5Y4TeNhcpB+pGa
+	9Me4lpiOizgUHznRIzCwAgvvyvwGo2uug8Y1IeDVA3qWLLDsr+HYQKZO58/cq2J6
+	XTz4A8k+Rkt1wEWqJE7bjr4VKOdn0vAi6irpdcdlD0Ptce7o424sgqosmZpJEdrz
+	7UGAzV9HB4ddtfZNvGdu2dqrPI79MdRN1Qq9vvO1Fw==
+X-ME-Sender: <xms:IEcAaG3jZT-EgQw3p0_OEDZFhxvQIXTLtHXi2lRlEXw-NF-XTfennA>
+    <xme:IEcAaJHfJ_8ywZ94wlrpsWHNIwzMgbYA7IUjWkM7D2VtsAsWJ9BVrg63_WVSmLpmY
+    pDZDxeDQcHUfFgEWg>
+X-ME-Received: <xmr:IEcAaO7O4kX0xlCSAq76vaR5g8rLifConnTMpKT2681dg43ukEWNqBlBn0rH_sETqU3Eg8MUAkty6UHahREkZG3gFUCmVnzemb1T>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdejjeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefufffkfgggtgfgsehtkeertddtreej
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeejleelteejgfdvhfdtheeuffejleejhfet
+    ledvueekgeffkeeitddvlefhjeelgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegshhgrthgvrghrnhgrvhesghhmrghi
+    lhdrtghomhdprhgtphhtthhopegtohhnghgurghnhhhqgiesghhmrghilhdrtghomhdprh
+    gtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgt
+    phhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrth
+    hhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdp
+    rhgtphhtthhopehkuhhfohhrihhjihelkeesghhmrghilhdrtghomhdprhgtphhtthhope
+    dtheiihihtfedtsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:IEcAaH1bx_McmFxAwzqIkwKLrsE-EY-7Aw5Elg-12SxxCrhMn2Yujw>
+    <xmx:IEcAaJEGlOH1c0Z5TB8u7VxB3_zF2LMA3aYch7ZmMY8x4GQxmuqIBQ>
+    <xmx:IEcAaA-uf1ZI28UxwNIKv8k3MK3bDKQJPg4k2RtFtLjmgw0u46lRmg>
+    <xmx:IEcAaOknMHXl2fJ4et94ueXQidb8S1c3e900G_1P19NXelpaxt_Piw>
+    <xmx:IEcAaOcW4LvOQ-I95cNyxutloNWHO4nFa8GkrvMbTKhggSRcW5vBdnBZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 16 Apr 2025 20:11:12 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Arnav Bhate <bhatearnav@gmail.com>,
+    =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+    Justin Tobler <jltobler@gmail.com>,
+    Karthik Nayak <karthik.188@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Seyi Kuforiji <kuforiji98@gmail.com>,
+    Zheng Yuting <05zyt30@gmail.com>
+Subject: What's cooking interim report
+Date: Wed, 16 Apr 2025 17:11:10 -0700
+Message-ID: <xmqqr01rfy01.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfNQtwomiADszzSFy7LuF14g7VY+F7g+wcWCTHQNo8OHJOOpq48XN/19M1w4oZzkECOYkUaq8v7Zik28ZahQeF9Bpi7OcYlsIy1z08soho5IFXxMgzxuW
- AlWD2cPk8V6CpnwFTrD9mFonzXcb1MznXmVk/oT2RbMbAdxZHvd/NsLwqd06u/SI/I9AvCQgCKi3p1/oSbhHJ3D1Z5itCwPFvJs=
 
-Commit 05cd988dce ("wrapper: add a helper to generate numbers from a
-CSPRNG", 2022-01-17) added a csprng_bytes() function which used one
-of several interfaces to provide a source of cryptographically secure
-pseudorandom numbers. The CSPRNG_METHOD make variable was provided to
-determine the choice of available 'backends' for the source of random
-bytes.
+Here are some notable updates relative to the issue #04 of "What's
+cooking" report this month.
 
-Commit 05cd988dce did not set CSPRNG_METHOD in the Linux section of
-the config.mak.uname file, so it defaults to using '/dev/urandom' as
-the source of random bytes. The 'backend' values which could be used
-on Linux are 'arc4random', 'getrandom' or 'getentropy' ('openssl' is
-an option, but seems to be discouraged).
+These three topics have been merged to 'master'.
 
-The arc4random routines (ar4random_buf() is the one actually used) were
-added to glibc in version 2.36, while both getrandom() and getentropy()
-were included in 2.25. So, some of the more up-to-date distributions of
-Linux (eg Debian 12, Ubuntu 24.04) would be able to use the 'arc4random'
-setting. All currently supported distributions have glibc 2.25 or later
-(RHEL 8 has v2.28) and, therefore, have support for the 'getrandom' and
-'getentropy' settings.
+ * js/ci-fedora-gawk (2025-04-16) 1 commit
+ * dd/sparse-glibc-workaround (2025-04-09) 1 commit
+ * js/ci-github-update-ubuntu (2025-04-09) 1 commit
 
-The arc4random routines on the *BSDs (along with cygwin) implement the
-ChaCha20 stream cipher algorithm (see RFC8439) in userspace, rather than
-as a system call, and are thus somewhat faster (having avoided a context
-switch to the kernel). In contrast, on Linux all three functions are
-simple wrappers around the same kernel CSPRNG syscall.
+As removal of Ubuntu 20.04 runner images from GitHub Actions was
+causing some CI jobs to fail, Đoàn Trần Công Danh and Dscho's work
+to update the necessary bits to make them work has been merged, with
+a bit ahead of schedule.  At the same time, we discovered that we
+lost "awk" on fedora image that resulted in test failures, which was
+quickly diagnosed and patched by Dscho with great help from Todd
+Zullinger, which was also fast-tracked to 'master'.  These three
+topics should be merged down to 'maint' before we'd make any update
+to it.
 
-If the meson build system is used on a newer platform, then they will be
-configured to use 'arc4random', whereas the make build will currently
-default to using '/dev/urandom' on Linux. Since there is no advantage,
-in terms of performance, to the 'arc4random' setting, the 'getrandom'
-setting should be preferred from an availability perspective. (Also, the
-current uses of csprng_bytes() are not in any hot path).
+We also graduated a bunch of other topics that have been cooking in
+'next' and spending the usual 1 calendar week (or more).
 
-In order to set an appropriate default, set the CSPRNG_METHOD build
-variable to 'getrandom' in the Linux section of the 'config.mak.uname'
-file.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
- config.mak.uname | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/config.mak.uname b/config.mak.uname
-index 330741eb5a..db22a8fb31 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -50,6 +50,7 @@ ifeq ($(uname_S),Linux)
- 	HAVE_ALLOCA_H = YesPlease
- 	# override in config.mak if you have glibc >= 2.38
- 	NO_STRLCPY = YesPlease
-+	CSPRNG_METHOD = getrandom
- 	HAVE_PATHS_H = YesPlease
- 	LIBC_CONTAINS_LIBINTL = YesPlease
- 	HAVE_DEV_TTY = YesPlease
--- 
-2.49.0
+ * jt/help-sha-backend-info-in-build-options (2025-04-07) 2 commits
+ * ps/cat-file-filter-batch (2025-04-07) 12 commits
+ * ps/misc-build-fixes (2025-04-01) 5 commits
+ * ps/test-wo-perl-prereq (2025-04-07) 20 commits
+ * ab/rm-sign-compare (2025-03-29) 1 commit
+ * ab/pathspec-sign-compare-workaround (2025-04-01) 1 commit
+ * jt/ref-transaction-abort-fix (2025-03-21) 1 commit
+ * zy/send-email-error-handling (2025-04-07) 2 commits
+ * jt/rev-list-z (2025-03-21) 5 commits
+ * sk/clar-trailer-urlmatch-norm-test (2025-03-04) 2 commits
+ * kn/non-transactional-batch-updates (2025-04-08) 9 commits
+ * ps/maintenance-reflog-expire (2025-04-08) 6 commits
 
