@@ -1,85 +1,84 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E727E22FF21
-	for <git@vger.kernel.org>; Thu, 17 Apr 2025 10:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E4222FDEF
+	for <git@vger.kernel.org>; Thu, 17 Apr 2025 10:49:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744886992; cv=none; b=fGkYEUfztxbScQ2NyHAINgAgsy5hhyIyZnxFuLIGKzpur/IMAdFzUUzXu2tcg7KWH1ANiTFtt3gcWEWM3ZCIxwhInuRw8FgfNQH3kzu/rmqvdEA8qoodijTedZdOWbt9eg0vUa0JtcCmHv+GNL4NU/vEqcVuEhwsqneo9AiTjNU=
+	t=1744886994; cv=none; b=jrbwiaPLnpao0ZLKlnS7mo7dUsTKtZgIAUomLHBTwd2XRNQ70kVBl3Qh8pHP+6XfgyquHWJhdav3wX/s3vAhVMDWfN5S5hLTNaP5xyHY8ZUlXFPuRZ37hrndeCg/N15WMxTTa37XyUUh765cyI2AHYCdCxVBEjtAjS5UKJD44Ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744886992; c=relaxed/simple;
-	bh=V8zXrXVswCjIT3NgyrA1xog6p5n2Kv9Wg3tTy51Dt9w=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=o5oLatONf3OUEiPuFX3e3LEDZ4SOYFEtsB4/jVAppme8r9g+kHfKW8RqXSA36VCFHnQbHbogoiKBqca5c3wqVpncgOeCu7F3ScG6+xxuJIpF8xmID1zfrmctA3C4n6gv4Emeg8YRphUSfXwKpCbRNiLybEstHQOvVlExSDOEbKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l+/alJIV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iYEJXvRl; arc=none smtp.client-ip=202.12.124.158
+	s=arc-20240116; t=1744886994; c=relaxed/simple;
+	bh=g28ml5GS+1JG0lkQQ40hkk9QkX5CAfm7BWn+bWfsKyw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=sej5hoz+xlnPjzCJZKPYcKkDpM2UgaB3nV05eq2vFWiWZKIKiPaIrhTOOIJS1XLzUB4sP8Qa5QHw+4sKXVr/XinMeiAtwhNhqbhIRDUpUjQn+vVa3kQxDanH1eDZSQ+4rxxBNK6jfo7Ze1UV/wpoGlSBeoiiQ081epRjV52c0qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mzfZGiqd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QPlxQQ1K; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l+/alJIV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iYEJXvRl"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mzfZGiqd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QPlxQQ1K"
 Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CAFD725401FE;
-	Thu, 17 Apr 2025 06:49:47 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EF0EF2540201;
+	Thu, 17 Apr 2025 06:49:49 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 17 Apr 2025 06:49:48 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 17 Apr 2025 06:49:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1744886987;
-	 x=1744973387; bh=kIyvAsnIVq81yiuextB1ktpev+pR+KF9Qkr+quCySFY=; b=
-	l+/alJIVRqvNAbK7twxpCNC+kMSn/+EkV7P3OX7G0/vn4uEa0cFFj20e8G+1bkPZ
-	tpNOLgBWsWLnLXXeVnUm0tpulCjksDuvEwqfRg82cb6IvrAfpc+STXXKkAWp8JNn
-	QTs1+mGUHLjSuxW7QoztcmOQSlFIWdacYj3K47rSVVoXV0AzmYwzUAPViOpk03UZ
-	3dcA9vDH+YJsuot4B62k10d/k8tMgfywHvjXo4YbIT+zmKen9tiWldHvYVi3nhob
-	GtkG9akWdn7veKN4B/YCr47du1Dp+JJUYfW5bkMXsj/g1d0FH6VDztZaOi4PpZu0
-	AvpG6qr7asJS3qmm/w5rZw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1744886989;
+	 x=1744973389; bh=44jiKLSD83Xu+/YPtcE1QjeP/cSIoSODcbtVDMG9VCk=; b=
+	mzfZGiqdyIW7z9Xr4JBVot8uli/JrWuQKUHuTXFJ0zd+ng75TiS10rKiiBmebg7y
+	k1NpOwEZpb/pLxxej8AJ0RR3n549z5OWnYRoqOFb0mZpzmsjzB2CdYSG1xmaK21t
+	+KRl3ZfJYbQ/w54yWDLdafohDqWIz2wrWizClk8SIMU0C0bvntwveJxY92KoRygf
+	VjvW/5VAMGKJmjwyPJ/od6GjEbGlgPohH8k01Pwlo3AhsiCcM1HFas84djl16gHr
+	RAnlO4ILBQ1a/qSac/rhXEAhU86QDTx2F4X7vgFCGc/Q+Mc4p3220/cZ5FJfAmmd
+	ULvqFusZFNlWEInnuipwOQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744886987; x=
-	1744973387; bh=kIyvAsnIVq81yiuextB1ktpev+pR+KF9Qkr+quCySFY=; b=i
-	YEJXvRlAZDQKzVJWWUAkVG0k4k4ZzNHHC8gbuvJ/+7HjwsZi+FHq8DAQC3MgwN6t
-	l4wfXauygq3ngMxgrD7QR/vvXp3U1qV+ET3DP31QOCHdGLe6YMXrShIV9aW/sRll
-	nTBpmcSkVhoaFgKDZ0SaP3A3+wOdfXBXoHgXfNgc5G+o7KggCGOWUzYo09ka9v+i
-	AT6gAQlKX0rLnNrgnrZBdQCjg735PCvh2IngS5/tzsEORR9ihIK103mEBTUj5WDw
-	hnb3y/Fa5Gn/mnK3+AK/vTCLVBNGjhKu6Nz+D0nzQIMA3U8GYnp6qdW+oADHEftx
-	fRP+V2m+BCYdKCF3frc9A==
-X-ME-Sender: <xms:y9wAaLvY78uFCYJrvA7_tOWw1TEPuoyNRnOQMAsRmBFIcZBcrFeZCw>
-    <xme:y9wAaMdlMZC0F_ImGA9FJ2IhY6PQTZj_un3vLc1fEKIFtYR_23hEgSgsCykg9JYnK
-    lzU6GpNPRTFUrmW7A>
-X-ME-Received: <xmr:y9wAaOx3TSP-w7de2E9qNjiErq9Ln9F6ICO6WpV09ewpblfLHgJFfEtPwgaBPpARkhMWP56njo974PQNJ_zlXQoZj6RtYCToUx-njAtPEtzu5sXA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744886989; x=
+	1744973389; bh=44jiKLSD83Xu+/YPtcE1QjeP/cSIoSODcbtVDMG9VCk=; b=Q
+	PlxQQ1K2gakPsQDh9e7IdZ7PwwhRwUgm91UlzvGXeJi2qtrUgj0bzxxkxsUZITfR
+	+kMuiKER997GN2BGAhYm0XTvFqCwS5DhhfvbzT5U01C07aHy3sJArkJhPuPCjkaJ
+	A5FUcexyyn3QB01VTyflP1+0FkBqnMf2UsXbynJ2VWPHQd2x/Ehx9lET5uDTv4WY
+	UAFd2lgw3L7TpoqCAlNVhaSqnG82kKbZwr9jVCnNg3FLTWt/pnTwMdJ4uI2pk0C2
+	zfBgHXlgdPTirRjJP0HSVgcOMfC46OzAj99bdrGutBsay0cekkL416JB2WrJ6Opi
+	XZW1rWwf3rm5itfKvxKbQ==
+X-ME-Sender: <xms:zdwAaCeean6Uz1hisyiVirAgyRJM9k10NVgRE58thOHK-x81Q_wzmw>
+    <xme:zdwAaMN8ZoM7F6Ee1YXDXGxdMm4qF4rXwQ29QxutFB9paJZPHAqFAzYrOqkcW-OKU
+    rbn4GZ6q6tO0HmTYw>
+X-ME-Received: <xmr:zdwAaDip3hsqNf0L8rg58IUxlwJqJnhyv6AbQSAYqFqGSpf3WCeAZSUE7UD0V8m565uNZ8XSS19rg-3ctNlwvap2mvqANQx8s7jlkOnP2YQ40UtZ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeltdeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffufffkgggtgfgjfhfvvefosehtjeertder
+    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedt
-    heefhfegffevgeegtdfhheeuvdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
+    drihhmqeenucggtffrrghtthgvrhhnpefgvdefjeeugfegieevveffhfekueehfeeliefh
+    uddtteekheffhffhkefggeekieenucffohhmrghinhepfhhlrghgshdrhhgvlhhpnecuve
     hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
     rdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhlrghusghithiisehp
-    hhihshhikhdrfhhuqdgsvghrlhhinhdruggvpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghp
-    thhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvthdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphht
-    thhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:y9wAaKODLRxErym2MOFYqMoq1hl5C2D_KxQ_v2qug9W2I7NilBedjQ>
-    <xmx:y9wAaL9CLdTTs6zhlvfnImdqimb69HpNpEDGElSWfRHYdK3DtWXTNQ>
-    <xmx:y9wAaKWhN6wfbVg_nS0eg9IyZMb991oP7GzWnfOWxgMr1pTGZEcWJw>
-    <xmx:y9wAaMeio9sLtLRXF6vrRJq8yVqJ4zLCYWwM49rvbflIl7govwpfyQ>
-    <xmx:y9wAaNRxaF55SOMknBHDfq5cYl7eWGr8soCSXrkxoME2_yCc3sfgbq_o>
+    epphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhm
+    pdhrtghpthhtohepghhlrghusghithiisehphhihshhikhdrfhhuqdgsvghrlhhinhdrug
+    gvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifoh
+    hougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggv
+X-ME-Proxy: <xmx:zdwAaP_IWb52nU7-RTFl2Db55rI85AZsX1lqt6ZX2c9l9Gx_wXtmUw>
+    <xmx:zdwAaOtyJ2Dx4upOLY22OkJXpWxjCpLUhadO8IxjTn71qGSATcrsew>
+    <xmx:zdwAaGGslZ265_74YvnSlzTdlr6oiDmeHhiEsZE7YuoVLDJrmeYhuQ>
+    <xmx:zdwAaNMcowsbcLt_i1oC4T-u-Z0j5PMK50vFo56AO1YLE20-AaglDw>
+    <xmx:zdwAaEBcElbrpk1qKuNN3O_7yvEZfXesyZhA50VIgT-SOQ_mFmlJ273C>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Apr 2025 06:49:46 -0400 (EDT)
+ 17 Apr 2025 06:49:48 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 537f5314 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 17 Apr 2025 10:49:40 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id fcc60e00 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 17 Apr 2025 10:49:43 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 0/7] parse-options: harden handling of integer values
-Date: Thu, 17 Apr 2025 12:49:35 +0200
-Message-Id: <20250417-b4-pks-parse-options-integers-v4-0-9cbc76b61cfe@pks.im>
+Date: Thu, 17 Apr 2025 12:49:37 +0200
+Subject: [PATCH v4 2/7] global: use designated initializers for options
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,13 +87,9 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAL/cAGgC/43NQQ6CMBCF4auYrh3TKQXElfcwLloYoDFC0xKiI
- dzdgYXBFS7/ycs3k4gUHEVxOUwi0Oii6zsOfTyIsjVdQ+AqbqGkSqWWCFaDf0TwJkSC3g+8j+C
- 6gRoKEQqrrS1rhRJRsOED1e61+rc7d+vi0If3+m7E5fqvPCJIMJk6m0rLMrH6yuOTe4qFHdWGw
- nSPUkyVJHOt0WAt8YdKtlS2RyVMVUnBVmbJ5MWXmuf5A17Ylm5dAQAA
-X-Change-ID: 20250401-b4-pks-parse-options-integers-9b4bbcf21011
-In-Reply-To: <20250401-b4-pks-parse-options-integers-v1-0-a628ad40c3b4@pks.im>
-References: <20250401-b4-pks-parse-options-integers-v1-0-a628ad40c3b4@pks.im>
+Message-Id: <20250417-b4-pks-parse-options-integers-v4-2-9cbc76b61cfe@pks.im>
+References: <20250417-b4-pks-parse-options-integers-v4-0-9cbc76b61cfe@pks.im>
+In-Reply-To: <20250417-b4-pks-parse-options-integers-v4-0-9cbc76b61cfe@pks.im>
 To: git@vger.kernel.org
 Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>, 
  Todd Zullinger <tmz@pobox.com>, 
@@ -104,548 +99,1006 @@ Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
  Phillip Wood <phillip.wood123@gmail.com>
 X-Mailer: b4 0.14.2
 
-Hi,
+While we expose macros for most of our different option types understood
+by the "parse-options" subsystem, not every combination of fields that
+has one as that would otherwise quickly lead to an explosion of macros.
+Instead, we just initialize structures manually for those variants of
+fields that don't have a macro.
 
-this patch series addresses the issues raised in [1] and [2]. As
-discussed in [1], the series also introduces a couple of safeguards to
-make it harder to misuse `OPT_INTEGER()` and `OPT_MAGNITUDE()`:
+Callsites that open-code these structure initialization don't use
+designated initializers though and instead just provide values for each
+of the fields that they want to initialize. This has three significant
+downsides:
 
-  - We now track the precision of the underlying integer types. This
-    makes it possible to pass arbitrarily-sized integers to those
-    options, not only `int` and `unsigned long`, respectively.
+  - Callsites need to specify all values up to the last field that they
+    care about. This often includes fields that should simply be left at
+    their default zero-initialized state, which adds distraction.
 
-  - We introduce a build assert to verify that the passed variable has
-    correct signedness.
+  - Any reader not deeply familiar with the layout of the structure
+    has a hard time figuring out what the respective initializers mean.
 
-Furthermore, the series introduces `OPT_UNSIGNED()` to adapt all
-callsites that previously used variables with the wrong signedness.
+  - Reordering or introducing new fields in the middle of the structure
+    is impossible without adapting all callsites.
 
-Changes in v2:
-  - Adapt computation of upper bounds to use similar logic to
-    `maximum_signed_value_of_type()`.
-  - Link to v1: https://lore.kernel.org/r/20250401-b4-pks-parse-options-integers-v1-0-a628ad40c3b4@pks.im
+Convert all sites to instead use designated initializers, which we have
+started using in our codebase quite a while ago. This allows us to skip
+any default-initialized fields, gives the reader context by specifying
+the field names and allows us to reorder or introduce new fields where
+we want to.
 
-Changes in v3:
-  - Introduce `errno` checks for `strto{u,i}max()`.
-  - Note that the precision is in bytes.
-  - Reject leading '-' when parsing unsigned integers.
-  - Introduce bounded integer options. This patch is mostly a proof of
-    concept that demonstrates that precision and ranges are orthogonal
-    to one another, so I consider it to be an optional patch. It may be
-    useful in the future, but I haven't converted any callsites to use
-    bounds yet.
-  - Link to v2: https://lore.kernel.org/r/20250415-b4-pks-parse-options-integers-v2-0-ce07441a1f01@pks.im
-
-Changes in v4:
-  - Adapt `OPTION_INTEGER()` to also accept unit factors. Like this, we
-    can avoid introducing `OPTION_UNSIGNED()` because now the behaviour
-    of `OPTION_INTEGER()` and `OPTION_MAGNITUDE()` are the same, except
-    of course the signedness.
-  - Rename `OPTION_MAGNITUDE()` to clarify this new world order, as the
-    main difference isn't unit factors anymore but only the signedness.
-  - Drop the PoC patch that introduces bounded integer options.
-  - Fix an off-by-one error for the lower boundary in
-    `git_parse_signed()`.
-  - Link to v3: https://lore.kernel.org/r/20250416-b4-pks-parse-options-integers-v3-0-d390746bea79@pks.im
-
-Thanks!
-
-Patrick
-
-[1]: <89257ab82cd60d135cce02d51eacee7ec35c1c37.camel@physik.fu-berlin.de>
-[2]: <Z8HW6petWuMRWSXf@teonanacatl.net>
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (7):
-      parse: fix off-by-one for minimum signed values
-      global: use designated initializers for options
-      parse-options: support unit factors in `OPT_INTEGER()`
-      parse-options: rename `OPT_MAGNITUDE()` to `OPT_UNSIGNED()`
-      parse-options: introduce precision handling for `OPTION_INTEGER`
-      parse-options: introduce precision handling for `OPTION_UNSIGNED`
-      parse-options: detect mismatches in integer signedness
+ archive.c                     |  35 ++++++++---
+ builtin/am.c                  |  28 ++++++---
+ builtin/clone.c               |  13 ++++-
+ builtin/commit-tree.c         |  12 +++-
+ builtin/commit.c              |  62 +++++++++++++++-----
+ builtin/config.c              |  13 ++++-
+ builtin/describe.c            |  24 ++++++--
+ builtin/fetch.c               |  10 +++-
+ builtin/fmt-merge-msg.c       |  25 +++++---
+ builtin/gc.c                  |  12 +++-
+ builtin/grep.c                |  14 +++--
+ builtin/init-db.c             |  13 +++--
+ builtin/ls-remote.c           |  11 +++-
+ builtin/merge.c               |  37 +++++++++---
+ builtin/read-tree.c           |  11 +++-
+ builtin/rebase.c              |  25 ++++++--
+ builtin/revert.c              |  12 +++-
+ builtin/show-branch.c         |  12 +++-
+ builtin/tag.c                 |  23 ++++++--
+ builtin/update-index.c        | 131 +++++++++++++++++++++++++++++-------------
+ builtin/write-tree.c          |  12 ++--
+ diff.c                        |  13 +++--
+ ref-filter.h                  |  15 +++--
+ t/helper/test-parse-options.c |  38 +++++++++---
+ 24 files changed, 443 insertions(+), 158 deletions(-)
 
- Documentation/technical/api-parse-options.adoc |  10 +-
- apply.c                                        |   4 +-
- archive.c                                      |  35 +++++--
- builtin/am.c                                   |  28 ++++--
- builtin/backfill.c                             |   4 +-
- builtin/clone.c                                |  13 ++-
- builtin/column.c                               |   2 +-
- builtin/commit-tree.c                          |  12 ++-
- builtin/commit.c                               |  62 +++++++++---
- builtin/config.c                               |  13 ++-
- builtin/describe.c                             |  24 +++--
- builtin/fetch.c                                |  10 +-
- builtin/fmt-merge-msg.c                        |  27 +++--
- builtin/gc.c                                   |  16 ++-
- builtin/grep.c                                 |  18 ++--
- builtin/init-db.c                              |  13 ++-
- builtin/ls-remote.c                            |  11 ++-
- builtin/merge.c                                |  38 +++++--
- builtin/multi-pack-index.c                     |   2 +-
- builtin/pack-objects.c                         |   8 +-
- builtin/read-tree.c                            |  11 ++-
- builtin/rebase.c                               |  25 +++--
- builtin/repack.c                               |   8 +-
- builtin/revert.c                               |  12 ++-
- builtin/show-branch.c                          |  13 ++-
- builtin/tag.c                                  |  24 +++--
- builtin/update-index.c                         | 131 +++++++++++++++++--------
- builtin/write-tree.c                           |  12 ++-
- diff.c                                         |  13 ++-
- git-compat-util.h                              |   7 ++
- parse-options.c                                | 102 ++++++++++++++-----
- parse-options.h                                |  17 +++-
- parse.c                                        |   4 +-
- parse.h                                        |   1 +
- ref-filter.h                                   |  15 ++-
- t/helper/test-parse-options.c                  |  50 +++++++---
- t/t0040-parse-options.sh                       |  93 +++++++++++++-----
- 37 files changed, 646 insertions(+), 242 deletions(-)
+diff --git a/archive.c b/archive.c
+index 8be4e7ac8db..67bba3cd301 100644
+--- a/archive.c
++++ b/archive.c
+@@ -650,20 +650,37 @@ static int parse_archive_args(int argc, const char **argv,
+ 		OPT_STRING(0, "format", &format, N_("fmt"), N_("archive format")),
+ 		OPT_STRING(0, "prefix", &base, N_("prefix"),
+ 			N_("prepend prefix to each pathname in the archive")),
+-		{ OPTION_CALLBACK, 0, "add-file", args, N_("file"),
+-		  N_("add untracked file to archive"), 0, add_file_cb,
+-		  (intptr_t)&base },
+-		{ OPTION_CALLBACK, 0, "add-virtual-file", args,
+-		  N_("path:content"), N_("add untracked file to archive"), 0,
+-		  add_file_cb, (intptr_t)&base },
++		{
++			.type = OPTION_CALLBACK,
++			.long_name = "add-file",
++			.value = args,
++			.argh = N_("file"),
++			.help = N_("add untracked file to archive"),
++			.callback = add_file_cb,
++			.defval = (intptr_t) &base,
++		},
++		{
++			.type = OPTION_CALLBACK,
++			.long_name = "add-virtual-file",
++			.value = args,
++			.argh = N_("path:content"),
++			.help = N_("add untracked file to archive"),
++			.callback = add_file_cb,
++			.defval = (intptr_t) &base,
++		},
+ 		OPT_STRING('o', "output", &output, N_("file"),
+ 			N_("write the archive to this file")),
+ 		OPT_BOOL(0, "worktree-attributes", &worktree_attributes,
+ 			N_("read .gitattributes in working directory")),
+ 		OPT__VERBOSE(&verbose, N_("report archived files on stderr")),
+-		{ OPTION_STRING, 0, "mtime", &mtime_option, N_("time"),
+-		  N_("set modification time of archive entries"),
+-		  PARSE_OPT_NONEG },
++		{
++			.type = OPTION_STRING,
++			.long_name = "mtime",
++			.value = &mtime_option,
++			.argh = N_("time"),
++			.help = N_("set modification time of archive entries"),
++			.flags = PARSE_OPT_NONEG,
++		},
+ 		OPT_NUMBER_CALLBACK(&compression_level,
+ 			N_("set compression level"), number_callback),
+ 		OPT_GROUP(""),
+diff --git a/builtin/am.c b/builtin/am.c
+index 3b61bd4c333..4afb519830f 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -2400,11 +2400,16 @@ int cmd_am(int argc,
+ 		OPT_CMDMODE(0, "quit", &resume_mode,
+ 			N_("abort the patching operation but keep HEAD where it is"),
+ 			RESUME_QUIT),
+-		{ OPTION_CALLBACK, 0, "show-current-patch", &resume_mode,
+-		  "(diff|raw)",
+-		  N_("show the patch being applied"),
+-		  PARSE_OPT_CMDMODE | PARSE_OPT_OPTARG | PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
+-		  parse_opt_show_current_patch, RESUME_SHOW_PATCH_RAW },
++		{
++			.type = OPTION_CALLBACK,
++			.long_name = "show-current-patch",
++			.value = &resume_mode,
++			.argh = "(diff|raw)",
++			.help = N_("show the patch being applied"),
++			.flags = PARSE_OPT_CMDMODE | PARSE_OPT_OPTARG | PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
++			.callback = parse_opt_show_current_patch,
++			.defval = RESUME_SHOW_PATCH_RAW,
++		},
+ 		OPT_CMDMODE(0, "retry", &resume_mode,
+ 			N_("try to apply current patch again"),
+ 			RESUME_APPLY),
+@@ -2417,9 +2422,16 @@ int cmd_am(int argc,
+ 		OPT_BOOL(0, "ignore-date", &state.ignore_date,
+ 			N_("use current timestamp for author date")),
+ 		OPT_RERERE_AUTOUPDATE(&state.allow_rerere_autoupdate),
+-		{ OPTION_STRING, 'S', "gpg-sign", &state.sign_commit, N_("key-id"),
+-		  N_("GPG-sign commits"),
+-		  PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
++		{
++			.type = OPTION_STRING,
++			.short_name = 'S',
++			.long_name = "gpg-sign",
++			.value = &state.sign_commit,
++			.argh = N_("key-id"),
++			.help = N_("GPG-sign commits"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = (intptr_t) "",
++		},
+ 		OPT_CALLBACK_F(0, "empty", &state.empty_type, "(stop|drop|keep)",
+ 		  N_("how to handle empty patches"),
+ 		  PARSE_OPT_NONEG, am_option_parse_empty),
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 88276e5b7ab..9c3547f41e3 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -930,9 +930,16 @@ int cmd_clone(int argc,
+ 			 N_("don't use local hardlinks, always copy")),
+ 		OPT_BOOL('s', "shared", &option_shared,
+ 			 N_("setup as shared repository")),
+-		{ OPTION_CALLBACK, 0, "recurse-submodules", &option_recurse_submodules,
+-		  N_("pathspec"), N_("initialize submodules in the clone"),
+-		  PARSE_OPT_OPTARG, recurse_submodules_cb, (intptr_t)"." },
++		{
++			.type = OPTION_CALLBACK,
++			.long_name = "recurse-submodules",
++			.value = &option_recurse_submodules,
++			.argh = N_("pathspec"),
++			.help = N_("initialize submodules in the clone"),
++			.flags = PARSE_OPT_OPTARG,
++			.callback = recurse_submodules_cb,
++			.defval = (intptr_t)".",
++		},
+ 		OPT_ALIAS(0, "recursive", "recurse-submodules"),
+ 		OPT_INTEGER('j', "jobs", &max_jobs,
+ 			    N_("number of submodules cloned in parallel")),
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index 38457600a4e..c787133d004 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -111,8 +111,16 @@ int cmd_commit_tree(int argc,
+ 		OPT_CALLBACK_F('F', NULL, &buffer, N_("file"),
+ 			N_("read commit log message from file"), PARSE_OPT_NONEG,
+ 			parse_file_arg_callback),
+-		{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
+-			N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
++		{
++			.type = OPTION_STRING,
++			.short_name = 'S',
++			.long_name = "gpg-sign",
++			.value = &sign_commit,
++			.argh = N_("key-id"),
++			.help = N_("GPG sign commit"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = (intptr_t) "",
++		},
+ 		OPT_END()
+ 	};
+ 	int ret;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 2f459682221..66bd91fd523 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1542,17 +1542,34 @@ struct repository *repo UNUSED)
+ 			    STATUS_FORMAT_LONG),
+ 		OPT_BOOL('z', "null", &s.null_termination,
+ 			 N_("terminate entries with NUL")),
+-		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg,
+-		  N_("mode"),
+-		  N_("show untracked files, optional modes: all, normal, no. (Default: all)"),
+-		  PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
+-		{ OPTION_STRING, 0, "ignored", &ignored_arg,
+-		  N_("mode"),
+-		  N_("show ignored files, optional modes: traditional, matching, no. (Default: traditional)"),
+-		  PARSE_OPT_OPTARG, NULL, (intptr_t)"traditional" },
+-		{ OPTION_STRING, 0, "ignore-submodules", &ignore_submodule_arg, N_("when"),
+-		  N_("ignore changes to submodules, optional when: all, dirty, untracked. (Default: all)"),
+-		  PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
++		{
++			.type = OPTION_STRING,
++			.short_name = 'u',
++			.long_name = "untracked-files",
++			.value = &untracked_files_arg,
++			.argh = N_("mode"),
++			.help = N_("show untracked files, optional modes: all, normal, no. (Default: all)"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = (intptr_t)"all",
++		},
++		{
++			.type = OPTION_STRING,
++			.long_name = "ignored",
++			.value = &ignored_arg,
++			.argh = N_("mode"),
++			.help = N_("show ignored files, optional modes: traditional, matching, no. (Default: traditional)"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = (intptr_t)"traditional",
++		},
++		{
++			.type = OPTION_STRING,
++			.long_name = "ignore-submodules",
++			.value = &ignore_submodule_arg,
++			.argh = N_("when"),
++			.help = N_("ignore changes to submodules, optional when: all, dirty, untracked. (Default: all)"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = (intptr_t)"all",
++		},
+ 		OPT_COLUMN(0, "column", &s.colopts, N_("list untracked files in columns")),
+ 		OPT_BOOL(0, "no-renames", &no_renames, N_("do not detect renames")),
+ 		OPT_CALLBACK_F('M', "find-renames", &rename_score_arg,
+@@ -1688,8 +1705,16 @@ int cmd_commit(int argc,
+ 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
+ 		OPT_CLEANUP(&cleanup_arg),
+ 		OPT_BOOL(0, "status", &include_status, N_("include status in commit message template")),
+-		{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
+-		  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
++		{
++			.type = OPTION_STRING,
++			.short_name = 'S',
++			.long_name = "gpg-sign",
++			.value = &sign_commit,
++			.argh = N_("key-id"),
++			.help = N_("GPG sign commit"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = (intptr_t) "",
++		},
+ 		/* end commit message options */
+ 
+ 		OPT_GROUP(N_("Commit contents options")),
+@@ -1714,7 +1739,16 @@ int cmd_commit(int argc,
+ 			 N_("terminate entries with NUL")),
+ 		OPT_BOOL(0, "amend", &amend, N_("amend previous commit")),
+ 		OPT_BOOL(0, "no-post-rewrite", &no_post_rewrite, N_("bypass post-rewrite hook")),
+-		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, N_("mode"), N_("show untracked files, optional modes: all, normal, no. (Default: all)"), PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
++		{
++			.type = OPTION_STRING,
++			.short_name = 'u',
++			.long_name = "untracked-files",
++			.value = &untracked_files_arg,
++			.argh = N_("mode"),
++			.help = N_("show untracked files, optional modes: all, normal, no. (Default: all)"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = (intptr_t)"all",
++		},
+ 		OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
+ 		OPT_PATHSPEC_FILE_NUL(&pathspec_file_nul),
+ 		/* end commit contents options */
+diff --git a/builtin/config.c b/builtin/config.c
+index 53a90094e31..f70d6354772 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -131,9 +131,16 @@ struct config_display_options {
+ #define TYPE_COLOR		6
+ #define TYPE_BOOL_OR_STR	7
+ 
+-#define OPT_CALLBACK_VALUE(s, l, v, h, i) \
+-	{ OPTION_CALLBACK, (s), (l), (v), NULL, (h), PARSE_OPT_NOARG | \
+-	PARSE_OPT_NONEG, option_parse_type, (i) }
++#define OPT_CALLBACK_VALUE(s, l, v, h, i) { \
++	.type = OPTION_CALLBACK, \
++	.short_name = (s), \
++	.long_name = (l), \
++	.value = (v), \
++	.help = (h), \
++	.flags = PARSE_OPT_NOARG | PARSE_OPT_NONEG, \
++	.callback = option_parse_type, \
++	.defval = (i), \
++}
+ 
+ static int option_parse_type(const struct option *opt, const char *arg,
+ 			     int unset)
+diff --git a/builtin/describe.c b/builtin/describe.c
+index e2e73f3d757..2da9f4fed01 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -601,12 +601,24 @@ int cmd_describe(int argc,
+ 			   N_("do not consider tags matching <pattern>")),
+ 		OPT_BOOL(0, "always",        &always,
+ 			N_("show abbreviated commit object as fallback")),
+-		{OPTION_STRING, 0, "dirty",  &dirty, N_("mark"),
+-			N_("append <mark> on dirty working tree (default: \"-dirty\")"),
+-			PARSE_OPT_OPTARG, NULL, (intptr_t) "-dirty"},
+-		{OPTION_STRING, 0, "broken",  &broken, N_("mark"),
+-			N_("append <mark> on broken working tree (default: \"-broken\")"),
+-			PARSE_OPT_OPTARG, NULL, (intptr_t) "-broken"},
++		{
++			.type = OPTION_STRING,
++			.long_name = "dirty",
++			.value = &dirty,
++			.argh = N_("mark"),
++			.help = N_("append <mark> on dirty working tree (default: \"-dirty\")"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = (intptr_t) "-dirty",
++		},
++		{
++			.type = OPTION_STRING,
++			.long_name = "broken",
++			.value = &broken,
++			.argh = N_("mark"),
++			.help = N_("append <mark> on broken working tree (default: \"-broken\")"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = (intptr_t) "-broken",
++		},
+ 		OPT_END(),
+ 	};
+ 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 02af5054690..3a5159d9e69 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -2359,8 +2359,14 @@ int cmd_fetch(int argc,
+ 		OPT_SET_INT_F(0, "refetch", &refetch,
+ 			      N_("re-fetch without negotiating common commits"),
+ 			      1, PARSE_OPT_NONEG),
+-		{ OPTION_STRING, 0, "submodule-prefix", &submodule_prefix, N_("dir"),
+-			   N_("prepend this to submodule path output"), PARSE_OPT_HIDDEN },
++		{
++			.type = OPTION_STRING,
++			.long_name = "submodule-prefix",
++			.value = &submodule_prefix,
++			.argh = N_("dir"),
++			.help = N_("prepend this to submodule path output"),
++			.flags = PARSE_OPT_HIDDEN,
++		},
+ 		OPT_CALLBACK_F(0, "recurse-submodules-default",
+ 			   &recurse_submodules_default, N_("on-demand"),
+ 			   N_("default for recursive fetching of submodules "
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 189cd1096a0..240cdb474bc 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -20,13 +20,24 @@ int cmd_fmt_merge_msg(int argc,
+ 	char *into_name = NULL;
+ 	int shortlog_len = -1;
+ 	struct option options[] = {
+-		{ OPTION_INTEGER, 0, "log", &shortlog_len, N_("n"),
+-		  N_("populate log with at most <n> entries from shortlog"),
+-		  PARSE_OPT_OPTARG, NULL, DEFAULT_MERGE_LOG_LEN },
+-		{ OPTION_INTEGER, 0, "summary", &shortlog_len, N_("n"),
+-		  N_("alias for --log (deprecated)"),
+-		  PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN, NULL,
+-		  DEFAULT_MERGE_LOG_LEN },
++		{
++			.type = OPTION_INTEGER,
++			.long_name = "log",
++			.value = &shortlog_len,
++			.argh = N_("n"),
++			.help = N_("populate log with at most <n> entries from shortlog"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = DEFAULT_MERGE_LOG_LEN,
++		},
++		{
++			.type = OPTION_INTEGER,
++			.long_name = "summary",
++			.value = &shortlog_len,
++			.argh = N_("n"),
++			.help = N_("alias for --log (deprecated)"),
++			.flags = PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN,
++			.defval = DEFAULT_MERGE_LOG_LEN,
++		},
+ 		OPT_STRING('m', "message", &message, N_("text"),
+ 			N_("use <text> as start of message")),
+ 		OPT_STRING(0, "into-name", &into_name, N_("name"),
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 99431fd4674..6707a26bc6e 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -699,9 +699,15 @@ struct repository *repo UNUSED)
+ 	int ret;
+ 	struct option builtin_gc_options[] = {
+ 		OPT__QUIET(&quiet, N_("suppress progress reporting")),
+-		{ OPTION_STRING, 0, "prune", &prune_expire_arg, N_("date"),
+-			N_("prune unreferenced objects"),
+-			PARSE_OPT_OPTARG, NULL, (intptr_t)prune_expire_arg },
++		{
++			.type = OPTION_STRING,
++			.long_name = "prune",
++			.value = &prune_expire_arg,
++			.argh = N_("date"),
++			.help = N_("prune unreferenced objects"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = (intptr_t)prune_expire_arg,
++		},
+ 		OPT_BOOL(0, "cruft", &cfg.cruft_packs, N_("pack unreferenced objects separately")),
+ 		OPT_MAGNITUDE(0, "max-cruft-size", &cfg.max_cruft_size,
+ 			      N_("with --cruft, limit the size of new cruft packs")),
+diff --git a/builtin/grep.c b/builtin/grep.c
+index d1427290f77..c4869733e1b 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1017,10 +1017,16 @@ int cmd_grep(int argc,
+ 		OPT_BOOL(0, "all-match", &opt.all_match,
+ 			N_("show only matches from files that match all patterns")),
+ 		OPT_GROUP(""),
+-		{ OPTION_STRING, 'O', "open-files-in-pager", &show_in_pager,
+-			N_("pager"), N_("show matching files in the pager"),
+-			PARSE_OPT_OPTARG | PARSE_OPT_NOCOMPLETE,
+-			NULL, (intptr_t)default_pager },
++		{
++			.type = OPTION_STRING,
++			.short_name = 'O',
++			.long_name = "open-files-in-pager",
++			.value = &show_in_pager,
++			.argh = N_("pager"),
++			.help = N_("show matching files in the pager"),
++			.flags = PARSE_OPT_OPTARG | PARSE_OPT_NOCOMPLETE,
++			.defval = (intptr_t)default_pager,
++		},
+ 		OPT_BOOL_F(0, "ext-grep", &external_grep_allowed__ignored,
+ 			   N_("allow calling of grep(1) (ignored by this build)"),
+ 			   PARSE_OPT_NOCOMPLETE),
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 196dccdd77a..4a950e44d8d 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -93,10 +93,15 @@ int cmd_init_db(int argc,
+ 				N_("directory from which templates will be used")),
+ 		OPT_SET_INT(0, "bare", &is_bare_repository_cfg,
+ 				N_("create a bare repository"), 1),
+-		{ OPTION_CALLBACK, 0, "shared", &init_shared_repository,
+-			N_("permissions"),
+-			N_("specify that the git repository is to be shared amongst several users"),
+-			PARSE_OPT_OPTARG | PARSE_OPT_NONEG, shared_callback, 0},
++		{
++			.type = OPTION_CALLBACK,
++			.long_name = "shared",
++			.value = &init_shared_repository,
++			.argh = N_("permissions"),
++			.help = N_("specify that the git repository is to be shared amongst several users"),
++			.flags = PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
++			.callback = shared_callback
++		},
+ 		OPT_BIT('q', "quiet", &flags, N_("be quiet"), INIT_DB_QUIET),
+ 		OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
+ 			   N_("separate git dir from working tree")),
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index 42f34e12361..01a4d4daa1f 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -67,9 +67,14 @@ int cmd_ls_remote(int argc,
+ 		OPT__QUIET(&quiet, N_("do not print remote URL")),
+ 		OPT_STRING(0, "upload-pack", &uploadpack, N_("exec"),
+ 			   N_("path of git-upload-pack on the remote host")),
+-		{ OPTION_STRING, 0, "exec", &uploadpack, N_("exec"),
+-			   N_("path of git-upload-pack on the remote host"),
+-			   PARSE_OPT_HIDDEN },
++		{
++			.type = OPTION_STRING,
++			.long_name = "exec",
++			.value = &uploadpack,
++			.argh = N_("exec"),
++			.help = N_("path of git-upload-pack on the remote host"),
++			.flags = PARSE_OPT_HIDDEN,
++		},
+ 		OPT_BIT('t', "tags", &flags, N_("limit to tags"), REF_TAGS),
+ 		OPT_BIT('b', "branches", &flags, N_("limit to branches"), REF_BRANCHES),
+ 		OPT_BIT_F('h', "heads", &flags,
+diff --git a/builtin/merge.c b/builtin/merge.c
+index ba9faf126aa..21787d45165 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -250,9 +250,15 @@ static struct option builtin_merge_options[] = {
+ 	OPT_BOOL(0, "stat", &show_diffstat,
+ 		N_("show a diffstat at the end of the merge")),
+ 	OPT_BOOL(0, "summary", &show_diffstat, N_("(synonym to --stat)")),
+-	{ OPTION_INTEGER, 0, "log", &shortlog_len, N_("n"),
+-	  N_("add (at most <n>) entries from shortlog to merge commit message"),
+-	  PARSE_OPT_OPTARG, NULL, DEFAULT_MERGE_LOG_LEN },
++	{
++		.type = OPTION_INTEGER,
++		.long_name = "log",
++		.value = &shortlog_len,
++		.argh = N_("n"),
++		.help = N_("add (at most <n>) entries from shortlog to merge commit message"),
++		.flags = PARSE_OPT_OPTARG,
++		.defval = DEFAULT_MERGE_LOG_LEN,
++	},
+ 	OPT_BOOL(0, "squash", &squash,
+ 		N_("create a single commit instead of doing a merge")),
+ 	OPT_BOOL(0, "commit", &option_commit,
+@@ -274,9 +280,16 @@ static struct option builtin_merge_options[] = {
+ 	OPT_CALLBACK('m', "message", &merge_msg, N_("message"),
+ 		N_("merge commit message (for a non-fast-forward merge)"),
+ 		option_parse_message),
+-	{ OPTION_LOWLEVEL_CALLBACK, 'F', "file", &merge_msg, N_("path"),
+-		N_("read message from file"), PARSE_OPT_NONEG,
+-		NULL, 0, option_read_message },
++	{
++		.type = OPTION_LOWLEVEL_CALLBACK,
++		.short_name = 'F',
++		.long_name = "file",
++		.value = &merge_msg,
++		.argh = N_("path"),
++		.help = N_("read message from file"),
++		.flags = PARSE_OPT_NONEG,
++		.ll_callback = option_read_message,
++	},
+ 	OPT_STRING(0, "into-name", &into_name, N_("name"),
+ 		   N_("use <name> instead of the real target")),
+ 	OPT__VERBOSITY(&verbosity),
+@@ -289,8 +302,16 @@ static struct option builtin_merge_options[] = {
+ 	OPT_BOOL(0, "allow-unrelated-histories", &allow_unrelated_histories,
+ 		 N_("allow merging unrelated histories")),
+ 	OPT_SET_INT(0, "progress", &show_progress, N_("force progress reporting"), 1),
+-	{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
+-	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
++	{
++		.type = OPTION_STRING,
++		.short_name = 'S',
++		.long_name = "gpg-sign",
++		.value = &sign_commit,
++		.argh = N_("key-id"),
++		.help = N_("GPG sign commit"),
++		.flags = PARSE_OPT_OPTARG,
++		.defval = (intptr_t) "",
++	},
+ 	OPT_AUTOSTASH(&autostash),
+ 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
+ 	OPT_BOOL(0, "signoff", &signoff, N_("add a Signed-off-by trailer")),
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index d2a807a828b..a8f352f7cd9 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -135,9 +135,14 @@ int cmd_read_tree(int argc,
+ 			 N_("3-way merge in presence of adds and removes")),
+ 		OPT_BOOL(0, "reset", &opts.reset,
+ 			 N_("same as -m, but discard unmerged entries")),
+-		{ OPTION_STRING, 0, "prefix", &opts.prefix, N_("<subdirectory>/"),
+-		  N_("read the tree into the index under <subdirectory>/"),
+-		  PARSE_OPT_NONEG },
++		{
++			.type = OPTION_STRING,
++			.long_name = "prefix",
++			.value = &opts.prefix,
++			.argh = N_("<subdirectory>/"),
++			.help = N_("read the tree into the index under <subdirectory>/"),
++			.flags = PARSE_OPT_NONEG,
++		},
+ 		OPT_BOOL('u', NULL, &opts.update,
+ 			 N_("update working tree with merge result")),
+ 		OPT_CALLBACK_F(0, "exclude-per-directory", &opts,
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index d4715ed35d7..d4083350090 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1122,9 +1122,15 @@ int cmd_rebase(int argc,
+ 		OPT_BIT('v', "verbose", &options.flags,
+ 			N_("display a diffstat of what changed upstream"),
+ 			REBASE_NO_QUIET | REBASE_VERBOSE | REBASE_DIFFSTAT),
+-		{OPTION_NEGBIT, 'n', "no-stat", &options.flags, NULL,
+-			N_("do not show diffstat of what changed upstream"),
+-			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
++		{
++			.type = OPTION_NEGBIT,
++			.short_name = 'n',
++			.long_name = "no-stat",
++			.value = &options.flags,
++			.help = N_("do not show diffstat of what changed upstream"),
++			.flags = PARSE_OPT_NOARG,
++			.defval = REBASE_DIFFSTAT,
++		},
+ 		OPT_BOOL(0, "signoff", &options.signoff,
+ 			 N_("add a Signed-off-by trailer to each commit")),
+ 		OPT_BOOL(0, "committer-date-is-author-date",
+@@ -1190,9 +1196,16 @@ int cmd_rebase(int argc,
+ 		OPT_BOOL(0, "update-refs", &options.update_refs,
+ 			 N_("update branches that point to commits "
+ 			    "that are being rebased")),
+-		{ OPTION_STRING, 'S', "gpg-sign", &gpg_sign, N_("key-id"),
+-			N_("GPG-sign commits"),
+-			PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
++		{
++			.type = OPTION_STRING,
++			.short_name = 'S',
++			.long_name = "gpg-sign",
++			.value = &gpg_sign,
++			.argh = N_("key-id"),
++			.help = N_("GPG-sign commits"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = (intptr_t) "",
++		},
+ 		OPT_AUTOSTASH(&options.autostash),
+ 		OPT_STRING_LIST('x', "exec", &options.exec, N_("exec"),
+ 				N_("add exec lines after each commit of the "
+diff --git a/builtin/revert.c b/builtin/revert.c
+index aca6c293cdf..4f5ef975494 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -132,8 +132,16 @@ static int run_sequencer(int argc, const char **argv, const char *prefix,
+ 		OPT_STRING(0, "strategy", &strategy, N_("strategy"), N_("merge strategy")),
+ 		OPT_STRVEC('X', "strategy-option", &opts->xopts, N_("option"),
+ 			N_("option for merge strategy")),
+-		{ OPTION_STRING, 'S', "gpg-sign", &gpg_sign, N_("key-id"),
+-		  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
++		{
++			.type = OPTION_STRING,
++			.short_name = 'S',
++			.long_name = "gpg-sign",
++			.value = &gpg_sign,
++			.argh = N_("key-id"),
++			.help = N_("GPG sign commit"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = (intptr_t) "",
++		},
+ 		OPT_END()
+ 	};
+ 	struct option *options = base_options;
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index fce6b404e92..dab37019d29 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -667,9 +667,15 @@ int cmd_show_branch(int ac,
+ 			 N_("show remote-tracking branches")),
+ 		OPT__COLOR(&showbranch_use_color,
+ 			    N_("color '*!+-' corresponding to the branch")),
+-		{ OPTION_INTEGER, 0, "more", &extra, N_("n"),
+-			    N_("show <n> more commits after the common ancestor"),
+-			    PARSE_OPT_OPTARG, NULL, (intptr_t)1 },
++		{
++			.type = OPTION_INTEGER,
++			.long_name = "more",
++			.value = &extra,
++			.argh = N_("n"),
++			.help = N_("show <n> more commits after the common ancestor"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = 1,
++		},
+ 		OPT_SET_INT(0, "list", &extra, N_("synonym to more=-1"), -1),
+ 		OPT_BOOL(0, "no-name", &no_name, N_("suppress naming strings")),
+ 		OPT_BOOL(0, "current", &with_current_branch,
+diff --git a/builtin/tag.c b/builtin/tag.c
+index d3e0943b734..b266f12bb48 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -479,9 +479,15 @@ int cmd_tag(int argc,
+ 	int edit_flag = 0;
+ 	struct option options[] = {
+ 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
+-		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
+-				N_("print <n> lines of each tag message"),
+-				PARSE_OPT_OPTARG, NULL, 1 },
++		{
++			.type = OPTION_INTEGER,
++			.short_name = 'n',
++			.value = &filter.lines,
++			.argh = N_("n"),
++			.help = N_("print <n> lines of each tag message"),
++			.flags = PARSE_OPT_OPTARG,
++			.defval = 1,
++		},
+ 		OPT_CMDMODE('d', "delete", &cmdmode, N_("delete tags"), 'd'),
+ 		OPT_CMDMODE('v', "verify", &cmdmode, N_("verify tags"), 'v'),
+ 
+@@ -513,9 +519,14 @@ int cmd_tag(int argc,
+ 			N_("do not output a newline after empty formatted refs")),
+ 		OPT_REF_SORT(&sorting_options),
+ 		{
+-			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
+-			N_("print only tags of the object"), PARSE_OPT_LASTARG_DEFAULT,
+-			parse_opt_object_name, (intptr_t) "HEAD"
++			.type = OPTION_CALLBACK,
++			.long_name = "points-at",
++			.value = &filter.points_at,
++			.argh = N_("object"),
++			.help = N_("print only tags of the object"),
++			.flags = PARSE_OPT_LASTARG_DEFAULT,
++			.callback = parse_opt_object_name,
++			.defval = (intptr_t) "HEAD",
+ 		},
+ 		OPT_STRING(  0 , "format", &format.format, N_("format"),
+ 			   N_("format to use for the output")),
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index b2f6b1a3fbb..ee64b022679 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -964,29 +964,51 @@ int cmd_update_index(int argc,
+ 			N_("like --refresh, but ignore assume-unchanged setting"),
+ 			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
+ 			really_refresh_callback),
+-		{OPTION_LOWLEVEL_CALLBACK, 0, "cacheinfo", NULL,
+-			N_("<mode>,<object>,<path>"),
+-			N_("add the specified entry to the index"),
+-			PARSE_OPT_NOARG | /* disallow --cacheinfo=<mode> form */
+-			PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
+-			NULL, 0,
+-			cacheinfo_callback},
++		{
++			.type = OPTION_LOWLEVEL_CALLBACK,
++			.long_name = "cacheinfo",
++			.argh = N_("<mode>,<object>,<path>"),
++			.help = N_("add the specified entry to the index"),
++			.flags = PARSE_OPT_NOARG | /* disallow --cacheinfo=<mode> form */
++				 PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
++			.ll_callback = cacheinfo_callback,
++		},
+ 		OPT_CALLBACK_F(0, "chmod", &set_executable_bit, "(+|-)x",
+ 			N_("override the executable bit of the listed files"),
+ 			PARSE_OPT_NONEG,
+ 			chmod_callback),
+-		{OPTION_SET_INT, 0, "assume-unchanged", &mark_valid_only, NULL,
+-			N_("mark files as \"not changing\""),
+-			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, MARK_FLAG},
+-		{OPTION_SET_INT, 0, "no-assume-unchanged", &mark_valid_only, NULL,
+-			N_("clear assumed-unchanged bit"),
+-			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, UNMARK_FLAG},
+-		{OPTION_SET_INT, 0, "skip-worktree", &mark_skip_worktree_only, NULL,
+-			N_("mark files as \"index-only\""),
+-			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, MARK_FLAG},
+-		{OPTION_SET_INT, 0, "no-skip-worktree", &mark_skip_worktree_only, NULL,
+-			N_("clear skip-worktree bit"),
+-			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, UNMARK_FLAG},
++		{
++			.type = OPTION_SET_INT,
++			.long_name = "assume-unchanged",
++			.value = &mark_valid_only,
++			.help = N_("mark files as \"not changing\""),
++			.flags = PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++			.defval = MARK_FLAG,
++		},
++		{
++			.type = OPTION_SET_INT,
++			.long_name = "no-assume-unchanged",
++			.value = &mark_valid_only,
++			.help = N_("clear assumed-unchanged bit"),
++			.flags = PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++			.defval = UNMARK_FLAG,
++		},
++		{
++			.type = OPTION_SET_INT,
++			.long_name = "skip-worktree",
++			.value = &mark_skip_worktree_only,
++			.help = N_("mark files as \"index-only\""),
++			.flags = PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++			.defval = MARK_FLAG,
++		},
++		{
++			.type = OPTION_SET_INT,
++			.long_name = "no-skip-worktree",
++			.value = &mark_skip_worktree_only,
++			.help = N_("clear skip-worktree bit"),
++			.flags = PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++			.defval = UNMARK_FLAG,
++		},
+ 		OPT_BOOL(0, "ignore-skip-worktree-entries", &ignore_skip_worktree_entries,
+ 			 N_("do not touch index-only entries")),
+ 		OPT_SET_INT(0, "info-only", &info_only,
+@@ -995,22 +1017,39 @@ int cmd_update_index(int argc,
+ 			N_("remove named paths even if present in worktree"), 1),
+ 		OPT_BOOL('z', NULL, &nul_term_line,
+ 			 N_("with --stdin: input lines are terminated by null bytes")),
+-		{OPTION_LOWLEVEL_CALLBACK, 0, "stdin", &read_from_stdin, NULL,
+-			N_("read list of paths to be updated from standard input"),
+-			PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+-			NULL, 0, stdin_callback},
+-		{OPTION_LOWLEVEL_CALLBACK, 0, "index-info", &nul_term_line, NULL,
+-			N_("add entries from standard input to the index"),
+-			PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+-			NULL, 0, stdin_cacheinfo_callback},
+-		{OPTION_LOWLEVEL_CALLBACK, 0, "unresolve", &has_errors, NULL,
+-			N_("repopulate stages #2 and #3 for the listed paths"),
+-			PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+-			NULL, 0, unresolve_callback},
+-		{OPTION_LOWLEVEL_CALLBACK, 'g', "again", &has_errors, NULL,
+-			N_("only update entries that differ from HEAD"),
+-			PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+-			NULL, 0, reupdate_callback},
++		{
++			.type = OPTION_LOWLEVEL_CALLBACK,
++			.long_name = "stdin",
++			.value = &read_from_stdin,
++			.help = N_("read list of paths to be updated from standard input"),
++			.flags = PARSE_OPT_NONEG | PARSE_OPT_NOARG,
++			.ll_callback = stdin_callback,
++		},
++		{
++			.type = OPTION_LOWLEVEL_CALLBACK,
++			.long_name = "index-info",
++			.value = &nul_term_line,
++			.help = N_("add entries from standard input to the index"),
++			.flags = PARSE_OPT_NONEG | PARSE_OPT_NOARG,
++			.ll_callback = stdin_cacheinfo_callback,
++		},
++		{
++			.type = OPTION_LOWLEVEL_CALLBACK,
++			.long_name = "unresolve",
++			.value = &has_errors,
++			.help = N_("repopulate stages #2 and #3 for the listed paths"),
++			.flags = PARSE_OPT_NONEG | PARSE_OPT_NOARG,
++			.ll_callback = unresolve_callback,
++		},
++		{
++			.type = OPTION_LOWLEVEL_CALLBACK,
++			.short_name = 'g',
++			.long_name = "again",
++			.value = &has_errors,
++			.help = N_("only update entries that differ from HEAD"),
++			.flags = PARSE_OPT_NONEG | PARSE_OPT_NOARG,
++			.ll_callback = reupdate_callback,
++		},
+ 		OPT_BIT(0, "ignore-missing", &refresh_args.flags,
+ 			N_("ignore files missing from worktree"),
+ 			REFRESH_IGNORE_MISSING),
+@@ -1036,12 +1075,22 @@ int cmd_update_index(int argc,
+ 			N_("write out the index even if is not flagged as changed"), 1),
+ 		OPT_BOOL(0, "fsmonitor", &fsmonitor,
+ 			N_("enable or disable file system monitor")),
+-		{OPTION_SET_INT, 0, "fsmonitor-valid", &mark_fsmonitor_only, NULL,
+-			N_("mark files as fsmonitor valid"),
+-			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, MARK_FLAG},
+-		{OPTION_SET_INT, 0, "no-fsmonitor-valid", &mark_fsmonitor_only, NULL,
+-			N_("clear fsmonitor valid bit"),
+-			PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, UNMARK_FLAG},
++		{
++			.type = OPTION_SET_INT,
++			.long_name = "fsmonitor-valid",
++			.value = &mark_fsmonitor_only,
++			.help = N_("mark files as fsmonitor valid"),
++			.flags = PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++			.defval = MARK_FLAG,
++		},
++		{
++			.type = OPTION_SET_INT,
++			.long_name = "no-fsmonitor-valid",
++			.value = &mark_fsmonitor_only,
++			.help = N_("clear fsmonitor valid bit"),
++			.flags = PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++			.defval = UNMARK_FLAG,
++		},
+ 		OPT_END()
+ 	};
+ 
+diff --git a/builtin/write-tree.c b/builtin/write-tree.c
+index 43f233e69b0..5a8dc377ec0 100644
+--- a/builtin/write-tree.c
++++ b/builtin/write-tree.c
+@@ -31,10 +31,14 @@ int cmd_write_tree(int argc,
+ 			WRITE_TREE_MISSING_OK),
+ 		OPT_STRING(0, "prefix", &tree_prefix, N_("<prefix>/"),
+ 			   N_("write tree object for a subdirectory <prefix>")),
+-		{ OPTION_BIT, 0, "ignore-cache-tree", &flags, NULL,
+-		  N_("only useful for debugging"),
+-		  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, NULL,
+-		  WRITE_TREE_IGNORE_CACHE_TREE },
++		{
++			.type = OPTION_BIT,
++			.long_name = "ignore-cache-tree",
++			.value = &flags,
++			.help = N_("only useful for debugging"),
++			.flags = PARSE_OPT_HIDDEN | PARSE_OPT_NOARG,
++			.defval = WRITE_TREE_IGNORE_CACHE_TREE,
++		},
+ 		OPT_END()
+ 	};
+ 
+diff --git a/diff.c b/diff.c
+index 08f5e00a2cc..f2fcc7f3c22 100644
+--- a/diff.c
++++ b/diff.c
+@@ -5892,10 +5892,15 @@ struct option *add_diff_options(const struct option *opts,
+ 		OPT_CALLBACK_F(0, "diff-filter", options, N_("[(A|C|D|M|R|T|U|X|B)...[*]]"),
+ 			       N_("select files by diff type"),
+ 			       PARSE_OPT_NONEG, diff_opt_diff_filter),
+-		{ OPTION_CALLBACK, 0, "output", options, N_("<file>"),
+-		  N_("output to a specific file"),
+-		  PARSE_OPT_NONEG, NULL, 0, diff_opt_output },
+-
++		{
++			.type = OPTION_CALLBACK,
++			.long_name = "output",
++			.value = options,
++			.argh = N_("<file>"),
++			.help = N_("output to a specific file"),
++			.flags = PARSE_OPT_NONEG,
++			.ll_callback = diff_opt_output,
++		},
+ 		OPT_END()
+ 	};
+ 
+diff --git a/ref-filter.h b/ref-filter.h
+index 013d4cfa64b..c98c4fbd4c1 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -114,11 +114,16 @@ struct ref_format {
+ }
+ 
+ /*  Macros for checking --merged and --no-merged options */
+-#define _OPT_MERGED_NO_MERGED(option, filter, h) \
+-	{ OPTION_CALLBACK, 0, option, (filter), N_("commit"), (h), \
+-	  PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG, \
+-	  parse_opt_merge_filter, (intptr_t) "HEAD" \
+-	}
++#define _OPT_MERGED_NO_MERGED(option, filter, h) { \
++	.type = OPTION_CALLBACK, \
++	.long_name = option, \
++	.value = (filter), \
++	.argh = N_("commit"), \
++	.help = (h), \
++	.flags = PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG, \
++	.callback = parse_opt_merge_filter, \
++	.defval = (intptr_t) "HEAD", \
++}
+ #define OPT_MERGED(f, h) _OPT_MERGED_NO_MERGED("merged", f, h)
+ #define OPT_NO_MERGED(f, h) _OPT_MERGED_NO_MERGED("no-merged", f, h)
+ 
+diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
+index bfe45ec68b0..997f55fd45b 100644
+--- a/t/helper/test-parse-options.c
++++ b/t/helper/test-parse-options.c
+@@ -124,8 +124,15 @@ int cmd__parse_options(int argc, const char **argv)
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "yes", &boolean, "get a boolean"),
+ 		OPT_BOOL('D', "no-doubt", &boolean, "begins with 'no-'"),
+-		{ OPTION_SET_INT, 'B', "no-fear", &boolean, NULL,
+-		  "be brave", PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, 1 },
++		{
++			.type = OPTION_SET_INT,
++			.short_name = 'B',
++			.long_name = "no-fear",
++			.value = &boolean,
++			.help = "be brave",
++			.flags = PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++			.defval = 1,
++		},
+ 		OPT_COUNTUP('b', "boolean", &boolean, "increment by one"),
+ 		OPT_BIT('4', "or4", &boolean,
+ 			"bitwise-or boolean with ...0100", 4),
+@@ -155,12 +162,27 @@ int cmd__parse_options(int argc, const char **argv)
+ 		OPT_GROUP("Magic arguments"),
+ 		OPT_NUMBER_CALLBACK(&integer, "set integer to NUM",
+ 			number_callback),
+-		{ OPTION_COUNTUP, '+', NULL, &boolean, NULL, "same as -b",
+-		  PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_NODASH },
+-		{ OPTION_COUNTUP, 0, "ambiguous", &ambiguous, NULL,
+-		  "positive ambiguity", PARSE_OPT_NOARG | PARSE_OPT_NONEG },
+-		{ OPTION_COUNTUP, 0, "no-ambiguous", &ambiguous, NULL,
+-		  "negative ambiguity", PARSE_OPT_NOARG | PARSE_OPT_NONEG },
++		{
++			.type = OPTION_COUNTUP,
++			.short_name = '+',
++			.value = &boolean,
++			.help = "same as -b",
++			.flags = PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_NODASH,
++		},
++		{
++			.type = OPTION_COUNTUP,
++			.long_name = "ambiguous",
++			.value = &ambiguous,
++			.help = "positive ambiguity",
++			.flags = PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++		},
++		{
++			.type = OPTION_COUNTUP,
++			.long_name = "no-ambiguous",
++			.value = &ambiguous,
++			.help = "negative ambiguity",
++			.flags = PARSE_OPT_NOARG | PARSE_OPT_NONEG,
++		},
+ 		OPT_GROUP("Standard options"),
+ 		OPT__ABBREV(&abbrev),
+ 		OPT__VERBOSE(&verbose, "be verbose"),
 
-Range-diff versus v3:
-
--:  ----------- > 1:  99a003e994b parse: fix off-by-one for minimum signed values
-1:  7a3f09bbbbd = 2:  014d716fe08 global: use designated initializers for options
-2:  526a1a2f2c4 < -:  ----------- parse-options: check for overflow when parsing integers
--:  ----------- > 3:  e3644d6825c parse-options: support unit factors in `OPT_INTEGER()`
--:  ----------- > 4:  5c10f8d5866 parse-options: rename `OPT_MAGNITUDE()` to `OPT_UNSIGNED()`
-3:  2c2a2685455 ! 5:  4aa18d68c03 parse-options: introduce precision handling for `OPTION_INTEGER`
-    @@ Commit message
-           - Even when a caller knows that they want to store a value larger than
-             `INT_MAX` they don't have a way to do so.
-     
-    -    Funny enough, even if the caller gets everything correct the parsing
-    -    logic is still insufficient because we use `strtol()` to parse the
-    -    argument, which returns a `long`. But as that value is implicitly cast
-    -    when assigning it to the `int` field we may still get invalid results.
-    -
-         In practice this doesn't tend to be a huge issue because users typically
-         don't end up passing huge values to most commands. But the parsing logic
-         is demonstrably broken, and it is too easy to get the calling convention
-    @@ parse-options.c: static enum parse_opt_result do_get_value(struct parse_opt_ctx_
-     +		} else if (!*arg) {
-      			return error(_("%s expects a numerical value"),
-      				     optname(opt, flags));
-    -+		} else {
-    -+			errno = 0;
-    -+			value = strtoimax(arg, (char **)&s, 10);
-    -+			if (*s)
-    -+				return error(_("%s expects a numerical value"),
-    -+					     optname(opt, flags));
-    +-		if (!git_parse_int(arg, opt->value))
-    +-			return error(_("%s expects an integer value"
-    +-				       " with an optional k/m/g suffix"),
-    ++		} else if (!git_parse_signed(arg, &value, upper_bound)) {
-     +			if (errno == ERANGE)
-     +				return error(_("value %s for %s not in range [%"PRIdMAX",%"PRIdMAX"]"),
-     +					     arg, optname(opt, flags), lower_bound, upper_bound);
-    -+			if (errno)
-    -+				return error_errno(_("value %s for %s cannot be parsed"),
-    -+						   arg, optname(opt, flags));
-    ++
-    ++			return error(_("%s expects an integer value with an optional k/m/g suffix"),
-    + 				     optname(opt, flags));
-    +-		return 0;
-     +		}
-    - 
-    --		errno = 0;
-    --		*(int *)opt->value = strtol(arg, (char **)&s, 10);
-    --		if (*s)
-    --			return error(_("%s expects a numerical value"),
-    --				     optname(opt, flags));
-    --		if (errno == ERANGE)
-    -+		if (value < lower_bound || value > upper_bound)
-    - 			return error(_("value %s for %s not in range [%"PRIdMAX",%"PRIdMAX"]"),
-    --				     arg, optname(opt, flags), (intmax_t)LONG_MIN, (intmax_t)LONG_MAX);
-    --		if (errno)
-    --			return error_errno(_("value %s for %s cannot be parsed"),
-    --					   arg, optname(opt, flags));
-    ++
-    ++		if (value < lower_bound)
-    ++			return error(_("value %s for %s not in range [%"PRIdMAX",%"PRIdMAX"]"),
-     +				     arg, optname(opt, flags), lower_bound, upper_bound);
-      
-    --		return 0;
-     +		switch (opt->precision) {
-     +		case 1:
-     +			*(int8_t *)opt->value = value;
-    @@ parse-options.c: static enum parse_opt_result do_get_value(struct parse_opt_ctx_
-     +			    optname(opt, flags));
-     +		}
-     +	}
-    - 	case OPTION_MAGNITUDE:
-    + 	case OPTION_UNSIGNED:
-      		if (unset) {
-      			*(unsigned long *)opt->value = 0;
-     
-    @@ t/helper/test-parse-options.c: int cmd__parse_options(int argc, const char **arg
-      		OPT_INTEGER('i', "integer", &integer, "get a integer"),
-     +		OPT_INTEGER(0, "i16", &i16, "get a 16 bit integer"),
-      		OPT_INTEGER('j', NULL, &integer, "get a integer, too"),
-    - 		OPT_MAGNITUDE('m', "magnitude", &magnitude, "get a magnitude"),
-    + 		OPT_UNSIGNED('u', "unsigned", &unsigned_integer, "get an unsigned integer"),
-      		OPT_SET_INT(0, "set23", &integer, "set integer to 23", 23),
-     @@ t/helper/test-parse-options.c: int cmd__parse_options(int argc, const char **argv)
-      	}
-      	show(&expect, &ret, "boolean: %d", boolean);
-      	show(&expect, &ret, "integer: %d", integer);
-     +	show(&expect, &ret, "i16: %"PRIdMAX, (intmax_t) i16);
-    - 	show(&expect, &ret, "magnitude: %lu", magnitude);
-    + 	show(&expect, &ret, "unsigned: %lu", unsigned_integer);
-      	show(&expect, &ret, "timestamp: %"PRItime, timestamp);
-      	show(&expect, &ret, "string: %s", string ? string : "(not set)");
-     
-    @@ t/t0040-parse-options.sh: usage: test-tool parse-options <options>
-                                get a integer
-     +    --[no-]i16 <n>        get a 16 bit integer
-          -j <n>                get a integer, too
-    -     -m, --magnitude <n>   get a magnitude
-    +     -u, --unsigned <n>    get an unsigned integer
-          --[no-]set23          set integer to 23
-    -@@ t/t0040-parse-options.sh: test_expect_success 'OPT_MAGNITUDE() 3giga' '
-    +@@ t/t0040-parse-options.sh: test_expect_success 'OPT_UNSIGNED() 3giga' '
-      cat >expect <<\EOF
-      boolean: 2
-      integer: 1729
-     +i16: 0
-    - magnitude: 16384
-    + unsigned: 16384
-      timestamp: 0
-      string: 123
-     @@ t/t0040-parse-options.sh: test_expect_success 'short options' '
-    @@ t/t0040-parse-options.sh: test_expect_success 'short options' '
-      boolean: 2
-      integer: 1729
-     +i16: 9000
-    - magnitude: 16384
-    + unsigned: 16384
-      timestamp: 0
-      string: 321
-     @@ t/t0040-parse-options.sh: file: prefix/fi.le
-      EOF
-      
-      test_expect_success 'long options' '
-    --	test-tool parse-options --boolean --integer 1729 --magnitude 16k \
-    -+	test-tool parse-options --boolean --integer 1729 --i16 9000 --magnitude 16k \
-    +-	test-tool parse-options --boolean --integer 1729 --unsigned 16k \
-    ++	test-tool parse-options --boolean --integer 1729 --i16 9000 --unsigned 16k \
-      		--boolean --string2=321 --verbose --verbose --no-dry-run \
-      		--abbrev=10 --file fi.le --obsolete \
-      		>output 2>output.err &&
-    @@ t/t0040-parse-options.sh: test_expect_success 'abbreviate to something longer th
-      	boolean: 0
-      	integer: 0
-     +	i16: 0
-    - 	magnitude: 0
-    + 	unsigned: 0
-      	timestamp: 0
-      	string: (not set)
-     @@ t/t0040-parse-options.sh: test_expect_success 'superfluous value provided: cmdmode' '
-    @@ t/t0040-parse-options.sh: test_expect_success 'superfluous value provided: cmdmo
-      boolean: 1
-      integer: 13
-     +i16: 0
-    - magnitude: 0
-    + unsigned: 0
-      timestamp: 0
-      string: 123
-     @@ t/t0040-parse-options.sh: test_expect_success 'intermingled arguments' '
-    @@ t/t0040-parse-options.sh: test_expect_success 'intermingled arguments' '
-      boolean: 0
-      integer: 2
-     +i16: 0
-    - magnitude: 0
-    + unsigned: 0
-      timestamp: 0
-      string: (not set)
-     @@ t/t0040-parse-options.sh: cat >expect <<\EOF
-    @@ t/t0040-parse-options.sh: cat >expect <<\EOF
-      boolean: 5
-      integer: 4
-     +i16: 0
-    - magnitude: 0
-    + unsigned: 0
-      timestamp: 0
-      string: (not set)
-     @@ t/t0040-parse-options.sh: test_expect_success 'OPT_CALLBACK() and callback errors work' '
-    @@ t/t0040-parse-options.sh: test_expect_success 'OPT_CALLBACK() and callback error
-      boolean: 1
-      integer: 23
-     +i16: 0
-    - magnitude: 0
-    + unsigned: 0
-      timestamp: 0
-      string: (not set)
-     @@ t/t0040-parse-options.sh: test_expect_success 'OPT_NUMBER_CALLBACK() works' '
-    @@ t/t0040-parse-options.sh: test_expect_success 'OPT_NUMBER_CALLBACK() works' '
-      boolean: 0
-      integer: 0
-     +i16: 0
-    - magnitude: 0
-    + unsigned: 0
-      timestamp: 0
-      string: (not set)
-    -@@ t/t0040-parse-options.sh: test_expect_success 'overflowing integer' '
-    +@@ t/t0040-parse-options.sh: test_expect_success 'unsigned with units but no numbers' '
-      	test_must_be_empty out
-      '
-      
-4:  9c1a42f8d3f ! 6:  aa766336dd9 parse-options: introduce precision handling for `OPTION_MAGNITUDE`
-    @@ Metadata
-     Author: Patrick Steinhardt <ps@pks.im>
-     
-      ## Commit message ##
-    -    parse-options: introduce precision handling for `OPTION_MAGNITUDE`
-    +    parse-options: introduce precision handling for `OPTION_UNSIGNED`
-     
-         This commit is the equivalent to the preceding commit, but instead of
-         introducing precision handling for `OPTION_INTEGER` we introduce it for
-    -    `OPTION_MAGNITUDE`.
-    +    `OPTION_UNSIGNED`.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-      ## parse-options.c ##
-     @@ parse-options.c: static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
-      
-    - 		if (value < lower_bound || value > upper_bound)
-    + 		if (value < lower_bound)
-      			return error(_("value %s for %s not in range [%"PRIdMAX",%"PRIdMAX"]"),
-     -				     arg, optname(opt, flags), lower_bound, upper_bound);
-     +				     arg, optname(opt, flags), (intmax_t)lower_bound, (intmax_t)upper_bound);
-    @@ parse-options.c: static enum parse_opt_result do_get_value(struct parse_opt_ctx_
-     @@ parse-options.c: static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
-      		}
-      	}
-    - 	case OPTION_MAGNITUDE:
-    + 	case OPTION_UNSIGNED:
-     +	{
-     +		uintmax_t upper_bound = UINTMAX_MAX >> (bitsizeof(uintmax_t) - CHAR_BIT * opt->precision);
-    -+		unsigned long value;
-    ++		uintmax_t value;
-     +
-      		if (unset) {
-     -			*(unsigned long *)opt->value = 0;
-    @@ parse-options.c: static enum parse_opt_result do_get_value(struct parse_opt_ctx_
-     +		} else if (get_arg(p, opt, flags, &arg)) {
-      			return -1;
-     -		if (!git_parse_ulong(arg, opt->value))
-    -+		} else if (!git_parse_ulong(arg, &value)) {
-    ++		} else if (!*arg) {
-    ++			return error(_("%s expects a numerical value"),
-    ++				     optname(opt, flags));
-    ++		} else if (!git_parse_unsigned(arg, &value, upper_bound)) {
-    ++			if (errno == ERANGE)
-    ++				return error(_("value %s for %s not in range [%"PRIdMAX",%"PRIdMAX"]"),
-    ++					     arg, optname(opt, flags), (uintmax_t) 0, upper_bound);
-    ++
-      			return error(_("%s expects a non-negative integer value"
-      				       " with an optional k/m/g suffix"),
-      				     optname(opt, flags));
-     -		return 0;
-     +		}
-     +
-    -+		if (value > upper_bound)
-    -+			return error(_("value %s for %s not in range [%"PRIuMAX",%"PRIuMAX"]"),
-    -+				     arg, optname(opt, flags), (uintmax_t)0, (uintmax_t)upper_bound);
-    -+
-     +		switch (opt->precision) {
-     +		case 1:
-     +			*(uint8_t *)opt->value = value;
-    @@ parse-options.h: struct option {
-      	.help = (h), \
-      	.flags = PARSE_OPT_NONEG, \
-     
-    + ## parse.c ##
-    +@@ parse.c: int git_parse_signed(const char *value, intmax_t *ret, intmax_t max)
-    + 	return 0;
-    + }
-    + 
-    +-static int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max)
-    ++int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max)
-    + {
-    + 	if (value && *value) {
-    + 		char *end;
-    +
-    + ## parse.h ##
-    +@@
-    + #define PARSE_H
-    + 
-    + int git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
-    ++int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max);
-    + int git_parse_ssize_t(const char *, ssize_t *);
-    + int git_parse_ulong(const char *, unsigned long *);
-    + int git_parse_int(const char *value, int *ret);
-    +
-      ## t/helper/test-parse-options.c ##
-     @@ t/helper/test-parse-options.c: int cmd__parse_options(int argc, const char **argv)
-      	};
-      	struct string_list expect = STRING_LIST_INIT_NODUP;
-      	struct string_list list = STRING_LIST_INIT_NODUP;
-    -+	uint16_t m16 = 0;
-    ++	uint16_t u16 = 0;
-      	int16_t i16 = 0;
-      
-      	struct option options[] = {
-     @@ t/helper/test-parse-options.c: int cmd__parse_options(int argc, const char **argv)
-      		OPT_INTEGER(0, "i16", &i16, "get a 16 bit integer"),
-      		OPT_INTEGER('j', NULL, &integer, "get a integer, too"),
-    - 		OPT_MAGNITUDE('m', "magnitude", &magnitude, "get a magnitude"),
-    -+		OPT_MAGNITUDE(0, "m16", &m16, "get a 16 bit magnitude"),
-    + 		OPT_UNSIGNED('u', "unsigned", &unsigned_integer, "get an unsigned integer"),
-    ++		OPT_UNSIGNED(0, "u16", &u16, "get a 16 bit unsigned integer"),
-      		OPT_SET_INT(0, "set23", &integer, "set integer to 23", 23),
-      		OPT_CMDMODE(0, "mode1", &integer, "set integer to 1 (cmdmode option)", 1),
-      		OPT_CMDMODE(0, "mode2", &integer, "set integer to 2 (cmdmode option)", 2),
-     @@ t/helper/test-parse-options.c: int cmd__parse_options(int argc, const char **argv)
-      	show(&expect, &ret, "integer: %d", integer);
-      	show(&expect, &ret, "i16: %"PRIdMAX, (intmax_t) i16);
-    - 	show(&expect, &ret, "magnitude: %lu", magnitude);
-    -+	show(&expect, &ret, "m16: %"PRIuMAX, (uintmax_t) m16);
-    + 	show(&expect, &ret, "unsigned: %lu", unsigned_integer);
-    ++	show(&expect, &ret, "u16: %"PRIuMAX, (uintmax_t) u16);
-      	show(&expect, &ret, "timestamp: %"PRItime, timestamp);
-      	show(&expect, &ret, "string: %s", string ? string : "(not set)");
-      	show(&expect, &ret, "abbrev: %d", abbrev);
-    @@ t/t0040-parse-options.sh
-     @@ t/t0040-parse-options.sh: usage: test-tool parse-options <options>
-          --[no-]i16 <n>        get a 16 bit integer
-          -j <n>                get a integer, too
-    -     -m, --magnitude <n>   get a magnitude
-    -+    --m16 <n>             get a 16 bit magnitude
-    +     -u, --unsigned <n>    get an unsigned integer
-    ++    --u16 <n>             get a 16 bit unsigned integer
-          --[no-]set23          set integer to 23
-          --mode1               set integer to 1 (cmdmode option)
-          --mode2               set integer to 2 (cmdmode option)
-     @@ t/t0040-parse-options.sh: boolean: 2
-      integer: 1729
-      i16: 0
-    - magnitude: 16384
-    -+m16: 0
-    + unsigned: 16384
-    ++u16: 0
-      timestamp: 0
-      string: 123
-      abbrev: 7
-     @@ t/t0040-parse-options.sh: boolean: 2
-      integer: 1729
-      i16: 9000
-    - magnitude: 16384
-    -+m16: 32768
-    + unsigned: 16384
-    ++u16: 32768
-      timestamp: 0
-      string: 321
-      abbrev: 10
-     @@ t/t0040-parse-options.sh: EOF
-      
-      test_expect_success 'long options' '
-    - 	test-tool parse-options --boolean --integer 1729 --i16 9000 --magnitude 16k \
-    + 	test-tool parse-options --boolean --integer 1729 --i16 9000 --unsigned 16k \
-     -		--boolean --string2=321 --verbose --verbose --no-dry-run \
-    -+		--m16 32k --boolean --string2=321 --verbose --verbose --no-dry-run \
-    ++		--u16 32k --boolean --string2=321 --verbose --verbose --no-dry-run \
-      		--abbrev=10 --file fi.le --obsolete \
-      		>output 2>output.err &&
-      	test_must_be_empty output.err &&
-     @@ t/t0040-parse-options.sh: test_expect_success 'abbreviate to something longer than SHA1 length' '
-      	integer: 0
-      	i16: 0
-    - 	magnitude: 0
-    -+	m16: 0
-    + 	unsigned: 0
-    ++	u16: 0
-      	timestamp: 0
-      	string: (not set)
-      	abbrev: 100
-     @@ t/t0040-parse-options.sh: boolean: 1
-      integer: 13
-      i16: 0
-    - magnitude: 0
-    -+m16: 0
-    + unsigned: 0
-    ++u16: 0
-      timestamp: 0
-      string: 123
-      abbrev: 7
-     @@ t/t0040-parse-options.sh: boolean: 0
-      integer: 2
-      i16: 0
-    - magnitude: 0
-    -+m16: 0
-    + unsigned: 0
-    ++u16: 0
-      timestamp: 0
-      string: (not set)
-      abbrev: 7
-     @@ t/t0040-parse-options.sh: boolean: 5
-      integer: 4
-      i16: 0
-    - magnitude: 0
-    -+m16: 0
-    + unsigned: 0
-    ++u16: 0
-      timestamp: 0
-      string: (not set)
-      abbrev: 7
-     @@ t/t0040-parse-options.sh: boolean: 1
-      integer: 23
-      i16: 0
-    - magnitude: 0
-    -+m16: 0
-    + unsigned: 0
-    ++u16: 0
-      timestamp: 0
-      string: (not set)
-      abbrev: 7
-     @@ t/t0040-parse-options.sh: boolean: 0
-      integer: 0
-      i16: 0
-    - magnitude: 0
-    -+m16: 0
-    + unsigned: 0
-    ++u16: 0
-      timestamp: 0
-      string: (not set)
-      abbrev: 7
-    @@ t/t0040-parse-options.sh: test_expect_success 'i16 limits range' '
-      	test_grep "value -32769 for option .i16. not in range \[-32768,32767\]" err
-      '
-      
-    -+test_expect_success 'm16 limits range' '
-    -+	test-tool parse-options --m16 65535 >out &&
-    -+	test_grep "m16: 65535" out &&
-    -+	test_must_fail test-tool parse-options --m16 65536 2>err &&
-    -+	test_grep "value 65536 for option .m16. not in range \[0,65535\]" err
-    ++test_expect_success 'u16 limits range' '
-    ++	test-tool parse-options --u16 65535 >out &&
-    ++	test_grep "u16: 65535" out &&
-    ++	test_must_fail test-tool parse-options --u16 65536 2>err &&
-    ++	test_grep "value 65536 for option .u16. not in range \[0,65535\]" err
-     +'
-     +
-      test_done
-5:  ef204776e85 < -:  ----------- parse-options: introduce `OPTION_UNSIGNED`
-6:  99e009d78c8 ! 7:  254e0f62a85 parse-options: detect mismatches in integer signedness
-    @@ parse-options.h: struct option {
-      	.precision = sizeof(*v), \
-      	.argh = N_("n"), \
-      	.help = (h), \
-    -@@ parse-options.h: struct option {
-    - 	.type = OPTION_MAGNITUDE, \
-    - 	.short_name = (s), \
-    - 	.long_name = (l), \
-    --	.value = (v), \
-    -+	.value = (v) + BARF_UNLESS_UNSIGNED(*(v)), \
-    - 	.precision = sizeof(*v), \
-    - 	.argh = N_("n"), \
-    - 	.help = (h), \
-7:  ed5b28998af < -:  ----------- parse-options: introduce bounded integer options
-
----
-base-commit: 5b97a56fa0e7d580dc8865b73107407c9b3f0eff
-change-id: 20250401-b4-pks-parse-options-integers-9b4bbcf21011
+-- 
+2.49.0.805.g082f7c87e0.dirty
 
