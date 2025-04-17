@@ -1,124 +1,134 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DB81FBEA2
-	for <git@vger.kernel.org>; Thu, 17 Apr 2025 22:22:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F822184E
+	for <git@vger.kernel.org>; Thu, 17 Apr 2025 22:56:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744928534; cv=none; b=lQZSNxIYvVOQcLttj8lQ1Vif3m7TkutmhDalxNV4ZpZ8b65aB2oAEaMgR7JtvyoJXGdueQeUgAv7o0iqrD4EDgedVvhliehrbqBmZIkNP4kKc7zyPM+7sXpfadtB6kVcxAaCFLYDfqI/IZ/GgLFqsjrnYPKXeP7HecAUtJ4a8BY=
+	t=1744930615; cv=none; b=OhR4stJH9BsREffoTlk62USUGurgPEBixC4+lAcPRYwT7i6GNVKkKKj7eGu2rpq/0uIfCwOQNOwMLx1tp7pf8Q8IsJSSlmUEF76TsVQBDeLKUEWdTHnUyqeK8OHACejrGihcgC//MpUU2Dca6q3bjLpnCDsDHbtjiGJLWTS0e8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744928534; c=relaxed/simple;
-	bh=rrhMOKiesqGVAWLT1IwoQEjdVMB+VqsAuSLPH5cfknQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TGFhPJbRA8j6LWaPrPsKtf+uhadUHKBevAd27Q75ouHYPa+X8UNn13LvLUjbjaL3mFur0KNnJQf08W0EFuUos4mTUAYXem4tLenPpI3METZTdbPeodPw/ozRLNX7cH0+7+gR+YJp3oi4BIaDYdLTRpNbe4SWBATBqJvtCFzKK7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WSQ6chQo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B2zy2MJ0; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744930615; c=relaxed/simple;
+	bh=uCJr3SRMjm8JjP1PyAzHYnW66MGzpgLfvteqpQk7860=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=K2CjNf5uOtJZudhVzztYGQwhGXTfbjY+zqtLXTiSAzwL2KnTc7U+61/Lkw2b8YHejBTaxvJxw+PmhAUDEHU2rz/OZX83rZJY/5v8JyZi7+KttFWsEsVvgVhY//ZKUFBJTjbBt4rvb0XIVuk/H7Td8H68g3bNXHDEQAMV2jBUH/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WQfzuZW1; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WSQ6chQo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B2zy2MJ0"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 142881140110;
-	Thu, 17 Apr 2025 18:22:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 17 Apr 2025 18:22:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1744928531; x=1745014931; bh=A+gdDImClC
-	rEajNNN0vi73HffE4JyLh9hgyRG0ElqAU=; b=WSQ6chQoSLM5nrTxg3iV2UU+w4
-	YdCmQqa9+yLk5dR9is0tRqhePB5dQw3T6eBw2DvifHxiSV97cqLYj+vBAlDw9o3f
-	GeR0GtJoAh1kjoXOCypR+NlP+3R/OLE2TOU2Mnr87DS0RihaP1WPqqctBqlF8CjU
-	bSBFhOrOR2pu0YfFA3w0mI3e8Xp5P7gcwqEwR0oo9e7h5fo2xu/7SkmpPq4C2XSS
-	amDoBwOOBHnEdQdGqr8zwARn/QbSGf5VyCU2uFh7cklSsT5Dt4yWZh85A8ozPnOL
-	fALCPDmJGQDBO6yKBIbnmzpIYBpu92LvZW32mBVcUuY4QJQn5oi8DQjkMftw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1744928531; x=1745014931; bh=A+gdDImClCrEajNNN0vi73HffE4JyLh9hgy
-	RG0ElqAU=; b=B2zy2MJ0xx46vzZirObxUI33EKKKpHCgzUG9xCjjG9tEqk1fTqp
-	vBYI5pUZZzonPMGVVZrXqnd8poRaEsH/KxSVvn5JGugewbmFnJSZmzHZt+wtwAYZ
-	2wZZJB0Vcb+tegt9p1ht2oHSOcTBzc/lvoXOomCX3aIGx2Qa8vMDfdsZ0/VOSsqK
-	0XxDdxfVIpI/difUk3kDFMl3ogX0Vx+kW+DX6O+lb0ORSGamxYfGguhCDleeDfm/
-	kd1/hVzOQOwCXlThKlo/bZzmL03Vk3QLyTDvKyiJ8HYbAzcQvNbeVfmEJQ7NQDvR
-	BdgsYBdLz1WgE4dA/DROwELCDRspOY0KaIA==
-X-ME-Sender: <xms:E38BaI2cdhWSFMdhDXJc6CAdIYeYF0hvy-YIiwx2HsvCNhwjFuv0Cw>
-    <xme:E38BaDFyGZSfaNtzYGvwPbaZnVA04DusjJx5C9B7-eqWlspqTdW2QN6zToUbGVt1r
-    KyBppFWlssv9G1jDg>
-X-ME-Received: <xmr:E38BaA79-aX5U2bTdLrpiBk9NCU4DzgiH76CEmpXDPjtOM2bJ-MC78s1MnH_r_3leIPb_n3ONQBe0YpkRLV9T9ZAzHqg2x7uLL61>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvfedtgeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
-    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfh
-    hfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:E38BaB2_lvY7aZTt0XbTtZo0YTEDZga6BkMY4M_lVRSgMKsXzC7yPw>
-    <xmx:E38BaLEx4_7s9OUQ9GoX1JwjKpIWBcx_NxqdXkBmM447gI2Dhat04Q>
-    <xmx:E38BaK_Kc3OQDlBDMlXntW5uI8P3z_dnDZC7ZFX0GoFPF-QU86iZbQ>
-    <xmx:E38BaAkYWD5tvhHBz7b5i1QHjtUVIidDKG3A6YorimD67JZ6TiqZoA>
-    <xmx:E38BaIIauyBDDJBaAXYBfUFd56vbmDfTeyQwezQDXzg1B0NONqMo0asW>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Apr 2025 18:22:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH 4/4] t/perf/lib-bitmap.sh: avoid test_perf during setup
-In-Reply-To: <0906e14c0e55b52573c7e0b632c7c639850700ec.1744924321.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Thu, 17 Apr 2025 17:12:23 -0400")
-References: <cover.1744924321.git.me@ttaylorr.com>
-	<0906e14c0e55b52573c7e0b632c7c639850700ec.1744924321.git.me@ttaylorr.com>
-Date: Thu, 17 Apr 2025 15:22:10 -0700
-Message-ID: <xmqq8qnye8dp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WQfzuZW1"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3913d129c1aso922073f8f.0
+        for <git@vger.kernel.org>; Thu, 17 Apr 2025 15:56:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744930609; x=1745535409; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=uM+9yYKIDdyjvQ6mrBRDxMilakxbfELeAOK3uTya8OU=;
+        b=WQfzuZW10rc1U8NYcyTSF5JrXH16k0wD4xY/CGWGecc6JfY0hHDIGI8CxgzdgU/YWb
+         +xqX+m1NwzhYzudYRmBAGV6O2xE2rTMXx+hDHc5vcG+HrVNflWWSKdUmgD5Ec7YzJZnV
+         xYB5taNsIrbWU/Y8fSYjkzlI1PgVRh8JQ2Xw47tZ2ZxPgYmD07shqTHP4Xu/3XNRPfZ7
+         q439vA1QrUqWsCblW3DYFVXsTwnGxxXa3Wfs34LkwfWE1T03BJN1PsPxCBUd5drzA513
+         LOdnAne+nFnYjvQEl3SqdR11FTXMF4WrIHUxtp8bC2eQJJxM4s/23AqpFWt4hTYRQAVl
+         Cp3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744930609; x=1745535409;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uM+9yYKIDdyjvQ6mrBRDxMilakxbfELeAOK3uTya8OU=;
+        b=oBS4EfE1JMJndsMG3g876XipYsAY/ZifHOLbd53rPBmfLI0/yJGT9Y8cPSQqaRBigr
+         nKA5lwXgxzPvWhnGxPJSbVIRnphCAMixheVHsTRdRVLVgOoU55Q7xBWcXI4JE8LwPY6Q
+         V8S85q98zBJJhacnAmATwOX0w42TbizN1XOfq8GE3YXHj2dm7NebtUVSaEjW+HG6ZL98
+         p10AGDJ9d/SyfmF1lAWXOVAG/EU9w82POMDklBfvB5o2ZXK464X1be12IRYc4OL5xJ9m
+         C6EPg5a7N0+iTil41tzVI+BjV0++xQeA6SOeRaTgbL/iII/8OTCdxeG+ELUn8Hy8y64e
+         fTBQ==
+X-Gm-Message-State: AOJu0YwWfuv+NRvazb9cdA10g48T5RCtVm2NyQiWmSxKulFzIc6RckXV
+	zc5DSNdGuoQkPADa3MKVNLzdcw13vxol75sFIzc4MjKqBlLee/7JNE4E5/BTvCM6TTvpuksCPi2
+	MpQAA0hXD0YqnGAXX0pfc7o+2+dL86Yt5D5s=
+X-Gm-Gg: ASbGncuIja34xSZPFquUAaQgay+TV/aGEhqrGMm1uP1sbbEJwYJk/E9/MHd9hMjCN3a
+	+Uo9I5dYkQUYTnzgIFR44iH9Wyqcodo1o3uUFFRjDCSteQ9BcxtjFCcNSYeVuNDTYBYRjn9J77Y
+	aRv/IB0lQEsTd/s4abZZtUpg==
+X-Google-Smtp-Source: AGHT+IF7vMyBhRs1FY3asx//lgka3uYWmgZuqttwii+kRAI2+N3l7erOzC5av0W6qVnXREvuSO/xDlCARdGr49+Zf20=
+X-Received: by 2002:a5d:64a7:0:b0:390:dec3:2780 with SMTP id
+ ffacd0b85a97d-39efbdc665amr294694f8f.24.1744930609092; Thu, 17 Apr 2025
+ 15:56:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Keith Thompson <Keith.S.Thompson@gmail.com>
+Date: Thu, 17 Apr 2025 15:56:37 -0700
+X-Gm-Features: ATxdqUHyxvGwvP3OWMnhZu5AGTR1IW4n2zNhLNt9rOIPiT5E4-9x1CCD4Q3zLHA
+Message-ID: <CAAHpriMkqapiJuUGimn-i8SqcZmvmc=Wpk6oUr844uAkCYgMxA@mail.gmail.com>
+Subject: Bug report: Minor glitch in "git help" error message
+To: git@vger.kernel.org
+Cc: Keith Thompson <Keith.S.Thompson@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Taylor Blau <me@ttaylorr.com> writes:
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-> In the test_pack_bitmap() helper function, we first repack the
-> repository under test for consistency and to eliminate any effects from
-> different distributions of objects among packs.
->
-> This step is performed with test_perf, so it is repeated
-> $GIT_PERF_REPEAT_COUNT number of times. But we do not care about timing
-> this portion of the setup phase, and repeating the process does not
-> change the outcome.
->
-> Use test_expect_success to avoid spending time repeating an idempotent
-> portion of the setup for performance tests that use test_pack_bitmap().
->
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  t/perf/lib-bitmap.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+What did you do before the bug happened? (Steps to reproduce your issue)
+git help nosuchcommand
 
-OK.
+What did you expect to happen? (Expected behavior)
+An error message: "No manual entry for git-nosuchcommand"
 
->
-> diff --git a/t/perf/lib-bitmap.sh b/t/perf/lib-bitmap.sh
-> index 55a8feb1dc..fdf5f35f1b 100644
-> --- a/t/perf/lib-bitmap.sh
-> +++ b/t/perf/lib-bitmap.sh
-> @@ -69,7 +69,7 @@ test_partial_bitmap () {
->  }
->  
->  test_pack_bitmap () {
-> -	test_perf "repack to disk" '
-> +	test_expect_success "repack to disk" '
->  		git repack -ad
->  	'
+What happened instead? (Actual behavior)
+An error message: "No manual entry for gitnosuchcommand"
+
+What's different between what you expected and what actually happened?
+The hyphen.
+
+If "nosuchcommand" were a git command, the man page would be
+readable by typing "man git-nosuchcommand".  The error message
+should reflect that.  (The error message is actually produced
+by the "man" command.)
+
+Anything else you want to add:
+Proposed patch (works on my system):
+
+```
+commit 148f2e07a7dbdbe72fa0bd4340b76cba12a19a24 (HEAD -> fix-help-bug)
+Author: Keith Thompson <Keith.S.Thompson@gmail.com>
+Date:   2025-04-17 15:35:44 -0700
+
+    Fix "git help" message for nonexistent subcommand
+
+diff --git builtin/help.c builtin/help.c
+index c257079ceb..792549864f 100644
+--- builtin/help.c
++++ builtin/help.c
+@@ -450,7 +450,7 @@ static const char *cmd_to_page(const char *git_cmd)
+  else if (!strcmp("scalar", git_cmd))
+  return xstrdup(git_cmd);
+  else
+- return xstrfmt("git%s", git_cmd);
++ return xstrfmt("git-%s", git_cmd);
+ }
+
+ static void setup_man_path(void)
+```
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.49.0
+cpu: x86_64
+built from commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.5.0
+OpenSSL: OpenSSL 3.0.13 30 Jan 2024
+zlib: 1.3
+uname: Linux 6.11.0-24-generic #24~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC
+Tue Mar 25 20:14:34 UTC 2 x86_64
+compiler info: gnuc: 13.3
+libc info: glibc: 2.39
+$SHELL (typically, interactive shell): /o/bin/bash
+
+
+[Enabled Hooks]
