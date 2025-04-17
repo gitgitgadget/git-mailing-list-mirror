@@ -1,100 +1,123 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C17322B
-	for <git@vger.kernel.org>; Thu, 17 Apr 2025 00:25:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71767256D
+	for <git@vger.kernel.org>; Thu, 17 Apr 2025 00:39:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744849532; cv=none; b=bALjUKW4lh4EnZCpwdbkJFbTLr58jbHyuSPltKtXq3wuHMCAffeeOdS5Ok+HVcHj5wGhQpmUPlDB3sIpTjrPiiapmD8nAlaKCldFkTDqKymUHptsBlJeUOMvui1jYmILMG2jlCKlk1KWgUnNK85cXD0ExBros1o3M/ZEmQbCzcA=
+	t=1744850394; cv=none; b=Mpb0eBacruYzlwY3AvnO1i/i4m9ui/fyKb5HVISfnWK4guTgIZlk4xgNMJxmEMVn97Ut+NfLQ1fdDtvKHjc1vq9JV8Wkv9QQX+KXcv6yeywiePKtbI91AXObAAzdO4qCyotctAza7/VRBAxvqvX9vYYnnjvcz8xUShJ7Eu2hDEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744849532; c=relaxed/simple;
-	bh=MvkDM4OFslm5YLz3TGCyHXZZH3ws4hqvLJD9bS6dQR0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cXR1fBwdVrgbC2pxlDrf3kt1z2L2djU+0HLAaTDQOXMf+EXqjwUyfGKEfJZZMdmjVzOv5rumvFd28i9jd02PM6krolpUm6BFCZ8qDnDtA8/5ajQg92fwfONuju11r8pmsc+qIepS1TgsJ8BdfPZXxEUPZPUYUJNFsgLAt7DZt+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iEEHzKP3; arc=none smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744850394; c=relaxed/simple;
+	bh=54XZw+OpeDsOSv+hdYxVvnq6Lh1cWhcv6duDf9etq8Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gEMA6SwfsIeTtDqsce29sW/HO7velLpLKz6s6vlmFnOZS+KZxpd13f8juKt2X6PPWTuBY2sWYEmBth8hbk8EZGZLK5+vuacCP3mgBq7vIAYbeDwpDdBo1BZV3Zlxpvv+PramCmRh1sSMUKPqN6KWUegnKX7PHndH093477ac3mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=F8NabQY+; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iEEHzKP3"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6f768e9be1aso14499697b3.0
-        for <git@vger.kernel.org>; Wed, 16 Apr 2025 17:25:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744849529; x=1745454329; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=m05Y4Ak88xsvJ9YVkRU/hmd760jSwrR8hs0hAxosjaY=;
-        b=iEEHzKP3IdI9eIZTYIutA6PNoHHDC7uqnpD7yHzVydIW4T22OlOH/zSiaShOMm4Lzr
-         pBOLy0WDVT076llBoCgGRbUFJ71+oLbVBTOQcg5udycghAZ0X1nNynivYd76D7Eqi53C
-         jYDDCNx6AR5AcxNd342XyxvMwguzv1iQkkVm5Tfdh/HxgkPTVqT2yy71tSPN3IUh4Uu5
-         SkZD7wXb3+RuV3/jynQf9KQJfrQi/zFfYANUy+pjUo2g6dMxQdZ9f2XxxiW4Ys8HXI1M
-         nurFz0EHlAnpnWrd4wvZqbCWjYnqWzu+fs9xHtjNzGN/CKG62apHhoBhr11VVOROvY2y
-         +qyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744849529; x=1745454329;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m05Y4Ak88xsvJ9YVkRU/hmd760jSwrR8hs0hAxosjaY=;
-        b=kqPSvksKLhVnMBzsBeJ1ysAAYJ+QvfjOJP06EL0+1DQndGzRTNQubL0d9N3RgRL9md
-         iTqtqi1kS9ZCFkG6J7+lg+xT0hrKEHpGQ0SNcHXRn4UEnz03ZFHhrBVjAyWgbTTr8VLM
-         lhtZdkUiM16H2TlEItDlGL+iPNAvz6ZXlCsy4/uz0PyNSgIRXLD0CLEFZqlcSsP1SqPn
-         W+XScBHHSBxiGnpcxHy86yTRwT358AwWsBjfWsiq4LFM8meubNUDe5vwM8G4pyNmpNpn
-         hb1RnRmBUfvLRJXb19yppp4zC04VDCSzv2S0G13Q/aCtPSY3R078oU4eqy4vh470VtBY
-         +oTg==
-X-Gm-Message-State: AOJu0Yxer6z9AWFJRupJG/Q8crPHCBvRNxygHg59TNsgtngSuaSCQpA/
-	e5niVOYO5HImw1XKXkRKSmk1TOLuprbrTh0iuf8glsNJ8szd3sAH
-X-Gm-Gg: ASbGncs55xqh/HjV4dVAJ2YE+i1Mpksmpo4M6SDbrhJkqKBsXBOuQ0703VARF7OJRje
-	fMNLrLdWvOHJ+IpUWzKuoaHIYbcTbU1naEYXr33pWSFkN5SokRIImRqa7GGQVgu6ebLRCi5we97
-	JklFUx+jSCeB11LK/oCiSqI4MVdWnq1Jup44oMp5Ojh0GU5RwiU9iOEtgAe+5E6wxI3OUJ+syvn
-	w4qJh0Z/8iy/lfjkOMQbZA52ri9+kgC/oVOX5Wo2VYucdxltE9GzeFkyGAr4yDuxTL9WoSVIlo9
-	kC9LfN8nCKpcuVPNIM2+hHKaa3mGQY/+50UHF9qYqPdy7OraJuwtGOwy/tx6Cao5xsN9sFfRLHZ
-	sYp66hfklr5Cd2g==
-X-Google-Smtp-Source: AGHT+IEi/LY5nGvF2uXkkiqhOKM9TtbE6s++xDuAw33mxMdRPFh8vVTakONjoUO1GPHyaoM+DvVa+Q==
-X-Received: by 2002:a05:690c:6a0a:b0:700:5107:ca0f with SMTP id 00721157ae682-706beb979a4mr12113327b3.16.1744849529536;
-        Wed, 16 Apr 2025 17:25:29 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:2473:276:c095:5974? ([2600:1700:60ba:9810:2473:276:c095:5974])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7053e11a44dsm44032427b3.33.2025.04.16.17.25.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Apr 2025 17:25:28 -0700 (PDT)
-Message-ID: <9e14443c-e549-46e1-9fbf-ee72800e6944@gmail.com>
-Date: Wed, 16 Apr 2025 20:25:28 -0400
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="F8NabQY+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1744850384;
+	bh=54XZw+OpeDsOSv+hdYxVvnq6Lh1cWhcv6duDf9etq8Y=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=F8NabQY+wRp6LH38rjc3ir1fghsmKfBjE9pE4yLy15aQxw6FZm0d9vVFGTTJs+BwC
+	 Dnp+SSgP/7yTWmOlezNURwtV0RMUZber/FMeNJchr/10jR5ePIkGNzyDjESqLu5EAS
+	 tINPbjD4NDu29xAjxFU+HD3Sgc//h+zJ/UDlh+BcwHwy/dSith4VVdh8NEOTPe3lTq
+	 WB3FAvvYH5ZsgCSPAhxhQ+ez6SQT2+bfbsVIvbKKCDl/tjLzw25HukNxL5O5OFcYfT
+	 8l41+gVlnMz1bPOxdH8QFcoGOicga+SuoShdZW0x76QXRwiRKzJ9xTpeZAXXzHNh44
+	 wi00beKt9YCkNE7zWyXf6aKyNFbHQGhr7lnVw76BvEpGOWE/Y+VTx+rkLyclfve0jX
+	 iJhAiZOpetfCqVy7Ryht8sNeeYLirXJlfFlgiCoHSp9jHZttKJEMmsb9gKkrA1cHD8
+	 dmv+dm5VxVt/jVFUNMOrUers4z6w6F8dHETHNOn5GccXuoXEOoI
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9ec0:b846:49f:a41d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 28C3C2010E;
+	Thu, 17 Apr 2025 00:39:44 +0000 (UTC)
+Date: Thu, 17 Apr 2025 00:39:42 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com, james@jamesliu.io,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>
+Subject: Re: [PATCH v2] docs: document core.hooksPath=/dev/null
+Message-ID: <aABNzj66xq5HA6gA@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Derrick Stolee <stolee@gmail.com>,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com, james@jamesliu.io,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>
+References: <pull.1899.git.1743719888430.gitgitgadget@gmail.com>
+ <pull.1899.v2.git.1744818135435.gitgitgadget@gmail.com>
+ <BD8FCCB1-C97D-4057-982E-93A7F8B01AB9@gmail.com>
+ <9e14443c-e549-46e1-9fbf-ee72800e6944@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] docs: document core.hooksPath=/dev/null
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, james@jamesliu.io,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Phillip Wood <phillip.wood123@gmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>
-References: <pull.1899.git.1743719888430.gitgitgadget@gmail.com>
- <pull.1899.v2.git.1744818135435.gitgitgadget@gmail.com>
- <BD8FCCB1-C97D-4057-982E-93A7F8B01AB9@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <BD8FCCB1-C97D-4057-982E-93A7F8B01AB9@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="HLwXhpH9KSsD8rPq"
+Content-Disposition: inline
+In-Reply-To: <9e14443c-e549-46e1-9fbf-ee72800e6944@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On 4/16/2025 12:53 PM, Lucas Seiki Oshiro wrote:
-> Hi!
-> 
->> +You can also disable all hooks entirely by setting `core.hooksPath`
->> +to `/dev/null`.
-> 
-> Personally I think it would be better to focus on the non-expert user,
 
-I absolutely want this to be targeted for expert users, so users self-
-select themselves into the risk of what happens when disabling hooks.
-This is a "there be dragons here" kind of warning, implying that you
-better know what you're doing if you are messing with hook paths.
+--HLwXhpH9KSsD8rPq
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
--Stolee
+On 2025-04-17 at 00:25:28, Derrick Stolee wrote:
+> On 4/16/2025 12:53 PM, Lucas Seiki Oshiro wrote:
+> > Hi!
+> >=20
+> >> +You can also disable all hooks entirely by setting `core.hooksPath`
+> >> +to `/dev/null`.
+> >=20
+> > Personally I think it would be better to focus on the non-expert user,
+>=20
+> I absolutely want this to be targeted for expert users, so users self-
+> select themselves into the risk of what happens when disabling hooks.
+> This is a "there be dragons here" kind of warning, implying that you
+> better know what you're doing if you are messing with hook paths.
 
+Yes, I think that's the right choice.  As we've established elsewhere,
+it's easy to break things or cause data loss (e.g., by not pushing Git
+LFS objects) by disabling hooks and the user should be confident of what
+they're doing before doing so.
+
+That being said, I agree that in the general case we should make our
+documentation accessible to non-expert users because nobody is born
+knowing how to use Git and that will benefit the most people.  This just
+happens to be an exception.
+
+I thought the text in the patch looked good to me.  I appreciate you
+graciously pivoting approaches and documenting this, both for the
+benefit of users and as an approach to help make sure we don't break
+this functionality.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--HLwXhpH9KSsD8rPq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmgATc4JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ+1ej2aQQkkjNz9ZhDzH79KFJE0n6+oTq4iKcFKBz9RZ
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAALW5AP9JAFbWKqfGvlsnfwEA/ee2277S
+dNIV28PfrOHzFjqRRgEA2IJWlJXLe7k5KKS14pg+H0PII/R7dxaKwWvHvvJj6As=
+=C6kc
+-----END PGP SIGNATURE-----
+
+--HLwXhpH9KSsD8rPq--
