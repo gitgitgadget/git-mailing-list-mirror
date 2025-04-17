@@ -1,132 +1,100 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078DA360
-	for <git@vger.kernel.org>; Thu, 17 Apr 2025 00:11:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C17322B
+	for <git@vger.kernel.org>; Thu, 17 Apr 2025 00:25:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744848676; cv=none; b=bB/rR5Wk7A6VdxqonPkzSzPJ2WN895bYOUMieKoXnxgUuiPOq3rQIMPcm5tQLbJ9F/dd7sa09icdU//uqCnRXlhJmWko43maTsz/3PRiXHe7R8U/xqqcB2dRl1icX3Bzkb9pi3aY2jBmNk7zlY3knwNrmPS6LUhePllYd1tLZ84=
+	t=1744849532; cv=none; b=bALjUKW4lh4EnZCpwdbkJFbTLr58jbHyuSPltKtXq3wuHMCAffeeOdS5Ok+HVcHj5wGhQpmUPlDB3sIpTjrPiiapmD8nAlaKCldFkTDqKymUHptsBlJeUOMvui1jYmILMG2jlCKlk1KWgUnNK85cXD0ExBros1o3M/ZEmQbCzcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744848676; c=relaxed/simple;
-	bh=JOLzoLRwC4YIX+/oRvmCIO64pWeeYPctdsc58Lha6Ew=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=lYJdeIuKQUZ8uWrpnsq5SZFtldsotcRgF+VHMjgVEEq4vQYpY/wFP8JeCZG79MKRQ5ps7ob8Dx+Wx8h5DBeTTnEZcP6slD+N/VEMI0210XJLJF3SOJ39VW5n8SBBHKbl14kzErjFbwL9f2HNNVtiKj1HAeuSsox+l9W46mvcWGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=odQc6bU6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sq+50CCS; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1744849532; c=relaxed/simple;
+	bh=MvkDM4OFslm5YLz3TGCyHXZZH3ws4hqvLJD9bS6dQR0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cXR1fBwdVrgbC2pxlDrf3kt1z2L2djU+0HLAaTDQOXMf+EXqjwUyfGKEfJZZMdmjVzOv5rumvFd28i9jd02PM6krolpUm6BFCZ8qDnDtA8/5ajQg92fwfONuju11r8pmsc+qIepS1TgsJ8BdfPZXxEUPZPUYUJNFsgLAt7DZt+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iEEHzKP3; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="odQc6bU6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sq+50CCS"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 01EEC11400AE;
-	Wed, 16 Apr 2025 20:11:13 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 16 Apr 2025 20:11:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm1; t=1744848672; x=1744935072; bh=tM
-	TpZQpobzhmtqL9rg4GUdiuLOW+RqKGZMNECx4I36o=; b=odQc6bU6d5c+oFUrgq
-	7I8gNtEe8bVvUIsZI9J/1fxLEgK22xMsQyARR1GVthuDy23iJv82F8XR63T7bWXA
-	B7vZ9arEL/MPfCsuIV/j5+Jv9vZRJ19uwCDWq89zGyrIhrXiyf5DIXu5E4x4rWLa
-	sZXiIBvzAl/eGfius+31J+rKO4L7SS1igcHRy+jsKNZ6shdfytl1eviiIbXMfeXG
-	JkPBdXMgEp194IjV/fABPEKcJn6z6+AfTTqPF9asS9DEk+xoO1XcAG3cze/yuiux
-	+UxFpdPMzLSCADtEKff5SFJqcJXMpSsMvhdRc36cE8L28tE2VrLFEy3NAUEF+n5Y
-	RqCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1744848672; x=1744935072; bh=tMTpZQpobzhmtqL9rg4GUdiuLOW+
-	RqKGZMNECx4I36o=; b=sq+50CCSLWFfqnV8uIsG1pFGivdqSVAzT9tRSox/2nWn
-	zu5XAeGgGn0/ky0M2dcmd+3Qtgn8NFKCWbrHySQym8FdE272ULIqX8e6SE5WVdDf
-	oTSF6tpGdR90u5ZSIbrNxvDxoxyUvw6nGaKt6pD89RIWxO2qMB5Y4TeNhcpB+pGa
-	9Me4lpiOizgUHznRIzCwAgvvyvwGo2uug8Y1IeDVA3qWLLDsr+HYQKZO58/cq2J6
-	XTz4A8k+Rkt1wEWqJE7bjr4VKOdn0vAi6irpdcdlD0Ptce7o424sgqosmZpJEdrz
-	7UGAzV9HB4ddtfZNvGdu2dqrPI79MdRN1Qq9vvO1Fw==
-X-ME-Sender: <xms:IEcAaG3jZT-EgQw3p0_OEDZFhxvQIXTLtHXi2lRlEXw-NF-XTfennA>
-    <xme:IEcAaJHfJ_8ywZ94wlrpsWHNIwzMgbYA7IUjWkM7D2VtsAsWJ9BVrg63_WVSmLpmY
-    pDZDxeDQcHUfFgEWg>
-X-ME-Received: <xmr:IEcAaO7O4kX0xlCSAq76vaR5g8rLifConnTMpKT2681dg43ukEWNqBlBn0rH_sETqU3Eg8MUAkty6UHahREkZG3gFUCmVnzemb1T>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdejjeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefufffkfgggtgfgsehtkeertddtreej
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeejleelteejgfdvhfdtheeuffejleejhfet
-    ledvueekgeffkeeitddvlefhjeelgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegshhgrthgvrghrnhgrvhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopegtohhnghgurghnhhhqgiesghhmrghilhdrtghomhdprh
-    gtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgt
-    phhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrth
-    hhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdp
-    rhgtphhtthhopehkuhhfohhrihhjihelkeesghhmrghilhdrtghomhdprhgtphhtthhope
-    dtheiihihtfedtsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:IEcAaH1bx_McmFxAwzqIkwKLrsE-EY-7Aw5Elg-12SxxCrhMn2Yujw>
-    <xmx:IEcAaJEGlOH1c0Z5TB8u7VxB3_zF2LMA3aYch7ZmMY8x4GQxmuqIBQ>
-    <xmx:IEcAaA-uf1ZI28UxwNIKv8k3MK3bDKQJPg4k2RtFtLjmgw0u46lRmg>
-    <xmx:IEcAaOknMHXl2fJ4et94ueXQidb8S1c3e900G_1P19NXelpaxt_Piw>
-    <xmx:IEcAaOcW4LvOQ-I95cNyxutloNWHO4nFa8GkrvMbTKhggSRcW5vBdnBZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Apr 2025 20:11:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Arnav Bhate <bhatearnav@gmail.com>,
-    =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>,
-    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-    Justin Tobler <jltobler@gmail.com>,
-    Karthik Nayak <karthik.188@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Seyi Kuforiji <kuforiji98@gmail.com>,
-    Zheng Yuting <05zyt30@gmail.com>
-Subject: What's cooking interim report
-Date: Wed, 16 Apr 2025 17:11:10 -0700
-Message-ID: <xmqqr01rfy01.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iEEHzKP3"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6f768e9be1aso14499697b3.0
+        for <git@vger.kernel.org>; Wed, 16 Apr 2025 17:25:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744849529; x=1745454329; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=m05Y4Ak88xsvJ9YVkRU/hmd760jSwrR8hs0hAxosjaY=;
+        b=iEEHzKP3IdI9eIZTYIutA6PNoHHDC7uqnpD7yHzVydIW4T22OlOH/zSiaShOMm4Lzr
+         pBOLy0WDVT076llBoCgGRbUFJ71+oLbVBTOQcg5udycghAZ0X1nNynivYd76D7Eqi53C
+         jYDDCNx6AR5AcxNd342XyxvMwguzv1iQkkVm5Tfdh/HxgkPTVqT2yy71tSPN3IUh4Uu5
+         SkZD7wXb3+RuV3/jynQf9KQJfrQi/zFfYANUy+pjUo2g6dMxQdZ9f2XxxiW4Ys8HXI1M
+         nurFz0EHlAnpnWrd4wvZqbCWjYnqWzu+fs9xHtjNzGN/CKG62apHhoBhr11VVOROvY2y
+         +qyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744849529; x=1745454329;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=m05Y4Ak88xsvJ9YVkRU/hmd760jSwrR8hs0hAxosjaY=;
+        b=kqPSvksKLhVnMBzsBeJ1ysAAYJ+QvfjOJP06EL0+1DQndGzRTNQubL0d9N3RgRL9md
+         iTqtqi1kS9ZCFkG6J7+lg+xT0hrKEHpGQ0SNcHXRn4UEnz03ZFHhrBVjAyWgbTTr8VLM
+         lhtZdkUiM16H2TlEItDlGL+iPNAvz6ZXlCsy4/uz0PyNSgIRXLD0CLEFZqlcSsP1SqPn
+         W+XScBHHSBxiGnpcxHy86yTRwT358AwWsBjfWsiq4LFM8meubNUDe5vwM8G4pyNmpNpn
+         hb1RnRmBUfvLRJXb19yppp4zC04VDCSzv2S0G13Q/aCtPSY3R078oU4eqy4vh470VtBY
+         +oTg==
+X-Gm-Message-State: AOJu0Yxer6z9AWFJRupJG/Q8crPHCBvRNxygHg59TNsgtngSuaSCQpA/
+	e5niVOYO5HImw1XKXkRKSmk1TOLuprbrTh0iuf8glsNJ8szd3sAH
+X-Gm-Gg: ASbGncs55xqh/HjV4dVAJ2YE+i1Mpksmpo4M6SDbrhJkqKBsXBOuQ0703VARF7OJRje
+	fMNLrLdWvOHJ+IpUWzKuoaHIYbcTbU1naEYXr33pWSFkN5SokRIImRqa7GGQVgu6ebLRCi5we97
+	JklFUx+jSCeB11LK/oCiSqI4MVdWnq1Jup44oMp5Ojh0GU5RwiU9iOEtgAe+5E6wxI3OUJ+syvn
+	w4qJh0Z/8iy/lfjkOMQbZA52ri9+kgC/oVOX5Wo2VYucdxltE9GzeFkyGAr4yDuxTL9WoSVIlo9
+	kC9LfN8nCKpcuVPNIM2+hHKaa3mGQY/+50UHF9qYqPdy7OraJuwtGOwy/tx6Cao5xsN9sFfRLHZ
+	sYp66hfklr5Cd2g==
+X-Google-Smtp-Source: AGHT+IEi/LY5nGvF2uXkkiqhOKM9TtbE6s++xDuAw33mxMdRPFh8vVTakONjoUO1GPHyaoM+DvVa+Q==
+X-Received: by 2002:a05:690c:6a0a:b0:700:5107:ca0f with SMTP id 00721157ae682-706beb979a4mr12113327b3.16.1744849529536;
+        Wed, 16 Apr 2025 17:25:29 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:2473:276:c095:5974? ([2600:1700:60ba:9810:2473:276:c095:5974])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7053e11a44dsm44032427b3.33.2025.04.16.17.25.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Apr 2025 17:25:28 -0700 (PDT)
+Message-ID: <9e14443c-e549-46e1-9fbf-ee72800e6944@gmail.com>
+Date: Wed, 16 Apr 2025 20:25:28 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] docs: document core.hooksPath=/dev/null
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, james@jamesliu.io,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Phillip Wood <phillip.wood123@gmail.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>
+References: <pull.1899.git.1743719888430.gitgitgadget@gmail.com>
+ <pull.1899.v2.git.1744818135435.gitgitgadget@gmail.com>
+ <BD8FCCB1-C97D-4057-982E-93A7F8B01AB9@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <BD8FCCB1-C97D-4057-982E-93A7F8B01AB9@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Here are some notable updates relative to the issue #04 of "What's
-cooking" report this month.
+On 4/16/2025 12:53 PM, Lucas Seiki Oshiro wrote:
+> Hi!
+> 
+>> +You can also disable all hooks entirely by setting `core.hooksPath`
+>> +to `/dev/null`.
+> 
+> Personally I think it would be better to focus on the non-expert user,
 
-These three topics have been merged to 'master'.
+I absolutely want this to be targeted for expert users, so users self-
+select themselves into the risk of what happens when disabling hooks.
+This is a "there be dragons here" kind of warning, implying that you
+better know what you're doing if you are messing with hook paths.
 
- * js/ci-fedora-gawk (2025-04-16) 1 commit
- * dd/sparse-glibc-workaround (2025-04-09) 1 commit
- * js/ci-github-update-ubuntu (2025-04-09) 1 commit
-
-As removal of Ubuntu 20.04 runner images from GitHub Actions was
-causing some CI jobs to fail, Đoàn Trần Công Danh and Dscho's work
-to update the necessary bits to make them work has been merged, with
-a bit ahead of schedule.  At the same time, we discovered that we
-lost "awk" on fedora image that resulted in test failures, which was
-quickly diagnosed and patched by Dscho with great help from Todd
-Zullinger, which was also fast-tracked to 'master'.  These three
-topics should be merged down to 'maint' before we'd make any update
-to it.
-
-We also graduated a bunch of other topics that have been cooking in
-'next' and spending the usual 1 calendar week (or more).
-
- * jt/help-sha-backend-info-in-build-options (2025-04-07) 2 commits
- * ps/cat-file-filter-batch (2025-04-07) 12 commits
- * ps/misc-build-fixes (2025-04-01) 5 commits
- * ps/test-wo-perl-prereq (2025-04-07) 20 commits
- * ab/rm-sign-compare (2025-03-29) 1 commit
- * ab/pathspec-sign-compare-workaround (2025-04-01) 1 commit
- * jt/ref-transaction-abort-fix (2025-03-21) 1 commit
- * zy/send-email-error-handling (2025-04-07) 2 commits
- * jt/rev-list-z (2025-03-21) 5 commits
- * sk/clar-trailer-urlmatch-norm-test (2025-03-04) 2 commits
- * kn/non-transactional-batch-updates (2025-04-08) 9 commits
- * ps/maintenance-reflog-expire (2025-04-08) 6 commits
+Thanks,
+-Stolee
 
