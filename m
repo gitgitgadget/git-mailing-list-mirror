@@ -1,69 +1,70 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7726F9EC
-	for <git@vger.kernel.org>; Thu, 17 Apr 2025 21:12:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59AF20A5E5
+	for <git@vger.kernel.org>; Thu, 17 Apr 2025 21:12:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744924336; cv=none; b=cIOk1HGLF4nFSxADH0iRNrxo3I4ZJHfVnmV+Yrk/Zp3+qe7jviQTCb6YrISHfTW0nxOS15tiT44BH+S6d9od4fsQc6p+47AQQpPVo/+Api8z+uXFwMs4XKG5BBlJOJkblfd2vD/nTZhPgkftc+20NuHHY3c3mNYeTapDO4X3IWo=
+	t=1744924338; cv=none; b=Gfs1kHMiK1FPbRggBP+0vultqVPrHG8YTnV7m4K70P1lKPAqgEUv8R/Ic46bNQm95w4ueB9dP+VVb5I/YOAohnJ2gt2eXduoyLuX8LU/b+ntzC+/jQ8WVtlGhjerjJ39VJN4jeDSlTmCXfiNnLqbMgcsF6zg5F/Nyi7nlkq1LDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744924336; c=relaxed/simple;
-	bh=cq4N7Oww3p21vNBbiJE+YQpKHEoc2izbDWZhf8Kk4YM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=ZE52ADAGxvAU4IztdoIYtxZlhO5TWqYLdYbRditsPIeJA9KZ4olLUyi4r72INitBxhxIgwP8inqD6bAAkcA9yM7xqZqM6Ff4le9bjW40v2hmQpXYoHbyIPf7l2WOw+0MQDFO8HcnRniaO3InwaUgTYgxCpNKmibv9Qu+ojFBSb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=HuH463Wz; arc=none smtp.client-ip=209.85.219.54
+	s=arc-20240116; t=1744924338; c=relaxed/simple;
+	bh=TBtfsBb0rpZ3p5zr6DC5bCU8oYGTHoxduAOhsz+7hGk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J3avKUv1rX7y3J6AL7WuO20XYUt3ozYNccud3SuRn1Gy8dt99hW3bq2+5uK+NSWk3952Yxv9Ezdf3XwhKTmpPhAHH4QOBB5gA7SoSjew+3de4eEsqzrVEzHzf53Jowxz6zaYf7FOGMcOayPn9zwGsbxD2RebqsV4uL0oSDCgK74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=y69yVHUE; arc=none smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="HuH463Wz"
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6e8ec399427so10367966d6.2
-        for <git@vger.kernel.org>; Thu, 17 Apr 2025 14:12:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="y69yVHUE"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-476b89782c3so13736891cf.1
+        for <git@vger.kernel.org>; Thu, 17 Apr 2025 14:12:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744924332; x=1745529132; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AQ20NGV7Cqz+zk4NPa+Z2HFjfvc1Rj82QC3pyWm1t9g=;
-        b=HuH463WzOnqY+ni4UFoVNlzqGQmmcJ356W8YcSlzGWFW5XvNjGSfjC9w0DiKdN+pa9
-         BibsDqIIi/pQY0uLbQ7aRAKBKnKwPyaCp2f4Djg7qaD8Hkv5g+L//M5oWueXqTS4Sjy7
-         7qg9DbCD6IOxzgGbbzAuftap7fDXICeu20/RXtkmRObRHW7xmMrwDj9V2wqfulh2TDT0
-         iJv/EfRAPF+Us4OxHvYSngruYVxEnGdUbGR5hi64rs2PmWSQTqvmv9PFmXPQy0+l5Zgn
-         5dh/tMe8EWHiCE0qhat5Wu3TXB0TgNa+kO8OLCKA53mOfALfwOkGq58c9YYE2jLcawCz
-         cv5Q==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1744924335; x=1745529135; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cFPX1yxFSFqxQPyW4yacuwuhvQbulx/Xx1RTo7ASFps=;
+        b=y69yVHUEXQvCOphL5/+0cW8/zaEqLtDY0HMDxSmXnEFe2qgrQP7HWJpP+y5ej2l9lX
+         v4kHFB4RePjGtNBdUuUa6JsJpYtVAiz0BmI1Hs+awYU3hT1AIomA4pS1DoTSBwvSNGQm
+         yQEWrlCC2L+X6TRno1E42S+qibumKhmSss5AUkXGOVBJ5V25rzYIs0ciAuulhVOsD5HA
+         q6SXz84M0ToCGz4lyh+4i3WRYBxwo1ZW/9+ww7qfRBtdj973a+1j1GPI8GXmtjzWSNwG
+         qTVqM5Nteg4i0U+ctP7l+mDuSO6ache1WHENcaU9+dxN2v1FOHa2RdlYQwNUrUyw0yCg
+         oWow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744924332; x=1745529132;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AQ20NGV7Cqz+zk4NPa+Z2HFjfvc1Rj82QC3pyWm1t9g=;
-        b=A9XnBy17rgc/zyLM3YWylT16BjVcjHMnWxP3PnorWVttpX05WyeGTgvmx9HTIRiiHr
-         N4ml6rpmSq5BhsAsHe/y21jYutZuzT4WQyaOO/luh57sLsuT7k9tEav3ynD1+HO84SYd
-         gfi/9S/gAKxVg5Aq1PRfr1f9QOP9GioRmzHUOTPgu5dLMGSeNQqUuVOEXMGcKvUOKWiA
-         FELPQE19sz1kKf1JbeB3RWUieE8d3wlDD3ZvHLNL40vO0KmEe2Ezp4O+UHbs/2ySYfso
-         L5V9KxmsvCo9JFBY8i6N2j5TZzuyOEx/eHwrNFw273D8UV9Knuo4VOoDLO/q2H6Ac5wA
-         tWZg==
-X-Gm-Message-State: AOJu0YyQM+Z0807uzJZnLSYpJQmndELC71A49yi23xzdyMFzTS4gVoxU
-	/VXNXjIi6hu+xRlHljXKDQIJETA6f67tD/cpPs4JVemPztHBz/F2KrUv+aAdDwlD2nJ8P38YsTJ
-	SOnM=
-X-Gm-Gg: ASbGncvYa71zJOpRRHoEVewT+1Ty3b3vvMG+ZfZ/nZnYg7e47SElb7Qp9DR8OO+IZk+
-	8OWj2Os0gnLW5VWkzZq9b15mheWbBbKtwSjtNNIABtddoC3G9DwQ9I5sCELD7Mpj4IQvNTKB6yk
-	ZGSZoHFHYWvEGFlD3fglRy1aYiWn1zDn9uPxPTwNMJlsnlM39pI51g4NZ70OtUkMOCsc4KQmLus
-	ja+VS/BJifWkN33KIlZgS9ghflDS+aQC76op19cLh2WmlB+nhGzufe6Au/kjfeK8SbpcWec/PfU
-	h8eEMOL3S4zm9bXZyUnVZPwhow4NdfVo4akMXvmFwvbOOFNTpT7v0BQ92NVQswX4XD8qrFP9cfF
-	5MLfzVhy06ksXxFfRn+ErEog=
-X-Google-Smtp-Source: AGHT+IF4NuiogRwVljXuWyq2klSvbYxPShjoYEUYSuebiq7bGOIXTjM+4W0/1uMlWemAkibuBgFhvQ==
-X-Received: by 2002:a05:6214:d0c:b0:6e8:97d2:99a2 with SMTP id 6a1803df08f44-6f2c4699b3bmr7815896d6.39.1744924332355;
-        Thu, 17 Apr 2025 14:12:12 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744924335; x=1745529135;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cFPX1yxFSFqxQPyW4yacuwuhvQbulx/Xx1RTo7ASFps=;
+        b=Q/5aPujmjGA0dceGLiB8Xf3gGXVSeVzxOSCQOTqci2+j7LEds5cyiNXl+t4w6grZw8
+         zl19OjLRV972YnbTWhV6eY5pbRKbFtQcPX0zhtyL0M/RGV5ZFdMTXvbM7r9qc/L0/srL
+         ceaW3M2+3O+jMokLjmOhTbEme/hod+/e8GxmO/xRBwdHMp6Nwfd99CAptem0JiOKPaAu
+         D8FSKHzituRsbCKMY3JvrChtabn8xhxTQLw6kf12tl1KISSkG5umLfcpp43PdWjzSHuM
+         GP3yGzrOkOOL+GfvIp9aV44K7IJ2hPDyt8G+kBem39VCgeDK/Q3gj4HMwyQ5DAdAyzPS
+         dzMQ==
+X-Gm-Message-State: AOJu0Yxzlf2Ava3zRKJWUDxNdYJ1bwkhraAXYRVVem05jyc4pPvJHVfX
+	VmwTDZfTDJ1wg82Vn/Xg7se44IeZu0w0rlsqy1pGuaEyVnz4FJ7d1Y+MgQ8QA6mboUawTjtBy/K
+	A0O8=
+X-Gm-Gg: ASbGncufeCr+uSUujp0C4SUwbNdrV3IlAuijz7NF+EN8Ncjhfvwvg46autjs9PwSIVC
+	bKx6B0wdh0X0PnGerwQao2fz34tYGnZPHe3ha8gW8tic03u6oDEX5aXQv1oxuA+q4D5vlSizt1z
+	g6jU+lIImo0MDnayjQ7djrh0rLT3uEAsdSKO1k9Afl1sv0bvJAm6h09xeYKp/ccOSsDOfO7zLts
+	XBm5ifgVkuy/J2hfDSdBkvHyZAL6wasY626rwLgTjCieNp/x+xlZgLHLBHDiWiEl186eHaqPmaR
+	gWznEylcFRjSX+OErzVVf4f78PPLGoPpDt+Wmv0LRiPJkqOPVuRu6Zxk9ArBNOOSADwQVOo3IUP
+	AMk+6pUL8GLt4
+X-Google-Smtp-Source: AGHT+IEeWI3GAm80r8yTt/X75jG2OsPLOk1m0zBxTXar2VvatDX6d7ytYawTVEq0H33VuKEa5cU3WA==
+X-Received: by 2002:ac8:5e14:0:b0:476:a3c8:c78d with SMTP id d75a77b69052e-47aec3cf9cfmr5205081cf.29.1744924335522;
+        Thu, 17 Apr 2025 14:12:15 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f2c2c233besm3268426d6.118.2025.04.17.14.12.11
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-47ae9cf9a8dsm3178951cf.70.2025.04.17.14.12.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Apr 2025 14:12:11 -0700 (PDT)
-Date: Thu, 17 Apr 2025 17:12:10 -0400
+        Thu, 17 Apr 2025 14:12:15 -0700 (PDT)
+Date: Thu, 17 Apr 2025 17:12:14 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/4] pack-bitmap: enable lookup tables by default, misc.
- cleanups
-Message-ID: <cover.1744924321.git.me@ttaylorr.com>
+Subject: [PATCH 1/4] pack-bitmap: write lookup table extension by default
+Message-ID: <b7cfb1267fdd7f50f414c9f79377cb338a0c1ab0.1744924321.git.me@ttaylorr.com>
+References: <cover.1744924321.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,50 +73,124 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1744924321.git.me@ttaylorr.com>
 
-This is a short series I extracted from a larger topic on reusing
-"external"[^1] deltas during verbatim pack reuse.
+The lookup table extension for reachability bitmaps was first introduced
+via 3fe0121479 (Merge branch 'ac/bitmap-lookup-table', 2022-09-05).
+For each bitmapped commit, the lookup table encodes three unsigned
+integers:
 
-As part of performance-testing that series, I realized that bitmap
-lookup tables are not written by default. Since it has been a
-significant period of time since their introduction, the first patch of
-this series makes writing the lookup table extension the default
-behavior. This is:
+  - The pack position of the commit.
+  - An offset within the *.bitmap itself where that commit's bitmap
+    lives.
+  - An index into the same table where information on that commit's XOR
+    pair can be found.
 
-  * pack-bitmap: write lookup table extension by default
+Lookup tables make bitmap operations faster because they no longer have
+to read the entire *.bitmap file to discover what commits have
+corresponding reachability bitmaps.
 
-The next three patches clean up some t/perf scripts that were redundant
-now that lookup tables are the default behavior. Those are:
+When bitmap lookup tables were first introduced, we established a
+baseline level of performance in p5310 with and without lookup tables.
+Here is the baseline without:
 
-  * p5312: removed duplicate performance test script
-  * t/perf: avoid testing bitmaps without lookup table
-  * t/perf/lib-bitmap.sh: avoid test_perf during setup
+    Test                                                    this tree
+    -----------------------------------------------------------------------
+    5310.6: simulated clone                               14.04(5.78+1.79)
+    5310.7: simulated fetch                               1.95(3.05+0.20)
+    5310.8: pack to file (bitmap)                         44.73(20.55+7.45)
+    5310.9: rev-list (commits)                            0.78(0.46+0.10)
+    5310.10: rev-list (objects)                           4.07(3.97+0.08)
+    5310.11: rev-list with tag negated via --not          0.06(0.02+0.03)
+             --all (objects)
+    5310.12: rev-list with negative tag (objects)         0.21(0.15+0.05)
+    5310.13: rev-list count with blob:none                0.24(0.17+0.06)
+    5310.14: rev-list count with blob:limit=1k            7.07(5.92+0.48)
+    5310.15: rev-list count with tree:0                   0.25(0.17+0.07)
+    5310.16: simulated partial clone                      5.67(3.28+0.64)
+    5310.18: clone (partial bitmap)                       16.05(8.34+1.86)
+    5310.19: pack to file (partial bitmap)                59.76(27.22+7.43)
+    5310.20: rev-list with tree filter (partial bitmap)   0.90(0.18+0.16)
 
-Thanks in advance for your review :-).
+, and here is the same set of tests, this time with the lookup table
+enabled:
 
-[^1]: The term I'm using to describe delta/base pairs which either (a)
-are represented from different packs in a MIDX bitmap, or (b) the client
-is known to already have the base.
+    Test                                                    this tree
+    -----------------------------------------------------------------------
+    5310.26: simulated clone                              13.69(5.72+1.78)
+    5310.27: simulated fetch                              1.84(3.02+0.16)
+    5310.28: pack to file (bitmap)                        45.63(20.67+7.50)
+    5310.29: rev-list (commits)                           0.56(0.39+0.8)
+    5310.30: rev-list (objects)                           3.77(3.74+0.08)
+    5310.31: rev-list with tag negated via --not          0.05(0.02+0.03)
+             --all (objects)
+    5310.32: rev-list with negative tag (objects)         0.21(0.15+0.05)
+    5310.33: rev-list count with blob:none                0.23(0.17+0.05)
+    5310.34: rev-list count with blob:limit=1k            6.65(5.72+0.40)
+    5310.35: rev-list count with tree:0                   0.23(0.16+0.06)
+    5310.36: simulated partial clone                      5.57(3.26+0.59)
+    5310.38: clone (partial bitmap)                       15.89(8.39+1.84)
+    5310.39: pack to file (partial bitmap)                58.32(27.55+7.47)
+    5310.40: rev-list with tree filter (partial bitmap)   0.73(0.18+0.15)
 
-Taylor Blau (4):
-  pack-bitmap: write lookup table extension by default
-  p5312: removed duplicate performance test script
-  t/perf: avoid testing bitmaps without lookup table
-  t/perf/lib-bitmap.sh: avoid test_perf during setup
+(All numbers here come from a ~2022-era copy of the kernel, via
+Abhradeep Chakraborty who implemented the lookup table extension).
 
- Documentation/config/pack.adoc       |   2 +-
- builtin/multi-pack-index.c           |   1 +
- builtin/pack-objects.c               |   2 +-
- t/perf/lib-bitmap.sh                 |   2 +-
- t/perf/p5310-pack-bitmaps.sh         |  47 +++++-------
- t/perf/p5311-pack-bitmaps-fetch.sh   |  76 +++++++++----------
- t/perf/p5312-pack-bitmaps-revs.sh    |  34 ---------
- t/perf/p5326-multi-pack-bitmaps.sh   | 107 ++++++++++++---------------
- t/perf/p5333-pseudo-merge-bitmaps.sh |   1 -
- 9 files changed, 106 insertions(+), 166 deletions(-)
- delete mode 100755 t/perf/p5312-pack-bitmaps-revs.sh
+In the almost three years since lookup tables were introduced, GitHub
+has used them in production without issue, taking advantage of the above
+performance benefits along the way.
 
+Since this feature has had sufficient time to flush out any bugs and/or
+performance regressions, let's enable it by default so that all bitmap
+users can reap similar performance benefits.
 
-base-commit: c152ae3ef50dc7bbbf5089571df5bba404a96e0d
+[1]: https://lore.kernel.org/git/pull.1266.git.1655728395.gitgitgadget@gmail.com/
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ Documentation/config/pack.adoc | 2 +-
+ builtin/multi-pack-index.c     | 1 +
+ builtin/pack-objects.c         | 2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config/pack.adoc b/Documentation/config/pack.adoc
+index da527377fa..ba538e3d9c 100644
+--- a/Documentation/config/pack.adoc
++++ b/Documentation/config/pack.adoc
+@@ -191,7 +191,7 @@ pack.writeBitmapLookupTable::
+ 	bitmap index (if one is written). This table is used to defer
+ 	loading individual bitmaps as late as possible. This can be
+ 	beneficial in repositories that have relatively large bitmap
+-	indexes. Defaults to false.
++	indexes. Defaults to true.
+ 
+ pack.readReverseIndex::
+ 	When true, git will read any .rev file(s) that may be available
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 2a938466f5..6ad6f814e3 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -142,6 +142,7 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
+ 	int ret;
+ 
+ 	opts.flags |= MIDX_WRITE_BITMAP_HASH_CACHE;
++	opts.flags |= MIDX_WRITE_BITMAP_LOOKUP_TABLE;
+ 
+ 	git_config(git_multi_pack_index_write_config, NULL);
+ 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 3973267e9e..384fefbb1d 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -239,7 +239,7 @@ static enum {
+ 	WRITE_BITMAP_QUIET,
+ 	WRITE_BITMAP_TRUE,
+ } write_bitmap_index;
+-static uint16_t write_bitmap_options = BITMAP_OPT_HASH_CACHE;
++static uint16_t write_bitmap_options = BITMAP_OPT_HASH_CACHE | BITMAP_OPT_LOOKUP_TABLE;
+ 
+ static int exclude_promisor_objects;
+ static int exclude_promisor_objects_best_effort;
 -- 
 2.49.0.226.g0e6cae136d
+
