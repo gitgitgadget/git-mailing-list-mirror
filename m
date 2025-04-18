@@ -1,98 +1,112 @@
-Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3787545009
-	for <git@vger.kernel.org>; Fri, 18 Apr 2025 18:52:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A8A21B8F6
+	for <git@vger.kernel.org>; Fri, 18 Apr 2025 18:59:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745002334; cv=none; b=qAX6W11hJmQuB6ECCFdm4H1rgTy6t4PQklRGRBKwzXfWoWb5Ob+PZon85ApHoZxhvQOrgFQjuGf+EwhhRlE6qmMNvhvAMIE+8ww5Ayxy36cGmLHRl7+I74IcVuljS65qIsf8XhRb/voi9kzetbCujs7x5khCV1J1NHl9i6ogaLY=
+	t=1745002745; cv=none; b=Og2DmStcNcZ30Dr2oImtTxOXE6k1CxVDt8k8OAY/RG0zGcySd66LgrotICq6qsVCydb14b7aBW9wAPoTbF65NtJ3g0Y8sVwLRk2oHB5J1IwAWpPOPim73z7KGzFJxCl03p61wERbZZZ/2YazqJbNXLp2v/8tEF9Yx3evVY6wePA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745002334; c=relaxed/simple;
-	bh=cYKZjEO52V2lC76LFtEblrVP5VhxrO6DpCM4BXsC2/Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nDjhZ+6CebaVbn6pT7WFl8p44E2wCROlDuHf8kSIx3zc19WlDYpXok1yVh9NozQmbaiO6xd8HIMVs0hVD6lJfbZowcOEd7v5aiZA76LXHP0y1JoZYjlN3cgmyTZBQwemxpXiiGPIjhfvPLIMWp2wqDKFrA8Dlxklxks/kPk4SAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=NPy/4BgS; arc=none smtp.client-ip=84.93.230.244
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1745002745; c=relaxed/simple;
+	bh=SFPYWepFuGcunDc/wYdsVlXDemyeW6/I6BoghmFIywo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Yf/y3KzDivaF9VbIYp1qEz/u1vP9OYnpyfhXlJlnEgugO52ObUjq4ZPJtPSn4VcltQVNl5Ud558POaqOAi/tEetjcJ8bmPCGUZ/k9eLIAMhDu2inwrHfUrYOc2LTwzwXg2nWdE3aET9Fzs7ID2fVdeGDDG4d8CWBwW4+9RiTzgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=adK6Q/eY; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="NPy/4BgS"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id 5qojuPXedjZe55qoku8fHg; Fri, 18 Apr 2025 19:52:03 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1745002323; bh=IgGMBKegoXC9LyW93iwyl2fSOkk1L89juBHZzvbxBIo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=NPy/4BgSGo2A+BrHfm5wnNeNnJvicwemjbjITJvZgqZyiwt37dG6E9Z5BIsI0JK8r
-	 qnn4X3gqsE+pjxmoEbCmt4lxkEH9PZpg+SfDUlVfBXShdPiWINqpaqVWjC/RlTWm4q
-	 mUGq0KX8G0BKf7PKvMObkm4oUrg9HZX1ezUuyyIt/VDdgP3htW/wTxKsZYSIqB3FLq
-	 UlPlo9lhzZBYT4iBc5qPi8kUfESMXM7RTzaezq/Y39S7exi1fBiq2RHlMsutdHKfpt
-	 rryCYnmAnrdUw64d2QVMmT0yPDheZooucXANvdZRKTcU4mutD2n8w9XiylR+vlyWIN
-	 +GsfgabcLSCtg==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=UuDANPwB c=1 sm=1 tr=0 ts=68029f53
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=otWec7-Cf7HSPfzGVMAA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <4b2fdfd0-72da-4c36-8b8a-4ef514873d39@ramsayjones.plus.com>
-Date: Fri, 18 Apr 2025 19:52:01 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="adK6Q/eY"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-22622ddcc35so32988145ad.2
+        for <git@vger.kernel.org>; Fri, 18 Apr 2025 11:59:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745002743; x=1745607543; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9H06ASHFfj+/Y8Aj0cB76kJm+MLkOXvd2aIfCP7Nzow=;
+        b=adK6Q/eYTV0bp2M7FZq0VBA5b6Mk94s1GTqW5ZwVjz/Tr78lDIFYDT2oReo7o40um9
+         H/kJJlxj1E105zerHs0TlnN1e6BUCfSYs9+nyDRRz4t7TD5RAT+WhD0e4qwT3QyhWt1y
+         aH3w95F/JOOCDcplyPES+sm5KHxMJ90cRjZjo72DgCl7YONfl576C3JQHqP62Xoe+SVO
+         v5LyHxdllZ3k2GQUcLlZdLVdaYw88TluyTqDIcRH7SYCDnxWYRSXrTduSVMmM1wdr4Jo
+         7xOGdKnep1ufvD85FNWbfEn7v8vn2rY8bkuhNyXQy2H+02+JKPhRMd8dNaya9+Ba6PRf
+         7qNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745002743; x=1745607543;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9H06ASHFfj+/Y8Aj0cB76kJm+MLkOXvd2aIfCP7Nzow=;
+        b=f+4xLsOMKnOOEAqTi56Za3WnpSyPHPGoKYuMM9cNfTUDEzFYfn/uecoEBeJTChtH/k
+         lz5eisdvHZIoWDsNTQujGn7J/EoW9Ui1LCzYO4DsI169lRP26Vuxf7MXB/TeFeGOKo4y
+         7ix/5622SUUKQUAXpJuW9PMksTi2BDAdUvLEyfrn53PYXD7t2q9I4A9UgNbRIy3addGu
+         LWuqR+WZ8XstEBtXW2ITuNC/ZZnK+81v7sn0djPnVU65oBs3YCRKwlMNH4D9olG2JDcX
+         W1tfT3lH9M9ohAa7zzP08tRhuVmPV5GGmoY/KQene4y0/qZ4IxL6mUFSdLbIcK7awpbX
+         ZsYw==
+X-Gm-Message-State: AOJu0YwGz3ZJVfA8kTTy5R+eQkdvjIbkqLnHOrm5nJs+U2zu3p9JVW7p
+	d1Euz2dWFNG+Si3b6eAiyo0fl2L7aoh76L0qxUYdnYeUESze07izLBjF1WNt
+X-Gm-Gg: ASbGncsuO78upTyBmbdQ16kAMZEBX1ndCJLSTaR15XU0o+LIZpcwV3ygp/Nk6Yi+L46
+	cipeqJiRk++viY3wHmJeJVfVoPNpCuvTzxVGt1Dw1tXehKpVW9MFrT30G+FN1txjal0QE3OCRpU
+	r6Km4gu9BooBSJknBfm3WgOE+nyGrCzFEIynARVfWAZU/w1RjCBEH1FLc3x7adKwikYqo29TyKM
+	S5p8cwsha/oXrPamwHDcBAEnZD0QXZvMG5YGbyueyauqHdKVAWJz6+AuSS3ybtLuDQYh/87f8Qf
+	ulTW6SOu+vgRwRSAHfjF/ndo93g+PqFgP5xbfqGstUH/9o31gQ5u1WKx
+X-Google-Smtp-Source: AGHT+IFVEgi8vCi+n9noFtxgV6onOk2MYRG0UXMSHrMqlEdyTrE5tNYhfAN8cfD5P8qC3Qn2OTSpYQ==
+X-Received: by 2002:a17:902:d4cd:b0:21f:35fd:1b6c with SMTP id d9443c01a7336-22c5364235fmr48754235ad.45.1745002743042;
+        Fri, 18 Apr 2025 11:59:03 -0700 (PDT)
+Received: from localhost.localdomain ([157.119.45.6])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22c50bdb365sm20402635ad.19.2025.04.18.11.59.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Apr 2025 11:59:02 -0700 (PDT)
+From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+X-Google-Original-From: Abhijeet Sonar <abhijeet.nkt@gmaiil.com>
+To: git@vger.kernel.org
+Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+Subject: [PATCH] environment: fix typo: 'setup_git_directory_gently'
+Date: Sat, 19 Apr 2025 00:28:48 +0530
+Message-ID: <20250418185855.52950-1-abhijeet.nkt@gmaiil.com>
+X-Mailer: git-send-email 2.49.0-rc0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] t/meson.build: remove deleted performance test script
-To: Junio C Hamano <gitster@pobox.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>
-References: <67c50fde-d29c-404b-a296-9f0e482acaf3@ramsayjones.plus.com>
- <xmqqmscdbc6g.fsf@gitster.g>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <xmqqmscdbc6g.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfCvwr5Mdoo8svhzW/FACRvbpqfuvDw3GqEA28oIT9x7ZzAbPZu5192SXb3Kef/Uonh/e7L4bQ8Xo41mafCZlR/72tD684tg/17uFCirIjLCdX14lx8ml
- G+YH9C/Y043o1/2sEb0YY3BZoRTdfXdFgowgRU3b16j0dnFReqOY+dI2OoLrAKLTCRoJvRaSEFwnfDAmDIOmaThBlh3Ogz4gUPk=
+Content-Transfer-Encoding: 8bit
 
+From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
 
+Above the declaration of git_work_tree_cfg, we have:
 
-On 18/04/2025 18:40, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
->> Commit 8b0b5c7046 (p5312: removed duplicate performance test script,
->> 2025-04-17) removed the 't/perf/p5312-pack-bitmaps-revs.sh' script, but
->> forgot to remove it from 't/meson.build', resulting in a broken build.
->>
->> In order to fix the build, remove the script from 't/meson.build'.
-> 
-> Thanks.
-> 
-> 
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> ---
->>
->> Hi Taylor, Junio,
->>
->> If you need to re-roll the 'tb/pack-bitmap-lookup-tables' branch, could
->> you please squash this into commit 8b0b5c7046. (the meson build on the
->> current 'seen' branch is broken otherwise).
-> 
-> Unless the topic by Tayor gets rebased on top of what contains
-> ps/meson-build-perf-bench, which is not even in 'next' (hence I
-> wouldn't recommend doing such a rebase), this needs to be dealt with
-> as an evil-merge semantic conflict fix-up, which I did this morning
-> and pushed the result out.
+  /* This is set by setup_git_dir_gently() and/or git_default_config() */
+  char *git_work_tree_cfg;
 
-Ah, yes, I just fetched and found your fixup (which you did hours ago!).
-Sorry for the noise.
+It can be verified that there is no function called
+'setup_git_dir_gently' by running grep on the codebase:
 
-Thanks.
+  $ grep -R setup_git_dir_gently .
+  ./environment.c:/* This is set by setup_git_dir_gently() and/or git_default_config() */
 
-ATB,
-Ramsay Jones
+The comment, introduced in e90fdc39b6 (Clean up work-tree handling), is
+the only occurrence of the name 'setup_git_dir_gently'.
 
+It probably meant 'setup_git_directory_gently' as that is a name of a
+real function in setup.c. Correct it.
 
+Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+---
+ environment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/environment.c b/environment.c
+index 3c32367c28..970a407753 100644
+--- a/environment.c
++++ b/environment.c
+@@ -106,7 +106,7 @@ int auto_comment_line_char;
+ /* Parallel index stat data preload? */
+ int core_preload_index = 1;
+ 
+-/* This is set by setup_git_dir_gently() and/or git_default_config() */
++/* This is set by setup_git_directory_gently() and/or git_default_config() */
+ char *git_work_tree_cfg;
+ 
+ /*
+-- 
+2.49.0-rc0
 
