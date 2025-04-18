@@ -1,97 +1,105 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1297B204C26
-	for <git@vger.kernel.org>; Fri, 18 Apr 2025 10:17:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43FF2741C8
+	for <git@vger.kernel.org>; Fri, 18 Apr 2025 13:27:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744971449; cv=none; b=qF1LyMyCjl41nIMFyZu2CxOXHAlkYHozL3L+kRa6zq1g7ROxxVpxiYGz1izQWVaePd/6DIq/aQZOX54EnSu4XzhpLeGJm30o/AcXqWYp1xw1yxwuMkz0q0stWF0gHFyE57nENFZolt2+5pkrMLEIzaxzHSLl1lejN3exywXru3U=
+	t=1744982872; cv=none; b=Bpp9D6yPE7/vTXhw2UmcV+oebJz0uZMAtdX+nV1Wdpnss0qN5qDq5Thdf1377/ETxQ3Hh1U6QpDn86YYY3OgFBxdG2ZPxRHOh96mslMYmiDyGlsmyCnIMWA2iOFfzeJ655RG/wsJxK4YrzZVIItr0guWb1SjRfDtEdSpKIhgj2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744971449; c=relaxed/simple;
-	bh=a1dEBAR9eqHrEZDy0wKW3y6t+lG0X/+w+gpiBjTpc6U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OZL6edHRtB+yaqQcVs9FJmhwae9HwVO4nJs/6KvvmSNWHON4xPZ0tDWKnSS5Xsod8xd+VIUrqSnsWFBYCN/pENvMHw81cAg+RYg1OvpJzehoeiP/DGJFW6/XVfc7mgueHqgzVeTursq7WzA79mAvyrb83m2/6K7d1N+z7PBFRq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Gois9Ec2; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1744982872; c=relaxed/simple;
+	bh=NL/vjdYUxp2ztsj3EEb2tYbpOT0lyJ6QB7+nZGdU5pw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lOxJ+gEuVVSVSiUPKMc9l0NRrP1DiCsrAVIFdh92R+lnAN/CACLYiBZESJTPFLOUUY+94s6u6H1kdb47uKBfF7fDORHDPHg5YdpuiOjDVbx/PL9NaX6b5gc0VFdGhiwbzlyf08BSSI6HeYC9J8LAkbtLR7epJHCf2E2dlmrsy5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iw7dbedj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sojPyb2L; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Gois9Ec2"
-Received: (qmail 16621 invoked by uid 109); 18 Apr 2025 10:17:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=a1dEBAR9eqHrEZDy0wKW3y6t+lG0X/+w+gpiBjTpc6U=; b=Gois9Ec2CdrBsnaOQ9Oafels05VW4nz8gHfuZ7+eVepOQUhFZD6FjFnNNbjWmE5/dmDNgz/vJDWp5QVFdMvhpDTN87TKLAXchsOJbR8E6g+/Mj3OMhuJNJ1Gba3CV47kux67tudepH/m1T5fl596H38vSR+Fu+azYYzAora+x0W3A5i8T5GYbi9Xr/ZfMv/5ESsGAANprpg4yLh46R24dCc9WCFsMf6mVzOeGauJ/OnSD8bKc6ArIS5Em+NFNiMCVro8HnTkL330r8sNO7+MqTCAS2BWCXZdXU5OTlJPtVumnlDwZGVYI0LKiUN15qJeCdumJqh4/Q6xjswQZ5/w4g==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 18 Apr 2025 10:17:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31822 invoked by uid 111); 18 Apr 2025 10:17:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Apr 2025 06:17:30 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 18 Apr 2025 06:17:25 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] t/perf/lib-bitmap.sh: avoid test_perf during setup
-Message-ID: <20250418101725.GD10441@coredump.intra.peff.net>
-References: <cover.1744924321.git.me@ttaylorr.com>
- <0906e14c0e55b52573c7e0b632c7c639850700ec.1744924321.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iw7dbedj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sojPyb2L"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9B72D13801A6;
+	Fri, 18 Apr 2025 09:27:48 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Fri, 18 Apr 2025 09:27:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1744982868; x=1745069268; bh=RvG9zE34jB
+	z38gknwZfjm7QHgknYGw1v5ybXw6tIMck=; b=iw7dbedjxWtsrQlHW0HjMMP3ut
+	/J1kstKwi4SU5x0zFxRuOy0kqGTwhueKcBeHQ6ZuBN2tC+0FmYOhsvOspP73+RNz
+	qUmrXisZwFZQb8O/wR4xDX5gZ4BK2mXV+YqykkmShefjWpbYl413K4xSWskNKrkn
+	L9w5PGDa1stJIeMzDvycl7GNG8fxqL35/zmp5/nJyHFq2Zx5Xve+5ItwU8r6H2ND
+	MaSFcp460qFg0mX9cqnUJX+97DK8HQB60x8De0bR1LIXoi66zFAme3c4lC8mGIhn
+	Iw2Vnxriz3Ue2qAw39Yx+Chx+0x7cDVpMW1PjNJmd+/9J/Dm4H9zLCUYq3QQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1744982868; x=1745069268; bh=RvG9zE34jBz38gknwZfjm7QHgknYGw1v5yb
+	Xw6tIMck=; b=sojPyb2Lh6JrT3BmQBbuS6SCVlmwU2lmYD9PrgYMq0l++MXPta8
+	rj+B59yzhTaEflLnhfnVhovfcPZd6IAA8K5jOf3nU6hZykU33lufZugVGaD8T2Dc
+	2Y8iMkbTWH7mT1eX+MWyhbsuQcpYp8dmjEjs6Klaoc4fl6gQzHus/XDP4czVz/PO
+	EXro9Np4horaZQhJ3ypC8EV0Z37mPN/4zv4gbkYzL/YQaEoVPRQbUNO/JLxPreCF
+	ePtf5yzvdDkRPrCxxYFDY0/7/zT5vEeoAdquKOdQ8VVwX5dQSbRJM41Kd7iYITZc
+	HtbWgv2mT0j6jVeGax+UTNA2rN4H0qaiF7A==
+X-ME-Sender: <xms:VFMCaFRrbw1yRtZzLdW8aDwj0MfF4HUVcmATYc62vzrJdvzoCES7_g>
+    <xme:VFMCaOxGROQ5hzthyUwB36kc_LlAL_3vbplNxBQoTKMKjnSYHZ--_uWFHc-SzM3ZL
+    ZNTNnIS_a2JDbe-dA>
+X-ME-Received: <xmr:VFMCaK2SuokulRoOPHWlNctfPuod52i6fOn6_jYpmjCPlH-5ZYiBaV6lA6GZkY7JnDqAoLkBBvkeomg9AyOppc3OqtXlwdpNnmGS>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvfedvvdejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvthdprhgtphhtthhopehkvghithhhrdhsrdhthhhomhhpshhonhesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:VFMCaNBNl8bjJHmtTdwXFFDOk5WQ1I_WlXzO8m0pyY8VA3vVVKJm_g>
+    <xmx:VFMCaOjFWNas3wHrFPrcJGsKKLLuYJ689ZG1rLi7DJ-ceXnUjbtNag>
+    <xmx:VFMCaBpQYSgJEMLHnLY7FmsSuPyF-roXPWhajq24f9r5IoomqbrY9w>
+    <xmx:VFMCaJgI_HVzD0H30-F8bJZtl-f2eJx6ydojySg7QJk4idZfkkZDrg>
+    <xmx:VFMCaJb_xhWqDE6Uiwzf3btHG8UqcnxplicHlAGO_zPqIEiAJBnxUpa1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 18 Apr 2025 09:27:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Keith Thompson <Keith.S.Thompson@gmail.com>,  git@vger.kernel.org
+Subject: Re: Bug report: Minor glitch in "git help" error message
+In-Reply-To: <20250418091612.GA10441@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 18 Apr 2025 05:16:12 -0400")
+References: <CAAHpriMkqapiJuUGimn-i8SqcZmvmc=Wpk6oUr844uAkCYgMxA@mail.gmail.com>
+	<xmqq5xj2clcx.fsf@gitster.g>
+	<CAAHpriNYikDFwiTpjZEupG4yWOkbzW5DnBcsUnBKkfxxxtWNkw@mail.gmail.com>
+	<20250418091612.GA10441@coredump.intra.peff.net>
+Date: Fri, 18 Apr 2025 06:27:46 -0700
+Message-ID: <xmqqv7r1bnvx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <0906e14c0e55b52573c7e0b632c7c639850700ec.1744924321.git.me@ttaylorr.com>
+Content-Type: text/plain
 
-On Thu, Apr 17, 2025 at 05:12:23PM -0400, Taylor Blau wrote:
+Jeff King <peff@peff.net> writes:
 
-> In the test_pack_bitmap() helper function, we first repack the
-> repository under test for consistency and to eliminate any effects from
-> different distributions of objects among packs.
+> ...
+> So probably a bad idea.
+> ...
 >
-> This step is performed with test_perf, so it is repeated
-> $GIT_PERF_REPEAT_COUNT number of times. But we do not care about timing
-> this portion of the setup phase, and repeating the process does not
-> change the outcome.
+> The other thing it's tempting to do is teach "git help" to check ...
+> ... We pick up
+> third-party commands automatically by looking in the $PATH for them. But
+> I don't think we can do the same for documentation ...
 
-Isn't this also where we actually generate the bitmaps? I.e., it is
-where we would see a performance regression in the bitmap writing
-process (whereas the rest of the script is about the reading side).
+Great write-up.  Thanks.
 
-That said, I don't think it's even doing that very well. It is mutating
-the on-disk state, so the first run will potentially be much slower than
-subsequent runs (since everything is now in one big pack with bitmaps,
-and we try to reuse deltas and bitmap data as much as possible). And
-since we take best-of-N, we're basically just measuring those subsequent
-noop repacks (unless you set the repeat count to 1!).
 
-I think we've run into this before, e.g. in 775c71e16d (p5302: create
-the repo in each index-pack test, 2019-04-22). And there the solution
-was to reset the repo state before each timing, assuming it is quick
-enough not to affect the test too much. Our perf suite doesn't provide
-much support there (we'd want something like hyperfine's --prepare
-option).
-
-So I dunno. It is possible for timing this operation to provide some
-value, but I don't think the current implementation is doing that. And
-it's quite expensive to run.
-
-> diff --git a/t/perf/lib-bitmap.sh b/t/perf/lib-bitmap.sh
-> index 55a8feb1dc..fdf5f35f1b 100644
-> --- a/t/perf/lib-bitmap.sh
-> +++ b/t/perf/lib-bitmap.sh
-> @@ -69,7 +69,7 @@ test_partial_bitmap () {
->  }
->  
->  test_pack_bitmap () {
-> -	test_perf "repack to disk" '
-> +	test_expect_success "repack to disk" '
->  		git repack -ad
->  	'
-
-The same issue exists in t5326, which calls "multi-pack-index write"
-with the "--bitmap" flag, I think. So if we are going to do this, we'd
-probably want the same there.
-
--Peff
