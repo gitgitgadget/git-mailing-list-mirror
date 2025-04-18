@@ -1,101 +1,81 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3444541760
-	for <git@vger.kernel.org>; Fri, 18 Apr 2025 21:38:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3936741760
+	for <git@vger.kernel.org>; Fri, 18 Apr 2025 21:41:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745012317; cv=none; b=YrIOCLwM1PTgIlT+8p8XyUoD/Y3114p0HszEaaiwUfjs5jqnpqOfEsQgb4WkL388U6zyoULzycwd+kH93LtADe31gTZN+bNETOs6xuM9b5k0YtoqOMWOEdLrHWx4Y100dH2ZXrhk2hiUg2xb0bvaWUdaf9TKIoqYR60gKwU+InI=
+	t=1745012480; cv=none; b=VtRTO8gHUn8Kpg5Uf/9BDjFf94VSlWfVaYdNWgyj3hZZDKkU2ADI0QzG8GbW0S7yxTegScaJJLzztgihwhmt2gvKTWj5LlMWlQDNPizLcZSETjvUnlashDDO6P7dXjiJKJL9Dg6u+dbqN1LnL61V8N5bcyDRHdyg+RqR1B0igbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745012317; c=relaxed/simple;
-	bh=8OV40C79WRlOGtP/Fe6wzBk/mAa/bt4e9Rk4nWrbggY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sElBwpyTUm02U7+q/GP7cP8eIj8LJTFjKbTuMLfFhfRKWRHn8fhrtA25pBnK7YfAZjbEX7q2/6dxV3nwXtXipIU4fYW2XhJXO5T/Q7imx6f1VIsdMOvt7Zn+bKMzRewJBrXvw0C9wQBSWwslVBuAgjU/Jt7Mon/eFXl3+hhdcPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LCiaIVxE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dd8Tcuea; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LCiaIVxE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dd8Tcuea"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 35FF5138054A;
-	Fri, 18 Apr 2025 17:38:34 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Fri, 18 Apr 2025 17:38:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745012314; x=1745098714; bh=8OV40C79WR
-	lOGtP/Fe6wzBk/mAa/bt4e9Rk4nWrbggY=; b=LCiaIVxE/WIROFVopSu0Mm81Bh
-	Rr/qJ82SYQRsS3JDik8Q/eTZMmdiL3a6quhYy8j5z0R3kBydxFe/1w8j9+ODzFvV
-	46AYHv5apJQzdO7rVSvMuBUp9/ZSo2KxYcnC3C068I97l/aZyiqeW4Jj/OTuvri9
-	eJvVdumAo4r7z4tPOtJNJQup65vxDMy3N8n8vb6VOtitke+mi3/0xOWl9lXrDZiM
-	KCMU/UaNXBFw60t3HWC7BdvnXC8fqhh+6S1/RNmljVLUYwZl8psubfZNJZJMpI4p
-	LpwoyOpggq9aTkqRSfMxRIfRPH2fSYP1Tu9dvy317tG4FXKtqHjQ70DY/w4Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745012314; x=1745098714; bh=8OV40C79WRlOGtP/Fe6wzBk/mAa/bt4e9Rk
-	4nWrbggY=; b=Dd8TcueanWsoBgS8Td7rMoVUt4l3XGmWLCtVqKNmaEjA8YakRFH
-	A6ISBmkE5Y2uDfxuIojGPMWya9eAsaCdojQ6NYis8ReKNKt9AHKBDxpPEa9fpyZ9
-	Ne6p3v0NwiL0ft1Fwk1kbT7MAeHQseuQfUQTBuOgKOvMNs8C+CiCO3p0ZO4G5QPJ
-	ofztRDealdsI6RpPmtTK6iSuuqrl1JL8mEoXrOn3mTaXdaqMTG2EVvQyezng9aT2
-	bcNJ/3EGPQSWH3D7NVV5fjHmMWXNNp8Wm/ubUdF+F8YvlIDTrTqLNRX8o2eRRCt4
-	Ty35ZpOH+olZ6C9+Le1RD8t+7F0tL5zBIGg==
-X-ME-Sender: <xms:WcYCaFxCrKky22Ew8pKzKXnvj9xIB2nN8G3WwfU1hpS7z-U3dE6Nfw>
-    <xme:WcYCaFQFvT7pZKwEKki2HNLYKfbRTceE4RfDOIf_xu7lb1I9kk8-kyaER6_arQ7xH
-    4SGzHJ1RY051cq4dQ>
-X-ME-Received: <xmr:WcYCaPUUFUInyyVRTGgitlfRpDeK3_Z1e0k2M8KvWSO7bRXCceI64DXzOms22Mb9ZguNSaetzHTS8lYlAilWhqUGKFEY-D4AxBWB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvfeefvdehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopegrnhhthhhonhihfigrnhhghedufeesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:WcYCaHh2jSCLivNrDkte1Nvx59vXx-dYaNBFdkqMr_gL7cAmFETHSQ>
-    <xmx:WsYCaHAFj3fCzbX-d_8LJU8eElaQ0lnZiBlUkJMBlEoZBxTJtXyQdg>
-    <xmx:WsYCaAKN7gp4OQnYNT8PiPAvAIKZBM5d-N-w1KBonACXR-Lv9lmTow>
-    <xmx:WsYCaGBntyaYtp8TsPUoO6EbVeaGnFTes0LQ6SbDS1L0W0wVUuPwow>
-    <xmx:WsYCaN5sRg-VCMngQM6yBcZcOwwsx_Ere1mcqQPtpyZNz6PSq7raOyn->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 18 Apr 2025 17:38:33 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Anthony Wang <anthonywang513@gmail.com>,  git@vger.kernel.org
-Subject: Re: aw/t9811-modernize, was Re: What's cooking in git.git (Apr
- 2025, #04; Tue, 15)
-In-Reply-To: <20250418213531.GA89733@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 18 Apr 2025 17:35:31 -0400")
-References: <xmqqbjsxkn6x.fsf@gitster.g>
-	<20250418213531.GA89733@coredump.intra.peff.net>
-Date: Fri, 18 Apr 2025 14:38:32 -0700
-Message-ID: <xmqqtt6l9mlj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1745012480; c=relaxed/simple;
+	bh=D21IVyZOYzjgK/ZuO+YbQWnk4lOwcqxucfYHWwEf8Ew=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=U/1QLIBpw2ovmIJwtT6s4bEgQAb9SYSFcw58is27fiNnJuV24HVA0MpSjMQUiwq3utLcqtXZGASsSzUAZ9WTPzh59xI1BeI3gF2E2xxyVBPISfk+8lR4EA3CsgVBXbJdfqBlbMwuMzddGHxUhr1sbm1xGb1XX4qKKNGgBwhpQxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6ed2172c58eso2695776d6.2
+        for <git@vger.kernel.org>; Fri, 18 Apr 2025 14:41:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745012475; x=1745617275;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lBjYGEy/kK13simP89mA6ImYk3k1cYa1xy7tN9/7hrs=;
+        b=Wd5VH1u5hBe6G81Lxth3DQekatnVOYvIYhAeDLvxSyXpkbzkWXSZgECM2hLW/fCq8e
+         NCogtEE379nHgkoTkzmoYze69RgDZi4EYF/i3X1EgyXPTpPSDsuxhyB5HExZi+yBM9Qx
+         56kkHQd4MEiQwwT3Q+9KK+EG87iRJg2YAPk1jlsZKPzZ0eyV9qqYQO7A1eGd8eftm9o9
+         +bVwRVKUfdDF55z5Pyk3Zgs5/Ym85iWtN0secDnl37Vy6yz4pZJK5YVc6PX/fmBGNkvp
+         bnKJTE6R8xhPQCtyhCrTDfkl94wXDNMnO0jzTpluJdA1tJ50/wb6W+AvernifUodIw2z
+         UyJA==
+X-Forwarded-Encrypted: i=1; AJvYcCVNpP0nk3AzkmN/rGd5xOtFCAxijAWzn+UVUou+96t7bEh1OFFKu15hYFvhf1YmWN56MVo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3rTq0pJFMCGg1yr8ako/hGeB1k3DZvpWG6X7F8XXheJBElCCA
+	7wggI4nQ8OFvF9P/uvFOCi5ZzPQmpc5FlhiT89QcILl/AY0l9Wc/0vOdIxV6QCZV/qqEX+i3A8T
+	/iDA1Zs/uPoD2YN/3pMfaRrq1GhE=
+X-Gm-Gg: ASbGncuqfBdWpQVmhiHx2ieJtofJDYRQRDgZRKBBF1E96jdyIue390ywIHPk37rtn6T
+	bh+E/iMs3cIzQ0m0DQtkfuozStPj2xI49t1MPF0K82pxt1q7Z40rwHgcwDojlvtjYH5Z8gLQksF
+	GQVSeZtUMVbOjJGCHqlYmpZ6KV2jGgyAqrc+0VB9LMpFHmzHCPD6GF6g==
+X-Google-Smtp-Source: AGHT+IF/fDNYSFD3ia6SzKcgW8qtFPqXW+NxOEUK9Lq/GVOBBJo5DZrpUVn8P4/kkMMn7yxgglVz6XbgU35lh4qZ3wg=
+X-Received: by 2002:ad4:5aae:0:b0:6e8:f88f:b96a with SMTP id
+ 6a1803df08f44-6f2c44d5743mr29746816d6.1.1745012474950; Fri, 18 Apr 2025
+ 14:41:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250405103718.25160-1-anthonywang03@icloud.com>
+ <20250416145939.24207-1-anthonywang03@icloud.com> <20250416145939.24207-2-anthonywang03@icloud.com>
+ <xmqqikn1bapz.fsf@gitster.g> <xmqq34e5b2s2.fsf@gitster.g>
+In-Reply-To: <xmqq34e5b2s2.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 18 Apr 2025 17:41:04 -0400
+X-Gm-Features: ATxdqUGYTOBl8PE9e5FV4ZHxIMdFH7fGZs6H1aN0iLBXQO5RFxgJw2ohxfazNZ0
+Message-ID: <CAPig+cS79mpfStmBBN2a-PeQAwrgtbj6HJmmuv6C1QEDFcOUgw@mail.gmail.com>
+Subject: Re: [GSoC] [PATCH v7 1/1] t9811: be more precise to check importing
+ of tags
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Anthony Wang <anthonywang513@gmail.com>, git@vger.kernel.org, anthonywang03@icloud.com, 
+	christian.couder@gmail.com, karthik.188@gmail.com, ps@pks.im, 
+	shejialuo@gmail.com, shyamthakkar001@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
+On Fri, Apr 18, 2025 at 5:03=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Subject: [PATCH] t9811: fix misconversion of test
+>
+> The previous commit started to insist TAG_F1_ONLY to be missing,
+> which was not in the original.  Let's not to be overly eager in the
+> conversion.
 
-> So I don't know if git-p4 got smarter, or what. But we should probably
-> back out at least that part of the commit until we figure out what's
-> going on (where "we" is somebody who cares a lot more about p4 than I
-> do).
+s/to be/be/
 
-Yes, and there was another breakage in that 2-hunk patch in the
-other hunk I sent out a fix for a few minutes ago.
+> Aso, the other hunk in the commit introduced shell syntax errors,
+> breaking the test to fail.  Fix it.
 
-Thanks.
+s/Aso/Also/
+s/breaking/causing/
+
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
