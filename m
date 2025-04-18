@@ -1,92 +1,81 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DA2204C0C
-	for <git@vger.kernel.org>; Fri, 18 Apr 2025 21:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E71E2868B
+	for <git@vger.kernel.org>; Fri, 18 Apr 2025 21:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745010228; cv=none; b=ef9Y2bYp06Kp0/hDs/0k8Lal2w6rNDCDej0cHhU4Z9hO+HzN7KWi7GyKmmIbAYyWcSuCaAQcfeb/szT4LT8/FdoOe8HRecEZ0Z/9Ag2HXIEzzUItWbehck9zIuOs9DjazVshBfSpcP4YxZ6KQTZmA+nB7mwA+Atw3i9OgFe+r/8=
+	t=1745010275; cv=none; b=DGggXvtGaUN4LXcAaPtxZ1fvtKWnB+YaNqrqo5uiE4seWjPuI6M1zlWNnyUlSfPQx6q4Q6m0yLGUM5Oga+JZ2qMap+ytaSnJ2ZctCI7VZwZyWAhuOo/CcAa4bVRkCf/rkht/zzcr6JyFQ+sjuyXSgOJP4/EQ5/iG1WpaznXOfm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745010228; c=relaxed/simple;
-	bh=CZI76Jc+1OQXCl0tqxChfjgC7Atd/CwjlUdDZbpEErM=;
+	s=arc-20240116; t=1745010275; c=relaxed/simple;
+	bh=ICEqsk0vZIsF4f9JpRgxE7YrktQJIw9TqOdE0SWj5AE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qYWx1IqC6vOkGSOWqfr0G6YZhKWOgjBtxaW91wE1ffnG9qmlJ09Fmd1OxVNcJ3gAB3I6ptHg15CcHbCfuQTM8S2XsrI6g0hwU5F9gwml+SItjvOiqjPJo5c/ZBZnb1fbvYYL7Rl3ymnb9bqZ6zLLiOge/aDVzz1zcpwrq3znMmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tR6nDqs0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YYsQHm35; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=LF8OlC9OJv00suCXzeOEP1VnXIyxjRTT84boKYt+HlOMKpgP4p2EuzBcRxkfXVhwAWFkQ4nV12KgwCf9zSuXwtPb8+vwvXMx/7/OiH1ntXN4AJt+mDL0SiFUL9QW9CJCvxi5CPKns1YgQQ73V793jNtoUYkgn5m5tj+x2xzr1+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wahbfcq2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mBV1lcfi; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tR6nDqs0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YYsQHm35"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 20C3B11401EF;
-	Fri, 18 Apr 2025 17:03:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wahbfcq2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mBV1lcfi"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9935611400B4;
+	Fri, 18 Apr 2025 17:04:32 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 18 Apr 2025 17:03:44 -0400
+  by phl-compute-11.internal (MEProxy); Fri, 18 Apr 2025 17:04:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745010224; x=1745096624; bh=LDqZ37kChR
-	NptzB97bjcMyt+FiRu40OCIVu8DGQkn9M=; b=tR6nDqs0uvo2SICCDkej/C8XZN
-	RxV2EuzdZfh28GyLQrBnpejU/W1Xbpcjc7c/vN2KkYFIIJjz9m/nnGNFJIKVfZNH
-	7RA0FOj0zhuaBIyv1yRacDFjzp66gQncpWezZpy3jsmECyffZF8V6YjOHXLL/fmK
-	9KQqUorgVEzHkUN+43hFi5WBojmU0/AEQYesHh+EXHdM7cfx3nS0Hrdq+DsY3Y3c
-	TPwruZBv+06M0WdPRsfsGJGOs92+yftimKdqyYRX8n/uzseverrO/laT5C1oiorJ
-	GKQSU//zROfN4H30FsFJWszIZ4ibTEtVV27X/skV2lfv7CcX0scTJM6JmACw==
+	:subject:to:to; s=fm1; t=1745010272; x=1745096672; bh=QnSZ+Jmsah
+	6SR8Ak7GDQM6uFMm3gqsPDNN8DrY3DUvs=; b=wahbfcq2FY6IXUXY/IdH1MxRvb
+	GzIKDyHlimvWK/5xhsr3nIvKhVzwF1hfBCyhYoZaW64en2wcX71pGpkChoIM01XH
+	wpsUscZIYscpjbIaadTKx7MtNNuoRVc748ZbJFxi3bylb80fwR+zJI7QsXL+G3Vk
+	/wIFZfcJxyMWxFFHgYWiKioBQz8O7aTHqVGB20gsqJoFNY4OYk70a4J608J6FR1L
+	EwVSLIS0dJTZGCTMHOeTtE8XBw7Vbspd1AFybxXa8fkyYxvIOnL1zGKiF/Pk2KhC
+	CPBMqBV0aAm/p8UOqbrFFu4ag0FFcO0zdq5Ys9AievYXPuj1lHeHeb63UwBA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745010224; x=1745096624; bh=LDqZ37kChRNptzB97bjcMyt+FiRu40OCIVu
-	8DGQkn9M=; b=YYsQHm3513OeUOknu/bH7BwzkRrss7s4aa7Yu3VIaTtzMudSl46
-	mLzVFdvUGbQTNc0pTwRCmHB+P2jiRNon2Zwdk7b4riXa7jZnhZuIehinUVxdRFgx
-	FQNc0senxX9lYxsQp3vI8BAWUqcpTSaV6H3sIF+gNSkmPDBcvlJrEttPXLhBygLp
-	ECkulbNVltGZvx+QhEWtYvAlie1lsZ7PcvKDCm/S+oEdLi2aB6/ZHYMeWnb0MG7g
-	BHucHbFoxQWwCuwpqb/SsKdDLyqqEc7RUyN0sam+9OoDFfquHO6RFP46/UWjzWsg
-	uSrUqtKfMkomQcsgNcPm/o8SSUafv0pcW2g==
-X-ME-Sender: <xms:L74CaBJsG_v1rKKPyK2vXLGuZuNuReVvO4rBLPz8pbZusxoGEeNdnw>
-    <xme:L74CaNJLUxIcnCWNXmEXo_M42oGXWiWFoF1HNAmspo6aY_UFZpM41tVi6r7rJMWJT
-    JUe3YL3WDhV7lr9Sw>
-X-ME-Received: <xmr:L74CaJtMjpwYa63OxuWzXKMX7Fq6S_O76_eDnpzsU2kxW71OBTD8sI3DbAxa3myTehuqRkTSaH0-9tI6UanXJNjIlMi4o3LOrQmM>
+	1745010272; x=1745096672; bh=QnSZ+Jmsah6SR8Ak7GDQM6uFMm3gqsPDNN8
+	DrY3DUvs=; b=mBV1lcfiW0o9xcCEf7yMpoJgW1zsJbUdV27G1kWd/gZquMsv5BN
+	ZuDNIt1ehPl+cQ1b5+Rv57LciQc5UFAqJt5sUrM9jJCja0Eh0FsmEwA5nbCvFff2
+	TxICUOMT6eq1xRfxryXPZLb314uGQ63USsTgHAWBEnqMCcrWkqVKrCbsJ/7Uo5aH
+	JABrJxyWm5BkMkBJFiE3p1FvCjYGHZWQ+Ece4Q5wg6SfIYA9To4LnSJ0EBAqoZN6
+	rRe6isQx+7+nCbRbUdaDtZkmsOyUvicuy3O91M9Bum/BeUXi2w+/P6vN0OzAGo8I
+	UHKjdJkTr4AwkZamoabWK77xjjN1adDiS7g==
+X-ME-Sender: <xms:YL4CaAtyHnAy7ycvDQqXjOVmP5QG4z86CKjmcv8S6mfccRghHfk3nw>
+    <xme:YL4CaNeMhguR1Yq6mvD5zyfJs-Aa8d7HG0Om5SL7Kon7w7Cx06VauV7q-yP6FMh3S
+    X_6a38LbS-rjJ1DZA>
+X-ME-Received: <xmr:YL4CaLx5ZwrkIGD9g8I1_L6l2Dmy_ffuL83YWq6PMmgJtFJYDGtEZq0tOKbtyJk-Zte2u8aNMvLErUADck5g3mDTsM4N_9PJYOyL>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvfeefudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprghnthhhohhnhi
-    ifrghnghehudefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopegrnhhthhhonhihfigrnhhgtdefsehitghloh
-    huugdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehshhgvjhhirghluhhosehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepshhhhigrmhhthhgrkhhkrghrtddtudesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:L74CaCZMMc9GEEccCIBsip9iq7m3qSYUrNxnM4cHD6gXCo98MC7rjQ>
-    <xmx:L74CaIZUs-VAhuaCcI7AuhsZGMpAF43JM5N31ltgeC1cT9QKRZPPtQ>
-    <xmx:L74CaGD9uYs8W_XbTX-FxHgD2rtUYbsFVILFaJ0y8FW4lncdu4RcAg>
-    <xmx:L74CaGaz8t6eTIuwldMotrtrGsh-wD3x-jle4xHpmJqEuBbyCGWhnQ>
-    <xmx:ML4CaIylYXkuNzJf4f5O0gKvVWuha4i6RsaCU5pQfeve-8XBshkqp27_>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopegrsghhihhjvggvthdrnhhkthesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:YL4CaDMpoetRxHQgDsg5GiEh4wRnonAUz7GOGWEQPYx9gPj3q6-I_g>
+    <xmx:YL4CaA8h6o8PVY3lvk5IruIdWUsWT7SKhbBBG6t4VEsOLqf8RVQ9QQ>
+    <xmx:YL4CaLUpHp0KsVWcuPIT0VhgYkPGM64KvWJ4rC7QTUx-7UuHzTqvoQ>
+    <xmx:YL4CaJfxydoC0JBn3Xtp7Zsw7fsGIZ6ZKzm2SJzDRfTzauZ_87WlKg>
+    <xmx:YL4CaFLL-txd0sWZjo9A2gsuLXULrvP-T5IjoW6sSnYq771H0YwG99gE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 18 Apr 2025 17:03:43 -0400 (EDT)
+ 18 Apr 2025 17:04:32 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Anthony Wang <anthonywang513@gmail.com>
-Cc: git@vger.kernel.org,  anthonywang03@icloud.com,
-  christian.couder@gmail.com,  karthik.188@gmail.com,  ps@pks.im,
-  shejialuo@gmail.com,  shyamthakkar001@gmail.com
-Subject: Re: [GSoC] [PATCH v7 1/1] t9811: be more precise to check importing
- of tags
-In-Reply-To: <xmqqikn1bapz.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	18 Apr 2025 11:12:08 -0700")
-References: <20250405103718.25160-1-anthonywang03@icloud.com>
-	<20250416145939.24207-1-anthonywang03@icloud.com>
-	<20250416145939.24207-2-anthonywang03@icloud.com>
-	<xmqqikn1bapz.fsf@gitster.g>
-Date: Fri, 18 Apr 2025 14:03:41 -0700
-Message-ID: <xmqq34e5b2s2.fsf@gitster.g>
+To: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] environment: fix typo: 'setup_git_directory_gently'
+In-Reply-To: <20250418185855.52950-1-abhijeet.nkt@gmaiil.com> (Abhijeet
+	Sonar's message of "Sat, 19 Apr 2025 00:28:48 +0530")
+References: <20250418185855.52950-1-abhijeet.nkt@gmaiil.com>
+Date: Fri, 18 Apr 2025 14:04:31 -0700
+Message-ID: <xmqqy0vx9o68.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,48 +85,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Abhijeet Sonar <abhijeet.nkt@gmail.com> writes:
 
-> Let's add this on top.
+> From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+>
+> Above the declaration of git_work_tree_cfg, we have:
+>
+>   /* This is set by setup_git_dir_gently() and/or git_default_config() */
+>   char *git_work_tree_cfg;
+>
+> It can be verified that there is no function called
+> 'setup_git_dir_gently' by running grep on the codebase:
+>
+>   $ grep -R setup_git_dir_gently .
+>   ./environment.c:/* This is set by setup_git_dir_gently() and/or git_default_config() */
+>
+> The comment, introduced in e90fdc39b6 (Clean up work-tree handling), is
+> the only occurrence of the name 'setup_git_dir_gently'.
+>
+> It probably meant 'setup_git_directory_gently' as that is a name of a
+> real function in setup.c. Correct it.
+>
+> Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+> ---
+>  environment.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Well, it turns out that it wasn't enough.
+Will queue.  Thanks for a well-written patch.
 
---- >8 ------ >8 ------ >8 ---
-Subject: [PATCH] t9811: fix misconversion of test
-
-The previous commit started to insist TAG_F1_ONLY to be missing,
-which was not in the original.  Let's not to be overly eager in the
-conversion.
-
-Aso, the other hunk in the commit introduced shell syntax errors,
-breaking the test to fail.  Fix it.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t9811-git-p4-label-import.sh | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
-index 39856629c0..7614dfbd95 100755
---- a/t/t9811-git-p4-label-import.sh
-+++ b/t/t9811-git-p4-label-import.sh
-@@ -97,7 +97,6 @@ test_expect_success 'two labels on the same changelist' '
- 
- 		git show-ref --verify refs/tags/TAG_F1_1 &&
- 		git show-ref --verify refs/tags/TAG_F1_2 &&
--		test_must_fail git show-ref --verify refs/tags/TAG_F1_ONLY &&
- 
- 		cd main &&
- 
-@@ -207,7 +206,7 @@ test_expect_success 'use git config to enable import/export of tags' '
- 		git tag CFG_A_GIT_TAG &&
- 		git p4 rebase --verbose &&
- 		git p4 submit --verbose &&
--		git show-ref --verify refs/tags/TAG_F1_1 &&
-+		git show-ref --verify refs/tags/TAG_F1_1
- 	) &&
- 	(
- 		cd "$cli" &&
--- 
-2.49.0-524-g64a58d64d1
-
+> diff --git a/environment.c b/environment.c
+> index 3c32367c28..970a407753 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -106,7 +106,7 @@ int auto_comment_line_char;
+>  /* Parallel index stat data preload? */
+>  int core_preload_index = 1;
+>  
+> -/* This is set by setup_git_dir_gently() and/or git_default_config() */
+> +/* This is set by setup_git_directory_gently() and/or git_default_config() */
+>  char *git_work_tree_cfg;
+>  
+>  /*
