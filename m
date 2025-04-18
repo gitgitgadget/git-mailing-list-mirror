@@ -1,107 +1,115 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D077215066
-	for <git@vger.kernel.org>; Fri, 18 Apr 2025 21:44:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22221B6CE0
+	for <git@vger.kernel.org>; Fri, 18 Apr 2025 21:52:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745012675; cv=none; b=sQVpV2jOmWo3tR2JvHVpyRUBxUT1BEUoKSH3G51wc79A73p3rTLRiyUGLYG14/lpfIbVVvMDKCWA2eHjY+uVYRdlSiDC3o3ZvZh2HAwmHTpAf62b/WPj+/qIxf7E2ajiCOQiB0U+6UuJzbBhaJQ3A+LbV1wr0I5TrGTIchXX8Gc=
+	t=1745013157; cv=none; b=Awv6LgYS3R5ftDl0rVEgaNqm9FNkShfy4+rw9Vy13KbFRZ6MxL/8tx9iebH4rYAakp0C2OvBoRmwMyn3jMk+oNsPAjbCEYJzi8XK9thiBzR+eic4wTi7jaHTleV/zb9omm7NYL2h0w3g8Zn2sLLXl63YsNxSGF+6DDQC/8+W2G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745012675; c=relaxed/simple;
-	bh=8ncvx7V6YHRCdLT6or+itpMQPLC3QGOwj3GFZ18QT14=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NzCnvi97UdqquL7MwOIlarV29qXjsWqXWh2rxGZCBja1fmDs8yPaEnt9Nenancy6d/Pz/8P7R/eD7HPjXrzMrjqV+C5g3FXhhft3Qh9gCIxiQyeVJIzzUZDgzFoFOB642AYkTnKhwUnBv2LQettIenNTHkhsQbjkYQmpzKt77Q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vmC4g8P4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qhkKsQXk; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745013157; c=relaxed/simple;
+	bh=T6Je5Mash7BRC+O5V15MS+RiuW42Dgk7Mvb8i4bTbpM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BSPQM5/iGqzeoQt8PHCM/OEq4B4ZpFiZiJrEvHncv/9+wnKFY2ylLpHx4Qz4u8DVVDO5gAFAa0wxH4mCgCUnYpJXUsFBV2Kd1vUBeTGQiNvZLOjzBeEHoskRuPEI/NCrn22kYvTl66N6paAMBmTIxCPPDOgg/tO79NXfsjmjdG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=wrJtb7+q; arc=none smtp.client-ip=209.85.219.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vmC4g8P4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qhkKsQXk"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 127041140262;
-	Fri, 18 Apr 2025 17:44:32 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 18 Apr 2025 17:44:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745012672; x=1745099072; bh=8ncvx7V6YH
-	RCdLT6or+itpMQPLC3QGOwj3GFZ18QT14=; b=vmC4g8P4+Epp9j6XIJ8DEKsRVz
-	fmXpEzocXuJZrorlPORTnw+Hp/otmeAcVj0Dn8K0svTtcMNq52Mix3jGX7+02f8+
-	jF1UhiRbw2PULUcECO9MNQQHPNdgL7nkqnnqjwFLvtrhflgDOMQ780nNTtlqHzPO
-	QCiIrV/RjXKLWCiikbt6t6oNg3lHiiGgAHW6ZfyGZiJLTc3qSkJC25Wpa0YRJIGc
-	ExwrGVDeq+ZUTiCzKH1TdRCOwstWMtGRzXL5im7PDKSDkYs+nFKNUowamWwokAh0
-	rbHE+8dNAdLYMhkdFFXab/hSfr0njjXb1Fk57eaLE+5Q58GI2KGSg2iicrsg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745012672; x=1745099072; bh=8ncvx7V6YHRCdLT6or+itpMQPLC3QGOwj3G
-	FZ18QT14=; b=qhkKsQXk4lpHY9LpvshP1mHuur54eiCjR2yapKDuioSg9U6KW0j
-	tsn0fE+Rp5eDj1o68FaJIuTr05AmLNtK+ohqgnRVfwzZSd4+0snCJ90GatvjGTZX
-	DCMjmToTkbnja5StLINDBeTgBTjXgr2D1pwvVUYsUkQSqQGaovsa3v27sS/TGozK
-	VABhhlrQdkoS4fH72QJsxfdBE/CIu/9A0Ow7hdMl8MTOyA09ChonIrhk04N4PIf/
-	ZpVX5G9a0V2sOKJpFpYqh7tbXgVgNchJU9tJ2olEcagLNPuS1IE5PiwlnW595O48
-	oJ+OVLenY0VMcoN7O1Qbmgqjlusb2UA+qVA==
-X-ME-Sender: <xms:v8cCaFzu_o2BqLKSOKFVcJlCkGPBMMBqqJPRmfV7s3_xtS7CDD3hyg>
-    <xme:v8cCaFRBeEwb3Aqi_hNcufBa_xsl4lLZfIatj4AECYAFxx3am68hN3-8g0qL901KJ
-    ido-_C36xfwJ7AVuA>
-X-ME-Received: <xmr:v8cCaPWgtaI23BC69lqzPePRQees51Y2F-6rL4YrMtFUoB3_hMcXIz4bk9PTDmdsVnhqcYDTqZjufqWI7o2bckF6UXUra56Yv7yE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvfeefvdeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopegrnhhthhhonhihfigrnhhghedufeesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:v8cCaHgSsZKqctS2nH6tbuHJDA27pHmG1mLUCxfIHa63XyZxqixVHQ>
-    <xmx:v8cCaHBx4N73d-fzZz4jg3eJId_UyBW4YuGFsxV5o7sm_XJTkDHtKg>
-    <xmx:v8cCaAKJob9KIotlrbEEXNyApDEHIqY_GxUma0s-2OWHAQ5qi95Ltg>
-    <xmx:v8cCaGCzVDWPT9h-kUYDM3rdJasznd6S4GCSdQX5zVfbWl9P-ZZWXQ>
-    <xmx:wMcCaN54c7LHH1j1V7_KN-Fozs0v9VGEJwLdRZH-FH3PPhHjORr2I0GZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 18 Apr 2025 17:44:31 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Anthony Wang <anthonywang513@gmail.com>,  git@vger.kernel.org
-Subject: Re: aw/t9811-modernize, was Re: What's cooking in git.git (Apr
- 2025, #04; Tue, 15)
-In-Reply-To: <xmqqtt6l9mlj.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	18 Apr 2025 14:38:32 -0700")
-References: <xmqqbjsxkn6x.fsf@gitster.g>
-	<20250418213531.GA89733@coredump.intra.peff.net>
-	<xmqqtt6l9mlj.fsf@gitster.g>
-Date: Fri, 18 Apr 2025 14:44:30 -0700
-Message-ID: <xmqqmscd9mbl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="wrJtb7+q"
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6ecf0e07954so32302246d6.1
+        for <git@vger.kernel.org>; Fri, 18 Apr 2025 14:52:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1745013154; x=1745617954; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZxOPoquOAN8mffLbapi3/N+Ighoarmj5EsJXMtmNZnU=;
+        b=wrJtb7+qKGEjyxU4fayrLnInMglqHEZoAwOgliLXTX5ItZJATvbrAyK9cQuXNQvU34
+         7+/CgjRv+WcNsN57Ub/rhA5Qea1XdO3SSeot1yfqp7xPp5iZBpF9mhzIeJu9N8t9RkBJ
+         AoNaVi5WhqOQCulnPZA0UR8+iREMlv5reGCWzd9UprZ0RpLJIomOasSEE1tcKPrZ1yAL
+         PMedF3ekUpzysNDWIK+QYCrcKj1J4YEj7bFT1ZmFKJS9AV/Hzo7g4yGMxYIoZJMXPPGO
+         S9L7wv7V9mDUzfXvDknuM3EICs5o5XACJg/nB5/ND7S6SMeMdLLVnLR3T1fPYCyV76c6
+         YRyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745013154; x=1745617954;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZxOPoquOAN8mffLbapi3/N+Ighoarmj5EsJXMtmNZnU=;
+        b=shcogJfTlCz7kGWDCeAb9t3zn5XuCnntS0PCB/TI7O5Wte+E6gxcCZS350eg1EpnHe
+         gmzY4JPtqL1flug+f0iucGrhRkIV8wA3ZoZgJHgg8QoHcv+oB14lpJniimXIxcQ14B4G
+         qzP6SQE8/LmKRqSX5Lc9Bet/07RZO03xnBMBlsZl/M95X3v410oDrcQ9mNP/+swzhK5k
+         pBAOBA8entGafL9CmSmXX14aCpMSf9aXCBEPYsqoI+5ew1AETBErjZHzCeWo0QeawWjs
+         vM4ow7WPGFF5lR73rVCiH9qvMdWnaW5hqINt1YGx0zMyJUYsAdnW+kNhJaEccIHyccHD
+         CEBw==
+X-Forwarded-Encrypted: i=1; AJvYcCXWSu852wk/oPqAk0d3sAegSRAjyjqlkZYFrKDdLYtffXBf6udxWT7aeYt+cFRiIcPwuVY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzapXOdeyzoI/9EGu306eiZgJJVK+6jOBRD1ocdzFKPspZ40f5q
+	sGPdrlDDf8MpjG16fYlg3XJ6kZ31GdtkjW2QNy6jBZz4Va8LcoP9+Psc9EheKV8=
+X-Gm-Gg: ASbGncuY0Y/z7G2U9A6QqS/SkWiJrX9JEqDbVD1X7jMwmF5+pZA3UAPXrqeVunH9Ss7
+	+X8toi8r6GubRvYQar3Kd07bgNKC2liXDR36gSlddzndDUg/Uo4+YVdHk5HZglI4/LibCLkH8ls
+	jsvi9U5gg3URF/9mSB7M3784bkvcM8XTVD1fnZH10ydu/226SlCvtZpl17I+oeUjF02CzwVQgN/
+	SLW18C5q1XBDEt7/pUJM0/53aCh8g+pSVNtM2maDQ0/RQDuDALuV0nHTzof+YJ2cafgPxYpvcaC
+	Eird/T6+vwOmMS+2Sbz8ffx9g1EytsjPCP9am7q8JpNKAhm8GrJsfAdi+usrVbEoyPZKxyZqSv+
+	WJQB3dLBymSIv
+X-Google-Smtp-Source: AGHT+IHpIvlqzhDYY5ZqRgXoAwGDRYqqk8TW1iiCAKpF3hEE3iZFj+wPB/eE8O2oFXkQi2nf1sRAGg==
+X-Received: by 2002:a05:6214:224b:b0:6ea:d40e:2bc5 with SMTP id 6a1803df08f44-6f2c450c031mr76736956d6.9.1745013154626;
+        Fri, 18 Apr 2025 14:52:34 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f2c2bfd8c4sm14691306d6.87.2025.04.18.14.52.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Apr 2025 14:52:34 -0700 (PDT)
+Date: Fri, 18 Apr 2025 17:52:32 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/4] pack-bitmap: write lookup table extension by default
+Message-ID: <aALJoFOUWq0v3fiB@nand.local>
+References: <cover.1744924321.git.me@ttaylorr.com>
+ <b7cfb1267fdd7f50f414c9f79377cb338a0c1ab0.1744924321.git.me@ttaylorr.com>
+ <xmqqmscee97z.fsf@gitster.g>
+ <20250418093335.GB10441@coredump.intra.peff.net>
+ <xmqqr01pbhk2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqr01pbhk2.fsf@gitster.g>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+On Fri, Apr 18, 2025 at 08:44:29AM -0700, Junio C Hamano wrote:
 > Jeff King <peff@peff.net> writes:
 >
->> So I don't know if git-p4 got smarter, or what. But we should probably
->> back out at least that part of the commit until we figure out what's
->> going on (where "we" is somebody who cares a lot more about p4 than I
->> do).
+> > They're not technically required to be in sync. It is OK for the midx
+> > bitmaps to have different options than the ones we make for packs. And
+> > in theory they could intentionally diverge, though in practice I don't
+> > think we (yet) have any extensions or options that would be more
+> > appropriate for one or the other.
+> >
+> > So if we did want to join them, I think it would make sense to still be
+> > able to use different flags for each situation, but initialize them from
+> > a common definition.
 >
-> Yes, and there was another breakage in that 2-hunk patch in the
-> other hunk I sent out a fix for a few minutes ago.
+> Thanks for great explanation---I guess it is not worth pursuing,
+> then.  It is not like it would make the system misbehave when two
+> are set differently.
 
-We seem to have quite a many ubuntu/linux test jobs, none of which
-failed due to the obvious syntax error in t9811, which probalby
-means we are not running p4 tests at all on any of our Linux jobs.
+Hah, Peff beat me to it. I saw your reply last night and was going to
+write you a very similar response.
 
+I think the summary from my perspective would be that: the two could
+fall out-of-sync intentionally if we want the two commands to ever have
+different defaults. Tangentially we could use some common "bitmap_flags"
+field whose bits are defined in pack-bitmap.h and used in both places.
+
+The latter is a bit awkward currently because the current "flags" that
+we pass into the MIDX machinery from the builtin all have MIDX-specific
+meanings. So we would have to either make sure that MIDX uses separate
+bit positions (which is awful and far too fragile for my comfort/taste)
+or store them as a separate set of flags (I think what Peff is getting
+at above).
+
+Thanks,
+Taylor
